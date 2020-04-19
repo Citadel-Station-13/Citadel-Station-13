@@ -184,6 +184,7 @@
 		"cock_length"		= COCK_SIZE_DEF,
 		"cock_diameter_ratio"	= COCK_DIAMETER_RATIO_DEF,
 		"cock_color"		= pick("FFFFFF","7F7F7F", "7FFF7F", "7F7FFF", "FF7F7F", "7FFFFF", "FF7FFF", "FFFF7F"),
+		"cock_taur"			= FALSE,
 		"has_balls" 		= FALSE,
 		"balls_color" 		= pick("FFFFFF","7F7F7F", "7FFF7F", "7F7FFF", "FF7F7F", "7FFFFF", "FF7FFF", "FFFF7F"),
 		"balls_size"		= BALLS_SIZE_DEF,
@@ -208,7 +209,8 @@
 		"ipc_antenna"		= "None",
 		"flavor_text"		= "",
 		"meat_type"			= "Mammalian",
-		"body_model"		= MALE
+		"body_model"		= MALE,
+		"body_size"			= RESIZE_DEFAULT_SIZE
 		))
 
 /proc/random_hair_style(gender)
@@ -260,23 +262,29 @@
 		if(!findname(.))
 			break
 
-/proc/random_skin_tone()
-	return pick(GLOB.skin_tones)
+#define SKINTONE2HEX(skin_tone) GLOB.skin_tones[skin_tone] || skin_tone
 
+/proc/random_skin_tone()
+	return pick(GLOB.skin_tones - GLOB.nonstandard_skin_tones)
+
+//ordered by amount of tan. Keep the nonstandard skin tones last.
 GLOBAL_LIST_INIT(skin_tones, list(
-	"albino",
-	"caucasian1",
-	"caucasian2",
-	"caucasian3",
-	"latino",
-	"mediterranean",
-	"asian1",
-	"asian2",
-	"arab",
-	"indian",
-	"african1",
-	"african2"
+	"albino" = "#fff4e6",
+	"caucasian1" = "#ffe0d1",
+	"caucasian2" = "#fcccb3",
+	"caucasian3" = "#e8b59b",
+	"latino" = "#d9ae96",
+	"mediterranean" = "#c79b8b",
+	"asian1" = "#ffdeb3",
+	"asian2" = "#e3ba84",
+	"arab" = "#c4915e",
+	"indian" = "#b87840",
+	"african1" = "#754523",
+	"african2" = "#471c18",
+	"orange" = "#ffc905" //Spray tan overdose.
 	))
+
+GLOBAL_LIST_INIT(nonstandard_skin_tones, list("orange"))
 
 GLOBAL_LIST_EMPTY(species_list)
 
@@ -579,3 +587,16 @@ GLOBAL_LIST_EMPTY(species_list)
 		chosen = pick(mob_spawn_meancritters)
 	var/mob/living/simple_animal/C = new chosen(spawn_location)
 	return C
+
+/proc/passtable_on(target, source)
+	var/mob/living/L = target
+	if(!HAS_TRAIT(L, TRAIT_PASSTABLE) && L.pass_flags & PASSTABLE)
+		ADD_TRAIT(L, TRAIT_PASSTABLE, INNATE_TRAIT)
+	ADD_TRAIT(L, TRAIT_PASSTABLE, source)
+	L.pass_flags |= PASSTABLE
+
+/proc/passtable_off(target, source)
+	var/mob/living/L = target
+	REMOVE_TRAIT(L, TRAIT_PASSTABLE, source)
+	if(!HAS_TRAIT(L, TRAIT_PASSTABLE))
+		L.pass_flags &= ~PASSTABLE

@@ -112,7 +112,7 @@
 /datum/export/glasswork_lens
 	cost = 1800
 	unit_name = "small glass lens"
-	export_types = list(/obj/item/lens)
+	export_types = list(/obj/item/glasswork/glass_base/lens)
 
 /datum/export/glasswork_spouty
 	cost = 1200
@@ -130,4 +130,28 @@
 	cost = 1000
 	unit_name = "large flask"
 	export_types = list(/obj/item/reagent_containers/glass/beaker/flask/large)
+	include_subtypes = FALSE
+
+/datum/export/glasswork_teaplate
+	cost = 1200
+	unit_name = "tea gear"
+	export_types = list(/obj/item/tea_plate)
+	include_subtypes = FALSE
+
+/datum/export/glasswork_teacup
+	cost = 1800
+	unit_name = "tea gear"
+	export_types = list(/obj/item/tea_cup)
+	include_subtypes = FALSE
+
+/datum/export/glasswork_laserpointer
+	cost = 2600
+	unit_name = "hand made laserpointer"
+	export_types = list(/obj/item/laser_pointer/blue/handmade)
+	include_subtypes = FALSE
+
+/datum/export/glasswork_glasses
+	cost = 5000
+	unit_name = "hand made glasses"
+	export_types = list(/obj/item/glasswork/glasses)
 	include_subtypes = FALSE

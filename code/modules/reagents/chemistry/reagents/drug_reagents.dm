@@ -353,7 +353,7 @@
 
 /datum/reagent/drug/aranesp
 	name = "Aranesp"
-	description = "Amps you up and gets you going, fixes all stamina damage you might have but can cause toxin and oxygen damage."
+	description = "Amps you up and gets you going, fixing stamina damage but possibly causing toxin and oxygen damage."
 	reagent_state = LIQUID
 	color = "#78FFF0"
 	pH = 9.2
@@ -362,7 +362,7 @@
 	var/high_message = pick("You feel amped up.", "You feel ready.", "You feel like you can push it to the limit.")
 	if(prob(5))
 		to_chat(M, "<span class='notice'>[high_message]</span>")
-	M.adjustStaminaLoss(-18, 0)
+	M.adjustStaminaLoss(-10, 0)
 	M.adjustToxLoss(0.5, 0)
 	if(prob(50))
 		M.losebreath++
@@ -467,9 +467,9 @@
 		if(H.physiology)
 			H.physiology.stamina_mod *= 0.5
 		if(H.dna && H.dna.species)
-			H.dna.species.punchdamagehigh *= 4
-			H.dna.species.punchdamagelow  *= 4
-			H.dna.species.punchstunthreshold *= 2
+			H.dna.species.punchdamagehigh += 4
+			H.dna.species.punchdamagelow  += 4
+			H.dna.species.punchstunthreshold -= 2
 
 /datum/reagent/drug/skooma/on_mob_end_metabolize(mob/living/L)
 	. = ..()
@@ -480,9 +480,9 @@
 		if(H.physiology)
 			H.physiology.stamina_mod *= 2
 		if(H.dna && H.dna.species)
-			H.dna.species.punchdamagehigh *= 0.25
-			H.dna.species.punchdamagelow *= 0.25
-			H.dna.species.punchstunthreshold *= 0.5
+			H.dna.species.punchdamagehigh -= 4
+			H.dna.species.punchdamagelow -= 4
+			H.dna.species.punchstunthreshold += 2
 
 /datum/reagent/drug/skooma/on_mob_life(mob/living/carbon/M)
 	M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 1*REM)

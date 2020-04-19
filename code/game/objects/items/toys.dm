@@ -273,15 +273,12 @@
 			var/obj/item/twohanded/dualsaber/toy/newSaber = new /obj/item/twohanded/dualsaber/toy(user.loc)
 			if(hacked) // That's right, we'll only check the "original" "sword".
 				newSaber.hacked = TRUE
-				newSaber.item_color = "rainbow"
 			qdel(W)
 			qdel(src)
 	else if(istype(W, /obj/item/multitool))
 		if(!hacked)
 			hacked = TRUE
-			item_color = "rainbow"
 			to_chat(user, "<span class='warning'>RNBW_ENGAGE</span>")
-
 			if(active)
 				update_icon()
 				user.update_inv_hands()
@@ -352,7 +349,7 @@
 		update_light()
 	return TRUE
 
-/obj/item/toy/sword/cx/worn_overlays(isinhands, icon_file, style_flags = NONE)
+/obj/item/toy/sword/cx/worn_overlays(isinhands, icon_file, used_state, style_flags = NONE)
 	. = ..()
 	if(active)
 		if(isinhands)
@@ -454,11 +451,8 @@
 	total_mass_on = TOTAL_MASS_TOY_SWORD
 	sharpness = IS_BLUNT
 
-/obj/item/twohanded/dualsaber/toy/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
-	return FALSE
-
-/obj/item/twohanded/dualsaber/toy/IsReflect()//Stops Toy Dualsabers from reflecting energy projectiles
-	return FALSE
+/obj/item/twohanded/dualsaber/toy/run_block(mob/living/owner, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return)
+	return BLOCK_NONE
 
 /obj/item/twohanded/dualsaber/hypereutactic/toy
 	name = "\improper DX Hyper-Euplastic LightSword"
@@ -474,11 +468,8 @@
 	slowdown_wielded = 0
 	sharpness = IS_BLUNT
 
-/obj/item/twohanded/dualsaber/hypereutactic/toy/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
-	return FALSE
-
-/obj/item/twohanded/dualsaber/hypereutactic/toy/IsReflect()//Stops it from reflecting energy projectiles
-	return FALSE
+/obj/item/twohanded/dualsaber/hypereutactic/toy/run_block(mob/living/owner, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return)
+	return BLOCK_NONE
 
 /obj/item/twohanded/dualsaber/hypereutactic/toy/rainbow
 	name = "\improper Hyper-Euclidean Reciprocating Trigonometric Zweihander"

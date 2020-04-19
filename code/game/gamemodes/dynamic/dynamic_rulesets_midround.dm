@@ -34,8 +34,7 @@
 	living_players = trim_list(mode.current_players[CURRENT_LIVING_PLAYERS])
 	living_antags = trim_list(mode.current_players[CURRENT_LIVING_ANTAGS])
 	list_observers = trim_list(mode.current_players[CURRENT_OBSERVERS])
-	var/datum/element/ghost_role_eligibility/eligibility = SSdcs.GetElement(list(/datum/element/ghost_role_eligibility))
-	ghost_eligible = trim_list(eligibility.get_all_ghost_role_eligible())
+	ghost_eligible = trim_list(get_all_ghost_role_eligible())
 
 /datum/dynamic_ruleset/midround/proc/trim_list(list/L = list())
 	var/list/trimmed_list = L.Copy()
@@ -415,7 +414,7 @@
 	required_candidates = 1
 	blocking_rules = list(/datum/dynamic_ruleset/roundstart/clockcult)
 	weight = 4
-	cost = 10
+	cost = 20
 	requirements = list(101,101,101,80,60,50,50,50,50,50)
 	high_population_requirement = 50
 	repeatable = TRUE

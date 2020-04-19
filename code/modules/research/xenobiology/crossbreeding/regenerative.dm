@@ -200,8 +200,7 @@ Regenerative extracts:
 	colour = "gold"
 
 /obj/item/slimecross/regenerative/gold/core_effect(mob/living/target, mob/user)
-	var/newcoin = pick(/obj/item/coin/silver, /obj/item/coin/iron, /obj/item/coin/gold, /obj/item/coin/diamond, /obj/item/coin/plasma, /obj/item/coin/uranium)
-	var/obj/item/coin/C = new newcoin(target.loc)
+	var/obj/item/coin/C = new /obj/effect/spawner/lootdrop/coin(target.loc)
 	playsound(C, 'sound/items/coinflip.ogg', 50, 1)
 	target.put_in_hand(C)
 

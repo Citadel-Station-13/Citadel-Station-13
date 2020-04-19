@@ -283,7 +283,7 @@ All foods are distributed among various categories. Use common sense.
 	S.create_reagents(S.volume, reagent_flags, reagent_value)
 	if(reagents)
 		reagents.trans_to(S, reagents.total_volume)
-	if(S.bonus_reagents && S.bonus_reagents.len)
+	if(cooking_efficiency && length(S.bonus_reagents))
 		for(var/r_id in S.bonus_reagents)
 			var/amount = S.bonus_reagents[r_id] * cooking_efficiency
 			if(r_id == /datum/reagent/consumable/nutriment || r_id == /datum/reagent/consumable/nutriment/vitamin)

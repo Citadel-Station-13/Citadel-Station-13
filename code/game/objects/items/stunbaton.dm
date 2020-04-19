@@ -15,7 +15,7 @@
 	attack_verb = list("beaten")
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 50, "bio" = 0, "rad" = 0, "fire" = 80, "acid" = 80)
 
-	var/stamforce = 25
+	var/stamforce = 35
 	var/status = FALSE
 	var/knockdown = TRUE
 	var/obj/item/stock_parts/cell/cell
@@ -170,7 +170,7 @@
 	return disarming || (user.a_intent != INTENT_HARM)
 
 /obj/item/melee/baton/proc/baton_stun(mob/living/L, mob/user, disarming = FALSE)
-	if(L.check_shields(src, 0, "[user]'s [name]", MELEE_ATTACK)) //No message; check_shields() handles that
+	if(L.run_block(src, 0, "[user]'s [name]", ATTACK_TYPE_MELEE, 0, user) & BLOCK_SUCCESS) //No message; check_shields() handles that
 		playsound(L, 'sound/weapons/genhit.ogg', 50, 1)
 		return FALSE
 	var/stunpwr = stamforce

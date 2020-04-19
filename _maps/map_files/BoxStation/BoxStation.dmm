@@ -1337,7 +1337,7 @@
 /turf/open/floor/plasteel,
 /area/security/prison)
 "adf" = (
-/obj/structure/toilet{
+/obj/structure/toilet/secret/prison{
 	dir = 1
 	},
 /turf/open/floor/plasteel/freezer,
@@ -3988,7 +3988,6 @@
 /obj/item/clothing/under/suit/waiter,
 /obj/item/clothing/under/suit/waiter,
 /obj/item/clothing/under/suit/waiter,
-/obj/item/clothing/suit/straight_jacket,
 /turf/open/floor/plasteel,
 /area/crew_quarters/fitness)
 "ahD" = (
@@ -7882,11 +7881,7 @@
 /turf/open/floor/wood,
 /area/lawoffice)
 "aqa" = (
-/obj/structure/closet/secure_closet/personal{
-	desc = "Swipe your ID on this locker to claim it. You can drag it around and use it as your own personal storage area. Very useful.";
-	name = "Personal ID-Locked Locker";
-	pixel_y = 10
-	},
+/obj/structure/closet/secure_closet/personal,
 /turf/open/floor/carpet,
 /area/crew_quarters/dorms)
 "aqb" = (
@@ -8021,11 +8016,7 @@
 /turf/open/floor/carpet,
 /area/crew_quarters/dorms)
 "aqo" = (
-/obj/structure/closet/secure_closet/personal/cabinet{
-	desc = "Swipe your ID on the closet to claim it. First come first serve, this one is wooden and fancy. Store your stuff here.";
-	name = "Personal ID-Locked Closet";
-	pixel_y = 15
-	},
+/obj/structure/closet/secure_closet/personal/cabinet,
 /turf/open/floor/wood,
 /area/crew_quarters/dorms)
 "aqp" = (
@@ -8846,14 +8837,10 @@
 /area/security/vacantoffice/b)
 "ask" = (
 /obj/item/flashlight/lamp/green{
-	pixel_x = -3;
-	pixel_y = 22
+	pixel_x = -2;
+	pixel_y = 15
 	},
-/obj/structure/dresser{
-	desc = "There's plenty of clothes here to change into! It has a surprising amount of variety, too.";
-	name = "Dresser";
-	pixel_y = 7
-	},
+/obj/structure/dresser,
 /turf/open/floor/wood,
 /area/crew_quarters/dorms)
 "asl" = (
@@ -8864,7 +8851,6 @@
 /turf/open/floor/plating,
 /area/security/vacantoffice/b)
 "asm" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on,
 /obj/structure/chair/comfy/brown{
 	dir = 4
 	},
@@ -11677,7 +11663,7 @@
 /turf/open/floor/plating,
 /area/maintenance/starboard/fore)
 "aAs" = (
-/obj/structure/piano{
+/obj/structure/musician/piano{
 	icon_state = "piano"
 	},
 /turf/open/floor/plating,
@@ -13056,7 +13042,7 @@
 /turf/open/floor/plasteel,
 /area/crew_quarters/cryopod)
 "aDL" = (
-/obj/structure/toilet{
+/obj/structure/toilet/secret/low_loot{
 	dir = 4
 	},
 /obj/structure/mirror{
@@ -13944,7 +13930,7 @@
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/storage/eva)
 "aGk" = (
-/obj/structure/toilet{
+/obj/structure/toilet/secret/low_loot{
 	dir = 4
 	},
 /obj/structure/mirror{
@@ -14488,8 +14474,10 @@
 /turf/open/floor/plasteel,
 /area/gateway)
 "aHw" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/effect/landmark/event_spawn,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 10
+	},
 /turf/open/floor/wood,
 /area/crew_quarters/dorms)
 "aHx" = (
@@ -15799,7 +15787,7 @@
 /area/hydroponics)
 "aKJ" = (
 /obj/machinery/vending/cola/black,
-/obj/structure/sign/poster/contraband/sun_kist{
+/obj/structure/sign/poster/contraband/starkist{
 	pixel_y = 32
 	},
 /turf/open/floor/wood,
@@ -21467,7 +21455,7 @@
 /turf/open/floor/plating,
 /area/maintenance/port)
 "aZt" = (
-/obj/structure/toilet{
+/obj/structure/toilet/secret/low_loot{
 	dir = 4
 	},
 /obj/structure/mirror{
@@ -23035,11 +23023,7 @@
 /turf/open/floor/carpet,
 /area/bridge/meeting_room)
 "bdJ" = (
-/obj/structure/closet/secure_closet/personal/cabinet{
-	desc = "Swipe your ID on the closet to claim it. First come first serve, this one is wooden and fancy. Store your stuff here.";
-	name = "Personal ID-Locked Closet";
-	pixel_y = 15
-	},
+/obj/structure/closet/secure_closet/personal/cabinet,
 /turf/open/floor/plating,
 /area/maintenance/port)
 "bdK" = (
@@ -26479,7 +26463,9 @@
 /turf/open/floor/plating,
 /area/maintenance/disposal)
 "blU" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 10
+	},
 /turf/open/floor/wood,
 /area/crew_quarters/dorms)
 "blV" = (
@@ -54427,11 +54413,7 @@
 /turf/open/space/basic,
 /area/space/nearstation)
 "eSe" = (
-/obj/structure/closet/secure_closet/personal/cabinet{
-	desc = "Swipe your ID on the closet to claim it. First come first serve, this one is wooden and fancy. Store your stuff here.";
-	name = "Personal ID-Locked Closet";
-	pixel_y = 15
-	},
+/obj/structure/closet/secure_closet/personal/cabinet,
 /turf/open/floor/carpet,
 /area/crew_quarters/dorms)
 "eVC" = (
@@ -54800,6 +54782,12 @@
 	},
 /turf/open/floor/plasteel,
 /area/hallway/secondary/entry)
+"fPL" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 4
+	},
+/turf/open/floor/wood,
+/area/crew_quarters/dorms)
 "fTg" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -55323,7 +55311,9 @@
 /turf/open/floor/wood,
 /area/crew_quarters/bar)
 "hPs" = (
-/obj/structure/fireplace,
+/obj/structure/fireplace{
+	pixel_y = -6
+	},
 /obj/machinery/airalarm{
 	dir = 8;
 	pixel_x = 23
@@ -55549,18 +55539,6 @@
 /obj/structure/grille,
 /turf/open/space/basic,
 /area/space/nearstation)
-"iDS" = (
-/obj/docking_port/stationary{
-	dir = 8;
-	dwidth = 3;
-	height = 5;
-	id = "commonmining_home";
-	name = "SS13: Common Mining Dock";
-	roundstart_template = /datum/map_template/shuttle/mining_common/meta;
-	width = 7
-	},
-/turf/open/space/basic,
-/area/space)
 "iEJ" = (
 /obj/machinery/door/airlock/external{
 	name = "Escape Pod One"
@@ -55633,7 +55611,7 @@
 	},
 /area/crew_quarters/theatre)
 "iTU" = (
-/obj/structure/piano{
+/obj/structure/musician/piano{
 	icon_state = "piano"
 	},
 /turf/open/floor/wood,
@@ -56107,18 +56085,13 @@
 /turf/open/floor/plasteel,
 /area/crew_quarters/dorms)
 "kmS" = (
+/obj/structure/dresser,
 /obj/item/flashlight/lamp/green{
-	pixel_x = -3;
-	pixel_y = 22
+	pixel_x = -2;
+	pixel_y = 15
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
-	dir = 4;
-	pixel_y = 5
-	},
-/obj/structure/dresser{
-	desc = "There's plenty of clothes here to change into! It has a surprising amount of variety, too.";
-	name = "Dresser";
-	pixel_y = 7
+	dir = 4
 	},
 /turf/open/floor/carpet,
 /area/crew_quarters/dorms)
@@ -56816,7 +56789,7 @@
 /turf/open/floor/plating,
 /area/security/main)
 "myh" = (
-/obj/structure/piano,
+/obj/structure/musician/piano,
 /obj/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/wood,
@@ -57124,15 +57097,6 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
-"nGI" = (
-/obj/machinery/door/airlock/external{
-	name = "Common Mining Shuttle Bay"
-	},
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 4
-	},
-/turf/open/floor/plating,
-/area/hallway/secondary/entry)
 "nLu" = (
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
@@ -57350,8 +57314,8 @@
 /area/security/prison)
 "omY" = (
 /obj/item/flashlight/lamp/green{
-	pixel_x = -3;
-	pixel_y = 22
+	pixel_x = -2;
+	pixel_y = 15
 	},
 /obj/structure/dresser{
 	desc = "There's plenty of clothes here to change into! It has a surprising amount of variety, too.";
@@ -57463,7 +57427,9 @@
 /turf/closed/wall,
 /area/crew_quarters/bar)
 "oAB" = (
-/obj/structure/fireplace,
+/obj/structure/fireplace{
+	pixel_y = -6
+	},
 /turf/open/floor/carpet,
 /area/crew_quarters/dorms)
 "oDm" = (
@@ -57504,7 +57470,7 @@
 /turf/open/floor/wood,
 /area/crew_quarters/bar)
 "oIW" = (
-/obj/structure/toilet{
+/obj/structure/toilet/secret/low_loot{
 	dir = 8
 	},
 /turf/open/floor/mineral/titanium/blue,
@@ -59737,15 +59703,6 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/starboard/fore)
-"vDR" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on,
-/obj/structure/closet/secure_closet/personal/cabinet{
-	desc = "Swipe your ID on the closet to claim it. First come first serve, this one is wooden and fancy. Store your stuff here.";
-	name = "Personal ID-Locked Closet";
-	pixel_y = 15
-	},
-/turf/open/floor/wood,
-/area/crew_quarters/dorms)
 "vEi" = (
 /obj/structure/cable{
 	icon_state = "4-8"
@@ -60202,17 +60159,6 @@
 /obj/item/coin/gold,
 /turf/open/floor/plasteel,
 /area/crew_quarters/fitness)
-"xfS" = (
-/obj/effect/turf_decal/tile/blue{
-	dir = 4
-	},
-/obj/machinery/computer/shuttle/mining/common{
-	dir = 4
-	},
-/turf/open/floor/plasteel/white/corner{
-	dir = 1
-	},
-/area/hallway/secondary/entry)
 "xgk" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -60535,15 +60481,6 @@
 /obj/item/instrument/trombone,
 /turf/open/floor/wood,
 /area/crew_quarters/theatre)
-"xQG" = (
-/obj/machinery/door/airlock/external{
-	name = "Common Mining Shuttle Bay"
-	},
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 8
-	},
-/turf/open/floor/plating,
-/area/hallway/secondary/entry)
 "xSW" = (
 /obj/effect/turf_decal/tile/red{
 	dir = 1
@@ -60647,7 +60584,7 @@
 /turf/open/floor/plasteel,
 /area/crew_quarters/fitness/pool)
 "ycd" = (
-/obj/structure/toilet{
+/obj/structure/toilet/secret/low_loot{
 	dir = 4
 	},
 /obj/structure/mirror{
@@ -69068,7 +69005,7 @@ aaa
 aaa
 aoV
 aaa
-iDS
+aaa
 aaa
 aaa
 aoV
@@ -69323,11 +69260,11 @@ aaa
 aaa
 aaa
 aaa
-asE
-asE
-nGI
-asE
-asE
+aaa
+aaa
+aaa
+aaa
+aaa
 aoV
 aaa
 aaa
@@ -69581,9 +69518,9 @@ aaa
 aaa
 aaa
 aaf
-awW
-auP
-awW
+aaa
+aaa
+aaa
 aaf
 kls
 aaa
@@ -69839,8 +69776,8 @@ aaa
 aaa
 arB
 arB
-xQG
-asE
+arB
+arB
 aAC
 aaf
 aaa
@@ -70095,7 +70032,7 @@ aaa
 aaa
 aaa
 arB
-xfS
+awZ
 ayk
 awW
 aAD
@@ -73439,7 +73376,7 @@ ayl
 aIK
 ayl
 beM
-asE
+arB
 aaa
 aaa
 aaa
@@ -92684,7 +92621,7 @@ aqe
 arf
 aqo
 atm
-atm
+fPL
 arf
 avv
 awu
@@ -92940,7 +92877,7 @@ cSA
 aqe
 arf
 asm
-blU
+atm
 blU
 avg
 awp
@@ -93712,7 +93649,7 @@ aqi
 arf
 ask
 atm
-atm
+fPL
 arf
 awq
 axO
@@ -93967,8 +93904,8 @@ ajo
 aps
 aqk
 arf
-vDR
-blU
+aqo
+atm
 aHw
 avn
 awv

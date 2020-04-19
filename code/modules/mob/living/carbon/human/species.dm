@@ -39,7 +39,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 	var/horn_color	//specific horn colors, because why not?
 	var/wing_color
 
-	var/use_skintones = 0	// does it use skintones or not? (spoiler alert this is only used by humans)
+	var/use_skintones = NO_SKINTONES	// does it use skintones or not? (spoiler alert this is only used by humans)
 	var/exotic_blood = ""	// If your race wants to bleed something other than bog standard blood, change this to reagent id.
 	var/exotic_bloodtype = "" //If your race uses a non standard bloodtype (A+, O-, AB-, etc)
 	var/meat = /obj/item/reagent_containers/food/snacks/meat/slab/human //What the species drops on gibbing
@@ -853,7 +853,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 				if(!forced_colour)
 					switch(S.color_src)
 						if(SKINTONE)
-							accessory_overlay.color = "#[skintone2hex(H.skin_tone)]"
+							accessory_overlay.color = SKINTONE2HEX(H.skin_tone)
 						if(MUTCOLORS)
 							if(fixed_mut_color)
 								accessory_overlay.color = "#[fixed_mut_color]"
@@ -893,7 +893,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 					accessory_overlay.icon_state = "m_ears_none_[layertext]"
 				if(bodypart == "tail")
 					accessory_overlay.icon_state = "m_tail_husk_[layertext]"
-				if(MATRIXED)
+				if(S.color_src == MATRIXED)
 					var/list/husklist = list()
 					husklist += ReadRGB("#a3a3a3")
 					husklist += ReadRGB("#a3a3a3")
@@ -1437,7 +1437,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 			to_chat(user, "<span class='notice'>You do not breathe, so you cannot perform CPR.</span>")
 
 /datum/species/proc/grab(mob/living/carbon/human/user, mob/living/carbon/human/target, datum/martial_art/attacker_style)
-	if(target.check_block())
+	if(target.check_martial_melee_block())
 		target.visible_message("<span class='warning'>[target] blocks [user]'s grab attempt!</span>")
 		return 0
 	if(attacker_style && attacker_style.grab_act(user,target))
@@ -1453,9 +1453,15 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 	if(IS_STAMCRIT(user)) //CITADEL CHANGE - makes it impossible to punch while in stamina softcrit
 		to_chat(user, "<span class='warning'>You're too exhausted.</span>") //CITADEL CHANGE - ditto
 		return FALSE //CITADEL CHANGE - ditto
-	if(target.check_block())
+	if(target.check_martial_melee_block())
 		target.visible_message("<span class='warning'>[target] blocks [user]'s attack!</span>")
 		return FALSE
+
+	if(HAS_TRAIT(user, TRAIT_PUGILIST))//CITADEL CHANGE - makes punching cause staminaloss but funny martial artist types get a discount
+		user.adjustStaminaLossBuffered(1.5)
+	else
+		user.adjustStaminaLossBuffered(3.5)
+
 	if(attacker_style && attacker_style.harm_act(user,target))
 		return TRUE
 	else
@@ -1474,13 +1480,15 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 			else
 				user.do_attack_animation(target, ATTACK_EFFECT_PUNCH)
 
-		user.adjustStaminaLossBuffered(5) //CITADEL CHANGE - makes punching cause staminaloss
-
 		var/damage = rand(user.dna.species.punchdamagelow, user.dna.species.punchdamagehigh)
+		var/puncherstam = user.getStaminaLoss()
+		var/puncherbrute = user.getBruteLoss()
+		var/punchedstam = target.getStaminaLoss()
+		var/punchedbrute = target.getBruteLoss()
 
 		//CITADEL CHANGES - makes resting and disabled combat mode reduce punch damage, makes being out of combat mode result in you taking more damage
-		if(!(target.combat_flags & COMBAT_FLAG_COMBAT_ACTIVE) && damage < user.dna.species.punchstunthreshold)
-			damage = user.dna.species.punchstunthreshold - 1
+		if(!(target.combat_flags & COMBAT_FLAG_COMBAT_ACTIVE))
+			damage *= 1.5
 		if(!CHECK_MOBILITY(user, MOBILITY_STAND))
 			damage *= 0.5
 		if(!(user.combat_flags & COMBAT_FLAG_COMBAT_ACTIVE))
@@ -1491,10 +1499,12 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 
 		var/miss_chance = 100//calculate the odds that a punch misses entirely. considers stamina and brute damage of the puncher. punches miss by default to prevent weird cases
 		if(user.dna.species.punchdamagelow)
+			if(HAS_TRAIT(user, TRAIT_PUGILIST)) //pugilists have a flat 10% miss chance
+				miss_chance = 10
 			if(atk_verb == ATTACK_EFFECT_KICK) //kicks never miss (provided your species deals more than 0 damage)
 				miss_chance = 0
 			else
-				miss_chance = min((user.dna.species.punchdamagehigh/user.dna.species.punchdamagelow) + user.getStaminaLoss() + (user.getBruteLoss()*0.5), 100) //old base chance for a miss + various damage. capped at 100 to prevent weirdness in prob()
+				miss_chance = min(10 + ((puncherstam + puncherbrute)*0.5), 100) //probability of miss has a base of 10, and modified based on half brute total. Capped at max 100 to prevent weirdness in prob()
 
 		if(!damage || !affecting || prob(miss_chance))//future-proofing for species that have 0 damage/weird cases where no zone is targeted
 			playsound(target.loc, user.dna.species.miss_sound, 25, TRUE, -1)
@@ -1518,7 +1528,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 
 		if(user.limb_destroyer)
 			target.dismembering_strike(user, affecting.body_zone)
-		
+
 		if(atk_verb == ATTACK_EFFECT_KICK)//kicks deal 1.5x raw damage + 0.5x stamina damage
 			target.apply_damage(damage*1.5, BRUTE, affecting, armor_block)
 			target.apply_damage(damage*0.5, STAMINA, affecting, armor_block)
@@ -1529,13 +1539,25 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 			log_combat(user, target, "punched")
 
 		if((target.stat != DEAD) && damage >= user.dna.species.punchstunthreshold)
-			target.visible_message("<span class='danger'>[user] knocks [target] down!</span>", \
-							"<span class='userdanger'>You're knocked down by [user]!</span>", "<span class='hear'>You hear aggressive shuffling followed by a loud thud!</span>", COMBAT_MESSAGE_RANGE, user)
-			to_chat(user, "<span class='danger'>You knock [target] down!</span>")
-			var/knockdown_duration = 40 + (target.getStaminaLoss() + (target.getBruteLoss()*0.5))*0.8 - armor_block
-			target.DefaultCombatKnockdown(knockdown_duration)
-			target.forcesay(GLOB.hit_appends)
-			log_combat(user, target, "got a stun punch with their previous punch")
+			if((punchedstam > 50) && prob(punchedstam*0.5)) //If our punch victim has been hit above the threshold, and they have more than 50 stamina damage, roll for stun, probability of 1% per 2 stamina damage
+
+				target.visible_message("<span class='danger'>[user] knocks [target] down!</span>", \
+								"<span class='userdanger'>You're knocked down by [user]!</span>", "<span class='hear'>You hear aggressive shuffling followed by a loud thud!</span>", COMBAT_MESSAGE_RANGE, user)
+				to_chat(user, "<span class='danger'>You knock [target] down!</span>")
+
+				var/knockdown_duration = 40 + (punchedstam + (punchedbrute*0.5))*0.8 - armor_block
+				target.DefaultCombatKnockdown(knockdown_duration)
+				target.forcesay(GLOB.hit_appends)
+				log_combat(user, target, "got a stun punch with their previous punch")
+
+				if(HAS_TRAIT(user, TRAIT_KI_VAMPIRE) && !HAS_TRAIT(target, TRAIT_NOBREATH) && (punchedbrute < 100)) //If we're a ki vampire we also sap them of lifeforce, but only if they're not too beat up. Also living organics only.
+					user.adjustBruteLoss(-5)
+					user.adjustFireLoss(-5)
+					user.adjustStaminaLoss(-20)
+
+					target.adjustCloneLoss(10)
+					target.adjustBruteLoss(10)
+
 		else if(!(target.mobility_flags & MOBILITY_STAND))
 			target.forcesay(GLOB.hit_appends)
 
@@ -1552,6 +1574,9 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 	var/aim_for_groin  = user.zone_selected == "groin"
 	var/target_aiming_for_groin = target.zone_selected == "groin"
 
+	if(target.check_martial_melee_block()) //END EDIT
+		target.visible_message("<span class='warning'>[target] blocks [user]'s disarm attempt!</span>")
+		return FALSE
 	if(IS_STAMCRIT(user))
 		to_chat(user, "<span class='warning'>You're too exhausted!</span>")
 		return FALSE
@@ -1590,13 +1615,18 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 			"You hear a slap."
 		)
 		return FALSE
-	else if(attacker_style && attacker_style.disarm_act(user,target))
-		return 1
+		
 	else
 		user.do_attack_animation(target, ATTACK_EFFECT_DISARM)
 
-		user.adjustStaminaLossBuffered(3) //CITADEL CHANGE - makes disarmspam cause staminaloss
-
+		if(HAS_TRAIT(user, TRAIT_PUGILIST))//CITADEL CHANGE - makes disarmspam cause staminaloss, pugilists can do it almost effortlessly
+			user.adjustStaminaLossBuffered(1)
+		else
+			user.adjustStaminaLossBuffered(3)
+		
+		if(attacker_style && attacker_style.disarm_act(user,target))
+			return TRUE
+		
 		if(target.w_uniform)
 			target.w_uniform.add_fingerprint(user)
 		//var/randomized_zone = ran_zone(user.zone_selected) CIT CHANGE - comments out to prevent compiling errors
@@ -1624,8 +1654,12 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 		if(!(target.combat_flags & COMBAT_FLAG_COMBAT_ACTIVE)) //CITADEL CHANGE
 			randn += 25 //CITADEL CHANGE - Makes it harder to disarm outside of combat mode
 		if(user.pulling == target)
-			randn += -20 //If you have the time to get someone in a grab, you should have a greater chance at snatching the thing in their hand. Will be made completely obsolete by the grab rework but i've got a poor track record for releasing big projects on time so w/e i guess
-
+			randn -= 20 //If you have the time to get someone in a grab, you should have a greater chance at snatching the thing in their hand. Will be made completely obsolete by the grab rework but i've got a poor track record for releasing big projects on time so w/e i guess
+		if(HAS_TRAIT(user, TRAIT_PUGILIST))
+			randn -= 25 //if you are a pugilist, you're slapping that item from them pretty reliably
+		if(HAS_TRAIT(target, TRAIT_PUGILIST))
+			randn += 25 //meanwhile, pugilists are less likely to get disarmed
+		
 		if(randn <= 35)//CIT CHANGE - changes this back to a 35% chance to accomodate for the above being commented out in favor of right-click pushing
 			var/obj/item/I = null
 			if(target.pulling)
@@ -1680,9 +1714,9 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 /datum/species/proc/spec_attacked_by(obj/item/I, mob/living/user, obj/item/bodypart/affecting, intent, mob/living/carbon/human/H)
 	// Allows you to put in item-specific reactions based on species
 	if(user != H)
-		if(H.check_shields(I, I.force, "the [I.name]", MELEE_ATTACK, I.armour_penetration))
+		if(H.run_block(I, I.force, "the [I.name]", ATTACK_TYPE_MELEE, I.armour_penetration, user, affecting.body_zone) & BLOCK_SUCCESS)
 			return 0
-	if(H.check_block())
+	if(H.check_martial_melee_block())
 		H.visible_message("<span class='warning'>[H] blocks [I]!</span>")
 		return 0
 
@@ -1798,7 +1832,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 		return TRUE
 	if(M.mind)
 		attacker_style = M.mind.martial_art
-	if((M != H) && M.a_intent != INTENT_HELP && H.check_shields(M, 0, M.name, attack_type = UNARMED_ATTACK))
+	if((M != H) && M.a_intent != INTENT_HELP && (H.run_block(M, 0, "[M]", ATTACK_TYPE_UNARMED, 0, M, M.zone_selected) & BLOCK_SUCCESS))
 		log_combat(M, H, "attempted to touch")
 		H.visible_message("<span class='warning'>[M] attempted to touch [H]!</span>")
 		return TRUE
@@ -1836,7 +1870,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 	if(IS_STAMCRIT(user))
 		to_chat(user, "<span class='warning'>You're too exhausted.</span>")
 		return FALSE
-	if(target.check_block())
+	if(target.check_martial_melee_block())
 		target.visible_message("<span class='warning'>[target] blocks [user]'s shoving attempt!</span>")
 		return FALSE
 	if(attacker_style && attacker_style.disarm_act(user,target))
