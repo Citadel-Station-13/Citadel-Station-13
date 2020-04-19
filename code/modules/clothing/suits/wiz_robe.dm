@@ -239,6 +239,6 @@
 		to_chat(user, "<span class='warning'>The rune can only be used on battlemage armour!</span>")
 		return
 	var/datum/element/shielded/S = SSdcs.GetElement(list(/datum/element/shielded, 0, W.max_charges, W.recharge_delay, W.recharge_rate, ITEM_SLOT_OCLOTHING, W.shield_state))
-	S.recharge(W, 8)
+	S.recharge(W, 8, forced = TRUE)
 	to_chat(user, "<span class='notice'>You charge \the [W]. It can now absorb [S.charges_per_atom[W]] hits.</span>")
 	qdel(src)

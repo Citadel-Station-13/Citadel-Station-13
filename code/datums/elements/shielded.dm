@@ -3,7 +3,7 @@
 	id_arg_index = 3
 	var/max_charges = 3
 	var/recharge_delay = 20 SECONDS //How long after we've been shot before we can start recharging.
-	var/recharge_rate = 1 //How quickly the shield recharges once it starts charging. Can be a decimal.
+	var/recharge_rate = 1 //How quickly the shield recharges once it starts charging. Can be a decimal. set to zero to disable.
 	var/accepted_slots
 	var/shield_state = "shield-old" //the state of the shield overlay.
 	var/broken_state //null
@@ -85,13 +85,13 @@
 		var/atom/movable/A = i
 		recharge(A, recharge_rate, checked)
 
-/datum/element/shielded/proc/recharge(atom/movable/A, amount, list/checked = list())
+/datum/element/shielded/proc/recharge(atom/movable/A, amount, list/checked = list(), forced = FALSE)
 	var/old_charges = charges_per_atom[A]
-	if(old_charges >= max_charges || world.time < last_use_per_atom[A])
+	if(old_charges >= max_charges || (!forced && world.time < last_use_per_atom[A]))
 		return
-	var/new_charges = min(old_charges + recharge_rate, max_charges)
+	var/new_charges = CLAMP(old_charges + recharge_rate, 0, max_charges)
 	charges_per_atom[A] = new_charges
-	if(new_charges % 1)
+	if(round(old_charges) >= round(new_charges)) //only send outputs if it effectively gained at least one charge
 		return
 	var/mob/living/L
 	var/skip_in = FALSE
