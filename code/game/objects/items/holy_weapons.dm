@@ -248,9 +248,11 @@
 /obj/item/nullrod/proc/reskin_holy_weapon(mob/living/L)
 	if(GLOB.holy_weapon_type)
 		return
+	var/obj/item/holy_weapon
+	var/list/holy_weapons_list = subtypesof(/obj/item/nullrod) + list(HOLY_WEAPONS)
 	var/list/display_names = list()
 	var/list/nullrod_icons = list()
-	for(var/V in typesof(/obj/item/nullrod))
+	for(var/V in holy_weapons_list)
 		var/obj/item/nullrod/rodtype = V
 		if (initial(rodtype.chaplain_spawnable))
 			display_names[initial(rodtype.name)] = rodtype
@@ -263,7 +265,7 @@
 		return
 
 	var/A = display_names[choice] // This needs to be on a separate var as list member access is not allowed for new
-	var/obj/item/nullrod/holy_weapon = new A
+	holy_weapon = new A
 
 	GLOB.holy_weapon_type = holy_weapon.type
 
