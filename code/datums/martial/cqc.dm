@@ -9,6 +9,7 @@
 	id = MARTIALART_CQC
 	help_verb = /mob/living/carbon/human/proc/CQC_help
 	block_chance = 75
+	pugilist = TRUE
 	var/old_grab_state = null
 
 /datum/martial_art/cqc/reset_streak(mob/living/carbon/human/new_target)
