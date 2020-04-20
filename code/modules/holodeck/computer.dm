@@ -31,12 +31,12 @@
 	var/area/holodeck/last_program
 	var/area/offline_program = /area/holodeck/rec_center/offline
 
-	var/list/program_cache
-	var/list/emag_programs
-
 	// Splitting this up allows two holodecks of the same size
 	// to use the same source patterns.  Y'know, if you want to.
-	var/holodeck_type = /area/holodeck/rec_center	// locate(this) to get the target holodeck
+	var/holodeck_type = /area/holodeck/rec_center
+
+	var/list/program_cache
+	var/list/emag_programs
 
 	var/active = FALSE
 	var/damaged = FALSE
@@ -49,16 +49,18 @@
 	return INITIALIZE_HINT_LATELOAD
 
 /obj/machinery/computer/holodeck/LateInitialize()
-	if(ispath(holodeck_type, /area))
-		linked = pop(get_areas(holodeck_type, FALSE))
-	if(ispath(offline_program, /area))
-		offline_program = pop(get_areas(offline_program), FALSE)
-	// the following is necessary for power reasons
+	linked = SSholodeck.target_holodeck_area[type]
+	offline_program = SSholodeck.offline_programs[type]
 	if(!linked || !offline_program)
 		log_world("No matching holodeck area found")
 		qdel(src)
 		return
-	var/area/AS = get_area(src)
+
+	program_cache = SSholodeck.program_cache[type]
+	emag_programs = SSholodeck.emag_program_cache[type]
+
+	// the following is necessary for power reasons
+	var/area/AS = get_base_area(src)
 	if(istype(AS, /area/holodeck))
 		log_mapping("Holodeck computer cannot be in a holodeck, This would cause circular power dependency.")
 		qdel(src)
@@ -66,7 +68,6 @@
 	else
 		linked.linked = src
 
-	generate_program_list()
 	load_program(offline_program, FALSE, FALSE)
 
 /obj/machinery/computer/holodeck/Destroy()
@@ -180,19 +181,6 @@
 /obj/machinery/computer/holodeck/blob_act(obj/structure/blob/B)
 	emergency_shutdown()
 	return ..()
-
-/obj/machinery/computer/holodeck/proc/generate_program_list()
-	for(var/typekey in GLOB.holodeck_areas_prototypes[type])
-		var/area/holodeck/A = GLOB.areas_by_type[typekey]
-		if(!A || !A.contents.len)
-			continue
-		var/list/info_this = list()
-		info_this["name"] = A.name
-		info_this["type"] = A.type
-		if(A.restricted)
-			LAZYADD(emag_programs, list(info_this))
-		else
-			LAZYADD(program_cache, list(info_this))
 
 /obj/machinery/computer/holodeck/proc/toggle_power(toggleOn = FALSE)
 	if(active == toggleOn)
