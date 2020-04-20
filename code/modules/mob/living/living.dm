@@ -645,11 +645,6 @@
 		attempt_resist_grab(FALSE)
 		// Return as we should only resist one thing at a time. Give clickdelay if the grab wasn't passive.
 		return old_gs? TRUE : FALSE
-
-	if(CHECK_MOBILITY(src, MOBILITY_USE) && resist_embedded()) //Citadel Change for embedded removal memes - requires being able to use items.
-		// DO NOT GIVE DEFAULT CLICKDELAY - This is a combat action.
-		changeNext_move(CLICK_CD_MELEE)
-		return FALSE
 		
 	// unbuckling yourself. stops the chain if you try it.
 	if(buckled && last_special <= world.time)
@@ -673,10 +668,17 @@
 			resist_fire() //stop, drop, and roll
 			// Give clickdelay
 			return TRUE
+
 	if(resting) //cit change - allows resisting out of resting
 		resist_a_rest() // ditto
 		// DO NOT GIVE CLCIKDELAY - resist_a_rest() handles spam prevention. Somewhat.
 		return FALSE
+
+	if(CHECK_MOBILITY(src, MOBILITY_USE) && resist_embedded()) //Citadel Change for embedded removal memes - requires being able to use items.
+		// DO NOT GIVE DEFAULT CLICKDELAY - This is a combat action.
+		changeNext_move(CLICK_CD_MELEE)
+		return FALSE
+
 	if(last_special <= world.time)
 		resist_restraints() //trying to remove cuffs.
 		// DO NOT GIVE CLICKDELAY - last_special handles this.
