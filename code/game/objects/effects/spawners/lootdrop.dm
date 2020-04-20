@@ -264,7 +264,6 @@
 			LAZYSET(loot, M, our_chance)
 	return ..()
 
-
 // Tech storage circuit board spawners
 // For these, make sure that lootcount equals the number of list items
 
@@ -525,6 +524,105 @@
 		/obj/item/clothing/gloves/combat = 10,
 		/obj/item/clothing/shoes/sneakers/noslip = 10
 		)
+
+/obj/effect/spawner/lootdrop/low_tools
+	name = "random basic tool(s) spawner"
+	lootcount = 1
+	loot = list(
+		/obj/item/screwdriver = 1,
+		/obj/item/wrench = 1,
+		/obj/item/weldingtool/mini = 1,
+		/obj/item/crowbar = 1,
+		/obj/item/wirecutters = 1,
+		/obj/item/analyzer = 1,
+		/obj/item/t_scanner = 1
+		)
+
+/obj/effect/spawner/lootdrop/high_tools
+	name = "random adv tool(s) spawner"
+	lootcount = 1
+	loot = list(
+		/obj/item/screwdriver/power = 1,
+		/obj/item/weldingtool/experimental = 1,
+		/obj/item/crowbar/power = 1,
+		/obj/item/analyzer = 1,
+		/obj/item/multitool = 1
+		)
+
+/obj/effect/spawner/lootdrop/welder_tools
+	name = "random safe welder tool(s) spawner"
+	lootcount = 1
+	loot = list(
+		/obj/item/weldingtool = 1,
+		/obj/item/weldingtool/mini = 1,
+		/obj/item/weldingtool/hugetank = 1,
+		/obj/item/weldingtool/largetank = 1
+		)
+
+/obj/effect/spawner/lootdrop/tool_box
+	name = "random safe tool box(es) spawner"
+	lootcount = 1
+	loot = list(
+		/obj/item/storage/toolbox/mechanical = 1,
+		/obj/item/storage/toolbox/mechanical/old = 1,
+		/obj/item/storage/toolbox/emergency = 1,
+		/obj/item/storage/toolbox/emergency/old = 1,
+		/obj/item/storage/toolbox/electrical = 1,
+		/obj/item/storage/toolbox/syndicate = 1,
+		/obj/item/storage/toolbox/artistic = 1,
+		/obj/item/storage/toolbox/gold_fake = 1,
+		/obj/item/storage/toolbox/rubber = 1
+		)
+
+/obj/effect/spawner/lootdrop/healing_kits
+	name = "random safe medical kit(s) spawner"
+	lootcount = 1
+	loot = list(
+		/obj/item/storage/firstaid/regular = 1,
+		/obj/item/storage/firstaid/ancient = 1,
+		/obj/item/storage/firstaid/fire = 1,
+		/obj/item/storage/firstaid/toxin = 1,
+		/obj/item/storage/firstaid/radbgone = 1,
+		/obj/item/storage/firstaid/o2 = 1,
+		/obj/item/storage/firstaid/brute = 1
+		)
+
+/obj/effect/spawner/lootdrop/breathing_tanks
+	name = "random internal tank(s) spawner"
+	lootcount = 1
+	loot = list(
+		/obj/item/tank/internals/oxygen = 1,
+		/obj/item/tank/internals/oxygen/yellow = 1,
+		/obj/item/tank/internals/oxygen/red = 1,
+		/obj/item/tank/internals/air = 1,
+		/obj/item/tank/internals/plasmaman = 1,
+		/obj/item/tank/internals/plasmaman/belt = 1,
+		/obj/item/tank/internals/emergency_oxygen = 1,
+		/obj/item/tank/internals/emergency_oxygen/engi = 1,
+		/obj/item/tank/internals/emergency_oxygen/double = 1
+		)
+
+/obj/effect/spawner/lootdrop/breathing_masks
+	name = "random internal mask(s) spawner"
+	lootcount = 1
+	loot = list(
+		/obj/item/clothing/mask/gas = 2,
+		/obj/item/clothing/mask/gas/glass = 4,
+		/obj/item/clothing/mask/breath = 5,
+		/obj/item/clothing/mask/breath/medical = 1
+		)
+ 
+/obj/effect/spawner/lootdrop/welder_tools/no_turf
+	spawn_on_turf = FALSE
+
+/obj/effect/spawner/lootdrop/low_tools/no_turf
+	spawn_on_turf = FALSE
+ 
+/obj/effect/spawner/lootdrop/breathing_tanks/no_turf
+	spawn_on_turf = FALSE
+
+/obj/effect/spawner/lootdrop/breathing_masks/no_turf
+	spawn_on_turf = FALSE
 
 /obj/effect/spawner/lootdrop/coin/no_turf
 	spawn_on_turf = FALSE

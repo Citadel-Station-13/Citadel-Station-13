@@ -139,8 +139,9 @@
 #define STYLE_PAW_TAURIC		(1<<3)
 #define STYLE_HOOF_TAURIC		(1<<4)
 #define STYLE_ALL_TAURIC		(STYLE_SNEK_TAURIC|STYLE_PAW_TAURIC|STYLE_HOOF_TAURIC)
-#define USE_SNEK_CLIP_MASK		(1<<5)
-#define USE_HOOF_CLIP_MASK		(1<<6)
+#define STYLE_NO_ANTHRO_ICON	(1<<5) //When digis fit the default sprite fine and need no copypasted states. This is the case of skirts and winter coats, for example.
+#define USE_SNEK_CLIP_MASK		(1<<6)
+#define USE_HOOF_CLIP_MASK		(1<<7)
 #define USE_TAUR_CLIP_MASK		(USE_SNEK_CLIP_MASK|USE_HOOF_CLIP_MASK)
 
 //digitigrade legs settings.
@@ -150,7 +151,7 @@
 
 //flags for covering body parts
 #define GLASSESCOVERSEYES	(1<<0)
-#define MASKCOVERSEYES		(1<<1)		// get rid of some of the other retardation in these flags
+#define MASKCOVERSEYES		(1<<1)		// get rid of some of the other stupidity in these flags
 #define HEADCOVERSEYES		(1<<2)		// feel free to realloc these numbers for other purposes
 #define MASKCOVERSMOUTH		(1<<3)		// on other items, these are just for mask/head
 #define HEADCOVERSMOUTH		(1<<4)

@@ -137,10 +137,8 @@ GLOBAL_LIST_INIT(jumpsuitlist, list(PREF_SUIT, PREF_SKIRT))
 #define UPLINK_PEN		"Pen" //like a real spy!
 GLOBAL_LIST_INIT(uplink_spawn_loc_list, list(UPLINK_PDA, UPLINK_RADIO, UPLINK_PEN))
 
-//List of alpha masked cached icons.
-GLOBAL_LIST_EMPTY(alpha_masked_worn_clothing_icons)
-//List containing alpha mask /icons in a 'state = list(icon, offset_x, offset_y)'
-GLOBAL_LIST_EMPTY(worn_alpha_masks)
+//List of cached alpha masked icons.
+GLOBAL_LIST_EMPTY(alpha_masked_worn_icons)
 
 	//radical shit
 GLOBAL_LIST_INIT(hit_appends, list("-OOF", "-ACK", "-UGH", "-HRNK", "-HURGH", "-GLORF"))

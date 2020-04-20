@@ -205,6 +205,8 @@
 		H.facial_hair_style = random_facial_hair_style(gender)
 	if(skin_tone)
 		H.skin_tone = skin_tone
+		if(!GLOB.skin_tones[H.skin_tone])
+			H.dna.skin_tone_override = H.skin_tone
 	else
 		H.skin_tone = random_skin_tone()
 	H.update_hair()

@@ -298,7 +298,7 @@
 	subcategory = CAT_AMMO
 
 /datum/crafting_recipe/ashen_arrow
-	name = "Fire Hardened Arrow"
+	name = "Ashen Arrow"
 	result = /obj/item/ammo_casing/caseless/arrow/ash
 	tools = list(TOOL_WELDER)
 	time = 30
