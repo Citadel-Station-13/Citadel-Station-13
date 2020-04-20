@@ -81,9 +81,7 @@
 	ENABLE_BITFIELD(mob.flags_1, HOLOGRAM_1)
 	if(isliving(mob))
 		var/mob/living/L = mob
-		L.feeding = FALSE
-		L.devourable = FALSE
-		L.digestable = FALSE
+		L.vore_flags = 0
 	return mob
 
 /obj/effect/holodeck_effect/mobspawner/deactivate(var/obj/machinery/computer/holodeck/HC)
