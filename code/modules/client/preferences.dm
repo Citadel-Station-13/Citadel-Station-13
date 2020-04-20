@@ -197,10 +197,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/action_buttons_screen_locs = list()
 
 	//bad stuff
-	var/digestable = FALSE
-	var/devourable = FALSE
-	var/feeding = FALSE
-	var/lickable = FALSE
+	var/vore_flags = 0
 	var/list/belly_prefs = list()
 	var/vore_taste = "nothing in particular"
 

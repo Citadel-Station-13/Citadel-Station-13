@@ -60,7 +60,9 @@
 /obj/structure/cable{
 	icon_state = "4-8"
 	},
-/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 5
+	},
 /turf/open/floor/plasteel,
 /area/security/main)
 "aai" = (
@@ -2696,6 +2698,9 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 8
 	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
 /turf/open/floor/plasteel,
 /area/security/main)
 "afp" = (
@@ -4439,9 +4444,6 @@
 /obj/structure/cable{
 	icon_state = "4-8"
 	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
 /obj/effect/turf_decal/tile/red{
 	dir = 1
 	},
@@ -5100,9 +5102,6 @@
 /obj/structure/cable{
 	icon_state = "2-4"
 	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
 /obj/structure/disposalpipe/segment{
 	dir = 6
 	},
@@ -5528,9 +5527,6 @@
 	dir = 1;
 	pixel_y = -24
 	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
 /obj/effect/turf_decal/tile/red{
 	dir = 1
 	},
@@ -5546,14 +5542,14 @@
 /obj/structure/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
-	dir = 1
-	},
 /obj/effect/turf_decal/tile/red,
 /obj/effect/turf_decal/tile/red{
 	dir = 8
 	},
 /obj/structure/disposalpipe/segment,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 6
+	},
 /turf/open/floor/plasteel,
 /area/security/main)
 "akj" = (
@@ -7986,6 +7982,9 @@
 /obj/structure/disposalpipe/segment{
 	dir = 6
 	},
+/obj/structure/cable{
+	icon_state = "2-8"
+	},
 /turf/open/floor/plating,
 /area/maintenance/fore/secondary)
 "aqm" = (
@@ -9816,6 +9815,9 @@
 	name = "Dormitories Maintenance";
 	req_access_txt = "12"
 	},
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
 /turf/open/floor/plating,
 /area/maintenance/fore/secondary)
 "avy" = (
@@ -10270,6 +10272,9 @@
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 5
+	},
+/obj/structure/cable{
+	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel,
 /area/crew_quarters/dorms)
@@ -23786,9 +23791,6 @@
 "bfC" = (
 /obj/structure/table/wood,
 /obj/item/flashlight/lamp/green,
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 5
-	},
 /turf/open/floor/wood,
 /area/crew_quarters/heads/captain)
 "bfD" = (
@@ -55616,6 +55618,10 @@
 	},
 /turf/open/floor/wood,
 /area/crew_quarters/bar)
+"iUK" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/turf/open/floor/plasteel,
+/area/security/vacantoffice/b)
 "iVU" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -56974,6 +56980,12 @@
 /obj/machinery/vending/autodrobe,
 /turf/open/floor/wood,
 /area/maintenance/bar)
+"nfw" = (
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/turf/open/floor/plasteel,
+/area/crew_quarters/dorms)
 "ngs" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 8
@@ -57837,6 +57849,13 @@
 	},
 /turf/open/floor/plating,
 /area/crew_quarters/fitness)
+"pRW" = (
+/obj/structure/disposalpipe/segment,
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/turf/open/floor/plating,
+/area/maintenance/fore/secondary)
 "pTB" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/cable{
@@ -59423,6 +59442,15 @@
 	},
 /turf/open/floor/plating,
 /area/space/nearstation)
+"vaW" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/turf/open/floor/plasteel,
+/area/crew_quarters/dorms)
 "vbi" = (
 /obj/structure/table,
 /obj/item/instrument/guitar{
@@ -59989,6 +60017,9 @@
 /obj/machinery/airalarm{
 	dir = 1;
 	pixel_y = -22
+	},
+/obj/structure/cable{
+	icon_state = "1-4"
 	},
 /turf/open/floor/plasteel,
 /area/crew_quarters/dorms)
@@ -86195,7 +86226,7 @@ cCi
 aqX
 arR
 asj
-arT
+iUK
 ajr
 atY
 auo
@@ -94674,15 +94705,15 @@ aoa
 ajo
 apt
 aql
-aoJ
-aoJ
-aoJ
-aoJ
+pRW
+pRW
+pRW
+pRW
 avw
 awy
-awr
-awr
-avG
+nfw
+nfw
+vaW
 wqF
 aAh
 aAh
