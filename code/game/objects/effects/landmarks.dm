@@ -36,6 +36,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark)
 	var/jobspawn_override = FALSE
 	var/delete_after_roundstart = TRUE
 	var/used = FALSE
+	var/job_spawnpoint = TRUE //Is it a potential job spawnpoint or should we skip it?
 
 /obj/effect/landmark/start/proc/after_round_start()
 	if(delete_after_roundstart)
@@ -281,6 +282,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 	name = "bomb or clown beacon spawner"
 	var/nukie_path = /obj/item/sbeacondrop/bomb
 	var/clown_path = /obj/item/sbeacondrop/clownbomb
+	job_spawnpoint = FALSE
 
 /obj/effect/landmark/start/nuclear_equipment/after_round_start()
 	var/npath = nukie_path

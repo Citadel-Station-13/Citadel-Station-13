@@ -8,6 +8,7 @@
 				 /obj/item/stack/sheet/plastic = 2,
 				 /obj/item/stack/rods = 1)
 	result = /obj/structure/curtain
+	subcategory = CAT_FURNITURE
 	category = CAT_MISC
 
 /datum/crafting_recipe/guillotine
@@ -42,6 +43,7 @@
 				/obj/item/pipe = 3,
 				/obj/item/stack/cable_coil = 30)
 	category = CAT_MISC
+	subcategory = CAT_TOOL
 	tools = list(TOOL_WRENCH, TOOL_WELDER, TOOL_WIRECUTTER)
 
 /datum/crafting_recipe/goldenbox
@@ -53,6 +55,23 @@
 				/obj/item/stack/sheet/mineral/gold = 1,
 				/datum/reagent/water  = 15)
 	time = 40
+	subcategory = CAT_TOOL
+	category = CAT_MISC
+
+/datum/crafting_recipe/papersack
+	name = "Paper Sack"
+	result = /obj/item/storage/box/papersack
+	time = 10
+	reqs = list(/obj/item/paper = 5)
+	subcategory = CAT_TOOL
+	category = CAT_MISC
+
+/datum/crafting_recipe/smallcarton
+	name = "Small Carton"
+	result = /obj/item/reagent_containers/food/drinks/sillycup/smallcarton
+	time = 10
+	reqs = list(/obj/item/stack/sheet/cardboard = 1)
+	subcategory = CAT_TOOL
 	category = CAT_MISC
 
 /datum/crafting_recipe/bronze_driver
@@ -64,6 +83,7 @@
 				/obj/item/stack/tile/bronze = 1,
 				/datum/reagent/water  = 15)
 	time = 40
+	subcategory = CAT_TOOL
 	category = CAT_MISC
 
 /datum/crafting_recipe/bronze_welder
@@ -75,6 +95,7 @@
 				/obj/item/stack/tile/bronze = 1,
 				/datum/reagent/water  = 15)
 	time = 40
+	subcategory = CAT_TOOL
 	category = CAT_MISC
 
 /datum/crafting_recipe/bronze_wirecutters
@@ -86,6 +107,7 @@
 				/obj/item/stack/tile/bronze = 1,
 				/datum/reagent/water  = 15)
 	time = 40
+	subcategory = CAT_TOOL
 	category = CAT_MISC
 
 /datum/crafting_recipe/bronze_crowbar
@@ -97,6 +119,7 @@
 				/obj/item/stack/tile/bronze = 1,
 				/datum/reagent/water  = 15)
 	time = 40
+	subcategory = CAT_TOOL
 	category = CAT_MISC
 
 /datum/crafting_recipe/bronze_wrench
@@ -108,6 +131,7 @@
 				/obj/item/stack/tile/bronze = 1,
 				/datum/reagent/water  = 15)
 	time = 40
+	subcategory = CAT_TOOL
 	category = CAT_MISC
 
 /datum/crafting_recipe/rcl
@@ -116,6 +140,16 @@
 	time = 40
 	tools = list(TOOL_WELDER, TOOL_SCREWDRIVER, TOOL_WRENCH)
 	reqs = list(/obj/item/stack/sheet/metal = 15)
+	subcategory = CAT_TOOL
+	category = CAT_MISC
+
+/datum/crafting_recipe/picket_sign
+	name = "Picket Sign"
+	result = /obj/item/picket_sign
+	reqs = list(/obj/item/stack/rods = 1,
+				/obj/item/stack/sheet/cardboard = 2)
+	time = 80
+	subcategory = CAT_TOOL
 	category = CAT_MISC
 
 ////////////
@@ -210,13 +244,6 @@
 				/obj/item/stack/rods = 1)
 	category = CAT_MISC
 
-/datum/crafting_recipe/papersack
-	name = "Paper Sack"
-	result = /obj/item/storage/box/papersack
-	time = 10
-	reqs = list(/obj/item/paper = 5)
-	category = CAT_MISC
-
 /datum/crafting_recipe/flashlight_eyes
 	name = "Flashlight Eyes"
 	result = /obj/item/organ/eyes/robotic/flashlight
@@ -225,13 +252,6 @@
 		/obj/item/flashlight = 2,
 		/obj/item/restraints/handcuffs/cable = 1
 	)
-	category = CAT_MISC
-
-/datum/crafting_recipe/smallcarton
-	name = "Small Carton"
-	result = /obj/item/reagent_containers/food/drinks/sillycup/smallcarton
-	time = 10
-	reqs = list(/obj/item/stack/sheet/cardboard = 1)
 	category = CAT_MISC
 
 /datum/crafting_recipe/pressureplate
@@ -269,6 +289,14 @@
 	reqs = list(/obj/item/folder/paperwork = 1)
 	category = CAT_MISC
 
+/datum/crafting_recipe/coconut_bong
+	name = "Coconut Bong"
+	result = /obj/item/bong/coconut
+	reqs = list(/obj/item/stack/sheet/mineral/bamboo = 2,
+				/obj/item/reagent_containers/food/snacks/grown/coconut = 1)
+	time = 70
+	category = CAT_MISC
+
 //////////////
 //Banners/////
 //////////////
@@ -279,6 +307,7 @@
 	time = 40
 	reqs = list(/obj/item/stack/rods = 2,
 				/obj/item/clothing/under/rank/captain/parade = 1)
+	subcategory = CAT_FURNITURE
 	category = CAT_MISC
 
 /datum/crafting_recipe/engineering_banner
@@ -287,6 +316,7 @@
 	time = 40
 	reqs = list(/obj/item/stack/rods = 2,
 				/obj/item/clothing/under/rank/engineering/engineer = 1)
+	subcategory = CAT_FURNITURE
 	category = CAT_MISC
 
 /datum/crafting_recipe/cargo_banner
@@ -295,6 +325,7 @@
 	time = 40
 	reqs = list(/obj/item/stack/rods = 2,
 				/obj/item/clothing/under/rank/cargo/tech = 1)
+	subcategory = CAT_FURNITURE
 	category = CAT_MISC
 
 /datum/crafting_recipe/science_banner
@@ -303,6 +334,7 @@
 	time = 40
 	reqs = list(/obj/item/stack/rods = 2,
 				/obj/item/clothing/under/rank/rnd/scientist = 1)
+	subcategory = CAT_FURNITURE
 	category = CAT_MISC
 
 /datum/crafting_recipe/medical_banner
@@ -311,6 +343,7 @@
 	time = 40
 	reqs = list(/obj/item/stack/rods = 2,
 				/obj/item/clothing/under/rank/medical/doctor = 1)
+	subcategory = CAT_FURNITURE
 	category = CAT_MISC
 
 /datum/crafting_recipe/security_banner
@@ -319,50 +352,43 @@
 	time = 40
 	reqs = list(/obj/item/stack/rods = 2,
 				/obj/item/clothing/under/rank/security/officer = 1)
+	subcategory = CAT_FURNITURE
 	category = CAT_MISC
 
-	/datum/crafting_recipe/bloodsucker/vassalrack
-		name = "Persuasion Rack"
-		//desc = "For converting crewmembers into loyal Vassals."
-		result = /obj/structure/bloodsucker/vassalrack
-		tools = list(/obj/item/weldingtool,
-					 ///obj/item/screwdriver,
-					 /obj/item/wrench
+/datum/crafting_recipe/bloodsucker/vassalrack
+	name = "Persuasion Rack"
+	//desc = "For converting crewmembers into loyal Vassals."
+	result = /obj/structure/bloodsucker/vassalrack
+	tools = list(/obj/item/weldingtool,
+				 	//obj/item/screwdriver,
+					/obj/item/wrench
 					 )
-		reqs = list(/obj/item/stack/sheet/mineral/wood = 3,
-					/obj/item/stack/sheet/metal = 2,
-					/obj/item/restraints/handcuffs/cable = 2,
-					///obj/item/storage/belt = 1
-					///obj/item/stack/sheet/animalhide = 1, // /obj/item/stack/sheet/leather = 1,
-					///obj/item/stack/sheet/plasteel = 5
-					)
+	reqs = list(/obj/item/stack/sheet/mineral/wood = 3,
+				/obj/item/stack/sheet/metal = 2,
+				/obj/item/restraints/handcuffs/cable = 2,
+				//obj/item/storage/belt = 1,
+				//obj/item/stack/sheet/animalhide = 1,
+				//obj/item/stack/sheet/leather = 1,
+				//obj/item/stack/sheet/plasteel = 5
+				)
 		//parts = list(/obj/item/storage/belt = 1
 		//			 )
-
-		time = 150
-		category = CAT_MISC
-		always_availible = FALSE	// Disabled til learned
-
-
-	/datum/crafting_recipe/bloodsucker/candelabrum
-		name = "Candelabrum"
-		//desc = "For converting crewmembers into loyal Vassals."
-		result = /obj/structure/bloodsucker/candelabrum
-		tools = list(/obj/item/weldingtool,
-					 /obj/item/wrench
-					 )
-		reqs = list(/obj/item/stack/sheet/metal = 3,
-					/obj/item/stack/rods = 1,
-					/obj/item/candle = 1
-					)
-		time = 100
-		category = CAT_MISC
-		always_availible = FALSE	// Disabled til learned
-
-/datum/crafting_recipe/coconut_bong
-	name = "Coconut Bong"
-	result = /obj/item/bong/coconut
-	reqs = list(/obj/item/stack/sheet/mineral/bamboo = 2,
-				/obj/item/reagent_containers/food/snacks/grown/coconut = 1)
-	time = 70
+	time = 150
 	category = CAT_MISC
+	always_availible = FALSE	// Disabled til learned
+
+
+/datum/crafting_recipe/bloodsucker/candelabrum
+	name = "Candelabrum"
+	//desc = "For converting crewmembers into loyal Vassals."
+	result = /obj/structure/bloodsucker/candelabrum
+	tools = list(/obj/item/weldingtool,
+				 /obj/item/wrench
+				)
+	reqs = list(/obj/item/stack/sheet/metal = 3,
+				/obj/item/stack/rods = 1,
+				/obj/item/candle = 1
+				)
+	time = 100
+	category = CAT_MISC
+	always_availible = FALSE	// Disabled til learned
