@@ -135,6 +135,12 @@
 //Ammo Shells/
 //////////////
 
+/datum/design/shell_clip/sec
+	id = "sec_shellclip"
+	build_type = PROTOLATHE
+	category = list("Ammo")
+	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
+
 /datum/design/beanbag_slug/sec
 	id = "sec_beanbag"
 	build_type = PROTOLATHE
@@ -166,7 +172,7 @@
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
 
 /datum/design/incendiary_slug/sec
-	id = "sec_Islug"
+	id = "sec_islug"
 	build_type = PROTOLATHE
 	category = list("Ammo")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY

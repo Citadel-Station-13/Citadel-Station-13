@@ -81,6 +81,12 @@
 	build_path = /obj/item/weaponcrafting/receiver
 	category = list("hacked", "Security")
 
+/datum/design/shell_clip
+	name = "stripper clip (shotgun shells)"
+	id = "shell_clip"
+	build_type = AUTOLATHE
+	materials = list(/datum/material/iron = 5000)
+
 /datum/design/shotgun_slug
 	name = "Shotgun Slug"
 	id = "shotgun_slug"

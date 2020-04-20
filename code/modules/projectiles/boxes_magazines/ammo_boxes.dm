@@ -121,3 +121,51 @@
 	icon_state = "foambox_riot"
 	ammo_type = /obj/item/ammo_casing/caseless/foam_dart/riot
 	custom_materials = list(/datum/material/iron = 50000)
+
+//Shotgun clips
+/obj/item/ammo_box/shotgun
+	name = "stripper clip (shotgun shells)"
+	desc = "A stripper clip, designed to help with loading a shotgun slightly faster."
+	icon = 'icons/obj/ammo.dmi'
+	icon_state = "shotgunclip"
+	caliber = "shotgun" // slapped in to allow shell mix n match
+	max_ammo = 4
+	ammo_type = /obj/item/ammo_casing/shotgun
+	var/pixeloffsetx = 4
+
+/obj/item/ammo_box/shotgun/update_icon()
+	..()
+	update_overlays()
+
+/obj/item/ammo_box/shotgun/update_overlays()
+	. = ..()
+	if(stored_ammo.len)
+		var/offset = -4
+		for(var/A in stored_ammo)
+			var/obj/item/ammo_casing/shotgun/C = A
+			offset += pixeloffsetx
+			var/mutable_appearance/shell_overlay = mutable_appearance(icon, "[initial(C.icon_state)]-clip")
+			shell_overlay.pixel_x += offset
+			shell_overlay.appearance_flags = RESET_COLOR
+			. += shell_overlay
+
+/obj/item/ammo_box/shotgun/rubbershot
+	ammo_type = /obj/item/ammo_casing/shotgun/rubbershot
+
+/obj/item/ammo_box/shotgun/buckshot
+	ammo_type = /obj/item/ammo_casing/shotgun/buckshot
+
+/obj/item/ammo_box/shotgun/beanbag
+	ammo_type = /obj/item/ammo_casing/shotgun/beanbag
+
+/obj/item/ammo_box/shotgun/stunslug
+	ammo_type = /obj/item/ammo_casing/shotgun/stunslug
+
+/obj/item/ammo_box/shotgun/techshell
+	ammo_type = /obj/item/ammo_casing/shotgun/techshell
+
+/obj/item/ammo_box/shotgun/incendiary
+	ammo_type = /obj/item/ammo_casing/shotgun/incendiary
+
+/obj/item/ammo_box/shotgun/dart
+	ammo_type = /obj/item/ammo_casing/shotgun/dart

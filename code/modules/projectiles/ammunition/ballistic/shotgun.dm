@@ -7,6 +7,7 @@
 	caliber = "shotgun"
 	projectile_type = /obj/item/projectile/bullet/shotgun_slug
 	custom_materials = list(/datum/material/iron=4000)
+	var/mutable_appearance/current_overlay // for stripper clips
 
 /obj/item/ammo_casing/shotgun/beanbag
 	name = "beanbag slug"
