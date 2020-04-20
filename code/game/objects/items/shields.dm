@@ -37,7 +37,7 @@
 	return TRUE
 
 /obj/item/shield/altafterattack(atom/target, mob/user, proximity_flag, click_parameters)
-	user_shieldbash(user, target, user.a_intent !== INTENT_HARM)
+	user_shieldbash(user, target, user.a_intent == INTENT_HARM)
 	return TRUE
 
 /obj/item/shield/proc/do_shieldbash_effect(mob/living/user, dir, harmful)
