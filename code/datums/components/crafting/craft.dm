@@ -24,7 +24,7 @@
 				),
 				CAT_ROBOT = CAT_NONE,
 				CAT_MISC = list(
-					CAT_MISC,
+					CAT_MISCELLANEOUS,
 					CAT_TOOL,
 					CAT_FURNITURE,
 				),
