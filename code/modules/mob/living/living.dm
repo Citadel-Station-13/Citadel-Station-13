@@ -684,7 +684,6 @@
 		// DO NOT GIVE CLICKDELAY - last_special handles this.
 		return FALSE
 
-
 /// Proc to resist a grab. moving_resist is TRUE if this began by someone attempting to move. Return FALSE if still grabbed/failed to break out. Use this instead of resist_grab() directly.
 /mob/proc/attempt_resist_grab(moving_resist, forced, log = TRUE)
 	if(!pulledby)	//not being grabbed
