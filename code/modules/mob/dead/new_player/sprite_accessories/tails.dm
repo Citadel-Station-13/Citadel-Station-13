@@ -1,10 +1,12 @@
 /datum/sprite_accessory/tails
 	icon = 'icons/mob/mutant_bodyparts.dmi'
 	mutant_part_string = "tail"
+	relevant_layers = list(BODY_BEHIND_LAYER, BODY_FRONT_LAYER)
 
 /datum/sprite_accessory/tails_animated
 	icon = 'icons/mob/mutant_bodyparts.dmi'
 	mutant_part_string = "tailwag"
+	relevant_layers = list(BODY_BEHIND_LAYER, BODY_FRONT_LAYER)
 
 /******************************************
 ************* Lizard Tails ****************
@@ -509,6 +511,7 @@
 	icon = 'modular_citadel/icons/mob/mam_tails.dmi'
 	recommended_species = list("mammal", "slimeperson", "podweak", "felinid", "insect")
 	mutant_part_string = "tail"
+	relevant_layers = list(BODY_BEHIND_LAYER, BODY_FRONT_LAYER)
 
 /datum/sprite_accessory/mam_tails/none
 	name = "None"
@@ -519,7 +522,7 @@
 /datum/sprite_accessory/mam_tails_animated
 	color_src = MATRIXED
 	icon = 'modular_citadel/icons/mob/mam_tails.dmi'
-	mutant_part_string = "tail"
+	mutant_part_string = "tailwag"
 
 /datum/sprite_accessory/mam_tails_animated/none
 	name = "None"

@@ -548,8 +548,10 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 
 	//Underwear, Undershirts & Socks
 	if(!(NO_UNDERWEAR in species_traits))
-
-		if(H.socks && !H.hidden_socks && H.get_num_legs(FALSE) >= 2)
+		var/datum/sprite_accessory/taur/TA
+		if(mutant_bodyparts["taur"] && H.dna.features["taur"])
+			TA = GLOB.taur_list[H.dna.features["taur"]]
+		if(!(TA?.hide_legs) && H.socks && !H.hidden_socks && H.get_num_legs(FALSE) >= 2)
 			if(H.saved_socks)
 				H.socks = H.saved_socks
 				H.saved_socks = ""
@@ -597,7 +599,6 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 
 /datum/species/proc/handle_mutant_bodyparts(mob/living/carbon/human/H, forced_colour)
 	var/list/bodyparts_to_add = mutant_bodyparts.Copy()
-	var/list/standing	= list()
 
 	H.remove_overlay(BODY_BEHIND_LAYER)
 	H.remove_overlay(BODY_ADJ_LAYER)
@@ -608,7 +609,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 		return
 
 	var/obj/item/bodypart/head/HD = H.get_bodypart(BODY_ZONE_HEAD)
-	var/tauric = H.dna.features["taur"] && H.dna.features["taur"] != "None"
+	var/tauric = mutant_bodyparts["taur"] && H.dna.features["taur"] && H.dna.features["taur"] != "None"
 
 	if(mutant_bodyparts["tail_lizard"])
 		if((H.wear_suit && (H.wear_suit.flags_inv & HIDETAUR)) || tauric)
@@ -814,8 +815,8 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 		if(!S.mutant_part_string)
 			dna_feature_as_text_string[S] = bodypart
 
-	var/static/list/layer_text = list("[BODY_BEHIND_LAYER]" = "_BEHIND", "[BODY_ADJ_LAYER]" = "_ADJ", \
-								"[BODY_ADJ_UPPER_LAYER]" = "_ADJUP", "[BODY_FRONT_LAYER]" = "_FRONT")
+	var/static/list/layer_text = list("[BODY_BEHIND_LAYER]" = "BEHIND", "[BODY_ADJ_LAYER]" = "ADJ", \
+								"[BODY_ADJ_UPPER_LAYER]" = "ADJUP", "[BODY_FRONT_LAYER]" = "FRONT")
 
 	var/g = (H.dna.features["body_model"] == FEMALE) ? "f" : "m"
 	var/list/colorlist = list()
@@ -828,8 +829,9 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 		colorlist[index] /= 255
 
 	for(var/layer in relevant_layers)
+		var/list/standing = list()
 		var/layertext = layer_text[layer]
-		if(!layertext) // should there
+		if(!layertext) //shouldn't happen
 			stack_trace("invalid layer '[layer]' found in the list of relevant layers on species.handle_mutant_bodyparts().")
 			continue
 		var/layernum = text2num(layer)
@@ -839,9 +841,9 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 			bodypart = S.mutant_part_string || dna_feature_as_text_string[S]
 
 			if(S.gender_specific)
-				accessory_overlay.icon_state = "[g]_[bodypart]_[S.icon_state][layertext]"
+				accessory_overlay.icon_state = "[g]_[bodypart]_[S.icon_state]_[layertext]"
 			else
-				accessory_overlay.icon_state = "m_[bodypart]_[S.icon_state][layertext]"
+				accessory_overlay.icon_state = "m_[bodypart]_[S.icon_state]_[layertext]"
 
 			if(S.center)
 				accessory_overlay = center_image(accessory_overlay, S.dimension_x, S.dimension_y)
@@ -1004,8 +1006,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 				standing += extra2_accessory_overlay
 
 
-		H.overlays_standing[layer] = standing.Copy()
-		standing = list()
+		H.overlays_standing[layernum] = standing
 
 	H.apply_overlay(BODY_BEHIND_LAYER)
 	H.apply_overlay(BODY_ADJ_LAYER)
