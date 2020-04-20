@@ -19,7 +19,6 @@
 ************** Taur Bodies ****************
 *******************************************/
 
-/datum/sprite_accessory/taur
 	icon = 'modular_citadel/icons/mob/mam_taur.dmi'
 	extra_icon = 'modular_citadel/icons/mob/mam_taur.dmi'
 	extra2_icon = 'modular_citadel/icons/mob/mam_taur.dmi'
@@ -30,9 +29,15 @@
 	relevant_layers = list(BODY_ADJ_UPPER_LAYER, BODY_FRONT_LAYER)
 	var/taur_mode = NONE //Must be a single specific tauric suit variation bitflag. Don't do FLAG_1|FLAG_2
 	var/alt_taur_mode = NONE //Same as above.
-	var/hide_legs = USE_HOOF_CLIP_MASK
-	alpha_mask_state = "taur_mask_def"
+	var/hide_legs = USE_QUADRUPED_CLIP_MASK
+	alpha_mask_state =
 
+/datum/sprite_accessory/taur/New()
+	switch(hide_legs)
+		if(USE_QUADRUPED_CLIP_MASK)
+			alpha_mask_state = "taur_mask_def"
+		if(USE_SNEK_CLIP_MASK)
+			alpha_mask_state = "taur_mask_naga"
 
 /datum/sprite_accessory/taur/none
 	name = "None"
@@ -93,7 +98,6 @@
 	icon_state = "naga"
 	taur_mode = STYLE_SNEK_TAURIC
 	hide_legs = USE_SNEK_CLIP_MASK
-	alpha_mask_state = "taur_mask_naga"
 
 /datum/sprite_accessory/taur/otie
 	name = "Otie"

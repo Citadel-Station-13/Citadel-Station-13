@@ -176,13 +176,13 @@ BLIND     // can't see anything
 /proc/generate_alpha_masked_clothing(index,state,icon,female,alpha_masks)
 	var/icon/I = icon(icon, state)
 	if(female)
-		var/icon/female_s = icon('icons/mob/clothing/alpha_filters.dmi', "[(female == FEMALE_UNIFORM_FULL) ? "female_full" : "female_top"]")
+		var/icon/female_s = icon('icons/mob/clothing/alpha_masks.dmi', "[(female == FEMALE_UNIFORM_FULL) ? "female_full" : "female_top"]")
 		I.Blend(female_s, ICON_MULTIPLY, -15, -15) //it's a 64x64 icon.
 	if(alpha_masks)
 		if(istext(alpha_masks))
 			alpha_masks = list(alpha_masks)
 		for(var/alpha_state in alpha_masks)
-			var/icon/alpha = icon('icons/mob/clothing/alpha_filters.dmi', alpha_state)
+			var/icon/alpha = icon('icons/mob/clothing/alpha_masks.dmi', alpha_state)
 			I.Blend(alpha, ICON_MULTIPLY, -15, -15)
 	. = GLOB.alpha_masked_worn_icons[index] = fcopy_rsc(I)
 

@@ -139,14 +139,8 @@ There are several things that need to be remembered:
 
 		var/mutable_appearance/uniform_overlay
 
-		if(dna && dna.species.sexes)
-			if(dna.features["body_model"] == FEMALE && U.fitted != NO_FEMALE_UNIFORM)
-				uniform_overlay = U.build_worn_icon(UNIFORM_LAYER, alt_worn, FALSE, U.fitted, target_overlay, variant_flag, FALSE, mask)
-
-
-		if(!uniform_overlay)
-			uniform_overlay = U.build_worn_icon( UNIFORM_LAYER, alt_worn, FALSE, NO_FEMALE_UNIFORM, target_overlay, variant_flag, FALSE, mask)
-
+		var/gendered = (dna?.species.sexes && dna.features["body_model"] == FEMALE) ? U.fitted : NO_FEMALE_UNIFORM
+		uniform_overlay = U.build_worn_icon( UNIFORM_LAYER, alt_worn, FALSE, gendered, target_overlay, variant_flag, FALSE, mask)
 
 		if(OFFSET_UNIFORM in dna.species.offset_features)
 			uniform_overlay.pixel_x += dna.species.offset_features[OFFSET_UNIFORM][1]
