@@ -32,6 +32,85 @@
 	subcategory = CAT_MISCELLANEOUS
 	category = CAT_MISC
 
+// Blood Sucker stuff //
+/datum/crafting_recipe/bloodsucker/blackcoffin
+	name = "Black Coffin"
+	result = /obj/structure/closet/crate/coffin/blackcoffin
+	tools = list(/obj/item/weldingtool,
+				 /obj/item/screwdriver)
+	reqs = list(/obj/item/stack/sheet/cloth = 1,
+				/obj/item/stack/sheet/mineral/wood = 5,
+				/obj/item/stack/sheet/metal = 1)
+				///obj/item/stack/packageWrap = 8,
+				///obj/item/pipe = 2)
+	time = 150
+		subcategory = CAT_FURNITURE
+	category = CAT_MISC
+	always_availible = TRUE
+
+/datum/crafting_recipe/bloodsucker/meatcoffin
+	name = "Meat Coffin"
+	result =/obj/structure/closet/crate/coffin/meatcoffin
+	tools = list(/obj/item/kitchen/knife,
+				 /obj/item/kitchen/rollingpin)
+	reqs = list(/obj/item/reagent_containers/food/snacks/meat/slab = 5,
+				/obj/item/restraints/handcuffs/cable = 1)
+	time = 150
+		subcategory = CAT_FURNITURE
+	category = CAT_MISC
+	always_availible = TRUE
+
+/datum/crafting_recipe/bloodsucker/metalcoffin
+	name = "Metal Coffin"
+	result =/obj/structure/closet/crate/coffin/metalcoffin
+	tools = list(/obj/item/weldingtool,
+				 /obj/item/screwdriver)
+	reqs = list(/obj/item/stack/sheet/metal = 5)
+	time = 100
+		subcategory = CAT_FURNITURE
+	category = CAT_MISC
+	always_availible = TRUE
+
+/datum/crafting_recipe/bloodsucker/vassalrack
+	name = "Persuasion Rack"
+	//desc = "For converting crewmembers into loyal Vassals."
+	result = /obj/structure/bloodsucker/vassalrack
+	tools = list(/obj/item/weldingtool,
+				 	//obj/item/screwdriver,
+					/obj/item/wrench
+					 )
+	reqs = list(/obj/item/stack/sheet/mineral/wood = 3,
+				/obj/item/stack/sheet/metal = 2,
+				/obj/item/restraints/handcuffs/cable = 2,
+				//obj/item/storage/belt = 1,
+				//obj/item/stack/sheet/animalhide = 1,
+				//obj/item/stack/sheet/leather = 1,
+				//obj/item/stack/sheet/plasteel = 5
+				)
+		//parts = list(/obj/item/storage/belt = 1
+		//			 )
+	time = 150
+	subcategory = CAT_MISCELLANEOUS
+	category = CAT_MISC
+	always_availible = FALSE	// Disabled til learned
+
+
+/datum/crafting_recipe/bloodsucker/candelabrum
+	name = "Candelabrum"
+	//desc = "For converting crewmembers into loyal Vassals."
+	result = /obj/structure/bloodsucker/candelabrum
+	tools = list(/obj/item/weldingtool,
+				 /obj/item/wrench
+				)
+	reqs = list(/obj/item/stack/sheet/metal = 3,
+				/obj/item/stack/rods = 1,
+				/obj/item/candle = 1
+				)
+	time = 100
+	subcategory = CAT_MISCELLANEOUS
+	category = CAT_MISC
+	always_availible = FALSE	// Disabled til learned
+
 ///////////////////
 //Tools & Storage//
 ///////////////////
@@ -373,43 +452,3 @@
 				/obj/item/clothing/under/rank/security/officer = 1)
 	subcategory = CAT_FURNITURE
 	category = CAT_MISC
-
-/datum/crafting_recipe/bloodsucker/vassalrack
-	name = "Persuasion Rack"
-	//desc = "For converting crewmembers into loyal Vassals."
-	result = /obj/structure/bloodsucker/vassalrack
-	tools = list(/obj/item/weldingtool,
-				 	//obj/item/screwdriver,
-					/obj/item/wrench
-					 )
-	reqs = list(/obj/item/stack/sheet/mineral/wood = 3,
-				/obj/item/stack/sheet/metal = 2,
-				/obj/item/restraints/handcuffs/cable = 2,
-				//obj/item/storage/belt = 1,
-				//obj/item/stack/sheet/animalhide = 1,
-				//obj/item/stack/sheet/leather = 1,
-				//obj/item/stack/sheet/plasteel = 5
-				)
-		//parts = list(/obj/item/storage/belt = 1
-		//			 )
-	time = 150
-	subcategory = CAT_MISCELLANEOUS
-	category = CAT_MISC
-	always_availible = FALSE	// Disabled til learned
-
-
-/datum/crafting_recipe/bloodsucker/candelabrum
-	name = "Candelabrum"
-	//desc = "For converting crewmembers into loyal Vassals."
-	result = /obj/structure/bloodsucker/candelabrum
-	tools = list(/obj/item/weldingtool,
-				 /obj/item/wrench
-				)
-	reqs = list(/obj/item/stack/sheet/metal = 3,
-				/obj/item/stack/rods = 1,
-				/obj/item/candle = 1
-				)
-	time = 100
-	subcategory = CAT_MISCELLANEOUS
-	category = CAT_MISC
-	always_availible = FALSE	// Disabled til learned
