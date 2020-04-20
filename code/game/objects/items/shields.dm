@@ -114,7 +114,7 @@
 		to_chat(user, "<span class='warning'>You can't bash with [src] again so soon!</span>")
 		return FALSE
 	var/mob/living/livingtarget = target		//only access after an isliving check!
-	if(isliving(target) && !CHECK_MOBILITY(targetliving, MOBILITY_STAND))		//GROUND SLAAAM
+	if(isliving(target) && !CHECK_MOBILITY(livingtarget, MOBILITY_STAND))		//GROUND SLAAAM
 		if(!(shield_flags & SHIELD_BASH_GROUND_SLAM))
 			to_chat(user, "<span class='warning'>You can't ground slam with [src]!</span>")
 			return FALSE
