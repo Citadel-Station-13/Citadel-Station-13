@@ -360,7 +360,6 @@ obj/item/shield/riot/bullet_proof
 	desc = "A massive shield that can block a lot of attacks and can take a lot of abuse before breaking." //It cant break unless it is removed from the implant
 	item_state = "metal"
 	icon_state = "metal"
-	icon = 'icons/obj/items_and_weapons.dmi'
 	block_chance = 30 //May be big but hard to move around to block.
 	slowdown = 1
 	shield_flags = SHIELD_FLAGS_DEFAULT
