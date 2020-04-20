@@ -568,11 +568,16 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	hair_color						= sanitize_hexcolor(hair_color, 3, 0)
 	facial_hair_color				= sanitize_hexcolor(facial_hair_color, 3, 0)
 	eye_color						= sanitize_hexcolor(eye_color, 3, 0)
-	use_custom_skin_tone			= sanitize_integer(use_custom_skin_tone, FALSE, TRUE, initial(use_custom_skin_tone))
-	if(use_custom_skin_tone && CONFIG_GET(number/allow_custom_skintones))
+
+	var/static/allow_custom_skintones
+	if(isnull(allow_custom_skintones))
+		allow_custom_skintones = CONFIG_GET(flag/allow_custom_skintones)
+	use_custom_skin_tone			= allow_custom_skintones ? sanitize_integer(use_custom_skin_tone, FALSE, TRUE, initial(use_custom_skin_tone)) : FALSE
+	if(use_custom_skin_tone)
 		skin_tone					= sanitize_hexcolor(skin_tone, 6, TRUE, "#FFFFFF")
 	else
 		skin_tone					= sanitize_inlist(skin_tone, GLOB.skin_tones - GLOB.nonstandard_skin_tones, initial(skin_tone))
+
 	horn_color						= sanitize_hexcolor(horn_color, 3, FALSE)
 	wing_color						= sanitize_hexcolor(wing_color, 3, FALSE, "#FFFFFF")
 	backbag							= sanitize_inlist(backbag, GLOB.backbaglist, initial(backbag))
