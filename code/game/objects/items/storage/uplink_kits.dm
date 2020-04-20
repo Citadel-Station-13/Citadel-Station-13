@@ -500,7 +500,7 @@
 	new item1(src)	// Create three, non repeat items from the list.
 	new item2(src)
 	new item3(src)
-  new /obj/item/paper/contractor_guide(src)	//Paper guide
+	new /obj/item/paper/contractor_guide(src)	//Paper guide
 
 /obj/item/storage/box/syndie_kit/northstar
 
