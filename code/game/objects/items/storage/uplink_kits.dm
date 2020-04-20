@@ -510,3 +510,4 @@
 	new /obj/item/clothing/under/chameleon(src)
 	new /obj/item/storage/fancy/cigarettes/cigpack_syndicate(src)
 	new /obj/item/lighter(src)
+	
