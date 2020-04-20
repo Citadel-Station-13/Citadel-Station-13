@@ -24,7 +24,7 @@
 	for(var/turf/open/floor/T in world)
 		if(is_station_level(T.z))
 			var/area/A = get_area(T)
-			if(!A.outdoors)
+			if(A.outdoors)
 				continue
 			pick_turfs += T
 
