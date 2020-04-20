@@ -303,7 +303,6 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	custom_materials = list(/datum/material/iron=500, /datum/material/glass=500)
 	resistance_flags = FIRE_PROOF
 
-
 /obj/item/switchblade
 	name = "switchblade"
 	icon_state = "switchblade"
@@ -646,9 +645,10 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 					/mob/living/simple_animal/hostile/poison/bees/,
 					/mob/living/simple_animal/butterfly,
 					/mob/living/simple_animal/cockroach,
+					/mob/living/simple_animal/banana_spider,
+					/mob/living/simple_animal/hostile/poison/giant_spider,
 					/obj/item/queen_bee
 	))
-
 
 /obj/item/melee/flyswatter/afterattack(atom/target, mob/user, proximity_flag)
 	. = ..()
