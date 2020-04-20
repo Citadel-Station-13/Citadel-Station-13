@@ -142,9 +142,9 @@
 
 		// now that we have pixels_to_use, place our thing and add it to the returned list.
 		B.screen_loc = I.screen_loc = "[screen_start_x]:[round(current_pixel + (pixels_to_use * 0.5) + (first? 0 : VOLUMETRIC_STORAGE_ITEM_PADDING), 1)],[screen_start_y+row-1]:[screen_pixel_y]"
-		first = FALSE		//apply padding to everything after this
 		// add the used pixels to pixel after we place the object
 		current_pixel += pixels_to_use + (first? 0 : VOLUMETRIC_STORAGE_ITEM_PADDING)
+		first = FALSE		//apply padding to everything after this
 
 		// set various things
 		B.set_pixel_size(pixels_to_use)
