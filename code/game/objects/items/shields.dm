@@ -33,11 +33,11 @@
 	return TRUE
 
 /obj/item/shield/alt_pre_attack(atom/A, mob/living/user, params)
-	user_shieldbash(user, A, user.a_intent != INTENT_HARM)
+	user_shieldbash(user, A, user.a_intent == INTENT_HARM)
 	return TRUE
 
 /obj/item/shield/altafterattack(atom/target, mob/user, proximity_flag, click_parameters)
-	user_shieldbash(user, target, user.a_intent != INTENT_HARM)
+	user_shieldbash(user, target, user.a_intent !== INTENT_HARM)
 	return TRUE
 
 /obj/item/shield/proc/do_shieldbash_effect(mob/living/user, dir, harmful)
@@ -53,8 +53,8 @@
 		if(WEST)
 			px = -12
 	var/obj/effect/temp_visual/dir_setting/shield_bash/effect = new(user.loc, dir)
-	effect.pixel_x = user.pixel_x
-	effect.pixel_y = user.pixel_y
+	effect.pixel_x = user.pixel_x - 32		//96x96 effect, -32.
+	effect.pixel_y = user.pixel_y - 32
 	user.visible_message("<span class='warning'>[user] [harmful? "charges forwards with" : "sweeps"] [src]!</span>")
 	animate(user, pixel_x = px, pixel_y = py, time = 3, easing = SINE_EASING | EASE_OUT, flags = ANIMATION_PARALLEL | ANIMATION_RELATIVE)
 	animate(user, pixel_x = -px, pixel_y = -py, time = 3, flags = ANIMATION_RELATIVE)
