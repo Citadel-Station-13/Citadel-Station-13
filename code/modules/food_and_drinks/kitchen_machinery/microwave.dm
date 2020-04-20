@@ -19,6 +19,7 @@
 	var/broken = 0 // 0, 1 or 2 // How broken is it???
 	var/max_n_of_items = 10
 	var/efficiency = 0
+	var/productivity = 0
 	var/datum/looping_sound/microwave/soundloop
 	var/list/ingredients = list() // may only contain /atom/movables
 
@@ -43,12 +44,14 @@
 	. = ..()
 
 /obj/machinery/microwave/RefreshParts()
-	efficiency = 0
+	efficiency = 0.6
+	productivity = 0
+	max_n_of_items = 5
 	for(var/obj/item/stock_parts/micro_laser/M in component_parts)
-		efficiency += M.rating
+		efficiency += M.rating * 0.4
+		productivity += M.rating
 	for(var/obj/item/stock_parts/matter_bin/M in component_parts)
-		max_n_of_items = 10 * M.rating
-		break
+		max_n_of_items += M.rating * 5
 
 /obj/machinery/microwave/examine(mob/user)
 	. = ..()
@@ -83,7 +86,7 @@
 	if(!(stat & (NOPOWER|BROKEN)))
 		. += "<span class='notice'>The status display reads:</span>"
 		. += "<span class='notice'>- Capacity: <b>[max_n_of_items]</b> items.<span>"
-		. += "<span class='notice'>- Cook time reduced by <b>[(efficiency - 1) * 25]%</b>.<span>"
+		. += "<span class='notice'>- Cook time reduced by <b>[(productivity - 1) * 25]%</b>.<span>"
 
 /obj/machinery/microwave/update_icon_state()
 	if(broken)
@@ -240,7 +243,7 @@
 		playsound(src, 'sound/machines/buzz-sigh.ogg', 50, 0)
 		return
 
-	if(prob(max((5 / efficiency) - 5, dirty * 5))) //a clean unupgraded microwave has no risk of failure
+	if(prob(dirty * 5 / (5 * efficiency))) //a clean unupgraded microwave has no risk of failure
 		muck()
 		return
 	for(var/obj/O in ingredients)
@@ -285,7 +288,7 @@
 	update_icon()
 	loop(MICROWAVE_MUCK, 4)
 
-/obj/machinery/microwave/proc/loop(type, time, wait = max(12 - 2 * efficiency, 2)) // standard wait is 10
+/obj/machinery/microwave/proc/loop(type, time, wait = max(12 - 2 * productivity, 2)) // standard wait is 10
 	if(stat & (NOPOWER|BROKEN))
 		if(type == MICROWAVE_PRE)
 			pre_fail()
