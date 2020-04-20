@@ -5,7 +5,7 @@
 //	You do not need to raise this if you are adding new values that have sane defaults.
 //	Only raise this value when changing the meaning/format/name/layout of an existing value
 //	where you would want the updater procs below to run
-#define SAVEFILE_VERSION_MAX	28
+#define SAVEFILE_VERSION_MAX	29
 
 /*
 SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Carn
@@ -120,10 +120,14 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		if(fexists(vr_path))
 			var/list/json_from_file = json_decode(file2text(vr_path))
 			if(json_from_file)
-				digestable = json_from_file["digestable"]
-				devourable = json_from_file["devourable"]
-				feeding = json_from_file["feeding"]
-				lickable = json_from_file["lickable"]
+				if(json_from_file["digestable"])
+					ENABLE_BITFIELD(vore_flags,DIGESTABLE)
+				if(json_from_file["devourable"])
+					ENABLE_BITFIELD(vore_flags,DEVOURABLE)
+				if(json_from_file["feeding"])
+					ENABLE_BITFIELD(vore_flags,FEEDING)
+				if(json_from_file["lickable"])
+					ENABLE_BITFIELD(vore_flags,LICKABLE)
 				belly_prefs = json_from_file["belly_prefs"]
 				vore_taste = json_from_file["vore_taste"]
 
@@ -158,6 +162,24 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		if(malformed_hockeys[hockey])
 			features["cock_shape"] = malformed_hockeys[hockey]
 			features["cock_taur"] = TRUE
+	
+	if(current_version < 29)
+		var/digestable
+		var/devourable
+		var/feeding
+		var/lickable
+		S["digestable"]						>> digestable
+		S["devourable"]						>> devourable
+		S["feeding"]						>> feeding
+		S["lickable"]						>> lickable
+		if(digestable)
+			ENABLE_BITFIELD(vore_flags,DIGESTABLE)
+		if(devourable)
+			ENABLE_BITFIELD(vore_flags,DEVOURABLE)
+		if(feeding)
+			ENABLE_BITFIELD(vore_flags,FEEDING)
+		if(lickable)
+			ENABLE_BITFIELD(vore_flags,LICKABLE)
 
 	if(current_version < 29)
 		switch(features["taur"])
@@ -508,11 +530,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	else //We have no old flavortext, default to new
 		S["feature_flavor_text"]		>> features["flavor_text"]
 
-	S["digestable"]						>> digestable
-	S["devourable"]						>> devourable
-	S["feeding"]						>> feeding
+	S["vore_flags"]						>> vore_flags
 	S["vore_taste"]						>> vore_taste
-	S["lickable"]						>> lickable
 	S["belly_prefs"]					>> belly_prefs
 
 	//try to fix any outdated data if necessary
@@ -632,10 +651,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 	all_quirks = SANITIZE_LIST(all_quirks)
 
-	lickable						= sanitize_integer(lickable, FALSE, TRUE, initial(lickable))
-	devourable						= sanitize_integer(devourable, FALSE, TRUE, initial(devourable))
-	digestable						= sanitize_integer(digestable, FALSE, TRUE, initial(digestable))
-	feeding							= sanitize_integer(feeding, FALSE, TRUE, initial(feeding))
+	vore_flags						= sanitize_integer(vore_flags, 0, MAX_VORE_FLAG, 0)
 	vore_taste						= copytext(vore_taste, 1, MAX_TASTE_LEN)
 	belly_prefs 					= SANITIZE_LIST(belly_prefs)
 
@@ -745,11 +761,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	//Quirks
 	WRITE_FILE(S["all_quirks"]			, all_quirks)
 
-	WRITE_FILE(S["digestable"]			, digestable)
-	WRITE_FILE(S["devourable"]			, devourable)
-	WRITE_FILE(S["feeding"]				, feeding)
+	WRITE_FILE(S["vore_flags"]			, vore_flags)
 	WRITE_FILE(S["vore_taste"]			, vore_taste)
-	WRITE_FILE(S["lickable"]			, lickable)
 	WRITE_FILE(S["belly_prefs"]			, belly_prefs)
 
 	cit_character_pref_save(S)
