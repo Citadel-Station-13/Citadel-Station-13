@@ -22,7 +22,8 @@
 
 /datum/round_event/wormholes/start()
 	for(var/turf/open/floor/T in world)
-		if(is_station_level(T.z))
+		var/area/A = get_area(T)
+		if(is_station_level(T.z) && !A.outdoors)
 			pick_turfs += T
 
 	for(var/i = 1, i <= number_of_wormholes, i++)
