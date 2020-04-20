@@ -129,6 +129,9 @@
 	return data
 
 /obj/machinery/computer/cargo/express/ui_act(action, params, datum/tgui/ui)
+	if(!allowed(usr))
+		to_chat(usr, "<span class='notice'>Access denied.</span>")
+		return
 	switch(action)
 		if("LZCargo")
 			usingBeacon = FALSE

@@ -331,7 +331,7 @@
 	if(mining_points)
 		. += "There's [mining_points] mining equipment redemption point\s loaded onto this card."
 	if(!bank_support || (bank_support == ID_LOCKED_BANK_ACCOUNT && !registered_account))
-		. += "This ID has no banking support whatsover, must be an older model..."
+		. += "<span class='info'>This ID has no banking support whatsover, must be an older model...</span>"
 	else if(registered_account)
 		. += "The account linked to the ID belongs to '[registered_account.account_holder]' and reports a balance of [registered_account.account_balance] cr."
 		if(registered_account.account_job)
