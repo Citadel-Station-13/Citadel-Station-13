@@ -6,14 +6,22 @@
 	hidden = TRUE
 
 	var/obj/machinery/computer/holodeck/linked
-	var/list/compatible_holodeck_comps
-	var/abstract_type = /area/holodeck
 	var/restricted = 0 // if true, program goes on emag list
 
 /*
 	Power tracking: Use the holodeck computer's power grid
 	Asserts are to avoid the inevitable infinite loops
 */
+
+/area/holodeck/Initialize()
+	. = ..()
+	var/list/update_holodeck_cache = SSholodeck?.rejected_areas[type]
+	if(update_holodeck_cache)
+		var/list/info_this = list("name" = name, "type" = type)
+		var/list/target = restricted ? SSholodeck.emag_program_cache : SSholodeck.program_cache
+		for(var/A in update_holodeck_cache)
+			LAZYADD(target[A], info_this)
+		SSholodeck.rejected_areas -= type
 
 /area/holodeck/powered(var/chan)
 	if(!requires_power)
@@ -55,8 +63,6 @@
 */
 /area/holodeck/rec_center
 	name = "\improper Recreational Holodeck"
-	compatible_holodeck_comps = list(/obj/machinery/computer/holodeck)
-	abstract_type = /area/holodeck/rec_center
 
 /area/holodeck/rec_center/offline
 	name = "Holodeck - Offline"

@@ -35,8 +35,6 @@
 					SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "quality_drink", /datum/mood_event/quality_fantastic)
 				if (RACE_DRINK)
 					SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "quality_drink", /datum/mood_event/race_drink)
-				if (FOOD_AMAZING)
-					SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "quality_food", /datum/mood_event/amazingtaste)
 	return ..()
 
 /datum/reagent/consumable/nutriment
@@ -819,10 +817,19 @@
 	nutriment_factor = 2 * REAGENTS_METABOLISM
 	color = "#792300"
 	taste_description = "indescribable"
-	quality = FOOD_AMAZING
 	taste_mult = 100
 	can_synth = FALSE
 	pH = 6.1
+
+/datum/reagent/consumable/secretsauce/reaction_obj(obj/O, reac_volume)
+	//splashing any amount above or equal to 1u of secret sauce onto a piece of food turns its quality to 100
+	if(reac_volume >= 1 && isfood(O))
+		var/obj/item/reagent_containers/food/splashed_food = O
+		splashed_food.adjust_food_quality(100)
+		// if it's a customisable food, we need to edit its total quality too, to prevent its quality resetting from adding more ingredients!
+		if(istype(O, /obj/item/reagent_containers/food/snacks/customizable))
+			var/obj/item/reagent_containers/food/snacks/customizable/splashed_custom_food = O
+			splashed_custom_food.total_quality += 10000
 
 /datum/reagent/consumable/char
 	name = "Char"
