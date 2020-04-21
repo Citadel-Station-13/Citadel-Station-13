@@ -452,7 +452,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	if ((100-get_integrity()) < 75)
 		power = (power_calc * ((100 - (0.15*(100-get_integrity()) - 5)**2) / 100)) + power_calc*0.1
 	else
-		power = power_calc * (((100-get_integrity())^((3*(100-get_integrity()))/1000) + 2*(100-get_integrity()))/100) //new and improved, more linear
+		power = power_calc * (((100-get_integrity())**((3*(100-get_integrity()))/1000) + 2*(100-get_integrity()))/100) //new and improved, more linear
 		//power = power_calc * ((((100-get_integrity())**1.3)-(2*(100-get_integrity())))/100)
 	if(power > POWER_PENALTY_THRESHOLD || damage > damage_penalty_point)
 
