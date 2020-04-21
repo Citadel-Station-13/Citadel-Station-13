@@ -4,7 +4,7 @@
 	return abs(A)
 
 /proc/_animate(atom/A, set_vars, time = 10, loop = 1, easing = LINEAR_EASING, flags = null)
-	var/mutable_appearance/MA = new(A)
+	var/mutable_appearance/MA = new()
 	for(var/v in set_vars)
 		MA.vars[v] = set_vars[v]
 	animate(A, appearance = MA, time, loop, easing, flags)
@@ -32,9 +32,6 @@
 
 /proc/_cos(X)
 	return cos(X)
-
-/proc/_filter(type, ...)
-	return filter(arglist(args.Copy()))
 
 /proc/_get_dir(Loc1, Loc2)
 	return get_dir(Loc1, Loc2)
@@ -237,4 +234,3 @@
 	for(var/turf/T in v)
 		. += T
 	return pick(.)
-t
