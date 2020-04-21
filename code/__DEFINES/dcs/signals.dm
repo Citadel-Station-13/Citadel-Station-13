@@ -119,6 +119,8 @@
 #define COMSIG_MOVABLE_UNCROSSED "movable_uncrossed"            //from base of atom/movable/Uncrossed(): (/atom/movable)
 #define COMSIG_MOVABLE_BUMP "movable_bump"						//from base of atom/movable/Bump(): (/atom)
 #define COMSIG_MOVABLE_IMPACT "movable_impact"					//from base of atom/movable/throw_impact(): (/atom/hit_atom, /datum/thrownthing/throwingdatum)
+	#define COMPONENT_MOVABLE_IMPACT_FLIP_HITPUSH 1			///if true, flip if the impact will push what it hits
+	#define COMPONENT_MOVABLE_IMPACT_NEVERMIND 2			///return true if you destroyed whatever it was you're impacting and there won't be anything for hitby() to run on
 #define COMSIG_MOVABLE_IMPACT_ZONE "item_impact_zone"			//from base of mob/living/hitby(): (mob/living/target, hit_zone)
 #define COMSIG_MOVABLE_BUCKLE "buckle"							//from base of atom/movable/buckle_mob(): (mob, force)
 #define COMSIG_MOVABLE_UNBUCKLE "unbuckle"						//from base of atom/movable/unbuckle_mob(): (mob, force)
@@ -138,7 +140,6 @@
 	#define HEARING_SOURCE 8*/
 #define COMSIG_MOVABLE_DISPOSING "movable_disposing"			//called when the movable is added to a disposal holder object for disposal movement: (obj/structure/disposalholder/holder, obj/machinery/disposal/source)
 #define COMSIG_MOVABLE_TELEPORTED "movable_teleported"			//from base of do_teleport(): (channel, turf/origin, turf/destination)
-
 // /mind signals
 #define  COMSIG_PRE_MIND_TRANSFER "pre_mind_transfer"			//from base of mind/transfer_to() before it's done: (new_character, old_character)
 	#define COMPONENT_STOP_MIND_TRANSFER 1						//stops the mind transfer from happening.
@@ -148,6 +149,8 @@
 #define COMSIG_MOB_EXAMINATE "mob_examinate"					//from base of /mob/verb/examinate(): (atom/A)
 #define COMSIG_MOB_DEATH "mob_death"							//from base of mob/death(): (gibbed)
 	#define COMPONENT_BLOCK_DEATH_BROADCAST 1					//stops the death from being broadcasted in deadchat.
+#define COMSIG_MOB_CLICKON "mob_clickon"						//from base of mob/clickon(): (atom/A, params)
+	#define COMSIG_MOB_CANCEL_CLICKON 1
 #define COMSIG_MOB_GHOSTIZE "mob_ghostize"						//from base of mob/Ghostize(): (can_reenter_corpse, special, penalize)
 	#define COMPONENT_BLOCK_GHOSTING (1<<0)
 	#define COMPONENT_DO_NOT_PENALIZE_GHOSTING (1<<1)
@@ -212,7 +215,7 @@
 // /mob/living/carbon signals
 #define COMSIG_CARBON_SOUNDBANG "carbon_soundbang"					//from base of mob/living/carbon/soundbang_act(): (list(intensity))
 #define COMSIG_CARBON_IDENTITY_TRANSFERRED_TO "carbon_id_transferred_to" //from datum/dna/transfer_identity(): (datum/dna, transfer_SE)
-
+#define COMSIG_CARBON_TACKLED "carbon_tackled"						//sends from tackle.dm on tackle completion
 // /mob/living/simple_animal/hostile signals
 #define COMSIG_HOSTILE_ATTACKINGTARGET "hostile_attackingtarget"
 	#define COMPONENT_HOSTILE_NO_ATTACK 1
