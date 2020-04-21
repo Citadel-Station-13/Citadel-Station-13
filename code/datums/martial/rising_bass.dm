@@ -9,6 +9,7 @@
 	id = MARTIALART_RISINGBASS
 	allow_temp_override = FALSE
 	help_verb = /mob/living/carbon/human/proc/rising_bass_help
+	pugilist = TRUE
 	var/datum/action/risingbassmove/sidekick = new/datum/action/risingbassmove/sidekick()
 	var/datum/action/risingbassmove/deftswitch = new/datum/action/risingbassmove/deftswitch()
 	var/repulsecool = 0

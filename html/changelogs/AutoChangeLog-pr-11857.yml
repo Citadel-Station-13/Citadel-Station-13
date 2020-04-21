@@ -1,6 +1,0 @@
-author: "Trilbyspaceclone"
-delete-after: True
-changes: 
-  - rscadd: "12 new more drinks for most races!"
-  - rscadd: "New animations for mauna loa, and colour swap from red to blue for a Paramedic Hardsuit helm"
-  - tweak: "Lowers cog champ ((the drink)) flare rate"

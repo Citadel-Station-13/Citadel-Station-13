@@ -1,6 +1,6 @@
 // Process the predator's effects upon the contents of its belly (i.e digestion/transformation etc)
 /obj/belly/proc/process_belly(var/times_fired,var/wait) //Passed by controller
-	if((times_fired < next_process) || !contents.len)
+	if((times_fired < next_process) || !length(contents))
 		recent_sound = FALSE
 		return SSBELLIES_IGNORED
 
@@ -27,7 +27,7 @@
 		var/list/EL = emote_lists[digest_mode]
 		if(LAZYLEN(EL))
 			for(var/mob/living/M in contents)
-				if(M.digestable || !(digest_mode == DM_DIGEST)) // don't give digesty messages to indigestible people
+				if((M.vore_flags & DIGESTABLE) || !(digest_mode == DM_DIGEST)) // don't give digesty messages to indigestible people
 					to_chat(M,"<span class='notice'>[pick(EL)]</span>")
 
 ///////////////////// Prey Loop Refresh/hack //////////////////////
@@ -51,7 +51,7 @@
 
 //////////////////////// Absorbed Handling ////////////////////////
 	for(var/mob/living/M in contents)
-		if(M.absorbed)
+		if(M.vore_flags & ABSORBED)
 			M.Stun(5)
 
 ////////////////////////// Sound vars /////////////////////////////
@@ -76,7 +76,7 @@
 					play_sound = pick(pred_digest)
 
 				//Pref protection!
-				if (!M.digestable || M.absorbed)
+				if (!M.vore_flags & DIGESTABLE || M.vore_flags & ABSORBED)
 					continue
 
 				//Person just died in guts!
@@ -150,7 +150,7 @@
 						SEND_SOUND(M,prey_digest)
 					play_sound = pick(pred_digest)
 
-				if(M.absorbed)
+				if(M.vore_flags & ABSORBED)
 					continue
 
 				if(M.nutrition >= 100) //Drain them until there's no nutrients left. Slowly "absorb" them.
@@ -164,8 +164,8 @@
 		if(DM_UNABSORB)
 
 			for (var/mob/living/M in contents)
-				if(M.absorbed && owner.nutrition >= 100)
-					M.absorbed = FALSE
+				if(M.vore_flags & ABSORBED && owner.nutrition >= 100)
+					DISABLE_BITFIELD(M.vore_flags, ABSORBED)
 					to_chat(M,"<span class='notice'>You suddenly feel solid again </span>")
 					to_chat(owner,"<span class='notice'>You feel like a part of you is missing.</span>")
 					owner.nutrition -= 100
