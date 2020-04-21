@@ -30,7 +30,6 @@
 	var/taur_mode = NONE //Must be a single specific tauric suit variation bitflag. Don't do FLAG_1|FLAG_2
 	var/alt_taur_mode = NONE //Same as above.
 	var/hide_legs = USE_QUADRUPED_CLIP_MASK
-	alpha_mask_state =
 
 /datum/sprite_accessory/taur/New()
 	switch(hide_legs)
