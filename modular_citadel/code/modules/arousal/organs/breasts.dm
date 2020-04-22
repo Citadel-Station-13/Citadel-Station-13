@@ -84,7 +84,6 @@
 			to_chat(owner, "<span class='warning'>You feel your breasts shrinking away from your body as your chest flattens out.</span>")
 		QDEL_IN(src, 1)
 		return
-	var/enlargement = FALSE
 	switch(rounded_cached)
 		if(0) //flatchested
 			size = "flat"
