@@ -111,9 +111,6 @@
 #define GRAB_NECK					2
 #define GRAB_KILL					3
 
-//slowdown when in softcrit
-#define SOFTCRIT_ADD_SLOWDOWN 6
-
 /// Attack types for check_block()/run_block(). Flags, combinable.
 /// Attack was melee, whether or not armed.
 #define ATTACK_TYPE_MELEE			(1<<0)
