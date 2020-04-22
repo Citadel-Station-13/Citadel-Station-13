@@ -85,7 +85,7 @@
 	granted_trait = TRAIT_FAST_PUMP
 	traitname = "riflery"
 	icon_state = "book1"
-	remarks = list("One smooth motion...", "Palm the bolt...", "Push up, rotate back, push forward, down...", "Don't slap yourself with the bolt...", "Wait, what's this about pumping?")
+	remarks = list("One smooth motion...", "Palm the bolt...", "Push up, rotate back, push forward, down...", "Don't slap yourself with the bolt...", "Wait, what's this about pumping?", "Who just scribbled \"Z\" and \"LMB\" on this page?")
 
 ///ACTION BUTTONS///
 
