@@ -67,10 +67,6 @@
 			color = "#[owner.dna.features["breasts_color"]]"
 
 //Allows breasts to grow and change size, with sprite changes too.
-//maximum wah
-//Comical sizes slow you down in movement and actions.
-//Ridiculous sizes makes you more cumbersome.
-//this is far too lewd wah
 
 /obj/item/organ/genital/breasts/modify_size(modifier, min = -INFINITY, max = INFINITY)
 	var/new_value = CLAMP(cached_size + modifier, min, max)
@@ -96,16 +92,8 @@
 			size = breast_values[rounded_cached]
 		if(9 to 15) //massive
 			size = breast_values[rounded_cached]
-			enlargement = TRUE
 		if(16 to INFINITY) //rediculous
 			size = "huge"
-			enlargement = TRUE
-	if(owner)
-		var/status_effect = owner.has_status_effect(STATUS_EFFECT_BREASTS_ENLARGEMENT)
-		if(enlargement && !status_effect)
-			owner.apply_status_effect(STATUS_EFFECT_BREASTS_ENLARGEMENT)
-		else if(!enlargement && status_effect)
-			owner.remove_status_effect(STATUS_EFFECT_BREASTS_ENLARGEMENT)
 
 	if(rounded_cached < 16 && owner)//Because byond doesn't count from 0, I have to do this.
 		var/mob/living/carbon/human/H = owner
