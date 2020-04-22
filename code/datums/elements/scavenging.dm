@@ -67,8 +67,8 @@
 	scavenge(source, user, 1)
 	return COMPONENT_NO_ATTACK_HAND
 
-/datum/element/scavenging/proc/scavenge_tool(atom/source, obj/item/I, mob/living/user, params)
-	if(mob.a_intent == INTENT_HARM) //Robust trash disposal techniques!
+/datum/element/scavenging/proc/scavenge_tool(atom/source, obj/item/I, mob/user, params)
+	if(user.a_intent == INTENT_HARM) //Robust trash disposal techniques!
 		return
 	var/speed_multi = tool_types[I.tool_behaviour]
 	if(!speed_multi)
