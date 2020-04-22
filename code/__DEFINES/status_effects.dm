@@ -94,10 +94,6 @@
 
 #define STATUS_EFFECT_SPASMS /datum/status_effect/spasms //causes random muscle spasms
 
-#define STATUS_EFFECT_BREASTS_ENLARGEMENT /datum/status_effect/chem/breast_enlarger //Applied slowdown due to the ominous bulk.
-
-#define STATUS_EFFECT_PENIS_ENLARGEMENT /datum/status_effect/chem/penis_enlarger //More applied slowdown, just like the above.
-
 #define STATUS_EFFECT_NO_COMBAT_MODE /datum/status_effect/no_combat_mode //Wont allow combat mode and will disable it
 #define STATUS_EFFECT_MESMERIZE /datum/status_effect/mesmerize //Just reskinned no_combat_mode
 
