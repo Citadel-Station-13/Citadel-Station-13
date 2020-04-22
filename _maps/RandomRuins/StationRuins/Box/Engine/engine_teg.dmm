@@ -103,10 +103,6 @@
 /obj/structure/window/reinforced,
 /turf/open/floor/plasteel,
 /area/engine/engineering)
-"dw" = (
-/obj/structure/lattice/catwalk,
-/turf/open/space,
-/area/space/nearstation)
 "dZ" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -2631,7 +2627,7 @@ EN
 fq
 LS
 Hn
-dw
+tw
 yf
 Rh
 yf
@@ -2657,9 +2653,9 @@ XW
 ST
 Ok
 MP
-dw
-dw
-dw
+tw
+tw
+tw
 Rh
 Rh
 Rh
