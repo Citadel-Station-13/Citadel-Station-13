@@ -25,7 +25,7 @@
 //reagents_value defines, for cargo stuff.
 #define DEFAULT_REAGENTS_VALUE 1
 #define NO_REAGENTS_VALUE 0
-#define HARVEST_REAGENTS_VALUE 0.3
+#define HARVEST_REAGENTS_VALUE 0.01
 
 
 #define TOUCH			1	// splashing
