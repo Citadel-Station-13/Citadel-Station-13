@@ -89,7 +89,7 @@
 		QDEL_IN(src, 1)
 		return
 	var/enlargement = FALSE
-	if(enlargement & rounded_cached < 16)
+	if(enlargement && rounded_cached < 16)
 		enlargement = FALSE
 	switch(rounded_cached)
 		if(0) //flatchested
