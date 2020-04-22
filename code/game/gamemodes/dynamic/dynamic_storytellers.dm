@@ -115,7 +115,7 @@ Property weights are:
 		return 100
 	var/threat_perc = mode.threat/mode.threat_level
 
-	return round(max(0,100*(1-(threat_perc*threat_perc*threat_perc))))
+	return CLAMP(round(100*(1-(threat_perc*threat_perc))**2,1),0,100)
 
 /datum/dynamic_storyteller/proc/roundstart_draft()
 	var/list/drafted_rules = list()
@@ -152,7 +152,7 @@ Property weights are:
 					is 2.26 times as likely to be picked, all other things considered.
 					Of course, we don't want it to GUARANTEE the closest, that's no fun, so it's just a weight.
 				*/
-				threat_weight = 1-abs(1-LOGISTIC_FUNCTION(2,0.05,cost_difference,0))
+				threat_weight = abs(1-abs(1-LOGISTIC_FUNCTION(2,0.05,cost_difference,0)))
 			if (rule.ready())
 				var/property_weight = 0
 				for(var/property in property_weights)
@@ -331,7 +331,7 @@ Property weights are:
 /datum/dynamic_storyteller/story/calculate_threat()
 	var/current_time = (world.time / SSautotransfer.targettime)*180
 	mode.threat_level = round(mode.initial_threat_level*(sin(current_time)+0.25),0.1)
-	..()
+	return ..()
 
 /datum/dynamic_storyteller/classic
 	name = "Classic"
