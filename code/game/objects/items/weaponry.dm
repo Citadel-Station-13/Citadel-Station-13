@@ -647,7 +647,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 					/mob/living/simple_animal/butterfly,
 					/mob/living/simple_animal/cockroach,
 					/obj/item/queen_bee
-	)
+	))
 	spider_panic = typecacheof(list(
 					/mob/living/simple_animal/banana_spider,
 					/mob/living/simple_animal/hostile/poison/giant_spider,
