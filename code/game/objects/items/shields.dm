@@ -389,6 +389,8 @@ obj/item/shield/riot/bullet_proof
 			recharge_timerid = null
 
 /obj/item/shield/riot/implant/proc/recharge()
+	if(obj_integrity == max_integrity)
+		return
 	obj_integrity = max_integrity
 	if(ismob(loc.loc))		//cyberimplant.user
 		to_chat(loc, "<span class='notice'>[src] has recharged its reinforcement matrix and is ready for use!</span>")

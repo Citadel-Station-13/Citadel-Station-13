@@ -272,7 +272,7 @@
 	contents = newlist(/obj/item/shield/riot/implant)
 
 /obj/item/organ/cyberimp/arm/shield/Extend(obj/item/I)
-	if(item.obj_integrity == 0)				//that's how the shield recharge works
+	if(I.obj_integrity == 0)				//that's how the shield recharge works
 		to_chat(owner, "<span class='warning'>[I] is still too unstable to extend. Give it some time!</span>")
 		return FALSE
 	return ..()
