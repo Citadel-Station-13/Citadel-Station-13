@@ -61,7 +61,6 @@
 				"<span class='userdanger'>[M] [response_disarm] [name]!</span>", null, COMBAT_MESSAGE_RANGE)
 		log_combat(M, src, "disarmed")
 	else
-		var/damage = rand(15, 30)
 		visible_message("<span class='danger'>[M] has slashed at [src]!</span>", \
 				"<span class='userdanger'>[M] has slashed at [src]!</span>", null, COMBAT_MESSAGE_RANGE)
 		playsound(loc, 'sound/weapons/slice.ogg', 25, 1, -1)
