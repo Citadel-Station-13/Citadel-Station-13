@@ -364,11 +364,13 @@ obj/item/shield/riot/bullet_proof
 	block_chance = 50
 	slowdown = 1
 	shield_flags = SHIELD_FLAGS_DEFAULT
+	max_integrity = 60
+	obj_integrity = 60
 	item_flags = SLOWS_WHILE_IN_HAND
 	var/recharge_timerid
 	var/recharge_delay = 15 SECONDS
 
-/// Entirely overriden take_damage.
+/// Entirely overriden take_damage. This shouldn't exist outside of an implant (other than maybe christmas).
 /obj/item/shield/riot/implant/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, attack_dir, armour_penetration = 0)
 	obj_integrity -= damage_amount
 	if(obj_integrity < 0)
@@ -376,6 +378,7 @@ obj/item/shield/riot/bullet_proof
 	if(obj_integrity == 0)
 		if(ismob(loc))
 			var/mob/living/L = loc
+			playsound(src, 'sound/effects/glassbr3.ogg', 100)
 			L.visible_message("<span class='boldwarning'>[src] overloads from the damage sustained!</span>")
 			L.dropItemToGround(src)			//implant component catch hook will grab it.
 
