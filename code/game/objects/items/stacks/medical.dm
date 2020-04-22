@@ -92,7 +92,6 @@
 	icon_state = "gauze"
 	var/stop_bleeding = 1800
 	var/heal_brute = 5
-	var/heal_tox = FALSE
 	self_delay = 10
 
 /obj/item/stack/medical/gauze/heal(mob/living/M, mob/user)
@@ -102,8 +101,6 @@
 			H.suppress_bloodloss(stop_bleeding)
 			to_chat(user, "<span class='notice'>You stop the bleeding of [M]!</span>")
 			H.adjustBruteLoss(-(heal_brute))
-			if(heal_tox)
-				H.adjustToxLoss(-5) //Heals 5 damage but is not safe for slimes...
 			return TRUE
 	to_chat(user, "<span class='notice'>You can not use \the [src] on [M]!</span>")
 
@@ -135,7 +132,6 @@
 	name = "sterilized medical gauze"
 	desc = "A roll of elastic sterilized cloth that is extremely effective at stopping bleeding, heals minor wounds and cleans them."
 	singular_name = "sterilized medical gauze"
-	heal_tox = TRUE
 	self_delay = 5
 
 /obj/item/stack/medical/gauze/cyborg
