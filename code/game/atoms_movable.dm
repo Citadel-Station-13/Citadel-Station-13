@@ -55,10 +55,6 @@
 			em_block = new(src, render_target)
 			vis_contents += em_block
 
-/atom/movable/Destroy()
-	QDEL_NULL(em_block)
-	return ..()
-
 /atom/movable/proc/update_emissive_block()
 	if(blocks_emissive != EMISSIVE_BLOCK_GENERIC)
 		return
@@ -228,10 +224,12 @@
 /atom/movable/Destroy(force)
 	QDEL_NULL(proximity_monitor)
 	QDEL_NULL(language_holder)
+	QDEL_NULL(em_block)
 
 	unbuckle_all_mobs(force=1)
 
 	. = ..()
+
 	if(loc)
 		//Restore air flow if we were blocking it (movables with ATMOS_PASS_PROC will need to do this manually if necessary)
 		if(((CanAtmosPass == ATMOS_PASS_DENSITY && density) || CanAtmosPass == ATMOS_PASS_NO) && isturf(loc))

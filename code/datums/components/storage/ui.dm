@@ -92,6 +92,8 @@
 	var/list/volume_by_item = list()
 	var/list/percentage_by_item = list()
 	for(var/obj/item/I in contents)
+		if(QDELETED(I))
+			continue
 		volume = I.get_w_volume()
 		used += volume
 		volume_by_item[I] = volume
