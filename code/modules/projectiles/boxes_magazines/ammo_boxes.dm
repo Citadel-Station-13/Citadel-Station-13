@@ -129,13 +129,10 @@
 	icon = 'icons/obj/ammo.dmi'
 	icon_state = "shotgunclip"
 	caliber = "shotgun" // slapped in to allow shell mix n match
-	max_ammo = 4
 	ammo_type = /obj/item/ammo_casing/shotgun
+	max_ammo = 4
 	var/pixeloffsetx = 4
-
-/obj/item/ammo_box/shotgun/update_icon()
-	..()
-	update_overlays()
+	start_empty = 1
 
 /obj/item/ammo_box/shotgun/update_overlays()
 	. = ..()
@@ -149,23 +146,28 @@
 			shell_overlay.appearance_flags = RESET_COLOR
 			. += shell_overlay
 
-/obj/item/ammo_box/shotgun/rubbershot
+/obj/item/ammo_box/shotgun/loaded
+	start_empty = 0
+
+/obj/item/ammo_box/shotgun/loaded/slug
+
+/obj/item/ammo_box/shotgun/loaded/rubbershot
 	ammo_type = /obj/item/ammo_casing/shotgun/rubbershot
 
-/obj/item/ammo_box/shotgun/buckshot
+/obj/item/ammo_box/shotgun/loaded/buckshot
 	ammo_type = /obj/item/ammo_casing/shotgun/buckshot
 
-/obj/item/ammo_box/shotgun/beanbag
+/obj/item/ammo_box/shotgun/loaded/beanbag
 	ammo_type = /obj/item/ammo_casing/shotgun/beanbag
 
-/obj/item/ammo_box/shotgun/stunslug
+/obj/item/ammo_box/shotgun/loaded/stunslug
 	ammo_type = /obj/item/ammo_casing/shotgun/stunslug
 
-/obj/item/ammo_box/shotgun/techshell
+/obj/item/ammo_box/shotgun/loaded/techshell
 	ammo_type = /obj/item/ammo_casing/shotgun/techshell
 
-/obj/item/ammo_box/shotgun/incendiary
+/obj/item/ammo_box/shotgun/loaded/incendiary
 	ammo_type = /obj/item/ammo_casing/shotgun/incendiary
 
-/obj/item/ammo_box/shotgun/dart
+/obj/item/ammo_box/shotgun/loaded/dart
 	ammo_type = /obj/item/ammo_casing/shotgun/dart
