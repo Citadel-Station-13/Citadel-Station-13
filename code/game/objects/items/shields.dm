@@ -357,20 +357,41 @@ obj/item/shield/riot/bullet_proof
 	block_chance = 50
 
 /obj/item/shield/riot/implant
-	name = "riot tower shield"
-	desc = "A massive shield that can block a lot of attacks and can take a lot of abuse before breaking." //It cant break unless it is removed from the implant
+	name = "telescoping shield implant"
+	desc = "A compact, arm-mounted telescopic shield. While nigh-indestructible when powered by a host user, it will eventually overload from damage. Recharges while inside its implant."
 	item_state = "metal"
 	icon_state = "metal"
-	block_chance = 30 //May be big but hard to move around to block.
+	block_chance = 50
 	slowdown = 1
 	shield_flags = SHIELD_FLAGS_DEFAULT
 	item_flags = SLOWS_WHILE_IN_HAND
+	var/recharge_timerid
+	var/recharge_delay = 15 SECONDS
 
-/obj/item/shield/riot/implant/run_block(mob/living/owner, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return)
-	if(attack_type & ATTACK_TYPE_PROJECTILE)
-		final_block_chance = 60 //Massive shield
-	return ..()
+/// Entirely overriden take_damage.
+/obj/item/shield/riot/implant/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, attack_dir, armour_penetration = 0)
+	obj_integrity -= damage_amount
+	if(obj_integrity < 0)
+		obj_integrity = 0
+	if(obj_integrity == 0)
+		if(ismob(loc))
+			var/mob/living/L = loc
+			L.visible_message("<span class='boldwarning'>[src] overloads from the damage sustained!</span>")
+			L.dropItemToGround(src)			//implant component catch hook will grab it.
 
+/obj/item/shield/riot/implant/Moved()
+	. = ..()
+	if(istype(loc, /obj/item/organ/cyberimp/arm/shield))
+		recharge_timerid = addtimer(CALLBACK(src, .proc/recharge), recharge_delay, flags = TIMER_STOPPABLE)
+	else		//extending
+		if(recharge_timerid)
+			deltimer(recharge_timerid)
+			recharge_timerid = null
+
+/obj/item/shield/riot/implant/proc/recharge()
+	obj_integrity = max_integrity
+	if(ismob(loc.loc))		//cyberimplant.user
+		to_chat(loc, "<span class='notice'>[src] has recharged its reinforcement matrix and is ready for use!</span>")
 
 /obj/item/shield/energy
 	name = "energy combat shield"
