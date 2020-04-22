@@ -450,6 +450,8 @@ GLOBAL_VAR_INIT(dynamic_storyteller_type, /datum/dynamic_storyteller/classic)
 	if(!drafted_rules.len)
 		message_admins("Not enough threat level for roundstart antags!")
 		log_game("DYNAMIC: Not enough threat level for roundstart antags!")
+		midround_injection_cooldown = round((midround_injection_cooldown + world.time) / 2, 1)
+		latejoin_injection_cooldown = round((latejoin_injection_cooldown + world.time) / 2, 1)
 	var/indice_pop = min(10,round(roundstart_pop_ready/pop_per_requirement)+1)
 	extra_rulesets_amount = 0
 	if (GLOB.dynamic_classic_secret)
