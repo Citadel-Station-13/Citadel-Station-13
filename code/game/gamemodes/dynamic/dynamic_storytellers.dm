@@ -209,8 +209,8 @@ Property weights are:
 	weight = 1
 	event_frequency_lower = 2 MINUTES
 	event_frequency_upper = 10 MINUTES
-	flags = WAROPS_ALWAYS_ALLOWED
-	min_players = 40
+	flags = WAROPS_ALWAYS_ALLOWED | FORCE_IF_WON
+	min_players = 30
 	var/refund_cooldown = 0
 	
 /datum/dynamic_storyteller/chaotic/do_process()
@@ -232,7 +232,7 @@ Property weights are:
 	curve_centre = 2
 	curve_width = 1.5
 	weight = 2
-	min_players = 30
+	min_players = 20
 	flags = WAROPS_ALWAYS_ALLOWED | USE_PREV_ROUND_WEIGHTS
 	property_weights = list("valid" = 3, "trust" = 5)
 
@@ -358,7 +358,7 @@ Property weights are:
 	flags = NO_ASSASSIN | FORCE_IF_WON
 	weight = 1
 	dead_player_weight = 5
-	property_weights = list("extended" = 2, "chaos" = -1, "valid" = -1, "story_potential" = 1, "conversion" = -10)
+	property_weights = list("extended" = 2, "chaos" = -1, "valid" = -1, "conversion" = -10)
 
 /datum/dynamic_storyteller/no_antag
 	name = "Extended"
