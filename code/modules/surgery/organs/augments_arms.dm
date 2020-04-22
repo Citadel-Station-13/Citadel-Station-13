@@ -39,7 +39,7 @@
 		if(I in contents)		//already in us somehow? i probably shouldn't catch this so it's easier to spot bugs but eh..
 			return
 		I.visible_message("<span class='notice'>[I] snaps back into [src]!</span>")
-		I.forceMove(contents)
+		I.forceMove(src)
 		if(I == holder)
 			holder = null
 
