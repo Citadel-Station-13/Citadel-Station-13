@@ -205,12 +205,12 @@
 
 /obj/item/clothing/gloves/thief/strip_mod(mob/M)
 	. = ..()
-	if(isantagonist(M))
+	if(M?.mind?.special_role)
 		return 5
 
 /obj/item/clothing/gloves/thief/strip_silence(mob/M)
 	. = ..()
-	if(isantagonist(M))
+	if(M?.mind?.special_role)
 		return TRUE
 
 /obj/item/clothing/gloves/thief/Initialize()
@@ -222,5 +222,5 @@
 
 /obj/item/clothing/gloves/thief/examine(mob/user)
 	. = ..()
-	if(isantagonist(user))
-		. += "They are made with completely frictionless, insulated cloth, making it easier to steal from people with."
+	if(M?.mind?.special_role)
+		. += "<b>They are made with completely frictionless, insulated cloth, making it easier to steal from people with.</b>"

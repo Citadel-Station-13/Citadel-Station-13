@@ -191,6 +191,6 @@ datum/atom_hud/alternate_appearance/basic/onePerson
 			add_hud_to(mob)
 
 /datum/atom_hud/alternate_appearance/basic/antag/mobShouldSee(mob/M)
-	if(isantagonist(M))
+	if(M?.mind?.special_role)
 		return TRUE
 	return FALSE
