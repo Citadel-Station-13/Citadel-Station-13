@@ -730,7 +730,7 @@ GLOBAL_VAR_INIT(dynamic_storyteller_type, /datum/dynamic_storyteller/classic)
 				if (O.started_as_observer) // Observers
 					current_players[CURRENT_OBSERVERS].Add(M)
 					continue
-			if(!voluntary_ghosted)
+			if(!M.voluntary_ghosted)
 				current_players[CURRENT_DEAD_PLAYERS].Add(M) // Players who actually died (and admins who ghosted, would be nice to avoid counting them somehow)
 	threat = storyteller.calculate_threat() + added_threat
 	if(threat_average_weight)
