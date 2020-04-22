@@ -165,6 +165,7 @@
 	attack_verb = list("shoved", "bashed")
 	var/cooldown = 0 //shield bash cooldown. based on world.time
 	var/repair_material = /obj/item/stack/sheet/mineral/titanium
+	var/can_shatter = TRUE
 	shield_flags = SHIELD_FLAGS_DEFAULT | SHIELD_TRANSPARENT
 	max_integrity = 75
 
@@ -214,7 +215,7 @@
 	new /obj/item/shard((get_turf(src)))
 
 /obj/item/shield/riot/on_shield_block(mob/living/owner, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return)
-	if(obj_integrity <= damage)
+	if(can_shatter && (obj_integrity <= damage))
 		var/turf/T = get_turf(owner)
 		T.visible_message("<span class='warning'>[attack_text] destroys [src]!</span>")
 		shatter(owner)
@@ -366,6 +367,7 @@ obj/item/shield/riot/bullet_proof
 	shield_flags = SHIELD_FLAGS_DEFAULT
 	max_integrity = 60
 	obj_integrity = 60
+	can_shatter = FALSE
 	item_flags = SLOWS_WHILE_IN_HAND
 	var/recharge_timerid
 	var/recharge_delay = 15 SECONDS
