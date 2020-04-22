@@ -1966,7 +1966,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					var/max_D = CONFIG_GET(number/penis_max_inches_prefs)
 					var/new_length = input(user, "Penis length in inches:\n([min_D]-[max_D])", "Character Preference") as num|null
 					if(new_length)
-						features["cock_length"] = CLAMP(round(new_length), min_D, max_D)
+						features["cock_length"] = clamp(round(new_length), min_D, max_D)
 
 				if("cock_shape")
 					var/new_shape
@@ -2163,7 +2163,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					var/danger = CONFIG_GET(number/threshold_body_size_slowdown)
 					var/new_body_size = input(user, "Choose your desired sprite size:\n([min*100]%-[max*100]%), Warning: May make your character look distorted[danger > min ? ", and an exponential slowdown will occur for those smaller than [danger*100]%!" : "!"]", "Character Preference", features["body_size"]*100) as num|null
 					if (new_body_size)
-						new_body_size = CLAMP(new_body_size * 0.01, min, max)
+						new_body_size = clamp(new_body_size * 0.01, min, max)
 						var/dorfy
 						if(danger > new_body_size)
 							dorfy = alert(user, "The chosen size appears to be smaller than the threshold of [danger*100]%, which will lead to an added exponential slowdown. Are you sure about that?", "Dwarfism Alert", "Yes", "Move it to the threshold", "No")

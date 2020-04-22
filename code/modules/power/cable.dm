@@ -217,7 +217,7 @@ By design, d1 is the smallest direction and d2 is the highest
 
 /obj/structure/cable/proc/surplus()
 	if(powernet)
-		return CLAMP(powernet.avail-powernet.load, 0, powernet.avail)
+		return clamp(powernet.avail-powernet.load, 0, powernet.avail)
 	else
 		return 0
 
@@ -233,7 +233,7 @@ By design, d1 is the smallest direction and d2 is the highest
 
 /obj/structure/cable/proc/delayed_surplus()
 	if(powernet)
-		return CLAMP(powernet.newavail - powernet.delayedload, 0, powernet.newavail)
+		return clamp(powernet.newavail - powernet.delayedload, 0, powernet.newavail)
 	else
 		return 0
 
@@ -565,7 +565,7 @@ By design, d1 is the smallest direction and d2 is the highest
 		return
 	var/obj/item/restraints/handcuffs/cable/result = new(get_turf(user))
 	user.put_in_hands(result)
-	result.color = color 
+	result.color = color
 	to_chat(user, "<span class='notice'>You make some restraints out of cable</span>")
 
 //add cables to the stack
@@ -848,4 +848,4 @@ By design, d1 is the smallest direction and d2 is the highest
 	. = ..()
 	var/list/cable_colors = GLOB.cable_colors
 	color = pick(cable_colors)
-	
+
