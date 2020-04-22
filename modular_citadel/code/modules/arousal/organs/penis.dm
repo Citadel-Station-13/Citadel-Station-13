@@ -40,6 +40,8 @@
 	var/rounded_length = round(length)
 	var/new_size
 	var/enlargement = FALSE
+	if(enlargement & rounded_length < 21)
+		enlargement = FALSE
 	switch(rounded_length)
 		if(0 to 6) //If modest size
 			new_size = 1
