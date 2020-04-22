@@ -33,11 +33,11 @@
 	return TRUE
 
 /obj/item/shield/alt_pre_attack(atom/A, mob/living/user, params)
-	user_shieldbash(user, A, user.a_intent != INTENT_HARM)
+	user_shieldbash(user, A, user.a_intent == INTENT_HARM)
 	return TRUE
 
 /obj/item/shield/altafterattack(atom/target, mob/user, proximity_flag, click_parameters)
-	user_shieldbash(user, target, user.a_intent != INTENT_HARM)
+	user_shieldbash(user, target, user.a_intent == INTENT_HARM)
 	return TRUE
 
 /obj/item/shield/proc/do_shieldbash_effect(mob/living/user, dir, harmful)
@@ -52,13 +52,13 @@
 			px = 12
 		if(WEST)
 			px = -12
-	var/oldpx = user.pixel_x
-	var/oldpy = user.pixel_y
-	animate(user, pixel_x = px, pixel_y = py, time = 3, easing = SINE_EASING | EASE_OUT, flags = ANIMATION_END_NOW)
-	animate(user, pixel_x = oldpx, pixel_y = oldpy, time = 3)
-	user.visible_message("<span class='warning'>[user] [harmful? "charges forwards with" : "sweeps"] [src]!</span>")
 	var/obj/effect/temp_visual/dir_setting/shield_bash/effect = new(user.loc, dir)
-	animate(effect, alpha = 0, pixel_x = px + 4, pixel_y = py + 4, time = 3)
+	effect.pixel_x = user.pixel_x - 32		//96x96 effect, -32.
+	effect.pixel_y = user.pixel_y - 32
+	user.visible_message("<span class='warning'>[user] [harmful? "charges forwards with" : "sweeps"] [src]!</span>")
+	animate(user, pixel_x = px, pixel_y = py, time = 3, easing = SINE_EASING | EASE_OUT, flags = ANIMATION_PARALLEL | ANIMATION_RELATIVE)
+	animate(user, pixel_x = -px, pixel_y = -py, time = 3, flags = ANIMATION_RELATIVE)
+	animate(effect, alpha = 0, pixel_x = px * 1.5, pixel_y = py * 1.5, time = 3, flags = ANIMATION_PARALLEL | ANIMATION_RELATIVE)
 
 /obj/item/shield/proc/bash_target(mob/living/user, mob/living/target, bashdir, harmful)
 	if(!(target.status_flags & CANKNOCKDOWN) || HAS_TRAIT(src, TRAIT_STUNIMMUNE))	// should probably add stun absorption check at some point I guess..
@@ -76,7 +76,7 @@
 		"<span class='warning'>[user] shoves you with [src]!</span>")
 	for(var/i in 1 to harmful? shieldbash_knockback : shieldbash_push_distance)
 		var/turf/new_turf = get_step(target, bashdir)
-		var/mob/living/carbon/human/H = locate() in new_turf
+		var/mob/living/carbon/human/H = locate() in (new_turf.contents - target)
 		if(H && harmful)
 			H.visible_message("<span class='warning'>[target] is sent crashing into [H]!</span>",
 			"<span class='userdanger'>[target] is sent crashing into you!</span>")
@@ -113,7 +113,8 @@
 	if(world.time < last_shieldbash + shieldbash_cooldown)
 		to_chat(user, "<span class='warning'>You can't bash with [src] again so soon!</span>")
 		return FALSE
-	if(isliving(target))		//GROUND SLAAAM
+	var/mob/living/livingtarget = target		//only access after an isliving check!
+	if(isliving(target) && !CHECK_MOBILITY(livingtarget, MOBILITY_STAND))		//GROUND SLAAAM
 		if(!(shield_flags & SHIELD_BASH_GROUND_SLAM))
 			to_chat(user, "<span class='warning'>You can't ground slam with [src]!</span>")
 			return FALSE
@@ -122,7 +123,7 @@
 		playsound(src, harmful? "swing_hit" : 'sound/weapons/thudswoosh.ogg', 75, 1)
 		last_shieldbash = world.time
 		user.adjustStaminaLossBuffered(shieldbash_stamcost)
-		return 1
+		return TRUE
 	// Directional sweep!
 	last_shieldbash = world.time
 	user.adjustStaminaLossBuffered(shieldbash_stamcost)
