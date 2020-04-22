@@ -132,7 +132,7 @@
 	ammo_type = /obj/item/ammo_casing/shotgun
 	max_ammo = 4
 	var/pixeloffsetx = 4
-	start_empty = 1
+	start_empty = TRUE
 
 /obj/item/ammo_box/shotgun/update_overlays()
 	. = ..()
@@ -147,9 +147,7 @@
 			. += shell_overlay
 
 /obj/item/ammo_box/shotgun/loaded
-	start_empty = 0
-
-/obj/item/ammo_box/shotgun/loaded/slug
+	start_empty = FALSE
 
 /obj/item/ammo_box/shotgun/loaded/rubbershot
 	ammo_type = /obj/item/ammo_casing/shotgun/rubbershot
