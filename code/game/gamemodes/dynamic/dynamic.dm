@@ -227,9 +227,10 @@ GLOBAL_VAR_INIT(dynamic_storyteller_type, /datum/dynamic_storyteller/classic)
 		for(var/T in config.storyteller_cache)
 			var/datum/dynamic_storyteller/S = T
 			choices[initial(S.name)] = T
-		var/selected_storyteller = input("Select storyteller:", "Storyteller", storyteller.name) as null|anything in choices
+		var/selected_storyteller = choices[input("Select storyteller:", "Storyteller", storyteller.name) as null|anything in choices]
 		storyteller = new selected_storyteller
 		storyteller.on_start()
+		message_admins("[key_name(usr)] changed the storyteller to [storyteller].", 1)
 
 	admin_panel() // Refreshes the window
 
