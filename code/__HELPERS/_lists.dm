@@ -234,37 +234,19 @@
 //2. Gets a number between 1 and that total
 //3. For each element in the list, subtracts its weighting from that number
 //4. If that makes the number 0 or less, return that element.
-/proc/pickweight(list/L)
+/proc/pickweight(list/L, base_weight = 1)
 	var/total = 0
 	var/item
 	for (item in L)
 		if (!L[item])
-			L[item] = 1
+			L[item] = base_weight
 		total += L[item]
 
-	total = rand(1, total)
+	total = rand() * total
 	for (item in L)
-		total -=L [item]
+		total -= L[item]
 		if (total <= 0)
 			return item
-
-	return null
-
-/proc/pickweightAllowZero(list/L) //The original pickweight proc will sometimes pick entries with zero weight.  I'm not sure if changing the original will break anything, so I left it be.
-	var/total = 0
-	var/item
-	for (item in L)
-		if (!L[item])
-			L[item] = 0
-		total += L[item]
-
-	total = rand(0, total)
-	for (item in L)
-		total -=L [item]
-		if (total <= 0 && L[item])
-			return item
-
-	return null
 
 //Pick a random element from the list and remove it from the list.
 /proc/pick_n_take(list/L)

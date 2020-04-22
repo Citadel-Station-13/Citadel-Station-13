@@ -523,3 +523,10 @@ GLOBAL_LIST_INIT(pda_reskins, list(PDA_SKIN_CLASSIC = 'icons/obj/pda.dmi', PDA_S
 #define NIGHTSHIFT_AREA_NONE				4		//default/highest.
 
 #define UNTIL(X) while(!(X)) stoplag()
+
+
+//Scavenging element defines for special loot "events".
+#define SCAVENGING_FOUND_NOTHING	"found_nothing"
+#define SCAVENGING_SPAWN_MOUSE		"spawn_mouse"
+#define SCAVENGING_SPAWN_MICE		"spawn_mice"
+#define SCAVENGING_SPAWN_TOM		"spawn_tom_the_mouse"
