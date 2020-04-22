@@ -211,6 +211,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 	var/show_mismatched_markings = FALSE //determines whether or not the markings lists should show markings that don't match the currently selected species. Intentionally left unsaved.
 
+	var/no_tetris_storage = FALSE
+
 /datum/preferences/New(client/C)
 	parent = C
 

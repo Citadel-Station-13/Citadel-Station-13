@@ -16,7 +16,6 @@
 	var/widescreenpref = TRUE
 	var/autostand = TRUE
 	var/auto_ooc = FALSE
-	var/no_tetris_storage = FALSE
 
 	//vore prefs
 	var/toggleeatingnoise = TRUE
