@@ -1,8 +1,8 @@
 /mob/living/carbon/alien/humanoid/hunter
 	name = "alien hunter"
 	caste = "h"
-	maxHealth = 160
-	health = 160
+	maxHealth = 170
+	health = 170
 	icon_state = "alienh"
 	var/obj/screen/leap_icon = null
 
