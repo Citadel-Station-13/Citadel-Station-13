@@ -35,15 +35,13 @@
 					SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "quality_drink", /datum/mood_event/quality_fantastic)
 				if (RACE_DRINK)
 					SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "quality_drink", /datum/mood_event/race_drink)
-				if (FOOD_AMAZING)
-					SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "quality_food", /datum/mood_event/amazingtaste)
 	return ..()
 
 /datum/reagent/consumable/nutriment
 	name = "Nutriment"
 	description = "All the vitamins, minerals, and carbohydrates the body needs in pure form."
 	reagent_state = SOLID
-	nutriment_factor = 15 * REAGENTS_METABOLISM
+	nutriment_factor = 10 * REAGENTS_METABOLISM
 	color = "#664330" // rgb: 102, 67, 48
 
 	var/brute_heal = 1
@@ -93,7 +91,7 @@
 	name = "Vitamin"
 	description = "All the best vitamins, minerals, and carbohydrates the body needs in pure form."
 	value = 0.5
-
+	nutriment_factor = 15 * REAGENTS_METABOLISM //The are the best food for you!
 	brute_heal = 1
 	burn_heal = 1
 
@@ -109,7 +107,7 @@
 	taste_mult = 0.8
 	value = 1
 	taste_description = "oil"
-	nutriment_factor = 7 * REAGENTS_METABOLISM //Not very healthy on its own
+	nutriment_factor = 5 * REAGENTS_METABOLISM //Not very healthy on its own
 	metabolization_rate = 10 * REAGENTS_METABOLISM
 	var/fry_temperature = 450 //Around ~350 F (117 C) which deep fryers operate around in the real world
 	var/boiling //Used in mob life to determine if the oil kills, and only on touch application
@@ -153,7 +151,7 @@
 	reagent_state = SOLID
 	color = "#FFFFFF" // rgb: 255, 255, 255
 	taste_mult = 1.5 // stop sugar drowning out other flavours
-	nutriment_factor = 5 * REAGENTS_METABOLISM
+	nutriment_factor = 3 * REAGENTS_METABOLISM
 	metabolization_rate = 2 * REAGENTS_METABOLISM
 	overdose_threshold = 200 // Hyperglycaemic shock
 	taste_description = "sweetness"
@@ -179,21 +177,20 @@
 /datum/reagent/consumable/soysauce
 	name = "Soysauce"
 	description = "A salty sauce made from the soy plant."
-	nutriment_factor = 2 * REAGENTS_METABOLISM
 	color = "#792300" // rgb: 121, 35, 0
 	taste_description = "umami"
 
 /datum/reagent/consumable/ketchup
 	name = "Ketchup"
 	description = "Ketchup, catsup, whatever. It's tomato paste."
-	nutriment_factor = 5 * REAGENTS_METABOLISM
+	nutriment_factor = 3 * REAGENTS_METABOLISM
 	color = "#731008" // rgb: 115, 16, 8
 	taste_description = "ketchup"
 
 /datum/reagent/consumable/mustard
 	name = "Mustard"
 	description = "Mustard, mostly used on hotdogs, corndogs and burgers."
-	nutriment_factor = 5 * REAGENTS_METABOLISM
+	nutriment_factor = 3 * REAGENTS_METABOLISM
 	color = "#DDED26" // rgb: 221, 237, 38
 	taste_description = "mustard"
 
@@ -378,14 +375,13 @@
 	name = "Coco Powder"
 	description = "A fatty, bitter paste made from coco beans."
 	reagent_state = SOLID
-	nutriment_factor = 5 * REAGENTS_METABOLISM
+	nutriment_factor = 3 * REAGENTS_METABOLISM
 	color = "#302000" // rgb: 48, 32, 0
 	taste_description = "bitterness"
 
 /datum/reagent/consumable/hot_coco
 	name = "Hot Chocolate"
 	description = "Made with love! And coco beans."
-	nutriment_factor = 3 * REAGENTS_METABOLISM
 	color = "#660000" // rgb: 221, 202, 134
 	taste_description = "creamy chocolate"
 	glass_icon_state  = "chocolateglass"
@@ -488,13 +484,13 @@
 	description = "A popular food paste made from ground dry-roasted peanuts."
 	color = "#C29261"
 	value = 3
-	nutriment_factor = 15 * REAGENTS_METABOLISM
+	nutriment_factor = 10 * REAGENTS_METABOLISM
 	taste_description = "peanuts"
 
 /datum/reagent/consumable/cornoil
 	name = "Corn Oil"
 	description = "An oil derived from various types of corn."
-	nutriment_factor = 20 * REAGENTS_METABOLISM
+	nutriment_factor = 12 * REAGENTS_METABOLISM
 	value = 4
 	color = "#302000" // rgb: 48, 32, 0
 	taste_description = "slime"
@@ -626,7 +622,7 @@
 	description = "Sweet sweet honey that decays into sugar. Has antibacterial and natural healing properties."
 	color = "#d3a308"
 	value = 15
-	nutriment_factor = 15 * REAGENTS_METABOLISM
+	nutriment_factor = 10 * REAGENTS_METABOLISM
 	metabolization_rate = 1 * REAGENTS_METABOLISM
 	taste_description = "sweetness"
 
@@ -696,7 +692,7 @@
 	name = "Stabilized Nutriment"
 	description = "A bioengineered protien-nutrient structure designed to decompose in high saturation. In layman's terms, it won't get you fat."
 	reagent_state = SOLID
-	nutriment_factor = 15 * REAGENTS_METABOLISM
+	nutriment_factor = 12 * REAGENTS_METABOLISM
 	color = "#664330" // rgb: 102, 67, 48
 
 /datum/reagent/consumable/nutriment/stabilized/on_mob_life(mob/living/carbon/M)
@@ -807,7 +803,7 @@
 /datum/reagent/consumable/caramel
 	name = "Caramel"
 	description = "Who would have guessed that heated sugar could be so delicious?"
-	nutriment_factor = 10 * REAGENTS_METABOLISM
+	nutriment_factor = 4 * REAGENTS_METABOLISM
 	color = "#D98736"
 	taste_mult = 2
 	taste_description = "caramel"
@@ -819,10 +815,19 @@
 	nutriment_factor = 2 * REAGENTS_METABOLISM
 	color = "#792300"
 	taste_description = "indescribable"
-	quality = FOOD_AMAZING
 	taste_mult = 100
 	can_synth = FALSE
 	pH = 6.1
+
+/datum/reagent/consumable/secretsauce/reaction_obj(obj/O, reac_volume)
+	//splashing any amount above or equal to 1u of secret sauce onto a piece of food turns its quality to 100
+	if(reac_volume >= 1 && isfood(O))
+		var/obj/item/reagent_containers/food/splashed_food = O
+		splashed_food.adjust_food_quality(100)
+		// if it's a customisable food, we need to edit its total quality too, to prevent its quality resetting from adding more ingredients!
+		if(istype(O, /obj/item/reagent_containers/food/snacks/customizable))
+			var/obj/item/reagent_containers/food/snacks/customizable/splashed_custom_food = O
+			splashed_custom_food.total_quality += 10000
 
 /datum/reagent/consumable/char
 	name = "Char"
