@@ -33,6 +33,7 @@
 	RegisterSignal(I, COMSIG_ITEM_DROPPED, .proc/magnetic_catch)
 
 /obj/item/organ/cyberimp/arm/proc/magnetic_catch(datum/source, mob/user)
+	. = COMPONENT_DROPPED_RELOCATION
 	var/obj/item/I = source			//if someone is misusing the signal, just runtime
 	if(I in items_list)
 		if(I in contents)		//already in us somehow? i probably shouldn't catch this so it's easier to spot bugs but eh..
