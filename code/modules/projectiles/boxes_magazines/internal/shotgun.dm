@@ -36,6 +36,7 @@
 /obj/item/ammo_box/magazine/internal/shot/dual
 	name = "double-barrel shotgun internal magazine"
 	max_ammo = 2
+	multiload = 1
 
 /obj/item/ammo_box/magazine/internal/shot/dual/heck
 	name = "heckgun internal magazine"
