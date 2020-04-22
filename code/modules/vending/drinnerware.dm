@@ -26,7 +26,6 @@
 	premium = list(
 					/obj/item/reagent_containers/food/condiment/enzyme = 1,
 					/obj/item/reagent_containers/glass/bottle/cryoxadone = 2) // Bartender can literally make this with upgraded parts, or it gets stolen from medical.
-	
 	armor = list("melee" = 100, "bullet" = 100, "laser" = 100, "energy" = 100, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 50)
 	refill_canister = /obj/item/vending_refill/dinnerware
 	resistance_flags = FIRE_PROOF
