@@ -153,7 +153,7 @@
 /datum/supply_pack/medical/firstaidburns
 	name = "Burn Treatment Kit Crate"
 	desc = "Contains three first aid kits focused on healing severe burns."
-	cost = 1000
+	cost = 1300
 	contains = list(/obj/item/storage/firstaid/fire,
 					/obj/item/storage/firstaid/fire,
 					/obj/item/storage/firstaid/fire)
