@@ -22,7 +22,7 @@
 
 	if(turfs.len) //Pick a turf to spawn at if we can
 		var/turf/T = pick(turfs)
-		new /datum/spacevine_controller(T, pick(subtypesof(/datum/spacevine_mutation)), rand(10,100), rand(5,10), src) //spawn a controller at turf with randomized stats and a single random mutation
+		new /datum/spacevine_controller(T, pick(subtypesof(/datum/spacevine_mutation)), rand(30,100), rand(5,10), src) //spawn a controller at turf with randomized stats and a single random mutation
 
 
 /datum/spacevine_mutation
@@ -382,9 +382,6 @@
 /datum/spacevine_controller/New(turf/location, list/muts, potency, production, datum/round_event/event = null)
 	vines = list()
 	growth_queue = list()
-	var/obj/structure/spacevine/SV = spawn_spacevine_piece(location, null, muts)
-	if (event)
-		event.announce_to_ghosts(SV)
 	START_PROCESSING(SSobj, src)
 	vine_mutations_list = list()
 	init_subtypes(/datum/spacevine_mutation/, vine_mutations_list)
@@ -534,7 +531,7 @@
 	if(!override)
 		qdel(src)
 
-/obj/structure/spacevine/CanAllowThrough(atom/movable/mover, turf/target)
+/obj/structure/spacevine/CanPass(atom/movable/mover, turf/target)
 	. = ..()
 	if(isvineimmune(mover))
 		return TRUE
