@@ -95,7 +95,10 @@
 	/// How far away a plant can attach a vine to something
 	var/vine_grab_distance = 5
 	/// Whether or not this plant is ghost possessable
-	var/playable_plant = TRUE
+	var/playable_plant = FALSE //Normal plants can **not** have players.
+
+/mob/living/simple_animal/hostile/venus_human_trap/ghost_playable
+	playable_plant = TRUE //For admins that want to buss some harmless plants
 
 /mob/living/simple_animal/hostile/venus_human_trap/Life()
 	. = ..()
@@ -149,6 +152,7 @@
   * Arguments:
   * * mob/user - The ghost to possibly control the plant
   */
+
 /mob/living/simple_animal/hostile/venus_human_trap/proc/humanize_plant(mob/user)
 	if(key || !playable_plant || stat)
 		return
