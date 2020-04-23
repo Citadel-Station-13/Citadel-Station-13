@@ -1,7 +1,7 @@
 /obj/item/boombox
 	name = "boombox"
 	desc = "A dusty, gray, bulky, battery-powered, auto-looping stereo cassette player. An ancient relic from prehistoric times on that one planet with humans and stuff. Yeah, that one."
-	icon = 'modular_citadel/icons/obj/boombox.dmi'
+	icon = 'icons/obj/boombox.dmi'
 	icon_state = "raiqbawks_off"//PLACEHOLDER UNTIL SOMEONE SPRITES PLAIN NON-FANCY BOOMBOXES
 	w_class = WEIGHT_CLASS_NORMAL
 	force = 3

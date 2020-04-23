@@ -27,6 +27,7 @@ GLOBAL_PROTECT(href_token)
 	var/href_token
 
 	var/deadmined
+	var/following = null
 
 /datum/admins/New(datum/admin_rank/R, ckey, force_active = FALSE, protected)
 	if(IsAdminAdvancedProcCall())
@@ -113,6 +114,7 @@ GLOBAL_PROTECT(href_token)
 		owner.add_admin_verbs()	//TODO <--- todo what? the proc clearly exists and works since its the backbone to our entire admin system
 		owner.verbs -= /client/proc/readmin
 		GLOB.admins |= C
+		C.mentor_datum_set(TRUE)
 
 /datum/admins/proc/disassociate()
 	if(IsAdminAdvancedProcCall())
@@ -125,6 +127,8 @@ GLOBAL_PROTECT(href_token)
 		owner.remove_admin_verbs()
 		owner.holder = null
 		owner = null
+		owner.remove_mentor_verbs()
+		owner.mentor_datum = null
 
 /datum/admins/proc/check_for_rights(rights_required)
 	if(rights_required && !(rights_required & rank.rights))

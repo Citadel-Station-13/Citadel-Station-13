@@ -63,3 +63,8 @@
 	var/damageoverlaytemp = 0
 
 	var/drunkenness = 0 //Overall drunkenness - check handle_alcohol() in life.dm for effects
+	var/lastmousedir
+	var/wrongdirmovedelay
+
+	//oh no vore time
+	var/voremode = FALSE

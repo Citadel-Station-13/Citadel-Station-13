@@ -24,6 +24,7 @@
 	var/list/modkits = list()
 
 	var/recharge_timerid
+	recoil = 0.5
 
 /obj/item/gun/energy/kinetic_accelerator/premiumka
 	name = "premium accelerator"
@@ -194,6 +195,12 @@
 	else
 		cut_overlays()
 
+/obj/item/gun/energy/kinetic_accelerator/getstamcost(mob/living/carbon/user)
+	if(user && !lavaland_equipment_pressure_check(get_turf(user)))
+		return 0
+	else
+		return ..()
+
 //Casing
 /obj/item/ammo_casing/energy/kinetic
 	projectile_type = /obj/item/projectile/kinetic
@@ -260,7 +267,6 @@
 		M.gets_drilled(firer)
 	var/obj/effect/temp_visual/kinetic_blast/K = new /obj/effect/temp_visual/kinetic_blast(target_turf)
 	K.color = color
-
 
 //Modkits
 /obj/item/borg/upgrade/modkit

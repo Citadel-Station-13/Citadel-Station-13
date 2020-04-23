@@ -5,8 +5,8 @@
 	item_state = "w_suit"
 	body_parts_covered = CHEST|GROIN|ARMS
 	can_adjust = TRUE
-	icon = 'modular_citadel/icons/obj/clothing/turtlenecks.dmi'
-	mob_overlay_icon = 'modular_citadel/icons/mob/citadel/uniforms.dmi'
+	icon = 'icons/obj/clothing/turtlenecks.dmi'
+	mob_overlay_icon = 'icons/mob/citadel/uniforms.dmi'
 	mutantrace_variation = NONE
 
 /obj/item/clothing/under/sweater/black

@@ -186,11 +186,11 @@
 	item_state = null
 	force = 14
 	pin = /obj/item/firing_pin/holy
-	icon = 'modular_citadel/icons/obj/guns/VGguns.dmi'
+	icon = 'icons/obj/guns/VGguns.dmi'
 	ammo_x_offset = 4
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/redtag/hitscan/holy)
-	lefthand_file = 'modular_citadel/icons/mob/citadel/guns_lefthand.dmi'
-	righthand_file = 'modular_citadel/icons/mob/citadel/guns_righthand.dmi'
+	lefthand_file = 'icons/mob/citadel/guns_lefthand.dmi'
+	righthand_file = 'icons/mob/citadel/guns_righthand.dmi'
 	var/chaplain_spawnable = TRUE
 	total_mass = TOTAL_MASS_MEDIEVAL_WEAPON
 	throw_speed = 3
@@ -240,3 +240,11 @@
 		chambered.BB.damage *= 5
 
 	process_fire(target, user, TRUE, params)
+
+/obj/item/gun/energy/laser/practice/raygun
+	name = "toy ray gun"
+	icon = 'icons/obj/guns/cit_guns.dmi'
+	icon_state = "raygun"
+	desc = "A toy laser with a classic, retro feel and look. Compatible with existing laser tag systems."
+	ammo_type = list(/obj/item/ammo_casing/energy/laser/raytag)
+	selfcharge = EGUN_SELFCHARGE

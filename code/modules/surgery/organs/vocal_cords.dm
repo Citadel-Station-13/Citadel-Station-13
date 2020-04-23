@@ -1131,7 +1131,7 @@
 			var/datum/status_effect/chem/enthrall/E = H.has_status_effect(/datum/status_effect/chem/enthrall)
 			switch(E.phase)
 				if(2 to INFINITY)
-					playsound(get_turf(H), pick('sound/effects/meow1.ogg', 'modular_citadel/sound/voice/nya.ogg'), 50, 1, -1) //I'm very tempted to write a Fermis clause that makes them merowr.ogg if it's me. But, I also don't think snowflakism is okay. I would've gotten away for it too, if it wern't for my morals.
+					playsound(get_turf(H), pick('sound/effects/meow1.ogg', 'sound/voice/nya.ogg'), 50, 1, -1) //I'm very tempted to write a Fermis clause that makes them merowr.ogg if it's me. But, I also don't think snowflakism is okay. I would've gotten away for it too, if it wern't for my morals.
 					H.emote("me", EMOTE_VISIBLE, "lets out a nya!")
 					E.cooldown += 1
 

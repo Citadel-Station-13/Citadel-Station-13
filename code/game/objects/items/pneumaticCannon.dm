@@ -259,6 +259,10 @@
 		loaded++
 		CHECK_TICK
 
+/obj/item/pneumatic_cannon/fire_items(turf/target, mob/user)
+	. = ..()
+	shake_camera(user, (pressureSetting * 0.75 + 1), (pressureSetting * 0.75))
+
 /obj/item/pneumatic_cannon/pie
 	name = "pie cannon"
 	desc = "Load cream pie for optimal results."

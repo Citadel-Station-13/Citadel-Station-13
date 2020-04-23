@@ -26,3 +26,9 @@
 	caliber = "40mm"
 	icon_state = "40mmHE"
 	projectile_type = /obj/item/projectile/bullet/a40mm
+
+/obj/item/ammo_casing/c46x30mm/rubber
+	name = "4.6x30mm rubberbullet casing"
+	desc = "A 4.6x30mm rubberbullet casing."
+	caliber = "4.6x30mm"
+	projectile_type = /obj/item/projectile/bullet/c46x30mm/rubber

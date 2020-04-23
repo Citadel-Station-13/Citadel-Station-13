@@ -4,6 +4,7 @@
 	icon_state = "revolver"
 	mag_type = /obj/item/ammo_box/magazine/internal/cylinder
 	casing_ejector = FALSE
+	recoil = 0.5
 
 /obj/item/gun/ballistic/revolver/Initialize()
 	. = ..()
@@ -287,6 +288,7 @@
 						"Maple" = "dshotgun-l",
 						"Rosewood" = "dshotgun-p"
 						)
+	recoil = 1
 
 /obj/item/gun/ballistic/revolver/doublebarrel/attackby(obj/item/A, mob/user, params)
 	..()

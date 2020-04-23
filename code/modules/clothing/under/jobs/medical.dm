@@ -18,8 +18,8 @@
 /obj/item/clothing/under/rank/medical/chief_medical_officer/turtleneck
 	desc = "It's a turtleneck worn by those with the experience to be \"Chief Medical Officer\". It provides minor biological protection, for an officer with a superior sense of style and practicality."
 	name = "chief medical officer's turtleneck"
-	mob_overlay_icon = 'modular_citadel/icons/mob/clothing/turtlenecks.dmi'
-	icon = 'modular_citadel/icons/obj/clothing/turtlenecks.dmi'
+	mob_overlay_icon = 'icons/mob/clothing/turtlenecks.dmi'
+	icon = 'icons/obj/clothing/turtlenecks.dmi'
 	icon_state = "cmoturtle"
 	item_state = "w_suit"
 	alt_covers_chest = TRUE

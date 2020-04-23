@@ -96,6 +96,9 @@
 	if(lying && !buckled && prob(getBruteLoss()*200/maxHealth))
 		makeTrail(newloc, T, old_direction)
 
+	pseudo_z_axis = newloc.get_fake_z()
+	pixel_z = pseudo_z_axis
+
 /mob/living/forceMove(atom/destination)
 	stop_pulling()
 	if(buckled)

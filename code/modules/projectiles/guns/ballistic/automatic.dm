@@ -425,3 +425,33 @@
 	..()
 	icon_state = "oldrifle[magazine ? "-[CEILING(get_ammo(0)/4, 1)*4]" : ""]"
 	return
+
+/obj/item/gun/ballistic/automatic/spinfusor
+	name = "Stormhammer Magnetic Cannon"
+	desc = "An innovative weapon utilizing mag-lev technology to spin up a magnetic fusor and launch it at extreme velocities."
+	icon = 'icons/obj/guns/cit_guns.dmi'
+	icon_state = "spinfusor"
+	item_state = "spinfusor"
+	mag_type = /obj/item/ammo_box/magazine/internal/spinfusor
+	fire_sound = 'sound/weapons/rocketlaunch.ogg'
+	w_class = WEIGHT_CLASS_BULKY
+	can_suppress = 0
+	burst_size = 1
+	fire_delay = 40
+	select = 0
+	actions_types = list()
+	casing_ejector = 0
+
+/obj/item/gun/ballistic/automatic/spinfusor/attackby(obj/item/A, mob/user, params)
+	var/num_loaded = magazine.attackby(A, user, params, 1)
+	if(num_loaded)
+		to_chat(user, "<span class='notice'>You load [num_loaded] disk\s into \the [src].</span>")
+		update_icon()
+		chamber_round()
+
+/obj/item/gun/ballistic/automatic/spinfusor/attack_self(mob/living/user)
+	return //caseless rounds are too glitchy to unload properly. Best to make it so that you cannot remove disks from the spinfusor
+
+/obj/item/gun/ballistic/automatic/spinfusor/update_icon()
+	..()
+	icon_state = "spinfusor[magazine ? "-[get_ammo(1)]" : ""]"

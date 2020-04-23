@@ -75,35 +75,35 @@
 				disguise_icon_override = 'icons/mob/robots.dmi'
 			if("Default - Treads")
 				disguise = "engi-tread"
-				disguise_icon_override = 'modular_citadel/icons/mob/robots.dmi'
+				disguise_icon_override = 'icons/mob/robots_citadel.dmi'
 			if("Loader")
 				disguise = "loaderborg"
-				disguise_icon_override = 'modular_citadel/icons/mob/robots.dmi'
+				disguise_icon_override = 'icons/mob/robots_citadel.dmi'
 			if("Handy")
 				disguise = "handyeng"
-				disguise_icon_override = 'modular_citadel/icons/mob/robots.dmi'
+				disguise_icon_override = 'icons/mob/robots_citadel.dmi'
 			if("Sleek")
 				disguise = "sleekeng"
-				disguise_icon_override = 'modular_citadel/icons/mob/robots.dmi'
+				disguise_icon_override = 'icons/mob/robots_citadel.dmi'
 			if("Can")
 				disguise = "caneng"
-				disguise_icon_override = 'modular_citadel/icons/mob/robots.dmi'
+				disguise_icon_override = 'icons/mob/robots_citadel.dmi'
 			if("Marina")
 				disguise = "marinaeng"
-				disguise_icon_override = 'modular_citadel/icons/mob/robots.dmi'
+				disguise_icon_override = 'icons/mob/robots_citadel.dmi'
 			if("Spider")
 				disguise = "spidereng"
-				disguise_icon_override = 'modular_citadel/icons/mob/robots.dmi'
+				disguise_icon_override = 'icons/mob/robots_citadel.dmi'
 			if("Heavy")
 				disguise = "heavyeng"
-				disguise_icon_override = 'modular_citadel/icons/mob/robots.dmi'
+				disguise_icon_override = 'icons/mob/robots_citadel.dmi'
 			if("Pup Dozer")
 				disguise = "pupdozer"
-				disguise_icon_override = 'modular_citadel/icons/mob/widerobot.dmi'
+				disguise_icon_override = 'icons/mob/widerobot.dmi'
 				disguise_pixel_offset = -16
 			if("Vale")
 				disguise = "valeeng"
-				disguise_icon_override = 'modular_citadel/icons/mob/widerobot.dmi'
+				disguise_icon_override = 'icons/mob/widerobot.dmi'
 				disguise_pixel_offset = -16
 		animation_playing = TRUE
 		to_chat(user, "<span class='notice'>You activate \the [src].</span>")

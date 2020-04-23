@@ -12,38 +12,38 @@
 /datum/sprite_accessory/ears/human/axolotl
 	name = "Axolotl"
 	icon_state = "axolotl"
-	icon = 'modular_citadel/icons/mob/mam_ears.dmi'
+	icon = 'icons/mob/mam_ears.dmi'
 
 /datum/sprite_accessory/ears/human/bear
 	name = "Bear"
 	icon_state = "bear"
-	icon = 'modular_citadel/icons/mob/mam_ears.dmi'
+	icon = 'icons/mob/mam_ears.dmi'
 	color_src = MATRIXED
 
 /datum/sprite_accessory/ears/human/bigwolf
 	name = "Big Wolf"
 	icon_state = "bigwolf"
-	icon = 'modular_citadel/icons/mob/mam_ears.dmi'
+	icon = 'icons/mob/mam_ears.dmi'
 	color_src = MATRIXED
 
 /datum/sprite_accessory/ears/human/bigwolfinner
 	name = "Big Wolf (ALT)"
 	icon_state = "bigwolfinner"
 	hasinner = 1
-	icon = 'modular_citadel/icons/mob/mam_ears.dmi'
+	icon = 'icons/mob/mam_ears.dmi'
 	color_src = MATRIXED
 
 /datum/sprite_accessory/ears/human/bigwolfdark
 	name = "Dark Big Wolf"
 	icon_state = "bigwolfdark"
-	icon = 'modular_citadel/icons/mob/mam_ears.dmi'
+	icon = 'icons/mob/mam_ears.dmi'
 	color_src = MATRIXED
 
 /datum/sprite_accessory/ears/human/bigwolfinnerdark
 	name = "Dark Big Wolf (ALT)"
 	icon_state = "bigwolfinnerdark"
 	hasinner = 1
-	icon = 'modular_citadel/icons/mob/mam_ears.dmi'
+	icon = 'icons/mob/mam_ears.dmi'
 	color_src = MATRIXED
 
 /datum/sprite_accessory/ears/cat
@@ -55,50 +55,50 @@
 /datum/sprite_accessory/ears/human/cow
 	name = "Cow"
 	icon_state = "cow"
-	icon = 'modular_citadel/icons/mob/mam_ears.dmi'
+	icon = 'icons/mob/mam_ears.dmi'
 	color_src = MATRIXED
 
 /datum/sprite_accessory/ears/human/curled
 	name = "Curled Horn"
 	icon_state = "horn1"
-	icon = 'modular_citadel/icons/mob/mam_ears.dmi'
+	icon = 'icons/mob/mam_ears.dmi'
 	color_src = MUTCOLORS3
 
 /datum/sprite_accessory/ears/human/eevee
 	name = "Eevee"
 	icon_state = "eevee"
-	icon = 'modular_citadel/icons/mob/mam_ears.dmi'
+	icon = 'icons/mob/mam_ears.dmi'
 	color_src = MATRIXED
 
 /datum/sprite_accessory/ears/human/elephant
 	name = "Elephant"
 	icon_state = "elephant"
-	icon = 'modular_citadel/icons/mob/mam_ears.dmi'
+	icon = 'icons/mob/mam_ears.dmi'
 	color_src = MATRIXED
 
 /datum/sprite_accessory/ears/human/elf
 	name = "Elf"
 	icon_state = "elf"
-	icon = 'modular_citadel/icons/mob/mam_ears.dmi'
+	icon = 'icons/mob/mam_ears.dmi'
 	color_src = SKINTONE
 
 /datum/sprite_accessory/ears/fennec
 	name = "Fennec"
 	icon_state = "fennec"
-	icon = 'modular_citadel/icons/mob/mam_ears.dmi'
+	icon = 'icons/mob/mam_ears.dmi'
 	color_src = MATRIXED
 
 /datum/sprite_accessory/ears/fish
 	name = "Fish"
 	icon_state = "fish"
-	icon = 'modular_citadel/icons/mob/mam_ears.dmi'
+	icon = 'icons/mob/mam_ears.dmi'
 	color_src = MATRIXED
 
 /datum/sprite_accessory/ears/fox
 	name = "Fox"
 	icon_state = "fox"
 	color_src = MATRIXED
-	icon = 'modular_citadel/icons/mob/mam_ears.dmi'
+	icon = 'icons/mob/mam_ears.dmi'
 
 /datum/sprite_accessory/ears/human/jellyfish
 	name = "Jellyfish"
@@ -109,68 +109,68 @@
 	name = "Dog, Floppy"
 	icon_state = "lab"
 	color_src = MATRIXED
-	icon = 'modular_citadel/icons/mob/mam_ears.dmi'
+	icon = 'icons/mob/mam_ears.dmi'
 
 /datum/sprite_accessory/ears/murid
 	name = "Murid"
 	icon_state = "murid"
-	icon = 'modular_citadel/icons/mob/mam_ears.dmi'
+	icon = 'icons/mob/mam_ears.dmi'
 	color_src = MATRIXED
 
 /datum/sprite_accessory/ears/human/otie
 	name = "Otusian"
 	icon_state = "otie"
 	color_src = MATRIXED
-	icon = 'modular_citadel/icons/mob/mam_ears.dmi'
+	icon = 'icons/mob/mam_ears.dmi'
 
 /datum/sprite_accessory/ears/human/pede
 	name = "Scolipede"
 	icon_state = "pede"
-	icon = 'modular_citadel/icons/mob/mam_ears.dmi'
+	icon = 'icons/mob/mam_ears.dmi'
 	color_src = MATRIXED
 
 /datum/sprite_accessory/ears/human/rabbit
 	name = "Rabbit"
 	icon_state = "rabbit"
 	color_src = MATRIXED
-	icon = 'modular_citadel/icons/mob/mam_ears.dmi'
+	icon = 'icons/mob/mam_ears.dmi'
 
 /datum/sprite_accessory/ears/human/sergal
 	name = "Sergal"
 	icon_state = "sergal"
-	icon = 'modular_citadel/icons/mob/mam_ears.dmi'
+	icon = 'icons/mob/mam_ears.dmi'
 	color_src = MATRIXED
 
 /datum/sprite_accessory/ears/human/skunk
 	name = "skunk"
 	icon_state = "skunk"
-	icon = 'modular_citadel/icons/mob/mam_ears.dmi'
+	icon = 'icons/mob/mam_ears.dmi'
 	color_src = MATRIXED
 
 /datum/sprite_accessory/ears/squirrel
 	name = "Squirrel"
 	icon_state = "squirrel"
-	icon = 'modular_citadel/icons/mob/mam_ears.dmi'
+	icon = 'icons/mob/mam_ears.dmi'
 	color_src = MATRIXED
 
 /datum/sprite_accessory/ears/wolf
 	name = "Wolf"
 	icon_state = "wolf"
 	color_src = MATRIXED
-	icon = 'modular_citadel/icons/mob/mam_ears.dmi'
+	icon = 'icons/mob/mam_ears.dmi'
 
 /datum/sprite_accessory/ears/bunny
 	name = "Bunny"
 	icon_state = "bunny"
 	color_src = MATRIXED
-	icon = 'modular_citadel/icons/mob/mam_ears.dmi'
+	icon = 'icons/mob/mam_ears.dmi'
 
 /******************************************
 *************** Furry Ears ****************
 *******************************************/
 
 /datum/sprite_accessory/mam_ears
-	icon = 'modular_citadel/icons/mob/mam_ears.dmi'
+	icon = 'icons/mob/mam_ears.dmi'
 	color_src = MATRIXED
 
 /datum/sprite_accessory/mam_ears/none

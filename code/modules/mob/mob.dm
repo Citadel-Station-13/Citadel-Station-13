@@ -1051,3 +1051,14 @@ GLOBAL_VAR_INIT(exploit_warn_spam_prevention, 0)
 	for(var/obj/item/I in held_items)
 		if(I.item_flags & SLOWS_WHILE_IN_HAND)
 			. += I.slowdown
+
+/mob/living/proc/add_screams(var/list/screams)
+	LAZYINITLIST(alternate_screams)
+	if(!screams || screams.len == 0)
+		return
+	for(var/S in screams)
+		LAZYADD(alternate_screams, S)
+
+/mob/living/proc/clear_screams()
+	LAZYINITLIST(alternate_screams)
+	LAZYCLEARLIST(alternate_screams)

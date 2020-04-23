@@ -1149,3 +1149,18 @@
 			dna.features["body_model"] = MALE
 	if(update_icon)
 		update_body()
+
+/mob/living/carbon/onMouseMove(object, location, control, params)
+	if(!(combat_flags & COMBAT_FLAG_COMBAT_ACTIVE))
+		return
+	mouse_face_atom(object)
+	lastmousedir = dir
+
+/mob/living/carbon/proc/reindex_screams()
+	clear_screams()
+	if(head)
+		add_screams(head.alternate_screams)
+	if(wear_mask)
+		add_screams(wear_mask.alternate_screams)
+	if(back)
+		add_screams(back.alternate_screams)

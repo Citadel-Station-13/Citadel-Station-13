@@ -570,3 +570,9 @@
 			return 0
 		else
 			return ((weapon_weight * 25) * inaccuracy_modifier)
+
+/obj/item/gun/proc/getstamcost(mob/living/carbon/user)
+	if(user && user.has_gravity())
+		return recoil
+	else
+		return recoil*5

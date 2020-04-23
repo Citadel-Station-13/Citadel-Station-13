@@ -125,3 +125,4 @@
 	var/siliconaccesstoggle = FALSE
 
 	var/voluntary_ghosted = FALSE		//whether or not they voluntarily ghosted.
+	var/nextsoundemote = 1

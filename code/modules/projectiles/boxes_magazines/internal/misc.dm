@@ -9,3 +9,9 @@
 	ammo_type = /obj/item/ammo_casing/caseless/laser/gatling
 	caliber = "gatling"
 	max_ammo = 5000
+
+/obj/item/ammo_box/magazine/internal/spinfusor
+	name = "spinfusor internal magazine"
+	ammo_type = /obj/item/ammo_casing/caseless/spinfusor
+	caliber = "spinfusor"
+	max_ammo = 1

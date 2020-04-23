@@ -307,3 +307,13 @@
 		air.gases[/datum/gas/oxygen]=max(air.gases[/datum/gas/oxygen]-(pulse_strength/2000),0)
 		air.gases[/datum/gas/pluoxium]+=(pulse_strength/4000)
 		GAS_GARBAGE_COLLECT(air.gases)
+
+/turf/open/get_fake_z()
+	var/objschecked
+	for(var/obj/structure/structurestocheck in contents)
+		objschecked++
+		if(structurestocheck.pseudo_z_axis)
+			return structurestocheck.pseudo_z_axis
+		if(objschecked >= 25)
+			break
+	return pseudo_z_axis

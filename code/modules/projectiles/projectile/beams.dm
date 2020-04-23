@@ -224,3 +224,34 @@
 	if(isopenturf(target) || istype(target, /turf/closed/indestructible))//shrunk floors wouldnt do anything except look weird, i-walls shouldnt be bypassable
 		return
 	target.AddComponent(/datum/component/shrink, shrink_time)
+
+/obj/item/projectile/beam/lasertag/wavemotion
+	tracer_type = /obj/effect/projectile/tracer/laser/wavemotion
+	muzzle_type = /obj/effect/projectile/muzzle/laser/wavemotion
+	impact_type = /obj/effect/projectile/impact/laser/wavemotion
+	hitscan = TRUE
+
+/obj/item/projectile/beam/lasertag/dispersal
+	tracer_type = /obj/effect/projectile/tracer/laser/blue
+	muzzle_type = /obj/effect/projectile/muzzle/laser/blue
+	impact_type = /obj/effect/projectile/impact/laser/blue
+	hitscan = TRUE
+
+
+/obj/item/projectile/beam/disabler/weak
+	name = "particle blast"
+	damage = 13
+	icon_state = "disablerpellet"
+
+/obj/item/projectile/beam/disabler/slug
+	name = "positron blast"
+	damage = 80
+	range = 14
+	speed = 0.6
+	icon_state = "disablerslug"
+
+/obj/item/projectile/beam/lasertag/ray		//the projectile, compatible with regular laser tag armor
+	icon = 'icons/obj/guns/cit_guns.dmi'
+	icon_state = "ray"
+	name = "ray bolt"
+	eyeblur = 0

@@ -350,48 +350,48 @@
 			cyborg_base_icon = "medical"
 		if("Droid")
 			cyborg_base_icon = "medical"
-			cyborg_icon_override = 'modular_citadel/icons/mob/robots.dmi'
+			cyborg_icon_override = 'icons/mob/robots_citadel.dmi'
 			hat_offset = 4
 		if("Sleek")
 			cyborg_base_icon = "sleekmed"
-			cyborg_icon_override = 'modular_citadel/icons/mob/robots.dmi'
+			cyborg_icon_override = 'icons/mob/robots_citadel.dmi'
 		if("Marina")
 			cyborg_base_icon = "marinamed"
-			cyborg_icon_override = 'modular_citadel/icons/mob/robots.dmi'
+			cyborg_icon_override = 'icons/mob/robots_citadel.dmi'
 		if("Eyebot")
 			cyborg_base_icon = "eyebotmed"
-			cyborg_icon_override = 'modular_citadel/icons/mob/robots.dmi'
+			cyborg_icon_override = 'icons/mob/robots_citadel.dmi'
 		if("Heavy")
 			cyborg_base_icon = "heavymed"
-			cyborg_icon_override = 'modular_citadel/icons/mob/robots.dmi'
+			cyborg_icon_override = 'icons/mob/robots_citadel.dmi'
 		if("Medihound")
 			cyborg_base_icon = "medihound"
-			cyborg_icon_override = 'modular_citadel/icons/mob/widerobot.dmi'
+			cyborg_icon_override = 'icons/mob/widerobot.dmi'
 			sleeper_overlay = "msleeper"
 			moduleselect_icon = "medihound"
-			moduleselect_alternate_icon = 'modular_citadel/icons/ui/screen_cyborg.dmi'
+			moduleselect_alternate_icon = 'icons/ui/screen_cyborg.dmi'
 			dogborg = TRUE
 		if("Medihound Dark")
 			cyborg_base_icon = "medihounddark"
-			cyborg_icon_override = 'modular_citadel/icons/mob/widerobot.dmi'
+			cyborg_icon_override = 'icons/mob/widerobot.dmi'
 			sleeper_overlay = "mdsleeper"
 			moduleselect_icon = "medihound"
-			moduleselect_alternate_icon = 'modular_citadel/icons/ui/screen_cyborg.dmi'
+			moduleselect_alternate_icon = 'icons/ui/screen_cyborg.dmi'
 			dogborg = TRUE
 		if("Vale")
 			cyborg_base_icon = "valemed"
-			cyborg_icon_override = 'modular_citadel/icons/mob/widerobot.dmi'
+			cyborg_icon_override = 'icons/mob/widerobot.dmi'
 			sleeper_overlay = "valemedsleeper"
 			moduleselect_icon = "medihound"
-			moduleselect_alternate_icon = 'modular_citadel/icons/ui/screen_cyborg.dmi'
+			moduleselect_alternate_icon = 'icons/ui/screen_cyborg.dmi'
 			dogborg = TRUE
 		if("Alina")
 			cyborg_base_icon = "alina-med"
-			cyborg_icon_override = 'modular_citadel/icons/mob/widerobot.dmi'
+			cyborg_icon_override = 'icons/mob/widerobot.dmi'
 			special_light_key = "alina"
 			sleeper_overlay = "alinasleeper"
 			moduleselect_icon = "medihound"
-			moduleselect_alternate_icon = 'modular_citadel/icons/ui/screen_cyborg.dmi'
+			moduleselect_alternate_icon = 'icons/ui/screen_cyborg.dmi'
 			dogborg = TRUE
 	return ..()
 
@@ -448,43 +448,43 @@
 		if("Default - Treads")
 			cyborg_base_icon = "engi-tread"
 			special_light_key = "engineer"
-			cyborg_icon_override = 'modular_citadel/icons/mob/robots.dmi'
+			cyborg_icon_override = 'icons/mob/robots_citadel.dmi'
 		if("Loader")
 			cyborg_base_icon = "loaderborg"
-			cyborg_icon_override = 'modular_citadel/icons/mob/robots.dmi'
+			cyborg_icon_override = 'icons/mob/robots_citadel.dmi'
 			has_snowflake_deadsprite = TRUE
 		if("Handy")
 			cyborg_base_icon = "handyeng"
-			cyborg_icon_override = 'modular_citadel/icons/mob/robots.dmi'
+			cyborg_icon_override = 'icons/mob/robots_citadel.dmi'
 		if("Sleek")
 			cyborg_base_icon = "sleekeng"
-			cyborg_icon_override = 'modular_citadel/icons/mob/robots.dmi'
+			cyborg_icon_override = 'icons/mob/robots_citadel.dmi'
 		if("Can")
 			cyborg_base_icon = "caneng"
-			cyborg_icon_override = 'modular_citadel/icons/mob/robots.dmi'
+			cyborg_icon_override = 'icons/mob/robots_citadel.dmi'
 		if("Marina")
 			cyborg_base_icon = "marinaeng"
-			cyborg_icon_override = 'modular_citadel/icons/mob/robots.dmi'
+			cyborg_icon_override = 'icons/mob/robots_citadel.dmi'
 		if("Spider")
 			cyborg_base_icon = "spidereng"
-			cyborg_icon_override = 'modular_citadel/icons/mob/robots.dmi'
+			cyborg_icon_override = 'icons/mob/robots_citadel.dmi'
 		if("Heavy")
 			cyborg_base_icon = "heavyeng"
-			cyborg_icon_override = 'modular_citadel/icons/mob/robots.dmi'
+			cyborg_icon_override = 'icons/mob/robots_citadel.dmi'
 		if("Pup Dozer")
 			cyborg_base_icon = "pupdozer"
-			cyborg_icon_override = 'modular_citadel/icons/mob/widerobot.dmi'
+			cyborg_icon_override = 'icons/mob/widerobot.dmi'
 			sleeper_overlay = "dozersleeper"
 			dogborg = TRUE
 		if("Vale")
 			cyborg_base_icon = "valeeng"
-			cyborg_icon_override = 'modular_citadel/icons/mob/widerobot.dmi'
+			cyborg_icon_override = 'icons/mob/widerobot.dmi'
 			sleeper_overlay = "valeengsleeper"
 			dogborg = TRUE
 		if("Alina")
 			cyborg_base_icon = "alina-eng"
 			special_light_key = "alina"
-			cyborg_icon_override = 'modular_citadel/icons/mob/widerobot.dmi'
+			cyborg_icon_override = 'icons/mob/widerobot.dmi'
 			sleeper_overlay = "alinasleeper"
 			dogborg = TRUE
 	return ..()
@@ -526,42 +526,42 @@
 		if("Default - Treads")
 			cyborg_base_icon = "sec-tread"
 			special_light_key = "sec"
-			cyborg_icon_override = 'modular_citadel/icons/mob/robots.dmi'
+			cyborg_icon_override = 'icons/mob/robots_citadel.dmi'
 		if("Sleek")
 			cyborg_base_icon = "sleeksec"
-			cyborg_icon_override = 'modular_citadel/icons/mob/robots.dmi'
+			cyborg_icon_override = 'icons/mob/robots_citadel.dmi'
 		if("Marina")
 			cyborg_base_icon = "marinasec"
-			cyborg_icon_override = 'modular_citadel/icons/mob/robots.dmi'
+			cyborg_icon_override = 'icons/mob/robots_citadel.dmi'
 		if("Can")
 			cyborg_base_icon = "cansec"
-			cyborg_icon_override = 'modular_citadel/icons/mob/robots.dmi'
+			cyborg_icon_override = 'icons/mob/robots_citadel.dmi'
 		if("Spider")
 			cyborg_base_icon = "spidersec"
-			cyborg_icon_override = 'modular_citadel/icons/mob/robots.dmi'
+			cyborg_icon_override = 'icons/mob/robots_citadel.dmi'
 		if("Heavy")
 			cyborg_base_icon = "heavysec"
-			cyborg_icon_override = 'modular_citadel/icons/mob/robots.dmi'
+			cyborg_icon_override = 'icons/mob/robots_citadel.dmi'
 		if("K9")
 			cyborg_base_icon = "k9"
 			sleeper_overlay = "ksleeper"
-			cyborg_icon_override = 'modular_citadel/icons/mob/widerobot.dmi'
+			cyborg_icon_override = 'icons/mob/widerobot.dmi'
 			dogborg = TRUE
 		if("Alina")
 			cyborg_base_icon = "alina-sec"
 			special_light_key = "alina"
 			sleeper_overlay = "alinasleeper"
-			cyborg_icon_override = 'modular_citadel/icons/mob/widerobot.dmi'
+			cyborg_icon_override = 'icons/mob/widerobot.dmi'
 			dogborg = TRUE
 		if("K9 Dark")
 			cyborg_base_icon = "k9dark"
 			sleeper_overlay = "k9darksleeper"
-			cyborg_icon_override = 'modular_citadel/icons/mob/widerobot.dmi'
+			cyborg_icon_override = 'icons/mob/widerobot.dmi'
 			dogborg = TRUE
 		if("Vale")
 			cyborg_base_icon = "valesec"
 			sleeper_overlay = "valesecsleeper"
-			cyborg_icon_override = 'modular_citadel/icons/mob/widerobot.dmi'
+			cyborg_icon_override = 'icons/mob/widerobot.dmi'
 			dogborg = TRUE
 	return ..()
 
@@ -609,13 +609,13 @@
 			cyborg_base_icon = "peace"
 		if("Spider")
 			cyborg_base_icon = "whitespider"
-			cyborg_icon_override = 'modular_citadel/icons/mob/robots.dmi'
+			cyborg_icon_override = 'icons/mob/robots_citadel.dmi'
 		if("Borgi")
 			cyborg_base_icon = "borgi"
 			moduleselect_icon = "borgi"
-			moduleselect_alternate_icon = 'modular_citadel/icons/ui/screen_cyborg.dmi'
+			moduleselect_alternate_icon = 'icons/ui/screen_cyborg.dmi'
 			hat_offset = INFINITY
-			cyborg_icon_override = 'modular_citadel/icons/mob/robots.dmi'
+			cyborg_icon_override = 'icons/mob/robots_citadel.dmi'
 			has_snowflake_deadsprite = TRUE
 	return ..()
 
@@ -763,42 +763,42 @@
 			hat_offset = INFINITY //He is already wearing a hat
 		if("(Service) Sleek")
 			cyborg_base_icon = "sleekserv"
-			cyborg_icon_override = 'modular_citadel/icons/mob/robots.dmi'
+			cyborg_icon_override = 'icons/mob/robots_citadel.dmi'
 		if("(Service) Heavy")
 			cyborg_base_icon = "heavyserv"
-			cyborg_icon_override = 'modular_citadel/icons/mob/robots.dmi'
+			cyborg_icon_override = 'icons/mob/robots_citadel.dmi'
 		if("(Service) DarkK9")
 			cyborg_base_icon = "k50"
-			cyborg_icon_override = 'modular_citadel/icons/mob/widerobot.dmi'
+			cyborg_icon_override = 'icons/mob/widerobot.dmi'
 			sleeper_overlay = "ksleeper"
 			dogborg = TRUE
 		if("(Service) Vale")
 			cyborg_base_icon = "valeserv"
-			cyborg_icon_override = 'modular_citadel/icons/mob/widerobot.dmi'
+			cyborg_icon_override = 'icons/mob/widerobot.dmi'
 			sleeper_overlay = "valeservsleeper"
 			dogborg = TRUE
 		if("(Service) ValeDark")
 			cyborg_base_icon = "valeservdark"
-			cyborg_icon_override = 'modular_citadel/icons/mob/widerobot.dmi'
+			cyborg_icon_override = 'icons/mob/widerobot.dmi'
 			sleeper_overlay = "valeservsleeper"
 			dogborg = TRUE
 		if("(Janitor) Default")
 			cyborg_base_icon = "janitor"
 		if("(Janitor) Marina")
 			cyborg_base_icon = "marinajan"
-			cyborg_icon_override = 'modular_citadel/icons/mob/robots.dmi'
+			cyborg_icon_override = 'icons/mob/robots_citadel.dmi'
 		if("(Janitor) Sleek")
 			cyborg_base_icon = "sleekjan"
-			cyborg_icon_override = 'modular_citadel/icons/mob/robots.dmi'
+			cyborg_icon_override = 'icons/mob/robots_citadel.dmi'
 		if("(Janitor) Can")
 			cyborg_base_icon = "canjan"
-			cyborg_icon_override = 'modular_citadel/icons/mob/robots.dmi'
+			cyborg_icon_override = 'icons/mob/robots_citadel.dmi'
 		if("(Janitor) Heavy")
 			cyborg_base_icon = "heavyres"
-			cyborg_icon_override = 'modular_citadel/icons/mob/robots.dmi'
+			cyborg_icon_override = 'icons/mob/robots_citadel.dmi'
 		if("(Janitor) Scrubpuppy")
 			cyborg_base_icon = "scrubpup"
-			cyborg_icon_override = 'modular_citadel/icons/mob/widerobot.dmi'
+			cyborg_icon_override = 'icons/mob/widerobot.dmi'
 			sleeper_overlay = "jsleeper"
 			dogborg = TRUE
 	return ..()
@@ -846,31 +846,31 @@
 			special_light_key = "miner"
 		if("Droid")
 			cyborg_base_icon = "miner"
-			cyborg_icon_override = 'modular_citadel/icons/mob/robots.dmi'
+			cyborg_icon_override = 'icons/mob/robots_citadel.dmi'
 			hat_offset = 4
 		if("Sleek")
 			cyborg_base_icon = "sleekmin"
-			cyborg_icon_override = 'modular_citadel/icons/mob/robots.dmi'
+			cyborg_icon_override = 'icons/mob/robots_citadel.dmi'
 		if("Can")
 			cyborg_base_icon = "canmin"
-			cyborg_icon_override = 'modular_citadel/icons/mob/robots.dmi'
+			cyborg_icon_override = 'icons/mob/robots_citadel.dmi'
 		if("Marina")
 			cyborg_base_icon = "marinamin"
-			cyborg_icon_override = 'modular_citadel/icons/mob/robots.dmi'
+			cyborg_icon_override = 'icons/mob/robots_citadel.dmi'
 		if("Spider")
 			cyborg_base_icon = "spidermin"
-			cyborg_icon_override = 'modular_citadel/icons/mob/robots.dmi'
+			cyborg_icon_override = 'icons/mob/robots_citadel.dmi'
 		if("Heavy")
 			cyborg_base_icon = "heavymin"
-			cyborg_icon_override = 'modular_citadel/icons/mob/robots.dmi'
+			cyborg_icon_override = 'icons/mob/robots_citadel.dmi'
 		if("Blade")
 			cyborg_base_icon = "blade"
-			cyborg_icon_override = 'modular_citadel/icons/mob/widerobot.dmi'
+			cyborg_icon_override = 'icons/mob/widerobot.dmi'
 			sleeper_overlay = "bladesleeper"
 			dogborg = TRUE
 		if("Vale")
 			cyborg_base_icon = "valemine"
-			cyborg_icon_override = 'modular_citadel/icons/mob/widerobot.dmi'
+			cyborg_icon_override = 'icons/mob/widerobot.dmi'
 			sleeper_overlay = "valeminesleeper"
 			dogborg = TRUE
 	return ..()

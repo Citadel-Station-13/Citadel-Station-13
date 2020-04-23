@@ -41,6 +41,7 @@
 
 	if(stat != DEAD)
 		return 1
+	doSprintBufferRegen()
 
 //Procs called while dead
 /mob/living/carbon/proc/handle_death()

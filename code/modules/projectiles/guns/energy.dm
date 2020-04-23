@@ -38,6 +38,7 @@
 
 	/// SET THIS TO TRUE IF YOU OVERRIDE altafterattack() or ANY right click action! If this is FALSE, the gun will show in examine its default right click behavior, which is to switch modes.
 	var/right_click_overridden = FALSE
+	recoil = 0.1
 
 /obj/item/gun/energy/emp_act(severity)
 	. = ..()

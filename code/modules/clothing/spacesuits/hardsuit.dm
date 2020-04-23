@@ -803,7 +803,7 @@
 /obj/item/clothing/suit/space/hardsuit/shielded/worn_overlays(isinhands, icon_file, used_state, style_flags = NONE)
 	. = ..()
 	if(!isinhands)
-		var/file2use = style_flags & STYLE_ALL_TAURIC ? 'modular_citadel/icons/mob/64x32_effects.dmi' : 'icons/effects/effects.dmi'
+		var/file2use = style_flags & STYLE_ALL_TAURIC ? 'icons/mob/64x32_effects.dmi' : 'icons/effects/effects.dmi'
 		. += mutable_appearance(file2use, shield_state, MOB_LAYER + 0.01)
 
 /obj/item/clothing/head/helmet/space/hardsuit/shielded

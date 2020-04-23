@@ -5,4 +5,3 @@
 	caliber = "75"
 	multiple_sprites = 2
 	max_ammo = 8
-

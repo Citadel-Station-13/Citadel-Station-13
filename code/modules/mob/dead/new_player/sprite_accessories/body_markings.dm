@@ -37,19 +37,19 @@
 	extra2 = FALSE
 	color_src = MATRIXED
 	gender_specific = 0
-	icon = 'modular_citadel/icons/mob/mam_markings.dmi'
+	icon = 'icons/mob/mam_markings.dmi'
 	recommended_species = list("mammal", "xeno", "slimeperson", "podweak")
 
 /datum/sprite_accessory/mam_body_markings/none
 	name = "None"
 	icon_state = "none"
 	ckeys_allowed = list("yousshouldnteverbeseeingthisyoumeme")
-	icon = 'modular_citadel/icons/mob/markings_notmammals.dmi'
+	icon = 'icons/mob/markings_notmammals.dmi'
 
 /datum/sprite_accessory/mam_body_markings/plain
 	name = "Plain"
 	icon_state = "plain"
-	icon = 'modular_citadel/icons/mob/markings_notmammals.dmi'
+	icon = 'icons/mob/markings_notmammals.dmi'
 
 /datum/sprite_accessory/mam_body_markings/redpanda
 	name = "Redpanda"
@@ -62,17 +62,17 @@
 /datum/sprite_accessory/mam_body_markings/bee
 	name = "Bee"
 	icon_state = "bee"
-	icon = 'modular_citadel/icons/mob/markings_notmammals.dmi'
+	icon = 'icons/mob/markings_notmammals.dmi'
 
 /datum/sprite_accessory/mam_body_markings/belly
 	name = "Belly"
 	icon_state = "belly"
-	icon = 'modular_citadel/icons/mob/markings_notmammals.dmi'
+	icon = 'icons/mob/markings_notmammals.dmi'
 
 /datum/sprite_accessory/mam_body_markings/bellyslim
 	name = "Bellyslim"
 	icon_state = "bellyslim"
-	icon = 'modular_citadel/icons/mob/markings_notmammals.dmi'
+	icon = 'icons/mob/markings_notmammals.dmi'
 
 /datum/sprite_accessory/mam_body_markings/corgi
 	name = "Corgi"
@@ -113,7 +113,7 @@
 /datum/sprite_accessory/mam_body_markings/frog
 	name = "Frog"
 	icon_state = "frog"
-	icon = 'modular_citadel/icons/mob/markings_notmammals.dmi'
+	icon = 'icons/mob/markings_notmammals.dmi'
 
 /datum/sprite_accessory/mam_body_markings/goat
 	name = "Goat"
@@ -122,7 +122,7 @@
 /datum/sprite_accessory/mam_body_markings/handsfeet
 	name = "Handsfeet"
 	icon_state = "handsfeet"
-	icon = 'modular_citadel/icons/mob/markings_notmammals.dmi'
+	icon = 'icons/mob/markings_notmammals.dmi'
 
 /datum/sprite_accessory/mam_body_markings/hawk
 	name = "Hawk"
@@ -143,7 +143,7 @@
 /datum/sprite_accessory/mam_body_markings/insect
 	name = "Insect"
 	icon_state = "insect"
-	icon = 'modular_citadel/icons/mob/markings_notmammals.dmi'
+	icon = 'icons/mob/markings_notmammals.dmi'
 
 /datum/sprite_accessory/mam_body_markings/otie
 	name = "Otie"
@@ -172,7 +172,7 @@
 /datum/sprite_accessory/mam_body_markings/pede
 	name = "Scolipede"
 	icon_state = "scolipede"
-	icon = 'modular_citadel/icons/mob/markings_notmammals.dmi'
+	icon = 'icons/mob/markings_notmammals.dmi'
 
 /datum/sprite_accessory/mam_body_markings/shark
 	name = "Shark"
@@ -201,7 +201,7 @@
 /datum/sprite_accessory/mam_body_markings/turian
 	name = "Turian"
 	icon_state = "turian"
-	icon = 'modular_citadel/icons/mob/markings_notmammals.dmi'
+	icon = 'icons/mob/markings_notmammals.dmi'
 
 /datum/sprite_accessory/mam_body_markings/wolf
 	name = "Wolf"
@@ -210,7 +210,7 @@
 /datum/sprite_accessory/mam_body_markings/xeno
 	name = "Xeno"
 	icon_state = "xeno"
-	icon = 'modular_citadel/icons/mob/markings_notmammals.dmi'
+	icon = 'icons/mob/markings_notmammals.dmi'
 
 /******************************************
 ************* Insect Markings *************

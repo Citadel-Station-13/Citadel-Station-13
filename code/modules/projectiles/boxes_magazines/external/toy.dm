@@ -65,3 +65,35 @@
 	multiple_sprites = 2
 	ammo_type = /obj/item/ammo_casing/caseless/foam_dart/mag
 	custom_materials = list(/datum/material/iron = 200)
+
+/obj/item/ammo_box/magazine/toy/AM4B
+	name = "foam force AM4-B magazine"
+	icon = 'icons/obj/guns/cit_guns.dmi'
+	icon_state = "AM4MAG-60"
+	max_ammo = 60
+	multiple_sprites = 0
+	custom_materials = list(/datum/material/iron = 200)
+
+/obj/item/ammo_box/magazine/toy/AM4C
+	name = "foam force AM4-C magazine"
+	icon = 'icons/obj/guns/cit_guns.dmi'
+	icon_state = "AM4MAG-32"
+	max_ammo = 32
+	multiple_sprites = 0
+	custom_materials = list(/datum/material/iron = 200)
+
+/obj/item/ammo_box/magazine/toy/x9
+	name = "foam force X9 magazine"
+	icon = 'icons/obj/guns/cit_guns.dmi'
+	icon_state = "toy9magazine"
+	max_ammo = 30
+	multiple_sprites = 2
+	custom_materials = list(/datum/material/iron = 200)
+
+/obj/item/ammo_box/magazine/toy/x9
+	name = "foam force X9 magazine"
+	icon = 'icons/obj/guns/cit_guns.dmi'
+	icon_state = "toy9magazine"
+	max_ammo = 30
+	multiple_sprites = 2
+	custom_materials = list(/datum/material/iron = 200)

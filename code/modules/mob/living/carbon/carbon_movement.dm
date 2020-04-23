@@ -29,6 +29,11 @@
 			nutrition -= HUNGER_FACTOR/10
 			if(m_intent == MOVE_INTENT_RUN)
 				nutrition -= HUNGER_FACTOR/10
+	wrongdirmovedelay = FALSE
+	if((combat_flags & COMBAT_FLAG_COMBAT_ACTIVE) && client && lastmousedir)
+		if(lastmousedir != dir)
+			wrongdirmovedelay = TRUE
+			setDir(lastmousedir, ismousemovement = TRUE)
 
 /mob/living/carbon/can_move_under_living(mob/living/other)
 	. = ..()

@@ -25,7 +25,7 @@
 /obj/item/gun/ballistic/automatic/pistol/modular
 	name = "modular pistol"
 	desc = "A small, easily concealable 10mm handgun. Has a threaded barrel for suppressors."
-	icon = 'modular_citadel/icons/obj/guns/cit_guns.dmi'
+	icon = 'icons/obj/guns/cit_guns.dmi'
 	icon_state = "cde"
 	can_unsuppress = TRUE
 	obj_flags = UNIQUE_RENAME
@@ -129,7 +129,7 @@
 /obj/item/gun/ballistic/automatic/pistol/antitank
 	name = "Anti Tank Pistol"
 	desc = "A massively impractical and silly monstrosity of a pistol that fires .50 calliber rounds. The recoil is likely to dislocate your wrist."
-	icon = 'modular_citadel/icons/obj/guns/cit_guns.dmi'
+	icon = 'icons/obj/guns/cit_guns.dmi'
 	icon_state = "atp"
 	item_state = "pistol"
 	recoil = 4
@@ -155,3 +155,27 @@
 	name = "Syndicate Anti Tank Pistol"
 	desc = "A massively impractical and silly monstrosity of a pistol that fires .50 calliber rounds. The recoil is likely to dislocate a variety of joints without proper bracing."
 	pin = /obj/item/firing_pin/implant/pindicate
+
+/obj/item/gun/ballistic/automatic/toy/pistol/stealth
+	name = "foam force stealth pistol"
+	desc = "A small, easily concealable toy bullpup handgun. Ages 8 and up."
+	icon = 'icons/obj/guns/cit_guns.dmi'
+	icon_state = "foamsp"
+	w_class = WEIGHT_CLASS_SMALL
+	mag_type = /obj/item/ammo_box/magazine/toy/pistol
+	can_suppress = FALSE
+	fire_sound = 'sound/weapons/gunshot_silenced.ogg'
+	suppressed = TRUE
+	burst_size = 1
+	fire_delay = 0
+	spread = 20
+	actions_types = list()
+
+/obj/item/gun/ballistic/automatic/toy/pistol/stealth/update_icon()
+	..()
+	if(magazine)
+		cut_overlays()
+		add_overlay("foamsp-magazine")
+	else
+		cut_overlays()
+	icon_state = "[initial(icon_state)][chambered ? "" : "-e"]"

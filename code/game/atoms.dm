@@ -49,6 +49,7 @@
 	var/list/fingerprintshidden
 	var/list/blood_DNA
 	var/list/suit_fibers
+	var/pseudo_z_axis
 
 /atom/New(loc, ...)
 	//atom creation method that preloads variables at creation
@@ -1014,3 +1015,6 @@ Proc for attack log creation, because really why not
 				max_grav = max(G.setting,max_grav)
 			return max_grav
 	return SSmapping.level_trait(T.z, ZTRAIT_GRAVITY)
+
+/atom/proc/get_fake_z()
+	return pseudo_z_axis

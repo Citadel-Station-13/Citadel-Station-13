@@ -1214,3 +1214,26 @@
 			STAMINA:<font size='1'><a href='?_src_=vars;[HrefToken()];mobToDamage=[refid];adjustDamage=stamina' id='stamina'>[getStaminaLoss()]</a>
 		</font>
 	"}
+
+/mob/living/carbon/update_stamina()
+	var/total_health = getStaminaLoss()
+	if(total_health >= STAMINA_SOFTCRIT)
+		if(!(combat_flags & COMBAT_FLAG_SOFT_STAMCRIT))
+			ENABLE_BITFIELD(combat_flags, COMBAT_FLAG_SOFT_STAMCRIT)
+	else
+		if(combat_flags & COMBAT_FLAG_SOFT_STAMCRIT)
+			DISABLE_BITFIELD(combat_flags, COMBAT_FLAG_SOFT_STAMCRIT)
+	if(total_health)
+		if(!(combat_flags & COMBAT_FLAG_HARD_STAMCRIT) && total_health >= STAMINA_CRIT && !stat)
+			to_chat(src, "<span class='notice'>You're too exhausted to keep going...</span>")
+			set_resting(TRUE, FALSE, FALSE)
+			disable_intentional_combat_mode(TRUE, FALSE)
+			ENABLE_BITFIELD(combat_flags, COMBAT_FLAG_HARD_STAMCRIT)
+			filters += CIT_FILTER_STAMINACRIT
+			update_mobility()
+	if((combat_flags & COMBAT_FLAG_HARD_STAMCRIT) && total_health <= STAMINA_SOFTCRIT)
+		to_chat(src, "<span class='notice'>You don't feel nearly as exhausted anymore.</span>")
+		DISABLE_BITFIELD(combat_flags, COMBAT_FLAG_HARD_STAMCRIT | COMBAT_FLAG_SOFT_STAMCRIT)
+		filters -= CIT_FILTER_STAMINACRIT
+		update_mobility()
+	update_health_hud()

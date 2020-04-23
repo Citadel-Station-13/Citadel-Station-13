@@ -52,31 +52,31 @@
 	name = "Axolotl"
 	icon_state = "axolotl"
 	color_src = MATRIXED
-	icon = 'modular_citadel/icons/mob/mam_tails.dmi'
+	icon = 'icons/mob/mam_tails.dmi'
 
 /datum/sprite_accessory/tails_animated/lizard/axolotl
 	name = "Axolotl"
 	icon_state = "axolotl"
 	color_src = MATRIXED
-	icon = 'modular_citadel/icons/mob/mam_tails.dmi'
+	icon = 'icons/mob/mam_tails.dmi'
 
 /datum/sprite_accessory/body_markings/guilmon
 	name = "Guilmon"
 	icon_state = "guilmon"
 	color_src = MATRIXED
-	icon = 'modular_citadel/icons/mob/markings_notmammals.dmi'
+	icon = 'icons/mob/markings_notmammals.dmi'
 
 /datum/sprite_accessory/tails/lizard/guilmon
 	name = "Guilmon"
 	icon_state = "guilmon"
 	color_src = MATRIXED
-	icon = 'modular_citadel/icons/mob/mam_tails.dmi'
+	icon = 'icons/mob/mam_tails.dmi'
 
 /datum/sprite_accessory/tails_animated/lizard/guilmon
 	name = "Guilmon"
 	icon_state = "guilmon"
 	color_src = MATRIXED
-	icon = 'modular_citadel/icons/mob/mam_tails.dmi'
+	icon = 'icons/mob/mam_tails.dmi'
 
 /******************************************
 ************** Human Tails ****************
@@ -93,105 +93,105 @@
 /datum/sprite_accessory/tails/human/ailurus
 	name = "Red Panda"
 	icon_state = "wah"
-	icon = 'modular_citadel/icons/mob/mam_tails.dmi'
+	icon = 'icons/mob/mam_tails.dmi'
 	color_src = MATRIXED
 
 /datum/sprite_accessory/tails_animated/human/ailurus
 	name = "Red Panda"
 	icon_state = "wah"
-	icon = 'modular_citadel/icons/mob/mam_tails.dmi'
+	icon = 'icons/mob/mam_tails.dmi'
 	color_src = MATRIXED
 
 /datum/sprite_accessory/tails/human/axolotl
 	name = "Axolotl"
 	icon_state = "axolotl"
-	icon = 'modular_citadel/icons/mob/mam_tails.dmi'
+	icon = 'icons/mob/mam_tails.dmi'
 	color_src = MATRIXED
 
 /datum/sprite_accessory/tails_animated/human/axolotl
 	name = "Axolotl"
 	icon_state = "axolotl"
-	icon = 'modular_citadel/icons/mob/mam_tails.dmi'
+	icon = 'icons/mob/mam_tails.dmi'
 	color_src = MATRIXED
 
 /datum/sprite_accessory/mam_tails/batl
 	name = "Bat (Long)"
-	icon = 'modular_citadel/icons/mob/mam_tails.dmi'
+	icon = 'icons/mob/mam_tails.dmi'
 	icon_state = "batl"
 
 /datum/sprite_accessory/mam_tails_animated/batl
 	name = "Bat (Long)"
-	icon = 'modular_citadel/icons/mob/mam_tails.dmi'
+	icon = 'icons/mob/mam_tails.dmi'
 	icon_state = "batl"
 
 /datum/sprite_accessory/mam_tails/bats
 	name = "Bat (Short)"
-	icon = 'modular_citadel/icons/mob/mam_tails.dmi'
+	icon = 'icons/mob/mam_tails.dmi'
 	icon_state = "bats"
 
 /datum/sprite_accessory/mam_tails_animated/bats
 	name = "Bat (Short)"
-	icon = 'modular_citadel/icons/mob/mam_tails.dmi'
+	icon = 'icons/mob/mam_tails.dmi'
 	icon_state = "bats"
 
 /datum/sprite_accessory/tails/human/bee
 	name = "Bee"
 	icon_state = "bee"
-	icon = 'modular_citadel/icons/mob/mam_tails.dmi'
+	icon = 'icons/mob/mam_tails.dmi'
 	color_src = MATRIXED
 
 /datum/sprite_accessory/tails_animated/human/bee
 	name = "Bee"
 	icon_state = "bee"
-	icon = 'modular_citadel/icons/mob/mam_tails.dmi'
+	icon = 'icons/mob/mam_tails.dmi'
 	color_src = MATRIXED
 
 /datum/sprite_accessory/tails/human/cat
 	name = "Cat"
 	icon_state = "cat"
-	icon = 'modular_citadel/icons/mob/mam_tails.dmi'
+	icon = 'icons/mob/mam_tails.dmi'
 	color_src = HAIR
 
 /datum/sprite_accessory/tails_animated/human/cat
 	name = "Cat"
 	icon_state = "cat"
-	icon = 'modular_citadel/icons/mob/mam_tails.dmi'
+	icon = 'icons/mob/mam_tails.dmi'
 	color_src = HAIR
 
 /datum/sprite_accessory/tails/human/catbig
 	name = "Cat, Big"
 	icon_state = "catbig"
-	icon = 'modular_citadel/icons/mob/mam_tails.dmi'
+	icon = 'icons/mob/mam_tails.dmi'
 	color_src = MATRIXED
 
 /datum/sprite_accessory/tails_animated/human/catbig
 	name = "Cat, Big"
 	icon_state = "catbig"
-	icon = 'modular_citadel/icons/mob/mam_tails.dmi'
+	icon = 'icons/mob/mam_tails.dmi'
 	color_src = MATRIXED
 
 /datum/sprite_accessory/tails/human/twocat
 	name = "Cat, Double"
 	icon_state = "twocat"
-	icon = 'modular_citadel/icons/mob/mam_tails.dmi'
+	icon = 'icons/mob/mam_tails.dmi'
 	color_src = MATRIXED
 
 /datum/sprite_accessory/tails_animated/human/twocat
 	name = "Cat, Double"
 	icon_state = "twocat"
-	icon = 'modular_citadel/icons/mob/mam_tails.dmi'
+	icon = 'icons/mob/mam_tails.dmi'
 	color_src = MATRIXED
 
 /datum/sprite_accessory/tails/human/cow
 	name = "Cow"
 	icon_state = "cow"
-	icon = 'modular_citadel/icons/mob/mam_tails.dmi'
+	icon = 'icons/mob/mam_tails.dmi'
 	color_src = MATRIXED
 
 /datum/sprite_accessory/tails_animated/human/cow
 	name = "Cow"
 	icon_state = "cow"
-	icon = 'modular_citadel/icons/mob/mam_tails.dmi'
+	icon = 'icons/mob/mam_tails.dmi'
 	color_src = MATRIXED
 
 /datum/sprite_accessory/tails/human/corvid
@@ -205,182 +205,182 @@
 /datum/sprite_accessory/tails/human/eevee
 	name = "Eevee"
 	icon_state = "eevee"
-	icon = 'modular_citadel/icons/mob/mam_tails.dmi'
+	icon = 'icons/mob/mam_tails.dmi'
 	color_src = MATRIXED
 
 /datum/sprite_accessory/tails_animated/human/eevee
 	name = "Eevee"
 	icon_state = "eevee"
-	icon = 'modular_citadel/icons/mob/mam_tails.dmi'
+	icon = 'icons/mob/mam_tails.dmi'
 	color_src = MATRIXED
 
 /datum/sprite_accessory/tails/human/fennec
 	name = "Fennec"
 	icon_state = "fennec"
-	icon = 'modular_citadel/icons/mob/mam_tails.dmi'
+	icon = 'icons/mob/mam_tails.dmi'
 	color_src = MATRIXED
 
 /datum/sprite_accessory/tails_animated/human/fennec
 	name = "Fennec"
 	icon_state = "fennec"
-	icon = 'modular_citadel/icons/mob/mam_tails.dmi'
+	icon = 'icons/mob/mam_tails.dmi'
 	color_src = MATRIXED
 
 /datum/sprite_accessory/tails/human/fish
 	name = "Fish"
 	icon_state = "fish"
-	icon = 'modular_citadel/icons/mob/mam_tails.dmi'
+	icon = 'icons/mob/mam_tails.dmi'
 	color_src = MATRIXED
 
 /datum/sprite_accessory/tails_animated/human/fish
 	name = "Fish"
 	icon_state = "fish"
-	icon = 'modular_citadel/icons/mob/mam_tails.dmi'
+	icon = 'icons/mob/mam_tails.dmi'
 	color_src = MATRIXED
 
 /datum/sprite_accessory/tails/human/fox
 	name = "Fox"
 	icon_state = "fox"
-	icon = 'modular_citadel/icons/mob/mam_tails.dmi'
+	icon = 'icons/mob/mam_tails.dmi'
 	color_src = MATRIXED
 
 /datum/sprite_accessory/tails_animated/human/fox
 	name = "Fox"
 	icon_state = "fox"
-	icon = 'modular_citadel/icons/mob/mam_tails.dmi'
+	icon = 'icons/mob/mam_tails.dmi'
 	color_src = MATRIXED
 
 /datum/sprite_accessory/tails/human/horse
 	name = "Horse"
 	icon_state = "horse"
-	icon = 'modular_citadel/icons/mob/mam_tails.dmi'
+	icon = 'icons/mob/mam_tails.dmi'
 	color_src = HAIR
 
 /datum/sprite_accessory/tails_animated/human/horse
 	name = "Horse"
 	icon_state = "horse"
-	icon = 'modular_citadel/icons/mob/mam_tails.dmi'
+	icon = 'icons/mob/mam_tails.dmi'
 	color_src = HAIR
 
 /datum/sprite_accessory/tails/human/husky
 	name = "Husky"
 	icon_state = "husky"
-	icon = 'modular_citadel/icons/mob/mam_tails.dmi'
+	icon = 'icons/mob/mam_tails.dmi'
 	color_src = MATRIXED
 
 /datum/sprite_accessory/tails_animated/human/husky
 	name = "Husky"
 	icon_state = "husky"
-	icon = 'modular_citadel/icons/mob/mam_tails.dmi'
+	icon = 'icons/mob/mam_tails.dmi'
 	color_src = MATRIXED
 
 /datum/sprite_accessory/tails/human/insect
 	name = "Insect"
 	icon_state = "insect"
-	icon = 'modular_citadel/icons/mob/mam_tails.dmi'
+	icon = 'icons/mob/mam_tails.dmi'
 	color_src = MATRIXED
 
 /datum/sprite_accessory/tails_animated/human/insect
 	name = "insect"
 	icon_state = "insect"
-	icon = 'modular_citadel/icons/mob/mam_tails.dmi'
+	icon = 'icons/mob/mam_tails.dmi'
 	color_src = MATRIXED
 
 /datum/sprite_accessory/tails/human/kitsune
 	name = "Kitsune"
 	icon_state = "kitsune"
 	color_src = MATRIXED
-	icon = 'modular_citadel/icons/mob/mam_tails.dmi'
+	icon = 'icons/mob/mam_tails.dmi'
 
 /datum/sprite_accessory/tails_animated/human/kitsune
 	name = "Kitsune"
 	icon_state = "kitsune"
 	color_src = MATRIXED
-	icon = 'modular_citadel/icons/mob/mam_tails.dmi'
+	icon = 'icons/mob/mam_tails.dmi'
 
 /datum/sprite_accessory/tails/human/murid
 	name = "Murid"
 	icon_state = "murid"
 	color_src = MATRIXED
-	icon = 'modular_citadel/icons/mob/mam_tails.dmi'
+	icon = 'icons/mob/mam_tails.dmi'
 
 /datum/sprite_accessory/tails_animated/human/murid
 	name = "Murid"
 	icon_state = "murid"
 	color_src = MATRIXED
-	icon = 'modular_citadel/icons/mob/mam_tails.dmi'
+	icon = 'icons/mob/mam_tails.dmi'
 
 /datum/sprite_accessory/tails/human/otie
 	name = "Otusian"
 	icon_state = "otie"
 	color_src = MATRIXED
-	icon = 'modular_citadel/icons/mob/mam_tails.dmi'
+	icon = 'icons/mob/mam_tails.dmi'
 
 /datum/sprite_accessory/tails_animated/human/otie
 	name = "Otusian"
 	icon_state = "otie"
 	color_src = MATRIXED
-	icon = 'modular_citadel/icons/mob/mam_tails.dmi'
+	icon = 'icons/mob/mam_tails.dmi'
 
 /datum/sprite_accessory/tails/orca
 	name = "Orca"
 	icon_state = "orca"
 	color_src = MATRIXED
-	icon = 'modular_citadel/icons/mob/mam_tails.dmi'
+	icon = 'icons/mob/mam_tails.dmi'
 
 /datum/sprite_accessory/tails_animated/orca
 	name = "Orca"
 	icon_state = "orca"
 	color_src = MATRIXED
-	icon = 'modular_citadel/icons/mob/mam_tails.dmi'
+	icon = 'icons/mob/mam_tails.dmi'
 
 /datum/sprite_accessory/tails/human/pede
 	name = "Scolipede"
 	icon_state = "pede"
 	color_src = MATRIXED
-	icon = 'modular_citadel/icons/mob/mam_tails.dmi'
+	icon = 'icons/mob/mam_tails.dmi'
 
 /datum/sprite_accessory/tails_animated/human/pede
 	name = "Scolipede"
 	icon_state = "pede"
 	color_src = MATRIXED
-	icon = 'modular_citadel/icons/mob/mam_tails.dmi'
+	icon = 'icons/mob/mam_tails.dmi'
 
 /datum/sprite_accessory/tails/human/rabbit
 	name = "Rabbit"
 	icon_state = "rabbit"
 	color_src = MATRIXED
-	icon = 'modular_citadel/icons/mob/mam_tails.dmi'
+	icon = 'icons/mob/mam_tails.dmi'
 
 /datum/sprite_accessory/tails_animated/human/rabbit
 	name = "Rabbit"
 	icon_state = "rabbit"
 	color_src = MATRIXED
-	icon = 'modular_citadel/icons/mob/mam_tails.dmi'
+	icon = 'icons/mob/mam_tails.dmi'
 
 /datum/sprite_accessory/tails/human/sergal
 	name = "Sergal"
 	icon_state = "sergal"
 	color_src = MATRIXED
-	icon = 'modular_citadel/icons/mob/mam_tails.dmi'
+	icon = 'icons/mob/mam_tails.dmi'
 
 /datum/sprite_accessory/tails_animated/human/sergal
 	name = "Sergal"
 	icon_state = "sergal"
 	color_src = MATRIXED
-	icon = 'modular_citadel/icons/mob/mam_tails.dmi'
+	icon = 'icons/mob/mam_tails.dmi'
 
 /datum/sprite_accessory/tails/human/skunk
 	name = "skunk"
 	icon_state = "skunk"
 	color_src = MATRIXED
-	icon = 'modular_citadel/icons/mob/mam_tails.dmi'
+	icon = 'icons/mob/mam_tails.dmi'
 
 /datum/sprite_accessory/tails_animated/human/skunk
 	name = "skunk"
 	icon_state = "skunk"
 	color_src = MATRIXED
-	icon = 'modular_citadel/icons/mob/mam_tails.dmi'
+	icon = 'icons/mob/mam_tails.dmi'
 
 /datum/sprite_accessory/tails/human/smooth
 	name = "Smooth"
@@ -402,25 +402,25 @@
 	name = "Shark"
 	icon_state = "shark"
 	color_src = MATRIXED
-	icon = 'modular_citadel/icons/mob/mam_tails.dmi'
+	icon = 'icons/mob/mam_tails.dmi'
 
 /datum/sprite_accessory/tails_animated/human/shark
 	name = "Shark"
 	icon_state = "shark"
 	color_src = MATRIXED
-	icon = 'modular_citadel/icons/mob/mam_tails.dmi'
+	icon = 'icons/mob/mam_tails.dmi'
 
 /datum/sprite_accessory/tails/human/datashark
 	name = "datashark"
 	icon_state = "datashark"
 	color_src = MATRIXED
-	icon = 'modular_citadel/icons/mob/mam_tails.dmi'
+	icon = 'icons/mob/mam_tails.dmi'
 
 /datum/sprite_accessory/tails_animated/human/datashark
 	name = "datashark"
 	icon_state = "datashark"
 	color_src = MATRIXED
-	icon = 'modular_citadel/icons/mob/mam_tails.dmi'
+	icon = 'icons/mob/mam_tails.dmi'
 
 /datum/sprite_accessory/tails/human/straighttail
 	name = "Straight Tail"
@@ -434,37 +434,37 @@
 	name = "Squirrel"
 	icon_state = "squirrel"
 	color_src = MATRIXED
-	icon = 'modular_citadel/icons/mob/mam_tails.dmi'
+	icon = 'icons/mob/mam_tails.dmi'
 
 /datum/sprite_accessory/tails_animated/human/squirrel
 	name = "Squirrel"
 	icon_state = "squirrel"
 	color_src = MATRIXED
-	icon = 'modular_citadel/icons/mob/mam_tails.dmi'
+	icon = 'icons/mob/mam_tails.dmi'
 
 /datum/sprite_accessory/tails/human/tentacle
 	name = "Tentacle"
 	icon_state = "tentacle"
 	color_src = MATRIXED
-	icon = 'modular_citadel/icons/mob/mam_tails.dmi'
+	icon = 'icons/mob/mam_tails.dmi'
 
 /datum/sprite_accessory/tails_animated/human/tentacle
 	name = "Tentacle"
 	icon_state = "tentacle"
 	color_src = MATRIXED
-	icon = 'modular_citadel/icons/mob/mam_tails.dmi'
+	icon = 'icons/mob/mam_tails.dmi'
 
 /datum/sprite_accessory/tails/human/tiger
 	name = "Tiger"
 	icon_state = "tiger"
 	color_src = MATRIXED
-	icon = 'modular_citadel/icons/mob/mam_tails.dmi'
+	icon = 'icons/mob/mam_tails.dmi'
 
 /datum/sprite_accessory/tails_animated/human/tiger
 	name = "Tiger"
 	icon_state = "tiger"
 	color_src = MATRIXED
-	icon = 'modular_citadel/icons/mob/mam_tails.dmi'
+	icon = 'icons/mob/mam_tails.dmi'
 
 /datum/sprite_accessory/tails/human/dtiger
 	name = "Dark Tiger"
@@ -486,13 +486,13 @@
 	name = "Wolf"
 	icon_state = "wolf"
 	color_src = MATRIXED
-	icon = 'modular_citadel/icons/mob/mam_tails.dmi'
+	icon = 'icons/mob/mam_tails.dmi'
 
 /datum/sprite_accessory/tails_animated/human/wolf
 	name = "Wolf"
 	icon_state = "wolf"
 	color_src = MATRIXED
-	icon = 'modular_citadel/icons/mob/mam_tails.dmi'
+	icon = 'icons/mob/mam_tails.dmi'
 
 /******************************************
 ************** Furry Tails ****************
@@ -500,7 +500,7 @@
 
 /datum/sprite_accessory/mam_tails
 	color_src = MATRIXED
-	icon = 'modular_citadel/icons/mob/mam_tails.dmi'
+	icon = 'icons/mob/mam_tails.dmi'
 	recommended_species = list("mammal", "slimeperson", "podweak", "felinid", "insect")
 
 /datum/sprite_accessory/mam_tails/none
@@ -510,7 +510,7 @@
 
 /datum/sprite_accessory/mam_tails_animated
 	color_src = MATRIXED
-	icon = 'modular_citadel/icons/mob/mam_tails.dmi'
+	icon = 'icons/mob/mam_tails.dmi'
 
 /datum/sprite_accessory/mam_tails_animated/none
 	name = "None"
@@ -576,7 +576,7 @@
 /datum/sprite_accessory/mam_tails_animated/catbig
 	name = "Cat, Big"
 	icon_state = "catbig"
-	
+
 /datum/sprite_accessory/mam_tails/twocat
 	name = "Cat, Double"
 	icon_state = "twocat"

@@ -34,6 +34,7 @@
 	integrity_failure = 0.33
 	smooth = SMOOTH_TRUE
 	canSmoothWith = list(/obj/structure/table, /obj/structure/table/reinforced, /obj/structure/table/greyscale)
+	pseudo_z_axis = 8
 
 /obj/structure/table/examine(mob/user)
 	. = ..()

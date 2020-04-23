@@ -92,6 +92,15 @@
 	add_fingerprint(user)
 
 	user.adjustStaminaLossBuffered(getweight()*0.8)//CIT CHANGE - makes attacking things cause stamina loss
+	if(force >= 15)
+		shake_camera(user, ((force - 10) * 0.01 + 1), ((force - 10) * 0.01))
+		if(M.client)
+			switch (M.client.prefs.damagescreenshake)
+				if (1)
+					shake_camera(M, ((force - 10) * 0.015 + 1), ((force - 10) * 0.015))
+				if (2)
+					if(!CHECK_MOBILITY(M, MOBILITY_MOVE))
+						shake_camera(M, ((force - 10) * 0.015 + 1), ((force - 10) * 0.015))
 
 //the equivalent of the standard version of attack() but for object targets.
 /obj/item/proc/attack_obj(obj/O, mob/living/user)
@@ -106,6 +115,8 @@
 	user.changeNext_move(CLICK_CD_MELEE)
 	user.do_attack_animation(O)
 	O.attacked_by(src, user)
+	if(force >= 20)
+		shake_camera(user, ((force - 15) * 0.01 + 1), ((force - 15) * 0.01))
 
 /atom/movable/proc/attacked_by()
 	return
@@ -208,3 +219,24 @@
 	animate(src, pixel_x = -2, pixel_y = -2, time = 1, flags = ANIMATION_RELATIVE | ANIMATION_PARALLEL)
 	animate(pixel_x = 4, pixel_y = 4, time = 1, flags = ANIMATION_RELATIVE)
 	animate(pixel_x = -2, pixel_y = -2, time = 0.5, flags = ANIMATION_RELATIVE)
+
+/obj/item/proc/rightclick_melee_attack_chain(mob/user, atom/target, params)
+	if(!alt_pre_attack(target, user, params)) //Hey, does this item have special behavior that should override all normal right-click functionality?
+		if(!target.altattackby(src, user, params)) //Does the target do anything special when we right-click on it?
+			melee_attack_chain(user, target, params) //Ugh. Lame! I'm filing a legal complaint about the discrimination against the right mouse button!
+		else
+			altafterattack(target, user, TRUE, params)
+	return
+
+/obj/item/proc/alt_pre_attack(atom/A, mob/living/user, params)
+	return FALSE //return something other than false if you wanna override attacking completely
+
+/atom/proc/altattackby(obj/item/W, mob/user, params)
+	return FALSE //return something other than false if you wanna add special right-click behavior to objects.
+
+/obj/item/proc/rightclick_attack_self(mob/user)
+	return FALSE
+
+/obj/item/proc/altafterattack(atom/target, mob/user, proximity_flag, click_parameters)
+	SEND_SIGNAL(src, COMSIG_ITEM_ALT_AFTERATTACK, target, user, proximity_flag, click_parameters)
+	return FALSE

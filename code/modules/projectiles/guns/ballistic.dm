@@ -8,6 +8,7 @@
 	var/obj/item/ammo_box/magazine/magazine
 	var/casing_ejector = TRUE //whether the gun ejects the chambered casing
 	var/magazine_wording = "magazine"
+	recoil = 0.25
 
 /obj/item/gun/ballistic/Initialize()
 	. = ..()

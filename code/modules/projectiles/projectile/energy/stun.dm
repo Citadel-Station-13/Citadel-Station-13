@@ -49,3 +49,20 @@
 	knockdown_stamoverride = 30
 	knockdown_stam_max = null
 	tase_duration = 10
+
+/obj/item/projectile/energy/electrode/pump
+	name = "electron blast"
+	icon_state = "stunjectile"
+	color = null
+	nodamage = TRUE
+	knockdown = 100
+	knockdown_stamoverride = 0
+	knockdown_stam_max = 0
+	stamina = 18
+	stutter = 5
+	jitter = 20
+	strong_tase = FALSE
+	tase_duration = 0
+	hitsound = 'sound/weapons/taserhit.ogg'
+	range = 3
+	strong_tase = FALSE

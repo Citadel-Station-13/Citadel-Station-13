@@ -3,7 +3,7 @@
 *********** Xeno Dorsal Tubes *************
 *******************************************/
 /datum/sprite_accessory/xeno_dorsal
-	icon = 'modular_citadel/icons/mob/xeno_parts_greyscale.dmi'
+	icon = 'icons/mob/xeno_parts_greyscale.dmi'
 
 /datum/sprite_accessory/xeno_dorsal/standard
 	name = "Standard"
@@ -21,7 +21,7 @@
 ************* Xeno Tails ******************
 *******************************************/
 /datum/sprite_accessory/xeno_tail
-	icon = 'modular_citadel/icons/mob/xeno_parts_greyscale.dmi'
+	icon = 'icons/mob/xeno_parts_greyscale.dmi'
 
 /datum/sprite_accessory/xeno_tail/none
 	name = "None"
@@ -34,7 +34,7 @@
 ************* Xeno Heads ******************
 *******************************************/
 /datum/sprite_accessory/xeno_head
-	icon = 'modular_citadel/icons/mob/xeno_parts_greyscale.dmi'
+	icon = 'icons/mob/xeno_parts_greyscale.dmi'
 
 /datum/sprite_accessory/xeno_head/standard
 	name = "Standard"

@@ -48,7 +48,7 @@
 	var/mutation_color = ""
 	var/no_update = 0
 	var/body_markings = ""	//for bodypart markings
-	var/body_markings_icon = 'modular_citadel/icons/mob/mam_markings.dmi'
+	var/body_markings_icon = 'icons/mob/mam_markings.dmi'
 	var/list/markings_color = list()
 	var/aux_marking
 	var/digitigrade_type
@@ -480,9 +480,9 @@
 		// Body markings
 		if(!isnull(body_markings))
 			if(species_id == "husk")
-				marking = image('modular_citadel/icons/mob/markings_notmammals.dmi', "husk_[body_zone]", -MARKING_LAYER, image_dir)
+				marking = image('icons/mob/markings_notmammals.dmi', "husk_[body_zone]", -MARKING_LAYER, image_dir)
 			else if(species_id == "husk" && use_digitigrade)
-				marking = image('modular_citadel/icons/mob/markings_notmammals.dmi', "husk_[digitigrade_type]_[use_digitigrade]_[body_zone]", -MARKING_LAYER, image_dir)
+				marking = image('icons/mob/markings_notmammals.dmi', "husk_[digitigrade_type]_[use_digitigrade]_[body_zone]", -MARKING_LAYER, image_dir)
 
 			else if(!use_digitigrade)
 				if(body_zone == BODY_ZONE_CHEST)
@@ -502,7 +502,7 @@
 				aux += image(limb.icon, "[species_id]_[I]", -aux_layer, image_dir)
 				if(!isnull(aux_marking))
 					if(species_id == "husk")
-						auxmarking += image('modular_citadel/icons/mob/markings_notmammals.dmi', "husk_[I]", -aux_layer, image_dir)
+						auxmarking += image('icons/mob/markings_notmammals.dmi', "husk_[I]", -aux_layer, image_dir)
 					else
 						auxmarking += image(body_markings_icon, "[body_markings]_[I]", -aux_layer, image_dir)
 			. += aux
@@ -521,7 +521,7 @@
 				aux += image(limb.icon, "[I]", -aux_layer, image_dir)
 				if(!isnull(aux_marking))
 					if(species_id == "husk")
-						auxmarking += image('modular_citadel/icons/mob/markings_notmammals.dmi', "husk_[I]", -aux_layer, image_dir)
+						auxmarking += image('icons/mob/markings_notmammals.dmi', "husk_[I]", -aux_layer, image_dir)
 					else
 						auxmarking += image(body_markings_icon, "[body_markings]_[I]", -aux_layer, image_dir)
 			. += auxmarking
@@ -529,9 +529,9 @@
 
 		if(!isnull(body_markings))
 			if(species_id == "husk")
-				marking = image('modular_citadel/icons/mob/markings_notmammals.dmi', "husk_[body_zone]", -MARKING_LAYER, image_dir)
+				marking = image('icons/mob/markings_notmammals.dmi', "husk_[body_zone]", -MARKING_LAYER, image_dir)
 			else if(species_id == "husk" && use_digitigrade)
-				marking = image('modular_citadel/icons/mob/markings_notmammals.dmi', "husk_digitigrade_[use_digitigrade]_[body_zone]", -MARKING_LAYER, image_dir)
+				marking = image('icons/mob/markings_notmammals.dmi', "husk_digitigrade_[use_digitigrade]_[body_zone]", -MARKING_LAYER, image_dir)
 
 			else if(!use_digitigrade)
 				if(body_zone == BODY_ZONE_CHEST)
