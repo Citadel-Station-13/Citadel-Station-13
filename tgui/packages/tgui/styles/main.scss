@@ -13,7 +13,6 @@
 @include meta.load-css('./atomic/outline.scss');
 @include meta.load-css('./atomic/position.scss');
 @include meta.load-css('./atomic/text.scss');
-@include meta.load-css('./atomic/outline.scss');
 
 // Components
 @include meta.load-css('./components/BlockQuote.scss');
