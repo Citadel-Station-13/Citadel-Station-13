@@ -5,6 +5,7 @@
 /obj/machinery/mineral
 	var/input_dir = NORTH
 	var/output_dir = SOUTH
+	var/needs_item_input
 
 /obj/machinery/mineral/proc/unload_mineral(atom/movable/S)
 	S.forceMove(drop_location())

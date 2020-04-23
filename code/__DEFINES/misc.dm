@@ -523,3 +523,5 @@ GLOBAL_LIST_INIT(pda_reskins, list(PDA_SKIN_CLASSIC = 'icons/obj/pda.dmi', PDA_S
 #define NIGHTSHIFT_AREA_NONE				4		//default/highest.
 
 #define UNTIL(X) while(!(X)) stoplag()
+
+#define WANTED_FILE "wanted_message.json"
