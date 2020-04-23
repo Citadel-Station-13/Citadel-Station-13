@@ -33,7 +33,8 @@
 
 /obj/item/clothing/gloves/tackler/dropped(mob/user)
 	. = ..()
-	qdel(tackler)
+	if(tackler)
+		qdel(tackler)
 
 /obj/item/clothing/gloves/tackler/dolphin
 	name = "dolphin gloves"
