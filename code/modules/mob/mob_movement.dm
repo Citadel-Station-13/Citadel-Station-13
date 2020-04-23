@@ -253,7 +253,7 @@
 	if(!speed_change)
 		remove_movespeed_modifier(/datum/movespeed_modifier/gravity)
 	else
-		add_movespeed_modifier(/datum/movespeed_modifier/gravity, multiplicative_slowdown = speed_change)
+		add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/gravity, multiplicative_slowdown = speed_change)
 
 //bodypart selection - Cyberboss
 //8 toggles through head - eyes - mouth
