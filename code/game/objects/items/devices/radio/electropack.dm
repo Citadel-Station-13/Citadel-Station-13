@@ -16,6 +16,9 @@
 	var/on = TRUE
 	var/shock_cooldown = FALSE
 
+	var/ui_x = 260
+	var/ui_y = 137
+
 /obj/item/electropack/suicide_act(mob/living/carbon/user)
 	user.visible_message("<span class='suicide'>[user] hooks [user.p_them()]self to the electropack and spams the trigger! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	return (FIRELOSS)
@@ -128,22 +131,12 @@
 	if(!ishuman(user))
 		return
 
-	user.set_machine(src)
-	var/dat = {"
-<TT>
-Turned [on ? "On" : "Off"] - <A href='?src=[REF(src)];set=power'>Toggle</A><BR>
-<B>Frequency/Code</B> for electropack:<BR>
-Frequency:
-[format_frequency(src.frequency)]
-<A href='byond://?src=[REF(src)];set=freq'>Set</A><BR>
-
-Code:
-[src.code]
-<A href='byond://?src=[REF(src)];set=code'>Set</A><BR>
-</TT>"}
-	user << browse(dat, "window=radio")
-	onclose(user, "radio")
-	return
+/obj/item/electropack/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
+									datum/tgui/master_ui = null, datum/ui_state/state = GLOB.hands_state)
+	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+	if(!ui)
+		ui = new(user, src, ui_key, "Electropack", name, ui_x, ui_y, master_ui, state)
+		ui.open()
 
 /obj/item/electropack/shockcollar
 	name = "shock collar"

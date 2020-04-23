@@ -441,19 +441,9 @@
 
 	var/location = viable_occupant.dna.mutation_index.Find(mutation) //We do this because we dont want people using sysexp or similair tools to just read the mutations.
 
-	if(!location) //Do this only when needed, dont make a list with mutations for every iteration if you dont need to
-		var/list/mutations = get_mutation_list(TRUE)
-		if(mutation in mutations)
-			location = mutations.Find(mutation)
-	if(mutation == current_mutation)
-		class = "selected"
-	if(location > DNA_MUTATION_BLOCKS)
-		temp_html += "<a class='clean' href='?src=[REF(src)];task=inspect;num=[location];'><img class='[class]' src='dna_extra.gif' width = '65'  alt='Extra Mutation'></a>"
-	else if(mutation in stored_research.discovered_mutations)
-		temp_html += "<a class='clean' href='?src=[REF(src)];task=inspect;num=[location];'><img class='[class]' src='dna_discovered.gif' width = '65'  alt='Discovered Mutation'></a>"
-	else
-		temp_html += "<a class='clean' clean href='?src=[REF(src)];task=inspect;num=[location];'><img class='[class]' src='dna_undiscovered.gif' width = '65' alt=Undiscovered Mutation'></a>"
-	return temp_html
+	if(!ui)
+		ui = new(user, src, ui_key, "DnaConsole", name, 539, 710, master_ui, state)
+		ui.open()
 
 /obj/machinery/computer/scan_consolenew/proc/display_sequence(mutation, storage_slot) //Storage slot is for when viewing from the stored mutations
 	var/temp_html = ""

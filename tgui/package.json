@@ -1,6 +1,13 @@
 {
   "name": "tgui",
+<<<<<<< HEAD
   "private": true,
+=======
+  "version": "3.0.0",
+  "workspaces": [
+    "packages/*"
+  ],
+>>>>>>> 2185124... Merge pull request #50497 from stylemistake/tgui-3.0
   "scripts": {
     "build": "gulp --min",
     "watch": "gulp watch"

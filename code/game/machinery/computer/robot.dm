@@ -8,6 +8,8 @@
 	var/temp = null
 
 	light_color = LIGHT_COLOR_PINK
+	ui_x = 500
+	ui_y = 460
 
 /obj/machinery/computer/robotics/proc/can_control(mob/user, mob/living/silicon/robot/R)
 	if(!istype(R))
@@ -25,14 +27,25 @@
 			return FALSE
 	return TRUE
 
-/obj/machinery/computer/robotics/ui_interact(mob/user)
-	. = ..()
-	if (src.z > 6)
-		to_chat(user, "<span class='boldannounce'>Unable to establish a connection</span>: \black You're too far away from the station!")
-		return
-	user.set_machine(src)
-	var/dat
-	var/robots = 0
+/obj/machinery/computer/robotics/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
+									datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
+	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+	if(!ui)
+		ui = new(user, src, ui_key, "RoboticsControlConsole", name, ui_x, ui_y, master_ui, state)
+		ui.open()
+
+/obj/machinery/computer/robotics/ui_data(mob/user)
+	var/list/data = list()
+
+	data["can_hack"] = FALSE
+	if(issilicon(user))
+		var/mob/living/silicon/S = user
+		if(S.hack_software)
+			data["can_hack"] = TRUE
+	else if(IsAdminGhost(user))
+		data["can_hack"] = TRUE
+
+	data["cyborgs"] = list()
 	for(var/mob/living/silicon/robot/R in GLOB.silicon_mobs)
 		if(!can_control(user, R))
 			continue

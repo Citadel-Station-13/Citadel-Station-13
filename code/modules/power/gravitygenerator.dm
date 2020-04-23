@@ -28,7 +28,7 @@ GLOBAL_LIST_EMPTY(gravity_generators) // We will keep track of this by adding ne
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	var/sprite_number = 0
 
-/obj/machinery/gravity_generator/safe_throw_at()
+/obj/machinery/gravity_generator/safe_throw_at(atom/target, range, speed, mob/thrower, spin = TRUE, diagonals_first = FALSE, datum/callback/callback, force = MOVE_FORCE_STRONG, gentle = FALSE)
 	return FALSE
 
 /obj/machinery/gravity_generator/ex_act(severity, target)
@@ -56,7 +56,7 @@ GLOBAL_LIST_EMPTY(gravity_generators) // We will keep track of this by adding ne
 	qdel(src)
 
 /obj/machinery/gravity_generator/proc/set_broken()
-	stat |= BROKEN
+	obj_break()
 
 /obj/machinery/gravity_generator/proc/set_fix()
 	stat &= ~BROKEN
@@ -116,6 +116,8 @@ GLOBAL_LIST_EMPTY(gravity_generators) // We will keep track of this by adding ne
 	sprite_number = 8
 	use_power = IDLE_POWER_USE
 	interaction_flags_machine = INTERACT_MACHINE_ALLOW_SILICON | INTERACT_MACHINE_OFFLINE
+	ui_x = 400
+	ui_y = 165
 	var/on = TRUE
 	var/breaker = TRUE
 	var/list/parts = list()
@@ -187,14 +189,14 @@ GLOBAL_LIST_EMPTY(gravity_generators) // We will keep track of this by adding ne
 /obj/machinery/gravity_generator/main/attackby(obj/item/I, mob/user, params)
 	switch(broken_state)
 		if(GRAV_NEEDS_SCREWDRIVER)
-			if(istype(I, /obj/item/screwdriver))
+			if(I.tool_behaviour == TOOL_SCREWDRIVER)
 				to_chat(user, "<span class='notice'>You secure the screws of the framework.</span>")
 				I.play_tool_sound(src)
 				broken_state++
 				update_icon()
 				return
 		if(GRAV_NEEDS_WELDING)
-			if(istype(I, /obj/item/weldingtool))
+			if(I.tool_behaviour == TOOL_WELDER)
 				if(I.use_tool(src, user, 0, volume=50, amount=1))
 					to_chat(user, "<span class='notice'>You mend the damaged framework.</span>")
 					broken_state++
@@ -206,14 +208,14 @@ GLOBAL_LIST_EMPTY(gravity_generators) // We will keep track of this by adding ne
 				if(PS.get_amount() >= 10)
 					PS.use(10)
 					to_chat(user, "<span class='notice'>You add the plating to the framework.</span>")
-					playsound(src.loc, 'sound/machines/click.ogg', 75, 1)
+					playsound(src.loc, 'sound/machines/click.ogg', 75, TRUE)
 					broken_state++
 					update_icon()
 				else
 					to_chat(user, "<span class='warning'>You need 10 sheets of plasteel!</span>")
 				return
 		if(GRAV_NEEDS_WRENCH)
-			if(istype(I, /obj/item/wrench))
+			if(I.tool_behaviour == TOOL_WRENCH)
 				to_chat(user, "<span class='notice'>You secure the plating to the framework.</span>")
 				I.play_tool_sound(src)
 				set_fix()
@@ -224,7 +226,7 @@ GLOBAL_LIST_EMPTY(gravity_generators) // We will keep track of this by adding ne
 									datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
-		ui = new(user, src, ui_key, "gravity_generator", name, 400, 200, master_ui, state)
+		ui = new(user, src, ui_key, "GravityGenerator", name, ui_x, ui_y, master_ui, state)
 		ui.open()
 
 /obj/machinery/gravity_generator/main/ui_data(mob/user)
@@ -241,16 +243,18 @@ GLOBAL_LIST_EMPTY(gravity_generators) // We will keep track of this by adding ne
 /obj/machinery/gravity_generator/main/ui_act(action, params)
 	if(..())
 		return
+
 	switch(action)
 		if("gentoggle")
 			breaker = !breaker
 			investigate_log("was toggled [breaker ? "<font color='green'>ON</font>" : "<font color='red'>OFF</font>"] by [key_name(usr)].", INVESTIGATE_GRAVITY)
 			set_power()
+			. = TRUE
 
 // Power and Icon States
 
 /obj/machinery/gravity_generator/main/power_change()
-	..()
+	. = ..()
 	investigate_log("has [stat & NOPOWER ? "lost" : "regained"] power.", INVESTIGATE_GRAVITY)
 	set_power()
 
@@ -313,7 +317,7 @@ GLOBAL_LIST_EMPTY(gravity_generators) // We will keep track of this by adding ne
 				charge_count -= 2
 
 			if(charge_count % 4 == 0 && prob(75)) // Let them know it is charging/discharging.
-				playsound(src.loc, 'sound/effects/empulse.ogg', 100, 1)
+				playsound(src.loc, 'sound/effects/empulse.ogg', 100, TRUE)
 
 			updateDialog()
 			if(prob(25)) // To help stop "Your clothes feel warm." spam.

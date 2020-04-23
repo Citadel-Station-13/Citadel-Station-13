@@ -6,8 +6,8 @@
 	size = 12
 	requires_ntnet = 1
 	required_access = ACCESS_NETWORK	//NETWORK CONTROL IS A MORE SECURE PROGRAM.
-	available_on_ntnet = 1
-	tgui_id = "ntos_net_monitor"
+	available_on_ntnet = TRUE
+	tgui_id = "NtosNetMonitor"
 
 /datum/computer_file/program/ntnetmonitor/ui_act(action, params)
 	if(..())

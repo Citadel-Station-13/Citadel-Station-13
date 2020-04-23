@@ -93,10 +93,22 @@
 	else
 		icon_state = "[initial(icon_state)]-off"
 
-/obj/machinery/mineral/equipment_vendor/ui_interact(mob/user)
-	. = ..()
-	var/list/dat = list()
-	dat += "<br><b>Equipment point cost list:</b><BR><table border='0' width='300'>"
+/obj/machinery/mineral/equipment_vendor/ui_base_html(html)
+	var/datum/asset/spritesheet/assets = get_asset_datum(/datum/asset/spritesheet/vending)
+	. = replacetext(html, "<!--customheadhtml-->", assets.css_tag())
+
+/obj/machinery/mineral/equipment_vendor/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
+									datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
+	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+	if(!ui)
+		var/datum/asset/assets = get_asset_datum(/datum/asset/spritesheet/vending)
+		assets.send(user)
+		ui = new(user, src, ui_key, "MiningVendor", name, ui_x, ui_y, master_ui, state)
+		ui.open()
+
+/obj/machinery/mineral/equipment_vendor/ui_static_data(mob/user)
+	. = list()
+	.["product_records"] = list()
 	for(var/datum/data/mining_equipment/prize in prize_list)
 		dat += "<tr><td>[prize.equipment_name]</td><td>[prize.cost]</td><td><A href='?src=[REF(src)];purchase=[REF(prize)]'>Purchase</A></td></tr>"
 	dat += "</table>"

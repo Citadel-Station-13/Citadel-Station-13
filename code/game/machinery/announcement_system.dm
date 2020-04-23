@@ -105,12 +105,10 @@ GLOBAL_LIST_EMPTY(announcement_systems)
 
 /obj/machinery/announcement_system/ui_interact(mob/user)
 	. = ..()
-	if(!user.canUseTopic(src, !hasSiliconAccessInArea(user)))
-		return
-	if(stat & BROKEN)
-		visible_message("<span class='warning'>[src] buzzes.</span>", "<span class='italics'>You hear a faint buzz.</span>")
-		playsound(src.loc, 'sound/machines/buzz-two.ogg', 50, 1)
-		return
+	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+	if(!ui)
+		ui = new(user, src, ui_key, "AutomatedAnnouncement", "Automated Announcement System", 500, 225, master_ui, state)
+		ui.open()
 
 
 	var/contents = "Arrival Announcement:  <A href='?src=[REF(src)];ArrivalT-Topic=1'>([(arrivalToggle ? "On" : "Off")])</a><br>\n<A href='?src=[REF(src)];ArrivalTopic=1'>[arrival]</a><br><br>\n"

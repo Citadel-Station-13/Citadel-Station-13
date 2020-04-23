@@ -6,91 +6,84 @@
 	transfer_access = ACCESS_HEADS
 	requires_ntnet = 0
 	size = 8
-	tgui_id = "ntos_card"
-	ui_x = 600
-	ui_y = 700
+	tgui_id = "NtosCard"
+	ui_x = 450
+	ui_y = 520
 
-	var/mod_mode = 1
-	var/is_centcom = 0
-	var/show_assignments = 0
-	var/minor = 0
-	var/authenticated = 0
-	var/list/reg_ids = list()
-	var/list/region_access = null
-	var/list/head_subordinates = null
-	var/target_dept = 0 //Which department this computer has access to. 0=all departments
-	var/change_position_cooldown = 30
-	//Jobs you cannot open new positions for
-	var/list/blacklisted = list(
-		"AI",
-		"Assistant",
-		"Cyborg",
-		"Captain",
-		"Head of Personnel",
-		"Head of Security",
-		"Chief Engineer",
-		"Research Director",
-		"Chief Medical Officer")
+	var/is_centcom = FALSE
+	var/minor = FALSE
+	var/authenticated = FALSE
+	var/list/region_access
+	var/list/head_subordinates
+	///Which departments this computer has access to. Defined as access regions. null = all departments
+	var/target_dept
 
-	//The scaling factor of max total positions in relation to the total amount of people on board the station in %
-	var/max_relative_positions = 30 //30%: Seems reasonable, limit of 6 @ 20 players
+	//For some reason everything was exploding if this was static.
+	var/list/sub_managers
 
-	//This is used to keep track of opened positions for jobs to allow instant closing
-	//Assoc array: "JobName" = (int)<Opened Positions>
-	var/list/opened_positions = list();
+/datum/computer_file/program/card_mod/New(obj/item/modular_computer/comp)
+	. = ..()
+	sub_managers = list(
+		"[ACCESS_HOP]" = list(
+			"department" = list(CARDCON_DEPARTMENT_SERVICE, CARDCON_DEPARTMENT_COMMAND),
+			"region" = 1,
+			"head" = "Head of Personnel"
+		),
+		"[ACCESS_HOS]" = list(
+			"department" = CARDCON_DEPARTMENT_SECURITY,
+			"region" = 2,
+			"head" = "Head of Security"
+		),
+		"[ACCESS_CMO]" = list(
+			"department" = CARDCON_DEPARTMENT_MEDICAL,
+			"region" = 3,
+			"head" = "Chief Medical Officer"
+		),
+		"[ACCESS_RD]" = list(
+			"department" = CARDCON_DEPARTMENT_SCIENCE,
+			"region" = 4,
+			"head" = "Research Director"
+		),
+		"[ACCESS_CE]" = list(
+			"department" = CARDCON_DEPARTMENT_ENGINEERING,
+			"region" = 5,
+			"head" = "Chief Engineer"
+		)
+	)
 
-/datum/computer_file/program/card_mod/New()
-	..()
-	addtimer(CALLBACK(src, .proc/SetConfigCooldown), 0)
+/datum/computer_file/program/card_mod/proc/authenticate(mob/user, obj/item/card/id/id_card)
+	if(!id_card)
+		return
 
-/datum/computer_file/program/card_mod/proc/SetConfigCooldown()
-	change_position_cooldown = CONFIG_GET(number/id_console_jobslot_delay)
+	region_access = list()
+	if(!target_dept && (ACCESS_CHANGE_IDS in id_card.access))
+		minor = FALSE
+		authenticated = TRUE
+		update_static_data(user)
+		return TRUE
 
-/datum/computer_file/program/card_mod/event_idremoved(background, slot)
-	if(!slot || slot == 2)// slot being false means both are removed
-		minor = 0
-		authenticated = 0
-		head_subordinates = null
-		region_access = null
+	var/list/head_types = list()
+	for(var/access_text in sub_managers)
+		var/list/info = sub_managers[access_text]
+		var/access = text2num(access_text)
+		if((access in id_card.access) && ((info["region"] in target_dept) || !length(target_dept)))
+			region_access += info["region"]
+			//I don't even know what I'm doing anymore
+			head_types += info["head"]
 
+	head_subordinates = list()
+	if(length(head_types))
+		for(var/j in SSjob.occupations)
+			var/datum/job/job = j
+			for(var/head in head_types)//god why
+				if(head in job.department_head)
+					head_subordinates += job.title
 
-/datum/computer_file/program/card_mod/proc/job_blacklisted(jobtitle)
-	return (jobtitle in blacklisted)
-
-
-//Logic check for if you can open the job
-/datum/computer_file/program/card_mod/proc/can_open_job(datum/job/job)
-	if(job)
-		if(!job_blacklisted(job.title))
-			if((job.total_positions <= GLOB.player_list.len * (max_relative_positions / 100)))
-				var/delta = (world.time / 10) - GLOB.time_last_changed_position
-				if((change_position_cooldown < delta) || (opened_positions[job.title] < 0))
-					return 1
-				return -2
-			return 0
-	return 0
-
-//Logic check for if you can close the job
-/datum/computer_file/program/card_mod/proc/can_close_job(datum/job/job)
-	if(job)
-		if(!job_blacklisted(job.title))
-			if(job.total_positions > job.current_positions)
-				var/delta = (world.time / 10) - GLOB.time_last_changed_position
-				if((change_position_cooldown < delta) || (opened_positions[job.title] > 0))
-					return 1
-				return -2
-			return 0
-	return 0
-
-/datum/computer_file/program/card_mod/proc/format_jobs(list/jobs)
-	var/obj/item/computer_hardware/card_slot/card_slot = computer.all_components[MC_CARD]
-	var/obj/item/card/id/id_card = card_slot.stored_card
-	var/list/formatted = list()
-	for(var/job in jobs)
-		formatted.Add(list(list(
-			"display_name" = replacetext(job, "&nbsp", " "),
-			"target_rank" = id_card && id_card.assignment ? id_card.assignment : "Unassigned",
-			"job" = job)))
+	if(length(region_access))
+		minor = TRUE
+		authenticated = TRUE
+		update_static_data(user)
+		return TRUE
 
 	return formatted
 

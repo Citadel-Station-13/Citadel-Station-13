@@ -8,22 +8,15 @@
 	var/list/located = list()
 	var/screen = 0
 	var/stored_data
-
-/obj/machinery/computer/mecha/ui_interact(mob/user)
-	. = ..()
-	var/dat = "<html><head><meta http-equiv='Content-Type' content='text/html; charset=UTF-8'><title>[src.name]</title><style>h3 {margin: 0px; padding: 0px;}</style></head><body>"
-	if(screen == 0)
-		dat += "<h3>Tracking beacons data</h3>"
-		var/list/trackerlist = list()
-		for(var/obj/mecha/MC in GLOB.mechas_list)
-			trackerlist += MC.trackers
-		for(var/obj/item/mecha_parts/mecha_tracking/TR in trackerlist)
-			var/answer = TR.get_mecha_info()
-			if(answer)
-				dat += {"<hr>[answer]<br/>
-						<a href='?src=[REF(src)];send_message=[REF(TR)]'>Send message</a><br/>
-						<a href='?src=[REF(src)];get_log=[REF(TR)]'>Show exosuit log</a><br/>
-						[TR.recharging?"Recharging EMP Pulse...<br>":"<a style='color: #f00;' href='?src=[REF(src)];shock=[REF(TR)]'>(EMP Pulse)</a><br>"]"}
+	ui_x = 500
+	ui_y = 500
+	
+/obj/machinery/computer/mecha/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
+									datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
+	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+	if(!ui)
+		ui = new(user, src, ui_key, "ExosuitControlConsole", name, ui_x, ui_y, master_ui, state)
+		ui.open()
 
 	if(screen==1)
 		dat += "<h3>Log contents</h3>"

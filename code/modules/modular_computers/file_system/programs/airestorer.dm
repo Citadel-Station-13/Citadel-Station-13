@@ -7,9 +7,9 @@
 	requires_ntnet = 0
 	usage_flags = PROGRAM_CONSOLE
 	transfer_access = ACCESS_HEADS
-	available_on_ntnet = 1
-	tgui_id = "ntos_ai_restorer"
-	ui_x = 600
+	available_on_ntnet = TRUE
+	tgui_id = "NtosAiRestorer"
+	ui_x = 370
 	ui_y = 400
 
 	var/restoring = FALSE
