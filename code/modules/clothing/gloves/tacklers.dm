@@ -33,11 +33,7 @@
 
 /obj/item/clothing/gloves/tackler/dropped(mob/user)
 	. = ..()
-	if(!ishuman(user))
-		return
-	var/mob/living/carbon/human/H = user
-	if(H.get_item_by_slot(ITEM_SLOT_GLOVES) == src)
-		qdel(tackler)
+	qdel(tackler)
 
 /obj/item/clothing/gloves/tackler/dolphin
 	name = "dolphin gloves"
