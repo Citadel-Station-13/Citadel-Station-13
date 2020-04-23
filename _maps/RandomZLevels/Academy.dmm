@@ -3598,9 +3598,6 @@
 /turf/open/floor/carpet,
 /area/awaymission/academy/academygate)
 "km" = (
-/obj/machinery/gateway{
-	dir = 9
-	},
 /obj/structure/cable{
 	icon_state = "1-4"
 	},
@@ -3638,25 +3635,16 @@
 /turf/open/floor/plasteel,
 /area/awaymission/academy/classrooms)
 "kr" = (
-/obj/machinery/gateway{
-	dir = 4
-	},
 /turf/open/floor/plating,
 /area/awaymission/academy/academygate)
 "ks" = (
-/obj/machinery/gateway{
-	dir = 10
-	},
-/turf/open/floor/plating,
+	/turf/open/floor/plating,
 /area/awaymission/academy/academygate)
 "kt" = (
 /obj/machinery/gateway,
 /turf/open/floor/plating,
 /area/awaymission/academy/academygate)
 "ku" = (
-/obj/machinery/gateway{
-	dir = 6
-	},
 /turf/open/floor/plating,
 /area/awaymission/academy/academygate)
 "kv" = (
@@ -3743,6 +3731,7 @@
 /turf/open/floor/plasteel,
 /area/awaymission/academy/academyaft)
 "kI" = (
+/obj/machinery/gateway/away,
 /obj/structure/cable,
 /obj/machinery/gateway/centeraway{
 	calibrated = 1
@@ -13008,10 +12997,11 @@ jU
 jZ
 kb
 ke
-kj
-km
-kp
-ks
+ke
+kf
+kf
+kf
+ke
 kf
 kf
 ky
@@ -13139,9 +13129,10 @@ jY
 kc
 jW
 kf
-kn
+kf
 kI
-kt
+ke
+ke
 kf
 kf
 ky
@@ -13269,9 +13260,9 @@ jY
 kc
 jW
 kf
-ko
-kr
-ku
+kf
+kf
+kf
 kf
 kf
 ky

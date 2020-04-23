@@ -175,6 +175,7 @@
 								M.load_template(S)
 								M.existing_shuttle = SSshuttle.emergency
 								M.action_load(S)
+								log_shuttle("[key_name(usr)] has purchased [S.name].")
 								message_admins("[S.name] loaded, purchased by [usr]")
 							else
 								to_chat(usr, "Something went wrong! The shuttle exchange system seems to be down.")
