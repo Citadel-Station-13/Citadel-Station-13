@@ -479,5 +479,4 @@
 	integer = FALSE
 
 //Allows players to set a hexadecimal color of their choice as skin tone, on top of the standard ones.
-/datum/config_entry/number/allow_custom_skintones
-	config_entry_value = 1
+/datum/config_entry/flag/allow_custom_skintones

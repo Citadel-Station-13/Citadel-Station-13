@@ -185,7 +185,7 @@
 			START_PROCESSING(SSobj, src)
 	else if((reagents.pH < -3) || (reagents.pH > 17))
 		visible_message("<span class='notice'>[icon2html(src, viewers(src))] \The [src] is damaged by the super pH and begins to deform!</span>")
-		reagents.pH = CLAMP(reagents.pH, -3, 17)
+		reagents.pH = clamp(reagents.pH, -3, 17)
 		container_HP -= 1
 
 
