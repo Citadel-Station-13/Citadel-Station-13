@@ -60782,19 +60782,6 @@
 	},
 /turf/open/floor/engine,
 /area/engine/engineering)
-"vsG" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
-/obj/machinery/door/airlock/maintenance{
-	name = "Research Lab Maintenance";
-	req_one_access_txt = "7;29"
-	},
-/turf/open/floor/plating,
-/area/maintenance/department/engine)
 "vsJ" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/effect/turf_decal/tile/neutral{
@@ -94054,7 +94041,7 @@ jZG
 bpY
 bpY
 bpY
-vsG
+bNZ
 bva
 bva
 bva
