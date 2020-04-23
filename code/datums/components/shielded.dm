@@ -66,7 +66,7 @@
 	if(world.time < last_time_used && !dissipating)
 		return
 	var/old_charges = charges
-	charges = CLAMP(charges + recharge_rate, 0, max_charges)
+	charges = clamp(charges + recharge_rate, 0, max_charges)
 	if(round(old_charges) >= round(charges)) //only send outputs if it effectively gained at least one charge
 		return
 	var/sound = recharge_sound
@@ -85,7 +85,7 @@
 
 /datum/component/shielded/proc/adjust_charges(amount)
 	var/old_charges = charges
-	charges = CLAMP(charges + amount, 0, max_charges)
+	charges = clamp(charges + amount, 0, max_charges)
 	if(recharge_delay && recharge_rate && (dissipating ? !charges : charges == max_charges))
 		STOP_PROCESSING(SSdcs, src)
 	if(charges < 1 && del_on_overload)
