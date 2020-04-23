@@ -45,7 +45,11 @@ menu "menu"
 		command = "hotkeys-help"
 		category = "&Help"
 		saved-params = "is-checked"
-
+	elem 
+		name = "&Hotkeys"
+		command = "hotkeys-help"
+		category = "&Help"
+		saved-params = "is-checked"
 
 window "mainwindow"
 	elem "mainwindow"
@@ -285,11 +289,23 @@ window "statwindow"
 		tab-background-color = #242424
 		prefix-color = #e0e0e0
 		suffix-color = #e0e0e0
-
+		
+window "popupwindow"
+	elem "popupwindow"
+		type = MAIN
+		pos = 281,0
+		size = 120x120
+		anchor1 = none
+		anchor2 = none
+		background-color = none
+		is-visible = false
+		saved-params = "pos;size;is-minimized;is-maximized"
+		statusbar = false
+		can-resize = false
 window "preferences_window"
 	elem "preferences_window"
 		type = MAIN
-		pos = 372,0
+		pos = 281,0
 		size = 1280x1000
 		anchor1 = none
 		anchor2 = none

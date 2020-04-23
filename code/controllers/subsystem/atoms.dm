@@ -119,6 +119,7 @@ SUBSYSTEM_DEF(atoms)
 		B.alias = "Mutation #[i]"
 		GLOB.all_mutations[B.type] = B
 		GLOB.full_sequences[B.type] = generate_gene_sequence(B.blocks)
+		GLOB.alias_mutations[B.alias] = B.type
 		if(B.locked)
 			continue
 		if(B.quality == POSITIVE)
