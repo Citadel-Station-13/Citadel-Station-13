@@ -52,6 +52,7 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 	inverse_chem_val 		= 0.5
 	inverse_chem		= /datum/reagent/impure/SDZF
 	can_synth = TRUE
+	value = REAGENT_VALUE_EXCEPTIONAL
 
 
 //Main SDGF chemical
@@ -309,6 +310,7 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 	can_synth = TRUE
 	taste_description = "a weird chemical fleshy flavour"
 	chemical_flags = REAGENT_SNEAKYNAME
+	value = REAGENT_VALUE_VERY_RARE
 
 /datum/reagent/impure/SDZF/on_mob_life(mob/living/carbon/M) //If you're bad at fermichem, turns your clone into a zombie instead.
 	switch(current_cycle)//Pretends to be normal
