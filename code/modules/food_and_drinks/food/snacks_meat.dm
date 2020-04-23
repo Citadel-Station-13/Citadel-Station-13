@@ -372,3 +372,12 @@
 	bonus_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/nutriment/vitamin = 1)
 	tastes = list("meat" = 3, "smokey sauce" = 1)
 	foodtype = MEAT
+
+/obj/item/reagent_containers/food/snacks/gtc
+	name = "General tso chicken"
+	desc = "Chicken mixed with a cocktail of garlic and chili to make a rather meat heavy salad."
+	icon_state = "general_tso_chicken"
+	list_reagents = list(/datum/reagent/consumable/nutriment = 6, /datum/reagent/consumable/nutriment/vitamin = 2)
+	bonus_reagents = list(/datum/reagent/consumable/nutriment = 6, /datum/reagent/consumable/nutriment/vitamin = 3)
+	tastes = list("meat" = 3, "takeout food" = 1)
+	foodtype = MEAT

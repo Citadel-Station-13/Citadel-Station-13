@@ -188,3 +188,16 @@
 /obj/item/kitchen/knife/scimiar/Initialize()
 	. = ..()
 	AddComponent(/datum/component/butchering, 90 - force, 100, force - 60) //bonus chance increases depending on force
+
+/obj/item/kitchen/foon
+	name = "foon"
+	desc = "A mix of a spoon and a fork, but only the worst parts of the too."
+	icon_state = "foon"
+	force = 1//000
+	w_class = WEIGHT_CLASS_TINY
+	throwforce = 0
+	throw_speed = 3
+	throw_range = 5
+	custom_materials = list(/datum/material/iron=80)
+	flags_1 = CONDUCT_1
+	attack_verb = list("fooned", "poked")

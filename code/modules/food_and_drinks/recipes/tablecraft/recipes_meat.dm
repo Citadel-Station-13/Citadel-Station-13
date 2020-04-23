@@ -84,6 +84,17 @@
 	result = /obj/item/reagent_containers/food/snacks/nugget
 	subcategory = CAT_MEAT
 
+/datum/crafting_recipe/food/gtc
+	name = "General tso chicken"
+	reqs = list(
+		/obj/item/reagent_containers/food/snacks/meat/cutlet = 2,
+		/datum/reagent/consumable/ethanol/sake = 5,
+		/obj/item/reagent_containers/food/snacks/grown/garlic = 1,
+		/obj/item/reagent_containers/food/snacks/grown/chili = 1
+	)
+	result = /obj/item/reagent_containers/food/snacks/gtc
+	subcategory = CAT_MEAT
+
 /datum/crafting_recipe/food/corndog
 	name = "Corndog meal"
 	reqs = list(

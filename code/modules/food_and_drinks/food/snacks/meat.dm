@@ -29,6 +29,27 @@
 	..()
 	S.name = "[name] steak"
 
+/obj/item/reagent_containers/food/snacks/meat/slab/fat
+	name = "fat"
+	desc = "Collection of fat from an animal."
+	icon_state = "fat"
+	dried_type = null
+	bitesize = 1
+	list_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/cooking_oil = 5)
+	cooked_type = /obj/item/reagent_containers/food/snacks/tallow
+	slice_path = /obj/item/reagent_containers/food/snacks/meat/rawcutlet/cracklings
+	slices_num = 6
+	filling_color = "#FF0000"
+	tastes = list("fat" = 1)
+	foodtype = MEAT | GROSS //Dont just eat this
+
+/obj/item/reagent_containers/food/snacks/tallow
+	name = "Tallow"
+	desc = "Collection of cooked fat from an animal."
+	icon_state = "tallow"
+	list_reagents = list(/datum/reagent/consumable/cooking_oil = 12) //A way to get more cooking oil if needed
+	foodtype = MEAT | GROSS
+
 ///////////////////////////////////// HUMAN MEATS //////////////////////////////////////////////////////
 
 
@@ -440,6 +461,12 @@
 	cooked_type = /obj/item/reagent_containers/food/snacks/meat/cutlet/gondola
 	tastes = list("meat" = 1, "tranquility" = 1)
 
+/obj/item/reagent_containers/food/snacks/meat/rawcutlet/cracklings
+	name = "raw cracklings"
+	desc = "Cut up strips of animal fat"
+	cooked_type = /obj/item/reagent_containers/food/snacks/meat/cutlet/crackling
+	tastes = list("fat" = 1, "oil" = 1)
+
 //Cooked cutlets
 
 /obj/item/reagent_containers/food/snacks/meat/cutlet
@@ -487,3 +514,9 @@
 /obj/item/reagent_containers/food/snacks/meat/cutlet/chicken
 	name = "chicken cutlet"
 	tastes = list("chicken" = 1)
+
+/obj/item/reagent_containers/food/snacks/meat/cutlet/crackling
+	name = "cracklings"
+	desc = "A set of cracklings."
+	icon_state = "cracklings_alt"
+	tastes = list("fried meat" = 1)

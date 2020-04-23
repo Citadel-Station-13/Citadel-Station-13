@@ -103,3 +103,13 @@
 	bonus_reagents = list(/datum/reagent/consumable/nutriment = 8, /datum/reagent/consumable/nutriment/vitamin = 1)
 	tastes = list("noodle" = 1, "butter" = 1)
 	foodtype = GRAIN | DAIRY
+
+/obj/item/reagent_containers/food/snacks/pho
+	name = "pho noodles"
+	desc = "Rice Noodles suspended in a lively soup."
+	icon = 'icons/obj/food/pizzaspaghetti.dmi'
+	icon_state = "pho"
+	trash = /obj/item/reagent_containers/glass/bowl
+	bonus_reagents = list(/datum/reagent/consumable/nutriment = 8, /datum/reagent/consumable/nutriment/vitamin = 1)
+	tastes = list("noodle" = 1, "butter" = 1)
+	foodtype = GRAIN | DAIRY

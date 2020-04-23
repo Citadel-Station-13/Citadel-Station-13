@@ -262,3 +262,11 @@
 	tastes = list("bungo" = 2, "hot curry" = 4, "tropical sweetness" = 1)
 	filling_color = "#E6A625"
 	foodtype = VEGETABLES | FRUIT | DAIRY
+
+/obj/item/reagent_containers/food/snacks/soup/mashpotato
+	name = "mash potato soup"
+	desc = "Gravy with cooked up pulp of a potato."
+	icon_state = "onionsoup"
+	bonus_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/nutriment/vitamin = 5)
+	tastes = list("gravy" = 3, "potato" = 1)
+	foodtype = VEGETABLES | MEAT

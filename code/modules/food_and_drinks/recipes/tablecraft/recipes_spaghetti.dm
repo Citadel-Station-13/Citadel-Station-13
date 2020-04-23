@@ -51,6 +51,15 @@
 	result = /obj/item/reagent_containers/food/snacks/beefnoodle
 	subcategory = CAT_SPAGHETTI
 
+/datum/crafting_recipe/food/butternoodles
+	name = "Butter Noodles"
+	reqs = list(
+		/obj/item/reagent_containers/food/snacks/boiledspaghetti = 1,
+		/obj/item/reagent_containers/food/snacks/butter = 1
+	)
+	result = /obj/item/reagent_containers/food/snacks/butternoodles
+	subcategory = CAT_SPAGHETTI
+
 /datum/crafting_recipe/food/chowmein
 	name = "Chowmein"
 	reqs = list(
@@ -62,11 +71,15 @@
 	result = /obj/item/reagent_containers/food/snacks/chowmein
 	subcategory = CAT_SPAGHETTI
 
-/datum/crafting_recipe/food/butternoodles
-	name = "Butter Noodles"
+/datum/crafting_recipe/food/pho
+	name = "Pho soup"
 	reqs = list(
+		/datum/reagent/water = 10,
+		/datum/reagent/consumable/rice = 10,
+		/obj/item/reagent_containers/glass/bowl = 1,
 		/obj/item/reagent_containers/food/snacks/boiledspaghetti = 1,
-		/obj/item/reagent_containers/food/snacks/butter = 1
+		/obj/item/reagent_containers/food/snacks/meat/cutlet = 1,
+		/obj/item/reagent_containers/food/snacks/grown/nettle = 1
 	)
-	result = /obj/item/reagent_containers/food/snacks/butternoodles
+	result = /obj/item/reagent_containers/food/snacks/pho
 	subcategory = CAT_SPAGHETTI

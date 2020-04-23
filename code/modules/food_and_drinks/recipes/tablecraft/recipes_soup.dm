@@ -99,6 +99,19 @@
 	result = /obj/item/reagent_containers/food/snacks/soup/hotchili
 	subcategory = CAT_SOUP
 
+/datum/crafting_recipe/food/mashsoup
+	name = "Mash potato soup"
+	reqs = list(
+		/datum/reagent/water = 20,
+		/datum/reagent/consumable/flour = 5,
+		/obj/item/reagent_containers/glass/bowl = 1,
+		/obj/item/reagent_containers/food/snacks/butter = 1,
+		/obj/item/reagent_containers/food/snacks/grown/potato = 2,
+		/obj/item/reagent_containers/food/snacks/tallow = 1
+	)
+	result= /obj/item/reagent_containers/food/snacks/soup/mashpotato
+	subcategory = CAT_SOUP
+
 /datum/crafting_recipe/food/meatballsoup
 	name = "Meatball soup"
 	reqs = list(
