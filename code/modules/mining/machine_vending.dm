@@ -7,6 +7,8 @@
 	icon_state = "mining"
 	density = TRUE
 	circuit = /obj/item/circuitboard/machine/mining_equipment_vendor
+	ui_x = 425
+	ui_y = 600
 	var/icon_deny = "mining-deny"
 	var/obj/item/card/id/inserted_id
 	var/list/prize_list = list( //if you add something to this, please, for the love of god, sort it by price/type. use tabs and not spaces.
@@ -83,9 +85,14 @@
 	src.equipment_path = path
 	src.cost = cost
 
-/obj/machinery/mineral/equipment_vendor/power_change()
-	..()
-	update_icon()
+/obj/machinery/mineral/equipment_vendor/Initialize()
+	. = ..()
+	build_inventory()
+
+/obj/machinery/mineral/equipment_vendor/proc/build_inventory()
+	for(var/p in prize_list)
+		var/datum/data/mining_equipment/M = p
+		GLOB.vending_products[M.equipment_path] = 1
 
 /obj/machinery/mineral/equipment_vendor/update_icon_state()
 	if(powered())
@@ -110,39 +117,65 @@
 	. = list()
 	.["product_records"] = list()
 	for(var/datum/data/mining_equipment/prize in prize_list)
-		dat += "<tr><td>[prize.equipment_name]</td><td>[prize.cost]</td><td><A href='?src=[REF(src)];purchase=[REF(prize)]'>Purchase</A></td></tr>"
-	dat += "</table>"
+		var/list/product_data = list(
+			path = replacetext(replacetext("[prize.equipment_path]", "/obj/item/", ""), "/", "-"),
+			name = prize.equipment_name,
+			price = prize.cost,
+			ref = REF(prize)
+		)
+		.["product_records"] += list(product_data)
 
-	var/datum/browser/popup = new(user, "miningvendor", "Mining Equipment Vendor", 400, 350)
-	popup.set_content(dat.Join())
-	popup.open()
-	return
+/obj/machinery/mineral/equipment_vendor/ui_data(mob/user)
+	. = list()
+	var/mob/living/carbon/human/H
+	var/obj/item/card/id/C
+	if(ishuman(user))
+		H = user
+		C = H.get_idcard(TRUE)
+		if(C)
+			.["user"] = list()
+			.["user"]["points"] = C.mining_points
+			if(C.assignment)
+				.["user"]["job"] = C.assignment
+			else
+				.["user"]["job"] = "No Job"
 
-/obj/machinery/mineral/equipment_vendor/Topic(href, href_list)
+/obj/machinery/mineral/equipment_vendor/ui_act(action, params)
 	if(..())
 		return
-	if(href_list["purchase"])
-		var/mob/M = usr
-		var/obj/item/card/id/I = M.get_idcard(TRUE)
-		if(istype(I))
-			var/datum/data/mining_equipment/prize = locate(href_list["purchase"]) in prize_list
-			if (!prize || !(prize in prize_list))
-				to_chat(usr, "<span class='warning'>Error: Invalid choice!</span>")
+
+	switch(action)
+		if("purchase")
+			var/mob/M = usr
+			var/obj/item/card/id/I = M.get_idcard(TRUE)
+			if(!istype(I))
+				to_chat(usr, "<span class='alert'>Error: An ID is required!</span>")
+				flick(icon_deny, src)
+				return
+			var/datum/data/mining_equipment/prize = locate(params["ref"]) in prize_list
+			if(!prize || !(prize in prize_list))
+				to_chat(usr, "<span class='alert'>Error: Invalid choice!</span>")
 				flick(icon_deny, src)
 				return
 			if(prize.cost > I.mining_points)
-				to_chat(usr, "<span class='warning'>Error: Insufficient credits for [prize.equipment_name] on [I]!</span>")
+				to_chat(usr, "<span class='alert'>Error: Insufficient points for [prize.equipment_name] on [I]!</span>")
 				flick(icon_deny, src)
-			else
-				I.mining_points -= prize.cost
-				to_chat(usr, "<span class='notice'>[src] clanks to life briefly before vending [prize.equipment_name]!</span>")
-				new prize.equipment_path(src.loc)
-				SSblackbox.record_feedback("nested tally", "mining_equipment_bought", 1, list("[type]", "[prize.equipment_path]"))
-		else
-			to_chat(usr, "<span class='warning'>Error: An ID with a registered account is required!</span>")
-			flick(icon_deny, src)
-	updateUsrDialog()
-	return
+				return
+			I.mining_points -= prize.cost
+			to_chat(usr, "<span class='notice'>[src] clanks to life briefly before vending [prize.equipment_name]!</span>")
+			new prize.equipment_path(loc)
+			SSblackbox.record_feedback("nested tally", "mining_equipment_bought", 1, list("[type]", "[prize.equipment_path]"))
+			. = TRUE
+
+/obj/machinery/mineral/equipment_vendor/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/mining_voucher))
+		RedeemVoucher(I, user)
+		return
+	if(default_deconstruction_screwdriver(user, "mining-open", "mining", I))
+		return
+	if(default_deconstruction_crowbar(I))
+		return
+	return ..()
 
 /obj/machinery/mineral/equipment_vendor/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/mining_voucher))

@@ -86,7 +86,7 @@ SUBSYSTEM_DEF(shuttle)
 		WARNING("No /obj/docking_port/mobile/emergency/backup placed on the map!")
 	if(!supply)
 		WARNING("No /obj/docking_port/mobile/supply placed on the map!")
-	realtimeofstart = world.realtime
+		realtimeofstart = world.realtime
 	return ..()
 
 /datum/controller/subsystem/shuttle/proc/initial_load()
@@ -293,7 +293,7 @@ SUBSYSTEM_DEF(shuttle)
 		emergency.cancel(get_area(user))
 		log_shuttle("[key_name(user)] has recalled the shuttle.")
 		message_admins("[ADMIN_LOOKUPFLW(user)] has recalled the shuttle.")
-		deadchat_broadcast("<span class='deadsay'><span class='name'>[user.real_name]</span> has recalled the shuttle from <span class='name'>[get_area_name(user, TRUE)]</span>.</span>", user)
+		deadchat_broadcast(" has recalled the shuttle from <span class='name'>[get_area_name(user, TRUE)]</span>.", "<span class='name'>[user.real_name]</span>", user)
 		return 1
 
 /datum/controller/subsystem/shuttle/proc/canRecall()
@@ -313,7 +313,7 @@ SUBSYSTEM_DEF(shuttle)
 		else
 			if(emergency.timeLeft(1) < emergencyCallTime * 0.25)
 				return
-	return 1
+	return TRUE
 
 /datum/controller/subsystem/shuttle/proc/autoEvac()
 	if (!SSticker.IsRoundInProgress())

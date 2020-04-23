@@ -206,19 +206,19 @@
 /datum/asset/spritesheet/simple/minesweeper
 	name = "minesweeper"
 	assets = list(
-		"1" = 'icons/misc/minesweeper_tiles/one.png',
-		"2" = 'icons/misc/minesweeper_tiles/two.png',
-		"3" = 'icons/misc/minesweeper_tiles/three.png',
-		"4" = 'icons/misc/minesweeper_tiles/four.png',
-		"5" = 'icons/misc/minesweeper_tiles/five.png',
-		"6" = 'icons/misc/minesweeper_tiles/six.png',
-		"7" = 'icons/misc/minesweeper_tiles/seven.png',
-		"8" = 'icons/misc/minesweeper_tiles/eight.png',
-		"empty" = 'icons/misc/minesweeper_tiles/empty.png',
-		"flag" = 'icons/misc/minesweeper_tiles/flag.png',
-		"hidden" = 'icons/misc/minesweeper_tiles/hidden.png',
-		"mine" = 'icons/misc/minesweeper_tiles/mine.png',
-		"minehit" = 'icons/misc/minesweeper_tiles/minehit.png'
+		"1" = 'icons/UI_Icons/minesweeper_tiles/one.png',
+		"2" = 'icons/UI_Icons/minesweeper_tiles/two.png',
+		"3" = 'icons/UI_Icons/minesweeper_tiles/three.png',
+		"4" = 'icons/UI_Icons/minesweeper_tiles/four.png',
+		"5" = 'icons/UI_Icons/minesweeper_tiles/five.png',
+		"6" = 'icons/UI_Icons/minesweeper_tiles/six.png',
+		"7" = 'icons/UI_Icons/minesweeper_tiles/seven.png',
+		"8" = 'icons/UI_Icons/minesweeper_tiles/eight.png',
+		"empty" = 'icons/UI_Icons/minesweeper_tiles/empty.png',
+		"flag" = 'icons/UI_Icons/minesweeper_tiles/flag.png',
+		"hidden" = 'icons/UI_Icons/minesweeper_tiles/hidden.png',
+		"mine" = 'icons/UI_Icons/minesweeper_tiles/mine.png',
+		"minehit" = 'icons/UI_Icons/minesweeper_tiles/minehit.png'
 	)
 
 
@@ -260,7 +260,7 @@
 	name = "pipes"
 
 /datum/asset/spritesheet/pipes/register()
-	for (var/each in list('icons/obj/atmospherics/pipes/pipe_item.dmi', 'icons/obj/atmospherics/pipes/disposal.dmi', 'icons/obj/atmospherics/pipes/transit_tube.dmi', 'icons/obj/plumbing/fluid_ducts.dmi'))
+	for (var/each in list('icons/obj/atmospherics/pipes/pipe_item.dmi', 'icons/obj/atmospherics/pipes/disposal.dmi'))
 		InsertAll("", each, GLOB.alldirs)
 	..()
 

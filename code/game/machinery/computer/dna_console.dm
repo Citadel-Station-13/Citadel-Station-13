@@ -1210,7 +1210,7 @@
 			var/len = length_char(scanner_occupant.dna.uni_identity)
 			rad_pulse_timer = world.time + (radduration*10)
 			rad_pulse_index = WRAP(text2num(params["index"]), 1, len+1)
-			begin_processing()
+			START_PROCESSING(SSobj, src)
 			return
 
 		// Cancels the delayed action - In this context it is not the radiation
@@ -1503,7 +1503,7 @@
 		//	   this DNA can not be bad
 		//   is done via radiation bursts, so radiation immune carbons are not viable
 		// And the DNA Scanner itself must have a valid scan level
-	if(scanner_occupant.has_dna() && !HAS_TRAIT(scanner_occupant, TRAIT_RADIMMUNE) && !HAS_TRAIT(scanner_occupant, TRAIT_BADDNA) || (connected_scanner.scan_level == 3))
+	if(scanner_occupant.has_dna() && !HAS_TRAIT(scanner_occupant, TRAIT_RADIMMUNE) && !HAS_TRAIT(scanner_occupant, TRAIT_NOCLONE) || (connected_scanner.scan_level == 3))
 		return TRUE
 
 	return FALSE
@@ -1575,7 +1575,7 @@
 	// Imagine it being like a microwave stopping when you open the door.
 	rad_pulse_index = 0
 	rad_pulse_timer = 0
-	end_processing()
+	STOP_PROCESSING(SSobj, src)
 	scanner_occupant = null
 
 /**
@@ -1953,7 +1953,7 @@
 	// If we can't, abort the procedure.
 	if(!can_modify_occupant())
 		rad_pulse_index = 0
-		end_processing()
+		STOP_PROCESSING(SSobj, src)
 		return
 
 	var/len = length_char(scanner_occupant.dna.uni_identity)
@@ -1965,7 +1965,7 @@
 	scanner_occupant.updateappearance(mutations_overlay_update=1)
 
 	rad_pulse_index = 0
-	end_processing()
+	STOP_PROCESSING(SSobj, src)
 	return
 
 /**

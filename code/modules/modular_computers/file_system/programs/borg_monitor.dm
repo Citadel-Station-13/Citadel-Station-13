@@ -36,7 +36,7 @@
 
 		var/list/cyborg_data = list(
 			name = R.name,
-			locked_down = R.lockcharge,
+			locked_down = R.locked_down,
 			status = R.stat,
 			shell_discon = shell,
 			charge = R.cell ? round(R.cell.percent()) : null,

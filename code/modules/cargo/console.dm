@@ -74,12 +74,9 @@
 /obj/machinery/computer/cargo/ui_data()
 	var/list/data = list()
 	data["location"] = SSshuttle.supply.getStatusText()
-	/*var/datum/bank_account/D = SSeconomy.get_dep_account(ACCOUNT_CAR)
-	if(D)
-		data["points"] = D.account_balance*/
 	data["away"] = SSshuttle.supply.getDockedId() == "supply_away"
-	//data["self_paid"] = self_paid
 	data["docked"] = SSshuttle.supply.mode == SHUTTLE_IDLE
+	data["points"] = SSshuttle.points
 	data["loan"] = !!SSshuttle.shuttle_loan
 	data["loan_dispatched"] = SSshuttle.shuttle_loan && SSshuttle.shuttle_loan.dispatched
 	var/message = "Remember to stamp and send back the supply manifests."
@@ -95,7 +92,6 @@
 			"cost" = SO.pack.cost,
 			"id" = SO.id,
 			"orderer" = SO.orderer,
-			"paid" = !isnull(SO.paying_account) //paid by requester
 		))
 
 	data["requests"] = list()
@@ -128,7 +124,6 @@
 			"cost" = P.cost,
 			"id" = pack,
 			"desc" = P.desc || P.name, // If there is a description, use it. Otherwise use the pack's name.
-			//"small_item" = P.small_item,
 			"access" = P.access
 		))
 	return data
@@ -167,8 +162,6 @@
 			else
 				SSshuttle.shuttle_loan.loan_shuttle()
 				say("The supply shuttle has been loaned to CentCom.")
-				investigate_log("[key_name(usr)] accepted a shuttle loan event.", INVESTIGATE_CARGO)
-				log_game("[key_name(usr)] accepted a shuttle loan event.")
 				. = TRUE
 		if("add")
 			var/id = text2path(params["id"])
@@ -189,36 +182,19 @@
 				name = usr.real_name
 				rank = "Silicon"
 
-		/*	var/datum/bank_account/account
-			if(self_paid && ishuman(usr))
-				var/mob/living/carbon/human/H = usr
-				var/obj/item/card/id/id_card = H.get_idcard(TRUE)
-				if(!istype(id_card))
-					say("No ID card detected.")
-					return
-				account = id_card.registered_account
-				if(!istype(account))
-					say("Invalid bank account.")
-					return
-		*/
 			var/reason = ""
-			if(requestonly && !self_paid)
+			if(requestonly)
 				reason = stripped_input("Reason:", name, "")
 				if(isnull(reason) || ..())
 					return
 
 			var/turf/T = get_turf(src)
-			var/datum/supply_order/SO = new(pack, name, rank, ckey, reason, account)
+			var/datum/supply_order/SO = new(pack, name, rank, ckey, reason)
 			SO.generateRequisition(T)
-			if(requestonly && !self_paid)
+			if(requestonly)
 				SSshuttle.requestlist += SO
 			else
 				SSshuttle.shoppinglist += SO
-				if(self_paid)
-					say("Order processed. The price will be charged to [account.account_holder]'s bank account on delivery.")
-			if(requestonly && message_cooldown < world.time)
-				radio.talk_into(src, "A new order has been requested.", RADIO_CHANNEL_SUPPLY)
-				message_cooldown = world.time + 30 SECONDS
 			. = TRUE
 		if("remove")
 			var/id = text2num(params["id"])
@@ -248,9 +224,6 @@
 		if("denyall")
 			SSshuttle.requestlist.Cut()
 			. = TRUE
-	/*	if("toggleprivate")
-			self_paid = !self_paid
-	*/		. = TRUE
 	if(.)
 		post_signal("supply")
 

@@ -124,6 +124,7 @@ GLOBAL_LIST(topic_status_cache)
 	GLOB.subsystem_log = "[GLOB.log_directory]/subsystem.log"
 	GLOB.reagent_log = "[GLOB.log_directory]/reagents.log"
 	GLOB.world_crafting_log = "[GLOB.log_directory]/crafting.log"
+	GLOB.world_asset_log = "[GLOB.log_directory]/asset.log"
 
 
 #ifdef UNIT_TESTS

@@ -164,21 +164,16 @@
 						to_chat(usr, "You have not met the requirements for purchasing this shuttle.")
 					else
 						if(SSshuttle.points >= S.credit_cost)
-							var/obj/machinery/shuttle_manipulator/M = locate() in GLOB.machines
-							if(M)
-								SSshuttle.shuttle_purchased = TRUE
-								SSshuttle.points -= S.credit_cost
-								minor_announce("[usr.real_name] has purchased [S.name] for [S.credit_cost] credits." , "Shuttle Purchase")
-								message_admins("[ADMIN_LOOKUPFLW(usr)] purchased [S.name].")
-								SSblackbox.record_feedback("text", "shuttle_purchase", 1, "[S.name]")
-								M.unload_preview()
-								M.load_template(S)
-								M.existing_shuttle = SSshuttle.emergency
-								M.action_load(S)
-								log_shuttle("[key_name(usr)] has purchased [S.name].")
-								message_admins("[S.name] loaded, purchased by [usr]")
-							else
-								to_chat(usr, "Something went wrong! The shuttle exchange system seems to be down.")
+							SSshuttle.shuttle_purchased = TRUE
+							SSshuttle.unload_preview()
+							SSshuttle.load_template(S)
+							SSshuttle.existing_shuttle = SSshuttle.emergency
+							SSshuttle.action_load(S)
+							SSshuttle.points -= S.credit_cost
+							minor_announce("[usr.real_name] has purchased [S.name] for [S.credit_cost] credits." , "Shuttle Purchase")
+							message_admins("[ADMIN_LOOKUPFLW(usr)] purchased [S.name].")
+							log_shuttle("[key_name(usr)] has purchased [S.name].")
+							SSblackbox.record_feedback("text", "shuttle_purchase", 1, "[S.name]")
 						else
 							to_chat(usr, "Not enough credits.")
 

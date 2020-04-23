@@ -32,7 +32,6 @@
 	var/nopower_state = "dispenser_nopower"
 	var/has_panel_overlay = TRUE
 	var/obj/item/reagent_containers/beaker = null
-	//dispensable_reagents is copypasted in plumbing synthesizers. Please update accordingly. (I didn't make it global because that would limit custom chem dispensers)
 	var/list/dispensable_reagents = list(
 		/datum/reagent/hydrogen,
 		/datum/reagent/lithium,

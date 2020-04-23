@@ -111,7 +111,7 @@
 		if("time")
 			timing = !timing
 			if(timing && istype(holder, /obj/item/transfer_valve))
-				log_bomber(usr, "activated a", src, "attachment on [holder]")
+				log_game(usr, "activated a", src, "attachment on [holder]")
 			update_icon()
 			. = TRUE
 		if("repeat")

@@ -177,7 +177,7 @@
 			if("red")
 				return "#ff0000"
 		return P.colour
-	else if(istype(I, /obj/item/soap) || istype(I, /obj/item/reagent_containers/glass/rag))
+	else if(istype(I, /obj/item/soap) || istype(I, /obj/item/reagent_containers/rag))
 		return canvas_color
 
 /obj/item/canvas/proc/try_rename(mob/user)
@@ -240,7 +240,6 @@
 /obj/structure/sign/painting/Initialize(mapload, dir, building)
 	. = ..()
 	SSpersistence.painting_frames += src
-	AddComponent(/datum/component/art, 20)
 	if(dir)
 		setDir(dir)
 	if(building)

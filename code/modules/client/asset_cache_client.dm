@@ -39,8 +39,7 @@
 		"smmon_3.gif" 				= 'icons/program_icons/smmon_3.gif',
 		"smmon_4.gif" 				= 'icons/program_icons/smmon_4.gif',
 		"smmon_5.gif" 				= 'icons/program_icons/smmon_5.gif',
-		"smmon_6.gif" 				= 'icons/program_icons/smmon_6.gif',
-		"borg_mon.gif"				= 'icons/program_icons/borg_mon.gif'
+		"smmon_6.gif" 				= 'icons/program_icons/smmon_6.gif'
 	)
 
 /datum/asset/spritesheet/simple/pda
@@ -147,7 +146,8 @@
 		"json2.min.js"             = 'code/modules/goonchat/browserassets/js/json2.min.js',
 		"browserOutput.js"         = 'code/modules/goonchat/browserassets/js/browserOutput.js',
 		"browserOutput.css"	       = 'code/modules/goonchat/browserassets/css/browserOutput.css',
-		"browserOutput_white.css"  = 'code/modules/goonchat/browserassets/css/browserOutput_white.css',
+		"browserOutput_dark.css"   = 'code/modules/goonchat/browserassets/css/browserOutput_dark.css',
+		"browserOutput_light.css"  = 'code/modules/goonchat/browserassets/css/browserOutput_light.css'
 	)
 
 /datum/asset/simple/fontawesome
@@ -202,33 +202,6 @@
 		"boss6.gif" = 'icons/UI_Icons/Arcade/boss6.gif',
 		)
 
-/datum/asset/spritesheet/simple/achievements
-	name ="achievements"
-	assets = list(
-		"default" = 'icons/UI_Icons/Achievements/default.png',
-		"basemisc" = 'icons/UI_Icons/Achievements/basemisc.png',
-		"baseboss" = 'icons/UI_Icons/Achievements/baseboss.png',
-		"baseskill" = 'icons/UI_Icons/Achievements/baseskill.png',
-		"bbgum" = 'icons/UI_Icons/Achievements/Boss/bbgum.png',
-		"colossus" = 'icons/UI_Icons/Achievements/Boss/colossus.png',
-		"hierophant" = 'icons/UI_Icons/Achievements/Boss/hierophant.png',
-		"legion" = 'icons/UI_Icons/Achievements/Boss/legion.png',
-		"miner" = 'icons/UI_Icons/Achievements/Boss/miner.png',
-		"swarmer" = 'icons/UI_Icons/Achievements/Boss/swarmer.png',
-		"tendril" = 'icons/UI_Icons/Achievements/Boss/tendril.png',
-		"featofstrength" = 'icons/UI_Icons/Achievements/Misc/featofstrength.png',
-		"helbital" = 'icons/UI_Icons/Achievements/Misc/helbital.png',
-		"jackpot" = 'icons/UI_Icons/Achievements/Misc/jackpot.png',
-		"meteors" = 'icons/UI_Icons/Achievements/Misc/meteors.png',
-		"timewaste" = 'icons/UI_Icons/Achievements/Misc/timewaste.png',
-		"upgrade" = 'icons/UI_Icons/Achievements/Misc/upgrade.png',
-		"clownking" = 'icons/UI_Icons/Achievements/Misc/clownking.png',
-		"clownthanks" = 'icons/UI_Icons/Achievements/Misc/clownthanks.png',
-		"rule8" = 'icons/UI_Icons/Achievements/Misc/rule8.png',
-		"snail" = 'icons/UI_Icons/Achievements/Misc/snail.png',
-		"mining" = 'icons/UI_Icons/Achievements/Skills/mining.png',
-	)
-
 /datum/asset/spritesheet/simple/pills
 	name ="pills"
 	assets = list(
@@ -262,14 +235,6 @@
 		set waitfor = FALSE
 		var/datum/language/L = new path ()
 		L.get_icon()
-
-/datum/asset/spritesheet/pipes
-	name = "pipes"
-
-/datum/asset/spritesheet/pipes/register()
-	for (var/each in list('icons/obj/atmospherics/pipes/pipe_item.dmi', 'icons/obj/atmospherics/pipes/disposal.dmi', 'icons/obj/atmospherics/pipes/transit_tube.dmi', 'icons/obj/plumbing/fluid_ducts.dmi'))
-		InsertAll("", each, GLOB.alldirs)
-	..()
 
 // Representative icons for each research design
 /datum/asset/spritesheet/research_designs
