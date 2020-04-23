@@ -150,6 +150,8 @@
 #define TRAIT_PUGILIST	"pugilist" //This guy punches people for a living
 #define TRAIT_KI_VAMPIRE	"ki-vampire" //when someone with this trait rolls maximum damage on a punch and stuns the target, they regain some stamina and do clone damage
 #define TRAIT_PASSTABLE			"passtable"
+#define TRAIT_GIANT				"giant"
+#define TRAIT_DWARF				"dwarf"
 
 // mobility flag traits
 // IN THE FUTURE, IT WOULD BE NICE TO DO SOMETHING SIMILAR TO https://github.com/tgstation/tgstation/pull/48923/files (ofcourse not nearly the same because I have my.. thoughts on it)

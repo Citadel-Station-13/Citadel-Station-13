@@ -1,6 +1,7 @@
 /datum/martial_art/krav_maga
 	name = "Krav Maga"
 	id = MARTIALART_KRAVMAGA
+	pugilist = TRUE
 	var/datum/action/neck_chop/neckchop = new/datum/action/neck_chop()
 	var/datum/action/leg_sweep/legsweep = new/datum/action/leg_sweep()
 	var/datum/action/lung_punch/lungpunch = new/datum/action/lung_punch()
@@ -115,7 +116,7 @@
 				  	"<span class='userdanger'>[A] slams your chest! You can't breathe!</span>")
 	playsound(get_turf(A), 'sound/effects/hit_punch.ogg', 50, 1, -1)
 	if(D.losebreath <= 10)
-		D.losebreath = CLAMP(D.losebreath + 5, 0, 10)
+		D.losebreath = clamp(D.losebreath + 5, 0, 10)
 	D.adjustOxyLoss(damage + 5)
 	log_combat(A, D, "quickchoked")
 	return TRUE
@@ -127,7 +128,7 @@
 	playsound(get_turf(A), 'sound/effects/hit_punch.ogg', 50, 1, -1)
 	D.apply_damage(damage, BRUTE)
 	if(D.silent <= 10)
-		D.silent = CLAMP(D.silent + 10, 0, 10)
+		D.silent = clamp(D.silent + 10, 0, 10)
 	log_combat(A, D, "neck chopped")
 	return TRUE
 
@@ -186,7 +187,7 @@
 	if(damage >= stunthreshold)
 		D.visible_message("<span class='warning'>[D] sputters and recoils in pain!</span>", "<span class='userdanger'>You recoil in pain as you are jabbed in a nerve!</span>")
 		D.drop_all_held_items()
-	
+
 	return TRUE
 
 //Krav Maga Gloves
