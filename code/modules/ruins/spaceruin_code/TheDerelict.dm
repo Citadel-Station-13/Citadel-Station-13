@@ -167,6 +167,7 @@
 
 
 // So drones can teach borgs and AI dronespeak. For best effect, combine with mother drone lawset.
+
 /obj/item/dronespeak_manual
 	name = "dronespeak manual"
 	desc = "The book's cover reads: \"Understanding Dronespeak - An exercise in futility.\""
@@ -180,7 +181,7 @@
 			to_chat(user, "<span class='boldannounce'>You start skimming through [src], but you already know dronespeak.</span>")
 		else
 			to_chat(user, "<span class='boldannounce'>You start skimming through [src], and suddenly the drone chittering makes sense.</span>")
-			user.grant_language(/datum/language/drone, TRUE, TRUE, LANGUAGE_MIND)
+			user.grant_language(/datum/language/drone, TRUE, TRUE)
 		return
 
 	if(user.has_language(/datum/language/drone))
@@ -201,7 +202,7 @@
 			M.visible_message("<span class='danger'>[user] beats [M] over the head with [src]!</span>", "<span class='userdanger'>[user] beats you over the head with [src]!</span>", "<span class='hear'>You hear smacking.</span>")
 		else
 			M.visible_message("<span class='notice'>[user] teaches [M] by beating [M.p_them()] over the head with [src]!</span>", "<span class='boldnotice'>As [user] hits you with [src], chitters resonate in your mind.</span>", "<span class='hear'>You hear smacking.</span>")
-			M.grant_language(/datum/language/drone, TRUE, TRUE, LANGUAGE_MIND)
+			M.grant_language(/datum/language/drone, TRUE, TRUE)
 		return
 
 /obj/structure/fluff/oldturret

@@ -147,7 +147,8 @@
 		"json2.min.js"             = 'code/modules/goonchat/browserassets/js/json2.min.js',
 		"browserOutput.js"         = 'code/modules/goonchat/browserassets/js/browserOutput.js',
 		"browserOutput.css"	       = 'code/modules/goonchat/browserassets/css/browserOutput.css',
-		"browserOutput_white.css"  = 'code/modules/goonchat/browserassets/css/browserOutput_white.css',
+		"browserOutput_dark.css"   = 'code/modules/goonchat/browserassets/css/browserOutput_dark.css',
+		"browserOutput_light.css"  = 'code/modules/goonchat/browserassets/css/browserOutput_light.css'
 	)
 
 /datum/asset/simple/fontawesome
@@ -200,34 +201,26 @@
 		"boss4.gif" = 'icons/UI_Icons/Arcade/boss4.gif',
 		"boss5.gif" = 'icons/UI_Icons/Arcade/boss5.gif',
 		"boss6.gif" = 'icons/UI_Icons/Arcade/boss6.gif',
-		)
-
-/datum/asset/spritesheet/simple/achievements
-	name ="achievements"
-	assets = list(
-		"default" = 'icons/UI_Icons/Achievements/default.png',
-		"basemisc" = 'icons/UI_Icons/Achievements/basemisc.png',
-		"baseboss" = 'icons/UI_Icons/Achievements/baseboss.png',
-		"baseskill" = 'icons/UI_Icons/Achievements/baseskill.png',
-		"bbgum" = 'icons/UI_Icons/Achievements/Boss/bbgum.png',
-		"colossus" = 'icons/UI_Icons/Achievements/Boss/colossus.png',
-		"hierophant" = 'icons/UI_Icons/Achievements/Boss/hierophant.png',
-		"legion" = 'icons/UI_Icons/Achievements/Boss/legion.png',
-		"miner" = 'icons/UI_Icons/Achievements/Boss/miner.png',
-		"swarmer" = 'icons/UI_Icons/Achievements/Boss/swarmer.png',
-		"tendril" = 'icons/UI_Icons/Achievements/Boss/tendril.png',
-		"featofstrength" = 'icons/UI_Icons/Achievements/Misc/featofstrength.png',
-		"helbital" = 'icons/UI_Icons/Achievements/Misc/helbital.png',
-		"jackpot" = 'icons/UI_Icons/Achievements/Misc/jackpot.png',
-		"meteors" = 'icons/UI_Icons/Achievements/Misc/meteors.png',
-		"timewaste" = 'icons/UI_Icons/Achievements/Misc/timewaste.png',
-		"upgrade" = 'icons/UI_Icons/Achievements/Misc/upgrade.png',
-		"clownking" = 'icons/UI_Icons/Achievements/Misc/clownking.png',
-		"clownthanks" = 'icons/UI_Icons/Achievements/Misc/clownthanks.png',
-		"rule8" = 'icons/UI_Icons/Achievements/Misc/rule8.png',
-		"snail" = 'icons/UI_Icons/Achievements/Misc/snail.png',
-		"mining" = 'icons/UI_Icons/Achievements/Skills/mining.png',
 	)
+
+/datum/asset/spritesheet/simple/minesweeper
+	name = "minesweeper"
+	assets = list(
+		"1" = 'icons/misc/minesweeper_tiles/one.png',
+		"2" = 'icons/misc/minesweeper_tiles/two.png',
+		"3" = 'icons/misc/minesweeper_tiles/three.png',
+		"4" = 'icons/misc/minesweeper_tiles/four.png',
+		"5" = 'icons/misc/minesweeper_tiles/five.png',
+		"6" = 'icons/misc/minesweeper_tiles/six.png',
+		"7" = 'icons/misc/minesweeper_tiles/seven.png',
+		"8" = 'icons/misc/minesweeper_tiles/eight.png',
+		"empty" = 'icons/misc/minesweeper_tiles/empty.png',
+		"flag" = 'icons/misc/minesweeper_tiles/flag.png',
+		"hidden" = 'icons/misc/minesweeper_tiles/hidden.png',
+		"mine" = 'icons/misc/minesweeper_tiles/mine.png',
+		"minehit" = 'icons/misc/minesweeper_tiles/minehit.png'
+	)
+
 
 /datum/asset/spritesheet/simple/pills
 	name ="pills"
