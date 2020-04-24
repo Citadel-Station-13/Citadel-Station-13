@@ -1,13 +1,19 @@
 
-/proc/createRandomZlevel(name = AWAY_MISSION_NAME, list/traits = list(ZTRAIT_AWAY = TRUE), list/potential_levels = potential_away_levels)
-	if(GLOB.random_zlevels_generated[name] || !length(potential_levels))
+/proc/createRandomZlevel(name = AWAY_MISSION_NAME, list/traits = list(ZTRAIT_AWAY = TRUE), list/potential_levels = GLOB.potential_away_levels)
+	if(GLOB.random_zlevels_generated[name])
+		stack_trace("[name] level already generated.")
+		return
+	if(!length(potential_levels))
+		stack_trace("No potential [name] level to load has been found.")
 		return
 
-	to_chat(world, "<span class='boldannounce'>Loading [name]...</span>")
+	var/start_time = REALTIMEOFDAY
 	var/map = pick(potential_levels)
-	load_new_z_level(map, name, traits)
-	to_chat(world, "<span class='boldannounce'>[name] loaded.</span>")
-	random_zlevels_generated[name] = TRUE
+	if(!load_new_z_level(map, name, traits))
+		INIT_ANNOUNCE("Failed to load [name]! map filepath: [map]!")
+		return
+	INIT_ANNOUNCE("Loaded [name] in [(REALTIMEOFDAY - start_time)/10]s!")
+	GLOB.random_zlevels_generated[name] = TRUE
 
 /proc/reset_gateway_spawns(reset = FALSE)
 	for(var/obj/machinery/gateway/G in world)

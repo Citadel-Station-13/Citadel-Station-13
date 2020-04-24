@@ -1,3 +1,5 @@
+#define INIT_ANNOUNCE(X) to_chat(world, "<span class='boldannounce'>[X]</span>"); log_world(X)
+
 SUBSYSTEM_DEF(mapping)
 	name = "Mapping"
 	init_order = INIT_ORDER_MAPPING
@@ -183,7 +185,6 @@ SUBSYSTEM_DEF(mapping)
 
 	z_list = SSmapping.z_list
 
-#define INIT_ANNOUNCE(X) to_chat(world, "<span class='boldannounce'>[X]</span>"); log_world(X)
 /datum/controller/subsystem/mapping/proc/LoadGroup(list/errorList, name, path, files, list/traits, list/default_traits, silent = FALSE)
 	. = list()
 	var/start_time = REALTIMEOFDAY
@@ -267,7 +268,6 @@ SUBSYSTEM_DEF(mapping)
 				msg += ", [FailedZs[I]]"
 		msg += ". Yell at your server host!"
 		INIT_ANNOUNCE(msg)
-#undef INIT_ANNOUNCE
 
 GLOBAL_LIST_EMPTY(the_station_areas)
 
@@ -450,14 +450,12 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 			lvl_name = "[mapfile] custom"
 			to_chat(usr,"<span class='notice'>Loading [lvl_name]...</span>")
 			var/datum/map_template/template = new(mapfile, choice, ztraits)
-			level = template.load_new_z()
+			level = template.load_new_z(ztraits)
 		else
 			lvl_name = answer
 			to_chat(usr,"<span class='notice'>Loading [lvl_name]...</span>")
-			var/datum/map_template/template = new(lvl_name, choice, ztraits)
-			level = template.load_new_z()
-		else
-			return
+			var/datum/map_template/template = new(lvl_name, choice)
+			level = template.load_new_z(ztraits)
 
 	message_admins("Admin [key_name_admin(usr)] has loaded [lvl_name] [choice].")
 	log_admin("Admin [key_name(usr)] has loaded [lvl_name] [choice].")
