@@ -336,7 +336,7 @@
 			if(prob(severity * 0.15))
 				to_chat(owner, "<span class='sevtug[span_part]'>\"[text2ratvar(pick(mania_messages))]\"</span>")
 			owner.playsound_local(get_turf(motor), hum, severity, 1)
-			owner.adjust_drugginess(CLAMP(max(severity * 0.075, 1), 0, max(0, 50 - owner.druggy))) //7.5% of severity per second, minimum 1
+			owner.adjust_drugginess(clamp(max(severity * 0.075, 1), 0, max(0, 50 - owner.druggy))) //7.5% of severity per second, minimum 1
 			if(owner.hallucination < 50)
 				owner.hallucination = min(owner.hallucination + max(severity * 0.075, 1), 50) //7.5% of severity per second, minimum 1
 			if(owner.dizziness < 50)
@@ -594,7 +594,7 @@
 		old_health = owner.health
 	if(!old_oxyloss)
 		old_oxyloss = owner.getOxyLoss()
-	var/health_difference = old_health - owner.health - CLAMP(owner.getOxyLoss() - old_oxyloss,0, owner.getOxyLoss())
+	var/health_difference = old_health - owner.health - clamp(owner.getOxyLoss() - old_oxyloss,0, owner.getOxyLoss())
 	if(!health_difference)
 		return
 	owner.visible_message("<span class='warning'>The light in [owner]'s eyes dims as [owner.p_theyre()] harmed!</span>", \

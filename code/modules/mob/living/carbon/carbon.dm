@@ -98,6 +98,8 @@
 /mob/living/carbon/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	. = ..()
 	var/hurt = TRUE
+	if(GetComponent(/datum/component/tackler))
+		return
 	if(throwingdatum?.thrower && iscyborg(throwingdatum.thrower))
 		var/mob/living/silicon/robot/R = throwingdatum.thrower
 		if(!R.emagged)

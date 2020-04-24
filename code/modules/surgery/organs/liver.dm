@@ -52,7 +52,7 @@
 
 /obj/item/organ/liver/applyOrganDamage(d, maximum = maxHealth)
 	. = ..()
-	if(!.)
+	if(!. || QDELETED(owner))
 		return
 	if(damage >= high_threshold)
 		var/move_calc = 1+((round(damage) - high_threshold)/(high_threshold/3))

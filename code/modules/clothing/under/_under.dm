@@ -26,6 +26,8 @@
 		. += mutable_appearance('icons/effects/item_damage.dmi', "damageduniform")
 	if(blood_DNA)
 		. += mutable_appearance('icons/effects/blood.dmi', "uniformblood", color = blood_DNA_to_color())
+	if(accessory_overlay)
+		. += accessory_overlay
 
 /obj/item/clothing/under/attackby(obj/item/I, mob/user, params)
 	if((has_sensor == BROKEN_SENSORS) && istype(I, /obj/item/stack/cable_coil))
@@ -99,8 +101,7 @@
 			if((flags_inv & HIDEACCESSORY) || (A.flags_inv & HIDEACCESSORY))
 				return TRUE
 
-			var/accessory_color = attached_accessory.icon_state
-			accessory_overlay = mutable_appearance('icons/mob/clothing/accessories.dmi', "[accessory_color]")
+			accessory_overlay = mutable_appearance('icons/mob/clothing/accessories.dmi', "attached_accessory.icon_state")
 			accessory_overlay.alpha = attached_accessory.alpha
 			accessory_overlay.color = attached_accessory.color
 
