@@ -115,7 +115,7 @@ Property weights are:
 		return 100
 	var/threat_perc = mode.threat/mode.threat_level
 
-	return CLAMP(round(100*(1-(threat_perc*threat_perc))**2,1),0,100)
+	return clamp(round(100*(1-(threat_perc*threat_perc))**2,1),0,100)
 
 /datum/dynamic_storyteller/proc/roundstart_draft()
 	var/list/drafted_rules = list()
