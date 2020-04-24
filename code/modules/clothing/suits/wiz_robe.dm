@@ -199,10 +199,9 @@
 	icon_state = "battlemage"
 	item_state = "battlemage"
 	recharge_rate = 0
+	max_charges = INFINITY
 	current_charges = 15
-	recharge_cooldown = INFINITY
 	shield_state = "shield-red"
-	shield_on = "shield-red"
 	min_cold_protection_temperature = ARMOR_MIN_TEMP_PROTECT
 	max_heat_protection_temperature = ARMOR_MAX_TEMP_PROTECT
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/shielded/wizard
@@ -243,6 +242,7 @@
 	if(!istype(W))
 		to_chat(user, "<span class='warning'>The rune can only be used on battlemage armour!</span>")
 		return
-	W.current_charges += 8
-	to_chat(user, "<span class='notice'>You charge \the [W]. It can now absorb [W.current_charges] hits.</span>")
+	var/datum/component/shielded/S = GetComponent(/datum/component/shielded)
+	S.adjust_charges(8)
+	to_chat(user, "<span class='notice'>You charge \the [W]. It can now absorb [S.charges] hits.</span>")
 	qdel(src)

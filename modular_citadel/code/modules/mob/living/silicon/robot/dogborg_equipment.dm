@@ -268,7 +268,7 @@ SLEEPER CODE IS IN game/objects/items/devices/dogborg_sleeper.dm !
 	else if(isliving(target))
 		var/mob/living/L = target
 		if(!status)
-			if(L.ckey && !(L.client?.prefs.lickable))
+			if(L.ckey && !(L.client?.prefs.vore_flags & LICKABLE))
 				to_chat(R, "<span class='danger'>ERROR ERROR: Target not lickable. Aborting display-of-affection subroutine.</span>")
 				return
 			if(check_zone(R.zone_selected) == "head")
@@ -327,7 +327,7 @@ SLEEPER CODE IS IN game/objects/items/devices/dogborg_sleeper.dm !
 		return
 	var/mob/living/silicon/robot/R = user
 	var/mob/living/L = target
-	if(L.ckey && !(L.client?.prefs.lickable))
+	if(L.ckey && !(L.client?.prefs.vore_flags & LICKABLE))
 		to_chat(R, "<span class='danger'>ERROR ERROR: Target not lickable. Aborting display-of-affection subroutine.</span>")
 		return
 
@@ -438,7 +438,7 @@ SLEEPER CODE IS IN game/objects/items/devices/dogborg_sleeper.dm !
 				DefaultCombatKnockdown(15, 1, 1)
 			else
 				L.visible_message("<span class ='danger'>[src] pounces on [L]!</span>", "<span class ='userdanger'>[src] pounces on you!</span>")
-				L.DefaultCombatKnockdown(iscarbon(L) ? 60 : 45, override_stamdmg = CLAMP(pounce_stamloss, 0, pounce_stamloss_cap-L.getStaminaLoss())) // Temporary. If someone could rework how dogborg pounces work to accomodate for combat changes, that'd be nice.
+				L.DefaultCombatKnockdown(iscarbon(L) ? 60 : 45, override_stamdmg = clamp(pounce_stamloss, 0, pounce_stamloss_cap-L.getStaminaLoss())) // Temporary. If someone could rework how dogborg pounces work to accomodate for combat changes, that'd be nice.
 				playsound(src, 'sound/weapons/Egloves.ogg', 50, 1)
 				sleep(2)//Runtime prevention (infinite bump() calls on hulks)
 				step_towards(src,L)

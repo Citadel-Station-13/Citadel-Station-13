@@ -526,8 +526,8 @@
 /obj/structure/closet/crate/secure/gear{
 	req_access_txt = "150"
 	},
-/obj/item/clothing/gloves/combat,
-/obj/item/clothing/gloves/combat,
+/obj/item/clothing/gloves/tackler/combat/insulated,
+/obj/item/clothing/gloves/tackler/combat/insulated,
 /obj/item/clothing/under/syndicate/combat,
 /obj/item/clothing/under/syndicate/combat,
 /obj/item/storage/belt/military,
@@ -4197,7 +4197,7 @@
 "kw" = (
 /obj/structure/table,
 /obj/effect/decal/cleanable/dirt,
-/obj/item/clothing/gloves/combat{
+/obj/item/clothing/gloves/tackler/combat/insulated{
 	pixel_y = -6
 	},
 /obj/item/tank/internals/emergency_oxygen{
