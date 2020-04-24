@@ -2,8 +2,8 @@
 //										BREAST ENLARGE
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 //Other files that are relivant:
-//modular_citadel/code/datums/status_effects/chems.dm
-//modular_citadel/code/modules/arousal/organs/breasts.dm
+//code/datums/status_effects/chems.dm
+//code/modules/arousal/organs/breasts.dm
 
 //breast englargement
 //Honestly the most requested chems

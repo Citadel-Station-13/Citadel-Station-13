@@ -3,7 +3,7 @@
 // 		synthetic-derived growth factor			 //
 //////////////////////////////////////////////////
 other files that are relivant:
-modular_citadel/code/datums/status_effects/chems.dm - SDGF
+code/datums/status_effects/chems.dm - SDGF
 WHAT IT DOES
 
 Several outcomes are possible (in priority order):

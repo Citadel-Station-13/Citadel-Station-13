@@ -507,7 +507,7 @@
 	required_catalysts = list(/datum/reagent/fermi/SDGF = 1)
 	required_temp = 500
 	mix_message = "the reaction gives off a meow!"
-	mix_sound = "modular_citadel/sound/voice/merowr.ogg"
+	mix_sound = "sound/voice/merowr.ogg"
 	//FermiChem vars:
 	OptimalTempMin 		= 650
 	OptimalpHMin 		= 0

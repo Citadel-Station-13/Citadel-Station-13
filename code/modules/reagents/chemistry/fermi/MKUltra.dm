@@ -4,7 +4,7 @@
 ////////////////////////////////////////
 The magnum opus of FermiChem -
 Long and complicated, I highly recomend you look at the two other files heavily involved in this
-modular_citadel/code/datums/status_effects/chems.dm - handles the subject's reactions
+code/datums/status_effects/chems.dm - handles the subject's reactions
 code/modules/surgery/organs/vocal_cords.dm - handles the enchanter speaking
 
 HOW IT WORKS
