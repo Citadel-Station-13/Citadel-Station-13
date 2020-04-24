@@ -158,11 +158,24 @@
 			H.set_species(newrace, icon_update=0)
 
 			if(H.dna.species.use_skintones)
-				var/new_s_tone = input(user, "Choose your skin tone:", "Race change")  as null|anything in GLOB.skin_tones
-
+				var/list/choices = GLOB.skin_tones
+				if(CONFIG_GET(flag/allow_custom_skintones))
+					choices += "custom"
+				var/new_s_tone = input(H, "Choose your skin tone:", "Race change")  as null|anything in choices
 				if(new_s_tone)
-					H.skin_tone = new_s_tone
-					H.dna.update_ui_block(DNA_SKIN_TONE_BLOCK)
+					if(new_s_tone == "custom")
+						var/default = H.dna.skin_tone_override || null
+						var/custom_tone = input(user, "Choose your custom skin tone:", "Race change", default) as color|null
+						if(custom_tone)
+							var/temp_hsv = RGBtoHSV(new_s_tone)
+							if(ReadHSV(temp_hsv)[3] >= ReadHSV("#202020")[3])
+								to_chat(H,"<span class='danger'>Invalid color. Your color is not bright enough.</span>")
+							else
+								H.skin_tone = custom_tone
+								H.dna.skin_tone_override = custom_tone
+					else
+						H.skin_tone = new_s_tone
+						H.dna.update_ui_block(DNA_SKIN_TONE_BLOCK)
 
 			if(MUTCOLORS in H.dna.species.species_traits)
 				var/new_mutantcolor = input(user, "Choose your skin color:", "Race change","#"+H.dna.features["mcolor"]) as color|null

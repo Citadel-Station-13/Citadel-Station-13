@@ -308,12 +308,12 @@
 	var/new_rows = input(user, "How many rows do you want? (Minimum: 4, Maximum: 30)", "Minesweeper Rows") as null|num
 	if(!new_rows || !user.canUseTopic(src, !hasSiliconAccessInArea(user)))
 		return FALSE
-	new_rows = CLAMP(new_rows + 1, 4, 30)
+	new_rows = clamp(new_rows + 1, 4, 30)
 	playsound(loc, 'sound/arcade/minesweeper_menuselect.ogg', 50, 0, extrarange = -3, falloff = 10)
 	var/new_columns = input(user, "How many columns do you want? (Minimum: 4, Maximum: 50)", "Minesweeper Squares") as null|num
 	if(!new_columns || !user.canUseTopic(src, !hasSiliconAccessInArea(user)))
 		return FALSE
-	new_columns = CLAMP(new_columns + 1, 4, 50)
+	new_columns = clamp(new_columns + 1, 4, 50)
 	playsound(loc, 'sound/arcade/minesweeper_menuselect.ogg', 50, 0, extrarange = -3, falloff = 10)
 	var/grid_area = (new_rows - 1) * (new_columns - 1)
 	var/lower_limit = round(grid_area*0.156)
@@ -324,7 +324,7 @@
 	playsound(loc, 'sound/arcade/minesweeper_menuselect.ogg', 50, 0, extrarange = -3, falloff = 10)
 	rows = new_rows
 	columns = new_columns
-	mine_limit = CLAMP(new_mine_limit, lower_limit, upper_limit)
+	mine_limit = clamp(new_mine_limit, lower_limit, upper_limit)
 	return TRUE
 
 /obj/machinery/computer/arcade/minesweeper/proc/make_mines(var/reset_everything)

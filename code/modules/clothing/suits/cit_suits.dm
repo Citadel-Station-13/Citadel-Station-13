@@ -16,7 +16,7 @@
 	icon_state = "trek_ds9_coat"
 	item_state = "trek_ds9_coat"
 	body_parts_covered = CHEST|GROIN|ARMS
-	mutantrace_variation = NONE
+	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
 	permeability_coefficient = 0.50
 	allowed = list(
 		/obj/item/flashlight, /obj/item/analyzer,
@@ -43,7 +43,7 @@
 	desc = "A uniform jacket from the United Federation. Set phasers to awesome."
 	icon_state = "fedcoat"
 	item_state = "fedcoat"
-	mutantrace_variation = NONE
+	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
 	blood_overlay_type = "coat"
 	body_parts_covered = CHEST|GROIN|ARMS
 	allowed = list(
@@ -107,6 +107,7 @@
 	desc = "A modern uniform jacket from the United Federation."
 	icon_state = "fedmodern"
 	item_state = "fedmodern"
+	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
 	body_parts_covered = CHEST|GROIN|ARMS
 	allowed = list(
 		/obj/item/flashlight, /obj/item/analyzer,

@@ -11,6 +11,7 @@
 	shirt_color = random_short_color()
 	socks = random_socks()
 	socks_color = random_short_color()
+	use_custom_skin_tone = FALSE
 	skin_tone = random_skin_tone()
 	hair_style = random_hair_style(gender)
 	facial_hair_style = random_facial_hair_style(gender)

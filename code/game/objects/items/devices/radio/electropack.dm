@@ -81,7 +81,7 @@
 			if(!usr.canUseTopic(src, BE_CLOSE))
 				return
 			new_code = round(new_code)
-			new_code = CLAMP(new_code, 1, 100)
+			new_code = clamp(new_code, 1, 100)
 			code = new_code
 
 		if(href_list["set"] == "power")

@@ -87,7 +87,7 @@
 		if(istype(new_material))
 			chosen = new_material
 	if(href_list["chooseAmt"])
-		coinsToProduce = CLAMP(coinsToProduce + text2num(href_list["chooseAmt"]), 0, 1000)
+		coinsToProduce = clamp(coinsToProduce + text2num(href_list["chooseAmt"]), 0, 1000)
 		updateUsrDialog()
 	if(href_list["makeCoins"])
 		var/temp_coins = coinsToProduce

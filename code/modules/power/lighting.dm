@@ -312,10 +312,9 @@
 
 /obj/machinery/light/update_overlays()
 	. = ..()
+	SSvis_overlays.remove_vis_overlay(src, managed_vis_overlays)
 	if(on && status == LIGHT_OK)
-		var/mutable_appearance/glowybit = mutable_appearance(overlayicon, base_state, EMISSIVE_LAYER, EMISSIVE_PLANE)
-		glowybit.alpha = CLAMP(light_power*250, 30, 200)
-		. += glowybit
+		SSvis_overlays.add_vis_overlay(src, overlayicon, base_state, EMISSIVE_LAYER, EMISSIVE_PLANE, dir, clamp(light_power*250, 30, 200))
 
 
 // update the icon_state and luminosity of the light depending on its state

@@ -10,9 +10,7 @@ GLOBAL_LIST(topic_status_cache)
 /world/New()
 	enable_debugger()
 
-#if DM_VERSION >= 513 && DM_BUILD >= 1506
 	world.Profile(PROFILE_START)
-#endif
 
 	log_world("World loaded at [TIME_STAMP("hh:mm:ss", FALSE)]!")
 

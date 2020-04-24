@@ -1,6 +1,6 @@
 /obj/item/organ/genital
 	color = "#fcccb3"
-	w_class = WEIGHT_CLASS_NORMAL
+	w_class = WEIGHT_CLASS_SMALL
 	var/shape
 	var/sensitivity = 1 // wow if this were ever used that'd be cool but it's not but i'm keeping it for my unshit code
 	var/genital_flags //see citadel_defines.dm
@@ -319,7 +319,7 @@
 				genital_overlay = center_image(genital_overlay, dim_x, dim_y)
 
 			if(dna.species.use_skintones && dna.features["genitals_use_skintone"])
-				genital_overlay.color = "#[skintone2hex(skin_tone)]"
+				genital_overlay.color = SKINTONE2HEX(skin_tone)
 			else
 				switch(S.color_src)
 					if("cock_color")
@@ -331,7 +331,7 @@
 					if("vag_color")
 						genital_overlay.color = "#[dna.features["vag_color"]]"
 
-			genital_overlay.icon_state = "[G.slot]_[S.icon_state]_[size][dna.species.use_skintones ? "_s" : ""]_[aroused_state]_[layertext]"
+			genital_overlay.icon_state = "[G.slot]_[S.icon_state]_[size][(dna.species.use_skintones && !dna.skin_tone_override) ? "_s" : ""]_[aroused_state]_[layertext]"
 
 			if(layers_num[layer] == GENITALS_FRONT_LAYER && G.genital_flags & GENITAL_THROUGH_CLOTHES)
 				genital_overlay.layer = -GENITALS_EXPOSED_LAYER
@@ -361,9 +361,8 @@
 	var/willyCheck = getorganslot(ORGAN_SLOT_PENIS)
 
 	if(organCheck == FALSE)
-		if(ishuman(src) && dna.species.id == "human")
+		if(ishuman(src) && dna.species.use_skintones)
 			dna.features["genitals_use_skintone"] = TRUE
-			dna.species.use_skintones = TRUE
 		if(src.dna.species.fixed_mut_color)
 			dna.features["cock_color"] = "[dna.species.fixed_mut_color]"
 			dna.features["breasts_color"] = "[dna.species.fixed_mut_color]"

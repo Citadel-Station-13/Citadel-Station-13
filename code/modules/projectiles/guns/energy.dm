@@ -233,7 +233,7 @@
 	..()
 	if(!automatic_charge_overlays)
 		return
-	var/ratio = can_shoot() ? CEILING(CLAMP(cell.charge / cell.maxcharge, 0, 1) * charge_sections, 1) : 0
+	var/ratio = can_shoot() ? CEILING(clamp(cell.charge / cell.maxcharge, 0, 1) * charge_sections, 1) : 0
 				// Sets the ratio to 0 if the gun doesn't have enough charge to fire, or if it's power cell is removed.
 				// TG issues #5361 & #47908
 	if(ratio == old_ratio && !force_update)

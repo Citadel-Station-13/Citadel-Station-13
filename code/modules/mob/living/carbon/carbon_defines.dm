@@ -68,3 +68,4 @@
 
 	//oh no vore time
 	var/voremode = FALSE
+	var/tackling = FALSE //Whether or not we are tackling, this will prevent the knock into effects for carbons

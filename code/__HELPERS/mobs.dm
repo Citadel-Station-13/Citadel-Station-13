@@ -265,22 +265,26 @@
 #define SKINTONE2HEX(skin_tone) GLOB.skin_tones[skin_tone] || skin_tone
 
 /proc/random_skin_tone()
-	return pick(GLOB.skin_tones)
+	return pick(GLOB.skin_tones - GLOB.nonstandard_skin_tones)
 
+//ordered by amount of tan. Keep the nonstandard skin tones last.
 GLOBAL_LIST_INIT(skin_tones, list(
-	"albino",
-	"caucasian1",
-	"caucasian2",
-	"caucasian3",
-	"latino",
-	"mediterranean",
-	"asian1",
-	"asian2",
-	"arab",
-	"indian",
-	"african1",
-	"african2"
+	"albino" = "#fff4e6",
+	"caucasian1" = "#ffe0d1",
+	"caucasian2" = "#fcccb3",
+	"caucasian3" = "#e8b59b",
+	"latino" = "#d9ae96",
+	"mediterranean" = "#c79b8b",
+	"asian1" = "#ffdeb3",
+	"asian2" = "#e3ba84",
+	"arab" = "#c4915e",
+	"indian" = "#b87840",
+	"african1" = "#754523",
+	"african2" = "#471c18",
+	"orange" = "#ffc905" //Spray tan overdose.
 	))
+
+GLOBAL_LIST_INIT(nonstandard_skin_tones, list("orange"))
 
 GLOBAL_LIST_EMPTY(species_list)
 
