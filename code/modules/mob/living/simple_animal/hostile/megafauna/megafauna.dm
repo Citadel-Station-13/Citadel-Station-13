@@ -27,12 +27,18 @@
 	mob_size = MOB_SIZE_LARGE
 	layer = LARGE_MOB_LAYER //Looks weird with them slipping under mineral walls and cameras and shit otherwise
 	flags_1 = PREVENT_CONTENTS_EXPLOSION_1 | HEAR_1
+	/// Crusher loot dropped when fauna killed with a crusher
 	var/list/crusher_loot
 	var/medal_type
+	/// Score given to players when the fauna is killed
 	var/score_type = BOSS_SCORE
+	/// If the megafauna is actually killed (vs entering another phase)
 	var/elimination = 0
+	/// Modifies attacks when at lower health
 	var/anger_modifier = 0
+	/// Internal tracking GPS inside fauna
 	var/obj/item/gps/internal
+	/// Next time fauna can use a melee attack
 	var/recovery_time = 0
 
 /mob/living/simple_animal/hostile/megafauna/Initialize(mapload)
