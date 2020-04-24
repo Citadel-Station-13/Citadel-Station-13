@@ -64,7 +64,7 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	//citadel changes
 	var/obj/screen/sprint_buffer/sprint_buffer
 	var/obj/screen/staminas/staminas
-	/var/obj/screen/staminabuffer/staminabuffer
+	var/obj/screen/staminabuffer/staminabuffer
 
 /datum/hud/New(mob/owner)
 	mymob = owner

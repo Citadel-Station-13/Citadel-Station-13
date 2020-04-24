@@ -13,9 +13,7 @@
 /obj/item/clothing/suit/trek/ds9
 	name = "Padded Overcoat"
 	desc = "The overcoat worn by all officers of the 2380s."
-	icon = 'icons/obj/clothing/trek_item_icon.dmi'
 	icon_state = "trek_ds9_coat"
-	mob_overlay_icon = 'icons/mob/clothing/trek_mob_icon.dmi'
 	item_state = "trek_ds9_coat"
 	body_parts_covered = CHEST|GROIN|ARMS
 	mutantrace_variation = NONE
@@ -43,8 +41,6 @@
 /obj/item/clothing/suit/fluff/fedcoat
 	name = "Federation Uniform Jacket"
 	desc = "A uniform jacket from the United Federation. Set phasers to awesome."
-	icon = 'icons/obj/clothing/trek_item_icon.dmi'
-	mob_overlay_icon = 'icons/mob/clothing/trek_mob_icon.dmi'
 	icon_state = "fedcoat"
 	item_state = "fedcoat"
 	mutantrace_variation = NONE
@@ -109,8 +105,6 @@
 /obj/item/clothing/suit/fluff/modernfedcoat
 	name = "Modern Federation Uniform Jacket"
 	desc = "A modern uniform jacket from the United Federation."
-	icon = 'icons/obj/clothing/trek_item_icon.dmi'
-	mob_overlay_icon = 'icons/mob/clothing/trek_mob_icon.dmi'
 	icon_state = "fedmodern"
 	item_state = "fedmodern"
 	body_parts_covered = CHEST|GROIN|ARMS
@@ -141,7 +135,6 @@
 /obj/item/clothing/suit/armor/hos/trenchcoat/cloak
 	name = "armored trenchcloak"
 	desc = "A trenchcoat enchanced with a special lightweight kevlar. This one appears to be designed to be draped over one's shoulders rather than worn normally.."
-	mob_overlay_icon = 'icons/mob/citadel/suit.dmi'
 	icon_state = "hostrench"
 	item_state = "hostrench"
 	mutantrace_variation = NONE

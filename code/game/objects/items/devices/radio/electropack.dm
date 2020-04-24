@@ -148,7 +148,7 @@ Code:
 /obj/item/electropack/shockcollar
 	name = "shock collar"
 	desc = "A reinforced metal collar. It seems to have some form of wiring near the front. Strange.."
-	icon = 'icons/obj/clothing/cit_neck.dmi'
+	icon = 'icons/obj/clothing/neck.dmi'
 	mob_overlay_icon = 'icons/mob/citadel/neck.dmi'
 	icon_state = "shockcollar"
 	item_state = "shockcollar"

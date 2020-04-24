@@ -1,7 +1,6 @@
 /obj/item/clothing/head/hunter
 	name = "hunter"
 	desc = "A basic hat for hunting things."
-	icon = 'icons/obj/clothing/hats.dmi'
 	icon_state = "hunter"
 	item_state = "hunter_worn"
 
@@ -9,9 +8,7 @@
 	name = "Federation Officer's Cap"
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 0)
 	desc = "An officer's cap that demands discipline from the one who wears it."
-	icon = 'icons/obj/clothing/trek_item_icon.dmi'
 	icon_state = "fedcapofficer"
-	mob_overlay_icon = 'icons/mob/clothing/trek_mob_icon.dmi'
 	item_state = "fedcapofficer"
 
 	//Variants
