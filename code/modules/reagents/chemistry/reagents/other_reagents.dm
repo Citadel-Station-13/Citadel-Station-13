@@ -140,7 +140,7 @@
 	data = list("donor"=null,"viruses"=null,"blood_DNA"="REPLICATED", "bloodcolor" = BLOOD_COLOR_SYNTHETIC, "blood_type"="SY","resistances"=null,"trace_chem"=null,"mind"=null,"ckey"=null,"gender"=null,"real_name"=null,"cloneable"=null,"factions"=null)
 	name = "Synthetic Blood"
 	description = "A synthetically produced imitation of blood."
-	taste_description = "oily"
+	taste_description = "oil"
 	color = BLOOD_COLOR_SYNTHETIC // rgb: 11, 7, 48
 	value = REAGENT_VALUE_NONE
 

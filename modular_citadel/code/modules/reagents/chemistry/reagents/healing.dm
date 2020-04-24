@@ -101,7 +101,7 @@
 	data = list("grown_volume" = 0, "injected_vol" = 0)
 	var/borrowed_health
 	color = "#FFDADA"
-	value = REAGENT_VALUE_VERY_RARE
+	value = REAGENT_VALUE_COMMON
 
 /datum/reagent/synthtissue/reaction_mob(mob/living/M, method=TOUCH, reac_volume,show_message = 1)
 	if(iscarbon(M))
