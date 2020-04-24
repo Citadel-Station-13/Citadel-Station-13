@@ -1,15 +1,13 @@
-// How much "space" we give the edge of the map
-GLOBAL_LIST_INIT(potentialRandomZlevels, generateMapList(filename = "[global.config.directory]/awaymissionconfig.txt"))
 
-/proc/createRandomZlevel()
-	if(GLOB.awaydestinations.len)	//crude, but it saves another var!
+/proc/createRandomZlevel(name = AWAY_MISSION_NAME, list/traits = list(ZTRAIT_AWAY = TRUE), list/potential_levels = potential_away_levels)
+	if(GLOB.random_zlevels_generated[name] || !length(potential_levels))
 		return
 
-	if(GLOB.potentialRandomZlevels && GLOB.potentialRandomZlevels.len)
-		to_chat(world, "<span class='boldannounce'>Loading away mission...</span>")
-		var/map = pick(GLOB.potentialRandomZlevels)
-		load_new_z_level(map, "Away Mission")
-		to_chat(world, "<span class='boldannounce'>Away mission loaded.</span>")
+	to_chat(world, "<span class='boldannounce'>Loading [name]...</span>")
+	var/map = pick(potential_levels)
+	load_new_z_level(map, name, traits)
+	to_chat(world, "<span class='boldannounce'>[name] loaded.</span>")
+	random_zlevels_generated[name] = TRUE
 
 /proc/reset_gateway_spawns(reset = FALSE)
 	for(var/obj/machinery/gateway/G in world)
