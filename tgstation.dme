@@ -3308,6 +3308,4 @@
 #include "interface\menu.dm"
 #include "interface\stylesheet.dm"
 #include "interface\skin.dmf"
-#include "modular_citadel\code\modules\mob\living\carbon\damage_procs.dm"
-#include "modular_citadel\code\modules\mob\living\carbon\human\human.dm"
 // END_INCLUDE
