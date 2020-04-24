@@ -290,7 +290,7 @@ obj/item/clothing/neck/neckerchief
 /obj/item/clothing/neck/undertale
 	name = "Sylphaen Heart Locket"
 	desc = "A heart shaped locket...The name: 'Zander Sylphaen is inscribed on the front. Something about this necklace fills you with determination."
-	icon = 'icons/obj/clothing/cit_neck.dmi'
+	icon = 'icons/obj/clothing/neck.dmi'
 	item_state = "undertale"
 	icon_state = "undertale"
 	mob_overlay_icon = 'icons/mob/clothing/necks.dmi'

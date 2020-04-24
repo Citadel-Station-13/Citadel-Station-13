@@ -1164,3 +1164,4 @@
 		add_screams(wear_mask.alternate_screams)
 	if(back)
 		add_screams(back.alternate_screams)
+
