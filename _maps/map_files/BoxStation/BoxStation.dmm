@@ -45748,7 +45748,7 @@
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "cfP" = (
-/obj/machinery/atmospherics/components/trinary/mixer/airmix{
+/obj/machinery/atmospherics/components/trinary/mixer/airmix/inverse{
 	dir = 4
 	},
 /turf/open/floor/plasteel,
