@@ -1,5 +1,6 @@
 macro "default"
 
+
 menu "menu"
 	elem 
 		name = "&File"
@@ -268,14 +269,13 @@ window "statwindow"
 		is-default = true
 		saved-params = ""
 
-		window "preferences_window"
+window "preferences_window"
 	elem "preferences_window"
 		type = MAIN
 		pos = 372,0
 		size = 1280x1000
 		anchor1 = none
 		anchor2 = none
-		background-color = none
 		is-visible = false
 		saved-params = "pos;size;is-minimized;is-maximized"
 		statusbar = false
@@ -285,7 +285,6 @@ window "statwindow"
 		size = 960x1000
 		anchor1 = 0,0
 		anchor2 = 75,100
-		background-color = none
 		saved-params = ""
 	elem "character_preview_map"
 		type = MAP
@@ -295,3 +294,4 @@ window "statwindow"
 		anchor2 = 100,100
 		right-click = true
 		saved-params = "zoom;letterbox;zoom-mode"
+

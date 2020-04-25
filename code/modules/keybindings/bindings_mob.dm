@@ -3,24 +3,7 @@
 // Or we can have NPC's send actual keypresses and detect that by seeing no client
 
 /mob/key_down(_key, client/user)
-	if(SSinput.typing_indicator_binds[_key])
-		var/macroset = winget(user, "mainwindow", "macro")
-		var/list/L = SSinput.macro_set_reverse_lookups[macroset]
-		var/valid = FALSE
-		for(var/the_verb in L)
-			if(the_verb in SSinput.typing_indicator_verbs)
-				var/list/keys = L[the_verb]
-				valid = TRUE
-				if(length(keys) > 1)
-					for(var/i in 2 to length(keys))
-						if(!client.keys_held[keys[i]])
-							valid = FALSE
-							break
-		if(valid)
-			display_typing_indicator()
 	switch(_key)
-		if("Escape")			//escape breaks out of clientside verb text input without executing at all, meaning we can't hook the verb to do this for us.
-			clear_typing_indicator()
 		if("Delete", "H")
 			if(!pulling)
 				to_chat(src, "<span class='notice'>You are not pulling anything.</span>")

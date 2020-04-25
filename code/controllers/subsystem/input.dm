@@ -8,14 +8,6 @@ SUBSYSTEM_DEF(input)
 
 	var/list/macro_sets
 	var/list/movement_keys
-	/*! Special thing (until we get custom keybinds that also support clientside macros :weary:) that lets us do stuff like look up "which key is say/me bound to". Special format too, the value of a key should be list(key, modifier1, modifier2, ...). "default" unless override.
-	 *  USE get_key_for_macro_id or get_typing_indicator_binds TO ACCESS!
-	 */
-	var/list/macro_set_reverse_lookups
-	/// cache these for speed.
-	var/list/typing_indicator_binds
-	/// same
-	var/static/list/typing_indicator_verbs
 
 /datum/controller/subsystem/input/Initialize()
 	setup_default_macro_sets()
@@ -41,56 +33,34 @@ SUBSYSTEM_DEF(input)
 			"Tab" = "\".winset \\\"input.focus=true?map.focus=true input.background-color=[COLOR_INPUT_DISABLED]:input.focus=true input.background-color=[COLOR_INPUT_ENABLED]\\\"\"",
 			"O" = "ooc",
 			"Ctrl+O" = "looc",
-			"T" = "say_keybind",
-			"Ctrl+T" = "whisper",
-			"M" = "me_keybind",
-			"Ctrl+M" = "subtle",
+			"T" = "Say",
+			"Ctrl+T" = "SayWithIndicator",
+			"Y" = "whisper",
+			"M" = "Me",
+			"Ctrl+M" = "MeWithIndicator",
+			"5" = "subtle",
 			"Back" = "\".winset \\\"input.text=\\\"\\\"\\\"\"", // This makes it so backspace can remove default inputs
 			"Any" = "\"KeyDown \[\[*\]\]\"",
 			"Any+UP" = "\"KeyUp \[\[*\]\]\"",
 			),
 		"old_default" = list(
 			"Tab" = "\".winset \\\"mainwindow.macro=old_hotkeys map.focus=true input.background-color=[COLOR_INPUT_DISABLED]\\\"\"",
-			"Ctrl+T" = "say_keybind",
+			"Ctrl+T" = "Say",
 			"Ctrl+O" = "ooc",
 			),
 		"old_hotkeys" = list(
 			"Tab" = "\".winset \\\"mainwindow.macro=old_default input.focus=true input.background-color=[COLOR_INPUT_ENABLED]\\\"\"",
 			"O" = "ooc",
 			"L" = "looc",
-			"T" = "say_keybind",
-			"M" = "me_keybind",
+			"T" = "Say",
+			"Ctrl+T" = "SayWithIndicator",
+			"M" = "Me",
+			"Ctrl+M" = "MeWithIndicator",
 			"Back" = "\".winset \\\"input.text=\\\"\\\"\\\"\"", // This makes it so backspace can remove default inputs
 			"Any" = "\"KeyDown \[\[*\]\]\"",
 			"Any+UP" = "\"KeyUp \[\[*\]\]\"",
 			),
 		)
-
-	macro_set_reverse_lookups = list(
-		"default" = list(
-			"say_keybind" = list("T"),
-			"whisper" = list("T", "Ctrl"),
-			"me_keybind" = list("M"),
-			"subtle" = list("M", "Ctrl")
-			),
-		"old_default" = list(
-			"say_keybind" = list("T", "Ctrl"),
-			),
-		"old_hotkeys" = list(
-			"say_keybind" = list("T"),
-			"me_keybind" = list("M"),
-			)
-		)
-
-	typing_indicator_verbs = list("me", "say", "say_keybind", "me_keybind")
-	typing_indicator_binds = list()
-	for(var/check_verb in typing_indicator_verbs)
-		for(var/macro_set in macro_set_reverse_lookups)
-			var/list/keylist = macro_set_reverse_lookups[macro_set][check_verb]
-			if(!keylist)
-				continue
-			var/key = keylist[1]
-			typing_indicator_binds[key] = TRUE
 
 	// Because i'm lazy and don't want to type all these out twice
 	var/list/old_default = default_macro_sets["old_default"]
@@ -151,10 +121,3 @@ SUBSYSTEM_DEF(input)
 	for(var/i in 1 to length(clients))
 		var/client/C = clients[i]
 		C.keyLoop()
-
-/datum/controller/subsystem/input/proc/get_key_for_macro_id(macro_id, macroset)
-	return macro_set_reverse_lookups[macroset][macro_id] || macro_set_reverse_lookups["default"][macro_id]
-
-/// Returns an associative list of keys without modifiers like ctrl. You have to do another lookup, this is for the first check to be faster.
-/datum/controller/subsystem/input/proc/get_typing_indicator_binds(macroset)
-	return typing_indicator_binds[macroset]

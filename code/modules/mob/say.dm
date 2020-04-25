@@ -1,55 +1,43 @@
 //Speech verbs.
 // the _keybind verbs uses "as text" versus "as text|null" to force a popup when pressed by a keybind.
-/mob/verb/say_keybind(message as text)
-	set name = "say_keybind"
+/mob/verb/say_typing_indicator()
+	set name = "SayWithIndicator"
 	set hidden = TRUE
 	set category = "IC"
+	display_typing_indicator()
+	var/message = input(usr, "", "Say") as text|null
 	// If they don't type anything just drop the message.
 	clear_typing_indicator()		// clear it immediately!
 	if(!length(message))
 		return
-	return do_sayverb(message)
+	return say_verb(message)
 
-/mob/verb/say_verb(message as text|null)
+/mob/verb/say_verb(message as text)
 	set name = "Say"
 	set category = "IC"
-	display_typing_indicator()
-	if(!length(message))
-		// We don't use input because that can't be broken out of with ESC key.
-		winset(src, null, "command=\"say_keybind\"")
-	else
-		return do_sayverb(message)
-
-/mob/proc/do_sayverb(message)
-	clear_typing_indicator()		// clear it immediately!
 	if(!length(message))
 		return
 	if(GLOB.say_disabled)	//This is here to try to identify lag problems
 		to_chat(usr, "<span class='danger'>Speech is currently admin-disabled.</span>")
 		return
+	clear_typing_indicator()		// clear it immediately!
 	say(message)
 
-/mob/verb/me_keybind(message as message)
-	set name = "me_keybind"
+/mob/verb/me_typing_indicator()
+	set name = "MeWithIndicator"
 	set hidden = TRUE
 	set category = "IC"
+	display_typing_indicator()
+	var/message = input(usr, "", "Me") as message|null
 	// If they don't type anything just drop the message.
 	clear_typing_indicator()		// clear it immediately!
 	if(!length(message))
 		return
-	return do_meverb(message)
+	return me_verb(message)
 
-/mob/verb/me_verb(message as message|null)
+/mob/verb/me_verb(message as message)
 	set name = "Me"
 	set category = "IC"
-	display_typing_indicator()
-	if(!length(message))
-		// Do not use input because it can't be broken out of with ESC key.
-		winset(src, null, "command=\"me_keybind\"")
-	else
-		return do_meverb(message)
-
-/mob/proc/do_meverb(message)
 	clear_typing_indicator()		// clear it immediately!
 	if(!length(message))
 		return
