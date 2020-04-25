@@ -16,7 +16,8 @@
 	slot = ORGAN_SLOT_STOMACH_AID
 
 /obj/item/organ/cyberimp/chest/nutriment/on_life()
-	if(synthesizing)
+	. = ..()
+	if(!. || synthesizing)
 		return
 
 	if(owner.nutrition <= hunger_threshold)
@@ -59,23 +60,25 @@
 	var/convalescence_time = 0
 
 /obj/item/organ/cyberimp/chest/reviver/on_life()
+	. = ..()
 	if(reviving)
-		var/do_heal = world.time < convalescence_time
+		var/do_heal = . && world.time < convalescence_time
 		if(revive_cost >= MAX_HEAL_COOLDOWN)
 			do_heal = FALSE
-		else if(owner.stat && owner.stat != DEAD)
+		else if(owner?.stat && owner.stat != DEAD)
 			do_heal = TRUE
 		else if(!do_heal)
 			convalescence_time = world.time + DEF_CONVALESCENCE_TIME
-		if(do_heal)
+		if(. && (do_heal || world.time < convalescence_time))
 			addtimer(CALLBACK(src, .proc/heal), 3 SECONDS)
 		else
 			cooldown = revive_cost + world.time
 			reviving = FALSE
-			to_chat(owner, "<span class='notice'>Your reviver implant shuts down and starts recharging. It will be ready again in [DisplayTimeText(revive_cost)].</span>")
+			if(owner)
+				to_chat(owner, "<span class='notice'>Your reviver implant shuts down and starts recharging. It will be ready again in [DisplayTimeText(revive_cost)].</span>")
 		return
 
-	if(cooldown > world.time || owner.stat == CONSCIOUS || owner.stat == DEAD || owner.suiciding)
+	if(!. || cooldown > world.time || owner.stat == CONSCIOUS || owner.stat == DEAD || owner.suiciding)
 		return
 
 	revive_cost = 0
