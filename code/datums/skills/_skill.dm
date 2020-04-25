@@ -45,6 +45,8 @@ GLOBAL_LIST_INIT(skill_datums, init_skill_datums())
   * Checks if a value is greater
   */
 /datum/skill/proc/is_value_greater(existing, new_value)
+	if(!existing)
+		return TRUE
 	return new_value > existing
 
 /**

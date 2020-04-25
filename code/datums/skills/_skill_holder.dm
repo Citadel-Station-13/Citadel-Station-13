@@ -25,7 +25,10 @@
 		CRASH("Invalid get_skill_affinity call. Use typepaths.")		//until a time when we somehow need text ids for dynamic skills, I'm enforcing this.
 	if(!skills)
 		return 1
-	return skill_affinities[skill]
+	var/affinity = skill_affinities[skill]
+	if(isnull(affinity))
+		return 1
+	return affinity
 
 /**
   * Sets the value of a skill.
@@ -45,7 +48,7 @@
   */
 /datum/skill_holder/proc/boost_skill_value_to(skill, value)
 	var/current = get_skill_value(skill)
-	if(is_skill_value_greater(skill, current, value))
+	if(!is_skill_value_greater(skill, current, value))
 		return FALSE
 	set_skill_value(skill, value)
 	return TRUE
