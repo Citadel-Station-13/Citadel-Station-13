@@ -495,20 +495,18 @@
 			host.add_fingerprint(M)
 		return FALSE
 	if(!length(can_hold_extra) || !is_type_in_typecache(I, can_hold_extra))
-		if(length(can_hold))
-			if(!is_type_in_typecache(I, can_hold))
-				if(!stop_messages)
-					to_chat(M, "<span class='warning'>[host] cannot hold [I]!</span>")
-				return FALSE
+		if(length(can_hold) && !is_type_in_typecache(I, can_hold))
+			if(!stop_messages)
+				to_chat(M, "<span class='warning'>[host] cannot hold [I]!</span>")
+			return FALSE
 		if(is_type_in_typecache(I, cant_hold)) //Check for specific items which this container can't hold.
 			if(!stop_messages)
 				to_chat(M, "<span class='warning'>[host] cannot hold [I]!</span>")
 			return FALSE
-		if(storage_flags & STORAGE_LIMIT_MAX_W_CLASS)
-			if(I.w_class > max_w_class)
-				if(!stop_messages)
-					to_chat(M, "<span class='warning'>[I] is too long for [host]!</span>")
-				return FALSE
+		if(storage_flags & STORAGE_LIMIT_MAX_W_CLASS && I.w_class > max_w_class)
+			if(!stop_messages)
+				to_chat(M, "<span class='warning'>[I] is too long for [host]!</span>")
+			return FALSE
 		// STORAGE LIMITS
 	if(storage_flags & STORAGE_LIMIT_MAX_ITEMS)
 		if(real_location.contents.len >= max_items)
