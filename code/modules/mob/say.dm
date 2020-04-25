@@ -1,11 +1,11 @@
 //Speech verbs.
 // the _keybind verbs uses "as text" versus "as text|null" to force a popup when pressed by a keybind.
 /mob/verb/say_typing_indicator()
-	set name = "SayWithIndicator"
+	set name = "say_indicator"
 	set hidden = TRUE
 	set category = "IC"
 	display_typing_indicator()
-	var/message = input(usr, "", "Say") as text|null
+	var/message = input(usr, "", "say") as text|null
 	// If they don't type anything just drop the message.
 	clear_typing_indicator()		// clear it immediately!
 	if(!length(message))
@@ -13,7 +13,7 @@
 	return say_verb(message)
 
 /mob/verb/say_verb(message as text)
-	set name = "Say"
+	set name = "say"
 	set category = "IC"
 	if(!length(message))
 		return
@@ -24,11 +24,11 @@
 	say(message)
 
 /mob/verb/me_typing_indicator()
-	set name = "MeWithIndicator"
+	set name = "me_indicator"
 	set hidden = TRUE
 	set category = "IC"
 	display_typing_indicator()
-	var/message = input(usr, "", "Me") as message|null
+	var/message = input(usr, "", "me") as message|null
 	// If they don't type anything just drop the message.
 	clear_typing_indicator()		// clear it immediately!
 	if(!length(message))
@@ -36,9 +36,8 @@
 	return me_verb(message)
 
 /mob/verb/me_verb(message as message)
-	set name = "Me"
+	set name = "me"
 	set category = "IC"
-	clear_typing_indicator()		// clear it immediately!
 	if(!length(message))
 		return
 	if(GLOB.say_disabled)	//This is here to try to identify lag problems
@@ -46,6 +45,7 @@
 		return
 
 	message = trim(copytext_char(sanitize(message), 1, MAX_MESSAGE_LEN))
+	clear_typing_indicator()		// clear it immediately!
 
 	usr.emote("me",1,message,TRUE)
 
