@@ -3314,6 +3314,7 @@
 #include "modular_citadel\code\modules\custom_loadout\custom_items.dm"
 #include "modular_citadel\code\modules\custom_loadout\load_to_mob.dm"
 #include "modular_citadel\code\modules\custom_loadout\read_from_file.dm"
+#include "modular_citadel\code\modules\language\sylvan.dm"
 #include "modular_citadel\code\modules\mentor\dementor.dm"
 #include "modular_citadel\code\modules\mentor\follow.dm"
 #include "modular_citadel\code\modules\mentor\mentor.dm"
