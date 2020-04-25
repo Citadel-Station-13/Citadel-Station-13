@@ -66,9 +66,10 @@
   * Port to tgui-next when?
   */
 /datum/skill_holder/proc/html_readout()
-	. = list("<center><h1>Skills</h1></center><hr>")
-	. += "<table style=\"width:100%\"><tr><th><b>Skill</b><th><b>Value</b></tr>"
+	var/list/out = list("<center><h1>Skills</h1></center><hr>")
+	out += "<table style=\"width:100%\"><tr><th><b>Skill</b><th><b>Value</b></tr>"
 	for(var/path in skills)
 		var/datum/skill/S = GLOB.skill_datums[path]
-		. += "<tr><td>[S.name]</td><td>[S.standard_render_value(skills[path])]</td></tr>"
-	. += "</table>"
+		out += "<tr><td>[S.name]</td><td>[S.standard_render_value(skills[path])]</td></tr>"
+	out += "</table>"
+	return out.Join("")

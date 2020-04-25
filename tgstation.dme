@@ -568,6 +568,7 @@
 #include "code\datums\ruins\lavaland.dm"
 #include "code\datums\ruins\space.dm"
 #include "code\datums\ruins\station.dm"
+#include "code\datums\skills\_check_skills.dm"
 #include "code\datums\skills\_skill.dm"
 #include "code\datums\skills\_skill_holder.dm"
 #include "code\datums\skills\medical.dm"
