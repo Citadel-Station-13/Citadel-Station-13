@@ -231,40 +231,77 @@
 
 //Picks a random element from a list based on a weighting system:
 //1. Adds up the total of weights for each element
-//2. Gets a number between 1 and that total
+//2. Gets the total from 0% to 100% of previous total value.
 //3. For each element in the list, subtracts its weighting from that number
 //4. If that makes the number 0 or less, return that element.
-/proc/pickweight(list/L)
+/proc/pickweight(list/L, base_weight = 1)
 	var/total = 0
 	var/item
 	for (item in L)
 		if (!L[item])
-			L[item] = 1
+			L[item] = base_weight
 		total += L[item]
 
-	total = rand(1, total)
+	total = rand() * total
 	for (item in L)
-		total -=L [item]
+		total -= L[item]
 		if (total <= 0)
 			return item
 
-	return null
-
-/proc/pickweightAllowZero(list/L) //The original pickweight proc will sometimes pick entries with zero weight.  I'm not sure if changing the original will break anything, so I left it be.
+//Picks a number of elements from a list based on weight.
+//This is highly optimised and good for things like grabbing 200 items from a list of 40,000
+//Much more efficient than many pickweight calls
+/proc/pickweight_mult(list/L, quantity, base_weight = 1)
+	//First we total the list as normal
 	var/total = 0
 	var/item
 	for (item in L)
 		if (!L[item])
-			L[item] = 0
+			L[item] = base_weight
 		total += L[item]
 
-	total = rand(0, total)
-	for (item in L)
-		total -=L [item]
-		if (total <= 0 && L[item])
-			return item
+	//Next we will make a list of randomly generated numbers, called Requests
+	//It is critical that this list be sorted in ascending order, so we will build it in that order
+	//First one is free, so we start counting at 2
+	var/list/requests = list(rand(1, total))
+	for (var/i in 2 to quantity)
+		//Each time we generate the next request
+		var/newreq = rand()* total
+		//We will loop through all existing requests
+		for (var/j in 1 to requests.len)
+			//We keep going through the list until we find an element which is bigger than the one we want to add
+			if (requests[j] > newreq)
+				//And then we insert the newqreq at that point, pushing everything else forward
+				requests.Insert(j, newreq)
+				break
 
-	return null
+
+
+	//Now when we get here, we have a list of random numbers sorted in ascending order.
+	//The length of that list is equal to Quantity passed into this function
+	//Next we make a list to store results
+	var/list/results = list()
+
+	//Zero the total, we'll reuse it
+	total = 0
+
+	//Now we will iterate forward through the items list, adding each weight to the total
+	for (item in L)
+		total += L[item]
+
+		//After each item we do a while loop
+		while (requests.len && total >= requests[1])
+			//If the total is higher than the value of the first request
+			results += item //We add this item to the results list
+			requests.Cut(1,2) //And we cut off the top of the requests list
+
+			//This while loop will repeat until the next request is higher than the total.
+			//The current item might be added to the results list many times, in this process
+
+	//By the time we get here:
+		//Requests will be empty
+		//Results will have a length of quality
+	return results
 
 //Pick a random element from the list and remove it from the list.
 /proc/pick_n_take(list/L)
@@ -273,6 +310,13 @@
 		var/picked = rand(1,L.len)
 		. = L[picked]
 		L.Cut(picked,picked+1)			//Cut is far more efficient that Remove()
+
+//Pick a random element from the list by weight and remove it from the list.
+//Result is returned as a list in the format list(key, value)
+/proc/pickweight_n_take(list/L, base_weight = 1)
+	if (L.len)
+		. = pickweight(L, base_weight)
+		L.Remove(.)
 
 //Returns the top(last) element from the list and removes it from the list (typical stack function)
 /proc/pop(list/L)
