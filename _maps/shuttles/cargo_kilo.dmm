@@ -35,10 +35,6 @@
 	},
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/supply)
-"g" = (
-/obj/effect/turf_decal/stripes/corner,
-/turf/open/floor/mineral/titanium/yellow,
-/area/shuttle/supply)
 "h" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -64,9 +60,7 @@
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/supply)
 "k" = (
-/obj/effect/turf_decal/stripes/corner{
-	dir = 4
-	},
+/obj/effect/turf_decal/stripes/corner,
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/supply)
 "l" = (
@@ -209,12 +203,24 @@
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plating/airless,
 /area/shuttle/supply)
-"M" = (
+"K" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/turf/open/floor/mineral/titanium/yellow,
+/area/shuttle/supply)
+"Q" = (
 /obj/effect/turf_decal/stripes/corner{
 	dir = 4
 	},
 /obj/effect/turf_decal/stripes/corner{
 	dir = 1
+	},
+/turf/open/floor/mineral/titanium/yellow,
+/area/shuttle/supply)
+"Z" = (
+/obj/effect/turf_decal/stripes/corner{
+	dir = 4
 	},
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/supply)
@@ -251,12 +257,12 @@ C
 a
 c
 o
-w
-k
+K
+Z
 w
 o
-w
-M
+K
+Q
 e
 A
 D
@@ -284,7 +290,7 @@ w
 w
 w
 w
-g
+k
 x
 A
 D
