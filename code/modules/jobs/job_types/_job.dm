@@ -179,7 +179,7 @@
 	M.skill_holder.skill_affinities = list()
 	for(var/skill in skill_affinities)
 		M.skill_holder.skill_affinities[skill] = skill_affinities[skill]
-	LAZYCLEARLIST(M.skill_holder.skill_affinities)		//if we didn't set any.
+	UNSETEMPTY(M.skill_holder.skill_affinities)		//if we didn't set any.
 
 /datum/outfit/job
 	name = "Standard Gear"

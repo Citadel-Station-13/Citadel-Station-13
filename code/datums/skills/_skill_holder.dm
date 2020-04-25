@@ -45,7 +45,7 @@
   */
 /datum/skill_holder/proc/boost_skill_value_to(skill, value)
 	var/current = get_skill_value(skill)
-	if(!is_skill_value_greater(skill, current, value))
+	if(is_skill_value_greater(skill, current, value))
 		return FALSE
 	set_skill_value(skill, value)
 	return TRUE
