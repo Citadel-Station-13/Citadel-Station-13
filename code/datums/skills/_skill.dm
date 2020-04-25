@@ -47,6 +47,12 @@ GLOBAL_LIST_INIT(skill_datums, init_skill_datums())
 /datum/skill/proc/is_value_greater(existing, new_value)
 	return new_value > existing
 
+/**
+  * Standard value "render"
+  */
+/datum/skill/proc/standard_render_value(value)
+	return value
+
 // Just saying, the choice to use different sub-parent-types is to force coders to resolve issues as I won't be implementing custom procs to grab skill levels in a certain context.
 // Aka: So people don't forget to change checks if they change a skill's progression type.
 
@@ -57,6 +63,9 @@ GLOBAL_LIST_INIT(skill_datums, init_skill_datums())
 /datum/skill/binary/sanitize_value(new_value)
 	return new_value? TRUE : FALSE
 
+/datum/skill/binary/standard_render_value(value)
+	return value? "Yes" : "No"
+
 /datum/skill/numerical
 	abstract_type = /datum/skill/numerical
 	progression_type = SKILL_PROGRESSION_NUMERICAL
@@ -64,9 +73,14 @@ GLOBAL_LIST_INIT(skill_datums, init_skill_datums())
 	var/max_value = 100
 	/// Min value of this skill
 	var/min_value = 0
+	/// Display as a percent in standard_render_value?
+	var/display_as_percent = FALSE
 
 /datum/skill/numerical/sanitize_value(new_value)
 	return clamp(new_value, min_value, max_value)
+
+/datum/skill/numerical/standard_render_value(value)
+	return display_as_percent? "[round(value/max_value/100, 0.01)]%" : "[value] / [max_value]"
 
 /datum/skill/enum
 	abstract_type = /datum/skill/enum

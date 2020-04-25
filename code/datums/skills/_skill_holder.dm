@@ -60,3 +60,15 @@
 	var/current = get_skill_value(skill)
 	var/affinity = get_skill_affinity(skill)
 	bosst_skill_value_to(skill, current + (value * affinity))
+
+/**
+  * Generates a HTML readout of our skills.
+  * Port to tgui-next when?
+  */
+/datum/skill_holder/proc/html_readout()
+	. = list("<center><h1>Skills</h1></center><hr>")
+	. += "<table style=\"width:100%\"><tr><th><b>Skill</b><th><b>Value</b></tr>"
+	for(var/path in skills)
+		var/datum/skill/S = GLOB.skill_datums[path]
+		. += "<tr><td>[S.name]</td><td>[S.standard_render_value(skills[path])]</td></tr>"
+	. += "</table>"
