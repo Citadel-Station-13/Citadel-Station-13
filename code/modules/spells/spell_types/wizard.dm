@@ -297,7 +297,7 @@
 				var/mob/living/M = AM
 				M.DefaultCombatKnockdown(stun_amt, override_hardstun = stun_amt * 0.2)
 				to_chat(M, "<span class='userdanger'>You're thrown back by [user]!</span>")
-			AM.throw_at(throwtarget, ((CLAMP((maxthrow - (CLAMP(distfromcaster - 2, 0, distfromcaster))), 3, maxthrow))), 1,user)//So stuff gets tossed around at the same time.
+			AM.throw_at(throwtarget, ((clamp((maxthrow - (clamp(distfromcaster - 2, 0, distfromcaster))), 3, maxthrow))), 1,user)//So stuff gets tossed around at the same time.
 			safety--
 
 /obj/effect/proc_holder/spell/aoe_turf/repulse/xeno //i fixed conflicts only to find out that this is in the WIZARD file instead of the xeno file?!

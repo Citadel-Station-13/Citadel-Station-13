@@ -20,7 +20,7 @@
 					/obj/item/reagent_containers/food/condiment/saltshaker = 5,
 					/obj/item/reagent_containers/food/condiment/peppermill = 5)
 	contraband = list(
-					/obj/item/reagent_containers/food/snacks/monkeycube = 1,
+					/obj/item/reagent_containers/food/snacks/cube/monkey= 1,
 					/obj/item/kitchen/knife/butcher = 2,
 					/obj/item/reagent_containers/syringe = 3)
 	premium = list(

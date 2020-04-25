@@ -6,7 +6,7 @@
 	var/directstamloss = (bufferedstam + amount) - stambuffer
 	if(directstamloss > 0)
 		adjustStaminaLoss(directstamloss)
-	bufferedstam = CLAMP(bufferedstam + amount, 0, stambuffer)
+	bufferedstam = clamp(bufferedstam + amount, 0, stambuffer)
 	stambufferregentime = world.time + 10
 	if(updating_health)
 		update_health_hud()

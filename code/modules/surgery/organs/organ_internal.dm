@@ -209,7 +209,7 @@
 		return FALSE
 	if(maximum < damage)
 		return FALSE
-	damage = CLAMP(damage + d, 0, maximum)
+	damage = clamp(damage + d, 0, maximum)
 	var/mess = check_damage_thresholds()
 	prev_damage = damage
 	if(mess && owner)

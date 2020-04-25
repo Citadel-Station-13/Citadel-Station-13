@@ -208,6 +208,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 	var/show_mismatched_markings = FALSE //determines whether or not the markings lists should show markings that don't match the currently selected species. Intentionally left unsaved.
 
+	var/no_tetris_storage = FALSE
+
 /datum/preferences/New(client/C)
 	parent = C
 
@@ -863,6 +865,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			dat += "<b>Widescreen:</b> <a href='?_src_=prefs;preference=widescreenpref'>[widescreenpref ? "Enabled ([CONFIG_GET(string/default_view)])" : "Disabled (15x15)"]</a><br>"
 			dat += "<b>Auto stand:</b> <a href='?_src_=prefs;preference=autostand'>[autostand ? "Enabled" : "Disabled"]</a><br>"
 			dat += "<b>Auto OOC:</b> <a href='?_src_=prefs;preference=auto_ooc'>[auto_ooc ? "Enabled" : "Disabled"]</a><br>"
+			dat += "<b>Force Slot Storage HUD:</b> <a href='?_src_=prefs;preference=no_tetris_storage'>[no_tetris_storage ? "Enabled" : "Disabled"]</a><br>"
 			dat += "<b>Screen Shake:</b> <a href='?_src_=prefs;preference=screenshake'>[(screenshake==100) ? "Full" : ((screenshake==0) ? "None" : "[screenshake]")]</a><br>"
 			if (user && user.client && !user.client.prefs.screenshake==0)
 				dat += "<b>Damage Screen Shake:</b> <a href='?_src_=prefs;preference=damagescreenshake'>[(damagescreenshake==1) ? "On" : ((damagescreenshake==0) ? "Off" : "Only when down")]</a><br>"
@@ -1839,7 +1842,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 				if("s_tone")
 					var/list/choices = GLOB.skin_tones - GLOB.nonstandard_skin_tones
-					if(CONFIG_GET(number/allow_custom_skintones))
+					if(CONFIG_GET(flag/allow_custom_skintones))
 						choices += "custom"
 					var/new_s_tone = input(user, "Choose your character's skin tone:", "Character Preference")  as null|anything in choices
 					if(new_s_tone)
@@ -1968,7 +1971,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					var/max_D = CONFIG_GET(number/penis_max_inches_prefs)
 					var/new_length = input(user, "Penis length in inches:\n([min_D]-[max_D])", "Character Preference") as num|null
 					if(new_length)
-						features["cock_length"] = CLAMP(round(new_length), min_D, max_D)
+						features["cock_length"] = clamp(round(new_length), min_D, max_D)
 
 				if("cock_shape")
 					var/new_shape
@@ -2165,7 +2168,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					var/danger = CONFIG_GET(number/threshold_body_size_slowdown)
 					var/new_body_size = input(user, "Choose your desired sprite size:\n([min*100]%-[max*100]%), Warning: May make your character look distorted[danger > min ? ", and an exponential slowdown will occur for those smaller than [danger*100]%!" : "!"]", "Character Preference", features["body_size"]*100) as num|null
 					if (new_body_size)
-						new_body_size = CLAMP(new_body_size * 0.01, min, max)
+						new_body_size = clamp(new_body_size * 0.01, min, max)
 						var/dorfy
 						if(danger > new_body_size)
 							dorfy = alert(user, "The chosen size appears to be smaller than the threshold of [danger*100]%, which will lead to an added exponential slowdown. Are you sure about that?", "Dwarfism Alert", "Yes", "Move it to the threshold", "No")
@@ -2206,6 +2209,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					autostand = !autostand
 				if("auto_ooc")
 					auto_ooc = !auto_ooc
+				if("no_tetris_storage")
+					no_tetris_storage = !no_tetris_storage
 				if ("screenshake")
 					var/desiredshake = input(user, "Set the amount of screenshake you want. \n(0 = disabled, 100 = full, 200 = maximum.)", "Character Preference", screenshake)  as null|num
 					if (!isnull(desiredshake))
