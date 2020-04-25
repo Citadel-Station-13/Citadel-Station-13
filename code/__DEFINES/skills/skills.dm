@@ -16,7 +16,7 @@
 
 // Standard values for job starting skill affinities
 
-#define STARTING_SKILL_AFFINITY_SURGERY_MEDICAL			1.25
+#define STARTING_SKILL_AFFINITY_SURGERY_MEDICAL			1.2
 
 // Standard values for skill gain (this is multiplied by affinity)
 

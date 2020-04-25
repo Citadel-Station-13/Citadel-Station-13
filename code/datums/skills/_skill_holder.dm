@@ -59,7 +59,7 @@
 		CRASH("You cannot auto increment a non numerical skill!")
 	var/current = get_skill_value(skill)
 	var/affinity = get_skill_affinity(skill)
-	bosst_skill_value_to(skill, current + (value * affinity))
+	boost_skill_value_to(skill, current + (value * affinity))
 
 /**
   * Generates a HTML readout of our skills.

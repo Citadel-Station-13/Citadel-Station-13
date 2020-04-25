@@ -61,7 +61,7 @@
 	var/skill_mod = 1
 	if(user?.mind?.skill_holder)
 		skill_mod = SURGERY_SKILL_SPEEDUP_NUMERICAL_SCALE(user.mind.skill_holder.get_skill_value(/datum/skill/numerical/surgery))
-	if(do_after(user, time * speed_mod, target = target))
+	if(do_after(user, time * speed_mod * skill_mod, target = target))
 		var/prob_chance = 100
 		if(implement_type)	//this means it isn't a require hand or any item step.
 			prob_chance = implements[implement_type]
