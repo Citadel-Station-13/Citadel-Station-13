@@ -5,7 +5,7 @@ GLOBAL_LIST_EMPTY(traitor_classes)
 	var/employer = "The Syndicate"
 	var/weight = 0
 	var/chaos = 0
-	var/cost = 0
+	var/threat = 0
 	var/TC = 20
 	var/list/uplink_filters
 
@@ -38,3 +38,7 @@ GLOBAL_LIST_EMPTY(traitor_classes)
 /datum/traitor_class/proc/finalize_traitor(datum/antagonist/traitor/T)
 	// Finalization. Return TRUE if should play standard traitor sound/equip, return FALSE if both are special case
 	return TRUE
+
+/datum/traitor_class/proc/clean_up_traitor(datum/antagonist/traitor/T)
+	// Any effects that need to be cleaned up if traitor class is being swapped.
+	

@@ -1,6 +1,7 @@
 /mob/living/simple_animal/hostile/dark_wizard
 	name = "Dark Wizard"
 	desc = "Killing amateurs since the dawn of times."
+	threat = 3
 	icon = 'icons/mob/simple_human.dmi'
 	icon_state = "dark_wizard"
 	icon_living = "dark_wizard"

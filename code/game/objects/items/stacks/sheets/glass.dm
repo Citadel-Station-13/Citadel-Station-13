@@ -22,6 +22,8 @@ GLOBAL_LIST_INIT(glass_recipes, list ( \
 		new/datum/stack_recipe("spout flask", /obj/item/glasswork/glass_base/spouty, 20), \
 		new/datum/stack_recipe("small bulb flask", /obj/item/glasswork/glass_base/flask_small, 5), \
 		new/datum/stack_recipe("large bottle flask", /obj/item/glasswork/glass_base/flask_large, 15), \
+		new/datum/stack_recipe("tea cup", /obj/item/glasswork/glass_base/tea_plate, 5), \
+		new/datum/stack_recipe("tea plate", /obj/item/glasswork/glass_base/tea_cup, 5), \
 	)), \
 ))
 
@@ -137,7 +139,7 @@ GLOBAL_LIST_INIT(pglass_recipes, list ( \
 		return ..()
 
 /obj/item/stack/sheet/plasmaglass/on_solar_construction(obj/machinery/power/solar/S)
-	S.obj_integrity *= 1.2
+	S.max_integrity *= 1.2
 	S.efficiency *= 1.2
 
 /*
@@ -170,7 +172,7 @@ GLOBAL_LIST_INIT(reinforced_glass_recipes, list ( \
 	..()
 
 /obj/item/stack/sheet/rglass/on_solar_construction(obj/machinery/power/solar/S)
-	S.obj_integrity *= 2
+	S.max_integrity *= 2
 
 /obj/item/stack/sheet/rglass/cyborg
 	custom_materials = null
@@ -218,7 +220,7 @@ GLOBAL_LIST_INIT(prglass_recipes, list ( \
 	. += GLOB.prglass_recipes
 
 /obj/item/stack/sheet/plasmarglass/on_solar_construction(obj/machinery/power/solar/S)
-	S.obj_integrity *= 2.2
+	S.max_integrity *= 2.2
 	S.efficiency *= 1.2
 
 GLOBAL_LIST_INIT(titaniumglass_recipes, list(
@@ -242,7 +244,7 @@ GLOBAL_LIST_INIT(titaniumglass_recipes, list(
 	. += GLOB.titaniumglass_recipes
 
 /obj/item/stack/sheet/titaniumglass/on_solar_construction(obj/machinery/power/solar/S)
-	S.obj_integrity *= 2.5
+	S.max_integrity *= 2.5
 	S.efficiency *= 1.5
 
 GLOBAL_LIST_INIT(plastitaniumglass_recipes, list(
@@ -270,7 +272,7 @@ GLOBAL_LIST_INIT(plastitaniumglass_recipes, list(
 	. += GLOB.plastitaniumglass_recipes
 
 /obj/item/stack/sheet/titaniumglass/on_solar_construction(obj/machinery/power/solar/S)
-	S.obj_integrity *= 2
+	S.max_integrity *= 2
 	S.efficiency *= 2
 
 /obj/item/shard

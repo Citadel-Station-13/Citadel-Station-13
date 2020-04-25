@@ -82,6 +82,7 @@
 
 	// Change Appearance, not randomizing clothes colour, itll just be janky
 	H.gender = pick(MALE, FEMALE)
+	H.dna.skin_tone_override = null
 	H.skin_tone = random_skin_tone()
 	H.hair_style = random_hair_style(H.gender)
 	H.facial_hair_style = pick(random_facial_hair_style(H.gender),"Shaved")
@@ -95,7 +96,7 @@
 	H.dna.features = random_features(H.dna.species?.id)
 
 	// Apply Appearance
-	H.update_body() // Outfit and underware, also body.
+	H.update_body(TRUE) // Outfit and underwear, also body and privates.
 	//H.update_mutant_bodyparts() // Lizard tails etc
 	H.update_hair()
 	H.update_body_parts()
@@ -124,6 +125,8 @@
 		// Revert Appearance
 		H.gender = prev_gender
 		H.skin_tone = prev_skin_tone
+		if(!GLOB.skin_tones[H.skin_tone])
+			H.dna.skin_tone_override = H.skin_tone
 		H.hair_style = prev_hair_style
 		H.facial_hair_style = prev_facial_hair_style
 		H.hair_color = prev_hair_color
@@ -140,7 +143,7 @@
 			ADD_TRAIT(H, TRAIT_DISFIGURED, "husk") // NOTE: We are ASSUMING husk. // H.status_flags |= DISFIGURED	// Restore "Unknown" disfigurement
 		H.dna.features = prev_features
 		// Apply Appearance
-		H.update_body() // Outfit and underware, also body.
+		H.update_body(TRUE) // Outfit and underwear, also body and privates.
 		H.update_hair()
 		H.update_body_parts()	// Body itself, maybe skin color?
 		cast_effect() // POOF

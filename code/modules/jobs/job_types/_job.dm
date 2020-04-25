@@ -63,6 +63,8 @@
 
 	//If a job complies with dresscodes, loadout items will not be equipped instead of the job's outfit, instead placing the items into the player's backpack.
 	var/dresscodecompliant = TRUE
+	// How much threat this job is worth in dynamic. Is subtracted if the player's not an antag, added if they are.
+	var/threat = 0
 
 //Only override this proc
 //H is usually a human unless an /equip override transformed it
@@ -87,6 +89,11 @@
 	. = CONFIG_GET(keyed_list/antag_rep)[lowertext(title)]
 	if(. == null)
 		return antag_rep
+
+/datum/job/proc/GetThreat()
+	. = CONFIG_GET(keyed_list/job_threat)[lowertext(title)]
+	if(. == null)
+		return threat
 
 //Don't override this unless the job transforms into a non-human (Silicons do this for example)
 /datum/job/proc/equip(mob/living/carbon/human/H, visualsOnly = FALSE, announce = TRUE, latejoin = FALSE, datum/outfit/outfit_override = null, client/preference_source)

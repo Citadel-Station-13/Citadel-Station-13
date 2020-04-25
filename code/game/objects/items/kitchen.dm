@@ -142,6 +142,7 @@
 	name = "plastic knife"
 	desc = "A plastic knife. Rather harmless to anything."
 	force = 1
+	throwforce = 1
 	bayonet = FALSE
 
 /obj/item/kitchen/knife/combat/cyborg

@@ -10,7 +10,7 @@
 	var/freq = input(usr, "What frequency would you like the sound to play at?",, 1) as null|num
 	if(!freq)
 		freq = 1
-	vol = CLAMP(vol, 1, 100)
+	vol = clamp(vol, 1, 100)
 
 	var/sound/admin_sound = new()
 	admin_sound.file = S

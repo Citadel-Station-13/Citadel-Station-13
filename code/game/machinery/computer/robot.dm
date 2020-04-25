@@ -11,16 +11,19 @@
 
 /obj/machinery/computer/robotics/proc/can_control(mob/user, mob/living/silicon/robot/R)
 	if(!istype(R))
-		return 0
+		return FALSE
 	if(isAI(user))
 		if (R.connected_ai != user)
-			return 0
+			return FALSE
 	if(iscyborg(user))
 		if (R != user)
-			return 0
+			return FALSE
 	if(R.scrambledcodes)
-		return 0
-	return 1
+		return FALSE
+	if (hasSiliconAccessInArea(user) && !issilicon(user))
+		if (!Adjacent(user))
+			return FALSE
+	return TRUE
 
 /obj/machinery/computer/robotics/ui_interact(mob/user)
 	. = ..()

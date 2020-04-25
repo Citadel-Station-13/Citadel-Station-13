@@ -271,9 +271,9 @@
 /datum/reagent/water/reaction_obj(obj/O, reac_volume)
 	O.extinguish()
 	O.acid_level = 0
-	// Monkey cube
-	if(istype(O, /obj/item/reagent_containers/food/snacks/monkeycube))
-		var/obj/item/reagent_containers/food/snacks/monkeycube/cube = O
+	// cubes
+	if(istype(O, /obj/item/reagent_containers/food/snacks/cube))
+		var/obj/item/reagent_containers/food/snacks/cube/cube = O
 		cube.Expand()
 
 	// Dehydrated carp
@@ -332,7 +332,7 @@
 		data = list("misc" = 1)
 	data["misc"]++
 	M.jitteriness = min(M.jitteriness+4,10)
-	if(iscultist(M))
+	if(iscultist(M, FALSE, TRUE))
 		for(var/datum/action/innate/cult/blood_magic/BM in M.actions)
 			if(!BM.holy_dispel)
 				BM.holy_dispel = TRUE
@@ -361,7 +361,7 @@
 				if("emote")
 					M.visible_message("<span class='warning'>[M] [pick("whimpers quietly", "shivers as though cold", "glances around in paranoia")].</span>")
 	if(data["misc"] >= 60)	// 30 units, 135 seconds
-		if(iscultist(M) || is_servant_of_ratvar(M))
+		if(iscultist(M, FALSE, TRUE) || is_servant_of_ratvar(M, FALSE, TRUE))
 			if(iscultist(M))
 				SSticker.mode.remove_cultist(M.mind, FALSE, TRUE)
 			else if(is_servant_of_ratvar(M))
@@ -507,93 +507,83 @@
 /datum/reagent/spraytan/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message = 1)
 	if(ishuman(M))
 		if(method == PATCH || method == VAPOR)
-			var/mob/living/carbon/human/N = M
-			if(N.dna.species.id == "human")
-				switch(N.skin_tone)
-					if("african1")
-						N.skin_tone = "african2"
-					if("indian")
-						N.skin_tone = "african1"
-					if("arab")
-						N.skin_tone = "indian"
-					if("asian2")
-						N.skin_tone = "arab"
-					if("asian1")
-						N.skin_tone = "asian2"
-					if("mediterranean")
-						N.skin_tone = "african1"
-					if("latino")
-						N.skin_tone = "mediterranean"
-					if("caucasian3")
-						N.skin_tone = "mediterranean"
-					if("caucasian2")
-						N.skin_tone = pick("caucasian3", "latino")
-					if("caucasian1")
-						N.skin_tone = "caucasian2"
-					if ("albino")
-						N.skin_tone = "caucasian1"
+			var/mob/living/carbon/human/H = M
+			if(H.dna.species.use_skintones)
+				if(!H.dna.skin_tone_override)
+					var/diff_len = length(GLOB.skin_tones - GLOB.nonstandard_skin_tones)
+					H.skin_tone = GLOB.skin_tones[min(diff_len, GLOB.skin_tones.Find(H.skin_tone) + 1)]
+				else
+					H.skin_tone = H.dna.skin_tone_override = tan_mutant_color(H.dna.skin_tone_override, "#202020")
+			if(MUTCOLORS in H.dna.species.species_traits) //take current alien color and darken it slightly
+				H.dna.features["mcolor"] = tan_mutant_color(H.dna.features["mcolor"])
+			H.update_body()
 
-			if(MUTCOLORS in N.dna.species.species_traits) //take current alien color and darken it slightly
-				var/newcolor = ""
-				var/string = N.dna.features["mcolor"]
-				var/len = length(string)
-				var/char = ""
-				var/ascii = 0
-				for(var/i=1, i<=len, i += length(char))
-					char = string[i]
-					ascii = text2ascii(char)
-					switch(ascii)
-						if(48)
-							newcolor += "0"
-						if(49 to 57)
-							newcolor += ascii2text(ascii-1)	//numbers 1 to 9
-						if(97)
-							newcolor += "9"
-						if(98 to 102)
-							newcolor += ascii2text(ascii-1)	//letters b to f lowercase
-						if(65)
-							newcolor += "9"
-						if(66 to 70)
-							newcolor += ascii2text(ascii+31)	//letters B to F - translates to lowercase
-						else
-							break
-				if(ReadHSV(newcolor)[3] >= ReadHSV("#7F7F7F")[3])
-					N.dna.features["mcolor"] = newcolor
-			N.regenerate_icons()
+	if(method == INGEST)
+		if(show_message)
+			to_chat(M, "<span class='notice'>That tasted horrible.</span>")
 
+	return ..()
 
+/datum/reagent/spraytan/proc/tan_mutant_color(color, limit = "#7F7F7F")
+	var/newcolor = ""
+	var/len = length(color)
+	var/char = ""
+	var/ascii = 0
+	for(var/i=1, i<=len, i += length(char))
+		char = color[i]
+		ascii = text2ascii(char)
+		switch(ascii)
+			if(35)
+				newcolor += "#"
+			if(48)
+				newcolor += "0"
+			if(49 to 57)
+				newcolor += ascii2text(ascii-1)	//numbers 1 to 9
+			if(97)
+				newcolor += "9"
+			if(98 to 102)
+				newcolor += ascii2text(ascii-1)	//letters b to f lowercase
+			if(65)
+				newcolor += "9"
+			if(66 to 70)
+				newcolor += ascii2text(ascii+31)	//letters B to F - translates to lowercase
+			else
+				break
+	if(ReadHSV(newcolor)[3] >= ReadHSV(limit)[3])
+		return newcolor
+	return color
 
-		if(method == INGEST)
-			if(show_message)
-				to_chat(M, "<span class='notice'>That tasted horrible.</span>")
-	..()
-
+/datum/reagent/spraytan/overdose_start(mob/living/M)
+	. = ..()
+	if(ishuman(M))
+		var/mob/living/carbon/human/H = M
+		H.hair_style = "Spiky"
+		H.facial_hair_style = "Shaved"
+		H.facial_hair_color = "000"
+		H.hair_color = "000"
+		if(!(HAIR in H.dna.species.species_traits)) //No hair? No problem!
+			H.dna.species.species_traits += HAIR
+		if(H.dna.species.use_skintones)
+			if(H.dna.skin_tone_override)
+				H.skin_tone = H.dna.skin_tone_override = "#FF8800"
+			else
+				H.skin_tone = "orange"
+		else if(MUTCOLORS in H.dna.species.species_traits) //Aliens with custom colors simply get turned orange
+			H.dna.features["mcolor"] = "f80"
+		H.update_body()
 
 /datum/reagent/spraytan/overdose_process(mob/living/M)
 	metabolization_rate = 1 * REAGENTS_METABOLISM
-
 	if(ishuman(M))
-		var/mob/living/carbon/human/N = M
-		N.hair_style = "Spiky"
-		N.facial_hair_style = "Shaved"
-		N.facial_hair_color = "000"
-		N.hair_color = "000"
-		if(!(HAIR in N.dna.species.species_traits)) //No hair? No problem!
-			N.dna.species.species_traits += HAIR
-		if(N.dna.species.use_skintones)
-			N.skin_tone = "orange"
-		else if(MUTCOLORS in N.dna.species.species_traits) //Aliens with custom colors simply get turned orange
-			N.dna.features["mcolor"] = "f80"
-		N.regenerate_icons()
+		var/mob/living/carbon/human/H = M
 		if(prob(7))
-			if(N.w_uniform)
-				M.visible_message(pick("<b>[M]</b>'s collar pops up without warning.</span>", "<b>[M]</b> flexes [M.p_their()] arms."))
+			if(H.w_uniform)
+				H.visible_message(pick("<b>[H]</b>'s collar pops up without warning.</span>", "<b>[H]</b> flexes [H.p_their()] arms."))
 			else
-				M.visible_message("<b>[M]</b> flexes [M.p_their()] arms.")
+				H.visible_message("<b>[H]</b> flexes [H.p_their()] arms.")
 	if(prob(10))
 		M.say(pick("Shit was SO cash.", "You are everything bad in the world.", "What sports do you play, other than 'jack off to naked drawn Japanese people?'", "Don’t be a stranger. Just hit me with your best shot.", "My name is John and I hate every single one of you."), forced = "spraytan")
-	..()
-	return
+	return ..()
 
 /datum/reagent/mutationtoxin
 	name = "Stable Mutation Toxin"
@@ -1070,11 +1060,11 @@
 	to_chat(M, "<span class='userdanger'>You start feeling your guts twisting painfully!</span>")
 	SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "[type]_overdose", /datum/mood_event/overdose, name)
 
-/datum/reagent/iron/overdose_process(mob/living/carbon/C)
+/datum/reagent/iron/overdose_process(mob/living/M)
 	if(prob(20))
-		var/obj/item/organ/liver/L = C.getorganslot(ORGAN_SLOT_LIVER)
-		if (istype(L))
-			C.applyLiverDamage(2) //mild until the fabled med rework comes out. the organ damage galore
+		var/obj/item/organ/liver/L = M.getorganslot(ORGAN_SLOT_LIVER)
+		if(L)
+			L.applyOrganDamage(2)
 	..()
 
 /datum/reagent/gold
@@ -1917,22 +1907,22 @@
 	name = "Growth Serum"
 	description = "A commercial chemical designed to help older men in the bedroom."//not really it just makes you a giant
 	color = "#ff0000"//strong red. rgb 255, 0, 0
-	var/current_size = 1
+	var/current_size = RESIZE_DEFAULT_SIZE
 	taste_description = "bitterness" // apparently what viagra tastes like
 
 /datum/reagent/growthserum/on_mob_life(mob/living/carbon/H)
 	var/newsize = current_size
 	switch(volume)
 		if(0 to 19)
-			newsize = 1.25
+			newsize = 1.25*RESIZE_DEFAULT_SIZE
 		if(20 to 49)
-			newsize = 1.5
+			newsize = 1.5*RESIZE_DEFAULT_SIZE
 		if(50 to 99)
-			newsize = 2
+			newsize = 2*RESIZE_DEFAULT_SIZE
 		if(100 to 199)
-			newsize = 2.5
+			newsize = 2.5*RESIZE_DEFAULT_SIZE
 		if(200 to INFINITY)
-			newsize = 3.5
+			newsize = 3.5*RESIZE_DEFAULT_SIZE
 
 	H.resize = newsize/current_size
 	current_size = newsize
@@ -1940,7 +1930,8 @@
 	..()
 
 /datum/reagent/growthserum/on_mob_end_metabolize(mob/living/M)
-	M.resize = 1/current_size
+	M.resize = RESIZE_DEFAULT_SIZE/current_size
+	current_size = RESIZE_DEFAULT_SIZE
 	M.update_transform()
 	..()
 
@@ -2032,9 +2023,9 @@
 
 /datum/reagent/peaceborg_confuse/on_mob_life(mob/living/carbon/M)
 	if(M.confused < 6)
-		M.confused = CLAMP(M.confused + 3, 0, 5)
+		M.confused = clamp(M.confused + 3, 0, 5)
 	if(M.dizziness < 6)
-		M.dizziness = CLAMP(M.dizziness + 3, 0, 5)
+		M.dizziness = clamp(M.dizziness + 3, 0, 5)
 	if(prob(20))
 		to_chat(M, "You feel confused and disorientated.")
 	..()

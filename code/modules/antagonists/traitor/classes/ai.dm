@@ -1,5 +1,6 @@
 /datum/traitor_class/ai // this one is special, so has no weight
 	name = "Malfunctioning AI"
+	threat = 20
 
 /datum/traitor_class/ai/forge_objectives(datum/antagonist/traitor/T)
 	var/objective_count = 0

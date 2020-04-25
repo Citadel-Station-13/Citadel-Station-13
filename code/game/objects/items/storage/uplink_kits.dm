@@ -404,6 +404,12 @@
 	new /obj/item/gun/ballistic/revolver(src)
 	new /obj/item/ammo_box/a357(src)
 
+/obj/item/storage/box/syndie_kit/pistol
+
+/obj/item/storage/box/syndie_kit/pistol/PopulateContents()
+	new /obj/item/gun/ballistic/automatic/pistol(src)
+	new /obj/item/ammo_box/magazine/m10mm(src)
+
 /obj/item/storage/box/syndie_kit/contract_kit
 	name = "contractor kit"
 	desc = "Supplied to Syndicate contractors in active mission areas."
@@ -495,3 +501,13 @@
 	new item2(src)
 	new item3(src)
 	new /obj/item/paper/contractor_guide(src)	//Paper guide
+
+/obj/item/storage/box/syndie_kit/northstar
+
+/obj/item/storage/box/syndie_kit/northstar/PopulateContents()
+	new /obj/item/clothing/gloves/fingerless/pugilist/rapid(src)
+	new /obj/item/clothing/accessory/padding(src)
+	new /obj/item/clothing/under/chameleon(src)
+	new /obj/item/storage/fancy/cigarettes/cigpack_syndicate(src)
+	new /obj/item/lighter(src)
+	

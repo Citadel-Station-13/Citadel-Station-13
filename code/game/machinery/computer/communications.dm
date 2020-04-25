@@ -292,6 +292,10 @@
 				playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, 0)
 				CentCom_announce(input, usr)
 				to_chat(usr, "<span class='notice'>Message transmitted to Central Command.</span>")
+				for(var/client/X in GLOB.admins)
+					if(X.prefs.toggles & SOUND_ADMINHELP)
+						SEND_SOUND(X, sound('sound/effects/printer.ogg'))
+					window_flash(X, ignorepref = FALSE)
 				usr.log_talk(input, LOG_SAY, tag="CentCom announcement")
 				deadchat_broadcast("<span class='deadsay'><span class='name'>[usr.real_name]</span> has messaged CentCom, \"[input]\" at <span class='name'>[get_area_name(usr, TRUE)]</span>.</span>", usr)
 				CM.lastTimeUsed = world.time
@@ -309,6 +313,10 @@
 				playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, 0)
 				Syndicate_announce(input, usr)
 				to_chat(usr, "<span class='danger'>SYSERR @l(19833)of(transmit.dm): !@$ MESSAGE TRANSMITTED TO SYNDICATE COMMAND.</span>")
+				for(var/client/X in GLOB.admins)
+					if(X.prefs.toggles & SOUND_ADMINHELP)
+						SEND_SOUND(X, sound('sound/effects/printer.ogg'))
+					window_flash(X, ignorepref = FALSE)
 				usr.log_talk(input, LOG_SAY, tag="Syndicate announcement")
 				deadchat_broadcast("<span class='deadsay'><span class='name'>[usr.real_name]</span> has messaged the Syndicate, \"[input]\" at <span class='name'>[get_area_name(usr, TRUE)]</span>.</span>", usr)
 				CM.lastTimeUsed = world.time

@@ -1,6 +1,0 @@
-author: "zeroisthebiggay"
-delete-after: True
-changes: 
-  - rscadd: "sneaksuit to contractor items"
-  - tweak: "sneaksuit is a bundle"
-  - rscdel: "intel potion and radio implant from contractor items"

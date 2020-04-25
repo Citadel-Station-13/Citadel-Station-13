@@ -695,7 +695,7 @@
 							holo_icon = client.prefs.get_filtered_holoform(HOLOFORM_FILTER_AI)
 						else
 							holo_icon = getHologramIcon(icon('icons/mob/ai.dmi', "female"))
-					else if("xeno queen")
+					if("xeno queen")
 						holo_icon = getHologramIcon(icon(icon_list[input],"alienq"))
 					else
 						holo_icon = getHologramIcon(icon(icon_list[input], input))
@@ -869,7 +869,7 @@
 	if(istype(A, /obj/machinery/camera))
 		current = A
 	if(client)
-		if(ismovableatom(A))
+		if(ismovable(A))
 			if(A != GLOB.ai_camera_room_landmark)
 				end_multicam()
 			client.perspective = EYE_PERSPECTIVE
@@ -1016,7 +1016,7 @@
 		if("Yes.")
 			src.ghostize(FALSE, penalize = TRUE)
 			var/announce_rank = "Artificial Intelligence,"
-			if(GLOB.announcement_systems.len) 
+			if(GLOB.announcement_systems.len)
 				// Sends an announcement the AI has cryoed.
 				var/obj/machinery/announcement_system/announcer = pick(GLOB.announcement_systems)
 				announcer.announce("CRYOSTORAGE", src.real_name, announce_rank, list())

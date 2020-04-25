@@ -275,10 +275,8 @@ SLIME SCANNER
 			//LIVER
 			else if(istype(O, /obj/item/organ/liver))
 				var/obj/item/organ/liver/L = O
-				if(H.undergoing_liver_failure() && H.stat != DEAD) //might be depreciated
+				if(L.organ_flags & ORGAN_FAILING && H.stat != DEAD) //might be depreciated
 					temp_message += "<span class='danger'>Subject is suffering from liver failure: Apply Corazone and begin a liver transplant immediately!</span>"
-				if(L.swelling > 20)
-					temp_message += " <span class='danger'>Subject is suffering from an enlarged liver.</span>" //i.e. shrink their liver or give them a transplant.
 
 			//HEART
 			else if(ishuman(M) && (istype(O, /obj/item/organ/heart)))
@@ -310,11 +308,11 @@ SLIME SCANNER
 			//GENERAL HANDLER
 			if(!damage_message)
 				if(O.organ_flags & ORGAN_FAILING)
-					damage_message += " <span class='alert'><b>End Stage [O.name] failure detected.</b></span>"
+					damage_message += " <span class='alert'><b>Chronic [O.name] failure detected.</b></span>"
 				else if(O.damage > O.high_threshold)
-					damage_message += " <span class='alert'>Chronic [O.name] failure detected.</span>"
+					damage_message += " <span class='alert'>Acute [O.name] failure detected.</span>"
 				else if(O.damage > O.low_threshold && advanced)
-					damage_message += " <font color='red'>Acute [O.name] failure detected.</span>"
+					damage_message += " <font color='red'>Minor [O.name] failure detected.</span>"
 
 			if(temp_message || damage_message)
 				msg += "\t<b><span class='info'>[uppertext(O.name)]:</b></span> [damage_message] [temp_message]\n"

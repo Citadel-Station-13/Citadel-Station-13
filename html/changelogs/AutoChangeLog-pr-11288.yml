@@ -1,7 +1,0 @@
-author: "Trilbyspaceclone"
-delete-after: True
-changes: 
-  - balance: "Added sunglasses that are able to be huds AND prescription"
-  - rscadd: "Prescription sunglasses and crafting of each new type for - Diagnostic, Med and Sec"
-  - rscadd: "Diagnostic Sunglasses"
-  - bugfix: "Blackists Prescription HUDs from sunglasses crafting"

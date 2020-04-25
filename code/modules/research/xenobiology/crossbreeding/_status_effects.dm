@@ -505,13 +505,13 @@ datum/status_effect/rebreathing/tick()
 /datum/status_effect/stabilized/purple/tick()
 	var/is_healing = FALSE
 	if(owner.getBruteLoss() > 0)
-		owner.adjustBruteLoss(-0.2)
+		owner.adjustBruteLoss(-0.4)
 		is_healing = TRUE
 	if(owner.getFireLoss() > 0)
-		owner.adjustFireLoss(-0.2)
+		owner.adjustFireLoss(-0.4)
 		is_healing = TRUE
 	if(owner.getToxLoss() > 0)
-		owner.adjustToxLoss(-0.2, forced = TRUE) //Slimepeople should also get healed.
+		owner.adjustToxLoss(-0.4, forced = TRUE) //Slimepeople should also get healed.
 		is_healing = TRUE
 	if(is_healing)
 		examine_text = "<span class='warning'>SUBJECTPRONOUN is regenerating slowly, purplish goo filling in small injuries!</span>"
@@ -624,9 +624,9 @@ datum/status_effect/stabilized/blue/on_remove()
 		O.extinguish() //All shamelessly copied from water's reaction_obj, since I didn't seem to be able to get it here for some reason.
 		O.acid_level = 0
 	// Monkey cube
-	if(istype(O, /obj/item/reagent_containers/food/snacks/monkeycube))
+	if(istype(O, /obj/item/reagent_containers/food/snacks/cube))
 		to_chat(owner, "<span class='warning'>[linked_extract] kept your hands wet! It makes [O] expand!</span>")
-		var/obj/item/reagent_containers/food/snacks/monkeycube/cube = O
+		var/obj/item/reagent_containers/food/snacks/cube/cube = O
 		cube.Expand()
 
 	// Dehydrated carp
@@ -933,7 +933,6 @@ datum/status_effect/stabilized/blue/on_remove()
 	return ..()
 
 /datum/status_effect/stabilized/lightpink/tick()
-	owner.adjustStaminaLoss(-4.5)
 	for(var/mob/living/carbon/human/H in range(1, get_turf(owner)))
 		if(H != owner && H.stat != DEAD && H.health <= 0 && !H.reagents.has_reagent(/datum/reagent/medicine/epinephrine))
 			to_chat(owner, "[linked_extract] pulses in sync with [H]'s heartbeat, trying to keep [H.p_them()] alive.")

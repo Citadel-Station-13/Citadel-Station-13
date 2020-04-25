@@ -16,6 +16,7 @@
 	startWhen		= 6
 	endWhen			= 66
 	announceWhen	= 1
+	threat = 15
 	var/list/wave_type
 	var/wave_name = "normal"
 	var/direction
@@ -88,8 +89,10 @@
 	max_occurrences = 3
 	earliest_start = 35 MINUTES
 
+
 /datum/round_event/meteor_wave/threatening
 	wave_name = "threatening"
+	threat = 25
 
 /datum/round_event_control/meteor_wave/catastrophic
 	name = "Meteor Wave: Catastrophic"
@@ -101,6 +104,7 @@
 
 /datum/round_event/meteor_wave/catastrophic
 	wave_name = "catastrophic"
+	threat = 35
 
 #undef SINGULO_BEACON_DISTURBANCE
 #undef SINGULO_BEACON_MAX_DISTURBANCE

@@ -45,7 +45,7 @@
 
 /datum/design/board/vendor
 	name = "Machine Design (Vendor Board)"
-	desc = "The circuit board for a Vendor."
+	desc = "The circuit board for a Vendor. Use a screwdriver to turn the \"brand selection\" dial."
 	id = "vendor"
 	build_path = /obj/item/circuitboard/machine/vendor
 	category = list ("Misc. Machinery")

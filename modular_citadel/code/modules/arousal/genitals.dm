@@ -1,6 +1,6 @@
 /obj/item/organ/genital
 	color = "#fcccb3"
-	w_class = WEIGHT_CLASS_NORMAL
+	w_class = WEIGHT_CLASS_SMALL
 	var/shape
 	var/sensitivity = 1 // wow if this were ever used that'd be cool but it's not but i'm keeping it for my unshit code
 	var/genital_flags //see citadel_defines.dm
@@ -41,6 +41,9 @@
 		return
 	update_size()
 	update_appearance()
+	if(genital_flags & UPDATE_OWNER_APPEARANCE && owner && ishuman(owner))
+		var/mob/living/carbon/human/H = owner
+		H.update_genitals()
 	if(linked_organ_slot || (linked_organ && !owner))
 		update_link()
 
@@ -49,9 +52,16 @@
 	var/list/exposed_genitals = list() //Keeping track of them so we don't have to iterate through every genitalia and see if exposed
 
 /obj/item/organ/genital/proc/is_exposed()
-	if(!owner || CHECK_BITFIELD(genital_flags, GENITAL_INTERNAL) || CHECK_BITFIELD(genital_flags, GENITAL_HIDDEN))
+	if(!owner || genital_flags & (GENITAL_INTERNAL|GENITAL_HIDDEN))
 		return FALSE
-	if(CHECK_BITFIELD(genital_flags, GENITAL_THROUGH_CLOTHES))
+	if(genital_flags & GENITAL_UNDIES_HIDDEN && ishuman(owner))
+		var/mob/living/carbon/human/H = owner
+		if(!(NO_UNDERWEAR in H.dna.species.species_traits))
+			var/datum/sprite_accessory/underwear/top/T = H.hidden_undershirt ? null : GLOB.undershirt_list[H.undershirt]
+			var/datum/sprite_accessory/underwear/bottom/B = H.hidden_underwear ? null : GLOB.underwear_list[H.underwear]
+			if(zone == BODY_ZONE_CHEST ? (T?.covers_chest || B?.covers_chest) : (T?.covers_groin || B?.covers_groin))
+				return FALSE
+	if(genital_flags & GENITAL_THROUGH_CLOTHES)
 		return TRUE
 
 	switch(zone) //update as more genitals are added
@@ -60,25 +70,21 @@
 		if(BODY_ZONE_PRECISE_GROIN)
 			return owner.is_groin_exposed()
 
-/obj/item/organ/genital/proc/toggle_visibility(visibility)
+/obj/item/organ/genital/proc/toggle_visibility(visibility, update = TRUE)
+	genital_flags &= ~(GENITAL_THROUGH_CLOTHES|GENITAL_HIDDEN|GENITAL_UNDIES_HIDDEN)
+	if(owner)
+		owner.exposed_genitals -= src
 	switch(visibility)
-		if("Always visible")
-			ENABLE_BITFIELD(genital_flags, GENITAL_THROUGH_CLOTHES)
-			DISABLE_BITFIELD(genital_flags, GENITAL_HIDDEN)
-			if(!(src in owner.exposed_genitals))
+		if(GEN_VISIBLE_ALWAYS)
+			genital_flags |= GENITAL_THROUGH_CLOTHES
+			if(owner)
 				owner.exposed_genitals += src
-		if("Hidden by clothes")
-			DISABLE_BITFIELD(genital_flags, GENITAL_THROUGH_CLOTHES)
-			DISABLE_BITFIELD(genital_flags, GENITAL_HIDDEN)
-			if(src in owner.exposed_genitals)
-				owner.exposed_genitals -= src
-		if("Always hidden")
-			DISABLE_BITFIELD(genital_flags, GENITAL_THROUGH_CLOTHES)
-			ENABLE_BITFIELD(genital_flags, GENITAL_HIDDEN)
-			if(src in owner.exposed_genitals)
-				owner.exposed_genitals -= src
+		if(GEN_VISIBLE_NO_UNDIES)
+			genital_flags |= GENITAL_UNDIES_HIDDEN
+		if(GEN_VISIBLE_NEVER)
+			genital_flags |= GENITAL_HIDDEN
 
-	if(ishuman(owner)) //recast to use update genitals proc
+	if(update && owner && ishuman(owner)) //recast to use update genitals proc
 		var/mob/living/carbon/human/H = owner
 		H.update_genitals()
 
@@ -86,6 +92,10 @@
 	set category = "IC"
 	set name = "Expose/Hide genitals"
 	set desc = "Allows you to toggle which genitals should show through clothes or not."
+
+	if(stat != CONSCIOUS)
+		to_chat(usr, "<span class='warning'>You can toggle genitals visibility right now...</span>")
+		return
 
 	var/list/genital_list = list()
 	for(var/obj/item/organ/genital/G in internal_organs)
@@ -95,10 +105,11 @@
 		return
 	//Full list of exposable genitals created
 	var/obj/item/organ/genital/picked_organ
-	picked_organ = input(src, "Choose which genitalia to expose/hide", "Expose/Hide genitals", null) in genital_list
-	if(picked_organ)
-		var/picked_visibility = input(src, "Choose visibility setting", "Expose/Hide genitals", "Hidden by clothes") in list("Always visible", "Hidden by clothes", "Always hidden")
-		picked_organ.toggle_visibility(picked_visibility)
+	picked_organ = input(src, "Choose which genitalia to expose/hide", "Expose/Hide genitals") as null|anything in genital_list
+	if(picked_organ && (picked_organ in internal_organs))
+		var/picked_visibility = input(src, "Choose visibility setting", "Expose/Hide genitals") as null|anything in GLOB.genitals_visibility_toggles
+		if(picked_visibility && picked_organ && (picked_organ in internal_organs))
+			picked_organ.toggle_visibility(picked_visibility)
 	return
 
 /mob/living/carbon/verb/toggle_arousal_state()
@@ -182,14 +193,19 @@
 	if(.)
 		update()
 		RegisterSignal(owner, COMSIG_MOB_DEATH, .proc/update_appearance)
+		if(genital_flags & GENITAL_THROUGH_CLOTHES)
+			owner.exposed_genitals += src
 
 /obj/item/organ/genital/Remove(special = FALSE)
 	. = ..()
-	var/mob/living/carbon/human/H = .
+	var/mob/living/carbon/C = .
 	update()
-	if(!QDELETED(H))
-		UnregisterSignal(H, COMSIG_MOB_DEATH)
-		H.update_genitals()
+	if(!QDELETED(C))
+		if(genital_flags & UPDATE_OWNER_APPEARANCE && ishuman(C))
+			var/mob/living/carbon/human/H = .
+			H.update_genitals()
+		C.exposed_genitals -= src
+		UnregisterSignal(C, COMSIG_MOB_DEATH)
 
 //proc to give a player their genitals and stuff when they log in
 /mob/living/carbon/human/proc/give_genitals(clean = FALSE)//clean will remove all pre-existing genitals. proc will then give them any genitals that are enabled in their DNA
@@ -286,13 +302,24 @@
 			if(!S || S.icon_state == "none")
 				continue
 			var/aroused_state = G.aroused_state && S.alt_aroused
+			var/accessory_icon = S.icon
+			var/do_center = S.center
+			var/dim_x = S.dimension_x
+			var/dim_y = S.dimension_y
+			if(G.genital_flags & GENITAL_CAN_TAUR && S.taur_icon && (!S.feat_taur || dna.features[S.feat_taur]) && dna.species.mutant_bodyparts["taur"])
+				var/datum/sprite_accessory/taur/T = GLOB.taur_list[dna.features["taur"]]
+				if(T?.taur_mode & S.accepted_taurs)
+					accessory_icon = S.taur_icon
+					do_center = TRUE
+					dim_x = S.taur_dimension_x
+					dim_y = S.taur_dimension_y
 
-			var/mutable_appearance/genital_overlay = mutable_appearance(S.icon, layer = -layer)
-			if(S.center)
-				genital_overlay = center_image(genital_overlay, S.dimension_x, S.dimension_y)
+			var/mutable_appearance/genital_overlay = mutable_appearance(accessory_icon, layer = -layer)
+			if(do_center)
+				genital_overlay = center_image(genital_overlay, dim_x, dim_y)
 
 			if(dna.species.use_skintones && dna.features["genitals_use_skintone"])
-				genital_overlay.color = "#[skintone2hex(skin_tone)]"
+				genital_overlay.color = SKINTONE2HEX(skin_tone)
 			else
 				switch(S.color_src)
 					if("cock_color")
@@ -304,11 +331,11 @@
 					if("vag_color")
 						genital_overlay.color = "#[dna.features["vag_color"]]"
 
-			genital_overlay.icon_state = "[G.slot]_[S.icon_state]_[size][dna.species.use_skintones ? "_s" : ""]_[aroused_state]_[layertext]"
+			genital_overlay.icon_state = "[G.slot]_[S.icon_state]_[size][(dna.species.use_skintones && !dna.skin_tone_override) ? "_s" : ""]_[aroused_state]_[layertext]"
 
-			if(layers_num[layer] == GENITALS_FRONT_LAYER && CHECK_BITFIELD(G.genital_flags, GENITAL_THROUGH_CLOTHES))
+			if(layers_num[layer] == GENITALS_FRONT_LAYER && G.genital_flags & GENITAL_THROUGH_CLOTHES)
 				genital_overlay.layer = -GENITALS_EXPOSED_LAYER
-				LAZYADD(fully_exposed, genital_overlay) // to be added to a layer with higher priority than clothes, hence the name of the bitflag.
+				LAZYADD(fully_exposed, genital_overlay)
 			else
 				genital_overlay.layer = -layers_num[layer]
 				standing += genital_overlay
@@ -334,14 +361,12 @@
 	var/willyCheck = getorganslot(ORGAN_SLOT_PENIS)
 
 	if(organCheck == FALSE)
-		if(ishuman(src) && dna.species.id == "human")
+		if(ishuman(src) && dna.species.use_skintones)
 			dna.features["genitals_use_skintone"] = TRUE
-			dna.species.use_skintones = TRUE
-		if(MUTCOLORS)
-			if(src.dna.species.fixed_mut_color)
-				dna.features["cock_color"] = "[dna.species.fixed_mut_color]"
-				dna.features["breasts_color"] = "[dna.species.fixed_mut_color]"
-				return
+		if(src.dna.species.fixed_mut_color)
+			dna.features["cock_color"] = "[dna.species.fixed_mut_color]"
+			dna.features["breasts_color"] = "[dna.species.fixed_mut_color]"
+			return
 		//So people who haven't set stuff up don't get rainbow surprises.
 		dna.features["cock_color"] = "[dna.features["mcolor"]]"
 		dna.features["breasts_color"] = "[dna.features["mcolor"]]"

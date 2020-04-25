@@ -1,8 +1,7 @@
 /datum/species/mush //mush mush codecuck
 	name = "Anthromorphic Mushroom"
 	id = "mush"
-	mutant_bodyparts = list("caps")
-	default_features = list("caps" = "Round")
+	mutant_bodyparts = list("caps" = "Round")
 
 	fixed_mut_color = "DBBF92"
 	hair_color = "FF4B19" //cap color, spot color uses eye color
@@ -13,9 +12,9 @@
 	inherent_traits = list(TRAIT_NOBREATH)
 	speedmod = 1.5 //faster than golems but not by much
 
-	punchdamagelow = 6
-	punchdamagehigh = 14
-	punchstunthreshold = 14 //about 44% chance to stun
+	punchdamagelow = 2
+	punchdamagehigh = 12 //still better than humans
+	punchstunthreshold = 10
 
 	no_equip = list(SLOT_WEAR_MASK, SLOT_WEAR_SUIT, SLOT_GLOVES, SLOT_SHOES, SLOT_W_UNIFORM)
 
@@ -23,7 +22,6 @@
 	heatmod = 1.5
 
 	mutanteyes = /obj/item/organ/eyes/night_vision/mushroom
-	use_skintones = FALSE
 	var/datum/martial_art/mushpunch/mush
 
 /datum/species/mush/after_equip_job(datum/job/J, mob/living/carbon/human/H)

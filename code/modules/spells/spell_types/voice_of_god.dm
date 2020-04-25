@@ -4,7 +4,7 @@
 	charge_max = 1200 //variable
 	cooldown_min = 0
 	level_max = 1
-	clothes_req = 0
+	clothes_req = NONE
 	action_icon = 'icons/mob/actions/actions_items.dmi'
 	action_icon_state = "voice_of_god"
 	var/command
@@ -13,9 +13,10 @@
 	var/list/spans = list("colossus","yell")
 	var/speech_sound = 'sound/magic/clockwork/invoke_general.ogg'
 
-/obj/effect/proc_holder/spell/voice_of_god/can_cast(mob/user = usr)
+/obj/effect/proc_holder/spell/voice_of_god/can_cast(mob/user = usr, skipcharge = FALSE, silent = TRUE)
 	if(!user.can_speak())
-		to_chat(user, "<span class='warning'>You are unable to speak!</span>")
+		if(!silent)
+			to_chat(user, "<span class='warning'>You are unable to speak!</span>")
 		return FALSE
 	return TRUE
 

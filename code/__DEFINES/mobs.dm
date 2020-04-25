@@ -36,16 +36,16 @@
 #define BLOODCRAWL_EAT 2
 
 //Mob bio-types flags
-#define MOB_ORGANIC 	1 << 0
-#define MOB_MINERAL		1 << 1
-#define MOB_ROBOTIC 	1 << 2
-#define MOB_UNDEAD		1 << 3
-#define MOB_HUMANOID 	1 << 4
-#define MOB_BUG 		1 << 5
-#define MOB_BEAST		1 << 6
-#define MOB_EPIC		1 << 7 //megafauna
-#define MOB_REPTILE		1 << 8
-#define MOB_SPIRIT		1 << 9
+#define MOB_ORGANIC 	(1 << 0)
+#define MOB_MINERAL		(1 << 1)
+#define MOB_ROBOTIC 	(1 << 2)
+#define MOB_UNDEAD		(1 << 3)
+#define MOB_HUMANOID 	(1 << 4)
+#define MOB_BUG 		(1 << 5)
+#define MOB_BEAST		(1 << 6)
+#define MOB_EPIC		(1 << 7) //megafauna
+#define MOB_REPTILE		(1 << 8)
+#define MOB_SPIRIT		(1 << 9)
 
 //Organ defines for carbon mobs
 #define ORGAN_ORGANIC   1
@@ -289,6 +289,8 @@
 #define HUMAN_FIRE_STACK_ICON_NUM	3
 
 #define PULL_PRONE_SLOWDOWN 0.6
-#define HUMAN_CARRY_SLOWDOWN 0
 
 #define TYPING_INDICATOR_TIMEOUT 10 SECONDS
+
+#define FIREMAN_CARRY_SLOWDOWN 0
+#define PIGGYBACK_CARRY_SLOWDOWN 1

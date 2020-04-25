@@ -15,6 +15,7 @@
 	minimal_access = list(ACCESS_JANITOR, ACCESS_MAINT_TUNNELS, ACCESS_MINERAL_STOREROOM)
 
 	display_order = JOB_DISPLAY_ORDER_JANITOR
+	threat = 0.2
 
 /datum/outfit/job/janitor
 	name = "Janitor"

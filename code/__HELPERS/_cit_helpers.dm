@@ -58,14 +58,13 @@ GLOBAL_LIST_EMPTY(ipc_antennas_list)
 	//Genitals and Arousal Lists
 GLOBAL_LIST_EMPTY(genitals_list)
 GLOBAL_LIST_EMPTY(cock_shapes_list)
-GLOBAL_LIST_EMPTY(gentlemans_organ_names)
 GLOBAL_LIST_EMPTY(balls_shapes_list)
 GLOBAL_LIST_EMPTY(breasts_shapes_list)
 GLOBAL_LIST_EMPTY(vagina_shapes_list)
-GLOBAL_LIST_INIT(cum_into_containers_list, list(/obj/item/reagent_containers/food/snacks/pie)) //Yer fuggin snowflake name list jfc
-GLOBAL_LIST_INIT(dick_nouns, list("dick","cock","member","shaft"))
-GLOBAL_LIST_INIT(cum_id_list,"semen")
-GLOBAL_LIST_INIT(milk_id_list,"milk")
+//longcat memes.
+GLOBAL_LIST_INIT(dick_nouns, list("phallus", "willy", "dick", "prick", "member", "tool", "gentleman's organ", "cock", "wang", "knob", "dong", "joystick", "pecker", "johnson", "weenie", "tadger", "schlong", "thirsty ferret", "One eyed trouser trout", "Ding dong", "ankle spanker", "Pork sword", "engine cranker", "Harry hot dog", "Davy Crockett", "Kidney cracker", "Heat seeking moisture missile", "Giggle stick", "love whistle", "Tube steak", "Uncle Dick", "Purple helmet warrior"))
+
+GLOBAL_LIST_INIT(genitals_visibility_toggles, list(GEN_VISIBLE_ALWAYS, GEN_VISIBLE_NO_CLOTHES, GEN_VISIBLE_NO_UNDIES, GEN_VISIBLE_NEVER))
 
 GLOBAL_LIST_INIT(dildo_shapes, list(
 		"Human"		= "human",
@@ -113,7 +112,7 @@ GLOBAL_VAR_INIT(miscreants_allowed, FALSE)
 	set desc = "Toggles seeing LocalOutOfCharacter chat"
 	prefs.chat_toggles ^= CHAT_LOOC
 	prefs.save_preferences()
-	src << "You will [(prefs.chat_toggles & CHAT_LOOC) ? "now" : "no longer"] see messages on the LOOC channel."
+	to_chat(src, "You will [(prefs.chat_toggles & CHAT_LOOC) ? "now" : "no longer"] see messages on the LOOC channel.")
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "TLOOC") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /mob/living/carbon/proc/has_penis()

@@ -43,7 +43,7 @@
 /// Updates the combat mode HUD icon.
 /mob/living/proc/update_combat_mode_icon()
 	var/obj/screen/combattoggle/T = locate() in hud_used?.static_inventory
-	T?.update_icon_state()
+	T?.update_icon()
 
 /// Enables intentionally being in combat mode. Please try not to use this proc for feedback whenever possible.
 /mob/living/proc/enable_intentional_combat_mode(silent = TRUE, visible = FALSE)

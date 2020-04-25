@@ -34,6 +34,8 @@
 	display_order = JOB_DISPLAY_ORDER_HEAD_OF_PERSONNEL
 
 	blacklisted_quirks = list(/datum/quirk/mute, /datum/quirk/brainproblems, /datum/quirk/prosopagnosia, /datum/quirk/insanity)
+	threat = 2
+
 
 /datum/outfit/job/hop
 	name = "Head of Personnel"

@@ -11,7 +11,7 @@
 	slot_flags = ITEM_SLOT_BACK
 	item_flags = NONE
 	casing_ejector = FALSE
-	inaccuracy_modifier = 0.33 //to counteract the innaccuracy from WEAPON_HEAVY, bows are supposed to be accurate but only able to be fired with both hands
+	inaccuracy_modifier = 0 //to counteract the innaccuracy from WEAPON_HEAVY, bows are supposed to be accurate but only able to be fired with both hands
 	pin = null
 	no_pin_required = TRUE
 	trigger_guard = TRIGGER_GUARD_NONE //so ashwalkers can use it
@@ -62,5 +62,4 @@
 	desc = "Some sort of pipe made projectile weapon made of a silk string and lots of bending. Used to fire arrows."
 	icon_state = "pipebow"
 	item_state = "pipebow"
-	inaccuracy_modifier = 1.1 //Made of pipe and in a rush
 	force = 0

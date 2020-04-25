@@ -12,43 +12,56 @@
 	var/datum/traitor_class/traitor_kind
 	var/datum/contractor_hub/contractor_hub
 	hijack_speed = 0.5				//10 seconds per hijack stage by default
+	threat = 5
 
 /datum/antagonist/traitor/New()
-	..()
 	if(!GLOB.traitor_classes.len)//Only need to fill the list when it's needed.
 		for(var/I in subtypesof(/datum/traitor_class))
 			new I
+	..()
 
-/datum/antagonist/traitor/proc/set_traitor_kind(var/kind)
+/datum/antagonist/traitor/proc/set_traitor_kind(kind)
+	var/swap_from_old = FALSE
+	if(traitor_kind)
+		traitor_kind.remove_innate_effects(owner.current)
+		traitor_kind.clean_up_traitor(src)
+		swap_from_old = TRUE
 	traitor_kind = GLOB.traitor_classes[kind]
-	if(istype(SSticker.mode, /datum/game_mode/dynamic))
+	traitor_kind.apply_innate_effects(owner.current)
+	if(give_objectives)
+		for(var/O in objectives)
+			qdel(O)
+		traitor_kind.forge_objectives(src)
+	if(swap_from_old)
+		traitor_kind.finalize_traitor(src)
+		traitor_kind.greet(src)
+		owner.announce_objectives()
+
+/proc/get_random_traitor_kind(var/list/blacklist = list())
+	var/chaos_weight = 0
+	if(istype(SSticker.mode,/datum/game_mode/dynamic))
 		var/datum/game_mode/dynamic/mode = SSticker.mode
-		if(traitor_kind.cost)
-			mode.spend_threat(traitor_kind.cost)
-			mode.log_threat("[traitor_kind.cost] was spent due to [owner.name] being a [traitor_kind.name].")
+		chaos_weight = (mode.threat - 50)/50
+	var/list/weights = list()
+	for(var/C in GLOB.traitor_classes)
+		if(!(C in blacklist))
+			var/datum/traitor_class/class = GLOB.traitor_classes[C]
+			var/weight = LOGISTIC_FUNCTION(1.5*class.weight,chaos_weight,class.chaos,0)
+			weights[C] = weight * 1000
+	var/choice = pickweightAllowZero(weights)
+	if(!choice)
+		choice = TRAITOR_HUMAN // it's an "easter egg"
+	var/datum/traitor_class/actual_class = GLOB.traitor_classes[choice]
+	actual_class.weight *= 0.8 // less likely this round
+	return choice
 
 /datum/antagonist/traitor/on_gain()
 	if(owner.current && isAI(owner.current))
 		set_traitor_kind(TRAITOR_AI)
 	else
-		var/chaos_weight = 0
-		if(istype(SSticker.mode,/datum/game_mode/dynamic))
-			var/datum/game_mode/dynamic/mode = SSticker.mode
-			chaos_weight = (mode.threat - 50)/50
-		var/list/weights = list()
-		for(var/C in GLOB.traitor_classes)
-			var/datum/traitor_class/class = GLOB.traitor_classes[C]
-			var/weight = (1.5*class.weight)/(0.5+NUM_E**(-chaos_weight*class.chaos)) // just a logistic function
-			weights[C] = weight
-		var/choice = pickweightAllowZero(weights)
-		if(!choice)
-			choice = GLOB.traitor_classes[TRAITOR_HUMAN]
-		set_traitor_kind(pickweightAllowZero(weights))
-		traitor_kind.weight *= 0.8 // less likely this round
+		set_traitor_kind(get_random_traitor_kind())
 	SSticker.mode.traitors += owner
 	owner.special_role = special_role
-	if(give_objectives)
-		traitor_kind.forge_objectives(src)
 	finalize_traitor()
 	..()
 
@@ -99,6 +112,14 @@
 		if(should_equip)
 			equip(silent)
 		owner.current.playsound_local(get_turf(owner.current), 'sound/ambience/antag/tatoralert.ogg', 100, FALSE, pressure_affected = FALSE)
+
+/datum/antagonist/traitor/antag_panel_objectives()
+	. += "<i><b>Traitor class:</b></i> <a href='?src=[REF(owner)];traitor_class=1;target_antag=[REF(src)]'>[traitor_kind.employer]</a><br>"
+	. += ..()
+	if(contractor_hub?.assigned_targets && length(contractor_hub.assigned_targets))
+		. += "<i><b>Contract Targets</b></i>:<br>"
+		for(var/datum/mind/M in contractor_hub.assigned_targets)
+			. += "<b> - </b>[key_name(M, FALSE, TRUE)]<br>"
 
 /datum/antagonist/traitor/apply_innate_effects(mob/living/mob_override)
 	. = ..()
@@ -294,3 +315,6 @@
 
 /datum/antagonist/traitor/is_gamemode_hero()
 	return SSticker.mode.name == "traitor"
+
+/datum/antagonist/traitor/threat()
+	return (..())+traitor_kind.threat

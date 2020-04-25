@@ -196,7 +196,7 @@
 	. = 1
 
 /datum/reagent/drug/methamphetamine/overdose_process(mob/living/M)
-	if(CHECK_MOBILITY(M, MOBILITY_MOVE) && !ismovableatom(M.loc))
+	if(CHECK_MOBILITY(M, MOBILITY_MOVE) && !ismovable(M.loc))
 		for(var/i in 1 to 4)
 			step(M, pick(GLOB.cardinals))
 	if(prob(20))
@@ -223,7 +223,7 @@
 	..()
 
 /datum/reagent/drug/methamphetamine/addiction_act_stage3(mob/living/M)
-	if(CHECK_MOBILITY(M, MOBILITY_MOVE) && !ismovableatom(M.loc))
+	if(CHECK_MOBILITY(M, MOBILITY_MOVE) && !ismovable(M.loc))
 		for(var/i = 0, i < 4, i++)
 			step(M, pick(GLOB.cardinals))
 	M.Jitter(15)
@@ -233,7 +233,7 @@
 	..()
 
 /datum/reagent/drug/methamphetamine/addiction_act_stage4(mob/living/carbon/human/M)
-	if(CHECK_MOBILITY(M, MOBILITY_MOVE) && !ismovableatom(M.loc))
+	if(CHECK_MOBILITY(M, MOBILITY_MOVE) && !ismovable(M.loc))
 		for(var/i = 0, i < 8, i++)
 			step(M, pick(GLOB.cardinals))
 	M.Jitter(20)
@@ -285,7 +285,7 @@
 	M.adjustStaminaLoss(-5, 0)
 	M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 4)
 	M.hallucination += 5
-	if(CHECK_MOBILITY(M, MOBILITY_MOVE) && !ismovableatom(M.loc))
+	if(CHECK_MOBILITY(M, MOBILITY_MOVE) && !ismovable(M.loc))
 		step(M, pick(GLOB.cardinals))
 		step(M, pick(GLOB.cardinals))
 	..()
@@ -293,7 +293,7 @@
 
 /datum/reagent/drug/bath_salts/overdose_process(mob/living/M)
 	M.hallucination += 5
-	if(CHECK_MOBILITY(M, MOBILITY_MOVE) && !ismovableatom(M.loc))
+	if(CHECK_MOBILITY(M, MOBILITY_MOVE) && !ismovable(M.loc))
 		for(var/i in 1 to 8)
 			step(M, pick(GLOB.cardinals))
 	if(prob(20))
@@ -304,7 +304,7 @@
 
 /datum/reagent/drug/bath_salts/addiction_act_stage1(mob/living/M)
 	M.hallucination += 10
-	if(CHECK_MOBILITY(M, MOBILITY_MOVE) && !ismovableatom(M.loc))
+	if(CHECK_MOBILITY(M, MOBILITY_MOVE) && !ismovable(M.loc))
 		for(var/i = 0, i < 8, i++)
 			step(M, pick(GLOB.cardinals))
 	M.Jitter(5)
@@ -315,7 +315,7 @@
 
 /datum/reagent/drug/bath_salts/addiction_act_stage2(mob/living/M)
 	M.hallucination += 20
-	if(CHECK_MOBILITY(M, MOBILITY_MOVE) && !ismovableatom(M.loc))
+	if(CHECK_MOBILITY(M, MOBILITY_MOVE) && !ismovable(M.loc))
 		for(var/i = 0, i < 8, i++)
 			step(M, pick(GLOB.cardinals))
 	M.Jitter(10)
@@ -327,7 +327,7 @@
 
 /datum/reagent/drug/bath_salts/addiction_act_stage3(mob/living/M)
 	M.hallucination += 30
-	if(CHECK_MOBILITY(M, MOBILITY_MOVE) && !ismovableatom(M.loc))
+	if(CHECK_MOBILITY(M, MOBILITY_MOVE) && !ismovable(M.loc))
 		for(var/i = 0, i < 12, i++)
 			step(M, pick(GLOB.cardinals))
 	M.Jitter(15)
@@ -339,7 +339,7 @@
 
 /datum/reagent/drug/bath_salts/addiction_act_stage4(mob/living/carbon/human/M)
 	M.hallucination += 30
-	if(CHECK_MOBILITY(M, MOBILITY_MOVE) && !ismovableatom(M.loc))
+	if(CHECK_MOBILITY(M, MOBILITY_MOVE) && !ismovable(M.loc))
 		for(var/i = 0, i < 16, i++)
 			step(M, pick(GLOB.cardinals))
 	M.Jitter(50)
@@ -353,7 +353,7 @@
 
 /datum/reagent/drug/aranesp
 	name = "Aranesp"
-	description = "Amps you up and gets you going, fixes all stamina damage you might have but can cause toxin and oxygen damage."
+	description = "Amps you up and gets you going, fixing stamina damage but possibly causing toxin and oxygen damage."
 	reagent_state = LIQUID
 	color = "#78FFF0"
 	pH = 9.2
@@ -362,7 +362,7 @@
 	var/high_message = pick("You feel amped up.", "You feel ready.", "You feel like you can push it to the limit.")
 	if(prob(5))
 		to_chat(M, "<span class='notice'>[high_message]</span>")
-	M.adjustStaminaLoss(-18, 0)
+	M.adjustStaminaLoss(-10, 0)
 	M.adjustToxLoss(0.5, 0)
 	if(prob(50))
 		M.losebreath++
@@ -467,7 +467,9 @@
 		if(H.physiology)
 			H.physiology.stamina_mod *= 0.5
 		if(H.dna && H.dna.species)
-			H.dna.species.punchdamagehigh *= 5
+			H.dna.species.punchdamagehigh += 4
+			H.dna.species.punchdamagelow  += 4
+			H.dna.species.punchstunthreshold -= 2
 
 /datum/reagent/drug/skooma/on_mob_end_metabolize(mob/living/L)
 	. = ..()
@@ -478,7 +480,9 @@
 		if(H.physiology)
 			H.physiology.stamina_mod *= 2
 		if(H.dna && H.dna.species)
-			H.dna.species.punchdamagehigh *= 0.2
+			H.dna.species.punchdamagehigh -= 4
+			H.dna.species.punchdamagelow -= 4
+			H.dna.species.punchstunthreshold += 2
 
 /datum/reagent/drug/skooma/on_mob_life(mob/living/carbon/M)
 	M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 1*REM)

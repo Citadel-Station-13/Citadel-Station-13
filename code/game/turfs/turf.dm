@@ -47,6 +47,9 @@
 	// by default, vis_contents is inherited from the turf that was here before
 	vis_contents.Cut()
 
+	if(color)
+		add_atom_colour(color, FIXED_COLOUR_PRIORITY)
+
 	assemble_baseturfs()
 
 	levelupdate()
@@ -438,7 +441,7 @@
 	for(var/V in contents)
 		var/atom/A = V
 		if(!QDELETED(A) && A.level >= affecting_level)
-			if(ismovableatom(A))
+			if(ismovable(A))
 				var/atom/movable/AM = A
 				if(!AM.ex_check(explosion_id))
 					continue

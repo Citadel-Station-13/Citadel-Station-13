@@ -470,7 +470,6 @@
 				/datum/objective/steal,
 				/datum/objective/download,
 				/datum/objective/nuclear,
-				/datum/objective/capture,
 				/datum/objective/absorb,
 				/datum/objective/custom
 			)
@@ -511,6 +510,19 @@
 				target_antag.objectives.Insert(objective_pos, new_objective)
 			message_admins("[key_name_admin(usr)] edited [current]'s objective to [new_objective.explanation_text]")
 			log_admin("[key_name(usr)] edited [current]'s objective to [new_objective.explanation_text]")
+
+	else if(href_list["traitor_class"])
+		var/static/list/choices
+		if(!choices)
+			choices = list()
+			for(var/C in GLOB.traitor_classes)
+				var/datum/traitor_class/t = C
+				choices[initial(t.employer)] = C
+		var/datum/antagonist/traitor/T = locate(href_list["target_antag"]) in antag_datums
+		if(T)
+			var/selected_type = input("Select traitor class:", "Traitor class", T.traitor_kind.employer) as null|anything in choices
+			selected_type = choices[selected_type]
+			T.set_traitor_kind(selected_type)
 
 	else if (href_list["obj_delete"])
 		var/datum/objective/objective

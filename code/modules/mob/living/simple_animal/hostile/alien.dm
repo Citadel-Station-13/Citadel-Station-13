@@ -7,6 +7,7 @@
 	icon_dead = "alienh_dead"
 	icon_gib = "syndicate_gib"
 	gender = FEMALE
+	threat = 1
 	response_help = "pokes"
 	response_disarm = "shoves"
 	response_harm = "hits"
@@ -62,6 +63,7 @@
 	icon_state = "aliens"
 	icon_living = "aliens"
 	icon_dead = "aliens_dead"
+	threat = 3
 	health = 150
 	maxHealth = 150
 	melee_damage_lower = 15
@@ -78,6 +80,7 @@
 	icon_state = "alienq"
 	icon_living = "alienq"
 	icon_dead = "alienq_dead"
+	threat = 8
 	health = 250
 	maxHealth = 250
 	melee_damage_lower = 15
@@ -157,6 +160,7 @@
 	name = "lusty xenomorph maid"
 	melee_damage_lower = 0
 	melee_damage_upper = 0
+	threat = -1
 	a_intent = INTENT_HELP
 	friendly = "caresses"
 	obj_damage = 0
@@ -171,7 +175,7 @@
 	AddElement(/datum/element/cleaning)
 
 /mob/living/simple_animal/hostile/alien/maid/AttackingTarget()
-	if(ismovableatom(target))
+	if(ismovable(target))
 		if(istype(target, /obj/effect/decal/cleanable))
 			visible_message("[src] cleans up \the [target].")
 			qdel(target)

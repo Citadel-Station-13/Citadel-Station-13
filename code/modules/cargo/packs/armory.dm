@@ -164,17 +164,6 @@
 					/obj/item/shield/riot)
 	crate_name = "riot shields crate"
 
-/datum/supply_pack/security/armory/riotshotguns
-	name = "Riot Shotgun Crate"
-	desc = "For when the greytide gets really uppity. Contains three riot shotguns, seven rubber shot and beanbag shells. Requires Armory access to open."
-	cost = 6500
-	contains = list(/obj/item/gun/ballistic/shotgun/riot,
-					/obj/item/gun/ballistic/shotgun/riot,
-					/obj/item/gun/ballistic/shotgun/riot,
-					/obj/item/storage/box/rubbershot,
-					/obj/item/storage/box/beanbag)
-	crate_name = "riot shotgun crate"
-
 /datum/supply_pack/security/armory/russian
 	name = "Russian Surplus Crate"
 	desc = "Hello Comrade, we have the most modern russian military equipment the black market can offer, for the right price of course. Sadly we couldnt remove the lock so it requires Armory access to open."
@@ -186,7 +175,7 @@
 					/obj/item/clothing/suit/armor/vest/russian,
 					/obj/item/clothing/head/helmet/rus_helmet,
 					/obj/item/clothing/shoes/russian,
-					/obj/item/clothing/gloves/combat,
+					/obj/item/clothing/gloves/tackler/combat/insulated,
 					/obj/item/clothing/under/syndicate/rus_army,
 					/obj/item/clothing/under/costume/soviet,
 					/obj/item/clothing/mask/russian_balaclava,
@@ -212,26 +201,9 @@
 					/obj/item/clothing/mask/gas/sechailer/swat,
 					/obj/item/storage/belt/military/assault,
 					/obj/item/storage/belt/military/assault,
-					/obj/item/clothing/gloves/combat,
-					/obj/item/clothing/gloves/combat)
+					/obj/item/clothing/gloves/tackler/combat/insulated,
+					/obj/item/clothing/gloves/tackler/combat/insulated)
 	crate_name = "swat crate"
-
-/datum/supply_pack/security/armory/swattasers //Lesser AEG tbh
-	name = "SWAT tactical tasers Crate"
-	desc = "Contains two tactical energy gun, these guns are able to tase, disable and lethal as well as hold a seclight. Requires Armory access to open."
-	cost = 7000
-	contains = list(/obj/item/gun/energy/e_gun/stun,
-					/obj/item/gun/energy/e_gun/stun)
-	crate_name = "swat taser crate"
-
-/datum/supply_pack/security/armory/woodstock
-	name = "WoodStock Classic Shotguns Crate"
-	desc = "Contains three rustic, pumpaction shotguns. Requires Armory access to open."
-	cost = 3000
-	contains = list(/obj/item/gun/ballistic/shotgun,
-					/obj/item/gun/ballistic/shotgun,
-					/obj/item/gun/ballistic/shotgun)
-	crate_name = "woodstock shotguns crate"
 
 /datum/supply_pack/security/armory/wt550
 	name = "WT-550 Semi-Auto Rifle Crate"
@@ -259,14 +231,4 @@
 					/obj/item/ammo_box/magazine/wt550m9/wtrubber,
 					/obj/item/ammo_box/magazine/wt550m9/wtrubber,
 					/obj/item/ammo_box/magazine/wt550m9/wtrubber)
-	crate_name = "auto rifle ammo crate"
-
-/datum/supply_pack/security/armory/wt550ammo_special
-	name = "WT-550 Semi-Auto SMG Special Ammo Crate"
-	desc = "Contains 2 20-round Armour Piercing and Incendiary magazines for the WT-550 Semi-Auto SMG. Each magazine is designed to facilitate rapid tactical reloads. Requires Armory access to open."
-	cost = 3000
-	contains = list(/obj/item/ammo_box/magazine/wt550m9/wtap,
-					/obj/item/ammo_box/magazine/wt550m9/wtap,
-					/obj/item/ammo_box/magazine/wt550m9/wtic,
-					/obj/item/ammo_box/magazine/wt550m9/wtic)
 	crate_name = "auto rifle ammo crate"

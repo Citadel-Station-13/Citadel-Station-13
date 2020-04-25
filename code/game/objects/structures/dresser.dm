@@ -73,7 +73,7 @@
 		H.socks_color = recolor_undergarment(H, "socks", H.socks_color)
 
 	add_fingerprint(H)
-	H.update_body()
+	H.update_body(TRUE)
 
 /obj/structure/dresser/proc/recolor_undergarment(mob/living/carbon/human/H, garment_type = "underwear", default_color)
 	var/n_color = input(H, "Choose your [garment_type]'\s color.", "Character Preference", default_color) as color|null

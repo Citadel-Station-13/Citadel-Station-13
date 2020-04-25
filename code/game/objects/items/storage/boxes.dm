@@ -454,11 +454,11 @@
 	. = ..()
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.max_items = 7
-	STR.can_hold = typecacheof(list(/obj/item/reagent_containers/food/snacks/monkeycube))
+	STR.can_hold = typecacheof(list(/obj/item/reagent_containers/food/snacks/cube/monkey))
 
 /obj/item/storage/box/monkeycubes/PopulateContents()
 	for(var/i in 1 to 5)
-		new /obj/item/reagent_containers/food/snacks/monkeycube(src)
+		new /obj/item/reagent_containers/food/snacks/cube/monkey(src)
 
 /obj/item/storage/box/ids
 	name = "box of spare IDs"
@@ -946,12 +946,47 @@
 							  /obj/item/reagent_containers/food/snacks/grown/apple,
 							  /obj/item/reagent_containers/food/snacks/chocolatebar,
 							  /obj/item/reagent_containers/food/snacks/grown/cherries,
+							  /obj/item/reagent_containers/food/snacks/grown/berries,
 							  /obj/item/reagent_containers/food/snacks/grown/banana,
 							  /obj/item/reagent_containers/food/snacks/grown/cabbage,
 							  /obj/item/reagent_containers/food/snacks/grown/soybeans,
 							  /obj/item/reagent_containers/food/snacks/grown/corn,
 							  /obj/item/reagent_containers/food/snacks/grown/mushroom/plumphelmet,
-							  /obj/item/reagent_containers/food/snacks/grown/mushroom/chanterelle)
+							  /obj/item/reagent_containers/food/snacks/grown/mushroom/chanterelle,
+							  /obj/item/reagent_containers/food/snacks/meatball,
+							  /obj/item/reagent_containers/food/snacks/grown/citrus/orange,
+							  /obj/item/reagent_containers/food/snacks/grown/citrus/lemon,
+							  /obj/item/reagent_containers/food/snacks/grown/citrus/lime,
+							  /obj/item/reagent_containers/food/snacks/grown/bluecherries,
+							  /obj/item/reagent_containers/food/snacks/grown/cocoapod,
+							  /obj/item/reagent_containers/food/snacks/grown/vanillapod,
+							  /obj/item/reagent_containers/food/snacks/grown/grapes,
+							  /obj/item/reagent_containers/food/snacks/grown/strawberry,
+							  /obj/item/reagent_containers/food/snacks/grown/whitebeet,
+							  /obj/item/reagent_containers/food/snacks/meat/slab/bear,
+							  /obj/item/reagent_containers/food/snacks/meat/slab/spider,
+							  /obj/item/reagent_containers/food/snacks/spidereggs,
+							  /obj/item/reagent_containers/food/snacks/carpmeat,
+							  /obj/item/reagent_containers/food/snacks/meat/slab/xeno,
+							  /obj/item/reagent_containers/food/snacks/meat/slab/corgi,
+							  /obj/item/reagent_containers/food/snacks/grown/oat,
+							  /obj/item/reagent_containers/food/snacks/grown/wheat,
+							  /obj/item/reagent_containers/honeycomb,
+							  /obj/item/reagent_containers/food/snacks/grown/watermelon,
+							  /obj/item/reagent_containers/food/snacks/grown/onion,
+							  /obj/item/reagent_containers/food/snacks/grown/peach,
+							  /obj/item/reagent_containers/food/snacks/grown/peanut,
+							  /obj/item/reagent_containers/food/snacks/grown/pineapple,
+							  /obj/item/reagent_containers/food/snacks/grown/pumpkin,
+							  /obj/item/reagent_containers/food/snacks/meat/rawcrab,
+							  /obj/item/reagent_containers/food/snacks/meat/slab/goliath,
+							  /obj/item/reagent_containers/food/snacks/meat/slab/chicken,
+							  /obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/slime,
+							  /obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/golem,
+							  /obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/lizard,
+							  /obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/skeleton,
+							  /obj/item/reagent_containers/food/snacks/egg,
+							  /obj/item/reagent_containers/food/snacks/grown/eggplant)
 		new randomFood(src)
 
 /obj/item/storage/box/ingredients/fiesta
@@ -970,7 +1005,7 @@
 /obj/item/storage/box/ingredients/italian/PopulateContents()
 	for(var/i in 1 to 3)
 		new /obj/item/reagent_containers/food/snacks/grown/tomato(src)
-		new /obj/item/reagent_containers/food/snacks/faggot(src)
+		new /obj/item/reagent_containers/food/snacks/meatball(src)
 	new /obj/item/reagent_containers/food/drinks/bottle/wine(src)
 
 /obj/item/storage/box/ingredients/vegetarian
@@ -993,7 +1028,7 @@
 		new /obj/item/reagent_containers/food/snacks/grown/potato(src)
 		new /obj/item/reagent_containers/food/snacks/grown/tomato(src)
 		new /obj/item/reagent_containers/food/snacks/grown/corn(src)
-	new /obj/item/reagent_containers/food/snacks/faggot(src)
+	new /obj/item/reagent_containers/food/snacks/meatball(src)
 
 /obj/item/storage/box/ingredients/fruity
 	theme_name = "fruity"
@@ -1049,7 +1084,7 @@
 	new /obj/item/reagent_containers/food/snacks/carpmeat(src)
 	new /obj/item/reagent_containers/food/snacks/meat/slab/xeno(src)
 	new /obj/item/reagent_containers/food/snacks/meat/slab/corgi(src)
-	new /obj/item/reagent_containers/food/snacks/faggot(src)
+	new /obj/item/reagent_containers/food/snacks/meatball(src)
 
 /obj/item/storage/box/ingredients/exotic
 	theme_name = "exotic"
@@ -1060,6 +1095,15 @@
 		new /obj/item/reagent_containers/food/snacks/grown/soybeans(src)
 		new /obj/item/reagent_containers/food/snacks/grown/cabbage(src)
 	new /obj/item/reagent_containers/food/snacks/grown/chili(src)
+
+/obj/item/storage/box/ingredients/sushi
+	theme_name = "sushi"
+
+/obj/item/storage/box/ingredients/sushi/PopulateContents()
+	for(var/i in 1 to 3)
+		new /obj/item/reagent_containers/food/snacks/sea_weed(src)
+		new /obj/item/reagent_containers/food/snacks/carpmeat(src)
+	new /obj/item/reagent_containers/food/snacks/meat/rawcrab(src)
 
 /obj/item/storage/box/emptysandbags
 	name = "box of empty sandbags"

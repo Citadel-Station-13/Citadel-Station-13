@@ -7,7 +7,7 @@
 	slot = "vagina"
 	size = 1 //There is only 1 size right now
 	shape = DEF_VAGINA_SHAPE
-	genital_flags = CAN_MASTURBATE_WITH|CAN_CLIMAX_WITH|GENITAL_CAN_AROUSE
+	genital_flags = CAN_MASTURBATE_WITH|CAN_CLIMAX_WITH|GENITAL_CAN_AROUSE|GENITAL_UNDIES_HIDDEN
 	masturbation_verb = "finger"
 	arousal_verb = "You feel wetness on your crotch"
 	unarousal_verb = "You no longer feel wet"
@@ -55,8 +55,9 @@
 		if(owner.dna.species.use_skintones && owner.dna.features["genitals_use_skintone"])
 			if(ishuman(owner)) // Check before recasting type, although someone fucked up if you're not human AND have use_skintones somehow...
 				var/mob/living/carbon/human/H = owner // only human mobs have skin_tone, which we need.
-				color = "#[skintone2hex(H.skin_tone)]"
-				icon_state += "_s"
+				color = SKINTONE2HEX(H.skin_tone)
+				if(!H.dna.skin_tone_override)
+					icon_state += "_s"
 		else
 			color = "#[owner.dna.features["vag_color"]]"
 		if(ishuman(owner))
@@ -66,7 +67,8 @@
 /obj/item/organ/genital/vagina/get_features(mob/living/carbon/human/H)
 	var/datum/dna/D = H.dna
 	if(D.species.use_skintones && D.features["genitals_use_skintone"])
-		color = "#[skintone2hex(H.skin_tone)]"
+		color = SKINTONE2HEX(H.skin_tone)
 	else
 		color = "[D.features["vag_color"]]"
 	shape = "[D.features["vag_shape"]]"
+	toggle_visibility(D.features["vag_visibility"], FALSE)

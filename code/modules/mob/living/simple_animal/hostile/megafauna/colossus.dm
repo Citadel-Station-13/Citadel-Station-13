@@ -24,6 +24,7 @@ Difficulty: Very Hard
 /mob/living/simple_animal/hostile/megafauna/colossus
 	name = "colossus"
 	desc = "A monstrous creature protected by heavy shielding."
+	threat = 40
 	health = 2500
 	maxHealth = 2500
 	attacktext = "judges"
@@ -55,7 +56,7 @@ Difficulty: Very Hard
 	L.dust()
 
 /mob/living/simple_animal/hostile/megafauna/colossus/OpenFire()
-	anger_modifier = CLAMP(((maxHealth - health)/50),0,20)
+	anger_modifier = clamp(((maxHealth - health)/50),0,20)
 	ranged_cooldown = world.time + 120
 
 	if(enrage(target))
@@ -603,6 +604,7 @@ Difficulty: Very Hard
 	icon_state = "lightgeist"
 	icon_living = "lightgeist"
 	icon_dead = "butterfly_dead"
+	threat = -0.7
 	turns_per_move = 1
 	response_help = "waves away"
 	response_disarm = "brushes aside"
@@ -760,7 +762,7 @@ Difficulty: Very Hard
 	name = "Exit Possession"
 	desc = "Exits the body you are possessing."
 	charge_max = 60
-	clothes_req = 0
+	clothes_req = NONE
 	invocation_type = "none"
 	max_targets = 1
 	range = -1

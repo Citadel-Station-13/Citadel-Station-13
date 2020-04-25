@@ -311,7 +311,7 @@
 	else if(href_list["create"])
 		var/amount = (text2num(href_list["amount"]))
 		//Can't be outside these (if you change this keep a sane limit)
-		amount = CLAMP(amount, 1, 50)
+		amount = clamp(amount, 1, 50)
 		var/id = href_list["create"]
 		if(!stored_research.researched_designs.Find(id))
 			//naughty naughty

@@ -9,7 +9,7 @@
 	arousal_verb = "Your balls ache a little"
 	unarousal_verb = "Your balls finally stop aching, again"
 	linked_organ_slot = ORGAN_SLOT_PENIS
-	genital_flags = CAN_MASTURBATE_WITH|MASTURBATE_LINKED_ORGAN|GENITAL_FUID_PRODUCTION
+	genital_flags = CAN_MASTURBATE_WITH|MASTURBATE_LINKED_ORGAN|GENITAL_FUID_PRODUCTION|UPDATE_OWNER_APPEARANCE|GENITAL_UNDIES_HIDDEN
 	var/size_name = "average"
 	shape = DEF_BALLS_SHAPE
 	fluid_id = /datum/reagent/consumable/semen
@@ -49,23 +49,20 @@
 		if(owner.dna.species.use_skintones && owner.dna.features["genitals_use_skintone"])
 			if(ishuman(owner)) // Check before recasting type, although someone fucked up if you're not human AND have use_skintones somehow...
 				var/mob/living/carbon/human/H = owner // only human mobs have skin_tone, which we need.
-				color = "#[skintone2hex(H.skin_tone)]"
-				icon_state += "_s"
+				color = SKINTONE2HEX(H.skin_tone)
+				if(!H.dna.skin_tone_override)
+					icon_state += "_s"
 		else
 			color = "#[owner.dna.features["balls_color"]]"
-		if(ishuman(owner))
-			var/mob/living/carbon/human/H = owner
-			H.update_genitals()
 
 /obj/item/organ/genital/testicles/get_features(mob/living/carbon/human/H)
 	var/datum/dna/D = H.dna
 	if(D.species.use_skintones && D.features["genitals_use_skintone"])
-		color = "#[skintone2hex(H.skin_tone)]"
+		color = SKINTONE2HEX(H.skin_tone)
 	else
 		color = "#[D.features["balls_color"]]"
 	shape = D.features["balls_shape"]
-	if(D.features["balls_shape"] == "Hidden")
-		ENABLE_BITFIELD(genital_flags, GENITAL_INTERNAL)
 	fluid_rate = D.features["balls_cum_rate"]
 	fluid_mult = D.features["balls_cum_mult"]
 	fluid_efficiency = D.features["balls_efficiency"]
+	toggle_visibility(D.features["balls_visibility"], FALSE)

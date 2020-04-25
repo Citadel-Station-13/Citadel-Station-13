@@ -62,11 +62,11 @@
 /obj/item/paper/oui_getcontent(mob/target)
 	if(!target.is_literate() || force_stars)
 		force_stars = FALSE
-		return "<HTML><HEAD><TITLE>[name]</TITLE></HEAD><BODY>[stars(info)]<HR>[stamps]</BODY></HTML>"
+		return "<HTML><HEAD><meta http-equiv='Content-Type' content='text/html; charset=UTF-8'><TITLE>[name]</TITLE></HEAD><BODY>[stars(info)]<HR>[stamps]</BODY></HTML>"
 	else if(istype(target.get_active_held_item(), /obj/item/pen) | istype(target.get_active_held_item(), /obj/item/toy/crayon))
-		return "<HTML><HEAD><TITLE>[name]</TITLE></HEAD><BODY>[info_links]<HR>[stamps]</BODY><div align='right'style='position:fixed;bottom:0;font-style:bold;'><A href='?src=[REF(src)];help=1'>\[?\]</A></div></HTML>"
+		return "<HTML><HEAD><meta http-equiv='Content-Type' content='text/html; charset=UTF-8'><TITLE>[name]</TITLE></HEAD><BODY>[info_links]<HR>[stamps]</BODY><div align='right'style='position:fixed;bottom:0;font-style:bold;'><A href='?src=[REF(src)];help=1'>\[?\]</A></div></HTML>"
 	else
-		return "<HTML><HEAD><TITLE>[name]</TITLE></HEAD><BODY>[info]<HR>[stamps]</BODY></HTML>"
+		return "<HTML><HEAD><meta http-equiv='Content-Type' content='text/html; charset=UTF-8'><TITLE>[name]</TITLE></HEAD><BODY>[info]<HR>[stamps]</BODY></HTML>"
 
 /obj/item/paper/oui_canview(mob/target)
 	if(check_rights_for(target.client, R_FUN)) //Allows admins to view faxes
@@ -231,7 +231,7 @@
 
 
 /obj/item/paper/proc/openhelp(mob/user)
-	user << browse({"<HTML><HEAD><TITLE>Paper Help</TITLE></HEAD>
+	user << browse({"<HTML><HEAD><meta http-equiv='Content-Type' content='text/html; charset=UTF-8'><TITLE>Paper Help</TITLE></HEAD>
 	<BODY>
 		You can use backslash (\\) to escape special characters.<br>
 		<br>

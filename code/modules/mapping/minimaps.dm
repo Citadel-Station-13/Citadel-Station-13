@@ -95,7 +95,8 @@
 <!DOCTYPE html>
 <HTML>
 <HEAD>
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta http-equiv='X-UA-Compatible' content='IE=edge'>
+<meta http-equiv='Content-Type' content='text/html; charset=UTF-8'>
 <script>
 function hexify(num) {
 	if(!num) num = 0;

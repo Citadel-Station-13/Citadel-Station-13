@@ -59,7 +59,7 @@
 		SA.del_on_death = FALSE
 
 		spawned_mobs += SA
-		SA.AddElement(/datum/element/ghost_role_eligibility)
+		SA.AddElement(/datum/element/ghost_role_eligibility, penalize_on_ghost = TRUE)
 		to_chat(SA, "<span class='userdanger'>Hello world!</span>")
 		to_chat(SA, "<span class='warning'>Due to freak radiation and/or chemicals \
 			and/or lucky chance, you have gained human level intelligence \

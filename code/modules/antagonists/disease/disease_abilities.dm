@@ -59,7 +59,7 @@ new /datum/disease_ability/symptom/powerful/youth
 	var/stat_block = ""
 	var/threshold_block = ""
 	var/category = ""
-
+	var/malefit = 0 // used for threat calculation
 	var/list/symptoms
 	var/list/actions
 
@@ -282,6 +282,7 @@ new /datum/disease_ability/symptom/powerful/youth
 
 /datum/disease_ability/symptom/medium/heal
 	cost = 5
+	malefit = -1
 	category = "Symptom (+)"
 
 /datum/disease_ability/symptom/powerful
@@ -291,6 +292,7 @@ new /datum/disease_ability/symptom/powerful/youth
 
 /datum/disease_ability/symptom/powerful/heal
 	cost = 8
+	malefit = -1
 	category = "Symptom (Strong+)"
 
 /******MILD******/
@@ -319,50 +321,61 @@ new /datum/disease_ability/symptom/powerful/youth
 
 /datum/disease_ability/symptom/medium/hallucigen
 	symptoms = list(/datum/symptom/hallucigen)
+	malefit = 1
 	short_desc = "Cause victims to hallucinate."
 	long_desc = "Cause victims to hallucinate. Decreases stats, especially resistance."
 
 /datum/disease_ability/symptom/medium/choking
 	symptoms = list(/datum/symptom/choking)
+	malefit = 1
 	short_desc = "Cause victims to choke."
 	long_desc = "Cause victims to choke, threatening asphyxiation. Decreases stats, especially transmissibility."
 
 /datum/disease_ability/symptom/medium/confusion
 	symptoms = list(/datum/symptom/confusion)
+	malefit = 1
 	short_desc = "Cause victims to become confused."
 	long_desc = "Cause victims to become confused intermittently."
 
 /datum/disease_ability/symptom/medium/vomit
 	symptoms = list(/datum/symptom/vomit)
+	malefit = 1
 	short_desc = "Cause victims to vomit."
 	long_desc = "Cause victims to vomit. Slightly increases transmissibility. Vomiting also also causes the victims to lose nutrition and removes some toxin damage."
 
 /datum/disease_ability/symptom/medium/voice_change
 	symptoms = list(/datum/symptom/voice_change)
+	malefit = 1
 	short_desc = "Change the voice of victims."
 	long_desc = "Change the voice of victims, causing confusion in communications."
 
 /datum/disease_ability/symptom/medium/visionloss
 	symptoms = list(/datum/symptom/visionloss)
+	malefit = 1
 	short_desc = "Damage the eyes of victims, eventually causing blindness."
 	long_desc = "Damage the eyes of victims, eventually causing blindness. Decreases all stats."
 
 /datum/disease_ability/symptom/medium/deafness
+	malefit = 1
 	symptoms = list(/datum/symptom/deafness)
 
 /datum/disease_ability/symptom/medium/fever
+	malefit = 1
 	symptoms = list(/datum/symptom/fever)
 
 /datum/disease_ability/symptom/medium/shivering
+	malefit = 1
 	symptoms = list(/datum/symptom/shivering)
 
 /datum/disease_ability/symptom/medium/headache
 	symptoms = list(/datum/symptom/headache)
 
 /datum/disease_ability/symptom/medium/nano_boost
+	malefit = -1
 	symptoms = list(/datum/symptom/nano_boost)
 
 /datum/disease_ability/symptom/medium/nano_destroy
+	malefit = 1
 	symptoms = list(/datum/symptom/nano_destroy)
 
 /datum/disease_ability/symptom/medium/viraladaptation
@@ -374,18 +387,22 @@ new /datum/disease_ability/symptom/powerful/youth
 	symptoms = list(/datum/symptom/viralevolution)
 
 /datum/disease_ability/symptom/medium/polyvitiligo
+	malefit = 1
 	symptoms = list(/datum/symptom/polyvitiligo)
 
 /datum/disease_ability/symptom/medium/disfiguration
+	malefit = 1
 	symptoms = list(/datum/symptom/disfiguration)
 
 /datum/disease_ability/symptom/medium/itching
 	symptoms = list(/datum/symptom/itching)
+	malefit = 1
 	short_desc = "Cause victims to itch."
 	long_desc = "Cause victims to itch, increasing all stats except stealth."
 
 /datum/disease_ability/symptom/medium/heal/weight_loss
 	symptoms = list(/datum/symptom/weight_loss)
+	malefit = 1
 	short_desc = "Cause victims to lose weight."
 	long_desc = "Cause victims to lose weight, and make it almost impossible for them to gain nutrition from food. Reduced nutrition allows your infection to spread more easily from hosts, especially by sneezing."
 
@@ -400,12 +417,15 @@ new /datum/disease_ability/symptom/powerful/youth
 /******POWERFUL******/
 
 /datum/disease_ability/symptom/powerful/fire
+	malefit = 1
 	symptoms = list(/datum/symptom/fire)
 
 /datum/disease_ability/symptom/powerful/flesh_eating
+	malefit = 1
 	symptoms = list(/datum/symptom/flesh_eating)
 
 /datum/disease_ability/symptom/powerful/genetic_mutation
+	malefit = 1
 	symptoms = list(/datum/symptom/genetic_mutation)
 	cost = 8
 
@@ -413,6 +433,7 @@ new /datum/disease_ability/symptom/powerful/youth
 	symptoms = list(/datum/symptom/inorganic_adaptation)
 
 /datum/disease_ability/symptom/powerful/narcolepsy
+	malefit = 1
 	symptoms = list(/datum/symptom/narcolepsy)
 
 /datum/disease_ability/symptom/powerful/youth
