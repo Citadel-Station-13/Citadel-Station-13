@@ -182,7 +182,7 @@
 	icon_state = "disablerslug"
 
 /obj/item/projectile/beam/pump
-	damage = 7
+	damage = 9
 	range = 6
 
 /obj/item/projectile/energy/disabler/pump
