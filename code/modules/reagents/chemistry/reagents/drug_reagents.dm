@@ -460,7 +460,7 @@
 
 /datum/reagent/drug/skooma/on_mob_metabolize(mob/living/L)
 	. = ..()
-	L.add_movespeed_modifier(type, update=TRUE, priority=100, multiplicative_slowdown=-1, blacklisted_movetypes=(FLYING|FLOATING))
+	L.add_movespeed_modifier(/datum/movespeed_modifier/reagent/skooma)
 	L.next_move_modifier *= 2
 	if(ishuman(L))
 		var/mob/living/carbon/human/H = L
@@ -473,7 +473,7 @@
 
 /datum/reagent/drug/skooma/on_mob_end_metabolize(mob/living/L)
 	. = ..()
-	L.remove_movespeed_modifier(type)
+	L.remove_movespeed_modifier(/datum/movespeed_modifier/reagent/skooma)
 	L.next_move_modifier *= 0.5
 	if(ishuman(L))
 		var/mob/living/carbon/human/H = L
