@@ -386,7 +386,7 @@
 	name = "Plasma Fist"
 	desc = "A forbidden martial art designed on the surging power of plasma. Use it to harness the ancient power."
 	item_path = /obj/item/book/granter/martial/plasma_fist
-	cost = 3
+	cost = 2
 
 /datum/spellbook_entry/item/guardian
 	name = "Guardian Deck"
