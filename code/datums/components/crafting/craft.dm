@@ -24,7 +24,7 @@
 				),
 				CAT_ROBOT = CAT_NONE,
 				CAT_MISC = list(
-					CAT_MISC,
+					CAT_MISCELLANEOUS,
 					CAT_TOOL,
 					CAT_FURNITURE,
 				),
@@ -205,6 +205,18 @@
 				var/atom/movable/I = new R.result (get_turf(user.loc))
 				I.CheckParts(parts, R)
 				if(isitem(I))
+					if(isfood(I))
+						var/obj/item/reagent_containers/food/food_result = I
+						var/total_quality = 0
+						var/total_items = 0
+						for(var/obj/item/ingredient in parts)
+							var/obj/item/reagent_containers/food/food_ingredient = ingredient
+							total_items += 1
+							total_quality += food_ingredient.food_quality
+						if(total_items == 0)
+							food_result.adjust_food_quality(50)
+						else
+							food_result.adjust_food_quality(total_quality / total_items)
 					user.put_in_hands(I)
 				if(send_feedback)
 					SSblackbox.record_feedback("tally", "object_crafted", 1, I.type)

@@ -506,7 +506,7 @@
 	taste_description = "awful cooking"
 
 /datum/reagent/toxin/condensed_cooking_oil/on_mob_life(mob/living/carbon/M)
-	if(prob(15))
+	if(prob(5))
 		M.vomit()
 	else
 		if(prob(40))
