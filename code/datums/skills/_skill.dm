@@ -4,7 +4,7 @@ GLOBAL_LIST_INIT(skill_datums, init_skill_datums())
 	. = list()
 	for(var/path in subtypesof(/datum/skill))
 		var/datum/skill/S = path
-		if(S.abstract_type == path)
+		if(initial(S.abstract_type) == path)
 			continue
 		S = new path
 		.[S.type] = S
