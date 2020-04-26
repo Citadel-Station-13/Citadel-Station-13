@@ -694,7 +694,7 @@
 	var/prev_dynamic_voting = CONFIG_GET(flag/dynamic_voting)
 	CONFIG_SET(flag/dynamic_voting,!prev_dynamic_voting)
 	if (!prev_dynamic_voting)
-		to_chat(world, "<B>Vote is between dynamic storytellers.</B>")
+		to_chat(world, "<B>Vote is now between dynamic storytellers.</B>")
 	else
 		to_chat(world, "<B>Vote is now between extended and secret.</B>")
 	log_admin("[key_name(usr)] [prev_dynamic_voting ? "disabled" : "enabled"] dynamic voting.")
