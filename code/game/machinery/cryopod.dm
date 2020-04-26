@@ -405,7 +405,7 @@
 
 	// Ghost and delete the mob.
 	if(!mob_occupant.get_ghost(1))
-		mob_occupant.ghostize(FALSE, penalize = TRUE)
+		mob_occupant.ghostize(FALSE, penalize = TRUE, voluntary = TRUE)
 
 	QDEL_NULL(occupant)
 	for(var/I in cryo_items) //only "CRYO_DESTROY_LATER" atoms are left)

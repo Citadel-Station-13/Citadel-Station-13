@@ -12,7 +12,7 @@
 	var/list/datum/nanite_program/programs = list()
 	var/max_programs = NANITE_PROGRAM_LIMIT
 
-	var/list/datum/nanite_program/protocol/protocols = list() ///Separate list of protocol programs, to avoid looping through the whole programs list when cheking for conflicts
+	var/list/datum/nanite_program/protocol/protocols = list() ///Separate list of protocol programs, to avoid looping through the whole programs list when checking for conflicts
 	var/start_time = 0 ///Timestamp to when the nanites were first inserted in the host
 	var/stealth = FALSE //if TRUE, does not appear on HUDs and health scans
 	var/diagnostics = TRUE //if TRUE, displays program list when scanned by nanite scanners
