@@ -9,8 +9,6 @@
 	var/can_change_id = FALSE
 	/// Show ID?
 	var/show_id = TRUE
-	/// Numerical ID or text?
-	var/id_is_number = FALSE
 	var/cooldown = FALSE //Door cooldowns
 
 /obj/item/assembly/Initialize(mapload)
@@ -33,10 +31,7 @@
 	if(!can_change_id)
 		return
 	var/new_id
-	if(id_is_number)
-		new_id = input(user, "Set ID (number)", "Set ID", show_id? id : null) as num|null
-	else
-		new_id = input(user, "Set ID", "Set ID", show_id? id : null) as text|null
+	new_id = input(user, "Set ID", "Set ID", show_id? id : null) as text|null
 	if(!isnull(new_id))		//0/"" is considered !, so check null instead of just !.
 		id = new_id
 
