@@ -253,7 +253,7 @@
 
 /obj/item/firing_pin/security_level/Initialize()
 	. = ..()
-	fail_message = "<span class='warning'>INVALID SECURITY LEVEL. CURRENT: [uppertext(NUM2SECLEVLE(GLOB.security_level))]. \
+	fail_message = "<span class='warning'>INVALID SECURITY LEVEL. CURRENT: [uppertext(NUM2SECLEVEL(GLOB.security_level))]. \
 					MIN: [uppertext(NUM2SECLEVEL(min_sec_level))]. MAX: [uppertext(NUM2SECLEVEL(max_sec_level))]. \
 					ONLY LETHALS: [only_lethals ? "YES" : "NO"].</span>"
 	update_icon()
