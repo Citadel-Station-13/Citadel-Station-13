@@ -40,9 +40,6 @@
 			var/obj/item/organ/genital/breasts/B = new /obj/item/organ/genital/breasts(T)
 			M.visible_message("<span class='warning'>A pair of breasts suddenly fly out of the [M]!</b></span>")
 			var/T2 = get_random_station_turf()
-			M.adjustBruteLoss(25)
-			M.DefaultCombatKnockdown(50)
-			M.Stun(50)
 			B.throw_at(T2, 8, 1)
 		M.reagents.del_reagent(type)
 		return
@@ -57,11 +54,6 @@
 	var/mob/living/carbon/human/H = M
 	//If they've opted out, then route processing though liver.
 	if(!(H.client?.prefs.cit_toggles & BREAST_ENLARGEMENT))
-		var/obj/item/organ/liver/L = H.getorganslot(ORGAN_SLOT_LIVER)
-		if(L)
-			L.applyOrganDamage(0.25)
-		else
-			H.adjustToxLoss(1)
 		return..()
 	var/obj/item/organ/genital/breasts/B = M.getorganslot(ORGAN_SLOT_BREASTS)
 	//otherwise proceed as normal
@@ -85,19 +77,13 @@
 	B.modify_size(0.05)
 
 	if (ISINRANGE_EX(B.cached_size, 8.5, 9) && (H.w_uniform || H.wear_suit))
-		var/target = H.get_bodypart(BODY_ZONE_CHEST)
 		if(!message_spam)
 			to_chat(H, "<span class='danger'>Your breasts begin to strain against your clothes tightly!</b></span>")
 			message_spam = TRUE
-		H.adjustOxyLoss(5, 0)
-		H.apply_damage(1, BRUTE, target)
 	return ..()
 
 /datum/reagent/fermi/breast_enlarger/overdose_process(mob/living/carbon/M) //Turns you into a female if male and ODing, doesn't touch nonbinary and object genders.
 	if(!(M.client?.prefs.cit_toggles & FORCED_FEM))
-		var/obj/item/organ/liver/L = M.getorganslot(ORGAN_SLOT_LIVER)
-		if(L)
-			L.applyOrganDamage(0.25)
 		return ..()
 
 	var/obj/item/organ/genital/penis/P = M.getorganslot(ORGAN_SLOT_PENIS)
@@ -132,9 +118,6 @@
 /datum/reagent/fermi/BEsmaller/on_mob_life(mob/living/carbon/M)
 	var/obj/item/organ/genital/breasts/B = M.getorganslot(ORGAN_SLOT_BREASTS)
 	if(!(M.client?.prefs.cit_toggles & BREAST_ENLARGEMENT) || !B)
-		var/obj/item/organ/liver/L = M.getorganslot(ORGAN_SLOT_LIVER)
-		if(L)
-			L.applyOrganDamage(-0.25)
 		return ..()
 	B.modify_size(-0.05)
 	return ..()
@@ -199,9 +182,6 @@
 			var/obj/item/organ/genital/penis/P = new /obj/item/organ/genital/penis(T)
 			M.visible_message("<span class='warning'>A penis suddenly flies out of the [M]!</b></span>")
 			var/T2 = get_random_station_turf()
-			M.adjustBruteLoss(25)
-			M.DefaultCombatKnockdown(50)
-			M.Stun(50)
 			P.throw_at(T2, 8, 1)
 		M.reagents.del_reagent(type)
 		return
@@ -214,11 +194,6 @@
 		return ..()
 	var/mob/living/carbon/human/H = M
 	if(!(H.client?.prefs.cit_toggles & PENIS_ENLARGEMENT))
-		var/obj/item/organ/liver/L = H.getorganslot(ORGAN_SLOT_LIVER)
-		if(L)
-			L.applyOrganDamage(0.25)
-		else
-			H.adjustToxLoss(1)
 		return ..()
 	var/obj/item/organ/genital/penis/P = H.getorganslot(ORGAN_SLOT_PENIS)
 	//otherwise proceed as normal
@@ -233,11 +208,9 @@
 
 	P.modify_size(0.1)
 	if (ISINRANGE_EX(P.length, 20.5, 21) && (H.w_uniform || H.wear_suit))
-		var/target = H.get_bodypart(BODY_ZONE_CHEST)
 		if(!message_spam)
 			to_chat(H, "<span class='danger'>Your cock begin to strain against your clothes tightly!</b></span>")
 			message_spam = TRUE
-		H.apply_damage(2.5, BRUTE, target)
 
 	return ..()
 
@@ -284,9 +257,6 @@
 	var/mob/living/carbon/human/H = M
 	var/obj/item/organ/genital/penis/P = H.getorganslot(ORGAN_SLOT_PENIS)
 	if(!(H.client?.prefs.cit_toggles & PENIS_ENLARGEMENT) || !P)
-		var/obj/item/organ/liver/L = M.getorganslot(ORGAN_SLOT_LIVER)
-		if(L)
-			L.applyOrganDamage(-0.25)
 		return..()
 
 	P.modify_size(-0.1)
