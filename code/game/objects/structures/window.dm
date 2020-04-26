@@ -405,7 +405,7 @@ GLOBAL_LIST_EMPTY(electrochromatic_window_lookup)
 			for(var/obj/item/shard/debris in spawnDebris(drop_location()))
 				transfer_fingerprints_to(debris) // transfer fingerprints to shards only
 	if(electrochromatic_status != NOT_ELECTROCHROMATIC)		//eh fine keep your kit.
-		new /obj/item/electronics/electrochromatic_kit/K(drop_location())
+		new /obj/item/electronics/electrochromatic_kit(drop_location())
 		// Intentionally not setting the ID so you can't decon one to know all of the IDs.
 	qdel(src)
 	update_nearby_icons()
