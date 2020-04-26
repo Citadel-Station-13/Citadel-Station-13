@@ -299,6 +299,7 @@ GLOBAL_LIST_EMPTY(electrochromatic_window_lookup)
 	animate(src, color = newcolor, time = 2)
 
 /obj/structure/window/proc/remove_electrochromatic()
+	electrochromatic_off()
 	electrochromatic_status = NOT_ELECTROCHROMATIC
 	if(!electrochromatic_id)
 		return
@@ -308,14 +309,17 @@ GLOBAL_LIST_EMPTY(electrochromatic_window_lookup)
 	electrochromatic_id = null
 
 /obj/structure/window/vv_edit_var(var_name, var_value)
-	var/old_id
 	var/check_status
 	if(var_name == NAMEOF(src, electrochromatic_id))
-		if((electrochromatic_status != NOT_ELECTROCHROMATIC) && electrochromatic_id)
-			old_id = electrochromatic_id
+		if(electrochromatic_id && GLOB.electrochromatic_window_lookup["[electrochromatic_id]"])
+			GLOB.electrochromatic_window_lookup[electrochromatic_id] -= src
 	if(var_name == NAMEOF(src, electrochromatic_status))
 		check_status = TRUE
 	. = ..()		//do this first incase it runtimes.
+	if(var_name == NAMEOF(src, electrochromatic_id))
+		if((electrochromatic_status != NOT_ELECTROCHROMATIC) && electrochromatic_id)
+			LAZYINITLIST(GLOB.electrochromatic_window_lookup[electrochromatic_id])
+			GLOB.electrochromatic_window_lookup[electrochromatic_id] += src
 	if(check_status)
 		if(electrochromatic_status == NOT_ELECTROCHROMATIC)
 			remove_electrochromatic()
@@ -336,10 +340,6 @@ GLOBAL_LIST_EMPTY(electrochromatic_window_lookup)
 			return
 		else
 			remove_electrochromatic()
-	if(old_id)
-		GLOB.electrochromatic_window_lookup[old_id] -= src
-		if(electrochromatic_id)
-			GLOB.electrochromatic_window_lookup[electrochromatic_id] += src
 
 /obj/structure/window/proc/make_electrochromatic(new_id = electrochromatic_id)
 	remove_electrochromatic()
