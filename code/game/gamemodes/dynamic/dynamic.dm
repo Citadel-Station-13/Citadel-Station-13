@@ -253,7 +253,7 @@ GLOBAL_VAR_INIT(dynamic_forced_storyteller, null)
 
 /datum/game_mode/dynamic/send_intercept()
 	. = "<b><i>Central Command Status Summary</i></b><hr>"
-	switch(round(threat_level))
+	switch(round(initial_threat_level))
 		if(0 to 20)
 			. += "<b>Peaceful Waypoint</b></center><BR>"
 			. += "Your station orbits deep within controlled, core-sector systems and serves as a waypoint for routine traffic through Nanotrasen's trade empire. Due to the combination of high security, interstellar traffic, and low strategic value, it makes any direct threat of violence unlikely. Your primary enemies will be incompetence and bored crewmen: try to organize team-building events to keep staffers interested and productive. However, even deep in our territory there may be subversive elements, especially for such a high-value target as your station. Keep an eye out, but don't expect much trouble."
