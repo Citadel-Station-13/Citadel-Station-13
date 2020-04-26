@@ -11,7 +11,7 @@
 	var/show_id = TRUE
 	var/cooldown = FALSE //Door cooldowns
 
-/obj/item/assembly/Initialize(mapload)
+/obj/item/assembly/control/Initialize(mapload)
 	if(mapload && id)
 		if(copytext(id, 1, 2) == "!")
 			id = SSmapping.get_obfuscated_id(id)
@@ -166,4 +166,4 @@
 
 /obj/item/assembly/control/electrochromatic/activate()
 	on = !on
-	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_ELECTROCHROMATIC_WINDOW_TOGGLE, on, id)
+	do_electrochromatic_toggle(on, id)

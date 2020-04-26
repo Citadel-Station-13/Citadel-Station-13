@@ -590,5 +590,4 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 	var/key = "[original]%[id_type]"
 	if(random_generated_ids_by_original[key])
 		return random_generated_ids_by_original[key]
-	random_generated_ids_by_original[key] = "[obfuscation_secret]%[obfuscation_next++]"
-	return value
+	. = random_generated_ids_by_original[key] = "[obfuscation_secret]%[obfuscation_next_id++]"

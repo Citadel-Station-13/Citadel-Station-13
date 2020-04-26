@@ -236,7 +236,7 @@
 /datum/crafting_recipe/electrochromatic_kit
 	name = "Electrochromatic Kit"
 	result = /obj/item/electronics/electrochromatic_kit
-	reqs = list(/obj/item/stack/metal = 1,
+	reqs = list(/obj/item/stack/sheet/metal = 1,
 				/obj/item/stack/cable_coil = 1)
 	time = 5
 	subcategory = CAT_MISCELLANEOUS

@@ -8,11 +8,10 @@ GLOBAL_LIST_EMPTY(electrochromatic_window_lookup)
 	var/list/windows = GLOB.electrochromatic_window_lookup["[id]"]
 	if(!windows)
 		return
-	var/obj/structure/window/W = i
+	var/obj/structure/window/W		//define outside for performance because obviously this matters.
 	for(var/i in windows)
 		W = i
 		new_status? W.electrochromatic_dim() : W.electrochromatic_off()
-
 
 /obj/structure/window
 	name = "window"
@@ -215,7 +214,7 @@ GLOBAL_LIST_EMPTY(electrochromatic_window_lookup)
 		if(!user.temporarilyRemoveItemFromInventory(K))
 			to_chat(user, "<span class='warning'>[K] is stuck to your hand!</span>")
 			return
-		if(is_electrochromatic)
+		if(electrochromatic_status != NOT_ELECTROCHROMATIC)
 			to_chat(user, "<span class='warning'>[src] is already electrochromatic!</span>")
 			return
 		if(anchored)
@@ -292,7 +291,7 @@ GLOBAL_LIST_EMPTY(electrochromatic_window_lookup)
 /obj/structure/window/proc/electrochromatic_off()
 	if(electrochromatic_status == ELECTROCHROMATIC_OFF)
 		return
-	electrochromatic_on = FALSE
+	electrochromatic_status = ELECTROCHROMATIC_OFF
 	var/current = color
 	update_atom_colour()
 	var/newcolor = color
@@ -406,7 +405,7 @@ GLOBAL_LIST_EMPTY(electrochromatic_window_lookup)
 			for(var/obj/item/shard/debris in spawnDebris(drop_location()))
 				transfer_fingerprints_to(debris) // transfer fingerprints to shards only
 	if(electrochromatic_status != NOT_ELECTROCHROMATIC)		//eh fine keep your kit.
-		new /obj/item/electrochromatic_kit/K(drop_location())
+		new /obj/item/electronics/electrochromatic_kit/K(drop_location())
 		// Intentionally not setting the ID so you can't decon one to know all of the IDs.
 	qdel(src)
 	update_nearby_icons()
