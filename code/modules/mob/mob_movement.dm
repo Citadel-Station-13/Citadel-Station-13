@@ -80,12 +80,12 @@
 	var/oldloc = mob.loc
 
 	if(L.confused)
-		var/newdir = 0
-		if(L.confused > 40)
+		var/newdir = NONE
+		if((L.confused > 50) && prob(min(L.confused * 0.5, 50)))
 			newdir = pick(GLOB.alldirs)
-		else if(prob(L.confused * 1.5))
+		else if(prob(L.confused))
 			newdir = angle2dir(dir2angle(direction) + pick(90, -90))
-		else if(prob(L.confused * 3))
+		else if(prob(L.confused * 2))
 			newdir = angle2dir(dir2angle(direction) + pick(45, -45))
 		if(newdir)
 			direction = newdir
