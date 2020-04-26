@@ -156,7 +156,7 @@
 
 			var/multiplier = text2num(href_list["multiplier"])
 			var/is_stack = ispath(being_built.build_path, /obj/item/stack)
-			multiplier = CLAMP(multiplier,1,50)
+			multiplier = clamp(multiplier,1,50)
 
 			/////////////////
 
@@ -240,7 +240,7 @@
 	T=1.2
 	for(var/obj/item/stock_parts/manipulator/M in component_parts)
 		T -= M.rating*0.2
-	prod_coeff = CLAMP(T,1,0) // Coeff going 1 -> 0,8 -> 0,6 -> 0,4
+	prod_coeff = clamp(T,1,0) // Coeff going 1 -> 0,8 -> 0,6 -> 0,4
 
 /obj/machinery/autoylathe/proc/main_win(mob/user)
 	var/dat = "<div class='statusDisplay'><h3>Autoylathe Menu:</h3><br>"

@@ -59,7 +59,7 @@
 
 	var/edible = TRUE // That doesn't mean eating it is a good idea
 
-	var/list/reagent_contents = list(/datum/reagent/consumable/nutriment = 1)
+	var/list/reagent_contents = list(/datum/reagent/consumable/nutriment = 0.1)
 	// If the user can toggle the colour, a la vanilla spraycan
 	var/can_change_colour = FALSE
 
@@ -346,8 +346,8 @@
 	var/clicky
 
 	if(click_params && click_params["icon-x"] && click_params["icon-y"])
-		clickx = CLAMP(text2num(click_params["icon-x"]) - 16, -(world.icon_size/2), world.icon_size/2)
-		clicky = CLAMP(text2num(click_params["icon-y"]) - 16, -(world.icon_size/2), world.icon_size/2)
+		clickx = clamp(text2num(click_params["icon-x"]) - 16, -(world.icon_size/2), world.icon_size/2)
+		clicky = clamp(text2num(click_params["icon-y"]) - 16, -(world.icon_size/2), world.icon_size/2)
 
 	if(!instant)
 		to_chat(user, "<span class='notice'>You start drawing a [temp] on the [target.name]...</span>")
@@ -487,56 +487,56 @@
 	icon_state = "crayonred"
 	paint_color = "#DA0000"
 	crayon_color = "red"
-	reagent_contents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/colorful_reagent/crayonpowder/red = 1)
+	reagent_contents = list(/datum/reagent/consumable/nutriment = 0.1, /datum/reagent/colorful_reagent/crayonpowder/red = 0.9)
 	dye_color = DYE_RED
 
 /obj/item/toy/crayon/orange
 	icon_state = "crayonorange"
 	paint_color = "#FF9300"
 	crayon_color = "orange"
-	reagent_contents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/colorful_reagent/crayonpowder/orange = 1)
+	reagent_contents = list(/datum/reagent/consumable/nutriment = 0.1, /datum/reagent/colorful_reagent/crayonpowder/orange = 0.9)
 	dye_color = DYE_ORANGE
 
 /obj/item/toy/crayon/yellow
 	icon_state = "crayonyellow"
 	paint_color = "#FFF200"
 	crayon_color = "yellow"
-	reagent_contents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/colorful_reagent/crayonpowder/yellow = 1)
+	reagent_contents = list(/datum/reagent/consumable/nutriment = 0.1, /datum/reagent/colorful_reagent/crayonpowder/yellow = 0.9)
 	dye_color = DYE_YELLOW
 
 /obj/item/toy/crayon/green
 	icon_state = "crayongreen"
 	paint_color = "#A8E61D"
 	crayon_color = "green"
-	reagent_contents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/colorful_reagent/crayonpowder/green = 1)
+	reagent_contents = list(/datum/reagent/consumable/nutriment = 0.1, /datum/reagent/colorful_reagent/crayonpowder/green = 0.9)
 	dye_color = DYE_GREEN
 
 /obj/item/toy/crayon/blue
 	icon_state = "crayonblue"
 	paint_color = "#00B7EF"
 	crayon_color = "blue"
-	reagent_contents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/colorful_reagent/crayonpowder/blue = 1)
+	reagent_contents = list(/datum/reagent/consumable/nutriment = 0.1, /datum/reagent/colorful_reagent/crayonpowder/blue = 0.9)
 	dye_color = DYE_BLUE
 
 /obj/item/toy/crayon/purple
 	icon_state = "crayonpurple"
 	paint_color = "#DA00FF"
 	crayon_color = "purple"
-	reagent_contents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/colorful_reagent/crayonpowder/purple = 1)
+	reagent_contents = list(/datum/reagent/consumable/nutriment = 0.1, /datum/reagent/colorful_reagent/crayonpowder/purple = 0.9)
 	dye_color = DYE_PURPLE
 
 /obj/item/toy/crayon/black
 	icon_state = "crayonblack"
 	paint_color = "#1C1C1C" //Not completely black because total black looks bad. So Mostly Black.
 	crayon_color = "black"
-	reagent_contents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/colorful_reagent/crayonpowder/black = 1)
+	reagent_contents = list(/datum/reagent/consumable/nutriment = 0.1, /datum/reagent/colorful_reagent/crayonpowder/black = 0.9)
 	dye_color = DYE_BLACK
 
 /obj/item/toy/crayon/white
 	icon_state = "crayonwhite"
 	paint_color = "#FFFFFF"
 	crayon_color = "white"
-	reagent_contents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/colorful_reagent/crayonpowder/white = 1)
+	reagent_contents = list(/datum/reagent/consumable/nutriment = 0.1, /datum/reagent/colorful_reagent/crayonpowder/white = 0.9)
 	dye_color = DYE_WHITE
 
 /obj/item/toy/crayon/mime
@@ -544,7 +544,7 @@
 	desc = "A very sad-looking crayon."
 	paint_color = "#FFFFFF"
 	crayon_color = "mime"
-	reagent_contents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/colorful_reagent/crayonpowder/invisible = 1)
+	reagent_contents = list(/datum/reagent/consumable/nutriment = 0.1, /datum/reagent/colorful_reagent/crayonpowder/invisible = 0.9)
 	charges = -1
 	dye_color = DYE_MIME
 
@@ -552,10 +552,9 @@
 	icon_state = "crayonrainbow"
 	paint_color = "#FFF000"
 	crayon_color = "rainbow"
-	reagent_contents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/colorful_reagent = 1)
+	reagent_contents = list(/datum/reagent/consumable/nutriment = 0.1, /datum/reagent/colorful_reagent = 0.9)
 	drawtype = RANDOM_ANY // just the default starter.
 	dye_color = DYE_RAINBOW
-
 	charges = -1
 
 /obj/item/toy/crayon/rainbow/afterattack(atom/target, mob/user, proximity, params)

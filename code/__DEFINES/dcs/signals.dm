@@ -200,6 +200,7 @@
 #define COMSIG_LIVING_RUN_BLOCK "living_do_run_block"				//from base of mob/living/do_run_block(): (real_attack, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone)
 #define COMSIG_LIVING_COMBAT_ENABLED "combatmode_enabled"		//from base of mob/living/enable_combat_mode() (was_forced)
 #define COMSIG_LIVING_COMBAT_DISABLED "combatmode_disabled"		//from base of mob/living/disable_combat_mode() (was_forced)
+#define COMSIG_LIVING_GET_BLOCKING_ITEMS "get_blocking_items"	//from base of mob/living/get_blocking_items(): (list/items)
 
 //ALL OF THESE DO NOT TAKE INTO ACCOUNT WHETHER AMOUNT IS 0 OR LOWER AND ARE SENT REGARDLESS!
 #define COMSIG_LIVING_STATUS_STUN "living_stun"					//from base of mob/living/Stun() (amount, update, ignore)
@@ -241,6 +242,8 @@
 #define COMSIG_ITEM_ALT_AFTERATTACK "item_alt_afterattack"		//from base of obj/item/altafterattack(): (atom/target, mob/user, proximity, params)
 #define COMSIG_ITEM_EQUIPPED "item_equip"						//from base of obj/item/equipped(): (/mob/equipper, slot)
 #define COMSIG_ITEM_DROPPED "item_drop"							//from base of obj/item/dropped(): (mob/user)
+	// relocated, tell inventory procs if those called this that the item isn't available anymore.
+	#define COMPONENT_DROPPED_RELOCATION 1
 #define COMSIG_ITEM_PICKUP "item_pickup"						//from base of obj/item/pickup(): (/mob/taker)
 #define COMSIG_ITEM_ATTACK_ZONE "item_attack_zone"				//from base of mob/living/carbon/attacked_by(): (mob/living/carbon/target, mob/living/user, hit_zone)
 #define COMSIG_ITEM_IMBUE_SOUL "item_imbue_soul" 				//return a truthy value to prevent ensouling, checked in /obj/effect/proc_holder/spell/targeted/lichdom/cast(): (mob/user)

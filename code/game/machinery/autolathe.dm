@@ -169,7 +169,7 @@
 
 			var/multiplier = text2num(href_list["multiplier"])
 			var/is_stack = ispath(being_built.build_path, /obj/item/stack)
-			multiplier = CLAMP(multiplier,1,50)
+			multiplier = clamp(multiplier,1,50)
 
 			/////////////////
 
@@ -439,8 +439,3 @@
 	desc = "An autolathe reprogrammed with security protocols to prevent hacking."
 	hackable = FALSE
 	circuit = /obj/item/circuitboard/machine/autolathe/secure
-
-//Called when the object is constructed by an autolathe
-//Has a reference to the autolathe so you can do !!FUN!! things with hacked lathes
-/obj/item/proc/autolathe_crafted(obj/machinery/autolathe/A)
-	return
