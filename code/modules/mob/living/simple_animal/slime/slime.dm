@@ -147,25 +147,25 @@
 
 /mob/living/simple_animal/slime/on_reagent_change()
 	. = ..()
-	remove_movespeed_modifier(MOVESPEED_ID_SLIME_REAGENTMOD, TRUE)
+	remove_movespeed_modifier(/datum/movespeed_modifier/slime_reagentmod)
 	var/amount = 0
 	if(reagents.has_reagent(/datum/reagent/medicine/morphine)) // morphine slows slimes down
 		amount = 2
 	if(reagents.has_reagent(/datum/reagent/consumable/frostoil)) // Frostoil also makes them move VEEERRYYYYY slow
 		amount = 5
 	if(amount)
-		add_movespeed_modifier(MOVESPEED_ID_SLIME_REAGENTMOD, TRUE, 100, override = TRUE, multiplicative_slowdown = amount)
+		add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/slime_reagentmod, multiplicative_slowdown = amount)
 
 /mob/living/simple_animal/slime/updatehealth()
 	. = ..()
-	remove_movespeed_modifier(MOVESPEED_ID_SLIME_HEALTHMOD, FALSE)
+	remove_movespeed_modifier(/datum/movespeed_modifier/slime_healthmod)
 	var/health_deficiency = (100 - health)
 	var/mod = 0
 	if(health_deficiency >= 45)
 		mod += (health_deficiency / 25)
 	if(health <= 0)
 		mod += 2
-	add_movespeed_modifier(MOVESPEED_ID_SLIME_HEALTHMOD, TRUE, 100, multiplicative_slowdown = mod)
+	add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/slime_healthmod, multiplicative_slowdown = mod)
 
 /mob/living/simple_animal/slime/adjust_bodytemperature()
 	. = ..()
@@ -173,9 +173,8 @@
 	if(bodytemperature >= 330.23) // 135 F or 57.08 C
 		mod = -1	// slimes become supercharged at high temperatures
 	else if(bodytemperature < 183.222)
-		mod = (283.222 - bodytemperature) / 10 * 1.75
-	if(mod)
-		add_movespeed_modifier(MOVESPEED_ID_SLIME_TEMPMOD, TRUE, 100, override = TRUE, multiplicative_slowdown = mod)
+		mod = min(15, (283.222 - bodytemperature) / 10 * 1.75)
+	add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/slime_tempmod, multiplicative_slowdown = mod)
 
 /mob/living/simple_animal/slime/ObjBump(obj/O)
 	if(!client && powerlevel > 0)

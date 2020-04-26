@@ -3,6 +3,7 @@
 	desc = "Makes researched and prototype items with materials and energy."
 	layer = BELOW_OBJ_LAYER
 	var/consoleless_interface = TRUE			//Whether it can be used without a console.
+	var/offstation_security_levels = TRUE
 	var/efficiency_coeff = 1				//Materials needed / coeff = actual.
 	var/list/categories = list()
 	var/datum/component/remote_materials/materials
@@ -98,6 +99,7 @@
 			var/obj/item/I = O
 			I.material_flags |= MATERIAL_NO_EFFECTS //Find a better way to do this.
 			I.set_custom_materials(matlist.Copy())
+			I.rnd_crafted(src)
 	SSblackbox.record_feedback("nested tally", "item_printed", amount, list("[type]", "[path]"))
 	investigate_log("[key_name(user)] built [amount] of [path] at [src]([type]).", INVESTIGATE_RESEARCH)
 
@@ -134,6 +136,12 @@
 	if(D.build_type && !(D.build_type & allowed_buildtypes))
 		say("This machine does not have the necessary manipulation systems for this design. Please contact Nanotrasen Support!")
 		return FALSE
+	if(!(obj_flags & EMAGGED) && (offstation_security_levels || is_station_level(z)))
+		if(GLOB.security_level < D.min_security_level)
+			say("Minimum security alert level required to print this design not met, please contact the command staff.")
+			return FALSE
+		if(GLOB.security_level > D.max_security_level)
+			say("Exceeded maximum security alert level required to print this design, please contact the command staff.")
 	if(!materials.mat_container)
 		say("No connection to material storage, please contact the quartermaster.")
 		return FALSE
@@ -275,15 +283,26 @@
 			temp_material += " [all_materials[M]/coeff] [CallMaterialName(M)]"
 		c = min(c,t)
 
-	if (c >= 1)
+	var/clearance = !(obj_flags & EMAGGED) && (offstation_security_levels || is_station_level(z))
+	var/sec_text = ""
+	if(clearance && (D.min_security_level > SEC_LEVEL_GREEN || D.max_security_level < SEC_LEVEL_DELTA))
+		sec_text = " (Allowed security levels: "
+		for(var/n in D.min_security_level to D.max_security_level)
+			sec_text += NUM2SECLEVEL(n)
+			if(n + 1 <= D.max_security_level)
+				sec_text += ", "
+		sec_text += ")"
+
+	clearance = !clearance || ISINRANGE(GLOB.security_level, D.min_security_level, D.max_security_level)
+	if (c >= 1 && clearance)
 		l += "<A href='?src=[REF(src)];build=[D.id];amount=1'>[D.name]</A>[RDSCREEN_NOBREAK]"
 		if(c >= 5)
 			l += "<A href='?src=[REF(src)];build=[D.id];amount=5'>x5</A>[RDSCREEN_NOBREAK]"
 		if(c >= 10)
 			l += "<A href='?src=[REF(src)];build=[D.id];amount=10'>x10</A>[RDSCREEN_NOBREAK]"
-		l += "[temp_material][RDSCREEN_NOBREAK]"
+		l += "[temp_material][sec_text][RDSCREEN_NOBREAK]"
 	else
-		l += "<span class='linkOff'>[D.name]</span>[temp_material][RDSCREEN_NOBREAK]"
+		l += "<span class='linkOff'>[D.name]</span>[temp_material][sec_text][RDSCREEN_NOBREAK]"
 	l += ""
 	return l
 
