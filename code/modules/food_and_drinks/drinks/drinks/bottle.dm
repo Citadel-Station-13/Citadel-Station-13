@@ -396,6 +396,16 @@
 	list_reagents = list(/datum/reagent/consumable/orangejuice = 100)
 	foodtype = FRUIT| BREAKFAST
 
+/obj/item/reagent_containers/food/drinks/bottle/bio_carton
+	name = "small carton box"
+	desc = "A small biodegradable carton box made from plant biomatter."
+	icon_state = "eco_box"
+	item_state = "carton"
+	lefthand_file = 'icons/mob/inhands/equipment/kitchen_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/kitchen_righthand.dmi'
+	volume = 50
+	isGlass = FALSE
+
 /obj/item/reagent_containers/food/drinks/bottle/cream
 	name = "milk cream"
 	desc = "It's cream. Made from milk. What else did you think you'd find in there?"

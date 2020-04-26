@@ -41,7 +41,7 @@
 	STOP_PROCESSING(SSobj, core)
 	update_icon()
 	GLOB.poi_list |= src
-	previous_level = get_security_level()
+	previous_level = NUM2SECLEVEL(GLOB.security_level)
 
 /obj/machinery/nuclearbomb/Destroy()
 	safety = FALSE
@@ -419,7 +419,7 @@
 		return
 	timing = !timing
 	if(timing)
-		previous_level = get_security_level()
+		previous_level = NUM2SECLEVEL(GLOB.security_level)
 		detonation_timer = world.time + (timer_set * 10)
 		for(var/obj/item/pinpointer/nuke/syndicate/S in GLOB.pinpointer_list)
 			S.switch_mode_to(TRACK_INFILTRATOR)

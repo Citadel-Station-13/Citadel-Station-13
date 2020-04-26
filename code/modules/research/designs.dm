@@ -36,6 +36,9 @@ other types of metals and chemistry for reagents).
 	var/dangerous_construction = FALSE	//notify and log for admin investigations if this is printed.
 	var/departmental_flags = ALL			//bitflags for deplathes.
 	var/list/datum/techweb_node/unlocked_by = list()
+	///minimum and security levels the design can be printed on. Currently only available for rnd production machinery and mechfab.
+	var/min_security_level = SEC_LEVEL_GREEN
+	var/max_security_level = SEC_LEVEL_DELTA
 	var/research_icon					//Replaces the item icon in the research console
 	var/research_icon_state
 	var/icon_cache

@@ -298,8 +298,8 @@ GLOBAL_LIST(topic_status_cache)
 	if(SSmapping.config) // this just stops the runtime, honk.
 		features += "[SSmapping.config.map_name]"	//CIT CHANGE - makes the hub entry display the current map
 
-	if(get_security_level())//CIT CHANGE - makes the hub entry show the security level
-		features += "[get_security_level()] alert"
+	if(NUM2SECLEVEL(GLOB.security_level))//CIT CHANGE - makes the hub entry show the security level
+		features += "[NUM2SECLEVEL(GLOB.security_level)] alert"
 
 	if (n > 1)
 		features += "~[n] players"
