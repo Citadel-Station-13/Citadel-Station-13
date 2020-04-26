@@ -34,7 +34,7 @@
 		return
 	var/new_id
 	if(id_is_number)
-		new_id = input(user, "Set ID (number)", "Set ID", show_id? id : null) as number|null
+		new_id = input(user, "Set ID (number)", "Set ID", show_id? id : null) as num|null
 	else
 		new_id = input(user, "Set ID", "Set ID", show_id? id : null) as text|null
 	if(!isnull(new_id))		//0/"" is considered !, so check null instead of just !.

@@ -352,7 +352,11 @@ GLOBAL_LIST_EMPTY(electrochromatic_window_lookup)
 /obj/structure/window/update_atom_colour()
 	if((electrochromatic_status != ELECTROCHROMATIC_OFF) && (electrochromatic_status != ELECTROCHROMATIC_DIMMED))
 		return FALSE
-	return ..()
+	. = ..()
+	if(color_hex2num(color) < 255)
+		set_opacity(255)
+	else
+		set_opacity(FALSE)
 
 /obj/structure/window/proc/check_state(checked_state)
 	if(state == checked_state)
