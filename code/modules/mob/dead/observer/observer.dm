@@ -942,6 +942,9 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	set name = "Game info"
 	set desc = "Shows various info relating to the game mode, antagonists etc."
 	set category = "Ghost"
+	if(!started_as_observer && can_reenter_corpse)
+		to_chat(src, "You cannot see this info unless you are an observer or you've chosen Do Not Resuscitate!")
+		return
 	var/list/stuff = list("[SSticker.mode.name]")
 	stuff += "Antagonists:\n"
 	for(var/datum/antagonist/A in GLOB.antagonists)
