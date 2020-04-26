@@ -43,6 +43,8 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 
 GLOBAL_VAR_INIT(dynamic_storyteller_type, /datum/dynamic_storyteller/classic)
 
+GLOBAL_VAR_INIT(dynamic_forced_storyteller, 0)
+
 /datum/game_mode/dynamic
 	name = "dynamic mode"
 	config_tag = "dynamic"
@@ -355,6 +357,8 @@ GLOBAL_VAR_INIT(dynamic_storyteller_type, /datum/dynamic_storyteller/classic)
 	SSblackbox.record_feedback("tally","dynamic_threat",peaceful_percentage,"Percent of same-vote rounds that are more peaceful")
 
 /datum/game_mode/dynamic/can_start()
+	if(GLOB.dynamic_forced_storyteller)
+		GLOB.dynamic_storyteller_type = GLOB.dynamic_forced_storyteller
 	storyteller = new GLOB.dynamic_storyteller_type // this is where all the initialization happens
 	storyteller.on_start()
 	SSblackbox.record_feedback("text","dynamic_storyteller",1,storyteller.name)
