@@ -40,10 +40,10 @@ GLOBAL_VAR_INIT(dynamic_stacking_limit, 90)
 GLOBAL_LIST_EMPTY(dynamic_forced_roundstart_ruleset)
 // Forced threat level, setting this to zero or higher forces the roundstart threat to the value.
 GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
-
+// Storyteller picked by the voting.
 GLOBAL_VAR_INIT(dynamic_storyteller_type, /datum/dynamic_storyteller/classic)
-
-GLOBAL_VAR_INIT(dynamic_forced_storyteller, 0)
+// Storyteller forced by admins during voting--will be used instead of above.
+GLOBAL_VAR_INIT(dynamic_forced_storyteller, null)
 
 /datum/game_mode/dynamic
 	name = "dynamic mode"
