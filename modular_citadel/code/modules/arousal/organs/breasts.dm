@@ -54,7 +54,7 @@
 			desc += " They're leaking [lowertext(R.name)]."
 	var/datum/sprite_accessory/S = GLOB.breasts_shapes_list[shape]
 	var/icon_shape = S ? S.icon_state : "pair"
-	var/icon_size = CLAMP(breast_values[size], BREASTS_ICON_MIN_SIZE, BREASTS_ICON_MAX_SIZE)
+	var/icon_size = clamp(breast_values[size], BREASTS_ICON_MIN_SIZE, BREASTS_ICON_MAX_SIZE)
 	icon_state = "breasts_[icon_shape]_[icon_size]"
 	if(owner)
 		if(owner.dna.species.use_skintones && owner.dna.features["genitals_use_skintone"])
@@ -69,7 +69,7 @@
 //Allows breasts to grow and change size, with sprite changes too.
 
 /obj/item/organ/genital/breasts/modify_size(modifier, min = -INFINITY, max = INFINITY)
-	var/new_value = CLAMP(cached_size + modifier, min, max)
+	var/new_value = clamp(cached_size + modifier, min, max)
 	if(new_value == cached_size)
 		return
 	prev_size = cached_size

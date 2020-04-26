@@ -21,11 +21,11 @@
 	var/diameter_ratio = COCK_DIAMETER_RATIO_DEF //0.25; check citadel_defines.dm
 
 /obj/item/organ/genital/penis/modify_size(modifier, min = -INFINITY, max = INFINITY)
-	var/new_value = CLAMP(length + modifier, min, max)
+	var/new_value = clamp(length + modifier, min, max)
 	if(new_value == length)
 		return
 	prev_length = length
-	length = CLAMP(length + modifier, min, max)
+	length = clamp(length + modifier, min, max)
 	update()
 	..()
 
@@ -50,7 +50,7 @@
 			new_size = 4 //no new sprites for anything larger yet
 
 	if(linked_organ)
-		linked_organ.size = CLAMP(size + new_size, BALLS_SIZE_MIN, BALLS_SIZE_MAX)
+		linked_organ.size = clamp(size + new_size, BALLS_SIZE_MIN, BALLS_SIZE_MAX)
 		linked_organ.update()
 	size = new_size
 

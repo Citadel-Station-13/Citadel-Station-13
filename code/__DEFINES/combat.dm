@@ -111,9 +111,6 @@
 #define GRAB_NECK					2
 #define GRAB_KILL					3
 
-//slowdown when in softcrit
-#define SOFTCRIT_ADD_SLOWDOWN 6
-
 /// Attack types for check_block()/run_block(). Flags, combinable.
 /// Attack was melee, whether or not armed.
 #define ATTACK_TYPE_MELEE			(1<<0)
@@ -302,8 +299,8 @@ GLOBAL_LIST_INIT(shove_disarming_types, typecacheof(list(
 
 /// Block priorities
 #define BLOCK_PRIORITY_HELD_ITEM				100
-#define BLOCK_PRIORITY_CLOTHING					50
 #define BLOCK_PRIORITY_WEAR_SUIT				75
+#define BLOCK_PRIORITY_CLOTHING					50
 #define BLOCK_PRIORITY_UNIFORM					25
 
 #define BLOCK_PRIORITY_DEFAULT BLOCK_PRIORITY_HELD_ITEM

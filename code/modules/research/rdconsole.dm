@@ -301,15 +301,26 @@ Nothing else in the console has ID requirements.
 				temp_material += " [all_materials[M]/coeff] [CallMaterialName(M)]"
 			c = min(c,t)
 
-		if (c >= 1)
+		var/clearance = !(linked_lathe.obj_flags & EMAGGED) && (linked_lathe.offstation_security_levels || is_station_level(linked_lathe.z))
+		var/sec_text = ""
+		if(clearance && (D.min_security_level > SEC_LEVEL_GREEN || D.max_security_level < SEC_LEVEL_DELTA))
+			sec_text = " (Allowed security levels: "
+			for(var/n in D.min_security_level to D.max_security_level)
+				sec_text += NUM2SECLEVEL(n)
+				if(n + 1 <= D.max_security_level)
+					sec_text += ", "
+			sec_text += ")"
+
+		clearance = !clearance || ISINRANGE(GLOB.security_level, D.min_security_level, D.max_security_level)
+		if (c >= 1 && clearance)
 			l += "<A href='?src=[REF(src)];build=[D.id];amount=1'>[D.name]</A>[RDSCREEN_NOBREAK]"
 			if(c >= 5)
 				l += "<A href='?src=[REF(src)];build=[D.id];amount=5'>x5</A>[RDSCREEN_NOBREAK]"
 			if(c >= 10)
 				l += "<A href='?src=[REF(src)];build=[D.id];amount=10'>x10</A>[RDSCREEN_NOBREAK]"
-			l += "[temp_material][RDSCREEN_NOBREAK]"
+			l += "[temp_material][sec_text][RDSCREEN_NOBREAK]"
 		else
-			l += "<span class='linkOff'>[D.name]</span>[temp_material][RDSCREEN_NOBREAK]"
+			l += "<span class='linkOff'>[D.name]</span>[temp_material][sec_text][RDSCREEN_NOBREAK]"
 		l += ""
 	l += "</div>"
 	return l
