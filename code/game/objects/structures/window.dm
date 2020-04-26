@@ -52,7 +52,7 @@ GLOBAL_LIST_EMPTY(electrochromatic_window_lookup)
 /obj/structure/window/examine(mob/user)
 	. = ..()
 	if(electrochromatic_status != NOT_ELECTROCHROMATIC)
-		. += "<span class='notice'>The window has electrochromatic circuitry on it.</span>")
+		. += "<span class='notice'>The window has electrochromatic circuitry on it.</span>"
 	if(reinf)
 		if(anchored && state == WINDOW_SCREWED_TO_FRAME)
 			. += "<span class='notice'>The window is <b>screwed</b> to the frame.</span>"
