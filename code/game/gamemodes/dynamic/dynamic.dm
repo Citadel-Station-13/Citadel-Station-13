@@ -253,8 +253,8 @@ GLOBAL_VAR_INIT(dynamic_forced_storyteller, null)
 
 /datum/game_mode/dynamic/send_intercept()
 	. = "<b><i>Central Command Status Summary</i></b><hr>"
-	switch(round(initial_threat_level))
-		if(0 to 20)
+	switch(round(threat_level))
+		if(-INFINITY to 20)
 			. += "<b>Peaceful Waypoint</b></center><BR>"
 			. += "Your station orbits deep within controlled, core-sector systems and serves as a waypoint for routine traffic through Nanotrasen's trade empire. Due to the combination of high security, interstellar traffic, and low strategic value, it makes any direct threat of violence unlikely. Your primary enemies will be incompetence and bored crewmen: try to organize team-building events to keep staffers interested and productive. However, even deep in our territory there may be subversive elements, especially for such a high-value target as your station. Keep an eye out, but don't expect much trouble."
 			set_security_level(SEC_LEVEL_GREEN)
@@ -286,7 +286,7 @@ GLOBAL_VAR_INIT(dynamic_forced_storyteller, null)
 			. += "<b>Black Orbit</b></center><BR>"
 			. += "As part of a mandatory security protocol, we are required to inform you that as a result of your orbital pattern directly behind an astrological body (oriented from our nearest observatory), your station will be under decreased monitoring and support. It is anticipated that your extreme location and decreased surveillance could pose security risks. Avoid unnecessary risks and attempt to keep your station in one piece."
 			set_security_level(SEC_LEVEL_AMBER)
-		if(96 to 100)
+		if(96 to INFINITY)
 			. += "<b>Impending Doom</b></center><BR>"
 			. += "Your station is somehow in the middle of hostile territory, in clear view of any enemy of the corporation. Your likelihood to survive is low, and station destruction is expected and almost inevitable. Secure any sensitive material and neutralize any enemy you will come across. It is important that you at least try to maintain the station.<BR>"
 			. += "Good luck."
