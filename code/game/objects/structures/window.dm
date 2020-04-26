@@ -211,9 +211,6 @@ GLOBAL_LIST_EMPTY(electrochromatic_window_lookup)
 
 	if(istype(I, /obj/item/electronics/electrochromatic_kit) && user.a_intent == INTENT_HELP)
 		var/obj/item/electronics/electrochromatic_kit/K = I
-		if(!user.temporarilyRemoveItemFromInventory(K))
-			to_chat(user, "<span class='warning'>[K] is stuck to your hand!</span>")
-			return
 		if(electrochromatic_status != NOT_ELECTROCHROMATIC)
 			to_chat(user, "<span class='warning'>[src] is already electrochromatic!</span>")
 			return
@@ -222,6 +219,9 @@ GLOBAL_LIST_EMPTY(electrochromatic_window_lookup)
 			return
 		if(!K.id)
 			to_chat(user, "<span class='warning'>[K] has no ID set!</span>")
+			return
+		if(!user.temporarilyRemoveItemFromInventory(K))
+			to_chat(user, "<span class='warning'>[K] is stuck to your hand!</span>")
 			return
 		user.visible_message("<span class='notice'>[user] upgrades [src] with [I].</span>", "<span class='notice'>You upgrade [src] with [I].</span>")
 		make_electrochromatic(K.id)
@@ -341,8 +341,10 @@ GLOBAL_LIST_EMPTY(electrochromatic_window_lookup)
 		if(electrochromatic_id)
 			GLOB.electrochromatic_window_lookup[electrochromatic_id] += src
 
-/obj/structure/window/proc/make_electrochromatic(new_id)
+/obj/structure/window/proc/make_electrochromatic(new_id = electrochromatic_id)
 	remove_electrochromatic()
+	if(!new_id)
+		CRASH("Attempted to make electrochromatic with null ID.")
 	electrochromatic_id = new_id
 	electrochromatic_status = ELECTROCHROMATIC_OFF
 	LAZYINITLIST(GLOB.electrochromatic_window_lookup["[electrochromatic_id]"])
@@ -352,7 +354,7 @@ GLOBAL_LIST_EMPTY(electrochromatic_window_lookup)
 	if((electrochromatic_status != ELECTROCHROMATIC_OFF) && (electrochromatic_status != ELECTROCHROMATIC_DIMMED))
 		return FALSE
 	. = ..()
-	if(color_hex2num(color) < 255)
+	if(color && (color_hex2num(color) < 255))
 		set_opacity(255)
 	else
 		set_opacity(FALSE)

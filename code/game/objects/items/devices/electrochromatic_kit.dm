@@ -1,7 +1,6 @@
 /obj/item/electronics/electrochromatic_kit
 	name = "electrochromatic kit"
 	desc = "A kit for upgrading a window into an electrochromatic one."
-	icon = 'icons/obj/device.dmi'
 	/// Electrochromatic ID
 	var/id
 

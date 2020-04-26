@@ -26,8 +26,6 @@
 
 /obj/item/assembly/control/attack_self(mob/living/user)
 	. = ..()
-	if(.)
-		return
 	if(!can_change_id)
 		return
 	var/new_id
