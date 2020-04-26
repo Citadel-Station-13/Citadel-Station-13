@@ -210,7 +210,7 @@ GLOBAL_LIST_EMPTY(electrochromatic_window_lookup)
 			to_chat(user, "<span class='warning'>[src] is already in good condition!</span>")
 		return
 
-	if(!anchored && istype(I, /obj/item/electronics/electrochromatic_kit && user.a_intent == INTENT_HELP)
+	if(istype(I, /obj/item/electronics/electrochromatic_kit) && user.a_intent == INTENT_HELP)
 		var/obj/item/electronics/electrochromatic_kit/K = I
 		if(!user.temporarilyRemoveItemFromInventory(K))
 			to_chat(user, "<span class='warning'>[K] is stuck to your hand!</span>")
@@ -218,7 +218,7 @@ GLOBAL_LIST_EMPTY(electrochromatic_window_lookup)
 		if(is_electrochromatic)
 			to_chat(user, "<span class='warning'>[src] is already electrochromatic!</span>")
 			return
-		if(!anchored)
+		if(anchored)
 			to_chat(user, "<span class='warning'>[src] must not be attached to the floor!</span>")
 			return
 		if(!K.id)
@@ -346,7 +346,7 @@ GLOBAL_LIST_EMPTY(electrochromatic_window_lookup)
 	remove_electrochromatic()
 	electrochromatic_id = new_id
 	electrochromatic_status = ELECTROCHROMATIC_OFF
-	LAZYINITLIST(GLOB.electrochromatic_window_lookup["[electrochromatic_id]")
+	LAZYINITLIST(GLOB.electrochromatic_window_lookup["[electrochromatic_id]"])
 	GLOB.electrochromatic_window_lookup[electrochromatic_id] |= src
 
 /obj/structure/window/update_atom_colour()
