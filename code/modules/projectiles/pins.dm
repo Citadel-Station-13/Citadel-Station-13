@@ -253,8 +253,8 @@
 
 /obj/item/firing_pin/security_level/Initialize()
 	. = ..()
-	fail_message = "<span class='warning'>INVALID SECURITY LEVEL. CURRENT: [uppertext(num2seclevel(GLOB.security_level))]. \
-					MIN: [uppertext(num2seclevel(min_sec_level))]. MAX: [uppertext(num2seclevel(max_sec_level))]. \
+	fail_message = "<span class='warning'>INVALID SECURITY LEVEL. CURRENT: [uppertext(NUM2SECLEVLE(GLOB.security_level))]. \
+					MIN: [uppertext(NUM2SECLEVEL(min_sec_level))]. MAX: [uppertext(NUM2SECLEVEL(max_sec_level))]. \
 					ONLY LETHALS: [only_lethals ? "YES" : "NO"].</span>"
 	update_icon()
 
@@ -262,9 +262,9 @@
 	. = ..()
 	var/lethal = only_lethals ? "only lethal " : ""
 	if(min_sec_level != max_sec_level)
-		. += "<span class='notice'>It's currently set to disallow [lethal]operation when the security level isn't between <b>[num2seclevel(min_sec_level)]</b> and <b>[num2seclevel(max_sec_level)]</b>.</span>"
+		. += "<span class='notice'>It's currently set to disallow [lethal]operation when the security level isn't between <b>[NUM2SECLEVEL(min_sec_level)]</b> and <b>[NUM2SECLEVEL(max_sec_level)]</b>.</span>"
 	else
-		. += "<span class='notice'>It's currently set to disallow [lethal]operation when the security level isn't <b>[num2seclevel(min_sec_level)]</b>.</span>"
+		. += "<span class='notice'>It's currently set to disallow [lethal]operation when the security level isn't <b>[NUM2SECLEVEL(min_sec_level)]</b>.</span>"
 	if(can_toggle)
 		. += "<span class='notice'>You can use a <b>multitool</b> to modify its settings.</span>"
 
@@ -278,14 +278,14 @@
 	var/static/list/till_designs_pr_isnt_merged = list("green", "blue", "amber", "red", "delta")
 	switch(selection)
 		if("Minimum Level Setting")
-			var/input = input(user, "Input the new minimum level setting.", "Firing Pin Settings", num2seclevel(min_sec_level)) as null|anything in till_designs_pr_isnt_merged
+			var/input = input(user, "Input the new minimum level setting.", "Firing Pin Settings", NUM2SECLEVEL(min_sec_level)) as null|anything in till_designs_pr_isnt_merged
 			if(!input)
 				return
 			min_sec_level = till_designs_pr_isnt_merged.Find(input) - 1
 			if(min_sec_level > max_sec_level)
 				max_sec_level = SEC_LEVEL_DELTA
 		if("Maximum Level Setting")
-			var/input = input(user, "Input the new maximum level setting.", "Firing Pin Settings", num2seclevel(max_sec_level)) as null|anything in till_designs_pr_isnt_merged
+			var/input = input(user, "Input the new maximum level setting.", "Firing Pin Settings", NUM2SECLEVEL(max_sec_level)) as null|anything in till_designs_pr_isnt_merged
 			if(!input)
 				return
 			max_sec_level = till_designs_pr_isnt_merged.Find(input) - 1
@@ -294,8 +294,8 @@
 		if("Lethals Only Toggle")
 			only_lethals = !only_lethals
 
-	fail_message = "<span class='warning'>INVALID SECURITY LEVEL. CURRENT: [uppertext(num2seclevel(GLOB.security_level))]. \
-					MIN: [uppertext(num2seclevel(min_sec_level))]. MAX: [uppertext(num2seclevel(max_sec_level))]. \
+	fail_message = "<span class='warning'>INVALID SECURITY LEVEL. CURRENT: [uppertext(NUM2SECLEVEL(GLOB.security_level))]. \
+					MIN: [uppertext(NUM2SECLEVEL(min_sec_level))]. MAX: [uppertext(NUM2SECLEVEL(max_sec_level))]. \
 					ONLY LETHALS: [only_lethals ? "YES" : "NO"].</span>"
 	update_icon()
 
