@@ -521,6 +521,7 @@
 #include "code\datums\elements\mob_holder.dm"
 #include "code\datums\elements\polychromic.dm"
 #include "code\datums\elements\spellcasting.dm"
+#include "code\datums\elements\squish.dm"
 #include "code\datums\elements\swimming.dm"
 #include "code\datums\elements\sword_point.dm"
 #include "code\datums\elements\update_icon_blocker.dm"
