@@ -201,6 +201,18 @@
 			)
 		if((P.hidden && !(obj_flags & EMAGGED)) || (P.contraband && !contraband) || (P.special && !P.special_enabled) || P.DropPodOnly)
 			continue
+		if((P.space_gear && !space_gear))
+			continue
+		if((P.heavy_firearms && !heavy_firearms))
+			continue
+		if((P.medco_trade && !medco_trade))
+			continue
+		if((P.blackmarket && !blackmarket))
+			continue
+		if((P.animal_handing && !animal_handing))
+			continue
+		if((P.adv_sci && !adv_sci))
+			continue
 		data["supplies"][P.group]["packs"] += list(list(
 			"name" = P.name,
 			"cost" = P.cost,

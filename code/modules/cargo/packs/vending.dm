@@ -24,7 +24,7 @@
 	name = "Importation of Heavy Firearms Importation Verification"
 	desc = "Update you verification to import more regulated girearms such as - SWAT Gear, WT-550 and more."
 	cost = 8000
-	contains = list(/obj/item/folder/paperwork_correct/space_gear)
+	contains = list(/obj/item/folder/paperwork_correct/heavy_firearms)
 	crate_name = "firearms permit crate"
 
 /datum/supply_pack/vending/permit_medco_trade
