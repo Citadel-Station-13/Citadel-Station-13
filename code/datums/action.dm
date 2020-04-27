@@ -171,7 +171,7 @@
 	if(!..())
 		return 0
 	var/mob/M = target
-	M.ghostize(1)
+	M.ghostize(can_reenter_corpse = TRUE, voluntary = TRUE)
 
 /datum/action/proc/OnUpdatedIcon()
 	UpdateButtonIcon()

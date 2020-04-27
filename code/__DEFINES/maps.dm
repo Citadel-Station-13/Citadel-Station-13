@@ -35,6 +35,7 @@ require only minor tweaks.
 #define ZTRAIT_REEBE "Reebe"
 #define ZTRAIT_RESERVED "Transit/Reserved"
 #define ZTRAIT_AWAY "Away Mission"
+#define ZTRAIT_VR "Virtual Reality"
 #define ZTRAIT_SPACE_RUINS "Space Ruins"
 #define ZTRAIT_LAVA_RUINS "Lava Ruins"
 #define ZTRAIT_ISOLATED_RUINS "Isolated Ruins" //Placing ruins on z levels with this trait will use turf reservation instead of usual placement.
@@ -102,3 +103,7 @@ require only minor tweaks.
 #define PLACE_ISOLATED "isolated" //On isolated ruin z level
 //Map type stuff.
 #define MAP_TYPE_STATION "station"
+
+//Random z-levels name defines.
+#define AWAY_MISSION_NAME "Away Mission"
+#define VIRT_REALITY_NAME "Virtual Reality"

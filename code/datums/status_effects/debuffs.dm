@@ -120,12 +120,12 @@
 /datum/status_effect/mesmerize/on_creation(mob/living/new_owner, set_duration)
 	. = ..()
 	ADD_TRAIT(owner, TRAIT_MUTE, "mesmerize")
-	owner.add_movespeed_modifier("[STATUS_EFFECT_MESMERIZE]_[id]", TRUE, priority = 64, override = TRUE, multiplicative_slowdown = 5, blacklisted_movetypes = FALSE? NONE : CRAWLING)
+	owner.add_movespeed_modifier(/datum/movespeed_modifier/status_effect/mesmerize)
 
 /datum/status_effect/mesmerize/on_remove()
 	. = ..()
 	REMOVE_TRAIT(owner, TRAIT_MUTE, "mesmerize")
-	owner.remove_movespeed_modifier("[STATUS_EFFECT_MESMERIZE]_[id]")
+	owner.remove_movespeed_modifier(/datum/movespeed_modifier/status_effect/mesmerize)
 
 /datum/status_effect/mesmerize/on_creation(mob/living/new_owner, set_duration)
 	if(isnum(set_duration))
@@ -141,9 +141,7 @@
 /datum/status_effect/electrode
 	id = "tased"
 	alert_type = null
-	var/slowdown = 1.5
-	var/slowdown_priority = 50		//to make sure the stronger effect overrides
-	var/affect_crawl = FALSE
+	var/movespeed_mod = /datum/movespeed_modifier/status_effect/tased
 	var/nextmove_modifier = 1
 	var/stamdmg_per_ds = 0		//a 20 duration would do 20 stamdmg, disablers do 24 or something
 	var/last_tick = 0			//fastprocess processing speed is a goddamn sham, don't trust it.
@@ -155,12 +153,12 @@
 	last_tick = world.time
 	if(iscarbon(owner))
 		var/mob/living/carbon/C = owner
-		C.add_movespeed_modifier("[MOVESPEED_ID_TASED_STATUS]_[id]", TRUE, priority = slowdown_priority, override = TRUE, multiplicative_slowdown = slowdown, blacklisted_movetypes = affect_crawl? NONE : CRAWLING)
+		C.add_movespeed_modifier(movespeed_mod)
 
 /datum/status_effect/electrode/on_remove()
 	if(iscarbon(owner))
 		var/mob/living/carbon/C = owner
-		C.remove_movespeed_modifier("[MOVESPEED_ID_TASED_STATUS]_[id]")
+		C.remove_movespeed_modifier(movespeed_mod)
 	. = ..()
 
 /datum/status_effect/electrode/tick()
@@ -178,8 +176,7 @@
 
 /datum/status_effect/electrode/no_combat_mode
 	id = "tased_strong"
-	slowdown = 8
-	slowdown_priority = 100
+	movespeed_mod = /datum/movespeed_modifier/status_effect/tased/no_combat_mode
 	nextmove_modifier = 2
 	blocks_combatmode = TRUE
 	stamdmg_per_ds = 1
@@ -650,11 +647,11 @@
 	if(isnum(set_duration))
 		duration = set_duration
 	. = ..()
-	owner.add_movespeed_modifier(MOVESPEED_ID_ELECTROSTAFF, multiplicative_slowdown = 1, movetypes = GROUND)
+	owner.add_movespeed_modifier(/datum/movespeed_modifier/status_effect/electrostaff)
 
 /datum/status_effect/electrostaff/on_remove()
 	. = ..()
-	owner.remove_movespeed_modifier(MOVESPEED_ID_ELECTROSTAFF)
+	owner.remove_movespeed_modifier(/datum/movespeed_modifier/status_effect/electrostaff)
 
 //GOLEM GANG
 
