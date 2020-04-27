@@ -68,7 +68,7 @@
 	empty_pod.explosionSize = list(0,0,0,1)
 	empty_pod.leavingSound = 'sound/effects/podwoosh.ogg'
 
-	new /obj/effect/DPtarget(empty_pod_turf, empty_pod)
+	new /obj/effect/abstract/DPtarget(empty_pod_turf, empty_pod)
 
 /datum/syndicate_contract/proc/enter_check(datum/source, sent_mob)
 	if(istype(source, /obj/structure/closet/supplypod/extractionpod))
@@ -131,7 +131,7 @@
 				SSshuttle.points -= points_to_check
 
 			priority_announce("One of your crew was captured by a rival organisation - we've needed to pay their ransom to bring them back. \
-							As is policy we've taken a portion of the station's funds to offset the overall cost.", null, 'sound/ai/attention.ogg', null, "Nanotrasen Asset Protection")
+							As is policy we've taken a portion of the station's funds to offset the overall cost.", null, "attention", null, "Nanotrasen Asset Protection")
 
 // They're off to holding - handle the return timer and give some text about what's going on.
 /datum/syndicate_contract/proc/handleVictimExperience(var/mob/living/M)
@@ -199,7 +199,7 @@
 		M.blur_eyes(30)
 		M.Dizzy(35)
 		M.confused += 20
-		new /obj/effect/DPtarget(possible_drop_loc[pod_rand_loc], return_pod)
+		new /obj/effect/abstract/DPtarget(possible_drop_loc[pod_rand_loc], return_pod)
 	else
 		to_chat(M, "<span class='reallybig hypnophrase'>A million voices echo in your head... <i>\"Seems where you got sent here from won't \
 					be able to handle our pod... You will die here instead.\"</i></span>")

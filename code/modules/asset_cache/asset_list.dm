@@ -138,8 +138,8 @@ GLOBAL_LIST_EMPTY(asset_datums)
 	var/size_id = "[I.Width()]x[I.Height()]"
 	var/size = sizes[size_id]
 
-	if (sprites[sprite_name])
-		CRASH("duplicate sprite \"[sprite_name]\" in sheet [name] ([type])")
+	//if (sprites[sprite_name])
+		//CRASH("duplicate sprite \"[sprite_name]\" in sheet [name] ([type])")    TODO FIGURE OUT WHERE THE FUCK ARE THE DUPLICATES.
 
 	if (size)
 		var/position = size[SPRSZ_COUNT]++

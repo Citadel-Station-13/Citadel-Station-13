@@ -25,6 +25,9 @@
 	/datum/clockwork_scripture/ranged_ability/kindle, /datum/clockwork_scripture/ranged_ability/hateful_manacles) //quickbound scripture, accessed by index
 	var/maximum_quickbound = 5 //how many quickbound scriptures we can have
 
+	var/ui_x = 800
+	var/ui_z = 420
+
 	var/obj/structure/destructible/clockwork/trap/linking //If we're linking traps together, which ones we're doing
 
 /obj/item/clockwork/slab/internal //an internal motor for mobs running scripture
@@ -165,18 +168,19 @@
 		user.emote("scream")
 		user.apply_damage(5, BURN, BODY_ZONE_L_ARM)
 		user.apply_damage(5, BURN, BODY_ZONE_R_ARM)
-		return 0
+		return FALSE
 	if(!is_servant_of_ratvar(user))
 		to_chat(user, "<span class='warning'>The information on [src]'s display shifts rapidly. After a moment, your head begins to pound, and you tear your eyes away.</span>")
-		user.confused += 5
-		user.dizziness += 5
-		return 0
+		if(user.confused || user.dizziness) //We dont want this to stack.
+			user.confused += 5
+			user.dizziness += 5
+		return FALSE
 	if(busy)
 		to_chat(user, "<span class='warning'>[src] refuses to work, displaying the message: \"[busy]!\"</span>")
-		return 0
+		return FALSE
 	if(!no_cost && !can_recite_scripture(user))
 		to_chat(user, "<span class='nezbere'>[src] hums fitfully in your hands, but doesn't seem to do anything...</span>")
-		return 0
+		return FALSE
 	access_display(user)
 
 /obj/item/clockwork/slab/AltClick(mob/living/user)
@@ -195,11 +199,9 @@
 /obj/item/clockwork/slab/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.inventory_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
-		ui = new(user, src, ui_key, "clockwork_slab", name, 800, 420, master_ui, state)
-		ui.set_autoupdate(FALSE) //we'll update this occasionally, but not as often as possible
-		ui.set_style("clockwork")
+		ui = new(user, src, ui_key, "ClockworkSlab", name, ui_x, ui_z, master_ui, state)
 		ui.open()
-
+	
 /obj/item/clockwork/slab/proc/recite_scripture(datum/clockwork_scripture/scripture, mob/living/user)
 	if(!scripture || !user || !user.canUseTopic(src) || (!no_cost && !can_recite_scripture(user)))
 		return FALSE
@@ -426,8 +428,29 @@
 
 /obj/item/clockwork/slab/ui_data(mob/user) //we display a lot of data via TGUI
 	var/list/data = list()
-	data["power"] = "<b><font color=#B18B25>[DisplayPower(get_clockwork_power())]</b> power is available for scripture and other consumers.</font>"
+	data["power"] = DisplayPower(get_clockwork_power())
+	data["scripture"] = list()
+	for(var/s in GLOB.all_scripture)
+		var/datum/clockwork_scripture/S = GLOB.all_scripture[s]
+		if(S.tier == selected_scripture) //display only scriptures of the selected tier
+			var/scripture_color = get_component_color_bright(S.primary_component)
+			var/list/temp_info = list("name" = "<font color=[scripture_color]><b>[S.name]</b></font>",
+			"descname" = "<font color=[scripture_color]>([S.descname])</font>",
+			"tip" = "[S.desc]\n[S.usage_tip]",
+			"required" = "([DisplayPower(S.power_cost)][S.special_power_text ? "+ [replacetext(S.special_power_text, "POWERCOST", "[DisplayPower(S.special_power_cost)]")]" : ""])",
+			"type" = "[S.type]",
+			"quickbind" = S.quickbind)
+			if(S.important)
+				temp_info["name"] = "<i>[temp_info["name"]]</i>"
+			var/found = quickbound.Find(S.type)
+			if(found)
+				temp_info["bound"] = "<b>[found]</b>"
+			if(S.invokers_required > 1)
+				temp_info["invokers"] = "<font color=#B18B25>Invokers: <b>[S.invokers_required]</b></font>"
+			data["scripture"] += list(temp_info)
 
+/obj/item/clockwork/slab/ui_static_data(mob/user)
+	var/list/data = list()
 	switch(selected_scripture) //display info based on selected scripture tier
 		if(SCRIPTURE_DRIVER)
 			data["tier_info"] = "<font color=#B18B25><b>These scriptures are permanently unlocked.</b></font>"
@@ -449,26 +472,6 @@
 	<font color=#AF0AAF>Scriptures in <b>purple</b> are niche but still important!</font><br>\
 	<font color=#DAAA18><i>Scriptures with italicized names are important to success.</i></font>"
 	generate_all_scripture()
-
-	data["scripture"] = list()
-	for(var/s in GLOB.all_scripture)
-		var/datum/clockwork_scripture/S = GLOB.all_scripture[s]
-		if(S.tier == selected_scripture) //display only scriptures of the selected tier
-			var/scripture_color = get_component_color_bright(S.primary_component)
-			var/list/temp_info = list("name" = "<font color=[scripture_color]><b>[S.name]</b></font>",
-			"descname" = "<font color=[scripture_color]>([S.descname])</font>",
-			"tip" = "[S.desc]\n[S.usage_tip]",
-			"required" = "([DisplayPower(S.power_cost)][S.special_power_text ? "+ [replacetext(S.special_power_text, "POWERCOST", "[DisplayPower(S.special_power_cost)]")]" : ""])",
-			"type" = "[S.type]",
-			"quickbind" = S.quickbind)
-			if(S.important)
-				temp_info["name"] = "<i>[temp_info["name"]]</i>"
-			var/found = quickbound.Find(S.type)
-			if(found)
-				temp_info["bound"] = "<b>[found]</b>"
-			if(S.invokers_required > 1)
-				temp_info["invokers"] = "<font color=#B18B25>Invokers: <b>[S.invokers_required]</b></font>"
-			data["scripture"] += list(temp_info)
 	data["recollection"] = recollecting
 	if(recollecting)
 		data["recollection_categories"] = GLOB.ratvar_awakens ? list() : list(\

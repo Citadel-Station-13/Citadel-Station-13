@@ -168,9 +168,9 @@
 /datum/asset/spritesheet/goonchat/register()
 	InsertAll("emoji", 'icons/emoji.dmi')
 
-	// pre-loading all lanugage icons also helps to avoid meta
+	// Pre-loading all language icons also helps to avoid meta
 	InsertAll("language", 'icons/misc/language.dmi')
-	// catch languages which are pulling icons from another file
+	// Catch languages which are pulling icons from another file
 	for(var/path in typesof(/datum/language))
 		var/datum/language/L = path
 		var/icon = initial(L.icon)
