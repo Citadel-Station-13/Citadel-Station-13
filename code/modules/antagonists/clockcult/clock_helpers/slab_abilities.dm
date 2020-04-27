@@ -211,7 +211,7 @@
 					var/mob/living/carbon/C = L
 					C.stuttering = max(8, C.stuttering)
 					C.drowsyness = max(8, C.drowsyness)
-					C.confused += CLAMP(16 - C.confused, 0, 8)
+					C.confused += clamp(16 - C.confused, 0, 8)
 					C.apply_status_effect(STATUS_EFFECT_BELLIGERENT)
 				L.adjustFireLoss(15)
 	..()

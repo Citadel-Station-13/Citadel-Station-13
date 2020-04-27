@@ -159,7 +159,7 @@
 
 			if(H.dna.species.use_skintones)
 				var/list/choices = GLOB.skin_tones
-				if(CONFIG_GET(number/allow_custom_skintones))
+				if(CONFIG_GET(flag/allow_custom_skintones))
 					choices += "custom"
 				var/new_s_tone = input(H, "Choose your skin tone:", "Race change")  as null|anything in choices
 				if(new_s_tone)

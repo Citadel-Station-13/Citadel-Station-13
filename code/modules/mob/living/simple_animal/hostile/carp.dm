@@ -7,7 +7,7 @@
 	icon_living = "carp"
 	icon_dead = "carp_dead"
 	icon_gib = "carp_gib"
-	threat = 0.2
+	threat = 0.1
 	mob_biotypes = MOB_ORGANIC|MOB_BEAST
 	speak_chance = 0
 	turns_per_move = 5

@@ -144,20 +144,7 @@ Creating a chem with a low purity will make you permanently fall in love with so
 	pH = 10
 	chemical_flags = REAGENT_ONMOBMERGE | REAGENT_DONOTSPLIT //Procs on_mob_add when merging into a human
 	can_synth = FALSE
-
-
-/datum/reagent/fermi/enthrall/test
-	name = "MKUltraTest"
-	description = "A forbidden deep red mixture that makes you like Fermis a little too much. Unobtainable and due to be removed from the wiki."
-	data = list("creatorID" = "honkatonkbramblesnatch", "creatorGender" = "Mistress", "creatorName" = "Fermis Yakumo")
-	creatorID  = "honkatonkbramblesnatch"//ckey
-	creatorGender = "Mistress"
-	creatorName = "Fermis Yakumo"
-	purity = 1
-
-/datum/reagent/fermi/enthrall/test/on_new()
-	..()
-	creator = get_mob_by_key(creatorID)
+	value = REAGENT_VALUE_EXCEPTIONAL
 
 /datum/reagent/fermi/enthrall/on_new(list/data)
 	creatorID = data["creatorID"]

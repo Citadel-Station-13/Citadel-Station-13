@@ -1,0 +1,13 @@
+#List the potential virtual reality Z-levels here. awaymissionconfig copypasta follows.
+
+#Maps must be the full path to them
+#Maps should be 255x255 or smaller and be bounded.  Falling off the edge of the map will result in undefined behavior.
+#SPECIFYING AN INVALID MAP WILL RESULT IN RUNTIMES ON GAME START
+
+#!!IMPORTANT NOTES FOR HOSTING VR MAPS!!:
+#Do NOT tick the maps during compile -- the game uses this list to decide which map to load. Ticking the maps will result in them ALL being loaded at once.
+#DO tick the associated code file for the virtual reality levels you are enabling. Otherwise, the map will be trying to reference objects which do not exist, which will cause runtime errors!
+
+#_maps/RandomZLevels/VR/murderdome.dmm
+#_maps/RandomZLevels/VR/snowdin_VR.dmm
+#_maps/RandomZLevels/VR/syndicate_trainer.dmm
