@@ -264,10 +264,10 @@
 
 // Forgive me for my sins...
 #define CHAMELEON_CLOTHING_DEFINE(path) \
-##path/syndicate/Initialize(mapload) \
-	. = ..() \
-	AddComponent(/datum/component/identification/syndicate, ID_COMPONENT_DEL_ON_IDENTIFY, ID_COMPONENT_EFFECT_NO_ACTIONS, ID_COMPONENT_IDENTIFY_WITH_DECONSTRUCTOR) \
-
+##path/syndicate/Initialize(mapload){\
+	. = ..();\
+	AddComponent(/datum/component/identification/syndicate, ID_COMPONENT_DEL_ON_IDENTIFY, ID_COMPONENT_EFFECT_NO_ACTIONS, ID_COMPONENT_IDENTIFY_WITH_DECONSTRUCTOR);\
+}\
 ##path
 
 CHAMELEON_CLOTHING_DEFINE(/obj/item/clothing/under/chameleon)
