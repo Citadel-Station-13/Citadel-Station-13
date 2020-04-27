@@ -67,3 +67,9 @@
 // /datum/component/identification/identification_method_flags
 /// Can be identified in a deconstructive analyzer
 #define ID_COMPONENT_IDENTIFY_WITH_DECONSTRUCTOR			(1<<0)
+
+// Return values for /datum/component/deitnfication/check_knowledge()
+/// Has no knowledge, default
+#define ID_COMPONENT_KNONWLEDGE_NONE			0
+/// Has full knowledge
+#define ID_COMPONENT_KNOWLEDGE_FULL				1

@@ -33,7 +33,18 @@
 		RegisterwithParent()
 
 /datum/component/identification/proc/check_knowledge(mob/user)
+	return ID_COMPONENT_KNOWLEDGE_NONE
 
 /datum/component/identification/proc/on_identify(mob/user)
 	if(identification_flags & ID_COMPONENT_DEL_ON_IDENTIFY)
 		qdel(src)
+
+/**
+  * Identification component subtype - Syndicate
+  *
+  * Checks if the user is a traitor.
+  */
+/datum/component/identification/syndicate/check_knowledge(mob/user)
+	. = ..()
+	if(user?.mind?.has_antag_datum(/datum/antagonist/traitor)
+		. = max(., ID_COMPONENT_KNOWLEDGE_FULL)
