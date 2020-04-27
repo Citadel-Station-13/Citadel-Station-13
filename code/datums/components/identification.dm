@@ -38,7 +38,7 @@
 		unregister += COMSIG_ITEM_DECONSTRUCTOR_DEEPSCAN
 	UnregisterSignal(parent, unregister)
 
-/datum/component/identification/proc/on_examine(mob/user, list/returnlist)
+/datum/component/identification/proc/on_examine(datum/source, mob/user, list/returnlist)
 	if(check_knowledge(user) != ID_COMPONENT_KNOWLEDGE_FULL)
 		return
 	if(!additional_examine_text)
@@ -54,7 +54,7 @@
 	if((var_value == NAMEOF(src, identification_flags)) || (var_value == NAMEOF(src, identification_effect_flags)) || (var_value == NAMEOF(src, identification_method_flags)))
 		RegisterWithParent()
 
-/datum/component/identification/proc/on_equip(mob/user)
+/datum/component/identification/proc/on_equip(datum/source, mob/user)
 	if(check_knowledge(user) == ID_COMPONENT_KNOWLEDGE_FULL)
 		return
 	if(identification_method_flags & ID_COMPONENT_EFFECT_NO_ACTIONS)
@@ -67,7 +67,7 @@
 	if(identification_flags & ID_COMPONENT_DEL_ON_IDENTIFY)
 		qdel(src)
 
-/datum/component/identification/proc/on_deconstructor_deepscan(obj/machinery/rnd/destructive_analyzer/analyzer, mob/user, list/information = list())
+/datum/component/identification/proc/on_deconstructor_deepscan(datum/source, obj/machinery/rnd/destructive_analyzer/analyzer, mob/user, list/information = list())
 	if((identification_method_flags & ID_COMPONENT_IDENTIFY_WITH_DECONSTRUCTOR) && !(identification_flags & ID_COMPONENT_DECONSTRUCTOR_DEEPSCANNED))
 		identification_flags |= ID_COMPONENT_DECONSTRUCTOR_DEEPSCANNED
 		on_identify(user)
