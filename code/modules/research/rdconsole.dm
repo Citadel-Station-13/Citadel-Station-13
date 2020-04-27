@@ -47,6 +47,9 @@ Nothing else in the console has ID requirements.
 
 	var/research_control = TRUE
 
+	/// Long action cooldown to prevent spam
+	var/last_long_action = 0
+
 /obj/machinery/computer/rdconsole/production
 	circuit = /obj/item/circuitboard/computer/rdconsole/production
 	research_control = FALSE
@@ -627,8 +630,7 @@ Nothing else in the console has ID requirements.
 			l += "</div>[RDSCREEN_NOBREAK]"
 			anything = TRUE
 
-		if (!anything)
-			l += "Nothing!"
+		l += "<div class='statusDisplay'><A href='?src=[REF(src)];deconstruct=[RESEARCH_DEEP_SCAN_ID]'>Nondestructive Deep Scan</A></div>
 
 		l += "</div>"
 	return l
@@ -915,6 +917,9 @@ Nothing else in the console has ID requirements.
 		screen = RDSCREEN_MENU
 		say("Ejecting Technology Disk")
 	if(ls["deconstruct"])
+		if((last_long_action + 1 SECONDS) > world.time)
+			return
+		last_long_action = world.time
 		if(QDELETED(linked_destroy))
 			say("No Destructive Analyzer Linked!")
 			return

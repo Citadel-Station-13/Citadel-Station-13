@@ -10,6 +10,8 @@
 	var/identification_method_flags = NONE
 	/// If this is set, show this on examine to the examiner if they know how to use it.
 	var/additional_examine_text = "<span class='notice'>You seem to know more about this item than others..</span>"
+	/// Added to deconstructive analyzer say on success if set
+	var/deconstructor_reveal_text = "item operation instructions"
 
 /datum/component/identification/Initialize(id_flags, id_effect_flags, id_method_flags)
 	if(!isobj(parent))
@@ -60,10 +62,12 @@
 	if(identification_flags & ID_COMPONENT_DEL_ON_IDENTIFY)
 		qdel(src)
 
-/datum/component/identification/proc/on_deconstructor_deepscan(obj/machinery/rnd/destructive_analyzer/analyzer, mob/user)
+/datum/component/identification/proc/on_deconstructor_deepscan(obj/machinery/rnd/destructive_analyzer/analyzer, mob/user, list/information = list())
 	if((identification_method_flags & ID_COMPONENT_IDENTIFY_WITH_DECONSTRUCTOR) && !(identification_flags & ID_COMPONENT_DECONSTRUCTOR_DEEPSCANNED))
 		identification_flags |= ID_COMPONENT_DECONSTRUCTOR_DEEPSCANNED
 		on_identify(user)
+		if(deconstructor_reveal_text)
+			information += deconstructor_reveal_text
 		return COMPONENT_DEEPSCAN_UNCOVERED_INFORMATION
 
 /**
