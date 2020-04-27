@@ -239,7 +239,7 @@
 	reqs = list(/obj/item/stack/sheet/metal = 1,
 				/obj/item/stack/cable_coil = 1)
 	time = 5
-	subcategory = CAT_MISCELLANEOUS
+	subcategory = CAT_TOOL
 	category = CAT_MISC
 
 ////////////
