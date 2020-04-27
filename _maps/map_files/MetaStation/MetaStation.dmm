@@ -38456,6 +38456,9 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 10
 	},
+/obj/structure/window/reinforced{
+	dir = 1
+	},
 /turf/open/floor/plasteel/dark/corner{
 	dir = 1
 	},
@@ -43312,7 +43315,7 @@
 /obj/structure/cable/yellow{
 	icon_state = "1-2"
 	},
-/obj/machinery/atmospherics/pipe/manifold/orange/visible,
+/obj/machinery/atmospherics/pipe/manifold/orange/hidden,
 /turf/open/floor/plasteel,
 /area/hallway/primary/starboard)
 "bHs" = (
@@ -81353,6 +81356,12 @@
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/space)
+"ewb" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/turf/closed/wall,
+/area/maintenance/starboard)
 "eEe" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 8
@@ -81696,15 +81705,6 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/science/circuit)
-"jMl" = (
-/obj/structure/cable/yellow{
-	icon_state = "1-2"
-	},
-/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
-	dir = 8
-	},
-/turf/open/floor/plating,
-/area/maintenance/starboard)
 "jPu" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -82994,16 +82994,19 @@
 	},
 /turf/open/floor/plasteel,
 /area/science/circuit)
-"yhU" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/turf/closed/wall,
-/area/maintenance/starboard)
 "ykE" = (
 /obj/machinery/light,
 /turf/open/floor/plasteel/white,
 /area/science/circuit)
+"ymd" = (
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/maintenance/starboard)
 
 (1,1,1) = {"
 oRp
@@ -121423,7 +121426,7 @@ bpc
 dhQ
 btw
 buX
-jMl
+ymd
 bGp
 btw
 dCV
@@ -121680,7 +121683,7 @@ alq
 alq
 alq
 buY
-yhU
+ewb
 alq
 alq
 alq
