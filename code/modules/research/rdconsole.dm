@@ -577,7 +577,6 @@ Nothing else in the console has ID requirements.
 
 		var/list/boostable_nodes = techweb_item_boost_check(linked_destroy.loaded_item)
 		for(var/id in boostable_nodes)
-			anything = TRUE
 			var/list/worth = boostable_nodes[id]
 			var/datum/techweb_node/N = SSresearch.techweb_node_by_id(id)
 
@@ -611,7 +610,6 @@ Nothing else in the console has ID requirements.
 		// point deconstruction and material reclamation use the same ID to prevent accidentally missing the points
 		var/list/point_values = techweb_item_point_check(linked_destroy.loaded_item)
 		if(point_values)
-			anything = TRUE
 			l += "<div class='statusDisplay'>[RDSCREEN_NOBREAK]"
 			if (stored_research.deconstructed_items[linked_destroy.loaded_item.type])
 				l += "<span class='linkOff'>Point Deconstruction</span>"
@@ -627,7 +625,6 @@ Nothing else in the console has ID requirements.
 			for (var/M in materials)
 				l += "* [CallMaterialName(M)] x [materials[M]]"
 			l += "</div>[RDSCREEN_NOBREAK]"
-			anything = TRUE
 
 		l += "<div class='statusDisplay'><A href='?src=[REF(src)];deconstruct=[RESEARCH_DEEP_SCAN_ID]'>Nondestructive Deep Scan</A></div>"
 

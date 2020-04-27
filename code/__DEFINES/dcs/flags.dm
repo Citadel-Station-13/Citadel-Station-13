@@ -72,6 +72,6 @@
 
 // Return values for /datum/component/deitnfication/check_knowledge()
 /// Has no knowledge, default
-#define ID_COMPONENT_KNONWLEDGE_NONE			0
+#define ID_COMPONENT_KNOWLEDGE_NONE			0
 /// Has full knowledge
 #define ID_COMPONENT_KNOWLEDGE_FULL				1
