@@ -20,7 +20,7 @@
 	dizziness = max(amount, 0)
 
 /**
-  * Sets a mob's blindness to an amount if it was not above it already, similar to how status effects work 
+  * Sets a mob's blindness to an amount if it was not above it already, similar to how status effects work
   */
 /mob/proc/blind_eyes(amount)
 	var/old_blind = eye_blind || HAS_TRAIT(src, TRAIT_BLIND)
@@ -90,8 +90,8 @@
 		return
 	var/obj/screen/plane_master/game_world/GW = locate(/obj/screen/plane_master/game_world) in client.screen
 	var/obj/screen/plane_master/floor/F = locate(/obj/screen/plane_master/floor) in client.screen
-	GW.add_filter("blurry_eyes", 2, EYE_BLUR(CLAMP(eye_blurry*0.1,0.6,3)))
-	F.add_filter("blurry_eyes", 2, EYE_BLUR(CLAMP(eye_blurry*0.1,0.6,3)))
+	GW.add_filter("blurry_eyes", 2, EYE_BLUR(clamp(eye_blurry*0.1,0.6,3)))
+	F.add_filter("blurry_eyes", 2, EYE_BLUR(clamp(eye_blurry*0.1,0.6,3)))
 
 /mob/proc/remove_eyeblur()
 	if(!client)
@@ -120,4 +120,4 @@
 ///Adjust the body temperature of a mob, with min/max settings
 /mob/proc/adjust_bodytemperature(amount,min_temp=0,max_temp=INFINITY)
 	if(bodytemperature >= min_temp && bodytemperature <= max_temp)
-		bodytemperature = CLAMP(bodytemperature + amount,min_temp,max_temp)
+		bodytemperature = clamp(bodytemperature + amount,min_temp,max_temp)

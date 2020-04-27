@@ -6,7 +6,7 @@ GLOBAL_LIST_INIT(dwarf_last, world.file2list("strings/names/dwarf_last.txt")) //
 	name = "Dwarf"
 	id = "dwarf" //Also called Homo sapiens pumilionis
 	default_color = "FFFFFF"
-	species_traits = list(EYECOLOR,HAIR,FACEHAIR,LIPS,NO_UNDERWEAR)
+	species_traits = list(EYECOLOR,HAIR,FACEHAIR,LIPS,NO_UNDERWEAR,TRAIT_DWARF)
 	inherent_traits = list()
 	limbs_id = "human"
 	use_skintones = USE_SKINTONES_GRAYSCALE_CUSTOM
@@ -35,7 +35,6 @@ GLOBAL_LIST_INIT(dwarf_last, world.file2list("strings/names/dwarf_last.txt")) //
 	H.update_hair()
 	H.transform = H.transform.Scale(1, 0.8) //We use scale, and yeah. Dwarves can become gnomes with DWARFISM.
 	RegisterSignal(C, COMSIG_MOB_SAY, .proc/handle_speech) //We register handle_speech is being used.
-
 
 /datum/species/dwarf/on_species_loss(mob/living/carbon/H, datum/species/new_species)
 	. = ..()
@@ -170,7 +169,7 @@ GLOBAL_LIST_INIT(dwarf_last, world.file2list("strings/names/dwarf_last.txt")) //
 	for(var/datum/reagent/R in owner.reagents.reagent_list)
 		if(istype(R, /datum/reagent/consumable/ethanol))
 			var/datum/reagent/consumable/ethanol/E = R
-			stored_alcohol = CLAMP(stored_alcohol + E.boozepwr / 50, 0, max_alcohol)
+			stored_alcohol = clamp(stored_alcohol + E.boozepwr / 50, 0, max_alcohol)
 	var/heal_amt = heal_rate
 	stored_alcohol -= alcohol_rate //Subtracts alcohol_Rate from stored alcohol so EX: 250 - 0.25 per each loop that occurs.
 	if(stored_alcohol > 400) //If they are over 400 they start regenerating
