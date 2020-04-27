@@ -39329,9 +39329,6 @@
 /obj/structure/cable/yellow{
 	icon_state = "0-2"
 	},
-/obj/machinery/camera{
-	c_tag = "Atmospherics - Entrance"
-	},
 /obj/machinery/light_switch{
 	pixel_x = -26
 	},
@@ -39363,6 +39360,10 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/machinery/camera{
+	c_tag = "Atmospherics - Entrance";
+	dir = 8
+	},
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "bza" = (
@@ -40909,7 +40910,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
-/turf/closed/wall/r_wall,
+/turf/closed/wall,
 /area/engine/atmos)
 "bCp" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -40929,7 +40930,7 @@
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 4
 	},
-/turf/closed/wall/r_wall,
+/turf/closed/wall,
 /area/engine/atmos)
 "bCr" = (
 /obj/machinery/atmospherics/components/binary/pump/on{
@@ -44805,11 +44806,11 @@
 /obj/machinery/atmospherics/pipe/simple/orange/visible{
 	dir = 10
 	},
-/turf/closed/wall/r_wall,
+/turf/closed/wall,
 /area/engine/atmos)
 "bKA" = (
 /obj/machinery/atmospherics/pipe/simple/orange/visible,
-/turf/closed/wall/r_wall,
+/turf/closed/wall,
 /area/engine/atmos)
 "bKB" = (
 /obj/machinery/atmospherics/pipe/simple/cyan/visible{
@@ -81302,6 +81303,12 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/starboard)
+"dOR" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/turf/closed/wall,
+/area/maintenance/starboard)
 "dYu" = (
 /obj/machinery/door/airlock/external{
 	name = "Auxiliary Airlock"
@@ -81356,12 +81363,6 @@
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/space)
-"ewb" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/turf/closed/wall,
-/area/maintenance/starboard)
 "eEe" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 8
@@ -81643,6 +81644,14 @@
 	},
 /turf/open/floor/plasteel,
 /area/security/prison)
+"jsc" = (
+/obj/machinery/atmospherics/pipe/simple/green/visible,
+/obj/machinery/camera{
+	c_tag = "Atmospherics - Aft";
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
+/area/engine/atmos)
 "jwW" = (
 /turf/closed/wall/mineral/plastitanium,
 /area/crew_quarters/fitness/recreation)
@@ -82067,6 +82076,15 @@
 	},
 /turf/open/floor/plasteel,
 /area/construction/storage/wing)
+"nLT" = (
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/maintenance/starboard)
 "nWb" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -82998,15 +83016,6 @@
 /obj/machinery/light,
 /turf/open/floor/plasteel/white,
 /area/science/circuit)
-"ymd" = (
-/obj/structure/cable/yellow{
-	icon_state = "1-2"
-	},
-/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
-	dir = 8
-	},
-/turf/open/floor/plating,
-/area/maintenance/starboard)
 
 (1,1,1) = {"
 oRp
@@ -121426,7 +121435,7 @@ bpc
 dhQ
 btw
 buX
-ymd
+nLT
 bGp
 btw
 dCV
@@ -121683,7 +121692,7 @@ alq
 alq
 alq
 buY
-ewb
+dOR
 alq
 alq
 alq
@@ -127349,7 +127358,7 @@ bKG
 bMl
 dhj
 njd
-bNU
+jsc
 bPr
 bNU
 eJq
