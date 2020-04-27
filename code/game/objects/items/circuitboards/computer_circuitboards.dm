@@ -209,6 +209,12 @@
 	name = "Supply Console (Computer Board)"
 	build_path = /obj/machinery/computer/cargo
 	var/contraband = FALSE
+	var/space_gear = FALSE
+	var/heavy_firearms = FALSE
+	var/medco_trade = FALSE
+	var/blackmarket = FALSE
+	var/animal_handing = FALSE
+	var/adv_sci = FALSE
 
 /obj/item/circuitboard/computer/cargo/multitool_act(mob/living/user)
 	if(!(obj_flags & EMAGGED))
@@ -222,6 +228,11 @@
 	if(obj_flags & EMAGGED)
 		return
 	contraband = TRUE
+	space_gear = TRUE
+	heavy_firearms = TRUE
+	medco_trade = TRUE
+	blackmarket = TRUE
+	animal_handing = TRUE
 	obj_flags |= EMAGGED
 	to_chat(user, "<span class='notice'>You adjust [src]'s routing and receiver spectrum, unlocking special supplies and contraband.</span>")
 	return TRUE

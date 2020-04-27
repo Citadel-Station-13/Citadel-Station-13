@@ -84,6 +84,7 @@
 	desc = "Got people being spaced left and right? Hole in the same room as the dead body of Hos or cap? Fear not, now you can buy one medical hardsuit with a mask and air tank to save your fellow crewmembers. Requires medical access to open."
 	cost = 2750
 	access = ACCESS_MEDICAL
+	space_gear = TRUE
 	contains = list(/obj/item/tank/internals/air,
 					/obj/item/clothing/mask/gas,
 					/obj/item/clothing/suit/space/hardsuit/medical)
@@ -122,6 +123,7 @@
 	desc = "A full set of Med-Co advanced surgery tools, this crate also comes with a spay of synth flesh as well as a can of . Requires Surgery access to open."
 	cost = 5500
 	access = ACCESS_SURGERY
+	medco_trade = TRUE
 	contains = list(/obj/item/storage/belt/medical/surgery_belt_adv,
 					/obj/item/reagent_containers/medspray/synthflesh,
 					/obj/item/reagent_containers/medspray/sterilizine)
@@ -173,6 +175,7 @@
 	name = "Medical Sprays"
 	desc = "Contains two cans of Styptic Spray, Silver Sulfadiazine Spray, Synthflesh Spray and Sterilizer Compound Spray."
 	cost = 2250
+	medco_trade = TRUE
 	contains = list(/obj/item/reagent_containers/medspray/styptic,
 					/obj/item/reagent_containers/medspray/styptic,
 					/obj/item/reagent_containers/medspray/silver_sulf,
@@ -257,6 +260,7 @@
 	name = "Virus Containment Crate"
 	desc = "Viro let out a death plague Mk II again? Someone didn't wash their hands? Old plagues born anew? Well, this crate is for you! Hope you cure it before it breaks out of the station... This crate needs medical access to open and has two bio suits, a box of needles and beakers, five spaceacillin needles, and a medibot."
 	cost = 3000
+	medco_trade = TRUE
 	access = ACCESS_MEDICAL
 	contains = list(/mob/living/simple_animal/bot/medbot,
 					/obj/item/clothing/head/bio_hood,

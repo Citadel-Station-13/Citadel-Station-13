@@ -75,6 +75,7 @@
 	desc = "The rare M.A.S.O.N RIG. Requires CE access to open."
 	cost = 15000
 	access = ACCESS_CE
+	space_gear = TRUE
 	contains = list(/obj/item/clothing/suit/space/hardsuit/ancient/mason)
 	crate_name = "M.A.S.O.N Rig"
 	crate_type = /obj/structure/closet/crate/secure/engineering

@@ -211,6 +211,7 @@
 	desc = "Contains two space-worthy envirosuits for Plasmamen. Order now and we'll throw in two free helmets! Requires EVA access to open."
 	cost = 4000
 	access = ACCESS_EVA
+	space_gear = TRUE
 	contains = list(/obj/item/clothing/suit/space/eva/plasmaman,
 					/obj/item/clothing/suit/space/eva/plasmaman,
 					/obj/item/clothing/head/helmet/space/plasmaman,
@@ -279,6 +280,7 @@
 	desc = "Contains three EVA grade jectpaks. Requires EVA access to open."
 	cost = 2000
 	access = ACCESS_EVA
+	space_gear = TRUE
 	contains = list(/obj/item/tank/jetpack/carbondioxide/eva,
 					/obj/item/tank/jetpack/carbondioxide/eva,
 					/obj/item/tank/jetpack/carbondioxide/eva)

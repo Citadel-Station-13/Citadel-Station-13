@@ -108,3 +108,30 @@
 	desc = "A neat stack of filled-out forms, in triplicate and signed. Is there anything more satisfying? Make sure they get stamped."
 	icon = 'icons/obj/bureaucracy.dmi'
 	icon_state = "docs_verified"
+
+//Trade paper work, we are a subtype of paperwork for a reason.
+/obj/item/folder/paperwork_correct/space_gear
+	name = "VW-CWG of 23"
+	desc = "Paper that verifies the buyer is able to handle hardsuits and other space gear that is restricted."
+
+/obj/item/folder/paperwork_correct/heavy_firearms
+	name = "IHF-433 Section 13"
+	desc = "Paper that verifies the Importation of Heavy Firearms into Section 13 of space."
+
+/obj/item/folder/paperwork_correct/medco_trade
+	name = "NT-MedCo Trade Aggrement"
+	desc = "Paper that reinstates NT import of MedCo latest products."
+
+/obj/item/folder/paperwork/blackmarket //Yes you can fill this out and send it back to NT for credits. Emergent gameplay
+	name = "Space Queen Claims"
+	desc = "Outdated space-claims on a trade route that is not well known and seems to have been misfiled."
+
+/obj/item/folder/paperwork_correct/animal_handing
+	name = "Animal Handling License"
+	desc = "License for importation and handling of exotic animals."
+
+//Right, this one is for unlocking RnD based gear, such as node disks, or maybe items that decon into Rnd points.
+//This should NOT hold any items other then blueprints ever.
+/obj/item/folder/paperwork_correct/adv_sci
+	name = "NT Space Market Transportation Syncing"
+	desc = "Paperwork that connects the station to a privet market of stations."

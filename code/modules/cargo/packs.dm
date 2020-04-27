@@ -16,6 +16,16 @@
 	var/DropPodOnly = FALSE //only usable by the Bluespace Drop Pod via the express cargo console
 	var/admin_spawned = FALSE //Can only an admin spawn this crate?
 
+// Cargo Restictions //
+// These are used for when you want to stop cargo buying a crate type round start
+// These are vage for a reason, and that is to allow others to use/exspand on them
+	var/space_gear = FALSE //Hardsuits and higher level space gear
+	var/heavy_firearms = FALSE //Larger and more powerful gear
+	var/medco_trade = FALSE // Implants and medical based gear that are higher level
+	var/blackmarket = FALSE // Drugs and none-syndi gear
+	var/animal_handing = FALSE // More rare animal and hostile animals
+	var/adv_sci = FALSE //Tech that is not made by NT but still are usefull
+
 /datum/supply_pack/proc/generate(atom/A)
 	var/obj/structure/closet/crate/C = new crate_type(A)
 	C.name = crate_name
