@@ -30297,6 +30297,7 @@
 /obj/item/radio/intercom{
 	pixel_y = 22
 	},
+/obj/item/mmi/posibrain,
 /turf/open/floor/plasteel/dark,
 /area/science/robotics/lab)
 "aXh" = (
@@ -30463,15 +30464,14 @@
 /turf/open/floor/plasteel/dark,
 /area/maintenance/central)
 "aXw" = (
-/obj/structure/table,
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
-/obj/item/folder,
 /obj/machinery/light{
 	dir = 4
 	},
+/obj/machinery/computer/nanite_cloud_controller,
 /turf/open/floor/plasteel/dark,
 /area/science/research)
 "aXx" = (
@@ -30583,12 +30583,7 @@
 	name = "science camera";
 	network = list("ss13","rd")
 	},
-/obj/structure/table/reinforced,
-/obj/item/multitool{
-	pixel_x = -4;
-	pixel_y = 3
-	},
-/obj/item/integrated_electronics/analyzer,
+/obj/machinery/computer/nanite_chamber_control,
 /turf/open/floor/plasteel/dark,
 /area/science/research)
 "aXG" = (
@@ -31256,7 +31251,8 @@
 	dir = 1
 	},
 /obj/structure/table/reinforced,
-/obj/item/stack/sheet/metal/ten,
+/obj/item/nanite_scanner,
+/obj/item/nanite_remote,
 /turf/open/floor/plasteel/dark,
 /area/science/research)
 "aYO" = (
@@ -35132,6 +35128,7 @@
 	dir = 4
 	},
 /obj/effect/landmark/event_spawn,
+/obj/machinery/nanite_program_hub,
 /turf/open/floor/plasteel/dark,
 /area/science/research)
 "beE" = (
@@ -85135,6 +85132,21 @@
 	icon_state = "wood-broken7"
 	},
 /area/maintenance/port/fore)
+"kRh" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/effect/turf_decal/bot,
+/obj/machinery/nanite_chamber,
+/turf/open/floor/plasteel/dark,
+/area/science/research)
 "kSc" = (
 /obj/structure/sign/nanotrasen,
 /turf/closed/wall,
@@ -85399,6 +85411,14 @@
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
 /area/hallway/secondary/entry)
+"sfp" = (
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/machinery/nanite_programmer,
+/turf/open/floor/plasteel/dark,
+/area/science/research)
 "swG" = (
 /obj/item/reagent_containers/food/drinks/drinkingglass{
 	pixel_x = 4;
@@ -123495,9 +123515,9 @@ bgk
 aBd
 aZv
 aXw
-dMc
+kRh
 aXI
-aXI
+sfp
 beD
 bbj
 aNF
