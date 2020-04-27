@@ -389,6 +389,7 @@
 #include "code\datums\components\explodable.dm"
 #include "code\datums\components\footstep.dm"
 #include "code\datums\components\forced_gravity.dm"
+#include "code\datums\components\identification.dm"
 #include "code\datums\components\igniter.dm"
 #include "code\datums\components\infective.dm"
 #include "code\datums\components\jousting.dm"
