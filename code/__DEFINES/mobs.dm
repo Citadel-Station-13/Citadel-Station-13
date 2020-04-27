@@ -291,3 +291,7 @@
 #define PULL_PRONE_SLOWDOWN 0.6
 #define FIREMAN_CARRY_SLOWDOWN 0
 #define PIGGYBACK_CARRY_SLOWDOWN 1
+//slowdown when in softcrit. Note that crawling slowdown will also apply at the same time!
+#define SOFTCRIT_ADD_SLOWDOWN 2
+//slowdown when crawling
+#define CRAWLING_ADD_SLOWDOWN 4

@@ -20,7 +20,7 @@
 	return sqrt(((b.x - a.x) ** 2) + ((b.y - a.y) ** 2))
 
 /proc/angle_between_points(datum/point/a, datum/point/b)
-	return ATAN2((b.y - a.y), (b.x - a.x))
+	return arctan((b.y - a.y), (b.x - a.x))
 
 /datum/position			//For positions with map x/y/z and pixel x/y so you don't have to return lists. Could use addition/subtraction in the future I guess.
 	var/x = 0

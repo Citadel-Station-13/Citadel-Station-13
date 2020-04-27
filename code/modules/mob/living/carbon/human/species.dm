@@ -331,7 +331,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 		if(mutant_bodyparts["meat_type"]) //I can't believe it's come to the meat
 			H.type_of_meat = GLOB.meat_types[H.dna.features["meat_type"]]
 
-	C.add_movespeed_modifier(MOVESPEED_ID_SPECIES, TRUE, 100, override=TRUE, multiplicative_slowdown=speedmod, movetypes=(~FLYING))
+	C.add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/species, TRUE, multiplicative_slowdown = speedmod)
 
 	SEND_SIGNAL(C, COMSIG_SPECIES_GAIN, src, old_species)
 
@@ -349,7 +349,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 	for(var/X in inherent_traits)
 		REMOVE_TRAIT(C, X, SPECIES_TRAIT)
 
-	C.remove_movespeed_modifier(MOVESPEED_ID_SPECIES)
+	C.remove_movespeed_modifier(/datum/movespeed_modifier/species)
 
 	if(mutant_bodyparts["meat_type"])
 		C.type_of_meat = GLOB.meat_types[C.dna.features["meat_type"]]
@@ -1299,14 +1299,14 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 		if(H.overeatduration < 100)
 			to_chat(H, "<span class='notice'>You feel fit again!</span>")
 			REMOVE_TRAIT(H, TRAIT_FAT, OBESITY)
-			H.remove_movespeed_modifier(MOVESPEED_ID_FAT)
+			H.remove_movespeed_modifier(/datum/movespeed_modifier/obesity)
 			H.update_inv_w_uniform()
 			H.update_inv_wear_suit()
 	else
 		if(H.overeatduration >= 100)
 			to_chat(H, "<span class='danger'>You suddenly feel blubbery!</span>")
 			ADD_TRAIT(H, TRAIT_FAT, OBESITY)
-			H.add_movespeed_modifier(MOVESPEED_ID_FAT, multiplicative_slowdown = 1.5)
+			H.add_movespeed_modifier(/datum/movespeed_modifier/obesity)
 			H.update_inv_w_uniform()
 			H.update_inv_wear_suit()
 
@@ -1362,9 +1362,9 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 		if(!HAS_TRAIT(H, TRAIT_NOHUNGER))
 			var/hungry = (500 - H.nutrition) / 5 //So overeat would be 100 and default level would be 80
 			if(hungry >= 70)
-				H.add_movespeed_modifier(MOVESPEED_ID_HUNGRY, override = TRUE, multiplicative_slowdown = (hungry / 50))
+				H.add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/hunger, multiplicative_slowdown = (hungry / 50))
 			else
-				H.remove_movespeed_modifier(MOVESPEED_ID_HUNGRY)
+				H.remove_movespeed_modifier(/datum/movespeed_modifier/hunger)
 
 	switch(H.nutrition)
 		if(NUTRITION_LEVEL_FULL to INFINITY)
@@ -1615,7 +1615,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 			"You hear a slap."
 		)
 		return FALSE
-		
+
 	else
 		user.do_attack_animation(target, ATTACK_EFFECT_DISARM)
 
@@ -1623,10 +1623,10 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 			user.adjustStaminaLossBuffered(1)
 		else
 			user.adjustStaminaLossBuffered(3)
-		
+
 		if(attacker_style && attacker_style.disarm_act(user,target))
 			return TRUE
-		
+
 		if(target.w_uniform)
 			target.w_uniform.add_fingerprint(user)
 		//var/randomized_zone = ran_zone(user.zone_selected) CIT CHANGE - comments out to prevent compiling errors
@@ -1659,7 +1659,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 			randn -= 25 //if you are a pugilist, you're slapping that item from them pretty reliably
 		if(HAS_TRAIT(target, TRAIT_PUGILIST))
 			randn += 25 //meanwhile, pugilists are less likely to get disarmed
-		
+
 		if(randn <= 35)//CIT CHANGE - changes this back to a 35% chance to accomodate for the above being commented out in favor of right-click pushing
 			var/obj/item/I = null
 			if(target.pulling)
@@ -1932,8 +1932,8 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 		var/obj/item/target_held_item = target.get_active_held_item()
 		if(!is_type_in_typecache(target_held_item, GLOB.shove_disarming_types))
 			target_held_item = null
-		if(!target.has_movespeed_modifier(MOVESPEED_ID_SHOVE))
-			target.add_movespeed_modifier(MOVESPEED_ID_SHOVE, multiplicative_slowdown = SHOVE_SLOWDOWN_STRENGTH)
+		if(!target.has_movespeed_modifier(/datum/movespeed_modifier/shove))
+			target.add_movespeed_modifier(/datum/movespeed_modifier/shove)
 			if(target_held_item)
 				if(!HAS_TRAIT(target_held_item, TRAIT_NODROP))
 					target.visible_message("<span class='danger'>[target.name]'s grip on \the [target_held_item] loosens!</span>",
@@ -2084,7 +2084,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 		SEND_SIGNAL(H, COMSIG_CLEAR_MOOD_EVENT, "cold")
 		SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, "hot", /datum/mood_event/hot)
 
-		H.remove_movespeed_modifier(MOVESPEED_ID_COLD)
+		H.remove_movespeed_modifier(/datum/movespeed_modifier/cold)
 
 		var/burn_damage
 		var/firemodifier = H.fire_stacks / 50
@@ -2101,8 +2101,8 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 	else if(H.bodytemperature < BODYTEMP_COLD_DAMAGE_LIMIT && !HAS_TRAIT(H, TRAIT_RESISTCOLD))
 		SEND_SIGNAL(H, COMSIG_CLEAR_MOOD_EVENT, "hot")
 		SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, "cold", /datum/mood_event/cold)
-		//Sorry for the nasty oneline but I don't want to assign a variable on something run pretty frequently
-		H.add_movespeed_modifier(MOVESPEED_ID_COLD, override = TRUE, multiplicative_slowdown = ((BODYTEMP_COLD_DAMAGE_LIMIT - H.bodytemperature) / COLD_SLOWDOWN_FACTOR), blacklisted_movetypes = FLOATING)
+		//Apply cold slowdown
+		H.add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/cold, multiplicative_slowdown = ((BODYTEMP_COLD_DAMAGE_LIMIT - H.bodytemperature) / COLD_SLOWDOWN_FACTOR))
 		switch(H.bodytemperature)
 			if(200 to BODYTEMP_COLD_DAMAGE_LIMIT)
 				H.apply_damage(COLD_DAMAGE_LEVEL_1*coldmod*H.physiology.cold_mod, BURN)
@@ -2112,7 +2112,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 				H.apply_damage(COLD_DAMAGE_LEVEL_3*coldmod*H.physiology.cold_mod, BURN)
 
 	else
-		H.remove_movespeed_modifier(MOVESPEED_ID_COLD)
+		H.remove_movespeed_modifier(/datum/movespeed_modifier/cold)
 		SEND_SIGNAL(H, COMSIG_CLEAR_MOOD_EVENT, "cold")
 		SEND_SIGNAL(H, COMSIG_CLEAR_MOOD_EVENT, "hot")
 

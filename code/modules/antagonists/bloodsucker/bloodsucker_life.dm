@@ -39,7 +39,7 @@
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /datum/antagonist/bloodsucker/proc/AddBloodVolume(value)
-	owner.current.blood_volume = CLAMP(owner.current.blood_volume + value, 0, max_blood_volume)
+	owner.current.blood_volume = clamp(owner.current.blood_volume + value, 0, max_blood_volume)
 	update_hud()
 
 /datum/antagonist/bloodsucker/proc/HandleFeeding(mob/living/carbon/target, mult=1)
@@ -112,7 +112,7 @@
 			CheckVampOrgans() // Heart, Eyes
 			if(check_limbs(costMult))
 				return TRUE
-			
+
 		// BRUTE: Always Heal
 		var/bruteheal = min(C.getBruteLoss(), actual_regen)
 		var/toxinheal = min(C.getToxLoss(), actual_regen)
@@ -121,7 +121,7 @@
 			if(mult == 0)
 				return TRUE
 			if(owner.current.stat >= UNCONSCIOUS) //Faster regeneration while unconcious, so you dont have to wait all day
-				mult *= 2  
+				mult *= 2
 			// We have damage. Let's heal (one time)
 			C.adjustBruteLoss(-bruteheal * mult, forced = TRUE)// Heal BRUTE / BURN in random portions throughout the body.
 			C.adjustFireLoss(-fireheal * mult, forced = TRUE)
@@ -129,7 +129,7 @@
 			//C.heal_overall_damage(bruteheal * mult, fireheal * mult)				 // REMOVED: We need to FORCE this, because otherwise, vamps won't heal EVER. Swapped to above.
 			AddBloodVolume((bruteheal * -0.5 + fireheal * -1 + toxinheal * -0.2) / mult * costMult)	// Costs blood to heal
 			return TRUE // Healed! Done for this tick.
-		
+
 
 
 /datum/antagonist/bloodsucker/proc/check_limbs(costMult)
@@ -137,7 +137,7 @@
 	var/mob/living/carbon/C = owner.current
 	var/list/missing = C.get_missing_limbs()
 	if(missing.len && C.blood_volume < limb_regen_cost + 5)
-		return FALSE 
+		return FALSE
 	for(var/targetLimbZone in missing) 			// 1) Find ONE Limb and regenerate it.
 		C.regenerate_limb(targetLimbZone, FALSE)		// regenerate_limbs() <--- If you want to EXCLUDE certain parts, do it like this ----> regenerate_limbs(0, list("head"))
 		AddBloodVolume(50)
@@ -183,7 +183,7 @@
 		owner.current.blur_eyes(8 - 8 * (owner.current.blood_volume / BLOOD_VOLUME_BAD))
 	// Nutrition
 	owner.current.nutrition = clamp(owner.current.blood_volume, 545, 0) //The amount of blood is how full we are.
-	//A bit higher regeneration based on blood volume 
+	//A bit higher regeneration based on blood volume
 	if(owner.current.blood_volume < 700)
 		additional_regen = 0.4
 	else if(owner.current.blood_volume < BLOOD_VOLUME_NORMAL)
@@ -369,8 +369,8 @@
 				 //Puke blood only if puke_blood is true, and loose some blood, else just puke normally.
 				if(puke_blood)
 					C.blood_volume = max(0, C.blood_volume - foodInGut * 2)
-					C.vomit(foodInGut * 4, foodInGut * 2, 0) 
-				else 
+					C.vomit(foodInGut * 4, foodInGut * 2, 0)
+				else
 					C.vomit(foodInGut * 4, FALSE, 0)
 				C.Stun(30)
 				//C.Dizzy(50)
