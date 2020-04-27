@@ -23,10 +23,18 @@
 
 /datum/component/identification/RegisterWithParent()
 	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, .proc/on_examine)
+	if(identification_effect_flags & ID_COMPONENT_EFFECT_NO_ACTIONS)
+		RegisterSignal(parent, COMSIG_ITEM_EQUIPPED, .proc/on_equip)
+	if(identification_method_flags & ID_COMPONENT_IDENTIFY_WITH_DECONSTRUCTOR)
+		RegisteRsignal(parent, COMSIG_ITEM_DECONSTRUCTOR_DEEPSCAN, .proc/on_deconstructor_deepscan)
 
 /datum/component/identification/UnregisterFromParent()
 	var/list/unregister = list(COMSIG_PARENT_EXAMINE)
-
+	if(identification_effect_flags & ID_COMPONENT_EFFECT_NO_ACTIONS)
+		unregister += COMSIG_ITEM_EQUIPPED
+	if(identification_method_flags & ID_COMPONENT_IDENTIFY_WITH_DECONSTRUCTOR)
+		unregister += COMSIG_ITEM_DECONSTRUCTOR_READ
+		unregister += COMSIG_ITEM_DECONSTRUCTOR_DEEPSCAN
 	UnregisterSignal(parent, unregister)
 
 /datum/component/identification/proc/on_examine(mob/user, list/returnlist)
@@ -52,11 +60,19 @@
 	if(identification_flags & ID_COMPONENT_DEL_ON_IDENTIFY)
 		qdel(src)
 
+/datum/component/identification/proc/on_deconstructor_deepscan(obj/machinery/rnd/destructive_analyzer/analyzer, mob/user)
+	if((identification_method_flags & ID_COMPONENT_IDENTIFY_WITH_DECONSTRUCTOR) && !(identification_flags & ID_COMPONENT_DECONSTRUCTOR_DEEPSCANNED))
+		identification_flags |= ID_COMPONENT_DECONSTRUCTOR_DEEPSCANNED
+		on_identify(user)
+		return COMPONENT_DEEPSCAN_UNCOVERED_INFORMATION
+
 /**
   * Identification component subtype - Syndicate
   *
   * Checks if the user is a traitor.
   */
+/datum/component/identification/syndicate
+
 /datum/component/identification/syndicate/check_knowledge(mob/user)
 	. = ..()
 	if(user?.mind?.has_antag_datum(/datum/antagonist/traitor)
