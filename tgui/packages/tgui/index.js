@@ -12,12 +12,12 @@ import './polyfills/inferno';
 
 // Themes
 import './styles/main.scss';
-import './styles/themes/cardtable.scss';
 import './styles/themes/malfunction.scss';
 import './styles/themes/ntos.scss';
 import './styles/themes/hackerman.scss';
 import './styles/themes/retro.scss';
 import './styles/themes/syndicate.scss';
+import './styles/themes/clockcult.scss';
 
 import { loadCSS } from 'fg-loadcss';
 import { render } from 'inferno';

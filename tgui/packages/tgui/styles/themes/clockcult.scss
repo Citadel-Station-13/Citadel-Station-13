@@ -18,6 +18,7 @@
 
   // Components
   @include meta.load-css('../components/Button.scss', $with: (
+    'color-backround' : #170800,
     'color-default': colors.$primary,
     'color-disabled': #2D1400,
     'color-selected': #CFBA47,
