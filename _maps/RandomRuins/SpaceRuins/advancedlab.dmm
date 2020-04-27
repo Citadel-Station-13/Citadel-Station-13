@@ -185,7 +185,7 @@
 	name = "Clothes"
 	},
 /obj/item/clothing/head/chameleon,
-/obj/item/clothing/gloves/combat,
+/obj/item/clothing/gloves/tackler/combat/insulated,
 /obj/item/clothing/suit/chameleon,
 /obj/item/clothing/under/chameleon,
 /obj/item/clothing/shoes/chameleon,
@@ -221,7 +221,7 @@
 	},
 /obj/item/clothing/under/rank/centcom/commander,
 /obj/item/clothing/head/centhat,
-/obj/item/clothing/gloves/combat,
+/obj/item/clothing/gloves/tackler/combat/insulated,
 /obj/item/clothing/suit/armor/vest,
 /obj/item/clothing/shoes/sneakers/brown,
 /turf/open/floor/wood,

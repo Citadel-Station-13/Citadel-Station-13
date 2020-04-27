@@ -21,7 +21,7 @@
 	var/list/offhands = list() // keyed list containing all the current riding offsets associated by mob
 
 /datum/component/riding/Initialize()
-	if(!ismovableatom(parent))
+	if(!ismovable(parent))
 		return COMPONENT_INCOMPATIBLE
 	RegisterSignal(parent, COMSIG_MOVABLE_BUCKLE, .proc/vehicle_mob_buckle)
 	RegisterSignal(parent, COMSIG_MOVABLE_UNBUCKLE, .proc/vehicle_mob_unbuckle)
@@ -204,7 +204,7 @@
 	. = ..()
 	var/mob/living/carbon/human/H = parent
 	if(!length(H.buckled_mobs))
-		H.remove_movespeed_modifier(MOVESPEED_ID_HUMAN_CARRYING)
+		H.remove_movespeed_modifier(/datum/movespeed_modifier/human_carry)
 	if(!fireman_carrying)
 		M.Daze(25)
 	REMOVE_TRAIT(M, TRAIT_MOBILITY_NOUSE, src)
@@ -213,7 +213,7 @@
 	. = ..()
 	var/mob/living/carbon/human/H = parent
 	if(length(H.buckled_mobs))
-		H.add_movespeed_modifier(MOVESPEED_ID_HUMAN_CARRYING, multiplicative_slowdown = fireman_carrying? FIREMAN_CARRY_SLOWDOWN : PIGGYBACK_CARRY_SLOWDOWN)
+		H.add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/human_carry, TRUE, fireman_carrying? FIREMAN_CARRY_SLOWDOWN : PIGGYBACK_CARRY_SLOWDOWN)
 	if(fireman_carrying)
 		ADD_TRAIT(M, TRAIT_MOBILITY_NOUSE, src)
 

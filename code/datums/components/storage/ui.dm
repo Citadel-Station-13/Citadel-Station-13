@@ -27,8 +27,8 @@
 		numbered_contents = _process_numerical_display()
 		adjusted_contents = numbered_contents.len
 
-	var/columns = CLAMP(max_items, 1, maxcolumns ? maxcolumns : screen_max_columns)
-	var/rows = CLAMP(CEILING(adjusted_contents / columns, 1), 1, screen_max_rows)
+	var/columns = clamp(max_items, 1, maxcolumns ? maxcolumns : screen_max_columns)
+	var/rows = clamp(CEILING(adjusted_contents / columns, 1), 1, screen_max_rows)
 
 	// First, boxes.
 	ui_boxes = get_ui_boxes()
@@ -107,7 +107,7 @@
 	// after this point we are sure we can somehow fit all items into our max number of rows.
 
 	// determine rows
-	var/rows = CLAMP(CEILING(min_pixels / horizontal_pixels, 1), 1, screen_max_rows)
+	var/rows = clamp(CEILING(min_pixels / horizontal_pixels, 1), 1, screen_max_rows)
 
 	var/overrun = FALSE
 	if(used > our_volume)
@@ -202,7 +202,7 @@
 			M.active_storage.ui_hide(M)
 		M.active_storage = src
 	LAZYOR(is_using, M)
-	if(volumetric_ui())
+	if(!M.client?.prefs?.no_tetris_storage && volumetric_ui())
 		//new volumetric ui bay-style
 		M.client.screen |= orient2hud_volumetric(M, maxallowedscreensize)
 	else

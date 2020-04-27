@@ -195,7 +195,7 @@
 		return
 	holder.remove_reagent(/datum/reagent/sorium, multiplier*4)
 	var/turf/T = get_turf(holder.my_atom)
-	var/range = CLAMP(sqrt(multiplier*4), 1, 6)
+	var/range = clamp(sqrt(multiplier*4), 1, 6)
 	goonchem_vortex(T, 1, range)
 
 /datum/chemical_reaction/sorium_vortex
@@ -206,7 +206,7 @@
 
 /datum/chemical_reaction/sorium_vortex/on_reaction(datum/reagents/holder, multiplier)
 	var/turf/T = get_turf(holder.my_atom)
-	var/range = CLAMP(sqrt(multiplier), 1, 6)
+	var/range = clamp(sqrt(multiplier), 1, 6)
 	goonchem_vortex(T, 1, range)
 
 /datum/chemical_reaction/liquid_dark_matter
@@ -220,7 +220,7 @@
 		return
 	holder.remove_reagent(/datum/reagent/liquid_dark_matter, multiplier*3)
 	var/turf/T = get_turf(holder.my_atom)
-	var/range = CLAMP(sqrt(multiplier*3), 1, 6)
+	var/range = clamp(sqrt(multiplier*3), 1, 6)
 	goonchem_vortex(T, 0, range)
 
 /datum/chemical_reaction/ldm_vortex
@@ -231,7 +231,7 @@
 
 /datum/chemical_reaction/ldm_vortex/on_reaction(datum/reagents/holder, multiplier)
 	var/turf/T = get_turf(holder.my_atom)
-	var/range = CLAMP(sqrt(multiplier/2), 1, 6)
+	var/range = clamp(sqrt(multiplier/2), 1, 6)
 	goonchem_vortex(T, 0, range)
 
 /datum/chemical_reaction/flash_powder

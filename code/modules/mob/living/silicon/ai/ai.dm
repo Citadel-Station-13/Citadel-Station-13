@@ -869,7 +869,7 @@
 	if(istype(A, /obj/machinery/camera))
 		current = A
 	if(client)
-		if(ismovableatom(A))
+		if(ismovable(A))
 			if(A != GLOB.ai_camera_room_landmark)
 				end_multicam()
 			client.perspective = EYE_PERSPECTIVE
@@ -1016,7 +1016,7 @@
 		if("Yes.")
 			src.ghostize(FALSE, penalize = TRUE)
 			var/announce_rank = "Artificial Intelligence,"
-			if(GLOB.announcement_systems.len) 
+			if(GLOB.announcement_systems.len)
 				// Sends an announcement the AI has cryoed.
 				var/obj/machinery/announcement_system/announcer = pick(GLOB.announcement_systems)
 				announcer.announce("CRYOSTORAGE", src.real_name, announce_rank, list())

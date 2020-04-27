@@ -19,6 +19,7 @@
 	var/broken = 0 // 0, 1 or 2 // How broken is it???
 	var/max_n_of_items = 10
 	var/efficiency = 0
+	var/quality_increase = 5 // how much do we increase the quality of microwaved items
 	var/productivity = 0
 	var/datum/looping_sound/microwave/soundloop
 	var/list/ingredients = list() // may only contain /atom/movables
@@ -51,7 +52,10 @@
 		efficiency += M.rating * 0.4
 		productivity += M.rating
 	for(var/obj/item/stock_parts/matter_bin/M in component_parts)
-		max_n_of_items += M.rating * 5
+
+		max_n_of_items = 10 * M.rating
+		quality_increase = M.rating * 5
+		break
 
 /obj/machinery/microwave/examine(mob/user)
 	. = ..()
