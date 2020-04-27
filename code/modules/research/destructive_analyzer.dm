@@ -148,7 +148,7 @@ Note: Must be placed within 3 tiles of the R&D Console
 		. = SEND_SIGNAL(loaded_item, COMSIG_ITEM_DECONSTRUCTOR_DEEPSCAN, src, user, return_list)
 		flick("d_analyzer_process", src)
 		if(. & COMPONENT_DEEPSCAN_UNCOVERED_INFORMATION)
-			say("New information uncovered from item deep scan[length(return_list)? " [english_list(return_list)]" : ""].")
+			say("New information uncovered from item deep scan[length(return_list)? ": [english_list(return_list)]" : ""].")
 		else
 			say("Item deep scan uncovered no new information.")
 
