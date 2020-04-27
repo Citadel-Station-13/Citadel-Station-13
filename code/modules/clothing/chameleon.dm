@@ -376,7 +376,7 @@ CHAMELEON_CLOTHING_DEFINE(/obj/item/clothing/gloves/chameleon)
 
 	var/datum/action/item_action/chameleon/change/chameleon_action
 
-CHAMELEON_CLOTHING_DEFINE(/obj/item/cltohing/gloves/chameleon/insulated)
+CHAMELEON_CLOTHING_DEFINE(/obj/item/clothing/gloves/chameleon/insulated)
 	siemens_coefficient = 0
 
 /obj/item/clothing/gloves/chameleon/Initialize()
@@ -532,7 +532,7 @@ CHAMELEON_CLOTHING_DEFINE(/obj/item/clothing/shoes/chameleon/noslip)
 	. = ..()
 	chameleon_action.emp_randomise(INFINITY)
 
-/obj/item/storage/backpack/chameleon
+CHAMELEON_CLOTHING_DEFINE(/obj/item/storage/backpack/chameleon)
 	name = "backpack"
 	var/datum/action/item_action/chameleon/change/chameleon_action
 
@@ -624,7 +624,7 @@ CHAMELEON_CLOTHING_DEFINE(/obj/item/pda/chameleon)
 	. = ..()
 	chameleon_action.emp_randomise(INFINITY)
 
-/obj/item/stamp/chameleon
+CHAMELEON_CLOTHING_DEFINE(/obj/item/stamp/chameleon)
 	var/datum/action/item_action/chameleon/change/chameleon_action
 
 /obj/item/stamp/chameleon/Initialize()

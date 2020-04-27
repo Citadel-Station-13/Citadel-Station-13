@@ -28,7 +28,7 @@
 	if(identification_effect_flags & ID_COMPONENT_EFFECT_NO_ACTIONS)
 		RegisterSignal(parent, COMSIG_ITEM_EQUIPPED, .proc/on_equip)
 	if(identification_method_flags & ID_COMPONENT_IDENTIFY_WITH_DECONSTRUCTOR)
-		RegisteRsignal(parent, COMSIG_ITEM_DECONSTRUCTOR_DEEPSCAN, .proc/on_deconstructor_deepscan)
+		Registersignal(parent, COMSIG_ITEM_DECONSTRUCTOR_DEEPSCAN, .proc/on_deconstructor_deepscan)
 
 /datum/component/identification/UnregisterFromParent()
 	var/list/unregister = list(COMSIG_PARENT_EXAMINE)
@@ -49,11 +49,17 @@
 /datum/component/identification/vv_edit_var(var_name, var_value)
 	// since i care SOOO much about memory optimization, we only register signals we need to
 	// so when someone vv's us, we should probably make sure we have the ones we need to with an update.
-	if((var_value == NAMEOF(src, identification_flags)) || (var_value == NAMEOF(src, identifcation_effect_flags)) || (var_value == NAMEOF(src, identification_method_flags)))
+	if((var_value == NAMEOF(src, identification_flags)) || (var_value == NAMEOF(src, identification_effect_flags)) || (var_value == NAMEOF(src, identification_method_flags)))
 		UnregisterFromParent()
 	. = ..()
-	if((var_value == NAMEOF(src, identification_flags)) || (var_value == NAMEOF(src, identifcation_effect_flags)) || (var_value == NAMEOF(src, identification_method_flags)))
-		RegisterwithParent()
+	if((var_value == NAMEOF(src, identification_flags)) || (var_value == NAMEOF(src, identification_effect_flags)) || (var_value == NAMEOF(src, identification_method_flags)))
+		RegisterWithParent()
+
+/datum/component/identification/proc/on_equip(mob/user)
+	if(check_knowledge(user) == ID_COMPONENT_KNOWLEDGE_FULL)
+		return
+	if(identification_method_flags & ID_COMPONENT_EFFECT_NO_ACTIONS)
+		return COMPONENT_NO_GRANT_ACTIONS
 
 /datum/component/identification/proc/check_knowledge(mob/user)
 	return ID_COMPONENT_KNOWLEDGE_NONE

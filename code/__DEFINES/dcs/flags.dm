@@ -60,7 +60,7 @@
 /// Delete on successful broad identification (so the main way we "uncover" how an object works, since this won't be on it to obfuscate it)
 #define ID_COMPONENT_DEL_ON_IDENTIFY						(1<<0)
 /// We've already been successfully deepscanned by a deconstructive analyzer
-#define ID_COMPONENT_DECONSTRUCTIVE_DEEPSCANNED				(1<<1)
+#define ID_COMPONENT_DECONSTRUCTOR_DEEPSCANNED				(1<<1)
 
 // /datum/component/identification/identification_effect_flags
 /// Block user from getting actions if they don't know how to use this. Triggered on equip.
