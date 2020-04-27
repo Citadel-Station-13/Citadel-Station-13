@@ -79,5 +79,5 @@
 
 /datum/component/identification/syndicate/check_knowledge(mob/user)
 	. = ..()
-	if(user?.mind?.has_antag_datum(/datum/antagonist/traitor)
+	if(user?.mind?.has_antag_datum(/datum/antagonist/traitor))
 		. = max(., ID_COMPONENT_KNOWLEDGE_FULL)
