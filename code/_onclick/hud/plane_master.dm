@@ -5,6 +5,7 @@
 	blend_mode = BLEND_OVERLAY
 	var/show_alpha = 255
 	var/hide_alpha = 0
+	var/add_to_hud = TRUE
 
 /obj/screen/plane_master/proc/Show(override)
 	alpha = override || show_alpha
@@ -59,6 +60,18 @@
 	else
 		remove_filter("ambient_occlusion")
 	update_filters()
+
+///Shadow cone movables are so special each one of them has their own plane master.
+/obj/screen/plane_master/field_of_vision
+	name = "field of vision plane master"
+	add_to_hud = FALSE
+	alpha = 0
+
+/obj/screen/plane_master/field_of_vision/Initialize(mapload, new_plane)
+	. = ..()
+	if(!new_plane)
+		return INITIALIZE_HINT_QDEL
+	plane = new_plane
 
 ///Contains all lighting objects
 /obj/screen/plane_master/lighting

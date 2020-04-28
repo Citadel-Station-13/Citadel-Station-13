@@ -76,11 +76,19 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	hand_slots = list()
 
 	for(var/mytype in subtypesof(/obj/screen/plane_master))
-		var/obj/screen/plane_master/instance = new mytype()
+		var/obj/screen/plane_master/instance = mytype
+		if(!initial(instance.add_to_hud))
+			continue
+		instance = new mytype()
 		plane_masters["[instance.plane]"] = instance
 		instance.backdrop(mymob)
 
+	GLOB.mob_huds += src
+
+	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_NEW_HUD, src)
+
 /datum/hud/Destroy()
+	GLOB.mob_huds -= src
 	if(mymob.hud_used == src)
 		mymob.hud_used = null
 
