@@ -53690,7 +53690,7 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/components/binary/pump{
-	name = "Mix to Fuel Pipe""
+	name = "Mix to Fuel Pipe"
 	},
 /turf/open/floor/plasteel/dark,
 /area/engine/atmos)
