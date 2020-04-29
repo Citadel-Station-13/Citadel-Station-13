@@ -60,6 +60,15 @@
 	sheet_type = /obj/item/stack/sheet/mineral/uranium
 	canSmoothWith = list(/turf/closed/wall/mineral/uranium, /obj/structure/falsewall/uranium)
 
+//Radiates when being welded, other wise is safe
+/turf/closed/wall/mineral/uranium/attackby(obj/item/W, mob/user, params)
+	if(W.get_temperature() > 300)//If the temperature of the object is over 300, then ignite
+		log_game("uranium wall heated by [key_name(user)] in [AREACOORD(src)]")
+		radiate()
+		return
+	..()
+
+//We dont want this to get spammed to much
 /turf/closed/wall/mineral/uranium/proc/radiate()
 	if(!active)
 		if(world.time > last_event+15)
@@ -71,18 +80,6 @@
 			active = null
 			return
 	return
-
-/turf/closed/wall/mineral/uranium/attack_hand(mob/user)
-	radiate()
-	. = ..()
-
-/turf/closed/wall/mineral/uranium/attackby(obj/item/W, mob/user, params)
-	radiate()
-	..()
-
-/turf/closed/wall/mineral/uranium/Bumped(atom/movable/AM)
-	radiate()
-	..()
 
 /turf/closed/wall/mineral/plasma
 	name = "plasma wall"
