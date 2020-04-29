@@ -262,6 +262,26 @@ Transfer_mind is there to check if mob is being deleted/not going to have a body
 Works together with spawning an observer, noted above.
 */
 
+/mob/proc/ghost_role_penalize_cooldown(cooldown)
+	var/penalty = cooldown
+	if(!cooldown)
+		penalty = CONFIG_GET(number/suicide_reenter_round_timer) MINUTES
+	var/roundstart_quit_limit = CONFIG_GET(number/roundstart_suicide_time_limit) MINUTES
+	if(world.time < roundstart_quit_limit) //add up the time difference to their antag rolling penalty if they quit before half a (ingame) hour even passed.
+		penalty += roundstart_quit_limit - world.time
+	if(penalty)
+		penalty += world.realtime
+		if(SSautotransfer.can_fire && SSautotransfer.maxvotes)
+			var/maximumRoundEnd = SSautotransfer.starttime + SSautotransfer.voteinterval * SSautotransfer.maxvotes
+			if(penalty - SSshuttle.realtimeofstart > maximumRoundEnd + SSshuttle.emergencyCallTime + SSshuttle.emergencyDockTime + SSshuttle.emergencyEscapeTime)
+				penalty = CANT_REENTER_ROUND
+		if(!(ckey in GLOB.client_ghost_timeouts))
+			GLOB.client_ghost_timeouts += ckey
+			GLOB.client_ghost_timeouts[ckey] = 0
+		else if(GLOB.client_ghost_timeouts[ckey] == CANT_REENTER_ROUND)
+			return
+		GLOB.client_ghost_timeouts[ckey] = max(GLOB.client_ghost_timeouts[ckey],penalty)
+
 /mob/proc/ghostize(can_reenter_corpse = TRUE, special = FALSE, penalize = FALSE, voluntary = FALSE)
 	var/sig_flags = SEND_SIGNAL(src, COMSIG_MOB_GHOSTIZE, can_reenter_corpse, special, penalize)
 	penalize = !(sig_flags & COMPONENT_DO_NOT_PENALIZE_GHOSTING) && (suiciding || penalize) // suicide squad.
@@ -277,22 +297,8 @@ Works together with spawning an observer, noted above.
 			client.prefs.chat_toggles ^= CHAT_OOC
 	transfer_ckey(ghost, FALSE)
 	if(penalize)
-		var/penalty = CONFIG_GET(number/suicide_reenter_round_timer) MINUTES
-		var/roundstart_quit_limit = CONFIG_GET(number/roundstart_suicide_time_limit) MINUTES
-		if(world.time < roundstart_quit_limit) //add up the time difference to their antag rolling penalty if they quit before half a (ingame) hour even passed.
-			penalty += roundstart_quit_limit - world.time
-		if(penalty)
-			penalty += world.realtime
-			if(SSautotransfer.can_fire && SSautotransfer.maxvotes)
-				var/maximumRoundEnd = SSautotransfer.starttime + SSautotransfer.voteinterval * SSautotransfer.maxvotes
-				if(penalty - SSshuttle.realtimeofstart > maximumRoundEnd + SSshuttle.emergencyCallTime + SSshuttle.emergencyDockTime + SSshuttle.emergencyEscapeTime)
-					penalty = CANT_REENTER_ROUND
-			if(!(ckey in GLOB.client_ghost_timeouts))
-				GLOB.client_ghost_timeouts += ckey
-				GLOB.client_ghost_timeouts[ckey] = 0
-			else if(GLOB.client_ghost_timeouts[ckey] == CANT_REENTER_ROUND)
-				return
-			GLOB.client_ghost_timeouts[ckey] = max(GLOB.client_ghost_timeouts[ckey],penalty)
+		ghost_role_penalize_cooldown()
+
 	// needs to be done AFTER the ckey transfer, too
 	return ghost
 

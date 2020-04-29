@@ -172,6 +172,14 @@
 
 /datum/config_entry/flag/norespawn
 
+/datum/config_entry/flag/have_respawn_cooldown
+
+/datum/config_entry/number/respawn_cooldown
+
+/datum/config_entry/flag/disallow_character_respawns
+
+/datum/config_entry/flag/disallow_job_respawns
+
 /datum/config_entry/flag/guest_jobban
 
 /datum/config_entry/flag/usewhitelist

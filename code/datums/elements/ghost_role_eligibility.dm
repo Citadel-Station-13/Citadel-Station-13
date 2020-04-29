@@ -2,6 +2,10 @@ GLOBAL_LIST_EMPTY(ghost_eligible_mobs)
 
 GLOBAL_LIST_EMPTY(client_ghost_timeouts)
 
+GLOBAL_LIST_EMPTY(abandoned_characters)
+
+GLOBAL_LIST_EMPTY(abandoned_jobs)
+
 /datum/element/ghost_role_eligibility
 	element_flags = ELEMENT_DETACH | ELEMENT_BESPOKE
 	id_arg_index = 2

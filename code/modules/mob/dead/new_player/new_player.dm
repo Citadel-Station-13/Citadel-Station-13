@@ -359,6 +359,22 @@
 		alert(src, "An administrator has disabled late join spawning.")
 		return FALSE
 
+	if(CONFIG_GET(flag/have_respawn_cooldown) && (ckey in GLOB.client_ghost_timeouts))
+		var/timeout = GLOB.client_ghost_timeouts[ckey]
+		if(timeout != CANT_REENTER_ROUND && timeout <= world.realtime)
+			alert(src,"You are unable to reenter the round[timeout != CANT_REENTER_ROUND ? " yet. Your respawn blacklist will expire in [DisplayTimeText(timeout - world.realtime)]" : ""]")
+			return
+		else
+			GLOB.client_ghost_timeouts -= ckey
+
+	if(CONFIG_GET(flag/disallow_character_respawns) && (client.prefs.real_name in GLOB.abandoned_characters))
+		alert(src,"This character died this round! Play a different one!")
+		return
+
+	if(CONFIG_GET(flag/disallow_job_respawns) && (islist(GLOB.abandoned_jobs[ckey]) && (!rank in GLOB.abandoned_jobs[ckey])))
+		alert(src,"You've already played that role this round! Pick a different one!")
+		return
+
 	var/arrivals_docked = TRUE
 	if(SSshuttle.arrivals)
 		close_spawn_windows()	//In case we get held up

@@ -206,6 +206,15 @@ VOTE_AUTOTRANSFER_MAXIMUM 4
 ## disable abandon mob
 NORESPAWN
 
+## number of minutes to wait before allowing respawn after abandoning character
+RESPAWN_COOLDOWN 20
+
+## make respawns have a cooldown (same as ghost role eligibility cooldown)
+DISALLOW_CHARACTER_RESPAWNS
+
+## require respawns to use different character
+DISALLOW_JOB_RESPAWNS
+
 ## disables calling del(src) on newmobs if they logout before spawnin in
 # DONT_DEL_NEWMOB
 

@@ -424,12 +424,16 @@ mob/visible_message(message, self_message, blind_message, vision_distance = DEFA
 	set category = "OOC"
 
 	if (CONFIG_GET(flag/norespawn))
+		to_chat(usr,"<span class='boldnotice'>Respawning is disabled.</span>")
 		return
-	if ((stat != DEAD || !( SSticker )))
+	if (stat != DEAD)
 		to_chat(usr, "<span class='boldnotice'>You must be dead to use this!</span>")
 		return
 
-	log_game("[key_name(usr)] used abandon mob.")
+	if(alert(usr, "Go back to the lobby?", "Message", "Yes", "No") != "Yes")
+		return
+
+	log_game("[key_name(usr)] respawned.")
 
 	to_chat(usr, "<span class='boldnotice'>Please roleplay correctly!</span>")
 
@@ -447,6 +451,8 @@ mob/visible_message(message, self_message, blind_message, vision_distance = DEFA
 		log_game("[key_name(usr)] AM failed due to disconnect.")
 		qdel(M)
 		return
+
+	ghost_role_penalize_cooldown(CONFIG_GET(number/respawn_cooldown) MINUTES)
 
 	M.key = key
 //	M.Login()	//wat
