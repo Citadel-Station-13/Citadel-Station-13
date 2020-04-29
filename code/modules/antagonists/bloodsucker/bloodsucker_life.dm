@@ -147,12 +147,6 @@
 		to_chat(C, "<span class='notice'>Your flesh knits as it regrows your [L]!</span>")
 		playsound(C, 'sound/magic/demon_consume.ogg', 50, TRUE)
 		return TRUE
-	for(var/obj/item/bodypart/BP in C.bodyparts) //If we dont do this, the bloodsucker can get stuck eternally trying to regenerate prosthetics.
-		if(!istype(BP) && !BP.status == 2)
-			return FALSE
-		to_chat(C, "<span class='notice'>Your body expels the [BP]!</span>")
-		BP.drop_limb()
-		return TRUE 
 
 /datum/antagonist/bloodsucker/proc/CureDisabilities()
 	var/mob/living/carbon/C = owner.current

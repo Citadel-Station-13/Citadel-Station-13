@@ -19,7 +19,7 @@
 	if(!.)
 		return
 	// must have nobody around to see the cloak
-	for(var/mob/living/M in viewers(9, owner)))
+	for(var/mob/living/M in viewers(9, owner))
 		if(M != owner)
 			to_chat(owner, "<span class='warning'>You may only vanish into the shadows unseen.</span>")
 			return FALSE
