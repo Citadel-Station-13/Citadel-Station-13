@@ -371,7 +371,7 @@
 		alert(src,"This character died this round! Play a different one!")
 		return
 
-	if(CONFIG_GET(flag/disallow_job_respawns) && (islist(GLOB.abandoned_jobs[ckey]) && (!rank in GLOB.abandoned_jobs[ckey])))
+	if(CONFIG_GET(flag/disallow_job_respawns) && islist(GLOB.abandoned_jobs[ckey]) && (!(rank in GLOB.abandoned_jobs[ckey])))
 		alert(src,"You've already played that role this round! Pick a different one!")
 		return
 
