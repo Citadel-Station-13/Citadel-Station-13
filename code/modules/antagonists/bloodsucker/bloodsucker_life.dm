@@ -17,7 +17,7 @@
 		if(owner.current.stat == CONSCIOUS && !poweron_feed && !HAS_TRAIT(owner.current, TRAIT_FAKEDEATH)) // Deduct Blood
 			AddBloodVolume(passive_blood_drain) // -.1 currently
 		if(HandleHealing(1)) 		// Heal
-			if(notice_healing == FALSE && owner.current.blood_volume > 0)
+			if(!notice_healing && owner.current.blood_volume > 0)
 				to_chat(owner, "<span class='notice'>The power of your blood begins knitting your wounds...</span>")
 				notice_healing = TRUE
 		else if(notice_healing == TRUE)
