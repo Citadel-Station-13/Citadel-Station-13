@@ -110,6 +110,9 @@
 	if(!(shield_flags & SHIELD_CAN_BASH))
 		to_chat(user, "<span class='warning'>[src] can't be used to shield bash!</span>")
 		return FALSE
+	if(!CHECK_MOBILITY(user, MOBILITY_STAND))
+		to_chat(user, "<span class='warning'>You can't bash with [src] while on the ground!</span>")
+		return FALSE
 	if(world.time < last_shieldbash + shieldbash_cooldown)
 		to_chat(user, "<span class='warning'>You can't bash with [src] again so soon!</span>")
 		return FALSE
