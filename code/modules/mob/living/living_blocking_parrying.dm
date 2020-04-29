@@ -13,6 +13,8 @@
 	var/parry_prioritize_martial = TRUE
 	/// Our block_parry_data for unarmed blocks/parries. Currently only used for parrying, as unarmed block isn't implemented yet. YOU MUST RUN [get_block_parry_data(this)] INSTEAD OF DIRECTLY ACCESSING!
 	var/datum/block_parry_data/block_parry_data
+	/// Successful parries within the current parry cycle. It's a list of efficiency percentages.
+	var/list/successful_parries
 
 GLOBAL_LIST_EMPTY(block_parry_data)
 
@@ -118,20 +120,42 @@ GLOBAL_LIST_EMPTY(block_parry_data)
 	var/list/parry_imperfect_falloff_percent_override
 	/// Efficiency in percent on perfect parry.
 	var/parry_efficiency_perfect = 120
-	/// Parry data.
+	/// Parry effect data.
 	var/list/parry_data = list(
 		PARRY_REFLEX_COUNTERATTACK = PARRY_COUNTERATTACK_MELEE_ATTACK_CHAIN
 		)
+	/// Enable default handling of audio/visual feedback
+	var/parry_default_handle_feedback = TRUE
+	/// Sounds for parrying
+	var/list/parry_sounds = list('sound/block_parry/block_metal1.ogg' = 1, 'sound/block_parry/block_metal1.ogg' = 1)
+
+/**
+  * Quirky proc to get average of flags in list that are in attack_type because why is attack_type a flag.
+  */
+/datum/block_parry_data/proc/attack_type_list_scan(list/L, attack_type)
+	var/total = 0
+	var/div = 0
+	for(var/flagtext in L)
+		if(attack_type & num2text(flagtext))
+			total += L[flagtext]
+			div++
+	// if none, return null.
+	if(!div)
+		return
+	return total/div	//groan
 
 /mob/living/proc/handle_block_parry(seconds = 1)
 	if(active_blocking)
 		var/datum/block_parry_data/data = get_block_parry_data(active_block_item.block_parry_data)
 		adjustStaminaLossBuffered(data.block_stamina_cost_per_second * seconds)
 
-/obj/item/proc/active_parry(mob/living/owner, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return)
-	if(!CHECK_BITFIELD(item_flags, ITEM_CAN_PARRY))
-		return
-	/// Yadda yadda WIP access block/parry data...
+//Stubs.
+
+/obj/item/proc/on_active_parry(mob/living/owner, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return, parry_efficiency)
+
+/mob/living/proc/on_active_parry(mob/living/owner, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return, parry_efficiency)
+
+/datum/martial_art/proc/on_active_parry(mob/living/owner, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return, parry_efficiency)
 
 /obj/item/proc/active_parry_reflex_counter(atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, list/return_list)
 
@@ -139,6 +163,9 @@ GLOBAL_LIST_EMPTY(block_parry_data)
 
 /datum/martial_art/proc/active_parry_reflex_counter(atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, list/return_list)
 
+/**
+  * Gets the stage of our parry sequence we're currently in.
+  */
 /mob/living/proc/get_parry_stage()
 	if(!parrying)
 		return NOT_PARRYING
@@ -155,31 +182,63 @@ GLOBAL_LIST_EMPTY(block_parry_data)
 			return PARRY_SPINDOWN
 	return NOT_PARRYING
 
+/**
+  * Gets the percentage efficiency of our parry.
+  */
 /mob/living/proc/get_parry_efficiency(attack_type)
 	var/datum/block_parry_data/data = get_parry_data()
 	if(get_parry_stage() != PARRY_ACTIVE)
 		return 0
 	var/difference = abs(get_parry_time() - (data.parry_time_perfect + data.parry_time_windup))
-	var/leeway = data.parry_time_perfect_leeway_override["[attack_type]"]
+	var/leeway = data.attack_type_list_scan(data.parry_time_perfect_leeway_override, attack_type)
 	if(isnull(leeway))
 		leeway = data.parry_time_perfect_leeway
 	difference -= leeway
 	. = data.parry_efficiency_perfect
 	if(difference <= 0)
 		return
-	var/falloff = data.parry_imperfect_falloff_percent_override["[attack_type]"]
+	var/falloff = data.attack_type_list_scan(data.parry_imperfect_falloff_percent_override, attack_type)
 	if(isnull(falloff))
 		falloff = data.parry_imperfect_falloff_percent
 	. -= falloff * difference
 
+/**
+  * Gets the current decisecond "frame" of an active parry.
+  */
 /mob/living/proc/get_parry_time()
 	return world.time - parry_start_time
 
 /// same return values as normal blocking, called with absolute highest priority in the block "chain".
 /mob/living/proc/run_parry(atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, list/return_list = list())
+	var/stage = get_parry_stage()
+	if(stage == NOT_PARRYING)
+		return BLOCK_NONE
+	var/efficiency = get_parry_efficiency(attack_type)
+	switch(parrying)
+		if(ITEM_PARRY)
+			. = active_parry_item.on_active_parry(object, damage, attack_text, attack_type, armour_penetration, attacker, def_zone, return_list, efficiency)
+		if(UNARMED_PARRY)
+			. = on_active_parry(object, damage, attack_text, attack_type, armour_penetration, attacker, def_zone, return_list, efficiency)
+		if(MARTIAL_PARRY)
+			. = mind.martial_art.on_active_parry(object, damage, attack_text, attack_type, armour_penetration, attacker, def_zone, return_list, efficiency)
+	if(efficiency <= 0)
+		return
+	. |= BLOCK_SHOULD_PARTIAL_MITIGATE
+	var/current = return_list[BLOCK_RETURN_MITIGATION_PERCENT] || 0
+	return_list[BLOCK_RETURN_MITIGATION_PERCENT] = 100 - (clamp(100 - current, 0, 100) * clamp(1 - (efficiency / 100), 0, 1))
+	var/list/effect_text = run_parry_countereffects(object, damage, attack_text, attack_type, armour_penetration, attacker, def_zone, return_list, efficiency)
+	if(parry_default_handle-feedback)
+		handle_parry_feedback(object, damage, attack_text, attack_type, armour_penetration, attacker, def_zone, return_list, efficiency, effect_text)
+	successful_parries |= efficiency
+
+/mob/living/proc/handle_parry_feedback(atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, list/return_list = list(), parry_efficiency, list/effect_text)
+	var/datum/block_parry_data/data = get_parry_data()
+	if(data.parry_sounds)
+		playsound(src, pick(data.parry_sounds), 75)
+	visible_message("<span class='danger'>[src] parries \the [attack_text][length(effect_text)? ", [english_list(effect_text)] [attacker]" : ""]!</span>")
 
 /// Run counterattack if any
-/mob/living/proc/run_parry_countereffects(atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, list/return_list = list())
+/mob/living/proc/run_parry_countereffects(atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, list/return_list = list(), parry_efficiency)
 	if(!isliving(attacker))
 		return
 	var/mob/living/L = attacker
@@ -215,6 +274,7 @@ GLOBAL_LIST_EMPTY(block_parry_data)
 	if(data.parry_data[PARRY_DAZE_ATTACKER])
 		L.Daze(data.parry_data[PARRY_DAZE_ATTACKER])
 		effect_text += "dazing"
+	return effect_text
 
 /// Gets the datum/block_parry_data we're going to use to parry.
 /mob/living/proc/get_parry_data()
@@ -225,3 +285,21 @@ GLOBAL_LIST_EMPTY(block_parry_data)
 	else if(parrying == MARTIAL_PARRY)
 		return get_block_parry_data(mind.martial_art.block_parry_data)
 
+/// Effects
+/obj/effect/abstract/parry
+	icon = 'icons/effects/block_parry.dmi'
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	layer = FLOAT_LAYER
+	plane = FLOAT_PLANE
+	vis_flags = VIS_INHERIT_LAYER|VIS_INHERIT_PLANE
+
+/obj/effect/abstract/parry/main
+	icon_state = "parry_bm_hold"
+
+/obj/effect/abstract/parry/main/proc/run(windup_time = 2, active_time = 5, spindown_time = 3, qdel_end = TRUE)
+	QDEL_IN(src, windup_time + active_time + spindown_time)
+	var/matrix/current = transform
+	transform = matrix(0.1, 0, 0, 0, 0.1, 0)
+	animate(src, transform = current, time = windup_time)
+	sleep(active_time)
+	flick(icon, "parry_bm_end")

@@ -134,9 +134,9 @@
 /// The amount of damage that is blocked.
 /obj/item/proc/active_block_damage_mitigation(mob/living/owner, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return)
 	var/datum/block_parry_data/data = get_block_parry_data()
-	var/absorption = data.block_damage_absorption_override["[attack_type]"]
-	var/efficiency = data.block_damage_multiplier_override["[attack_type]"]
-	var/limit = data.block_damage_limit_override["[attack_type]"]
+	var/absorption = data.attack_type_list_scan(data.block_damage_absorption_override, attack_type)
+	var/efficiency = data.attack_type_list_scan(data.block_damage_multiplier_override, attack_type)
+	var/limit = data.attack_type_list_scan(data.block_damage_limit_override, attack_type)
 	// must use isnulls to handle 0's.
 	if(isnull(absorption))
 		absorption = data.block_damage_absorption
@@ -159,12 +159,12 @@
 /// Amount of stamina from damage blocked. Note that the damage argument is damage_blocked.
 /obj/item/proc/active_block_stamina_cost(mob/living/owner, atom/object, damage_blocked, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return)
 	var/datum/block_parry_data/data = get_block_parry_data()
-	var/efficiency = data.block_stamina_efficiency_override["[attack_type]"]
+	var/efficiency = data.attack_type_list_scan(data.block_stamina_efficiency_override, attack_type)
 	if(isnull(efficiency))
 		efficiency = data.block_stamina_efficiency
 	var/multiplier = 1
 	if(!CHECK_MOBILITY(owner, MOBILITY_STAND))
-		multiplier = data.block_resting_stamina_penalty_multiplier_override["["[attack_type]"]"]
+		multiplier = data.attack_type_list_scan(data.block_resting_stamina_penalty_multiplier_override, attack_type)
 		if(isnull(multiplier))
 			multiplier = data.block_resting_stamina_penalty_multiplier
 	return (damage_blocked / efficiency)

@@ -21,7 +21,9 @@
 /// Meta-flag for run_block/do_run_block : By default, BLOCK_SUCCESS tells do_run_block() to assume the attack is completely blocked and not continue the block chain. If this is present, it will continue to check other items in the chain rather than stopping.
 #define BLOCK_CONTINUE_CHAIN			(1<<8)
 /// Attack should change the amount of damage incurred. This means something calling run_block() has to handle it!
-#define BLOCK_CHANGE_DAMAGE				(1<<9)
+#define BLOCK_SHOULD_CHANGE_DAMAGE		(1<<9)
+/// Attack should scale by this percent, 0 for no block and 100 for full blocked
+#define BLOCK_SHOULD_PARTIAL_MITIGATE	(1<<10)
 
 /// For keys in associative list/block_return as we don't want to saturate our (somewhat) limited flags.
 #define BLOCK_RETURN_REDIRECT_METHOD			"REDIRECT_METHOD"
@@ -47,6 +49,8 @@
 #define BLOCK_RETURN_ACTIVE_BLOCK_DAMAGE_MITIGATED				"damage_mitigated"
 /// For [BLOCK_CHANGE_DAMAGE]. Set damage to this.
 #define BLOCK_RETURN_SET_DAMAGE_TO								"set_damage_to"
+/// For [BLOCK_SHOULD_PARTIAL_MITIGATE]. Percentage mitigation.
+#define BLOCK_RETURN_MITIGATION_PERCENT							"partial_mitigation"
 
 /// Default if the above isn't set in the list.
 #define DEFAULT_REDIRECT_METHOD_PROJECTILE REDIRECT_METHOD_DEFLECT
