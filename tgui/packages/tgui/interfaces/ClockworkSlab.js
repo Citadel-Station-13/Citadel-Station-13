@@ -1,7 +1,7 @@
 import { map } from 'common/collections';
 import { Fragment } from 'inferno';
 import { useBackend, useSharedState } from '../backend';
-import { Button, Flex, LabeledList, NoticeBox, Section, Tabs, AnimatedNumber } from '../components';
+import { Button, Flex, LabeledList, NoticeBox, Section, Tabs } from '../components';
 import { Window } from '../layouts';
 
 export const ClockworkSlab = (props, context) => {
@@ -11,23 +11,31 @@ export const ClockworkSlab = (props, context) => {
     disk,
     has_disk,
     has_program,
-    scripture = {},
+    scriptures = {},
   } = data;
   const [
-    selectedScripture,
-    setSelectedScripture,
+    selectedCategory,
+    setSelectedCategory,
   ] = useSharedState(context, 'category');
-  const scriptureInCategory = scripture
-    && scripture[selectedScripture]
+  const scriptureInCategory = scriptures
+    && scriptures[selectedCategory]
     || [];
   return (
     <Window resizable>
-      <Window.Content theme="clockcult" scrollable>
+      <Window.Content scrollable>
         <Section
-          title="Scripture Disk"
+          title="Program Disk"
           buttons={(
-            <AnimatedNumber
-              value={data.power} />
+            <Fragment>
+              <Button
+                icon="eject"
+                content="Eject"
+                onClick={() => act('eject')} />
+              <Button
+                icon="minus-circle"
+                content="Delete Program"
+                onClick={() => act('clear')} />
+            </Fragment>
           )}>
           {has_disk ? (
             has_program ? (
@@ -51,7 +59,7 @@ export const ClockworkSlab = (props, context) => {
           )}
         </Section>
         <Section
-          title="Programs"
+          title="Scripture"
           buttons={(
             <Fragment>
               <Button
@@ -64,7 +72,7 @@ export const ClockworkSlab = (props, context) => {
                 onClick={() => act('refresh')} />
             </Fragment>
           )}>
-          {scripture !== null ? (
+          {scriptures !== null ? (
             <Flex>
               <Flex.Item minWidth="110px">
                 <Tabs vertical>
@@ -77,12 +85,12 @@ export const ClockworkSlab = (props, context) => {
                     return (
                       <Tabs.Tab
                         key={category}
-                        selected={category === selectedScripture}
-                        onClick={() => setSelectedScripture(category)}>
+                        selected={category === selectedCategory}
+                        onClick={() => setSelectedCategory(category)}>
                         {tabLabel}
                       </Tabs.Tab>
                     );
-                  })(scripture)}
+                  })(scriptures)}
                 </Tabs>
               </Flex.Item>
               <Flex.Item grow={1} basis={0}>
@@ -126,7 +134,7 @@ export const ClockworkSlab = (props, context) => {
             </Flex>
           ) : (
             <NoticeBox>
-              No nanite scripture are currently researched.
+              No nanite scriptures are currently researched.
             </NoticeBox>
           )}
         </Section>

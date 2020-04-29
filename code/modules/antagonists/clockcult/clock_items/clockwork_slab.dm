@@ -429,7 +429,7 @@
 /obj/item/clockwork/slab/ui_data(mob/user) //we display a lot of data via TGUI
 	var/list/data = list()
 	data["power"] = DisplayPower(get_clockwork_power())
-	data["scripture"] = list()
+	data["scriptures"] = list()
 	for(var/s in GLOB.all_scripture)
 		var/datum/clockwork_scripture/S = GLOB.all_scripture[s]
 		if(S.tier == selected_scripture) //display only scriptures of the selected tier
@@ -448,6 +448,7 @@
 			if(S.invokers_required > 1)
 				temp_info["invokers"] = "<font color=#B18B25>Invokers: <b>[S.invokers_required]</b></font>"
 			data["scripture"] += list(temp_info)
+			return data
 
 /obj/item/clockwork/slab/ui_static_data(mob/user)
 	var/list/data = list()
