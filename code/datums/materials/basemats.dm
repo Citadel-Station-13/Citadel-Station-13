@@ -59,7 +59,7 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	sheet_type = /obj/item/stack/sheet/mineral/diamond
 	value_per_unit = 0.25
 
-///Is slightly radioactive
+///Is cheap and dense 
 /datum/material/uranium
 	name = "uranium"
 	id = "uranium"
@@ -69,15 +69,6 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	sheet_type = /obj/item/stack/sheet/mineral/uranium
 	value_per_unit = 0.05
 	armor_modifiers = list("melee" = 1.5, "bullet" = 1.4, "laser" = 0.5, "energy" = 0.5, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 1, "acid" = 1)
-
-/datum/material/uranium/on_applied(atom/source, amount, material_flags)
-	. = ..()
-	source.AddComponent(/datum/component/radioactive, amount / 20, source, 0) //half-life of 0 because we keep on going.
-
-/datum/material/uranium/on_removed(atom/source, material_flags)
-	. = ..()
-	qdel(source.GetComponent(/datum/component/radioactive))
-
 
 ///Adds firestacks on hit (Still needs support to turn into gas on destruction)
 /datum/material/plasma
