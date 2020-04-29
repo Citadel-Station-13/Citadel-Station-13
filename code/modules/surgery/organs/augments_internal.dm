@@ -102,8 +102,8 @@
 	slot = ORGAN_SLOT_BRAIN_ANTISTUN
 
 /obj/item/organ/cyberimp/brain/anti_stun/on_life()
-	..()
-	if(crit_fail || !(organ_flags & ORGAN_FAILING))
+	. = ..()
+	if(!. || crit_fail)
 		return
 	owner.adjustStaminaLoss(-3.5, FALSE) //Citadel edit, makes it more useful in Stamina based combat
 	owner.HealAllImmobilityUpTo(STUN_SET_AMOUNT)
