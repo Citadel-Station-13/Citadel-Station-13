@@ -11,7 +11,7 @@
 	speak_emote = list("telepathically cries")
 	speed = 2
 	move_to_delay = 2
-	projectiletype = /obj/projectile/temp/basilisk/ice
+	projectiletype = /obj/item/projectile/temp/basilisk/ice
 	projectilesound = 'sound/weapons/pierce.ogg'
 	ranged = TRUE
 	ranged_message = "manifests ice"

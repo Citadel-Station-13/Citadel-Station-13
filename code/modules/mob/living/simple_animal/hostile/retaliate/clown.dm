@@ -6,7 +6,6 @@
 	icon_living = "clown"
 	icon_dead = "clown_dead"
 	icon_gib = "clown_gib"
-	health_doll_icon = "clown" //if >32x32, it will use this generic. for all the huge clown mobs that subtype from this
 	mob_biotypes = MOB_ORGANIC|MOB_HUMANOID
 	turns_per_move = 5
 	response_disarm = "gently pushes aside"
@@ -31,7 +30,6 @@
 	minbodytemp = 270
 	maxbodytemp = 370
 	unsuitable_atmos_damage = 10
-	footstep_type = FOOTSTEP_MOB_SHOE
 	var/banana_time = 0 // If there's no time set it won't spawn.
 	var/banana_type = /obj/item/grown/bananapeel
 	var/attack_reagent

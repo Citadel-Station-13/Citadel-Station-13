@@ -68,6 +68,9 @@
 
 /datum/status_effect/proc/tick() //Called every tick.
 
+/datum/status_effect/proc/before_remove() //! Called before being removed; returning FALSE will cancel removal
+	return TRUE
+
 /datum/status_effect/proc/on_remove() //Called whenever the buff expires or is removed; do note that at the point this is called, it is out of the owner's status_effects but owner is not yet null
 	SHOULD_CALL_PARENT(TRUE)
 	REMOVE_TRAIT(owner, TRAIT_COMBAT_MODE_LOCKED, src)
@@ -129,7 +132,7 @@
 	if(status_effects)
 		var/datum/status_effect/S1 = effect
 		for(var/datum/status_effect/S in status_effects)
-			if(initial(S1.id) == S.id)
+			if(initial(S1.id) == S.id && S.before_remove(arguments))
 				qdel(S)
 				. = TRUE
 

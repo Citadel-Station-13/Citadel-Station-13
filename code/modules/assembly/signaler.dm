@@ -186,7 +186,7 @@
 
 /obj/item/assembly/signaler/anomaly/manual_suicide(mob/living/carbon/user)
 	user.visible_message("<span class='suicide'>[user]'s [src] is reacting to the radio signal, warping [user.p_their()] body!</span>")
-	user.set_suicide(TRUE)
+	user.suiciding = TRUE
 	user.suicide_log()
 	user.gib()
 

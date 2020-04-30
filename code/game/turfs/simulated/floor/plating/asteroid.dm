@@ -403,7 +403,6 @@
 				return
 		new randumb(T)
 
-
 /turf/open/floor/plating/asteroid/snow
 	gender = PLURAL
 	name = "snow"
