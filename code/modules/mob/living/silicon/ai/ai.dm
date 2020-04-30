@@ -833,7 +833,7 @@
 		if(S.job)
 			jobpart = "[S.job]"
 
-	var/rendered = "<i><span class='game say'>[start]<span class='name'>[hrefpart][namepart] ([jobpart])</a> </span><span class='message'>[raw_message]</span></span></i>"
+	var/rendered = "<i><span class='game say'>[start]<span class='name'>[hrefpart][namepart] ([jobpart])</a> </span><span class='message'>[treated_message]</span></span></i>"
 
 	if (client?.prefs.chat_on_map && (client.prefs.see_chat_non_mob || ismob(speaker)))
 		create_chat_message(speaker, message_language, raw_message, spans, message_mode)
