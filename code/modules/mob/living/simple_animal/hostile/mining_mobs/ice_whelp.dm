@@ -33,7 +33,6 @@
 	deathsound = 'sound/magic/demon_dies.ogg'
 	stat_attack = UNCONSCIOUS
 	robust_searching = TRUE
-	footstep_type = FOOTSTEP_MOB_CLAW
 	/// How far the whelps fire can go
 	var/fire_range = 4
 

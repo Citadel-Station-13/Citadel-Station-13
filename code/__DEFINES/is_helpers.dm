@@ -175,9 +175,9 @@ GLOBAL_LIST_INIT(clawfootmob, typecacheof(list(
 	/mob/living/simple_animal/chicken,
 	/mob/living/simple_animal/hostile/bear,
 	/mob/living/simple_animal/hostile/jungle/mega_arachnid,
-	/mob/living/simple_animal/hostile/mining_mobs/ice_whelp,
-	/mob/living/simple_animal/hostile/mining_mobs/wolf,
-	/mob/living/simple_animal/hostile/mining_mobs/polarbear
+	/mob/living/simple_animal/hostile/asteroid/ice_whelp,
+	/mob/living/simple_animal/hostile/asteroid/wolf,
+	/mob/living/simple_animal/hostile/asteroid/polarbear
 	)))
 
 GLOBAL_LIST_INIT(barefootmob, typecacheof(list(

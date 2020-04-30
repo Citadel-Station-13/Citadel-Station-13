@@ -16,7 +16,7 @@
 	obj_damage = 40
 	melee_damage_lower = 25
 	melee_damage_upper = 25
-	attack_text = "claws"
+	attacktext = "claws"
 	attack_sound = 'sound/weapons/bladeslice.ogg'
 	vision_range = 2 // don't aggro unless you basically antagonize it, though they will kill you worse than a goliath will
 	aggro_vision_range = 9
@@ -29,7 +29,6 @@
 	crusher_loot = /obj/item/crusher_trophy/goliath_tentacle
 	stat_attack = UNCONSCIOUS
 	robust_searching = TRUE
-	footstep_type = FOOTSTEP_MOB_CLAW
 	/// Message for when the polar bear starts to attack faster
 	var/aggressive_message_said = FALSE
 
