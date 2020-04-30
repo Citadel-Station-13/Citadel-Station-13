@@ -290,8 +290,3 @@
 #define HUMAN_FIRE_STACK_ICON_NUM	3
 
 #define SLEEP_CHECK_DEATH(X) sleep(X); if(QDELETED(src) || stat == DEAD) return;
-
-//slowdown when in softcrit. Note that crawling slowdown will also apply at the same time!
-#define SOFTCRIT_ADD_SLOWDOWN 2
-//slowdown when crawling
-#define CRAWLING_ADD_SLOWDOWN 4

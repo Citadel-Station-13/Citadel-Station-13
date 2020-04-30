@@ -18,7 +18,7 @@
 	outdoors = TRUE
 	flags_1 = NONE
 	ambientsounds = MINING
-	flora_allowed FALSE
+	flora_allowed = FALSE
 
 /area/mine/unexplored
 	name = "Mine"

@@ -19,7 +19,7 @@
 	armour_penetration = 20
 	melee_damage_lower = 20
 	melee_damage_upper = 20
-	attack_text = "chomps"
+	attacktext = "chomps"
 	attack_sound = 'sound/magic/demon_attack1.ogg'
 	vision_range = 9
 	aggro_vision_range = 9
