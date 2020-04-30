@@ -8,6 +8,10 @@
 #define PLANE_SPACE_PARALLAX -90
 #define PLANE_SPACE_PARALLAX_RENDER_TARGET "PLANE_SPACE_PARALLAX"
 
+#define OPENSPACE_LAYER 17 //Openspace layer over all
+#define OPENSPACE_PLANE -4 //Openspace plane below all turfs
+#define OPENSPACE_BACKDROP_PLANE -3 //Black square just over openspace plane to guaranteed cover all in openspace turf
+
 #define FLOOR_PLANE -2
 #define FLOOR_PLANE_RENDER_TARGET "FLOOR_PLANE"
 #define GAME_PLANE -1
