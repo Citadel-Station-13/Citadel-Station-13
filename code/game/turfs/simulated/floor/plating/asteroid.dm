@@ -335,7 +335,7 @@
 		var/spawned_terrain = FALSE
 		if(is_mining_level(z))
 			spawned_flora = SpawnFlora(T)
-		if(!spawned_flora && !spawned_terrain) // no rocks beneath mob spawners / mobs. 
+		if(!spawned_flora && !spawned_terrain) // no rocks beneath mob spawners / mobs.
 			SpawnMonster(T)
 	T.ChangeTurf(turf_type, null, CHANGETURF_IGNORE_AIR)
 
