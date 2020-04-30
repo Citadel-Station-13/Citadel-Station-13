@@ -118,6 +118,7 @@ GLOBAL_LIST_INIT(cargo_shuttle_leave_behind_typecache, typecacheof(list(
 			continue
 
 		SSshuttle.points -= SO.pack.cost
+		SSshuttle.supply.callTime += SO.pack.loading_time
 		value += SO.pack.cost
 		SSshuttle.shoppinglist -= SO
 		SSshuttle.orderhistory += SO

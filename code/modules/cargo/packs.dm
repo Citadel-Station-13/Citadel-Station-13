@@ -15,6 +15,7 @@
 	var/special_enabled = FALSE
 	var/DropPodOnly = FALSE //only usable by the Bluespace Drop Pod via the express cargo console
 	var/admin_spawned = FALSE //Can only an admin spawn this crate?
+	var/loading_time = 3 //How long does it take to load a packet onto the shuttle? by default its 3 seconds
 
 // Cargo Restictions //
 // These are used for when you want to stop cargo buying a crate type round start
@@ -33,6 +34,8 @@
 		C.req_access = list(access)
 	if(access_any)
 		C.req_one_access = access_any
+
+	SSshuttle.supply.callTime -= loading_time
 
 	fill(C)
 

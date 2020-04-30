@@ -94,6 +94,7 @@
 		if(space_gear != TRUE)
 			space_gear = TRUE
 			board.space_gear = TRUE
+			SSshuttle.supply.callTime += 15
 			to_chat(user, "<span class='notice'>You upload the [W] into the console unlocking more options.</span>")
 			qdel(W) //Yes we are one time use.
 			return
@@ -103,6 +104,7 @@
 		if(heavy_firearms != TRUE)
 			heavy_firearms = TRUE
 			board.heavy_firearms = TRUE
+			SSshuttle.supply.callTime += 60
 			to_chat(user, "<span class='notice'>You upload the [W] into the console unlocking more options.</span>")
 			qdel(W) //Yes we are one time use.
 			return
@@ -112,6 +114,7 @@
 		if(medco_trade != TRUE)
 			medco_trade = TRUE
 			board.medco_trade = TRUE
+			SSshuttle.supply.callTime += 20
 			to_chat(user, "<span class='notice'>You upload the [W] into the console unlocking more options.</span>")
 			qdel(W) //Yes we are one time use.
 			return
@@ -121,6 +124,7 @@
 		if(blackmarket != TRUE)
 			blackmarket = TRUE
 			board.blackmarket = TRUE
+			SSshuttle.supply.callTime += 120 //Backwater hidden route
 			to_chat(user, "<span class='notice'>You upload the hidden trade route with [W] into the console unlocking more options.</span>")
 			//qdel(W) //Shhhhhh Were not one time
 			return
@@ -130,6 +134,7 @@
 		if(animal_handing != TRUE)
 			animal_handing = TRUE
 			board.animal_handing = TRUE
+			SSshuttle.supply.callTime += 5 //Local
 			to_chat(user, "<span class='notice'>You upload the [W] into the console unlocking more options.</span>")
 			qdel(W) //Yes we are one time use.
 			return
@@ -139,8 +144,9 @@
 		if(adv_sci != TRUE)
 			adv_sci = TRUE
 			board.adv_sci = TRUE
+			SSshuttle.supply.callTime += 600 //Your connecting with a massive amout of routes and networking, its going to double your time
 			to_chat(user, "<span class='notice'>You upload the [W] into the console unlocking more options.</span>")
-			//qdel(W) //Were not one time use... At all...
+			//qdel(W) //Were not one time use...
 			return
 		else
 			to_chat(user, "<span class='notice'>You double check the certificate with [W].</span>")

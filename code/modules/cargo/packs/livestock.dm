@@ -9,6 +9,7 @@
 /datum/supply_pack/critter
 	group = "Livestock"
 	crate_type = /obj/structure/closet/crate/critter
+	loading_time = 12 //Takes longer to load up an animal
 
 /datum/supply_pack/critter/animal_feed
 	name = "Animal Feed Crate"
@@ -18,6 +19,7 @@
 					/obj/item/reagent_containers/food/snacks/grown/oat)
 	crate_name = "animal feed crate"
 	crate_type = /obj/structure/closet/crate/freezer
+	loading_time = 3
 
 /datum/supply_pack/critter/animal_feed/generate()
 	. = ..()

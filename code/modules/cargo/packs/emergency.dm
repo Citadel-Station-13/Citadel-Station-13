@@ -8,6 +8,7 @@
 
 /datum/supply_pack/emergency
 	group = "Emergency"
+	loading_time = 0 //We are Emergency gear, pre-packed and waiting
 
 /datum/supply_pack/emergency/vehicle
 	name = "Biker Gang Kit" //TUNNEL SNAKES OWN THIS TOWN

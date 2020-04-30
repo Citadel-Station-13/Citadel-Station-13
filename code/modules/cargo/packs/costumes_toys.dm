@@ -8,6 +8,7 @@
 
 /datum/supply_pack/costumes_toys
 	group = "Costumes & Toys"
+	loading_time = 5
 
 /datum/supply_pack/costumes_toys/randomised/fill(obj/structure/closet/crate/C)
 	var/list/L = contains.Copy()

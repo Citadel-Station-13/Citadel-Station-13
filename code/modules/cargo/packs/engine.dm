@@ -9,6 +9,7 @@
 /datum/supply_pack/engine
 	group = "Engine Construction"
 	crate_type = /obj/structure/closet/crate/engineering
+	loading_time = 10
 
 /datum/supply_pack/engine/am_jar
 	name = "Antimatter Containment Jar Crate"
