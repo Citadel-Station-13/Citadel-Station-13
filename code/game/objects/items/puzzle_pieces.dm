@@ -115,7 +115,6 @@
 	roundstart_signaller_freq = FREQ_HOLOGRID_SOLUTION //Frequency is kept on it's own default channel however.
 	active = TRUE
 	trigger_delay = 10
-	protected = TRUE
 	resistance_flags = INDESTRUCTIBLE | FIRE_PROOF | ACID_PROOF | LAVA_PROOF
 	var/reward = /obj/item/reagent_containers/food/snacks/cookie
 	var/claimed = FALSE

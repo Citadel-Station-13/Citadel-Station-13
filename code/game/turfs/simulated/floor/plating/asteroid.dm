@@ -398,9 +398,6 @@
 		if(istype(loc, /area/mine/explored) || istype(loc, /area/lavaland/surface/outdoors/explored))
 			return
 		var/randumb = pickweight(terrain_spawn_list)
-		for(var/obj/structure/geyser/F in range(7, T))
-			if(istype(F, randumb))
-				return
 		new randumb(T)
 
 /turf/open/floor/plating/asteroid/snow
