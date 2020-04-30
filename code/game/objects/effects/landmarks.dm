@@ -513,3 +513,9 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 /obj/effect/landmark/stationroom/lavaland/station
 	templates = list("Public Mining Base" = 3)
 	icon = 'icons/rooms/Lavaland/Mining.dmi'
+
+// handled in portals.dm, id connected to one-way portal
+/obj/effect/landmark/portal_exit
+	name = "portal exit"
+	icon_state = "portal_exit"
+	var/id

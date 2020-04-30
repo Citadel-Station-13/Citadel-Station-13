@@ -120,11 +120,6 @@
 	var/reward = /obj/item/reagent_containers/food/snacks/cookie
 	var/claimed = FALSE
 
-/obj/item/pressure_plate/hologrid/Initialize()
-	. = ..()
-
-	AddElement(/datum/element/undertile, tile_overlay = tile_overlay) //we remove use_anchor here, so it ALWAYS stays anchored
-
 /obj/item/pressure_plate/hologrid/examine(mob/user)
 	. = ..()
 	if(claimed)
@@ -145,3 +140,8 @@
 		trigger()
 		sleep(15)
 		qdel(AM)
+
+// snowflake code until undertile elements
+/obj/item/pressure_plate/hologrid/hide()
+	. = ..()
+	anchored = TRUE

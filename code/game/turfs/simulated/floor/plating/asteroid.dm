@@ -151,6 +151,8 @@
 	var/list/flora_spawn_list
 	/// Terrain that can spawn in the tunnel, weighted list.
 	var/list/terrain_spawn_list
+	/// Turf type to choose when spawning in tunnel at 1% chance, weighted list
+	var/list/choose_turf_type
 	/// if the tunnel should keep being created
 	var/sanity = 1
 	/// Cave direction to move
@@ -164,6 +166,7 @@
 	/// The non-cave creating type
 	var/data_having_type = /turf/open/floor/plating/asteroid/airless/cave/has_data
 	/// Option tunnel width, wegihted list
+	var/list/pick_tunnel_width
 	turf_type = /turf/open/floor/plating/asteroid/airless
 
 /turf/open/floor/plating/asteroid/airless/cave/has_data //subtype for producing a tunnel with given data
@@ -323,10 +326,7 @@
 
 /// Spawns the floor of the tunnel and any type of structure or mob it can have
 /turf/open/floor/plating/asteroid/airless/cave/proc/SpawnFloor(turf/T)
-	if(!T)
-		sanity = 0
-		return
-	if(isarea(T.loc))
+	var/area/A = T.loc
 	if(!A.tunnel_allowed)
 		sanity = 0
 		return
