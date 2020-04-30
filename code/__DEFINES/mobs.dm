@@ -289,6 +289,4 @@
 
 #define HUMAN_FIRE_STACK_ICON_NUM	3
 
-#define PULL_PRONE_SLOWDOWN 0.6
-#define FIREMAN_CARRY_SLOWDOWN 0
-#define PIGGYBACK_CARRY_SLOWDOWN 1
+#define SLEEP_CHECK_DEATH(X) sleep(X); if(QDELETED(src) || stat == DEAD) return;

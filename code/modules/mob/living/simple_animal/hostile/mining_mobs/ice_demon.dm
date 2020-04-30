@@ -43,7 +43,7 @@
 	/// Distance the demon will teleport from the target
 	var/teleport_distance = 3
 
-/obj/projectile/temp/basilisk/ice
+/obj/item/projectile/temp/basilisk/ice
 	name = "ice blast"
 	damage = 5
 	nodamage = FALSE

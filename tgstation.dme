@@ -125,6 +125,7 @@
 #include "code\__DEFINES\dcs\helpers.dm"
 #include "code\__DEFINES\dcs\signals.dm"
 #include "code\__DEFINES\flags\shields.dm"
+#include "code\__DEFINES\mobs\slowdowns.dm"
 #include "code\__HELPERS\_cit_helpers.dm"
 #include "code\__HELPERS\_lists.dm"
 #include "code\__HELPERS\_logging.dm"

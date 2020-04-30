@@ -10,8 +10,7 @@ Difficulty: Extremely Hard
 	icon_state = "demonic_miner"
 	icon_living = "demonic_miner"
 	icon = 'icons/mob/icemoon/icemoon_monsters.dmi'
-	attack_verb_continuous = "pummels"
-	attack_verb_simple = "pummels"
+	attack_text = "pummels"
 	attack_sound = 'sound/weapons/sonic_jackhammer.ogg'
 	mob_biotypes = MOB_ORGANIC|MOB_HUMANOID
 	light_color = "#E4C7C5"
@@ -105,7 +104,7 @@ Difficulty: Extremely Hard
 			else
 				ice_shotgun(5, list(list(0, 30, 60, 90, 120, 150, 180, 210, 240, 270, 300, 330), list(-30, -15, 0, 15, 30)))
 
-/obj/projectile/frost_orb
+/obj/item/projectile/frost_orb
 	name = "frost orb"
 	icon_state = "ice_1"
 	damage = 20
@@ -114,12 +113,12 @@ Difficulty: Extremely Hard
 	homing_turn_speed = 30
 	damage_type = BURN
 
-/obj/projectile/frost_orb/on_hit(atom/target, blocked = FALSE)
+/obj/item/projectile/frost_orb/on_hit(atom/target, blocked = FALSE)
 	. = ..()
 	if(isturf(target) || isobj(target))
 		target.ex_act(EXPLODE_HEAVY)
 
-/obj/projectile/snowball
+/obj/item/projectile/snowball
 	name = "machine-gun snowball"
 	icon_state = "nuclear_particle"
 	damage = 5
@@ -127,7 +126,7 @@ Difficulty: Extremely Hard
 	speed = 4
 	damage_type = BRUTE
 
-/obj/projectile/ice_blast
+/obj/item/projectile/ice_blast
 	name = "ice blast"
 	icon_state = "ice_2"
 	damage = 15
@@ -135,7 +134,7 @@ Difficulty: Extremely Hard
 	speed = 4
 	damage_type = BRUTE
 
-/obj/projectile/ice_blast/on_hit(atom/target, blocked = FALSE)
+/obj/item/projectile/ice_blast/on_hit(atom/target, blocked = FALSE)
 	. = ..()
 	if(isturf(target) || isobj(target))
 		target.ex_act(EXPLODE_HEAVY)
@@ -166,26 +165,26 @@ Difficulty: Extremely Hard
 		var/turf/endloc = get_turf(target)
 		if(!endloc)
 			break
-		var/obj/projectile/frost_orb/P = new(startloc)
+		var/obj/item/projectile/frost_orb/P = new(startloc)
 		P.preparePixelProjectile(endloc, startloc)
 		P.firer = src
 		if(target)
 			P.original = target
 		P.set_homing_target(target)
 		P.fire(rand(0, 360))
-		addtimer(CALLBACK(P, /obj/projectile/frost_orb/proc/orb_explosion, projectile_speed_multiplier), 20) // make the orbs home in after a second
+		addtimer(CALLBACK(P, /obj/item/projectile/frost_orb/proc/orb_explosion, projectile_speed_multiplier), 20) // make the orbs home in after a second
 		SLEEP_CHECK_DEATH(added_delay)
 	SetRecoveryTime(40, 60)
 
 /// Called when the orb is exploding, shoots out projectiles
-/obj/projectile/frost_orb/proc/orb_explosion(projectile_speed_multiplier)
+/obj/item/projectile/frost_orb/proc/orb_explosion(projectile_speed_multiplier)
 	for(var/i in 0 to 5)
 		var/angle = i * 60
 		var/turf/startloc = get_turf(src)
 		var/turf/endloc = get_turf(original)
 		if(!startloc || !endloc)
 			break
-		var/obj/projectile/ice_blast/P = new(startloc)
+		var/obj/item/projectile/ice_blast/P = new(startloc)
 		P.speed *= projectile_speed_multiplier
 		P.preparePixelProjectile(endloc, startloc, null, angle + rand(-10, 10))
 		P.firer = firer
@@ -201,7 +200,7 @@ Difficulty: Extremely Hard
 		var/turf/endloc = get_turf(target)
 		if(!endloc)
 			break
-		var/obj/projectile/P = new /obj/projectile/snowball(startloc)
+		var/obj/item/projectile/P = new /obj/item/projectile/snowball(startloc)
 		P.speed *= projectile_speed_multiplier
 		P.preparePixelProjectile(endloc, startloc, null, rand(-spread, spread))
 		P.firer = src
@@ -220,7 +219,7 @@ Difficulty: Extremely Hard
 			var/turf/endloc = get_turf(target)
 			if(!endloc)
 				break
-			var/obj/projectile/P = new /obj/projectile/ice_blast(startloc)
+			var/obj/item/projectile/P = new /obj/item/projectile/ice_blast(startloc)
 			P.speed *= projectile_speed_multiplier
 			P.preparePixelProjectile(endloc, startloc, null, spread)
 			P.firer = src

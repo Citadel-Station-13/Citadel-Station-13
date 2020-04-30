@@ -7,8 +7,7 @@
 	icon_dead = "polarbear_dead"
 	mob_biotypes = MOB_ORGANIC|MOB_BEAST
 	mouse_opacity = MOUSE_OPACITY_ICON
-	friendly_verb_continuous = "growls at"
-	friendly_verb_simple = "growl at"
+	friendly = "growls at"
 	speak_emote = list("growls")
 	speed = 12
 	move_to_delay = 12
@@ -17,8 +16,7 @@
 	obj_damage = 40
 	melee_damage_lower = 25
 	melee_damage_upper = 25
-	attack_verb_continuous = "claws"
-	attack_verb_simple = "claw"
+	attack_text = "claws"
 	attack_sound = 'sound/weapons/bladeslice.ogg'
 	vision_range = 2 // don't aggro unless you basically antagonize it, though they will kill you worse than a goliath will
 	aggro_vision_range = 9
