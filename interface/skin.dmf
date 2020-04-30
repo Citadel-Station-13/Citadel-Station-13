@@ -268,7 +268,7 @@ window "statwindow"
 		is-default = true
 		saved-params = ""
 
-		window "preferences_window"
+window "preferences_window"
 	elem "preferences_window"
 		type = MAIN
 		pos = 372,0
