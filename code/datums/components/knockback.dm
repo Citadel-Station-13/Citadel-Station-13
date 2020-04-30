@@ -51,7 +51,7 @@
   * * throw_dir - Direction to throw the atom
   */
 /datum/component/knockback/proc/do_knockback(atom/target, mob/thrower, throw_dir)
-	if(!ismovableatom(target) || throw_dir == null)
+	if(!ismovable(target) || throw_dir == null)
 		return
 	var/atom/movable/throwee = target
 	if(throwee.anchored && !throw_anchored)

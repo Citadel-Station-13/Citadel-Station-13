@@ -544,7 +544,7 @@
 	display_name = "Basic Tools"
 	description = "Basic mechanical, electronic, surgical and botanical tools."
 	prereq_ids = list("base")
-	design_ids = list("screwdriver", "wrench", "wirecutters", "crowbar", "multitool", "welding_tool", "tscanner", "analyzer", "cable_coil", "pipe_painter", "airlock_painter", "scalpel", "circular_saw", "surgicaldrill", "retractor", "cautery", "hemostat", "cultivator", "plant_analyzer", "shovel", "spade", "hatchet", "mop", "broom")
+	design_ids = list("screwdriver", "wrench", "wirecutters", "crowbar", "multitool", "welding_tool", "tscanner", "analyzer", "cable_coil", "pipe_painter", "airlock_painter", "scalpel", "circular_saw", "surgicaldrill", "retractor", "cautery", "hemostat", "cultivator", "plant_analyzer", "shovel", "spade", "hatchet", "mop", "broom", "normtrash")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 500)
 
 /datum/techweb_node/basic_mining
@@ -568,7 +568,7 @@
 	display_name = "Advanced Sanitation Technology"
 	description = "Clean things better, faster, stronger, and harder!"
 	prereq_ids = list("adv_engi")
-	design_ids = list("advmop", "buffer", "light_replacer", "spraybottle", "beartrap", "ci-janitor")
+	design_ids = list("advmop", "buffer", "light_replacer", "spraybottle", "beartrap", "ci-janitor", "paint_remover")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 1750) // No longer has its bag
 
 /datum/techweb_node/botany
@@ -956,6 +956,14 @@
 	prereq_ids = list("nanite_harmonic", "alientech")
 	design_ids = list("spreading_nanites","mindcontrol_nanites","mitosis_nanites")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 10000)
+
+/datum/techweb_node/nanite_replication_protocols
+	id = "nanite_replication_protocols"
+	display_name = "Nanite Replication Protocols"
+	description = "Advanced behaviours that allow nanites to exploit certain circumstances to replicate faster."
+	prereq_ids = list("nanite_smart")
+	design_ids = list("kickstart_nanites","factory_nanites","tinker_nanites","offline_nanites","synergy_nanites")
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 5000)
 
 ////////////////////////Alien technology////////////////////////
 /datum/techweb_node/alientech //AYYYYYYYYLMAOO tech

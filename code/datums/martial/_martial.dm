@@ -10,6 +10,7 @@
 	var/help_verb
 	var/pacifism_check = TRUE //are the martial arts combos/attacks unable to be used by pacifist.
 	var/allow_temp_override = TRUE //if this martial art can be overridden by temporary martial arts
+	var/pugilist = FALSE
 
 /datum/martial_art/proc/disarm_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	return FALSE
@@ -61,7 +62,8 @@
 	if(help_verb)
 		H.verbs += help_verb
 	H.mind.martial_art = src
-	ADD_TRAIT(H, TRAIT_PUGILIST, MARTIAL_ARTIST_TRAIT)
+	if(pugilist)
+		ADD_TRAIT(H, TRAIT_PUGILIST, MARTIAL_ARTIST_TRAIT)
 	return TRUE
 
 /datum/martial_art/proc/store(datum/martial_art/M,mob/living/carbon/human/H)

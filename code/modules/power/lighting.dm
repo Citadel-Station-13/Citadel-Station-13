@@ -314,7 +314,7 @@
 	. = ..()
 	SSvis_overlays.remove_vis_overlay(src, managed_vis_overlays)
 	if(on && status == LIGHT_OK)
-		SSvis_overlays.add_vis_overlay(src, overlayicon, base_state, EMISSIVE_LAYER, EMISSIVE_PLANE, dir, CLAMP(light_power*250, 30, 200))
+		SSvis_overlays.add_vis_overlay(src, overlayicon, base_state, EMISSIVE_LAYER, EMISSIVE_PLANE, dir, clamp(light_power*250, 30, 200))
 
 
 // update the icon_state and luminosity of the light depending on its state

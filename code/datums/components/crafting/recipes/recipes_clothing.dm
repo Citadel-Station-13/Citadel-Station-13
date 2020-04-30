@@ -41,7 +41,7 @@
 	category = CAT_CLOTHING
 	
 /datum/crafting_recipe/armwraps
-	name = "armwraps"
+	name = "Armwraps"
 	result = /obj/item/clothing/gloves/fingerless/pugilist
 	time = 60
 	tools = list(TOOL_WIRECUTTER)
@@ -51,7 +51,7 @@
 	category = CAT_CLOTHING
 
 /datum/crafting_recipe/armwrapsplusone
-	name = "armwraps of mighty fists"
+	name = "Armwraps of Mighty Fists"
 	result = /obj/item/clothing/gloves/fingerless/pugilist/magic
 	time = 300
 	tools = list(TOOL_WIRECUTTER, /obj/item/book/codex_gigas, /obj/item/clothing/head/wizard, /obj/item/clothing/suit/wizrobe)
@@ -327,3 +327,16 @@
 				/obj/item/stack/cable_coil = 10)
 	time = 100 //Takes awhile to put all the garlics on the coil and knot it.
 	category = CAT_CLOTHING
+
+/datum/crafting_recipe/gripperoffbrand
+	name = "Improvised Gripper Gloves"
+	reqs = list(
+            /obj/item/clothing/gloves/fingerless = 1,
+         //   /obj/item/stack/sticky_tape = 1
+		 	/obj/item/stack/cable_coil = 5,
+			/obj/item/stack/sheet/cloth = 2,
+	)
+	result = /obj/item/clothing/gloves/tackler/offbrand
+	category = CAT_CLOTHING
+	tools = list(TOOL_WIRECUTTER)
+	time = 20

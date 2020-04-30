@@ -36,16 +36,16 @@
 #define BLOODCRAWL_EAT 2
 
 //Mob bio-types flags
-#define MOB_ORGANIC 	1 << 0
-#define MOB_MINERAL		1 << 1
-#define MOB_ROBOTIC 	1 << 2
-#define MOB_UNDEAD		1 << 3
-#define MOB_HUMANOID 	1 << 4
-#define MOB_BUG 		1 << 5
-#define MOB_BEAST		1 << 6
-#define MOB_EPIC		1 << 7 //megafauna
-#define MOB_REPTILE		1 << 8
-#define MOB_SPIRIT		1 << 9
+#define MOB_ORGANIC 	(1 << 0)
+#define MOB_MINERAL		(1 << 1)
+#define MOB_ROBOTIC 	(1 << 2)
+#define MOB_UNDEAD		(1 << 3)
+#define MOB_HUMANOID 	(1 << 4)
+#define MOB_BUG 		(1 << 5)
+#define MOB_BEAST		(1 << 6)
+#define MOB_EPIC		(1 << 7) //megafauna
+#define MOB_REPTILE		(1 << 8)
+#define MOB_SPIRIT		(1 << 9)
 
 //Organ defines for carbon mobs
 #define ORGAN_ORGANIC   1
@@ -290,3 +290,8 @@
 #define HUMAN_FIRE_STACK_ICON_NUM	3
 
 #define SLEEP_CHECK_DEATH(X) sleep(X); if(QDELETED(src) || stat == DEAD) return;
+
+//slowdown when in softcrit. Note that crawling slowdown will also apply at the same time!
+#define SOFTCRIT_ADD_SLOWDOWN 2
+//slowdown when crawling
+#define CRAWLING_ADD_SLOWDOWN 4
