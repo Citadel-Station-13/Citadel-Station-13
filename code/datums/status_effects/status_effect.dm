@@ -127,8 +127,9 @@
 	S1 = new effect(arguments)
 	. = S1
 
-/mob/living/proc/remove_status_effect(effect) //removes all of a given status effect from this mob, returning TRUE if at least one was removed
+/mob/living/proc/remove_status_effect(effect, ...) //removes all of a given status effect from this mob, returning TRUE if at least one was removed
 	. = FALSE
+	var/list/arguments = args.Copy(2)
 	if(status_effects)
 		var/datum/status_effect/S1 = effect
 		for(var/datum/status_effect/S in status_effects)
