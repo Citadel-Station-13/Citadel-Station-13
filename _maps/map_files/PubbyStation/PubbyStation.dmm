@@ -9691,18 +9691,21 @@
 /turf/open/floor/plating,
 /area/security/brig)
 "awK" = (
-/obj/structure/cable{
-	icon_state = "0-4"
+/obj/machinery/atmospherics/pipe/simple/cyan/hidden{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/red{
+	dir = 8
 	},
 /obj/structure/cable{
-	icon_state = "0-8"
+	icon_state = "2-4"
 	},
-/obj/machinery/door/poddoor/preopen{
-	id = "Secure Gate";
-	name = "brig shutters"
+/obj/structure/cable{
+	icon_state = "4-8"
 	},
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/plating,
+/turf/open/floor/plasteel,
 /area/security/brig)
 "awL" = (
 /obj/machinery/door/firedoor,
@@ -12509,23 +12512,6 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plating,
 /area/maintenance/department/security/brig)
-"aDn" = (
-/obj/machinery/atmospherics/pipe/simple/cyan/hidden{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/obj/effect/turf_decal/tile/red,
-/obj/effect/turf_decal/tile/red{
-	dir = 8
-	},
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/obj/structure/cable{
-	icon_state = "2-8"
-	},
-/turf/open/floor/plasteel,
-/area/security/brig)
 "aDo" = (
 /obj/machinery/disposal/bin,
 /obj/structure/disposalpipe/trunk,
@@ -53533,23 +53519,6 @@
 	icon_state = "wood-broken"
 	},
 /area/maintenance/department/crew_quarters/dorms)
-"eqX" = (
-/obj/machinery/atmospherics/pipe/simple/cyan/hidden{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/obj/effect/turf_decal/tile/red,
-/obj/effect/turf_decal/tile/red{
-	dir = 8
-	},
-/obj/structure/cable{
-	icon_state = "2-4"
-	},
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/turf/open/floor/plasteel,
-/area/security/brig)
 "eta" = (
 /obj/machinery/door/airlock/engineering{
 	name = "Engineering Supplies";
@@ -54982,19 +54951,6 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/solars/port)
-"hzx" = (
-/obj/machinery/atmospherics/pipe/simple/cyan/hidden{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/red,
-/obj/effect/turf_decal/tile/red{
-	dir = 8
-	},
-/obj/structure/cable{
-	icon_state = "2-8"
-	},
-/turf/open/floor/plasteel,
-/area/security/brig)
 "hCb" = (
 /obj/machinery/door/airlock/public/glass{
 	name = "Monastery Transit"
@@ -55003,22 +54959,6 @@
 	heat_capacity = 1e+006
 	},
 /area/hallway/secondary/entry)
-"hCT" = (
-/obj/machinery/atmospherics/pipe/manifold/cyan/hidden{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/red,
-/obj/effect/turf_decal/tile/red{
-	dir = 8
-	},
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/obj/structure/cable{
-	icon_state = "2-8"
-	},
-/turf/open/floor/plasteel,
-/area/security/brig)
 "hDG" = (
 /obj/machinery/door/airlock/engineering{
 	name = "Auxillary Base Construction";
@@ -55693,6 +55633,23 @@
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
+"jen" = (
+/obj/machinery/atmospherics/pipe/simple/cyan/hidden{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/structure/cable{
+	icon_state = "2-8"
+	},
+/turf/open/floor/plasteel,
+/area/security/brig)
 "jeq" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -55846,6 +55803,20 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/science/xenobiology)
+"jxK" = (
+/obj/machinery/atmospherics/pipe/simple/cyan/hidden{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/turf/open/floor/plasteel,
+/area/security/brig)
 "jzz" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/sign/warning/vacuum/external,
@@ -57873,20 +57844,6 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/department/engine)
-"omj" = (
-/obj/machinery/atmospherics/pipe/simple/cyan/hidden{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/obj/effect/turf_decal/tile/red,
-/obj/effect/turf_decal/tile/red{
-	dir = 8
-	},
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/turf/open/floor/plasteel,
-/area/security/brig)
 "onX" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/public/glass{
@@ -59240,6 +59197,22 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/sleeper)
+"rdB" = (
+/obj/machinery/atmospherics/pipe/manifold/cyan/hidden{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/structure/cable{
+	icon_state = "2-8"
+	},
+/turf/open/floor/plasteel,
+/area/security/brig)
 "reH" = (
 /obj/item/reagent_containers/food/drinks/bottle/vodka,
 /obj/structure/disposalpipe/segment{
@@ -59306,6 +59279,18 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/science/xenobiology)
+"rjF" = (
+/obj/structure/cable{
+	icon_state = "0-8"
+	},
+/obj/machinery/door/poddoor/preopen{
+	id = "Secure Gate";
+	name = "brig shutters"
+	},
+/obj/effect/spawner/structure/window/reinforced,
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/security/brig)
 "rmC" = (
 /turf/open/space/basic,
 /area/space/station_ruins)
@@ -60295,6 +60280,19 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel,
 /area/hallway/primary/aft)
+"tTZ" = (
+/obj/machinery/atmospherics/pipe/simple/cyan/hidden{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/obj/structure/cable{
+	icon_state = "2-8"
+	},
+/turf/open/floor/plasteel,
+/area/security/brig)
 "tXn" = (
 /obj/structure/sink{
 	dir = 4;
@@ -61100,21 +61098,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/aft)
-"vKZ" = (
-/obj/structure/cable{
-	icon_state = "0-8"
-	},
-/obj/structure/cable{
-	icon_state = "0-4"
-	},
-/obj/machinery/door/poddoor/preopen{
-	id = "Secure Gate";
-	name = "brig shutters"
-	},
-/obj/effect/spawner/structure/window/reinforced,
-/obj/structure/cable,
-/turf/open/floor/plating,
-/area/security/brig)
 "vMx" = (
 /obj/structure/disposalpipe/segment{
 	dir = 6
@@ -61919,18 +61902,6 @@
 /obj/item/broken_bottle,
 /turf/open/floor/plating,
 /area/maintenance/solars/port)
-"xvl" = (
-/obj/structure/cable{
-	icon_state = "0-8"
-	},
-/obj/machinery/door/poddoor/preopen{
-	id = "Secure Gate";
-	name = "brig shutters"
-	},
-/obj/effect/spawner/structure/window/reinforced,
-/obj/structure/cable,
-/turf/open/floor/plating,
-/area/security/brig)
 "xvO" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -83379,7 +83350,7 @@ asw
 atx
 auz
 avu
-vKZ
+rjF
 axG
 ayH
 aAe
@@ -83893,7 +83864,7 @@ aty
 atz
 aux
 avv
-awK
+awI
 axG
 ayL
 aAi
@@ -84403,11 +84374,11 @@ aoT
 apK
 aqr
 arl
-eqX
+awK
 atD
 auz
 avx
-vKZ
+rjF
 axG
 ayJ
 aAg
@@ -84917,11 +84888,11 @@ aoV
 apJ
 aqt
 arm
-hCT
+rdB
 atz
 aux
 avy
-awK
+awI
 axG
 ayL
 aAi
@@ -85431,11 +85402,11 @@ aoX
 apI
 apO
 aro
-aDn
+jen
 atD
 auz
 avA
-xvl
+rjF
 axG
 ayL
 aAi
@@ -85945,7 +85916,7 @@ aoZ
 amg
 aqv
 aro
-omj
+jxK
 atE
 auB
 avB
@@ -86202,7 +86173,7 @@ apa
 agP
 aqw
 arp
-hzx
+tTZ
 atF
 alv
 alv
