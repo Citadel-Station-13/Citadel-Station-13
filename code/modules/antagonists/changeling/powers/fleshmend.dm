@@ -1,8 +1,9 @@
 /obj/effect/proc_holder/changeling/fleshmend
 	name = "Fleshmend"
-	desc = "Our flesh rapidly regenerates, healing our burns, bruises, and shortness of breath. Functions while unconscious."
+	desc = "Our flesh rapidly regenerates, healing our burns, bruises, and shortness of breath. Functions while unconscious. This ability is loud, and might cause our blood to react violently to heat."
 	helptext = "If we are on fire, the healing effect will not function. Does not regrow limbs or restore lost blood."
 	chemical_cost = 20
+	loudness = 2
 	dna_cost = 2
 	req_stat = UNCONSCIOUS
 	action_icon = 'icons/mob/actions/actions_changeling.dmi'
