@@ -95,18 +95,19 @@ window "mapwindow"
 	elem "mapwindow"
 		type = MAIN
 		pos = 418,0
-		size = 662x561
+		size = 1024x1024
 		anchor1 = none
 		anchor2 = none
 		background-color = none
 		saved-params = "pos;size;is-minimized;is-maximized"
 		statusbar = false
 		is-pane = true
-		outer-size = 662x536
+		outer-size = 684x617
+		inner-size = 662x561
 	elem "map"
 		type = MAP
 		pos = 0,0
-		size = 640x480
+		size = 1024x1024
 		anchor1 = 0,0
 		anchor2 = 100,100
 		font-family = "Arial"
