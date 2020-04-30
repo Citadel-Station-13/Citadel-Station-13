@@ -7,7 +7,7 @@
 	eyeblur = 10
 	slur = 5
 	knockdown = 160
-	stamina = 60
+	stamina = 40
 	knockdown_stamoverride = 0
 
 /obj/item/projectile/energy/bolt/halloween
