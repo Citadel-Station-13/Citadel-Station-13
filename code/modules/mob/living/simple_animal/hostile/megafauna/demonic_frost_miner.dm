@@ -32,7 +32,6 @@ Difficulty: Extremely Hard
 	blood_volume = BLOOD_VOLUME_NORMAL
 	deathmessage = "falls to the ground, decaying into plasma particles."
 	deathsound = "bodyfall"
-	footstep_type = FOOTSTEP_MOB_HEAVY
 	attack_action_types = list(/datum/action/innate/megafauna_attack/frost_orbs,
 							   /datum/action/innate/megafauna_attack/snowball_machine_gun,
 							   /datum/action/innate/megafauna_attack/ice_shotgun)

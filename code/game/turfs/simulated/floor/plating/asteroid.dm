@@ -149,6 +149,8 @@
 	var/list/megafauna_spawn_list
 	/// Flora that can spawn in the tunnel, weighted list
 	var/list/flora_spawn_list
+	/// Terrain that can spawn in the tunnel, weighted list.
+	var/list/terrain_spawn_list
 	/// if the tunnel should keep being created
 	var/sanity = 1
 	/// Cave direction to move
@@ -335,6 +337,7 @@
 		var/spawned_terrain = FALSE
 		if(is_mining_level(z))
 			spawned_flora = SpawnFlora(T)
+		spawned_terrain = SpawnTerrain(T)
 		if(!spawned_flora && !spawned_terrain) // no rocks beneath mob spawners / mobs.
 			SpawnMonster(T)
 	T.ChangeTurf(turf_type, null, CHANGETURF_IGNORE_AIR)
@@ -389,6 +392,17 @@
 				return
 		new randumb(T)
 		return TRUE
+
+/turf/open/floor/plating/asteroid/airless/cave/proc/SpawnTerrain(turf/T)
+	if(prob(1))
+		if(istype(loc, /area/mine/explored) || istype(loc, /area/lavaland/surface/outdoors/explored))
+			return
+		var/randumb = pickweight(terrain_spawn_list)
+		for(var/obj/structure/geyser/F in range(7, T))
+			if(istype(F, randumb))
+				return
+		new randumb(T)
+
 
 /turf/open/floor/plating/asteroid/snow
 	gender = PLURAL
