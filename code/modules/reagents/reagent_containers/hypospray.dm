@@ -134,9 +134,9 @@
 
 /obj/item/reagent_containers/hypospray/medipen/stimulants
 	name = "illegal stimpack medipen"
-	desc = "A highly illegal medipen due to its load and small injections, allow for five uses before being drained"
+	desc = "A highly illegal medipen due to its load, allow for two uses before being drained"
 	volume = 50
-	amount_per_transfer_from_this = 10
+	amount_per_transfer_from_this = 25
 	list_reagents = list(/datum/reagent/medicine/stimulants = 50)
 
 /obj/item/reagent_containers/hypospray/medipen/stimulants/baseball
@@ -207,10 +207,10 @@
 #define DELUXE_SELF_SPRAY 10
 #define DELUXE_SELF_INJECT 10
 
-#define COMBAT_WAIT_SPRAY 0
-#define COMBAT_WAIT_INJECT 0
-#define COMBAT_SELF_SPRAY 0
-#define COMBAT_SELF_INJECT 0
+#define COMBAT_WAIT_SPRAY 15
+#define COMBAT_WAIT_INJECT 15
+#define COMBAT_SELF_SPRAY 5
+#define COMBAT_SELF_INJECT 5
 
 //A vial-loaded hypospray. Cartridge-based!
 /obj/item/hypospray/mkii
