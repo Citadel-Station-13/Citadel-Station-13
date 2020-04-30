@@ -701,6 +701,8 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 			target.client.images |= speech_overlay
 			sleep(30)
 			target.client.images.Remove(speech_overlay)
+		if (target.client?.prefs.chat_on_map)
+			target.create_chat_message(person, understood_language, chosen, spans, 0)
 	else // Radio talk
 		var/chosen = specific_message
 		if(!chosen)
