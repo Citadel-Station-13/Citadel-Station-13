@@ -5,12 +5,14 @@ GLOBAL_LIST_EMPTY(mobs_with_editable_flavor_text) //et tu, hacky code
 	id_arg_index = 3
 	var/flavor_name = "Flavor Text"
 	var/list/texts_by_atom = list()
-	var/addendum = "This can also be used for OOC notes and preferences!"
+	var/addendum = ""
 	var/always_show = FALSE
 	var/max_len = MAX_FLAVOR_LEN
 	var/can_edit = TRUE
+	/// For preference/DNA saving/loading. Null to prevent.
+	var/save_key
 
-/datum/element/flavor_text/Attach(datum/target, text = "", _name = "Flavor Text", _addendum, _max_len = MAX_FLAVOR_LEN, _always_show = FALSE, _edit = TRUE)
+/datum/element/flavor_text/Attach(datum/target, text = "", _name = "Flavor Text", _addendum, _max_len = MAX_FLAVOR_LEN, _always_show = FALSE, _edit = TRUE, _save_key)
 	. = ..()
 
 	if(. == ELEMENT_INCOMPATIBLE || !isatom(target)) //no reason why this shouldn't work on atoms too.
@@ -25,6 +27,7 @@ GLOBAL_LIST_EMPTY(mobs_with_editable_flavor_text) //et tu, hacky code
 		addendum = _addendum
 	always_show = _always_show
 	can_edit = _edit
+	save_key = _save_key
 
 	RegisterSignal(target, COMSIG_PARENT_EXAMINE, .proc/show_flavor)
 
@@ -118,7 +121,7 @@ GLOBAL_LIST_EMPTY(mobs_with_editable_flavor_text) //et tu, hacky code
 	var/static/list/i_dont_even_know_who_you_are = typecacheof(list(/datum/antagonist/abductor, /datum/antagonist/ert,
 													/datum/antagonist/nukeop, /datum/antagonist/wizard))
 
-/datum/element/flavor_text/carbon/Attach(datum/target, text = "", _name = "Flavor Text", _addendum, _max_len = MAX_FLAVOR_LEN, _always_show = FALSE, _edit = TRUE)
+/datum/element/flavor_text/carbon/Attach(datum/target, text = "", _name = "Flavor Text", _addendum, _max_len = MAX_FLAVOR_LEN, _always_show = FALSE, _edit = TRUE, _save_key = "flavor_text")
 	if(!iscarbon(target))
 		return ELEMENT_INCOMPATIBLE
 	. = ..()
@@ -136,15 +139,15 @@ GLOBAL_LIST_EMPTY(mobs_with_editable_flavor_text) //et tu, hacky code
 	UnregisterSignal(C, list(COMSIG_CARBON_IDENTITY_TRANSFERRED_TO, COMSIG_MOB_ANTAG_ON_GAIN, COMSIG_HUMAN_PREFS_COPIED_TO, COMSIG_HUMAN_HARDSET_DNA, COMSIG_HUMAN_ON_RANDOMIZE))
 
 /datum/element/flavor_text/carbon/proc/update_dna_flavor_text(mob/living/carbon/C)
-	texts_by_atom[C] = C.dna.features["flavor_text"]
+	texts_by_atom[C] = C.dna.features["[save_key]"]
 
 /datum/element/flavor_text/carbon/proc/update_prefs_flavor_text(mob/living/carbon/human/H, datum/preferences/P, icon_updates = TRUE, roundstart_checks = TRUE)
-	texts_by_atom[H] = P.features["flavor_text"]
+	texts_by_atom[H] = P.features["[save_key]"]
 
 /datum/element/flavor_text/carbon/set_flavor(mob/living/carbon/user)
 	. = ..()
 	if(. && user.dna)
-		user.dna.features["flavor_text"] = texts_by_atom[user]
+		user.dna.features["[save_key]"] = texts_by_atom[user]
 
 /datum/element/flavor_text/carbon/proc/unset_flavor(mob/living/carbon/user)
 	texts_by_atom[user] = ""
@@ -153,4 +156,4 @@ GLOBAL_LIST_EMPTY(mobs_with_editable_flavor_text) //et tu, hacky code
 	if(is_type_in_typecache(antag, i_dont_even_know_who_you_are))
 		texts_by_atom[user] = ""
 		if(user.dna)
-			user.dna.features["flavor_text"] = ""
+			user.dna.features["[save_key]"] = ""
