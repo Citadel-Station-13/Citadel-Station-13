@@ -54,12 +54,12 @@
 /turf/open/floor/plating/asteroid/snow/icemoon,
 /area/ruin/unpowered/buried_library)
 "ao" = (
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/wood,
 /area/ruin/unpowered/buried_library)
 "ap" = (
 /obj/item/stack/sheet/mineral/wood,
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/wood,
 /area/ruin/unpowered/buried_library)
 "aq" = (
@@ -73,7 +73,7 @@
 /turf/open/floor/plasteel/cult,
 /area/ruin/unpowered/buried_library)
 "as" = (
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /obj/item/paper/fluff/ruins/oldstation/protosing,
 /turf/open/floor/plating/asteroid/snow/icemoon,
 /area/ruin/unpowered/buried_library)
@@ -93,7 +93,7 @@
 /turf/open/floor/plating,
 /area/ruin/unpowered/buried_library)
 "ax" = (
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating/asteroid/snow/icemoon,
 /area/ruin/unpowered/buried_library)
 "ay" = (
@@ -105,7 +105,7 @@
 /turf/open/floor/wood,
 /area/ruin/unpowered/buried_library)
 "aA" = (
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/ruin/unpowered/buried_library)
 "aB" = (
@@ -126,7 +126,7 @@
 /area/ruin/unpowered/buried_library)
 "aF" = (
 /obj/item/book/manual/random,
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating/asteroid/snow/icemoon,
 /area/ruin/unpowered/buried_library)
 "aG" = (
@@ -136,7 +136,7 @@
 /area/ruin/unpowered/buried_library)
 "aH" = (
 /obj/structure/table/bronze,
-/obj/item/statuebust/hippocratic,
+/obj/item/statuebust,
 /turf/open/floor/carpet/black,
 /area/ruin/unpowered/buried_library)
 "aI" = (
@@ -145,16 +145,16 @@
 /turf/open/floor/plasteel/cult,
 /area/ruin/unpowered/buried_library)
 "aJ" = (
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/cult,
 /area/ruin/unpowered/buried_library)
 "aK" = (
 /obj/item/feather,
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/cult,
 /area/ruin/unpowered/buried_library)
 "aL" = (
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /obj/structure/fluff/paper/stack,
 /turf/open/floor/wood,
 /area/ruin/unpowered/buried_library)
@@ -176,7 +176,7 @@
 /turf/closed/mineral/random/snow/no_caves,
 /area/ruin/unpowered/buried_library)
 "aQ" = (
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /obj/item/paper/fluff/awaymissions/moonoutpost19/research/larva_autopsy,
 /turf/open/floor/wood,
 /area/ruin/unpowered/buried_library)
@@ -186,7 +186,7 @@
 /area/ruin/unpowered/buried_library)
 "aS" = (
 /obj/structure/table/wood/fancy/black,
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /obj/item/paper/secretrecipe,
 /obj/item/flashlight/lantern/jade{
 	on = 1
@@ -194,7 +194,7 @@
 /turf/open/floor/plasteel/cult,
 /area/ruin/unpowered/buried_library)
 "aT" = (
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /obj/structure/fluff/paper,
 /turf/open/floor/wood,
 /area/ruin/unpowered/buried_library)
@@ -243,7 +243,7 @@
 /turf/open/floor/wood,
 /area/ruin/unpowered/buried_library)
 "bd" = (
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /obj/structure/fluff/paper{
 	icon_state = "paper";
 	dir = 1
@@ -258,7 +258,7 @@
 /turf/open/floor/wood,
 /area/ruin/unpowered/buried_library)
 "bf" = (
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /obj/structure/fluff/paper{
 	icon_state = "paper";
 	dir = 4
@@ -270,7 +270,7 @@
 /turf/open/floor/plating/asteroid/snow/icemoon,
 /area/ruin/unpowered/buried_library)
 "bh" = (
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /mob/living/simple_animal/pet/fox,
 /turf/open/floor/wood,
 /area/ruin/unpowered/buried_library)
@@ -307,7 +307,7 @@
 /turf/closed/mineral/random/snow/no_caves,
 /area/ruin/unpowered/buried_library)
 "bp" = (
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /obj/structure/fluff/paper,
 /turf/open/floor/plating/asteroid/snow/icemoon,
 /area/ruin/unpowered/buried_library)
@@ -325,7 +325,7 @@
 /turf/open/floor/plating/asteroid/snow/icemoon,
 /area/ruin/unpowered/buried_library)
 "bt" = (
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /turf/template_noop,
 /area/template_noop)
 "bu" = (
@@ -343,7 +343,7 @@
 /turf/open/floor/plating/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "by" = (
-/obj/structure/statue/bronze/marx,
+/obj/item/statuebust,
 /turf/open/floor/carpet/black,
 /area/ruin/unpowered/buried_library)
 "bz" = (
@@ -361,7 +361,7 @@
 /turf/open/floor/carpet/black,
 /area/ruin/unpowered/buried_library)
 "bC" = (
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /obj/structure/fluff/paper{
 	icon_state = "paper";
 	dir = 1

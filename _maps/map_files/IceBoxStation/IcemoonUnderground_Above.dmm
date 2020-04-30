@@ -2185,10 +2185,8 @@
 /turf/open/floor/plasteel,
 /area/mine/laborcamp)
 "mL" = (
-/obj/item/kirbyplants{
-	icon_state = "plant-10"
-	},
 /obj/effect/decal/cleanable/dirt,
+/obj/item/twohanded/required/kirbyplants/random,
 /turf/open/floor/plasteel,
 /area/mine/laborcamp)
 "mS" = (
@@ -2346,14 +2344,12 @@
 /area/mine/laborcamp)
 "pi" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/item/kirbyplants{
-	icon_state = "plant-05"
-	},
 /obj/machinery/camera{
 	c_tag = "Labor Camp Cellblock";
 	dir = 4;
 	network = list("labor")
 	},
+/obj/item/twohanded/required/kirbyplants/random,
 /turf/open/floor/plasteel,
 /area/mine/laborcamp)
 "pu" = (
@@ -2626,7 +2622,7 @@
 "we" = (
 /obj/structure/table,
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/spawner/lootdrop/donkpockets,
+/obj/item/storage/box/donkpockets,
 /turf/open/floor/plasteel,
 /area/mine/laborcamp)
 "wj" = (
@@ -3342,8 +3338,8 @@
 /area/mine/eva)
 "LU" = (
 /obj/structure/table,
-/obj/machinery/computer/bookmanagement,
 /obj/effect/decal/cleanable/dirt,
+/obj/machinery/computer/libraryconsole/bookmanagement,
 /turf/open/floor/plasteel,
 /area/mine/laborcamp)
 "Mt" = (
@@ -3912,15 +3908,12 @@
 	pixel_y = 22
 	},
 /obj/item/soap/nanotrasen,
-/obj/item/bikehorn/rubberducky/plasticducky,
+/obj/item/bikehorn/rubberducky,
 /turf/open/floor/plasteel/freezer,
 /area/mine/laborcamp)
 "WO" = (
 /obj/effect/turf_decal/stripes/corner{
 	dir = 1
-	},
-/obj/structure/sign/warning/gasmask{
-	pixel_y = 32
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
@@ -3928,6 +3921,9 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 10
+	},
+/obj/structure/sign/warning/xeno_mining{
+	pixel_y = 32
 	},
 /turf/open/floor/plasteel,
 /area/mine/laborcamp)

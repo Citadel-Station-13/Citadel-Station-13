@@ -53,11 +53,7 @@
 /area/ruin/powered/bathhouse)
 "l" = (
 /obj/structure/table/wood,
-/obj/item/reagent_containers/food/snacks/spaghetti/pastatomato{
-	desc = "Just how mom used to make it.";
-	name = "soul food";
-	tastes = list("nostalgia" = 1)
-	},
+/obj/item/reagent_containers/food/snacks/meatballspaghetti,
 /turf/open/floor/wood,
 /area/ruin/powered/bathhouse)
 "m" = (
