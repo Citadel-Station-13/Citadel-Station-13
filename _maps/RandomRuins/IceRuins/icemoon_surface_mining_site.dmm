@@ -57,11 +57,11 @@
 /area/ruin/unpowered)
 "m" = (
 /obj/structure/barricade/wooden/crude/snow,
+/obj/structure/mineral_door/wood,
 /turf/open/floor/wood,
 /area/ruin/unpowered)
 "n" = (
-/obj/structure/mineral_door/wood,
-/turf/open/floor/wood,
+/turf/closed/mineral/random/snow/no_caves,
 /area/ruin/unpowered)
 "o" = (
 /obj/item/reagent_containers/food/drinks/beer,

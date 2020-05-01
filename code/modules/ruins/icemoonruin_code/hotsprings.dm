@@ -1,12 +1,9 @@
 GLOBAL_LIST_EMPTY(cursed_minds)
 
 /**
-  * Turns whoever enters into a mob or random person
+  * Turns whoever enters into a mob
   *
   * If mob is chosen, turns the person into a random animal type
-  * If appearance is chosen, turns the person into a random human with a random species
-  * This changes name, and changes their DNA as well
-  * Random species is same as wizard swap event so people don't get killed ex: plasmamen
   * Once the spring is used, it cannot be used by the same mind ever again
   * After usage, teleports the user back to a random safe turf (so mobs are not killed by ice moon atmosphere)
   *

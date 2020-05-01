@@ -23,6 +23,7 @@
 "f" = (
 /obj/structure/sign/poster/contraband/lusty_xenomorph,
 /obj/structure/falsewall/abductor,
+/obj/structure/fans/tiny,
 /turf/open/floor/mineral/diamond,
 /area/icemoon/surface/outdoors)
 
