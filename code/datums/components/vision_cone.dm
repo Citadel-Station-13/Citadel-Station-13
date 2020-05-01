@@ -105,13 +105,13 @@
 //Byond doc is not entirely correct on the integrated arctan() proc.
 //When both x and y are negative, the output is also negative, cycling clockwise instead of counter-clockwise.
 //That's also why I have to use the SIMPLIFY_DEGREES macro.
-#define FOV_ANGLE_CHECK(mob, target, value) \
+#define FOV_ANGLE_CHECK(mob, target, zero_x_y_statement, success_statement) \
 	var/turf/T1 = get_turf(target);\
 	var/turf/T2 = get_turf(mob);\
 	var/_x = (T1.x - T2.x);\
 	var/_y = (T1.y - T2.y);\
 	if(!_x && !_y){\
-		return;\
+		zero_x_y_statement;\
 	}\
 	var/dir = (mob.dir & (EAST|WEST)) || mob.dir;\
 	var/_degree = -angle;\
@@ -125,44 +125,24 @@
 		}\
 		if(SOUTH){\
 			_degree += 90;\
-		};\
+		}\
 	}\
 	var/_min = SIMPLIFY_DEGREES(_degree - _half);\
 	var/_max = SIMPLIFY_DEGREES(_degree + _half);\
 	if((_min > _max) ? !ISINRANGE(SIMPLIFY_DEGREES(arctan(_x, _y)), _max, _min) : ISINRANGE(SIMPLIFY_DEGREES(arctan(_x, _y)), _min, _max)){\
-		return value;\
+		success_statement;\
 	}
 
 /datum/component/vision_cone/proc/on_examinate(mob/source, atom/target)
-	FOV_ANGLE_CHECK(source, target, COMPONENT_DENY_EXAMINATE|COMPONENT_EXAMINATE_BLIND)
+	FOV_ANGLE_CHECK(source, target, return, return COMPONENT_DENY_EXAMINATE|COMPONENT_EXAMINATE_BLIND)
 
 /datum/component/vision_cone/proc/on_visible_message(mob/source, atom/target, message, range, list/ignored_mobs)
-	FOV_ANGLE_CHECK(source, target, COMPONENT_NO_VISIBLE_MESSAGE)
+	FOV_ANGLE_CHECK(source, target, return, return COMPONENT_NO_VISIBLE_MESSAGE)
 
 /datum/component/vision_cone/proc/on_visible_atoms(mob/source, list/atoms)
 	for(var/k in atoms)
 		var/atom/A = k
-		var/turf/T1 = get_turf(A)
-		var/turf/T2 = get_turf(source)
-		var/_x = (T1.x - T2.x)
-		var/_y = (T1.y - T2.y)
-		if(!_x && !_y)
-			continue
-		var/dir = (source.dir & (EAST|WEST)) || source.dir
-		var/degree = -angle
-		var/half = shadow_angle/2
-		switch(dir)
-			if(EAST)
-				degree += 180
-			if(NORTH)
-				degree += 270
-			if(SOUTH)
-				degree += 90
-		var/min = SIMPLIFY_DEGREES(degree - half);\
-		var/max = SIMPLIFY_DEGREES(degree + half);\
-		var/arctan = SIMPLIFY_DEGREES(arctan(_x, _y))
-		if((min > max) ? !ISINRANGE(arctan, max, min) : ISINRANGE(arctan, min, max))
-			atoms -= A
+		FOV_ANGLE_CHECK(source, A, continue, atoms -= A)
 
 #undef FOV_ANGLE_CHECK
 
