@@ -6,6 +6,7 @@
       "IcemoonUnderground_Above.dmm",
       "IceBoxStation.dmm"
    ],
+   "station_ruin_budget":0,
    "space_ruin_levels":0,
    "space_empty_levels":0,
    "shuttles":{

@@ -22,6 +22,7 @@
 	var/traits = null
 	var/space_ruin_levels = 2
 	var/space_empty_levels = 1
+	var/station_ruin_budget = -1
 
 	var/minetype = "lavaland"
 
@@ -129,6 +130,9 @@
 	else if (!isnull(temp))
 		log_world("map_config space_empty_levels is not a number!")
 		return
+
+	if("station_ruin_budget" in json)
+		station_ruin_budget = json["station_ruin_budget"]
 
 	temp = json["year_offset"]
 	if (isnum(temp))
