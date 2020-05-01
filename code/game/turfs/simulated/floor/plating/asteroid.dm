@@ -149,8 +149,6 @@
 	var/list/megafauna_spawn_list
 	/// Flora that can spawn in the tunnel, weighted list
 	var/list/flora_spawn_list
-	/// Terrain that can spawn in the tunnel, weighted list.
-	var/list/terrain_spawn_list
 	/// Turf type to choose when spawning in tunnel at 1% chance, weighted list
 	var/list/choose_turf_type
 	/// if the tunnel should keep being created
@@ -207,7 +205,6 @@
 						  /mob/living/simple_animal/hostile/asteroid/hivelord/legion/snow = 50, /mob/living/simple_animal/hostile/asteroid/goldgrub = 10)
 
 	flora_spawn_list = list(/obj/structure/flora/tree/pine = 2, /obj/structure/flora/grass/both = 12)
-	terrain_spawn_list = list()
 	data_having_type = /turf/open/floor/plating/asteroid/airless/cave/snow/has_data
 	turf_type = /turf/open/floor/plating/asteroid/snow/icemoon
 	choose_turf_type = list(/turf/open/floor/plating/asteroid/snow/icemoon = 19, /turf/open/floor/plating/ice/icemoon = 1)
@@ -334,11 +331,9 @@
 		turf_type = pickweight(choose_turf_type)
 	if(turf_type == initial(turf_type)) // Don't spawn different turf types under flora or terrain
 		var/spawned_flora = FALSE
-		var/spawned_terrain = FALSE
 		if(is_mining_level(z))
 			spawned_flora = SpawnFlora(T)
-		spawned_terrain = SpawnTerrain(T)
-		if(!spawned_flora && !spawned_terrain) // no rocks beneath mob spawners / mobs.
+		if(!spawned_flora) // no rocks beneath mob spawners / mobs.
 			SpawnMonster(T)
 	T.ChangeTurf(turf_type, null, CHANGETURF_IGNORE_AIR)
 
@@ -392,13 +387,6 @@
 				return
 		new randumb(T)
 		return TRUE
-
-/turf/open/floor/plating/asteroid/airless/cave/proc/SpawnTerrain(turf/T)
-	if(prob(1))
-		if(istype(loc, /area/mine/explored) || istype(loc, /area/lavaland/surface/outdoors/explored))
-			return
-		var/randumb = pickweight(terrain_spawn_list)
-		new randumb(T)
 
 /turf/open/floor/plating/asteroid/snow
 	gender = PLURAL
