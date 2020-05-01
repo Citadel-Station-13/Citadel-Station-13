@@ -116,10 +116,10 @@
 	if(T.y+height > world.maxy)
 		return
 
-	var/list/border = block(locate(max(T.x - 1, 1), max(T.y - 1, 1), T.z)
-		locate(min(T.x + width + 1, world.maxx), min(T.y + height + 1, world.max,y T.z))
+	var/list/border = block(locate(max(T.x - 1, 1), max(T.y - 1, 1), T.z),
+		locate(min(T.x + width + 1, world.maxx), min(T.y + height + 1, world.maxy), T.z))
 	for(var/i in border)
-		var/turf/disabling = i
+		var/turf/turf_to_disable = i
 		SSair.remove_from_active(turf_to_disable) //stop processing turfs along the border to prevent runtimes, we return it in initTemplateBounds()
 		turf_to_disable.atmos_adjacent_turfs?.Cut()
 

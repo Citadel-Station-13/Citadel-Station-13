@@ -91,6 +91,15 @@ By design, d1 is the smallest direction and d2 is the highest
 		d1 = _d1
 		d2 = _d2
 
+	if(dir != SOUTH)
+		var/angle_to_turn = dir2angle(dir) - 180
+		// direct dir set instead of setDir intentional
+		dir = SOUTH
+		if(d1)
+			d1 = turn(d1, angle_to_turn)
+		if(d2)
+			d2 = turn(d2, angle_to_turn)
+
 	var/turf/T = get_turf(src)			// hide if turf is not intact
 	if(level==1)
 		hide(T.intact)
