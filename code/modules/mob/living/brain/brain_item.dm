@@ -245,23 +245,17 @@
 	. = adjusted_amount
 */
 
-/obj/item/organ/brain/on_life()
-	if(damage >= BRAIN_DAMAGE_DEATH) //rip
-		to_chat(owner, "<span class='userdanger'>The last spark of life in your brain fizzles out...</span>")
-		owner.death()
-		brain_death = TRUE
-		return
-	..()
-
-/obj/item/organ/brain/on_death()
-	if(damage <= BRAIN_DAMAGE_DEATH) //rip
-		brain_death = FALSE
-	..()
-
-
 /obj/item/organ/brain/applyOrganDamage(var/d, var/maximum = maxHealth)
-	..()
-
+	. = ..()
+	if(!. || !owner)
+		return
+	if(damage >= BRAIN_DAMAGE_DEATH) //rip
+		if(owner.stat != DEAD)
+			to_chat(owner, "<span class='userdanger'>The last spark of life in your brain fizzles out...</span>")
+			owner.death()
+		brain_death = TRUE
+	else
+		brain_death = FALSE
 
 /obj/item/organ/brain/check_damage_thresholds(mob/M)
 	. = ..()

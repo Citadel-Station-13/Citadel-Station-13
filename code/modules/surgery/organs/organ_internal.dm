@@ -108,7 +108,7 @@
 		var/datum/gas_mixture/enviro = T.return_air()
 		local_temp = enviro.temperature
 
-	else if(istype(loc, /mob/) && !owner)
+	else if(!owner && ismob(loc))
 		var/mob/M = loc
 		if(is_type_in_typecache(M.loc, GLOB.freezing_objects))
 			if(!(organ_flags & ORGAN_FROZEN))
@@ -134,18 +134,17 @@
 	organ_flags &= ~ORGAN_FROZEN
 	return FALSE
 
-/obj/item/organ/proc/on_life()	//repair organ damage if the organ is not failing
-	if(organ_flags & ORGAN_FAILING)
-		return
-	if(is_cold())
-		return
-	///Damage decrements by a percent of its maxhealth
-	var/healing_amount = -(maxHealth * healing_factor)
-	///Damage decrements again by a percent of its maxhealth, up to a total of 4 extra times depending on the owner's health
-	healing_amount -= owner.satiety > 0 ? 4 * healing_factor * owner.satiety / MAX_SATIETY : 0
-	if(healing_amount)
-		applyOrganDamage(healing_amount) //to FERMI_TWEAK
-		//Make it so each threshold is stuck.
+/obj/item/organ/proc/on_life()	//repair organ damage if the organ is not failing or synthetic
+	if(organ_flags & ORGAN_FAILING || !owner)
+		return FALSE
+	if(!is_cold() && damage)
+		///Damage decrements by a percent of its maxhealth
+		var/healing_amount = -(maxHealth * healing_factor)
+		///Damage decrements again by a percent of its maxhealth, up to a total of 4 extra times depending on the owner's satiety
+		healing_amount -= owner.satiety > 0 ? 4 * healing_factor * owner.satiety / MAX_SATIETY : 0
+		if(healing_amount)
+			applyOrganDamage(healing_amount) //to FERMI_TWEAK
+	return TRUE
 
 /obj/item/organ/examine(mob/user)
 	. = ..()
@@ -205,9 +204,7 @@
 
 ///Adjusts an organ's damage by the amount "d", up to a maximum amount, which is by default max damage
 /obj/item/organ/proc/applyOrganDamage(var/d, var/maximum = maxHealth)	//use for damaging effects
-	if(!d) //Micro-optimization.
-		return FALSE
-	if(maximum < damage)
+	if(!d || maximum < damage) //Micro-optimization.
 		return FALSE
 	damage = clamp(damage + d, 0, maximum)
 	var/mess = check_damage_thresholds()

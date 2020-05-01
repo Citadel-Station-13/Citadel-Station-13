@@ -8,6 +8,10 @@
 #define PLANE_SPACE_PARALLAX -90
 #define PLANE_SPACE_PARALLAX_RENDER_TARGET "PLANE_SPACE_PARALLAX"
 
+#define OPENSPACE_LAYER 17 //Openspace layer over all
+#define OPENSPACE_PLANE -4 //Openspace plane below all turfs
+#define OPENSPACE_BACKDROP_PLANE -3 //Black square just over openspace plane to guaranteed cover all in openspace turf
+
 #define FLOOR_PLANE -2
 #define FLOOR_PLANE_RENDER_TARGET "FLOOR_PLANE"
 #define GAME_PLANE -1
@@ -61,7 +65,9 @@
 
 #define BELOW_MOB_LAYER 3.7
 #define LYING_MOB_LAYER 3.8
+#define MOB_LOWER_LAYER 3.95
 //#define MOB_LAYER 4 //For easy recordkeeping; this is a byond define
+#define MOB_UPPER_LAYER 4.05
 #define ABOVE_MOB_LAYER 4.1
 #define WALL_OBJ_LAYER 4.25
 #define EDGED_TURF_LAYER 4.3
@@ -102,10 +108,6 @@
 #define ABOVE_LIGHTING_PLANE 16
 #define ABOVE_LIGHTING_LAYER 16
 #define ABOVE_LIGHTING_RENDER_TARGET "ABOVE_LIGHTING_PLANE"
-
-#define FLOOR_OPENSPACE_PLANE 17
-#define OPENSPACE_LAYER 17
-#define OPENSPACE_RENDER_TARGET "OPENSPACE_PLANE"
 
 #define BYOND_LIGHTING_PLANE 18
 #define BYOND_LIGHTING_LAYER 18

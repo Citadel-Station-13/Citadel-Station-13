@@ -352,7 +352,6 @@ SUBSYSTEM_DEF(vote)
 			if("dynamic")
 				if(SSticker.current_state > GAME_STATE_PREGAME)//Don't change the mode if the round already started.
 					return message_admins("A vote has tried to change the gamemode, but the game has already started. Aborting.")
-				GLOB.master_mode = "dynamic"
 				var/list/runnable_storytellers = config.get_runnable_storytellers()
 				var/datum/dynamic_storyteller/picked
 				for(var/T in runnable_storytellers)
@@ -489,6 +488,7 @@ SUBSYSTEM_DEF(vote)
 				modes_to_add -= "traitor" // makes it so that traitor is always available
 				choices.Add(modes_to_add)
 			if("dynamic")
+				GLOB.master_mode = "dynamic"
 				var/list/probabilities = CONFIG_GET(keyed_list/storyteller_weight)
 				for(var/T in config.storyteller_cache)
 					var/datum/dynamic_storyteller/S = T
