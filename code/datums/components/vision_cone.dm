@@ -147,7 +147,7 @@
 		var/_x = (T1.x - T2.x)
 		var/_y = (T1.y - T2.y)
 		if(!_x && !_y)
-			zero_x_y_statement
+			continue
 		var/dir = (source.dir & (EAST|WEST)) || source.dir
 		var/degree = -angle
 		var/half = shadow_angle/2
