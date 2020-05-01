@@ -175,10 +175,17 @@
 	name = "Explosive Lance (Grenade)"
 	result = /obj/item/twohanded/spear
 	reqs = list(/obj/item/twohanded/spear = 1,
-				/obj/item/grenade = 1)
+				/obj/item/grenade = 1,
+				/obj/item/restraints/handcuffs/cable = 1,
+				/obj/item/assembly/igniter = 2,
+				/obj/item/stack/sheet/plasteel = 3,
+				/datum/reagent/fuel = 50
+
+				)
 	parts = list(/obj/item/twohanded/spear = 1,
-				/obj/item/grenade = 1)
-	time = 15
+				/obj/item/grenade = 1,
+				/obj/item/restraints/handcuffs/cable = 1)
+	time = 450
 	category = CAT_WEAPONRY
 	subcategory = CAT_WEAPON
 
