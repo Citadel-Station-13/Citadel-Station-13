@@ -148,7 +148,8 @@
 			msg = blind_message
 		else if(T.lighting_object && T.lighting_object.invisibility <= M.see_invisible && T.is_softly_lit() && !in_range(T,M)) //the light object is dark and not invisible to us, darkness does not matter if you're directly next to the target
 			msg = blind_message
-
+		else if(SEND_SIGNAL(M, COMSIG_MOB_GET_VISIBLE_MESSAGE, src, message, vision_distance, ignored_mobs) & COMPONENT_NO_VISIBLE_MESSAGE)
+			msg = blind_message
 		if(!msg)
 			continue
 		M.show_message(msg, MSG_VISUAL,blind_message, MSG_AUDIBLE)
@@ -315,8 +316,13 @@ mob/visible_message(message, self_message, blind_message, vision_distance = DEFA
 /mob/proc/show_inv(mob/user)
 	return
 
+//view() but with a signal, to allow blacklisting some of the otherwise visible atoms.
+/mob/proc/visible_atoms()
+	. = view()
+	SEND_SIGNAL(src, COMSIG_MOB_VISIBLE_ATOMS, .)
+
 //mob verbs are faster than object verbs. See https://secure.byond.com/forum/?post=1326139&page=2#comment8198716 for why this isn't atom/verb/examine()
-/mob/verb/examinate(atom/A as mob|obj|turf in view()) //It used to be oview(12), but I can't really say why
+/mob/verb/examinate(atom/A as mob|obj|turf in visible_atoms()) //It used to be oview(12), but I can't really say why
 	set name = "Examine"
 	set category = "IC"
 
@@ -329,9 +335,13 @@ mob/visible_message(message, self_message, blind_message, vision_distance = DEFA
 		return
 
 	face_atom(A)
+	var/flags = SEND_SIGNAL(src, COMSIG_MOB_EXAMINATE, A)
+	if(flags & COMPONENT_DENY_EXAMINATE)
+		if(flags & COMPONENT_EXAMINATE_BLIND)
+			to_chat(src, "<span class='warning'>Something is there but you can't see it!</span>")
+		return
 	var/list/result = A.examine(src)
 	to_chat(src, result.Join("\n"))
-	SEND_SIGNAL(src, COMSIG_MOB_EXAMINATE, A)
 
 //same as above
 //note: ghosts can point, this is intended

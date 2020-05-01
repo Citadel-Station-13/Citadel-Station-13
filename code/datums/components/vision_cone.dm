@@ -2,91 +2,74 @@
 #define FOV_180_DEGREES	180
 #define FOV_270_DEGREES	270
 
-
-GLOBAL_LIST_INIT(available_fov_planes, generate_fov_planes_list())
-
-/proc/generate_fov_planes_list()
-	. = list()
-	for(var/a in FIELD_OF_VISION_PLANE_START to FIELD_OF_VISION_PLANE_END)
-		. += a
-
 /datum/component/vision_cone
-	///a 480x480 screen object that more or less indicates which portions of the screen your vision can't reach.
+	can_transfer = TRUE
 	var/atom/movable/fov_holder/fov
 	var/current_fov_size = list(15, 15)
 	var/angle = 0
-	var/rot_scale = 1 //used in shadow cone rotation.
-	var/shadow_angle = 90
+	var/rot_scale = 1 //used in the shadow cone transform Turn() calculations.
+	var/shadow_angle = FOV_90_DEGREES
+	var/image/shadow_mask //what masks the environment from our sight.
+	var/image/visual_shadow //the visual, found on the WALL_PLANE plane.
+	var/image/owner_mask //This will mask the shadow cone mask, so it won't mask the user.
 
 /datum/component/vision_cone/Initialize(fov_type = FOV_90_DEGREES, _angle = 0)
 	if(!ismob(parent))
 		return COMPONENT_INCOMPATIBLE
-	var/mob/M = parent
 	angle = _angle
 	shadow_angle = fov_type
+
+/datum/component/vision_cone/RegisterWithParent()
+	. = ..()
+	var/mob/M = parent
 	if(M.client)
-		generate_fov_holder(M, _angle)
+		generate_fov_holder(M, angle)
 	RegisterSignal(M, COMSIG_MOB_CLIENT_LOGIN, .proc/on_mob_login)
-	RegisterSignal(M, COMSIG_MOB_CLIENT_LOGOUT, .proc/on_mob_logout)
 	RegisterSignal(M, COMSIG_MOB_CLIENT_CHANGE_VIEW, .proc/on_change_view)
-
-/datum/component/vision_cone/Destroy()
-	if(fov)
-		delete_fov_holder(parent)
-	return ..()
-
-/datum/component/vision_cone/proc/generate_fov_holder(mob/M, _angle = 0)
-	var/plane_to_use = popleft(GLOB.available_fov_planes)
-	for(var/A in GLOB.mob_huds)
-		var/datum/hud/H = A
-		var/obj/screen/plane_master/field_of_vision/F = new /obj/screen/plane_master/field_of_vision(null, plane_to_use)
-		H.plane_masters["[plane_to_use]"] = F
-		if(H.mymob.client)
-			H.mymob.client.screen += F
-	var/obj/screen/plane_master/field_of_vision/F = M.hud_used.plane_masters["[plane_to_use]"]
-	F.render_target = "[FOV_RENDER_TARGET][F.plane]"
-	F.alpha = 255
-	fov = new(get_turf(M))
-	fov.icon_state = "[shadow_angle]"
-	fov.dir = M.dir
-	fov.plane = plane_to_use
-	if(_angle)
-		rotate_shadow_cone(_angle, FALSE)
-	if(M.client.view != "[current_fov_size[1]]x[current_fov_size[2]]")
-		resize_fov(current_fov_size, M.client.view)
 	RegisterSignal(M, COMSIG_ATOM_DIR_CHANGE, .proc/on_dir_change)
 	RegisterSignal(M, COMSIG_MOVABLE_MOVED, .proc/on_mob_moved)
-	RegisterSignal(SSdcs, COMSIG_GLOB_VAR_EDIT, .proc/on_new_hud)
+	RegisterSignal(M, COMSIG_MOB_GET_VISIBLE_MESSAGE, .proc/on_visible_message)
+	RegisterSignal(M, COMSIG_MOB_EXAMINATE, .proc/on_examinate)
+	RegisterSignal(M, COMSIG_MOB_VISIBLE_ATOMS, .proc/on_visible_atoms)
 
-/datum/component/vision_cone/proc/delete_fov_holder(mob/M)
-	UnregisterSignal(M, list(COMSIG_ATOM_DIR_CHANGE, COMSIG_MOVABLE_MOVED))
-	UnregisterSignal(SSdcs, COMSIG_GLOB_VAR_EDIT)
-	var/plane_to_unuse = fov.plane
-	QDEL_NULL(fov)
-	for(var/A in GLOB.mob_huds)
-		var/datum/hud/H = A
-		var/obj/screen/plane_master/field_of_vision/F = H.plane_masters["[plane_to_unuse]"]
-		H.plane_masters -= ["plane_to_unuse"]
-		if(H.mymob.client)
-			H.mymob.client.screen -= F
-		qdel(F)
-	GLOB.available_fov_planes += plane_to_unuse
+/datum/component/vision_cone/UnregisterFromParent()
+	. = ..()
+	var/mob/M = parent
+	if(!QDELETED(fov))
+		if(M.client)
+			M.client.images -= owner_mask
+			M.client.images -= shadow_mask
+			M.client.images -= visual_shadow
+		QDEL_NULL(fov)
+	UnregisterSignal(M, list(COMSIG_MOB_CLIENT_LOGIN, COMSIG_MOB_CLIENT_CHANGE_VIEW,
+							COMSIG_ATOM_DIR_CHANGE, COMSIG_MOVABLE_MOVED,
+							COMSIG_MOB_GET_VISIBLE_MESSAGE, COMSIG_MOB_EXAMINATE, COMSIG_MOB_VISIBLE_ATOMS))
 
-/datum/component/vision_cone/proc/on_new_hud(datum/source, datum/hud/new_hud)
-	var/obj/screen/plane_master/field_of_vision/F = new /obj/screen/plane_master/field_of_vision(null, fov.plane)
-	new_hud.plane_masters["[fov.plane]"] = F
-
-/datum/component/vision_cone/proc/on_mob_login(mob/source, client/client)
-	generate_fov_holder(source)
-
-/datum/component/vision_cone/proc/on_mob_logout(mob/source, client/client)
-	delete_fov_holder(source)
-
-/datum/component/vision_cone/proc/on_mob_moved(mob/source, atom/oldloc, dir, forced)
-	fov.forceMove(get_turf(source), harderforce = TRUE)
-
-/datum/component/vision_cone/proc/on_dir_change(mob/source, old_dir, new_dir)
-	fov.dir = new_dir
+/datum/component/vision_cone/proc/generate_fov_holder(mob/M, _angle = 0)
+	if(QDELETED(fov))
+		fov = new(get_turf(M))
+		fov.icon_state = "[shadow_angle]"
+		fov.dir = M.dir
+		shadow_mask = image('icons/misc/field_of_vision.dmi', fov, "[shadow_angle]", FIELD_OF_VISION_LAYER)
+		shadow_mask.override = TRUE
+		shadow_mask.plane = FIELD_OF_VISION_PLANE
+		visual_shadow = image('icons/misc/field_of_vision.dmi', fov, "[shadow_angle]_v", FIELD_OF_VISION_LAYER)
+		visual_shadow.plane = WALL_PLANE
+		owner_mask = new(loc = M)
+		owner_mask.appearance_flags = RESET_TRANSFORM
+		owner_mask.plane = FIELD_OF_VISION_BLOCKER_PLANE
+		owner_mask.pixel_x -= initial(M.pixel_x) //usually the case of critters with icons larger than 32x32
+		owner_mask.pixel_y -= initial(M.pixel_y) //Idem.
+		if(!M.render_target)
+			M.render_target = ref(M)
+		owner_mask.render_source = M.render_target
+		if(_angle)
+			rotate_shadow_cone(_angle)
+	M.client.images += shadow_mask
+	M.client.images += visual_shadow
+	M.client.images += owner_mask
+	if(M.client.view != "[current_fov_size[1]]x[current_fov_size[2]]")
+		resize_fov(current_fov_size, getviewsize(M.client.view))
 
 /datum/component/vision_cone/proc/rotate_shadow_cone(new_angle)
 	var/simple_degrees = SIMPLIFY_DEGREES(new_angle - angle)
@@ -94,30 +77,88 @@ GLOBAL_LIST_INIT(available_fov_planes, generate_fov_planes_list())
 	if(to_scale)
 		var/old_rot_scale = rot_scale
 		rot_scale = 1 + to_scale
-		fov.transform.Scale(rot_scale/old_rot_scale)
-	fov.transform.Turn(fov.transform, simple_degrees)
-
-/datum/component/vision_cone/proc/on_change_view(mob/source, client, list/old_view, list/view)
-	resize_fov(old_view, view)
+		if(old_rot_scale != rot_scale)
+			visual_shadow.transform = shadow_mask.transform = shadow_mask.transform.Scale(rot_scale/old_rot_scale)
+	visual_shadow.transform = shadow_mask.transform = shadow_mask.transform.Turn(fov.transform, simple_degrees)
 
 /datum/component/vision_cone/proc/resize_fov(list/old_view, list/view)
 	current_fov_size = view
 	var/old_size = max(old_view[1], old_view[2])
 	var/new_size = max(view[1], view[2])
 	if(old_size == new_size) //longest edges are still of the same length.
-		stack_trace("aaaaaaa")
 		return
-	fov.transform.Scale((new_size/old_size)**2)
+	visual_shadow.transform = shadow_mask.transform = shadow_mask.transform.Scale(new_size/old_size)
+
+/datum/component/vision_cone/proc/on_mob_login(mob/source, client/client)
+	generate_fov_holder(source, angle)
+
+/datum/component/vision_cone/proc/on_mob_moved(mob/source, atom/oldloc, dir, forced)
+	fov?.forceMove(get_turf(source), harderforce = TRUE)
+
+/datum/component/vision_cone/proc/on_dir_change(mob/source, old_dir, new_dir)
+	if(fov)
+		fov.dir = new_dir
+
+/datum/component/vision_cone/proc/on_change_view(mob/source, client, list/old_view, list/view)
+	resize_fov(old_view, view)
+
+//Byond doc is not entirely correct on the integrated arctan() proc.
+//When both x and y are negative, the output is also negative, cycling clockwise instead of counter-clockwise.
+//That's also why I have to use the SIMPLIFY_DEGREES macro.
+#define FOV_ANGLE_CHECK(mob, target, zero_x_y_statement, success_statement) \
+	var/turf/T1 = get_turf(target);\
+	var/turf/T2 = get_turf(mob);\
+	var/_x = (T1.x - T2.x);\
+	var/_y = (T1.y - T2.y);\
+	if(!_x && !_y){\
+		zero_x_y_statement;\
+	}\
+	var/dir = (mob.dir & (EAST|WEST)) || mob.dir;\
+	var/_degree = -angle;\
+	var/_half = shadow_angle/2;\
+	switch(dir){\
+		if(EAST){\
+			_degree += 180;\
+		}\
+		if(NORTH){\
+			_degree += 270;\
+		}\
+		if(SOUTH){\
+			_degree += 90;\
+		};\
+	}\
+	var/_min = SIMPLIFY_DEGREES(_degree - _half);\
+	var/_max = SIMPLIFY_DEGREES(_degree + _half);\
+	if((_min > _max) ? !ISINRANGE(SIMPLIFY_DEGREES(arctan(_x, _y)), _max, _min) : ISINRANGE(SIMPLIFY_DEGREES(arctan(_x, _y)), _min, _max)){\
+		success_statement;\
+	}
+
+/datum/component/vision_cone/proc/on_examinate(mob/source, atom/target)
+	FOV_ANGLE_CHECK(source, target, return, return COMPONENT_DENY_EXAMINATE|COMPONENT_EXAMINATE_BLIND)
+
+/datum/component/vision_cone/proc/on_visible_message(mob/source, atom/target, message, range, list/ignored_mobs)
+	FOV_ANGLE_CHECK(source, target, return, return COMPONENT_NO_VISIBLE_MESSAGE)
+
+/datum/component/vision_cone/proc/on_visible_atoms(mob/source, list/atoms)
+	for(var/k in atoms)
+		var/atom/A = k
+		FOV_ANGLE_CHECK(source, A, continue, atoms -= A)
+
+#undef FOV_ANGLE_CHECK
 
 /atom/movable/fov_holder //required for mouse opacity.
 	name = "field of vision holder"
-	icon = 'icons/misc/field_of_vision.dmi'
-	icon_state = "90"
-	color = "#AAAAAA"
-	pixel_x = -224
+	pixel_x = -224 //the image is about 480x480 px, ergo 15 tiles (480/32) big, we gotta center it.
 	pixel_y = -224
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	plane = FIELD_OF_VISION_PLANE
 	anchored = TRUE
+
+/atom/movable/fov_holder/ConveyorMove()
+	return
+
+/atom/movable/fov_holder/has_gravity(turf/T)
+	return FALSE
 
 /atom/movable/fov_holder/ex_act(severity)
 	return FALSE
@@ -141,8 +182,6 @@ GLOBAL_LIST_INIT(available_fov_planes, generate_fov_planes_list())
 
 /mob
 	var/datum/component/vision_cone/FoV
-	var/del_fov = FALSE
-
 
 /mob/verb/fov_test()
 	set name = "FoV Test Toggle"
@@ -150,30 +189,5 @@ GLOBAL_LIST_INIT(available_fov_planes, generate_fov_planes_list())
 
 	if(!FoV)
 		FoV = AddComponent(/datum/component/vision_cone)
-	else if(!del_fov)
-		FoV.fov.filters = null
-		FoV.fov.render_target = null
-		del_fov = TRUE
-		spawn(50)
-			QDEL_NULL(FoV)
-			del_fov = FALSE
-
-/mob/verb/fov_icon()
-	set name = "FoV Test Icon"
-	set category = "IC"
-
-	if(!FoV)
-		return
-	switch(FoV.fov.icon_state)
-		if("90")
-			FoV.fov.icon_state = "[FOV_180_DEGREES]"
-		if("180")
-			FoV.fov.icon_state = "[FOV_270_DEGREES]"
-		if("270")
-			FoV.fov.icon_state = "[FOV_90_DEGREES]b"
-		if("90b")
-			FoV.fov.icon_state = "[FOV_180_DEGREES]b"
-		if("180b")
-			FoV.fov.icon_state = "[FOV_270_DEGREES]b"
-		if("270b")
-			FoV.fov.icon_state = "[FOV_90_DEGREES]"
+	else
+		QDEL_NULL(FoV)

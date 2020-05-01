@@ -158,6 +158,7 @@
 /obj/item/storage/secure/safe
 	name = "secure safe"
 	icon = 'icons/obj/storage.dmi'
+	plane = ABOVE_WALL_PLANE
 	icon_state = "safe"
 	icon_opened = "safe0"
 	icon_locking = "safeb"

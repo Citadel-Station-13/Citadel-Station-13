@@ -77,7 +77,7 @@
 
 	if(SEND_SIGNAL(src, COMSIG_MOB_CLICKON, A, params) & COMSIG_MOB_CANCEL_CLICKON)
 		return
-		
+
 	var/list/modifiers = params2list(params)
 	if(modifiers["shift"] && modifiers["middle"])
 		ShiftMiddleClickOn(A)
@@ -324,10 +324,11 @@
 	return
 
 /atom/proc/ShiftClick(mob/user)
-	var/flags = SEND_SIGNAL(src, COMSIG_CLICK_SHIFT, user)
+	var/flags = SEND_SIGNAL(src, COMSIG_CLICK_SHIFT, user) | SEND_SIGNAL(user, COMSIG_MOB_CLICKED_SHIFT_ON, src)
 	if(!(flags & COMPONENT_DENY_EXAMINATE) && user.client && (user.client.eye == user || user.client.eye == user.loc || flags & COMPONENT_ALLOW_EXAMINATE))
 		user.examinate(src)
-	return
+	else if(flags & COMPONENT_EXAMINATE_BLIND)
+		to_chat(user, "<span class='warning'>Something is there but you can't see it!</span>")
 
 /*
 	Ctrl click

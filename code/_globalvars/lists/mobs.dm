@@ -94,5 +94,3 @@ GLOBAL_LIST_INIT(blood_reagent_types, list(
 		/datum/reagent/blood,
 		/datum/reagent/blood/jellyblood
 		))
-
-GLOBAL_LIST_EMPTY(mob_huds)
