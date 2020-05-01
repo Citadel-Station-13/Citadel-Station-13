@@ -38,6 +38,9 @@
 
 	var/year_offset = 540 //The offset of ingame year from the actual IRL year. You know you want to make a map that takes place in the 90's. Don't lie.
 
+	/// Orientation to load in by default.
+	var/orientation = SOUTH		//byond defaults to placing everyting SOUTH.
+
 /proc/load_map_config(filename = "data/next_map.json", default_to_box, delete_after, error_if_missing = TRUE)
 	var/datum/map_config/config = new
 	if (default_to_box)
@@ -139,12 +142,17 @@
 
 	if ("minetype" in json)
 		minetype = json["minetype"]
-	
+
 	if ("maptype" in json)
 		maptype = json["maptype"]
 
 	if ("announcertype" in json)
 		announcertype = json["announcertype"]
+
+	if ("orientation" in json)
+		orientation = json["orientation"]
+		if(!(orientation in GLOB.cardinals))
+			orientation = SOUTH
 
 	allow_custom_shuttles = json["allow_custom_shuttles"] != FALSE
 
