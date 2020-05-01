@@ -26,7 +26,7 @@
 
 /obj/item/organ/liver/on_life()
 	. = ..()
-	if(!.)//can't process reagents with a failing liver
+	if(!. || !owner)//can't process reagents with a failing liver
 		return
 
 	if(filterToxins && !HAS_TRAIT(owner, TRAIT_TOXINLOVER))
