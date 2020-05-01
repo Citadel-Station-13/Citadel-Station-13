@@ -213,6 +213,7 @@ GLOBAL_LIST_EMPTY(block_parry_data)
 	var/stage = get_parry_stage()
 	if(stage == NOT_PARRYING)
 		return BLOCK_NONE
+	var/datum/block_parry_data/data = get_block_parry_data()
 	var/efficiency = get_parry_efficiency(attack_type)
 	switch(parrying)
 		if(ITEM_PARRY)
@@ -227,7 +228,7 @@ GLOBAL_LIST_EMPTY(block_parry_data)
 	var/current = return_list[BLOCK_RETURN_MITIGATION_PERCENT] || 0
 	return_list[BLOCK_RETURN_MITIGATION_PERCENT] = 100 - (clamp(100 - current, 0, 100) * clamp(1 - (efficiency / 100), 0, 1))
 	var/list/effect_text = run_parry_countereffects(object, damage, attack_text, attack_type, armour_penetration, attacker, def_zone, return_list, efficiency)
-	if(parry_default_handle-feedback)
+	if(data.parry_default_handle_feedback)
 		handle_parry_feedback(object, damage, attack_text, attack_type, armour_penetration, attacker, def_zone, return_list, efficiency, effect_text)
 	successful_parries |= efficiency
 
@@ -296,7 +297,7 @@ GLOBAL_LIST_EMPTY(block_parry_data)
 /obj/effect/abstract/parry/main
 	icon_state = "parry_bm_hold"
 
-/obj/effect/abstract/parry/main/proc/run(windup_time = 2, active_time = 5, spindown_time = 3, qdel_end = TRUE)
+/obj/effect/abstract/parry/main/proc/run_animation(windup_time = 2, active_time = 5, spindown_time = 3, qdel_end = TRUE)
 	QDEL_IN(src, windup_time + active_time + spindown_time)
 	var/matrix/current = transform
 	transform = matrix(0.1, 0, 0, 0, 0.1, 0)

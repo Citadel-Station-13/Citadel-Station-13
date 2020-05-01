@@ -205,7 +205,7 @@
 	active_block_do_stamina_damage(owner, object, stamina_cost, attack_text, attack_type, armour_penetration, attacker, def_zone, final_block_chance, block_return)
 	block_return[BLOCK_RETURN_ACTIVE_BLOCK_DAMAGE_MITIGATED] = damage_mitigated
 	block_return[BLOCK_RETURN_SET_DAMAGE_TO] = final_damage
-	. = BLOCK_CHANGE_DAMAGE
+	. = BLOCK_SHOULD_CHANGE_DAMAGE
 	if(final_damage <= 0)
 		. |= BLOCK_SUCCESS			//full block
 		owner.visible_message("<span class='warning'>[owner] blocks \the [attack_text] with [src]!</span>")
