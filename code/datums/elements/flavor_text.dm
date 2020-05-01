@@ -120,13 +120,16 @@ GLOBAL_LIST_EMPTY(mobs_with_editable_flavor_text) //et tu, hacky code
 	//list of antagonists etcetera that should have nothing to do with people's snowflakes.
 	var/static/list/i_dont_even_know_who_you_are = typecacheof(list(/datum/antagonist/abductor, /datum/antagonist/ert,
 													/datum/antagonist/nukeop, /datum/antagonist/wizard))
+	/// Do we transfer by DNA?
+	var/dna_carryover = TRUE
 
-/datum/element/flavor_text/carbon/Attach(datum/target, text = "", _name = "Flavor Text", _addendum, _max_len = MAX_FLAVOR_LEN, _always_show = FALSE, _edit = TRUE, _save_key = "flavor_text")
+/datum/element/flavor_text/carbon/Attach(datum/target, text = "", _name = "Flavor Text", _addendum, _max_len = MAX_FLAVOR_LEN, _always_show = FALSE, _edit = TRUE, _save_key = "flavor_text", _dna_carryover = TRUE)
 	if(!iscarbon(target))
 		return ELEMENT_INCOMPATIBLE
 	. = ..()
 	if(. == ELEMENT_INCOMPATIBLE)
 		return
+	src.dna_carryover = _dna_carryover
 	RegisterSignal(target, COMSIG_CARBON_IDENTITY_TRANSFERRED_TO, .proc/update_dna_flavor_text)
 	RegisterSignal(target, COMSIG_MOB_ANTAG_ON_GAIN, .proc/on_antag_gain)
 	if(ishuman(target))
@@ -139,14 +142,17 @@ GLOBAL_LIST_EMPTY(mobs_with_editable_flavor_text) //et tu, hacky code
 	UnregisterSignal(C, list(COMSIG_CARBON_IDENTITY_TRANSFERRED_TO, COMSIG_MOB_ANTAG_ON_GAIN, COMSIG_HUMAN_PREFS_COPIED_TO, COMSIG_HUMAN_HARDSET_DNA, COMSIG_HUMAN_ON_RANDOMIZE))
 
 /datum/element/flavor_text/carbon/proc/update_dna_flavor_text(mob/living/carbon/C)
-	texts_by_atom[C] = C.dna.features["[save_key]"]
+	if(!save_key)
+		return
+	// if we aren't carrying over from dna load from prefs instead
+	texts_by_atom[C] = dna_carryover? C.dna.features[save_key] : C.client?.prefs?.features[save_key]
 
 /datum/element/flavor_text/carbon/proc/update_prefs_flavor_text(mob/living/carbon/human/H, datum/preferences/P, icon_updates = TRUE, roundstart_checks = TRUE)
-	texts_by_atom[H] = P.features["[save_key]"]
+	texts_by_atom[H] = P.features[save_key]
 
 /datum/element/flavor_text/carbon/set_flavor(mob/living/carbon/user)
 	. = ..()
-	if(. && user.dna)
+	if(. && user.dna && dna_carryover)		// only save to dna if carrying over.
 		user.dna.features["[save_key]"] = texts_by_atom[user]
 
 /datum/element/flavor_text/carbon/proc/unset_flavor(mob/living/carbon/user)

@@ -1514,10 +1514,10 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					if(!isnull(msg))
 						features["flavor_text"] = html_decode(msg)
 
-				if("ooc_text")
+				if("ooc_notes")
 					var/msg = stripped_multiline_input(usr, "Set always-visible OOC notes related to content preferences. THIS IS NOT FOR CHARACTE DESCRIPTIONS!!", "OOC notes", features["ooc_notes"], MAX_FLAVOR_LEN, TRUE)
 					if(!isnull(msg))
-						features["ooc_nodes"] = html_decode(msg)
+						features["ooc_notes"] = html_decode(msg)
 
 				if("hair")
 					var/new_hair = input(user, "Choose your character's hair colour:", "Character Preference","#"+hair_color) as color|null
