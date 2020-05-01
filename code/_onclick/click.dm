@@ -327,8 +327,6 @@
 	var/flags = SEND_SIGNAL(src, COMSIG_CLICK_SHIFT, user) | SEND_SIGNAL(user, COMSIG_MOB_CLICKED_SHIFT_ON, src)
 	if(!(flags & COMPONENT_DENY_EXAMINATE) && user.client && (user.client.eye == user || user.client.eye == user.loc || flags & COMPONENT_ALLOW_EXAMINATE))
 		user.examinate(src)
-	else if(flags & COMPONENT_EXAMINATE_BLIND)
-		to_chat(user, "<span class='warning'>Something is there but you can't see it!</span>")
 
 /*
 	Ctrl click

@@ -64,7 +64,7 @@
 
 #define ISODD(x) (x % 2 != 0)
 
-// Returns true if val is from min to max, inclusive. 174, 280, 14, 280
+// Returns true if val is from min to max, inclusive.
 #define ISINRANGE(val, min, max) (min <= val && val <= max)
 
 // Same as above, exclusive.

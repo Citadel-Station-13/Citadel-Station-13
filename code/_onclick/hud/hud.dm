@@ -76,8 +76,7 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	hand_slots = list()
 
 	for(var/mytype in subtypesof(/obj/screen/plane_master))
-		var/obj/screen/plane_master/instance = mytype
-		instance = new mytype()
+		var/obj/screen/plane_master/instance = new mytype()
 		plane_masters["[instance.plane]"] = instance
 		instance.backdrop(mymob)
 

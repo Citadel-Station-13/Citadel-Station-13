@@ -179,15 +179,3 @@
 /atom/movable/fov_holder/forceMove(atom/destination, no_tp=FALSE, harderforce = FALSE)
 	if(harderforce)
 		return ..()
-
-/mob
-	var/datum/component/vision_cone/FoV
-
-/mob/verb/fov_test()
-	set name = "FoV Test Toggle"
-	set category = "IC"
-
-	if(!FoV)
-		FoV = AddComponent(/datum/component/vision_cone)
-	else
-		QDEL_NULL(FoV)
