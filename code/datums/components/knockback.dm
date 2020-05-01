@@ -60,4 +60,4 @@
 		throw_dir = turn(throw_dir, 180)
 		throw_distance *= -1
 	var/atom/throw_target = get_edge_target_turf(throwee, throw_dir)
-	throwee.safe_throw_at(throw_target, throw_distance, 1, thrower, gentle = throw_gentle)
+	throwee.safe_throw_at(throw_target, throw_distance, 1, thrower)		//, gentle = throw_gentle)
