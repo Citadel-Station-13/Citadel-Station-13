@@ -14,17 +14,13 @@
 /area/icemoon/underground/explored)
 "q" = (
 /mob/living/simple_animal/hostile/megafauna/wendigo,
-/turf/open/indestructible/necropolis{
-	initial_gas_mix = "ICEMOON_ATMOS"
-	},
+/turf/open/indestructible/necropolis/air,
 /area/icemoon/underground/explored)
 "z" = (
 /obj/effect/landmark/portal_exit{
 	id = "wendigo arena"
 	},
-/turf/open/indestructible/necropolis{
-	initial_gas_mix = "ICEMOON_ATMOS"
-	},
+/turf/open/indestructible/necropolis/air,
 /area/icemoon/underground/explored)
 "K" = (
 /obj/effect/landmark/portal_exit{
@@ -33,9 +29,7 @@
 /turf/open/floor/plating/asteroid/snow/ice/icemoon,
 /area/icemoon/underground/explored)
 "N" = (
-/turf/open/indestructible/necropolis{
-	initial_gas_mix = "ICEMOON_ATMOS"
-	},
+/turf/open/indestructible/necropolis/air,
 /area/icemoon/underground/explored)
 "U" = (
 /obj/item/paper/crumpled/bloody{
