@@ -191,7 +191,7 @@
 	src.bounds = bounds = list(1.#INF, 1.#INF, 1.#INF, -1.#INF, -1.#INF, -1.#INF)
 	var/datum/map_orientation_pattern/mode = forced_pattern || GLOB.map_orientation_patterns["[orientation]"] || GLOB.map_orientation_patterns["[SOUTH]"]
 	var/invert_y = mode.invert_y
-	var/invert_x = mode.invert_x ^ reflect_across_y
+	var/invert_x = mode.invert_x
 	var/swap_xy = mode.swap_xy
 	var/xi = mode.xi
 	var/yi = mode.yi
