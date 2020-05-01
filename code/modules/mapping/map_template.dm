@@ -43,6 +43,12 @@
 		return cached_map.bounds
 	return get_parsed_bounds()
 
+/datum/map_template/proc/get_last_loaded_turf_block()
+	if(!cached_map)
+		CRASH("Improper use of get_last_loaded_turf_block, no cached_map.")
+	var/list/B = cached_map.bounds
+	return block(locate(B[MAP_MINX], B[MAP_MINY], B[MAP_MINZ]), locate(B[MAP_MAXX], B[MAP_MAXY], B[MAP_MAXZ]))
+
 /datum/map_template/proc/get_size(orientation = SOUTH)
 	if(!width || !height || !zdepth)
 		preload_size(mappath)
