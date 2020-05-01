@@ -227,7 +227,7 @@
 	// Traits
 	for(var/T in defaultTraits)
 		REMOVE_TRAIT(owner.current, T, BLOODSUCKER_TRAIT)
-	if(had_toxlover == TRUE)
+	if(had_toxlover)
 		ADD_TRAIT(owner.current, TRAIT_TOXINLOVER, SPECIES_TRAIT)
 
 	// Traits: Species
