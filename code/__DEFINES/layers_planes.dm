@@ -75,7 +75,9 @@
 
 #define BELOW_MOB_LAYER 3.7
 #define LYING_MOB_LAYER 3.8
+#define MOB_LOWER_LAYER 3.95
 //#define MOB_LAYER 4 //For easy recordkeeping; this is a byond define
+#define MOB_UPPER_LAYER 4.05
 #define ABOVE_MOB_LAYER 4.1
 #define WALL_OBJ_LAYER 4.25
 #define EDGED_TURF_LAYER 4.3

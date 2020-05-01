@@ -19,6 +19,9 @@
 	display_order = JOB_DISPLAY_ORDER_CHEMIST
 	threat = 1.5
 
+	starting_skills = list(/datum/skill/numerical/surgery = STARTING_SKILL_SURGERY_MEDICAL)
+	skill_affinities = list(/datum/skill/numerical/surgery = STARTING_SKILL_AFFINITY_SURGERY_MEDICAL)
+
 /datum/outfit/job/chemist
 	name = "Chemist"
 	jobtype = /datum/job/chemist

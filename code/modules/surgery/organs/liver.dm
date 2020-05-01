@@ -25,25 +25,24 @@
 	var/cachedmoveCalc = 1
 
 /obj/item/organ/liver/on_life()
-	var/mob/living/carbon/C = owner
+	. = ..()
+	if(!.)//can't process reagents with a failing liver
+		return
 
-	if(istype(C))
-		if(!(organ_flags & ORGAN_FAILING))//can't process reagents with a failing liver
+	if(filterToxins && !HAS_TRAIT(owner, TRAIT_TOXINLOVER))
+		//handle liver toxin filtration
+		for(var/datum/reagent/toxin/T in owner.reagents.reagent_list)
+			var/thisamount = owner.reagents.get_reagent_amount(T.type)
+			if (thisamount && thisamount <= toxTolerance)
+				owner.reagents.remove_reagent(T.type, 1)
+			else
+				damage += (thisamount*toxLethality)
 
-			if(filterToxins && !HAS_TRAIT(owner, TRAIT_TOXINLOVER))
-				//handle liver toxin filtration
-				for(var/datum/reagent/toxin/T in C.reagents.reagent_list)
-					var/thisamount = C.reagents.get_reagent_amount(T.type)
-					if (thisamount && thisamount <= toxTolerance)
-						C.reagents.remove_reagent(T.type, 1)
-					else
-						damage += (thisamount*toxLethality)
+	//metabolize reagents
+	owner.reagents.metabolize(owner, can_overdose=TRUE)
 
-			//metabolize reagents
-			C.reagents.metabolize(C, can_overdose=TRUE)
-
-			if(damage > 10 && prob(damage/3))//the higher the damage the higher the probability
-				to_chat(C, "<span class='warning'>You feel a dull pain in your abdomen.</span>")
+	if(damage > 10 && prob(damage/3))//the higher the damage the higher the probability
+		to_chat(owner, "<span class='warning'>You feel a dull pain in your abdomen.</span>")
 
 /obj/item/organ/liver/prepare_eat()
 	var/obj/S = ..()
@@ -56,22 +55,22 @@
 		return
 	if(damage >= high_threshold)
 		var/move_calc = 1+((round(damage) - high_threshold)/(high_threshold/3))
-		owner.add_movespeed_modifier(MOVESPEED_ID_CIRRHOSIS, TRUE, 100, NONE, override = TRUE, multiplicative_slowdown = move_calc)
+		owner.add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/liver_cirrhosis, multiplicative_slowdown = move_calc)
 		sizeMoveMod(move_calc, owner)
 	else
-		owner.remove_movespeed_modifier(MOVESPEED_ID_CIRRHOSIS)
+		owner.remove_movespeed_modifier(/datum/movespeed_modifier/liver_cirrhosis)
 		sizeMoveMod(1, owner)
 
 /obj/item/organ/liver/Insert(mob/living/carbon/M, special = FALSE, drop_if_replaced = TRUE)
 	. = ..()
 	if(. && damage >= high_threshold)
 		var/move_calc = 1+((round(damage) - high_threshold)/(high_threshold/3))
-		M.add_movespeed_modifier(MOVESPEED_ID_CIRRHOSIS, TRUE, 100, NONE, override = TRUE, multiplicative_slowdown = move_calc)
+		M.add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/liver_cirrhosis, multiplicative_slowdown = move_calc)
 		sizeMoveMod(move_calc, owner)
 
 /obj/item/organ/liver/Remove(special = FALSE)
 	if(!QDELETED(owner))
-		owner.remove_movespeed_modifier(MOVESPEED_ID_CIRRHOSIS)
+		owner.remove_movespeed_modifier(/datum/movespeed_modifier/liver_cirrhosis)
 		sizeMoveMod(1, owner)
 	return ..()
 

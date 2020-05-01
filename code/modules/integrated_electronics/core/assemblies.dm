@@ -79,7 +79,9 @@
 
 	for(var/I in assembly_components)
 		var/obj/item/integrated_circuit/IC = I
-		. += IC.external_examine(user)
+		var/text = IC.external_examine(user)
+		if(text)
+			. += text
 	if(opened)
 		interact(user)
 
