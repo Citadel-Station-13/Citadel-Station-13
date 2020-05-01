@@ -2,15 +2,6 @@
 //Unsorted//
 ////////////
 
-/datum/crafting_recipe/tiny_fan
-	name = "Tiny Fan"
-	reqs = list(/obj/item/stack/sheet/metal = 2)
-	result = /obj/structure/fans/tiny
-	tools = list(TOOL_SCREWDRIVER)
-	subcategory = CAT_MISCELLANEOUS
-	category = CAT_MISC
-
-
 /datum/crafting_recipe/shower
 	name = "Shower"
 	reqs = list(/obj/item/stack/sheet/metal = 3)
