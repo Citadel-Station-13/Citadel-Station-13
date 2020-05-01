@@ -1,4 +1,4 @@
-/obj/item/clothing/under/dress/skirt
+/obj/item/clothing/under/dress
 	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
 
 /obj/item/clothing/under/dress/skirt

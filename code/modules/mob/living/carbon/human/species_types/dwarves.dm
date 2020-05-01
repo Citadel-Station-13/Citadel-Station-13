@@ -101,12 +101,11 @@ GLOBAL_LIST_INIT(dwarf_last, world.file2list("strings/names/dwarf_last.txt")) //
 
 /obj/item/organ/dwarfgland/on_life() //Primary loop to hook into to start delayed loops for other loops..
 	. = ..()
-	dwarf_cycle_ticker()
+	if(owner && owner.stat != DEAD)
+		dwarf_cycle_ticker()
 
 //Handles the delayed tick cycle by just adding on increments per each on_life() tick
 /obj/item/organ/dwarfgland/proc/dwarf_cycle_ticker()
-	if(owner.stat == DEAD)
-		return //We make sure they are not dead, so they don't increment any tickers.
 	dwarf_eth_ticker++
 	dwarf_filth_ticker++
 
@@ -169,7 +168,7 @@ GLOBAL_LIST_INIT(dwarf_last, world.file2list("strings/names/dwarf_last.txt")) //
 	for(var/datum/reagent/R in owner.reagents.reagent_list)
 		if(istype(R, /datum/reagent/consumable/ethanol))
 			var/datum/reagent/consumable/ethanol/E = R
-			stored_alcohol = CLAMP(stored_alcohol + E.boozepwr / 50, 0, max_alcohol)
+			stored_alcohol = clamp(stored_alcohol + E.boozepwr / 50, 0, max_alcohol)
 	var/heal_amt = heal_rate
 	stored_alcohol -= alcohol_rate //Subtracts alcohol_Rate from stored alcohol so EX: 250 - 0.25 per each loop that occurs.
 	if(stored_alcohol > 400) //If they are over 400 they start regenerating

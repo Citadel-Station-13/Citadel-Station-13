@@ -30,3 +30,9 @@
 		total_rating += M.rating * 2			//There is only one.
 	total_rating = max(1, total_rating)
 	efficiency_coeff = total_rating
+	var/obj/item/circuitboard/machine/circuit_imprinter/C = circuit
+	offstation_security_levels = C.offstation_security_levels
+
+/obj/machinery/rnd/production/circuit_imprinter/offstation
+	offstation_security_levels = FALSE
+	circuit = /obj/item/circuitboard/machine/circuit_imprinter/offstation

@@ -272,7 +272,7 @@
 		reports += config.mode_reports[config_tag]
 		Count++
 	for(var/i in Count to rand(3,5)) //Between three and five wrong entries on the list.
-		var/false_report_type = pickweightAllowZero(report_weights)
+		var/false_report_type = pickweight(report_weights, 0)
 		report_weights[false_report_type] = 0 //Make it so the same false report won't be selected twice
 		reports += config.mode_reports[false_report_type]
 
@@ -603,4 +603,8 @@
 
 /// Mode specific admin panel.
 /datum/game_mode/proc/admin_panel()
+	return
+
+/// Mode specific info for ghost game_info
+/datum/game_mode/proc/ghost_info()
 	return

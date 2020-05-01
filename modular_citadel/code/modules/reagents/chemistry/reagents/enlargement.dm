@@ -29,6 +29,7 @@
 	inverse_chem_val 		= 0.35
 	inverse_chem		= /datum/reagent/fermi/BEsmaller //At really impure vols, it just becomes 100% inverse
 	can_synth = FALSE
+	value = REAGENT_VALUE_VERY_RARE
 	var/message_spam = FALSE
 
 /datum/reagent/fermi/breast_enlarger/on_mob_metabolize(mob/living/M)
@@ -126,6 +127,7 @@
 	taste_description = "a milky ice cream like flavour."
 	metabolization_rate = 0.25
 	can_synth = FALSE
+	value = REAGENT_VALUE_RARE
 
 /datum/reagent/fermi/BEsmaller/on_mob_life(mob/living/carbon/M)
 	var/obj/item/organ/genital/breasts/B = M.getorganslot(ORGAN_SLOT_BREASTS)
@@ -186,6 +188,7 @@
 	inverse_chem_val 		= 0.35
 	inverse_chem		= /datum/reagent/fermi/PEsmaller //At really impure vols, it just becomes 100% inverse and shrinks instead.
 	can_synth = FALSE
+	value = REAGENT_VALUE_VERY_RARE
 	var/message_spam = FALSE
 
 /datum/reagent/fermi/penis_enlarger/on_mob_metabolize(mob/living/M)
@@ -273,6 +276,7 @@
 	taste_description = "chinese dragon powder"
 	metabolization_rate = 0.5
 	can_synth = FALSE
+	value = REAGENT_VALUE_RARE
 
 /datum/reagent/fermi/PEsmaller/on_mob_life(mob/living/carbon/M)
 	if(!ishuman(M))

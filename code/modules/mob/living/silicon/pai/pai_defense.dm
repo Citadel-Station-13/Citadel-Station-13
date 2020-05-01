@@ -69,7 +69,7 @@
 	return FALSE //No we're not flammable
 
 /mob/living/silicon/pai/proc/take_holo_damage(amount)
-	emitterhealth = CLAMP((emitterhealth - amount), -50, emittermaxhealth)
+	emitterhealth = clamp((emitterhealth - amount), -50, emittermaxhealth)
 	if(emitterhealth < 0)
 		fold_in(force = TRUE)
 	if(amount > 0)

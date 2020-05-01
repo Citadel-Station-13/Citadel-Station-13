@@ -30,6 +30,7 @@ I'd like to point out from my calculations it'll take about 60-80 minutes to die
 	inverse_chem_val = 0.25
 	can_synth = FALSE
 	var/datum/action/chem/astral/AS = new/datum/action/chem/astral()
+	value = REAGENT_VALUE_AMAZING
 
 /datum/action/chem/astral
 	name = "Return to body"

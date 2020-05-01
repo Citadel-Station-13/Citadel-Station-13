@@ -65,7 +65,7 @@
 	qdel(src)
 
 /obj/item/organ/regenerative_core/on_life()
-	..()
+	. = ..()
 	if(owner.health < owner.crit_threshold)
 		ui_action_click()
 
