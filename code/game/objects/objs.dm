@@ -314,3 +314,11 @@
 	current_skin = choice
 	icon_state = unique_reskin[choice]
 	to_chat(M, "[src] is now skinned as '[choice]'.")
+
+//Called when the object is constructed by an autolathe
+//Has a reference to the autolathe so you can do !!FUN!! things with hacked lathes
+/obj/proc/autolathe_crafted(obj/machinery/autolathe/A)
+	return
+
+/obj/proc/rnd_crafted(obj/machinery/rnd/production/P)
+	return
