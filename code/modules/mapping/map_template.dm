@@ -85,8 +85,8 @@
 	var/x = centered? max(FLOOR((world.maxx - width) / 2, 1), 1) : 1
 	var/y = centered? max(FLOOR((world.maxy - height) / 2, 1), 1) : 1
 
-	var/datum/space_level/level = SSmapping.add_new_zlevel(name, traits)
-	var/datum/parsed_map/parsed = load_map(file(mappath), x, y, level.z_value, no_changeturf=(SSatoms.initialized == INITIALIZATION_INSSATOMS), placeOnTop=TRUE)
+	var/datum/space_level/level = SSmapping.add_new_zlevel(name, ztraits)
+	var/datum/parsed_map/parsed = load_map(file(mappath), x, y, level.z_value, no_changeturf=(SSatoms.initialized == INITIALIZATION_INSSATOMS), placeOnTop = TRUE, orientation = orientation)
 	var/list/bounds = parsed.bounds
 	if(!bounds)
 		return FALSE
@@ -116,12 +116,15 @@
 	if(T.y+height > world.maxy)
 		return
 
-	var/list/border = block(locate(max(T.x-1, 1),			max(T.y-1, 1),			 T.z),
-							locate(min(T.x+width+1, world.maxx),	min(T.y+height+1, world.maxy), T.z))
-	for(var/L in border)
-		var/turf/turf_to_disable = L
+	var/list/border = block(locate(max(T.x - 1, 1), max(T.y - 1, 1), T.z)
+		locate(min(T.x + width + 1, world.maxx), min(T.y + height + 1, world.max,y T.z))
+	for(var/i in border)
+		var/turf/disabling = i
 		SSair.remove_from_active(turf_to_disable) //stop processing turfs along the border to prevent runtimes, we return it in initTemplateBounds()
 		turf_to_disable.atmos_adjacent_turfs?.Cut()
+
+	if(annihilate == MAP_TEMPLATE_ANNIHILATE_PRELOAD)
+		annihilate_bounds(old_T, centered, orientation)
 
 	// Accept cached maps, but don't save them automatically - we don't want
 	// ruins clogging up memory for the whole round.
