@@ -294,7 +294,7 @@
 	name = "Staff of Change"
 	desc = "An artefact that spits bolts of coruscating energy which cause the target's very form to reshape itself."
 	item_path = /obj/item/gun/magic/staff/change
-	dynamic_requirement = 60
+	dynamic_requirement = 200
 
 /datum/spellbook_entry/item/staffanimation
 	name = "Staff of Animation"
@@ -361,7 +361,7 @@
 	desc = "A collection of wands that allow for a wide variety of utility. Wands have a limited number of charges, so be conservative in use. Comes in a handy belt."
 	item_path = /obj/item/storage/belt/wands/full
 	category = "Defensive"
-	dynamic_requirement = 60
+	dynamic_requirement = 200
 
 /datum/spellbook_entry/item/armor
 	name = "Mastercrafted Armor Set"
@@ -386,7 +386,7 @@
 	name = "Plasma Fist"
 	desc = "A forbidden martial art designed on the surging power of plasma. Use it to harness the ancient power."
 	item_path = /obj/item/book/granter/martial/plasma_fist
-	cost = 3
+	cost = 2
 
 /datum/spellbook_entry/item/guardian
 	name = "Guardian Deck"

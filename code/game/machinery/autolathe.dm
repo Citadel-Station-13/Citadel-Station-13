@@ -441,11 +441,6 @@
 	circuit = /obj/item/circuitboard/machine/autolathe/secure
 	stored_research = /datum/techweb/specialized/autounlocking/autolathe/public
 
-//Called when the object is constructed by an autolathe
-//Has a reference to the autolathe so you can do !!FUN!! things with hacked lathes
-/obj/item/proc/autolathe_crafted(obj/machinery/autolathe/A)
-	return
-
 /obj/machinery/autolathe/toy
 	name = "autoylathe"
 	desc = "It produces toys using plastic, metal and glass."

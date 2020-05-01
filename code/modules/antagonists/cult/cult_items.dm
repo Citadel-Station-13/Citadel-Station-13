@@ -539,7 +539,7 @@
 	if(SSshuttle.emergency.mode == SHUTTLE_CALL)
 		var/cursetime = 1800
 		var/timer = SSshuttle.emergency.timeLeft(1) + cursetime
-		var/security_num = seclevel2num(get_security_level())
+		var/security_num = SECLEVEL2NUM(NUM2SECLEVEL(GLOB.security_level))
 		var/set_coefficient = 1
 		switch(security_num)
 			if(SEC_LEVEL_GREEN)
