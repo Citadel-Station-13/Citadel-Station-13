@@ -10,3 +10,6 @@
 #LetterJay 
 /modular_citadel/code/modules/client/loadout/__donator.dm @LetterJay 
 /SQL/database_changelog.txt @LetterJay
+
+# bobbahbrown
+/code/datums/chatmessage.dm @bobbahbrown
