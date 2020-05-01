@@ -131,12 +131,12 @@
 		var/newx = T.x
 		var/newy = T.y
 		if(orientation == NORTH)
-			newx -= width + 1
-			newy -= height + 1
+			newx -= width - 1
+			newy -= height - 1
 		else if(orientation == WEST)
-			newy -= width + 1
+			newy -= width - 1
 		else if(orientation == EAST)
-			newx -= height + 1
+			newx -= height - 1
 		// eh let's not silently fail.
 		if(!ISINRANGE(newx, 1, world.maxx) || !ISINRANGE(newy, 1, world.maxy))
 			stack_trace("Warning: Rotation placed a map template load spot ([COORD(T)]) out of bounds of the game world. Clamping to world borders, this might cause issues.")
