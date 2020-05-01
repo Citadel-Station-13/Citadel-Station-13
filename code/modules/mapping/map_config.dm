@@ -170,3 +170,23 @@
 
 /datum/map_config/proc/MakeNextMap()
 	return config_filename == "data/next_map.json" || fcopy(config_filename, "data/next_map.json")
+
+/// badmin moments. Keep up to date with LoadConfig()!
+/datum/map_config/proc/WriteNextMap()
+	var/list/jsonlist = list()
+	jsonlist["map_name"] = map_name
+	jsonlist["map_path"] = map_path
+	jsonlist["map_file"] = map_file
+	jsonlist["shuttles"] = shuttles
+	jsonlist["traits"] = traits
+	jsonlist["space_ruin_levels"] = space_ruin_levels
+	jsonlist["year_offset"] = year_offset
+	jsonlist["minetype"] = minetype
+	jsonlist["maptype"] = maptype
+	jsonlist["announcertype"] = announcertype
+	jsonlist["orientation"] = orientation
+	jsonlist["allow_custom_shuttles"] = allow_custom_shuttles
+	if(fexists("data/next_map.json"))
+		fdel("data/next_map.json")
+	var/F = file("data/next_map.json")
+	WRITE_FILE(F, json_encode(jsonlist))
