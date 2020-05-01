@@ -105,13 +105,19 @@
 //Byond doc is not entirely correct on the integrated arctan() proc.
 //When both x and y are negative, the output is also negative, cycling clockwise instead of counter-clockwise.
 //That's also why I have to use the SIMPLIFY_DEGREES macro.
-#define FOV_ANGLE_CHECK(mob, target, zero_x_y_statement, success_statement) \
+#define FOV_CONTINUE "continue"
+#define FOV_RETURN "return"
+#define FOV_ANGLE_CHECK(mob, target, zero_x_y_statement, success_old, success_new) \
 	var/turf/T1 = get_turf(target);\
 	var/turf/T2 = get_turf(mob);\
 	var/_x = (T1.x - T2.x);\
 	var/_y = (T1.y - T2.y);\
 	if(!_x && !_y){\
-		zero_x_y_statement;\
+		if(zero_x_y_statement == FOV_CONTINUE){\
+			continue;\
+		} else {\
+			return;\
+		};\
 	}\
 	var/dir = (mob.dir & (EAST|WEST)) || mob.dir;\
 	var/_degree = -angle;\
@@ -130,21 +136,23 @@
 	var/_min = SIMPLIFY_DEGREES(_degree - _half);\
 	var/_max = SIMPLIFY_DEGREES(_degree + _half);\
 	if((_min > _max) ? !ISINRANGE(SIMPLIFY_DEGREES(arctan(_x, _y)), _max, _min) : ISINRANGE(SIMPLIFY_DEGREES(arctan(_x, _y)), _min, _max)){\
-		success_statement;\
+		success_old = success_new;\
 	}
 
 /datum/component/vision_cone/proc/on_examinate(mob/source, atom/target)
-	FOV_ANGLE_CHECK(source, target, return, return COMPONENT_DENY_EXAMINATE|COMPONENT_EXAMINATE_BLIND)
+	FOV_ANGLE_CHECK(source, target, FOV_RETURN, ., COMPONENT_DENY_EXAMINATE|COMPONENT_EXAMINATE_BLIND)
 
 /datum/component/vision_cone/proc/on_visible_message(mob/source, atom/target, message, range, list/ignored_mobs)
-	FOV_ANGLE_CHECK(source, target, return, return COMPONENT_NO_VISIBLE_MESSAGE)
+	FOV_ANGLE_CHECK(source, target, FOV_RETURN, ., COMPONENT_NO_VISIBLE_MESSAGE)
 
 /datum/component/vision_cone/proc/on_visible_atoms(mob/source, list/atoms)
 	for(var/k in atoms)
 		var/atom/A = k
-		FOV_ANGLE_CHECK(source, A, continue, atoms -= A)
+		FOV_ANGLE_CHECK(source, A, FOV_CONTINUE, atoms, atoms - A)
 
 #undef FOV_ANGLE_CHECK
+#undef FOV_CONTINUE
+#undef FOV_RETURN
 
 /atom/movable/fov_holder //required for mouse opacity.
 	name = "field of vision holder"
