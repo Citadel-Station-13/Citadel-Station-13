@@ -13,7 +13,7 @@
 
 /obj/item/organ/appendix/on_life()
 	. = ..()
-	if(.)
+	if(. || !owner)
 		return
 	owner.adjustToxLoss(4, TRUE, TRUE)	//forced to ensure people don't use it to gain tox as slime person
 

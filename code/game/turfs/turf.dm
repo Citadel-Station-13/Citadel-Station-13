@@ -1,6 +1,8 @@
 /turf
 	icon = 'icons/turf/floors.dmi'
 	level = 1
+	vis_flags = VIS_INHERIT_PLANE|VIS_INHERIT_ID	//when this be added to vis_contents of something it inherit something.plane and be associatet with something on clicking,
+													//important for visualisation of turf in openspace and interraction with openspace that show you turf.
 
 	var/intact = 1
 

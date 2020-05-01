@@ -108,7 +108,7 @@
 		var/datum/gas_mixture/enviro = T.return_air()
 		local_temp = enviro.temperature
 
-	else if(istype(loc, /mob/) && !owner)
+	else if(!owner && ismob(loc))
 		var/mob/M = loc
 		if(is_type_in_typecache(M.loc, GLOB.freezing_objects))
 			if(!(organ_flags & ORGAN_FROZEN))
@@ -137,9 +137,7 @@
 /obj/item/organ/proc/on_life()	//repair organ damage if the organ is not failing or synthetic
 	if(organ_flags & ORGAN_FAILING || !owner)
 		return FALSE
-	if(is_cold())
-		return FALSE
-	if(damage)
+	if(!is_cold() && damage)
 		///Damage decrements by a percent of its maxhealth
 		var/healing_amount = -(maxHealth * healing_factor)
 		///Damage decrements again by a percent of its maxhealth, up to a total of 4 extra times depending on the owner's satiety
