@@ -443,6 +443,10 @@
 	initial_gas_mix = ICEMOON_DEFAULT_ATMOS
 	planetary_atmos = TRUE
 
+/turf/open/floor/plating/asteroid/snow/ice/icemoon/solarpanel
+	icon = "icons/turf/floors.dmi"
+	icon_state = "solarpanel"
+
 /turf/open/floor/plating/asteroid/snow/ice/burn_tile()
 	return FALSE
 
