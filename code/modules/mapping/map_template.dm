@@ -111,10 +111,36 @@
 /datum/map_template/proc/on_map_loaded(z, list/bounds)
 	loaded++
 
-/datum/map_template/proc/load(turf/T, centered = FALSE, orientation = SOUTH, annihilate = default_annihilate, force_cache = FALSE)
+/**
+  * Proc to trigger a load at a specific area. Calls on_map_loaded(T.z, loaded_bounds) afterwards.
+  *
+  * @params
+  * * turf/T - Turf to load at
+  * * centered - Center at T or load with the bottomright corner being at T
+  * * orientation - SOUTH is default, anything else rotates the map to face it with the point of reference being the map itself is facing south by default. Cardinals only, don't be a 4head and put in multiple flags. It won't work or be pretty if you try.
+  * * annihilate - Should we destroy stuff in our bounds while loading
+  * * force_cache - Should we force the parsed shuttle to cache instead of being GC'd post loading if it wasn't going to be cached by default
+  * * rotate_placement_to_orientation - Has no effect if centered. Should we rotate where we load it around the turf we're loading at? Used for stuff like engine submaps when the station is rotated.
+  *
+  */
+/datum/map_template/proc/load(turf/T, centered = FALSE, orientation = SOUTH, annihilate = default_annihilate, force_cache = FALSE, rotate_placement_to_orientation = FALSE)
 	var/old_T = T
 	if(centered)
 		T = locate(T.x - FLOOR(((orientation & (NORTH|SOUTH))? width : height) / 2, 1) , T.y - FLOOR(((orientation & (NORTH|SOUTH)) ? height : width) / 2, 1) , T.z) // %180 catches East/West (90,270) rotations on true, North/South (0,180) rotations on false
+	else if(rotate_placement_to_orientation && (orientation != SOUTH))
+		var/newx = T.x
+		var/newy = T.y
+		if(orientation == NORTH)
+			newx -= width + 1
+			newy -= height + 1
+		else if(orientation == WEST)
+			newy -= width + 1
+		else if(orientation == EAST)
+			newx -= height + 1
+		// eh let's not silently fail.
+		if(!ISINRANGE(newx, 1, world.maxx) || !ISINRANGE(newy, 1, world.maxy))
+			stack_trace("Warning: Rotation placed a map template load spot ([COORD(T)]) out of bounds of the game world. Clamping to world borders, this might cause issues.")
+		T = locate(clamp(newx, 1, world.maxx), clamp(newy, 1, world.maxy), T.z)
 	if(!T)
 		return
 	if(T.x+width > world.maxx)
