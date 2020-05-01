@@ -41,8 +41,6 @@
 	// "fun things"
 	/// Orientation to load in by default.
 	var/orientation = SOUTH		//byond defaults to placing everyting SOUTH.
-	/// Should we mirror the map?
-	var/mirror = FALSE
 
 /proc/load_map_config(filename = "data/next_map.json", default_to_box, delete_after, error_if_missing = TRUE)
 	var/datum/map_config/config = new
@@ -156,9 +154,6 @@
 		orientation = json["orientation"]
 		if(!(orientation in GLOB.cardinals))
 			orientation = SOUTH
-
-	if( "mirror" in json)
-		mirror = json["mirror"]? TRUE : FALSE
 
 	allow_custom_shuttles = json["allow_custom_shuttles"] != FALSE
 

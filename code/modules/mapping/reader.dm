@@ -175,28 +175,27 @@
 	return ..()
 
 /// Load the parsed map into the world. See [/proc/load_map] for arguments.
-/datum/parsed_map/proc/load(x_offset, y_offset, z_offset, cropMap, no_changeturf, x_lower, x_upper, y_lower, y_upper, placeOnTop, orientation, annihilate_tiles, reflect_y, datum/map_orientation_pattern/forced_pattern)
+/datum/parsed_map/proc/load(x_offset, y_offset, z_offset, cropMap, no_changeturf, x_lower, x_upper, y_lower, y_upper, placeOnTop, orientation, annihilate_tiles, datum/map_orientation_pattern/forced_pattern)
 	//How I wish for RAII
 	Master.StartLoadingMap()
-	. = _load_impl(x_offset, y_offset, z_offset, cropMap, no_changeturf, x_lower, x_upper, y_lower, y_upper, placeOnTop, orientation, annihilate_tiles, reflect_y, forced_pattern)
+	. = _load_impl(x_offset, y_offset, z_offset, cropMap, no_changeturf, x_lower, x_upper, y_lower, y_upper, placeOnTop, orientation, annihilate_tiles, forced_pattern)
 	Master.StopLoadingMap()
 
 // Do not call except via load() above.
 // Lower/upper here refers to the actual map template's parsed coordinates, NOT ACTUAL COORDINATES! Figure it out yourself my head hurts too much to implement that too.
-/datum/parsed_map/proc/_load_impl(x_offset = 1, y_offset = 1, z_offset = world.maxz + 1, cropMap = FALSE, no_changeturf = FALSE, x_lower = -INFINITY, x_upper = INFINITY, y_lower = -INFINITY, y_upper = INFINITY, placeOnTop = FALSE, orientation = SOUTH, annihilate_tiles = FALSE, reflect_y = FALSE, datum/map_orientation_pattern/forced_pattern)
+/datum/parsed_map/proc/_load_impl(x_offset = 1, y_offset = 1, z_offset = world.maxz + 1, cropMap = FALSE, no_changeturf = FALSE, x_lower = -INFINITY, x_upper = INFINITY, y_lower = -INFINITY, y_upper = INFINITY, placeOnTop = FALSE, orientation = SOUTH, annihilate_tiles = FALSE, datum/map_orientation_pattern/forced_pattern)
 	var/list/areaCache = list()
 	var/list/modelCache = build_cache(no_changeturf)
 	var/space_key = modelCache[SPACE_KEY]
 	var/list/bounds
 	src.bounds = bounds = list(1.#INF, 1.#INF, 1.#INF, -1.#INF, -1.#INF, -1.#INF)
 	var/datum/map_orientation_pattern/mode = forced_pattern || GLOB.map_orientation_patterns["[orientation]"] || GLOB.map_orientation_patterns["[SOUTH]"]
-	var/invert_y = mode.invert_y ^ reflect_y
-	var/invert_x = mode.invert_x
+	var/invert_y = mode.invert_y
+	var/invert_x = mode.invert_x ^ reflect_across_y
 	var/swap_xy = mode.swap_xy
 	var/xi = mode.xi
 	var/yi = mode.yi
 	var/turn_angle = round(SIMPLIFY_DEGREES(mode.turn_angle), 90)
-
 	var/delta_swap = x_offset - y_offset
 
 	for(var/__I in gridSets)
