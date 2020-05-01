@@ -125,9 +125,10 @@
 
 	// Accept cached maps, but don't save them automatically - we don't want
 	// ruins clogging up memory for the whole round.
-	var/datum/parsed_map/parsed = cached_map || new(file(mappath))
-	cached_map = keep_cached_map ? parsed : null
-	if(!parsed.load(T.x, T.y, T.z, cropMap=TRUE, no_changeturf=(SSatoms.initialized == INITIALIZATION_INSSATOMS), placeOnTop=TRUE))
+	var/is_cached = cached_map
+	var/datum/parsed_map/parsed = is_cached || new(file(mappath))
+	cached_map = (force_cache || keep_cached_map) ? parsed : is_cached
+	if(!parsed.load(T.x, T.y, T.z, cropMap=TRUE, no_changeturf=(SSatoms.initialized == INITIALIZATION_INSSATOMS), placeOnTop=TRUE, orientation = orientation, annihilate_tiles = (annihilate == MAP_TEMPLATE_ANNIHILATE_LOADING)))
 		return
 	var/list/bounds = parsed.bounds
 	if(!bounds)
