@@ -26,12 +26,10 @@ Difficulty: Hard
 	melee_queue_distance = 20 // as far as possible really, need this because of charging and teleports
 	ranged = TRUE
 	pixel_x = -16
-	loot = list()
-	butcher_results = list()
-	guaranteed_butcher_results = list(/obj/item/wendigo_blood)
+	loot = list(/obj/item/wendigo_blood)
 	crusher_loot = list(/obj/item/wendigo_blood, /obj/item/crusher_trophy/demon_claws)
 	wander = FALSE
-	del_on_death = FALSE
+	del_on_death = TRUE
 	blood_volume = BLOOD_VOLUME_NORMAL
 	deathmessage = "falls, shaking the ground around it"
 	deathsound = 'sound/effects/gravhit.ogg'
