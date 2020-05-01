@@ -146,10 +146,6 @@
 	},
 /turf/open/floor/plating/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
-"nR" = (
-/obj/structure/chair/sofa/left,
-/turf/closed/mineral/snowmountain/cavern/icemoon,
-/area/icemoon/underground/explored)
 "oB" = (
 /obj/structure/table/wood,
 /obj/item/clothing/under/misc/pj/blue,
@@ -177,10 +173,10 @@
 /turf/open/floor/plating/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "pP" = (
-/obj/structure/chair/sofa/left{
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/chair/sofa/right{
 	dir = 1
 	},
-/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/wood,
 /area/ruin/powered)
 "pV" = (
@@ -271,7 +267,7 @@
 /turf/open/floor/carpet,
 /area/ruin/powered)
 "yb" = (
-/obj/structure/chair/sofa/right{
+/obj/structure/chair/sofa/left{
 	dir = 1
 	},
 /turf/open/floor/wood,
@@ -1141,7 +1137,7 @@ Og
 Ei
 Ei
 Ei
-nR
+Ei
 Vn
 xN
 Cd
