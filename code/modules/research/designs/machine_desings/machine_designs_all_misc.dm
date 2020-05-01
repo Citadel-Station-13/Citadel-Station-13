@@ -111,6 +111,6 @@
 	name = "Machine Design (Autoylathe)"
 	desc = "The circuit board for an autoylathe."
 	id = "autoylathe"
-	build_path = /obj/item/circuitboard/machine/autoylathe
+	build_path = /obj/item/circuitboard/machine/autolathe/toy
 	departmental_flags = DEPARTMENTAL_FLAG_ALL
 	category = list("Misc. Machinery")
