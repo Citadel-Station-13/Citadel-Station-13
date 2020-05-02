@@ -60,7 +60,7 @@
 	if(!safe_maint_items)
 		safe_maint_items = list()
 		for(var/A in GLOB.maintenance_loot)
-		if(ispath(A, /obj/item))
-			safe_maint_items[A] = GLOB.maintenance_loot[A]
+			if(ispath(A, /obj/item))
+				safe_maint_items[A] = GLOB.maintenance_loot[A]
 	loot += safe_maint_items
 	return ..()
