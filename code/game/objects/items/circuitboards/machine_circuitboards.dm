@@ -1054,9 +1054,9 @@
 	build_path = /obj/machinery/vending/kink
 	req_components = list(/obj/item/vending_refill/kink = 1)
 
-/obj/item/circuitboard/machine/autoylathe
+/obj/item/circuitboard/machine/autolathe/toy
 	name = "Autoylathe (Machine Board)"
-	build_path = /obj/machinery/autoylathe
+	build_path = /obj/machinery/autolathe/toy
 	req_components = list(
 		/obj/item/stock_parts/matter_bin = 3,
 		/obj/item/stock_parts/manipulator = 1,

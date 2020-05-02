@@ -74,3 +74,11 @@
 	materials = list(/datum/material/glass = 20)
 	build_path = /obj/item/stock_parts/cell/emergency_light
 	category = list("initial", "Electronics")
+
+/datum/design/electrochromatic_control
+	name = "Electrochromatic Control Circuit"
+	id = "electrochromatic_control_circuit"
+	build_type = AUTOLATHE
+	materials = list(/datum/material/iron = 100, /datum/material/glass = 100)
+	build_path = /obj/item/assembly/control/electrochromatic
+	category = list("initial", "Electronics")

@@ -579,39 +579,36 @@ GLOBAL_LIST_EMPTY(vending_products)
 			if(!R || !istype(R) || !R.product_path)
 				vend_ready = TRUE
 				return
+			if(R.amount <= 0)
+				to_chat(usr, "<span class='warning'>Sold out.</span>")
+				vend_ready = TRUE
+				return
 			if(R in hidden_records)
 				if(!extended_inventory)
 					vend_ready = TRUE
 					return
 			else if(R in coin_records)
-				if(!(coin))
-					to_chat(usr, "<span class='warning'>You need to a coin to get this item!</span>")
+				if(!coin)
+					to_chat(usr, "<span class='warning'>You need to insert a coin to get this item!</span>")
 					vend_ready = TRUE
 					return
 				if(coin && coin.string_attached)
-					if(!prob(50))
-						to_chat(usr, "<span class='warning'>You weren't able to pull [coin] out fast enough, the machine ate it, string and all!</span>")
-						QDEL_NULL(coin)
-						return
-					if(!usr.CanReach(src))
-						to_chat(usr, "<span class='notice'>You successfully pull [coin] out of [src] to the floor.</span>")
-						coin = null
-						if(!usr.put_in_hands(coin))
+					if(prob(50))
+						if(usr.put_in_hands(coin))
+							to_chat(usr, "<span class='notice'>You successfully pull [coin] out before [src] could swallow it.</span>")
+							coin = null
+						else
 							to_chat(usr, "<span class='warning'>You couldn't pull [coin] out because your hands are full!</span>")
 							QDEL_NULL(coin)
-						to_chat(usr, "<span class='notice'>You successfully pull [coin] out before [src] could swallow it.</span>")
-						coin = null
-				QDEL_NULL(coin)
+					else
+						to_chat(usr, "<span class='warning'>You weren't able to pull [coin] out fast enough, the machine ate it, string and all!</span>")
+						QDEL_NULL(coin)
+				else
+					QDEL_NULL(coin)
 			else if(!(R in product_records))
 				vend_ready = TRUE
 				message_admins("Vending machine exploit attempted by [ADMIN_LOOKUPFLW(usr)]!")
 				return
-			if(R.amount <= 0)
-				to_chat(usr, "<span class='warning'>Sold out.</span>")
-				vend_ready = TRUE
-				return
-			else
-				R.amount--
 			if(((last_reply + 200) <= world.time) && vend_reply)
 				speak(vend_reply)
 				last_reply = world.time
@@ -623,8 +620,7 @@ GLOBAL_LIST_EMPTY(vending_products)
 				to_chat(usr, "<span class='notice'>You take [R.name] out of the slot.</span>")
 			else
 				to_chat(usr, "<span class='warning'>[capitalize(R.name)] falls onto the floor!</span>")
-
-				
+			R.amount--
 			SSblackbox.record_feedback("nested tally", "vending_machine_usage", 1, list("[type]", "[R.product_path]"))
 			vend_ready = TRUE
 			return
