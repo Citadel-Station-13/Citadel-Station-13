@@ -438,6 +438,9 @@
 	loot = list(/obj/item/organ/regenerative_core/legion)
 	brood_type = /mob/living/simple_animal/hostile/asteroid/hivelordbrood/legion/snow
 
+/mob/living/simple_animal/hostile/asteroid/hivelord/legion/snow/tendril
+	fromtendril = TRUE
+
 // Snow Legion skull
 /mob/living/simple_animal/hostile/asteroid/hivelordbrood/legion/snow
 	name = "snow legion"
