@@ -137,3 +137,35 @@
 /area/holodeck/rec_center/thunderdome1218
 	name = "Holodeck - 1218 AD"
 	restricted = 1
+
+// Holo-dormitories
+
+/area/holodeck/bedroom1
+	name = "\improper Recreational Holo-dorm"
+
+/area/holodeck/bedroom1/offline
+	name = "Holodorm - Offline"
+
+/area/holodeck/bedroom1/standard
+	name = "Holodorm - Standard Bedroom"
+
+/area/holodeck/bedroom1/nice
+	name = "Holodorm - Fancy Bedroom"
+
+/area/holodeck/bedroom1/shifty
+	name = "Holodorm - Dodgy Barracks"
+
+/area/holodeck/bedroom1/dungeon
+	name = "Holodorm - Dungeon"
+
+/area/holodeck/bedroom1/medical
+	name = "Holodorm - Medical Patient Room"
+
+/area/holodeck/bedroom1/prison
+	name = "Holodorm - Prison Cell"
+
+/area/holodeck/bedroom2
+	name = "\improper Recreational Holo-dorm"
+
+/area/holodeck/bedroom3
+	name = "\improper Recreational Holo-dorm"

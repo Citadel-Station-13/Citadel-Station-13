@@ -13,7 +13,7 @@ SUBSYSTEM_DEF(holodeck)
 	//generates the list of available holodeck programs.
 	for(var/path in subtypesof(/datum/holodeck_cache))
 		new path
-	for(var/path in typesof(/obj/machinery/computer/holodeck)) //The istances will be handled by SSatoms.
+	for(var/path in typesof(/obj/machinery/computer/holodeck)) //The instances will be handled by SSatoms.
 		var/obj/machinery/computer/holodeck/H = path
 		offline_programs[path] = pop(get_areas(initial(H.offline_program)), FALSE)
 		target_holodeck_area[path] = pop(get_areas(initial(H.holodeck_type)), FALSE)
@@ -54,3 +54,18 @@ SUBSYSTEM_DEF(holodeck)
 	master_type = /area/holodeck/rec_center
 	skip_types = /area/holodeck/rec_center
 	compatible_holodeck_comps = list(/obj/machinery/computer/holodeck)
+
+/datum/holodeck_cache/bedroom1
+	master_type = /area/holodeck/bedroom1
+	skip_types = /area/holodeck/bedroom1
+	compatible_holodeck_comps = list(/obj/machinery/computer/holodeck/holodorm1)
+
+/datum/holodeck_cache/bedroom2
+	master_type = /area/holodeck/bedroom1
+	skip_types = list(/area/holodeck/bedroom2, /area/holodeck/bedroom1)
+	compatible_holodeck_comps = list(/obj/machinery/computer/holodeck/holodorm2)
+
+/datum/holodeck_cache/bedroom3
+	master_type = /area/holodeck/bedroom1
+	skip_types = list(/area/holodeck/bedroom3, /area/holodeck/bedroom1)
+	compatible_holodeck_comps = list(/obj/machinery/computer/holodeck/holodorm3)

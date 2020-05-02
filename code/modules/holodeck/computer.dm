@@ -284,5 +284,23 @@
 		visible_message("[O] fades away!")
 	qdel(O)
 
+/obj/machinery/computer/holodeck/holodorm1
+	name = "holodorm control console"
+	desc = "a computer used to control a nearby holodorm"
+	offline_program = /area/holodeck/bedroom1/offline
+	holodeck_type = /area/holodeck/bedroom1
+
+/obj/machinery/computer/holodeck/holodorm2
+	name = "holodorm control console"
+	desc = "a computer used to control a nearby holodorm"
+	offline_program = /area/holodeck/bedroom1/offline
+	holodeck_type = /area/holodeck/bedroom2
+
+/obj/machinery/computer/holodeck/holodorm3
+	name = "holodorm control console"
+	desc = "a computer used to control a nearby holodorm"
+	offline_program = /area/holodeck/bedroom1/offline
+	holodeck_type = /area/holodeck/bedroom3
+
 #undef HOLODECK_CD
 #undef HOLODECK_DMG_CD

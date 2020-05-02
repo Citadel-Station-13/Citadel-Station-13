@@ -7956,15 +7956,13 @@
 /turf/closed/wall,
 /area/crew_quarters/dorms)
 "atg" = (
-/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
-	dir = 4
-	},
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden,
 /turf/open/floor/plasteel/cafeteria,
 /area/crew_quarters/dorms)
 "ath" = (
@@ -7978,6 +7976,9 @@
 	},
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 10
 	},
 /turf/open/floor/plasteel/cafeteria,
 /area/crew_quarters/dorms)
@@ -8854,47 +8855,19 @@
 /turf/closed/wall/r_wall,
 /area/gateway)
 "avd" = (
-/obj/effect/spawner/structure/window/reinforced,
-/obj/machinery/door/poddoor/shutters/preopen{
-	id = "Dorm3Shutters";
-	name = "Dorm Shutters"
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 5
 	},
-/turf/open/floor/plating,
-/area/crew_quarters/dorms)
-"ave" = (
-/obj/structure/bed,
-/obj/machinery/button/door{
-	id = "Dorm3Shutters";
-	name = "Privacy Shutters Control";
-	pixel_y = 26
-	},
-/obj/effect/spawner/lootdrop/bedsheet,
-/turf/open/floor/wood,
+/turf/closed/wall,
 /area/crew_quarters/dorms)
 "avf" = (
-/obj/machinery/light/small{
+/obj/machinery/light{
 	dir = 1
 	},
-/obj/structure/sign/plaques/deempisi{
-	pixel_y = 28
+/turf/open/floor/engine{
+	name = "Holodeck Projector Floor"
 	},
-/obj/machinery/atmospherics/components/unary/vent_pump/on{
-	dir = 4
-	},
-/turf/open/floor/wood,
-/area/crew_quarters/dorms)
-"avg" = (
-/obj/machinery/button/door{
-	id = "Dorm3";
-	name = "Dorm Bolt Control";
-	normaldoorcontrol = 1;
-	pixel_x = 25;
-	specialfunctions = 4
-	},
-/obj/structure/closet/secure_closet/personal/cabinet,
-/obj/machinery/atmospherics/pipe/manifold/supply/hidden,
-/turf/open/floor/wood,
-/area/crew_quarters/dorms)
+/area/holodeck/bedroom1)
 "avh" = (
 /obj/structure/disposalpipe/segment{
 	dir = 5
@@ -9486,43 +9459,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
-"awn" = (
-/obj/structure/dresser,
-/turf/open/floor/wood,
-/area/crew_quarters/dorms)
-"awo" = (
-/turf/open/floor/wood{
-	icon_state = "wood-broken7"
-	},
-/area/crew_quarters/dorms)
-"awp" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
-	dir = 4
-	},
-/turf/open/floor/wood{
-	icon_state = "wood-broken7"
-	},
-/area/crew_quarters/dorms)
-"awq" = (
-/obj/machinery/door/airlock{
-	id_tag = "Dorm3";
-	name = "Dorm 3"
-	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/turf/open/floor/plasteel/dark,
-/area/crew_quarters/dorms)
 "awr" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 4
@@ -10314,46 +10250,12 @@
 	},
 /turf/open/floor/plating,
 /area/crew_quarters/dorms)
-"ayj" = (
-/obj/structure/bed,
-/obj/machinery/button/door{
-	id = "Dorm2Shutters";
-	name = "Privacy Shutters Control";
-	pixel_y = 26
-	},
-/obj/effect/spawner/lootdrop/bedsheet,
-/turf/open/floor/carpet,
-/area/crew_quarters/dorms)
-"ayk" = (
-/obj/machinery/light/small{
-	dir = 1
-	},
-/obj/structure/sign/plaques/deempisi{
-	pixel_y = 28
-	},
-/obj/machinery/atmospherics/components/unary/vent_pump/on{
-	dir = 4
-	},
-/turf/open/floor/carpet,
-/area/crew_quarters/dorms)
 "ayl" = (
-/obj/machinery/button/door{
-	id = "Dorm2";
-	name = "Dorm Bolt Control";
-	normaldoorcontrol = 1;
-	pixel_x = 25;
-	specialfunctions = 4
+/turf/open/floor/engine{
+	name = "Holodeck Projector Floor"
 	},
-/obj/structure/closet/secure_closet/personal/cabinet,
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/turf/open/floor/carpet,
-/area/crew_quarters/dorms)
+/area/holodeck/bedroom1)
 "aym" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/structure/extinguisher_cabinet{
 	pixel_x = -24
@@ -10364,10 +10266,8 @@
 /obj/structure/chair/comfy{
 	dir = 4
 	},
-/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
-	dir = 4
-	},
 /obj/effect/landmark/start/assistant,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/carpet,
 /area/crew_quarters/dorms)
 "ayo" = (
@@ -10841,21 +10741,55 @@
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "azr" = (
-/obj/structure/table/wood,
-/obj/item/storage/book/bible,
-/turf/open/floor/carpet,
+/obj/machinery/button/door{
+	id = "Dorm2Shutters";
+	name = "Privacy Shutters Control";
+	pixel_y = -26
+	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/machinery/computer/holodeck/holodorm1{
+	dir = 4
+	},
+/turf/open/floor/plasteel/dark,
 /area/crew_quarters/dorms)
 "azs" = (
-/obj/structure/chair/wood/normal{
-	dir = 8
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
 	},
-/turf/open/floor/carpet,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/machinery/light,
+/obj/machinery/airalarm{
+	dir = 1;
+	pixel_y = -22
+	},
+/turf/open/floor/plasteel/dark,
 /area/crew_quarters/dorms)
 "azt" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 4
 	},
-/turf/open/floor/carpet,
+/obj/machinery/button/door{
+	id = "Dorm2";
+	name = "Dorm Bolt Control";
+	normaldoorcontrol = 1;
+	specialfunctions = 4;
+	pixel_y = -26
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/turf/open/floor/plasteel/dark,
 /area/crew_quarters/dorms)
 "azu" = (
 /obj/machinery/door/airlock{
@@ -11368,6 +11302,9 @@
 /area/hallway/primary/central)
 "aAO" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
 /turf/open/floor/plasteel,
 /area/crew_quarters/dorms)
 "aAP" = (
@@ -49366,7 +49303,9 @@
 /turf/open/floor/carpet,
 /area/crew_quarters/dorms)
 "col" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
+	dir = 4
+	},
 /turf/open/floor/carpet,
 /area/crew_quarters/dorms)
 "com" = (
@@ -99282,8 +99221,8 @@ aiS
 aiS
 aiS
 apX
-avd
-avd
+ayi
+ayi
 apX
 ayi
 ayi
@@ -99539,12 +99478,12 @@ ale
 asb
 coe
 apX
-ave
-awn
-apX
-ayj
+ayl
+ayl
+ayl
+ayl
 azr
-apX
+avd
 aBM
 aDb
 apX
@@ -99797,11 +99736,11 @@ asc
 atf
 apX
 avf
-awo
-apX
-ayk
+ayl
+ayl
+ayl
 azs
-apX
+atf
 aBN
 aDc
 apX
@@ -100052,13 +99991,13 @@ apX
 aqT
 asd
 atg
-auj
-avg
-awp
 apX
 ayl
+ayl
+ayl
+ayl
 azt
-apX
+atf
 aBO
 aDd
 apX
@@ -100309,13 +100248,13 @@ apX
 aqU
 ase
 ath
+auj
+avd
 apX
-atf
-awq
 apX
-atf
+apX
 azu
-apX
+atf
 atf
 aDe
 apX
@@ -100827,9 +100766,9 @@ apX
 avi
 aws
 coi
+aDf
+aDf
 aBQ
-aDf
-aDf
 aBQ
 con
 cop

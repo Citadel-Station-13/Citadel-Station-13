@@ -69034,6 +69034,9 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 4
 	},
+/obj/structure/rack,
+/obj/effect/spawner/lootdrop/maintenance,
+/obj/item/wrench,
 /turf/open/floor/plasteel,
 /area/maintenance/starboard)
 "clA" = (
@@ -76747,91 +76750,34 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
-/obj/effect/landmark/event_spawn,
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
-	},
-/turf/open/floor/plasteel,
-/area/maintenance/starboard)
-"cyZ" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/turf/open/floor/plasteel,
-/area/maintenance/starboard)
-"cza" = (
-/obj/structure/closet/crate{
-	icon_state = "crateopen"
 	},
 /obj/effect/spawner/lootdrop/maintenance{
 	lootcount = 2;
 	name = "2maintenance loot spawner"
 	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
-/turf/open/floor/plating,
-/area/maintenance/starboard)
-"czb" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/girder,
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
-/turf/open/floor/plating,
-/area/maintenance/starboard)
-"czc" = (
-/obj/structure/rack,
-/obj/item/wrench,
-/obj/effect/spawner/lootdrop/maintenance,
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/turf/open/floor/plasteel,
-/area/maintenance/starboard)
-"czd" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/light/small,
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
+/obj/structure/closet/crate{
+	icon_state = "crateopen"
 	},
 /turf/open/floor/plasteel,
 /area/maintenance/starboard)
 "cze" = (
-/obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
-/obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/turf/open/floor/plasteel,
-/area/maintenance/starboard)
+/turf/closed/wall,
+/area/crew_quarters/dorms)
 "czf" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
 /turf/closed/wall,
-/area/crew_quarters/fitness/recreation)
+/area/crew_quarters/dorms)
 "czg" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -78729,77 +78675,8 @@
 	},
 /turf/open/floor/wood,
 /area/crew_quarters/dorms)
-"cCf" = (
-/obj/structure/table/wood,
-/obj/item/paper_bin,
-/obj/item/pen,
-/obj/machinery/light{
-	dir = 1
-	},
-/obj/machinery/status_display/evac{
-	pixel_y = 32
-	},
-/turf/open/floor/wood,
-/area/crew_quarters/dorms)
-"cCg" = (
-/obj/structure/closet/secure_closet/personal/cabinet,
-/obj/item/clothing/suit/jacket/letterman_nanotrasen,
-/obj/item/clothing/suit/toggle/lawyer,
-/obj/item/radio/intercom{
-	name = "Station Intercom";
-	pixel_x = 26;
-	pixel_y = 26
-	},
-/obj/item/clothing/under/costume/kilt,
-/obj/item/clothing/head/beret,
-/obj/machinery/airalarm{
-	pixel_y = 23
-	},
-/turf/open/floor/wood,
-/area/crew_quarters/dorms)
 "cCh" = (
 /obj/structure/dresser,
-/turf/open/floor/carpet,
-/area/crew_quarters/dorms)
-"cCi" = (
-/obj/structure/bed,
-/obj/machinery/light{
-	dir = 1
-	},
-/obj/machinery/status_display/evac{
-	pixel_y = 32
-	},
-/obj/effect/spawner/lootdrop/bedsheet,
-/turf/open/floor/carpet,
-/area/crew_quarters/dorms)
-"cCj" = (
-/obj/structure/closet/secure_closet/personal/cabinet,
-/obj/item/clothing/suit/jacket{
-	desc = "All the class of a trenchcoat without the security fibers.";
-	icon_state = "detective";
-	name = "trenchcoat"
-	},
-/obj/item/clothing/suit/toggle/lawyer/purple,
-/obj/item/radio/intercom{
-	name = "Station Intercom";
-	pixel_x = 26;
-	pixel_y = 26
-	},
-/obj/item/clothing/head/fedora{
-	icon_state = "detective"
-	},
-/obj/item/clothing/under/costume/geisha,
-/obj/item/clothing/head/fedora{
-	icon_state = "curator"
-	},
-/obj/item/clothing/suit/jacket{
-	desc = "This looks awfully familiar...";
-	icon_state = "curator"
-	},
-/obj/item/clothing/under/rank/civilian/curator/treasure_hunter,
-/obj/machinery/airalarm{
-	pixel_y = 23
-	},
 /turf/open/floor/carpet,
 /area/crew_quarters/dorms)
 "cCk" = (
@@ -79688,21 +79565,11 @@
 	icon_state = "wood-broken3"
 	},
 /area/crew_quarters/dorms)
-"cDE" = (
-/obj/structure/table/wood,
-/obj/item/folder,
-/obj/machinery/newscaster{
-	pixel_x = -32
-	},
-/obj/item/razor,
-/turf/open/floor/wood,
-/area/crew_quarters/dorms)
 "cDF" = (
-/obj/structure/chair/office/dark{
-	dir = 8
+/turf/open/floor/engine{
+	name = "Holodeck Projector Floor"
 	},
-/turf/open/floor/wood,
-/area/crew_quarters/dorms)
+/area/holodeck/bedroom1)
 "cDG" = (
 /turf/open/floor/wood,
 /area/crew_quarters/dorms)
@@ -80809,13 +80676,10 @@
 /turf/open/floor/wood,
 /area/crew_quarters/dorms)
 "cFA" = (
-/obj/structure/table/wood,
-/obj/item/flashlight/lamp/green,
-/obj/machinery/newscaster{
-	pixel_x = -32
+/turf/open/floor/engine{
+	name = "Holodeck Projector Floor"
 	},
-/turf/open/floor/carpet,
-/area/crew_quarters/dorms)
+/area/holodeck/bedroom2)
 "cFB" = (
 /obj/structure/chair/office/dark{
 	dir = 8
@@ -81616,16 +81480,22 @@
 	specialfunctions = 4
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
-/turf/open/floor/wood,
-/area/crew_quarters/dorms)
-"cGW" = (
-/obj/structure/dresser,
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on,
-/turf/open/floor/wood,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/machinery/computer/holodeck/holodorm1{
+	dir = 4
+	},
+/obj/item/radio/intercom{
+	name = "Station Intercom (General)";
+	pixel_y = -29
+	},
+/turf/open/floor/plasteel/dark,
 /area/crew_quarters/dorms)
 "cGX" = (
-/obj/structure/table/wood,
-/obj/item/paper_bin,
 /obj/machinery/button/door{
 	id = "Dorm3";
 	name = "Dormitory Door Lock";
@@ -81635,12 +81505,35 @@
 	specialfunctions = 4
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
-/turf/open/floor/carpet,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/machinery/computer/holodeck/holodorm2{
+	dir = 4
+	},
+/obj/item/radio/intercom{
+	name = "Station Intercom (General)";
+	pixel_y = -29
+	},
+/turf/open/floor/plasteel/dark,
 /area/crew_quarters/dorms)
 "cGY" = (
-/obj/item/twohanded/required/kirbyplants/random,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on,
-/turf/open/floor/carpet,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/machinery/airalarm{
+	dir = 8;
+	pixel_x = 24
+	},
+/obj/machinery/light,
+/turf/open/floor/plasteel/dark,
 /area/crew_quarters/dorms)
 "cGZ" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -82249,7 +82142,7 @@
 	id_tag = "Dorm2";
 	name = "Cabin 2"
 	},
-/turf/open/floor/wood,
+/turf/open/floor/plasteel/dark,
 /area/crew_quarters/dorms)
 "cIi" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
@@ -82261,7 +82154,7 @@
 	id_tag = "Dorm3";
 	name = "Cabin 3"
 	},
-/turf/open/floor/carpet,
+/turf/open/floor/plasteel/dark,
 /area/crew_quarters/dorms)
 "cIk" = (
 /obj/machinery/firealarm{
@@ -125768,6 +125661,21 @@
 /obj/machinery/air_sensor/atmos/toxins_mixing_tank,
 /turf/open/floor/engine/vacuum,
 /area/science/mixing)
+"eAv" = (
+/obj/structure/cable/white{
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/light/small{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/maintenance/starboard)
 "eCJ" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -126513,6 +126421,14 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plating,
 /area/science/mixing)
+"jXT" = (
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/open/floor/engine{
+	name = "Holodeck Projector Floor"
+	},
+/area/holodeck/bedroom1)
 "kam" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/conveyor{
@@ -126674,6 +126590,14 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/medical/medbay/central)
+"lCs" = (
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/open/floor/engine{
+	name = "Holodeck Projector Floor"
+	},
+/area/holodeck/bedroom2)
 "lDl" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/brown{
@@ -126818,6 +126742,15 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/science/mixing)
+"mom" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/turf/open/floor/plasteel/dark,
+/area/crew_quarters/dorms)
 "mpP" = (
 /obj/structure/cable/white{
 	icon_state = "4-8"
@@ -127267,6 +127200,14 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/chapel/office)
+"rIQ" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/obj/effect/landmark/event_spawn,
+/turf/open/floor/plasteel,
+/area/maintenance/starboard)
 "rKU" = (
 /obj/structure/cable/white{
 	icon_state = "4-8"
@@ -177223,7 +177164,7 @@ ciA
 bgZ
 clv
 cng
-coF
+cyY
 cqd
 crv
 csX
@@ -178515,7 +178456,7 @@ ctc
 bHq
 bHq
 cne
-cyY
+coF
 cAx
 cCd
 cDD
@@ -178772,7 +178713,7 @@ ctd
 cuF
 cwc
 cne
-cyZ
+czf
 cAw
 cAw
 cAw
@@ -179029,11 +178970,11 @@ cte
 cuG
 bHq
 cni
-cza
-cAw
-cCe
-cDE
-cFy
+czf
+cDF
+cDF
+cDF
+cDF
 cGV
 cIg
 cJj
@@ -179286,12 +179227,12 @@ ctf
 cuH
 bHq
 cxt
-czb
-cAw
-cCf
+czf
+jXT
 cDF
-cDG
-cDG
+cDF
+cDF
+mom
 cIh
 cJn
 cLd
@@ -179538,17 +179479,17 @@ clE
 cno
 coQ
 clA
-clz
+rIQ
 bJe
 cuI
 bHq
 cxt
-czc
-cAw
-cCg
-cDG
-cFz
-cGW
+czf
+cDF
+cDF
+cDF
+cDF
+cGY
 cIi
 cJo
 cLe
@@ -179799,8 +179740,8 @@ crB
 ctg
 cuJ
 bHq
-cnf
-czd
+eAv
+czf
 cAw
 cAw
 cAw
@@ -180057,10 +179998,10 @@ cth
 cuK
 bHq
 cni
-coF
-cAw
-cCh
-cDH
+czf
+cFA
+cFA
+cFA
 cFA
 cGX
 cIg
@@ -180314,12 +180255,12 @@ cti
 bHq
 bHq
 cxt
-coI
-cAw
-cCi
-cDI
-cFB
-cDI
+czf
+lCs
+cFA
+cFA
+cFA
+mom
 cIj
 cJr
 cLd
@@ -180572,10 +180513,10 @@ aad
 cti
 cxu
 cze
-cAw
-cCj
-cDI
-cDI
+cFA
+cFA
+cFA
+cFA
 cGY
 cIi
 cJo
