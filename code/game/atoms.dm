@@ -965,7 +965,7 @@ Proc for attack log creation, because really why not
 	for(var/x in materials)
 		var/datum/material/custom_material = SSmaterials.GetMaterialRef(x)
 
-		if(!(material_flags & MATERIAL_NO_EFFECTS))
+		if(material_flags & MATERIAL_EFFECTS)
 			custom_material.on_applied(src, materials[custom_material] * multiplier * material_modifier, material_flags)
 		custom_materials[custom_material] += materials[x] * multiplier
 

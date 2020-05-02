@@ -324,7 +324,6 @@ GLOBAL_LIST_INIT(titanium_recipes, list ( \
 	custom_materials = list(/datum/material/titanium=MINERAL_MATERIAL_AMOUNT, /datum/material/plasma=MINERAL_MATERIAL_AMOUNT)
 	point_value = 45
 	merge_type = /obj/item/stack/sheet/mineral/plastitanium
-	material_flags = MATERIAL_NO_EFFECTS
 
 /obj/item/stack/sheet/mineral/plastitanium/fifty
 	amount = 50
