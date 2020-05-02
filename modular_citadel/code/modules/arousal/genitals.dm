@@ -15,6 +15,7 @@
 	var/fluid_efficiency = 1
 	var/fluid_rate = CUM_RATE
 	var/fluid_mult = 1
+	var/time_since_last_orgasm = 500
 	var/aroused_state = FALSE //Boolean used in icon_state strings
 	var/obj/item/organ/genital/linked_organ
 	var/linked_organ_slot //used for linking an apparatus' organ to its other half on update_link().
@@ -155,20 +156,13 @@
 		return
 	reagents.maximum_volume = fluid_max_volume
 	if(fluid_id && CHECK_BITFIELD(genital_flags, GENITAL_FUID_PRODUCTION))
-		generate_fluid()
+		time_since_last_orgasm++
 
 /obj/item/organ/genital/proc/generate_fluid()
-	var/amount = fluid_rate
-	if(!reagents.total_volume && amount < 0.1) // Apparently, 0.015 gets rounded down to zero and no reagents are created if we don't start it with 0.1 in the tank.
-		amount += 0.1
-	var/multiplier = fluid_mult
-	if(reagents.total_volume >= 5)
-		multiplier *= 0.8
-	if(reagents.total_volume < reagents.maximum_volume)
-		reagents.isolate_reagent(fluid_id)//remove old reagents if it changed and just clean up generally
-		reagents.add_reagent(fluid_id, (amount * multiplier))//generate the cum
-		return TRUE
-	return FALSE
+	var/amount = clamp(fluid_rate * time_since_last_orgasm * multiplier,0,fluid_max_volume)
+	reagents.clear_reagents()
+	reagents.add_reagent(fluid_id,amount)
+	return TRUE
 
 /obj/item/organ/genital/proc/update_link()
 	if(owner)
