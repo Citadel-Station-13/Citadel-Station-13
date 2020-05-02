@@ -159,7 +159,7 @@
 		time_since_last_orgasm++
 
 /obj/item/organ/genital/proc/generate_fluid()
-	var/amount = clamp(fluid_rate * time_since_last_orgasm * multiplier,0,fluid_max_volume)
+	var/amount = clamp(fluid_rate * time_since_last_orgasm * fluid_mult,0,fluid_max_volume)
 	reagents.clear_reagents()
 	reagents.add_reagent(fluid_id,amount)
 	return TRUE
