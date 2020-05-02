@@ -158,7 +158,7 @@ Difficulty: Hard
 	animate(src, pixel_z = rand(5, 15), time = 1, loop = 6)
 	animate(pixel_z = 0, time = 1)
 	for(var/mob/living/L in get_hearers_in_view(7, src) - src)
-		shake_camera(L, 120, 2)
+		shake_camera(L, 30, 1)
 		to_chat(L, "<span class='danger'>The wendigo screams loudly!</span>")
 	SetRecoveryTime(30, 0)
 	SLEEP_CHECK_DEATH(12)
