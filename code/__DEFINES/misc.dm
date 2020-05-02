@@ -530,3 +530,10 @@ GLOBAL_LIST_INIT(pda_reskins, list(PDA_SKIN_CLASSIC = 'icons/obj/pda.dmi', PDA_S
 #define SCAVENGING_SPAWN_MOUSE		"spawn_mouse"
 #define SCAVENGING_SPAWN_MICE		"spawn_mice"
 #define SCAVENGING_SPAWN_TOM		"spawn_tom_the_mouse"
+
+//Scavenging element defines for ckey/mind restrictions.
+#define NO_LOOT_RESTRICTION			0
+#define LOOT_RESTRICTION_MIND		1
+#define LOOT_RESTRICTION_CKEY		2
+#define LOOT_RESTRICTION_MIND_PILE	3 //limited to the current pile.
+#define LOOT_RESTRICTION_CKEY_PILE	4 //Idem
