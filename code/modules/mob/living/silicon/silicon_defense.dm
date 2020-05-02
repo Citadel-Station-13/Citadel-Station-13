@@ -1,3 +1,5 @@
+/mob/living/silicon/KnockToFloor(disarm_items = FALSE, silent = TRUE, updating = TRUE)
+	return
 
 /mob/living/silicon/grippedby(mob/living/user, instant = FALSE)
 	return //can't upgrade a simple pull into a more aggressive grab.

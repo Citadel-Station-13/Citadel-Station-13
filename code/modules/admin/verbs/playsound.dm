@@ -10,7 +10,7 @@
 	var/freq = input(usr, "What frequency would you like the sound to play at?",, 1) as null|num
 	if(!freq)
 		freq = 1
-	vol = CLAMP(vol, 1, 100)
+	vol = clamp(vol, 1, 100)
 
 	var/sound/admin_sound = new()
 	admin_sound.file = S
@@ -137,6 +137,49 @@
 						C.chatOutput.stopMusic()
 
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Play Internet Sound")
+
+/client/proc/manual_play_web_sound()
+	set category = "Fun"
+	set name = "Manual Play Internet Sound"
+	if(!check_rights(R_SOUNDS))
+		return
+
+	var/web_sound_input = input("Enter content stream URL (fetch this from local youtube-dl!)", "Play Internet Sound via direct URL") as text|null
+	if(istext(web_sound_input))
+		if(!length(web_sound_input))
+			log_admin("[key_name(src)] stopped web sound")
+			message_admins("[key_name(src)] stopped web sound")
+			var/mob/M
+			for(var/i in GLOB.player_list)
+				M = i
+				M?.client?.chatOutput?.stopMusic()
+			return
+		else
+			if(web_sound_input && !findtext(web_sound_input, GLOB.is_http_protocol))
+				to_chat(src, "<span class='boldwarning'>BLOCKED: Content URL not using http(s) protocol</span>")
+				return
+			var/freq = input(usr, "What frequency would you like the sound to play at?",, 1) as null|num
+			if(isnull(freq))
+				return
+			if(!freq)
+				freq = 1
+			SSblackbox.record_feedback("nested tally", "played_url", 1, list("[ckey]", "[web_sound_input]"))
+			var/logstr = "[key_name(src)] played web sound at freq [freq]: [web_sound_input]"
+			log_admin(logstr)
+			message_admins(logstr)
+			var/mob/M
+			var/client/C
+			var/datum/chatOutput/O
+			for(var/i in GLOB.player_list)
+				M = i
+				C = M.client
+				if(!(C?.prefs?.toggles & SOUND_MIDI))
+					continue
+				O = C.chatOutput
+				if(!O || O.broken || !O.loaded)
+					continue
+				O.sendMusic(web_sound_input, freq)
+		SSblackbox.record_feedback("tally", "admin_verb", 1, "Manual Play Internet Sound")
 
 /client/proc/set_round_end_sound(S as sound)
 	set category = "Fun"

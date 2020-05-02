@@ -3,6 +3,7 @@
 	var/crit_fail = FALSE
 	animate_movement = 2
 	speech_span = SPAN_ROBOT
+	vis_flags = VIS_INHERIT_PLANE //when this be added to vis_contents of something it inherit something.plane, important for visualisation of obj in openspace.
 	var/obj_flags = CAN_BE_HIT
 	var/set_obj_flags // ONLY FOR MAPPING: Sets flags from a string list, handled in Initialize. Usage: set_obj_flags = "EMAGGED;!CAN_BE_HIT" to set EMAGGED and clear CAN_BE_HIT.
 

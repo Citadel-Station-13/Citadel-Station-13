@@ -73,6 +73,7 @@
 #define CAT_AMMO	"Ammunition"
 #define CAT_ROBOT	"Robots"
 #define CAT_MISC	"Misc"
+#define CAT_MISCELLANEOUS	"Miscellaneous"
 #define CAT_TOOL	"Tools & Storage"
 #define CAT_FURNITURE	"Furniture"
 #define CAT_PRIMAL  "Tribal"

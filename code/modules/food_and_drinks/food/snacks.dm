@@ -153,6 +153,12 @@ All foods are distributed among various categories. Use common sense.
 
 /obj/item/reagent_containers/food/snacks/examine(mob/user)
 	. = ..()
+	if(food_quality >= 70)
+		. += "It is of a high quality."
+	else
+		if(food_quality <= 30)
+			. += "It is of a low quality."
+
 	if(bitecount == 0)
 		return
 	else if(bitecount == 1)
@@ -296,6 +302,10 @@ All foods are distributed among various categories. Use common sense.
 	var/obj/item/result
 	if(cooked_type)
 		result = new cooked_type(T)
+		//if the result is food, set its food quality to the original food item's quality
+		if(isfood(result))
+			var/obj/item/reagent_containers/food/food_output = result
+			food_output.adjust_food_quality(food_quality + M.quality_increase)
 		if(istype(M))
 			initialize_cooked_food(result, M.efficiency)
 		else

@@ -90,3 +90,10 @@
 	desc = "Through bluespace magic stolen from an organisation that hoards technology, these boots simply allow you to slip through the atoms that make up anything, but only while walking, for safety reasons. As well as this, they unfortunately cause minor breath loss as the majority of atoms in your lungs are sucked out into any solid object you walk through."
 	item = /obj/item/clothing/shoes/wallwalkers
 	cost = 6
+
+/datum/uplink_item/device_tools/guerillagloves
+	name = "Guerilla Gloves"
+	desc = "A pair of highly robust combat gripper gloves that excels at performing takedowns at close range, with an added lining of insulation. Careful not to hit a wall!"
+	item = /obj/item/clothing/gloves/tackler/combat/insulated
+	include_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops)
+	cost = 2

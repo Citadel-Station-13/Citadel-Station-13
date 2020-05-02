@@ -327,3 +327,16 @@
 				/obj/item/stack/cable_coil = 10)
 	time = 100 //Takes awhile to put all the garlics on the coil and knot it.
 	category = CAT_CLOTHING
+
+/datum/crafting_recipe/gripperoffbrand
+	name = "Improvised Gripper Gloves"
+	reqs = list(
+            /obj/item/clothing/gloves/fingerless = 1,
+         //   /obj/item/stack/sticky_tape = 1
+		 	/obj/item/stack/cable_coil = 5,
+			/obj/item/stack/sheet/cloth = 2,
+	)
+	result = /obj/item/clothing/gloves/tackler/offbrand
+	category = CAT_CLOTHING
+	tools = list(TOOL_WIRECUTTER)
+	time = 20

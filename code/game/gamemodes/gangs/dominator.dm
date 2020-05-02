@@ -229,7 +229,7 @@
 			if(!was_stranded)
 				priority_announce("All hostile activity within station systems has ceased.","Network Alert")
 
-			if(get_security_level() == "delta")
+			if(NUM2SECLEVEL(GLOB.security_level) == "delta")
 				set_security_level("red")
 
 		SSshuttle.clearHostileEnvironment(src)

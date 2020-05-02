@@ -19,6 +19,11 @@
 	path_image_color = "#993299"
 	weather_immunities = list("lava","ash")
 
+	var/clean_time = 50 //How long do we take to clean?
+	var/broom = FALSE //Do we have an speed buff from a broom?
+	var/adv_mop = FALSE //Do we have a cleaning buff from a better mop?
+
+
 	var/blood = 1
 	var/trash = 0
 	var/pests = 0
@@ -75,6 +80,26 @@
 				to_chat(user, "<span class='warning'>Please close the access panel before locking it.</span>")
 			else
 				to_chat(user, "<span class='notice'>\The [src] doesn't seem to respect your authority.</span>")
+
+	if(istype(W, /obj/item/mop/advanced))
+		if(bot_core.allowed(user) && open && adv_mop == TRUE)
+			to_chat(user, "<span class='notice'>You replace \the [src] old mop with a new better one!</span>")
+			adv_mop = TRUE
+			clean_time = 20 //2.5 the speed!
+			window_name = "Automatic Station Cleaner v2.1 BETA" //New!
+			qdel(W)
+		else
+			to_chat(user, "<span class='notice'>\the [src] already has this mop!</span>")
+
+	if(istype(W, /obj/item/twohanded/broom))
+		if(bot_core.allowed(user) && open && broom == TRUE)
+			to_chat(user, "<span class='notice'>You add to \the [src] a broom speeding it up!</span>")
+			broom = TRUE
+			base_speed = 1 //2x faster!
+			qdel(W)
+		else
+			to_chat(user, "<span class='notice'>\the [src] already has a broom!</span>")
+
 	else
 		return ..()
 
@@ -221,7 +246,7 @@
 		icon_state = "cleanbot-c"
 		visible_message("<span class='notice'>[src] begins to clean up [A].</span>")
 		mode = BOT_CLEANING
-		spawn(50)
+		spawn(clean_time)
 			if(mode == BOT_CLEANING)
 				if(A && isturf(A.loc))
 					var/atom/movable/AM = A

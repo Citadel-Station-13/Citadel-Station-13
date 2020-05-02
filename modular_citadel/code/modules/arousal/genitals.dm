@@ -1,6 +1,6 @@
 /obj/item/organ/genital
 	color = "#fcccb3"
-	w_class = WEIGHT_CLASS_NORMAL
+	w_class = WEIGHT_CLASS_SMALL
 	var/shape
 	var/sensitivity = 1 // wow if this were ever used that'd be cool but it's not but i'm keeping it for my unshit code
 	var/genital_flags //see citadel_defines.dm
@@ -150,7 +150,8 @@
 		aroused_state = FALSE
 
 /obj/item/organ/genital/on_life()
-	if(!reagents || !owner)
+	. = ..()
+	if(!reagents || !.)
 		return
 	reagents.maximum_volume = fluid_max_volume
 	if(fluid_id && CHECK_BITFIELD(genital_flags, GENITAL_FUID_PRODUCTION))

@@ -53,7 +53,7 @@
 		restricted_jobs += "Assistant"
 
 	// Set number of Vamps
-	recommended_enemies = CLAMP(round(num_players()/10), 1, 6);
+	recommended_enemies = clamp(round(num_players()/10), 1, 6);
 
 	// Select Antags
 	for(var/i = 0, i < recommended_enemies, i++)
@@ -195,7 +195,7 @@
 		return FALSE
 	if(target.stat > UNCONSCIOUS)
 		return FALSE
-	
+
 				// Check Overdose: Am I even addicted to blood? Do I even have any in me?
 				//if (!target.reagents.addiction_list || !target.reagents.reagent_list)
 					//message_admins("DEBUG2: can_make_vassal() Abort: No reagents")
