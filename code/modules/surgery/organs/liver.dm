@@ -25,25 +25,24 @@
 	var/cachedmoveCalc = 1
 
 /obj/item/organ/liver/on_life()
-	var/mob/living/carbon/C = owner
+	. = ..()
+	if(!. || !owner)//can't process reagents with a failing liver
+		return
 
-	if(istype(C))
-		if(!(organ_flags & ORGAN_FAILING))//can't process reagents with a failing liver
+	if(filterToxins && !HAS_TRAIT(owner, TRAIT_TOXINLOVER))
+		//handle liver toxin filtration
+		for(var/datum/reagent/toxin/T in owner.reagents.reagent_list)
+			var/thisamount = owner.reagents.get_reagent_amount(T.type)
+			if (thisamount && thisamount <= toxTolerance)
+				owner.reagents.remove_reagent(T.type, 1)
+			else
+				damage += (thisamount*toxLethality)
 
-			if(filterToxins && !HAS_TRAIT(owner, TRAIT_TOXINLOVER))
-				//handle liver toxin filtration
-				for(var/datum/reagent/toxin/T in C.reagents.reagent_list)
-					var/thisamount = C.reagents.get_reagent_amount(T.type)
-					if (thisamount && thisamount <= toxTolerance)
-						C.reagents.remove_reagent(T.type, 1)
-					else
-						damage += (thisamount*toxLethality)
+	//metabolize reagents
+	owner.reagents.metabolize(owner, can_overdose=TRUE)
 
-			//metabolize reagents
-			C.reagents.metabolize(C, can_overdose=TRUE)
-
-			if(damage > 10 && prob(damage/3))//the higher the damage the higher the probability
-				to_chat(C, "<span class='warning'>You feel a dull pain in your abdomen.</span>")
+	if(damage > 10 && prob(damage/3))//the higher the damage the higher the probability
+		to_chat(owner, "<span class='warning'>You feel a dull pain in your abdomen.</span>")
 
 /obj/item/organ/liver/prepare_eat()
 	var/obj/S = ..()

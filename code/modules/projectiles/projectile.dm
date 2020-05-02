@@ -315,6 +315,8 @@
 		objs += O
 	var/obj/O = safepick(objs)
 	if(O)
+		if(length(O.buckled_mobs))
+			return pick(O.buckled_mobs)
 		return O
 	//Nothing else is here that we can hit, hit the turf if we haven't.
 	if(!(T in permutated) && can_hit_target(T, permutated, T == original, TRUE))

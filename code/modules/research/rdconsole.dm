@@ -47,6 +47,9 @@ Nothing else in the console has ID requirements.
 
 	var/research_control = TRUE
 
+	/// Long action cooldown to prevent spam
+	var/last_long_action = 0
+
 /obj/machinery/computer/rdconsole/production
 	circuit = /obj/item/circuitboard/computer/rdconsole/production
 	research_control = FALSE
@@ -583,10 +586,8 @@ Nothing else in the console has ID requirements.
 		l += "<table><tr><td>[icon2html(linked_destroy.loaded_item, usr)]</td><td><b>[linked_destroy.loaded_item.name]</b> <A href='?src=[REF(src)];eject_item=1'>Eject</A></td></tr></table>[RDSCREEN_NOBREAK]"
 		l += "Select a node to boost by deconstructing this item. This item can boost:"
 
-		var/anything = FALSE
 		var/list/boostable_nodes = techweb_item_boost_check(linked_destroy.loaded_item)
 		for(var/id in boostable_nodes)
-			anything = TRUE
 			var/list/worth = boostable_nodes[id]
 			var/datum/techweb_node/N = SSresearch.techweb_node_by_id(id)
 
@@ -620,7 +621,6 @@ Nothing else in the console has ID requirements.
 		// point deconstruction and material reclamation use the same ID to prevent accidentally missing the points
 		var/list/point_values = techweb_item_point_check(linked_destroy.loaded_item)
 		if(point_values)
-			anything = TRUE
 			l += "<div class='statusDisplay'>[RDSCREEN_NOBREAK]"
 			if (stored_research.deconstructed_items[linked_destroy.loaded_item.type])
 				l += "<span class='linkOff'>Point Deconstruction</span>"
@@ -636,10 +636,8 @@ Nothing else in the console has ID requirements.
 			for (var/M in materials)
 				l += "* [CallMaterialName(M)] x [materials[M]]"
 			l += "</div>[RDSCREEN_NOBREAK]"
-			anything = TRUE
 
-		if (!anything)
-			l += "Nothing!"
+		l += "<div class='statusDisplay'><A href='?src=[REF(src)];deconstruct=[RESEARCH_DEEP_SCAN_ID]'>Nondestructive Deep Scan</A></div>"
 
 		l += "</div>"
 	return l
@@ -926,6 +924,9 @@ Nothing else in the console has ID requirements.
 		screen = RDSCREEN_MENU
 		say("Ejecting Technology Disk")
 	if(ls["deconstruct"])
+		if((last_long_action + 1 SECONDS) > world.time)
+			return
+		last_long_action = world.time
 		if(QDELETED(linked_destroy))
 			say("No Destructive Analyzer Linked!")
 			return
@@ -1037,7 +1038,7 @@ Nothing else in the console has ID requirements.
 						autolathe_friendly = FALSE
 						D.category -= "Imported"
 
-			if(D.build_type & (AUTOLATHE|PROTOLATHE|CRAFTLATHE)) // Specifically excludes circuit imprinter and mechfab
+			if(D.build_type & (AUTOLATHE|PROTOLATHE|TOYLATHE)) // Specifically excludes circuit imprinter and mechfab
 				D.build_type = autolathe_friendly ? (D.build_type | AUTOLATHE) : D.build_type
 				D.category |= "Imported"
 			d_disk.blueprints[slot] = D
