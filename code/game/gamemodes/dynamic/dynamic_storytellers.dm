@@ -191,8 +191,10 @@ Property weights are:
 /datum/dynamic_storyteller/proc/event_draft()
 	var/list/drafted_rules = list()
 	for(var/datum/dynamic_ruleset/event/rule in mode.events)
-		if(rule.acceptable(mode.current_players[CURRENT_LIVING_PLAYERS].len, mode.threat_level) && (mode.threat_level - mode.threat) >= rule.cost)
+		if(rule.acceptable(mode.current_players[CURRENT_LIVING_PLAYERS].len, mode.threat_level))
 			if(rule.ready())
+				var/cost_difference = abs(rule.cost-(mode.threat_level-mode.threat))
+				var/threat_weight = 1-abs(1-(LOGISTIC_FUNCTION(2,0.05,cost_difference,0)))
 				var/property_weight = 0
 				for(var/property in property_weights)
 					if(property in rule.property_weights)
