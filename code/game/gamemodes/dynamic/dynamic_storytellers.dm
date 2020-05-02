@@ -43,35 +43,36 @@ Property weights are:
 	mode.event_injection_cooldown = (round(clamp(EXP_DISTRIBUTION(event_injection_cooldown_middle), GLOB.dynamic_event_delay_min, GLOB.dynamic_event_delay_max)) + world.time)
 
 /datum/dynamic_storyteller/proc/calculate_threat()
-	var/threat = 0
+	//side effects city but lol byond code is already that
+	mode.threat_contributions = list("antags" = 0, "events" = 0, "mobs" = 0, "jobs" = 0)
 	for(var/datum/antagonist/A in GLOB.antagonists)
 		if(A?.owner?.current && A.owner.current.stat != DEAD)
-			threat += A.threat()
+			mode.threat_contributions["antags"] += A.threat()
 	for(var/r in SSevents.running)
 		var/datum/round_event/R = r
-		threat += R.threat()
+		mode.threat_contributions["events"] += R.threat()
 	for(var/mob/living/simple_animal/hostile/H in GLOB.mob_living_list)
 		var/turf/T = get_turf(H)
 		if(H.stat != DEAD && is_station_level(T.z) && !("Station" in H.faction))
-			threat += H.threat()
+			mode.threat_contributions["mobs"] += H.threat()
 	for(var/obj/item/phylactery/P in GLOB.poi_list)
-		threat += 25 // can't be giving them too much of a break
+		mode.threat_contributions["phylactery"] = 25 // can't be giving them too much of a break
 	for (var/mob/M in mode.current_players[CURRENT_LIVING_PLAYERS])
 		if (M?.mind?.assigned_role && M.stat != DEAD)
 			var/datum/job/J = SSjob.GetJob(M.mind.assigned_role)
 			if(J)
 				if(length(M.mind.antag_datums))
-					threat += J.GetThreat()
+					mode.threat_contributions["jobs"] += J.GetThreat()
 				else
-					threat -= J.GetThreat()
-	threat += (mode.current_players[CURRENT_DEAD_PLAYERS].len)*dead_player_weight
-	return round(threat,0.1)
+					mode.threat_contributions["jobs"] -= J.GetThreat()
+	mode.threat_contributions["dead_players"] = (mode.current_players[CURRENT_DEAD_PLAYERS].len)*dead_player_weight
+	SEND_SIGNAL(mode,COMSIG_DYNAMIC_CALCULATE_THREAT,mode)
 
 /datum/dynamic_storyteller/proc/do_process()
 	return
 
 /datum/dynamic_storyteller/proc/on_start()
-	if (istype(SSticker.mode, /datum/game_mode/dynamic))
+	if (DYNAMIC_MODE)
 		mode = SSticker.mode
 		GLOB.dynamic_curve_centre = curve_centre
 		GLOB.dynamic_curve_width = curve_width

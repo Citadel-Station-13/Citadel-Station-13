@@ -318,7 +318,7 @@
 			//ignore this comment, it fixes the broken sytax parsing caused by the " above
 			else
 				parts += "[FOURSPACES]<i>Nobody died this shift!</i>"
-	if(istype(SSticker.mode, /datum/game_mode/dynamic))
+	if(DYNAMIC_MODE)
 		var/datum/game_mode/dynamic/mode = SSticker.mode
 		mode.update_playercounts()
 		parts += "[FOURSPACES]Final threat level: [mode.threat_level]"

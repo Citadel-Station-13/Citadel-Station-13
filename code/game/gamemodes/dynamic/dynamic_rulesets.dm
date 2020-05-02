@@ -111,7 +111,7 @@
 		requirements = requirementses[config_tag]
 	if(config_tag in high_population_requirements)
 		high_population_requirement = high_population_requirements[config_tag]
-	if (istype(SSticker.mode, /datum/game_mode/dynamic))
+	if (DYNAMIC_MODE)
 		mode = SSticker.mode
 	else if (GLOB.master_mode != "dynamic") // This is here to make roundstart forced ruleset function.
 		qdel(src)

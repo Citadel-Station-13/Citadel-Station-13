@@ -94,7 +94,7 @@ GLOBAL_VAR_INIT(war_declared, FALSE)
 		if(board.moved)
 			to_chat(user, "The shuttle has already been moved! You have forfeit the right to declare war.")
 			return FALSE
-	if(istype(SSticker.mode, /datum/game_mode/dynamic))
+	if(DYNAMIC_MODE)
 		var/datum/game_mode/dynamic/mode = SSticker.mode
 		if(!(mode.storyteller.flags & WAROPS_ALWAYS_ALLOWED))
 			if(mode.threat_level < CONFIG_GET(number/dynamic_warops_requirement))

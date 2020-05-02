@@ -135,6 +135,8 @@ GLOBAL_VAR_INIT(dynamic_forced_storyteller, null)
 	var/only_ruleset_executed = FALSE
 	/// Antags rolled by rules so far, to keep track of and discourage scaling past a certain ratio of crew/antags especially on lowpop.
 	var/antags_rolled = 0
+	// Threat contributions from individual things that can add threat
+	var/list/threat_contributions = list()
 	// Arbitrary threat addition, for fudging purposes.
 	var/added_threat = 50
 
@@ -371,7 +373,7 @@ GLOBAL_VAR_INIT(dynamic_forced_storyteller, null)
 	log_game("DYNAMIC: Stacking limit is [GLOB.dynamic_stacking_limit], Classic secret is [GLOB.dynamic_classic_secret ? "Enabled" : "Disabled"], High population limit is [GLOB.dynamic_high_pop_limit].")
 	if(GLOB.dynamic_forced_threat_level >= 0)
 		threat_level = round(GLOB.dynamic_forced_threat_level, 0.1)
-		threat = threat_level
+		threat = 0
 		SSblackbox.record_feedback("tally","dynamic_threat",threat_level,"Threat level (forced)")
 	else
 		generate_threat()
@@ -738,7 +740,13 @@ GLOBAL_VAR_INIT(dynamic_forced_storyteller, null)
 					continue
 			if(!M.voluntary_ghosted)
 				current_players[CURRENT_DEAD_PLAYERS].Add(M) // Players who actually died (and admins who ghosted, would be nice to avoid counting them somehow)
-	threat = storyteller.calculate_threat() + added_threat
+	update_threat()
+
+/datum/game_mode/dynamic/proc/update_threat()
+	storyteller.calculate_threat()
+	threat = added_threat
+	for(var/cause in threat_contributions)
+		threat += threat_contributions[cause]
 	if(threat_average_weight)
 		var/cur_sample_weight = world.time - last_threat_sample_time
 		threat_average = ((threat_average * threat_average_weight) + (threat * cur_sample_weight)) / (threat_average_weight + cur_sample_weight)

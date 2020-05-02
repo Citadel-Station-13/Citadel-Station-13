@@ -96,6 +96,14 @@
 	set_light(lon_range)
 	if(initial(SSticker.mode.round_ends_with_antag_death))
 		SSticker.mode.round_ends_with_antag_death = FALSE
+	if(DYNAMIC_MODE)
+		RegisterSignal(SSticker.mode,COMSIG_DYNAMIC_CALCULATE_THREAT,.proc/threat)
+
+/obj/item/phylactery/proc/threat(datum/game_mode/dynamic/mode)
+	if(!("phylactery" in mode.threat_contributions))
+		mode.threat_contributions["phylactery"] = 0
+	mode.threat_contributions["phylactery"] += 25
+	return 0
 
 /obj/item/phylactery/Destroy(force=FALSE)
 	STOP_PROCESSING(SSobj, src)
