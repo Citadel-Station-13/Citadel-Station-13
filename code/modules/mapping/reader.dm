@@ -416,23 +416,7 @@
 
 //Instance an atom at (x,y,z) and gives it the variables in attributes
 /datum/parsed_map/proc/instance_atom(path,list/attributes, turf/crds, no_changeturf, placeOnTop, turn_angle = 0, swap_xy, invert_y, invert_x)
-	if(turn_angle != 0)
-		attributes = attributes.Copy()
-		attributes["dir"] = turn((attributes["dir"] || SOUTH), turn_angle)
-		var/px = attributes["pixel_x"] || 0
-		var/py = attributes["pixel_y"] || 0
-		if(invert_y)			//same order of operations as the load rotation, mirror and then x/y swapping.
-			py = -py
-		if(invert_x)
-			px = -px
-		if(swap_xy)
-			var/opx = px
-			px = py
-			py = opx
-		attributes["pixel_x"] = px
-		attributes["pixel_y"] = py
-
-	world.preloader_setup(attributes, path)
+	world.preloader_setup(attributes, path, turn_angle, invert_x, invert_y, swap_xy)
 
 	if(crds)
 		if(ispath(path, /turf))
