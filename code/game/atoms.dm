@@ -50,6 +50,13 @@
 	var/list/blood_DNA
 	var/list/suit_fibers
 
+	/// Last name used to calculate a color for the chatmessage overlays
+	var/chat_color_name
+	/// Last color calculated for the the chatmessage overlays
+	var/chat_color
+	/// A luminescence-shifted value of the last color calculated for chatmessage overlays
+	var/chat_color_darkened
+
 /atom/New(loc, ...)
 	//atom creation method that preloads variables at creation
 	if(GLOB.use_preloader && (src.type == GLOB._preloader.target_path))//in case the instanciated atom is creating other atoms in New()
