@@ -689,7 +689,9 @@
 /obj/machinery/power/smes{
 	charge = 5e+006
 	},
-/obj/structure/cable,
+/obj/structure/cable{
+	icon_state = "0-4"
+	},
 /turf/open/floor/plating,
 /area/mine/living_quarters)
 "cT" = (
@@ -700,10 +702,16 @@
 /obj/structure/sign/warning/electricshock{
 	pixel_y = 32
 	},
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
 /turf/open/floor/plating,
 /area/mine/living_quarters)
 "cU" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
+/obj/structure/cable{
+	icon_state = "2-8"
+	},
 /turf/open/floor/plating,
 /area/mine/living_quarters)
 "cV" = (
@@ -871,6 +879,9 @@
 /obj/machinery/power/port_gen/pacman{
 	anchored = 1
 	},
+/obj/structure/cable{
+	icon_state = "0-2"
+	},
 /turf/open/floor/plating,
 /area/mine/living_quarters)
 "dp" = (
@@ -878,6 +889,9 @@
 	dir = 6
 	},
 /obj/machinery/meter,
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
 /turf/open/floor/plating,
 /area/mine/living_quarters)
 "dq" = (
@@ -1016,11 +1030,15 @@
 /obj/machinery/power/port_gen/pacman{
 	anchored = 1
 	},
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/mine/living_quarters)
 "dH" = (
 /obj/machinery/atmospherics/components/binary/pump/on,
 /obj/structure/cable,
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
 /turf/open/floor/plating,
 /area/mine/living_quarters)
 "dI" = (
@@ -1127,6 +1145,9 @@
 	req_access_txt = "48"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
 /turf/open/floor/plating,
 /area/mine/living_quarters)
 "dT" = (
@@ -1240,6 +1261,9 @@
 /obj/effect/turf_decal/tile/brown{
 	dir = 4
 	},
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
 /turf/open/floor/plasteel,
 /area/mine/living_quarters)
 "ej" = (
@@ -1335,6 +1359,9 @@
 	},
 /obj/structure/cable{
 	icon_state = "4-8"
+	},
+/obj/structure/cable{
+	icon_state = "1-4"
 	},
 /turf/open/floor/plasteel,
 /area/mine/living_quarters)
