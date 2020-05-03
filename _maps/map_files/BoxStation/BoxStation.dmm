@@ -8337,24 +8337,6 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/fore/secondary)
-"aqn" = (
-/obj/structure/bed,
-/obj/machinery/airalarm{
-	pixel_y = 23
-	},
-/obj/machinery/button/door{
-	id = "Dorm4";
-	name = "Dorm Bolt Control";
-	normaldoorcontrol = 1;
-	pixel_x = 25;
-	specialfunctions = 4
-	},
-/obj/machinery/atmospherics/components/unary/vent_pump/on{
-	dir = 4
-	},
-/obj/effect/spawner/lootdrop/bedsheet,
-/turf/open/floor/carpet,
-/area/crew_quarters/dorms)
 "aqo" = (
 /obj/structure/closet/secure_closet/personal/cabinet,
 /turf/open/floor/wood,
@@ -9160,9 +9142,6 @@
 /turf/open/floor/plasteel,
 /area/crew_quarters/dorms)
 "asg" = (
-/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
-	dir = 4
-	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -9172,15 +9151,8 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/obj/structure/sign/warning/fire{
-	desc = "A sign that states the labeled room's number.";
-	dir = 4;
-	icon_state = "roomnum";
-	name = "Room Number 3";
-	pixel_x = -30;
-	pixel_y = -7
-	},
 /obj/effect/landmark/start/assistant,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel,
 /area/crew_quarters/dorms)
 "ash" = (
@@ -9496,13 +9468,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/fore)
-"ate" = (
-/obj/effect/landmark/xeno_spawn,
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
-/turf/open/floor/carpet,
-/area/crew_quarters/dorms)
 "atf" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 4
@@ -9510,15 +9475,13 @@
 /turf/open/floor/carpet,
 /area/crew_quarters/dorms)
 "atg" = (
-/obj/machinery/door/airlock{
-	id_tag = "Dorm4";
-	name = "Room Three"
+/obj/machinery/light{
+	dir = 1
 	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
+/turf/open/floor/engine{
+	name = "Holodeck Projector Floor"
 	},
-/turf/open/floor/plasteel/dark,
-/area/crew_quarters/dorms)
+/area/holodeck/bedroom1)
 "ath" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -9526,13 +9489,11 @@
 /turf/open/floor/carpet,
 /area/crew_quarters/dorms)
 "ati" = (
-/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
-	dir = 4
-	},
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel,
 /area/crew_quarters/dorms)
 "atj" = (
@@ -9876,23 +9837,10 @@
 /turf/open/floor/carpet,
 /area/crew_quarters/dorms)
 "auw" = (
-/obj/structure/bed,
-/obj/machinery/airalarm{
-	pixel_y = 23
+/turf/open/floor/engine{
+	name = "Holodeck Projector Floor"
 	},
-/obj/machinery/button/door{
-	id = "Dorm3";
-	name = "Dorm Bolt Control";
-	normaldoorcontrol = 1;
-	pixel_x = 25;
-	specialfunctions = 4
-	},
-/obj/machinery/atmospherics/components/unary/vent_pump/on{
-	dir = 4
-	},
-/obj/effect/spawner/lootdrop/bedsheet,
-/turf/open/floor/carpet,
-/area/crew_quarters/dorms)
+/area/holodeck/bedroom1)
 "aux" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/effect/turf_decal/tile/neutral{
@@ -10009,9 +9957,6 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
-	dir = 4
-	},
 /obj/structure/sign/warning/fire{
 	desc = "A sign that states the labeled room's number.";
 	dir = 1;
@@ -10020,6 +9965,7 @@
 	pixel_x = -30;
 	pixel_y = -7
 	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel,
 /area/crew_quarters/dorms)
 "auT" = (
@@ -39447,13 +39393,28 @@
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "bPh" = (
-/obj/machinery/atmospherics/pipe/simple/cyan/visible,
-/obj/effect/spawner/structure/window/reinforced,
-/obj/machinery/atmospherics/pipe/layer_manifold{
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 4
 	},
-/turf/open/floor/plating,
-/area/engine/atmos)
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/machinery/airalarm{
+	dir = 4;
+	pixel_x = -23
+	},
+/obj/item/radio/intercom{
+	name = "Station Intercom (General)";
+	pixel_y = -29
+	},
+/obj/machinery/computer/holodeck/holodorm1{
+	dir = 4
+	},
+/turf/open/floor/plasteel/dark,
+/area/crew_quarters/dorms)
 "bPi" = (
 /obj/machinery/light{
 	dir = 4
@@ -41472,12 +41433,18 @@
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "bUN" = (
-/obj/machinery/portable_atmospherics/canister,
-/obj/machinery/atmospherics/components/unary/portables_connector/visible{
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
-/turf/open/floor/plasteel,
-/area/engine/atmos)
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/machinery/light,
+/turf/open/floor/plasteel/dark,
+/area/crew_quarters/dorms)
 "bUO" = (
 /obj/machinery/portable_atmospherics/canister,
 /obj/machinery/atmospherics/components/unary/portables_connector/visible{
@@ -55505,6 +55472,12 @@
 /obj/item/coin/silver,
 /turf/open/floor/plating,
 /area/maintenance/starboard/fore)
+"iYv" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 10
+	},
+/turf/closed/wall,
+/area/crew_quarters/dorms)
 "iYE" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -56927,6 +56900,26 @@
 "naI" = (
 /turf/open/space,
 /area/space/station_ruins)
+"nbg" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on,
+/obj/machinery/button/door{
+	id = "Dorm3";
+	name = "Dorm Bolt Control";
+	normaldoorcontrol = 1;
+	specialfunctions = 4;
+	pixel_y = -25
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/turf/open/floor/plasteel/dark,
+/area/crew_quarters/dorms)
 "nbT" = (
 /obj/structure/cable{
 	icon_state = "0-8"
@@ -57906,6 +57899,12 @@
 	},
 /turf/open/space,
 /area/solar/starboard/aft)
+"pUo" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 5
+	},
+/turf/closed/wall,
+/area/crew_quarters/dorms)
 "pUy" = (
 /obj/effect/turf_decal/tile/red,
 /obj/effect/turf_decal/tile/red{
@@ -59045,6 +59044,10 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
+"tFt" = (
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden,
+/turf/closed/wall,
+/area/crew_quarters/dorms)
 "tHh" = (
 /obj/machinery/disposal/bin,
 /obj/effect/turf_decal/tile/red,
@@ -91067,11 +91070,11 @@ aoB
 aod
 aqe
 arf
-aqa
-atf
-arf
-aqa
-atf
+auw
+auw
+auw
+auw
+bPh
 arf
 aqa
 atf
@@ -91324,11 +91327,11 @@ gfC
 aod
 aqe
 arf
-apY
-ate
-arf
-apY
-ath
+atg
+auw
+auw
+auw
+bUN
 arf
 apY
 ath
@@ -91581,12 +91584,12 @@ aoD
 aod
 aqe
 arf
-aqn
-ath
-arf
 auw
-ath
-arf
+auw
+auw
+auw
+nbg
+pUo
 ayV
 ath
 dgz
@@ -91838,13 +91841,13 @@ aoC
 aod
 aqe
 arf
-asd
-atg
 arf
-asd
+arf
+arf
+arf
 awo
-arf
-asd
+iYv
+tFt
 aAb
 dgz
 iVU
@@ -92096,7 +92099,7 @@ apo
 aqh
 arh
 asg
-atj
+aul
 aul
 auR
 atj
