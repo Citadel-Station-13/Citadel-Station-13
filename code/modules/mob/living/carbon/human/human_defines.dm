@@ -9,9 +9,10 @@
 	/// Enable stamina combat
 	combat_flags = COMBAT_FLAGS_DEFAULT
 	status_flags = CANSTUN|CANKNOCKDOWN|CANUNCONSCIOUS|CANPUSH|CANSTAGGER
+	has_field_of_vision = FALSE //Handled by species.
 
 	blocks_emissive = EMISSIVE_BLOCK_UNIQUE
-	
+
 	//Hair colour and style
 	var/hair_color = "000"
 	var/hair_style = "Bald"

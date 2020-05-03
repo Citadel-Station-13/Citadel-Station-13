@@ -1,6 +1,3 @@
-//better performant than a proc.
-#define REVERSE_DIR(dir) ( ((dir & 85) << 1) | ((dir & 170) >> 1) )
-
 /*
  * A large number of misc global procs.
  */

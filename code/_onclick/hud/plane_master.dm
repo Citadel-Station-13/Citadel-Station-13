@@ -24,6 +24,10 @@
 	blend_mode = BLEND_MULTIPLY
 	alpha = 255
 
+/obj/screen/plane_master/openspace/Initialize()
+	. = ..()
+	filters += filter(type="alpha", render_source=FIELD_OF_VISION_RENDER_TARGET, flags=MASK_INVERSE)
+
 /obj/screen/plane_master/openspace/backdrop(mob/mymob)
 	filters = list()
 	filters += filter(type = "drop_shadow", color = "#04080FAA", size = -10)

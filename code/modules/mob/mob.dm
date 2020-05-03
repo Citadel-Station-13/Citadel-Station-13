@@ -41,6 +41,11 @@
 	update_movespeed(TRUE)
 	hook_vr("mob_new",list(src))
 
+/mob/ComponentInitialize()
+	. = ..()
+	if(has_field_of_vision && CONFIG_GET(flag/use_field_of_vision))
+		LoadComponent(/datum/component/vision_cone, field_of_vision_type)
+
 /mob/GenerateTag()
 	tag = "mob_[next_mob_id++]"
 
@@ -317,8 +322,8 @@ mob/visible_message(message, self_message, blind_message, vision_distance = DEFA
 	return
 
 //view() but with a signal, to allow blacklisting some of the otherwise visible atoms.
-/mob/proc/visible_atoms()
-	. = view()
+/mob/proc/visible_atoms(dist = world.view)
+	. = view(dist)
 	SEND_SIGNAL(src, COMSIG_MOB_VISIBLE_ATOMS, .)
 
 //mob verbs are faster than object verbs. See https://secure.byond.com/forum/?post=1326139&page=2#comment8198716 for why this isn't atom/verb/examine()

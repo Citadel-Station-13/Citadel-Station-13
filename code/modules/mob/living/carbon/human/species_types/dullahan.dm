@@ -13,6 +13,7 @@
 	blacklisted = TRUE
 	limbs_id = "human"
 	skinned_type = /obj/item/stack/sheet/animalhide/human
+	has_field_of_vision = FALSE //Too much of a trouble, their vision is already bound to their severed head.
 	var/pumpkin = FALSE
 
 	var/obj/item/dullahan_relay/myhead

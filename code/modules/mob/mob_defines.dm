@@ -131,4 +131,5 @@
 
 	var/voluntary_ghosted = FALSE		//whether or not they voluntarily ghosted.
 
-	vis_flags = VIS_INHERIT_PLANE //when this be added to vis_contents of something it inherit something.plane, important for visualisation of mob in openspace.
+	var/has_field_of_vision = FALSE
+	var/field_of_vision_type = FOV_90_DEGREES

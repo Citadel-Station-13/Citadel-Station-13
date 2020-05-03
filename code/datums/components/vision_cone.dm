@@ -1,7 +1,3 @@
-#define FOV_90_DEGREES	90
-#define FOV_180_DEGREES	180
-#define FOV_270_DEGREES	270
-
 #define CENTERED_RENDER_SOURCE(img, atom, FoV) \
 	atom.render_target = atom.render_target || ref(atom);\
 	img.render_source = atom.render_target;\
