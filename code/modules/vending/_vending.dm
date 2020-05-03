@@ -575,7 +575,7 @@ GLOBAL_LIST_EMPTY(vending_products)
 		var/cost_mult = get_best_discount(C)
 		if(cost_mult != 1)
 			.["cost_mult"] = cost_mult
-			if(cost < 1)
+			if(cost_mult < 1)
 				.["cost_text"] = " [(1 - cost_mult) * 100]% OFF"
 			else
 				.["cost_text"] = " [(cost_mult - 1) * 100]% EXTRA"
