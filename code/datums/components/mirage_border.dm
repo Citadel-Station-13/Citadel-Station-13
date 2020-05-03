@@ -39,4 +39,5 @@
 /obj/effect/abstract/mirage_holder
 	name = "Mirage holder"
 	anchored = TRUE
+	plane = PLANE_SPACE
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT

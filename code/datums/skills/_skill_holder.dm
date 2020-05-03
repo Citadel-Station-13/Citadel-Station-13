@@ -15,7 +15,7 @@
 		CRASH("Invalid get_skill_value call. Use typepaths.")		//until a time when we somehow need text ids for dynamic skills, I'm enforcing this.
 	if(!skills)
 		return null
-	return skills[skill]
+	return LAZYACCESS(skills, skill)
 
 /**
   * Grabs our affinity for a skill. !!This is a multiplier!!
@@ -25,7 +25,7 @@
 		CRASH("Invalid get_skill_affinity call. Use typepaths.")		//until a time when we somehow need text ids for dynamic skills, I'm enforcing this.
 	if(!skills)
 		return 1
-	var/affinity = skill_affinities[skill]
+	var/affinity = LAZYACCESS(skill_affinities, skill)
 	if(isnull(affinity))
 		return 1
 	return affinity
@@ -39,7 +39,7 @@
 	LAZYINITLIST(skills)
 	value = sanitize_skill_value(skill, value)
 	if(!isnull(value))
-		skills[skill] = value
+		LAZYSET(skills, skill, value)
 		return TRUE
 	return FALSE
 

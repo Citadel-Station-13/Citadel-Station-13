@@ -239,7 +239,7 @@
 			if(objective.completable)
 				var/completion = objective.check_completion()
 				if(completion >= 1)
-					objectives_text += "<br><B>Objective #[count]</B>: [objective.explanation_text] <span class='greentext'><B>Success!</span>"
+					objectives_text += "<br><B>Objective #[count]</B>: [objective.explanation_text] <span class='greentext'><B>Success!</B></span>"
 				else if(completion <= 0)
 					objectives_text += "<br><B>Objective #[count]</B>: [objective.explanation_text] <span class='redtext'>Fail.</span>"
 					traitorwin = FALSE

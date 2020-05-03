@@ -10,6 +10,8 @@
 	throwforce = 10
 	blocks_emissive = EMISSIVE_BLOCK_GENERIC
 
+	vis_flags = VIS_INHERIT_PLANE //when this be added to vis_contents of something it inherit something.plane, important for visualisation of mob in openspace.
+
 	var/lighting_alpha = LIGHTING_PLANE_ALPHA_VISIBLE
 	var/datum/mind/mind
 	var/list/datum/action/actions = list()

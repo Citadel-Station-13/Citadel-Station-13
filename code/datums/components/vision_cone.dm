@@ -2,6 +2,36 @@
 #define FOV_180_DEGREES	180
 #define FOV_270_DEGREES	270
 
+#define CENTERED_RENDER_SOURCE(img, atom, FoV) \
+	atom.render_target = atom.render_target || ref(atom);\
+	img.render_source = atom.render_target;\
+	var/_cached_sizes = FoV.width_n_height_offsets[atom.icon];\
+	if(atom.icon){\
+		if(!_cached_sizes){\
+			var/icon/_I = icon(atom.icon);\
+			var/list/L = list();\
+			L += (_I.Width() - world.icon_size)/2;\
+			L += (_I.Height() - world.icon_size)/2;\
+			_cached_sizes = FoV.width_n_height_offsets[atom.icon] = L\
+		}\
+		img.pixel_x = _cached_sizes[1];\
+		img.pixel_y = _cached_sizes[2]\
+	}
+
+#define REGISTER_NESTED_LOCS(source, list, comsig, proc) \
+	for(var/k in get_nested_locs(source)){\
+		var/atom/_A = k;\
+		RegisterSignal(_A, comsig, proc);\
+		list += _A\
+	}
+
+#define UNREGISTER_NESTED_LOCS(list, comsig, index) \
+	for(var/k in index to length(list)){\
+		var/atom/_A = list[k];\
+		UnregisterSignal(_A, comsig);\
+		list -= _A\
+	}
+
 /datum/component/vision_cone
 	can_transfer = TRUE
 	var/atom/movable/fov_holder/fov
@@ -12,6 +42,8 @@
 	var/image/shadow_mask //what masks the environment from our sight.
 	var/image/visual_shadow //the visual, found on the WALL_PLANE plane.
 	var/image/owner_mask //This will mask the shadow cone mask, so it won't mask the user.
+	var/list/nested_locs = list() //To ensure the above mask assumes the right shape when inside a locker, mech, vehicle etcetera.
+	var/static/list/width_n_height_offsets = list() //because render sources are automatically centered unlike most mapped visuals.
 
 /datum/component/vision_cone/Initialize(fov_type = FOV_90_DEGREES, _angle = 0)
 	if(!ismob(parent))
@@ -25,9 +57,7 @@
 	if(M.client)
 		generate_fov_holder(M, angle)
 	RegisterSignal(M, COMSIG_MOB_CLIENT_LOGIN, .proc/on_mob_login)
-	RegisterSignal(M, COMSIG_MOB_CLIENT_CHANGE_VIEW, .proc/on_change_view)
-	RegisterSignal(M, COMSIG_ATOM_DIR_CHANGE, .proc/on_dir_change)
-	RegisterSignal(M, COMSIG_MOVABLE_MOVED, .proc/on_mob_moved)
+	RegisterSignal(M, COMSIG_MOB_CLIENT_LOGOUT, .proc/on_mob_logout)
 	RegisterSignal(M, COMSIG_MOB_GET_VISIBLE_MESSAGE, .proc/on_visible_message)
 	RegisterSignal(M, COMSIG_MOB_EXAMINATE, .proc/on_examinate)
 	RegisterSignal(M, COMSIG_MOB_VISIBLE_ATOMS, .proc/on_visible_atoms)
@@ -41,9 +71,13 @@
 			M.client.images -= shadow_mask
 			M.client.images -= visual_shadow
 		QDEL_NULL(fov)
-	UnregisterSignal(M, list(COMSIG_MOB_CLIENT_LOGIN, COMSIG_MOB_CLIENT_CHANGE_VIEW,
-							COMSIG_ATOM_DIR_CHANGE, COMSIG_MOVABLE_MOVED,
-							COMSIG_MOB_GET_VISIBLE_MESSAGE, COMSIG_MOB_EXAMINATE, COMSIG_MOB_VISIBLE_ATOMS))
+		QDEL_NULL(owner_mask)
+	if(length(nested_locs))
+		UNREGISTER_NESTED_LOCS(nested_locs, COMSIG_MOVABLE_MOVED, 1)
+	UnregisterSignal(M, list(COMSIG_MOB_CLIENT_LOGIN, COMSIG_MOB_CLIENT_LOGOUT, COMSIG_MOB_DEATH,
+							COMSIG_LIVING_REVIVE, COMSIG_MOB_CLIENT_CHANGE_VIEW, COMSIG_ATOM_DIR_CHANGE,
+							COMSIG_MOVABLE_MOVED, COMSIG_MOB_GET_VISIBLE_MESSAGE, COMSIG_MOB_EXAMINATE,
+							COMSIG_MOB_VISIBLE_ATOMS))
 
 /datum/component/vision_cone/proc/generate_fov_holder(mob/M, _angle = 0)
 	if(QDELETED(fov))
@@ -58,13 +92,17 @@
 		owner_mask = new(loc = M)
 		owner_mask.appearance_flags = RESET_TRANSFORM
 		owner_mask.plane = FIELD_OF_VISION_BLOCKER_PLANE
-		owner_mask.pixel_x -= initial(M.pixel_x) //usually the case of critters with icons larger than 32x32
-		owner_mask.pixel_y -= initial(M.pixel_y) //Idem.
-		if(!M.render_target)
-			M.render_target = ref(M)
-		owner_mask.render_source = M.render_target
 		if(_angle)
 			rotate_shadow_cone(_angle)
+	fov.alpha = M.stat == DEAD ? 0 : 255
+	RegisterSignal(M, COMSIG_MOB_DEATH, .proc/hide_fov)
+	RegisterSignal(M, COMSIG_LIVING_REVIVE, .proc/show_fov)
+	RegisterSignal(M, COMSIG_ATOM_DIR_CHANGE, .proc/on_dir_change)
+	RegisterSignal(M, COMSIG_MOVABLE_MOVED, .proc/on_mob_moved)
+	if(!isturf(M.loc))
+		REGISTER_NESTED_LOCS(M, nested_locs, COMSIG_MOVABLE_MOVED, .proc/on_loc_moved)
+		var/atom/A = nested_locs[nested_locs.len]
+		CENTERED_RENDER_SOURCE(owner_mask, A, src)
 	M.client.images += shadow_mask
 	M.client.images += visual_shadow
 	M.client.images += owner_mask
@@ -92,15 +130,49 @@
 /datum/component/vision_cone/proc/on_mob_login(mob/source, client/client)
 	generate_fov_holder(source, angle)
 
-/datum/component/vision_cone/proc/on_mob_moved(mob/source, atom/oldloc, dir, forced)
-	fov?.forceMove(get_turf(source), harderforce = TRUE)
+/datum/component/vision_cone/proc/on_mob_logout(mob/source, client/client)
+	UnregisterSignal(source, list(COMSIG_ATOM_DIR_CHANGE, COMSIG_MOVABLE_MOVED, COMSIG_MOB_DEATH, COMSIG_LIVING_REVIVE))
+	if(length(nested_locs))
+		UNREGISTER_NESTED_LOCS(nested_locs, COMSIG_MOVABLE_MOVED, 1)
+	fov.alpha = 0
 
 /datum/component/vision_cone/proc/on_dir_change(mob/source, old_dir, new_dir)
-	if(fov)
-		fov.dir = new_dir
+	fov.dir = new_dir
+
+/// This only affects the screen visuals, not the functionality.
+/datum/component/vision_cone/proc/hide_fov(mob/source)
+	fov.alpha = 0
+
+/// Same as above.
+/datum/component/vision_cone/proc/show_fov(mob/source)
+	fov.alpha = 255
 
 /datum/component/vision_cone/proc/on_change_view(mob/source, client, list/old_view, list/view)
 	resize_fov(old_view, view)
+
+/datum/component/vision_cone/proc/on_mob_moved(mob/source, atom/oldloc, dir, forced)
+	fov.forceMove(get_turf(source), harderforce = TRUE)
+	if(!isturf(source.loc)) //Recalculate all nested locations.
+		UNREGISTER_NESTED_LOCS( nested_locs, COMSIG_MOVABLE_MOVED, 1)
+		REGISTER_NESTED_LOCS(source, nested_locs, COMSIG_MOVABLE_MOVED, .proc/on_loc_moved)
+		var/atom/A = nested_locs[nested_locs.len]
+		CENTERED_RENDER_SOURCE(owner_mask, A, src)
+	else if(length(nested_locs))
+		UNREGISTER_NESTED_LOCS(nested_locs, COMSIG_MOVABLE_MOVED, 1)
+		CENTERED_RENDER_SOURCE(owner_mask, source, src)
+
+/datum/component/vision_cone/proc/on_loc_moved(atom/source, atom/oldloc, dir, forced)
+	if(isturf(source.loc) && isturf(oldloc)) //This is the case of the topmost movable loc moving around the world, skip.
+		return
+	if(nested_locs[nested_locs.len] != source)
+		UNREGISTER_NESTED_LOCS(nested_locs, COMSIG_MOVABLE_MOVED, nested_locs.Find(source) + 1)
+	REGISTER_NESTED_LOCS(source, nested_locs, COMSIG_MOVABLE_MOVED, .proc/on_loc_moved)
+	var/atom/A = nested_locs[nested_locs.len]
+	CENTERED_RENDER_SOURCE(owner_mask, A, src)
+
+#undef CENTERED_RENDER_SOURCE
+#undef REGISTER_NESTED_LOCS
+#undef UNREGISTER_NESTED_LOCS
 
 //Byond doc is not entirely correct on the integrated arctan() proc.
 //When both x and y are negative, the output is also negative, cycling clockwise instead of counter-clockwise.
