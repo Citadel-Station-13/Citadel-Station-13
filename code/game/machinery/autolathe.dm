@@ -31,7 +31,7 @@
 	var/selected_category
 	var/screen = 1
 
-	var/datum/techweb/stored_research = /datum/techweb/specialized/autounlocking/autolathe
+	var/datum/techweb/specialized/autounlocking/stored_research = /datum/techweb/specialized/autounlocking/autolathe
 	var/list/categories = list(
 							"Tools",
 							"Electronics",
