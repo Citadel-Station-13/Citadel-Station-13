@@ -28,13 +28,13 @@
 	var/prod_coeff = 1
 
 	var/datum/design/being_built
-	var/datum/techweb/stored_research
 	var/list/datum/design/matching_designs
 	var/selected_category
 	var/screen = 1
 	var/base_price = 25
 	var/hacked_price = 50
 
+	var/datum/techweb/stored_research = /datum/techweb/specialized/autounlocking/autolathe
 	var/list/categories = list(
 							"Tools",
 							"Electronics",
@@ -47,9 +47,7 @@
 							"Dinnerware",
 							"Imported"
 							)
-
-/obj/machinery/autolathe/Initialize()
-	var/static/list/allowed_types = list(
+	var/list/allowed_materials = list(
 		/datum/material/iron,
 		/datum/material/glass,
 		/datum/material/gold,
@@ -65,10 +63,12 @@
 		/datum/material/adamantine,
 		/datum/material/mythril
 		)
-	AddComponent(/datum/component/material_container, allowed_types, _show_on_examine=TRUE, _after_insert=CALLBACK(src, .proc/AfterMaterialInsert))
+
+/obj/machinery/autolathe/Initialize()
+	AddComponent(/datum/component/material_container, allowed_materials, _show_on_examine=TRUE, _after_insert=CALLBACK(src, .proc/AfterMaterialInsert))
 	. = ..()
 	wires = new /datum/wires/autolathe(src)
-	stored_research = new /datum/techweb/specialized/autounlocking/autolathe
+	stored_research = new stored_research
 	matching_designs = list()
 
 /obj/machinery/autolathe/Destroy()
@@ -93,7 +93,7 @@
 		if(AUTOLATHE_SEARCH_MENU)
 			dat = search_win(user)
 
-	var/datum/browser/popup = new(user, "autolathe", name, 400, 500)
+	var/datum/browser/popup = new(user, name, name, 400, 500)
 	popup.set_content(dat)
 	popup.open()
 
@@ -441,8 +441,32 @@
 	desc = "An autolathe reprogrammed with security protocols to prevent hacking."
 	hackable = FALSE
 	circuit = /obj/item/circuitboard/machine/autolathe/secure
+	stored_research = /datum/techweb/specialized/autounlocking/autolathe/public
 
-//Called when the object is constructed by an autolathe
-//Has a reference to the autolathe so you can do !!FUN!! things with hacked lathes
-/obj/item/proc/autolathe_crafted(obj/machinery/autolathe/A)
-	return
+/obj/machinery/autolathe/toy
+	name = "autoylathe"
+	desc = "It produces toys using plastic, metal and glass."
+	circuit = /obj/item/circuitboard/machine/autolathe/toy
+
+	stored_research = /datum/techweb/specialized/autounlocking/autolathe/toy
+	categories = list(
+					"Toys",
+					"Figurines",
+					"Pistols",
+					"Rifles",
+					"Heavy",
+					"Melee",
+					"Armor",
+					"Adult",
+					"Misc",
+					"Imported"
+					)
+	allowed_materials = list(
+		/datum/material/iron,
+		/datum/material/glass,
+		/datum/material/plastic
+		)
+
+/obj/machinery/autolathe/toy/hacked/Initialize()
+	. = ..()
+	adjust_hacked(TRUE)

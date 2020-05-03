@@ -32,6 +32,7 @@
 	default_price = 50
 	extra_price = 250
 	payment_department = ACCOUNT_SRV
+	cost_multiplier_per_dept = list(ACCOUNT_SRV = 0)
 
 /obj/item/vending_refill/dinnerware
 	icon_state = "refill_cook"

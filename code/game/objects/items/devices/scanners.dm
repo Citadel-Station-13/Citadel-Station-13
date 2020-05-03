@@ -80,7 +80,7 @@ SLIME SCANNER
 	var/mode = 1
 	var/scanmode = 0
 	var/advanced = FALSE
-	custom_price = 300
+	custom_price = 100
 
 /obj/item/healthanalyzer/suicide_act(mob/living/carbon/user)
 	user.visible_message("<span class='suicide'>[user] begins to analyze [user.p_them()]self with [src]! The display shows that [user.p_theyre()] dead!</span>")

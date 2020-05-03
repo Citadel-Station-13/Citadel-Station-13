@@ -310,6 +310,13 @@
 		/obj/item/stock_parts/manipulator = 1,
 		/obj/item/stock_parts/micro_laser = 1,
 		/obj/item/stack/sheet/glass = 1)
+	var/offstation_security_levels = TRUE
+
+/obj/item/circuitboard/machine/mechfab/offstation
+	offstation_security_levels = FALSE
+
+/obj/item/circuitboard/machine/mechfab/rnd_crafted(obj/machinery/rnd/production/P)
+	offstation_security_levels = P.offstation_security_levels
 
 /obj/item/circuitboard/machine/cryo_tube
 	name = "Cryotube (Machine Board)"
@@ -761,6 +768,13 @@
 		/obj/item/stock_parts/matter_bin = 1,
 		/obj/item/stock_parts/manipulator = 1,
 		/obj/item/reagent_containers/glass/beaker = 2)
+	var/offstation_security_levels = TRUE
+
+/obj/item/circuitboard/machine/circuit_imprinter/offstation
+	offstation_security_levels = FALSE
+
+/obj/item/circuitboard/machine/mechfab/rnd_crafted(obj/machinery/rnd/production/P)
+	offstation_security_levels = P.offstation_security_levels
 
 /obj/item/circuitboard/machine/circuit_imprinter/department
 	name = "Departmental Circuit Imprinter (Machine Board)"
@@ -834,6 +848,13 @@
 		/obj/item/stock_parts/matter_bin = 2,
 		/obj/item/stock_parts/manipulator = 2,
 		/obj/item/reagent_containers/glass/beaker = 2)
+	var/offstation_security_levels = TRUE
+
+/obj/item/circuitboard/machine/protolathe/offstation
+	offstation_security_levels = FALSE
+
+/obj/item/circuitboard/machine/protolathe/rnd_crafted(obj/machinery/rnd/production/P)
+	offstation_security_levels = P.offstation_security_levels
 
 /obj/item/circuitboard/machine/protolathe/department
 	name = "Departmental Protolathe (Machine Board)"
@@ -1040,9 +1061,9 @@
 	build_path = /obj/machinery/vending/kink
 	req_components = list(/obj/item/vending_refill/kink = 1)
 
-/obj/item/circuitboard/machine/autoylathe
+/obj/item/circuitboard/machine/autolathe/toy
 	name = "Autoylathe (Machine Board)"
-	build_path = /obj/machinery/autoylathe
+	build_path = /obj/machinery/autolathe/toy
 	req_components = list(
 		/obj/item/stock_parts/matter_bin = 3,
 		/obj/item/stock_parts/manipulator = 1,

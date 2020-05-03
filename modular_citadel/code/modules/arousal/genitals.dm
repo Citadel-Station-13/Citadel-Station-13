@@ -150,7 +150,8 @@
 		aroused_state = FALSE
 
 /obj/item/organ/genital/on_life()
-	if(!reagents || !owner)
+	. = ..()
+	if(!reagents || !.)
 		return
 	reagents.maximum_volume = fluid_max_volume
 	if(fluid_id && CHECK_BITFIELD(genital_flags, GENITAL_FUID_PRODUCTION))

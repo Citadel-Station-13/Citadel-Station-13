@@ -12,6 +12,13 @@
 	bubble_icon = "alien"
 	type_of_meat = /obj/item/reagent_containers/food/snacks/meat/slab/xeno
 
+	/// How much brute damage without armor piercing they do against mobs in melee
+	var/meleeSlashHumanPower = 20
+	/// How much power they have for DefaultCombatKnockdown when attacking humans
+	var/meleeKnockdownPower = 100
+	/// How much brute damage they do to simple animals
+	var/meleeSlashSAPower = 35
+
 	var/obj/item/card/id/wear_id = null // Fix for station bounced radios -- Skie
 	var/has_fine_manipulation = 0
 	var/move_delay_add = 0 // movement delay to add

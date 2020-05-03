@@ -29,22 +29,17 @@
 	var/damage_multiplier = 1
 
 /obj/item/organ/ears/on_life()
-	if(!iscarbon(owner))
-		return
-	..()
-	var/mob/living/carbon/C = owner
-	if((damage < maxHealth) && (organ_flags & ORGAN_FAILING))	//ear damage can be repaired from the failing condition
-		organ_flags &= ~ORGAN_FAILING
+	. = ..()
 	// genetic deafness prevents the body from using the ears, even if healthy
-	if(HAS_TRAIT(C, TRAIT_DEAF))
+	if(owner && HAS_TRAIT(owner, TRAIT_DEAF))
 		deaf = max(deaf, 1)
-	else if(!(organ_flags & ORGAN_FAILING)) // if this organ is failing, do not clear deaf stacks.
+	else if(.) // if this organ is failing, do not clear deaf stacks.
 		deaf = max(deaf - 1, 0)
 		if(prob(damage / 20) && (damage > low_threshold))
 			adjustEarDamage(0, 4)
-			SEND_SOUND(C, sound('sound/weapons/flash_ring.ogg'))
-			to_chat(C, "<span class='warning'>The ringing in your ears grows louder, blocking out any external noises for a moment.</span>")
-	else if((organ_flags & ORGAN_FAILING) && (deaf == 0))
+			SEND_SOUND(owner, sound('sound/weapons/flash_ring.ogg'))
+			to_chat(owner, "<span class='warning'>The ringing in your ears grows louder, blocking out any external noises for a moment.</span>")
+	else if(!. && !deaf)
 		deaf = 1	//stop being not deaf you deaf idiot
 
 /obj/item/organ/ears/proc/restoreEars()

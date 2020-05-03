@@ -188,6 +188,16 @@
 	item = /obj/item/healthanalyzer/rad_laser
 	cost = 3
 
+/datum/uplink_item/device_tools/riflery_primer
+	name = "Riflery Primer"
+	desc = "An old book with blood and vodka stains on it. Freshly pulled from a dusty crate in some old warehouse, \
+			this primer of questionable worth and value is rumored to increase your rifle-bolt-working and/or shotgun \
+			racking fivefold. Then again, the techniques here only work on bolt-actions and pump-actions..."
+	item = /obj/item/book/granter/trait/rifleman
+	cost = 3
+	restricted_roles = list("Operative") // i want it to be surplusable but i also want it to be mostly nukie only, please advise
+	surplus = 90
+
 /datum/uplink_item/device_tools/stimpack
 	name = "Stimpack"
 	desc = "Stimpacks, the tool of many great heroes, make you nearly immune to stuns and knockdowns for about \

@@ -27,4 +27,8 @@
 	refill_canister = /obj/item/vending_refill/donksoft
 	default_price = 150
 	extra_price = 300
-	payment_department = ACCOUNT_SRV
+	payment_department = NO_FREEBIES
+
+/obj/machinery/vending/toyliberationstation/Initialize()
+	. = ..()
+	cost_multiplier_per_dept = list("[ACCESS_SYNDICATE]" = 0)

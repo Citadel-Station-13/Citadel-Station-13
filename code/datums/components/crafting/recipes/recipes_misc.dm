@@ -115,6 +115,33 @@
 //Tools & Storage//
 ///////////////////
 
+/datum/crafting_recipe/upgraded_gauze
+	name = "Improved Gauze"
+	result = /obj/item/stack/medical/gauze/adv
+	time = 1
+	reqs = list(/obj/item/stack/medical/gauze = 1,
+				/datum/reagent/space_cleaner/sterilizine = 10)
+	category = CAT_MISC
+	subcategory = CAT_TOOL
+
+/datum/crafting_recipe/bruise_pack
+	name = "Bruise Pack"
+	result = /obj/item/stack/medical/bruise_pack
+	time = 1
+	reqs = list(/obj/item/stack/medical/gauze = 1,
+				/datum/reagent/medicine/styptic_powder = 10)
+	category = CAT_MISC
+	subcategory = CAT_TOOL
+
+/datum/crafting_recipe/burn_pack
+	name = "Brun Ointment"
+	result = /obj/item/stack/medical/ointment
+	time = 1
+	reqs = list(/obj/item/stack/medical/gauze = 1,
+				/datum/reagent/medicine/silver_sulfadiazine = 10)
+	category = CAT_MISC
+	subcategory = CAT_TOOL
+
 /datum/crafting_recipe/ghettojetpack
 	name = "Improvised Jetpack"
 	result = /obj/item/tank/jetpack/improvised

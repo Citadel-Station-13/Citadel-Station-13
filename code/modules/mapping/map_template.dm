@@ -121,6 +121,6 @@
 
 //for your ever biggening badminnery kevinz000
 //❤ - Cyberboss
-/proc/load_new_z_level(file, name, list/traits = list(ZTRAIT_AWAY = TRUE))
+/proc/load_new_z_level(file, name, list/traits)
 	var/datum/map_template/template = new(file, name)
-	template.load_new_z(traits)
+	return template.load_new_z(traits)

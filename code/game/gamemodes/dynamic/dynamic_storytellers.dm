@@ -115,7 +115,7 @@ Property weights are:
 		return 100
 	var/threat_perc = mode.threat/mode.threat_level
 
-	return round(max(0,100*(1-(threat_perc*threat_perc*threat_perc))))
+	return clamp(round(100*(1-(threat_perc*threat_perc))**2,1),0,100)
 
 /datum/dynamic_storyteller/proc/roundstart_draft()
 	var/list/drafted_rules = list()
@@ -152,7 +152,7 @@ Property weights are:
 					is 2.26 times as likely to be picked, all other things considered.
 					Of course, we don't want it to GUARANTEE the closest, that's no fun, so it's just a weight.
 				*/
-				threat_weight = 1-abs(1-LOGISTIC_FUNCTION(2,0.05,cost_difference,0))
+				threat_weight = abs(1-abs(1-LOGISTIC_FUNCTION(2,0.05,cost_difference,0)))
 			if (rule.ready())
 				var/property_weight = 0
 				for(var/property in property_weights)
@@ -209,8 +209,8 @@ Property weights are:
 	weight = 1
 	event_frequency_lower = 2 MINUTES
 	event_frequency_upper = 10 MINUTES
-	flags = WAROPS_ALWAYS_ALLOWED
-	min_players = 40
+	flags = WAROPS_ALWAYS_ALLOWED | FORCE_IF_WON
+	min_players = 30
 	var/refund_cooldown = 0
 
 /datum/dynamic_storyteller/chaotic/do_process()
@@ -232,7 +232,7 @@ Property weights are:
 	curve_centre = 2
 	curve_width = 1.5
 	weight = 2
-	min_players = 30
+	min_players = 20
 	flags = WAROPS_ALWAYS_ALLOWED | USE_PREV_ROUND_WEIGHTS
 	property_weights = list("valid" = 3, "trust" = 5)
 
@@ -331,7 +331,7 @@ Property weights are:
 /datum/dynamic_storyteller/story/calculate_threat()
 	var/current_time = (world.time / SSautotransfer.targettime)*180
 	mode.threat_level = round(mode.initial_threat_level*(sin(current_time)+0.25),0.1)
-	..()
+	return ..()
 
 /datum/dynamic_storyteller/classic
 	name = "Classic"
@@ -358,7 +358,7 @@ Property weights are:
 	flags = NO_ASSASSIN | FORCE_IF_WON
 	weight = 1
 	dead_player_weight = 5
-	property_weights = list("extended" = 2, "chaos" = -1, "valid" = -1, "story_potential" = 1, "conversion" = -10)
+	property_weights = list("extended" = 2, "chaos" = -1, "valid" = -1, "conversion" = -10)
 
 /datum/dynamic_storyteller/no_antag
 	name = "Extended"

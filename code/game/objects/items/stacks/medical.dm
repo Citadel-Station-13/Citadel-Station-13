@@ -101,6 +101,7 @@
 		if(!H.bleedsuppress && H.bleed_rate) //so you can't stack bleed suppression
 			H.suppress_bloodloss(stop_bleeding)
 			to_chat(user, "<span class='notice'>You stop the bleeding of [M]!</span>")
+			H.adjustBruteLoss(-(heal_brute))
 			return TRUE
 	to_chat(user, "<span class='notice'>You can not use \the [src] on [M]!</span>")
 
@@ -127,6 +128,12 @@
 	desc = "A roll of cloth roughly cut from something that can stop bleeding, but does not heal wounds."
 	stop_bleeding = 900
 	heal_brute = 0
+
+/obj/item/stack/medical/gauze/adv
+	name = "sterilized medical gauze"
+	desc = "A roll of elastic sterilized cloth that is extremely effective at stopping bleeding, heals minor wounds and cleans them."
+	singular_name = "sterilized medical gauze"
+	self_delay = 5
 
 /obj/item/stack/medical/gauze/cyborg
 	custom_materials = null

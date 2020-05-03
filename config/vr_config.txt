@@ -9,5 +9,5 @@
 #DO tick the associated code file for the virtual reality levels you are enabling. Otherwise, the map will be trying to reference objects which do not exist, which will cause runtime errors!
 
 #_maps/RandomZLevels/VR/murderdome.dmm
-#_maps/RandomZLevels/VR/snowdin_VR.dm
-#_maps/RandomZLevels/VR/syndicate_trainer.dm
+#_maps/RandomZLevels/VR/snowdin_VR.dmm
+#_maps/RandomZLevels/VR/syndicate_trainer.dmm

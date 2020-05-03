@@ -1,20 +1,19 @@
-// How much "space" we give the edge of the map
-GLOBAL_LIST_INIT(potentialRandomZlevels, generateMapList(filename = "[global.config.directory]/awaymissionconfig.txt"))
-// So far only adds an additional trait to vr levels. But I'll probably use make VR separate from away missions in a near future.
-GLOBAL_LIST_INIT(potentialRandomVRlevels, generateMapList(filename = "[global.config.directory]/vr_config.txt"))
 
-/proc/createRandomZlevel()
-	if(GLOB.awaydestinations.len)	//crude, but it saves another var!
+/proc/createRandomZlevel(name = AWAY_MISSION_NAME, list/traits = list(ZTRAIT_AWAY = TRUE), list/potential_levels = GLOB.potential_away_levels)
+	if(GLOB.random_zlevels_generated[name])
+		stack_trace("[name] level already generated.")
+		return
+	if(!length(potential_levels))
+		stack_trace("No potential [name] level to load has been found.")
 		return
 
-	if(GLOB.potentialRandomZlevels?.len)
-		to_chat(world, "<span class='boldannounce'>Loading away mission...</span>")
-		var/map = pick(GLOB.potentialRandomZlevels)
-		var/list/traits = list(ZTRAIT_AWAY = TRUE)
-		if(map in GLOB.potentialRandomVRlevels)
-			traits[ZTRAIT_VIRTUAL_REALITY] = TRUE
-		load_new_z_level(map, "Away Mission", traits)
-		to_chat(world, "<span class='boldannounce'>Away mission loaded.</span>")
+	var/start_time = REALTIMEOFDAY
+	var/map = pick(potential_levels)
+	if(!load_new_z_level(map, name, traits))
+		INIT_ANNOUNCE("Failed to load [name]! map filepath: [map]!")
+		return
+	INIT_ANNOUNCE("Loaded [name] in [(REALTIMEOFDAY - start_time)/10]s!")
+	GLOB.random_zlevels_generated[name] = TRUE
 
 /proc/reset_gateway_spawns(reset = FALSE)
 	for(var/obj/machinery/gateway/G in world)

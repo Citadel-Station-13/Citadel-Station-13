@@ -30,6 +30,7 @@
 	default_price = 60
 	extra_price = 160
 	payment_department = ACCOUNT_SRV
+	cost_multiplier_per_dept = list(ACCOUNT_SRV = 0)
 	input_display_header = "Chef's Food Selection"
 
 /obj/item/vending_refill/snack

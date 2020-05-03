@@ -225,6 +225,7 @@
 	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE))
 		return
 	target_temperature = min_temperature
+	to_chat(user,"<span class='notice'>You minimize the temperature on the [src].</span>")
 	investigate_log("was set to [target_temperature] K by [key_name(usr)]", INVESTIGATE_ATMOS)
 	message_admins("[src.name] was minimized by [ADMIN_LOOKUPFLW(usr)] at [ADMIN_COORDJMP(T)], [A]")
 	return TRUE
@@ -257,6 +258,7 @@
 	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE))
 		return
 	target_temperature = max_temperature
+	to_chat(user,"<span class='notice'>You maximize the temperature on the [src].</span>")
 	investigate_log("was set to [target_temperature] K by [key_name(usr)]", INVESTIGATE_ATMOS)
 	message_admins("[src.name] was maximized by [ADMIN_LOOKUPFLW(usr)] at [ADMIN_COORDJMP(T)], [A]")
 	return TRUE

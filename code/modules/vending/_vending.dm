@@ -123,14 +123,12 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 	var/extended_inventory
 	///Are we checking the users ID
 	var/scan_id = TRUE
-	///Coins that we accept?
-	var/obj/item/coin/coin
-	///Bills we accept?
-	var/obj/item/stack/spacecash/bill
 	///Default price of items if not overridden
 	var/default_price = 25
 	///Default price of premium items if not overridden
 	var/extra_price = 50
+	///cost multiplier per department or access
+	var/list/cost_multiplier_per_dept = list()
   	/**
 	  * Is this item on station or not
 	  *
@@ -200,7 +198,6 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 
 /obj/machinery/vending/Destroy()
 	QDEL_NULL(wires)
-	QDEL_NULL(coin)
 	return ..()
 
 /obj/machinery/vending/can_speak()
@@ -529,7 +526,6 @@ GLOBAL_LIST_EMPTY(vending_products)
 /obj/machinery/vending/ui_static_data(mob/user)
 	. = list()
 	.["onstation"] = onstation
-	.["department"] = payment_department
 	.["product_records"] = list()
 	for (var/datum/data/vending_product/R in product_records)
 		var/list/data = list(
@@ -565,21 +561,27 @@ GLOBAL_LIST_EMPTY(vending_products)
 
 /obj/machinery/vending/ui_data(mob/user)
 	. = list()
-	var/mob/living/carbon/human/H
-	var/obj/item/card/id/C
-	if(ishuman(user))
-		H = user
-		C = H.get_idcard(TRUE)
-		if(C?.registered_account)
-			.["user"] = list()
-			.["user"]["name"] = C.registered_account.account_holder
-			.["user"]["cash"] = C.registered_account.account_balance
-			if(C.registered_account.account_job)
-				.["user"]["job"] = C.registered_account.account_job.title
-				.["user"]["department"] = C.registered_account.account_job.paycheck_department
-			else
-				.["user"]["job"] = "No Job"
-				.["user"]["department"] = "No Department"
+	var/obj/item/card/id/C = user.get_idcard(TRUE)
+	.["cost_mult"] = 1
+	.["cost_text"] = ""
+	if(C && C.registered_account)
+		.["user"] = list()
+		.["user"]["name"] = C.registered_account.account_holder
+		.["user"]["cash"] = C.registered_account.account_balance
+		if(C.registered_account.account_job)
+			.["user"]["job"] = C.registered_account.account_job.title
+		else
+			.["user"]["job"] = "No Job"
+		var/cost_mult = get_best_discount(C)
+		if(cost_mult != 1)
+			.["cost_mult"] = cost_mult
+			switch(cost_mult)
+				if(0)
+					.["cost_text"] = "FREE"
+				if(0 to 1)
+					.["cost_text"] = " [(1 - cost_mult) * 100]% OFF"
+				if(1 to INFINITY)
+					.["cost_text"] = " [(cost_mult - 1) * 100]% EXTRA"
 	.["stock"] = list()
 	for (var/datum/data/vending_product/R in product_records + coin_records + hidden_records)
 		.["stock"][R.name] = R.amount
@@ -621,10 +623,8 @@ GLOBAL_LIST_EMPTY(vending_products)
 				flick(icon_deny,src)
 				vend_ready = TRUE
 				return
-			if(onstation && ishuman(usr))
-				var/mob/living/carbon/human/H = usr
-				var/obj/item/card/id/C = H.get_idcard(TRUE)
-
+			if(onstation && price_to_use >= 0)
+				var/obj/item/card/id/C = usr.get_idcard(TRUE)
 				if(!C)
 					say("No card found.")
 					flick(icon_deny,src)
@@ -636,10 +636,10 @@ GLOBAL_LIST_EMPTY(vending_products)
 					vend_ready = TRUE
 					return
 				var/datum/bank_account/account = C.registered_account
-				if(account.account_job && account.account_job.paycheck_department == payment_department)
-					price_to_use = 0
 				if(coin_records.Find(R) || hidden_records.Find(R))
 					price_to_use = R.custom_premium_price ? R.custom_premium_price : extra_price
+				else
+					price_to_use = round(price_to_use * get_best_discount(C))
 				if(price_to_use && !account.adjust_money(-price_to_use))
 					say("You do not possess the funds to purchase [R.name].")
 					flick(icon_deny,src)
@@ -697,6 +697,25 @@ GLOBAL_LIST_EMPTY(vending_products)
 		return
 
 	say(message)
+
+/**
+  * Gets the best discount from a given ID card, comparing its access and paycheck depart with cost_multiplier_per_dept.
+  * It only applies to the regular selection, not premium or contraband. And a bank account is still required.
+  * But it can also be used to charge more to certain departments or accesses. :)
+  *
+  * Arguments:
+  * * list/dept_access_list - the list to compare
+  */
+/obj/machinery/vending/proc/get_best_discount(obj/item/card/id/C)
+	var/list/discounts = NUMLIST2TEXTLIST(C.GetAccess())
+	if(C.registered_account?.account_job)
+		discounts += C.registered_account.account_job.paycheck_department
+	discounts &= cost_multiplier_per_dept
+	if(!length(discounts))
+		return 1
+	. = INFINITY
+	for(var/k in discounts)
+		. = min(cost_multiplier_per_dept[k], .)
 
 /obj/machinery/vending/power_change()
 	. = ..()

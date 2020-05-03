@@ -4,7 +4,6 @@
 	desc = "Everything you need for do-it-yourself station repair."
 	icon_state = "engi"
 	icon_deny = "engi-deny"
-	req_access = list(ACCESS_ENGINE_EQUIP)
 	products = list(/obj/item/clothing/under/rank/engineering/chief_engineer = 4,
 					/obj/item/clothing/under/rank/engineering/engineer = 4,
 					/obj/item/clothing/shoes/sneakers/orange = 4,
@@ -32,3 +31,4 @@
 	default_price = 450
 	extra_price = 500
 	payment_department = ACCOUNT_ENG
+	cost_multiplier_per_dept = list(ACCOUNT_ENG = 0)
