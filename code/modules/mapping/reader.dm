@@ -213,7 +213,7 @@
 		//these values are the same until a new gridset is reached.
 		var/edge_dist_x = gridset.xcrd - 1											//from left side, 0 is right on the x_offset
 		var/edge_dist_y = gridset.ycrd - length(gridset.gridLines)					//from bottom, 0 is right on the y_offset
-		var/actual_x_starting = invert_x? (x_offset + width - edge_dist_x) : (x_offset + edge_dist_x)		//this value is not changed, cache.
+		var/actual_x_starting = invert_x? (x_offset + width - edge_dist_x - 1) : (x_offset + edge_dist_x)		//this value is not changed, cache.
 		//this value is changed
 		var/actual_y = invert_y? (y_offset + edge_dist_y) : (y_offset + gridset.ycrd - 1)
 		for(var/line in gridset.gridLines)

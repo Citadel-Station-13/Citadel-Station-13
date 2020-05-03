@@ -143,9 +143,9 @@
 		T = locate(clamp(newx, 1, world.maxx), clamp(newy, 1, world.maxy), T.z)
 	if(!T)
 		return
-	if(T.x+width > world.maxx)
+	if(T.x+width-1 > world.maxx)
 		return
-	if(T.y+height > world.maxy)
+	if(T.y+height-1 > world.maxy)
 		return
 
 	var/list/border = block(locate(max(T.x - 1, 1), max(T.y - 1, 1), T.z),
