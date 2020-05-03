@@ -10,14 +10,14 @@
 /obj/item/projectile/bullet/reusable/arrow/Initialize()
 	. = ..()
 	hunted = typecacheof(list(
-					/mob/living/simple_animal/hostile/asteroid
+					/mob/living/simple_animal/hostile/asteroid/
 	))
 
 /obj/item/projectile/bullet/reusable/arrow/on_hit(atom/target, blocked = FALSE)
 	. = ..()
 
 	if(is_type_in_typecache(target, hunted))
-			to_chat(user, "<span class='warning'>You easily land a critical shot on the [target].</span>")
+		to_chat(user, "<span class='warning'>You easily land a critical shot on the [target].</span>") //To give feedback
 			if(istype(target, /mob/living/))
 				var/mob/living/simple_animal/hostile/asteroid/ashlands = target
 				ashlands.adjustBruteLoss(-hunted) //Were doing it via ajust so we work around armor
