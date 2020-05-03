@@ -53835,6 +53835,11 @@
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/engine,
 /area/engine/engineering)
+"dIH" = (
+/obj/structure/grille/broken,
+/obj/effect/landmark/loneopspawn,
+/turf/open/floor/plating/asteroid/snow/icemoon,
+/area/icemoon/surface/outdoors)
 "dJL" = (
 /obj/structure/cable{
 	icon_state = "1-2"
@@ -56457,6 +56462,10 @@
 /obj/effect/landmark/xeno_spawn,
 /turf/open/floor/wood,
 /area/maintenance/bar)
+"kyT" = (
+/obj/effect/landmark/loneopspawn,
+/turf/open/floor/plating/snowed/smoothed/icemoon,
+/area/icemoon/surface/outdoors)
 "kzT" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/closed/wall/r_wall,
@@ -57967,6 +57976,10 @@
 	},
 /turf/open/floor/carpet,
 /area/crew_quarters/dorms)
+"oDb" = (
+/obj/effect/landmark/loneopspawn,
+/turf/open/floor/plating/asteroid/snow/icemoon,
+/area/icemoon/surface/outdoors)
 "oDm" = (
 /obj/machinery/gulag_teleporter,
 /turf/open/floor/plasteel,
@@ -75139,7 +75152,7 @@ aBM
 aBM
 aBM
 ayF
-ayF
+oDb
 ayF
 ayF
 ayF
@@ -79835,7 +79848,7 @@ aBM
 aBM
 aBM
 aBM
-ayF
+oDb
 avU
 ayF
 ayF
@@ -80517,7 +80530,7 @@ aBM
 aBM
 aBM
 aBM
-ayF
+oDb
 ayF
 ayF
 ayF
@@ -80882,7 +80895,7 @@ cfx
 cfx
 ayF
 ayF
-ayF
+oDb
 aBM
 aBM
 aBM
@@ -82958,7 +82971,7 @@ aBD
 aBD
 aBD
 aBD
-ayF
+oDb
 ayF
 aBM
 aBM
@@ -90929,7 +90942,7 @@ iPp
 hVs
 ccw
 ayF
-ayF
+oDb
 aBM
 aBM
 aBM
@@ -95553,7 +95566,7 @@ ayF
 ayF
 ayF
 ayF
-aAM
+dIH
 aBM
 aBM
 aBM
@@ -100570,7 +100583,7 @@ aBM
 aBM
 aBM
 aBM
-ayF
+oDb
 ayF
 ayF
 ayF
@@ -103756,7 +103769,7 @@ cNW
 bAw
 bAw
 clp
-crk
+kyT
 ayF
 ayF
 ayF
@@ -105205,7 +105218,7 @@ ayB
 aAM
 ayB
 ayB
-ayF
+oDb
 ayF
 ayF
 ayF
@@ -109927,7 +109940,7 @@ ttL
 cOe
 cOe
 cNW
-ayF
+oDb
 ayB
 ayB
 ayB
@@ -113778,7 +113791,7 @@ ayF
 ayF
 ayF
 ayF
-ayF
+oDb
 ayF
 ayF
 ayF
@@ -113962,7 +113975,7 @@ aBM
 aBM
 aBM
 aBM
-ayF
+oDb
 ayF
 ayF
 aBM
@@ -114019,7 +114032,7 @@ ayF
 aBM
 aBM
 ayF
-ayF
+oDb
 ayF
 aBM
 aBM
@@ -115292,7 +115305,7 @@ aBM
 aBM
 aBM
 ayF
-ayF
+oDb
 ayF
 aBM
 aBM
