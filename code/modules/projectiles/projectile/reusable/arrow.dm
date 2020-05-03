@@ -16,7 +16,7 @@
 /obj/item/projectile/bullet/reusable/arrow/on_hit(atom/target, blocked = FALSE)
 	. = ..()
 	handle_drop()
-	if(is_type_in_typecache(target, hunted, /mob/living/))
+	if(is_type_in_typecache(target, hunted))
 		var/mob/living/simple_animal/hostile/asteroid/ashlands = target
 		ashlands.adjustBruteLoss(-hunted) //Were doing it via ajust so we work around armor
 
