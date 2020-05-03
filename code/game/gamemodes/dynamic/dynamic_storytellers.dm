@@ -197,7 +197,7 @@ Property weights are:
 				for(var/property in property_weights)
 					if(property in rule.property_weights)
 						property_weight += rule.property_weights[property] * property_weights[property]
-				drafted_rules[rule] = (rule.get_weight() + property_weight)*rule.weight_mult
+				drafted_rules[rule] = round(((rule.get_weight() + property_weight)*rule.weight_mult*threat_weight)*1000,1)
 	return drafted_rules
 
 
