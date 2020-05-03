@@ -162,7 +162,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		if(malformed_hockeys[hockey])
 			features["cock_shape"] = malformed_hockeys[hockey]
 			features["cock_taur"] = TRUE
-	
+
 	if(current_version < 29)
 		var/digestable
 		var/devourable

@@ -688,9 +688,27 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 			if(get_dist(target,H)<get_dist(target,person))
 				person = H
 		people += H
-	// Get person to affect if radio hallucination
-	var/is_radio = !person || force_radio
-	if (is_radio)
+	if(person && !force_radio) //Basic talk
+		var/chosen = specific_message
+		if(!chosen)
+			chosen = capitalize(pick(speak_messages))
+		chosen = replacetext(chosen, "%TARGETNAME%", target_name)
+		var/image/speech_overlay = image('icons/mob/talk.dmi', person, "default0", layer = ABOVE_MOB_LAYER)
+		var/message = target.compose_message(person,understood_language,chosen,null,list(person.speech_span),face_name = TRUE)
+		feedback_details += "Type: Talk, Source: [person.real_name], Message: [message]"
+		to_chat(target, message)
+		if(target.client)
+			target.client.images |= speech_overlay
+			sleep(30)
+			target.client.images.Remove(speech_overlay)
+		var/spans = list(person.speech_span)
+		if (target.client?.prefs.chat_on_map)
+			target.create_chat_message(person, understood_language, chosen, spans, 0)
+	else // Radio talk
+		var/chosen = specific_message
+		if(!chosen)
+			chosen = capitalize(pick(radio_messages))
+		chosen = replacetext(chosen, "%TARGETNAME%", target_name)
 		var/list/humans = list()
 		for(var/mob/living/carbon/human/H in GLOB.alive_mob_list)
 			humans += H

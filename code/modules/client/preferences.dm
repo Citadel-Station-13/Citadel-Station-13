@@ -2140,6 +2140,10 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					var/pickedPDASkin = input(user, "Choose your PDA reskin.", "Character Preference", pda_skin) as null|anything in GLOB.pda_reskins
 					if(pickedPDASkin)
 						pda_skin = pickedPDASkin
+				if ("max_chat_length")
+					var/desiredlength = input(user, "Choose the max character length of shown Runechat messages. Valid range is 1 to [CHAT_MESSAGE_MAX_LENGTH] (default: [initial(max_chat_length)]))", "Character Preference", max_chat_length)  as null|num
+					if (!isnull(desiredlength))
+						max_chat_length = clamp(desiredlength, 1, CHAT_MESSAGE_MAX_LENGTH)
 
 				if("hud_toggle_color")
 					var/new_toggle_color = input(user, "Choose your HUD toggle flash color:", "Game Preference",hud_toggle_color) as color|null
@@ -2249,7 +2253,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				if("chat_on_map")
 					chat_on_map = !chat_on_map
 				if("see_chat_non_mob")
-					see_chat_non_mob = !see_chat_non_mob				
+					see_chat_non_mob = !see_chat_non_mob
 				if("action_buttons")
 					buttons_locked = !buttons_locked
 				if("tgui_fancy")
