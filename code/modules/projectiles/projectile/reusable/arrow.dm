@@ -2,21 +2,21 @@
 	name = "wooden arrow"
 	desc = "Woosh!"
 	damage = 15
-	var/list/hunted
+	var/list/hunt
 	var/hunted = 20
 	icon_state = "arrow"
 	ammo_type = /obj/item/ammo_casing/caseless/arrow/wood
 
 /obj/item/projectile/bullet/reusable/arrow/Initialize()
 	. = ..()
-	hunted = typecacheof(list(
+	hunt = typecacheof(list(
 					/mob/living/simple_animal/hostile/asteroid/
 	))
 
 /obj/item/projectile/bullet/reusable/arrow/on_hit(atom/target, blocked = FALSE)
 	. = ..()
 	handle_drop()
-	if(is_type_in_typecache(target, hunted))
+	if(is_type_in_typecache(target, hunt))
 		var/mob/living/simple_animal/hostile/asteroid/ashlands = target
 		ashlands.adjustBruteLoss(-hunted) //Were doing it via ajust so we work around armor
 
