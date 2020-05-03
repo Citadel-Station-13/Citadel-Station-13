@@ -575,13 +575,10 @@ GLOBAL_LIST_EMPTY(vending_products)
 		var/cost_mult = get_best_discount(C)
 		if(cost_mult != 1)
 			.["cost_mult"] = cost_mult
-			switch(cost_mult)
-				if(0)
-					.["cost_text"] = "FREE"
-				if(0 to 1)
-					.["cost_text"] = " [(1 - cost_mult) * 100]% OFF"
-				if(1 to INFINITY)
-					.["cost_text"] = " [(cost_mult - 1) * 100]% EXTRA"
+			if(cost < 1)
+				.["cost_text"] = " [(1 - cost_mult) * 100]% OFF"
+			else
+				.["cost_text"] = " [(cost_mult - 1) * 100]% EXTRA"
 	.["stock"] = list()
 	for (var/datum/data/vending_product/R in product_records + coin_records + hidden_records)
 		.["stock"][R.name] = R.amount

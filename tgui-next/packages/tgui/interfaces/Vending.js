@@ -47,6 +47,7 @@ export const Vending = props => {
       <Section title="Products" >
         <Table>
           {inventory.map((product => {
+            const suffix = ' cr' + data.cost_text;
             return (
               <Table.Row key={product.name}>
                 <Table.Cell>
@@ -97,9 +98,10 @@ export const Vending = props => {
                           )
                         )
                       )}
-                      content={(data.cost_mult !== 0
-                        ? Math.round(product.price * data.cost_mult) + ' cr'
-                        : '') + data.cost_text}
+                      content={(data.onstation
+                        && product.price !== 0)
+                        ? Math.round(product.price * data.cost_mult) + suffix
+                        : 'FREE'}
                       onClick={() => act(ref, 'vend', {
                         'ref': product.ref,
                       })} />
