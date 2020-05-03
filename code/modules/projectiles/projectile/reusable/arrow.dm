@@ -19,8 +19,8 @@
 	if(is_type_in_typecache(target, hunted))
 			to_chat(user, "<span class='warning'>You easily land a critical shot on the [target].</span>")
 			if(istype(target, /mob/living/))
-				var/mob/living/simple_animal/hostile/asteroid = target
-				asteroid.adjustBruteLoss(-hunted) //Were doing it via ajust so we work around armor
+				var/mob/living/simple_animal/hostile/asteroid/ashlands = target
+				ashlands.adjustBruteLoss(-hunted) //Were doing it via ajust so we work around armor
 
 	handle_drop()
 
