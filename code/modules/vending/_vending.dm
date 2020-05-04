@@ -630,6 +630,11 @@ GLOBAL_LIST_EMPTY(vending_products)
 			to_chat(usr, "<span class='notice'>You remove [coin] from [src].</span>")
 			coin = null
 			return
+		if("takeoutbill")
+			usr.put_in_hands(bill)
+			to_chat(usr, "<span class='notice'>You remove [bill] from [src].</span>")
+			bill = null
+			return
 			
 		if("togglevoice")
 			if(panel_open)
