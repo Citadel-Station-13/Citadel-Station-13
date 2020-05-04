@@ -613,15 +613,7 @@
 	user.visible_message("<span class='suicide'>[user] begins to sword-swallow \the [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	return BRUTELOSS
 
-/obj/item/twohanded/spear/examine(mob/user)
-	. = ..()
-	if(explosive)
-		. += "<span class='notice'>Alt-click to set your war cry.</span><br><span class='notice'>Right-click in combat mode to wield</span>"
-
 /obj/item/twohanded/spear/update_icon_state()
-	if(explosive)
-		icon_state = "spearbomb[wielded]"
-	else
 		icon_state = "[icon_prefix][wielded]"
 
 /obj/item/twohanded/spear/afterattack(atom/movable/AM, mob/user, proximity)
@@ -630,20 +622,6 @@
 		return
 	if(isopenturf(AM)) //So you can actually melee with it
 		return
-	if(explosive && wielded) //Citadel edit removes qdel and explosive.forcemove(AM)
-		user.say("[war_cry]", forced="spear warcry")
-		explosive.prime()
-
-
-/obj/item/twohanded/spear/AltClick(mob/user)
-	. = ..()
-	if(user.canUseTopic(src, BE_CLOSE))
-		..()
-		if(istype(user) && loc == user)
-			var/input = stripped_input(user,"What do you want your war cry to be? You will shout it when you hit someone in melee.", ,"", 50)
-			if(input)
-				src.war_cry = input
-		return TRUE
 
 /obj/item/twohanded/spear/CheckParts(list/parts_list)
 	var/obj/item/shard/tip = locate() in parts_list
@@ -652,8 +630,9 @@
 		force_unwielded = 11
 		throwforce = 21
 		icon_prefix = "spearplasma"
-	qdel(tip)
 	update_icon()
+	qdel(tip)
+	..()
 
 // CHAINSAW
 /obj/item/twohanded/required/chainsaw
