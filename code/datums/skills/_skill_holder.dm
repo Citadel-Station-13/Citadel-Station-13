@@ -33,36 +33,37 @@
 /**
   * Sets the value of a skill.
   */
-/datum/skill_holder/proc/set_skill_value(skill, value)
-	if(!ispath(skill))
+/datum/skill_holder/proc/set_skill_value(skill, value, owner)
+	if(!ispath(skill, /datum/skill))
 		CRASH("Invalid set_skill_value call. Use typepaths.")		//until a time when we somehow need text ids for dynamic skills, I'm enforcing this.
-	LAZYINITLIST(skills)
-	value = sanitize_skill_value(skill, value)
+	var/datum/skill/S = GET_SKILL_DATUM(path)
+	value = S.sanitize_value(value)
 	if(!isnull(value))
-		skills[skill] = value
+		LAZYINITLIST(skills)
+		S.set_skill(src, value, owner)
 		return TRUE
 	return FALSE
 
 /**
   * Boosts a skill to a value if not aobve
   */
-/datum/skill_holder/proc/boost_skill_value_to(skill, value)
+/datum/skill_holder/proc/boost_skill_value_to(skill, value, mob/owner)
 	var/current = get_skill_value(skill)
 	if(!is_skill_value_greater(skill, current, value))
 		return FALSE
-	set_skill_value(skill, value)
+	set_skill_value(skill, value, owner)
 	return TRUE
 
 /**
   * Automatic skill increase, multiplied by skill affinity if existing.
   * Only works if skill is numerical.
   */
-/datum/skill_holder/proc/auto_gain_experience(skill, value)
+/datum/skill_holder/proc/auto_gain_experience(skill, value, mob/owner)
 	if(!ispath(skill, /datum/skill/numerical))
 		CRASH("You cannot auto increment a non numerical skill!")
 	var/current = get_skill_value(skill)
 	var/affinity = get_skill_affinity(skill)
-	boost_skill_value_to(skill, current + (value * affinity))
+	boost_skill_value_to(skill, current + (value * affinity), owner)
 
 /**
   * Generates a HTML readout of our skills.
@@ -73,6 +74,6 @@
 	out += "<table style=\"width:100%\"><tr><th><b>Skill</b><th><b>Value</b></tr>"
 	for(var/path in skills)
 		var/datum/skill/S = GLOB.skill_datums[path]
-		out += "<tr><td>[S.name]</td><td>[S.standard_render_value(skills[path])]</td></tr>"
+		out += "<tr><td><font color='[S.name_color]'>[S.name]</font></td><td>[S.standard_render_value(skills[path])]</td></tr>"
 	out += "</table>"
 	return out.Join("")
