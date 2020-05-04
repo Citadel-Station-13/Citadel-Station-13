@@ -22,9 +22,6 @@
 	var/clean_time = 50 //How long do we take to clean?
 	var/broom = FALSE //Do we have an speed buff from a broom?
 	var/adv_mop = FALSE //Do we have a cleaning buff from a better mop?
-	var/spray_bottle = FALSE//Do we have a spray bottle?
-
-	var/cleaning_distence = 0 //How far can we clean? 0 = Same tile as bot.
 
 	var/blood = 1
 	var/trash = 0
@@ -82,20 +79,6 @@
 				to_chat(user, "<span class='warning'>Please close the access panel before locking it.</span>")
 			else
 				to_chat(user, "<span class='notice'>\The [src] doesn't seem to respect your authority.</span>")
-
-	else if(istype(W, /obj/item/reagent_containers/spray))
-		if(bot_core.allowed(user) && open)
-			if(!spray_bottle)
-				to_chat(user, "<span class='notice'>You add to \the [src] a new spray bottle!</span>")
-				spray_bottle = TRUE
-				cleaning_distence = 2 //Can now clean 2 tiles away!
-				window_name = "Automatic Station Cleaner v3.7 ALPHA"
-				qdel(W)
-		if(!open)
-			to_chat(user, "<span class='notice'>\the [src] access pannle is not open!</span>")
-			return
-		else
-			to_chat(user, "<span class='notice'>\the [src] already has a spray bottle!</span>")
 
 	else if(istype(W, /obj/item/mop/advanced))
 		if(bot_core.allowed(user) && open)
@@ -206,19 +189,14 @@
 				shuffle = TRUE	//Shuffle the list the next time we scan so we dont both go the same way.
 			path = list()
 
-		if(!path || path.len) //No path, need a new one
+		if(!path || path.len == 0) //No path, need a new one
 			//Try to produce a path to the target, and ignore airlocks to which it has access.
 			path = get_path_to(src, target.loc, /turf/proc/Distance_cardinal, 0, 30, id=access_card)
-		if(target && path.len == 0 && (get_dist(src,target) > 1))
-			path = get_path_to(src, get_turf(target), /turf/proc/Distance_cardinal, 0, 30,id=access_card)
-			mode = BOT_MOVING
-			if(!path.len) //try to get closer if you can't reach the cleanable directly
-				path = get_path_to(src, get_turf(target), /turf/proc/Distance_cardinal, 0, 30,1,id=access_card)
-				if(!path.len) //Do not glue to a stuff we can not get to
-					add_to_ignore(target)
-					target = null
-					path = list()
-					return
+			if(!bot_move(target))
+				add_to_ignore(target)
+				target = null
+				path = list()
+				return
 			mode = BOT_MOVING
 		else if(!bot_move(target))
 			target = null
@@ -270,7 +248,7 @@
 	target_types = typecacheof(target_types)
 
 /mob/living/simple_animal/bot/cleanbot/UnarmedAttack(atom/A)
-	if(istype(A, /obj/effect/decal/cleanable) && (get_dist(src,A) <= cleaning_distence))
+	if(istype(A, /obj/effect/decal/cleanable))
 		anchored = TRUE
 		icon_state = "cleanbot-c"
 		visible_message("<span class='notice'>[src] begins to clean up [A].</span>")
