@@ -3098,7 +3098,9 @@
 /turf/open/floor/plating,
 /area/maintenance/fore/secondary)
 "agd" = (
-/obj/machinery/atmospherics/pipe/manifold4w/general/visible,
+/obj/machinery/atmospherics/pipe/manifold/general/visible{
+	dir = 8
+	},
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "age" = (
@@ -6473,16 +6475,6 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/science/xenobiology)
-"alX" = (
-/obj/machinery/button/door{
-	id = "atmos";
-	name = "Atmospherics Lockdown";
-	pixel_x = 24;
-	pixel_y = 4;
-	req_access_txt = "24"
-	},
-/turf/open/floor/plasteel,
-/area/engine/atmos)
 "alY" = (
 /obj/structure/cable{
 	icon_state = "1-2"
@@ -39435,7 +39427,10 @@
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "bPe" = (
-/obj/machinery/atmospherics/pipe/manifold/yellow/visible,
+/obj/machinery/atmospherics/components/binary/pump{
+	dir = 8;
+	name = "Pure to Ports"
+	},
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "bPf" = (
@@ -39453,10 +39448,10 @@
 /area/engine/atmos)
 "bPh" = (
 /obj/machinery/atmospherics/pipe/simple/cyan/visible,
-/obj/machinery/atmospherics/pipe/simple/yellow/visible{
+/obj/effect/spawner/structure/window/reinforced,
+/obj/machinery/atmospherics/pipe/layer_manifold{
 	dir = 4
 	},
-/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/engine/atmos)
 "bPi" = (
@@ -40719,7 +40714,9 @@
 /area/engine/atmos)
 "bSM" = (
 /obj/effect/spawner/structure/window/reinforced,
-/obj/machinery/atmospherics/pipe/simple/general/visible,
+/obj/machinery/atmospherics/pipe/simple/general/visible{
+	dir = 5
+	},
 /turf/open/floor/plating,
 /area/engine/atmos)
 "bSP" = (
@@ -41475,13 +41472,16 @@
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "bUN" = (
-/obj/machinery/atmospherics/pipe/manifold/general/visible,
+/obj/machinery/portable_atmospherics/canister,
+/obj/machinery/atmospherics/components/unary/portables_connector/visible{
+	dir = 1
+	},
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "bUO" = (
-/obj/machinery/atmospherics/components/binary/pump{
-	dir = 8;
-	name = "Ports to External"
+/obj/machinery/portable_atmospherics/canister,
+/obj/machinery/atmospherics/components/unary/portables_connector/visible{
+	dir = 1
 	},
 /turf/open/floor/plasteel,
 /area/engine/atmos)
@@ -41912,8 +41912,9 @@
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "bVZ" = (
-/obj/machinery/atmospherics/pipe/manifold/general/visible{
-	dir = 8
+/obj/machinery/atmospherics/components/binary/pump{
+	dir = 8;
+	name = "Ports to External"
 	},
 /turf/open/floor/plasteel,
 /area/engine/atmos)
@@ -46658,8 +46659,8 @@
 /turf/closed/wall/r_wall,
 /area/engine/atmos)
 "ciu" = (
-/obj/machinery/atmospherics/pipe/simple/yellow/visible,
 /obj/effect/spawner/structure/window/reinforced,
+/obj/machinery/atmospherics/pipe/layer_manifold,
 /turf/open/floor/plating,
 /area/engine/atmos)
 "civ" = (
@@ -53524,8 +53525,9 @@
 /turf/open/floor/plasteel,
 /area/security/brig)
 "daq" = (
-/obj/machinery/atmospherics/components/unary/portables_connector/visible,
-/obj/machinery/portable_atmospherics/canister,
+/obj/machinery/atmospherics/pipe/manifold/general/visible{
+	dir = 1
+	},
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "daI" = (
@@ -53947,9 +53949,7 @@
 /turf/open/floor/plating,
 /area/security/prison)
 "eqq" = (
-/obj/machinery/atmospherics/pipe/manifold/orange/visible{
-	dir = 4
-	},
+/obj/machinery/atmospherics/pipe/manifold/orange/visible,
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "eqA" = (
@@ -55364,7 +55364,7 @@
 "ivJ" = (
 /obj/machinery/atmospherics/pipe/simple/cyan/visible,
 /obj/effect/spawner/structure/window/reinforced,
-/obj/machinery/atmospherics/pipe/simple/purple/visible{
+/obj/machinery/atmospherics/pipe/layer_manifold{
 	dir = 4
 	},
 /turf/open/floor/plating,
@@ -55417,7 +55417,7 @@
 /obj/machinery/atmospherics/pipe/simple/cyan/visible{
 	dir = 4
 	},
-/obj/machinery/atmospherics/pipe/simple/yellow/visible,
+/obj/machinery/atmospherics/pipe/layer_manifold,
 /turf/open/floor/plating,
 /area/engine/atmos)
 "iLJ" = (
@@ -55708,11 +55708,7 @@
 /turf/closed/wall/r_wall,
 /area/engine/gravity_generator)
 "jBQ" = (
-/obj/machinery/atmospherics/components/binary/pump{
-	dir = 8;
-	name = "Pure to Ports"
-	},
-/obj/machinery/atmospherics/pipe/simple/general/visible,
+/obj/machinery/atmospherics/pipe/manifold4w/general/visible,
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "jCq" = (
@@ -56728,6 +56724,10 @@
 	},
 /turf/open/floor/wood,
 /area/crew_quarters/bar)
+"moS" = (
+/obj/machinery/atmospherics/pipe/manifold4w/yellow/visible,
+/turf/open/floor/plasteel,
+/area/engine/atmos)
 "mps" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -57773,7 +57773,9 @@
 /area/crew_quarters/fitness)
 "pCj" = (
 /obj/effect/spawner/structure/window/reinforced,
-/obj/machinery/atmospherics/pipe/simple/yellow/visible,
+/obj/machinery/atmospherics/pipe/simple/yellow/visible{
+	dir = 5
+	},
 /turf/open/floor/plating,
 /area/engine/atmos)
 "pDe" = (
@@ -57915,10 +57917,11 @@
 /turf/open/floor/plasteel,
 /area/security/processing)
 "pUP" = (
-/obj/machinery/atmospherics/pipe/simple/orange/visible{
-	dir = 5
+/obj/effect/spawner/structure/window/reinforced,
+/obj/machinery/atmospherics/pipe/manifold/general/visible{
+	dir = 4
 	},
-/turf/open/floor/plasteel,
+/turf/open/floor/plating,
 /area/engine/atmos)
 "qaY" = (
 /obj/structure/table/reinforced,
@@ -58469,6 +58472,13 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/maintenance/fore)
+"rTo" = (
+/obj/machinery/atmospherics/components/binary/pump{
+	dir = 8;
+	name = "External to Pumps"
+	},
+/turf/open/floor/plasteel,
+/area/engine/atmos)
 "rTu" = (
 /obj/structure/cable{
 	icon_state = "4-8"
@@ -60034,18 +60044,18 @@
 /turf/open/floor/plasteel/white,
 /area/science/circuit)
 "vPQ" = (
-/obj/machinery/atmospherics/components/binary/pump{
-	dir = 8;
-	name = "External to Pumps"
+/obj/effect/spawner/structure/window/reinforced,
+/obj/machinery/atmospherics/pipe/simple/yellow/visible{
+	dir = 10
 	},
-/turf/open/floor/plasteel,
+/turf/open/floor/plating,
 /area/engine/atmos)
 "vQf" = (
 /obj/structure/cable{
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/cyan/visible,
-/obj/machinery/atmospherics/components/binary/pump/on{
+/obj/machinery/atmospherics/components/binary/pump{
 	dir = 8;
 	name = "Mix to External"
 	},
@@ -93433,7 +93443,7 @@ bQp
 alk
 gAu
 eqq
-pUP
+bOd
 bOd
 bOd
 bOd
@@ -93689,8 +93699,8 @@ bJF
 bVX
 bRA
 bTP
+rTo
 bOd
-vPQ
 bOd
 bOd
 bOd
@@ -93947,7 +93957,7 @@ bMQ
 bRC
 rdl
 daq
-bUN
+bUO
 bOd
 bOd
 bOd
@@ -94204,7 +94214,7 @@ cBF
 bRD
 rdl
 daq
-bUN
+bUO
 bOd
 bOd
 bOd
@@ -94460,7 +94470,7 @@ bPc
 bQs
 cez
 ceA
-bOd
+daq
 bUO
 bOd
 bOd
@@ -94718,7 +94728,7 @@ bQv
 bRF
 bSM
 bVZ
-bUN
+bOd
 bOd
 bOd
 bOd
@@ -94973,7 +94983,7 @@ bOc
 udT
 omk
 nTU
-bSM
+pUP
 jBQ
 agd
 cCB
@@ -95487,8 +95497,8 @@ oVN
 bPf
 bQx
 bRH
-bMQ
-bTU
+vPQ
+moS
 kGv
 bUS
 cCE
@@ -96002,15 +96012,15 @@ ivJ
 bQy
 bRI
 bSP
-bPh
+ivJ
 jzM
 bRI
 cCF
-bPh
+ivJ
 bQy
 bRI
 bQy
-bPh
+ivJ
 bQy
 bRI
 bSP
