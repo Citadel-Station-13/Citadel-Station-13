@@ -40749,10 +40749,6 @@
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "bOQ" = (
-/obj/effect/turf_decal/tile/yellow,
-/obj/effect/turf_decal/tile/yellow{
-	dir = 4
-	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 10
 	},
