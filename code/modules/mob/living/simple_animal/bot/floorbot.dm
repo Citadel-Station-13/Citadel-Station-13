@@ -33,6 +33,9 @@
 	var/oldloc = null
 	var/toolbox = /obj/item/storage/toolbox/mechanical
 
+	var/storage_upgrade = FALSE
+	var/syndicate_toolbox = FALSE
+
 	#define HULL_BREACH		1
 	#define LINE_SPACE_MODE		2
 	#define FIX_TILE		3
@@ -120,6 +123,30 @@
 			to_chat(user, "<span class='notice'>You load [loaded] tiles into the floorbot. It now contains [specialtiles] tiles.</span>")
 		else
 			to_chat(user, "<span class='warning'>You need at least one floor tile to put into [src]!</span>")
+
+	else if(istype(W, /obj/item/storage/toolbox/artistic))
+		if(bot_core.allowed(user) && open && storage_upgrade != TRUE)
+			to_chat(user, "<span class='notice'>You upgrade \the [src] case to hold more!</span>")
+			storage_upgrade = TRUE
+			maxtiles += 100 //Double the storage!
+			qdel(W)
+		if(!open)
+			to_chat(user, "<span class='notice'>\the [src] access pannle is not open!</span>")
+			return
+		else
+			to_chat(user, "<span class='notice'>\the [src] already has a upgraded case!</span>")
+
+	else if(istype(W, /obj/item/storage/toolbox/syndicate))
+		if(bot_core.allowed(user) && open && syndicate_toolbox != TRUE)
+			to_chat(user, "<span class='notice'>You upgrade \the [src] case to hold more!</span>")
+			syndicate_toolbox = TRUE
+			maxtiles += 200 //Double bse storage
+			base_speed = 1 //2x faster!
+			qdel(W)
+		else
+			to_chat(user, "<span class='notice'>\the [src] already has a upgraded case!</span>")
+
+
 	else
 		..()
 

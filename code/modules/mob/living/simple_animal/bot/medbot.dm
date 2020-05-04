@@ -42,6 +42,7 @@
 	var/declare_crit = 1 //If active, the bot will transmit a critical patient alert to MedHUD users.
 	var/declare_cooldown = 0 //Prevents spam of critical patient alerts.
 	var/stationary_mode = 0 //If enabled, the Medibot will not move automatically.
+	var/injection_time = 30 //How long we take to inject someone
 	//Setting which reagents to use to treat what by default. By id.
 	var/treatment_brute_avoid = /datum/reagent/medicine/tricordrazine
 	var/treatment_brute = /datum/reagent/medicine/bicaridine
@@ -51,19 +52,26 @@
 	var/treatment_fire = /datum/reagent/medicine/kelotane
 	var/treatment_tox_avoid = /datum/reagent/medicine/tricordrazine
 	var/treatment_tox = /datum/reagent/medicine/charcoal
-	var/treatment_tox_toxlover = /datum/reagent/toxin
+	var/treatment_tox_toxlover = /datum/reagent/toxin //Injects toxins into people that heal via toxins
 	var/treatment_virus_avoid = null
 	var/treatment_virus = /datum/reagent/medicine/spaceacillin
 	var/treat_virus = 1 //If on, the bot will attempt to treat viral infections, curing them if possible.
 	var/shut_up = 0 //self explanatory :)
 
+	var/piercing = FALSE //Do we pierc through clothing?
+	var/hypospray = FALSE //Do we have the nicer needle? - Injects faster
+	var/upgraded_dispenser_1 //Do we have the nicer chemicals? - replaces dex with salbutamol
+	var/upgraded_dispenser_2 //Do we have the nicer chemicals? - replaces kep with oxandrolone
+	var/upgraded_dispenser_3 //Do we have the nicer chemicals? - replaces bic with sal acid
+	var/upgraded_dispenser_4 //Do we have the nicer chemicals? - replaces charcoal/toxin with pentetic acid / pentetic jelly
+
 /mob/living/simple_animal/bot/medbot/mysterious
 	name = "\improper Mysterious Medibot"
 	desc = "International Medibot of mystery."
 	skin = "bezerk"
-	treatment_brute = /datum/reagent/medicine/tricordrazine
-	treatment_fire = /datum/reagent/medicine/tricordrazine
-	treatment_tox = /datum/reagent/medicine/tricordrazine
+	treatment_brute = /datum/reagent/medicine/regen_jelly
+	treatment_fire = /datum/reagent/medicine/regen_jelly
+	treatment_tox = /datum/reagent/medicine/regen_jelly
 
 /mob/living/simple_animal/bot/medbot/derelict
 	name = "\improper Old Medibot"
@@ -234,6 +242,81 @@
 		to_chat(user, "<span class='notice'>You insert [W].</span>")
 		show_controls(user)
 
+	else if(istype(W, /obj/item/reagent_containers/syringe/piercing))
+		if(bot_core.allowed(user) && open && piercing != TRUE)
+			to_chat(user, "<span class='notice'>You replace \the [src] syringe with a diamond-tipped one!</span>")
+			piercing = TRUE
+			qdel(W)
+		if(!open)
+			to_chat(user, "<span class='notice'>\the [src] access pannle is not open!</span>")
+			return
+		else
+			to_chat(user, "<span class='notice'>\the [src] already has a diamond-tipped syringe!</span>")
+
+	else if(istype(W, /obj/item/hypospray/mkii))
+		if(bot_core.allowed(user) && open && hypospray != TRUE)
+			to_chat(user, "<span class='notice'>You replace \the [src] syringe base with a DeForest Medical MK.II Hypospray!</span>")
+			hypospray = TRUE
+			injection_time = 15 //Half the time half the death!
+			window_name = "Automatic Medical Unit v2.4 ALPHA"
+			qdel(W)
+		if(!open)
+			to_chat(user, "<span class='notice'>\the [src] access pannle is not open!</span>")
+			return
+		else
+			to_chat(user, "<span class='notice'>\the [src] already has a DeForest Medical Hypospray base!</span>")
+
+
+	else if(istype(W, /obj/item/circuitboard/machine/chem_dispenser))
+		if(bot_core.allowed(user) && open && upgraded_dispenser_1 != TRUE)
+			to_chat(user, "<span class='notice'>You add in the board upgrading \the [src] reagent banks!</span>")
+			upgraded_dispenser_1 = TRUE
+			treatment_oxy = /datum/reagent/medicine/salbutamol //Replaces Dex with salbutamol "better" healing of o2
+			qdel(W)
+		if(!open)
+			to_chat(user, "<span class='notice'>\the [src] access pannle is not open!</span>")
+			return
+		else
+			to_chat(user, "<span class='notice'>\the [src] already has a this upgrade!</span>")
+
+	else if(istype(W, /obj/item/circuitboard/machine/cryo_tube))
+		if(bot_core.allowed(user) && open && upgraded_dispenser_2 != TRUE)
+			to_chat(user, "<span class='notice'>You add in the board upgrading \the [src] reagent banks!</span>")
+			upgraded_dispenser_2 = TRUE
+			treatment_fire = /datum/reagent/medicine/oxandrolone //Replaces Kep with oxandrolone "better" healing of burns
+			qdel(W)
+		if(!open)
+			to_chat(user, "<span class='notice'>\the [src] access pannle is not open!</span>")
+			return
+		else
+			to_chat(user, "<span class='notice'>\the [src] already has a this upgrade!</span>")
+
+	else if(istype(W, /obj/item/circuitboard/machine/chem_master))
+		if(bot_core.allowed(user) && open && upgraded_dispenser_3 != TRUE)
+			to_chat(user, "<span class='notice'>You add in the board upgrading \the [src] reagent banks!</span>")
+			upgraded_dispenser_3 = TRUE
+			treatment_brute = /datum/reagent/medicine/sal_acid //Replaces Bic with Sal Acid "better" healing of brute
+			qdel(W)
+		if(!open)
+			to_chat(user, "<span class='notice'>\the [src] access pannle is not open!</span>")
+			return
+		else
+			to_chat(user, "<span class='notice'>\the [src] already has a this upgrade!</span>")
+
+	else if(istype(W, /obj/item/circuitboard/machine/sleeper))
+		if(bot_core.allowed(user) && open && upgraded_dispenser_4 != TRUE)
+			to_chat(user, "<span class='notice'>You add in the board upgrading \the [src] reagent banks!</span>")
+			upgraded_dispenser_4 = TRUE
+			treatment_tox = /datum/reagent/medicine/pen_acid //replaces charcoal with pen acid a "better" healing of toxins
+			treatment_tox_toxlover = /datum/reagent/medicine/pen_acid/pen_jelly //Injects pen jelly into people that heal via toxins
+			qdel(W)
+		if(!open)
+			to_chat(user, "<span class='notice'>\the [src] access pannle is not open!</span>")
+			return
+		else
+			to_chat(user, "<span class='notice'>\the [src] already has a this upgrade!</span>")
+
+
 	else
 		var/current_health = health
 		..()
@@ -249,6 +332,7 @@
 		audible_message("<span class='danger'>[src] buzzes oddly!</span>")
 		flick("medibot_spark", src)
 		playsound(src, "sparks", 75, 1)
+		piercing = TRUE //Jabs even harder through the clothing!
 		if(user)
 			oldpatient = user
 
@@ -361,7 +445,7 @@
 
 	if(ishuman(C))
 		var/mob/living/carbon/human/H = C
-		if (H.wear_suit && H.head && istype(H.wear_suit, /obj/item/clothing) && istype(H.head, /obj/item/clothing))
+		if (H.wear_suit && H.head && istype(H.wear_suit, /obj/item/clothing) && istype(H.head, /obj/item/clothing) && piercing != TRUE)
 			var/obj/item/clothing/CS = H.wear_suit
 			var/obj/item/clothing/CH = H.head
 			if (CS.clothing_flags & CH.clothing_flags & THICKMATERIAL)
@@ -504,7 +588,7 @@
 			"<span class='userdanger'>[src] is trying to inject you!</span>")
 
 		var/failed = FALSE
-		if(do_mob(src, patient, 30))	//Is C == patient? This is so confusing
+		if(do_mob(src, patient, injection_time))	//Is C == patient? This is so confusing
 			if((get_dist(src, patient) <= 1) && (on) && assess_patient(patient))
 				if(reagent_id == "internal_beaker")
 					if(use_beaker && reagent_glass && reagent_glass.reagents.total_volume)

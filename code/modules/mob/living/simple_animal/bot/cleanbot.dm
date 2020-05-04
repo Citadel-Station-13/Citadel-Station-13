@@ -22,7 +22,9 @@
 	var/clean_time = 50 //How long do we take to clean?
 	var/broom = FALSE //Do we have an speed buff from a broom?
 	var/adv_mop = FALSE //Do we have a cleaning buff from a better mop?
+	var/spray_bottle = FALSE//Do we have a spray bottle?
 
+	var/cleaning_distence = 0 //How far can we clean? 0 = Same tile as bot.
 
 	var/blood = 1
 	var/trash = 0
@@ -80,6 +82,19 @@
 				to_chat(user, "<span class='warning'>Please close the access panel before locking it.</span>")
 			else
 				to_chat(user, "<span class='notice'>\The [src] doesn't seem to respect your authority.</span>")
+
+	else if(istype(W, /obj/item/reagent_containers/spray))
+		if(bot_core.allowed(user) && open && spray_bottle != TRUE)
+			to_chat(user, "<span class='notice'>You add to \the [src] a new spray bottle!</span>")
+			spray_bottle = TRUE
+			cleaning_distence = 2 //Can now clean 2 tiles away!
+			window_name = "Automatic Station Cleaner v3.7 ALPHA"
+			qdel(W)
+		if(!open)
+			to_chat(user, "<span class='notice'>\the [src] access pannle is not open!</span>")
+			return
+		else
+			to_chat(user, "<span class='notice'>\the [src] already has a spray bottle!</span>")
 
 	if(istype(W, /obj/item/mop/advanced))
 		if(bot_core.allowed(user) && open && adv_mop == TRUE)
@@ -241,7 +256,7 @@
 	target_types = typecacheof(target_types)
 
 /mob/living/simple_animal/bot/cleanbot/UnarmedAttack(atom/A)
-	if(istype(A, /obj/effect/decal/cleanable))
+	if(istype(A, /obj/effect/decal/cleanable) && (get_dist(src,A) <= cleaning_distence))
 		anchored = TRUE
 		icon_state = "cleanbot-c"
 		visible_message("<span class='notice'>[src] begins to clean up [A].</span>")
