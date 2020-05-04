@@ -14,7 +14,7 @@
 	. = ..()
 	UnregisterSignal(M,COMSIG_AREA_ENTERED)
 
-/datum/element/dusts_on_leaving_area/proc/check_dust(var/mob/M)
+/datum/element/dusts_on_leaving_area/proc/check_dust(mob/M)
 	var/area/A = get_area(M)
 	if(!(A.type in area_types))
 		M.dust(force = TRUE)
