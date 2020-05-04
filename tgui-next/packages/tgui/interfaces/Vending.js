@@ -41,7 +41,7 @@ export const Vending = props => {
         </Section>
       )}
       {data.bill && (
-        <Section title="Bill">
+        <Section title="Space Cash">
           <Button
             content={"Take out the bill"}
             onClick={() => act(ref, 'takeoutbill')} />
