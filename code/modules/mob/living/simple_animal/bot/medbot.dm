@@ -228,7 +228,6 @@
 
 /mob/living/simple_animal/bot/medbot/attackby(obj/item/W as obj, mob/user as mob, params)
 	if(istype(W, /obj/item/reagent_containers/glass))
-		. = 1 //no afterattack
 		if(locked)
 			to_chat(user, "<span class='warning'>You cannot insert a beaker because the panel is locked!</span>")
 			return
@@ -243,10 +242,11 @@
 		show_controls(user)
 
 	else if(istype(W, /obj/item/reagent_containers/syringe/piercing))
-		if(bot_core.allowed(user) && open && piercing != TRUE)
-			to_chat(user, "<span class='notice'>You replace \the [src] syringe with a diamond-tipped one!</span>")
-			piercing = TRUE
-			qdel(W)
+		if(bot_core.allowed(user) && open)
+			if(!piercing)
+				to_chat(user, "<span class='notice'>You replace \the [src] syringe with a diamond-tipped one!</span>")
+				piercing = TRUE
+				qdel(W)
 		if(!open)
 			to_chat(user, "<span class='notice'>\the [src] access pannle is not open!</span>")
 			return
@@ -254,12 +254,13 @@
 			to_chat(user, "<span class='notice'>\the [src] already has a diamond-tipped syringe!</span>")
 
 	else if(istype(W, /obj/item/hypospray/mkii))
-		if(bot_core.allowed(user) && open && hypospray != TRUE)
-			to_chat(user, "<span class='notice'>You replace \the [src] syringe base with a DeForest Medical MK.II Hypospray!</span>")
-			hypospray = TRUE
-			injection_time = 15 //Half the time half the death!
-			window_name = "Automatic Medical Unit v2.4 ALPHA"
-			qdel(W)
+		if(bot_core.allowed(user) && open)
+			if(!hypospray)
+				to_chat(user, "<span class='notice'>You replace \the [src] syringe base with a DeForest Medical MK.II Hypospray!</span>")
+				hypospray = TRUE
+				injection_time = 15 //Half the time half the death!
+				window_name = "Automatic Medical Unit v2.4 ALPHA"
+				qdel(W)
 		if(!open)
 			to_chat(user, "<span class='notice'>\the [src] access pannle is not open!</span>")
 			return
@@ -268,11 +269,12 @@
 
 
 	else if(istype(W, /obj/item/circuitboard/machine/chem_dispenser))
-		if(bot_core.allowed(user) && open && upgraded_dispenser_1 != TRUE)
-			to_chat(user, "<span class='notice'>You add in the board upgrading \the [src] reagent banks!</span>")
-			upgraded_dispenser_1 = TRUE
-			treatment_oxy = /datum/reagent/medicine/salbutamol //Replaces Dex with salbutamol "better" healing of o2
-			qdel(W)
+		if(bot_core.allowed(user) && open)
+			if(!upgraded_dispenser_1)
+				to_chat(user, "<span class='notice'>You add in the board upgrading \the [src] reagent banks!</span>")
+				upgraded_dispenser_1 = TRUE
+				treatment_oxy = /datum/reagent/medicine/salbutamol //Replaces Dex with salbutamol "better" healing of o2
+				qdel(W)
 		if(!open)
 			to_chat(user, "<span class='notice'>\the [src] access pannle is not open!</span>")
 			return
@@ -280,11 +282,12 @@
 			to_chat(user, "<span class='notice'>\the [src] already has a this upgrade!</span>")
 
 	else if(istype(W, /obj/item/circuitboard/machine/cryo_tube))
-		if(bot_core.allowed(user) && open && upgraded_dispenser_2 != TRUE)
-			to_chat(user, "<span class='notice'>You add in the board upgrading \the [src] reagent banks!</span>")
-			upgraded_dispenser_2 = TRUE
-			treatment_fire = /datum/reagent/medicine/oxandrolone //Replaces Kep with oxandrolone "better" healing of burns
-			qdel(W)
+		if(bot_core.allowed(user) && open)
+			if(!upgraded_dispenser_2)
+				to_chat(user, "<span class='notice'>You add in the board upgrading \the [src] reagent banks!</span>")
+				upgraded_dispenser_2 = TRUE
+				treatment_fire = /datum/reagent/medicine/oxandrolone //Replaces Kep with oxandrolone "better" healing of burns
+				qdel(W)
 		if(!open)
 			to_chat(user, "<span class='notice'>\the [src] access pannle is not open!</span>")
 			return
@@ -292,11 +295,12 @@
 			to_chat(user, "<span class='notice'>\the [src] already has a this upgrade!</span>")
 
 	else if(istype(W, /obj/item/circuitboard/machine/chem_master))
-		if(bot_core.allowed(user) && open && upgraded_dispenser_3 != TRUE)
-			to_chat(user, "<span class='notice'>You add in the board upgrading \the [src] reagent banks!</span>")
-			upgraded_dispenser_3 = TRUE
-			treatment_brute = /datum/reagent/medicine/sal_acid //Replaces Bic with Sal Acid "better" healing of brute
-			qdel(W)
+		if(bot_core.allowed(user) && open)
+			if(!upgraded_dispenser_3)
+				to_chat(user, "<span class='notice'>You add in the board upgrading \the [src] reagent banks!</span>")
+				upgraded_dispenser_3 = TRUE
+				treatment_brute = /datum/reagent/medicine/sal_acid //Replaces Bic with Sal Acid "better" healing of brute
+				qdel(W)
 		if(!open)
 			to_chat(user, "<span class='notice'>\the [src] access pannle is not open!</span>")
 			return
@@ -304,12 +308,13 @@
 			to_chat(user, "<span class='notice'>\the [src] already has a this upgrade!</span>")
 
 	else if(istype(W, /obj/item/circuitboard/machine/sleeper))
-		if(bot_core.allowed(user) && open && upgraded_dispenser_4 != TRUE)
-			to_chat(user, "<span class='notice'>You add in the board upgrading \the [src] reagent banks!</span>")
-			upgraded_dispenser_4 = TRUE
-			treatment_tox = /datum/reagent/medicine/pen_acid //replaces charcoal with pen acid a "better" healing of toxins
-			treatment_tox_toxlover = /datum/reagent/medicine/pen_acid/pen_jelly //Injects pen jelly into people that heal via toxins
-			qdel(W)
+		if(bot_core.allowed(user) && open)
+			if(!upgraded_dispenser_4)
+				to_chat(user, "<span class='notice'>You add in the board upgrading \the [src] reagent banks!</span>")
+				upgraded_dispenser_4 = TRUE
+				treatment_tox = /datum/reagent/medicine/pen_acid //replaces charcoal with pen acid a "better" healing of toxins
+				treatment_tox_toxlover = /datum/reagent/medicine/pen_acid/pen_jelly //Injects pen jelly into people that heal via toxins
+				qdel(W)
 		if(!open)
 			to_chat(user, "<span class='notice'>\the [src] access pannle is not open!</span>")
 			return

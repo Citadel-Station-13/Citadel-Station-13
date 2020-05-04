@@ -84,34 +84,43 @@
 				to_chat(user, "<span class='notice'>\The [src] doesn't seem to respect your authority.</span>")
 
 	else if(istype(W, /obj/item/reagent_containers/spray))
-		if(bot_core.allowed(user) && open && spray_bottle != TRUE)
-			to_chat(user, "<span class='notice'>You add to \the [src] a new spray bottle!</span>")
-			spray_bottle = TRUE
-			cleaning_distence = 2 //Can now clean 2 tiles away!
-			window_name = "Automatic Station Cleaner v3.7 ALPHA"
-			qdel(W)
+		if(bot_core.allowed(user) && open)
+			if(!spray_bottle)
+				to_chat(user, "<span class='notice'>You add to \the [src] a new spray bottle!</span>")
+				spray_bottle = TRUE
+				cleaning_distence = 2 //Can now clean 2 tiles away!
+				window_name = "Automatic Station Cleaner v3.7 ALPHA"
+				qdel(W)
 		if(!open)
 			to_chat(user, "<span class='notice'>\the [src] access pannle is not open!</span>")
 			return
 		else
 			to_chat(user, "<span class='notice'>\the [src] already has a spray bottle!</span>")
 
-	if(istype(W, /obj/item/mop/advanced))
-		if(bot_core.allowed(user) && open && adv_mop == TRUE)
-			to_chat(user, "<span class='notice'>You replace \the [src] old mop with a new better one!</span>")
-			adv_mop = TRUE
-			clean_time = 20 //2.5 the speed!
-			window_name = "Automatic Station Cleaner v2.1 BETA" //New!
-			qdel(W)
+	else if(istype(W, /obj/item/mop/advanced))
+		if(bot_core.allowed(user) && open)
+			if(!adv_mop)
+				to_chat(user, "<span class='notice'>You replace \the [src] old mop with a new better one!</span>")
+				adv_mop = TRUE
+				clean_time = 20 //2.5 the speed!
+				window_name = "Automatic Station Cleaner v2.1 BETA" //New!
+				qdel(W)
+		if(!open)
+			to_chat(user, "<span class='notice'>\the [src] access pannle is not open!</span>")
+			return
 		else
 			to_chat(user, "<span class='notice'>\the [src] already has this mop!</span>")
 
-	if(istype(W, /obj/item/twohanded/broom))
-		if(bot_core.allowed(user) && open && broom == TRUE)
-			to_chat(user, "<span class='notice'>You add to \the [src] a broom speeding it up!</span>")
-			broom = TRUE
-			base_speed = 1 //2x faster!
-			qdel(W)
+	else if(istype(W, /obj/item/twohanded/broom))
+		if(bot_core.allowed(user) && open)
+			if(!broom)
+				to_chat(user, "<span class='notice'>You add to \the [src] a broom speeding it up!</span>")
+				broom = TRUE
+				base_speed = 1 //2x faster!
+				qdel(W)
+		if(!open)
+			to_chat(user, "<span class='notice'>\the [src] access pannle is not open!</span>")
+			return
 		else
 			to_chat(user, "<span class='notice'>\the [src] already has a broom!</span>")
 
@@ -197,14 +206,19 @@
 				shuffle = TRUE	//Shuffle the list the next time we scan so we dont both go the same way.
 			path = list()
 
-		if(!path || path.len == 0) //No path, need a new one
+		if(!path || path.len) //No path, need a new one
 			//Try to produce a path to the target, and ignore airlocks to which it has access.
 			path = get_path_to(src, target.loc, /turf/proc/Distance_cardinal, 0, 30, id=access_card)
-			if(!bot_move(target))
-				add_to_ignore(target)
-				target = null
-				path = list()
-				return
+		if(target && path.len == 0 && (get_dist(src,target) > 1))
+			path = get_path_to(src, get_turf(target), /turf/proc/Distance_cardinal, 0, 30,id=access_card)
+			mode = BOT_MOVING
+			if(!path.len) //try to get closer if you can't reach the cleanable directly
+				path = get_path_to(src, get_turf(target), /turf/proc/Distance_cardinal, 0, 30,1,id=access_card)
+				if(!path.len) //Do not glue to a stuff we can not get to
+					add_to_ignore(target)
+					target = null
+					path = list()
+					return
 			mode = BOT_MOVING
 		else if(!bot_move(target))
 			target = null
