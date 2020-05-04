@@ -73,7 +73,6 @@
 		if(bot_core.allowed(user) && !open && !emagged)
 			locked = !locked
 			to_chat(user, "<span class='notice'>You [ locked ? "lock" : "unlock"] \the [src] behaviour controls.</span>")
-			return
 		else
 			if(emagged)
 				to_chat(user, "<span class='warning'>ERROR</span>")
@@ -82,7 +81,7 @@
 			else
 				to_chat(user, "<span class='notice'>\The [src] doesn't seem to respect your authority.</span>")
 
-	if(istype(W, /obj/item/mop/advanced))
+	else if(istype(W, /obj/item/mop/advanced))
 		if(bot_core.allowed(user) && open && adv_mop != TRUE)
 			to_chat(user, "<span class='notice'>You replace \the [src] old mop with a new better one!</span>")
 			adv_mop = TRUE
@@ -95,7 +94,7 @@
 		else
 			to_chat(user, "<span class='notice'>\the [src] already has this mop!</span>")
 
-	if(istype(W, /obj/item/twohanded/broom))
+	else if(istype(W, /obj/item/twohanded/broom))
 		if(bot_core.allowed(user) && open && broom != TRUE)
 			to_chat(user, "<span class='notice'>You add to \the [src] a broom speeding it up!</span>")
 			broom = TRUE
