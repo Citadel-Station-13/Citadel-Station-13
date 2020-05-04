@@ -576,3 +576,4 @@
 /datum/status_effect/regenerative_core/on_remove()
 	. = ..()
 	REMOVE_TRAIT(owner, TRAIT_IGNOREDAMAGESLOWDOWN, "regenerative_core")
+	owner.updatehealth()
