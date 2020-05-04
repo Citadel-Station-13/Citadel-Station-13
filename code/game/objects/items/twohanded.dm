@@ -600,12 +600,6 @@
 	AddComponent(/datum/component/jousting)
 	AddElement(/datum/element/sword_point)
 
-/obj/item/twohanded/spear/attack_self(mob/user)
-	if(explosive)
-		explosive.attack_self(user)
-		return
-	. = ..()
-
 //Citadel additions : attack_self and rightclick_attack_self
 
 /obj/item/twohanded/rightclick_attack_self(mob/user)
@@ -617,17 +611,12 @@
 
 /obj/item/twohanded/spear/suicide_act(mob/living/carbon/user)
 	user.visible_message("<span class='suicide'>[user] begins to sword-swallow \the [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
-	if(explosive) //Citadel Edit removes qdel and explosive.forcemove(AM)
-		user.say("[war_cry]", forced="spear warcry")
-		explosive.prime()
-		user.gib()
-		return BRUTELOSS
 	return BRUTELOSS
 
 /obj/item/twohanded/spear/examine(mob/user)
 	. = ..()
 	if(explosive)
-		. += "<span class='notice'>Use in your hands to activate the attached explosive.</span><br><span class='notice'>Alt-click to set your war cry.</span><br><span class='notice'>Right-click in combat mode to wield</span>"
+		. += "<span class='notice'>Alt-click to set your war cry.</span><br><span class='notice'>Right-click in combat mode to wield</span>"
 
 /obj/item/twohanded/spear/update_icon_state()
 	if(explosive)
@@ -645,16 +634,11 @@
 		user.say("[war_cry]", forced="spear warcry")
 		explosive.prime()
 
-/obj/item/twohanded/spear/grenade_prime_react(obj/item/grenade/nade) //Citadel edit, removes throw_impact because memes
-	nade.forceMove(get_turf(src))
-	qdel(src)
 
 /obj/item/twohanded/spear/AltClick(mob/user)
 	. = ..()
 	if(user.canUseTopic(src, BE_CLOSE))
 		..()
-		if(!explosive)
-			return
 		if(istype(user) && loc == user)
 			var/input = stripped_input(user,"What do you want your war cry to be? You will shout it when you hit someone in melee.", ,"", 50)
 			if(input)
@@ -669,19 +653,6 @@
 		throwforce = 21
 		icon_prefix = "spearplasma"
 	qdel(tip)
-	var/obj/item/twohanded/spear/S = locate() in parts_list
-	if(S)
-		if(S.explosive)
-			S.explosive.forceMove(get_turf(src))
-			S.explosive = null
-		parts_list -= S
-		qdel(S)
-	..()
-	var/obj/item/grenade/G = locate() in contents
-	if(G)
-		explosive = G
-		name = "explosive lance"
-		desc = "A makeshift spear with [G] attached to it."
 	update_icon()
 
 // CHAINSAW
