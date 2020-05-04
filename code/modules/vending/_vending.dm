@@ -557,6 +557,7 @@ GLOBAL_LIST_EMPTY(vending_products)
 		.["stock"][R.name] = R.amount
 	.["extended_inventory"] = extended_inventory
 	.["coin"] = coin
+	.["bill"] = bill
 
 /obj/machinery/vending/ui_act(action, params)
 	. = ..()

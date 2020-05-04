@@ -10,7 +10,7 @@ export const Vending = props => {
   let inventory;
   let custom = false;
   const onstation = true;
-  if (data.extended_inventory && data.coin) {
+  if (data.extended_inventory && (data.coin || data.bill)) {
     inventory = [
       ...data.product_records,
       ...data.hidden_records,
@@ -21,7 +21,7 @@ export const Vending = props => {
       ...data.product_records,
       ...data.hidden_records,
     ];
-  } else if (data.coin) {
+  } else if (data.coin || data.bill) {
     inventory = [
       ...data.product_records,
       ...data.coin_records,
@@ -38,6 +38,13 @@ export const Vending = props => {
           <Button
             content={"Take out the coin"}
             onClick={() => act(ref, 'takeoutcoin')} />
+        </Section>
+      )}
+      {data.bill && (
+        <Section title="Bill">
+          <Button
+            content={"Take out the bill"}
+            onClick={() => act(ref, 'takeoutbill')} />
         </Section>
       )}
       <Section title="Products" >
