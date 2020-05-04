@@ -73,6 +73,7 @@
 		if(bot_core.allowed(user) && !open && !emagged)
 			locked = !locked
 			to_chat(user, "<span class='notice'>You [ locked ? "lock" : "unlock"] \the [src] behaviour controls.</span>")
+			return
 		else
 			if(emagged)
 				to_chat(user, "<span class='warning'>ERROR</span>")
@@ -82,21 +83,27 @@
 				to_chat(user, "<span class='notice'>\The [src] doesn't seem to respect your authority.</span>")
 
 	if(istype(W, /obj/item/mop/advanced))
-		if(bot_core.allowed(user) && open && adv_mop == TRUE)
+		if(bot_core.allowed(user) && open && adv_mop != TRUE)
 			to_chat(user, "<span class='notice'>You replace \the [src] old mop with a new better one!</span>")
 			adv_mop = TRUE
 			clean_time = 20 //2.5 the speed!
 			window_name = "Automatic Station Cleaner v2.1 BETA" //New!
 			qdel(W)
+		if(!open)
+			to_chat(user, "<span class='notice'>\the [src] access pannle is not open!</span>")
+			return
 		else
 			to_chat(user, "<span class='notice'>\the [src] already has this mop!</span>")
 
 	if(istype(W, /obj/item/twohanded/broom))
-		if(bot_core.allowed(user) && open && broom == TRUE)
+		if(bot_core.allowed(user) && open && broom != TRUE)
 			to_chat(user, "<span class='notice'>You add to \the [src] a broom speeding it up!</span>")
 			broom = TRUE
 			base_speed = 1 //2x faster!
 			qdel(W)
+		if(!open)
+			to_chat(user, "<span class='notice'>\the [src] access pannle is not open!</span>")
+			return
 		else
 			to_chat(user, "<span class='notice'>\the [src] already has a broom!</span>")
 
