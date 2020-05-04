@@ -21,9 +21,7 @@
 
 /datum/sprite_accessory/taur
 	icon = 'modular_citadel/icons/mob/mam_taur.dmi'
-	extra_icon = 'modular_citadel/icons/mob/mam_taur.dmi'
 	extra = TRUE
-	extra2_icon = 'modular_citadel/icons/mob/mam_taur.dmi'
 	extra2 = TRUE
 	center = TRUE
 	dimension_x = 64
