@@ -564,6 +564,7 @@
 	alert_type = /obj/screen/alert/status_effect/regenerative_core
 
 /datum/status_effect/regenerative_core/on_apply()
+	. = ..()
 	ADD_TRAIT(owner, TRAIT_IGNOREDAMAGESLOWDOWN, "regenerative_core")
 	owner.adjustBruteLoss(-25)
 	if(!AmBloodsucker(owner))	//use your coffin you lazy bastard
@@ -573,4 +574,5 @@
 	return TRUE
 
 /datum/status_effect/regenerative_core/on_remove()
+	. = ..()
 	REMOVE_TRAIT(owner, TRAIT_IGNOREDAMAGESLOWDOWN, "regenerative_core")
