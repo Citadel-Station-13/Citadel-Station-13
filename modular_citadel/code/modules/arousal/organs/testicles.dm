@@ -19,9 +19,8 @@
 /obj/item/organ/genital/testicles/generate_fluid()
 	if(!linked_organ && !update_link())
 		return FALSE
-	. = ..()
-	if(. && reagents.holder_full())
-		to_chat(owner, "Your balls finally feel full, again.")
+	return ..()
+	// in memoriam "Your balls finally feel full, again." ??-2020
 
 /obj/item/organ/genital/testicles/upon_link()
 	size = linked_organ.size
