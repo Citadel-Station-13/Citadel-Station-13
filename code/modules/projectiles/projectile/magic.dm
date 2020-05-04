@@ -182,9 +182,9 @@
 			var/path = pick(/mob/living/simple_animal/hostile/carp,
 							/mob/living/simple_animal/hostile/bear,
 							/mob/living/simple_animal/hostile/mushroom,
-							/mob/living/simple_animal/hostile/statue,
 							/mob/living/simple_animal/hostile/retaliate/bat,
 							/mob/living/simple_animal/hostile/retaliate/goat,
+							/mob/living/simple_animal/hostile/retaliate/poison/snake,
 							/mob/living/simple_animal/hostile/killertomato,
 							/mob/living/simple_animal/hostile/poison/giant_spider,
 							/mob/living/simple_animal/hostile/poison/giant_spider/hunter,
@@ -195,12 +195,12 @@
 							/mob/living/simple_animal/hostile/asteroid/goliath/beast,
 							/mob/living/simple_animal/hostile/headcrab,
 							/mob/living/simple_animal/hostile/morph,
-							/mob/living/simple_animal/hostile/stickman,
 							/mob/living/simple_animal/hostile/stickman/dog,
 							/mob/living/simple_animal/hostile/megafauna/dragon/lesser,
 							/mob/living/simple_animal/hostile/gorilla,
 							/mob/living/simple_animal/parrot,
 							/mob/living/simple_animal/pet/dog/corgi,
+							/mob/living/simple_animal/pet/dog/corgi/exoticcorgi,
 							/mob/living/simple_animal/crab,
 							/mob/living/simple_animal/pet/dog/pug,
 							/mob/living/simple_animal/pet/cat,
@@ -211,7 +211,10 @@
 							/mob/living/simple_animal/pet/fox,
 							/mob/living/simple_animal/butterfly,
 							/mob/living/simple_animal/pet/cat/cak,
-							/mob/living/simple_animal/chick)
+							/mob/living/simple_animal/chick,
+							/mob/living/simple_animal/pet/gondola,
+							/mob/living/simple_animal/cockroach,
+							/mob/living/simple_animal/sloth)
 			new_mob = new path(M.loc)
 
 		if("humanoid")
