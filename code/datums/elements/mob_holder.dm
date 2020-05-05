@@ -164,7 +164,7 @@
 	release()
 
 /obj/item/clothing/head/mob_holder/mob_can_equip(mob/living/M, mob/living/equipper, slot, disable_warning = FALSE, bypass_equip_delay_self = FALSE)
-	if(!ishuman(M)) //monkeys holding monkeys holding monkeys...
+	if(M == held_mob || !ishuman(M)) //monkeys holding monkeys holding monkeys...
 		return FALSE
 	return ..()
 

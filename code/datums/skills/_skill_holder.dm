@@ -41,9 +41,7 @@
 /datum/skill_holder/proc/get_skill_affinity(skill)
 	if(!ispath(skill))
 		CRASH("Invalid get_skill_affinity call. Use typepaths.")		//until a time when we somehow need text ids for dynamic skills, I'm enforcing this.
-	if(!skills)
-		return 1
-	var/affinity = skill_affinities[skill]
+	var/affinity = LAZYACCESS(skill_affinities, skill)
 	if(isnull(affinity))
 		return 1
 	return affinity
