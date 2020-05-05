@@ -207,7 +207,7 @@
 	return 1
 
 /// How much stamina this takes to swing this is not for realism purposes hecc off.
-/obj/item/proc/getweight(mob/living/user, multiplier = 1, flags = NONE)
+/obj/item/proc/getweight(mob/living/user, multiplier = 1, flags = SKILL_STAMINA_COST)
 	. = (total_mass || w_class * STAM_COST_W_CLASS_MULT) * multiplier
 	if(!user)
 		return
@@ -216,7 +216,7 @@
 		. *= STAM_COST_NO_COMBAT_MULT
 		bad_flag |= SKILL_COMBAT_MODE
 	if(used_skills && user.mind)
-		LIST_SKILL_MODIFIER(used_skills, user.mind.skill_holder, ., skill_difficulty, SKILL_STAMINA_COST|flags, bad_flag)
+		LIST_SKILL_MODIFIER(used_skills, user.mind.skill_holder, ., skill_difficulty, flags, bad_flag)
 
 /// How long this staggers for. 0 and negatives supported.
 /obj/item/proc/melee_stagger_duration(force_override)
