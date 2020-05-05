@@ -133,8 +133,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	var/list/juice_results //A reagent list containing blah blah... but when JUICED in a grinder!
 
 	///Skills vars
-	var/used_skills //path/s of skill/s exercised when using this item.
-	var/skill_flags = NONE //better defines which tasks the the skill/s is/are exercised on.
+	var/list/used_skills //list of skills exercised when using this item. An associated bitfield indicates how the skill is exercised.
 	var/skill_difficulty = THRESHOLD_COMPETENT //how difficult it's to use this item in general.
 	var/skill_gain = DEF_SKILL_GAIN //base skill value gain from using this item.
 
@@ -801,8 +800,8 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	play_tool_sound(target, volume)
 
 	if(delay)
-		if(user.mind && used_skills && skill_flags & SKILL_USE_TOOL)
-			LIST_SKILL_MODIFIER(used_skills, user.mind.skill_holder, delay, skill_difficulty)
+		if(user.mind && used_skills)
+			LIST_SKILL_MODIFIER(used_skills, user.mind.skill_holder, delay, skill_difficulty, SKILL_USE_TOOL, NONE)
 
 		// Create a callback with checks that would be called every tick by do_after.
 		var/datum/callback/tool_check = CALLBACK(src, .proc/tool_check_callback, user, amount, extra_checks)
@@ -828,12 +827,11 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	if(delay >= MIN_TOOL_SOUND_DELAY)
 		play_tool_sound(target, volume)
 
-	if(user.mind && used_skills && skill_flags & SKILL_TRAINING_TOOL && skill_gain_mult)
-		if(!islist(used_skills))
-			user.mind.skill_holder.boost_skill_value_to(used_skills, skill_gain*skill_gain_mult, GET_STANDARD_LVL(max_level))
-		else
-			for(var/skill in used_skills)
-				user.mind.skill_holder.boost_skill_value_to(skill, skill_gain*skill_gain_mult, GET_STANDARD_LVL(max_level))
+	if(user.mind && used_skills && skill_gain_mult)
+		for(var/skill in used_skills)
+			if(!(used_skills[skill] & SKILL_TRAINING_TOOL))
+				continue
+			user.mind.skill_holder.auto_gain_experience(skill, skill_gain*skill_gain_mult, GET_STANDARD_LVL(max_level))
 
 	return TRUE
 

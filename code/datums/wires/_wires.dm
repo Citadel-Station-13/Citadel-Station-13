@@ -140,10 +140,12 @@
 	if(req_skill && user?.mind)
 		var/level_diff = req_skill - user.mind.skill_holder.get_skill_level(/datum/skill/level/job/wiring)
 		if(level_diff > 0)
+			LAZYSET(current_users, user, TRUE)
 			to_chat(user, "<span class='notice'>You begin cutting [holder]'s [color] wire...</span>")
 			if(!do_after(user, 1.5 SECONDS * level_diff, target = holder) || !interactable(user))
+				LAZYREMOVE(current_users, user)
 				return FALSE
-			user.mind?.skill_holder.auto_gain_experience(/datum/skill/level/job/wiring, DEF_SKILL_GAIN*level_diff)
+			LAZYREMOVE(current_users, user)
 	to_chat(user, "<span class='notice'>You cut [holder]'s [color] wire.</span>")
 	cut(get_wire(color))
 	return TRUE
@@ -167,10 +169,12 @@
 	if(req_skill && user?.mind)
 		var/level_diff = req_skill - user.mind.skill_holder.get_skill_level(/datum/skill/level/job/wiring)
 		if(level_diff > 0)
+			LAZYSET(current_users, user, TRUE)
 			to_chat(user, "<span class='notice'>You begin pulsing [holder]'s [color] wire...</span>")
 			if(!do_after(user, 1.5 SECONDS * level_diff, target = holder) || !interactable(user))
+				LAZYREMOVE(current_users, user)
 				return FALSE
-			user.mind?.skill_holder.auto_gain_experience(/datum/skill/level/job/wiring, DEF_SKILL_GAIN*level_diff)
+			LAZYREMOVE(current_users, user)
 	to_chat(user, "<span class='notice'>You pulse [holder]'s [color] wire.</span>")
 	pulse(get_wire(color), user)
 	return TRUE
@@ -286,7 +290,7 @@
 		if("cut")
 			I = L.is_holding_tool_quality(TOOL_WIRECUTTER)
 			if(I || IsAdminGhost(usr))
-				if(cut_color(target_wire) && I && holder)
+				if(cut_color(target_wire, L) && I && holder)
 					I.play_tool_sound(holder, 20)
 				. = TRUE
 			else

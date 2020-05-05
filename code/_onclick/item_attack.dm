@@ -91,7 +91,7 @@
 	log_combat(user, M, "attacked", src.name, "(INTENT: [uppertext(user.a_intent)]) (DAMTYPE: [uppertext(damtype)])")
 	add_fingerprint(user)
 
-	user.adjustStaminaLossBuffered(getweight()*0.8)//CIT CHANGE - makes attacking things cause stamina loss
+	user.adjustStaminaLossBuffered(getweight(user, STAM_COST_ATTACK_MOB_MULT))//CIT CHANGE - makes attacking things cause stamina loss
 
 //the equivalent of the standard version of attack() but for object targets.
 /obj/item/proc/attack_obj(obj/O, mob/living/user)
@@ -102,7 +102,7 @@
 	if(IS_STAMCRIT(user)) // CIT CHANGE - makes it impossible to attack in stamina softcrit
 		to_chat(user, "<span class='warning'>You're too exhausted.</span>") // CIT CHANGE - ditto
 		return // CIT CHANGE - ditto
-	user.adjustStaminaLossBuffered(getweight()*1.2)//CIT CHANGE - makes attacking things cause stamina loss
+	user.adjustStaminaLossBuffered(getweight(user, STAM_COST_ATTACK_OBJ_MULT))//CIT CHANGE - makes attacking things cause stamina loss
 	user.changeNext_move(CLICK_CD_MELEE)
 	user.do_attack_animation(O)
 	O.attacked_by(src, user)
@@ -112,15 +112,17 @@
 
 /obj/attacked_by(obj/item/I, mob/living/user)
 	var/totitemdamage = I.force
+	var/bad_flag = NONE
+	if(!(user.combat_flags & COMBAT_FLAG_COMBAT_ACTIVE) && iscarbon(user))
+		totitemdamage *= 0.5
+		bad_flag |= SKILL_COMBAT_MODE //blacklist combat skills.
 	if(I.used_skills && user.mind)
-		if(I.skill_flags & SKILL_ATTACK_OBJ)
-			LIST_SKILL_MODIFIER(I.used_skills, user.mind.skill_holder, totitemdamage, I.skill_difficulty)
-		if(I.skill_flags & SKILL_TRAIN_ATTACK_OBJ)
-			if(!islist(I.used_skills))
-				user.mind.skill_holder.boost_skill_value_to(I.used_skills, I.skill_gain)
-			else
-				for(var/skill in I.used_skills)
-					user.mind.skill_holder.boost_skill_value_to(skill, I.skill_gain)
+		if(totitemdamage)
+			LIST_SKILL_MODIFIER(I.used_skills, user.mind.skill_holder, totitemdamage, I.skill_difficulty, SKILL_ATTACK_OBJ, bad_flag)
+		for(var/skill in I.used_skills)
+			if(!(I.used_skills[skill] & SKILL_TRAIN_ATTACK_OBJ))
+				continue
+			user.mind.skill_holder.auto_gain_experience(skill, I.skill_gain)
 	if(totitemdamage)
 		visible_message("<span class='danger'>[user] has hit [src] with [I]!</span>", null, null, COMBAT_MESSAGE_RANGE)
 		//only witnesses close by and the victim see a hit message.
@@ -152,20 +154,20 @@
 
 /mob/living/proc/pre_attacked_by(obj/item/I, mob/living/user)
 	. = I.force
-	if(!(user.combat_flags & COMBAT_FLAG_COMBAT_ACTIVE))
+	var/bad_flag = NONE
+	if(!(user.combat_flags & COMBAT_FLAG_COMBAT_ACTIVE) && iscarbon(user))
 		. *= 0.5
+		bad_flag |= SKILL_COMBAT_MODE //blacklist combat skills.
 	if(!CHECK_MOBILITY(user, MOBILITY_STAND))
 		. *= 0.5
 	if(!user.mind || !I.used_skills)
 		return
-	if(. && I.skill_flags & SKILL_ATTACK_MOB)
-		LIST_SKILL_MODIFIER(I.used_skills, user.mind.skill_holder, ., I.skill_difficulty)
-	if(I.skill_flags & SKILL_TRAIN_ATTACK_MOB)
-		if(!islist(I.used_skills))
-			user.mind.skill_holder.boost_skill_value_to(I.used_skills, I.skill_gain)
-		else
-			for(var/skill in I.used_skills)
-				user.mind.skill_holder.boost_skill_value_to(skill, I.skill_gain)
+	if(.)
+		LIST_SKILL_MODIFIER(I.used_skills, user.mind.skill_holder, ., I.skill_difficulty, SKILL_ATTACK_MOB, bad_flag)
+	for(var/skill in I.used_skills)
+		if(!(I.used_skills[skill] & SKILL_TRAIN_ATTACK_MOB))
+			continue
+		user.mind.skill_holder.auto_gain_experience(skill, I.skill_gain)
 
 /mob/living/carbon/pre_attacked_by(obj/item/I, mob/living/user)
 	. = ..()
@@ -205,8 +207,14 @@
 	return 1
 
 /// How much stamina this takes to swing this is not for realism purposes hecc off.
-/obj/item/proc/getweight()
-	return total_mass || w_class * 1.25
+/obj/item/proc/getweight(mob/living/user, multiplier = 1, flags = NONE)
+	. = (total_mass || w_class * STAM_COST_W_CLASS_MULT) * multiplier
+	var/bad_flag = NONE
+	if(iscarbon(user) && !(user.combat_flags & COMBAT_FLAG_COMBAT_ACTIVE))
+		. *= STAM_COST_NO_COMBAT_MULT
+		bad_flag |= SKILL_COMBAT_MODE
+	if(used_skills && user.mind)
+		LIST_SKILL_MODIFIER(used_skills, user.mind.skill_holder, ., skill_difficulty, SKILL_STAMINA_COST|flags, bad_flag)
 
 /// How long this staggers for. 0 and negatives supported.
 /obj/item/proc/melee_stagger_duration(force_override)

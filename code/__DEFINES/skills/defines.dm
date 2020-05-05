@@ -36,6 +36,9 @@
 #define SKILL_TRAIN_ATTACK_MOB	(1<<3)
 #define SKILL_ATTACK_OBJ		(1<<4)
 #define SKILL_TRAIN_ATTACK_OBJ	(1<<5)
+#define SKILL_STAMINA_COST		(1<<6) //Influences the stamina cost from weapon usage.
+#define SKILL_THROW_STAM_COST	(1<<7)
+#define SKILL_COMBAT_MODE		(1<<8) //The user must have combat mode on.
 
 ///competency_threshold index defines
 #define THRESHOLD_COMPETENT	1

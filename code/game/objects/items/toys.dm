@@ -241,11 +241,13 @@
 		playsound(user, activation_sound, transform_volume, 1)
 		w_class = WEIGHT_CLASS_BULKY
 		AddElement(/datum/element/sword_point)
+		total_mass = total_mass_on
 	else
 		to_chat(user, "<span class='notice'>[deactivation_message]</span>")
 		playsound(user, deactivation_sound, transform_volume, 1)
 		w_class = WEIGHT_CLASS_SMALL
 		RemoveElement(/datum/element/sword_point)
+		total_mass = initial(total_mass)
 
 	update_icon()
 	add_fingerprint(user)
@@ -286,9 +288,6 @@
 			to_chat(user, "<span class='warning'>It's already fabulous!</span>")
 	else
 		return ..()
-
-/obj/item/toy/sword/getweight()
-	return (active ? total_mass_on : total_mass) || w_class *1.25
 
 /obj/item/toy/sword/cx
 	name = "\improper DX Non-Euplastic LightSword"

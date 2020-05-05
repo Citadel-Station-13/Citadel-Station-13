@@ -13,26 +13,28 @@
 	}\
 	target /= (1+(___value-to_check.competency_thresholds[threshold])*to_check.competency_mults[threshold])
 
-/// This is the one that accepts typepaths and lists.
-#define LIST_SKILL_MODIFIER(to_check, holder, target, threshold) \
-	if(!islist(to_check)){\
-		SKILL_MODIFIER(GLOB.skill_datums[to_check], holder, target, threshold)\
-	} else {\
-		var/___sum = 0;\
-		var/list/___L = to_check;\
-		for(var/_S in ___L){\
-			var/___value;\
-			var/datum/skill/___S = GLOB.skill_datums[_S];\
-			switch(___S.progression_type){\
-				if(SKILL_PROGRESSION_LEVEL){\
-					___value = LAZYACCESS(holder.skill_levels, ___S.type)\
-				} else {\
-					___value = LAZYACCESS(holder.skills, ___S.type)\
-				}\
-			}\
-			___sum += (1+(___value - ___S.competency_thresholds[threshold])*___S.competency_mults[threshold])\
+/// This is the one that accepts typepaths and lists. if flags are enabled, an associative value check will be done.
+#define LIST_SKILL_MODIFIER(list, holder, target, threshold, flags, bad_flags) \
+	var/___sum = 0;\
+	var/___divisor = 0;\
+	for(var/_S in list){\
+		if((flags && !(list[_S] & (flags))) || (bad_flags && list[_S] & (bad_flags))){\
+			continue\
 		}\
-		target /= (___sum/length(___L))\
+		var/___value;\
+		var/datum/skill/___S = GLOB.skill_datums[_S];\
+		switch(___S.progression_type){\
+			if(SKILL_PROGRESSION_LEVEL){\
+				___value = LAZYACCESS(holder.skill_levels, ___S.type)\
+			} else {\
+				___value = LAZYACCESS(holder.skills, ___S.type)\
+			}\
+		}\
+		___sum += (1+(___value - ___S.competency_thresholds[threshold])*___S.competency_mults[threshold]);\
+		___divisor++\
+	}\
+	if(___divisor){\
+		target /= (___sum/___divisor)\
 	}
 
 //How experience levels are calculated.

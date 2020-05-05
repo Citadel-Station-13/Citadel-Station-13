@@ -29,8 +29,8 @@
   * Grabs the level of a skill. Only supported by skills with tiers or levels.
   */
 /datum/skill_holder/proc/get_skill_level(skill)
-	if(!ispath(skill))
-		CRASH("Invalid get_skill_value call. Use typepaths.")		//until a time when we somehow need text ids for dynamic skills, I'm enforcing this.
+	if(!ispath(skill, /datum/skill))
+		CRASH("Invalid get_skill_value call. Use skill typepaths.")	//until a time when we somehow need text ids for dynamic skills, I'm enforcing this.
 	if(!skill_levels)
 		return 0
 	return skill_levels[skill]
@@ -39,8 +39,8 @@
   * Grabs our affinity for a skill. !!This is a multiplier!!
   */
 /datum/skill_holder/proc/get_skill_affinity(skill)
-	if(!ispath(skill))
-		CRASH("Invalid get_skill_affinity call. Use typepaths.")		//until a time when we somehow need text ids for dynamic skills, I'm enforcing this.
+	if(!ispath(skill, /datum/skill))
+		CRASH("Invalid get_skill_affinity call. Use skill typepaths.")	//until a time when we somehow need text ids for dynamic skills, I'm enforcing this.
 	var/affinity = LAZYACCESS(skill_affinities, skill)
 	if(isnull(affinity))
 		return 1
@@ -51,7 +51,7 @@
   */
 /datum/skill_holder/proc/set_skill_value(skill, value, silent = FALSE)
 	if(!ispath(skill, /datum/skill))
-		CRASH("Invalid set_skill_value call. Use typepaths.")		//until a time when we somehow need text ids for dynamic skills, I'm enforcing this.
+		CRASH("Invalid set_skill_value call. Use skill typepaths.")	//until a time when we somehow need text ids for dynamic skills, I'm enforcing this.
 	var/datum/skill/S = GLOB.skill_datums[skill]
 	value = S.sanitize_value(value)
 	if(!isnull(value))
@@ -75,8 +75,11 @@
   * Only works if skill is numerical.
   */
 /datum/skill_holder/proc/auto_gain_experience(skill, value, maximum, silent = FALSE)
-	if(!ispath(skill, /datum/skill/numerical))
-		CRASH("You cannot auto increment a non numerical skill!")
+	if(!ispath(skill, /datum/skill))
+		CRASH("Invalid set_skill_value call. Use skill typepaths.")
+	var/datum/skill/S = GLOB.skill_datums[skill]
+	if(S.progression_type != SKILL_PROGRESSION_NUMERICAL && S.progression_type != SKILL_PROGRESSION_LEVEL)
+		CRASH("You cannot auto increment a non numerical(experience skill!")
 	var/current = get_skill_value(skill)
 	var/affinity = get_skill_affinity(skill)
 	var/target_value = current + (value * affinity)
@@ -95,6 +98,6 @@
 	out += "<table style=\"width:100%\"><tr><th><b>Skill</b><th><b>Value</b></tr>"
 	for(var/path in skills)
 		var/datum/skill/S = GLOB.skill_datums[path]
-		out += "<tr><td><font color='[S.name_color]'>[S.name]</font></td><td>[S.standard_render_value(skills[path])]</td></tr>"
+		out += "<tr><td><font color='[S.name_color]'>[S.name]</font></td><td>[S.standard_render_value(skills[path], LAZYACCESS(skill_levels, path) || 0)]</td></tr>"
 	out += "</table>"
 	return out.Join("")

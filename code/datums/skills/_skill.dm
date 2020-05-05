@@ -28,7 +28,7 @@ GLOBAL_LIST_INIT_TYPED(skill_datums, /datum/skill, init_skill_datums())
 	/// Our description
 	var/desc
 	/// Color of the name as shown in the html readout
-	var/name_color = "#000000"
+	var/name_color = "#FFFFFF"
 	/// Our progression type
 	var/progression_type
 	/// Abstract type
@@ -62,7 +62,7 @@ GLOBAL_LIST_INIT_TYPED(skill_datums, /datum/skill, init_skill_datums())
 /**
   * Standard value "render"
   */
-/datum/skill/proc/standard_render_value(value)
+/datum/skill/proc/standard_render_value(value, level)
 	return value
 
 // Just saying, the choice to use different sub-parent-types is to force coders to resolve issues as I won't be implementing custom procs to grab skill levels in a certain context.
@@ -77,7 +77,7 @@ GLOBAL_LIST_INIT_TYPED(skill_datums, /datum/skill, init_skill_datums())
 /datum/skill/binary/sanitize_value(new_value)
 	return new_value? TRUE : FALSE
 
-/datum/skill/binary/standard_render_value(value)
+/datum/skill/binary/standard_render_value(value, level)
 	return value? "Yes" : "No"
 
 /datum/skill/numerical
@@ -93,7 +93,7 @@ GLOBAL_LIST_INIT_TYPED(skill_datums, /datum/skill, init_skill_datums())
 /datum/skill/numerical/sanitize_value(new_value)
 	return clamp(new_value, min_value, max_value)
 
-/datum/skill/numerical/standard_render_value(value)
+/datum/skill/numerical/standard_render_value(value, level)
 	return display_as_percent? "[round(value/max_value/100, 0.01)]%" : "[value] / [max_value]"
 
 /datum/skill/enum
@@ -113,7 +113,7 @@ GLOBAL_LIST_INIT_TYPED(skill_datums, /datum/skill, init_skill_datums())
 	abstract_type = /datum/skill/level
 	progression_type = SKILL_PROGRESSION_LEVEL
 	var/standard_xp_lvl_up = STD_XP_LVL_UP //the standard required to level up. def: 100
-	var/xp_lvl_multiplier = STD_XP_LVL_UP //standard required level up exp multiplier. def: 2 (100, 200, 400, 800 etc.)
+	var/xp_lvl_multiplier = STD_XP_LVL_MULTI //standard required level up exp multiplier. def: 2 (100, 200, 400, 800 etc.)
 	var/max_levels = STD_MAX_LVL
 	var/level_up_method = STANDARD_LEVEL_UP //how levels are calculated.
 	var/list/levels = list() //level thresholds, if associative, these will be preceded by tiers such as "novice" or "trained"
@@ -132,7 +132,7 @@ GLOBAL_LIST_INIT_TYPED(skill_datums, /datum/skill, init_skill_datums())
 				value = XP_LEVEL(standard_xp_lvl_up, xp_lvl_multiplier, lvl)
 			if(DWARFY_LEVEL_UP)
 				value = DORF_XP_LEVEL(standard_xp_lvl_up, xp_lvl_multiplier, lvl)
-		value = round(value)
+		value = round(value, 1)
 		if(!associative)
 			levels += value
 			continue
@@ -142,7 +142,7 @@ GLOBAL_LIST_INIT_TYPED(skill_datums, /datum/skill, init_skill_datums())
 		var/key = LAZYACCESS(levels, lvl)
 		if(!key)
 			if(lvl == 1) //You dun goof it.
-				stack_trace("Skill datum [src] was set to have an associative levels list despite the latted having no key.")
+				stack_trace("Skill datum [src] was set to have an associative levels list despite the latter having no key value.")
 				associative = FALSE
 				levels += value
 				continue
@@ -170,18 +170,18 @@ GLOBAL_LIST_INIT_TYPED(skill_datums, /datum/skill, init_skill_datums())
 	else if(. < 0)
 		to_chat(M.current, "<span class='warning'>I feel like I've become worse at [name]!</span>")
 
-/datum/skill/level/standard_render_value(value)
-	var/current_lvl = associative ? unskilled_tier : 0
+/datum/skill/level/standard_render_value(value, level)
+	var/current_lvl = associative ? (!level ? unskilled_tier : levels[level]) : level
 	var/current_lvl_xp_sum = 0
-	var/next_lvl_xp_sum
-	for(var/lvl in 1 to max_levels)
-		next_lvl_xp_sum = associative ? levels[levels[lvl]] : levels[lvl]
-		if(value < next_lvl_xp_sum)
-			break
-		current_lvl_xp_sum = next_lvl_xp_sum
-		current_lvl = associative ? levels[lvl] : lvl+1
+	if(level)
+		current_lvl_xp_sum = associative ? levels[levels[level]] : levels[level]
+	var/next_index = max(max_levels, level+1)
+	var/next_lvl_xp = associative ? levels[levels[next_index]] : levels[next_index]
+	if(next_lvl_xp > current_lvl_xp_sum)
+		next_lvl_xp -= current_lvl_xp_sum
 
-	return "[associative ? current_lvl : "Lvl. [current_lvl]"] ([value - current_lvl_xp_sum]/[next_lvl_xp_sum])[value > next_lvl_xp_sum ? " \[MAX!\]" : ""]"
+
+	return "[associative ? current_lvl : "Lvl. [current_lvl]"] ([value - current_lvl_xp_sum]/[next_lvl_xp])[level == max_levels ? " \[MAX!\]" : ""]"
 
 /datum/skill/level/job
 	levels = list("Basic", "Trained", "Experienced", "Master")
