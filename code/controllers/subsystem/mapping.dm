@@ -49,6 +49,9 @@ SUBSYSTEM_DEF(mapping)
 	/// "secret" key
 	var/obfuscation_secret
 
+	/// In game accessible global overmap
+	var/datum/overmap/overmap
+
 //dlete dis once #39770 is resolved
 /datum/controller/subsystem/mapping/proc/HACK_LoadMapConfig()
 	if(!config)
@@ -73,6 +76,7 @@ SUBSYSTEM_DEF(mapping)
 		if(!config || config.defaulted)
 			to_chat(world, "<span class='boldannounce'>Unable to load next or default map config, defaulting to Box Station</span>")
 			config = old_config
+	initialize_overmap()
 	GLOB.year_integer += config.year_offset
 	GLOB.announcertype = (config.announcertype == "standard" ? (prob(1) ? "medibot" : "classic") : config.announcertype)
 	loadWorld()
@@ -591,3 +595,13 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 	if(random_generated_ids_by_original[key])
 		return random_generated_ids_by_original[key]
 	. = random_generated_ids_by_original[key] = "[obfuscation_secret]%[obfuscation_next_id++]"
+
+/**
+  * Initialize the overmap if the map config specifies to do so.
+  */
+/datum/controller/subsystem/mapping/proc/initialize_overmap()
+	if(!config.overmap_enabled)
+		return
+	if(overmap)
+		CRASH("Overmap exists.")
+	overmap = new /datum/overmap(config.overmap_width, config.overmap_height)

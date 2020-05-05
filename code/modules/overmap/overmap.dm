@@ -16,7 +16,9 @@
 	/// Head of our quadtree structure
 	var/datum/overmap_quadtree/tree_head
 
-/datum/overmap/New()
+/datum/overmap/New(width = 512, height = 512)
+	src.width = width
+	src.height = height
 	objects = list()
 	regenerate_tree()
 
@@ -28,4 +30,7 @@
 		tree_head.insert(O)
 
 /datum/overmap/proc/insert_object(datum/overmap_object/O)
+	ASSERT(!O.containing_overmap)
+	objects += O
+	O.containing_overmap = src
 	return tree_head.insert(O)

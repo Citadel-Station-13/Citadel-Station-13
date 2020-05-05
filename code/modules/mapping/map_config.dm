@@ -38,6 +38,13 @@
 
 	var/year_offset = 540 //The offset of ingame year from the actual IRL year. You know you want to make a map that takes place in the 90's. Don't lie.
 
+	/// Is overmap enabled (which makes it initialized on init.)
+	var/overmap_enabled = FALSE
+	/// Overmap width
+	var/overmap_width = 512
+	/// Overmap height
+	var/overmap_height = 512
+
 /proc/load_map_config(filename = "data/next_map.json", default_to_box, delete_after, error_if_missing = TRUE)
 	var/datum/map_config/config = new
 	if (default_to_box)
@@ -139,7 +146,7 @@
 
 	if ("minetype" in json)
 		minetype = json["minetype"]
-	
+
 	if ("maptype" in json)
 		maptype = json["maptype"]
 
@@ -147,6 +154,12 @@
 		announcertype = json["announcertype"]
 
 	allow_custom_shuttles = json["allow_custom_shuttles"] != FALSE
+
+	overmap_enabled = json["overmap_enabled"] != FALSE
+	if(json["overmap_width"])
+		overmap_width = json["overmap_width"]
+	if(json["overmap_height"])
+		overmap_height = json["overmap_height"]
 
 	defaulted = FALSE
 	return TRUE

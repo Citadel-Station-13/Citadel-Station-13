@@ -26,7 +26,7 @@
 	var/maxx
 	var/maxy
 
-/datum/overmap_quadtree(datum/overmap_quadtree/parent, minx, miny, maxx, maxy)
+/datum/overmap_quadtree/New(datum/overmap_quadtree/parent, minx, miny, maxx, maxy)
 	src.minx = minx
 	src.miny = miny
 	src.maxx = maxx
@@ -42,10 +42,32 @@
 	bottomleft = null
 	bottomright = null
 
+/datum/overmap_quadtree/Destroy()
+	// don't bother with checking for parent let the gc failure happen if someone is being stupid
+	parent = null
+	if(objects)
+		for(var/i in objects)
+			var/datum/overmap_object/O = i
+			if(O.containing_node == src)
+				O.containing_node = null
+	QDEL_NULL(topleft)
+	QDEL_NULL(topright)
+	QDEL_NULL(bottomright)
+	QDEL_NULL(bottomleft)
+
 /datum/overmap_quadtree/proc/insert(datum/overmap_object/O)
 	if(O.pos_x < minx || O.pos_x > maxx || O.pos_y < miny || O.pos_y > maxy)
 		CRASH("Out of bounds insert")
 	objects? directInsert(O) : treeInsert(O)
+
+/**
+  * Get all objects inside this.
+  */
+/datum/overmap_quadtree/proc/getAllObjects()
+	if(objects)
+		return objects.Copy()
+	else
+		return topleft.getAllObjects() + topright.getAllObjects() + bottomleft.getAllObjects() + bottomright.getAllObjects()
 
 /datum/overmap_quadtree/proc/construct_tree()
 	var/midx = maxx - minx
@@ -70,6 +92,7 @@
 /datum/overmap_quadtree/proc/directInsert(datum/overmap_object/O)
 	if(length(objects) < OVERMAP_QUADTREE_DIVIDE_THRESHOLD)
 		objects += O
+		O.containing_node = src
 		return
 	var/list/O = objects
 	objects = null
