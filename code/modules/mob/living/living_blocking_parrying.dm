@@ -18,7 +18,7 @@
 
 GLOBAL_LIST_EMPTY(block_parry_data)
 
-/proc/get_block_parry_data(datum/block_parry_data/type_id_datum)
+/proc/return_block_parry_datum(datum/block_parry_data/type_id_datum)
 	if(istype(type_id_datum))
 		return type_id_datum
 	if(ispath(type_id_datum))
@@ -28,7 +28,7 @@ GLOBAL_LIST_EMPTY(block_parry_data)
 	else		//text id
 		return GLOB.block_parry_data["[type_id_datum]"]
 
-/proc/set_block_parry_data(id, datum/block_parry_data/data)
+/proc/set_block_parry_datum(id, datum/block_parry_data/data)
 	if(ispath(id))
 		CRASH("Path-fetching of block parry data is only to grab static data, do not attempt to modify global caches of paths. Use string IDs.")
 	GLOB.block_parry_data["[id]"] = data
@@ -144,9 +144,15 @@ GLOBAL_LIST_EMPTY(block_parry_data)
 		return
 	return total/div	//groan
 
+/**
+  * Gets this item's datum/block_parry_data
+  */
+/obj/item/proc/get_block_parry_data()
+	return return_block_parry_datum(block_parry_data)
+
 /mob/living/proc/handle_block_parry(seconds = 1)
 	if(active_blocking)
-		var/datum/block_parry_data/data = get_block_parry_data(active_block_item.block_parry_data)
+		var/datum/block_parry_data/data = return_block_parry_datum(active_block_item.block_parry_data)
 		adjustStaminaLossBuffered(data.block_stamina_cost_per_second * seconds)
 
 //Stubs.
@@ -213,7 +219,7 @@ GLOBAL_LIST_EMPTY(block_parry_data)
 	var/stage = get_parry_stage()
 	if(stage == NOT_PARRYING)
 		return BLOCK_NONE
-	var/datum/block_parry_data/data = get_block_parry_data()
+	var/datum/block_parry_data/data = get_parry_data()
 	var/efficiency = get_parry_efficiency(attack_type)
 	switch(parrying)
 		if(ITEM_PARRY)
@@ -282,9 +288,9 @@ GLOBAL_LIST_EMPTY(block_parry_data)
 	if(parrying == ITEM_PARRY)
 		return active_parry_item.get_block_parry_data()
 	else if(parrying == UNARMED_PARRY)
-		return get_block_parry_data(block_parry_data)
+		return return_block_parry_datum(block_parry_data)
 	else if(parrying == MARTIAL_PARRY)
-		return get_block_parry_data(mind.martial_art.block_parry_data)
+		return return_block_parry_datum(mind.martial_art.block_parry_data)
 
 /// Effects
 /obj/effect/abstract/parry

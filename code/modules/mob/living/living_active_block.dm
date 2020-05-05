@@ -120,12 +120,6 @@
 	return TRUE
 
 /**
-  * Gets our datum/block_parry_data
-  */
-/obj/item/proc/get_block_parry_data()
-	return get_block_parry_data(block_parry_data)
-
-/**
   * Returns if we can actively block.
   */
 /obj/item/proc/can_active_block()
