@@ -184,9 +184,9 @@
 
 	for (var/i=1 to meat_produced)
 		var/obj/item/reagent_containers/food/snacks/meat/slab/newmeat = new typeofmeat
-		newmeat.adjust_food_quality(meat_quality)
 		newmeat.name = "[sourcename] [newmeat.name]"
 		if(istype(newmeat))
+			newmeat.adjust_food_quality(meat_quality)
 			newmeat.subjectname = sourcename
 			newmeat.reagents.add_reagent (/datum/reagent/consumable/nutriment, sourcenutriment / meat_produced) // Thehehe. Fat guys go first
 			if(sourcejob)
