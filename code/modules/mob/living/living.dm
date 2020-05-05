@@ -319,8 +319,8 @@
 		set_pull_offsets(M, state)
 
 /mob/living/proc/set_pull_offsets(mob/living/M, grab_state = GRAB_PASSIVE)
-	if(M.buckled)
-		return //don't make them change direction or offset them if they're buckled into something.
+	if(M.buckled || M.combat_flags & COMBAT_FLAG_COMBAT_ACTIVE)
+		return //don't make them change direction or offset them if they're buckled into something or in combat mode.
 	var/offset = 0
 	switch(grab_state)
 		if(GRAB_PASSIVE)
