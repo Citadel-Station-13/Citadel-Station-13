@@ -84,7 +84,6 @@
 			panel_open = FALSE
 
 	else if(istype(I, /obj/item/stack/cable_coil) && panel_open)
-		var/obj/item/stack/cable_coil/C = I
 		if(obj_flags & EMAGGED) //Emagged, not broken by EMP
 			to_chat(user, "<span class='warning'>Sign has been damaged beyond repair!</span>")
 			return
@@ -92,7 +91,7 @@
 			to_chat(user, "<span class='warning'>This sign is functioning properly!</span>")
 			return
 
-		if(C.use(2))
+		if(I.use_tool(src, user, 0, 2))
 			to_chat(user, "<span class='notice'>You replace the burnt wiring.</span>")
 			broken = FALSE
 		else

@@ -1,4 +1,4 @@
-GLOBAL_LIST_INIT(skill_datums, init_skill_datums())
+GLOBAL_LIST_INIT_TYPED(skill_datums, /datum/skill, init_skill_datums())
 
 /proc/init_skill_datums()
 	. = list()
@@ -10,12 +10,12 @@ GLOBAL_LIST_INIT(skill_datums, init_skill_datums())
 		.[S.type] = S
 
 /proc/sanitize_skill_value(path, value)
-	var/datum/skill/S = GET_SKILL_DATUM(path)
+	var/datum/skill/S = GLOB.skill_datums[path]
 	// don't check, if we runtime let it happen.
 	return S.sanitize_value(value)
 
 /proc/is_skill_value_greater(path, existing, new_value)
-	var/datum/skill/S = GET_SKILL_DATUM(path)
+	var/datum/skill/S = GLOB.skill_datums[path]
 	// don't check, if we runtime let it happen.
 	return S.is_value_greater(existing, new_value)
 
@@ -33,6 +33,10 @@ GLOBAL_LIST_INIT(skill_datums, init_skill_datums())
 	var/progression_type
 	/// Abstract type
 	var/abstract_type = /datum/skill
+	/// skill threshold used in generic skill modifiers calculations.
+	var/list/competency_thresholds = list(0, 0, 0)
+	/// Multiplier of the difference of the holder skill value and the selected threshold.
+	var/list/competency_mults = list(0, 0, 0)
 
 /**
   * Ensures what someone's setting as a value for this skill is valid.
@@ -44,7 +48,7 @@ GLOBAL_LIST_INIT(skill_datums, init_skill_datums())
   * Sets the new value of this skill in the holder skills list.
   * As well as possible feedback messages or secondary effects on value change, that's on you.
   */
-/datum/skill/proc/set_skill(datum/skill_holder/H, value, mob/owner)
+/datum/skill/proc/set_skill_value(datum/skill_holder/H, value, mob/owner)
 	H.skills[type] = value
 
 /**
@@ -67,6 +71,8 @@ GLOBAL_LIST_INIT(skill_datums, init_skill_datums())
 /datum/skill/binary
 	abstract_type = /datum/skill/binary
 	progression_type = SKILL_PROGRESSION_BINARY
+	competency_thresholds = list(FALSE, TRUE, TRUE)
+	competency_mults = list(0.5, 0.5, 0.5)
 
 /datum/skill/binary/sanitize_value(new_value)
 	return new_value? TRUE : FALSE
@@ -103,22 +109,23 @@ GLOBAL_LIST_INIT(skill_datums, init_skill_datums())
 /**
   * Classing r p g styled skills, tiered by lvl, and current/nextlvl experience.
   */
-/datum/skill/experience
-	abstract_type = /datum/skill/experience
+/datum/skill/level
+	abstract_type = /datum/skill/level
+	progression_type = SKILL_PROGRESSION_LEVEL
 	var/standard_xp_lvl_up = STD_XP_LVL_UP //the standard required to level up. def: 100
 	var/xp_lvl_multiplier = STD_XP_LVL_UP //standard required level up exp multiplier. def: 2 (100, 200, 400, 800 etc.)
-	var/max_lvl = STD_MAX_LVL
+	var/max_levels = STD_MAX_LVL
 	var/level_up_method = STANDARD_LEVEL_UP //how levels are calculated.
 	var/list/levels = list() //level thresholds, if associative, these will be preceded by tiers such as "novice" or "trained"
 	var/associative = FALSE //See above.
 	var/unskilled_tier = "Unskilled" //Only relevant for associative experience levels
 
 //Builds the levels list.
-/datum/skill/experience/New()
+/datum/skill/level/New()
 	. = ..()
 	var/max_assoc = ""
 	var/max_assoc_start = 1
-	for(var/lvl in 1 to max_lvl)
+	for(var/lvl in 1 to max_levels)
 		var/value
 		switch(level_up_method)
 			if(STANDARD_LEVEL_UP)
@@ -143,41 +150,57 @@ GLOBAL_LIST_INIT(skill_datums, init_skill_datums())
 			levels["[max_assoc] +[max_assoc_start++]"] = value
 		levels[key] = value
 
+/datum/skill/level/sanitize_value(new_value)
+	return max(new_value, 0)
 
-/datum/skill/experience/sanitize_value(new_value)
-	return round(max(new_value, 0))
-
-/datum/skill/experience/set_skill(datum/skill_holder/H, value, mob/owner)
-	var/old_value = H.skills[type]
+/datum/skill/level/set_skill_value(datum/skill_holder/H, value, datum/mind/M, silent = FALSE)
 	H.skills[type] = value
-	if(value > old_value)
+	var/new_level
+	for(var/k in levels)
+		if(value < (associative ? levels[k] : k))
+			break
+		new_level++
+	var/old_level = LAZYACCESS(H.skill_levels, type)
+	LAZYSET(H.skill_levels, type, new_level)
+	. = new_level - old_level
+	if(silent || !(M?.current))
+		return
+	if(. > 0)
+		to_chat(M.current, "<span class='nicegreen'>I feel like I've become more proficient at [name]!</span>")
+	else if(. < 0)
+		to_chat(M.current, "<span class='warning'>I feel like I've become worse at [name]!</span>")
 
-/datum/skill/experience/standard_render_value(value)
+/datum/skill/level/standard_render_value(value)
 	var/current_lvl = associative ? unskilled_tier : 0
 	var/current_lvl_xp_sum = 0
 	var/next_lvl_xp_sum
-	for(var/lvl in 1 to max_lvl)
+	for(var/lvl in 1 to max_levels)
 		next_lvl_xp_sum = associative ? levels[levels[lvl]] : levels[lvl]
 		if(value < next_lvl_xp_sum)
 			break
 		current_lvl_xp_sum = next_lvl_xp_sum
-		current_lvl = associative ? levels[lvl] : current_lvl+1
+		current_lvl = associative ? levels[lvl] : lvl+1
 
 	return "[associative ? current_lvl : "Lvl. [current_lvl]"] ([value - current_lvl_xp_sum]/[next_lvl_xp_sum])[value > next_lvl_xp_sum ? " \[MAX!\]" : ""]"
 
-/datum/skill/experience/job
-	levels = ("Basic", "Trained", "Experienced", "Master")
+/datum/skill/level/job
+	levels = list("Basic", "Trained", "Experienced", "Master")
+	competency_thresholds = list(JOB_SKILL_TRAINED, JOB_SKILL_EXPERT, JOB_SKILL_MASTER)
+	competency_mults = list(0.15, 0.1, 0.1)
 	associative = TRUE
 
 //quite the reference, no?
-/datum/skill/experience/dwarfy
-	abstract_type = /datum/skill/experience/dwarfy
+/datum/skill/level/dwarfy
+	abstract_type = /datum/skill/level/dwarfy
 	standard_xp_lvl_up = DORF_XP_LVL_UP
 	xp_lvl_multiplier = DORF_XP_LVL_MULTI
-	max_lvl = DORF_MAX_LVL
+	max_levels = DORF_MAX_LVL
+	level_up_method = DWARFY_LEVEL_UP
 	levels = list("Novice", "Adequate", "Competent", "Skilled",
 				"Proficient", "Talented", "Adept", "Expert",
 				"Professional", "Accomplished", "Great", "Master",
 				"High Master", "Grand Master", "Legendary")
+	competency_thresholds = list(DORF_SKILL_COMPETENT, DORF_SKILL_EXPERT, DORF_SKILL_MASTER)
+	competency_mults = list(0.15, 0.1, 0.08)
 	associative = TRUE
 	unskilled_tier = "Dabbling"

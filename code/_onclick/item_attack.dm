@@ -111,26 +111,30 @@
 	return
 
 /obj/attacked_by(obj/item/I, mob/living/user)
-	if(I.force)
+	var/totitemdamage = I.force
+	if(I.used_skills && user.mind)
+		if(I.skill_flags & SKILL_ATTACK_OBJ)
+			LIST_SKILL_MODIFIER(used_skills, user.mind.skill_holder, totitemdamage, I.skill_difficulty)
+		if(I.skill_flags & SKILL_TRAIN_ATTACK_OBJ)
+			if(!islist(I.used_skills))
+				user.mind.skill_holder.boost_skill_value_to(used_skills, I.skill_gain)
+			else
+				for(var/skill in used_skills)
+					user.mind.skill_holder.boost_skill_value_to(skill, I.skill_gain)
+	if(totitemdamage)
 		visible_message("<span class='danger'>[user] has hit [src] with [I]!</span>", null, null, COMBAT_MESSAGE_RANGE)
 		//only witnesses close by and the victim see a hit message.
 		log_combat(user, src, "attacked", I)
-	take_damage(I.force, I.damtype, "melee", 1)
+	take_damage(totitemdamage, I.damtype, "melee", 1)
 
 /mob/living/attacked_by(obj/item/I, mob/living/user)
-	//CIT CHANGES START HERE - combatmode and resting checks
-	var/totitemdamage = I.force
-	if(!(user.combat_flags & COMBAT_FLAG_COMBAT_ACTIVE))
-		totitemdamage *= 0.5
-	if(!CHECK_MOBILITY(user, MOBILITY_STAND))
-		totitemdamage *= 0.5
-	//CIT CHANGES END HERE
+	var/totitemdamage = calculate_item_force(I, user, TRUE)
 	if((user != src) && run_block(I, totitemdamage, "the [I.name]", ATTACK_TYPE_MELEE, I.armour_penetration, user) & BLOCK_SUCCESS)
 		return FALSE
 	send_item_attack_message(I, user)
-	I.do_stagger_action(src, user)
+	I.do_stagger_action(src, user, totitemdamage)
 	if(I.force)
-		apply_damage(totitemdamage, I.damtype) //CIT CHANGE - replaces I.force with totitemdamage
+		apply_damage(totitemdamage, I.damtype)
 		if(I.damtype == BRUTE)
 			if(prob(33))
 				I.add_mob_blood(src)
@@ -145,6 +149,28 @@
 		playsound(loc, 'sound/weapons/tap.ogg', I.get_clamped_volume(), 1, -1)
 	else
 		return ..()
+
+/mob/living/proc/pre_attacked_by(obj/item/I, mob/living/user, pre_attack = FALSE)
+	. = I.force
+	if(!(user.combat_flags & COMBAT_FLAG_COMBAT_ACTIVE))
+		. *= 0.5
+	if(!CHECK_MOBILITY(user, MOBILITY_STAND))
+		. *= 0.5
+	if(!pre_attack || !user.mind || !I.used_skills)
+		return
+	if(. && I.skill_flags & SKILL_ATTACK_MOB)
+		LIST_SKILL_MODIFIER(used_skills, user.mind.skill_holder, ., I.skill_difficulty)
+	if(I.skill_flags & SKILL_TRAIN_ATTACK_MOB)
+		if(!islist(I.used_skills))
+			user.mind.skill_holder.boost_skill_value_to(used_skills, I.skill_gain)
+		else
+			for(var/skill in used_skills)
+				user.mind.skill_holder.boost_skill_value_to(skill, I.skill_gain)
+
+/mob/living/carbon/proc/pre_attacked_by(obj/item/I, mob/living/user, pre_attack = FALSE)
+	. = ..()
+	if(!(combat_flags & COMBAT_FLAG_COMBAT_ACTIVE))
+		. *= 1.5
 
 // Proximity_flag is 1 if this afterattack was called on something adjacent, in your square, or on your person.
 // Click parameters is the params string from byond Click() code, see that documentation.
@@ -183,18 +209,18 @@
 	return total_mass || w_class * 1.25
 
 /// How long this staggers for. 0 and negatives supported.
-/obj/item/proc/melee_stagger_duration()
+/obj/item/proc/melee_stagger_duration(force_override)
 	if(!isnull(stagger_force))
 		return stagger_force
 	/// totally not an untested, arbitrary equation.
-	return clamp((1.5 + (w_class/7.5)) * (force / 2), 0, 10 SECONDS)
+	return clamp((1.5 + (w_class/7.5)) * ((force_override || force) / 2), 0, 10 SECONDS)
 
-/obj/item/proc/do_stagger_action(mob/living/target, mob/living/user)
+/obj/item/proc/do_stagger_action(mob/living/target, mob/living/user, force_override)
 	if(!CHECK_BITFIELD(target.status_flags, CANSTAGGER))
 		return FALSE
 	if(target.combat_flags & COMBAT_FLAG_SPRINT_ACTIVE)
 		target.do_staggered_animation()
-	var/duration = melee_stagger_duration()
+	var/duration = melee_stagger_duration(force_override)
 	if(!duration)		//0
 		return FALSE
 	else if(duration > 0)
