@@ -209,6 +209,8 @@
 /// How much stamina this takes to swing this is not for realism purposes hecc off.
 /obj/item/proc/getweight(mob/living/user, multiplier = 1, flags = NONE)
 	. = (total_mass || w_class * STAM_COST_W_CLASS_MULT) * multiplier
+	if(!user)
+		return
 	var/bad_flag = NONE
 	if(iscarbon(user) && !(user.combat_flags & COMBAT_FLAG_COMBAT_ACTIVE))
 		. *= STAM_COST_NO_COMBAT_MULT
