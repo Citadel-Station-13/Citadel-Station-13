@@ -114,7 +114,7 @@
 	var/totitemdamage = I.force
 	if(I.used_skills && user.mind)
 		if(I.skill_flags & SKILL_ATTACK_OBJ)
-			LIST_SKILL_MODIFIER(used_skills, user.mind.skill_holder, totitemdamage, I.skill_difficulty)
+			LIST_SKILL_MODIFIER(I.used_skills, user.mind.skill_holder, totitemdamage, I.skill_difficulty)
 		if(I.skill_flags & SKILL_TRAIN_ATTACK_OBJ)
 			if(!islist(I.used_skills))
 				user.mind.skill_holder.boost_skill_value_to(used_skills, I.skill_gain)
@@ -128,7 +128,7 @@
 	take_damage(totitemdamage, I.damtype, "melee", 1)
 
 /mob/living/attacked_by(obj/item/I, mob/living/user)
-	var/totitemdamage = calculate_item_force(I, user, TRUE)
+	var/totitemdamage = calculate_item_force(I, user)
 	if((user != src) && run_block(I, totitemdamage, "the [I.name]", ATTACK_TYPE_MELEE, I.armour_penetration, user) & BLOCK_SUCCESS)
 		return FALSE
 	send_item_attack_message(I, user)
@@ -150,7 +150,7 @@
 	else
 		return ..()
 
-/mob/living/proc/pre_attacked_by(obj/item/I, mob/living/user, pre_attack = FALSE)
+/mob/living/proc/pre_attacked_by(obj/item/I, mob/living/user)
 	. = I.force
 	if(!(user.combat_flags & COMBAT_FLAG_COMBAT_ACTIVE))
 		. *= 0.5
@@ -159,7 +159,7 @@
 	if(!pre_attack || !user.mind || !I.used_skills)
 		return
 	if(. && I.skill_flags & SKILL_ATTACK_MOB)
-		LIST_SKILL_MODIFIER(used_skills, user.mind.skill_holder, ., I.skill_difficulty)
+		LIST_SKILL_MODIFIER(I.used_skills, user.mind.skill_holder, ., I.skill_difficulty)
 	if(I.skill_flags & SKILL_TRAIN_ATTACK_MOB)
 		if(!islist(I.used_skills))
 			user.mind.skill_holder.boost_skill_value_to(used_skills, I.skill_gain)
@@ -167,7 +167,7 @@
 			for(var/skill in used_skills)
 				user.mind.skill_holder.boost_skill_value_to(skill, I.skill_gain)
 
-/mob/living/carbon/proc/pre_attacked_by(obj/item/I, mob/living/user, pre_attack = FALSE)
+/mob/living/carbon/pre_attacked_by(obj/item/I, mob/living/user)
 	. = ..()
 	if(!(combat_flags & COMBAT_FLAG_COMBAT_ACTIVE))
 		. *= 1.5

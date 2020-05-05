@@ -77,7 +77,7 @@
 	SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "embedded", /datum/mood_event/embedded)
 
 /mob/living/carbon/attacked_by(obj/item/I, mob/living/user)
-	var/totitemdamage = pre_attacked_by(I, user, TRUE)
+	var/totitemdamage = pre_attacked_by(I, user)
 	if(!(user.combat_flags & COMBAT_FLAG_COMBAT_ACTIVE))
 		totitemdamage *= 0.5
 	if(!CHECK_MOBILITY(user, MOBILITY_STAND))

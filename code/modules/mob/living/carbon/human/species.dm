@@ -1712,7 +1712,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 			disarm(M, H, attacker_style)
 
 /datum/species/proc/spec_attacked_by(obj/item/I, mob/living/user, obj/item/bodypart/affecting, intent, mob/living/carbon/human/H)
-	var/totitemdamage = H.pre_attacked_by(I, user, TRUE)
+	var/totitemdamage = H.pre_attacked_by(I, user)
 	// Allows you to put in item-specific reactions based on species
 	if(user != H)
 		if(H.run_block(I, totitemdamage, "the [I.name]", ATTACK_TYPE_MELEE, I.armour_penetration, user, affecting.body_zone) & BLOCK_SUCCESS)
