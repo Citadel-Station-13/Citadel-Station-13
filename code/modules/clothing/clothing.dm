@@ -173,12 +173,18 @@ SEE_PIXELS// if an object is located on an unlit area, but some of its pixels ar
 BLIND     // can't see anything
 */
 
-/proc/generate_female_clothing(index,t_color,icon,type)
-	var/icon/female_clothing_icon	= icon("icon"=icon, "icon_state"=t_color)
-	var/icon/female_s				= icon("icon"='icons/mob/clothing/uniform.dmi', "icon_state"="[(type == FEMALE_UNIFORM_FULL) ? "female_full" : "female_top"]")
-	female_clothing_icon.Blend(female_s, ICON_MULTIPLY)
-	female_clothing_icon 			= fcopy_rsc(female_clothing_icon)
-	GLOB.female_clothing_icons[index] = female_clothing_icon
+/proc/generate_alpha_masked_clothing(index,state,icon,female,alpha_masks)
+	var/icon/I = icon(icon, state)
+	if(female)
+		var/icon/female_s = icon('icons/mob/clothing/alpha_masks.dmi', "[(female == FEMALE_UNIFORM_FULL) ? "female_full" : "female_top"]")
+		I.Blend(female_s, ICON_MULTIPLY, -15, -15) //it's a 64x64 icon.
+	if(alpha_masks)
+		if(istext(alpha_masks))
+			alpha_masks = list(alpha_masks)
+		for(var/alpha_state in alpha_masks)
+			var/icon/alpha = icon('icons/mob/clothing/alpha_masks.dmi', alpha_state)
+			I.Blend(alpha, ICON_MULTIPLY, -15, -15)
+	. = GLOB.alpha_masked_worn_icons[index] = fcopy_rsc(I)
 
 /obj/item/clothing/proc/weldingvisortoggle(mob/user) //proc to toggle welding visors on helmets, masks, goggles, etc.
 	if(!can_use(user))
