@@ -22,6 +22,12 @@
 	/// Speed per decisecond, y
 	var/speed_y
 
+	// UI
+	/// The icon state that is fed to tgui-next for drawing.
+	var/ui_icon_state = ""
+	/// Unique ID on an UI. Must be unique to the overmap.
+	var/ui_id
+
 /datum/overmap_object/proc/euclidean_distance(datum/overmap_object/other)
 	return sqrt(((other.pos_x - pos_x) ** 2) + ((other.pos_y - pos_y) ** 2))
 
@@ -35,5 +41,24 @@
 		relative_move(speed_x, speed_y)
 	if(!requires_processing)
 		return PROCESS_KILL
+
+/**
+  * Unique ID to identify it on an UI
+  */
+/datum/overmap_object/proc/UUID()
+	return ui_id
+
+/**
+  * Return a data list for our UI data
+  */
+/datum/overmap_object/proc/encode_ui()
+	return list(
+	"pos_x" = pos_x,
+	"pos_y" = pos_y,
+	"heading" = heading,
+	"icon_state" = ui_icon_state,
+	"speed_x" = speed_x,
+	"speed_y" = speed_y
+	)
 
 /datum/overmap_object/proc/relative_move(px, py)
