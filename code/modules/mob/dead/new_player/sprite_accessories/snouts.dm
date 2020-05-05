@@ -1,5 +1,6 @@
 /datum/sprite_accessory/snouts
 	icon = 'icons/mob/mutant_bodyparts.dmi'
+	mutant_part_string = "snout"
 
 /datum/sprite_accessory/snouts/sharp
 	name = "Sharp"
@@ -152,11 +153,13 @@
 	color_src = MATRIXED
 	icon = 'modular_citadel/icons/mob/mam_snouts.dmi'
 	recommended_species = list("mammal", "slimeperson", "insect", "podweak")
+	mutant_part_string = "snout"
 
 /datum/sprite_accessory/mam_snouts/none
 	name = "None"
 	icon_state = "none"
 	recommended_species = null
+	relevant_layers = null
 
 /datum/sprite_accessory/mam_snouts/bird
 	name = "Beak"

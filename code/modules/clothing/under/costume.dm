@@ -130,25 +130,27 @@
 	var/obj/item/clothing/accessory/maidapron/A = new (src)
 	attach_accessory(A)
 
+/obj/item/clothing/under/costume/singer
+	desc = "Just looking at this makes you want to sing."
+	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
+	body_parts_covered = CHEST|GROIN|ARMS
+	alternate_worn_layer = ABOVE_SHOES_LAYER
+	can_adjust = FALSE
+
 /obj/item/clothing/under/costume/singer/yellow
 	name = "yellow performer's outfit"
-	desc = "Just looking at this makes you want to sing."
 	icon_state = "ysing"
 	item_state = "ysing"
 	body_parts_covered = CHEST|GROIN|ARMS
 	fitted = NO_FEMALE_UNIFORM
-	alternate_worn_layer = ABOVE_SHOES_LAYER
 	can_adjust = FALSE
 
 /obj/item/clothing/under/costume/singer/blue
 	name = "blue performer's outfit"
-	desc = "Just looking at this makes you want to sing."
 	icon_state = "bsing"
 	item_state = "bsing"
-	body_parts_covered = CHEST|GROIN|ARMS
 	alternate_worn_layer = ABOVE_SHOES_LAYER
 	fitted = FEMALE_UNIFORM_TOP
-	can_adjust = FALSE
 
 /obj/item/clothing/under/costume/geisha
 	name = "geisha suit"
@@ -205,7 +207,7 @@
 	body_parts_covered = CHEST|GROIN|ARMS
 	fitted = FEMALE_UNIFORM_TOP
 	can_adjust = FALSE
-	mutantrace_variation = NONE
+	mutantrace_variation = USE_TAUR_CLIP_MASK
 
 /obj/item/clothing/under/costume/drfreeze
 	name = "doctor freeze's jumpsuit"
@@ -213,7 +215,7 @@
 	icon_state = "drfreeze"
 	item_state = "drfreeze"
 	can_adjust = FALSE
-	mutantrace_variation = NONE
+	mutantrace_variation = USE_TAUR_CLIP_MASK
 
 /obj/item/clothing/under/costume/lobster
 	name = "foam lobster suit"
@@ -222,7 +224,7 @@
 	item_state = "lobster"
 	fitted = NO_FEMALE_UNIFORM
 	can_adjust = FALSE
-	mutantrace_variation = NONE
+	mutantrace_variation = USE_TAUR_CLIP_MASK
 
 /obj/item/clothing/under/costume/gondola
 	name = "gondola hide suit"
@@ -248,7 +250,7 @@
 	icon_state = "christmasmaler"
 	item_state = "christmasmaler"
 	can_adjust = FALSE
-	mutantrace_variation = NONE
+	mutantrace_variation = USE_TAUR_CLIP_MASK
 
 /obj/item/clothing/under/costume/christmas/green
 	name = "green christmas suit"
@@ -262,7 +264,7 @@
 	icon_state = "christmasfemaler"
 	item_state = "christmasfemaler"
 	body_parts_covered = CHEST|GROIN
-	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
+	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON|USE_TAUR_CLIP_MASK
 
 /obj/item/clothing/under/costume/christmas/croptop/green
 	name = "green feminine christmas suit"
@@ -287,7 +289,6 @@
 	item_state = "qipao_white"
 	body_parts_covered = CHEST|GROIN
 	can_adjust = FALSE
-	mutantrace_variation = NONE
 
 /obj/item/clothing/under/costume/qipao/red
 	name = "Red Qipao"
@@ -296,7 +297,6 @@
 	item_state = "qipao_red"
 	body_parts_covered = CHEST|GROIN
 	can_adjust = FALSE
-	mutantrace_variation = NONE
 
 /obj/item/clothing/under/costume/cheongsam
 	name = "Black Cheongsam"
@@ -305,7 +305,7 @@
 	item_state = "cheong"
 	body_parts_covered = CHEST|GROIN
 	can_adjust = FALSE
-	mutantrace_variation = NONE
+	mutantrace_variation = USE_TAUR_CLIP_MASK
 
 /obj/item/clothing/under/costume/cheongsam/white
 	name = "White Cheongsam"
@@ -323,7 +323,6 @@
 	item_state = "cheongr"
 	body_parts_covered = CHEST|GROIN
 	can_adjust = FALSE
-	mutantrace_variation = NONE
 
 /obj/item/clothing/under/costume/cloud
 	name = "cloud"
