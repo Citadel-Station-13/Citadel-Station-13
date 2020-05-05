@@ -100,8 +100,9 @@
 		if(mob.throwing)
 			mob.throwing.finalize(FALSE)
 
-	if(mob.pulling && !(combat_flags & COMBAT_FLAG_COMBAT_ACTIVE))
-		mob.setDir(turn(mob.dir, 180))
+	var/mob/living/L = mob
+	if(L.pulling && !(L.combat_flags & COMBAT_FLAG_COMBAT_ACTIVE))
+		L.setDir(turn(L.dir, 180))
 
 	SEND_SIGNAL(mob, COMSIG_MOB_CLIENT_MOVE, src, direction, n, oldloc)
 
