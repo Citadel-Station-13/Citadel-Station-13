@@ -35,10 +35,6 @@
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /turf/open/floor/plasteel/cult,
 /area/ruin/unpowered/buried_library)
-"aj" = (
-/obj/structure/bookcase/random,
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/ruin/unpowered/buried_library)
 "ak" = (
 /turf/closed/mineral/random/snow/no_caves,
 /area/ruin/unpowered/buried_library)
@@ -99,10 +95,6 @@
 "aA" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
-/area/ruin/unpowered/buried_library)
-"aB" = (
-/obj/structure/girder,
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/ruin/unpowered/buried_library)
 "aC" = (
 /obj/item/feather,
@@ -674,7 +666,7 @@ ah
 ak
 ah
 bh
-aj
+ah
 az
 ah
 ak
@@ -695,7 +687,7 @@ ai
 ar
 al
 bc
-aj
+ah
 aL
 ah
 aA
@@ -777,7 +769,7 @@ ac
 ba
 ac
 ac
-aB
+br
 ad
 aa
 ad
