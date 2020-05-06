@@ -87,11 +87,19 @@
 	else
 		remove_filter("ambient_occlusion")
 
+//Reserved to chat messages, so they are still displayed above the field of vision masking.
+/obj/screen/plane_master/chat_messages
+	name = "chat messages plane master"
+	plane = CHAT_PLANE
+	appearance_flags = PLANE_MASTER
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+
 ///Contains all shadow cone masks, whose image overrides are displayed only to their respective owners.
 /obj/screen/plane_master/field_of_vision
 	name = "field of vision plane master"
 	plane = FIELD_OF_VISION_PLANE
 	render_target = FIELD_OF_VISION_RENDER_TARGET
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 
 /obj/screen/plane_master/field_of_vision/Initialize()
 	. = ..()
@@ -102,6 +110,7 @@
 	name = "field of vision inset underlay plane master"
 	plane = FIELD_OF_VISION_BLOCKER_PLANE
 	render_target = FIELD_OF_VISION_BLOCKER_RENDER_TARGET
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 
 ///Contains all lighting objects
 /obj/screen/plane_master/lighting

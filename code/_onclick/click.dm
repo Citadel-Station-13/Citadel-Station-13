@@ -423,32 +423,36 @@
 	LE.fire()
 
 // Simple helper to face what you clicked on, in case it should be needed in more than one place
-/mob/proc/face_atom(atom/A)
-	if( buckled || stat != CONSCIOUS || !A || !x || !y || !A.x || !A.y )
+/mob/proc/face_atom(atom/A, ismousemovement = FALSE)
+	if( buckled || stat != CONSCIOUS || !loc || !A || !A.x || !A.y )
 		return
-	var/dx = A.x - x
-	var/dy = A.y - y
+	var/atom/L = loc
+	if(L.flags_1 & BLOCK_FACE_ATOM_1)
+		return
+	var/turf/T = get_turf(src)
+	var/dx = A.x - T.x
+	var/dy = A.y - T.y
 	if(!dx && !dy) // Wall items are graphically shifted but on the floor
 		if(A.pixel_y > 16)
-			setDir(NORTH)
+			setDir(NORTH, ismousemovement)
 		else if(A.pixel_y < -16)
-			setDir(SOUTH)
+			setDir(SOUTH, ismousemovement)
 		else if(A.pixel_x > 16)
-			setDir(EAST)
+			setDir(EAST, ismousemovement)
 		else if(A.pixel_x < -16)
-			setDir(WEST)
+			setDir(WEST, ismousemovement)
 		return
 
 	if(abs(dx) < abs(dy))
 		if(dy > 0)
-			setDir(NORTH)
+			setDir(NORTH, ismousemovement)
 		else
-			setDir(SOUTH)
+			setDir(SOUTH, ismousemovement)
 	else
 		if(dx > 0)
-			setDir(EAST)
+			setDir(EAST, ismousemovement)
 		else
-			setDir(WEST)
+			setDir(WEST, ismousemovement)
 
 //debug
 /obj/screen/proc/scale_to(x1,y1)

@@ -11,27 +11,31 @@
 #define PLANE_SPACE_PARALLAX_RENDER_TARGET "PLANE_SPACE_PARALLAX"
 
 #define OPENSPACE_LAYER 17 //Openspace layer over all
-#define OPENSPACE_PLANE -8 //Openspace plane below all turfs
-#define OPENSPACE_BACKDROP_PLANE -7 //Black square just over openspace plane to guaranteed cover all in openspace turf
+#define OPENSPACE_PLANE -9 //Openspace plane below all turfs
+#define OPENSPACE_BACKDROP_PLANE -8 //Black square just over openspace plane to guaranteed cover all in openspace turf
 
-#define FLOOR_PLANE -6
+#define FLOOR_PLANE -7
 #define FLOOR_PLANE_RENDER_TARGET "FLOOR_PLANE"
 
-#define WALL_PLANE -5
+#define WALL_PLANE -6
 #define WALL_PLANE_RENDER_TARGET "WALL_PLANE"
 
-#define ABOVE_WALL_PLANE -4
+#define ABOVE_WALL_PLANE -5
 #define ABOVE_WALL_PLANE_RENDER_TARGET "ABOVE_WALL_PLANE"
 
-#define FIELD_OF_VISION_BLOCKER_PLANE -3
+#define FIELD_OF_VISION_BLOCKER_PLANE -4
 #define FIELD_OF_VISION_BLOCKER_RENDER_TARGET "*FIELD_OF_VISION_BLOCKER_PLANE"
 
-#define FIELD_OF_VISION_PLANE -2
+#define FIELD_OF_VISION_PLANE -3
 #define FIELD_OF_VISION_RENDER_TARGET "*FIELD_OF_VISION_PLANE"
 #define FIELD_OF_VISION_LAYER 17 //used to place the visual (not the mask) shadow cone above any other floor plane stuff.
 
-#define GAME_PLANE -1
+#define GAME_PLANE -2
 #define GAME_PLANE_RENDER_TARGET "GAME_PLANE"
+
+#define CHAT_PLANE -1 //We don't want heard messages to be hidden by FoV.
+#define CHAT_LAYER 12.1 //Legacy, it doesn't matter that much because we are displayed above the game plane anyway.
+
 #define BLACKNESS_PLANE 0 //To keep from conflicts with SEE_BLACKNESS internals
 #define BLACKNESS_PLANE_RENDER_TARGET "BLACKNESS_PLANE"
 
@@ -104,8 +108,6 @@
 #define AREA_LAYER 10
 #define MASSIVE_OBJ_LAYER 11
 #define POINT_LAYER 12
-
-#define CHAT_LAYER 12.1
 
 #define EMISSIVE_BLOCKER_PLANE 12
 #define EMISSIVE_BLOCKER_LAYER 12

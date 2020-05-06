@@ -57,6 +57,8 @@
 	RegisterSignal(M, COMSIG_MOB_GET_VISIBLE_MESSAGE, .proc/on_visible_message)
 	RegisterSignal(M, COMSIG_MOB_EXAMINATE, .proc/on_examinate)
 	RegisterSignal(M, COMSIG_MOB_VISIBLE_ATOMS, .proc/on_visible_atoms)
+	RegisterSignal(M, COMSIG_MOB_CLIENT_CHANGE_VIEW, .proc/on_change_view)
+	RegisterSignal(M, COMSIG_MOB_RESET_PERSPECTIVE, .proc/on_reset_perspective)
 
 /datum/component/vision_cone/UnregisterFromParent()
 	. = ..()
@@ -70,10 +72,10 @@
 		QDEL_NULL(owner_mask)
 	if(length(nested_locs))
 		UNREGISTER_NESTED_LOCS(nested_locs, COMSIG_MOVABLE_MOVED, 1)
-	UnregisterSignal(M, list(COMSIG_MOB_CLIENT_LOGIN, COMSIG_MOB_CLIENT_LOGOUT, COMSIG_MOB_DEATH,
-							COMSIG_LIVING_REVIVE, COMSIG_MOB_CLIENT_CHANGE_VIEW, COMSIG_ATOM_DIR_CHANGE,
-							COMSIG_MOVABLE_MOVED, COMSIG_MOB_GET_VISIBLE_MESSAGE, COMSIG_MOB_EXAMINATE,
-							COMSIG_MOB_VISIBLE_ATOMS))
+	UnregisterSignal(M, list(COMSIG_MOB_CLIENT_LOGIN, COMSIG_MOB_CLIENT_LOGOUT,
+							COMSIG_MOB_GET_VISIBLE_MESSAGE, COMSIG_MOB_EXAMINATE,
+							COMSIG_MOB_VISIBLE_ATOMS, COMSIG_MOB_RESET_PERSPECTIVE,
+							COMSIG_MOB_CLIENT_CHANGE_VIEW))
 
 /datum/component/vision_cone/proc/generate_fov_holder(mob/M, _angle = 0)
 	if(QDELETED(fov))
@@ -95,10 +97,11 @@
 	RegisterSignal(M, COMSIG_LIVING_REVIVE, .proc/show_fov)
 	RegisterSignal(M, COMSIG_ATOM_DIR_CHANGE, .proc/on_dir_change)
 	RegisterSignal(M, COMSIG_MOVABLE_MOVED, .proc/on_mob_moved)
+	var/atom/A = M
 	if(!isturf(M.loc))
 		REGISTER_NESTED_LOCS(M, nested_locs, COMSIG_MOVABLE_MOVED, .proc/on_loc_moved)
-		var/atom/A = nested_locs[nested_locs.len]
-		CENTERED_RENDER_SOURCE(owner_mask, A, src)
+		A = nested_locs[nested_locs.len]
+	CENTERED_RENDER_SOURCE(owner_mask, A, src)
 	M.client.images += shadow_mask
 	M.client.images += visual_shadow
 	M.client.images += owner_mask
@@ -130,7 +133,6 @@
 	UnregisterSignal(source, list(COMSIG_ATOM_DIR_CHANGE, COMSIG_MOVABLE_MOVED, COMSIG_MOB_DEATH, COMSIG_LIVING_REVIVE))
 	if(length(nested_locs))
 		UNREGISTER_NESTED_LOCS(nested_locs, COMSIG_MOVABLE_MOVED, 1)
-	fov.alpha = 0
 
 /datum/component/vision_cone/proc/on_dir_change(mob/source, old_dir, new_dir)
 	fov.dir = new_dir
@@ -142,6 +144,13 @@
 /// Same as above.
 /datum/component/vision_cone/proc/show_fov(mob/source)
 	fov.alpha = 255
+
+/// Idem.
+/datum/component/vision_cone/proc/on_reset_perspective(mob/source, atom/target)
+	if(source.client.eye == source || source.client.eye == source.loc)
+		fov.alpha = 255
+	else
+		fov.alpha = 0
 
 /datum/component/vision_cone/proc/on_change_view(mob/source, client, list/old_view, list/view)
 	resize_fov(old_view, view)
@@ -202,10 +211,12 @@
 	}
 
 /datum/component/vision_cone/proc/on_examinate(mob/source, atom/target)
-	FOV_ANGLE_CHECK(source, target, return, return COMPONENT_DENY_EXAMINATE|COMPONENT_EXAMINATE_BLIND)
+	if(fov.alpha)
+		FOV_ANGLE_CHECK(source, target, return, return COMPONENT_DENY_EXAMINATE|COMPONENT_EXAMINATE_BLIND)
 
 /datum/component/vision_cone/proc/on_visible_message(mob/source, atom/target, message, range, list/ignored_mobs)
-	FOV_ANGLE_CHECK(source, target, return, return COMPONENT_NO_VISIBLE_MESSAGE)
+	if(fov.alpha)
+		FOV_ANGLE_CHECK(source, target, return, return COMPONENT_NO_VISIBLE_MESSAGE)
 
 /datum/component/vision_cone/proc/on_visible_atoms(mob/source, list/atoms)
 	for(var/k in atoms)

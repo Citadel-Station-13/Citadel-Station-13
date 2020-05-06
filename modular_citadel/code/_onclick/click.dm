@@ -72,30 +72,3 @@
 
 /mob/proc/AltRangedAttack(atom/A, params)
 	return FALSE
-
-/mob/proc/mouse_face_atom(atom/A)	//Basically a copy of face_atom but with ismousemovement set to TRUE
-	if( buckled || stat != CONSCIOUS || !A || !x || !y || !A.x || !A.y )
-		return
-	var/dx = A.x - x
-	var/dy = A.y - y
-	if(!dx && !dy) // Wall items are graphically shifted but on the floor
-		if(A.pixel_y > 16)
-			setDir(NORTH, ismousemovement = TRUE)
-		else if(A.pixel_y < -16)
-			setDir(SOUTH, ismousemovement = TRUE)
-		else if(A.pixel_x > 16)
-			setDir(EAST, ismousemovement = TRUE)
-		else if(A.pixel_x < -16)
-			setDir(WEST, ismousemovement = TRUE)
-		return
-
-	if(abs(dx) < abs(dy))
-		if(dy > 0)
-			setDir(NORTH, ismousemovement = TRUE)
-		else
-			setDir(SOUTH, ismousemovement = TRUE)
-	else
-		if(dx > 0)
-			setDir(EAST, ismousemovement = TRUE)
-		else
-			setDir(WEST, ismousemovement = TRUE)

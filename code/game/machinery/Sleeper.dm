@@ -35,6 +35,11 @@
 	reset_chem_buttons()
 	RefreshParts()
 	add_inital_chems()
+	new_occupant_dir = dir
+
+/obj/machinery/sleeper/setDir(newdir)
+	. = ..()
+	new_occupant_dir = dir
 
 /obj/machinery/sleeper/on_deconstruction()
 	var/obj/item/reagent_containers/sleeper_buffer/buffer = new (loc)
@@ -250,7 +255,7 @@
 		data["occupant"]["fireLoss"] = mob_occupant.getFireLoss()
 		data["occupant"]["cloneLoss"] = mob_occupant.getCloneLoss()
 		data["occupant"]["brainLoss"] = mob_occupant.getOrganLoss(ORGAN_SLOT_BRAIN)
-		
+
 		if(mob_occupant.reagents.reagent_list.len)
 			for(var/datum/reagent/R in mob_occupant.reagents.reagent_list)
 				chemical_list += list(list("name" = R.name, "volume" = R.volume))
