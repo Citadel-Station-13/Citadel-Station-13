@@ -205,7 +205,7 @@
 /datum/map_template/proc/get_affected_turfs(turf/T, centered = FALSE, orientation = SOUTH)
 	var/turf/placement = T
 	if(centered)
-		var/turf/corner = locate(placement.x - FLOOR(((orientation & (NORTH|SOUTH))? width : height) / 2, 1), placement.y - FLOOR(((orientation & (NORTH|SOUTH))? height : width) / 2, 1), placement.z) // %180 catches East/West (90,270) rotations on true, North/South (0,180) rotations on false
+		var/turf/corner = locate(placement.x - round(((orientation & (NORTH|SOUTH))? width : height) / 2), placement.y - round(((orientation & (NORTH|SOUTH))? height : width) / 2), placement.z) // %180 catches East/West (90,270) rotations on true, North/South (0,180) rotations on false
 		if(corner)
 			placement = corner
 	return block(placement, locate(placement.x + ((orientation & (NORTH|SOUTH)) ? width : height) - 1, placement.y + ((orientation & (NORTH|SOUTH))? height : width) - 1, placement.z))
