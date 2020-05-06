@@ -18,14 +18,18 @@
 #define INVOKE_CALLBACK cb_return = extra_checks?.Invoke(user, delay, target, world.time - starttime, do_after_flags, required_mobility_flags, required_combat_flags, mob_redirect, stage, initially_held_item, tool)
 #define CHECK_FLAG_FAILURE ((required_mobility_flags || required_combat_flags) && (!living_user || !CHECK_ALL_MOBILITY(living_user, required_mobility_flags) || !CHECK_MULTIPLE_BITFIELDS(living_user.combat_flags, required_combat_flags)))
 #define TIMELEFT (world.time - starttime)
+#define DEBUG to_chat(world, "DEBUG: [__LINE__] executing")
 /proc/do_after_advanced(atom/user, delay, atom/target, do_after_flags, datum/callback/extra_checks, required_mobility_flags, required_combat_flags, mob/living/mob_redirect, obj/item/tool)
+	DEBUG
 	// CHECK AND SET VARIABLES
 	if(!user)
 		return FALSE
+	DEBUG
 	if(!target)
 		target = user
 	if((user.loc == null) || (target.loc == null))
 		return FALSE
+	DEBUG
 	var/mob/living/living_user = mob_redirect
 	if(!living_user && isliving(user))
 		living_user = user
@@ -34,13 +38,16 @@
 	var/startloctarget = target.loc
 	var/turf/userturf = get_turf(user)
 	var/turf/targetturf = get_turf(target)
+	DEBUG
 	if(!userturf || !targetturf)
 		return FALSE
+	DEBUG
 	if((do_after_flags & DO_AFTER_REQUIRES_USER_ON_TURF) && !isturf(user.loc))
 		return FALSE
 	var/starttime = world.time
 	var/endtime = world.time + delay
 	var/obj/item/initially_held_item = mob_redirect?.get_active_held_item()
+	DEBUG
 	if(!(do_after_flags & DO_AFTER_NO_COEFFICIENT) && living_user)
 		delay *= living_user.do_after_coefficent()
 	var/atom/movable/AM_user = ismovable(user) && user
@@ -52,11 +59,13 @@
 	// DO OUR STARTING CHECKS
 	var/cb_return
 	INVOKE_CALLBACK
+	DEBUG
 	if(cb_return == DO_AFTER_STOP)
 		return FALSE
 	else if(cb_return != DO_AFTER_PROCEED)
 		if(CHECK_FLAG_FAILURE)
 			return FALSE
+	DEBUG
 	// SETUP LOOP
 	var/datum/progressbar/progbar
 	if(living_user)
@@ -77,11 +86,13 @@
 			. = FALSE
 			break
 		INVOKE_CALLBACK
+		DEBUG
 		if(cb_return == DO_AFTER_STOP)
 			. = FALSE
 			break
 		else if(cb_return == DO_AFTER_PROCEED)
 			continue
+		DEBUG
 		// otherwise, go through our normal checks.
 		if(((do_after_flags & DO_AFTER_DISALLOW_MOVING_ABSOLUTE_USER) && (user.loc != startlocuser)) || ((do_after_flags & DO_AFTER_DISALLOW_MOVING_ABSOLUTE_TARGET) && (target.loc != startloctarget)))
 			. = FALSE
@@ -100,20 +111,24 @@
 			if(locchanged && !drifting && !(do_after_flags & DO_AFTER_ALLOW_NONSPACEDRIFT_RELATIVITY))
 				. = FALSE
 				break
+		DEBUG
 		if(!AM_user.inertia_dir)
 			drifting = FALSE
 		if((do_after_flags & DO_AFTER_REQUIRES_USER_ON_TURF) && !isturf(user.loc))
 			return FALSE
+		DEBUG
 		if(CHECK_FLAG_FAILURE)
 			. = FALSE
 			break
 		held = living_user?.get_active_held_item()
+		DEBUG
 		if((do_after_flags & DO_AFTER_DISALLOW_ACTIVE_ITEM_CHANGE) && (held != (tool || initially_held_item)))
 			. = FALSE
 			break
 		if((do_after_flags & DO_AFTER_REQUIRE_FREE_HAND_OR_TOOL) && (!living_user?.is_holding(tool) && !length(living_user?.get_empty_held_indexes())))
 			. = FALSE
 			break
+	DEBUG
 
 	// CLEANUP
 	qdel(progbar)
