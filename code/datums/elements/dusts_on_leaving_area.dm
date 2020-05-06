@@ -8,12 +8,13 @@
 	if(!ismob(target))
 		return ELEMENT_INCOMPATIBLE
 	area_types = types
-	RegisterSignal(target,COMSIG_AREA_ENTERED,.proc/check_dust)
+	RegisterSignal(target,COMSIG_ENTER_AREA,.proc/check_dust)
 
 /datum/element/dusts_on_leaving_area/Detach(mob/M)
 	. = ..()
-	UnregisterSignal(M,COMSIG_AREA_ENTERED)
+	UnregisterSignal(M,COMSIG_ENTER_AREA)
 
-/datum/element/dusts_on_leaving_area/proc/check_dust(area/A, mob/M)
-	if(!(A.type in area_types))
+/datum/element/dusts_on_leaving_area/proc/check_dust(datum/source, area/A)
+	var/mob/M = source
+	if(istype(M) && !(A.type in area_types))
 		M.dust(force = TRUE)
