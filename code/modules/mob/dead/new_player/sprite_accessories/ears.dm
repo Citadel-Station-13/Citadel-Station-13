@@ -1,9 +1,12 @@
 /datum/sprite_accessory/ears
 	icon = 'icons/mob/mutant_bodyparts.dmi'
+	mutant_part_string = "ears"
+	relevant_layers = list(BODY_BEHIND_LAYER, BODY_ADJ_LAYER, BODY_FRONT_LAYER)
 
 /datum/sprite_accessory/ears/none
 	name = "None"
 	icon_state = "none"
+	relevant_layers = null
 
 /******************************************
 *************** Human Ears ****************
@@ -172,10 +175,13 @@
 /datum/sprite_accessory/mam_ears
 	icon = 'modular_citadel/icons/mob/mam_ears.dmi'
 	color_src = MATRIXED
+	mutant_part_string = "ears"
+	relevant_layers = list(BODY_BEHIND_LAYER, BODY_ADJ_LAYER, BODY_FRONT_LAYER)
 
 /datum/sprite_accessory/mam_ears/none
 	name = "None"
 	icon_state = "none"
+	relevant_layers = null
 
 /datum/sprite_accessory/mam_ears/axolotl
 	name = "Axolotl"

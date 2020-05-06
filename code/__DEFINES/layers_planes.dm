@@ -1,6 +1,8 @@
 //Defines for atom layers and planes
 //KEEP THESE IN A NICE ACSCENDING ORDER, PLEASE
 
+#define PLANE_VOID -100
+
 #define CLICKCATCHER_PLANE -99
 
 #define PLANE_SPACE -95

@@ -7,6 +7,7 @@
 /datum/sprite_accessory/spines/none
 	name = "None"
 	icon_state = "none"
+	relevant_layers = null
 
 /datum/sprite_accessory/spines_animated/none
 	name = "None"
