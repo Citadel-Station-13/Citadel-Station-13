@@ -100,7 +100,6 @@
 		if(mob.throwing)
 			mob.throwing.finalize(FALSE)
 
-	var/mob/living/L = mob
 	if(L.pulling && !(L.combat_flags & COMBAT_FLAG_COMBAT_ACTIVE))
 		L.setDir(turn(L.dir, 180))
 
