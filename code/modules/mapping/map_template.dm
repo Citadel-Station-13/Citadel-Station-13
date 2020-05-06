@@ -200,7 +200,7 @@
 //❤ - Cyberboss
 /proc/load_new_z_level(file, name, orientation, list/ztraits)
 	var/datum/map_template/template = new(file, name)
-	template.load_new_z(orientation, ztraits)
+	return template.load_new_z(orientation, ztraits)
 
 /datum/map_template/proc/get_affected_turfs(turf/T, centered = FALSE, orientation = SOUTH)
 	var/turf/placement = T
