@@ -62,6 +62,7 @@
 
 	var/force_escaped = FALSE  // Set by Into The Sunset command of the shuttle manipulator
 	var/list/learned_recipes //List of learned recipe TYPES.
+	var/list/objectives = list() // List of objectives not attached to an antag datum.
 
 	/// Our skill holder.
 	var/datum/skill_holder/skill_holder
@@ -370,6 +371,7 @@
 
 
 	var/list/all_objectives = list()
+	all_objectives |= objectives
 	for(var/datum/antagonist/A in antag_datums)
 		output += A.antag_memory
 		all_objectives |= A.objectives
@@ -426,12 +428,14 @@
 		var/datum/objective/new_objective //New objective we're be adding
 
 		if(href_list["obj_edit"])
-			for(var/datum/antagonist/A in antag_datums)
-				old_objective = locate(href_list["obj_edit"]) in A.objectives
-				if(old_objective)
-					target_antag = A
-					objective_pos = A.objectives.Find(old_objective)
-					break
+			old_objective = locate(href_list["obj_edit"] in objectives)
+			if(!old_objective)
+				for(var/datum/antagonist/A in antag_datums)
+					old_objective = locate(href_list["obj_edit"]) in A.objectives
+					if(old_objective)
+						target_antag = A
+						objective_pos = A.objectives.Find(old_objective)
+						break
 			if(!old_objective)
 				to_chat(usr,"Invalid objective.")
 				return
@@ -442,19 +446,13 @@
 				if(X)
 					target_antag = X
 			if(!target_antag)
-				switch(antag_datums.len)
-					if(0)
-						target_antag = add_antag_datum(/datum/antagonist/custom)
-					if(1)
-						target_antag = antag_datums[1]
-					else
-						var/datum/antagonist/target = input("Which antagonist gets the objective:", "Antagonist", "(new custom antag)") as null|anything in antag_datums + "(new custom antag)"
-						if (QDELETED(target))
-							return
-						else if(target == "(new custom antag)")
-							target_antag = add_antag_datum(/datum/antagonist/custom)
-						else
-							target_antag = target
+				var/datum/antagonist/target = input("Which antagonist gets the objective:", "Antagonist", "(none)") as null|anything in antag_datums + "(none)"
+				if (QDELETED(target))
+					return
+				else if(target == "(none)")
+					target_antag = 0
+				else
+					target_antag = target
 
 		var/static/list/choices
 		if(!choices)
@@ -496,7 +494,10 @@
 			new_objective = new selected_type
 			new_objective.owner = src
 			new_objective.admin_edit(usr)
-			target_antag.objectives += new_objective
+			if(target_antag)
+				target_antag.objectives += new_objective
+			else
+				objectives += new_objective
 
 			message_admins("[key_name_admin(usr)] added a new objective for [current]: [new_objective.explanation_text]")
 			log_admin("[key_name(usr)] added a new objective for [current]: [new_objective.explanation_text]")
@@ -510,8 +511,12 @@
 				new_objective = new selected_type
 				new_objective.owner = src
 				new_objective.admin_edit(usr)
-				target_antag.objectives -= old_objective
-				target_antag.objectives.Insert(objective_pos, new_objective)
+				if(target_antag)
+					target_antag.objectives -= old_objective
+					target_antag.objectives.Insert(objective_pos, new_objective)
+				else
+					objectives -= old_objective
+					objectives.Insert(objective_pos, new_objective)
 			message_admins("[key_name_admin(usr)] edited [current]'s objective to [new_objective.explanation_text]")
 			log_admin("[key_name(usr)] edited [current]'s objective to [new_objective.explanation_text]")
 
@@ -605,8 +610,12 @@
 		usr = current
 	traitor_panel()
 
+/datum/mind/proc/add_objective(datum/objective/O)
+	objectives += O
+
 /datum/mind/proc/get_all_objectives()
 	var/list/all_objectives = list()
+	all_objectives |= objectives
 	for(var/datum/antagonist/A in antag_datums)
 		all_objectives |= A.objectives
 	return all_objectives

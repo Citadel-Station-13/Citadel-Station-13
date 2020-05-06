@@ -274,6 +274,12 @@
 	parts += antag_report()
 
 	CHECK_TICK
+
+	//Crew objectives
+	parts += crew_report()
+
+	CHECK_TICK
+	
 	//Medals
 	parts += medal_report()
 	//Station Goals
@@ -494,6 +500,24 @@
 		result += "</div>"
 
 	return result.Join()
+
+/datum/controller/subsystem/ticker/proc/crew_report()
+	var/list/result = list()
+	for(var/P in GLOB.player_list)
+		if(ismob(P))
+			var/mob/M = P
+			if(M.mind?.objectives?.len)
+				var/objectives_complete = TRUE
+				report += printobjectives(M.mind.objectives)
+				for(var/datum/objective/objective in objectives)
+					if(objective.completable && !objective.check_completion())
+						objectives_complete = FALSE
+						break
+				if(objectives_complete)
+					report += "<span class='greentext big'>[M.name] was successful!</span>"
+				else
+					report += "<span class='redtext big'>[M.name] has failed!</span>"
+	return result.Join("<br>")
 
 /proc/cmp_antag_category(datum/antagonist/A,datum/antagonist/B)
 	return sorttext(B.roundend_category,A.roundend_category)
