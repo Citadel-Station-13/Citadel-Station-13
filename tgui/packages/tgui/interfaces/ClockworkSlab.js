@@ -1,144 +1,165 @@
-import { map } from 'common/collections';
 import { Fragment } from 'inferno';
-import { useBackend, useSharedState } from '../backend';
-import { Button, Flex, LabeledList, NoticeBox, Section, Tabs } from '../components';
-import { Window } from '../layouts';
+import { useBackend } from '../backend';
+import { Button, LabeledList, Section, Tabs, Input } from '../components';
 
-export const ClockworkSlab = (props, context) => {
-  const { act, data } = useBackend(context);
+
+export const ClockworkSlab = props => {
+  const { act, data } = useBackend(props);
   const {
-    detail_view,
-    disk,
-    has_disk,
-    has_program,
-    scriptures = {},
+    recollection,
+    rec_text,
+    recollection_categories,
+    rec_section,
+    rec_binds,
   } = data;
-  const [
-    selectedCategory,
-    setSelectedCategory,
-  ] = useSharedState(context, 'category');
-  const scriptureInCategory = scriptures
-    && scriptures[selectedCategory]
-    || [];
+
   return (
-    <Window resizable>
-      <Window.Content scrollable>
-        <Section
-          title="Program Disk"
-          buttons={(
-            <Fragment>
-              <Button
-                icon="eject"
-                content="Eject"
-                onClick={() => act('eject')} />
-              <Button
-                icon="minus-circle"
-                content="Delete Program"
-                onClick={() => act('clear')} />
-            </Fragment>
-          )}>
-          {has_disk ? (
-            has_program ? (
-              <LabeledList>
-                <LabeledList.Item label="Program Name">
-                  {disk.name}
-                </LabeledList.Item>
-                <LabeledList.Item label="Description">
-                  {disk.desc}
-                </LabeledList.Item>
-              </LabeledList>
-            ) : (
-              <NoticeBox>
-                No Program Installed
-              </NoticeBox>
-            )
-          ) : (
-            <NoticeBox>
-              Insert Disk
-            </NoticeBox>
-          )}
+    <Fragment theme="syndicate">
+      <Section>
+        <Button
+          content={recollection ? "Recital" : "Recollection"}
+          onClick={() => act('toggle')}
+        />
+      </Section>
+      {!!recollection && (
+        <Section title="Recollection">
+          {rec_text}
+          {recollection_categories.map(categories => {
+            return (
+              <Fragment key={categories.name} >
+                <br />
+                <Button
+                  content={`${categories.name} - ${categories.desc}`}
+                  onClick={() => act('rec_category', {
+                    "category": categories.name,
+                  })} />
+              </Fragment>
+            );
+          })}
+          {rec_section}
+          {rec_binds}
         </Section>
-        <Section
-          title="Scripture"
-          buttons={(
-            <Fragment>
-              <Button
-                icon={detail_view ? 'info' : 'list'}
-                content={detail_view ? 'Detailed' : 'Compact'}
-                onClick={() => act('toggle_details')} />
-              <Button
-                icon="sync"
-                content="Sync Research"
-                onClick={() => act('refresh')} />
-            </Fragment>
-          )}>
-          {scriptures !== null ? (
-            <Flex>
-              <Flex.Item minWidth="110px">
-                <Tabs vertical>
-                  {map((cat_contents, category) => {
-                    const progs = cat_contents || [];
-                    // Backend was sending stupid data that would have been
-                    // annoying to fix
-                    const tabLabel = category
-                      .substring(0, category.length - 8);
-                    return (
-                      <Tabs.Tab
-                        key={category}
-                        selected={category === selectedCategory}
-                        onClick={() => setSelectedCategory(category)}>
-                        {tabLabel}
-                      </Tabs.Tab>
-                    );
-                  })(scriptures)}
-                </Tabs>
-              </Flex.Item>
-              <Flex.Item grow={1} basis={0}>
-                {detail_view ? (
-                  scriptureInCategory.map(program => (
-                    <Section
-                      key={program.id}
-                      title={program.name}
-                      level={2}
-                      buttons={(
-                        <Button
-                          icon="download"
-                          content="Download"
-                          disabled={!has_disk}
-                          onClick={() => act('download', {
-                            program_id: program.id,
-                          })} />
-                      )}>
-                      {program.desc}
-                    </Section>
-                  ))
-                ) : (
-                  <LabeledList>
-                    {scriptureInCategory.map(program => (
-                      <LabeledList.Item
-                        key={program.id}
-                        label={program.name}
-                        buttons={(
-                          <Button
-                            icon="download"
-                            content="Download"
-                            disabled={!has_disk}
-                            onClick={() => act('download', {
-                              program_id: program.id,
-                            })} />
-                        )} />
-                    ))}
-                  </LabeledList>
+      )}
+      {recollection && (
+        <Fragment>
+          <Section title="Power">
+            {data.power}
+          </Section>
+          <Section title="Recital">
+            {data.tier_info}
+            {data.scripturecolors}
+            <Tabs>
+              <Tabs.Tab
+                key="driver"
+                label="Driver">
+                {() => (
+                  <Section>
+                    <LabeledList>
+                      {data.scripture.driver.map(script => {
+                        return (
+                          <LabeledList.Item
+                            key={script.name}
+                            label={script.name}
+                            buttons={(
+                              <Fragment>
+                                <Button
+                                  content={`Recite (${script.required} W)`}
+                                  onClick={() => act('recite', {
+                                    'category': script.name,
+                                  })} />
+                                <Button
+                                  content={
+                                    script.quickbind
+                                      ? `Unbind ${script.quickbind}`
+                                      : 'Quickbind'
+                                  }
+                                  onClick={() => act('bind', {
+                                    'category': script.name,
+                                  })} />
+                              </Fragment>
+                            )}>
+                            {`${script.descname} ${script.invokers}`}
+                          </LabeledList.Item>
+                        );
+                      })}
+                    </LabeledList>
+                  </Section>
                 )}
-              </Flex.Item>
-            </Flex>
-          ) : (
-            <NoticeBox>
-              No nanite scriptures are currently researched.
-            </NoticeBox>
-          )}
-        </Section>
-      </Window.Content>
-    </Window>
+              </Tabs.Tab>
+              <Tabs.Tab
+                key="script"
+                label="Script">
+                {() => (
+                  <Section>
+                    <LabeledList>
+                      {data.scripture.script.map(script => {
+                        return (
+                          <LabeledList.Item
+                            key={script.name}
+                            label={script.name}
+                            buttons={(
+                              <Fragment>
+                                <Button
+                                  content={`Recite (${script.required} W)`}
+                                  onClick={() => act('recite', {
+                                    'category': script.name,
+                                  })} />
+                                <Button
+                                  content={script.quickbind
+                                    ? `Unbind ${script.quickbind}`
+                                    : 'Quickbind'}
+                                  onClick={() => act('bind', {
+                                    'category': script.name,
+                                  })} />
+                              </Fragment>
+                            )}>
+                            {`${script.descname} ${script.invokers}`}
+                          </LabeledList.Item>
+                        );
+                      })}
+                    </LabeledList>
+                  </Section>
+                )}
+              </Tabs.Tab>
+              <Tabs.Tab
+                key="application"
+                label="Application">
+                {() => (
+                  <Section>
+                    <LabeledList>
+                      {data.scripture.application.map(script => {
+                        return (
+                          <LabeledList.Item
+                            key={script.name}
+                            label={script.name}
+                            buttons={(
+                              <Fragment>
+                                <Button
+                                  content={`Recite (${script.required} W)`}
+                                  onClick={() => act('recite', {
+                                    'category': script.name,
+                                  })} />
+                                <Button
+                                  content={script.quickbind
+                                    ? `Unbind ${script.quickbind}`
+                                    : 'Quickbind'}
+                                  onClick={() => act('bind', {
+                                    'category': script.name,
+                                  })} />
+                              </Fragment>
+                            )}>
+                            {`${script.descname} ${script.invokers}`}
+                          </LabeledList.Item>
+                        );
+                      })}
+                    </LabeledList>
+                  </Section>
+                )}
+              </Tabs.Tab>
+            </Tabs>
+          </Section>
+        </Fragment>
+      )}
+    </Fragment>
   );
 };
