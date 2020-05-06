@@ -9,7 +9,7 @@
 	if(istype(src.glasses, /obj/item/clothing/glasses))		//glasses
 		var/obj/item/clothing/glasses/GFP = src.glasses
 		number += GFP.flash_protect
-
+ 
 	if(istype(src.wear_mask, /obj/item/clothing/mask))		//mask
 		var/obj/item/clothing/mask/MFP = src.wear_mask
 		number += MFP.flash_protect
@@ -275,6 +275,8 @@
 
 	if(health >= 0 && !(HAS_TRAIT(src, TRAIT_FAKEDEATH)))
 		var/friendly_check = FALSE
+		if(run_block(M, 0, M.name, ATTACK_TYPE_UNARMED))
+			return
 		if(lying)
 			if(buckled)
 				to_chat(M, "<span class='warning'>You need to unbuckle [src] first to do that!")

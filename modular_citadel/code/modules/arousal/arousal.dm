@@ -63,10 +63,12 @@
 	if(!target || !R)
 		return
 	var/turfing = isturf(target)
+	G.generate_fluid()
 	if(spill && R.total_volume >= 5)
 		R.reaction(turfing ? target : target.loc, TOUCH, 1, 0)
 	if(!turfing)
 		R.trans_to(target, R.total_volume * (spill ? G.fluid_transfer_factor : 1))
+	G.time_since_last_orgasm = 0
 	R.clear_reagents()
 
 /mob/living/carbon/human/proc/mob_climax_outside(obj/item/organ/genital/G, mb_time = 30) //This is used for forced orgasms and other hands-free climaxes

@@ -276,7 +276,23 @@ Works together with spawning an observer, noted above.
 		if (!(client.prefs.chat_toggles & CHAT_OOC))
 			client.prefs.chat_toggles ^= CHAT_OOC
 	transfer_ckey(ghost, FALSE)
-	ghost.AddElement(/datum/element/ghost_role_eligibility,penalize) // technically already run earlier, but this adds the penalty
+	if(penalize)
+		var/penalty = CONFIG_GET(number/suicide_reenter_round_timer) MINUTES
+		var/roundstart_quit_limit = CONFIG_GET(number/roundstart_suicide_time_limit) MINUTES
+		if(world.time < roundstart_quit_limit) //add up the time difference to their antag rolling penalty if they quit before half a (ingame) hour even passed.
+			penalty += roundstart_quit_limit - world.time
+		if(penalty)
+			penalty += world.realtime
+			if(SSautotransfer.can_fire && SSautotransfer.maxvotes)
+				var/maximumRoundEnd = SSautotransfer.starttime + SSautotransfer.voteinterval * SSautotransfer.maxvotes
+				if(penalty - SSshuttle.realtimeofstart > maximumRoundEnd + SSshuttle.emergencyCallTime + SSshuttle.emergencyDockTime + SSshuttle.emergencyEscapeTime)
+					penalty = CANT_REENTER_ROUND
+			if(!(ckey in GLOB.client_ghost_timeouts))
+				GLOB.client_ghost_timeouts += ckey
+				GLOB.client_ghost_timeouts[ckey] = 0
+			else if(GLOB.client_ghost_timeouts[ckey] == CANT_REENTER_ROUND)
+				return
+			GLOB.client_ghost_timeouts[ckey] = max(GLOB.client_ghost_timeouts[ckey],penalty)
 	// needs to be done AFTER the ckey transfer, too
 	return ghost
 
@@ -554,7 +570,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 			views |= i
 		var/new_view = input("Choose your new view", "Modify view range", 7) as null|anything in views
 		if(new_view)
-			client.change_view(CLAMP(new_view, 7, max_view))
+			client.change_view(clamp(new_view, 7, max_view))
 	else
 		client.change_view(CONFIG_GET(string/default_view))
 
@@ -921,3 +937,20 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		spawners_menu = new(src)
 
 	spawners_menu.ui_interact(src)
+
+/mob/dead/observer/verb/game_info()
+	set name = "Game info"
+	set desc = "Shows various info relating to the game mode, antagonists etc."
+	set category = "Ghost"
+	if(!started_as_observer && can_reenter_corpse)
+		to_chat(src, "You cannot see this info unless you are an observer or you've chosen Do Not Resuscitate!")
+		return
+	var/list/stuff = list("[SSticker.mode.name]")
+	stuff += "Antagonists:\n"
+	for(var/datum/antagonist/A in GLOB.antagonists)
+		if(A.owner)
+			stuff += "[A.owner] the [A.name]"
+	var/ghost_info = SSticker.mode.ghost_info()
+	if(ghost_info)
+		stuff += ghost_info
+	to_chat(src,stuff.Join("\n"))

@@ -68,7 +68,7 @@
 		var/obj/O = A
 		if(ObjBump(O))
 			return
-	if(ismovableatom(A))
+	if(ismovable(A))
 		var/atom/movable/AM = A
 		if(PushAM(AM, move_force))
 			return
@@ -502,8 +502,16 @@
 				var/obj/effect/proc_holder/spell/spell = S
 				spell.updateButtonIcon()
 
+//proc used to remove all immobilisation effects + reset stamina
+/mob/living/proc/remove_CC(should_update_mobility = TRUE)
+	SetAllImmobility(0, FALSE)
+	setStaminaLoss(0)
+	SetUnconscious(0, FALSE)
+	if(should_update_mobility)
+		update_mobility()
+
 //proc used to completely heal a mob.
-/mob/living/proc/fully_heal(admin_revive = 0)
+/mob/living/proc/fully_heal(admin_revive = FALSE)
 	restore_blood()
 	setToxLoss(0, 0) //zero as second argument not automatically call updatehealth().
 	setOxyLoss(0, 0)
@@ -668,17 +676,20 @@
 			resist_fire() //stop, drop, and roll
 			// Give clickdelay
 			return TRUE
+
 	if(resting) //cit change - allows resisting out of resting
 		resist_a_rest() // ditto
 		// DO NOT GIVE CLCIKDELAY - resist_a_rest() handles spam prevention. Somewhat.
 		return FALSE
-	if(last_special <= world.time)
-		resist_restraints() //trying to remove cuffs.
-		// DO NOT GIVE CLICKDELAY - last_special handles this.
-		return FALSE
+
 	if(CHECK_MOBILITY(src, MOBILITY_USE) && resist_embedded()) //Citadel Change for embedded removal memes - requires being able to use items.
 		// DO NOT GIVE DEFAULT CLICKDELAY - This is a combat action.
 		changeNext_move(CLICK_CD_MELEE)
+		return FALSE
+
+	if(last_special <= world.time)
+		resist_restraints() //trying to remove cuffs.
+		// DO NOT GIVE CLICKDELAY - last_special handles this.
 		return FALSE
 
 /// Proc to resist a grab. moving_resist is TRUE if this began by someone attempting to move. Return FALSE if still grabbed/failed to break out. Use this instead of resist_grab() directly.
@@ -1027,7 +1038,7 @@
 		update_fire()
 
 /mob/living/proc/adjust_fire_stacks(add_fire_stacks) //Adjusting the amount of fire_stacks we have on person
-	fire_stacks = CLAMP(fire_stacks + add_fire_stacks, -20, 20)
+	fire_stacks = clamp(fire_stacks + add_fire_stacks, -20, 20)
 	if(on_fire && fire_stacks <= 0)
 		ExtinguishMob()
 

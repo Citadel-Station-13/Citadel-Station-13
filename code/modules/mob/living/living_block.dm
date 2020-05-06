@@ -61,6 +61,7 @@
 	. = list()
 	if(active_block_item)
 		.[active_block_item] = active_block_item.block_parry_data.block_active_priority
+	SEND_SIGNAL(src, COMSIG_LIVING_GET_BLOCKING_ITEMS, .)
 	for(var/obj/item/I in held_items)
 		// this is a bad check but i am not removing it until a better catchall is made
 		if(istype(I, /obj/item/clothing))
@@ -77,11 +78,13 @@
 
 /// Runs block and returns flag for do_run_block to process.
 /obj/item/proc/run_block(mob/living/owner, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return)
-	SEND_SIGNAL(src, COMSIG_ITEM_RUN_BLOCK, owner, object, damage, attack_text, attack_type, armour_penetration, attacker, def_zone, final_block_chance, block_return)
+	. = SEND_SIGNAL(src, COMSIG_ITEM_RUN_BLOCK, owner, object, damage, attack_text, attack_type, armour_penetration, attacker, def_zone, final_block_chance, block_return)
+	if(. & BLOCK_SUCCESS)
+		return
 	if(prob(final_block_chance))
 		owner.visible_message("<span class='danger'>[owner] blocks [attack_text] with [src]!</span>")
-		return BLOCK_SUCCESS | BLOCK_PHYSICAL_EXTERNAL
-	return BLOCK_NONE
+		return . | BLOCK_SUCCESS | BLOCK_PHYSICAL_EXTERNAL
+	return . | BLOCK_NONE
 
 /// Returns block information using list/block_return. Used for check_block() on mobs.
 /obj/item/proc/check_block(mob/living/owner, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return)

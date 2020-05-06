@@ -128,7 +128,7 @@
 		// Can most things breathe?
 		if(trace_gases)
 			continue
-		if(A_gases[/datum/gas/oxygen] >= 16)
+		if(A_gases[/datum/gas/oxygen] <= 16)
 			continue
 		if(A_gases[/datum/gas/plasma])
 			continue

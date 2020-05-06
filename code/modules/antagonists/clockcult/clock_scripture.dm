@@ -30,6 +30,7 @@ Applications: 8 servants, 3 caches, and 100 CV
 	var/primary_component
 	var/important = FALSE //important scripture will be italicized in the slab's interface
 	var/sort_priority = 1 //what position the scripture should have in a list of scripture. Should be based off of component costs/reqs, but you can't initial() lists.
+	var/requires_full_power = FALSE		//requires the user to be a full, non neutered servant of ratvar
 
 //messages for offstation scripture recital, courtesy ratvar's generals(and neovgre)
 	var/static/list/neovgre_penalty = list("Go to the station.", "Useless.", "Don't waste time.", "Pathetic.", "Wasteful.")
@@ -76,6 +77,9 @@ Applications: 8 servants, 3 caches, and 100 CV
 
 /datum/clockwork_scripture/proc/can_recite() //If the words can be spoken
 	if(!invoker || !slab || invoker.get_active_held_item() != slab)
+		return FALSE
+	if(!is_servant_of_ratvar(invoker, requires_full_power))
+		to_chat(invoker, "<span class='warning'>You aren't strongly connected enough to Ratvar to invoke this!</span>")
 		return FALSE
 	if(!invoker.can_speak_vocal())
 		to_chat(invoker, "<span class='warning'>You are unable to speak the words of the scripture!</span>")
@@ -236,17 +240,20 @@ Applications: 8 servants, 3 caches, and 100 CV
 		return FALSE
 	return TRUE
 
+/datum/clockwork_scripture/create_object/proc/get_spawn_path(mob/user)
+	return object_path
+
 /datum/clockwork_scripture/create_object/scripture_effects()
 	if(creator_message && observer_message)
 		invoker.visible_message(observer_message, creator_message)
 	else if(creator_message)
 		to_chat(invoker, creator_message)
-	var/obj/O = new object_path (get_turf(invoker))
+	var/to_spawn = get_spawn_path(invoker)
+	var/obj/O = new to_spawn(get_turf(invoker))
 	O.ratvar_act() //update the new object so it gets buffed if ratvar is alive
 	if(isitem(O) && put_object_in_hands)
 		invoker.put_in_hands(O)
 	return TRUE
-
 
 //Used specifically to create construct shells.
 /datum/clockwork_scripture/create_object/construct

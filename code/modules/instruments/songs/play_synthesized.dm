@@ -52,8 +52,8 @@
 						if(!num)		//it's an accidental
 							accents[key] = oct_acc		//if they misspelled it/fucked up that's on them lmao, no safety checks.
 						else	//octave
-							octaves[key] = CLAMP(num, octave_min, octave_max)
-					compiled_chord += CLAMP((note_offset_lookup[key] + octaves[key] * 12 + accent_lookup[accents[key]]), key_min, key_max)
+							octaves[key] = clamp(num, octave_min, octave_max)
+					compiled_chord += clamp((note_offset_lookup[key] + octaves[key] * 12 + accent_lookup[accents[key]]), key_min, key_max)
 			compiled_chord += tempodiv		//this goes last
 			if(length(compiled_chord))
 				compiled_chords[++compiled_chords.len] = compiled_chord
@@ -76,7 +76,7 @@
 	copy.frequency = K.frequency
 	copy.volume = volume
 	var/channel_text = num2text(channel)
-	channels_playing[channel_text] = volume
+	channels_playing[channel_text] = 100
 	last_channel_played = channel_text
 	for(var/i in hearing_mobs)
 		var/mob/M = i
@@ -132,4 +132,4 @@
 		else
 			for(var/i in hearing_mobs)
 				var/mob/M = i
-				M.set_sound_channel_volume(channelnumber, current_volume)
+				M.set_sound_channel_volume(channelnumber, (current_volume * 0.01) * volume * using_instrument.volume_multiplier)

@@ -167,15 +167,10 @@
 	if((do_after_flags & DO_AFTER_REQUIRE_FREE_HAND_OR_TOOL) && (!living_user?.is_holding(tool) && !length(living_user?.get_empty_held_indexes())))
 		return FALSE
 
-/// Requires absolute stillness in the user
-#define DO_AFTER_DISALLOW_MOVING_ABSOLUTE_USER		(1<<0)
-/// Requires relative stillness to our target
-#define DO_AFTER_DISALLOW_MOVING_RELATIVE_TARGET		(1<<1)
-
 #undef INVOKE_CALLBACK
 #undef CHECK_FLAG_FAILURE
 
-/proc/do_mob(mob/user , mob/target, time = 30, uninterruptible = 0, progress = 1, datum/callback/extra_checks = null, ignorehelditem = 0)
+/proc/do_mob(mob/user , mob/target, time = 30, uninterruptible = 0, progress = 1, datum/callback/extra_checks = null, ignorehelditem = FALSE, resume_time = 0 SECONDS)
 	if(!user || !target)
 		return 0
 	var/user_loc = user.loc
@@ -194,10 +189,10 @@
 	var/endtime = world.time+time
 	var/starttime = world.time
 	. = 1
-	while (world.time < endtime)
+	while (world.time + resume_time < endtime)
 		stoplag(1)
 		if (progress)
-			progbar.update(world.time - starttime)
+			progbar.update(world.time - starttime + resume_time)
 		if(QDELETED(user) || QDELETED(target))
 			. = 0
 			break
@@ -229,7 +224,7 @@
 		checked_health["health"] = health
 	return ..()
 
-/proc/do_after(mob/user, var/delay, needhand = 1, atom/target = null, progress = 1, datum/callback/extra_checks = null, required_mobility_flags = (MOBILITY_USE|MOBILITY_MOVE))
+/proc/do_after(mob/user, var/delay, needhand = 1, atom/target = null, progress = 1, datum/callback/extra_checks = null, required_mobility_flags = (MOBILITY_USE|MOBILITY_MOVE), resume_time = 0 SECONDS)
 	if(!user)
 		return 0
 	var/atom/Tloc = null
@@ -258,10 +253,10 @@
 	var/starttime = world.time
 	. = 1
 	var/mob/living/L = isliving(user) && user			//evals to last thing eval'd
-	while (world.time < endtime)
+	while (world.time + resume_time < endtime)
 		stoplag(1)
 		if (progress)
-			progbar.update(world.time - starttime)
+			progbar.update(world.time - starttime + resume_time)
 
 		if(drifting && !user.inertia_dir)
 			drifting = 0

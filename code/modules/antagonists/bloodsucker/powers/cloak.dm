@@ -2,7 +2,7 @@
 
 /datum/action/bloodsucker/cloak
 	name = "Cloak of Darkness"
-	desc = "Blend into the shadows and become invisible to the untrained eye. Movement is slowed in brightly lit areas."
+	desc = "Blend into the shadows and become invisible to the untrained eye. Movement is slowed in brightly lit areas, and you cannot dissapear while mortals watch you."
 	button_icon_state = "power_cloak"
 	bloodcost = 5
 	cooldown = 50
@@ -18,14 +18,11 @@
 	. = ..()
 	if(!.)
 		return
-	
 	// must have nobody around to see the cloak
-	var/watchers = viewers(9,get_turf(owner))
-	for(var/mob/living/M in watchers)
+	for(var/mob/living/M in viewers(9, owner))
 		if(M != owner)
 			to_chat(owner, "<span class='warning'>You may only vanish into the shadows unseen.</span>")
 			return FALSE
-
 	return TRUE
 
 /datum/action/bloodsucker/cloak/ActivatePower()

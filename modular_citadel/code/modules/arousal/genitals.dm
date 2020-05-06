@@ -1,6 +1,7 @@
 /obj/item/organ/genital
 	color = "#fcccb3"
-	w_class = WEIGHT_CLASS_NORMAL
+	w_class = WEIGHT_CLASS_SMALL
+	organ_flags = ORGAN_NO_DISMEMBERMENT
 	var/shape
 	var/sensitivity = 1 // wow if this were ever used that'd be cool but it's not but i'm keeping it for my unshit code
 	var/genital_flags //see citadel_defines.dm
@@ -15,6 +16,7 @@
 	var/fluid_efficiency = 1
 	var/fluid_rate = CUM_RATE
 	var/fluid_mult = 1
+	var/time_since_last_orgasm = 500
 	var/aroused_state = FALSE //Boolean used in icon_state strings
 	var/obj/item/organ/genital/linked_organ
 	var/linked_organ_slot //used for linking an apparatus' organ to its other half on update_link().
@@ -150,24 +152,18 @@
 		aroused_state = FALSE
 
 /obj/item/organ/genital/on_life()
-	if(!reagents || !owner)
+	. = ..()
+	if(!reagents || !.)
 		return
 	reagents.maximum_volume = fluid_max_volume
 	if(fluid_id && CHECK_BITFIELD(genital_flags, GENITAL_FUID_PRODUCTION))
-		generate_fluid()
+		time_since_last_orgasm++
 
 /obj/item/organ/genital/proc/generate_fluid()
-	var/amount = fluid_rate
-	if(!reagents.total_volume && amount < 0.1) // Apparently, 0.015 gets rounded down to zero and no reagents are created if we don't start it with 0.1 in the tank.
-		amount += 0.1
-	var/multiplier = fluid_mult
-	if(reagents.total_volume >= 5)
-		multiplier *= 0.8
-	if(reagents.total_volume < reagents.maximum_volume)
-		reagents.isolate_reagent(fluid_id)//remove old reagents if it changed and just clean up generally
-		reagents.add_reagent(fluid_id, (amount * multiplier))//generate the cum
-		return TRUE
-	return FALSE
+	var/amount = clamp(fluid_rate * time_since_last_orgasm * fluid_mult,0,fluid_max_volume)
+	reagents.clear_reagents()
+	reagents.add_reagent(fluid_id,amount)
+	return TRUE
 
 /obj/item/organ/genital/proc/update_link()
 	if(owner)
@@ -319,7 +315,7 @@
 				genital_overlay = center_image(genital_overlay, dim_x, dim_y)
 
 			if(dna.species.use_skintones && dna.features["genitals_use_skintone"])
-				genital_overlay.color = "#[skintone2hex(skin_tone)]"
+				genital_overlay.color = SKINTONE2HEX(skin_tone)
 			else
 				switch(S.color_src)
 					if("cock_color")
@@ -331,7 +327,7 @@
 					if("vag_color")
 						genital_overlay.color = "#[dna.features["vag_color"]]"
 
-			genital_overlay.icon_state = "[G.slot]_[S.icon_state]_[size][dna.species.use_skintones ? "_s" : ""]_[aroused_state]_[layertext]"
+			genital_overlay.icon_state = "[G.slot]_[S.icon_state]_[size][(dna.species.use_skintones && !dna.skin_tone_override) ? "_s" : ""]_[aroused_state]_[layertext]"
 
 			if(layers_num[layer] == GENITALS_FRONT_LAYER && G.genital_flags & GENITAL_THROUGH_CLOTHES)
 				genital_overlay.layer = -GENITALS_EXPOSED_LAYER
@@ -361,14 +357,12 @@
 	var/willyCheck = getorganslot(ORGAN_SLOT_PENIS)
 
 	if(organCheck == FALSE)
-		if(ishuman(src) && dna.species.id == "human")
+		if(ishuman(src) && dna.species.use_skintones)
 			dna.features["genitals_use_skintone"] = TRUE
-			dna.species.use_skintones = TRUE
-		if(MUTCOLORS)
-			if(src.dna.species.fixed_mut_color)
-				dna.features["cock_color"] = "[dna.species.fixed_mut_color]"
-				dna.features["breasts_color"] = "[dna.species.fixed_mut_color]"
-				return
+		if(src.dna.species.fixed_mut_color)
+			dna.features["cock_color"] = "[dna.species.fixed_mut_color]"
+			dna.features["breasts_color"] = "[dna.species.fixed_mut_color]"
+			return
 		//So people who haven't set stuff up don't get rainbow surprises.
 		dna.features["cock_color"] = "[dna.features["mcolor"]]"
 		dna.features["breasts_color"] = "[dna.features["mcolor"]]"

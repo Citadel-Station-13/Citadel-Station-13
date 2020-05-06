@@ -22,7 +22,7 @@
 		for(var/obj/item/I in contents)
 			. += I.get_belt_overlay()
 
-/obj/item/storage/belt/worn_overlays(isinhands, icon_file, style_flags = NONE)
+/obj/item/storage/belt/worn_overlays(isinhands, icon_file, used_state, style_flags = NONE)
 	. = ..()
 	if(!isinhands && onmob_overlays)
 		for(var/obj/item/I in contents)
@@ -695,7 +695,10 @@
 		/obj/item/gun/ballistic/revolver,
 		/obj/item/ammo_box,
 		/obj/item/toy/gun,
-		/obj/item/gun/energy/e_gun/mini
+		/obj/item/gun/energy/e_gun/mini,
+		/obj/item/gun/ballistic/automatic/magrifle/pistol,
+		/obj/item/gun/energy/disabler,
+		/obj/item/gun/energy/taser
 		))
 
 /obj/item/storage/belt/holster/full/PopulateContents()
@@ -708,6 +711,7 @@
 	desc = "A dorky fannypack for keeping small items in."
 	icon_state = "fannypack_leather"
 	item_state = "fannypack_leather"
+	dying_key = DYE_REGISTRY_FANNYPACK
 
 /obj/item/storage/belt/fannypack/ComponentInitialize()
 	. = ..()

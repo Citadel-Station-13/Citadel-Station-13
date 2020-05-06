@@ -1,7 +1,7 @@
 /datum/reagent/blood
 	data = list("donor"=null,"viruses"=null,"blood_DNA"=null, "bloodcolor" = BLOOD_COLOR_HUMAN, "blood_type"= null,"resistances"=null,"trace_chem"=null,"mind"=null,"ckey"=null,"gender"=null,"real_name"=null,"cloneable"=null,"factions"=null,"quirks"=null)
 	name = "Blood"
-	value = 1
+	value = REAGENT_VALUE_UNCOMMON // $$$ blood ""donations"" $$$
 	color = BLOOD_COLOR_HUMAN // rgb: 200, 0, 0
 	description = "Blood from some creature."
 	metabolization_rate = 5 //fast rate so it disappears fast.
@@ -140,8 +140,9 @@
 	data = list("donor"=null,"viruses"=null,"blood_DNA"="REPLICATED", "bloodcolor" = BLOOD_COLOR_SYNTHETIC, "blood_type"="SY","resistances"=null,"trace_chem"=null,"mind"=null,"ckey"=null,"gender"=null,"real_name"=null,"cloneable"=null,"factions"=null)
 	name = "Synthetic Blood"
 	description = "A synthetically produced imitation of blood."
-	taste_description = "oily"
+	taste_description = "oil"
 	color = BLOOD_COLOR_SYNTHETIC // rgb: 11, 7, 48
+	value = REAGENT_VALUE_NONE
 
 /datum/reagent/blood/jellyblood
 	data = list("donor"=null,"viruses"=null,"blood_DNA"=null, "bloodcolor" = BLOOD_COLOR_SLIME, "blood_type"="GEL","resistances"=null,"trace_chem"=null,"mind"=null,"ckey"=null,"gender"=null,"real_name"=null,"cloneable"=null,"factions"=null)
@@ -158,6 +159,7 @@
 	description = "This highly resembles blood, but it doesnt actually function like it, resembling more ketchup, with a more blood-like consistency."
 	taste_description = "sap" //Like tree sap?
 	pH = 7.45
+	value = REAGENT_VALUE_NONE
 
 /datum/reagent/blood/jellyblood/on_mob_life(mob/living/carbon/M)
 	if(prob(10))
@@ -271,9 +273,9 @@
 /datum/reagent/water/reaction_obj(obj/O, reac_volume)
 	O.extinguish()
 	O.acid_level = 0
-	// Monkey cube
-	if(istype(O, /obj/item/reagent_containers/food/snacks/monkeycube))
-		var/obj/item/reagent_containers/food/snacks/monkeycube/cube = O
+	// cubes
+	if(istype(O, /obj/item/reagent_containers/food/snacks/cube))
+		var/obj/item/reagent_containers/food/snacks/cube/cube = O
 		cube.Expand()
 
 	// Dehydrated carp
@@ -332,7 +334,7 @@
 		data = list("misc" = 1)
 	data["misc"]++
 	M.jitteriness = min(M.jitteriness+4,10)
-	if(iscultist(M))
+	if(iscultist(M, FALSE, TRUE))
 		for(var/datum/action/innate/cult/blood_magic/BM in M.actions)
 			if(!BM.holy_dispel)
 				BM.holy_dispel = TRUE
@@ -361,7 +363,7 @@
 				if("emote")
 					M.visible_message("<span class='warning'>[M] [pick("whimpers quietly", "shivers as though cold", "glances around in paranoia")].</span>")
 	if(data["misc"] >= 60)	// 30 units, 135 seconds
-		if(iscultist(M) || is_servant_of_ratvar(M))
+		if(iscultist(M, FALSE, TRUE) || is_servant_of_ratvar(M, FALSE, TRUE))
 			if(iscultist(M))
 				SSticker.mode.remove_cultist(M.mind, FALSE, TRUE)
 			else if(is_servant_of_ratvar(M))
@@ -387,6 +389,7 @@
 	description = "Something that shouldn't exist on this plane of existence."
 	taste_description = "suffering"
 	pH = 6.5
+	value = REAGENT_VALUE_RARE
 
 /datum/reagent/fuel/unholywater/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
 	if(method == TOUCH || method == VAPOR)
@@ -423,6 +426,7 @@
 	name = "Hell Water"
 	description = "YOUR FLESH! IT BURNS!"
 	taste_description = "burning"
+	value = REAGENT_VALUE_VERY_RARE
 
 /datum/reagent/hellwater/on_mob_life(mob/living/carbon/M)
 	M.fire_stacks = min(5,M.fire_stacks + 3)
@@ -437,6 +441,7 @@
 	name = "Zelus Oil"
 	description = "Oil blessed by a greater being."
 	taste_description = "metallic oil"
+	value = REAGENT_VALUE_RARE
 
 /datum/reagent/fuel/holyoil/on_mob_life(mob/living/carbon/M)
 	if(is_servant_of_ratvar(M))
@@ -475,6 +480,7 @@
 	name = "Godblood"
 	description = "Slowly heals all damage types. Has a rather high overdose threshold. Glows with mysterious power."
 	overdose_threshold = 150
+	value = REAGENT_VALUE_RARE
 
 /datum/reagent/lube
 	name = "Space Lube"
@@ -507,93 +513,83 @@
 /datum/reagent/spraytan/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message = 1)
 	if(ishuman(M))
 		if(method == PATCH || method == VAPOR)
-			var/mob/living/carbon/human/N = M
-			if(N.dna.species.id == "human")
-				switch(N.skin_tone)
-					if("african1")
-						N.skin_tone = "african2"
-					if("indian")
-						N.skin_tone = "african1"
-					if("arab")
-						N.skin_tone = "indian"
-					if("asian2")
-						N.skin_tone = "arab"
-					if("asian1")
-						N.skin_tone = "asian2"
-					if("mediterranean")
-						N.skin_tone = "african1"
-					if("latino")
-						N.skin_tone = "mediterranean"
-					if("caucasian3")
-						N.skin_tone = "mediterranean"
-					if("caucasian2")
-						N.skin_tone = pick("caucasian3", "latino")
-					if("caucasian1")
-						N.skin_tone = "caucasian2"
-					if ("albino")
-						N.skin_tone = "caucasian1"
+			var/mob/living/carbon/human/H = M
+			if(H.dna.species.use_skintones)
+				if(!H.dna.skin_tone_override)
+					var/diff_len = length(GLOB.skin_tones - GLOB.nonstandard_skin_tones)
+					H.skin_tone = GLOB.skin_tones[min(diff_len, GLOB.skin_tones.Find(H.skin_tone) + 1)]
+				else
+					H.skin_tone = H.dna.skin_tone_override = tan_mutant_color(H.dna.skin_tone_override, "#202020")
+			if(MUTCOLORS in H.dna.species.species_traits) //take current alien color and darken it slightly
+				H.dna.features["mcolor"] = tan_mutant_color(H.dna.features["mcolor"])
+			H.update_body()
 
-			if(MUTCOLORS in N.dna.species.species_traits) //take current alien color and darken it slightly
-				var/newcolor = ""
-				var/string = N.dna.features["mcolor"]
-				var/len = length(string)
-				var/char = ""
-				var/ascii = 0
-				for(var/i=1, i<=len, i += length(char))
-					char = string[i]
-					ascii = text2ascii(char)
-					switch(ascii)
-						if(48)
-							newcolor += "0"
-						if(49 to 57)
-							newcolor += ascii2text(ascii-1)	//numbers 1 to 9
-						if(97)
-							newcolor += "9"
-						if(98 to 102)
-							newcolor += ascii2text(ascii-1)	//letters b to f lowercase
-						if(65)
-							newcolor += "9"
-						if(66 to 70)
-							newcolor += ascii2text(ascii+31)	//letters B to F - translates to lowercase
-						else
-							break
-				if(ReadHSV(newcolor)[3] >= ReadHSV("#7F7F7F")[3])
-					N.dna.features["mcolor"] = newcolor
-			N.regenerate_icons()
+	if(method == INGEST)
+		if(show_message)
+			to_chat(M, "<span class='notice'>That tasted horrible.</span>")
 
+	return ..()
 
+/datum/reagent/spraytan/proc/tan_mutant_color(color, limit = "#7F7F7F")
+	var/newcolor = ""
+	var/len = length(color)
+	var/char = ""
+	var/ascii = 0
+	for(var/i=1, i<=len, i += length(char))
+		char = color[i]
+		ascii = text2ascii(char)
+		switch(ascii)
+			if(35)
+				newcolor += "#"
+			if(48)
+				newcolor += "0"
+			if(49 to 57)
+				newcolor += ascii2text(ascii-1)	//numbers 1 to 9
+			if(97)
+				newcolor += "9"
+			if(98 to 102)
+				newcolor += ascii2text(ascii-1)	//letters b to f lowercase
+			if(65)
+				newcolor += "9"
+			if(66 to 70)
+				newcolor += ascii2text(ascii+31)	//letters B to F - translates to lowercase
+			else
+				break
+	if(ReadHSV(newcolor)[3] >= ReadHSV(limit)[3])
+		return newcolor
+	return color
 
-		if(method == INGEST)
-			if(show_message)
-				to_chat(M, "<span class='notice'>That tasted horrible.</span>")
-	..()
-
+/datum/reagent/spraytan/overdose_start(mob/living/M)
+	. = ..()
+	if(ishuman(M))
+		var/mob/living/carbon/human/H = M
+		H.hair_style = "Spiky"
+		H.facial_hair_style = "Shaved"
+		H.facial_hair_color = "000"
+		H.hair_color = "000"
+		if(!(HAIR in H.dna.species.species_traits)) //No hair? No problem!
+			H.dna.species.species_traits += HAIR
+		if(H.dna.species.use_skintones)
+			if(H.dna.skin_tone_override)
+				H.skin_tone = H.dna.skin_tone_override = "#FF8800"
+			else
+				H.skin_tone = "orange"
+		else if(MUTCOLORS in H.dna.species.species_traits) //Aliens with custom colors simply get turned orange
+			H.dna.features["mcolor"] = "f80"
+		H.update_body()
 
 /datum/reagent/spraytan/overdose_process(mob/living/M)
 	metabolization_rate = 1 * REAGENTS_METABOLISM
-
 	if(ishuman(M))
-		var/mob/living/carbon/human/N = M
-		N.hair_style = "Spiky"
-		N.facial_hair_style = "Shaved"
-		N.facial_hair_color = "000"
-		N.hair_color = "000"
-		if(!(HAIR in N.dna.species.species_traits)) //No hair? No problem!
-			N.dna.species.species_traits += HAIR
-		if(N.dna.species.use_skintones)
-			N.skin_tone = "orange"
-		else if(MUTCOLORS in N.dna.species.species_traits) //Aliens with custom colors simply get turned orange
-			N.dna.features["mcolor"] = "f80"
-		N.regenerate_icons()
+		var/mob/living/carbon/human/H = M
 		if(prob(7))
-			if(N.w_uniform)
-				M.visible_message(pick("<b>[M]</b>'s collar pops up without warning.</span>", "<b>[M]</b> flexes [M.p_their()] arms."))
+			if(H.w_uniform)
+				H.visible_message(pick("<b>[H]</b>'s collar pops up without warning.</span>", "<b>[H]</b> flexes [H.p_their()] arms."))
 			else
-				M.visible_message("<b>[M]</b> flexes [M.p_their()] arms.")
+				H.visible_message("<b>[H]</b> flexes [H.p_their()] arms.")
 	if(prob(10))
 		M.say(pick("Shit was SO cash.", "You are everything bad in the world.", "What sports do you play, other than 'jack off to naked drawn Japanese people?'", "Don’t be a stranger. Just hit me with your best shot.", "My name is John and I hate every single one of you."), forced = "spraytan")
-	..()
-	return
+	return ..()
 
 /datum/reagent/mutationtoxin
 	name = "Stable Mutation Toxin"
@@ -601,6 +597,7 @@
 	color = "#5EFF3B" //RGB: 94, 255, 59
 	metabolization_rate = INFINITY //So it instantly removes all of itself
 	taste_description = "slime"
+	value = REAGENT_VALUE_RARE
 	var/datum/species/race = /datum/species/human
 	var/mutationtext = "<span class='danger'>The pain subsides. You feel... human.</span>"
 
@@ -760,6 +757,7 @@
 	color = "#5EFF3B" //RGB: 94, 255, 59
 	taste_description = "slime"
 	metabolization_rate = 0.2
+	value = REAGENT_VALUE_RARE
 
 /datum/reagent/slime_toxin/on_mob_life(mob/living/carbon/human/H)
 	..()
@@ -796,6 +794,7 @@
 	color = "#5EFF3B" //RGB: 94, 255, 59
 	metabolization_rate = INFINITY
 	taste_description = "slime"
+	value = REAGENT_VALUE_RARE
 
 /datum/reagent/mulligan/on_mob_life(mob/living/carbon/human/H)
 	..()
@@ -810,6 +809,7 @@
 	description = "An advanced corruptive toxin produced by slimes."
 	color = "#13BC5E" // rgb: 19, 188, 94
 	taste_description = "slime"
+	value = REAGENT_VALUE_VERY_RARE
 
 /datum/reagent/aslimetoxin/reaction_mob(mob/living/L, method=TOUCH, reac_volume)
 	if(method != TOUCH)
@@ -821,6 +821,7 @@
 	color = "#5EFF3B" //RGB: 94, 255, 59
 	can_synth = FALSE
 	taste_description = "decay"
+	value = REAGENT_VALUE_GLORIOUS
 
 /datum/reagent/gluttonytoxin/reaction_mob(mob/living/L, method=TOUCH, reac_volume)
 	L.ForceContractDisease(new /datum/disease/transformation/morph(), FALSE, TRUE)
@@ -1044,6 +1045,14 @@
 			// +20% success propability on each step, useful while operating in less-than-perfect conditions
 	..()
 
+/datum/reagent/space_cleaner/sterilizine/reaction_obj(obj/O, reac_volume)
+	if(istype(O, /obj/item/stack/medical/gauze))
+		var/obj/item/stack/medical/gauze/G = O
+		reac_volume = min((reac_volume / 10), G.amount)
+		new/obj/item/stack/medical/gauze/adv(get_turf(G), reac_volume)
+		G.use(reac_volume)
+
+
 /datum/reagent/iron
 	name = "Iron"
 	description = "Pure iron is a metal."
@@ -1070,11 +1079,11 @@
 	to_chat(M, "<span class='userdanger'>You start feeling your guts twisting painfully!</span>")
 	SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "[type]_overdose", /datum/mood_event/overdose, name)
 
-/datum/reagent/iron/overdose_process(mob/living/carbon/C)
+/datum/reagent/iron/overdose_process(mob/living/M)
 	if(prob(20))
-		var/obj/item/organ/liver/L = C.getorganslot(ORGAN_SLOT_LIVER)
-		if (istype(L))
-			C.applyLiverDamage(2) //mild until the fabled med rework comes out. the organ damage galore
+		var/obj/item/organ/liver/L = M.getorganslot(ORGAN_SLOT_LIVER)
+		if(L)
+			L.applyOrganDamage(2)
 	..()
 
 /datum/reagent/gold
@@ -1123,6 +1132,7 @@
 	color = "#0000CC"
 	taste_description = "fizzling blue"
 	pH = 12
+	value = REAGENT_VALUE_RARE
 
 /datum/reagent/bluespace/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
 	if(method == TOUCH || method == VAPOR)
@@ -1249,6 +1259,7 @@
 	metabolization_rate = 1.5 * REAGENTS_METABOLISM
 	taste_description = "acid"
 	pH = 2
+	value = REAGENT_VALUE_RARE
 
 /datum/reagent/space_cleaner/ez_clean/on_mob_life(mob/living/carbon/M)
 	M.adjustBruteLoss(3.33)
@@ -1300,6 +1311,7 @@
 	color = "#535E66" // rgb: 83, 94, 102
 	can_synth = FALSE
 	taste_description = "sludge"
+	value = REAGENT_VALUE_GLORIOUS
 
 /datum/reagent/nanomachines/reaction_mob(mob/living/L, method=TOUCH, reac_volume, show_message = 1, touch_protection = 0)
 	if(method==PATCH || method==INGEST || method==INJECT || (method == VAPOR && prob(min(reac_volume,100)*(1 - touch_protection))))
@@ -1311,6 +1323,7 @@
 	color = "#535E66" // rgb: 83, 94, 102
 	can_synth = FALSE
 	taste_description = "sludge"
+	value = REAGENT_VALUE_GLORIOUS
 
 /datum/reagent/xenomicrobes/reaction_mob(mob/living/L, method=TOUCH, reac_volume, show_message = 1, touch_protection = 0)
 	if(method==PATCH || method==INGEST || method==INJECT || (method == VAPOR && prob(min(reac_volume,100)*(1 - touch_protection))))
@@ -1323,6 +1336,7 @@
 	can_synth = FALSE
 	taste_description = "slime"
 	pH = 11
+	value = REAGENT_VALUE_GLORIOUS
 
 /datum/reagent/fungalspores/reaction_mob(mob/living/L, method=TOUCH, reac_volume, show_message = 1, touch_protection = 0)
 	if(method==PATCH || method==INGEST || method==INJECT || (method == VAPOR && prob(min(reac_volume,100)*(1 - touch_protection))))
@@ -1350,6 +1364,7 @@
 	color = "#664B63" // rgb: 102, 75, 99
 	taste_description = "metal"
 	pH = 11.8
+	value = REAGENT_VALUE_UNCOMMON
 
 /datum/reagent/ammonia
 	name = "Ammonia"
@@ -1427,6 +1442,7 @@
 	metabolization_rate = 1.5 * REAGENTS_METABOLISM
 	color = "E1A116"
 	taste_description = "sourness"
+	value = REAGENT_VALUE_EXCEPTIONAL
 
 /datum/reagent/stimulum/on_mob_metabolize(mob/living/L)
 	..()
@@ -1452,13 +1468,14 @@
 	color = "90560B"
 	taste_description = "burning"
 	pH = 2
+	value = REAGENT_VALUE_VERY_RARE
 
 /datum/reagent/nitryl/on_mob_metabolize(mob/living/L)
 	..()
-	L.add_movespeed_modifier(type, update=TRUE, priority=100, multiplicative_slowdown=-1, blacklisted_movetypes=(FLYING|FLOATING))
+	L.add_movespeed_modifier(/datum/movespeed_modifier/reagent/nitryl)
 
 /datum/reagent/nitryl/on_mob_end_metabolize(mob/living/L)
-	L.remove_movespeed_modifier(type)
+	L.remove_movespeed_modifier(/datum/movespeed_modifier/reagent/nitryl)
 	..()
 
 /////////////////////////Coloured Crayon Powder////////////////////////////
@@ -1473,6 +1490,7 @@
 	color = "#FFFFFF" // rgb: 207, 54, 0
 	taste_description = "the back of class"
 	no_mob_color = TRUE
+	value = REAGENT_VALUE_NONE
 
 /datum/reagent/colorful_reagent/crayonpowder/New()
 	description = "\an [colorname] powder made by grinding down crayons, good for colouring chemical reagents."
@@ -1643,6 +1661,7 @@
 	color = "#FFFF00"
 	var/list/random_color_list = list("#00aedb","#a200ff","#f47835","#d41243","#d11141","#00b159","#00aedb","#f37735","#ffc425","#008744","#0057e7","#d62d20","#ffa700")
 	taste_description = "rainbows"
+	value = REAGENT_VALUE_RARE
 	var/no_mob_color = FALSE
 
 /datum/reagent/colorful_reagent/on_mob_life(mob/living/carbon/M)
@@ -1672,6 +1691,7 @@
 	color = "#ff00dd"
 	var/list/potential_colors = list("0ad","a0f","f73","d14","d14","0b5","0ad","f73","fc2","084","05e","d22","fa0") // fucking hair code
 	taste_description = "sourness"
+	value = REAGENT_VALUE_RARE
 
 /datum/reagent/hair_dye/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
 	if(method == TOUCH || method == VAPOR)
@@ -1687,6 +1707,7 @@
 	reagent_state = LIQUID
 	color = "#fac34b"
 	taste_description = "sourness"
+	value = REAGENT_VALUE_UNCOMMON
 
 /datum/reagent/barbers_aid/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
 	if(method == TOUCH || method == VAPOR)
@@ -1704,6 +1725,7 @@
 	reagent_state = LIQUID
 	color = "#ffaf00"
 	taste_description = "sourness"
+	value = REAGENT_VALUE_RARE
 
 /datum/reagent/concentrated_barbers_aid/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
 	if(method == TOUCH || method == VAPOR)
@@ -1736,6 +1758,7 @@
 	color = "#A70FFF"
 	taste_description = "dryness"
 	pH = 10.7
+	value = REAGENT_VALUE_UNCOMMON
 
 /datum/reagent/drying_agent/reaction_turf(turf/open/T, reac_volume)
 	if(istype(T))
@@ -1873,6 +1896,7 @@
 	color = "#00ff80"
 	taste_description = "strange honey"
 	pH = 3
+	value = REAGENT_VALUE_UNCOMMON
 
 /datum/reagent/royal_bee_jelly/on_mob_life(mob/living/carbon/M)
 	if(prob(2))
@@ -1894,6 +1918,7 @@
 	can_synth = FALSE
 	taste_description = "brains"
 	pH = 0.5
+	value = REAGENT_VALUE_GLORIOUS
 
 /datum/reagent/romerol/reaction_mob(mob/living/carbon/human/H, method=TOUCH, reac_volume)
 	// Silently add the zombie infection organ to be activated upon death
@@ -1907,6 +1932,7 @@
 	description = "An experimental serum which causes rapid muscular growth in Hominidae. Side-affects may include hypertrichosis, violent outbursts, and an unending affinity for bananas."
 	reagent_state = LIQUID
 	color = "#00f041"
+	value = REAGENT_VALUE_EXCEPTIONAL
 
 /datum/reagent/magillitis/on_mob_life(mob/living/carbon/M)
 	..()
@@ -1918,6 +1944,7 @@
 	description = "A commercial chemical designed to help older men in the bedroom."//not really it just makes you a giant
 	color = "#ff0000"//strong red. rgb 255, 0, 0
 	var/current_size = RESIZE_DEFAULT_SIZE
+	value = REAGENT_VALUE_COMMON
 	taste_description = "bitterness" // apparently what viagra tastes like
 
 /datum/reagent/growthserum/on_mob_life(mob/living/carbon/H)
@@ -1988,6 +2015,7 @@
 	color = "#AAAAAA55"
 	taste_description = "water"
 	metabolization_rate = 0.25 * REAGENTS_METABOLISM
+	value = REAGENT_VALUE_RARE
 	pH = 15
 
 /datum/reagent/pax/on_mob_metabolize(mob/living/L)
@@ -2004,6 +2032,7 @@
 	color = "#FAFF00"
 	taste_description = "acrid cinnamon"
 	metabolization_rate = 0.2 * REAGENTS_METABOLISM
+	value = REAGENT_VALUE_UNCOMMON
 
 /datum/reagent/bz_metabolites/on_mob_metabolize(mob/living/L)
 	..()
@@ -2024,18 +2053,20 @@
 	name = "synth-pax"
 	description = "A colorless liquid that suppresses violence on the subjects. Cheaper to synthetize, but wears out faster than normal Pax."
 	metabolization_rate = 1.5 * REAGENTS_METABOLISM
+	value = REAGENT_VALUE_COMMON
 
 /datum/reagent/peaceborg_confuse
 	name = "Dizzying Solution"
 	description = "Makes the target off balance and dizzy"
 	metabolization_rate = 1.5 * REAGENTS_METABOLISM
 	taste_description = "dizziness"
+	value = REAGENT_VALUE_COMMON
 
 /datum/reagent/peaceborg_confuse/on_mob_life(mob/living/carbon/M)
 	if(M.confused < 6)
-		M.confused = CLAMP(M.confused + 3, 0, 5)
+		M.confused = clamp(M.confused + 3, 0, 5)
 	if(M.dizziness < 6)
-		M.dizziness = CLAMP(M.dizziness + 3, 0, 5)
+		M.dizziness = clamp(M.dizziness + 3, 0, 5)
 	if(prob(20))
 		to_chat(M, "You feel confused and disorientated.")
 	..()
@@ -2045,6 +2076,7 @@
 	description = "An extremely weak stamina-toxin that tires out the target. Completely harmless."
 	metabolization_rate = 1.5 * REAGENTS_METABOLISM
 	taste_description = "tiredness"
+	value = REAGENT_VALUE_COMMON
 
 /datum/reagent/peaceborg_tire/on_mob_life(mob/living/carbon/M)
 	var/healthcomp = (100 - M.health)	//DOES NOT ACCOUNT FOR ADMINBUS THINGS THAT MAKE YOU HAVE MORE THAN 200/210 HEALTH, OR SOMETHING OTHER THAN A HUMAN PROCESSING THIS.
@@ -2060,6 +2092,7 @@
 	color = "#9A6750" //RGB: 154, 103, 80
 	taste_description = "inner peace"
 	can_synth = FALSE
+	value = REAGENT_VALUE_GLORIOUS
 
 /datum/reagent/tranquility/reaction_mob(mob/living/L, method=TOUCH, reac_volume, show_message = 1, touch_protection = 0)
 	if(method==PATCH || method==INGEST || method==INJECT || (method == VAPOR && prob(min(reac_volume,100)*(1 - touch_protection))))
@@ -2070,6 +2103,7 @@
 	description = "The primary precursor for an ancient feline delicacy known as skooma. While it has no notable effects on it's own, mixing it with morphine in a chilled container may yield interesting results."
 	color = "#FAEAFF"
 	taste_description = "synthetic catnip"
+	value = REAGENT_VALUE_UNCOMMON
 
 /datum/reagent/moonsugar/on_mob_life(mob/living/carbon/M)
 	if(prob(20))
@@ -2086,6 +2120,7 @@
 	var/datum/dna/original_dna
 	var/reagent_ticks = 0
 	chemical_flags = REAGENT_INVISIBLE
+	value = REAGENT_VALUE_GLORIOUS
 
 /datum/reagent/changeling_string/on_mob_metabolize(mob/living/carbon/C)
 	if(ishuman(C) && C.dna && data["desired_dna"])
@@ -2121,6 +2156,7 @@
 	taste_description = "grass"
 	description = "A colorless liquid that makes people more peaceful and felines more happy."
 	metabolization_rate = 1.75 * REAGENTS_METABOLISM
+	value = REAGENT_VALUE_COMMON
 
 /datum/reagent/pax/catnip/on_mob_life(mob/living/carbon/M)
 	if(prob(20))
