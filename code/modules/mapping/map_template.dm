@@ -88,8 +88,8 @@
 	SSair.setup_template_machinery(atmos_machines)
 
 /datum/map_template/proc/load_new_z(orientation = SOUTH, list/ztraits = src.ztraits || list(ZTRAIT_AWAY = TRUE), centered = TRUE)
-	var/x = centered? max(FLOOR((world.maxx - width) / 2, 1), 1) : 1
-	var/y = centered? max(FLOOR((world.maxy - height) / 2, 1), 1) : 1
+	var/x = centered? max(round((world.maxx - width) / 2), 1) : 1
+	var/y = centered? max(round((world.maxy - height) / 2), 1) : 1
 
 	var/datum/space_level/level = SSmapping.add_new_zlevel(name, ztraits)
 	var/datum/parsed_map/parsed = load_map(file(mappath), x, y, level.z_value, no_changeturf=(SSatoms.initialized == INITIALIZATION_INSSATOMS), placeOnTop = TRUE, orientation = orientation)
