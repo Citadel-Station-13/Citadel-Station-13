@@ -126,7 +126,7 @@
 /datum/map_template/proc/load(turf/T, centered = FALSE, orientation = SOUTH, annihilate = default_annihilate, force_cache = FALSE, rotate_placement_to_orientation = FALSE)
 	var/old_T = T
 	if(centered)
-		T = locate(T.x - FLOOR(((orientation & (NORTH|SOUTH))? width : height) / 2, 1) , T.y - FLOOR(((orientation & (NORTH|SOUTH)) ? height : width) / 2, 1) , T.z) // %180 catches East/West (90,270) rotations on true, North/South (0,180) rotations on false
+		T = locate(T.x - round(((orientation & (NORTH|SOUTH))? width : height) / 2) , T.y - round(((orientation & (NORTH|SOUTH)) ? height : width) / 2) , T.z) // %180 catches East/West (90,270) rotations on true, North/South (0,180) rotations on false
 	else if(rotate_placement_to_orientation && (orientation != SOUTH))
 		var/newx = T.x
 		var/newy = T.y
