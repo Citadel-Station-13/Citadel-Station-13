@@ -62,6 +62,9 @@
 		/datum/material/mythril
 		)
 
+	/// Base print speed
+	var/base_print_speed = 10
+
 /obj/machinery/autolathe/Initialize()
 	AddComponent(/datum/component/material_container, allowed_materials, _show_on_examine=TRUE, _after_insert=CALLBACK(src, .proc/AfterMaterialInsert))
 	. = ..()
@@ -206,7 +209,7 @@
 				busy = TRUE
 				use_power(power)
 				icon_state = "autolathe_n"
-				var/time = is_stack ? 10 : 10 * coeff * multiplier
+				var/time = is_stack ? 10 : base_print_speed * coeff * multiplier
 				addtimer(CALLBACK(src, .proc/make_item, power, materials_used, custom_materials, multiplier, coeff, is_stack), time)
 			else
 				to_chat(usr, "<span class=\"alert\">Not enough materials for this operation.</span>")
@@ -442,6 +445,7 @@
 	hackable = FALSE
 	circuit = /obj/item/circuitboard/machine/autolathe/secure
 	stored_research = /datum/techweb/specialized/autounlocking/autolathe/public
+	base_print_speed = 20
 
 /obj/machinery/autolathe/toy
 	name = "autoylathe"
