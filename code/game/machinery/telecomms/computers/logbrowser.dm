@@ -1,24 +1,165 @@
-
+/*
+	The log console for viewing the entire telecomms 
+	network log
+*/
 
 /obj/machinery/computer/telecomms/server
 	name = "telecommunications server monitoring console"
 	icon_screen = "comm_logs"
 	desc = "Has full access to all details and record of the telecommunications network it's monitoring."
 
-	var/screen = 0				// the screen number:
-	var/list/servers = list()	// the servers located by the computer
-	var/obj/machinery/telecomms/server/SelectedServer
+	var/list/machinelist = list()	// the servers located by the computer
+	var/obj/machinery/telecomms/server/SelectedMachine = null
 
 	var/network = "NULL"		// the network to probe
-	var/temp = ""				// temporary feedback messages
-
-	var/universal_translate = 0 // set to 1 if it can translate nonhuman speech
+	var/notice = ""
+	var/universal_translate = FALSE // set to 1 if it can translate nonhuman speech
 
 	req_access = list(ACCESS_TCOMSAT)
 	circuit = /obj/item/circuitboard/computer/comm_server
 
+/obj/machinery/computer/telecomms/server/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
+														datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
+	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+	if(!ui)
+		ui = new(user, src, ui_key, "tcommsserver", "Telecomms Server Monitor", 575, 400, master_ui, state)
+		ui.open()
+
+/obj/machinery/computer/telecomms/server/ui_data(mob/user)
+	var/list/data_out = list()
+	data_out["network"] = network
+	data_out["notice"] = notice
+
+	data_out["servers"] = list()
+	for(var/obj/machinery/telecomms/server/T in machinelist)
+		var/list/data = list(
+			name = T.name,
+			id = T.id,
+			ref = REF(T)
+		)
+		data_out["servers"] += list(data)
+
+	if(!SelectedMachine) //null is bad.
+		return data_out
+	
+	data_out["selected"] = list(
+		name = SelectedMachine.name,
+		id = SelectedMachine.id,
+		ref = REF(SelectedMachine)
+	)
+	data_out["selected_logs"] = list()
+
+	for(var/datum/comm_log_entry/C in SelectedMachine.log_entries)
+		var/list/data = list()
+		data["name"] = C.name	//name of the file
+		data["ref"] = REF(C)
+		data["input_type"] = C.input_type	//type of input ("Speech File" | "Execution Error"). Let js handle this
+
+		switch(C.input_type)
+			if("Speech File")
+				data["source"] = list(
+					name = C.parameters["name"],	//name of the mob | obj
+					job = C.parameters["job"]		//job of the mob | obj
+				)
+
+				// -- Determine race of orator --
+				var/mobtype = C.parameters["mobtype"]
+				var/race	// The actual race of the mob
+
+				if(ispath(mobtype, /mob/living/carbon/human) || ispath(mobtype, /mob/living/brain))
+					race = "Humanoid"
+				else if(ispath(mobtype, /mob/living/simple_animal/slime))
+					race = "Slime"	// NT knows a lot about slimes, but not aliens. Can identify slimes
+				else if(ispath(mobtype, /mob/living/carbon/monkey))
+					race = "Monkey"
+				else if(ispath(mobtype, /mob/living/silicon) || C.parameters["job"] == "AI")
+					race = "Artificial Life"	// sometimes M gets deleted prematurely for AIs... just check the job
+				else if(isobj(mobtype))
+					race = "Machinery"
+				else if(ispath(mobtype, /mob/living/simple_animal))
+					race = "Domestic Animal"
+				else
+					race = "Unidentifiable"
+
+				data["race"] = race
+				// based on [/atom/movable/proc/lang_treat]
+				var/message = C.parameters["message"]
+				var/language = C.parameters["language"]
+
+				if(universal_translate || user.has_language(language))
+					message = message
+				else if(!user.has_language(language))
+					var/datum/language/D = GLOB.language_datum_instances[language]
+					message = D.scramble(message)
+				else if(language)
+					message = "(unintelligible)"
+
+				data["message"] = message
+
+			if("Execution Error")
+				data["message"] = C.parameters["message"]
+			else
+				data["message"] = "(unintelligible)"
+		
+		data_out["selected_logs"] += list(data)
+  return data_out
+
+
+/obj/machinery/computer/telecomms/server/ui_act(action, params)
+	if(..())
+		return
+	switch(action)
+		if("mainmenu")
+			SelectedMachine = null
+			return
+		if("release")
+			machinelist = list()
+			return
+		if("network") //network change, flush the selected machine and buffer
+			var/newnet = trim(html_encode(params["value"]), 15)
+			if(length(newnet) > 15)	//i'm looking at you, you href fuckers
+				notice = "<span class='warning'>FAILED: NETWORK TAG STRING TOO LENGHTLY</span>"
+				return
+			network = newnet
+			SelectedMachine = null
+			machinelist = list()
+			return
+		if("probe")
+			if(LAZYLEN(machinelist) > 0)
+				notice = "<span class='warning'>FAILED: CANNOT PROBE WHEN BUFFER FULL</span>"
+				return
+			
+			for(var/obj/machinery/telecomms/T in urange(25, src))
+				if(T.network == network)
+					LAZYADD(machinelist, T)
+
+			if(!LAZYLEN(machinelist))
+				notice = "<span class='warning'>FAILED: UNABLE TO LOCATE NETWORK ENTITIES IN \[[network]\]</span>"
+				return
+			notice = "<span class='warning'>[machinelist.len] ENTITIES LOCATED & BUFFERED</span>"
+		if("viewmachine")
+			for(var/obj/machinery/telecomms/T in machinelist)
+				if(T.id == params["value"])
+					SelectedMachine = T
+					break
+		if("delete")
+			if(!src.allowed(usr) && !(obj_flags & EMAGGED))
+				to_chat(usr, "<span class='danger'>ACCESS DENIED.</span>")
+				return
+
+			if(!SelectedMachine)
+				return
+			var/datum/comm_log_entry/D = locate(params["value"])
+			if(!istype(D))
+				say("<span class='warning'>OBJECT NOT FOUND</span>")		
+				return
+			say("<span class='warning'>DELETED ENTRY: [D.name]</span>")
+			SelectedMachine.log_entries.Remove(D)
+			qdel(D)
+/*
 /obj/machinery/computer/telecomms/server/ui_interact(mob/user)
 	. = ..()
+
 	var/dat = "<TITLE>Telecommunication Server Monitor</TITLE><center><b>Telecommunications Server Monitor</b></center>"
 
 	switch(screen)
@@ -131,8 +272,8 @@
 
 	temp = ""
 	return
-
-
+*/
+/*
 /obj/machinery/computer/telecomms/server/Topic(href, href_list)
 	if(..())
 		return
@@ -213,3 +354,4 @@
 /obj/machinery/computer/telecomms/server/attackby()
 	. = ..()
 	updateUsrDialog()
+*/

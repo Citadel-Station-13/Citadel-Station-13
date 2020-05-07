@@ -91,6 +91,7 @@ import { SpawnersMenu } from './interfaces/SpawnersMenu';
 import { StationAlertConsole } from './interfaces/StationAlertConsole';
 import { SuitStorageUnit } from './interfaces/SuitStorageUnit';
 import { Tank } from './interfaces/Tank';
+import { Telemonitor, Logbrowser } from './interfaces/Telecomms';
 import { TankDispenser } from './interfaces/TankDispenser';
 import { Teleporter } from './interfaces/Teleporter';
 import { ThermoMachine } from './interfaces/ThermoMachine';
@@ -501,6 +502,16 @@ const ROUTES = {
   suit_storage_unit: {
     component: () => SuitStorageUnit,
     scrollable: false,
+  },
+  tcommsserver: {
+    component: () => Logbrowser,
+    scrollable: true,
+    theme: 'ntos',
+  },
+  telemonitor: {
+    component: () => Telemonitor,
+    scrollable: true,
+    theme: 'ntos',
   },
   tanks: {
     component: () => Tank,
