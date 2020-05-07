@@ -81,7 +81,7 @@
 	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
-	resistance_flags = FIRE_PROOF | ACID_PROOF|  GOLIATH_RESISTANCE
+	resistance_flags = FIRE_PROOF | ACID_PROOF |  GOLIATH_RESISTANCE
 
 /obj/item/clothing/head/hooded/cloakhood/drake
 	name = "drake helm"
@@ -90,7 +90,7 @@
 	armor = list("melee" = 50, "bullet" = 20, "laser" = 30, "energy" = 25, "bomb" = 25, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 100)
 	heat_protection = HEAD
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
-	resistance_flags = FIRE_PROOF | ACID_PROOF| GOLIATH_RESISTANCE
+	resistance_flags = FIRE_PROOF | ACID_PROOF | GOLIATH_RESISTANCE
 
 /obj/item/clothing/neck/cloak/polychromic
 	name = "polychromic cloak"
