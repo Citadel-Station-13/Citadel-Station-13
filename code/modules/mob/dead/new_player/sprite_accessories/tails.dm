@@ -523,6 +523,7 @@
 	color_src = MATRIXED
 	icon = 'modular_citadel/icons/mob/mam_tails.dmi'
 	mutant_part_string = "tailwag"
+	relevant_layers = list(BODY_BEHIND_LAYER, BODY_FRONT_LAYER)
 
 /datum/sprite_accessory/mam_tails_animated/none
 	name = "None"

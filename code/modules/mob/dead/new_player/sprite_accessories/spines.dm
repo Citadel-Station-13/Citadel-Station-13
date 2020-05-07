@@ -1,8 +1,10 @@
 /datum/sprite_accessory/spines
 	icon = 'icons/mob/mutant_bodyparts.dmi'
+	relevant_layers = list(BODY_BEHIND_LAYER, BODY_ADJ_LAYER)
 
 /datum/sprite_accessory/spines_animated
 	icon = 'icons/mob/mutant_bodyparts.dmi'
+	relevant_layers = list(BODY_BEHIND_LAYER, BODY_ADJ_LAYER)
 
 /datum/sprite_accessory/spines/none
 	name = "None"
