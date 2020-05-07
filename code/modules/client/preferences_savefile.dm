@@ -5,7 +5,7 @@
 //	You do not need to raise this if you are adding new values that have sane defaults.
 //	Only raise this value when changing the meaning/format/name/layout of an existing value
 //	where you would want the updater procs below to run
-#define SAVEFILE_VERSION_MAX	30
+#define SAVEFILE_VERSION_MAX	31
 
 /*
 SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Carn
@@ -190,6 +190,9 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 			if("Cow")
 				features["taur"] = "Cow (Spotted)"
 
+	if(current_version < 31)	//If you remove this, remove force_reset_keybindings() too.
+		addtimer(CALLBACK(src, .proc/force_reset_keybindings), 30)	//No mob available when this is run, timer allows user choice.
+
 /datum/preferences/proc/load_path(ckey,filename="preferences.sav")
 	if(!ckey)
 		return
@@ -255,6 +258,9 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["pda_color"]			>> pda_color
 	S["pda_skin"]			>> pda_skin
 
+	// Custom hotkeys
+	S["key_bindings"]		>> key_bindings
+
 	//citadel code
 	S["arousable"]			>> arousable
 	S["screenshake"]		>> screenshake
@@ -309,6 +315,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	cit_toggles			= sanitize_integer(cit_toggles, 0, 65535, initial(cit_toggles))
 	auto_ooc			= sanitize_integer(auto_ooc, 0, 1, initial(auto_ooc))
 	no_tetris_storage		= sanitize_integer(no_tetris_storage, 0, 1, initial(no_tetris_storage))
+	key_bindings 	= sanitize_islist(key_bindings, list())
 
 	return 1
 
@@ -366,6 +373,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["pda_style"], pda_style)
 	WRITE_FILE(S["pda_color"], pda_color)
 	WRITE_FILE(S["pda_skin"], pda_skin)
+	WRITE_FILE(S["key_bindings"], key_bindings)
 
 	//citadel code
 	WRITE_FILE(S["screenshake"], screenshake)
