@@ -36,6 +36,10 @@ map deltastation
 	minplayers 50
 endmap
 
+map icebox
+	minplayers 25
+endmap
+
 map runtimestation
 endmap
 
