@@ -61,12 +61,15 @@ obj/item/shield/riot/ratvarian/proc/calc_bash_mult()
 	new /obj/item/clockwork/alloy_shards/large(get_turf(src))
 
 /obj/item/shield/riot/ratvarian/user_shieldbash(mob/living/user, atom/target, harmful)
-	var/actual_bash_mult = calc_bash_mult()
-	shieldbash_knockback = round(initial(shieldbash_knockback) * actual_bash_mult, 1)   //Modifying the strength of the bash, done with initial() to prevent magic-number issues if the original shieldbash values are changed
-	shieldbash_brutedamage = round(initial(shieldbash_brutedamage) * actual_bash_mult, 1) //Where I think of it, better round this stuff because we don't need even more things that deal like 3.25 damage
-	shieldbash_stamdmg = round(initial(shieldbash_stamdmg) * actual_bash_mult, 1) //Like 20 brute and 60 stam + a fuckton of knockback at the moment (at maximum charge), seems mostly fine? I think?
-	if(..()) //If this bash actually was executed
-		dam_absorbed -= calc_bash_absorb_use()
-		return TRUE
+	if(harmful)
+		var/actual_bash_mult = calc_bash_mult()
+		shieldbash_knockback = round(initial(shieldbash_knockback) * actual_bash_mult, 1)   //Modifying the strength of the bash, done with initial() to prevent magic-number issues if the original shieldbash values are changed
+		shieldbash_brutedamage = round(initial(shieldbash_brutedamage) * actual_bash_mult, 1) //Where I think of it, better round this stuff because we don't need even more things that deal like 3.25 damage
+		shieldbash_stamdmg = round(initial(shieldbash_stamdmg) * actual_bash_mult, 1) //Like 20 brute and 60 stam + a fuckton of knockback at the moment (at maximum charge), seems mostly fine? I think?
+		if(..()) //If this bash actually was executed
+			dam_absorbed -= calc_bash_absorb_use()
+			return TRUE
+		else
+			return FALSE
 	else
-		return FALSE
+		return ..()
