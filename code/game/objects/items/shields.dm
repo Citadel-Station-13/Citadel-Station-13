@@ -3,6 +3,7 @@
 	icon = 'icons/obj/shields.dmi'
 	block_chance = 50
 	item_flags = ITEM_CAN_BLOCK
+	block_parry_data = /datum/block_parry_data/shield
 	armor = list("melee" = 50, "bullet" = 50, "laser" = 50, "energy" = 0, "bomb" = 30, "bio" = 0, "rad" = 0, "fire" = 80, "acid" = 70)
 	/// Shield flags
 	var/shield_flags = SHIELD_FLAGS_DEFAULT
@@ -22,6 +23,9 @@
 	var/shieldbash_stagger_duration = 3.5 SECONDS
 	/// Shield bashing push distance
 	var/shieldbash_push_distance = 1
+
+/datum/block_parry_data/shield
+
 
 /obj/item/shield/examine(mob/user)
 	. = ..()
