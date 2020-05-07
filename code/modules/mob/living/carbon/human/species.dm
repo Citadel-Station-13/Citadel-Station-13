@@ -35,10 +35,6 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 
 	var/hair_color	// this allows races to have specific hair colors... if null, it uses the H's hair/facial hair colors. if "mutcolor", it uses the H's mutant_color
 	var/hair_alpha = 255	// the alpha used by the hair. 255 is completely solid, 0 is transparent.
-
-	var/horn_color	//specific horn colors, because why not?
-	var/wing_color
-
 	var/use_skintones = NO_SKINTONES	// does it use skintones or not? (spoiler alert this is only used by humans)
 	var/exotic_blood = ""	// If your race wants to bleed something other than bog standard blood, change this to reagent id.
 	var/exotic_bloodtype = "" //If your race uses a non standard bloodtype (A+, O-, AB-, etc)
@@ -882,9 +878,9 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 						if(EYECOLOR)
 							accessory_overlay.color = "#[H.eye_color]"
 						if(HORNCOLOR)
-							accessory_overlay.color = "#[H.horn_color]"
+							accessory_overlay.color = "#[H.dna.features["horns_color"]]"
 						if(WINGCOLOR)
-							accessory_overlay.color = "#[H.wing_color]"
+							accessory_overlay.color = "#[H.dna.features["wings_color"]]"
 				else
 					accessory_overlay.color = forced_colour
 			else
@@ -938,9 +934,9 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 						extra_accessory_overlay.color = "#[H.eye_color]"
 
 					if(HORNCOLOR)
-						extra_accessory_overlay.color = "#[H.horn_color]"
+						extra_accessory_overlay.color = "#[H.dna.features["horns_color"]]"
 					if(WINGCOLOR)
-						extra_accessory_overlay.color = "#[H.wing_color]"
+						extra_accessory_overlay.color = "#[H.dna.features["wings_color"]]"
 
 				if(OFFSET_MUTPARTS in H.dna.species.offset_features)
 					extra_accessory_overlay.pixel_x += H.dna.species.offset_features[OFFSET_MUTPARTS][1]
@@ -979,9 +975,9 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 						else
 							extra2_accessory_overlay.color = "#[H.hair_color]"
 					if(HORNCOLOR)
-						extra2_accessory_overlay.color = "#[H.horn_color]"
+						extra2_accessory_overlay.color = "#[H.dna.features["horns_color"]]"
 					if(WINGCOLOR)
-						extra2_accessory_overlay.color = "#[H.wing_color]"
+						extra2_accessory_overlay.color = "#[H.dna.features["wings_color"]]"
 
 				if(OFFSET_MUTPARTS in H.dna.species.offset_features)
 					extra2_accessory_overlay.pixel_x += H.dna.species.offset_features[OFFSET_MUTPARTS][1]

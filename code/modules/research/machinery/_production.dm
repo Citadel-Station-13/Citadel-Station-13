@@ -61,7 +61,8 @@
 	popup.open()
 
 /obj/machinery/rnd/production/proc/calculate_efficiency()
-	efficiency_coeff = 1
+	var/total_manip_rating = 0
+	var/manips = 0
 	if(reagents)		//If reagents/materials aren't initialized, don't bother, we'll be doing this again after reagents init anyways.
 		reagents.maximum_volume = 0
 		for(var/obj/item/reagent_containers/glass/G in component_parts)
@@ -72,11 +73,10 @@
 		for(var/obj/item/stock_parts/matter_bin/M in component_parts)
 			total_storage += M.rating * 75000
 		materials.set_local_size(total_storage)
-	var/total_rating = 0
 	for(var/obj/item/stock_parts/manipulator/M in component_parts)
-		total_rating += M.rating
-	total_rating = max(1, total_rating)
-	efficiency_coeff = total_rating
+		total_manip_rating += M.rating
+		manips++
+	efficiency_coeff = STANDARD_PART_LEVEL_LATHE_COEFFICIENT(total_manip_rating / (manips? manips : 1))
 
 /obj/machinery/rnd/production/examine(mob/user)
 	. = ..()
@@ -113,7 +113,7 @@
 	// these types don't have their .materials set in do_print, so don't allow
 	// them to be constructed efficiently
 	var/ef = efficient_with(being_built.build_path) ? efficiency_coeff : 1
-	return round(A / max(1, all_materials[mat] / ef))
+	return round(A / max(1, all_materials[mat] * ef))
 
 /obj/machinery/rnd/production/proc/efficient_with(path)
 	return !ispath(path, /obj/item/stack/sheet) && !ispath(path, /obj/item/stack/ore/bluespace_crystal)
@@ -155,24 +155,24 @@
 	var/coeff = efficient_with(D.build_path) ? efficiency_coeff : 1
 	var/list/efficient_mats = list()
 	for(var/MAT in D.materials)
-		efficient_mats[MAT] = D.materials[MAT]/coeff
+		efficient_mats[MAT] = D.materials[MAT] * coeff
 	if(!materials.mat_container.has_materials(efficient_mats, amount))
 		say("Not enough materials to complete prototype[amount > 1? "s" : ""].")
 		return FALSE
 	for(var/R in D.reagents_list)
-		if(!reagents.has_reagent(R, D.reagents_list[R]*amount/coeff))
+		if(!reagents.has_reagent(R, D.reagents_list[R] * amount * coeff))
 			say("Not enough reagents to complete prototype[amount > 1? "s" : ""].")
 			return FALSE
 	materials.mat_container.use_materials(efficient_mats, amount)
 	materials.silo_log(src, "built", -amount, "[D.name]", efficient_mats)
 	for(var/R in D.reagents_list)
-		reagents.remove_reagent(R, D.reagents_list[R]*amount/coeff)
+		reagents.remove_reagent(R, D.reagents_list[R] * amount * coeff)
 	busy = TRUE
 	if(production_animation)
 		flick(production_animation, src)
-	var/timecoeff = D.lathe_time_factor / efficiency_coeff
-	addtimer(CALLBACK(src, .proc/reset_busy), (30 * timecoeff * amount) ** 0.5)
-	addtimer(CALLBACK(src, .proc/do_print, D.build_path, amount, efficient_mats, D.dangerous_construction, usr), (32 * timecoeff * amount) ** 0.8)
+	var/timecoeff = D.lathe_time_factor * efficiency_coeff
+	addtimer(CALLBACK(src, .proc/reset_busy), (20 * timecoeff * amount) ** 0.5)
+	addtimer(CALLBACK(src, .proc/do_print, D.build_path, amount, efficient_mats, D.dangerous_construction, usr), (20 * timecoeff * amount) ** 0.5)
 	return TRUE
 
 /obj/machinery/rnd/production/proc/search(string)

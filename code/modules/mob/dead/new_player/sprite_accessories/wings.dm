@@ -7,6 +7,7 @@
 
 /datum/sprite_accessory/wings_open
 	icon = 'icons/mob/wings.dmi'
+	relevant_layers = list(BODY_BEHIND_LAYER, BODY_ADJ_LAYER, BODY_FRONT_LAYER)
 
 /datum/sprite_accessory/wings_open/angel
 	name = "Angel"
@@ -49,6 +50,7 @@
 	dimension_x = 46
 	center = TRUE
 	dimension_y = 34
+	relevant_layers = list(BODY_BEHIND_LAYER, BODY_ADJ_LAYER, BODY_FRONT_LAYER)
 
 /datum/sprite_accessory/deco_wings/bat
 	name = "Bat"
