@@ -532,7 +532,10 @@ BOMBCAP 20
 ## of ruins.
 LAVALAND_BUDGET 60
 
-## Space Ruin Budged
+## Ice Moon Budget
+ICEMOON_BUDGET 90
+
+## Space Ruin Budget
 Space_Budget 16
 
 ## Station Ruin Budget

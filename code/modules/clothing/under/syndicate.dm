@@ -86,7 +86,7 @@
 	desc = "With a suit lined with this many pockets, you are ready to operate."
 	icon_state = "syndicate_combat"
 	can_adjust = FALSE
-	mutantrace_variation = NONE
+	mutantrace_variation = USE_TAUR_CLIP_MASK
 
 /obj/item/clothing/under/syndicate/rus_army
 	name = "advanced military tracksuit"
@@ -105,5 +105,5 @@
 	has_sensor = NO_SENSORS
 	armor = list("melee" = 15, "bullet" = 5, "laser" = 0,"energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 40)
 	alt_covers_chest = TRUE
-	mutantrace_variation = NONE
+	mutantrace_variation = USE_TAUR_CLIP_MASK
 
