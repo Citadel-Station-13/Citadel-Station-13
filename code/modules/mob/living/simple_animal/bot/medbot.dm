@@ -283,7 +283,7 @@
 			to_chat(user, "<span class='notice'>The [src] access pannel locked off to you!</span>")
 			return
 		else
-			to_chat(user, "<span class='notice'>The [src] already has a this upgrade!</span>")
+			to_chat(user, "<span class='notice'>The [src] already has this upgrade!</span>")
 
 	else if(istype(W, /obj/item/circuitboard/machine/cryo_tube))
 		if(bot_core.allowed(user) && open && !CHECK_BITFIELD(upgrades,UPGRADE_MEDICAL_CRYO_BOARD))
@@ -298,7 +298,7 @@
 			to_chat(user, "<span class='notice'>The [src] access pannel locked off to you!</span>")
 			return
 		else
-			to_chat(user, "<span class='notice'>The [src] already has a this upgrade!</span>")
+			to_chat(user, "<span class='notice'>The [src] already has this upgrade!</span>")
 
 	else if(istype(W, /obj/item/circuitboard/machine/chem_master))
 		if(bot_core.allowed(user) && open && !CHECK_BITFIELD(upgrades,UPGRADE_MEDICAL_CHEM_MASTER))
@@ -313,7 +313,7 @@
 			to_chat(user, "<span class='notice'>the [src] access pannel locked off to you!</span>")
 			return
 		else
-			to_chat(user, "<span class='notice'>the [src] already has a this upgrade!</span>")
+			to_chat(user, "<span class='notice'>the [src] already has this upgrade!</span>")
 
 	else if(istype(W, /obj/item/circuitboard/machine/sleeper))
 		if(bot_core.allowed(user) && open && !CHECK_BITFIELD(upgrades,UPGRADE_MEDICAL_SLEEP_BOARD))
@@ -329,7 +329,7 @@
 			to_chat(user, "<span class='notice'>The [src] access pannel locked off to you!</span>")
 			return
 		else
-			to_chat(user, "<span class='notice'>The [src] already has a this upgrade!</span>")
+			to_chat(user, "<span class='notice'>The [src] already has this upgrade!</span>")
 
 	else
 		var/current_health = health
