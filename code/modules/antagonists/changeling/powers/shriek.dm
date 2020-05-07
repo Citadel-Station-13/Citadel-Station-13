@@ -3,7 +3,7 @@
 	desc = "Our lungs and vocal cords shift, allowing us to briefly emit a noise that deafens and confuses the weak-minded."
 	helptext = "Emits a high-frequency sound that confuses and deafens humans, blows out nearby lights and overloads cyborg sensors. This ability is somewhat loud, and carries a small risk of our blood gaining violent sensitivity to heat."
 	chemical_cost = 20
-	dna_cost = 1
+	dna_cost = 2
 	loudness = 1
 	req_human = 1
 	action_icon = 'icons/mob/actions/actions_changeling.dmi'
@@ -37,7 +37,7 @@
 	desc = "We shift our vocal cords to release a high-frequency sound that overloads nearby electronics."
 	helptext = "Emits a high-frequency sound that overloads nearby electronics. This ability is somewhat loud, and carries a small risk of our blood gaining violent sensitivity to heat."
 	chemical_cost = 20
-	dna_cost = 1
+	dna_cost = 2
 	loudness = 1
 	action_icon = 'icons/mob/actions/actions_changeling.dmi'
 	action_icon_state = "ling_dissonant"
