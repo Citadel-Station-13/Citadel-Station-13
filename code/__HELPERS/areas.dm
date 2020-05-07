@@ -58,6 +58,11 @@ GLOBAL_LIST_INIT(typecache_powerfailure_safe_areas, typecacheof(/area/engine/eng
 	else if(isarea(areatype))
 		var/area/areatemp = areatype
 		areatype = areatemp.type
+	else if(islist(areatype))
+		var/list/turfs = list()
+		for(var/A in areatype)
+			turfs += get_area_turfs(A)
+		return turfs
 	else if(!ispath(areatype))
 		return null
 
