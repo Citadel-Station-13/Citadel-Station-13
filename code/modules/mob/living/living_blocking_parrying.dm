@@ -101,6 +101,13 @@ GLOBAL_LIST_EMPTY(block_parry_data)
 	/////////// PARRYING ////////////
 	/// Prioriry for [mob/do_run_block()] while we're being used to parry.
 	//  None - Parry is always highest priority!
+	/// Parry doesn't work if you aren't able to otherwise attack due to clickdelay
+	var/parry_respect_clickdelay
+	#warn implement
+	/// Parry stamina cost
+	var/parry_stamina_cost = 5
+	#warn implement
+
 
 	/// Parry windup duration in deciseconds. 0 to this is windup, afterwards is main stage.
 	var/parry_time_windup = 2
@@ -128,6 +135,12 @@ GLOBAL_LIST_EMPTY(block_parry_data)
 	var/parry_default_handle_feedback = TRUE
 	/// Sounds for parrying
 	var/list/parry_sounds = list('sound/block_parry/block_metal1.ogg' = 1, 'sound/block_parry/block_metal1.ogg' = 1)
+	/// Stagger duration post-parry if you fail to parry an attack
+	var/parry_failed_stagger_duration = 3.5 SECONDS
+	#warn implement
+	/// Clickdelay duration post-parry if you fail to parry an attack
+	var/parry_failed_clickcd_duration = 2 SECONDS
+	#warn implement
 
 /**
   * Quirky proc to get average of flags in list that are in attack_type because why is attack_type a flag.
@@ -236,7 +249,7 @@ GLOBAL_LIST_EMPTY(block_parry_data)
 	var/list/effect_text = run_parry_countereffects(object, damage, attack_text, attack_type, armour_penetration, attacker, def_zone, return_list, efficiency)
 	if(data.parry_default_handle_feedback)
 		handle_parry_feedback(object, damage, attack_text, attack_type, armour_penetration, attacker, def_zone, return_list, efficiency, effect_text)
-	successful_parries |= efficiency
+	successful_parries += efficiency
 
 /mob/living/proc/handle_parry_feedback(atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, list/return_list = list(), parry_efficiency, list/effect_text)
 	var/datum/block_parry_data/data = get_parry_data()
