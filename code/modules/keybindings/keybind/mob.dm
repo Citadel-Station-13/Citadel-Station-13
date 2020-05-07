@@ -2,7 +2,6 @@
 	category = CATEGORY_HUMAN
 	weight = WEIGHT_MOB
 
-
 /datum/keybinding/mob/face_north
 	hotkey_keys = list("CtrlW", "CtrlNorth")
 	name = "face_north"
@@ -14,7 +13,6 @@
 	M.northface()
 	return TRUE
 
-
 /datum/keybinding/mob/face_east
 	hotkey_keys = list("CtrlD", "CtrlEast")
 	name = "face_east"
@@ -25,7 +23,6 @@
 	var/mob/M = user.mob
 	M.eastface()
 	return TRUE
-
 
 /datum/keybinding/mob/face_south
 	hotkey_keys = list("CtrlS", "CtrlSouth")

@@ -16,22 +16,6 @@
 	L.resist()
 	return TRUE
 
-/datum/keybinding/living/look_up
-	hotkey_keys = list("L")
-	name = "look up"
-	full_name = "Look Up"
-	description = "Look up at the next z-level.  Only works if directly below open space."
-
-/datum/keybinding/living/look_up/down(client/user)
-	var/mob/living/L = user.mob
-	L.look_up()
-	return TRUE
-
-/datum/keybinding/living/look_up/up(client/user)
-	var/mob/living/L = user.mob
-	L.stop_look_up()
-	return TRUE
-
 /datum/keybinding/living/toggle_combat_mode
 	hotkey_keys = list("C")
 	name = "toggle_combat_mode"
@@ -39,9 +23,47 @@
 	description = "Toggles whether or not you're in combat mode."
 
 /datum/keybinding/living/toggle_combat_mode/can_use(client/user)
-	return iscarbon(user.mob)
+	return iscarbon(user.mob)		// for now, only carbons should be using combat mode, although all livings have combat mode implemented.
 
 /datum/keybinding/living/toggle_combat_mode/down(client/user)
 	var/mob/living/carbon/C = user.mob
 	C.user_toggle_intentional_combat_mode()
+	return TRUE
+
+/datum/keybinding/living/hold_sprint
+	hotkey_keys = list("Shift")
+	name = "hold_sprint"
+	full_name = "Sprint (hold down)"
+	description = "Hold down to sprint"
+
+/datum/keybinding/living/hold_sprint/can_use(client/user)
+	return ishuman(user.mob) || isrobot(user.mob)
+
+/datum/keybinding/living/hold_sprint/down(client/user)
+	var/mob/living/L = user.mob
+	L.sprint_hotkey(TRUE)
+	return TRUE
+
+/datum/keybinding/living/hold_sprint/up(client/user)
+	var/mob/living/L = user.mob
+	L.sprint_hotkey(FALSE)
+	return TRUE
+
+/datum/keybinding/living/toggle_sprint
+	hotkey_keys = list()
+	name = "toggle_sprint"
+	full_name = "Sprint (toggle)"
+	description = "Press to toggle sprint"
+
+/datum/keybinding/living/toggle_sprint/can_use(client/user)
+	return ishuman(user.mob) || isrobot(user.mob)
+
+/datum/keybinding/living/toggle_sprint/down(client/user)
+	var/mob/living/L = user.mob
+	L.default_toggle_sprint(TRUE)
+	return TRUE
+
+/datum/keybinding/living/toggle_sprint/up(client/user)
+	var/mob/living/L = user.mob
+	L.default_toggle_sprint(FALSE)
 	return TRUE
