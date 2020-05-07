@@ -27,12 +27,12 @@
 	var/obj/item/organ/eyes/E = user.getorganslot(ORGAN_SLOT_EYES)
 	if(E)
 		if(!active)
-			E.sight_flags |= SEE_MOBS | SEE_OBJS | SEE_TURFS //Add sight flags to the user's eyes
+			E.sight_flags |= SEE_MOBS //Add sight flags to the user's eyes
 			E.flash_protect = -1 //Adjust the user's eyes' flash protection
 			to_chat(user, "We adjust our eyes to sense prey through walls.")
 			active = TRUE //Defined in code/modules/spells/spell.dm
 		else
-			E.sight_flags ^= SEE_MOBS | SEE_OBJS | SEE_TURFS //Remove sight flags from the user's eyes
+			E.sight_flags ^= SEE_MOBS //Remove sight flags from the user's eyes
 			E.flash_protect = 2 //Adjust the user's eyes' flash protection
 			to_chat(user, "We adjust our eyes to protect them from bright lights.")
 			active = FALSE
@@ -50,7 +50,7 @@
 	var/obj/item/organ/eyes/E = user.getorganslot(ORGAN_SLOT_EYES)
 	if(E)
 		if (active)
-			E.sight_flags ^= SEE_MOBS | SEE_OBJS | SEE_TURFS
+			E.sight_flags ^= SEE_MOBS
 		else
 			E.flash_protect = 0
 		user.update_sight()
