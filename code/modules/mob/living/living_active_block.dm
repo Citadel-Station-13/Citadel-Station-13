@@ -235,9 +235,10 @@
   *
   * @params
   * * our_dir - our direction.
-  * * their_dir - their direction. Must be a single direction, or NONE for an attack from the same tile.
+  * * their_dir - their direction. Must be a single direction, or NONE for an attack from the same tile. This is incoming direction.
   */
 /obj/item/proc/can_block_direction(our_dir, their_dir)
+	their_dir = turn(their_dir, 180)
 	if(our_dir != NORTH)
 		var/turn_angle = dir2angle(our_dir)
 		// dir2angle(), ss13 proc is clockwise so dir2angle(EAST) == 90
