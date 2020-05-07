@@ -26,7 +26,6 @@
 
 /datum/block_parry_data/shield
 
-
 /obj/item/shield/examine(mob/user)
 	. = ..()
 	if(shield_flags & SHIELD_CAN_BASH)

@@ -19,10 +19,10 @@
 		return FALSE
 	var/obj/item/I = active_block_item
 	active_blocking = FALSE
+	active_block_effect_end()
 	active_block_item = null
 	REMOVE_TRAIT(src, TRAIT_MOBILITY_NOUSE, ACTIVE_BLOCK_TRAIT)
 	remove_movespeed_modifier(/datum/movespeed_modifier/active_block)
-	active_block_effect_end()
 	var/datum/block_parry_data/data = I.get_block_parry_data()
 	if(timeToNextMove() < data.block_end_click_cd_add)
 		changeNext_move(data.block_end_click_cd_add)
@@ -183,11 +183,17 @@
 	else
 		owner.adjustStaminaLossBuffered(stamina_amount)
 
-/obj/item/proc/active_block(mob/living/owner, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return)
+/obj/item/proc/active_block(mob/living/owner, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return, override_direction)
 	if(!can_active_block())
 		return BLOCK_NONE
 	var/datum/block_parry_data/data = get_block_parry_data()
-	var/incoming_direction = get_dir(get_turf(attacker) || get_turf(object), src)
+	var/incoming_direction
+	if(isnull(override_direction))
+		if(istype(object, /obj/item/projectile))
+			var/obj/item/projectile/P = object
+			incoming_direction = angle2dir(P.Angle)
+		else
+			incoming_direction = get_dir(get_turf(attacker) || get_turf(object), src)
 	if(!CHECK_MOBILITY(owner, MOBILITY_STAND) && !(data.block_resting_attack_types_anydir & attack_type) && (!(data.block_resting_attack_types_directional & attack_type) || !can_block_direction(owner.dir, incoming_direction)))
 		return BLOCK_NONE
 	else if(!can_block_direction(owner.dir, incoming_direction))
@@ -218,7 +224,7 @@
 	block_return[BLOCK_RETURN_ACTIVE_BLOCK_DAMAGE_MITIGATED] = active_block_damage_mitigation(owner, object, damage, attack_text, attack_type, armour_penetration, attacker, def_zone, final_block_chance, block_return)
 
 /**
-  * Gets the list of directions we can block. Include DOWN to block attacks from our same tile.
+  * Gets the block direction bitflags of what we can block.
   */
 /obj/item/proc/blockable_directions()
 	var/datum/block_parry_data/data = get_block_parry_data()
@@ -237,7 +243,7 @@
 		// dir2angle(), ss13 proc is clockwise so dir2angle(EAST) == 90
 		// turn(), byond proc is counterclockwise so turn(NORTH, 90) == WEST
 		their_dir = turn(their_dir, turn_angle)
-	return (DIR2BLOCKDIR(their_dir) in blockable_directions())
+	return (DIR2BLOCKDIR(their_dir) & blockable_directions())
 
 /**
   * can_block_direction but for "compound" directions to check all of them and return the number of directions that were blocked.

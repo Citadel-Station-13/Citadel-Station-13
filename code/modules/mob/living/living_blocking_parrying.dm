@@ -39,7 +39,7 @@ GLOBAL_LIST_EMPTY(block_parry_data)
 
 	/// NOTE: FOR ATTACK_TYPE_DEFINE, you MUST wrap it in "[DEFINE_HERE]"! The defines are bitflags, and therefore, NUMBERS!
 
-	/// See defines.
+	/// See defines. Point of reference is someone facing north.
 	var/can_block_directions = BLOCK_DIR_NORTH | BLOCK_DIR_NORTHEAST | BLOCK_DIR_NORTHWEST
 	/// Our slowdown added while blocking
 	var/block_slowdown = 2
