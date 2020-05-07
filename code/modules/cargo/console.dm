@@ -22,12 +22,7 @@
 
 	//Each cargo console and request console will need  a trade rout uploaded into them to unlock this
 	//Emags
-	var/space_gear = FALSE //Hardsuits and higher level space gear
-	var/heavy_firearms = FALSE //Larger and more powerful gear
-	var/medco_trade = FALSE // Implants and medical based gear that are higher level
-	var/blackmarket = FALSE // Drugs and none-syndi gear
-	var/animal_handing = FALSE // More rare animal and hostile animals
-	var/adv_sci = FALSE //Tech that is not made by NT but still are usefull
+	var/permits = 0
 
 /obj/machinery/computer/cargo/request
 	name = "supply request console"
@@ -67,89 +62,72 @@
 	obj_flags |= EMAGGED
 	contraband = TRUE
 
-	space_gear = TRUE
-	heavy_firearms = TRUE
-	medco_trade = TRUE
-	blackmarket = TRUE
-	animal_handing = TRUE
-	adv_sci = FALSE
+	permits |= PREMIT_SPACE
+	permits |= PREMIT_WEAPONS
+	permits |= PERMIT_MEDCO
+	permits |= PERMIT_BLACKMARKET
+	permits |= PERMIT_ANIMALS
+	permits |= PERMIT_ADVSCI
 
 	// This also permamently sets this on the circuit board
 	var/obj/item/circuitboard/computer/cargo/board = circuit
 
 	board.contraband = TRUE
-	board.space_gear = TRUE
-	board.heavy_firearms = TRUE
-	board.medco_trade = TRUE
-	board.blackmarket = TRUE
-	board.animal_handing = TRUE
-	board.adv_sci = TRUE
+
+	board.permits |= PREMIT_SPACE
+	board.permits |= PREMIT_WEAPONS
+	board.permits |= PERMIT_MEDCO
+	board.permits |= PERMIT_BLACKMARKET
+	board.permits |= PERMIT_ANIMALS
+	board.permits |= PERMIT_ADVSCI
 
 	board.obj_flags |= EMAGGED
 	update_static_data(user)
 
 /obj/machinery/computer/cargo/attackby(obj/item/W, mob/living/user, params)
 	var/obj/item/circuitboard/computer/cargo/board = circuit
-	if((istype(W, /obj/item/folder/paperwork_correct/space_gear)) && allowed(user))
-		if(space_gear != TRUE)
-			space_gear = TRUE
-			board.space_gear = TRUE
-			SSshuttle.supply.callTime += 15
-			to_chat(user, "<span class='notice'>You upload the [W] into the console unlocking more options.</span>")
-			qdel(W) //Yes we are one time use.
-			return
-		else
-			to_chat(user, "<span class='notice'>You double check the certificate with [W].</span>")
-	if((istype(W, /obj/item/folder/paperwork_correct/heavy_firearms)) && allowed(user))
-		if(heavy_firearms != TRUE)
-			heavy_firearms = TRUE
-			board.heavy_firearms = TRUE
-			SSshuttle.supply.callTime += 60
-			to_chat(user, "<span class='notice'>You upload the [W] into the console unlocking more options.</span>")
-			qdel(W) //Yes we are one time use.
-			return
-		else
-			to_chat(user, "<span class='notice'>You double check the certificate with [W].</span>")
-	if((istype(W, /obj/item/folder/paperwork_correct/medco_trade)) && allowed(user))
-		if(medco_trade != TRUE)
-			medco_trade = TRUE
-			board.medco_trade = TRUE
-			SSshuttle.supply.callTime += 20
-			to_chat(user, "<span class='notice'>You upload the [W] into the console unlocking more options.</span>")
-			qdel(W) //Yes we are one time use.
-			return
-		else
-			to_chat(user, "<span class='notice'>You double check the certificate with [W].</span>")
-	if((istype(W, /obj/item/folder/paperwork/blackmarket)) && allowed(user))
-		if(blackmarket != TRUE)
-			blackmarket = TRUE
-			board.blackmarket = TRUE
-			SSshuttle.supply.callTime += 120 //Backwater hidden route
-			to_chat(user, "<span class='notice'>You upload the hidden trade route with [W] into the console unlocking more options.</span>")
-			//qdel(W) //Shhhhhh Were not one time
-			return
-		else
-			to_chat(user, "<span class='notice'>You double check the backend trade route with [W].</span>")
-	if((istype(W, /obj/item/folder/paperwork_correct/animal_handing)) && allowed(user))
-		if(animal_handing != TRUE)
-			animal_handing = TRUE
-			board.animal_handing = TRUE
-			SSshuttle.supply.callTime += 5 //Local
-			to_chat(user, "<span class='notice'>You upload the [W] into the console unlocking more options.</span>")
-			qdel(W) //Yes we are one time use.
-			return
-		else
-			to_chat(user, "<span class='notice'>You double check the certificate with [W].</span>")
-	if((istype(W, /obj/item/folder/paperwork_correct/adv_sci)) && allowed(user))
-		if(adv_sci != TRUE)
-			adv_sci = TRUE
-			board.adv_sci = TRUE
-			SSshuttle.supply.callTime += 600 //Your connecting with a massive amout of routes and networking, its going to double your time
-			to_chat(user, "<span class='notice'>You upload the [W] into the console unlocking more options.</span>")
-			//qdel(W) //Were not one time use...
-			return
-		else
-			to_chat(user, "<span class='notice'>You double check the certificate with [W].</span>")
+	if((istype(W, /obj/item/folder/permit/space_gear)) && allowed(user) && !CHECK_BITFIELD(permits,PREMIT_SPACE))
+		permits |= PREMIT_SPACE
+		board.permits |= PREMIT_SPACE
+		SSshuttle.supply.callTime += 15
+		to_chat(user, "<span class='notice'>You upload the [W] into the console unlocking more options.</span>")
+		qdel(W) //Yes we are one time use.
+		return
+	if((istype(W, /obj/item/folder/permit/heavy_firearms)) && allowed(user) && !CHECK_BITFIELD(permits,PREMIT_WEAPONS))
+		permits |= PREMIT_WEAPONS
+		board.permits |= PREMIT_WEAPONS
+		SSshuttle.supply.callTime += 60
+		to_chat(user, "<span class='notice'>You upload the [W] into the console unlocking more options.</span>")
+		qdel(W) //Yes we are one time use.
+		return
+	if((istype(W, /obj/item/folder/permit/medco_trade)) && allowed(user) && !CHECK_BITFIELD(permits,PERMIT_MEDCO))
+		permits |= PERMIT_MEDCO
+		board.permits |= PERMIT_MEDCO
+		SSshuttle.supply.callTime += 20
+		to_chat(user, "<span class='notice'>You upload the [W] into the console unlocking more options.</span>")
+		qdel(W) //Yes we are one time use.
+		return
+	if((istype(W, /obj/item/folder/permit/blackmarket)) && allowed(user) && !CHECK_BITFIELD(permits,PERMIT_BLACKMARKET))
+		permits |= PERMIT_BLACKMARKET
+		board.permits |= PERMIT_BLACKMARKET
+		SSshuttle.supply.callTime += 120 //Backwater hidden route
+		to_chat(user, "<span class='notice'>You upload the hidden trade route with [W] into the console unlocking more options.</span>")
+		//qdel(W) //Shhhhhh Were not one time
+		return
+	if((istype(W, /obj/item/folder/permit/animal_handing)) && allowed(user) && !CHECK_BITFIELD(permits,PERMIT_ANIMALS))
+		permits |= PERMIT_ANIMALS
+		board.permits |= PERMIT_ANIMALS
+		SSshuttle.supply.callTime += 5 //Local
+		to_chat(user, "<span class='notice'>You upload the [W] into the console unlocking more options.</span>")
+		qdel(W) //Yes we are one time use.
+		return
+	if((istype(W, /obj/item/folder/permit/adv_sci)) && allowed(user) && !CHECK_BITFIELD(permits,PERMIT_ADVSCI))
+		permits |= PERMIT_ADVSCI
+		board.permits |= PERMIT_ADVSCI
+		SSshuttle.supply.callTime += 600 //Your connecting with a massive amout of routes and networking, its going to double your time
+		to_chat(user, "<span class='notice'>You upload the [W] into the console unlocking more options.</span>")
+		//qdel(W) //Were not one time use...
+		return
 	..()
 
 /obj/machinery/computer/cargo/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
@@ -207,17 +185,7 @@
 			)
 		if((P.hidden && !(obj_flags & EMAGGED)) || (P.contraband && !contraband) || (P.special && !P.special_enabled) || P.DropPodOnly)
 			continue
-		if((P.space_gear && !space_gear))
-			continue
-		if((P.heavy_firearms && !heavy_firearms))
-			continue
-		if((P.medco_trade && !medco_trade))
-			continue
-		if((P.blackmarket && !blackmarket))
-			continue
-		if((P.animal_handing && !animal_handing))
-			continue
-		if((P.adv_sci && !adv_sci))
+		if((P.permits & permits) != permits)
 			continue
 		data["supplies"][P.group]["packs"] += list(list(
 			"name" = P.name,

@@ -53,7 +53,7 @@
 	desc = "Poly 'Who stole all the hardsuits!' Well now you can get more hardsuits if needed! NOTE ONE HARDSUIT IS IN THIS CRATE, as well as one air tank and mask!"
 	cost = 2250
 	access = ACCESS_ENGINE
-	space_gear = TRUE
+	permits = PREMIT_SPACE
 	contains = list(/obj/item/tank/internals/air,
 					/obj/item/clothing/mask/gas,
 					/obj/item/clothing/suit/space/hardsuit/engine)
@@ -65,7 +65,7 @@
 	desc = "Too many techs and not enough hardsuits? Time to buy some more! Comes with gas mask and air tank. Ask the CE to open."
 	cost = 5000
 	access = ACCESS_CE //100% Fire and Bio resistance
-	space_gear = TRUE
+	permits = PREMIT_SPACE
 	contains = list(/obj/item/tank/internals/air,
 					/obj/item/clothing/mask/gas,
 					/obj/item/clothing/suit/space/hardsuit/engine/atmos)

@@ -17,28 +17,28 @@
 	name = "Space Gear Importation Verification"
 	desc = "Update you verification to import more regulated space gear such as - Hardsuits, Plasmamen EVA suits and more."
 	cost = 5500
-	contains = list(/obj/item/folder/paperwork_correct/space_gear)
+	contains = list(/obj/item/folder/permit/space_gear)
 	crate_name = "space permit crate"
 
 /datum/supply_pack/vending/permit_firearms
 	name = "Importation of Heavy Firearms Importation Verification"
 	desc = "Update you verification to import more regulated girearms such as - SWAT Gear, WT-550 and more."
 	cost = 8000
-	contains = list(/obj/item/folder/paperwork_correct/heavy_firearms)
+	contains = list(/obj/item/folder/permit/heavy_firearms)
 	crate_name = "firearms permit crate"
 
 /datum/supply_pack/vending/permit_medco_trade
 	name = "MedCo Trade Importation Verification"
 	desc = "Update you verification to import more regulated MedCo branded items such as - Medspray, Advanced Surgery Tools and more."
 	cost = 6000
-	contains = list(/obj/item/folder/paperwork_correct/medco_trade)
+	contains = list(/obj/item/folder/permit/medco_trade)
 	crate_name = "medco trade permit crate"
 
 /datum/supply_pack/vending/permit_animal
 	name = "Animal Handling License Verification"
 	desc = "Update you verification to import more regulated exotic animals such as - Gooses, Goats and more."
 	cost = 4500 //Animals are not worth much tbh
-	contains = list(/obj/item/folder/paperwork_correct/animal_handing)
+	contains = list(/obj/item/folder/permit/animal_handing)
 	crate_name = "animal handling license crate"
 
 //////////////////////////////////////////////////////////////////////////////

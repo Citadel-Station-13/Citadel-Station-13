@@ -33,3 +33,12 @@
     list("gondolapod", "gondola", "The silent walker. This one seems to be part of a delivery agency."),\
     list("", "", "")\
 )
+
+
+#define PREMIT_SPACE         (1<<0)
+#define PREMIT_WEAPONS       (1<<1)
+#define PERMIT_MEDCO         (1<<2)
+#define PERMIT_BLACKMARKET   (1<<3)
+#define PERMIT_ANIMALS       (1<<4)
+#define PERMIT_ADVSCI        (1<<5)
+

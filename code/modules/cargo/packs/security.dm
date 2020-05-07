@@ -119,7 +119,7 @@
 /datum/supply_pack/security/sechardsuit
 	name = "Sec Hardsuit"
 	desc = "One Sec Hardsuit with a small air tank and mask."
-	space_gear = TRUE
+	permits = PREMIT_SPACE
 	cost = 3000 // half of SWAT gear for have the armor and half the gear
 	contains = list(/obj/item/clothing/suit/space/hardsuit/security,
 					/obj/item/tank/internals/air,

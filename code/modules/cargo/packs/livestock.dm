@@ -45,7 +45,7 @@
 	name = "Butterflies Crate"
 	desc = "Not a very dangerous insect, but they do give off a better image than, say, flies or cockroaches."//is that a motherfucking worm reference
 	contraband = TRUE
-	animal_handing = TRUE
+	permits = PERMIT_ANIMALS
 	cost = 5000
 	contains = list(/mob/living/simple_animal/butterfly)
 	crate_name = "entomology samples crate"
@@ -111,7 +111,7 @@
 	name = "Exotic Corgi Crate"
 	desc = "Corgis fit for a king, these corgis come in a unique color to signify their superiority. Comes with a cute collar!"
 	cost = 5500
-	animal_handing = TRUE
+	permits = PERMIT_ANIMALS
 	contains = list(/mob/living/simple_animal/pet/dog/corgi/exoticcorgi,
 					/obj/item/clothing/neck/petcollar)
 	crate_name = "exotic corgi crate"
@@ -135,7 +135,7 @@
 	name = "Goat Crate"
 	desc = "The goat goes baa! Warranty void if used as a replacement for Pete."
 	cost = 2500
-	animal_handing = TRUE
+	permits = PERMIT_ANIMALS
 	contains = list(/mob/living/simple_animal/hostile/retaliate/goat)
 	crate_name = "goat crate"
 
@@ -143,7 +143,7 @@
 	name = "Goose Crate"
 	desc = "Angry and violent birds. Evil, evil creatures."
 	cost = 2500
-	animal_handing = TRUE
+	permits = PERMIT_ANIMALS
 	contains = list(/mob/living/simple_animal/hostile/retaliate/goose)
 	crate_name = "goose crate"
 
@@ -165,7 +165,7 @@
 	name = "Snake Crate"
 	desc = "Tired of these MOTHER FUCKING snakes on this MOTHER FUCKING space station? Then this isn't the crate for you. Contains three poisonous snakes."
 	cost = 3000
-	animal_handing = TRUE
+	permits = PERMIT_ANIMALS
 	contains = list(/mob/living/simple_animal/hostile/retaliate/poison/snake,
 					/mob/living/simple_animal/hostile/retaliate/poison/snake,
 					/mob/living/simple_animal/hostile/retaliate/poison/snake)
@@ -187,7 +187,7 @@
 	name = "Security Bat Crate"
 	desc = "Contains five security bats, perfect to Bat-up any security officer."
 	cost = 2500
-	animal_handing = TRUE
+	permits = PERMIT_ANIMALS
 	contains = list(/mob/living/simple_animal/hostile/retaliate/bat/secbat,
 					/mob/living/simple_animal/hostile/retaliate/bat/secbat,
 					/mob/living/simple_animal/hostile/retaliate/bat/secbat,

@@ -40,7 +40,7 @@
 	name = "Combat Knives Crate"
 	desc = "Contains three sharpened combat knives. Each knife guaranteed to fit snugly inside any Nanotrasen-standard boot. Requires Armory access to open."
 	cost = 3200
-	heavy_firearms = TRUE
+	permits = PREMIT_WEAPONS
 	contains = list(/obj/item/kitchen/knife/combat,
 					/obj/item/kitchen/knife/combat,
 					/obj/item/kitchen/knife/combat)
@@ -50,7 +50,7 @@
 	name = "Combat Shotguns Crate"
 	desc = "For when the enemy absolutely needs to be replaced with lead. Contains three Aussec-designed Combat Shotguns, with three Shotgun Bandoliers, as well as seven buchshot and 12g shotgun slugs. Requires Armory access to open."
 	cost = 8000
-	heavy_firearms = TRUE
+	permits = PREMIT_WEAPONS
 	contains = list(/obj/item/gun/ballistic/shotgun/automatic/combat,
 					/obj/item/gun/ballistic/shotgun/automatic/combat,
 					/obj/item/gun/ballistic/shotgun/automatic/combat,
@@ -108,7 +108,7 @@
 	desc = "Burn, baby burn. Contains three incendiary grenades, seven incendiary slugs, three plasma canisters, and a flamethrower. Requires Brige access to open."
 	cost = 1750
 	access = ACCESS_HEADS
-	heavy_firearms = TRUE
+	permits = PREMIT_WEAPONS
 	contains = list(/obj/item/flamethrower/full,
 					/obj/item/tank/internals/plasma,
 					/obj/item/tank/internals/plasma,
@@ -172,7 +172,7 @@
 	desc = "Hello Comrade, we have the most modern russian military equipment the black market can offer, for the right price of course. Sadly we couldnt remove the lock so it requires Armory access to open."
 	cost = 7500
 	contraband = TRUE
-	heavy_firearms = TRUE
+	permits = PREMIT_WEAPONS
 	contains = list(/obj/item/reagent_containers/food/snacks/rationpack,
 					/obj/item/ammo_box/a762,
 					/obj/item/storage/toolbox/ammo,
@@ -197,7 +197,7 @@
 	name = "SWAT Crate"
 	desc = "Contains two fullbody sets of tough, fireproof, pressurized suits designed in a joint effort by IS-ERI and Nanotrasen. Each set contains a suit, helmet, mask, combat belt, and combat gloves. Requires Armory access to open."
 	cost = 6000
-	heavy_firearms = TRUE
+	permits = PREMIT_WEAPONS
 	contains = list(/obj/item/clothing/head/helmet/swat/nanotrasen,
 					/obj/item/clothing/head/helmet/swat/nanotrasen,
 					/obj/item/clothing/suit/space/swat,
@@ -214,7 +214,7 @@
 	name = "WT-550 Semi-Auto Rifle Crate"
 	desc = "Contains two high-powered, semiautomatic rifles chambered in 4.6x30mm. Requires Armory access to open."
 	cost = 2550
-	heavy_firearms = TRUE
+	permits = PREMIT_WEAPONS
 	contains = list(/obj/item/gun/ballistic/automatic/wt550,
 					/obj/item/gun/ballistic/automatic/wt550)
 	crate_name = "auto rifle crate"
