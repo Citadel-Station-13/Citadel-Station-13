@@ -543,8 +543,16 @@
 				var/obj/effect/proc_holder/spell/spell = S
 				spell.updateButtonIcon()
 
+//proc used to remove all immobilisation effects + reset stamina
+/mob/living/proc/remove_CC(should_update_mobility = TRUE)
+	SetAllImmobility(0, FALSE)
+	setStaminaLoss(0)
+	SetUnconscious(0, FALSE)
+	if(should_update_mobility)
+		update_mobility()
+
 //proc used to completely heal a mob.
-/mob/living/proc/fully_heal(admin_revive = 0)
+/mob/living/proc/fully_heal(admin_revive = FALSE)
 	restore_blood()
 	setToxLoss(0, 0) //zero as second argument not automatically call updatehealth().
 	setOxyLoss(0, 0)

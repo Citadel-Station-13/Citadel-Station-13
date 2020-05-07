@@ -260,6 +260,15 @@
 	subcategory = CAT_TOOL
 	category = CAT_MISC
 
+/datum/crafting_recipe/electrochromatic_kit
+	name = "Electrochromatic Kit"
+	result = /obj/item/electronics/electrochromatic_kit
+	reqs = list(/obj/item/stack/sheet/metal = 1,
+				/obj/item/stack/cable_coil = 1)
+	time = 5
+	subcategory = CAT_TOOL
+	category = CAT_MISC
+
 ////////////
 //Vehicles//
 ////////////
@@ -401,15 +410,6 @@
 	reqs = list(/obj/item/camera = 1,
 				/datum/reagent/water/holywater = 10)
 	parts = list(/obj/item/camera = 1)
-	subcategory = CAT_MISCELLANEOUS
-	category = CAT_MISC
-
-/datum/crafting_recipe/paperwork
-	name = "Filed Paper Work"
-	result =  /obj/item/folder/paperwork_correct
-	time = 10 //Takes time for people to file and complete paper work!
-	tools = list(/obj/item/pen)
-	reqs = list(/obj/item/folder/paperwork = 1)
 	subcategory = CAT_MISCELLANEOUS
 	category = CAT_MISC
 

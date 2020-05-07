@@ -265,6 +265,7 @@
 #define WIZARD_AGE_MIN		30	//youngest a wizard can be
 #define APPRENTICE_AGE_MIN	29	//youngest an apprentice can be
 #define SHOES_SLOWDOWN		0	//How much shoes slow you down by default. Negative values speed you up
+#define SHOES_SPEED_SLIGHT  SHOES_SLOWDOWN - 1 // slightest speed boost to movement
 #define POCKET_STRIP_DELAY			40	//time taken (in deciseconds) to search somebody's pockets
 #define DOOR_CRUSH_DAMAGE	15	//the amount of damage that airlocks deal when they crush you
 
@@ -292,10 +293,4 @@
 #define GRAB_PIXEL_SHIFT_AGGRESSIVE 12
 #define GRAB_PIXEL_SHIFT_NECK 16
 
-#define PULL_PRONE_SLOWDOWN 0.6
-#define FIREMAN_CARRY_SLOWDOWN 0
-#define PIGGYBACK_CARRY_SLOWDOWN 1
-//slowdown when in softcrit. Note that crawling slowdown will also apply at the same time!
-#define SOFTCRIT_ADD_SLOWDOWN 2
-//slowdown when crawling
-#define CRAWLING_ADD_SLOWDOWN 4
+#define SLEEP_CHECK_DEATH(X) sleep(X); if(QDELETED(src) || stat == DEAD) return;
