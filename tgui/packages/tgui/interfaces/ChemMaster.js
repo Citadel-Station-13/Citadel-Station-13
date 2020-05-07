@@ -1,26 +1,11 @@
-import { Fragment } from 'inferno';
-import { useBackend, useSharedState } from '../backend';
+import { Component, Fragment } from 'inferno';
+import { act } from '../byond';
 import { AnimatedNumber, Box, Button, ColorBox, LabeledList, NumberInput, Section, Table } from '../components';
-import { Window } from '../layouts';
 
-export const ChemMaster = (props, context) => {
-  const { data } = useBackend(context);
-  const { screen } = data;
-  return (
-    <Window resizable>
-      <Window.Content scrollable>
-        {screen === 'analyze' && (
-          <AnalysisResults />
-        ) || (
-          <ChemMasterContent />
-        )}
-      </Window.Content>
-    </Window>
-  );
-};
-
-const ChemMasterContent = (props, context) => {
-  const { act, data } = useBackend(context);
+export const ChemMaster = props => {
+  const { state } = props;
+  const { config, data } = state;
+  const { ref } = config;
   const {
     screen,
     beakerContents = [],
@@ -32,9 +17,7 @@ const ChemMasterContent = (props, context) => {
     pillBottleCurrentAmount,
     pillBottleMaxAmount,
   } = data;
-  if (screen === 'analyze') {
-    return <AnalysisResults />;
-  }
+
   return (
     <Fragment>
       <Section
@@ -50,7 +33,7 @@ const ChemMasterContent = (props, context) => {
             <Button
               icon="eject"
               content="Eject"
-              onClick={() => act('eject')} />
+              onClick={() => act(ref, 'eject')} />
           </Fragment>
         )}>
         {!isBeakerLoaded && (
@@ -67,6 +50,7 @@ const ChemMasterContent = (props, context) => {
           {beakerContents.map(chemical => (
             <ChemicalBufferEntry
               key={chemical.id}
+              state={state}
               chemical={chemical}
               transferTo="buffer" />
           ))}
@@ -83,7 +67,7 @@ const ChemMasterContent = (props, context) => {
               color={data.mode ? 'good' : 'bad'}
               icon={data.mode ? 'exchange-alt' : 'times'}
               content={data.mode ? 'Transfer' : 'Destroy'}
-              onClick={() => act('toggleMode')} />
+              onClick={() => act(ref, 'toggleMode')} />
           </Fragment>
         )}>
         {bufferContents.length === 0 && (
@@ -95,6 +79,7 @@ const ChemMasterContent = (props, context) => {
           {bufferContents.map(chemical => (
             <ChemicalBufferEntry
               key={chemical.id}
+              state={state}
               chemical={chemical}
               transferTo="beaker" />
           ))}
@@ -102,7 +87,7 @@ const ChemMasterContent = (props, context) => {
       </Section>
       <Section
         title="Packaging">
-        <PackagingControls />
+        <PackagingControls state={state} />
       </Section>
       {!!isPillBottleLoaded && (
         <Section
@@ -115,7 +100,7 @@ const ChemMasterContent = (props, context) => {
               <Button
                 icon="eject"
                 content="Eject"
-                onClick={() => act('ejectPillBottle')} />
+                onClick={() => act(ref, 'ejectPillBottle')} />
             </Fragment>
           )} />
       )}
@@ -125,9 +110,9 @@ const ChemMasterContent = (props, context) => {
 
 const ChemicalBuffer = Table;
 
-const ChemicalBufferEntry = (props, context) => {
-  const { act } = useBackend(context);
-  const { chemical, transferTo } = props;
+const ChemicalBufferEntry = props => {
+  const { state, chemical, transferTo } = props;
+  const { ref } = state.config;
   return (
     <Table.Row key={chemical.id}>
       <Table.Cell color="label">
@@ -139,28 +124,28 @@ const ChemicalBufferEntry = (props, context) => {
       <Table.Cell collapsing>
         <Button
           content="1"
-          onClick={() => act('transfer', {
+          onClick={() => act(ref, 'transfer', {
             id: chemical.id,
             amount: 1,
             to: transferTo,
           })} />
         <Button
           content="5"
-          onClick={() => act('transfer', {
+          onClick={() => act(ref, 'transfer', {
             id: chemical.id,
             amount: 5,
             to: transferTo,
           })} />
         <Button
           content="10"
-          onClick={() => act('transfer', {
+          onClick={() => act(ref, 'transfer', {
             id: chemical.id,
             amount: 10,
             to: transferTo,
           })} />
         <Button
           content="All"
-          onClick={() => act('transfer', {
+          onClick={() => act(ref, 'transfer', {
             id: chemical.id,
             amount: 1000,
             to: transferTo,
@@ -168,7 +153,7 @@ const ChemicalBufferEntry = (props, context) => {
         <Button
           icon="ellipsis-h"
           title="Custom amount"
-          onClick={() => act('transfer', {
+          onClick={() => act(ref, 'transfer', {
             id: chemical.id,
             amount: -1,
             to: transferTo,
@@ -176,7 +161,7 @@ const ChemicalBufferEntry = (props, context) => {
         <Button
           icon="question"
           title="Analyze"
-          onClick={() => act('analyze', {
+          onClick={() => act(ref, 'analyze', {
             id: chemical.id,
           })} />
       </Table.Cell>
@@ -196,7 +181,7 @@ const PackagingControlsItem = props => {
   return (
     <LabeledList.Item label={label}>
       <NumberInput
-        width="84px"
+        width={14}
         unit={amountUnit}
         step={1}
         stepPixelSize={15}
@@ -204,129 +189,176 @@ const PackagingControlsItem = props => {
         minValue={1}
         maxValue={10}
         onChange={onChangeAmount} />
-      <Button
-        ml={1}
+      <Button ml={1}
         content="Create"
         onClick={onCreate} />
-      <Box inline ml={1} color="label">
-        {sideNote}
-      </Box>
+      <Box inline ml={1}
+        color="label"
+        content={sideNote} />
     </LabeledList.Item>
   );
 };
 
-const PackagingControls = (props, context) => {
-  const { act, data } = useBackend(context);
-  const [
-    pillAmount,
-    setPillAmount,
-  ] = useSharedState(context, 'pillAmount', 1);
-  const [
-    patchAmount,
-    setPatchAmount,
-  ] = useSharedState(context, 'patchAmount', 1);
-  const [
-    bottleAmount,
-    setBottleAmount,
-  ] = useSharedState(context, 'bottleAmount', 1);
-  const [
-    packAmount,
-    setPackAmount,
-  ] = useSharedState(context, 'packAmount', 1);
-  const {
-    condi,
-    chosenPillStyle,
-    pillStyles = [],
-  } = data;
-  return (
-    <LabeledList>
-      {!condi && (
-        <LabeledList.Item label="Pill type">
-          {pillStyles.map(pill => (
-            <Button
-              key={pill.id}
-              width="30px"
-              selected={pill.id === chosenPillStyle}
-              textAlign="center"
-              color="transparent"
-              onClick={() => act('pillStyle', { id: pill.id })}>
-              <Box mx={-1} className={pill.className} />
-            </Button>
-          ))}
-        </LabeledList.Item>
-      )}
-      {!condi && (
-        <PackagingControlsItem
-          label="Pills"
-          amount={pillAmount}
-          amountUnit="pills"
-          sideNote="max 50u"
-          onChangeAmount={(e, value) => setPillAmount(value)}
-          onCreate={() => act('create', {
-            type: 'pill',
-            amount: pillAmount,
-            volume: 'auto',
-          })} />
-      )}
-      {!condi && (
-        <PackagingControlsItem
-          label="Patches"
-          amount={patchAmount}
-          amountUnit="patches"
-          sideNote="max 40u"
-          onChangeAmount={(e, value) => setPatchAmount(value)}
-          onCreate={() => act('create', {
-            type: 'patch',
-            amount: patchAmount,
-            volume: 'auto',
-          })} />
-      )}
-      {!condi && (
-        <PackagingControlsItem
-          label="Bottles"
-          amount={bottleAmount}
-          amountUnit="bottles"
-          sideNote="max 30u"
-          onChangeAmount={(e, value) => setBottleAmount(value)}
-          onCreate={() => act('create', {
-            type: 'bottle',
-            amount: bottleAmount,
-            volume: 'auto',
-          })} />
-      )}
-      {!!condi && (
-        <PackagingControlsItem
-          label="Packs"
-          amount={packAmount}
-          amountUnit="packs"
-          sideNote="max 10u"
-          onChangeAmount={(e, value) => setPackAmount(value)}
-          onCreate={() => act('create', {
-            type: 'condimentPack',
-            amount: packAmount,
-            volume: 'auto',
-          })} />
-      )}
-      {!!condi && (
-        <PackagingControlsItem
-          label="Bottles"
-          amount={bottleAmount}
-          amountUnit="bottles"
-          sideNote="max 50u"
-          onChangeAmount={(e, value) => setBottleAmount(value)}
-          onCreate={() => act('create', {
-            type: 'condimentBottle',
-            amount: bottleAmount,
-            volume: 'auto',
-          })} />
-      )}
-    </LabeledList>
-  );
-};
+class PackagingControls extends Component {
+  constructor() {
+    super();
+    this.state = {
+      pillAmount: 1,
+      patchAmount: 1,
+      bottleAmount: 1,
+      packAmount: 1,
+      vialAmount: 1,
+      dartAmount: 1,
+    };
+  }
 
-const AnalysisResults = (props, context) => {
-  const { act, data } = useBackend(context);
-  const { analyzeVars } = data;
+  render() {
+    const { state, props } = this;
+    const { ref } = props.state.config;
+    const {
+      pillAmount,
+      patchAmount,
+      bottleAmount,
+      packAmount,
+      vialAmount,
+      dartAmount,
+    } = this.state;
+    const {
+      condi,
+      chosenPillStyle,
+      pillStyles = [],
+    } = props.state.data;
+    return (
+      <LabeledList>
+        {!condi && (
+          <LabeledList.Item label="Pill type">
+            {pillStyles.map(pill => (
+              <Button
+                key={pill.id}
+                width={5}
+                selected={pill.id === chosenPillStyle}
+                textAlign="center"
+                color="transparent"
+                onClick={() => act(ref, 'pillStyle', { id: pill.id })}>
+                <Box mx={-1} className={pill.className} />
+              </Button>
+            ))}
+          </LabeledList.Item>
+        )}
+        {!condi && (
+          <PackagingControlsItem
+            label="Pills"
+            amount={pillAmount}
+            amountUnit="pills"
+            sideNote="max 50u"
+            onChangeAmount={(e, value) => this.setState({
+              pillAmount: value,
+            })}
+            onCreate={() => act(ref, 'create', {
+              type: 'pill',
+              amount: pillAmount,
+              volume: 'auto',
+            })} />
+        )}
+        {!condi && (
+          <PackagingControlsItem
+            label="Patches"
+            amount={patchAmount}
+            amountUnit="patches"
+            sideNote="max 40u"
+            onChangeAmount={(e, value) => this.setState({
+              patchAmount: value,
+            })}
+            onCreate={() => act(ref, 'create', {
+              type: 'patch',
+              amount: patchAmount,
+              volume: 'auto',
+            })} />
+        )}
+        {!condi && (
+          <PackagingControlsItem
+            label="Bottles"
+            amount={bottleAmount}
+            amountUnit="bottles"
+            sideNote="max 30u"
+            onChangeAmount={(e, value) => this.setState({
+              bottleAmount: value,
+            })}
+            onCreate={() => act(ref, 'create', {
+              type: 'bottle',
+              amount: bottleAmount,
+              volume: 'auto',
+            })} />
+        )}
+        {!condi && (
+          <PackagingControlsItem
+            label="Hypovials"
+            amount={vialAmount}
+            amountUnit="vials"
+            sideNote="max 60u"
+            onChangeAmount={(e, value) => this.setState({
+              vialAmount: value,
+            })}
+            onCreate={() => act(ref, 'create', {
+              type: 'hypoVial',
+              amount: vialAmount,
+              volume: 'auto',
+            })} />
+        )}
+        {!condi && (
+          <PackagingControlsItem
+            label="Smartdarts"
+            amount={dartAmount}
+            amountUnit="darts"
+            sideNote="max 20u"
+            onChangeAmount={(e, value) => this.setState({
+              dartAmount: value,
+            })}
+            onCreate={() => act(ref, 'create', {
+              type: 'smartDart',
+              amount: dartAmount,
+              volume: 'auto',
+            })} />
+        )}
+        {!!condi && (
+          <PackagingControlsItem
+            label="Packs"
+            amount={packAmount}
+            amountUnit="packs"
+            sideNote="max 10u"
+            onChangeAmount={(e, value) => this.setState({
+              packAmount: value,
+            })}
+            onCreate={() => act(ref, 'create', {
+              type: 'condimentPack',
+              amount: packAmount,
+              volume: 'auto',
+            })} />
+        )}
+        {!!condi && (
+          <PackagingControlsItem
+            label="Bottles"
+            amount={bottleAmount}
+            amountUnit="bottles"
+            sideNote="max 50u"
+            onChangeAmount={(e, value) => this.setState({
+              bottleAmount: value,
+            })}
+            onCreate={() => act(ref, 'create', {
+              type: 'condimentBottle',
+              amount: bottleAmount,
+              volume: 'auto',
+            })} />
+        )}
+      </LabeledList>
+    );
+  }
+}
+
+const AnalysisResults = props => {
+  const { state, fermianalyze } = props;
+  const { ref } = state.config;
+  const { analyzeVars } = state.data;
   return (
     <Section
       title="Analysis Results"
@@ -334,34 +366,83 @@ const AnalysisResults = (props, context) => {
         <Button
           icon="arrow-left"
           content="Back"
-          onClick={() => act('goScreen', {
+          onClick={() => act(ref, 'goScreen', {
             screen: 'home',
           })} />
       )}>
-      <LabeledList>
-        <LabeledList.Item label="Name">
-          {analyzeVars.name}
-        </LabeledList.Item>
-        <LabeledList.Item label="State">
-          {analyzeVars.state}
-        </LabeledList.Item>
-        <LabeledList.Item label="Color">
-          <ColorBox color={analyzeVars.color} mr={1} />
-          {analyzeVars.color}
-        </LabeledList.Item>
-        <LabeledList.Item label="Description">
-          {analyzeVars.description}
-        </LabeledList.Item>
-        <LabeledList.Item label="Metabolization Rate">
-          {analyzeVars.metaRate} u/minute
-        </LabeledList.Item>
-        <LabeledList.Item label="Overdose Threshold">
-          {analyzeVars.overD}
-        </LabeledList.Item>
-        <LabeledList.Item label="Addiction Threshold">
-          {analyzeVars.addicD}
-        </LabeledList.Item>
-      </LabeledList>
+      {!fermianalyze && (
+        <LabeledList>
+          <LabeledList.Item label="Name">
+            {analyzeVars.name}
+          </LabeledList.Item>
+          <LabeledList.Item label="State">
+            {analyzeVars.state}
+          </LabeledList.Item>
+          <LabeledList.Item label="Color">
+            <ColorBox color={analyzeVars.color} mr={1} />
+            {analyzeVars.color}
+          </LabeledList.Item>
+          <LabeledList.Item label="Description">
+            {analyzeVars.description}
+          </LabeledList.Item>
+          <LabeledList.Item label="Metabolization Rate">
+            {analyzeVars.metaRate} u/minute
+          </LabeledList.Item>
+          <LabeledList.Item label="Overdose Threshold">
+            {analyzeVars.overD}
+          </LabeledList.Item>
+          <LabeledList.Item label="Addiction Threshold">
+            {analyzeVars.addicD}
+          </LabeledList.Item>
+        </LabeledList>
+      )}
+      {!!fermianalyze && (
+        <LabeledList>
+          <LabeledList.Item label="Name">
+            {analyzeVars.name}
+          </LabeledList.Item>
+          <LabeledList.Item label="State">
+            {analyzeVars.state}
+          </LabeledList.Item>
+          <LabeledList.Item label="Color">
+            <ColorBox color={analyzeVars.color} mr={1} />
+            {analyzeVars.color}
+          </LabeledList.Item>
+          <LabeledList.Item label="Description">
+            {analyzeVars.description}
+          </LabeledList.Item>
+          <LabeledList.Item label="Metabolization Rate">
+            {analyzeVars.metaRate} u/minute
+          </LabeledList.Item>
+          <LabeledList.Item label="Overdose Threshold">
+            {analyzeVars.overD}
+          </LabeledList.Item>
+          <LabeledList.Item label="Addiction Threshold">
+            {analyzeVars.addicD}
+          </LabeledList.Item>
+          <LabeledList.Item label="Purity">
+            {analyzeVars.purityF}
+          </LabeledList.Item>
+          <LabeledList.Item label="Inverse Ratio">
+            {analyzeVars.inverseRatioF}
+          </LabeledList.Item>
+          <LabeledList.Item label="Purity E">
+            {analyzeVars.purityE}
+          </LabeledList.Item>
+          <LabeledList.Item label="Lower Optimal Temperature">
+            {analyzeVars.minTemp}
+          </LabeledList.Item>
+          <LabeledList.Item label="Upper Optimal Temperature">
+            {analyzeVars.maxTemp}
+          </LabeledList.Item>
+          <LabeledList.Item label="Explosive Temperature">
+            {analyzeVars.eTemp}
+          </LabeledList.Item>
+          <LabeledList.Item label="pH Peak">
+            {analyzeVars.pHpeak}
+          </LabeledList.Item>
+        </LabeledList>
+      )}
     </Section>
   );
 };
