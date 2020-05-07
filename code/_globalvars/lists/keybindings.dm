@@ -5,7 +5,7 @@
 		if(!initial(keybinding.hotkey_keys))
 			continue
 		add_keybinding(new keybinding)
-	init_emote_keybinds()
+	// init_emote_keybinds() - Disabled - I don't particularly want this.
 
 /// Adds an instanced keybinding to the global tracker
 /proc/add_keybinding(datum/keybinding/instance)
