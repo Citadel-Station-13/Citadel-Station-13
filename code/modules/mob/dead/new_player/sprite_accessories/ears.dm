@@ -223,6 +223,8 @@
 	icon_state = "cat"
 	icon = 'icons/mob/mutant_bodyparts.dmi'
 	color_src = HAIR
+	extra = TRUE
+	extra_color_src = NONE
 
 /datum/sprite_accessory/mam_ears/catbig
 	name = "Cat, Big"
