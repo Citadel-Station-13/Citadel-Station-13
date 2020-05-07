@@ -61,7 +61,8 @@ export const ChemHeater = (props, context) => {
           buttons={!!isBeakerLoaded && (
             <Fragment>
               <Box inline color="label" mr={2}>
-                {beakerCurrentVolume} / {beakerMaxVolume} units, {data.beakerCurrentpH} pH
+                {beakerCurrentVolume} / {beakerMaxVolume} units,
+                {data.beakerCurrentpH} pH
               </Box>
               <Button
                 icon="eject"
