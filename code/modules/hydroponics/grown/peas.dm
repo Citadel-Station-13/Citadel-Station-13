@@ -81,7 +81,7 @@
 	icon_grow = "worldpeas-grow"
 	icon_dead = "worldpeas-dead"
 	genes = list (/datum/plant_gene/trait/glow/blue)
-	reagents_add = list (/datum/reagent/Pax = 0.15, /datum/reagent/drug/happiness = 0.1, /datum/reagent/consumable/nutriment = 0.05)
+	reagents_add = list (/datum/reagent/pax = 0.15, /datum/reagent/drug/happiness = 0.1, /datum/reagent/consumable/nutriment = 0.05)
 	rarity = 50 // This absolutely will make even the most hardened Syndicate Operators relax, and lay down their arms.
 
 
