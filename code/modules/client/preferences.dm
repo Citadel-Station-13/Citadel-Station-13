@@ -2479,13 +2479,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					if(auto_fit_viewport && parent)
 						parent.fit_viewport()
 
-				if("sprint_key")
-					sprint_spacebar = !sprint_spacebar
-
-				if("sprint_toggle")
-					sprint_toggle = !sprint_toggle
-
-
 				if("hud_toggle_flash")
 					hud_toggle_flash = !hud_toggle_flash
 
