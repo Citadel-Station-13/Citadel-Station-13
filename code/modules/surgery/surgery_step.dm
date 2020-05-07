@@ -58,7 +58,10 @@
 		return FALSE
 	if(tool)
 		speed_mod = tool.toolspeed
-	if(do_after(user, time * speed_mod, target = target))
+	var/skill_mod = 1
+	if(user?.mind?.skill_holder)
+		skill_mod = SURGERY_SKILL_SPEEDUP_NUMERICAL_SCALE(user.mind.skill_holder.get_skill_value(/datum/skill/numerical/surgery))
+	if(do_after(user, time * speed_mod * skill_mod, target = target))
 		var/prob_chance = 100
 		if(implement_type)	//this means it isn't a require hand or any item step.
 			prob_chance = implements[implement_type]
@@ -66,6 +69,7 @@
 
 		if((prob(prob_chance) || (iscyborg(user) && !silicons_obey_prob)) && chem_check(target) && !try_to_fail)
 			if(success(user, target, target_zone, tool, surgery))
+				user?.mind?.skill_holder?.auto_gain_experience(/datum/skill/numerical/surgery, SKILL_GAIN_SURGERY_PER_STEP)
 				advance = TRUE
 		else
 			if(failure(user, target, target_zone, tool, surgery))

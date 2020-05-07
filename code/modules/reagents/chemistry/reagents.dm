@@ -51,7 +51,7 @@ GLOBAL_LIST_INIT(name2reagent, build_name2reagent())
 	var/inverse_chem					// What chem is metabolised when purity is below inverse_chem_val, this shouldn't be made, but if it does, well, I guess I'll know about it.
 	var/metabolizing = FALSE
 	var/chemical_flags // See fermi/readme.dm REAGENT_DEAD_PROCESS, REAGENT_DONOTSPLIT, REAGENT_ONLYINVERSE, REAGENT_ONMOBMERGE, REAGENT_INVISIBLE, REAGENT_FORCEONNEW, REAGENT_SNEAKYNAME
-	var/value = 0 //How much does it sell for in cargo?
+	var/value = REAGENT_VALUE_NONE //How much does it sell for in cargo?
 
 /datum/reagent/Destroy() // This should only be called by the holder, so it's already handled clearing its references
 	. = ..()

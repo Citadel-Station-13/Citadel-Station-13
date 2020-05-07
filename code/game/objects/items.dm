@@ -392,7 +392,8 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	if(item_flags & DROPDEL)
 		qdel(src)
 	item_flags &= ~IN_INVENTORY
-	SEND_SIGNAL(src, COMSIG_ITEM_DROPPED,user)
+	if(SEND_SIGNAL(src, COMSIG_ITEM_DROPPED,user) & COMPONENT_DROPPED_RELOCATION)
+		. = ITEM_RELOCATED_BY_DROPPED
 	user.update_equipment_speed_mods()
 
 // called just as an item is picked up (loc is not yet changed)
@@ -433,11 +434,12 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 // for items that can be placed in multiple slots
 // note this isn't called during the initial dressing of a player
 /obj/item/proc/equipped(mob/user, slot)
-	SEND_SIGNAL(src, COMSIG_ITEM_EQUIPPED, user, slot)
-	for(var/X in actions)
-		var/datum/action/A = X
-		if(item_action_slot_check(slot, user, A)) //some items only give their actions buttons when in a specific slot.
-			A.Grant(user)
+	. = SEND_SIGNAL(src, COMSIG_ITEM_EQUIPPED, user, slot)
+	if(!(. & COMPONENT_NO_GRANT_ACTIONS))
+		for(var/X in actions)
+			var/datum/action/A = X
+			if(item_action_slot_check(slot, user, A)) //some items only give their actions buttons when in a specific slot.
+				A.Grant(user)
 	item_flags |= IN_INVENTORY
 	user.update_equipment_speed_mods()
 

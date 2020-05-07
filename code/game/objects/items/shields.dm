@@ -107,8 +107,13 @@
 	return TRUE
 
 /obj/item/shield/proc/user_shieldbash(mob/living/user, atom/target, harmful)
+	if(!(user.combat_flags & COMBAT_FLAG_COMBAT_ACTIVE)) //Combat mode has to be enabled for shield bashing
+		return FALSE
 	if(!(shield_flags & SHIELD_CAN_BASH))
 		to_chat(user, "<span class='warning'>[src] can't be used to shield bash!</span>")
+		return FALSE
+	if(!CHECK_MOBILITY(user, MOBILITY_STAND))
+		to_chat(user, "<span class='warning'>You can't bash with [src] while on the ground!</span>")
 		return FALSE
 	if(world.time < last_shieldbash + shieldbash_cooldown)
 		to_chat(user, "<span class='warning'>You can't bash with [src] again so soon!</span>")
@@ -165,6 +170,7 @@
 	attack_verb = list("shoved", "bashed")
 	var/cooldown = 0 //shield bash cooldown. based on world.time
 	var/repair_material = /obj/item/stack/sheet/mineral/titanium
+	var/can_shatter = TRUE
 	shield_flags = SHIELD_FLAGS_DEFAULT | SHIELD_TRANSPARENT
 	max_integrity = 75
 
@@ -214,7 +220,7 @@
 	new /obj/item/shard((get_turf(src)))
 
 /obj/item/shield/riot/on_shield_block(mob/living/owner, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return)
-	if(obj_integrity <= damage)
+	if(can_shatter && (obj_integrity <= damage))
 		var/turf/T = get_turf(owner)
 		T.visible_message("<span class='warning'>[attack_text] destroys [src]!</span>")
 		shatter(owner)
@@ -355,20 +361,47 @@ obj/item/shield/riot/bullet_proof
 	block_chance = 50
 
 /obj/item/shield/riot/implant
-	name = "riot tower shield"
-	desc = "A massive shield that can block a lot of attacks and can take a lot of abuse before breaking." //It cant break unless it is removed from the implant
+	name = "telescoping shield implant"
+	desc = "A compact, arm-mounted telescopic shield. While nigh-indestructible when powered by a host user, it will eventually overload from damage. Recharges while inside its implant."
 	item_state = "metal"
 	icon_state = "metal"
-	block_chance = 30 //May be big but hard to move around to block.
+	block_chance = 50
 	slowdown = 1
 	shield_flags = SHIELD_FLAGS_DEFAULT
+	max_integrity = 60
+	obj_integrity = 60
+	can_shatter = FALSE
 	item_flags = SLOWS_WHILE_IN_HAND
+	var/recharge_timerid
+	var/recharge_delay = 15 SECONDS
 
-/obj/item/shield/riot/implant/run_block(mob/living/owner, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return)
-	if(attack_type & ATTACK_TYPE_PROJECTILE)
-		final_block_chance = 60 //Massive shield
-	return ..()
+/// Entirely overriden take_damage. This shouldn't exist outside of an implant (other than maybe christmas).
+/obj/item/shield/riot/implant/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, attack_dir, armour_penetration = 0)
+	obj_integrity -= damage_amount
+	if(obj_integrity < 0)
+		obj_integrity = 0
+	if(obj_integrity == 0)
+		if(ismob(loc))
+			var/mob/living/L = loc
+			playsound(src, 'sound/effects/glassbr3.ogg', 100)
+			L.visible_message("<span class='boldwarning'>[src] overloads from the damage sustained!</span>")
+			L.dropItemToGround(src)			//implant component catch hook will grab it.
 
+/obj/item/shield/riot/implant/Moved()
+	. = ..()
+	if(istype(loc, /obj/item/organ/cyberimp/arm/shield))
+		recharge_timerid = addtimer(CALLBACK(src, .proc/recharge), recharge_delay, flags = TIMER_STOPPABLE)
+	else		//extending
+		if(recharge_timerid)
+			deltimer(recharge_timerid)
+			recharge_timerid = null
+
+/obj/item/shield/riot/implant/proc/recharge()
+	if(obj_integrity == max_integrity)
+		return
+	obj_integrity = max_integrity
+	if(ismob(loc.loc))		//cyberimplant.user
+		to_chat(loc, "<span class='notice'>[src] has recharged its reinforcement matrix and is ready for use!</span>")
 
 /obj/item/shield/energy
 	name = "energy combat shield"

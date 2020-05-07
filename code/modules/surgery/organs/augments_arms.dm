@@ -2,6 +2,7 @@
 	name = "arm-mounted implant"
 	desc = "You shouldn't see this! Adminhelp and report this as an issue on github!"
 	zone = BODY_ZONE_R_ARM
+	organ_flags = ORGAN_SYNTHETIC
 	icon_state = "implant-toolkit"
 	w_class = WEIGHT_CLASS_NORMAL
 	actions_types = list(/datum/action/item_action/organ_action/toggle)
@@ -20,7 +21,28 @@
 
 	update_icon()
 	SetSlotFromZone()
-	items_list = contents.Copy()
+	for(var/obj/item/I in contents)
+		add_item(I)
+
+/obj/item/organ/cyberimp/arm/proc/add_item(obj/item/I)
+	if(I in items_list)
+		return
+	I.forceMove(src)
+	items_list += I
+	// ayy only dropped signal for performance, we can't possibly have shitcode that doesn't call it when removing items from a mob, right?
+	// .. right??!
+	RegisterSignal(I, COMSIG_ITEM_DROPPED, .proc/magnetic_catch)
+
+/obj/item/organ/cyberimp/arm/proc/magnetic_catch(datum/source, mob/user)
+	. = COMPONENT_DROPPED_RELOCATION
+	var/obj/item/I = source			//if someone is misusing the signal, just runtime
+	if(I in items_list)
+		if(I in contents)		//already in us somehow? i probably shouldn't catch this so it's easier to spot bugs but eh..
+			return
+		I.visible_message("<span class='notice'>[I] snaps back into [src]!</span>")
+		I.forceMove(src)
+		if(I == holder)
+			holder = null
 
 /obj/item/organ/cyberimp/arm/proc/SetSlotFromZone()
 	switch(zone)
@@ -62,7 +84,7 @@
 	. = ..()
 	if(. & EMP_PROTECT_SELF)
 		return
-	if(prob(15/severity) && owner)
+	if(owner)
 		to_chat(owner, "<span class='warning'>[src] is hit by EMP!</span>")
 		// give the owner an idea about why his implant is glitching
 		Retract()
@@ -75,28 +97,19 @@
 		"<span class='notice'>[holder] snaps back into your [zone == BODY_ZONE_R_ARM ? "right" : "left"] arm.</span>",
 		"<span class='italics'>You hear a short mechanical noise.</span>")
 
-	if(istype(holder, /obj/item/assembly/flash/armimplant))
-		var/obj/item/assembly/flash/F = holder
-		F.set_light(0)
-
 	owner.transferItemToLoc(holder, src, TRUE)
 	holder = null
 	playsound(get_turf(owner), 'sound/mecha/mechmove03.ogg', 50, 1)
 
-/obj/item/organ/cyberimp/arm/proc/Extend(var/obj/item/item)
+/obj/item/organ/cyberimp/arm/proc/Extend(obj/item/item)
 	if(!(item in src))
 		return
 
 	holder = item
 
-	ADD_TRAIT(holder, TRAIT_NODROP, HAND_REPLACEMENT_TRAIT)
 	holder.resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	holder.slot_flags = null
 	holder.set_custom_materials(null)
-
-	if(istype(holder, /obj/item/assembly/flash/armimplant))
-		var/obj/item/assembly/flash/F = holder
-		F.set_light(7)
 
 	var/obj/item/arm_item = owner.get_active_held_item()
 
@@ -223,21 +236,6 @@
 	icon_state = "arm_taser"
 	contents = newlist(/obj/item/gun/energy/e_gun/advtaser/mounted)
 
-/obj/item/organ/cyberimp/arm/gun/emp_act(severity)
-	. = ..()
-	if(. & EMP_PROTECT_SELF)
-		return
-	if(prob(30/severity) && owner && !(organ_flags & ORGAN_FAILING))
-		Retract()
-		owner.visible_message("<span class='danger'>A loud bang comes from [owner]\'s [zone == BODY_ZONE_R_ARM ? "right" : "left"] arm!</span>")
-		playsound(get_turf(owner), 'sound/weapons/flashbang.ogg', 100, 1)
-		to_chat(owner, "<span class='userdanger'>You feel an explosion erupt inside your [zone == BODY_ZONE_R_ARM ? "right" : "left"] arm as your implant breaks!</span>")
-		owner.adjust_fire_stacks(20)
-		owner.IgniteMob()
-		owner.adjustFireLoss(25)
-		crit_fail = 1
-		organ_flags |= ORGAN_FAILING
-
 /obj/item/organ/cyberimp/arm/flash
 	name = "integrated high-intensity photon projector" //Why not
 	desc = "An integrated projector mounted onto a user's arm that is able to be used as a powerful flash."
@@ -274,6 +272,12 @@
 	name = "arm-mounted riot shield"
 	desc = "A deployable riot shield to help deal with civil unrest."
 	contents = newlist(/obj/item/shield/riot/implant)
+
+/obj/item/organ/cyberimp/arm/shield/Extend(obj/item/I)
+	if(I.obj_integrity == 0)				//that's how the shield recharge works
+		to_chat(owner, "<span class='warning'>[I] is still too unstable to extend. Give it some time!</span>")
+		return FALSE
+	return ..()
 
 /obj/item/organ/cyberimp/arm/shield/emag_act()
 	. = ..()
