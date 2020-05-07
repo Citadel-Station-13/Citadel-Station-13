@@ -125,13 +125,13 @@
 	if(!CHECK_MOBILITY(user, MOBILITY_STAND))
 		totitemdamage *= 0.5
 	//CIT CHANGES END HERE
-	if(user != src && check_shields(I, totitemdamage, "the [I.name]", MELEE_ATTACK, I.armour_penetration))
+	if((user != src) && run_block(I, totitemdamage, "the [I.name]", ATTACK_TYPE_MELEE, I.armour_penetration, user) & BLOCK_SUCCESS)
 		return FALSE
 	send_item_attack_message(I, user)
 	I.do_stagger_action(src, user)
 	if(I.force)
 		apply_damage(totitemdamage, I.damtype) //CIT CHANGE - replaces I.force with totitemdamage
-		if(I.damtype == BRUTE && !HAS_TRAIT(src, TRAIT_NOMARROW))
+		if(I.damtype == BRUTE)
 			if(prob(33))
 				I.add_mob_blood(src)
 				var/turf/location = get_turf(src)
@@ -155,9 +155,9 @@
 /obj/item/proc/get_clamped_volume()
 	if(w_class)
 		if(force)
-			return CLAMP((force + w_class) * 4, 30, 100)// Add the item's force to its weight class and multiply by 4, then clamp the value between 30 and 100
+			return clamp((force + w_class) * 4, 30, 100)// Add the item's force to its weight class and multiply by 4, then clamp the value between 30 and 100
 		else
-			return CLAMP(w_class * 6, 10, 100) // Multiply the item's weight class by 6, then clamp the value between 10 and 100
+			return clamp(w_class * 6, 10, 100) // Multiply the item's weight class by 6, then clamp the value between 10 and 100
 
 /mob/living/proc/send_item_attack_message(obj/item/I, mob/living/user, hit_area)
 	var/message_verb = "attacked"

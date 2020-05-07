@@ -21,29 +21,42 @@
 
 /datum/sprite_accessory/taur
 	icon = 'modular_citadel/icons/mob/mam_taur.dmi'
-	extra_icon = 'modular_citadel/icons/mob/mam_taur.dmi'
-	extra = TRUE
-	extra2_icon = 'modular_citadel/icons/mob/mam_taur.dmi'
-	extra2 = TRUE
 	center = TRUE
 	dimension_x = 64
-	var/taur_mode = NONE //Must be a single specific tauric suit variation bitflag. Don't do FLAG_1|FLAG_2
-	var/alt_taur_mode = NONE //Same as above.
 	color_src = MATRIXED
 	recommended_species = list("human", "lizard", "insect", "mammal", "xeno", "jelly", "slimeperson", "podweak")
+	relevant_layers = list(BODY_ADJ_UPPER_LAYER, BODY_FRONT_LAYER)
+	var/taur_mode = NONE //Must be a single specific tauric suit variation bitflag. Don't do FLAG_1|FLAG_2
+	var/alt_taur_mode = NONE //Same as above.
+	var/hide_legs = USE_QUADRUPED_CLIP_MASK
+
+/datum/sprite_accessory/taur/New()
+	switch(hide_legs)
+		if(USE_QUADRUPED_CLIP_MASK)
+			alpha_mask_state = "taur_mask_def"
+		if(USE_SNEK_CLIP_MASK)
+			alpha_mask_state = "taur_mask_naga"
 
 /datum/sprite_accessory/taur/none
-	dimension_x = 32
-	center = FALSE
 	name = "None"
 	icon_state = "None"
+	dimension_x = 32
+	center = FALSE
 	recommended_species = null
+	relevant_layers = null
+	hide_legs = FALSE
 
 /datum/sprite_accessory/taur/cow
 	name = "Cow"
 	icon_state = "cow"
 	taur_mode = STYLE_HOOF_TAURIC
 	alt_taur_mode = STYLE_PAW_TAURIC
+	color_src = MUTCOLORS
+
+/datum/sprite_accessory/taur/cow/spotted
+	name = "Cow (Spotted)"
+	icon_state = "cow_spotted"
+	color_src = MATRIXED
 
 /datum/sprite_accessory/taur/deer
 	name = "Deer"
@@ -56,27 +69,21 @@
 	name = "Drake"
 	icon_state = "drake"
 	taur_mode = STYLE_PAW_TAURIC
+	color_src = MUTCOLORS
+	extra = TRUE
 
 /datum/sprite_accessory/taur/drider
 	name = "Drider"
 	icon_state = "drider"
 	color_src = MUTCOLORS
+	extra = TRUE
 
 /datum/sprite_accessory/taur/eevee
 	name = "Eevee"
 	icon_state = "eevee"
 	taur_mode = STYLE_PAW_TAURIC
 	color_src = MUTCOLORS
-
-/datum/sprite_accessory/taur/fox
-	name = "Fox"
-	icon_state = "fox"
-	taur_mode = STYLE_PAW_TAURIC
-
-/datum/sprite_accessory/taur/husky
-	name = "Husky"
-	icon_state = "husky"
-	taur_mode = STYLE_PAW_TAURIC
+	extra = TRUE
 
 /datum/sprite_accessory/taur/horse
 	name = "Horse"
@@ -84,15 +91,11 @@
 	taur_mode = STYLE_HOOF_TAURIC
 	alt_taur_mode = STYLE_PAW_TAURIC
 
-/datum/sprite_accessory/taur/lab
-	name = "Lab"
-	icon_state = "lab"
-	taur_mode = STYLE_PAW_TAURIC
-
 /datum/sprite_accessory/taur/naga
 	name = "Naga"
 	icon_state = "naga"
 	taur_mode = STYLE_SNEK_TAURIC
+	hide_legs = USE_SNEK_CLIP_MASK
 
 /datum/sprite_accessory/taur/otie
 	name = "Otie"
@@ -104,29 +107,26 @@
 	icon_state = "pede"
 	taur_mode = STYLE_PAW_TAURIC
 	color_src = MUTCOLORS
-
-/datum/sprite_accessory/taur/panther
-	name = "Panther"
-	icon_state = "panther"
-	taur_mode = STYLE_PAW_TAURIC
-
-/datum/sprite_accessory/taur/shepherd
-	name = "Shepherd"
-	icon_state = "shepherd"
-	taur_mode = STYLE_PAW_TAURIC
+	extra = TRUE
+	extra2 = TRUE
 
 /datum/sprite_accessory/taur/tentacle
 	name = "Tentacle"
 	icon_state = "tentacle"
 	taur_mode = STYLE_SNEK_TAURIC
 	color_src = MUTCOLORS
+	hide_legs = USE_SNEK_CLIP_MASK
 
-/datum/sprite_accessory/taur/tiger
-	name = "Tiger"
-	icon_state = "tiger"
+/datum/sprite_accessory/taur/canine
+	name = "Canine"
+	icon_state = "canine"
 	taur_mode = STYLE_PAW_TAURIC
+	color_src = MUTCOLORS
+	extra = TRUE
 
-/datum/sprite_accessory/taur/wolf
-	name = "Wolf"
-	icon_state = "wolf"
+/datum/sprite_accessory/taur/feline
+	name = "Feline"
+	icon_state = "feline"
 	taur_mode = STYLE_PAW_TAURIC
+	color_src = MUTCOLORS
+	extra = TRUE

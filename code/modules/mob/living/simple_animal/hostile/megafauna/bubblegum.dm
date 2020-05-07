@@ -65,10 +65,10 @@ Difficulty: Hard
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/Life()
 	..()
-	move_to_delay = CLAMP(round((health/maxHealth) * 10), 3, 10)
+	move_to_delay = clamp(round((health/maxHealth) * 10), 3, 10)
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/OpenFire()
-	anger_modifier = CLAMP(((maxHealth - health)/50),0,20)
+	anger_modifier = clamp(((maxHealth - health)/50),0,20)
 	if(charging)
 		return
 	ranged_cooldown = world.time + ranged_cooldown_time
@@ -103,7 +103,7 @@ Difficulty: Hard
 	if(.)
 		SSshuttle.shuttle_purchase_requirements_met |= "bubblegum"
 
-/mob/living/simple_animal/hostile/megafauna/bubblegum/do_attack_animation(atom/A)
+/mob/living/simple_animal/hostile/megafauna/bubblegum/do_attack_animation(atom/A, visual_effect_icon, obj/item/used_item, no_effect)
 	if(charging)
 		return
 	..()

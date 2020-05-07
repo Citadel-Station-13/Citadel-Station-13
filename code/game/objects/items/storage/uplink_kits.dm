@@ -294,18 +294,18 @@
 	name = "chameleon kit"
 
 /obj/item/storage/box/syndie_kit/chameleon/PopulateContents()
-	new /obj/item/clothing/under/chameleon(src)
-	new /obj/item/clothing/suit/chameleon(src)
-	new /obj/item/clothing/gloves/chameleon(src)
-	new /obj/item/clothing/shoes/chameleon(src)
-	new /obj/item/clothing/glasses/chameleon(src)
-	new /obj/item/clothing/head/chameleon(src)
-	new /obj/item/clothing/mask/chameleon(src)
-	new /obj/item/storage/backpack/chameleon(src)
-	new /obj/item/radio/headset/chameleon(src)
-	new /obj/item/stamp/chameleon(src)
-	new /obj/item/pda/chameleon(src)
-	new /obj/item/clothing/neck/cloak/chameleon(src)
+	new /obj/item/clothing/under/chameleon/syndicate(src)
+	new /obj/item/clothing/suit/chameleon/syndicate(src)
+	new /obj/item/clothing/gloves/chameleon/insulated/syndicate(src)
+	new /obj/item/clothing/shoes/chameleon/syndicate(src)
+	new /obj/item/clothing/glasses/chameleon/syndicate(src)
+	new /obj/item/clothing/head/chameleon/syndicate(src)
+	new /obj/item/clothing/mask/chameleon/syndicate(src)
+	new /obj/item/storage/backpack/chameleon/syndicate(src)
+	new /obj/item/radio/headset/chameleon/syndicate(src)
+	new /obj/item/stamp/chameleon/syndicate(src)
+	new /obj/item/pda/chameleon/syndicate(src)
+	new /obj/item/clothing/neck/cloak/chameleon/syndicate(src)
 
 //5*(2*4) = 5*8 = 45, 45 damage if you hit one person with all 5 stars.
 //Not counting the damage it will do while embedded (2*4 = 8, at 15% chance)
@@ -404,6 +404,12 @@
 	new /obj/item/gun/ballistic/revolver(src)
 	new /obj/item/ammo_box/a357(src)
 
+/obj/item/storage/box/syndie_kit/pistol
+
+/obj/item/storage/box/syndie_kit/pistol/PopulateContents()
+	new /obj/item/gun/ballistic/automatic/pistol(src)
+	new /obj/item/ammo_box/magazine/m10mm(src)
+
 /obj/item/storage/box/syndie_kit/contract_kit
 	name = "contractor kit"
 	desc = "Supplied to Syndicate contractors in active mission areas."
@@ -495,3 +501,13 @@
 	new item2(src)
 	new item3(src)
 	new /obj/item/paper/contractor_guide(src)	//Paper guide
+
+/obj/item/storage/box/syndie_kit/northstar
+
+/obj/item/storage/box/syndie_kit/northstar/PopulateContents()
+	new /obj/item/clothing/gloves/fingerless/pugilist/rapid(src)
+	new /obj/item/clothing/accessory/padding(src)
+	new /obj/item/clothing/under/chameleon(src)
+	new /obj/item/storage/fancy/cigarettes/cigpack_syndicate(src)
+	new /obj/item/lighter(src)
+

@@ -309,7 +309,7 @@
 /datum/export/gear/combatgloves
 	cost = 80
 	unit_name = "combat gloves"
-	export_types = list(/obj/item/clothing/gloves/combat, /obj/item/clothing/gloves/rapid, /obj/item/clothing/gloves/krav_maga)
+	export_types = list(/obj/item/clothing/gloves/tackler/combat, /obj/item/clothing/gloves/tackler/dolphin, /obj/item/clothing/gloves/fingerless/pugilist/rapid, /obj/item/clothing/gloves/krav_maga)
 	include_subtypes = TRUE
 
 /datum/export/gear/bonegloves

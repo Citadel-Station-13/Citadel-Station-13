@@ -31,7 +31,7 @@
 	nodes = list()
 	for(var/obj/machinery/atmospherics/A in needs_nullifying)
 		A.disconnect(src)
-		A.build_network()
+		SSair.add_to_rebuild_queue(A)
 
 /obj/machinery/atmospherics/pipe/layer_manifold/proc/get_all_connected_nodes()
 	return front_nodes + back_nodes + nodes
@@ -128,7 +128,7 @@
 	if(initialize_directions & dir)
 		return ..()
 	if((NORTH|EAST) & dir)
-		user.ventcrawl_layer = CLAMP(user.ventcrawl_layer + 1, PIPING_LAYER_MIN, PIPING_LAYER_MAX)
+		user.ventcrawl_layer = clamp(user.ventcrawl_layer + 1, PIPING_LAYER_MIN, PIPING_LAYER_MAX)
 	if((SOUTH|WEST) & dir)
-		user.ventcrawl_layer = CLAMP(user.ventcrawl_layer - 1, PIPING_LAYER_MIN, PIPING_LAYER_MAX)
+		user.ventcrawl_layer = clamp(user.ventcrawl_layer - 1, PIPING_LAYER_MIN, PIPING_LAYER_MAX)
 	to_chat(user, "You align yourself with the [user.ventcrawl_layer]\th output.")

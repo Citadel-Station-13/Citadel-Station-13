@@ -56,7 +56,7 @@ Difficulty: Very Hard
 	L.dust()
 
 /mob/living/simple_animal/hostile/megafauna/colossus/OpenFire()
-	anger_modifier = CLAMP(((maxHealth - health)/50),0,20)
+	anger_modifier = clamp(((maxHealth - health)/50),0,20)
 	ranged_cooldown = world.time + 120
 
 	if(enrage(target))
@@ -762,7 +762,7 @@ Difficulty: Very Hard
 	name = "Exit Possession"
 	desc = "Exits the body you are possessing."
 	charge_max = 60
-	clothes_req = 0
+	clothes_req = NONE
 	invocation_type = "none"
 	max_targets = 1
 	range = -1

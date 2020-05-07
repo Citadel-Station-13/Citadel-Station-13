@@ -191,7 +191,7 @@
 	alert_type = /obj/screen/alert/status_effect/bloodchill
 
 /datum/status_effect/bloodchill/on_apply()
-	owner.add_movespeed_modifier("bloodchilled", TRUE, 100, NONE, override = TRUE, multiplicative_slowdown = 3)
+	owner.add_movespeed_modifier(/datum/movespeed_modifier/status_effect/bloodchill)
 	return ..()
 
 /datum/status_effect/bloodchill/tick()
@@ -199,7 +199,7 @@
 		owner.adjustFireLoss(2)
 
 /datum/status_effect/bloodchill/on_remove()
-	owner.remove_movespeed_modifier("bloodchilled")
+	owner.remove_movespeed_modifier(/datum/movespeed_modifier/status_effect/bloodchill)
 	return ..()
 
 /obj/screen/alert/status_effect/bloodchill
@@ -213,7 +213,7 @@
 	alert_type = /obj/screen/alert/status_effect/bonechill
 
 /datum/status_effect/bonechill/on_apply()
-	owner.add_movespeed_modifier("bonechilled", TRUE, 100, NONE, override = TRUE, multiplicative_slowdown = 3)
+	owner.add_movespeed_modifier(/datum/movespeed_modifier/status_effect/bonechill)
 	return ..()
 
 /datum/status_effect/bonechill/tick()
@@ -223,7 +223,7 @@
 		owner.adjust_bodytemperature(-10)
 
 /datum/status_effect/bonechill/on_remove()
-	owner.remove_movespeed_modifier("bonechilled")
+	owner.remove_movespeed_modifier(/datum/movespeed_modifier/status_effect/bonechill)
 	return ..()
 
 /obj/screen/alert/status_effect/bonechill
@@ -385,11 +385,11 @@ datum/status_effect/rebreathing/tick()
 	duration = 30
 
 /datum/status_effect/tarfoot/on_apply()
-	owner.add_movespeed_modifier(MOVESPEED_ID_TARFOOT, update=TRUE, priority=100, multiplicative_slowdown=0.5, blacklisted_movetypes=(FLYING|FLOATING))
+	owner.add_movespeed_modifier(/datum/movespeed_modifier/status_effect/tarfoot)
 	return ..()
 
 /datum/status_effect/tarfoot/on_remove()
-	owner.remove_movespeed_modifier(MOVESPEED_ID_TARFOOT)
+	owner.remove_movespeed_modifier(/datum/movespeed_modifier/status_effect/tarfoot)
 	return ..()
 
 /datum/status_effect/spookcookie
@@ -505,13 +505,13 @@ datum/status_effect/rebreathing/tick()
 /datum/status_effect/stabilized/purple/tick()
 	var/is_healing = FALSE
 	if(owner.getBruteLoss() > 0)
-		owner.adjustBruteLoss(-0.2)
+		owner.adjustBruteLoss(-0.4)
 		is_healing = TRUE
 	if(owner.getFireLoss() > 0)
-		owner.adjustFireLoss(-0.2)
+		owner.adjustFireLoss(-0.4)
 		is_healing = TRUE
 	if(owner.getToxLoss() > 0)
-		owner.adjustToxLoss(-0.2, forced = TRUE) //Slimepeople should also get healed.
+		owner.adjustToxLoss(-0.4, forced = TRUE) //Slimepeople should also get healed.
 		is_healing = TRUE
 	if(is_healing)
 		examine_text = "<span class='warning'>SUBJECTPRONOUN is regenerating slowly, purplish goo filling in small injuries!</span>"
@@ -624,9 +624,9 @@ datum/status_effect/stabilized/blue/on_remove()
 		O.extinguish() //All shamelessly copied from water's reaction_obj, since I didn't seem to be able to get it here for some reason.
 		O.acid_level = 0
 	// Monkey cube
-	if(istype(O, /obj/item/reagent_containers/food/snacks/monkeycube))
+	if(istype(O, /obj/item/reagent_containers/food/snacks/cube))
 		to_chat(owner, "<span class='warning'>[linked_extract] kept your hands wet! It makes [O] expand!</span>")
-		var/obj/item/reagent_containers/food/snacks/monkeycube/cube = O
+		var/obj/item/reagent_containers/food/snacks/cube/cube = O
 		cube.Expand()
 
 	// Dehydrated carp
@@ -707,15 +707,15 @@ datum/status_effect/stabilized/blue/on_remove()
 /datum/status_effect/stabilized/sepia/tick()
 	if(prob(50) && mod > -1)
 		mod--
-		owner.add_movespeed_modifier(MOVESPEED_ID_SEPIA, update=TRUE, priority=100, multiplicative_slowdown=-1, blacklisted_movetypes=(FLYING|FLOATING))
+		owner.add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/status_effect/sepia, multiplicative_slowdown = 1)
 	else if(mod < 1)
 		mod++
 		// yeah a value of 0 does nothing but replacing the trait in place is cheaper than removing and adding repeatedly
-		owner.add_movespeed_modifier(MOVESPEED_ID_SEPIA, update=TRUE, priority=100, multiplicative_slowdown=0, blacklisted_movetypes=(FLYING|FLOATING))
+		owner.add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/status_effect/sepia, multiplicative_slowdown = 0)
 	return ..()
 
 /datum/status_effect/stabilized/sepia/on_remove()
-	owner.remove_movespeed_modifier(MOVESPEED_ID_SEPIA)
+	owner.remove_movespeed_modifier(/datum/movespeed_modifier/status_effect/sepia)
 	return ..()
 
 /datum/status_effect/stabilized/cerulean
@@ -777,11 +777,11 @@ datum/status_effect/stabilized/blue/on_remove()
 	colour = "red"
 
 /datum/status_effect/stabilized/red/on_apply()
-	owner.ignore_slowdown("slimestatus")
-	return ..()
+	. = ..()
+	owner.add_movespeed_mod_immunities(type, /datum/movespeed_modifier/equipment_speedmod)
 
 /datum/status_effect/stabilized/red/on_remove()
-	owner.unignore_slowdown("slimestatus")
+	owner.remove_movespeed_mod_immunities(type, /datum/movespeed_modifier/equipment_speedmod)
 	return ..()
 
 /datum/status_effect/stabilized/green
@@ -933,7 +933,6 @@ datum/status_effect/stabilized/blue/on_remove()
 	return ..()
 
 /datum/status_effect/stabilized/lightpink/tick()
-	owner.adjustStaminaLoss(-4.5)
 	for(var/mob/living/carbon/human/H in range(1, get_turf(owner)))
 		if(H != owner && H.stat != DEAD && H.health <= 0 && !H.reagents.has_reagent(/datum/reagent/medicine/epinephrine))
 			to_chat(owner, "[linked_extract] pulses in sync with [H]'s heartbeat, trying to keep [H.p_them()] alive.")

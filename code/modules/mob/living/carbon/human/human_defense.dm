@@ -52,36 +52,12 @@
 				return martial_art_result
 	return ..()
 
-/mob/living/carbon/human/check_reflect(def_zone)
-	if(wear_suit?.IsReflect(def_zone))
-		return TRUE
-	return ..()
-
-/mob/living/carbon/human/check_shields(atom/AM, damage, attack_text = "the attack", attack_type = MELEE_ATTACK, armour_penetration = 0)
-	. = ..()
-	if(.)
-		return
-	var/block_chance_modifier = round(damage / -3)
-	if(wear_suit)
-		var/final_block_chance = wear_suit.block_chance - (CLAMP((armour_penetration-wear_suit.armour_penetration)/2,0,100)) + block_chance_modifier
-		if(wear_suit.hit_reaction(src, AM, attack_text, final_block_chance, damage, attack_type))
-			return TRUE
-	if(w_uniform)
-		var/final_block_chance = w_uniform.block_chance - (CLAMP((armour_penetration-w_uniform.armour_penetration)/2,0,100)) + block_chance_modifier
-		if(w_uniform.hit_reaction(src, AM, attack_text, final_block_chance, damage, attack_type))
-			return TRUE
-	if(wear_neck)
-		var/final_block_chance = wear_neck.block_chance - (CLAMP((armour_penetration-wear_neck.armour_penetration)/2,0,100)) + block_chance_modifier
-		if(wear_neck.hit_reaction(src, AM, attack_text, final_block_chance, damage, attack_type))
-			return TRUE
-	return FALSE
-
 /mob/living/carbon/human/can_embed(obj/item/I)
 	if(I.get_sharpness() || is_pointed(I) || is_type_in_typecache(I, GLOB.can_embed_types))
 		return TRUE
 	return FALSE
 
-/mob/living/carbon/human/proc/check_block()
+/mob/living/carbon/human/proc/check_martial_melee_block()
 	if(mind)
 		if(mind.martial_art && prob(mind.martial_art.block_chance) && mind.martial_art.can_use(src) && in_throw_mode && !incapacitated(FALSE, TRUE))
 			return TRUE
@@ -179,7 +155,7 @@
 	if(M.a_intent == INTENT_HARM)
 		if (w_uniform)
 			w_uniform.add_fingerprint(M)
-		var/damage = prob(90) ? 20 : 0
+		var/damage = prob(90) ? M.meleeSlashHumanPower : 0
 		if(!damage)
 			playsound(loc, 'sound/weapons/slashmiss.ogg', 50, 1, -1)
 			visible_message("<span class='danger'>[M] has lunged at [src]!</span>", \
@@ -206,10 +182,7 @@
 					"<span class='userdanger'>[M] disarmed [src]!</span>")
 		else
 			playsound(loc, 'sound/weapons/pierce.ogg', 25, 1, -1)
-			if(!lying)				//CITADEL EDIT
-				DefaultCombatKnockdown(100, TRUE, FALSE, 30, 25)
-			else
-				DefaultCombatKnockdown(100)
+			DefaultCombatKnockdown(M.meleeKnockdownPower)
 			log_combat(M, src, "tackled")
 			visible_message("<span class='danger'>[M] has tackled down [src]!</span>", \
 				"<span class='userdanger'>[M] has tackled down [src]!</span>")

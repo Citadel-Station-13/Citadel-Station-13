@@ -17,6 +17,7 @@
 	body_parts_covered = CHEST
 	allowed = list (/obj/item/gun/energy/laser/bluetag)
 	resistance_flags = NONE
+	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
 
 /obj/item/clothing/suit/redtag
 	name = "red laser tag armor"
@@ -27,6 +28,7 @@
 	body_parts_covered = CHEST
 	allowed = list (/obj/item/gun/energy/laser/redtag)
 	resistance_flags = NONE
+	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
 
 /*
  * Costume
@@ -38,6 +40,7 @@
 	item_state = "armor"
 	body_parts_covered = CHEST|GROIN
 	hoodtype = /obj/item/clothing/head/hooded/flashsuit
+	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
 
 /obj/item/clothing/head/hooded/flashsuit
 	name = "flash button"
@@ -58,6 +61,7 @@
 	desc = "Yarr."
 	icon_state = "hgpirate"
 	item_state = "hgpirate"
+	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
 
 
 /obj/item/clothing/suit/cyborg_suit
@@ -88,6 +92,7 @@
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	allowed = list(/obj/item/storage/fancy/cigarettes, /obj/item/stack/spacecash)
 	flags_inv = HIDEJUMPSUIT
+	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
 
 
 /obj/item/clothing/suit/apron/overalls
@@ -103,6 +108,7 @@
 	icon_state = "purplebartenderapron"
 	item_state = "purplebartenderapron"
 	body_parts_covered = CHEST
+	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
 
 /obj/item/clothing/suit/syndicatefake
 	name = "black and red space suit replica"
@@ -121,7 +127,7 @@
 	item_state = "hastur"
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
-
+	mutantrace_variation = NONE
 
 /obj/item/clothing/suit/imperium_monk
 	name = "\improper Imperium monk suit"
@@ -131,7 +137,7 @@
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	flags_inv = HIDESHOES|HIDEJUMPSUIT
 	allowed = list(/obj/item/storage/book/bible, /obj/item/nullrod, /obj/item/reagent_containers/food/drinks/bottle/holywater, /obj/item/storage/fancy/candle_box, /obj/item/candle, /obj/item/tank/internals/emergency_oxygen)
-
+	mutantrace_variation = NONE
 
 /obj/item/clothing/suit/chickensuit
 	name = "chicken suit"
@@ -205,6 +211,7 @@
 	item_state = "snowman"
 	body_parts_covered = CHEST|GROIN
 	flags_inv = HIDEJUMPSUIT
+	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
 
 /obj/item/clothing/suit/poncho
 	name = "poncho"
@@ -212,6 +219,7 @@
 	icon_state = "classicponcho"
 	item_state = "classicponcho"
 	body_parts_covered = CHEST|GROIN
+	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
 
 /obj/item/clothing/suit/poncho/green
 	name = "green poncho"
@@ -242,6 +250,7 @@
 	item_state = "w_suit"
 	body_parts_covered = CHEST|GROIN|LEGS|FEET
 	flags_inv = HIDEJUMPSUIT|HIDESHOES
+	mutantrace_variation = NONE
 
 /obj/item/clothing/suit/hooded/carp_costume
 	name = "carp costume"
@@ -288,6 +297,7 @@
 	body_parts_covered = CHEST|GROIN|ARMS
 	clothing_flags = THICKMATERIAL
 	hoodtype = /obj/item/clothing/head/hooded/bee_hood
+	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
 
 /obj/item/clothing/head/hooded/bee_hood
 	name = "bee hood"
@@ -307,7 +317,7 @@
 	allowed = list()
 	actions_types = list(/datum/action/item_action/toggle_human_head)
 	hoodtype = /obj/item/clothing/head/hooded/human_head
-
+	mutantrace_variation = NONE
 
 /obj/item/clothing/head/hooded/human_head
 	name = "bloated human head"
@@ -323,6 +333,7 @@
 	icon_state = "officertanjacket"
 	item_state = "officertanjacket"
 	body_parts_covered = CHEST|ARMS
+	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
 
 /obj/item/clothing/suit/ran
 	name = "shikigami costume"
@@ -332,6 +343,7 @@
 	body_parts_covered = CHEST|GROIN|LEGS
 	flags_inv = HIDEJUMPSUIT|HIDETAUR
 	heat_protection = CHEST|GROIN|LEGS //fluffy tails!
+	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
 
 /obj/item/clothing/head/ran
 	name = "shikigami hat"
@@ -361,6 +373,7 @@
 	icon_state = "ianshirt"
 	item_state = "ianshirt"
 	body_parts_covered = CHEST|GROIN
+	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
 
 /obj/item/clothing/suit/nerdshirt
 	name = "gamer shirt"
@@ -368,6 +381,7 @@
 	icon_state = "nerdshirt"
 	item_state = "nerdshirt"
 	body_parts_covered = CHEST|GROIN
+	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
 
 /obj/item/clothing/suit/vapeshirt //wearing this is asking to get beat.
 	name = "Vape Naysh shirt"
@@ -375,6 +389,7 @@
 	icon_state = "vapeshirt"
 	item_state = "vapeshirt"
 	body_parts_covered = CHEST|GROIN
+	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
 
 /obj/item/clothing/suit/jacket
 	name = "bomber jacket"
@@ -385,6 +400,7 @@
 	body_parts_covered = CHEST|ARMS
 	cold_protection = CHEST|GROIN|ARMS
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
+	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
 
 /obj/item/clothing/suit/jacket/leather
 	name = "leather jacket"
@@ -401,6 +417,7 @@
 	icon_state = "leathercoat"
 	body_parts_covered = CHEST|GROIN|ARMS|LEGS
 	cold_protection = CHEST|GROIN|ARMS|LEGS
+	mutantrace_variation = STYLE_DIGITIGRADE
 
 /obj/item/clothing/suit/jacket/puffer
 	name = "puffer jacket"
@@ -492,6 +509,7 @@
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 0, "bio" = 10, "rad" = 0, "fire" = 0, "acid" = 0)
 	allowed = list(/obj/item/flashlight, /obj/item/tank/internals/emergency_oxygen, /obj/item/tank/internals/plasmaman, /obj/item/toy, /obj/item/storage/fancy/cigarettes, /obj/item/lighter)
+	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
 
 /obj/item/clothing/head/hooded/winterhood
 	name = "winter hood"
@@ -793,7 +811,7 @@
 	desc = "A dusty button up winter coat. The zipper tab looks like a tiny pickaxe."
 	icon_state = "coatminer"
 	item_state = "coatminer"
-	allowed = list(/obj/item/pickaxe, /obj/item/flashlight, /obj/item/tank/internals/emergency_oxygen, /obj/item/tank/internals/plasmaman, /obj/item/toy, /obj/item/storage/fancy/cigarettes, /obj/item/lighter)
+	allowed = list(/obj/item/pickaxe, /obj/item/flashlight, /obj/item/tank/internals, /obj/item/resonator, /obj/item/mining_scanner, /obj/item/t_scanner/adv_mining_scanner, /obj/item/gun/energy/kinetic_accelerator, /obj/item/toy, /obj/item/storage/fancy/cigarettes, /obj/item/lighter)
 	armor = list("melee" = 10, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 0)
 	hoodtype = /obj/item/clothing/head/hooded/winterhood/miner
 
@@ -897,6 +915,7 @@
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS|HANDS|HEAD
 	user_vars_to_edit = list("name" = "Spooky Ghost", "real_name" = "Spooky Ghost" , "incorporeal_move" = INCORPOREAL_MOVE_BASIC, "appearance_flags" = KEEP_TOGETHER|TILE_BOUND, "alpha" = 150)
 	alternate_worn_layer = ABOVE_BODY_FRONT_LAYER //so the bedsheet goes over everything but fire
+	mutantrace_variation = NONE
 
 /obj/item/clothing/suit/bronze
 	name = "bronze suit"
@@ -918,6 +937,7 @@
 	flags_inv = HIDEGLOVES|HIDEEARS|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS|HANDS|HEAD
 	alternate_worn_layer = UNDER_HEAD_LAYER
+	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
 
 /obj/item/clothing/suit/flakjack
 	name = "flak jacket"
@@ -928,6 +948,7 @@
 	body_parts_covered = CHEST
 	resistance_flags = NONE
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 5, "bio" = 0, "rad" = 0, "fire" = -5, "acid" = -15) //nylon sucks against acid
+	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
 
 /obj/item/clothing/suit/assu_suit
 	name = "DAB suit"
@@ -973,73 +994,12 @@
 	name = "polychromic winter coat"
 	icon_state = "coatpoly"
 	item_state = "coatpoly"
-	item_color = "coatpoly"
 	hoodtype = /obj/item/clothing/head/hooded/winterhood/polychromic
-	hasprimary = TRUE
-	hassecondary = TRUE
-	hastertiary = TRUE
-	primary_color = "#6A6964"
-	secondary_color = "#C4B8A6"
-	tertiary_color = "#0000FF"
+
+/obj/item/clothing/suit/hooded/wintercoat/polychromic/ComponentInitialize()
+	. = ..()
+	AddElement(/datum/element/polychromic, list("#6A6964", "#C4B8A6", "#0000FF"), 3)
 
 /obj/item/clothing/head/hooded/winterhood/polychromic
 	icon_state = "winterhood_poly"
-	item_color = "winterhood_poly"
 	item_state = "winterhood_poly"
-
-/obj/item/clothing/head/hooded/winterhood/polychromic/worn_overlays(isinhands, icon_file, style_flags = NONE)	//this is where the main magic happens.
-	. = ..()
-	if(suit.hasprimary | suit.hassecondary)
-		if(!isinhands)	//prevents the worn sprites from showing up if you're just holding them
-			if(suit.hasprimary)	//checks if overlays are enabled
-				var/mutable_appearance/primary_worn = mutable_appearance(icon_file, "[item_color]-primary")	//automagical sprite selection
-				primary_worn.color = suit.primary_color	//colors the overlay
-				. += primary_worn	//adds the overlay onto the buffer list to draw on the mob sprite.
-			if(suit.hassecondary)
-				var/mutable_appearance/secondary_worn = mutable_appearance(icon_file, "[item_color]-secondary")
-				secondary_worn.color = suit.secondary_color
-				. += secondary_worn
-
-/obj/item/clothing/suit/hooded/wintercoat/polychromic/worn_overlays(isinhands, icon_file, style_flags = NONE)	//this is where the main magic happens.
-	. = ..()
-	if(hasprimary | hassecondary | hastertiary)
-		if(!isinhands)	//prevents the worn sprites from showing up if you're just holding them
-			if(hasprimary)	//checks if overlays are enabled
-				var/mutable_appearance/primary_worn = mutable_appearance(icon_file, "[item_color]-primary[suittoggled ? "_t" : ""]")	//automagical sprite selection
-				primary_worn.color = primary_color	//colors the overlay
-				. += primary_worn	//adds the overlay onto the buffer list to draw on the mob sprite.
-			if(hassecondary)
-				var/mutable_appearance/secondary_worn = mutable_appearance(icon_file, "[item_color]-secondary[suittoggled ? "_t" : ""]")
-				secondary_worn.color = secondary_color
-				. += secondary_worn
-			if(hastertiary)
-				var/mutable_appearance/tertiary_worn = mutable_appearance(icon_file, "[item_color]-tertiary[suittoggled ? "_t" : ""]")
-				tertiary_worn.color = tertiary_color
-				. += tertiary_worn
-
-/obj/item/clothing/suit/hooded/wintercoat/AltClick(mob/user)
-	. = ..()
-	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
-		return
-	if(hasprimary | hassecondary | hastertiary)
-		var/choice = input(user,"polychromic thread options", "Clothing Recolor") as null|anything in list("[hasprimary ? "Primary Color" : ""]", "[hassecondary ? "Secondary Color" : ""]", "[hastertiary ? "Tertiary Color" : ""]")	//generates a list depending on the enabled overlays
-		switch(choice)	//Lets the list's options actually lead to something
-			if("Primary Color")
-				var/primary_color_input = input(usr,"","Choose Primary Color",primary_color) as color|null	//color input menu, the "|null" adds a cancel button to it.
-				if(primary_color_input)	//Checks if the color selected is NULL, rejects it if it is NULL.
-					primary_color = sanitize_hexcolor(primary_color_input, desired_format=6, include_crunch=1)	//formats the selected color properly
-				update_icon()	//updates the item icon
-				user.regenerate_icons()	//updates the worn icon. Probably a bad idea, but it works.
-			if("Secondary Color")
-				var/secondary_color_input = input(usr,"","Choose Secondary Color",secondary_color) as color|null
-				if(secondary_color_input)
-					secondary_color = sanitize_hexcolor(secondary_color_input, desired_format=6, include_crunch=1)
-				update_icon()
-				user.regenerate_icons()
-			if("Tertiary Color")
-				var/tertiary_color_input = input(usr,"","Choose Tertiary Color",tertiary_color) as color|null
-				if(tertiary_color_input)
-					tertiary_color = sanitize_hexcolor(tertiary_color_input, desired_format=6, include_crunch=1)
-				update_icon()
-				user.regenerate_icons()
-	return TRUE

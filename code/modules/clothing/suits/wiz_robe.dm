@@ -9,6 +9,12 @@
 	equip_delay_other = 50
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	dog_fashion = /datum/dog_fashion/head/blue_wizard
+	var/magic_flags = SPELL_WIZARD_HAT
+
+/obj/item/clothing/head/wizard/ComponentInitialize()
+	. = ..()
+	if(magic_flags)
+		AddElement(/datum/element/spellcasting, magic_flags, ITEM_SLOT_HEAD)
 
 /obj/item/clothing/head/wizard/red
 	name = "red wizard hat"
@@ -36,7 +42,7 @@
 	permeability_coefficient = 1
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 0)
 	resistance_flags = FLAMMABLE
-	dog_fashion = /datum/dog_fashion/head/blue_wizard
+	magic_flags = NONE
 
 /obj/item/clothing/head/wizard/marisa
 	name = "witch hat"
@@ -50,6 +56,7 @@
 	icon_state = "magus"
 	item_state = "magus"
 	dog_fashion = null
+	magic_flags = SPELL_WIZARD_HAT|SPELL_CULT_HELMET
 
 /obj/item/clothing/head/wizard/santa
 	name = "Santa's hat"
@@ -72,6 +79,13 @@
 	strip_delay = 50
 	equip_delay_other = 50
 	resistance_flags = FIRE_PROOF | ACID_PROOF
+	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
+	var/magic_flags = SPELL_WIZARD_ROBE
+
+/obj/item/clothing/suit/wizrobe/ComponentInitialize()
+	. = ..()
+	if(magic_flags)
+		AddElement(/datum/element/spellcasting, magic_flags, ITEM_SLOT_OCLOTHING)
 
 /obj/item/clothing/suit/wizrobe/red
 	name = "red wizard robe"
@@ -102,48 +116,46 @@
 	desc = "A set of armored robes that seem to radiate a dark power."
 	icon_state = "magusblue"
 	item_state = "magusblue"
+	mutantrace_variation = STYLE_DIGITIGRADE
+	magic_flags = SPELL_WIZARD_ROBE|SPELL_CULT_ARMOR
 
 /obj/item/clothing/suit/wizrobe/magusred
 	name = "\improper Magus robe"
 	desc = "A set of armored robes that seem to radiate a dark power."
 	icon_state = "magusred"
 	item_state = "magusred"
-
+	mutantrace_variation = STYLE_DIGITIGRADE
+	magic_flags = SPELL_WIZARD_ROBE|SPELL_CULT_ARMOR
 
 /obj/item/clothing/suit/wizrobe/santa
 	name = "Santa's suit"
 	desc = "Festive!"
 	icon_state = "santa"
 	item_state = "santa"
+	mutantrace_variation = STYLE_DIGITIGRADE
 
 /obj/item/clothing/suit/wizrobe/fake
-	name = "wizard robe"
 	desc = "A rather dull blue robe meant to mimick real wizard robes."
 	icon_state = "wizard-fake"
-	item_state = "wizrobe"
 	gas_transfer_coefficient = 1
 	permeability_coefficient = 1
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 0)
 	resistance_flags = FLAMMABLE
+	magic_flags = NONE
 
 /obj/item/clothing/head/wizard/marisa/fake
-	name = "witch hat"
-	desc = "Strange-looking hat-wear, makes you want to cast fireballs."
-	icon_state = "marisa"
 	gas_transfer_coefficient = 1
 	permeability_coefficient = 1
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 0)
 	resistance_flags = FLAMMABLE
+	magic_flags = NONE
 
 /obj/item/clothing/suit/wizrobe/marisa/fake
-	name = "witch robe"
-	desc = "Magic is all about the spell power, ZE!"
-	icon_state = "marisa"
-	item_state = "marisarobe"
 	gas_transfer_coefficient = 1
 	permeability_coefficient = 1
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 0)
 	resistance_flags = FLAMMABLE
+	magic_flags = NONE
 
 /obj/item/clothing/suit/wizrobe/paper
 	name = "papier-mache robe" // no non-latin characters!
@@ -187,16 +199,19 @@
 	icon_state = "battlemage"
 	item_state = "battlemage"
 	recharge_rate = 0
+	max_charges = INFINITY
 	current_charges = 15
-	recharge_cooldown = INFINITY
 	shield_state = "shield-red"
-	shield_on = "shield-red"
 	min_cold_protection_temperature = ARMOR_MIN_TEMP_PROTECT
 	max_heat_protection_temperature = ARMOR_MAX_TEMP_PROTECT
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/shielded/wizard
 	armor = list("melee" = 30, "bullet" = 20, "laser" = 20, "energy" = 20, "bomb" = 20, "bio" = 20, "rad" = 20, "fire" = 100, "acid" = 100)
 	slowdown = 0
 	resistance_flags = FIRE_PROOF | ACID_PROOF
+
+/obj/item/clothing/suit/space/hardsuit/shielded/wizard/ComponentInitialize()
+	. = ..()
+	AddElement(/datum/element/spellcasting, SPELL_WIZARD_HAT, ITEM_SLOT_HEAD)
 
 /obj/item/clothing/head/helmet/space/hardsuit/shielded/wizard
 	name = "battlemage helmet"
@@ -208,6 +223,10 @@
 	armor = list("melee" = 30, "bullet" = 20, "laser" = 20, "energy" = 20, "bomb" = 20, "bio" = 20, "rad" = 20, "fire" = 100, "acid" = 100)
 	actions_types = null //No inbuilt light
 	resistance_flags = FIRE_PROOF | ACID_PROOF
+
+/obj/item/clothing/head/helmet/space/hardsuit/shielded/wizard/ComponentInitialize()
+	. = ..()
+	AddElement(/datum/element/spellcasting, SPELL_WIZARD_ROBE, ITEM_SLOT_OCLOTHING)
 
 /obj/item/clothing/head/helmet/space/hardsuit/shielded/wizard/attack_self(mob/user)
 	return
@@ -223,6 +242,7 @@
 	if(!istype(W))
 		to_chat(user, "<span class='warning'>The rune can only be used on battlemage armour!</span>")
 		return
-	W.current_charges += 8
-	to_chat(user, "<span class='notice'>You charge \the [W]. It can now absorb [W.current_charges] hits.</span>")
+	var/datum/component/shielded/S = GetComponent(/datum/component/shielded)
+	S.adjust_charges(8)
+	to_chat(user, "<span class='notice'>You charge \the [W]. It can now absorb [S.charges] hits.</span>")
 	qdel(src)

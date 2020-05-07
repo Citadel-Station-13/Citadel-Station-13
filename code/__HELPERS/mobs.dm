@@ -47,7 +47,7 @@
 		init_sprite_accessory_subtypes(/datum/sprite_accessory/underwear/socks, GLOB.socks_list)
 	return pick(GLOB.socks_list)
 
-/proc/random_features(intendedspecies)
+/proc/random_features(intendedspecies, intended_gender)
 	if(!GLOB.tails_list_human.len)
 		init_sprite_accessory_subtypes(/datum/sprite_accessory/tails/human, GLOB.tails_list_human)
 	if(!GLOB.tails_list_lizard.len)
@@ -149,7 +149,13 @@
 	var/color2 = random_short_color()
 	var/color3 = random_short_color()
 
-	//CIT CHANGE - changes this entire return to support cit's snowflake parts
+	var/body_model = MALE
+	switch(intended_gender)
+		if(MALE, FEMALE)
+			body_model = intended_gender
+		if(PLURAL)
+			body_model = pick(MALE,FEMALE)
+
 	return(list(
 		"mcolor"			= color1,
 		"mcolor2"			= color2,
@@ -184,6 +190,7 @@
 		"cock_length"		= COCK_SIZE_DEF,
 		"cock_diameter_ratio"	= COCK_DIAMETER_RATIO_DEF,
 		"cock_color"		= pick("FFFFFF","7F7F7F", "7FFF7F", "7F7FFF", "FF7F7F", "7FFFFF", "FF7FFF", "FFFF7F"),
+		"cock_taur"			= FALSE,
 		"has_balls" 		= FALSE,
 		"balls_color" 		= pick("FFFFFF","7F7F7F", "7FFF7F", "7F7FFF", "FF7F7F", "7FFFFF", "FF7FFF", "FFFF7F"),
 		"balls_size"		= BALLS_SIZE_DEF,
@@ -208,7 +215,8 @@
 		"ipc_antenna"		= "None",
 		"flavor_text"		= "",
 		"meat_type"			= "Mammalian",
-		"body_model"		= MALE
+		"body_model"		= body_model,
+		"body_size"			= RESIZE_DEFAULT_SIZE
 		))
 
 /proc/random_hair_style(gender)
@@ -260,23 +268,29 @@
 		if(!findname(.))
 			break
 
-/proc/random_skin_tone()
-	return pick(GLOB.skin_tones)
+#define SKINTONE2HEX(skin_tone) GLOB.skin_tones[skin_tone] || skin_tone
 
+/proc/random_skin_tone()
+	return pick(GLOB.skin_tones - GLOB.nonstandard_skin_tones)
+
+//ordered by amount of tan. Keep the nonstandard skin tones last.
 GLOBAL_LIST_INIT(skin_tones, list(
-	"albino",
-	"caucasian1",
-	"caucasian2",
-	"caucasian3",
-	"latino",
-	"mediterranean",
-	"asian1",
-	"asian2",
-	"arab",
-	"indian",
-	"african1",
-	"african2"
+	"albino" = "#fff4e6",
+	"caucasian1" = "#ffe0d1",
+	"caucasian2" = "#fcccb3",
+	"caucasian3" = "#e8b59b",
+	"latino" = "#d9ae96",
+	"mediterranean" = "#c79b8b",
+	"asian1" = "#ffdeb3",
+	"asian2" = "#e3ba84",
+	"arab" = "#c4915e",
+	"indian" = "#b87840",
+	"african1" = "#754523",
+	"african2" = "#471c18",
+	"orange" = "#ffc905" //Spray tan overdose.
 	))
+
+GLOBAL_LIST_INIT(nonstandard_skin_tones, list("orange"))
 
 GLOBAL_LIST_EMPTY(species_list)
 
@@ -303,7 +317,7 @@ GLOBAL_LIST_EMPTY(species_list)
 		else
 			return "unknown"
 
-/proc/do_mob(mob/user , mob/target, time = 30, uninterruptible = 0, progress = 1, datum/callback/extra_checks = null, ignorehelditem = 0)
+/proc/do_mob(mob/user , mob/target, time = 30, uninterruptible = 0, progress = 1, datum/callback/extra_checks = null, ignorehelditem = FALSE, resume_time = 0 SECONDS)
 	if(!user || !target)
 		return 0
 	var/user_loc = user.loc
@@ -322,10 +336,10 @@ GLOBAL_LIST_EMPTY(species_list)
 	var/endtime = world.time+time
 	var/starttime = world.time
 	. = 1
-	while (world.time < endtime)
+	while (world.time + resume_time < endtime)
 		stoplag(1)
 		if (progress)
-			progbar.update(world.time - starttime)
+			progbar.update(world.time - starttime + resume_time)
 		if(QDELETED(user) || QDELETED(target))
 			. = 0
 			break
@@ -357,7 +371,7 @@ GLOBAL_LIST_EMPTY(species_list)
 		checked_health["health"] = health
 	return ..()
 
-/proc/do_after(mob/user, var/delay, needhand = 1, atom/target = null, progress = 1, datum/callback/extra_checks = null, required_mobility_flags = (MOBILITY_USE|MOBILITY_MOVE))
+/proc/do_after(mob/user, var/delay, needhand = 1, atom/target = null, progress = 1, datum/callback/extra_checks = null, required_mobility_flags = (MOBILITY_USE|MOBILITY_MOVE), resume_time = 0 SECONDS)
 	if(!user)
 		return 0
 	var/atom/Tloc = null
@@ -386,10 +400,10 @@ GLOBAL_LIST_EMPTY(species_list)
 	var/starttime = world.time
 	. = 1
 	var/mob/living/L = isliving(user) && user			//evals to last thing eval'd
-	while (world.time < endtime)
+	while (world.time + resume_time < endtime)
 		stoplag(1)
 		if (progress)
-			progbar.update(world.time - starttime)
+			progbar.update(world.time - starttime + resume_time)
 
 		if(drifting && !user.inertia_dir)
 			drifting = 0
@@ -579,3 +593,16 @@ GLOBAL_LIST_EMPTY(species_list)
 		chosen = pick(mob_spawn_meancritters)
 	var/mob/living/simple_animal/C = new chosen(spawn_location)
 	return C
+
+/proc/passtable_on(target, source)
+	var/mob/living/L = target
+	if(!HAS_TRAIT(L, TRAIT_PASSTABLE) && L.pass_flags & PASSTABLE)
+		ADD_TRAIT(L, TRAIT_PASSTABLE, INNATE_TRAIT)
+	ADD_TRAIT(L, TRAIT_PASSTABLE, source)
+	L.pass_flags |= PASSTABLE
+
+/proc/passtable_off(target, source)
+	var/mob/living/L = target
+	REMOVE_TRAIT(L, TRAIT_PASSTABLE, source)
+	if(!HAS_TRAIT(L, TRAIT_PASSTABLE))
+		L.pass_flags &= ~PASSTABLE

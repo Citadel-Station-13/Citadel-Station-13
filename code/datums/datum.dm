@@ -109,6 +109,8 @@
 		UnregisterSignal(target, signal_procs[target])
 	//END: ECS SHIT
 
+	SSsounds.free_datum_channels(src)
+
 	return QDEL_HINT_QUEUE
 
 #ifdef DATUMVAR_DEBUGGING_MODE
@@ -173,11 +175,9 @@
 	if(!islist(jsonlist))
 		if(!istext(jsonlist))
 			CRASH("Invalid JSON")
-			return
 		jsonlist = json_decode(jsonlist)
 		if(!islist(jsonlist))
 			CRASH("Invalid JSON")
-			return
 	if(!jsonlist["DATUM_TYPE"])
 		return
 	if(!ispath(jsonlist["DATUM_TYPE"]))

@@ -87,7 +87,7 @@
 	. = ..()
 	. += "<span class='notice'>Alt-click to change firing modes.</span>"
 
-/obj/item/gun/energy/pumpaction/worn_overlays(isinhands, icon_file, style_flags = NONE)	//ammo counter for inhands
+/obj/item/gun/energy/pumpaction/worn_overlays(isinhands, icon_file, used_state, style_flags = NONE)	//ammo counter for inhands
 	. = ..()
 	var/ratio = CEILING((cell.charge / cell.maxcharge) * charge_sections, 1)
 	var/obj/item/ammo_casing/energy/shot = ammo_type[current_firemode_index]
@@ -131,7 +131,7 @@
 	item_state = "particleblaster"
 	lefthand_file = 'modular_citadel/icons/mob/inhands/guns_lefthand.dmi'
 	righthand_file = 'modular_citadel/icons/mob/inhands/guns_righthand.dmi'
-	ammo_type = list(/obj/item/ammo_casing/energy/electrode/pump, /obj/item/ammo_casing/energy/laser/pump)
+	ammo_type = list(/obj/item/ammo_casing/energy/disabler/pump, /obj/item/ammo_casing/energy/laser/pump)
 	ammo_x_offset = 2
 	modifystate = 1
 
@@ -152,19 +152,19 @@
 	fire_sound = 'sound/weapons/LaserSlugv3.ogg'
 
 /obj/item/ammo_casing/energy/laser/pump
-	projectile_type = /obj/item/projectile/beam/weak
-	e_cost = 200
+	projectile_type = /obj/item/projectile/beam/pump
+	e_cost = 350
 	select_name = "kill"
-	pellets = 3
+	pellets = 6
 	variance = 15
 	fire_sound = 'sound/weapons/ParticleBlaster.ogg'
 
-/obj/item/ammo_casing/energy/electrode/pump
-	projectile_type = /obj/item/projectile/energy/electrode/pump
-	select_name = "stun"
+/obj/item/ammo_casing/energy/disabler/pump
+	projectile_type = /obj/item/projectile/energy/disabler/pump
+	select_name = "disable"
 	fire_sound = 'sound/weapons/LaserSlugv3.ogg'
-	e_cost = 300
-	pellets = 3
+	e_cost = 150
+	pellets = 6
 	variance = 20
 
 //PROJECTILES
@@ -181,19 +181,13 @@
 	speed = 0.6
 	icon_state = "disablerslug"
 
-/obj/item/projectile/energy/electrode/pump
-	name = "electron blast"
-	icon_state = "stunjectile"
+/obj/item/projectile/beam/pump
+	damage = 9
+	range = 6
+
+/obj/item/projectile/energy/disabler/pump
+	name = "disabling blast"
+	icon_state = "disablerslug"
 	color = null
-	nodamage = TRUE
-	knockdown = 100
-	knockdown_stamoverride = 0
-	knockdown_stam_max = 0
-	stamina = 18
-	stutter = 5
-	jitter = 20
-	strong_tase = FALSE
-	tase_duration = 0
-	hitsound = 'sound/weapons/taserhit.ogg'
-	range = 3
-	strong_tase = FALSE
+	stamina = 13
+	range = 6

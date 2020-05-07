@@ -8,7 +8,7 @@
 	masturbation_verb = "stroke"
 	arousal_verb = "You pop a boner"
 	unarousal_verb = "Your boner goes down"
-	genital_flags = CAN_MASTURBATE_WITH|CAN_CLIMAX_WITH|GENITAL_CAN_AROUSE|UPDATE_OWNER_APPEARANCE|GENITAL_UNDIES_HIDDEN
+	genital_flags = CAN_MASTURBATE_WITH|CAN_CLIMAX_WITH|GENITAL_CAN_AROUSE|UPDATE_OWNER_APPEARANCE|GENITAL_UNDIES_HIDDEN|GENITAL_CAN_TAUR
 	linked_organ_slot = ORGAN_SLOT_TESTICLES
 	fluid_transfer_factor = 0.5
 	shape = DEF_COCK_SHAPE
@@ -21,11 +21,11 @@
 	var/diameter_ratio = COCK_DIAMETER_RATIO_DEF //0.25; check citadel_defines.dm
 
 /obj/item/organ/genital/penis/modify_size(modifier, min = -INFINITY, max = INFINITY)
-	var/new_value = CLAMP(length + modifier, min, max)
+	var/new_value = clamp(length + modifier, min, max)
 	if(new_value == length)
 		return
 	prev_length = length
-	length = CLAMP(length + modifier, min, max)
+	length = clamp(length + modifier, min, max)
 	update()
 	..()
 
@@ -60,7 +60,7 @@
 		else if(!enlargement && status_effect)
 			owner.remove_status_effect(STATUS_EFFECT_PENIS_ENLARGEMENT)
 	if(linked_organ)
-		linked_organ.size = CLAMP(size + new_size, BALLS_SIZE_MIN, BALLS_SIZE_MAX)
+		linked_organ.size = clamp(size + new_size, BALLS_SIZE_MIN, BALLS_SIZE_MAX)
 		linked_organ.update()
 	size = new_size
 
@@ -79,21 +79,27 @@
 	var/icon_shape = S ? S.icon_state : "human"
 	icon_state = "penis_[icon_shape]_[size]"
 	var/lowershape = lowertext(shape)
-	desc = "You see [aroused_state ? "an erect" : "a flaccid"] [lowershape] [name]. You estimate it's about [round(length, 0.25)] inch[round(length, 0.25) != 1 ? "es" : ""] long and [round(diameter, 0.25)] inch[round(diameter, 0.25) != 1 ? "es" : ""] in diameter."
 
 	if(owner)
 		if(owner.dna.species.use_skintones && owner.dna.features["genitals_use_skintone"])
 			if(ishuman(owner)) // Check before recasting type, although someone fucked up if you're not human AND have use_skintones somehow...
 				var/mob/living/carbon/human/H = owner // only human mobs have skin_tone, which we need.
-				color = "#[skintone2hex(H.skin_tone)]"
-				icon_state += "_s"
+				color = SKINTONE2HEX(H.skin_tone)
+				if(!H.dna.skin_tone_override)
+					icon_state += "_s"
 		else
 			color = "#[owner.dna.features["cock_color"]]"
+		if(genital_flags & GENITAL_CAN_TAUR && S?.taur_icon && (!S.feat_taur || owner.dna.features[S.feat_taur]) && owner.dna.species.mutant_bodyparts["taur"])
+			var/datum/sprite_accessory/taur/T = GLOB.taur_list[owner.dna.features["taur"]]
+			if(T.taur_mode & S.accepted_taurs) //looks out of place on those.
+				lowershape = "taur, [lowershape]"
+
+	desc = "You see [aroused_state ? "an erect" : "a flaccid"] [lowershape] [name]. You estimate it's about [round(length, 0.25)] inch[round(length, 0.25) != 1 ? "es" : ""] long and [round(diameter, 0.25)] inch[round(diameter, 0.25) != 1 ? "es" : ""] in diameter."
 
 /obj/item/organ/genital/penis/get_features(mob/living/carbon/human/H)
 	var/datum/dna/D = H.dna
 	if(D.species.use_skintones && D.features["genitals_use_skintone"])
-		color = "#[skintone2hex(H.skin_tone)]"
+		color = SKINTONE2HEX(H.skin_tone)
 	else
 		color = "#[D.features["cock_color"]]"
 	length = D.features["cock_length"]

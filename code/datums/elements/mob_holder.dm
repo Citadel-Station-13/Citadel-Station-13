@@ -71,11 +71,12 @@
 	name = "bugged mob"
 	desc = "Yell at coderbrush."
 	icon = null
-	alternate_worn_icon = 'icons/mob/animals_held.dmi'
+	mob_overlay_icon = 'icons/mob/animals_held.dmi'
 	righthand_file = 'icons/mob/animals_held_rh.dmi'
 	lefthand_file = 'icons/mob/animals_held_lh.dmi'
 	icon_state = ""
 	w_class = WEIGHT_CLASS_BULKY
+	dynamic_hair_suffix = ""
 	var/mob/living/held_mob
 
 /obj/item/clothing/head/mob_holder/Initialize(mapload, mob/living/target, worn_state, alt_worn, right_hand, left_hand, slots = NONE)
@@ -85,7 +86,7 @@
 		assimilate(target)
 
 	if(alt_worn)
-		alternate_worn_icon = alt_worn
+		mob_overlay_icon = alt_worn
 	if(worn_state)
 		item_state = worn_state
 		icon_state = worn_state
@@ -161,6 +162,11 @@
 		var/mob/living/L = loc
 		L.visible_message("<span class='warning'>[held_mob] escapes from [L]!</span>", "<span class='warning'>[held_mob] escapes your grip!</span>")
 	release()
+
+/obj/item/clothing/head/mob_holder/mob_can_equip(mob/living/M, mob/living/equipper, slot, disable_warning = FALSE, bypass_equip_delay_self = FALSE)
+	if(M == held_mob || !ishuman(M)) //monkeys holding monkeys holding monkeys...
+		return FALSE
+	return ..()
 
 /obj/item/clothing/head/mob_holder/assume_air(datum/gas_mixture/env)
 	var/atom/location = loc

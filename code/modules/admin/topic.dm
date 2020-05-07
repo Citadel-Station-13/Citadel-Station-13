@@ -1394,6 +1394,32 @@
 		log_admin("[key_name(usr)] removed [rule] from the forced roundstart rulesets.")
 		message_admins("[key_name(usr)] removed [rule] from the forced roundstart rulesets.", 1)
 
+	else if(href_list["f_dynamic_storyteller"])
+		if(!check_rights(R_ADMIN))
+			return
+		if(SSticker && SSticker.mode)
+			return alert(usr, "The game has already started.", null, null, null, null)
+		if(GLOB.master_mode != "dynamic")
+			return alert(usr, "The game mode has to be dynamic mode.", null, null, null, null)
+		var/list/choices = list()
+		for(var/T in config.storyteller_cache)
+			var/datum/dynamic_storyteller/S = T
+			choices[initial(S.name)] = T
+		var/choice = choices[input("Select storyteller:", "Storyteller", "Classic") as null|anything in choices]
+		if(choice)
+			GLOB.dynamic_forced_storyteller = choice
+			log_admin("[key_name(usr)] forced the storyteller to [GLOB.dynamic_forced_storyteller].")
+			message_admins("[key_name(usr)] forced the storyteller to [GLOB.dynamic_forced_storyteller].")
+			Game()
+
+	else if(href_list["f_dynamic_storyteller_clear"])
+		if(!check_rights(R_ADMIN))
+			return
+		GLOB.dynamic_forced_storyteller = null
+		Game()
+		log_admin("[key_name(usr)] cleared the forced storyteller. The mode will pick one as normal.")
+		message_admins("[key_name(usr)] cleared the forced storyteller. The mode will pick one as normal.", 1)
+
 	else if(href_list["f_dynamic_latejoin"])
 		if(!check_rights(R_ADMIN))
 			return
@@ -1732,9 +1758,8 @@
 		var/mob/M = locate(href_list["makeeligible"])
 		if(!ismob(M))
 			to_chat(usr, "this can only be used on instances of type /mob.")
-		var/datum/element/ghost_role_eligibility/eli = SSdcs.GetElement(list(/datum/element/ghost_role_eligibility))
-		if(M.ckey in eli.timeouts)
-			eli.timeouts -= M.ckey
+		if(M.ckey in GLOB.client_ghost_timeouts)
+			GLOB.client_ghost_timeouts -= M.ckey
 
 	else if(href_list["sendtoprison"])
 		if(!check_rights(R_ADMIN))
@@ -2364,7 +2389,7 @@
 			return
 
 		var/list/offset = splittext(href_list["offset"],",")
-		var/number = CLAMP(text2num(href_list["object_count"]), 1, 100)
+		var/number = clamp(text2num(href_list["object_count"]), 1, 100)
 		var/X = offset.len > 0 ? text2num(offset[1]) : 0
 		var/Y = offset.len > 1 ? text2num(offset[2]) : 0
 		var/Z = offset.len > 2 ? text2num(offset[3]) : 0

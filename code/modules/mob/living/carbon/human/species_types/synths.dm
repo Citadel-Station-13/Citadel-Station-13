@@ -23,7 +23,7 @@
 	armor = 25
 	punchdamagelow = 10
 	punchdamagehigh = 19
-	punchstunthreshold = 14 //about 50% chance to stun
+	punchstunthreshold = 14
 	disguise_fail_health = 50
 
 /datum/species/synth/on_species_gain(mob/living/carbon/human/H, datum/species/old_species)
@@ -80,7 +80,7 @@
 		fake_species = null
 		meat = initial(meat)
 		limbs_id = "synth"
-		use_skintones = 0
+		use_skintones = FALSE
 		sexes = 0
 		fixed_mut_color = ""
 		hair_color = ""
