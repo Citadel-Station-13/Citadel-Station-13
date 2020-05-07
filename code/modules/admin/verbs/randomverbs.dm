@@ -1226,8 +1226,10 @@ GLOBAL_LIST_EMPTY(custom_outfits) //Admin created outfits
 	if(!check_rights(R_ADMIN) || !check_rights(R_FUN))
 		return
 	if(busy_toggling_fov)
-		to_chat(usr, "<span class='warning'>A previous call of this function is still busy toggling FoV [CONFIG_GET(flag/use_field_of_vision) ? "On" : "Off"]. Have some patiece</span>.")
+		to_chat(usr, "<span class='warning'>A previous call of this function is still busy toggling FoV [CONFIG_GET(flag/use_field_of_vision) ? "on" : "fff"]. Have some patiece</span>.")
+		return
 
+	busy_toggling_fov = TRUE
 	if(CONFIG_GET(flag/use_field_of_vision))
 		CONFIG_SET(flag/use_field_of_vision, FALSE)
 		for(var/k in GLOB.mob_list)
@@ -1259,6 +1261,7 @@ GLOBAL_LIST_EMPTY(custom_outfits) //Admin created outfits
 				continue
 			M.LoadComponent(/datum/component/field_of_vision, M.field_of_vision_type)
 			CHECK_TICK
+	busy_toggling_fov = FALSE
 
 
 
