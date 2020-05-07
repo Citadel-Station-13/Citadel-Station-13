@@ -8,7 +8,7 @@
 	var/zone = BODY_ZONE_CHEST
 	var/slot
 	// DO NOT add slots with matching names to different zones - it will break internal_organs_slot list!
-	var/organ_flags = 0
+	var/organ_flags = NONE
 	var/maxHealth = STANDARD_ORGAN_THRESHOLD
 	var/damage = 0		//total damage this organ has sustained
 	///Healing factor and decay factor function on % of maxhealth, and do not work by applying a static number per tick
@@ -108,7 +108,7 @@
 		var/datum/gas_mixture/enviro = T.return_air()
 		local_temp = enviro.temperature
 
-	else if(istype(loc, /mob/) && !owner)
+	else if(!owner && ismob(loc))
 		var/mob/M = loc
 		if(is_type_in_typecache(M.loc, GLOB.freezing_objects))
 			if(!(organ_flags & ORGAN_FROZEN))
@@ -137,9 +137,7 @@
 /obj/item/organ/proc/on_life()	//repair organ damage if the organ is not failing or synthetic
 	if(organ_flags & ORGAN_FAILING || !owner)
 		return FALSE
-	if(is_cold())
-		return FALSE
-	if(damage)
+	if(!is_cold() && damage)
 		///Damage decrements by a percent of its maxhealth
 		var/healing_amount = -(maxHealth * healing_factor)
 		///Damage decrements again by a percent of its maxhealth, up to a total of 4 extra times depending on the owner's satiety

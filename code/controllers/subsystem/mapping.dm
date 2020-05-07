@@ -42,6 +42,13 @@ SUBSYSTEM_DEF(mapping)
 
 	var/stat_map_name = "Loading..."
 
+	/// Lookup list for random generated IDs.
+	var/list/random_generated_ids_by_original = list()
+	/// next id for separating obfuscated ids.
+	var/obfuscation_next_id = 1
+	/// "secret" key
+	var/obfuscation_secret
+
 //dlete dis once #39770 is resolved
 /datum/controller/subsystem/mapping/proc/HACK_LoadMapConfig()
 	if(!config)
@@ -51,6 +58,10 @@ SUBSYSTEM_DEF(mapping)
 		config = load_map_config(error_if_missing = FALSE)
 #endif
 	stat_map_name = config.map_name
+
+/datum/controller/subsystem/mapping/PreInit()
+	if(!obfuscation_secret)
+		obfuscation_secret = md5(GUID())		//HAH! Guess this!
 
 /datum/controller/subsystem/mapping/Initialize(timeofday)
 	HACK_LoadMapConfig()
@@ -185,7 +196,7 @@ SUBSYSTEM_DEF(mapping)
 
 	z_list = SSmapping.z_list
 
-/datum/controller/subsystem/mapping/proc/LoadGroup(list/errorList, name, path, files, list/traits, list/default_traits, silent = FALSE)
+/datum/controller/subsystem/mapping/proc/LoadGroup(list/errorList, name, path, files, list/traits, list/default_traits, silent = FALSE, orientation = SOUTH)
 	. = list()
 	var/start_time = REALTIMEOFDAY
 
@@ -225,7 +236,7 @@ SUBSYSTEM_DEF(mapping)
 	// load the maps
 	for (var/P in parsed_maps)
 		var/datum/parsed_map/pm = P
-		if (!pm.load(1, 1, start_z + parsed_maps[P], no_changeturf = TRUE))
+		if (!pm.load(1, 1, start_z + parsed_maps[P], no_changeturf = TRUE, orientation = orientation))
 			errorList |= pm.original_path
 	if(!silent)
 		INIT_ANNOUNCE("Loaded [name] in [(REALTIMEOFDAY - start_time)/10]s!")
@@ -241,7 +252,7 @@ SUBSYSTEM_DEF(mapping)
 	// load the station
 	station_start = world.maxz + 1
 	INIT_ANNOUNCE("Loading [config.map_name]...")
-	LoadGroup(FailedZs, "Station", config.map_path, config.map_file, config.traits, ZTRAITS_STATION)
+	LoadGroup(FailedZs, "Station", config.map_path, config.map_file, config.traits, ZTRAITS_STATION, FALSE, config.orientation)
 
 	if(SSdbcore.Connect())
 		var/datum/DBQuery/query_round_map_name = SSdbcore.NewQuery("UPDATE [format_table_name("round")] SET map_name = '[config.map_name]' WHERE id = [GLOB.round_id]")
@@ -568,3 +579,15 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 		LM.load()
 	if(GLOB.stationroom_landmarks.len)
 		seedStation() //I'm sure we can trust everyone not to insert a 1x1 rooms which loads a landmark which loads a landmark which loads a la...
+
+/**
+  * Generates an obfuscated but constant id for an original id for cases where you don't want players codediving for an id.
+  * WARNING: MAKE SURE PLAYERS ARE NOT ABLE TO ACCESS THIS. To save performance, it's just secret + an incrementing number. Very guessable if you know what the secret is.
+  */
+/datum/controller/subsystem/mapping/proc/get_obfuscated_id(original, id_type = "GENERAL")
+	if(!original)
+		return	//no.
+	var/key = "[original]%[id_type]"
+	if(random_generated_ids_by_original[key])
+		return random_generated_ids_by_original[key]
+	. = random_generated_ids_by_original[key] = "[obfuscation_secret]%[obfuscation_next_id++]"

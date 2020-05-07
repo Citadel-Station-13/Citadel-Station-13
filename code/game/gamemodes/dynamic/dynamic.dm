@@ -839,3 +839,11 @@ GLOBAL_VAR_INIT(dynamic_forced_storyteller, null)
 			return RULE_OF_THREE(40, 20, x) + 50
 		if (20 to INFINITY)
 			return rand(90, 100)
+
+/datum/game_mode/dynamic/ghost_info()
+	. = list()
+	. += "Current threat: [threat]"
+	. += "Target threat: [threat_level]"
+	. += "Storyteller: <b>[storyteller.name]</b><br/>"
+	. += "Parameters: centre = [GLOB.dynamic_curve_centre] ; width = [GLOB.dynamic_curve_width].<br/>"
+	. += "<i>On average, <b>[peaceful_percentage]</b>% of the rounds are more peaceful.</i><br/>"

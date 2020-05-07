@@ -492,7 +492,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 	if(!template)
 		return FALSE
 	testing("Room \"[template_name]\" placed at ([T.x], [T.y], [T.z])")
-	template.load(T, centered = FALSE)
+	template.load(T, centered = FALSE, orientation = dir, rotate_placement_to_orientation = TRUE)
 	template.loaded++
 	GLOB.stationroom_landmarks -= src
 	qdel(src)
@@ -503,7 +503,6 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 /obj/effect/landmark/stationroom/box/engine
 	templates = list("Engine SM" = 3, "Engine Singulo" = 3, "Engine Tesla" = 3)
 	icon = 'icons/rooms/box/engine.dmi'
-
 
 /obj/effect/landmark/stationroom/box/engine/New()
 	. = ..()

@@ -1,5 +1,6 @@
 macro "default"
 
+
 menu "menu"
 	elem 
 		name = "&File"
@@ -128,24 +129,28 @@ window "mainwindow"
 window "mapwindow"
 	elem "mapwindow"
 		type = MAIN
-		pos = 0,0
-		size = 640x480
+		pos = 418,0
+		size = 1024x1024
 		anchor1 = none
 		anchor2 = none
-		saved-params = "pos;size;is-minimized;is-maximized"
+		background-color = none
+		saved-params = ""
+		statusbar = false
 		is-pane = true
+		outer-size = 1090x1192
+		inner-size = 1068x1136
 	elem "map"
 		type = MAP
 		pos = 0,0
-		size = 640x480
+		size = 1024x1024
 		anchor1 = 0,0
 		anchor2 = 100,100
 		font-family = "Arial"
 		font-size = 7
-		text-color = none
 		is-default = true
 		saved-params = "icon-size"
 		zoom-mode = distort
+		style = ".center { text-align: center; }\n.maptext { font-family: 'Small Fonts'; font-size: 7px; -dm-text-outline: 1px black; color: white; line-height: 1.1; }\n.command_headset { font-weight: bold;\tfont-size: 8px; } .small { font-size: 6px; }\n.big { font-size: 8px; }\n.reallybig { font-size: 8px; }\n.extremelybig { font-size: 8px; }\n.greentext { color: #00ff00; font-size: 7px; }\n.redtext { color: #ff0000; font-size: 7px; }\n.clown { color: #ff69bf; font-size: 7px;  font-weight: bold; }\n.his_grace { color: #15d512; }\n.hypnophrase { color: #0d0d0d; font-weight: bold; }\n.yell { font-weight: bold; }\n.italics { font-size: 6px; }"
 
 window "infowindow"
 	elem "infowindow"
@@ -268,14 +273,13 @@ window "statwindow"
 		is-default = true
 		saved-params = ""
 
-		window "preferences_window"
+window "preferences_window"
 	elem "preferences_window"
 		type = MAIN
 		pos = 372,0
 		size = 1280x1000
 		anchor1 = none
 		anchor2 = none
-		background-color = none
 		is-visible = false
 		saved-params = "pos;size;is-minimized;is-maximized"
 		statusbar = false
@@ -285,7 +289,6 @@ window "statwindow"
 		size = 960x1000
 		anchor1 = 0,0
 		anchor2 = 75,100
-		background-color = none
 		saved-params = ""
 	elem "character_preview_map"
 		type = MAP
@@ -295,3 +298,4 @@ window "statwindow"
 		anchor2 = 100,100
 		right-click = true
 		saved-params = "zoom;letterbox;zoom-mode"
+

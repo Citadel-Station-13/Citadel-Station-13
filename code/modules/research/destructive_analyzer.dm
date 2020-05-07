@@ -101,7 +101,7 @@ Note: Must be placed within 3 tiles of the R&D Console
 	if(!istype(loaded_item) || !istype(linked_console))
 		return FALSE
 
-	if (id && id != RESEARCH_MATERIAL_RECLAMATION_ID)
+	if (id && id != RESEARCH_MATERIAL_RECLAMATION_ID && id != RESEARCH_DEEP_SCAN_ID)
 		var/datum/techweb_node/TN = SSresearch.techweb_node_by_id(id)
 		if(!istype(TN))
 			return FALSE
@@ -125,7 +125,7 @@ Note: Must be placed within 3 tiles of the R&D Console
 		if(destroy_item(loaded_item))
 			linked_console.stored_research.boost_with_path(SSresearch.techweb_node_by_id(TN.id), dpath)
 
-	else
+	else if(id == RESEARCH_MATERIAL_RECLAMATION_ID)
 		var/list/point_value = techweb_item_point_check(loaded_item)
 		if(linked_console.stored_research.deconstructed_items[loaded_item.type])
 			point_value = list()
@@ -143,6 +143,15 @@ Note: Must be placed within 3 tiles of the R&D Console
 		if(destroy_item(loaded_item))
 			linked_console.stored_research.add_point_list(point_value)
 			linked_console.stored_research.deconstructed_items[loaded_type] = point_value
+	else if(id == RESEARCH_DEEP_SCAN_ID)
+		var/list/return_list = list()
+		. = SEND_SIGNAL(loaded_item, COMSIG_ITEM_DECONSTRUCTOR_DEEPSCAN, src, user, return_list)
+		flick("d_analyzer_process", src)
+		if(. & COMPONENT_DEEPSCAN_UNCOVERED_INFORMATION)
+			say("New information uncovered from item deep scan[length(return_list)? ": [english_list(return_list)]" : ""].")
+		else
+			say("Item deep scan uncovered no new information.")
+
 	return TRUE
 
 /obj/machinery/rnd/destructive_analyzer/proc/unload_item()
