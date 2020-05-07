@@ -33,8 +33,7 @@
 	var/oldloc = null
 	var/toolbox = /obj/item/storage/toolbox/mechanical
 
-	var/storage_upgrade = FALSE
-	var/syndicate_toolbox = FALSE
+	var/upgrades = 0
 
 	#define HULL_BREACH		1
 	#define LINE_SPACE_MODE		2
@@ -125,28 +124,32 @@
 			to_chat(user, "<span class='warning'>You need at least one floor tile to put into [src]!</span>")
 
 	else if(istype(W, /obj/item/storage/toolbox/artistic))
-		if(bot_core.allowed(user) && open)
-			if(!storage_upgrade)
-				to_chat(user, "<span class='notice'>You upgrade \the [src] case to hold more!</span>")
-				storage_upgrade = TRUE
-				maxtiles += 100 //Double the storage!
-				qdel(W)
+		if(bot_core.allowed(user) && open && !CHECK_BITFIELD(upgrades,UPGRADE_FLOOR_ARTBOX))
+			to_chat(user, "<span class='notice'>You upgrade \the [src] case to hold more!</span>")
+			upgrades |= UPGRADE_FLOOR_ARTBOX
+			maxtiles += 100 //Double the storage!
+			qdel(W)
 		if(!open)
-			to_chat(user, "<span class='notice'>\the [src] access pannle is not open!</span>")
+			to_chat(user, "<span class='notice'>The [src] access pannle is not open!</span>")
+			return
+		if(!bot_core.allowed(user))
+			to_chat(user, "<span class='notice'>The [src] access pannel locked off to you!</span>")
 			return
 		else
-			to_chat(user, "<span class='notice'>\the [src] already has a upgraded case!</span>")
+			to_chat(user, "<span class='notice'>The [src] already has a upgraded case!</span>")
 
 	else if(istype(W, /obj/item/storage/toolbox/syndicate))
-		if(bot_core.allowed(user) && open)
-			if(!syndicate_toolbox)
-				to_chat(user, "<span class='notice'>You upgrade \the [src] case to hold more!</span>")
-				syndicate_toolbox = TRUE
-				maxtiles += 200 //Double bse storage
-				base_speed = 1 //2x faster!
-				qdel(W)
+		if(bot_core.allowed(user) && open && !CHECK_BITFIELD(upgrades,UPGRADE_FLOOR_SYNDIBOX))
+			to_chat(user, "<span class='notice'>You upgrade \the [src] case to hold more!</span>")
+			upgrades |= UPGRADE_FLOOR_SYNDIBOX
+			maxtiles += 200 //Double bse storage
+			base_speed = 1 //2x faster!
+			qdel(W)
+		if(!bot_core.allowed(user))
+			to_chat(user, "<span class='notice'>The [src] access pannel locked off to you!</span>")
+			return
 		else
-			to_chat(user, "<span class='notice'>\the [src] already has a upgraded case!</span>")
+			to_chat(user, "<span class='notice'>The [src] already has a upgraded case!</span>")
 
 
 	else
