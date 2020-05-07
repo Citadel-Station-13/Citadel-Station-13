@@ -21,8 +21,6 @@
 
 /datum/sprite_accessory/taur
 	icon = 'modular_citadel/icons/mob/mam_taur.dmi'
-	extra_icon = 'modular_citadel/icons/mob/mam_taur.dmi'
-	extra2_icon = 'modular_citadel/icons/mob/mam_taur.dmi'
 	center = TRUE
 	dimension_x = 64
 	color_src = MATRIXED

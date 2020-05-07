@@ -62,6 +62,9 @@
 		/datum/material/mythril
 		)
 
+	/// Base print speed
+	var/base_print_speed = 10
+
 /obj/machinery/autolathe/Initialize()
 	AddComponent(/datum/component/material_container, allowed_materials, _show_on_examine=TRUE, _after_insert=CALLBACK(src, .proc/AfterMaterialInsert))
 	. = ..()
@@ -206,7 +209,7 @@
 				busy = TRUE
 				use_power(power)
 				icon_state = "autolathe_n"
-				var/time = is_stack ? 32 : 32*coeff*multiplier
+				var/time = is_stack ? 10 : base_print_speed * coeff * multiplier
 				addtimer(CALLBACK(src, .proc/make_item, power, materials_used, custom_materials, multiplier, coeff, is_stack), time)
 			else
 				to_chat(usr, "<span class=\"alert\">Not enough materials for this operation.</span>")
@@ -254,10 +257,12 @@
 		T += MB.rating*75000
 	var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
 	materials.max_amount = T
-	T=1.2
+	var/manips = 0
+	var/total_manip_rating = 0
 	for(var/obj/item/stock_parts/manipulator/M in component_parts)
-		T -= M.rating*0.2
-	prod_coeff = min(1,max(0,T)) // Coeff going 1 -> 0,8 -> 0,6 -> 0,4
+		total_manip_rating += M.rating
+		manips++
+	prod_coeff = STANDARD_PART_LEVEL_LATHE_COEFFICIENT(total_manip_rating / (manips? manips : 1))
 
 /obj/machinery/autolathe/examine(mob/user)
 	. += ..()
@@ -440,6 +445,7 @@
 	hackable = FALSE
 	circuit = /obj/item/circuitboard/machine/autolathe/secure
 	stored_research = /datum/techweb/specialized/autounlocking/autolathe/public
+	base_print_speed = 20
 
 /obj/machinery/autolathe/toy
 	name = "autoylathe"
