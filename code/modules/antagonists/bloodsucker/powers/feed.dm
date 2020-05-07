@@ -169,8 +169,8 @@
 						 	 vision_distance = notice_range, ignored_mobs = target) // Only people who AREN'T the target will notice this action.
 		// Warn Feeder about Witnesses...
 		var/was_unnoticed = TRUE
-		for(var/mob/living/M in viewers(notice_range, owner))
-			if(M != owner && M != target && iscarbon(M) && M.mind && !M.silicon_privileges && !M.eye_blind && !M.mind.has_antag_datum(ANTAG_DATUM_BLOODSUCKER))
+		for(var/mob/living/M in get_actual_viewers(notice_range, owner) - owner - target)
+			if(M.client && !M.silicon_privileges && !M.eye_blind && !M.mind.has_antag_datum(ANTAG_DATUM_BLOODSUCKER))
 				was_unnoticed = FALSE
 				break
 		if(was_unnoticed)

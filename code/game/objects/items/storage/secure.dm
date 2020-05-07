@@ -105,10 +105,7 @@
 				if (length(code) > 5)
 					code = "ERROR"
 		add_fingerprint(usr)
-		for(var/mob/M in viewers(1, loc))
-			if ((M.client && M.machine == src))
-				attack_self(M)
-			return
+		attack_self(usr)
 	return
 
 

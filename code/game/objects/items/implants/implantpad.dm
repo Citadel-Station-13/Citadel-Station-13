@@ -66,7 +66,7 @@
 		if(ismob(loc))
 			attack_self(loc)
 		else
-			for(var/mob/M in viewers(1, src))
+			for(var/mob/M in get_actual_viewers(1, src))
 				if(M.client)
 					attack_self(M)
 		add_fingerprint(usr)

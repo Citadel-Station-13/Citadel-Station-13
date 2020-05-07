@@ -59,12 +59,14 @@
 	RegisterSignal(M, COMSIG_MOB_VISIBLE_ATOMS, .proc/on_visible_atoms)
 	RegisterSignal(M, COMSIG_MOB_CLIENT_CHANGE_VIEW, .proc/on_change_view)
 	RegisterSignal(M, COMSIG_MOB_RESET_PERSPECTIVE, .proc/on_reset_perspective)
+	RegisterSignal(M, COMSIG_MOB_IS_VIEWER, .proc/is_viewer)
 
 /datum/component/vision_cone/UnregisterFromParent()
 	. = ..()
 	var/mob/M = parent
 	if(!QDELETED(fov))
 		if(M.client)
+			UnregisterSignal(M, list(COMSIG_ATOM_DIR_CHANGE, COMSIG_MOVABLE_MOVED, COMSIG_MOB_DEATH, COMSIG_LIVING_REVIVE))
 			M.client.images -= owner_mask
 			M.client.images -= shadow_mask
 			M.client.images -= visual_shadow
@@ -75,7 +77,7 @@
 	UnregisterSignal(M, list(COMSIG_MOB_CLIENT_LOGIN, COMSIG_MOB_CLIENT_LOGOUT,
 							COMSIG_MOB_GET_VISIBLE_MESSAGE, COMSIG_MOB_EXAMINATE,
 							COMSIG_MOB_VISIBLE_ATOMS, COMSIG_MOB_RESET_PERSPECTIVE,
-							COMSIG_MOB_CLIENT_CHANGE_VIEW))
+							COMSIG_MOB_CLIENT_CHANGE_VIEW, COMSIG_MOB_IS_VIEWER))
 
 /datum/component/vision_cone/proc/generate_fov_holder(mob/M, _angle = 0)
 	if(QDELETED(fov))
@@ -222,6 +224,9 @@
 	for(var/k in atoms)
 		var/atom/A = k
 		FOV_ANGLE_CHECK(source, A, continue, atoms -= A)
+
+/datum/component/vision_cone/proc/is_viewer(mob/source, atom/center, depth, list/viewers_list)
+	FOV_ANGLE_CHECK(source, center, return, viewers_list -= source)
 
 #undef FOV_ANGLE_CHECK
 

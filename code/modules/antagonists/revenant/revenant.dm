@@ -27,6 +27,7 @@
 	sight = SEE_SELF
 	throwforce = 0
 	blood_volume = 0
+	has_field_of_vision = FALSE //we are a spoopy ghost
 
 	see_in_dark = 8
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE

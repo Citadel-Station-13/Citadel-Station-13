@@ -349,7 +349,7 @@ mob/visible_message(message, self_message, blind_message, vision_distance = DEFA
 //note: ghosts can point, this is intended
 //visible_message will handle invisibility properly
 //overridden here and in /mob/dead/observer for different point span classes and sanity checks
-/mob/verb/pointed(atom/A as mob|obj|turf in view())
+/mob/verb/pointed(atom/A as mob|obj|turf in visible_atoms())
 	set name = "Point To"
 	set category = "Object"
 
