@@ -89,7 +89,7 @@
 	name = "world peas cluster"
 	desc = "Pax Mundi, a rather peculiar and recent discovery in botanical circles is rumored to be able to pacify even the most enraged of beasts, when consumed. At last... World Peas."
 	icon_state = "worldpeas"
-	filling_color "#34b1b1"
+	filling_color "#0099CC"
 	bitesize_mod = 4
 	foodtype = VEGETABLES
 	tastes = list ("Tranquility" = 2, "numbing happiness" = 1)
