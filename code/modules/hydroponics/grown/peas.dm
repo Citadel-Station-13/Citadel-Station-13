@@ -36,7 +36,7 @@
 	desc = "These seeds give off a very soft purple glow.. they should grow into Laughin' Peas."
 	icon_state = "seed-laughpeas"
 	species = "peaslaughing"
-	plantname = "Laughin' Pea Vines"
+	plantname = "Laughin' Peas"
 	product = /obj/item/reagent_containers/food/snacks/grown/peas/laugh
 	maturation = 7
 	potency = 10
@@ -54,13 +54,13 @@
 
 /obj/item/reagent_containers/food/snacks/grown/peas/laugh
 	seed = /obj/item/seeds/peas/laugh
-	name = "laughin' pea pod"
+	name = "pod of laughin' peas"
 	desc = "Ridens Cicer, guaranteed to improve your mood dramatically upon consumption!"
 	icon_state = "laughpeas"
 	filling_color = "#ee7bee"
 	bitesize_mod = 2
 	foodtype = VEGETABLES
-	tastes = list ("a prancing rabbit" = 2, "lingering sweetness" = 1)
+	tastes = list ("a prancing rabbit" = 2, "lingering sweetness" = 1) //Vib Ribbon sends her regards.. wherever she is.
 	wine_power = 90
 
 
@@ -70,29 +70,29 @@
 	desc = "These rather large seeds give off a soothing blue glow..."
 	icon_state = "seed-worldpeas"
 	species = "peasworld"
-	plantname = "World Pea Coils"
+	plantname = "World Peas"
 	product = /obj/item/reagent_containers/food/snacks/grown/peas/laugh/peace
 	maturation = 20
 	potency = 75
 	yield = 1
 	production = 10
-	growthstages = 4
+	growthstages = 3
 	growing_icon = 'icons/obj/hydroponics/growing_vegetables.dmi'
 	icon_grow = "worldpeas-grow"
 	icon_dead = "worldpeas-dead"
 	genes = list (/datum/plant_gene/trait/glow/blue)
-	reagents_add = list (/datum/reagent/pax = 0.1, /datum/reagent/drug/happiness = 0.05, /datum/reagent/consumable/nutriment = 0.15)
+	reagents_add = list (/datum/reagent/Pax = 0.15, /datum/reagent/drug/happiness = 0.1, /datum/reagent/consumable/nutriment = 0.05)
 	rarity = 50 // This absolutely will make even the most hardened Syndicate Operators relax, and lay down their arms.
 
 
 /obj/item/reagent_containers/food/snacks/grown/peas/laugh/peace
-	name = "world peas cluster"
-	desc = "Pax Mundi, a rather peculiar and recent discovery in botanical circles is rumored to be able to pacify even the most enraged of beasts, when consumed. At last... World Peas."
+	name = "cluster of world peas"
+	desc = "Pax Mundi, a rather peculiar and recent discovery in botanical circles is rumored to be able to pacify even the most enraged of beasts, when consumed." //at last... world peas. I'm not sorry.
 	icon_state = "worldpeas"
 	filling_color = "#0099CC"
 	bitesize_mod = 4
 	foodtype = VEGETABLES
-	tastes = list ("Tranquility" = 2, "numbing happiness" = 1)
+	tastes = list ("numbing tranquility" = 2, "warm happiness" = 1)
 	wine_power = 100
 	wine_flavor = "mind-numbing peace and warmth"
 
