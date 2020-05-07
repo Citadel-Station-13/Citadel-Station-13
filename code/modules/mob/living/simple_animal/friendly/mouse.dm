@@ -97,6 +97,8 @@
 	body_color = "brown"
 	icon_state = "mouse_brown"
 
+GLOBAL_VAR(tom_existed)
+
 //TOM IS ALIVE! SQUEEEEEEEE~K :)
 /mob/living/simple_animal/mouse/brown/Tom
 	name = "Tom"
@@ -105,6 +107,10 @@
 	response_disarm = "gently pushes aside"
 	response_harm   = "splats"
 	gold_core_spawnable = NO_SPAWN
+
+/mob/living/simple_animal/mouse/brown/Tom/Initialize()
+	. = ..()
+	GLOB.tom_existed = TRUE
 
 /obj/item/reagent_containers/food/snacks/deadmouse
 	name = "dead mouse"

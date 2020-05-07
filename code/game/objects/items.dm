@@ -898,11 +898,3 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	. = ..()
 	if(var_name == NAMEOF(src, slowdown))
 		set_slowdown(var_value)			//don't care if it's a duplicate edit as slowdown'll be set, do it anyways to force normal behavior.
-
-//Called when the object is constructed by an autolathe
-//Has a reference to the autolathe so you can do !!FUN!! things with hacked lathes
-/obj/item/proc/autolathe_crafted(obj/machinery/autolathe/A)
-	return
-
-/obj/item/proc/rnd_crafted(obj/machinery/rnd/production/P)
-	return

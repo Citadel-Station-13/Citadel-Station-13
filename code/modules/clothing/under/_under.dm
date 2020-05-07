@@ -6,7 +6,7 @@
 	block_priority = BLOCK_PRIORITY_UNIFORM
 	slot_flags = ITEM_SLOT_ICLOTHING
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 0)
-	mutantrace_variation = STYLE_DIGITIGRADE
+	mutantrace_variation = STYLE_DIGITIGRADE|USE_TAUR_CLIP_MASK
 	var/fitted = FEMALE_UNIFORM_FULL // For use in alternate clothing styles for women
 	var/has_sensor = HAS_SENSORS // For the crew computer
 	var/random_sensor = TRUE
@@ -101,7 +101,7 @@
 			if((flags_inv & HIDEACCESSORY) || (A.flags_inv & HIDEACCESSORY))
 				return TRUE
 
-			accessory_overlay = mutable_appearance('icons/mob/clothing/accessories.dmi', "attached_accessory.icon_state")
+			accessory_overlay = mutable_appearance('icons/mob/clothing/accessories.dmi', attached_accessory.icon_state)
 			accessory_overlay.alpha = attached_accessory.alpha
 			accessory_overlay.color = attached_accessory.color
 
@@ -263,10 +263,13 @@
 			fitted = NO_FEMALE_UNIFORM
 		if(!alt_covers_chest) // for the special snowflake suits that expose the chest when adjusted
 			body_parts_covered &= ~CHEST
+			mutantrace_variation &= ~USE_TAUR_CLIP_MASK //How are we supposed to see the uniform otherwise?
 	else
 		fitted = initial(fitted)
 		if(!alt_covers_chest)
 			body_parts_covered |= CHEST
+			if(initial(mutantrace_variation) & USE_TAUR_CLIP_MASK)
+				mutantrace_variation |= USE_TAUR_CLIP_MASK
 
 	return adjusted
 

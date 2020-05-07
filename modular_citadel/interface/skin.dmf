@@ -94,16 +94,20 @@ window "mainwindow"
 window "mapwindow"
 	elem "mapwindow"
 		type = MAIN
-		pos = 0,0
-		size = 640x480
+		pos = 418,0
+		size = 1024x1024
 		anchor1 = none
 		anchor2 = none
+		background-color = none
 		saved-params = "pos;size;is-minimized;is-maximized"
+		statusbar = false
 		is-pane = true
+		outer-size = 684x617
+		inner-size = 662x561
 	elem "map"
 		type = MAP
 		pos = 0,0
-		size = 640x480
+		size = 1024x1024
 		anchor1 = 0,0
 		anchor2 = 100,100
 		font-family = "Arial"
@@ -111,6 +115,7 @@ window "mapwindow"
 		is-default = true
 		saved-params = "icon-size"
 		zoom-mode = distort
+		style = ".center { text-align: center; }\n.maptext { font-family: 'Small Fonts'; font-size: 7px; -dm-text-outline: 1px black; color: white; line-height: 1.1; }\n.command_headset { font-weight: bold;\tfont-size: 8px; } .small { font-size: 6px; }\n.big { font-size: 8px; }\n.reallybig { font-size: 8px; }\n.extremelybig { font-size: 8px; }\n.greentext { color: #00ff00; font-size: 7px; }\n.redtext { color: #ff0000; font-size: 7px; }\n.clown { color: #ff69bf; font-size: 7px;  font-weight: bold; }\n.his_grace { color: #15d512; }\n.hypnophrase { color: #0d0d0d; font-weight: bold; }\n.yell { font-weight: bold; }\n.italics { font-size: 6px; }"
 
 window "infowindow"
 	elem "infowindow"
@@ -196,7 +201,7 @@ window "infowindow"
 		anchor2 = 97,0
 		font-size = 8
 		text-color = #e0e0e0
-		background-color = #A92c2c
+		background-color = #a92c2c
 		saved-params = "is-checked"
 		text = "Report Issue"
 		command = "report-issue"
