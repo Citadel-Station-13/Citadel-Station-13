@@ -47,7 +47,7 @@
 		init_sprite_accessory_subtypes(/datum/sprite_accessory/underwear/socks, GLOB.socks_list)
 	return pick(GLOB.socks_list)
 
-/proc/random_features(intendedspecies)
+/proc/random_features(intendedspecies, intended_gender)
 	if(!GLOB.tails_list_human.len)
 		init_sprite_accessory_subtypes(/datum/sprite_accessory/tails/human, GLOB.tails_list_human)
 	if(!GLOB.tails_list_lizard.len)
@@ -149,7 +149,13 @@
 	var/color2 = random_short_color()
 	var/color3 = random_short_color()
 
-	//CIT CHANGE - changes this entire return to support cit's snowflake parts
+	var/body_model = MALE
+	switch(intended_gender)
+		if(MALE, FEMALE)
+			body_model = intended_gender
+		if(PLURAL)
+			body_model = pick(MALE,FEMALE)
+
 	return(list(
 		"mcolor"			= color1,
 		"mcolor2"			= color2,
@@ -209,7 +215,7 @@
 		"ipc_antenna"		= "None",
 		"flavor_text"		= "",
 		"meat_type"			= "Mammalian",
-		"body_model"		= MALE,
+		"body_model"		= body_model,
 		"body_size"			= RESIZE_DEFAULT_SIZE
 		))
 
@@ -311,7 +317,7 @@ GLOBAL_LIST_EMPTY(species_list)
 		else
 			return "unknown"
 
-/proc/do_mob(mob/user , mob/target, time = 30, uninterruptible = 0, progress = 1, datum/callback/extra_checks = null, ignorehelditem = 0)
+/proc/do_mob(mob/user , mob/target, time = 30, uninterruptible = 0, progress = 1, datum/callback/extra_checks = null, ignorehelditem = FALSE, resume_time = 0 SECONDS)
 	if(!user || !target)
 		return 0
 	var/user_loc = user.loc
@@ -330,10 +336,10 @@ GLOBAL_LIST_EMPTY(species_list)
 	var/endtime = world.time+time
 	var/starttime = world.time
 	. = 1
-	while (world.time < endtime)
+	while (world.time + resume_time < endtime)
 		stoplag(1)
 		if (progress)
-			progbar.update(world.time - starttime)
+			progbar.update(world.time - starttime + resume_time)
 		if(QDELETED(user) || QDELETED(target))
 			. = 0
 			break
@@ -365,7 +371,7 @@ GLOBAL_LIST_EMPTY(species_list)
 		checked_health["health"] = health
 	return ..()
 
-/proc/do_after(mob/user, var/delay, needhand = 1, atom/target = null, progress = 1, datum/callback/extra_checks = null, required_mobility_flags = (MOBILITY_USE|MOBILITY_MOVE))
+/proc/do_after(mob/user, var/delay, needhand = 1, atom/target = null, progress = 1, datum/callback/extra_checks = null, required_mobility_flags = (MOBILITY_USE|MOBILITY_MOVE), resume_time = 0 SECONDS)
 	if(!user)
 		return 0
 	var/atom/Tloc = null
@@ -394,10 +400,10 @@ GLOBAL_LIST_EMPTY(species_list)
 	var/starttime = world.time
 	. = 1
 	var/mob/living/L = isliving(user) && user			//evals to last thing eval'd
-	while (world.time < endtime)
+	while (world.time + resume_time < endtime)
 		stoplag(1)
 		if (progress)
-			progbar.update(world.time - starttime)
+			progbar.update(world.time - starttime + resume_time)
 
 		if(drifting && !user.inertia_dir)
 			drifting = 0

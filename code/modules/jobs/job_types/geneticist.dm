@@ -19,6 +19,8 @@
 	display_order = JOB_DISPLAY_ORDER_GENETICIST
 	threat = 1.5
 
+	starting_skills = list(/datum/skill/numerical/surgery = STARTING_SKILL_SURGERY_MEDICAL)
+
 /datum/outfit/job/geneticist
 	name = "Geneticist"
 	jobtype = /datum/job/geneticist

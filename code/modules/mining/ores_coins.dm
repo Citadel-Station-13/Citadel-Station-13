@@ -70,7 +70,6 @@
 	singular_name = "uranium ore chunk"
 	points = 30
 	custom_materials = list(/datum/material/uranium=MINERAL_MATERIAL_AMOUNT)
-	material_flags = MATERIAL_NO_EFFECTS
 	refined_type = /obj/item/stack/sheet/mineral/uranium
 
 /obj/item/stack/ore/iron
@@ -319,7 +318,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	throwforce = 2
 	w_class = WEIGHT_CLASS_TINY
 	custom_materials = list(/datum/material/iron = 400)
-	material_flags = MATERIAL_ADD_PREFIX | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS
+	material_flags = MATERIAL_ADD_PREFIX | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS | MATERIAL_EFFECTS
 	var/string_attached
 	var/list/sideslist = list("heads","tails")
 	var/cooldown = 0
