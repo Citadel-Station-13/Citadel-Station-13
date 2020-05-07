@@ -333,7 +333,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 			H.type_of_meat = GLOB.meat_types[H.dna.features["meat_type"]]
 
 		if(H.client && has_field_of_vision && CONFIG_GET(flag/use_field_of_vision))
-			H.LoadComponent(/datum/component/vision_cone, H.field_of_vision_type)
+			H.LoadComponent(/datum/component/field_of_vision, H.field_of_vision_type)
 
 	C.add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/species, TRUE, multiplicative_slowdown = speedmod)
 
@@ -369,7 +369,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 		C.dna.mutation_index[new_species.inert_mutation] = create_sequence(new_species.inert_mutation)
 
 	if(!new_species.has_field_of_vision && has_field_of_vision && ishuman(C) && CONFIG_GET(flag/use_field_of_vision))
-		var/datum/component/vision_cone/F = GetComponent(/datum/component/vision_cone)
+		var/datum/component/field_of_vision/F = GetComponent(/datum/component/field_of_vision)
 		if(F)
 			qdel(F)
 

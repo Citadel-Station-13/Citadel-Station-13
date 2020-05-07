@@ -56,4 +56,4 @@
 	SEND_SIGNAL(src, COMSIG_MOB_CLIENT_LOGIN, client)
 
 	if(has_field_of_vision && CONFIG_GET(flag/use_field_of_vision))
-		LoadComponent(/datum/component/vision_cone, field_of_vision_type)
+		LoadComponent(/datum/component/field_of_vision, field_of_vision_type)
