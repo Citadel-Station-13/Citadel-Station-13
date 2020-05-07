@@ -60,7 +60,8 @@
 /mob/living/proc/get_blocking_items()
 	. = list()
 	if(active_block_item)
-		.[active_block_item] = active_block_item.block_parry_data.block_active_priority
+		var/datum/block_parry_data/data = active_block_item.get_block_parry_data()
+		.[active_block_item] = data.block_active_priority
 	SEND_SIGNAL(src, COMSIG_LIVING_GET_BLOCKING_ITEMS, .)
 	for(var/obj/item/I in held_items)
 		// this is a bad check but i am not removing it until a better catchall is made

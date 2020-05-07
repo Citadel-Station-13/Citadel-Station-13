@@ -14,9 +14,9 @@
 #define NO_UNIFORM_REQUIRED					(1<<11) //Can be worn on certain slots (currently belt and id) that would otherwise require an uniform.
 #define NO_ATTACK_CHAIN_SOFT_STAMCRIT		(1<<12)		//Entirely blocks melee_attack_chain() if user is soft stamcritted. Uses getStaminaLoss() to check at this point in time. THIS DOES NOT BLOCK RANGED AFTERATTACK()S, ONLY MELEE RANGE AFTERATTACK()S.
 /// This item can be used to parry. Only a basic check used to determine if we should proceed with parry chain at all.
-#define ITEM_CAN_PARRY						(1<<0)
+#define ITEM_CAN_PARRY						(1<<13)
 /// This item can be used in the directional blocking system. Only a basic check used to determine if we should proceed with directional block handling at all.
-#define ITEM_CAN_BLOCK						(1<<1)
+#define ITEM_CAN_BLOCK						(1<<14)
 
 
 // Flags for the clothing_flags var on /obj/item/clothing

@@ -18,11 +18,11 @@
 #define DO_AFTER_ALLOW_NONSPACEDRIFT_RELATIVITY		(1<<8)
 
 /// Ignores checks.
-#define DO_AFTER_PROCEED		2
+#define DO_AFTER_PROCEED		"PROCEED"
 /// Uses all other checks
-#define DO_AFTER_CONTINUE		NONE
+#define DO_AFTER_CONTINUE		"CONTINUE"
 /// Breaks
-#define DO_AFTER_STOP			1
+#define DO_AFTER_STOP			"STOP"
 
 /// Stage - initiating a do_after
 #define DO_AFTER_STARTING 1

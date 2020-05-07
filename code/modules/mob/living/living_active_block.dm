@@ -18,11 +18,11 @@
 	if(!active_blocking)
 		return FALSE
 	var/obj/item/I = active_block_item
-	active_block_effect_end()
 	active_blocking = FALSE
 	active_block_item = null
 	REMOVE_TRAIT(src, TRAIT_MOBILITY_NOUSE, ACTIVE_BLOCK_TRAIT)
-	remove_movespeed_modifier(MOVESPEED_ID_ACTIVE_BLOCK)
+	remove_movespeed_modifier(/datum/movespeed_modifier/active_block)
+	active_block_effect_end()
 	var/datum/block_parry_data/data = I.get_block_parry_data()
 	if(timeToNextMove() < data.block_end_click_cd_add)
 		changeNext_move(data.block_end_click_cd_add)
@@ -40,7 +40,7 @@
 	active_block_item = I
 	if(data.block_lock_attacking)
 		ADD_TRAIT(src, TRAIT_MOBILITY_NOUSE, ACTIVE_BLOCK_TRAIT)		//probably should be something else at some point
-	add_movespeed_modifier(MOVESPEED_ID_ACTIVE_BLOCK, TRUE, 100, override = TRUE, multiplicative_slowdown = data.block_slowdown, blacklisted_movetypes = FLOATING)
+	add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/active_block, multiplicative_slowdown = data.block_slowdown)
 	active_block_effect_start()
 	return TRUE
 
@@ -55,7 +55,7 @@
 	animate(src, pixel_x = get_standard_pixel_x_offset(), pixel_y = get_standard_pixel_y_offset(), time = 2.5, FALSE, SINE_EASING | EASE_IN)
 
 /mob/living/proc/continue_starting_active_block()
-	return active_block_starting != ACTIVE_BLOCK_STARTING_INTERRUPT
+	return (active_block_starting != ACTIVE_BLOCK_STARTING_INTERRUPT)? DO_AFTER_CONTINUE : DO_AFTER_STOP
 
 /mob/living/get_standard_pixel_x_offset()
 	. = ..()
