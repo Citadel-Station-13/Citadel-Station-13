@@ -37,7 +37,7 @@
 	description = "Hold down to sprint"
 
 /datum/keybinding/living/hold_sprint/can_use(client/user)
-	return ishuman(user.mob) || isrobot(user.mob)
+	return ishuman(user.mob) || iscyborg(user.mob)
 
 /datum/keybinding/living/hold_sprint/down(client/user)
 	var/mob/living/L = user.mob
@@ -56,7 +56,7 @@
 	description = "Press to toggle sprint"
 
 /datum/keybinding/living/toggle_sprint/can_use(client/user)
-	return ishuman(user.mob) || isrobot(user.mob)
+	return ishuman(user.mob) || iscyborg(user.mob)
 
 /datum/keybinding/living/toggle_sprint/down(client/user)
 	var/mob/living/L = user.mob
