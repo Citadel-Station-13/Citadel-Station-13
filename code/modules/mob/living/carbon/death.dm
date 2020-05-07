@@ -41,18 +41,14 @@
 				if(no_brain && istype(O, /obj/item/organ/brain))
 					qdel(O) //so the brain isn't transfered to the head when the head drops.
 					continue
-				var/org_zone = check_zone(O.zone) //both groin and chest organs.
-				if(org_zone == BODY_ZONE_CHEST)
+				if(!(O.organ_flags & ORGAN_NO_DISMEMBERMENT) && check_zone(O.zone) == BODY_ZONE_CHEST)
 					O.Remove()
 					O.forceMove(Tsec)
 					O.throw_at(get_edge_target_turf(src,pick(GLOB.alldirs)),rand(1,3),5)
 	else
 		for(var/X in internal_organs)
 			var/obj/item/organ/I = X
-			if(no_brain && istype(I, /obj/item/organ/brain))
-				qdel(I)
-				continue
-			if(no_organs && !istype(I, /obj/item/organ/brain))
+			if(I.organ_flags & ORGAN_NO_DISMEMBERMENT || (no_brain && istype(I, /obj/item/organ/brain)) || (no_organs && !istype(I, /obj/item/organ/brain)))
 				qdel(I)
 				continue
 			I.Remove()

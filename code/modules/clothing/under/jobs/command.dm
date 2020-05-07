@@ -46,4 +46,4 @@
 	icon_state = "lewdcap"
 	item_state = "lewdcap"
 	can_adjust = FALSE
-	mutantrace_variation = NONE
+	mutantrace_variation = USE_TAUR_CLIP_MASK
