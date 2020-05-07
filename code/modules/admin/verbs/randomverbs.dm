@@ -1225,13 +1225,20 @@ GLOBAL_LIST_EMPTY(custom_outfits) //Admin created outfits
 	var/static/busy_toggling_fov = FALSE
 	if(!check_rights(R_ADMIN) || !check_rights(R_FUN))
 		return
-	if(busy_toggling_fov)
-		to_chat(usr, "<span class='warning'>A previous call of this function is still busy toggling FoV [CONFIG_GET(flag/use_field_of_vision) ? "on" : "fff"]. Have some patiece</span>.")
-		return
 
+	var/on_off = CONFIG_GET(flag/use_field_of_vision)
+
+	if(busy_toggling_fov)
+		to_chat(usr, "<span class='warning'>A previous call of this function is still busy toggling FoV [on_off ? "on" : "off"]. Have some patiece</span>.")
+		return
 	busy_toggling_fov = TRUE
-	if(CONFIG_GET(flag/use_field_of_vision))
-		CONFIG_SET(flag/use_field_of_vision, FALSE)
+
+	log_admin("[key_name(usr)] has [on_off ? "disabled" : "enabled"] the Field of Vision configuration.")
+	CONFIG_SET(flag/use_field_of_vision, !on_off)
+
+	SSblackbox.record_feedback("nested tally", "admin_toggle", 1, list("Toggled Field of Vision", "[on_off ? "Enabled" : "Disabled"]"))
+
+	if(on_off)
 		for(var/k in GLOB.mob_list)
 			if(!k)
 				continue
@@ -1247,7 +1254,6 @@ GLOBAL_LIST_EMPTY(custom_outfits) //Admin created outfits
 				qdel(FoV)
 			CHECK_TICK
 	else
-		CONFIG_SET(flag/use_field_of_vision, TRUE)
 		for(var/k in GLOB.clients)
 			if(!k)
 				continue
@@ -1261,10 +1267,8 @@ GLOBAL_LIST_EMPTY(custom_outfits) //Admin created outfits
 				continue
 			M.LoadComponent(/datum/component/field_of_vision, M.field_of_vision_type)
 			CHECK_TICK
+
 	busy_toggling_fov = FALSE
-
-
-
 
 /client/proc/smite(mob/living/carbon/human/target as mob)
 	set name = "Smite"
