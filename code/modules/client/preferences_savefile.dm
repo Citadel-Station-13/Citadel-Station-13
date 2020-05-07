@@ -5,7 +5,7 @@
 //	You do not need to raise this if you are adding new values that have sane defaults.
 //	Only raise this value when changing the meaning/format/name/layout of an existing value
 //	where you would want the updater procs below to run
-#define SAVEFILE_VERSION_MAX	29
+#define SAVEFILE_VERSION_MAX	30
 
 /*
 SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Carn
@@ -180,6 +180,19 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 			ENABLE_BITFIELD(vore_flags,FEEDING)
 		if(lickable)
 			ENABLE_BITFIELD(vore_flags,LICKABLE)
+
+	if(current_version < 30)
+		switch(features["taur"])
+			if("Husky", "Lab", "Shepherd", "Fox", "Wolf")
+				features["taur"] = "Canine"
+			if("Panther", "Tiger")
+				features["taur"] = "Feline"
+			if("Cow")
+				features["taur"] = "Cow (Spotted)"
+
+	if(current_version < 31)
+		S["wing_color"]			>> features["wings_color"]
+		S["horn_color"]			>> features["horns_color"]
 
 /datum/preferences/proc/load_path(ckey,filename="preferences.sav")
 	if(!ckey)
@@ -412,15 +425,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		if(newtype)
 			pref_species = new newtype
 
-	if(!S["features["mcolor"]"] || S["features["mcolor"]"] == "#000")
-		WRITE_FILE(S["features["mcolor"]"]	, "#FFF")
-
-	if(!S["features["horn_color"]"] || S["features["horn_color"]"] == "#000")
-		WRITE_FILE(S["features["horn_color"]"]	, "#85615a")
-
-	if(!S["features["wing_color"]"] || S["features["wing_color"]"] == "#000")
-		WRITE_FILE(S["features["wing_color"]"]	, "#FFF")
-
 	//Character
 	S["real_name"]				>> real_name
 	S["nameless"]				>> nameless
@@ -444,8 +448,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["shirt_color"]			>> shirt_color
 	S["socks"]					>> socks
 	S["socks_color"]			>> socks_color
-	S["horn_color"]				>> horn_color
-	S["wing_color"]				>> wing_color
 	S["backbag"]				>> backbag
 	S["jumpsuit_style"]			>> jumpsuit_style
 	S["uplink_loc"]				>> uplink_spawn_loc
@@ -555,15 +557,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		if(!custom_names[custom_name_id])
 			custom_names[custom_name_id] = get_default_name(custom_name_id)
 
-	if(!features["mcolor"] || features["mcolor"] == "#000")
-		features["mcolor"] = pick("FFFFFF","7F7F7F", "7FFF7F", "7F7FFF", "FF7F7F", "7FFFFF", "FF7FFF", "FFFF7F")
-
-	if(!features["horn_color"] || features["horn_color"] == "#000")
-		features["horn_color"] = "85615a"
-
-	if(!features["wing_color"] || features["wing_color"] == "#000")
-		features["wing_color"] = "FFFFFF"
-
 	nameless		= sanitize_integer(nameless, 0, 1, initial(nameless))
 	be_random_name	= sanitize_integer(be_random_name, 0, 1, initial(be_random_name))
 	be_random_body	= sanitize_integer(be_random_body, 0, 1, initial(be_random_body))
@@ -590,8 +583,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	else
 		skin_tone					= sanitize_inlist(skin_tone, GLOB.skin_tones - GLOB.nonstandard_skin_tones, initial(skin_tone))
 
-	horn_color						= sanitize_hexcolor(horn_color, 3, FALSE)
-	wing_color						= sanitize_hexcolor(wing_color, 3, FALSE, "#FFFFFF")
+	features["horns_color"]			= sanitize_hexcolor(features["horns_color"], 3, FALSE, "85615a")
+	features["wings_color"]			= sanitize_hexcolor(features["wings_color"], 3, FALSE, "FFFFFF")
 	backbag							= sanitize_inlist(backbag, GLOB.backbaglist, initial(backbag))
 	jumpsuit_style					= sanitize_inlist(jumpsuit_style, GLOB.jumpsuitlist, initial(jumpsuit_style))
 	uplink_spawn_loc				= sanitize_inlist(uplink_spawn_loc, GLOB.uplink_spawn_loc_list, initial(uplink_spawn_loc))
@@ -705,8 +698,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["shirt_color"]				, shirt_color)
 	WRITE_FILE(S["socks"]					, socks)
 	WRITE_FILE(S["socks_color"]				, socks_color)
-	WRITE_FILE(S["horn_color"]				, horn_color)
-	WRITE_FILE(S["wing_color"]				, wing_color)
+	WRITE_FILE(S["horns_color"]				, features["horns_color"])
+	WRITE_FILE(S["wings_color"]				, features["wings_color"])
 	WRITE_FILE(S["backbag"]					, backbag)
 	WRITE_FILE(S["jumpsuit_style"]			, jumpsuit_style)
 	WRITE_FILE(S["uplink_loc"]				, uplink_spawn_loc)

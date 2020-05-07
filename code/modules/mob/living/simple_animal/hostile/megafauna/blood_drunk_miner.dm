@@ -265,4 +265,12 @@ Difficulty: Medium
 	desc = "The sweet blood, oh, it sings to me."
 	invisibility = 100
 
+/mob/living/simple_animal/hostile/megafauna/blood_drunk_miner/doom
+	name = "hostile-environment miner"
+	desc = "A miner destined to hop across dimensions for all eternity, hunting anomalous creatures."
+	speed = 8
+	move_to_delay = 8
+	ranged_cooldown_time = 8
+	dash_cooldown = 8
+
 #undef MINER_DASH_RANGE

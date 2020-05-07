@@ -16,6 +16,7 @@
 	from doing this unless you absolutely know what you are doing, and have defined a
 	conversion in savefile.dm
 */
+
 /proc/init_sprite_accessory_subtypes(prototype, list/L, list/male, list/female, roundstart = FALSE, skip_prototype = TRUE)//Roundstart argument builds a specific list for roundstart parts where some parts may be locked
 	if(!istype(L))
 		L = list()
@@ -59,14 +60,15 @@
 	var/dimension_x = 32
 	var/dimension_y = 32
 	var/center = FALSE	//Should we center the sprite?
+	var/list/relevant_layers //list of layers that this accessory uses. As of now only used in species.handle_mutant_bodyparts(), but that's where most sprite accessories are anyway.
+	var/mutant_part_string //Also used in species.handle_mutant_bodyparts() to generate the overlay icon state.
+	var/alpha_mask_state
 
 	//Special / holdover traits for Citadel specific sprites.
 	var/extra = FALSE
 	var/extra_color_src = MUTCOLORS2						//The color source for the extra overlay.
-	var/extra_icon = 'modular_citadel/icons/mob/mam_tails.dmi'
 	var/extra2 = FALSE
 	var/extra2_color_src = MUTCOLORS3
-	var/extra2_icon = 'modular_citadel/icons/mob/mam_tails.dmi'
 
 	//for snowflake/donor specific sprites
 	var/list/ckeys_allowed
