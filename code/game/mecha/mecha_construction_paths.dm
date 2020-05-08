@@ -41,8 +41,8 @@
 				desc += "<span class='notice'>The mech could use a <b>crystal</b> of sorts.</span>"
 			if(/obj/item/assembly/signaler/anomaly)
 				desc += "<span class='notice'>The mech could use a <b>anomaly</b> of sorts.</span>"
-		else
-			return
+			else
+				return
 
 /datum/component/construction/mecha/spawn_result()
 	if(!result)
