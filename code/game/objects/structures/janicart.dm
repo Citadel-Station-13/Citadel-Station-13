@@ -107,7 +107,7 @@
 		items += list("Spray bottle" = image(icon = myspray.icon, icon_state = myspray.icon_state))
 	if(myreplacer)
 		items += list("Light replacer" = image(icon = myreplacer.icon, icon_state = myreplacer.icon_state))
-	var/obj/item/clothing/suit/caution/sign = locate() in src
+	var/obj/item/caution/sign = locate() in src
 	if(sign)
 		items += list("Sign" = image(icon = sign.icon, icon_state = sign.icon_state))
 
