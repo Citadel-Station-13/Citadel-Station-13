@@ -51,6 +51,5 @@
 	if(E)
 		if (active)
 			E.sight_flags ^= SEE_MOBS
-		else
-			E.flash_protect = 0
+		E.flash_protect = initial(E.flash_protect)
 		user.update_sight()
