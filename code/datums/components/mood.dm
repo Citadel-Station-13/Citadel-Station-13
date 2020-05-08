@@ -201,7 +201,7 @@
 
 	if(old_sanity > 1 && sanity == 1)
 		RegisterSignal(master, COMSIG_MOB_SKILL_GET_AFFINITY, .proc/on_get_skill_affinity)
-	else if(old_sanity == 1 && sanity < 1)
+	else if(old_sanity == 1 && sanity > 1)
 		UnregisterSignal(master, COMSIG_MOB_SKILL_GET_AFFINITY)
 
 	//update_mood_icon()
