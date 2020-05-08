@@ -366,7 +366,7 @@
 	if(tick_moves_leftover > 1)
 		required_moves += round(tick_moves_leftover)
 		tick_moves_leftover = MODULUS(tick_moves_leftover, 1)
-	for(var/i in required_moves)
+	for(var/i in 1 to required_moves)
 		pixel_move(1, FALSE)
 
 /obj/item/projectile/proc/fire(angle, atom/direct_target)
