@@ -66,12 +66,6 @@
 	icon_state = "craft"
 	screen_loc = ui_crafting
 
-/obj/screen/craft/Click()
-	var/mob/living/M = usr
-	if(isobserver(usr))
-		return
-	M.OpenCraftingMenu()
-
 /obj/screen/area_creator
 	name = "create new area"
 	icon = 'icons/mob/screen_midnight.dmi'
@@ -172,14 +166,12 @@
 	var/static/mutable_appearance/blocked_overlay = mutable_appearance('icons/mob/screen_gen.dmi', "blocked")
 	var/held_index = 0
 
-/obj/screen/inventory/hand/update_icon()
+/obj/screen/inventory/hand/update_overlays()
 	. = ..()
 
 	if(!handcuff_overlay)
 		var/state = (!(held_index % 2)) ? "markus" : "gabrielle"
 		handcuff_overlay = mutable_appearance('icons/mob/screen_gen.dmi', state)
-
-	cut_overlay(list(handcuff_overlay, blocked_overlay, "hand_active"))
 
 	if(!hud?.mymob)
 		return
@@ -187,14 +179,14 @@
 	if(iscarbon(hud.mymob))
 		var/mob/living/carbon/C = hud.mymob
 		if(C.handcuffed)
-			add_overlay(handcuff_overlay)
+			. += handcuff_overlay
 
 		if(held_index)
 			if(!C.has_hand_for_held_index(held_index))
-				add_overlay(blocked_overlay)
+				. += blocked_overlay
 
 	if(held_index == hud.mymob.active_hand_index)
-		add_overlay("hand_active")
+		. += "hand_active"
 
 
 /obj/screen/inventory/hand/Click(location, control, params)
@@ -218,20 +210,6 @@
 		user.swap_hand(held_index)
 	return TRUE
 
-/obj/screen/close
-	name = "close"
-	layer = ABOVE_HUD_LAYER
-	plane = ABOVE_HUD_PLANE
-	icon_state = "backpack_close"
-
-/obj/screen/close/Initialize(mapload, new_master)
-	. = ..()
-	master = new_master
-
-/obj/screen/close/Click()
-	var/datum/component/storage/S = master
-	S.hide_from(usr)
-	return TRUE
 
 /obj/screen/drop
 	name = "drop"
@@ -297,6 +275,9 @@
 		icon_state = "internal0"
 	else
 		if(!C.getorganslot(ORGAN_SLOT_BREATHING_TUBE))
+			if(HAS_TRAIT(C, TRAIT_NO_INTERNALS))
+				to_chat(C, "<span class='warning'>Due to cumbersome equipment or anatomy, you are currently unable to use internals!</span>")
+				return
 			var/obj/item/clothing/check
 			var/internals = FALSE
 
@@ -410,30 +391,6 @@
 		icon_state = "act_rest"
 	else
 		icon_state = "act_rest0"
-
-/obj/screen/storage
-	name = "storage"
-	icon_state = "block"
-	screen_loc = "7,7 to 10,8"
-	layer = HUD_LAYER
-	plane = HUD_PLANE
-
-/obj/screen/storage/Initialize(mapload, new_master)
-	. = ..()
-	master = new_master
-
-/obj/screen/storage/Click(location, control, params)
-	if(world.time <= usr.next_move)
-		return TRUE
-	if(usr.incapacitated())
-		return TRUE
-	if (ismecha(usr.loc)) // stops inventory actions in a mech
-		return TRUE
-	if(master)
-		var/obj/item/I = usr.get_active_held_item()
-		if(I)
-			master.attackby(null, I, usr, params)
-	return TRUE
 
 /obj/screen/throw_catch
 	name = "throw/catch"

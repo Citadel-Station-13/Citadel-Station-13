@@ -49,13 +49,13 @@ Credit dupes that require a lot of manual work shouldn't be removed, unless they
 				sold = E.sell_object(thing, report, dry_run, allowed_categories , apply_elastic)
 				report.exported_atoms += " [thing.name]"
 				break
-		if(thing.reagents)
+		if(thing.reagents?.value_multiplier)
 			for(var/A in thing.reagents.reagent_list)
 				var/datum/reagent/R = A
 				if(!R.value)
 					continue
 				report.reagents_volume[R.name] += R.volume
-				report.reagents_value[R.name] += R.volume * R.value
+				report.reagents_value[R.name] += round(R.volume * R.value * thing.reagents.value_multiplier)
 		if(!dry_run && (sold || delete_unsold))
 			if(ismob(thing))
 				thing.investigate_log("deleted through cargo export",INVESTIGATE_CARGO)

@@ -144,20 +144,7 @@ Creating a chem with a low purity will make you permanently fall in love with so
 	pH = 10
 	chemical_flags = REAGENT_ONMOBMERGE | REAGENT_DONOTSPLIT //Procs on_mob_add when merging into a human
 	can_synth = FALSE
-
-
-/datum/reagent/fermi/enthrall/test
-	name = "MKUltraTest"
-	description = "A forbidden deep red mixture that makes you like Fermis a little too much. Unobtainable and due to be removed from the wiki."
-	data = list("creatorID" = "honkatonkbramblesnatch", "creatorGender" = "Mistress", "creatorName" = "Fermis Yakumo")
-	creatorID  = "honkatonkbramblesnatch"//ckey
-	creatorGender = "Mistress"
-	creatorName = "Fermis Yakumo"
-	purity = 1
-
-/datum/reagent/fermi/enthrall/test/on_new()
-	..()
-	creator = get_mob_by_key(creatorID)
+	value = REAGENT_VALUE_EXCEPTIONAL
 
 /datum/reagent/fermi/enthrall/on_new(list/data)
 	creatorID = data["creatorID"]
@@ -191,7 +178,7 @@ Creating a chem with a low purity will make you permanently fall in love with so
 		var/obj/item/organ/vocal_cords/Vc = M.getorganslot(ORGAN_SLOT_VOICE)
 		var/obj/item/organ/vocal_cords/nVc = new /obj/item/organ/vocal_cords/velvet
 		if(Vc)
-			Vc.Remove(M)
+			Vc.Remove()
 		nVc.Insert(M)
 		qdel(Vc)
 		to_chat(M, "<span class='notice'><i>You feel your vocal chords tingle you speak in a more charasmatic and sultry tone.</i></span>")
@@ -333,6 +320,8 @@ Creating a chem with a low purity will make you permanently fall in love with so
 	..()
 
 /datum/reagent/fermi/proc/FallInLove(mob/living/carbon/Lover, mob/living/carbon/Love)
+	if(Lover.client?.prefs.cit_toggles & NEVER_HYPNO)
+		return // doesn't even give a message, it's just ignored
 	if(Lover.has_status_effect(STATUS_EFFECT_INLOVE))
 		to_chat(Lover, "<span class='warning'>You are already fully devoted to someone else!</span>")
 		return

@@ -22,6 +22,7 @@
 
 	display_order = JOB_DISPLAY_ORDER_WARDEN
 	blacklisted_quirks = list(/datum/quirk/mute, /datum/quirk/nonviolent, /datum/quirk/paraplegic)
+	threat = 2
 
 /datum/job/warden/get_access()
 	var/list/L = list()
@@ -34,7 +35,7 @@
 
 	belt = /obj/item/pda/warden
 	ears = /obj/item/radio/headset/headset_sec/alt
-	uniform = /obj/item/clothing/under/rank/warden
+	uniform = /obj/item/clothing/under/rank/security/warden
 	shoes = /obj/item/clothing/shoes/jackboots
 	suit = /obj/item/clothing/suit/armor/vest/warden/alt
 	gloves = /obj/item/clothing/gloves/color/black

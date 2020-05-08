@@ -149,9 +149,9 @@
 
 //OPEN TURF ATMOS
 #define OPENTURF_DEFAULT_ATMOS		"o2=22;n2=82;TEMP=293.15" //the default air mix that open turfs spawn
-#define TCOMMS_ATMOS				"n2=100;TEMP=80" //-193,15°C telecommunications. also used for xenobiology slime killrooms
+#define TCOMMS_ATMOS				"n2=100;TEMP=80" //-193,15degC telecommunications. also used for xenobiology slime killrooms
 #define AIRLESS_ATMOS				"TEMP=2.7" //space
-#define FROZEN_ATMOS				"o2=22;n2=82;TEMP=180" //-93.15°C snow and ice turfs
+#define FROZEN_ATMOS				"o2=22;n2=82;TEMP=180" //-93.15degC snow and ice turfs
 #define BURNMIX_ATMOS				"o2=2500;plasma=5000;TEMP=370" //used in the holodeck burn test program
 
 //ATMOSPHERICS DEPARTMENT GAS TANK TURFS
@@ -161,9 +161,13 @@
 #define ATMOS_TANK_O2				"o2=100000;TEMP=293.15"
 #define ATMOS_TANK_N2				"n2=100000;TEMP=293.15"
 #define ATMOS_TANK_AIRMIX			"o2=2644;n2=10580;TEMP=293.15"
+
 //LAVALAND
 #define LAVALAND_EQUIPMENT_EFFECT_PRESSURE 50 //what pressure you have to be under to increase the effect of equipment meant for lavaland
 #define LAVALAND_DEFAULT_ATMOS "o2=14;n2=23;TEMP=300"
+
+//SNOSTATION
+#define ICEMOON_DEFAULT_ATMOS "o2=17;n2=63;TEMP=180"
 
 //ATMOSIA GAS MONITOR TAGS
 #define ATMOS_GAS_MONITOR_INPUT_O2 "o2_in"

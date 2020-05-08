@@ -4,9 +4,10 @@
 	icon = 'icons/mob/simple_human.dmi'
 	icon_state = "zombie"
 	icon_living = "zombie"
-	mob_biotypes = list(MOB_ORGANIC, MOB_HUMANOID)
+	mob_biotypes = MOB_ORGANIC|MOB_HUMANOID
 	speak_chance = 0
 	stat_attack = UNCONSCIOUS //braains
+	threat = 1
 	maxHealth = 100
 	health = 100
 	harm_intent_damage = 5
@@ -64,7 +65,7 @@
 	icon_state = "husk"
 	icon_living = "husk"
 	icon_dead = "husk"
-	mob_biotypes = list(MOB_ORGANIC, MOB_HUMANOID)
+	mob_biotypes = MOB_ORGANIC|MOB_HUMANOID
 	speak_chance = 0
 	stat_attack = UNCONSCIOUS //braains
 	maxHealth = 100

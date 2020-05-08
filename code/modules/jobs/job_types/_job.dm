@@ -63,6 +63,13 @@
 
 	//If a job complies with dresscodes, loadout items will not be equipped instead of the job's outfit, instead placing the items into the player's backpack.
 	var/dresscodecompliant = TRUE
+	// How much threat this job is worth in dynamic. Is subtracted if the player's not an antag, added if they are.
+	var/threat = 0
+
+	/// Starting skill levels.
+	var/list/starting_skills
+	/// Skill affinities to set
+	var/list/skill_affinities
 
 //Only override this proc
 //H is usually a human unless an /equip override transformed it
@@ -87,6 +94,11 @@
 	. = CONFIG_GET(keyed_list/antag_rep)[lowertext(title)]
 	if(. == null)
 		return antag_rep
+
+/datum/job/proc/GetThreat()
+	. = CONFIG_GET(keyed_list/job_threat)[lowertext(title)]
+	if(. == null)
+		return threat
 
 //Don't override this unless the job transforms into a non-human (Silicons do this for example)
 /datum/job/proc/equip(mob/living/carbon/human/H, visualsOnly = FALSE, announce = TRUE, latejoin = FALSE, datum/outfit/outfit_override = null, client/preference_source)
@@ -135,7 +147,6 @@
 		return TRUE	//Available in 0 days = available right now = player is old enough to play.
 	return FALSE
 
-
 /datum/job/proc/available_in_days(client/C)
 	if(!C)
 		return 0
@@ -158,6 +169,17 @@
 
 /datum/job/proc/radio_help_message(mob/M)
 	to_chat(M, "<b>Prefix your message with :h to speak on your department's radio. To see other prefixes, look closely at your headset.</b>")
+
+/datum/job/proc/standard_assign_skills(datum/mind/M)
+	if(!starting_skills)
+		return
+	for(var/skill in starting_skills)
+		M.skill_holder.boost_skill_value_to(skill, starting_skills[skill])
+	// do wipe affinities though
+	M.skill_holder.skill_affinities = list()
+	for(var/skill in skill_affinities)
+		M.skill_holder.skill_affinities[skill] = skill_affinities[skill]
+	UNSETEMPTY(M.skill_holder.skill_affinities)		//if we didn't set any.
 
 /datum/outfit/job
 	name = "Standard Gear"

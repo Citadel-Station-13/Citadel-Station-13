@@ -17,6 +17,10 @@
 	minimal_access = list(ACCESS_MEDICAL, ACCESS_MORGUE, ACCESS_CHEMISTRY, ACCESS_MINERAL_STOREROOM)
 
 	display_order = JOB_DISPLAY_ORDER_CHEMIST
+	threat = 1.5
+
+	starting_skills = list(/datum/skill/numerical/surgery = STARTING_SKILL_SURGERY_MEDICAL)
+	skill_affinities = list(/datum/skill/numerical/surgery = STARTING_SKILL_AFFINITY_SURGERY_MEDICAL)
 
 /datum/outfit/job/chemist
 	name = "Chemist"
@@ -25,7 +29,7 @@
 	glasses = /obj/item/clothing/glasses/science
 	belt = /obj/item/pda/chemist
 	ears = /obj/item/radio/headset/headset_med
-	uniform = /obj/item/clothing/under/rank/chemist
+	uniform = /obj/item/clothing/under/rank/medical/chemist
 	shoes = /obj/item/clothing/shoes/sneakers/white
 	suit =  /obj/item/clothing/suit/toggle/labcoat/chemist
 	backpack = /obj/item/storage/backpack/chemistry

@@ -252,7 +252,7 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 
 // update the icon depending on the position
 
-/obj/machinery/conveyor_switch/update_icon()
+/obj/machinery/conveyor_switch/update_icon_state()
 	if(position<0)
 		if(invert_icon)
 			icon_state = "switch-fwd"
@@ -330,7 +330,7 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 	desc = "A conveyor control switch assembly."
 	icon = 'icons/obj/recycling.dmi'
 	icon_state = "switch-off"
-	w_class = WEIGHT_CLASS_BULKY
+	w_class = WEIGHT_CLASS_NORMAL
 	var/id = "" //inherited by the switch
 
 /obj/item/conveyor_switch_construct/Initialize()

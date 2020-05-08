@@ -22,6 +22,8 @@
 	var/staminaloss = 0		//Stamina damage, or exhaustion. You recover it slowly naturally, and are knocked down if it gets too high. Holodeck and hallucinations deal this.
 	var/crit_threshold = HEALTH_THRESHOLD_CRIT // when the mob goes from "normal" to crit
 
+	var/mobility_flags = MOBILITY_FLAGS_DEFAULT
+
 	var/confused = 0	//Makes the mob move in random directions.
 
 	var/hallucination = 0 //Directly affects how long a mob will hallucinate for
@@ -52,7 +54,7 @@
 	var/limb_destroyer = 0 //1 Sets AI behavior that allows mobs to target and dismember limbs with their basic attack.
 
 	var/mob_size = MOB_SIZE_HUMAN
-	var/list/mob_biotypes = list(MOB_ORGANIC)
+	var/mob_biotypes = MOB_ORGANIC
 	var/metabolism_efficiency = 1 //more or less efficiency to metabolize helpful/harmful reagents and regulate body temperature..
 	var/has_limbs = 0 //does the mob have distinct limbs?(arms,legs, chest,head)
 
@@ -89,6 +91,7 @@
 	var/stuttering = 0
 	var/slurring = 0
 	var/cultslurring = 0
+	var/clockcultslurring = 0
 	var/derpspeech = 0
 
 	var/list/implants = null
@@ -101,8 +104,6 @@
 
 	var/list/obj/effect/proc_holder/abilities = list()
 
-	var/can_be_held = FALSE	//whether this can be picked up and held.
-
 	var/radiation = 0 //If the mob is irradiated.
 	var/ventcrawl_layer = PIPING_LAYER_DEFAULT
 	var/losebreath = 0
@@ -114,3 +115,25 @@
 	var/drag_slowdown = TRUE //Whether the mob is slowed down when dragging another prone mob
 
 	var/rotate_on_lying = FALSE
+
+	/// Next world.time when we can get the "you can't move while buckled to [thing]" message.
+	var/buckle_message_cooldown = 0
+
+	//// CITADEL STATION COMBAT ////
+	/// See __DEFINES/combat.dm
+	var/combat_flags = COMBAT_FLAGS_STAMSYSTEM_EXEMPT
+	/// Next world.time when we will show a visible message on entering combat mode voluntarily again.
+	var/combatmessagecooldown = 0
+
+	var/incomingstammult = 1
+	var/bufferedstam = 0
+	var/stambuffer = 20
+	var/stambufferregentime
+
+	//Sprint buffer---
+	var/sprint_buffer = 42					//Tiles
+	var/sprint_buffer_max = 42
+	var/sprint_buffer_regen_ds = 0.3		//Tiles per world.time decisecond
+	var/sprint_buffer_regen_last = 0		//last world.time this was regen'd for math.
+	var/sprint_stamina_cost = 0.70			//stamina loss per tile while insufficient sprint buffer.
+	//---End

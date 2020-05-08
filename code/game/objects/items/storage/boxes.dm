@@ -50,11 +50,10 @@
 	user.visible_message("<span class='suicide'>[user] beating [user.p_them()]self with \the [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	return BRUTELOSS
 
-/obj/item/storage/box/update_icon()
+/obj/item/storage/box/update_overlays()
 	. = ..()
 	if(illustration)
-		cut_overlays()
-		add_overlay(illustration)
+		. += illustration
 
 /obj/item/storage/box/attack_self(mob/user)
 	..()
@@ -322,6 +321,26 @@
 	for(var/i in 1 to 5)
 		new /obj/item/grenade/empgrenade(src)
 
+/obj/item/storage/box/minibombs
+	name = "box of syndicate minibombs"
+	desc = "A box containing 2 highly explosive syndicate minibombs."
+	icon_state = "syndiebox"
+	illustration = "frag"
+
+/obj/item/storage/box/minibombs/PopulateContents()
+	new /obj/item/grenade/syndieminibomb(src)
+	new /obj/item/grenade/syndieminibomb(src)
+
+/obj/item/storage/box/bombananas
+	name = "box of bombananas"
+	desc = "A box containing 2 highly explosive bombananas. Discard peel at enemy after consumption."
+	icon_state = "syndiebox"
+	illustration = "frag"
+
+/obj/item/storage/box/bombananas/PopulateContents()
+	new /obj/item/reagent_containers/food/snacks/grown/banana/bombanana(src)
+	new /obj/item/reagent_containers/food/snacks/grown/banana/bombanana(src)
+
 /obj/item/storage/box/trackimp
 	name = "boxed tracking implant kit"
 	desc = "Box full of scum-bag tracking utensils."
@@ -435,11 +454,11 @@
 	. = ..()
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.max_items = 7
-	STR.can_hold = typecacheof(list(/obj/item/reagent_containers/food/snacks/monkeycube))
+	STR.can_hold = typecacheof(list(/obj/item/reagent_containers/food/snacks/cube/monkey))
 
 /obj/item/storage/box/monkeycubes/PopulateContents()
 	for(var/i in 1 to 5)
-		new /obj/item/reagent_containers/food/snacks/monkeycube(src)
+		new /obj/item/reagent_containers/food/snacks/cube/monkey(src)
 
 /obj/item/storage/box/ids
 	name = "box of spare IDs"
@@ -846,10 +865,11 @@
 	foldable = null
 	var/design = NODESIGN
 
-/obj/item/storage/box/papersack/update_icon()
+/obj/item/storage/box/papersack/update_icon_state()
 	if(contents.len == 0)
 		icon_state = "[item_state]"
-	else icon_state = "[item_state]_closed"
+	else
+		icon_state = "[item_state]_closed"
 
 /obj/item/storage/box/papersack/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/pen))
@@ -926,12 +946,47 @@
 							  /obj/item/reagent_containers/food/snacks/grown/apple,
 							  /obj/item/reagent_containers/food/snacks/chocolatebar,
 							  /obj/item/reagent_containers/food/snacks/grown/cherries,
+							  /obj/item/reagent_containers/food/snacks/grown/berries,
 							  /obj/item/reagent_containers/food/snacks/grown/banana,
 							  /obj/item/reagent_containers/food/snacks/grown/cabbage,
 							  /obj/item/reagent_containers/food/snacks/grown/soybeans,
 							  /obj/item/reagent_containers/food/snacks/grown/corn,
 							  /obj/item/reagent_containers/food/snacks/grown/mushroom/plumphelmet,
-							  /obj/item/reagent_containers/food/snacks/grown/mushroom/chanterelle)
+							  /obj/item/reagent_containers/food/snacks/grown/mushroom/chanterelle,
+							  /obj/item/reagent_containers/food/snacks/meatball,
+							  /obj/item/reagent_containers/food/snacks/grown/citrus/orange,
+							  /obj/item/reagent_containers/food/snacks/grown/citrus/lemon,
+							  /obj/item/reagent_containers/food/snacks/grown/citrus/lime,
+							  /obj/item/reagent_containers/food/snacks/grown/bluecherries,
+							  /obj/item/reagent_containers/food/snacks/grown/cocoapod,
+							  /obj/item/reagent_containers/food/snacks/grown/vanillapod,
+							  /obj/item/reagent_containers/food/snacks/grown/grapes,
+							  /obj/item/reagent_containers/food/snacks/grown/strawberry,
+							  /obj/item/reagent_containers/food/snacks/grown/whitebeet,
+							  /obj/item/reagent_containers/food/snacks/meat/slab/bear,
+							  /obj/item/reagent_containers/food/snacks/meat/slab/spider,
+							  /obj/item/reagent_containers/food/snacks/spidereggs,
+							  /obj/item/reagent_containers/food/snacks/carpmeat,
+							  /obj/item/reagent_containers/food/snacks/meat/slab/xeno,
+							  /obj/item/reagent_containers/food/snacks/meat/slab/corgi,
+							  /obj/item/reagent_containers/food/snacks/grown/oat,
+							  /obj/item/reagent_containers/food/snacks/grown/wheat,
+							  /obj/item/reagent_containers/honeycomb,
+							  /obj/item/reagent_containers/food/snacks/grown/watermelon,
+							  /obj/item/reagent_containers/food/snacks/grown/onion,
+							  /obj/item/reagent_containers/food/snacks/grown/peach,
+							  /obj/item/reagent_containers/food/snacks/grown/peanut,
+							  /obj/item/reagent_containers/food/snacks/grown/pineapple,
+							  /obj/item/reagent_containers/food/snacks/grown/pumpkin,
+							  /obj/item/reagent_containers/food/snacks/meat/rawcrab,
+							  /obj/item/reagent_containers/food/snacks/meat/slab/goliath,
+							  /obj/item/reagent_containers/food/snacks/meat/slab/chicken,
+							  /obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/slime,
+							  /obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/golem,
+							  /obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/lizard,
+							  /obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/skeleton,
+							  /obj/item/reagent_containers/food/snacks/egg,
+							  /obj/item/reagent_containers/food/snacks/grown/eggplant)
 		new randomFood(src)
 
 /obj/item/storage/box/ingredients/fiesta
@@ -950,7 +1005,7 @@
 /obj/item/storage/box/ingredients/italian/PopulateContents()
 	for(var/i in 1 to 3)
 		new /obj/item/reagent_containers/food/snacks/grown/tomato(src)
-		new /obj/item/reagent_containers/food/snacks/faggot(src)
+		new /obj/item/reagent_containers/food/snacks/meatball(src)
 	new /obj/item/reagent_containers/food/drinks/bottle/wine(src)
 
 /obj/item/storage/box/ingredients/vegetarian
@@ -973,7 +1028,7 @@
 		new /obj/item/reagent_containers/food/snacks/grown/potato(src)
 		new /obj/item/reagent_containers/food/snacks/grown/tomato(src)
 		new /obj/item/reagent_containers/food/snacks/grown/corn(src)
-	new /obj/item/reagent_containers/food/snacks/faggot(src)
+	new /obj/item/reagent_containers/food/snacks/meatball(src)
 
 /obj/item/storage/box/ingredients/fruity
 	theme_name = "fruity"
@@ -1029,7 +1084,7 @@
 	new /obj/item/reagent_containers/food/snacks/carpmeat(src)
 	new /obj/item/reagent_containers/food/snacks/meat/slab/xeno(src)
 	new /obj/item/reagent_containers/food/snacks/meat/slab/corgi(src)
-	new /obj/item/reagent_containers/food/snacks/faggot(src)
+	new /obj/item/reagent_containers/food/snacks/meatball(src)
 
 /obj/item/storage/box/ingredients/exotic
 	theme_name = "exotic"
@@ -1040,6 +1095,15 @@
 		new /obj/item/reagent_containers/food/snacks/grown/soybeans(src)
 		new /obj/item/reagent_containers/food/snacks/grown/cabbage(src)
 	new /obj/item/reagent_containers/food/snacks/grown/chili(src)
+
+/obj/item/storage/box/ingredients/sushi
+	theme_name = "sushi"
+
+/obj/item/storage/box/ingredients/sushi/PopulateContents()
+	for(var/i in 1 to 3)
+		new /obj/item/reagent_containers/food/snacks/sea_weed(src)
+		new /obj/item/reagent_containers/food/snacks/carpmeat(src)
+	new /obj/item/reagent_containers/food/snacks/meat/rawcrab(src)
 
 /obj/item/storage/box/emptysandbags
 	name = "box of empty sandbags"
@@ -1053,9 +1117,9 @@
 	desc = "A box containing a gift for worthy golems."
 
 /obj/item/storage/box/rndboards/PopulateContents()
-	new /obj/item/circuitboard/machine/protolathe(src)
+	new /obj/item/circuitboard/machine/protolathe/offstation(src)
 	new /obj/item/circuitboard/machine/destructive_analyzer(src)
-	new /obj/item/circuitboard/machine/circuit_imprinter(src)
+	new /obj/item/circuitboard/machine/circuit_imprinter/offstation(src)
 	new /obj/item/circuitboard/computer/rdconsole(src)
 
 /obj/item/storage/box/silver_sulf
@@ -1268,3 +1332,62 @@
 /obj/item/storage/box/marshmallow/PopulateContents()
 	for (var/i in 1 to 5)
 		new /obj/item/reagent_containers/food/snacks/marshmallow(src)
+
+/obj/item/storage/box/material/PopulateContents() 	//less uranium because radioactive
+	var/static/items_inside = list(
+		/obj/item/stack/sheet/metal/fifty=1,\
+		/obj/item/stack/sheet/glass/fifty=1,\
+		/obj/item/stack/sheet/rglass=50,\
+		/obj/item/stack/sheet/plasmaglass=50,\
+		/obj/item/stack/sheet/titaniumglass=50,\
+		/obj/item/stack/sheet/plastitaniumglass=50,\
+		/obj/item/stack/sheet/plasteel=50,\
+		/obj/item/stack/sheet/mineral/plastitanium=50,\
+		/obj/item/stack/sheet/mineral/titanium=50,\
+		/obj/item/stack/sheet/mineral/gold=50,\
+		/obj/item/stack/sheet/mineral/silver=50,\
+		/obj/item/stack/sheet/mineral/plasma=50,\
+		/obj/item/stack/sheet/mineral/uranium=50,\
+		/obj/item/stack/sheet/mineral/diamond=50,\
+		/obj/item/stack/sheet/bluespace_crystal=50,\
+		/obj/item/stack/sheet/mineral/bananium=50,\
+		/obj/item/stack/sheet/mineral/wood=50,\
+		/obj/item/stack/sheet/plastic/fifty=1,\
+		/obj/item/stack/sheet/runed_metal/fifty=1
+		)
+	generate_items_inside(items_inside, src)
+
+/obj/item/storage/box/debugtools
+	name = "box of debug tools"
+	icon_state = "syndiebox"
+
+/obj/item/storage/box/debugtools/PopulateContents()
+	var/static/items_inside = list(
+		/obj/item/flashlight/emp/debug=1,\
+		/obj/item/pda=1,\
+		/obj/item/modular_computer/tablet/preset/advanced=1,\
+		/obj/item/geiger_counter=1,\
+		/obj/item/construction/rcd/combat/admin=1,\
+		/obj/item/pipe_dispenser=1,\
+		/obj/item/card/emag=1,\
+		/obj/item/healthanalyzer/advanced=1,\
+		/obj/item/disk/tech_disk/debug=1,\
+		/obj/item/uplink/debug=1,\
+		/obj/item/uplink/nuclear/debug=1,\
+		/obj/item/storage/box/beakers/bluespace=1,\
+		/obj/item/storage/box/beakers/variety=1,\
+		/obj/item/storage/box/material=1,\
+		/obj/item/storage/belt/medical/surgery_belt_adv=1
+		)
+	generate_items_inside(items_inside, src)
+
+/obj/item/storage/box/beakers/variety
+	name = "beaker variety box"
+
+/obj/item/storage/box/beakers/variety/PopulateContents()
+	new /obj/item/reagent_containers/glass/beaker(src)
+	new /obj/item/reagent_containers/glass/beaker/large(src)
+	new /obj/item/reagent_containers/glass/beaker/plastic(src)
+	new /obj/item/reagent_containers/glass/beaker/meta(src)
+	new /obj/item/reagent_containers/glass/beaker/noreact(src)
+	new /obj/item/reagent_containers/glass/beaker/bluespace(src)

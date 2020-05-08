@@ -20,6 +20,8 @@
 															"universal translator" = 35,
 															//"projection array" = 15
 															"remote signaller" = 5,
+															"loudness booster" = 25,
+															"encryption keys" = 20
 															)
 
 /mob/living/silicon/pai/proc/paiInterface()
@@ -50,6 +52,8 @@
 				left_part = softwareMedicalRecord()
 			if("securityrecord")
 				left_part = softwareSecurityRecord()
+			if("encryptionkeys")
+				left_part = softwareEncryptionKeys()
 			if("translator")
 				left_part = softwareTranslator()
 			if("atmosensor")
@@ -64,6 +68,8 @@
 				left_part = softwareCamera()
 			if("signaller")
 				left_part = softwareSignal()
+			if("loudness")
+				left_part = softwareLoudness()
 
 	//usr << browse_rsc('windowbak.png')		// This has been moved to the mob's Login() proc
 
@@ -72,6 +78,7 @@
 	dat = {"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\" \"http://www.w3.org/TR/html4/loose.dtd\">
 			<html>
 			<head>
+				<meta http-equiv='Content-Type' content='text/html; charset=UTF-8'>
 				<style type=\"text/css\">
 					body { background-image:url('html/paigrid.png'); }
 
@@ -256,6 +263,9 @@
 				else
 					var/datum/atom_hud/med = GLOB.huds[med_hud]
 					med.remove_hud_from(src)
+		if("encryptionkeys")
+			if(href_list["toggle"])
+				encryptmod = TRUE
 		if("translator")
 			if(href_list["toggle"])
 				grant_all_languages(TRUE)
@@ -271,6 +281,10 @@
 				var/turf/T = get_turf(loc)
 				cable = new /obj/item/pai_cable(T)
 				T.visible_message("<span class='warning'>A port on [src] opens to reveal [cable], which promptly falls to the floor.</span>", "<span class='italics'>You hear the soft click of something light and hard falling to the ground.</span>")
+		if("loudness")
+			if(subscreen == 1) // Open Instrument
+				internal_instrument.ui_interact(src)
+
 	//updateUsrDialog()		We only need to account for the single mob this is intended for, and he will *always* be able to call this window
 	paiInterface()		 // So we'll just call the update directly rather than doing some default checks
 	return
@@ -306,6 +320,8 @@
 			dat += "<a href='byond://?src=[REF(src)];software=[s]'>Camera Jack</a> <br>"
 		if(s == "remote signaller")
 			dat += "<a href='byond://?src=[REF(src)];software=signaller;sub=0'>Remote Signaller</a> <br>"
+		if(s == "loudness booster")
+			dat += "<a href='byond://?src=[REF(src)];software=loudness;sub=0'>Loudness Booster</a> <br>"
 	dat += "<br>"
 
 	// Advanced
@@ -319,6 +335,8 @@
 			dat += "<a href='byond://?src=[REF(src)];software=securityhud;sub=0'>Facial Recognition Suite</a>[(secHUD) ? "<font color=#55FF55> On</font>" : "<font color=#FF5555> Off</font>"] <br>"
 		if(s == "medical HUD")
 			dat += "<a href='byond://?src=[REF(src)];software=medicalhud;sub=0'>Medical Analysis Suite</a>[(medHUD) ? "<font color=#55FF55> On</font>" : "<font color=#FF5555> Off</font>"] <br>"
+		if(s == "encryption keys")
+			dat += "<a href='byond://?src=[REF(src)];software=encryptionkeys;sub=0'>Channel Encryption Firmware</a>[(encryptmod) ? "<font color=#55FF55> On</font>" : "<font color=#FF5555> Off</font>"] <br>"
 		if(s == "universal translator")
 			var/datum/language_holder/H = get_language_holder()
 			dat += "<a href='byond://?src=[REF(src)];software=translator;sub=0'>Universal Translator</a>[H.omnitongue ? "<font color=#55FF55> On</font>" : "<font color=#FF5555> Off</font>"] <br>"
@@ -469,6 +487,14 @@
 				. += "<pre>Requested security record not found,</pre><BR>"
 			. += "<BR>\n<A href='?src=[REF(src)];software=securityrecord;sub=0'>Back</A><BR>"
 	return .
+// Encryption Keys
+// Encryption kets
+/mob/living/silicon/pai/proc/softwareEncryptionKeys()
+	var/dat = {"<h3>Encryption Key Firmware</h3><br>
+				When enabled, this device will be able to use up to two (2) encryption keys for departmental channel access.<br><br>
+				The device is currently [encryptmod ? "<font color=#55FF55>en" : "<font color=#FF5555>dis" ]abled.</font><br>[encryptmod ? "" : "<a href='byond://?src=[REF(src)];software=encryptionkeys;sub=0;toggle=1'>Activate Encryption Key Ports</a><br>"]"}
+	return dat
+
 
 // Universal Translator
 /mob/living/silicon/pai/proc/softwareTranslator()
@@ -629,4 +655,13 @@
 	dat += "</ul>"
 	dat += "<br><br>"
 	dat += "Messages: <hr> [pda.tnote]"
+	return dat
+
+// Loudness Booster
+/mob/living/silicon/pai/proc/softwareLoudness()
+	if(!internal_instrument)
+		internal_instrument = new(src)
+	var/dat = "<h3>Sound Synthetizer</h3>"
+	dat += "<a href='byond://?src=[REF(src)];software=loudness;sub=1'>Open Synthesizer Interface</a><br>"
+	dat += "<a href='byond://?src=[REF(src)];software=loudness;sub=2'>Choose Instrument Type</a>"
 	return dat

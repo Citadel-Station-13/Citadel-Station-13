@@ -7,6 +7,7 @@
 	color = "#CF3600" // rgb: 207, 54, 0
 	taste_description = "bitterness"
 	taste_mult = 1.2
+	value = REAGENT_VALUE_COMMON //Encouraging people to mix toxins for reasons beyond harming each other or mixing reagents such as pen acid.
 	var/toxpwr = 1.5
 
 /datum/reagent/toxin/on_mob_life(mob/living/carbon/M)
@@ -21,6 +22,7 @@
 	color = "#792300" // rgb: 121, 35, 0
 	toxpwr = 2.5
 	taste_description = "mushroom"
+	value = REAGENT_VALUE_UNCOMMON
 	pH = 13
 
 /datum/reagent/toxin/mutagen
@@ -30,6 +32,7 @@
 	toxpwr = 0
 	taste_description = "slime"
 	taste_mult = 0.9
+	value = REAGENT_VALUE_VERY_COMMON
 	pH = 2.3
 
 /datum/reagent/toxin/mutagen/reaction_mob(mob/living/carbon/M, method=TOUCH, reac_volume)
@@ -40,9 +43,9 @@
 	if((method==VAPOR && prob(min(33, reac_volume))) || method==INGEST || method==PATCH || method==INJECT)
 		M.randmuti()
 		if(prob(98))
-			M.randmutb()
+			M.easy_randmut(NEGATIVE+MINOR_NEGATIVE)
 		else
-			M.randmutg()
+			M.easy_randmut(POSITIVE)
 		M.updateappearance()
 		M.domutcheck()
 	..()
@@ -60,6 +63,7 @@
 	color = "#8228A0"
 	toxpwr = 3
 	pH = 4
+	value = REAGENT_VALUE_RARE //sheets are worth more
 
 /datum/reagent/toxin/plasma/on_mob_life(mob/living/carbon/C)
 	if(holder.has_reagent(/datum/reagent/medicine/epinephrine))
@@ -92,6 +96,7 @@
 	toxpwr = 0
 	taste_description = "acid"
 	pH = 1.2
+	value = REAGENT_VALUE_RARE
 
 /datum/reagent/toxin/lexorin/on_mob_life(mob/living/carbon/C)
 	. = TRUE
@@ -114,6 +119,7 @@
 	taste_description = "slime"
 	taste_mult = 1.3
 	pH = 10
+	value = REAGENT_VALUE_UNCOMMON
 
 /datum/reagent/toxin/slimejelly/on_mob_life(mob/living/carbon/M)
 	if(prob(10))
@@ -132,6 +138,7 @@
 	toxpwr = 0
 	taste_description = "mint"
 	pH = 8
+	value = REAGENT_VALUE_UNCOMMON
 
 /datum/reagent/toxin/minttoxin/on_mob_life(mob/living/carbon/M)
 	if(HAS_TRAIT(M, TRAIT_FAT))
@@ -145,6 +152,7 @@
 	toxpwr = 2
 	taste_description = "fish"
 	pH = 12
+	value = REAGENT_VALUE_RARE
 
 /datum/reagent/toxin/zombiepowder
 	name = "Zombie Powder"
@@ -155,6 +163,7 @@
 	taste_description = "death"
 	var/fakedeath_active = FALSE
 	pH = 13
+	value = REAGENT_VALUE_EXCEPTIONAL
 
 /datum/reagent/toxin/zombiepowder/on_mob_metabolize(mob/living/L)
 	..()
@@ -193,6 +202,7 @@
 	toxpwr = 0.8
 	taste_description = "death"
 	pH = 14.5
+	value = REAGENT_VALUE_EXCEPTIONAL
 
 /datum/reagent/toxin/ghoulpowder/on_mob_metabolize(mob/living/L)
 	..()
@@ -214,6 +224,7 @@
 	toxpwr = 0
 	taste_description = "sourness"
 	pH = 11
+	value = REAGENT_VALUE_UNCOMMON
 
 /datum/reagent/toxin/mindbreaker/on_mob_life(mob/living/carbon/M)
 	M.hallucination += 5
@@ -226,6 +237,7 @@
 	toxpwr = 1
 	taste_mult = 1
 	pH = 2.7
+	value = REAGENT_VALUE_NONE
 
 /datum/reagent/toxin/plantbgone/reaction_obj(obj/O, reac_volume)
 	if(istype(O, /obj/structure/alien/weeds))
@@ -250,6 +262,7 @@
 	description = "A harmful toxic mixture to kill weeds. Do not ingest!"
 	color = "#4B004B" // rgb: 75, 0, 75
 	pH = 3
+	value = REAGENT_VALUE_NONE
 
 /datum/reagent/toxin/pestkiller
 	name = "Pest Killer"
@@ -257,10 +270,11 @@
 	color = "#4B004B" // rgb: 75, 0, 75
 	toxpwr = 1
 	pH = 3.2
+	value = REAGENT_VALUE_NONE
 
 /datum/reagent/toxin/pestkiller/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
 	..()
-	if(MOB_BUG in M.mob_biotypes)
+	if(M.mob_biotypes & MOB_BUG)
 		var/damage = min(round(0.4*reac_volume, 0.1),10)
 		M.adjustToxLoss(damage)
 
@@ -270,6 +284,7 @@
 	color = "#9ACD32"
 	toxpwr = 1
 	pH = 11
+	value = REAGENT_VALUE_RARE
 
 /datum/reagent/toxin/spore/on_mob_life(mob/living/carbon/C)
 	C.damageoverlaytemp = 60
@@ -284,6 +299,7 @@
 	toxpwr = 0.5
 	taste_description = "burning"
 	pH = 13
+	value = REAGENT_VALUE_VERY_RARE
 
 /datum/reagent/toxin/spore_burning/on_mob_life(mob/living/carbon/M)
 	M.adjust_fire_stacks(2)
@@ -323,6 +339,7 @@
 	glass_name = "glass of beer"
 	glass_desc = "A freezing pint of beer."
 	pH = 2
+	value = REAGENT_VALUE_VERY_RARE
 
 /datum/reagent/toxin/fakebeer/on_mob_life(mob/living/carbon/M)
 	switch(current_cycle)
@@ -340,6 +357,7 @@
 	color = "#5B2E0D" // rgb: 91, 46, 13
 	toxpwr = 0.5
 	pH = 4.2
+	value = REAGENT_VALUE_VERY_COMMON
 
 /datum/reagent/toxin/teapowder
 	name = "Ground Tea Leaves"
@@ -348,6 +366,7 @@
 	color = "#7F8400" // rgb: 127, 132, 0
 	toxpwr = 0.5
 	pH = 4.9
+	value = REAGENT_VALUE_VERY_COMMON
 
 /datum/reagent/toxin/mutetoxin //the new zombie powder.
 	name = "Mute Toxin"
@@ -367,6 +386,7 @@
 	color = "#6E2828"
 	data = 15
 	toxpwr = 0
+	value = REAGENT_VALUE_UNCOMMON
 
 /datum/reagent/toxin/staminatoxin/on_mob_life(mob/living/carbon/M)
 	M.adjustStaminaLoss(REM * data, 0)
@@ -381,6 +401,7 @@
 	color = "#787878"
 	metabolization_rate = 0.125 * REAGENTS_METABOLISM
 	toxpwr = 0
+	value = REAGENT_VALUE_VERY_RARE
 
 /datum/reagent/toxin/polonium/on_mob_life(mob/living/carbon/M)
 	M.radiation += 4
@@ -394,6 +415,7 @@
 	metabolization_rate = 0.25 * REAGENTS_METABOLISM
 	overdose_threshold = 30
 	toxpwr = 0
+	value = REAGENT_VALUE_UNCOMMON
 
 /datum/reagent/toxin/histamine/on_mob_life(mob/living/carbon/M)
 	if(prob(50))
@@ -441,6 +463,7 @@
 	color = "#F0FFF0"
 	metabolization_rate = 0.25 * REAGENTS_METABOLISM
 	toxpwr = 0
+	value = REAGENT_VALUE_VERY_RARE
 
 /datum/reagent/toxin/venom/on_mob_life(mob/living/carbon/M)
 	toxpwr = 0.2*volume
@@ -476,6 +499,7 @@
 	color = "#00B4FF"
 	metabolization_rate = 0.125 * REAGENTS_METABOLISM
 	toxpwr = 1.25
+	value = REAGENT_VALUE_UNCOMMON
 
 /datum/reagent/toxin/cyanide/on_mob_life(mob/living/carbon/M)
 	if(prob(5))
@@ -494,6 +518,26 @@
 	metabolization_rate = 0.25 * REAGENTS_METABOLISM
 	toxpwr = 0.5
 	taste_description = "bad cooking"
+	value = REAGENT_VALUE_NONE
+
+/datum/reagent/toxin/condensed_cooking_oil
+	name = "Condensed Cooking Oil"
+	description = "Taste the consequences of your mistakes."
+	reagent_state = LIQUID
+	color = "#d6d6d8"
+	metabolization_rate = 0.25 * REAGENTS_METABOLISM
+	toxpwr = 0
+	taste_mult = -2
+	taste_description = "awful cooking"
+	value = REAGENT_VALUE_NONE
+
+/datum/reagent/toxin/condensed_cooking_oil/on_mob_life(mob/living/carbon/M)
+	if(prob(5))
+		M.vomit()
+	else
+		if(prob(40))
+			M.adjustOrganLoss(ORGAN_SLOT_HEART, 0.5) //For reference, bungotoxin does 3
+	..()
 
 /datum/reagent/toxin/itching_powder
 	name = "Itching Powder"
@@ -504,7 +548,7 @@
 	toxpwr = 0
 
 /datum/reagent/toxin/itching_powder/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
-	if(method == TOUCH || method == VAPOR)
+	if((method == TOUCH || method == VAPOR) && M.reagents)
 		M.reagents.add_reagent(/datum/reagent/toxin/itching_powder, reac_volume)
 
 /datum/reagent/toxin/itching_powder/on_mob_life(mob/living/carbon/M)
@@ -533,13 +577,14 @@
 	color = "#7F10C0"
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 	toxpwr = 2.5
+	value = REAGENT_VALUE_EXCEPTIONAL
 
 /datum/reagent/toxin/initropidril/on_mob_life(mob/living/carbon/C)
 	if(prob(25))
 		var/picked_option = rand(1,3)
 		switch(picked_option)
 			if(1)
-				C.Knockdown(60, 0)
+				C.DefaultCombatKnockdown(60, 0)
 				. = TRUE
 			if(2)
 				C.losebreath += 10
@@ -564,6 +609,7 @@
 	metabolization_rate = 0.25 * REAGENTS_METABOLISM
 	toxpwr = 0
 	taste_mult = 0 // undetectable, I guess?
+	value = REAGENT_VALUE_VERY_RARE
 
 /datum/reagent/toxin/pancuronium/on_mob_life(mob/living/carbon/M)
 	if(current_cycle >= 10)
@@ -580,6 +626,7 @@
 	color = "#6496FA"
 	metabolization_rate = 0.75 * REAGENTS_METABOLISM
 	toxpwr = 0
+	value = REAGENT_VALUE_VERY_RARE
 
 /datum/reagent/toxin/sodium_thiopental/on_mob_life(mob/living/carbon/M)
 	if(current_cycle >= 10)
@@ -608,6 +655,7 @@
 	color = "#FFFFFF"
 	toxpwr = 0
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
+	value = REAGENT_VALUE_RARE
 
 /datum/reagent/toxin/amanitin/on_mob_end_metabolize(mob/living/M)
 	var/toxdamage = current_cycle*3*REM
@@ -638,6 +686,7 @@
 	color = "#7DC3A0"
 	metabolization_rate = 0.06 * REAGENTS_METABOLISM
 	toxpwr = 1.75
+	value = REAGENT_VALUE_EXCEPTIONAL
 
 /datum/reagent/toxin/coniine/on_mob_life(mob/living/carbon/M)
 	M.losebreath += 5
@@ -652,6 +701,7 @@
 	overdose_threshold = 29
 	toxpwr = 0
 	taste_description = "vomit"
+	value = REAGENT_VALUE_VERY_RARE
 
 /datum/reagent/toxin/spewium/on_mob_life(mob/living/carbon/C)
 	.=..()
@@ -675,10 +725,11 @@
 	color = "#191919"
 	metabolization_rate = 0.125 * REAGENTS_METABOLISM
 	toxpwr = 1
+	value = REAGENT_VALUE_VERY_RARE
 
 /datum/reagent/toxin/curare/on_mob_life(mob/living/carbon/M)
 	if(current_cycle >= 11)
-		M.Knockdown(60, 0)
+		M.DefaultCombatKnockdown(60, 0)
 	M.adjustOxyLoss(1*REM, 0)
 	. = 1
 	..()
@@ -690,6 +741,7 @@
 	color = "#C8C8C8" //RGB: 200, 200, 200
 	metabolization_rate = 0.2 * REAGENTS_METABOLISM
 	toxpwr = 0
+	value = REAGENT_VALUE_VERY_RARE
 
 /datum/reagent/toxin/heparin/on_mob_life(mob/living/carbon/M)
 	if(ishuman(M))
@@ -708,6 +760,7 @@
 	metabolization_rate = 0.6 * REAGENTS_METABOLISM
 	toxpwr = 0.5
 	taste_description = "spinning"
+	value = REAGENT_VALUE_VERY_RARE
 
 /datum/reagent/toxin/rotatium/on_mob_life(mob/living/carbon/M)
 	if(M.hud_used)
@@ -734,6 +787,7 @@
 	metabolization_rate = 0.8 * REAGENTS_METABOLISM
 	toxpwr = 0.25
 	taste_description = "skewing"
+	value = REAGENT_VALUE_EXCEPTIONAL
 
 /datum/reagent/toxin/skewium/on_mob_life(mob/living/carbon/M)
 	/*
@@ -770,6 +824,7 @@
 	color = "#3C5133"
 	metabolization_rate = 0.08 * REAGENTS_METABOLISM
 	toxpwr = 0.15
+	value = REAGENT_VALUE_VERY_RARE
 
 /datum/reagent/toxin/anacea/on_mob_life(mob/living/carbon/M)
 	var/remove_amt = 5
@@ -791,6 +846,7 @@
 	taste_description = "acid"
 	self_consuming = TRUE
 	pH = 2.75
+	value = REAGENT_VALUE_NONE
 
 /datum/reagent/toxin/acid/reaction_mob(mob/living/carbon/C, method=TOUCH, reac_volume)
 	if(!istype(C))
@@ -822,6 +878,7 @@
 	color = "#5050FF"
 	toxpwr = 2
 	acidpwr = 42.0
+	value = REAGENT_VALUE_COMMON
 
 /datum/reagent/toxin/acid/fluacid/on_mob_life(mob/living/carbon/M)
 	M.adjustFireLoss(current_cycle/10, 0)
@@ -835,6 +892,7 @@
 	metabolization_rate = 0 //stays in the system until active.
 	var/actual_metaboliztion_rate = REAGENTS_METABOLISM
 	toxpwr = 0
+	value = REAGENT_VALUE_VERY_RARE
 	var/actual_toxpwr = 5
 	var/delay = 30
 
@@ -843,7 +901,7 @@
 		holder.remove_reagent(type, actual_metaboliztion_rate * M.metabolism_efficiency)
 		M.adjustToxLoss(actual_toxpwr*REM, 0)
 		if(prob(10))
-			M.Knockdown(20, 0)
+			M.DefaultCombatKnockdown(20, 0)
 		. = 1
 	..()
 
@@ -853,6 +911,7 @@
 	color = "#F0F8FF" // rgb: 240, 248, 255
 	toxpwr = 0
 	taste_description = "stillness"
+	value = REAGENT_VALUE_RARE
 
 /datum/reagent/toxin/mimesbane/on_mob_metabolize(mob/living/L)
 	ADD_TRAIT(L, TRAIT_EMOTEMUTE, type)
@@ -867,6 +926,7 @@
 	toxpwr = 0
 	taste_description = "bone hurting"
 	overdose_threshold = 20
+	value = REAGENT_VALUE_VERY_RARE //because it's very funny.
 
 /datum/reagent/toxin/bonehurtingjuice/on_mob_add(mob/living/carbon/M)
 	M.say("oof ouch my bones", forced = /datum/reagent/toxin/bonehurtingjuice)
@@ -926,6 +986,7 @@
 	toxpwr = 0
 	taste_description = "brain hurting"
 	metabolization_rate = 5
+	value = REAGENT_VALUE_EXCEPTIONAL
 
 /datum/reagent/toxin/brainhurtingjuice/on_mob_life(mob/living/carbon/M)
 	if(prob(50))
@@ -944,6 +1005,7 @@
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 	toxpwr = 0
 	taste_description = "tannin"
+	value = REAGENT_VALUE_RARE
 
 /datum/reagent/toxin/bungotoxin/on_mob_life(mob/living/carbon/M)
 	M.adjustOrganLoss(ORGAN_SLOT_HEART, 3)

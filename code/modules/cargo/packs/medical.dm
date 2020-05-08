@@ -88,6 +88,7 @@
 					/obj/item/clothing/mask/gas,
 					/obj/item/clothing/suit/space/hardsuit/medical)
 	crate_name = "medical hardsuit"
+	crate_type = /obj/structure/closet/crate/secure/medical
 
 /datum/supply_pack/medical/supplies
 	name = "Medical Supplies Crate"
@@ -125,7 +126,7 @@
 					/obj/item/reagent_containers/medspray/synthflesh,
 					/obj/item/reagent_containers/medspray/sterilizine)
 	crate_name = "medco surgery tools"
-	crate_type = /obj/structure/closet/crate/medical
+	crate_type = /obj/structure/closet/crate/secure/medical
 
 /datum/supply_pack/medical/surgery
 	name = "Surgical Supplies Crate"

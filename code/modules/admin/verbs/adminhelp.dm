@@ -79,7 +79,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 			title = "Resolved Tickets"
 	if(!l2b)
 		return
-	var/list/dat = list("<html><head><title>[title]</title></head>")
+	var/list/dat = list("<html><head><meta http-equiv='Content-Type' content='text/html; charset=UTF-8'><title>[title]</title></head>")
 	dat += "<A href='?_src_=holder;[HrefToken()];ahelp_tickets=[state]'>Refresh</A><br><br>"
 	for(var/I in l2b)
 		var/datum/admin_help/AH = I
@@ -165,7 +165,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 //is_bwoink is TRUE if this ticket was started by an admin PM
 /datum/admin_help/New(msg, client/C, is_bwoink)
 	//clean the input msg
-	msg = sanitize(copytext(msg,1,MAX_MESSAGE_LEN))
+	msg = sanitize(copytext_char(msg,1,MAX_MESSAGE_LEN))
 	if(!msg || !C || !C.mob)
 		qdel(src)
 		return
@@ -401,7 +401,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 
 //Show the ticket panel
 /datum/admin_help/proc/TicketPanel()
-	var/list/dat = list("<html><head><title>Ticket #[id]</title></head>")
+	var/list/dat = list("<html><head><meta http-equiv='Content-Type' content='text/html; charset=UTF-8'><title>Ticket #[id]</title></head>")
 	var/ref_src = "[REF(src)]"
 	dat += "<h4>Admin Help Ticket #[id]: [LinkedReplyName(ref_src)]</h4>"
 	dat += "<b>State: "

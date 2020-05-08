@@ -75,7 +75,7 @@
 		message_admins("[key_name_admin(src)] decided not to answer [key_name_admin(H)]'s [sender] request.")
 		return
 
-	log_directed_talk(src, H, input, LOG_ADMIN, "reply")
+	log_directed_talk(mob, H, input, LOG_ADMIN, "reply")
 	message_admins("[key_name_admin(src)] replied to [key_name_admin(H)]'s [sender] message with: \"[input]\"")
 	to_chat(H, "You hear something crackle in your ears for a moment before a voice speaks.  \"Please stand by for a message from [sender == "Syndicate" ? "your benefactor" : "Central Command"].  Message as follows[sender == "Syndicate" ? ", agent." : ":"] <span class='bold'>[input].</span> Message ends.\"")
 
@@ -594,31 +594,6 @@ Traitors and the like can also be revived with the previous role mostly intact.
 
 	admin_delete(A)
 
-/client/proc/admin_delete(datum/D)
-	var/atom/A = D
-	var/coords = ""
-	var/jmp_coords = ""
-	if(istype(A))
-		var/turf/T = get_turf(A)
-		if(T)
-			coords = "at [COORD(T)]"
-			jmp_coords = "at [ADMIN_COORDJMP(T)]"
-		else
-			jmp_coords = coords = "in nullspace"
-
-	if (alert(src, "Are you sure you want to delete:\n[D]\n[coords]?", "Confirmation", "Yes", "No") == "Yes")
-		log_admin("[key_name(usr)] deleted [D] [coords]")
-		message_admins("[key_name_admin(usr)] deleted [D] [jmp_coords]")
-		SSblackbox.record_feedback("tally", "admin_verb", 1, "Delete") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-		if(isturf(D))
-			var/turf/T = D
-			T.ScrapeAway()
-		else
-			vv_update_display(D, "deleted", VV_MSG_DELETED)
-			qdel(D)
-			if(!QDELETED(D))
-				vv_update_display(D, "deleted", "")
-
 /client/proc/cmd_admin_list_open_jobs()
 	set category = "Admin"
 	set name = "Manage Job Slots"
@@ -934,7 +909,7 @@ GLOBAL_LIST_EMPTY(custom_outfits) //Admin created outfits
 	id_select += "</select>"
 
 	var/dat = {"
-	<html><head><title>Create Outfit</title></head><body>
+	<html><head><meta http-equiv='Content-Type' content='text/html; charset=UTF-8'><title>Create Outfit</title></head><body>
 	<form name="outfit" action="byond://?src=[REF(src)];[HrefToken()]" method="get">
 	<input type="hidden" name="src" value="[REF(src)]">
 	[HrefTokenFormField()]
@@ -1249,7 +1224,7 @@ GLOBAL_LIST_EMPTY(custom_outfits) //Admin created outfits
 	if(!check_rights(R_ADMIN) || !check_rights(R_FUN))
 		return
 
-	var/list/punishment_list = list(ADMIN_PUNISHMENT_PIE, ADMIN_PUNISHMENT_FIREBALL, ADMIN_PUNISHMENT_LIGHTNING, ADMIN_PUNISHMENT_BRAINDAMAGE, ADMIN_PUNISHMENT_BSA, ADMIN_PUNISHMENT_GIB, ADMIN_PUNISHMENT_SUPPLYPOD_QUICK, ADMIN_PUNISHMENT_SUPPLYPOD, ADMIN_PUNISHMENT_MAZING, ADMIN_PUNISHMENT_ROD)
+	var/list/punishment_list = list(ADMIN_PUNISHMENT_PIE, ADMIN_PUNISHMENT_CUSTOM_PIE, ADMIN_PUNISHMENT_FIREBALL, ADMIN_PUNISHMENT_LIGHTNING, ADMIN_PUNISHMENT_BRAINDAMAGE, ADMIN_PUNISHMENT_BSA, ADMIN_PUNISHMENT_GIB, ADMIN_PUNISHMENT_SUPPLYPOD_QUICK, ADMIN_PUNISHMENT_SUPPLYPOD, ADMIN_PUNISHMENT_MAZING, ADMIN_PUNISHMENT_ROD)
 
 	var/punishment = input("Choose a punishment", "DIVINE SMITING") as null|anything in punishment_list
 
@@ -1314,6 +1289,19 @@ GLOBAL_LIST_EMPTY(custom_outfits) //Admin created outfits
 		if(ADMIN_PUNISHMENT_PIE)
 			var/obj/item/reagent_containers/food/snacks/pie/cream/nostun/creamy = new(get_turf(target))
 			creamy.splat(target)
+		if (ADMIN_PUNISHMENT_CUSTOM_PIE)
+			var/obj/item/reagent_containers/food/snacks/pie/cream/nostun/A = new()
+			if(!A.reagents)
+				var/amount = input(usr, "Specify the reagent size of [A]", "Set Reagent Size", 50) as num|null
+				if(amount)
+					A.create_reagents(amount)
+			if(A.reagents)
+				var/chosen_id = choose_reagent_id(usr)
+				if(chosen_id)
+					var/amount = input(usr, "Choose the amount to add.", "Choose the amount.", A.reagents.maximum_volume) as num|null
+					if(amount)
+						A.reagents.add_reagent(chosen_id, amount)
+						A.splat(target)
 
 	punish_log(target, punishment)
 
@@ -1347,7 +1335,7 @@ GLOBAL_LIST_EMPTY(custom_outfits) //Admin created outfits
 		return
 
 	var/list/msg = list()
-	msg += "<html><head><title>Playtime Report</title></head><body>Playtime:<BR><UL>"
+	msg += "<html><head><meta http-equiv='Content-Type' content='text/html; charset=UTF-8'><title>Playtime Report</title></head><body>Playtime:<BR><UL>"
 	for(var/client/C in GLOB.clients)
 		msg += "<LI> - [key_name_admin(C)]: <A href='?_src_=holder;[HrefToken()];getplaytimewindow=[REF(C.mob)]'>" + C.get_exp_living() + "</a></LI>"
 	msg += "</UL></BODY></HTML>"
@@ -1364,7 +1352,7 @@ GLOBAL_LIST_EMPTY(custom_outfits) //Admin created outfits
 		return
 
 	var/list/body = list()
-	body += "<html><head><title>Playtime for [C.key]</title></head><BODY><BR>Playtime:"
+	body += "<html><head><meta http-equiv='Content-Type' content='text/html; charset=UTF-8'><title>Playtime for [C.key]</title></head><BODY><BR>Playtime:"
 	body += C.get_exp_report()
 	body += "<A href='?_src_=holder;[HrefToken()];toggleexempt=[REF(C)]'>Toggle Exempt status</a>"
 	body += "</BODY></HTML>"
@@ -1391,3 +1379,47 @@ GLOBAL_LIST_EMPTY(custom_outfits) //Admin created outfits
 	else
 		message_admins("[key_name_admin(usr)] has [newstate ? "activated" : "deactivated"] job exp exempt status on [key_name_admin(C)]")
 		log_admin("[key_name(usr)] has [newstate ? "activated" : "deactivated"] job exp exempt status on [key_name(C)]")
+
+/// Allow admin to add or remove traits of datum
+/datum/admins/proc/modify_traits(datum/D)
+	if(!D)
+		return
+
+	var/add_or_remove = input("Remove/Add?", "Trait Remove/Add") as null|anything in list("Add","Remove")
+	if(!add_or_remove)
+		return
+	var/list/availible_traits = list()
+
+	switch(add_or_remove)
+		if("Add")
+			for(var/key in GLOB.traits_by_type)
+				if(istype(D,key))
+					availible_traits += GLOB.traits_by_type[key]
+		if("Remove")
+			if(!GLOB.trait_name_map)
+				GLOB.trait_name_map = generate_trait_name_map()
+			for(var/trait in D.status_traits)
+				var/name = GLOB.trait_name_map[trait] || trait
+				availible_traits[name] = trait
+
+	var/chosen_trait = input("Select trait to modify", "Trait") as null|anything in sortList(availible_traits)
+	if(!chosen_trait)
+		return
+	chosen_trait = availible_traits[chosen_trait]
+
+	var/source = "adminabuse"
+	switch(add_or_remove)
+		if("Add") //Not doing source choosing here intentionally to make this bit faster to use, you can always vv it.
+			ADD_TRAIT(D,chosen_trait,source)
+		if("Remove")
+			var/specific = input("All or specific source ?", "Trait Remove/Add") as null|anything in list("All","Specific")
+			if(!specific)
+				return
+			switch(specific)
+				if("All")
+					source = null
+				if("Specific")
+					source = input("Source to be removed","Trait Remove/Add") as null|anything in sortList(D.status_traits[chosen_trait])
+					if(!source)
+						return
+			REMOVE_TRAIT(D,chosen_trait,source)

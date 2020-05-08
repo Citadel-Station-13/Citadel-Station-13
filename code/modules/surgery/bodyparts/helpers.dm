@@ -17,7 +17,6 @@
 			return L
 	return FALSE
 
-
 /mob/proc/has_left_hand(check_disabled = TRUE)
 	return TRUE
 
@@ -29,7 +28,7 @@
 	return FALSE
 
 /mob/living/carbon/alien/larva/has_left_hand()
-	return 1
+	return TRUE
 
 
 /mob/proc/has_right_hand(check_disabled = TRUE)
@@ -43,9 +42,7 @@
 	return FALSE
 
 /mob/living/carbon/alien/larva/has_right_hand()
-	return 1
-
-
+	return TRUE
 
 /mob/proc/has_left_leg()
 	return TRUE
@@ -66,7 +63,6 @@
 		return TRUE
 	else
 		return FALSE
-
 
 //Limb numbers
 /mob/proc/get_num_arms(check_disabled = TRUE)
@@ -165,6 +161,7 @@
 		for(var/obj/item/I in L.embedded_objects)
 			L.embedded_objects -= I
 			I.forceMove(T)
+			I.unembedded()
 
 	clear_alert("embeddedobject")
 	SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "embedded")
@@ -254,37 +251,6 @@
 		if(robotic)
 			L.change_bodypart_status(BODYPART_ROBOTIC)
 	. = L
-
-
-/proc/skintone2hex(skin_tone)
-	. = 0
-	switch(skin_tone)
-		if("caucasian1")
-			. = "ffe0d1"
-		if("caucasian2")
-			. = "fcccb3"
-		if("caucasian3")
-			. = "e8b59b"
-		if("latino")
-			. = "d9ae96"
-		if("mediterranean")
-			. = "c79b8b"
-		if("asian1")
-			. = "ffdeb3"
-		if("asian2")
-			. = "e3ba84"
-		if("arab")
-			. = "c4915e"
-		if("indian")
-			. = "b87840"
-		if("african1")
-			. = "754523"
-		if("african2")
-			. = "471c18"
-		if("albino")
-			. = "fff4e6"
-		if("orange")
-			. = "ffc905"
 
 /mob/living/carbon/proc/Digitigrade_Leg_Swap(swap_back)
 	for(var/X in bodyparts)

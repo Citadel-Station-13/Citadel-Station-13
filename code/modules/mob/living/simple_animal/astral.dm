@@ -4,7 +4,7 @@
 	icon = 'icons/mob/mob.dmi'
 	icon_state = "ghost"
 	icon_living = "ghost"
-	mob_biotypes = list(MOB_SPIRIT)
+	mob_biotypes = MOB_SPIRIT
 	attacktext = "raises the hairs on the neck of"
 	response_harm = "disrupts the concentration of"
 	response_disarm = "wafts"
@@ -32,7 +32,6 @@
 /mob/living/simple_animal/astral/death()
 	icon_state = "shade_dead"
 	Stun(1000)
-	canmove = 0
 	friendly = "deads at"
 	pseudo_death = TRUE
 	incorporeal_move = 0

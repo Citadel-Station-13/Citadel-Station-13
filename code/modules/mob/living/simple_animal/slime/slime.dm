@@ -70,7 +70,8 @@
 
 	var/colour = "grey"
 	var/coretype = /obj/item/slime_extract/grey
-	var/list/slime_mutation[4]
+	var/list/slime_mutation
+	var/static/list/color_mutation_cache = list()
 
 	var/static/list/slime_colours = list("rainbow", "grey", "purple", "metal", "orange",
 	"blue", "dark blue", "dark purple", "yellow", "silver", "pink", "red",
@@ -84,6 +85,7 @@
 
 
 /mob/living/simple_animal/slime/Initialize(mapload, new_colour="grey", new_is_adult=FALSE)
+	initialize_mutations()
 	var/datum/action/innate/slime/feed/F = new
 	F.Grant(src)
 
@@ -97,7 +99,7 @@
 	else
 		var/datum/action/innate/slime/evolve/E = new
 		E.Grant(src)
-	create_reagents(100)
+	create_reagents(100, NONE, NO_REAGENTS_VALUE)
 	set_colour(new_colour)
 	. = ..()
 	nutrition = 700
@@ -108,10 +110,16 @@
 		AC.Remove(src)
 	return ..()
 
+/mob/living/simple_animal/slime/proc/initialize_mutations()
+	var/list/cached = color_mutation_cache[colour]
+	if(!cached)
+		cached = color_mutation_cache[colour] = mutation_table(colour)
+	slime_mutation = cached
+
 /mob/living/simple_animal/slime/proc/set_colour(new_colour)
 	colour = new_colour
 	update_name()
-	slime_mutation = mutation_table(colour)
+	initialize_mutations()
 	var/sanitizedcolour = replacetext(colour, " ", "")
 	coretype = text2path("/obj/item/slime_extract/[sanitizedcolour]")
 	regenerate_icons()
@@ -139,25 +147,26 @@
 
 /mob/living/simple_animal/slime/on_reagent_change()
 	. = ..()
-	remove_movespeed_modifier(MOVESPEED_ID_SLIME_REAGENTMOD, TRUE)
+	remove_movespeed_modifier(/datum/movespeed_modifier/slime_reagentmod)
 	var/amount = 0
 	if(reagents.has_reagent(/datum/reagent/medicine/morphine)) // morphine slows slimes down
 		amount = 2
 	if(reagents.has_reagent(/datum/reagent/consumable/frostoil)) // Frostoil also makes them move VEEERRYYYYY slow
 		amount = 5
 	if(amount)
-		add_movespeed_modifier(MOVESPEED_ID_SLIME_REAGENTMOD, TRUE, 100, override = TRUE, multiplicative_slowdown = amount)
+		add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/slime_reagentmod, multiplicative_slowdown = amount)
 
 /mob/living/simple_animal/slime/updatehealth()
 	. = ..()
-	remove_movespeed_modifier(MOVESPEED_ID_SLIME_HEALTHMOD, FALSE)
-	var/health_deficiency = (100 - health)
+	remove_movespeed_modifier(/datum/movespeed_modifier/slime_healthmod)
 	var/mod = 0
-	if(health_deficiency >= 45)
-		mod += (health_deficiency / 25)
-	if(health <= 0)
-		mod += 2
-	add_movespeed_modifier(MOVESPEED_ID_SLIME_HEALTHMOD, TRUE, 100, multiplicative_slowdown = mod)
+	if(!HAS_TRAIT(src, TRAIT_IGNOREDAMAGESLOWDOWN))
+		var/health_deficiency = (maxHealth - health)
+		if(health_deficiency >= 45)
+			mod += (health_deficiency / 25)
+		if(health <= 0)
+			mod += 2
+	add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/slime_healthmod, multiplicative_slowdown = mod)
 
 /mob/living/simple_animal/slime/adjust_bodytemperature()
 	. = ..()
@@ -165,9 +174,8 @@
 	if(bodytemperature >= 330.23) // 135 F or 57.08 C
 		mod = -1	// slimes become supercharged at high temperatures
 	else if(bodytemperature < 183.222)
-		mod = (283.222 - bodytemperature) / 10 * 1.75
-	if(mod)
-		add_movespeed_modifier(MOVESPEED_ID_SLIME_TEMPMOD, TRUE, 100, override = TRUE, multiplicative_slowdown = mod)
+		mod = min(15, (283.222 - bodytemperature) / 10 * 1.75)
+	add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/slime_tempmod, multiplicative_slowdown = mod)
 
 /mob/living/simple_animal/slime/ObjBump(obj/O)
 	if(!client && powerlevel > 0)
@@ -454,13 +462,13 @@
 
 	SStun = world.time + rand(20,60)
 	spawn(0)
-		canmove = 0
+		DISABLE_BITFIELD(mobility_flags, MOBILITY_MOVE)
 		if(user)
 			step_away(src,user,15)
 		sleep(3)
 		if(user)
 			step_away(src,user,15)
-		update_canmove()
+		update_mobility()
 
 /mob/living/simple_animal/slime/pet
 	docile = 1

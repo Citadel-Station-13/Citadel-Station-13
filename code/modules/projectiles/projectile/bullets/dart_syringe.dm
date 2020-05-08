@@ -6,7 +6,7 @@
 
 /obj/item/projectile/bullet/dart/Initialize()
 	. = ..()
-	create_reagents(50, NO_REACT)
+	create_reagents(50, NO_REACT, NO_REAGENTS_VALUE)
 
 /obj/item/projectile/bullet/dart/on_hit(atom/target, blocked = FALSE, skip = FALSE)
 	if(iscarbon(target))
@@ -28,6 +28,9 @@
 	DISABLE_BITFIELD(reagents.reagents_holder_flags, NO_REACT)
 	reagents.handle_reactions()
 	return BULLET_ACT_HIT
+
+/obj/item/projectile/bullet/dart/piercing
+	piercing = TRUE
 
 /obj/item/projectile/bullet/dart/metalfoam/Initialize()
 	. = ..()
@@ -57,11 +60,11 @@
 						if(R.overdose_threshold == 0 || emptrig == TRUE) //Is there a possible OD?
 							M.reagents.add_reagent(R.type, R.volume)
 						else
-							var/transVol = CLAMP(R.volume, 0, (R.overdose_threshold - M.reagents.get_reagent_amount(R.type)) -1)
+							var/transVol = clamp(R.volume, 0, (R.overdose_threshold - M.reagents.get_reagent_amount(R.type)) -1)
 							M.reagents.add_reagent(R.type, transVol)
 					else
 						if(!R.overdose_threshold == 0)
-							var/transVol = CLAMP(R.volume, 0, R.overdose_threshold-1)
+							var/transVol = clamp(R.volume, 0, R.overdose_threshold-1)
 							M.reagents.add_reagent(R.type, transVol)
 						else
 							M.reagents.add_reagent(R.type, R.volume)

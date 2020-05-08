@@ -285,7 +285,7 @@
 	name = "Flat Top (Big)"
 	icon_state = "hair_bigflattop"
 
-/datum/sprite_accessory/hair/fag	//grimacing emoji
+/datum/sprite_accessory/hair/flow
 	name = "Flow Hair"
 	icon_state = "hair_f"
 
@@ -598,6 +598,10 @@
 /datum/sprite_accessory/hair/scully
 	name = "Scully"
 	icon_state = "hair_scully"
+
+/datum/sprite_accessory/hair/shaggy
+    name = "Shaggy"
+    icon_state = "hair_shaggy"
 
 /datum/sprite_accessory/hair/shaved
 	name = "Shaved"

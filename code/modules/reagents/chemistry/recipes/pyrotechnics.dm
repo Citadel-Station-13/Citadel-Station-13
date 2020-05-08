@@ -76,7 +76,7 @@
 		for(var/mob/living/carbon/C in get_hearers_in_view(round(multiplier/48,1),get_turf(holder.my_atom)))
 			if(iscultist(C))
 				to_chat(C, "<span class='userdanger'>The divine explosion sears you!</span>")
-				C.Knockdown(40)
+				C.DefaultCombatKnockdown(40)
 				C.adjust_fire_stacks(5)
 				C.IgniteMob()
 	..(holder, multiplier, T)
@@ -195,7 +195,7 @@
 		return
 	holder.remove_reagent(/datum/reagent/sorium, multiplier*4)
 	var/turf/T = get_turf(holder.my_atom)
-	var/range = CLAMP(sqrt(multiplier*4), 1, 6)
+	var/range = clamp(sqrt(multiplier*4), 1, 6)
 	goonchem_vortex(T, 1, range)
 
 /datum/chemical_reaction/sorium_vortex
@@ -206,7 +206,7 @@
 
 /datum/chemical_reaction/sorium_vortex/on_reaction(datum/reagents/holder, multiplier)
 	var/turf/T = get_turf(holder.my_atom)
-	var/range = CLAMP(sqrt(multiplier), 1, 6)
+	var/range = clamp(sqrt(multiplier), 1, 6)
 	goonchem_vortex(T, 1, range)
 
 /datum/chemical_reaction/liquid_dark_matter
@@ -220,7 +220,7 @@
 		return
 	holder.remove_reagent(/datum/reagent/liquid_dark_matter, multiplier*3)
 	var/turf/T = get_turf(holder.my_atom)
-	var/range = CLAMP(sqrt(multiplier*3), 1, 6)
+	var/range = clamp(sqrt(multiplier*3), 1, 6)
 	goonchem_vortex(T, 0, range)
 
 /datum/chemical_reaction/ldm_vortex
@@ -231,7 +231,7 @@
 
 /datum/chemical_reaction/ldm_vortex/on_reaction(datum/reagents/holder, multiplier)
 	var/turf/T = get_turf(holder.my_atom)
-	var/range = CLAMP(sqrt(multiplier/2), 1, 6)
+	var/range = clamp(sqrt(multiplier/2), 1, 6)
 	goonchem_vortex(T, 0, range)
 
 /datum/chemical_reaction/flash_powder
@@ -252,7 +252,7 @@
 	for(var/mob/living/carbon/C in get_hearers_in_view(range, location))
 		if(C.flash_act())
 			if(get_dist(C, location) < 4)
-				C.Knockdown(60)
+				C.DefaultCombatKnockdown(60)
 			else
 				C.Stun(100)
 	holder.remove_reagent(/datum/reagent/flash_powder, multiplier*3)
@@ -273,7 +273,7 @@
 	for(var/mob/living/carbon/C in get_hearers_in_view(range, location))
 		if(C.flash_act())
 			if(get_dist(C, location) < 4)
-				C.Knockdown(60)
+				C.DefaultCombatKnockdown(60)
 			else
 				C.Stun(100)
 

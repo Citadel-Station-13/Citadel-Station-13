@@ -17,33 +17,24 @@
 	low_threshold_cleared = "<span class='info'>The last bouts of pain in your stomach have died out.</span>"
 
 /obj/item/organ/stomach/on_life()
-	..()
-	var/datum/reagent/consumable/nutriment/Nutri
+	. = ..()
+	if(!owner)
+		return
 	if(ishuman(owner))
 		var/mob/living/carbon/human/H = owner
-		if(!(organ_flags & ORGAN_FAILING))
+		if(.)
 			H.dna.species.handle_digestion(H)
 		handle_disgust(H)
-		Nutri = locate(/datum/reagent/consumable/nutriment) in H.reagents.reagent_list
 
-		if(Nutri)
-			if(prob((damage/40) * Nutri.volume * Nutri.volume))
-				H.vomit(damage)
-				to_chat(H, "<span class='warning'>Your stomach reels in pain as you're incapable of holding down all that food!</span>")
-
-		else if(Nutri && damage > high_threshold)
-			if(prob((damage/10) * Nutri.volume * Nutri.volume))
-				H.vomit(damage)
-				to_chat(H, "<span class='warning'>Your stomach reels in pain as you're incapable of holding down all that food!</span>")
-
-
-	else if(iscarbon(owner))
-		var/mob/living/carbon/C = owner
-		Nutri = locate(/datum/reagent/consumable/nutriment) in C.reagents.reagent_list
-
-	if(damage < low_threshold)
+	if(!damage)
 		return
-
+	var/datum/reagent/consumable/nutriment/Nutri = locate(/datum/reagent/consumable/nutriment) in owner.reagents.reagent_list
+	if(!Nutri)
+		return
+	var/prob_divisor = damage > high_threshold ? 10 : 40
+	if(prob((damage/prob_divisor) * (Nutri.volume**2)))
+		owner.vomit(damage)
+		to_chat(owner, "<span class='warning'>Your stomach reels in pain as you're incapable of holding down all that food!</span>")
 
 /obj/item/organ/stomach/proc/handle_disgust(mob/living/carbon/human/H)
 	if(H.disgust)
@@ -80,9 +71,9 @@
 			H.throw_alert("disgust", /obj/screen/alert/disgusted)
 			SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, "disgust", /datum/mood_event/disgusted)
 
-/obj/item/organ/stomach/Remove(mob/living/carbon/M, special = 0)
+/obj/item/organ/stomach/Remove(special = FALSE)
 	var/mob/living/carbon/human/H = owner
-	if(istype(H))
+	if(H && istype(H))
 		H.clear_alert("disgust")
 		SEND_SIGNAL(H, COMSIG_CLEAR_MOOD_EVENT, "disgust")
 	..()
@@ -96,3 +87,7 @@
 	name = "digestive crystal"
 	icon_state = "stomach-p"
 	desc = "A strange crystal that is responsible for metabolizing the unseen energy force that feeds plasmamen."
+
+/obj/item/organ/stomach/ipc
+	name = "ipc stomach"
+	icon_state = "stomach-ipc"

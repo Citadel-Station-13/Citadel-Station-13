@@ -18,8 +18,11 @@
 	response_disarm = "gently pushes aside"
 	response_harm = "kicks"
 	gold_core_spawnable = FRIENDLY_SPAWN
-	can_be_held = "fox"
 	do_footstep = TRUE
+
+/mob/living/simple_animal/pet/fox/ComponentInitialize()
+	. = ..()
+	AddElement(/datum/element/mob_holder, "fox")
 
 //Captain fox
 /mob/living/simple_animal/pet/fox/Renault

@@ -7,8 +7,9 @@
 	icon_aggro = "Hivelord_alert"
 	icon_dead = "Hivelord_dead"
 	icon_gib = "syndicate_gib"
-	mob_biotypes = list(MOB_ORGANIC)
+	mob_biotypes = MOB_ORGANIC
 	mouse_opacity = MOUSE_OPACITY_OPAQUE
+	threat = 4
 	move_to_delay = 14
 	ranged = 1
 	vision_range = 4
@@ -81,11 +82,15 @@
 	throw_message = "falls right through the strange body of the"
 	obj_damage = 0
 	environment_smash = ENVIRONMENT_SMASH_NONE
-	pass_flags = PASSTABLE
+	pass_flags = PASSTABLE | PASSMOB //they shouldn't get stuck behind hivelords.
+	density = FALSE
 	del_on_death = 1
+	var/swarming = FALSE
 
 /mob/living/simple_animal/hostile/asteroid/hivelordbrood/Initialize()
 	. = ..()
+	if(swarming)
+		AddComponent(/datum/component/swarming) //oh god not the bees
 	addtimer(CALLBACK(src, .proc/death), 100)
 
 //Legion
@@ -98,7 +103,7 @@
 	icon_aggro = "legion"
 	icon_dead = "legion"
 	icon_gib = "syndicate_gib"
-	mob_biotypes = list(MOB_ORGANIC, MOB_HUMANOID)
+	mob_biotypes = MOB_ORGANIC|MOB_HUMANOID
 	obj_damage = 60
 	melee_damage_lower = 15
 	melee_damage_upper = 15
@@ -134,6 +139,11 @@
 	move_to_delay = 10 //actually faster!
 	crusher_drop_mod = 20
 	dwarf_mob = TRUE
+
+/mob/living/simple_animal/hostile/asteroid/hivelord/legion/beegion
+	name = "beegion"
+	desc = "You can still see what was once a human under the shifting mass of - oh my God, those are bees."
+	brood_type = /mob/living/simple_animal/hostile/poison/bees/toxin
 
 /mob/living/simple_animal/hostile/asteroid/hivelord/legion/death(gibbed)
 	visible_message("<span class='warning'>The skulls on [src] wail in anger as they flee from their dying host!</span>")
@@ -174,10 +184,10 @@
 	speak_emote = list("echoes")
 	attack_sound = 'sound/weapons/pierce.ogg'
 	throw_message = "is shrugged off by"
-	pass_flags = PASSTABLE
 	del_on_death = TRUE
 	stat_attack = UNCONSCIOUS
 	robust_searching = 1
+	swarming = TRUE
 	var/can_infest_dead = FALSE
 
 /mob/living/simple_animal/hostile/asteroid/hivelordbrood/legion/Life()
@@ -190,7 +200,7 @@
 /mob/living/simple_animal/hostile/asteroid/hivelordbrood/legion/proc/infest(mob/living/carbon/human/H)
 	visible_message("<span class='warning'>[name] burrows into the flesh of [H]!</span>")
 	var/mob/living/simple_animal/hostile/asteroid/hivelord/legion/L
-	if(H.dna.check_mutation(DWARFISM)) //dwarf legions aren't just fluff!
+	if(HAS_TRAIT(H, TRAIT_DWARF)) //dwarf legions aren't just fluff!
 		L = new /mob/living/simple_animal/hostile/asteroid/hivelord/legion/dwarf(H.loc)
 	else
 		L = new(H.loc)
@@ -224,6 +234,7 @@
 	icon_state = "legion"
 	icon_living = "legion"
 	icon_dead = "legion"
+	threat = 5
 	health = 450
 	maxHealth = 450
 	melee_damage_lower = 20
@@ -269,16 +280,17 @@
 	H.dna.add_mutation(DWARFISM)
 
 /obj/effect/mob_spawn/human/corpse/damaged/legioninfested/Initialize()
-	var/type = pickweight(list("Miner" = 66, "Ashwalker" = 10, "Golem" = 10,"Clown" = 10, pick(list("Shadow", "YeOlde","Operative", "Cultist", "Lavaknight")) = 4)) //CIT CHANGE: Lavaknights
+	var/type = pickweight(list("Miner" = 45, "Ashwalker" = 10, "Golem" = 10,"Clown" = 10, pick(list("Shadow", "YeOlde","Operative", "Cultist", "Lavaknight")) = 4, "Assistant" = 20, "Beelegion" = 1))
 	switch(type)
 		if("Miner")
 			mob_species = pickweight(list(/datum/species/human = 70, /datum/species/lizard = 26, /datum/species/fly = 2, /datum/species/plasmaman = 2))
 			if(mob_species == /datum/species/plasmaman)
-				uniform = /obj/item/clothing/under/plasmaman
-				head = /obj/item/clothing/head/helmet/space/plasmaman
+				uniform = /obj/item/clothing/under/plasmaman/mining
+				head = /obj/item/clothing/head/helmet/space/plasmaman/mining
 				belt = /obj/item/tank/internals/plasmaman/belt
+				mask = /obj/item/clothing/mask/gas/explorer
 			else
-				uniform = /obj/item/clothing/under/rank/miner/lavaland
+				uniform = /obj/item/clothing/under/rank/cargo/miner/lavaland
 				if (prob(4))
 					belt = pickweight(list(/obj/item/storage/belt/mining = 2, /obj/item/storage/belt/mining/alt = 2))
 				else if(prob(10))
@@ -297,7 +309,7 @@
 				l_pocket = pickweight(list(/obj/item/stack/spacecash/c1000 = 7, /obj/item/reagent_containers/hypospray/medipen/survival = 2, /obj/item/borg/upgrade/modkit/cooldown = 1 ))
 		if("Ashwalker")
 			mob_species = /datum/species/lizard/ashwalker
-			uniform = /obj/item/clothing/under/gladiator/ash_walker
+			uniform = /obj/item/clothing/under/costume/gladiator/ash_walker
 			if(prob(95))
 				head = /obj/item/clothing/head/helmet/gladiator
 			else
@@ -337,7 +349,7 @@
 				l_pocket = pick(list(/obj/item/crowbar/power, /obj/item/wrench/power, /obj/item/weldingtool/experimental))
 		if("YeOlde")
 			mob_gender = FEMALE
-			uniform = /obj/item/clothing/under/maid
+			uniform = /obj/item/clothing/under/costume/maid
 			gloves = /obj/item/clothing/gloves/color/white
 			shoes = /obj/item/clothing/shoes/laceup
 			head = /obj/item/clothing/head/helmet/knight
@@ -360,7 +372,7 @@
 			back = /obj/item/tank/internals/oxygen
 			mask = /obj/item/clothing/mask/breath
 		if("Cultist")
-			uniform = /obj/item/clothing/under/roman
+			uniform = /obj/item/clothing/under/costume/roman
 			suit = /obj/item/clothing/suit/cultrobes
 			head = /obj/item/clothing/head/culthood
 			suit_store = /obj/item/tome
@@ -368,13 +380,73 @@
 			l_pocket = /obj/item/melee/cultblade/dagger
 			glasses =  /obj/item/clothing/glasses/hud/health/night/cultblind
 			backpack_contents = list(/obj/item/reagent_containers/glass/beaker/unholywater = 1, /obj/item/cult_shift = 1, /obj/item/flashlight/flare/culttorch = 1, /obj/item/stack/sheet/runed_metal = 15)
-		if("Lavaknight") //START OF CIT CHANGE
-			uniform = /obj/item/clothing/under/assistantformal
+		if("Lavaknight")
+			uniform = /obj/item/clothing/under/misc/assistantformal
 			mask = /obj/item/clothing/mask/breath
 			shoes = /obj/item/clothing/shoes/sneakers/black
 			r_pocket = /obj/item/melee/transforming/energy/sword/cx/broken
 			suit = /obj/item/clothing/suit/space/hardsuit/lavaknight
 			suit_store = /obj/item/tank/internals/oxygen
-			id = /obj/item/card/id/knight //END OF CIT CHANGE
+			id = /obj/item/card/id/knight
 			id_job = "Knight"
+		if("Assistant")
+			uniform = /obj/item/clothing/under/color/grey
+			belt = /obj/item/tank/internals/emergency_oxygen
+			mask = /obj/item/clothing/mask/gas
+			ears = /obj/item/radio/headset
+			gloves = /obj/item/clothing/gloves/color/fyellow
+			id = /obj/item/card/id/silver/reaper //looks cool and has a fancy name but only a 1% chance
+			back = /obj/item/storage/backpack
+			backpack_contents = list(/obj/item/stack/cable_coil = 12, /obj/item/assembly/flash = 1, /obj/item/storage/fancy/donut_box = 1, /obj/item/storage/fancy/cigarettes/cigpack_shadyjims = 1, /obj/item/lighter = 1)
+			if(prob(99))
+				id = /obj/item/card/id
+				id_job = "Assisant"
+			if(prob(95))
+				head = /obj/item/clothing/head/hardhat/red
+			if(prob(5))
+				gloves = /obj/item/clothing/gloves/color/yellow
+			if(prob(10))
+				back = /obj/item/twohanded/spear
+				backpack_contents = null
+			if(prob(90))
+				r_pocket = /obj/item/kitchen/knife
+			if(prob(60))
+				l_pocket = /obj/item/soap/homemade
+		if("Beelegion")
+			uniform = /obj/item/clothing/under/color/yellow
+			suit = /obj/item/clothing/suit/hooded/bee_costume
+			shoes = /obj/item/clothing/shoes/sneakers/yellow
+			gloves = /obj/item/clothing/gloves/color/yellow
+			ears = /obj/item/radio/headset
+			belt = /obj/item/storage/belt/fannypack/yellow
+			id_job = "Assisant"
+			id = /obj/item/card/id
+			l_pocket = /obj/item/reagent_containers/food/drinks/soda_cans/buzz_fuzz
+			mask = /obj/item/clothing/mask/rat/bee
 	. = ..()
+
+// Snow Legion
+/mob/living/simple_animal/hostile/asteroid/hivelord/legion/snow
+	name = "snow legion"
+	desc = "You can still see what was once a human under the shifting snowy mass, clearly decorated by a clown."
+	icon = 'icons/mob/icemoon/icemoon_monsters.dmi'
+	icon_state = "snowlegion"
+	icon_living = "snowlegion"
+	icon_aggro = "snowlegion_alive"
+	icon_dead = "snowlegion"
+	crusher_loot = /obj/item/crusher_trophy/legion_skull
+	loot = list(/obj/item/organ/regenerative_core/legion)
+	brood_type = /mob/living/simple_animal/hostile/asteroid/hivelordbrood/legion/snow
+
+/mob/living/simple_animal/hostile/asteroid/hivelord/legion/snow/tendril
+	fromtendril = TRUE
+
+// Snow Legion skull
+/mob/living/simple_animal/hostile/asteroid/hivelordbrood/legion/snow
+	name = "snow legion"
+	desc = "One of many."
+	icon = 'icons/mob/icemoon/icemoon_monsters.dmi'
+	icon_state = "snowlegion_head"
+	icon_living = "snowlegion_head"
+	icon_aggro = "snowlegion_head"
+	icon_dead = "snowlegion_head"

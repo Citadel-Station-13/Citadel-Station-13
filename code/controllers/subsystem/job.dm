@@ -66,6 +66,7 @@ SUBSYSTEM_DEF(job)
 
 
 /datum/controller/subsystem/job/proc/GetJob(rank)
+	RETURN_TYPE(/datum/job)
 	if(!occupations.len)
 		SetupOccupations()
 	return name_occupations[rank]
@@ -118,7 +119,7 @@ SUBSYSTEM_DEF(job)
 		if(flag && (!(flag in player.client.prefs.be_special)))
 			JobDebug("FOC flag failed, Player: [player], Flag: [flag], ")
 			continue
-		if(player.mind && job.title in player.mind.restricted_roles)
+		if(player.mind && (job.title in player.mind.restricted_roles))
 			JobDebug("FOC incompatible with antagonist role, Player: [player]")
 			continue
 		if(player.client.prefs.job_preferences[job.title] == level)
@@ -158,7 +159,7 @@ SUBSYSTEM_DEF(job)
 			JobDebug("GRJ player not enough xp, Player: [player]")
 			continue
 
-		if(player.mind && job.title in player.mind.restricted_roles)
+		if(player.mind && (job.title in player.mind.restricted_roles))
 			JobDebug("GRJ incompatible with antagonist role, Player: [player], Job: [job.title]")
 			continue
 
@@ -340,7 +341,7 @@ SUBSYSTEM_DEF(job)
 					JobDebug("DO non-human failed, Player: [player], Job:[job.title]")
 					continue
 
-				if(player.mind && job.title in player.mind.restricted_roles)
+				if(player.mind && (job.title in player.mind.restricted_roles))
 					JobDebug("DO incompatible with antagonist role, Player: [player], Job:[job.title]")
 					continue
 
@@ -427,6 +428,8 @@ SUBSYSTEM_DEF(job)
 	if(!joined_late)
 		var/obj/S = null
 		for(var/obj/effect/landmark/start/sloc in GLOB.start_landmarks_list)
+			if(!sloc.job_spawnpoint)
+				continue
 			if(sloc.name != rank)
 				S = sloc //so we can revert to spawning them on top of eachother if something goes wrong
 				continue

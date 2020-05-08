@@ -47,6 +47,12 @@
 	results = list(/datum/reagent/consumable/sodiumchloride = 3)
 	required_reagents = list(/datum/reagent/water = 1, /datum/reagent/sodium = 1, /datum/reagent/chlorine = 1)
 
+/datum/chemical_reaction/preservahyde
+	name = "Preservahyde"
+	id = "preservahyde"
+	results = list(/datum/reagent/preservahyde = 3)
+	required_reagents = list(/datum/reagent/water = 1, /datum/reagent/toxin/formaldehyde = 1, /datum/reagent/bromine = 1)
+
 /datum/chemical_reaction/plasmasolidification
 	name = "Solid Plasma"
 	id = "solidplasma"
@@ -68,6 +74,28 @@
 	var/location = get_turf(holder.my_atom)
 	for(var/i = 1, i <= multiplier, i++)
 		new /obj/item/stack/sheet/mineral/gold(location)
+
+/datum/chemical_reaction/uraniumsolidification
+	name = "Solid Uranium"
+	id = "soliduranium"
+	required_reagents = list(/datum/reagent/consumable/frostoil = 5, /datum/reagent/uranium = 20, /datum/reagent/bromine = 1)
+	mob_react = FALSE
+
+/datum/chemical_reaction/uraniumsolidification/on_reaction(datum/reagents/holder, multiplier)
+	var/location = get_turf(holder.my_atom)
+	for(var/i = 1, i <= multiplier, i++)
+		new /obj/item/stack/sheet/mineral/uranium(location)
+
+/datum/chemical_reaction/bluespacecrystalifaction
+	name = "Crystal Bluespace"
+	id = "crystalbluespace"
+	required_reagents = list(/datum/reagent/consumable/frostoil = 5, /datum/reagent/bluespace = 20, /datum/reagent/iron = 1)
+	mob_react = FALSE
+
+/datum/chemical_reaction/bluespacecrystalifaction/on_reaction(datum/reagents/holder, multiplier)
+	var/location = get_turf(holder.my_atom)
+	for(var/i = 1, i <= multiplier, i++)
+		new /obj/item/stack/sheet/bluespace_crystal(location)
 
 /datum/chemical_reaction/capsaicincondensation
 	name = "Capsaicincondensation"
@@ -228,7 +256,6 @@
 	var/level_max = 2
 
 /datum/chemical_reaction/mix_virus/on_reaction(datum/reagents/holder, multiplier)
-
 	var/datum/reagent/blood/B = locate(/datum/reagent/blood) in holder.reagent_list
 	if(B && B.data)
 		var/datum/disease/advance/D = locate(/datum/disease/advance) in B.data["viruses"]
@@ -236,93 +263,130 @@
 			for(var/i in 1 to min(multiplier, 5))
 				D.Evolve(level_min, level_max)
 
-/datum/chemical_reaction/mix_virus/mix_virus_2
+/datum/chemical_reaction/mix_virus/synth
+	id = "mixvirus_synth"
+	required_catalysts = list(/datum/reagent/blood/synthetics = 1)
 
+/datum/chemical_reaction/mix_virus/mix_virus_2
 	name = "Mix Virus 2"
 	id = "mixvirus2"
 	required_reagents = list(/datum/reagent/toxin/mutagen = 1)
 	level_min = 2
 	level_max = 4
 
-/datum/chemical_reaction/mix_virus/mix_virus_3
+/datum/chemical_reaction/mix_virus/mix_virus_2/synth
+	id = "mixvirus2_synth"
+	required_catalysts = list(/datum/reagent/blood/synthetics = 1)
 
+/datum/chemical_reaction/mix_virus/mix_virus_3
 	name = "Mix Virus 3"
 	id = "mixvirus3"
 	required_reagents = list(/datum/reagent/toxin/plasma = 1)
 	level_min = 4
 	level_max = 6
 
-/datum/chemical_reaction/mix_virus/mix_virus_4
+/datum/chemical_reaction/mix_virus/mix_virus_3/synth
+	id = "mixvirus3_synth"
+	required_catalysts = list(/datum/reagent/blood/synthetics = 1)
 
+/datum/chemical_reaction/mix_virus/mix_virus_4
 	name = "Mix Virus 4"
 	id = "mixvirus4"
 	required_reagents = list(/datum/reagent/uranium = 1)
 	level_min = 5
 	level_max = 6
 
-/datum/chemical_reaction/mix_virus/mix_virus_5
+/datum/chemical_reaction/mix_virus/mix_virus_4/synth
+	id = "mixvirus4_synth"
+	required_catalysts = list(/datum/reagent/blood/synthetics = 1)
 
+/datum/chemical_reaction/mix_virus/mix_virus_5
 	name = "Mix Virus 5"
 	id = "mixvirus5"
 	required_reagents = list(/datum/reagent/toxin/mutagen/mutagenvirusfood = 1)
 	level_min = 3
 	level_max = 3
 
-/datum/chemical_reaction/mix_virus/mix_virus_6
+/datum/chemical_reaction/mix_virus/mix_virus_5/synth
+	id = "mixvirus5_synth"
+	required_catalysts = list(/datum/reagent/blood/synthetics = 1)
 
+/datum/chemical_reaction/mix_virus/mix_virus_6
 	name = "Mix Virus 6"
 	id = "mixvirus6"
 	required_reagents = list(/datum/reagent/toxin/mutagen/mutagenvirusfood/sugar = 1)
 	level_min = 4
 	level_max = 4
 
-/datum/chemical_reaction/mix_virus/mix_virus_7
+/datum/chemical_reaction/mix_virus/mix_virus_6/synth
+	id = "mixvirus6_synth"
+	required_catalysts = list(/datum/reagent/blood/synthetics = 1)
 
+/datum/chemical_reaction/mix_virus/mix_virus_7
 	name = "Mix Virus 7"
 	id = "mixvirus7"
 	required_reagents = list(/datum/reagent/toxin/plasma/plasmavirusfood/weak = 1)
 	level_min = 5
 	level_max = 5
 
-/datum/chemical_reaction/mix_virus/mix_virus_8
+/datum/chemical_reaction/mix_virus/mix_virus_7/synth
+	id = "mixvirus7_synth"
+	required_catalysts = list(/datum/reagent/blood/synthetics = 1)
 
+/datum/chemical_reaction/mix_virus/mix_virus_8
 	name = "Mix Virus 8"
 	id = "mixvirus8"
 	required_reagents = list(/datum/reagent/toxin/plasma/plasmavirusfood = 1)
 	level_min = 6
 	level_max = 6
 
-/datum/chemical_reaction/mix_virus/mix_virus_9
+/datum/chemical_reaction/mix_virus/mix_virus_8/synth
+	id = "mixvirus8_synth"
+	required_catalysts = list(/datum/reagent/blood/synthetics = 1)
 
+/datum/chemical_reaction/mix_virus/mix_virus_9
 	name = "Mix Virus 9"
 	id = "mixvirus9"
 	required_reagents = list(/datum/reagent/medicine/synaptizine/synaptizinevirusfood = 1)
 	level_min = 1
 	level_max = 1
 
-/datum/chemical_reaction/mix_virus/mix_virus_10
+/datum/chemical_reaction/mix_virus/mix_virus_9/synth
+	id = "mixvirus9_synth"
+	required_catalysts = list(/datum/reagent/blood/synthetics = 1)
 
+/datum/chemical_reaction/mix_virus/mix_virus_10
 	name = "Mix Virus 10"
 	id = "mixvirus10"
 	required_reagents = list(/datum/reagent/uranium/uraniumvirusfood = 1)
 	level_min = 6
 	level_max = 7
 
-/datum/chemical_reaction/mix_virus/mix_virus_11
+/datum/chemical_reaction/mix_virus/mix_virus_10/synth
+	id = "mixvirus10_synth"
+	required_catalysts = list(/datum/reagent/blood/synthetics = 1)
 
+/datum/chemical_reaction/mix_virus/mix_virus_11
 	name = "Mix Virus 11"
 	id = "mixvirus11"
 	required_reagents = list(/datum/reagent/uranium/uraniumvirusfood/unstable = 1)
 	level_min = 7
 	level_max = 7
 
-/datum/chemical_reaction/mix_virus/mix_virus_12
+/datum/chemical_reaction/mix_virus/mix_virus_11/synth
+	id = "mixvirus11_synth"
+	required_catalysts = list(/datum/reagent/blood/synthetics = 1)
 
+/datum/chemical_reaction/mix_virus/mix_virus_12
 	name = "Mix Virus 12"
 	id = "mixvirus12"
 	required_reagents = list(/datum/reagent/uranium/uraniumvirusfood/stable = 1)
 	level_min = 8
 	level_max = 8
+
+/datum/chemical_reaction/mix_virus/mix_virus_12/synth
+	id = "mixvirus12_synth"
+	required_catalysts = list(/datum/reagent/blood/synthetics = 1)
 
 /datum/chemical_reaction/mix_virus/rem_virus
 	name = "Devolve Virus"
@@ -338,6 +402,10 @@
 			for(var/i in 1 to min(multiplier, 5))
 				D.Devolve()
 
+/datum/chemical_reaction/mix_virus/rem_virus/synth
+	id = "remvirus_synth"
+	required_catalysts = list(/datum/reagent/blood/synthetics = 1)
+
 /datum/chemical_reaction/mix_virus/neuter_virus
 	name = "Neuter Virus"
 	id = "neutervirus"
@@ -351,6 +419,10 @@
 		if(D)
 			for(var/i in 1 to min(multiplier, 5))
 				D.Neuter()
+
+/datum/chemical_reaction/mix_virus/neuter_virus/synth
+	id = "neutervirus_synth"
+	required_catalysts = list(/datum/reagent/blood/synthetics = 1)
 
 ////////////////////////////////// foam and foam precursor ///////////////////////////////////////////////////
 
@@ -743,3 +815,13 @@
 	id = "blue_glitter_white"
 	results = list(/datum/reagent/glitter/blue  = 2)
 	required_reagents = list(/datum/reagent/glitter/white = 1, /datum/reagent/colorful_reagent/crayonpowder/blue = 1)
+
+//////////////////////////////////// Synthblood ///////////////////////////////////////////
+
+/datum/chemical_reaction/synth_blood
+	name = "Synthetic Blood"
+	id = /datum/reagent/blood/synthetics
+	results = list(/datum/reagent/blood/synthetics = 3)
+	required_reagents = list(/datum/reagent/medicine/salglu_solution = 1, /datum/reagent/iron = 1, /datum/reagent/stable_plasma = 1)
+	mix_message = "The mixture congeals and gives off a faint copper scent."
+	required_temp = 350

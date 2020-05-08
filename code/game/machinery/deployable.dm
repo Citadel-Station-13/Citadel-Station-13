@@ -15,7 +15,7 @@
 	density = TRUE
 	max_integrity = 100
 	var/proj_pass_rate = 50 //How many projectiles will pass the cover. Lower means stronger cover
-	var/material = METAL
+	var/bar_material = METAL
 
 /obj/structure/barricade/deconstruct(disassembled = TRUE)
 	if(!(flags_1 & NODECONSTRUCT_1))
@@ -26,14 +26,14 @@
 	return
 
 /obj/structure/barricade/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/weldingtool) && user.a_intent != INTENT_HARM && material == METAL)
+	if(istype(I, /obj/item/weldingtool) && user.a_intent != INTENT_HARM && bar_material == METAL)
 		if(obj_integrity < max_integrity)
 			if(!I.tool_start_check(user, amount=0))
 				return
 
 			to_chat(user, "<span class='notice'>You begin repairing [src]...</span>")
 			if(I.use_tool(src, user, 40, volume=40))
-				obj_integrity = CLAMP(obj_integrity + 20, 0, max_integrity)
+				obj_integrity = clamp(obj_integrity + 20, 0, max_integrity)
 	else
 		return ..()
 
@@ -61,7 +61,7 @@
 	desc = "This space is blocked off by a wooden barricade."
 	icon = 'icons/obj/structures.dmi'
 	icon_state = "woodenbarricade"
-	material = WOOD
+	bar_material = WOOD
 	var/drop_amount = 3
 
 /obj/structure/barricade/wooden/attackby(obj/item/I, mob/user)
@@ -106,7 +106,7 @@
 	max_integrity = 280
 	proj_pass_rate = 20
 	pass_flags = LETPASSTHROW
-	material = SAND
+	bar_material = SAND
 	climbable = TRUE
 	smooth = SMOOTH_TRUE
 	canSmoothWith = list(/obj/structure/barricade/sandbags, /turf/closed/wall, /turf/closed/wall/r_wall, /obj/structure/falsewall, /obj/structure/falsewall/reinforced, /turf/closed/wall/rust, /turf/closed/wall/r_wall/rust, /obj/structure/barricade/security)

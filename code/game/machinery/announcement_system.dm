@@ -29,25 +29,25 @@ GLOBAL_LIST_EMPTY(announcement_systems)
 /obj/machinery/announcement_system/Initialize()
 	. = ..()
 	GLOB.announcement_systems += src
-	radio = new /obj/item/radio/headset/ai(src)
+	radio = new /obj/item/radio/headset/silicon/ai(src)
 	update_icon()
 
-/obj/machinery/announcement_system/update_icon()
+/obj/machinery/announcement_system/update_icon_state()
 	if(is_operational())
 		icon_state = (panel_open ? "AAS_On_Open" : "AAS_On")
 	else
 		icon_state = (panel_open ? "AAS_Off_Open" : "AAS_Off")
 
-
-	cut_overlays()
+/obj/machinery/announcement_system/update_overlays()
+	. =..()
 	if(arrivalToggle)
-		add_overlay(greenlight)
+		. += greenlight
 
 	if(newheadToggle)
-		add_overlay(pinklight)
+		. += pinklight
 
 	if(stat & BROKEN)
-		add_overlay(errorlight)
+		. += errorlight
 
 /obj/machinery/announcement_system/Destroy()
 	QDEL_NULL(radio)
@@ -105,7 +105,7 @@ GLOBAL_LIST_EMPTY(announcement_systems)
 
 /obj/machinery/announcement_system/ui_interact(mob/user)
 	. = ..()
-	if(!user.canUseTopic(src, !issilicon(user)))
+	if(!user.canUseTopic(src, !hasSiliconAccessInArea(user)))
 		return
 	if(stat & BROKEN)
 		visible_message("<span class='warning'>[src] buzzes.</span>", "<span class='italics'>You hear a faint buzz.</span>")
@@ -123,7 +123,7 @@ GLOBAL_LIST_EMPTY(announcement_systems)
 /obj/machinery/announcement_system/Topic(href, href_list)
 	if(..())
 		return
-	if(!usr.canUseTopic(src, !issilicon(usr)))
+	if(!usr.canUseTopic(src, !hasSiliconAccessInArea(usr)))
 		return
 	if(stat & BROKEN)
 		visible_message("<span class='warning'>[src] buzzes.</span>", "<span class='italics'>You hear a faint buzz.</span>")
@@ -132,13 +132,13 @@ GLOBAL_LIST_EMPTY(announcement_systems)
 
 	if(href_list["ArrivalTopic"])
 		var/NewMessage = stripped_input(usr, "Enter in the arrivals announcement configuration.", "Arrivals Announcement Config", arrival)
-		if(!usr.canUseTopic(src, !issilicon(usr)))
+		if(!usr.canUseTopic(src, !hasSiliconAccessInArea(usr)))
 			return
 		if(NewMessage)
 			arrival = NewMessage
 	else if(href_list["NewheadTopic"])
 		var/NewMessage = stripped_input(usr, "Enter in the departmental head announcement configuration.", "Head Departmental Announcement Config", newhead)
-		if(!usr.canUseTopic(src, !issilicon(usr)))
+		if(!usr.canUseTopic(src, !hasSiliconAccessInArea(usr)))
 			return
 		if(NewMessage)
 			newhead = NewMessage
@@ -157,7 +157,7 @@ GLOBAL_LIST_EMPTY(announcement_systems)
 	. = attack_ai(user)
 
 /obj/machinery/announcement_system/attack_ai(mob/user)
-	if(!user.canUseTopic(src, !issilicon(user)))
+	if(!user.canUseTopic(src, !hasSiliconAccessInArea(user)))
 		return
 	if(stat & BROKEN)
 		to_chat(user, "<span class='warning'>[src]'s firmware appears to be malfunctioning!</span>")

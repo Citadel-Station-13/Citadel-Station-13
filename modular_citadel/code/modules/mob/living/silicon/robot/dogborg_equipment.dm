@@ -54,8 +54,8 @@ SLEEPER CODE IS IN game/objects/items/devices/dogborg_sleeper.dm !
 		var/mob/living/M = A
 		var/cachedstam = M.getStaminaLoss()
 		var/totalstuntime = cachedstam * stamtostunconversion * (M.lying ? 2 : 1)
-		if(!M.resting)
-			M.Knockdown(cachedstam*2) //BORK BORK. GET DOWN.
+		if(CHECK_MOBILITY(M, MOBILITY_STAND))
+			M.DefaultCombatKnockdown(cachedstam*2) //BORK BORK. GET DOWN.
 		M.Stun(totalstuntime)
 		user.do_attack_animation(A, ATTACK_EFFECT_BITE)
 		user.start_pulling(M, TRUE) //Yip yip. Come with.
@@ -265,26 +265,28 @@ SLEEPER CODE IS IN game/objects/items/devices/dogborg_sleeper.dm !
 			R.cell.give(500)
 			return
 		R.visible_message("[R] begins to lick \the [target.name] clean...", "<span class='notice'>You begin to lick \the [target.name] clean...</span>")
-	else if(ishuman(target))
+	else if(isliving(target))
 		var/mob/living/L = target
-		if(status == 0 && check_zone(R.zone_selected) == "head")
-			R.visible_message("<span class='warning'>\the [R] affectionally licks \the [L]'s face!</span>", "<span class='notice'>You affectionally lick \the [L]'s face!</span>")
-			playsound(src.loc, 'sound/effects/attackblob.ogg', 50, 1)
-			if(istype(L) && L.fire_stacks > 0)
-				L.adjust_fire_stacks(-10)
-			return
-		else if(status == 0)
-			R.visible_message("<span class='warning'>\the [R] affectionally licks \the [L]!</span>", "<span class='notice'>You affectionally lick \the [L]!</span>")
-			playsound(src.loc, 'sound/effects/attackblob.ogg', 50, 1)
-			if(istype(L) && L.fire_stacks > 0)
-				L.adjust_fire_stacks(-10)
-			return
+		if(!status)
+			if(L.ckey && !(L.client?.prefs.vore_flags & LICKABLE))
+				to_chat(R, "<span class='danger'>ERROR ERROR: Target not lickable. Aborting display-of-affection subroutine.</span>")
+				return
+			if(check_zone(R.zone_selected) == "head")
+				R.visible_message("<span class='warning'>\the [R] affectionally licks \the [L]'s face!</span>", "<span class='notice'>You affectionally lick \the [L]'s face!</span>")
+				playsound(src.loc, 'sound/effects/attackblob.ogg', 50, 1)
+				if(istype(L) && L.fire_stacks > 0)
+					L.adjust_fire_stacks(-10)
+			else
+				R.visible_message("<span class='warning'>\the [R] affectionally licks \the [L]!</span>", "<span class='notice'>You affectionally lick \the [L]!</span>")
+				playsound(src.loc, 'sound/effects/attackblob.ogg', 50, 1)
+				if(istype(L) && L.fire_stacks > 0)
+					L.adjust_fire_stacks(-10)
 		else
 			if(R.cell.charge <= 800)
 				to_chat(R, "Insufficent Power!")
 				return
 			L.Stun(4) // normal stunbaton is force 7 gimme a break good sir!
-			L.Knockdown(80)
+			L.DefaultCombatKnockdown(80)
 			L.apply_effect(EFFECT_STUTTER, 4)
 			L.visible_message("<span class='danger'>[R] has shocked [L] with its tongue!</span>", \
 								"<span class='userdanger'>[R] has shocked you with its tongue!</span>")
@@ -310,35 +312,43 @@ SLEEPER CODE IS IN game/objects/items/devices/dogborg_sleeper.dm !
 	return
 
 //Nerfed tongue for flavour reasons (haha geddit?). Used for aux skins for regular borgs
-/obj/item/soap/tongue/flavour
+/obj/item/dogborg_tongue
+	name = "synthetic tongue"
+	desc = "Useful for slurping mess off the floor before affectionally licking the crew members in the face."
+	icon = 'icons/mob/dogborg.dmi'
+	icon_state = "synthtongue"
+	hitsound = 'sound/effects/attackblob.ogg'
 	desc = "For giving affectionate kisses."
+	item_flags = NOBLUDGEON
 
-/obj/item/soap/tongue/flavour/attack_self(mob/user)
-	return
-
-/obj/item/soap/tongue/flavour/afterattack(atom/target, mob/user, proximity)
-	if(!proximity)
+/obj/item/dogborg_tongue/afterattack(atom/target, mob/user, proximity)
+	. = ..()
+	if(!proximity || !isliving(target))
 		return
 	var/mob/living/silicon/robot/R = user
-	if(ishuman(target))
-		var/mob/living/L = target
-		if(status == 0 && check_zone(R.zone_selected) == "head")
-			R.visible_message("<span class='warning'>\the [R] affectionally licks \the [L]'s face!</span>", "<span class='notice'>You affectionally lick \the [L]'s face!</span>")
-			playsound(src.loc, 'sound/effects/attackblob.ogg', 50, 1)
-			return
-		else if(status == 0)
-			R.visible_message("<span class='warning'>\the [R] affectionally licks \the [L]!</span>", "<span class='notice'>You affectionally lick \the [L]!</span>")
-			playsound(src.loc, 'sound/effects/attackblob.ogg', 50, 1)
-			return
+	var/mob/living/L = target
+	if(L.ckey && !(L.client?.prefs.vore_flags & LICKABLE))
+		to_chat(R, "<span class='danger'>ERROR ERROR: Target not lickable. Aborting display-of-affection subroutine.</span>")
+		return
 
-//Same as above but for noses
-/obj/item/analyzer/nose/flavour/AltClick(mob/user)
-	return
+	if(check_zone(R.zone_selected) == "head")
+		R.visible_message("<span class='warning'>\the [R] affectionally licks \the [L]'s face!</span>", "<span class='notice'>You affectionally lick \the [L]'s face!</span>")
+		playsound(R, 'sound/effects/attackblob.ogg', 50, 1)
+	else
+		R.visible_message("<span class='warning'>\the [R] affectionally licks \the [L]!</span>", "<span class='notice'>You affectionally lick \the [L]!</span>")
+		playsound(R, 'sound/effects/attackblob.ogg', 50, 1)
 
-/obj/item/analyzer/nose/flavour/attack_self(mob/user)
-	return
 
-/obj/item/analyzer/nose/flavour/afterattack(atom/target, mob/user, proximity)
+/obj/item/dogborg_nose
+	name = "boop module"
+	icon = 'icons/mob/dogborg.dmi'
+	icon_state = "nose"
+	desc = "The BOOP module"
+	flags_1 = CONDUCT_1|NOBLUDGEON
+	force = 0
+
+/obj/item/dogborg_nose/afterattack(atom/target, mob/user, proximity)
+	. = ..()
 	if(!proximity)
 		return
 	do_attack_animation(target, null, src)
@@ -424,15 +434,15 @@ SLEEPER CODE IS IN game/objects/items/devices/dogborg_sleeper.dm !
 	if(hit_atom)
 		if(isliving(hit_atom))
 			var/mob/living/L = hit_atom
-			if(!L.check_shields(0, "the [name]", src, attack_type = LEAP_ATTACK))
+			if(L.run_block(0, "the [name]", src, ATTACK_TYPE_TACKLE, 0, src) & BLOCK_SUCCESS)
+				DefaultCombatKnockdown(15, 1, 1)
+			else
 				L.visible_message("<span class ='danger'>[src] pounces on [L]!</span>", "<span class ='userdanger'>[src] pounces on you!</span>")
-				L.Knockdown(iscarbon(L) ? 60 : 45, override_stamdmg = CLAMP(pounce_stamloss, 0, pounce_stamloss_cap-L.getStaminaLoss())) // Temporary. If someone could rework how dogborg pounces work to accomodate for combat changes, that'd be nice.
+				L.DefaultCombatKnockdown(iscarbon(L) ? 60 : 45, override_stamdmg = clamp(pounce_stamloss, 0, pounce_stamloss_cap-L.getStaminaLoss())) // Temporary. If someone could rework how dogborg pounces work to accomodate for combat changes, that'd be nice.
 				playsound(src, 'sound/weapons/Egloves.ogg', 50, 1)
 				sleep(2)//Runtime prevention (infinite bump() calls on hulks)
 				step_towards(src,L)
 				log_combat(src, L, "borg pounced")
-			else
-				Knockdown(15, 1, 1)
 
 			pounce_cooldown = !pounce_cooldown
 			spawn(pounce_cooldown_time) //3s by default
@@ -440,10 +450,10 @@ SLEEPER CODE IS IN game/objects/items/devices/dogborg_sleeper.dm !
 		else if(hit_atom.density && !hit_atom.CanPass(src))
 			visible_message("<span class ='danger'>[src] smashes into [hit_atom]!</span>", "<span class ='userdanger'>You smash into [hit_atom]!</span>")
 			playsound(src, 'sound/items/trayhit1.ogg', 50, 1)
-			Knockdown(15, 1, 1)
+			DefaultCombatKnockdown(15, 1, 1)
 
 		if(leaping)
 			leaping = 0
 			pixel_y = initial(pixel_y)
 			update_icons()
-			update_canmove()
+			update_mobility()

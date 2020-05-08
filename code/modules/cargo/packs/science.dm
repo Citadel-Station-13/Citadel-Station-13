@@ -25,6 +25,7 @@
 	desc = "Hello brothers from the stars!!! Our fellow brethren have made contact at long last and gave us gifts man! They really did build the prymi- Connection Error- Bro we’ll send you a sheet of advanced alien alloy."
 	cost = 15000
 	DropPodOnly = TRUE
+	contraband = TRUE
 	contains = list(/obj/item/stack/sheet/mineral/abductor)
 	crate_name = "alien bro alloy crate"
 
@@ -83,7 +84,7 @@
 
 /datum/supply_pack/science/glasswork
 	name = "Glass Blower Kit Crate"
-	desc = "Learn and make glassworks of usefull things for a profit! Contains glassworking tools and blowing rods. Glass not included."
+	desc = "Learn and make glassworks of useful things for a profit! Contains glassworking tools and blowing rods. Glass not included."
 	cost = 1000
 	contains = list(/obj/item/glasswork/glasskit,
 					/obj/item/glasswork/glasskit,
@@ -106,17 +107,6 @@
 					/obj/item/clothing/gloves/color/latex/nitrile,
 					/obj/item/clothing/gloves/color/latex/nitrile)
 	crate_name = "nitrile gloves crate"
-
-/datum/supply_pack/science/nuke_b_gone
-	name = "Nuke Defusal Kit"
-	desc = "Contains set of tools to defuse a nuke."
-	cost = 7500 //Usefull for traitors/nukies that fucked up
-	dangerous = TRUE
-	DropPodOnly = TRUE
-	contains = list(/obj/item/nuke_core_container/nt,
-					/obj/item/screwdriver/nuke/nt,
-					/obj/item/paper/guides/nt/nuke_instructions)
-	crate_name = "safe defusal kit storage"
 
 /datum/supply_pack/science/plasma
 	name = "Plasma Assembly Crate"
@@ -190,17 +180,6 @@
 	crate_name = "slime core crate"
 	crate_type = /obj/structure/closet/crate/secure/science
 
-/datum/supply_pack/science/supermater
-	name = "Supermatter Extraction Tools Crate"
-	desc = "Contains a set of tools to extract a sliver of supermatter. Consult your CE today!"
-	cost = 7500 //Usefull for traitors that fucked up
-	hidden = TRUE
-	contains = list(/obj/item/nuke_core_container/supermatter,
-					/obj/item/scalpel/supermatter,
-					/obj/item/hemostat/supermatter,
-					/obj/item/paper/guides/antag/supermatter_sliver)
-	crate_name = "supermatter extraction kit crate"
-
 /datum/supply_pack/science/tablets
 	name = "Tablet Crate"
 	desc = "What's a computer? Contains five cargo tablets."
@@ -223,10 +202,3 @@
 	crate_type = /obj/structure/closet/crate/secure/science
 	dangerous = TRUE
 
-/datum/supply_pack/science/tech_slugs
-	name = "Tech Slug Ammo Shells"
-	desc = "A new type of shell that is able to be made into a few different dangerous types. Contains two boxes of tech slugs, 14 shells in all."
-	cost = 1700
-	contains = list(/obj/item/storage/box/techsslug,
-					/obj/item/storage/box/techsslug)
-	crate_name = "tech slug crate"

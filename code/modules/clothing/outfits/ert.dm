@@ -1,9 +1,9 @@
 /datum/outfit/ert
 	name = "ERT Common"
 
-	uniform = /obj/item/clothing/under/rank/centcom_officer
+	uniform = /obj/item/clothing/under/rank/centcom/officer
 	shoes = /obj/item/clothing/shoes/combat/swat
-	gloves = /obj/item/clothing/gloves/combat
+	gloves = /obj/item/clothing/gloves/tackler/combat/insulated
 	ears = /obj/item/radio/headset/headset_cent/alt
 
 /datum/outfit/ert/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE, client/preference_source)
@@ -18,8 +18,9 @@
 	R.freqlock = TRUE
 
 	var/obj/item/card/id/W = H.wear_id
-	W.registered_name = H.real_name
-	W.update_label(W.registered_name, W.assignment)
+	if(W)
+		W.registered_name = H.real_name
+		W.update_label(W.registered_name, W.assignment)
 
 /datum/outfit/ert/commander
 	name = "ERT Commander"
@@ -68,8 +69,8 @@
 	id = /obj/item/card/id/ert/Security
 	suit = /obj/item/clothing/suit/space/hardsuit/ert/sec
 	glasses = /obj/item/clothing/glasses/hud/security/sunglasses
-	back = /obj/item/storage/backpack/security
 	belt = /obj/item/storage/belt/security/full
+	back = /obj/item/storage/backpack/security
 	backpack_contents = list(/obj/item/storage/box/engineer=1,\
 		/obj/item/storage/box/handcuffs=1,\
 		/obj/item/clothing/mask/gas/sechailer=1,\
@@ -226,7 +227,7 @@
 /datum/outfit/centcom_official
 	name = "CentCom Official"
 
-	uniform = /obj/item/clothing/under/rank/centcom_officer
+	uniform = /obj/item/clothing/under/rank/centcom/officer
 	shoes = /obj/item/clothing/shoes/sneakers/black
 	gloves = /obj/item/clothing/gloves/color/black
 	ears = /obj/item/radio/headset/headset_cent

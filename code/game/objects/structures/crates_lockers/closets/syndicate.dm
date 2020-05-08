@@ -15,7 +15,7 @@
 	new /obj/item/ammo_box/magazine/m10mm(src)
 	new /obj/item/storage/belt/military(src)
 	new /obj/item/crowbar/red(src)
-	new /obj/item/clothing/glasses/night(src)
+	new /obj/item/clothing/glasses/night/syndicate(src)
 
 /obj/structure/closet/syndicate/nuclear
 	desc = "It's a storage unit for a Syndicate boarding party."

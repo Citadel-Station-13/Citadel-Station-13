@@ -22,6 +22,23 @@
 // Is an open container for all intents and purposes.
 #define OPENCONTAINER 	(REFILLABLE | DRAINABLE | TRANSPARENT)
 
+//reagents_value defines, basically a multiplier used in reagent containers cargo selling.
+#define DEFAULT_REAGENTS_VALUE 1
+#define NO_REAGENTS_VALUE 0
+#define HARVEST_REAGENTS_VALUE 0.3
+
+/// Standard reagents value defines.
+/// Take a grain of salt, only "rare" reagents should have a decent value here, for balance reasons.
+/// TL;DR Think of it also like general market request price more than rarity.
+#define REAGENT_VALUE_NONE			0	//all the stuff pretty much available in potentially unlimited quantities.
+#define REAGENT_VALUE_VERY_COMMON	0.1 //same as above, just not so unlimited.
+#define REAGENT_VALUE_COMMON		0.5
+#define REAGENT_VALUE_UNCOMMON		1
+#define REAGENT_VALUE_RARE			2.5
+#define REAGENT_VALUE_VERY_RARE		5
+#define REAGENT_VALUE_EXCEPTIONAL	10	//extremely rare or tedious to craft, possibly unsynthetizable, reagents.
+#define REAGENT_VALUE_AMAZING		30	//reserved ONLY for non-mass produceable, unsynthetizable reagents.
+#define REAGENT_VALUE_GLORIOUS		300	//reagents that shouldn't be possible to get or farm under normal conditions. e.g. Romerol, fungal TB, adminordrazine...
 
 #define TOUCH			1	// splashing
 #define INGEST			2	// ingestion
@@ -39,6 +56,8 @@
 #define DEL_REAGENT		1	// reagent deleted (fully cleared)
 #define ADD_REAGENT		2	// reagent added
 #define REM_REAGENT		3	// reagent removed (may still exist)
+
+#define THRESHOLD_UNHUSK 50 // health threshold for synthflesh/rezadone to unhusk someone
 
 //reagent bitflags, used for altering how they works
 #define REAGENT_DEAD_PROCESS		(1<<0)	//calls on_mob_dead() if present in a dead body

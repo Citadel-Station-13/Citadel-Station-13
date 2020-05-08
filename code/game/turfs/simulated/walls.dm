@@ -70,7 +70,8 @@
 
 /turf/closed/wall/proc/break_wall()
 	new sheet_type(src, sheet_amount)
-	return new girder_type(src)
+	if(girder_type)
+		return new girder_type(src)
 
 /turf/closed/wall/proc/devastate_wall()
 	new sheet_type(src, sheet_amount)
@@ -171,7 +172,8 @@
 	var/turf/T = user.loc	//get user's location for delay checks
 
 	//the istype cascade has been spread among various procs for easy overriding
-	if(try_clean(W, user, T) || try_wallmount(W, user, T) || try_decon(W, user, T) || try_destroy(W, user, T))
+	var/srctype = type
+	if(try_clean(W, user, T) || try_wallmount(W, user, T) || try_decon(W, user, T) || (type == srctype && try_destroy(W, user, T)))
 		return
 
 	return ..()

@@ -42,7 +42,7 @@
 	..()
 	update_icon()
 
-/obj/machinery/smartfridge/update_icon()
+/obj/machinery/smartfridge/update_icon_state()
 	if(!stat)
 		if(visible_contents)
 			switch(contents.len)
@@ -289,13 +289,12 @@
 	..()
 	update_icon()
 
-/obj/machinery/smartfridge/drying_rack/update_icon()
-	..()
-	cut_overlays()
+/obj/machinery/smartfridge/drying_rack/update_overlays()
+	. = ..()
 	if(drying)
-		add_overlay("drying_rack_drying")
+		. += "drying_rack_drying"
 	if(contents.len)
-		add_overlay("drying_rack_filled")
+		. += "drying_rack_filled"
 
 /obj/machinery/smartfridge/drying_rack/process()
 	..()

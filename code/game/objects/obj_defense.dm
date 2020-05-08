@@ -6,20 +6,19 @@
 		return
 	if(sound_effect)
 		play_attack_sound(damage_amount, damage_type, damage_flag)
-	if(!(resistance_flags & INDESTRUCTIBLE) && obj_integrity > 0)
-		damage_amount = run_obj_armor(damage_amount, damage_type, damage_flag, attack_dir, armour_penetration)
-		if(damage_amount >= DAMAGE_PRECISION)
-			. = damage_amount
-			var/old_integ = obj_integrity
-			obj_integrity = max(old_integ - damage_amount, 0)
-			if(obj_integrity <= 0)
-				var/int_fail = integrity_failure
-				if(int_fail && old_integ > int_fail)
-					obj_break(damage_flag)
-				obj_destruction(damage_flag)
-			else if(integrity_failure)
-				if(obj_integrity <= integrity_failure)
-					obj_break(damage_flag)
+	if((resistance_flags & INDESTRUCTIBLE) || obj_integrity <= 0)
+		return
+	damage_amount = run_obj_armor(damage_amount, damage_type, damage_flag, attack_dir, armour_penetration)
+	if(damage_amount < DAMAGE_PRECISION)
+		return
+	. = damage_amount
+	obj_integrity = max(obj_integrity - damage_amount, 0)
+	//BREAKING FIRST
+	if(integrity_failure && obj_integrity <= integrity_failure * max_integrity)
+		obj_break(damage_flag)
+	//DESTROYING SECOND
+	if(obj_integrity <= 0)
+		obj_destruction(damage_flag)
 
 //returns the damage value of the attack after processing the obj's various armor protections
 /obj/proc/run_obj_armor(damage_amount, damage_type, damage_flag = 0, attack_dir, armour_penetration = 0)
@@ -32,7 +31,7 @@
 	if(damage_flag)
 		armor_protection = armor.getRating(damage_flag)
 	if(armor_protection)		//Only apply weak-against-armor/hollowpoint effects if there actually IS armor.
-		armor_protection = CLAMP(armor_protection - armour_penetration, 0, 100)
+		armor_protection = clamp(armor_protection - armour_penetration, 0, 100)
 	return round(damage_amount * (100 - armor_protection)*0.01, DAMAGE_PRECISION)
 
 //the sound played when the obj is damaged.
@@ -214,7 +213,7 @@ GLOBAL_DATUM_INIT(acid_overlay, /mutable_appearance, mutable_appearance('icons/e
 		if(T.intact && level == 1) //fire can't damage things hidden below the floor.
 			return
 	if(exposed_temperature && !(resistance_flags & FIRE_PROOF))
-		take_damage(CLAMP(0.02 * exposed_temperature, 0, 20), BURN, "fire", 0)
+		take_damage(clamp(0.02 * exposed_temperature, 0, 20), BURN, "fire", 0)
 	if(!(resistance_flags & ON_FIRE) && (resistance_flags & FLAMMABLE))
 		resistance_flags |= ON_FIRE
 		SSfire_burning.processing[src] = src
@@ -245,7 +244,7 @@ GLOBAL_DATUM_INIT(acid_overlay, /mutable_appearance, mutable_appearance('icons/e
 	if(has_buckled_mobs())
 		for(var/m in buckled_mobs)
 			var/mob/living/buckled_mob = m
-			buckled_mob.electrocute_act((CLAMP(round(strength/400), 10, 90) + rand(-5, 5)), src, tesla_shock = 1)
+			buckled_mob.electrocute_act((clamp(round(strength/400), 10, 90) + rand(-5, 5)), src, flags = SHOCK_TESLA)
 
 /obj/proc/reset_shocked()
 	obj_flags &= ~BEING_SHOCKED
@@ -271,7 +270,7 @@ GLOBAL_DATUM_INIT(acid_overlay, /mutable_appearance, mutable_appearance('icons/e
 
 //changes max_integrity while retaining current health percentage
 //returns TRUE if the obj broke, FALSE otherwise
-/obj/proc/modify_max_integrity(new_max, can_break = TRUE, damage_type = BRUTE, new_failure_integrity = null)
+/obj/proc/modify_max_integrity(new_max, can_break = TRUE, damage_type = BRUTE)
 	var/current_integrity = obj_integrity
 	var/current_max = max_integrity
 
@@ -282,10 +281,7 @@ GLOBAL_DATUM_INIT(acid_overlay, /mutable_appearance, mutable_appearance('icons/e
 
 	max_integrity = new_max
 
-	if(new_failure_integrity != null)
-		integrity_failure = new_failure_integrity
-
-	if(can_break && integrity_failure && current_integrity <= integrity_failure)
+	if(can_break && integrity_failure && current_integrity <= integrity_failure * max_integrity)
 		obj_break(damage_type)
 		return TRUE
 	return FALSE

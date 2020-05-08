@@ -1,4 +1,0 @@
-author: "Putnam3145"
-delete-after: True
-changes: 
-  - balance: "Metabolic synthesis disables if user isn't well-fed rather than if user is starving"

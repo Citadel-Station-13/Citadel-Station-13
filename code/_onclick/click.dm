@@ -75,6 +75,9 @@
 	if(notransform)
 		return
 
+	if(SEND_SIGNAL(src, COMSIG_MOB_CLICKON, A, params) & COMSIG_MOB_CANCEL_CLICKON)
+		return
+		
 	var/list/modifiers = params2list(params)
 	if(modifiers["shift"] && modifiers["middle"])
 		ShiftMiddleClickOn(A)
@@ -152,10 +155,10 @@
 		else
 			if(ismob(A))
 				changeNext_move(CLICK_CD_MELEE)
-			UnarmedAttack(A,1)
+			UnarmedAttack(A, 1)
 	else
 		if(W)
-			W.afterattack(A,src,0,params)
+			W.ranged_attack_chain(src, A, params)
 		else
 			RangedAttack(A,params)
 
@@ -319,9 +322,11 @@
 /mob/proc/ShiftClickOn(atom/A)
 	A.ShiftClick(src)
 	return
+
 /atom/proc/ShiftClick(mob/user)
-	SEND_SIGNAL(src, COMSIG_CLICK_SHIFT, user)
-	user.examinate(src)
+	var/flags = SEND_SIGNAL(src, COMSIG_CLICK_SHIFT, user)
+	if(!(flags & COMPONENT_DENY_EXAMINATE) && user.client && (user.client.eye == user || user.client.eye == user.loc || flags & COMPONENT_ALLOW_EXAMINATE))
+		user.examinate(src)
 	return
 
 /*

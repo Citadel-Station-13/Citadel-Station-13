@@ -21,6 +21,7 @@
 	RegisterSignal(parent, COMSIG_ADD_MOOD_EVENT, .proc/add_event)
 	RegisterSignal(parent, COMSIG_CLEAR_MOOD_EVENT, .proc/clear_event)
 	RegisterSignal(parent, COMSIG_MODIFY_SANITY, .proc/modify_sanity)
+	RegisterSignal(parent, COMSIG_LIVING_REVIVE, .proc/on_revive)
 
 	RegisterSignal(parent, COMSIG_MOB_HUD_CREATED, .proc/modify_hud)
 	var/mob/living/owner = parent
@@ -81,7 +82,8 @@
 		msg += "<span class='nicegreen'>I don't have much of a reaction to anything right now.<span>\n"
 	to_chat(user || parent, msg)
 
-/datum/component/mood/proc/update_mood() //Called whenever a mood event is added or removed
+///Called after moodevent/s have been added/removed.
+/datum/component/mood/proc/update_mood()
 	mood = 0
 	shown_mood = 0
 	for(var/i in mood_events)
@@ -173,27 +175,27 @@
 	switch(sanity)
 		if(-INFINITY to SANITY_CRAZY)
 			setInsanityEffect(MAJOR_INSANITY_PEN)
-			master.add_movespeed_modifier(MOVESPEED_ID_SANITY, TRUE, 100, override=TRUE, multiplicative_slowdown=1.5) //Did we change something ? movetypes is runtiming, movetypes=(~FLYING))
+			master.add_movespeed_modifier(/datum/movespeed_modifier/sanity/insane)
 			sanity_level = 6
 		if(SANITY_CRAZY to SANITY_UNSTABLE)
 			setInsanityEffect(MINOR_INSANITY_PEN)
-			master.add_movespeed_modifier(MOVESPEED_ID_SANITY, TRUE, 100, override=TRUE, multiplicative_slowdown=1)//, movetypes=(~FLYING))
+			master.add_movespeed_modifier(/datum/movespeed_modifier/sanity/crazy)
 			sanity_level = 5
 		if(SANITY_UNSTABLE to SANITY_DISTURBED)
 			setInsanityEffect(0)
-			master.add_movespeed_modifier(MOVESPEED_ID_SANITY, TRUE, 100, override=TRUE, multiplicative_slowdown=0.5)//, movetypes=(~FLYING))
+			master.add_movespeed_modifier(/datum/movespeed_modifier/sanity/disturbed)
 			sanity_level = 4
 		if(SANITY_DISTURBED to SANITY_NEUTRAL)
 			setInsanityEffect(0)
-			master.remove_movespeed_modifier(MOVESPEED_ID_SANITY, TRUE)
+			master.remove_movespeed_modifier(MOVESPEED_ID_SANITY)
 			sanity_level = 3
 		if(SANITY_NEUTRAL+1 to SANITY_GREAT+1) //shitty hack but +1 to prevent it from responding to super small differences
 			setInsanityEffect(0)
-			master.remove_movespeed_modifier(MOVESPEED_ID_SANITY, TRUE)
+			master.remove_movespeed_modifier(MOVESPEED_ID_SANITY)
 			sanity_level = 2
 		if(SANITY_GREAT+1 to INFINITY)
 			setInsanityEffect(0)
-			master.remove_movespeed_modifier(MOVESPEED_ID_SANITY, TRUE)
+			master.remove_movespeed_modifier(MOVESPEED_ID_SANITY)
 			sanity_level = 1
 	//update_mood_icon()
 
@@ -234,6 +236,15 @@
 	qdel(event)
 	update_mood()
 
+/datum/component/mood/proc/remove_temp_moods() //Removes all temp moodsfor(var/i in mood_events)
+	for(var/i in mood_events)
+		var/datum/mood_event/moodlet = mood_events[i]
+		if(!moodlet || !moodlet.timeout)
+			continue
+		mood_events -= i
+		qdel(moodlet)
+	update_mood()
+
 /datum/component/mood/proc/modify_hud(datum/source)
 	var/mob/living/owner = parent
 	var/datum/hud/hud = owner.hud_used
@@ -269,6 +280,13 @@
 			add_event(null, "nutrition", /datum/mood_event/hungry)
 		if(0 to NUTRITION_LEVEL_STARVING)
 			add_event(null, "nutrition", /datum/mood_event/starving)
+
+///Called when parent is ahealed.
+/datum/component/mood/proc/on_revive(datum/source, full_heal)
+	if(!full_heal)
+		return
+	remove_temp_moods()
+	setSanity(initial(sanity))
 
 #undef MINOR_INSANITY_PEN
 #undef MAJOR_INSANITY_PEN

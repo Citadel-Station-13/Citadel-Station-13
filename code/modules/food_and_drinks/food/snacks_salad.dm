@@ -116,3 +116,12 @@
 	bonus_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/consumable/nutriment/vitamin = 4)
 	tastes = list("rice" = 1, "egg" = 1)
 	foodtype = GRAIN | MEAT //EGG = MEAT -NinjaNomNom 2017
+
+/obj/item/reagent_containers/food/snacks/salad/caesar
+	name = "caesar salad"
+	desc = "You too?"
+	icon_state = "ceasar_salad"
+	trash = /obj/item/kitchen/knife
+	bonus_reagents = list(/datum/reagent/medicine/earthsblood = 1, /datum/reagent/iron = 4)
+	tastes = list("iron" = 1, "conspiracy" = 1)
+	foodtype = VEGETABLES

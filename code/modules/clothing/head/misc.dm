@@ -372,14 +372,12 @@
 	name = "Telegram cap"
 	desc = "A bright red cap warn by hotel staff. Or people who want to be a singing telegram"
 	icon_state = "telegram"
-	item_color = "telegram"
 	dog_fashion = /datum/dog_fashion/head/telegram
 
 /obj/item/clothing/head/colour
 	name = "Singer cap"
 	desc = "A light white hat that has bands of color. Just makes you want to sing and dance!"
 	icon_state = "colour"
-	item_color = "colour"
 	dog_fashion = /datum/dog_fashion/head/colour
 
 /obj/item/clothing/head/christmashat
@@ -423,3 +421,15 @@
 	desc = "A security cowboy hat, perfect for any true lawman"
 	icon_state = "cowboyhat_sec"
 	item_state= "cowboyhat_sec"
+
+/obj/item/clothing/head/squatter_hat
+	name = "slav squatter hat"
+	icon_state = "squatter_hat"
+	item_state = "squatter_hat"
+	desc = "Cyka blyat."
+
+/obj/item/clothing/head/russobluecamohat
+	name = "russian blue camo beret"
+	desc = "A symbol of discipline, honor, and lots and lots of removal of some type of skewered food."
+	icon_state = "russobluecamohat"
+	item_state = "russobluecamohat"

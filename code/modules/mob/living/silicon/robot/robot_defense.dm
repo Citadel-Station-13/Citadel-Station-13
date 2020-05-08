@@ -36,7 +36,7 @@
 					"<span class='userdanger'>[M] has disabled [src]'s active module!</span>", null, COMBAT_MESSAGE_RANGE)
 				log_combat(M, src, "disarmed", "[I ? " removing \the [I]" : ""]")
 			else
-				Stun(40)
+				Paralyze(40)
 				step(src,get_dir(M,src))
 				log_combat(M, src, "pushed")
 				visible_message("<span class='danger'>[M] has forced back [src]!</span>", \
@@ -86,9 +86,9 @@
 		return
 	switch(severity)
 		if(1)
-			Stun(160)
+			Paralyze(160)
 		if(2)
-			Stun(60)
+			Paralyze(60)
 
 
 /mob/living/silicon/robot/emag_act(mob/user)

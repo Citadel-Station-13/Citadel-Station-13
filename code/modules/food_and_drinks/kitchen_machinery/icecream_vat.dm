@@ -319,7 +319,7 @@
 /obj/machinery/icecream_vat/proc/replace_beaker(mob/living/user, obj/item/reagent_containers/new_beaker)
 	if(beaker)
 		beaker.forceMove(drop_location())
-		if(user && Adjacent(user) && !issiliconoradminghost(user))
+		if(user && Adjacent(user) && user.can_hold_items())
 			user.put_in_hands(beaker)
 	if(new_beaker)
 		beaker = new_beaker

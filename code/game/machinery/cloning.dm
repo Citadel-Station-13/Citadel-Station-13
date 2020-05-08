@@ -61,7 +61,7 @@
 	QDEL_LIST(unattached_flesh)
 	. = ..()
 
-/obj/machinery/clonepod/RefreshParts()	
+/obj/machinery/clonepod/RefreshParts()
 	speed_coeff = 0
 	efficiency = 0
 	for(var/obj/item/stock_parts/scanning_module/S in component_parts)
@@ -69,7 +69,7 @@
 	for(var/obj/item/stock_parts/manipulator/P in component_parts)
 		speed_coeff += (P.rating / 2)
 	speed_coeff = max(1, speed_coeff)
-	heal_level = CLAMP((efficiency * 10) + 10, MINIMUM_HEAL_LEVEL, 100)
+	heal_level = clamp((efficiency * 10) + 10, MINIMUM_HEAL_LEVEL, 100)
 
 //The return of data disks?? Just for transferring between genetics machine/cloning machine.
 //TO-DO: Make the genetics machine accept them.
@@ -77,6 +77,8 @@
 	name = "cloning data disk"
 	icon_state = "datadisk0" //Gosh I hope syndies don't mistake them for the nuke disk.
 	var/list/fields = list()
+	var/list/mutations = list()
+	var/max_mutations = 6
 	var/read_only = 0 //Well,it's still a floppy disk
 
 //Disk stuff.
@@ -129,7 +131,7 @@
 	return examine(user)
 
 //Start growing a human clone in the pod!
-/obj/machinery/clonepod/proc/growclone(ckey, clonename, ui, se, mindref, datum/species/mrace, list/features, factions, list/quirks)
+/obj/machinery/clonepod/proc/growclone(ckey, clonename, ui, mutation_index, mindref, datum/species/mrace, list/features, factions, list/quirks)
 	if(panel_open)
 		return FALSE
 	if(mess || attempting)
@@ -141,6 +143,8 @@
 		if(clonemind.current.stat != DEAD)	//mind is associated with a non-dead body
 			return FALSE
 		if(clonemind.current.suiciding) // Mind is associated with a body that is suiciding.
+			return FALSE
+		if(AmBloodsucker(clonemind.current)) //If the mind is a bloodsucker
 			return FALSE
 	if(clonemind.active)	//somebody is using that mind
 		if( ckey(clonemind.key)!=ckey )
@@ -157,16 +161,15 @@
 		mess = TRUE
 		update_icon()
 		return FALSE
-	if(isvamp(clonemind)) //If the mind is a bloodsucker
-		return FALSE
 
 	attempting = TRUE //One at a time!!
 	countdown.start()
 
 	var/mob/living/carbon/human/H = new /mob/living/carbon/human(src)
 
-	H.hardset_dna(ui, se, H.real_name, null, mrace, features)
-	H.randmutb() //100% bad mutation. Can be cured with mutadone.
+	H.hardset_dna(ui, mutation_index, H.real_name, null, mrace, features)
+
+	H.easy_randmut(NEGATIVE+MINOR_NEGATIVE) //100% bad mutation. Can be cured with mutadone.
 
 	H.silent = 20 //Prevents an extreme edge case where clones could speak if they said something at exactly the right moment.
 	occupant = H
@@ -177,6 +180,7 @@
 
 	//Get the clone body ready
 	maim_clone(H)
+	ADD_TRAIT(H, TRAIT_MUTATION_STASIS, CLONING_POD_TRAIT)
 	ADD_TRAIT(H, TRAIT_STABLEHEART, CLONING_POD_TRAIT)
 	ADD_TRAIT(H, TRAIT_STABLELIVER, CLONING_POD_TRAIT)
 	ADD_TRAIT(H, TRAIT_EMOTEMUTE, CLONING_POD_TRAIT)
@@ -216,7 +220,7 @@
 	if(!is_operational()) //Autoeject if power is lost
 		if(mob_occupant)
 			go_out()
-			mob_occupant.apply_vore_prefs()
+			mob_occupant.copy_from_prefs_vr()
 			connected_message("Clone Ejected: Loss of power.")
 
 	else if(mob_occupant && (mob_occupant.loc == src))
@@ -226,7 +230,7 @@
 				SPEAK("The cloning has been \
 					aborted due to unrecoverable tissue failure.")
 			go_out()
-			mob_occupant.apply_vore_prefs()
+			mob_occupant.copy_from_prefs_vr()
 
 		else if(mob_occupant.cloneloss > (100 - heal_level))
 			mob_occupant.Unconscious(80)
@@ -272,7 +276,7 @@
 					BP.attach_limb(mob_occupant)
 
 			go_out()
-			mob_occupant.apply_vore_prefs()
+			mob_occupant.copy_from_prefs_vr()
 
 	else if (!mob_occupant || mob_occupant.loc != src)
 		occupant = null
@@ -320,7 +324,7 @@
 			SPEAK("An emergency ejection of the current clone has occurred. Survival not guaranteed.")
 			to_chat(user, "<span class='notice'>You force an emergency ejection. </span>")
 			go_out()
-			mob_occupant.apply_vore_prefs()
+			mob_occupant.copy_from_prefs_vr()
 	else
 		return ..()
 
@@ -366,6 +370,7 @@
 		return
 
 	REMOVE_TRAIT(mob_occupant, TRAIT_STABLEHEART, CLONING_POD_TRAIT)
+	REMOVE_TRAIT(mob_occupant, TRAIT_MUTATION_STASIS, CLONING_POD_TRAIT)
 	REMOVE_TRAIT(mob_occupant, TRAIT_STABLELIVER, CLONING_POD_TRAIT)
 	REMOVE_TRAIT(mob_occupant, TRAIT_EMOTEMUTE, CLONING_POD_TRAIT)
 	REMOVE_TRAIT(mob_occupant, TRAIT_MUTE, CLONING_POD_TRAIT)
@@ -418,7 +423,7 @@
 		if(mob_occupant && prob(100/(severity*efficiency)))
 			connected_message(Gibberish("EMP-caused Accidental Ejection", 0))
 			SPEAK(Gibberish("Exposure to electromagnetic fields has caused the ejection of, ERROR: John Doe, prematurely." ,0))
-			mob_occupant.apply_vore_prefs()
+			mob_occupant.copy_from_prefs_vr()
 			go_out()
 
 /obj/machinery/clonepod/ex_act(severity, target)
@@ -471,57 +476,57 @@
 		if(!istype(organ) || (organ.organ_flags & ORGAN_VITAL))
 			continue
 		organ.organ_flags |= ORGAN_FROZEN
-		organ.Remove(H, special=TRUE)
+		organ.Remove(TRUE)
 		organ.forceMove(src)
 		unattached_flesh += organ
 
 	flesh_number = unattached_flesh.len
 
-/obj/machinery/clonepod/update_icon()
-	cut_overlays()
-
+/obj/machinery/clonepod/update_icon_state()
 	if(mess)
 		icon_state = "pod_g"
-		var/image/gib1 = image(CRYOMOBS, "gibup")
-		var/image/gib2 = image(CRYOMOBS, "gibdown")
-		gib1.pixel_y = 27 + round(sin(world.time) * 3)
-		gib1.pixel_x = round(sin(world.time * 3))
-		gib2.pixel_y = 27 + round(cos(world.time) * 3)
-		gib2.pixel_x = round(cos(world.time * 3))
-		add_overlay(gib2)
-		add_overlay(gib1)
-		add_overlay("cover-on")
-
 	else if(occupant)
 		icon_state = "pod_1"
-
-		var/image/occupant_overlay
-		var/completion = (flesh_number - unattached_flesh.len) / flesh_number
-
-		if(unattached_flesh.len <= 0)
-			occupant_overlay = image(occupant.icon, occupant.icon_state)
-			occupant_overlay.copy_overlays(occupant)
-		else
-			occupant_overlay = image(CRYOMOBS, "clone_meat")
-			var/matrix/tform = matrix()
-			tform.Scale(completion)
-			tform.Turn(cos(world.time * 2) * 3)
-			occupant_overlay.transform = tform
-			occupant_overlay.appearance_flags = 0
-
-		occupant_overlay.dir = SOUTH
-		occupant_overlay.pixel_y = 27 + round(sin(world.time) * 3)
-		occupant_overlay.pixel_x = round(sin(world.time * 3))
-
-		add_overlay(occupant_overlay)
-		add_overlay("cover-on")
 	else
 		icon_state = "pod_0"
 
 	if(panel_open)
 		icon_state = "pod_0_maintenance"
 
-	add_overlay("panel")
+/obj/machinery/clonepod/update_overlays()
+	. = ..()
+	if(mess)
+		var/mutable_appearance/gib1 = mutable_appearance(CRYOMOBS, "gibup")
+		var/mutable_appearance/gib2 = mutable_appearance(CRYOMOBS, "gibdown")
+		gib1.pixel_y = 27 + round(sin(world.time) * 3)
+		gib1.pixel_x = round(sin(world.time * 3))
+		gib2.pixel_y = 27 + round(cos(world.time) * 3)
+		gib2.pixel_x = round(cos(world.time * 3))
+		. += gib2
+		. += gib1
+	else if(occupant)
+		var/mutable_appearance/occupant_overlay
+		var/completion = (flesh_number - unattached_flesh.len) / flesh_number
+
+		if(unattached_flesh.len <= 0)
+			occupant_overlay = mutable_appearance(occupant.icon, occupant.icon_state)
+			occupant_overlay.copy_overlays(occupant)
+			. += "cover-on"
+		else
+			occupant_overlay = mutable_appearance(CRYOMOBS, "clone_meat")
+			var/matrix/tform = matrix()
+			tform.Scale(completion)
+			tform.Turn(cos(world.time * 2) * 3)
+			occupant_overlay.transform = tform
+			occupant_overlay.appearance_flags = NONE
+
+		occupant_overlay.dir = SOUTH
+		occupant_overlay.pixel_y = 27 + round(sin(world.time) * 3)
+		occupant_overlay.pixel_x = round(sin(world.time * 3))
+
+		. += occupant_overlay
+		. += "cover-on"
+	. += "panel"
 
 /*
  *	Manual -- A big ol' manual.

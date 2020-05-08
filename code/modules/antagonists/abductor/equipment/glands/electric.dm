@@ -11,9 +11,10 @@
 	..()
 	ADD_TRAIT(owner, TRAIT_SHOCKIMMUNE, "abductor_gland")
 
-/obj/item/organ/heart/gland/electric/Remove(mob/living/carbon/M, special = 0)
-	REMOVE_TRAIT(owner, TRAIT_SHOCKIMMUNE, "abductor_gland")
-	..()
+/obj/item/organ/heart/gland/electric/Remove(special = FALSE)
+	if(!QDELETED(owner))
+		REMOVE_TRAIT(owner, TRAIT_SHOCKIMMUNE, "abductor_gland")
+	return ..()
 
 /obj/item/organ/heart/gland/electric/activate()
 	owner.visible_message("<span class='danger'>[owner]'s skin starts emitting electric arcs!</span>",\

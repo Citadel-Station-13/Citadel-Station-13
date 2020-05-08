@@ -20,7 +20,7 @@
 
 
 /mob/living/carbon/human/proc/checkarmor(obj/item/bodypart/def_zone, d_type)
-	if(!d_type)
+	if(!d_type || !def_zone)
 		return 0
 	var/protection = 0
 	var/list/body_parts = list(head, wear_mask, wear_suit, w_uniform, back, gloves, shoes, belt, s_store, glasses, ears, wear_id, wear_neck) //Everything but pockets. Pockets are l_store and r_store. (if pockets were allowed, putting something armored, gloves or hats for example, would double up on the armor)
@@ -45,58 +45,19 @@
 		if(spec_return)
 			return spec_return
 
-	if(mind)
-		if (mind.martial_art && mind.martial_art.dodge_chance)
-			if(!lying && dna && !dna.check_mutation(HULK))
-				if(prob(mind.martial_art.dodge_chance))
-					var/dodgemessage = pick("dodges under the projectile!","dodges to the right of the projectile!","jumps over the projectile!")
-					visible_message("<span class='danger'>[src] [dodgemessage]</span>", "<span class='userdanger'>You dodge the projectile!</span>")
-					return BULLET_ACT_BLOCK
-		if(mind.martial_art && !incapacitated(FALSE, TRUE) && mind.martial_art.can_use(src) && mind.martial_art.deflection_chance) //Some martial arts users can deflect projectiles!
-			if(prob(mind.martial_art.deflection_chance))
-				if(!lying && dna && !dna.check_mutation(HULK)) //But only if they're not lying down, and hulks can't do it
-					if(mind.martial_art.deflection_chance >= 100) //if they can NEVER be hit, lets clue sec in ;)
-						visible_message("<span class='danger'>[src] deflects the projectile; [p_they()] can't be hit with ranged weapons!</span>", "<span class='userdanger'>You deflect the projectile!</span>")
-					else
-						visible_message("<span class='danger'>[src] deflects the projectile!</span>", "<span class='userdanger'>You deflect the projectile!</span>")
-					playsound(src, pick('sound/weapons/bulletflyby.ogg', 'sound/weapons/bulletflyby2.ogg', 'sound/weapons/bulletflyby3.ogg'), 75, 1)
-					if(mind.martial_art.reroute_deflection)
-						P.firer = src
-						P.setAngle(rand(0, 360))//SHING
-					return BULLET_ACT_FORCE_PIERCE
-
+	if(mind) //martial art stuff
+		if(mind.martial_art && mind.martial_art.can_use(src)) //Some martial arts users can deflect projectiles!
+			var/martial_art_result = mind.martial_art.on_projectile_hit(src, P, def_zone)
+			if(!(martial_art_result == BULLET_ACT_HIT))
+				return martial_art_result
 	return ..()
-
-/mob/living/carbon/human/check_reflect(def_zone)
-	if(wear_suit?.IsReflect(def_zone))
-		return TRUE
-	return ..()
-
-/mob/living/carbon/human/check_shields(atom/AM, damage, attack_text = "the attack", attack_type = MELEE_ATTACK, armour_penetration = 0)
-	. = ..()
-	if(.)
-		return
-	var/block_chance_modifier = round(damage / -3)
-	if(wear_suit)
-		var/final_block_chance = wear_suit.block_chance - (CLAMP((armour_penetration-wear_suit.armour_penetration)/2,0,100)) + block_chance_modifier
-		if(wear_suit.hit_reaction(src, AM, attack_text, final_block_chance, damage, attack_type))
-			return TRUE
-	if(w_uniform)
-		var/final_block_chance = w_uniform.block_chance - (CLAMP((armour_penetration-w_uniform.armour_penetration)/2,0,100)) + block_chance_modifier
-		if(w_uniform.hit_reaction(src, AM, attack_text, final_block_chance, damage, attack_type))
-			return TRUE
-	if(wear_neck)
-		var/final_block_chance = wear_neck.block_chance - (CLAMP((armour_penetration-wear_neck.armour_penetration)/2,0,100)) + block_chance_modifier
-		if(wear_neck.hit_reaction(src, AM, attack_text, final_block_chance, damage, attack_type))
-			return TRUE
-	return FALSE
 
 /mob/living/carbon/human/can_embed(obj/item/I)
 	if(I.get_sharpness() || is_pointed(I) || is_type_in_typecache(I, GLOB.can_embed_types))
 		return TRUE
 	return FALSE
 
-/mob/living/carbon/human/proc/check_block()
+/mob/living/carbon/human/proc/check_martial_melee_block()
 	if(mind)
 		if(mind.martial_art && prob(mind.martial_art.block_chance) && mind.martial_art.can_use(src) && in_throw_mode && !incapacitated(FALSE, TRUE))
 			return TRUE
@@ -136,7 +97,6 @@
 	// the attacked_by code varies among species
 	return dna.species.spec_attacked_by(I, user, affecting, a_intent, src)
 
-
 /mob/living/carbon/human/attack_hulk(mob/living/carbon/human/user, does_attack_animation = FALSE)
 	if(user.a_intent == INTENT_HARM)
 		. = ..(user, TRUE)
@@ -174,7 +134,7 @@
 					"<span class='userdanger'>[M] disarmed [src]!</span>")
 		else if(!M.client || prob(5)) // only natural monkeys get to stun reliably, (they only do it occasionaly)
 			playsound(loc, 'sound/weapons/pierce.ogg', 25, 1, -1)
-			Knockdown(100)
+			DefaultCombatKnockdown(100)
 			log_combat(M, src, "tackled")
 			visible_message("<span class='danger'>[M] has tackled down [src]!</span>", \
 				"<span class='userdanger'>[M] has tackled down [src]!</span>")
@@ -195,7 +155,7 @@
 	if(M.a_intent == INTENT_HARM)
 		if (w_uniform)
 			w_uniform.add_fingerprint(M)
-		var/damage = prob(90) ? 20 : 0
+		var/damage = prob(90) ? M.meleeSlashHumanPower : 0
 		if(!damage)
 			playsound(loc, 'sound/weapons/slashmiss.ogg', 50, 1, -1)
 			visible_message("<span class='danger'>[M] has lunged at [src]!</span>", \
@@ -222,10 +182,7 @@
 					"<span class='userdanger'>[M] disarmed [src]!</span>")
 		else
 			playsound(loc, 'sound/weapons/pierce.ogg', 25, 1, -1)
-			if(!lying)				//CITADEL EDIT
-				Knockdown(100, TRUE, FALSE, 30, 25)
-			else
-				Knockdown(100)
+			DefaultCombatKnockdown(M.meleeKnockdownPower)
 			log_combat(M, src, "tackled")
 			visible_message("<span class='danger'>[M] has tackled down [src]!</span>", \
 				"<span class='userdanger'>[M] has tackled down [src]!</span>")
@@ -292,10 +249,10 @@
 			switch(M.damtype)
 				if("brute")
 					if(M.force > 35) // durand and other heavy mechas
-						Knockdown(50)
+						DefaultCombatKnockdown(50)
 						src.throw_at(throw_target, rand(1,5), 7)
-					else if(M.force >= 20 && !IsKnockdown()) // lightweight mechas like gygax
-						Knockdown(30)
+					else if(M.force >= 20 && CHECK_MOBILITY(src, MOBILITY_STAND)) // lightweight mechas like gygax
+						DefaultCombatKnockdown(30)
 						src.throw_at(throw_target, rand(1,3), 7)
 					update |= temp.receive_damage(dmg, 0)
 					playsound(src, 'sound/weapons/punch4.ogg', 50, 1)
@@ -392,8 +349,8 @@
 
 
 //Added a safety check in case you want to shock a human mob directly through electrocute_act.
-/mob/living/carbon/human/electrocute_act(shock_damage, obj/source, siemens_coeff = 1, safety = 0, override = 0, tesla_shock = 0, illusion = 0, stun = TRUE)
-	if(tesla_shock)
+/mob/living/carbon/human/electrocute_act(shock_damage, source, siemens_coeff = 1, flags = NONE)
+	if(flags & SHOCK_TESLA)
 		var/total_coeff = 1
 		if(gloves)
 			var/obj/item/clothing/gloves/G = gloves
@@ -408,20 +365,20 @@
 		siemens_coeff = total_coeff
 		if(flags_1 & TESLA_IGNORE_1)
 			siemens_coeff = 0
-	else if(!safety)
+	else if(!(flags & SHOCK_NOGLOVES))
 		var/gloves_siemens_coeff = 1
 		if(gloves)
 			var/obj/item/clothing/gloves/G = gloves
 			gloves_siemens_coeff = G.siemens_coefficient
 		siemens_coeff = gloves_siemens_coeff
-	if(undergoing_cardiac_arrest() && !illusion)
+	if(undergoing_cardiac_arrest() && !(flags & SHOCK_ILLUSION))
 		if(shock_damage * siemens_coeff >= 1 && prob(25))
 			var/obj/item/organ/heart/heart = getorganslot(ORGAN_SLOT_HEART)
 			heart.beating = TRUE
 			if(stat == CONSCIOUS)
 				to_chat(src, "<span class='notice'>You feel your heart beating again!</span>")
 	siemens_coeff *= physiology.siemens_coeff
-	. = ..(shock_damage,source,siemens_coeff,safety,override,tesla_shock, illusion, stun)
+	. = ..()
 	if(.)
 		electrocution_animation(40)
 

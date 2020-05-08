@@ -84,7 +84,6 @@
 /obj/machinery/atmospherics/components/proc/nullifyPipenet(datum/pipeline/reference)
 	if(!reference)
 		CRASH("nullifyPipenet(null) called by [type] on [COORD(src)]")
-		return
 	var/i = parents.Find(reference)
 	reference.other_airs -= airs[i]
 	reference.other_atmosmch -= src
@@ -144,8 +143,8 @@
 	for(var/i in 1 to device_type)
 		var/datum/pipeline/parent = parents[i]
 		if(!parent)
-			throw EXCEPTION("Component is missing a pipenet! Rebuilding...")
-			build_network()
+			stack_trace("Component is missing a pipenet! Rebuilding...")
+			SSair.add_to_rebuild_queue(src)
 		parent.update = 1
 
 /obj/machinery/atmospherics/components/returnPipenets()

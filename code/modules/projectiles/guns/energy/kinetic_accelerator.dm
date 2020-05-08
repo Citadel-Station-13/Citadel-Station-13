@@ -34,7 +34,7 @@
 	righthand_file = 'icons/mob/inhands/weapons/guns_righthand.dmi'
 	ammo_type = list(/obj/item/ammo_casing/energy/kinetic/premium)
 
-/obj/item/gun/energy/kinetic_accelerator/premiumka/dropped()
+/obj/item/gun/energy/kinetic_accelerator/premiumka/dropped(mob/user)
 	. = ..()
 	if(!QDELING(src) && !holds_charge)
 		// Put it on a delay because moving item from slot to hand
@@ -137,7 +137,7 @@
 	if(!can_shoot())
 		attempt_reload()
 
-/obj/item/gun/energy/kinetic_accelerator/dropped()
+/obj/item/gun/energy/kinetic_accelerator/dropped(mob/user)
 	. = ..()
 	if(!QDELING(src) && !holds_charge)
 		// Put it on a delay because moving item from slot to hand
@@ -297,7 +297,7 @@
 /obj/item/borg/upgrade/modkit/proc/install(obj/item/gun/energy/kinetic_accelerator/KA, mob/user)
 	. = TRUE
 	if(src in KA.modkits) // Sanity check to prevent installing the same modkit twice thanks to occasional click/lag delays.
-		return
+		return FALSE
 	if(minebot_upgrade)
 		if(minebot_exclusive && !istype(KA.loc, /mob/living/simple_animal/hostile/mining_drone))
 			to_chat(user, "<span class='notice'>The modkit you're trying to install is only rated for minebot use.</span>")
@@ -317,7 +317,7 @@
 	if(KA.get_remaining_mod_capacity() >= cost)
 		if(.)
 			if(!user.transferItemToLoc(src, KA))
-				return
+				return FALSE
 			to_chat(user, "<span class='notice'>You install the modkit.</span>")
 			playsound(loc, 'sound/items/screwdriver.ogg', 100, 1)
 			KA.modkits += src
@@ -382,7 +382,7 @@
 		var/old = KA.overheat_time
 		KA.overheat_time = max(0, KA.overheat_time - modifier)
 		decreased = old - KA.overheat_time
-		
+
 
 /obj/item/borg/upgrade/modkit/cooldown/uninstall(obj/item/gun/energy/kinetic_accelerator/KA)
 	KA.overheat_time += decreased

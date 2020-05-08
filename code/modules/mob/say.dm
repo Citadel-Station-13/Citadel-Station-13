@@ -12,7 +12,7 @@
 	var/customsayverb = findtext(input, "*")
 	if(customsayverb && message_mode != MODE_WHISPER_CRIT)
 		message_mode = MODE_CUSTOM_SAY
-		return lowertext(copytext(input, 1, customsayverb))
+		return lowertext(copytext_char(input, 1, customsayverb))
 	else
 		return ..()
 
@@ -35,7 +35,7 @@
 		to_chat(usr, "<span class='danger'>Speech is currently admin-disabled.</span>")
 		return
 
-	message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
+	message = trim(copytext_char(sanitize(message), 1, MAX_MESSAGE_LEN))
 
 	usr.emote("me",1,message,TRUE)
 
@@ -83,9 +83,9 @@
 	deadchat_broadcast(rendered, follow_target = src, speaker_key = key)
 
 /mob/proc/check_emote(message)
-	if(copytext(message, 1, 2) == "*")
-		emote(copytext(message, 2), intentional = TRUE)
-		return 1
+	if(message[1] == "*")
+		emote(copytext(message, length(message[1]) + 1), intentional = TRUE)
+		return TRUE
 
 /mob/proc/hivecheck()
 	return 0
@@ -94,11 +94,11 @@
 	return LINGHIVE_NONE
 
 /mob/proc/get_message_mode(message)
-	var/key = copytext(message, 1, 2)
+	var/key = message[1]
 	if(key == "#")
 		return MODE_WHISPER
 	else if(key == ";")
 		return MODE_HEADSET
-	else if(length(message) > 2 && (key in GLOB.department_radio_prefixes))
-		var/key_symbol = lowertext(copytext(message, 2, 3))
+	else if((length(message) > (length(key) + 1)) && (key in GLOB.department_radio_prefixes))
+		var/key_symbol = lowertext(message[length(key) + 1])
 		return GLOB.department_radio_keys[key_symbol]

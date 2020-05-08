@@ -13,7 +13,9 @@
 	var/death = TRUE //Kill the mob
 	var/roundstart = TRUE //fires on initialize
 	var/instant = FALSE	//fires on New
-	var/flavour_text = "The mapper forgot to set this!"
+	var/short_desc = "The mapper forgot to set this!"
+	var/flavour_text = ""
+	var/important_info = ""
 	var/faction = null
 	var/permanent = FALSE	//If true, the spawner will not disappear upon running out of uses.
 	var/random = FALSE		//Don't set a name or gender, just go random
@@ -110,7 +112,12 @@
 	if(ckey)
 		M.ckey = ckey
 		if(show_flavour)
-			to_chat(M, "[flavour_text]")
+			var/output_message = "<span class='big bold'>[short_desc]</span>"
+			if(flavour_text != "")
+				output_message += "\n<span class='bold'>[flavour_text]</span>"
+			if(important_info != "")
+				output_message += "\n<span class='userdanger'>[important_info]</span>"
+			to_chat(M, output_message)
 		var/datum/mind/MM = M.mind
 		var/datum/antagonist/A
 		if(antagonist_type)
@@ -198,10 +205,12 @@
 		H.facial_hair_style = random_facial_hair_style(gender)
 	if(skin_tone)
 		H.skin_tone = skin_tone
+		if(!GLOB.skin_tones[H.skin_tone])
+			H.dna.skin_tone_override = H.skin_tone
 	else
 		H.skin_tone = random_skin_tone()
 	H.update_hair()
-	H.update_body()
+	H.update_body() //update_genitals arg FALSE because these don't quite require/have them most times.
 	if(outfit)
 		var/static/list/slots = list("uniform", "r_hand", "l_hand", "suit", "shoes", "gloves", "ears", "glasses", "mask", "head", "belt", "r_pocket", "l_pocket", "back", "id", "neck", "backpack_contents", "suit_store")
 		for(var/slot in slots)
@@ -340,7 +349,7 @@
 	name = "sleeper"
 	icon = 'icons/obj/machines/sleeper.dmi'
 	icon_state = "sleeper"
-	flavour_text = "<span class='big bold'>You are a space doctor!</span>"
+	short_desc = "You are a space doctor!"
 	assignedrole = "Space Doctor"
 	job_description = "Off-station Doctor"
 
@@ -397,13 +406,14 @@
 	name = "bartender sleeper"
 	icon = 'icons/obj/machines/sleeper.dmi'
 	icon_state = "sleeper"
-	flavour_text = "<span class='big bold'>You are a space bartender!</span><b> Time to mix drinks and change lives. Smoking space drugs makes it easier to understand your patrons' odd dialect.</b>"
+	short_desc = "You are a space bartender!"
+	flavour_text = "Time to mix drinks and change lives. Smoking space drugs makes it easier to understand your patrons' odd dialect."
 	assignedrole = "Space Bartender"
 	id_job = "Bartender"
 
 /datum/outfit/spacebartender
 	name = "Space Bartender"
-	uniform = /obj/item/clothing/under/rank/bartender
+	uniform = /obj/item/clothing/under/rank/civilian/bartender
 	back = /obj/item/storage/backpack
 	shoes = /obj/item/clothing/shoes/sneakers/black
 	suit = /obj/item/clothing/suit/armor/vest
@@ -422,7 +432,8 @@
 	name = "beach bum sleeper"
 	icon = 'icons/obj/machines/sleeper.dmi'
 	icon_state = "sleeper"
-	flavour_text = "<span class='big bold'>You're, like, totally a dudebro, bruh.</span><b> Ch'yea. You came here, like, on spring break, hopin' to pick up some bangin' hot chicks, y'knaw?</b>"
+	short_desc = "You're a spunky lifeguard!"
+	flavour_text = "It's up to you to make sure nobody drowns or gets eaten by sharks and stuff."
 	assignedrole = "Beach Bum"
 
 /obj/effect/mob_spawn/human/beach/alive/lifeguard
@@ -458,7 +469,7 @@
 /datum/outfit/nanotrasenbridgeofficercorpse
 	name = "Bridge Officer Corpse"
 	ears = /obj/item/radio/headset/heads/hop
-	uniform = /obj/item/clothing/under/rank/centcom_officer
+	uniform = /obj/item/clothing/under/rank/centcom/officer
 	suit = /obj/item/clothing/suit/armor/bulletproof
 	shoes = /obj/item/clothing/shoes/sneakers/black
 	glasses = /obj/item/clothing/glasses/sunglasses
@@ -473,13 +484,13 @@
 
 /datum/outfit/nanotrasencommandercorpse
 	name = "Nanotrasen Private Security Commander"
-	uniform = /obj/item/clothing/under/rank/centcom_commander
+	uniform = /obj/item/clothing/under/rank/centcom/commander
 	suit = /obj/item/clothing/suit/armor/bulletproof
 	ears = /obj/item/radio/headset/heads/captain
 	glasses = /obj/item/clothing/glasses/eyepatch
 	mask = /obj/item/clothing/mask/cigarette/cigar/cohiba
 	head = /obj/item/clothing/head/centhat
-	gloves = /obj/item/clothing/gloves/combat
+	gloves = /obj/item/clothing/gloves/tackler/combat
 	shoes = /obj/item/clothing/shoes/combat/swat
 	r_pocket = /obj/item/lighter
 	id = /obj/item/card/id
@@ -493,10 +504,10 @@
 
 /datum/outfit/nanotrasensoldiercorpse
 	name = "NT Private Security Officer Corpse"
-	uniform = /obj/item/clothing/under/rank/security
+	uniform = /obj/item/clothing/under/rank/security/officer
 	suit = /obj/item/clothing/suit/armor/vest
 	shoes = /obj/item/clothing/shoes/combat
-	gloves = /obj/item/clothing/gloves/combat
+	gloves = /obj/item/clothing/gloves/tackler/combat
 	mask = /obj/item/clothing/mask/gas/sechailer/swat
 	head = /obj/item/clothing/head/helmet/swat/nanotrasen
 	back = /obj/item/storage/backpack/security
@@ -511,7 +522,7 @@
 	name = "sleeper"
 	icon = 'icons/obj/machines/sleeper.dmi'
 	icon_state = "sleeper"
-	flavour_text = "<span class='big bold'>You are a Nanotrasen Commander!</span>"
+	short_desc = "You are a Nanotrasen Commander!"
 
 /obj/effect/mob_spawn/human/nanotrasensoldier/alive
 	death = FALSE
@@ -522,7 +533,7 @@
 	icon = 'icons/obj/machines/sleeper.dmi'
 	icon_state = "sleeper"
 	faction = "nanotrasenprivate"
-	flavour_text = "<span class='big bold'>You are a Nanotrasen Private Security Officer!</span>"
+	short_desc = "You are a Nanotrasen Private Security Officer!"
 
 
 /////////////////Spooky Undead//////////////////////
@@ -539,7 +550,8 @@
 	job_description = "Skeleton"
 	icon = 'icons/effects/blood.dmi'
 	icon_state = "remains"
-	flavour_text = "<span class='big bold'>By unknown powers, your skeletal remains have been reanimated!</span><b> Walk this mortal plain and terrorize all living adventurers who dare cross your path.</b>"
+	short_desc = "By unknown powers, your skeletal remains have been reanimated!"
+	flavour_text = "Walk this mortal plain and terrorize all living adventurers who dare cross your path."
 	assignedrole = "Skeleton"
 
 /obj/effect/mob_spawn/human/zombie
@@ -554,7 +566,9 @@
 	job_description = "Zombie"
 	icon = 'icons/effects/blood.dmi'
 	icon_state = "remains"
-	flavour_text = "<span class='big bold'>By unknown powers, your rotting remains have been resurrected!</span><b> Walk this mortal plain and terrorize all living adventurers who dare cross your path.</b>"
+	short_desc = "By unknown powers, your rotting remains have been resurrected!"
+	flavour_text = "Walk this mortal plain and terrorize all living adventurers who dare cross your path."
+
 
 
 /obj/effect/mob_spawn/human/abductor
@@ -590,7 +604,7 @@
 
 /datum/outfit/cryobartender
 	name = "Cryogenic Bartender"
-	uniform = /obj/item/clothing/under/rank/bartender
+	uniform = /obj/item/clothing/under/rank/civilian/bartender
 	back = /obj/item/storage/backpack
 	shoes = /obj/item/clothing/shoes/sneakers/black
 	suit = /obj/item/clothing/suit/armor/vest
@@ -627,7 +641,7 @@
 
 /datum/outfit/lavaknight
 	name = "Cydonian Knight"
-	uniform = /obj/item/clothing/under/assistantformal
+	uniform = /obj/item/clothing/under/misc/assistantformal
 	mask = /obj/item/clothing/mask/breath
 	shoes = /obj/item/clothing/shoes/sneakers/black
 	r_pocket = /obj/item/melee/transforming/energy/sword/cx

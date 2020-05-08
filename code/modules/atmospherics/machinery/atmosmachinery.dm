@@ -64,6 +64,7 @@
 		nullifyNode(i)
 
 	SSair.atmos_machinery -= src
+	SSair.pipenets_needing_rebuilt -= src
 
 	dropContents()
 	if(pipe_vision_img)
@@ -313,10 +314,6 @@
 	else if(is_type_in_typecache(src, GLOB.ventcrawl_machinery) && can_crawl_through()) //if we move in a way the pipe can connect, but doesn't - or we're in a vent
 		user.forceMove(loc)
 		user.visible_message("<span class='notice'>You hear something squeezing through the ducts...</span>", "<span class='notice'>You climb out the ventilation system.")
-
-	user.canmove = FALSE
-	addtimer(VARSET_CALLBACK(user, canmove, TRUE), 1)
-
 
 /obj/machinery/atmospherics/AltClick(mob/living/L)
 	if(is_type_in_typecache(src, GLOB.ventcrawl_machinery))

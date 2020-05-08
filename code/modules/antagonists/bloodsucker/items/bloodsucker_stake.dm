@@ -1,8 +1,4 @@
-
-
 // organ_internal.dm   --   /obj/item/organ
-
-
 
 // Do I have a stake in my heart?
 /mob/living/AmStaked()
@@ -13,16 +9,14 @@
 		if (istype(I,/obj/item/stake/))
 			return TRUE
 	return FALSE
+
 /mob/proc/AmStaked()
 	return FALSE
-
 
 /mob/living/proc/StakeCanKillMe()
 	return IsSleeping() || stat >= UNCONSCIOUS || blood_volume <= 0 || HAS_TRAIT(src, TRAIT_DEATHCOMA) // NOTE: You can't go to sleep in a coffin with a stake in you.
 
-
-///obj/item/weapon/melee/stake
-/obj/item/stake/
+/obj/item/stake
 	name = "wooden stake"
 	desc = "A simple wooden stake carved to a sharp point."
 	icon = 'icons/obj/items_and_weapons.dmi'
@@ -96,6 +90,7 @@
 	user.dropItemToGround(src, TRUE) //user.drop_item() // "drop item" doesn't seem to exist anymore. New proc is user.dropItemToGround() but it doesn't seem like it's needed now?
 	var/obj/item/bodypart/B = C.get_bodypart("chest")  // This was all taken from hitby() in human_defense.dm
 	B.embedded_objects |= src
+	embedded()
 	add_mob_blood(target)//Place blood on the stake
 	loc = C // Put INSIDE the character
 	B.receive_damage(w_class * embedding.embedded_impact_pain_multiplier)
@@ -112,8 +107,7 @@
 
 // Can this target be staked? If someone stands up before this is complete, it fails. Best used on someone stationary.
 /mob/living/carbon/proc/can_be_staked()
-	//return resting || IsKnockdown() || IsUnconscious() || (stat && (stat != SOFT_CRIT || pulledby)) || (has_trait(TRAIT_FAKEDEATH)) || resting || IsStun() || IsFrozen() || (pulledby && pulledby.grab_state >= GRAB_NECK)
-	return (resting || lying || IsUnconscious() || pulledby && pulledby.grab_state >= GRAB_NECK)
+	return !CHECK_MOBILITY(src, MOBILITY_STAND)
 	// ABOVE:  Taken from update_mobility() in living.dm
 
 /obj/item/stake/hardened

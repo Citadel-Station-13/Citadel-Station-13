@@ -13,7 +13,7 @@
 	anchored = TRUE
 	layer = HIGH_OBJ_LAYER
 	max_integrity = 300
-	integrity_failure = 100
+	integrity_failure = 0.33
 	armor = list("melee" = 20, "bullet" = 50, "laser" = 50, "energy" = 50, "bomb" = 10, "bio" = 100, "rad" = 100, "fire" = 10, "acid" = 70)
 	var/datum/team/gang/gang
 	var/operating = FALSE	//false=standby or broken, true=takeover
@@ -229,7 +229,7 @@
 			if(!was_stranded)
 				priority_announce("All hostile activity within station systems has ceased.","Network Alert")
 
-			if(get_security_level() == "delta")
+			if(NUM2SECLEVEL(GLOB.security_level) == "delta")
 				set_security_level("red")
 
 		SSshuttle.clearHostileEnvironment(src)

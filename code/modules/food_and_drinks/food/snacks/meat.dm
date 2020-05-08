@@ -47,6 +47,7 @@
 		slice.name = "raw [subjectname] cutlet"
 	else if(subjectjob)
 		slice.name = "raw [subjectjob] cutlet"
+	slice.adjust_food_quality(food_quality)
 
 /obj/item/reagent_containers/food/snacks/meat/slab/human/initialize_cooked_food(obj/item/reagent_containers/food/snacks/meat/S, cooking_efficiency)
 	..()
@@ -271,7 +272,7 @@
 /obj/item/reagent_containers/food/snacks/meat/slab/meatwheat
 	name = "meatwheat clump"
 	desc = "This doesn't look like meat, but your standards aren't <i>that</i> high to begin with."
-	list_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/nutriment/vitamin = 2, /datum/reagent/blood = 5, /datum/reagent/consumable/cooking_oil = 1)
+	list_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/nutriment/vitamin = 2, /datum/reagent/consumable/cooking_oil = 1)
 	filling_color = rgb(150, 0, 0)
 	icon_state = "meatwheat_clump"
 	bitesize = 4

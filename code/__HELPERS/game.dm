@@ -183,7 +183,7 @@
 	return
 
 
-// Better recursive loop, technically sort of not actually recursive cause that shit is retarded, enjoy.
+// Better recursive loop, technically sort of not actually recursive cause that shit is stupid, enjoy.
 //No need for a recursive limit either
 /proc/recursive_mob_check(atom/O,client_check=1,sight_check=1,include_radio=1)
 
@@ -425,8 +425,7 @@
 			candidates -= M
 
 /proc/pollGhostCandidates(Question, jobbanType, datum/game_mode/gametypeCheck, be_special_flag = 0, poll_time = 300, ignore_category = null, flashwindow = TRUE)
-	var/datum/element/ghost_role_eligibility/eligibility = SSdcs.GetElement(/datum/element/ghost_role_eligibility)
-	var/list/candidates = eligibility.get_all_ghost_role_eligible()
+	var/list/candidates = get_all_ghost_role_eligible()
 	return pollCandidates(Question, jobbanType, gametypeCheck, be_special_flag, poll_time, ignore_category, flashwindow, candidates)
 
 /proc/pollCandidates(Question, jobbanType, datum/game_mode/gametypeCheck, be_special_flag = 0, poll_time = 300, ignore_category = null, flashwindow = TRUE, list/group = null)
@@ -436,7 +435,7 @@
 	var/list/result = list()
 	for(var/m in group)
 		var/mob/M = m
-		if(!M.key || !M.client || (ignore_category && GLOB.poll_ignore[ignore_category] && M.ckey in GLOB.poll_ignore[ignore_category]))
+		if(!M.key || !M.client || (ignore_category && GLOB.poll_ignore[ignore_category] && (M.ckey in GLOB.poll_ignore[ignore_category])))
 			continue
 		if(be_special_flag)
 			if(!(M.client.prefs) || !(be_special_flag in M.client.prefs.be_special))
@@ -549,3 +548,36 @@
 	var/pressure = environment.return_pressure()
 	if(pressure <= LAVALAND_EQUIPMENT_EFFECT_PRESSURE)
 		. = TRUE
+
+/proc/ispipewire(item)
+	var/static/list/pipe_wire = list(
+		/obj/machinery/atmospherics,
+		/obj/structure/disposalpipe,
+		/obj/structure/cable
+	)
+	return (is_type_in_list(item, pipe_wire))
+
+// Find a obstruction free turf that's within the range of the center. Can also condition on if it is of a certain area type.
+/proc/find_obstruction_free_location(var/range, var/atom/center, var/area/specific_area)
+	var/list/turfs = RANGE_TURFS(range, center)
+	var/list/possible_loc = list()
+	for(var/turf/found_turf in turfs)
+		var/area/turf_area = get_area(found_turf)
+		if(specific_area)	// We check if both the turf is a floor, and that it's actually in the area. // We also want a location that's clear of any obstructions.
+			if(!istype(turf_area, specific_area))
+				continue
+		if(!isspaceturf(found_turf))
+			if(!is_blocked_turf(found_turf))
+				possible_loc.Add(found_turf)
+	if(possible_loc.len < 1)	// Need at least one free location.
+		return FALSE
+	return pick(possible_loc)
+
+/proc/power_fail(duration_min, duration_max)
+	for(var/P in GLOB.apcs_list)
+		var/obj/machinery/power/apc/C = P
+		if(C.cell && SSmapping.level_trait(C.z, ZTRAIT_STATION))
+			var/area/A = C.area
+			if(GLOB.typecache_powerfailure_safe_areas[A.type])
+				continue
+			C.energy_fail(rand(duration_min,duration_max))

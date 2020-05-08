@@ -6,6 +6,7 @@
 	icon_state = "headcrab"
 	icon_living = "headcrab"
 	icon_dead = "headcrab_dead"
+	threat = 1
 	gender = NEUTER
 	health = 50
 	maxHealth = 50
@@ -61,7 +62,7 @@
 	time++
 	if(time >= EGG_INCUBATION_TIME)
 		Pop()
-		Remove(owner)
+		Remove()
 		qdel(src)
 
 /obj/item/organ/body_egg/changeling_egg/proc/Pop()

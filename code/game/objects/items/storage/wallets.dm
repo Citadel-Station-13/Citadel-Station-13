@@ -66,7 +66,7 @@
 	. = ..()
 	refreshID()
 
-/obj/item/storage/wallet/update_icon()
+/obj/item/storage/wallet/update_icon_state()
 	var/new_state = "wallet"
 	if(front_id)
 		new_state = "wallet_id"
@@ -101,11 +101,11 @@
 	icon_state = "random_wallet"
 
 /obj/item/storage/wallet/random/PopulateContents()
-	var/item1_type = pick( /obj/item/stack/spacecash/c10, /obj/item/stack/spacecash/c100, /obj/item/stack/spacecash/c1000, /obj/item/stack/spacecash/c20, /obj/item/stack/spacecash/c200, /obj/item/stack/spacecash/c50, /obj/item/stack/spacecash/c500)
+	var/item1_type = /obj/effect/spawner/lootdrop/space_cash/no_turf
 	var/item2_type
 	if(prob(50))
-		item2_type = pick( /obj/item/stack/spacecash/c10, /obj/item/stack/spacecash/c100, /obj/item/stack/spacecash/c1000, /obj/item/stack/spacecash/c20, /obj/item/stack/spacecash/c200, /obj/item/stack/spacecash/c50, /obj/item/stack/spacecash/c500)
-	var/item3_type = pick( /obj/item/coin/silver, /obj/item/coin/silver, /obj/item/coin/gold, /obj/item/coin/iron, /obj/item/coin/iron, /obj/item/coin/iron )
+		item2_type = /obj/effect/spawner/lootdrop/space_cash/no_turf
+	var/item3_type = /obj/effect/spawner/lootdrop/coin/no_turf
 
 	spawn(2)
 		if(item1_type)

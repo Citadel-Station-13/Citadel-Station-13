@@ -1,4 +1,0 @@
-author: "kevinz000"
-delete-after: True
-changes: 
-  - rscdel: "Blood duplication is gone, but viruses now react up to 5 times, 1 time per unit, for virus mix."

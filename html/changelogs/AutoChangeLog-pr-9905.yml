@@ -1,7 +1,0 @@
-author: "Trilbyspaceclone"
-delete-after: True
-changes: 
-  - rscadd: "more glassware"
-  - rscadd: "Few new packs and glassmaker kit!"
-  - tweak: "prices/chems of crates/autobottler"
-  - bugfix: "some crates ungettable as well as some broken crates"

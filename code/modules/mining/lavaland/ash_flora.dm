@@ -201,14 +201,14 @@
 	icon = 'icons/obj/lavaland/ash_flora.dmi'
 	icon_state = "mushroom_bowl"
 
-/obj/item/reagent_containers/glass/bowl/mushroom_bowl/update_icon()
-	cut_overlays()
-	if(reagents && reagents.total_volume)
-		var/mutable_appearance/filling = mutable_appearance('icons/obj/lavaland/ash_flora.dmi', "fullbowl")
-		filling.color = mix_color_from_reagents(reagents.reagent_list)
-		add_overlay(filling)
-	else
+/obj/item/reagent_containers/glass/bowl/mushroom_bowl/update_icon_state()
+	if(!reagents || !reagents.total_volume)
 		icon_state = "mushroom_bowl"
+
+/obj/item/reagent_containers/glass/bowl/mushroom_bowl/update_overlays()
+	. = ..()
+	if(reagents && reagents.total_volume)
+		. += mutable_appearance('icons/obj/lavaland/ash_flora.dmi', "fullbowl", color = mix_color_from_reagents(reagents.reagent_list))
 
 /obj/item/reagent_containers/glass/bowl/mushroom_bowl/attackby(obj/item/I,mob/user, params)
 	if(istype(I, /obj/item/reagent_containers/food/snacks))
@@ -226,6 +226,78 @@
 				A.initialize_custom_food(src, S, user)
 	else
 		. = ..()
+
+////// LAVALAND FLORA //////
+
+/obj/item/seeds/lavaland
+	name = "lavaland seeds"
+	desc = "You should never see this."
+	lifespan = 50
+	endurance = 25
+	maturation = 7
+	production = 4
+	yield = 4
+	potency = 15
+	growthstages = 3
+	rarity = 20
+	reagents_add = list(/datum/reagent/consumable/nutriment = 0.1)
+	resistance_flags = FIRE_PROOF
+
+/obj/item/seeds/lavaland/cactus
+	name = "pack of fruiting cactus seeds"
+	desc = "These seeds grow into fruiting cacti."
+	icon_state = "seed-cactus"
+	species = "cactus"
+	plantname = "Fruiting Cactus"
+	product = /obj/item/reagent_containers/food/snacks/grown/ash_flora/cactus_fruit
+	genes = list(/datum/plant_gene/trait/fire_resistance)
+	growing_icon = 'icons/obj/hydroponics/growing_fruits.dmi'
+	growthstages = 2
+	reagents_add = list(/datum/reagent/consumable/nutriment/vitamin = 0.04, /datum/reagent/consumable/nutriment = 0.04, /datum/reagent/consumable/vitfro = 0.08)
+
+/obj/item/seeds/lavaland/polypore
+	name = "pack of polypore mycelium"
+	desc = "This mycelium grows into bracket mushrooms, also known as polypores. Woody and firm, shaft miners often use them for makeshift crafts."
+	icon_state = "mycelium-polypore"
+	species = "polypore"
+	plantname = "Polypore Mushrooms"
+	product = /obj/item/reagent_containers/food/snacks/grown/ash_flora/shavings
+	genes = list(/datum/plant_gene/trait/plant_type/fungal_metabolism, /datum/plant_gene/trait/fire_resistance)
+	growing_icon = 'icons/obj/hydroponics/growing_mushrooms.dmi'
+	reagents_add = list(/datum/reagent/consumable/sugar = 0.06, /datum/reagent/consumable/ethanol = 0.04, /datum/reagent/stabilizing_agent = 0.06, /datum/reagent/toxin/minttoxin = 0.02)
+
+/obj/item/seeds/lavaland/porcini
+	name = "pack of porcini mycelium"
+	desc = "This mycelium grows into Boletus edulus, also known as porcini. Native to the late Earth, but discovered on Lavaland. Has culinary, medicinal and relaxant effects."
+	icon_state = "mycelium-porcini"
+	species = "porcini"
+	plantname = "Porcini Mushrooms"
+	product = /obj/item/reagent_containers/food/snacks/grown/ash_flora/mushroom_leaf
+	genes = list(/datum/plant_gene/trait/plant_type/fungal_metabolism, /datum/plant_gene/trait/fire_resistance)
+	growing_icon = 'icons/obj/hydroponics/growing_mushrooms.dmi'
+	reagents_add = list(/datum/reagent/consumable/nutriment = 0.06, /datum/reagent/consumable/vitfro = 0.04, /datum/reagent/drug/nicotine = 0.04)
+
+/obj/item/seeds/lavaland/inocybe
+	name = "pack of inocybe mycelium"
+	desc = "This mycelium grows into an inocybe mushroom, a species of Lavaland origin with hallucinatory and toxic effects."
+	icon_state = "mycelium-inocybe"
+	species = "inocybe"
+	plantname = "Inocybe Mushrooms"
+	product = /obj/item/reagent_containers/food/snacks/grown/ash_flora/mushroom_cap
+	genes = list(/datum/plant_gene/trait/plant_type/fungal_metabolism, /datum/plant_gene/trait/fire_resistance)
+	growing_icon = 'icons/obj/hydroponics/growing_mushrooms.dmi'
+	reagents_add = list(/datum/reagent/toxin/mindbreaker = 0.04, /datum/reagent/consumable/entpoly = 0.08, /datum/reagent/drug/mushroomhallucinogen = 0.04)
+
+/obj/item/seeds/lavaland/ember
+	name = "pack of embershroom mycelium"
+	desc = "This mycelium grows into embershrooms, a species of bioluminescent mushrooms native to Lavaland."
+	icon_state = "mycelium-ember"
+	species = "ember"
+	plantname = "Embershroom Mushrooms"
+	product = /obj/item/reagent_containers/food/snacks/grown/ash_flora/mushroom_stem
+	genes = list(/datum/plant_gene/trait/plant_type/fungal_metabolism, /datum/plant_gene/trait/glow, /datum/plant_gene/trait/fire_resistance)
+	growing_icon = 'icons/obj/hydroponics/growing_mushrooms.dmi'
+	reagents_add = list(/datum/reagent/consumable/tinlux = 0.04, /datum/reagent/consumable/nutriment/vitamin = 0.02, /datum/reagent/drug/space_drugs = 0.02)
 
 //what you can craft with these things
 /datum/crafting_recipe/mushroom_bowl

@@ -16,6 +16,11 @@
 	circuit = /obj/item/circuitboard/machine/telecomms/processor
 	var/process_mode = 1 // 1 = Uncompress Signals, 0 = Compress Signals
 
+/obj/machinery/telecomms/processor/RefreshParts()
+	idle_power_usage = 30
+	for(var/obj/item/stock_parts/manipulator/P in component_parts)
+		idle_power_usage -= (P.rating * 1.5) //Has 2 manipulators
+
 /obj/machinery/telecomms/processor/receive_information(datum/signal/subspace/signal, obj/machinery/telecomms/machine_from)
 	if(!is_freq_listening(signal))
 		return
@@ -28,7 +33,6 @@
 	if(istype(machine_from, /obj/machinery/telecomms/bus))
 		relay_direct_information(signal, machine_from) // send the signal back to the machine
 	else // no bus detected - send the signal to servers instead
-		signal.data["slow"] += rand(5, 10) // slow the signal down
 		relay_information(signal, signal.server_type)
 
 //Preset Processors

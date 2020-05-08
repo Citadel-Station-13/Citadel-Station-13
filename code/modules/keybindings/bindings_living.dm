@@ -19,6 +19,9 @@
 			if(possible_a_intents)
 				a_intent_change(INTENT_HARM)
 				return
+		if ("V")
+			lay_down()
+			return
 
 
 	return ..()

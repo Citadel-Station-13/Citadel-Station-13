@@ -17,7 +17,7 @@
 			to_chat(user, "Your head pounds for a moment, before your vision clears. The Wish Granter, sensing the darkness in your heart, has given you limitless power, and it's all yours!")
 			user.dna.add_mutation(HULK)
 			user.dna.add_mutation(XRAY)
-			user.dna.add_mutation(COLDRES)
+			user.dna.add_mutation(SPACEMUT)
 			user.dna.add_mutation(TK)
 			user.next_move_modifier *= 0.5	//half the delay between attacks!
 			to_chat(user, "Things around you feel slower!")
@@ -94,9 +94,8 @@
 					var/mob/living/simple_animal/hostile/venus_human_trap/killwish = new /mob/living/simple_animal/hostile/venus_human_trap(loc)
 					killwish.maxHealth = 1500
 					killwish.health = killwish.maxHealth
-					killwish.grasp_range = 6
+					killwish.vine_grab_distance = 6
 					killwish.melee_damage_upper = 30
-					killwish.grasp_chance = 50
 					killwish.loot = list(/obj/item/twohanded/dualsaber/hypereutactic)
 					charges--
 					insisting = FALSE

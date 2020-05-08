@@ -19,6 +19,8 @@
 
 	display_order = JOB_DISPLAY_ORDER_SHAFT_MINER
 
+	threat = 1.5
+
 /datum/outfit/job/miner
 	name = "Shaft Miner (Lavaland)"
 	jobtype = /datum/job/mining
@@ -27,7 +29,7 @@
 	ears = /obj/item/radio/headset/headset_cargo/mining
 	shoes = /obj/item/clothing/shoes/workboots/mining
 	gloves = /obj/item/clothing/gloves/color/black
-	uniform = /obj/item/clothing/under/rank/miner/lavaland
+	uniform = /obj/item/clothing/under/rank/cargo/miner/lavaland
 	l_pocket = /obj/item/reagent_containers/hypospray/medipen/survival
 	r_pocket = /obj/item/storage/bag/ore	//causes issues if spawned in backpack
 	backpack_contents = list(
@@ -46,7 +48,7 @@
 
 /datum/outfit/job/miner/asteroid
 	name = "Shaft Miner (Asteroid)"
-	uniform = /obj/item/clothing/under/rank/miner
+	uniform = /obj/item/clothing/under/rank/cargo/miner
 	shoes = /obj/item/clothing/shoes/workboots
 
 /datum/outfit/job/miner/equipped

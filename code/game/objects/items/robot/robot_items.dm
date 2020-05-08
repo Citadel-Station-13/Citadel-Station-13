@@ -11,7 +11,7 @@
 	var/charge_cost = 30
 
 /obj/item/borg/stun/attack(mob/living/M, mob/living/user)
-	if(M.check_shields(src, 0, "[M]'s [name]", MELEE_ATTACK))
+	if(M.run_block(src, 0, "[M]'s [name]", ATTACK_TYPE_MELEE, 0, user, ran_zone(user.zone_selected)) & BLOCK_SUCCESS)
 		playsound(M, 'sound/weapons/genhit.ogg', 50, 1)
 		return FALSE
 	if(iscyborg(user))
@@ -20,7 +20,7 @@
 			return
 
 	user.do_attack_animation(M)
-	M.Knockdown(100)
+	M.DefaultCombatKnockdown(100)
 	M.apply_effect(EFFECT_STUTTER, 5)
 
 	M.visible_message("<span class='danger'>[user] has prodded [M] with [src]!</span>", \
@@ -80,9 +80,8 @@
 					else
 						user.visible_message("<span class='notice'>[user] hugs [M] to make [M.p_them()] feel better!</span>", \
 								"<span class='notice'>You hug [M] to make [M.p_them()] feel better!</span>")
-					if(M.resting && !M.recoveringstam)
-						M.resting = FALSE
-						M.update_canmove()
+					if(M.resting && !(M.combat_flags & COMBAT_FLAG_HARD_STAMCRIT))
+						M.set_resting(FALSE, TRUE)
 				else
 					user.visible_message("<span class='notice'>[user] pets [M]!</span>", \
 							"<span class='notice'>You pet [M]!</span>")
@@ -100,9 +99,8 @@
 					else
 						user.visible_message("<span class='warning'>[user] hugs [M] in a firm bear-hug! [M] looks uncomfortable...</span>", \
 								"<span class='warning'>You hug [M] firmly to make [M.p_them()] feel better! [M] looks uncomfortable...</span>")
-					if(M.resting && !M.recoveringstam)
-						M.resting = FALSE
-						M.update_canmove()
+					if(!CHECK_MOBILITY(M, MOBILITY_STAND) && !(M.combat_flags & COMBAT_FLAG_HARD_STAMCRIT))
+						M.set_resting(FALSE, TRUE)
 				else
 					user.visible_message("<span class='warning'>[user] bops [M] on the head!</span>", \
 							"<span class='warning'>You bop [M] on the head!</span>")
@@ -111,10 +109,9 @@
 			if(scooldown < world.time)
 				if(M.health >= 0)
 					if(ishuman(M)||ismonkey(M))
-						M.electrocute_act(5, "[user]", safety = 1)
+						M.electrocute_act(5, "[user]", flags = SHOCK_NOGLOVES)
 						user.visible_message("<span class='userdanger'>[user] electrocutes [M] with [user.p_their()] touch!</span>", \
 							"<span class='danger'>You electrocute [M] with your touch!</span>")
-						M.update_canmove()
 					else
 						if(!iscyborg(M))
 							M.adjustFireLoss(10)
@@ -154,11 +151,7 @@
 	var/static/list/charge_machines = typecacheof(list(/obj/machinery/cell_charger, /obj/machinery/recharger, /obj/machinery/recharge_station, /obj/machinery/mech_bay_recharge_port))
 	var/static/list/charge_items = typecacheof(list(/obj/item/stock_parts/cell, /obj/item/gun/energy))
 
-/obj/item/borg/charger/Initialize()
-	. = ..()
-
-/obj/item/borg/charger/update_icon()
-	..()
+/obj/item/borg/charger/update_icon_state()
 	icon_state = "charger_[mode]"
 
 /obj/item/borg/charger/attack_self(mob/user)
@@ -330,7 +323,7 @@
 					C.stuttering += 10
 					C.Jitter(10)
 				if(2)
-					C.Knockdown(40)
+					C.DefaultCombatKnockdown(40)
 					C.confused += 10
 					C.stuttering += 15
 					C.Jitter(25)
@@ -364,7 +357,7 @@
 /obj/item/borg/lollipop/equipped()
 	check_amount()
 
-/obj/item/borg/lollipop/dropped()
+/obj/item/borg/lollipop/dropped(mob/user)
 	check_amount()
 
 /obj/item/borg/lollipop/proc/check_amount()	//Doesn't even use processing ticks.
@@ -596,7 +589,7 @@
 	update_icon()
 	to_chat(user, "<span class='boldnotice'>You [active? "activate":"deactivate"] [src].</span>")
 
-/obj/item/borg/projectile_dampen/update_icon()
+/obj/item/borg/projectile_dampen/update_icon_state()
 	icon_state = "[initial(icon_state)][active]"
 
 /obj/item/borg/projectile_dampen/proc/activate_field()
@@ -627,7 +620,7 @@
 			return host.loc
 	return null
 
-/obj/item/borg/projectile_dampen/dropped()
+/obj/item/borg/projectile_dampen/dropped(mob/user)
 	. = ..()
 	host = loc
 
@@ -656,7 +649,7 @@
 			continue
 		usage += projectile_tick_speed_ecost
 		usage += (tracked[I] * projectile_damage_tick_ecost_coefficient)
-	energy = CLAMP(energy - usage, 0, maxenergy)
+	energy = clamp(energy - usage, 0, maxenergy)
 	if(energy <= 0)
 		deactivate_field()
 		visible_message("<span class='warning'>[src] blinks \"ENERGY DEPLETED\".</span>")
@@ -666,7 +659,7 @@
 		if(iscyborg(host.loc))
 			host = host.loc
 		else
-			energy = CLAMP(energy + energy_recharge, 0, maxenergy)
+			energy = clamp(energy + energy_recharge, 0, maxenergy)
 			return
 	if(host.cell && (host.cell.charge >= (host.cell.maxcharge * cyborg_cell_critical_percentage)) && (energy < maxenergy))
 		host.cell.use(energy_recharge*energy_recharge_cyborg_drain_coefficient)

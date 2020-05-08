@@ -7,7 +7,7 @@
 
 	w_class = WEIGHT_CLASS_SMALL
 
-	materials = list(MAT_METAL=50, MAT_GLASS=50)
+	custom_materials = list(/datum/material/iron=50, /datum/material/glass=50)
 
 	flags_1 = CONDUCT_1
 	item_flags = NOBLUDGEON
@@ -64,10 +64,10 @@
 		if(!L)
 			return OXYLOSS
 
-		L.Remove(user)
+		L.Remove()
 
 		// make some colorful reagent, and apply it to the lungs
-		L.create_reagents(10)
+		L.create_reagents(10, NONE, NO_REAGENTS_VALUE)
 		L.reagents.add_reagent(/datum/reagent/colorful_reagent, 10)
 		L.reagents.reaction(L, TOUCH, 1)
 

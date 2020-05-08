@@ -1,3 +1,18 @@
+#define NOT_ELECTROCHROMATIC		0
+#define ELECTROCHROMATIC_OFF		1
+#define ELECTROCHROMATIC_DIMMED		2
+
+GLOBAL_LIST_EMPTY(electrochromatic_window_lookup)
+
+/proc/do_electrochromatic_toggle(new_status, id)
+	var/list/windows = GLOB.electrochromatic_window_lookup["[id]"]
+	if(!windows)
+		return
+	var/obj/structure/window/W		//define outside for performance because obviously this matters.
+	for(var/i in windows)
+		W = i
+		new_status? W.electrochromatic_dim() : W.electrochromatic_off()
+
 /obj/structure/window
 	name = "window"
 	desc = "A window."
@@ -18,7 +33,6 @@
 	var/obj/item/stack/sheet/glass_type = /obj/item/stack/sheet/glass
 	var/cleanable_type = /obj/effect/decal/cleanable/glass
 	var/glass_amount = 1
-	var/mutable_appearance/crack_overlay
 	can_be_unanchored = TRUE
 	resistance_flags = ACID_PROOF
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 80, "acid" = 100)
@@ -29,8 +43,15 @@
 	rad_insulation = RAD_VERY_LIGHT_INSULATION
 	rad_flags = RAD_PROTECT_CONTENTS
 
+	/// Electrochromatic status
+	var/electrochromatic_status = NOT_ELECTROCHROMATIC
+	/// Electrochromatic ID. Set the first character to ! to replace with a SSmapping generated pseudorandom obfuscated ID for mapping purposes.
+	var/electrochromatic_id
+
 /obj/structure/window/examine(mob/user)
 	. = ..()
+	if(electrochromatic_status != NOT_ELECTROCHROMATIC)
+		. += "<span class='notice'>The window has electrochromatic circuitry on it.</span>"
 	if(reinf)
 		if(anchored && state == WINDOW_SCREWED_TO_FRAME)
 			. += "<span class='notice'>The window is <b>screwed</b> to the frame.</span>"
@@ -53,6 +74,10 @@
 	if(reinf && anchored)
 		state = WINDOW_SCREWED_TO_FRAME
 
+	if(mapload && electrochromatic_id)
+		if(copytext(electrochromatic_id, 1, 2) == "!")
+			electrochromatic_id = SSmapping.get_obfuscated_id(electrochromatic_id)
+
 	ini_dir = dir
 	air_update_turf(1)
 
@@ -62,6 +87,12 @@
 	//windows only block while reinforced and fulltile, so we'll use the proc
 	real_explosion_block = explosion_block
 	explosion_block = EXPLOSION_BLOCK_PROC
+
+	if(electrochromatic_status != NOT_ELECTROCHROMATIC)
+		var/old = electrochromatic_status
+		make_electrochromatic()
+		if(old == ELECTROCHROMATIC_DIMMED)
+			electrochromatic_dim()
 
 /obj/structure/window/ComponentInitialize()
 	. = ..()
@@ -178,6 +209,24 @@
 			to_chat(user, "<span class='warning'>[src] is already in good condition!</span>")
 		return
 
+	if(istype(I, /obj/item/electronics/electrochromatic_kit) && user.a_intent == INTENT_HELP)
+		var/obj/item/electronics/electrochromatic_kit/K = I
+		if(electrochromatic_status != NOT_ELECTROCHROMATIC)
+			to_chat(user, "<span class='warning'>[src] is already electrochromatic!</span>")
+			return
+		if(anchored)
+			to_chat(user, "<span class='warning'>[src] must not be attached to the floor!</span>")
+			return
+		if(!K.id)
+			to_chat(user, "<span class='warning'>[K] has no ID set!</span>")
+			return
+		if(!user.temporarilyRemoveItemFromInventory(K))
+			to_chat(user, "<span class='warning'>[K] is stuck to your hand!</span>")
+			return
+		user.visible_message("<span class='notice'>[user] upgrades [src] with [I].</span>", "<span class='notice'>You upgrade [src] with [I].</span>")
+		make_electrochromatic(K.id)
+		qdel(K)
+
 	if(!(flags_1&NODECONSTRUCT_1))
 		if(istype(I, /obj/item/screwdriver))
 			I.play_tool_sound(src, 75)
@@ -225,6 +274,91 @@
 	air_update_turf(TRUE)
 	update_nearby_icons()
 
+/obj/structure/window/proc/spraycan_paint(paint_color)
+	if(color_hex2num(paint_color) < 255)
+		set_opacity(255)
+	else
+		set_opacity(initial(opacity))
+	add_atom_colour(paint_color, WASHABLE_COLOUR_PRIORITY)
+
+/obj/structure/window/proc/electrochromatic_dim()
+	if(electrochromatic_status == ELECTROCHROMATIC_DIMMED)
+		return
+	electrochromatic_status = ELECTROCHROMATIC_DIMMED
+	animate(src, color = "#222222", time = 2)
+	set_opacity(TRUE)
+
+/obj/structure/window/proc/electrochromatic_off()
+	if(electrochromatic_status == ELECTROCHROMATIC_OFF)
+		return
+	electrochromatic_status = ELECTROCHROMATIC_OFF
+	var/current = color
+	update_atom_colour()
+	var/newcolor = color
+	color = current
+	animate(src, color = newcolor, time = 2)
+
+/obj/structure/window/proc/remove_electrochromatic()
+	electrochromatic_off()
+	electrochromatic_status = NOT_ELECTROCHROMATIC
+	if(!electrochromatic_id)
+		return
+	var/list/L = GLOB.electrochromatic_window_lookup["[electrochromatic_id]"]
+	if(L)
+		L -= src
+	electrochromatic_id = null
+
+/obj/structure/window/vv_edit_var(var_name, var_value)
+	var/check_status
+	if(var_name == NAMEOF(src, electrochromatic_id))
+		if(electrochromatic_id && GLOB.electrochromatic_window_lookup["[electrochromatic_id]"])
+			GLOB.electrochromatic_window_lookup[electrochromatic_id] -= src
+	if(var_name == NAMEOF(src, electrochromatic_status))
+		check_status = TRUE
+	. = ..()		//do this first incase it runtimes.
+	if(var_name == NAMEOF(src, electrochromatic_id))
+		if((electrochromatic_status != NOT_ELECTROCHROMATIC) && electrochromatic_id)
+			LAZYINITLIST(GLOB.electrochromatic_window_lookup[electrochromatic_id])
+			GLOB.electrochromatic_window_lookup[electrochromatic_id] += src
+	if(check_status)
+		if(electrochromatic_status == NOT_ELECTROCHROMATIC)
+			remove_electrochromatic()
+			return
+		else if(electrochromatic_status == ELECTROCHROMATIC_OFF)
+			if(!electrochromatic_id)
+				return
+			else
+				make_electrochromatic()
+			electrochromatic_off()
+			return
+		else if(electrochromatic_status == ELECTROCHROMATIC_DIMMED)
+			if(!electrochromatic_id)
+				return
+			else
+				make_electrochromatic()
+			electrochromatic_dim()
+			return
+		else
+			remove_electrochromatic()
+
+/obj/structure/window/proc/make_electrochromatic(new_id = electrochromatic_id)
+	remove_electrochromatic()
+	if(!new_id)
+		CRASH("Attempted to make electrochromatic with null ID.")
+	electrochromatic_id = new_id
+	electrochromatic_status = ELECTROCHROMATIC_OFF
+	LAZYINITLIST(GLOB.electrochromatic_window_lookup["[electrochromatic_id]"])
+	GLOB.electrochromatic_window_lookup[electrochromatic_id] |= src
+
+/obj/structure/window/update_atom_colour()
+	if((electrochromatic_status != ELECTROCHROMATIC_OFF) && (electrochromatic_status != ELECTROCHROMATIC_DIMMED))
+		return FALSE
+	. = ..()
+	if(color && (color_hex2num(color) < 255))
+		set_opacity(255)
+	else
+		set_opacity(FALSE)
+
 /obj/structure/window/proc/check_state(checked_state)
 	if(state == checked_state)
 		return TRUE
@@ -264,7 +398,6 @@
 		if(BURN)
 			playsound(src, 'sound/items/Welder.ogg', 100, 1)
 
-
 /obj/structure/window/deconstruct(disassembled = TRUE)
 	if(QDELETED(src))
 		return
@@ -273,6 +406,9 @@
 		if(!(flags_1 & NODECONSTRUCT_1))
 			for(var/obj/item/shard/debris in spawnDebris(drop_location()))
 				transfer_fingerprints_to(debris) // transfer fingerprints to shards only
+	if(electrochromatic_status != NOT_ELECTROCHROMATIC)		//eh fine keep your kit.
+		new /obj/item/electronics/electrochromatic_kit(drop_location())
+		// Intentionally not setting the ID so you can't decon one to know all of the IDs.
 	qdel(src)
 	update_nearby_icons()
 
@@ -316,8 +452,8 @@
 	density = FALSE
 	air_update_turf(1)
 	update_nearby_icons()
+	remove_electrochromatic()
 	return ..()
-
 
 /obj/structure/window/Move()
 	var/turf/T = loc
@@ -337,22 +473,19 @@
 		queue_smooth_neighbors(src)
 
 //merges adjacent full-tile windows into one
-/obj/structure/window/update_icon()
-	if(!QDELETED(src))
-		if(!fulltile)
-			return
+/obj/structure/window/update_overlays()
+	. = ..()
+	if(QDELETED(src) || !fulltile)
+		return
+	var/ratio = obj_integrity / max_integrity
+	ratio = CEILING(ratio*4, 1) * 25
 
-		var/ratio = obj_integrity / max_integrity
-		ratio = CEILING(ratio*4, 1) * 25
+	if(smooth)
+		queue_smooth(src)
 
-		if(smooth)
-			queue_smooth(src)
-
-		cut_overlay(crack_overlay)
-		if(ratio > 75)
-			return
-		crack_overlay = mutable_appearance('icons/obj/structures.dmi', "damage[ratio]", -(layer+0.1))
-		add_overlay(crack_overlay)
+	if(ratio > 75)
+		return
+	. += mutable_appearance('icons/obj/structures.dmi', "damage[ratio]", -(layer+0.1))
 
 /obj/structure/window/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 
@@ -595,6 +728,14 @@
 /obj/structure/window/plastitanium/unanchored
 	anchored = FALSE
 
+//pirate ship windows
+/obj/structure/window/plastitanium/pirate
+	desc = "Yarr this window be explosion proof!"
+	explosion_block = 30
+
+/obj/structure/window/plastitanium/pirate/unanchored
+	anchored = FALSE
+
 /obj/structure/window/reinforced/clockwork
 	name = "brass window"
 	desc = "A paper-thin pane of translucent yet reinforced brass."
@@ -727,7 +868,6 @@
 		set_opacity(TRUE)
 	queue_smooth(src)
 
-
 /obj/structure/window/paperframe/attackby(obj/item/W, mob/user)
 	if(W.get_temperature())
 		fire_act(W.get_temperature())
@@ -745,3 +885,7 @@
 			return
 	..()
 	update_icon()
+
+#undef NOT_ELECTROCHROMATIC
+#undef ELECTROCHROMATIC_OFF
+#undef ELECTROCHROMATIC_DIMMED

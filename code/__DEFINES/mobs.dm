@@ -35,17 +35,17 @@
 #define BLOODCRAWL 1
 #define BLOODCRAWL_EAT 2
 
-//Mob bio-types
-#define MOB_ORGANIC 	"organic"
-#define MOB_INORGANIC 	"inorganic"
-#define MOB_ROBOTIC 	"robotic"
-#define MOB_UNDEAD		"undead"
-#define MOB_HUMANOID 	"humanoid"
-#define MOB_BUG 		"bug"
-#define MOB_BEAST		"beast"
-#define MOB_EPIC		"epic" //megafauna
-#define MOB_REPTILE		"reptile"
-#define MOB_SPIRIT		"spirit"
+//Mob bio-types flags
+#define MOB_ORGANIC 	(1 << 0)
+#define MOB_MINERAL		(1 << 1)
+#define MOB_ROBOTIC 	(1 << 2)
+#define MOB_UNDEAD		(1 << 3)
+#define MOB_HUMANOID 	(1 << 4)
+#define MOB_BUG 		(1 << 5)
+#define MOB_BEAST		(1 << 6)
+#define MOB_EPIC		(1 << 7) //megafauna
+#define MOB_REPTILE		(1 << 8)
+#define MOB_SPIRIT		(1 << 9)
 
 //Organ defines for carbon mobs
 #define ORGAN_ORGANIC   1
@@ -58,8 +58,10 @@
 #define BODYPART_DISABLED_DAMAGE 1
 #define BODYPART_DISABLED_PARALYSIS 2
 
+#define DEFAULT_BODYPART_ICON 'icons/mob/human_parts.dmi'
 #define DEFAULT_BODYPART_ICON_ORGANIC 'icons/mob/human_parts_greyscale.dmi'
 #define DEFAULT_BODYPART_ICON_ROBOTIC 'icons/mob/augmentation/augments.dmi'
+#define DEFAULT_BODYPART_ICON_CITADEL 'modular_citadel/icons/mob/mutant_bodyparts.dmi'
 
 #define MONKEY_BODYPART "monkey"
 #define ALIEN_BODYPART "alien"
@@ -200,11 +202,24 @@
 #define NO_SLIP_WHEN_WALKING	(1<<0)
 #define SLIDE					(1<<1)
 #define GALOSHES_DONT_HELP		(1<<2)
-#define SLIDE_ICE				(1<<3)
-#define SLIP_WHEN_CRAWLING		(1<<4) //clown planet ruin
-#define SLIP_WHEN_JOGGING		(1<<5) //slips prevented by walking are also dodged if the mob is not sprinting or fatigued... unless this flag is on.
+#define FLYING_DOESNT_HELP		(1<<3)
+#define SLIDE_ICE				(1<<4)
+#define SLIP_WHEN_CRAWLING		(1<<5) //clown planet ruin amongst others
+#define SLIP_WHEN_JOGGING		(1<<6) //slips prevented by walking are also dodged if the mob is nor sprinting or fatigued... unless this flag is on.
+
 
 #define MAX_CHICKENS 50
+
+///Flags used by the flags parameter of electrocute act.
+
+///Makes it so that the shock doesn't take gloves into account.
+#define SHOCK_NOGLOVES (1 << 0)
+///Used when the shock is from a tesla bolt.
+#define SHOCK_TESLA (1 << 1)
+///Used when an illusion shocks something. Makes the shock deal stamina damage and not trigger certain secondary effects.
+#define SHOCK_ILLUSION (1 << 2)
+///The shock doesn't stun.
+#define SHOCK_NOSTUN (1 << 3)
 
 
 #define INCORPOREAL_MOVE_BASIC 1
@@ -250,6 +265,7 @@
 #define WIZARD_AGE_MIN		30	//youngest a wizard can be
 #define APPRENTICE_AGE_MIN	29	//youngest an apprentice can be
 #define SHOES_SLOWDOWN		0	//How much shoes slow you down by default. Negative values speed you up
+#define SHOES_SPEED_SLIGHT  SHOES_SLOWDOWN - 1 // slightest speed boost to movement
 #define POCKET_STRIP_DELAY			40	//time taken (in deciseconds) to search somebody's pockets
 #define DOOR_CRUSH_DAMAGE	15	//the amount of damage that airlocks deal when they crush you
 
@@ -273,5 +289,4 @@
 
 #define HUMAN_FIRE_STACK_ICON_NUM	3
 
-#define PULL_PRONE_SLOWDOWN 0.6
-#define HUMAN_CARRY_SLOWDOWN 0
+#define SLEEP_CHECK_DEATH(X) sleep(X); if(QDELETED(src) || stat == DEAD) return;

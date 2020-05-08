@@ -50,11 +50,6 @@
 	zone_select.update_icon()
 	static_inventory += zone_select
 
-	using = new /obj/screen/craft
-	using.icon = ui_style
-	using.hud = src
-	static_inventory += using
-
 	using = new /obj/screen/area_creator
 	using.icon = ui_style
 	using.hud = src

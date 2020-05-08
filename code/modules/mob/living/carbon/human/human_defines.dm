@@ -5,7 +5,13 @@
 	pressure_resistance = 25
 	can_buckle = TRUE
 	buckle_lying = FALSE
-	mob_biotypes = list(MOB_ORGANIC, MOB_HUMANOID)
+	mob_biotypes = MOB_ORGANIC|MOB_HUMANOID
+	/// Enable stamina combat
+	combat_flags = COMBAT_FLAGS_DEFAULT
+	status_flags = CANSTUN|CANKNOCKDOWN|CANUNCONSCIOUS|CANPUSH|CANSTAGGER
+
+	blocks_emissive = EMISSIVE_BLOCK_UNIQUE
+
 	//Hair colour and style
 	var/hair_color = "000"
 	var/hair_style = "Bald"
@@ -16,10 +22,6 @@
 
 	//Eye colour
 	var/eye_color = "000"
-
-	var/horn_color = "85615a"	//specific horn colors, because why not?
-
-	var/wing_color = "fff"		//wings too
 
 	var/skin_tone = "caucasian1"	//Skin tone
 
@@ -59,7 +61,6 @@
 
 	var/custom_species = null
 
-	var/datum/personal_crafting/handcrafting
 	var/datum/physiology/physiology
 
 	var/list/datum/bioware = list()

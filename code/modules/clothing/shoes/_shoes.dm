@@ -49,8 +49,8 @@
 		last_bloodtype = blood_dna[blood_dna[blood_dna.len]]//trust me this works
 		last_blood_DNA = blood_dna[blood_dna.len]
 
-/obj/item/clothing/shoes/worn_overlays(isinhands = FALSE, icon_file, style_flags = NONE)
-	. = list()
+/obj/item/clothing/shoes/worn_overlays(isinhands = FALSE, icon_file, used_state, style_flags = NONE)
+	. = ..()
 	if(!isinhands)
 		var/bloody = FALSE
 		if(blood_DNA)
@@ -61,7 +61,7 @@
 		if(damaged_clothes)
 			. += mutable_appearance('icons/effects/item_damage.dmi', "damagedshoe")
 		if(bloody)
-			var/file2use = style_flags & STYLE_DIGITIGRADE ? 'icons/mob/feet_digi.dmi' : 'icons/effects/blood.dmi'
+			var/file2use = style_flags & STYLE_DIGITIGRADE ? 'icons/mob/clothing/feet_digi.dmi' : 'icons/effects/blood.dmi'
 			. += mutable_appearance(file2use, "shoeblood", color = blood_DNA_to_color())
 
 /obj/item/clothing/shoes/equipped(mob/user, slot)

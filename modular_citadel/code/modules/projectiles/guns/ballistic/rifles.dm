@@ -16,6 +16,29 @@
 	spread = 30	//should be 40 for XCOM memes, but since its adminspawn only, might as well make it useable
 	recoil = 1
 
+///toy memes///
+
+/obj/item/ammo_box/magazine/toy/x9
+	name = "foam force X9 magazine"
+	icon = 'modular_citadel/icons/obj/guns/cit_guns.dmi'
+	icon_state = "toy9magazine"
+	max_ammo = 30
+	multiple_sprites = 2
+	custom_materials = list(/datum/material/iron = 200)
+
+/obj/item/gun/ballistic/automatic/x9/toy
+	name = "\improper Foam Force X9"
+	desc = "An old but reliable assault rifle made for combat against unknown enemies. Appears to be hastily converted. Ages 8 and up."
+	icon = 'modular_citadel/icons/obj/guns/cit_guns.dmi'
+	icon_state = "toy9"
+	can_suppress = 0
+	obj_flags = 0
+	mag_type = /obj/item/ammo_box/magazine/toy/x9
+	casing_ejector = 0
+	spread = 90		//MAXIMUM XCOM MEMES (actually that'd be 180 spread)
+	w_class = WEIGHT_CLASS_BULKY
+	weapon_weight = WEAPON_HEAVY
+
 ///////security rifles special ammo///////
 
 /obj/item/ammo_casing/c46x30mm/rubber
@@ -42,7 +65,7 @@
 	icon_state = "toy9magazine"
 	max_ammo = 30
 	multiple_sprites = 2
-	materials = list(MAT_METAL = 200)
+	custom_materials = list(/datum/material/iron = 200)
 
 /obj/item/gun/ballistic/automatic/x9/toy
 	name = "\improper Foam Force X9"
@@ -178,7 +201,7 @@
 	icon_state = "AM4MAG-60"
 	max_ammo = 60
 	multiple_sprites = 0
-	materials = list(MAT_METAL = 200)
+	custom_materials = list(/datum/material/iron = 200)
 
 /obj/item/gun/ballistic/automatic/AM4B
 	name = "AM4-B"
@@ -230,7 +253,7 @@
 	icon_state = "AM4MAG-32"
 	max_ammo = 32
 	multiple_sprites = 0
-	materials = list(MAT_METAL = 200)
+	custom_materials = list(/datum/material/iron = 200)
 
 /obj/item/gun/ballistic/automatic/AM4C
 	name = "AM4-C"

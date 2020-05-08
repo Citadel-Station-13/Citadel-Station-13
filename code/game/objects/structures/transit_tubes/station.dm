@@ -43,10 +43,10 @@
 
 
 //pod insertion
-/obj/structure/transit_tube/station/MouseDrop_T(obj/structure/c_transit_tube_pod/R, mob/user)
-	if(!user.canmove || user.stat || user.restrained())
+/obj/structure/transit_tube/station/MouseDrop_T(obj/structure/c_transit_tube_pod/R, mob/living/user)
+	if(!istype(user) || !CHECK_MOBILITY(user, MOBILITY_USE))
 		return
-	if (!istype(R) || get_dist(user, src) > 1 || get_dist(src,R) > 1)
+	if(!istype(R) || get_dist(user, src) > 1 || get_dist(src,R) > 1)
 		return
 	for(var/obj/structure/transit_tube_pod/pod in loc)
 		return //no fun allowed
@@ -74,7 +74,7 @@
 						pod.visible_message("<span class='warning'>[user] starts putting [GM] into the [pod]!</span>")
 						if(do_after(user, 15, target = src))
 							if(open_status == STATION_TUBE_OPEN && GM && user.grab_state >= GRAB_AGGRESSIVE && user.pulling == GM && !GM.buckled && !GM.has_buckled_mobs())
-								GM.Knockdown(100)
+								GM.DefaultCombatKnockdown(100)
 								src.Bumped(GM)
 						break
 		else

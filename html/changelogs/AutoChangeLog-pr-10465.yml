@@ -1,8 +1,0 @@
-author: "Putnam3145"
-delete-after: True
-changes: 
-  - rscadd: "Ghost dojo now has an autoylathe."
-  - rscdel: "Ghost dojo no longer has VR or modular computer access."
-  - tweak: "Ghost dojo mobs are pacifists."
-  - tweak: "Ghost dojo booze-o-mat is now all access."
-  - bugfix: "Ghost dojo crematorium now has a button."

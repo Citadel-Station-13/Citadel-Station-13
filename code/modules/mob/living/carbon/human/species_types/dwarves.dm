@@ -6,11 +6,10 @@ GLOBAL_LIST_INIT(dwarf_last, world.file2list("strings/names/dwarf_last.txt")) //
 	name = "Dwarf"
 	id = "dwarf" //Also called Homo sapiens pumilionis
 	default_color = "FFFFFF"
-	species_traits = list(EYECOLOR,HAIR,FACEHAIR,LIPS,NO_UNDERWEAR)
+	species_traits = list(EYECOLOR,HAIR,FACEHAIR,LIPS,NO_UNDERWEAR,TRAIT_DWARF)
 	inherent_traits = list()
-	default_features = list("mcolor" = "FFF", "wings" = "None")
 	limbs_id = "human"
-	use_skintones = 1
+	use_skintones = USE_SKINTONES_GRAYSCALE_CUSTOM
 	say_mod = "bellows" //high energy, EXTRA BIOLOGICAL FUEL
 	damage_overlay_type = "human"
 	skinned_type = /obj/item/stack/sheet/animalhide/human
@@ -31,16 +30,17 @@ GLOBAL_LIST_INIT(dwarf_last, world.file2list("strings/names/dwarf_last.txt")) //
 	. = ..()
 	var/dwarf_hair = pick("Beard (Dwarf)", "Beard (Very Long)", "Beard (Long)") //beard roullette
 	var/mob/living/carbon/human/H = C
+	H.grant_language(/datum/language/dwarf)
 	H.facial_hair_style = dwarf_hair
 	H.update_hair()
 	H.transform = H.transform.Scale(1, 0.8) //We use scale, and yeah. Dwarves can become gnomes with DWARFISM.
 	RegisterSignal(C, COMSIG_MOB_SAY, .proc/handle_speech) //We register handle_speech is being used.
 
-
 /datum/species/dwarf/on_species_loss(mob/living/carbon/H, datum/species/new_species)
 	. = ..()
 	H.transform = H.transform.Scale(1, 1.25) //And we undo it.
 	UnregisterSignal(H, COMSIG_MOB_SAY) //We register handle_speech is not being used.
+	H.remove_language(/datum/language/dwarf)
 
 //Dwarf Name stuff
 /proc/dwarf_name() //hello caller: my name is urist mcuristurister
@@ -52,21 +52,20 @@ GLOBAL_LIST_INIT(dwarf_last, world.file2list("strings/names/dwarf_last.txt")) //
 //Dwarf Speech handling - Basically a filter/forces them to say things. The IC helper
 /datum/species/dwarf/proc/handle_speech(datum/source, list/speech_args)
 	var/message = speech_args[SPEECH_MESSAGE]
-	if(message[1] != "*")
-		message = " [message]" //Credits to goonstation for the strings list.
-		var/list/dwarf_words = strings("dwarf_replacement.json", "dwarf") //thanks to regex too.
+	if(speech_args[SPEECH_LANGUAGE] != /datum/language/dwarf) // No accent if they speak their language
+		if(message[1] != "*")
+			message = " [message]" //Credits to goonstation for the strings list.
+			var/list/dwarf_words = strings("dwarf_replacement.json", "dwarf") //thanks to regex too.
+			for(var/key in dwarf_words) //Theres like 1459 words or something man.
+				var/value = dwarf_words[key] //Thus they will always be in character.
+				if(islist(value)) //Whether they like it or not.
+					value = pick(value) //This could be drastically reduced if needed though.
+				message = replacetextEx(message, " [uppertext(key)]", " [uppertext(value)]")
+				message = replacetextEx(message, " [capitalize(key)]", " [capitalize(value)]")
+				message = replacetextEx(message, " [key]", " [value]") //Also its scottish.
 
-		for(var/key in dwarf_words) //Theres like 1459 words or something man.
-			var/value = dwarf_words[key] //Thus they will always be in character.
-			if(islist(value)) //Whether they like it or not.
-				value = pick(value) //This could be drastically reduced if needed though.
-
-			message = replacetextEx(message, " [uppertext(key)]", " [uppertext(value)]")
-			message = replacetextEx(message, " [capitalize(key)]", " [capitalize(value)]")
-			message = replacetextEx(message, " [key]", " [value]") //Also its scottish.
-
-		if(prob(3))
-			message += pick(" By Armok!")
+	if(prob(3))
+		message += " By Armok!"
 	speech_args[SPEECH_MESSAGE] = trim(message)
 
 //This mostly exists because my testdwarf's liver died while trying to also not die due to no alcohol.
@@ -92,6 +91,8 @@ GLOBAL_LIST_INIT(dwarf_last, world.file2list("strings/names/dwarf_last.txt")) //
 	//These count in on_life ticks which should be 2 seconds per every increment of 1 in a perfect world.
 	var/dwarf_filth_ticker = 0 //Currently set =< 4, that means this will fire the proc around every 4-8 seconds.
 	var/dwarf_eth_ticker = 0 //Currently set =< 1, that means this will fire the proc around every 2 seconds
+	var/last_filth_spam
+	var/last_alcohol_spam
 
 /obj/item/organ/dwarfgland/prepare_eat()
 	var/obj/S = ..()
@@ -100,12 +101,11 @@ GLOBAL_LIST_INIT(dwarf_last, world.file2list("strings/names/dwarf_last.txt")) //
 
 /obj/item/organ/dwarfgland/on_life() //Primary loop to hook into to start delayed loops for other loops..
 	. = ..()
-	dwarf_cycle_ticker()
+	if(owner && owner.stat != DEAD)
+		dwarf_cycle_ticker()
 
 //Handles the delayed tick cycle by just adding on increments per each on_life() tick
 /obj/item/organ/dwarfgland/proc/dwarf_cycle_ticker()
-	if(owner.stat == DEAD)
-		return //We make sure they are not dead, so they don't increment any tickers.
 	dwarf_eth_ticker++
 	dwarf_filth_ticker++
 
@@ -136,40 +136,39 @@ GLOBAL_LIST_INIT(dwarf_last, world.file2list("strings/names/dwarf_last.txt")) //
 			filth_counter += 10 //Dwarves could technically chainstun each other in a vomit tantrum spiral.
 	switch(filth_counter)
 		if(11 to 25)
-			if(prob(25))
-				to_chat(owner, "<span class = 'danger'>Someone should really clean up in here!</span>")
+			if(last_filth_spam + 40 SECONDS < world.time)
+				to_chat(owner, "<span class = 'warning'>Someone should really clean up in here!</span>")
+				last_filth_spam = world.time
 		if(26 to 50)
-			if(prob(30)) //Probability the message appears
+			if(prob(6)) //And then the probability they vomit along with it.
 				to_chat(owner, "<span class = 'danger'>The stench makes you queasy.</span>")
-				if(prob(20)) //And then the probability they vomit along with it.
-					owner.vomit(20) //I think vomit should stay over a disgust adjustment.
+				owner.vomit(10) //I think vomit should stay over a disgust adjustment.
 		if(51 to 75)
-			if(prob(35))
+			if(prob(9))
 				to_chat(owner, "<span class = 'danger'>By Armok! You won't be able to keep alcohol down at all!</span>")
-				if(prob(25))
-					owner.vomit(20) //Its more funny
+				owner.vomit(20) //Its more funny
 		if(76 to 100)
-			if(prob(40))
+			if(prob(11))
 				to_chat(owner, "<span class = 'userdanger'>You can't live in such FILTH!</span>")
-				if(prob(25))
-					owner.adjustToxLoss(10) //Now they start dying.
-					owner.vomit(20)
+				owner.adjustToxLoss(10) //Now they start dying.
+				owner.vomit(20)
 		if(101 to INFINITY) //Now they will really start dying
-			if(prob(40))
+			if(last_filth_spam + 12 SECONDS < world.time)
 				to_chat(owner, "<span class = 'userdanger'> THERES TOO MUCH FILTH, OH GODS THE FILTH!</span>")
+				last_filth_spam = world.time
+			if(prob(40))
 				owner.adjustToxLoss(15)
-				owner.vomit(40)
+				owner.vomit(30)
 	CHECK_TICK //Check_tick right here, its motherfuckin magic. (To me at least)
 
 //Handles the dwarf alcohol cycle tied to on_life, it ticks in dwarf_cycle_ticker.
 /obj/item/organ/dwarfgland/proc/dwarf_eth_cycle()
 	//BOOZE POWER
+	var/init_stored_alcohol = stored_alcohol
 	for(var/datum/reagent/R in owner.reagents.reagent_list)
 		if(istype(R, /datum/reagent/consumable/ethanol))
 			var/datum/reagent/consumable/ethanol/E = R
-			stored_alcohol += (E.boozepwr / 50)
-			if(stored_alcohol > max_alcohol) //Dwarves technically start at 250 alcohol stored.
-				stored_alcohol = max_alcohol
+			stored_alcohol = clamp(stored_alcohol + E.boozepwr / 50, 0, max_alcohol)
 	var/heal_amt = heal_rate
 	stored_alcohol -= alcohol_rate //Subtracts alcohol_Rate from stored alcohol so EX: 250 - 0.25 per each loop that occurs.
 	if(stored_alcohol > 400) //If they are over 400 they start regenerating
@@ -177,16 +176,27 @@ GLOBAL_LIST_INIT(dwarf_last, world.file2list("strings/names/dwarf_last.txt")) //
 		owner.adjustFireLoss(-heal_amt) //Unless they drink casually all the time.
 		owner.adjustOxyLoss(-heal_amt)
 		owner.adjustCloneLoss(-heal_amt) //Also they will probably get brain damage if thats a thing here.
-	if(prob(25))
-		switch(stored_alcohol)
-			if(0 to 24)
+	if(init_stored_alcohol + 0.5 < stored_alcohol) //recovering stored alcohol at a steady rate of +0.75, no spam.
+		return
+	switch(stored_alcohol)
+		if(0 to 24)
+			if(last_alcohol_spam + 8 SECONDS < world.time)
 				to_chat(owner, "<span class='userdanger'>DAMNATION INCARNATE, WHY AM I CURSED WITH THIS DRY-SPELL? I MUST DRINK.</span>")
-				owner.adjustToxLoss(35)
-			if(25 to 50)
+				last_alcohol_spam = world.time
+			owner.adjustToxLoss(10)
+		if(25 to 50)
+			if(last_alcohol_spam + 20 SECONDS < world.time)
 				to_chat(owner, "<span class='danger'>Oh DAMN, I need some brew!</span>")
-			if(51 to 75)
+				last_alcohol_spam = world.time
+		if(51 to 75)
+			if(last_alcohol_spam + 35 SECONDS < world.time)
 				to_chat(owner, "<span class='warning'>Your body aches, you need to get ahold of some booze...</span>")
-			if(76 to 100)
+				last_alcohol_spam = world.time
+		if(76 to 100)
+			if(last_alcohol_spam + 40 SECONDS < world.time)
 				to_chat(owner, "<span class='notice'>A pint of anything would really hit the spot right now.</span>")
-			if(101 to 150)
+				last_alcohol_spam = world.time
+		if(101 to 150)
+			if(last_alcohol_spam + 50 SECONDS < world.time)
 				to_chat(owner, "<span class='notice'>You feel like you could use a good brew.</span>")
+				last_alcohol_spam = world.time

@@ -1,4 +1,0 @@
-author: "kevinz000"
-delete-after: True
-changes: 
-  - bugfix: "telescopic iv drips now have the proper sanity checks for deployment."

@@ -23,7 +23,7 @@
 	name = "small light fixture frame"
 	icon_state = "bulb-construct-item"
 	result_path = /obj/structure/light_construct/small
-	materials = list(MAT_METAL=MINERAL_MATERIAL_AMOUNT)
+	custom_materials = list(/datum/material/iron=MINERAL_MATERIAL_AMOUNT)
 
 /obj/item/wallframe/light_fixture/try_build(turf/on_wall, user)
 	if(!..())
@@ -220,6 +220,7 @@
 	var/bulb_emergency_colour = "#FF3232"	// determines the colour of the light while it's in emergency mode
 	var/bulb_emergency_pow_mul = 0.75	// the multiplier for determining the light's power in emergency mode
 	var/bulb_emergency_pow_min = 0.5	// the minimum value for the light's power in emergency mode
+	var/hijacked = FALSE	// if true, the light is in a hijacked area
 
 /obj/machinery/light/broken
 	status = LIGHT_BROKEN
@@ -256,6 +257,7 @@
 
 /obj/machinery/light/small/built
 	icon_state = "bulb-empty"
+	start_with_cell = FALSE
 
 /obj/machinery/light/small/built/Initialize()
 	. = ..()
@@ -290,26 +292,30 @@
 	QDEL_NULL(cell)
 	return ..()
 
-/obj/machinery/light/update_icon()
-	cut_overlays()
+/obj/machinery/light/update_icon_state()
 	switch(status)		// set icon_states
 		if(LIGHT_OK)
 			var/area/A = get_base_area(src)
 			if(emergency_mode || (A && A.fire))
 				icon_state = "[base_state]_emergency"
 			else
-				icon_state = "[base_state]"
-				if(on)
-					var/mutable_appearance/glowybit = mutable_appearance(overlayicon, base_state, ABOVE_LIGHTING_LAYER, ABOVE_LIGHTING_PLANE)
-					glowybit.alpha = CLAMP(light_power*250, 30, 200)
-					add_overlay(glowybit)
+				if (hijacked)
+					icon_state = "[base_state]_hijacked"
+				else
+					icon_state = "[base_state]"
 		if(LIGHT_EMPTY)
 			icon_state = "[base_state]-empty"
 		if(LIGHT_BURNED)
 			icon_state = "[base_state]-burned"
 		if(LIGHT_BROKEN)
 			icon_state = "[base_state]-broken"
-	return
+
+/obj/machinery/light/update_overlays()
+	. = ..()
+	SSvis_overlays.remove_vis_overlay(src, managed_vis_overlays)
+	if(on && status == LIGHT_OK)
+		SSvis_overlays.add_vis_overlay(src, overlayicon, base_state, EMISSIVE_LAYER, EMISSIVE_PLANE, dir, clamp(light_power*250, 30, 200))
+
 
 // update the icon_state and luminosity of the light depending on its state
 /obj/machinery/light/proc/update(trigger = TRUE)
@@ -326,6 +332,10 @@
 		var/area/A = get_base_area(src)
 		if (A && A.fire)
 			CO = bulb_emergency_colour
+		else if (hijacked)
+			BR = BR * 1.5
+			PO = PO * 1.5
+			CO = color ? color : LIGHT_COLOR_YELLOW
 		else if (nightshift_enabled)
 			BR = nightshift_brightness
 			PO = nightshift_light_power
@@ -355,7 +365,7 @@
 	if(on != on_gs)
 		on_gs = on
 		if(on)
-			static_power_used = brightness * 14.4 //20W per unit luminosity
+			static_power_used = brightness * 14.4 * (hijacked ? 2 : 1) //20W per unit luminosity
 			addStaticPower(static_power_used, STATIC_LIGHT)
 		else
 			removeStaticPower(static_power_used, STATIC_LIGHT)
@@ -718,7 +728,7 @@
 	var/status = LIGHT_OK		// LIGHT_OK, LIGHT_BURNED or LIGHT_BROKEN
 	var/base_state
 	var/switchcount = 0	// number of times switched
-	materials = list(MAT_GLASS=100)
+	custom_materials = list(/datum/material/glass=100)
 	grind_results = list(/datum/reagent/silicon = 5, /datum/reagent/nitrogen = 10) //Nitrogen is used as a cheaper alternative to argon in incandescent lighbulbs
 	var/rigged = 0		// true if rigged to explode
 	var/brightness = 2 //how much light it gives off

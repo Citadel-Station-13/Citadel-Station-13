@@ -199,32 +199,28 @@
 		stat |= BROKEN
 
 
-/obj/machinery/power/smes/update_icon()
-	cut_overlays()
-	if(stat & BROKEN)
-		return
-
-	if(panel_open)
+/obj/machinery/power/smes/update_overlays()
+	. = ..()
+	if((stat & BROKEN) || panel_open)
 		return
 
 	if(outputting)
-		add_overlay("smes-op1")
+		. += "smes-op1"
 	else
-		add_overlay("smes-op0")
+		. += "smes-op0"
 
 	if(inputting)
-		add_overlay("smes-oc1")
+		. += "smes-oc1"
 	else
 		if(input_attempt)
-			add_overlay("smes-oc0")
+			. += "smes-oc0"
 
 	var/clevel = chargedisplay()
 	if(clevel>0)
-		add_overlay("smes-og[clevel]")
-
+		. += "smes-og[clevel]"
 
 /obj/machinery/power/smes/proc/chargedisplay()
-	return CLAMP(round(5.5*charge/capacity),0,5)
+	return clamp(round(5.5*charge/capacity),0,5)
 
 /obj/machinery/power/smes/process()
 	if(stat & BROKEN)
@@ -376,7 +372,7 @@
 				target = text2num(target)
 				. = TRUE
 			if(.)
-				input_level = CLAMP(target, 0, input_level_max)
+				input_level = clamp(target, 0, input_level_max)
 				log_smes(usr)
 		if("output")
 			var/target = params["target"]
@@ -398,7 +394,7 @@
 				target = text2num(target)
 				. = TRUE
 			if(.)
-				output_level = CLAMP(target, 0, output_level_max)
+				output_level = clamp(target, 0, output_level_max)
 				log_smes(usr)
 
 /obj/machinery/power/smes/proc/log_smes(mob/user)

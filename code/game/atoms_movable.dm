@@ -39,6 +39,37 @@
 
 	var/zfalling = FALSE
 
+	/// Either FALSE, [EMISSIVE_BLOCK_GENERIC], or [EMISSIVE_BLOCK_UNIQUE]
+	var/blocks_emissive = FALSE
+	///Internal holder for emissive blocker object, do not use directly use blocks_emissive
+	var/atom/movable/emissive_blocker/em_block
+
+
+/atom/movable/Initialize(mapload)
+	. = ..()
+	switch(blocks_emissive)
+		if(EMISSIVE_BLOCK_GENERIC)
+			update_emissive_block()
+		if(EMISSIVE_BLOCK_UNIQUE)
+			render_target = ref(src)
+			em_block = new(src, render_target)
+			vis_contents += em_block
+
+/atom/movable/Destroy()
+	QDEL_NULL(em_block)
+	return ..()
+
+/atom/movable/proc/update_emissive_block()
+	if(blocks_emissive != EMISSIVE_BLOCK_GENERIC)
+		return
+	if(length(managed_vis_overlays))
+		for(var/a in managed_vis_overlays)
+			var/obj/effect/overlay/vis/vs
+			if(vs.plane == EMISSIVE_BLOCKER_PLANE)
+				SSvis_overlays.remove_vis_overlay(src, list(vs))
+				break
+	SSvis_overlays.add_vis_overlay(src, icon, icon_state, EMISSIVE_BLOCKER_LAYER, EMISSIVE_BLOCKER_PLANE, dir)
+
 /atom/movable/proc/can_zFall(turf/source, levels = 1, turf/target, direction)
 	if(!direction)
 		direction = DOWN
@@ -131,7 +162,7 @@
 			return FALSE
 		// Are we trying to pull something we are already pulling? Then enter grab cycle and end.
 		if(AM == pulling)
-			grab_state = state
+			setGrabState(state)
 			if(istype(AM,/mob/living))
 				var/mob/living/AMob = AM
 				AMob.grabbedby(src)
@@ -142,7 +173,7 @@
 		AM.pulledby.stop_pulling() //an object can't be pulled by two mobs at once.
 	pulling = AM
 	AM.pulledby = src
-	grab_state = state
+	setGrabState(state)
 	if(ismob(AM))
 		var/mob/M = AM
 		log_combat(src, M, "grabbed", addition="passive grab")
@@ -155,10 +186,10 @@
 		pulling.pulledby = null
 		var/mob/living/ex_pulled = pulling
 		pulling = null
-		grab_state = 0
+		setGrabState(0)
 		if(isliving(ex_pulled))
 			var/mob/living/L = ex_pulled
-			L.update_canmove()// mob gets up if it was lyng down in a chokehold
+			L.update_mobility()// mob gets up if it was lyng down in a chokehold
 
 /atom/movable/proc/Move_Pulled(atom/A)
 	if(!pulling)
@@ -194,160 +225,6 @@
 			stop_pulling()
 			return
 
-////////////////////////////////////////
-// Here's where we rewrite how byond handles movement except slightly different
-// To be removed on step_ conversion
-// All this work to prevent a second bump
-/atom/movable/Move(atom/newloc, direct=0)
-	. = FALSE
-	if(!newloc || newloc == loc)
-		return
-
-	if(!direct)
-		direct = get_dir(src, newloc)
-	setDir(direct)
-
-	if(!loc.Exit(src, newloc))
-		return
-
-	if(!newloc.Enter(src, src.loc))
-		return
-
-	// Past this is the point of no return
-	var/atom/oldloc = loc
-	var/area/oldarea = get_area(oldloc)
-	var/area/newarea = get_area(newloc)
-	loc = newloc
-	. = TRUE
-	oldloc.Exited(src, newloc)
-	if(oldarea != newarea)
-		oldarea.Exited(src, newloc)
-
-	for(var/i in oldloc)
-		if(i == src) // Multi tile objects
-			continue
-		var/atom/movable/thing = i
-		thing.Uncrossed(src)
-
-	newloc.Entered(src, oldloc)
-	if(oldarea != newarea)
-		newarea.Entered(src, oldloc)
-
-	for(var/i in loc)
-		if(i == src) // Multi tile objects
-			continue
-		var/atom/movable/thing = i
-		thing.Crossed(src)
-//
-////////////////////////////////////////
-
-/atom/movable/Move(atom/newloc, direct)
-	var/atom/movable/pullee = pulling
-	var/turf/T = loc
-	if(pulling)
-		if(pullee && get_dist(src, pullee) > 1)
-			stop_pulling()
-
-		if(pullee && pullee.loc != loc && !isturf(pullee.loc) ) //to be removed once all code that changes an object's loc uses forceMove().
-			log_game("DEBUG:[src]'s pull on [pullee] wasn't broken despite [pullee] being in [pullee.loc]. Pull stopped manually.")
-			stop_pulling()
-	if(!loc || !newloc)
-		return FALSE
-	var/atom/oldloc = loc
-
-	if(loc != newloc)
-		if (!(direct & (direct - 1))) //Cardinal move
-			. = ..()
-		else //Diagonal move, split it into cardinal moves
-			moving_diagonally = FIRST_DIAG_STEP
-			var/first_step_dir
-			// The `&& moving_diagonally` checks are so that a forceMove taking
-			// place due to a Crossed, Bumped, etc. call will interrupt
-			// the second half of the diagonal movement, or the second attempt
-			// at a first half if step() fails because we hit something.
-			if (direct & NORTH)
-				if (direct & EAST)
-					if (step(src, NORTH) && moving_diagonally)
-						first_step_dir = NORTH
-						moving_diagonally = SECOND_DIAG_STEP
-						. = step(src, EAST)
-					else if (moving_diagonally && step(src, EAST))
-						first_step_dir = EAST
-						moving_diagonally = SECOND_DIAG_STEP
-						. = step(src, NORTH)
-				else if (direct & WEST)
-					if (step(src, NORTH) && moving_diagonally)
-						first_step_dir = NORTH
-						moving_diagonally = SECOND_DIAG_STEP
-						. = step(src, WEST)
-					else if (moving_diagonally && step(src, WEST))
-						first_step_dir = WEST
-						moving_diagonally = SECOND_DIAG_STEP
-						. = step(src, NORTH)
-			else if (direct & SOUTH)
-				if (direct & EAST)
-					if (step(src, SOUTH) && moving_diagonally)
-						first_step_dir = SOUTH
-						moving_diagonally = SECOND_DIAG_STEP
-						. = step(src, EAST)
-					else if (moving_diagonally && step(src, EAST))
-						first_step_dir = EAST
-						moving_diagonally = SECOND_DIAG_STEP
-						. = step(src, SOUTH)
-				else if (direct & WEST)
-					if (step(src, SOUTH) && moving_diagonally)
-						first_step_dir = SOUTH
-						moving_diagonally = SECOND_DIAG_STEP
-						. = step(src, WEST)
-					else if (moving_diagonally && step(src, WEST))
-						first_step_dir = WEST
-						moving_diagonally = SECOND_DIAG_STEP
-						. = step(src, SOUTH)
-			if(moving_diagonally == SECOND_DIAG_STEP)
-				if(!.)
-					setDir(first_step_dir)
-				else if (!inertia_moving)
-					inertia_next_move = world.time + inertia_move_delay
-					newtonian_move(direct)
-			moving_diagonally = 0
-			return
-
-	if(!loc || (loc == oldloc && oldloc != newloc))
-		last_move = 0
-		return
-
-	if(.)
-		Moved(oldloc, direct)
-	if(. && pulling && pulling == pullee) //we were pulling a thing and didn't lose it during our move.
-		if(pulling.anchored)
-			stop_pulling()
-		else
-			var/pull_dir = get_dir(src, pulling)
-			//puller and pullee more than one tile away or in diagonal position
-			if(get_dist(src, pulling) > 1 || (moving_diagonally != SECOND_DIAG_STEP && ((pull_dir - 1) & pull_dir)))
-				pulling.Move(T, get_dir(pulling, T)) //the pullee tries to reach our previous position
-				if(pulling && get_dist(src, pulling) > 1) //the pullee couldn't keep up
-					stop_pulling()
-			if(pulledby && moving_diagonally != FIRST_DIAG_STEP && get_dist(src, pulledby) > 1)//separated from our puller and not in the middle of a diagonal move.
-				pulledby.stop_pulling()
-
-
-	last_move = direct
-	setDir(direct)
-	if(. && has_buckled_mobs() && !handle_buckled_mob_movement(loc,direct)) //movement failed due to buckled mob(s)
-		return FALSE
-
-//Called after a successful Move(). By this point, we've already moved
-/atom/movable/proc/Moved(atom/OldLoc, Dir, Forced = FALSE)
-	SEND_SIGNAL(src, COMSIG_MOVABLE_MOVED, OldLoc, Dir, Forced)
-	if (!inertia_moving)
-		inertia_next_move = world.time + inertia_move_delay
-		newtonian_move(Dir)
-	if (length(client_mobs_in_contents))
-		update_parallax_contents()
-
-	return TRUE
-
 /atom/movable/Destroy(force)
 	QDEL_NULL(proximity_monitor)
 	QDEL_NULL(language_holder)
@@ -372,147 +249,15 @@
 		orbiting.end_orbit(src)
 		orbiting = null
 
-// Make sure you know what you're doing if you call this, this is intended to only be called by byond directly.
-// You probably want CanPass()
-/atom/movable/Cross(atom/movable/AM)
-	. = TRUE
-	SEND_SIGNAL(src, COMSIG_MOVABLE_CROSS, AM)
-	return CanPass(AM, AM.loc, TRUE)
-
-//oldloc = old location on atom, inserted when forceMove is called and ONLY when forceMove is called!
-/atom/movable/Crossed(atom/movable/AM, oldloc)
-	SEND_SIGNAL(src, COMSIG_MOVABLE_CROSSED, AM)
-
-/atom/movable/Uncross(atom/movable/AM, atom/newloc)
-	. = ..()
-	if(SEND_SIGNAL(src, COMSIG_MOVABLE_UNCROSS, AM) & COMPONENT_MOVABLE_BLOCK_UNCROSS)
-		return FALSE
-	if(isturf(newloc) && !CheckExit(AM, newloc))
-		return FALSE
-
-/atom/movable/Uncrossed(atom/movable/AM)
-	SEND_SIGNAL(src, COMSIG_MOVABLE_UNCROSSED, AM)
-
-/atom/movable/Bump(atom/A)
-	if(!A)
-		CRASH("Bump was called with no argument.")
-	SEND_SIGNAL(src, COMSIG_MOVABLE_BUMP, A)
-	. = ..()
-	if(!QDELETED(throwing))
-		throwing.hit_atom(A)
-		. = TRUE
-		if(QDELETED(A))
-			return
-	A.Bumped(src)
-
-/atom/movable/proc/forceMove(atom/destination)
-	. = FALSE
-	if(destination)
-		. = doMove(destination)
-	else
-		CRASH("No valid destination passed into forceMove")
-
-/atom/movable/proc/moveToNullspace()
-	return doMove(null)
-
-/atom/movable/proc/doMove(atom/destination)
-	. = FALSE
-	if(destination)
-		if(pulledby)
-			pulledby.stop_pulling()
-		var/atom/oldloc = loc
-		var/same_loc = oldloc == destination
-		var/area/old_area = get_area(oldloc)
-		var/area/destarea = get_area(destination)
-
-		loc = destination
-		moving_diagonally = 0
-
-		if(!same_loc)
-			if(oldloc)
-				oldloc.Exited(src, destination)
-				if(old_area && old_area != destarea)
-					old_area.Exited(src, destination)
-			for(var/atom/movable/AM in oldloc)
-				AM.Uncrossed(src)
-			var/turf/oldturf = get_turf(oldloc)
-			var/turf/destturf = get_turf(destination)
-			var/old_z = (oldturf ? oldturf.z : null)
-			var/dest_z = (destturf ? destturf.z : null)
-			if (old_z != dest_z)
-				onTransitZ(old_z, dest_z)
-			destination.Entered(src, oldloc)
-			if(destarea && old_area != destarea)
-				destarea.Entered(src, oldloc)
-
-			for(var/atom/movable/AM in destination)
-				if(AM == src)
-					continue
-				AM.Crossed(src, oldloc)
-
-		Moved(oldloc, NONE, TRUE)
-		. = TRUE
-
-	//If no destination, move the atom into nullspace (don't do this unless you know what you're doing)
-	else
-		. = TRUE
-		if (loc)
-			var/atom/oldloc = loc
-			var/area/old_area = get_area(oldloc)
-			oldloc.Exited(src, null)
-			if(old_area)
-				old_area.Exited(src, null)
-		loc = null
-
-/atom/movable/proc/onTransitZ(old_z,new_z)
-	SEND_SIGNAL(src, COMSIG_MOVABLE_Z_CHANGED, old_z, new_z)
-	for (var/item in src) // Notify contents of Z-transition. This can be overridden IF we know the items contents do not care.
-		var/atom/movable/AM = item
-		AM.onTransitZ(old_z,new_z)
-
-/atom/movable/proc/setMovetype(newval)
-	movement_type = newval
-
-//Called whenever an object moves and by mobs when they attempt to move themselves through space
-//And when an object or action applies a force on src, see newtonian_move() below
-//Return 0 to have src start/keep drifting in a no-grav area and 1 to stop/not start drifting
-//Mobs should return 1 if they should be able to move of their own volition, see client/Move() in mob_movement.dm
-//movement_dir == 0 when stopping or any dir when trying to move
-/atom/movable/proc/Process_Spacemove(movement_dir = 0)
-	if(has_gravity(src))
-		return 1
-
-	if(pulledby)
-		return 1
-
-	if(throwing)
-		return 1
-
-	if(!isturf(loc))
-		return 1
-
-	if(locate(/obj/structure/lattice) in range(1, get_turf(src))) //Not realistic but makes pushing things in space easier
-		return 1
-
-	return 0
-
-
-/atom/movable/proc/newtonian_move(direction) //Only moves the object if it's under no gravity
-	if(!loc || Process_Spacemove(0))
-		inertia_dir = 0
-		return 0
-
-	inertia_dir = direction
-	if(!direction)
-		return 1
-	inertia_last_loc = loc
-	SSspacedrift.processing[src] = src
-	return 1
-
 /atom/movable/proc/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	set waitfor = 0
-	SEND_SIGNAL(src, COMSIG_MOVABLE_IMPACT, hit_atom, throwingdatum)
-	return hit_atom.hitby(src, throwingdatum=throwingdatum)
+	var/hitpush = TRUE
+	var/impact_signal = SEND_SIGNAL(src, COMSIG_MOVABLE_IMPACT, hit_atom, throwingdatum)
+	if(impact_signal & COMPONENT_MOVABLE_IMPACT_FLIP_HITPUSH)
+		hitpush = FALSE // hacky, tie this to something else or a proper workaround later
+
+	if(impact_signal & ~COMPONENT_MOVABLE_IMPACT_NEVERMIND) // in case a signal interceptor broke or deleted the thing before we could process our hit
+		return hit_atom.hitby(src, throwingdatum = throwingdatum, hitpush = hitpush)
 
 /atom/movable/hitby(atom/movable/AM, skipcatch, hitpush = TRUE, blocked, datum/thrownthing/throwingdatum)
 	if(!anchored && hitpush && (!throwingdatum || (throwingdatum.force >= (move_resist * MOVE_FORCE_PUSH_RATIO))))
@@ -610,17 +355,6 @@
 		SSthrowing.currentrun[src] = TT
 	TT.tick()
 
-/atom/movable/proc/handle_buckled_mob_movement(newloc,direct)
-	for(var/m in buckled_mobs)
-		var/mob/living/buckled_mob = m
-		if(!buckled_mob.Move(newloc, direct))
-			forceMove(buckled_mob.loc)
-			last_move = buckled_mob.last_move
-			inertia_dir = last_move
-			buckled_mob.inertia_dir = last_move
-			return 0
-	return 1
-
 /atom/movable/proc/force_pushed(atom/movable/pusher, force = MOVE_FORCE_DEFAULT, direction)
 	return FALSE
 
@@ -639,7 +373,7 @@
 
 /atom/movable/CanPass(atom/movable/mover, turf/target)
 	if(mover in buckled_mobs)
-		return 1
+		return TRUE
 	return ..()
 
 // called when this atom is removed from a storage item, which is passed on as S. The loc variable is already set to the new destination before this is called.
@@ -739,9 +473,8 @@
 
 /atom/movable/vv_get_dropdown()
 	. = ..()
-	. -= "Jump to"
-	.["Follow"] = "?_src_=holder;[HrefToken()];adminplayerobservefollow=[REF(src)]"
-	.["Get"] = "?_src_=holder;[HrefToken()];admingetmovable=[REF(src)]"
+	. += "<option value='?_src_=holder;[HrefToken()];adminplayerobservefollow=[REF(src)]'>Follow</option>"
+	. += "<option value='?_src_=holder;[HrefToken()];admingetmovable=[REF(src)]'>Get</option>"
 
 /atom/movable/proc/ex_check(ex_id)
 	if(!ex_id)
@@ -864,6 +597,11 @@
 	if(force < (move_resist * MOVE_FORCE_PULL_RATIO))
 		return FALSE
 	return TRUE
+
+/// Updates the grab state of the movable
+/// This exists to act as a hook for behaviour
+/atom/movable/proc/setGrabState(newstate)
+	grab_state = newstate
 
 /obj/item/proc/do_pickup_animation(atom/target)
 	set waitfor = FALSE

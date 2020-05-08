@@ -2,7 +2,7 @@
 	name = "playback device"
 	desc = "A small electronic device able to record a voice sample, and repeat that sample when it receive a signal."
 	icon_state = "radio"
-	materials = list(MAT_METAL=500, MAT_GLASS=50)
+	custom_materials = list(/datum/material/iron = 500, /datum/material/glass = 50)
 	flags_1 = HEAR_1
 	attachable = TRUE
 	verb_say = "beeps"
@@ -25,12 +25,13 @@
 	listening = FALSE
 	languages = message_language
 	say("The recorded message is '[recorded]'.", language = message_language)
+	activate_cooldown = max(round(length(recorded) * 0.5), 3 SECONDS)
 
 /obj/item/assembly/playback/activate()
-	if(recorded == "") // Why say anything when there isn't anything to say
+	. = ..()
+	if(!. || !recorded) // Why say anything when there isn't anything to say
 		return FALSE
 	say("[recorded]", language = languages) // Repeat the message in the language it was said in
-	return TRUE
 
 /obj/item/assembly/playback/proc/record()
 	if(!secured || holder)

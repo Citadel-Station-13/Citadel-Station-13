@@ -35,7 +35,7 @@
 			"<span class='warning'>[user] screws up, causing [H] to flop around violently as they're zapped!</span>",
 			"<span class='warning'>[user] screws up, causing [H] to flop around violently as they're zapped!</span>")
 		H.emote("scream")
-		H.electrocute_act(25, (tool), 1, FALSE, FALSE, FALSE, TRUE)
+		H.electrocute_act(25, (tool), 1, SHOCK_ILLUSION)
 		H.adjustFireLoss(10)
 		H.emote("flip")
 		H.Jitter(100)
@@ -50,7 +50,7 @@
 	var/obj/item/organ/brain/BR = H.getorgan(/obj/item/organ/brain)
 	if(BR.organ_flags & ORGAN_FAILING)
 		H.adjustOrganLoss(ORGAN_SLOT_BRAIN, -5)
-	H.electrocute_act(0, (tool), 1, FALSE, FALSE, FALSE, TRUE)
+	H.electrocute_act(0, (tool), 1, SHOCK_ILLUSION)
 	//If we're using a defib, let the defib handle the revive.
 	if(istype(tool, /obj/item/twohanded/shockpaddles))
 		return
@@ -70,7 +70,7 @@
 	display_results(user, target, "<span class='warning'>You screw up, sending a current through their body!</span>",
 		"<span class='warning'>[user] screws up, causing [H] to flop around violently as they're zapped!</span>",
 		"<span class='warning'>[user] screws up, causing [H] to flop around violently as they're zapped!</span>")
-	H.electrocute_act(25, (tool), 1, FALSE, FALSE, FALSE, TRUE)
+	H.electrocute_act(25, (tool), 1, SHOCK_ILLUSION)
 	H.adjustFireLoss(10)
 	H.emote("flip")
 	H.adjustOrganLoss(ORGAN_SLOT_HEART, 10)

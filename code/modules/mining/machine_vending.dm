@@ -87,7 +87,7 @@
 	..()
 	update_icon()
 
-/obj/machinery/mineral/equipment_vendor/update_icon()
+/obj/machinery/mineral/equipment_vendor/update_icon_state()
 	if(powered())
 		icon_state = initial(icon_state)
 	else
@@ -122,13 +122,10 @@
 				to_chat(usr, "<span class='warning'>Error: Insufficient credits for [prize.equipment_name] on [I]!</span>")
 				flick(icon_deny, src)
 			else
-				if (I.mining_points -= prize.cost)
-					to_chat(usr, "<span class='notice'>[src] clanks to life briefly before vending [prize.equipment_name]!</span>")
-					new prize.equipment_path(src.loc)
-					SSblackbox.record_feedback("nested tally", "mining_equipment_bought", 1, list("[type]", "[prize.equipment_path]"))
-				else
-					to_chat(usr, "<span class='warning'>Error: Transaction failure, please try again later!</span>")
-					flick(icon_deny, src)
+				I.mining_points -= prize.cost
+				to_chat(usr, "<span class='notice'>[src] clanks to life briefly before vending [prize.equipment_name]!</span>")
+				new prize.equipment_path(src.loc)
+				SSblackbox.record_feedback("nested tally", "mining_equipment_bought", 1, list("[type]", "[prize.equipment_path]"))
 		else
 			to_chat(usr, "<span class='warning'>Error: An ID with a registered account is required!</span>")
 			flick(icon_deny, src)
@@ -197,7 +194,7 @@
 	prize_list += list(
 		new /datum/data/mining_equipment("Extra Id",       				/obj/item/card/id/mining, 				                   		250),
 		new /datum/data/mining_equipment("Science Goggles",       		/obj/item/clothing/glasses/science,								250),
-		new /datum/data/mining_equipment("Monkey Cube",					/obj/item/reagent_containers/food/snacks/monkeycube,        	300),
+		new /datum/data/mining_equipment("Monkey Cube",					/obj/item/reagent_containers/food/snacks/cube/monkey,        	300),
 		new /datum/data/mining_equipment("Toolbelt",					/obj/item/storage/belt/utility,	    							350),
 		new /datum/data/mining_equipment("Royal Cape of the Liberator", /obj/item/bedsheet/rd/royal_cape, 								500),
 		new /datum/data/mining_equipment("Grey Slime Extract",			/obj/item/slime_extract/grey,									1000),
@@ -306,7 +303,7 @@
 
 /obj/item/storage/backpack/duffelbag/mining_cloned/PopulateContents()
 	new /obj/item/pickaxe/mini(src)
-	new /obj/item/clothing/under/rank/miner/lavaland(src)
+	new /obj/item/clothing/under/rank/cargo/miner/lavaland(src)
 	new /obj/item/clothing/shoes/workboots/mining(src)
 	new /obj/item/clothing/gloves/color/black(src)
 	new /obj/item/implanter/tracking/gps(src)

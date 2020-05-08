@@ -5,13 +5,26 @@
 	antagpanel_category = "Clockcult"
 	job_rank = ROLE_SERVANT_OF_RATVAR
 	antag_moodlet = /datum/mood_event/cult
-	var/datum/action/innate/hierophant/hierophant_network = new()
+	var/datum/action/innate/hierophant/hierophant_network = new
+	threat = 3
 	var/datum/team/clockcult/clock_team
 	var/make_team = TRUE //This should be only false for tutorial scarabs
+	var/neutered = FALSE			//can not use round ending, gibbing, converting, or similar things with unmatched round impact
+	var/ignore_eligibility_check = FALSE
+	var/ignore_holy_water = FALSE
 
 /datum/antagonist/clockcult/silent
 	silent = TRUE
 	show_in_antagpanel = FALSE //internal
+
+/datum/antagonist/clockcult/neutered
+	neutered = TRUE
+
+/datum/antagonist/clockcult/neutered/traitor
+	ignore_eligibility_check = TRUE
+	ignore_holy_water = TRUE
+	show_in_roundend = FALSE
+	make_team = FALSE
 
 /datum/antagonist/clockcult/Destroy()
 	qdel(hierophant_network)
@@ -37,7 +50,7 @@
 
 /datum/antagonist/clockcult/can_be_owned(datum/mind/new_owner)
 	. = ..()
-	if(.)
+	if(. && !ignore_eligibility_check)
 		. = is_eligible_servant(new_owner.current)
 
 /datum/antagonist/clockcult/greet()
@@ -120,7 +133,7 @@
 	hierophant_network.Grant(current)
 	current.throw_alert("clockinfo", /obj/screen/alert/clockwork/infodump)
 	var/obj/structure/destructible/clockwork/massive/celestial_gateway/G = GLOB.ark_of_the_clockwork_justiciar
-	if(G.active && ishuman(current))
+	if(G && G.active && ishuman(current))
 		current.add_overlay(mutable_appearance('icons/effects/genetics.dmi', "servitude", -MUTATIONS_LAYER))
 
 /datum/antagonist/clockcult/remove_innate_effects(mob/living/mob_override)
@@ -174,9 +187,12 @@
 	log_admin("[key_name(admin)] has made [new_owner.current] into a servant of Ratvar.")
 
 /datum/antagonist/clockcult/admin_remove(mob/user)
-	remove_servant_of_ratvar(owner.current, TRUE)
-	message_admins("[key_name_admin(user)] has removed clockwork servant status from [owner.current].")
-	log_admin("[key_name(user)] has removed clockwork servant status from [owner.current].")
+	var/mob/target = owner.current
+	if(!target)
+		return
+	remove_servant_of_ratvar(target, TRUE)
+	message_admins("[key_name_admin(user)] has removed clockwork servant status from [target].")
+	log_admin("[key_name(user)] has removed clockwork servant status from [target].")
 
 /datum/antagonist/clockcult/get_admin_commands()
 	. = ..()

@@ -70,7 +70,7 @@
 	item_state = "hostile_env"
 	clothing_flags = THICKMATERIAL //not spaceproof
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
-	resistance_flags = FIRE_PROOF | LAVA_PROOF
+	resistance_flags = FIRE_PROOF | LAVA_PROOF | ACID_PROOF | GOLIATH_RESISTANCE
 	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_SNEK_TAURIC|STYLE_PAW_TAURIC
 	slowdown = 0
 	armor = list("melee" = 70, "bullet" = 40, "laser" = 10, "energy" = 10, "bomb" = 50, "bio" = 100, "rad" = 100, "fire" = 100, "acid" = 100)
@@ -110,17 +110,17 @@
 	AddComponent(/datum/component/spraycan_paintable)
 	update_icon()
 
-/obj/item/clothing/head/helmet/space/hostile_environment/update_icon()
-	..()
-	cut_overlays()
+
+/obj/item/clothing/head/helmet/space/hostile_environment/update_overlays()
+	. = ..()
 	var/mutable_appearance/glass_overlay = mutable_appearance(icon, "hostile_env_glass")
 	glass_overlay.appearance_flags = RESET_COLOR
-	add_overlay(glass_overlay)
+	. += glass_overlay
 
-/obj/item/clothing/head/helmet/space/hostile_environment/worn_overlays(isinhands, icon_file, style_flags = NONE)
+/obj/item/clothing/head/helmet/space/hostile_environment/worn_overlays(isinhands, icon_file, used_state, style_flags = NONE)
 	. = ..()
 	if(!isinhands)
-		var/mutable_appearance/M = mutable_appearance('icons/mob/head.dmi', "hostile_env_glass")
+		var/mutable_appearance/M = mutable_appearance('icons/mob/clothing/head.dmi', "hostile_env_glass")
 		M.appearance_flags = RESET_COLOR
 		. += M
 

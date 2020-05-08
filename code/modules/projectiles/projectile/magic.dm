@@ -124,8 +124,8 @@
 	if(!istype(M) || M.stat == DEAD || M.notransform || (GODMODE & M.status_flags))
 		return
 
-	M.notransform = 1
-	M.canmove = 0
+	M.notransform = TRUE
+	M.Paralyze(INFINITY)
 	M.icon = null
 	M.cut_overlays()
 	M.invisibility = INVISIBILITY_ABSTRACT
@@ -182,18 +182,14 @@
 			var/path = pick(/mob/living/simple_animal/hostile/carp,
 							/mob/living/simple_animal/hostile/bear,
 							/mob/living/simple_animal/hostile/mushroom,
-							/mob/living/simple_animal/hostile/statue,
 							/mob/living/simple_animal/hostile/retaliate/bat,
 							/mob/living/simple_animal/hostile/retaliate/goat,
 							/mob/living/simple_animal/hostile/killertomato,
 							/mob/living/simple_animal/hostile/poison/giant_spider,
 							/mob/living/simple_animal/hostile/poison/giant_spider/hunter,
 							/mob/living/simple_animal/hostile/blob/blobbernaut/independent,
-							/mob/living/simple_animal/hostile/carp/ranged,
-							/mob/living/simple_animal/hostile/carp/ranged/chaos,
 							/mob/living/simple_animal/hostile/asteroid/basilisk/watcher,
 							/mob/living/simple_animal/hostile/asteroid/goliath/beast,
-							/mob/living/simple_animal/hostile/headcrab,
 							/mob/living/simple_animal/hostile/morph,
 							/mob/living/simple_animal/hostile/stickman,
 							/mob/living/simple_animal/hostile/stickman/dog,
@@ -284,7 +280,7 @@
 				if(L.mind)
 					L.mind.transfer_to(S)
 					if(owner)
-						to_chat(S, "<span class='userdanger'>You are an animate statue. You cannot move when monitored, but are nearly invincible and deadly when unobserved! Do not harm [owner], your creator.</span>")
+						to_chat(S, "<span class='userdanger'>You are an animated statue. You cannot move when monitored, but are nearly invincible and deadly when unobserved! Do not harm [owner], your creator.</span>")
 				P.forceMove(S)
 				return
 		else
@@ -529,7 +525,7 @@
 	else
 		used = 1
 		victim.take_overall_damage(30,30)
-		victim.Knockdown(60)
+		victim.DefaultCombatKnockdown(60)
 		explosion(src, -1, -1, -1, -1, FALSE, FALSE, 5)
 	return BULLET_ACT_HIT
 

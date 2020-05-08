@@ -81,7 +81,6 @@
 
 	var/dextrous = FALSE //If the creature has, and can use, hands
 	var/dextrous_hud_type = /datum/hud/dextrous
-	var/datum/personal_crafting/handcrafting
 
 	var/AIStatus = AI_ON //The Status of our AI, can be set to AI_ON (On, usual processing), AI_IDLE (Will not process, but will return to AI_ON if an enemy comes near), AI_OFF (Off, Not processing ever), AI_Z_OFF (Temporarily off due to nonpresence of players)
 	var/can_have_ai = TRUE //once we have become sentient, we can never go back
@@ -98,7 +97,6 @@
 /mob/living/simple_animal/Initialize()
 	. = ..()
 	GLOB.simple_animals[AIStatus] += src
-	handcrafting = new()
 	if(gender == PLURAL)
 		gender = pick(MALE,FEMALE)
 	if(!real_name)
@@ -106,6 +104,8 @@
 	if(!loc)
 		stack_trace("Simple animal being instantiated in nullspace")
 	update_simplemob_varspeed()
+	if(dextrous)
+		AddComponent(/datum/component/personal_crafting)
 
 /mob/living/simple_animal/Destroy()
 	GLOB.simple_animals[AIStatus] -= src
@@ -128,7 +128,7 @@
 
 /mob/living/simple_animal/updatehealth()
 	..()
-	health = CLAMP(health, 0, maxHealth)
+	health = clamp(health, 0, maxHealth)
 
 /mob/living/simple_animal/update_stat()
 	if(status_flags & GODMODE)
@@ -153,7 +153,7 @@
 /mob/living/simple_animal/proc/handle_automated_movement()
 	set waitfor = FALSE
 	if(!stop_automated_movement && wander)
-		if((isturf(src.loc) || allow_movement_on_non_turfs) && !resting && !buckled && canmove)		//This is so it only moves if it's not inside a closet, gentics machine, etc.
+		if((isturf(src.loc) || allow_movement_on_non_turfs) && CHECK_MULTIPLE_BITFIELDS(mobility_flags, MOBILITY_STAND|MOBILITY_MOVE) && !buckled)		//This is so it only moves if it's not inside a closet, gentics machine, etc.
 			turns_since_move++
 			if(turns_since_move >= turns_per_move)
 				if(!(stop_automated_movement_when_pulled && pulledby)) //Some animals don't move when pulled
@@ -292,8 +292,8 @@
 
 /mob/living/simple_animal/proc/update_simplemob_varspeed()
 	if(speed == 0)
-		remove_movespeed_modifier(MOVESPEED_ID_SIMPLEMOB_VARSPEED, TRUE)
-	add_movespeed_modifier(MOVESPEED_ID_SIMPLEMOB_VARSPEED, TRUE, 100, multiplicative_slowdown = speed, override = TRUE)
+		remove_movespeed_modifier(/datum/movespeed_modifier/simplemob_varspeed)
+	add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/simplemob_varspeed, multiplicative_slowdown = speed)
 
 /mob/living/simple_animal/Stat()
 	..()
@@ -418,20 +418,19 @@
 	else
 		..()
 
-/mob/living/simple_animal/update_canmove(value_otherwise = TRUE)
-	if(IsUnconscious() || IsStun() || IsKnockdown() || stat || resting)
+/mob/living/simple_animal/update_mobility(value_otherwise = MOBILITY_FLAGS_DEFAULT)
+	if(IsUnconscious() || IsStun() || IsParalyzed() || stat || resting)
 		drop_all_held_items()
-		canmove = FALSE
+		mobility_flags = NONE
 	else if(buckled)
-		canmove = FALSE
+		mobility_flags = ~MOBILITY_MOVE
 	else
-		canmove = value_otherwise
-	if(!canmove) // !(mobility_flags & MOBILITY_MOVE)
+		mobility_flags = MOBILITY_FLAGS_DEFAULT
+	if(!CHECK_MOBILITY(src, MOBILITY_MOVE)) // !(mobility_flags & MOBILITY_MOVE)
 		walk(src, 0) //stop mid walk
-
 	update_transform()
 	update_action_buttons_icon()
-	return canmove
+	return mobility_flags
 
 /mob/living/simple_animal/update_transform()
 	var/matrix/ntransform = matrix(transform) //aka transform.Copy()
@@ -470,10 +469,6 @@
 
 /mob/living/simple_animal/get_idcard(hand_first = TRUE)
 	return ..() || access_card
-
-/mob/living/simple_animal/OpenCraftingMenu()
-	if(dextrous)
-		handcrafting.ui_interact(src)
 
 /mob/living/simple_animal/can_hold_items()
 	return dextrous

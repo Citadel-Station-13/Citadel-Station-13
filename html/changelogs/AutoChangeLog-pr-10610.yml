@@ -1,8 +1,0 @@
-author: "Owai-Seek"
-delete-after: True
-changes: 
-  - rscadd: "Four New Bounties"
-  - tweak: "tweaked several bounties"
-  - tweak: "reorganised several bounties"
-  - balance: "balanced several bounties"
-  - bugfix: "added shady jims to vendor"

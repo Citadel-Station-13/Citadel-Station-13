@@ -17,7 +17,7 @@ From these blood pools Bubblegum may summon slaughterlings - weak, low-damage mi
 When Bubblegum dies, it leaves behind a H.E.C.K. suit+helmet as well as a chest that can contain three things:
  1. A spellblade that can slice off limbs at range
  2. A bottle that, when activated, drives everyone nearby into a frenzy
- 3. A contract that marks for death the chosen target
+ 3. A super double-barrel shotgun that shoots both shells at the same time.
 
 Difficulty: Hard
 
@@ -26,6 +26,7 @@ Difficulty: Hard
 /mob/living/simple_animal/hostile/megafauna/bubblegum
 	name = "bubblegum"
 	desc = "In what passes for a hierarchy among slaughter demons, this one is king."
+	threat = 35
 	health = 2500
 	maxHealth = 2500
 	attacktext = "rends"
@@ -64,10 +65,10 @@ Difficulty: Hard
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/Life()
 	..()
-	move_to_delay = CLAMP(round((health/maxHealth) * 10), 3, 10)
+	move_to_delay = clamp(round((health/maxHealth) * 10), 3, 10)
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/OpenFire()
-	anger_modifier = CLAMP(((maxHealth - health)/50),0,20)
+	anger_modifier = clamp(((maxHealth - health)/50),0,20)
 	if(charging)
 		return
 	ranged_cooldown = world.time + ranged_cooldown_time
@@ -102,7 +103,7 @@ Difficulty: Hard
 	if(.)
 		SSshuttle.shuttle_purchase_requirements_met |= "bubblegum"
 
-/mob/living/simple_animal/hostile/megafauna/bubblegum/do_attack_animation(atom/A)
+/mob/living/simple_animal/hostile/megafauna/bubblegum/do_attack_animation(atom/A, visual_effect_icon, obj/item/used_item, no_effect)
 	if(charging)
 		return
 	..()

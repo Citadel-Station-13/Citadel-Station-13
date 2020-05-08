@@ -33,7 +33,7 @@
 		bleed_rate = 0
 		return
 
-	if(bleed_rate <= 0)
+	if(bleed_rate < 0)
 		bleed_rate = 0
 
 	if(HAS_TRAIT(src, TRAIT_NOMARROW)) //Bloodsuckers don't need to be here.
@@ -94,12 +94,12 @@
 
 			//We want an accurate reading of .len
 			listclearnulls(BP.embedded_objects)
-			temp_bleed += 0.5*BP.embedded_objects.len
+			temp_bleed += 0.5 * BP.embedded_objects.len
 
 			if(brutedamage >= 20)
 				temp_bleed += (brutedamage * 0.013)
 
-		bleed_rate = max(bleed_rate - 0.50, temp_bleed)//if no wounds, other bleed effects (heparin) naturally decreases
+		bleed_rate = max(bleed_rate - 0.5, temp_bleed)//if no wounds, other bleed effects (heparin) naturally decreases
 
 		if(bleed_rate && !bleedsuppress && !(HAS_TRAIT(src, TRAIT_FAKEDEATH)))
 			bleed(bleed_rate)
@@ -185,7 +185,7 @@
 			var/datum/disease/D = thing
 			blood_data["viruses"] += D.Copy()
 
-		blood_data["blood_DNA"] = copytext(dna.unique_enzymes,1,0)
+		blood_data["blood_DNA"] = dna.unique_enzymes
 		blood_data["bloodcolor"] = bloodtype_to_color(dna.blood_type)
 		if(disease_resistances && disease_resistances.len)
 			blood_data["resistances"] = disease_resistances.Copy()
@@ -204,7 +204,7 @@
 
 		if(!suiciding)
 			blood_data["cloneable"] = 1
-		blood_data["blood_type"] = copytext(dna.blood_type,1,0)
+		blood_data["blood_type"] = dna.blood_type
 		blood_data["gender"] = gender
 		blood_data["real_name"] = real_name
 		blood_data["features"] = dna.features
@@ -237,7 +237,7 @@
 		return /datum/reagent/blood/jellyblood
 	if(dna?.species?.exotic_blood)
 		return dna.species.exotic_blood
-	else if((NOBLOOD in dna.species.species_traits) || (HAS_TRAIT(src, TRAIT_NOCLONE)))
+	else if((dna && (NOBLOOD in dna.species.species_traits)) || HAS_TRAIT(src, TRAIT_NOCLONE))
 		return
 	else
 		return /datum/reagent/blood
@@ -289,8 +289,7 @@
 				drop.update_icon()
 				return
 			else
-				temp_blood_DNA = list()
-				temp_blood_DNA |= drop.blood_DNA.Copy() //we transfer the dna from the drip to the splatter
+				temp_blood_DNA = drop.blood_DNA.Copy()		//transfer dna from drip to splatter.
 				qdel(drop)//the drip is replaced by a bigger splatter
 		else
 			drop = new(T, get_static_viruses())

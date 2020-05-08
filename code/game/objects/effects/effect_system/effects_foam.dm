@@ -94,7 +94,7 @@
 /obj/effect/particle_effect/foam/Initialize()
 	. = ..()
 	MakeSlippery()
-	create_reagents(1000) //limited by the size of the reagent holder anyway.
+	create_reagents(1000, NONE, NO_REAGENTS_VALUE) //limited by the size of the reagent holder anyway.
 	START_PROCESSING(SSfastprocess, src)
 	playsound(src, 'sound/effects/bubbles2.ogg', 80, 1, -3)
 

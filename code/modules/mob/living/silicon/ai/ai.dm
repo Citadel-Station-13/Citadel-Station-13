@@ -18,7 +18,7 @@
 	icon_state = "ai"
 	move_resist = MOVE_FORCE_OVERPOWERING
 	density = TRUE
-	canmove = FALSE
+	mobility_flags = ALL
 	status_flags = CANSTUN|CANPUSH
 	a_intent = INTENT_HARM //so we always get pushed instead of trying to swap
 	sight = SEE_TURFS | SEE_MOBS | SEE_OBJS
@@ -146,7 +146,7 @@
 	aiPDA.name = name + " (" + aiPDA.ownjob + ")"
 
 	aiMulti = new(src)
-	radio = new /obj/item/radio/headset/ai(src)
+	radio = new /obj/item/radio/headset/silicon/ai(src)
 	aicamera = new/obj/item/camera/siliconcam/ai_camera(src)
 
 	deploy_action.Grant(src)
@@ -315,17 +315,19 @@
 	var/is_anchored = FALSE
 	if(move_resist == MOVE_FORCE_OVERPOWERING)
 		move_resist = MOVE_FORCE_NORMAL
+		REMOVE_TRAIT(src, TRAIT_NO_TELEPORT, src)
 	else
 		is_anchored = TRUE
 		move_resist = MOVE_FORCE_OVERPOWERING
-		REMOVE_TRAIT(src, TRAIT_NO_TELEPORT, src)
 		ADD_TRAIT(src, TRAIT_NO_TELEPORT, src)
 
 	to_chat(src, "<b>You are now [is_anchored ? "" : "un"]anchored.</b>")
 	// the message in the [] will change depending whether or not the AI is anchored
 
-/mob/living/silicon/ai/update_canmove() //If the AI dies, mobs won't go through it anymore
-	return 0
+// AIs are immobile
+/mob/living/silicon/ai/update_mobility()
+	mobility_flags = ALL
+	return ALL
 
 /mob/living/silicon/ai/proc/ai_cancel_call()
 	set category = "Malfunction"
@@ -693,7 +695,7 @@
 							holo_icon = client.prefs.get_filtered_holoform(HOLOFORM_FILTER_AI)
 						else
 							holo_icon = getHologramIcon(icon('icons/mob/ai.dmi', "female"))
-					else if("xeno queen")
+					if("xeno queen")
 						holo_icon = getHologramIcon(icon(icon_list[input],"alienq"))
 					else
 						holo_icon = getHologramIcon(icon(icon_list[input], input))
@@ -820,21 +822,21 @@
 	return get_dist(src, A) <= max(viewscale[1]*0.5,viewscale[2]*0.5)
 
 /mob/living/silicon/ai/proc/relay_speech(message, atom/movable/speaker, datum/language/message_language, raw_message, radio_freq, list/spans, message_mode)
-	raw_message = lang_treat(speaker, message_language, raw_message, spans, message_mode)
+	var/treated_message = lang_treat(speaker, message_language, raw_message, spans, message_mode)
 	var/start = "Relayed Speech: "
 	var/namepart = "[speaker.GetVoice()][speaker.get_alt_name()]"
 	var/hrefpart = "<a href='?src=[REF(src)];track=[html_encode(namepart)]'>"
-	var/jobpart
+	var/jobpart = "Unknown"
 
 	if (iscarbon(speaker))
 		var/mob/living/carbon/S = speaker
 		if(S.job)
 			jobpart = "[S.job]"
-	else
-		jobpart = "Unknown"
 
-	var/rendered = "<i><span class='game say'>[start]<span class='name'>[hrefpart][namepart] ([jobpart])</a> </span><span class='message'>[raw_message]</span></span></i>"
+	var/rendered = "<i><span class='game say'>[start]<span class='name'>[hrefpart][namepart] ([jobpart])</a> </span><span class='message'>[treated_message]</span></span></i>"
 
+	if (client?.prefs.chat_on_map && (client.prefs.see_chat_non_mob || ismob(speaker)))
+		create_chat_message(speaker, message_language, raw_message, spans, message_mode)
 	show_message(rendered, MSG_AUDIBLE)
 
 /mob/living/silicon/ai/fully_replace_character_name(oldname,newname)
@@ -867,7 +869,7 @@
 	if(istype(A, /obj/machinery/camera))
 		current = A
 	if(client)
-		if(ismovableatom(A))
+		if(ismovable(A))
 			if(A != GLOB.ai_camera_room_landmark)
 				end_multicam()
 			client.perspective = EYE_PERSPECTIVE
@@ -987,7 +989,7 @@
 		deployed_shell.undeploy()
 	diag_hud_set_deployed()
 
-/mob/living/silicon/ai/resist()
+/mob/living/silicon/ai/do_resist()
 	return
 
 /mob/living/silicon/ai/spawned/Initialize(mapload, datum/ai_laws/L, mob/target_ai)
@@ -1002,3 +1004,28 @@
 	. = ..()
 	if(.)
 		end_multicam()
+
+/mob/living/silicon/ai/verb/ai_cryo()
+	set name = "AI Cryogenic Stasis"
+	set desc = "Puts the current AI personality into cryogenic stasis, freeing the space for another."
+	set category = "AI Commands"
+
+	if(incapacitated())
+		return
+	switch(alert("Would you like to enter cryo? This will ghost you. Remember to AHELP before cryoing out of important roles, even with no admins online.",,"Yes.","No."))
+		if("Yes.")
+			src.ghostize(FALSE, penalize = TRUE)
+			var/announce_rank = "Artificial Intelligence,"
+			if(GLOB.announcement_systems.len)
+				// Sends an announcement the AI has cryoed.
+				var/obj/machinery/announcement_system/announcer = pick(GLOB.announcement_systems)
+				announcer.announce("CRYOSTORAGE", src.real_name, announce_rank, list())
+			new /obj/structure/AIcore/latejoin_inactive(loc)
+			if(src.mind)
+				//Handle job slot/tater cleanup.
+				if(src.mind.assigned_role == "AI")
+					SSjob.FreeRole("AI")
+			src.mind.special_role = null
+			qdel(src)
+		else
+			return

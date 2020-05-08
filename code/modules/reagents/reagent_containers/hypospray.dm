@@ -85,17 +85,17 @@
 
 /obj/item/reagent_containers/hypospray/medipen
 	name = "epinephrine medipen"
-	desc = "A rapid and safe way to stabilize patients in critical condition for personnel without advanced medical knowledge."
+	desc = "A rapid and safe way to stabilize patients in critical condition for personnel without advanced medical knowledge. Contains a powerful preservative that can delay decomposition when applied to a dead body."
 	icon_state = "medipen"
 	item_state = "medipen"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
-	amount_per_transfer_from_this = 10
-	volume = 10
+	amount_per_transfer_from_this = 13
+	volume = 13
 	ignore_flags = 1 //so you can medipen through hardsuits
 	reagent_flags = DRAWABLE
 	flags_1 = null
-	list_reagents = list(/datum/reagent/medicine/epinephrine = 10)
+	list_reagents = list(/datum/reagent/medicine/epinephrine = 10, /datum/reagent/preservahyde = 3)
 
 /obj/item/reagent_containers/hypospray/medipen/suicide_act(mob/living/carbon/user)
 	user.visible_message("<span class='suicide'>[user] begins to choke on \the [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
@@ -119,7 +119,7 @@
 			reagents.add_reagent_list(list_reagents)
 			update_icon()
 
-/obj/item/reagent_containers/hypospray/medipen/update_icon()
+/obj/item/reagent_containers/hypospray/medipen/update_icon_state()
 	if(reagents.total_volume > 0)
 		icon_state = initial(icon_state)
 	else
@@ -207,8 +207,8 @@
 #define DELUXE_SELF_SPRAY 10
 #define DELUXE_SELF_INJECT 10
 
-#define COMBAT_WAIT_SPRAY 0
-#define COMBAT_WAIT_INJECT 0
+#define COMBAT_WAIT_SPRAY 15
+#define COMBAT_WAIT_INJECT 15
 #define COMBAT_SELF_SPRAY 0
 #define COMBAT_SELF_INJECT 0
 
@@ -282,13 +282,12 @@
 		vial = new start_vial
 	update_icon()
 
-/obj/item/hypospray/mkii/update_icon()
-	..()
+/obj/item/hypospray/mkii/ComponentInitialize()
+	. = ..()
+	AddElement(/datum/element/update_icon_updates_onmob)
+
+/obj/item/hypospray/mkii/update_icon_state()
 	icon_state = "[initial(icon_state)][vial ? "" : "-e"]"
-	if(ismob(loc))
-		var/mob/M = loc
-		M.update_inv_hands()
-	return
 
 /obj/item/hypospray/mkii/examine(mob/user)
 	. = ..()
@@ -332,7 +331,6 @@
 	else
 		to_chat(user, "<span class='notice'>This doesn't fit in [src].</span>")
 		return FALSE
-	return FALSE
 
 /obj/item/hypospray/mkii/AltClick(mob/user)
 	. = ..()
@@ -423,18 +421,21 @@
 		else
 			unload_hypo(vial,user)
 
-/obj/item/hypospray/mkii/verb/modes()
-	set name = "Toggle Application Mode"
-	set category = "Object"
-	set src in usr
-	var/mob/M = usr
-	switch(mode)
-		if(HYPO_SPRAY)
-			mode = HYPO_INJECT
-			to_chat(M, "[src] is now set to inject contents on application.")
-		if(HYPO_INJECT)
-			mode = HYPO_SPRAY
-			to_chat(M, "[src] is now set to spray contents on application.")
+/obj/item/hypospray/mkii/CtrlClick(mob/living/user)
+	. = ..()
+	if(user.canUseTopic(src, FALSE) && user.get_active_held_item(src))
+		switch(mode)
+			if(HYPO_SPRAY)
+				mode = HYPO_INJECT
+				to_chat(user, "[src] is now set to inject contents on application.")
+			if(HYPO_INJECT)
+				mode = HYPO_SPRAY
+				to_chat(user, "[src] is now set to spray contents on application.")
+		return TRUE
+
+/obj/item/hypospray/mkii/examine(mob/user)
+	. = ..()
+	. += "<span class='notice'><b>Ctrl-Click</b> it to toggle its mode from spraying to injecting and vice versa.</span>"
 
 #undef HYPO_SPRAY
 #undef HYPO_INJECT

@@ -6,7 +6,7 @@
 	icon_state = "gutlunch"
 	icon_living = "gutlunch"
 	icon_dead = "gutlunch"
-	mob_biotypes = list(MOB_ORGANIC, MOB_BEAST)
+	mob_biotypes = MOB_ORGANIC|MOB_BEAST
 	speak_emote = list("warbles", "quavers")
 	emote_hear = list("trills.")
 	emote_see = list("sniffs.", "burps.")
@@ -39,7 +39,8 @@
 	animal_species = /mob/living/simple_animal/hostile/asteroid/gutlunch
 	childtype = list(/mob/living/simple_animal/hostile/asteroid/gutlunch/gubbuck = 45, /mob/living/simple_animal/hostile/asteroid/gutlunch/guthen = 55)
 
-	wanted_objects = list(/obj/effect/decal/cleanable/blood/gibs/xeno, /obj/effect/decal/cleanable/blood/gibs/)
+	wanted_objects = list(/obj/effect/decal/cleanable/blood/gibs/xeno, /obj/effect/decal/cleanable/blood/gibs/, /obj/item/bodypart, /obj/item/organ/appendix, /obj/item/organ/ears, /obj/item/organ/eyes, /obj/item/organ/heart, /obj/item/organ/liver, \
+						/obj/item/organ/lungs, /obj/item/organ/stomach, /obj/item/organ/tongue) // So we dont eat implants or brains. Still can eat robotic stuff thats subtyped of base line but thats a issue for a nother day.
 	var/obj/item/udder/gutlunch/udder = null
 
 /mob/living/simple_animal/hostile/asteroid/gutlunch/Initialize()

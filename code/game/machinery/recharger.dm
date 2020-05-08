@@ -10,6 +10,7 @@
 	pass_flags = PASSTABLE
 	var/obj/item/charging = null
 	var/recharge_coeff = 1
+	var/using_power = FALSE //Did we put power into "charging" last process()?
 
 	var/static/list/allowed_devices = typecacheof(list(
 		/obj/item/gun/energy,
@@ -19,7 +20,9 @@
 		/obj/item/gun/ballistic/automatic/magrifle_e,
 		/obj/item/gun/ballistic/automatic/pistol/mag_e,
 		/obj/item/ammo_casing/mws_batt,
-		/obj/item/ammo_box/magazine/mws_mag))
+		/obj/item/ammo_box/magazine/mws_mag,
+		/obj/item/twohanded/electrostaff,
+		/obj/item/gun/ballistic/automatic/magrifle))
 
 /obj/machinery/recharger/RefreshParts()
 	for(var/obj/item/stock_parts/capacitor/C in component_parts)
@@ -47,10 +50,17 @@
 	if (new_charging)
 		START_PROCESSING(SSmachines, src)
 		use_power = ACTIVE_POWER_USE
-		update_icon(scan = TRUE)
+		using_power = TRUE
+		update_icon()
 	else
 		use_power = IDLE_POWER_USE
+		using_power = FALSE
 		update_icon()
+
+/obj/machinery/recharger/Exited(atom/movable/M, atom/newloc)
+	. = ..()
+	if(charging == M)
+		setCharging()
 
 /obj/machinery/recharger/attackby(obj/item/G, mob/user, params)
 	if(istype(G, /obj/item/wrench))
@@ -110,35 +120,33 @@
 		charging.update_icon()
 		charging.forceMove(drop_location())
 		user.put_in_hands(charging)
-		setCharging(null)
 
 /obj/machinery/recharger/attack_tk(mob/user)
 	if(charging)
 		charging.update_icon()
 		charging.forceMove(drop_location())
-		setCharging(null)
 
 /obj/machinery/recharger/process()
 	if(stat & (NOPOWER|BROKEN) || !anchored)
 		return PROCESS_KILL
 
-	var/using_power = 0
+	using_power = FALSE
 	if(charging)
 		var/obj/item/stock_parts/cell/C = charging.get_cell()
 		if(C)
 			if(C.charge < C.maxcharge)
 				C.give(C.chargerate * recharge_coeff)
 				use_power(250 * recharge_coeff)
-				using_power = 1
-			update_icon(using_power)
+				using_power = TRUE
+			update_icon()
 
 		if(istype(charging, /obj/item/ammo_box/magazine/recharge))
 			var/obj/item/ammo_box/magazine/recharge/R = charging
 			if(R.stored_ammo.len < R.max_ammo)
 				R.stored_ammo += new R.ammo_type(R)
 				use_power(200 * recharge_coeff)
-				using_power = 1
-			update_icon(using_power)
+				using_power = TRUE
+			update_icon()
 			return
 
 		if(istype(charging, /obj/item/ammo_casing/mws_batt))
@@ -182,20 +190,15 @@
 				B.cell.charge = 0
 
 
-/obj/machinery/recharger/update_icon(using_power = 0, scan)	//we have an update_icon() in addition to the stuff in process to make it feel a tiny bit snappier.
+/obj/machinery/recharger/update_icon_state()
 	if(stat & (NOPOWER|BROKEN) || !anchored)
 		icon_state = "rechargeroff"
-		return
-	if(scan)
-		icon_state = "rechargeroff"
-		return
-	if(panel_open)
+	else if(panel_open)
 		icon_state = "rechargeropen"
-		return
-	if(charging)
+	else if(charging)
 		if(using_power)
 			icon_state = "recharger1"
 		else
 			icon_state = "recharger2"
-		return
-	icon_state = "recharger0"
+	else
+		icon_state = "recharger0"

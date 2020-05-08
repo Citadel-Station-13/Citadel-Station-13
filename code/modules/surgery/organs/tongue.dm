@@ -23,45 +23,30 @@
 		/datum/language/aphasia,
 		/datum/language/slime,
 		/datum/language/vampiric,
+		/datum/language/dwarf,
 	))
 	healing_factor = STANDARD_ORGAN_HEALING*5 //Fast!!
 	decay_factor = STANDARD_ORGAN_DECAY/2
 
 /obj/item/organ/tongue/Initialize(mapload)
 	. = ..()
+	low_threshold_passed = "<span class='info'>Your [name] feels a little sore.</span>"
+	low_threshold_cleared = "<span class='info'>Your [name] soreness has subsided.</span>"
+	high_threshold_passed = "<span class='warning'>Your [name] is really starting to hurt.</span>"
+	high_threshold_cleared = "<span class='info'>The pain of your [name] has subsided a little.</span>"
+	now_failing = "<span class='warning'>Your [name] feels like it's about to fall out!.</span>"
+	now_fixed = "<span class='info'>The excruciating pain of your [name] has subsided.</span>"
 	languages_possible = languages_possible_base
 
 /obj/item/organ/tongue/proc/handle_speech(datum/source, list/speech_args)
+	return
 
-/obj/item/organ/tongue/emp_act(severity)
+/obj/item/organ/tongue/applyOrganDamage(d, maximum = maxHealth)
 	. = ..()
-	if(. & EMP_PROTECT_SELF)
-		return
-	if(organ_flags & ORGAN_SYNTHETIC)
-		var/errormessage = list("Runtime in tongue.dm, line 39: Undefined operation \"zapzap ow my tongue\"", "afhsjifksahgjkaslfhashfjsak", "-1.#IND", "Graham's number", "inside you all along", "awaiting at least 1 approving review before merging this taste request")
-		owner.say("The pH is appropriately [pick(errormessage)].")
-
-/obj/item/organ/tongue/applyOrganDamage(var/d, var/maximum = maxHealth)
-
-	if(!d) //Micro-optimization.
-		return
-	if(maximum < damage)
-		return
-	damage = CLAMP(damage + d, 0, maximum)
-	var/mess = check_damage_thresholds(owner)
-	prev_damage = damage
-	if(mess && owner)
-		to_chat(owner, mess)
-
-	if ((damage / maxHealth) > 1)
+	if (damage >= maxHealth)
 		to_chat(owner, "<span class='userdanger'>Your tongue is singed beyond recognition, and disintegrates!</span>")
 		SSblackbox.record_feedback("tally", "fermi_chem", 1, "Tongues lost to Fermi")
 		qdel(src)
-	else if ((damage / maxHealth) > 0.85)
-		to_chat(owner, "<span class='warning'>Your tongue feels like it's about to fall out!.</span>")
-	else if ((damage / maxHealth) > 0.5)
-		to_chat(owner, "<span class='notice'>Your tongue is really starting to hurt.</span>")
-
 
 /obj/item/organ/tongue/Insert(mob/living/carbon/M, special = 0, drop_if_replaced = TRUE)
 	..()
@@ -71,12 +56,13 @@
 		RegisterSignal(M, COMSIG_MOB_SAY, .proc/handle_speech)
 	M.UnregisterSignal(M, COMSIG_MOB_SAY)
 
-/obj/item/organ/tongue/Remove(mob/living/carbon/M, special = 0)
-	..()
-	if(say_mod && M.dna && M.dna.species)
-		M.dna.species.say_mod = initial(M.dna.species.say_mod)
-	UnregisterSignal(M, COMSIG_MOB_SAY, .proc/handle_speech)
-	M.RegisterSignal(M, COMSIG_MOB_SAY, /mob/living/carbon/.proc/handle_tongueless_speech)
+/obj/item/organ/tongue/Remove(special = FALSE)
+	if(!QDELETED(owner))
+		if(say_mod && owner.dna?.species)
+			owner.dna.species.say_mod = initial(owner.dna.species.say_mod)
+		UnregisterSignal(owner, COMSIG_MOB_SAY, .proc/handle_speech)
+		owner.RegisterSignal(owner, COMSIG_MOB_SAY, /mob/living/carbon/.proc/handle_tongueless_speech)
+	return ..()
 
 /obj/item/organ/tongue/could_speak_in_language(datum/language/dt)
 	return is_type_in_typecache(dt, languages_possible)
@@ -189,7 +175,7 @@
 		var/insertpos = rand(1, message_list.len - 1)
 		var/inserttext = message_list[insertpos]
 
-		if(!(copytext(inserttext, length(inserttext) - 2) == "..."))
+		if(!(copytext(inserttext, -3) == "..."))//3 == length("...")
 			message_list[insertpos] = inserttext + "..."
 
 		if(prob(20) && message_list.len > 3)
@@ -290,7 +276,7 @@
 
 /obj/item/organ/tongue/fluffy/handle_speech(datum/source, list/speech_args)
 	var/message = speech_args[SPEECH_MESSAGE]
-	if(copytext(message, 1, 2) != "*")
+	if(message[1] != "*")
 		message = replacetext(message, "ne", "nye")
 		message = replacetext(message, "nu", "nyu")
 		message = replacetext(message, "na", "nya")
@@ -308,6 +294,13 @@
 	taste_sensitivity = 10
 	maxHealth = 60 //It's robotic!
 	organ_flags = ORGAN_SYNTHETIC
+
+/obj/item/organ/tongue/cybernetic/emp_act(severity)
+	. = ..()
+	if(. & EMP_PROTECT_SELF)
+		return
+	var/errormessage = list("Runtime in tongue.dm, line 39: Undefined operation \"zapzap ow my tongue\"", "afhsjifksahgjkaslfhashfjsak", "-1.#IND", "Graham's number", "inside you all along", "awaiting at least 1 approving review before merging this taste request")
+	owner.say("The pH is appropriately [pick(errormessage)].", forced = "EMPed synthetic tongue")
 
 /obj/item/organ/tongue/cybernetic/handle_speech(datum/source, list/speech_args)
 	speech_args[SPEECH_SPANS] |= SPAN_ROBOT

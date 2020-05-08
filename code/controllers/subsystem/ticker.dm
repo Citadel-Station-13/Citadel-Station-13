@@ -68,6 +68,8 @@ SUBSYSTEM_DEF(ticker)
 
 	var/modevoted = FALSE					//Have we sent a vote for the gamemode?
 
+	var/station_integrity = 100				// stored at roundend for use in some antag goals
+
 /datum/controller/subsystem/ticker/Initialize(timeofday)
 	load_mode()
 
@@ -156,8 +158,7 @@ SUBSYSTEM_DEF(ticker)
 			for(var/client/C in GLOB.clients)
 				window_flash(C, ignorepref = TRUE) //let them know lobby has opened up.
 			to_chat(world, "<span class='boldnotice'>Welcome to [station_name()]!</span>")
-			if(CONFIG_GET(flag/irc_announce_new_game))
-				world.TgsTargetedChatBroadcast("New round starting on [SSmapping.config.map_name]!", FALSE)
+			send2chat("New round starting on [SSmapping.config.map_name]!", CONFIG_GET(string/chat_announce_new_game))
 			current_state = GAME_STATE_PREGAME
 			//Everyone who wants to be an observer is now spawned
 			create_observers()
@@ -212,7 +213,7 @@ SUBSYSTEM_DEF(ticker)
 			check_queue()
 			check_maprotate()
 			scripture_states = scripture_unlock_alert(scripture_states)
-			SSshuttle.autoEnd()
+			//SSshuttle.autoEnd()
 
 			if(!roundend_check_paused && mode.check_finished(force_ending) || force_ending)
 				current_state = GAME_STATE_FINISHED
@@ -363,7 +364,7 @@ SUBSYSTEM_DEF(ticker)
 		var/turf/epi = bomb.loc
 		qdel(bomb)
 		if(epi)
-			explosion(epi, 0, 256, 512, 0, TRUE, TRUE, 0, TRUE)
+			explosion(epi, 512, 0, 0, 0, TRUE, TRUE, 0, TRUE)
 
 /datum/controller/subsystem/ticker/proc/create_characters()
 	for(var/mob/dead/new_player/player in GLOB.player_list)
@@ -386,6 +387,9 @@ SUBSYSTEM_DEF(ticker)
 	for(var/mob/dead/new_player/N in GLOB.player_list)
 		var/mob/living/carbon/human/player = N.new_character
 		if(istype(player) && player.mind && player.mind.assigned_role)
+			var/datum/job/J = SSjob.GetJob(player.mind.assigned_role)
+			if(J)
+				J.standard_assign_skills(player.mind)
 			if(player.mind.assigned_role == "Captain")
 				captainless=0
 			if(player.mind.assigned_role != player.mind.special_role)
@@ -475,7 +479,19 @@ SUBSYSTEM_DEF(ticker)
 	if(CONFIG_GET(flag/tgstyle_maprotation))
 		INVOKE_ASYNC(SSmapping, /datum/controller/subsystem/mapping/.proc/maprotate)
 	else
-		SSvote.initiate_vote("map","server",TRUE)
+		var/vote_type = CONFIG_GET(string/map_vote_type)
+		switch(vote_type)
+			if("PLURALITY")
+				SSvote.initiate_vote("map","server", display = SHOW_RESULTS)
+			if("APPROVAL")
+				SSvote.initiate_vote("map","server", display = SHOW_RESULTS, votesystem = APPROVAL_VOTING)
+			if("IRV")
+				SSvote.initiate_vote("map","server", display = SHOW_RESULTS, votesystem = INSTANT_RUNOFF_VOTING)
+			if("SCORE")
+				SSvote.initiate_vote("map","server", display = SHOW_RESULTS, votesystem = MAJORITY_JUDGEMENT_VOTING)
+			else
+				SSvote.initiate_vote("map","server", display = SHOW_RESULTS)
+		// fallback
 
 /datum/controller/subsystem/ticker/proc/HasRoundStarted()
 	return current_state >= GAME_STATE_PLAYING
@@ -490,9 +506,9 @@ SUBSYSTEM_DEF(ticker)
 		SSticker.modevoted = TRUE
 		var/dynamic = CONFIG_GET(flag/dynamic_voting)
 		if(dynamic)
-			SSvote.initiate_vote("dynamic","server",hideresults=TRUE,votesystem=SCORE_VOTING,forced=TRUE,vote_time = 20 MINUTES)
+			SSvote.initiate_vote("dynamic", "server", display = NONE, votesystem = SCORE_VOTING, forced = TRUE,vote_time = 20 MINUTES)
 		else
-			SSvote.initiate_vote("roundtype","server",hideresults=TRUE,votesystem=PLURALITY_VOTING,forced=TRUE, \
+			SSvote.initiate_vote("roundtype", "server", display = NONE, votesystem = PLURALITY_VOTING, forced=TRUE, \
 			vote_time = (CONFIG_GET(flag/modetier_voting) ? 1 MINUTES : 20 MINUTES))
 
 /datum/controller/subsystem/ticker/Recover()
@@ -688,6 +704,7 @@ SUBSYSTEM_DEF(ticker)
 		round_end_sound = pick(\
 		'sound/roundend/newroundsexy.ogg',
 		'sound/roundend/apcdestroyed.ogg',
+		'sound/roundend/seeyoulaterokay.ogg',
 		'sound/roundend/bangindonk.ogg',
 		'sound/roundend/leavingtg.ogg',
 		'sound/roundend/its_only_game.ogg',

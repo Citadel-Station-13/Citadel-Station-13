@@ -17,7 +17,7 @@
 	icon = 'icons/obj/monitors.dmi'
 	icon_state = "fire0"
 	max_integrity = 250
-	integrity_failure = 100
+	integrity_failure = 0.4
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 100, "rad" = 100, "fire" = 90, "acid" = 30)
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 2
@@ -55,10 +55,7 @@
 	..()
 	update_icon()
 
-/obj/machinery/firealarm/update_icon()
-	cut_overlays()
-	SSvis_overlays.remove_vis_overlay(src, managed_vis_overlays)
-
+/obj/machinery/firealarm/update_icon_state()
 	if(panel_open)
 		icon_state = "fire_b[buildstage]"
 		return
@@ -72,27 +69,31 @@
 	if(stat & NOPOWER)
 		return
 
-	add_overlay("fire_overlay")
+/obj/machinery/firealarm/update_overlays()
+	. = ..()
+	SSvis_overlays.remove_vis_overlay(src, managed_vis_overlays)
+
+	. += "fire_overlay"
 
 	if(is_station_level(z))
-		add_overlay("fire_[GLOB.security_level]")
-		SSvis_overlays.add_vis_overlay(src, icon, "fire_[GLOB.security_level]", ABOVE_LIGHTING_LAYER, ABOVE_LIGHTING_PLANE, dir)
+		. += "fire_[GLOB.security_level]"
+		SSvis_overlays.add_vis_overlay(src, icon, "fire_[GLOB.security_level]", EMISSIVE_LAYER, EMISSIVE_PLANE, dir)
 	else
-		add_overlay("fire_[SEC_LEVEL_GREEN]")
-		SSvis_overlays.add_vis_overlay(src, icon, "fire_[SEC_LEVEL_GREEN]", ABOVE_LIGHTING_LAYER, ABOVE_LIGHTING_PLANE, dir)
+		. += "fire_[SEC_LEVEL_GREEN]"
+		SSvis_overlays.add_vis_overlay(src, icon, "fire_[SEC_LEVEL_GREEN]", EMISSIVE_LAYER, EMISSIVE_PLANE, dir)
 
 	var/area/A = src.loc
 	A = A.loc
 
 	if(!detecting || !A.fire)
-		add_overlay("fire_off")
-		SSvis_overlays.add_vis_overlay(src, icon, "fire_off", ABOVE_LIGHTING_LAYER, ABOVE_LIGHTING_PLANE, dir)
+		. += "fire_off"
+		SSvis_overlays.add_vis_overlay(src, icon, "fire_off", EMISSIVE_LAYER, EMISSIVE_PLANE, dir)
 	else if(obj_flags & EMAGGED)
-		add_overlay("fire_emagged")
-		SSvis_overlays.add_vis_overlay(src, icon, "fire_emagged", ABOVE_LIGHTING_LAYER, ABOVE_LIGHTING_PLANE, dir)
+		. += "fire_emagged"
+		SSvis_overlays.add_vis_overlay(src, icon, "fire_emagged", EMISSIVE_LAYER, EMISSIVE_PLANE, dir)
 	else
-		add_overlay("fire_on")
-		SSvis_overlays.add_vis_overlay(src, icon, "fire_on", ABOVE_LIGHTING_LAYER, ABOVE_LIGHTING_PLANE, dir)
+		. += "fire_on"
+		SSvis_overlays.add_vis_overlay(src, icon, "fire_on", EMISSIVE_LAYER, EMISSIVE_PLANE, dir)
 
 /obj/machinery/firealarm/emp_act(severity)
 	. = ..()
@@ -198,7 +199,7 @@
 					return
 				else if(W.force) //hit and turn it on
 					..()
-					var/area/A = get_area(src)
+					var/area/A = get_base_area(src)
 					if(!A.fire)
 						alarm()
 					return

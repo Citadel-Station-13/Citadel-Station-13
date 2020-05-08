@@ -1,4 +1,0 @@
-author: "CameronWoof"
-delete-after: True
-changes: 
-  - rscadd: "Robots can now check the crew manifest from anywhere with the \"View Crew Manifest\" verb."

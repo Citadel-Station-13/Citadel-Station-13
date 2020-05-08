@@ -74,7 +74,7 @@
 	var/datum/language_holder/other
 	if(istype(thing, /datum/language_holder))
 		other = thing
-	else if(ismovableatom(thing))
+	else if(ismovable(thing))
 		var/atom/movable/AM = thing
 		other = AM.get_language_holder()
 	else if(istype(thing, /datum/mind))
@@ -94,7 +94,7 @@
 	language_menu.ui_interact(user)
 
 /datum/language_holder/proc/get_atom()
-	if(ismovableatom(owner))
+	if(ismovable(owner))
 		. = owner
 	else if(istype(owner, /datum/mind))
 		var/datum/mind/M = owner
@@ -124,6 +124,10 @@
 /datum/language_holder/drone/syndicate
 	only_speaks_language = null
 
+/datum/language_holder/dwarf
+	languages = list(/datum/language/common, /datum/language/dwarf)
+	only_speaks_language = /datum/language/dwarf
+
 /datum/language_holder/slime
 	languages = list(/datum/language/common, /datum/language/slime)
 	only_speaks_language = /datum/language/slime
@@ -134,7 +138,7 @@
 
 /datum/language_holder/synthetic
 	languages = list(/datum/language/common)
-	shadow_languages = list(/datum/language/common, /datum/language/machine, /datum/language/draconic, /datum/language/slime)
+	shadow_languages = list(/datum/language/common, /datum/language/machine, /datum/language/draconic, /datum/language/slime, /datum/language/dwarf)
 
 /datum/language_holder/empty
 	languages = list()

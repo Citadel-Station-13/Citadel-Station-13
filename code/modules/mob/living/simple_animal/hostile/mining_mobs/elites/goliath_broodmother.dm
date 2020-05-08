@@ -25,6 +25,7 @@
 	icon_aggro = "broodmother"
 	icon_dead = "egg_sac"
 	icon_gib = "syndicate_gib"
+	threat = 10
 	maxHealth = 800
 	health = 800
 	melee_damage_lower = 30
@@ -37,7 +38,7 @@
 	throw_message = "does nothing to the rocky hide of the"
 	speed = 2
 	move_to_delay = 5
-	mob_biotypes = list(MOB_ORGANIC, MOB_BEAST)
+	mob_biotypes = MOB_ORGANIC|MOB_BEAST
 	mouse_opacity = MOUSE_OPACITY_ICON
 	deathmessage = "explodes into gore!"
 	loot_drop = /obj/item/crusher_trophy/broodmother_tongue
@@ -178,7 +179,7 @@
 	throw_message = "does nothing to the rocky hide of the"
 	speed = 2
 	move_to_delay = 5
-	mob_biotypes = list(MOB_ORGANIC, MOB_BEAST)
+	mob_biotypes = MOB_ORGANIC|MOB_BEAST
 	mouse_opacity = MOUSE_OPACITY_ICON
 	butcher_results = list()
 	guaranteed_butcher_results = list(/obj/item/stack/sheet/animalhide/goliath_hide = 1)

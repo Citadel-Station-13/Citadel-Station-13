@@ -6,25 +6,16 @@
 
 //Inverts the colour of an HTML string
 /proc/invertHTML(HTMLstring)
-
-	if (!( istext(HTMLstring) ))
+	if(!istext(HTMLstring))
 		CRASH("Given non-text argument!")
-		return
-	else
-		if (length(HTMLstring) != 7)
-			CRASH("Given non-HTML argument!")
-			return
+	else if(length(HTMLstring) != 7)
+		CRASH("Given non-HTML argument!")
+	else if(length_char(HTMLstring) != 7)
+		CRASH("Given non-hex symbols in argument!")
 	var/textr = copytext(HTMLstring, 2, 4)
 	var/textg = copytext(HTMLstring, 4, 6)
 	var/textb = copytext(HTMLstring, 6, 8)
-	var/r = hex2num(textr)
-	var/g = hex2num(textg)
-	var/b = hex2num(textb)
-	textr = num2hex(255 - r, 2)
-	textg = num2hex(255 - g, 2)
-	textb = num2hex(255 - b, 2)
-	return text("#[][][]", textr, textg, textb)
-	return
+	return rgb(255 - hex2num(textr), 255 - hex2num(textg), 255 - hex2num(textb))
 
 /proc/Get_Angle(atom/movable/start,atom/movable/end)//For beams.
 	if(!start || !end)
@@ -184,15 +175,15 @@ Turf and target are separate in case you want to teleport some distance from a t
 //Returns whether or not a player is a guest using their ckey as an input
 /proc/IsGuestKey(key)
 	if (findtext(key, "Guest-", 1, 7) != 1) //was findtextEx
-		return 0
+		return FALSE
 
 	var/i, ch, len = length(key)
 
-	for (i = 7, i <= len, ++i)
+	for (i = 7, i <= len, ++i) //we know the first 6 chars are Guest-
 		ch = text2ascii(key, i)
-		if (ch < 48 || ch > 57)
-			return 0
-	return 1
+		if (ch < 48 || ch > 57) //0-9
+			return FALSE
+	return TRUE
 
 //Generalised helper proc for letting mobs rename themselves. Used to be clname() and ainame()
 /mob/proc/apply_pref_name(role, client/C)
@@ -443,6 +434,29 @@ Turf and target are separate in case you want to teleport some distance from a t
 
 	return locate(x,y,A.z)
 
+/**
+  * Get ranged target turf, but with direct targets as opposed to directions
+  *
+  * Starts at atom A and gets the exact angle between A and target
+  * Moves from A with that angle, Range amount of times, until it stops, bound to map size
+  * Arguments:
+  * * A - Initial Firer / Position
+  * * target - Target to aim towards
+  * * range - Distance of returned target turf from A
+  * * offset - Angle offset, 180 input would make the returned target turf be in the opposite direction
+  */
+/proc/get_ranged_target_turf_direct(atom/A, atom/target, range, offset)
+	var/angle = arctan(target.x - A.x, target.y - A.y)
+	if(offset)
+		angle += offset
+	var/turf/T = get_turf(A)
+	for(var/i in 1 to range)
+		var/turf/check = locate(A.x + cos(angle) * i, A.y + sin(angle) * i, A.z)
+		if(!check)
+			break
+		T = check
+
+	return T
 
 // returns turf relative to A offset in dx and dy tiles
 // bound to map limits
@@ -786,8 +800,8 @@ GLOBAL_LIST_INIT(WALLITEMS_INVERSE, typecacheof(list(
 	tX = splittext(tX[1], ":")
 	tX = tX[1]
 	var/list/actual_view = getviewsize(C ? C.view : world.view)
-	tX = CLAMP(origin.x + text2num(tX) - round(actual_view[1] / 2) - 1, 1, world.maxx)
-	tY = CLAMP(origin.y + text2num(tY) - round(actual_view[2] / 2) - 1, 1, world.maxy)
+	tX = clamp(origin.x + text2num(tX) - round(actual_view[1] / 2) - 1, 1, world.maxx)
+	tY = clamp(origin.y + text2num(tY) - round(actual_view[2] / 2) - 1, 1, world.maxy)
 	return locate(tX, tY, tZ)
 
 /proc/screen_loc2turf(text, turf/origin, client/C)
@@ -800,8 +814,8 @@ GLOBAL_LIST_INIT(WALLITEMS_INVERSE, typecacheof(list(
 	tX = text2num(tX[2])
 	tZ = origin.z
 	var/list/actual_view = getviewsize(C ? C.view : world.view)
-	tX = CLAMP(origin.x + round(actual_view[1] / 2) - tX, 1, world.maxx)
-	tY = CLAMP(origin.y + round(actual_view[2] / 2) - tY, 1, world.maxy)
+	tX = clamp(origin.x + round(actual_view[1] / 2) - tX, 1, world.maxx)
+	tY = clamp(origin.y + round(actual_view[2] / 2) - tY, 1, world.maxy)
 	return locate(tX, tY, tZ)
 
 /proc/IsValidSrc(datum/D)
@@ -1241,8 +1255,6 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 				return FALSE
 	return TRUE
 
-#define UNTIL(X) while(!(X)) stoplag()
-
 /proc/pass()
 	return
 
@@ -1314,7 +1326,7 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 /proc/GUID()
 	var/const/GUID_VERSION = "b"
 	var/const/GUID_VARIANT = "d"
-	var/node_id = copytext(md5("[rand()*rand(1,9999999)][world.name][world.hub][world.hub_password][world.internet_address][world.address][world.contents.len][world.status][world.port][rand()*rand(1,9999999)]"), 1, 13)
+	var/node_id = copytext_char(md5("[rand()*rand(1,9999999)][world.name][world.hub][world.hub_password][world.internet_address][world.address][world.contents.len][world.status][world.port][rand()*rand(1,9999999)]"), 1, 13)
 
 	var/time_high = "[num2hex(text2num(time2text(world.realtime,"YYYY")), 2)][num2hex(world.realtime, 6)]"
 
@@ -1435,7 +1447,9 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 
 /proc/get_random_drink()
 	var/list/blocked = list(/obj/item/reagent_containers/food/drinks/soda_cans,
-		/obj/item/reagent_containers/food/drinks/bottle
+		/obj/item/reagent_containers/food/drinks/bottle,
+		/obj/item/reagent_containers/food/drinks/flask/russian,
+		/obj/item/reagent_containers/food/drinks/flask/steel
 		)
 	return pick(subtypesof(/obj/item/reagent_containers/food/drinks) - blocked)
 
@@ -1501,3 +1515,87 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 		return -1
 	else
 		return 0
+
+// Converts browser keycodes to BYOND keycodes.
+/proc/browser_keycode_to_byond(keycode)
+	keycode = text2num(keycode)
+	switch(keycode)
+		// letters and numbers
+		if(65 to 90, 48 to 57)
+			return ascii2text(keycode)
+		if(17)
+			return "Ctrl"
+		if(18)
+			return "Alt"
+		if(16)
+			return "Shift"
+		if(37)
+			return "West"
+		if(38)
+			return "North"
+		if(39)
+			return "East"
+		if(40)
+			return "South"
+		if(45)
+			return "Insert"
+		if(46)
+			return "Delete"
+		if(36)
+			return "Northwest"
+		if(35)
+			return "Southwest"
+		if(33)
+			return "Northeast"
+		if(34)
+			return "Southeast"
+		if(112 to 123)
+			return "F[keycode-111]"
+		if(96 to 105)
+			return "Numpad[keycode-96]"
+		if(188)
+			return ","
+		if(190)
+			return "."
+		if(189)
+			return "-"
+
+/proc/generate_items_inside(list/items_list, where_to)
+	for(var/each_item in items_list)
+		for(var/i in 1 to items_list[each_item])
+			new each_item(where_to)
+
+//sends a message to chat
+//config_setting should be one of the following
+//null - noop
+//empty string - use TgsTargetBroadcast with admin_only = FALSE
+//other string - use TgsChatBroadcast with the tag that matches config_setting, only works with TGS4, if using TGS3 the above method is used
+/proc/send2chat(message, config_setting)
+	if(config_setting == null || !world.TgsAvailable())
+		return
+	var/datum/tgs_version/version = world.TgsVersion()
+	if(config_setting == "" || version.suite == 3)
+		world.TgsTargetedChatBroadcast(message, FALSE)
+		return
+
+	var/list/channels_to_use = list()
+	for(var/I in world.TgsChatChannelInfo())
+		var/datum/tgs_chat_channel/channel = I
+		if(channel.tag == config_setting)
+			channels_to_use += channel
+
+	if(channels_to_use.len)
+		world.TgsChatBroadcast()
+
+//Checks to see if either the victim has a garlic necklace or garlic in their blood
+/proc/blood_sucking_checks(var/mob/living/carbon/target, check_neck, check_blood)
+	//Bypass this if the target isnt carbon.
+	if(!iscarbon(target))
+		return TRUE
+	if(check_neck)
+		if(istype(target.get_item_by_slot(SLOT_NECK), /obj/item/clothing/neck/garlic_necklace))
+			return FALSE
+	if(check_blood)
+		if(target.reagents.has_reagent(/datum/reagent/consumable/garlic))
+			return FALSE
+	return TRUE

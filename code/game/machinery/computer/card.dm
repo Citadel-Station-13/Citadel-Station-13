@@ -171,7 +171,7 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 
 /obj/machinery/computer/card/AltClick(mob/user)
 	. = ..()
-	if(!user.canUseTopic(src, !issilicon(user)) || !is_operational())
+	if(!user.canUseTopic(src, !hasSiliconAccessInArea(user)) || !is_operational())
 		return
 	if(inserted_modify_id)
 		if(id_eject(user, inserted_modify_id))
@@ -360,7 +360,7 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 	if(..())
 		return
 
-	if(!usr.canUseTopic(src, !issilicon(usr)) || !is_operational())
+	if(!usr.canUseTopic(src, !hasSiliconAccessInArea(usr)) || !is_operational())
 		usr.unset_machine()
 		usr << browse(null, "window=id_com")
 		return
@@ -392,7 +392,7 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 					inserted_scan_id = id_to_insert
 					updateUsrDialog()
 		if ("auth")
-			if ((!( authenticated ) && (inserted_scan_id || issilicon(usr)) || mode))
+			if ((!( authenticated ) && (inserted_scan_id || hasSiliconAccessInArea(usr)) || mode))
 				if (check_access(inserted_scan_id))
 					region_access = list()
 					head_subordinates = list()
@@ -426,7 +426,7 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 							get_subordinates("Quartermaster")
 						if(region_access)
 							authenticated = 1
-			else if ((!( authenticated ) && issilicon(usr)) && (!inserted_modify_id))
+			else if ((!( authenticated ) && hasSiliconAccessInArea(usr)) && (!inserted_modify_id))
 				to_chat(usr, "<span class='warning'>You can't modify an ID without an ID inserted to modify! Once one is in the modify slot on the computer, you can log in.</span>")
 		if ("logout")
 			region_access = null
@@ -481,7 +481,7 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 		if ("reg")
 			if (authenticated)
 				var/t2 = inserted_modify_id
-				if ((authenticated && inserted_modify_id == t2 && (in_range(src, usr) || issilicon(usr)) && isturf(loc)))
+				if ((authenticated && inserted_modify_id == t2 && (in_range(src, usr) || hasSiliconAccessInArea(usr)) && isturf(loc)))
 					var/newName = reject_bad_name(href_list["reg"])
 					if(newName)
 						inserted_modify_id.registered_name = newName

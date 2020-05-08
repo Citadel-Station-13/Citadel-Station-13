@@ -21,7 +21,7 @@
 	var/obj/item/cigbutt/butt = /obj/item/cigbutt
 	saved_appearance = initial(butt.appearance)
 
-/obj/item/chameleon/dropped()
+/obj/item/chameleon/dropped(mob/user)
 	..()
 	disrupt()
 
@@ -48,6 +48,10 @@
 	if(ismob(target))
 		return
 	if(istype(target, /obj/structure/falsewall))
+		return
+	if(target.alpha != 255)
+		return
+	if(target.invisibility != 0)
 		return
 	if(iseffect(target))
 		if(!(istype(target, /obj/effect/decal))) //be a footprint

@@ -3,16 +3,18 @@
 
 /datum/mutation/human/nervousness
 	name = "Nervousness"
+	desc = "Causes the holder to stutter."
 	quality = MINOR_NEGATIVE
 	text_gain_indication = "<span class='danger'>You feel nervous.</span>"
 
-/datum/mutation/human/nervousness/on_life(mob/living/carbon/human/owner)
+/datum/mutation/human/nervousness/on_life()
 	if(prob(10))
 		owner.stuttering = max(10, owner.stuttering)
 
 
 /datum/mutation/human/wacky
 	name = "Wacky"
+	desc = "<span class='sans'>Unknown.</span>"
 	quality = MINOR_NEGATIVE
 	text_gain_indication = "<span class='sans'>You feel an off sensation in your voicebox.</span>"
 	text_lose_indication = "<span class='notice'>The off sensation passes.</span>"
@@ -34,6 +36,7 @@
 
 /datum/mutation/human/mute
 	name = "Mute"
+	desc = "Completely inhibits the vocal section of the brain."
 	quality = NEGATIVE
 	text_gain_indication = "<span class='danger'>You feel unable to express yourself at all.</span>"
 	text_lose_indication = "<span class='danger'>You feel able to speak freely again.</span>"
@@ -53,8 +56,8 @@
 
 /datum/mutation/human/smile
 	name = "Smile"
+	desc = "Causes the user to be in constant mania."
 	quality = MINOR_NEGATIVE
-	dna_block = NON_SCANNABLE
 	text_gain_indication = "<span class='notice'>You feel so happy. Nothing can be wrong with anything. :)</span>"
 	text_lose_indication = "<span class='notice'>Everything is terrible again. :(</span>"
 
@@ -76,7 +79,7 @@
 		message = " [message] "
 		//Time for a friendly game of SS13
 		message = replacetext(message," stupid "," smart ")
-		message = replacetext(message," retard "," genius ")
+		message = replacetext(message," idiot "," genius ")
 		message = replacetext(message," unrobust "," robust ")
 		message = replacetext(message," dumb "," smart ")
 		message = replacetext(message," awful "," great ")
@@ -95,7 +98,6 @@
 		message = replacetext(message," ugly "," beautiful ")
 		message = replacetext(message," douchbag "," nice guy ")
 		message = replacetext(message," whore "," lady ")
-		message = replacetext(message," gamer "," intellectual ")
 		message = replacetext(message," nerd "," smarty pants ")
 		message = replacetext(message," moron "," fun person ")
 		message = replacetext(message," IT'S LOOSE "," EVERYTHING IS FINE ")
@@ -106,7 +108,6 @@
 		message = replacetext(message," drink "," liquid ")
 		message = replacetext(message," feminist "," empowered woman ")
 		message = replacetext(message," i hate you "," you're a mean ")
-		message = replacetext(message," jew "," jewish ")
 		message = replacetext(message," shit "," shiz ")
 		message = replacetext(message," crap "," poo ")
 		message = replacetext(message," slut "," tease ")
@@ -121,8 +122,8 @@
 
 /datum/mutation/human/unintelligible
 	name = "Unintelligible"
+	desc = "Partially inhibits the vocal center of the brain, severely distorting speech."
 	quality = NEGATIVE
-	dna_block = NON_SCANNABLE
 	text_gain_indication = "<span class='danger'>You can't seem to form any coherent thoughts!</span>"
 	text_lose_indication = "<span class='danger'>Your mind feels more clear.</span>"
 
@@ -141,8 +142,9 @@
 
 /datum/mutation/human/swedish
 	name = "Swedish"
+	desc = "A horrible mutation originating from the distant past. Thought to be eradicated after the incident in 2037."
 	quality = MINOR_NEGATIVE
-	dna_block = NON_SCANNABLE
+	locked = TRUE
 	text_gain_indication = "<span class='notice'>You feel Swedish, however that works.</span>"
 	text_lose_indication = "<span class='notice'>The feeling of Swedishness passes.</span>"
 
@@ -173,8 +175,8 @@
 
 /datum/mutation/human/chav
 	name = "Chav"
+	desc = "Unknown"
 	quality = MINOR_NEGATIVE
-	dna_block = NON_SCANNABLE
 	text_gain_indication = "<span class='notice'>Ye feel like a reet prat like, innit?</span>"
 	text_lose_indication = "<span class='notice'>You no longer feel like being rude and sassy.</span>"
 
@@ -220,12 +222,13 @@
 
 /datum/mutation/human/elvis
 	name = "Elvis"
+	desc = "A terrifying mutation named after its 'patient-zero'."
 	quality = MINOR_NEGATIVE
-	dna_block = NON_SCANNABLE
+	locked = TRUE
 	text_gain_indication = "<span class='notice'>You feel pretty good, honeydoll.</span>"
 	text_lose_indication = "<span class='notice'>You feel a little less conversation would be great.</span>"
 
-/datum/mutation/human/elvis/on_life(mob/living/carbon/human/owner)
+/datum/mutation/human/elvis/on_life()
 	switch(pick(1,2))
 		if(1)
 			if(prob(15))
@@ -259,15 +262,16 @@
 		message = replacetext(message," thank you "," thank you, thank you very much ")
 		message = replacetext(message," what are you "," whatcha ")
 		message = replacetext(message," yes ",pick(" sure", "yea "))
-		message = replacetext(message," faggot "," square ")
+		message = replacetext(message," dumbass "," square ")
 		message = replacetext(message," muh valids "," getting my kicks ")
 		speech_args[SPEECH_MESSAGE] = trim(message)
 
 
 /datum/mutation/human/stoner
 	name = "Stoner"
+	desc = "A common mutation that severely decreases intelligence."
 	quality = NEGATIVE
-	dna_block = NON_SCANNABLE
+	locked = TRUE
 	text_gain_indication = "<span class='notice'>You feel...totally chill, man!</span>"
 	text_lose_indication = "<span class='notice'>You feel like you have a better sense of time.</span>"
 

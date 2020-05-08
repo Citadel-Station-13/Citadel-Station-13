@@ -21,7 +21,7 @@
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 30)
 	resistance_flags = FIRE_PROOF
 
-	materials = list(MAT_METAL=70, MAT_GLASS=30)
+	custom_materials = list(/datum/material/iron=70, /datum/material/glass=30)
 	var/welding = 0 	//Whether or not the welding tool is off(0), on(1) or currently welding(2)
 	var/status = TRUE 		//Whether the welder is secured or unsecured (able to attach rods to it to make a flamethrower)
 	var/max_fuel = 20 	//The max amount of fuel the welder can hold
@@ -40,24 +40,24 @@
 	reagents.add_reagent(/datum/reagent/fuel, max_fuel)
 	update_icon()
 
+/obj/item/weldingtool/ComponentInitialize()
+	. = ..()
+	AddElement(/datum/element/update_icon_updates_onmob)
 
-/obj/item/weldingtool/proc/update_torch()
+/obj/item/weldingtool/update_icon_state()
 	if(welding)
-		add_overlay("[initial(icon_state)]-on")
 		item_state = "[initial(item_state)]1"
 	else
 		item_state = "[initial(item_state)]"
 
-
-/obj/item/weldingtool/update_icon()
-	cut_overlays()
+/obj/item/weldingtool/update_overlays()
+	. = ..()
 	if(change_icons)
 		var/ratio = get_fuel() / max_fuel
 		ratio = CEILING(ratio*4, 1) * 25
-		add_overlay("[initial(icon_state)][ratio]")
-	update_torch()
-	return
-
+		. += "[initial(icon_state)][ratio]"
+	if(welding)
+		. += "[initial(icon_state)]-on"
 
 /obj/item/weldingtool/process()
 	switch(welding)
@@ -177,11 +177,6 @@
 	if(get_fuel() <= 0 && welding)
 		switched_on(user)
 		update_icon()
-		//mob icon update
-		if(ismob(loc))
-			var/mob/M = loc
-			M.update_inv_hands(0)
-
 		return 0
 	return 1
 
@@ -297,7 +292,7 @@
 	desc = "A slightly larger welder with a larger tank."
 	icon_state = "indwelder"
 	max_fuel = 40
-	materials = list(MAT_GLASS=60)
+	custom_materials = list(/datum/material/glass=60)
 
 /obj/item/weldingtool/largetank/cyborg
 	name = "integrated welding tool"
@@ -316,7 +311,7 @@
 	icon_state = "miniwelder"
 	max_fuel = 10
 	w_class = WEIGHT_CLASS_TINY
-	materials = list(MAT_METAL=30, MAT_GLASS=10)
+	custom_materials = list(/datum/material/iron=30, /datum/material/glass=10)
 	change_icons = 0
 
 /obj/item/weldingtool/mini/flamethrower_screwdriver()
@@ -342,7 +337,7 @@
 	icon_state = "upindwelder"
 	item_state = "upindwelder"
 	max_fuel = 80
-	materials = list(MAT_METAL=70, MAT_GLASS=120)
+	custom_materials = list(/datum/material/iron=70, /datum/material/glass=120)
 
 /obj/item/weldingtool/experimental
 	name = "experimental welding tool"
@@ -350,7 +345,7 @@
 	icon_state = "exwelder"
 	item_state = "exwelder"
 	max_fuel = 40
-	materials = list(MAT_METAL=70, MAT_GLASS=120)
+	custom_materials = list(/datum/material/iron=70, /datum/material/glass=120)
 	var/last_gen = 0
 	change_icons = 0
 	can_off_process = 1

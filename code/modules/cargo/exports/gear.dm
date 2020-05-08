@@ -229,12 +229,12 @@
 /datum/export/gear/magboots
 	cost = 50
 	unit_name = "magboots"
-	export_types = list(/obj/item/clothing/shoes/magboots, /obj/item/clothing/shoes/magboots/atmos)
+	export_types = list(/obj/item/clothing/shoes/magboots)
 
 /datum/export/gear/nosellboots
 	cost = -5000 //We DONT want scew antags
 	unit_name = "error shipment stolen"
-	export_types = list(/obj/item/clothing/shoes/magboots/advance, /obj/item/clothing/shoes/magboots/deathsquad)
+	export_types = list(/obj/item/clothing/shoes/magboots/advance)
 
 /datum/export/gear/syndamagboots
 	cost = 250
@@ -279,7 +279,7 @@
 /datum/export/gear/magicboots //Magic as in Antag - Wiz/Cults
 	cost = 450
 	unit_name = "magic shoes"
-	export_types = list(/obj/item/clothing/shoes/sandal/marisa, /obj/item/clothing/shoes/sandal/magic, /obj/item/clothing/shoes/cult, /obj/item/clothing/shoes/clockwork, /obj/item/clothing/shoes/clown_shoes/taeclowndo, /obj/item/clothing/shoes/sandal/slippers)
+	export_types = list(/obj/item/clothing/shoes/sandal/marisa, /obj/item/clothing/shoes/sandal/magic, /obj/item/clothing/shoes/cult, /obj/item/clothing/shoes/clockwork, /obj/item/clothing/shoes/clown_shoes/taeclowndo)
 	include_subtypes = TRUE
 
 //Headsets/Ears
@@ -309,7 +309,7 @@
 /datum/export/gear/combatgloves
 	cost = 80
 	unit_name = "combat gloves"
-	export_types = list(/obj/item/clothing/gloves/combat, /obj/item/clothing/gloves/rapid, /obj/item/clothing/gloves/krav_maga)
+	export_types = list(/obj/item/clothing/gloves/tackler/combat, /obj/item/clothing/gloves/tackler/dolphin, /obj/item/clothing/gloves/fingerless/pugilist/rapid, /obj/item/clothing/gloves/krav_maga)
 	include_subtypes = TRUE
 
 /datum/export/gear/bonegloves
@@ -582,19 +582,18 @@ datum/export/gear/glasses //glasses are not worth selling
 	cost = 10
 	unit_name = "fancy clothing"
 	k_elasticity = 1/90 //These will be what sells
-	export_types = list(/obj/item/clothing/under/scratch, /obj/item/clothing/under/sl_suit, /obj/item/clothing/under/rank/vice, /obj/item/clothing/under/suit_jacket, \
-						/obj/item/clothing/under/burial, /obj/item/clothing/under/skirt/black, /obj/item/clothing/under/captainparade, /obj/item/clothing/under/hosparademale, \
-						/obj/item/clothing/under/hosparadefem, /obj/item/clothing/under/assistantformal, /obj/item/clothing/under/stripeddress, /obj/item/clothing/under/redeveninggown, \
-						/obj/item/clothing/under/plaid_skirt, /obj/item/clothing/under/geisha, /obj/item/clothing/under/trek, /obj/item/clothing/under/wedding, /obj/item/clothing/under/aviatoruniform,\
-						/obj/item/clothing/under/mega, /obj/item/clothing/under/cia, /obj/item/clothing/under/casualwear, /obj/item/clothing/under/rank)
+	export_types = list(/obj/item/clothing/under/suit/white_on_white, /obj/item/clothing/under/suit/sl, /obj/item/clothing/under/misc/vice_officer, /obj/item/clothing/under/suit/black, \
+						/obj/item/clothing/under/misc/burial, /obj/item/clothing/under/dress/skirt, /obj/item/clothing/under/rank/captain/parade, /obj/item/clothing/under/rank/security/head_of_security/parade, \
+						/obj/item/clothing/under/rank/security/head_of_security/parade/female, /obj/item/clothing/under/misc/assistantformal, /obj/item/clothing/under/dress/striped, /obj/item/clothing/under/dress/redeveninggown, \
+						/obj/item/clothing/under/dress/skirt/plaid, /obj/item/clothing/under/costume/geisha, /obj/item/clothing/under/trek, /obj/item/clothing/under/rank)
 	include_subtypes = TRUE
 
 /datum/export/gear/armored_jumpsuit
 	cost = 15
 	unit_name = "armored_jumpsuit"
 	k_elasticity = 1/90 //These will be what sells
-	export_types = list(/obj/item/clothing/under/durathread, /obj/item/clothing/under/rank/security, /obj/item/clothing/under/plasmaman, /obj/item/clothing/under/syndicate, \
-						/obj/item/clothing/under/rank/det, /obj/item/clothing/under/rank/head_of_security, /obj/item/clothing/under/rank/security/spacepol)
+	export_types = list(/obj/item/clothing/under/misc/durathread, /obj/item/clothing/under/rank/security/officer, /obj/item/clothing/under/plasmaman, /obj/item/clothing/under/syndicate, \
+						/obj/item/clothing/under/rank/security/detective, /obj/item/clothing/under/rank/security/head_of_security, /obj/item/clothing/under/rank/security/officer/spacepol)
 	exclude_types = list(/obj/item/clothing/under/syndicate/tacticool, /obj/item/clothing/under/syndicate/tacticool/skirt)
 	include_subtypes = TRUE
 

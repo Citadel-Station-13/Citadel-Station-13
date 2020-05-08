@@ -68,6 +68,10 @@
 	results = list(/datum/reagent/medicine/synthflesh = 3)
 	required_reagents = list(/datum/reagent/blood = 1, /datum/reagent/carbon = 1, /datum/reagent/medicine/styptic_powder = 1)
 
+/datum/chemical_reaction/synthflesh/synthblood
+	id = "synthflesh_2"
+	required_reagents = list(/datum/reagent/blood/synthetics = 1, /datum/reagent/carbon = 1, /datum/reagent/medicine/styptic_powder = 1)
+
 /datum/chemical_reaction/synthtissue
 	name = "Synthtissue"
 	id = /datum/reagent/synthtissue
@@ -101,7 +105,7 @@
 	if(St.purity < 1)
 		St.volume *= St.purity
 		St.purity = 1
-	var/amount = CLAMP(0.002, 0, N.volume)
+	var/amount = clamp(0.002, 0, N.volume)
 	N.volume -= amount
 	St.data["grown_volume"] = St.data["grown_volume"] + added_volume
 	St.name = "[initial(St.name)] [round(St.data["grown_volume"], 0.1)]u colony"

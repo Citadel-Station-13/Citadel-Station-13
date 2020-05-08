@@ -138,7 +138,7 @@
 																	datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
-		ui = new(user, src, ui_key, "atmos_filter", name, 475, 195, master_ui, state)
+		ui = new(user, src, ui_key, "atmos_filter", name, 475, 185, master_ui, state)
 		ui.open()
 
 /obj/machinery/atmospherics/components/trinary/filter/ui_data()
@@ -175,7 +175,7 @@
 				rate = text2num(rate)
 				. = TRUE
 			if(.)
-				transfer_rate = CLAMP(rate, 0, MAX_TRANSFER_RATE)
+				transfer_rate = clamp(rate, 0, MAX_TRANSFER_RATE)
 				investigate_log("was set to [transfer_rate] L/s by [key_name(usr)]", INVESTIGATE_ATMOS)
 		if("filter")
 			filter_type = null

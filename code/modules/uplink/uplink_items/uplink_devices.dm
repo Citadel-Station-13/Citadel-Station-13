@@ -20,6 +20,12 @@
 	item = /obj/item/emagrecharge
 	cost = 2
 
+/datum/uplink_item/device_tools/bluespacerecharge
+	name = "Bluespace Crystal Recharging Device"
+	desc = "A small device intended for recharging Wall Walking boots. Using it will add six charges to them. Use ten bluespace crystals on this recharger to add three more charges to it. "
+	item = /obj/item/bluespacerecharge
+	cost = 2
+
 /datum/uplink_item/device_tools/phantomthief
 	name = "Syndicate Mask"
 	desc = "A cheap plastic mask fitted with an adrenaline autoinjector, which can be used by simply tensing your muscles"
@@ -92,7 +98,7 @@
 	desc = "A robust seven-slot set of webbing that is capable of holding all manner of tactical equipment."
 	item = /obj/item/storage/belt/military
 	cost = 1
-	exclude_modes = list(/datum/game_mode/nuclear)
+	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops)
 
 /datum/uplink_item/device_tools/fakenucleardisk
 	name = "Decoy Nuclear Authentication Disk"
@@ -139,7 +145,7 @@
 	name = "Headset Upgrader"
 	desc = "A device that can be used to make one headset immune to flashbangs."
 	item = /obj/item/headsetupgrader
-	cost = 3
+	cost = 1
 
 /datum/uplink_item/device_tools/medgun
 	name = "Medbeam Gun"
@@ -182,11 +188,22 @@
 	item = /obj/item/healthanalyzer/rad_laser
 	cost = 3
 
+/datum/uplink_item/device_tools/riflery_primer
+	name = "Riflery Primer"
+	desc = "An old book with blood and vodka stains on it. Freshly pulled from a dusty crate in some old warehouse, \
+			this primer of questionable worth and value is rumored to increase your rifle-bolt-working and/or shotgun \
+			racking fivefold. Then again, the techniques here only work on bolt-actions and pump-actions..."
+	item = /obj/item/book/granter/trait/rifleman
+	cost = 3
+	restricted_roles = list("Operative") // i want it to be surplusable but i also want it to be mostly nukie only, please advise
+	surplus = 90
+
 /datum/uplink_item/device_tools/stimpack
 	name = "Stimpack"
 	desc = "Stimpacks, the tool of many great heroes, make you nearly immune to stuns and knockdowns for about \
-			5 minutes after injection."
-	item = /obj/item/reagent_containers/syringe/stimulants
+			5 minutes after fully injecting yourself. Can inject yourself, or others, 5 times and through hardsuits. \
+			Each injection will gives around a minute of stimulants."
+	item = /obj/item/reagent_containers/hypospray/medipen/stimulants
 	cost = 5
 	surplus = 90
 

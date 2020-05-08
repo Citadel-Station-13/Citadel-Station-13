@@ -1,3 +1,5 @@
+/mob/living/silicon/KnockToFloor(disarm_items = FALSE, silent = TRUE, updating = TRUE)
+	return
 
 /mob/living/silicon/grippedby(mob/living/user, instant = FALSE)
 	return //can't upgrade a simple pull into a more aggressive grab.
@@ -32,7 +34,7 @@
 		var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
 		if(prob(damage))
 			for(var/mob/living/N in buckled_mobs)
-				N.Knockdown(20)
+				N.DefaultCombatKnockdown(20)
 				unbuckle_mob(N)
 				N.visible_message("<span class='boldwarning'>[N] is knocked off of [src] by [M]!</span>")
 		switch(M.melee_damage_type)
@@ -85,11 +87,11 @@
 		return
 	return ..()
 
-/mob/living/silicon/electrocute_act(shock_damage, obj/source, siemens_coeff = 1, safety = 0, tesla_shock = 0, illusion = 0, stun = TRUE)
+/mob/living/silicon/electrocute_act(shock_damage, source, siemens_coeff = 1, flags = NONE)
 	if(buckled_mobs)
 		for(var/mob/living/M in buckled_mobs)
 			unbuckle_mob(M)
-			M.electrocute_act(shock_damage/100, source, siemens_coeff, safety, tesla_shock, illusion, stun)	//Hard metal shell conducts!
+			M.electrocute_act(shock_damage/100, source, siemens_coeff, flags)	//Hard metal shell conducts!
 	return 0 //So borgs they don't die trying to fix wiring
 
 /mob/living/silicon/emp_act(severity)
@@ -106,24 +108,28 @@
 	for(var/mob/living/M in buckled_mobs)
 		if(prob(severity*50))
 			unbuckle_mob(M)
-			M.Knockdown(40)
+			M.DefaultCombatKnockdown(40)
 			M.visible_message("<span class='boldwarning'>[M] is thrown off of [src]!</span>")
 	flash_act(affect_silicon = 1)
 
 /mob/living/silicon/bullet_act(obj/item/projectile/P, def_zone)
 	if(P.original != src || P.firer != src) //try to block or reflect the bullet, can't do so when shooting oneself
-		if(reflect_bullet_check(P, def_zone))
-			return -1 // complete projectile permutation
-		if(check_shields(P, P.damage, "the [P.name]", PROJECTILE_ATTACK, P.armour_penetration))
+		var/list/returnlist = list()
+		var/returned = run_block(P, P.damage, "the [P.name]", ATTACK_TYPE_PROJECTILE, P.armour_penetration, P.firer, def_zone, returnlist)
+		if(returned & BLOCK_SHOULD_REDIRECT)
+			handle_projectile_attack_redirection(P, returnlist[BLOCK_RETURN_REDIRECT_METHOD])
+		if(returned & BLOCK_REDIRECTED)
+			return BULLET_ACT_FORCE_PIERCE
+		if(returned & BLOCK_SUCCESS)
 			P.on_hit(src, 100, def_zone)
-			return 2
+			return BULLET_ACT_BLOCK
 	if((P.damage_type == BRUTE || P.damage_type == BURN))
 		adjustBruteLoss(P.damage)
 		if(prob(P.damage*1.5))
 			for(var/mob/living/M in buckled_mobs)
 				M.visible_message("<span class='boldwarning'>[M] is knocked off of [src]!</span>")
 				unbuckle_mob(M)
-				M.Knockdown(40)
+				M.DefaultCombatKnockdown(40)
 	if(P.stun || P.knockdown)
 		for(var/mob/living/M in buckled_mobs)
 			unbuckle_mob(M)

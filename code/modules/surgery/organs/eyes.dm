@@ -1,3 +1,7 @@
+#define BLURRY_VISION_ONE	1
+#define BLURRY_VISION_TWO	2
+#define BLIND_VISION_THREE	3
+
 /obj/item/organ/eyes
 	name = BODY_ZONE_PRECISE_EYES
 	icon_state = "eyeballs"
@@ -10,7 +14,7 @@
 	decay_factor = STANDARD_ORGAN_DECAY
 	maxHealth = 0.5 * STANDARD_ORGAN_THRESHOLD		//half the normal health max since we go blind at 30, a permanent blindness at 50 therefore makes sense unless medicine is administered
 	high_threshold = 0.3 * STANDARD_ORGAN_THRESHOLD	//threshold at 30
-	low_threshold = 0.15 * STANDARD_ORGAN_THRESHOLD	//threshold at 15
+	low_threshold = 0.2 * STANDARD_ORGAN_THRESHOLD	//threshold at 15
 
 	low_threshold_passed = "<span class='info'>Distant objects become somewhat less tangible.</span>"
 	high_threshold_passed = "<span class='info'>Everything starts to look a lot less clear.</span>"
@@ -27,14 +31,17 @@
 	var/flash_protect = 0
 	var/see_invisible = SEE_INVISIBLE_LIVING
 	var/lighting_alpha
-	var/damaged	= FALSE	//damaged indicates that our eyes are undergoing some level of negative effect
+	var/eye_damaged	= FALSE	//indicates that our eyes are undergoing some level of negative effect
 
 /obj/item/organ/eyes/Insert(mob/living/carbon/M, special = FALSE, drop_if_replaced = FALSE)
 	. = ..()
 	if(!.)
 		return
-	if(damage == initial(damage))
-		clear_eye_trauma()
+	switch(eye_damaged)
+		if(BLURRY_VISION_ONE, BLURRY_VISION_TWO)
+			owner.overlay_fullscreen("eye_damage", /obj/screen/fullscreen/impaired, eye_damaged)
+		if(BLIND_VISION_THREE)
+			owner.become_blind(EYE_DAMAGE)
 	if(ishuman(owner))
 		var/mob/living/carbon/human/H = owner
 		old_eye_color = H.eye_color
@@ -47,45 +54,50 @@
 	M.update_tint()
 	owner.update_sight()
 
-/obj/item/organ/eyes/Remove(mob/living/carbon/M, special = 0)
-	clear_eye_trauma()
+/obj/item/organ/eyes/Remove(special = FALSE)
 	. = ..()
-	if(ishuman(M) && eye_color)
-		var/mob/living/carbon/human/H = M
+	var/mob/living/carbon/C = .
+	if(QDELETED(C))
+		return
+	switch(eye_damaged)
+		if(BLURRY_VISION_ONE, BLURRY_VISION_TWO)
+			C.clear_fullscreen("eye_damage")
+		if(BLIND_VISION_THREE)
+			C.cure_blind(EYE_DAMAGE)
+	if(ishuman(C) && eye_color)
+		var/mob/living/carbon/human/H = C
 		H.eye_color = old_eye_color
 		if(!special)
-			H.dna.species.handle_body()
+			H.dna.species.handle_body(H)
 	if(!special)
-		M.update_tint()
-		M.update_sight()
+		C.update_tint()
+		C.update_sight()
 
-/obj/item/organ/eyes/on_life()
-	..()
-	var/mob/living/carbon/C = owner
-	//since we can repair fully damaged eyes, check if healing has occurred
-	if((organ_flags & ORGAN_FAILING) && (damage < maxHealth))
-		organ_flags &= ~ORGAN_FAILING
-		C.cure_blind(EYE_DAMAGE)
-	//various degrees of "oh fuck my eyes", from "point a laser at your eye" to "staring at the Sun" intensities
-	if(damage > 20)
-		damaged = TRUE
-		if(organ_flags & ORGAN_FAILING)
-			C.become_blind(EYE_DAMAGE)
-		else if(damage > 30)
-			C.overlay_fullscreen("eye_damage", /obj/screen/fullscreen/impaired, 2)
+
+/obj/item/organ/eyes/applyOrganDamage(d, maximum = maxHealth)
+	. = ..()
+	if(!.)
+		return
+	var/old_damaged = eye_damaged
+	switch(damage)
+		if(INFINITY to maxHealth)
+			eye_damaged = BLIND_VISION_THREE
+		if(maxHealth to high_threshold)
+			eye_damaged = BLURRY_VISION_TWO
+		if(high_threshold to low_threshold)
+			eye_damaged = BLURRY_VISION_ONE
 		else
-			C.overlay_fullscreen("eye_damage", /obj/screen/fullscreen/impaired, 1)
-	//called once since we don't want to keep clearing the screen of eye damage for people who are below 20 damage
-	else if(damaged)
-		damaged = FALSE
-		C.clear_fullscreen("eye_damage")
-	return
-
-/obj/item/organ/eyes/proc/clear_eye_trauma()
-	var/mob/living/carbon/C = owner
-	C.clear_fullscreen("eye_damage")
-	C.cure_blind(EYE_DAMAGE)
-	damaged = FALSE
+			eye_damaged = FALSE
+	if(eye_damaged == old_damaged || !owner)
+		return
+	if(old_damaged == BLIND_VISION_THREE)
+		owner.cure_blind(EYE_DAMAGE)
+	else if(eye_damaged == BLIND_VISION_THREE)
+		owner.become_blind(EYE_DAMAGE)
+	if(eye_damaged && eye_damaged != BLIND_VISION_THREE)
+		owner.overlay_fullscreen("eye_damage", /obj/screen/fullscreen/impaired, eye_damaged)
+	else
+		owner.clear_fullscreen("eye_damage")
 
 /obj/item/organ/eyes/night_vision
 	name = "shadow eyes"
@@ -185,13 +197,13 @@
 	eye.update_brightness(M)
 	M.become_blind("flashlight_eyes")
 
-
-/obj/item/organ/eyes/robotic/flashlight/Remove(var/mob/living/carbon/M, special = FALSE)
-	eye.on = FALSE
-	eye.update_brightness(M)
-	eye.forceMove(src)
-	M.cure_blind("flashlight_eyes")
-	..()
+/obj/item/organ/eyes/robotic/flashlight/Remove(special = FALSE)
+	if(!QDELETED(owner))
+		eye.on = FALSE
+		eye.update_brightness(owner)
+		eye.forceMove(src)
+		owner.cure_blind("flashlight_eyes")
+	return ..()
 
 // Welding shield implant
 /obj/item/organ/eyes/robotic/shield
@@ -202,7 +214,7 @@
 /obj/item/organ/eyes/robotic/shield/emp_act(severity)
 	return
 
-#define RGB2EYECOLORSTRING(definitionvar) ("[copytext(definitionvar,2,3)][copytext(definitionvar,4,5)][copytext(definitionvar,6,7)]")
+#define RGB2EYECOLORSTRING(definitionvar) ("[copytext_char(definitionvar, 2, 3)][copytext_char(definitionvar, 4, 5)][copytext_char(definitionvar, 6, 7)]")
 
 /obj/item/organ/eyes/robotic/glow
 	name = "High Luminosity Eyes"
@@ -227,7 +239,7 @@
 	terminate_effects()
 	. = ..()
 
-/obj/item/organ/eyes/robotic/glow/Remove(mob/living/carbon/M, special = FALSE)
+/obj/item/organ/eyes/robotic/glow/Remove(special = FALSE)
 	terminate_effects()
 	. = ..()
 
@@ -236,7 +248,6 @@
 		deactivate(TRUE)
 	active = FALSE
 	clear_visuals(TRUE)
-	STOP_PROCESSING(SSfastprocess, src)
 
 /obj/item/organ/eyes/robotic/glow/ui_action_click(owner, action)
 	if(istype(action, /datum/action/item_action/organ_action/toggle))
@@ -255,8 +266,10 @@
 	if(!C || QDELETED(src) || QDELETED(user) || QDELETED(owner) || owner != user)
 		return
 	var/range = input(user, "Enter range (0 - [max_light_beam_distance])", "Range Select", 0) as null|num
+	if(!isnum(range))
+		return
 
-	set_distance(CLAMP(range, 0, max_light_beam_distance))
+	set_distance(clamp(range, 0, max_light_beam_distance))
 	assume_rgb(C)
 
 /obj/item/organ/eyes/robotic/glow/proc/assume_rgb(newcolor)
@@ -316,6 +329,8 @@
 	on_mob.forceMove(scanning)
 	for(var/i in 1 to light_beam_distance)
 		scanning = get_step(scanning, scandir)
+		if(!scanning)
+			break
 		if(scanning.opacity || scanning.has_opaque_atom)
 			stop = TRUE
 		var/obj/effect/abstract/eye_lighting/L = LAZYACCESS(eye_lighting, i)
@@ -374,3 +389,11 @@
 	name = "insect eyes"
 	desc = "These eyes seem to have increased sensitivity to bright light, with no improvement to low light vision."
 	flash_protect = -1
+
+/obj/item/organ/eyes/ipc
+	name = "ipc eyes"
+	icon_state = "cybernetic_eyeballs"
+
+#undef BLURRY_VISION_ONE
+#undef BLURRY_VISION_TWO
+#undef BLIND_VISION_THREE

@@ -17,6 +17,7 @@
 	mind_traits = list(TRAIT_CLOWN_MENTALITY)
 
 	display_order = JOB_DISPLAY_ORDER_CLOWN
+	threat = 0 // honk
 
 /datum/outfit/job/clown
 	name = "Clown"
@@ -24,7 +25,7 @@
 
 	belt = /obj/item/pda/clown
 	ears = /obj/item/radio/headset/headset_srv
-	uniform = /obj/item/clothing/under/rank/clown
+	uniform = /obj/item/clothing/under/rank/civilian/clown
 	shoes = /obj/item/clothing/shoes/clown_shoes
 	mask = /obj/item/clothing/mask/gas/clown_hat
 	l_pocket = /obj/item/bikehorn

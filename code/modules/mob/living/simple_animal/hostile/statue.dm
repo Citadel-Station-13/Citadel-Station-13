@@ -9,8 +9,8 @@
 	icon_dead = "human_male"
 	gender = NEUTER
 	a_intent = INTENT_HARM
-	mob_biotypes = list(MOB_INORGANIC, MOB_HUMANOID)
-
+	mob_biotypes = MOB_HUMANOID
+	threat = 3
 	response_help = "touches"
 	response_disarm = "pushes"
 
@@ -126,7 +126,7 @@
 	// This loop will, at most, loop twice.
 	for(var/atom/check in check_list)
 		for(var/mob/living/M in viewers(world.view + 1, check) - src)
-			if(M.client && CanAttack(M) && !M.has_unlimited_silicon_privilege)
+			if(M.client && CanAttack(M) && !M.silicon_privileges)
 				if(!M.eye_blind)
 					return M
 		for(var/obj/mecha/M in view(world.view + 1, check)) //assuming if you can see them they can see you
@@ -169,7 +169,7 @@
 	desc = "You will trigger a large amount of lights around you to flicker."
 
 	charge_max = 300
-	clothes_req = 0
+	clothes_req = NONE
 	range = 14
 
 /obj/effect/proc_holder/spell/aoe_turf/flicker_lights/cast(list/targets,mob/user = usr)
@@ -185,13 +185,13 @@
 
 	message = "<span class='notice'>You glare your eyes.</span>"
 	charge_max = 600
-	clothes_req = 0
+	clothes_req = NONE
 	range = 10
 
 /obj/effect/proc_holder/spell/aoe_turf/blindness/cast(list/targets,mob/user = usr)
 	for(var/mob/living/L in GLOB.alive_mob_list)
 		var/turf/T = get_turf(L.loc)
-		if(T && T in targets)
+		if(T && (T in targets))
 			L.blind_eyes(4)
 	return
 
@@ -201,7 +201,7 @@
 	desc = "Toggle your nightvision mode."
 
 	charge_max = 10
-	clothes_req = 0
+	clothes_req = NONE
 
 	message = "<span class='notice'>You toggle your night vision!</span>"
 	range = -1

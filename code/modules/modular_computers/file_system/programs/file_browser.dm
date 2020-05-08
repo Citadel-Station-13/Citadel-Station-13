@@ -145,7 +145,7 @@
 	t = replacetext(t, "\[/i\]", "</I>")
 	t = replacetext(t, "\[u\]", "<U>")
 	t = replacetext(t, "\[/u\]", "</U>")
-	t = replacetext(t, "\[time\]", "[STATION_TIME_TIMESTAMP("hh:mm:ss")]")
+	t = replacetext(t, "\[time\]", "[STATION_TIME_TIMESTAMP("hh:mm:ss", world.time)]")
 	t = replacetext(t, "\[date\]", "[time2text(world.realtime, "MMM DD")] [GLOB.year_integer]")
 	t = replacetext(t, "\[large\]", "<font size=\"4\">")
 	t = replacetext(t, "\[/large\]", "</font>")

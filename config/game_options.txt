@@ -288,6 +288,9 @@ MINIMUM_SECBORG_ALERT 3
 ## Uncomment to load one of the missions from awaymissionconfig.txt at roundstart.
 #ROUNDSTART_AWAY
 
+## Uncomment to load one of the virtual reality levels from vr_config at roundstart.
+#ROUNDSTART_VR
+
 ## How long the delay is before the Away Mission gate opens. Default is half an hour.
 ## 600 is one minute.
 GATEWAY_DELAY 18000
@@ -421,11 +424,13 @@ ROUNDSTART_RACES human
 
 ## Races that are strictly worse than humans that could probably be turned on without balance concerns
 ROUNDSTART_RACES lizard
+ROUNDSTART_RACES synthliz
 #ROUNDSTART_RACES fly
 #ROUNDSTART_RACES insect
 ROUNDSTART_RACES plasmaman
 #ROUNDSTART_RACES shadow
 ROUNDSTART_RACES felinid
+ROUNDSTART_RACES dwarf
 
 ## Races that are better than humans in some ways, but worse in others
 #ROUNDSTART_RACES jelly
@@ -527,8 +532,14 @@ BOMBCAP 20
 ## of ruins.
 LAVALAND_BUDGET 60
 
-## Space Ruin Budged
+## Ice Moon Budget
+ICEMOON_BUDGET 90
+
+## Space Ruin Budget
 Space_Budget 16
+
+## Station Ruin Budget
+STATION_SPACE_BUDGET 10
 
 ## Time in ds from when a player latejoins till the arrival shuttle docks at the station
 ## Must be at least 30. At least 55 recommended to be visually/aurally appropriate
@@ -582,7 +593,7 @@ MONKEYCAP 64
 #DISABLE_STAMBUFFER
 
 #Replaces standard extended/secret dichotomy with extended and calm/chaotic votes for dynamic.
-DYNAMIC_VOTING
+#DYNAMIC_VOTING
 
 ## Choose which Engine to start the round with. Weight is after the comma. Setting the weight to 0 removes the engine from rotation.
 BOX_RANDOM_ENGINE Box SM,3
@@ -591,6 +602,10 @@ BOX_RANDOM_ENGINE Box Singulo,3
 BOX_RANDOM_ENGINE Box SM 1x3,1
 BOX_RANDOM_ENGINE Box SM 5x5,1
 BOX_RANDOM_ENGINE Box SM 3x,0
+BOX_RANDOM_ENGINE Box TEG,3
+BOX_RANDOM_ENGINE Box Empty,0
+BOX_RANDOM_ENGINE Box Antimatter,1
+BOX_RANDOM_ENGINE Box P.A.C.M.A.N,1
 
 ## Whether or not there's a mode tier list vote after the secret/extended vote.
 MODETIER_VOTING
@@ -600,3 +615,30 @@ DROPPED_MODES 3
 
 ## Whether the suicide verb is allowed.
 # SUICIDE_ALLOWED
+
+## Breast cups selectable from the character creation menu. Keep em lowercase.
+BREASTS_CUPS_PREFS a
+BREASTS_CUPS_PREFS b
+BREASTS_CUPS_PREFS c
+BREASTS_CUPS_PREFS d
+BREASTS_CUPS_PREFS e
+
+## Minimum and maximum limits for penis length from the character creation menu.
+PENIS_MIN_INCHES_PREFS 1
+PENIS_MAX_INCHES_PREFS 20
+
+## Body size configs, the feature will be disabled if both min and max have the same value.
+BODY_SIZE_MIN 1
+BODY_SIZE_MAX 1
+
+## Pun-Pun movement slowdown given to characters with a body size smaller than this value,
+## to compensate for their smaller hitbox.
+## To disable, just make sure the value is lower than 'body_size_min'
+THRESHOLD_BODY_SIZE_SLOWDOWN 0.85
+
+## Multiplier used in the smaller strides slowdown calculation.
+## Doesn't apply to floating or crawling mobs.
+BODY_SIZE_SLOWDOWN_MULTIPLIER 0.25
+
+## Allows players to set a hexadecimal color of their choice as skin tone, on top of the standard ones.
+ALLOW_CUSTOM_SKINTONES

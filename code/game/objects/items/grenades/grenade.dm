@@ -34,12 +34,12 @@
 
 /obj/item/grenade/proc/clown_check(mob/living/carbon/human/user)
 	var/clumsy = HAS_TRAIT(user, TRAIT_CLUMSY)
-	if(clumsy && (clumsy_check == GRENADE_CLUMSY_FUMBLE))
-		if(prob(50))
+	if(clumsy)
+		if(clumsy_check == GRENADE_CLUMSY_FUMBLE && prob(50))
 			to_chat(user, "<span class='warning'>Huh? How does this thing work?</span>")
 			preprime(user, 5, FALSE)
 			return FALSE
-	else if(!clumsy && (clumsy_check == GRENADE_NONCLUMSY_FUMBLE))
+	else if(clumsy_check == GRENADE_NONCLUMSY_FUMBLE && !(user.mind && HAS_TRAIT(user.mind, TRAIT_CLOWN_MENTALITY)))
 		to_chat(user, "<span class='warning'>You pull the pin on [src]. Attached to it is a pink ribbon that says, \"<span class='clown'>HONK</span>\"</span>")
 		preprime(user, 5, FALSE)
 		return FALSE
@@ -115,12 +115,14 @@
 /obj/item/grenade/attack_paw(mob/user)
 	return attack_hand(user)
 
-/obj/item/grenade/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
-	var/obj/item/projectile/P = hitby
-	if(damage && attack_type == PROJECTILE_ATTACK && P.damage_type != STAMINA && prob(15))
-		owner.visible_message("<span class='danger'>[attack_text] hits [owner]'s [src], setting it off! What a shot!</span>")
-		prime()
-		return TRUE //It hit the grenade, not them
+/obj/item/grenade/run_block(mob/living/owner, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return)
+	if(attack_type & ATTACK_TYPE_PROJECTILE)
+		var/obj/item/projectile/P = object
+		if(damage && !P.nodamage && (P.damage_type != STAMINA) && prob(15))
+			owner.visible_message("<span class='danger'>[attack_text] hits [owner]'s [src], setting it off! What a shot!</span>")
+			prime()
+			return BLOCK_SUCCESS | BLOCK_PHYSICAL_EXTERNAL
+	return ..()
 
 /obj/item/proc/grenade_prime_react(obj/item/grenade/nade)
 	return

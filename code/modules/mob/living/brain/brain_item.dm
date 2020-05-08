@@ -10,7 +10,7 @@
 	organ_flags = ORGAN_VITAL
 	attack_verb = list("attacked", "slapped", "whacked")
 	///The brain's organ variables are significantly more different than the other organs, with half the decay rate for balance reasons, and twice the maxHealth
-	decay_factor = STANDARD_ORGAN_DECAY	/ 4		//30 minutes of decaying to result in a fully damaged brain, since a fast decay rate would be unfun gameplay-wise
+	decay_factor = STANDARD_ORGAN_DECAY	/ 2		//30 minutes of decaying to result in a fully damaged brain, since a fast decay rate would be unfun gameplay-wise
 	healing_factor = STANDARD_ORGAN_HEALING / 2
 
 	maxHealth	= BRAIN_DAMAGE_DEATH
@@ -55,16 +55,18 @@
 	//Update the body's icon so it doesnt appear debrained anymore
 	C.update_hair()
 
-/obj/item/organ/brain/Remove(mob/living/carbon/C, special = 0, no_id_transfer = FALSE)
-	..()
+/obj/item/organ/brain/Remove(special = FALSE, no_id_transfer = FALSE)
+	. = ..()
+	var/mob/living/carbon/C = .
 	for(var/X in traumas)
 		var/datum/brain_trauma/BT = X
 		BT.on_lose(TRUE)
 		BT.owner = null
 
-	if((!gc_destroyed || (owner && !owner.gc_destroyed)) && !no_id_transfer)
+	if((!QDELETED(src) || C) && !no_id_transfer)
 		transfer_identity(C)
-	C.update_hair()
+	if(C)
+		C.update_hair()
 
 /obj/item/organ/brain/prepare_eat()
 	return // Too important to eat.
@@ -86,7 +88,7 @@
 			brainmob.stored_dna = new /datum/dna/stored(brainmob)
 		C.dna.copy_dna(brainmob.stored_dna)
 		if(HAS_TRAIT(L, TRAIT_NOCLONE))
-			brainmob.status_traits[TRAIT_NOCLONE] = L.status_traits[TRAIT_NOCLONE]
+			LAZYSET(brainmob.status_traits, TRAIT_NOCLONE, L.status_traits[TRAIT_NOCLONE])
 		var/obj/item/organ/zombie_infection/ZI = L.getorganslot(ORGAN_SLOT_ZOMBIE)
 		if(ZI)
 			brainmob.set_species(ZI.old_species)	//For if the brain is cloned
@@ -227,7 +229,7 @@
 	var/adjusted_amount
 	if(amount >= 0 && maximum)
 		var/brainloss = get_brain_damage()
-		var/new_brainloss = CLAMP(brainloss + amount, 0, maximum)
+		var/new_brainloss = clamp(brainloss + amount, 0, maximum)
 		if(brainloss > new_brainloss) //brainloss is over the cap already
 			return 0
 		adjusted_amount = new_brainloss - brainloss
@@ -243,23 +245,17 @@
 	. = adjusted_amount
 */
 
-/obj/item/organ/brain/on_life()
-	if(damage >= BRAIN_DAMAGE_DEATH) //rip
-		to_chat(owner, "<span class='userdanger'>The last spark of life in your brain fizzles out...</span>")
-		owner.death()
-		brain_death = TRUE
-		return
-	..()
-
-/obj/item/organ/brain/on_death()
-	if(damage <= BRAIN_DAMAGE_DEATH) //rip
-		brain_death = FALSE
-	..()
-
-
 /obj/item/organ/brain/applyOrganDamage(var/d, var/maximum = maxHealth)
-	..()
-
+	. = ..()
+	if(!. || !owner)
+		return
+	if(damage >= BRAIN_DAMAGE_DEATH) //rip
+		if(owner.stat != DEAD)
+			to_chat(owner, "<span class='userdanger'>The last spark of life in your brain fizzles out...</span>")
+			owner.death()
+		brain_death = TRUE
+	else
+		brain_death = FALSE
 
 /obj/item/organ/brain/check_damage_thresholds(mob/M)
 	. = ..()
@@ -389,6 +385,7 @@
 	if(resilience)
 		actual_trauma.resilience = resilience
 	SSblackbox.record_feedback("tally", "traumas", 1, actual_trauma.type)
+	return actual_trauma
 
 //Add a random trauma of a certain subtype
 /obj/item/organ/brain/proc/gain_trauma_type(brain_trauma_type = /datum/brain_trauma, resilience)

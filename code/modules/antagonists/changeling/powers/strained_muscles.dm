@@ -21,12 +21,12 @@
 		to_chat(user, "<span class='notice'>Our muscles tense and strengthen.</span>")
 		changeling.chem_recharge_slowdown += 0.5
 	else
-		user.remove_movespeed_modifier(MOVESPEED_ID_CHANGELING_MUSCLES)
+		user.remove_movespeed_modifier(/datum/movespeed_modifier/strained_muscles)
 		to_chat(user, "<span class='notice'>Our muscles relax.</span>")
 		changeling.chem_recharge_slowdown -= 0.5
 		if(stacks >= 20)
 			to_chat(user, "<span class='danger'>We collapse in exhaustion.</span>")
-			user.Knockdown(60)
+			user.DefaultCombatKnockdown(60)
 			user.emote("gasp")
 
 	INVOKE_ASYNC(src, .proc/muscle_loop, user)
@@ -36,12 +36,12 @@
 /obj/effect/proc_holder/changeling/strained_muscles/proc/muscle_loop(mob/living/carbon/user)
 	var/datum/antagonist/changeling/changeling = user.mind.has_antag_datum(/datum/antagonist/changeling)
 	while(active)
-		user.add_movespeed_modifier(MOVESPEED_ID_CHANGELING_MUSCLES, update=TRUE, priority=100, multiplicative_slowdown=-1, blacklisted_movetypes=(FLYING|FLOATING))
+		user.add_movespeed_modifier(/datum/movespeed_modifier/strained_muscles)
 		if(user.stat != CONSCIOUS || user.staminaloss >= 90)
 			active = !active
 			to_chat(user, "<span class='notice'>Our muscles relax without the energy to strengthen them.</span>")
-			user.Knockdown(40)
-			user.remove_movespeed_modifier(MOVESPEED_ID_CHANGELING_MUSCLES)
+			user.DefaultCombatKnockdown(40)
+			user.remove_movespeed_modifier(/datum/movespeed_modifier/strained_muscles)
 			changeling.chem_recharge_slowdown -= 0.5
 			break
 

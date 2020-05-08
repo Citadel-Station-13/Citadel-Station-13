@@ -201,10 +201,10 @@
 /obj/item/reagent_containers/food/snacks/donut/jelly/choco
 	name = "chocolate jelly donut"
 	desc = "Goes great with a glass of warm milk."
-	icon_state = "jelly_choc"
+	icon_state = "jelly_choco"
 	bonus_reagents = list(/datum/reagent/consumable/hot_coco = 3, /datum/reagent/consumable/sprinkles = 1, /datum/reagent/consumable/nutriment/vitamin = 1) //the coco reagent is just bitter.
 	tastes = list("jelly" = 1, "donut" = 4, "bitterness" = 1)
-	decorated_icon = "jelly_choc_sprinkles"
+	decorated_icon = "jelly_choco_sprinkles"
 	filling_color = "#4F230D"
 
 /obj/item/reagent_containers/food/snacks/donut/jelly/blumpkin
@@ -353,6 +353,13 @@
 	tastes = list("muffin" = 3, "spookiness" = 1)
 	foodtype = GRAIN | FRUIT | SUGAR | BREAKFAST
 
+/obj/item/reagent_containers/food/snacks/muffin/poppy
+	name = "poppy muffin"
+	icon_state = "poppymuffin"
+	desc = "A classic lemon poppy seed muffin. Do not consume prior to drug testing."
+	tastes = list("muffin" = 3, "lemon" = 1, "seeds" = 1)
+	foodtype = GRAIN | SUGAR | BREAKFAST
+
 /obj/item/reagent_containers/food/snacks/chawanmushi
 	name = "chawanmushi"
 	desc = "A legendary egg custard that makes friends out of enemies. Probably too hot for a cat to eat."
@@ -433,6 +440,40 @@
 	filling_color = "#CD853F"
 	tastes = list("meat" = 2, "dough" = 2, "laziness" = 1)
 	foodtype = GRAIN
+	var/list/cached_reagents_amount
+	var/previous_typepath
+
+/obj/item/reagent_containers/food/snacks/donkpocket/Initialize(mapload)
+	. = ..()
+	if(!cooked_type) //maploaded cooked donk pockets won't cool down anyway.
+		desc += " This one will stay warm for a long time, great."
+
+/obj/item/reagent_containers/food/snacks/donkpocket/initialize_cooked_food(obj/item/reagent_containers/food/snacks/donkpocket/S, cooking_efficiency = 1)
+	. = ..()
+	if(istype(S))
+		desc = initial(desc) //reset the desc since will now cool down.
+		for(var/R in S.bonus_reagents)
+			LAZYSET(S.cached_reagents_amount, R, S.reagents.get_reagent_amount(R))
+		S.previous_typepath = type
+		addtimer(CALLBACK(S, .proc/cool_down), 7 MINUTES) //canonically they reverted back to normal after 7 minutes.
+
+/obj/item/reagent_containers/food/snacks/donkpocket/proc/cool_down()
+	if(!previous_typepath) //This shouldn't happen.
+		qdel(src)
+		return
+	var/spoiled = FALSE
+	for(var/R in cached_reagents_amount)
+		var/amount = cached_reagents_amount[R]
+		if(reagents.get_reagent_amount(R) < amount)
+			spoiled = TRUE
+		reagents.remove_reagent(R, amount) //no reagent duping please.
+	var/obj/item/reagent_containers/food/snacks/donkpocket/D = new previous_typepath(drop_location())
+	D.create_reagents(D.volume, reagent_flags, reagent_value)
+	reagents.trans_to(D, reagents.total_volume)
+	if(spoiled)
+		D.cooked_type = null
+		D.desc += " This one has gone cold and mushy, pretty unsuitable for cooking."
+	qdel(src)
 
 /obj/item/reagent_containers/food/snacks/donkpocket/warm
 	name = "warm Donk-pocket"

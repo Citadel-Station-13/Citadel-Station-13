@@ -1,5 +1,10 @@
 /datum/sprite_accessory
 	var/alt_aroused = FALSE //CIT CODE if this is TRUE, then the genitals will use an alternate icon_state when aroused.
+	var/taur_icon //leave null if the genital doesn't have a taur counterpart.
+	var/accepted_taurs = STYLE_HOOF_TAURIC|STYLE_PAW_TAURIC //Types that match with the accessory.
+	var/feat_taur //the text string of the dna feature to check for those who want to opt out.
+	var/taur_dimension_y = 32
+	var/taur_dimension_x = 32
 
 
 //DICKS,COCKS,PENISES,WHATEVER YOU WANT TO CALL THEM
@@ -8,6 +13,7 @@
 	name = "penis"			//the preview name of the accessory
 	color_src = "cock_color"
 	alt_aroused = TRUE
+	feat_taur = "cock_taur"
 
 /datum/sprite_accessory/penis/human
 	icon_state = "human"
@@ -16,10 +22,14 @@
 /datum/sprite_accessory/penis/knotted
 	icon_state = "knotted"
 	name = "Knotted"
+	taur_icon = 'modular_citadel/icons/obj/genitals/taur_penis_onmob.dmi'
+	taur_dimension_x = 64
 
 /datum/sprite_accessory/penis/flared
 	icon_state = "flared"
 	name = "Flared"
+	taur_icon = 'modular_citadel/icons/obj/genitals/taur_penis_onmob.dmi'
+	taur_dimension_x = 64
 
 /datum/sprite_accessory/penis/barbknot
 	icon_state = "barbknot"
@@ -28,6 +38,8 @@
 /datum/sprite_accessory/penis/tapered
 	icon_state = "tapered"
 	name = "Tapered"
+	taur_icon = 'modular_citadel/icons/obj/genitals/taur_penis_onmob.dmi'
+	taur_dimension_x = 64
 
 /datum/sprite_accessory/penis/tentacle
 	icon_state = "tentacle"
@@ -41,80 +53,50 @@
 	icon_state = "hemiknot"
 	name = "Knotted Hemi"
 
-
-////////////////////////
-// Taur cocks go here //
-////////////////////////
-/datum/sprite_accessory/penis/taur_flared
-	icon = 'modular_citadel/icons/obj/genitals/taur_penis_onmob.dmi' //Needed larger width
-	icon_state = "flared"
-	name = "Taur, Flared"
-	center = TRUE //Center the image 'cause 2-tile wide.
-	dimension_x = 64
-
-/datum/sprite_accessory/penis/taur_knotted
-	icon = 'modular_citadel/icons/obj/genitals/taur_penis_onmob.dmi' //Needed larger width
-	icon_state = "knotted"
-	name = "Taur, Knotted"
-	center = TRUE //Center the image 'cause 2-tile wide.
-	dimension_x = 64
-
-/datum/sprite_accessory/penis/taur_tapered
-	icon = 'modular_citadel/icons/obj/genitals/taur_penis_onmob.dmi' //Needed larger width
-	icon_state = "tapered"
-	name = "Taur, Tapered"
-	center = TRUE //Center the image 'cause 2-tile wide.
-	dimension_x = 64
-
 //Testicles
-//These ones aren't inert
 /datum/sprite_accessory/testicles
 	icon = 'modular_citadel/icons/obj/genitals/testicles_onmob.dmi'
 	icon_state = "testicle"
 	name = "testicle"		//the preview name of the accessory
 	color_src = "balls_color"
 
-/datum/sprite_accessory/testicles/hidden
-	icon_state = "none"
-	name = "Hidden"
-
 /datum/sprite_accessory/testicles/single
 	icon_state = "single"
-	name = "Single"
+	name = "Single" //Single as "single pair", for clarity.
 
 //Vaginas
 /datum/sprite_accessory/vagina
 	icon = 'modular_citadel/icons/obj/genitals/vagina_onmob.dmi'
-	icon_state = null
 	name = "vagina"
 	color_src = "vag_color"
+	alt_aroused = TRUE
 
 /datum/sprite_accessory/vagina/human
 	icon_state = "human"
 	name = "Human"
-	alt_aroused = TRUE
 
 /datum/sprite_accessory/vagina/tentacles
 	icon_state = "tentacle"
 	name = "Tentacle"
-	alt_aroused = TRUE
 
 /datum/sprite_accessory/vagina/dentata
 	icon_state = "dentata"
 	name = "Dentata"
-	alt_aroused = TRUE
 
 /datum/sprite_accessory/vagina/hairy
 	icon_state = "hairy"
 	name = "Hairy"
+	alt_aroused = FALSE
 
 /datum/sprite_accessory/vagina/spade
 	icon_state = "spade"
 	name = "Spade"
+	alt_aroused = FALSE
 
 /datum/sprite_accessory/vagina/furred
 	icon_state = "furred"
 	name = "Furred"
+	alt_aroused = FALSE
 
 /datum/sprite_accessory/vagina/gaping
 	icon_state = "gaping"
@@ -125,7 +107,6 @@
 	icon = 'modular_citadel/icons/obj/genitals/breasts_onmob.dmi'
 	name = "breasts"
 	color_src = "breasts_color"
-	alt_aroused = TRUE
 
 /datum/sprite_accessory/breasts/pair
 	icon_state = "pair"
@@ -138,14 +119,3 @@
 /datum/sprite_accessory/breasts/sextuple
 	icon_state = "sextuple"
 	name = "Sextuple"
-
-//OVIPOSITORS BE HERE
-/datum/sprite_accessory/ovipositor
-	icon = 'modular_citadel/icons/obj/genitals/penis_onmob.dmi'
-	icon_state = null
-	name = "Ovipositor"			//the preview name of the accessory
-	color_src = "cock_color"
-
-/datum/sprite_accessory/ovipositor/knotted
-	icon_state = "knotted"
-	name = "Knotted"

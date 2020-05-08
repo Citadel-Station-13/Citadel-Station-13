@@ -23,12 +23,12 @@
 				owner.remove_status_effect(src)
 	..()
 
-/datum/status_effect/chem/SGDF/on_remove(mob/living/carbon/M)
+/datum/status_effect/chem/SGDF/on_remove()
 	log_game("FERMICHEM: SGDF mind shift applied. [owner] is now playing as their clone and should not have memories after their clone split (look up SGDF status applied). ID: [owner.key]")
 	originalmind.transfer_to(fermi_Clone)
 	to_chat(owner, "<span class='warning'>Lucidity shoots to your previously blank mind as your mind suddenly finishes the cloning process. You marvel for a moment at yourself, as your mind subconciously recollects all your memories up until the point when you cloned yourself. Curiously, you find that you memories are blank after you ingested the synthetic serum, leaving you to wonder where the other you is.</span>")
-	to_chat(M, "<span class='warning'>Lucidity shoots to your previously blank mind as your mind suddenly finishes the cloning process. You marvel for a moment at yourself, as your mind subconciously recollects all your memories up until the point when you cloned yourself. Curiously, you find that you memories are blank after you ingested the synthetic serum, leaving you to wonder where the other you is.</span>")
 	fermi_Clone = null
+	return ..()
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -76,7 +76,7 @@
 		to_chat(H, "<span class='warning'>Your enormous breasts are way too large to fit anything over them!</b></span>")
 
 	if(last_checked_size != B.cached_size)
-		H.add_movespeed_modifier(BREAST_MOVEMENT_SPEED, TRUE, 100, NONE, override = TRUE, multiplicative_slowdown = moveCalc)
+		H.add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/status_effect/breast_hypertrophy, multiplicative_slowdown = moveCalc)
 		sizeMoveMod(moveCalc)
 
 	if (B.size == "huge")
@@ -93,8 +93,9 @@
 /datum/status_effect/chem/breast_enlarger/on_remove()
 	log_game("FERMICHEM: [owner]'s breasts has reduced to an acceptable size. ID: [owner.key]")
 	to_chat(owner, "<span class='notice'>Your expansive chest has become a more managable size, liberating your movements.</b></span>")
-	owner.remove_movespeed_modifier(BREAST_MOVEMENT_SPEED)
+	owner.remove_movespeed_modifier(/datum/movespeed_modifier/status_effect/breast_hypertrophy)
 	sizeMoveMod(1)
+	return ..()
 
 /datum/status_effect/chem/breast_enlarger/proc/sizeMoveMod(var/value)
 	if(cachedmoveCalc == value)
@@ -151,19 +152,20 @@
 		playsound(H.loc, 'sound/items/poster_ripped.ogg', 50, 1)
 		to_chat(H, "<span class='warning'>Your enormous package is way to large to fit anything over!</b></span>")
 
-	if(P.length < 22 && H.has_movespeed_modifier(DICK_MOVEMENT_SPEED))
+	if(P.length < 22 && H.has_movespeed_modifier(/datum/movespeed_modifier/status_effect/penis_hypertrophy))
 		to_chat(owner, "<span class='notice'>Your rascally willy has become a more managable size, liberating your movements.</b></span>")
-		H.remove_movespeed_modifier(DICK_MOVEMENT_SPEED)
-	else if(P.length >= 22 && !H.has_movespeed_modifier(DICK_MOVEMENT_SPEED))
+		H.remove_movespeed_modifier(/datum/movespeed_modifier/status_effect/penis_hypertrophy)
+	else if(P.length >= 22 && !H.has_movespeed_modifier(/datum/movespeed_modifier/status_effect/penis_hypertrophy))
 		to_chat(H, "<span class='warning'>Your indulgent johnson is so substantial, it's taking all your blood and affecting your movements!</b></span>")
-		H.add_movespeed_modifier(DICK_MOVEMENT_SPEED, TRUE, 100, NONE, override = TRUE, multiplicative_slowdown = moveCalc)
+		H.add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/status_effect/penis_hypertrophy, multiplicative_slowdown = moveCalc)
 	H.AdjustBloodVol(bloodCalc)
 	..()
 
 /datum/status_effect/chem/penis_enlarger/on_remove()
 	log_game("FERMICHEM: [owner]'s dick has reduced to an acceptable size. ID: [owner.key]")
-	owner.remove_movespeed_modifier(DICK_MOVEMENT_SPEED)
+	owner.remove_movespeed_modifier(/datum/movespeed_modifier/status_effect/penis_hypertrophy)
 	owner.ResetBloodVol()
+	return ..()
 
 ///////////////////////////////////////////////
 //			Astral INSURANCE
@@ -190,17 +192,15 @@
 		log_game("FERMICHEM: [M]'s possesser has been booted out into a astral ghost!")
 	originalmind.transfer_to(original)
 
-/datum/status_effect/chem/astral_insurance/on_remove(mob/living/carbon/M) //God damnit get them home!
-	if(owner.mind == originalmind) //If they're home, HOORAY
-		return
-	if(owner.mind)
-		var/mob/living/simple_animal/astral/G = new(get_turf(M.loc))
-		owner.mind.transfer_to(G)//Just in case someone else is inside of you, it makes them a ghost and should hopefully bring them home at the end.
-		to_chat(G, "<span class='warning'>[M]'s conciousness snaps back to them as their astrogen runs out, kicking your projected mind out!'</b></span>")
-		log_game("FERMICHEM: [M]'s possesser has been booted out into a astral ghost!")
-	originalmind.transfer_to(original)
-
-
+/datum/status_effect/chem/astral_insurance/on_remove() //God damnit get them home!
+	if(owner.mind != originalmind) //If they're home, HOORAY
+		if(owner.mind)
+			var/mob/living/simple_animal/astral/G = new(get_turf(owner))
+			owner.mind.transfer_to(G)//Just in case someone else is inside of you, it makes them a ghost and should hopefully bring them home at the end.
+			to_chat(G, "<span class='warning'>[owner]'s conciousness snaps back to them as their astrogen runs out, kicking your projected mind out!'</b></span>")
+			log_game("FERMICHEM: [owner]'s possesser has been booted out into a astral ghost!")
+		originalmind.transfer_to(original)
+	return ..()
 
 /*//////////////////////////////////////////
 		Mind control functions!
@@ -211,10 +211,10 @@
 
 /mob/living/verb/toggle_hypno()
 	set category = "IC"
-	set name = "Toggle Lewd MKUltra"
-	set desc = "Allows you to toggle if you'd like lewd flavour messages for MKUltra."
+	set name = "Toggle Lewd Hypno"
+	set desc = "Allows you to toggle if you'd like lewd flavour messages for hypno features, such as MKUltra."
 	client.prefs.cit_toggles ^= HYPNO
-	to_chat(usr, "You [((client.prefs.cit_toggles & HYPNO) ?"will":"no longer")] receive lewd flavour messages for MKUltra.")
+	to_chat(usr, "You [((client.prefs.cit_toggles & HYPNO) ?"will":"no longer")] receive lewd flavour messages for hypno.")
 
 /datum/status_effect/chem/enthrall
 	id = "enthrall"
@@ -280,7 +280,7 @@
 	var/mob/living/carbon/M = owner
 
 	//chem calculations
-	if(!owner.reagents.has_reagent(/datum/chemical_reaction/fermi/enthrall) && !owner.reagents.has_reagent(/datum/reagent/fermi/enthrall/test))
+	if(!owner.reagents.has_reagent(/datum/chemical_reaction/fermi/enthrall))
 		if (phase < 3 && phase != 0)
 			deltaResist += 3//If you've no chem, then you break out quickly
 			if(prob(5))
@@ -532,7 +532,7 @@
 				cooldown += 1 //Cooldown doesn't process till status is done
 
 		else if(status == "charge")
-			owner.add_movespeed_modifier(MOVESPEED_ID_MKULTRA, update=TRUE, priority=100, multiplicative_slowdown=-2, blacklisted_movetypes=(FLYING|FLOATING))
+			owner.add_movespeed_modifier(/datum/movespeed_modifier/status_effect/mkultra)
 			status = "charged"
 			if(lewd)
 				to_chat(owner, "<span class='notice'><i>Your [enthrallGender]'s order fills you with a burst of speed!</i></span>")
@@ -542,8 +542,8 @@
 		else if (status == "charged")
 			if (statusStrength < 0)
 				status = null
-				owner.remove_movespeed_modifier(MOVESPEED_ID_MKULTRA)
-				owner.Knockdown(50)
+				owner.remove_movespeed_modifier(/datum/movespeed_modifier/status_effect/mkultra)
+				owner.DefaultCombatKnockdown(50)
 				to_chat(owner, "<span class='notice'><i>Your body gives out as the adrenaline in your system runs out.</i></span>")
 			else
 				statusStrength -= 1
@@ -603,7 +603,7 @@
 	REMOVE_TRAIT(owner, TRAIT_PACIFISM, "MKUltra")
 	to_chat(owner, "<span class='big redtext'><i>You're now free of [master]'s influence, and fully independent!'</i></span>")
 	UnregisterSignal(owner, COMSIG_GLOB_LIVING_SAY_SPECIAL)
-
+	return ..()
 
 /datum/status_effect/chem/enthrall/proc/owner_hear(datum/source, list/hearing_args)
 	if(lewd == FALSE)
@@ -638,7 +638,7 @@
 					H.adjust_arousal(5)
 				C.jitteriness += 100
 				C.stuttering += 25
-				C.Knockdown(60)
+				C.DefaultCombatKnockdown(60)
 				C.Stun(60)
 				to_chat(owner, "<span class='warning'><i>Your muscles seize up, then start spasming wildy!</i></span>")
 

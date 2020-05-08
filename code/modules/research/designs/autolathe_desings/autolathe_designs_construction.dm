@@ -1,17 +1,17 @@
 ///////////////////////////////////
-//////////Autolathe Designs ///////
+//////////Autolathe Designs////////
 ///////////////////////////////////
 
 
-////////////////
-///Construction//
-////////////////
+//////////////////
+///Construction///
+//////////////////
 
 /datum/design/rods
 	name = "Metal Rod"
 	id = "rods"
 	build_type = AUTOLATHE
-	materials = list(MAT_METAL = 1000)
+	materials = list(/datum/material/iron = 1000)
 	build_path = /obj/item/stack/rods
 	category = list("initial","Construction")
 	maxstack = 50
@@ -20,7 +20,7 @@
 	name = "Metal"
 	id = "metal"
 	build_type = AUTOLATHE
-	materials = list(MAT_METAL = MINERAL_MATERIAL_AMOUNT)
+	materials = list(/datum/material/iron = MINERAL_MATERIAL_AMOUNT)
 	build_path = /obj/item/stack/sheet/metal
 	category = list("initial","Construction")
 	maxstack = 50
@@ -29,7 +29,7 @@
 	name = "Glass"
 	id = "glass"
 	build_type = AUTOLATHE
-	materials = list(MAT_GLASS = MINERAL_MATERIAL_AMOUNT)
+	materials = list(/datum/material/glass = MINERAL_MATERIAL_AMOUNT)
 	build_path = /obj/item/stack/sheet/glass
 	category = list("initial","Construction")
 	maxstack = 50
@@ -38,7 +38,7 @@
 	name = "Reinforced Glass"
 	id = "rglass"
 	build_type = AUTOLATHE | SMELTER | PROTOLATHE
-	materials = list(MAT_METAL = 1000, MAT_GLASS = MINERAL_MATERIAL_AMOUNT)
+	materials = list(/datum/material/iron = 1000, /datum/material/glass = MINERAL_MATERIAL_AMOUNT)
 	build_path = /obj/item/stack/sheet/rglass
 	category = list("initial","Construction","Stock Parts")
 	maxstack = 50
@@ -47,7 +47,7 @@
 	name = "Light Tube"
 	id = "light_tube"
 	build_type = AUTOLATHE
-	materials = list(MAT_GLASS = 100)
+	materials = list(/datum/material/glass = 100)
 	build_path = /obj/item/light/tube
 	category = list("initial", "Construction")
 
@@ -55,7 +55,7 @@
 	name = "Light Bulb"
 	id = "light_bulb"
 	build_type = AUTOLATHE
-	materials = list(MAT_GLASS = 100)
+	materials = list(/datum/material/glass = 100)
 	build_path = /obj/item/light/bulb
 	category = list("initial", "Construction")
 
@@ -63,7 +63,7 @@
 	name = "Camera Assembly"
 	id = "camera_assembly"
 	build_type = AUTOLATHE
-	materials = list(MAT_METAL = 400, MAT_GLASS = 250)
+	materials = list(/datum/material/iron = 400, /datum/material/glass = 250)
 	build_path = /obj/item/wallframe/camera
 	category = list("initial", "Construction")
 
@@ -71,7 +71,7 @@
 	name = "Newscaster Frame"
 	id = "newscaster_frame"
 	build_type = AUTOLATHE
-	materials = list(MAT_METAL = 14000, MAT_GLASS = 8000)
+	materials = list(/datum/material/iron = 14000, /datum/material/glass = 8000)
 	build_path = /obj/item/wallframe/newscaster
 	category = list("initial", "Construction")
 
@@ -79,7 +79,7 @@
 	name = "Turret Control Frame"
 	id = "turret_control"
 	build_type = AUTOLATHE
-	materials = list(MAT_METAL = 12000)
+	materials = list(/datum/material/iron = 12000)
 	build_path = /obj/item/wallframe/turret_control
 	category = list("initial", "Construction")
 
@@ -87,7 +87,7 @@
 	name = "Conveyor Belt"
 	id = "conveyor_belt"
 	build_type = AUTOLATHE
-	materials = list(MAT_METAL = 3000)
+	materials = list(/datum/material/iron = 3000)
 	build_path = /obj/item/stack/conveyor
 	category = list("initial", "Construction")
 	maxstack = 30
@@ -96,14 +96,24 @@
 	name = "Conveyor Belt Switch"
 	id = "conveyor_switch"
 	build_type = AUTOLATHE
-	materials = list(MAT_METAL = 450, MAT_GLASS = 190)
+	materials = list(/datum/material/iron = 450, /datum/material/glass = 190)
 	build_path = /obj/item/conveyor_switch_construct
 	category = list("initial", "Construction")
 
 /datum/design/rcd_ammo
 	name = "Compressed Matter Cartridge"
 	id = "rcd_ammo"
-	build_type = AUTOLATHE
-	materials = list(MAT_METAL = 12000, MAT_GLASS=8000)
+	build_type = AUTOLATHE | PROTOLATHE
+	materials = list(/datum/material/iron = 12000, /datum/material/glass=8000)
 	build_path = /obj/item/rcd_ammo
-	category = list("initial","Construction")
+	category = list("initial","Construction","Tool Designs")
+	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
+
+/datum/design/rcd_ammo_large
+	name = "Large Compressed Matter Cartridge"
+	id = "rcd_ammo_large"
+	build_type = AUTOLATHE | PROTOLATHE
+	materials = list(/datum/material/iron = 48000, /datum/material/glass = 32000)
+	build_path = /obj/item/rcd_ammo/large
+	category = list("Tool Designs")
+	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING

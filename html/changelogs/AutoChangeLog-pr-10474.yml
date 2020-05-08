@@ -1,5 +1,0 @@
-author: "Putnam3145"
-delete-after: True
-changes: 
-  - bugfix: "Traitor objectives don't take a dump when they try to add an assassinate anymore"
-  - admin: "Objective removal with antag panel no longer commented out silently while still being an option that gives useful feedback on stuff it's not doing in any respect"

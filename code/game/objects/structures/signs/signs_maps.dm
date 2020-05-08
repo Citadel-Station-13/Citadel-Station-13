@@ -55,3 +55,18 @@
 	name = "cafe"
 	desc = "A direction sign, pointing out which way the Cafe is."
 	icon_state = "direction_cafe"
+
+obj/structure/sign/directions/rooms
+	name = "room"
+	desc = "Room numbers, helps others find you!"
+	icon_state = "roomnum"
+
+obj/structure/sign/directions/dorms
+	name = "dorm"
+	desc = "Dorm numbers, help others find you, or you find others."
+	icon_state = "dormnum"
+
+obj/structure/sign/directions/cells
+	name = "room"
+	desc = "So the less fortunate amongst us know where they'll be staying."
+	icon_state = "cellnum"

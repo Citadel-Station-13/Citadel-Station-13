@@ -1,4 +1,4 @@
-/proc/generate_tracer_between_points(datum/point/starting, datum/point/ending, beam_type, color, qdel_in = 5, light_range = 2, light_color_override, light_intensity = 1, instance_key)		//Do not pass z-crossing points as that will not be properly (and likely will never be properly until it's absolutely needed) supported!
+/proc/generate_tracer_between_points(datum/point/starting, datum/point/ending, beam_type, color, qdel_in = 5, light_range = 2, light_color_override, light_intensity = 1, list/turfs)		//Do not pass z-crossing points as that will not be properly (and likely will never be properly until it's absolutely needed) supported!
 	if(!istype(starting) || !istype(ending) || !ispath(beam_type))
 		return
 	var/datum/point/midpoint = point_midpoint_points(starting, ending)
@@ -9,17 +9,15 @@
 	. = PB
 	if(light_range > 0 && light_intensity > 0)
 		var/list/turf/line = getline(starting.return_turf(), ending.return_turf())
-		tracing_line:
-			for(var/i in line)
-				var/turf/T = i
-				for(var/obj/effect/projectile_lighting/PL in T)
-					if(PL.owner == instance_key)
-						continue tracing_line
-				QDEL_IN(new /obj/effect/projectile_lighting(T, light_color_override, light_range, light_intensity, instance_key), qdel_in > 0? qdel_in : 5)
+		for(var/i in line)
+			if(turfs[i])
+				continue
+			turfs[i] = TRUE
+			QDEL_IN(new /obj/effect/projectile_lighting(i, light_color_override, light_range, light_intensity), qdel_in > 0? qdel_in : 5)
 		line = null
 	if(qdel_in)
 		QDEL_IN(PB, qdel_in)
-
+d
 /obj/effect/projectile/tracer
 	name = "beam"
 	icon = 'icons/obj/projectiles_tracer.dmi'

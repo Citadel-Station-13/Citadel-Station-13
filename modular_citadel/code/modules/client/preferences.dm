@@ -23,9 +23,6 @@
 	var/hound_sleeper = TRUE
 	var/cit_toggles = TOGGLES_CITADEL
 
-	// stuff that was in base
-	max_save_slots = 10
-
 
 /datum/preferences/New(client/C)
 	..()
@@ -48,10 +45,3 @@
 		else
 			if(L[slot_to_string(slot)] < DEFAULT_SLOT_AMT)
 				return TRUE
-
-/datum/preferences/copy_to(mob/living/carbon/human/character, icon_updates = 1)
-	..()
-	character.give_genitals(TRUE)
-	character.flavor_text = features["flavor_text"] //Let's update their flavor_text at least initially
-	if(icon_updates)
-		character.update_genitals()

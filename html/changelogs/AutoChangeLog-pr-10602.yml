@@ -1,4 +1,0 @@
-author: "Ghommie"
-delete-after: True
-changes: 
-  - bugfix: "Fixed a little exploit with ventcrawlers being capable of escaping closed turfs by printing scrubbers/vents into them."

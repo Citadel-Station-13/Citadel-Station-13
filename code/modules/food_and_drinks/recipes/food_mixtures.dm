@@ -1,13 +1,13 @@
 /datum/crafting_recipe/food
 	var/real_parts
 	category = CAT_FOOD
+	time = 5
 
 /datum/crafting_recipe/food/New()
 	real_parts = parts.Copy()
 	parts |= reqs
 
 //////////////////////////////////////////FOOD MIXTURES////////////////////////////////////
-
 /datum/chemical_reaction/tofu
 	name = "Tofu"
 	id = "tofu"
@@ -100,6 +100,10 @@
 	id = "synthmeat"
 	required_reagents = list(/datum/reagent/blood = 5, /datum/reagent/medicine/cryoxadone = 1)
 	mob_react = FALSE
+
+/datum/chemical_reaction/synthmeat/synthblood
+	id = "synthmeat_synthblood"
+	required_reagents = list(/datum/reagent/blood/synthetics = 5, /datum/reagent/medicine/cryoxadone = 1)
 
 /datum/chemical_reaction/synthmeat/on_reaction(datum/reagents/holder, multiplier)
 	var/location = get_turf(holder.my_atom)

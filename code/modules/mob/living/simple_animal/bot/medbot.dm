@@ -106,7 +106,7 @@
 	skin = new_skin
 	update_icon()
 
-/mob/living/simple_animal/bot/medbot/update_canmove()
+/mob/living/simple_animal/bot/medbot/update_mobility()
 	. = ..()
 	update_icon()
 
@@ -148,7 +148,7 @@
 	else
 		dat += "None Loaded"
 	dat += "<br>Behaviour controls are [locked ? "locked" : "unlocked"]<hr>"
-	if(!locked || issilicon(user) || IsAdminGhost(user))
+	if(!locked || hasSiliconAccessInArea(user) || IsAdminGhost(user))
 		dat += "<TT>Healing Threshold: "
 		dat += "<a href='?src=[REF(src)];adj_threshold=-10'>--</a> "
 		dat += "<a href='?src=[REF(src)];adj_threshold=-5'>-</a> "
@@ -264,6 +264,9 @@
 		if((last_newpatient_speak + 300) < world.time) //Don't spam these messages!
 			var/list/messagevoice = list("Hey, [H.name]! Hold on, I'm coming." = 'sound/voice/medbot/coming.ogg',"Wait [H.name]! I want to help!" = 'sound/voice/medbot/help.ogg',"[H.name], you appear to be injured!" = 'sound/voice/medbot/injured.ogg')
 			var/message = pick(messagevoice)
+			if(prob(1) && ISINRANGE_EX(H.getFireLoss(), 0, 20))
+				message = "Notices your minor burns*OwO what's this?"
+				messagevoice[message] = 'sound/voice/medbot/owo.ogg'
 			speak(message)
 			playsound(loc, messagevoice[message], 50, 0)
 			last_newpatient_speak = world.time
@@ -522,9 +525,6 @@
 		update_icon()
 		soft_reset()
 		return
-
-	reagent_id = null
-	return
 
 /mob/living/simple_animal/bot/medbot/proc/check_overdose(mob/living/carbon/patient,reagent_id,injection_amount)
 	var/datum/reagent/R  = GLOB.chemical_reagents_list[reagent_id]

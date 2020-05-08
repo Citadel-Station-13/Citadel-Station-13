@@ -1,5 +1,4 @@
 #define REM REAGENTS_EFFECT_MULTIPLIER
-
 GLOBAL_LIST_INIT(name2reagent, build_name2reagent())
 
 /proc/build_name2reagent()
@@ -52,7 +51,7 @@ GLOBAL_LIST_INIT(name2reagent, build_name2reagent())
 	var/inverse_chem					// What chem is metabolised when purity is below inverse_chem_val, this shouldn't be made, but if it does, well, I guess I'll know about it.
 	var/metabolizing = FALSE
 	var/chemical_flags // See fermi/readme.dm REAGENT_DEAD_PROCESS, REAGENT_DONOTSPLIT, REAGENT_ONLYINVERSE, REAGENT_ONMOBMERGE, REAGENT_INVISIBLE, REAGENT_FORCEONNEW, REAGENT_SNEAKYNAME
-	var/value = 0 //How much does it sell for in cargo?
+	var/value = REAGENT_VALUE_NONE //How much does it sell for in cargo?
 
 /datum/reagent/Destroy() // This should only be called by the holder, so it's already handled clearing its references
 	. = ..()
@@ -63,7 +62,7 @@ GLOBAL_LIST_INIT(name2reagent, build_name2reagent())
 		return 0
 	if(method == VAPOR) //smoke, foam, spray
 		if(M.reagents)
-			var/modifier = CLAMP((1 - touch_protection), 0, 1)
+			var/modifier = clamp((1 - touch_protection), 0, 1)
 			var/amount = round(reac_volume*modifier, 0.1)
 			if(amount >= 0.5)
 				M.reagents.add_reagent(type, amount)
@@ -79,7 +78,6 @@ GLOBAL_LIST_INIT(name2reagent, build_name2reagent())
 	current_cycle++
 	if(holder)
 		holder.remove_reagent(type, metabolization_rate * M.metabolism_efficiency) //By default it slowly disappears.
-	return
 
 //called when a mob processes chems when dead.
 /datum/reagent/proc/on_mob_dead(mob/living/carbon/M)
@@ -88,15 +86,15 @@ GLOBAL_LIST_INIT(name2reagent, build_name2reagent())
 	current_cycle++
 	if(holder)
 		holder.remove_reagent(type, metabolization_rate * M.metabolism_efficiency) //By default it slowly disappears.
-	return
 
 // Called when this reagent is first added to a mob
 /datum/reagent/proc/on_mob_add(mob/living/L, amount)
 	if(!iscarbon(L))
 		return
 	var/mob/living/carbon/M = L
+	var/turf/T = get_turf(M)
+	log_reagent("MOB ADD: on_mob_add(): [key_name(M)] at [AREACOORD(T)] - [volume] of [type] with [purity] purity")
 	if (purity == 1)
-		log_game("CHEM: [L] ckey: [L.key] has ingested [volume]u of [type]")
 		return
 	if(cached_purity == 1)
 		cached_purity = purity
@@ -113,20 +111,18 @@ GLOBAL_LIST_INIT(name2reagent, build_name2reagent())
 			R.name = name//Negative effects are hidden
 			if(R.chemical_flags & REAGENT_INVISIBLE)
 				R.chemical_flags |= (REAGENT_INVISIBLE)
-		log_game("FERMICHEM: [M] ckey: [M.key] has ingested [volume]u of [inverse_chem]")
-		return
+		log_reagent("MOB ADD: on_mob_add() (impure): merged [volume] of [inverse_chem]")
 	else if (impure_chem)
 		var/impureVol = amount * (1 - purity) //turns impure ratio into impure chem
 		if(!(chemical_flags & REAGENT_SPLITRETAINVOL))
 			M.reagents.remove_reagent(type, (impureVol), FALSE)
 		M.reagents.add_reagent(impure_chem, impureVol, FALSE, other_purity = 1-cached_purity)
-		log_game("FERMICHEM: [M] ckey: [M.key] has ingested [volume - impureVol]u of [type]")
-		log_game("FERMICHEM: [M] ckey: [M.key] has ingested [volume]u of [impure_chem]")
-	return
+		log_reagent("MOB ADD: on_mob_add() (mixed purity): merged [volume - impureVol] of [type] and [volume] of [impure_chem]")
 
 // Called when this reagent is removed while inside a mob
 /datum/reagent/proc/on_mob_delete(mob/living/L)
-	return
+	var/turf/T = get_turf(L)
+	log_reagent("MOB DELETE: on_mob_delete: [key_name(L)] at [AREACOORD(T)] - [type]")
 
 // Called when this reagent first starts being metabolized by a liver
 /datum/reagent/proc/on_mob_metabolize(mob/living/L)
@@ -147,8 +143,9 @@ GLOBAL_LIST_INIT(name2reagent, build_name2reagent())
 /datum/reagent/proc/on_merge(data, amount, mob/living/carbon/M, purity)
 	if(!iscarbon(M))
 		return
+	var/turf/T = get_turf(M)
+	log_reagent("MOB ADD: on_merge(): [key_name(M)] at [AREACOORD(T)] - [volume] of [type] with [purity] purity")
 	if (purity == 1)
-		log_game("FERMICHEM: [M] ckey: [M.key] has ingested [volume]u of [type]")
 		return
 	cached_purity = purity //purity SHOULD be precalculated from the add_reagent, update cache.
 	if (purity < 0)
@@ -164,16 +161,13 @@ GLOBAL_LIST_INIT(name2reagent, build_name2reagent())
 			R.name = name//Negative effects are hidden
 			if(R.chemical_flags & REAGENT_INVISIBLE)
 				R.chemical_flags |= (REAGENT_INVISIBLE)
-		log_game("FERMICHEM: [M] ckey: [M.key] has merged [volume]u of [inverse_chem]")
-		return
+		log_reagent("MOB ADD: on_merge() (impure): merged [volume] of [inverse_chem]")
 	else if (impure_chem) //SPLIT
 		var/impureVol = amount * (1 - purity)
 		if(!(chemical_flags & REAGENT_SPLITRETAINVOL))
 			M.reagents.remove_reagent(type, impureVol, FALSE)
 		M.reagents.add_reagent(impure_chem, impureVol, FALSE, other_purity = 1-cached_purity)
-		log_game("FERMICHEM: [M] ckey: [M.key] has merged [volume - impureVol]u of [type]")
-		log_game("FERMICHEM: [M] ckey: [M.key] has merged [volume]u of [impure_chem]")
-	return
+		log_reagent("MOB ADD: on_merge() (mixed purity): merged [volume - impureVol] of [type] and [volume] of [impure_chem]")
 
 /datum/reagent/proc/on_update(atom/A)
 	return
@@ -189,31 +183,26 @@ GLOBAL_LIST_INIT(name2reagent, build_name2reagent())
 /datum/reagent/proc/overdose_start(mob/living/M)
 	to_chat(M, "<span class='userdanger'>You feel like you took too much of [name]!</span>")
 	SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "[type]_overdose", /datum/mood_event/overdose, name)
-	return
 
 /datum/reagent/proc/addiction_act_stage1(mob/living/M)
 	SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "[type]_overdose", /datum/mood_event/withdrawal_light, name)
 	if(prob(30))
 		to_chat(M, "<span class='notice'>You feel like having some [name] right about now.</span>")
-	return
 
 /datum/reagent/proc/addiction_act_stage2(mob/living/M)
 	SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "[type]_overdose", /datum/mood_event/withdrawal_medium, name)
 	if(prob(30))
 		to_chat(M, "<span class='notice'>You feel like you need [name]. You just can't get enough.</span>")
-	return
 
 /datum/reagent/proc/addiction_act_stage3(mob/living/M)
 	SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "[type]_overdose", /datum/mood_event/withdrawal_severe, name)
 	if(prob(30))
 		to_chat(M, "<span class='danger'>You have an intense craving for [name].</span>")
-	return
 
 /datum/reagent/proc/addiction_act_stage4(mob/living/M)
 	SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "[type]_overdose", /datum/mood_event/withdrawal_critical, name)
 	if(prob(30))
 		to_chat(M, "<span class='boldannounce'>You're not feeling good at all! You really need some [name].</span>")
-	return
 
 /proc/pretty_string_from_reagent_list(list/reagent_list)
 	//Convert reagent list to a printable string for logging etc
@@ -222,3 +211,13 @@ GLOBAL_LIST_INIT(name2reagent, build_name2reagent())
 		rs += "[R.name], [R.volume]"
 
 	return rs.Join(" | ")
+
+//For easy bloodsucker disgusting and blood removal
+/datum/reagent/proc/disgust_bloodsucker(mob/living/carbon/C, disgust, blood_change, blood_puke = TRUE, force)
+	if(AmBloodsucker(C))
+		var/datum/antagonist/bloodsucker/bloodsuckerdatum = C.mind.has_antag_datum(ANTAG_DATUM_BLOODSUCKER)
+		if(disgust)
+			bloodsuckerdatum.handle_eat_human_food(disgust, blood_puke, force)
+		if(blood_change)
+			bloodsuckerdatum.AddBloodVolume(blood_change)
+

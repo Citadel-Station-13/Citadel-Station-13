@@ -27,6 +27,10 @@
 
 	display_order = JOB_DISPLAY_ORDER_CHIEF_MEDICAL_OFFICER
 	blacklisted_quirks = list(/datum/quirk/mute, /datum/quirk/brainproblems, /datum/quirk/insanity)
+	threat = 2
+
+	starting_skills = list(/datum/skill/numerical/surgery = STARTING_SKILL_SURGERY_MEDICAL)
+	skill_affinities = list(/datum/skill/numerical/surgery = STARTING_SKILL_AFFINITY_SURGERY_MEDICAL)
 
 /datum/outfit/job/cmo
 	name = "Chief Medical Officer"
@@ -36,7 +40,7 @@
 	belt = /obj/item/pda/heads/cmo
 	l_pocket = /obj/item/pinpointer/crew
 	ears = /obj/item/radio/headset/heads/cmo
-	uniform = /obj/item/clothing/under/rank/chief_medical_officer
+	uniform = /obj/item/clothing/under/rank/medical/chief_medical_officer
 	shoes = /obj/item/clothing/shoes/sneakers/brown
 	suit = /obj/item/clothing/suit/toggle/labcoat/cmo
 	l_hand = /obj/item/storage/firstaid/regular
