@@ -14,7 +14,7 @@
 
 /obj/item/ammo_box/magazine/m57
 	name = "toploader magazine (5.7x28mm)"
-	icon_state = "5.7x28m"
+	icon_state = "5.7m"
 	ammo_type = /obj/item/ammo_casing/a57
 	caliber = "a57"
 	max_ammo = 50 // Reworked into a PDW. Changed from 30 to 40 with a damage nerf to not make it "C-20r with a grenade launcher"
