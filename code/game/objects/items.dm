@@ -134,7 +134,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 
 	///Skills vars
 	//list of skill PATHS exercised when using this item. An associated bitfield can be set to indicate additional ways the skill is used by this specific item.
-	var/list/datum/skill/used_skills.
+	var/list/datum/skill/used_skills
 	var/skill_difficulty = THRESHOLD_COMPETENT //how difficult it's to use this item in general.
 	var/skill_gain = DEF_SKILL_GAIN //base skill value gain from using this item.
 
