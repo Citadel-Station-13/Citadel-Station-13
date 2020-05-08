@@ -112,8 +112,8 @@
 /datum/design/rcd_ammo_large
 	name = "Large Compressed Matter Cartridge"
 	id = "rcd_ammo_large"
-	build_type = AUTOLATHE | PROTOLATHE
+	build_type = AUTOLATHE | PROTOLATHE | NO_PUBLIC_LATHE
 	materials = list(/datum/material/iron = 48000, /datum/material/glass = 32000)
 	build_path = /obj/item/rcd_ammo/large
-	category = list("Tool Designs")
+	category = list("hacked", "Construction", "Tool Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
