@@ -1049,15 +1049,16 @@
 /mob/living/carbon/human/updatehealth()
 	. = ..()
 
-	if(HAS_TRAIT(src, TRAIT_IGNORESLOWDOWN))
+	if(HAS_TRAIT(src, TRAIT_IGNORESLOWDOWN))	//if we want to ignore slowdown from damage and equipment
 		remove_movespeed_modifier(/datum/movespeed_modifier/damage_slowdown)
 		remove_movespeed_modifier(/datum/movespeed_modifier/damage_slowdown_flying)
 		return
 	var/stambufferinfluence = (bufferedstam*(100/stambuffer))*0.2 //CIT CHANGE - makes stamina buffer influence movedelay
-	var/health_deficiency = ((100 + stambufferinfluence) - health + (getStaminaLoss()*0.75))//CIT CHANGE - reduces the impact of staminaloss and makes stamina buffer influence it
-	if(health_deficiency >= 40)
-		add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/damage_slowdown, TRUE, (health_deficiency-39) / 75)
-		add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/damage_slowdown_flying, TRUE, (health_deficiency-39) / 25)
+	if(!HAS_TRAIT(src, TRAIT_IGNOREDAMAGESLOWDOWN))	//if we want to ignore slowdown from damage, but not from equipment
+		var/health_deficiency = ((maxHealth + stambufferinfluence) - health + (getStaminaLoss()*0.75))//CIT CHANGE - reduces the impact of staminaloss and makes stamina buffer influence it
+		if(health_deficiency >= 40)
+			add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/damage_slowdown, TRUE, (health_deficiency-39) / 75)
+			add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/damage_slowdown_flying, TRUE, (health_deficiency-39) / 25)
 	else
 		remove_movespeed_modifier(/datum/movespeed_modifier/damage_slowdown)
 		remove_movespeed_modifier(/datum/movespeed_modifier/damage_slowdown_flying)

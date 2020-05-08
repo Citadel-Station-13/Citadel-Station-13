@@ -38,7 +38,4 @@
 			user.show_message("<span class='notice'>You weave \the [S.name] into a workable fabric.</span>", MSG_VISUAL)
 	return TRUE
 
-/obj/structure/loom/unanchored
-	anchored = FALSE
-
 #undef FABRIC_PER_SHEET

@@ -148,15 +148,7 @@
 	crate_name = "supermatter shard crate"
 	crate_type = /obj/structure/closet/crate/secure/engineering
 	dangerous = TRUE
-
-/datum/supply_pack/engine/supermatter_spray
-	name = "Supermatter Spray Crate"
-	desc = "The single thing that can truly heal the supermatter."
-	cost = 2000
-	contains = list(/obj/item/supermatterspray)
-	crate_name = "supermatter shard crate"
-	crate_type = /obj/structure/closet/crate/engineering/electrical
-
+	
 /datum/supply_pack/engine/tesla_coils
 	name = "Tesla Coil Crate"
 	desc = "Whether it's high-voltage executions, creating research points, or just plain old power generation: This pack of four Tesla coils can do it all!"
