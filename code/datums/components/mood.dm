@@ -1,3 +1,4 @@
+#define SLIGHT_INSANITY_PEN 1
 #define MINOR_INSANITY_PEN 5
 #define MAJOR_INSANITY_PEN 10
 #define MOOD_INSANITY_MALUS 0.0054 // per point of sanity below SANITY_DISTURBED, a 40% debuff to skills at rock bottom depression.
@@ -183,7 +184,7 @@
 			master.add_movespeed_modifier(/datum/movespeed_modifier/sanity/crazy)
 			sanity_level = 5
 		if(SANITY_UNSTABLE to SANITY_DISTURBED)
-			setInsanityEffect(0)
+			setInsanityEffect(SLIGHT_INSANITY_PEN)
 			master.add_movespeed_modifier(/datum/movespeed_modifier/sanity/disturbed)
 			sanity_level = 4
 		if(SANITY_DISTURBED to SANITY_NEUTRAL)
@@ -211,12 +212,12 @@
 		return
 	//var/mob/living/master = parent
 	//master.crit_threshold = (master.crit_threshold - insanity_effect) + newval
-	insanity_effect = newval
-	if(insanity_effect)
+	if(!insanity_effect && newval)
 		RegisterSignal(parent, COMSIG_MOB_ACTION_SKILL_MOD, .proc/on_mob_action_skill_mod)
 		RegisterSignal(parent, COMSIG_MOB_ITEM_ACTION_SKILLS_MOD, .proc/on_item_action_skills_mod)
-	else
+	else if(insanity_effect && !newval)
 		UnregisterSignal(parent, list(COMSIG_MOB_ACTION_SKILL_MOD, COMSIG_MOB_ITEM_ACTION_SKILLS_MOD))
+	insanity_effect = newval
 
 /datum/component/mood/proc/modify_sanity(datum/source, amount, minimum = SANITY_INSANE, maximum = SANITY_AMAZING)
 	setSanity(sanity + amount, minimum, maximum)
@@ -333,6 +334,7 @@
 		return
 	return_value[1] *= SKILL_AFFINITY_MOOD_BONUS
 
+#undef SLIGHT_INSANITY_PEN
 #undef MINOR_INSANITY_PEN
 #undef MAJOR_INSANITY_PEN
 #undef MOOD_INSANITY_MALUS
