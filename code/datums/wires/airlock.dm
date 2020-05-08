@@ -1,6 +1,7 @@
 /datum/wires/airlock
 	holder_type = /obj/machinery/door/airlock
 	proper_name = "Generic Airlock"
+	req_skill = JOB_SKILL_UNSKILLED //Training wheel, as per request.
 	var/wiretype
 
 /datum/wires/airlock/secure

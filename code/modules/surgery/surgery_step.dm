@@ -59,7 +59,7 @@
 	if(tool)
 		speed_mod = tool.toolspeed
 	if(user.mind)
-		SKILL_MODIFIER(GLOB.skill_datums[/datum/skill/numerical/surgery], user.mind.skill_holder, speed_mod, THRESHOLD_COMPETENT)
+		speed_mod = user.mind.skill_holder.action_skills_mod(/datum/skill/numerical/surgery, speed_mod, THRESHOLD_COMPETENT, FALSE)
 	if(do_after(user, time * speed_mod, target = target))
 		var/prob_chance = 100
 		if(implement_type)	//this means it isn't a require hand or any item step.

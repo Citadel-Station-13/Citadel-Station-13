@@ -29,6 +29,8 @@
 #define DEF_SKILL_GAIN					1
 #define SKILL_GAIN_SURGERY_PER_STEP		0.25
 
+#define SKILL_AFFINITY_MOOD_BONUS 		1.25
+
 ///Items skill_flags and other defines
 #define SKILL_USE_TOOL			(1<<0)
 #define SKILL_TRAINING_TOOL		(1<<1)
@@ -39,6 +41,8 @@
 #define SKILL_STAMINA_COST		(1<<6) //Influences the stamina cost from weapon usage.
 #define SKILL_THROW_STAM_COST	(1<<7)
 #define SKILL_COMBAT_MODE		(1<<8) //The user must have combat mode on.
+#define SKILL_USE_MOOD			(1<<9) //Is the skill negatively affected by bad mood.
+#define SKILL_TRAIN_MOOD		(1<<10) //Is this skill training affected by good mood.
 
 ///competency_threshold index defines
 #define THRESHOLD_COMPETENT	1

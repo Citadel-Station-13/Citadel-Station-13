@@ -37,6 +37,8 @@ GLOBAL_LIST_INIT_TYPED(skill_datums, /datum/skill, init_skill_datums())
 	var/list/competency_thresholds = list(0, 0, 0)
 	/// Multiplier of the difference of the holder skill value and the selected threshold.
 	var/list/competency_mults = list(0, 0, 0)
+	/// In which way this skil can affect or be affected through actions.
+	var/skill_flags = SKILL_USE_MOOD|SKILL_TRAIN_MOOD
 
 /**
   * Ensures what someone's setting as a value for this skill is valid.

@@ -133,7 +133,8 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	var/list/juice_results //A reagent list containing blah blah... but when JUICED in a grinder!
 
 	///Skills vars
-	var/list/used_skills //list of skills exercised when using this item. An associated bitfield indicates how the skill is exercised.
+	//list of skill PATHS exercised when using this item. An associated bitfield can be set to indicate additional ways the skill is used by this specific item.
+	var/list/datum/skill/used_skills.
 	var/skill_difficulty = THRESHOLD_COMPETENT //how difficult it's to use this item in general.
 	var/skill_gain = DEF_SKILL_GAIN //base skill value gain from using this item.
 
@@ -801,7 +802,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 
 	if(delay)
 		if(user.mind && used_skills)
-			LIST_SKILL_MODIFIER(used_skills, user.mind.skill_holder, delay, skill_difficulty, SKILL_USE_TOOL, NONE)
+			delay = user.mind.skill_holder.item_action_skills_mod(src, delay, skill_difficulty, SKILL_USE_TOOL, NONE, FALSE)
 
 		// Create a callback with checks that would be called every tick by do_after.
 		var/datum/callback/tool_check = CALLBACK(src, .proc/tool_check_callback, user, amount, extra_checks)
