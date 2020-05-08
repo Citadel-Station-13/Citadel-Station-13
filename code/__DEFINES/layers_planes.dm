@@ -16,6 +16,8 @@
 #define PLANE_SPACE_PARALLAX -90
 #define PLANE_SPACE_PARALLAX_RENDER_TARGET "*PLANE_SPACE_PARALLAX"
 
+#define SPACE_LAYER 1.8
+
 #define OPENSPACE_LAYER 17 //Openspace layer over all
 #define OPENSPACE_PLANE -8 //Openspace plane below all turfs
 #define OPENSPACE_RENDER_TARGET "*OPENSPACE"
@@ -106,18 +108,6 @@
 /// Final rendering plane, all other planes should draw onto this one via plane_masters and render_target/sources.
 #define FINAL_RENDER_PLANE 100
 
-
-
-
-
-
-
-
-
-
-
-
-#define SPACE_LAYER 1.8
 //#define TURF_LAYER 2 //For easy recordkeeping; this is a byond define
 #define MID_TURF_LAYER 2.02
 #define HIGH_TURF_LAYER 2.03

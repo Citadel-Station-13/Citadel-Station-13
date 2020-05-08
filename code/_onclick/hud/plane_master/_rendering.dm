@@ -41,7 +41,7 @@
 	. = ..()
 	. += new /obj/screen/plane_render_target(null, "turf", plane, 1, TURF_RENDER_TARGET)
 	. += new /obj/screen/plane_render_target(null, "game", plane, 2, GAME_PLANE_RENDER_TARGET)
-	. += new /obj/screen/plane_render_target(null, "blackness", plane, 3, BLACKNESS_RENDER_TARGET)
+	. += new /obj/screen/plane_render_target(null, "blackness", plane, 3, BLACKNESS_PLANE_RENDER_TARGET)
 	. += new /obj/screen/plane_render_target(null, "lighting", plane, 4, LIGHTING_RENDER_TARGET)
 	. += new /obj/screen/plane_render_target(null, "above lighting", plane, 5, ABOVE_LIGHTING_RENDER_TARGET)
 	. += new /obj/screen/plane_render_target(null, "camerastatic", plane, 6, CAMERA_STATIC_RENDER_TARGET)
