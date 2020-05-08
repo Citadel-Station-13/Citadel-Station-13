@@ -17,14 +17,20 @@
 #define PLANE_SPACE_PARALLAX_RENDER_TARGET "PLANE_SPACE_PARALLAX"
 
 #define OPENSPACE_LAYER 17 //Openspace layer over all
-#define OPENSPACE_PLANE -4 //Openspace plane below all turfs
-#define OPENSPACE_BACKDROP_PLANE -3 //Black square just over openspace plane to guaranteed cover all in openspace turf
+#define OPENSPACE_PLANE -8 //Openspace plane below all turfs
+#define OPENSPACE_RENDER_TARGET "*OPENSPACE"
+#define OPENSPACE_BACKDROP_PLANE -7 //Black square just over openspace plane to guaranteed cover all in openspace turf
+#define OPENSPACE_BACKDROP_RENDER_TARGET "*OPENSPACE_BACKDROP"
 
-#define FLOOR_PLANE -2
+#define FLOOR_PLANE -6
 #define FLOOR_PLANE_RENDER_TARGET "FLOOR_PLANE"
 
+/// Turf rendering plane, all turfs should render into this.
+#define TURF_PLANE -5
+#define TURF_RENDER_TARGET "*TURF_SUBRENDER"
+
 #define GAME_PLANE -1
-#define GAME_PLANE_RENDER_TARGET "GAME_PLANE"
+#define GAME_PLANE_RENDER_TARGET "*GAME_PLANE"
 
 #define BLACKNESS_PLANE 0 //To keep from conflicts with SEE_BLACKNESS internals
 #define BLACKNESS_PLANE_RENDER_TARGET "BLACKNESS_PLANE"
@@ -43,20 +49,15 @@
 
 #define LIGHTING_PLANE 15
 #define LIGHTING_LAYER 15
-#define LIGHTING_RENDER_TARGET "LIGHT_PLANE"
+#define LIGHTING_RENDER_TARGET "*LIGHT_PLANE"
 
 #define ABOVE_LIGHTING_PLANE 16
 #define ABOVE_LIGHTING_LAYER 16
-#define ABOVE_LIGHTING_RENDER_TARGET "ABOVE_LIGHTING_PLANE"
-
-#define BYOND_LIGHTING_PLANE 18
-#define BYOND_LIGHTING_LAYER 18
-#define BYOND_LIGHTING_RENDER_TARGET "BYOND_LIGHTING_PLANE"
+#define ABOVE_LIGHTING_RENDER_TARGET "*ABOVE_LIGHTING_PLANE"
 
 #define CAMERA_STATIC_PLANE 19
 #define CAMERA_STATIC_LAYER 19
-#define CAMERA_STATIC_RENDER_TARGET "CAMERA_STATIC_PLANE"
-
+#define CAMERA_STATIC_RENDER_TARGET "*CAMERA_STATIC_PLANE"
 
 #define FULLSCREEN_PLANE 20
 #define FLASH_LAYER 20
@@ -65,7 +66,7 @@
 #define BLIND_LAYER 20.3
 #define CRIT_LAYER 20.4
 #define CURSE_LAYER 20.5
-#define FULLSCREEN_RENDER_TARGET "FULLSCREEN_PLANE"
+#define FULLSCREEN_RENDER_TARGET "*FULLSCREEN_PLANE"
 
 /// Game rendering plane, all game world (like lighting, floors, mobs, people, objects, things, not HUDs or eye effects or anything) planes should draw onto this one.
 #define GAME_RENDERING_PLANE 50
