@@ -37,7 +37,7 @@
 	icon_state = "seed-laughpeas"
 	species = "peaslaughing"
 	plantname = "Laughin' Peas"
-	product = /obj/item/reagent_containers/food/snacks/grown/peas/laugh
+	product = /obj/item/reagent_containers/food/snacks/grown/laugh
 	maturation = 7
 	potency = 10
 	yield = 7
@@ -52,7 +52,7 @@
 	rarity = 25 //It actually might make Central Command Officials loosen up a smidge, eh?
 
 
-/obj/item/reagent_containers/food/snacks/grown/peas/laugh
+/obj/item/reagent_containers/food/snacks/grown/laugh
 	seed = /obj/item/seeds/peas/laugh
 	name = "pod of laughin' peas"
 	desc = "Ridens Cicer, guaranteed to improve your mood dramatically upon consumption!"
@@ -60,7 +60,7 @@
 	filling_color = "#ee7bee"
 	bitesize_mod = 2
 	foodtype = VEGETABLES
-	tastes = list ("a prancing rabbit" = 2, "lingering sweetness" = 1) //Vib Ribbon sends her regards.. wherever she is.
+	tastes = list ("prancing rabbits" = 1) //Vib Ribbon sends her regards.. wherever she is.
 	wine_power = 90
 
 
@@ -71,7 +71,7 @@
 	icon_state = "seed-worldpeas"
 	species = "peasworld"
 	plantname = "World Peas"
-	product = /obj/item/reagent_containers/food/snacks/grown/peas/laugh/peace
+	product = /obj/item/reagent_containers/food/snacks/grown/peace
 	maturation = 20
 	potency = 75
 	yield = 1
@@ -85,14 +85,15 @@
 	rarity = 50 // This absolutely will make even the most hardened Syndicate Operators relax, and lay down their arms.
 
 
-/obj/item/reagent_containers/food/snacks/grown/peas/laugh/peace
+/obj/item/reagent_containers/food/snacks/grown/peace
+	seed = /obj/item/seeds/peas/laugh/peace
 	name = "cluster of world peas"
-	desc = "Pax Mundi, a rather peculiar and recent discovery in botanical circles is rumored to be able to pacify even the most enraged of beasts, when consumed." //at last... world peas. I'm not sorry.
+	desc = "A plant discovered through extensive genetic engineering, and iterative graft work. It's rumored to bring peace to any who consume it. In the wider AgSci community, it's attained the nickname of 'Pax Mundi'." //at last... world peas. I'm not sorry.
 	icon_state = "worldpeas"
 	filling_color = "#0099CC"
 	bitesize_mod = 4
 	foodtype = VEGETABLES
-	tastes = list ("numbing tranquility" = 2, "warm happiness" = 1)
+	tastes = list ("numbing tranquility" = 2, "warmth" = 1)
 	wine_power = 100
 	wine_flavor = "mind-numbing peace and warmth"
 
