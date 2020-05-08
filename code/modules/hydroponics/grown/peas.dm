@@ -61,7 +61,7 @@
 	filling_color = "#ee7bee"
 	bitesize_mod = 2
 	foodtype = VEGETABLES
-	tastes = list ("prancing rabbits" = 2) //Vib Ribbon sends her regards.. wherever she is.
+	tastes = list ("a prancing rabbit" = 1) //Vib Ribbon sends her regards.. wherever she is.
 	wine_power = 90
 	wine_flavor = "a vector-grapic rabbit dancing on your tongue"
 
