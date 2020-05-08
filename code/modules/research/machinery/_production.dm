@@ -4,7 +4,7 @@
 	layer = BELOW_OBJ_LAYER
 	var/consoleless_interface = TRUE			//Whether it can be used without a console.
 	var/offstation_security_levels = TRUE
-	var/efficiency_coeff = 1				//Materials needed / coeff = actual.
+	var/cost_coefficieny = 1				//Materials needed / coeff = actual.
 	var/list/categories = list()
 	var/datum/component/remote_materials/materials
 	var/allowed_department_flags = ALL
@@ -76,13 +76,13 @@
 	for(var/obj/item/stock_parts/manipulator/M in component_parts)
 		total_manip_rating += M.rating
 		manips++
-	efficiency_coeff = STANDARD_PART_LEVEL_LATHE_COEFFICIENT(total_manip_rating / (manips? manips : 1))
+	cost_coefficient = STANDARD_PART_LEVEL_LATHE_COEFFICIENT(total_manip_rating / (manips? manips : 1))
 
 /obj/machinery/rnd/production/examine(mob/user)
 	. = ..()
 	var/datum/component/remote_materials/materials = GetComponent(/datum/component/remote_materials)
 	if(in_range(user, src) || isobserver(user))
-		. += "<span class='notice'>The status display reads: Storing up to <b>[materials.local_size]</b> material units locally.<br>Material usage efficiency at <b>[efficiency_coeff*100]%</b>.</span>"
+		. += "<span class='notice'>The status display reads: Storing up to <b>[materials.local_size]</b> material units locally.<br>Material cost coefficient at <b>[cost_coefficient*100]%</b>.</span>"
 
 //we eject the materials upon deconstruction.
 /obj/machinery/rnd/production/on_deconstruction()
@@ -276,9 +276,9 @@
 		t = check_mat(D, M)
 		temp_material += " | "
 		if (t < 1)
-			temp_material += "<span class='bad'>[all_materials[M]/coeff] [CallMaterialName(M)]</span>"
+			temp_material += "<span class='bad'>[all_materials[M] * coeff] [CallMaterialName(M)]</span>"
 		else
-			temp_material += " [all_materials[M]/coeff] [CallMaterialName(M)]"
+			temp_material += " [all_materials[M] * coeff] [CallMaterialName(M)]"
 		c = min(c,t)
 
 	var/clearance = !(obj_flags & EMAGGED) && (offstation_security_levels || is_station_level(z))
