@@ -17,7 +17,6 @@
 	var/list/L = list()
 	var/list/LL = list()
 	var/hacked = FALSE
-	var/hackable = TRUE
 	var/disabled = 0
 	var/shocked = FALSE
 	var/hack_wire
@@ -32,7 +31,7 @@
 	var/selected_category
 	var/screen = 1
 
-	var/datum/techweb/stored_research = /datum/techweb/specialized/autounlocking/autolathe
+	var/datum/techweb/specialized/autounlocking/stored_research = /datum/techweb/specialized/autounlocking/autolathe
 	var/list/categories = list(
 							"Tools",
 							"Electronics",
@@ -425,11 +424,11 @@
 
 /obj/machinery/autolathe/proc/adjust_hacked(state)
 	hacked = state
-	if(!hackable && hacked)
-		return
 	for(var/id in SSresearch.techweb_designs)
 		var/datum/design/D = SSresearch.techweb_design_by_id(id)
-		if((D.build_type & AUTOLATHE) && ("hacked" in D.category))
+		if(D.build_type & stored_research.design_autounlock_skip_types)
+			continue
+		if((D.build_type & stored_research.design_autounlock_buildtypes) && ("hacked" in D.category))
 			if(hacked)
 				stored_research.add_design(D)
 			else
@@ -441,8 +440,7 @@
 
 /obj/machinery/autolathe/secure
 	name = "secured autolathe"
-	desc = "An autolathe reprogrammed with security protocols to prevent hacking."
-	hackable = FALSE
+	desc = "It produces items using metal and glass. This model was reprogrammed without some of the more hazardous designs."
 	circuit = /obj/item/circuitboard/machine/autolathe/secure
 	stored_research = /datum/techweb/specialized/autounlocking/autolathe/public
 	base_print_speed = 20
