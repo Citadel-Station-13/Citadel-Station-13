@@ -27,6 +27,7 @@
 	foodtype = VEGETABLES
 	tastes = list ("peas" = 1, "chalky saltiness" = 1)
 	wine_power = 50
+	wine_flavor = "It tastes, distressingly, of fermented peas."
 	// distill_regeant = /datum/reagent/saltpetre //if allowed, remove wine_power, ya dingus.
 
 
@@ -48,7 +49,7 @@
 	icon_dead = "laughpeas-dead"
 	genes = list (/datum/plant_gene/trait/repeated_harvest, /datum/plant_gene/trait/glow/purple)
 	mutatelist = list (/obj/item/seeds/peas/laugh/peace)
-	reagents_add = list (/datum/reagent/consumable/laughter = 0.1, /datum/reagent/consumable/sugar = 0.05)
+	reagents_add = list (/datum/reagent/consumable/laughter = 0.05, /datum/reagent/consumable/sugar = 0.05 /datum/reagent/consumable/nutriment = 0.07)
 	rarity = 25 //It actually might make Central Command Officials loosen up a smidge, eh?
 
 
@@ -60,8 +61,9 @@
 	filling_color = "#ee7bee"
 	bitesize_mod = 2
 	foodtype = VEGETABLES
-	tastes = list ("prancing rabbits" = 1) //Vib Ribbon sends her regards.. wherever she is.
+	tastes = list ("prancing rabbits" = 2) //Vib Ribbon sends her regards.. wherever she is.
 	wine_power = 90
+	wine_flavor = "a vector-grapic rabbit dancing on your tongue"
 
 
 // World Peas - Peace at last, peace at last...
@@ -81,7 +83,7 @@
 	icon_grow = "worldpeas-grow"
 	icon_dead = "worldpeas-dead"
 	genes = list (/datum/plant_gene/trait/glow/blue)
-	reagents_add = list (/datum/reagent/pax = 0.15, /datum/reagent/drug/happiness = 0.1, /datum/reagent/consumable/nutriment = 0.05)
+	reagents_add = list (/datum/reagent/pax = 0.15, /datum/reagent/drug/happiness = 0.1, /datum/reagent/consumable/nutriment = 0.15)
 	rarity = 50 // This absolutely will make even the most hardened Syndicate Operators relax, and lay down their arms.
 
 
