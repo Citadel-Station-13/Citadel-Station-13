@@ -28,7 +28,7 @@ GLOBAL_LIST_INIT_TYPED(skill_datums, /datum/skill, init_skill_datums())
 	/// Our description
 	var/desc
 	/// Color of the name as shown in the html readout
-	var/name_color = "#FFFFFF"
+	var/name_color = "#F0F0F0" // White on dark surface.
 	/// Our progression type
 	var/progression_type
 	/// Abstract type
