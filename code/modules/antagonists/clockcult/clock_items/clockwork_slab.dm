@@ -171,7 +171,7 @@
 		return FALSE
 	if(!is_servant_of_ratvar(user))
 		to_chat(user, "<span class='warning'>The information on [src]'s display shifts rapidly. After a moment, your head begins to pound, and you tear your eyes away.</span>")
-		if(user.confused || user.dizziness) //We dont want this to stack.
+		if(user.confused || user.dizziness)
 			user.confused += 5
 			user.dizziness += 5
 		return FALSE
@@ -201,7 +201,7 @@
 	if(!ui)
 		ui = new(user, src, ui_key, "ClockworkSlab", name, ui_x, ui_z, master_ui, state)
 		ui.open()
-	
+
 /obj/item/clockwork/slab/proc/recite_scripture(datum/clockwork_scripture/scripture, mob/living/user)
 	if(!scripture || !user || !user.canUseTopic(src) || (!no_cost && !can_recite_scripture(user)))
 		return FALSE
@@ -432,40 +432,26 @@
 	data["scriptures"] = list()
 	for(var/s in GLOB.all_scripture)
 		var/datum/clockwork_scripture/S = GLOB.all_scripture[s]
-		if(S.tier == selected_scripture) //display only scriptures of the selected tier
-			var/scripture_color = get_component_color_bright(S.primary_component)
-			var/list/temp_info = list("name" = "<font color=[scripture_color]><b>[S.name]</b></font>",
-			"descname" = "<font color=[scripture_color]>([S.descname])</font>",
-			"tip" = "[S.desc]\n[S.usage_tip]",
-			"required" = "([DisplayPower(S.power_cost)][S.special_power_text ? "+ [replacetext(S.special_power_text, "POWERCOST", "[DisplayPower(S.special_power_cost)]")]" : ""])",
-			"type" = "[S.type]",
-			"quickbind" = S.quickbind)
-			if(S.important)
-				temp_info["name"] = "<i>[temp_info["name"]]</i>"
-			var/found = quickbound.Find(S.type)
-			if(found)
-				temp_info["bound"] = "<b>[found]</b>"
-			if(S.invokers_required > 1)
-				temp_info["invokers"] = "<font color=#B18B25>Invokers: <b>[S.invokers_required]</b></font>"
-			data["scripture"] += list(temp_info)
-			return data
+		var/scripture_color = get_component_color_bright(S.primary_component)
+		var/list/temp_info = list("name" = "<font color=[scripture_color]><b>[S.name]</b></font>",
+		"descname" = "<font color=[scripture_color]>([S.descname])</font>",
+		"tip" = "[S.desc]\n[S.usage_tip]",
+		"required" = "([DisplayPower(S.power_cost)][S.special_power_text ? "+ [replacetext(S.special_power_text, "POWERCOST", "[DisplayPower(S.special_power_cost)]")]" : ""])",
+		"type" = "[S.type]",
+		"quickbind" = S.quickbind)
+		if(S.important)
+			temp_info["name"] = "<i>[temp_info["name"]]</i>"
+		var/found = quickbound.Find(S.type)
+		if(found)
+			temp_info["bound"] = "<b>[found]</b>"
+		if(S.invokers_required > 1)
+			temp_info["invokers"] = "<font color=#B18B25>Invokers: <b>[S.invokers_required]</b></font>"
+		data["scripture"] += list(temp_info)
+	return data
 
 /obj/item/clockwork/slab/ui_static_data(mob/user)
 	var/list/data = list()
-	switch(selected_scripture) //display info based on selected scripture tier
-		if(SCRIPTURE_DRIVER)
-			data["tier_info"] = "<font color=#B18B25><b>These scriptures are permanently unlocked.</b></font>"
-		if(SCRIPTURE_SCRIPT)
-			if(SSticker.scripture_states[SCRIPTURE_SCRIPT])
-				data["tier_info"] = "<font color=#B18B25><b>These scriptures are permanently unlocked.</b></font>"
-			else
-				data["tier_info"] = "<font color=#B18B25><i>These scriptures will automatically unlock when the Ark is halfway ready or if [DisplayPower(SCRIPT_UNLOCK_THRESHOLD)] of power is reached.</i></font>"
-		if(SCRIPTURE_APPLICATION)
-			if(SSticker.scripture_states[SCRIPTURE_APPLICATION])
-				data["tier_info"] = "<font color=#B18B25><b>These scriptures are permanently unlocked.</b></font>"
-			else
-				data["tier_info"] = "<font color=#B18B25><i>Unlock these optional scriptures by converting another servant or if [DisplayPower(APPLICATION_UNLOCK_THRESHOLD)] of power is reached..</i></font>"
-
+	data["tier_info"] = "<font color=#B18B25><b>These scriptures are permanently unlocked.</b></font>"
 	data["selected"] = selected_scripture
 	data["scripturecolors"] = "<font color=#DAAA18>Scriptures in <b>yellow</b> are related to construction and building.</font><br>\
 	<font color=#6E001A>Scriptures in <b>red</b> are related to attacking and offense.</font><br>\
@@ -474,19 +460,18 @@
 	<font color=#DAAA18><i>Scriptures with italicized names are important to success.</i></font>"
 	generate_all_scripture()
 	data["recollection"] = recollecting
-	if(recollecting)
-		data["recollection_categories"] = GLOB.ratvar_awakens ? list() : list(\
-		list("name" = "Getting Started", "desc" = "First-time servant? Read this first."), \
-		list("name" = "Basics", "desc" = "A primer on how to play as a servant."), \
-		list("name" = "Terminology", "desc" = "Common acronyms, words, and terms."), \
-		list("name" = "Components", "desc" = "Information on components, your primary resource."), \
-		list("name" = "Scripture", "desc" = "Information on scripture, ancient tools used by the cult."), \
-		list("name" = "Power", "desc" = "The power system that certain objects use to function."), \
-		list("name" = "Conversion", "desc" = "Converting the crew, cyborgs, and very walls to your cause."), \
-		)
-		data["rec_text"] = recollection()
-		data["rec_section"] = GLOB.ratvar_awakens ? "" : get_recollection_text(recollection_category)
-		data["rec_binds"] = GLOB.ratvar_awakens ? "" : get_recollection_quickbinds()
+	data["recollection_categories"] = GLOB.ratvar_awakens ? list() : list(\
+	list("name" = "Getting Started", "desc" = "First-time servant? Read this first."), \
+	list("name" = "Basics", "desc" = "A primer on how to play as a servant."), \
+	list("name" = "Terminology", "desc" = "Common acronyms, words, and terms."), \
+	list("name" = "Components", "desc" = "Information on components, your primary resource."), \
+	list("name" = "Scripture", "desc" = "Information on scripture, ancient tools used by the cult."), \
+	list("name" = "Power", "desc" = "The power system that certain objects use to function."), \
+	list("name" = "Conversion", "desc" = "Converting the crew, cyborgs, and very walls to your cause."), \
+	)
+	data["rec_text"] = recollection()
+	data["rec_section"] = GLOB.ratvar_awakens ? "" : get_recollection_text(recollection_category)
+	data["rec_binds"] = GLOB.ratvar_awakens ? "" : get_recollection_quickbinds()
 	return data
 
 /obj/item/clockwork/slab/ui_act(action, params)
