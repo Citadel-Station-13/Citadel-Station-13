@@ -8,7 +8,7 @@
 /datum/component/construction/mecha/examine(mob/user)
 	. = ..()
 	if(looky_helpy)
-		switch(key)
+		switch("key")
 			if(TOOL_WRENCH)
 				desc += "<span class='notice'>The mech could be <b>wrenched</b> into place.</span>"
 			if(TOOL_SCREWDRIVER)
