@@ -118,8 +118,7 @@
 				return
 
 			if(istype(W, /obj/item/stack/cable_coil))
-				var/obj/item/stack/cable_coil/coil = W
-				if(coil.use(1))
+				if(W.use_tool(src, user, 0, 1, max_level = JOB_SKILL_TRAINED))
 					icon_state = "[fixture_type]-construct-stage2"
 					stage = 2
 					user.visible_message("[user.name] adds wires to [src].", \

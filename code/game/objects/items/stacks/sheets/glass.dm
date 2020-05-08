@@ -69,7 +69,7 @@ GLOBAL_LIST_INIT(glass_recipes, list ( \
 		if (get_amount() < 1 || CC.get_amount() < 5)
 			to_chat(user, "<span class='warning>You need five lengths of coil and one sheet of glass to make wired glass!</span>")
 			return
-		CC.use(5)
+		CC.use_tool(src, user, 0, 5, max_level = JOB_SKILL_BASIC)
 		use(1)
 		to_chat(user, "<span class='notice'>You attach wire to the [name].</span>")
 		var/obj/item/stack/light_w/new_tile = new(user.loc)
