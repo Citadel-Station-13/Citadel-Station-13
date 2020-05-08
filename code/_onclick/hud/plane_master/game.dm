@@ -1,4 +1,23 @@
+///Contains most things in the game world
+/obj/screen/plane_master/game_world
+	name = "game world plane master"
+	plane = GAME_PLANE
+	appearance_flags = PLANE_MASTER //should use client color
+	blend_mode = BLEND_OVERLAY
+	render_target = GAME_PLANE_RENDER_TARGET
 
+/obj/screen/plane_master/game_world/backdrop(mob/mymob)
+	if(istype(mymob) && mymob.client && mymob.client.prefs && mymob.client.prefs.ambientocclusion)
+		add_filter("ambient_occlusion", 0, AMBIENT_OCCLUSION)
+	else
+		remove_filter("ambient_occlusion")
+	update_filters()
+
+/obj/screen/plane_master/blackness
+	name = "blackness plane master"
+	plane = BLACKNESS_PLANE
+	render_target = BLACKNESS_PLANE_RENDER_TARGET
+	appearance_flags = PLANE_MASTER
 
 /obj/screen/plane_master/above_lighting
 	name = "above lighting plane master"
