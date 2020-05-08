@@ -91,7 +91,8 @@ import { SpawnersMenu } from './interfaces/SpawnersMenu';
 import { StationAlertConsole } from './interfaces/StationAlertConsole';
 import { SuitStorageUnit } from './interfaces/SuitStorageUnit';
 import { Tank } from './interfaces/Tank';
-import { Telemonitor, Logbrowser } from './interfaces/Telecomms';
+import { TeleLogBrowser } from './interfaces/TelecommsLogBrowser';
+import { Telemonitor } from './interfaces/TelecommsMonitor';
 import { TankDispenser } from './interfaces/TankDispenser';
 import { Teleporter } from './interfaces/Teleporter';
 import { ThermoMachine } from './interfaces/ThermoMachine';
@@ -504,7 +505,7 @@ const ROUTES = {
     scrollable: false,
   },
   tcommsserver: {
-    component: () => Logbrowser,
+    component: () => TeleLogBrowser,
     scrollable: true,
     theme: 'ntos',
   },

@@ -34,9 +34,44 @@
 
 	light_color = LIGHT_COLOR_GREEN
 
+/obj/machinery/computer/message_monitor/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE,\
+														datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
+	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+
+	if(!ui)
+		ui = new(user, src, ui_key, "telepdalog", name, 575, 400, master_ui, state)
+		ui.open()
+
+/obj/machinery/computer/message_monitor/ui_static_data(mob/user)
+	var/list/data_out = list()
+
+	data_out["predef_messages"] = list(
+		"noserver" = noserver,
+		"incorrectkey" = incorrectkey,
+		"defaultmsg" = defaultmsg,
+		"rebootmsg" = rebootmsg
+	)
+	return data_out
+
+/obj/machinery/computer/message_monitor/ui_data(mob/user)
+	var/list/data_out = list()
+
+	data_out["hacking"] = hacking
+	data_out["notice"] = message
+
+	data_out["selected"] = list(
+		name = linkedServer.name,
+		id = linkedServer.id,
+		ref = REF(linkedServer)
+	)
+	return data_out
+
+
+
 /obj/machinery/computer/message_monitor/attackby(obj/item/O, mob/living/user, params)
 	if(istype(O, /obj/item/screwdriver) && (obj_flags & EMAGGED))
-		//Stops people from just unscrewing the monitor and putting it back to get the console working again.
+		//Stops people from just unscrewing the monitor and putting it back to get the console working again. 
+		//Why this though, you should make it emag to a board level. (i wont do it)
 		to_chat(user, "<span class='warning'>It is too hot to mess with!</span>")
 	else
 		return ..()
@@ -49,7 +84,7 @@
 		to_chat(user, "<span class='notice'>A no server error appears on the screen.</span>")
 		return
 	obj_flags |= EMAGGED
-	screen = 2
+	//screen = 2
 	spark_system.set_up(5, 0, src)
 	spark_system.start()
 	var/obj/item/paper/monitorkey/MK = new(loc, linkedServer)

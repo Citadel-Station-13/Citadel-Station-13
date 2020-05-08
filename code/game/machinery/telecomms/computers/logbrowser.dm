@@ -38,10 +38,13 @@
 			ref = REF(T)
 		)
 		data_out["servers"] += list(data)
+	data_out["servers"] = sortList(data_out["servers"]) //a-z sort
 
 	if(!SelectedMachine) //null is bad.
+		data_out["selected"] = null //but in js, null is good.
 		return data_out
-	
+
+	data_out["traffic"] = SelectedMachine.totaltraffic
 	data_out["selected"] = list(
 		name = SelectedMachine.name,
 		id = SelectedMachine.id,
@@ -49,61 +52,67 @@
 	)
 	data_out["selected_logs"] = list()
 
+	if(!LAZYLEN(SelectedMachine.log_entries))
+		return data_out
+	
 	for(var/datum/comm_log_entry/C in SelectedMachine.log_entries)
 		var/list/data = list()
 		data["name"] = C.name	//name of the file
 		data["ref"] = REF(C)
 		data["input_type"] = C.input_type	//type of input ("Speech File" | "Execution Error"). Let js handle this
 
-		switch(C.input_type)
-			if("Speech File")
-				data["source"] = list(
-					name = C.parameters["name"],	//name of the mob | obj
-					job = C.parameters["job"]		//job of the mob | obj
-				)
+		if(C.input_type == "Speech File") //there is a reason why this is not a switch.
+			data["source"] = list(
+				name = C.parameters["name"],	//name of the mob | obj
+				job = C.parameters["job"]		//job of the mob | obj
+			)
 
-				// -- Determine race of orator --
-				var/mobtype = C.parameters["mobtype"]
-				var/race	// The actual race of the mob
+			// -- Determine race of orator --
+			var/mobtype = C.parameters["mobtype"]
+			var/race	// The actual race of the mob
 
-				if(ispath(mobtype, /mob/living/carbon/human) || ispath(mobtype, /mob/living/brain))
-					race = "Humanoid"
-				else if(ispath(mobtype, /mob/living/simple_animal/slime))
-					race = "Slime"	// NT knows a lot about slimes, but not aliens. Can identify slimes
-				else if(ispath(mobtype, /mob/living/carbon/monkey))
-					race = "Monkey"
-				else if(ispath(mobtype, /mob/living/silicon) || C.parameters["job"] == "AI")
-					race = "Artificial Life"	// sometimes M gets deleted prematurely for AIs... just check the job
-				else if(isobj(mobtype))
-					race = "Machinery"
-				else if(ispath(mobtype, /mob/living/simple_animal))
-					race = "Domestic Animal"
-				else
-					race = "Unidentifiable"
-
-				data["race"] = race
-				// based on [/atom/movable/proc/lang_treat]
-				var/message = C.parameters["message"]
-				var/language = C.parameters["language"]
-
-				if(universal_translate || user.has_language(language))
-					message = message
-				else if(!user.has_language(language))
-					var/datum/language/D = GLOB.language_datum_instances[language]
-					message = D.scramble(message)
-				else if(language)
-					message = "(unintelligible)"
-
-				data["message"] = message
-
-			if("Execution Error")
-				data["message"] = C.parameters["message"]
+			if(ispath(mobtype, /mob/living/carbon/human) || ispath(mobtype, /mob/living/brain))
+				race = "Humanoid"
+			else if(ispath(mobtype, /mob/living/simple_animal/slime))
+				race = "Slime"	// NT knows a lot about slimes, but not aliens. Can identify slimes
+			else if(ispath(mobtype, /mob/living/carbon/monkey))
+				race = "Monkey"
+			else if(ispath(mobtype, /mob/living/silicon) || C.parameters["job"] == "AI")
+				race = "Artificial Life"	// sometimes M gets deleted prematurely for AIs... just check the job
+			else if(isobj(mobtype))
+				race = "Machinery"
+			else if(ispath(mobtype, /mob/living/simple_animal))
+				race = "Domestic Animal"
 			else
-				data["message"] = "(unintelligible)"
+				race = "Unidentifiable"
+
+			data["race"] = race
+			// based on [/atom/movable/proc/lang_treat]
+			var/message = C.parameters["message"]
+			var/language = C.parameters["language"]
+			to_chat(world, user)
+			if(universal_translate || user.has_language(language))
+				message = message
+			else if(!user.has_language(language))
+				var/datum/language/D = GLOB.language_datum_instances[language]
+				message = D.scramble(message)
+			else if(language)
+				message = "(unintelligible)"
+
+			data["message"] = message
+
+		else if(C.input_type == "Execution Error")
+			data["message"] = C.parameters["message"]
+		else
+			data["message"] = "(unintelligible)"
 		
 		data_out["selected_logs"] += list(data)
-  return data_out
+	return data_out
 
+/obj/machinery/computer/telecomms/server/ui_static_data(mob/user)	//i tried placing the logbuilder here but it fails because mob/user is null??	
+	var/list/data_out = list()
+	data_out["notice"] = "" //hacky way of removing it when you leave the console
+	return data_out
 
 /obj/machinery/computer/telecomms/server/ui_act(action, params)
 	if(..())
@@ -111,14 +120,17 @@
 	switch(action)
 		if("mainmenu")
 			SelectedMachine = null
+			notice = ""
+			update_static_data(usr)
 			return
 		if("release")
 			machinelist = list()
+			notice = ""
 			return
 		if("network") //network change, flush the selected machine and buffer
 			var/newnet = trim(html_encode(params["value"]), 15)
 			if(length(newnet) > 15)	//i'm looking at you, you href fuckers
-				notice = "<span class='warning'>FAILED: NETWORK TAG STRING TOO LENGHTLY</span>"
+				notice = "FAILED: NETWORK TAG STRING TOO LENGHTLY"
 				return
 			network = newnet
 			SelectedMachine = null
@@ -126,7 +138,7 @@
 			return
 		if("probe")
 			if(LAZYLEN(machinelist) > 0)
-				notice = "<span class='warning'>FAILED: CANNOT PROBE WHEN BUFFER FULL</span>"
+				notice = "FAILED: CANNOT PROBE WHEN BUFFER FULL"
 				return
 			
 			for(var/obj/machinery/telecomms/T in urange(25, src))
@@ -134,9 +146,8 @@
 					LAZYADD(machinelist, T)
 
 			if(!LAZYLEN(machinelist))
-				notice = "<span class='warning'>FAILED: UNABLE TO LOCATE NETWORK ENTITIES IN \[[network]\]</span>"
+				notice = "FAILED: UNABLE TO LOCATE NETWORK ENTITIES IN \[[network]\]"
 				return
-			notice = "<span class='warning'>[machinelist.len] ENTITIES LOCATED & BUFFERED</span>"
 		if("viewmachine")
 			for(var/obj/machinery/telecomms/T in machinelist)
 				if(T.id == params["value"])
@@ -151,11 +162,12 @@
 				return
 			var/datum/comm_log_entry/D = locate(params["value"])
 			if(!istype(D))
-				say("<span class='warning'>OBJECT NOT FOUND</span>")		
+				notice = "OBJECT NOT FOUND"		
 				return
-			say("<span class='warning'>DELETED ENTRY: [D.name]</span>")
+			notice = "DELETED ENTRY: [D.name]"
 			SelectedMachine.log_entries.Remove(D)
 			qdel(D)
+			update_static_data(usr)
 /*
 /obj/machinery/computer/telecomms/server/ui_interact(mob/user)
 	. = ..()
