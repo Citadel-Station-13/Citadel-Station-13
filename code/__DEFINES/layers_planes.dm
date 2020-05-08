@@ -1,11 +1,15 @@
 //Defines for atom layers and planes
 //KEEP THESE IN A NICE ACSCENDING ORDER, PLEASE
 
-// Planes
+// This file is organized by plane followed by the layers that will be used by objects on said plane. Misc things go below the main section.
+
+/////////////////// UNDERLAY BACKDROPS /////////////
 /// Void plane
-#define PLANE_VOID -10000
+#define PLANE_VOID -100
 /// Clickcatcher plane aka what captures clicks if you click on a black spot of the screen
-#define CLICKCATCHER_PLANE -9000
+#define CLICKCATCHER_PLANE -99
+
+/////////////////// GAME WORLD /////////////////////
 
 #define PLANE_SPACE -95
 #define PLANE_SPACE_RENDER_TARGET "PLANE_SPACE"
@@ -53,12 +57,6 @@
 #define CAMERA_STATIC_LAYER 19
 #define CAMERA_STATIC_RENDER_TARGET "CAMERA_STATIC_PLANE"
 
-/// PLANE: HUD. All HUD elements should ultimately get shown on this plane.
-#define HUD_PLANE 21
-#define HUD_LAYER 21
-#define HUD_RENDER_TARGET "HUD_PLANE"
-
-//HUD layer defines
 
 #define FULLSCREEN_PLANE 20
 #define FLASH_LAYER 20
@@ -69,35 +67,55 @@
 #define CURSE_LAYER 20.5
 #define FULLSCREEN_RENDER_TARGET "FULLSCREEN_PLANE"
 
-
-#define VOLUMETRIC_STORAGE_BOX_PLANE 23
-#define VOLUMETRIC_STORAGE_BOX_LAYER 23
-#define VOLUMETRIC_STORAGE_BOX_RENDER_TARGET "VOLUME_STORAGE_BOX_PLANE"
-
-#define VOLUMETRIC_STORAGE_ITEM_PLANE 24
-#define VOLUMETRIC_STORAGE_ITEM_LAYER 24
-#define VOLUMETRIC_STORAGE_ITEM_RENDER_TARGET "VOLUME_STORAGE_ITEM_PLANE"
-
-#define ABOVE_HUD_PLANE 25
-#define ABOVE_HUD_LAYER 25
-#define ABOVE_HUD_RENDER_TARGET "ABOVE_HUD_PLANE"
-
-#define SPLASHSCREEN_LAYER 30
-#define SPLASHSCREEN_PLANE 30
-#define SPLASHSCREEN_RENDER_TARGET "SPLASHSCREEN_PLANE"
-
 /// Game rendering plane, all game world (like lighting, floors, mobs, people, objects, things, not HUDs or eye effects or anything) planes should draw onto this one.
-#define GAME_RENDER_PLANE 5000
-#define GAME_RENDER_TARGET "*GAME_RENDER"
+#define GAME_RENDERING_PLANE 50
+#define GAME_RENDERING_TARGET "*GAME_RENDER"
+
+/////////////////// HUD ////////////////////////////
+
+/// HUD plane, all general HUD elements should be on this plane.
+#define HUD_PLANE 60
+#define HUD_LAYER 21
+#define HUD_RENDER_TARGET "*HUD_PLANE"
+
+#define VOLUMETRIC_STORAGE_BOX_PLANE 70
+#define VOLUMETRIC_STORAGE_BOX_LAYER 23
+#define VOLUMETRIC_STORAGE_BOX_RENDER_TARGET "*VOLUME_STORAGE_BOX_PLANE"
+
+#define VOLUMETRIC_STORAGE_ITEM_PLANE 71
+#define VOLUMETRIC_STORAGE_ITEM_LAYER 24
+#define VOLUMETRIC_STORAGE_ITEM_RENDER_TARGET "*VOLUME_STORAGE_ITEM_PLANE"
+
+#define ABOVE_HUD_PLANE 80
+#define ABOVE_HUD_LAYER 25
+#define ABOVE_HUD_RENDER_TARGET "*ABOVE_HUD_PLANE"
 
 /// HUD rendering plane, all HUD elements should render onto this plane.
-#define HUD_RENDER_PLANE 9000
-#define HUD_RENDER_TARGET "*HUD_RENDER"
+#define HUD_RENDERING_PLANE 95
+#define HUD_RENDERING_TARGET "*HUD_RENDER"
 
+/////////////////// SPLASHSCREEN ///////////////////
+/// Splashscreen plane.
+#define SPLASHSCREEN_PLANE 99
+#define SPLASHSCREEN_RENDER_TARGET "*SPLASHSCREEN"
+
+#define SPLASHSCREEN_LAYER 30
+
+//////////////////// FINAL /////////////////////////
 /// Final rendering plane, all other planes should draw onto this one via plane_masters and render_target/sources.
-#define FINAL_RENDER_PLANE 10000
+#define FINAL_RENDER_PLANE 100
 
-// Layers
+
+
+
+
+
+
+
+
+
+
+
 #define SPACE_LAYER 1.8
 //#define TURF_LAYER 2 //For easy recordkeeping; this is a byond define
 #define MID_TURF_LAYER 2.02
