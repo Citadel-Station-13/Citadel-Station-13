@@ -510,6 +510,7 @@ By design, d1 is the smallest direction and d2 is the highest
 	full_w_class = WEIGHT_CLASS_SMALL
 	grind_results = list(/datum/reagent/copper = 2) //2 copper per cable in the coil
 	usesound = 'sound/items/deconstruct.ogg'
+	used_skills = list(/datum/skill/level/job/wiring)
 
 /obj/item/stack/cable_coil/cyborg
 	is_cyborg = 1
@@ -590,8 +591,6 @@ By design, d1 is the smallest direction and d2 is the highest
 	else
 		amount += extra
 	update_icon()
-
-
 
 ///////////////////////////////////////////////
 // Cable laying procedures

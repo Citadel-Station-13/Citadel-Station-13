@@ -1,6 +1,7 @@
 /datum/wires/apc
 	holder_type = /obj/machinery/power/apc
 	proper_name = "APC"
+	req_knowledge = JOB_SKILL_MASTER
 
 /datum/wires/apc/New(atom/holder)
 	wires = list(
