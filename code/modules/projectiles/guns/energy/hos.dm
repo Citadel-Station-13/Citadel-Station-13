@@ -1,6 +1,5 @@
 // -------------- HoS Modular Weapon System -------------
-// -------------- Code originally from VoreStation -------------
-
+// ---------- Code originally from VoreStation ----------
 /obj/item/gun/ballistic/revolver/mws
 	name = "MWS-01 'Big Iron'"
 	desc = "Modular Weapons System"
@@ -261,6 +260,26 @@
 
 	..()
 
+/obj/item/gunbox
+	name = "Modular Weapon Box"
+	desc = "A box containing a micro-fabricator capable of creating one of two different weapon selections. How fancy!"
+	icon = 'icons/obj/storage.dmi'
+	icon_state = "lockbox+l"
+	item_state = "syringe_kit"
+
+/obj/item/gunbox/attack_self(mob/user)
+	var/selection = input("Select weapon style.", "Modular Weapon Box", "Cancel") in list("X-01 Multiphase", "MWS-01 'Big Iron'", "Cancel")
+	var/atom/A
+	switch(selection)
+		if("X-01 Multiphase")
+			A = new /obj/item/gun/energy/e_gun/hos
+			user.put_in_hands(A)
+			qdel(src)
+		if("MWS-01 'Big Iron'")
+			A = new /obj/item/storage/secure/briefcase/mws_pack_hos
+			user.put_in_hands(A)
+			qdel(src)
+
 /obj/item/storage/secure/briefcase/mws_pack
 	name = "\improper \'MWS\' gun kit"
 	desc = "A storage case for a multi-purpose handgun. Variety hour!"
@@ -282,3 +301,4 @@
 	new /obj/item/ammo_casing/mws_batt/lethal(src)
 	new /obj/item/ammo_casing/mws_batt/stun(src)
 	new /obj/item/ammo_casing/mws_batt/stun(src)
+	new /obj/item/ammo_casing/mws_batt/ion(src)
