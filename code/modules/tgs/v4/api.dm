@@ -49,7 +49,7 @@
 	var/list/last_interop_response
 
 /datum/tgs_api/v4/ApiVersion()
-	return "4.0.0.0"
+	return new /datum/tgs_version("4.0.0.0")
 
 /datum/tgs_api/v4/OnWorldNew(datum/tgs_event_handler/event_handler, minimum_required_security_level)
 	json_path = world.params[TGS4_PARAM_INFO_JSON]
