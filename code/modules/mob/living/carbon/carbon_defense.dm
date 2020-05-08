@@ -77,15 +77,13 @@
 	SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "embedded", /datum/mood_event/embedded)
 
 /mob/living/carbon/attacked_by(obj/item/I, mob/living/user)
-	//CIT CHANGES START HERE - combatmode and resting checks
-	var/totitemdamage = I.force
+	var/totitemdamage = pre_attacked_by(I, user)
 	if(!(user.combat_flags & COMBAT_FLAG_COMBAT_ACTIVE))
 		totitemdamage *= 0.5
 	if(!CHECK_MOBILITY(user, MOBILITY_STAND))
 		totitemdamage *= 0.5
 	if(!(combat_flags & COMBAT_FLAG_COMBAT_ACTIVE))
 		totitemdamage *= 1.5
-	//CIT CHANGES END HERE
 	var/impacting_zone = (user == src)? check_zone(user.zone_selected) : ran_zone(user.zone_selected)
 	if((user != src) && (mob_run_block(I, totitemdamage, "the [I]", ATTACK_TYPE_MELEE, I.armour_penetration, user, impacting_zone, null) & BLOCK_SUCCESS))
 		return FALSE
@@ -94,7 +92,7 @@
 		affecting = bodyparts[1]
 	SEND_SIGNAL(I, COMSIG_ITEM_ATTACK_ZONE, src, user, affecting)
 	send_item_attack_message(I, user, affecting.name)
-	I.do_stagger_action(src, user)
+	I.do_stagger_action(src, user, totitemdamage)
 	if(I.force)
 		apply_damage(totitemdamage, I.damtype, affecting) //CIT CHANGE - replaces I.force with totitemdamage
 		if(I.damtype == BRUTE && affecting.status == BODYPART_ORGANIC)
