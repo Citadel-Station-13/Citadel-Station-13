@@ -17,8 +17,6 @@
 		/obj/item/melee/baton,
 		/obj/item/ammo_box/magazine/recharge,
 		/obj/item/modular_computer,
-		/obj/item/gun/ballistic/automatic/magrifle_e,
-		/obj/item/gun/ballistic/automatic/pistol/mag_e,
 		/obj/item/ammo_casing/mws_batt,
 		/obj/item/ammo_box/magazine/mws_mag,
 		/obj/item/twohanded/electrostaff,
