@@ -75,6 +75,7 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 
 	hand_slots = list()
 
+	// Instance all plane masters
 	for(var/mytype in subtypesof(/obj/screen/plane_master))
 		var/obj/screen/plane_master/instance = new mytype()
 		plane_masters["[instance.plane]"] = instance
@@ -211,7 +212,7 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	for(var/thing in plane_masters)
 		var/obj/screen/plane_master/PM = plane_masters[thing]
 		PM.backdrop(mymob)
-		mymob.client.screen += PM
+		mymob.client.screen += PM.screen_objects()
 
 /datum/hud/human/show_hud(version = 0,mob/viewmob)
 	. = ..()

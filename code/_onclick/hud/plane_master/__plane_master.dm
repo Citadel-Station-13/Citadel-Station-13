@@ -1,3 +1,7 @@
+INITIALIZE_IMMEDIATE(/obj/screen/plane_master)
+/**
+  * Plane masters. For rendering pipeline purposes, the objects that render_source from other planes should be defined on the target plane, not the source, for easier bookkeeping of layers.
+  */
 /obj/screen/plane_master
 	screen_loc = "CENTER"
 	icon_state = "blank"
@@ -6,11 +10,26 @@
 	var/show_alpha = 255
 	var/hide_alpha = 0
 
+/obj/screen/plane_master/Initialize(mapload)
+	. = ..()
+	setup()
+
+/**
+  * Set up things like render target objects.
+  */
+/obj/screen/plane_master/proc/setup()
+
 /obj/screen/plane_master/proc/Show(override)
 	alpha = override || show_alpha
 
 /obj/screen/plane_master/proc/Hide(override)
 	alpha = override || hide_alpha
+
+/**
+  * Gets the list of objects that needs to be added or removed from a client's screen.
+  */
+/obj/screen/plane_master/proc/screen_objects(mob/M)
+	return list(src)
 
 //Why do plane masters need a backdrop sometimes? Read https://secure.byond.com/forum/?post=2141928
 //Trust me, you need one. Period. If you don't think you do, you're doing something extremely wrong.
