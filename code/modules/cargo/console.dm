@@ -185,7 +185,7 @@
 			)
 		if((P.hidden && !(obj_flags & EMAGGED)) || (P.contraband && !contraband) || (P.special && !P.special_enabled) || P.DropPodOnly)
 			continue
-		if((P.permits & permits) != permits)
+		if((P.permits & permits) != P.permits)
 			continue
 		data["supplies"][P.group]["packs"] += list(list(
 			"name" = P.name,
