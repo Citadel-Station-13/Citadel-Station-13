@@ -4,7 +4,7 @@
 	layer = BELOW_OBJ_LAYER
 	var/consoleless_interface = TRUE			//Whether it can be used without a console.
 	var/offstation_security_levels = TRUE
-	var/cost_coefficieny = 1				//Materials needed / coeff = actual.
+	var/cost_coefficient = 1				//Materials needed / coeff = actual.
 	var/list/categories = list()
 	var/datum/component/remote_materials/materials
 	var/allowed_department_flags = ALL
