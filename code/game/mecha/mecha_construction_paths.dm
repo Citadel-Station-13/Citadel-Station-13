@@ -8,38 +8,39 @@
 /datum/component/construction/mecha/examine(mob/user)
 	. = ..()
 	if(looky_helpy)
-		if("key" == TOOL_WRENCH)
-			desc += "<span class='notice'>The mech could be <b>wrenched</b> into place.</span>"
-		if("key" == TOOL_SCREWDRIVER)
-			desc += "<span class='notice'>The mech could be <b>screwed</b> into place.</span>"
-		if("key" == TOOL_WIRECUTTER)
-			desc += "<span class='notice'>The mech wires could be <b>trimmed</b> into place.</span>"
-		if("key" == /obj/item/stack/cable_coil)
-			desc += "<span class='notice'>The mech could use some <b>wiring</b>.</span>"
-		if("key" == /obj/item/circuitboard)
-			desc += "<span class='notice'>The mech could use a type of<b>circuitboard</b>.</span>"
-		if("key" == /obj/item/stock_parts/scanning_module)
-			desc += "<span class='notice'>The mech could use a <b>scanning stock part</b>.</span>"
-		if("key" == /obj/item/stock_parts/capacitor)
-			desc += "<span class='notice'>The mech could use a <b>power based stock part</b>.</span>"
-		if("key" == /obj/item/stock_parts/cell)
-			desc += "<span class='notice'>The mech could use a <b>power source</b>.</span>"
-		if("key" == /obj/item/stack/sheet/metal)
-			desc += "<span class='notice'>The mech could use some <b>sheets of metal</b>.</span>"
-		if("key" == /obj/item/stack/sheet/plasteel)
-			desc += "<span class='notice'>The mech could use some <b>sheets of strong steel</b>.</span>"
-		if("key" == /obj/item/bikehorn)
-			desc += "<span class='notice'>HONK IT!.</span>"
-		if("key" == /obj/item/clothing/mask/gas/clown_hat)
-			desc += "<span class='notice'>GIVE IT CLOWN MAKEUP HONK!.</span>"
-		if("key" == /obj/item/clothing/shoes/clown_shoes)
-			desc += "<span class='notice'>GIVE IT GOOFY SHOES HONK HONK!.</span>"
-		if("key" == /obj/item/mecha_parts/part)
-			desc += "<span class='notice'>The mech could use a mech <b>part</b>.</span>"
-		if("key" == /obj/item/stack/ore/bluespace_crystal)
-			desc += "<span class='notice'>The mech could use a <b>crystal</b> of sorts.</span>"
-		if("key" == /obj/item/assembly/signaler/anomaly)
-			desc += "<span class='notice'>The mech could use a <b>anomaly</b> of sorts.</span>"
+		switch(key)
+			if(TOOL_WRENCH)
+				desc += "<span class='notice'>The mech could be <b>wrenched</b> into place.</span>"
+			if(TOOL_SCREWDRIVER)
+				desc += "<span class='notice'>The mech could be <b>screwed</b> into place.</span>"
+			if(TOOL_WIRECUTTER)
+				desc += "<span class='notice'>The mech wires could be <b>trimmed</b> into place.</span>"
+			if(/obj/item/stack/cable_coil)
+				desc += "<span class='notice'>The mech could use some <b>wiring</b>.</span>"
+			if(/obj/item/circuitboard)
+				desc += "<span class='notice'>The mech could use a type of<b>circuitboard</b>.</span>"
+			if(/obj/item/stock_parts/scanning_module)
+				desc += "<span class='notice'>The mech could use a <b>scanning stock part</b>.</span>"
+			if(/obj/item/stock_parts/capacitor)
+				desc += "<span class='notice'>The mech could use a <b>power based stock part</b>.</span>"
+			if(/obj/item/stock_parts/cell)
+				desc += "<span class='notice'>The mech could use a <b>power source</b>.</span>"
+			if(/obj/item/stack/sheet/metal)
+				desc += "<span class='notice'>The mech could use some <b>sheets of metal</b>.</span>"
+			if(/obj/item/stack/sheet/plasteel)
+				desc += "<span class='notice'>The mech could use some <b>sheets of strong steel</b>.</span>"
+			if(/obj/item/bikehorn)
+				desc += "<span class='notice'>HONK IT!.</span>"
+			if(/obj/item/clothing/mask/gas/clown_hat)
+				desc += "<span class='notice'>GIVE IT CLOWN MAKEUP HONK!.</span>"
+			if(/obj/item/clothing/shoes/clown_shoes)
+				desc += "<span class='notice'>GIVE IT GOOFY SHOES HONK HONK!.</span>"
+			if(/obj/item/mecha_parts/part)
+				desc += "<span class='notice'>The mech could use a mech <b>part</b>.</span>"
+			if(/obj/item/stack/ore/bluespace_crystal)
+				desc += "<span class='notice'>The mech could use a <b>crystal</b> of sorts.</span>"
+			if(/obj/item/assembly/signaler/anomaly)
+				desc += "<span class='notice'>The mech could use a <b>anomaly</b> of sorts.</span>"
 		else
 			return
 
