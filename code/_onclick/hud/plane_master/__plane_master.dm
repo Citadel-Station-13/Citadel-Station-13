@@ -5,7 +5,7 @@ INITIALIZE_IMMEDIATE(/obj/screen/plane_master)
 /obj/screen/plane_master
 	screen_loc = "CENTER"
 	icon_state = "blank"
-	appearance_flags = PLANE_MASTER|NO_CLIENT_COLOR
+	appearance_flags = PLANE_MASTER | NO_CLIENT_COLOR | PIXEL_SCALE
 	blend_mode = BLEND_OVERLAY
 	var/show_alpha = 255
 	var/hide_alpha = 0

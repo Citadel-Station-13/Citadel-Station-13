@@ -99,7 +99,7 @@
 
 /////////////////// SPLASHSCREEN ///////////////////
 /// Splashscreen plane.
-#define SPLASHSCREEN_PLANE 99
+#define SPLASHSCREEN_PLANE 200
 #define SPLASHSCREEN_RENDER_TARGET "*SPLASHSCREEN"
 
 #define SPLASHSCREEN_LAYER 30

@@ -3,21 +3,20 @@
   */
 /obj/screen/plane_master/final_full_render
 	name = "final render plane master"
-	appearance_flags = PLANE_MASTER | NO_CLIENT_COLOR
+	appearance_flags = PLANE_MASTER | NO_CLIENT_COLOR | PIXEL_SCALE
 	plane = FINAL_RENDER_PLANE
 
 /obj/screen/plane_master/final_full_render/get_render_holders()
 	. = ..()
 	. += new /obj/screen/plane_render_target(null, "final hud", plane, 2, HUD_RENDERING_TARGET)
 	. += new /obj/screen/plane_render_target(null, "final game", plane, 1, GAME_RENDERING_TARGET)
-	. += new /obj/screen/plane_render_target(null, "splashscreen", plane, 3, SPLASHSCREEN_RENDER_TARGET)
 
 /**
   * Plane master governing the result of all HUD rendering. All HUD elements or effects should render into this.
   */
 /obj/screen/plane_master/final_hud_render
 	name = "hud render plane master"
-	appearance_flags = PLANE_MASTER | NO_CLIENT_COLOR
+	appearance_flags = PLANE_MASTER | NO_CLIENT_COLOR | PIXEL_SCALE
 	plane = HUD_RENDERING_PLANE
 	render_target = HUD_RENDERING_TARGET
 
@@ -33,7 +32,7 @@
   */
 /obj/screen/plane_master/final_game_render
 	name = "game render plane master"
-	appearance_flags = PLANE_MASTER
+	appearance_flags = PLANE_MASTER | PIXEL_SCALE
 	plane = GAME_RENDERING_PLANE
 	render_target = GAME_RENDERING_TARGET
 

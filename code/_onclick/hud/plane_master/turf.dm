@@ -2,7 +2,7 @@
 	name = "turf subrendering plane master"
 	plane = TURF_PLANE
 	render_target = TURF_RENDER_TARGET
-	appearance_flags = PLANE_MASTER
+	appearance_flags = PLANE_MASTER | PIXEL_SCALE
 
 /obj/screen/plane_master/turf_subrender/get_render_holders()
 	. = ..()
@@ -15,7 +15,7 @@
 /obj/screen/plane_master/openspace
 	name = "open space plane master"
 	plane = OPENSPACE_PLANE
-	appearance_flags = PLANE_MASTER
+	appearance_flags = PLANE_MASTER | PIXEL_SCALE
 	render_target = OPENSPACE_RENDER_TARGET
 
 /obj/screen/plane_master/openspace/get_render_holders()
@@ -24,7 +24,7 @@
 
 /obj/screen/plane_master/openspace_backdrop
 	name = "openspace backdrop plane master"
-	appearance_flags = PLANE_MASTER
+	appearance_flags = PLANE_MASTER | PIXEL_SCALE
 	alpha = 255
 	render_target = OPENSPACE_BACKDROP_RENDER_TARGET
 	plane = OPENSPACE_BACKDROP_PLANE
@@ -40,6 +40,6 @@
 /obj/screen/plane_master/floor
 	name = "floor plane master"
 	plane = FLOOR_PLANE
-	appearance_flags = PLANE_MASTER
+	appearance_flags = PLANE_MASTER | PIXEL_SCALE
 	blend_mode = BLEND_OVERLAY
 	render_target = FLOOR_PLANE_RENDER_TARGET
