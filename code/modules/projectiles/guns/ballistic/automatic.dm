@@ -425,3 +425,29 @@
 	..()
 	icon_state = "oldrifle[magazine ? "-[CEILING(get_ammo(0)/4, 1)*4]" : ""]"
 	return
+
+//////////////////////////
+// NT SUMPTER MILITARY  //
+//////////////////////////
+
+/obj/item/gun/ballistic/automatic/sumpter
+	name = "\improper Sumpter Rifle"
+	desc = "The military version of a modular multipurpose bullpup weapon. Fires 5.56 in either semi-auto or two round bursts."
+	icon_state = "sumpter"
+	item_state = "bulldog"
+	w_class = WEIGHT_CLASS_NORMAL
+	weapon_weight = WEAPON_MEDIUM
+	mag_type = /obj/item/ammo_box/magazine/m556
+	fire_sound = 'sound/weapons/gunshot_rifle.ogg'
+	burst_shot_delay = 2
+	burst_size = 2
+	pin = /obj/item/firing_pin
+	can_bayonet = TRUE
+	knife_x_offset = 26
+	knife_y_offset = 10
+
+/obj/item/gun/ballistic/automatic/sumpter/nomag
+	spawnwithmagazine = FALSE
+
+/obj/item/gun/ballistic/automatic/sumpter/nomag/nopin
+	pin = null

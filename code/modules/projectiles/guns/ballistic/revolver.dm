@@ -313,18 +313,19 @@
 	else
 		to_chat(user, "<span class='warning'>[src] is empty!</span>")
 
-// IMPROVISED SHOTGUN //
+/////////////////////////////
+//   IMPROVISED SHOTGUN    //
+/////////////////////////////
 
 /obj/item/gun/ballistic/revolver/doublebarrel/improvised
 	name = "improvised shotgun"
-	desc = "Essentially a tube that aims shotgun shells."
+	desc = "A break-action breechloaded shotgun that fires 20 gauge shells."
 	icon_state = "ishotgun"
 	item_state = "shotgun"
 	w_class = WEIGHT_CLASS_BULKY
 	force = 10
 	slot_flags = null
 	mag_type = /obj/item/ammo_box/magazine/internal/shot/improvised
-	sawn_desc = "I'm just here for the gasoline."
 	unique_reskin = null
 	var/slung = FALSE
 
@@ -355,7 +356,7 @@
 /obj/item/gun/ballistic/revolver/doublebarrel/improvised/sawn
 	name = "sawn-off improvised shotgun"
 	desc = "A single-shot shotgun. Better not miss."
-	icon_state = "ishotgun"
+	icon_state = "ishotgun-sawn"
 	item_state = "gun"
 	w_class = WEIGHT_CLASS_NORMAL
 	sawn_off = TRUE

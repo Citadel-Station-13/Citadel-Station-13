@@ -112,3 +112,45 @@
 /obj/item/projectile/bullet/seed
 	damage = 4
 	stamina = 1
+
+//////////////////
+//    20 BORE   //
+//////////////////
+
+/obj/item/projectile/bullet/pellet/shotgun_buckshot/twentybore_buckshot
+	name = "20g buckshot pellet"
+	damage = 10
+
+/obj/item/projectile/bullet/shotgun_slug/twentybore_slug
+	name = "12g shotgun slug"
+	damage = 50
+
+/obj/item/projectile/bullet/shotgun_beanbag/twentybore_beanbag
+	name = "beanbag slug"
+	damage = 2
+	stamina = 50
+
+/obj/item/projectile/bullet/incendiary/shotgun/twentybore_incendiary
+	name = "incendiary slug"
+	damage = 16
+
+//////////////////
+//   .410 BORE  //
+//////////////////
+
+/obj/item/projectile/bullet/pellet/shotgun_buckshot/fourtenbore_buckshot
+	name = "20g buckshot pellet"
+	damage = 8
+
+/obj/item/projectile/bullet/shotgun_slug/fourtenbore_slug
+	name = "12g shotgun slug"
+	damage = 40
+
+/obj/item/projectile/bullet/shotgun_beanbag/fourtenbore_beanbag
+	name = "beanbag slug"
+	damage = 2
+	stamina = 50
+
+/obj/item/projectile/bullet/incendiary/shotgun/fourtenbore_incendiary
+	name = "incendiary slug"
+	damage = 10

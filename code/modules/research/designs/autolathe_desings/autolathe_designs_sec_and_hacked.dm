@@ -6,19 +6,27 @@
 /////////////
 
 /datum/design/beanbag_slug
-	name = "Beanbag Slug"
+	name = "12g Beanbag Slug"
 	id = "beanbag_slug"
 	build_type = AUTOLATHE
-	materials = list(/datum/material/iron = 250)
+	materials = list(/datum/material/iron = 1000)
 	build_path = /obj/item/ammo_casing/shotgun/beanbag
 	category = list("initial", "Security")
 
 /datum/design/rubbershot
-	name = "Rubber Shot"
+	name = "12g Rubber Shot"
 	id = "rubber_shot"
 	build_type = AUTOLATHE
 	materials = list(/datum/material/iron = 4000)
 	build_path = /obj/item/ammo_casing/shotgun/rubbershot
+	category = list("initial", "Security")
+
+/datum/design/twentybeanbag_slug
+	name = "20g Beanbag Slug"
+	id = "beanbag_slug_twenty"
+	build_type = AUTOLATHE
+	materials = list(/datum/material/iron = 500)
+	build_path = /obj/item/ammo_casing/shotgun_20bore/beanbag
 	category = list("initial", "Security")
 
 /datum/design/c38
@@ -73,6 +81,7 @@
 	build_path = /obj/item/restraints/handcuffs
 	category = list("hacked", "Security")
 
+/*
 /datum/design/receiver
 	name = "Modular Receiver"
 	id = "receiver"
@@ -81,8 +90,23 @@
 	build_path = /obj/item/weaponcrafting/receiver
 	category = list("hacked", "Security")
 
+Old receiver, removed, you now use different receivers found in guncrafting.dm
+*/
+/datum/design/rifle_receiver
+	name = "Rifle Receiver"
+	id = "rifle_receiver"
+	build_type = AUTOLATHE
+	materials = list(/datum/material/iron = 40000)
+	build_path = /obj/item/weaponcrafting/improvised_parts/rifle_receiver
+	category = list("hacked", "Security")
+
+
+/////////////////
+//   12 Gauge  //
+/////////////////
+
 /datum/design/shotgun_slug
-	name = "Shotgun Slug"
+	name = "12g Shotgun Slug"
 	id = "shotgun_slug"
 	build_type = AUTOLATHE
 	materials = list(/datum/material/iron = 4000)
@@ -90,7 +114,7 @@
 	category = list("hacked", "Security")
 
 /datum/design/buckshot_shell
-	name = "Buckshot Shell"
+	name = "12g Buckshot Shell"
 	id = "buckshot_shell"
 	build_type = AUTOLATHE
 	materials = list(/datum/material/iron = 4000)
@@ -98,7 +122,7 @@
 	category = list("hacked", "Security")
 
 /datum/design/shotgun_dart
-	name = "Shotgun Dart"
+	name = "12g Shotgun Dart"
 	id = "shotgun_dart"
 	build_type = AUTOLATHE
 	materials = list(/datum/material/iron = 4000)
@@ -106,12 +130,44 @@
 	category = list("hacked", "Security")
 
 /datum/design/incendiary_slug
-	name = "Incendiary Slug"
+	name = "12g Incendiary Slug"
 	id = "incendiary_slug"
 	build_type = AUTOLATHE
 	materials = list(/datum/material/iron = 4000)
 	build_path = /obj/item/ammo_casing/shotgun/incendiary
 	category = list("hacked", "Security")
+
+/////////////////
+//  20 Gauge   //
+/////////////////
+
+/datum/design/twentyshotgun_slug
+	name = "20g Shotgun Slug"
+	id = "shotgun_slug_twenty"
+	build_type = AUTOLATHE
+	materials = list(/datum/material/iron = 2000)
+	build_path = /obj/item/ammo_casing/shotgun_20bore
+	category = list("hacked", "Security")
+
+/datum/design/twentybuckshot_shell
+	name = "20g Buckshot Shell"
+	id = "buckshot_shell_twenty"
+	build_type = AUTOLATHE
+	materials = list(/datum/material/iron = 2000)
+	build_path = /obj/item/ammo_casing/shotgun_20bore/buckshot
+	category = list("hacked", "Security")
+
+/datum/design/twentyincendiary_slug
+	name = "20g Incendiary Slug"
+	id = "incendiary_slug_twenty"
+	build_type = AUTOLATHE
+	materials = list(/datum/material/iron = 2000)
+	build_path = /obj/item/ammo_casing/shotgun_20bore/incendiary
+	category = list("hacked", "Security")
+
+/////////////////
+//   Bullets   //
+/////////////////
 
 /datum/design/riot_dart
 	name = "Foam Riot Dart"
@@ -127,6 +183,22 @@
 	build_type = AUTOLATHE
 	materials = list(/datum/material/iron = 50000) //Comes with 40 darts
 	build_path = /obj/item/ammo_box/foambox/riot
+	category = list("hacked", "Security")
+
+/datum/design/m32acp
+	name = "Empty .32 Magazine"
+	id = "m32acp"
+	build_type = AUTOLATHE
+	materials = list(/datum/material/iron = 10000)
+	build_path = /obj/item/ammo_box/magazine/m32acp/empty
+	category = list("hacked", "Security")
+
+/datum/design/c32acp
+	name = "Pistol Bullet (.32)"
+	id = "c32acp"
+	build_type = AUTOLATHE
+	materials = list(/datum/material/iron = 250)
+	build_path = /obj/item/ammo_casing/c32acp
 	category = list("hacked", "Security")
 
 /datum/design/a357

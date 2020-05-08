@@ -1,8 +1,14 @@
+// 5.7x28mm (M-90gl Carbine) (Originally 5.56)
+
+/obj/item/projectile/bullet/a57
+	name = "5.7x28mm bullet"
+	damage = 20 // Originally 35 but the magazine capacity has gone from 30 to 50.
+
 // 5.56mm (M-90gl Carbine)
 
 /obj/item/projectile/bullet/a556
 	name = "5.56mm bullet"
-	damage = 35
+	damage = 25 // Originally 35. The Syndicate FN P90GL
 
 // 7.62 (Nagant Rifle)
 

@@ -196,10 +196,10 @@
 
 /datum/uplink_item/dangerous/carbine
 	name = "M-90gl Carbine"
-	desc = "A fully-loaded, specialized three-round burst carbine that fires 5.56mm ammunition from a 30 round magazine \
+	desc = "A fully-loaded, specialized three-round burst carbine that fires 5.7x28mm ammunition from a 50 round magazine \
 			with a toggleable 40mm underbarrel grenade launcher."
 	item = /obj/item/gun/ballistic/automatic/m90
-	cost = 18
+	cost = 12
 	surplus = 50
 	include_modes = list(/datum/game_mode/nuclear)
 

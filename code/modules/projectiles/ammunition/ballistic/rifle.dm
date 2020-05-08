@@ -10,7 +10,16 @@
 /obj/item/ammo_casing/a762/enchanted
 	projectile_type = /obj/item/projectile/bullet/a762_enchanted
 
-// 5.56mm (M-90gl Carbine)
+// 5.7x28mm (M-90gl PDW) - used to be 5.56
+
+
+/obj/item/ammo_casing/a57
+	name = "5.7x28mm bullet casing"
+	desc = "A 5.7x28mm bullet casing."
+	caliber = "a57"
+	projectile_type = /obj/item/projectile/bullet/a556
+
+// 5.56 (Sumpter)
 
 /obj/item/ammo_casing/a556
 	name = "5.56mm bullet casing"

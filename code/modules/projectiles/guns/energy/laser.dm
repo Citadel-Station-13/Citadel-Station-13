@@ -240,3 +240,23 @@
 		chambered.BB.damage *= 5
 
 	process_fire(target, user, TRUE, params)
+
+
+////////////////
+// IMPROVISED //
+////////////////
+
+/obj/item/gun/energy/e_gun/old/improvised
+	name = "improvised energy gun"
+	desc = "A crude imitation of an energy gun. It works, however the beams are poorly focused and most of the energy is wasted before it reaches the target. Welp, it still burns things."
+	icon_state = "improvised"
+	ammo_x_offset = 1
+	shaded_charge = 1
+	ammo_type = list(/obj/item/ammo_casing/energy/lasergun/improvised)
+
+/obj/item/gun/energy/e_gun/old/improvised/upgraded
+	name = "makeshift energy gun"
+	desc = "Although its laser and capacitors are upgraded, its manufacturing quality negates some of the benefits. Roughly comparable to Nanotrasen's own."
+	ammo_type = list(/obj/item/ammo_casing/energy/laser/hos)
+
+// Balance note - Getting the lens to craft this requires going through a 6 step glassmaking process that you need a specific cargo crate for, as well as tier 4 parts.

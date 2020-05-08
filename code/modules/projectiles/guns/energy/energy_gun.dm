@@ -147,3 +147,37 @@
 				add_overlay("[icon_state]_fail_1")
 			if(151 to INFINITY)
 				add_overlay("[icon_state]_fail_2")
+
+//////////////// Type 21 is functionally identical to the HoS's gun.
+// PLASMA GUN // Type 20 is functionally identical to a laser gun. You can tell it apart because it is red.
+//////////////// Type 19 is worse than a laser gun. It fires in bursts of three. Use this for events, the burst scares the crew but doesn't harm them too much.
+
+/obj/item/gun/energy/e_gun/plasmagun_type21
+	name = "\improper Type-21 EED"
+	desc = "A successor to the Type-20 model. This version includes new non-lethal firing modes."
+	icon_state = "plasmagun"
+	force = 10
+	ammo_type = list(/obj/item/ammo_casing/energy/electrode, /obj/item/ammo_casing/energy/disabler, /obj/item/ammo_casing/energy/laser/hos)
+	ammo_x_offset = 1
+	shaded_charge = 1
+
+/obj/item/gun/energy/e_gun/plasmagun_type20
+	name = "\improper Type-20 EED"
+	desc = "At a slightly increased power cost, this fires a singular bolt that is slightly more powerful than all three of the Type-19's burst-fired bolts combined. The question bamboozling Nanotrasen's top scientists to this day is: 'why is it red?'"
+	icon_state = "plasmagun20"
+	force = 10
+	ammo_type = list(/obj/item/ammo_casing/energy/lasergun)
+	ammo_x_offset = 1
+	shaded_charge = 1
+
+/obj/item/gun/energy/e_gun/plasmagun_type19
+	name = "\improper Type-19 EED"
+	desc = "An ancient alien waepon, dubbed 'Encased Energy Director'. The original power source has been replaced with a Nanotrasen compatible power  supply."
+	icon_state = "plasmagun19"
+	force = 10
+	ammo_type = list(/obj/item/ammo_casing/energy/lasergun/plasmagun/triple) // WARNING! This damage type does a small amount of stamina damage too.
+	ammo_x_offset = 1
+	shaded_charge = 1
+	fire_delay = 15 // You fire your burst in 0.75 seconds, wait 0.75 seconds, then fire another burst. Effectively this is a 0.75s cooldown.
+	burst_size = 3
+	burst_shot_delay = 2.5

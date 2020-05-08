@@ -611,13 +611,13 @@
 		/obj/item/clothing/mask/breath = 5,
 		/obj/item/clothing/mask/breath/medical = 1
 		)
- 
+
 /obj/effect/spawner/lootdrop/welder_tools/no_turf
 	spawn_on_turf = FALSE
 
 /obj/effect/spawner/lootdrop/low_tools/no_turf
 	spawn_on_turf = FALSE
- 
+
 /obj/effect/spawner/lootdrop/breathing_tanks/no_turf
 	spawn_on_turf = FALSE
 
@@ -644,3 +644,49 @@
 
 /obj/effect/spawner/lootdrop/glowstick/no_turf
 	spawn_on_turf = FALSE
+
+// Random Parts
+
+/obj/effect/spawner/lootdrop/stock_parts
+	name = "random stock parts spawner"
+	lootcount = 1
+	loot = list(
+				/obj/item/stock_parts/capacitor,
+				/obj/item/stock_parts/scanning_module,
+				/obj/item/stock_parts/manipulator,
+				/obj/item/stock_parts/micro_laser,
+				/obj/item/stock_parts/matter_bin,
+				/obj/item/stock_parts/cell
+				)
+
+// Random Weapon Parts
+
+/obj/effect/spawner/lootdrop/weapon_parts
+	name = "random weapon parts spawner 50%"
+	lootcount = 1
+	spawn_on_turf = FALSE
+	loot = list("" = 50,
+		/obj/item/weaponcrafting/improvised_parts/barrel_rifle = 10,
+		/obj/item/weaponcrafting/improvised_parts/barrel_shotgun = 5,
+		/obj/item/weaponcrafting/improvised_parts/barrel_pistol = 5,
+		/obj/item/weaponcrafting/improvised_parts/rifle_receiver = 10,
+		/obj/item/weaponcrafting/improvised_parts/shotgun_receiver = 3,
+		/obj/item/weaponcrafting/improvised_parts/pistol_receiver = 3,
+		/obj/item/weaponcrafting/improvised_parts/laser_receiver = 1,
+		/obj/item/weaponcrafting/improvised_parts/trigger_assembly = 10,
+		/obj/item/weaponcrafting/improvised_parts/makeshift_lens = 3,
+		)
+
+/obj/effect/spawner/lootdrop/weapon_parts
+	name = "random weapon parts spawner 25%"
+	lootcount = 1
+	spawn_on_turf = FALSE
+	loot = list("" = 75,
+		/obj/item/weaponcrafting/improvised_parts/barrel_rifle = 5,
+		/obj/item/weaponcrafting/improvised_parts/barrel_pistol = 5,
+		/obj/item/weaponcrafting/improvised_parts/rifle_receiver = 5,
+		/obj/item/weaponcrafting/improvised_parts/pistol_receiver = 2,
+		/obj/item/weaponcrafting/improvised_parts/trigger_assembly = 5,
+		/obj/item/weaponcrafting/improvised_parts/makeshift_lens = 3,
+		)
+// Note - Neither of these spawns wooden weapon parts.

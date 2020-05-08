@@ -21,6 +21,7 @@
 	impact_type = /obj/effect/projectile/impact/laser
 
 /obj/item/projectile/beam/laser/heavylaser
+
 	name = "heavy laser"
 	icon_state = "heavylaser"
 	damage = 40
@@ -38,6 +39,9 @@
 
 /obj/item/projectile/beam/weak
 	damage = 15
+
+/obj/item/projectile/beam/weak/improvised
+	damage = 10
 
 /obj/item/projectile/beam/weak/penetrator
 	armour_penetration = 50
@@ -80,6 +84,26 @@
 	tracer_type = /obj/effect/projectile/tracer/disabler
 	muzzle_type = /obj/effect/projectile/muzzle/disabler
 	impact_type = /obj/effect/projectile/impact/disabler
+
+// Plasmagun Start
+
+/obj/item/projectile/beam/laser/blue
+	name = "energy beam"
+	icon_state = "omnilaser"
+	damage = 20
+	damage_type = BURN
+	flag = "energy"
+	tracer_type = /obj/effect/projectile/tracer/laser/blue
+	muzzle_type = /obj/effect/projectile/muzzle/laser/blue
+	impact_type = /obj/effect/projectile/impact/laser/blue
+
+/obj/item/projectile/beam/laser/blue/triple
+	icon_state = "omnilaser"
+	damage = 6 // Does less damage due to cheaper energy cost.
+	eyeblur = 1
+	stamina = 5 // Bonus! It's function
+
+// Plasmagun End
 
 /obj/item/projectile/beam/pulse
 	name = "pulse"

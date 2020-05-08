@@ -12,6 +12,15 @@
 	e_cost = 200
 	select_name = "kill"
 
+/obj/item/ammo_casing/energy/lasergun/improvised
+	projectile_type = /obj/item/projectile/beam/weak/improvised
+	e_cost = 200
+	select_name = "kill"
+
+/obj/item/ammo_casing/energy/lasergun/improvised/upgraded
+	projectile_type = /obj/item/projectile/beam/weak
+	e_cost = 83
+
 /obj/item/ammo_casing/energy/laser/hos
 	e_cost = 100
 
@@ -79,3 +88,17 @@
 	projectile_type = /obj/item/projectile/beam/mindflayer
 	select_name = "MINDFUCK"
 	fire_sound = 'sound/weapons/laser.ogg'
+
+////////////////
+// Plasmagun //
+///////////////
+
+/obj/item/ammo_casing/energy/lasergun/plasmagun
+	projectile_type = /obj/item/projectile/beam/laser/blue
+	e_cost = 200
+	select_name = "kill"
+
+/obj/item/ammo_casing/energy/lasergun/plasmagun/triple
+	projectile_type = /obj/item/projectile/beam/laser/blue/triple
+	e_cost = 25
+	select_name = "kill" // Burst-fire hence the low cost.

@@ -12,10 +12,18 @@
 	else
 		icon_state = "75-0"
 
+/obj/item/ammo_box/magazine/m57
+	name = "toploader magazine (5.7x28mm)"
+	icon_state = "5.7x28m"
+	ammo_type = /obj/item/ammo_casing/a57
+	caliber = "a57"
+	max_ammo = 50 // Reworked into a PDW. Changed from 30 to 40 with a damage nerf to not make it "C-20r with a grenade launcher"
+	multiple_sprites = 2
+
 /obj/item/ammo_box/magazine/m556
-	name = "toploader magazine (5.56mm)"
+	name = "rifle magazine (5.56mm)"
 	icon_state = "5.56m"
 	ammo_type = /obj/item/ammo_casing/a556
 	caliber = "a556"
-	max_ammo = 30
-	multiple_sprites = 2
+	max_ammo = 12
+	multiple_sprites = 0
