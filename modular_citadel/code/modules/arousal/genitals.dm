@@ -159,10 +159,10 @@
 	if(fluid_id && CHECK_BITFIELD(genital_flags, GENITAL_FUID_PRODUCTION))
 		time_since_last_orgasm++
 
-/obj/item/organ/genital/proc/generate_fluid()
+/obj/item/organ/genital/proc/generate_fluid(datum/reagents/R)
 	var/amount = clamp(fluid_rate * time_since_last_orgasm * fluid_mult,0,fluid_max_volume)
-	reagents.clear_reagents()
-	reagents.add_reagent(fluid_id,amount)
+	R.clear_reagents()
+	R.add_reagent(fluid_id,amount)
 	return TRUE
 
 /obj/item/organ/genital/proc/update_link()

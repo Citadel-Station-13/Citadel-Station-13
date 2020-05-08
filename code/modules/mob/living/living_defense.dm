@@ -340,7 +340,7 @@
 		if(M.is_muzzled() || (M.wear_mask && M.wear_mask.flags_cover & MASKCOVERSMOUTH))
 			to_chat(M, "<span class='warning'>You can't bite with your mouth covered!</span>")
 			return FALSE
-		if(run_block(M, 0, "the [M.name]", ATTACK_TYPE_MELEE | ATTACK_TYPE_UNARMED, M, check_zone(M.zone_selected)) & BLOCK_SUCCESS)
+		if(run_block(M, 0, "the [M.name]", ATTACK_TYPE_MELEE | ATTACK_TYPE_UNARMED, 0, M, check_zone(M.zone_selected)) & BLOCK_SUCCESS)
 			return FALSE
 		M.do_attack_animation(src, ATTACK_EFFECT_BITE)
 		if (prob(75))
