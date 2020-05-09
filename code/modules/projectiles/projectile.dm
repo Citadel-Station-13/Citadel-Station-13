@@ -32,7 +32,6 @@
 	//Fired processing vars
 	var/fired = FALSE	//Have we been fired yet
 	var/paused = FALSE	//for suspending the projectile midair
-	var/last_projectile_move = 0
 	var/time_offset = 0
 	var/datum/point/vector/trajectory
 	var/trajectory_ignore_forcemove = FALSE	//instructs forceMove to NOT reset our trajectory to the new location!
@@ -78,11 +77,15 @@
 	//Homing
 	var/homing = FALSE
 	var/atom/homing_target
-	var/homing_turn_speed = 10		//Angle per tick.
+	/// How fast the projectile turns towards its homing targets, in angle per second.
+	var/homing_turn_speed = 100
 	var/homing_inaccuracy_min = 0		//in pixels for these. offsets are set once when setting target.
 	var/homing_inaccuracy_max = 0
 	var/homing_offset_x = 0
 	var/homing_offset_y = 0
+
+	/// How many deciseconds are each hitscan movement considered
+	var/hitscan_movement_decisecond_equivalency = 0.1
 
 	var/ignore_source_check = FALSE
 
@@ -362,9 +365,10 @@
 		return PROCESS_KILL
 	if(paused || !isturf(loc))
 		return
+	
 	var/required_pixels = (pixels_per_second * (((SSprojectiles.flags & SS_TICKER)? (wait * world.tick_lag) : wait) * 0.1)) + pixels_tick_leftover
-	pixel_move(round(required_pixels, pixel_increment_amount), FALSE)
 	pixels_tick_leftover = MODULUS(required_pixels, pixel_increment_amount)
+	pixel_move(FLOOR(required_pixels / pixel_increment_amount, pixel_increment_amount), FALSE)
 
 /obj/item/projectile/proc/fire(angle, atom/direct_target)
 	if(fired_from)
@@ -387,7 +391,7 @@
 			qdel(src)
 			return
 		var/turf/target = locate(clamp(starting + xo, 1, world.maxx), clamp(starting + yo, 1, world.maxy), starting.z)
-		setAngle(Get_Angle(src, target))
+		setAngle(get_projectile_angle(src, target))
 	original_angle = Angle
 	if(!nondirectional_sprite)
 		var/matrix/M = new
@@ -399,7 +403,6 @@
 	if(isnull(pixel_increment_amount))
 		pixel_increment_amount = SSprojectiles.global_pixel_increment_amount
 	trajectory = new(starting.x, starting.y, starting.z, pixel_x, pixel_y, Angle, pixel_increment_amount)
-	last_projectile_move = world.time
 	fired = TRUE
 	if(hitscan)
 		process_hitscan()
@@ -476,20 +479,26 @@
 			if(!QDELETED(src))
 				qdel(src)
 			return	//Kill!
-		pixel_move(1, TRUE)
+		pixel_move(1, TRUE, hitscan_movement_decisecond_equivalency)
 
 /obj/item/projectile/proc/pixel_move(times, hitscanning = FALSE, trajectory_multiplier = 1)
 	if(!loc || !trajectory)
 		return
-	last_projectile_move = world.time
 	if(!nondirectional_sprite && !hitscanning)
 		var/matrix/M = new
 		M.Turn(Angle)
 		transform = M
-	if(homing)
-		process_homing()
 	var/forcemoved = FALSE
+	var/turf/oldloc = loc
+	var/old_px = pixel_x
+	var/old_py = pixel_y
 	for(var/i in 1 to times)
+		// HOMING START - Too expensive to proccall at this point.
+		if(homing_target)
+			// No datum/points, too expensive.
+			var/angle = closer_angle_difference(Angle, get_projectile_angle(src, homing_target))
+			setAngle(Angle + clamp(angle, -homing_turn_speed, homing_turn_speed))
+		// HOMING END
 		trajectory.increment(trajectory_multiplier)
 		var/turf/T = trajectory.return_turf()
 		if(!istype(T))
@@ -513,19 +522,10 @@
 			if(QDELETED(src))
 				return
 	if(!hitscanning && !forcemoved)
-		pixel_x = trajectory.return_px() - trajectory.mpx * times * trajectory_multiplier
-		pixel_y = trajectory.return_py() - trajectory.mpy * times * trajectory_multiplier
-		animate(src, pixel_x = trajectory.return_px(), pixel_y = trajectory.return_py(), time = 1, flags = ANIMATION_END_NOW)
+		pixel_x = ((oldloc.x - x) * world.icon_size) + old_px
+		pixel_y = ((oldloc.y - y) * world.icon_size) + old_py
+		animate(src, pixel_x = trajectory.return_px(), pixel_y = trajectory.return_py(), time = ((SSprojectiles.flags & SS_TICKER)? (SSprojectiles.wait * world.tick_lag) : SSprojectiles.wait), flags = ANIMATION_END_NOW)
 	Range()
-
-/obj/item/projectile/proc/process_homing()			//may need speeding up in the future performance wise.
-	if(!homing_target)
-		return FALSE
-	var/datum/point/PT = RETURN_PRECISE_POINT(homing_target)
-	PT.x += clamp(homing_offset_x, 1, world.maxx)
-	PT.y += clamp(homing_offset_y, 1, world.maxy)
-	var/angle = closer_angle_difference(Angle, angle_between_points(RETURN_PRECISE_POINT(src), PT))
-	setAngle(Angle + clamp(angle, -homing_turn_speed, homing_turn_speed))
 
 /obj/item/projectile/proc/set_homing_target(atom/A)
 	if(!A || (!isturf(A) && !isturf(A.loc)))
@@ -575,7 +575,7 @@
 	if(targloc || !params)
 		yo = targloc.y - curloc.y
 		xo = targloc.x - curloc.x
-		setAngle(Get_Angle(src, targloc) + spread)
+		setAngle(get_projectile_angle(src, targloc) + spread)
 
 	if(isliving(source) && params)
 		var/list/calculated = calculate_projectile_angle_and_pixel_offsets(source, params)
@@ -586,7 +586,7 @@
 	else if(targloc)
 		yo = targloc.y - curloc.y
 		xo = targloc.x - curloc.x
-		setAngle(Get_Angle(src, targloc) + spread)
+		setAngle(get_projectile_angle(src, targloc) + spread)
 	else
 		stack_trace("WARNING: Projectile [type] fired without either mouse parameters, or a target atom to aim at!")
 		qdel(src)
