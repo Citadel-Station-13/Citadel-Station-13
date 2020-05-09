@@ -132,6 +132,12 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	var/list/grind_results //A reagent list containing the reagents this item produces when ground up in a grinder - this can be an empty list to allow for reagent transferring only
 	var/list/juice_results //A reagent list containing blah blah... but when JUICED in a grinder!
 
+	///Skills vars
+	//list of skill PATHS exercised when using this item. An associated bitfield can be set to indicate additional ways the skill is used by this specific item.
+	var/list/datum/skill/used_skills
+	var/skill_difficulty = THRESHOLD_COMPETENT //how difficult it's to use this item in general.
+	var/skill_gain = DEF_SKILL_GAIN //base skill value gain from using this item.
+
 /obj/item/Initialize()
 
 	if (attack_verb)
@@ -783,7 +789,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 
 // Called when a mob tries to use the item as a tool.
 // Handles most checks.
-/obj/item/proc/use_tool(atom/target, mob/living/user, delay, amount=0, volume=0, datum/callback/extra_checks)
+/obj/item/proc/use_tool(atom/target, mob/living/user, delay, amount=0, volume=0, datum/callback/extra_checks, skill_gain_mult = 1, max_level = INFINITY)
 	// No delay means there is no start message, and no reason to call tool_start_check before use_tool.
 	// Run the start check here so we wouldn't have to call it manually.
 	if(!delay && !tool_start_check(user, amount))
@@ -795,6 +801,9 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	play_tool_sound(target, volume)
 
 	if(delay)
+		if(user.mind && used_skills)
+			delay = user.mind.skill_holder.item_action_skills_mod(src, delay, skill_difficulty, SKILL_USE_TOOL, NONE, FALSE)
+
 		// Create a callback with checks that would be called every tick by do_after.
 		var/datum/callback/tool_check = CALLBACK(src, .proc/tool_check_callback, user, amount, extra_checks)
 
@@ -818,6 +827,12 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	// but only if the delay between the beginning and the end is not too small
 	if(delay >= MIN_TOOL_SOUND_DELAY)
 		play_tool_sound(target, volume)
+
+	if(user.mind && used_skills && skill_gain_mult)
+		for(var/skill in used_skills)
+			if(!(used_skills[skill] & SKILL_TRAINING_TOOL))
+				continue
+			user.mind.skill_holder.auto_gain_experience(skill, skill_gain*skill_gain_mult, GET_STANDARD_LVL(max_level))
 
 	return TRUE
 

@@ -222,7 +222,9 @@
 	tempo = sanitize_tempo(600 / bpm)
 
 /// Updates the window for our user. Override in subtypes.
-/datum/song/proc/updateDialog(mob/user)
+/datum/song/proc/updateDialog(mob/user = usr)
+	if(user.machine != src)
+		return
 	ui_interact(user)
 
 /datum/song/process(wait)
@@ -277,8 +279,10 @@
 // subtype for handheld instruments, like violin
 /datum/song/handheld
 
-/datum/song/handheld/updateDialog(mob/user)
-	parent.ui_interact(user || usr)
+/datum/song/handheld/updateDialog(mob/user = usr)
+	if(user.machine != src)
+		return
+	parent.ui_interact(user)
 
 /datum/song/handheld/should_stop_playing(mob/user)
 	. = ..()
@@ -290,8 +294,10 @@
 // subtype for stationary structures, like pianos
 /datum/song/stationary
 
-/datum/song/stationary/updateDialog(mob/user)
-	parent.ui_interact(user || usr)
+/datum/song/stationary/updateDialog(mob/user = usr)
+	if(user.machine != src)
+		return
+	parent.ui_interact(user)
 
 /datum/song/stationary/should_stop_playing(mob/user)
 	. = ..()
