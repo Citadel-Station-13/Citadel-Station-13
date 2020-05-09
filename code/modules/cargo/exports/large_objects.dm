@@ -171,13 +171,13 @@
 	var/worth = 10
 	var/gases = C.air_contents.gases
 
-	worth += gases[/datum/gas/bz]*4
-	worth += gases[/datum/gas/stimulum]*25
-	worth += gases[/datum/gas/hypernoblium]*1000
-	worth += gases[/datum/gas/miasma]*4
-	worth += gases[/datum/gas/tritium]*7
-	worth += gases[/datum/gas/pluoxium]*6
-	worth += gases[/datum/gas/nitryl]*30
+	worth += gases[/datum/gas/bz]*2
+	worth += gases[/datum/gas/stimulum]*20
+	worth += gases[/datum/gas/hypernoblium]*100
+	worth += gases[/datum/gas/miasma]*1
+	worth += gases[/datum/gas/tritium]*4
+	worth += gases[/datum/gas/pluoxium]*3
+	worth += gases[/datum/gas/nitryl]*25
 	return worth
 
 
