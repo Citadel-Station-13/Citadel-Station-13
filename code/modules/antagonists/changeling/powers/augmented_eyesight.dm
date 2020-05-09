@@ -47,7 +47,7 @@
 
 /obj/effect/proc_holder/changeling/augmented_eyesight/on_refund(mob/user) //Get rid of X-ray vision and flash protection when the user refunds this ability
 	action.Remove(user)
-		EMOVE_TRAIT(user, TRAIT_THERMAL_VISION, CHANGELING_TRAIT)
+	REMOVE_TRAIT(user, TRAIT_THERMAL_VISION, CHANGELING_TRAIT)
 	var/obj/item/organ/eyes/E = user.getorganslot(ORGAN_SLOT_EYES)
 	if(E)
 		E.flash_protect = initial(E.flash_protect)
