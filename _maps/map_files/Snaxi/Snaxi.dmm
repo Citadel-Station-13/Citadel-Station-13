@@ -1108,13 +1108,11 @@
 /obj/structure/cable{
 	icon_state = "2-4"
 	},
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 4;
-	icon_state = "1-4"
-	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
+	},
+/obj/structure/cable{
+	icon_state = "1-4"
 	},
 /turf/open/floor/circuit,
 /area/ai_monitored/turret_protected/ai_upload)
@@ -12835,11 +12833,6 @@
 	dir = 4
 	},
 /obj/structure/cable{
-	d1 = 1;
-	d2 = 4;
-	icon_state = "1-4"
-	},
-/obj/structure/cable{
 	icon_state = "2-4"
 	},
 /obj/machinery/door/airlock/security{
@@ -12849,6 +12842,9 @@
 /obj/machinery/door/firedoor/border_only{
 	dir = 4;
 	name = "east facing firelock"
+	},
+/obj/structure/cable{
+	icon_state = "1-4"
 	},
 /turf/open/floor/plasteel/grimy,
 /area/security/detectives_office)
@@ -13730,12 +13726,10 @@
 /obj/structure/cable{
 	icon_state = "2-4"
 	},
+/obj/machinery/holopad,
 /obj/structure/cable{
-	d1 = 1;
-	d2 = 4;
 	icon_state = "1-4"
 	},
-/obj/machinery/holopad,
 /turf/open/floor/plasteel/checker,
 /area/crew_quarters/heads/hor)
 "gNb" = (
@@ -14659,8 +14653,6 @@
 /area/crew_quarters/fitness)
 "hse" = (
 /obj/structure/cable{
-	d1 = 1;
-	d2 = 4;
 	icon_state = "1-4"
 	},
 /turf/open/floor/circuit/off,
@@ -20237,8 +20229,6 @@
 	icon_state = "4-8"
 	},
 /obj/structure/cable{
-	d1 = 1;
-	d2 = 4;
 	icon_state = "1-4"
 	},
 /turf/open/floor/circuit/off,
@@ -21653,10 +21643,6 @@
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "mfF" = (
-/obj/structure/cable{
-	dir = 8;
-	icon_state = "0-4"
-	},
 /obj/machinery/power/apc{
 	areastring = "/area/crew_quarters/heads/cmo";
 	dir = 1;
@@ -21673,6 +21659,9 @@
 	},
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
+	},
+/obj/structure/cable{
+	icon_state = "0-4"
 	},
 /turf/open/floor/plasteel/white,
 /area/crew_quarters/heads/cmo)
@@ -23713,15 +23702,13 @@
 /area/crew_quarters/dorms)
 "nBk" = (
 /obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/structure/cable{
 	icon_state = "1-8"
 	},
 /obj/structure/cable{
-	d1 = 1;
-	d2 = 4;
 	icon_state = "1-4"
-	},
-/obj/structure/cable{
-	icon_state = "1-2"
 	},
 /turf/open/floor/plating/asteroid/snow/icemoon,
 /area/icemoon/surface/outdoors)
@@ -28837,11 +28824,6 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 4;
-	icon_state = "1-4"
-	},
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/firedoor/border_only{
 	dir = 4;
@@ -28849,6 +28831,9 @@
 	},
 /obj/machinery/door/firedoor/border_only{
 	name = "south facing firelock"
+	},
+/obj/structure/cable{
+	icon_state = "1-4"
 	},
 /turf/open/floor/plating,
 /area/security/main)
@@ -31096,8 +31081,6 @@
 	icon_state = "4-8"
 	},
 /obj/structure/cable{
-	d1 = 1;
-	d2 = 4;
 	icon_state = "1-4"
 	},
 /turf/open/floor/plating/asteroid/snow/icemoon,
@@ -31195,11 +31178,6 @@
 	},
 /obj/structure/cable{
 	icon_state = "2-4"
-	},
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 4;
-	icon_state = "1-4"
 	},
 /turf/open/floor/plating,
 /area/security/checkpoint/medical)
@@ -35157,8 +35135,6 @@
 /area/science/robotics/mechbay)
 "vdW" = (
 /obj/structure/cable{
-	d1 = 1;
-	d2 = 4;
 	icon_state = "1-4"
 	},
 /turf/closed/wall/r_wall,
