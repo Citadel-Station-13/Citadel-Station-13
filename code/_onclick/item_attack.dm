@@ -163,7 +163,7 @@
 	if(!user.mind || !I.used_skills)
 		return
 	if(.)
-		. = user.mind.skill_holder.item_action_skills_mod(., I.skill_difficulty, SKILL_ATTACK_MOB, bad_flag)
+		. = user.mind.skill_holder.item_action_skills_mod(I, ., I.skill_difficulty, SKILL_ATTACK_MOB, bad_flag)
 	for(var/skill in I.used_skills)
 		if(!(I.used_skills[skill] & SKILL_TRAIN_ATTACK_MOB))
 			continue
@@ -216,7 +216,7 @@
 		. *= STAM_COST_NO_COMBAT_MULT
 		bad_flag |= SKILL_COMBAT_MODE
 	if(used_skills && user.mind)
-		. = user.mind.skill_holder.item_action_skills_mod(., skill_difficulty, flags, bad_flag, FALSE)
+		. = user.mind.skill_holder.item_action_skills_mod(src, ., skill_difficulty, flags, bad_flag, FALSE)
 
 /// How long this staggers for. 0 and negatives supported.
 /obj/item/proc/melee_stagger_duration(force_override)

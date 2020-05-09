@@ -114,7 +114,6 @@
 	add_fingerprint(user)
 	if(charging)
 		charging.update_icon()
-		charging.forceMove(drop_location())
 		user.put_in_hands(charging)
 
 /obj/machinery/recharger/attack_tk(mob/user)

@@ -575,7 +575,7 @@
 		/datum/reagent/consumable/ethanol/atomicbomb,
 		/datum/reagent/consumable/ethanol/thirteenloko,
 		/datum/reagent/consumable/ethanol/changelingsting,
-		/datum/reagent/consumable/ethanol/whiskey_cola
+    /datum/reagent/consumable/ethanol/atomicbomb
 	)
 
 /obj/machinery/chem_dispenser/drinks/beer/fullupgrade //fully ugpraded stock parts, emagged
