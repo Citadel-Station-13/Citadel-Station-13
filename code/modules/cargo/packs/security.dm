@@ -111,8 +111,8 @@
 					/obj/item/clothing/head/helmet/alt,
 					/obj/item/clothing/gloves/tackler/combat/insulated,
 					/obj/item/clothing/mask/gas,
-					/obj/item/gun/ballistic/shotgun/boltaction,
-					/obj/item/ammo_box/a762)
+					/obj/item/ammo_box/magazine/m10mm/rifle,
+					/obj/item/gun/ballistic/automatic/surplus)
 	crate_name = "surplus russian gear"
 	crate_type = /obj/structure/closet/crate/internals
 
