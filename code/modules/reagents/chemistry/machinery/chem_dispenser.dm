@@ -514,6 +514,7 @@
 		/datum/reagent/toxin/mindbreaker,
 		/datum/reagent/toxin/staminatoxin,
 		/datum/reagent/medicine/cryoxadone
+		/datum/reagent/iron
 	)
 
 /obj/machinery/chem_dispenser/drinks/fullupgrade //fully ugpraded stock parts, emagged
@@ -568,7 +569,6 @@
 	upgrade_reagents2 = null
 	upgrade_reagents3 = null
 	emagged_reagents = list(
-		/datum/reagent/iron,
 		/datum/reagent/consumable/ethanol/alexander,
 		/datum/reagent/consumable/clownstears,
 		/datum/reagent/toxin/minttoxin,
