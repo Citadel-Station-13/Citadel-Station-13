@@ -27,12 +27,12 @@
 	var/obj/item/organ/eyes/E = user.getorganslot(ORGAN_SLOT_EYES)
 	if(E)
 		if(!active)
-			ADD_TRAIT(user, TRAIT_THERMAL_VISION, GENETIC_MUTATION)
+			ADD_TRAIT(user, TRAIT_THERMAL_VISION, CHANGELING_TRAIT)
 			E.flash_protect = -1 //Adjust the user's eyes' flash protection
 			to_chat(user, "We adjust our eyes to sense prey through walls.")
 			active = TRUE //Defined in code/modules/spells/spell.dm
 		else
-			REMOVE_TRAIT(user, TRAIT_THERMAL_VISION, GENETIC_MUTATION)
+			REMOVE_TRAIT(user, TRAIT_THERMAL_VISION, CHANGELING_TRAIT)
 			E.flash_protect = 2 //Adjust the user's eyes' flash protection
 			to_chat(user, "We adjust our eyes to protect them from bright lights.")
 			active = FALSE
@@ -47,9 +47,8 @@
 
 /obj/effect/proc_holder/changeling/augmented_eyesight/on_refund(mob/user) //Get rid of X-ray vision and flash protection when the user refunds this ability
 	action.Remove(user)
+		EMOVE_TRAIT(user, TRAIT_THERMAL_VISION, CHANGELING_TRAIT)
 	var/obj/item/organ/eyes/E = user.getorganslot(ORGAN_SLOT_EYES)
 	if(E)
-		if (active)
-			E.sight_flags ^= SEE_MOBS
 		E.flash_protect = initial(E.flash_protect)
-		user.update_sight()
+	user.update_sight()
