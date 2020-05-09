@@ -375,7 +375,7 @@
 		return
 	
 	var/required_pixels = (pixels_per_second * (((SSprojectiles.flags & SS_TICKER)? (wait * world.tick_lag) : wait) * 0.1)) + pixels_tick_leftover
-	if(required_pixels > pixel_increment_amount)
+	if(required_pixels >= pixel_increment_amount)
 		pixels_tick_leftover = MODULUS(required_pixels, pixel_increment_amount)
 		pixel_move(FLOOR(required_pixels / pixel_increment_amount, pixel_increment_amount), FALSE)
 	else
@@ -532,10 +532,10 @@
 			step_towards(src, T)
 			if(QDELETED(src))
 				return
-		pixels_tick_leftover += pixel_increment_amount
-		if(pixels_tick_leftover > world.icon_size)
+		pixels_range_leftover += pixel_increment_amount
+		if(pixels_range_leftover > world.icon_size)
 			Range()
-			pixels_tick_leftover -= world.icon_size
+			pixels_range_leftover -= world.icon_size
 	if(!hitscanning && !forcemoved)
 		pixel_x = ((oldloc.x - x) * world.icon_size) + old_px
 		pixel_y = ((oldloc.y - y) * world.icon_size) + old_py
