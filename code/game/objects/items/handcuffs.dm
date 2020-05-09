@@ -118,7 +118,7 @@
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
 	custom_materials = list(/datum/material/iron=150, /datum/material/glass=75)
 	breakouttime = 300 //Deciseconds = 30s
-	cuffsound = 'sound/weapons/cablecuff.ogg' 
+	cuffsound = 'sound/weapons/cablecuff.ogg'
 
 /obj/item/restraints/handcuffs/cable/attack_self(mob/user)
 	to_chat(user, "<span class='notice'>You start unwinding the cable restraints back into coil</span>")
@@ -130,7 +130,7 @@
 	user.put_in_hands(coil)
 	coil.color = color
 	to_chat(user, "<span class='notice'>You unwind the cable restraints back into coil</span>")
-	
+
 /obj/item/restraints/handcuffs/cable/red
 	color = "#ff0000"
 
@@ -225,7 +225,6 @@
 /obj/item/restraints/handcuffs/fake/kinky
 	name = "kinky handcuffs"
 	desc = "Fake handcuffs meant for erotic roleplay."
-	icon = 'modular_citadel/icons/obj/items_and_weapons.dmi'
 	icon_state = "handcuffgag"
 	item_state = "kinkycuff"
 
