@@ -435,7 +435,7 @@
 	damage = 15
 	damage_type = BURN
 	nodamage = 0
-	pixels_per_Second = TILES_TO_PIXELS(33.33)
+	pixels_per_second = TILES_TO_PIXELS(33.33)
 	flag = "magic"
 
 	var/tesla_power = 20000

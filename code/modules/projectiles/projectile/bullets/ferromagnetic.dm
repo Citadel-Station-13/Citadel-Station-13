@@ -4,7 +4,6 @@
 	armour_penetration = 20
 	light_range = 3
 	pixels_per_second = TILES_TO_PIXELS(16.667)
-	speed = 0.6
 	range = 35
 	light_color = LIGHT_COLOR_RED
 
