@@ -108,7 +108,7 @@ Difficulty: Extremely Hard
 	icon_state = "ice_1"
 	damage = 20
 	armour_penetration = 100
-	speed = 10
+	pixels_per_second = TILES_TO_PIXELS(1)
 	homing_turn_speed = 30
 	damage_type = BURN
 
@@ -122,7 +122,7 @@ Difficulty: Extremely Hard
 	icon_state = "nuclear_particle"
 	damage = 5
 	armour_penetration = 100
-	speed = 4
+	pixels_per_second = TILES_TO_PIXELS(2.5)
 	damage_type = BRUTE
 
 /obj/item/projectile/ice_blast
@@ -130,7 +130,7 @@ Difficulty: Extremely Hard
 	icon_state = "ice_2"
 	damage = 15
 	armour_penetration = 100
-	speed = 4
+	pixels_per_second = TILES_TO_PIXELS(2.5)
 	damage_type = BRUTE
 
 /obj/item/projectile/ice_blast/on_hit(atom/target, blocked = FALSE)
@@ -184,7 +184,7 @@ Difficulty: Extremely Hard
 		if(!startloc || !endloc)
 			break
 		var/obj/item/projectile/ice_blast/P = new(startloc)
-		P.speed *= projectile_speed_multiplier
+		P.pixels_per_second *= projectile_speed_multiplier
 		P.preparePixelProjectile(endloc, startloc, null, angle + rand(-10, 10))
 		P.firer = firer
 		if(original)
@@ -200,7 +200,7 @@ Difficulty: Extremely Hard
 		if(!endloc)
 			break
 		var/obj/item/projectile/P = new /obj/item/projectile/snowball(startloc)
-		P.speed *= projectile_speed_multiplier
+		P.pixels_per_second *= projectile_speed_multiplier
 		P.preparePixelProjectile(endloc, startloc, null, rand(-spread, spread))
 		P.firer = src
 		if(target)
@@ -219,7 +219,7 @@ Difficulty: Extremely Hard
 			if(!endloc)
 				break
 			var/obj/item/projectile/P = new /obj/item/projectile/ice_blast(startloc)
-			P.speed *= projectile_speed_multiplier
+			P.pixels_per_second *= projectile_speed_multiplier
 			P.preparePixelProjectile(endloc, startloc, null, spread)
 			P.firer = src
 			if(target)
