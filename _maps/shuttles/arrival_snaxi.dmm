@@ -29,6 +29,9 @@
 /area/shuttle/arrival)
 "h" = (
 /obj/structure/closet/wardrobe/grey,
+/obj/machinery/light/small{
+	dir = 1
+	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/arrival)
 "i" = (
@@ -72,20 +75,16 @@
 "o" = (
 /obj/structure/table,
 /obj/item/storage/firstaid/regular,
+/obj/machinery/light/small,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/arrival)
 "p" = (
-/obj/machinery/light/small{
-	dir = 1
-	},
-/obj/structure/chair/comfy/shuttle{
-	dir = 8
-	},
-/turf/open/floor/mineral/titanium,
-/area/shuttle/arrival)
-"q" = (
 /obj/structure/table,
 /obj/item/storage/toolbox/emergency,
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/arrival)
+"q" = (
+/obj/machinery/light,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/arrival)
 "r" = (
@@ -95,23 +94,12 @@
 /turf/open/floor/mineral/titanium,
 /area/shuttle/arrival)
 "s" = (
-/obj/machinery/light,
-/turf/open/floor/mineral/titanium/blue,
-/area/shuttle/arrival)
-"t" = (
 /obj/item/radio/intercom{
 	name = "Station Intercom (General)";
 	pixel_y = -29
 	},
 /obj/machinery/light,
 /turf/open/floor/mineral/titanium/blue,
-/area/shuttle/arrival)
-"v" = (
-/obj/machinery/light/small,
-/obj/structure/chair/comfy/shuttle{
-	dir = 8
-	},
-/turf/open/floor/mineral/titanium,
 /area/shuttle/arrival)
 "x" = (
 /obj/structure/closet/emcloset,
@@ -136,9 +124,9 @@ a
 (2,1,1) = {"
 b
 b
-p
 r
-v
+r
+r
 b
 b
 "}
@@ -157,7 +145,7 @@ i
 r
 r
 r
-q
+p
 b
 "}
 (5,1,1) = {"
@@ -175,7 +163,7 @@ m
 r
 r
 r
-s
+q
 b
 "}
 (7,1,1) = {"
@@ -211,7 +199,7 @@ j
 r
 r
 r
-t
+s
 b
 "}
 (11,1,1) = {"
