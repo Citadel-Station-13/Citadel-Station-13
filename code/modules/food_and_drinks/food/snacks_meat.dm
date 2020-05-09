@@ -397,8 +397,8 @@
 
 /obj/item/reagent_containers/food/snacks/cube/ape
 	name = "ape cube"
-	desc = "Dont add water"
-	tastes = list("banana" = 1, "beef" = 1)
+	desc = "Don't add water."
+	tastes = list("the jungle" = 1, "bananas" = 1, "jimmies" = 1)
 	dried_being = /mob/living/simple_animal/hostile/gorilla
 
 /obj/item/reagent_containers/food/snacks/cube/egg
