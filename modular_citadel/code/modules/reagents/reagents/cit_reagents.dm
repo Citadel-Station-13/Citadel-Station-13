@@ -92,8 +92,7 @@
 /datum/reagent/drug/aphrodisiac
 	name = "Crocin"
 	description = "Naturally found in the crocus and gardenia flowers, this drug acts as a natural and safe aphrodisiac."
-	taste_description = "strawberry roofies"
-	taste_mult = 2 //Hide the roofies in stronger flavors
+	taste_description = "strawberries"
 	color = "#FFADFF"//PINK, rgb(255, 173, 255)
 	can_synth = FALSE
 
