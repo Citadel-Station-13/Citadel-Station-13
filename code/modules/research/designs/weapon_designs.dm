@@ -135,9 +135,12 @@
 //Ammo Shells/
 //////////////
 
-/datum/design/shell_clip/sec
+/datum/design/shell_clip
+	name = "stripper clip (shotgun shells)"
 	id = "sec_shellclip"
 	build_type = PROTOLATHE
+	materials = list(/datum/material/iron = 5000)
+	build_path = /obj/item/ammo_box/shotgun
 	category = list("Ammo")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
 
