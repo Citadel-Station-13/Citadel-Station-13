@@ -377,9 +377,9 @@
 	var/required_pixels = (pixels_per_second * (((SSprojectiles.flags & SS_TICKER)? (wait * world.tick_lag) : wait) * 0.1)) + pixels_tick_leftover
 	if(required_pixels >= pixel_increment_amount)
 		pixels_tick_leftover = MODULUS(required_pixels, pixel_increment_amount)
-		pixel_move(FLOOR(required_pixels / pixel_increment_amount, pixel_increment_amount), FALSE)
+		pixel_move(FLOOR(required_pixels / pixel_increment_amount, 1), FALSE)
 	else
-		pixels_tick_leftover += required_pixels
+		pixels_tick_leftover = required_pixels
 
 /obj/item/projectile/proc/fire(angle, atom/direct_target)
 	if(fired_from)
