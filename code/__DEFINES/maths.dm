@@ -210,4 +210,4 @@
 /// Make sure something is a boolean TRUE/FALSE 1/0 value, since things like bitfield & bitflag doesn't always give 1s and 0s.
 #define FORCE_BOOLEAN(x) ((x)? TRUE : FALSE)
 
-#define TILES_TO_PIXELS(tiles)			(tiles * world.icon_size)
+#define TILES_TO_PIXELS(tiles)			(tiles * PIXELS)

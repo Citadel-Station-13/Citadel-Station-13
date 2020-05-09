@@ -448,7 +448,8 @@
 		else
 			return ..()
 
-/obj/item/projectile/proc/set_pixel_speed(new_speed)
+/obj/item/projectile/proc/set_pixel_increment_amount(new_speed)
+	pixel_increment_amount = new_speed
 	if(trajectory)
 		trajectory.set_speed(new_speed)
 		return TRUE
