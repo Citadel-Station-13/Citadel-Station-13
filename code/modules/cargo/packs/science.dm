@@ -10,12 +10,12 @@
 	group = "Science"
 	crate_type = /obj/structure/closet/crate/science
 
-/datum/supply_pack/science/monkey  //Ape out!
+/datum/supply_pack/science/ape  //Ape out!
 	name = "Ape Cube Crate"
 	desc = "Pss what a new test subject with supper strangth, speed, and love for bananas all at the same time? Say no more... Contains a single ape cube. Dont add water!"
 	contraband = TRUE
 	cost = 2500
-	contains = list (/obj/item/reagent_containers/food/snacks/monkeycube/ape)
+	contains = list (/obj/item/reagent_containers/food/snacks/cube/ape)
 	crate_name = "ape cube crate"
 
 /datum/supply_pack/science/beakers
