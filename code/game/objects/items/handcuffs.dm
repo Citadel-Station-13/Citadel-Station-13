@@ -251,7 +251,7 @@
 	throw_range = 1
 	icon_state = "beartrap"
 	desc = "A trap used to catch bears and other legged creatures."
-	var/armed = 0
+	var/armed = FALSE
 	var/trap_damage = 20
 
 /obj/item/restraints/legcuffs/beartrap/Initialize()
@@ -274,14 +274,14 @@
 	if(armed && isturf(src.loc))
 		if(isliving(AM))
 			var/mob/living/L = AM
-			var/snap = 0
+			var/snap = FALSE
 			var/def_zone = BODY_ZONE_CHEST
 			if(iscarbon(L))
 				var/mob/living/carbon/C = L
-				snap = 1
 				if(!C.lying)
 					def_zone = pick(BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
 					if(!C.legcuffed && C.get_num_legs(FALSE) >= 2) //beartrap can't cuff your leg if there's already a beartrap or legcuffs, or you don't have two legs.
+						snap = TRUE
 						C.legcuffed = src
 						forceMove(C)
 						C.update_equipment_speed_mods()
@@ -290,21 +290,21 @@
 			else if(isanimal(L))
 				var/mob/living/simple_animal/SA = L
 				if(SA.mob_size > MOB_SIZE_TINY)
-					snap = 1
-			if(L.movement_type & FLYING)
-				snap = 0
+					snap = TRUE
+			if(L.movement_type & (FLYING | FLOATING))
+				snap = FALSE
 			if(snap)
-				armed = 0
+				armed = FALSE
 				icon_state = "[initial(icon_state)][armed]"
 				playsound(src.loc, 'sound/effects/snap.ogg', 50, 1)
 				L.visible_message("<span class='danger'>[L] triggers \the [src].</span>", \
 						"<span class='userdanger'>You trigger \the [src]!</span>")
-				L.apply_damage(trap_damage,BRUTE, def_zone)
+				L.apply_damage(trap_damage, BRUTE, def_zone)
 	..()
 
 /obj/item/restraints/legcuffs/beartrap/energy
 	name = "energy snare"
-	armed = 1
+	armed = TRUE
 	icon_state = "e_snare"
 	trap_damage = 0
 	item_flags = DROPDEL
