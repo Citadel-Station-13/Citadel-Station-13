@@ -395,6 +395,12 @@
 	tastes = list("milk" = 1, "beef" = 1)
 	dried_being = /mob/living/simple_animal/cow
 
+/obj/item/reagent_containers/food/snacks/cube/ape
+	name = "ape cube"
+	desc = "Dont add water"
+	tastes = list("banana" = 1, "beef" = 1)
+	dried_being = /mob/living/simple_animal/hostile/gorilla
+
 /obj/item/reagent_containers/food/snacks/cube/egg
 //Well eggs normally are able to hatch into small birds, this one does not.
 //Also in order to have a normal egg hatch you need a hen to lay the egg that is able to hatch, meaning this one is for on-demand hen needs.
