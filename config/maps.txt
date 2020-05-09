@@ -40,7 +40,8 @@ map icebox
 	minplayers 25
 endmap
 
-map citsnow
+map snaxi
+	minplayers 25
 endmap
 
 map runtimestation

@@ -557,6 +557,10 @@
 	suffix = "cog"
 	name = "arrival shuttle (Cog)"
 
+/datum/map_template/shuttle/arrival/snaxi
+	suffix = "snaxi"
+	name = "arrival shuttle (Snaxi)"
+
 /datum/map_template/shuttle/aux_base/default
 	suffix = "default"
 	name = "auxilliary base (Default)"

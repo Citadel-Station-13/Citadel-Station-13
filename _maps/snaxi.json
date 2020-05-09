@@ -4,7 +4,7 @@
    "map_file":[
       "IcemoonUnderground_Below.dmm",
       "IcemoonUnderground_Above.dmm",
-      "CitSnow.dmm"
+      "Snaxi.dmm"
    ],
    "station_ruin_budget":0,
    "space_ruin_levels":0,
@@ -18,6 +18,7 @@
    "traits":[
       {
          "Up":1,
+		 "Station":0,
          "Mining":true,
          "Linkage":null,
          "Gravity":true,
@@ -27,6 +28,7 @@
       {
          "Down":-1,
          "Up":1,
+		 "Station":0,
          "Mining":true,
          "Linkage":null,
          "Gravity":true,
