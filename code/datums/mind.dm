@@ -63,7 +63,11 @@
 	var/force_escaped = FALSE  // Set by Into The Sunset command of the shuttle manipulator
 	var/list/learned_recipes //List of learned recipe TYPES.
 
+	/// Our skill holder.
+	var/datum/skill_holder/skill_holder
+
 /datum/mind/New(var/key)
+	skill_holder = new(src)
 	src.key = key
 	soulOwner = src
 	martial_art = default_martial_art
@@ -76,6 +80,7 @@
 			if(antag_datum.delete_on_mind_deletion)
 				qdel(i)
 		antag_datums = null
+	QDEL_NULL(skill_holder)
 	return ..()
 
 /datum/mind/proc/get_language_holder()

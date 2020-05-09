@@ -59,8 +59,6 @@
 //let's just pretend fulltile windows being children of border windows is fine
 #define FULLTILE_WINDOW_DIR NORTHEAST
 
-//The amount of materials you get from a sheet of mineral like iron/diamond/glass etc
-#define MINERAL_MATERIAL_AMOUNT 2000
 //The maximum size of a stack object.
 #define MAX_STACK_SIZE 50
 //maximum amount of cable in a coil

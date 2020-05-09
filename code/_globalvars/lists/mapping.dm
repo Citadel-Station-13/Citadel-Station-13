@@ -50,3 +50,8 @@ GLOBAL_LIST_EMPTY_TYPED(areas_by_type, /area)
 GLOBAL_LIST_EMPTY(all_abstract_markers)
 
 GLOBAL_LIST_EMPTY(stationroom_landmarks) //List of all spawns for stationrooms
+
+///Away missions, VR, random z levels stuff.
+GLOBAL_LIST_EMPTY(random_zlevels_generated)
+GLOBAL_LIST_INIT(potential_away_levels, generateMapList(filename = "[global.config.directory]/awaymissionconfig.txt"))
+GLOBAL_LIST_INIT(potential_vr_levels, generateMapList(filename = "[global.config.directory]/vr_config.txt"))

@@ -7,6 +7,7 @@
 	update_body_parts() //to update the carbon's new bodyparts appearance
 	GLOB.carbon_list += src
 	blood_volume = (BLOOD_VOLUME_NORMAL * blood_ratio)
+	add_movespeed_modifier(/datum/movespeed_modifier/carbon_crawling)
 
 /mob/living/carbon/Destroy()
 	//This must be done first, so the mob ghosts correctly before DNA etc is nulled
@@ -198,7 +199,7 @@
 			to_chat(src, "<span class='notice'>You set [I] down gently on the ground.</span>")
 			return
 
-		adjustStaminaLossBuffered(I.getweight()*2)//CIT CHANGE - throwing items shall be more tiring than swinging em. Doubly so.
+		adjustStaminaLossBuffered(I.getweight(src, STAM_COST_THROW_MULT, SKILL_THROW_STAM_COST))
 
 	if(thrown_thing)
 		visible_message("<span class='danger'>[src] has thrown [thrown_thing].</span>")
@@ -539,15 +540,22 @@
 	return 1
 
 /mob/living/carbon/proc/spew_organ(power = 5, amt = 1)
+	var/list/spillable_organs = list()
+	for(var/A in internal_organs)
+		var/obj/item/organ/O = A
+		if(!(O.organ_flags & ORGAN_NO_DISMEMBERMENT))
+			spillable_organs += O
 	for(var/i in 1 to amt)
-		if(!internal_organs.len)
+		if(!spillable_organs.len)
 			break //Guess we're out of organs!
-		var/obj/item/organ/guts = pick(internal_organs)
+		var/obj/item/organ/guts = pick(spillable_organs)
+		spillable_organs -= guts
 		var/turf/T = get_turf(src)
 		guts.Remove()
 		guts.forceMove(T)
 		var/atom/throw_target = get_edge_target_turf(guts, dir)
 		guts.throw_at(throw_target, power, 4, src)
+
 
 
 /mob/living/carbon/fully_replace_character_name(oldname,newname)
@@ -574,9 +582,9 @@
 		become_husk("burn")
 	med_hud_set_health()
 	if(stat == SOFT_CRIT)
-		add_movespeed_modifier(MOVESPEED_ID_CARBON_SOFTCRIT, TRUE, multiplicative_slowdown = SOFTCRIT_ADD_SLOWDOWN)
+		add_movespeed_modifier(/datum/movespeed_modifier/carbon_softcrit)
 	else
-		remove_movespeed_modifier(MOVESPEED_ID_CARBON_SOFTCRIT, TRUE)
+		remove_movespeed_modifier(/datum/movespeed_modifier/carbon_softcrit)
 
 /mob/living/carbon/update_stamina()
 	var/stam = getStaminaLoss()

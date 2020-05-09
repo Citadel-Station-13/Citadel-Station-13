@@ -76,7 +76,7 @@
 		to_chat(H, "<span class='warning'>Your enormous breasts are way too large to fit anything over them!</b></span>")
 
 	if(last_checked_size != B.cached_size)
-		H.add_movespeed_modifier(BREAST_MOVEMENT_SPEED, TRUE, 100, NONE, override = TRUE, multiplicative_slowdown = moveCalc)
+		H.add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/status_effect/breast_hypertrophy, multiplicative_slowdown = moveCalc)
 		sizeMoveMod(moveCalc)
 
 	if (B.size == "huge")
@@ -93,7 +93,7 @@
 /datum/status_effect/chem/breast_enlarger/on_remove()
 	log_game("FERMICHEM: [owner]'s breasts has reduced to an acceptable size. ID: [owner.key]")
 	to_chat(owner, "<span class='notice'>Your expansive chest has become a more managable size, liberating your movements.</b></span>")
-	owner.remove_movespeed_modifier(BREAST_MOVEMENT_SPEED)
+	owner.remove_movespeed_modifier(/datum/movespeed_modifier/status_effect/breast_hypertrophy)
 	sizeMoveMod(1)
 	return ..()
 
@@ -152,18 +152,18 @@
 		playsound(H.loc, 'sound/items/poster_ripped.ogg', 50, 1)
 		to_chat(H, "<span class='warning'>Your enormous package is way to large to fit anything over!</b></span>")
 
-	if(P.length < 22 && H.has_movespeed_modifier(DICK_MOVEMENT_SPEED))
+	if(P.length < 22 && H.has_movespeed_modifier(/datum/movespeed_modifier/status_effect/penis_hypertrophy))
 		to_chat(owner, "<span class='notice'>Your rascally willy has become a more managable size, liberating your movements.</b></span>")
-		H.remove_movespeed_modifier(DICK_MOVEMENT_SPEED)
-	else if(P.length >= 22 && !H.has_movespeed_modifier(DICK_MOVEMENT_SPEED))
+		H.remove_movespeed_modifier(/datum/movespeed_modifier/status_effect/penis_hypertrophy)
+	else if(P.length >= 22 && !H.has_movespeed_modifier(/datum/movespeed_modifier/status_effect/penis_hypertrophy))
 		to_chat(H, "<span class='warning'>Your indulgent johnson is so substantial, it's taking all your blood and affecting your movements!</b></span>")
-		H.add_movespeed_modifier(DICK_MOVEMENT_SPEED, TRUE, 100, NONE, override = TRUE, multiplicative_slowdown = moveCalc)
+		H.add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/status_effect/penis_hypertrophy, multiplicative_slowdown = moveCalc)
 	H.AdjustBloodVol(bloodCalc)
 	..()
 
 /datum/status_effect/chem/penis_enlarger/on_remove()
 	log_game("FERMICHEM: [owner]'s dick has reduced to an acceptable size. ID: [owner.key]")
-	owner.remove_movespeed_modifier(DICK_MOVEMENT_SPEED)
+	owner.remove_movespeed_modifier(/datum/movespeed_modifier/status_effect/penis_hypertrophy)
 	owner.ResetBloodVol()
 	return ..()
 
@@ -280,7 +280,7 @@
 	var/mob/living/carbon/M = owner
 
 	//chem calculations
-	if(!owner.reagents.has_reagent(/datum/chemical_reaction/fermi/enthrall) && !owner.reagents.has_reagent(/datum/reagent/fermi/enthrall/test))
+	if(!owner.reagents.has_reagent(/datum/chemical_reaction/fermi/enthrall))
 		if (phase < 3 && phase != 0)
 			deltaResist += 3//If you've no chem, then you break out quickly
 			if(prob(5))
@@ -532,7 +532,7 @@
 				cooldown += 1 //Cooldown doesn't process till status is done
 
 		else if(status == "charge")
-			owner.add_movespeed_modifier(MOVESPEED_ID_MKULTRA, update=TRUE, priority=100, multiplicative_slowdown=-2, blacklisted_movetypes=(FLYING|FLOATING))
+			owner.add_movespeed_modifier(/datum/movespeed_modifier/status_effect/mkultra)
 			status = "charged"
 			if(lewd)
 				to_chat(owner, "<span class='notice'><i>Your [enthrallGender]'s order fills you with a burst of speed!</i></span>")
@@ -542,7 +542,7 @@
 		else if (status == "charged")
 			if (statusStrength < 0)
 				status = null
-				owner.remove_movespeed_modifier(MOVESPEED_ID_MKULTRA)
+				owner.remove_movespeed_modifier(/datum/movespeed_modifier/status_effect/mkultra)
 				owner.DefaultCombatKnockdown(50)
 				to_chat(owner, "<span class='notice'><i>Your body gives out as the adrenaline in your system runs out.</i></span>")
 			else

@@ -237,7 +237,7 @@
 		return
 
 	if(!CONFIG_GET(flag/disable_secborg) && GLOB.security_level < CONFIG_GET(number/minimum_secborg_alert))
-		to_chat(src, "<span class='notice'>NOTICE: Due to local station regulations, the security cyborg module and its variants are only available during [num2seclevel(CONFIG_GET(number/minimum_secborg_alert))] alert and greater.</span>")
+		to_chat(src, "<span class='notice'>NOTICE: Due to local station regulations, the security cyborg module and its variants are only available during [NUM2SECLEVEL(CONFIG_GET(number/minimum_secborg_alert))] alert and greater.</span>")
 
 	var/list/modulelist = list("Standard" = /obj/item/robot_module/standard, \
 	"Engineering" = /obj/item/robot_module/engineering, \
@@ -427,24 +427,23 @@
 
 	else if(istype(W, /obj/item/stack/cable_coil) && wiresexposed)
 		user.changeNext_move(CLICK_CD_MELEE)
-		var/obj/item/stack/cable_coil/coil = W
 		if (getFireLoss() > 0 || getToxLoss() > 0)
-			if(src == user && coil.use(1))
+			if(src == user)
 				to_chat(user, "<span class='notice'>You start fixing yourself...</span>")
-				if(!do_after(user, 50, target = src))
+				if(!W.use_tool(src, user, 50, 1, max_level = JOB_SKILL_TRAINED))
+					to_chat(user, "<span class='warning'>You need more cable to repair [src]!</span>")
 					return
 				adjustFireLoss(-10)
 				adjustToxLoss(-10)
-			if (coil.use(1))
+			else
 				to_chat(user, "<span class='notice'>You start fixing [src]...</span>")
-				if(!do_after(user, 30, target = src))
+				if(!W.use_tool(src, user, 30, 1))
+					to_chat(user, "<span class='warning'>You need more cable to repair [src]!</span>")
 					return
 				adjustFireLoss(-30)
 				adjustToxLoss(-30)
 				updatehealth()
 				user.visible_message("[user] has fixed some of the burnt wires on [src].", "<span class='notice'>You fix some of the burnt wires on [src].</span>")
-			else
-				to_chat(user, "<span class='warning'>You need more cable to repair [src]!</span>")
 		else
 			to_chat(user, "The wires seem fine, there's no need to fix them.")
 

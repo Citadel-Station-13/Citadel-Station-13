@@ -76,7 +76,8 @@
 	var/problems = FALSE
 	if(iscarbon(host_mob))
 		var/mob/living/carbon/C = host_mob
-		if(length(C.get_traumas()))
+		var/obj/item/organ/brain/B = C.getorganslot(ORGAN_SLOT_BRAIN)
+		if(length(B?.get_traumas_type(TRAUMA_RESILIENCE_BASIC)))
 			problems = TRUE
 	if(host_mob.getOrganLoss(ORGAN_SLOT_BRAIN) > 0)
 		problems = TRUE
@@ -198,7 +199,8 @@
 	var/problems = FALSE
 	if(iscarbon(host_mob))
 		var/mob/living/carbon/C = host_mob
-		if(length(C.get_traumas()))
+		var/obj/item/organ/brain/B = C.getorganslot(ORGAN_SLOT_BRAIN)
+		if(length(B?.get_traumas_type(TRAUMA_RESILIENCE_SURGERY)))
 			problems = TRUE
 	if(host_mob.getOrganLoss(ORGAN_SLOT_BRAIN) > 0)
 		problems = TRUE
@@ -208,7 +210,7 @@
 	host_mob.adjustOrganLoss(ORGAN_SLOT_BRAIN, -2)
 	if(iscarbon(host_mob) && prob(10))
 		var/mob/living/carbon/C = host_mob
-		C.cure_trauma_type(resilience = TRAUMA_RESILIENCE_LOBOTOMY)
+		C.cure_trauma_type(resilience = TRAUMA_RESILIENCE_SURGERY)
 
 /datum/nanite_program/defib
 	name = "Defibrillation"

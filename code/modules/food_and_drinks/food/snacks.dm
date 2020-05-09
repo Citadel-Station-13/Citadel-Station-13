@@ -260,6 +260,7 @@ All foods are distributed among various categories. Use common sense.
 		slice.desc = "[desc]"
 	if(foodtype != initial(foodtype))
 		slice.foodtype = foodtype //if something happens that overrode our food type, make sure the slice carries that over
+	slice.adjust_food_quality(food_quality)
 
 /obj/item/reagent_containers/food/snacks/proc/generate_trash(atom/location)
 	if(trash)

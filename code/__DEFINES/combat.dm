@@ -111,9 +111,6 @@
 #define GRAB_NECK					2
 #define GRAB_KILL					3
 
-//slowdown when in softcrit
-#define SOFTCRIT_ADD_SLOWDOWN 6
-
 /// Attack types for check_block()/run_block(). Flags, combinable.
 /// Attack was melee, whether or not armed.
 #define ATTACK_TYPE_MELEE			(1<<0)
@@ -250,6 +247,15 @@ GLOBAL_LIST_INIT(shove_disarming_types, typecacheof(list(
 #define TOTAL_MASS_HAND_REPLACEMENT	5 //standard punching stamina cost. most hand replacements are huge items anyway.
 #define TOTAL_MASS_MEDIEVAL_WEAPON	3.6 //very, very generic average sword/warpick/etc. weight in pounds.
 #define TOTAL_MASS_TOY_SWORD 1.5
+
+//stamina cost defines.
+#define STAM_COST_ATTACK_OBJ_MULT	1.2
+#define STAM_COST_ATTACK_MOB_MULT	0.8
+#define STAM_COST_BATON_MOB_MULT	1
+#define STAM_COST_NO_COMBAT_MULT	1.25
+#define STAM_COST_W_CLASS_MULT		1.25
+#define STAM_COST_THROW_MULT		2
+
 
 //bullet_act() return values
 #define BULLET_ACT_HIT				"HIT"		//It's a successful hit, whatever that means in the context of the thing it's hitting.

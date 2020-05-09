@@ -6,7 +6,10 @@
 /obj/structure/cable{
 	icon_state = "4-8"
 	},
-/obj/machinery/door/poddoor/shutters/radiation/preopen,
+/obj/machinery/door/poddoor/shutters/radiation/preopen{
+	id = "engsm";
+	name = "Radiation Chamber Shutters"
+	},
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "ab" = (
@@ -16,28 +19,40 @@
 /obj/structure/cable{
 	icon_state = "2-8"
 	},
-/obj/machinery/door/poddoor/shutters/radiation/preopen,
+/obj/machinery/door/poddoor/shutters/radiation/preopen{
+	id = "engsm";
+	name = "Radiation Chamber Shutters"
+	},
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "ac" = (
 /obj/structure/cable{
 	icon_state = "4-8"
 	},
-/obj/machinery/door/poddoor/shutters/radiation/preopen,
+/obj/machinery/door/poddoor/shutters/radiation/preopen{
+	id = "engsm";
+	name = "Radiation Chamber Shutters"
+	},
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "ad" = (
 /obj/structure/cable{
 	icon_state = "2-8"
 	},
-/obj/machinery/door/poddoor/shutters/radiation/preopen,
+/obj/machinery/door/poddoor/shutters/radiation/preopen{
+	id = "engsm";
+	name = "Radiation Chamber Shutters"
+	},
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "ae" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
-/obj/machinery/door/poddoor/shutters/radiation/preopen,
+/obj/machinery/door/poddoor/shutters/radiation/preopen{
+	id = "engsm";
+	name = "Radiation Chamber Shutters"
+	},
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "af" = (
