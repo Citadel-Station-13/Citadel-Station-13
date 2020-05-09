@@ -9,10 +9,12 @@ GLOBAL_LIST_EMPTY(mobs_with_editable_flavor_text) //et tu, hacky code
 	var/always_show = FALSE
 	var/max_len = MAX_FLAVOR_LEN
 	var/can_edit = TRUE
-	/// For preference/DNA saving/loading. Null to prevent.
+	/// For preference/DNA saving/loading. Null to prevent. Prefs are only loaded from obviously if it exists in preferences.features.
 	var/save_key
+	/// Do not attempt to render a preview on examine. If this is on, it will display as \[flavor_name\]
+	var/examine_no_preview = FALSE
 
-/datum/element/flavor_text/Attach(datum/target, text = "", _name = "Flavor Text", _addendum, _max_len = MAX_FLAVOR_LEN, _always_show = FALSE, _edit = TRUE, _save_key)
+/datum/element/flavor_text/Attach(datum/target, text = "", _name = "Flavor Text", _addendum, _max_len = MAX_FLAVOR_LEN, _always_show = FALSE, _edit = TRUE, _save_key, _examine_no_preview = FALSE)
 	. = ..()
 
 	if(. == ELEMENT_INCOMPATIBLE || !isatom(target)) //no reason why this shouldn't work on atoms too.
@@ -28,6 +30,7 @@ GLOBAL_LIST_EMPTY(mobs_with_editable_flavor_text) //et tu, hacky code
 	always_show = _always_show
 	can_edit = _edit
 	save_key = _save_key
+	examine_no_preview = _examine_no_preview
 
 	RegisterSignal(target, COMSIG_PARENT_EXAMINE, .proc/show_flavor)
 
@@ -36,9 +39,12 @@ GLOBAL_LIST_EMPTY(mobs_with_editable_flavor_text) //et tu, hacky code
 		LAZYOR(GLOB.mobs_with_editable_flavor_text[M], src)
 		M.verbs |= /mob/proc/manage_flavor_tests
 
+	if(ishuman(target))
+		RegisterSignal(target, COMSIG_HUMAN_PREFS_COPIED_TO, .proc/update_prefs_flavor_text)
+
 /datum/element/flavor_text/Detach(atom/A)
 	. = ..()
-	UnregisterSignal(A, COMSIG_PARENT_EXAMINE)
+	UnregisterSignal(A, list(COMSIG_PARENT_EXAMINE, COMSIG_HUMAN_PREFS_COPIED_TO))
 	texts_by_atom -= A
 	if(can_edit && ismob(A))
 		var/mob/M = A
@@ -60,6 +66,9 @@ GLOBAL_LIST_EMPTY(mobs_with_editable_flavor_text) //et tu, hacky code
 			return
 	var/text = texts_by_atom[target]
 	if(!text)
+		return
+	if(examine_no_preview)
+		examine_list += "<span class='notice'><a href='?src=[REF(src)];show_flavor=[REF(atrget)]'>\[[flavor_name]\]</a></span>"
 		return
 	var/msg = replacetext(text, "\n", " ")
 	if(length_char(msg) <= 40)
@@ -115,6 +124,10 @@ GLOBAL_LIST_EMPTY(mobs_with_editable_flavor_text) //et tu, hacky code
 		return TRUE
 	return FALSE
 
+/datum/element/flavor_text/proc/update_prefs_flavor_text(mob/living/carbon/human/H, datum/preferences/P, icon_updates = TRUE, roundstart_checks = TRUE)
+	if(P.features.Find(save_key))
+		texts_by_atom[H] = P.features[save_key]
+
 //subtypes with additional hooks for DNA and preferences.
 /datum/element/flavor_text/carbon
 	//list of antagonists etcetera that should have nothing to do with people's snowflakes.
@@ -123,7 +136,7 @@ GLOBAL_LIST_EMPTY(mobs_with_editable_flavor_text) //et tu, hacky code
 	/// Do we transfer by DNA?
 	var/dna_carryover = TRUE
 
-/datum/element/flavor_text/carbon/Attach(datum/target, text = "", _name = "Flavor Text", _addendum, _max_len = MAX_FLAVOR_LEN, _always_show = FALSE, _edit = TRUE, _save_key = "flavor_text", _dna_carryover = TRUE)
+/datum/element/flavor_text/carbon/Attach(datum/target, text = "", _name = "Flavor Text", _addendum, _max_len = MAX_FLAVOR_LEN, _always_show = FALSE, _edit = TRUE, _save_key = "flavor_text", _examine_no_preview = FALSE, _dna_carryover = TRUE)
 	if(!iscarbon(target))
 		return ELEMENT_INCOMPATIBLE
 	. = ..()
@@ -133,7 +146,6 @@ GLOBAL_LIST_EMPTY(mobs_with_editable_flavor_text) //et tu, hacky code
 	RegisterSignal(target, COMSIG_CARBON_IDENTITY_TRANSFERRED_TO, .proc/update_dna_flavor_text)
 	RegisterSignal(target, COMSIG_MOB_ANTAG_ON_GAIN, .proc/on_antag_gain)
 	if(ishuman(target))
-		RegisterSignal(target, COMSIG_HUMAN_PREFS_COPIED_TO, .proc/update_prefs_flavor_text)
 		RegisterSignal(target, COMSIG_HUMAN_HARDSET_DNA, .proc/update_dna_flavor_text)
 		RegisterSignal(target, COMSIG_HUMAN_ON_RANDOMIZE, .proc/unset_flavor)
 
@@ -146,9 +158,6 @@ GLOBAL_LIST_EMPTY(mobs_with_editable_flavor_text) //et tu, hacky code
 		return
 	// if we aren't carrying over from dna load from prefs instead
 	texts_by_atom[C] = dna_carryover? C.dna.features[save_key] : C.client?.prefs?.features[save_key]
-
-/datum/element/flavor_text/carbon/proc/update_prefs_flavor_text(mob/living/carbon/human/H, datum/preferences/P, icon_updates = TRUE, roundstart_checks = TRUE)
-	texts_by_atom[H] = P.features[save_key]
 
 /datum/element/flavor_text/carbon/set_flavor(mob/living/carbon/user)
 	. = ..()
