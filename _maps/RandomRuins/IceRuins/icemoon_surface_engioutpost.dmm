@@ -5,10 +5,6 @@
 "ab" = (
 /turf/open/floor/plating/snowed/smoothed/icemoon,
 /area/icemoon/surface/outdoors)
-"ac" = (
-/obj/effect/mob_spawn/human/engineer/rig,
-/turf/open/floor/plating/snowed/smoothed/icemoon,
-/area/icemoon/surface/outdoors)
 "ad" = (
 /obj/machinery/power/floodlight,
 /obj/structure/cable{
@@ -1425,7 +1421,7 @@ ak
 aa
 "}
 (9,1,1) = {"
-ac
+ab
 ab
 al
 ap
