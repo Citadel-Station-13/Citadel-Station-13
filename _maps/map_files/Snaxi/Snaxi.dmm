@@ -423,6 +423,12 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/central)
+"ajl" = (
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/open/floor/plating/asteroid/snow/icemoon,
+/area/maintenance/solars/port/fore)
 "ajq" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 8
@@ -1162,6 +1168,14 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/science/robotics/lab)
+"awB" = (
+/obj/structure/chair/stool,
+/obj/machinery/camera{
+	c_tag = "Aft Starboard Solar Control";
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/maintenance/solars/starboard/aft)
 "awW" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 1
@@ -2302,7 +2316,7 @@
 /obj/machinery/light{
 	dir = 8
 	},
-/turf/open/floor/plating/asteroid/snow/icemoon,
+/turf/open/floor/plating/snowed/smoothed/icemoon,
 /area/quartermaster/miningdock)
 "aJC" = (
 /obj/machinery/porta_turret/ai{
@@ -2577,6 +2591,10 @@
 /obj/structure/chair/comfy/brown,
 /turf/open/floor/plasteel/dark,
 /area/security/prison)
+"aNg" = (
+/obj/machinery/light,
+/turf/open/floor/plating/asteroid/snow/icemoon,
+/area/maintenance/solars/port/fore)
 "aNj" = (
 /obj/structure/cable{
 	icon_state = "1-2"
@@ -2867,6 +2885,15 @@
 /obj/effect/landmark/start/station_engineer,
 /turf/open/floor/plasteel,
 /area/engine/engineering)
+"aQK" = (
+/obj/structure/cable{
+	icon_state = "1-4"
+	},
+/obj/structure/cable{
+	icon_state = "2-4"
+	},
+/turf/open/floor/plating/snowed/smoothed/icemoon,
+/area/icemoon/surface/outdoors)
 "aQT" = (
 /obj/structure/cable{
 	icon_state = "1-2"
@@ -3082,6 +3109,16 @@
 	},
 /turf/open/floor/wood,
 /area/hallway/secondary/exit/departure_lounge)
+"bbq" = (
+/obj/machinery/door/airlock/engineering{
+	name = "Port Bow Solar Access";
+	req_access_txt = "10"
+	},
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/turf/open/floor/plating,
+/area/maintenance/solars/port/fore)
 "bcc" = (
 /obj/machinery/door/window/brigdoor/security/cell{
 	id = "Cell 2";
@@ -3193,6 +3230,12 @@
 	},
 /turf/open/floor/wood,
 /area/security/courtroom)
+"bfg" = (
+/obj/structure/cable{
+	icon_state = "2-4"
+	},
+/turf/open/floor/plating,
+/area/maintenance/solars/starboard/aft)
 "bfk" = (
 /obj/structure/plasticflaps,
 /obj/machinery/door/firedoor/border_only{
@@ -3215,6 +3258,9 @@
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 9
+	},
+/obj/structure/cable{
+	icon_state = "2-8"
 	},
 /turf/open/floor/plating/snowed/smoothed/icemoon,
 /area/icemoon/surface/outdoors)
@@ -5123,6 +5169,15 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/visible,
 /turf/open/floor/plating/snowed/smoothed/icemoon,
 /area/icemoon/surface/outdoors)
+"bHc" = (
+/obj/structure/cable{
+	icon_state = "2-4"
+	},
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/turf/open/floor/plating,
+/area/maintenance/solars/starboard/fore)
 "bHh" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 9
@@ -5554,6 +5609,13 @@
 	},
 /turf/open/floor/plasteel,
 /area/engine/engineering)
+"bLv" = (
+/obj/machinery/power/tracker,
+/obj/structure/cable{
+	icon_state = "0-4"
+	},
+/turf/open/floor/plating/asteroid/snow/ice/icemoon/solarpanel,
+/area/icemoon/surface/outdoors)
 "bLI" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 1
@@ -6558,6 +6620,15 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/security/main)
+"cbL" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/structure/cable{
+	icon_state = "2-4"
+	},
+/turf/open/floor/plating,
+/area/maintenance/solars/port/fore)
 "cbO" = (
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple,
 /obj/machinery/atmospherics/pipe/simple/green/visible{
@@ -6814,6 +6885,10 @@
 	},
 /turf/open/floor/plasteel,
 /area/crew_quarters/fitness)
+"chZ" = (
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/maintenance/solars/port/fore)
 "cio" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable{
@@ -7019,6 +7094,12 @@
 	},
 /turf/open/floor/wood,
 /area/crew_quarters/theatre)
+"clq" = (
+/obj/structure/cable{
+	icon_state = "0-4"
+	},
+/turf/open/floor/plating/snowed/smoothed/icemoon,
+/area/icemoon/surface/outdoors)
 "cly" = (
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple,
 /turf/open/floor/plating/snowed/smoothed/icemoon,
@@ -8000,6 +8081,19 @@
 	},
 /turf/open/floor/plasteel,
 /area/janitor)
+"cRJ" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 4
+	},
+/obj/machinery/door/airlock/external{
+	name = "Solar Maintenance";
+	req_access_txt = "10; 13"
+	},
+/turf/open/floor/plating,
+/area/maintenance/solars/port/aft)
 "cRX" = (
 /obj/structure/cable{
 	icon_state = "0-2"
@@ -8134,6 +8228,16 @@
 	},
 /turf/open/floor/plasteel,
 /area/engine/atmospherics_engine)
+"cUm" = (
+/obj/machinery/door/airlock/engineering{
+	name = "Starboard Quarter Solar Access";
+	req_access_txt = "10"
+	},
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/turf/open/floor/plating,
+/area/maintenance/solars/starboard/aft)
 "cUC" = (
 /obj/structure/chair,
 /obj/effect/landmark/start/geneticist,
@@ -8183,6 +8287,10 @@
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden,
 /turf/open/floor/plasteel,
 /area/storage/primary)
+"cVL" = (
+/obj/machinery/light,
+/turf/open/floor/plating/asteroid/snow/icemoon,
+/area/maintenance/solars/starboard/fore)
 "cWG" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/effect/turf_decal/tile/brown{
@@ -8486,6 +8594,16 @@
 	},
 /turf/open/floor/plasteel/freezer,
 /area/crew_quarters/kitchen)
+"dfx" = (
+/obj/structure/cable{
+	icon_state = "0-8"
+	},
+/obj/machinery/power/solar{
+	id = "portsolar";
+	name = "Port Solar Array"
+	},
+/turf/open/floor/plating/asteroid/snow/ice/icemoon/solarpanel,
+/area/icemoon/surface/outdoors)
 "dfy" = (
 /obj/structure/cable{
 	icon_state = "4-8"
@@ -8631,6 +8749,9 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/tcommsat/computer)
+"dmE" = (
+/turf/closed/wall/r_wall,
+/area/maintenance/solars/port/aft)
 "dnm" = (
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 4
@@ -9476,6 +9597,9 @@
 	},
 /turf/open/floor/engine,
 /area/science/xenobiology)
+"dTy" = (
+/turf/closed/wall/r_wall,
+/area/maintenance/solars/starboard/fore)
 "dTE" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable{
@@ -9537,6 +9661,12 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/engine/supermatter)
+"dUH" = (
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/turf/open/floor/plating,
+/area/maintenance/solars/starboard/aft)
 "dUI" = (
 /obj/structure/table,
 /obj/item/storage/belt/utility,
@@ -10300,6 +10430,12 @@
 	},
 /turf/open/floor/plasteel/freezer,
 /area/medical/surgery)
+"euS" = (
+/obj/structure/cable{
+	icon_state = "2-4"
+	},
+/turf/open/floor/plating/snowed/smoothed/icemoon,
+/area/icemoon/surface/outdoors)
 "euW" = (
 /obj/structure/cable{
 	icon_state = "1-8"
@@ -10465,6 +10601,12 @@
 	},
 /turf/open/floor/plasteel,
 /area/engine/atmos)
+"eCd" = (
+/obj/structure/cable{
+	icon_state = "1-8"
+	},
+/turf/open/floor/plating,
+/area/maintenance/solars/port/aft)
 "eDr" = (
 /obj/structure/cable{
 	icon_state = "4-8"
@@ -10863,6 +11005,12 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/aft/secondary)
+"eNK" = (
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/turf/open/floor/plating,
+/area/maintenance/solars/starboard/fore)
 "eNX" = (
 /obj/structure/window/reinforced{
 	dir = 1
@@ -11127,6 +11275,17 @@
 	},
 /turf/open/floor/plasteel,
 /area/engine/engineering)
+"eWw" = (
+/obj/machinery/door/airlock/external{
+	name = "Solar Maintenance";
+	req_access_txt = "10; 13"
+	},
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
+/turf/open/floor/plating,
+/area/maintenance/solars/port/fore)
 "eWH" = (
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plating/snowed/smoothed/icemoon,
@@ -11139,6 +11298,15 @@
 /obj/structure/closet/crate,
 /turf/open/floor/plasteel,
 /area/quartermaster/storage)
+"eYe" = (
+/obj/structure/disposalpipe/segment{
+	dir = 6
+	},
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/turf/open/floor/plating/snowed/smoothed/icemoon,
+/area/icemoon/surface/outdoors)
 "eYu" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -11199,6 +11367,15 @@
 /obj/machinery/monkey_recycler,
 /turf/open/floor/plasteel/white,
 /area/science/xenobiology)
+"faJ" = (
+/obj/structure/cable{
+	icon_state = "2-4"
+	},
+/obj/structure/cable{
+	icon_state = "1-4"
+	},
+/turf/open/floor/plating/snowed/smoothed/icemoon,
+/area/icemoon/surface/outdoors)
 "faR" = (
 /obj/structure/window/reinforced{
 	dir = 8
@@ -11322,6 +11499,10 @@
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/ai_monitored/turret_protected/aisat/service)
+"feM" = (
+/obj/structure/sign/warning/electricshock,
+/turf/closed/wall/r_wall,
+/area/maintenance/solars/starboard/fore)
 "ffJ" = (
 /obj/effect/turf_decal/tile/red{
 	dir = 1
@@ -11728,6 +11909,18 @@
 /obj/effect/turf_decal/tile/brown,
 /turf/open/floor/plasteel,
 /area/quartermaster/storage)
+"fsh" = (
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/structure/cable{
+	icon_state = "1-4"
+	},
+/obj/structure/cable{
+	icon_state = "1-8"
+	},
+/turf/open/floor/plating/snowed/smoothed/icemoon,
+/area/icemoon/surface/outdoors)
 "fsA" = (
 /obj/structure/bodycontainer/morgue,
 /obj/effect/turf_decal/tile/blue{
@@ -11974,6 +12167,10 @@
 	},
 /turf/open/floor/plasteel/freezer,
 /area/crew_quarters/dorms)
+"fBG" = (
+/obj/structure/grille/broken,
+/turf/open/floor/plating/asteroid/snow/icemoon,
+/area/icemoon/surface/outdoors)
 "fBS" = (
 /turf/open/floor/plating,
 /area/engine/storage)
@@ -12150,6 +12347,19 @@
 	},
 /turf/open/floor/wood,
 /area/crew_quarters/bar)
+"fIY" = (
+/obj/structure/cable{
+	icon_state = "0-4"
+	},
+/obj/machinery/power/apc{
+	areastring = "/area/maintenance/solars/starboard/fore";
+	dir = 8;
+	name = "Starboard Bow Solar APC";
+	pixel_x = -25;
+	pixel_y = 3
+	},
+/turf/open/floor/plating,
+/area/maintenance/solars/starboard/fore)
 "fJc" = (
 /obj/structure/cable{
 	icon_state = "4-8"
@@ -12323,6 +12533,10 @@
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/engine/engineering)
+"fNh" = (
+/obj/structure/cable,
+/turf/open/floor/plating/snowed/smoothed/icemoon,
+/area/icemoon/surface/outdoors)
 "fNC" = (
 /obj/structure/cable{
 	icon_state = "1-2"
@@ -12392,6 +12606,10 @@
 /obj/machinery/holopad,
 /turf/open/floor/plasteel/dark,
 /area/security/prison)
+"fOG" = (
+/obj/machinery/light,
+/turf/open/floor/plating/asteroid/snow/icemoon,
+/area/maintenance/solars/port/aft)
 "fOW" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
@@ -12570,6 +12788,19 @@
 	},
 /turf/open/floor/carpet,
 /area/crew_quarters/dorms)
+"fUm" = (
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 1
+	},
+/obj/machinery/door/airlock/external{
+	name = "Solar Maintenance";
+	req_access_txt = "10; 13"
+	},
+/turf/open/floor/plating,
+/area/maintenance/solars/starboard/aft)
 "fUX" = (
 /obj/machinery/sleeper{
 	dir = 4
@@ -12589,6 +12820,18 @@
 /obj/effect/landmark/blobstart,
 /turf/open/floor/plating,
 /area/hallway/primary/fore)
+"fVQ" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/structure/cable{
+	icon_state = "1-4"
+	},
+/obj/structure/cable{
+	icon_state = "2-4"
+	},
+/turf/open/floor/plating/snowed/smoothed/icemoon,
+/area/icemoon/surface/outdoors)
 "fVT" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden,
 /turf/open/floor/engine,
@@ -12930,6 +13173,12 @@
 /obj/machinery/jukebox,
 /turf/open/floor/wood,
 /area/crew_quarters/bar)
+"gkt" = (
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/open/floor/plating/asteroid/snow/icemoon,
+/area/maintenance/solars/starboard/aft)
 "gkv" = (
 /obj/machinery/door/airlock/engineering/glass/critical{
 	heat_proof = 1;
@@ -13232,6 +13481,12 @@
 /obj/effect/landmark/blobstart,
 /turf/open/floor/plasteel/freezer,
 /area/crew_quarters/fitness/recreation)
+"guD" = (
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/open/floor/plating/asteroid/snow/icemoon,
+/area/maintenance/solars/starboard/aft)
 "guE" = (
 /obj/structure/cable{
 	icon_state = "1-2"
@@ -13402,6 +13657,23 @@
 /obj/item/storage/firstaid/toxin,
 /turf/open/floor/plasteel/white,
 /area/science/mixing)
+"gAt" = (
+/obj/structure/cable{
+	icon_state = "0-4"
+	},
+/obj/machinery/power/apc{
+	areastring = "/area/maintenance/solars/port/fore";
+	dir = 8;
+	name = "Port Bow Solar APC";
+	pixel_x = -25;
+	pixel_y = 3
+	},
+/obj/machinery/camera{
+	c_tag = "Fore Port Solar Control";
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/maintenance/solars/port/fore)
 "gAu" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
@@ -13948,6 +14220,19 @@
 	},
 /turf/open/floor/plasteel,
 /area/quartermaster/miningdock)
+"gRP" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
+	},
+/obj/machinery/door/airlock/external{
+	name = "Solar Maintenance";
+	req_access_txt = "10; 13"
+	},
+/turf/open/floor/plating,
+/area/maintenance/solars/port/aft)
 "gRS" = (
 /obj/machinery/light{
 	dir = 8
@@ -14004,6 +14289,15 @@
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel/white,
 /area/science/lab)
+"gTh" = (
+/obj/structure/cable{
+	icon_state = "1-8"
+	},
+/obj/structure/cable{
+	icon_state = "2-8"
+	},
+/turf/open/floor/plating/snowed/smoothed/icemoon,
+/area/icemoon/surface/outdoors)
 "gTH" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -14116,6 +14410,10 @@
 /obj/effect/turf_decal/tile/purple,
 /turf/open/floor/plasteel/white,
 /area/medical/genetics)
+"gXM" = (
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/maintenance/solars/starboard/aft)
 "gYw" = (
 /obj/structure/cable{
 	icon_state = "1-8"
@@ -14754,6 +15052,18 @@
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plating,
 /area/maintenance/disposal)
+"huQ" = (
+/obj/machinery/power/terminal{
+	dir = 1
+	},
+/obj/structure/cable{
+	icon_state = "0-8"
+	},
+/obj/machinery/light/small{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/maintenance/solars/starboard/aft)
 "hva" = (
 /obj/structure/cable{
 	icon_state = "1-2"
@@ -14861,6 +15171,12 @@
 	},
 /turf/open/floor/plasteel,
 /area/maintenance/starboard)
+"hAa" = (
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/open/floor/plating/asteroid/snow/icemoon,
+/area/maintenance/solars/starboard/fore)
 "hAb" = (
 /obj/machinery/light/small,
 /mob/living/simple_animal/slime,
@@ -15075,12 +15391,24 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/nuke_storage)
+"hGK" = (
+/obj/structure/cable{
+	icon_state = "0-8"
+	},
+/turf/open/floor/plating/snowed/smoothed/icemoon,
+/area/icemoon/surface/outdoors)
 "hGM" = (
 /obj/structure/urinal{
 	pixel_y = 32
 	},
 /turf/open/floor/plasteel/freezer,
 /area/crew_quarters/dorms)
+"hHu" = (
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/open/floor/plating/asteroid/snow/icemoon,
+/area/maintenance/solars/starboard/fore)
 "hHy" = (
 /obj/machinery/door/firedoor/border_only{
 	dir = 1;
@@ -15832,6 +16160,19 @@
 /obj/machinery/light,
 /turf/open/floor/plasteel/dark,
 /area/security/main)
+"iaq" = (
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/door/airlock/external{
+	name = "Solar Maintenance";
+	req_access_txt = "10; 13"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/maintenance/solars/port/fore)
 "ias" = (
 /obj/structure/extinguisher_cabinet{
 	pixel_y = 30
@@ -16180,6 +16521,12 @@
 	},
 /turf/open/floor/circuit,
 /area/science/robotics/mechbay)
+"ikA" = (
+/obj/structure/cable{
+	icon_state = "1-4"
+	},
+/turf/open/floor/plating/snowed/smoothed/icemoon,
+/area/icemoon/surface/outdoors)
 "ikY" = (
 /obj/structure/window/reinforced{
 	dir = 4
@@ -16430,6 +16777,15 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/disposal)
+"isp" = (
+/obj/structure/rack,
+/obj/item/clothing/mask/gas,
+/obj/structure/sign/warning/vacuum/external{
+	pixel_y = 32
+	},
+/obj/item/multitool,
+/turf/open/floor/plating,
+/area/maintenance/solars/starboard/fore)
 "isu" = (
 /turf/open/floor/plasteel/dark,
 /area/science/server)
@@ -16701,6 +17057,15 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/turret_protected/ai_upload_foyer)
+"iAG" = (
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/structure/cable{
+	icon_state = "1-8"
+	},
+/turf/open/floor/plating,
+/area/maintenance/solars/starboard/fore)
 "iAO" = (
 /turf/closed/wall,
 /area/teleporter)
@@ -17546,6 +17911,16 @@
 /obj/effect/turf_decal/vg_decals/atmos/mix,
 /turf/open/floor/engine/airless,
 /area/engine/atmos)
+"jed" = (
+/obj/structure/cable{
+	icon_state = "0-8"
+	},
+/obj/machinery/power/terminal,
+/obj/machinery/light/small{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/maintenance/solars/starboard/fore)
 "jen" = (
 /obj/machinery/door/airlock/public/glass{
 	name = "Central Access"
@@ -17634,6 +18009,10 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel,
 /area/hallway/primary/fore)
+"jhF" = (
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating/airless,
+/area/maintenance/solars/port/aft)
 "jih" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel/white,
@@ -17645,6 +18024,13 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel,
 /area/hallway/primary/port)
+"jin" = (
+/obj/structure/cable{
+	icon_state = "0-8"
+	},
+/obj/machinery/power/smes,
+/turf/open/floor/plating,
+/area/maintenance/solars/port/fore)
 "jix" = (
 /obj/machinery/camera{
 	c_tag = "Brig Genpop Exterior";
@@ -17926,6 +18312,19 @@
 	},
 /turf/closed/wall,
 /area/maintenance/disposal)
+"jwc" = (
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 1
+	},
+/obj/machinery/door/airlock/external{
+	name = "Solar Maintenance";
+	req_access_txt = "10; 13"
+	},
+/turf/open/floor/plating,
+/area/maintenance/solars/starboard/fore)
 "jwj" = (
 /obj/structure/cable{
 	icon_state = "1-2"
@@ -17974,6 +18373,16 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/crew_quarters/heads/cmo)
+"jxB" = (
+/obj/structure/cable{
+	icon_state = "0-2"
+	},
+/obj/machinery/power/solar{
+	id = "starboardsolar";
+	name = "Starboard Solar Array"
+	},
+/turf/open/floor/plating/asteroid/snow/ice/icemoon/solarpanel,
+/area/icemoon/surface/outdoors)
 "jxZ" = (
 /obj/structure/cable{
 	icon_state = "4-8"
@@ -18014,6 +18423,12 @@
 /obj/effect/landmark/loneopspawn,
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plating/asteroid/snow/icemoon,
+/area/icemoon/surface/outdoors)
+"jAq" = (
+/obj/structure/cable{
+	icon_state = "1-8"
+	},
+/turf/open/floor/plating/snowed/smoothed/icemoon,
 /area/icemoon/surface/outdoors)
 "jAy" = (
 /obj/effect/landmark/blobstart,
@@ -18736,6 +19151,15 @@
 /obj/machinery/light,
 /turf/open/floor/plating/snowed/smoothed/icemoon,
 /area/icemoon/surface/outdoors)
+"jYT" = (
+/obj/machinery/power/solar_control{
+	dir = 4;
+	id = "portsolar";
+	name = "Port Quarter Solar Control"
+	},
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/maintenance/solars/port/aft)
 "jZl" = (
 /obj/structure/chair/comfy/brown{
 	dir = 4
@@ -19077,6 +19501,15 @@
 	},
 /turf/open/floor/plating,
 /area/ai_monitored/security/armory)
+"kkY" = (
+/obj/structure/cable{
+	icon_state = "1-4"
+	},
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/turf/open/floor/plating,
+/area/maintenance/solars/starboard/aft)
 "klc" = (
 /obj/effect/turf_decal/tile/brown{
 	dir = 1
@@ -19169,6 +19602,18 @@
 	},
 /turf/open/floor/plasteel,
 /area/crew_quarters/fitness)
+"knR" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/structure/cable{
+	icon_state = "1-8"
+	},
+/obj/structure/cable{
+	icon_state = "2-8"
+	},
+/turf/open/floor/plating/snowed/smoothed/icemoon,
+/area/icemoon/surface/outdoors)
 "kol" = (
 /obj/machinery/light{
 	dir = 1
@@ -19649,6 +20094,12 @@
 	},
 /turf/open/floor/plasteel,
 /area/engine/engineering)
+"kIG" = (
+/obj/structure/sign/warning/vacuum/external{
+	pixel_x = 32
+	},
+/turf/open/floor/plating,
+/area/maintenance/solars/port/fore)
 "kJk" = (
 /obj/machinery/atmospherics/pipe/simple/green/visible{
 	dir = 9
@@ -20105,6 +20556,16 @@
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/hallway/primary/central)
+"lbu" = (
+/obj/structure/cable{
+	icon_state = "0-2"
+	},
+/obj/machinery/power/solar{
+	id = "auxsolareast";
+	name = "Port Auxiliary Solar Array"
+	},
+/turf/open/floor/plating/asteroid/snow/ice/icemoon/solarpanel,
+/area/icemoon/surface/outdoors)
 "lbv" = (
 /obj/machinery/atmospherics/components/binary/pump,
 /obj/machinery/door/firedoor/border_only{
@@ -20264,6 +20725,17 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/paramedic)
+"lgX" = (
+/obj/machinery/camera{
+	c_tag = "Fore Starboard Solars";
+	dir = 1
+	},
+/obj/structure/cable{
+	icon_state = "0-8"
+	},
+/obj/machinery/power/smes,
+/turf/open/floor/plating,
+/area/maintenance/solars/starboard/fore)
 "lhi" = (
 /obj/structure/cable{
 	icon_state = "0-2"
@@ -20509,6 +20981,10 @@
 /obj/item/gavelblock,
 /turf/open/floor/wood,
 /area/security/courtroom)
+"lpT" = (
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/maintenance/solars/starboard/fore)
 "lpW" = (
 /obj/machinery/atmospherics/pipe/simple/general/visible,
 /obj/structure/table/glass,
@@ -21730,6 +22206,12 @@
 	},
 /turf/open/floor/plating,
 /area/security/courtroom)
+"mia" = (
+/obj/structure/cable{
+	icon_state = "1-4"
+	},
+/turf/open/floor/plating,
+/area/maintenance/solars/starboard/fore)
 "mjH" = (
 /obj/structure/cable{
 	icon_state = "4-8"
@@ -21743,6 +22225,12 @@
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/fore)
+"mjX" = (
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/open/floor/plating/asteroid/snow/icemoon,
+/area/maintenance/solars/starboard/aft)
 "mkd" = (
 /obj/effect/turf_decal/tile/yellow{
 	dir = 1
@@ -21821,6 +22309,18 @@
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/plasteel,
 /area/quartermaster/storage)
+"mmM" = (
+/obj/structure/cable{
+	icon_state = "1-8"
+	},
+/obj/structure/cable{
+	icon_state = "2-8"
+	},
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/turf/open/floor/plating/snowed/smoothed/icemoon,
+/area/icemoon/surface/outdoors)
 "mmO" = (
 /obj/structure/cable{
 	icon_state = "1-2"
@@ -21863,6 +22363,15 @@
 	},
 /turf/open/floor/engine,
 /area/engine/engineering)
+"mnL" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/turf/open/floor/plating/snowed/smoothed/icemoon,
+/area/icemoon/surface/outdoors)
 "moD" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -22766,6 +23275,21 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/security/armory)
+"mVe" = (
+/obj/machinery/power/apc{
+	areastring = "/area/maintenance/solars/port/aft";
+	dir = 4;
+	name = "Port Quarter Solar APC";
+	pixel_x = 23;
+	pixel_y = 2
+	},
+/obj/machinery/camera{
+	c_tag = "Aft Port Solar Control";
+	dir = 1
+	},
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/maintenance/solars/port/aft)
 "mVf" = (
 /obj/machinery/atmospherics/pipe/simple/yellow/visible{
 	dir = 6
@@ -23487,6 +24011,15 @@
 /obj/effect/turf_decal/tile/brown,
 /turf/open/floor/plasteel,
 /area/quartermaster/storage)
+"nsB" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/structure/cable{
+	icon_state = "2-8"
+	},
+/turf/open/floor/plating,
+/area/maintenance/solars/port/aft)
 "ntd" = (
 /obj/machinery/door/airlock/medical{
 	name = "Medbay Break Room";
@@ -23522,6 +24055,13 @@
 	},
 /turf/open/floor/engine/airless,
 /area/engine/atmos)
+"nuu" = (
+/obj/structure/cable{
+	icon_state = "0-2"
+	},
+/obj/machinery/power/tracker,
+/turf/open/floor/plating/asteroid/snow/ice/icemoon/solarpanel,
+/area/icemoon/surface/outdoors)
 "nuJ" = (
 /obj/structure/cable{
 	icon_state = "1-8"
@@ -23621,6 +24161,12 @@
 /obj/effect/spawner/lootdrop/techstorage/AI,
 /turf/open/floor/plating,
 /area/storage/tech)
+"nyq" = (
+/obj/structure/cable{
+	icon_state = "0-2"
+	},
+/turf/open/floor/plating/snowed/smoothed/icemoon,
+/area/icemoon/surface/outdoors)
 "nyT" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/closed/wall/r_wall,
@@ -24891,6 +25437,9 @@
 /obj/machinery/power/smes/engineering,
 /turf/open/floor/plasteel/dark,
 /area/engine/secure_construction)
+"oml" = (
+/turf/open/floor/plating,
+/area/maintenance/solars/port/aft)
 "omC" = (
 /obj/structure/cable{
 	icon_state = "1-4"
@@ -25299,6 +25848,15 @@
 	},
 /turf/open/floor/plasteel,
 /area/maintenance/aft)
+"oBl" = (
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/structure/cable{
+	icon_state = "2-8"
+	},
+/turf/open/floor/plating,
+/area/maintenance/solars/starboard/aft)
 "oBs" = (
 /obj/structure/cable{
 	icon_state = "0-2"
@@ -26315,6 +26873,18 @@
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
+"pjD" = (
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/structure/cable{
+	icon_state = "2-4"
+	},
+/obj/structure/cable{
+	icon_state = "2-8"
+	},
+/turf/open/floor/plating/snowed/smoothed/icemoon,
+/area/icemoon/surface/outdoors)
 "pkh" = (
 /mob/living/simple_animal/hostile/retaliate/goat{
 	name = "Pete"
@@ -27759,6 +28329,15 @@
 	},
 /turf/open/floor/engine,
 /area/engine/supermatter)
+"qeY" = (
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/structure/cable{
+	icon_state = "1-8"
+	},
+/turf/open/floor/plating,
+/area/maintenance/solars/port/fore)
 "qfd" = (
 /obj/structure/bodycontainer/morgue{
 	dir = 8
@@ -27766,6 +28345,18 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel/dark,
 /area/medical/morgue)
+"qfJ" = (
+/obj/structure/cable{
+	icon_state = "1-4"
+	},
+/obj/structure/cable{
+	icon_state = "2-4"
+	},
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/turf/open/floor/plating/snowed/smoothed/icemoon,
+/area/icemoon/surface/outdoors)
 "qfT" = (
 /obj/machinery/holopad,
 /turf/open/floor/carpet,
@@ -27898,6 +28489,12 @@
 "qlj" = (
 /turf/closed/wall,
 /area/crew_quarters/theatre)
+"qlH" = (
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/open/floor/plating/asteroid/snow/icemoon,
+/area/maintenance/solars/port/aft)
 "qlW" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -27973,6 +28570,16 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/engine/secure_construction)
+"qnL" = (
+/obj/machinery/power/solar_control{
+	id = "auxsolareast";
+	name = "Starboard Bow Solar Control"
+	},
+/obj/structure/cable{
+	icon_state = "0-4"
+	},
+/turf/open/floor/plating,
+/area/maintenance/solars/starboard/fore)
 "qoh" = (
 /obj/structure/cable{
 	icon_state = "4-8"
@@ -28100,9 +28707,8 @@
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
 "qrR" = (
-/obj/structure/cable,
-/turf/open/floor/plating/asteroid/snow/icemoon,
-/area/icemoon/surface/outdoors)
+/turf/closed/mineral/random/snow/no_caves,
+/area/icemoon/surface/outdoors/unexplored/rivers/no_monsters)
 "qrS" = (
 /obj/structure/cable{
 	icon_state = "1-2"
@@ -28663,6 +29269,10 @@
 	},
 /turf/open/floor/plating/snowed/smoothed/icemoon,
 /area/icemoon/surface/outdoors)
+"qJw" = (
+/obj/structure/sign/warning/electricshock,
+/turf/closed/wall/r_wall,
+/area/maintenance/solars/starboard/aft)
 "qJy" = (
 /obj/machinery/door/airlock/public/glass{
 	name = "Snow Airlock"
@@ -29428,6 +30038,16 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/security/prison)
+"rlM" = (
+/obj/machinery/power/solar_control{
+	id = "auxsolareast";
+	name = "Port Bow Solar Control"
+	},
+/obj/structure/cable{
+	icon_state = "0-4"
+	},
+/turf/open/floor/plating,
+/area/maintenance/solars/port/fore)
 "rlS" = (
 /obj/structure/table,
 /obj/item/stack/packageWrap,
@@ -29559,6 +30179,14 @@
 /obj/item/transfer_valve,
 /turf/open/floor/plasteel/white,
 /area/science/mixing)
+"rot" = (
+/obj/structure/cable,
+/obj/machinery/power/solar{
+	id = "starboardsolar";
+	name = "Starboard Solar Array"
+	},
+/turf/open/floor/plating/asteroid/snow/ice/icemoon/solarpanel,
+/area/icemoon/surface/outdoors)
 "roS" = (
 /obj/machinery/computer/card/minor/cmo{
 	dir = 4
@@ -29745,6 +30373,10 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/security/armory)
+"rtD" = (
+/obj/structure/sign/warning/electricshock,
+/turf/closed/wall/r_wall,
+/area/maintenance/solars/port/fore)
 "rtJ" = (
 /obj/structure/cable{
 	icon_state = "2-4"
@@ -29791,6 +30423,10 @@
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/circuit,
 /area/science/server)
+"rwm" = (
+/obj/structure/sign/warning/electricshock,
+/turf/closed/wall/r_wall,
+/area/maintenance/solars/port/aft)
 "rww" = (
 /turf/closed/wall,
 /area/engine/secure_construction)
@@ -29836,6 +30472,20 @@
 /obj/structure/bookcase/random/reference,
 /turf/open/floor/wood,
 /area/library)
+"rxI" = (
+/obj/structure/cable{
+	icon_state = "0-4"
+	},
+/obj/machinery/power/solar{
+	id = "portsolar";
+	name = "Port Solar Array"
+	},
+/turf/open/floor/plating/asteroid/snow/ice/icemoon/solarpanel,
+/area/icemoon/surface/outdoors)
+"rxJ" = (
+/obj/item/stack/cable_coil/random,
+/turf/open/floor/plating/asteroid/snow/icemoon,
+/area/icemoon/surface/outdoors)
 "rxM" = (
 /obj/effect/turf_decal/bot_white,
 /obj/structure/window/reinforced{
@@ -30393,6 +31043,12 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/science/xenobiology)
+"rUq" = (
+/obj/structure/cable{
+	icon_state = "2-8"
+	},
+/turf/open/floor/plating/snowed/smoothed/icemoon,
+/area/icemoon/surface/outdoors)
 "rUu" = (
 /obj/machinery/computer/message_monitor,
 /obj/effect/turf_decal/tile/green{
@@ -30505,6 +31161,12 @@
 /obj/structure/chair/stool,
 /turf/open/floor/carpet,
 /area/chapel/main)
+"rZJ" = (
+/obj/structure/chair/stool{
+	pixel_y = 8
+	},
+/turf/open/floor/plating,
+/area/maintenance/solars/port/fore)
 "rZL" = (
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
@@ -30559,6 +31221,16 @@
 /obj/machinery/portable_atmospherics/scrubber,
 /turf/open/floor/plasteel,
 /area/engine/atmos)
+"sbN" = (
+/obj/structure/cable{
+	icon_state = "0-8"
+	},
+/obj/machinery/power/terminal,
+/obj/machinery/light/small{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/maintenance/solars/port/fore)
 "sbS" = (
 /obj/structure/cable{
 	icon_state = "1-2"
@@ -30614,6 +31286,12 @@
 "sda" = (
 /turf/closed/wall,
 /area/storage/tech)
+"sdc" = (
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/open/floor/plating/asteroid/snow/icemoon,
+/area/maintenance/solars/port/aft)
 "sde" = (
 /obj/structure/rack,
 /obj/effect/spawner/lootdrop/techstorage/security,
@@ -30936,6 +31614,17 @@
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/port)
+"spy" = (
+/obj/machinery/power/solar_control{
+	dir = 1;
+	id = "starboardsolar";
+	name = "Starboard Quarter Solar Control"
+	},
+/obj/structure/cable{
+	icon_state = "0-4"
+	},
+/turf/open/floor/plating,
+/area/maintenance/solars/starboard/aft)
 "spE" = (
 /obj/machinery/atmospherics/pipe/manifold/yellow/visible{
 	dir = 8
@@ -31248,6 +31937,17 @@
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/plasteel,
 /area/security/checkpoint/supply)
+"sDD" = (
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
+/obj/machinery/door/airlock/external{
+	name = "Solar Maintenance";
+	req_access_txt = "10; 13"
+	},
+/turf/open/floor/plating,
+/area/maintenance/solars/starboard/fore)
 "sFh" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 1
@@ -32321,6 +33021,16 @@
 /obj/machinery/atmospherics/pipe/manifold4w/supply/hidden,
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
+"tlg" = (
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/door/airlock/engineering{
+	name = "Starboard Bow Solar Access";
+	req_access_txt = "10"
+	},
+/turf/open/floor/plating,
+/area/maintenance/solars/starboard/fore)
 "tlk" = (
 /obj/structure/cable{
 	icon_state = "4-8"
@@ -32384,6 +33094,12 @@
 "tmO" = (
 /turf/closed/wall,
 /area/hallway/primary/port)
+"tnL" = (
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/turf/open/floor/plating,
+/area/maintenance/solars/port/fore)
 "tnX" = (
 /obj/structure/cable{
 	icon_state = "2-4"
@@ -32406,6 +33122,15 @@
 /obj/effect/turf_decal/tile/blue,
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
+"toa" = (
+/obj/structure/cable{
+	icon_state = "1-4"
+	},
+/obj/structure/cable{
+	icon_state = "1-8"
+	},
+/turf/open/floor/plating/snowed/smoothed/icemoon,
+/area/icemoon/surface/outdoors)
 "tod" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -32935,6 +33660,13 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel,
 /area/storage/auxiliary)
+"tGJ" = (
+/obj/structure/cable{
+	icon_state = "0-8"
+	},
+/obj/machinery/power/smes,
+/turf/open/floor/plating,
+/area/maintenance/solars/starboard/aft)
 "tGK" = (
 /obj/machinery/atmospherics/components/unary/outlet_injector/on,
 /turf/open/floor/plating/snowed/smoothed/icemoon,
@@ -33604,6 +34336,12 @@
 	},
 /turf/open/floor/carpet,
 /area/crew_quarters/heads/captain)
+"uaG" = (
+/obj/structure/cable{
+	icon_state = "1-4"
+	},
+/turf/open/floor/plating,
+/area/maintenance/solars/port/fore)
 "uaJ" = (
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple{
 	dir = 6
@@ -34227,6 +34965,17 @@
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plasteel/dark,
 /area/hallway/secondary/exit/departure_lounge)
+"uyM" = (
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
+/obj/machinery/door/airlock/external{
+	name = "Solar Maintenance";
+	req_access_txt = "10; 13"
+	},
+/turf/open/floor/plating,
+/area/maintenance/solars/starboard/aft)
 "uyW" = (
 /obj/structure/cable{
 	icon_state = "0-4"
@@ -34756,6 +35505,11 @@
 "uQR" = (
 /turf/open/floor/wood,
 /area/bridge/meeting_room)
+"uRc" = (
+/obj/structure/cable,
+/obj/machinery/power/tracker,
+/turf/open/floor/plating/asteroid/snow/ice/icemoon/solarpanel,
+/area/icemoon/surface/outdoors)
 "uRg" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/structure/closet/bombcloset,
@@ -34990,6 +35744,12 @@
 "uYa" = (
 /turf/open/floor/plasteel/white,
 /area/medical/virology)
+"uYl" = (
+/obj/structure/chair/stool{
+	pixel_y = 8
+	},
+/turf/open/floor/plating,
+/area/maintenance/solars/starboard/fore)
 "uYm" = (
 /obj/machinery/door/poddoor/shutters{
 	id = "teledoor";
@@ -35558,6 +36318,9 @@
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plating,
 /area/maintenance/disposal)
+"vrd" = (
+/turf/closed/wall/r_wall,
+/area/maintenance/solars/port/fore)
 "vrg" = (
 /obj/machinery/atmospherics/components/trinary/filter/atmos/flipped/n2o,
 /turf/open/floor/plating,
@@ -35972,6 +36735,18 @@
 	},
 /turf/open/floor/carpet,
 /area/hallway/secondary/exit/departure_lounge)
+"vDy" = (
+/obj/structure/cable{
+	icon_state = "2-4"
+	},
+/obj/structure/cable{
+	icon_state = "1-4"
+	},
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/turf/open/floor/plating/snowed/smoothed/icemoon,
+/area/icemoon/surface/outdoors)
 "vDI" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 6
@@ -36771,6 +37546,13 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/security/prison)
+"wax" = (
+/obj/structure/cable{
+	icon_state = "0-2"
+	},
+/obj/machinery/power/smes,
+/turf/open/floor/plating,
+/area/maintenance/solars/port/aft)
 "waP" = (
 /obj/structure/cable{
 	icon_state = "4-8"
@@ -36782,6 +37564,18 @@
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/plasteel,
 /area/hallway/primary/port)
+"wbe" = (
+/obj/machinery/power/terminal{
+	dir = 4
+	},
+/obj/structure/cable{
+	icon_state = "0-2"
+	},
+/obj/machinery/light/small{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/maintenance/solars/port/aft)
 "wbE" = (
 /turf/open/floor/carpet,
 /area/hallway/secondary/exit/departure_lounge)
@@ -37343,9 +38137,8 @@
 /turf/open/floor/plasteel,
 /area/quartermaster/miningoffice)
 "wuf" = (
-/obj/structure/cable{
-	icon_state = "0-4"
-	},
+/obj/structure/grille,
+/obj/structure/lattice,
 /turf/open/floor/plating/asteroid/snow/icemoon,
 /area/icemoon/surface/outdoors)
 "wuj" = (
@@ -37388,6 +38181,14 @@
 	},
 /turf/open/floor/plasteel,
 /area/science/storage)
+"wuC" = (
+/obj/structure/cable,
+/obj/machinery/power/solar{
+	id = "auxsolareast";
+	name = "Port Auxiliary Solar Array"
+	},
+/turf/open/floor/plating/asteroid/snow/ice/icemoon/solarpanel,
+/area/icemoon/surface/outdoors)
 "wuQ" = (
 /obj/structure/table,
 /obj/machinery/plantgenes{
@@ -37487,6 +38288,12 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel/white,
 /area/medical/virology)
+"wBg" = (
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/open/floor/plating/asteroid/snow/icemoon,
+/area/maintenance/solars/port/fore)
 "wDd" = (
 /obj/machinery/atmospherics/pipe/simple/orange/visible{
 	dir = 10
@@ -37786,6 +38593,15 @@
 	},
 /turf/open/floor/engine,
 /area/science/xenobiology)
+"wNf" = (
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/structure/cable{
+	icon_state = "1-4"
+	},
+/turf/open/floor/plating,
+/area/maintenance/solars/port/aft)
 "wOn" = (
 /obj/structure/closet/crate/bin,
 /turf/open/floor/pod/dark,
@@ -37874,6 +38690,9 @@
 	},
 /turf/open/floor/plasteel,
 /area/engine/engineering)
+"wRY" = (
+/turf/closed/wall/r_wall,
+/area/maintenance/solars/starboard/aft)
 "wSb" = (
 /obj/effect/turf_decal/arrows/red{
 	dir = 8
@@ -38257,6 +39076,10 @@
 /obj/machinery/computer/station_alert,
 /turf/open/floor/plasteel,
 /area/crew_quarters/heads/chief)
+"xgh" = (
+/obj/item/stack/rods,
+/turf/open/floor/plating/asteroid/snow/icemoon,
+/area/icemoon/surface/outdoors)
 "xgi" = (
 /obj/machinery/atmospherics/components/binary/pump/on{
 	name = "Cooling to Unfiltered"
@@ -38572,6 +39395,12 @@
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/port)
+"xrW" = (
+/obj/structure/sign/warning/vacuum/external{
+	pixel_y = -32
+	},
+/turf/open/floor/plating,
+/area/maintenance/solars/starboard/aft)
 "xsE" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 1
@@ -38828,6 +39657,16 @@
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plasteel,
 /area/crew_quarters/fitness)
+"xDQ" = (
+/obj/machinery/door/airlock/engineering{
+	name = "Port Quarter Solar Access";
+	req_access_txt = "10"
+	},
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/turf/open/floor/plating,
+/area/maintenance/solars/port/aft)
 "xDS" = (
 /obj/machinery/status_display,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -39083,6 +39922,12 @@
 	},
 /turf/open/floor/plasteel,
 /area/engine/break_room)
+"xMV" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/turf/open/floor/plating,
+/area/maintenance/solars/port/aft)
 "xOj" = (
 /obj/structure/cable{
 	icon_state = "4-8"
@@ -39430,6 +40275,19 @@
 "yds" = (
 /turf/open/floor/plasteel/white,
 /area/medical/chemistry)
+"ydQ" = (
+/obj/machinery/power/apc{
+	areastring = "/area/maintenance/solars/starboard/aft";
+	dir = 8;
+	name = "Starboard Quarter Solar APC";
+	pixel_x = -26;
+	pixel_y = 3
+	},
+/obj/structure/cable{
+	icon_state = "0-4"
+	},
+/turf/open/floor/plating,
+/area/maintenance/solars/starboard/aft)
 "ydV" = (
 /obj/effect/turf_decal/tile/green,
 /obj/effect/turf_decal/tile/green{
@@ -39512,6 +40370,15 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/bridge)
+"yge" = (
+/obj/structure/cable{
+	icon_state = "2-4"
+	},
+/obj/structure/cable{
+	icon_state = "2-8"
+	},
+/turf/open/floor/plating/snowed/smoothed/icemoon,
+/area/icemoon/surface/outdoors)
 "ygB" = (
 /obj/structure/cable{
 	icon_state = "2-8"
@@ -44098,8 +44965,8 @@ yhx
 yhx
 yhx
 yhx
-yhx
-yhx
+avT
+avT
 yhx
 yhx
 yhx
@@ -44356,7 +45223,7 @@ yhx
 yhx
 yhx
 yhx
-yhx
+avT
 yhx
 yhx
 yhx
@@ -44613,7 +45480,7 @@ yhx
 yhx
 yhx
 yhx
-yhx
+avT
 yhx
 yhx
 yhx
@@ -44870,7 +45737,7 @@ yhx
 yhx
 yhx
 yhx
-yhx
+avT
 yhx
 yhx
 yhx
@@ -45127,7 +45994,7 @@ yhx
 yhx
 yhx
 yhx
-yhx
+avT
 yhx
 yhx
 yhx
@@ -45369,24 +46236,24 @@ yhx
 yhx
 yhx
 yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
+qrR
+qrR
+qrR
+wuf
+wuf
+wuf
+wuf
+wuf
+wuf
+wuf
+wuf
+wuf
+wuf
+wuf
+wuf
+fBG
+wuf
+wuf
 yhx
 yhx
 yhx
@@ -45626,24 +46493,24 @@ yhx
 yhx
 yhx
 yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
+qrR
+qrR
+qrR
+bTC
+avT
+avT
+avT
+avT
+avT
+avT
+avT
+rxJ
+avT
+avT
+avT
+xgh
+avT
+wuf
 yhx
 yhx
 yhx
@@ -45883,27 +46750,27 @@ yhx
 yhx
 yhx
 yhx
+qrR
+qrR
+qrR
+bTC
+avT
+lbu
+aQK
+wuC
+avT
+lbu
+aQK
+wuC
+avT
+lbu
+aQK
+wuC
+avT
+wuf
 yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
+avT
+avT
 yhx
 yhx
 yhx
@@ -46140,27 +47007,27 @@ yhx
 yhx
 yhx
 yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
+qrR
+qrR
+qrR
+bTC
+avT
+lbu
+qfJ
+wuC
+avT
+lbu
+qfJ
+wuC
+avT
+lbu
+qfJ
+wuC
+avT
+avT
+avT
+avT
+avT
 yhx
 yhx
 yhx
@@ -46397,25 +47264,25 @@ yhx
 yhx
 yhx
 yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
+qrR
+qrR
+qrR
+bTC
+avT
+lbu
+qfJ
+wuC
+avT
+lbu
+qfJ
+wuC
+avT
+lbu
+qfJ
+wuC
+avT
+avT
+avT
 yhx
 yhx
 yhx
@@ -46654,24 +47521,24 @@ yhx
 yhx
 yhx
 yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
+qrR
+avT
+avT
+avT
+avT
+lbu
+qfJ
+wuC
+avT
+lbu
+qfJ
+wuC
+avT
+lbu
+qfJ
+wuC
+avT
+avT
 yhx
 yhx
 yhx
@@ -46911,30 +47778,30 @@ yhx
 yhx
 yhx
 yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
+wuf
+wuf
+wuf
+avT
+avT
+lbu
+qfJ
+wuC
+avT
+lbu
+qfJ
+wuC
+avT
+lbu
+qfJ
+wuC
+avT
+wBg
+avT
+chZ
+vrd
+vrd
+vrd
+vrd
 yhx
 yhx
 yhx
@@ -47168,35 +48035,35 @@ yhx
 yhx
 yhx
 yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
+wuf
+avT
+avT
+avT
+avT
+avT
+hGK
+avT
+avT
+avT
+hGK
+avT
+avT
+avT
+hGK
+avT
+aNg
+chZ
+chZ
+chZ
+rlM
+rZJ
+gAt
+vrd
+avT
+avT
+avT
+avT
+avT
 yhx
 yhx
 yhx
@@ -47425,41 +48292,41 @@ yhx
 yhx
 yhx
 yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
+wuf
+avT
+nuu
+sXy
+sXy
+fNh
+xUL
+nyq
+sXy
+fNh
+xUL
+nyq
+sXy
+fNh
+xUL
+nyq
+sXy
+eWw
+tnL
+iaq
+qeY
+uaG
+cbL
+bbq
+sXy
+sXy
+sXy
+sXy
+ikA
+avT
+avT
+avT
+avT
+avT
+avT
 ydp
 ydp
 ydp
@@ -47682,41 +48549,41 @@ yhx
 yhx
 yhx
 yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
+wuf
+avT
+avT
+avT
+avT
+avT
+clq
+avT
+avT
+avT
+clq
+avT
+avT
+avT
+clq
+avT
+aNg
+chZ
+chZ
+chZ
+kIG
+sbN
+jin
+rtD
+avT
+avT
+avT
+avT
+bBh
+avT
+avT
+avT
+avT
+avT
+avT
 ydp
 ydp
 ydp
@@ -47939,46 +48806,46 @@ yhx
 yhx
 yhx
 yhx
+wuf
+fBG
+wuf
+avT
+avT
+lbu
+mmM
+wuC
+avT
+lbu
+mmM
+wuC
+avT
+lbu
+mmM
+wuC
+avT
+ajl
+avT
+chZ
+vrd
+vrd
+vrd
+vrd
 yhx
 yhx
 yhx
 yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-ydp
-ydp
-ydp
-ydp
-ydp
+bBh
+avT
+avT
+avT
+avT
+avT
+avT
+avT
+avT
+avT
+avT
+avT
 ydp
 ydp
 ydp
@@ -48054,23 +48921,23 @@ yhx
 yhx
 yhx
 yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
+qrR
+qrR
+qrR
+qrR
+qrR
+qrR
+wuf
+wuf
+wuf
+wuf
+wuf
+qrR
+qrR
+qrR
+qrR
+qrR
+qrR
 yhx
 yhx
 yhx
@@ -48196,6 +49063,25 @@ yhx
 yhx
 yhx
 yhx
+qrR
+qrR
+qrR
+avT
+avT
+lbu
+mmM
+wuC
+avT
+lbu
+mmM
+wuC
+avT
+lbu
+mmM
+wuC
+avT
+avT
+avT
 yhx
 yhx
 yhx
@@ -48205,37 +49091,18 @@ yhx
 yhx
 yhx
 yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-ydp
-ydp
-ydp
-ydp
-ydp
+rUq
+sXy
+sXy
+sXy
+sXy
+sXy
+sXy
+sXy
+sXy
+sXy
+sXy
+ikA
 ydp
 ydp
 ydp
@@ -48311,23 +49178,23 @@ yhx
 yhx
 yhx
 yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
+qrR
+qrR
+qrR
+qrR
+qrR
+qrR
+wuf
+avT
+avT
+avT
+wuf
+qrR
+qrR
+qrR
+qrR
+qrR
+qrR
 yhx
 yhx
 yhx
@@ -48453,6 +49320,25 @@ yhx
 yhx
 yhx
 yhx
+qrR
+qrR
+qrR
+wuf
+avT
+lbu
+mmM
+wuC
+avT
+lbu
+mmM
+wuC
+avT
+lbu
+mmM
+wuC
+avT
+avT
+avT
 yhx
 yhx
 yhx
@@ -48468,31 +49354,12 @@ yhx
 yhx
 yhx
 yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-ydp
-ydp
-ydp
-ydp
-ydp
+avT
+avT
+avT
+avT
+avT
+bBh
 ydp
 ydp
 ydp
@@ -48568,23 +49435,23 @@ yhx
 yhx
 yhx
 yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
+qrR
+qrR
+qrR
+qrR
+qrR
+qrR
+wuf
+avT
+bLv
+avT
+wuf
+qrR
+qrR
+qrR
+qrR
+qrR
+qrR
 yhx
 yhx
 yhx
@@ -48710,6 +49577,27 @@ yhx
 yhx
 yhx
 yhx
+qrR
+qrR
+qrR
+wuf
+avT
+lbu
+mmM
+wuC
+avT
+lbu
+mmM
+wuC
+avT
+lbu
+mmM
+wuC
+avT
+avT
+avT
+avT
+avT
 yhx
 yhx
 yhx
@@ -48723,38 +49611,17 @@ yhx
 yhx
 yhx
 yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-ydp
-ydp
-ydp
-ydp
-ydp
-ydp
-ydp
-ydp
-ydp
-ydp
+avT
+avT
+avT
+avT
+avT
+bBh
+avT
+avT
+avT
+avT
+avT
 avT
 avT
 avT
@@ -48825,23 +49692,23 @@ yhx
 yhx
 yhx
 yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
+wuf
+wuf
+wuf
+wuf
+wuf
+avT
+avT
+avT
+bBh
+avT
+avT
+avT
+wuf
+wuf
+fBG
+wuf
+wuf
 yhx
 yhx
 yhx
@@ -48967,55 +49834,55 @@ yhx
 yhx
 yhx
 yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-ydp
-ydp
-ydp
-ydp
-ydp
-ydp
-ydp
-ydp
-ydp
-ydp
+qrR
+qrR
+qrR
+wuf
+avT
+lbu
+gTh
+wuC
+avT
+lbu
+gTh
+wuC
+avT
+lbu
+gTh
+wuC
+avT
+wuf
 avT
 avT
 avT
-avT
+yhx
+yhx
+yhx
+yhx
+yhx
+yhx
+yhx
+yhx
+yhx
+yhx
+yhx
+yhx
+yhx
+yhx
+ydp
+ydp
+ydp
+ydp
+rUq
+sXy
+sXy
+sXy
+sXy
+sXy
+sXy
+sXy
+sXy
+ikA
 apJ
 apJ
 wRb
@@ -49082,23 +49949,23 @@ yhx
 yhx
 yhx
 yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
+wuf
+avT
+avT
+avT
+avT
+avT
+avT
+avT
+bBh
+avT
+avT
+avT
+avT
+avT
+avT
+avT
+wuf
 yhx
 yhx
 yhx
@@ -49224,6 +50091,27 @@ yhx
 yhx
 yhx
 yhx
+qrR
+qrR
+qrR
+wuf
+avT
+avT
+avT
+avT
+avT
+avT
+avT
+avT
+avT
+avT
+avT
+avT
+avT
+wuf
+avT
+avT
+avT
 yhx
 yhx
 yhx
@@ -49238,34 +50126,6 @@ yhx
 yhx
 yhx
 yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-ydp
-ydp
-ydp
-ydp
-ydp
-ydp
-ydp
 ydp
 ydp
 ydp
@@ -49273,6 +50133,13 @@ ydp
 avT
 avT
 avT
+avT
+avT
+avT
+avT
+avT
+avT
+bBh
 apJ
 apJ
 ieI
@@ -49339,23 +50206,23 @@ yhx
 yhx
 yhx
 yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
+wuf
+avT
+rxI
+rxI
+rxI
+rxI
+rxI
+avT
+hGK
+avT
+rxI
+rxI
+rxI
+rxI
+rxI
+avT
+wuf
 yhx
 yhx
 yhx
@@ -49481,26 +50348,26 @@ yhx
 yhx
 yhx
 yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
+qrR
+qrR
+avT
+wuf
+wuf
+wuf
+wuf
+wuf
+avT
+wuf
+wuf
+wuf
+wuf
+wuf
+wuf
+wuf
+wuf
+wuf
+avT
+avT
 yhx
 yhx
 yhx
@@ -49529,7 +50396,7 @@ ydp
 ydp
 avT
 avT
-avT
+bBh
 apJ
 apJ
 xRZ
@@ -49596,23 +50463,23 @@ yhx
 yhx
 yhx
 yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
+wuf
+avT
+yge
+pjD
+pjD
+pjD
+pjD
+fNh
+xUL
+nyq
+fsh
+fsh
+fsh
+fsh
+toa
+avT
+wuf
 yhx
 yhx
 yhx
@@ -49746,7 +50613,7 @@ yhx
 yhx
 yhx
 yhx
-yhx
+avT
 yhx
 yhx
 yhx
@@ -49786,7 +50653,7 @@ ydp
 ydp
 ydp
 avT
-avT
+bBh
 apJ
 apJ
 nOn
@@ -49853,23 +50720,23 @@ yhx
 yhx
 yhx
 yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
+wuf
+avT
+dfx
+dfx
+dfx
+dfx
+dfx
+avT
+clq
+avT
+dfx
+dfx
+dfx
+dfx
+dfx
+avT
+wuf
 yhx
 yhx
 yhx
@@ -50002,8 +50869,8 @@ yhx
 yhx
 yhx
 yhx
-yhx
-yhx
+avT
+avT
 yhx
 yhx
 yhx
@@ -50043,7 +50910,7 @@ ydp
 ydp
 ydp
 avT
-avT
+bBh
 apJ
 apJ
 jgj
@@ -50110,23 +50977,23 @@ yhx
 yhx
 yhx
 yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
+wuf
+avT
+avT
+avT
+avT
+avT
+avT
+avT
+bBh
+avT
+avT
+avT
+avT
+avT
+avT
+avT
+fBG
 yhx
 yhx
 yhx
@@ -50260,10 +51127,10 @@ yhx
 yhx
 yhx
 yhx
-yhx
-yhx
-yhx
-yhx
+avT
+avT
+avT
+avT
 yhx
 yhx
 yhx
@@ -50300,7 +51167,7 @@ ydp
 ydp
 ydp
 avT
-avT
+bBh
 apJ
 apJ
 vBg
@@ -50367,23 +51234,23 @@ yhx
 yhx
 yhx
 yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
+wuf
+avT
+rxI
+rxI
+rxI
+rxI
+rxI
+avT
+hGK
+avT
+rxI
+rxI
+rxI
+rxI
+rxI
+avT
+wuf
 yhx
 yhx
 yhx
@@ -50515,9 +51382,9 @@ yhx
 yhx
 yhx
 yhx
-yhx
-yhx
-yhx
+avT
+avT
+avT
 yhx
 yhx
 yhx
@@ -50557,7 +51424,7 @@ ydp
 ydp
 ydp
 avT
-avT
+bBh
 apJ
 apJ
 mOe
@@ -50624,23 +51491,23 @@ yhx
 yhx
 yhx
 yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
+wuf
+avT
+yge
+pjD
+pjD
+pjD
+pjD
+fNh
+xUL
+nyq
+fsh
+fsh
+fsh
+fsh
+toa
+avT
+wuf
 yhx
 yhx
 yhx
@@ -50773,8 +51640,8 @@ yhx
 yhx
 yhx
 yhx
-yhx
-yhx
+avT
+avT
 yhx
 yhx
 yhx
@@ -50814,7 +51681,7 @@ ydp
 ydp
 ydp
 avT
-avT
+bBh
 apJ
 apJ
 kgM
@@ -50881,23 +51748,23 @@ yhx
 yhx
 yhx
 yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
+wuf
+avT
+dfx
+dfx
+dfx
+dfx
+dfx
+avT
+clq
+avT
+dfx
+dfx
+dfx
+dfx
+dfx
+avT
+wuf
 yhx
 yhx
 yhx
@@ -51030,8 +51897,8 @@ yhx
 yhx
 yhx
 yhx
-yhx
-yhx
+avT
+avT
 yhx
 yhx
 yhx
@@ -51071,7 +51938,7 @@ ydp
 ydp
 ydp
 avT
-avT
+bBh
 apJ
 apJ
 won
@@ -51138,23 +52005,23 @@ yhx
 yhx
 yhx
 yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
+fBG
+avT
+avT
+avT
+avT
+avT
+avT
+avT
+bBh
+avT
+avT
+avT
+avT
+avT
+avT
+avT
+wuf
 yhx
 yhx
 yhx
@@ -51328,7 +52195,7 @@ ydp
 ydp
 ydp
 avT
-avT
+bBh
 apJ
 apJ
 apJ
@@ -51395,23 +52262,23 @@ yhx
 yhx
 yhx
 yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
+wuf
+avT
+rxI
+rxI
+rxI
+rxI
+rxI
+avT
+hGK
+avT
+rxI
+rxI
+rxI
+rxI
+rxI
+avT
+wuf
 yhx
 yhx
 yhx
@@ -51585,7 +52452,7 @@ ydp
 ydp
 ydp
 ydp
-avT
+bBh
 avT
 apJ
 gLH
@@ -51652,23 +52519,23 @@ yhx
 yhx
 yhx
 yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
+wuf
+avT
+yge
+pjD
+pjD
+pjD
+pjD
+fNh
+xUL
+nyq
+fsh
+fsh
+fsh
+fsh
+toa
+avT
+wuf
 yhx
 yhx
 yhx
@@ -51842,7 +52709,7 @@ ydp
 ydp
 ydp
 ydp
-avT
+bBh
 avT
 avT
 gLH
@@ -51909,23 +52776,23 @@ yhx
 yhx
 yhx
 yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
+wuf
+avT
+dfx
+dfx
+dfx
+dfx
+dfx
+avT
+clq
+avT
+dfx
+dfx
+dfx
+dfx
+dfx
+avT
+wuf
 yhx
 yhx
 yhx
@@ -52099,7 +52966,7 @@ ydp
 ydp
 ydp
 avT
-avT
+bBh
 avT
 avT
 gLH
@@ -52166,23 +53033,23 @@ yhx
 yhx
 yhx
 yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
+wuf
+avT
+avT
+avT
+avT
+avT
+avT
+avT
+bBh
+avT
+avT
+avT
+avT
+avT
+avT
+avT
+wuf
 yhx
 yhx
 yhx
@@ -52356,7 +53223,7 @@ ydp
 ydp
 ydp
 avT
-wuf
+bBh
 bmX
 avT
 gLH
@@ -52423,23 +53290,23 @@ yhx
 yhx
 yhx
 yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
+wuf
+wuf
+wuf
+avT
+avT
+avT
+avT
+qlH
+bBh
+qlH
+avT
+avT
+avT
+avT
+wuf
+wuf
+wuf
 yhx
 yhx
 yhx
@@ -52613,7 +53480,7 @@ ydp
 ydp
 ydp
 avT
-bzk
+bBh
 avT
 avT
 gLH
@@ -52684,15 +53551,15 @@ yhx
 yhx
 yhx
 yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
+avT
+avT
+fOG
+jhF
+cRJ
+jhF
+sdc
+avT
+avT
 yhx
 yhx
 yhx
@@ -52870,7 +53737,7 @@ ydp
 avT
 avT
 avT
-bzk
+bBh
 usE
 usE
 iAO
@@ -52942,13 +53809,13 @@ yhx
 yhx
 yhx
 yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
+avT
+avT
+jhF
+xMV
+jhF
+avT
+avT
 yhx
 yhx
 yhx
@@ -53127,7 +53994,7 @@ avT
 avT
 avT
 avT
-bzk
+bBh
 wSc
 lZL
 lmC
@@ -53200,11 +54067,11 @@ yhx
 yhx
 yhx
 yhx
-yhx
-yhx
-yhx
-yhx
-yhx
+jhF
+jhF
+gRP
+jhF
+jhF
 yhx
 yhx
 yhx
@@ -53384,7 +54251,7 @@ avT
 avT
 avT
 avT
-bMj
+rUq
 tGQ
 nEv
 qFa
@@ -53457,11 +54324,11 @@ yhx
 yhx
 yhx
 yhx
-yhx
-yhx
-yhx
-yhx
-yhx
+dmE
+oml
+nsB
+jYT
+dmE
 yhx
 yhx
 yhx
@@ -53714,11 +54581,11 @@ yhx
 yhx
 yhx
 yhx
-yhx
-yhx
-yhx
-yhx
-yhx
+dmE
+wbe
+eCd
+oml
+dmE
 yhx
 yhx
 yhx
@@ -53971,11 +54838,11 @@ yhx
 yhx
 yhx
 yhx
-yhx
-yhx
-yhx
-yhx
-yhx
+dmE
+wax
+wNf
+mVe
+dmE
 yhx
 yhx
 yhx
@@ -54228,11 +55095,11 @@ yhx
 yhx
 yhx
 yhx
-yhx
-yhx
-yhx
-yhx
-yhx
+dmE
+rwm
+xDQ
+dmE
+dmE
 yhx
 yhx
 yhx
@@ -54486,9 +55353,9 @@ yhx
 yhx
 yhx
 yhx
-yhx
-yhx
-yhx
+xUL
+bBh
+xUL
 yhx
 yhx
 yhx
@@ -54743,9 +55610,9 @@ yhx
 yhx
 yhx
 yhx
-yhx
-yhx
-yhx
+xUL
+bBh
+xUL
 yhx
 yhx
 yhx
@@ -55000,9 +55867,9 @@ yhx
 yhx
 yhx
 yhx
-yhx
-yhx
-yhx
+xUL
+bBh
+xUL
 yhx
 yhx
 yhx
@@ -55256,10 +56123,10 @@ yhx
 yhx
 yhx
 yhx
-yhx
-yhx
-yhx
-yhx
+avT
+xUL
+bBh
+xUL
 yhx
 yhx
 yhx
@@ -55513,9 +56380,9 @@ yhx
 yhx
 yhx
 yhx
-yhx
-yhx
-yhx
+euS
+sXy
+jAq
 yhx
 yhx
 yhx
@@ -55768,11 +56635,11 @@ yhx
 yhx
 yhx
 yhx
-yhx
-yhx
-yhx
-yhx
-yhx
+avT
+avT
+bBh
+xUL
+avT
 yhx
 yhx
 yhx
@@ -56025,11 +56892,11 @@ yhx
 yhx
 yhx
 yhx
-yhx
-yhx
-yhx
-yhx
-yhx
+avT
+avT
+bBh
+xUL
+avT
 yhx
 yhx
 yhx
@@ -56274,18 +57141,18 @@ yhx
 yhx
 yhx
 yhx
+avT
+xUL
+xUL
+xUL
+xUL
+avT
+avT
 yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
+xUL
+xUL
+bBh
+xUL
 yhx
 yhx
 yhx
@@ -56527,22 +57394,22 @@ yhx
 yhx
 yhx
 yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
+avT
+avT
+euS
+sXy
+sXy
+sXy
+sXy
+sXy
+sXy
+sXy
+sXy
+sXy
+sXy
+sXy
+jAq
+xUL
 yhx
 yhx
 yhx
@@ -56779,25 +57646,25 @@ yhx
 yhx
 yhx
 yhx
+avT
+avT
+avT
+avT
+euS
+sXy
+sXy
+jAq
+xUL
+xUL
+xUL
+avT
 yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
+xUL
+xUL
+xUL
+xUL
+xUL
+avT
 yhx
 yhx
 yhx
@@ -57033,19 +57900,19 @@ ydp
 ydp
 yhx
 yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
+avT
+avT
+avT
+avT
+euS
+sXy
+sXy
+jAq
+xUL
+xUL
+xUL
+avT
+avT
 yhx
 yhx
 yhx
@@ -57285,20 +58152,20 @@ ydp
 ydp
 ydp
 ydp
-ydp
-ydp
-ydp
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
+avT
+avT
+avT
+avT
+avT
+avT
+avT
+avT
+euS
+jAq
+xUL
+xUL
+xUL
+avT
 yhx
 yhx
 yhx
@@ -57542,16 +58409,16 @@ ydp
 ydp
 ydp
 ydp
-ydp
-ydp
-ydp
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
+avT
+avT
+avT
+avT
+avT
+avT
+avT
+euS
+jAq
+xUL
 yhx
 yhx
 yhx
@@ -57799,15 +58666,15 @@ ydp
 ydp
 ydp
 ydp
-ydp
-ydp
-ydp
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
+avT
+avT
+avT
+avT
+avT
+avT
+euS
+jAq
+xUL
 yhx
 yhx
 yhx
@@ -58056,14 +58923,14 @@ ydp
 ydp
 ydp
 ydp
-ydp
-ydp
-ydp
-yhx
-yhx
-yhx
-yhx
-yhx
+avT
+avT
+avT
+avT
+avT
+euS
+jAq
+xUL
 yhx
 yhx
 yhx
@@ -58313,13 +59180,13 @@ ydp
 ydp
 ydp
 ydp
-ydp
-ydp
-ydp
-yhx
-yhx
-yhx
-yhx
+avT
+avT
+avT
+avT
+euS
+jAq
+xUL
 yhx
 yhx
 yhx
@@ -58570,12 +59437,12 @@ ydp
 ydp
 ydp
 ydp
-ydp
-ydp
-ydp
-yhx
-yhx
-yhx
+avT
+avT
+avT
+euS
+jAq
+xUL
 yhx
 yhx
 yhx
@@ -58827,12 +59694,12 @@ ydp
 ydp
 ydp
 ydp
-ydp
-ydp
-ydp
-yhx
-yhx
-yhx
+avT
+avT
+euS
+jAq
+xUL
+avT
 yhx
 yhx
 yhx
@@ -59083,11 +59950,11 @@ ydp
 ydp
 ydp
 ydp
-ydp
-ydp
-ydp
-ydp
-yhx
+avT
+avT
+avT
+bBh
+xUL
 yhx
 yhx
 yhx
@@ -59340,11 +60207,11 @@ ydp
 ydp
 ydp
 ydp
-ydp
-ydp
-ydp
-ydp
-yhx
+avT
+avT
+avT
+bBh
+xUL
 yhx
 yhx
 yhx
@@ -59597,11 +60464,11 @@ ydp
 ydp
 ydp
 ydp
-ydp
-ydp
-ydp
-ydp
-yhx
+avT
+avT
+avT
+bBh
+xUL
 yhx
 yhx
 yhx
@@ -59854,11 +60721,11 @@ ydp
 ydp
 ydp
 ydp
-ydp
-ydp
-ydp
-ydp
-yhx
+avT
+avT
+avT
+bBh
+xUL
 yhx
 yhx
 yhx
@@ -60111,11 +60978,11 @@ ydp
 ydp
 ydp
 ydp
-ydp
-ydp
-ydp
-ydp
-yhx
+avT
+avT
+avT
+bBh
+xUL
 yhx
 yhx
 yhx
@@ -60368,11 +61235,11 @@ ydp
 ydp
 ydp
 ydp
-ydp
-ydp
-ydp
-ydp
-yhx
+avT
+avT
+avT
+bBh
+xUL
 yhx
 yhx
 yhx
@@ -60621,15 +61488,15 @@ avT
 ydp
 ydp
 ydp
-ydp
-ydp
-ydp
-ydp
-ydp
-ydp
-ydp
-ydp
-ydp
+avT
+avT
+avT
+avT
+avT
+avT
+avT
+bBh
+xUL
 ydp
 ydp
 ydp
@@ -60876,17 +61743,17 @@ xZL
 xBk
 avT
 ydp
-ydp
-ydp
-ydp
-ydp
-ydp
-ydp
-ydp
-ydp
-ydp
-ydp
-ydp
+avT
+avT
+avT
+avT
+avT
+avT
+avT
+avT
+avT
+bBh
+xUL
 ydp
 ydp
 ydp
@@ -61131,19 +61998,19 @@ avT
 avT
 xZL
 xBk
-avT
-avT
-avT
-ydp
-ydp
-ydp
-ydp
-ydp
-ydp
-ydp
-ydp
-ydp
-ydp
+xUL
+xUL
+xUL
+xUL
+xUL
+xUL
+xUL
+xUL
+xUL
+xUL
+xUL
+bBh
+xUL
 ydp
 ydp
 ydp
@@ -61388,19 +62255,19 @@ avT
 avT
 aSl
 bFk
-qrR
-avT
-avT
-ydp
-ydp
-ydp
-ydp
-ydp
-ydp
-ydp
-ydp
-ydp
-ydp
+sXy
+sXy
+sXy
+sXy
+sXy
+sXy
+sXy
+sXy
+sXy
+sXy
+sXy
+jAq
+xUL
 ydp
 ydp
 ydp
@@ -61648,8 +62515,8 @@ xBk
 avT
 avT
 avT
-ydp
-ydp
+avT
+avT
 ydp
 ydp
 ydp
@@ -76962,8 +77829,8 @@ yhx
 yhx
 yhx
 yhx
-yhx
-yhx
+avT
+avT
 yhx
 yhx
 yhx
@@ -77217,19 +78084,19 @@ yhx
 yhx
 yhx
 yhx
+avT
+avT
+avT
+avT
+avT
+avT
 yhx
 yhx
 yhx
 yhx
 yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
+avT
+avT
 yhx
 yhx
 yhx
@@ -77474,20 +78341,20 @@ yhx
 yhx
 yhx
 yhx
+avT
+avT
+avT
+avT
+avT
 yhx
 yhx
 yhx
 yhx
 yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
+avT
+avT
+avT
+avT
 yhx
 yhx
 yhx
@@ -77723,29 +78590,29 @@ yhx
 yhx
 yhx
 yhx
+qrR
+qrR
+qrR
+wuf
+avT
+wuf
+wuf
+wuf
+wuf
+wuf
+wuf
+wuf
+wuf
+wuf
+wuf
+avT
 yhx
 yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
+avT
+avT
+avT
+avT
+avT
 yhx
 yhx
 ydp
@@ -77980,31 +78847,31 @@ yhx
 yhx
 yhx
 yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
+qrR
+qrR
+qrR
+wuf
+avT
+avT
+avT
+avT
+avT
+avT
+avT
+avT
+avT
+avT
+avT
+avT
+avT
+avT
+avT
+avT
+avT
+avT
+avT
+avT
+avT
 ydp
 ydp
 ydp
@@ -78237,31 +79104,31 @@ yhx
 yhx
 yhx
 yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
+qrR
+qrR
+qrR
+wuf
+avT
+lbu
+aQK
+wuC
+avT
+lbu
+aQK
+wuC
+avT
+lbu
+aQK
+wuC
+avT
+avT
+avT
+avT
+avT
+avT
+avT
+avT
+avT
 ydp
 ydp
 ydp
@@ -78494,31 +79361,31 @@ yhx
 yhx
 yhx
 yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-ydp
+qrR
+qrR
+qrR
+wuf
+avT
+lbu
+fVQ
+wuC
+avT
+lbu
+fVQ
+wuC
+avT
+lbu
+fVQ
+wuC
+avT
+avT
+avT
+avT
+avT
+avT
+avT
+avT
+avT
 ydp
 ydp
 ydp
@@ -78751,31 +79618,31 @@ yhx
 yhx
 yhx
 yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-ydp
+qrR
+avT
+avT
+wuf
+avT
+lbu
+fVQ
+wuC
+avT
+lbu
+fVQ
+wuC
+avT
+lbu
+fVQ
+wuC
+avT
+avT
+avT
+avT
+avT
+avT
+avT
+avT
+avT
 ydp
 ydp
 ydp
@@ -79008,31 +79875,31 @@ yhx
 yhx
 yhx
 yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-ydp
+qrR
+avT
+avT
+avT
+avT
+lbu
+fVQ
+wuC
+avT
+lbu
+fVQ
+wuC
+avT
+lbu
+fVQ
+wuC
+avT
+avT
+avT
+avT
+avT
+avT
+avT
+avT
+avT
 ydp
 ydp
 ydp
@@ -79265,33 +80132,33 @@ yhx
 yhx
 yhx
 yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-ydp
-ydp
-ydp
+wuf
+wuf
+wuf
+avT
+avT
+lbu
+fVQ
+wuC
+avT
+lbu
+fVQ
+wuC
+avT
+lbu
+fVQ
+wuC
+avT
+avT
+avT
+avT
+hAa
+avT
+lpT
+dTy
+dTy
+dTy
+dTy
 ydp
 ydp
 ydp
@@ -79522,36 +80389,36 @@ yhx
 yhx
 yhx
 yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-ydp
-ydp
-ydp
-ydp
-ydp
-ydp
+wuf
+avT
+avT
+avT
+avT
+avT
+hGK
+avT
+avT
+avT
+hGK
+avT
+avT
+avT
+hGK
+avT
+avT
+avT
+avT
+cVL
+lpT
+lpT
+lpT
+qnL
+uYl
+fIY
+dTy
+avT
+avT
+avT
 ydp
 ydp
 avT
@@ -79779,37 +80646,37 @@ yhx
 yhx
 yhx
 yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-ydp
-ydp
-ydp
-ydp
-ydp
-ydp
-ydp
+wuf
+avT
+nuu
+sXy
+sXy
+fNh
+xUL
+nyq
+sXy
+fNh
+xUL
+nyq
+sXy
+fNh
+xUL
+nyq
+sXy
+sXy
+sXy
+sXy
+sDD
+eNK
+jwc
+iAG
+mia
+bHc
+tlg
+sXy
+sXy
+ikA
+avT
 ydp
 avT
 avT
@@ -80036,37 +80903,37 @@ yhx
 yhx
 yhx
 yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-ydp
-ydp
-ydp
-ydp
-ydp
-ydp
-ydp
-ydp
-ydp
-ydp
+wuf
+avT
+avT
+avT
+avT
+avT
+clq
+avT
+avT
+avT
+clq
+avT
+avT
+avT
+clq
+avT
+avT
+avT
+avT
+cVL
+lpT
+lpT
+lpT
+isp
+jed
+lgX
+feM
+avT
+avT
+bBh
+avT
 avT
 avT
 avT
@@ -80293,36 +81160,36 @@ yhx
 yhx
 yhx
 yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-ydp
-ydp
-ydp
-ydp
-ydp
-ydp
-ydp
+wuf
+avT
+wuf
+rxJ
+avT
+lbu
+knR
+wuC
+avT
+lbu
+knR
+wuC
+avT
+lbu
+knR
+wuC
 avT
 avT
+avT
+avT
+hHu
+avT
+lpT
+dTy
+dTy
+dTy
+dTy
+ydp
+avT
+bBh
 avT
 avT
 avT
@@ -80550,41 +81417,41 @@ yhx
 yhx
 yhx
 yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-ydp
-ydp
-ydp
-ydp
+qrR
+avT
+avT
+avT
+avT
+lbu
+knR
+wuC
+avT
+lbu
+knR
+wuC
+avT
+lbu
+knR
+wuC
+avT
+avT
+avT
+avT
+avT
+avT
+avT
+avT
+avT
 ydp
 ydp
 ydp
 avT
-xUL
-xUL
-xUL
-xUL
-xUL
-xUL
+rUq
+sXy
+sXy
+sXy
+sXy
+ikA
 xUL
 xUL
 xUL
@@ -80805,33 +81672,33 @@ yhx
 yhx
 yhx
 yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-ydp
-ydp
-ydp
-ydp
+avT
+avT
+avT
+avT
+avT
+wuf
+avT
+lbu
+knR
+wuC
+avT
+lbu
+knR
+wuC
+avT
+lbu
+knR
+wuC
+avT
+avT
+avT
+avT
+avT
+avT
+avT
+avT
+avT
 ydp
 ydp
 ydp
@@ -80841,7 +81708,7 @@ avT
 avT
 avT
 avT
-xUL
+bBh
 xUL
 xUL
 xUL
@@ -81062,33 +81929,33 @@ yhx
 yhx
 yhx
 yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-ydp
-ydp
-ydp
-ydp
+avT
+avT
+avT
+avT
+avT
+wuf
+avT
+lbu
+knR
+wuC
+avT
+lbu
+knR
+wuC
+avT
+lbu
+knR
+wuC
+avT
+avT
+avT
+avT
+avT
+avT
+avT
+avT
+avT
 ydp
 ydp
 ydp
@@ -81098,7 +81965,7 @@ avT
 avT
 avT
 avT
-xUL
+bBh
 xUL
 xUL
 xUL
@@ -81319,33 +82186,33 @@ yhx
 yhx
 yhx
 yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-ydp
-ydp
-ydp
-ydp
+avT
+avT
+avT
+avT
+avT
+wuf
+avT
+lbu
+gTh
+wuC
+avT
+lbu
+gTh
+wuC
+avT
+lbu
+gTh
+wuC
+avT
+wuf
+avT
+avT
+avT
+avT
+avT
+avT
+avT
 ydp
 ydp
 ydp
@@ -81355,7 +82222,7 @@ ydp
 ydp
 avT
 avT
-xUL
+bBh
 xUL
 xUL
 xUL
@@ -81576,33 +82443,33 @@ yhx
 yhx
 yhx
 yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-ydp
-ydp
-ydp
-ydp
+avT
+avT
+avT
+qrR
+qrR
+wuf
+avT
+avT
+avT
+avT
+avT
+avT
+avT
+avT
+avT
+avT
+avT
+xgh
+avT
+wuf
+avT
+avT
+avT
+avT
+avT
+avT
+avT
 ydp
 ydp
 ydp
@@ -81612,7 +82479,7 @@ ydp
 ydp
 avT
 avT
-xUL
+bBh
 xUL
 xUL
 xUL
@@ -81715,8 +82582,8 @@ avT
 avT
 avT
 aJt
-bzk
-avT
+bBh
+xUL
 aJt
 avT
 avT
@@ -81833,33 +82700,33 @@ yhx
 yhx
 yhx
 yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-ydp
-ydp
-ydp
-ydp
+avT
+avT
+avT
+qrR
+qrR
+wuf
+wuf
+wuf
+wuf
+wuf
+wuf
+wuf
+wuf
+wuf
+wuf
+wuf
+wuf
+fBG
+wuf
+wuf
+bmX
+avT
+avT
+avT
+avT
+avT
+avT
 ydp
 ydp
 ydp
@@ -81869,7 +82736,7 @@ ydp
 ydp
 avT
 avT
-xUL
+bBh
 cfp
 cfp
 xac
@@ -81972,9 +82839,9 @@ avT
 avT
 avT
 avT
-hOb
-avT
-avT
+bBh
+xUL
+xUL
 avT
 avT
 avT
@@ -82090,6 +82957,15 @@ yhx
 yhx
 yhx
 yhx
+avT
+avT
+avT
+yhx
+yhx
+yhx
+avT
+avT
+avT
 yhx
 yhx
 yhx
@@ -82102,20 +82978,11 @@ yhx
 yhx
 yhx
 yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-ydp
-ydp
-ydp
+avT
+avT
+avT
+avT
+avT
 ydp
 ydp
 ydp
@@ -82126,7 +82993,7 @@ ydp
 avT
 avT
 avT
-xUL
+bBh
 avT
 xac
 aHU
@@ -82229,9 +83096,9 @@ avT
 avT
 avT
 avT
-avT
-avT
-avT
+rUq
+sXy
+ikA
 avT
 avT
 bmX
@@ -82370,8 +83237,8 @@ yhx
 yhx
 yhx
 yhx
-ydp
-ydp
+avT
+avT
 ydp
 ydp
 ydp
@@ -82383,7 +83250,7 @@ ydp
 avT
 avT
 avT
-aJb
+eYe
 hSv
 fpJ
 gph
@@ -82488,7 +83355,7 @@ ydp
 ydp
 ydp
 avT
-avT
+bBh
 avT
 avT
 avT
@@ -82627,7 +83494,7 @@ yhx
 yhx
 yhx
 yhx
-ydp
+avT
 ydp
 ydp
 ydp
@@ -82640,7 +83507,7 @@ ydp
 bmX
 avT
 avT
-bzc
+mnL
 avT
 xac
 gLO
@@ -82745,8 +83612,8 @@ ydp
 ydp
 ydp
 ydp
-ydp
-ydp
+bBh
+avT
 ydp
 ydp
 ydp
@@ -82897,7 +83764,7 @@ ydp
 avT
 avT
 ydp
-bzc
+mnL
 avT
 xac
 irQ
@@ -83002,8 +83869,8 @@ ydp
 ydp
 ydp
 ydp
-ydp
-ydp
+bBh
+avT
 ydp
 ydp
 ydp
@@ -83154,7 +84021,7 @@ ydp
 avT
 avT
 ydp
-bzc
+mnL
 avT
 xac
 irQ
@@ -83259,8 +84126,8 @@ ydp
 ydp
 ydp
 ydp
-ydp
-ydp
+bBh
+avT
 ydp
 ydp
 ydp
@@ -83411,7 +84278,7 @@ ydp
 avT
 avT
 ydp
-bzc
+mnL
 avT
 xac
 irQ
@@ -83516,8 +84383,8 @@ ydp
 ydp
 ydp
 ydp
-ydp
-ydp
+bBh
+avT
 ydp
 ydp
 ydp
@@ -83668,7 +84535,7 @@ ydp
 avT
 avT
 avT
-bzc
+mnL
 avT
 xac
 irQ
@@ -83773,8 +84640,8 @@ ydp
 ydp
 ydp
 ydp
-ydp
-ydp
+bBh
+avT
 ydp
 ydp
 ydp
@@ -83925,7 +84792,7 @@ ydp
 ydp
 avT
 avT
-bzc
+mnL
 avT
 xac
 irQ
@@ -84030,8 +84897,8 @@ ydp
 ydp
 ydp
 ydp
-ydp
-ydp
+bBh
+avT
 ydp
 ydp
 ydp
@@ -84182,7 +85049,7 @@ ydp
 ydp
 avT
 avT
-bzc
+mnL
 avT
 xac
 irQ
@@ -84287,8 +85154,8 @@ ydp
 ydp
 ydp
 ydp
-ydp
-ydp
+bBh
+avT
 ydp
 ydp
 ydp
@@ -84439,7 +85306,7 @@ ydp
 ydp
 avT
 avT
-bzc
+mnL
 avT
 xac
 irQ
@@ -84544,8 +85411,8 @@ ydp
 ydp
 ydp
 ydp
-ydp
-ydp
+bBh
+avT
 ydp
 ydp
 ydp
@@ -84696,7 +85563,7 @@ ydp
 ydp
 ydp
 avT
-bzc
+mnL
 avT
 cfp
 cTh
@@ -84801,8 +85668,8 @@ ydp
 ydp
 ydp
 ydp
-ydp
-ydp
+bBh
+avT
 ydp
 ydp
 ydp
@@ -84953,7 +85820,7 @@ ydp
 ydp
 ydp
 avT
-bzc
+mnL
 avT
 xac
 irQ
@@ -85055,11 +85922,11 @@ ydp
 ydp
 ydp
 ydp
-ydp
-ydp
-ydp
-ydp
-ydp
+avT
+avT
+euS
+jAq
+avT
 ydp
 ydp
 ydp
@@ -85210,7 +86077,7 @@ ydp
 ydp
 ydp
 avT
-bzc
+mnL
 avT
 xac
 kPA
@@ -85312,10 +86179,10 @@ ydp
 ydp
 ydp
 ydp
-ydp
-ydp
-ydp
-ydp
+avT
+avT
+bBh
+avT
 ydp
 ydp
 ydp
@@ -85569,10 +86436,10 @@ ydp
 ydp
 ydp
 ydp
-ydp
-ydp
-ydp
-ydp
+avT
+avT
+bBh
+avT
 ydp
 ydp
 ydp
@@ -85826,10 +86693,10 @@ ydp
 ydp
 ydp
 ydp
-ydp
-ydp
-ydp
-ydp
+avT
+avT
+bBh
+avT
 ydp
 ydp
 ydp
@@ -86083,10 +86950,10 @@ ydp
 ydp
 ydp
 ydp
-ydp
-ydp
-ydp
-ydp
+avT
+avT
+bBh
+avT
 ydp
 ydp
 ydp
@@ -86340,10 +87207,10 @@ yhx
 yhx
 yhx
 yhx
-yhx
-yhx
-yhx
-yhx
+avT
+avT
+bBh
+avT
 yhx
 yhx
 yhx
@@ -86597,10 +87464,10 @@ yhx
 yhx
 yhx
 yhx
-yhx
-yhx
-yhx
-yhx
+avT
+avT
+bBh
+avT
 yhx
 yhx
 yhx
@@ -86854,10 +87721,10 @@ yhx
 yhx
 yhx
 yhx
-yhx
-yhx
-yhx
-yhx
+avT
+avT
+bBh
+avT
 yhx
 yhx
 yhx
@@ -87111,10 +87978,10 @@ yhx
 yhx
 yhx
 yhx
-yhx
-yhx
-yhx
-yhx
+avT
+avT
+bBh
+avT
 yhx
 yhx
 yhx
@@ -87366,12 +88233,12 @@ yhx
 yhx
 yhx
 yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
+avT
+avT
+avT
+avT
+bBh
+avT
 yhx
 yhx
 yhx
@@ -87623,12 +88490,12 @@ yhx
 yhx
 yhx
 yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
+avT
+euS
+sXy
+sXy
+jAq
+avT
 yhx
 yhx
 yhx
@@ -87880,12 +88747,12 @@ yhx
 yhx
 yhx
 yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
+avT
+bBh
+avT
+avT
+avT
+avT
 yhx
 yhx
 yhx
@@ -88137,10 +89004,10 @@ yhx
 yhx
 yhx
 yhx
-yhx
-yhx
-yhx
-yhx
+avT
+bBh
+avT
+avT
 yhx
 yhx
 yhx
@@ -88394,10 +89261,10 @@ yhx
 yhx
 yhx
 yhx
-yhx
-yhx
-yhx
-yhx
+avT
+bBh
+avT
+avT
 yhx
 yhx
 yhx
@@ -88651,10 +89518,10 @@ yhx
 yhx
 yhx
 yhx
-yhx
-yhx
-yhx
-yhx
+avT
+bBh
+avT
+avT
 yhx
 yhx
 yhx
@@ -88908,10 +89775,10 @@ yhx
 yhx
 yhx
 yhx
-yhx
-yhx
-yhx
-yhx
+avT
+bBh
+avT
+avT
 yhx
 yhx
 yhx
@@ -89165,10 +90032,10 @@ yhx
 yhx
 yhx
 yhx
-yhx
-yhx
-yhx
-yhx
+avT
+bBh
+avT
+avT
 yhx
 yhx
 yhx
@@ -89422,10 +90289,10 @@ yhx
 yhx
 yhx
 yhx
-yhx
-yhx
-yhx
-yhx
+avT
+bBh
+avT
+avT
 yhx
 yhx
 yhx
@@ -89679,10 +90546,10 @@ yhx
 yhx
 yhx
 yhx
-yhx
-yhx
-yhx
-yhx
+avT
+bBh
+avT
+avT
 yhx
 yhx
 yhx
@@ -89936,10 +90803,10 @@ yhx
 yhx
 yhx
 yhx
-yhx
-yhx
-yhx
-yhx
+avT
+bBh
+avT
+avT
 yhx
 yhx
 yhx
@@ -90193,10 +91060,10 @@ yhx
 yhx
 yhx
 yhx
-yhx
-yhx
-yhx
-yhx
+avT
+bBh
+avT
+avT
 yhx
 yhx
 yhx
@@ -90448,12 +91315,12 @@ yhx
 yhx
 yhx
 yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
+avT
+avT
+avT
+bBh
+avT
+avT
 yhx
 yhx
 yhx
@@ -90705,10 +91572,10 @@ yhx
 yhx
 yhx
 yhx
-yhx
-yhx
-yhx
-yhx
+avT
+avT
+avT
+bBh
 yhx
 yhx
 yhx
@@ -90962,10 +91829,10 @@ yhx
 yhx
 yhx
 yhx
-yhx
-yhx
-yhx
-yhx
+avT
+avT
+avT
+bBh
 yhx
 yhx
 yhx
@@ -91219,10 +92086,10 @@ yhx
 yhx
 yhx
 yhx
-yhx
-yhx
-yhx
-yhx
+avT
+avT
+avT
+bBh
 yhx
 yhx
 yhx
@@ -91476,10 +92343,10 @@ yhx
 yhx
 yhx
 yhx
-yhx
-yhx
-yhx
-yhx
+avT
+avT
+avT
+bBh
 yhx
 yhx
 yhx
@@ -91733,10 +92600,10 @@ yhx
 yhx
 yhx
 yhx
-yhx
-yhx
-yhx
-yhx
+avT
+avT
+avT
+bBh
 yhx
 yhx
 yhx
@@ -91990,10 +92857,10 @@ yhx
 yhx
 yhx
 yhx
-yhx
-yhx
-yhx
-yhx
+avT
+avT
+avT
+bBh
 yhx
 yhx
 yhx
@@ -92247,10 +93114,10 @@ yhx
 yhx
 yhx
 yhx
-yhx
-yhx
-yhx
-yhx
+avT
+avT
+avT
+bBh
 yhx
 yhx
 yhx
@@ -92504,10 +93371,10 @@ yhx
 yhx
 yhx
 yhx
-yhx
-yhx
-yhx
-yhx
+avT
+avT
+avT
+bBh
 yhx
 yhx
 yhx
@@ -92761,10 +93628,10 @@ yhx
 yhx
 yhx
 yhx
-yhx
-yhx
-yhx
-yhx
+avT
+avT
+avT
+bBh
 yhx
 yhx
 yhx
@@ -93018,10 +93885,10 @@ yhx
 yhx
 yhx
 yhx
-yhx
-yhx
-yhx
-yhx
+avT
+avT
+avT
+bBh
 yhx
 yhx
 yhx
@@ -93275,12 +94142,12 @@ yhx
 yhx
 yhx
 yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
+avT
+avT
+avT
+bBh
+avT
+avT
 yhx
 yhx
 yhx
@@ -93532,12 +94399,12 @@ yhx
 yhx
 yhx
 yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
+avT
+avT
+avT
+bBh
+avT
+avT
 yhx
 yhx
 yhx
@@ -93791,10 +94658,10 @@ yhx
 yhx
 yhx
 yhx
-yhx
-yhx
-yhx
-yhx
+avT
+bBh
+avT
+avT
 yhx
 yhx
 yhx
@@ -94048,10 +94915,10 @@ yhx
 yhx
 yhx
 yhx
-yhx
-yhx
-yhx
-yhx
+avT
+bBh
+avT
+avT
 yhx
 yhx
 yhx
@@ -94305,10 +95172,10 @@ yhx
 yhx
 yhx
 yhx
-yhx
-yhx
-yhx
-yhx
+avT
+bBh
+avT
+avT
 yhx
 yhx
 yhx
@@ -94562,10 +95429,10 @@ yhx
 yhx
 yhx
 yhx
-yhx
-yhx
-yhx
-yhx
+avT
+bBh
+avT
+avT
 yhx
 yhx
 yhx
@@ -94819,10 +95686,10 @@ yhx
 yhx
 yhx
 yhx
-yhx
-yhx
-yhx
-yhx
+avT
+bBh
+avT
+avT
 yhx
 yhx
 yhx
@@ -95076,10 +95943,10 @@ yhx
 yhx
 yhx
 yhx
-yhx
-yhx
-yhx
-yhx
+avT
+bBh
+avT
+avT
 yhx
 yhx
 yhx
@@ -95333,10 +96200,10 @@ yhx
 yhx
 yhx
 yhx
-yhx
-yhx
-yhx
-yhx
+avT
+bBh
+avT
+avT
 yhx
 yhx
 yhx
@@ -95590,10 +96457,10 @@ yhx
 yhx
 yhx
 yhx
-yhx
-yhx
-yhx
-yhx
+avT
+bBh
+avT
+avT
 yhx
 yhx
 yhx
@@ -95847,10 +96714,10 @@ yhx
 yhx
 yhx
 yhx
-yhx
-yhx
-yhx
-yhx
+avT
+bBh
+avT
+avT
 yhx
 yhx
 yhx
@@ -96102,12 +96969,12 @@ yhx
 yhx
 yhx
 yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
+avT
+avT
+avT
+bBh
+avT
+avT
 yhx
 yhx
 yhx
@@ -96359,12 +97226,12 @@ yhx
 yhx
 yhx
 yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
+avT
+avT
+avT
+bBh
+avT
+avT
 yhx
 yhx
 yhx
@@ -96616,10 +97483,10 @@ yhx
 yhx
 yhx
 yhx
-yhx
-yhx
-yhx
-yhx
+avT
+avT
+avT
+bBh
 yhx
 yhx
 yhx
@@ -96873,10 +97740,10 @@ yhx
 yhx
 yhx
 yhx
-yhx
-yhx
-yhx
-yhx
+avT
+avT
+avT
+bBh
 yhx
 yhx
 yhx
@@ -97130,10 +97997,10 @@ yhx
 yhx
 yhx
 yhx
-yhx
-yhx
-yhx
-yhx
+avT
+avT
+avT
+bBh
 yhx
 yhx
 yhx
@@ -97387,10 +98254,10 @@ yhx
 yhx
 yhx
 yhx
-yhx
-yhx
-yhx
-yhx
+avT
+avT
+avT
+bBh
 yhx
 yhx
 yhx
@@ -97644,10 +98511,10 @@ yhx
 yhx
 yhx
 yhx
-yhx
-yhx
-yhx
-yhx
+avT
+avT
+avT
+bBh
 yhx
 yhx
 yhx
@@ -97901,10 +98768,10 @@ yhx
 yhx
 yhx
 yhx
-yhx
-yhx
-yhx
-yhx
+avT
+avT
+avT
+bBh
 yhx
 yhx
 yhx
@@ -98158,6 +99025,10 @@ yhx
 yhx
 yhx
 yhx
+avT
+avT
+avT
+bBh
 yhx
 yhx
 yhx
@@ -98171,29 +99042,25 @@ yhx
 yhx
 yhx
 yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
+bmX
+wuf
+wuf
+wuf
+wuf
+wuf
+wuf
+wuf
+wuf
+wuf
+avT
+wuf
+wuf
+wuf
+wuf
+wuf
+qrR
+qrR
+qrR
 yhx
 yhx
 yhx
@@ -98415,6 +99282,10 @@ yhx
 yhx
 yhx
 yhx
+avT
+avT
+avT
+bBh
 yhx
 yhx
 yhx
@@ -98428,29 +99299,25 @@ yhx
 yhx
 yhx
 yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
+avT
+wuf
+avT
+avT
+avT
+rxJ
+avT
+avT
+avT
+avT
+avT
+avT
+avT
+avT
+avT
+wuf
+qrR
+qrR
+qrR
 yhx
 yhx
 yhx
@@ -98672,6 +99539,10 @@ yhx
 yhx
 yhx
 yhx
+avT
+avT
+avT
+bBh
 yhx
 yhx
 yhx
@@ -98685,29 +99556,25 @@ yhx
 yhx
 yhx
 yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
+avT
+wuf
+avT
+jxB
+faJ
+rot
+avT
+jxB
+faJ
+rot
+avT
+jxB
+aQK
+rot
+avT
+wuf
+qrR
+qrR
+qrR
 yhx
 yhx
 yhx
@@ -98929,6 +99796,11 @@ yhx
 yhx
 yhx
 yhx
+avT
+avT
+avT
+bBh
+avT
 yhx
 yhx
 yhx
@@ -98941,30 +99813,25 @@ yhx
 yhx
 yhx
 yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
+avT
+avT
+avT
+jxB
+vDy
+rot
+avT
+jxB
+vDy
+rot
+avT
+jxB
+qfJ
+rot
+avT
+wuf
+qrR
+qrR
+qrR
 yhx
 yhx
 yhx
@@ -99188,6 +100055,9 @@ yhx
 yhx
 yhx
 yhx
+avT
+bBh
+avT
 yhx
 yhx
 yhx
@@ -99200,28 +100070,25 @@ yhx
 yhx
 yhx
 yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
+avT
+avT
+avT
+jxB
+vDy
+rot
+avT
+jxB
+vDy
+rot
+avT
+jxB
+qfJ
+rot
+avT
+wuf
+qrR
+qrR
+qrR
 yhx
 yhx
 yhx
@@ -99445,6 +100312,9 @@ yhx
 yhx
 yhx
 yhx
+avT
+bBh
+avT
 yhx
 yhx
 yhx
@@ -99457,28 +100327,25 @@ yhx
 yhx
 yhx
 yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
+avT
+avT
+avT
+jxB
+vDy
+rot
+avT
+jxB
+vDy
+rot
+avT
+jxB
+qfJ
+rot
+avT
+avT
+qrR
+qrR
+qrR
 yhx
 yhx
 yhx
@@ -99702,40 +100569,40 @@ yhx
 yhx
 yhx
 yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
+avT
+bBh
+avT
+avT
+wRY
+wRY
+wRY
+wRY
+gXM
+avT
+gkt
+avT
+avT
+avT
+avT
+avT
+avT
+avT
+jxB
+vDy
+rot
+avT
+jxB
+vDy
+rot
+avT
+jxB
+qfJ
+rot
+avT
+avT
+wuf
+wuf
+wuf
 yhx
 yhx
 yhx
@@ -99959,40 +100826,40 @@ yhx
 yhx
 yhx
 yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
+avT
+bBh
+avT
+avT
+wRY
+ydQ
+awB
+spy
+gXM
+gXM
+gXM
+guD
+avT
+avT
+avT
+avT
+avT
+avT
+avT
+hGK
+avT
+avT
+avT
+hGK
+avT
+avT
+avT
+hGK
+avT
+avT
+avT
+avT
+avT
+wuf
 yhx
 yhx
 yhx
@@ -100216,40 +101083,40 @@ yhx
 yhx
 yhx
 yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
+avT
+rUq
+sXy
+sXy
+cUm
+kkY
+bfg
+oBl
+uyM
+dUH
+fUm
+sXy
+sXy
+sXy
+sXy
+sXy
+sXy
+sXy
+fNh
+xUL
+xUL
+xUL
+xUL
+xUL
+nyq
+sXy
+fNh
+xUL
+nyq
+sXy
+sXy
+uRc
+avT
+wuf
 yhx
 yhx
 yhx
@@ -100474,39 +101341,39 @@ yhx
 yhx
 yhx
 yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
+avT
+avT
+avT
+qJw
+tGJ
+huQ
+xrW
+gXM
+gXM
+gXM
+guD
+avT
+avT
+avT
+avT
+avT
+avT
+avT
+clq
+avT
+avT
+avT
+clq
+avT
+avT
+avT
+clq
+avT
+avT
+avT
+avT
+avT
+wuf
 yhx
 yhx
 yhx
@@ -100731,39 +101598,39 @@ yhx
 yhx
 yhx
 yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
+avT
+avT
+avT
+wRY
+wRY
+wRY
+wRY
+gXM
+avT
+mjX
+avT
+avT
+avT
+avT
+avT
+avT
+avT
+jxB
+mmM
+rot
+avT
+jxB
+mmM
+rot
+avT
+jxB
+knR
+rot
+avT
+avT
+wuf
+wuf
+wuf
 yhx
 yhx
 yhx
@@ -101002,25 +101869,25 @@ yhx
 yhx
 yhx
 yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
+avT
+avT
+avT
+jxB
+mmM
+rot
+avT
+jxB
+mmM
+rot
+avT
+jxB
+knR
+rot
+avT
+avT
+qrR
+qrR
+qrR
 yhx
 yhx
 yhx
@@ -101259,25 +102126,25 @@ yhx
 yhx
 yhx
 yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
+avT
+avT
+avT
+jxB
+mmM
+rot
+avT
+jxB
+mmM
+rot
+avT
+jxB
+knR
+rot
+avT
+wuf
+qrR
+qrR
+qrR
 yhx
 yhx
 yhx
@@ -101516,25 +102383,25 @@ yhx
 yhx
 yhx
 yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
+avT
+avT
+avT
+jxB
+mmM
+rot
+avT
+jxB
+mmM
+rot
+avT
+jxB
+knR
+rot
+avT
+wuf
+qrR
+qrR
+qrR
 yhx
 yhx
 yhx
@@ -101773,25 +102640,25 @@ yhx
 yhx
 yhx
 yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
+avT
+avT
+avT
+jxB
+gTh
+rot
+avT
+jxB
+gTh
+rot
+avT
+jxB
+gTh
+rot
+avT
+wuf
+qrR
+qrR
+qrR
 yhx
 yhx
 yhx
@@ -102030,25 +102897,25 @@ yhx
 yhx
 yhx
 yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
+avT
+wuf
+avT
+avT
+avT
+avT
+avT
+avT
+avT
+avT
+avT
+avT
+avT
+avT
+avT
+avT
+qrR
+qrR
+qrR
 yhx
 yhx
 yhx
@@ -102287,25 +103154,25 @@ yhx
 yhx
 yhx
 yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
-yhx
+avT
+wuf
+wuf
+wuf
+wuf
+wuf
+wuf
+wuf
+wuf
+wuf
+wuf
+wuf
+wuf
+wuf
+wuf
+wuf
+qrR
+qrR
+qrR
 yhx
 yhx
 yhx
