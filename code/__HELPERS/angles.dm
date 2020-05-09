@@ -12,7 +12,7 @@
 		AM = target
 		tx += AM.step_x
 		ty += AM.step_y
-	return SIMPLIFY_DEGREES(arctan(tx - sx, ty - sy))
+	return SIMPLIFY_DEGREES(arctan(ty - sy, tx - sx))
 
 /proc/Get_Angle(atom/movable/start,atom/movable/end)//For beams.
 	if(!start || !end)
