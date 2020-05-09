@@ -396,7 +396,9 @@
 	trajectory_ignore_forcemove = TRUE
 	forceMove(starting)
 	trajectory_ignore_forcemove = FALSE
-	trajectory = new(starting.x, starting.y, starting.z, pixel_x, pixel_y, Angle, pixel_increment_amount || SSprojectiles.global_pixel_increment_amount)
+	if(isnull(pixel_increment_amount))
+		pixel_increment_amount = SSprojectiles.global_pixel_increment_amount
+	trajectory = new(starting.x, starting.y, starting.z, pixel_x, pixel_y, Angle, pixel_increment_amount)
 	last_projectile_move = world.time
 	fired = TRUE
 	if(hitscan)
