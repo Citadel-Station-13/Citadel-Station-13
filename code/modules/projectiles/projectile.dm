@@ -35,13 +35,16 @@
 	var/time_offset = 0
 	var/datum/point/vector/trajectory
 	var/trajectory_ignore_forcemove = FALSE	//instructs forceMove to NOT reset our trajectory to the new location!
+	/// "leftover" pixels for Range() calculation as pixel_move() was moved to simulated semi-pixel movement and Range() is in tiles.
+	var/pixels_range_leftover = 0
+	/// "leftover" tick pixels and stuff yeah, so we don't round off things and introducing tracing inaccuracy.
+	var/pixels_tick_leftover = 0
 
 	/// Pixels moved per second.
 	var/pixels_per_second = TILES_TO_PIXELS(12.5)
 	/// The number of pixels we increment by. THIS IS NOT SPEED, DO NOT TOUCH THIS UNLESS YOU KNOW WHAT YOU ARE DOING. In general, lower values means more linetrace accuracy up to a point at cost of performance.
 	var/pixel_increment_amount
-	/// "leftover" tick pixelss and stuff yeah, so we don't round off things and introducing tracing inaccuracy.
-	var/pixels_tick_leftover = 0
+
 	var/Angle = 0
 	var/original_angle = 0		//Angle at firing
 	var/nondirectional_sprite = FALSE //Set TRUE to prevent projectiles from having their sprites rotated based on firing angle
@@ -94,7 +97,8 @@
 	var/nodamage = 0 //Determines if the projectile will skip any damage inflictions
 	var/flag = "bullet" //Defines what armor to use when it hits things.  Must be set to bullet, laser, energy,or bomb
 	var/projectile_type = /obj/item/projectile
-	var/range = 50 //This will de-increment every step. When 0, it will deletze the projectile.
+	/// Range of the projectile, de-incrementing every step. The projectile deletes itself at 0. This is in tiles.
+	var/range = 50
 	var/decayedRange			//stores original range
 	var/reflect_range_decrease = 5			//amount of original range that falls off when reflecting, so it doesn't go forever
 	var/is_reflectable = FALSE // Can it be reflected or not?
@@ -126,6 +130,10 @@
 	permutated = list()
 	decayedRange = range
 
+/**
+  * Artificially modified to be called at around every world.icon_size pixels of movement.
+  * WARNING: Range() can only be called once per pixel_increment_amount pixels.
+  */
 /obj/item/projectile/proc/Range()
 	range--
 	if(range <= 0 && loc)
@@ -367,8 +375,11 @@
 		return
 	
 	var/required_pixels = (pixels_per_second * (((SSprojectiles.flags & SS_TICKER)? (wait * world.tick_lag) : wait) * 0.1)) + pixels_tick_leftover
-	pixels_tick_leftover = MODULUS(required_pixels, pixel_increment_amount)
-	pixel_move(FLOOR(required_pixels / pixel_increment_amount, pixel_increment_amount), FALSE)
+	if(required_pixels > pixel_increment_amount)
+		pixels_tick_leftover = MODULUS(required_pixels, pixel_increment_amount)
+		pixel_move(FLOOR(required_pixels / pixel_increment_amount, pixel_increment_amount), FALSE)
+	else
+		pixels_tick_leftover += required_pixels
 
 /obj/item/projectile/proc/fire(angle, atom/direct_target)
 	if(fired_from)
@@ -521,11 +532,14 @@
 			step_towards(src, T)
 			if(QDELETED(src))
 				return
+		pixels_tick_leftover += pixel_increment_amount
+		if(pixels_tick_leftover > world.icon_size)
+			Range()
+			pixels_tick_leftover -= world.icon_size
 	if(!hitscanning && !forcemoved)
 		pixel_x = ((oldloc.x - x) * world.icon_size) + old_px
 		pixel_y = ((oldloc.y - y) * world.icon_size) + old_py
 		animate(src, pixel_x = trajectory.return_px(), pixel_y = trajectory.return_py(), time = ((SSprojectiles.flags & SS_TICKER)? (SSprojectiles.wait * world.tick_lag) : SSprojectiles.wait), flags = ANIMATION_END_NOW)
-	Range()
 
 /obj/item/projectile/proc/set_homing_target(atom/A)
 	if(!A || (!isturf(A) && !isturf(A.loc)))
