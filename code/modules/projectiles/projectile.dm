@@ -87,7 +87,7 @@
 	var/homing_offset_x = 0
 	var/homing_offset_y = 0
 
-	/// How many deciseconds are each hitscan movement considered
+	/// How many deciseconds are each hitscan movement considered. Used for homing and other things that use seconds for timing rather than ticks.
 	var/hitscan_movement_decisecond_equivalency = 0.1
 
 	var/ignore_source_check = FALSE
@@ -373,11 +373,12 @@
 		return PROCESS_KILL
 	if(paused || !isturf(loc))
 		return
-	
-	var/required_pixels = (pixels_per_second * (((SSprojectiles.flags & SS_TICKER)? (wait * world.tick_lag) : wait) * 0.1)) + pixels_tick_leftover
+
+	var/ds = (SSprojectiles.flags & SS_TICKER)? (wait * world.tick_lag) : wait
+	var/required_pixels = (pixels_per_second * ds * 0.1) + pixels_tick_leftover
 	if(required_pixels >= pixel_increment_amount)
 		pixels_tick_leftover = MODULUS(required_pixels, pixel_increment_amount)
-		pixel_move(FLOOR(required_pixels / pixel_increment_amount, 1), FALSE)
+		pixel_move(FLOOR(required_pixels / pixel_increment_amount, 1), FALSE, )
 	else
 		pixels_tick_leftover = required_pixels
 
@@ -417,6 +418,7 @@
 	fired = TRUE
 	if(hitscan)
 		process_hitscan()
+		return
 	if(!(datum_flags & DF_ISPROCESSING))
 		START_PROCESSING(SSprojectiles, src)
 	pixel_move(1, FALSE)	//move it now!
@@ -478,6 +480,7 @@
 		beam_segments[beam_index] = null	//record start.
 
 /obj/item/projectile/proc/process_hitscan()
+	var/ttm = round(world.icon_size / pixel_increment_amount, 1)
 	var/safety = range * 10
 	record_hitscan_start(RETURN_POINT_VECTOR_INCREMENT(src, Angle, MUZZLE_EFFECT_PIXEL_INCREMENT, 1))
 	while(loc && !QDELETED(src))
@@ -490,9 +493,15 @@
 			if(!QDELETED(src))
 				qdel(src)
 			return	//Kill!
-		pixel_move(1, TRUE, hitscan_movement_decisecond_equivalency)
+		pixel_move(ttm, TRUE, hitscan_movement_decisecond_equivalency)
 
-/obj/item/projectile/proc/pixel_move(times, hitscanning = FALSE, trajectory_multiplier = 1)
+/**
+  * The proc to make the projectile go, using a simulated pixel movement line trace.
+  * Note: deciseconds_equivalent is currently only used for homing, times is the number of times to move pixel_increment_amount.
+  * Trajectory multiplier directly modifies the factor of pixel_increment_amount to go per time.
+  * It's complicated, so probably just don'ot mess with this unless you know what you're doing.
+  */
+/obj/item/projectile/proc/pixel_move(times, hitscanning = FALSE, deciseconds_equivalent = world.tick_lag, trajectory_multiplier = 1)
 	if(!loc || !trajectory)
 		return
 	if(!nondirectional_sprite && !hitscanning)
@@ -508,7 +517,8 @@
 		if(homing_target)
 			// No datum/points, too expensive.
 			var/angle = closer_angle_difference(Angle, get_projectile_angle(src, homing_target))
-			setAngle(Angle + clamp(angle, -homing_turn_speed, homing_turn_speed))
+			var/max_turn = homing_turn_speed * deciseconds_equivalent * 0.1
+			setAngle(Angle + clamp(angle, -max_turn, max_turn))
 		// HOMING END
 		trajectory.increment(trajectory_multiplier)
 		var/turf/T = trajectory.return_turf()
@@ -535,6 +545,8 @@
 		pixels_range_leftover += pixel_increment_amount
 		if(pixels_range_leftover > world.icon_size)
 			Range()
+			if(QDELETED(src))
+				return
 			pixels_range_leftover -= world.icon_size
 	if(!hitscanning && !forcemoved)
 		pixel_x = ((oldloc.x - x) * world.icon_size) + old_px
