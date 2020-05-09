@@ -175,6 +175,11 @@
 	},
 /turf/open/floor/plating/snowed/smoothed/icemoon,
 /area/icemoon/surface/outdoors)
+"aI" = (
+/obj/effect/turf_decal/stripes/line,
+/obj/item/clothing/suit/space/hardsuit/engine,
+/turf/open/floor/plating/snowed/smoothed/icemoon,
+/area/icemoon/surface/outdoors)
 "aJ" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating/icemoon,
@@ -343,6 +348,7 @@
 "bf" = (
 /obj/effect/decal/cleanable/blood,
 /obj/effect/decal/cleanable/blood/gibs/core,
+/obj/item/clothing/suit/space/hardsuit/engine,
 /turf/open/floor/plating/asteroid/snow/icemoon,
 /area/icemoon/surface/outdoors)
 "bg" = (
@@ -1474,7 +1480,7 @@ bA
 aa
 aa
 af
-cA
+aI
 DM
 dc
 al
