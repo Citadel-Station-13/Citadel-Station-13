@@ -37,9 +37,12 @@
 	var/datum/point/vector/trajectory
 	var/trajectory_ignore_forcemove = FALSE	//instructs forceMove to NOT reset our trajectory to the new location!
 
-	var/speed = 0.8			//Amount of deciseconds it takes for projectile to travel
-	/// "leftover" ticks and stuff yeah. hey when are we rewriting projectiles for the eighth time to do something smarter like incrementing x pixels until it meets a goal instead of for(var/i in 1 to required_moves)?
-	var/tick_moves_leftover = 0
+	/// Pixels moved per second.
+	var/pixels_per_second = TILES_TO_PIXELS(12.5)
+	/// The number of pixels we increment by. THIS IS NOT SPEED, DO NOT TOUCH THIS UNLESS YOU KNOW WHAT YOU ARE DOING. In general, lower values means more linetrace accuracy up to a point at cost of performance.
+	var/pixel_increment_amount
+	/// "leftover" tick pixelss and stuff yeah, so we don't round off things and introducing tracing inaccuracy.
+	var/pixels_tick_leftover = 0
 	var/Angle = 0
 	var/original_angle = 0		//Angle at firing
 	var/nondirectional_sprite = FALSE //Set TRUE to prevent projectiles from having their sprites rotated based on firing angle
@@ -340,7 +343,7 @@
 	var/datum/point/vector/current = trajectory
 	if(!current)
 		var/turf/T = get_turf(src)
-		current = new(T.x, T.y, T.z, pixel_x, pixel_y, isnull(forced_angle)? Angle : forced_angle, SSprojectiles.global_pixel_speed)
+		current = new(T.x, T.y, T.z, pixel_x, pixel_y, isnull(forced_angle)? Angle : forced_angle, pixel_increment_amount || SSprojectiles.global_pixel_increment_amount)
 	var/datum/point/vector/v = current.return_vector_after_increments(moves * SSprojectiles.global_iterations_per_move)
 	return v.return_turf()
 
@@ -358,16 +361,9 @@
 		return PROCESS_KILL
 	if(paused || !isturf(loc))
 		return
-	var/ds = (SSprojectiles.flags & SS_TICKER)? (wait * world.tick_lag) : wait
-	var/required_moves = ds / speed
-	var/leftover = MODULUS(required_moves, 1)
-	tick_moves_leftover += leftover
-	required_moves = round(required_moves)
-	if(tick_moves_leftover > 1)
-		required_moves += round(tick_moves_leftover)
-		tick_moves_leftover = MODULUS(tick_moves_leftover, 1)
-	for(var/i in 1 to required_moves)
-		pixel_move(1, FALSE)
+	var/required_pixels = (pixels_per_second * (((SSprojectiles.flags & SS_TICKER)? (wait * world.tick_lag) : wait) * 0.1)) + pixels_tick_leftover
+	pixel_move(round(required_pixels, pixel_increment_amount), FALSE)
+	pixels_tick_leftover = MODULUS(required_pixels, pixel_increment_amount)
 
 /obj/item/projectile/proc/fire(angle, atom/direct_target)
 	if(fired_from)
@@ -399,7 +395,7 @@
 	trajectory_ignore_forcemove = TRUE
 	forceMove(starting)
 	trajectory_ignore_forcemove = FALSE
-	trajectory = new(starting.x, starting.y, starting.z, pixel_x, pixel_y, Angle, SSprojectiles.global_pixel_speed)
+	trajectory = new(starting.x, starting.y, starting.z, pixel_x, pixel_y, Angle, pixel_increment_amount || SSprojectiles.global_pixel_increment_amount)
 	last_projectile_move = world.time
 	fired = TRUE
 	if(hitscan)
@@ -478,7 +474,7 @@
 			return	//Kill!
 		pixel_move(1, TRUE)
 
-/obj/item/projectile/proc/pixel_move(trajectory_multiplier, hitscanning = FALSE)
+/obj/item/projectile/proc/pixel_move(times, hitscanning = FALSE, trajectory_multiplier = 1)
 	if(!loc || !trajectory)
 		return
 	last_projectile_move = world.time
@@ -489,7 +485,7 @@
 	if(homing)
 		process_homing()
 	var/forcemoved = FALSE
-	for(var/i in 1 to SSprojectiles.global_iterations_per_move)
+	for(var/i in 1 to times)
 		trajectory.increment(trajectory_multiplier)
 		var/turf/T = trajectory.return_turf()
 		if(!istype(T))
@@ -513,8 +509,8 @@
 			if(QDELETED(src))
 				return
 	if(!hitscanning && !forcemoved)
-		pixel_x = trajectory.return_px() - trajectory.mpx * trajectory_multiplier * SSprojectiles.global_iterations_per_move
-		pixel_y = trajectory.return_py() - trajectory.mpy * trajectory_multiplier * SSprojectiles.global_iterations_per_move
+		pixel_x = trajectory.return_px() - trajectory.mpx * times * trajectory_multiplier
+		pixel_y = trajectory.return_py() - trajectory.mpy * times * trajectory_multiplier
 		animate(src, pixel_x = trajectory.return_px(), pixel_y = trajectory.return_py(), time = 1, flags = ANIMATION_END_NOW)
 	Range()
 
