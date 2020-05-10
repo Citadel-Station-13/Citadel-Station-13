@@ -16,7 +16,3 @@
 	)
 	icon_state = "plant"
 	default_priority = 90
-
-/datum/language_holder/venus
-	languages = list(/datum/language/common, /datum/language/sylvan, /datum/language/machine)
-	only_speaks_language = /datum/language/sylvan
