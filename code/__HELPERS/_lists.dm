@@ -37,6 +37,7 @@
 	* TYPECONT: The typepath of the contents of the list
 	* COMPARE: The object to compare against, usualy the same as INPUT
 	* COMPARISON: The variable on the objects to compare
+	* COMPTYPE: How the current bin item to compare against COMPARE is fetched. By key or value.
 	*/
 #define BINARY_INSERT(INPUT, LIST, TYPECONT, COMPARE, COMPARISON, COMPTYPE) \
 	do {\
