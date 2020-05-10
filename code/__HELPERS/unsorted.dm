@@ -1573,7 +1573,7 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 /proc/send2chat(message, config_setting)
 	if(config_setting == null)
 		return
-	
+
 	UNTIL(GLOB.tgs_initialized)
 	if(!world.TgsAvailable())
 		return

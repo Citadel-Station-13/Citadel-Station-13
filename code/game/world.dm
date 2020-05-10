@@ -1,6 +1,7 @@
 #define RESTART_COUNTER_PATH "data/round_counter.txt"
 
 GLOBAL_VAR(restart_counter)
+GLOBAL_VAR_INIT(tgs_initialized, FALSE)
 
 GLOBAL_VAR(topic_status_lastcache)
 GLOBAL_LIST(topic_status_cache)
@@ -38,9 +39,6 @@ GLOBAL_LIST(topic_status_cache)
 
 #ifndef USE_CUSTOM_ERROR_HANDLER
 	world.log = file("[GLOB.log_directory]/dd.log")
-#else
-	if (TgsAvailable())
-		world.log = file("[GLOB.log_directory]/dd.log") //not all runtimes trigger world/Error, so this is the only way to ensure we can see all of them.
 #endif
 
 	load_admins()
@@ -69,6 +67,11 @@ GLOBAL_LIST(topic_status_cache)
 /world/proc/InitTgs()
 	TgsNew(new /datum/tgs_event_handler/impl, TGS_SECURITY_TRUSTED)
 	GLOB.revdata.load_tgs_info()
+#ifdef USE_CUSTOM_ERROR_HANDLER
+	if (TgsAvailable())
+		world.log = file("[GLOB.log_directory]/dd.log") //not all runtimes trigger world/Error, so this is the only way to ensure we can see all of them.
+#endif
+	GLOB.tgs_initialized = TRUE
 
 /world/proc/HandleTestRun()
 	//trigger things to run the whole process
