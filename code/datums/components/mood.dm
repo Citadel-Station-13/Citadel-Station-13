@@ -1,5 +1,7 @@
+#define SLIGHT_INSANITY_PEN 1
 #define MINOR_INSANITY_PEN 5
 #define MAJOR_INSANITY_PEN 10
+#define MOOD_INSANITY_MALUS 0.0054 // per point of sanity below SANITY_DISTURBED, a 40% debuff to skills at rock bottom depression.
 
 /datum/component/mood
 	var/mood //Real happiness
@@ -22,7 +24,6 @@
 	RegisterSignal(parent, COMSIG_CLEAR_MOOD_EVENT, .proc/clear_event)
 	RegisterSignal(parent, COMSIG_MODIFY_SANITY, .proc/modify_sanity)
 	RegisterSignal(parent, COMSIG_LIVING_REVIVE, .proc/on_revive)
-
 	RegisterSignal(parent, COMSIG_MOB_HUD_CREATED, .proc/modify_hud)
 	var/mob/living/owner = parent
 	if(owner.hud_used)
@@ -150,7 +151,7 @@
 		if(8)
 			setSanity(sanity+0.25, maximum=SANITY_GREAT)
 		if(9)
-			setSanity(sanity+0.4, maximum=SANITY_GREAT)
+			setSanity(sanity+0.4, maximum=SANITY_AMAZING)
 
 	HandleNutrition(owner)
 
@@ -166,6 +167,7 @@
 	else if(sanity > maximum && amount > sanity - 0.5)
 		amount = sanity - 0.5
 
+	var/old_sanity = sanity
 	// Disturbed stops you from getting any more sane
 	if(HAS_TRAIT(master, TRAIT_UNSTABLE))
 		sanity = min(amount,sanity)
@@ -182,7 +184,7 @@
 			master.add_movespeed_modifier(/datum/movespeed_modifier/sanity/crazy)
 			sanity_level = 5
 		if(SANITY_UNSTABLE to SANITY_DISTURBED)
-			setInsanityEffect(0)
+			setInsanityEffect(SLIGHT_INSANITY_PEN)
 			master.add_movespeed_modifier(/datum/movespeed_modifier/sanity/disturbed)
 			sanity_level = 4
 		if(SANITY_DISTURBED to SANITY_NEUTRAL)
@@ -197,6 +199,12 @@
 			setInsanityEffect(0)
 			master.remove_movespeed_modifier(MOVESPEED_ID_SANITY)
 			sanity_level = 1
+
+	if(old_sanity > 1 && sanity == 1)
+		RegisterSignal(master, COMSIG_MOB_SKILL_GET_AFFINITY, .proc/on_get_skill_affinity)
+	else if(old_sanity == 1 && sanity > 1)
+		UnregisterSignal(master, COMSIG_MOB_SKILL_GET_AFFINITY)
+
 	//update_mood_icon()
 
 /datum/component/mood/proc/setInsanityEffect(newval)//More code so that the previous proc works
@@ -204,9 +212,14 @@
 		return
 	//var/mob/living/master = parent
 	//master.crit_threshold = (master.crit_threshold - insanity_effect) + newval
+	if(!insanity_effect && newval)
+		RegisterSignal(parent, COMSIG_MOB_ACTION_SKILL_MOD, .proc/on_mob_action_skill_mod)
+		RegisterSignal(parent, COMSIG_MOB_ITEM_ACTION_SKILLS_MOD, .proc/on_item_action_skills_mod)
+	else if(insanity_effect && !newval)
+		UnregisterSignal(parent, list(COMSIG_MOB_ACTION_SKILL_MOD, COMSIG_MOB_ITEM_ACTION_SKILLS_MOD))
 	insanity_effect = newval
 
-/datum/component/mood/proc/modify_sanity(datum/source, amount, minimum = -INFINITY, maximum = INFINITY)
+/datum/component/mood/proc/modify_sanity(datum/source, amount, minimum = SANITY_INSANE, maximum = SANITY_AMAZING)
 	setSanity(sanity + amount, minimum, maximum)
 
 /datum/component/mood/proc/add_event(datum/source, category, type, param) //Category will override any events in the same category, should be unique unless the event is based on the same thing like hunger.
@@ -288,5 +301,40 @@
 	remove_temp_moods()
 	setSanity(initial(sanity))
 
+/datum/component/mood/proc/on_mob_action_skill_mod(mob/source, list/skill_args, list/mod_values)
+	var/datum/skill/S = GLOB.skill_datums[skill_args[ACTION_SKILL_MOD_SKILL]]
+	if(!(S.skill_flags & SKILL_USE_MOOD))
+		return
+	var/debuff = 1 - (SANITY_DISTURBED - sanity) * MOOD_INSANITY_MALUS
+	mod_values[MOD_VALUES_SKILL_MOD] *= skill_args[ACTION_SKILL_MOD_IS_MULTI] ? debuff : 1/debuff
+
+/datum/component/mood/proc/on_item_action_skills_mod(mob/source, list/skill_args, list/mod_values)
+	if(skill_args[ITEM_SKILLS_MOD_BAD_FLAGS] & SKILL_USE_MOOD)
+		return
+	var/divisor = mod_values[MOD_VALUES_ITEM_SKILLS_DIV]
+	if(!divisor)
+		return
+	var/obj/item/I = skill_args[ITEM_SKILLS_MOD_ITEM]
+	var/list/L = mod_values[MOD_VALUES_ITEM_SKILLS_CHECKED]
+	var/skills_len = length(L)
+	var/affected_skills = skills_len
+	for(var/k in L)
+		var/datum/skill/S = k
+		var/our_flags = I.used_skills[S.type]|S.skill_flags
+		if(!(our_flags & SKILL_USE_MOOD))
+			affected_skills--
+	if(!affected_skills)
+		return
+	var/debuff = 1 - (SANITY_DISTURBED - sanity) * MOOD_INSANITY_MALUS * (affected_skills/skills_len)
+	mod_values[MOD_VALUES_ITEM_SKILLS_SUM] *= skill_args[ITEM_SKILLS_MOD_IS_MULTI] ? debuff : 1/debuff
+
+/datum/component/mood/proc/on_get_skill_affinity(mob/source, skill_path, list/return_value)
+	var/datum/skill/S = GLOB.skill_datums[skill_path]
+	if(!S || !(S.skill_flags & SKILL_TRAIN_MOOD))
+		return
+	return_value[1] *= SKILL_AFFINITY_MOOD_BONUS
+
+#undef SLIGHT_INSANITY_PEN
 #undef MINOR_INSANITY_PEN
 #undef MAJOR_INSANITY_PEN
+#undef MOOD_INSANITY_MALUS

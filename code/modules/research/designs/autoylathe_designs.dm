@@ -562,6 +562,7 @@
 	materials = list(/datum/material/plastic = 4000, /datum/material/iron = 500)
 	build_path = /obj/item/gun/ballistic/automatic/x9/toy
 	category = list("initial", "Rifles")
+	build_type = TOYLATHE | NO_PUBLIC_LATHE
 
 /datum/design/foam_dart
 	name = "Box of Foam Darts"
@@ -586,6 +587,7 @@
 	materials = list(/datum/material/plastic = 4000, /datum/material/iron = 500)
 	build_path = /obj/item/gun/ballistic/automatic/toy/magrifle
 	category = list("initial", "Rifles")
+	build_type = TOYLATHE | NO_PUBLIC_LATHE
 
 /datum/design/foam_hyperburst
 	name = "MagTag Hyper Rifle"
@@ -618,6 +620,7 @@
 	materials = list(/datum/material/plastic = 4000, /datum/material/iron = 500)
 	build_path = /obj/item/gun/ballistic/automatic/AM4C
 	category = list("initial", "Rifles")
+	build_type = TOYLATHE | NO_PUBLIC_LATHE
 
 /datum/design/foam_f3
 	name = "Replica F3 Justicar"
@@ -650,6 +653,7 @@
 	materials = list(/datum/material/plastic = 2000, /datum/material/iron = 250)
 	build_path = /obj/item/gun/ballistic/automatic/toy/unrestricted
 	category = list("initial", "Pistols")
+	build_type = TOYLATHE | NO_PUBLIC_LATHE
 
 /datum/design/foam_pistol
 	name = "Foam Force Pistol"
@@ -698,6 +702,7 @@
 	materials = list(/datum/material/plastic = 4000, /datum/material/iron = 500)
 	build_path = /obj/item/gun/ballistic/automatic/c20r/toy/unrestricted
 	category = list("hacked", "Rifles")
+	build_type = TOYLATHE | NO_PUBLIC_LATHE
 
 /datum/design/foam_l6
 	name = "Donksoft LMG"
@@ -706,3 +711,4 @@
 	materials = list(/datum/material/plastic = 4000, /datum/material/iron = 500)
 	build_path = /obj/item/gun/ballistic/automatic/l6_saw/toy/unrestricted
 	category = list("hacked", "Rifles")
+	build_type = TOYLATHE | NO_PUBLIC_LATHE
