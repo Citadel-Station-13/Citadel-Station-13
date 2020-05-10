@@ -348,8 +348,9 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				dat += "[TextPreview(features["flavor_text"])]...<BR>"
 			dat += "<h2>OOC notes</h2>"
 			dat += "<a href='?_src_=prefs;preference=ooc_notes;task=input'><b>Set OOC notes</b></a><br>"
-			if(length(features["ooc_notes"]) <= 40)
-				if(!length(features["ooc_notes"]))
+			var/ooc_notes_len = length(features["ooc_notes"])
+			if(ooc_notes_len <= 40)
+				if(!ooc_notes_len)
 					dat += "\[...\]"
 				else
 					dat += "[features["ooc_notes"]]"
