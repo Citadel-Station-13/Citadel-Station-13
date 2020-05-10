@@ -2114,6 +2114,7 @@
 /area/science/robotics/mechbay)
 "aGl" = (
 /obj/structure/closet/secure_closet/miner,
+/obj/item/clothing/shoes/winterboots/ice_boots,
 /turf/open/floor/plasteel,
 /area/quartermaster/miningdock)
 "aGD" = (
@@ -7452,6 +7453,10 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
+"cxV" = (
+/obj/effect/turf_decal/bot,
+/turf/open/floor/plating/asteroid/snow/icemoon,
+/area/icemoon/surface/outdoors)
 "cxX" = (
 /obj/structure/cable{
 	icon_state = "4-8"
@@ -11465,6 +11470,7 @@
 	dir = 1
 	},
 /obj/structure/closet/secure_closet/miner,
+/obj/item/clothing/shoes/winterboots/ice_boots,
 /turf/open/floor/plasteel,
 /area/quartermaster/miningdock)
 "fcJ" = (
@@ -13274,7 +13280,7 @@
 	icon_state = "2-4"
 	},
 /obj/effect/turf_decal/bot_white,
-/obj/vehicle/ridden/secway,
+/obj/vehicle/ridden/atv/snowmobile/snowcurity,
 /obj/item/key/security,
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/security/armory)
@@ -14347,7 +14353,7 @@
 /turf/open/floor/plating,
 /area/engine/engineering)
 "gVo" = (
-/obj/vehicle/ridden/atv,
+/obj/vehicle/ridden/atv/snowmobile,
 /obj/item/key,
 /turf/open/floor/pod/dark,
 /area/medical/paramedic)
@@ -18988,14 +18994,21 @@
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden,
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/turret_protected/ai_upload_foyer)
+"jTl" = (
+/obj/effect/turf_decal/stripes,
+/obj/machinery/computer/cargo{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/quartermaster/storage)
 "jTo" = (
 /obj/structure/cable{
 	icon_state = "1-2"
 	},
 /obj/effect/turf_decal/bot_white,
-/obj/vehicle/ridden/secway,
-/obj/item/key/security,
 /obj/structure/window/reinforced,
+/obj/vehicle/ridden/atv/snowmobile/snowcurity,
+/obj/item/key/security,
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/security/armory)
 "jTs" = (
@@ -19294,7 +19307,8 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/bot,
-/obj/machinery/suit_storage_unit/standard_unit,
+/obj/vehicle/ridden/atv/snowmobile,
+/obj/item/key,
 /turf/open/floor/plasteel/dark,
 /area/storage/eva)
 "keq" = (
@@ -22074,6 +22088,8 @@
 	c_tag = "Mining Dock External";
 	dir = 8
 	},
+/obj/vehicle/ridden/atv/snowmobile,
+/obj/item/key,
 /turf/open/floor/plasteel,
 /area/quartermaster/miningdock)
 "mcU" = (
@@ -22343,9 +22359,9 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
-/obj/structure/rack,
 /obj/effect/turf_decal/bot,
-/obj/item/tank/jetpack/carbondioxide/eva,
+/obj/vehicle/ridden/atv/snowmobile,
+/obj/item/key,
 /turf/open/floor/plasteel/dark,
 /area/storage/eva)
 "mnj" = (
@@ -26747,13 +26763,14 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/bot,
-/obj/machinery/suit_storage_unit/standard_unit,
 /obj/item/radio/intercom{
 	pixel_y = 25
 	},
 /obj/machinery/camera/motion{
 	c_tag = "EVA Motion Sensor"
 	},
+/obj/vehicle/ridden/atv/snowmobile,
+/obj/item/key,
 /turf/open/floor/plasteel/dark,
 /area/storage/eva)
 "phf" = (
@@ -29555,6 +29572,7 @@
 	pixel_y = 28
 	},
 /obj/structure/closet/secure_closet/miner,
+/obj/item/clothing/shoes/winterboots/ice_boots,
 /turf/open/floor/plasteel,
 /area/quartermaster/miningdock)
 "qSP" = (
@@ -34564,6 +34582,8 @@
 /obj/item/radio/intercom{
 	pixel_y = 25
 	},
+/obj/vehicle/ridden/atv/snowmobile,
+/obj/item/key,
 /turf/open/floor/plasteel,
 /area/quartermaster/miningdock)
 "uhN" = (
@@ -40039,6 +40059,11 @@
 	},
 /turf/open/floor/plating/snowed/smoothed/icemoon,
 /area/icemoon/surface/outdoors)
+"xSQ" = (
+/obj/vehicle/ridden/atv/snowmobile,
+/obj/item/key,
+/turf/open/floor/plasteel,
+/area/quartermaster/miningdock)
 "xSZ" = (
 /obj/effect/turf_decal/tile/purple{
 	dir = 4
@@ -58140,7 +58165,7 @@ fHF
 aPC
 aPE
 aPE
-avT
+cxV
 xUL
 xUL
 avT
@@ -58397,7 +58422,7 @@ qAF
 hOc
 aOp
 aPE
-avT
+cxV
 xUL
 xUL
 avT
@@ -58654,7 +58679,7 @@ lqt
 gPb
 hFv
 aPC
-avT
+cxV
 xUL
 xUL
 avT
@@ -64024,7 +64049,7 @@ rhX
 kHd
 kHd
 kHd
-kHd
+gVo
 rhX
 xUL
 xUL
@@ -64536,7 +64561,7 @@ xnm
 xUL
 eTu
 kHd
-gVo
+kHd
 kHd
 gVo
 rhX
@@ -65305,8 +65330,8 @@ avT
 xUL
 xnm
 avT
-avT
-avT
+cxV
+cxV
 ydp
 ydp
 ydp
@@ -74328,7 +74353,7 @@ avT
 avT
 xUL
 xUL
-avT
+cxV
 sLj
 aPZ
 kAO
@@ -74585,7 +74610,7 @@ avT
 avT
 xUL
 xUL
-avT
+cxV
 wxT
 aPY
 kAO
@@ -74842,7 +74867,7 @@ avT
 avT
 xUL
 xUL
-avT
+cxV
 wxT
 moD
 aQd
@@ -75099,7 +75124,7 @@ avT
 avT
 xUL
 xUL
-avT
+cxV
 wxT
 ufA
 qHc
@@ -75356,7 +75381,7 @@ avT
 avT
 xUL
 xUL
-avT
+cxV
 sLj
 lhR
 fNR
@@ -80525,7 +80550,7 @@ bra
 odF
 bzq
 bzq
-bEi
+xSQ
 bBN
 bEi
 tRe
@@ -82775,7 +82800,7 @@ kPn
 tzP
 juI
 wIA
-sSy
+jTl
 vyf
 vyf
 vyf
