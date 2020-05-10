@@ -535,6 +535,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	else //We have no old flavortext, default to new
 		S["feature_flavor_text"]		>> features["flavor_text"]
 
+	S["feature_ooc_notes"]				>> features["ooc_notes"]
+
 	S["vore_flags"]						>> vore_flags
 	S["vore_taste"]						>> vore_taste
 	S["belly_prefs"]					>> belly_prefs
@@ -643,6 +645,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 
 	features["flavor_text"]			= copytext(features["flavor_text"], 1, MAX_FLAVOR_LEN)
+	features["ooc_notes"]			= copytext(features["ooc_notes"], 1, MAX_FLAVOR_LEN)
 
 	joblessrole	= sanitize_integer(joblessrole, 1, 3, initial(joblessrole))
 	//Validate job prefs
@@ -745,6 +748,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["feature_vag_visibility"], features["vag_visibility"])
 
 	WRITE_FILE(S["feature_has_womb"], features["has_womb"])
+
+	WRITE_FILE(S["feature_ooc_notes"], features["ooc_notes"])
 
 	//Custom names
 	for(var/custom_name_id in GLOB.preferences_custom_names)
