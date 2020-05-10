@@ -7453,10 +7453,6 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
-"cxV" = (
-/obj/effect/turf_decal/bot,
-/turf/open/floor/plating/asteroid/snow/icemoon,
-/area/icemoon/surface/outdoors)
 "cxX" = (
 /obj/structure/cable{
 	icon_state = "4-8"
@@ -8529,6 +8525,12 @@
 	},
 /obj/machinery/light/small{
 	dir = 4
+	},
+/obj/machinery/camera{
+	c_tag = "MiniSat External West";
+	dir = 8;
+	network = list("minisat");
+	start_active = 1
 	},
 /turf/open/floor/plating/asteroid/snow/icemoon,
 /area/icemoon/surface/outdoors)
@@ -16783,6 +16785,10 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/disposal)
+"isl" = (
+/obj/effect/turf_decal/bot,
+/turf/open/floor/plating/asteroid/snow/icemoon,
+/area/icemoon/surface/outdoors)
 "isp" = (
 /obj/structure/rack,
 /obj/item/clothing/mask/gas,
@@ -17700,6 +17706,20 @@
 /obj/effect/turf_decal/tile/yellow,
 /turf/open/floor/plasteel/white,
 /area/medical/chemistry)
+"iWC" = (
+/obj/structure/cable{
+	icon_state = "2-8"
+	},
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/camera{
+	c_tag = "MiniSat External South";
+	network = list("minisat");
+	start_active = 1
+	},
+/turf/open/floor/plating/asteroid/snow/icemoon,
+/area/icemoon/surface/outdoors)
 "iWG" = (
 /obj/item/radio/intercom{
 	pixel_x = -30
@@ -18785,6 +18805,11 @@
 	},
 /turf/open/floor/carpet,
 /area/quartermaster/miningoffice)
+"jMJ" = (
+/obj/vehicle/ridden/atv/snowmobile,
+/obj/item/key,
+/turf/open/floor/plasteel,
+/area/quartermaster/miningdock)
 "jNp" = (
 /obj/machinery/dna_scannernew,
 /obj/effect/turf_decal/tile/purple{
@@ -33964,6 +33989,21 @@
 	},
 /turf/open/floor/plasteel/freezer,
 /area/medical/surgery)
+"tOw" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/structure/cable{
+	icon_state = "1-8"
+	},
+/obj/machinery/camera{
+	c_tag = "MiniSat External North";
+	dir = 1;
+	network = list("minisat");
+	start_active = 1
+	},
+/turf/open/floor/plating/asteroid/snow/icemoon,
+/area/icemoon/surface/outdoors)
 "tOE" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 5
@@ -40059,11 +40099,6 @@
 	},
 /turf/open/floor/plating/snowed/smoothed/icemoon,
 /area/icemoon/surface/outdoors)
-"xSQ" = (
-/obj/vehicle/ridden/atv/snowmobile,
-/obj/item/key,
-/turf/open/floor/plasteel,
-/area/quartermaster/miningdock)
 "xSZ" = (
 /obj/effect/turf_decal/tile/purple{
 	dir = 4
@@ -48121,7 +48156,7 @@ avT
 avT
 ydp
 buI
-buJ
+tOw
 ghq
 cXI
 aJC
@@ -48135,7 +48170,7 @@ shR
 uXy
 ghq
 ghq
-bUB
+iWC
 bJf
 ydp
 ydp
@@ -58165,7 +58200,7 @@ fHF
 aPC
 aPE
 aPE
-cxV
+isl
 xUL
 xUL
 avT
@@ -58422,7 +58457,7 @@ qAF
 hOc
 aOp
 aPE
-cxV
+isl
 xUL
 xUL
 avT
@@ -58679,7 +58714,7 @@ lqt
 gPb
 hFv
 aPC
-cxV
+isl
 xUL
 xUL
 avT
@@ -65330,8 +65365,8 @@ avT
 xUL
 xnm
 avT
-cxV
-cxV
+isl
+isl
 ydp
 ydp
 ydp
@@ -74353,7 +74388,7 @@ avT
 avT
 xUL
 xUL
-cxV
+isl
 sLj
 aPZ
 kAO
@@ -74610,7 +74645,7 @@ avT
 avT
 xUL
 xUL
-cxV
+isl
 wxT
 aPY
 kAO
@@ -74867,7 +74902,7 @@ avT
 avT
 xUL
 xUL
-cxV
+isl
 wxT
 moD
 aQd
@@ -75124,7 +75159,7 @@ avT
 avT
 xUL
 xUL
-cxV
+isl
 wxT
 ufA
 qHc
@@ -75381,7 +75416,7 @@ avT
 avT
 xUL
 xUL
-cxV
+isl
 sLj
 lhR
 fNR
@@ -80550,7 +80585,7 @@ bra
 odF
 bzq
 bzq
-xSQ
+jMJ
 bBN
 bEi
 tRe
