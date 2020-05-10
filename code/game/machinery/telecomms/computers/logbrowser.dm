@@ -7,16 +7,15 @@
 	name = "telecommunications server monitoring console"
 	icon_screen = "comm_logs"
 	desc = "Has full access to all details and record of the telecommunications network it's monitoring."
+	circuit = /obj/item/circuitboard/computer/comm_server
+	req_access = list(ACCESS_TCOMSAT)
 
 	var/list/machinelist = list()	// the servers located by the computer
 	var/obj/machinery/telecomms/server/SelectedMachine = null
 
 	var/network = "NULL"		// the network to probe
 	var/notice = ""
-	var/universal_translate = FALSE // set to 1 if it can translate nonhuman speech
-
-	req_access = list(ACCESS_TCOMSAT)
-	circuit = /obj/item/circuitboard/computer/comm_server
+	var/universal_translate = FALSE // set to TRUE(1) if it can translate nonhuman speech	
 
 /obj/machinery/computer/telecomms/server/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
 														datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
@@ -121,7 +120,6 @@
 		if("mainmenu")
 			SelectedMachine = null
 			notice = ""
-			update_static_data(usr)
 			return
 		if("release")
 			machinelist = list()
@@ -141,7 +139,7 @@
 				notice = "FAILED: CANNOT PROBE WHEN BUFFER FULL"
 				return
 			
-			for(var/obj/machinery/telecomms/T in urange(25, src))
+			for(var/obj/machinery/telecomms/T in GLOB.telecomms_list) //telecomms just went global!
 				if(T.network == network)
 					LAZYADD(machinelist, T)
 
@@ -154,7 +152,7 @@
 					SelectedMachine = T
 					break
 		if("delete")
-			if(!src.allowed(usr) && !(obj_flags & EMAGGED))
+			if(!src.allowed(usr) && !CHECK_BITFIELD(obj_flags, EMAGGED))
 				to_chat(usr, "<span class='danger'>ACCESS DENIED.</span>")
 				return
 
@@ -165,42 +163,11 @@
 				notice = "OBJECT NOT FOUND"		
 				return
 			notice = "DELETED ENTRY: [D.name]"
-			SelectedMachine.log_entries.Remove(D)
+			LAZYREMOVE(SelectedMachine.log_entries, D)
 			qdel(D)
 			update_static_data(usr)
 /*
 /obj/machinery/computer/telecomms/server/ui_interact(mob/user)
-	. = ..()
-
-	var/dat = "<TITLE>Telecommunication Server Monitor</TITLE><center><b>Telecommunications Server Monitor</b></center>"
-
-	switch(screen)
-
-
-	  // --- Main Menu ---
-
-		if(0)
-			dat += "<br>[temp]<br>"
-			dat += "<br>Current Network: <a href='?src=[REF(src)];network=1'>[network]</a><br>"
-			if(servers.len)
-				dat += "<br>Detected Telecommunication Servers:<ul>"
-				for(var/obj/machinery/telecomms/T in servers)
-					dat += "<li><a href='?src=[REF(src)];viewserver=[T.id]'>[REF(T)] [T.name]</a> ([T.id])</li>"
-				dat += "</ul>"
-				dat += "<br><a href='?src=[REF(src)];operation=release'>\[Flush Buffer\]</a>"
-
-			else
-				dat += "<br>No servers detected. Scan for servers: <a href='?src=[REF(src)];operation=scan'>\[Scan\]</a>"
-
-
-	  // --- Viewing Server ---
-
-		if(1)
-			dat += "<br>[temp]<br>"
-			dat += "<center><a href='?src=[REF(src)];operation=mainmenu'>\[Main Menu\]</a>     <a href='?src=[REF(src)];operation=refresh'>\[Refresh\]</a></center>"
-			dat += "<br>Current Network: [network]"
-			dat += "<br>Selected Server: [SelectedServer.id]"
-
 			if(SelectedServer.totaltraffic >= 1024)
 				dat += "<br>Total recorded traffic: [round(SelectedServer.totaltraffic / 1024)] Terrabytes<br><br>"
 			else
@@ -278,92 +245,4 @@
 			dat += "</ol>"
 
 
-
-	user << browse(dat, "window=comm_monitor;size=575x400")
-	onclose(user, "server_control")
-
-	temp = ""
-	return
-*/
-/*
-/obj/machinery/computer/telecomms/server/Topic(href, href_list)
-	if(..())
-		return
-
-
-	add_fingerprint(usr)
-	usr.set_machine(src)
-
-	if(href_list["viewserver"])
-		screen = 1
-		for(var/obj/machinery/telecomms/T in servers)
-			if(T.id == href_list["viewserver"])
-				SelectedServer = T
-				break
-
-	if(href_list["operation"])
-		switch(href_list["operation"])
-
-			if("release")
-				servers = list()
-				screen = 0
-
-			if("mainmenu")
-				screen = 0
-
-			if("scan")
-				if(servers.len > 0)
-					temp = "<font color = #D70B00>- FAILED: CANNOT PROBE WHEN BUFFER FULL -</font color>"
-
-				else
-					for(var/obj/machinery/telecomms/server/T in urange(25, src))
-						if(T.network == network)
-							servers.Add(T)
-
-					if(!servers.len)
-						temp = "<font color = #D70B00>- FAILED: UNABLE TO LOCATE SERVERS IN \[[network]\] -</font color>"
-					else
-						temp = "<font color = #336699>- [servers.len] SERVERS PROBED & BUFFERED -</font color>"
-
-					screen = 0
-
-	if(href_list["delete"])
-
-		if(!src.allowed(usr) && !(obj_flags & EMAGGED))
-			to_chat(usr, "<span class='danger'>ACCESS DENIED.</span>")
-			return
-
-		if(SelectedServer)
-
-			var/datum/comm_log_entry/D = SelectedServer.log_entries[text2num(href_list["delete"])]
-
-			temp = "<font color = #336699>- DELETED ENTRY: [D.name] -</font color>"
-
-			SelectedServer.log_entries.Remove(D)
-			qdel(D)
-
-		else
-			temp = "<font color = #D70B00>- FAILED: NO SELECTED MACHINE -</font color>"
-
-	if(href_list["network"])
-
-		var/newnet = stripped_input(usr, "Which network do you want to view?", "Comm Monitor", network)
-
-		if(newnet && ((usr in range(1, src)) || hasSiliconAccessInArea(usr)))
-			if(length(newnet) > 15)
-				temp = "<font color = #D70B00>- FAILED: NETWORK TAG STRING TOO LENGHTLY -</font color>"
-
-			else
-
-				network = newnet
-				screen = 0
-				servers = list()
-				temp = "<font color = #336699>- NEW NETWORK TAG SET IN ADDRESS \[[network]\] -</font color>"
-
-	updateUsrDialog()
-	return
-
-/obj/machinery/computer/telecomms/server/attackby()
-	. = ..()
-	updateUsrDialog()
 */

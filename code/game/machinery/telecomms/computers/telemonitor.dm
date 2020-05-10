@@ -87,7 +87,7 @@
 				notice = "FAILED: CANNOT PROBE WHEN BUFFER FULL"
 				return
 			
-			for(var/obj/machinery/telecomms/T in urange(25, src))
+			for(var/obj/machinery/telecomms/T in GLOB.telecomms_list)
 				if(T.network == network)
 					LAZYADD(machinelist, T)
 

@@ -11,24 +11,31 @@
 	desc = "Used to monitor the crew's PDA messages, as well as request console messages."
 	icon_screen = "comm_logs"
 	circuit = /obj/item/circuitboard/computer/message_monitor
-	//Server linked to.
+
+	//Servers, and server linked to.
+	var/network = "tcommsat"		// the network to probe
+	var/list/machinelist = list()	// the servers located by the computer
 	var/obj/machinery/telecomms/message_server/linkedServer = null
+
 	//Sparks effect - For emag
 	var/datum/effect_system/spark_spread/spark_system = new /datum/effect_system/spark_spread
+
 	//Messages - Saves me time if I want to change something.
-	var/noserver = "<span class='alert'>ALERT: No server detected.</span>"
-	var/incorrectkey = "<span class='warning'>ALERT: Incorrect decryption key!</span>"
-	var/defaultmsg = "<span class='notice'>Welcome. Please select an option.</span>"
-	var/rebootmsg = "<span class='warning'>%$&(�: Critical %$$@ Error // !RestArting! <lOadiNg backUp iNput ouTput> - ?pLeaSe wAit!</span>"
+	var/noserver = "ALERT: No server detected."
+	var/incorrectkey = "ALERT: Incorrect decryption key!"
+	var/defaultmsg = "Welcome. Please select an option."
+	var/rebootmsg = "%$&(�: Critical %$$@ Error // !RestArting! <lOadiNg backUp iNput ouTput> - ?pLeaSe wAit!"
+
 	//Computer properties
-	var/screen = 0 		// 0 = Main menu, 1 = Message Logs, 2 = Hacked screen, 3 = Custom Message
+	//var/screen = 0 		// 0 = Main menu, 1 = Message Logs, 2 = Hacked screen, 3 = Custom Message
 	var/hacking = FALSE		// Is it being hacked into by the AI/Cyborg
-	var/message = "<span class='notice'>System bootup complete. Please select an option.</span>"	// The message that shows on the main menu.
+	var/message = ""	// The message that shows on the main menu.
 	var/auth = FALSE // Are they authenticated?
-	var/optioncount = 7
+	//var/optioncount = 7
+
 	// Custom Message Properties
-	var/customsender = "System Administrator"
 	var/obj/item/pda/customrecepient = null
+	var/customsender = "System Administrator"
 	var/customjob		= "Admin"
 	var/custommessage 	= "This is a test, please ignore."
 
@@ -45,31 +52,172 @@
 /obj/machinery/computer/message_monitor/ui_static_data(mob/user)
 	var/list/data_out = list()
 
-	data_out["predef_messages"] = list(
-		"noserver" = noserver,
-		"incorrectkey" = incorrectkey,
-		"defaultmsg" = defaultmsg,
-		"rebootmsg" = rebootmsg
-	)
+	if(!linkedServer)
+		return data_out
+	data_out["data_rc_msg"] = list()
+	/**	
+	 * datum/data_rc_msg
+	 * X												 	- 5%
+	 * var/rec_dpt = "Unspecified" //name of the person 	- 15%
+	 * var/send_dpt = "Unspecified" //name of the sender	- 15%
+	 * var/message = "Blank" //transferred message		 	- 300px
+	 * var/stamp = "Unstamped"								- 15%
+	 * var/id_auth = "Unauthenticated"						- 15%
+	 * var/priority = "Normal"								- 10%
+	 */
+	
 	return data_out
 
 /obj/machinery/computer/message_monitor/ui_data(mob/user)
 	var/list/data_out = list()
 
-	data_out["hacking"] = hacking
 	data_out["notice"] = message
+	data_out["authenticated"] = auth
+	data_out["network"] = network
+	data_out["canhack"] = (istype(user, /mob/living/silicon) && user.hack_software)
 
+	if(hacking)
+		data_out["hacking"] = hacking
+		var/data = ""
+		if(isAI(user) || iscyborg(user)) //screen 2
+			dat += "Brute-forcing for server key.<br> It will take 20 seconds for every character that the password has."
+			dat += "In the meantime, this console can reveal your true intentions if you let someone access it. Make sure no humans enter the room during that time."
+		else
+			//It's the same message as the one above but in base64. Base64 is better than bin, change my mind
+			dat += {"\
+			QnJ1dGUtZm9yY2luZyBmb3Igc2VydmVyIGtleS48YnI+IEl0IHdpbG<br>\
+			wgdGFrZSAyMCBzZWNvbmRzIGZvciBldmVyeSBjaGFyYWN0ZXIgdGhh<br>\
+			dCB0aGUgcGFzc3dvcmQgaGFzLiBJbiB0aGUgbWVhbnRpbWUsIHRoaX<br>\
+			MgY29uc29sZSBjYW4gcmV2ZWFsIHlvdXIgdHJ1ZSBpbnRlbnRpb25z<br>\
+			IGlmIHlvdSBsZXQgc29tZW9uZSBhY2Nlc3MgaXQuIE1ha2Ugc3VyZS<br>\
+			BubyBodW1hbnMgZW50ZXIgdGhlIHJvb20gZHVyaW5nIHRoYXQgdGltZS4=<br>\
+			"}
+		data_out["hacking_msg"] = data
+
+	data_out["servers"] = list()
+	for(var/obj/machinery/telecomms/message_server/T in machinelist)
+		var/list/data = list(
+			name = T.name,
+			id = T.id,
+			ref = REF(T)
+		)
+		data_out["servers"] += list(data)
+	data_out["servers"] = sortList(data_out["servers"]) //a-z sort
+
+	if(!linkedServer)
+		data_out["selected"] = null
+		return data_out
+		
 	data_out["selected"] = list(
 		name = linkedServer.name,
 		id = linkedServer.id,
-		ref = REF(linkedServer)
+		ref = REF(linkedServer),
+		status = !LINKED_SERVER_NONRESPONSIVE //returns true if server is running
 	)
 	return data_out
 
+/obj/machinery/computer/message_monitor/ui_act(action, params)
+	if(..())
+		return
+	switch(action)
+		if("mainmenu") //deselect
+			SelectedMachine = null
+			auth = FALSE
+			message = ""
+			return
+		if("release") //release server listing
+			machinelist = list()
+			message = ""
+			return
+		if("network") //network change, flush the selected machine and buffer, and de-auth them
+			var/newnet = trim(html_encode(params["value"]), 15)
+			if(length(newnet) > 15)	//i'm looking at you, you href fuckers
+				message = "FAILED: NETWORK TAG STRING TOO LENGHTLY"
+				return
+			network = newnet
+			SelectedMachine = null
+			machinelist = list()
+			auth = FALSE
+			message  = "NOTICE: Network change detected. Server disconnected, please re-authenticate."
+			return
+		if("probe") //probe network for the pda serbs
+			if(LAZYLEN(machinelist) > 0)
+				message = "FAILED: CANNOT PROBE WHEN BUFFER FULL"
+				return
+			
+			for(var/obj/machinery/telecomms/message_server/T in GLOB.telecomms_list)
+				if(T.network == network)
+					LAZYADD(machinelist, T)
 
+			if(!LAZYLEN(machinelist))
+				message = "FAILED: UNABLE TO LOCATE NETWORK ENTITIES IN \[[network]\]"
+				return
+		if("viewmachine")	//selected but not authorized
+			for(var/obj/machinery/telecomms/message_server/T in machinelist)
+				if(T.id == params["value"])
+					SelectedMachine = T
+					break
+
+		if("auth")
+			if(LINKED_SERVER_NONRESPONSIVE)
+				message = noserver
+				return
+			var/dkey = trim(input(usr, "Please enter the decryption key.") as text|null)
+			if(dkey && dkey == "")
+				return
+			if(linkedServer.decryptkey == dkey)
+				auth = TRUE
+			else
+				message = incorrectkey
+			update_static_data(usr)
+
+
+		if (href_list["hack"])
+			var/mob/living/silicon/S = usr
+			if(istype(S) && S.hack_software)
+				hacking = TRUE
+				//Time it takes to bruteforce is dependant on the password length.
+				var/time = 100 * length(linkedServer.decryptkey)
+				addtimer(CALLBACK(src, .proc/BruteForce, usr), time)
+
+		if("del_log")
+			if(!auth)
+				message = "WARNING: Auth failed! Delete abotrted!"
+				return
+			else if(LINKED_SERVER_NONRESPONSIVE)
+				message = noserver
+				return
+			
+			var/datum/data_ref = locate(params["ref"])
+			if(istype(data_ref, /datum/data_rc_msg))
+				LAZYREMOVE(linkedServer.rc_msgs, data_ref)
+				message = "NOTICE: Log Deleted!"
+				update_static_data(usr)
+			else if(istype(data_ref, /datum/data_pda_msg))
+				LAZYREMOVE(linkedServer.pda_msgs, data_ref)
+				message = "NOTICE: Log Deleted!"
+				update_static_data(usr)
+			else
+				message = "NOTICE: Log not found! It may have already been deleted"
+			update_static_data(usr)
+
+		if("clear_log")
+			if(!auth)
+				message = "WARNING: Auth failed! Delete abotrted!"
+				return
+			else if(LINKED_SERVER_NONRESPONSIVE)
+				message = noserver
+				return
+
+			var/what = locate(params["value"])
+			if(what == "pda_logs")
+				linkedServer.data_pda_msg = list()
+			if(what == "rc_msgs")
+				linkedServer.rc_msgs = list()
+			update_static_data(usr)
 
 /obj/machinery/computer/message_monitor/attackby(obj/item/O, mob/living/user, params)
-	if(istype(O, /obj/item/screwdriver) && (obj_flags & EMAGGED))
+	if(istype(O, /obj/item/screwdriver) && CHECK_BITFIELD(obj_flags, EMAGGED))
 		//Stops people from just unscrewing the monitor and putting it back to get the console working again. 
 		//Why this though, you should make it emag to a board level. (i wont do it)
 		to_chat(user, "<span class='warning'>It is too hot to mess with!</span>")
@@ -78,13 +226,13 @@
 
 /obj/machinery/computer/message_monitor/emag_act(mob/user)
 	. = ..()
-	if(obj_flags & EMAGGED)
+	if(CHECK_BITFIELD(obj_flags, EMAGGED))
 		return
 	if(isnull(linkedServer))
 		to_chat(user, "<span class='notice'>A no server error appears on the screen.</span>")
 		return
-	obj_flags |= EMAGGED
-	//screen = 2
+	ENABLE_BITFIELD(obj_flags, EMAGGED)
+	
 	spark_system.set_up(5, 0, src)
 	spark_system.start()
 	var/obj/item/paper/monitorkey/MK = new(loc, linkedServer)
@@ -107,7 +255,8 @@
 	//Is the server isn't linked to a server, and there's a server available, default it to the first one in the list.
 	if(!linkedServer)
 		for(var/obj/machinery/telecomms/message_server/S in GLOB.telecomms_list)
-			linkedServer = S
+			if(S.network == network)
+				linkedServer = S
 			break
 
 /obj/machinery/computer/message_monitor/Destroy()
@@ -280,10 +429,10 @@
 		var/currentKey = linkedServer.decryptkey
 		to_chat(user, "<span class='warning'>Brute-force completed! The key is '[currentKey]'.</span>")
 	hacking = FALSE
-	screen = 0 // Return the screen back to normal
+	//screen = 0 // Return the screen back to normal
 
 /obj/machinery/computer/message_monitor/proc/UnmagConsole()
-	obj_flags &= ~EMAGGED
+	DISABLE_BITFIELD(obj_flags, EMAGGED)
 
 /obj/machinery/computer/message_monitor/proc/ResetMessage()
 	customsender 	= "System Administrator"
@@ -483,7 +632,7 @@
 
 /obj/item/paper/monitorkey/Initialize(mapload, obj/machinery/telecomms/message_server/server)
 	..()
-	if (server)
+	if(server)
 		print(server)
 		return INITIALIZE_HINT_NORMAL
 	else
@@ -495,7 +644,7 @@
 	add_overlay("paper_words")
 
 /obj/item/paper/monitorkey/LateInitialize()
-	for (var/obj/machinery/telecomms/message_server/server in GLOB.telecomms_list)
-		if (server.decryptkey)
+	for(var/obj/machinery/telecomms/message_server/server in GLOB.telecomms_list)
+		if(server.decryptkey)
 			print(server)
 			break
