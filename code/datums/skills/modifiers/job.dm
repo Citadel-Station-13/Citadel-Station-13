@@ -1,11 +1,8 @@
-/// Jobbie level skill modifiers.
+/// Jobbie skill modifiers.
 
 /datum/skill_modifier/job
-	modifier_flags = MODIFIER_SKILL_VALUE|MODIFIER_SKILL_LEVEL|MODIFIER_SKILL_VIRTUE|MODIFIER_SKILL_ORIGIN_DIFF
+	modifier_flags = MODIFIER_SKILL_VALUE|MODIFIER_SKILL_VIRTUE|MODIFIER_SKILL_ORIGIN_DIFF
 	priority = MODIFIER_SKILL_PRIORITY_MAX
-
-/datum/skill_modifier/job
-	level_mod = JOB_SKILL_TRAINED
 
 /datum/skill_modifier/job/surgery
 	target_skills = /datum/skill/numerical/surgery
@@ -22,6 +19,10 @@
 	target_skills = /datum/skill/level/job/wiring
 
 /// Level skill modifiers below.
+/datum/skill_modifier/job/level
+	modifier_flags = MODIFIER_SKILL_VALUE|MODIFIER_SKILL_LEVEL|MODIFIER_SKILL_VIRTUE|MODIFIER_SKILL_ORIGIN_DIFF
+	level_mod = JOB_SKILL_TRAINED
+
 /datum/skill_modifier/job/level/New(id)
 	if(level_mod)
 		value_mod = GET_STANDARD_LVL(level_mod)
