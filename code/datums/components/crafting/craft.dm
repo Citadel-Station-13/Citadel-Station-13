@@ -211,7 +211,7 @@
 						var/total_items = 0
 						for(var/obj/item/reagent_containers/ingredient in parts)
 							total_items += 1
-							total_quality += food_ingredient.food_quality
+							total_quality += ingredient.food_quality
 						if(total_items == 0)
 							food_result.adjust_food_quality(50)
 						else
