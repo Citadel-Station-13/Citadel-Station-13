@@ -27,10 +27,10 @@
 /datum/mind/proc/get_skill_value(skill, apply_modifiers = TRUE)
 	if(!ispath(skill))
 		CRASH("Invalid get_skill_value call. Use typepaths.")		//until a time when we somehow need text ids for dynamic skills, I'm enforcing this.
-	if(!(skill_holder?.skills))
-		return null
+	if(!skill_holder.skills)
+		. = 0
 	else
-		. = skill_holder.skills[skill]
+		. = skill_holder.skills[skill] || 0
 	if(apply_modifiers && skill_holder.skill_value_mods)
 		var/L = LAZYACCESS(skill_holder.skill_value_mods, skill)
 		for(var/k in L)
