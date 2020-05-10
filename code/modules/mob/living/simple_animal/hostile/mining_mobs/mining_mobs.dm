@@ -63,7 +63,7 @@
 	..(gibbed)
 
 /mob/living/simple_animal/hostile/asteroid/proc/spawn_crusher_loot()
-	butcher_results[crusher_loot] = 1
+	LAZYSET(butcher_results, crusher_loot, 1)
 
 /mob/living/simple_animal/hostile/asteroid/handle_temperature_damage()
 	if(bodytemperature < minbodytemp)
