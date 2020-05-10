@@ -167,7 +167,7 @@ SLEEPER CODE IS IN game/objects/items/devices/dogborg_sleeper.dm !
 	if(!proximity)
 		return
 	do_attack_animation(target, null, src)
-	user.visible_message("<span class='notice'>[user] [pick(attack_verb)] \the [target.name] with their nose!</span>")
+	user.visible_message("<span class='notice'>[user] [attack_verb] \the [target.name] with their nose!</span>")
 
 //Delivery
 /obj/item/storage/bag/borgdelivery
