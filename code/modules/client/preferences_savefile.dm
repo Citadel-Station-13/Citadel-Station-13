@@ -191,8 +191,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 				features["taur"] = "Cow (Spotted)"
 
 	if(current_version < 31)
-		S["wing_color"]			>> features["wings_color"]
-		S["horn_color"]			>> features["horns_color"]
+		S["wings_color"]			>> features["wings_color"]
+		S["horns_color"]			>> features["horns_color"]
 
 /datum/preferences/proc/load_path(ckey,filename="preferences.sav")
 	if(!ckey)
