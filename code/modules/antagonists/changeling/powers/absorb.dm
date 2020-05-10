@@ -59,7 +59,7 @@
 		changeling.trueabsorbs++
 
 	if(user.nutrition < NUTRITION_LEVEL_WELL_FED)
-		user.nutrition = min((user.nutrition + target.nutrition), NUTRITION_LEVEL_WELL_FED)
+		user.adjust_nutrition(target.nutrition, NUTRITION_LEVEL_WELL_FED)
 
 	if(target.mind)//if the victim has got a mind
 		// Absorb a lizard, speak Draconic.

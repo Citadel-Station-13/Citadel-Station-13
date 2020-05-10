@@ -186,7 +186,7 @@
 /obj/item/slime_extract/purple/activate(mob/living/carbon/human/user, datum/species/jelly/luminescent/species, activation_type)
 	switch(activation_type)
 		if(SLIME_ACTIVATE_MINOR)
-			user.nutrition += 50
+			user.adjust_nutrition(50)
 			user.blood_volume += 50
 			to_chat(user, "<span class='notice'>You activate [src], and your body is refilled with fresh slime jelly!</span>")
 			return 150
@@ -636,7 +636,7 @@
 		qdel(src)
 		return
 	M.docile = 1
-	M.nutrition = 700
+	M.set_nutrition(700)
 	to_chat(M, "<span class='warning'>You absorb the potion and feel your intense desire to feed melt away.</span>")
 	to_chat(user, "<span class='notice'>You feed the slime the potion, removing its hunger and calming it.</span>")
 	var/newname = reject_bad_name(stripped_input(user, "Would you like to give the slime a name?", "Name your new pet", "pet slime", MAX_NAME_LEN), TRUE)

@@ -27,6 +27,7 @@
 	healable = 0
 	gender = NEUTER
 	blood_volume = 0 //Until someome reworks for them to have slime jelly
+	nutrition = 700
 
 	see_in_dark = 8
 
@@ -102,7 +103,6 @@
 	create_reagents(100, NONE, NO_REAGENTS_VALUE)
 	set_colour(new_colour)
 	. = ..()
-	nutrition = 700
 
 /mob/living/simple_animal/slime/Destroy()
 	for (var/A in actions)
@@ -267,8 +267,8 @@
 		return
 	attacked += 5
 	if(nutrition >= 100) //steal some nutrition. negval handled in life()
-		nutrition -= (50 + (40 * M.is_adult))
-		M.add_nutrition(50 + (40 * M.is_adult))
+		adjust_nutrition(-50 - (40 * M.is_adult))
+		M.adjust_nutrition(50 + (40 * M.is_adult), get_max_nutrition(), TRUE)
 	if(health > 0)
 		M.adjustBruteLoss(-10 + (-10 * M.is_adult))
 		M.updatehealth()
