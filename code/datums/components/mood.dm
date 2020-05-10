@@ -221,23 +221,15 @@
 	var/apply_bonus = !apply_malus && newval <= ECSTATIC_SANITY_PEN
 	if(apply_malus)
 		if(!malus)
-			malus = new(malus_id++)
+			ADD_SKILL_MODIFIER_BODY(/datum/skill_modifier/bad_mood, malus_id++, L, malus)
 		var/debuff = 1 - (SANITY_DISTURBED - sanity) * MOOD_INSANITY_MALUS
 		malus.value_mod = malus.level_mod = debuff
-		if(!L.mind)
-			ADD_SKILL_MODIFIER_BODY(malus, L)
-		else
-			L.mind.add_skill_modifier(malus.identifier)
 	else if(malus)
 		QDEL_NULL(malus)
 
 	if(apply_bonus)
 		if(!bonus)
-			bonus = new(bonus_id++)
-		if(!L.mind)
-			ADD_SKILL_MODIFIER_BODY(bonus, L)
-		else
-			L.mind.add_skill_modifier(bonus.identifier)
+			ADD_SKILL_MODIFIER_BODY(/datum/skill_modifier/great_mood, bonus_id++, L, bonus)
 	else if(bonus)
 		QDEL_NULL(bonus)
 

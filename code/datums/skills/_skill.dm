@@ -170,7 +170,7 @@ GLOBAL_LIST_INIT_TYPED(skill_datums, /datum/skill, init_skill_datums())
 	var/current_lvl_xp_sum = 0
 	if(level)
 		current_lvl_xp_sum = associative ? levels[levels[level]] : levels[level]
-	var/next_index = max(max_levels, level+1)
+	var/next_index = min(max_levels, level+1)
 	var/next_lvl_xp = associative ? levels[levels[next_index]] : levels[next_index]
 	if(next_lvl_xp > current_lvl_xp_sum)
 		next_lvl_xp -= current_lvl_xp_sum
@@ -178,6 +178,7 @@ GLOBAL_LIST_INIT_TYPED(skill_datums, /datum/skill, init_skill_datums())
 	return "[associative ? current_lvl : "Lvl. [current_lvl]"] ([value - current_lvl_xp_sum]/[next_lvl_xp])[level == max_levels ? " \[MAX!\]" : ""]"
 
 /datum/skill/level/job
+	abstract_type = /datum/skill/level/job
 	levels = list("Basic", "Trained", "Experienced", "Master")
 	competency_thresholds = list(JOB_SKILL_TRAINED, JOB_SKILL_EXPERT, JOB_SKILL_MASTER)
 	competency_mults = list(0.15, 0.1, 0.1)

@@ -14,17 +14,35 @@
 ///Doesn't automatically round the value.
 #define SANITIZE_SKILL_LEVEL(path, lvl) clamp(lvl, 0, GLOB.skill_datums[path].max_levels)
 
+/// Simple generic identifier macro.
+#define GET_SKILL_MOD_ID(path, id) (id ? "[path]&[id]" : path)
+
 /**
   * A simple universal comsig for body bound skill modifiers.
   * Technically they are still bound to the mind, but other signal procs will take care of adding and removing the modifier
   * from/to new/old minds.
   */
-#define ADD_SKILL_MODIFIER_BODY(mod, body) \
-	mod.RegisterSignal(body, COMSIG_MOB_ON_NEW_MIND, /datum/skill_modifier.proc/on_mob_new_mind, TRUE)
+#define ADD_SKILL_MODIFIER_BODY(path, id, body, prototype) \
+	prototype = GLOB.skill_modifiers[GET_SKILL_MOD_ID(path, id)] || new path(id);\
+	if(body.mind){\
+		body.mind.add_skill_modifier(prototype.identifier)\
+	} else {\
+		prototype.RegisterSignal(body, COMSIG_MOB_ON_NEW_MIND, /datum/skill_modifier.proc/on_mob_new_mind, TRUE)\
+	}
+
+/// Same as above but to remove the skill modifier.
+#define REMOVE_SKILL_MODIFIER_BODY(path, id, body) \
+	if(GLOB.skill_modifiers[GET_SKILL_MOD_ID(path, id)]){\
+		if(body.mind){\
+			body.mind.remove_skill_modifier(GET_SKILL_MOD_ID(path, id))\
+		} else {\
+			GLOB.skill_modifiers[GET_SKILL_MOD_ID(path, id)].UnregisterSignal(body, COMSIG_MOB_ON_NEW_MIND)\
+		}\
+	}
 
 ///Macro used when adding generic singleton skill modifiers.
 #define ADD_SINGLETON_SKILL_MODIFIER(mind, path, id) \
-	if(!GLOB.skill_modifiers[id]){\
+	if(!GLOB.skill_modifiers[GET_SKILL_MOD_ID(path, id)]){\
 		new path(id)\
 	};\
-	mind.add_skill_modifier(id ? "[path]&[id]" : path)
+	mind.add_skill_modifier(GET_SKILL_MOD_ID(path, id))

@@ -23,21 +23,21 @@ GLOBAL_LIST_EMPTY(potential_mods_per_skill)
 	var/priority = MODIFIER_SKILL_PRIORITY_DEF
 
 /datum/skill_modifier/New(id)
-	identifier = type
+	identifier = GET_SKILL_MOD_ID(type, id)
 	if(id)
-		identifier = "[type]&[id]"
+		var/former_id = identifier
 		var/dupe = 0
 		while(GLOB.skill_modifiers[identifier])
-			identifier = "[type]&[id][++dupe]"
+			identifier = "[former_id][++dupe]"
 	GLOB.skill_modifiers[identifier] = src
 
 	if(ispath(target_skills))
 		var/list/mod_L = GLOB.potential_mods_per_skill[target_skills]
 		if(!mod_L)
-			GLOB.potential_mods_per_skill[target_skills] = list(identifier = src)
+			mod_L = GLOB.potential_mods_per_skill[target_skills] = list()
 		else
 			BINARY_INSERT(identifier, mod_L, datum/skill_modifier, src, priority, COMPARE_VALUE)
-			mod_L[identifier] = src
+		mod_L[identifier] = src
 		GLOB.potential_skills_per_mod["[target_skills]"] = list(target_skills)
 	else //Should be a bitfield.
 		var/list/L = GLOB.potential_skills_per_mod["[target_skills]"]
@@ -50,10 +50,10 @@ GLOBAL_LIST_EMPTY(potential_mods_per_skill)
 		for(var/path in L)
 			var/list/mod_L = GLOB.potential_mods_per_skill[path]
 			if(!mod_L)
-				GLOB.potential_mods_per_skill[path] = list(identifier = src)
+				mod_L = GLOB.potential_mods_per_skill[target_skills] = list()
 			else
 				BINARY_INSERT(identifier, mod_L, datum/skill_modifier, src, priority, COMPARE_VALUE)
-				mod_L[identifier] = src
+			mod_L[identifier] = src
 
 /datum/skill_modifier/Destroy()
 	for(var/A in GLOB.potential_skills_per_mod["[target_skills]"])
@@ -70,11 +70,11 @@ GLOBAL_LIST_EMPTY(potential_mods_per_skill)
 		L[P] = GLOB.potential_mods_per_skill[P] & (__L + id)\
 	}\
 	if(M.modifier_flags & MODIFIER_SKILL_ORIGIN_DIFF){\
-		LAZYADDASSOC(O, id, P = G)\
+		LAZYADDASSOC(O, id, "[P]" = G)\
 	}
 
 /datum/mind/proc/add_skill_modifier(id)
-	if(skill_holder.all_current_skill_modifiers[id])
+	if(LAZYACCESS(skill_holder.all_current_skill_modifiers, id))
 		return
 	var/datum/skill_modifier/M = GLOB.skill_modifiers[id]
 	if(!M)
@@ -99,7 +99,7 @@ GLOBAL_LIST_EMPTY(potential_mods_per_skill)
 
 	if(M.modifier_flags & MODIFIER_SKILL_BODYBOUND)
 		M.RegisterSignal(src, COMSIG_MIND_TRANSFER, /datum/skill_modifier.proc/on_mind_transfer)
-		ADD_SKILL_MODIFIER_BODY(M, current)
+		M.RegisterSignal(current, COMSIG_MOB_ON_NEW_MIND, /datum/skill_modifier.proc/on_mob_new_mind, TRUE)
 	RegisterSignal(M, COMSIG_PARENT_QDELETING, .proc/on_skill_modifier_deletion)
 
 #undef ADD_MOD_STEP
@@ -107,7 +107,7 @@ GLOBAL_LIST_EMPTY(potential_mods_per_skill)
 #define REMOVE_MOD_STEP(L, P, O)\
 	LAZYREMOVEASSOC(L, P, id);\
 	if(M.modifier_flags & MODIFIER_SKILL_ORIGIN_DIFF){\
-		LAZYREMOVEASSOC(O, id, P)\
+		LAZYREMOVEASSOC(O, id, "[P]")\
 	}
 
 /datum/mind/proc/remove_skill_modifier(id, mind_transfer = FALSE)
@@ -164,7 +164,7 @@ GLOBAL_LIST_EMPTY(potential_mods_per_skill)
 				to_access = H.original_levels
 			if(MODIFIER_TARGET_AFFINITY)
 				to_access = H.original_affinities
-		. += value - LAZYACCESS(to_access[identifier], skillpath)
+		. += value - LAZYACCESS(to_access[identifier], "[skillpath]")
 
 ///Body bound modifier signal procs.
 /datum/skill_modifier/proc/on_mind_transfer(datum/mind/source, mob/new_character, mob/old_character)
