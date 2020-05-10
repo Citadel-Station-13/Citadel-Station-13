@@ -1,6 +1,8 @@
 
 #define MOVES_HITSCAN -1		//Not actually hitscan but close as we get without actual hitscan.
 #define MUZZLE_EFFECT_PIXEL_INCREMENT 17	//How many pixels to move the muzzle flash up so your character doesn't look like they're shitting out lasers.
+/// Minimum projectile pixels to move before it animate()S, below this it's a direct set.
+#define MINIMUM_PIXELS_TO_ANIMATE 4
 
 /obj/item/projectile
 	name = "projectile"
@@ -12,7 +14,9 @@
 	pass_flags = PASSTABLE
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	movement_type = FLYING
+	animate_movement = NO_STEPS
 	hitsound = 'sound/weapons/pierce.ogg'
+	appearance_flags = PIXEL_SCALE
 	var/hitsound_wall = ""
 
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
@@ -378,7 +382,7 @@
 	var/required_pixels = (pixels_per_second * ds * 0.1) + pixels_tick_leftover
 	if(required_pixels >= pixel_increment_amount)
 		pixels_tick_leftover = MODULUS(required_pixels, pixel_increment_amount)
-		pixel_move(FLOOR(required_pixels / pixel_increment_amount, 1), FALSE, )
+		pixel_move(FLOOR(required_pixels / pixel_increment_amount, 1), FALSE, ds, SSprojectiles.global_projectile_speed_multiplier)
 	else
 		pixels_tick_leftover = required_pixels
 
@@ -549,9 +553,15 @@
 				return
 			pixels_range_leftover -= world.icon_size
 	if(!hitscanning && !forcemoved)
-		pixel_x = ((oldloc.x - x) * world.icon_size) + old_px
-		pixel_y = ((oldloc.y - y) * world.icon_size) + old_py
-		animate(src, pixel_x = trajectory.return_px(), pixel_y = trajectory.return_py(), time = ((SSprojectiles.flags & SS_TICKER)? (SSprojectiles.wait * world.tick_lag) : SSprojectiles.wait), flags = ANIMATION_END_NOW)
+		var/traj_px = round(trajectory.return_px(), 1)
+		var/traj_py = round(trajectory.return_py(), 1)
+		if(pixel_increment_amount * times > MINIMUM_PIXELS_TO_ANIMATE)
+			pixel_x = ((oldloc.x - x) * world.icon_size) + old_px
+			pixel_y = ((oldloc.y - y) * world.icon_size) + old_py
+			animate(src, pixel_x = traj_px, pixel_y = traj_py, time = 1, flags = ANIMATION_END_NOW)
+		else
+			pixel_x = traj_px
+			pixel_y = traj_py
 
 /obj/item/projectile/proc/set_homing_target(atom/A)
 	if(!A || (!isturf(A) && !isturf(A.loc)))
@@ -724,3 +734,7 @@
 /proc/is_energy_reflectable_projectile(atom/A)
 	var/obj/item/projectile/P = A
 	return istype(P) && P.is_reflectable
+
+#undef MOVES_HITSCAN
+#undef MINIMUM_PIXELS_TO_ANIMATE
+#undef MUZZLE_EFFECT_PIXEL_INCREMENT

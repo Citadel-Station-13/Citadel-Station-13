@@ -4,6 +4,7 @@ PROCESSING_SUBSYSTEM_DEF(projectiles)
 	stat_tag = "PP"
 	flags = SS_NO_INIT|SS_TICKER
 	var/global_pixel_increment_amount = 2
+	var/global_projectile_speed_multiplier = 1
 
 /datum/controller/subsystem/processing/projectiles/proc/set_pixel_speed(new_speed)
 	global_pixel_increment_amount = new_speed
