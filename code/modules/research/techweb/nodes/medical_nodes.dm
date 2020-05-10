@@ -29,7 +29,7 @@
 /datum/techweb_node/surplus_limbs
 	id = "surplus_limbs"
 	display_name = "Basic Prosthetics"
-	description = "Basic fragile lims for the impaired."
+	description = "Basic fragile prosthetics for the impaired."
 	starting_node = TRUE
 	prereq_ids = list("biotech")
 	design_ids = list("basic_l_arm", "basic_r_arm", "basic_r_leg", "basic_l_leg")
@@ -38,7 +38,7 @@
 	id = "advance_limbs"
 	display_name = "Upgraded Prosthetics"
 	description = "Reinforced prosthetics for the impaired."
-	prereq_ids = list("adv_biotech", "surplus_lims")
+	prereq_ids = list("adv_biotech", "surplus_limbs")
 	design_ids = list("adv_l_arm", "adv_r_arm", "adv_r_leg", "adv_l_leg")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 1250)
 
