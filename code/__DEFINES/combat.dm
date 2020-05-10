@@ -35,9 +35,9 @@
 /// Default combat flags for those affected by ((stamina combat))
 #define COMBAT_FLAGS_DEFAULT					NONE
 /// Default combat flags for everyone else (so literally everyone but humans)
-#define COMBAT_FLAGS_STAMSYSTEM_EXEMPT			(COMBAT_FLAG_SPRINT_ACTIVE | COMBAT_FLAG_COMBAT_ACTIVE | COMBAT_FLAG_SPRINT_TOGGLED | COMBAT_FLAG_COMBAT_TOGGLED)
+#define COMBAT_FLAGS_STAMSYSTEM_EXEMPT			(COMBAT_FLAG_SPRINT_ACTIVE | COMBAT_FLAG_COMBAT_ACTIVE | COMBAT_FLAG_SPRINT_TOGGLED | COMBAT_FLAG_COMBAT_TOGGLED | COMBAT_FLAG_SPRINT_FORCED | COMBAT_FLAG_COMBAT_FORCED)
 /// Default combat flags for those only affected by sprint (so just silicons)
-#define COMBAT_FLAGS_STAMEXEMPT_YESSPRINT		(COMBAT_FLAG_COMBAT_ACTIVE | COMBAT_FLAG_COMBAT_TOGGLED)
+#define COMBAT_FLAGS_STAMEXEMPT_YESSPRINT		(COMBAT_FLAG_COMBAT_ACTIVE | COMBAT_FLAG_COMBAT_TOGGLED | COMBAT_FLAG_COMBAT_FORCED)
 
 /// The user wants combat mode on
 #define COMBAT_FLAG_COMBAT_TOGGLED			(1<<0)
@@ -57,6 +57,10 @@
 #define COMBAT_FLAG_INTENTIONALLY_RESTING	(1<<7)
 /// Currently stamcritted but not as violently
 #define COMBAT_FLAG_SOFT_STAMCRIT			(1<<8)
+/// Force combat mode on at all times, overrides everything including combat disable traits.
+#define COMBAT_FLAG_COMBAT_FORCED			(1<<9)
+/// Force sprint mode on at all times, overrides everything including sprint disable traits.
+#define COMBAT_FLAG_SPRINT_FORCED			(1<<10)
 
 // Helpers for getting someone's stamcrit state. Cast to living.
 #define NOT_STAMCRIT 0
