@@ -160,10 +160,7 @@
 			to_chat(user, "<span class='warning'>You need one length of cable to repair [src]!</span>")
 			return
 		to_chat(user, "<span class='notice'>You begin to replace the wires...</span>")
-		if(do_after(user, 30, target = src))
-			if(coil.get_amount() < 1)
-				return
-			coil.use(1)
+		if(W.use_tool(src, user, 30, 1))
 			obj_integrity = max_integrity
 			stat &= ~BROKEN
 			to_chat(user, "<span class='notice'>You repair \the [src].</span>")
