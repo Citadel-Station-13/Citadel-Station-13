@@ -194,10 +194,13 @@
 #define FOV_ANGLE_CHECK(mob, target, zero_x_y_statement, success_statement) \
 	var/turf/T1 = get_turf(target);\
 	var/turf/T2 = get_turf(mob);\
+	if(!T1 || !T2){\
+		zero_x_y_statement\
+	}\
 	var/_x = (T1.x - T2.x);\
 	var/_y = (T1.y - T2.y);\
 	if(!_x && !_y){\
-		zero_x_y_statement;\
+		zero_x_y_statement\
 	}\
 	var/dir = (mob.dir & (EAST|WEST)) || mob.dir;\
 	var/_degree = -angle;\
@@ -228,12 +231,15 @@
 		FOV_ANGLE_CHECK(source, target, return, return COMPONENT_NO_VISIBLE_MESSAGE)
 
 /datum/component/field_of_vision/proc/on_visible_atoms(mob/source, list/atoms)
+	if(!fov.alpha)
+		return
 	for(var/k in atoms)
 		var/atom/A = k
 		FOV_ANGLE_CHECK(source, A, continue, atoms -= A)
 
 /datum/component/field_of_vision/proc/is_viewer(mob/source, atom/center, depth, list/viewers_list)
-	FOV_ANGLE_CHECK(source, center, return, viewers_list -= source)
+	if(fov.alpha)
+		FOV_ANGLE_CHECK(source, center, return, viewers_list -= source)
 
 #undef FOV_ANGLE_CHECK
 
