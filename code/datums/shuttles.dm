@@ -170,6 +170,11 @@
 	port_id = "snowdin"
 	can_be_bought = FALSE
 
+/datum/map_template/shuttle/snow_taxi
+	port_id = "snow"
+	can_be_bought = FALSE
+	suffix = "taxi"
+
 // Shuttles start here:
 
 /datum/map_template/shuttle/emergency/backup
