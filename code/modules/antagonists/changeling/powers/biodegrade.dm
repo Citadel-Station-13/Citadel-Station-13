@@ -2,7 +2,7 @@
 	name = "Biodegrade"
 	desc = "Dissolves restraints or other objects preventing free movement."
 	helptext = "This is obvious to nearby people, and can destroy standard restraints and closets. This ability is somewhat loud, and carries a small risk of our blood gaining violent sensitivity to heat."
-	chemical_cost = 30 //High cost to prevent spam
+	chemical_cost = 15 //High cost to prevent spam
 	loudness = 1
 	dna_cost = 2
 	req_human = 1

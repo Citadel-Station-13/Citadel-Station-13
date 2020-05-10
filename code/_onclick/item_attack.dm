@@ -131,7 +131,7 @@
 
 /mob/living/attacked_by(obj/item/I, mob/living/user)
 	var/totitemdamage = pre_attacked_by(I, user)
-	if((user != src) && run_block(I, totitemdamage, "the [I.name]", ATTACK_TYPE_MELEE, I.armour_penetration, user) & BLOCK_SUCCESS)
+	if((user != src) && mob_run_block(I, totitemdamage, "the [I.name]", ATTACK_TYPE_MELEE, I.armour_penetration, user, null, null) & BLOCK_SUCCESS)
 		return FALSE
 	send_item_attack_message(I, user)
 	I.do_stagger_action(src, user, totitemdamage)
@@ -163,7 +163,7 @@
 	if(!user.mind || !I.used_skills)
 		return
 	if(.)
-		. = user.mind.skill_holder.item_action_skills_mod(., I.skill_difficulty, SKILL_ATTACK_MOB, bad_flag)
+		. = user.mind.skill_holder.item_action_skills_mod(I, ., I.skill_difficulty, SKILL_ATTACK_MOB, bad_flag)
 	for(var/skill in I.used_skills)
 		if(!(I.used_skills[skill] & SKILL_TRAIN_ATTACK_MOB))
 			continue
@@ -216,7 +216,7 @@
 		. *= STAM_COST_NO_COMBAT_MULT
 		bad_flag |= SKILL_COMBAT_MODE
 	if(used_skills && user.mind)
-		. = user.mind.skill_holder.item_action_skills_mod(., skill_difficulty, flags, bad_flag, FALSE)
+		. = user.mind.skill_holder.item_action_skills_mod(src, ., skill_difficulty, flags, bad_flag, FALSE)
 
 /// How long this staggers for. 0 and negatives supported.
 /obj/item/proc/melee_stagger_duration(force_override)

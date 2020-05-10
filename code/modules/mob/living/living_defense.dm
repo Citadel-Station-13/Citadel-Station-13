@@ -68,7 +68,7 @@
 /mob/living/bullet_act(obj/item/projectile/P, def_zone)
 	if(P.original != src || P.firer != src) //try to block or reflect the bullet, can't do so when shooting oneself
 		var/list/returnlist = list()
-		var/returned = run_block(P, P.damage, "the [P.name]", ATTACK_TYPE_PROJECTILE, P.armour_penetration, P.firer, def_zone, returnlist)
+		var/returned = mob_run_block(P, P.damage, "the [P.name]", ATTACK_TYPE_PROJECTILE, P.armour_penetration, P.firer, def_zone, returnlist)
 		if(returned & BLOCK_SHOULD_REDIRECT)
 			handle_projectile_attack_redirection(P, returnlist[BLOCK_RETURN_REDIRECT_METHOD])
 		if(returned & BLOCK_REDIRECTED)
@@ -111,7 +111,7 @@
 		I = AM
 		throwpower = I.throwforce
 	var/impacting_zone = ran_zone(BODY_ZONE_CHEST, 65)//Hits a random part of the body, geared towards the chest
-	if(run_block(AM, throwpower, "\the [AM.name]", ATTACK_TYPE_THROWN, 0, throwingdatum?.thrower, impacting_zone) & BLOCK_SUCCESS)
+	if(mob_run_block(AM, throwpower, "\the [AM.name]", ATTACK_TYPE_THROWN, 0, throwingdatum?.thrower, impacting_zone, null) & BLOCK_SUCCESS)
 		hitpush = FALSE
 		skipcatch = TRUE
 		blocked = TRUE
@@ -270,7 +270,7 @@
 /mob/living/attack_hand(mob/user)
 	..() //Ignoring parent return value here.
 	SEND_SIGNAL(src, COMSIG_MOB_ATTACK_HAND, user)
-	if((user != src) && user.a_intent != INTENT_HELP && (run_block(user, 0, user.name, ATTACK_TYPE_UNARMED | ATTACK_TYPE_MELEE, null, user, check_zone(user.zone_selected)) & BLOCK_SUCCESS))
+	if((user != src) && user.a_intent != INTENT_HELP && (mob_run_block(user, 0, user.name, ATTACK_TYPE_UNARMED | ATTACK_TYPE_MELEE, null, user, check_zone(user.zone_selected), null) & BLOCK_SUCCESS))
 		log_combat(user, src, "attempted to touch")
 		visible_message("<span class='warning'>[user] attempted to touch [src]!</span>")
 		return TRUE
@@ -281,7 +281,7 @@
 			to_chat(user, "<span class='notice'>You don't want to hurt [src]!</span>")
 			return TRUE
 		var/hulk_verb = pick("smash","pummel")
-		if(user != src && (run_block(user, 15, "the [hulk_verb]ing", ATTACK_TYPE_MELEE, null, user, check_zone(user.zone_selected)) & BLOCK_SUCCESS))
+		if(user != src && (mob_run_block(user, 15, "the [hulk_verb]ing", ATTACK_TYPE_MELEE, null, user, check_zone(user.zone_selected), null) & BLOCK_SUCCESS))
 			return TRUE
 		..()
 	return FALSE
@@ -303,7 +303,7 @@
 	var/damage = rand(5, 35)
 	if(M.is_adult)
 		damage = rand(20, 40)
-	if(run_block(M, damage, "the [M.name]", ATTACK_TYPE_MELEE, null, M, check_zone(M.zone_selected)) & BLOCK_SUCCESS)
+	if(mob_run_block(M, damage, "the [M.name]", ATTACK_TYPE_MELEE, null, M, check_zone(M.zone_selected), null) & BLOCK_SUCCESS)
 		return FALSE
 
 	if (stat != DEAD)
@@ -322,7 +322,7 @@
 		if(HAS_TRAIT(M, TRAIT_PACIFISM))
 			to_chat(M, "<span class='notice'>You don't want to hurt anyone!</span>")
 			return FALSE
-		if(run_block(M, rand(M.melee_damage_lower, M.melee_damage_upper), "the [M.name]", ATTACK_TYPE_MELEE, M.armour_penetration, M, check_zone(M.zone_selected)) & BLOCK_SUCCESS)
+		if(mob_run_block(M, rand(M.melee_damage_lower, M.melee_damage_upper), "the [M.name]", ATTACK_TYPE_MELEE, M.armour_penetration, M, check_zone(M.zone_selected), null) & BLOCK_SUCCESS)
 			return FALSE
 		if(M.attack_sound)
 			playsound(loc, M.attack_sound, 50, 1, 1)
@@ -340,7 +340,7 @@
 		if(M.is_muzzled() || (M.wear_mask && M.wear_mask.flags_cover & MASKCOVERSMOUTH))
 			to_chat(M, "<span class='warning'>You can't bite with your mouth covered!</span>")
 			return FALSE
-		if(run_block(M, 0, "the [M.name]", ATTACK_TYPE_MELEE | ATTACK_TYPE_UNARMED, M, check_zone(M.zone_selected)) & BLOCK_SUCCESS)
+		if(mob_run_block(M, 0, "the [M.name]", ATTACK_TYPE_MELEE | ATTACK_TYPE_UNARMED, 0, M, check_zone(M.zone_selected), null) & BLOCK_SUCCESS)
 			return FALSE
 		M.do_attack_animation(src, ATTACK_EFFECT_BITE)
 		if (prob(75))
@@ -364,7 +364,7 @@
 			if(HAS_TRAIT(L, TRAIT_PACIFISM))
 				to_chat(L, "<span class='notice'>You don't want to hurt anyone!</span>")
 				return FALSE
-			if(L != src && (run_block(L, rand(1, 3), "the [L.name]", ATTACK_TYPE_MELEE | ATTACK_TYPE_UNARMED, L, check_zone(L.zone_selected)) & BLOCK_SUCCESS))
+			if(L != src && (mob_run_block(L, rand(1, 3), "the [L.name]", ATTACK_TYPE_MELEE | ATTACK_TYPE_UNARMED, 0, L, check_zone(L.zone_selected), null) & BLOCK_SUCCESS))
 				return FALSE
 			L.do_attack_animation(src)
 			if(prob(90))
@@ -378,7 +378,7 @@
 					"<span class='userdanger'>[L.name] has attempted to bite [src]!</span>", null, COMBAT_MESSAGE_RANGE)
 
 /mob/living/attack_alien(mob/living/carbon/alien/humanoid/M)
-	if((M != src) && M.a_intent != INTENT_HELP && (run_block(M, 0, "the [M.name]", ATTACK_TYPE_MELEE | ATTACK_TYPE_UNARMED, M, check_zone(M.zone_selected)) & BLOCK_SUCCESS))
+	if((M != src) && M.a_intent != INTENT_HELP && (mob_run_block(M, 0, "the [M.name]", ATTACK_TYPE_MELEE | ATTACK_TYPE_UNARMED, 0, M, check_zone(M.zone_selected), null) & BLOCK_SUCCESS))
 		visible_message("<span class='danger'>[M] attempted to touch [src]!</span>")
 		return FALSE
 	switch(M.a_intent)
