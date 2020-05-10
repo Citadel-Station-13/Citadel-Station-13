@@ -138,6 +138,7 @@
 #define MOOD_LEVEL_SAD4 -25
 
 //Sanity levels for humans
+#define SANITY_AMAZING 150
 #define SANITY_GREAT 125
 #define SANITY_NEUTRAL 100
 #define SANITY_DISTURBED 75
@@ -288,6 +289,10 @@
 #define BODYPART_LIFE_UPDATE_HEALTH (1<<0)
 
 #define HUMAN_FIRE_STACK_ICON_NUM	3
+
+#define GRAB_PIXEL_SHIFT_PASSIVE 6
+#define GRAB_PIXEL_SHIFT_AGGRESSIVE 12
+#define GRAB_PIXEL_SHIFT_NECK 16
 
 #define SLEEP_CHECK_DEATH(X) sleep(X); if(QDELETED(src) || stat == DEAD) return;
 

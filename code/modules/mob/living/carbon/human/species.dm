@@ -36,10 +36,6 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 
 	var/hair_color	// this allows races to have specific hair colors... if null, it uses the H's hair/facial hair colors. if "mutcolor", it uses the H's mutant_color
 	var/hair_alpha = 255	// the alpha used by the hair. 255 is completely solid, 0 is transparent.
-
-	var/horn_color	//specific horn colors, because why not?
-	var/wing_color
-
 	var/use_skintones = NO_SKINTONES	// does it use skintones or not? (spoiler alert this is only used by humans)
 	var/exotic_blood = ""	// If your race wants to bleed something other than bog standard blood, change this to reagent id.
 	var/exotic_bloodtype = "" //If your race uses a non standard bloodtype (A+, O-, AB-, etc)
@@ -891,9 +887,9 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 						if(EYECOLOR)
 							accessory_overlay.color = "#[H.eye_color]"
 						if(HORNCOLOR)
-							accessory_overlay.color = "#[H.horn_color]"
+							accessory_overlay.color = "#[H.dna.features["horns_color"]]"
 						if(WINGCOLOR)
-							accessory_overlay.color = "#[H.wing_color]"
+							accessory_overlay.color = "#[H.dna.features["wings_color"]]"
 				else
 					accessory_overlay.color = forced_colour
 			else
@@ -947,9 +943,9 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 						extra_accessory_overlay.color = "#[H.eye_color]"
 
 					if(HORNCOLOR)
-						extra_accessory_overlay.color = "#[H.horn_color]"
+						extra_accessory_overlay.color = "#[H.dna.features["horns_color"]]"
 					if(WINGCOLOR)
-						extra_accessory_overlay.color = "#[H.wing_color]"
+						extra_accessory_overlay.color = "#[H.dna.features["wings_color"]]"
 
 				if(OFFSET_MUTPARTS in H.dna.species.offset_features)
 					extra_accessory_overlay.pixel_x += H.dna.species.offset_features[OFFSET_MUTPARTS][1]
@@ -988,9 +984,9 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 						else
 							extra2_accessory_overlay.color = "#[H.hair_color]"
 					if(HORNCOLOR)
-						extra2_accessory_overlay.color = "#[H.horn_color]"
+						extra2_accessory_overlay.color = "#[H.dna.features["horns_color"]]"
 					if(WINGCOLOR)
-						extra2_accessory_overlay.color = "#[H.wing_color]"
+						extra2_accessory_overlay.color = "#[H.dna.features["wings_color"]]"
 
 				if(OFFSET_MUTPARTS in H.dna.species.offset_features)
 					extra2_accessory_overlay.pixel_x += H.dna.species.offset_features[OFFSET_MUTPARTS][1]
@@ -1681,9 +1677,10 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 			disarm(M, H, attacker_style)
 
 /datum/species/proc/spec_attacked_by(obj/item/I, mob/living/user, obj/item/bodypart/affecting, intent, mob/living/carbon/human/H)
+	var/totitemdamage = H.pre_attacked_by(I, user)
 	// Allows you to put in item-specific reactions based on species
 	if(user != H)
-		if(H.run_block(I, I.force, "the [I.name]", ATTACK_TYPE_MELEE, I.armour_penetration, user, affecting.body_zone) & BLOCK_SUCCESS)
+		if(H.run_block(I, totitemdamage, "the [I.name]", ATTACK_TYPE_MELEE, I.armour_penetration, user, affecting.body_zone) & BLOCK_SUCCESS)
 			return 0
 	if(H.check_martial_melee_block())
 		H.visible_message("<span class='warning'>[H] blocks [I]!</span>")
@@ -1699,24 +1696,14 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 	var/armor_block = H.run_armor_check(affecting, "melee", "<span class='notice'>Your armor has protected your [hit_area].</span>", "<span class='notice'>Your armor has softened a hit to your [hit_area].</span>",I.armour_penetration)
 	armor_block = min(90,armor_block) //cap damage reduction at 90%
 	var/Iforce = I.force //to avoid runtimes on the forcesay checks at the bottom. Some items might delete themselves if you drop them. (stunning yourself, ninja swords)
-	//CIT CHANGES START HERE - combatmode and resting checks
-	var/totitemdamage = I.force
-	if(!(user.combat_flags & COMBAT_FLAG_COMBAT_ACTIVE))
-		totitemdamage *= 0.5
-	if(!CHECK_MOBILITY(user, MOBILITY_STAND))
-		totitemdamage *= 0.5
-	if(istype(H))
-		if(!(H.combat_flags & COMBAT_FLAG_COMBAT_ACTIVE))
-			totitemdamage *= 1.5
-	//CIT CHANGES END HERE
 	var/weakness = H.check_weakness(I, user)
 	apply_damage(totitemdamage * weakness, I.damtype, def_zone, armor_block, H) //CIT CHANGE - replaces I.force with totitemdamage
 
 	H.send_item_attack_message(I, user, hit_area)
 
-	I.do_stagger_action(H, user)
+	I.do_stagger_action(H, user, totitemdamage)
 
-	if(!I.force)
+	if(!totitemdamage)
 		return 0 //item force is zero
 
 	//dismemberment

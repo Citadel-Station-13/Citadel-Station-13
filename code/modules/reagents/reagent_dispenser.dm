@@ -213,7 +213,6 @@
 /obj/structure/reagent_dispensers/keg
 	name = "keg"
 	desc = "A keg."
-	icon = 'modular_citadel/icons/obj/objects.dmi'
 	icon_state = "keg"
 
 /obj/structure/reagent_dispensers/keg/mead

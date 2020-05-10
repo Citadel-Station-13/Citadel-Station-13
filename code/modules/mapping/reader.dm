@@ -1,6 +1,12 @@
 ///////////////////////////////////////////////////////////////
 //SS13 Optimized Map loader
 //////////////////////////////////////////////////////////////
+/*
+ * Notes:
+ * This does NOT support map files where more than one Z is in each grid set, as defined in the file.
+ * MultiZ map files ARE supported (however very much discouraged), as long as each gridset only contains one z.
+ * This assumes that for the most part, map files are properly formed, either DMM or TGM standard formats. If you feed it bad data, expect to crash.
+ */
 #define SPACE_KEY "space"
 
 /datum/grid_set
@@ -8,6 +14,12 @@
 	var/ycrd
 	var/zcrd
 	var/gridLines
+
+/datum/grid_set/proc/height(key_len)
+	return length(gridLines)
+
+/datum/grid_set/proc/width(key_len)
+	return gridLines[1] / key_len
 
 /datum/parsed_map
 	var/original_path
@@ -43,7 +55,7 @@
 /// - `cropMap`: When true, the map will be cropped to fit the existing world dimensions (Optional).
 /// - `measureOnly`: When true, no changes will be made to the world (Optional).
 /// - `no_changeturf`: When true, [turf/AfterChange] won't be called on loaded turfs
-/// - `x_lower`, `x_upper`, `y_lower`, `y_upper`: Coordinates (relative to the map) to crop to (Optional).
+/// - `x_lower`, `x_upper`, `y_lower`, `y_upper`: Coordinates (relative to the game world) to crop to (Optional).
 /// - `placeOnTop`: Whether to use [turf/PlaceOnTop] rather than [turf/ChangeTurf] (Optional).
 /proc/load_map(
 	dmm_file as file,
@@ -60,25 +72,37 @@
 	placeOnTop = FALSE as num,
 	orientation = SOUTH as num,
 	annihilate_tiles = FALSE,
-	z_lower = -INFINITY as num,
-	z_upper = INFINITY as num
+	crop_relative_to_game_world = TRUE
 	)
-	var/datum/parsed_map/parsed = new(dmm_file, x_lower, x_upper, y_lower, y_upper, z_lower, z_upper, measureOnly)
+	var/datum/parsed_map/parsed = new(dmm_file, measureOnly = measureOnly)
 	if(parsed.bounds && !measureOnly)
 		parsed.load(x_offset, y_offset, z_offset, cropMap, no_changeturf, x_lower, x_upper, y_lower, y_upper, placeOnTop, orientation, annihilate_tiles)
 	return parsed
 
-/// Parse a map, possibly cropping it.
-//WHY THE HECK DO WE EVEN SUPPORT NEGATIVE COORDINATES, ALL IT IS IS A WASTE OF TIME AND CPU!!!???
-//DO NOT USE THIS TO TRIM MAPS UNLESS STRICTLY NEEDED! IT IS EXTREMELY EXPENSIVE TO DO SO!
+/**
+  * Parse a map, possibly cropping it.
+  * Do not use the crop function unless strictly necessary.
+  * WARNING: Crop function crops based on the tiles you'd see in the map editor. If you're planning to load it in in a different orientation later, you better have done the math.
+  * It's recommended that you do not crop using this at all.
+  */
 /datum/parsed_map/New(tfile, x_lower = -INFINITY, x_upper = INFINITY, y_lower = -INFINITY, y_upper = INFINITY, z_lower = -INFINITY, z_upper = INFINITY, measureOnly = FALSE)
+	_parse(tfile, x_lower, x_upper, y_lower, y_upper, z_lower, z_upper, measureOnly)
+
+/datum/parsed_map/proc/_parse(tfile, x_lower, x_upper, y_lower, y_upper, z_lower, z_upper, measureOnly)
+	var/static/parsing = FALSE
+	UNTIL(!parsing)
+	// do not multithread this or bad things happen
+	parsing = TRUE
+	_do_parse(tfile, x_lower, x_upper, y_lower, y_upper, z_lower, z_upper, measureOnly)
+	parsing = FALSE
+
+/datum/parsed_map/proc/_do_parse(tfile, x_lower, x_upper, y_lower, y_upper, z_lower, z_upper, measureOnly)
 	if(isfile(tfile))
 		original_path = "[tfile]"
 		tfile = file2text(tfile)
 	else if(isnull(tfile))
 		// create a new datum without loading a map
 		return
-
 	bounds = parsed_bounds = list(1.#INF, 1.#INF, 1.#INF, -1.#INF, -1.#INF, -1.#INF)
 	ASSERT(x_upper >= x_lower)
 	ASSERT(y_upper >= y_lower)
@@ -107,24 +131,19 @@
 			if(!key_len)
 				CRASH("Coords before model definition in DMM")
 
+			// NOTE: We are assuming each coordset only contains one z.
+			var/curr_z = text2num(dmmRegex.group[5])
+			if(curr_z < z_lower || curr_z > z_upper)
+				continue
+						
 			var/curr_x = text2num(dmmRegex.group[3])
 			var/curr_y = text2num(dmmRegex.group[4])
-			var/curr_z = text2num(dmmRegex.group[5])
-
-			if(curr_x < x_lower || curr_y < y_lower || curr_z < z_lower || curr_z > z_upper)
-				continue
 
 			var/datum/grid_set/gridSet = new
 
 			gridSet.xcrd = curr_x
 			gridSet.ycrd = curr_y
 			gridSet.zcrd = curr_z
-
-			bounds[MAP_MINX] = min(bounds[MAP_MINX], curr_x)			//since down is up for y/gridlines, we now know the lower left corner.
-			bounds[MAP_MINY] = min(bounds[MAP_MINY], curr_y)
-			bounds[MAP_MINZ] = min(bounds[MAP_MINZ], curr_z)
-
-			bounds[MAP_MAXZ] = max(bounds[MAP_MAXZ], curr_z)			//we know max z now
 
 			var/list/gridLines = splittext(dmmRegex.group[6], "\n")
 			gridSet.gridLines = gridLines
@@ -134,31 +153,36 @@
 			if(leadingBlanks > 1)
 				gridLines.Cut(1, leadingBlanks) // Remove all leading blank lines.
 
-			gridSets += gridSet
-
 			var/lines = length(gridLines)
-			if(lines)
-				if(gridLines[gridLines.len] == "")
-					gridLines.Cut(gridLines.len) // Remove only one blank line at the end.
-				var/right_length = y_upper - curr_y + 1
-				if(lines > right_length)
-					gridLines.len = right_length			//this can't be negative due to our ASSERTions above, hopefully.
-
-			if(!gridLines.len) // Skip it if there's no content.
+			if(lines && gridLines[lines] == "")
+				// remove one trailing blank line
+				gridLines.len--
+				lines--
+			// y crop
+			var/right_length = y_upper - curr_y + 1
+			if(lines > right_length)
+				lines = gridLines.len = right_length
+			if(!lines)			// blank
 				continue
 
-			//do not use curr_y after this point, ycrd has changed. use it before because local var.
-			gridSet.ycrd += gridLines.len - 1 // Start at the top and work down
-			bounds[MAP_MAXY] = max(bounds[MAP_MAXY], gridSet.ycrd)			//we know max y now
+			var/width = length(gridLines[1]) / key_len
+			// x crop
+			var/right_width = x_upper - curr_x + 1
+			if(width > right_width)
+				for(var/i in 1 to lines)
+					gridLines[i] = copytext(gridLines[i], 1, key_len * right_width)
+			
+			// during the actual load we're starting at the top and working our way down
+			gridSet.ycrd += lines - 1
 
-			var/linelength = length(gridLines[1])		//yes it only samples the first line, this is why you use TGM instead of DMM!
-			var/xlength = linelength / key_len
-
-			var/maxx = gridSet.xcrd + xlength - 1
-			if(maxx > x_upper)
-				for(var/i in 1 to length(gridLines))
-					gridLines[i] = copytext(gridLines[i], 1, key_len * (x_upper - curr_x + 1))
-			bounds[MAP_MAXX] = max(bounds[MAP_MAXX], maxx)
+			// Safe to proceed, commit gridset to list and record coords.
+			gridSets += gridSet
+			bounds[MAP_MINX] = min(bounds[MAP_MINX], curr_x)
+			bounds[MAP_MAXX] = max(bounds[MAP_MAXX], curr_x + width - 1)
+			bounds[MAP_MINY] = min(bounds[MAP_MINY], curr_y)
+			bounds[MAP_MAXY] = max(bounds[MAP_MAXY], curr_y + lines - 1)
+			bounds[MAP_MINZ] = min(bounds[MAP_MINZ], curr_z)
+			bounds[MAP_MAXZ] = max(bounds[MAP_MAXZ], curr_z)
 		CHECK_TICK
 
 	// Indicate failure to parse any coordinates by nulling bounds
@@ -172,7 +196,8 @@
 /datum/parsed_map/Destroy()
 	if(template_host && template_host.cached_map == src)
 		template_host.cached_map = null
-	return ..()
+	. = ..()
+	return QDEL_HINT_HARDDEL_NOW
 
 /// Load the parsed map into the world. See [/proc/load_map] for arguments.
 /datum/parsed_map/proc/load(x_offset, y_offset, z_offset, cropMap, no_changeturf, x_lower, x_upper, y_lower, y_upper, placeOnTop, orientation, annihilate_tiles, datum/map_orientation_pattern/forced_pattern)
@@ -197,6 +222,8 @@
 	var/yi = mode.yi
 	var/turn_angle = round(SIMPLIFY_DEGREES(mode.turn_angle), 90)
 	var/delta_swap = x_offset - y_offset
+	// less checks later
+	var/do_crop = x_lower > -INFINITY || x_upper < INFINITY || y_lower > -INFINITY || y_upper < INFINITY
 
 	for(var/__I in gridSets)
 		var/datum/grid_set/gridset = __I
@@ -221,6 +248,8 @@
 			for(var/pos = 1 to (length(line) - key_len + 1) step key_len)
 				var/placement_x = swap_xy? (actual_y + delta_swap) : actual_x
 				var/placement_y = swap_xy? (actual_x - delta_swap) : actual_y
+				if(do_crop && ((placement_x < x_lower) || (placement_x > x_upper) || (placement_y < y_lower) || (placement_y > y_upper)))
+					continue
 				if(placement_x > world.maxx)
 					if(cropMap)
 						actual_x += xi
@@ -532,6 +561,7 @@
 	// fallback: string
 	return text
 
-/datum/parsed_map/Destroy()
-	..()
-	return QDEL_HINT_HARDDEL_NOW
+/datum/parsed_map/vv_edit_var(var_name, var_value)
+	if(var_name == NAMEOF(src, dmmRegex) || var_name == NAMEOF(src, trimQuotesRegex) || var_name == NAMEOF(src, trimRegex))
+		return FALSE
+	return ..()
