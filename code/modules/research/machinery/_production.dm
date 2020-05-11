@@ -4,7 +4,7 @@
 	layer = BELOW_OBJ_LAYER
 	var/consoleless_interface = TRUE			//Whether it can be used without a console.
 	var/offstation_security_levels = TRUE
-	var/efficiency_coeff = 1				//Materials needed / coeff = actual.
+	var/print_cost_coeff = 1				//Materials needed * coeff = actual.
 	var/list/categories = list()
 	var/datum/component/remote_materials/materials
 	var/allowed_department_flags = ALL
@@ -61,7 +61,8 @@
 	popup.open()
 
 /obj/machinery/rnd/production/proc/calculate_efficiency()
-	efficiency_coeff = 1
+	var/total_manip_rating = 0
+	var/manips = 0
 	if(reagents)		//If reagents/materials aren't initialized, don't bother, we'll be doing this again after reagents init anyways.
 		reagents.maximum_volume = 0
 		for(var/obj/item/reagent_containers/glass/G in component_parts)
@@ -72,17 +73,16 @@
 		for(var/obj/item/stock_parts/matter_bin/M in component_parts)
 			total_storage += M.rating * 75000
 		materials.set_local_size(total_storage)
-	var/total_rating = 0
 	for(var/obj/item/stock_parts/manipulator/M in component_parts)
-		total_rating += M.rating
-	total_rating = max(1, total_rating)
-	efficiency_coeff = total_rating
+		total_manip_rating += M.rating
+		manips++
+	print_cost_coeff = STANDARD_PART_LEVEL_LATHE_COEFFICIENT(total_manip_rating / (manips? manips : 1))
 
 /obj/machinery/rnd/production/examine(mob/user)
 	. = ..()
 	var/datum/component/remote_materials/materials = GetComponent(/datum/component/remote_materials)
 	if(in_range(user, src) || isobserver(user))
-		. += "<span class='notice'>The status display reads: Storing up to <b>[materials.local_size]</b> material units locally.<br>Material usage efficiency at <b>[efficiency_coeff*100]%</b>.</span>"
+		. += "<span class='notice'>The status display reads: Storing up to <b>[materials.local_size]</b> material units locally.<br>Material usage cost at <b>[print_cost_coeff*100]%</b>.</span>"
 
 //we eject the materials upon deconstruction.
 /obj/machinery/rnd/production/on_deconstruction()
@@ -112,8 +112,8 @@
 
 	// these types don't have their .materials set in do_print, so don't allow
 	// them to be constructed efficiently
-	var/ef = efficient_with(being_built.build_path) ? efficiency_coeff : 1
-	return round(A / max(1, all_materials[mat] / ef))
+	var/ef = efficient_with(being_built.build_path) ? print_cost_coeff : 1
+	return round(A / max(1, all_materials[mat] * ef))
 
 /obj/machinery/rnd/production/proc/efficient_with(path)
 	return !ispath(path, /obj/item/stack/sheet) && !ispath(path, /obj/item/stack/ore/bluespace_crystal)
@@ -152,27 +152,27 @@
 		power += round(D.materials[M] * amount / 35)
 	power = min(3000, power)
 	use_power(power)
-	var/coeff = efficient_with(D.build_path) ? efficiency_coeff : 1
+	var/coeff = efficient_with(D.build_path) ? print_cost_coeff : 1
 	var/list/efficient_mats = list()
 	for(var/MAT in D.materials)
-		efficient_mats[MAT] = D.materials[MAT]/coeff
+		efficient_mats[MAT] = D.materials[MAT] * coeff
 	if(!materials.mat_container.has_materials(efficient_mats, amount))
 		say("Not enough materials to complete prototype[amount > 1? "s" : ""].")
 		return FALSE
 	for(var/R in D.reagents_list)
-		if(!reagents.has_reagent(R, D.reagents_list[R]*amount/coeff))
+		if(!reagents.has_reagent(R, D.reagents_list[R] * amount * coeff))
 			say("Not enough reagents to complete prototype[amount > 1? "s" : ""].")
 			return FALSE
 	materials.mat_container.use_materials(efficient_mats, amount)
 	materials.silo_log(src, "built", -amount, "[D.name]", efficient_mats)
 	for(var/R in D.reagents_list)
-		reagents.remove_reagent(R, D.reagents_list[R]*amount/coeff)
+		reagents.remove_reagent(R, D.reagents_list[R] * amount * coeff)
 	busy = TRUE
 	if(production_animation)
 		flick(production_animation, src)
-	var/timecoeff = D.lathe_time_factor / efficiency_coeff
-	addtimer(CALLBACK(src, .proc/reset_busy), (30 * timecoeff * amount) ** 0.5)
-	addtimer(CALLBACK(src, .proc/do_print, D.build_path, amount, efficient_mats, D.dangerous_construction, usr), (32 * timecoeff * amount) ** 0.8)
+	var/timecoeff = D.lathe_time_factor * print_cost_coeff
+	addtimer(CALLBACK(src, .proc/reset_busy), (20 * timecoeff * amount) ** 0.5)
+	addtimer(CALLBACK(src, .proc/do_print, D.build_path, amount, efficient_mats, D.dangerous_construction, usr), (20 * timecoeff * amount) ** 0.5)
 	return TRUE
 
 /obj/machinery/rnd/production/proc/search(string)
@@ -247,7 +247,7 @@
 
 /obj/machinery/rnd/production/proc/ui_screen_search()
 	var/list/l = list()
-	var/coeff = efficiency_coeff
+	var/coeff = print_cost_coeff
 	l += "<h2>Search Results:</h2>"
 	l += "<form name='search' action='?src=[REF(src)]'>\
 	<input type='hidden' name='src' value='[REF(src)]'>\
@@ -264,7 +264,7 @@
 	if(!istype(D))
 		return
 	if(!coeff)
-		coeff = efficiency_coeff
+		coeff = print_cost_coeff
 	if(!efficient_with(D.build_path))
 		coeff = 1
 	var/list/l = list()
@@ -276,9 +276,9 @@
 		t = check_mat(D, M)
 		temp_material += " | "
 		if (t < 1)
-			temp_material += "<span class='bad'>[all_materials[M]/coeff] [CallMaterialName(M)]</span>"
+			temp_material += "<span class='bad'>[all_materials[M] * coeff] [CallMaterialName(M)]</span>"
 		else
-			temp_material += " [all_materials[M]/coeff] [CallMaterialName(M)]"
+			temp_material += " [all_materials[M] * coeff] [CallMaterialName(M)]"
 		c = min(c,t)
 
 	var/clearance = !(obj_flags & EMAGGED) && (offstation_security_levels || is_station_level(z))
@@ -366,7 +366,7 @@
 		return ui_screen_main()
 	var/list/l = list()
 	l += "<div class='statusDisplay'><h3>Browsing [selected_category]:</h3>"
-	var/coeff = efficiency_coeff
+	var/coeff = print_cost_coeff
 	for(var/v in stored_research.researched_designs)
 		var/datum/design/D = SSresearch.techweb_design_by_id(v)
 		if(!(selected_category in D.category)|| !(D.build_type & allowed_buildtypes))

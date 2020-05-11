@@ -163,14 +163,14 @@
 	if(status)
 		if(baton_stun(M, user, disarming))
 			user.do_attack_animation(M)
-			user.adjustStaminaLossBuffered(getweight())		//CIT CHANGE - makes stunbatonning others cost stamina
+			user.adjustStaminaLossBuffered(getweight(user, STAM_COST_BATON_MOB_MULT))
 	else if(user.a_intent != INTENT_HARM)			//they'll try to bash in the last proc.
 		M.visible_message("<span class='warning'>[user] has prodded [M] with [src]. Luckily it was off.</span>", \
 						"<span class='warning'>[user] has prodded you with [src]. Luckily it was off</span>")
 	return disarming || (user.a_intent != INTENT_HARM)
 
 /obj/item/melee/baton/proc/baton_stun(mob/living/L, mob/user, disarming = FALSE)
-	if(L.run_block(src, 0, "[user]'s [name]", ATTACK_TYPE_MELEE, 0, user) & BLOCK_SUCCESS) //No message; check_shields() handles that
+	if(L.mob_run_block(src, 0, "[user]'s [name]", ATTACK_TYPE_MELEE, 0, user, null, null) & BLOCK_SUCCESS) //No message; check_shields() handles that
 		playsound(L, 'sound/weapons/genhit.ogg', 50, 1)
 		return FALSE
 	var/stunpwr = stamforce
@@ -232,11 +232,8 @@
 /obj/item/melee/baton/stunsword
 	name = "stunsword"
 	desc = "not actually sharp, this sword is functionally identical to a stunbaton"
-	icon = 'modular_citadel/icons/obj/stunsword.dmi'
 	icon_state = "stunsword"
 	item_state = "sword"
-	lefthand_file = 'modular_citadel/icons/mob/inhands/stunsword_left.dmi'
-	righthand_file = 'modular_citadel/icons/mob/inhands/stunsword_right.dmi'
 
 /obj/item/melee/baton/stunsword/get_belt_overlay()
 	if(istype(loc, /obj/item/storage/belt/sabre))

@@ -259,10 +259,10 @@
 
 //HELPERS
 #define PIPING_LAYER_SHIFT(T, PipingLayer) \
-	if(T.dir & NORTH || T.dir & SOUTH) {									\
+	if(T.dir & (NORTH|SOUTH)) {									\
 		T.pixel_x = (PipingLayer - PIPING_LAYER_DEFAULT) * PIPING_LAYER_P_X;\
 	}																		\
-	if(T.dir & WEST || T.dir & EAST) {										\
+	if(T.dir & (WEST|EAST)) {										\
 		T.pixel_y = (PipingLayer - PIPING_LAYER_DEFAULT) * PIPING_LAYER_P_Y;\
 	}
 
@@ -297,6 +297,8 @@ GLOBAL_LIST_INIT(atmos_adjacent_savings, list(0,0))
 	}
 
 #define ARCHIVE_TEMPERATURE(gas) gas.temperature_archived = gas.temperature
+
+#define ARCHIVE(gas) gas.temperature_archived = gas.temperature; gas.gas_archive = gas.gases.Copy();
 
 GLOBAL_LIST_INIT(pipe_paint_colors, list(
 		"amethyst" = rgb(130,43,255), //supplymain
