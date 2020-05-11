@@ -397,7 +397,7 @@
 	/obj/item/sequence_scanner,
 	/obj/item/sensor_device,
 	/obj/item/bodybag,
-	/obj/item/surgicaldrill/advanced
+	/obj/item/surgicaldrill/advanced,
 	/obj/item/healthanalyzer,
 	/obj/item/reagent_containers/syringe,
 	/obj/item/clothing/glasses/hud/health,
