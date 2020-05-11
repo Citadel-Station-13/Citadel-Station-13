@@ -1005,7 +1005,7 @@
 	name = "polychromic winter coat"
 	icon_state = "coatpoly"
 	item_state = "coatpoly"
-	hoodtype = /obj/item/clothing/head/hooded/winterhood/polychromic
+	hoodtype = /obj/item/clothing/head/hooded/winterhood/false/polychromic
 
 /obj/item/clothing/suit/hooded/wintercoat/false/polychromic/ComponentInitialize()
 	. = ..()
