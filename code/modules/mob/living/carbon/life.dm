@@ -502,7 +502,6 @@ GLOBAL_LIST_INIT(ballmer_good_msg, list("Hey guys, what if we rolled out a blues
 										"Hear me out here. What if, and this is just a theory, we made R&D controllable from our PDAs?",
 										"I'm thinking we should roll out a git repository for our research under the AGPLv3 license so that we can share it among the other stations freely.",
 										"I dunno about you guys, but IDs and PDAs being separate is clunky as fuck. Maybe we should merge them into a chip in our arms? That way they can't be stolen easily.",
-										"Why the fuck aren't we just making every pair of shoes into galoshes? We have the technology."
 										"Why the fuck aren't we just making every pair of shoes into galoshes? We have the technology.",
 										"We can link the Ore Silo to are prolathens, why not also link it to autolathens or Exo Fabs.",
 										"If we can make better bombs with just some plasma and tritium then why still have station nukes use plutonium.",
