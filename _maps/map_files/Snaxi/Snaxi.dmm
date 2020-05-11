@@ -21203,6 +21203,9 @@
 /obj/machinery/door/firedoor/border_only{
 	dir = 1
 	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 1
+	},
 /turf/open/floor/carpet,
 /area/hallway/primary/port)
 "lng" = (
@@ -27582,6 +27585,9 @@
 	dir = 6
 	},
 /obj/machinery/atmospherics/pipe/manifold/yellow/visible/layer3,
+/obj/machinery/igniter{
+	id = "Incinerator"
+	},
 /turf/open/floor/engine,
 /area/engine/atmospherics_engine)
 "ptU" = (
@@ -29581,6 +29587,9 @@
 	name = "Snow Airlock"
 	},
 /obj/machinery/door/firedoor/border_only{
+	dir = 1
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 1
 	},
 /turf/open/floor/carpet,
@@ -34253,6 +34262,7 @@
 /obj/machinery/door/airlock/external{
 	name = "Escape Airlock"
 	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /turf/open/floor/carpet,
 /area/hallway/primary/port)
 "tHr" = (
@@ -36967,6 +36977,11 @@
 	name = "TEG Heatshield";
 	pixel_y = 25
 	},
+/obj/machinery/button/ignition{
+	id = "Incinerator";
+	pixel_y = 35;
+	pixel_x = -1
+	},
 /turf/open/floor/plasteel,
 /area/engine/atmospherics_engine)
 "vrJ" = (
@@ -39391,6 +39406,7 @@
 /obj/machinery/door/airlock/external{
 	name = "Escape Airlock"
 	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /turf/open/floor/carpet,
 /area/hallway/primary/port)
 "wSy" = (
@@ -55247,7 +55263,7 @@ avT
 avT
 avT
 usE
-wje
+xSN
 usE
 dxL
 wje
