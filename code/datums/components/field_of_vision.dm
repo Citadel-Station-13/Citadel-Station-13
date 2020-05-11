@@ -28,18 +28,39 @@
 		list -= _A\
 	}
 
+/**
+  * Field of Vision component. Does totally what you probably think it does,
+  * ergo preventing players from seeing what's behind them.
+  */
 /datum/component/field_of_vision
 	can_transfer = TRUE
+
+/**
+  * That special invisible, almost neigh indestructible movable
+  * that holds both shadow cone mask and image and follows the player around.
+  */
 	var/atom/movable/fov_holder/fov
+	///The current screen size this field of vision is meant to fit for.
 	var/current_fov_size = list(15, 15)
+	///How much is the cone rotated clockwise, purely backend. Please use rotate_shadow_cone() if you must.
 	var/angle = 0
-	var/rot_scale = 1 //used in the shadow cone transform Turn() calculations.
+	/// Used to scale the shadow cone when rotating it to fit over the edges of the screen.
+	var/rot_scale = 1
+	/// The inner angle of this cone, right hardset to 90, 180, or 270 degrees, until someone figures out a way to make it dynamic.
 	var/shadow_angle = FOV_90_DEGREES
-	var/image/shadow_mask //what masks the environment from our sight.
-	var/image/visual_shadow //the visual, found on the WALL_PLANE plane.
-	var/image/owner_mask //This will mask the shadow cone mask, so it won't mask the user.
-	var/list/nested_locs = list() //To ensure the above mask assumes the right shape when inside a locker, mech, vehicle etcetera.
-	var/static/list/width_n_height_offsets = list() //because render sources are automatically centered unlike most mapped visuals.
+	/// The mask portion of the cone, placed on a * render target plane so while not visible it still applies the filter.
+	var/image/shadow_mask
+	/// The visual portion of the cone, placed on the highest layer of the wall plane
+	var/image/visual_shadow
+	/// An image whose render_source is kept up to date to prevent the topmost location the mob is in from being hidden by the mask.
+	var/image/owner_mask
+	/// A list of nested locations the mob is in, to ensure the above image works correctly.
+	var/list/nested_locs = list()
+/**
+  * A static list of offsets based on icon width and height, because render sources are centered, unlike most other visuals,
+  * and that gives us some problems when the icon is larger or smaller than world.icon_size
+  */
+	var/static/list/width_n_height_offsets = list()
 
 /datum/component/field_of_vision/Initialize(fov_type = FOV_90_DEGREES, _angle = 0)
 	if(!ismob(parent))
@@ -70,7 +91,8 @@
 			M.client.images -= owner_mask
 			M.client.images -= shadow_mask
 			M.client.images -= visual_shadow
-		QDEL_NULL(fov)
+		qdel(fov, TRUE) // Forced.
+		fov = null
 		QDEL_NULL(owner_mask)
 	if(length(nested_locs))
 		UNREGISTER_NESTED_LOCS(nested_locs, COMSIG_MOVABLE_MOVED, 1)
@@ -79,6 +101,10 @@
 							COMSIG_MOB_VISIBLE_ATOMS, COMSIG_MOB_RESET_PERSPECTIVE,
 							COMSIG_MOB_CLIENT_CHANGE_VIEW, COMSIG_MOB_IS_VIEWER))
 
+/**
+  * Generates the holder and images (if not generated yet) and adds them to client.images.
+  * Run when the component is registered to a player mob, or upon login.
+  */
 /datum/component/field_of_vision/proc/generate_fov_holder(mob/M, _angle = 0)
 	if(QDELETED(fov))
 		fov = new(get_turf(M))
@@ -111,6 +137,7 @@
 	if(M.client.view != "[current_fov_size[1]]x[current_fov_size[2]]")
 		resize_fov(current_fov_size, getviewsize(M.client.view))
 
+///Rotates the shadow cone to a certain degree. Backend shenanigans.
 /datum/component/field_of_vision/proc/rotate_shadow_cone(new_angle)
 	var/simple_degrees = SIMPLIFY_DEGREES(new_angle - angle)
 	var/to_scale = cos(simple_degrees) * sin(simple_degrees)
@@ -121,6 +148,10 @@
 			visual_shadow.transform = shadow_mask.transform = shadow_mask.transform.Scale(rot_scale/old_rot_scale)
 	visual_shadow.transform = shadow_mask.transform = shadow_mask.transform.Turn(fov.transform, simple_degrees)
 
+/**
+  * Resizes the shadow to match the current screen size.
+  * Run when the client view size is changed, or if the player has a viewsize different than "15x15" on login/comp registration.
+  */
 /datum/component/field_of_vision/proc/resize_fov(list/old_view, list/view)
 	current_fov_size = view
 	var/old_size = max(old_view[1], old_view[2])
@@ -141,44 +172,60 @@
 /datum/component/field_of_vision/proc/on_dir_change(mob/source, old_dir, new_dir)
 	fov.dir = new_dir
 
-/// This only affects the screen visuals, not the functionality.
+///Hides the shadow, other visibility comsig procs will take it into account. Called when the mob dies.
 /datum/component/field_of_vision/proc/hide_fov(mob/source)
 	fov.alpha = 0
 
-/// Same as above.
+/// Shows the shadow. Called when the mob is revived.
 /datum/component/field_of_vision/proc/show_fov(mob/source)
 	fov.alpha = 255
 
-/// Idem.
+/// Hides the shadow when looking through other items, shows it otherwise.
 /datum/component/field_of_vision/proc/on_reset_perspective(mob/source, atom/target)
 	if(source.client.eye == source || source.client.eye == source.loc)
 		fov.alpha = 255
 	else
 		fov.alpha = 0
 
+/// Called when the client view size is changed.
 /datum/component/field_of_vision/proc/on_change_view(mob/source, client, list/old_view, list/view)
 	resize_fov(old_view, view)
 
+/**
+  * Called when the owner mob moves around. Used to keep shadow located right behind us,
+  * As well as modify the owner mask to match the topmost item.
+  */
 /datum/component/field_of_vision/proc/on_mob_moved(mob/source, atom/oldloc, dir, forced)
-	fov.forceMove(get_turf(source), harderforce = TRUE)
+	var/turf/T
 	if(!isturf(source.loc)) //Recalculate all nested locations.
 		UNREGISTER_NESTED_LOCS( nested_locs, COMSIG_MOVABLE_MOVED, 1)
 		REGISTER_NESTED_LOCS(source, nested_locs, COMSIG_MOVABLE_MOVED, .proc/on_loc_moved)
-		var/atom/A = nested_locs[nested_locs.len]
-		CENTERED_RENDER_SOURCE(owner_mask, A, src)
+		var/atom/movable/topmost = nested_locs[nested_locs.len]
+		T = topmost.loc
+		CENTERED_RENDER_SOURCE(owner_mask, topmost, src)
 	else if(length(nested_locs))
 		UNREGISTER_NESTED_LOCS(nested_locs, COMSIG_MOVABLE_MOVED, 1)
 		CENTERED_RENDER_SOURCE(owner_mask, source, src)
+		T = source.loc
+	if(T)
+		fov.forceMove(T, harderforce = TRUE)
 
-/datum/component/field_of_vision/proc/on_loc_moved(atom/source, atom/oldloc, dir, forced)
+/// Pretty much like the above, but meant for other movables the mob is stored in (bodybags, boxes, mechs etc).
+/datum/component/field_of_vision/proc/on_loc_moved(atom/movable/source, atom/oldloc, dir, forced)
 	if(isturf(source.loc) && isturf(oldloc)) //This is the case of the topmost movable loc moving around the world, skip.
+		fov.forceMove(source.loc, harderforce = TRUE)
 		return
-	if(nested_locs[nested_locs.len] != source)
+	var/atom/movable/prev_topmost = nested_locs[nested_locs.len]
+	if(prev_topmost != source)
 		UNREGISTER_NESTED_LOCS(nested_locs, COMSIG_MOVABLE_MOVED, nested_locs.Find(source) + 1)
 	REGISTER_NESTED_LOCS(source, nested_locs, COMSIG_MOVABLE_MOVED, .proc/on_loc_moved)
-	var/atom/A = nested_locs[nested_locs.len]
-	CENTERED_RENDER_SOURCE(owner_mask, A, src)
+	var/atom/movable/topmost = nested_locs[nested_locs.len]
+	if(topmost != prev_topmost)
+		CENTERED_RENDER_SOURCE(owner_mask, topmost, src)
+		if(topmost.loc)
+			fov.forceMove(topmost.loc, harderforce = TRUE)
 
+/// A hacky comsig proc for things that somehow decide to change icon on the go. may make a change_icon_file() proc later but...
 /datum/component/field_of_vision/proc/manual_centered_render_source(mob/source, old_icon)
 	if(!isturf(source.loc))
 		return
@@ -188,9 +235,13 @@
 #undef REGISTER_NESTED_LOCS
 #undef UNREGISTER_NESTED_LOCS
 
-//Byond doc is not entirely correct on the integrated arctan() proc.
-//When both x and y are negative, the output is also negative, cycling clockwise instead of counter-clockwise.
-//That's also why I have to use the SIMPLIFY_DEGREES macro.
+/**
+  * Byond doc is not entirely correct on the integrated arctan() proc.
+  * When both x and y are negative, the output is also negative, cycling clockwise instead of counter-clockwise.
+  * That's also why I am extensively using the SIMPLIFY_DEGREES macro here.
+  *
+  * Overall this is the main macro that calculates wheter a target is within the shadow cone angle or not.
+  */
 #define FOV_ANGLE_CHECK(mob, target, zero_x_y_statement, success_statement) \
 	var/turf/T1 = get_turf(target);\
 	var/turf/T2 = get_turf(mob);\
@@ -243,9 +294,13 @@
 
 #undef FOV_ANGLE_CHECK
 
-/atom/movable/fov_holder //required for mouse opacity.
+/**
+  * The shadow cone's mask and visual images holder which can't locate inside the mob,
+  * lest they inherit the mob opacity and cause a lot of hindrance
+  */
+/atom/movable/fov_holder
 	name = "field of vision holder"
-	pixel_x = -224 //the image is about 480x480 px, ergo 15 tiles (480/32) big, we gotta center it.
+	pixel_x = -224 //the image is about 480x480 px, ergo 15 tiles (480/32) big, and we gotta center it.
 	pixel_y = -224
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	plane = FIELD_OF_VISION_PLANE
@@ -272,7 +327,13 @@
 /atom/movable/fov_holder/onTransitZ()
 	return
 
-//Prevents people from moving these after creation, because they shouldn't be.
+/// Prevents people from moving these after creation, because they shouldn't be.
 /atom/movable/fov_holder/forceMove(atom/destination, no_tp=FALSE, harderforce = FALSE)
 	if(harderforce)
 		return ..()
+
+/// Last but not least, these shouldn't be deleted by anything but the component itself
+/atom/movable/fov_holder/Destroy(force = FALSE)
+	if(!force)
+		return QDEL_HINT_LETMELIVE
+	return ..()
