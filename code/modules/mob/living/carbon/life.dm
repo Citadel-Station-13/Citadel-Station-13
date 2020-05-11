@@ -503,7 +503,6 @@ GLOBAL_LIST_INIT(ballmer_good_msg, list("Hey guys, what if we rolled out a blues
 										"I'm thinking we should roll out a git repository for our research under the AGPLv3 license so that we can share it among the other stations freely.",
 										"I dunno about you guys, but IDs and PDAs being separate is clunky as fuck. Maybe we should merge them into a chip in our arms? That way they can't be stolen easily.",
 										"Why the fuck aren't we just making every pair of shoes into galoshes? We have the technology.",
-   								 	    "Why the fuck aren't we just making every pair of shoes into galoshes? We have the technology.",
 										"We can link the Ore Silo to our protolathes, so why don't we also link it to autolathes?",
 										"If we can make better bombs with heated plasma, oxygen, and tritium, then why do station nukes still use plutonium?",
  										"We should port all our NT programs to modular consoles and do away with computers. They're way more customizable, support cross-platform usage, and would allow crazy amounts of multitasking.",
