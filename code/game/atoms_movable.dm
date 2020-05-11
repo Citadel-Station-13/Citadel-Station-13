@@ -55,6 +55,8 @@
 			render_target = ref(src)
 			em_block = new(src, render_target)
 			vis_contents += em_block
+	if(!mapload && loc)
+		SEND_SIGNAL(loc, COMSIG_ATOM_NEW_CONTENT, src)
 
 /atom/movable/Destroy()
 	QDEL_NULL(em_block)
