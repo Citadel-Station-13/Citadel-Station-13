@@ -5,11 +5,14 @@
 	return TRUE
 
 /datum/proc/vv_edit_var(var_name, var_value) //called whenever a var is edited
-	if(var_name == NAMEOF(src, vars))
+	if(var_name == NAMEOF(src, vars) || var_name == NAMEOF(src, parent_type))
 		return FALSE
-	vars[var_name] = var_value
+	PropEdit(var_name, var_value)
 	datum_flags |= DF_VAR_EDITED
 	return TRUE
+
+/datum/proc/PropEdit(var_name, var_value)
+	vars[var_name] = var_value
 
 /datum/proc/vv_get_var(var_name)
 	switch(var_name)

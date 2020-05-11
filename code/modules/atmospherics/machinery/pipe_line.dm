@@ -1,43 +1,79 @@
+/**
+  * Pipeline datums, consisting of directly connected pipes and components.
+  * Merges into pipe network datums.
+  */
 /datum/pipeline
-	/// Our stored air, consisting of all direct attached components
-	var/datum/gas_mixture/air
+	/// Our temporarily stored air, consisting of all pipes and directly connected components to us. Used to hold air before we build our pipe network.
+	var/datum/gas_mixture/temporary_air
 	/// Pipes. They are all directly attached, with no gas mixtures of their own.
 	var/list/obj/machinery/atmospherics/pipe/pipes
 	/// Components that are directly attached.
 	var/list/obj/machinery/atmospherics/components/direct_components
 	/// Components that are not directly attached - These split air with us using reconcile_air().
 	var/list/obj/machinery/atmospherics/components/indirect_components
-
-	var/list/datum/gas_mixture/other_airs
-
-	var/list/obj/machinery/atmospherics/pipe/members
-	var/list/obj/machinery/atmospherics/components/other_atmosmch
+	/// Components that can potentially directly connect us to other pipelines when building a pipe network. These are checked rather than all components. This is a LAZY LIST.
+	var/list/obj/machinery/atmospherics/components/valve_components
+	/// Our volume, consisting of all pipes and directly attached components, in liters.
+	var/volume = 0
+	/// The total volume of all of our components plus us
+	var/total_volume = 0
+	/// Our parent pipe network.
+	var/datum/pipe_network/parent
+	/// The gas mixtures of indirectly attached components.
+	var/list/datum/gas_mixture/component_airs
 
 	var/update = TRUE
 
 /datum/pipeline/New()
+	volume = 0
+	total_volume = 0
 	pipes = list()
 	direct_components = list()
 	indirect_components = list()
-	SSair.networks += src
-
-	other_airs = list()
+	component_airs = list()
+	SSair.pipelines += src
 
 /datum/pipeline/Destroy()
-	SSair.networks -= src
-	if(air && air.volume)
-		temporarily_store_air()
-	for(var/obj/machinery/atmospherics/pipe/P in members)
-		P.parent = null
-	for(var/obj/machinery/atmospherics/components/C in other_atmosmch)
-		C.nullifyPipenet(src)
+	SSair.pipelines -= src
+	breakdown()
 	return ..()
 
-/datum/pipeline/process()
-	if(update)
-		update = FALSE
-		reconcile_air()
-	update = air.react(src)
+/**
+  * Disassembles us, storing our air into our resulting directly connected pipes.
+  */
+/datum/pipeline/proc/breakdown()
+	if(parent)
+		parent.breakdown()
+	var/obj/machinery/atmospherics/pipe/P
+	for(var/i in pipes)
+		P = i
+		P.temporarily_store_air(src)
+		P.parent = null
+	var/obj/machinery/atmospherics/components/C
+	for(var/i in direct_components)
+		C = i
+		C.temporarily_store_air(src)
+		C.nullifyPipenet(src)
+	for(var/i in indirect_components)
+		C = i
+		C.nullifyPipenet(src)
+	pipes.len = 0
+	direct_components.len = 0
+	indirect_components.len = 0
+	valve_components = null
+	volume = 0
+	total_volume = 0
+
+/**
+  * Temporarily stores air when our parent pipe network breaks down.
+  */
+/datum/pipeline/proc/temporarily_store_air()
+	var/datum/gas_mixture/parent_air = parent.air
+	temporary_air = new(volume)
+	temporary_air.copy_from(parent_air)
+	var/list/temp_gases = temporary_air.gases
+	for(var/gasid in temp_gases)
+		temp_gases[gasid] *= (volume / parent_air.volume
 
 /datum/pipeline/proc/build_pipeline(obj/machinery/atmospherics/base)
 	var/volume = 0
@@ -95,6 +131,11 @@
 		stack_trace("addMachineryMember: Null gasmix added to pipeline datum from [C] which is of type [C.type]. Nearby: ([C.x], [C.y], [C.z])")
 	other_airs |= G
 
+/**
+  * Add an atmospherics machinery to us.
+  */
+/datum/pipeline/proc/(obj/machinery/atmospherics/FROM, obj/machinery/atmospherics/TO)
+
 /datum/pipeline/proc/addMember(obj/machinery/atmospherics/A, obj/machinery/atmospherics/N)
 	if(istype(A, /obj/machinery/atmospherics/pipe))
 		var/obj/machinery/atmospherics/pipe/P = A
@@ -142,21 +183,6 @@
 	if(!P)
 		CRASH("null.addMember() called by [type] on [COORD(src)]")
 	P.addMember(A, src)
-
-
-/datum/pipeline/proc/temporarily_store_air()
-	//Update individual gas_mixtures by volume ratio
-
-	for(var/obj/machinery/atmospherics/pipe/member in members)
-		member.air_temporary = new
-		member.air_temporary.volume = member.volume
-		member.air_temporary.copy_from(air)
-		var/member_gases = member.air_temporary.gases
-
-		for(var/id in member_gases)
-			member_gases[id] *= member.volume/air.volume
-
-		member.air_temporary.temperature = air.temperature
 
 /datum/pipeline/proc/temperature_interact(turf/target, share_volume, thermal_conductivity)
 	var/total_heat_capacity = air.heat_capacity()
@@ -214,11 +240,6 @@
 			air.temperature -= heat/total_heat_capacity
 	update = TRUE
 
-/datum/pipeline/proc/return_air()
-	. = other_airs + air
-	if(null in .)
-		stack_trace("[src]([REF(src)]) has one or more null gas mixtures, which may cause bugs. Null mixtures will not be considered in reconcile_air().")
-		return removeNullsFromList(.)
 
 /datum/pipeline/proc/reconcile_air()
 	var/list/datum/gas_mixture/GL = list()
@@ -245,27 +266,3 @@
 				var/obj/machinery/atmospherics/components/unary/portables_connector/C = atmosmch
 				if(C.connected_device)
 					GL += C.portableConnectorReturnAir()
-
-	var/total_thermal_energy = 0
-	var/total_heat_capacity = 0
-	var/datum/gas_mixture/total_gas_mixture = new(0)
-
-	for(var/i in GL)
-		var/datum/gas_mixture/G = i
-		total_gas_mixture.volume += G.volume
-
-		total_gas_mixture.merge(G)
-
-		total_thermal_energy += THERMAL_ENERGY(G)
-		total_heat_capacity += G.heat_capacity()
-
-	total_gas_mixture.temperature = total_heat_capacity ? total_thermal_energy/total_heat_capacity : 0
-
-	if(total_gas_mixture.volume > 0)
-		//Update individual gas_mixtures by volume ratio
-		for(var/i in GL)
-			var/datum/gas_mixture/G = i
-			G.copy_from(total_gas_mixture)
-			var/list/G_gases = G.gases
-			for(var/id in G_gases)
-				G_gases[id] *= G.volume/total_gas_mixture.volume

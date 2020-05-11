@@ -2,15 +2,17 @@
   * Pipes. They are expected to always directly exist on a pipeline, rather than holding its own air.
   */
 /obj/machinery/atmospherics/pipe
-	var/datum/gas_mixture/air_temporary //used when reconstructing a pipeline that broke
-	/// Our volume, in liters.
-	var/volume
+	/// Used to reconstruct a pipeline that was broken/separated.
+	var/datum/gas_mixture/temporary_air
+	/// Our volume, in liters. ALL DYNAMIC VOLUME CHANGES MUST USE set_volume()!
+	PRIVATE_VAR(volume)
+	/// The pipeline that we belong to.
+	var/datum/pipeline/pipeline
 
 	level = 1
 
 	use_power = NO_POWER_USE
 	can_unwrench = 1
-	var/datum/pipeline/parent = null
 
 	//Buckling
 	can_buckle = 1
@@ -41,6 +43,29 @@
 	var/turf/T = loc			// hide if turf is not intact
 	hide(T.intact)
 	..()
+
+/**
+  * Sets our volume and updates our pipenet accordingly if necessary.
+  */
+/obj/machinery/atmospherics/pipe/proc/set_volume(new_volume)
+	var/diff = new_volume - volume
+	volume = new_volume
+	if(pipeline)
+		pipeline.set_volume(pipeline.volume + diff)
+
+/obj/machinery/atmospherics/pipe/temporarily_store_air(datum/pipeline/from)
+	var/datum/gas_mixture/parent_air = parent.temporary_air
+	temporary_air = new(volume)
+	temporary_air.copy_from(parent_air)
+	var/list/temp_gases = temporary_air.gases
+	for(var/gasid in temp_gases)
+		temp_gases[gasid] *= (volume / parent_air.volume
+
+/obj/machinery/atmospherics/pipe/PropEdit(var_name, var_value)
+	if(var_name == NAMEOF(src, volume))
+		set_volume(var_value)
+		return
+	return ..()
 
 /obj/machinery/atmospherics/pipe/hide(i)
 	if(level == 1 && isturf(loc))

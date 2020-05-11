@@ -19,7 +19,13 @@ SUBSYSTEM_DEF(air)
 	var/list/active_turfs = list()
 	var/list/turf_react_queue = list()
 	var/list/hotspots = list()
-	var/list/networks = list()
+	/// All pipe networks.
+	var/list/datum/pipe_network/pipenets = list()
+	/// All pipe lines.
+	var/list/datum/pipeline/pipelines = list()
+	/// Atmos machinery that needs to rebuild their pipelines
+	var/list/pipelines_needing_rebuilt = list()
+	/// Pipelines that need to rebuild their networks
 	var/list/pipenets_needing_rebuilt = list()
 	/// Atmospherics machinery that needs processing. Ones that return PROCESS_KILL are removed from this list
 	var/static/list/obj/machinery/atmospherics/atmos_machinery = list()
@@ -54,7 +60,8 @@ SUBSYSTEM_DEF(air)
 	msg += "RQ:[turf_react_queue.len]|"
 	msg += "EG:[excited_groups.len]|"
 	msg += "HS:[hotspots.len]|"
-	msg += "PN:[networks.len]|"
+	msg += "PN:[length(pipenets)]|"
+	msg += "PL:[length(pipelines)]|"
 	msg += "HP:[high_pressure_delta.len]|"
 	msg += "AS:[active_super_conductivity.len]|"
 	msg += "AT/MS:[round((cost ? active_turfs.len/cost : 0),0.1)]"
@@ -74,12 +81,16 @@ SUBSYSTEM_DEF(air)
 	var/timer = TICK_USAGE_REAL
 
 	if(currentpart == SSAIR_REBUILD_PIPENETS)
-		var/list/pipenet_rebuilds = pipenets_needing_rebuilt
-		for(var/thing in pipenet_rebuilds)
+		var/list/pipeline_rebuilds = pipelines_needing_rebuilt
+		for(var/thing in pipeline_rebuilds)
 			var/obj/machinery/atmospherics/AT = thing
 			AT.build_network()
+		var/list/pipenet_rebuilds = pipenets_needing_rebuilt
+		for(var/thing in pipenet_rebuilds)
+			var/datum/pipeline/P = thing
+			P.build_network()
 		cost_rebuilds = MC_AVERAGE(cost_rebuilds, TICK_DELTA_TO_MS(TICK_USAGE_REAL - timer))
-		pipenets_needing_rebuilt.Cut()
+		pipelines_needing_rebuilt.Cut()
 		if(state != SS_RUNNING)
 			return
 		resumed = FALSE
@@ -149,7 +160,7 @@ SUBSYSTEM_DEF(air)
 
 /datum/controller/subsystem/air/proc/process_pipenets(resumed = 0)
 	if (!resumed)
-		src.currentrun = networks.Copy()
+		src.currentrun = pipenets.Copy()
 	//cache for sanic speed (lists are references anyways)
 	var/list/currentrun = src.currentrun
 	while(currentrun.len)
@@ -158,13 +169,13 @@ SUBSYSTEM_DEF(air)
 		if(thing)
 			thing.process()
 		else
-			networks.Remove(thing)
+			pipenets.Remove(thing)
 		if(MC_TICK_CHECK)
 			return
 
 /datum/controller/subsystem/air/proc/add_to_rebuild_queue(atmos_machine)
 	if(istype(atmos_machine, /obj/machinery/atmospherics))
-		pipenets_needing_rebuilt += atmos_machine
+		pipelines_needing_rebuilt += atmos_machine
 
 /datum/controller/subsystem/air/proc/process_atmos_machinery(resumed = 0)
 	var/seconds = wait * 0.1

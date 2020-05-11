@@ -155,6 +155,12 @@
 				nodes[i] = target
 				break
 	update_icon()
+
+/**
+  * Temporarily stores air when our parent pipe network breaks down.
+  */
+/obj/machinery/atmospherics/proc/temporarily_store_air(datum/pipeline/from)
+
 /**
   * Sets our piping layer.
   */

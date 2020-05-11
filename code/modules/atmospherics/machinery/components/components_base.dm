@@ -2,25 +2,43 @@
 // On top of that, now people can add component-speciic procs/vars if they want!
 
 /obj/machinery/atmospherics/components
-	/// If this is TRUE, we are directly attached to our pipe network instead of utilizing reconcile_air() to equalize with the network every tick. THIS SHOULD NEVER BE CHANGED IN RUNTIME.
-	VAR_FINAL(pipenet_direct_attach) = FALSE
+	/// Pipenet flags for how we behave when connected to a pipenet. THIS SHOULD NEVER BE CHANGED IN RUNTIME.
+	VAR_FINAL(pipenet_flags) = NONE
+	/// The volumes of our nodes. NEVER DIRECTLY EDIT THIS LIST, COPY IT FIRST! THIS IS A TYPELIST.
+	var/list/node_volumes
+	/// Only valid if we are NOT directly connected: The airs of our nodes.
+	var/list/datum/gas_mixture/node_airs
+	/// Temporarily stored airs if we are a directly connected component and our pipeline is broken down. THIS IS A LAZY LIST.
+	var/list/datum/gas_mixture/temporary_node_airs
+	/// The pipelines we are connected to by node.
+	var/list/datum/pipeline/node_pipelines
 
 	var/welded = FALSE //Used on pumps and scrubbers
 	var/showpipe = FALSE
 	var/shift_underlay_only = TRUE //Layering only shifts underlay?
 
-	var/list/datum/pipeline/parents
-	var/list/datum/gas_mixture/airs
+/obj/machinery/atmospherics/components/Initialize(mapload, process = TRUE, setdir)
+	node_pipelines = new(device_type)
+	if(pipenet_flags & PIPENET_DIRECT_ATTACH)
+		node_volumes = typelist("NODE_VOLUMES", node_volumes)
+	else
+		node_airs = new(device_type)
+		for(var/i in 1 to device_type)
+			var/datum/gas_mixture/A = new(node_volumes? (node_volumes[i] || 200) : 200)		//defaults to 200 liters.
+	return ..()
 
-/obj/machinery/atmospherics/components/New()
-	parents = new(device_type)
-	airs = new(device_type)
-	..()
-
-	for(var/i in 1 to device_type)
-		var/datum/gas_mixture/A = new
-		A.volume = 200
-		airs[i] = A
+/obj/machinery/atmospherics/components/temporarily_store_air(datum/pipeline/from)
+	var/nodeindex = node_pipelines.Find(from)
+	if(!nodeindex)
+		CRASH("Couldn't find pipeline in node pipeline list!")
+	LAZYINITLIST(temporary_node_airs)
+	temporary_node_airs.len = device_type
+	var/datum/gas_mixture/parent_air = from.air
+	var/datum/gas_mixture/temporary_air = temporary_node_airs[nodeindex] = new /datum/gas_mixture(node_volumes? (node_volumes[i] || 200) : 200)
+	temporary_air.copy_from(parent_air)
+	var/list/temp_gases = temporary_air.gases
+	for(var/gasid in temp_gases)
+		temp_gases[gasid] *= temporary_air.volume / parent_air.volume
 
 // Iconnery
 
@@ -139,6 +157,12 @@
 	if(usr.canUseTopic(src))
 		return new_value
 	return default_set
+
+/**
+  * Returns pipelines that are directly connected to each other through us
+  */
+/obj/machinery/atmospherics/components/proc/directly_connected_pipelines(datum/pipeline/from)
+	return
 
 // Helpers
 
