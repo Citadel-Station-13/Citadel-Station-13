@@ -59,6 +59,17 @@
 	category = SLOT_WEAR_SUIT
 	path = /obj/item/clothing/suit/jacket/letterman_nanotrasen
 
+/datum/gear/coat
+	name = "Winter coat"
+	category = SLOT_WEAR_SUIT
+	path = /obj/item/clothing/suit/hooded/wintercoat/false
+
+/datum/gear/coat/polycoat
+	name = "Polychromic winter coat"
+	category = SLOT_WEAR_SUIT
+	path = /obj/item/clothing/suit/hooded/wintercoat/false/polychromic
+	cost = 4 //too many people with neon green coats is hard on the eyes
+
 /datum/gear/militaryjacket
 	name = "Military Jacket"
 	category = SLOT_WEAR_SUIT
