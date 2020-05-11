@@ -943,6 +943,9 @@
 /obj/item/grenade/smokebomb{
 	pixel_x = 5
 	},
+/obj/item/pickaxe/drill/diamonddrill,
+/obj/item/pickaxe/drill/diamonddrill,
+/obj/item/pickaxe/drill/diamonddrill,
 /turf/open/floor/pod/light,
 /area/shuttle/pirate)
 "ep" = (

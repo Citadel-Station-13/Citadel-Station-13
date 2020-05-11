@@ -11,12 +11,26 @@
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	invisibility = INVISIBILITY_LIGHTING
 
-	var/map_name // Set in New(); preserves the name set by the map maker, even if renamed by the Blueprints.
+	/// Set in New(); preserves the name set by the map maker, even if renamed by the Blueprints.
+	var/map_name
 
-	var/valid_territory = TRUE // If it's a valid territory for gangs to claim
-	var/blob_allowed = TRUE // Does it count for blobs score? By default, all areas count.
-	var/clockwork_warp_allowed = TRUE // Can servants warp into this area from Reebe?
+	/// If it's valid territory for gangs/cults to summon
+	var/valid_territory = TRUE
+	/// if blobs can spawn there and if it counts towards their score.
+	var/blob_allowed = TRUE
+	/// whether servants can warp into this area from Reebe
+	var/clockwork_warp_allowed = TRUE
+	/// Message to display when the clockwork warp fails
 	var/clockwork_warp_fail = "The structure there is too dense for warping to pierce. (This is normal in high-security areas.)"
+
+	/// If mining tunnel generation is allowed in this area
+	var/tunnel_allowed = FALSE
+	/// If flora are allowed to spawn in this area randomly through tunnel generation
+	var/flora_allowed = FALSE
+	/// if mobs can be spawned by natural random generation
+	var/mob_spawn_allowed = FALSE
+	/// If megafauna can be spawned by natural random generation
+	var/megafauna_spawn_allowed = FALSE
 
 	var/fire = null
 	var/atmos = TRUE
@@ -25,11 +39,14 @@
 	var/lightswitch = TRUE
 
 	var/requires_power = TRUE
-	var/always_unpowered = FALSE	// This gets overridden to 1 for space in area/Initialize().
+	/// This gets overridden to 1 for space in area/Initialize().
+	var/always_unpowered = FALSE
 
-	var/outdoors = FALSE //For space, the asteroid, lavaland, etc. Used with blueprints to determine if we are adding a new area (vs editing a station room)
+	/// For space, the asteroid, lavaland, etc. Used with blueprints to determine if we are adding a new area (vs editing a station room)
+	var/outdoors = FALSE
 
-	var/areasize = 0 //Size of the area in open turfs, only calculated for indoors areas.
+	/// Size of the area in open turfs, only calculated for indoors areas.
+	var/areasize = 0
 
 	var/power_equip = TRUE
 	var/power_light = TRUE
@@ -43,9 +60,12 @@
 	var/static_environ
 
 	var/has_gravity = 0
-	var/noteleport = FALSE			//Are you forbidden from teleporting to the area? (centcom, mobs, wizard, hand teleporter)
-	var/hidden = FALSE 			//Hides area from player Teleport function.
-	var/safe = FALSE 				//Is the area teleport-safe: no space / radiation / aggresive mobs / other dangers
+	/// Are you forbidden from teleporting to the area? (centcom, mobs, wizard, hand teleporter)
+	var/noteleport = FALSE
+	/// Hides area from player Teleport function.
+	var/hidden = FALSE
+	/// Is the area teleport-safe: no space / radiation / aggresive mobs / other dangers
+	var/safe = FALSE 				
 	/// If false, loading multiple maps with this area type will create multiple instances.
 	var/unique = TRUE
 

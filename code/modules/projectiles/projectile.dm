@@ -33,12 +33,13 @@
 	var/fired = FALSE	//Have we been fired yet
 	var/paused = FALSE	//for suspending the projectile midair
 	var/last_projectile_move = 0
-	var/last_process = 0
 	var/time_offset = 0
 	var/datum/point/vector/trajectory
 	var/trajectory_ignore_forcemove = FALSE	//instructs forceMove to NOT reset our trajectory to the new location!
 
 	var/speed = 0.8			//Amount of deciseconds it takes for projectile to travel
+	/// "leftover" ticks and stuff yeah. hey when are we rewriting projectiles for the eighth time to do something smarter like incrementing x pixels until it meets a goal instead of for(var/i in 1 to required_moves)?
+	var/tick_moves_leftover = 0
 	var/Angle = 0
 	var/original_angle = 0		//Angle at firing
 	var/nondirectional_sprite = FALSE //Set TRUE to prevent projectiles from having their sprites rotated based on firing angle
@@ -351,26 +352,20 @@
 /obj/item/projectile/Process_Spacemove(movement_dir = 0)
 	return TRUE	//Bullets don't drift in space
 
-/obj/item/projectile/process()
-	last_process = world.time
+/obj/item/projectile/process(wait)
 	if(!loc || !fired || !trajectory)
 		fired = FALSE
 		return PROCESS_KILL
 	if(paused || !isturf(loc))
-		last_projectile_move += world.time - last_process		//Compensates for pausing, so it doesn't become a hitscan projectile when unpaused from charged up ticks.
 		return
-	var/elapsed_time_deciseconds = (world.time - last_projectile_move) + time_offset
-	time_offset = 0
-	var/required_moves = speed > 0? FLOOR(elapsed_time_deciseconds / speed, 1) : MOVES_HITSCAN			//Would be better if a 0 speed made hitscan but everyone hates those so I can't make it a universal system :<
-	if(required_moves == MOVES_HITSCAN)
-		required_moves = SSprojectiles.global_max_tick_moves
-	else
-		if(required_moves > SSprojectiles.global_max_tick_moves)
-			var/overrun = required_moves - SSprojectiles.global_max_tick_moves
-			required_moves = SSprojectiles.global_max_tick_moves
-			time_offset += overrun * speed
-		time_offset += MODULUS(elapsed_time_deciseconds, speed)
-
+	var/ds = (SSprojectiles.flags & SS_TICKER)? (wait * world.tick_lag) : wait
+	var/required_moves = ds / speed
+	var/leftover = MODULUS(required_moves, 1)
+	tick_moves_leftover += leftover
+	required_moves = round(required_moves)
+	if(tick_moves_leftover > 1)
+		required_moves += round(tick_moves_leftover)
+		tick_moves_leftover = MODULUS(tick_moves_leftover, 1)
 	for(var/i in 1 to required_moves)
 		pixel_move(1, FALSE)
 

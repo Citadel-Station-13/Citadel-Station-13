@@ -117,7 +117,7 @@
 
 /datum/crafting_recipe/upgraded_gauze
 	name = "Improved Gauze"
-	result = /obj/item/stack/medical/gauze/adv
+	result = /obj/item/stack/medical/gauze/adv/one
 	time = 1
 	reqs = list(/obj/item/stack/medical/gauze = 1,
 				/datum/reagent/space_cleaner/sterilizine = 10)
@@ -126,7 +126,7 @@
 
 /datum/crafting_recipe/bruise_pack
 	name = "Bruise Pack"
-	result = /obj/item/stack/medical/bruise_pack
+	result = /obj/item/stack/medical/bruise_pack/one
 	time = 1
 	reqs = list(/obj/item/stack/medical/gauze = 1,
 				/datum/reagent/medicine/styptic_powder = 10)
@@ -134,8 +134,8 @@
 	subcategory = CAT_TOOL
 
 /datum/crafting_recipe/burn_pack
-	name = "Brun Ointment"
-	result = /obj/item/stack/medical/ointment
+	name = "Burn Ointment"
+	result = /obj/item/stack/medical/ointment/one
 	time = 1
 	reqs = list(/obj/item/stack/medical/gauze = 1,
 				/datum/reagent/medicine/silver_sulfadiazine = 10)
@@ -257,6 +257,15 @@
 	reqs = list(/obj/item/stack/rods = 1,
 				/obj/item/stack/sheet/cardboard = 2)
 	time = 80
+	subcategory = CAT_TOOL
+	category = CAT_MISC
+
+/datum/crafting_recipe/electrochromatic_kit
+	name = "Electrochromatic Kit"
+	result = /obj/item/electronics/electrochromatic_kit
+	reqs = list(/obj/item/stack/sheet/metal = 1,
+				/obj/item/stack/cable_coil = 1)
+	time = 5
 	subcategory = CAT_TOOL
 	category = CAT_MISC
 
@@ -401,15 +410,6 @@
 	reqs = list(/obj/item/camera = 1,
 				/datum/reagent/water/holywater = 10)
 	parts = list(/obj/item/camera = 1)
-	subcategory = CAT_MISCELLANEOUS
-	category = CAT_MISC
-
-/datum/crafting_recipe/paperwork
-	name = "Filed Paper Work"
-	result =  /obj/item/folder/paperwork_correct
-	time = 10 //Takes time for people to file and complete paper work!
-	tools = list(/obj/item/pen)
-	reqs = list(/obj/item/folder/paperwork = 1)
 	subcategory = CAT_MISCELLANEOUS
 	category = CAT_MISC
 
