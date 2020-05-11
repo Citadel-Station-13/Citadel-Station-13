@@ -23,7 +23,6 @@
 
 	other_airs = list()
 
-
 /datum/pipeline/Destroy()
 	SSair.networks -= src
 	if(air && air.volume)

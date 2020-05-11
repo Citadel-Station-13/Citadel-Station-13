@@ -90,11 +90,7 @@
 			qdel(meter)
 	. = ..()
 
-/obj/machinery/atmospherics/pipe/update_icon()
-	. = ..()
-	update_alpha()
-
-/obj/machinery/atmospherics/pipe/proc/update_alpha()
+/obj/machinery/atmospherics/pipe/update_alpha()
 	alpha = invisibility ? 64 : 255
 
 /obj/machinery/atmospherics/pipe/proc/update_node_icon()

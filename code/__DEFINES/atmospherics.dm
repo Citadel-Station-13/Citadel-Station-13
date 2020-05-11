@@ -122,12 +122,6 @@
 #define MAX_OUTPUT_PRESSURE					4500 // (kPa) What pressure pumps and powered equipment max out at.
 #define MAX_TRANSFER_RATE					200 // (L/s) Maximum speed powered equipment can work at.
 
-//used for device_type vars
-#define UNARY		1
-#define BINARY 		2
-#define TRINARY		3
-#define QUATERNARY	4
-
 //TANKS
 #define TANK_MELT_TEMPERATURE				1000000	//temperature in kelvins at which a tank will start to melt
 #define TANK_LEAK_PRESSURE					(30.*ONE_ATMOSPHERE)	//Tank starts leaking

@@ -91,6 +91,15 @@
 	if(update_icon)
 		update_icon()
 
+/**
+  * Separates and then Joins.
+  */
+/obj/machinery/atmospherics/proc/Rebuild(update_icon = TRUE)
+	Separate(FALSE)
+	Join(FALSE)
+	if(update_icon)
+		update_icon()
+
 /obj/machinery/atmospherics/proc/destroy_network()
 	return
 
@@ -110,7 +119,13 @@
 /obj/machinery/atmospherics/proc/node_connect_directions()
 	var/found = 0
 	var/list/connects = list()
-	for(var/dir in GLOB.cardinals)
+	for(var/dir in GLOB.cardinals_multiz)
+		if(dir & UP)
+			if(!SSmapping.get_turf_above(loc))
+				continue
+		else if(dir & DOWN)
+			if(!SSmapping.get_turf_below(loc))
+				continue
 		if(found == device_type)
 			break
 		if(dir & initialize_directions)
@@ -129,6 +144,8 @@
 
 //this is called just after the air controller sets up turfs
 /obj/machinery/atmospherics/proc/atmosinit(list/node_connects)
+	Join()
+
 	if(!node_connects) //for pipes where order of nodes doesn't matter
 		node_connects = getNodeConnects()
 
@@ -138,7 +155,6 @@
 				nodes[i] = target
 				break
 	update_icon()
-
 /**
   * Sets our piping layer.
   */
@@ -154,7 +170,7 @@
 
 //Find a connecting /obj/machinery/atmospherics in specified direction
 /obj/machinery/atmospherics/proc/findConnecting(direction, prompted_layer)
-	for(var/obj/machinery/atmospherics/target in get_step(src, direction))
+	for(var/obj/machinery/atmospherics/target in get_step_multiz(src, direction))
 		if(target.initialize_directions & get_dir(target,src))
 			if(connection_check(target, prompted_layer))
 				return target
@@ -171,6 +187,10 @@
 		return TRUE
 	return FALSE
 
+/**
+  * Returns atmospherics machinery that we are connected to that we are directly going to expand our pipenet to (so a logical no-block straight instantenously conducting connection).
+  * This proc returns a list that can include nulls. The list this proc returns should not be directly modified!
+  */
 /obj/machinery/atmospherics/proc/pipeline_expansion()
 	return nodes
 
@@ -362,5 +382,31 @@
 /obj/machinery/atmospherics/proc/can_see_pipes()
 	return TRUE
 
+/obj/machinery/atmospherics/update_icon()
+	. = ..()
+	update_alpha()
+	update_layer()
+	update_offsets()
+
+/**
+  * Updates our visual pixel shifts.
+  */
+/obj/machinery/atmospherics/proc/update_offsets()
+	if(pipe_flags & PIPING_AUTO_DOUBLE_SHIFT_OFFSETS)
+		PIPING_LAYER_DOUBLE_SHIFT(src, pipe_layer)
+	else if(pipe_flags & PIPING_AUTO_SHIFT_OFFSETS)
+		PIPING_LAYER_SHIFT(src, pipe_layer)
+	else
+		pixel_x = 0
+		pixel_y = 0
+
+/**
+  * Updates our visaul alpha
+  */
+/obj/machinery/atmospherics/proc/update_alpha()
+
+/**
+  * Updates our visual layer
+  */
 /obj/machinery/atmospherics/proc/update_layer()
 	layer = initial(layer) + (piping_layer - PIPING_LAYER_DEFAULT) * PIPING_LAYER_LCHANGE

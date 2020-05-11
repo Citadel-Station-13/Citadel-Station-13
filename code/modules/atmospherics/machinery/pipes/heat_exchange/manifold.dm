@@ -16,16 +16,15 @@
 
 	var/mutable_appearance/center
 
-/obj/machinery/atmospherics/pipe/heat_exchanging/manifold/Initialize()
+/obj/machinery/atmospherics/pipe/heat_exchanging/manifold/Initialize(mapload, process = TRUE, setdir)
 	icon_state = ""
 	center = mutable_appearance(icon, "manifold_center")
 	return ..()
 
 /obj/machinery/atmospherics/pipe/heat_exchanging/manifold/SetInitDirections()
-	initialize_directions = NORTH|SOUTH|EAST|WEST
-	initialize_directions &= ~dir
+	initialize_directions = ((NORTH|SOUTH|EAST|WEST) & (~dir))
 
-/obj/machinery/atmospherics/pipe/heat_exchanging/manifold/update_icon()
+/obj/machinery/atmospherics/pipe/heat_exchanging/manifold/update_overlays()
 	cut_overlays()
 	PIPING_LAYER_DOUBLE_SHIFT(center, piping_layer)
 	add_overlay(center)
@@ -33,10 +32,7 @@
 	//Add non-broken pieces
 	for(var/i in 1 to device_type)
 		if(nodes[i])
-			add_overlay( getpipeimage(icon, "pipe-[piping_layer]", get_dir(src, nodes[i])) )
-
-	update_layer()
-	update_alpha()
+			add_overlay(getpipeimage(icon, "pipe-[piping_layer]", get_dir(src, nodes[i])) )
 
 /obj/machinery/atmospherics/pipe/heat_exchanging/manifold/layer1
 	piping_layer = 1
