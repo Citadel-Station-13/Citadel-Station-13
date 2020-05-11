@@ -63,7 +63,7 @@
 	foodtype = VEGETABLES
 	tastes = list ("a prancing rabbit" = 1) //Vib Ribbon sends her regards.. wherever she is.
 	wine_power = 90
-	wine_flavor = "a vector-grapic rabbit dancing on your tongue"
+	wine_flavor = "a vector-graphic rabbit dancing on your tongue"
 
 
 // World Peas - Peace at last, peace at last...
