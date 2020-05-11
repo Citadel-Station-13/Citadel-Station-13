@@ -243,33 +243,6 @@
 #define INCINERATOR_SYNDICATELAVA_AIRLOCK_INTERIOR 		"syndicatelava_airlock_interior"
 #define INCINERATOR_SYNDICATELAVA_AIRLOCK_EXTERIOR	 	"syndicatelava_airlock_exterior"
 
-//MULTIPIPES
-//IF YOU EVER CHANGE THESE CHANGE SPRITES TO MATCH.
-#define PIPING_LAYER_MIN 1
-#define PIPING_LAYER_MAX 3
-#define PIPING_LAYER_DEFAULT 2
-#define PIPING_LAYER_P_X 5
-#define PIPING_LAYER_P_Y 5
-#define PIPING_LAYER_LCHANGE 0.05
-
-#define PIPING_ALL_LAYER				(1<<0)	//intended to connect with all layers, check for all instead of just one.
-#define PIPING_ONE_PER_TURF				(1<<1) 	//can only be built if nothing else with this flag is on the tile already.
-#define PIPING_DEFAULT_LAYER_ONLY		(1<<2)	//can only exist at PIPING_LAYER_DEFAULT
-#define PIPING_CARDINAL_AUTONORMALIZE	(1<<3)	//north/south east/west doesn't matter, auto normalize on build.
-
-//HELPERS
-#define PIPING_LAYER_SHIFT(T, PipingLayer) \
-	if(T.dir & (NORTH|SOUTH)) {									\
-		T.pixel_x = (PipingLayer - PIPING_LAYER_DEFAULT) * PIPING_LAYER_P_X;\
-	}																		\
-	if(T.dir & (WEST|EAST)) {										\
-		T.pixel_y = (PipingLayer - PIPING_LAYER_DEFAULT) * PIPING_LAYER_P_Y;\
-	}
-
-#define PIPING_LAYER_DOUBLE_SHIFT(T, PipingLayer) \
-	T.pixel_x = (PipingLayer - PIPING_LAYER_DEFAULT) * PIPING_LAYER_P_X;\
-	T.pixel_y = (PipingLayer - PIPING_LAYER_DEFAULT) * PIPING_LAYER_P_Y;
-
 #define THERMAL_ENERGY(gas) (gas.temperature * gas.heat_capacity())
 #define QUANTIZE(variable)		(round(variable,0.0000001))/*I feel the need to document what happens here. Basically this is used to catch most rounding errors, however it's previous value made it so that
 															once gases got hot enough, most procedures wouldnt occur due to the fact that the mole counts would get rounded away. Thus, we lowered it a few orders of magnititude */

@@ -21,7 +21,8 @@ SUBSYSTEM_DEF(air)
 	var/list/hotspots = list()
 	var/list/networks = list()
 	var/list/pipenets_needing_rebuilt = list()
-	var/list/obj/machinery/atmos_machinery = list()
+	/// Atmospherics machinery that needs processing. Ones that return PROCESS_KILL are removed from this list
+	var/static/list/obj/machinery/atmospherics/atmos_machinery = list()
 	var/list/pipe_init_dirs_cache = list()
 
 	//atmos singletons
@@ -179,7 +180,6 @@ SUBSYSTEM_DEF(air)
 		if(MC_TICK_CHECK)
 			return
 
-
 /datum/controller/subsystem/air/proc/process_react_queue(resumed = 0)
 	if(!resumed)
 		src.currentrun = turf_react_queue.Copy()
@@ -191,7 +191,6 @@ SUBSYSTEM_DEF(air)
 			T.process_cell_reaction()
 		if(MC_TICK_CHECK)
 			return
-
 
 /datum/controller/subsystem/air/proc/process_super_conductivity(resumed = 0)
 	if (!resumed)

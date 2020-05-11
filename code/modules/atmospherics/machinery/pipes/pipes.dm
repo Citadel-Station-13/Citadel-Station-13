@@ -1,3 +1,6 @@
+/**
+  * Pipes. They are expected to always directly exist on a pipeline, rather than holding its own air.
+  */
 /obj/machinery/atmospherics/pipe
 	var/datum/gas_mixture/air_temporary //used when reconstructing a pipeline that broke
 	var/volume = 0

@@ -24,7 +24,9 @@
 	var/can_unwrench = 0
 	var/initialize_directions = 0
 	var/pipe_color
+	/// Our pipe layer.
 	var/piping_layer = PIPING_LAYER_DEFAULT
+	/// Flags controlling behavior. See __DEFINES/atmospherics/pipe_flags
 	var/pipe_flags = NONE
 
 	var/static/list/iconsetids = list()
@@ -46,7 +48,7 @@
 		if(L.ventcrawler)
 			. += "<span class='notice'>Alt-click to crawl through it.</span>"
 
-/obj/machinery/atmospherics/New(loc, process = TRUE, setdir)
+/obj/machinery/atmospherics/Initialize(mapload, process = TRUE, setdir)
 	if(!isnull(setdir))
 		setDir(setdir)
 	if(pipe_flags & PIPING_CARDINAL_AUTONORMALIZE)
@@ -54,9 +56,9 @@
 	nodes = new(device_type)
 	if (!armor)
 		armor = list("melee" = 25, "bullet" = 10, "laser" = 10, "energy" = 100, "bomb" = 0, "bio" = 100, "rad" = 100, "fire" = 100, "acid" = 70)
-	..()
+	. = ..()
 	if(process)
-		SSair.atmos_machinery += src
+		SSair.atmos_machinery += src		// += not |= hope no insane admin decides to fuck with this haha......
 	SetInitDirections()
 
 /obj/machinery/atmospherics/Destroy()
@@ -71,7 +73,23 @@
 		qdel(pipe_vision_img)
 
 	return ..()
-	//return QDEL_HINT_FINDREFERENCE
+
+
+/**
+  * Fully disconnects us from whatever we're connected to.
+  */
+/obj/machinery/atmospherics/proc/Separate(update_icon = TRUE)
+
+	if(update_icon)
+		update_icon()
+
+/**
+  * Automatically connects us, building our network as necessary.
+  */
+/obj/machinery/atmospherics/proc/Join(update_icon = TRUE)
+
+	if(update_icon)
+		update_icon()
 
 /obj/machinery/atmospherics/proc/destroy_network()
 	return
@@ -86,19 +104,22 @@
 		N.disconnect(src)
 		nodes[i] = null
 
-/obj/machinery/atmospherics/proc/getNodeConnects()
-	var/list/node_connects = list()
-	node_connects.len = device_type
+/**
+  * Gets a list of directions we should be trying to connect to.
+  */
+/obj/machinery/atmospherics/proc/node_connect_directions()
+	var/found = 0
+	var/list/connects = list()
+	for(var/dir in GLOB.cardinals)
+		if(found == device_type)
+			break
+		if(dir & initialize_directions)
+			connects += dir
+			found++
 
-	for(var/i in 1 to device_type)
-		for(var/D in GLOB.cardinals)
-			if(D & GetInitDirections())
-				if(D in node_connects)
-					continue
-				node_connects[i] = D
-				break
-	return node_connects
-
+/**
+  * Normalizes our directions to be the same as equivalent directions if it doesn't matter if we're, for example, SOUTH rather than NORTH for straight pipes.
+  */
 /obj/machinery/atmospherics/proc/normalize_cardinal_directions()
 	switch(dir)
 		if(SOUTH)
@@ -118,9 +139,15 @@
 				break
 	update_icon()
 
-/obj/machinery/atmospherics/proc/setPipingLayer(new_layer)
+/**
+  * Sets our piping layer.
+  */
+/obj/machinery/atmospherics/proc/setPipingLayer(new_layer, update_icon = TRUE)
+	Separate(FALSE)
 	piping_layer = (pipe_flags & PIPING_DEFAULT_LAYER_ONLY) ? PIPING_LAYER_DEFAULT : new_layer
-	update_icon()
+	Join(FALSE)
+	if(update_icon)
+		update_icon()
 
 /obj/machinery/atmospherics/proc/can_be_node(obj/machinery/atmospherics/target, iteration)
 	return connection_check(target, piping_layer)
@@ -147,11 +174,12 @@
 /obj/machinery/atmospherics/proc/pipeline_expansion()
 	return nodes
 
+/**
+  * Automatically sets our initialize_directions, which governs what pipes we're going to try to connect to.
+  * Does not do rebuilding or anything.
+  */
 /obj/machinery/atmospherics/proc/SetInitDirections()
 	return
-
-/obj/machinery/atmospherics/proc/GetInitDirections()
-	return initialize_directions
 
 /obj/machinery/atmospherics/proc/returnPipenet()
 	return
