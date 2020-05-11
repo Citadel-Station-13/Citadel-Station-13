@@ -23,7 +23,7 @@
   * from/to new/old minds.
   */
 #define ADD_SKILL_MODIFIER_BODY(path, id, body, prototype) \
-	prototype = GLOB.skill_modifiers[GET_SKILL_MOD_ID(path, id)] || new path(id);\
+	prototype = GLOB.skill_modifiers[GET_SKILL_MOD_ID(path, id)] || new path(id, TRUE);\
 	if(body.mind){\
 		body.mind.add_skill_modifier(prototype.identifier)\
 	} else {\
@@ -43,6 +43,6 @@
 ///Macro used when adding generic singleton skill modifiers.
 #define ADD_SINGLETON_SKILL_MODIFIER(mind, path, id) \
 	if(!GLOB.skill_modifiers[GET_SKILL_MOD_ID(path, id)]){\
-		new path(id)\
+		new path(id, TRUE)\
 	};\
 	mind.add_skill_modifier(GET_SKILL_MOD_ID(path, id))

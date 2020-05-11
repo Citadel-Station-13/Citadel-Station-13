@@ -52,7 +52,7 @@
 		for(var/k in L)
 			var/datum/skill_modifier/M = GLOB.skill_modifiers[k]
 			. = M.apply_modifier(., skill, skill_holder, MODIFIER_TARGET_LEVEL)
-		. = SANITIZE_SKILL_LEVEL(skill, round ? round(.) : .)
+		. = SANITIZE_SKILL_LEVEL(skill, round ? round(., 1) : .)
 
 /**
   * Grabs our affinity for a skill. !!This is a multiplier!!

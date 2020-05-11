@@ -10,7 +10,7 @@ GLOBAL_LIST_EMPTY(potential_mods_per_skill)
 	/// flags for this skill modifier.
 	var/modifier_flags = NONE
 	/// target skills, can be a specific skill typepath or a set of skill flags.
-	var/target_skills = ALL
+	var/target_skills = NONE
 	/// The identifier key this skill modifier is associated with.
 	var/identifier
 	/// skill affinity modifier, can be a multiplier or addendum, depending on the modifier_flags flags.
@@ -22,15 +22,21 @@ GLOBAL_LIST_EMPTY(potential_mods_per_skill)
 	/// Priority of this skill modifier compared to other ones.
 	var/priority = MODIFIER_SKILL_PRIORITY_DEF
 
-/datum/skill_modifier/New(id)
+/datum/skill_modifier/New(id, register = FALSE)
 	identifier = GET_SKILL_MOD_ID(type, id)
 	if(id)
 		var/former_id = identifier
 		var/dupe = 0
 		while(GLOB.skill_modifiers[identifier])
 			identifier = "[former_id][++dupe]"
-	GLOB.skill_modifiers[identifier] = src
 
+	if(register)
+		register()
+
+/datum/skill_modifier/proc/register()
+	if(GLOB.skill_modifiers[identifier])
+		CRASH("Skill modifier identifier \"[identifier]\" already taken.")
+	GLOB.skill_modifiers[identifier] = src
 	if(ispath(target_skills))
 		var/list/mod_L = GLOB.potential_mods_per_skill[target_skills]
 		if(!mod_L)
@@ -147,11 +153,13 @@ GLOBAL_LIST_EMPTY(potential_mods_per_skill)
 		if(MODIFIER_TARGET_AFFINITY)
 			mod = affinity_mod
 
+	var/diff = 0
 	if(modifier_flags & (MODIFIER_SKILL_VIRTUE|MODIFIER_SKILL_HANDICAP))
 		if(modifier_flags & MODIFIER_SKILL_VIRTUE)
 			. = max(., mod)
 		if(modifier_flags & MODIFIER_SKILL_HANDICAP)
 			. = min(., mod)
+		diff = . - mod
 	else if(modifier_flags & MODIFIER_SKILL_MULT)
 		. *= mod
 	else
@@ -164,7 +172,7 @@ GLOBAL_LIST_EMPTY(potential_mods_per_skill)
 				to_access = H.original_levels
 			if(MODIFIER_TARGET_AFFINITY)
 				to_access = H.original_affinities
-		. += value - LAZYACCESS(to_access[identifier], "[skillpath]")
+		. += value - diff - LAZYACCESS(to_access[identifier], "[skillpath]")
 
 ///Body bound modifier signal procs.
 /datum/skill_modifier/proc/on_mind_transfer(datum/mind/source, mob/new_character, mob/old_character)
