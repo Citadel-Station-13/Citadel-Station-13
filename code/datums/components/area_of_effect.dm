@@ -91,8 +91,8 @@
 /datum/component/area_of_effect/proc/on_new_content(turf/T, atom/movable/A)
 	if((whitelist_typecache && !whitelist_typecache[A.type]) || (blacklist_typecache && blacklist_typecache[A.type]))
 		return
-	RegisterSignal(new_mov,  comsig_value, .proc/return_value)
-	range_view_list += new_mov
+	RegisterSignal(A,  comsig_value, .proc/return_value)
+	range_view_list += A
 
 /datum/component/area_of_effect/proc/transfer_sigs(turf/T, path, list/new_baseturfs, flags, list/transferring_comps, list/callbacks)
 	callbacks += CALLBACK(src, .proc/register_changed_turf, CHANGETURF_PROTOTYPE)
