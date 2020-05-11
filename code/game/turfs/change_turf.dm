@@ -90,7 +90,8 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 	var/list/old_baseturfs = baseturfs
 
 	var/list/transferring_comps = list()
-	SEND_SIGNAL(src, COMSIG_TURF_CHANGE, path, new_baseturfs, flags, transferring_comps)
+	var/list/transfer_callbacks = list()
+	SEND_SIGNAL(src, COMSIG_TURF_CHANGE, path, new_baseturfs, flags, transferring_comps, transfer_callbacks)
 	for(var/i in transferring_comps)
 		var/datum/component/comp = i
 		comp.RemoveComponent()
@@ -101,6 +102,14 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 
 	for(var/i in transferring_comps)
 		W.TakeComponent(i)
+	for(var/i in transfer_callbacks)
+		var/datum/callback/C = i
+		if(C.object == CHANGETURF_PROTOTYPE)
+			C.object = W
+		for(var/n in 1 to length(C.arguments))
+			if(C.arguments[n] == CHANGETURF_PROTOTYPE)
+				C.arguments[n] = W
+		C.Invoke()
 
 	if(new_baseturfs)
 		W.baseturfs = new_baseturfs
