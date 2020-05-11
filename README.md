@@ -5,9 +5,9 @@ Based and maintained from Citadel Station 13, that is based and maintained from 
 
 [![forinfinityandbyond](https://user-images.githubusercontent.com/5211576/29499758-4efff304-85e6-11e7-8267-62919c3688a9.gif)](https://www.reddit.com/r/SS13/comments/5oplxp/what_is_the_main_problem_with_byond_as_an_engine/dclbu1a)
 
-[![Build Status](https://api.travis-ci.org/SandPoot/Sandstorm-bois-ss13.svg?branch=master)](https://travis-ci.org/SandPoot/Sandstorm-bois-ss13)
+[![Build Status](https://api.travis-ci.org/SandPoot/Sandstorm-Station-13.svg?branch=master)](https://travis-ci.org/SandPoot/Sandstorm-Station-13)
 
-<img alt="GitHub forks badge" src="https://img.shields.io/github/forks/SandPoot/Sandstorm-bois-ss13"> <img alt="GitHub stars badge" src="https://img.shields.io/github/stars/SandPoot/Sandstorm-bois-ss13"> <a href="http://www.gnu.org/licenses/agpl-3.0.html"><img alt="GitHub license badge" src="https://img.shields.io/github/license/SandPoot/Sandstorm-bois-ss13"></a>
+<img alt="GitHub forks badge" src="https://img.shields.io/github/forks/SandPoot/Sandstorm-Station-13"> <img alt="GitHub stars badge" src="https://img.shields.io/github/stars/SandPoot/Sandstorm-Station-13"> <a href="http://www.gnu.org/licenses/agpl-3.0.html"><img alt="GitHub license badge" src="https://img.shields.io/github/license/SandPoot/Sandstorm-Station-13"></a>
 
 **Upstream Information**  
 **Website:** https://tgstation13.org  
@@ -23,7 +23,7 @@ Based and maintained from Citadel Station 13, that is based and maintained from 
 **Discord:**  [Here](https://discord.gg/E6SQuhz)  
 
 **Sandstorm Station Information**  
-**Code:** https://github.com/SandPoot/Sandstorm-bois-ss13  
+**Code:** https://github.com/SandPoot/Sandstorm-Station-13
 **Discord:**  https://discord.gg/Jx7A7dW.  
 
 ## DOWNLOADING
