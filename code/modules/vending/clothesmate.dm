@@ -159,6 +159,9 @@
 					/obj/item/clothing/under/costume/jabroni = 2,
 					/obj/item/clothing/suit/vapeshirt = 2,
 					/obj/item/clothing/suit/hooded/wintercoat = 2,
+					/obj/item/clothing/suit/hooded/wintercoat/aformal = 1,
+					/obj/item/clothing/suit/hooded/wintercoat/narsie/fake = 1,
+					/obj/item/clothing/suit/hooded/wintercoat/ratvar/fake = 1,
 					/obj/item/clothing/under/costume/geisha = 4,
 					/obj/item/clothing/under/misc/keyholesweater = 3,
 					/obj/item/clothing/under/misc/staffassistant = 5)
