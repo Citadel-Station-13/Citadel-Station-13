@@ -3414,6 +3414,7 @@
 #include "sandcode\code\modules\cargo\packs\emergency.dm"
 #include "sandcode\code\modules\clothing\masks\miscellaneous.dm"
 #include "sandcode\code\modules\crafting\recipes\recipes_misc.dm"
+#include "sandcode\code\modules\hydroponics\grown\misc.dm"
 #include "sandcode\code\modules\integrated_electronics\subtypes\output.dm"
 #include "sandcode\code\modules\misc\misc.dm"
 #include "sandcode\code\modules\mob\emote.dm"
