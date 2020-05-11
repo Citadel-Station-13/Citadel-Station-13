@@ -222,17 +222,19 @@
 	icon_state = "lockbox+l"
 	item_state = "syringe_kit"
 
-/obj/item/gunbox/attack_self(mob/user)
-	var/option
-	option = list("X-01 Multiphase" = /obj/item/gun/energy/e_gun/hos,
-				"MWS-01 'Big Iron'" = /obj/item/storage/secure/briefcase/mws_pack_hos,
-				"Cancel" = null)
-	var/choice = input(usr, "Choose weapon:", "Modular Weapon Box") as null|anything in option
-	if(choice)
-		var/obj/A
-		A = new choice
-		user.put_in_hands(A)
-		qdel(src)
+/obj/item/choice_beacon/hosgun
+	name = "personal weapon beacon"
+	desc = "Use this to summon your personal Head of Security issued firearm!"
+
+/obj/item/choice_beacon/hosgun/generate_display_names()
+	var/static/list/hos_gun_list
+	if(!hos_gun_list)
+		hos_gun_list = list()
+		var/list/templist = typesof(/obj/item/storage/secure/briefcase/hos/) //we have to convert type = name to name = type, how lovely!
+		for(var/V in templist)
+			var/atom/A = V
+			hos_gun_list[initial(A.name)] = A
+	return hos_gun_list
 
 /obj/item/storage/secure/briefcase/mws_pack
 	name = "\improper \'MWS\' gun kit"
@@ -244,11 +246,11 @@
 	for(var/path in subtypesof(/obj/item/ammo_casing/mws_batt))
 		new path(src)
 
-/obj/item/storage/secure/briefcase/mws_pack_hos
+/obj/item/storage/secure/briefcase/hos/mws_pack_hos
 	name = "\improper \'MWS\' gun kit"
 	desc = "A storage case for a multi-purpose handgun. Variety hour!"
 
-/obj/item/storage/secure/briefcase/mws_pack_hos/PopulateContents()
+/obj/item/storage/secure/briefcase/hos/mws_pack_hos/PopulateContents()
 	new /obj/item/gun/ballistic/revolver/mws(src)
 	new /obj/item/ammo_box/magazine/mws_mag(src)
 	new /obj/item/ammo_casing/mws_batt/lethal(src)
@@ -256,3 +258,10 @@
 	new /obj/item/ammo_casing/mws_batt/stun(src)
 	new /obj/item/ammo_casing/mws_batt/stun(src)
 	new /obj/item/ammo_casing/mws_batt/ion(src)
+
+/obj/item/storage/secure/briefcase/hos/multiphase_box
+	name = "\improper X-01 Multiphase energy gun box"
+	desc = "A storage case for a high-tech energy firearm."
+
+/obj/item/storage/secure/briefcase/mws_pack_hos/PopulateContents()
+	new /obj/item/gun/energy/e_gun/hos(src)
