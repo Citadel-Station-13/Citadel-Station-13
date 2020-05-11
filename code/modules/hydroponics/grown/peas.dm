@@ -36,7 +36,7 @@
 	name = "pack of laughin' peas"
 	desc = "These seeds give off a very soft purple glow.. they should grow into Laughin' Peas."
 	icon_state = "seed-laughpeas"
-	species = "peaslaughing"
+	species = "laughingpeas"
 	plantname = "Laughin' Peas"
 	product = /obj/item/reagent_containers/food/snacks/grown/laugh
 	maturation = 7
@@ -71,7 +71,7 @@
 	name = "pack of world peas"
 	desc = "These rather large seeds give off a soothing blue glow..."
 	icon_state = "seed-worldpeas"
-	species = "peasworld"
+	species = "worldpeas"
 	plantname = "World Peas"
 	product = /obj/item/reagent_containers/food/snacks/grown/peace
 	maturation = 20
