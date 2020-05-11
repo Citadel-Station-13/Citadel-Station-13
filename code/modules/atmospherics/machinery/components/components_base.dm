@@ -2,6 +2,9 @@
 // On top of that, now people can add component-speciic procs/vars if they want!
 
 /obj/machinery/atmospherics/components
+	/// If this is TRUE, we are directly attached to our pipe network instead of utilizing reconcile_air() to equalize with the network every tick. THIS SHOULD NEVER BE CHANGED IN RUNTIME.
+	VAR_FINAL(pipenet_direct_attach) = FALSE
+
 	var/welded = FALSE //Used on pumps and scrubbers
 	var/showpipe = FALSE
 	var/shift_underlay_only = TRUE //Layering only shifts underlay?

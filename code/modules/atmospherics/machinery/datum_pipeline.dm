@@ -1,5 +1,13 @@
 /datum/pipeline
+	/// Our stored air, consisting of all direct attached components
 	var/datum/gas_mixture/air
+	/// Pipes. They are all directly attached, with no gas mixtures of their own.
+	var/list/obj/machinery/atmospherics/pipe/pipes
+	/// Components that are directly attached.
+	var/list/obj/machinery/atmospherics/components/direct_components
+	/// Components that are not directly attached - These split air with us using reconcile_air().
+	var/list/obj/machinery/atmospherics/components/indirect_components
+
 	var/list/datum/gas_mixture/other_airs
 
 	var/list/obj/machinery/atmospherics/pipe/members
@@ -8,10 +16,13 @@
 	var/update = TRUE
 
 /datum/pipeline/New()
-	other_airs = list()
-	members = list()
-	other_atmosmch = list()
+	pipes = list()
+	direct_components = list()
+	indirect_components = list()
 	SSair.networks += src
+
+	other_airs = list()
+
 
 /datum/pipeline/Destroy()
 	SSair.networks -= src

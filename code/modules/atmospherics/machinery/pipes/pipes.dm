@@ -3,7 +3,8 @@
   */
 /obj/machinery/atmospherics/pipe
 	var/datum/gas_mixture/air_temporary //used when reconstructing a pipeline that broke
-	var/volume = 0
+	/// Our volume, in liters.
+	var/volume
 
 	level = 1
 
@@ -16,10 +17,11 @@
 	buckle_requires_restraints = 1
 	buckle_lying = -1
 
-/obj/machinery/atmospherics/pipe/New()
+/obj/machinery/atmospherics/pipe/Initialize(mapload)
 	add_atom_colour(pipe_color, FIXED_COLOUR_PRIORITY)
-	volume = 35 * device_type
-	..()
+	if(isnull(volume))
+		volume = 35 * device_type
+	return ..()
 
 /obj/machinery/atmospherics/pipe/nullifyNode(i)
 	var/obj/machinery/atmospherics/oldN = nodes[i]
