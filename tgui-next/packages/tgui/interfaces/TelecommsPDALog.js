@@ -14,16 +14,17 @@ export const TelePDALog = props => {
   } = data;
   const valid = (status && selected && authenticated);
 
-  if(data.hacking) {
-    return ( //should have used en -> jp unicode -> other encoding method -> utf8
+  if (data.hacking) {
+    return ( // should have used en -> jp unicode -> other encoding method->utf8
       <Fragment>
         <NoticeBox>
-          {"%$�(�:SYS&EM INTRN@L ACfES VIOL�TIa█ DEtE₡TED! Ree3ARcinG A█ BAaKUP RdST�RE PbINT [0xcff32ca/ - PLfASE aAIT"}
+          {"%$�(�:SYS&EM INTRN@L ACfES VIOL�TIa█ DEtE₡TED! Ree3AR\
+            cinG A█ BAaKUP RdST�RE PbINT [0xcff32ca/ - PLfASE aAIT"}
         </NoticeBox>
         <Section>
           {data.hacking_msg}
         </Section>
-      </Fragment> //Custom text because ai gets to see normaltext while people see binary
+      </Fragment> // ai gets to see normaltext while people see base64
     );
   }
 
@@ -71,9 +72,12 @@ export const TelePDALog = props => {
           </LabeledList.Item>
           <LabeledList.Item
             label="PDA Server Status"
-            color={status ? 'good' : 'bad'}
-            >
-            {status ? 'Running' : 'Server down! Log functionality unaccessable!'}
+            color={status ? 'good' : 'bad'}>
+            {status ? (
+              'Running'
+            ) : (
+              'Server down! Log functionality unaccessable!'
+            )}
           </LabeledList.Item>
         </LabeledList>
       </Section>
@@ -91,13 +95,13 @@ export const TelePDALog = props => {
             <Button
               content="Refresh"
               onClick={() => act('refresh')}
-              />
+            />
             <Button
               content="Delete Logs"
               onClick={() => act('delete', {
-                'value':'message_log'
+                'value': 'message_log',
               })}
-              />
+            />
           </Section>
           <Section>
             {message_logs.map(message => {
@@ -116,7 +120,7 @@ export const TelePDALog = props => {
                         <Button
                           content="Delete"
                           onClick={() => act('delete', {
-                            'value':message.ref
+                            'value': message.ref,
                           })}
                         />
                       )}>
@@ -124,7 +128,7 @@ export const TelePDALog = props => {
                     </LabeledList.Item>
                   </LabeledList>
                 </Section>
-              )
+              );
             })}
           </Section>
         </Tabs.Tab>
@@ -136,13 +140,13 @@ export const TelePDALog = props => {
             <Button
               content="Refresh"
               onClick={() => act('refresh')}
-              />
+            />
             <Button
               content="Delete Logs"
               onClick={() => act('delete', {
-                'value':'recon_logs'
+                'value': 'recon_logs',
               })}
-              />
+            />
           </Section>
           <Section>
             {recon_logs.map(message => {
@@ -161,7 +165,7 @@ export const TelePDALog = props => {
                         <Button
                           content="Delete"
                           onClick={() => act('delete', {
-                            'value':message.ref
+                            'value': message.ref,
                           })}
                         />
                       )}>
@@ -178,7 +182,7 @@ export const TelePDALog = props => {
                     </LabeledList.Item>
                   </LabeledList>
                 </Section>
-              )
+              );
             })}
           </Section>
         </Tabs.Tab>
@@ -190,5 +194,5 @@ export const TelePDALog = props => {
         </Tabs.Tab>
       </Tabs>
     </Fragment>
-  )
-}
+  );
+};
