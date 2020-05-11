@@ -110,7 +110,7 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 
 				to_chat(M, "<span class='warning'>You feel a strange sensation building in your mind as you realise there's two of you, before you get a chance to think about it, you suddenly split from your old body, and find yourself face to face with yourself.</span>")
 				M.visible_message("[M] suddenly shudders, and splits into two identical twins!")
-				SM.copy_known_languages_from(M, FALSE)
+				SM.copy_languages(M, LANGUAGE_MIND)
 				playerClone =  TRUE
 				M.next_move_modifier = 1
 				M.nutrition -= 500

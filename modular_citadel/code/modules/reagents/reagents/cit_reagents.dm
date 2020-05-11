@@ -28,7 +28,7 @@
 	gender = PLURAL
 	density = 0
 	layer = ABOVE_NORMAL_TURF_LAYER
-	icon = 'modular_citadel/icons/obj/genitals/effects.dmi'
+	icon = 'icons/obj/genitals/effects.dmi'
 	icon_state = "semen1"
 	random_icon_states = list("semen1", "semen2", "semen3", "semen4")
 
@@ -59,7 +59,7 @@
 	gender = PLURAL
 	density = 0
 	layer = ABOVE_NORMAL_TURF_LAYER
-	icon = 'modular_citadel/icons/obj/genitals/effects.dmi'
+	icon = 'icons/obj/genitals/effects.dmi'
 	icon_state = "fem1"
 	random_icon_states = list("fem1", "fem2", "fem3", "fem4")
 	blood_state = null
@@ -92,8 +92,7 @@
 /datum/reagent/drug/aphrodisiac
 	name = "Crocin"
 	description = "Naturally found in the crocus and gardenia flowers, this drug acts as a natural and safe aphrodisiac."
-	taste_description = "strawberry roofies"
-	taste_mult = 2 //Hide the roofies in stronger flavors
+	taste_description = "strawberries"
 	color = "#FFADFF"//PINK, rgb(255, 173, 255)
 	can_synth = FALSE
 

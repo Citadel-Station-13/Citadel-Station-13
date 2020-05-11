@@ -5,10 +5,6 @@
 "ab" = (
 /turf/open/floor/plating/snowed/smoothed/icemoon,
 /area/icemoon/surface/outdoors)
-"ac" = (
-/obj/effect/mob_spawn/human/engineer/rig,
-/turf/open/floor/plating/snowed/smoothed/icemoon,
-/area/icemoon/surface/outdoors)
 "ad" = (
 /obj/machinery/power/floodlight,
 /obj/structure/cable{
@@ -176,10 +172,9 @@
 /turf/open/floor/plating/snowed/smoothed/icemoon,
 /area/icemoon/surface/outdoors)
 "aI" = (
-/obj/item/pda/engineering{
-	note = "To-do: Check on singularity status. Get a pint at eat. Nag the research manager for RCDs."
-	},
-/turf/open/floor/plating/asteroid/snow/icemoon,
+/obj/effect/turf_decal/stripes/line,
+/obj/item/clothing/suit/space/hardsuit/engine,
+/turf/open/floor/plating/snowed/smoothed/icemoon,
 /area/icemoon/surface/outdoors)
 "aJ" = (
 /obj/effect/decal/cleanable/dirt,
@@ -337,20 +332,10 @@
 /obj/effect/decal/cleanable/blood/splatter,
 /turf/open/floor/plating/asteroid/snow/icemoon,
 /area/icemoon/surface/outdoors)
-"be" = (
-/obj/item/card/id{
-	access = list(200,204,11,12,10);
-	assignment = "Senior Station Engineer";
-	desc = "A card used to provide ID and determine access across the station. There's blood dripping from the corner. Ew.";
-	name = "George 'Plastic' Miller's ID Card (Senior Station Engineer)";
-	registered_name = "George 'Plastic' Miller"
-	},
-/turf/open/floor/plating/asteroid/snow/icemoon,
-/area/icemoon/surface/outdoors)
 "bf" = (
-/obj/effect/gibspawner/generic,
 /obj/effect/decal/cleanable/blood,
 /obj/effect/decal/cleanable/blood/gibs/core,
+/obj/item/clothing/suit/space/hardsuit/engine,
 /turf/open/floor/plating/asteroid/snow/icemoon,
 /area/icemoon/surface/outdoors)
 "bg" = (
@@ -534,10 +519,6 @@
 	},
 /obj/item/shard/plasma,
 /turf/open/floor/plating/snowed/smoothed/icemoon,
-/area/icemoon/surface/outdoors)
-"bz" = (
-/obj/item/clothing/suit/space/hardsuit/engine,
-/turf/open/floor/plating/asteroid/snow/icemoon,
 /area/icemoon/surface/outdoors)
 "bA" = (
 /obj/item/flashlight/flare,
@@ -997,13 +978,6 @@
 	},
 /turf/open/floor/plating/icemoon,
 /area/icemoon/surface/outdoors)
-"cU" = (
-/obj/effect/mob_spawn/human/engineer/rig,
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/turf/open/floor/plating/icemoon,
-/area/icemoon/surface/outdoors)
 "cV" = (
 /obj/effect/turf_decal/trimline/neutral/filled/line,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -1016,12 +990,7 @@
 	},
 /turf/open/floor/plating/snowed/smoothed/icemoon,
 /area/icemoon/surface/outdoors)
-"cX" = (
-/obj/machinery/rnd/production/circuit_imprinter,
-/turf/open/floor/plating/snowed/smoothed/icemoon,
-/area/icemoon/surface/outdoors)
 "cY" = (
-/obj/machinery/rnd/production/protolathe/department/engineering,
 /obj/machinery/light/small/broken,
 /turf/open/floor/plating/snowed/smoothed/icemoon,
 /area/icemoon/surface/outdoors)
@@ -1425,9 +1394,9 @@ aa
 aa
 aa
 aa
-aI
 aa
-be
+aa
+aa
 aa
 aa
 aa
@@ -1440,7 +1409,7 @@ ak
 aa
 "}
 (9,1,1) = {"
-ac
+ab
 ab
 al
 ap
@@ -1449,7 +1418,7 @@ aa
 aa
 aa
 bf
-bz
+aa
 aa
 aa
 af
@@ -1495,7 +1464,7 @@ bA
 aa
 aa
 af
-cA
+aI
 DM
 dc
 al
@@ -1517,7 +1486,7 @@ aa
 ab
 ab
 cF
-cU
+gA
 al
 al
 aO
