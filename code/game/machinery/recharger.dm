@@ -152,6 +152,8 @@
 				R.cell.give(R.cell.chargerate * recharge_coeff)
 				use_power(250 * recharge_coeff)
 				using_power = 1
+			if(R.BB == null)
+				R.chargeshot()
 			update_icon(using_power)
 
 		if(istype(charging, /obj/item/ammo_box/magazine/mws_mag))
@@ -162,6 +164,8 @@
 					batt.cell.give(batt.cell.chargerate * recharge_coeff)
 					use_power(250 * recharge_coeff)
 					using_power = 1
+				if(batt.BB == null)
+					batt.chargeshot()
 			update_icon(using_power)
 
 	else
