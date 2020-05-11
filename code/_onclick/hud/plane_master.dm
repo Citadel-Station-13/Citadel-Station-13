@@ -105,12 +105,27 @@
 	. = ..()
 	filters += filter(type="alpha", render_source=FIELD_OF_VISION_BLOCKER_RENDER_TARGET, flags=MASK_INVERSE)
 
-///Used to display the owner (and what they are grabbing) through the FoV plane mask.
+///Used to display the owner  through the FoV plane mask.
 /obj/screen/plane_master/field_of_vision_blocker
-	name = "field of vision inset underlay plane master"
+	name = "field of vision blocker plane master"
 	plane = FIELD_OF_VISION_BLOCKER_PLANE
 	render_target = FIELD_OF_VISION_BLOCKER_RENDER_TARGET
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+
+/**
+  * Used to display what the user is grabbing through the FoV plane mask, without uncovering whatever over it.
+  * If you are wondering why the owner is using a blocker instead. That's because the combined render target+source
+  * visual of this plane will still appear a transparent around the border of the FoV mask, which can be quite an itch.
+  */
+/obj/screen/plane_master/field_of_vision_pulled
+	name = "field of vision pulled overlay plane master"
+	plane = FIELD_OF_VISION_PULLED_PLANE
+	render_target = FIELD_OF_VISION_PULLED_RENDER_TARGET
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+
+/obj/screen/plane_master/field_of_vision_pulled/Initialize()
+	. = ..()
+	filters += filter(type="alpha", render_source=FIELD_OF_VISION_RENDER_TARGET)
 
 ///Contains all lighting objects
 /obj/screen/plane_master/lighting

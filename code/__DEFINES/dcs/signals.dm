@@ -141,6 +141,9 @@
 	#define HEARING_SOURCE 8*/
 #define COMSIG_MOVABLE_DISPOSING "movable_disposing"			//called when the movable is added to a disposal holder object for disposal movement: (obj/structure/disposalholder/holder, obj/machinery/disposal/source)
 #define COMSIG_MOVABLE_TELEPORTED "movable_teleported"			//from base of do_teleport(): (channel, turf/origin, turf/destination)
+#define COMSIG_MOVABLE_START_PULLING "movable_start_pulling"	//from base of atom/movable/start_pulling(): (atom/movable/AM, state, force, supress_message)
+#define COMSIG_MOVABLE_STOP_PULLING "movable_stop_pulling"		//from base of atom/movable/stop_pulling(): (atom/movable/AM)
+
 // /mind signals
 #define  COMSIG_PRE_MIND_TRANSFER "pre_mind_transfer"			//from base of mind/transfer_to() before it's done: (new_character, old_character)
 	#define COMPONENT_STOP_MIND_TRANSFER 1						//stops the mind transfer from happening.

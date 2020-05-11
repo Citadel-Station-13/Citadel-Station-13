@@ -54,6 +54,8 @@
 	var/image/visual_shadow
 	/// An image whose render_source is kept up to date to prevent the topmost location the mob is in from being hidden by the mask.
 	var/image/owner_mask
+	/// An image whose render_source is kept up to date with whatever the mob is pulling right now. displayed on yet another plane.
+	var/image/pulled_image
 	/// A list of nested locations the mob is in, to ensure the above image works correctly.
 	var/list/nested_locs = list()
 /**
@@ -71,6 +73,12 @@
 /datum/component/field_of_vision/RegisterWithParent()
 	. = ..()
 	var/mob/M = parent
+	pulled_image = new()
+	pulled_image.appearance_flags = RESET_TRANSFORM
+	pulled_image.plane = FIELD_OF_VISION_PULLED_PLANE
+	if(M.pulling)
+		pulled_image.loc = M.pulling
+		CENTERED_RENDER_SOURCE(pulled_image, M.pulling, src)
 	if(M.client)
 		generate_fov_holder(M, angle)
 	RegisterSignal(M, COMSIG_MOB_CLIENT_LOGIN, .proc/on_mob_login)
@@ -81,6 +89,8 @@
 	RegisterSignal(M, COMSIG_MOB_CLIENT_CHANGE_VIEW, .proc/on_change_view)
 	RegisterSignal(M, COMSIG_MOB_RESET_PERSPECTIVE, .proc/on_reset_perspective)
 	RegisterSignal(M, COMSIG_MOB_IS_VIEWER, .proc/is_viewer)
+	RegisterSignal(M, COMSIG_MOVABLE_START_PULLING, .proc/on_start_pulling)
+	RegisterSignal(M, COMSIG_MOVABLE_STOP_PULLING, .proc/on_stop_pulling)
 
 /datum/component/field_of_vision/UnregisterFromParent()
 	. = ..()
@@ -91,15 +101,18 @@
 			M.client.images -= owner_mask
 			M.client.images -= shadow_mask
 			M.client.images -= visual_shadow
+			M.client.images -= pulled_image
 		qdel(fov, TRUE) // Forced.
 		fov = null
 		QDEL_NULL(owner_mask)
+		QDEL_NULL(pulled_image)
 	if(length(nested_locs))
 		UNREGISTER_NESTED_LOCS(nested_locs, COMSIG_MOVABLE_MOVED, 1)
 	UnregisterSignal(M, list(COMSIG_MOB_CLIENT_LOGIN, COMSIG_MOB_CLIENT_LOGOUT,
 							COMSIG_MOB_GET_VISIBLE_MESSAGE, COMSIG_MOB_EXAMINATE,
 							COMSIG_MOB_VISIBLE_ATOMS, COMSIG_MOB_RESET_PERSPECTIVE,
-							COMSIG_MOB_CLIENT_CHANGE_VIEW, COMSIG_MOB_IS_VIEWER))
+							COMSIG_MOB_CLIENT_CHANGE_VIEW, COMSIG_MOB_IS_VIEWER,
+							COMSIG_MOVABLE_START_PULLING, COMSIG_MOVABLE_STOP_PULLING))
 
 /**
   * Generates the holder and images (if not generated yet) and adds them to client.images.
@@ -134,6 +147,7 @@
 	M.client.images += shadow_mask
 	M.client.images += visual_shadow
 	M.client.images += owner_mask
+	M.client.images += pulled_image
 	if(M.client.view != "[current_fov_size[1]]x[current_fov_size[2]]")
 		resize_fov(current_fov_size, getviewsize(M.client.view))
 
@@ -168,6 +182,14 @@
 								COMSIG_LIVING_REVIVE, COMSIG_ROBOT_UPDATE_ICONS))
 	if(length(nested_locs))
 		UNREGISTER_NESTED_LOCS(nested_locs, COMSIG_MOVABLE_MOVED, 1)
+
+/datum/component/field_of_vision/proc/on_start_pulling(atom/movable/source, atom/movable/AM, state, force, supress_message)
+	pulled_image.loc = AM
+	CENTERED_RENDER_SOURCE(pulled_image, AM, src)
+
+/datum/component/field_of_vision/proc/on_stop_pulling(atom/movable/source, atom/movable/AM)
+	pulled_image.loc = null
+	pulled_image.render_source = null
 
 /datum/component/field_of_vision/proc/on_dir_change(mob/source, old_dir, new_dir)
 	fov.dir = new_dir
