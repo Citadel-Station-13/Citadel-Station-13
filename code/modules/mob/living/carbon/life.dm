@@ -513,7 +513,6 @@ GLOBAL_LIST_INIT(ballmer_windows_me_msg, list("Yo man, what if, we like, uh, put
 											"Dude, radical idea: H.O.N.K mechs but with no bananium required.",
 											"Best idea ever: Disposal pipes instead of hallways.",
 											"What if we use a language that was written on a napkin and created over 1 weekend for all of our servers?",
-											"What if we use a language that was written on a napkin and created over 1 weekend for all of our servers?",
 											"What if we took a locker, some random trash, and made an exosuit out of it? Wouldn't that be like, super cool and stuff?",
 											"Okay, hear me out, what if we make illegal things not illegal, so that sec stops arresting us for having it?",
 											"I have a crazy idea, guys. Rather than having monkeys to test on, what if we only used apes?",
