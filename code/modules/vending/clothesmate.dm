@@ -128,17 +128,15 @@
 					/obj/item/clothing/under/costume/christmas/green = 3,
 					/obj/item/clothing/under/costume/christmas/croptop = 3,
 					/obj/item/clothing/under/costume/christmas/croptop/green = 3,
-					*/
 					/obj/item/clothing/suit/hooded/wintercoat/christmascoatr = 3,
 					/obj/item/clothing/suit/hooded/wintercoat/christmascoatg = 3,
 					/obj/item/clothing/suit/hooded/wintercoat/christmascoatrg = 3,
-					/*Commenting out until next Christmas or made automatic
 					/obj/item/clothing/head/christmashat = 3,
 					/obj/item/clothing/head/christmashatg = 3,
-					*/
 					/obj/item/clothing/shoes/winterboots/christmasbootsr = 3,
 					/obj/item/clothing/shoes/winterboots/christmasbootsg = 3,
 					/obj/item/clothing/shoes/winterboots/santaboots = 3,
+					*/
 					/obj/item/clothing/head/cowboyhat = 3,
 					/obj/item/clothing/head/cowboyhat/black = 3,
 					/obj/item/clothing/head/cowboyhat/white = 3,
@@ -160,6 +158,7 @@
 					/obj/item/clothing/suit/jacket/letterman_syndie = 5,
 					/obj/item/clothing/under/costume/jabroni = 2,
 					/obj/item/clothing/suit/vapeshirt = 2,
+					/obj/item/clothing/suit/hooded/wintercoat = 2,
 					/obj/item/clothing/under/costume/geisha = 4,
 					/obj/item/clothing/under/misc/keyholesweater = 3,
 					/obj/item/clothing/under/misc/staffassistant = 5)
