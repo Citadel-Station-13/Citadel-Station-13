@@ -89,7 +89,7 @@
 	temperature_archived = temperature
 
 /turf/open/archive()
-	ARCHIVE_TEMPERATURE(air)
+	air.archive()
 	archived_cycle = SSair.times_fired
 	temperature_archived = temperature
 
@@ -117,11 +117,10 @@
 	if(!air)
 		return
 	. = new /list
-	var/list/gases = air.gases
-	for(var/id in gases)
+	for(var/id in air.get_gases())
 		if (nonoverlaying_gases[id])
 			continue
-		var/gas = gases[id]
+		var/gas = air.get_moles(id)
 		var/gas_overlay = GLOB.meta_gas_overlays[id]
 		if(gas_overlay && gas > GLOB.meta_gas_visibility[id])
 			. += gas_overlay[min(FACTOR_GAS_VISIBLE_MAX, CEILING(gas / MOLES_GAS_VISIBLE_STEP, 1))]
@@ -136,7 +135,7 @@
 /////////////////////////////SIMULATION///////////////////////////////////
 
 #define LAST_SHARE_CHECK \
-	var/last_share = our_air.last_share;\
+	var/last_share = our_air.get_last_share();\
 	if(last_share > MINIMUM_AIR_TO_SUSPEND){\
 		our_excited_group.reset_cooldowns();\
 		cached_atmos_cooldown = 0;\
@@ -215,7 +214,7 @@
 	if (planet_atmos) //share our air with the "atmosphere" "above" the turf
 		var/datum/gas_mixture/G = new
 		G.copy_from_turf(src)
-		ARCHIVE_TEMPERATURE(G)
+		G.archive()
 		if(our_air.compare(G))
 			if(!our_excited_group)
 				var/datum/excited_group/EG = new
@@ -226,16 +225,11 @@
 
 	SSair.add_to_react_queue(src)
 
-	if((!our_excited_group && !(our_air.temperature > MINIMUM_TEMPERATURE_START_SUPERCONDUCTION && consider_superconductivity(starting = TRUE))) \
+	if((!our_excited_group && !(our_air.return_temperature() > MINIMUM_TEMPERATURE_START_SUPERCONDUCTION && consider_superconductivity(starting = TRUE))) \
 	  || (cached_atmos_cooldown > (EXCITED_GROUP_DISMANTLE_CYCLES * 2)))
 		SSair.remove_from_active(src)
 
 	atmos_cooldown = cached_atmos_cooldown
-
-/turf/open/space/process_cell(fire_count) //dumb hack to prevent space pollution
-	. = ..()
-	var/datum/gas_mixture/immutable/I = space_gas
-	I.after_process_cell()
 
 /turf/proc/process_cell_reaction()
 	SSair.remove_from_react_queue(src)
@@ -317,7 +311,6 @@
 	var/datum/gas_mixture/A = new
 
 	//make local for sanic speed
-	var/list/A_gases = A.gases
 	var/list/turf_list = src.turf_list
 	var/turflen = turf_list.len
 	var/space_in_group = FALSE
@@ -328,12 +321,10 @@
 			space_in_group = TRUE
 			qdel(A)
 			A = new /datum/gas_mixture/immutable/space()
-			A_gases = A.gases //update the cache
 			break
 		A.merge(T.air)
 
-	for(var/id in A_gases)
-		A_gases[id] /= turflen
+	A.multiply(1/turflen)
 
 	for(var/t in turf_list)
 		var/turf/open/T = t
@@ -430,7 +421,7 @@
 	//Conduct with air on my tile if I have it
 	if(!blocks_air)
 		temperature = air.temperature_share(null, thermal_conductivity, temperature, heat_capacity)
-	..((blocks_air ? temperature : air.temperature))
+	..((blocks_air ? temperature : air.return_temperature()))
 
 /turf/proc/consider_superconductivity()
 	if(!thermal_conductivity)
@@ -440,7 +431,7 @@
 	return TRUE
 
 /turf/open/consider_superconductivity(starting)
-	if(air.temperature < (starting?MINIMUM_TEMPERATURE_START_SUPERCONDUCTION:MINIMUM_TEMPERATURE_FOR_SUPERCONDUCTION))
+	if(air.return_temperature() < (starting?MINIMUM_TEMPERATURE_START_SUPERCONDUCTION:MINIMUM_TEMPERATURE_FOR_SUPERCONDUCTION))
 		return FALSE
 	if(air.heat_capacity() < M_CELL_WITH_RATIO) // Was: MOLES_CELLSTANDARD*0.1*0.05 Since there are no variables here we can make this a constant.
 		return FALSE

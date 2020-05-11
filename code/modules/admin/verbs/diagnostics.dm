@@ -1,15 +1,14 @@
 /proc/show_air_status_to(turf/target, mob/user)
 	var/datum/gas_mixture/env = target.return_air()
-	var/list/env_gases = env.gases
 	var/burning = FALSE
 	if(isopenturf(target))
 		var/turf/open/T = target
 		if(T.active_hotspot)
 			burning = TRUE
 
-	var/list/lines = list("<span class='adminnotice'>[AREACOORD(target)]: [env.temperature] K ([env.temperature - T0C] C), [env.return_pressure()] kPa[(burning)?(", <font color='red'>burning</font>"):(null)]</span>")
-	for(var/id in env_gases)
-		var/moles = env_gases[id]
+	var/list/lines = list("<span class='adminnotice'>[AREACOORD(target)]: [env.return_temperature()] K ([env.return_temperature() - T0C] C), [env.return_pressure()] kPa[(burning)?(", <font color='red'>burning</font>"):(null)]</span>")
+	for(var/id in env.get_gases())
+		var/moles = env.get_moles(id)
 		if (moles >= 0.00001)
 			lines += "[GLOB.meta_gas_names[id]]: [moles] mol"
 	to_chat(usr, lines.Join("\n"))

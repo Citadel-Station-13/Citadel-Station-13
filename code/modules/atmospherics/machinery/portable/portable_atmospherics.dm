@@ -19,8 +19,8 @@
 	SSair.atmos_machinery += src
 
 	air_contents = new
-	air_contents.volume = volume
-	air_contents.temperature = T20C
+	air_contents.set_volume(volume)
+	air_contents.set_temperature(T20C)
 
 	return 1
 
