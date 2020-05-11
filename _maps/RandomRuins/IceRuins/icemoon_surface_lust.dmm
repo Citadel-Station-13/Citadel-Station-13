@@ -20,12 +20,6 @@
 	},
 /turf/open/floor/mineral/diamond,
 /area/icemoon/surface/outdoors)
-"f" = (
-/obj/structure/sign/poster/contraband/lusty_xenomorph,
-/obj/structure/falsewall/abductor,
-/obj/structure/fans/tiny,
-/turf/open/floor/mineral/diamond,
-/area/icemoon/surface/outdoors)
 
 (1,1,1) = {"
 a
@@ -101,7 +95,7 @@ d
 e
 d
 c
-f
+b
 a
 a
 "}
