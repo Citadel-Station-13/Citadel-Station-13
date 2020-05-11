@@ -41,7 +41,7 @@
 
 /obj/item/clothing/head/helmet/space/hardsuit/dropped(mob/user)
 	..()
-	if(suit)
+	if(suit && !ismob(loc)) //equipped() will handle mob cases, so it doesn't disengage twice.
 		suit.RemoveHelmet()
 		soundloop.stop(user)
 

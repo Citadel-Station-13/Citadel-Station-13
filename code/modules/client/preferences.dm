@@ -94,8 +94,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/skin_tone = "caucasian1"		//Skin color
 	var/use_custom_skin_tone = FALSE
 	var/eye_color = "000"				//Eye color
-	var/horn_color = "85615a"			//Horn color
-	var/wing_color = "fff"				//Wing color
 	var/datum/species/pref_species = new /datum/species/human()	//Mutant race
 	var/list/features = list("mcolor" = "FFF",
 		"mcolor2" = "FFF",
@@ -104,8 +102,10 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		"tail_human" = "None",
 		"snout" = "Round",
 		"horns" = "None",
+		"horns_color" = "85615a",
 		"ears" = "None",
 		"wings" = "None",
+		"wings_color" = "FFF",
 		"frills" = "None",
 		"deco_wings" = "None",
 		"spines" = "None",
@@ -153,6 +153,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		"ipc_screen" = "Sunburst",
 		"ipc_antenna" = "None",
 		"flavor_text" = "",
+		"ooc_notes" = "",
 		"meat_type" = "Mammalian",
 		"body_model" = MALE,
 		"body_size" = RESIZE_DEFAULT_SIZE
@@ -348,6 +349,16 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					dat += "[features["flavor_text"]]"
 			else
 				dat += "[TextPreview(features["flavor_text"])]...<BR>"
+			dat += "<h2>OOC notes</h2>"
+			dat += "<a href='?_src_=prefs;preference=ooc_notes;task=input'><b>Set OOC notes</b></a><br>"
+			var/ooc_notes_len = length(features["ooc_notes"])
+			if(ooc_notes_len <= 40)
+				if(!ooc_notes_len)
+					dat += "\[...\]"
+				else
+					dat += "[features["ooc_notes"]]"
+			else
+				dat += "[TextPreview(features["ooc_notes"])]...<BR>"
 			dat += "<h2>Body</h2>"
 			dat += "<b>Gender:</b><a style='display:block;width:100px' href='?_src_=prefs;preference=gender;task=input'>[gender == MALE ? "Male" : (gender == FEMALE ? "Female" : (gender == PLURAL ? "Non-binary" : "Object"))]</a><BR>"
 			if(gender != NEUTER && pref_species.sexes)
@@ -496,7 +507,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				dat += "<h3>Horns</h3>"
 
 				dat += "<a style='display:block;width:100px' href='?_src_=prefs;preference=horns;task=input'>[features["horns"]]</a>"
-				dat += "<span style='border:1px solid #161616; background-color: #[horn_color];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=horns_color;task=input'>Change</a><BR>"
+				dat += "<span style='border:1px solid #161616; background-color: #[features["horns_color"]];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=horns_color;task=input'>Change</a><BR>"
 
 
 				mutant_category++
@@ -609,7 +620,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				dat += "<h3>Decorative wings</h3>"
 
 				dat += "<a style='display:block;width:100px' href='?_src_=prefs;preference=deco_wings;task=input'>[features["deco_wings"]]</a>"
-				dat += "<span style='border:1px solid #161616; background-color: #[wing_color];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=wings_color;task=input'>Change</a><BR>"
+				dat += "<span style='border:1px solid #161616; background-color: #[features["wings_color"]];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=wings_color;task=input'>Change</a><BR>"
 
 			if(pref_species.mutant_bodyparts["insect_wings"])
 				if(!mutant_category)
@@ -618,7 +629,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				dat += "<h3>Insect wings</h3>"
 
 				dat += "<a style='display:block;width:100px' href='?_src_=prefs;preference=insect_wings;task=input'>[features["insect_wings"]]</a>"
-				dat += "<span style='border:1px solid #161616; background-color: #[wing_color];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=wings_color;task=input'>Change</a><BR>"
+				dat += "<span style='border:1px solid #161616; background-color: #[features["wings_color"]];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=wings_color;task=input'>Change</a><BR>"
 				mutant_category++
 				if(mutant_category >= MAX_MUTANT_ROWS)
 					dat += "</td>"
@@ -1510,6 +1521,11 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					if(!isnull(msg))
 						features["flavor_text"] = html_decode(msg)
 
+				if("ooc_notes")
+					var/msg = stripped_multiline_input(usr, "Set always-visible OOC notes related to content preferences. THIS IS NOT FOR CHARACTE DESCRIPTIONS!!", "OOC notes", features["ooc_notes"], MAX_FLAVOR_LEN, TRUE)
+					if(!isnull(msg))
+						features["ooc_notes"] = html_decode(msg)
+
 				if("hair")
 					var/new_hair = input(user, "Choose your character's hair colour:", "Character Preference","#"+hair_color) as color|null
 					if(new_hair)
@@ -1770,12 +1786,12 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						features["horns"] = new_horns
 
 				if("horns_color")
-					var/new_horn_color = input(user, "Choose your character's horn colour:", "Character Preference","#"+horn_color) as color|null
+					var/new_horn_color = input(user, "Choose your character's horn colour:", "Character Preference","#"+features["horns_color"]) as color|null
 					if(new_horn_color)
 						if (new_horn_color == "#000000")
-							horn_color = "#85615A"
+							features["horns_color"] = "85615A"
 						else
-							horn_color = sanitize_hexcolor(new_horn_color)
+							features["horns_color"] = sanitize_hexcolor(new_horn_color)
 
 				if("wings")
 					var/new_wings
@@ -1784,12 +1800,12 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						features["wings"] = new_wings
 
 				if("wings_color")
-					var/new_wing_color = input(user, "Choose your character's wing colour:", "Character Preference","#"+wing_color) as color|null
+					var/new_wing_color = input(user, "Choose your character's wing colour:", "Character Preference","#"+features["wings_color"]) as color|null
 					if(new_wing_color)
 						if (new_wing_color == "#000000")
-							wing_color = "#FFFFFF"
+							features["wings_color"] = "#FFFFFF"
 						else
-							wing_color = sanitize_hexcolor(new_wing_color)
+							features["wings_color"] = sanitize_hexcolor(new_wing_color)
 
 				if("frills")
 					var/new_frills
@@ -2459,9 +2475,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		organ_eyes.old_eye_color = eye_color
 	character.hair_color = hair_color
 	character.facial_hair_color = facial_hair_color
-	character.horn_color = horn_color
-	character.wing_color = wing_color
-
 	character.skin_tone = skin_tone
 	character.dna.skin_tone_override = use_custom_skin_tone ? skin_tone : null
 	character.hair_style = hair_style

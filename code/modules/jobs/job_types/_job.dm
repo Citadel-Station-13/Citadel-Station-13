@@ -174,7 +174,7 @@
 	if(!starting_skills)
 		return
 	for(var/skill in starting_skills)
-		M.skill_holder.boost_skill_value_to(skill, starting_skills[skill])
+		M.skill_holder.boost_skill_value_to(skill, starting_skills[skill], TRUE) //silent
 	// do wipe affinities though
 	M.skill_holder.skill_affinities = list()
 	for(var/skill in skill_affinities)

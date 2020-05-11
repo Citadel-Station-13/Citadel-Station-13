@@ -183,7 +183,28 @@
 //	#define SPEECH_FORCED 7
 #define COMSIG_MOB_ANTAG_ON_GAIN "mob_antag_on_gain"			//from base of /datum/antagonist/on_gain(): (antag_datum)
 
-#define COMSIG_MOB_SPELL_CAN_CAST "mob_spell_can_cast"			//called from base of /obj/effect/proc_holder/spell/can_cast(): (spell)
+#define COMSIG_MOB_SPELL_CAN_CAST "mob_spell_can_cast"			//from base of /obj/effect/proc_holder/spell/can_cast(): (spell)
+
+#define COMSIG_MOB_ACTION_SKILL_MOD "mob_action_skill_mod"		//from base of /datum/skill_holder/action_skills_mod() : (proc args list, list/mod_values)
+	#define ACTION_SKILL_MOD_SKILL 1 //redundancy.
+	#define ACTION_SKILL_MOD_VALUE 2
+	#define ACTION_SKILL_MOD_THRESHOLD 3
+	#define ACTION_SKILL_MOD_IS_MULTI 4
+	//other mod values, kept separate from the args
+	#define MOD_VALUES_SKILL_MOD 1
+
+#define COMSIG_MOB_ITEM_ACTION_SKILLS_MOD "mob_item_action_skills_mod"	//from base of /datum/skill_holder/item_action_skills_mod() : (proc args list, mod_values)
+	#define ITEM_SKILLS_MOD_ITEM 1 //redundancy
+	#define ITEM_SKILLS_MOD_VALUE 2
+	#define ITEM_SKILLS_MOD_FLAGS 3
+	#define ITEM_SKILLS_MOD_BAD_FLAGS 4
+	#define ITEM_SKILLS_MOD_IS_MULTI 5
+	//other mod values, kept separate from the args
+	#define MOD_VALUES_ITEM_SKILLS_SUM 1
+	#define MOD_VALUES_ITEM_SKILLS_DIV 2
+	#define MOD_VALUES_ITEM_SKILLS_CHECKED 3
+
+#define COMSIG_MOB_SKILL_GET_AFFINITY "mob_skill_get_affinity"	//from base of /datum/skill_holder/get_skill_affinity(): (skill_path, list/return_value)
 
 // /mob/living signals
 #define COMSIG_LIVING_REGENERATE_LIMBS "living_regenerate_limbs"	//from base of /mob/living/regenerate_limbs(): (noheal, excluded_limbs)
