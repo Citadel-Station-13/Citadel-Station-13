@@ -512,7 +512,7 @@
 	if(!digested)
 		items_preserved |= item
 	else
-//		owner.nutrition += (5 * digested) // haha no.
+//		owner.adjust_nutrition(5 * digested) // haha no.
 		if(iscyborg(owner))
 			var/mob/living/silicon/robot/R = owner
 			R.cell.charge += (50 * digested)
