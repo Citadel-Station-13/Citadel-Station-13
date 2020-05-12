@@ -81,6 +81,8 @@
 
 /datum/config_entry/flag/disable_peaceborg
 
+/datum/config_entry/flag/economy	//money money money money money money money money money money money money
+
 /datum/config_entry/number/minimum_secborg_alert	//Minimum alert level for secborgs to be chosen.
 	config_entry_value = 3
 

@@ -18490,7 +18490,7 @@
 /turf/open/floor/plasteel,
 /area/crew_quarters/locker)
 "aQV" = (
-/obj/machinery/vending/autodrobe/all_access,
+/obj/machinery/vending/autodrobe,
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
@@ -56834,7 +56834,7 @@
 /turf/open/floor/engine,
 /area/engine/engineering)
 "lsk" = (
-/obj/machinery/vending/autodrobe/all_access,
+/obj/machinery/vending/autodrobe,
 /turf/open/floor/plasteel,
 /area/crew_quarters/fitness)
 "ltK" = (
@@ -59723,7 +59723,7 @@
 /turf/open/floor/plating,
 /area/maintenance/fore/secondary)
 "sXA" = (
-/obj/machinery/vending/boozeomat/all_access,
+/obj/machinery/vending/boozeomat,
 /turf/closed/wall,
 /area/maintenance/bar)
 "sXV" = (

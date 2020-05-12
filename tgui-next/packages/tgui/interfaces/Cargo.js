@@ -75,7 +75,17 @@ export const Cargo = props => {
           {() => (
             <Section
               title="Catalog"
-              buttons={cartButtons}>
+              buttons={(
+                <Fragment>
+                  {cartButtons}
+                  <Button
+                    ml={1}
+                    icon={data.self_paid ? 'check-square-o' : 'square-o'}
+                    content="Buy Privately"
+                    selected={data.self_paid}
+                    onClick={() => act(ref, 'toggleprivate')} />
+                </Fragment>
+              )}>
               <Catalog state={state} supplies={supplies} />
             </Section>
           )}
@@ -136,11 +146,6 @@ const Catalog = props => {
             className="LabeledList__row candystripe">
             <td className="LabeledList__cell LabeledList__label">
               {pack.name}:
-            </td>
-            <td className="LabeledList__cell">
-              {!!pack.small_item && (
-                <Fragment>Small Item</Fragment>
-              )}
             </td>
             <td className="LabeledList__cell">
               {!!pack.access && (

@@ -199,6 +199,10 @@
 	researched_designs -= design.id
 	return TRUE
 
+/datum/techweb/proc/get_point_total(list/pointlist)
+	for(var/i in pointlist)
+		. += pointlist[i]
+
 /datum/techweb/proc/can_afford(list/pointlist)
 	for(var/i in pointlist)
 		if(research_points[i] < pointlist[i])
@@ -227,6 +231,10 @@
 	for(var/id in node.design_ids)
 		add_design_by_id(id)
 	update_node_status(node)
+	if(!istype(src, /datum/techweb/admin))
+		var/datum/bank_account/D = SSeconomy.get_dep_account(ACCOUNT_SCI)
+		if(D)
+			D.adjust_money(SSeconomy.techweb_bounty)
 	return TRUE
 
 /datum/techweb/proc/unresearch_node_id(id)

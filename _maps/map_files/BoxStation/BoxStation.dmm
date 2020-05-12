@@ -18338,7 +18338,7 @@
 /turf/open/floor/plasteel,
 /area/crew_quarters/locker)
 "aQV" = (
-/obj/machinery/vending/autodrobe/all_access,
+/obj/machinery/vending/autodrobe,
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
@@ -41478,13 +41478,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/engine/atmos)
-"bUO" = (
-/obj/machinery/portable_atmospherics/canister,
-/obj/machinery/atmospherics/components/unary/portables_connector/visible{
-	dir = 1
-	},
-/turf/open/floor/plasteel,
-/area/engine/atmos)
 "bUR" = (
 /obj/machinery/atmospherics/pipe/simple/green/visible,
 /turf/open/floor/plasteel,
@@ -55361,14 +55354,6 @@
 /obj/effect/turf_decal/tile/green,
 /turf/open/floor/plasteel,
 /area/hallway/primary/starboard)
-"ivJ" = (
-/obj/machinery/atmospherics/pipe/simple/cyan/visible,
-/obj/effect/spawner/structure/window/reinforced,
-/obj/machinery/atmospherics/pipe/layer_manifold{
-	dir = 4
-	},
-/turf/open/floor/plating,
-/area/engine/atmos)
 "iwB" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -56424,7 +56409,7 @@
 	},
 /area/maintenance/bar)
 "lsk" = (
-/obj/machinery/vending/autodrobe/all_access,
+/obj/machinery/vending/autodrobe,
 /turf/open/floor/plasteel,
 /area/crew_quarters/fitness)
 "ltK" = (
@@ -58873,7 +58858,7 @@
 /turf/open/floor/plating,
 /area/maintenance/fore/secondary)
 "sXA" = (
-/obj/machinery/vending/boozeomat/all_access,
+/obj/machinery/vending/boozeomat,
 /turf/closed/wall,
 /area/maintenance/bar)
 "sXV" = (
@@ -93957,7 +93942,7 @@ bMQ
 bRC
 rdl
 daq
-bUO
+bUN
 bOd
 bOd
 bOd
@@ -94214,7 +94199,7 @@ cBF
 bRD
 rdl
 daq
-bUO
+bUN
 bOd
 bOd
 bOd
@@ -94471,7 +94456,7 @@ bQs
 cez
 ceA
 daq
-bUO
+bUN
 bOd
 bOd
 bOd
@@ -96008,19 +95993,19 @@ bKH
 bLK
 bLK
 bOf
-ivJ
+bPh
 bQy
 bRI
 bSP
-ivJ
+bPh
 jzM
 bRI
 cCF
-ivJ
+bPh
 bQy
 bRI
 bQy
-ivJ
+bPh
 bQy
 bRI
 bSP
