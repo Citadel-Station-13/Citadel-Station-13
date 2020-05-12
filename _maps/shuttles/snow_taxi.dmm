@@ -9,6 +9,7 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
+/obj/structure/fans/tiny/invisible,
 /turf/open/floor/plating,
 /area/shuttle/snowtaxi)
 "c" = (
@@ -16,10 +17,12 @@
 	name = "Mining Shuttle Airlock"
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
+/obj/structure/fans/tiny,
 /turf/open/floor/plating,
 /area/shuttle/snowtaxi)
 "e" = (
 /obj/effect/spawner/structure/window/shuttle,
+/obj/structure/fans/tiny/invisible,
 /turf/open/floor/plating,
 /area/shuttle/snowtaxi)
 "f" = (
@@ -46,6 +49,7 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 1
 	},
+/obj/structure/fans/tiny,
 /turf/open/floor/plating,
 /area/shuttle/snowtaxi)
 "i" = (
@@ -66,6 +70,7 @@
 /area/shuttle/snowtaxi)
 "l" = (
 /obj/effect/spawner/structure/window/shuttle,
+/obj/structure/fans/tiny/invisible,
 /turf/open/floor/plating/airless,
 /area/shuttle/snowtaxi)
 "u" = (

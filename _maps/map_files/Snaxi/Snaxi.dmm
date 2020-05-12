@@ -816,12 +816,10 @@
 /turf/open/floor/plasteel,
 /area/hallway/primary/port)
 "arl" = (
-/obj/machinery/door/airlock/external{
-	req_one_access_txt = "13,8"
-	},
 /obj/machinery/door/firedoor/border_only{
 	dir = 1
 	},
+/obj/machinery/door/airlock/external,
 /turf/open/floor/plasteel,
 /area/hallway/primary/port)
 "arE" = (
@@ -930,15 +928,8 @@
 /obj/structure/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/door/firedoor/border_only{
-	dir = 1
-	},
-/obj/machinery/door/airlock/engineering/abandoned{
-	name = "Electrical Maintenance";
-	req_access_txt = "11"
-	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/turf/open/floor/plating,
+/turf/closed/wall,
 /area/construction/storage)
 "atb" = (
 /obj/machinery/light{
@@ -1855,6 +1846,7 @@
 	dir = 4;
 	pixel_x = -22
 	},
+/obj/machinery/vending/autodrobe/all_access,
 /turf/open/floor/plasteel,
 /area/hallway/secondary/entry)
 "aDb" = (
@@ -1886,6 +1878,7 @@
 	pixel_x = 24
 	},
 /obj/effect/turf_decal/tile/purple,
+/obj/machinery/vending/clothing,
 /turf/open/floor/plasteel,
 /area/hallway/secondary/entry)
 "aDf" = (
@@ -1896,6 +1889,22 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 1
 	},
+/obj/structure/closet/cabinet,
+/obj/item/clothing/shoes/winterboots,
+/obj/item/clothing/shoes/winterboots,
+/obj/item/clothing/shoes/winterboots,
+/obj/item/clothing/suit/hooded/wintercoat,
+/obj/item/clothing/suit/hooded/wintercoat,
+/obj/item/clothing/suit/hooded/wintercoat,
+/obj/item/tank/internals/emergency_oxygen/engi,
+/obj/item/tank/internals/emergency_oxygen/engi,
+/obj/item/tank/internals/emergency_oxygen/engi,
+/obj/item/clothing/mask/gas,
+/obj/item/clothing/mask/gas,
+/obj/item/clothing/mask/gas,
+/obj/item/pickaxe,
+/obj/item/pickaxe,
+/obj/item/pickaxe,
 /turf/open/floor/plasteel,
 /area/hallway/secondary/entry)
 "aDh" = (
@@ -1920,8 +1929,30 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 1
 	},
+/obj/item/clothing/suit/hooded/wintercoat,
+/obj/item/clothing/suit/hooded/wintercoat,
+/obj/item/clothing/suit/hooded/wintercoat,
+/obj/item/clothing/shoes/winterboots,
+/obj/item/clothing/shoes/winterboots,
+/obj/item/clothing/shoes/winterboots,
+/obj/item/tank/internals/emergency_oxygen/engi,
+/obj/item/tank/internals/emergency_oxygen/engi,
+/obj/item/tank/internals/emergency_oxygen/engi,
+/obj/item/clothing/mask/gas,
+/obj/item/clothing/mask/gas,
+/obj/item/clothing/mask/gas,
+/obj/structure/closet/cabinet,
+/obj/item/pickaxe,
+/obj/item/pickaxe,
+/obj/item/pickaxe,
 /turf/open/floor/plasteel,
 /area/hallway/secondary/entry)
+"aDn" = (
+/obj/structure/chair/comfy/brown{
+	dir = 8
+	},
+/turf/closed/mineral/random/snow/no_caves,
+/area/icemoon/surface/outdoors)
 "aDo" = (
 /obj/machinery/door/airlock/public/glass{
 	name = "Snow Airlock"
@@ -2537,7 +2568,8 @@
 	id = "Skynet_launch";
 	name = "Mech Bay Door Control";
 	pixel_x = 6;
-	pixel_y = -24
+	pixel_y = -24;
+	req_access_txt = "29"
 	},
 /turf/open/floor/plasteel,
 /area/science/robotics/mechbay)
@@ -3540,7 +3572,7 @@
 /turf/open/floor/plasteel/cafeteria,
 /area/crew_quarters/kitchen)
 "bqN" = (
-/turf/closed/indestructible/rock/glacierrock,
+/turf/closed/indestructible/rock/snow/ice,
 /area/icemoon/surface/outdoors)
 "bqO" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -3743,6 +3775,7 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 8
 	},
+/obj/item/pipe_dispenser,
 /turf/open/floor/plasteel/dark,
 /area/engine/engineering)
 "buI" = (
@@ -6403,6 +6436,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 9
 	},
+/obj/structure/table/wood,
 /turf/open/floor/carpet,
 /area/chapel/main)
 "bVT" = (
@@ -7232,11 +7266,17 @@
 /turf/open/floor/plasteel/white,
 /area/medical/virology)
 "cnI" = (
-/obj/machinery/light{
-	dir = 1
+/obj/docking_port/stationary{
+	dheight = 1;
+	dir = 8;
+	dwidth = 12;
+	height = 17;
+	id = "syndicate_ne";
+	name = "northeast of station";
+	width = 23
 	},
 /turf/open/floor/plating/asteroid/snow/icemoon,
-/area/maintenance/aft)
+/area/icemoon/surface/outdoors/unexplored/rivers/no_monsters)
 "coa" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
@@ -9572,7 +9612,8 @@
 	id = "Skynet_launch";
 	name = "Mech Bay Door Control";
 	pixel_x = 6;
-	pixel_y = 24
+	pixel_y = 24;
+	req_access_txt = "29"
 	},
 /turf/open/floor/plating/snowed/smoothed/icemoon,
 /area/science/robotics/mechbay)
@@ -9919,7 +9960,7 @@
 	width = 3
 	},
 /turf/open/floor/plating/snowed/smoothed/icemoon,
-/area/hallway/primary/port)
+/area/icemoon/surface/outdoors)
 "dZg" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 9
@@ -12972,10 +13013,6 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
-"fVd" = (
-/obj/effect/landmark/blobstart,
-/turf/open/floor/plating,
-/area/hallway/primary/fore)
 "fVm" = (
 /turf/open/floor/wood{
 	icon_state = "wood-broken5"
@@ -13128,6 +13165,11 @@
 /obj/effect/landmark/start/assistant,
 /turf/open/floor/plasteel,
 /area/hallway/primary/fore)
+"gbI" = (
+/obj/effect/spawner/lootdrop/bedsheet,
+/obj/structure/bed,
+/turf/closed/mineral/random/snow/no_caves,
+/area/icemoon/surface/outdoors)
 "gcp" = (
 /obj/machinery/airalarm{
 	dir = 8;
@@ -13767,6 +13809,12 @@
 /obj/machinery/atmospherics/pipe/manifold/orange/visible,
 /turf/open/floor/engine,
 /area/engine/engineering)
+"gxY" = (
+/obj/structure/closet/secure_closet/personal/cabinet{
+	pixel_x = -8
+	},
+/turf/closed/mineral/random/snow/no_caves,
+/area/icemoon/surface/outdoors)
 "gyk" = (
 /obj/effect/turf_decal/tile/yellow{
 	dir = 1
@@ -14285,6 +14333,9 @@
 /obj/item/tank/internals/emergency_oxygen/engi,
 /obj/item/tank/internals/emergency_oxygen/engi,
 /obj/item/tank/internals/emergency_oxygen/engi,
+/obj/item/pickaxe,
+/obj/item/pickaxe,
+/obj/item/pickaxe,
 /turf/open/floor/plasteel/dark,
 /area/storage/eva)
 "gOM" = (
@@ -14497,6 +14548,10 @@
 /obj/structure/reagent_dispensers/fueltank,
 /turf/open/floor/plasteel,
 /area/storage/primary)
+"gUc" = (
+/obj/machinery/light,
+/turf/open/floor/plasteel/white,
+/area/crew_quarters/dorms)
 "gUw" = (
 /obj/structure/plasticflaps,
 /obj/machinery/door/poddoor{
@@ -15925,6 +15980,9 @@
 /obj/item/tank/internals/emergency_oxygen/engi,
 /obj/item/tank/internals/emergency_oxygen/engi,
 /obj/item/tank/internals/emergency_oxygen/engi,
+/obj/item/pickaxe,
+/obj/item/pickaxe,
+/obj/item/pickaxe,
 /turf/open/floor/plasteel/dark,
 /area/storage/eva)
 "hOA" = (
@@ -18478,6 +18536,13 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /turf/open/floor/plating,
 /area/engine/secure_construction)
+"jrE" = (
+/obj/structure/table/wood,
+/obj/item/flashlight/lantern{
+	pixel_y = 5
+	},
+/turf/closed/mineral/random/snow/no_caves,
+/area/icemoon/surface/outdoors)
 "jrH" = (
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
@@ -19095,7 +19160,7 @@
 /turf/open/floor/plasteel,
 /area/hallway/secondary/entry)
 "jOl" = (
-/obj/machinery/jukebox,
+/obj/machinery/vending/clothing,
 /turf/open/floor/plasteel/grimy,
 /area/crew_quarters/fitness/recreation)
 "jOy" = (
@@ -19179,6 +19244,12 @@
 	},
 /turf/open/floor/plasteel,
 /area/science/lab)
+"jPI" = (
+/obj/machinery/cryopod{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/icemoon/surface/outdoors)
 "jPP" = (
 /obj/machinery/gateway{
 	dir = 8
@@ -20220,6 +20291,10 @@
 /obj/machinery/computer/upload/borg,
 /turf/open/floor/circuit,
 /area/ai_monitored/turret_protected/ai_upload)
+"kAr" = (
+/obj/machinery/space_heater,
+/turf/closed/mineral/random/snow/no_caves,
+/area/icemoon/surface/outdoors)
 "kAv" = (
 /obj/machinery/firealarm{
 	dir = 1;
@@ -20372,6 +20447,11 @@
 	},
 /turf/open/floor/engine,
 /area/science/xenobiology)
+"kHD" = (
+/turf/open/floor/engine{
+	name = "Holodeck Projector Floor"
+	},
+/area/holodeck/rec_center)
 "kHI" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 1
@@ -20675,6 +20755,9 @@
 	},
 /turf/open/floor/plating/asteroid/snow/icemoon,
 /area/maintenance/aft/secondary)
+"kRk" = (
+/turf/open/floor/plasteel/white,
+/area/crew_quarters/dorms)
 "kRz" = (
 /obj/structure/cable{
 	icon_state = "1-8"
@@ -21906,8 +21989,11 @@
 /turf/open/floor/plating,
 /area/icemoon/surface/outdoors)
 "lJN" = (
-/turf/open/floor/plating/snowed/smoothed/icemoon,
-/area/hallway/primary/port)
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/open/floor/plasteel/white,
+/area/crew_quarters/dorms)
 "lKT" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -22921,6 +23007,9 @@
 /obj/item/tank/internals/emergency_oxygen/engi,
 /obj/item/tank/internals/emergency_oxygen/engi,
 /obj/item/tank/internals/emergency_oxygen/engi,
+/obj/item/pickaxe,
+/obj/item/pickaxe,
+/obj/item/pickaxe,
 /turf/open/floor/plasteel/dark,
 /area/storage/eva)
 "mwV" = (
@@ -23483,6 +23572,7 @@
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 4
 	},
+/obj/structure/table/wood,
 /turf/open/floor/carpet,
 /area/chapel/main)
 "mPM" = (
@@ -24321,6 +24411,9 @@
 	},
 /turf/open/floor/engine,
 /area/engine/engineering)
+"nqx" = (
+/turf/open/floor/plasteel,
+/area/icemoon/surface/outdoors)
 "nrd" = (
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/plasteel,
@@ -25521,6 +25614,10 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/hallway/secondary/entry)
+"oeh" = (
+/obj/structure/sign/warning/electricshock,
+/turf/closed/wall,
+/area/construction/storage)
 "oez" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -26154,6 +26251,25 @@
 	},
 /turf/open/floor/plasteel,
 /area/engine/atmos)
+"ovq" = (
+/obj/structure/closet/cabinet,
+/obj/item/clothing/shoes/winterboots,
+/obj/item/clothing/shoes/winterboots,
+/obj/item/clothing/shoes/winterboots,
+/obj/item/clothing/suit/hooded/wintercoat,
+/obj/item/clothing/suit/hooded/wintercoat,
+/obj/item/clothing/suit/hooded/wintercoat,
+/obj/item/tank/internals/emergency_oxygen/engi,
+/obj/item/tank/internals/emergency_oxygen/engi,
+/obj/item/tank/internals/emergency_oxygen/engi,
+/obj/item/clothing/mask/gas,
+/obj/item/clothing/mask/gas,
+/obj/item/clothing/mask/gas,
+/obj/item/pickaxe,
+/obj/item/pickaxe,
+/obj/item/pickaxe,
+/turf/open/floor/plasteel,
+/area/hallway/secondary/entry)
 "ovI" = (
 /obj/structure/cable{
 	icon_state = "2-4"
@@ -26997,6 +27113,17 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
+"pbs" = (
+/obj/docking_port/stationary{
+	dir = 2;
+	dwidth = 2;
+	height = 13;
+	id = "ferry_home";
+	name = "port bay 2";
+	width = 5
+	},
+/turf/open/floor/plating/asteroid/snow/icemoon,
+/area/icemoon/surface/outdoors)
 "pbw" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on,
 /obj/machinery/camera{
@@ -27081,6 +27208,9 @@
 /obj/item/hatchet,
 /obj/item/hatchet,
 /obj/item/hatchet,
+/obj/item/pickaxe/drill,
+/obj/item/pickaxe/drill,
+/obj/item/pickaxe/drill,
 /turf/open/floor/plasteel/dark,
 /area/storage/eva)
 "pdj" = (
@@ -27300,9 +27430,26 @@
 /turf/open/floor/plating,
 /area/engine/engineering)
 "piX" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/structure/closet/cabinet,
+/obj/item/clothing/suit/hooded/wintercoat,
+/obj/item/clothing/suit/hooded/wintercoat,
+/obj/item/clothing/suit/hooded/wintercoat,
+/obj/item/clothing/mask/gas,
+/obj/item/clothing/mask/gas,
+/obj/item/clothing/mask/gas,
+/obj/item/clothing/shoes/winterboots,
+/obj/item/clothing/shoes/winterboots,
+/obj/item/clothing/shoes/winterboots,
+/obj/item/tank/internals/emergency_oxygen/engi,
+/obj/item/tank/internals/emergency_oxygen/engi,
+/obj/item/tank/internals/emergency_oxygen/engi,
 /obj/structure/window/reinforced{
 	dir = 8
 	},
+/obj/item/pickaxe,
+/obj/item/pickaxe,
+/obj/item/pickaxe,
 /turf/open/floor/carpet,
 /area/hallway/secondary/exit/departure_lounge)
 "piY" = (
@@ -29212,6 +29359,7 @@
 	dir = 1;
 	name = "north facing firelock"
 	},
+/obj/structure/disposalpipe/segment,
 /turf/open/floor/plating,
 /area/janitor)
 "qsf" = (
@@ -30732,7 +30880,24 @@
 /turf/open/floor/plasteel/white,
 /area/crew_quarters/heads/cmo)
 "roW" = (
-/turf/open/floor/plating,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/structure/closet/cabinet,
+/obj/item/clothing/suit/hooded/wintercoat,
+/obj/item/clothing/suit/hooded/wintercoat,
+/obj/item/clothing/suit/hooded/wintercoat,
+/obj/item/clothing/mask/gas,
+/obj/item/clothing/mask/gas,
+/obj/item/clothing/mask/gas,
+/obj/item/clothing/shoes/winterboots,
+/obj/item/clothing/shoes/winterboots,
+/obj/item/clothing/shoes/winterboots,
+/obj/item/tank/internals/emergency_oxygen/engi,
+/obj/item/tank/internals/emergency_oxygen/engi,
+/obj/item/tank/internals/emergency_oxygen/engi,
+/obj/item/pickaxe,
+/obj/item/pickaxe,
+/obj/item/pickaxe,
+/turf/open/floor/plasteel,
 /area/hallway/primary/fore)
 "rpf" = (
 /obj/effect/turf_decal/stripes,
@@ -30838,6 +31003,7 @@
 	dir = 1;
 	pixel_y = -24
 	},
+/obj/item/pipe_dispenser,
 /turf/open/floor/plasteel,
 /area/engine/break_room)
 "rqW" = (
@@ -32120,7 +32286,8 @@
 	id = "Skynet_launch2";
 	name = "Mech Bay Door Control";
 	pixel_x = 6;
-	pixel_y = -24
+	pixel_y = -24;
+	req_access_txt = "29"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -32135,9 +32302,26 @@
 /turf/open/floor/plasteel/dark,
 /area/maintenance/department/bridge)
 "sma" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/structure/closet/cabinet,
+/obj/item/clothing/suit/hooded/wintercoat,
+/obj/item/clothing/suit/hooded/wintercoat,
+/obj/item/clothing/suit/hooded/wintercoat,
+/obj/item/clothing/mask/gas,
+/obj/item/clothing/mask/gas,
+/obj/item/clothing/mask/gas,
+/obj/item/clothing/shoes/winterboots,
+/obj/item/clothing/shoes/winterboots,
+/obj/item/clothing/shoes/winterboots,
+/obj/item/tank/internals/emergency_oxygen/engi,
+/obj/item/tank/internals/emergency_oxygen/engi,
+/obj/item/tank/internals/emergency_oxygen/engi,
 /obj/structure/window/reinforced{
 	dir = 4
 	},
+/obj/item/pickaxe,
+/obj/item/pickaxe,
+/obj/item/pickaxe,
 /turf/open/floor/carpet,
 /area/hallway/secondary/exit/departure_lounge)
 "smP" = (
@@ -32231,6 +32415,26 @@
 	},
 /turf/open/floor/plasteel,
 /area/hydroponics)
+"srU" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/structure/closet/cabinet,
+/obj/item/clothing/suit/hooded/wintercoat,
+/obj/item/clothing/suit/hooded/wintercoat,
+/obj/item/clothing/suit/hooded/wintercoat,
+/obj/item/clothing/mask/gas,
+/obj/item/clothing/mask/gas,
+/obj/item/clothing/mask/gas,
+/obj/item/clothing/shoes/winterboots,
+/obj/item/clothing/shoes/winterboots,
+/obj/item/clothing/shoes/winterboots,
+/obj/item/tank/internals/emergency_oxygen/engi,
+/obj/item/tank/internals/emergency_oxygen/engi,
+/obj/item/tank/internals/emergency_oxygen/engi,
+/obj/item/pickaxe,
+/obj/item/pickaxe,
+/obj/item/pickaxe,
+/turf/open/floor/plasteel,
+/area/hallway/secondary/entry)
 "ssH" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/atmos/nitrous_output{
 	dir = 8
@@ -33285,7 +33489,7 @@
 	dir = 8
 	},
 /turf/open/floor/plating/snowed/smoothed/icemoon,
-/area/hallway/primary/port)
+/area/icemoon/surface/outdoors)
 "tdL" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -33591,7 +33795,8 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/door/airlock/highsecurity{
-	name = "Telecomms and AI Access"
+	name = "Telecomms and AI Access";
+	req_access_txt = "32; 19"
 	},
 /obj/machinery/door/firedoor/border_only{
 	dir = 4
@@ -34541,6 +34746,13 @@
 	},
 /turf/open/floor/plasteel/freezer,
 /area/medical/surgery)
+"tOz" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/visible{
+	dir = 10
+	},
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/crew_quarters/dorms)
 "tOE" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 5
@@ -35708,6 +35920,12 @@
 /obj/machinery/holopad,
 /turf/open/floor/plasteel/dark,
 /area/chapel/office)
+"uEt" = (
+/obj/structure/chair/comfy/brown{
+	dir = 1
+	},
+/turf/closed/mineral/random/snow/no_caves,
+/area/icemoon/surface/outdoors)
 "uEz" = (
 /turf/open/floor/plasteel,
 /area/crew_quarters/fitness)
@@ -35998,6 +36216,7 @@
 /area/engine/engineering)
 "uLX" = (
 /obj/structure/cable,
+/obj/machinery/light,
 /obj/machinery/camera{
 	c_tag = "Supermatter North";
 	dir = 1
@@ -36849,6 +37068,12 @@
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/plasteel,
 /area/quartermaster/storage)
+"vow" = (
+/obj/machinery/door/airlock/public/glass{
+	name = "Holodeck Door"
+	},
+/turf/open/floor/plasteel/white,
+/area/crew_quarters/dorms)
 "voD" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -37858,6 +38083,12 @@
 	dir = 8
 	},
 /area/chapel/main)
+"vQk" = (
+/obj/machinery/computer/holodeck{
+	dir = 4
+	},
+/turf/open/floor/plasteel/white,
+/area/crew_quarters/dorms)
 "vQo" = (
 /turf/closed/wall/r_wall,
 /area/engine/supermatter)
@@ -38028,6 +38259,11 @@
 /obj/effect/spawner/lootdrop/techstorage/service,
 /turf/open/floor/plasteel/dark,
 /area/storage/tech)
+"vUF" = (
+/obj/structure/fans/tiny,
+/obj/structure/mineral_door/woodrustic,
+/turf/closed/mineral/random/snow/no_caves,
+/area/icemoon/surface/outdoors)
 "vUN" = (
 /obj/structure/table,
 /obj/machinery/computer/security/telescreen/circuitry,
@@ -38098,6 +38334,7 @@
 /area/medical/medbay/central)
 "vYc" = (
 /obj/effect/landmark/blobstart,
+/obj/item/pickaxe,
 /turf/open/floor/plating,
 /area/hallway/secondary/entry)
 "vYL" = (
@@ -38212,6 +38449,12 @@
 /obj/machinery/power/smes,
 /turf/open/floor/plating,
 /area/maintenance/solars/port/aft)
+"waC" = (
+/obj/machinery/door/airlock/public/glass{
+	name = "Cryogenic Storage"
+	},
+/turf/open/floor/plasteel,
+/area/hallway/secondary/exit/departure_lounge)
 "waP" = (
 /obj/structure/cable{
 	icon_state = "4-8"
@@ -38740,6 +38983,15 @@
 "wql" = (
 /turf/closed/wall/r_wall,
 /area/security/brig)
+"wrh" = (
+/obj/machinery/cryopod{
+	dir = 8
+	},
+/obj/machinery/computer/cryopod{
+	pixel_x = 32
+	},
+/turf/open/floor/plasteel,
+/area/icemoon/surface/outdoors)
 "wrN" = (
 /obj/effect/turf_decal/tile/brown{
 	dir = 1
@@ -39195,8 +39447,14 @@
 /area/maintenance/aft)
 "wJH" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/structure/sign/warning/electricshock,
-/turf/closed/wall,
+/obj/machinery/door/airlock/engineering/abandoned{
+	name = "Electrical Maintenance";
+	req_access_txt = "11"
+	},
+/obj/machinery/door/firedoor/border_only{
+	dir = 1
+	},
+/turf/open/floor/plating,
 /area/construction/storage)
 "wJN" = (
 /obj/structure/bodycontainer/morgue{
@@ -57341,7 +57599,7 @@ gsQ
 kkG
 aAS
 bxk
-aFO
+ovq
 aFO
 aFO
 aHA
@@ -59654,7 +59912,7 @@ gsQ
 arN
 aAS
 bxk
-aFO
+srU
 aFO
 aFY
 aHD
@@ -62969,7 +63227,7 @@ xUL
 xUL
 xUL
 xUL
-lJN
+xUL
 tmO
 fYx
 tkr
@@ -63426,7 +63684,7 @@ yhx
 yhx
 yhx
 yhx
-yhx
+cnI
 yhx
 yhx
 yhx
@@ -63758,7 +64016,7 @@ fQe
 lZs
 wje
 fhi
-sqg
+oeh
 cya
 lWi
 axu
@@ -63997,7 +64255,7 @@ xUL
 xUL
 xUL
 xUL
-lJN
+xUL
 tmO
 fYx
 tkr
@@ -73997,17 +74255,17 @@ ydp
 ydp
 ydp
 ydp
-ydp
-ydp
-ydp
-ydp
-ydp
-ydp
 avT
 avT
 avT
 avT
-axL
+avT
+avT
+iHM
+vow
+iHM
+vow
+tOz
 aaM
 nZE
 nZE
@@ -74254,17 +74512,17 @@ ydp
 ydp
 ydp
 ydp
-ydp
-ydp
-ydp
-ydp
-ydp
-ydp
 avT
 avT
 avT
 avT
 avT
+avT
+iHM
+lJN
+iHM
+gUc
+iHM
 axN
 ruo
 ruo
@@ -74511,20 +74769,20 @@ ydp
 ydp
 ydp
 ydp
-ydp
-ydp
-ydp
-ydp
-ydp
-ydp
 avT
 avT
-avT
-avT
-avT
-avT
-avT
-avT
+iHM
+iHM
+iHM
+iHM
+iHM
+vow
+iHM
+vow
+iHM
+iHM
+iHM
+iHM
 xZL
 xBk
 maG
@@ -74768,20 +75026,20 @@ ydp
 ydp
 ydp
 ydp
-ydp
-ydp
-ydp
-ydp
-ydp
-ydp
 avT
 avT
-avT
-avT
-avT
-avT
-avT
-avT
+iHM
+kHD
+kHD
+kHD
+kHD
+kHD
+kHD
+kHD
+kHD
+kHD
+kHD
+iHM
 xZL
 xBk
 maG
@@ -75027,18 +75285,18 @@ ydp
 ydp
 avT
 avT
-ydp
-ydp
-ydp
-avT
-avT
-avT
-avT
-avT
-avT
-avT
-avT
-avT
+iHM
+kHD
+kHD
+kHD
+kHD
+kHD
+kHD
+kHD
+kHD
+kHD
+kHD
+vow
 xZL
 xBk
 maG
@@ -75284,18 +75542,18 @@ ydp
 ydp
 avT
 avT
-avT
-avT
-ydp
-avT
-avT
-avT
-avT
-avT
-avT
-avT
-avT
-avT
+iHM
+kHD
+kHD
+kHD
+kHD
+kHD
+kHD
+kHD
+kHD
+kHD
+kHD
+iHM
 xZL
 xBk
 maG
@@ -75541,18 +75799,18 @@ ydp
 avT
 avT
 avT
-avT
-avT
-avT
-avT
-avT
-avT
-avT
-avT
-avT
-avT
-avT
-avT
+iHM
+kHD
+kHD
+kHD
+kHD
+kHD
+kHD
+kHD
+kHD
+kHD
+kHD
+vow
 xZL
 xBk
 maG
@@ -75798,18 +76056,18 @@ avT
 avT
 avT
 avT
-avT
-avT
-avT
-avT
-avT
-avT
-avT
-avT
-avT
-avT
-avT
-avT
+iHM
+kHD
+kHD
+kHD
+kHD
+kHD
+kHD
+kHD
+kHD
+kHD
+kHD
+iHM
 xZL
 xBk
 bzc
@@ -76055,18 +76313,18 @@ avT
 xUL
 cav
 xUL
-avT
-avT
-avT
-avT
-avT
-avT
-avT
-avT
-avT
-avT
-avT
-avT
+iHM
+kHD
+kHD
+kHD
+kHD
+kHD
+kHD
+kHD
+kHD
+kHD
+kHD
+iHM
 xZL
 xBk
 bzc
@@ -76312,18 +76570,18 @@ avT
 xUL
 xUL
 xUL
-avT
-avT
-avT
-avT
-avT
-avT
-bmX
-avT
-avT
-avT
-avT
-avT
+iHM
+iHM
+iHM
+iHM
+iHM
+vow
+iHM
+vow
+iHM
+iHM
+iHM
+iHM
 xZL
 xBk
 maG
@@ -76573,11 +76831,11 @@ avT
 avT
 avT
 avT
-avT
-avT
-avT
-avT
-avT
+iHM
+lJN
+vQk
+gUc
+iHM
 avT
 avT
 avT
@@ -76830,11 +77088,11 @@ pgp
 avT
 avT
 avT
-avT
-avT
-avT
-avT
-avT
+iHM
+kRk
+kRk
+kRk
+iHM
 avT
 avT
 avT
@@ -77088,9 +77346,9 @@ avT
 avT
 avT
 iHM
+vow
 iHM
-iHM
-iHM
+vow
 iHM
 avT
 avT
@@ -77409,7 +77667,7 @@ unA
 dnm
 unA
 unA
-unA
+waC
 unA
 bok
 rqE
@@ -77665,9 +77923,9 @@ wcB
 unA
 wcB
 unA
-avT
-avT
-avT
+nqx
+nqx
+nqx
 bok
 rqE
 faZ
@@ -77922,9 +78180,9 @@ wcB
 unA
 wcB
 unA
-avT
-avT
-avT
+jPI
+wrh
+jPI
 bok
 rqE
 rqE
@@ -77965,9 +78223,9 @@ cAe
 bPn
 bPn
 bPn
-cnI
 avT
-bmX
+avT
+avT
 avT
 avT
 ydp
@@ -78179,9 +78437,9 @@ ivM
 unA
 ivM
 unA
-xUL
-xUL
-pZl
+xiw
+xiw
+bok
 bok
 rqE
 rqE
@@ -78222,7 +78480,7 @@ cAe
 oBj
 cAe
 opT
-avT
+pbs
 avT
 avT
 avT
@@ -78479,7 +78737,7 @@ cAe
 bPn
 bPn
 bPn
-cnI
+avT
 avT
 avT
 avT
@@ -78996,11 +79254,11 @@ avT
 avT
 ydp
 ydp
-ktw
-ktw
-ktw
-ktw
-ktw
+ydp
+ydp
+ydp
+ydp
+ydp
 ydp
 ydp
 ydp
@@ -79253,11 +79511,11 @@ avT
 avT
 ydp
 ydp
-ktw
-kRI
-fdJ
-hGU
-ktw
+ydp
+jrE
+uEt
+gxY
+ydp
 ydp
 ydp
 ydp
@@ -79510,11 +79768,11 @@ avT
 avT
 ydp
 ydp
-ktw
-vSJ
-kZL
-kZL
-maR
+ydp
+aDn
+ydp
+ydp
+vUF
 ydp
 ydp
 ydp
@@ -79767,11 +80025,11 @@ avT
 ydp
 ydp
 ydp
-ktw
-ehh
-kZL
-hap
-ktw
+ydp
+gbI
+ydp
+kAr
+ydp
 ydp
 ydp
 ydp
@@ -80024,11 +80282,11 @@ avT
 avT
 ydp
 ydp
-ktw
-ktw
-ktw
-ktw
-ktw
+ydp
+ydp
+ydp
+ydp
+ydp
 ydp
 ydp
 ydp
@@ -85325,8 +85583,8 @@ iCO
 pJS
 wYk
 pqj
-pFR
-fVd
+pqj
+roW
 pFR
 oeC
 uEd
@@ -85582,7 +85840,7 @@ ocG
 pJS
 wji
 pqj
-pFR
+pqj
 roW
 pFR
 oeC
@@ -95850,7 +96108,7 @@ nJr
 hsv
 qib
 ktt
-anR
+uLX
 vQo
 qeP
 nCf
@@ -96107,7 +96365,7 @@ odg
 ucC
 gUL
 aNU
-uLX
+kVD
 vQo
 kgR
 kgR
