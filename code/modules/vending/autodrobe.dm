@@ -3,7 +3,6 @@
 	desc = "A vending machine for costumes."
 	icon_state = "theater"
 	icon_deny = "theater-deny"
-	req_access = list(ACCESS_THEATRE)
 	product_slogans = "Dress for success!;Suited and booted!;It's show time!;Why leave style up to fate? Use AutoDrobe!"
 	vend_reply = "Thank you for using AutoDrobe!"
 	products = list(/obj/item/clothing/suit/chickensuit = 1,
@@ -124,7 +123,7 @@
 					/obj/item/clothing/shoes/roman = 1,
 					/obj/item/shield/riot/roman/fake = 1,
 					/obj/item/skub = 1,
-					/obj/item/clothing/under/costume/lobster = 1,	 // CIT CHANGES
+					/obj/item/clothing/under/costume/lobster = 1,
 					/obj/item/clothing/head/lobsterhat = 1,
 					/obj/item/clothing/head/drfreezehat = 1,
 					/obj/item/clothing/suit/dracula = 1,
@@ -137,12 +136,19 @@
 					/obj/item/clothing/under/costume/christmas/croptop/green = 3,
 					/obj/item/clothing/head/christmashat = 3,
 					/obj/item/clothing/head/christmashatg = 3,
-					/obj/item/clothing/under/costume/drfreeze = 1)    //End of Cit Changes
-	refill_canister = /obj/item/vending_refill/autodrobe
+					/obj/item/clothing/under/costume/drfreeze = 1)
 
-/obj/machinery/vending/autodrobe/all_access
-	desc = "A vending machine for costumes. This model appears to have no access restrictions."
-	req_access = null
+	refill_canister = /obj/item/vending_refill/autodrobe
+	default_price = 180
+	extra_price = 360
+	payment_department = ACCOUNT_SRV
+
+/obj/machinery/vending/autodrobe/Initialize()
+	. = ..()
+	cost_multiplier_per_dept = list("[ACCESS_THEATRE]" = 0)
+
+/obj/machinery/vending/autodrobe/canLoadItem(obj/item/I,mob/user)
+	return (I.type in products)
 
 /obj/item/vending_refill/autodrobe
 	machine_name = "AutoDrobe"

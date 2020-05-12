@@ -105,16 +105,6 @@ GLOBAL_VAR_INIT(miscreants_allowed, FALSE)
 		if(!src.holder)	return
 		message_admins("[key_name_admin(usr)] manually reloaded mentors")
 
-//LOOC toggles
-/client/verb/listen_looc()
-	set name = "Show/Hide LOOC"
-	set category = "Preferences"
-	set desc = "Toggles seeing LocalOutOfCharacter chat"
-	prefs.chat_toggles ^= CHAT_LOOC
-	prefs.save_preferences()
-	to_chat(src, "You will [(prefs.chat_toggles & CHAT_LOOC) ? "now" : "no longer"] see messages on the LOOC channel.")
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "TLOOC") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-
 /mob/living/carbon/proc/has_penis()
 	var/obj/item/organ/genital/G = getorganslot(ORGAN_SLOT_PENIS)
 	if(G && istype(G, /obj/item/organ/genital/penis))

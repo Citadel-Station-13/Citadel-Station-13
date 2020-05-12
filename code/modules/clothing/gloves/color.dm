@@ -10,6 +10,8 @@
 	permeability_coefficient = 0.05
 	resistance_flags = NONE
 	var/can_be_cut = 1
+	custom_price = 1200
+	custom_premium_price = 1200
 
 /obj/item/clothing/gloves/color/fyellow                             //Cheap Chinese Crap
 	desc = "These gloves are cheap knockoffs of the coveted ones - no way this can end badly."

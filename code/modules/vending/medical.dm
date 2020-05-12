@@ -4,7 +4,6 @@
 	icon_state = "med"
 	icon_deny = "med-deny"
 	product_ads = "Go save some lives!;The best stuff for your medbay.;Only the finest tools.;Natural chemicals!;This stuff saves lives.;Don't you want some?;Ping!"
-	req_access = list(ACCESS_MEDICAL)
 	products = list(/obj/item/reagent_containers/syringe = 12,
 					/obj/item/reagent_containers/dropper = 3,
 					/obj/item/healthanalyzer = 4,
@@ -47,6 +46,10 @@
 	armor = list("melee" = 100, "bullet" = 100, "laser" = 100, "energy" = 100, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 50)
 	resistance_flags = FIRE_PROOF
 	refill_canister = /obj/item/vending_refill/medical
+	default_price = 200
+	extra_price = 250
+	payment_department = ACCOUNT_MED
+	cost_multiplier_per_dept = list(ACCOUNT_MED = 0)
 
 /obj/item/vending_refill/medical
 	machine_name = "NanoMed Plus"
@@ -54,4 +57,8 @@
 
 /obj/machinery/vending/medical/syndicate_access
 	name = "\improper SyndiMed Plus"
-	req_access = list(ACCESS_SYNDICATE)
+	payment_department = NO_FREEBIES
+
+/obj/machinery/vending/medical/syndicate_access/Initialize()
+	. = ..()
+	cost_multiplier_per_dept = list("[ACCESS_SYNDICATE]" = 0)

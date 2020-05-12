@@ -40,6 +40,7 @@
 	cost = 20
 	player_minimum = 30
 	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops)
+	restricted = TRUE
 
 /datum/uplink_item/bundles_TC/northstar_bundle
 	name = "Northstar Bundle"
