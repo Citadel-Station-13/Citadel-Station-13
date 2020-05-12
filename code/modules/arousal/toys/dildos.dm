@@ -4,7 +4,7 @@
 /obj/item/dildo
 	name 				= "dildo"
 	desc 				= "Floppy!"
-	icon 				= 'modular_citadel/icons/obj/genitals/dildo.dmi'
+	icon 				= 'icons/obj/genitals/dildo.dmi'
 	force 				= 0
 	hitsound			= 'sound/weapons/tap.ogg'
 	throwforce			= 0

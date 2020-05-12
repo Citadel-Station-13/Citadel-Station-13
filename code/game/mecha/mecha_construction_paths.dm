@@ -3,6 +3,46 @@
 ////////////////////////////////
 /datum/component/construction/mecha
 	var/base_icon
+	var/looky_helpy = TRUE
+
+/datum/component/construction/mecha/examine(mob/user)
+	. = ..()
+	if(looky_helpy)
+		switch(steps[index]["key"])
+			if(TOOL_WRENCH)
+				. += "<span class='notice'>The mech could be <b>wrenched</b> into place.</span>"
+			if(TOOL_SCREWDRIVER)
+				. += "<span class='notice'>The mech could be <b>screwed</b> into place.</span>"
+			if(TOOL_WIRECUTTER)
+				. += "<span class='notice'>The mech wires could be <b>trimmed</b> into place.</span>"
+			if(/obj/item/stack/cable_coil)
+				. += "<span class='notice'>The mech could use some <b>wiring</b>.</span>"
+			if(/obj/item/circuitboard)
+				. += "<span class='notice'>The mech could use a type of<b>circuitboard</b>.</span>"
+			if(/obj/item/stock_parts/scanning_module)
+				. += "<span class='notice'>The mech could use a <b>scanning stock part</b>.</span>"
+			if(/obj/item/stock_parts/capacitor)
+				. += "<span class='notice'>The mech could use a <b>power based stock part</b>.</span>"
+			if(/obj/item/stock_parts/cell)
+				. += "<span class='notice'>The mech could use a <b>power source</b>.</span>"
+			if(/obj/item/stack/sheet/metal)
+				. += "<span class='notice'>The mech could use some <b>sheets of metal</b>.</span>"
+			if(/obj/item/stack/sheet/plasteel)
+				. += "<span class='notice'>The mech could use some <b>sheets of strong steel</b>.</span>"
+			if(/obj/item/bikehorn)
+				. += "<span class='notice'>HONK IT!.</span>"
+			if(/obj/item/clothing/mask/gas/clown_hat)
+				. += "<span class='notice'>GIVE IT CLOWN MAKEUP HONK!.</span>"
+			if(/obj/item/clothing/shoes/clown_shoes)
+				. += "<span class='notice'>GIVE IT GOOFY SHOES HONK HONK!.</span>"
+			if(/obj/item/mecha_parts/part)
+				. += "<span class='notice'>The mech could use a mech <b>part</b>.</span>"
+			if(/obj/item/stack/ore/bluespace_crystal)
+				. += "<span class='notice'>The mech could use a <b>crystal</b> of sorts.</span>"
+			if(/obj/item/assembly/signaler/anomaly)
+				. += "<span class='notice'>The mech could use a <b>anomaly</b> of sorts.</span>"
+			else
+				return
 
 /datum/component/construction/mecha/spawn_result()
 	if(!result)

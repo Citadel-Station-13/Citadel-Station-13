@@ -176,3 +176,4 @@ GLOBAL_LIST_INIT(ore_probability, list(/obj/item/stack/ore/uranium = 50,
 			new /obj/item/book/granter/spell/sacredflame(loc)
 		if(28)
 			new /mob/living/simple_animal/hostile/megafauna/blood_drunk_miner/doom(loc)
+	qdel(src)
