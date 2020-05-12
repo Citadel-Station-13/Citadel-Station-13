@@ -63,6 +63,7 @@ As a Roboticist, you can reset a cyborg's module by cutting and mending the rese
 As a Roboticist, you can greatly help out Shaft Miners by building a Firefighter APLU equipped with a hydraulic clamp and plasma cutter. The mech is ash storm proof and can even walk across lava!
 As a Roboticist, you can augment people with cyborg limbs. Augmented limbs can easily be repaired with cables and welders.
 As a Roboticist, you can use your printer that is linked to the ore silo to teleport mats into your work place!
+As a Roboticist, you can upgrade cleanbots with adv mops and brooms to make them faster and better!
 As the AI, you can click on people's names to look at them. This only works if there are cameras that can see them.
 As the AI, you can quickly open and close doors by holding shift while clicking them, bolt them when holding ctrl, and even shock them while holding alt.
 As the AI, you can take pictures with your camera and upload them to newscasters.

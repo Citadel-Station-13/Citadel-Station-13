@@ -1182,7 +1182,7 @@
 	if(iscyborg(target))
 		..()
 		return
-	if(target.run_block(src, 0, "[user]'s [name]", ATTACK_TYPE_MELEE, 0, user) & BLOCK_SUCCESS) //No message; run_block() handles that
+	if(target.mob_run_block(src, 0, "[user]'s [name]", ATTACK_TYPE_MELEE, 0, user, null, null) & BLOCK_SUCCESS) //No message; run_block() handles that
 		playsound(target, 'sound/weapons/genhit.ogg', 50, 1)
 		return FALSE
 	if(user.a_intent != INTENT_HARM)

@@ -1,5 +1,5 @@
 /datum/design/autoylathe
-	build_type = AUTOYLATHE
+	build_type = TOYLATHE
 
 /datum/design/autoylathe/mech
 	category = list("initial", "Figurines")
@@ -558,15 +558,16 @@
 /datum/design/foam_x9
 	name = "Foam Force X9 Rifle"
 	id = "foam_x9"
-	build_type = AUTOYLATHE
+	build_type = TOYLATHE
 	materials = list(/datum/material/plastic = 4000, /datum/material/iron = 500)
 	build_path = /obj/item/gun/ballistic/automatic/x9/toy
 	category = list("initial", "Rifles")
+	build_type = TOYLATHE | NO_PUBLIC_LATHE
 
 /datum/design/foam_dart
 	name = "Box of Foam Darts"
 	id = "foam_dart"
-	build_type = AUTOYLATHE
+	build_type = TOYLATHE
 	materials = list(/datum/material/plastic = 500, /datum/material/iron = 100)
 	build_path = /obj/item/ammo_box/foambox
 	category = list("initial", "Misc")
@@ -574,7 +575,7 @@
 /datum/design/foam_magpistol
 	name = "Foam Force Magpistol"
 	id = "magfoam_launcher"
-	build_type = AUTOYLATHE
+	build_type = TOYLATHE
 	materials = list(/datum/material/plastic = 2000, /datum/material/iron = 250)
 	build_path = /obj/item/gun/ballistic/shotgun/toy/mag
 	category = list("initial", "Pistols")
@@ -582,15 +583,16 @@
 /datum/design/foam_magrifle
 	name = "Foam Force MagRifle"
 	id = "foam_magrifle"
-	build_type = AUTOYLATHE
+	build_type = TOYLATHE
 	materials = list(/datum/material/plastic = 4000, /datum/material/iron = 500)
 	build_path = /obj/item/gun/ballistic/automatic/toy/magrifle
 	category = list("initial", "Rifles")
+	build_type = TOYLATHE | NO_PUBLIC_LATHE
 
 /datum/design/foam_hyperburst
 	name = "MagTag Hyper Rifle"
 	id = "foam_hyperburst"
-	build_type = AUTOYLATHE
+	build_type = TOYLATHE
 	materials = list(/datum/material/plastic = 4000, /datum/material/iron = 2000, /datum/material/glass = 1000)
 	build_path = /obj/item/gun/energy/laser/practice/hyperburst
 	category = list("initial", "Rifles")
@@ -598,7 +600,7 @@
 /datum/design/foam_sp
 	name = "Foam Force Stealth Pistol"
 	id = "foam_sp"
-	build_type = AUTOYLATHE
+	build_type = TOYLATHE
 	materials = list(/datum/material/plastic = 2000, /datum/material/iron = 1000)
 	build_path = /obj/item/gun/ballistic/automatic/toy/pistol/stealth
 	category = list("initial", "Pistols")
@@ -606,7 +608,7 @@
 /datum/design/toyray
 	name = "RayTag Gun"
 	id = "toyray"
-	build_type = AUTOYLATHE
+	build_type = TOYLATHE
 	materials = list(/datum/material/plastic = 2000, /datum/material/iron = 1000, /datum/material/glass = 1000)
 	build_path = /obj/item/gun/energy/laser/practice/raygun
 	category = list("initial", "Pistols")
@@ -614,15 +616,16 @@
 /datum/design/am4c
 	name = "Foam Force AM4-C Rifle"
 	id = "foam_am4c"
-	build_type = AUTOYLATHE
+	build_type = TOYLATHE
 	materials = list(/datum/material/plastic = 4000, /datum/material/iron = 500)
 	build_path = /obj/item/gun/ballistic/automatic/AM4C
 	category = list("initial", "Rifles")
+	build_type = TOYLATHE | NO_PUBLIC_LATHE
 
 /datum/design/foam_f3
 	name = "Replica F3 Justicar"
 	id = "foam_f3"
-	build_type = AUTOYLATHE
+	build_type = TOYLATHE
 	materials = list(/datum/material/plastic = 2000, /datum/material/iron = 250)
 	build_path = /obj/item/toy/gun/justicar
 	category = list("initial", "Pistols")
@@ -630,7 +633,7 @@
 /datum/design/toy_blaster
 	name = "pump-action plastic blaster"
 	id = "toy_blaster"
-	build_type = AUTOYLATHE
+	build_type = TOYLATHE
 	materials = list(/datum/material/plastic = 2000, /datum/material/iron = 750, /datum/material/glass = 1000)
 	build_path = /obj/item/gun/energy/pumpaction/toy
 	category = list("initial", "Rifles")
@@ -638,7 +641,7 @@
 /datum/design/capammo
 	name = "Box of Caps"
 	id = "capammo"
-	build_type = AUTOYLATHE
+	build_type = TOYLATHE
 	materials = list(/datum/material/iron = 10, /datum/material/glass = 10)
 	build_path = /obj/item/toy/ammo/gun
 	category = list("initial", "Misc")
@@ -646,15 +649,16 @@
 /datum/design/foam_smg
 	name = "Foam Force SMG"
 	id = "foam_smg"
-	build_type = AUTOYLATHE
+	build_type = TOYLATHE
 	materials = list(/datum/material/plastic = 2000, /datum/material/iron = 250)
 	build_path = /obj/item/gun/ballistic/automatic/toy/unrestricted
 	category = list("initial", "Pistols")
+	build_type = TOYLATHE | NO_PUBLIC_LATHE
 
 /datum/design/foam_pistol
 	name = "Foam Force Pistol"
 	id = "foam_pistol"
-	build_type = AUTOYLATHE
+	build_type = TOYLATHE
 	materials = list(/datum/material/plastic = 2000, /datum/material/iron = 250)
 	build_path = /obj/item/gun/ballistic/automatic/toy/pistol/unrestricted
 	category = list("initial", "Pistols")
@@ -662,7 +666,7 @@
 /datum/design/foam_shotgun
 	name = "Foam Force Shotgun"
 	id = "foam_shotgun"
-	build_type = AUTOYLATHE
+	build_type = TOYLATHE
 	materials = list(/datum/material/plastic = 4000, /datum/material/iron = 500)
 	build_path = /obj/item/gun/ballistic/shotgun/toy/unrestricted
 	category = list("initial", "Rifles")
@@ -670,7 +674,7 @@
 /datum/design/foam_dartred
 	name = "Box of Lastag Red Foam Darts"
 	id = "redfoam_dart"
-	build_type = AUTOYLATHE
+	build_type = TOYLATHE
 	materials = list(/datum/material/plastic = 500, /datum/material/iron = 100)
 	build_path = /obj/item/ammo_box/foambox/tag/red
 	category = list("initial", "Misc")
@@ -678,7 +682,7 @@
 /datum/design/foam_dartblue
 	name = "Box of Lastag Blue Foam Darts"
 	id = "bluefoam_dart"
-	build_type = AUTOYLATHE
+	build_type = TOYLATHE
 	materials = list(/datum/material/plastic = 500, /datum/material/iron = 100)
 	build_path = /obj/item/ammo_box/foambox/tag/blue
 	category = list("initial", "Misc")
@@ -686,7 +690,7 @@
 /datum/design/foam_bow
 	name = "Foam Force Crossbow"
 	id = "foam_bow"
-	build_type = AUTOYLATHE
+	build_type = TOYLATHE
 	materials = list(/datum/material/plastic = 2000, /datum/material/iron = 250)
 	build_path = /obj/item/gun/ballistic/shotgun/toy/crossbow
 	category = list("initial", "Pistols")
@@ -694,15 +698,17 @@
 /datum/design/foam_c20
 	name = "Donksoft C20R"
 	id = "foam_c20"
-	build_type = AUTOYLATHE
+	build_type = TOYLATHE
 	materials = list(/datum/material/plastic = 4000, /datum/material/iron = 500)
 	build_path = /obj/item/gun/ballistic/automatic/c20r/toy/unrestricted
 	category = list("hacked", "Rifles")
+	build_type = TOYLATHE | NO_PUBLIC_LATHE
 
 /datum/design/foam_l6
 	name = "Donksoft LMG"
 	id = "foam_LMG"
-	build_type = AUTOYLATHE
+	build_type = TOYLATHE
 	materials = list(/datum/material/plastic = 4000, /datum/material/iron = 500)
 	build_path = /obj/item/gun/ballistic/automatic/l6_saw/toy/unrestricted
 	category = list("hacked", "Rifles")
+	build_type = TOYLATHE | NO_PUBLIC_LATHE

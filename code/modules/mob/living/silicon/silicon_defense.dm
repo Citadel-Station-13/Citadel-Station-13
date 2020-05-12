@@ -1,3 +1,5 @@
+/mob/living/silicon/KnockToFloor(disarm_items = FALSE, silent = TRUE, updating = TRUE)
+	return
 
 /mob/living/silicon/grippedby(mob/living/user, instant = FALSE)
 	return //can't upgrade a simple pull into a more aggressive grab.
@@ -113,7 +115,7 @@
 /mob/living/silicon/bullet_act(obj/item/projectile/P, def_zone)
 	if(P.original != src || P.firer != src) //try to block or reflect the bullet, can't do so when shooting oneself
 		var/list/returnlist = list()
-		var/returned = run_block(P, P.damage, "the [P.name]", ATTACK_TYPE_PROJECTILE, P.armour_penetration, P.firer, def_zone, returnlist)
+		var/returned = mob_run_block(P, P.damage, "the [P.name]", ATTACK_TYPE_PROJECTILE, P.armour_penetration, P.firer, def_zone, returnlist)
 		if(returned & BLOCK_SHOULD_REDIRECT)
 			handle_projectile_attack_redirection(P, returnlist[BLOCK_RETURN_REDIRECT_METHOD])
 		if(returned & BLOCK_REDIRECTED)

@@ -80,12 +80,12 @@
 	var/oldloc = mob.loc
 
 	if(L.confused)
-		var/newdir = 0
-		if(L.confused > 40)
+		var/newdir = NONE
+		if((L.confused > 50) && prob(min(L.confused * 0.5, 50)))
 			newdir = pick(GLOB.alldirs)
-		else if(prob(L.confused * 1.5))
+		else if(prob(L.confused))
 			newdir = angle2dir(dir2angle(direction) + pick(90, -90))
-		else if(prob(L.confused * 3))
+		else if(prob(L.confused * 2))
 			newdir = angle2dir(dir2angle(direction) + pick(45, -45))
 		if(newdir)
 			direction = newdir
@@ -100,15 +100,16 @@
 		if(mob.throwing)
 			mob.throwing.finalize(FALSE)
 
-	var/atom/movable/P = mob.pulling
-	if(P && !ismob(P) && P.density)
-		mob.setDir(turn(mob.dir, 180))
+	if(L.pulling && !(L.combat_flags & COMBAT_FLAG_COMBAT_ACTIVE))
+		L.setDir(turn(L.dir, 180))
 
 	SEND_SIGNAL(mob, COMSIG_MOB_CLIENT_MOVE, src, direction, n, oldloc)
 
 /// Process_Grab(): checks for grab, attempts to break if so. Return TRUE to prevent movement.
 /client/proc/Process_Grab()
 	if(mob.pulledby)
+		if((mob.pulledby == mob.pulling) && (mob.pulledby.grab_state == GRAB_PASSIVE))			//Don't autoresist passive grabs if we're grabbing them too.
+			return
 		if(mob.incapacitated(ignore_restraints = 1))
 			move_delay = world.time + 10
 			return TRUE

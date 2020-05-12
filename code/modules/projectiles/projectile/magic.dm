@@ -182,18 +182,14 @@
 			var/path = pick(/mob/living/simple_animal/hostile/carp,
 							/mob/living/simple_animal/hostile/bear,
 							/mob/living/simple_animal/hostile/mushroom,
-							/mob/living/simple_animal/hostile/statue,
 							/mob/living/simple_animal/hostile/retaliate/bat,
 							/mob/living/simple_animal/hostile/retaliate/goat,
 							/mob/living/simple_animal/hostile/killertomato,
 							/mob/living/simple_animal/hostile/poison/giant_spider,
 							/mob/living/simple_animal/hostile/poison/giant_spider/hunter,
 							/mob/living/simple_animal/hostile/blob/blobbernaut/independent,
-							/mob/living/simple_animal/hostile/carp/ranged,
-							/mob/living/simple_animal/hostile/carp/ranged/chaos,
 							/mob/living/simple_animal/hostile/asteroid/basilisk/watcher,
 							/mob/living/simple_animal/hostile/asteroid/goliath/beast,
-							/mob/living/simple_animal/hostile/headcrab,
 							/mob/living/simple_animal/hostile/morph,
 							/mob/living/simple_animal/hostile/stickman,
 							/mob/living/simple_animal/hostile/stickman/dog,
@@ -232,7 +228,6 @@
 
 	if(!new_mob)
 		return
-	new_mob.grant_language(/datum/language/common)
 
 	// Some forms can still wear some items
 	for(var/obj/item/W in contents)

@@ -492,7 +492,7 @@
 
 	user.do_attack_animation(L)
 
-	if(L.run_block(src, 0, "[user]'s [src]", ATTACK_TYPE_MELEE, 0, user, check_zone(user.zone_selected)) & BLOCK_SUCCESS)
+	if(L.mob_run_block(src, 0, "[user]'s [src]", ATTACK_TYPE_MELEE, 0, user, check_zone(user.zone_selected), null) & BLOCK_SUCCESS)
 		playsound(L, 'sound/weapons/genhit.ogg', 50, TRUE)
 		return FALSE
 

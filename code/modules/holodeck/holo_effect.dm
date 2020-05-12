@@ -62,7 +62,7 @@
 		s.set_up(3, 1, T)
 		s.start()
 		T.temperature = 5000
-		T.hotspot_expose(50000,50000,1)
+		T.hotspot_expose(50000, 50000, TRUE, TRUE)
 
 
 

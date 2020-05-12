@@ -6,6 +6,7 @@
 	mob_size = MOB_SIZE_SMALL
 	density = FALSE
 	hud_type = /datum/hud/larva
+	mouse_opacity = MOUSE_OPACITY_OPAQUE
 
 	maxHealth = 25
 	health = 25

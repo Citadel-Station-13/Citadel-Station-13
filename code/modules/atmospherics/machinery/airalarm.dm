@@ -786,9 +786,8 @@
 					return
 				user.visible_message("[user.name] wires the air alarm.", \
 									"<span class='notice'>You start wiring the air alarm...</span>")
-				if (do_after(user, 20, target = src))
-					if (cable.get_amount() >= 5 && buildstage == 1)
-						cable.use(5)
+				if (W.use_tool(src, user, 20, 5))
+					if (buildstage == 1)
 						to_chat(user, "<span class='notice'>You wire the air alarm.</span>")
 						wires.repair()
 						aidisabled = 0
