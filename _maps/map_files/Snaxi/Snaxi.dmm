@@ -16550,7 +16550,6 @@
 /area/lawoffice)
 "icb" = (
 /obj/structure/closet/secure_closet/captains,
-/obj/item/card/id/captains_spare,
 /turf/open/floor/carpet,
 /area/crew_quarters/heads/captain)
 "idb" = (
@@ -28584,6 +28583,7 @@
 /obj/machinery/door/firedoor/border_only{
 	name = "south facing firelock"
 	},
+/obj/item/card/id/captains_spare,
 /turf/open/floor/wood,
 /area/crew_quarters/heads/captain)
 "pPx" = (
