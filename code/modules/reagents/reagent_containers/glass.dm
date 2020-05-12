@@ -159,41 +159,6 @@
 				filling.icon_state = "[cached_icon]100"
 		. += filling
 
-/obj/item/reagent_containers/glass/beaker/jar
-	name = "honey jar"
-	desc = "A jar for honey. It can hold up to 60 units of sweet delight. Unable to withstand reagents of an extreme pH."
-	icon_state = "honey"
-
-/obj/item/reagent_containers/glass/beaker/glass_dish
-	name = "glass dish"
-	desc = "A tiny glass dish. It can hold up to 3 units. Unable to withstand reagents of an extreme pH."
-	custom_materials = list(/datum/material/glass = 500)
-	icon_state = "glass_disk"
-	possible_transfer_amounts = list(0.1,0.5,0.75,1,2,3)
-	volume = 3
-
-/obj/item/reagent_containers/glass/beaker/flask/large
-	name = "large flask"
-	desc = "A large flask. It can hold up to 80 units. Unable to withstand reagents of an extreme pH."
-	custom_materials = list(/datum/material/glass = 2500)
-	icon_state = "flasklarge"
-	volume = 80
-
-/obj/item/reagent_containers/glass/beaker/flask
-	name = "small flask"
-	desc = "A small flask. It can hold up to 40 units. Unable to withstand reagents of an extreme pH."
-	custom_materials = list(/datum/material/glass = 1000)
-	icon_state = "flasksmall"
-	volume = 40
-
-/obj/item/reagent_containers/glass/beaker/flask/spouty
-	name = "flask with spout"
-	desc = "A flask with a spout! It can hold up to 120 units. Unable to withstand reagents of an extreme pH."
-	custom_materials = list(/datum/material/glass = 2500)
-	icon_state = "flaskspouty"
-	possible_transfer_amounts = list(1,2,3,4,5,10,15,20,25,30,50,100,120)
-	volume = 120
-
 /obj/item/reagent_containers/glass/beaker/large
 	name = "large beaker"
 	desc = "A large beaker. Can hold up to 120 units. Unable to withstand reagents of an extreme pH."
