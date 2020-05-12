@@ -38,6 +38,8 @@
 	var/trajectory_ignore_forcemove = FALSE	//instructs forceMove to NOT reset our trajectory to the new location!
 
 	var/speed = 0.8			//Amount of deciseconds it takes for projectile to travel
+	/// "leftover" ticks and stuff yeah. hey when are we rewriting projectiles for the eighth time to do something smarter like incrementing x pixels until it meets a goal instead of for(var/i in 1 to required_moves)?
+	var/tick_moves_leftover = 0
 	var/Angle = 0
 	var/original_angle = 0		//Angle at firing
 	var/nondirectional_sprite = FALSE //Set TRUE to prevent projectiles from having their sprites rotated based on firing angle
@@ -350,13 +352,22 @@
 /obj/item/projectile/Process_Spacemove(movement_dir = 0)
 	return TRUE	//Bullets don't drift in space
 
-/obj/item/projectile/process()
+/obj/item/projectile/process(wait)
 	if(!loc || !fired || !trajectory)
 		fired = FALSE
 		return PROCESS_KILL
 	if(paused || !isturf(loc))
 		return
-	pixel_move(1, FALSE)
+	var/ds = (SSprojectiles.flags & SS_TICKER)? (wait * world.tick_lag) : wait
+	var/required_moves = ds / speed
+	var/leftover = MODULUS(required_moves, 1)
+	tick_moves_leftover += leftover
+	required_moves = round(required_moves)
+	if(tick_moves_leftover > 1)
+		required_moves += round(tick_moves_leftover)
+		tick_moves_leftover = MODULUS(tick_moves_leftover, 1)
+	for(var/i in 1 to required_moves)
+		pixel_move(1, FALSE)
 
 /obj/item/projectile/proc/fire(angle, atom/direct_target)
 	if(fired_from)

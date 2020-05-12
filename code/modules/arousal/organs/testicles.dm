@@ -2,7 +2,7 @@
 	name = "testicles"
 	desc = "A male reproductive organ."
 	icon_state = "testicles"
-	icon = 'modular_citadel/icons/obj/genitals/testicles.dmi'
+	icon = 'icons/obj/genitals/testicles.dmi'
 	zone = BODY_ZONE_PRECISE_GROIN
 	slot = ORGAN_SLOT_TESTICLES
 	size = BALLS_SIZE_MIN

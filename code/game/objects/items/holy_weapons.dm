@@ -519,7 +519,9 @@
 		S.name = name
 		S.ckey = C.ckey
 		S.status_flags |= GODMODE
-		S.language_holder = user.language_holder.copy(S)
+		S.copy_languages(user, LANGUAGE_MASTER)	//Make sure the sword can understand and communicate with the user.
+		S.update_atom_languages()
+		grant_all_languages(FALSE, FALSE, TRUE)	//Grants omnitongue
 		S.AddElement(/datum/element/ghost_role_eligibility,penalize_on_ghost = TRUE)
 		START_PROCESSING(SSprocessing,src)
 		var/input = stripped_input(S,"What are you named?", ,"", MAX_NAME_LEN)

@@ -76,7 +76,9 @@ GLOBAL_LIST_EMPTY(explosions)
 	//I would make this not ex_act the thing that triggered the explosion,
 	//but everything that explodes gives us their loc or a get_turf()
 	//and somethings expect us to ex_act them so they can qdel()
-	stoplag() //tldr, let the calling proc call qdel(src) before we explode
+	//stoplag() //tldr, let the calling proc call qdel(src) before we explode
+	// no - use sleep. stoplag() results in quirky things like explosions taking too long to process and hanging mid-air for no reason.
+	sleep(0)
 
 	EX_PREPROCESS_EXIT_CHECK
 

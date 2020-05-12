@@ -9,7 +9,7 @@
 	mob_biotypes = MOB_ORGANIC|MOB_BEAST
 	mouse_opacity = MOUSE_OPACITY_ICON
 	speak_emote = list("telepathically cries")
-	speed = 2
+	speed = 1
 	move_to_delay = 2
 	projectiletype = /obj/item/projectile/temp/basilisk/ice
 	projectilesound = 'sound/weapons/pierce.ogg'
@@ -25,8 +25,8 @@
 	melee_damage_upper = 15
 	attacktext = "slices"
 	attack_sound = 'sound/weapons/bladeslice.ogg'
-	vision_range = 9
-	aggro_vision_range = 9
+	vision_range = 7
+	aggro_vision_range = 7
 	move_force = MOVE_FORCE_VERY_STRONG
 	move_resist = MOVE_FORCE_VERY_STRONG
 	pull_force = MOVE_FORCE_VERY_STRONG

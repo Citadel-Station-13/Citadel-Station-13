@@ -59,6 +59,9 @@
 	self_delay = 20
 	grind_results = list(/datum/reagent/medicine/styptic_powder = 10)
 
+/obj/item/stack/medical/bruise_pack/one
+	amount = 1
+
 /obj/item/stack/medical/bruise_pack/heal(mob/living/M, mob/user)
 	if(M.stat == DEAD)
 		to_chat(user, "<span class='notice'> [M] is dead. You can not help [M.p_them()]!</span>")
@@ -134,6 +137,9 @@
 	singular_name = "sterilized medical gauze"
 	self_delay = 5
 
+/obj/item/stack/medical/gauze/adv/one
+	amount = 1
+
 /obj/item/stack/medical/gauze/cyborg
 	custom_materials = null
 	is_cyborg = 1
@@ -150,6 +156,9 @@
 	var/heal_burn = 20
 	self_delay = 20
 	grind_results = list(/datum/reagent/medicine/silver_sulfadiazine = 10)
+
+/obj/item/stack/medical/ointment/one
+	amount = 1
 
 /obj/item/stack/medical/ointment/heal(mob/living/M, mob/user)
 	if(M.stat == DEAD)
