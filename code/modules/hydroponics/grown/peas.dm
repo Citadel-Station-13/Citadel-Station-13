@@ -27,7 +27,7 @@
 	foodtype = VEGETABLES
 	tastes = list ("peas" = 1, "chalky saltiness" = 1)
 	wine_power = 50
-	wine_flavor = "distressingly of fermented peas."
+	wine_flavor = "what is, distressingly, fermented peas."
 	// distill_regeant = /datum/reagent/saltpetre //if allowed, remove wine_power, ya dingus.
 
 
