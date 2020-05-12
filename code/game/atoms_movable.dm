@@ -180,7 +180,6 @@
 		log_combat(src, M, "grabbed", addition="passive grab")
 		if(!supress_message)
 			visible_message("<span class='warning'>[src] has grabbed [M] passively!</span>")
-	SEND_SIGNAL(src, COMSIG_MOVABLE_START_PULLING, AM, state, force, supress_message)
 	return TRUE
 
 /atom/movable/proc/stop_pulling()
@@ -193,7 +192,6 @@
 	if(isliving(ex_pulled))
 		var/mob/living/L = ex_pulled
 		L.update_mobility()// mob gets up if it was lyng down in a chokehold
-	SEND_SIGNAL(src, COMSIG_MOVABLE_STOP_PULLING, ex_pulled)
 
 /atom/movable/proc/Move_Pulled(atom/A)
 	if(!pulling)

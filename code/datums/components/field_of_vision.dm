@@ -11,7 +11,8 @@
 			_cached_sizes = FoV.width_n_height_offsets[atom.icon] = L\
 		}\
 		img.pixel_x = _cached_sizes[1];\
-		img.pixel_y = _cached_sizes[2]\
+		img.pixel_y = _cached_sizes[2];\
+		img.loc = atom\
 	}
 
 #define REGISTER_NESTED_LOCS(source, list, comsig, proc) \
@@ -52,14 +53,20 @@
 	var/image/shadow_mask
 	/// The visual portion of the cone, placed on the highest layer of the wall plane
 	var/image/visual_shadow
-	/// An image whose render_source is kept up to date to prevent the topmost location the mob is in from being hidden by the mask.
+/**
+  * An image whose render_source is kept up to date to prevent the mob (or the topmost movable holding it) from being hidden by the mask.
+  * Will make it use vis_contents instead once a few byonds bugs with images and vis contents are fixed.
+  */
 	var/image/owner_mask
-	/// An image whose render_source is kept up to date with whatever the mob is pulling right now. displayed on yet another plane.
-	var/image/pulled_image
+/**
+  * A circle image used to somewhat uncover the adjacent portion of the shadow cone, making mobs and objects behind us somewhat visible.
+  * The owner mask is still required for those mob going over the default 32x32 px size btw.
+  */
+	var/image/adj_mask
 	/// A list of nested locations the mob is in, to ensure the above image works correctly.
 	var/list/nested_locs = list()
 /**
-  * A static list of offsets based on icon width and height, because render sources are centered, unlike most other visuals,
+  * A static list of offsets based on icon width and height, because render sources are centered unlike most other visuals,
   * and that gives us some problems when the icon is larger or smaller than world.icon_size
   */
 	var/static/list/width_n_height_offsets = list()
@@ -73,12 +80,6 @@
 /datum/component/field_of_vision/RegisterWithParent()
 	. = ..()
 	var/mob/M = parent
-	pulled_image = new()
-	pulled_image.appearance_flags = RESET_TRANSFORM
-	pulled_image.plane = FIELD_OF_VISION_PULLED_PLANE
-	if(M.pulling)
-		pulled_image.loc = M.pulling
-		CENTERED_RENDER_SOURCE(pulled_image, M.pulling, src)
 	if(M.client)
 		generate_fov_holder(M, angle)
 	RegisterSignal(M, COMSIG_MOB_CLIENT_LOGIN, .proc/on_mob_login)
@@ -89,8 +90,6 @@
 	RegisterSignal(M, COMSIG_MOB_CLIENT_CHANGE_VIEW, .proc/on_change_view)
 	RegisterSignal(M, COMSIG_MOB_RESET_PERSPECTIVE, .proc/on_reset_perspective)
 	RegisterSignal(M, COMSIG_MOB_IS_VIEWER, .proc/is_viewer)
-	RegisterSignal(M, COMSIG_MOVABLE_START_PULLING, .proc/on_start_pulling)
-	RegisterSignal(M, COMSIG_MOVABLE_STOP_PULLING, .proc/on_stop_pulling)
 
 /datum/component/field_of_vision/UnregisterFromParent()
 	. = ..()
@@ -101,18 +100,17 @@
 			M.client.images -= owner_mask
 			M.client.images -= shadow_mask
 			M.client.images -= visual_shadow
-			M.client.images -= pulled_image
+			M.client.images -= adj_mask
 		qdel(fov, TRUE) // Forced.
 		fov = null
 		QDEL_NULL(owner_mask)
-		QDEL_NULL(pulled_image)
+		QDEL_NULL(adj_mask)
 	if(length(nested_locs))
 		UNREGISTER_NESTED_LOCS(nested_locs, COMSIG_MOVABLE_MOVED, 1)
 	UnregisterSignal(M, list(COMSIG_MOB_CLIENT_LOGIN, COMSIG_MOB_CLIENT_LOGOUT,
 							COMSIG_MOB_GET_VISIBLE_MESSAGE, COMSIG_MOB_EXAMINATE,
 							COMSIG_MOB_VISIBLE_ATOMS, COMSIG_MOB_RESET_PERSPECTIVE,
-							COMSIG_MOB_CLIENT_CHANGE_VIEW, COMSIG_MOB_IS_VIEWER,
-							COMSIG_MOVABLE_START_PULLING, COMSIG_MOVABLE_STOP_PULLING))
+							COMSIG_MOB_CLIENT_CHANGE_VIEW, COMSIG_MOB_IS_VIEWER))
 
 /**
   * Generates the holder and images (if not generated yet) and adds them to client.images.
@@ -124,13 +122,15 @@
 		fov.icon_state = "[shadow_angle]"
 		fov.dir = M.dir
 		shadow_mask = image('icons/misc/field_of_vision.dmi', fov, "[shadow_angle]", FIELD_OF_VISION_LAYER)
-		shadow_mask.override = TRUE
 		shadow_mask.plane = FIELD_OF_VISION_PLANE
 		visual_shadow = image('icons/misc/field_of_vision.dmi', fov, "[shadow_angle]_v", FIELD_OF_VISION_LAYER)
-		visual_shadow.plane = WALL_PLANE
-		owner_mask = new(loc = M)
+		visual_shadow.plane = FIELD_OF_VISION_VISUAL_PLANE
+		owner_mask = new
 		owner_mask.appearance_flags = RESET_TRANSFORM
 		owner_mask.plane = FIELD_OF_VISION_BLOCKER_PLANE
+		adj_mask = image('icons/misc/field_of_vision.dmi', fov, "adj_mask", FIELD_OF_VISION_LAYER)
+		adj_mask.appearance_flags = RESET_TRANSFORM
+		adj_mask.plane = FIELD_OF_VISION_BLOCKER_PLANE
 		if(_angle)
 			rotate_shadow_cone(_angle)
 	fov.alpha = M.stat == DEAD ? 0 : 255
@@ -147,7 +147,7 @@
 	M.client.images += shadow_mask
 	M.client.images += visual_shadow
 	M.client.images += owner_mask
-	M.client.images += pulled_image
+	M.client.images += adj_mask
 	if(M.client.view != "[current_fov_size[1]]x[current_fov_size[2]]")
 		resize_fov(current_fov_size, getviewsize(M.client.view))
 
@@ -182,14 +182,6 @@
 								COMSIG_LIVING_REVIVE, COMSIG_ROBOT_UPDATE_ICONS))
 	if(length(nested_locs))
 		UNREGISTER_NESTED_LOCS(nested_locs, COMSIG_MOVABLE_MOVED, 1)
-
-/datum/component/field_of_vision/proc/on_start_pulling(atom/movable/source, atom/movable/AM, state, force, supress_message)
-	pulled_image.loc = AM
-	CENTERED_RENDER_SOURCE(pulled_image, AM, src)
-
-/datum/component/field_of_vision/proc/on_stop_pulling(atom/movable/source, atom/movable/AM)
-	pulled_image.loc = null
-	pulled_image.render_source = null
 
 /datum/component/field_of_vision/proc/on_dir_change(mob/source, old_dir, new_dir)
 	fov.dir = new_dir
@@ -273,7 +265,7 @@
 	}\
 	var/_x = (T1.x - T2.x);\
 	var/_y = (T1.y - T2.y);\
-	if(!_x && !_y){\
+	if(ISINRANGE(_x, -1, 1) && ISINRANGE(_y, -1, 1)){\
 		zero_x_y_statement\
 	}\
 	var/dir = (mob.dir & (EAST|WEST)) || mob.dir;\
