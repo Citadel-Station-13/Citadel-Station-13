@@ -256,3 +256,11 @@
 	materials = list(/datum/material/iron = 300, /datum/material/glass = 150)
 	build_path = /obj/item/key/collar
 	category = list("initial", "Misc")
+
+/datum/design/trigger_assembly
+	name = "Trigger Assembly"
+	id = "trigger_assembly"
+	build_type = AUTOLATHE
+	materials = list(/datum/material/iron = 10500, /datum/material/glass = 50)
+	build_path = /obj/item/weaponcrafting/improvised_parts/trigger_assembly
+	category = list("initial", "Misc")
