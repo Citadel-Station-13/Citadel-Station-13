@@ -93,7 +93,7 @@
 	var/shuttledocked = 0
 	var/delayed_close_requested = FALSE // TRUE means the door will automatically close the next time it's opened.
 
-	var/air_tight = FALSE	//TRUE means density will be set as soon as the door begins to close
+	air_tight = FALSE
 	var/prying_so_hard = FALSE
 
 	rad_flags = RAD_PROTECT_CONTENTS | RAD_NO_CONTAMINATE

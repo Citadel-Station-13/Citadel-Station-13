@@ -16,6 +16,7 @@
 	interaction_flags_atom = INTERACT_ATOM_UI_INTERACT
 
 	var/secondsElectrified = 0
+	var/air_tight = FALSE	//TRUE means density will be set as soon as the door begins to close
 	var/shockedby
 	var/visible = TRUE
 	var/operating = FALSE
@@ -160,7 +161,7 @@
 			open()
 		else
 			close()
-		return
+		return TRUE
 	if(density)
 		do_animate("deny")
 
@@ -180,11 +181,36 @@
 /obj/machinery/door/proc/try_to_crowbar(obj/item/I, mob/user)
 	return
 
+/obj/machinery/door/proc/is_holding_pressure()
+	var/turf/open/T = loc
+	if(!T)
+		return FALSE
+	if(!density)
+		return FALSE
+	// alrighty now we check for how much pressure we're holding back
+	var/min_moles = T.air.total_moles()
+	var/max_moles = min_moles
+	// okay this is a bit hacky. First, we set density to 0 and recalculate our adjacent turfs
+	density = FALSE
+	T.ImmediateCalculateAdjacentTurfs()
+	// then we use those adjacent turfs to figure out what the difference between the lowest and highest pressures we'd be holding is
+	for(var/turf/open/T2 in T.atmos_adjacent_turfs)
+		if((flags_1 & ON_BORDER_1) && get_dir(src, T2) != dir)
+			continue
+		var/moles = T2.air.total_moles()
+		if(moles < min_moles)
+			min_moles = moles
+		if(moles > max_moles)
+			max_moles = moles
+	density = TRUE
+	T.ImmediateCalculateAdjacentTurfs() // alright lets put it back
+	return max_moles - min_moles > 20
+
 /obj/machinery/door/attackby(obj/item/I, mob/user, params)
-	if(user.a_intent != INTENT_HARM && (istype(I, /obj/item/crowbar) || istype(I, /obj/item/twohanded/fireaxe)))
+	if(user.a_intent != INTENT_HARM && (I.tool_behaviour == TOOL_CROWBAR || istype(I, /obj/item/twohanded/fireaxe)))
 		try_to_crowbar(I, user)
 		return 1
-	else if(istype(I, /obj/item/weldingtool))
+	else if(I.tool_behaviour == TOOL_WELDER)
 		try_to_weld(I, user)
 		return 1
 	else if(!(I.item_flags & NOBLUDGEON) && user.a_intent != INTENT_HARM)
@@ -292,6 +318,8 @@
 	layer = closingLayer
 	if(!safe)
 		crush()
+	if(air_tight)
+		density = TRUE
 	sleep(5)
 	density = TRUE
 	sleep(5)

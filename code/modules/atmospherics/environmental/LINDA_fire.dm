@@ -9,46 +9,31 @@
 	return
 
 
-/turf/open/hotspot_expose(exposed_temperature, exposed_volume, soh = FALSE, holo = FALSE)
-	var/datum/gas_mixture/air_contents = return_air()
-	if(!air_contents)
-		return 0
+/turf/open/hotspot_expose(exposed_temperature, exposed_volume, soh)
+	if(!air)
+		return
 
-	var/oxy = air_contents.get_moles(/datum/gas/oxygen)
-	var/tox = air_contents.get_moles(/datum/gas/plasma)
-	var/trit = air_contents.get_moles(/datum/gas/tritium)
+	var/oxy = air.get_moles(/datum/gas/oxygen)
+	if (oxy < 0.5)
+		return
+	var/tox = air.get_moles(/datum/gas/plasma)
+	var/trit = air.get_moles(/datum/gas/tritium)
 	if(active_hotspot)
 		if(soh)
-			if((tox > 0.5 || trit > 0.5) && oxy > 0.5)
-				if(active_hotspot.temperature < exposed_temperature*50)
-					active_hotspot.temperature = exposed_temperature*50
+			if(tox > 0.5 || trit > 0.5)
+				if(active_hotspot.temperature < exposed_temperature)
+					active_hotspot.temperature = exposed_temperature
 				if(active_hotspot.volume < exposed_volume)
 					active_hotspot.volume = exposed_volume
-		return 1
-
-	var/igniting = 0
+		return
 
 	if((exposed_temperature > PLASMA_MINIMUM_BURN_TEMPERATURE) && (tox > 0.5 || trit > 0.5))
-		igniting = 1
 
-	if(igniting)
-		if(oxy < 0.5)
-			return 0
-
-		active_hotspot = new /obj/effect/hotspot(src, holo)
-		active_hotspot.temperature = exposed_temperature*50
-		active_hotspot.volume = exposed_volume*25
+		active_hotspot = new /obj/effect/hotspot(src, exposed_volume*25, exposed_temperature)
 
 		active_hotspot.just_spawned = (current_cycle < SSair.times_fired)
 			//remove just_spawned protection if no longer processing this cell
 		SSair.add_to_active(src, 0)
-	else
-		var/datum/gas_mixture/heating = air_contents.remove_ratio(exposed_volume/air_contents.return_volume())
-		heating.set_temperature(exposed_temperature)
-		heating.react()
-		assume_air(heating)
-		air_update_turf()
-	return igniting
 
 //This is the icon for fire on turfs, also helps for nurturing small fires until they are full tile
 /obj/effect/hotspot
@@ -67,11 +52,13 @@
 	var/bypassing = FALSE
 	var/visual_update_tick = 0
 
-/obj/effect/hotspot/Initialize(mapload, holo = FALSE)
+/obj/effect/hotspot/Initialize(mapload, starting_volume, starting_temperature)
 	. = ..()
-	if(holo)
-		flags_1 |= HOLOGRAM_1
 	SSair.hotspots += src
+	if(!isnull(starting_volume))
+		volume = starting_volume
+	if(!isnull(starting_temperature))
+		temperature = starting_temperature
 	perform_exposure()
 	setDir(pick(GLOB.cardinals))
 	air_update_turf()
@@ -83,22 +70,19 @@
 
 	location.active_hotspot = src
 
-	if(volume > CELL_VOLUME*0.95)
-		bypassing = TRUE
-	else
-		bypassing = FALSE
+	bypassing = !just_spawned && (volume > CELL_VOLUME*0.95)
 
 	if(bypassing)
-		if(!just_spawned)
-			volume = location.air.reaction_results["fire"]*FIRE_GROWTH_RATE
-			temperature = location.air.return_temperature()
+		volume = location.air.reaction_results["fire"]*FIRE_GROWTH_RATE
+		temperature = location.air.return_temperature()
 	else
 		var/datum/gas_mixture/affected = location.air.remove_ratio(volume/location.air.return_volume())
-		affected.set_temperature(temperature)
-		affected.react(src)
-		temperature = affected.return_temperature()
-		volume = affected.reaction_results["fire"]*FIRE_GROWTH_RATE
-		location.assume_air(affected)
+		if(affected) //in case volume is 0
+			affected.set_temperature(temperature)
+			affected.react(src)
+			temperature = affected.return_temperature()
+			volume = affected.reaction_results["fire"]*FIRE_GROWTH_RATE
+			location.assume_air(affected)
 
 	for(var/A in location)
 		var/atom/AT = A
@@ -175,8 +159,7 @@
 		qdel(src)
 		return
 
-	if(location.excited_group)
-		location.excited_group.reset_cooldowns()
+	location.eg_reset_cooldowns()
 
 	if((temperature < FIRE_MINIMUM_TEMPERATURE_TO_EXIST) || (volume <= 1))
 		qdel(src)
@@ -185,12 +168,17 @@
 		qdel(src)
 		return
 
+	//Not enough to burn
+	// god damn it previous coder you made the INSUFFICIENT macro for a fucking reason why didn't you use it here smh
+	if((INSUFFICIENT(/datum/gas/plasma) && INSUFFICIENT(/datum/gas/tritium)) || INSUFFICIENT(/datum/gas/oxygen))
+		qdel(src)
+		return
+
 	perform_exposure()
 
 	if(bypassing)
 		icon_state = "3"
-		if(!(flags_1 & HOLOGRAM_1))
-			location.burn_tile()
+		location.burn_tile()
 
 		//Possible spread due to radiated heat
 		if(location.air.return_temperature() > FIRE_MINIMUM_TEMPERATURE_TO_SPREAD)
@@ -198,7 +186,7 @@
 			for(var/t in location.atmos_adjacent_turfs)
 				var/turf/open/T = t
 				if(!T.active_hotspot)
-					T.hotspot_expose(radiated_temperature, CELL_VOLUME/4, flags_1 & HOLOGRAM_1)
+					T.hotspot_expose(radiated_temperature, CELL_VOLUME/4)
 
 	else
 		if(volume > CELL_VOLUME*0.4)
@@ -222,14 +210,13 @@
 	var/turf/open/T = loc
 	if(istype(T) && T.active_hotspot == src)
 		T.active_hotspot = null
-	if(!(flags_1 & HOLOGRAM_1))
-		DestroyTurf()
+	DestroyTurf()
 	return ..()
 
 /obj/effect/hotspot/proc/DestroyTurf()
 	if(isturf(loc))
 		var/turf/T = loc
-		if(T.to_be_destroyed)
+		if(T.to_be_destroyed && !T.changing_turf)
 			var/chance_of_deletion
 			if (T.heat_capacity) //beware of division by zero
 				chance_of_deletion = T.max_fire_temperature_sustained / T.heat_capacity * 8 //there is no problem with prob(23456), min() was redundant --rastaf0
