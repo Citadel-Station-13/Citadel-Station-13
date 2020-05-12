@@ -45021,7 +45021,7 @@
 /turf/open/floor/wood,
 /area/maintenance/bar)
 "bGM" = (
-/obj/machinery/vending/boozeomat/all_access,
+/obj/machinery/vending/boozeomat,
 /turf/open/floor/wood,
 /area/maintenance/bar)
 "bGN" = (
@@ -72658,7 +72658,7 @@
 /turf/open/floor/plasteel/grimy,
 /area/bridge)
 "cIV" = (
-/obj/machinery/vending/boozeomat/all_access,
+/obj/machinery/vending/boozeomat,
 /obj/machinery/status_display/evac{
 	pixel_y = 32
 	},

@@ -59723,7 +59723,7 @@
 /turf/open/floor/plating,
 /area/maintenance/fore/secondary)
 "sXA" = (
-/obj/machinery/vending/boozeomat/all_access,
+/obj/machinery/vending/boozeomat,
 /turf/closed/wall,
 /area/maintenance/bar)
 "sXV" = (
