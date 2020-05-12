@@ -3,6 +3,8 @@
 #define MUZZLE_EFFECT_PIXEL_INCREMENT 17	//How many pixels to move the muzzle flash up so your character doesn't look like they're shitting out lasers.
 /// Minimum projectile pixels to move before it animate()S, below this it's a direct set.
 #define MINIMUM_PIXELS_TO_ANIMATE 4
+/// Pixels to instantly travel on firing.
+#define PROJECTILE_FIRING_INSTANT_TRAVEL_AMOUNT 32
 
 /obj/item/projectile
 	name = "projectile"
@@ -425,7 +427,7 @@
 		return
 	if(!(datum_flags & DF_ISPROCESSING))
 		START_PROCESSING(SSprojectiles, src)
-	pixel_move(1, FALSE)	//move it now!
+	pixel_move(round(PROJECTILE_FIRING_INSTANT_TRAVEL_AMOUNT / pixel_increment_amount), FALSE, allow_animation = TRUE)	//move it now!
 
 /obj/item/projectile/proc/setAngle(new_angle, hitscan_store_segment = TRUE)	//wrapper for overrides.
 	Angle = new_angle
@@ -505,7 +507,7 @@
   * Trajectory multiplier directly modifies the factor of pixel_increment_amount to go per time.
   * It's complicated, so probably just don'ot mess with this unless you know what you're doing.
   */
-/obj/item/projectile/proc/pixel_move(times, hitscanning = FALSE, deciseconds_equivalent = world.tick_lag, trajectory_multiplier = 1)
+/obj/item/projectile/proc/pixel_move(times, hitscanning = FALSE, deciseconds_equivalent = world.tick_lag, trajectory_multiplier = 1, allow_animation = TRUE)
 	if(!loc || !trajectory)
 		return
 	if(!nondirectional_sprite && !hitscanning)
@@ -543,9 +545,13 @@
 				pixel_x = trajectory.return_px()
 				pixel_y = trajectory.return_py()
 		else if(T != loc)
-			step_towards(src, T)
-			if(QDELETED(src))
-				return
+			var/safety = CEILING(pixel_increment_amount / world.icon_size, 1) * 2
+			while(T.loc != loc)
+				if(!--safety)
+					CRASH("Projectile took more than pixel incrememnt speed times 2 to get to its location, this is probably something seriously scuffed going on.")
+				step_towards(src, T)
+				if(QDELETED(src))
+					return
 		pixels_range_leftover += pixel_increment_amount
 		if(pixels_range_leftover > world.icon_size)
 			Range()
@@ -555,7 +561,7 @@
 	if(!hitscanning && !forcemoved)
 		var/traj_px = round(trajectory.return_px(), 1)
 		var/traj_py = round(trajectory.return_py(), 1)
-		if(pixel_increment_amount * times > MINIMUM_PIXELS_TO_ANIMATE)
+		if(allow_animation && (pixel_increment_amount * times > MINIMUM_PIXELS_TO_ANIMATE))
 			pixel_x = ((oldloc.x - x) * world.icon_size) + old_px
 			pixel_y = ((oldloc.y - y) * world.icon_size) + old_py
 			animate(src, pixel_x = traj_px, pixel_y = traj_py, time = 1, flags = ANIMATION_END_NOW)
