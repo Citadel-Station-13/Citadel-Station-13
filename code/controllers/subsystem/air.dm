@@ -100,7 +100,7 @@ SUBSYSTEM_DEF(air)
 		if(state != SS_RUNNING)
 			return
 		resumed = 0
-		currentpart = SSAIR_ACTIVETURFS // set this to EQUALIZE for monstermos
+		currentpart = SSAIR_EQUALIZE // set this to EQUALIZE for monstermos
 
 	if(currentpart == SSAIR_EQUALIZE)
 		timer = TICK_USAGE_REAL
