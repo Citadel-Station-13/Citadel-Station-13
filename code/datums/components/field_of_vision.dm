@@ -225,10 +225,11 @@
 		var/atom/movable/topmost = nested_locs[nested_locs.len]
 		T = topmost.loc
 		CENTERED_RENDER_SOURCE(owner_mask, topmost, src)
-	else if(length(nested_locs))
-		UNREGISTER_NESTED_LOCS(nested_locs, COMSIG_MOVABLE_MOVED, 1)
-		CENTERED_RENDER_SOURCE(owner_mask, source, src)
+	else
 		T = source.loc
+		if(length(nested_locs))
+			UNREGISTER_NESTED_LOCS(nested_locs, COMSIG_MOVABLE_MOVED, 1)
+			CENTERED_RENDER_SOURCE(owner_mask, source, src)
 	if(T)
 		fov.forceMove(T, harderforce = TRUE)
 

@@ -120,7 +120,6 @@
 /obj/screen/plane_master/field_of_vision_pulled
 	name = "field of vision pulled overlay plane master"
 	plane = FIELD_OF_VISION_PULLED_PLANE
-	render_target = FIELD_OF_VISION_PULLED_RENDER_TARGET
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 
 /obj/screen/plane_master/field_of_vision_pulled/Initialize()

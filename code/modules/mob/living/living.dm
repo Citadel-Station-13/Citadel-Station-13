@@ -318,6 +318,8 @@
 
 		set_pull_offsets(M, state)
 
+	SEND_SIGNAL(src, COMSIG_MOVABLE_START_PULLING, AM, state, force, supress_message)
+
 /mob/living/proc/set_pull_offsets(mob/living/M, grab_state = GRAB_PASSIVE)
 	if(M.buckled || M.combat_flags & COMBAT_FLAG_COMBAT_ACTIVE)
 		return //don't make them change direction or offset them if they're buckled into something or in combat mode.
