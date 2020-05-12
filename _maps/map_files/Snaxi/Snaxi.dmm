@@ -752,6 +752,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
+/obj/item/gun/syringe/dart,
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
 "aoT" = (
@@ -19895,6 +19896,10 @@
 /obj/structure/bed/roller,
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/zone2)
+"kkj" = (
+/obj/machinery/gateway/centerstation,
+/turf/open/floor/plasteel/dark,
+/area/teleporter)
 "kkt" = (
 /obj/structure/table/glass,
 /obj/item/book/manual/wiki/infections{
@@ -22249,7 +22254,6 @@
 /obj/structure/cable{
 	icon_state = "0-4"
 	},
-/obj/machinery/bloodbankgen,
 /obj/machinery/airalarm{
 	pixel_y = 23
 	},
@@ -22259,6 +22263,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
+/obj/machinery/rnd/production/techfab/department/medical,
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
 "lTh" = (
@@ -29950,10 +29955,6 @@
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
-"qIv" = (
-/obj/machinery/gateway/centerstation,
-/turf/open/floor/plasteel/dark,
-/area/teleporter)
 "qIx" = (
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
@@ -30547,6 +30548,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
+/obj/item/gun/syringe/dart,
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
 "rck" = (
@@ -35819,6 +35821,10 @@
 	},
 /turf/open/floor/plasteel,
 /area/crew_quarters/fitness)
+"uvF" = (
+/obj/machinery/bloodbankgen,
+/turf/open/floor/plasteel/white,
+/area/medical/medbay/central)
 "uvO" = (
 /obj/structure/cable{
 	icon_state = "4-8"
@@ -54094,7 +54100,7 @@ avT
 avT
 gLH
 wie
-qIv
+kkj
 jrR
 nTQ
 nTQ
@@ -57428,7 +57434,7 @@ nsi
 eue
 eLX
 exq
-anm
+uvF
 sXJ
 sXJ
 vLa
