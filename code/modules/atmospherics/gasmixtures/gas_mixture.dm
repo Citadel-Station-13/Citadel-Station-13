@@ -49,6 +49,14 @@ GLOBAL_LIST_INIT(meta_gas_fusions, meta_gas_fusion_list())
 
 /datum/gas_mixture/proc/heat_capacity() //joules per kelvin
 
+/datum/gas_mixture/turf/archived_heat_capacity() // Same as above except vacuums return HEAT_CAPACITY_VACUUM
+	var/list/cached_gases = gas_archive
+	var/list/cached_gasheats = GLOB.meta_gas_specific_heats
+	for(var/id in cached_gases)
+		. += cached_gases[id] * cached_gasheats[id]
+	if(!.)
+		. += HEAT_CAPACITY_VACUUM //we want vacuums in turfs to have the same heat capacity as space
+
 /datum/gas_mixture/proc/total_moles()
 
 /datum/gas_mixture/proc/return_pressure() //kilopascals
@@ -73,6 +81,10 @@ GLOBAL_LIST_INIT(meta_gas_fusions, meta_gas_fusion_list())
 /datum/gas_mixture/proc/return_volume() //liters
 
 /datum/gas_mixture/proc/thermal_energy() //joules
+
+/datum/gas_mixture/proc/archive()
+	//Update archived versions of variables
+	//Returns: 1 in all cases
 
 /datum/gas_mixture/proc/archive()
 	//Update archived versions of variables
@@ -126,6 +138,10 @@ GLOBAL_LIST_INIT(meta_gas_fusions, meta_gas_fusion_list())
 	//Performs various reactions such as combustion or fusion (LOL)
 	//Returns: 1 if any reaction took place; 0 otherwise
 
+/datum/gas_mixture/archive()
+	temperature_archived = temperature
+	gas_archive = gases.Copy()
+	return 1
 
 /datum/gas_mixture/proc/__remove()
 /datum/gas_mixture/remove(amount)

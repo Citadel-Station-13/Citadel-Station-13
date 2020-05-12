@@ -63,7 +63,7 @@
 	if(!target || !R)
 		return
 	var/turfing = isturf(target)
-	G.generate_fluid()
+	G.generate_fluid(R)
 	if(spill && R.total_volume >= 5)
 		R.reaction(turfing ? target : target.loc, TOUCH, 1, 0)
 	if(!turfing)
