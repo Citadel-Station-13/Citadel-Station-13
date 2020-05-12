@@ -56,8 +56,9 @@
 		if(P.parent && (P.parent != src))
 			P.parent.breakdown()
 		// it's now safe to steal their air.
-		air.merge(P.temporary_air)
-		QDEL_NULL(P.temporary_air)
+		if(P.temporary_air)
+			air.merge(P.temporary_air)
+			QDEL_NULL(P.temporary_air)
 		// now, if they have any potentially valve components
 		for(var/i in P.valve_components)
 			// expand through them

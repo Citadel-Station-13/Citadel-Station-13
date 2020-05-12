@@ -22,8 +22,6 @@
 	/// The gas mixtures of indirectly attached components.
 	var/list/datum/gas_mixture/component_airs
 
-	var/update = TRUE
-
 /datum/pipeline/New()
 	volume = 0
 	total_volume = 0
@@ -75,7 +73,24 @@
 	for(var/gasid in temp_gases)
 		temp_gases[gasid] *= (volume / parent_air.volume
 
-/datum/pipeline/proc/build_pipeline(obj/machinery/atmospherics/base)
+/**
+  * Builds our network, expanding through whatever pipes we need to.
+  * Here's what happens:
+  * We disassemble ourselves
+  * We go from our base node, call pipeline_expansion() to get stuff it's connected to, and disassemble that if it has a parent that isn't us
+  * Depending on what it is, it's either a pipe, directly connected component, or indirectly connected component.
+  * Components can also be valves, and it's added if necessary
+  * This goes on for the things we just scanned with the first pipeline expansion
+  * After all this is done, we now know our total volume.
+  * We take all the air into our temporary_air.
+  * We build our pipe_network datum from ourselves, and it handles taking the air from us and connected pipenets into it.
+  */
+/datum/pipeline/proc/build_network(obj/machinery/atmospherics/base, build_pipe_network = TRUE)
+	breakdown()		// make sure we're empty, even if reusing pipelines isn't and probably shouldn't be a thing.
+	total_volume = 0
+	volume = 0
+
+
 	var/volume = 0
 	if(istype(base, /obj/machinery/atmospherics/pipe))
 		var/obj/machinery/atmospherics/pipe/E = base
