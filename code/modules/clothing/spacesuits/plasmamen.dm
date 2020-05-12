@@ -183,6 +183,18 @@
 	icon_state = "white_envirohelm"
 	item_state = "white_envirohelm"
 
+/obj/item/clothing/head/helmet/space/plasmaman/herbalist
+	name = "herbalist plasma envirosuit helmet"
+	desc = "A green and white envirohelmet designating it's wearer as a herbalist. While not specially designed for it, it would protect against minor planet-related injuries."
+	icon_state = "herbalist_envirohelm"
+	item_state = "herbalist_envirohelm"
+
+/obj/item/clothing/head/helmet/space/plasmaman/botany
+	name = "botany plasma envirosuit helmet"
+	desc = "A green and blue envirohelmet designating it's wearer as a botanist. While not specially designed for it, it would protect against minor planet-related injuries."
+	icon_state = "botany_envirohelm"
+	item_state = "botany_envirohelm"
+
 /obj/item/clothing/head/helmet/space/plasmaman/hop
 	name = "head of personell's plasma envirosuit helmet"
 	desc = "A finely tailored azure envirohelm designed for head of personell."

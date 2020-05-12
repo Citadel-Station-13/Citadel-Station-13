@@ -234,6 +234,11 @@
 	default_cartridge = /obj/item/cartridge/chemistry
 	icon_state = "pda-chemistry"
 
+/obj/item/pda/herbalist
+	name = "herbalist PDA"
+	//default_cartridge = /obj/item/cartridge/botanist
+	icon_state = "pda-herbalist"
+
 /obj/item/pda/geneticist
 	name = "geneticist PDA"
 	default_cartridge = /obj/item/cartridge/medical

@@ -35,6 +35,12 @@
 	icon_state = "virologist_envirosuit"
 	item_state = "virologist_envirosuit"
 
+/obj/item/clothing/under/plasmaman/herbalist
+	name = "herbalist plasma envirosuit"
+	desc = "A suit designed for the station's more plasma-based herbalist."
+	icon_state = "herbalist_envirosuit"
+	item_state = "herbalist_envirosuit"
+
 /obj/item/clothing/under/plasmaman/genetics
 	name = "genetics plasma envirosuit"
 	desc = "A plasmaman envirosuit designed for geneticists."

@@ -1,12 +1,12 @@
 /datum/job/herbalist
 	title = "Herbalist"
 	flag = HERBALIST
-	department_head = list("Chief Medical Officer")
+	department_head = list("Chief Medical Officer", "Head of Personnel")
 	department_flag = MEDSCI
 	faction = "Station"
 	total_positions = 2
 	spawn_positions = 2
-	supervisors = "the chief medical officer"
+	supervisors = "the chief medical officer and head of personnel"
 	selection_color = "#74b5e0"
 	exp_type = EXP_TYPE_CREW
 
@@ -25,16 +25,16 @@
 	name = "Herbalist"
 	jobtype = /datum/job/herbalist
 
-	belt = /obj/item/pda/botanist//To Do: change these into their own sprites
+	belt = /obj/item/pda/herbalist
 	ears = /obj/item/radio/headset/headset_medsrv
-	uniform = /obj/item/clothing/under/rank/medical/doctor//To Do: change these into their own sprites
+	uniform = /obj/item/clothing/under/rank/medical/doctor
 	shoes = /obj/item/clothing/shoes/sneakers/white
 	suit =  /obj/item/clothing/suit/toggle/labcoat
 	l_hand = /obj/item/storage/firstaid/regular
 	r_hand = /obj/item/plant_analyzer
 	gloves  =/obj/item/clothing/gloves/botanic_leather
 
-	backpack = /obj/item/storage/backpack/medic//To Do: change these into their own sprites
+	backpack = /obj/item/storage/backpack/medic
 	satchel = /obj/item/storage/backpack/satchel/med
 	duffelbag = /obj/item/storage/backpack/duffelbag/med
 
