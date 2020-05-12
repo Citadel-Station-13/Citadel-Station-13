@@ -413,15 +413,6 @@ GLOBAL_LIST_INIT(cloth_recipes, list ( \
 	amount = 30
 
 /*
- * Silk
- */
-
-	GLOBAL_LIST_INIT(silk_recipes, list ( \
-	new/datum/stack_recipe("white jumpsuit", /obj/item/clothing/under/color/white, 4, time = 40), \
-	new/datum/stack_recipe("white gloves", /obj/item/clothing/gloves/color/white, 2, time = 40) \
-	))
-
-/*
  * Durathread
  */
 GLOBAL_LIST_INIT(durathread_recipes, list ( \
