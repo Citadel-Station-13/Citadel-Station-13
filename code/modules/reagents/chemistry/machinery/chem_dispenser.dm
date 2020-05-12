@@ -513,7 +513,7 @@
 	emagged_reagents = list(
 		/datum/reagent/toxin/mindbreaker,
 		/datum/reagent/toxin/staminatoxin,
-		/datum/reagent/medicine/cryoxadone
+		/datum/reagent/medicine/cryoxadone,
 		/datum/reagent/iron
 	)
 
