@@ -820,6 +820,7 @@
 	dir = 1
 	},
 /obj/machinery/door/airlock/external,
+/obj/structure/fans/tiny,
 /turf/open/floor/plasteel,
 /area/hallway/primary/port)
 "arE" = (
@@ -17912,6 +17913,7 @@
 	dir = 1;
 	name = "north facing firelock"
 	},
+/obj/structure/fans/tiny,
 /turf/open/floor/plating,
 /area/hallway/primary/aft)
 "iRO" = (
@@ -19069,6 +19071,7 @@
 /obj/machinery/door/airlock/external{
 	name = "Escape Pod One"
 	},
+/obj/structure/fans/tiny,
 /turf/open/floor/plating,
 /area/hallway/primary/port)
 "jLF" = (
@@ -27185,6 +27188,7 @@
 /obj/machinery/door/firedoor/border_only{
 	name = "south facing firelock"
 	},
+/obj/structure/fans/tiny,
 /turf/open/floor/plating,
 /area/hallway/secondary/exit/departure_lounge)
 "pcl" = (
@@ -28092,6 +28096,7 @@
 	dir = 1;
 	name = "north facing firelock"
 	},
+/obj/structure/fans/tiny,
 /turf/open/floor/plating,
 /area/quartermaster/miningdock)
 "pzk" = (
@@ -30403,6 +30408,7 @@
 	dir = 8;
 	name = "west facing firelock"
 	},
+/obj/structure/fans/tiny,
 /turf/open/floor/plating,
 /area/crew_quarters/dorms)
 "rbm" = (
@@ -35990,6 +35996,7 @@
 	name = "Escape Pod Four";
 	shuttledocked = 1
 	},
+/obj/structure/fans/tiny,
 /turf/open/floor/plating,
 /area/maintenance/central)
 "uHy" = (
@@ -38829,6 +38836,7 @@
 /obj/machinery/door/airlock/external{
 	name = "Escape Pod Two"
 	},
+/obj/structure/fans/tiny,
 /turf/open/floor/plating,
 /area/hallway/primary/port)
 "wlZ" = (
