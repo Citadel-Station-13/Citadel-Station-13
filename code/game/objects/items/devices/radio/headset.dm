@@ -141,6 +141,13 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 	icon_state = "medsci_headset"
 	keyslot = new /obj/item/encryptionkey/headset_medsci
 
+/obj/item/radio/headset/headset_medsrv
+	name = "medical service radio headset"
+	desc = "A headset that is a result of the mating between medical and service."
+	icon_state = "medsrv_headset"
+	keyslot = new /obj/item/encryptionkey/headset_medsrv
+
+
 /obj/item/radio/headset/headset_com
 	name = "command radio headset"
 	desc = "A headset with a commanding channel.\nTo access the command channel, use :c."

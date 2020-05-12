@@ -89,6 +89,12 @@
 	head = /obj/item/clothing/head/helmet/space/plasmaman/medical
 	uniform = /obj/item/clothing/under/plasmaman/medical
 
+/datum/outfit/plasmaman/herbalist
+	name = "Herbalist Plasmaman"
+
+	head = /obj/item/clothing/head/helmet/space/plasmaman/medical //To Do: change these into their own sprites
+	uniform = /obj/item/clothing/under/plasmaman/medical
+
 /datum/outfit/plasmaman/cmo
 	name = "Chief Medical Officer Plasmaman"
 
