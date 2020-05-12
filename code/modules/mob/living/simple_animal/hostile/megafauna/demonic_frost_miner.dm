@@ -70,7 +70,10 @@ Difficulty: Extremely Hard
 
 /mob/living/simple_animal/hostile/megafauna/demonic_frost_miner/OpenFire()
 	check_enraged()
-	projectile_speed_multiplier = 1 - enraged * 0.25
+	if(enraged)
+		projectile_speed_multiplier = 1.33
+	else
+		projectile_speed_multiplier = 1
 	SetRecoveryTime(100, 100)
 
 	if(client)

@@ -4,7 +4,7 @@
 /// Minimum projectile pixels to move before it animate()S, below this it's a direct set.
 #define MINIMUM_PIXELS_TO_ANIMATE 4
 /// Pixels to instantly travel on firing.
-#define PROJECTILE_FIRING_INSTANT_TRAVEL_AMOUNT 32
+#define PROJECTILE_FIRING_INSTANT_TRAVEL_AMOUNT 16
 
 /obj/item/projectile
 	name = "projectile"
@@ -427,7 +427,7 @@
 		return
 	if(!(datum_flags & DF_ISPROCESSING))
 		START_PROCESSING(SSprojectiles, src)
-	pixel_move(round(PROJECTILE_FIRING_INSTANT_TRAVEL_AMOUNT / pixel_increment_amount), FALSE, allow_animation = TRUE)	//move it now!
+	pixel_move(round(PROJECTILE_FIRING_INSTANT_TRAVEL_AMOUNT / pixel_increment_amount), FALSE, allow_animation = FALSE)	//move it now!
 
 /obj/item/projectile/proc/setAngle(new_angle, hitscan_store_segment = TRUE)	//wrapper for overrides.
 	Angle = new_angle
