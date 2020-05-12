@@ -15,8 +15,7 @@
 	..()
 
 	for(var/i in 1 to device_type)
-		var/datum/gas_mixture/A = new
-		A.set_volume(200)
+		var/datum/gas_mixture/A = new(200)
 		airs[i] = A
 
 // Iconnery
