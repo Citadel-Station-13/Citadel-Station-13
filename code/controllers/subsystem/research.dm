@@ -310,7 +310,7 @@ SUBSYSTEM_DEF(research)
 		//Then we subtract production and maturation, making it so faster growing plants are better for RnD
 		//Then we add in lifespan and potency,
 		//A basic seed can be worth 268 points if its the best it can be.
-		L[TECHWEB_POINT_TYPE_GENERIC] = 50 + initial(S.rarity * 2 + S.yield * 2 - S.maturation - S.production + S.lifespan + S.potency)
+		L[TECHWEB_POINT_TYPE_GENERIC] = 50 + initial(S.rarity) * 2 + initial(S.yield) * 2 - initial(S.maturation) - initial(S.production) + initial(S.lifespan) + initial(S.potency)
 		techweb_point_items[S] = L
 
 	return ..()
