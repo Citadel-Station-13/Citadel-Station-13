@@ -17,7 +17,6 @@
 	var/list/L = list()
 	var/list/LL = list()
 	var/hacked = FALSE
-	var/hackable = TRUE
 	var/disabled = 0
 	var/shocked = FALSE
 	var/hack_wire
@@ -34,7 +33,7 @@
 	var/base_price = 25
 	var/hacked_price = 50
 
-	var/datum/techweb/stored_research = /datum/techweb/specialized/autounlocking/autolathe
+	var/datum/techweb/specialized/autounlocking/stored_research = /datum/techweb/specialized/autounlocking/autolathe
 	var/list/categories = list(
 							"Tools",
 							"Electronics",
@@ -63,6 +62,9 @@
 		/datum/material/adamantine,
 		/datum/material/mythril
 		)
+
+	/// Base print speed
+	var/base_print_speed = 10
 
 /obj/machinery/autolathe/Initialize()
 	AddComponent(/datum/component/material_container, allowed_materials, _show_on_examine=TRUE, _after_insert=CALLBACK(src, .proc/AfterMaterialInsert))
@@ -208,7 +210,7 @@
 				busy = TRUE
 				use_power(power)
 				icon_state = "autolathe_n"
-				var/time = is_stack ? 32 : 32*coeff*multiplier
+				var/time = is_stack ? 10 : base_print_speed * coeff * multiplier
 				addtimer(CALLBACK(src, .proc/make_item, power, materials_used, custom_materials, multiplier, coeff, is_stack), time)
 			else
 				to_chat(usr, "<span class=\"alert\">Not enough materials for this operation.</span>")
@@ -256,10 +258,12 @@
 		T += MB.rating*75000
 	var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
 	materials.max_amount = T
-	T=1.2
+	var/manips = 0
+	var/total_manip_rating = 0
 	for(var/obj/item/stock_parts/manipulator/M in component_parts)
-		T -= M.rating*0.2
-	prod_coeff = min(1,max(0,T)) // Coeff going 1 -> 0,8 -> 0,6 -> 0,4
+		total_manip_rating += M.rating
+		manips++
+	prod_coeff = STANDARD_PART_LEVEL_LATHE_COEFFICIENT(total_manip_rating / (manips? manips : 1))
 
 /obj/machinery/autolathe/examine(mob/user)
 	. += ..()
@@ -422,11 +426,11 @@
 
 /obj/machinery/autolathe/proc/adjust_hacked(state)
 	hacked = state
-	if(!hackable && hacked)
-		return
 	for(var/id in SSresearch.techweb_designs)
 		var/datum/design/D = SSresearch.techweb_design_by_id(id)
-		if((D.build_type & AUTOLATHE) && ("hacked" in D.category))
+		if(D.build_type & stored_research.design_autounlock_skip_types)
+			continue
+		if((D.build_type & stored_research.design_autounlock_buildtypes) && ("hacked" in D.category))
 			if(hacked)
 				stored_research.add_design(D)
 			else
@@ -438,10 +442,10 @@
 
 /obj/machinery/autolathe/secure
 	name = "secured autolathe"
-	desc = "An autolathe reprogrammed with security protocols to prevent hacking."
-	hackable = FALSE
+	desc = "It produces items using metal and glass. This model was reprogrammed without some of the more hazardous designs."
 	circuit = /obj/item/circuitboard/machine/autolathe/secure
 	stored_research = /datum/techweb/specialized/autounlocking/autolathe/public
+	base_print_speed = 20
 
 /obj/machinery/autolathe/toy
 	name = "autoylathe"

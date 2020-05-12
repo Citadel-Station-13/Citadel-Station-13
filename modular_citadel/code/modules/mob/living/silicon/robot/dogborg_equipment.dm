@@ -434,7 +434,7 @@ SLEEPER CODE IS IN game/objects/items/devices/dogborg_sleeper.dm !
 	if(hit_atom)
 		if(isliving(hit_atom))
 			var/mob/living/L = hit_atom
-			if(L.run_block(0, "the [name]", src, ATTACK_TYPE_TACKLE, 0, src) & BLOCK_SUCCESS)
+			if(L.mob_run_block(0, "the [name]", src, ATTACK_TYPE_TACKLE, 0, src, null, null) & BLOCK_SUCCESS)
 				DefaultCombatKnockdown(15, 1, 1)
 			else
 				L.visible_message("<span class ='danger'>[src] pounces on [L]!</span>", "<span class ='userdanger'>[src] pounces on you!</span>")

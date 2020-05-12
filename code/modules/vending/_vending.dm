@@ -123,6 +123,7 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 	var/extended_inventory
 	///Are we checking the users ID
 	var/scan_id = TRUE
+	var/obj/item/coin/coin
 	///Default price of items if not overridden
 	var/default_price = 25
 	///Default price of premium items if not overridden

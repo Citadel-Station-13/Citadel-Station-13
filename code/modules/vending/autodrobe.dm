@@ -147,9 +147,6 @@
 	. = ..()
 	cost_multiplier_per_dept = list("[ACCESS_THEATRE]" = 0)
 
-/obj/machinery/vending/autodrobe/all_access
-	desc = "A vending machine for costumes. This model appears to have no access restrictions."
-
 /obj/machinery/vending/autodrobe/canLoadItem(obj/item/I,mob/user)
 	return (I.type in products)
 

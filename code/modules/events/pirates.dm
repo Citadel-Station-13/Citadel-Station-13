@@ -61,6 +61,9 @@
 	var/list/candidates = pollGhostCandidates("Do you wish to be considered for pirate crew?", ROLE_TRAITOR)
 	shuffle_inplace(candidates)
 
+	if(!SSmapping.empty_space)
+		SSmapping.empty_space = SSmapping.add_new_zlevel("Empty Area For Pirates", list(ZTRAIT_LINKAGE = SELFLOOPING))
+	
 	var/datum/map_template/shuttle/pirate/default/ship = new
 	var/x = rand(TRANSITIONEDGE,world.maxx - TRANSITIONEDGE - ship.width)
 	var/y = rand(TRANSITIONEDGE,world.maxy - TRANSITIONEDGE - ship.height)

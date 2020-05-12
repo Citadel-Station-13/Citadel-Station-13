@@ -1,6 +1,8 @@
 //Defines for atom layers and planes
 //KEEP THESE IN A NICE ACSCENDING ORDER, PLEASE
 
+#define PLANE_VOID -100
+
 #define CLICKCATCHER_PLANE -99
 
 #define PLANE_SPACE -95
@@ -88,6 +90,8 @@
 #define AREA_LAYER 10
 #define MASSIVE_OBJ_LAYER 11
 #define POINT_LAYER 12
+
+#define CHAT_LAYER 12.1
 
 #define EMISSIVE_BLOCKER_PLANE 12
 #define EMISSIVE_BLOCKER_LAYER 12

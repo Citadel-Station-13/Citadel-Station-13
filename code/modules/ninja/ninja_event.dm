@@ -41,6 +41,9 @@ Contents:
 		for(var/obj/effect/landmark/carpspawn/L in GLOB.landmarks_list)
 			if(isturf(L.loc))
 				spawn_locs += L.loc
+		for(var/obj/effect/landmark/loneopspawn/L in GLOB.landmarks_list)
+			if(isturf(L.loc))
+				spawn_locs += L.loc
 		if(!spawn_locs.len)
 			return kill()
 		spawn_loc = pick(spawn_locs)

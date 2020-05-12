@@ -18,6 +18,10 @@
 	paycheck = PAYCHECK_MEDIUM
 	paycheck_department = ACCOUNT_SCI
 
+	starting_skills = list(/datum/skill/level/job/wiring = GET_STANDARD_LVL(JOB_SKILL_TRAINED))
+	skill_affinities = list(/datum/skill/level/job/wiring = STARTING_SKILL_AFFINITY_WIRING_ENGI_ROBO)
+
+
 	display_order = JOB_DISPLAY_ORDER_ROBOTICIST
 	threat = 1
 

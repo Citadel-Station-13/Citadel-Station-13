@@ -5,7 +5,7 @@
 	department_flag = ENGSEC
 	faction = "Station"
 	total_positions = 3
-	spawn_positions = 2
+	spawn_positions = 3
 	supervisors = "the chief engineer"
 	selection_color = "#ff9b3d"
 	exp_requirements = 60
@@ -19,6 +19,10 @@
 									ACCESS_ENGINE_EQUIP, ACCESS_EMERGENCY_STORAGE, ACCESS_CONSTRUCTION, ACCESS_MINERAL_STOREROOM)
 	paycheck = PAYCHECK_MEDIUM
 	paycheck_department = ACCOUNT_ENG
+
+	starting_skills = list(/datum/skill/level/job/wiring = GET_STANDARD_LVL(JOB_SKILL_BASIC))
+	skill_affinities = list(/datum/skill/level/job/wiring = STARTING_SKILL_AFFINITY_WIRING_ENGI_ROBO)
+
 	display_order = JOB_DISPLAY_ORDER_ATMOSPHERIC_TECHNICIAN
 	threat = 0.5
 

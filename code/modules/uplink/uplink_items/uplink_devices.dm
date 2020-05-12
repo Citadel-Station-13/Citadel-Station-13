@@ -201,10 +201,9 @@
 /datum/uplink_item/device_tools/stimpack
 	name = "Stimpack"
 	desc = "Stimpacks, the tool of many great heroes, make you nearly immune to stuns and knockdowns for about \
-			5 minutes after fully injecting yourself. Can inject yourself, or others, 5 times and through hardsuits. \
-			Each injection will gives around a minute of stimulants."
-	item = /obj/item/reagent_containers/hypospray/medipen/stimulants
-	cost = 5
+			5 minutes after injection."
+	item = /obj/item/reagent_containers/syringe/stimulants
+	cost = 3
 	surplus = 90
 
 /datum/uplink_item/device_tools/medkit

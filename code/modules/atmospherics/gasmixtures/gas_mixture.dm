@@ -17,6 +17,7 @@ GLOBAL_LIST_INIT(meta_gas_ids, meta_gas_id_list())
 GLOBAL_LIST_INIT(meta_gas_fusions, meta_gas_fusion_list())
 /datum/gas_mixture
 	var/list/gases = list()
+	var/list/gas_archive = list()
 	var/temperature = 0 //kelvins
 	var/tmp/temperature_archived = 0
 	var/volume = CELL_VOLUME //liters
@@ -31,8 +32,20 @@ GLOBAL_LIST_INIT(meta_gas_fusions, meta_gas_fusion_list())
 
 	//PV = nRT
 
-/datum/gas_mixture/proc/heat_capacity() //joules per kelvin
+/datum/gas_mixture/proc/heat_capacity()
+
+/datum/gas_mixture/proc/archived_heat_capacity()
+
+/datum/gas_mixture/heat_capacity() //joules per kelvin
 	var/list/cached_gases = gases
+	var/list/cached_gasheats = GLOB.meta_gas_specific_heats
+	. = 0
+	for(var/id in cached_gases)
+		. += cached_gases[id] * cached_gasheats[id]
+
+/datum/gas_mixture/archived_heat_capacity()
+	// lots of copypasta but heat_capacity is the single proc called the most in a regular round, bar none, so performance loss adds up
+	var/list/cached_gases = gas_archive
 	var/list/cached_gasheats = GLOB.meta_gas_specific_heats
 	. = 0
 	for(var/id in cached_gases)
@@ -40,6 +53,14 @@ GLOBAL_LIST_INIT(meta_gas_fusions, meta_gas_fusion_list())
 
 /datum/gas_mixture/turf/heat_capacity() // Same as above except vacuums return HEAT_CAPACITY_VACUUM
 	var/list/cached_gases = gases
+	var/list/cached_gasheats = GLOB.meta_gas_specific_heats
+	for(var/id in cached_gases)
+		. += cached_gases[id] * cached_gasheats[id]
+	if(!.)
+		. += HEAT_CAPACITY_VACUUM //we want vacuums in turfs to have the same heat capacity as space
+
+/datum/gas_mixture/turf/archived_heat_capacity() // Same as above except vacuums return HEAT_CAPACITY_VACUUM
+	var/list/cached_gases = gas_archive
 	var/list/cached_gasheats = GLOB.meta_gas_specific_heats
 	for(var/id in cached_gases)
 		. += cached_gases[id] * cached_gasheats[id]
@@ -66,6 +87,10 @@ GLOBAL_LIST_INIT(meta_gas_fusions, meta_gas_fusion_list())
 
 /datum/gas_mixture/proc/thermal_energy() //joules
 	return THERMAL_ENERGY(src) //see code/__DEFINES/atmospherics.dm; use the define in performance critical areas
+
+/datum/gas_mixture/proc/archive()
+	//Update archived versions of variables
+	//Returns: 1 in all cases
 
 /datum/gas_mixture/proc/merge(datum/gas_mixture/giver)
 	//Merges all air from giver into self. Deletes giver.
@@ -111,6 +136,10 @@ GLOBAL_LIST_INIT(meta_gas_fusions, meta_gas_fusion_list())
 	//Performs various reactions such as combustion or fusion (LOL)
 	//Returns: 1 if any reaction took place; 0 otherwise
 
+/datum/gas_mixture/archive()
+	temperature_archived = temperature
+	gas_archive = gases.Copy()
+	return 1
 
 /datum/gas_mixture/merge(datum/gas_mixture/giver)
 	if(!giver)
@@ -245,7 +274,7 @@ GLOBAL_LIST_INIT(meta_gas_fusions, meta_gas_fusion_list())
 	//GAS TRANSFER
 	for(var/id in cached_gases | sharer_gases) // transfer gases
 
-		delta = QUANTIZE(cached_gases[id] - sharer_gases[id])/(atmos_adjacent_turfs+1) //the amount of gas that gets moved between the mixtures
+		delta = QUANTIZE(gas_archive[id] - sharer.gas_archive[id])/(atmos_adjacent_turfs+1) //the amount of gas that gets moved between the mixtures
 
 		if(delta && abs_temperature_delta > MINIMUM_TEMPERATURE_DELTA_TO_CONSIDER)
 			gas_heat_capacity = delta * cached_gasheats[id]
@@ -293,8 +322,8 @@ GLOBAL_LIST_INIT(meta_gas_fusions, meta_gas_fusion_list())
 		sharer_temperature = sharer.temperature_archived
 	var/temperature_delta = temperature_archived - sharer_temperature
 	if(abs(temperature_delta) > MINIMUM_TEMPERATURE_DELTA_TO_CONSIDER)
-		var/self_heat_capacity = heat_capacity()
-		sharer_heat_capacity = sharer_heat_capacity || sharer.heat_capacity()
+		var/self_heat_capacity = archived_heat_capacity()
+		sharer_heat_capacity = sharer_heat_capacity || sharer.archived_heat_capacity()
 
 		if((sharer_heat_capacity > MINIMUM_HEAT_CAPACITY) && (self_heat_capacity > MINIMUM_HEAT_CAPACITY))
 			var/heat = conduction_coefficient*temperature_delta* \

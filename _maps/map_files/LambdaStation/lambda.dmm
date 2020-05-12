@@ -58598,7 +58598,7 @@
 /turf/open/space,
 /area/space/nearstation)
 "cgJ" = (
-/obj/machinery/vending/autodrobe/all_access,
+/obj/machinery/vending/autodrobe,
 /turf/open/floor/plating,
 /area/maintenance/aft)
 "cgK" = (
