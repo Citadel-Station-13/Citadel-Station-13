@@ -222,7 +222,7 @@
 
 /atom/movable/proc/experience_pressure_difference(pressure_difference, direction, pressure_resistance_prob_delta = 0, throw_target)
 	var/const/PROBABILITY_OFFSET = 25
-	var/const/PROBABILITY_BASE_PRECENT = 10
+	var/const/PROBABILITY_BASE_PRECENT = 75
 	var/max_force = sqrt(pressure_difference)*(MOVE_FORCE_DEFAULT / 5)
 	set waitfor = 0
 	var/move_prob = 100
@@ -230,17 +230,7 @@
 		move_prob = (pressure_difference/pressure_resistance*PROBABILITY_BASE_PRECENT)-PROBABILITY_OFFSET
 	move_prob += pressure_resistance_prob_delta
 	if (move_prob > PROBABILITY_OFFSET && prob(move_prob) && (move_resist != INFINITY) && (!anchored && (max_force >= (move_resist * MOVE_FORCE_PUSH_RATIO))) || (anchored && (max_force >= (move_resist * MOVE_FORCE_FORCEPUSH_RATIO))))
-		var/move_force = max_force * clamp(move_prob, 0, 100) / 100
-		if(move_force > 4000)
-			// WALLSLAM HELL TIME OH BOY
-			var/turf/throw_turf = get_ranged_target_turf(get_turf(src), direction, round(move_force / 2000))
-			if(throw_target && (get_dir(src, throw_target) & direction))
-				throw_turf = get_turf(throw_target)
-			var/throw_speed = clamp(round(move_force / 2000), 1, 10)
-			throw_at(throw_turf, move_force / 2000, throw_speed)
-		else
-			step(src, direction)
-		last_high_pressure_movement_air_cycle = SSair.times_fired
+		step(src, direction)
 
 ////////////////////////SUPERCONDUCTIVITY/////////////////////////////
 /turf/proc/conductivity_directions()
