@@ -545,8 +545,8 @@
 				pixel_x = trajectory.return_px()
 				pixel_y = trajectory.return_py()
 		else if(T != loc)
-			var/safety = CEILING(pixel_increment_amount / world.icon_size, 1) * 2
-			while(T.loc != loc)
+			var/safety = CEILING(pixel_increment_amount / world.icon_size, 1) * 2 + 1
+			while(T != loc)
 				if(!--safety)
 					CRASH("Projectile took more than pixel incrememnt speed times 2 to get to its location, this is probably something seriously scuffed going on.")
 				step_towards(src, T)
