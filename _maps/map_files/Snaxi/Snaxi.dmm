@@ -7031,6 +7031,16 @@
 	},
 /turf/open/floor/wood,
 /area/security/courtroom)
+"ciS" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/machinery/light/floor,
+/turf/open/floor/plating/snowed/smoothed/icemoon,
+/area/icemoon/surface/outdoors)
 "cjA" = (
 /obj/structure/cable{
 	icon_state = "1-2"
@@ -7766,6 +7776,10 @@
 	},
 /turf/open/floor/engine/air,
 /area/engine/atmos)
+"cBX" = (
+/obj/machinery/gateway/centerstation,
+/turf/open/floor/plasteel/dark,
+/area/teleporter)
 "cCb" = (
 /obj/machinery/atmospherics/pipe/simple/orange/visible,
 /obj/machinery/portable_atmospherics/canister/carbon_dioxide,
@@ -11564,6 +11578,16 @@
 	},
 /turf/open/floor/wood,
 /area/bridge/meeting_room)
+"eZT" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/visible{
+	dir = 4
+	},
+/obj/machinery/light/floor,
+/turf/open/floor/plating/snowed/smoothed/icemoon,
+/area/icemoon/surface/outdoors)
 "eZU" = (
 /obj/machinery/conveyor{
 	id = "QMLoad2";
@@ -12778,6 +12802,11 @@
 /obj/structure/cable,
 /turf/open/floor/plating/snowed/smoothed/icemoon,
 /area/icemoon/surface/outdoors)
+"fNt" = (
+/obj/machinery/atmospherics/pipe/simple/supply/visible,
+/obj/machinery/light/floor,
+/turf/open/floor/plating/snowed/smoothed/icemoon,
+/area/icemoon/surface/outdoors)
 "fNC" = (
 /obj/structure/cable{
 	icon_state = "1-2"
@@ -12917,6 +12946,16 @@
 	},
 /turf/open/floor/wood,
 /area/security/courtroom)
+"fPV" = (
+/obj/structure/cable{
+	icon_state = "2-4"
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/visible{
+	dir = 6
+	},
+/obj/machinery/light/floor,
+/turf/open/floor/plating/snowed/smoothed/icemoon,
+/area/icemoon/surface/outdoors)
 "fQc" = (
 /obj/structure/cable{
 	icon_state = "4-8"
@@ -13062,6 +13101,13 @@
 	icon_state = "wood-broken5"
 	},
 /area/maintenance/bar)
+"fVM" = (
+/obj/machinery/light,
+/obj/machinery/door/airlock/public/glass{
+	name = "Holodeck Door"
+	},
+/turf/open/floor/plasteel/white,
+/area/crew_quarters/dorms)
 "fVQ" = (
 /obj/structure/cable{
 	icon_state = "4-8"
@@ -14539,6 +14585,10 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/science/mixing)
+"gSA" = (
+/obj/machinery/light/floor,
+/turf/open/floor/plating/snowed/smoothed/icemoon,
+/area/icemoon/surface/outdoors)
 "gSY" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on,
 /obj/structure/chair/comfy/black{
@@ -19896,10 +19946,6 @@
 /obj/structure/bed/roller,
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/zone2)
-"kkj" = (
-/obj/machinery/gateway/centerstation,
-/turf/open/floor/plasteel/dark,
-/area/teleporter)
 "kkt" = (
 /obj/structure/table/glass,
 /obj/item/book/manual/wiki/infections{
@@ -22659,6 +22705,13 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /turf/open/floor/plasteel,
 /area/engine/engineering)
+"mfy" = (
+/obj/machinery/atmospherics/pipe/simple/supply/visible{
+	dir = 4
+	},
+/obj/machinery/light/floor,
+/turf/open/floor/plating/snowed/smoothed/icemoon,
+/area/icemoon/surface/outdoors)
 "mfF" = (
 /obj/machinery/power/apc{
 	areastring = "/area/crew_quarters/heads/cmo";
@@ -27171,6 +27224,14 @@
 	},
 /turf/closed/wall,
 /area/janitor)
+"paG" = (
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/visible,
+/obj/machinery/light/floor,
+/turf/open/floor/plating/snowed/smoothed/icemoon,
+/area/icemoon/surface/outdoors)
 "pbc" = (
 /obj/structure/cable{
 	icon_state = "4-8"
@@ -27403,6 +27464,13 @@
 /obj/machinery/disposal/bin,
 /turf/open/floor/carpet,
 /area/crew_quarters/dorms)
+"pgf" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/light/floor,
+/turf/open/floor/plating/asteroid/snow/icemoon,
+/area/icemoon/surface/outdoors)
 "pgk" = (
 /obj/structure/window{
 	dir = 1
@@ -34850,11 +34918,13 @@
 /turf/open/floor/plasteel/freezer,
 /area/medical/surgery)
 "tOz" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/visible{
-	dir = 10
+/obj/machinery/light{
+	dir = 1
 	},
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/plating,
+/obj/machinery/door/airlock/public/glass{
+	name = "Holodeck Door"
+	},
+/turf/open/floor/plasteel/white,
 /area/crew_quarters/dorms)
 "tOE" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -35096,6 +35166,13 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
+"tUq" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/light/floor,
+/turf/open/floor/plating/snowed/smoothed/icemoon,
+/area/icemoon/surface/outdoors)
 "tUF" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -35152,6 +35229,17 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on,
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
+"tXJ" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/visible{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/visible,
+/obj/machinery/light/floor,
+/turf/open/floor/plating/snowed/smoothed/icemoon,
+/area/icemoon/surface/outdoors)
 "tXN" = (
 /turf/closed/wall/r_wall,
 /area/science/robotics/lab)
@@ -35821,10 +35909,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/crew_quarters/fitness)
-"uvF" = (
-/obj/machinery/bloodbankgen,
-/turf/open/floor/plasteel/white,
-/area/medical/medbay/central)
 "uvO" = (
 /obj/structure/cable{
 	icon_state = "4-8"
@@ -39223,6 +39307,10 @@
 /obj/effect/landmark/blobstart,
 /turf/open/floor/plating,
 /area/maintenance/central)
+"wuW" = (
+/obj/machinery/bloodbankgen,
+/turf/open/floor/plasteel/white,
+/area/medical/medbay/central)
 "wvg" = (
 /turf/open/floor/wood,
 /area/library)
@@ -54100,7 +54188,7 @@ avT
 avT
 gLH
 wie
-kkj
+cBX
 jrR
 nTQ
 nTQ
@@ -57434,7 +57522,7 @@ nsi
 eue
 eLX
 exq
-uvF
+wuW
 sXJ
 sXJ
 vLa
@@ -58757,7 +58845,7 @@ sPA
 sKh
 xUL
 xUL
-xUL
+gSA
 avT
 avT
 avT
@@ -60556,7 +60644,7 @@ itp
 aPE
 aQV
 xZL
-xBk
+mfy
 avT
 avT
 ydp
@@ -61536,7 +61624,7 @@ avT
 avT
 avT
 xUL
-xUL
+gSA
 mbm
 iJl
 iJl
@@ -62355,7 +62443,7 @@ avT
 avT
 avT
 xZL
-xBk
+mfy
 avT
 avT
 ydp
@@ -62564,7 +62652,7 @@ avT
 avT
 avT
 avT
-ace
+ciS
 avT
 avT
 avT
@@ -64106,7 +64194,7 @@ ydp
 avT
 avT
 avT
-ace
+ciS
 avT
 avT
 avT
@@ -64154,7 +64242,7 @@ avT
 avT
 avT
 xZL
-xBk
+mfy
 avT
 avT
 avT
@@ -65403,7 +65491,7 @@ avT
 avT
 avT
 avT
-xUL
+gSA
 xnm
 xUL
 rhX
@@ -65905,7 +65993,7 @@ avT
 avT
 avT
 avT
-ace
+ciS
 avT
 avT
 avT
@@ -65953,7 +66041,7 @@ ydp
 avT
 avT
 xZL
-xBk
+mfy
 avT
 avT
 avT
@@ -66174,7 +66262,7 @@ avT
 avT
 avT
 avT
-xUL
+gSA
 xnm
 xUL
 rhX
@@ -66935,16 +67023,16 @@ avT
 avT
 ace
 xUL
+gSA
 xUL
 xUL
 xUL
 xUL
+gSA
 xUL
 xUL
 xUL
-xUL
-xUL
-xUL
+gSA
 xUL
 xnm
 avT
@@ -67706,7 +67794,7 @@ avT
 avT
 avT
 xZL
-xBk
+mfy
 maG
 avT
 avT
@@ -67752,7 +67840,7 @@ xUL
 avT
 avT
 xZL
-xBk
+mfy
 xUL
 xUL
 xUL
@@ -69551,7 +69639,7 @@ xUL
 xUL
 avT
 xZL
-xBk
+mfy
 avT
 avT
 ydp
@@ -70276,7 +70364,7 @@ avT
 avT
 avT
 xZL
-xBk
+mfy
 maG
 avT
 avT
@@ -71350,7 +71438,7 @@ xUL
 xUL
 avT
 xZL
-xBk
+mfy
 xUL
 xUL
 xUL
@@ -72108,14 +72196,14 @@ avT
 avT
 avT
 avT
-xZL
+eZT
 dvc
 vsM
 vsM
 vsM
 vsM
 vsM
-vsM
+fNt
 vsM
 vsM
 vsM
@@ -72332,7 +72420,7 @@ avT
 avT
 avT
 xZL
-xBk
+mfy
 maG
 avT
 avT
@@ -73907,7 +73995,7 @@ axN
 ruo
 ruo
 ruo
-aAh
+tXJ
 aDQ
 avT
 avT
@@ -74379,16 +74467,16 @@ avT
 avT
 avT
 avT
-iHM
-vow
-iHM
-vow
-tOz
+avT
+avT
+avT
+avT
+axL
 aaM
 nZE
 nZE
 abU
-xUL
+gSA
 maG
 avT
 avT
@@ -74637,9 +74725,9 @@ avT
 avT
 avT
 iHM
-lJN
+tOz
 iHM
-gUc
+fVM
 iHM
 axN
 ruo
@@ -74680,13 +74768,13 @@ avT
 avT
 xZL
 xBk
+gSA
 xUL
 xUL
+gSA
 xUL
 xUL
-xUL
-xUL
-xUL
+gSA
 btZ
 tif
 pqX
@@ -74889,18 +74977,18 @@ ydp
 ydp
 avT
 avT
+avT
+avT
+avT
+avT
 iHM
+kRk
 iHM
+kRk
 iHM
-iHM
-iHM
-vow
-iHM
-vow
-iHM
-iHM
-iHM
-iHM
+avT
+avT
+avT
 xZL
 xBk
 maG
@@ -75147,16 +75235,16 @@ ydp
 avT
 avT
 iHM
-kHD
-kHD
-kHD
-kHD
-kHD
-kHD
-kHD
-kHD
-kHD
-kHD
+iHM
+iHM
+iHM
+iHM
+vow
+iHM
+vow
+iHM
+iHM
+iHM
 iHM
 xZL
 xBk
@@ -75706,7 +75794,7 @@ avT
 avT
 avT
 avT
-xZL
+eZT
 xBk
 maG
 avT
@@ -76188,7 +76276,7 @@ kHD
 iHM
 xZL
 xBk
-bzc
+tUq
 ydp
 ydp
 ydp
@@ -76207,14 +76295,14 @@ ydp
 ydp
 avT
 avT
-tqg
+fPV
 ujF
 ujF
 ujF
 ujF
 ujF
 ujF
-ujF
+paG
 ujF
 ujF
 ujF
@@ -77473,7 +77561,7 @@ avT
 avT
 xZL
 xBk
-maG
+pgf
 wdv
 xUL
 xUL
@@ -78006,7 +78094,7 @@ avT
 avT
 avT
 avT
-xZL
+eZT
 xBk
 maG
 avT
@@ -78247,18 +78335,18 @@ xBk
 bzc
 xUL
 xUL
+gSA
+xUL
+xUL
+xUL
+xUL
+gSA
 xUL
 xUL
 xUL
 xUL
 xUL
-xUL
-xUL
-xUL
-xUL
-xUL
-xUL
-xUL
+gSA
 xUL
 xUL
 xUL
@@ -79805,7 +79893,7 @@ avT
 avT
 bmX
 avT
-xZL
+eZT
 xBk
 avT
 avT
@@ -81604,7 +81692,7 @@ ydp
 ydp
 avT
 avT
-xZL
+eZT
 xBk
 avT
 avT
@@ -83403,7 +83491,7 @@ xUL
 xUL
 xUL
 avT
-xZL
+eZT
 xBk
 avT
 avT
@@ -85202,7 +85290,7 @@ xUL
 xUL
 xiw
 avT
-xZL
+eZT
 xBk
 avT
 avT
@@ -87001,7 +87089,7 @@ avT
 avT
 avT
 avT
-xZL
+eZT
 xBk
 avT
 avT
@@ -88029,7 +88117,7 @@ vsM
 vsM
 vsM
 vsM
-vsM
+fNt
 aUb
 avT
 avT
