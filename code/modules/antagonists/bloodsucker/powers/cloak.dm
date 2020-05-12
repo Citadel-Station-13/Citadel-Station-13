@@ -18,14 +18,11 @@
 	. = ..()
 	if(!.)
 		return
-	
 	// must have nobody around to see the cloak
-	var/watchers = viewers(9,get_turf(owner))
-	for(var/mob/living/M in watchers)
+	for(var/mob/living/M in viewers(9, owner))
 		if(M != owner)
 			to_chat(owner, "<span class='warning'>You may only vanish into the shadows unseen.</span>")
 			return FALSE
-
 	return TRUE
 
 /datum/action/bloodsucker/cloak/ActivatePower()

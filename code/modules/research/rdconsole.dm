@@ -47,6 +47,9 @@ Nothing else in the console has ID requirements.
 
 	var/research_control = TRUE
 
+	/// Long action cooldown to prevent spam
+	var/last_long_action = 0
+
 /obj/machinery/computer/rdconsole/production
 	circuit = /obj/item/circuitboard/computer/rdconsole/production
 	research_control = FALSE
@@ -287,7 +290,7 @@ Nothing else in the console has ID requirements.
 			continue
 		var/temp_material
 		var/c = 50
-		var/coeff = linked_lathe.efficiency_coeff
+		var/coeff = linked_lathe.print_cost_coeff
 		if(!linked_lathe.efficient_with(D.build_path))
 			coeff = 1
 
@@ -296,9 +299,9 @@ Nothing else in the console has ID requirements.
 			var/t = linked_lathe.check_mat(D, M)
 			temp_material += " | "
 			if (t < 1)
-				temp_material += "<span class='bad'>[all_materials[M]/coeff] [CallMaterialName(M)]</span>"
+				temp_material += "<span class='bad'>[all_materials[M] * coeff] [CallMaterialName(M)]</span>"
 			else
-				temp_material += " [all_materials[M]/coeff] [CallMaterialName(M)]"
+				temp_material += " [all_materials[M] * coeff] [CallMaterialName(M)]"
 			c = min(c,t)
 
 		var/clearance = !(linked_lathe.obj_flags & EMAGGED) && (linked_lathe.offstation_security_levels || is_station_level(linked_lathe.z))
@@ -353,16 +356,16 @@ Nothing else in the console has ID requirements.
 		var/temp_material
 		var/c = 50
 		var/all_materials = D.materials + D.reagents_list
-		var/coeff = linked_lathe.efficiency_coeff
+		var/coeff = linked_lathe.print_cost_coeff
 		if(!linked_lathe.efficient_with(D.build_path))
 			coeff = 1
 		for(var/M in all_materials)
 			var/t = linked_lathe.check_mat(D, M)
 			temp_material += " | "
 			if (t < 1)
-				temp_material += "<span class='bad'>[all_materials[M]/coeff] [CallMaterialName(M)]</span>"
+				temp_material += "<span class='bad'>[all_materials[M] * coeff] [CallMaterialName(M)]</span>"
 			else
-				temp_material += " [all_materials[M]/coeff] [CallMaterialName(M)]"
+				temp_material += " [all_materials[M] * coeff] [CallMaterialName(M)]"
 			c = min(c,t)
 
 		if (c >= 1)
@@ -454,7 +457,7 @@ Nothing else in the console has ID requirements.
 		var/check_materials = TRUE
 
 		var/all_materials = D.materials + D.reagents_list
-		var/coeff = linked_imprinter.efficiency_coeff
+		var/coeff = linked_imprinter.print_cost_coeff
 		if(!linked_imprinter.efficient_with(D.build_path))
 			coeff = 1
 
@@ -462,9 +465,9 @@ Nothing else in the console has ID requirements.
 			temp_materials += " | "
 			if (!linked_imprinter.check_mat(D, M))
 				check_materials = FALSE
-				temp_materials += " <span class='bad'>[all_materials[M]/coeff] [CallMaterialName(M)]</span>"
+				temp_materials += " <span class='bad'>[all_materials[M] * coeff] [CallMaterialName(M)]</span>"
 			else
-				temp_materials += " [all_materials[M]/coeff] [CallMaterialName(M)]"
+				temp_materials += " [all_materials[M] * coeff] [CallMaterialName(M)]"
 		if (check_materials)
 			l += "<A href='?src=[REF(src)];imprint=[D.id]'>[D.name]</A>[temp_materials]"
 		else
@@ -485,16 +488,16 @@ Nothing else in the console has ID requirements.
 		var/temp_materials
 		var/check_materials = TRUE
 		var/all_materials = D.materials + D.reagents_list
-		var/coeff = linked_imprinter.efficiency_coeff
+		var/coeff = linked_imprinter.print_cost_coeff
 		if(!linked_imprinter.efficient_with(D.build_path))
 			coeff = 1
 		for(var/M in all_materials)
 			temp_materials += " | "
 			if (!linked_imprinter.check_mat(D, M))
 				check_materials = FALSE
-				temp_materials += " <span class='bad'>[all_materials[M]/coeff] [CallMaterialName(M)]</span>"
+				temp_materials += " <span class='bad'>[all_materials[M] * coeff] [CallMaterialName(M)]</span>"
 			else
-				temp_materials += " [all_materials[M]/coeff] [CallMaterialName(M)]"
+				temp_materials += " [all_materials[M] * coeff] [CallMaterialName(M)]"
 		if (check_materials)
 			l += "<A href='?src=[REF(src)];imprint=[D.id]'>[D.name]</A>[temp_materials]"
 		else
@@ -583,10 +586,8 @@ Nothing else in the console has ID requirements.
 		l += "<table><tr><td>[icon2html(linked_destroy.loaded_item, usr)]</td><td><b>[linked_destroy.loaded_item.name]</b> <A href='?src=[REF(src)];eject_item=1'>Eject</A></td></tr></table>[RDSCREEN_NOBREAK]"
 		l += "Select a node to boost by deconstructing this item. This item can boost:"
 
-		var/anything = FALSE
 		var/list/boostable_nodes = techweb_item_boost_check(linked_destroy.loaded_item)
 		for(var/id in boostable_nodes)
-			anything = TRUE
 			var/list/worth = boostable_nodes[id]
 			var/datum/techweb_node/N = SSresearch.techweb_node_by_id(id)
 
@@ -620,7 +621,6 @@ Nothing else in the console has ID requirements.
 		// point deconstruction and material reclamation use the same ID to prevent accidentally missing the points
 		var/list/point_values = techweb_item_point_check(linked_destroy.loaded_item)
 		if(point_values)
-			anything = TRUE
 			l += "<div class='statusDisplay'>[RDSCREEN_NOBREAK]"
 			if (stored_research.deconstructed_items[linked_destroy.loaded_item.type])
 				l += "<span class='linkOff'>Point Deconstruction</span>"
@@ -636,10 +636,8 @@ Nothing else in the console has ID requirements.
 			for (var/M in materials)
 				l += "* [CallMaterialName(M)] x [materials[M]]"
 			l += "</div>[RDSCREEN_NOBREAK]"
-			anything = TRUE
 
-		if (!anything)
-			l += "Nothing!"
+		l += "<div class='statusDisplay'><A href='?src=[REF(src)];deconstruct=[RESEARCH_DEEP_SCAN_ID]'>Nondestructive Deep Scan</A></div>"
 
 		l += "</div>"
 	return l
@@ -926,6 +924,9 @@ Nothing else in the console has ID requirements.
 		screen = RDSCREEN_MENU
 		say("Ejecting Technology Disk")
 	if(ls["deconstruct"])
+		if((last_long_action + 1 SECONDS) > world.time)
+			return
+		last_long_action = world.time
 		if(QDELETED(linked_destroy))
 			say("No Destructive Analyzer Linked!")
 			return
@@ -1037,7 +1038,7 @@ Nothing else in the console has ID requirements.
 						autolathe_friendly = FALSE
 						D.category -= "Imported"
 
-			if(D.build_type & (AUTOLATHE|PROTOLATHE|CRAFTLATHE)) // Specifically excludes circuit imprinter and mechfab
+			if(D.build_type & (AUTOLATHE|PROTOLATHE|TOYLATHE)) // Specifically excludes circuit imprinter and mechfab
 				D.build_type = autolathe_friendly ? (D.build_type | AUTOLATHE) : D.build_type
 				D.category |= "Imported"
 			d_disk.blueprints[slot] = D

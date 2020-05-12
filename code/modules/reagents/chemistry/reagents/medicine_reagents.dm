@@ -246,6 +246,13 @@
 	metabolization_rate = 5 * REAGENTS_METABOLISM
 	overdose_threshold = 50
 
+/datum/reagent/medicine/silver_sulfadiazine/reaction_obj(obj/O, reac_volume)
+	if(istype(O, /obj/item/stack/medical/gauze))
+		var/obj/item/stack/medical/gauze/G = O
+		reac_volume = min((reac_volume / 10), G.amount)
+		new/obj/item/stack/medical/ointment(get_turf(G), reac_volume)
+		G.use(reac_volume)
+
 /datum/reagent/medicine/silver_sulfadiazine/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message = 1)
 	if(iscarbon(M) && M.stat != DEAD)
 		if(method in list(INGEST, VAPOR, INJECT))
@@ -321,6 +328,12 @@
 			SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "painful_medicine", /datum/mood_event/painful_medicine)
 	..()
 
+/datum/reagent/medicine/styptic_powder/reaction_obj(obj/O, reac_volume)
+	if(istype(O, /obj/item/stack/medical/gauze))
+		var/obj/item/stack/medical/gauze/G = O
+		reac_volume = min((reac_volume / 10), G.amount)
+		new/obj/item/stack/medical/bruise_pack(get_turf(G), reac_volume)
+		G.use(reac_volume)
 
 /datum/reagent/medicine/styptic_powder/on_mob_life(mob/living/carbon/M)
 	M.adjustBruteLoss(-2*REM, 0)

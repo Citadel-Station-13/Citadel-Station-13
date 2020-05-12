@@ -10400,7 +10400,6 @@
 /obj/machinery/requests_console{
 	department = "AI";
 	departmentType = 5;
-	pixel_x = 0;
 	pixel_y = 28
 	},
 /obj/machinery/door/window/eastright{
@@ -42089,18 +42088,14 @@
 /turf/open/floor/plasteel/white,
 /area/medical/virology)
 "bMD" = (
-/obj/structure/flora/tree/palm{
-	pixel_x = 0
-	},
+/obj/structure/flora/tree/palm,
 /obj/machinery/light{
 	dir = 8
 	},
 /turf/open/floor/grass,
 /area/medical/virology)
 "bME" = (
-/obj/structure/flora/tree/palm{
-	pixel_x = 0
-	},
+/obj/structure/flora/tree/palm,
 /obj/machinery/light{
 	dir = 4;
 	light_color = "#c1caff"
@@ -42181,9 +42176,7 @@
 /turf/open/space/basic,
 /area/space/nearstation)
 "bML" = (
-/obj/structure/flora/tree/palm{
-	pixel_x = 0
-	},
+/obj/structure/flora/tree/palm,
 /turf/open/floor/grass,
 /area/medical/virology)
 "bMM" = (
@@ -71649,8 +71642,7 @@
 /obj/machinery/atmospherics/pipe/simple/orange/hidden,
 /obj/machinery/flasher{
 	id = "ID";
-	pixel_x = 24;
-	pixel_y = 0
+	pixel_x = 24
 	},
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/turret_protected/ai)

@@ -11,9 +11,17 @@
 
 		for(var/turf/check in get_affected_turfs(central_turf,1))
 			var/area/new_area = get_area(check)
-			if(!(istype(new_area, allowed_areas)) || check.flags_1 & NO_RUINS_1)
-				valid = FALSE
+			valid = FALSE // set to false before we check
+			if(check.flags_1 & NO_RUINS_1)
 				break
+			for(var/type in allowed_areas)
+				if(istype(new_area, type)) // it's at least one of our types so it's whitelisted
+					valid = TRUE
+					break
+
+			if(!valid)
+				break
+			
 
 		if(!valid)
 			continue
@@ -51,7 +59,7 @@
 	new /obj/effect/landmark/ruin(center, src)
 	return center
 
-/proc/seedRuins(list/z_levels = null, budget = 0, whitelist = /area/space, list/potentialRuins)
+/proc/seedRuins(list/z_levels = null, budget = 0, whitelist = list(/area/space), list/potentialRuins)
 	if(!z_levels || !z_levels.len)
 		WARNING("No Z levels provided - Not generating ruins")
 		return

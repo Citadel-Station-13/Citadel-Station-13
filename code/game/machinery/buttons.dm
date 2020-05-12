@@ -16,6 +16,9 @@
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 
 /obj/machinery/button/Initialize(mapload, ndir = 0, built = 0)
+	if(istext(id) && mapload)
+		if(copytext(id, 1, 2) == "!")
+			id = SSmapping.get_obfuscated_id(id)
 	. = ..()
 	if(built)
 		setDir(ndir)
@@ -259,6 +262,11 @@
 	device_type = /obj/item/assembly/control/crematorium
 	req_access = list()
 	id = 1
+
+/obj/machinery/button/electrochromatic
+	name = "window dim control"
+	desc = "Controls linked electrochromatic windows"
+	device_type = /obj/item/assembly/control/electrochromatic
 
 /obj/item/wallframe/button
 	name = "button frame"

@@ -17,7 +17,7 @@
 	update_combat_mode_icon()
 
 /mob/living/proc/disable_combat_mode(silent = TRUE, was_forced = FALSE, visible = FALSE, update_icon = TRUE)
-	if(!(combat_flags & COMBAT_FLAG_COMBAT_ACTIVE))
+	if(!(combat_flags & COMBAT_FLAG_COMBAT_ACTIVE) || (combat_flags & COMBAT_FLAG_COMBAT_FORCED))
 		return
 	DISABLE_BITFIELD(combat_flags, COMBAT_FLAG_COMBAT_ACTIVE)
 	SEND_SIGNAL(src, COMSIG_LIVING_COMBAT_DISABLED, was_forced)
@@ -60,6 +60,8 @@
 /mob/living/proc/disable_intentional_combat_mode(silent = TRUE, visible = FALSE)
 	if(!(combat_flags & COMBAT_FLAG_COMBAT_TOGGLED) && !(combat_flags & COMBAT_FLAG_COMBAT_ACTIVE))
 		return
+	if(combat_flags & COMBAT_FLAG_COMBAT_FORCED)
+		return
 	DISABLE_BITFIELD(combat_flags, COMBAT_FLAG_COMBAT_TOGGLED)
 	if(combat_flags & COMBAT_FLAG_COMBAT_ACTIVE)
 		disable_combat_mode(silent, FALSE, visible, FALSE)
@@ -71,6 +73,9 @@
 /mob/living/proc/user_toggle_intentional_combat_mode(visible = TRUE)
 	var/old = (combat_flags & COMBAT_FLAG_COMBAT_TOGGLED)
 	if(old)
+		if(combat_flags & COMBAT_FLAG_COMBAT_FORCED)
+			to_chat(src, "<span class='warning'>You are unable to relax your muscles.</span>")
+			return
 		disable_intentional_combat_mode()
 		playsound_local(src, 'sound/misc/ui_toggleoff.ogg', 50, FALSE, pressure_affected = FALSE) //Slightly modified version of the above!
 	else if(CAN_TOGGLE_COMBAT_MODE(src))

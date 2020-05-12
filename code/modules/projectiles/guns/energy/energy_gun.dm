@@ -52,12 +52,15 @@
 
 /obj/item/gun/energy/e_gun/hos
 	name = "\improper X-01 MultiPhase Energy Gun"
-	desc = "This is an expensive, modern recreation of an antique laser gun. This gun has several unique firemodes, but lacks the ability to recharge over time."
+	desc = "This is an expensive, modern recreation of an antique laser gun. This gun has several unique firemodes, but lacks the ability to recharge over time in exchange for inbuilt advanced firearm EMP shielding."
 	icon_state = "hoslaser"
 	force = 10
-	ammo_type = list(/obj/item/ammo_casing/energy/electrode/hos, /obj/item/ammo_casing/energy/disabler, /obj/item/ammo_casing/energy/laser/hos)
+	ammo_type = list(/obj/item/ammo_casing/energy/disabler, /obj/item/ammo_casing/energy/laser/hos, /obj/item/ammo_casing/energy/ion/hos)
 	ammo_x_offset = 4
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
+
+/obj/item/gun/energy/e_gun/hos/emp_act(severity)
+	return
 
 /obj/item/gun/energy/e_gun/dragnet
 	name = "\improper DRAGnet"

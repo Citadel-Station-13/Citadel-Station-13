@@ -10,24 +10,13 @@
 	group = "Science"
 	crate_type = /obj/structure/closet/crate/science
 
-/* For later
-/datum/supply_pack/science/monkey
+/datum/supply_pack/science/ape  //Ape out!
 	name = "Ape Cube Crate"
 	desc = "Pss what a new test subject with supper strangth, speed, and love for bananas all at the same time? Say no more... Contains a single ape cube. Dont add water!"
 	contraband = TRUE
 	cost = 2500
-	contains = list (/obj/item/reagent_containers/food/snacks/monkeycube/ape)
+	contains = list (/obj/item/reagent_containers/food/snacks/cube/ape)
 	crate_name = "ape cube crate"
-*/
-
-/datum/supply_pack/science/aliens
-	name = "Advanced Alien Alloy Crate Crate"
-	desc = "Hello brothers from the stars!!! Our fellow brethren have made contact at long last and gave us gifts man! They really did build the prymi- Connection Error- Bro we’ll send you a sheet of advanced alien alloy."
-	cost = 15000
-	DropPodOnly = TRUE
-	contraband = TRUE
-	contains = list(/obj/item/stack/sheet/mineral/abductor)
-	crate_name = "alien bro alloy crate"
 
 /datum/supply_pack/science/beakers
 	name = "Chemistry Beakers Crate"

@@ -35,6 +35,13 @@
 /datum/config_entry/keyed_list/midround_antag/ValidateListEntry(key_name, key_value)
 	return key_name in config.modes
 
+/datum/config_entry/keyed_list/force_antag_count
+	key_mode = KEY_MODE_TEXT
+	value_mode = VALUE_MODE_FLAG
+
+/datum/config_entry/keyed_list/force_antag_count/ValidateListEntry(key_name, key_value)
+	return key_name in config.modes
+
 /datum/config_entry/keyed_list/policy
 	key_mode = KEY_MODE_TEXT
 	value_mode = VALUE_MODE_TEXT
@@ -217,7 +224,8 @@
 	config_entry_value = list(			//DEFAULTS
 	/mob/living/simple_animal = 1,
 	/mob/living/silicon/pai = 1,
-	/mob/living/carbon/alien/humanoid/hunter = -1,
+	/mob/living/carbon/alien/humanoid/sentinel = 0.25,
+	/mob/living/carbon/alien/humanoid/drone = 0.5,
 	/mob/living/carbon/alien/humanoid/royal/praetorian = 1,
 	/mob/living/carbon/alien/humanoid/royal/queen = 3
 	)
@@ -345,6 +353,11 @@
 
 /datum/config_entry/number/space_budget
 	config_entry_value = 16
+	min_val = 0
+
+/datum/config_entry/number/icemoon_budget
+	config_entry_value = 90
+	integer = FALSE
 	min_val = 0
 
 /datum/config_entry/number/station_space_budget
