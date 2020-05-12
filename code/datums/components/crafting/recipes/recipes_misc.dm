@@ -157,7 +157,7 @@
 /datum/crafting_recipe/goldenbox
 	name = "Gold Plated Toolbox"
 	result = /obj/item/storage/toolbox/gold_fake
-	tools = list(/obj/item/stock_parts/cell/upgraded/plus)
+	tools = list(/obj/item/stock_parts/cell/high)
 	reqs = list(/obj/item/stack/sheet/cardboard = 1, //so we dont null items in crafting
 				/obj/item/stack/cable_coil = 10,
 				/obj/item/stack/sheet/mineral/gold = 1,
@@ -184,7 +184,7 @@
 
 /datum/crafting_recipe/bronze_driver
 	name = "Bronze Plated Screwdriver"
-	tools = list(/obj/item/stock_parts/cell/upgraded/plus)
+	tools = list(/obj/item/stock_parts/cell/high)
 	result = /obj/item/screwdriver/bronze
 	reqs = list(/obj/item/screwdriver = 1,
 				/obj/item/stack/cable_coil = 10,
@@ -196,7 +196,7 @@
 
 /datum/crafting_recipe/bronze_welder
 	name = "Bronze Plated Welding Tool"
-	tools = list(/obj/item/stock_parts/cell/upgraded/plus)
+	tools = list(/obj/item/stock_parts/cell/high)
 	result = /obj/item/weldingtool/bronze
 	reqs = list(/obj/item/weldingtool = 1,
 				/obj/item/stack/cable_coil = 10,
@@ -208,7 +208,7 @@
 
 /datum/crafting_recipe/bronze_wirecutters
 	name = "Bronze Plated Wirecutters"
-	tools = list(/obj/item/stock_parts/cell/upgraded/plus)
+	tools = list(/obj/item/stock_parts/cell/high)
 	result = /obj/item/wirecutters/bronze
 	reqs = list(/obj/item/wirecutters = 1,
 				/obj/item/stack/cable_coil = 10,
@@ -220,7 +220,7 @@
 
 /datum/crafting_recipe/bronze_crowbar
 	name = "Bronze Plated Crowbar"
-	tools = list(/obj/item/stock_parts/cell/upgraded/plus)
+	tools = list(/obj/item/stock_parts/cell/high)
 	result = /obj/item/crowbar/bronze
 	reqs = list(/obj/item/crowbar = 1,
 				/obj/item/stack/cable_coil = 10,
@@ -232,7 +232,7 @@
 
 /datum/crafting_recipe/bronze_wrench
 	name = "Bronze Plated Wrench"
-	tools = list(/obj/item/stock_parts/cell/upgraded/plus)
+	tools = list(/obj/item/stock_parts/cell/high)
 	result = /obj/item/wrench/bronze
 	reqs = list(/obj/item/wrench = 1,
 				/obj/item/stack/cable_coil = 10,
