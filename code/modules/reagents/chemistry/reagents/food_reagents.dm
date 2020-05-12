@@ -13,11 +13,12 @@
 	taste_mult = 4
 	value = REAGENT_VALUE_VERY_COMMON
 	var/nutriment_factor = 1 * REAGENTS_METABOLISM
+	var/max_nutrition = INFINITY
 	var/quality = 0	//affects mood, typically higher for mixed drinks with more complex recipes
 
 /datum/reagent/consumable/on_mob_life(mob/living/carbon/M)
 	current_cycle++
-	M.nutrition += nutriment_factor
+	M.adjust_nutrition(nutriment_factor, max_nutrition)
 	M.CheckBloodsuckerEatFood(nutriment_factor)
 	holder.remove_reagent(type, metabolization_rate)
 
@@ -694,13 +695,10 @@
 	description = "A bioengineered protien-nutrient structure designed to decompose in high saturation. In layman's terms, it won't get you fat."
 	reagent_state = SOLID
 	nutriment_factor = 12 * REAGENTS_METABOLISM
+	max_nutrition = NUTRITION_LEVEL_FULL - 25
 	color = "#664330" // rgb: 102, 67, 48
 	value = REAGENT_VALUE_RARE
 
-/datum/reagent/consumable/nutriment/stabilized/on_mob_life(mob/living/carbon/M)
-	if(M.nutrition > NUTRITION_LEVEL_FULL - 25)
-		M.nutrition -= 3*nutriment_factor
-	..()
 
 ////Lavaland Flora Reagents////
 

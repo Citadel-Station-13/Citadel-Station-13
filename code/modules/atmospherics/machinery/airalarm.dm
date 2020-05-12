@@ -36,6 +36,7 @@
 /obj/item/electronics/airalarm
 	name = "air alarm electronics"
 	icon_state = "airalarm_electronics"
+	custom_price = 50
 
 /obj/item/wallframe/airalarm
 	name = "air alarm frame"
