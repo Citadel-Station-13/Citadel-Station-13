@@ -32,7 +32,8 @@
 /obj/structure/table/wood,
 /obj/machinery/computer/security/wooden_tv,
 /obj/structure/barricade/wooden{
-	max_integrity = 10
+	max_integrity = 10;
+	obj_integrity = 10
 	},
 /turf/open/floor/wood,
 /area/maintenance/bar)
@@ -405,7 +406,8 @@
 /area/quartermaster/storage)
 "ahn" = (
 /obj/structure/barricade/wooden/snowed{
-	max_integrity = 10
+	max_integrity = 10;
+	obj_integrity = 10
 	},
 /turf/open/floor/wood,
 /area/maintenance/bar)
@@ -1211,7 +1213,8 @@
 	icon_state = "1-2"
 	},
 /obj/structure/barricade/wooden/snowed{
-	max_integrity = 10
+	max_integrity = 10;
+	obj_integrity = 10
 	},
 /turf/open/floor/wood,
 /area/maintenance/bar)
@@ -3098,7 +3101,8 @@
 	},
 /obj/structure/light_construct/small,
 /obj/structure/barricade/wooden/snowed{
-	max_integrity = 10
+	max_integrity = 10;
+	obj_integrity = 10
 	},
 /turf/open/floor/wood{
 	icon_state = "wood-broken4"
@@ -4838,6 +4842,14 @@
 /obj/machinery/door/firedoor/border_only,
 /turf/open/floor/plasteel,
 /area/science/robotics/mechbay)
+"bDf" = (
+/obj/machinery/door/airlock/external{
+	name = "Engineering External Access";
+	req_access_txt = "10;13"
+	},
+/obj/structure/fans/tiny,
+/turf/open/floor/plating,
+/area/engine/engineering)
 "bDg" = (
 /obj/structure/cable{
 	icon_state = "4-8"
@@ -7660,7 +7672,8 @@
 	icon_state = "1-2"
 	},
 /obj/structure/barricade/wooden/crude/snow{
-	max_integrity = 15
+	max_integrity = 15;
+	obj_integrity = 15
 	},
 /turf/open/floor/plating,
 /area/maintenance/bar)
@@ -8587,7 +8600,8 @@
 /area/engine/engineering)
 "cYK" = (
 /obj/structure/barricade/wooden/snowed{
-	max_integrity = 10
+	max_integrity = 10;
+	obj_integrity = 10
 	},
 /turf/open/floor/plating,
 /area/maintenance/bar)
@@ -10861,13 +10875,14 @@
 /area/hallway/primary/port)
 "eDt" = (
 /obj/machinery/door/airlock/maintenance,
-/obj/structure/barricade/wooden/crude/snow{
-	max_integrity = 15
-	},
 /obj/structure/cable{
 	icon_state = "1-2"
 	},
 /obj/structure/fans/tiny/invisible,
+/obj/structure/barricade/wooden/crude/snow{
+	max_integrity = 15;
+	obj_integrity = 15
+	},
 /turf/open/floor/plating,
 /area/maintenance/bar)
 "eDu" = (
@@ -14017,7 +14032,8 @@
 "gAG" = (
 /obj/structure/table/wood,
 /obj/structure/barricade/wooden{
-	max_integrity = 10
+	max_integrity = 10;
+	obj_integrity = 10
 	},
 /turf/open/floor/plating,
 /area/maintenance/bar)
@@ -18763,7 +18779,8 @@
 /area/crew_quarters/kitchen)
 "jvy" = (
 /obj/structure/barricade/wooden/snowed{
-	max_integrity = 10
+	max_integrity = 10;
+	obj_integrity = 10
 	},
 /obj/structure/sign/poster/contraband/random{
 	pixel_y = -32
@@ -18913,7 +18930,8 @@
 	icon_state = "1-2"
 	},
 /obj/structure/barricade/wooden{
-	max_integrity = 10
+	max_integrity = 10;
+	obj_integrity = 10
 	},
 /turf/open/floor/wood,
 /area/maintenance/bar)
@@ -19772,7 +19790,8 @@
 	dir = 4
 	},
 /obj/structure/barricade/wooden/snowed{
-	max_integrity = 10
+	max_integrity = 10;
+	obj_integrity = 10
 	},
 /turf/open/floor/wood,
 /area/maintenance/bar)
@@ -21843,7 +21862,8 @@
 /obj/machinery/door/airlock/maintenance,
 /obj/structure/fans/tiny/invisible,
 /obj/structure/barricade/wooden/crude/snow{
-	max_integrity = 15
+	max_integrity = 15;
+	obj_integrity = 15
 	},
 /turf/open/floor/plating,
 /area/maintenance/bar)
@@ -22032,16 +22052,6 @@
 	},
 /turf/closed/wall/r_wall,
 /area/engine/atmos)
-"lFm" = (
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 8
-	},
-/obj/machinery/door/airlock/external{
-	name = "Escape Airlock"
-	},
-/obj/structure/fans/tiny,
-/turf/open/floor/plating,
-/area/hallway/secondary/exit/departure_lounge)
 "lFu" = (
 /obj/machinery/door/firedoor/border_only{
 	name = "south facing firelock"
@@ -25435,7 +25445,8 @@
 "nPs" = (
 /obj/structure/chair/stool,
 /obj/structure/barricade/wooden{
-	max_integrity = 10
+	max_integrity = 10;
+	obj_integrity = 10
 	},
 /turf/open/floor/wood,
 /area/maintenance/bar)
@@ -26185,7 +26196,8 @@
 	dir = 1
 	},
 /obj/structure/barricade/wooden/crude/snow{
-	max_integrity = 15
+	max_integrity = 15;
+	obj_integrity = 15
 	},
 /turf/open/floor/wood,
 /area/maintenance/bar)
@@ -29404,7 +29416,8 @@
 	dir = 4
 	},
 /obj/structure/barricade/wooden{
-	max_integrity = 10
+	max_integrity = 10;
+	obj_integrity = 10
 	},
 /turf/open/floor/wood,
 /area/maintenance/bar)
@@ -29932,7 +29945,8 @@
 "qDg" = (
 /obj/structure/chair/comfy/brown,
 /obj/structure/barricade/wooden/snowed{
-	max_integrity = 10
+	max_integrity = 10;
+	obj_integrity = 10
 	},
 /turf/open/floor/wood,
 /area/maintenance/bar)
@@ -30902,7 +30916,8 @@
 	dir = 1
 	},
 /obj/structure/barricade/wooden/snowed{
-	max_integrity = 10
+	max_integrity = 10;
+	obj_integrity = 10
 	},
 /turf/open/floor/plating,
 /area/maintenance/bar)
@@ -31294,16 +31309,6 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
-"rsB" = (
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 4
-	},
-/obj/machinery/door/airlock/external{
-	name = "Escape Airlock"
-	},
-/obj/structure/fans/tiny,
-/turf/open/floor/plating,
-/area/hallway/secondary/exit/departure_lounge)
 "rsD" = (
 /obj/structure/table/wood,
 /obj/structure/bedsheetbin/towel,
@@ -32964,6 +32969,16 @@
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/plasteel,
 /area/security/checkpoint/supply)
+"sDA" = (
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
+	},
+/obj/machinery/door/airlock/external{
+	name = "Escape Airlock"
+	},
+/obj/structure/fans/tiny,
+/turf/open/floor/plating,
+/area/hallway/secondary/exit/departure_lounge)
 "sDD" = (
 /obj/structure/cable{
 	icon_state = "1-2"
@@ -34652,7 +34667,8 @@
 	pixel_y = -32
 	},
 /obj/structure/barricade/wooden/snowed{
-	max_integrity = 10
+	max_integrity = 10;
+	obj_integrity = 10
 	},
 /turf/open/floor/wood,
 /area/maintenance/bar)
@@ -34955,7 +34971,8 @@
 	dir = 1
 	},
 /obj/structure/barricade/wooden/snowed{
-	max_integrity = 10
+	max_integrity = 10;
+	obj_integrity = 10
 	},
 /turf/open/floor/wood,
 /area/maintenance/bar)
@@ -37395,6 +37412,16 @@
 	},
 /turf/closed/wall/r_wall,
 /area/security/prison)
+"vpY" = (
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 4
+	},
+/obj/machinery/door/airlock/external{
+	name = "Escape Airlock"
+	},
+/obj/structure/fans/tiny,
+/turf/open/floor/plating,
+/area/hallway/secondary/exit/departure_lounge)
 "vqv" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/machinery/door/airlock{
@@ -39588,7 +39615,8 @@
 /area/storage/atmos)
 "wEm" = (
 /obj/structure/barricade/wooden{
-	max_integrity = 10
+	max_integrity = 10;
+	obj_integrity = 10
 	},
 /turf/open/floor/wood{
 	icon_state = "wood-broken6"
@@ -39688,7 +39716,8 @@
 /area/hallway/primary/port)
 "wGD" = (
 /obj/structure/barricade/wooden{
-	max_integrity = 10
+	max_integrity = 10;
+	obj_integrity = 10
 	},
 /turf/open/floor/wood,
 /area/maintenance/bar)
@@ -40994,14 +41023,6 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/security/brig)
-"xFu" = (
-/obj/machinery/door/airlock/external{
-	name = "Engineering External Access";
-	req_access_txt = "10;13"
-	},
-/obj/structure/fans/tiny,
-/turf/open/floor/plating,
-/area/engine/engineering)
 "xFQ" = (
 /obj/machinery/doorButtons/airlock_controller{
 	idExterior = "virology_airlock_exterior";
@@ -41257,7 +41278,13 @@
 	},
 /turf/open/floor/plasteel,
 /area/engine/break_room)
-"xMR" = (
+"xMV" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/turf/open/floor/plating,
+/area/maintenance/solars/port/aft)
+"xOa" = (
 /obj/machinery/door/airlock/external{
 	name = "Engineering External Access";
 	req_access_txt = "10;13"
@@ -41265,12 +41292,6 @@
 /obj/structure/fans/tiny,
 /turf/open/floor/engine,
 /area/engine/atmospherics_engine)
-"xMV" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/turf/open/floor/plating,
-/area/maintenance/solars/port/aft)
 "xOj" = (
 /obj/structure/cable{
 	icon_state = "4-8"
@@ -72603,7 +72624,7 @@ bmX
 avT
 avT
 bok
-rsB
+vpY
 bok
 cwo
 wcB
@@ -78763,17 +78784,17 @@ xUL
 xUL
 pZl
 unA
-lFm
+sDA
 unA
-lFm
+sDA
 unA
 rJO
 xUL
 pZl
 unA
-lFm
+sDA
 unA
-lFm
+sDA
 unA
 bok
 bok
@@ -94645,7 +94666,7 @@ qtH
 xUL
 xUL
 xUL
-xFu
+bDf
 ijZ
 ijZ
 bnU
@@ -99272,7 +99293,7 @@ sTq
 hBq
 hBq
 hBq
-xMR
+xOa
 hBq
 kol
 jZW
