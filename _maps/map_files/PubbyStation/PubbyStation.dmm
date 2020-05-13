@@ -4058,6 +4058,7 @@
 	pixel_y = -3
 	},
 /obj/item/gun/energy/e_gun/advtaser,
+/obj/machinery/atmospherics/pipe/simple/cyan/hidden,
 /turf/open/floor/plasteel/dark,
 /area/security/armory)
 "akM" = (
@@ -52409,6 +52410,23 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/library)
+"cBi" = (
+/obj/machinery/flasher/portable,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/simple/cyan/hidden{
+	dir = 5
+	},
+/turf/open/floor/plasteel/dark,
+/area/security/armory)
 "cBk" = (
 /obj/machinery/vending/boozeomat/pubby_maint,
 /turf/closed/wall,
@@ -55283,6 +55301,9 @@
 	name = "Sergeant-at-Armsky";
 	weaponscheck = 1
 	},
+/obj/machinery/atmospherics/pipe/simple/cyan/hidden{
+	dir = 4
+	},
 /turf/open/floor/plasteel/dark,
 /area/security/armory)
 "iwe" = (
@@ -55668,6 +55689,13 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/science/xenobiology)
+"juw" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/machinery/atmospherics/pipe/simple/cyan/hidden{
+	dir = 4
+	},
+/turf/open/floor/plasteel/dark,
+/area/security/armory)
 "jvi" = (
 /obj/structure/cable{
 	icon_state = "4-8"
@@ -58246,6 +58274,15 @@
 	},
 /turf/open/floor/plating,
 /area/security/execution/transfer)
+"pfB" = (
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/manifold/cyan/hidden{
+	dir = 4
+	},
+/turf/open/floor/plasteel/dark,
+/area/security/armory)
 "pfP" = (
 /obj/structure/table,
 /obj/item/storage/box/syringes,
@@ -84497,7 +84534,7 @@ aiL
 ajg
 ajP
 akL
-alA
+cBi
 amh
 amV
 anF
@@ -84754,7 +84791,7 @@ aiM
 aiM
 ajQ
 akM
-akM
+juw
 ami
 amW
 anG
@@ -85268,7 +85305,7 @@ aiN
 aji
 ajS
 akO
-akO
+pfB
 amk
 amY
 anI

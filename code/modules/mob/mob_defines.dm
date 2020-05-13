@@ -130,3 +130,16 @@
 	var/siliconaccesstoggle = FALSE
 
 	var/voluntary_ghosted = FALSE		//whether or not they voluntarily ghosted.
+
+	var/flavor_text = ""
+	var/flavor_text_2 = "" //version of the above that only lasts for the current round.
+
+	///////TYPING INDICATORS///////
+	/// Set to true if we want to show typing indicators.
+	var/typing_indicator_enabled = FALSE
+	/// Default icon_state of our typing indicator. Currently only supports paths (because anything else is, as of time of typing this, unnecesary.
+	var/typing_indicator_state = /obj/effect/overlay/typing_indicator
+	/// The timer that will remove our indicator for early aborts (like when an user finishes their message)
+	var/typing_indicator_timerid
+	/// Current state of our typing indicator. Used for cut overlay, DO NOT RUNTIME ASSIGN OTHER THAN FROM SHOW/CLEAR. Used to absolutely ensure we do not get stuck overlays.
+	var/typing_indicator_current
