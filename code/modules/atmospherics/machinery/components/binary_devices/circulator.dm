@@ -132,10 +132,10 @@
 		return list(turn(dir, 270), turn(dir, 90))
 	return list(turn(dir, 90), turn(dir, 270))
 
-/obj/machinery/atmospherics/components/binary/circulator/can_be_node(obj/machinery/atmospherics/target)
-	if(anchored)
-		return ..(target)
-	return FALSE
+/obj/machinery/atmospherics/components/binary/circulator/node_connection_check(obj/machinery/atmospherics/target)
+	if(!anchored)
+		return FALSE
+	return ..()
 
 /obj/machinery/atmospherics/components/binary/circulator/multitool_act(mob/living/user, obj/item/I)
 	if(generator)
@@ -168,8 +168,7 @@
 	generator.update_icon()
 	generator = null
 
-/obj/machinery/atmospherics/components/binary/circulator/setPipingLayer(new_layer)
-	..()
+/obj/machinery/atmospherics/components/binary/circulator/update_offsets()
 	pixel_x = 0
 	pixel_y = 0
 

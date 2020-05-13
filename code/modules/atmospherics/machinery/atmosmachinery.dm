@@ -22,7 +22,8 @@
 	obj_flags = CAN_BE_HIT | ON_BLUEPRINTS
 	var/nodealert = 0
 	var/can_unwrench = 0
-	var/initialize_directions = 0
+	/// Direction flags that we can connect to nodes in.
+	var/initialize_directions = NONE
 	var/pipe_color
 	/// Our pipe layer.
 	var/piping_layer = PIPING_LAYER_DEFAULT
@@ -53,18 +54,30 @@
 /obj/machinery/atmospherics/Initialize(mapload, process = TRUE, setdir)
 	if(!isnull(setdir))
 		setDir(setdir)
-	if(pipe_flags & PIPING_CARDINAL_AUTONORMALIZE)
-		normalize_cardinal_directions()
 	nodes = new(device_type)
 	if (!armor)
 		armor = list("melee" = 25, "bullet" = 10, "laser" = 10, "energy" = 100, "bomb" = 0, "bio" = 100, "rad" = 100, "fire" = 100, "acid" = 70)
 	. = ..()
 	if(process)
 		SSair.atmos_machinery += src		// += not |= hope no insane admin decides to fuck with this haha......
+
+/**
+  * Cleans up from our position/location in the game world.
+  */
+/obj/machinery/atmospherics/proc/Cleanup(update_icon = TRUE)
+	. = Separate(update_icon)
+
+/**
+  * Sets up from our position/location in the game world.
+  */
+/obj/machinery/atmospherics/proc/Setup(update_icon = TRUE)
+	if(pipe_flags & PIPING_CARDINAL_AUTONORMALIZE)
+		normalize_cardinal_directions()
 	SetInitDirections()
+	. = Join(update_icon)
 
 /obj/machinery/atmospherics/Destroy()
-	Separate(FALSE)
+	Cleanup()
 
 	SSair.atmos_machinery -= src
 	SSair.pipenets_needing_rebuilt -= src
@@ -76,15 +89,18 @@
 	return ..()
 
 /obj/machinery/atmospherics/forceMove()
-	Separate(FALSE)
+	Cleanup(FALSE)
 	. = ..()
-	Join(TRUE)
+	Setup(FALSE)
+	update_icon()
 
 /**
-  * Fully disconnects us from whatever we're connected to.
+  * Fully disconnects us from whatever we're connected to. You probably want Cleanup().
   */
 /obj/machinery/atmospherics/proc/Separate(update_icon = TRUE)
 	SHOULD_NOT_OVERRIDE(TRUE)
+	PRIVATE_PROC(TRUE)			// May be reconsidered in the future.
+	. = FALSE
 	if(!(pipe_flags & PIPING_NETWORK_JOINED))
 		CRASH("Tried to Separate() while not Join()ed.")
 	pipe_flags &= ~PIPING_NETWORK_JOINED
@@ -93,30 +109,39 @@
 	nullify_nodes()
 	if(update_icon)
 		update_icon()
+	return TRUE
 
 /**
   * Checks if it's a valid location to join a network from.
   */
-/obj/machinery/atmospherics/proc/CheckJoin(useloc = loc)
+/obj/machinery/atmospherics/proc/CheckJoin(useloc = loc, force = FALSE)
 	if(!useloc)
 		return FALSE
+	// Essential checks should be above and not care about force.
+	if(force)
+		return TRUE
 	if(location_conflicts_at(useloc))
 		return FALSE
 	return TRUE
 
 /**
-  * Automatically connects us, building our network as necessary.
+  * Automatically connects us, building our network as necessary. You probably want Setup().
   */
-/obj/machinery/atmospherics/proc/Join(update_icon = TRUE)
+/obj/machinery/atmospherics/proc/Join(update_icon = TRUE, force = FALSE)
 	SHOULD_NOT_OVERRIDE(TRUE)
+	PRIVATE_PROC(TRUE)			// May be reconsidered in the future.
+	. = FALSE
 	if(pipe_flags & PIPING_NETWORK_JOINED)		//do not do it again.
 		CRASH("Tried to Join() while already Join()ed.")
+	if(!CheckJoin(loc, force))
+		return
 	pipe_flags |= PIPING_NETWORK_JOINED
 	collect_nodes()
 	join_nodes()
 	form_networks()
 	if(update_icon)
 		update_icon()
+	return TRUE
 
 /**
   * Separates and then Joins.
@@ -153,6 +178,15 @@
   * Collects and sets nodes that we should connect to.
   */
 /obj/machinery/atmospherics/proc/collect_nodes()
+	var/list/connect_directions = node_connect_directions()
+	if(length(connect_directions) != connect_directions)
+		CRASH("Found an incorrect number of connect directions! FOUND: [length(connect_directions)]. EXPECTED: [device_type.]")
+	for(var/i in 1 to device_type)
+		// defaults to single connections only.
+		var/obj/machinery/atmospherics/potential = get_valid_node(connect_directions[i], i)
+		if(!potential)
+			continue
+		nodes[i] = potential
 
 /**
   * Joins connected nodes. This proc should tell them we connected.
@@ -170,12 +204,6 @@
 /obj/machinery/atmospherics/proc/form_networks()
 	CRASH("form_networks() of base atmospherics machinery called.")
 
-/obj/machinery/atmospherics/proc/nullifyNode(i)
-	if(nodes[i])
-		var/obj/machinery/atmospherics/N = nodes[i]
-		N.disconnect(src)
-		nodes[i] = null
-
 /**
   * Called when a specific machinery is disconnecting from us.
   */
@@ -185,13 +213,6 @@
 		stack_trace("on_disconnect called without the disconnecting thing being in our nodes! Something has gone horribly wrong!")
 	else
 		nodes[nodeindex] = null
-	update_icon()
-
-/obj/machinery/atmospherics/proc/disconnect(obj/machinery/atmospherics/reference)
-	if(istype(reference, /obj/machinery/atmospherics/pipe))
-		var/obj/machinery/atmospherics/pipe/P = reference
-		P.destroy_network()
-	nodes[nodes.Find(reference)] = null
 	update_icon()
 
 /**
@@ -212,6 +233,7 @@
 		if(dir & initialize_directions)
 			connects += dir
 			found++
+	return connects
 
 /**
   * Normalizes our directions to be the same as equivalent directions if it doesn't matter if we're, for example, SOUTH rather than NORTH for straight pipes.
@@ -223,24 +245,17 @@
 		if(WEST)
 			setDir(EAST)
 
-//this is called just after the air controller sets up turfs
-/obj/machinery/atmospherics/proc/atmosinit(list/node_connects)
-	Join()
-
-	if(!node_connects) //for pipes where order of nodes doesn't matter
-		node_connects = getNodeConnects()
-
-	for(var/i in 1 to device_type)
-		for(var/obj/machinery/atmospherics/target in get_step(src,node_connects[i]))
-			if(can_be_node(target, i))
-				nodes[i] = target
-				break
-	update_icon()
+/**
+  * Initialization proc called by SSair after turfs are set up.
+  */
+/obj/machinery/atmospherics/proc/AtmosInitialize()
+	Setup()
 
 /**
   * Temporarily stores air when our parent pipe network breaks down.
   */
 /obj/machinery/atmospherics/proc/temporarily_store_air(datum/pipeline/from)
+	CRASH("Attempted to temporarily store air on a base atmospherics machinery!")
 
 /**
   * Sets our piping layer.
@@ -252,27 +267,46 @@
 	if(update_icon)
 		update_icon()
 
-/obj/machinery/atmospherics/proc/can_be_node(obj/machinery/atmospherics/target, iteration)
-	return connection_check(target, piping_layer)
+/**
+  * Checks if we should let someone connect to us. Does not consider their opinions on the matter.
+  */
+/obj/machinery/atmospherics/proc/node_connection_check(obj/machinery/atmospherics/target, node_index, prompted_layer)
+	return node_layer_check(target, prompted_layer) && node_direction_check(target)
 
-//Find a connecting /obj/machinery/atmospherics in specified direction
-/obj/machinery/atmospherics/proc/findConnecting(direction, prompted_layer)
+/**
+  * Checks the target is on the right pipe layer to connect to us.
+  */
+/obj/machinery/atmospherics/proc/node_layer_check(obj/machinery/atmospherics/target, our_layer = pipe_layer)
+	return (target.pipe_layer == our_layer) || ((target.pipe_flags | pipe_flags) & PIPING_ALL_LAYER)
+
+/**
+  * Checks the target is in the right direction to connect to us.
+  */
+/obj/machinery/atmospherics/proc/node_direction_check(obj/machinery/atmospherics/target)
+	return get_dir(src, target) & initialize_directions
+
+/**
+  * Checks if we can connect to a target, asking both ourselves and them if we can connect the other.
+  */
+/obj/machinery/atmospherics/proc/can_be_node(obj/machinery/atmospherics/target, node_index, prompted_layer)
+	return node_connection_check(target, node_index, prompted_layer) && target.node_connection_check(src, node_index, prompted_layer)
+
+/**
+  * Finds all valid nodes in a direction.
+  */
+/obj/machinery/atmospherics/proc/find_all_valid_nodes(direction, node_index, prompted_layer)
+	. = list()
 	for(var/obj/machinery/atmospherics/target in get_step_multiz(src, direction))
-		if(target.initialize_directions & get_dir(target,src))
-			if(connection_check(target, prompted_layer))
-				return target
+		if(can_be_node(target, node_index, prompted_layer))
+			. += target
 
-/obj/machinery/atmospherics/proc/connection_check(obj/machinery/atmospherics/target, given_layer)
-	if(isConnectable(target, given_layer) && target.isConnectable(src, given_layer) && (target.initialize_directions & get_dir(target,src)))
-		return TRUE
-	return FALSE
-
-/obj/machinery/atmospherics/proc/isConnectable(obj/machinery/atmospherics/target, given_layer)
-	if(isnull(given_layer))
-		given_layer = piping_layer
-	if((target.piping_layer == given_layer) || (target.pipe_flags & PIPING_ALL_LAYER))
-		return TRUE
-	return FALSE
+/**
+  * Finds a valid node in a direction.
+  */
+ /obj/machinery/atmospherics/proc/find_valid_node(direction, node_index, prompted_layer)
+ 	for(var/obj/machinery/atmospherics/target in get_step_multiz(src, direction))
+ 		if(can_be_node(target, node_index, prompted_layer))
+ 			return target
 
 /**
   * Returns atmospherics machinery that we are connected to that we are directly going to expand our pipenet to (so a logical no-block straight instantenously conducting connection).
