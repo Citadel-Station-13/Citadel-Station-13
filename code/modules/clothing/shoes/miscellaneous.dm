@@ -162,12 +162,12 @@
 	item_state = "iceboots"
 	clothing_flags = NOSLIP_ICE
 
-/obj/item/clothing/shoes/winterboots/christmasbootsr
+/obj/item/clothing/shoes/winterboots/false/christmasbootsr
 	name = "red christmas boots"
 	desc = "A pair of fluffy red christmas boots!"
 	icon_state = "christmasbootsr"
 
-/obj/item/clothing/shoes/winterboots/christmasbootsg
+/obj/item/clothing/shoes/winterboots/false/christmasbootsg
 	name = "green christmas boots"
 	desc = "A pair of fluffy green christmas boots!"
 	icon_state = "christmasbootsg"
