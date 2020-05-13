@@ -33,11 +33,11 @@
 	return TRUE
 
 /obj/item/shield/alt_pre_attack(atom/A, mob/living/user, params)
-	user_shieldbash(user, A, user.a_intent != INTENT_HARM)
+	user_shieldbash(user, A, user.a_intent == INTENT_HARM)
 	return TRUE
 
 /obj/item/shield/altafterattack(atom/target, mob/user, proximity_flag, click_parameters)
-	user_shieldbash(user, target, user.a_intent != INTENT_HARM)
+	user_shieldbash(user, target, user.a_intent == INTENT_HARM)
 	return TRUE
 
 /obj/item/shield/proc/do_shieldbash_effect(mob/living/user, dir, harmful)
@@ -52,13 +52,13 @@
 			px = 12
 		if(WEST)
 			px = -12
-	var/oldpx = user.pixel_x
-	var/oldpy = user.pixel_y
-	animate(user, pixel_x = px, pixel_y = py, time = 3, easing = SINE_EASING | EASE_OUT, flags = ANIMATION_END_NOW)
-	animate(user, pixel_x = oldpx, pixel_y = oldpy, time = 3)
-	user.visible_message("<span class='warning'>[user] [harmful? "charges forwards with" : "sweeps"] [src]!</span>")
 	var/obj/effect/temp_visual/dir_setting/shield_bash/effect = new(user.loc, dir)
-	animate(effect, alpha = 0, pixel_x = px + 4, pixel_y = py + 4, time = 3)
+	effect.pixel_x = user.pixel_x - 32		//96x96 effect, -32.
+	effect.pixel_y = user.pixel_y - 32
+	user.visible_message("<span class='warning'>[user] [harmful? "charges forwards with" : "sweeps"] [src]!</span>")
+	animate(user, pixel_x = px, pixel_y = py, time = 3, easing = SINE_EASING | EASE_OUT, flags = ANIMATION_PARALLEL | ANIMATION_RELATIVE)
+	animate(user, pixel_x = -px, pixel_y = -py, time = 3, flags = ANIMATION_RELATIVE)
+	animate(effect, alpha = 0, pixel_x = px * 1.5, pixel_y = py * 1.5, time = 3, flags = ANIMATION_PARALLEL | ANIMATION_RELATIVE)
 
 /obj/item/shield/proc/bash_target(mob/living/user, mob/living/target, bashdir, harmful)
 	if(!(target.status_flags & CANKNOCKDOWN) || HAS_TRAIT(src, TRAIT_STUNIMMUNE))	// should probably add stun absorption check at some point I guess..
@@ -76,7 +76,7 @@
 		"<span class='warning'>[user] shoves you with [src]!</span>")
 	for(var/i in 1 to harmful? shieldbash_knockback : shieldbash_push_distance)
 		var/turf/new_turf = get_step(target, bashdir)
-		var/mob/living/carbon/human/H = locate() in new_turf
+		var/mob/living/carbon/human/H = locate() in (new_turf.contents - target)
 		if(H && harmful)
 			H.visible_message("<span class='warning'>[target] is sent crashing into [H]!</span>",
 			"<span class='userdanger'>[target] is sent crashing into you!</span>")
@@ -107,13 +107,19 @@
 	return TRUE
 
 /obj/item/shield/proc/user_shieldbash(mob/living/user, atom/target, harmful)
+	if(!(user.combat_flags & COMBAT_FLAG_COMBAT_ACTIVE)) //Combat mode has to be enabled for shield bashing
+		return FALSE
 	if(!(shield_flags & SHIELD_CAN_BASH))
 		to_chat(user, "<span class='warning'>[src] can't be used to shield bash!</span>")
+		return FALSE
+	if(!CHECK_MOBILITY(user, MOBILITY_STAND))
+		to_chat(user, "<span class='warning'>You can't bash with [src] while on the ground!</span>")
 		return FALSE
 	if(world.time < last_shieldbash + shieldbash_cooldown)
 		to_chat(user, "<span class='warning'>You can't bash with [src] again so soon!</span>")
 		return FALSE
-	if(isliving(target))		//GROUND SLAAAM
+	var/mob/living/livingtarget = target		//only access after an isliving check!
+	if(isliving(target) && !CHECK_MOBILITY(livingtarget, MOBILITY_STAND))		//GROUND SLAAAM
 		if(!(shield_flags & SHIELD_BASH_GROUND_SLAM))
 			to_chat(user, "<span class='warning'>You can't ground slam with [src]!</span>")
 			return FALSE
@@ -122,7 +128,7 @@
 		playsound(src, harmful? "swing_hit" : 'sound/weapons/thudswoosh.ogg', 75, 1)
 		last_shieldbash = world.time
 		user.adjustStaminaLossBuffered(shieldbash_stamcost)
-		return 1
+		return TRUE
 	// Directional sweep!
 	last_shieldbash = world.time
 	user.adjustStaminaLossBuffered(shieldbash_stamcost)
@@ -164,11 +170,12 @@
 	attack_verb = list("shoved", "bashed")
 	var/cooldown = 0 //shield bash cooldown. based on world.time
 	var/repair_material = /obj/item/stack/sheet/mineral/titanium
+	var/can_shatter = TRUE
 	shield_flags = SHIELD_FLAGS_DEFAULT | SHIELD_TRANSPARENT
 	max_integrity = 75
 
 /obj/item/shield/run_block(mob/living/owner, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return)
-	if(ismovableatom(object))
+	if(ismovable(object))
 		var/atom/movable/AM = object
 		if(CHECK_BITFIELD(shield_flags, SHIELD_TRANSPARENT) && (AM.pass_flags & PASSGLASS))
 			return BLOCK_NONE
@@ -213,7 +220,7 @@
 	new /obj/item/shard((get_turf(src)))
 
 /obj/item/shield/riot/on_shield_block(mob/living/owner, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return)
-	if(obj_integrity <= damage)
+	if(can_shatter && (obj_integrity <= damage))
 		var/turf/T = get_turf(owner)
 		T.visible_message("<span class='warning'>[attack_text] destroys [src]!</span>")
 		shatter(owner)
@@ -324,7 +331,6 @@ obj/item/shield/riot/bullet_proof
 	armor = list("melee" = 25, "bullet" = 25, "laser" = 5, "energy" = 0, "bomb" = 30, "bio" = 0, "rad" = 0, "fire" = 70, "acid" = 80)
 	lefthand_file = 'icons/mob/inhands/equipment/shields_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/shields_righthand.dmi'
-	icon = 'icons/obj/items_and_weapons.dmi'
 	item_state = "metal"
 	icon_state = "makeshift_shield"
 	custom_materials = list(/datum/material/iron = 18000)
@@ -340,7 +346,6 @@ obj/item/shield/riot/bullet_proof
 	armor = list("melee" = 95, "bullet" = 95, "laser" = 75, "energy" = 60, "bomb" = 90, "bio" = 90, "rad" = 0, "fire" = 90, "acid" = 10) //Armor for the item, dosnt transfer to user
 	item_state = "metal"
 	icon_state = "metal"
-	icon = 'icons/obj/items_and_weapons.dmi'
 	block_chance = 75 //1/4 shots will hit*
 	force = 16
 	slowdown = 2
@@ -356,20 +361,47 @@ obj/item/shield/riot/bullet_proof
 	block_chance = 50
 
 /obj/item/shield/riot/implant
-	name = "riot tower shield"
-	desc = "A massive shield that can block a lot of attacks and can take a lot of abuse before breaking." //It cant break unless it is removed from the implant
+	name = "telescoping shield implant"
+	desc = "A compact, arm-mounted telescopic shield. While nigh-indestructible when powered by a host user, it will eventually overload from damage. Recharges while inside its implant."
 	item_state = "metal"
 	icon_state = "metal"
-	block_chance = 30 //May be big but hard to move around to block.
+	block_chance = 50
 	slowdown = 1
 	shield_flags = SHIELD_FLAGS_DEFAULT
+	max_integrity = 60
+	obj_integrity = 60
+	can_shatter = FALSE
 	item_flags = SLOWS_WHILE_IN_HAND
+	var/recharge_timerid
+	var/recharge_delay = 15 SECONDS
 
-/obj/item/shield/riot/implant/run_block(mob/living/owner, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return)
-	if(attack_type & ATTACK_TYPE_PROJECTILE)
-		final_block_chance = 60 //Massive shield
-	return ..()
+/// Entirely overriden take_damage. This shouldn't exist outside of an implant (other than maybe christmas).
+/obj/item/shield/riot/implant/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, attack_dir, armour_penetration = 0)
+	obj_integrity -= damage_amount
+	if(obj_integrity < 0)
+		obj_integrity = 0
+	if(obj_integrity == 0)
+		if(ismob(loc))
+			var/mob/living/L = loc
+			playsound(src, 'sound/effects/glassbr3.ogg', 100)
+			L.visible_message("<span class='boldwarning'>[src] overloads from the damage sustained!</span>")
+			L.dropItemToGround(src)			//implant component catch hook will grab it.
 
+/obj/item/shield/riot/implant/Moved()
+	. = ..()
+	if(istype(loc, /obj/item/organ/cyberimp/arm/shield))
+		recharge_timerid = addtimer(CALLBACK(src, .proc/recharge), recharge_delay, flags = TIMER_STOPPABLE)
+	else		//extending
+		if(recharge_timerid)
+			deltimer(recharge_timerid)
+			recharge_timerid = null
+
+/obj/item/shield/riot/implant/proc/recharge()
+	if(obj_integrity == max_integrity)
+		return
+	obj_integrity = max_integrity
+	if(ismob(loc.loc))		//cyberimplant.user
+		to_chat(loc, "<span class='notice'>[src] has recharged its reinforcement matrix and is ready for use!</span>")
 
 /obj/item/shield/energy
 	name = "energy combat shield"

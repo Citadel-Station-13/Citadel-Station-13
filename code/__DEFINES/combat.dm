@@ -35,9 +35,9 @@
 /// Default combat flags for those affected by ((stamina combat))
 #define COMBAT_FLAGS_DEFAULT					NONE
 /// Default combat flags for everyone else (so literally everyone but humans)
-#define COMBAT_FLAGS_STAMSYSTEM_EXEMPT			(COMBAT_FLAG_SPRINT_ACTIVE | COMBAT_FLAG_COMBAT_ACTIVE | COMBAT_FLAG_SPRINT_TOGGLED | COMBAT_FLAG_COMBAT_TOGGLED)
+#define COMBAT_FLAGS_STAMSYSTEM_EXEMPT			(COMBAT_FLAG_SPRINT_ACTIVE | COMBAT_FLAG_COMBAT_ACTIVE | COMBAT_FLAG_SPRINT_TOGGLED | COMBAT_FLAG_COMBAT_TOGGLED | COMBAT_FLAG_SPRINT_FORCED | COMBAT_FLAG_COMBAT_FORCED)
 /// Default combat flags for those only affected by sprint (so just silicons)
-#define COMBAT_FLAGS_STAMEXEMPT_YESSPRINT		(COMBAT_FLAG_COMBAT_ACTIVE | COMBAT_FLAG_COMBAT_TOGGLED)
+#define COMBAT_FLAGS_STAMEXEMPT_YESSPRINT		(COMBAT_FLAG_COMBAT_ACTIVE | COMBAT_FLAG_COMBAT_TOGGLED | COMBAT_FLAG_COMBAT_FORCED)
 
 /// The user wants combat mode on
 #define COMBAT_FLAG_COMBAT_TOGGLED			(1<<0)
@@ -57,6 +57,10 @@
 #define COMBAT_FLAG_INTENTIONALLY_RESTING	(1<<7)
 /// Currently stamcritted but not as violently
 #define COMBAT_FLAG_SOFT_STAMCRIT			(1<<8)
+/// Force combat mode on at all times, overrides everything including combat disable traits.
+#define COMBAT_FLAG_COMBAT_FORCED			(1<<9)
+/// Force sprint mode on at all times, overrides everything including sprint disable traits.
+#define COMBAT_FLAG_SPRINT_FORCED			(1<<10)
 
 // Helpers for getting someone's stamcrit state. Cast to living.
 #define NOT_STAMCRIT 0
@@ -110,9 +114,6 @@
 #define GRAB_AGGRESSIVE				1
 #define GRAB_NECK					2
 #define GRAB_KILL					3
-
-//slowdown when in softcrit
-#define SOFTCRIT_ADD_SLOWDOWN 6
 
 /// Attack types for check_block()/run_block(). Flags, combinable.
 /// Attack was melee, whether or not armed.
@@ -251,13 +252,32 @@ GLOBAL_LIST_INIT(shove_disarming_types, typecacheof(list(
 #define TOTAL_MASS_MEDIEVAL_WEAPON	3.6 //very, very generic average sword/warpick/etc. weight in pounds.
 #define TOTAL_MASS_TOY_SWORD 1.5
 
+//stamina cost defines.
+#define STAM_COST_ATTACK_OBJ_MULT	1.2
+#define STAM_COST_ATTACK_MOB_MULT	0.8
+#define STAM_COST_BATON_MOB_MULT	1
+#define STAM_COST_NO_COMBAT_MULT	1.25
+#define STAM_COST_W_CLASS_MULT		1.25
+#define STAM_COST_THROW_MULT		2
+
+
 //bullet_act() return values
 #define BULLET_ACT_HIT				"HIT"		//It's a successful hit, whatever that means in the context of the thing it's hitting.
 #define BULLET_ACT_BLOCK			"BLOCK"		//It's a blocked hit, whatever that means in the context of the thing it's hitting.
 #define BULLET_ACT_FORCE_PIERCE		"PIERCE"	//It pierces through the object regardless of the bullet being piercing by default.
 #define BULLET_ACT_TURF				"TURF"		//It hit us but it should hit something on the same turf too. Usually used for turfs.
 
-/// Bitflags for check_block() and handle_block(). Meant to be combined. You can be hit and still reflect, for example, if you do not use BLOCK_SUCCESS.
+/// Check whether or not we can block, without "triggering" a block. Basically run checks without effects like depleting shields.
+/// Wrapper for do_run_block(). The arguments on that means the same as for this.
+#define mob_check_block(object, damage, attack_text, attack_type, armour_penetration, attacker, def_zone, return_list)\
+	do_run_block(FALSE, object, damage, attack_text, attack_type, armour_penetration, attacker, check_zone(def_zone), return_list)
+
+/// Runs a block "sequence", effectively checking and then doing effects if necessary.
+/// Wrapper for do_run_block(). The arguments on that means the same as for this.
+#define mob_run_block(object, damage, attack_text, attack_type, armour_penetration, attacker, def_zone, return_list)\
+	do_run_block(TRUE, object, damage, attack_text, attack_type, armour_penetration, attacker, check_zone(def_zone), return_list)
+
+/// Bitflags for check_block() and run_block(). Meant to be combined. You can be hit and still reflect, for example, if you do not use BLOCK_SUCCESS.
 /// Attack was not blocked
 #define BLOCK_NONE						NONE
 /// Attack was blocked, do not do damage. THIS FLAG MUST BE THERE FOR DAMAGE/EFFECT PREVENTION!
@@ -302,8 +322,8 @@ GLOBAL_LIST_INIT(shove_disarming_types, typecacheof(list(
 
 /// Block priorities
 #define BLOCK_PRIORITY_HELD_ITEM				100
-#define BLOCK_PRIORITY_CLOTHING					50
 #define BLOCK_PRIORITY_WEAR_SUIT				75
+#define BLOCK_PRIORITY_CLOTHING					50
 #define BLOCK_PRIORITY_UNIFORM					25
 
 #define BLOCK_PRIORITY_DEFAULT BLOCK_PRIORITY_HELD_ITEM

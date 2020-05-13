@@ -434,6 +434,7 @@
 		mind.transfer_to(new_xeno)
 	else
 		transfer_ckey(new_xeno)
+	update_atom_languages()
 
 	to_chat(new_xeno, "<B>You are now an alien.</B>")
 	. = new_xeno

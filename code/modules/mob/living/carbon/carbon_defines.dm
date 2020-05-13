@@ -63,6 +63,7 @@
 	var/damageoverlaytemp = 0
 
 	var/drunkenness = 0 //Overall drunkenness - check handle_alcohol() in life.dm for effects
+	var/tackling = FALSE //Whether or not we are tackling, this will prevent the knock into effects for carbons
 
 	/// Protection (insulation) from the heat, Value 0-1 corresponding to the percentage of protection
 	var/heat_protection = 0 // No heat protection

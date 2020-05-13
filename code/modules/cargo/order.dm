@@ -66,12 +66,9 @@
 	P.info += "Item: [pack.name]<br/>"
 	P.info += "Contents: <br/>"
 	P.info += "<ul>"
-	for(var/atom/movable/AM in C.contents - P)
-		if((P.errors & MANIFEST_ERROR_CONTENTS))
-			if(prob(50))
-				P.info += "<li>[AM.name]</li>"
-			else
-				continue
+	for(var/atom/movable/AM in C.contents - P - C.lockerelectronics)
+		if((P.errors & MANIFEST_ERROR_CONTENTS) && prob(50))
+			continue
 		P.info += "<li>[AM.name]</li>"
 	P.info += "</ul>"
 	P.info += "<h4>Stamp below to confirm receipt of goods:</h4>"

@@ -1,7 +1,10 @@
-// This file has a weird name, but it's for anything related to the checks for shields, blocking, dodging, and similar "stop this attack before it actually impacts the target" as opposed to "defend once it has hit".
+// This file has a weird name, but it's for anything related to the checks for shields, blocking, dodging,
+// and similar "stop this attack before it actually impacts the target" as opposed to "defend once it has hit".
 
 /*
-/// Bitflags for check_block() and handle_block(). Meant to be combined. You can be hit and still reflect, for example, if you do not use BLOCK_SUCCESS.
+/// You can find the mob_check_block() and mob_run_block() macros in __DEFINES/combat.dm
+
+/// Bitflags for check_block() and run_block(). Meant to be combined. You can be hit and still reflect, for example, if you do not use BLOCK_SUCCESS.
 /// Attack was not blocked
 #define BLOCK_NONE						NONE
 /// Attack was blocked, do not do damage. THIS FLAG MUST BE THERE FOR DAMAGE/EFFECT PREVENTION!
@@ -22,14 +25,6 @@
 /// Attack outright missed because the target dodged. Should usually be combined with SHOULD_PASSTHROUGH or something (see martial arts)
 #define BLOCK_TARGET_DODGED				(1<<7)
 */
-
-///Check whether or not we can block, without "triggering" a block. Basically run checks without effects like depleting shields. Wrapper for do_run_block(). The arguments on that means the same as for this.
-/mob/living/proc/check_block(atom/object, damage, attack_text = "the attack", attack_type, armour_penetration, mob/attacker, def_zone, list/return_list)
-	return do_run_block(FALSE, object, damage, attack_text, attack_type, armour_penetration, attacker, check_zone(def_zone), return_list)
-
-/// Runs a block "sequence", effectively checking and then doing effects if necessary. Wrapper for do_run_block(). The arguments on that means the same as for this.
-/mob/living/proc/run_block(atom/object, damage, attack_text = "the attack", attack_type, armour_penetration, mob/attacker, def_zone, list/return_list)
-	return do_run_block(TRUE, object, damage, attack_text, attack_type, armour_penetration, attacker, check_zone(def_zone), return_list)
 
 /** The actual proc for block checks. DO NOT USE THIS DIRECTLY UNLESS YOU HAVE VERY GOOD REASON TO. To reduce copypaste for differences between handling for real attacks and virtual checks.
   * Automatically checks all held items for /obj/item/proc/run_block() with the same parameters.
@@ -57,7 +52,7 @@
 	if(real_attack)
 		for(var/obj/item/I in tocheck)
 			// i don't like this too
-			var/final_block_chance = I.block_chance - (CLAMP((armour_penetration-I.armour_penetration)/2,0,100)) + block_chance_modifier //So armour piercing blades can still be parried by other blades, for example
+			var/final_block_chance = I.block_chance - (clamp((armour_penetration-I.armour_penetration)/2,0,100)) + block_chance_modifier //So armour piercing blades can still be parried by other blades, for example
 			var/results = I.run_block(src, object, damage, attack_text, attack_type, armour_penetration, attacker, def_zone, final_block_chance, return_list)
 			. |= results
 			if((results & BLOCK_SUCCESS) && !(results & BLOCK_CONTINUE_CHAIN))
@@ -65,12 +60,13 @@
 	else
 		for(var/obj/item/I in tocheck)
 			// i don't like this too
-			var/final_block_chance = I.block_chance - (CLAMP((armour_penetration-I.armour_penetration)/2,0,100)) + block_chance_modifier //So armour piercing blades can still be parried by other blades, for example
+			var/final_block_chance = I.block_chance - (clamp((armour_penetration-I.armour_penetration)/2,0,100)) + block_chance_modifier //So armour piercing blades can still be parried by other blades, for example
 			I.check_block(src, object, damage, attack_text, attack_type, armour_penetration, attacker, def_zone, final_block_chance, return_list)
 
 /// Gets an unsortedlist of objects to run block checks on.
 /mob/living/proc/get_blocking_items()
 	. = list()
+	SEND_SIGNAL(src, COMSIG_LIVING_GET_BLOCKING_ITEMS, .)
 	for(var/obj/item/I in held_items)
 		// this is a bad check but i am not removing it until a better catchall is made
 		if(istype(I, /obj/item/clothing))
@@ -85,11 +81,13 @@
 
 /// Runs block and returns flag for do_run_block to process.
 /obj/item/proc/run_block(mob/living/owner, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return)
-	SEND_SIGNAL(src, COMSIG_ITEM_RUN_BLOCK, owner, object, damage, attack_text, attack_type, armour_penetration, attacker, def_zone, final_block_chance, block_return)
+	. = SEND_SIGNAL(src, COMSIG_ITEM_RUN_BLOCK, owner, object, damage, attack_text, attack_type, armour_penetration, attacker, def_zone, final_block_chance, block_return)
+	if(. & BLOCK_SUCCESS)
+		return
 	if(prob(final_block_chance))
 		owner.visible_message("<span class='danger'>[owner] blocks [attack_text] with [src]!</span>")
-		return BLOCK_SUCCESS | BLOCK_PHYSICAL_EXTERNAL
-	return BLOCK_NONE
+		return . | BLOCK_SUCCESS | BLOCK_PHYSICAL_EXTERNAL
+	return . | BLOCK_NONE
 
 /// Returns block information using list/block_return. Used for check_block() on mobs.
 /obj/item/proc/check_block(mob/living/owner, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return)

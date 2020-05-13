@@ -52,6 +52,7 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 	inverse_chem_val 		= 0.5
 	inverse_chem		= /datum/reagent/impure/SDZF
 	can_synth = TRUE
+	value = REAGENT_VALUE_RARE
 
 
 //Main SDGF chemical
@@ -109,7 +110,7 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 
 				to_chat(M, "<span class='warning'>You feel a strange sensation building in your mind as you realise there's two of you, before you get a chance to think about it, you suddenly split from your old body, and find yourself face to face with yourself.</span>")
 				M.visible_message("[M] suddenly shudders, and splits into two identical twins!")
-				SM.copy_known_languages_from(M, FALSE)
+				SM.copy_languages(M, LANGUAGE_MIND)
 				playerClone =  TRUE
 				M.next_move_modifier = 1
 				M.nutrition -= 500
@@ -309,6 +310,7 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 	can_synth = TRUE
 	taste_description = "a weird chemical fleshy flavour"
 	chemical_flags = REAGENT_SNEAKYNAME
+	value = REAGENT_VALUE_RARE
 
 /datum/reagent/impure/SDZF/on_mob_life(mob/living/carbon/M) //If you're bad at fermichem, turns your clone into a zombie instead.
 	switch(current_cycle)//Pretends to be normal

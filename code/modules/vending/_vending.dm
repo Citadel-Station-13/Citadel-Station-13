@@ -120,6 +120,8 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 	var/scan_id = TRUE
 	///Coins that we accept?
 	var/obj/item/coin/coin
+	///Bills that we accept?
+	var/obj/item/stack/spacecash/bill
 	///Default price of items if not overridden
   	/**
 	  * Is this item on station or not
@@ -182,6 +184,7 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 /obj/machinery/vending/Destroy()
 	QDEL_NULL(wires)
 	QDEL_NULL(coin)
+	QDEL_NULL(bill)
 	return ..()
 
 /obj/machinery/vending/can_speak()
@@ -376,12 +379,32 @@ GLOBAL_LIST_EMPTY(vending_products)
 		if(coin)
 			to_chat(user, "<span class='warning'>[src] already has [coin] inserted</span>")
 			return
+		if(bill)
+			to_chat(user, "<span class='warning'>[src] already has [bill] inserted</span>")
+			return
 		if(!premium.len)
 			to_chat(user, "<span class='warning'>[src] doesn't have a coin slot.</span>")
 			return
 		if(!user.transferItemToLoc(I, src))
 			return
 		coin = I
+		to_chat(user, "<span class='notice'>You insert [I] into [src].</span>")
+		return
+	else if(istype(I, /obj/item/stack/spacecash))
+		if(coin)
+			to_chat(user, "<span class='warning'>[src] already has [coin] inserted</span>")
+			return
+		if(bill)
+			to_chat(user, "<span class='warning'>[src] already has [bill] inserted</span>")
+			return
+		if(!premium.len)
+			to_chat(user, "<span class='warning'>[src] doesn't have a bill slot.</span>")
+			return
+		if(!user.transferItemToLoc(I, src))
+			return
+		var/obj/item/stack/S = I
+		S.use(1)
+		bill = new S.type(src, 1)
 		to_chat(user, "<span class='notice'>You insert [I] into [src].</span>")
 		return
 	else if(refill_canister && istype(I, refill_canister))
@@ -439,7 +462,7 @@ GLOBAL_LIST_EMPTY(vending_products)
 		vending_machine_input[format_text(I.name)] = 1
 	to_chat(user, "<span class='notice'>You insert [I] into [src]'s input compartment.</span>")
 	loaded_items++
-	
+
 /**
   * Is the passed in user allowed to load this vending machines compartments
   *
@@ -557,6 +580,7 @@ GLOBAL_LIST_EMPTY(vending_products)
 		.["stock"][R.name] = R.amount
 	.["extended_inventory"] = extended_inventory
 	.["coin"] = coin
+	.["bill"] = bill
 
 /obj/machinery/vending/ui_act(action, params)
 	. = ..()
@@ -579,39 +603,37 @@ GLOBAL_LIST_EMPTY(vending_products)
 			if(!R || !istype(R) || !R.product_path)
 				vend_ready = TRUE
 				return
+			if(R.amount <= 0)
+				to_chat(usr, "<span class='warning'>Sold out.</span>")
+				vend_ready = TRUE
+				return
 			if(R in hidden_records)
 				if(!extended_inventory)
 					vend_ready = TRUE
 					return
 			else if(R in coin_records)
-				if(!(coin))
-					to_chat(usr, "<span class='warning'>You need to a coin to get this item!</span>")
+				if(!(coin || bill))
+					to_chat(usr, "<span class='warning'>You need to insert a coin to get this item!</span>")
 					vend_ready = TRUE
 					return
 				if(coin && coin.string_attached)
-					if(!prob(50))
-						to_chat(usr, "<span class='warning'>You weren't able to pull [coin] out fast enough, the machine ate it, string and all!</span>")
-						QDEL_NULL(coin)
-						return
-					if(!usr.CanReach(src))
-						to_chat(usr, "<span class='notice'>You successfully pull [coin] out of [src] to the floor.</span>")
-						coin = null
-						if(!usr.put_in_hands(coin))
+					if(prob(50))
+						if(usr.put_in_hands(coin))
+							to_chat(usr, "<span class='notice'>You successfully pull [coin] out before [src] could swallow it.</span>")
+							coin = null
+						else
 							to_chat(usr, "<span class='warning'>You couldn't pull [coin] out because your hands are full!</span>")
 							QDEL_NULL(coin)
-						to_chat(usr, "<span class='notice'>You successfully pull [coin] out before [src] could swallow it.</span>")
-						coin = null
-				QDEL_NULL(coin)
+					else
+						to_chat(usr, "<span class='warning'>You weren't able to pull [coin] out fast enough, the machine ate it, string and all!</span>")
+						QDEL_NULL(coin)
+				else
+					QDEL_NULL(coin)
+					QDEL_NULL(bill)
 			else if(!(R in product_records))
 				vend_ready = TRUE
 				message_admins("Vending machine exploit attempted by [ADMIN_LOOKUPFLW(usr)]!")
 				return
-			if(R.amount <= 0)
-				to_chat(usr, "<span class='warning'>Sold out.</span>")
-				vend_ready = TRUE
-				return
-			else
-				R.amount--
 			if(((last_reply + 200) <= world.time) && vend_reply)
 				speak(vend_reply)
 				last_reply = world.time
@@ -623,8 +645,7 @@ GLOBAL_LIST_EMPTY(vending_products)
 				to_chat(usr, "<span class='notice'>You take [R.name] out of the slot.</span>")
 			else
 				to_chat(usr, "<span class='warning'>[capitalize(R.name)] falls onto the floor!</span>")
-
-				
+			R.amount--
 			SSblackbox.record_feedback("nested tally", "vending_machine_usage", 1, list("[type]", "[R.product_path]"))
 			vend_ready = TRUE
 			return
@@ -633,11 +654,16 @@ GLOBAL_LIST_EMPTY(vending_products)
 			to_chat(usr, "<span class='notice'>You remove [coin] from [src].</span>")
 			coin = null
 			return
-			
+		if("takeoutbill")
+			usr.put_in_hands(bill)
+			to_chat(usr, "<span class='notice'>You remove [bill] from [src].</span>")
+			bill = null
+			return
+
 		if("togglevoice")
 			if(panel_open)
 				shut_up = !shut_up
-				
+
 /obj/machinery/vending/process()
 	if(stat & (BROKEN|NOPOWER))
 		return PROCESS_KILL

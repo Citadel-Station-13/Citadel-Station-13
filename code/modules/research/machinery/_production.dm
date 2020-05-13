@@ -3,7 +3,8 @@
 	desc = "Makes researched and prototype items with materials and energy."
 	layer = BELOW_OBJ_LAYER
 	var/consoleless_interface = TRUE			//Whether it can be used without a console.
-	var/efficiency_coeff = 1				//Materials needed / coeff = actual.
+	var/offstation_security_levels = TRUE
+	var/print_cost_coeff = 1				//Materials needed * coeff = actual.
 	var/list/categories = list()
 	var/datum/component/remote_materials/materials
 	var/allowed_department_flags = ALL
@@ -60,7 +61,8 @@
 	popup.open()
 
 /obj/machinery/rnd/production/proc/calculate_efficiency()
-	efficiency_coeff = 1
+	var/total_manip_rating = 0
+	var/manips = 0
 	if(reagents)		//If reagents/materials aren't initialized, don't bother, we'll be doing this again after reagents init anyways.
 		reagents.maximum_volume = 0
 		for(var/obj/item/reagent_containers/glass/G in component_parts)
@@ -71,17 +73,16 @@
 		for(var/obj/item/stock_parts/matter_bin/M in component_parts)
 			total_storage += M.rating * 75000
 		materials.set_local_size(total_storage)
-	var/total_rating = 0
 	for(var/obj/item/stock_parts/manipulator/M in component_parts)
-		total_rating += M.rating
-	total_rating = max(1, total_rating)
-	efficiency_coeff = total_rating
+		total_manip_rating += M.rating
+		manips++
+	print_cost_coeff = STANDARD_PART_LEVEL_LATHE_COEFFICIENT(total_manip_rating / (manips? manips : 1))
 
 /obj/machinery/rnd/production/examine(mob/user)
 	. = ..()
 	var/datum/component/remote_materials/materials = GetComponent(/datum/component/remote_materials)
 	if(in_range(user, src) || isobserver(user))
-		. += "<span class='notice'>The status display reads: Storing up to <b>[materials.local_size]</b> material units locally.<br>Material usage efficiency at <b>[efficiency_coeff*100]%</b>.</span>"
+		. += "<span class='notice'>The status display reads: Storing up to <b>[materials.local_size]</b> material units locally.<br>Material usage cost at <b>[print_cost_coeff*100]%</b>.</span>"
 
 //we eject the materials upon deconstruction.
 /obj/machinery/rnd/production/on_deconstruction()
@@ -94,10 +95,9 @@
 		message_admins("[ADMIN_LOOKUPFLW(user)] has built [amount] of [path] at a [src]([type]).")
 	for(var/i in 1 to amount)
 		var/obj/O = new path(get_turf(src))
-		if(efficient_with(O.type) && isitem(O))
-			var/obj/item/I = O
-			I.material_flags |= MATERIAL_NO_EFFECTS //Find a better way to do this.
-			I.set_custom_materials(matlist.Copy())
+		if(efficient_with(O.type))
+			O.set_custom_materials(matlist.Copy())
+			O.rnd_crafted(src)
 	SSblackbox.record_feedback("nested tally", "item_printed", amount, list("[type]", "[path]"))
 	investigate_log("[key_name(user)] built [amount] of [path] at [src]([type]).", INVESTIGATE_RESEARCH)
 
@@ -112,8 +112,8 @@
 
 	// these types don't have their .materials set in do_print, so don't allow
 	// them to be constructed efficiently
-	var/ef = efficient_with(being_built.build_path) ? efficiency_coeff : 1
-	return round(A / max(1, all_materials[mat] / ef))
+	var/ef = efficient_with(being_built.build_path) ? print_cost_coeff : 1
+	return round(A / max(1, all_materials[mat] * ef))
 
 /obj/machinery/rnd/production/proc/efficient_with(path)
 	return !ispath(path, /obj/item/stack/sheet) && !ispath(path, /obj/item/stack/ore/bluespace_crystal)
@@ -134,6 +134,12 @@
 	if(D.build_type && !(D.build_type & allowed_buildtypes))
 		say("This machine does not have the necessary manipulation systems for this design. Please contact Nanotrasen Support!")
 		return FALSE
+	if(!(obj_flags & EMAGGED) && (offstation_security_levels || is_station_level(z)))
+		if(GLOB.security_level < D.min_security_level)
+			say("Minimum security alert level required to print this design not met, please contact the command staff.")
+			return FALSE
+		if(GLOB.security_level > D.max_security_level)
+			say("Exceeded maximum security alert level required to print this design, please contact the command staff.")
 	if(!materials.mat_container)
 		say("No connection to material storage, please contact the quartermaster.")
 		return FALSE
@@ -141,32 +147,32 @@
 		say("Mineral access is on hold, please contact the quartermaster.")
 		return FALSE
 	var/power = 1000
-	amount = CLAMP(amount, 1, 50)
+	amount = clamp(amount, 1, 50)
 	for(var/M in D.materials)
 		power += round(D.materials[M] * amount / 35)
 	power = min(3000, power)
 	use_power(power)
-	var/coeff = efficient_with(D.build_path) ? efficiency_coeff : 1
+	var/coeff = efficient_with(D.build_path) ? print_cost_coeff : 1
 	var/list/efficient_mats = list()
 	for(var/MAT in D.materials)
-		efficient_mats[MAT] = D.materials[MAT]/coeff
+		efficient_mats[MAT] = D.materials[MAT] * coeff
 	if(!materials.mat_container.has_materials(efficient_mats, amount))
 		say("Not enough materials to complete prototype[amount > 1? "s" : ""].")
 		return FALSE
 	for(var/R in D.reagents_list)
-		if(!reagents.has_reagent(R, D.reagents_list[R]*amount/coeff))
+		if(!reagents.has_reagent(R, D.reagents_list[R] * amount * coeff))
 			say("Not enough reagents to complete prototype[amount > 1? "s" : ""].")
 			return FALSE
 	materials.mat_container.use_materials(efficient_mats, amount)
 	materials.silo_log(src, "built", -amount, "[D.name]", efficient_mats)
 	for(var/R in D.reagents_list)
-		reagents.remove_reagent(R, D.reagents_list[R]*amount/coeff)
+		reagents.remove_reagent(R, D.reagents_list[R] * amount * coeff)
 	busy = TRUE
 	if(production_animation)
 		flick(production_animation, src)
-	var/timecoeff = D.lathe_time_factor / efficiency_coeff
-	addtimer(CALLBACK(src, .proc/reset_busy), (30 * timecoeff * amount) ** 0.5)
-	addtimer(CALLBACK(src, .proc/do_print, D.build_path, amount, efficient_mats, D.dangerous_construction, usr), (32 * timecoeff * amount) ** 0.8)
+	var/timecoeff = D.lathe_time_factor * print_cost_coeff
+	addtimer(CALLBACK(src, .proc/reset_busy), (20 * timecoeff * amount) ** 0.5)
+	addtimer(CALLBACK(src, .proc/do_print, D.build_path, amount, efficient_mats, D.dangerous_construction, usr), (20 * timecoeff * amount) ** 0.5)
 	return TRUE
 
 /obj/machinery/rnd/production/proc/search(string)
@@ -241,7 +247,7 @@
 
 /obj/machinery/rnd/production/proc/ui_screen_search()
 	var/list/l = list()
-	var/coeff = efficiency_coeff
+	var/coeff = print_cost_coeff
 	l += "<h2>Search Results:</h2>"
 	l += "<form name='search' action='?src=[REF(src)]'>\
 	<input type='hidden' name='src' value='[REF(src)]'>\
@@ -258,7 +264,7 @@
 	if(!istype(D))
 		return
 	if(!coeff)
-		coeff = efficiency_coeff
+		coeff = print_cost_coeff
 	if(!efficient_with(D.build_path))
 		coeff = 1
 	var/list/l = list()
@@ -270,20 +276,31 @@
 		t = check_mat(D, M)
 		temp_material += " | "
 		if (t < 1)
-			temp_material += "<span class='bad'>[all_materials[M]/coeff] [CallMaterialName(M)]</span>"
+			temp_material += "<span class='bad'>[all_materials[M] * coeff] [CallMaterialName(M)]</span>"
 		else
-			temp_material += " [all_materials[M]/coeff] [CallMaterialName(M)]"
+			temp_material += " [all_materials[M] * coeff] [CallMaterialName(M)]"
 		c = min(c,t)
 
-	if (c >= 1)
+	var/clearance = !(obj_flags & EMAGGED) && (offstation_security_levels || is_station_level(z))
+	var/sec_text = ""
+	if(clearance && (D.min_security_level > SEC_LEVEL_GREEN || D.max_security_level < SEC_LEVEL_DELTA))
+		sec_text = " (Allowed security levels: "
+		for(var/n in D.min_security_level to D.max_security_level)
+			sec_text += NUM2SECLEVEL(n)
+			if(n + 1 <= D.max_security_level)
+				sec_text += ", "
+		sec_text += ")"
+
+	clearance = !clearance || ISINRANGE(GLOB.security_level, D.min_security_level, D.max_security_level)
+	if (c >= 1 && clearance)
 		l += "<A href='?src=[REF(src)];build=[D.id];amount=1'>[D.name]</A>[RDSCREEN_NOBREAK]"
 		if(c >= 5)
 			l += "<A href='?src=[REF(src)];build=[D.id];amount=5'>x5</A>[RDSCREEN_NOBREAK]"
 		if(c >= 10)
 			l += "<A href='?src=[REF(src)];build=[D.id];amount=10'>x10</A>[RDSCREEN_NOBREAK]"
-		l += "[temp_material][RDSCREEN_NOBREAK]"
+		l += "[temp_material][sec_text][RDSCREEN_NOBREAK]"
 	else
-		l += "<span class='linkOff'>[D.name]</span>[temp_material][RDSCREEN_NOBREAK]"
+		l += "<span class='linkOff'>[D.name]</span>[temp_material][sec_text][RDSCREEN_NOBREAK]"
 	l += ""
 	return l
 
@@ -349,7 +366,7 @@
 		return ui_screen_main()
 	var/list/l = list()
 	l += "<div class='statusDisplay'><h3>Browsing [selected_category]:</h3>"
-	var/coeff = efficiency_coeff
+	var/coeff = print_cost_coeff
 	for(var/v in stored_research.researched_designs)
 		var/datum/design/D = SSresearch.techweb_design_by_id(v)
 		if(!(selected_category in D.category)|| !(D.build_type & allowed_buildtypes))

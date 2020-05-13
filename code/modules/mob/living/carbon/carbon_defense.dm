@@ -9,7 +9,7 @@
 	if(istype(src.glasses, /obj/item/clothing/glasses))		//glasses
 		var/obj/item/clothing/glasses/GFP = src.glasses
 		number += GFP.flash_protect
- 
+
 	if(istype(src.wear_mask, /obj/item/clothing/mask))		//mask
 		var/obj/item/clothing/mask/MFP = src.wear_mask
 		number += MFP.flash_protect
@@ -77,24 +77,22 @@
 	SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "embedded", /datum/mood_event/embedded)
 
 /mob/living/carbon/attacked_by(obj/item/I, mob/living/user)
-	//CIT CHANGES START HERE - combatmode and resting checks
-	var/totitemdamage = I.force
+	var/totitemdamage = pre_attacked_by(I, user)
 	if(!(user.combat_flags & COMBAT_FLAG_COMBAT_ACTIVE))
 		totitemdamage *= 0.5
 	if(!CHECK_MOBILITY(user, MOBILITY_STAND))
 		totitemdamage *= 0.5
 	if(!(combat_flags & COMBAT_FLAG_COMBAT_ACTIVE))
 		totitemdamage *= 1.5
-	//CIT CHANGES END HERE
 	var/impacting_zone = (user == src)? check_zone(user.zone_selected) : ran_zone(user.zone_selected)
-	if((user != src) && (run_block(I, totitemdamage, "the [I]", ATTACK_TYPE_MELEE, I.armour_penetration, user, impacting_zone) & BLOCK_SUCCESS))
+	if((user != src) && (mob_run_block(I, totitemdamage, "the [I]", ATTACK_TYPE_MELEE, I.armour_penetration, user, impacting_zone, null) & BLOCK_SUCCESS))
 		return FALSE
 	var/obj/item/bodypart/affecting = get_bodypart(impacting_zone)
 	if(!affecting) //missing limb? we select the first bodypart (you can never have zero, because of chest)
 		affecting = bodyparts[1]
 	SEND_SIGNAL(I, COMSIG_ITEM_ATTACK_ZONE, src, user, affecting)
 	send_item_attack_message(I, user, affecting.name)
-	I.do_stagger_action(src, user)
+	I.do_stagger_action(src, user, totitemdamage)
 	if(I.force)
 		apply_damage(totitemdamage, I.damtype, affecting) //CIT CHANGE - replaces I.force with totitemdamage
 		if(I.damtype == BRUTE && affecting.status == BODYPART_ORGANIC)
@@ -275,7 +273,7 @@
 
 	if(health >= 0 && !(HAS_TRAIT(src, TRAIT_FAKEDEATH)))
 		var/friendly_check = FALSE
-		if(run_block(M, 0, M.name, ATTACK_TYPE_UNARMED))
+		if(mob_run_block(M, 0, M.name, ATTACK_TYPE_UNARMED, 0, null, null, null))
 			return
 		if(lying)
 			if(buckled)

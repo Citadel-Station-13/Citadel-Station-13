@@ -97,8 +97,7 @@
 		to_chat(user, "<span class='notice'>You add [A] to the [initial(name)] assembly.</span>")
 
 	else if(stage == EMPTY && istype(I, /obj/item/stack/cable_coil))
-		var/obj/item/stack/cable_coil/C = I
-		if (C.use(1))
+		if (I.use_tool(src, user, 0, 1, max_level = JOB_SKILL_BASIC))
 			det_time = 50 // In case the cable_coil was removed and readded.
 			stage_change(WIRED)
 			to_chat(user, "<span class='notice'>You rig the [initial(name)] assembly.</span>")

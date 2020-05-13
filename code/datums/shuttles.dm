@@ -23,14 +23,14 @@
 	mappath = "[prefix][shuttle_id].dmm"
 	. = ..()
 
-/datum/map_template/shuttle/preload_size(path, cache)
+/datum/map_template/shuttle/preload_size(path = mappath, force_cache = FALSE)
 	. = ..(path, TRUE) // Done this way because we still want to know if someone actualy wanted to cache the map
 	if(!cached_map)
 		return
 
 	discover_port_offset()
 
-	if(!cache)
+	if(!cached_map)
 		cached_map = null
 
 /datum/map_template/shuttle/proc/discover_port_offset()
@@ -53,12 +53,11 @@
 				++xcrd
 			--ycrd
 
-/datum/map_template/shuttle/load(turf/T, centered, register=TRUE)
+/datum/map_template/shuttle/load(turf/T, centered = FALSE, orientation = SOUTH, annihilate = default_annihilate, force_cache = FALSE, rotate_placement_to_orientation = FALSE, register = TRUE)
 	. = ..()
 	if(!.)
 		return
-	var/list/turfs = block(	locate(.[MAP_MINX], .[MAP_MINY], .[MAP_MINZ]),
-							locate(.[MAP_MAXX], .[MAP_MAXY], .[MAP_MAXZ]))
+	var/list/turfs = get_last_loaded_turf_block()
 	for(var/i in 1 to turfs.len)
 		var/turf/place = turfs[i]
 		if(istype(place, /turf/open/space)) // This assumes all shuttles are loaded in a single spot then moved to their real destination.

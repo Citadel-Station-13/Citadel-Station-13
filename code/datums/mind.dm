@@ -63,7 +63,11 @@
 	var/force_escaped = FALSE  // Set by Into The Sunset command of the shuttle manipulator
 	var/list/learned_recipes //List of learned recipe TYPES.
 
+	/// Our skill holder.
+	var/datum/skill_holder/skill_holder
+
 /datum/mind/New(var/key)
+	skill_holder = new(src)
 	src.key = key
 	soulOwner = src
 	martial_art = default_martial_art
@@ -76,12 +80,12 @@
 			if(antag_datum.delete_on_mind_deletion)
 				qdel(i)
 		antag_datums = null
+	QDEL_NULL(skill_holder)
 	return ..()
 
 /datum/mind/proc/get_language_holder()
 	if(!language_holder)
-		var/datum/language_holder/L = current.get_language_holder(shadow=FALSE)
-		language_holder = L.copy(src)
+		language_holder = new (src)
 
 	return language_holder
 
@@ -96,9 +100,6 @@
 		if(iscarbon(current))
 			var/mob/living/carbon/C = current
 			C.disable_intentional_combat_mode(TRUE)
-	if(!language_holder)
-		var/datum/language_holder/mob_holder = new_character.get_language_holder(shadow = FALSE)
-		language_holder = mob_holder.copy(src)
 
 	if(key)
 		if(new_character.key != key)					//if we're transferring into a body with a key associated which is not ours
@@ -126,6 +127,7 @@
 	transfer_martial_arts(new_character)
 	if(active || force_key_move)
 		new_character.key = key		//now transfer the key to link the client to our new body
+	current.update_atom_languages()
 
 //CIT CHANGE - makes arousal update when transfering bodies
 	if(isliving(new_character)) //New humans and such are by default enabled arousal. Let's always use the new mind's prefs.

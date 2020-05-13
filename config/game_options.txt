@@ -139,6 +139,20 @@ MIDROUND_ANTAG CHANGELING
 MIDROUND_ANTAG WIZARD
 #MIDROUND_ANTAG  MONKEY
 
+## Toggles for whether this mode should force antags even if not enough players have it enabled.
+## If it's off, it just won't roll as many antags.
+#FORCE_ANTAG_COUNT TRAITOR
+#FORCE_ANTAG_COUNT TRAITORBRO
+#FORCE_ANTAG_COUNT TRAITORCHAN
+#FORCE_ANTAG_COUNT INTERNAL_AFFAIRS
+FORCE_ANTAG_COUNT  NUCLEAR
+FORCE_ANTAG_COUNT  REVOLUTION
+FORCE_ANTAG_COUNT CULT
+FORCE_ANTAG_COUNT CLOCKWORK_CULT
+#FORCE_ANTAG_COUNT CHANGELING
+#FORCE_ANTAG_COUNT WIZARD
+#FORCE_ANTAG_COUNT  MONKEY
+
 ## Uncomment these for overrides of the minimum / maximum number of players in a round type.
 ## If you set any of these occasionally check to see if you still need them as the modes
 ## will still be actively rebalanced around the SUGGESTED populations, not your overrides.
@@ -287,6 +301,9 @@ MINIMUM_SECBORG_ALERT 3
 
 ## Uncomment to load one of the missions from awaymissionconfig.txt at roundstart.
 #ROUNDSTART_AWAY
+
+## Uncomment to load one of the virtual reality levels from vr_config at roundstart.
+#ROUNDSTART_VR
 
 ## How long the delay is before the Away Mission gate opens. Default is half an hour.
 ## 600 is one minute.
@@ -529,7 +546,10 @@ BOMBCAP 20
 ## of ruins.
 LAVALAND_BUDGET 60
 
-## Space Ruin Budged
+## Ice Moon Budget
+ICEMOON_BUDGET 90
+
+## Space Ruin Budget
 Space_Budget 16
 
 ## Station Ruin Budget

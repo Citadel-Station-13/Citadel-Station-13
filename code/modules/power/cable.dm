@@ -91,6 +91,21 @@ By design, d1 is the smallest direction and d2 is the highest
 		d1 = _d1
 		d2 = _d2
 
+	if(dir != SOUTH)
+		var/angle_to_turn = dir2angle(dir)
+		if(angle_to_turn == 0 || angle_to_turn == 180)
+			angle_to_turn += 180
+		// direct dir set instead of setDir intentional
+		dir = SOUTH
+		if(d1)
+			d1 = turn(d1, angle_to_turn)
+		if(d2)
+			d2 = turn(d2, angle_to_turn)
+		if(d1 > d2)
+			var/temp = d2
+			d2 = d1
+			d1 = temp
+
 	var/turf/T = get_turf(src)			// hide if turf is not intact
 	if(level==1)
 		hide(T.intact)
@@ -217,7 +232,7 @@ By design, d1 is the smallest direction and d2 is the highest
 
 /obj/structure/cable/proc/surplus()
 	if(powernet)
-		return CLAMP(powernet.avail-powernet.load, 0, powernet.avail)
+		return clamp(powernet.avail-powernet.load, 0, powernet.avail)
 	else
 		return 0
 
@@ -233,7 +248,7 @@ By design, d1 is the smallest direction and d2 is the highest
 
 /obj/structure/cable/proc/delayed_surplus()
 	if(powernet)
-		return CLAMP(powernet.newavail - powernet.delayedload, 0, powernet.newavail)
+		return clamp(powernet.newavail - powernet.delayedload, 0, powernet.newavail)
 	else
 		return 0
 
@@ -495,6 +510,7 @@ By design, d1 is the smallest direction and d2 is the highest
 	full_w_class = WEIGHT_CLASS_SMALL
 	grind_results = list(/datum/reagent/copper = 2) //2 copper per cable in the coil
 	usesound = 'sound/items/deconstruct.ogg'
+	used_skills = list(/datum/skill/level/job/wiring)
 
 /obj/item/stack/cable_coil/cyborg
 	is_cyborg = 1
@@ -533,7 +549,7 @@ By design, d1 is the smallest direction and d2 is the highest
 	if(affecting && affecting.status == BODYPART_ROBOTIC)
 		if(user == H)
 			user.visible_message("<span class='notice'>[user] starts to fix some of the wires in [H]'s [affecting.name].</span>", "<span class='notice'>You start fixing some of the wires in [H]'s [affecting.name].</span>")
-			if(!do_after(user, H, 50))
+			if(!do_mob(user, H, 50))
 				return
 		if(item_heal_robotic(H, user, 0, 15))
 			use(1)
@@ -565,7 +581,7 @@ By design, d1 is the smallest direction and d2 is the highest
 		return
 	var/obj/item/restraints/handcuffs/cable/result = new(get_turf(user))
 	user.put_in_hands(result)
-	result.color = color 
+	result.color = color
 	to_chat(user, "<span class='notice'>You make some restraints out of cable</span>")
 
 //add cables to the stack
@@ -575,8 +591,6 @@ By design, d1 is the smallest direction and d2 is the highest
 	else
 		amount += extra
 	update_icon()
-
-
 
 ///////////////////////////////////////////////
 // Cable laying procedures
@@ -848,4 +862,4 @@ By design, d1 is the smallest direction and d2 is the highest
 	. = ..()
 	var/list/cable_colors = GLOB.cable_colors
 	color = pick(cable_colors)
-	
+

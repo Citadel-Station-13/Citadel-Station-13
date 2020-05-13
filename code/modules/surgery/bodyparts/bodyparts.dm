@@ -164,8 +164,8 @@
 		return FALSE
 
 	switch(animal_origin)
-		if(ALIEN_BODYPART,LARVA_BODYPART) //aliens take double burn //nothing can burn with so much snowflake code around
-			burn *= 2
+		if(ALIEN_BODYPART,LARVA_BODYPART) //aliens take some additional burn //nothing can burn with so much snowflake code around
+			burn *= 1.2
 
 	var/can_inflict = max_damage - get_damage()
 	if(can_inflict <= 0)
@@ -183,7 +183,7 @@
 	//We've dealt the physical damages, if there's room lets apply the stamina damage.
 	var/current_damage = get_damage(TRUE)		//This time around, count stamina loss too.
 	var/available_damage = max_damage - current_damage
-	stamina_dam += round(CLAMP(stamina, 0, min(max_stamina_damage - stamina_dam, available_damage)), DAMAGE_PRECISION)
+	stamina_dam += round(clamp(stamina, 0, min(max_stamina_damage - stamina_dam, available_damage)), DAMAGE_PRECISION)
 
 	if(disabled && stamina > 10)
 		incoming_stam_mult = max(0.01, incoming_stam_mult/(stamina*0.1))

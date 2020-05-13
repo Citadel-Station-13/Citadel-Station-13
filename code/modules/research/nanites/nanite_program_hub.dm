@@ -21,7 +21,7 @@
 						list(name = "Augmentation Nanites"),
 						list(name = "Suppression Nanites"),
 						list(name = "Weaponized Nanites"),
-						//list(name = "Protocols") B.E.P.I.S Content, which we dont have
+						list(name = "Protocols") //Moved to default techweb from B.E.P.I.S. research, for now
 						)
 
 /obj/machinery/nanite_program_hub/Initialize()

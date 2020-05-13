@@ -20,6 +20,9 @@
 
 	threat = 1.5
 
+	starting_skills = list(/datum/skill/numerical/surgery = STARTING_SKILL_SURGERY_MEDICAL)
+	skill_affinities = list(/datum/skill/numerical/surgery = STARTING_SKILL_AFFINITY_SURGERY_MEDICAL)
+
 /datum/outfit/job/virologist
 	name = "Virologist"
 	jobtype = /datum/job/virologist

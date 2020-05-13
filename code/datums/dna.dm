@@ -315,7 +315,7 @@
 	unique_enzymes = generate_unique_enzymes()
 	uni_identity = generate_uni_identity()
 	generate_dna_blocks()
-	features = random_features(species?.id)
+	features = random_features(species?.id, holder?.gender)
 
 
 /datum/dna/stored //subtype used by brain mob's stored_dna
@@ -361,6 +361,11 @@
 		var/datum/species/old_species = dna.species
 		dna.species = new_race
 		dna.species.on_species_gain(src, old_species, pref_load)
+		if(ishuman(src))
+			qdel(language_holder)
+			var/species_holder = initial(mrace.species_language_holder)
+			language_holder = new species_holder(src)
+		update_atom_languages()
 
 /mob/living/carbon/human/set_species(datum/species/mrace, icon_update = TRUE, pref_load = FALSE)
 	..()
@@ -675,6 +680,6 @@
 	var/danger = CONFIG_GET(number/threshold_body_size_slowdown)
 	if(features["body_size"] < danger)
 		var/slowdown = 1 + round(danger/features["body_size"], 0.1) * CONFIG_GET(number/body_size_slowdown_multiplier)
-		holder.add_movespeed_modifier(MOVESPEED_ID_SMALL_STRIDE, TRUE, 100, NONE, TRUE, slowdown, ALL, FLOATING|CRAWLING)
+		holder.add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/small_stride, TRUE, slowdown)
 	else if(old_size < danger)
-		holder.remove_movespeed_modifier(MOVESPEED_ID_SMALL_STRIDE)
+		holder.remove_movespeed_modifier(/datum/movespeed_modifier/small_stride)
