@@ -238,7 +238,7 @@
 
 /datum/design/bodybag
 	name = "Body Bag"
-	desc = "A normal body bag used for storge of dead crew."
+	desc = "A normal body bag used for storage of dead crew."
 	id = "bodybag"
 	build_type = PROTOLATHE
 	materials = list(/datum/material/plastic = 4000)
