@@ -77653,7 +77653,6 @@
 	name = "Maintenance Hatch";
 	req_access_txt = "12"
 	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/disposalpipe/segment,
 /obj/effect/turf_decal/stripes/line,
 /obj/effect/turf_decal/stripes/line{
@@ -122036,7 +122035,6 @@
 /turf/closed/wall/r_wall,
 /area/chapel/office)
 "dZO" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/bodycontainer/crematorium{
 	dir = 4;
 	id = "cremawheat"
@@ -127471,6 +127469,17 @@
 	icon_state = "platingdmg2"
 	},
 /area/security/prison)
+"utl" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/structure/cable/white{
+	icon_state = "4-8"
+	},
+/obj/effect/decal/cleanable/blood/splatter,
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden,
+/turf/open/floor/plating,
+/area/maintenance/disposal)
 "uuP" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
@@ -174078,7 +174087,7 @@ aqF
 arf
 asf
 atD
-auM
+utl
 aoF
 aaa
 aaa

@@ -3938,12 +3938,11 @@
 /turf/open/floor/plasteel,
 /area/security/main)
 "ahO" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
-	dir = 4;
-	pixel_y = 5
-	},
 /obj/structure/chair/sofa/left{
 	dir = 1
+	},
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 4
 	},
 /turf/open/floor/plasteel,
 /area/crew_quarters/fitness)
@@ -14109,8 +14108,7 @@
 /area/crew_quarters/dorms)
 "aFk" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
-	dir = 4;
-	pixel_y = 5
+	dir = 4
 	},
 /turf/open/floor/wood,
 /area/crew_quarters/bar)
@@ -14603,11 +14601,10 @@
 /turf/closed/wall,
 /area/crew_quarters/theatre)
 "aGw" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on{
-	dir = 4;
-	pixel_y = 5
-	},
 /obj/machinery/light/small{
+	dir = 4
+	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 4
 	},
 /turf/open/floor/wood,
@@ -15250,10 +15247,6 @@
 /turf/open/floor/plasteel,
 /area/crew_quarters/dorms)
 "aHV" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on{
-	dir = 1;
-	pixel_x = 5
-	},
 /obj/machinery/light/small{
 	dir = 4
 	},
@@ -15266,6 +15259,9 @@
 /obj/item/reagent_containers/rag/towel/random,
 /obj/item/reagent_containers/rag/towel/random,
 /obj/item/reagent_containers/rag/towel/random,
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 1
+	},
 /turf/open/floor/mineral/titanium/blue,
 /area/crew_quarters/toilet)
 "aHY" = (
@@ -19304,15 +19300,16 @@
 	name = "Art Storage";
 	pixel_y = 24
 	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
 /obj/structure/cable{
 	icon_state = "0-8"
 	},
 /obj/structure/cable{
 	icon_state = "4-8"
 	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plating,
 /area/maintenance/port)
 "aSY" = (
@@ -35617,8 +35614,7 @@
 	pixel_y = 3
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
-	dir = 4;
-	pixel_y = 5
+	dir = 4
 	},
 /turf/open/floor/wood,
 /area/crew_quarters/bar)
@@ -55452,11 +55448,10 @@
 /area/engine/engineering)
 "hOv" = (
 /obj/structure/table/wood/fancy,
-/obj/machinery/atmospherics/components/unary/vent_pump/on{
-	dir = 4;
-	pixel_y = 5
-	},
 /obj/item/reagent_containers/food/snacks/burger/plain,
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 4
+	},
 /turf/open/floor/wood,
 /area/crew_quarters/bar)
 "hOI" = (
@@ -55486,8 +55481,8 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 6
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
+	dir = 8
 	},
 /turf/closed/wall,
 /area/quartermaster/warehouse)
@@ -57748,8 +57743,7 @@
 	pixel_y = 20
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
-	dir = 4;
-	pixel_y = 5
+	dir = 4
 	},
 /turf/open/floor/wood,
 /area/crew_quarters/bar)
@@ -58028,6 +58022,10 @@
 /obj/effect/spawner/lootdrop/keg,
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
+"oFT" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/turf/closed/wall,
+/area/storage/art)
 "oHB" = (
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/dorms)
@@ -60500,11 +60498,10 @@
 /turf/closed/wall/r_wall,
 /area/maintenance/disposal/incinerator)
 "uQS" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
-	dir = 1;
-	pixel_x = 5
-	},
 /obj/machinery/light/small,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 1
+	},
 /turf/open/floor/mineral/titanium/blue,
 /area/crew_quarters/toilet)
 "uRd" = (
@@ -82695,7 +82692,7 @@ aPF
 aQZ
 aRa
 aTF
-aPG
+oFT
 aSX
 hPP
 aZF

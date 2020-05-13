@@ -6660,9 +6660,7 @@
 /obj/structure/cable/yellow{
 	icon_state = "2-8"
 	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden,
 /turf/open/floor/plasteel/showroomfloor,
 /area/security/warden)
 "amc" = (
@@ -7778,9 +7776,6 @@
 "aop" = (
 /obj/structure/bed,
 /obj/item/bedsheet,
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 9
-	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
@@ -7791,6 +7786,9 @@
 /obj/effect/turf_decal/tile/red,
 /obj/effect/turf_decal/tile/red{
 	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
+	dir = 4
 	},
 /turf/open/floor/plasteel/white,
 /area/security/brig)
@@ -9147,6 +9145,7 @@
 /area/maintenance/port/fore)
 "aqY" = (
 /obj/machinery/computer/security/labor,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel/dark,
 /area/security/brig)
 "aqZ" = (
@@ -11924,9 +11923,6 @@
 /turf/open/floor/plating,
 /area/maintenance/fore)
 "awC" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on{
-	dir = 1
-	},
 /obj/machinery/light/small{
 	dir = 1
 	},
@@ -14823,12 +14819,18 @@
 /obj/structure/cable/yellow{
 	icon_state = "2-8"
 	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
 /turf/open/floor/plasteel/dark,
 /area/security/brig)
 "aCr" = (
 /obj/machinery/door/airlock/security{
 	name = "Court Cell";
 	req_access_txt = "63"
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
 	},
 /turf/open/floor/plasteel/dark,
 /area/security/brig)
@@ -79861,13 +79863,13 @@
 	c_tag = "Chapel - Funeral Parlour";
 	dir = 8
 	},
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 4
+	},
 /turf/open/floor/plasteel/dark,
 /area/chapel/main)
 "djk" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 5
-	},
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden,
 /turf/closed/wall,
 /area/chapel/main)
 "djr" = (
@@ -80610,9 +80612,11 @@
 /area/security/brig)
 "dBH" = (
 /obj/effect/spawner/structure/window/reinforced,
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/structure/cable/yellow{
 	icon_state = "0-4"
+	},
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
+	dir = 8
 	},
 /turf/open/floor/plating,
 /area/security/brig)
@@ -82215,6 +82219,10 @@
 /obj/machinery/status_display/supply,
 /turf/closed/wall,
 /area/quartermaster/sorting)
+"orJ" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/turf/closed/wall,
+/area/security/brig)
 "oub" = (
 /obj/structure/sign/poster/official/random,
 /turf/closed/wall,
@@ -82299,6 +82307,12 @@
 	},
 /turf/closed/wall/r_wall,
 /area/maintenance/disposal/incinerator)
+"pvk" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/turf/closed/wall/r_wall,
+/area/security/detectives_office)
 "pvA" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -104390,7 +104404,7 @@ cLa
 cPF
 cQb
 djj
-djr
+cQb
 cRq
 cPA
 aaa
@@ -107370,7 +107384,7 @@ akv
 alO
 anf
 aop
-ahx
+orJ
 aqY
 asn
 atK
@@ -112777,7 +112791,7 @@ axp
 dBF
 azO
 aBi
-ajm
+axw
 ajm
 ajm
 ajm
@@ -113291,7 +113305,7 @@ axr
 ayF
 ayF
 ayF
-ayF
+pvk
 ayJ
 ayJ
 aGt
