@@ -24,7 +24,7 @@
 		else
 			for(var/B in magazine.stored_ammo)
 				var/obj/item/ammo_casing/mws_batt/other_batt = B
-				if(istype(other_batt,shot) && other_batt.cell.charge >= other_batt.e_cost)
+				if(other_batt == chambered.type && other_batt.cell.charge >= other_batt.e_cost)
 					switch_to(other_batt)
 	update_overlays()
 
@@ -54,7 +54,7 @@
 		var/true_index = ((our_slot + index - 1) % stored_ammo.len) + 1 // Stupid ONE BASED lists!
 		var/obj/item/ammo_casing/mws_batt/next_batt = stored_ammo[true_index]
 		if(chambered != next_batt && !istype(next_batt, chambered.type) && next_batt.cell.charge >= next_batt.e_cost)
-			switch_to(next_batt)
+			switch_to(next_batt, user)
 			break
 
 /obj/item/gun/ballistic/revolver/mws/AltClick(mob/living/user)
