@@ -11030,16 +11030,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on,
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
-"eHy" = (
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 4
-	},
-/obj/machinery/door/airlock/external{
-	name = "Escape Airlock"
-	},
-/obj/structure/fans/tiny,
-/turf/open/floor/plating,
-/area/hallway/secondary/exit/departure_lounge)
 "eHK" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/simple/yellow/visible{
@@ -22042,6 +22032,16 @@
 	},
 /turf/closed/wall/r_wall,
 /area/engine/atmos)
+"lFm" = (
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
+	},
+/obj/machinery/door/airlock/external{
+	name = "Escape Airlock"
+	},
+/obj/structure/fans/tiny,
+/turf/open/floor/plating,
+/area/hallway/secondary/exit/departure_lounge)
 "lFu" = (
 /obj/machinery/door/firedoor/border_only{
 	name = "south facing firelock"
@@ -27051,14 +27051,6 @@
 /obj/effect/landmark/start/head_of_personnel,
 /turf/open/floor/carpet,
 /area/crew_quarters/heads/hop)
-"oPA" = (
-/obj/machinery/door/airlock/external{
-	name = "Engineering External Access";
-	req_access_txt = "10;13"
-	},
-/obj/structure/fans/tiny,
-/turf/open/floor/engine,
-/area/engine/atmospherics_engine)
 "oPP" = (
 /obj/structure/table/reinforced,
 /obj/machinery/door/window/eastright{
@@ -30175,14 +30167,6 @@
 /obj/effect/turf_decal/tile/green,
 /turf/open/floor/plasteel/white,
 /area/medical/virology)
-"qJc" = (
-/obj/machinery/door/airlock/external{
-	name = "Engineering External Access";
-	req_access_txt = "10;13"
-	},
-/obj/structure/fans/tiny,
-/turf/open/floor/plating,
-/area/engine/engineering)
 "qJs" = (
 /obj/structure/chair,
 /obj/effect/turf_decal/stripes/line{
@@ -31288,16 +31272,6 @@
 "rqW" = (
 /turf/open/floor/plasteel/white,
 /area/science/robotics/lab)
-"rrf" = (
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 8
-	},
-/obj/machinery/door/airlock/external{
-	name = "Escape Airlock"
-	},
-/obj/structure/fans/tiny,
-/turf/open/floor/plating,
-/area/hallway/secondary/exit/departure_lounge)
 "rrm" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 1
@@ -31320,6 +31294,16 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
+"rsB" = (
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 4
+	},
+/obj/machinery/door/airlock/external{
+	name = "Escape Airlock"
+	},
+/obj/structure/fans/tiny,
+/turf/open/floor/plating,
+/area/hallway/secondary/exit/departure_lounge)
 "rsD" = (
 /obj/structure/table/wood,
 /obj/structure/bedsheetbin/towel,
@@ -37963,6 +37947,7 @@
 "vEo" = (
 /obj/machinery/door/airlock/wood,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
+/obj/structure/fans/tiny/invisible,
 /turf/open/floor/wood,
 /area/maintenance/bar)
 "vEr" = (
@@ -41009,6 +40994,14 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/security/brig)
+"xFu" = (
+/obj/machinery/door/airlock/external{
+	name = "Engineering External Access";
+	req_access_txt = "10;13"
+	},
+/obj/structure/fans/tiny,
+/turf/open/floor/plating,
+/area/engine/engineering)
 "xFQ" = (
 /obj/machinery/doorButtons/airlock_controller{
 	idExterior = "virology_airlock_exterior";
@@ -41264,6 +41257,14 @@
 	},
 /turf/open/floor/plasteel,
 /area/engine/break_room)
+"xMR" = (
+/obj/machinery/door/airlock/external{
+	name = "Engineering External Access";
+	req_access_txt = "10;13"
+	},
+/obj/structure/fans/tiny,
+/turf/open/floor/engine,
+/area/engine/atmospherics_engine)
 "xMV" = (
 /obj/structure/cable{
 	icon_state = "4-8"
@@ -72602,7 +72603,7 @@ bmX
 avT
 avT
 bok
-eHy
+rsB
 bok
 cwo
 wcB
@@ -78762,17 +78763,17 @@ xUL
 xUL
 pZl
 unA
-rrf
+lFm
 unA
-rrf
+lFm
 unA
 rJO
 xUL
 pZl
 unA
-rrf
+lFm
 unA
-rrf
+lFm
 unA
 bok
 bok
@@ -94644,7 +94645,7 @@ qtH
 xUL
 xUL
 xUL
-qJc
+xFu
 ijZ
 ijZ
 bnU
@@ -99271,7 +99272,7 @@ sTq
 hBq
 hBq
 hBq
-oPA
+xMR
 hBq
 kol
 jZW
