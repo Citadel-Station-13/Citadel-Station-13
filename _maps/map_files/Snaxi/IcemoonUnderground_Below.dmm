@@ -15,6 +15,10 @@
 "h" = (
 /turf/open/floor/plating/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
+"i" = (
+/obj/item/gps/mining,
+/turf/open/floor/plating/asteroid/snow/icemoon,
+/area/icemoon/underground/explored)
 "N" = (
 /obj/item/flashlight/lantern{
 	on = 1
@@ -40009,7 +40013,7 @@ a
 a
 a
 e
-h
+i
 h
 h
 e
