@@ -1990,11 +1990,9 @@
 /turf/open/floor/plasteel,
 /area/hallway/secondary/entry)
 "aDn" = (
-/obj/structure/chair/comfy/brown{
-	dir = 8
-	},
-/turf/closed/mineral/random/snow/no_caves,
-/area/icemoon/surface/outdoors)
+/obj/structure/disposalpipe/segment,
+/turf/closed/wall,
+/area/maintenance/disposal)
 "aDo" = (
 /obj/machinery/door/airlock/public/glass{
 	name = "Snow Airlock"
@@ -2323,7 +2321,8 @@
 /area/science/robotics/lab)
 "aHU" = (
 /obj/structure/disposalpipe/segment,
-/turf/closed/wall,
+/obj/machinery/rnd/production/techfab/department/service,
+/turf/open/floor/plating,
 /area/maintenance/disposal)
 "aIf" = (
 /obj/item/target,
@@ -13301,10 +13300,13 @@
 /turf/open/floor/plasteel,
 /area/hallway/primary/fore)
 "gbI" = (
-/obj/effect/spawner/lootdrop/bedsheet,
-/obj/structure/bed,
-/turf/closed/mineral/random/snow/no_caves,
-/area/icemoon/surface/outdoors)
+/obj/machinery/light/small,
+/obj/machinery/door/airlock{
+	name = "Service Hall";
+	req_one_access_txt = "25;26;35;28"
+	},
+/turf/open/floor/plating,
+/area/maintenance/disposal)
 "gcp" = (
 /obj/machinery/airalarm{
 	dir = 8;
@@ -13953,11 +13955,13 @@
 /turf/open/floor/engine,
 /area/engine/engineering)
 "gxY" = (
-/obj/structure/closet/secure_closet/personal/cabinet{
-	pixel_x = -8
+/obj/structure/disposalpipe/segment,
+/obj/machinery/door/airlock{
+	name = "Service Hall";
+	req_one_access_txt = "25;26;35;28"
 	},
-/turf/closed/mineral/random/snow/no_caves,
-/area/icemoon/surface/outdoors)
+/turf/open/floor/plating,
+/area/maintenance/disposal)
 "gyk" = (
 /obj/effect/turf_decal/tile/yellow{
 	dir = 1
@@ -18631,14 +18635,6 @@
 /obj/effect/turf_decal/tile/brown,
 /turf/open/floor/plasteel,
 /area/quartermaster/qm)
-"jmY" = (
-/obj/structure/disposalpipe/segment,
-/obj/machinery/door/airlock{
-	name = "Service Hall";
-	req_one_access_txt = "25;26;35;28"
-	},
-/turf/open/floor/plating,
-/area/maintenance/disposal)
 "jnh" = (
 /obj/effect/landmark/start/cook,
 /turf/open/floor/plasteel/cafeteria,
@@ -18725,13 +18721,6 @@
 /obj/structure/fans/tiny,
 /turf/open/floor/plating,
 /area/engine/secure_construction)
-"jrE" = (
-/obj/structure/table/wood,
-/obj/item/flashlight/lantern{
-	pixel_y = 5
-	},
-/turf/closed/mineral/random/snow/no_caves,
-/area/icemoon/surface/outdoors)
 "jrH" = (
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
@@ -20511,10 +20500,6 @@
 /obj/machinery/computer/upload/borg,
 /turf/open/floor/circuit,
 /area/ai_monitored/turret_protected/ai_upload)
-"kAr" = (
-/obj/machinery/space_heater,
-/turf/closed/mineral/random/snow/no_caves,
-/area/icemoon/surface/outdoors)
 "kAv" = (
 /obj/machinery/firealarm{
 	dir = 1;
@@ -22537,14 +22522,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/port)
-"lWD" = (
-/obj/machinery/light/small,
-/obj/machinery/door/airlock{
-	name = "Service Hall";
-	req_one_access_txt = "25;26;35;28"
-	},
-/turf/open/floor/plating,
-/area/maintenance/disposal)
 "lWP" = (
 /obj/structure/cable{
 	icon_state = "4-8"
@@ -31459,11 +31436,6 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/closed/wall,
 /area/medical/morgue)
-"rwX" = (
-/obj/structure/disposalpipe/segment,
-/obj/machinery/rnd/production/techfab/department/service,
-/turf/open/floor/plating,
-/area/maintenance/disposal)
 "rxc" = (
 /obj/effect/turf_decal/tile/yellow{
 	dir = 4
@@ -36273,12 +36245,6 @@
 /obj/machinery/holopad,
 /turf/open/floor/plasteel/dark,
 /area/chapel/office)
-"uEt" = (
-/obj/structure/chair/comfy/brown{
-	dir = 1
-	},
-/turf/closed/mineral/random/snow/no_caves,
-/area/icemoon/surface/outdoors)
 "uEz" = (
 /turf/open/floor/plasteel,
 /area/crew_quarters/fitness)
@@ -38618,11 +38584,6 @@
 /obj/effect/spawner/lootdrop/techstorage/service,
 /turf/open/floor/plasteel/dark,
 /area/storage/tech)
-"vUF" = (
-/obj/structure/fans/tiny,
-/obj/structure/mineral_door/woodrustic,
-/turf/closed/mineral/random/snow/no_caves,
-/area/icemoon/surface/outdoors)
 "vUN" = (
 /obj/structure/table,
 /obj/machinery/computer/security/telescreen/circuitry,
@@ -78372,7 +78333,7 @@ avT
 ydp
 ydp
 ydp
-avT
+ydp
 avT
 avT
 avT
@@ -78629,7 +78590,7 @@ ydp
 ydp
 ydp
 ydp
-avT
+ydp
 avT
 avT
 ydp
@@ -78880,8 +78841,8 @@ opT
 pbs
 avT
 avT
-avT
-avT
+ydp
+ydp
 ydp
 ydp
 ydp
@@ -79136,8 +79097,8 @@ bPn
 bPn
 avT
 avT
-avT
-avT
+ydp
+ydp
 ydp
 ydp
 ydp
@@ -79909,9 +79870,9 @@ avT
 ydp
 ydp
 ydp
-jrE
-uEt
-gxY
+ydp
+ydp
+ydp
 ydp
 ydp
 ydp
@@ -80166,10 +80127,10 @@ avT
 ydp
 ydp
 ydp
-aDn
 ydp
 ydp
-vUF
+ydp
+ydp
 ydp
 ydp
 ydp
@@ -80423,9 +80384,9 @@ ydp
 ydp
 ydp
 ydp
-gbI
 ydp
-kAr
+ydp
+ydp
 ydp
 ydp
 ydp
@@ -84662,10 +84623,10 @@ bBh
 avT
 xac
 gph
+aDn
 aHU
-rwX
 fpJ
-jmY
+gxY
 lFv
 hDk
 wAx
@@ -84921,7 +84882,7 @@ xac
 gLO
 huF
 cfp
-lWD
+gbI
 cfp
 gNI
 moX
