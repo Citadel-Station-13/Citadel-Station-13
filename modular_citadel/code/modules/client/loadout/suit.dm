@@ -153,14 +153,14 @@
 /datum/gear/christmascoatr
 	name = "Red Christmas Coat"
 	category = SLOT_WEAR_SUIT
-	path = /obj/item/clothing/suit/hooded/wintercoat/christmascoatr
+	path = /obj/item/clothing/suit/hooded/wintercoat/false/christmascoatr
 
 /datum/gear/christmascoatg
 	name = "Green Christmas Coat"
 	category = SLOT_WEAR_SUIT
-	path = /obj/item/clothing/suit/hooded/wintercoat/christmascoatg
+	path = /obj/item/clothing/suit/hooded/wintercoat/false/christmascoatg
 
 /datum/gear/christmascoatrg
 	name = "Red and Green Christmas Coat"
 	category = SLOT_WEAR_SUIT
-	path = /obj/item/clothing/suit/hooded/wintercoat/christmascoatrg
+	path = /obj/item/clothing/suit/hooded/wintercoat/false/christmascoatrg
