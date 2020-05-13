@@ -67,7 +67,7 @@
 /datum/gear/coat/polycoat
 	name = "Polychromic winter coat"
 	category = SLOT_WEAR_SUIT
-	path = /obj/item/clothing/suit/hooded/wintercoat/false/polychromic
+	path = /obj/item/clothing/suit/hooded/wintercoat/polychromic/false
 	cost = 4 //too many people with neon green coats is hard on the eyes
 
 /datum/gear/militaryjacket
