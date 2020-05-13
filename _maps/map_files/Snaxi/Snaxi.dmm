@@ -2322,11 +2322,8 @@
 /turf/open/floor/plasteel/white,
 /area/science/robotics/lab)
 "aHU" = (
-/obj/effect/spawner/lootdrop/maintenance,
-/obj/effect/spawner/lootdrop/maintenance,
-/obj/effect/spawner/lootdrop/maintenance,
-/obj/structure/closet/crate,
-/turf/open/floor/plating,
+/obj/structure/disposalpipe/segment,
+/turf/closed/wall,
 /area/maintenance/disposal)
 "aIf" = (
 /obj/item/target,
@@ -18634,6 +18631,14 @@
 /obj/effect/turf_decal/tile/brown,
 /turf/open/floor/plasteel,
 /area/quartermaster/qm)
+"jmY" = (
+/obj/structure/disposalpipe/segment,
+/obj/machinery/door/airlock{
+	name = "Service Hall";
+	req_one_access_txt = "25;26;35;28"
+	},
+/turf/open/floor/plating,
+/area/maintenance/disposal)
 "jnh" = (
 /obj/effect/landmark/start/cook,
 /turf/open/floor/plasteel/cafeteria,
@@ -22532,6 +22537,14 @@
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/port)
+"lWD" = (
+/obj/machinery/light/small,
+/obj/machinery/door/airlock{
+	name = "Service Hall";
+	req_one_access_txt = "25;26;35;28"
+	},
+/turf/open/floor/plating,
+/area/maintenance/disposal)
 "lWP" = (
 /obj/structure/cable{
 	icon_state = "4-8"
@@ -31447,7 +31460,8 @@
 /turf/closed/wall,
 /area/medical/morgue)
 "rwX" = (
-/obj/effect/landmark/xeno_spawn,
+/obj/structure/disposalpipe/segment,
+/obj/machinery/rnd/production/techfab/department/service,
 /turf/open/floor/plating,
 /area/maintenance/disposal)
 "rxc" = (
@@ -36948,8 +36962,7 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
-/obj/effect/landmark/blobstart,
-/turf/open/floor/plating,
+/turf/closed/wall,
 /area/maintenance/disposal)
 "vam" = (
 /obj/structure/closet/crate/bin,
@@ -84391,11 +84404,11 @@ avT
 bBh
 avT
 xac
-aHU
+dpp
 vaj
-aHU
-rwX
-xac
+dpp
+dpp
+cfp
 gNI
 skK
 wAx
@@ -84649,10 +84662,10 @@ bBh
 avT
 xac
 gph
+aHU
+rwX
 fpJ
-fpJ
-fpJ
-esq
+jmY
 lFv
 hDk
 wAx
@@ -84907,9 +84920,9 @@ avT
 xac
 gLO
 huF
-dpp
-evO
-xac
+cfp
+lWD
+cfp
 gNI
 moX
 wAx
