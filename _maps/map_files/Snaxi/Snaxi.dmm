@@ -400,6 +400,7 @@
 /obj/machinery/door/firedoor/border_only{
 	name = "south facing firelock"
 	},
+/obj/structure/fans/tiny,
 /turf/open/floor/plating,
 /area/quartermaster/storage)
 "ahn" = (
@@ -442,6 +443,7 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 4
 	},
+/obj/structure/fans/tiny,
 /turf/open/floor/plating,
 /area/maintenance/central)
 "ajl" = (
@@ -521,6 +523,11 @@
 /obj/structure/table/reinforced,
 /obj/item/reagent_containers/food/drinks/britcup{
 	desc = "Kingston's personal cup."
+	},
+/obj/machinery/door/window/eastright{
+	dir = 2;
+	name = "Medbay";
+	req_access_txt = "5"
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
@@ -1878,7 +1885,7 @@
 	dir = 4;
 	pixel_x = -22
 	},
-/obj/machinery/vending/autodrobe/all_access,
+/obj/machinery/vending/autodrobe,
 /turf/open/floor/plasteel,
 /area/hallway/secondary/entry)
 "aDb" = (
@@ -2744,6 +2751,7 @@
 	dir = 1;
 	name = "north facing firelock"
 	},
+/obj/structure/fans/tiny,
 /turf/open/floor/carpet,
 /area/crew_quarters/dorms)
 "aNS" = (
@@ -3514,6 +3522,7 @@
 	req_access_txt = "48";
 	shuttledocked = 1
 	},
+/obj/structure/fans/tiny,
 /turf/open/floor/plating,
 /area/quartermaster/miningdock)
 "bnE" = (
@@ -3788,6 +3797,7 @@
 	dir = 1;
 	name = "north facing firelock"
 	},
+/obj/structure/fans/tiny,
 /turf/open/floor/plasteel/dark,
 /area/hallway/secondary/exit/departure_lounge)
 "bum" = (
@@ -5643,6 +5653,7 @@
 /obj/machinery/door/airlock/external{
 	name = "Arrivals Airlock"
 	},
+/obj/structure/fans/tiny,
 /turf/open/floor/plating,
 /area/hallway/secondary/exit/departure_lounge)
 "bKl" = (
@@ -7541,6 +7552,7 @@
 /obj/machinery/door/firedoor/border_only{
 	name = "south facing firelock"
 	},
+/obj/structure/fans/tiny,
 /turf/open/floor/plasteel/dark,
 /area/hallway/primary/fore)
 "cvH" = (
@@ -10378,6 +10390,11 @@
 /area/crew_quarters/fitness)
 "eiR" = (
 /obj/structure/table/reinforced,
+/obj/machinery/door/window/westleft{
+	dir = 2;
+	name = "Medbay";
+	req_access_txt = "5"
+	},
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
 "eiW" = (
@@ -14067,6 +14084,7 @@
 /obj/machinery/door/airlock/public/glass{
 	name = "Holodeck Door"
 	},
+/obj/structure/fans/tiny,
 /turf/open/floor/plasteel/white,
 /area/crew_quarters/dorms)
 "gCS" = (
@@ -14811,6 +14829,7 @@
 	name = "north facing firelock"
 	},
 /obj/structure/disposalpipe/segment,
+/obj/structure/fans/tiny,
 /turf/open/floor/plasteel/dark,
 /area/hallway/secondary/exit/departure_lounge)
 "gZX" = (
@@ -15513,7 +15532,7 @@
 /turf/open/floor/carpet,
 /area/quartermaster/miningoffice)
 "hyz" = (
-/obj/machinery/vending/autodrobe/all_access,
+/obj/machinery/vending/autodrobe,
 /turf/open/floor/plasteel,
 /area/hallway/primary/fore)
 "hyK" = (
@@ -16798,7 +16817,7 @@
 /turf/open/floor/plasteel,
 /area/crew_quarters/fitness)
 "igO" = (
-/obj/machinery/vending/boozeomat/all_access,
+/obj/machinery/vending/boozeomat,
 /turf/open/floor/wood{
 	icon_state = "wood-broken4"
 	},
@@ -18666,6 +18685,7 @@
 	req_access_txt = "10;13"
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
+/obj/structure/fans/tiny,
 /turf/open/floor/plating,
 /area/engine/secure_construction)
 "jrE" = (
@@ -20754,6 +20774,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/structure/fans/tiny,
 /turf/open/floor/plasteel,
 /area/hallway/primary/port)
 "kMy" = (
@@ -21413,6 +21434,7 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 8
 	},
+/obj/structure/fans/tiny,
 /turf/open/floor/plasteel,
 /area/hallway/primary/port)
 "lkP" = (
@@ -24630,6 +24652,7 @@
 	name = "south facing firelock"
 	},
 /obj/structure/disposalpipe/segment,
+/obj/structure/fans/tiny,
 /turf/open/floor/carpet,
 /area/crew_quarters/dorms)
 "nsi" = (
@@ -25393,6 +25416,7 @@
 	dir = 8;
 	name = "west facing firelock"
 	},
+/obj/structure/fans/tiny,
 /turf/open/floor/plasteel,
 /area/security/prison)
 "nPs" = (
@@ -26277,6 +26301,7 @@
 	name = "External Access";
 	req_access_txt = "13"
 	},
+/obj/structure/fans/tiny,
 /turf/open/floor/plasteel,
 /area/maintenance/aft)
 "opY" = (
@@ -28985,6 +29010,7 @@
 /obj/machinery/door/firedoor/border_only{
 	name = "south facing firelock"
 	},
+/obj/structure/fans/tiny,
 /turf/open/floor/carpet,
 /area/crew_quarters/dorms)
 "pXl" = (
@@ -29456,6 +29482,16 @@
 /obj/structure/closet/crate/trashcart,
 /turf/open/floor/plasteel,
 /area/quartermaster/sorting)
+"qpQ" = (
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
+	},
+/obj/machinery/door/airlock/external{
+	name = "Escape Airlock"
+	},
+/obj/structure/fans/tiny,
+/turf/open/floor/plating,
+/area/hallway/secondary/exit/departure_lounge)
 "qpW" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /obj/effect/turf_decal/tile/brown{
@@ -33017,6 +33053,7 @@
 /obj/machinery/door/firedoor/border_only{
 	name = "south facing firelock"
 	},
+/obj/structure/fans/tiny,
 /turf/open/floor/plasteel/dark,
 /area/hallway/primary/fore)
 "sHK" = (
@@ -33072,6 +33109,7 @@
 	dir = 1
 	},
 /obj/machinery/door/firedoor/border_only,
+/obj/structure/fans/tiny,
 /turf/open/floor/plasteel/dark,
 /area/hallway/secondary/entry)
 "sKN" = (
@@ -34052,6 +34090,7 @@
 	req_access_txt = "48";
 	shuttledocked = 1
 	},
+/obj/structure/fans/tiny,
 /turf/open/floor/plating,
 /area/quartermaster/miningdock)
 "tmt" = (
@@ -34696,6 +34735,7 @@
 	name = "Escape Airlock"
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
+/obj/structure/fans/tiny,
 /turf/open/floor/carpet,
 /area/hallway/primary/port)
 "tHr" = (
@@ -34983,6 +35023,7 @@
 /obj/machinery/door/airlock/public/glass{
 	name = "Holodeck Door"
 	},
+/obj/structure/fans/tiny,
 /turf/open/floor/plasteel/white,
 /area/crew_quarters/dorms)
 "tOE" = (
@@ -36517,6 +36558,7 @@
 	dir = 8;
 	name = "west facing firelock"
 	},
+/obj/structure/fans/tiny,
 /turf/open/floor/plasteel,
 /area/maintenance/starboard)
 "uPI" = (
@@ -38858,6 +38900,7 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 4
 	},
+/obj/structure/fans/tiny,
 /turf/open/floor/plating,
 /area/hallway/primary/aft)
 "wfN" = (
@@ -39858,6 +39901,7 @@
 	name = "External Access";
 	req_access_txt = "13"
 	},
+/obj/structure/fans/tiny,
 /turf/open/floor/plating,
 /area/maintenance/aft)
 "wRv" = (
@@ -39904,6 +39948,7 @@
 	name = "Escape Airlock"
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
+/obj/structure/fans/tiny,
 /turf/open/floor/carpet,
 /area/hallway/primary/port)
 "wSy" = (
@@ -40768,6 +40813,14 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/closed/wall,
 /area/maintenance/disposal)
+"xzs" = (
+/obj/machinery/door/airlock/external{
+	name = "Engineering External Access";
+	req_access_txt = "10;13"
+	},
+/obj/structure/fans/tiny,
+/turf/open/floor/plating,
+/area/engine/engineering)
 "xzL" = (
 /obj/effect/turf_decal/tile/red,
 /obj/effect/turf_decal/tile/red{
@@ -41356,6 +41409,14 @@
 	},
 /turf/open/floor/plasteel/cafeteria,
 /area/crew_quarters/kitchen)
+"xUu" = (
+/obj/machinery/door/airlock/external{
+	name = "Engineering External Access";
+	req_access_txt = "10;13"
+	},
+/obj/structure/fans/tiny,
+/turf/open/floor/engine,
+/area/engine/atmospherics_engine)
 "xUy" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -41422,6 +41483,16 @@
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/port)
+"xXw" = (
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 4
+	},
+/obj/machinery/door/airlock/external{
+	name = "Escape Airlock"
+	},
+/obj/structure/fans/tiny,
+/turf/open/floor/plating,
+/area/hallway/secondary/exit/departure_lounge)
 "xXS" = (
 /obj/machinery/rnd/server,
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/on{
@@ -41521,6 +41592,7 @@
 	name = "Delivery Office";
 	req_access_txt = "50"
 	},
+/obj/structure/fans/tiny,
 /turf/open/floor/pod/dark,
 /area/maintenance/starboard)
 "ycQ" = (
@@ -72521,7 +72593,7 @@ bmX
 avT
 avT
 bok
-dnm
+xXw
 bok
 cwo
 wcB
@@ -78681,17 +78753,17 @@ xUL
 xUL
 pZl
 unA
-ivM
+qpQ
 unA
-ivM
+qpQ
 unA
 rJO
 xUL
 pZl
 unA
-ivM
+qpQ
 unA
-ivM
+qpQ
 unA
 bok
 bok
@@ -94563,7 +94635,7 @@ qtH
 xUL
 xUL
 xUL
-oib
+xzs
 ijZ
 ijZ
 bnU
@@ -99190,7 +99262,7 @@ sTq
 hBq
 hBq
 hBq
-iuP
+xUu
 hBq
 kol
 jZW
