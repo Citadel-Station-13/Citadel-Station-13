@@ -13,11 +13,25 @@
 	var/code = DEFAULT_SIGNALER_CODE
 	var/frequency = FREQ_SIGNALER
 	var/datum/radio_frequency/radio_connection
+	var/suicider = null
 	var/hearing_range = 1
+
+/obj/item/assembly/signaler/suicide_act(mob/living/carbon/user)
+	user.visible_message("<span class='suicide'>[user] eats \the [src]! If it is signaled, [user.p_they()] will die!</span>")
+	playsound(src, 'sound/items/eatfood.ogg', 50, TRUE)
+	user.transferItemToLoc(src, user, TRUE)
+	suicider = user
+	return MANUAL_SUICIDE
+
+/obj/item/assembly/signaler/proc/manual_suicide(mob/living/carbon/user)
+	user.visible_message("<span class='suicide'>[user]'s \the [src] receives a signal, killing [user.p_them()] instantly!</span>")
+	user.adjustOxyLoss(200)//it sends an electrical pulse to their heart, killing them. or something.
+	user.death(0)
 
 /obj/item/assembly/signaler/Initialize()
 	. = ..()
 	set_frequency(frequency)
+
 
 /obj/item/assembly/signaler/Destroy()
 	SSradio.remove_object(src,frequency)
@@ -52,12 +66,12 @@
 	data["code"] = code
 	data["minFrequency"] = MIN_FREE_FREQ
 	data["maxFrequency"] = MAX_FREE_FREQ
+
 	return data
 
 /obj/item/assembly/signaler/ui_act(action, params)
 	if(..())
 		return
-
 	switch(action)
 		if("signal")
 			INVOKE_ASYNC(src, .proc/signal)
@@ -101,6 +115,9 @@
 	if(usr)
 		GLOB.lastsignalers.Add("[time] <B>:</B> [usr.key] used [src] @ location ([T.x],[T.y],[T.z]) <B>:</B> [format_frequency(frequency)]/[code]")
 
+
+	return
+
 /obj/item/assembly/signaler/receive_signal(datum/signal/signal)
 	. = FALSE
 	if(!signal)
@@ -109,6 +126,8 @@
 		return
 	if(!(src.wires & WIRE_RADIO_RECEIVE))
 		return
+	if(suicider)
+		manual_suicide(suicider)
 	pulse(TRUE)
 	audible_message("[icon2html(src, hearers(src))] *beep* *beep* *beep*", null, hearing_range)
 	for(var/CHM in get_hearers_in_view(hearing_range, src))
@@ -116,6 +135,7 @@
 			var/mob/LM = CHM
 			LM.playsound_local(get_turf(src), 'sound/machines/triple_beep.ogg', ASSEMBLY_BEEP_VOLUME, TRUE)
 	return TRUE
+
 
 /obj/item/assembly/signaler/proc/set_frequency(new_frequency)
 	SSradio.remove_object(src, frequency)

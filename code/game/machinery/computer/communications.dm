@@ -179,7 +179,7 @@
 							SSshuttle.existing_shuttle = SSshuttle.emergency
 							SSshuttle.action_load(S)
 							D.adjust_money(-S.credit_cost)
-							minor_announce("[usr.real_name] has purchased [S.name] for [S.credit_cost] credits.[S.extra_desc ? " [S.extra_desc]" : ""]" , "Shuttle Purchase")
+							minor_announce("[usr.real_name] has purchased [S.name] for [S.credit_cost] credits." , "Shuttle Purchase")
 							message_admins("[ADMIN_LOOKUPFLW(usr)] purchased [S.name].")
 							log_shuttle("[key_name(usr)] has purchased [S.name].")
 							SSblackbox.record_feedback("text", "shuttle_purchase", 1, "[S.name]")
@@ -343,7 +343,7 @@
 				Nuke_request(input, usr)
 				to_chat(usr, "<span class='notice'>Request sent.</span>")
 				usr.log_message("has requested the nuclear codes from CentCom with reason \"[input]\"", LOG_SAY)
-				priority_announce("The codes for the on-station nuclear self-destruct have been requested by [usr]. Confirmation or denial of this request will be sent shortly.", "Nuclear Self Destruct Codes Requested",'sound/ai/commandreport.ogg')
+				priority_announce("The codes for the on-station nuclear self-destruct have been requested by [usr]. Confirmation or denial of this request will be sent shortly.", "Nuclear Self Destruct Codes Requested","commandreport")
 				CM.lastTimeUsed = world.time
 
 
