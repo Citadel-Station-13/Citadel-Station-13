@@ -1001,16 +1001,32 @@
 /obj/item/clothing/head/hooded/winterhood/christmashoodrg
 	icon_state = "christmashoodrg"
 
-/obj/item/clothing/suit/hooded/wintercoat/false/polychromic
+/obj/item/clothing/suit/hooded/wintercoat/polychromic
 	name = "polychromic winter coat"
 	icon_state = "coatpoly"
 	item_state = "coatpoly"
-	hoodtype = /obj/item/clothing/head/hooded/winterhood/false/polychromic
+	hoodtype = /obj/item/clothing/head/hooded/winterhood/polychromic
 
-/obj/item/clothing/suit/hooded/wintercoat/false/polychromic/ComponentInitialize()
+/obj/item/clothing/suit/hooded/wintercoat/polychromic/ComponentInitialize()
 	. = ..()
 	AddElement(/datum/element/polychromic, list("#6A6964", "#C4B8A6", "#0000FF"), 3)
 
-/obj/item/clothing/head/hooded/winterhood/false/polychromic
+/obj/item/clothing/head/hooded/winterhood/polychromic
 	icon_state = "winterhood_poly"
 	item_state = "winterhood_poly"
+
+
+/obj/item/clothing/suit/hooded/wintercoat/polychromic/false
+	name = "polychromic winter coat"
+	icon_state = "coatpoly"
+	item_state = "coatpoly"
+	cold_protection = 0
+	min_cold_protection_temperature = 0
+	armor = list("melee" = 0, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 0)
+	hoodtype = /obj/item/clothing/head/hooded/winterhood/polychromic/false
+
+/obj/item/clothing/head/hooded/winterhood/polychromic/false
+	icon_state = "winterhood_poly"
+	item_state = "winterhood_poly"
+	cold_protection = 0
+	min_cold_protection_temperature = 0
