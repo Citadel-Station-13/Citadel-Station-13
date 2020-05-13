@@ -61,12 +61,12 @@
 /datum/gear/christmasbootsr
 	name = "Red Christmas Boots"
 	category = SLOT_SHOES
-	path= /obj/item/clothing/shoes/winterboots/christmasbootsr
+	path= /obj/item/clothing/shoes/winterboots/false/christmasbootsr
 
 /datum/gear/christmasbootsg
 	name = "Green Christmas Boots"
 	category = SLOT_SHOES
-	path= /obj/item/clothing/shoes/winterboots/christmasbootsg
+	path= /obj/item/clothing/shoes/winterboots/false/christmasbootsg
 
 /datum/gear/santaboots
 	name = "Santa Boots"
