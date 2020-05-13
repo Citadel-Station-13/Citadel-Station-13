@@ -16,6 +16,7 @@
 	STR.cant_hold = typecacheof(list(/obj/item/screwdriver/power))
 	STR.can_hold = typecacheof(list(
 		/obj/item/stack/spacecash,
+		/obj/item/holochip,
 		/obj/item/card,
 		/obj/item/clothing/mask/cigarette,
 		/obj/item/flashlight/pen,
@@ -101,17 +102,5 @@
 	icon_state = "random_wallet"
 
 /obj/item/storage/wallet/random/PopulateContents()
-	var/item1_type = /obj/effect/spawner/lootdrop/space_cash/no_turf
-	var/item2_type
-	if(prob(50))
-		item2_type = /obj/effect/spawner/lootdrop/space_cash/no_turf
-	var/item3_type = /obj/effect/spawner/lootdrop/coin/no_turf
-
-	spawn(2)
-		if(item1_type)
-			new item1_type(src)
-		if(item2_type)
-			new item2_type(src)
-		if(item3_type)
-			new item3_type(src)
-	update_icon()
+	new /obj/item/holochip(src, rand(5,30))
+	icon_state = "wallet"

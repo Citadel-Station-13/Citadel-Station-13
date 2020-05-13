@@ -26,6 +26,7 @@ Credit dupes that require a lot of manual work shouldn't be removed, unless they
 	var/list/total_value = list()   //export instance => total value of sold objects
 	var/list/reagents_volume = list()//export reagents => into the total volume of the object sold
 	var/list/reagents_value = list()//export reagents => into the reagent type total value.
+	var/list/exported_atoms_ref = list()	//if they're not deleted they go in here for use.
 
 // external_report works as "transaction" object, pass same one in if you're doing more than one export in single go
 /proc/export_item_and_contents(atom/movable/AM, allowed_categories = EXPORT_CARGO, apply_elastic = TRUE, delete_unsold = TRUE, dry_run=FALSE, datum/export_report/external_report)
