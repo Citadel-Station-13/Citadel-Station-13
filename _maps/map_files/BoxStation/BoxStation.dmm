@@ -16717,10 +16717,6 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
-/obj/structure/sign/poster/contraband/robust_softdrinks{
-	pixel_x = -32;
-	pixel_y = 32
-	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "aMh" = (
@@ -17943,7 +17939,6 @@
 /obj/structure/cable{
 	icon_state = "0-8"
 	},
-/obj/machinery/status_display/evac,
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/preopen{
 	id = "bridge blast";
@@ -17961,21 +17956,6 @@
 /obj/structure/cable{
 	icon_state = "0-2"
 	},
-/obj/effect/spawner/structure/window/reinforced,
-/obj/machinery/door/poddoor/preopen{
-	id = "bridge blast";
-	name = "bridge blast door"
-	},
-/turf/open/floor/plating,
-/area/bridge)
-"aPW" = (
-/obj/structure/cable{
-	icon_state = "0-8"
-	},
-/obj/structure/cable{
-	icon_state = "0-4"
-	},
-/obj/machinery/status_display/evac,
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/preopen{
 	id = "bridge blast";
@@ -55990,6 +55970,10 @@
 /area/maintenance/fore/secondary)
 "khV" = (
 /obj/machinery/vending/cola/red,
+/obj/structure/sign/poster/contraband/robust_softdrinks{
+	pixel_x = -32;
+	pixel_y = 32
+	},
 /turf/open/floor/plasteel/dark,
 /area/hallway/primary/central)
 "kls" = (
@@ -58150,7 +58134,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 1
 	},
-/turf/open/floor/plasteel,
+/turf/closed/wall,
 /area/security/brig)
 "rdl" = (
 /obj/effect/spawner/structure/window/reinforced,
@@ -58450,6 +58434,10 @@
 	},
 /turf/open/floor/plasteel,
 /area/science/mixing)
+"rNG" = (
+/obj/machinery/status_display/evac,
+/turf/closed/wall,
+/area/ai_monitored/storage/eva)
 "rPU" = (
 /turf/open/floor/plasteel/white/side{
 	dir = 4
@@ -60877,6 +60865,10 @@
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plating,
 /area/maintenance/fore/secondary)
+"yeA" = (
+/obj/machinery/status_display/evac,
+/turf/closed/wall,
+/area/hallway/primary/central)
 "yhx" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 5
@@ -79018,7 +79010,7 @@ blW
 blW
 bqi
 cyD
-blW
+aZE
 cyD
 bvS
 blW
@@ -87987,7 +87979,7 @@ ayL
 ayW
 ayW
 ayW
-ayW
+rNG
 aJq
 aJq
 aOE
@@ -90561,7 +90553,7 @@ aKF
 aMf
 aNB
 aOE
-aPW
+aPS
 aRr
 aSD
 ceh
@@ -91585,7 +91577,7 @@ gfD
 woR
 dgz
 aJw
-aJw
+yeA
 aMh
 aJq
 aOE
