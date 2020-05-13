@@ -7,8 +7,6 @@
 	transfer_prints = TRUE
 	strip_delay = 40
 	equip_delay_other = 20
-	cold_protection = HANDS
-	min_cold_protection_temperature = GLOVES_MIN_TEMP_PROTECT
 	strip_mod = 0.9
 
 /obj/item/clothing/gloves/fingerless/pugilist
