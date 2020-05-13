@@ -31,8 +31,8 @@
 	back_nodes = list()
 	var/list/new_nodes = list()
 	for(var/p_layer in PIPING_LAYER_MIN to PIPING_LAYER_MAX)
-		var/obj/machinery/atmospherics/front = findConnecting(dir, p_layer)
-		var/obj/machinery/atmospherics/back = findConnecting(turn(dir, 180), p_layer)
+		var/obj/machinery/atmospherics/front = find_valid_node(dir, prompted_layer = p_layer)
+		var/obj/machinery/atmospherics/back = find_valid_node(turn(dir, 180), prompted_layer = p_layer)
 		if(front)
 			front_nodes += front
 			new_nodes += front

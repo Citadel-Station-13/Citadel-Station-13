@@ -42,7 +42,6 @@
 	for(var/gasid in temp_gases)
 		temp_gases[gasid] *= temporary_air.volume / parent_air.volume
 
-
 // Pipenet stuff; housekeeping
 
 /obj/machinery/atmospherics/components/nullifyNode(i)
@@ -70,22 +69,26 @@
 	reference.other_atmosmch -= src
 	parents[i] = null
 
-/obj/machinery/atmospherics/components/returnPipenetAir(datum/pipeline/reference)
+/obj/machinery/atmospherics/components/return_pipenet_air(node = 1)
+	return (aircomponent_flags & AIRCOMPONENT_DIRECT_ATTACH)
 	return airs[parents.Find(reference)]
 
 /obj/machinery/atmospherics/components/pipeline_expansion(datum/pipeline/from)
-	if(reference)
-		return list(nodes[parents.Find(reference)])
+	if(from)
+		return list(nodes[parents.Find(from)])
 	return ..()
 
-/obj/machinery/atmospherics/components/setPipenet(datum/pipeline/reference, obj/machinery/atmospherics/A)
-	parents[nodes.Find(A)] = reference
+/obj/machinery/atmospherics/components/on_pipeline_join(node = 1, obj/machinery/atmospherics/expanded_from, datum/pipeline/line)
+	parents[nodes.Find(expanded_from)] = line
+
+/obj/machinery/atmospherics/components/on_pipeline_replace(datum/pipeline/old, datum/pipeline/with)
+	var/pl_index = node_pipelines.Find(old)
+	if(!pl_index)
+		CRASH("Attempted to pipeline replace and could not find the old pipeline as ours! SOMETHING HAS GONE TERRIBLY WRONG!")
+	node_pipelines[pl_index] = with
 
 /obj/machinery/atmospherics/components/returnPipenet(obj/machinery/atmospherics/A = nodes[1]) //returns parents[1] if called without argument
 	return parents[nodes.Find(A)]
-
-/obj/machinery/atmospherics/components/replacePipenet(datum/pipeline/Old, datum/pipeline/New)
-	parents[parents.Find(Old)] = New
 
 /obj/machinery/atmospherics/components/unsafe_pressure_release(var/mob/user, var/pressures)
 	..()

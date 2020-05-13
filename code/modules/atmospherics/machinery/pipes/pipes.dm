@@ -95,11 +95,22 @@
 /obj/machinery/atmospherics/pipe/analyzer_act(mob/living/user, obj/item/I)
 	atmosanalyzer_scan(parent.air, user, src)
 
-/obj/machinery/atmospherics/pipe/returnPipenet()
+/obj/machinery/atmospherics/pipe/return_pipenets()
+	return list(parent)
+
+/obj/machinery/atmospherics/pipe/return_pipenet()
 	return parent
 
-/obj/machinery/atmospherics/pipe/setPipenet(datum/pipeline/P)
-	parent = P
+/obj/machinery/atmospherics/pipe/return_pipenet_air()
+	return parent.return_air()
+
+/obj/machinery/atmospherics/pipe/on_pipeline_join(node = 1, obj/machinery/atmospherics/expanded_from, datum/pipeline/line)
+	parent = line
+
+/obj/machinery/atmospherics/pipe/on_pipeline_replace(datum/pipeline/old, datum/pipeline/with)
+	if(old != parent)
+		stack_trace("Pipeline replacement proc called with an old pipeline that wasn't ours! SOMETHING HAS GONE HORRIBLY WRONG!")
+	parent = with
 
 /obj/machinery/atmospherics/pipe/Destroy()
 	QDEL_NULL(parent)

@@ -298,7 +298,7 @@
 	. = list()
 	for(var/obj/machinery/atmospherics/target in get_step_multiz(src, direction))
 		if(can_be_node(target, node_index, prompted_layer))
-			. += target
+			. |= target			// the |= instead of += is important. we don't want duplicate nodes, ever.
 
 /**
   * Finds a valid node in a direction.
@@ -343,8 +343,14 @@
 /**
   * Informs us that a specific node was set to a pipenet.
   */
-/obj/machinery/atmospherics/proc/on_set_pipenet(node = 1)
-	CRASH("The pipenet of a base atmospherics machinery was on_set. Someone screwed up.")
+/obj/machinery/atmospherics/proc/on_pipeline_join(node = 1, obj/machinery/atmospherics/expanded_from, datum/pipeline/line)
+	CRASH("The pipenet of a base atmospherics machinery was on_join'd. Someone screwed up.")
+
+/**
+  * Informs us that a pipenet we supposedly contained was replaced.
+  */
+/obj/machinery/atmospherics/proc/on_pipenet_replace(datum/pipeline/old, datum/pipeline/with)
+	CRASH("The pipenet of a base atmospherics machinery was on_replace'd. Someone screwed up.")
 
 /obj/machinery/atmospherics/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/pipe)) //lets you autodrop
