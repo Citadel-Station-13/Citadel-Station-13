@@ -11,34 +11,80 @@
 	volume = 260
 	construction_type = /obj/item/pipe/binary
 	pipe_state = "manifoldlayer"
-	var/list/front_nodes
-	var/list/back_nodes
+	var/list/front_nodes = list()
+	var/list/back_nodes = list()
 
 /obj/machinery/atmospherics/pipe/layer_manifold/Initialize()
-	front_nodes = list()
-	back_nodes = list()
 	icon_state = "manifoldlayer_center"
 	return ..()
 
-/obj/machinery/atmospherics/pipe/layer_manifold/Destroy()
-	nullifyAllNodes()
-	return ..()
-
-/obj/machinery/atmospherics/pipe/layer_manifold/proc/nullifyAllNodes()
-	var/list/obj/machinery/atmospherics/needs_nullifying = get_all_connected_nodes()
+/obj/machinery/atmospherics/pipe/layer_manifold/nullify_nodes()
 	front_nodes = null
 	back_nodes = null
-	nodes = list()
-	for(var/obj/machinery/atmospherics/A in needs_nullifying)
-		A.disconnect(src)
-		SSair.add_to_rebuild_queue(A)
+
+/obj/machinery/atmospherics/pipe/layer_manifoold/leave_nodes()
+	for(var/obj/machinery/atmospherics/A in front_nodes|back_nodes)
+		A.on_disconnect(src)
+
+/obj/machinery/atmospherics/pipe/layer_manifold/collect_nodes()
+	front_nodes = list()
+	back_nodes = list()
+	var/list/new_nodes = list()
+	for(var/p_layer in PIPING_LAYER_MIN to PIPING_LAYER_MAX)
+		var/obj/machinery/atmospherics/front = findConnecting(dir, p_layer)
+		var/obj/machinery/atmospherics/back = findConnecting(turn(dir, 180), p_layer)
+		if(front)
+			front_nodes += front
+			new_nodes += front
+		if(back)
+			back_nodes += back
+			new_nodes += back
+	return new_nodes()
+
+/obj/machinery/atmospherics/pipe/layer_manifold/join_nodes()
+	for(var/obj/machinery/atmospherics/A in front_nodes|back_nodes)
+		A.on_connect(src)
 
 /obj/machinery/atmospherics/pipe/layer_manifold/proc/get_all_connected_nodes()
-	return front_nodes + back_nodes + nodes
+	return front_nodes + back_nodes
 
-/obj/machinery/atmospherics/pipe/layer_manifold/update_icon()	//HEAVILY WIP FOR UPDATE ICONS!!
-	cut_overlays()
+/obj/machinery/atmospherics/pipe/layer_manifold/SetInitDirections()
+	switch(dir)
+		if(NORTH || SOUTH)
+			initialize_directions = NORTH|SOUTH
+		if(EAST || WEST)
+			initialize_directions = EAST|WEST
+
+/obj/machinery/atmospherics/pipe/layer_manifold/on_disconnect(obj/machinery/atmospherics/disconnecting)
+	front_nodes -= disconnecting
+	back_nodes -= disconnecting
+
+/obj/machinery/atmospherics/pipe/layer_manifold/isConnectable(obj/machinery/atmospherics/target, given_layer)
+	if(!given_layer)
+		return TRUE
+	. = ..()
+
+/obj/machinery/atmospherics/pipe/layer_manifold/setPipingLayer()
+	piping_layer = PIPING_LAYER_DEFAULT
+	return ..()
+
+/obj/machinery/atmospherics/pipe/layer_manifold/pipeline_expansion()
+	return get_all_connected_nodes()
+
+/obj/machinery/atmospherics/pipe/layer_manifold/relaymove(mob/living/user, dir)
+	if(initialize_directions & dir)
+		return ..()
+	if((NORTH|EAST) & dir)
+		user.ventcrawl_layer = clamp(user.ventcrawl_layer + 1, PIPING_LAYER_MIN, PIPING_LAYER_MAX)
+	if((SOUTH|WEST) & dir)
+		user.ventcrawl_layer = clamp(user.ventcrawl_layer - 1, PIPING_LAYER_MIN, PIPING_LAYER_MAX)
+	to_chat(user, "You align yourself with the [user.ventcrawl_layer]\th output.")
+
+/obj/machinery/atmospherics/pipe/layer_manifold/update_layer()
 	layer = initial(layer) + (PIPING_LAYER_MAX * PIPING_LAYER_LCHANGE)	//This is above everything else.
+
+/obj/machinery/atmospherics/pipe/layer_manifold/update_overlays()
+	cut_overlays()
 
 	for(var/node in front_nodes)
 		add_attached_images(node)
@@ -67,68 +113,3 @@
 	I.layer = layer - 0.01
 	PIPING_LAYER_SHIFT(I, p_layer)
 	add_overlay(I)
-
-/obj/machinery/atmospherics/pipe/layer_manifold/SetInitDirections()
-	switch(dir)
-		if(NORTH || SOUTH)
-			initialize_directions = NORTH|SOUTH
-		if(EAST || WEST)
-			initialize_directions = EAST|WEST
-
-/obj/machinery/atmospherics/pipe/layer_manifold/isConnectable(obj/machinery/atmospherics/target, given_layer)
-	if(!given_layer)
-		return TRUE
-	. = ..()
-
-/obj/machinery/atmospherics/pipe/layer_manifold/proc/findAllConnections()
-	front_nodes = list()
-	back_nodes = list()
-	var/list/new_nodes = list()
-	for(var/iter in PIPING_LAYER_MIN to PIPING_LAYER_MAX)
-		var/obj/machinery/atmospherics/foundfront = findConnecting(dir, iter)
-		var/obj/machinery/atmospherics/foundback = findConnecting(turn(dir, 180), iter)
-		front_nodes += foundfront
-		back_nodes += foundback
-		if(foundfront && !QDELETED(foundfront))
-			new_nodes += foundfront
-		if(foundback && !QDELETED(foundback))
-			new_nodes += foundback
-	update_icon()
-	return new_nodes
-
-/obj/machinery/atmospherics/pipe/layer_manifold/atmosinit()
-	normalize_cardinal_directions()
-	findAllConnections()
-	var/turf/T = loc			// hide if turf is not intact
-	hide(T.intact)
-
-/obj/machinery/atmospherics/pipe/layer_manifold/setPipingLayer()
-	piping_layer = PIPING_LAYER_DEFAULT
-
-/obj/machinery/atmospherics/pipe/layer_manifold/pipeline_expansion()
-	return get_all_connected_nodes()
-
-/obj/machinery/atmospherics/pipe/layer_manifold/disconnect(obj/machinery/atmospherics/reference)
-	if(istype(reference, /obj/machinery/atmospherics/pipe))
-		var/obj/machinery/atmospherics/pipe/P = reference
-		P.destroy_network()
-	while(reference in get_all_connected_nodes())
-		if(reference in nodes)
-			var/i = nodes.Find(reference)
-			nodes[i] = null
-		if(reference in front_nodes)
-			var/i = front_nodes.Find(reference)
-			front_nodes[i] = null
-		if(reference in back_nodes)
-			var/i = back_nodes.Find(reference)
-			back_nodes[i] = null
-	update_icon()
-
-/obj/machinery/atmospherics/pipe/layer_manifold/relaymove(mob/living/user, dir)
-	if(initialize_directions & dir)
-		return ..()
-	if((NORTH|EAST) & dir)
-		user.ventcrawl_layer = clamp(user.ventcrawl_layer + 1, PIPING_LAYER_MIN, PIPING_LAYER_MAX)
-	if((SOUTH|WEST) & dir)
-		user.ventcrawl_layer = clamp(user.ventcrawl_layer - 1, PIPING_LAYER_MIN, PIPING_LAYER_MAX)
-	to_chat(user, "You align yourself with the [user.ventcrawl_layer]\th output.")

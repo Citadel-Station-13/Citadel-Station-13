@@ -66,9 +66,6 @@
 /obj/machinery/atmospherics/Destroy()
 	Separate(FALSE)
 
-	for(var/i in 1 to device_type)
-		nullifyNode(i)
-
 	SSair.atmos_machinery -= src
 	SSair.pipenets_needing_rebuilt -= src
 
@@ -78,6 +75,10 @@
 
 	return ..()
 
+/obj/machinery/atmospherics/forceMove()
+	Separate(FALSE)
+	. = ..()
+	Join(TRUE)
 
 /**
   * Fully disconnects us from whatever we're connected to.
@@ -89,8 +90,19 @@
 	pipe_flags &= ~PIPING_NETWORK_JOINED
 	breakdown_networks()
 	leave_nodes()
+	nullify_nodes()
 	if(update_icon)
 		update_icon()
+
+/**
+  * Checks if it's a valid location to join a network from.
+  */
+/obj/machinery/atmospherics/proc/CheckJoin(useloc = loc)
+	if(!useloc)
+		return FALSE
+	if(location_conflicts_at(useloc))
+		return FALSE
+	return TRUE
 
 /**
   * Automatically connects us, building our network as necessary.
@@ -100,8 +112,9 @@
 	if(pipe_flags & PIPING_NETWORK_JOINED)		//do not do it again.
 		CRASH("Tried to Join() while already Join()ed.")
 	pipe_flags |= PIPING_NETWORK_JOINED
+	collect_nodes()
 	join_nodes()
-	build_networks()
+	form_networks()
 	if(update_icon)
 		update_icon()
 
@@ -117,21 +130,45 @@
 /**
   * Destroys our pipe network, usually used when we're leaving it.
   */
-/obj/machinery/atmospherics/proc/destroy_networks()
-	CRASH("destroy_networks() of base atmospherics machinery called.")
+/obj/machinery/atmospherics/proc/breakdown_networks()
+	CRASH("breakdown_networks() of base atmospherics machinery called.")
 
 /**
-  * Leave connected nodes. This proc should tell them we disconnected and for them to rebuild networks.
+  * Leave connected nodes. This proc should tell them we disconnected.
   */
 /obj/machinery/atmospherics/proc/leave_nodes()
-	CRASH("leave_nodes() of base atmospherics machinery called.")
+	for(var/i in nodes)
+		var/obj/machinery/atmospherics/A = i
+		if(!A)
+			continue
+		A.on_disconnect(src)
 
-/obj/machinery/atmospherics/proc/destroy_network()
-	return
+/**
+  * Clears references of connected nodes.
+  */
+/obj/machinery/atmospherics/proc/nullify_nodes()
+	nodes = list(device_type)
 
-/obj/machinery/atmospherics/proc/build_network()
-	// Called to build a network from this node
-	return
+/**
+  * Collects and sets nodes that we should connect to.
+  */
+/obj/machinery/atmospherics/proc/collect_nodes()
+
+/**
+  * Joins connected nodes. This proc should tell them we connected.
+  */
+/obj/machinery/atmospherics/proc/join_nodes()
+	for(var/i in nodes)
+		var/obj/machinery/atmospherics/A = i
+		if(!A)
+			continue
+		A.on_connect(src)
+
+/**
+  * Forms required pipeline datums.
+  */
+/obj/machinery/atmospherics/proc/form_networks()
+	CRASH("form_networks() of base atmospherics machinery called.")
 
 /obj/machinery/atmospherics/proc/nullifyNode(i)
 	if(nodes[i])
@@ -241,7 +278,7 @@
   * Returns atmospherics machinery that we are connected to that we are directly going to expand our pipenet to (so a logical no-block straight instantenously conducting connection).
   * This proc returns a list that can include nulls. The list this proc returns should not be directly modified!
   */
-/obj/machinery/atmospherics/proc/pipeline_expansion()
+/obj/machinery/atmospherics/proc/pipeline_expansion(datum/pipeline/from)
 	return nodes
 
 /**
@@ -256,6 +293,12 @@
   */
 /obj/machinery/atmospherics/proc/return_pipenet(node = 1)
 	CRASH("Tried to get the pipenet of a base atmospherics machinery. Either this check should be removed, or, more likely, someone screwed up.")
+
+/**
+  * Returns all pipenets we have.
+  */
+/obj/machinery/atmospherics/proc/return_pipenets()
+	CRASH("Tried to get all pipenets of a base atmospherics machinery. Either this check should be removed, or, more likely, someone screwed up.")
 
 /**
   * Returns the direct pipenet air of the specified node.
@@ -400,7 +443,7 @@
 				user.forceMove(target_move.loc) //handle entering and so on.
 				user.visible_message("<span class='notice'>You hear something squeezing through the ducts...</span>", "<span class='notice'>You climb out the ventilation system.")
 			else
-				var/list/pipenetdiff = returnPipenets() ^ target_move.returnPipenets()
+				var/list/pipenetdiff = return_pipenets() ^ target_move.return_pipenets()
 				if(pipenetdiff.len)
 					user.update_pipe_vision(target_move)
 				user.forceMove(target_move)
@@ -420,9 +463,6 @@
 
 /obj/machinery/atmospherics/proc/can_crawl_through()
 	return TRUE
-
-/obj/machinery/atmospherics/proc/returnPipenets()
-	return list()
 
 /obj/machinery/atmospherics/update_remote_sight(mob/user)
 	user.sight |= (SEE_TURFS|BLIND)

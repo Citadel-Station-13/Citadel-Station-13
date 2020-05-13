@@ -3,7 +3,7 @@
 
 /obj/machinery/atmospherics/components
 	/// Pipenet flags for how we behave when connected to a pipenet. THIS SHOULD NEVER BE CHANGED IN RUNTIME.
-	VAR_FINAL(pipenet_flags) = NONE
+	VAR_FINAL(aircomponent_flags) = NONE
 	/// The volumes of our nodes. NEVER DIRECTLY EDIT THIS LIST, COPY IT FIRST! THIS IS A TYPELIST.
 	var/list/node_volumes
 	/// Only valid if we are NOT directly connected: The airs of our nodes.
@@ -19,7 +19,7 @@
 
 /obj/machinery/atmospherics/components/Initialize(mapload, process = TRUE, setdir)
 	node_pipelines = new(device_type)
-	if(pipenet_flags & PIPENET_DIRECT_ATTACH)
+	if(aircomponent_flags & AIRCOMPONENT_DIRECT_ATTACH)
 		node_volumes = typelist("NODE_VOLUMES", node_volumes)
 	else
 		node_airs = new(device_type)
@@ -28,6 +28,8 @@
 	return ..()
 
 /obj/machinery/atmospherics/components/temporarily_store_air(datum/pipeline/from)
+	if(!(aircomponent_flags & AIRCOMPONENT_DIRECT_ATTACH))
+		CRASH("Tried to temporarily store air, but we're not a direct attaching component.")
 	var/nodeindex = node_pipelines.Find(from)
 	if(!nodeindex)
 		CRASH("Couldn't find pipeline in node pipeline list!")
@@ -40,48 +42,6 @@
 	for(var/gasid in temp_gases)
 		temp_gases[gasid] *= temporary_air.volume / parent_air.volume
 
-// Iconnery
-
-/obj/machinery/atmospherics/components/proc/update_icon_nopipes()
-	return
-
-/obj/machinery/atmospherics/components/update_icon()
-	update_icon_nopipes()
-
-	underlays.Cut()
-
-	var/turf/T = loc
-	if(level == 2 || (istype(T) && !T.intact))
-		showpipe = TRUE
-		plane = GAME_PLANE
-	else
-		showpipe = FALSE
-		plane = FLOOR_PLANE
-
-	if(!showpipe)
-		return //no need to update the pipes if they aren't showing
-
-	var/connected = 0 //Direction bitset
-
-	for(var/i in 1 to device_type) //adds intact pieces
-		if(nodes[i])
-			var/obj/machinery/atmospherics/node = nodes[i]
-			var/image/img = get_pipe_underlay("pipe_intact", get_dir(src, node), node.pipe_color)
-			underlays += img
-			connected |= img.dir
-
-	for(var/direction in GLOB.cardinals)
-		if((initialize_directions & direction) && !(connected & direction))
-			underlays += get_pipe_underlay("pipe_exposed", direction)
-
-	if(!shift_underlay_only)
-		PIPING_LAYER_SHIFT(src, piping_layer)
-
-/obj/machinery/atmospherics/components/proc/get_pipe_underlay(state, dir, color = null)
-	if(color)
-		. = getpipeimage('icons/obj/atmospherics/components/binary_devices.dmi', state, dir, color, piping_layer = shift_underlay_only ? piping_layer : 2)
-	else
-		. = getpipeimage('icons/obj/atmospherics/components/binary_devices.dmi', state, dir, piping_layer = shift_underlay_only ? piping_layer : 2)
 
 // Pipenet stuff; housekeeping
 
@@ -113,7 +73,7 @@
 /obj/machinery/atmospherics/components/returnPipenetAir(datum/pipeline/reference)
 	return airs[parents.Find(reference)]
 
-/obj/machinery/atmospherics/components/pipeline_expansion(datum/pipeline/reference)
+/obj/machinery/atmospherics/components/pipeline_expansion(datum/pipeline/from)
 	if(reference)
 		return list(nodes[parents.Find(reference)])
 	return ..()
@@ -179,9 +139,7 @@
 	for(var/i in 1 to device_type)
 		. += returnPipenet(nodes[i])
 
-
 // UI Stuff
-
 
 /obj/machinery/atmospherics/components/ui_status(mob/user)
 	if(allowed(user))
@@ -189,9 +147,50 @@
 	to_chat(user, "<span class='danger'>Access denied.</span>")
 	return UI_CLOSE
 
-
 // Tool acts
-
 
 /obj/machinery/atmospherics/components/analyzer_act(mob/living/user, obj/item/I)
 	atmosanalyzer_scan(airs, user, src)
+
+// Iconnery
+
+/obj/machinery/atmospherics/components/proc/update_icon_nopipes()
+	return
+
+/obj/machinery/atmospherics/components/update_icon()
+	update_icon_nopipes()
+
+	underlays.Cut()
+
+	var/turf/T = loc
+	if(level == 2 || (istype(T) && !T.intact))
+		showpipe = TRUE
+		plane = GAME_PLANE
+	else
+		showpipe = FALSE
+		plane = FLOOR_PLANE
+
+	if(!showpipe)
+		return //no need to update the pipes if they aren't showing
+
+	var/connected = 0 //Direction bitset
+
+	for(var/i in 1 to device_type) //adds intact pieces
+		if(nodes[i])
+			var/obj/machinery/atmospherics/node = nodes[i]
+			var/image/img = get_pipe_underlay("pipe_intact", get_dir(src, node), node.pipe_color)
+			underlays += img
+			connected |= img.dir
+
+	for(var/direction in GLOB.cardinals)
+		if((initialize_directions & direction) && !(connected & direction))
+			underlays += get_pipe_underlay("pipe_exposed", direction)
+
+	if(!shift_underlay_only)
+		PIPING_LAYER_SHIFT(src, piping_layer)
+
+/obj/machinery/atmospherics/components/proc/get_pipe_underlay(state, dir, color = null)
+	if(color)
+		. = getpipeimage('icons/obj/atmospherics/components/binary_devices.dmi', state, dir, color, piping_layer = shift_underlay_only ? piping_layer : 2)
+	else
+		. = getpipeimage('icons/obj/atmospherics/components/binary_devices.dmi', state, dir, piping_layer = shift_underlay_only ? piping_layer : 2)

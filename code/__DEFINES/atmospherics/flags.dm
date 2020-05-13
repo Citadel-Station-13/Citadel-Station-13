@@ -10,8 +10,8 @@
 /// Either already attached or attaching into a stationary, networked pipe.
 #define PIPING_NETWORK_JOINED					(1<<6)
 
-// pipenet_flags variable on components
+// aircomponent_flags variable on components
 /// This component directly attaches to a pipnet and accesses pipenet's air datum, rather than relying on equalization ticks to airflow.
-#define PIPENET_DIRECT_ATTACH			(1<<0)
+#define AIRCOMPONENT_DIRECT_ATTACH			(1<<0)
 /// This component is potentially going to allow straight-pipe like direct airflow, and should be asked if the pipenet should be expanding past it on equalization_tick()
-#define PIPENET_POTENTIAL_VALVE			(1<<1)
+#define AIRCOMPONENT_POTENTIAL_VALVE			(1<<1)
