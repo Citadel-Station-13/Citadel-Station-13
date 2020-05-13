@@ -1218,15 +1218,15 @@ datum/reagent/medicine/styptic_powder/overdose_start(mob/living/M)
 	value = REAGENT_VALUE_VERY_RARE
 
 /datum/reagent/medicine/lesser_syndicate_nanites/on_mob_life(mob/living/carbon/M)
-	M.adjustBruteLoss(-3*REM, FALSE) // hidden gold shh
-	M.adjustFireLoss(-3*REM, FALSE)
-	M.adjustOxyLoss(-15, FALSE)
-	M.adjustToxLoss(-3*REM, FALSE)
-	M.adjustOrganLoss(ORGAN_SLOT_BRAIN, -15*REM)
-	M.adjustCloneLoss(-3*REM, FALSE)
-	M.adjustStaminaLoss(-20*REM,FALSE)
+	M.adjustBruteLoss(-2*REM, FALSE)
+	M.adjustFireLoss(-2*REM, FALSE)
+	M.adjustOxyLoss(-5*REM, FALSE)
+	M.adjustToxLoss(-2*REM, FALSE)
+	M.adjustOrganLoss(ORGAN_SLOT_BRAIN, -5*REM)
+	M.adjustCloneLoss(-1.25*REM, FALSE)
+	M.adjustStaminaLoss(-4*REM,FALSE)
 	if(M.blood_volume < (BLOOD_VOLUME_NORMAL*M.blood_ratio))
-		M.blood_volume += 20 // blood fall out man bad
+		M.blood_volume += 3
 	..()
 	. = 1
 
