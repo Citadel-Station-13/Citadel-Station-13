@@ -34,7 +34,9 @@
 
 	var/image/pipe_vision_img = null
 
+	/// __DEFINES/atmospherics/device_type, how many devices we can connect basically.
 	var/device_type = 0
+	/// List of connected nodes.
 	var/list/obj/machinery/atmospherics/nodes
 
 	var/construction_type
@@ -62,6 +64,8 @@
 	SetInitDirections()
 
 /obj/machinery/atmospherics/Destroy()
+	Separate(FALSE)
+
 	for(var/i in 1 to device_type)
 		nullifyNode(i)
 
@@ -79,7 +83,12 @@
   * Fully disconnects us from whatever we're connected to.
   */
 /obj/machinery/atmospherics/proc/Separate(update_icon = TRUE)
-
+	SHOULD_NOT_OVERRIDE(TRUE)
+	if(!(pipe_flags & PIPING_NETWORK_JOINED))
+		CRASH("Tried to Separate() while not Join()ed.")
+	pipe_flags &= ~PIPING_NETWORK_JOINED
+	breakdown_networks()
+	leave_nodes()
 	if(update_icon)
 		update_icon()
 
@@ -87,7 +96,12 @@
   * Automatically connects us, building our network as necessary.
   */
 /obj/machinery/atmospherics/proc/Join(update_icon = TRUE)
-
+	SHOULD_NOT_OVERRIDE(TRUE)
+	if(pipe_flags & PIPING_NETWORK_JOINED)		//do not do it again.
+		CRASH("Tried to Join() while already Join()ed.")
+	pipe_flags |= PIPING_NETWORK_JOINED
+	join_nodes()
+	build_networks()
 	if(update_icon)
 		update_icon()
 
@@ -99,6 +113,18 @@
 	Join(FALSE)
 	if(update_icon)
 		update_icon()
+
+/**
+  * Destroys our pipe network, usually used when we're leaving it.
+  */
+/obj/machinery/atmospherics/proc/destroy_networks()
+	CRASH("destroy_networks() of base atmospherics machinery called.")
+
+/**
+  * Leave connected nodes. This proc should tell them we disconnected and for them to rebuild networks.
+  */
+/obj/machinery/atmospherics/proc/leave_nodes()
+	CRASH("leave_nodes() of base atmospherics machinery called.")
 
 /obj/machinery/atmospherics/proc/destroy_network()
 	return
@@ -112,6 +138,24 @@
 		var/obj/machinery/atmospherics/N = nodes[i]
 		N.disconnect(src)
 		nodes[i] = null
+
+/**
+  * Called when a specific machinery is disconnecting from us.
+  */
+/obj/machinery/atmospherics/proc/on_disconnect(obj/machinery/atmospherics/disconnecting)
+	var/nodeindex = nodes.Find(disconnecting)
+	if(!nodeindex)
+		stack_trace("on_disconnect called without the disconnecting thing being in our nodes! Something has gone horribly wrong!")
+	else
+		nodes[nodeindex] = null
+	update_icon()
+
+/obj/machinery/atmospherics/proc/disconnect(obj/machinery/atmospherics/reference)
+	if(istype(reference, /obj/machinery/atmospherics/pipe))
+		var/obj/machinery/atmospherics/pipe/P = reference
+		P.destroy_network()
+	nodes[nodes.Find(reference)] = null
+	update_icon()
 
 /**
   * Gets a list of directions we should be trying to connect to.
@@ -207,24 +251,23 @@
 /obj/machinery/atmospherics/proc/SetInitDirections()
 	return
 
-/obj/machinery/atmospherics/proc/returnPipenet()
-	return
+/**
+  * Returns the pipenet of the specified node.
+  */
+/obj/machinery/atmospherics/proc/return_pipenet(node = 1)
+	CRASH("Tried to get the pipenet of a base atmospherics machinery. Either this check should be removed, or, more likely, someone screwed up.")
 
-/obj/machinery/atmospherics/proc/returnPipenetAir()
-	return
+/**
+  * Returns the direct pipenet air of the specified node.
+  */
+/obj/machinery/atmospherics/proc/return_pipenet_air(node = 1)
+	CRASH("Tried to get the pipenet air of a base atmospherics machinery. Either this check should be removed, or, more likely, someone screwed up.")
 
-/obj/machinery/atmospherics/proc/setPipenet()
-	return
-
-/obj/machinery/atmospherics/proc/replacePipenet()
-	return
-
-/obj/machinery/atmospherics/proc/disconnect(obj/machinery/atmospherics/reference)
-	if(istype(reference, /obj/machinery/atmospherics/pipe))
-		var/obj/machinery/atmospherics/pipe/P = reference
-		P.destroy_network()
-	nodes[nodes.Find(reference)] = null
-	update_icon()
+/**
+  * Informs us that a specific node was set to a pipenet.
+  */
+/obj/machinery/atmospherics/proc/on_set_pipenet(node = 1)
+	CRASH("The pipenet of a base atmospherics machinery was on_set. Someone screwed up.")
 
 /obj/machinery/atmospherics/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/pipe)) //lets you autodrop

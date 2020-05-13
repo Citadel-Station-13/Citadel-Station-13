@@ -7,6 +7,8 @@
 #define PIPING_AUTO_DOUBLE_SHIFT_OFFSETS		(1<<4)
 /// Automatically shift pixel x OR pixel y depending on direction on update_icon().
 #define PIPING_AUTO_SHIFT_OFFSETS				(1<<5)
+/// Either already attached or attaching into a stationary, networked pipe.
+#define PIPING_NETWORK_JOINED					(1<<6)
 
 // pipenet_flags variable on components
 /// This component directly attaches to a pipnet and accesses pipenet's air datum, rather than relying on equalization ticks to airflow.
