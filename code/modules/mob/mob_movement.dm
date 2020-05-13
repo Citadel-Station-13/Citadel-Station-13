@@ -100,7 +100,7 @@
 		if(mob.throwing)
 			mob.throwing.finalize(FALSE)
 
-	if(L.pulling && !(L.combat_flags & COMBAT_FLAG_COMBAT_ACTIVE))
+	if(L.pulling && (L.grab_state > GRAB_PASSIVE) && !(L.combat_flags & COMBAT_FLAG_COMBAT_ACTIVE))
 		L.setDir(turn(L.dir, 180))
 
 	SEND_SIGNAL(mob, COMSIG_MOB_CLIENT_MOVE, src, direction, n, oldloc)
