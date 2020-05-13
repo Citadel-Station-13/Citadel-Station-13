@@ -971,34 +971,34 @@
 	flags_inv = HIDEJUMPSUIT
 	resistance_flags = NONE
 
-/obj/item/clothing/suit/hooded/wintercoat/christmascoatr
+/obj/item/clothing/suit/hooded/wintercoat/false/christmascoatr
 	name = "red christmas coat"
 	desc = "A festive red Christmas coat! Smells like Candy Cane!"
 	icon_state = "christmascoatr"
 	item_state = "christmascoatr"
-	hoodtype = /obj/item/clothing/head/hooded/winterhood/christmashoodr
+	hoodtype = /obj/item/clothing/head/hooded/winterhood/false/christmashoodr
 
-/obj/item/clothing/head/hooded/winterhood/christmashoodr
+/obj/item/clothing/head/hooded/winterhood/false/christmashoodr
 	icon_state = "christmashoodr"
 
-/obj/item/clothing/suit/hooded/wintercoat/christmascoatg
+/obj/item/clothing/suit/hooded/wintercoat/false/christmascoatg
 	name = "green christmas coat"
 	desc = "A festive green Christmas coat! Smells like Candy Cane!"
 	icon_state = "christmascoatg"
 	item_state = "christmascoatg"
-	hoodtype = /obj/item/clothing/head/hooded/winterhood/christmashoodg
+	hoodtype = /obj/item/clothing/head/hooded/winterhood/false/christmashoodg
 
-/obj/item/clothing/head/hooded/winterhood/christmashoodg
+/obj/item/clothing/head/hooded/winterhood/false/christmashoodg
 	icon_state = "christmashoodg"
 
-/obj/item/clothing/suit/hooded/wintercoat/christmascoatrg
+/obj/item/clothing/suit/hooded/wintercoat/false/christmascoatrg
 	name = "red and green christmas coat"
 	desc = "A festive red and green Christmas coat! Smells like Candy Cane!"
 	icon_state = "christmascoatrg"
 	item_state = "christmascoatrg"
-	hoodtype = /obj/item/clothing/head/hooded/winterhood/christmashoodrg
+	hoodtype = /obj/item/clothing/head/hooded/winterhood/false/christmashoodrg
 
-/obj/item/clothing/head/hooded/winterhood/christmashoodrg
+/obj/item/clothing/head/hooded/winterhood/false/christmashoodrg
 	icon_state = "christmashoodrg"
 
 /obj/item/clothing/suit/hooded/wintercoat/polychromic
