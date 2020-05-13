@@ -115,8 +115,8 @@
 		return PROCESS_KILL
 
 /obj/machinery/space_heater/RefreshParts()
-	var/laser = 0
-	var/cap = 0
+	var/laser = 2
+	var/cap = 1
 	for(var/obj/item/stock_parts/micro_laser/M in component_parts)
 		laser += M.rating
 	for(var/obj/item/stock_parts/capacitor/M in component_parts)
@@ -161,6 +161,8 @@
 		update_icon()
 		if(panel_open)
 			interact(user)
+	else if(default_unfasten_wrench(user, I))
+		return
 	else if(default_deconstruction_crowbar(I))
 		return
 	else
