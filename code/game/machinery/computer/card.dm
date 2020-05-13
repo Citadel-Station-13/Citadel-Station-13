@@ -467,7 +467,7 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 						to_chat(usr, "<span class='alert'>No log exists for this job.</span>")
 						updateUsrDialog()
 						return
-					if(inserted_modify_id.registered_account && alert("Would you like to set their bank account's assigned job to this?", "Bank Account Job", "Yes", "Yes") == "Yes")
+					if(inserted_modify_id.registered_account && (alert(usr, "Would you like to set their bank account's assigned job to this?", "Bank Account Job", "Yes", "No") == "Yes"))
 						inserted_modify_id.registered_account.account_job = jobdatum // this is a terrible idea and people will grief but sure whatever
 					inserted_modify_id.access = ( istype(src, /obj/machinery/computer/card/centcom) ? get_centcom_access(t1) : jobdatum.get_access() )
 				if (inserted_modify_id)
