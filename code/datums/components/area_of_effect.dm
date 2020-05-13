@@ -4,30 +4,32 @@
 	var/range_or_view = "range"
 	var/comsig_value
 	var/return_value
-	var/datum/callback/callback
+	var/datum/callback/comsig_callback
+	var/datum/callback/parent_moved_callback
 	var/range_view_list
 	var/range_view_turf_list = list()
 	var/list/whitelist_typecache
 	var/list/blacklist_typecache
 	var/protect_self = TRUE
 
-/datum/component/area_of_effect/Initialize(dist, r_or_v, comsig, value, _callback, whitelist, blacklist)
+/datum/component/area_of_effect/Initialize(dist = 5, r_or_v = "range", comsig, value, callback, move_callback, whitelist, blacklist, self = TRUE)
 	. = ..()
-	if(!isatom(parent) || isarea(parent) || !comsig || !(value || _callback))
+	if(!isatom(parent) || isarea(parent) || !comsig || !(value || callback || move_callback))
 		return COMPONENT_INCOMPATIBLE
 
-	var/atom/source = parent
 	distance = dist
 	range_or_view = r_or_v
 	comsig_value = comsig
 	return_value = value
-	callback = _callback
+	comsig_callback = callback
+	parent_moved_callback = move_callback
 	whitelist_typecache = whitelist
 	blacklist_typecache = blacklist
+	protect_self = self
 
-	range_view_list = (range_or_view == "range" ? range(distance, source) : view(distance, source))
+	range_view_list = (range_or_view == "range" ? range(distance, parent) : view(distance, parent))
 	if(!protect_self)
-		range_view_list -= src
+		range_view_list -= parent
 
 	for(var/turf/T in range_view_list)
 		RegisterSignal(T, COMSIG_ATOM_ENTERED, .proc/on_atom_entered)
@@ -43,6 +45,13 @@
 			continue
 		RegisterSignal(A,  comsig_value, .proc/return_value)
 
+/datum/component/area_of_effect/Destroy()
+	if(comsig_callback)
+		QDEL_NULL(comsig_callback)
+	if(parent_moved_callback)
+		QDEL_NULL(parent_moved_callback)
+	return ..()
+
 /datum/component/area_of_effect/proc/on_atom_entered(turf/T, atom/movable/entered, atom/oldloc)
 	if(entered == parent || (oldloc in range_view_turf_list))
 		return
@@ -52,44 +61,49 @@
 	range_view_list += entered
 
 /datum/component/area_of_effect/proc/on_atom_exited(turf/source, atom/movable/exited, atom/newloc)
-	if(exited == parent) //Reorganize the list of "protected" atoms
-		var/list/L
-		if(newloc && isturf(newloc)) //not nullspaced or bagged. Yea, quite a limitation for the latter, for now..
-			L = (range_or_view == "range" ? range(distance, newloc) : view(distance, newloc))
-			if(!protect_self)
-				L -= src
-		var/list/old_diff = range_view_list - L
-		var/list/old_turf_diff = range_view_turf_list - L
-		range_view_turf_list = list()
-		var/list/turf_sigs = list(COMSIG_ATOM_ENTERED, COMSIG_ATOM_EXITED, COMSIG_TURF_CHANGE, COMSIG_ATOM_NEW_CONTENT)
-		for(var/k in old_turf_diff)
-			var/turf/T = k
-			UnregisterSignal(T, turf_sigs)
-		for(var/k in old_diff)
+	if(exited != parent)
+		if((exited in range_view_list) && !(newloc in range_view_turf_list))
+			UnregisterSignal(exited, comsig_value)
+		return
+
+	var/list/L
+	if(newloc && isturf(newloc)) //not nullspaced or bagged. Yea, quite a limitation for the latter, as of now..
+		L = (range_or_view == "range" ? range(distance, newloc) : view(distance, newloc))
+		if(!protect_self)
+			L -= src
+	var/list/old_diff = range_view_list - L
+	var/list/old_turf_diff = range_view_turf_list - L
+	var/list/turf_sigs = list(COMSIG_ATOM_ENTERED, COMSIG_ATOM_EXITED, COMSIG_TURF_CHANGE, COMSIG_ATOM_NEW_CONTENT)
+	for(var/k in old_turf_diff)
+		var/turf/T = k
+		UnregisterSignal(T, turf_sigs)
+		range_view_turf_list -= T
+	for(var/k in old_diff)
+		var/atom/A = k
+		UnregisterSignal(A, comsig_value)
+	var/list/new_diff
+	var/list/new_turfs
+	if(L)
+		new_diff = L - range_view_list
+		new_turfs = list()
+		for(var/turf/T in new_diff)
+			RegisterSignal(T, COMSIG_ATOM_ENTERED, .proc/on_atom_entered)
+			RegisterSignal(T, COMSIG_ATOM_EXITED, .proc/on_atom_exited)
+			RegisterSignal(T, COMSIG_TURF_CHANGE, .proc/transfer_sigs)
+			RegisterSignal(T, COMSIG_ATOM_NEW_CONTENT, .proc/on_new_content)
+			range_view_turf_list += T
+			new_turfs += T
+		for(var/k in new_diff)
 			var/atom/A = k
-			UnregisterSignal(A, comsig_value)
-		if(L) //not nullspaced
-			var/list/new_diff = L - range_view_list
-			for(var/turf/T in new_diff)
-				RegisterSignal(T, COMSIG_ATOM_ENTERED, .proc/on_atom_entered)
-				RegisterSignal(T, COMSIG_ATOM_EXITED, .proc/on_atom_exited)
-				RegisterSignal(T, COMSIG_TURF_CHANGE, .proc/transfer_sigs)
-				RegisterSignal(T, COMSIG_ATOM_NEW_CONTENT, .proc/on_new_content)
-				range_view_turf_list += T
-			for(var/k in new_diff)
-				var/atom/A = k
-				if((whitelist_typecache && !whitelist_typecache[A.type]) || (blacklist_typecache && blacklist_typecache[A.type]))
-					L -= A
-					continue
-				RegisterSignal(A,  comsig_value, .proc/return_value)
-		range_view_list = L
-		return
-	if(!(exited in range_view_list) || (newloc in range_view_turf_list))
-		return
-	UnregisterSignal(exited, comsig_value)
+			if((whitelist_typecache && !whitelist_typecache[A.type]) || (blacklist_typecache && blacklist_typecache[A.type]))
+				L -= A
+				continue
+			RegisterSignal(A,  comsig_value, .proc/return_value)
+	range_view_list = L
+	parent_moved_callback?.Invoke(old_diff, old_turf_diff, new_diff, new_turfs)
 
 /datum/component/area_of_effect/proc/on_new_content(turf/T, atom/movable/A)
-	if((whitelist_typecache && !whitelist_typecache[A.type]) || (blacklist_typecache && blacklist_typecache[A.type]))
+	if((whitelist_typecache && !whitelist_typecache[A.type]) || (blacklist_typecache && blacklist_typecache[A.type]) || A == parent)
 		return
 	RegisterSignal(A,  comsig_value, .proc/return_value)
 	range_view_list += A
@@ -106,7 +120,7 @@
 	range_view_turf_list += T
 
 /datum/component/area_of_effect/proc/return_value(atom/source)
-	callback?.Invoke(source)
+	comsig_callback?.Invoke(source)
 	return return_value
 
 /obj/structure/range_test
@@ -115,6 +129,6 @@
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "shieldon"
 
-/obj/structure/range_test/LateInitialize()
+/obj/structure/range_test/ComponentInitialize()
 	. = ..()
-	AddComponent(/datum/component/area_of_effect, comsig = COMSIG_ATOM_EMP_ACT, value = EMP_PROTECT_CONTENTS|EMP_PROTECT_WIRES|EMP_PROTECT_SELF)
+	AddComponent(/datum/component/area_of_effect, dist = 2, comsig = COMSIG_ATOM_EMP_ACT, value = EMP_PROTECT_CONTENTS|EMP_PROTECT_WIRES|EMP_PROTECT_SELF)
