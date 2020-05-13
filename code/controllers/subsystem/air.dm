@@ -39,6 +39,10 @@ SUBSYSTEM_DEF(air)
 
 	var/log_explosive_decompression = TRUE // If things get spammy, admemes can turn this off.
 
+	var/monstermos_turf_limit = 25
+	var/monstermos_hard_turf_limit = 2000
+	var/monstermos_enabled = TRUE
+
 /datum/controller/subsystem/air/stat_entry(msg)
 	msg += "C:{"
 	msg += "EQ:[round(cost_equalize,1)]|"
@@ -100,7 +104,7 @@ SUBSYSTEM_DEF(air)
 		if(state != SS_RUNNING)
 			return
 		resumed = 0
-		currentpart = SSAIR_EQUALIZE // set this to EQUALIZE for monstermos
+		currentpart = monstermos_enabled ? SSAIR_EQUALIZE : SSAIR_ACTIVETURFS
 
 	if(currentpart == SSAIR_EQUALIZE)
 		timer = TICK_USAGE_REAL
