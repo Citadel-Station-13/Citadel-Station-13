@@ -60,6 +60,13 @@
 		/obj/item/toy/plush/snakeplushie
 		))
 
+/datum/component/storage/concrete/pockets/shoes/false/Initialize()
+	. = ..()
+	can_hold = typecacheof(list(
+		/obj/item/pen, /obj/item/toy/crayon,
+		/obj/item/lipstick, /obj/item/flashlight/pen,
+		/obj/item/clothing/mask/cigarette, /obj/item/toy/plush/snakeplushie
+		))
 /datum/component/storage/concrete/pockets/shoes/clown/Initialize()
 	. = ..()
 	cant_hold = typecacheof(list(/obj/item/screwdriver/power))
