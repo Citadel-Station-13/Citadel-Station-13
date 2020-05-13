@@ -158,10 +158,10 @@
 					/obj/item/clothing/suit/jacket/letterman_syndie = 5,
 					/obj/item/clothing/under/costume/jabroni = 2,
 					/obj/item/clothing/suit/vapeshirt = 2,
-					/obj/item/clothing/suit/hooded/wintercoat = 2,
-					/obj/item/clothing/suit/hooded/wintercoat/aformal = 1,
-					/obj/item/clothing/suit/hooded/wintercoat/narsie/fake = 1,
-					/obj/item/clothing/suit/hooded/wintercoat/ratvar/fake = 1,
+					/obj/item/clothing/suit/hooded/wintercoat = 3,
+					/obj/item/clothing/suit/hooded/wintercoat/aformal = 3,
+					/obj/item/clothing/suit/hooded/wintercoat/narsie/fake = 2, //look-a-like antag gear so slightly less than others
+					/obj/item/clothing/suit/hooded/wintercoat/ratvar/fake = 2,
 					/obj/item/clothing/under/costume/geisha = 4,
 					/obj/item/clothing/under/misc/keyholesweater = 3,
 					/obj/item/clothing/under/misc/staffassistant = 5)
@@ -173,7 +173,7 @@
 					/obj/item/clothing/under/pants/mustangjeans = 3,
 					/obj/item/clothing/neck/necklace/dope = 5,
 					/obj/item/clothing/suit/jacket/letterman_nanotrasen = 5,
-					/obj/item/clothing/suit/hooded/wintercoat/false/polychromic = 5)
+					/obj/item/clothing/suit/hooded/wintercoat/polychromic = 3)
 	refill_canister = /obj/item/vending_refill/clothing
 
 /obj/item/vending_refill/clothing
