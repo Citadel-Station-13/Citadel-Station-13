@@ -128,6 +128,11 @@
 	resistance_flags = NONE
 	permeability_coefficient = 0.05 //Thick soles, and covers the ankle
 	pocket_storage_component_path = /datum/component/storage/concrete/pockets/shoes
+	
+/obj/item/clothing/shoes/jackboots/false
+	desc = "Off-brand combat boot replicas fitted for comfort."
+	permeability_coefficient = 1
+	pocket_storage_component_path = /datum/component/storage/concrete/pockets/shoes/false
 
 /obj/item/clothing/shoes/jackboots/fast
 	slowdown = -1
@@ -142,6 +147,13 @@
 	heat_protection = FEET|LEGS
 	max_heat_protection_temperature = SHOES_MAX_TEMP_PROTECT
 	pocket_storage_component_path = /datum/component/storage/concrete/pockets/shoes
+
+/obj/item/clothing/shoes/winterboots/false
+	desc = "Boots lined with synthetic 'animal fur'."
+	permeability_coefficient = 1
+	min_cold_protection_temperature = 0
+	max_heat_protection_temperature = 0
+	pocket_storage_component_path = /datum/component/storage/concrete/pockets/shoes/false
 
 /obj/item/clothing/shoes/winterboots/ice_boots
 	name = "ice hiking boots"
@@ -175,6 +187,11 @@
 	strip_delay = 40
 	equip_delay_other = 40
 	pocket_storage_component_path = /datum/component/storage/concrete/pockets/shoes
+
+/obj/item/clothing/shoes/workboots/false
+	desc = "Off-brand lace-up work boots for the especially blue-collar."
+	permeability_coefficient = 1
+	pocket_storage_component_path = /datum/component/storage/concrete/pockets/shoes/false
 
 /obj/item/clothing/shoes/workboots/mining
 	name = "mining boots"
