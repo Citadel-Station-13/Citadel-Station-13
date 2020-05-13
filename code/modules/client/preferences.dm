@@ -153,6 +153,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		"ipc_screen" = "Sunburst",
 		"ipc_antenna" = "None",
 		"flavor_text" = "",
+		"ooc_notes" = "",
 		"meat_type" = "Mammalian",
 		"body_model" = MALE,
 		"body_size" = RESIZE_DEFAULT_SIZE
@@ -348,6 +349,16 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					dat += "[features["flavor_text"]]"
 			else
 				dat += "[TextPreview(features["flavor_text"])]...<BR>"
+			dat += "<h2>OOC notes</h2>"
+			dat += "<a href='?_src_=prefs;preference=ooc_notes;task=input'><b>Set OOC notes</b></a><br>"
+			var/ooc_notes_len = length(features["ooc_notes"])
+			if(ooc_notes_len <= 40)
+				if(!ooc_notes_len)
+					dat += "\[...\]"
+				else
+					dat += "[features["ooc_notes"]]"
+			else
+				dat += "[TextPreview(features["ooc_notes"])]...<BR>"
 			dat += "<h2>Body</h2>"
 			dat += "<b>Gender:</b><a style='display:block;width:100px' href='?_src_=prefs;preference=gender;task=input'>[gender == MALE ? "Male" : (gender == FEMALE ? "Female" : (gender == PLURAL ? "Non-binary" : "Object"))]</a><BR>"
 			if(gender != NEUTER && pref_species.sexes)
@@ -907,7 +918,12 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 			dat += "<b>Ghosts of Others:</b> <a href='?_src_=prefs;task=input;preference=ghostothers'>[button_name]</a><br>"
 			dat += "<br>"
+
 			dat += "<b>FPS:</b> <a href='?_src_=prefs;preference=clientfps;task=input'>[clientfps]</a><br>"
+
+			dat += "<b>Income Updates:</b> <a href='?_src_=prefs;preference=income_pings'>[(chat_toggles & CHAT_BANKCARD) ? "Allowed" : "Muted"]</a><br>"
+			dat += "<br>"
+
 			dat += "<b>Parallax (Fancy Space):</b> <a href='?_src_=prefs;preference=parallaxdown' oncontextmenu='window.location.href=\"?_src_=prefs;preference=parallaxup\";return false;'>"
 			switch (parallax)
 				if (PARALLAX_LOW)
@@ -1509,6 +1525,11 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					var/msg = stripped_multiline_input(usr, "Set the flavor text in your 'examine' verb. This can also be used for OOC notes and preferences!", "Flavor Text", features["flavor_text"], MAX_FLAVOR_LEN, TRUE)
 					if(!isnull(msg))
 						features["flavor_text"] = html_decode(msg)
+
+				if("ooc_notes")
+					var/msg = stripped_multiline_input(usr, "Set always-visible OOC notes related to content preferences. THIS IS NOT FOR CHARACTER DESCRIPTIONS!", "OOC notes", features["ooc_notes"], MAX_FLAVOR_LEN, TRUE)
+					if(!isnull(msg))
+						features["ooc_notes"] = html_decode(msg)
 
 				if("hair")
 					var/new_hair = input(user, "Choose your character's hair colour:", "Character Preference","#"+hair_color) as color|null
@@ -2302,6 +2323,9 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 				if("ghost_pda")
 					chat_toggles ^= CHAT_GHOSTPDA
+
+				if("income_pings")
+					chat_toggles ^= CHAT_BANKCARD
 
 				if("pull_requests")
 					chat_toggles ^= CHAT_PULLR

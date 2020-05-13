@@ -686,7 +686,7 @@
 	name = "ID, jumpsuit and shoes"
 	uniform = /obj/item/clothing/under/color/random
 	shoes = /obj/item/clothing/shoes/sneakers/black
-	id = /obj/item/card/id
+	id = /obj/item/card/id/no_banking
 	r_hand = /obj/item/storage/box/syndie_kit/chameleon/ghostcafe
 
 
