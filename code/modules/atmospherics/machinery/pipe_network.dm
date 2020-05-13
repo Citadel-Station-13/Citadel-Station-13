@@ -16,12 +16,15 @@
 	var/list/datum/pipeline/pipelines
 	/// Has our air changed? If so, we'll need to equalization_tick().
 	var/update = FALSE
+	/// Marks us as being invalid for air operations due to being mid-rebuild or destroy.
+	var/invalid = TRUE
 
 /datum/pipe_network/New(datum/pipeline/from)
 	SSair.pipenets += src
 	pipelines = list()
 
 /datum/pipe_network/Destroy()
+	invalid = FALSE
 	SSair.pipenets -= src
 	breakdown()
 	return ..()
@@ -65,6 +68,7 @@
 			var/obj/machinery/atmospherics/components/C = i
 			expand_through |= C.directly_connected_pipenets(P)
 	air.volume = total_volume
+	invalid = TRUE
 
 /**
   * Equalizes our air across all components inside us based on volumes.
@@ -105,6 +109,8 @@
 				gaslist[gasid] = (air.volume / total_volume) * total_gases[gasid]
 
 /datum/pipe_network/process()
+	if(invalid)
+		return
 	if(update)
 		update = FALSE
 		equalization_tick()

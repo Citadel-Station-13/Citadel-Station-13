@@ -25,24 +25,23 @@
 		volume = 35 * device_type
 	return ..()
 
-/obj/machinery/atmospherics/pipe/nullifyNode(i)
-	var/obj/machinery/atmospherics/oldN = nodes[i]
-	..()
-	if(oldN)
-		SSair.add_to_rebuild_queue(oldN)
+/obj/machinery/atmospherics/pipe/form_networks()
+	if(parent)
+		CRASH("Attempted to form network when parent still exists!")
+	parent = new
+	parent.build_network(src)
 
-/obj/machinery/atmospherics/pipe/destroy_network()
+/obj/machinery/atmospherics/pipe/breakdown_networks()
 	QDEL_NULL(parent)
 
-/obj/machinery/atmospherics/pipe/build_network()
-	if(QDELETED(parent))
-		parent = new
-		parent.build_pipeline(src)
+/obj/machinery/atmospherics/pipe/on_disconnect(obj/machinery/atmospherics/other)
+	. = ..()
+	SSair.add_to_rebuild_queue(src)		// they probably destroyed our network. i should probably have a better system than this but eh.
 
 /obj/machinery/atmospherics/pipe/atmosinit()
 	var/turf/T = loc			// hide if turf is not intact
 	hide(T.intact)
-	..()
+	return ..()
 
 /**
   * Sets our volume and updates our pipenet accordingly if necessary.
@@ -79,10 +78,11 @@
 		air_update_turf()
 
 /obj/machinery/atmospherics/pipe/return_air()
-	return parent.air
+	return return_pipenet_air()
 
 /obj/machinery/atmospherics/pipe/remove_air(amount)
-	return parent.air.remove(amount)
+	var/datum/gas_mixture/GM = return_pipenet_air()
+	return GM?.remove(amount)
 
 /obj/machinery/atmospherics/pipe/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/pipe_meter))
@@ -111,6 +111,10 @@
 	if(old != parent)
 		stack_trace("Pipeline replacement proc called with an old pipeline that wasn't ours! SOMETHING HAS GONE HORRIBLY WRONG!")
 	parent = with
+
+/obj/machinery/atmospherics/pipe/QueuePipenetRebuild(node = 1)
+	parent?.invalid = TRUE
+	SSair.add_to_rebuild_queue(src)
 
 /obj/machinery/atmospherics/pipe/Destroy()
 	QDEL_NULL(parent)

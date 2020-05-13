@@ -352,6 +352,24 @@
 /obj/machinery/atmospherics/proc/on_pipenet_replace(datum/pipeline/old, datum/pipeline/with)
 	CRASH("The pipenet of a base atmospherics machinery was on_replace'd. Someone screwed up.")
 
+/**
+  * Queues up a pipenet rebuild on a specified node.
+  */
+/obj/machinery/atmospherics/proc/QueuePipenetRebuild(node = 1)
+	CRASH("Queued a rebuild of a pipenet on base atmospherics machinery.")
+
+/**
+  * Rebuilds the pipenets of a specified node.
+  */
+/obj/machinery/atmospherics/proc/RebuildNodePipeline(node = 1)
+	CRASH("Attempted to RebuildNodePipeline() on base atmospherics machinery.")
+
+/**
+  * Rebuilds the pipenets of the entire machine.
+  */
+/obj/machinery/atmospherics/proc/RebuildAllPipelines()
+	CRASH("Attempted to rebuild all pipelines on base atmospherics machinery.")
+
 /obj/machinery/atmospherics/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/pipe)) //lets you autodrop
 		var/obj/item/pipe/pipe = W

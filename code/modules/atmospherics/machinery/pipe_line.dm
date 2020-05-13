@@ -21,6 +21,8 @@
 	var/datum/pipe_network/parent
 	/// The gas mixtures of indirectly attached components.
 	var/list/datum/gas_mixture/component_airs
+	/// Marks us as being destroyed or otherwise broken down or rebuilt. This means we should be invalid for air operations.
+	var/invalid = TRUE
 
 /datum/pipeline/New()
 	volume = 0
@@ -32,6 +34,7 @@
 	SSair.pipelines += src
 
 /datum/pipeline/Destroy()
+	invalid = TRUE
 	SSair.pipelines -= src
 	breakdown()
 	return ..()
@@ -90,7 +93,6 @@
 	total_volume = 0
 	volume = 0
 
-
 	var/volume = 0
 	if(istype(base, /obj/machinery/atmospherics/pipe))
 		var/obj/machinery/atmospherics/pipe/E = base
@@ -138,6 +140,7 @@
 			possible_expansions -= borderline
 
 	air.volume = volume
+	invalid = FALSE
 
 /datum/pipeline/proc/addMachineryMember(obj/machinery/atmospherics/components/C)
 	other_atmosmch |= C
