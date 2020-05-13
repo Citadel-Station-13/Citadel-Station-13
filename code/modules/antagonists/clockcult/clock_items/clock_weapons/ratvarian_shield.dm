@@ -10,7 +10,7 @@
 	armor = list("melee" = 70, "bullet" = 70, "laser" = -10, "energy" = -20, "bomb" = 60, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 100)
 	shield_flags = SHIELD_FLAGS_DEFAULT
 	max_integrity = 100
-	repair_material = 0 // Done differently because brass is technically a floortile, not a material sheet.
+	repair_material = /obj/item/stack/tile/brass
 	var/dam_absorbed = 0
 	var/bash_mult_steps = 40
 	var/max_bash_mult = 4
@@ -21,18 +21,6 @@
 		desc +="\n <span class='inathneq_small'>The shield has absorbed [dam_absorbed] damage, multiplying the effectiveness of its bashes by [calc_bash_mult()]</span>"
 	. = ..()
 	desc = initial(desc)
-
-/obj/item/shield/riot/ratvarian/attackby(obj/item/W, mob/user, params)
-	if(is_servant_of_ratvar(user) && istype(W, /obj/item/stack/tile/brass))
-		if(obj_integrity >= max_integrity)
-			to_chat(user, "<span class='warning'>[src] is already in perfect condition.</span>")
-		else
-			var/obj/item/stack/tile/brass/B = W
-			B.use(1)
-			obj_integrity = max_integrity
-			to_chat(user, "<span class='notice'>You swiftly repair [src] with [B].</span>")
-	else
-		return ..()
 
 obj/item/shield/riot/ratvarian/proc/calc_bash_mult()
 	var/bash_mult = 0
