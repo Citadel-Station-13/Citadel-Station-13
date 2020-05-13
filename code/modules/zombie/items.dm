@@ -74,4 +74,4 @@
 		user.adjustCloneLoss(-hp_gained, 0)
 		user.updatehealth()
 		user.adjustOrganLoss(ORGAN_SLOT_BRAIN, -hp_gained) // Zom Bee gibbers "BRAAAAISNSs!1!"
-		user.nutrition = min(user.nutrition + hp_gained, NUTRITION_LEVEL_FULL)
+		user.adjust_nutrition(hp_gained, NUTRITION_LEVEL_FULL)

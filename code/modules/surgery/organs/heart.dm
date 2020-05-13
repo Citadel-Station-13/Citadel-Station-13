@@ -221,7 +221,7 @@ obj/item/organ/heart/cybernetic/upgraded/on_life()
 		used_dose()
 	if(ramount < 10) //eats your nutrition to regen epinephrine
 		var/regen_amount = owner.nutrition/2000
-		owner.nutrition -= regen_amount
+		owner.adjust_nutrition(-regen_amount)
 		ramount += regen_amount
 
 /obj/item/organ/heart/cybernetic/upgraded/proc/used_dose()
