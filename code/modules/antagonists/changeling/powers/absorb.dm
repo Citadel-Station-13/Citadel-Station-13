@@ -59,7 +59,7 @@
 		changeling.trueabsorbs++
 
 	if(user.nutrition < NUTRITION_LEVEL_WELL_FED)
-		user.nutrition = min((user.nutrition + target.nutrition), NUTRITION_LEVEL_WELL_FED)
+		user.adjust_nutrition(target.nutrition, NUTRITION_LEVEL_WELL_FED)
 
 	// Absorb a lizard, speak Draconic.
 	user.copy_languages(target, LANGUAGE_ABSORB)

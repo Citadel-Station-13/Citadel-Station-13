@@ -118,30 +118,33 @@
 
 				// After we remove items, at least give them what they need to live.
 				target.dna.species.give_important_for_life(target)
-
-			// After pod is sent we start the victim narrative/heal.
-			handleVictimExperience(M)
-
-			// This is slightly delayed because of the sleep calls above to handle the narrative.
-			// We don't want to tell the station instantly.
-			var/points_to_check
-			if(points_to_check >= ransom)
-				SSshuttle.points -= ransom
-			else
-				SSshuttle.points -= points_to_check
-
+			handleVictimExperience(M)	// After pod is sent we start the victim narrative/heal.
+			var/datum/bank_account/D = SSeconomy.get_dep_account(ACCOUNT_CAR)
+			var/points_to_check = min(D.account_balance, ransom)
+			D.adjust_money(min(points_to_check, ransom))
 			priority_announce("One of your crew was captured by a rival organisation - we've needed to pay their ransom to bring them back. \
 							As is policy we've taken a portion of the station's funds to offset the overall cost.", null, "attention", null, "Nanotrasen Asset Protection")
 
-// They're off to holding - handle the return timer and give some text about what's going on.
-/datum/syndicate_contract/proc/handleVictimExperience(var/mob/living/M)
-	// Ship 'em back - dead or alive, 4 minutes wait.
-	// Even if they weren't the target, we're still treating them the same.
-	addtimer(CALLBACK(src, .proc/returnVictim, M), (60 * 10) * 4)
+			sleep(30)
 
-	if (M.stat != DEAD)
-		M.reagents.add_reagent(/datum/reagent/medicine/regen_jelly, 20)
+			// Pay contractor their portion of ransom
+			if (status == CONTRACT_STATUS_COMPLETE)
+				var/mob/living/carbon/human/H
+				var/obj/item/card/id/C
+				if(ishuman(contract.owner.current))
+					H = contract.owner.current
+					C = H.get_idcard(TRUE)
 
+				if(C && C.registered_account)
+					C.registered_account.adjust_money(points_to_check * 0.35)
+
+					C.registered_account.bank_card_talk("We've processed the ransom, agent. Here's your cut - your balance is now \
+					[C.registered_account.account_balance] cr.", TRUE)
+
+/datum/syndicate_contract/proc/handleVictimExperience(var/mob/living/M)	// They're off to holding - handle the return timer and give some text about what's going on.
+	addtimer(CALLBACK(src, .proc/returnVictim, M), 4 MINUTES)	// Ship 'em back - dead or alive... 4 minutes wait.
+	if(M.stat != DEAD)	//Even if they weren't the target, we're still treating them the same.
+		M.reagents.add_reagent(/datum/reagent/medicine/regen_jelly, 20)	// Heal them up - gets them out of crit/soft crit. -- now 100% toxinlover friendly!!
 		M.flash_act()
 		M.confused += 10
 		M.blur_eyes(5)

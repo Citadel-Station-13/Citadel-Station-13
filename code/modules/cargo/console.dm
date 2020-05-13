@@ -3,6 +3,7 @@
 	desc = "Used to order supplies, approve requests, and control the shuttle."
 	icon_screen = "supply"
 	circuit = /obj/item/circuitboard/computer/cargo
+	req_access = list(ACCESS_CARGO)
 	ui_x = 780
 	ui_y = 750
 
@@ -25,6 +26,7 @@
 	desc = "Used to request supplies from cargo."
 	icon_screen = "request"
 	circuit = /obj/item/circuitboard/computer/cargo/request
+	req_access = list()
 	requestonly = TRUE
 
 /obj/machinery/computer/cargo/Initialize()
@@ -49,6 +51,7 @@
 		. |= EXPORT_EMAG
 
 /obj/machinery/computer/cargo/emag_act(mob/user)
+	. = ..()
 	if(obj_flags & EMAGGED)
 		return
 	if(user)
@@ -62,7 +65,9 @@
 	var/obj/item/circuitboard/computer/cargo/board = circuit
 	board.contraband = TRUE
 	board.obj_flags |= EMAGGED
+	req_access = list()
 	update_static_data(user)
+	return ..()
 
 /obj/machinery/computer/cargo/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
 											datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
@@ -74,9 +79,12 @@
 /obj/machinery/computer/cargo/ui_data()
 	var/list/data = list()
 	data["location"] = SSshuttle.supply.getStatusText()
+	var/datum/bank_account/D = SSeconomy.get_dep_account(ACCOUNT_CAR)
+	if(D)
+		data["points"] = D.account_balance
 	data["away"] = SSshuttle.supply.getDockedId() == "supply_away"
+	data["self_paid"] = self_paid
 	data["docked"] = SSshuttle.supply.mode == SHUTTLE_IDLE
-	data["points"] = SSshuttle.points
 	data["loan"] = !!SSshuttle.shuttle_loan
 	data["loan_dispatched"] = SSshuttle.shuttle_loan && SSshuttle.shuttle_loan.dispatched
 	var/message = "Remember to stamp and send back the supply manifests."
@@ -92,6 +100,7 @@
 			"cost" = SO.pack.cost,
 			"id" = SO.id,
 			"orderer" = SO.orderer,
+			"paid" = !isnull(SO.paying_account) //paid by requester
 		))
 
 	data["requests"] = list()
@@ -130,6 +139,9 @@
 
 /obj/machinery/computer/cargo/ui_act(action, params, datum/tgui/ui)
 	if(..())
+		return
+	if(!allowed(usr))
+		to_chat(usr, "<span class='notice'>Access denied.</span>")
 		return
 	switch(action)
 		if("send")
@@ -182,19 +194,33 @@
 				name = usr.real_name
 				rank = "Silicon"
 
+			var/datum/bank_account/account
+			if(self_paid && ishuman(usr))
+				var/mob/living/carbon/human/H = usr
+				var/obj/item/card/id/id_card = H.get_idcard(TRUE)
+				if(!istype(id_card))
+					say("No ID card detected.")
+					return
+				account = id_card.registered_account
+				if(!istype(account))
+					say("Invalid bank account.")
+					return
+
 			var/reason = ""
-			if(requestonly)
+			if(requestonly && !self_paid)
 				reason = stripped_input("Reason:", name, "")
 				if(isnull(reason) || ..())
 					return
 
 			var/turf/T = get_turf(src)
-			var/datum/supply_order/SO = new(pack, name, rank, ckey, reason)
+			var/datum/supply_order/SO = new(pack, name, rank, ckey, reason, account)
 			SO.generateRequisition(T)
-			if(requestonly)
+			if(requestonly && !self_paid)
 				SSshuttle.requestlist += SO
 			else
 				SSshuttle.shoppinglist += SO
+				if(self_paid)
+					say("Order processed. The price will be charged to [account.account_holder]'s bank account on delivery.")
 			. = TRUE
 		if("remove")
 			var/id = text2num(params["id"])
@@ -223,6 +249,9 @@
 					break
 		if("denyall")
 			SSshuttle.requestlist.Cut()
+			. = TRUE
+		if("toggleprivate")
+			self_paid = !self_paid
 			. = TRUE
 	if(.)
 		post_signal("supply")
