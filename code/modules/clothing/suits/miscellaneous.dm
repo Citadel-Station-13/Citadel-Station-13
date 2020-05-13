@@ -1017,16 +1017,11 @@
 
 
 /obj/item/clothing/suit/hooded/wintercoat/polychromic/false
-	name = "polychromic winter coat"
-	icon_state = "coatpoly"
-	item_state = "coatpoly"
 	cold_protection = 0
 	min_cold_protection_temperature = 0
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 0)
 	hoodtype = /obj/item/clothing/head/hooded/winterhood/polychromic/false
 
 /obj/item/clothing/head/hooded/winterhood/polychromic/false
-	icon_state = "winterhood_poly"
-	item_state = "winterhood_poly"
 	cold_protection = 0
 	min_cold_protection_temperature = 0
