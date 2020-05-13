@@ -1015,7 +1015,6 @@
 	icon_state = "winterhood_poly"
 	item_state = "winterhood_poly"
 
-
 /obj/item/clothing/suit/hooded/wintercoat/polychromic/false
 	cold_protection = 0
 	min_cold_protection_temperature = 0
