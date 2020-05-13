@@ -4842,14 +4842,6 @@
 /obj/machinery/door/firedoor/border_only,
 /turf/open/floor/plasteel,
 /area/science/robotics/mechbay)
-"bDf" = (
-/obj/machinery/door/airlock/external{
-	name = "Engineering External Access";
-	req_access_txt = "10;13"
-	},
-/obj/structure/fans/tiny,
-/turf/open/floor/plating,
-/area/engine/engineering)
 "bDg" = (
 /obj/structure/cable{
 	icon_state = "4-8"
@@ -9647,6 +9639,14 @@
 	},
 /turf/open/floor/plating/asteroid/snow/icemoon,
 /area/ai_monitored/security/armory)
+"dKF" = (
+/obj/machinery/door/airlock/external{
+	name = "Engineering External Access";
+	req_access_txt = "10;13"
+	},
+/obj/structure/fans/tiny,
+/turf/open/floor/plating,
+/area/engine/engineering)
 "dKQ" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
@@ -11983,6 +11983,19 @@
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
+"flh" = (
+/obj/structure/cable{
+	icon_state = "1-8"
+	},
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/camera/motion{
+	c_tag = "Armory - External 1";
+	dir = 8
+	},
+/turf/open/floor/plating/asteroid/snow/icemoon,
+/area/ai_monitored/security/armory)
 "flw" = (
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple{
 	dir = 4
@@ -29556,6 +29569,16 @@
 	},
 /turf/open/floor/plating/asteroid/snow/icemoon,
 /area/icemoon/surface/outdoors)
+"qqZ" = (
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
+	},
+/obj/machinery/door/airlock/external{
+	name = "Escape Airlock"
+	},
+/obj/structure/fans/tiny,
+/turf/open/floor/plating,
+/area/hallway/secondary/exit/departure_lounge)
 "qrq" = (
 /obj/structure/cable{
 	icon_state = "0-8"
@@ -30651,6 +30674,14 @@
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/plasteel,
 /area/hallway/primary/aft)
+"ral" = (
+/obj/machinery/door/airlock/external{
+	name = "Engineering External Access";
+	req_access_txt = "10;13"
+	},
+/obj/structure/fans/tiny,
+/turf/open/floor/engine,
+/area/engine/atmospherics_engine)
 "ram" = (
 /obj/machinery/computer/card/minor/rd{
 	dir = 1
@@ -32969,16 +33000,6 @@
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/plasteel,
 /area/security/checkpoint/supply)
-"sDA" = (
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 8
-	},
-/obj/machinery/door/airlock/external{
-	name = "Escape Airlock"
-	},
-/obj/structure/fans/tiny,
-/turf/open/floor/plating,
-/area/hallway/secondary/exit/departure_lounge)
 "sDD" = (
 /obj/structure/cable{
 	icon_state = "1-2"
@@ -36044,6 +36065,18 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/security/main)
+"uwn" = (
+/obj/structure/cable{
+	icon_state = "2-8"
+	},
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/camera/motion{
+	c_tag = "Armory - External 2"
+	},
+/turf/open/floor/plating/asteroid/snow/icemoon,
+/area/ai_monitored/security/armory)
 "uwV" = (
 /obj/machinery/camera{
 	c_tag = "Northwestern Hall 4";
@@ -37412,16 +37445,6 @@
 	},
 /turf/closed/wall/r_wall,
 /area/security/prison)
-"vpY" = (
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 4
-	},
-/obj/machinery/door/airlock/external{
-	name = "Escape Airlock"
-	},
-/obj/structure/fans/tiny,
-/turf/open/floor/plating,
-/area/hallway/secondary/exit/departure_lounge)
 "vqv" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/machinery/door/airlock{
@@ -40473,6 +40496,16 @@
 /obj/machinery/portable_atmospherics/canister/toxins,
 /turf/open/floor/plating,
 /area/engine/storage)
+"xjZ" = (
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 4
+	},
+/obj/machinery/door/airlock/external{
+	name = "Escape Airlock"
+	},
+/obj/structure/fans/tiny,
+/turf/open/floor/plating,
+/area/hallway/secondary/exit/departure_lounge)
 "xka" = (
 /obj/machinery/space_heater,
 /turf/open/floor/plating,
@@ -41284,14 +41317,6 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/solars/port/aft)
-"xOa" = (
-/obj/machinery/door/airlock/external{
-	name = "Engineering External Access";
-	req_access_txt = "10;13"
-	},
-/obj/structure/fans/tiny,
-/turf/open/floor/engine,
-/area/engine/atmospherics_engine)
 "xOj" = (
 /obj/structure/cable{
 	icon_state = "4-8"
@@ -67002,7 +67027,7 @@ sSS
 rhg
 rhg
 rhg
-rhg
+flh
 dKw
 duI
 bVM
@@ -68548,7 +68573,7 @@ fnc
 sTz
 nxv
 nxv
-kYF
+uwn
 bVM
 avT
 avT
@@ -72624,7 +72649,7 @@ bmX
 avT
 avT
 bok
-vpY
+xjZ
 bok
 cwo
 wcB
@@ -78784,17 +78809,17 @@ xUL
 xUL
 pZl
 unA
-sDA
+qqZ
 unA
-sDA
+qqZ
 unA
 rJO
 xUL
 pZl
 unA
-sDA
+qqZ
 unA
-sDA
+qqZ
 unA
 bok
 bok
@@ -94666,7 +94691,7 @@ qtH
 xUL
 xUL
 xUL
-bDf
+dKF
 ijZ
 ijZ
 bnU
@@ -99293,7 +99318,7 @@ sTq
 hBq
 hBq
 hBq
-xOa
+ral
 hBq
 kol
 jZW
