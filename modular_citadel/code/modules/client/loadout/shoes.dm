@@ -6,17 +6,17 @@
 /datum/gear/workboots
 	name = "Work boots"
 	category = SLOT_SHOES
-	path = /obj/item/clothing/shoes/workboots
+	path = /obj/item/clothing/shoes/workboots/false
 
 /datum/gear/jackboots
 	name = "Jackboots"
 	category = SLOT_SHOES
-	path = /obj/item/clothing/shoes/jackboots
+	path = /obj/item/clothing/shoes/jackboots/false
 
 /datum/gear/winterboots
 	name = "Winter boots"
 	category = SLOT_SHOES
-	path = /obj/item/clothing/shoes/winterboots
+	path = /obj/item/clothing/shoes/winterboots/false
 
 /datum/gear/sandals
 	name = "Sandals"
