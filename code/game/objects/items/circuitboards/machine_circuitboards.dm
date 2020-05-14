@@ -884,6 +884,17 @@
 	name = "Departmental Protolathe - Service (Machine Board)"
 	build_path = /obj/machinery/rnd/production/protolathe/department/service
 
+/obj/item/circuitboard/machine/bepis
+	name = "BEPIS Chamber (Machine Board)"
+	icon_state = "science"
+	build_path = /obj/machinery/rnd/bepis
+	req_components = list(
+		/obj/item/stack/cable_coil = 5,
+		/obj/item/stock_parts/capacitor = 1,
+		/obj/item/stock_parts/manipulator = 1,
+		/obj/item/stock_parts/micro_laser = 1,
+		/obj/item/stock_parts/scanning_module = 1)
+
 /obj/item/circuitboard/machine/techfab
 	name = "\improper Techfab (Machine Board)"
 	build_path = /obj/machinery/rnd/production/techfab
