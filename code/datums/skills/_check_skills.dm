@@ -12,5 +12,5 @@
 		to_chat(usr, "<span class='warning'>How do you check the skills of [(usr == src)? "yourself when you are" : "something"] without the capability for skills? (PROBABLY A BUG, PRESS F1.)</span>")
 		return
 	var/datum/browser/B = new(usr, "skilldisplay_[REF(src)]", "Skills of [src]")
-	B.set_content(mind.skill_holder.html_readout())
+	B.set_content(mind.skill_html_readout())
 	B.open()

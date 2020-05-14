@@ -9,19 +9,10 @@ GLOBAL_LIST_INIT_TYPED(skill_datums, /datum/skill, init_skill_datums())
 		S = new path
 		.[S.type] = S
 
-/proc/sanitize_skill_value(path, value)
-	var/datum/skill/S = GLOB.skill_datums[path]
-	// don't check, if we runtime let it happen.
-	return S.sanitize_value(value)
-
-/proc/is_skill_value_greater(path, existing, new_value)
-	var/datum/skill/S = GLOB.skill_datums[path]
-	// don't check, if we runtime let it happen.
-	return S.is_value_greater(existing, new_value)
-
 /**
   * Skill datums
   */
+
 /datum/skill
 	/// Our name
 	var/name
@@ -33,11 +24,13 @@ GLOBAL_LIST_INIT_TYPED(skill_datums, /datum/skill, init_skill_datums())
 	var/progression_type
 	/// Abstract type
 	var/abstract_type = /datum/skill
-	/// skill threshold used in generic skill modifiers calculations.
+	/// List of max levels. Only used in level skills, but present here for helper macros.
+	var/max_levels = INFINITY
+	/// skill threshold used in generic skill competency calculations.
 	var/list/competency_thresholds = list(0, 0, 0)
 	/// Multiplier of the difference of the holder skill value and the selected threshold.
 	var/list/competency_mults = list(0, 0, 0)
-	/// In which way this skil can affect or be affected through actions.
+	/// In which way this skil can affect or be affected through actions and skill modifiers.
 	var/skill_flags = SKILL_USE_MOOD|SKILL_TRAIN_MOOD
 
 /**
@@ -114,9 +107,9 @@ GLOBAL_LIST_INIT_TYPED(skill_datums, /datum/skill, init_skill_datums())
 /datum/skill/level
 	abstract_type = /datum/skill/level
 	progression_type = SKILL_PROGRESSION_LEVEL
+	max_levels = STD_MAX_LVL
 	var/standard_xp_lvl_up = STD_XP_LVL_UP //the standard required to level up. def: 100
 	var/xp_lvl_multiplier = STD_XP_LVL_MULTI //standard required level up exp multiplier. def: 2 (100, 200, 400, 800 etc.)
-	var/max_levels = STD_MAX_LVL
 	var/level_up_method = STANDARD_LEVEL_UP //how levels are calculated.
 	var/list/levels = list() //level thresholds, if associative, these will be preceded by tiers such as "novice" or "trained"
 	var/associative = FALSE //See above.
@@ -177,15 +170,15 @@ GLOBAL_LIST_INIT_TYPED(skill_datums, /datum/skill, init_skill_datums())
 	var/current_lvl_xp_sum = 0
 	if(level)
 		current_lvl_xp_sum = associative ? levels[levels[level]] : levels[level]
-	var/next_index = max(max_levels, level+1)
+	var/next_index = min(max_levels, level+1)
 	var/next_lvl_xp = associative ? levels[levels[next_index]] : levels[next_index]
 	if(next_lvl_xp > current_lvl_xp_sum)
 		next_lvl_xp -= current_lvl_xp_sum
 
-
 	return "[associative ? current_lvl : "Lvl. [current_lvl]"] ([value - current_lvl_xp_sum]/[next_lvl_xp])[level == max_levels ? " \[MAX!\]" : ""]"
 
 /datum/skill/level/job
+	abstract_type = /datum/skill/level/job
 	levels = list("Basic", "Trained", "Experienced", "Master")
 	competency_thresholds = list(JOB_SKILL_TRAINED, JOB_SKILL_EXPERT, JOB_SKILL_MASTER)
 	competency_mults = list(0.15, 0.1, 0.1)

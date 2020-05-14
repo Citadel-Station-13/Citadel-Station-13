@@ -802,7 +802,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 
 	if(delay)
 		if(user.mind && used_skills)
-			delay = user.mind.skill_holder.item_action_skills_mod(src, delay, skill_difficulty, SKILL_USE_TOOL, NONE, FALSE)
+			delay = user.mind.item_action_skills_mod(src, delay, skill_difficulty, SKILL_USE_TOOL, NONE, FALSE)
 
 		// Create a callback with checks that would be called every tick by do_after.
 		var/datum/callback/tool_check = CALLBACK(src, .proc/tool_check_callback, user, amount, extra_checks)
@@ -832,7 +832,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 		for(var/skill in used_skills)
 			if(!(used_skills[skill] & SKILL_TRAINING_TOOL))
 				continue
-			user.mind.skill_holder.auto_gain_experience(skill, skill_gain*skill_gain_mult, GET_STANDARD_LVL(max_level))
+			user.mind.auto_gain_experience(skill, skill_gain*skill_gain_mult, GET_STANDARD_LVL(max_level))
 
 	return TRUE
 
