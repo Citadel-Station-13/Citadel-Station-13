@@ -40,7 +40,7 @@ obj/item/shield/riot/ratvarian/proc/calc_bash_mult()
 		return ..()
 
 	if(!is_servant_of_ratvar(owner))
-		owner.visible_message("<span class='warning'>As [owner] blocks the attack with [src], [owner.p_they()] suddenly drop it, whincing in pain! </span>", "<span class='warning'>As you block the attack with [src], it heats up tremendously, forcing you to drop it from the pain alone! </span>")
+		owner.visible_message("<span class='warning'>As [owner] blocks the attack with [src], [owner.p_they()] suddenly drops it, whincing in pain! </span>", "<span class='warning'>As you block the attack with [src], it heats up tremendously, forcing you to drop it from the pain alone! </span>")
 		owner.emote("scream")
 		playsound(src, 'sound/machines/fryer/deep_fryer_emerge.ogg', 50)
 		if(iscarbon(owner)) //Type safety for if a drone somehow got a shield (ratvar protect us)
@@ -70,6 +70,7 @@ obj/item/shield/riot/ratvarian/proc/calc_bash_mult()
 		shieldbash_brutedamage = round(initial(shieldbash_brutedamage) * actual_bash_mult, 1) //Where I think of it, better round this stuff because we don't need even more things that deal like 3.25 damage
 		shieldbash_stamdmg = round(initial(shieldbash_stamdmg) * actual_bash_mult, 1) //Like 20 brute and 60 stam + a fuckton of knockback at the moment (at maximum charge), seems mostly fine? I think?
 		if(..()) //If this bash actually was executed
+			playsound(user, 'sound/magic/fireball.ogg', 50, TRUE, frequency = 1.25)
 			dam_absorbed -= calc_bash_absorb_use()
 			return TRUE
 		else
