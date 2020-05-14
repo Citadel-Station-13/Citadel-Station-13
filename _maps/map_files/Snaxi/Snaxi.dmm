@@ -8745,6 +8745,10 @@
 /obj/effect/turf_decal/tile/purple{
 	dir = 4
 	},
+/obj/machinery/shower{
+	pixel_y = 20;
+	pixel_x = 11
+	},
 /turf/open/floor/plasteel/white,
 /area/medical/genetics)
 "ddh" = (
@@ -29671,6 +29675,10 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
+/obj/machinery/shower{
+	dir = 4;
+	pixel_x = 5
+	},
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
 "qsD" = (
@@ -39294,6 +39302,7 @@
 	department = "Tool Storage";
 	pixel_x = 30
 	},
+/obj/item/clothing/gloves/color/yellow,
 /turf/open/floor/plasteel,
 /area/storage/primary)
 "wqe" = (
@@ -41147,6 +41156,9 @@
 /obj/machinery/airalarm{
 	dir = 8;
 	pixel_x = 24
+	},
+/obj/machinery/shower{
+	dir = 8
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
