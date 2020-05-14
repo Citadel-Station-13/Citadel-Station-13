@@ -103,7 +103,7 @@
 //Nezbere's shield: Creates a ratvarian shield which absorbs attacks, see ratvarian_shield.dm for details.
 /datum/clockwork_scripture/create_object/nezberes_shield
 	descname = "Shield with empowerable bashes"
-	name = "Nazbere's shield"
+	name = "Nezbere's shield"
 	desc = "Creates a shield which generates charge from blocking damage, using it to empower its bashes tremendously. It is repaired with brass, and while very durable, extremely weak to lasers and, even more so, to energy weaponry."
 	invocations = list("Shield me...", "... from the coming dark!")
 	channel_time = 20
