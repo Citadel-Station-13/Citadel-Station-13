@@ -410,7 +410,7 @@
 				r_pocket = /obj/item/kitchen/knife
 			if(prob(60))
 				l_pocket = /obj/item/soap/homemade
-			if(prob(80) //Now they dont always have a backpack
+			if(prob(80)) //Now they dont always have a backpack
 				back = /obj/item/storage/backpack
 				backpack_contents = list(/obj/item/stack/cable_coil = 1, /obj/item/assembly/flash = 1, /obj/item/storage/fancy/donut_box = 1, /obj/item/storage/fancy/cigarettes/cigpack_shadyjims = 1, /obj/item/lighter = 1)
 
