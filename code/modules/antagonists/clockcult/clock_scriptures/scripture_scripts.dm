@@ -117,7 +117,7 @@
 	primary_component = VANGUARD_COGWHEEL
 	sort_priority = 5
 	quickbind = TRUE
-	quickbind_desc = "Creates a Ratvarian shield, which can absorb energy fron attacks for use in powerful bashes."
+	quickbind_desc = "Creates a Ratvarian shield, which can absorb energy from attacks for use in powerful bashes."
 
 //Clockwork Armaments: Grants the invoker the ability to call forth a Ratvarian spear and clockwork armor.
 /datum/clockwork_scripture/clockwork_armaments
