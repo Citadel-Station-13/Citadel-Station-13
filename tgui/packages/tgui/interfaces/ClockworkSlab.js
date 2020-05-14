@@ -1,124 +1,157 @@
+import { Window } from 'inferno';
 import { useBackend } from '../backend';
-import { Box, Section, LabeledList, Button, ProgressBar } from '../components';
-import { Fragment } from 'inferno';
-import { Window } from '../layouts';
+import { Button, LabeledList, Section, Tabs, Input } from '../components';
 
-export const Sleeper = (props, context) => {
-  const { act, data } = useBackend(context);
 
+export const ClockworkSlab = props => {
+  const { act, data } = useBackend(props);
   const {
-    open,
-    occupant = {},
-    occupied,
+    recollection,
+    rec_text,
+    recollection_categories,
+    rec_section,
+    rec_binds,
   } = data;
 
-  const preSortChems = data.chems || [];
-  const chems = preSortChems.sort((a, b) => {
-    const descA = a.name.toLowerCase();
-    const descB = b.name.toLowerCase();
-    if (descA < descB) {
-      return -1;
-    }
-    if (descA > descB) {
-      return 1;
-    }
-    return 0;
-  });
-
-  const damageTypes = [
-    {
-      label: 'Brute',
-      type: 'bruteLoss',
-    },
-    {
-      label: 'Burn',
-      type: 'fireLoss',
-    },
-    {
-      label: 'Toxin',
-      type: 'toxLoss',
-    },
-    {
-      label: 'Oxygen',
-      type: 'oxyLoss',
-    },
-  ];
-
   return (
-    <Window>
-      <Window.Content>
-        <Section
-          title={occupant.name ? occupant.name : 'No Occupant'}
-          minHeight="210px"
-          buttons={!!occupant.stat && (
-            <Box
-              inline
-              bold
-              color={occupant.statstate}>
-              {occupant.stat}
-            </Box>
-          )}>
-          {!!occupied && (
-            <Fragment>
-              <ProgressBar
-                value={occupant.health}
-                minValue={occupant.minHealth}
-                maxValue={occupant.maxHealth}
-                ranges={{
-                  good: [50, Infinity],
-                  average: [0, 50],
-                  bad: [-Infinity, 0],
-                }} />
-              <Box mt={1} />
-              <LabeledList>
-                {damageTypes.map(type => (
-                  <LabeledList.Item
-                    key={type.type}
-                    label={type.label}>
-                    <ProgressBar
-                      value={occupant[type.type]}
-                      minValue={0}
-                      maxValue={occupant.maxHealth}
-                      color="bad" />
-                  </LabeledList.Item>
-                ))}
-                <LabeledList.Item
-                  label="Cells"
-                  color={occupant.cloneLoss ? 'bad' : 'good'}>
-                  {occupant.cloneLoss ? 'Damaged' : 'Healthy'}
-                </LabeledList.Item>
-                <LabeledList.Item
-                  label="Brain"
-                  color={occupant.brainLoss ? 'bad' : 'good'}>
-                  {occupant.brainLoss ? 'Abnormal' : 'Healthy'}
-                </LabeledList.Item>
-              </LabeledList>
-            </Fragment>
-          )}
+    <Window style="clockwork">
+      <Section>
+        <Button
+          content={recollection ? "Recital" : "Recollection"}
+          onClick={() => act('toggle')}
+        />
+      </Section>
+      {!!recollection && (
+        <Section title="Recollection">
+          {rec_text}
+          {recollection_categories.map(categories => {
+            return (
+              <Window>
+                <br key='weh'/>
+                <Button
+                  content={`${categories.name} - ${categories.desc}`}
+                  onClick={() => act('rec_category', {
+                    "category": categories.name,
+                  })} />
+              </Window>
+            );
+          })}
+          {rec_section}
+          {rec_binds}
         </Section>
-        <Section
-          title="Medicines"
-          minHeight="205px"
-          buttons={(
-            <Button
-              icon={open ? 'door-open' : 'door-closed'}
-              content={open ? 'Open' : 'Closed'}
-              onClick={() => act('door')} />
-          )}>
-          {chems.map(chem => (
-            <Button
-              key={chem.name}
-              icon="flask"
-              content={chem.name}
-              disabled={!(occupied && chem.allowed)}
-              width="140px"
-              onClick={() => act('inject', {
-                chem: chem.id,
-              })}
-            />
-          ))}
-        </Section>
-      </Window.Content>
+      )}
+      {recollection && (
+        <Window>
+          <Section title="Power">
+            {data.power}
+          </Section>
+          <Section title="Recital">
+            {data.tier_info}
+            {data.scripturecolors}
+            <Tabs>
+              <Tabs.Tab
+                key="driver"
+                label="Driver">
+                {() => (
+                  <Section>
+                    <LabeledList>
+                      {data.scripture.driver.map(script => { // HEY! Make sure the data gets built byondside!
+                        return (
+                          <LabeledList.Item
+                            key={script.name}
+                            label={script.name} // should i just md5 this and cut
+                            buttons={(
+                              <Window>
+                                <Button
+                                  content={`Recite (${script.required} W)`}
+                                  onClick={() => act('recite', {
+                                    'category': script.name,
+                                  })} />
+                                <Button
+                                  content={script.quickbind ? `Unbind ${script.quickbind}` : 'Quickbind'}
+                                  onClick={() => act('bind', {
+                                    'category': script.name,
+                                  })} />
+                              </Window>
+                            )}>
+                            {`${script.descname} ${script.invokers}`}
+                          </LabeledList.Item>
+                        );
+                      })}
+                    </LabeledList>
+                  </Section>
+                )}
+              </Tabs.Tab>
+              <Tabs.Tab
+                key="script"
+                label="Script">
+                {() => (
+                  <Section>
+                    <LabeledList>
+                      {data.scripture.script.map(script => { // HEY! Make sure the data gets built byondside!
+                        return (
+                          <LabeledList.Item
+                            key={script.name}
+                            label={script.name} // should i just md5 this and cut
+                            buttons={(
+                              <Window>
+                                <Button
+                                  content={`Recite (${script.required} W)`}
+                                  onClick={() => act('recite', {
+                                    'category': script.name,
+                                  })} />
+                                <Button
+                                  content={script.quickbind ? `Unbind ${script.quickbind}` : 'Quickbind'}
+                                  onClick={() => act('bind', {
+                                    'category': script.name,
+                                  })} />
+                              </Window>
+                            )}>
+                            {`${script.descname} ${script.invokers}`}
+                          </LabeledList.Item>
+                        );
+                      })}
+                    </LabeledList>
+                  </Section>
+                )}
+              </Tabs.Tab>
+              <Tabs.Tab
+                key="application"
+                label="Application">
+                {() => (
+                  <Section>
+                    <LabeledList>
+                      {data.scripture.application.map(script => { // HEY! Make sure the data gets built byondside!
+                        return (
+                          <LabeledList.Item
+                            key={script.name}
+                            label={script.name} // should i just md5 this and cut
+                            buttons={(
+                              <Window>
+                                <Button
+                                  content={`Recite (${script.required} W)`}
+                                  onClick={() => act('recite', {
+                                    'category': script.name,
+                                  })} />
+                                <Button
+                                  content={script.quickbind ? `Unbind ${script.quickbind}` : 'Quickbind'}
+                                  onClick={() => act('bind', {
+                                    'category': script.name,
+                                  })} />
+                              </Window>
+                            )}>
+                            {`${script.descname} ${script.invokers}`}
+                          </LabeledList.Item>
+                        );
+                      })}
+                    </LabeledList>
+                  </Section>
+                )}
+              </Tabs.Tab>
+            </Tabs>
+          </Section>
+        </Window>
+      )}
     </Window>
   );
 };
