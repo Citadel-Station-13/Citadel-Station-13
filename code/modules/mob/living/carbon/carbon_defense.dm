@@ -435,3 +435,17 @@
 	var/obj/item/organ/ears/ears = getorganslot(ORGAN_SLOT_EARS)
 	if(istype(ears) && !ears.deaf)
 		. = TRUE
+
+/mob/living/carbon/getBruteLoss_nonProsthetic()
+	var/amount = 0
+	for(var/obj/item/bodypart/BP in bodyparts)
+		if (BP.status < 2)
+			amount += BP.brute_dam
+	return amount
+
+/mob/living/carbon/getFireLoss_nonProsthetic()
+	var/amount = 0
+	for(var/obj/item/bodypart/BP in bodyparts)
+		if (BP.status < 2)
+			amount += BP.burn_dam
+	return amount
