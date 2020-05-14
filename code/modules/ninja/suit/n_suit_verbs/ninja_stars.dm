@@ -14,6 +14,6 @@
 
 /obj/item/throwing_star/ninja
 	name = "ninja throwing star"
-	desc = "A sharp carbin fiber throwing star freshly printed! Even has that new plastic smell"
+	desc = "A sharp carbon fiber throwing star freshly printed! Even has that new plastic smell"
 	throwforce = 25
 	embedding = list("embedded_pain_multiplier" = 4, "embed_chance" = 70, "embedded_fall_chance" = 1)
