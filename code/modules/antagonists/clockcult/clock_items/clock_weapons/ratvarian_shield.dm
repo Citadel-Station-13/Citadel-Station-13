@@ -50,9 +50,10 @@ obj/item/shield/riot/ratvarian/proc/calc_bash_mult()
 		else
 			owner.adjustFireLoss(iscultist(owner) ? damage * 2 : damage)
 		addtimer(CALLBACK(owner, /mob/living.proc/dropItemToGround, src, TRUE), 1)
-	else
+	else if(!is_servant_of_ratvar(attacker)) //No exploiting my snowflake mechanics
 		dam_absorbed += damage
 		playsound(owner,  'sound/machines/clockcult/steam_whoosh.ogg', 30)
+
 	if(damage <= 10) //The shield itself is hard to break, this DOES NOT modify the actual blocking-mechanic
 		damage = 0
 	else
