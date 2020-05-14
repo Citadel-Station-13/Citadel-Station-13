@@ -6,15 +6,16 @@
 	var/return_value
 	var/datum/callback/comsig_callback
 	var/datum/callback/parent_moved_callback
+	var/datum/callback/turf_callback
 	var/range_view_list
 	var/range_view_turf_list = list()
 	var/list/whitelist_typecache
 	var/list/blacklist_typecache
 	var/protect_self = TRUE
 
-/datum/component/area_of_effect/Initialize(dist = 5, r_or_v = "range", comsig, value, callback, move_callback, whitelist, blacklist, self = TRUE)
+/datum/component/area_of_effect/Initialize(dist = 5, r_or_v = "range", comsig, value, callback, move_callback, t_callback, whitelist, blacklist, self = TRUE)
 	. = ..()
-	if(!isatom(parent) || isarea(parent) || !comsig || !(value || callback || move_callback))
+	if(!isatom(parent) || isarea(parent) || !comsig || !(value || callback || move_callback || t_callback))
 		return COMPONENT_INCOMPATIBLE
 
 	distance = dist
@@ -23,6 +24,7 @@
 	return_value = value
 	comsig_callback = callback
 	parent_moved_callback = move_callback
+	turf_callback = t_callback
 	whitelist_typecache = whitelist
 	blacklist_typecache = blacklist
 	protect_self = self
@@ -44,6 +46,8 @@
 			range_view_list -= A
 			continue
 		RegisterSignal(A,  comsig_value, .proc/return_value)
+
+	parent_moved_callback?.Invoke(null, null, range_view_list, range_view_turf_list)
 
 /datum/component/area_of_effect/Destroy()
 	if(comsig_callback)
@@ -118,17 +122,53 @@
 	RegisterSignal(T, COMSIG_TURF_CHANGE, .proc/transfer_sigs)
 	RegisterSignal(T, COMSIG_ATOM_NEW_CONTENT, .proc/on_new_content)
 	range_view_turf_list += T
+	turf_callback?.Invoke(T)
 
 /datum/component/area_of_effect/proc/return_value(atom/source)
-	comsig_callback?.Invoke(source)
-	return return_value
+	if(!(comsig_callback?.Invoke(source)))
+		return return_value
 
-/obj/structure/range_test
-	name = "Work in progress"
-	desc = "AAAAAAAAAAAAAAAA!!"
+
+
+/obj/structure/machinery/emp_protector
+	name = "\improper EMP dissipator"
+	desc = "A special rod machinery meant to dissipate electromagnetic pulses over a large area."
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "shieldon"
+	anchored = TRUE
+	density = TRUE
 
-/obj/structure/range_test/ComponentInitialize()
+/obj/structure/machinery/emp_protector/ComponentInitialize()
 	. = ..()
-	AddComponent(/datum/component/area_of_effect, dist = 2, comsig = COMSIG_ATOM_EMP_ACT, value = EMP_PROTECT_CONTENTS|EMP_PROTECT_WIRES|EMP_PROTECT_SELF)
+	if(anchored)
+		AddComponent(/datum/component/area_of_effect, dist = 2, comsig = COMSIG_ATOM_EMP_ACT, value = EMP_PROTECT_CONTENTS|EMP_PROTECT_WIRES|EMP_PROTECT_SELF)
+
+/obj/structure/machinery/emp_protector/examine(mob/user)
+	. = ..()
+	var/slow = FALSE
+	if(!malf_check(user))
+		slow = TRUE
+	. += "<span class='notice'>You can use a <b>wrench</b> to toggle the anchors[slow ? ", albeit it takes some time" : ", fast"].</span>"
+
+/obj/structure/machinery/emp_protector/wrench_act(mob/living/user, obj/item/I)
+	. = ..()
+	var/time = 10 SECONDS
+	if(malf_check(user))
+		time = 2 SECONDS
+	if(default_unfasten_wrench(user, I, time) != CANT_UNFASTEN)
+		if(anchored)
+			AddComponent(/datum/component/area_of_effect, dist = 2, comsig = COMSIG_ATOM_EMP_ACT, value = EMP_PROTECT_CONTENTS|EMP_PROTECT_WIRES|EMP_PROTECT_SELF)
+		else
+			var/datum/component/area_of_effect/AoE = GetComponent(/datum/component/area_of_effect)
+			qdel(AoE)
+		return TRUE
+
+/obj/structure/machinery/emp_protector/proc/malf_check(mob/living/user)
+	if(!iscyborg(user))
+		return FALSE
+	var/mob/living/silicon/robot/R = user
+	var/datum/antagonist/traitor/T = user.mind.has_antag_datum(/datum/antagonist/traitor)
+	if(!T && R.connected_ai?.mind)
+		T = R.connected_ai.mind.has_antag_datum(/datum/antagonist/traitor)
+	if(T && T.traitor_kind == TRAITOR_AI)
+		return TRUE
