@@ -75,7 +75,7 @@
 					cell.charge += delta
 					adjust_clockwork_power(-delta)
 		if(obj_integrity < max_integrity && istype(loc, /turf/open/floor/clockwork))
-			obj_integrity += min(max_integrity - obj_integrity, max_integrity / 100)
+			obj_integrity += min(max_integrity - obj_integrity, max_integrity / 200)
 		CHECK_TICK
 
 /obj/mecha/combat/neovgre/Initialize()
