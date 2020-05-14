@@ -30,7 +30,7 @@
 	loot = list(/obj/effect/decal/cleanable/robot_debris)
 	blood_volume = 0
 
-	do_footstep = TRUE
+	footstep_type = FOOTSTEP_MOB_CLAW
 
 /mob/living/simple_animal/hostile/hivebot/Initialize()
 	. = ..()
