@@ -248,15 +248,15 @@
 	if(prob(20/severity) && (istype(src, /obj/machinery/door/airlock) || istype(src, /obj/machinery/door/window)) )
 		INVOKE_ASYNC(src, .proc/open)
 	if(prob(severity*10 - 20))
-		if(secondsElectrified == 0)
-			secondsElectrified = -1
+		if(secondsElectrified == MACHINE_NOT_ELECTRIFIED)
+			secondsElectrified = MACHINE_ELECTRIFIED_PERMANENT
 			LAZYADD(shockedby, "\[[TIME_STAMP("hh:mm:ss", FALSE)]\]EM Pulse")
 			addtimer(CALLBACK(src, .proc/unelectrify), 300)
 
 /obj/machinery/door/proc/unelectrify()
-	secondsElectrified = 0
+	secondsElectrified = MACHINE_NOT_ELECTRIFIED
 
-/obj/machinery/door/update_icon_state()
+/obj/machinery/door/update_icon()
 	if(density)
 		icon_state = "door1"
 	else
@@ -314,10 +314,9 @@
 				return
 
 	operating = TRUE
+
 	do_animate("closing")
 	layer = closingLayer
-	if(!safe)
-		crush()
 	if(air_tight)
 		density = TRUE
 	sleep(5)
@@ -331,6 +330,8 @@
 	update_freelook_sight()
 	if(safe)
 		CheckForMobs()
+	else if(!(flags_1 & ON_BORDER_1))
+		crush()
 	return 1
 
 /obj/machinery/door/proc/CheckForMobs()

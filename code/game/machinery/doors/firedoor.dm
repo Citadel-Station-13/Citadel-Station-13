@@ -23,6 +23,7 @@
 	assemblytype = /obj/structure/firelock_frame
 	armor = list("melee" = 30, "bullet" = 30, "laser" = 20, "energy" = 20, "bomb" = 10, "bio" = 100, "rad" = 100, "fire" = 95, "acid" = 70)
 	interaction_flags_machine = INTERACT_MACHINE_WIRES_IF_OPEN | INTERACT_MACHINE_ALLOW_SILICON | INTERACT_MACHINE_OPEN_SILICON | INTERACT_MACHINE_REQUIRES_SILICON | INTERACT_MACHINE_OPEN
+	air_tight = TRUE
 	var/emergency_close_timer = 0
 	var/nextstate = null
 	var/boltslocked = TRUE
@@ -69,10 +70,14 @@
 	return ..()
 
 /obj/machinery/door/firedoor/Bumped(atom/movable/AM)
-	if(panel_open || operating)
+	if(panel_open || operating || welded)
 		return
-	if(!density)
-		return ..()
+	if(ismob(AM))
+		var/mob/user = AM
+		if(density && !welded && !operating && !(stat & NOPOWER) && (!density || allow_hand_open(user)))
+			add_fingerprint(user)
+			open()
+			return TRUE
 	return FALSE
 
 
@@ -87,6 +92,15 @@
 	. = ..()
 	if(.)
 		return
+
+	if(!welded && !operating && !(stat & NOPOWER) && (!density || allow_hand_open(user)))
+		add_fingerprint(user)
+		if(density)
+			emergency_close_timer = world.time + 30 // prevent it from instaclosing again if in space
+			open()
+		else
+			close()
+		return TRUE
 	if(operating || !density)
 		return
 	user.changeNext_move(CLICK_CD_MELEE)
@@ -156,6 +170,12 @@
 	else
 		close()
 
+/obj/machinery/door/firedoor/proc/allow_hand_open(mob/user)
+	var/area/A = get_area(src)
+	if(A && A.fire)
+		return FALSE
+	return !is_holding_pressure()
+
 /obj/machinery/door/firedoor/attack_ai(mob/user)
 	add_fingerprint(user)
 	if(welded || operating || stat & NOPOWER)
@@ -183,20 +203,16 @@
 		if("closing")
 			flick("door_closing", src)
 
-/obj/machinery/door/firedoor/update_icon_state()
+/obj/machinery/door/firedoor/update_icon()
+	cut_overlays()
 	if(density)
 		icon_state = "door_closed"
+		if(welded)
+			add_overlay("welded")
 	else
 		icon_state = "door_open"
-
-/obj/machinery/door/firedoor/update_overlays()
-	. = ..()
-	if(!welded)
-		return
-	if(density)
-		. += "welded"
-	else
-		. += "welded_open"
+		if(welded)
+			add_overlay("welded_open")
 
 /obj/machinery/door/firedoor/open()
 	. = ..()
@@ -318,6 +334,35 @@
 				M.start_pulling(M2)
 	. = ..()
 
+/obj/machinery/door/firedoor/border_only/allow_hand_open(mob/user)
+	var/area/A = get_area(src)
+	if((!A || !A.fire) && !is_holding_pressure())
+		return TRUE
+	whack_a_mole(TRUE) // WOOP WOOP SIDE EFFECTS
+	var/turf/T = loc
+	var/turf/T2 = get_step(T, dir)
+	if(!T || !T2)
+		return
+	var/status1 = check_door_side(T)
+	var/status2 = check_door_side(T2)
+	if((status1 == 1 && status2 == -1) || (status1 == -1 && status2 == 1))
+		to_chat(user, "<span class='warning'>Access denied. Try closing another firedoor to minimize decompression, or using a crowbar.</span>")
+		return FALSE
+	return TRUE
+
+/obj/machinery/door/firedoor/border_only/proc/check_door_side(turf/open/start_point)
+	var/list/turfs = list()
+	turfs[start_point] = 1
+	for(var/i = 1; (i <= turfs.len && i <= 11); i++) // check up to 11 turfs.
+		var/turf/open/T = turfs[i]
+		if(istype(T, /turf/open/space))
+			return -1
+		for(var/T2 in T.atmos_adjacent_turfs)
+			turfs[T2] = 1
+	if(turfs.len <= 10)
+		return 0 // not big enough to matter
+	return start_point.air.return_pressure() < 20 ? -1 : 1
+
 /obj/machinery/door/firedoor/border_only/CanPass(atom/movable/mover, turf/target)
 	if(istype(mover) && (mover.pass_flags & PASSGLASS))
 		return TRUE
@@ -348,6 +393,18 @@
 	assemblytype = /obj/structure/firelock_frame/heavy
 	max_integrity = 550
 
+/obj/machinery/door/firedoor/window
+	name = "window shutter"
+	icon = 'icons/obj/doors/doorfirewindow.dmi'
+	desc = "A second window that slides in when the original window is broken, designed to protect against hull breaches. Truly a work of genius by NT engineers."
+	glass = TRUE
+	explosion_block = 0
+	max_integrity = 50
+	resistance_flags = 0 // not fireproof
+	heat_proof = FALSE
+
+/obj/machinery/door/firedoor/window/allow_hand_open()
+	return TRUE
 
 /obj/item/electronics/firelock
 	name = "firelock circuitry"
