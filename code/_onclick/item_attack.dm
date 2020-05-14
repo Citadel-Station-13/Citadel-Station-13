@@ -118,11 +118,11 @@
 		bad_flag |= SKILL_COMBAT_MODE //blacklist combat skills.
 	if(I.used_skills && user.mind)
 		if(totitemdamage)
-			totitemdamage = user.mind.skill_holder.item_action_skills_mod(I, totitemdamage, I.skill_difficulty, SKILL_ATTACK_OBJ, bad_flag)
+			totitemdamage = user.mind.item_action_skills_mod(I, totitemdamage, I.skill_difficulty, SKILL_ATTACK_OBJ, bad_flag)
 		for(var/skill in I.used_skills)
 			if(!(I.used_skills[skill] & SKILL_TRAIN_ATTACK_OBJ))
 				continue
-			user.mind.skill_holder.auto_gain_experience(skill, I.skill_gain)
+			user.mind.auto_gain_experience(skill, I.skill_gain)
 	if(totitemdamage)
 		visible_message("<span class='danger'>[user] has hit [src] with [I]!</span>", null, null, COMBAT_MESSAGE_RANGE)
 		//only witnesses close by and the victim see a hit message.
@@ -163,11 +163,11 @@
 	if(!user.mind || !I.used_skills)
 		return
 	if(.)
-		. = user.mind.skill_holder.item_action_skills_mod(I, ., I.skill_difficulty, SKILL_ATTACK_MOB, bad_flag)
+		. = user.mind.item_action_skills_mod(I, ., I.skill_difficulty, SKILL_ATTACK_MOB, bad_flag)
 	for(var/skill in I.used_skills)
 		if(!(I.used_skills[skill] & SKILL_TRAIN_ATTACK_MOB))
 			continue
-		user.mind.skill_holder.auto_gain_experience(skill, I.skill_gain)
+		user.mind.auto_gain_experience(skill, I.skill_gain)
 
 /mob/living/carbon/pre_attacked_by(obj/item/I, mob/living/user)
 	. = ..()
@@ -216,7 +216,7 @@
 		. *= STAM_COST_NO_COMBAT_MULT
 		bad_flag |= SKILL_COMBAT_MODE
 	if(used_skills && user.mind)
-		. = user.mind.skill_holder.item_action_skills_mod(src, ., skill_difficulty, flags, bad_flag, FALSE)
+		. = user.mind.item_action_skills_mod(src, ., skill_difficulty, flags, bad_flag, FALSE)
 
 /// How long this staggers for. 0 and negatives supported.
 /obj/item/proc/melee_stagger_duration(force_override)
