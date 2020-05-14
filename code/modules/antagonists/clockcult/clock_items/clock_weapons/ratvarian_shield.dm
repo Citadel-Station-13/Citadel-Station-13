@@ -36,8 +36,23 @@ obj/item/shield/riot/ratvarian/proc/calc_bash_mult()
 	return absorb_use
 
 /obj/item/shield/riot/ratvarian/on_shield_block(mob/living/owner, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return)
-	dam_absorbed += damage
-	playsound(owner,  'sound/machines/clockcult/steam_whoosh.ogg', 30)
+	if(!damage)
+		return ..()
+
+	if(!is_servant_of_ratvar(owner))
+		owner.visible_message("<span class='warning'>As [owner] blocks the attack with [src], [owner.p_they()] suddenly drop it, whincing in pain </span>", "<span class='warning'>As you block the attack with [src], it heats up tremendously, forcing you to drop it from the pain alone </span>")
+		owner.emote("scream")
+		playsound(src, 'sound/machines/fryer/deep_fryer_emerge.ogg', 50)
+		if(iscarbon(owner)) //Type safety for if a drone somehow got a shield (ratvar protect us)
+			var/mob/living/carbon/C = owner
+			var/obj/item/bodypart/part = C.get_holding_bodypart_of_item(src)
+			C.apply_damage((iscultist(C) ? damage * 2 : damage), BURN, (istype(part, /obj/item/bodypart/l_arm) ? BODY_ZONE_L_ARM : BODY_ZONE_R_ARM)) //Deals the damage to the holder instead of absorbing it instead + forcedrops. Doubled if a cultist of Nar'Sie.
+		else
+			owner.adjustFireLoss(iscultist(owner) ? damage * 2 : damage)
+		addtimer(CALLBACK(owner, /mob/living.proc/dropItemToGround, src, TRUE), 1)
+	else
+		dam_absorbed += damage
+		playsound(owner,  'sound/machines/clockcult/steam_whoosh.ogg', 30)
 	if(damage <= 10) //The shield itself is hard to break, this DOES NOT modify the actual blocking-mechanic
 		damage = 0
 	else
@@ -49,7 +64,7 @@ obj/item/shield/riot/ratvarian/proc/calc_bash_mult()
 	new /obj/item/clockwork/alloy_shards/large(get_turf(src))
 
 /obj/item/shield/riot/ratvarian/user_shieldbash(mob/living/user, atom/target, harmful)
-	if(harmful)
+	if(harmful && is_servant_of_ratvar(user)) // No fun for non-clockies, but you can keep the normal bashes. Until you try to block with it.
 		var/actual_bash_mult = calc_bash_mult()
 		shieldbash_knockback = round(initial(shieldbash_knockback) * actual_bash_mult, 1)   //Modifying the strength of the bash, done with initial() to prevent magic-number issues if the original shieldbash values are changed
 		shieldbash_brutedamage = round(initial(shieldbash_brutedamage) * actual_bash_mult, 1) //Where I think of it, better round this stuff because we don't need even more things that deal like 3.25 damage
