@@ -1,14 +1,17 @@
 import { Fragment } from 'inferno';
 import { useBackend } from '../backend';
+import { act as _act } from '../byond';
 import { Button, LabeledList, NoticeBox, Section, Tabs, Input } from '../components';
 
 export const TelePDALog = props => {
   const { act, data } = useBackend(props);
   const {
+    network,
     authenticated = false,
     status = true,
     canhack = false,
     selected = null,
+    servers = [],
     message_logs = [],
     recon_logs = [],
   } = data;
@@ -32,8 +35,39 @@ export const TelePDALog = props => {
     <Fragment>
       <Section title="Network Control">
         <LabeledList>
+          <LabeledList.Item label="Network">
+            <Input
+              value={network}
+              maxLength={15}
+              onChange={(e, value) => act('network', {
+                'value': value,
+              })} />
+          </LabeledList.Item>
+          <LabeledList.Item
+            label="Memory"
+            buttons={(
+              <Fragment>
+                <Button
+                  content="Flush Buffer"
+                  icon="minus-circle"
+                  disabled={!servers.length}
+                  onClick={() => act('release')} />
+                <Button
+                  content="Probe Network"
+                  icon="sync"
+                  disabled={servers.length}
+                  onClick={() => act('probe')} />
+              </Fragment>
+            )}>
+            {servers ? (
+              `${servers.length} currently probed and buffered`
+            ) : (
+              'Buffer is empty!'
+            )}
+          </LabeledList.Item>
           <LabeledList.Item
             label="Authentication"
+            color={authenticated ? 'good' : 'bad'}
             buttons={(
               <Fragment>
                 <Button
@@ -58,34 +92,68 @@ export const TelePDALog = props => {
               <Fragment>
                 <Button
                   content="Authenticate"
-                  disabled={authenticated || !selected}
+                  icon={authenticated ? 'unlock' : 'lock'}
+                  disabled={!selected}
                   onClick={() => act('auth')}
                 />
                 <Button
                   content="Disconnect"
                   disabled={!selected}
-                  onClick={() => act('disconnect')}
+                  onClick={() => act('mainmenu')}
                 />
               </Fragment>
             )}>
-            {selected ? selected.name : "No Server!"}
+            {selected ? (
+              `${selected.name} (${selected.id})`
+            ) : (
+              "None (None)"
+            )}
           </LabeledList.Item>
           <LabeledList.Item
             label="PDA Server Status"
-            color={status ? 'good' : 'bad'}>
-            {status ? (
+            color={(status && selected) ? 'good' : 'bad'}>
+            {selected ? (
+              status ? (
               'Running'
-            ) : (
+              ) : (
               'Server down! Log functionality unaccessable!'
+              )
+            ):(
+              'No server selected'
             )}
           </LabeledList.Item>
         </LabeledList>
       </Section>
-      <Tabs vertical>
+      <Tabs>
         <Tabs.Tab
           key="servers"
           label="Servers">
-
+          <Section>
+            {(servers && servers.length) ? (
+              <LabeledList>
+                {servers.map(server => {
+                  return (
+                    <LabeledList.Item
+                      key={server.name}
+                      label={`${server.ref}`}
+                      buttons={(
+                        <Button
+                          content="Connect"
+                          selected={data.selected
+                            && (server.ref === data.selected.ref)}
+                          onClick={() => act('viewmachine', {
+                            'value': server.id,
+                          })} />
+                      )}>
+                      {`${server.name} (${server.id})`}
+                    </LabeledList.Item>
+                  );
+                })}
+              </LabeledList>
+            ) : (
+              '404 Servers not found. Have you tried scanning the network?'
+            )}
+          </Section>
         </Tabs.Tab>
         <Tabs.Tab
           key="message_logs"
@@ -97,14 +165,15 @@ export const TelePDALog = props => {
               onClick={() => act('refresh')}
             />
             <Button
-              content="Delete Logs"
+              content="Delete All Logs"
+              disabled={!(message_logs && message_logs.length)}
               onClick={() => act('delete', {
                 'value': 'message_log',
               })}
             />
           </Section>
-          <Section>
-            {message_logs.map(message => {
+          <Section label="Messages">
+            {(message_logs && message_logs.length) ? (message_logs.map(message => {
               return (
                 <Section key={message.ref}>
                   <LabeledList>
@@ -117,24 +186,34 @@ export const TelePDALog = props => {
                     <LabeledList.Item
                       label="Message"
                       buttons={(
-                        <Button
-                          content="Delete"
-                          onClick={() => act('delete', {
-                            'value': message.ref,
-                          })}
-                        />
+                        <Fragment>
+                          <Button
+                            content="Delete"
+                            onClick={() => act('delete', {
+                              'value': message.ref,
+                            })}
+                          />
+                          {message.image && (
+                            <Button // Had to use _act for this.
+                              content="Image"
+                              onClick={() => _act(message.ref, 'photo')}
+                            />
+                          )}
+                        </Fragment>
                       )}>
                       {message.message}
                     </LabeledList.Item>
                   </LabeledList>
                 </Section>
-              );
-            })}
+              )})
+            ) : (
+              'Error: Logs empty'
+            )}
           </Section>
         </Tabs.Tab>
         <Tabs.Tab
           key="recon_logs"
-          label="Request Console Logs"
+          label="Req. Console Logs"
           disabled={!valid}>
           <Section label="Options">
             <Button
@@ -142,14 +221,15 @@ export const TelePDALog = props => {
               onClick={() => act('refresh')}
             />
             <Button
-              content="Delete Logs"
+              content="Delete All Logs"
+              disabled={!(recon_logs && recon_logs.length)}
               onClick={() => act('delete', {
                 'value': 'recon_logs',
               })}
             />
           </Section>
-          <Section>
-            {recon_logs.map(message => {
+          <Section label="Requests">
+            {(recon_logs && recon_logs.length) ? (recon_logs.map(message => {
               return (
                 <Section key={message.ref}>
                   <LabeledList>
@@ -182,8 +262,10 @@ export const TelePDALog = props => {
                     </LabeledList.Item>
                   </LabeledList>
                 </Section>
-              );
-            })}
+              )})
+            ):(
+              'Error: No logs found'
+            )}
           </Section>
         </Tabs.Tab>
         <Tabs.Tab

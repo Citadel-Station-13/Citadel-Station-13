@@ -65,6 +65,16 @@ export const TeleLogBrowser = props => {
               "None (None)"
             )}
           </LabeledList.Item>
+          <LabeledList.Item label="Recorded Traffic">
+              {selected ? (selected.traffic <= 1024 ? (
+                  `${selected.traffic} Gigabytes`
+                ):(
+                  `${Math.round(selected.traffic/1024)} Terrabytes`
+                )
+              ):(
+                '0 Gigabytes'
+              )}
+          </LabeledList.Item>
         </LabeledList>
       </Section>
       <Tabs>
@@ -94,7 +104,7 @@ export const TeleLogBrowser = props => {
                 })}
               </LabeledList>
             ) : (
-              '404 Servers not found'
+              '404 Servers not found. Have you tried scanning the network?'
             )}
           </Section>
         </Tabs.Tab>

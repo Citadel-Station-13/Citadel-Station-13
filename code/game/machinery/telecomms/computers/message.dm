@@ -21,17 +21,15 @@
 	var/datum/effect_system/spark_spread/spark_system = new /datum/effect_system/spark_spread
 
 	//Messages - Saves me time if I want to change something.
-	var/noserver = "ALERT: No server detected."
+	var/noserver = "ALERT: No server detected. Server may be nonresponsive."
 	var/incorrectkey = "ALERT: Incorrect decryption key!"
 	var/defaultmsg = "Welcome. Please select an option."
-	var/rebootmsg = "%$&(�: Critical %$$@ Error // !RestArting! <lOadiNg backUp iNput ouTput> - ?pLeaSe wAit!"
+	var/rebootmsg = "%$�(�:SYS&EM INTRN@L ACfES VIOL�TIa█ DEtE₡TED! Ree3ARcinG A█ BAaKUP RdST�RE PbINT \[0xcff32ca/ - PLfASE aAIT"
 
 	//Computer properties
-	//var/screen = 0 		// 0 = Main menu, 1 = Message Logs, 2 = Hacked screen, 3 = Custom Message
 	var/hacking = FALSE		// Is it being hacked into by the AI/Cyborg
-	var/message = ""	// The message that shows on the main menu.
-	var/auth = FALSE // Are they authenticated?
-	//var/optioncount = 7
+	var/message = ""		// The message that shows on the main menu.
+	var/auth = FALSE 		// Are they authenticated?
 
 	// Custom Message Properties
 	var/obj/item/pda/customrecepient = null
@@ -46,25 +44,46 @@
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 
 	if(!ui)
-		ui = new(user, src, ui_key, "telepdalog", name, 575, 400, master_ui, state)
+		ui = new(user, src, ui_key, "telepdalog", name, 727, 510, master_ui, state)
 		ui.open()
 
 /obj/machinery/computer/message_monitor/ui_static_data(mob/user)
 	var/list/data_out = list()
 
-	if(!linkedServer)
+	if(!linkedServer || !auth) // no need building this if the usr isn't authenticated
 		return data_out
-	data_out["data_rc_msg"] = list()
-	/**	
-	 * datum/data_rc_msg
-	 * X												 	- 5%
-	 * var/rec_dpt = "Unspecified" //name of the person 	- 15%
-	 * var/send_dpt = "Unspecified" //name of the sender	- 15%
-	 * var/message = "Blank" //transferred message		 	- 300px
-	 * var/stamp = "Unstamped"								- 15%
-	 * var/id_auth = "Unauthenticated"						- 15%
-	 * var/priority = "Normal"								- 10%
-	 */
+
+	data_out["recon_logs"] = list()
+	var/i1 = 0
+	for(var/datum/data_rc_msg/rc in linkedServer.rc_msgs)
+		i1++
+		if(i1 > 3000)
+			break
+		var/list/data = list(
+			sender = rc.send_dpt,
+			recipient = rc.rec_dpt,
+			message = rc.message,
+			stamp = rc.stamp,
+			auth = rc.id_auth,
+			priority = rc.priority,
+			ref = REF(rc)
+		)
+		data_out["recon_logs"] += list(data)
+
+	data_out["message_logs"] = list()
+	var/i2 = 0
+	for(var/datum/data_pda_msg/pda in linkedServer.pda_msgs)
+		i2++
+		if(i2 > 3000)
+			break
+		var/list/data = list(
+			sender = pda.sender,
+			recipient = pda.recipient,
+			message = pda.message,
+			picture = pda.picture ? TRUE : FALSE,
+			ref = REF(pda)
+		)
+		data_out["message_logs"] += list(data)
 	
 	return data_out
 
@@ -74,17 +93,19 @@
 	data_out["notice"] = message
 	data_out["authenticated"] = auth
 	data_out["network"] = network
-	data_out["canhack"] = (istype(user, /mob/living/silicon) && user.hack_software)
 
+	var/mob/living/silicon/S = user
+	if(istype(S) && S.hack_software)
+		data_out["canhack"] = TRUE
 	if(hacking)
-		data_out["hacking"] = hacking
+		data_out["hacking"] = TRUE
 		var/data = ""
 		if(isAI(user) || iscyborg(user)) //screen 2
-			dat += "Brute-forcing for server key.<br> It will take 20 seconds for every character that the password has."
-			dat += "In the meantime, this console can reveal your true intentions if you let someone access it. Make sure no humans enter the room during that time."
+			data += "Brute-forcing for server key.<br> It will take 20 seconds for every character that the password has."
+			data += "In the meantime, this console can reveal your true intentions if you let someone access it. Make sure no humans enter the room during that time."
 		else
 			//It's the same message as the one above but in base64. Base64 is better than bin, change my mind
-			dat += {"\
+			data += {"\
 			QnJ1dGUtZm9yY2luZyBmb3Igc2VydmVyIGtleS48YnI+IEl0IHdpbG<br>\
 			wgdGFrZSAyMCBzZWNvbmRzIGZvciBldmVyeSBjaGFyYWN0ZXIgdGhh<br>\
 			dCB0aGUgcGFzc3dvcmQgaGFzLiBJbiB0aGUgbWVhbnRpbWUsIHRoaX<br>\
@@ -101,7 +122,7 @@
 			id = T.id,
 			ref = REF(T)
 		)
-		data_out["servers"] += list(data)
+		data_out["servers"] += list(data)	// This /might/ cause an oom. Too bad!
 	data_out["servers"] = sortList(data_out["servers"]) //a-z sort
 
 	if(!linkedServer)
@@ -112,7 +133,7 @@
 		name = linkedServer.name,
 		id = linkedServer.id,
 		ref = REF(linkedServer),
-		status = !LINKED_SERVER_NONRESPONSIVE //returns true if server is running
+		status = !LINKED_SERVER_NONRESPONSIVE // returns true if server is running
 	)
 	return data_out
 
@@ -121,7 +142,7 @@
 		return
 	switch(action)
 		if("mainmenu") //deselect
-			SelectedMachine = null
+			linkedServer = null
 			auth = FALSE
 			message = ""
 			return
@@ -135,7 +156,7 @@
 				message = "FAILED: NETWORK TAG STRING TOO LENGHTLY"
 				return
 			network = newnet
-			SelectedMachine = null
+			linkedServer = null
 			machinelist = list()
 			auth = FALSE
 			message  = "NOTICE: Network change detected. Server disconnected, please re-authenticate."
@@ -155,13 +176,14 @@
 		if("viewmachine")	//selected but not authorized
 			for(var/obj/machinery/telecomms/message_server/T in machinelist)
 				if(T.id == params["value"])
-					SelectedMachine = T
+					linkedServer = T
 					break
 
 		if("auth")
 			if(LINKED_SERVER_NONRESPONSIVE)
 				message = noserver
 				return
+
 			var/dkey = trim(input(usr, "Please enter the decryption key.") as text|null)
 			if(dkey && dkey == "")
 				return
@@ -171,8 +193,11 @@
 				message = incorrectkey
 			update_static_data(usr)
 
+		if("hack")
+			if(LINKED_SERVER_NONRESPONSIVE)
+				message = noserver
+				return
 
-		if (href_list["hack"])
 			var/mob/living/silicon/S = usr
 			if(istype(S) && S.hack_software)
 				hacking = TRUE
@@ -192,11 +217,9 @@
 			if(istype(data_ref, /datum/data_rc_msg))
 				LAZYREMOVE(linkedServer.rc_msgs, data_ref)
 				message = "NOTICE: Log Deleted!"
-				update_static_data(usr)
 			else if(istype(data_ref, /datum/data_pda_msg))
 				LAZYREMOVE(linkedServer.pda_msgs, data_ref)
 				message = "NOTICE: Log Deleted!"
-				update_static_data(usr)
 			else
 				message = "NOTICE: Log not found! It may have already been deleted"
 			update_static_data(usr)
@@ -209,11 +232,13 @@
 				message = noserver
 				return
 
-			var/what = locate(params["value"])
+			var/what = params["value"]
 			if(what == "pda_logs")
-				linkedServer.data_pda_msg = list()
+				linkedServer.pda_msgs = list()
 			if(what == "rc_msgs")
 				linkedServer.rc_msgs = list()
+			update_static_data(usr)
+		if("refresh")
 			update_static_data(usr)
 
 /obj/machinery/computer/message_monitor/attackby(obj/item/O, mob/living/user, params)
@@ -247,22 +272,10 @@
 	. = ..()
 	GLOB.telecomms_list += src
 
-/obj/machinery/computer/message_monitor/Initialize()
-	..()
-	return INITIALIZE_HINT_LATELOAD
-
-/obj/machinery/computer/message_monitor/LateInitialize()
-	//Is the server isn't linked to a server, and there's a server available, default it to the first one in the list.
-	if(!linkedServer)
-		for(var/obj/machinery/telecomms/message_server/S in GLOB.telecomms_list)
-			if(S.network == network)
-				linkedServer = S
-			break
-
 /obj/machinery/computer/message_monitor/Destroy()
 	GLOB.telecomms_list -= src
 	. = ..()
-
+/*
 /obj/machinery/computer/message_monitor/ui_interact(mob/living/user)
 	. = ..()
 	//If the computer is being hacked or is emagged, display the reboot message.
@@ -421,7 +434,7 @@
 	popup.set_content(dat)
 	popup.set_title_image(user.browse_rsc_icon(icon, icon_state))
 	popup.open()
-
+*/
 /obj/machinery/computer/message_monitor/proc/BruteForce(mob/user)
 	if(isnull(linkedServer))
 		to_chat(user, "<span class='warning'>Could not complete brute-force: Linked Server Disconnected!</span>")
@@ -440,6 +453,7 @@
 	custommessage 	= "This is a test, please ignore."
 	customjob 		= "Admin"
 
+/*
 /obj/machinery/computer/message_monitor/Topic(href, href_list)
 	if(..())
 		return
@@ -624,7 +638,7 @@
 			screen = 0
 
 	return attack_hand(usr)
-
+*/
 #undef LINKED_SERVER_NONRESPONSIVE
 
 /obj/item/paper/monitorkey

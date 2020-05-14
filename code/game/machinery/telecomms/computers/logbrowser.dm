@@ -43,10 +43,10 @@
 		data_out["selected"] = null //but in js, null is good.
 		return data_out
 
-	data_out["traffic"] = SelectedMachine.totaltraffic
 	data_out["selected"] = list(
 		name = SelectedMachine.name,
 		id = SelectedMachine.id,
+		traffic = SelectedMachine.totaltraffic,
 		ref = REF(SelectedMachine)
 	)
 	data_out["selected_logs"] = list()
@@ -89,7 +89,7 @@
 			// based on [/atom/movable/proc/lang_treat]
 			var/message = C.parameters["message"]
 			var/language = C.parameters["language"]
-			to_chat(world, user)
+
 			if(universal_translate || user.has_language(language))
 				message = message
 			else if(!user.has_language(language))
@@ -106,11 +106,6 @@
 			data["message"] = "(unintelligible)"
 		
 		data_out["selected_logs"] += list(data)
-	return data_out
-
-/obj/machinery/computer/telecomms/server/ui_static_data(mob/user)	//i tried placing the logbuilder here but it fails because mob/user is null??	
-	var/list/data_out = list()
-	data_out["notice"] = "" //hacky way of removing it when you leave the console
 	return data_out
 
 /obj/machinery/computer/telecomms/server/ui_act(action, params)
@@ -165,7 +160,6 @@
 			notice = "DELETED ENTRY: [D.name]"
 			LAZYREMOVE(SelectedMachine.log_entries, D)
 			qdel(D)
-			update_static_data(usr)
 /*
 /obj/machinery/computer/telecomms/server/ui_interact(mob/user)
 			if(SelectedServer.totaltraffic >= 1024)

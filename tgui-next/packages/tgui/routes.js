@@ -93,6 +93,7 @@ import { SuitStorageUnit } from './interfaces/SuitStorageUnit';
 import { Tank } from './interfaces/Tank';
 import { TeleLogBrowser } from './interfaces/TelecommsLogBrowser';
 import { Telemonitor } from './interfaces/TelecommsMonitor';
+import { TelePDALog } from './interfaces/TelecommsPDALog';
 import { TankDispenser } from './interfaces/TankDispenser';
 import { Teleporter } from './interfaces/Teleporter';
 import { ThermoMachine } from './interfaces/ThermoMachine';
@@ -511,6 +512,11 @@ const ROUTES = {
   },
   telemonitor: {
     component: () => Telemonitor,
+    scrollable: true,
+    theme: 'ntos',
+  },
+  telepdalog: {
+    component: () => TelePDALog,
     scrollable: true,
     theme: 'ntos',
   },
