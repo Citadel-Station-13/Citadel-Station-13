@@ -104,6 +104,10 @@
 	item_state = "crossbow"
 	ammo_type = list(/obj/item/ammo_casing/energy/bolt/halloween)
 
+/obj/item/gun/energy/kinetic_accelerator/crossbow/ninja
+	name = "implanted energy crossbow"
+	desc = "A weapon favored by Spider Clain stealth specialists."
+
 /obj/item/gun/energy/kinetic_accelerator/crossbow/large
 	name = "energy crossbow"
 	desc = "A reverse engineered weapon using syndicate technology. This thing seems incredibly unwieldly, and seems to be using similar internals to the Proto-Kinetic Accelerator. It might not play nice when brought near weapons similar to it."

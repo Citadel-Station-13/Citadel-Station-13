@@ -79,6 +79,15 @@
 	suppressed = TRUE //Softer fire sound
 	can_unsuppress = FALSE //Permanently silenced
 
+/obj/item/gun/syringe/syndicate/ninja
+	name = "suppressed dart pistol"
+	desc = "A prefected sping loaded syringe firing pistol. Only holds one shot..."
+	force = 6
+
+/obj/item/gun/syringe/syndicate/ninja/Initialize()
+	. = ..()
+	chambered = new /obj/item/ammo_casing/syringegun(src)
+
 /obj/item/gun/syringe/dna
 	name = "modified syringe gun"
 	desc = "A syringe gun that has been modified to fit DNA injectors instead of normal syringes."

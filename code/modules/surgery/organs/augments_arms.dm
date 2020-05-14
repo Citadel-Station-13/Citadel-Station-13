@@ -263,6 +263,12 @@
 		var/obj/item/assembly/flash/armimplant/F = locate(/obj/item/assembly/flash/armimplant) in items_list
 		F.I = src
 
+/obj/item/organ/cyberimp/arm/ninja
+	name = "arm-mounted ninja implant"
+	desc = "A variant of the arm combat implants. This one is loaded with a dart gun and a dart thrower for non-lethal take downs."
+	contents = newlist(/obj/item/assembly/flash/armimplant, /obj/item/gun/syringe/syndicate/ninja, /obj/item/gun/energy/kinetic_accelerator/crossbow/ninja)
+	obj_flags = EMP_PROTECT_SELF
+
 /obj/item/organ/cyberimp/arm/esword
 	name = "arm-mounted energy blade"
 	desc = "An illegal and highly dangerous cybernetic implant that can project a deadly blade of concentrated energy."
