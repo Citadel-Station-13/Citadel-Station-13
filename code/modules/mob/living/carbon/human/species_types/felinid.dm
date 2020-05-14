@@ -9,6 +9,9 @@
 	mutantears = /obj/item/organ/ears/cat
 	mutanttail = /obj/item/organ/tail/cat
 
+	/* ADDED BY CAT */
+	species_language_holder = /datum/language_holder/feline
+
 /datum/species/human/felinid/qualifies_for_rank(rank, list/features)
 	return TRUE
 

@@ -226,6 +226,13 @@ Key procs
 //*      Use atom language sources only.           *
 //************************************************/
 
+/*	CAT added this. If everything dies. Blame the cat!  */
+/datum/language_holder/feline
+	understood_languages = list(/datum/language/common = list(LANGUAGE_ATOM),
+								/datum/language/feline = list(LANGUAGE_ATOM))
+	spoken_languages = list(/datum/language/common = list(LANGUAGE_ATOM),
+							/datum/language/feline = list(LANGUAGE_ATOM))
+
 
 /datum/language_holder/alien
 	understood_languages = list(/datum/language/xenocommon = list(LANGUAGE_ATOM))
