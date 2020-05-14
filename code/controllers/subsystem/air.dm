@@ -39,7 +39,7 @@ SUBSYSTEM_DEF(air)
 
 	var/log_explosive_decompression = TRUE // If things get spammy, admemes can turn this off.
 
-	var/monstermos_turf_limit = 25
+	var/monstermos_turf_limit = 10
 	var/monstermos_hard_turf_limit = 2000
 	var/monstermos_enabled = TRUE
 
