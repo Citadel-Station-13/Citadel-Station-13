@@ -111,7 +111,7 @@
 	whispered = TRUE
 	creator_message = "You form a ratvarian shield, which is capable of absorbing blocked attacks to empower its bashes."
 	object_path = /obj/item/shield/riot/ratvarian
-	usage_tip = "Bashes will only consume charge when executed with intent to harm."
+	usage_tip = "Bashes will only use charge when performed with intent to harm."
 	tier = SCRIPTURE_SCRIPT
 	space_allowed = TRUE
 	primary_component = VANGUARD_COGWHEEL

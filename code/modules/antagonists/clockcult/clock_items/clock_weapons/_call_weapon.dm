@@ -9,8 +9,8 @@
 	check_flags = AB_CHECK_RESTRAINED|AB_CHECK_STUN|AB_CHECK_CONSCIOUS
 	buttontooltipstyle = "clockcult"
 	var/cooldown = 0
-	var/obj/item/weapon_type //The type of weapon to create
-	var/obj/item/weapon
+	var/obj/item/clockwork/weapon/weapon_type //The type of weapon to create
+	var/obj/item/clockwork/weapon/weapon
 
 /datum/action/innate/call_weapon/IsAvailable(silent = FALSE)
 	if(!is_servant_of_ratvar(owner))
