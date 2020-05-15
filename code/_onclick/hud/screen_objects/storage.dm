@@ -54,10 +54,14 @@
 
 /obj/screen/storage/volumetric_box
 	icon_state = "stored_continue"
+	layer = VOLUMETRIC_STORAGE_BOX_LAYER
+	plane = VOLUMETRIC_STORAGE_BOX_PLANE
 	var/obj/item/our_item
 
-/obj/screen/storage/volumetric_box/Initialize(mapload, new_master, our_item)
+/obj/screen/storage/volumetric_box/Initialize(mapload, new_master, obj/item/our_item)
 	src.our_item = our_item
+	RegisterSignal(our_item, COMSIG_ITEM_MOUSE_ENTER, .proc/on_item_mouse_enter)
+	RegisterSignal(our_item, COMSIG_ITEM_MOUSE_EXIT, .proc/on_item_mouse_exit)
 	return ..()
 
 /obj/screen/storage/volumetric_box/Destroy()
@@ -70,10 +74,30 @@
 /obj/screen/storage/volumetric_box/MouseDrop(atom/over, src_location, over_location, src_control, over_control, params)
 	return our_item.MouseDrop(over, src_location, over_location, src_control, over_control, params)
 
+/obj/screen/storage/volumetric_box/MouseExited(location, control, params)
+	makeItemInactive()
+
+/obj/screen/storage/volumetric_box/MouseEntered(location, control, params)
+	makeItemActive()
+
+/obj/screen/storage/volumetric_box/proc/on_item_mouse_enter()
+	makeItemActive()
+
+/obj/screen/storage/volumetric_box/proc/on_item_mouse_exit()
+	makeItemInactive()
+
+/obj/screen/storage/volumetric_box/proc/makeItemInactive()
+	our_item.layer = VOLUMETRIC_STORAGE_ITEM_LAYER
+	our_item.plane = VOLUMETRIC_STORAGE_ITEM_PLANE
+
+/obj/screen/storage/volumetric_box/proc/makeItemActive()
+	our_item.layer = VOLUMETRIC_STORAGE_ACTIVE_ITEM_LAYER		//make sure we display infront of the others!
+	our_item.plane = VOLUMETRIC_STORAGE_ACTIVE_ITEM_PLANE
+
 /obj/screen/storage/volumetric_box/center
 	icon_state = "stored_continue"
-	var/obj/screen/storage/stored_left/left
-	var/obj/screen/storage/stored_right/right
+	var/obj/screen/storage/volumetric_edge/stored_left/left
+	var/obj/screen/storage/volumetric_edge/stored_right/right
 	var/pixel_size
 
 /obj/screen/storage/volumetric_box/center/Initialize(mapload, new_master, our_item)
@@ -87,7 +111,7 @@
 	return ..()
 
 /obj/screen/storage/volumetric_box/center/proc/on_screen_objects()
-	return list(src, left, right)
+	return list(src)
 
 /**
   * Sets the size of this box screen object and regenerates its left/right borders. This includes the actual border's size!
@@ -96,18 +120,38 @@
 	if(pixel_size == pixels)
 		return
 	pixel_size = pixels
-	cut_overlays()
+	cut_overlays(TRUE)
 	//our icon size is 32 pixels.
 	transform = matrix((pixels - (VOLUMETRIC_STORAGE_BOX_BORDER_SIZE * 2)) / VOLUMETRIC_STORAGE_BOX_ICON_SIZE, 0, 0, 0, 1, 0)
 	left.pixel_x = -((pixels - VOLUMETRIC_STORAGE_BOX_ICON_SIZE) * 0.5) - VOLUMETRIC_STORAGE_BOX_BORDER_SIZE
 	right.pixel_x = ((pixels - VOLUMETRIC_STORAGE_BOX_ICON_SIZE) * 0.5) + VOLUMETRIC_STORAGE_BOX_BORDER_SIZE
-	add_overlay(left)
-	add_overlay(right)
+	add_overlay(left, TRUE)
+	add_overlay(right, TRUE)
 
-/obj/screen/storage/stored_left
+/obj/screen/storage/volumetric_edge
+	layer = VOLUMETRIC_STORAGE_BOX_LAYER
+	plane = VOLUMETRIC_STORAGE_BOX_PLANE
+
+/obj/screen/storage/volumetric_edge/Initialize(mapload, master, our_item)
+	src.master = master
+	return ..()
+
+/obj/screen/storage/volumetric_edge/Click(location, control, params)
+	return master.Click(location, control, params)
+
+/obj/screen/storage/volumetric_edge/MouseDrop(atom/over, src_location, over_location, src_control, over_control, params)
+	return master.MouseDrop(over, src_location, over_location, src_control, over_control, params)
+
+/obj/screen/storage/volumetric_edge/MouseExited(location, control, params)
+	return master.MouseExited(location, control, params)
+
+/obj/screen/storage/volumetric_edge/MouseEntered(location, control, params)
+	return master.MouseEntered(location, control, params)
+
+/obj/screen/storage/volumetric_edge/stored_left
 	icon_state = "stored_start"
 	appearance_flags = APPEARANCE_UI | KEEP_APART | RESET_TRANSFORM // Yes I know RESET_TRANSFORM is in APPEARANCE_UI but we're hard-asserting this incase someone changes it.
 
-/obj/screen/storage/stored_right
+/obj/screen/storage/volumetric_edge/stored_right
 	icon_state = "stored_end"
 	appearance_flags = APPEARANCE_UI | KEEP_APART | RESET_TRANSFORM
