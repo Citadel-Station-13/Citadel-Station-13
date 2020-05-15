@@ -102,7 +102,20 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 /obj/item/stack/ore/glass/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	if(..() || !ishuman(hit_atom))
 		return
-	var/mob/living/carbon/human/C = hit_atom
+	mob/living/carbon/human/poorsod = hit_atom
+	eyesand(poorsod)
+
+/obj/item/stack/ore/glass/attack(mob/living/M, mob/living/user)
+	if(!ishuman(M))
+		return ..()
+	if(user.zone_selected != BODY_ZONE_PRECISE_EYES && user.zone_selected != BODY_ZONE_HEAD)
+		return ..()
+	mob/living/carbon/human/poorsod = M
+	visible_message("<span class='danger'>[user] throws the sand at [C]'s face!</span>")
+	user.forcesay("POCKET SAAND!!")
+	eyesand(poorsod)
+
+/obj/item/stack/ore/glass/eyesand(mob/living/carbon/human/C)
 	if(C.head && C.head.flags_cover & HEADCOVERSEYES)
 		visible_message("<span class='danger'>[C]'s headgear blocks the sand!</span>")
 		return
@@ -116,7 +129,13 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	C.adjustStaminaLoss(15)//the pain from your eyes burning does stamina damage
 	C.confused += 5
 	to_chat(C, "<span class='userdanger'>\The [src] gets into your eyes! The pain, it burns!</span>")
+	C.forcesay("*scream")
 	qdel(src)
+
+
+	if(..() || !ishuman(hit_atom))
+		return
+	var/mob/living/carbon/human/C = hit_atom
 
 /obj/item/stack/ore/glass/ex_act(severity, target)
 	if (severity == EXPLODE_NONE)
