@@ -171,7 +171,7 @@ window "infowindow"
 		saved-params = "is-checked"
 		text = "Wiki"
 		command = "wiki"
-	elem "forum"
+	elem "discord"
 		type = BUTTON
 		pos = 320,5
 		size = 100x20
@@ -180,8 +180,8 @@ window "infowindow"
 		text-color = #e0e0e0
 		background-color = #40628a
 		saved-params = "is-checked"
-		text = "Forum"
-		command = "forum"
+		text = "Discord"
+		command = "discord"
 	elem "github"
 		type = BUTTON
 		pos = 420,5
