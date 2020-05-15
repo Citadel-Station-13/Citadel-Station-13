@@ -6,6 +6,7 @@
 	desc = "Very useful for filtering gasses."
 
 	can_unwrench = TRUE
+	aircomponent_flags = AIRCOMPONENT_DIRECT_ATTACH
 
 	var/transfer_rate = MAX_TRANSFER_RATE
 	var/filter_type = null

@@ -70,14 +70,15 @@
 /**
   * Sets up from our position/location in the game world.
   */
-/obj/machinery/atmospherics/proc/Setup(update_icon = TRUE)
+/obj/machinery/atmospherics/proc/Setup(update_icon = TRUE, subsystem_init = FALSE)
 	if(pipe_flags & PIPING_CARDINAL_AUTONORMALIZE)
 		normalize_cardinal_directions()
 	SetInitDirections()
-	. = Join(update_icon)
+	. = Join(update_icon, null, subsystem_init)
 
 /obj/machinery/atmospherics/Destroy()
 	Cleanup()
+	ReleaseAirToTurf()
 
 	SSair.atmos_machinery -= src
 	SSair.pipenets_needing_rebuilt -= src
@@ -89,6 +90,12 @@
 	return ..()
 
 /obj/machinery/atmospherics/forceMove()
+	Cleanup(FALSE)
+	. = ..()
+	Setup(FALSE)
+	update_icon()
+
+/obj/machinery/atmospherics/setDir(newdir)
 	Cleanup(FALSE)
 	. = ..()
 	Setup(FALSE)
@@ -114,31 +121,34 @@
 /**
   * Checks if it's a valid location to join a network from.
   */
-/obj/machinery/atmospherics/proc/CheckJoin(useloc = loc, force = FALSE)
+/obj/machinery/atmospherics/proc/CheckJoin(useloc = loc, force = FALSE, subsystem_init = FALSE)
 	if(!useloc)
 		return FALSE
+	var/location_conflicts = location_conflicts_at(useloc)
+	if(subsystem_init && location_conflicts)
+		stack_trace("[src]([COORD(src)]) had a location conflict at subsystem init. This probably means a mapper screwed up.")
 	// Essential checks should be above and not care about force.
 	if(force)
 		return TRUE
-	if(location_conflicts_at(useloc))
-		return FALSE
-	return TRUE
+	return !location_conflicts
 
 /**
   * Automatically connects us, building our network as necessary. You probably want Setup().
+  * If subsystem_init is TRUE, we will not form networks.
   */
-/obj/machinery/atmospherics/proc/Join(update_icon = TRUE, force = FALSE)
+/obj/machinery/atmospherics/proc/Join(update_icon = TRUE, force = FALSE, subsystem_init = FALSE)
 	SHOULD_NOT_OVERRIDE(TRUE)
 	PRIVATE_PROC(TRUE)			// May be reconsidered in the future.
 	. = FALSE
 	if(pipe_flags & PIPING_NETWORK_JOINED)		//do not do it again.
 		CRASH("Tried to Join() while already Join()ed.")
-	if(!CheckJoin(loc, force))
+	if(!CheckJoin(loc, force, subsystem_init))
 		return
 	pipe_flags |= PIPING_NETWORK_JOINED
 	collect_nodes()
-	join_nodes()
-	form_networks()
+	join_nodes(subsystem_init)
+	if(!subsystem_init)
+		form_networks()
 	if(update_icon)
 		update_icon()
 	return TRUE
@@ -191,12 +201,12 @@
 /**
   * Joins connected nodes. This proc should tell them we connected.
   */
-/obj/machinery/atmospherics/proc/join_nodes()
+/obj/machinery/atmospherics/proc/join_nodes(subsystem_init = FALSe)
 	for(var/i in nodes)
 		var/obj/machinery/atmospherics/A = i
 		if(!A)
 			continue
-		A.on_connect(src)
+		A.on_connect(src, subsystem_init)
 
 /**
   * Forms required pipeline datums.
@@ -213,6 +223,19 @@
 		stack_trace("on_disconnect called without the disconnecting thing being in our nodes! Something has gone horribly wrong!")
 	else
 		nodes[nodeindex] = null
+	update_icon()
+
+/**
+  * Called when a specific machinery is connecting to us.
+  */
+/obj/machinery/atmospherics/proc/on_connect(obj/machinery/atmospherics/connecting, subsystem_init = FALSE)
+	if(!subsystem_init)
+		if(!(connecting in nodes))
+			collect_nodes()		//make sure we have them
+		var/nodeindex = nodes.Find(connecting)
+		if(!nodeindex)
+			stack_trace("on_connect called but the connecting thing was not collected successfully into our nodes! Something has gone horribly wrong!")
+		do_node_pipeline_expansion(nodeindex, connecting)
 	update_icon()
 
 /**
@@ -246,10 +269,16 @@
 			setDir(EAST)
 
 /**
-  * Initialization proc called by SSair after turfs are set up.
+  * Initialization proc called by us being wrenched in/constructed OR during world init by SSair after turfs are set up.
   */
-/obj/machinery/atmospherics/proc/AtmosInitialize()
-	Setup()
+/obj/machinery/atmospherics/proc/AtmosInitialize(subsystem_init = FALSE)
+	Setup(subsystem_init = TRUE)
+
+/**
+  * Initialization proc called by SSair after AtmosInitialize to build networks.
+  */
+/obj/machinery/atmospherics/proc/AtmosnetInitialize()
+	form_networks()
 
 /**
   * Temporarily stores air when our parent pipe network breaks down.
@@ -269,9 +298,10 @@
 
 /**
   * Checks if we should let someone connect to us. Does not consider their opinions on the matter.
+  * Checks layer, direction, and makes sure both pipes are flagged as network joined.
   */
 /obj/machinery/atmospherics/proc/node_connection_check(obj/machinery/atmospherics/target, node_index, prompted_layer)
-	return node_layer_check(target, prompted_layer) && node_direction_check(target)
+	return node_layer_check(target, prompted_layer) && node_direction_check(target) && ((pipe_flags & target.pipe_flags) & PIPING_NETWORK_JOINED)
 
 /**
   * Checks the target is on the right pipe layer to connect to us.
@@ -351,6 +381,13 @@
   */
 /obj/machinery/atmospherics/proc/on_pipenet_replace(datum/pipeline/old, datum/pipeline/with)
 	CRASH("The pipenet of a base atmospherics machinery was on_replace'd. Someone screwed up.")
+
+/**
+  * Tries to extend our pipeline(s) from a node number to a new machine, usually used for machinery joins.
+  * And by usually, I mean don't touch or use this unless you know what this is doing.
+  */
+/obj/machinery/atmospherics/proc/expand_pipeline_to(obj/machinery/atmospherics/expand_to)
+	CRASH("Attempted to do_node_pipeline_expansion([nodeindex], [expand_to]) on base atmospherics machinery.")
 
 /**
   * Queues up a pipenet rebuild on a specified node.
@@ -466,12 +503,7 @@
 	setPipingLayer(set_layer)
 	var/turf/T = get_turf(src)
 	level = T.intact ? 2 : 1
-	atmosinit()
-	var/list/nodes = pipeline_expansion()
-	for(var/obj/machinery/atmospherics/A in nodes)
-		A.atmosinit()
-		A.addMember(src)
-	build_network()
+	AtmosInitialize()
 
 /obj/machinery/atmospherics/Entered(atom/movable/AM)
 	if(istype(AM, /mob/living))

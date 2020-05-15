@@ -17,6 +17,7 @@
 
 	can_unwrench = TRUE
 	shift_underlay_only = FALSE
+	aircomponent_flags = AIRCOMPONENT_DIRECT_ATTACH
 
 	var/transfer_rate = MAX_TRANSFER_RATE
 

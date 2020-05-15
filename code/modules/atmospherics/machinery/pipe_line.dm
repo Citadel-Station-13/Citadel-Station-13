@@ -43,8 +43,7 @@
   * Disassembles us, storing our air into our resulting directly connected pipes.
   */
 /datum/pipeline/proc/breakdown()
-	if(parent)
-		parent.breakdown()
+	breakdown_parent()
 	var/obj/machinery/atmospherics/pipe/P
 	for(var/i in pipes)
 		P = i
@@ -64,6 +63,12 @@
 	valve_components = null
 	volume = 0
 	total_volume = 0
+
+/**
+  * Breakdowns our parent pipe network if it exists.
+  */
+/datum/pipeline/proc/breakdown_parent()
+	parent?.breakdown()
 
 /**
   * Temporarily stores air when our parent pipe network breaks down.
@@ -173,9 +178,39 @@
 		A.setPipenet(src, N)
 		addMachineryMember(A)
 
-/datum/pipeline/proc/merge(datum/pipeline/E)
+/datum/pipeline/proc/merge(datum/pipeline/P)
 	if(E == src)
 		return
+	breakdown_parent()
+	P.breakdown_parent()
+	volume += P.volume
+	total_volume += P.volume
+	temporay_air.merge(P.temporary_air)
+	for(var/obj/machinery/atmospherics/pipe/P in P.pipes)
+
+
+		/// Our temporarily stored air, consisting of all pipes and directly connected components to us. Used to hold air before we build our pipe network.
+	var/datum/gas_mixture/temporary_air
+	/// Pipes. They are all directly attached, with no gas mixtures of their own.
+	var/list/obj/machinery/atmospherics/pipe/pipes
+	/// Components that are directly attached.
+	var/list/obj/machinery/atmospherics/components/direct_components
+	/// Components that are not directly attached - These split air with us using reconcile_air().
+	var/list/obj/machinery/atmospherics/components/indirect_components
+	/// Components that can potentially directly connect us to other pipelines when building a pipe network. These are checked rather than all components. This is a LAZY LIST.
+	var/list/obj/machinery/atmospherics/components/valve_components
+	/// Our volume, consisting of all pipes and directly attached components, in liters.
+	var/volume = 0
+	/// The total volume of all of our components plus us
+	var/total_volume = 0
+	/// Our parent pipe network.
+	var/datum/pipe_network/parent
+	/// The gas mixtures of indirectly attached components.
+	var/list/datum/gas_mixture/component_airs
+	/// Marks us as being destroyed or otherwise broken down or rebuilt. This means we should be invalid for air operations.
+	var/invalid = TRUE
+
+	parent.breakdown()
 	air.volume += E.air.volume
 	members.Add(E.members)
 	for(var/obj/machinery/atmospherics/pipe/S in E.members)
@@ -189,18 +224,6 @@
 	E.other_atmosmch.Cut()
 	update = TRUE
 	qdel(E)
-
-/obj/machinery/atmospherics/proc/addMember(obj/machinery/atmospherics/A)
-	return
-
-/obj/machinery/atmospherics/pipe/addMember(obj/machinery/atmospherics/A)
-	parent.addMember(A, src)
-
-/obj/machinery/atmospherics/components/addMember(obj/machinery/atmospherics/A)
-	var/datum/pipeline/P = returnPipenet(A)
-	if(!P)
-		CRASH("null.addMember() called by [type] on [COORD(src)]")
-	P.addMember(A, src)
 
 /datum/pipeline/proc/temperature_interact(turf/target, share_volume, thermal_conductivity)
 	var/total_heat_capacity = air.heat_capacity()

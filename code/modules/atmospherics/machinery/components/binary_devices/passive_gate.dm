@@ -16,6 +16,7 @@ Passive gate is similar to the regular pump except:
 	shift_underlay_only = FALSE
 
 	interaction_flags_machine = INTERACT_MACHINE_OFFLINE | INTERACT_MACHINE_WIRES_IF_OPEN | INTERACT_MACHINE_ALLOW_SILICON | INTERACT_MACHINE_OPEN_SILICON | INTERACT_MACHINE_SET_MACHINE
+	aircomponent_flags = AIRCOMPONENT_DIRECT_ATTACH
 
 	var/target_pressure = ONE_ATMOSPHERE
 

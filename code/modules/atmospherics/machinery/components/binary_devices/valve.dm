@@ -12,6 +12,7 @@ It's like a regular ol' straight pipe, but you can turn it on and off.
 
 	interaction_flags_machine = INTERACT_MACHINE_OFFLINE | INTERACT_MACHINE_OPEN //Intentionally no allow_silicon flag
 	pipe_flags = PIPING_CARDINAL_AUTONORMALIZE
+	aircomponent_flags = AIRCOMPONENT_DIRECT_ATTACH | AIRCOMPONENT_POTENTIAL_VALVE
 
 	var/frequency = 0
 	var/id = null

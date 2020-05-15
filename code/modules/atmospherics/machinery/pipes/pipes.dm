@@ -27,7 +27,7 @@
 
 /obj/machinery/atmospherics/pipe/form_networks()
 	if(parent)
-		CRASH("Attempted to form network when parent still exists!")
+		return
 	parent = new
 	parent.build_network(src)
 
@@ -36,7 +36,7 @@
 
 /obj/machinery/atmospherics/pipe/on_disconnect(obj/machinery/atmospherics/other)
 	. = ..()
-	SSair.add_to_rebuild_queue(src)		// they probably destroyed our network. i should probably have a better system than this but eh.
+	QueuePipenetRebuild()		// they probably destroyed our network. i should probably have a better system than this but eh.
 
 /obj/machinery/atmospherics/pipe/atmosinit()
 	var/turf/T = loc			// hide if turf is not intact
@@ -116,19 +116,24 @@
 	parent?.invalid = TRUE
 	SSair.add_to_rebuild_queue(src)
 
+/obj/machinery/atmospherics/pipe/RebuildNodePipenet(node = 1)
+	return RebuildAllPipenets()
+
+/obj/machinery/atmospherics/pipe/RebuildAllPipenets()
+	breakdown_networks()
+	form_networks()
+
+/obj/machinery/atmospherics/pipe/expand_pipeline_to(obj/machinery/atmospherics/expand_to)
+	parent.expand_to(src, expand_to)
+
 /obj/machinery/atmospherics/pipe/Destroy()
-	QDEL_NULL(parent)
-
-	releaseAirToTurf()
-	QDEL_NULL(air_temporary)
-
 	var/turf/T = loc
 	for(var/obj/machinery/meter/meter in T)
 		if(meter.target == src)
 			var/obj/item/pipe_meter/PM = new (T)
 			meter.transfer_fingerprints_to(PM)
 			qdel(meter)
-	. = ..()
+	return ..()
 
 /obj/machinery/atmospherics/pipe/update_alpha()
 	alpha = invisibility ? 64 : 255

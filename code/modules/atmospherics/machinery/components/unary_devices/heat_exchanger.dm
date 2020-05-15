@@ -5,6 +5,8 @@
 	name = "heat exchanger"
 	desc = "Exchanges heat between two input gases. Set up for fast heat transfer."
 
+	aircomponent_flags = AIRCOMPONENT_DIRECT_ATTACH
+
 	can_unwrench = TRUE
 	shift_underlay_only = FALSE // not really used
 

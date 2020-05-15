@@ -6,6 +6,7 @@
 	desc = "Very useful for mixing gasses."
 
 	can_unwrench = TRUE
+	aircomponent_flags = AIRCOMPONENT_DIRECT_ATTACH
 
 	var/target_pressure = ONE_ATMOSPHERE
 	var/node1_concentration = 0.5
