@@ -23,7 +23,8 @@
 	obj_damage = 40
 	melee_damage_lower = 15
 	melee_damage_upper = 15
-	attacktext = "slices"
+	attack_verb_continuous = "slices"
+	attack_verb_simple = "slice"
 	attack_sound = 'sound/weapons/bladeslice.ogg'
 	vision_range = 7
 	aggro_vision_range = 7

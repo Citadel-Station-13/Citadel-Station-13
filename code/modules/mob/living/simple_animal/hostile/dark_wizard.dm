@@ -17,7 +17,8 @@
 	obj_damage = 20
 	melee_damage_lower = 5
 	melee_damage_upper = 5
-	attacktext = "staves"
+	attack_verb_continuous = "staves"
+	attack_verb_simple = "stave"
 	a_intent = INTENT_HARM
 	speak_emote = list("chants")
 	attack_sound = 'sound/weapons/bladeslice.ogg'
