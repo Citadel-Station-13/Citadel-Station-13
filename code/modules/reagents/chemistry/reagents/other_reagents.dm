@@ -1735,6 +1735,22 @@
 			H.facial_hair_style = "Very Long Beard"
 			H.update_hair()
 
+/datum/reagent/baldium
+	name = "Baldium"
+	description = "A major cause of hair loss across the world."
+	reagent_state = LIQUID
+	color = "#ecb2cf"
+	taste_description = "bitterness"
+
+/datum/reagent/baldium/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
+	if(method == TOUCH || method == VAPOR)
+		if(M && ishuman(M))
+			var/mob/living/carbon/human/H = M
+			to_chat(H, "<span class='danger'>Your hair is falling out in clumps!</span>")
+			H.hair_style = "Bald"
+			H.facial_hair_style = "Shaved"
+			H.update_hair()
+
 /datum/reagent/saltpetre
 	name = "Saltpetre"
 	description = "Volatile. Controversial. Third Thing."
