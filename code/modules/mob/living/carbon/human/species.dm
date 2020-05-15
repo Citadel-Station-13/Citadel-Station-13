@@ -331,19 +331,20 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 		if(mutant_bodyparts["meat_type"]) //I can't believe it's come to the meat
 			H.type_of_meat = GLOB.meat_types[H.dna.features["meat_type"]]
 
-		if(mutant_bodyparts["taur"])
-			var/datum/sprite_accessory/taur/T = GLOB.taur_list[H.dna.features["taur"]]
-			switch(T?.taur_mode)
-				if(STYLE_HOOF_TAURIC)
-					H.physiology.footstep_type = FOOTSTEP_MOB_SHOE
-				if(STYLE_PAW_TAURIC)
-					H.physiology.footstep_type = FOOTSTEP_MOB_CLAW
-				if(STYLE_SNEK_TAURIC)
-					H.physiology.footstep_type = FOOTSTEP_MOB_CRAWL
-				else
-					H.physiology.footstep_type = null
-		else
-			H.physiology.footstep_type = null
+		if(H.physiology)
+			if(mutant_bodyparts["taur"])
+				var/datum/sprite_accessory/taur/T = GLOB.taur_list[H.dna.features["taur"]]
+				switch(T?.taur_mode)
+					if(STYLE_HOOF_TAURIC)
+						H.physiology.footstep_type = FOOTSTEP_MOB_SHOE
+					if(STYLE_PAW_TAURIC)
+						H.physiology.footstep_type = FOOTSTEP_MOB_CLAW
+					if(STYLE_SNEK_TAURIC)
+						H.physiology.footstep_type = FOOTSTEP_MOB_CRAWL
+					else
+						H.physiology.footstep_type = null
+			else
+				H.physiology.footstep_type = null
 
 	C.add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/species, TRUE, multiplicative_slowdown = speedmod)
 
