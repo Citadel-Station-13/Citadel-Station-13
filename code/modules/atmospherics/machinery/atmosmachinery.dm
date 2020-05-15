@@ -373,7 +373,7 @@
 /**
   * Informs us that a specific node was set to a pipenet.
   */
-/obj/machinery/atmospherics/proc/on_pipeline_join(node = 1, obj/machinery/atmospherics/expanded_from, datum/pipeline/line)
+/obj/machinery/atmospherics/proc/on_pipeline_join(obj/machinery/atmospherics/expanded_from, datum/pipeline/line)
 	CRASH("The pipenet of a base atmospherics machinery was on_join'd. Someone screwed up.")
 
 /**

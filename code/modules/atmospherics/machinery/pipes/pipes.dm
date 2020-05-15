@@ -49,8 +49,7 @@
 /obj/machinery/atmospherics/pipe/proc/set_volume(new_volume)
 	var/diff = new_volume - volume
 	volume = new_volume
-	if(pipeline)
-		pipeline.set_volume(pipeline.volume + diff)
+	parent?.adjustDirectVolume(diff)
 
 /obj/machinery/atmospherics/pipe/temporarily_store_air(datum/pipeline/from)
 	var/datum/gas_mixture/parent_air = parent.temporary_air
@@ -104,8 +103,15 @@
 /obj/machinery/atmospherics/pipe/return_pipenet_air()
 	return parent.return_air()
 
-/obj/machinery/atmospherics/pipe/on_pipeline_join(node = 1, obj/machinery/atmospherics/expanded_from, datum/pipeline/line)
-	parent = line
+/obj/machinery/atmospherics/pipe/on_pipeline_join(obj/machinery/atmospherics/expanded_from, datum/pipeline/line)
+	if(parent)
+		line.merge(parent)
+	else
+		parent = line
+		parent.adjustDirectVolume(volume)
+		parent.pipes += src
+		for(var/obj/machinery/atmospherics/A in pipeline_expansion)
+			parent.expand_to(src, A)
 
 /obj/machinery/atmospherics/pipe/on_pipeline_replace(datum/pipeline/old, datum/pipeline/with)
 	if(old != parent)

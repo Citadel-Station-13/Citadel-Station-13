@@ -78,7 +78,7 @@
 		return list(nodes[parents.Find(from)])
 	return ..()
 
-/obj/machinery/atmospherics/components/on_pipeline_join(node = 1, obj/machinery/atmospherics/expanded_from, datum/pipeline/line)
+/obj/machinery/atmospherics/components/on_pipeline_join(obj/machinery/atmospherics/expanded_from, datum/pipeline/line)
 	parents[nodes.Find(expanded_from)] = line
 
 /obj/machinery/atmospherics/components/on_pipeline_replace(datum/pipeline/old, datum/pipeline/with)

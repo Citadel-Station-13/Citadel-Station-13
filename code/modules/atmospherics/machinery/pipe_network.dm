@@ -70,6 +70,9 @@
 	air.volume = total_volume
 	invalid = TRUE
 
+/datum/pipe_network/proc/adjustDirectVolume(amount)
+	air.volume += amount
+
 /**
   * Equalizes our air across all components inside us based on volumes.
   */
@@ -108,6 +111,34 @@
 			for(var/gasid in total_gases)
 				gaslist[gasid] = (air.volume / total_volume) * total_gases[gasid]
 
+#warn wip below
+
+/datum/pipeline/proc/reconcile_air()
+	var/list/datum/gas_mixture/GL = list()
+	var/list/datum/pipeline/PL = list()
+	PL += src
+
+	for(var/i = 1; i <= PL.len; i++) //can't do a for-each here because we may add to the list within the loop
+		var/datum/pipeline/P = PL[i]
+		if(!P)
+			continue
+		GL += P.return_air()
+		for(var/atmosmch in P.other_atmosmch)
+			if (istype(atmosmch, /obj/machinery/atmospherics/components/binary/valve))
+				var/obj/machinery/atmospherics/components/binary/valve/V = atmosmch
+				if(V.on)
+					PL |= V.parents[1]
+					PL |= V.parents[2]
+			else if (istype(atmosmch,/obj/machinery/atmospherics/components/binary/relief_valve))
+				var/obj/machinery/atmospherics/components/binary/relief_valve/V = atmosmch
+				if(V.opened)
+					PL |= V.parents[1]
+					PL |= V.parents[2]
+			else if (istype(atmosmch, /obj/machinery/atmospherics/components/unary/portables_connector))
+				var/obj/machinery/atmospherics/components/unary/portables_connector/C = atmosmch
+				if(C.connected_device)
+					GL += C.portableConnectorReturnAir()
+
 /datum/pipe_network/process()
 	if(invalid)
 		return
@@ -115,3 +146,59 @@
 		update = FALSE
 		equalization_tick()
 	update = air.react(src)
+
+/datum/pipe_network/proc/temperature_interact(turf/target, share_volume, thermal_conductivity)
+	var/total_heat_capacity = air.heat_capacity()
+	var/partial_heat_capacity = total_heat_capacity*(share_volume/air.volume)
+	var/target_temperature
+	var/target_heat_capacity
+
+	if(isopenturf(target))
+
+		var/turf/open/modeled_location = target
+		target_temperature = modeled_location.GetTemperature()
+		target_heat_capacity = modeled_location.GetHeatCapacity()
+
+		if(modeled_location.blocks_air)
+
+			if((modeled_location.heat_capacity>0) && (partial_heat_capacity>0))
+				var/delta_temperature = air.temperature - target_temperature
+
+				var/heat = thermal_conductivity*delta_temperature* \
+					(partial_heat_capacity*target_heat_capacity/(partial_heat_capacity+target_heat_capacity))
+
+				air.temperature -= heat/total_heat_capacity
+				modeled_location.TakeTemperature(heat/target_heat_capacity)
+
+		else
+			var/delta_temperature = 0
+			var/sharer_heat_capacity = 0
+
+			delta_temperature = (air.temperature - target_temperature)
+			sharer_heat_capacity = target_heat_capacity
+
+			var/self_temperature_delta = 0
+			var/sharer_temperature_delta = 0
+
+			if((sharer_heat_capacity>0) && (partial_heat_capacity>0))
+				var/heat = thermal_conductivity*delta_temperature* \
+					(partial_heat_capacity*sharer_heat_capacity/(partial_heat_capacity+sharer_heat_capacity))
+
+				self_temperature_delta = -heat/total_heat_capacity
+				sharer_temperature_delta = heat/sharer_heat_capacity
+			else
+				return 1
+
+			air.temperature += self_temperature_delta
+			modeled_location.TakeTemperature(sharer_temperature_delta)
+
+
+	else
+		if((target.heat_capacity>0) && (partial_heat_capacity>0))
+			var/delta_temperature = air.temperature - target.temperature
+
+			var/heat = thermal_conductivity*delta_temperature* \
+				(partial_heat_capacity*target.heat_capacity/(partial_heat_capacity+target.heat_capacity))
+
+			air.temperature -= heat/total_heat_capacity
+	update = TRUE

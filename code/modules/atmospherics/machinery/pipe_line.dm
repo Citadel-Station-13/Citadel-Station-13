@@ -5,13 +5,15 @@
 /datum/pipeline
 	/// Our temporarily stored air, consisting of all pipes and directly connected components to us. Used to hold air before we build our pipe network.
 	var/datum/gas_mixture/temporary_air
+	// Machinery are either in pipes, direct components, or indirect components.
+
 	/// Pipes. They are all directly attached, with no gas mixtures of their own.
 	var/list/obj/machinery/atmospherics/pipe/pipes
 	/// Components that are directly attached.
 	var/list/obj/machinery/atmospherics/components/direct_components
 	/// Components that are not directly attached - These split air with us using reconcile_air().
 	var/list/obj/machinery/atmospherics/components/indirect_components
-	/// Components that can potentially directly connect us to other pipelines when building a pipe network. These are checked rather than all components. This is a LAZY LIST.
+	/// Components that can potentially directly connect us to other pipelines when building a pipe network. These are checked rather than all components. This is a LAZY LIST. This is also the only list that contains duplicates from the other lists.
 	var/list/obj/machinery/atmospherics/components/valve_components
 	/// Our volume, consisting of all pipes and directly attached components, in liters.
 	var/volume = 0
@@ -63,6 +65,7 @@
 	valve_components = null
 	volume = 0
 	total_volume = 0
+	QDEL_NULL(air_temporary)
 
 /**
   * Breakdowns our parent pipe network if it exists.
@@ -97,6 +100,63 @@
 	breakdown()		// make sure we're empty, even if reusing pipelines isn't and probably shouldn't be a thing.
 	total_volume = 0
 	volume = 0
+	air_temporary = new
+	add_member(base)
+	var/list/possible = list(base)
+	var/list/gathered = list()			//lmfao we have like 4 lists this is faster
+	while(length(possible))
+		var/obj/machinery/atmospherics/A = possible[1]
+		possible.Cut(1, 2)
+		var/list/result = A.pipeline_expansion(src)
+		for(var/obj/machinery/atmospherics/A in result)
+			if(gathered[A])
+				continue
+			gathered[A] = TRUE
+			add_member(A)
+	if(build_pipe_network)
+		build_parent()
+	invalid = FALSE
+
+/**
+  * Builds our pipe network.
+  */
+/datum/pipeline/proc/build_parent()
+	if(parent)
+		return
+	parent = new
+	parent.build_network(src)
+
+/datum/pipeline/proc/add_member(obj/machinery/atmospherics/A)
+	if(istype(A, /obj/machinery/atmospherics/pipe))
+		var/obj/machinery/atmospherics/pipe/P = A
+		pipes += P
+		volume += P.volume
+		total_volume += P.volume
+		join_air(P.air_temporary)
+		P.air_temporary = null
+		P.parent = src
+	else if(istype(A, /obj/machinery/atmospherics/components))
+		var/obj/machinery/atmospherics/components/C = A
+		if(C.aircomponent_flags & AIRCOMPONENT_DIRECT_ATTACH)
+			direct_components += C
+		else
+			indirect_components += C
+
+		if(C.aircomponent_flags & AIRCOMPONENT_POTENTIAL_VALVE)
+			valve_components += C
+	else
+		CRASH("Attempted to add member that wasn't a pipe or a component: [A].")
+
+	if(istype(base, /obj/machinery/atmospherics/pipe))
+		var/obj/machinery/atmospherics/pipe/P = base
+		volume += P.volume
+		total_volume += P.volume
+		pipes += P
+		if(P.air_temporary)
+			air_temporary = P.air_temporary
+			P.air_temporary = null
+	else
+
 
 	var/volume = 0
 	if(istype(base, /obj/machinery/atmospherics/pipe))
@@ -110,42 +170,6 @@
 		addMachineryMember(base)
 	if(!air)
 		air = new
-	var/list/possible_expansions = list(base)
-	while(possible_expansions.len>0)
-		for(var/obj/machinery/atmospherics/borderline in possible_expansions)
-
-			var/list/result = borderline.pipeline_expansion(src)
-
-			if(result.len>0)
-				for(var/obj/machinery/atmospherics/P in result)
-					if(istype(P, /obj/machinery/atmospherics/pipe))
-						var/obj/machinery/atmospherics/pipe/item = P
-						if(!members.Find(item))
-
-							if(item.parent)
-								var/static/pipenetwarnings = 10
-								if(pipenetwarnings > 0)
-									log_mapping("build_pipeline(): [item.type] added to a pipenet while still having one. (pipes leading to the same spot stacking in one turf) Nearby: ([item.x], [item.y], [item.z]).")
-									pipenetwarnings -= 1
-									if(pipenetwarnings == 0)
-										log_mapping("build_pipeline(): further messages about pipenets will be suppressed")
-							members += item
-							possible_expansions += item
-
-							volume += item.volume
-							item.parent = src
-
-							if(item.air_temporary)
-								air.merge(item.air_temporary)
-								item.air_temporary = null
-					else
-						P.setPipenet(src, borderline)
-						addMachineryMember(P)
-
-			possible_expansions -= borderline
-
-	air.volume = volume
-	invalid = FALSE
 
 /datum/pipeline/proc/addMachineryMember(obj/machinery/atmospherics/components/C)
 	other_atmosmch |= C
@@ -178,6 +202,31 @@
 		A.setPipenet(src, N)
 		addMachineryMember(A)
 
+/**
+  * Expands to expansion from source.
+  * expansion.on_pipeline_join handles adding them to us.
+  * This is probably bad code as we optimally should handle everything in here instead of having something else handle addition but eh.
+  */
+/datum/pipeline/proc/expand_to(obj/machinery/atmospherics/source, obj/machinery/atmospherics/expansion)
+	expansion.on_pipeline_join(source, src)
+
+/**
+  * Adjusts our direct total volume.
+  */
+/datum/pipeline/proc/adjustDirectVolume(amount)
+	volume += amount
+	total_volume += amount
+	parent?.adjustDirectVolume(amount)
+
+/**
+  * Adjusts our indirect total volume.
+  */
+/datum/pipeline/proc/adjustIndirectVolume(amount)
+	total_volume += amount
+
+/**
+  * Merges with another pipeline, taking all of them into us.
+  */
 /datum/pipeline/proc/merge(datum/pipeline/P)
 	if(E == src)
 		return
@@ -186,124 +235,21 @@
 	volume += P.volume
 	total_volume += P.volume
 	temporay_air.merge(P.temporary_air)
-	for(var/obj/machinery/atmospherics/pipe/P in P.pipes)
-
-
-		/// Our temporarily stored air, consisting of all pipes and directly connected components to us. Used to hold air before we build our pipe network.
-	var/datum/gas_mixture/temporary_air
-	/// Pipes. They are all directly attached, with no gas mixtures of their own.
-	var/list/obj/machinery/atmospherics/pipe/pipes
-	/// Components that are directly attached.
-	var/list/obj/machinery/atmospherics/components/direct_components
-	/// Components that are not directly attached - These split air with us using reconcile_air().
-	var/list/obj/machinery/atmospherics/components/indirect_components
-	/// Components that can potentially directly connect us to other pipelines when building a pipe network. These are checked rather than all components. This is a LAZY LIST.
-	var/list/obj/machinery/atmospherics/components/valve_components
-	/// Our volume, consisting of all pipes and directly attached components, in liters.
-	var/volume = 0
-	/// The total volume of all of our components plus us
-	var/total_volume = 0
-	/// Our parent pipe network.
-	var/datum/pipe_network/parent
-	/// The gas mixtures of indirectly attached components.
-	var/list/datum/gas_mixture/component_airs
-	/// Marks us as being destroyed or otherwise broken down or rebuilt. This means we should be invalid for air operations.
-	var/invalid = TRUE
-
-	parent.breakdown()
-	air.volume += E.air.volume
-	members.Add(E.members)
-	for(var/obj/machinery/atmospherics/pipe/S in E.members)
-		S.parent = src
-	air.merge(E.air)
-	for(var/obj/machinery/atmospherics/components/C in E.other_atmosmch)
-		C.replacePipenet(E, src)
-	other_atmosmch.Add(E.other_atmosmch)
-	other_airs.Add(E.other_airs)
-	E.members.Cut()
-	E.other_atmosmch.Cut()
+	for(var/obj/machinery/atmospherics/A in P.pipes | P.direct_components | P.indirect_components)
+		A.on_pipeline_replace(P, src)
+	pipes += P.pipes
+	direct_components |= P.direct_components		// components can be on two networks at once. pipes can't.
+	indirect_components |= P.indirect_components
+	P.pipes.len = 0
+	P.direct_components.len = 0
+	P.indirect_components.len = 0
+	component_airs += P.component_airs
+	P.component_airs.len = 0
+	valve_components |= P.valve_components
+	P.valve_components.len = 0
+	parent = new
+	parent.build_network(src)
 	update = TRUE
-	qdel(E)
 
 /datum/pipeline/proc/temperature_interact(turf/target, share_volume, thermal_conductivity)
-	var/total_heat_capacity = air.heat_capacity()
-	var/partial_heat_capacity = total_heat_capacity*(share_volume/air.volume)
-	var/target_temperature
-	var/target_heat_capacity
-
-	if(isopenturf(target))
-
-		var/turf/open/modeled_location = target
-		target_temperature = modeled_location.GetTemperature()
-		target_heat_capacity = modeled_location.GetHeatCapacity()
-
-		if(modeled_location.blocks_air)
-
-			if((modeled_location.heat_capacity>0) && (partial_heat_capacity>0))
-				var/delta_temperature = air.temperature - target_temperature
-
-				var/heat = thermal_conductivity*delta_temperature* \
-					(partial_heat_capacity*target_heat_capacity/(partial_heat_capacity+target_heat_capacity))
-
-				air.temperature -= heat/total_heat_capacity
-				modeled_location.TakeTemperature(heat/target_heat_capacity)
-
-		else
-			var/delta_temperature = 0
-			var/sharer_heat_capacity = 0
-
-			delta_temperature = (air.temperature - target_temperature)
-			sharer_heat_capacity = target_heat_capacity
-
-			var/self_temperature_delta = 0
-			var/sharer_temperature_delta = 0
-
-			if((sharer_heat_capacity>0) && (partial_heat_capacity>0))
-				var/heat = thermal_conductivity*delta_temperature* \
-					(partial_heat_capacity*sharer_heat_capacity/(partial_heat_capacity+sharer_heat_capacity))
-
-				self_temperature_delta = -heat/total_heat_capacity
-				sharer_temperature_delta = heat/sharer_heat_capacity
-			else
-				return 1
-
-			air.temperature += self_temperature_delta
-			modeled_location.TakeTemperature(sharer_temperature_delta)
-
-
-	else
-		if((target.heat_capacity>0) && (partial_heat_capacity>0))
-			var/delta_temperature = air.temperature - target.temperature
-
-			var/heat = thermal_conductivity*delta_temperature* \
-				(partial_heat_capacity*target.heat_capacity/(partial_heat_capacity+target.heat_capacity))
-
-			air.temperature -= heat/total_heat_capacity
-	update = TRUE
-
-
-/datum/pipeline/proc/reconcile_air()
-	var/list/datum/gas_mixture/GL = list()
-	var/list/datum/pipeline/PL = list()
-	PL += src
-
-	for(var/i = 1; i <= PL.len; i++) //can't do a for-each here because we may add to the list within the loop
-		var/datum/pipeline/P = PL[i]
-		if(!P)
-			continue
-		GL += P.return_air()
-		for(var/atmosmch in P.other_atmosmch)
-			if (istype(atmosmch, /obj/machinery/atmospherics/components/binary/valve))
-				var/obj/machinery/atmospherics/components/binary/valve/V = atmosmch
-				if(V.on)
-					PL |= V.parents[1]
-					PL |= V.parents[2]
-			else if (istype(atmosmch,/obj/machinery/atmospherics/components/binary/relief_valve))
-				var/obj/machinery/atmospherics/components/binary/relief_valve/V = atmosmch
-				if(V.opened)
-					PL |= V.parents[1]
-					PL |= V.parents[2]
-			else if (istype(atmosmch, /obj/machinery/atmospherics/components/unary/portables_connector))
-				var/obj/machinery/atmospherics/components/unary/portables_connector/C = atmosmch
-				if(C.connected_device)
-					GL += C.portableConnectorReturnAir()
+	return parent.temperature_interact(target, share_volume, thermal_conductivity)
