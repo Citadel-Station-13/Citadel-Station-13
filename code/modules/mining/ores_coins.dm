@@ -102,7 +102,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 /obj/item/stack/ore/glass/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	if(..() || !ishuman(hit_atom))
 		return
-	mob/living/carbon/human/poorsod = hit_atom
+	var/mob/living/carbon/human/poorsod = hit_atom
 	eyesand(poorsod)
 
 /obj/item/stack/ore/glass/attack(mob/living/M, mob/living/user)
@@ -110,12 +110,12 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 		return ..()
 	if(user.zone_selected != BODY_ZONE_PRECISE_EYES && user.zone_selected != BODY_ZONE_HEAD)
 		return ..()
-	mob/living/carbon/human/poorsod = M
+	var/mob/living/carbon/human/poorsod = M
 	visible_message("<span class='danger'>[user] throws the sand at [C]'s face!</span>")
 	user.forcesay("POCKET SAAND!!")
 	eyesand(poorsod)
 
-/obj/item/stack/ore/glass/eyesand(mob/living/carbon/human/C)
+/obj/item/stack/ore/glass/proc/eyesand(mob/living/carbon/human/C)
 	if(C.head && C.head.flags_cover & HEADCOVERSEYES)
 		visible_message("<span class='danger'>[C]'s headgear blocks the sand!</span>")
 		return
