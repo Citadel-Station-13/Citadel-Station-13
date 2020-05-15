@@ -260,7 +260,7 @@
 	name = initial(name)
 
 /obj/machinery/cryopod/container_resist(mob/living/user)
-	log_investigate("Cryogenetics machine container resisted by [key_name(user)] with occupant [key_name(occupant)].", INVESTIGATE_CRYOGENICS)
+	log_investigate("Cryogenics machine container resisted by [key_name(user)] with occupant [key_name(occupant)].", INVESTIGATE_CRYOGENICS)
 	visible_message("<span class='notice'>[occupant] emerges from [src]!</span>",
 		"<span class='notice'>You climb out of [src]!</span>")
 	open_machine()
