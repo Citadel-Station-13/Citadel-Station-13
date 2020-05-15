@@ -31,11 +31,11 @@
 		to_chat(usr, "<span class='warning'>You tried to give yourself \the [I], but you didn't want it.</span>")
 		return
 	if(get_empty_held_index_for_side())
-		to_chat(usr, "<span class='notice'>You offer \the [I] to [src]</span>")
+		to_chat(usr, "<span class='notice'>You offer \the [I] to [src].</span>")
 		switch(alert(src, "[user] wants to give you \a [I], do you accept it?", , "Yes", "No"))
 			if("Yes")
 				if(!I)
-					to_chat(usr, "<span class='warning'You need the item with you to give it!")
+					to_chat(usr, "<span class='warning'>You need the item with you to give it!")
 					return
 /*sadly broken	if(TRAIT_NODROP || ABSTRACT_ITEM_TRAIT)
 					to_chat(usr, "<span class='notice'>That's not something you can give.</span>")
