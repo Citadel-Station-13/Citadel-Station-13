@@ -473,13 +473,13 @@ Contains:
 ////////////////////
 
 /obj/item/clothing/suit/space/hardsuit/ert/paranormal/lavaland
-	desc = "Once powerful wards are built into this hardsuit, protecting the user from all manner of paranormal threats. This one has been on lava land for quite some time weaking it."
+	desc = "Once powerful wards are built into this hardsuit, protecting the user from all manner of paranormal threats. This one has been on lava land for quite some time weakening it."
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/ert/paranormal/lavaland
 	slowdown = 1
 	armor = list("melee" = 60, "bullet" = 20, "laser" = 30, "energy" = 25, "bomb" = 45, "bio" = 100, "rad" = 0, "fire" = 100, "acid" = 100)
 
 /obj/item/clothing/head/helmet/space/hardsuit/ert/paranormal/lavaland
-	desc = "A helmet worn by those who deal with paranormal threats for a living. This one has been on lava land for quite some time weaking it."
+	desc = "A helmet worn by those who deal with paranormal threats for a living. This one has been on lava land for quite some time weakening it."
 	armor = list("melee" = 60, "bullet" = 20, "laser" = 30, "energy" = 25, "bomb" = 45, "bio" = 100, "rad" = 0, "fire" = 100, "acid" = 100)
 
 /obj/item/clothing/suit/space/hardsuit/ert/paranormal/lavaland/beserker
