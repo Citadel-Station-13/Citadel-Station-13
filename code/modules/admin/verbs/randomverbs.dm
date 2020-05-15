@@ -1223,7 +1223,7 @@ GLOBAL_LIST_EMPTY(custom_outfits) //Admin created outfits
 	set name = "Enable/Disable Field of Vision"
 
 	var/static/busy_toggling_fov = FALSE
-	if(!check_rights(R_ADMIN)/* || !check_rights(R_FUN)*/) //temporary testmerge tweak.
+	if(!check_rights(R_ADMIN) || !check_rights(R_FUN))
 		return
 
 	var/on_off = CONFIG_GET(flag/use_field_of_vision)
