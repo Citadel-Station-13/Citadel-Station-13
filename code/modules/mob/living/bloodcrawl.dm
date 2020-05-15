@@ -164,7 +164,7 @@
 	if(!B)
 		return
 	forceMove(B.loc)
-	src.client.eye = src
+	reset_perspective(src)
 	src.visible_message("<span class='warning'><B>[src] rises out of the pool of blood!</B></span>")
 	exit_blood_effect(B)
 	if(iscarbon(src))

@@ -148,7 +148,8 @@
 			msg = blind_message
 		else if(T.lighting_object && T.lighting_object.invisibility <= M.see_invisible && T.is_softly_lit() && !in_range(T,M)) //the light object is dark and not invisible to us, darkness does not matter if you're directly next to the target
 			msg = blind_message
-
+		else if(SEND_SIGNAL(M, COMSIG_MOB_GET_VISIBLE_MESSAGE, src, message, vision_distance, ignored_mobs) & COMPONENT_NO_VISIBLE_MESSAGE)
+			msg = blind_message
 		if(!msg)
 			continue
 		M.show_message(msg, MSG_VISUAL,blind_message, MSG_AUDIBLE)
@@ -282,41 +283,48 @@ mob/visible_message(message, self_message, blind_message, vision_distance = DEFA
 // reset_perspective(thing) set the eye to the thing (if it's equal to current default reset to mob perspective)
 // reset_perspective() set eye to common default : mob on turf, loc otherwise
 /mob/proc/reset_perspective(atom/A)
-	if(client)
-		if(A)
-			if(ismovable(A))
-				//Set the the thing unless it's us
-				if(A != src)
-					client.perspective = EYE_PERSPECTIVE
-					client.eye = A
-				else
-					client.eye = client.mob
-					client.perspective = MOB_PERSPECTIVE
-			else if(isturf(A))
-				//Set to the turf unless it's our current turf
-				if(A != loc)
-					client.perspective = EYE_PERSPECTIVE
-					client.eye = A
-				else
-					client.eye = client.mob
-					client.perspective = MOB_PERSPECTIVE
+	if(!client)
+		return
+	if(A)
+		if(ismovable(A))
+			//Set the the thing unless it's us
+			if(A != src)
+				client.perspective = EYE_PERSPECTIVE
+				client.eye = A
 			else
-				//Do nothing
-		else
-			//Reset to common defaults: mob if on turf, otherwise current loc
-			if(isturf(loc))
 				client.eye = client.mob
 				client.perspective = MOB_PERSPECTIVE
-			else
+		else if(isturf(A))
+			//Set to the turf unless it's our current turf
+			if(A != loc)
 				client.perspective = EYE_PERSPECTIVE
-				client.eye = loc
-		return 1
+				client.eye = A
+			else
+				client.eye = client.mob
+				client.perspective = MOB_PERSPECTIVE
+		else
+			//Do nothing
+	else
+		//Reset to common defaults: mob if on turf, otherwise current loc
+		if(isturf(loc))
+			client.eye = client.mob
+			client.perspective = MOB_PERSPECTIVE
+		else
+			client.perspective = EYE_PERSPECTIVE
+			client.eye = loc
+	SEND_SIGNAL(src, COMSIG_MOB_RESET_PERSPECTIVE, A)
+	return TRUE
 
 /mob/proc/show_inv(mob/user)
 	return
 
+//view() but with a signal, to allow blacklisting some of the otherwise visible atoms.
+/mob/proc/visible_atoms(dist = world.view)
+	. = view(dist, src)
+	SEND_SIGNAL(src, COMSIG_MOB_VISIBLE_ATOMS, .)
+
 //mob verbs are faster than object verbs. See https://secure.byond.com/forum/?post=1326139&page=2#comment8198716 for why this isn't atom/verb/examine()
-/mob/verb/examinate(atom/A as mob|obj|turf in view()) //It used to be oview(12), but I can't really say why
+/mob/verb/examinate(atom/A as mob|obj|turf in visible_atoms()) //It used to be oview(12), but I can't really say why
 	set name = "Examine"
 	set category = "IC"
 
@@ -329,15 +337,19 @@ mob/visible_message(message, self_message, blind_message, vision_distance = DEFA
 		return
 
 	face_atom(A)
+	var/flags = SEND_SIGNAL(src, COMSIG_MOB_EXAMINATE, A)
+	if(flags & COMPONENT_DENY_EXAMINATE)
+		if(flags & COMPONENT_EXAMINATE_BLIND)
+			to_chat(src, "<span class='warning'>Something is there but you can't see it!</span>")
+		return
 	var/list/result = A.examine(src)
 	to_chat(src, result.Join("\n"))
-	SEND_SIGNAL(src, COMSIG_MOB_EXAMINATE, A)
 
 //same as above
 //note: ghosts can point, this is intended
 //visible_message will handle invisibility properly
 //overridden here and in /mob/dead/observer for different point span classes and sanity checks
-/mob/verb/pointed(atom/A as mob|obj|turf in view())
+/mob/verb/pointed(atom/A as mob|obj|turf in visible_atoms())
 	set name = "Point To"
 	set category = "Object"
 

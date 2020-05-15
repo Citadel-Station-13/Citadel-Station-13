@@ -19,10 +19,9 @@
 	if(!.)
 		return
 	// must have nobody around to see the cloak
-	for(var/mob/living/M in viewers(9, owner))
-		if(M != owner)
-			to_chat(owner, "<span class='warning'>You may only vanish into the shadows unseen.</span>")
-			return FALSE
+	for(var/mob/living/M in get_actual_viewers(9, owner) - owner)
+		to_chat(owner, "<span class='warning'>You may only vanish into the shadows unseen.</span>")
+		return FALSE
 	return TRUE
 
 /datum/action/bloodsucker/cloak/ActivatePower()
@@ -35,7 +34,7 @@
 		// Pay Blood Toll (if awake)
 		owner.alpha = max(35, owner.alpha - min(75, 10 + 5 * level_current))
 		bloodsuckerdatum.AddBloodVolume(-0.2)
-		
+
 		runintent = (user.m_intent == MOVE_INTENT_RUN)
 		var/turf/T = get_turf(user)
 		lum = T.get_lumcount()
@@ -50,7 +49,7 @@
 				if(!runintent)
 					user.toggle_move_intent()
 					REMOVE_TRAIT(user, TRAIT_NORUNNING, "cloak of darkness")
-		
+
 		sleep(5) // Check every few ticks
 
 /datum/action/bloodsucker/cloak/ContinueActive(mob/living/user, mob/living/target)
