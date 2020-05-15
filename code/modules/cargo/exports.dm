@@ -68,7 +68,7 @@ Credit dupes that require a lot of manual work shouldn't be removed, unless they
 	var/unit_name = ""				// Unit name. Only used in "Received [total_amount] [name]s [message]." message
 	var/message = ""
 	var/cost = 100					// Cost of item, in cargo credits. Must not alow for infinite price dupes, see above.
-	var/k_elasticity = 1/300			//coefficient used in marginal price calculation that roughly corresponds to the inverse of price elasticity, or "quantity elasticity" - CIT EDIT 1/30 - > 0
+	var/k_elasticity = 1/100			//coefficient used in marginal price calculation that roughly corresponds to the inverse of price elasticity, or "quantity elasticity" - CIT EDIT 1/30 - > 100
 	var/list/export_types = list()	// Type of the exported object. If none, the export datum is considered base type.
 	var/include_subtypes = TRUE		// Set to FALSE to make the datum apply only to a strict type.
 	var/list/exclude_types = list()	// Types excluded from export
