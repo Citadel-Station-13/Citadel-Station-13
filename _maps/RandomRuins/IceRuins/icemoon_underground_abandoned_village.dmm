@@ -198,6 +198,9 @@
 /obj/structure/toilet{
 	dir = 1
 	},
+/mob/living/simple_animal/hostile/skeleton/eskimo{
+	name = "Village Hunter"
+	},
 /turf/open/floor/plating,
 /area/ruin/powered)
 "sY" = (
@@ -216,6 +219,9 @@
 /area/icemoon/underground/explored)
 "tt" = (
 /obj/effect/decal/cleanable/dirt,
+/mob/living/simple_animal/hostile/skeleton/eskimo{
+	name = "Village Hunter"
+	},
 /turf/open/floor/plasteel/freezer,
 /area/ruin/powered)
 "tF" = (
@@ -414,6 +420,12 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/carpet,
+/area/ruin/powered)
+"IT" = (
+/mob/living/simple_animal/hostile/skeleton/eskimo{
+	name = "Village Hunter"
+	},
+/turf/open/floor/wood,
 /area/ruin/powered)
 "Kd" = (
 /obj/structure/flora/grass/green,
@@ -816,7 +828,7 @@ tF
 ac
 Vn
 AG
-aM
+IT
 yb
 Vn
 wQ
