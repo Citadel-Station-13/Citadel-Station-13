@@ -266,7 +266,7 @@
 /obj/item/organ/cyberimp/arm/ninja
 	name = "arm-mounted ninja implant"
 	desc = "A variant of the arm combat implants. This one is loaded with a dart gun and a dart thrower for non-lethal take downs."
-	contents = newlist(/obj/item/assembly/flash/armimplant, /obj/item/gun/syringe/syndicate/ninja, /obj/item/gun/energy/kinetic_accelerator/crossbow/ninja)
+	contents = newlist(/obj/item/assembly/flash/armimplant, /obj/item/gun/syringe/syndicate/ninja, /obj/item/gun/energy/kinetic_accelerator/crossbow/ninja, /obj/item/jammer)
 	obj_flags = EMP_PROTECT_SELF
 
 /obj/item/organ/cyberimp/arm/esword
