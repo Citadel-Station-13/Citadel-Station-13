@@ -392,16 +392,6 @@
 /mob/living/verb/succumb()
 	set name = "Succumb"
 	set category = "IC"
-	if(src.has_status_effect(/datum/status_effect/chem/enthrall))
-		var/datum/status_effect/chem/enthrall/E = src.has_status_effect(/datum/status_effect/chem/enthrall)
-		if(E.phase < 3)
-			if(HAS_TRAIT(src, TRAIT_MINDSHIELD))
-				to_chat(src, "<span class='notice'>Your mindshield prevents your mind from giving in!</span>")
-			else if(src.mind.assigned_role in GLOB.command_positions)
-				to_chat(src, "<span class='notice'>Your dedication to your department prevents you from giving in!</span>")
-			else
-				E.enthrallTally += 20
-				to_chat(src, "<span class='notice'>You give into [E.master]'s influence.</span>")
 	if (InCritical())
 		log_message("Has succumbed to death while in [InFullCritical() ? "hard":"soft"] critical with [round(health, 0.1)] points of health!", LOG_ATTACK)
 		adjustOxyLoss(health - HEALTH_THRESHOLD_DEAD)

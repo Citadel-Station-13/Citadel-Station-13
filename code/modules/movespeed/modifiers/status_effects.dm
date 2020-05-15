@@ -38,7 +38,3 @@
 /datum/movespeed_modifier/status_effect/penis_hypertrophy
 	blacklisted_movetypes = FLOATING
 	variable = TRUE
-
-/datum/movespeed_modifier/status_effect/mkultra
-	multiplicative_slowdown = -2
-	blacklisted_movetypes= FLYING|FLOATING
