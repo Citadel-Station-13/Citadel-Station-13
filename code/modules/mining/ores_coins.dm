@@ -112,7 +112,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 		return ..()
 	var/mob/living/carbon/human/poorsod = M
 	visible_message("<span class='danger'>[user] throws the sand at [poorsod]'s face!</span>")
-	if(ishuman(user)
+	if(ishuman(user))
 		var/mob/living/carbon/human/sayer = user
 		sayer.forcesay("POCKET SAAND!!")
 	eyesand(poorsod)
