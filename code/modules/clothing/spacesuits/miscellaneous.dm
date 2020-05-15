@@ -424,19 +424,6 @@ Contains:
 	icon_state = "hardsuit0-inq"
 	item_state = "hardsuit0-inq"
 
-/obj/item/clothing/suit/space/hardsuit/ert/paranormal/beserker
-	name = "champion's hardsuit"
-	desc = "Voices echo from the hardsuit, driving the user insane."
-	icon_state = "hardsuit-beserker"
-	item_state = "hardsuit-beserker"
-	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/ert/paranormal/beserker
-
-/obj/item/clothing/head/helmet/space/hardsuit/ert/paranormal/beserker
-	name = "champion's helmet"
-	desc = "Peering into the eyes of the helmet is enough to seal damnation."
-	icon_state = "hardsuit0-beserker"
-	item_state = "hardsuit0-beserker"
-
 /obj/item/clothing/head/helmet/space/fragile
 	name = "emergency space helmet"
 	desc = "A bulky, air-tight helmet meant to protect the user during emergency situations. It doesn't look very durable."
@@ -478,3 +465,34 @@ Contains:
 	desc = "A deep blue space helmet with a large red cross on the faceplate to designate the wearer as trained emergency medical personnel."
 	icon_state = "paramedic-eva-helmet"
 	item_state = "paramedic-eva-helmet"
+
+////////////////////
+//Lavaland ERT gear/
+//Same as drake armor but space proof, and anti-magic. Slowdown one do to being a hardsuit tho!
+//Bit more bomb do to lava land having gibbonite
+////////////////////
+
+/obj/item/clothing/suit/space/hardsuit/ert/paranormal/lavaland
+	desc = "Once powerful wards are built into this hardsuit, protecting the user from all manner of paranormal threats. This one has been on lava land for quite some time weaking it."
+	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/ert/paranormal/lavaland
+	slowdown = 1
+	armor = list("melee" = 60, "bullet" = 20, "laser" = 30, "energy" = 25, "bomb" = 45, "bio" = 100, "rad" = 0, "fire" = 100, "acid" = 100)
+
+/obj/item/clothing/head/helmet/space/hardsuit/ert/paranormal/lavaland
+	desc = "A helmet worn by those who deal with paranormal threats for a living. This one has been on lava land for quite some time weaking it."
+	armor = list("melee" = 60, "bullet" = 20, "laser" = 30, "energy" = 25, "bomb" = 45, "bio" = 100, "rad" = 0, "fire" = 100, "acid" = 100)
+
+/obj/item/clothing/suit/space/hardsuit/ert/paranormal/lavaland/beserker
+	name = "champion's hardsuit"
+	desc = "Voices echo from the hardsuit, driving the user insane."
+	icon_state = "hardsuit-beserker"
+	item_state = "hardsuit-beserker"
+	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/ert/paranormal/lavaland/beserker
+
+/obj/item/clothing/head/helmet/space/hardsuit/ert/paranormal/lavaland/beserker
+	name = "champion's helmet"
+	desc = "Peering into the eyes of the helmet is enough to seal damnation."
+	icon_state = "hardsuit0-beserker"
+	item_state = "hardsuit0-beserker"
+
+
