@@ -27,6 +27,7 @@
 					/obj/item/seeds/orange = 3,
 					/obj/item/seeds/peach = 3,
 					/obj/item/seeds/peanutseed = 3,
+					/obj/item/seeds/peas = 3,
 					/obj/item/seeds/pineapple = 3,
 					/obj/item/seeds/potato = 3,
 					/obj/item/seeds/poppy = 3,
