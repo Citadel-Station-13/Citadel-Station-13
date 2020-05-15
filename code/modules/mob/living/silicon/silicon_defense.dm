@@ -28,7 +28,7 @@
 			playsound(loc, 'sound/weapons/slashmiss.ogg', 25, 1, -1)
 			visible_message("<span class='danger'>[M] take a swipe at [src]!</span>", \
 							"<span class='userdanger'>[M] take a swipe at you!</span>", target = M, \
-							"<span class='danger'>You take a swipe at [src]!</span>")
+							target_message = "<span class='danger'>You take a swipe at [src]!</span>")
 
 /mob/living/silicon/attack_animal(mob/living/simple_animal/M)
 	. = ..()
