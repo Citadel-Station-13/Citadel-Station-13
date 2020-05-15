@@ -541,6 +541,21 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["vore_taste"]						>> vore_taste
 	S["belly_prefs"]					>> belly_prefs
 
+	//gear loadout
+	var/text_to_load
+	S["loadout"] >> text_to_load
+	var/list/saved_loadout_paths = splittext(text_to_load, "|")
+	chosen_gear = list()
+	gear_points = CONFIG_GET(number/initial_gear_points)
+	for(var/i in saved_loadout_paths)
+		var/datum/gear/path = text2path(i)
+		if(path)
+			var/init_cost = initial(path.cost)
+			if(init_cost > gear_points)
+				continue
+			chosen_gear += path
+			gear_points -= init_cost
+
 	//try to fix any outdated data if necessary
 	if(needs_update >= 0)
 		update_character(needs_update, S)		//needs_update == savefile_version if we need an update (positive integer)
@@ -770,6 +785,13 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["vore_flags"]			, vore_flags)
 	WRITE_FILE(S["vore_taste"]			, vore_taste)
 	WRITE_FILE(S["belly_prefs"]			, belly_prefs)
+
+	//gear loadout
+	if(chosen_gear.len)
+		var/text_to_save = chosen_gear.Join("|")
+		S["loadout"] << text_to_save
+	else
+		S["loadout"] << "" //empty string to reset the value
 
 	cit_character_pref_save(S)
 

@@ -507,3 +507,7 @@
 
 //Allows players to set a hexadecimal color of their choice as skin tone, on top of the standard ones.
 /datum/config_entry/flag/allow_custom_skintones
+
+///Initial loadout points
+/datum/config_entry/number/initial_gear_points
+	config_entry_value = 10
