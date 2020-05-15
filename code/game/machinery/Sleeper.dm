@@ -26,6 +26,8 @@
 	var/list/chem_buttons	//Used when emagged to scramble which chem is used, eg: antitoxin -> morphine
 	var/scrambled_chems = FALSE //Are chem buttons scrambled? used as a warning
 	var/enter_message = "<span class='notice'><b>You feel cool air surround you. You go numb as your senses turn inward.</b></span>"
+	payment_department = ACCOUNT_MED
+	fair_market_price = 5
 
 /obj/machinery/sleeper/Initialize()
 	. = ..()
@@ -210,6 +212,13 @@
 		ui = new(user, src, ui_key, "sleeper", name, 550, 700, master_ui, state)
 		ui.open()
 
+/obj/machinery/sleeper/process()
+	..()
+	check_nap_violations()
+
+/obj/machinery/sleeper/nap_violation(mob/violator)
+	open_machine()
+
 /obj/machinery/sleeper/ui_data()
 	var/list/data = list()
 	var/chemical_list = list()
@@ -295,7 +304,7 @@
 	if(..())
 		return
 	var/mob/living/mob_occupant = occupant
-
+	check_nap_violations()
 	switch(action)
 		if("door")
 			if(state_open)

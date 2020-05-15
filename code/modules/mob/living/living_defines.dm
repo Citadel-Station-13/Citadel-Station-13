@@ -6,6 +6,8 @@
 	pressure_resistance = 10
 	has_field_of_vision = TRUE
 
+	typing_indicator_enabled = TRUE
+
 	var/resize = 1 //Badminnery resize
 	var/lastattacker = null
 	var/lastattackerckey = null

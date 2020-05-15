@@ -29538,6 +29538,14 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
+/obj/machinery/computer/security/telescreen{
+	desc = "Used for watching the test chamber.";
+	dir = 4;
+	layer = 4;
+	name = "Test Chamber Telescreen";
+	network = list("toxins");
+	pixel_x = -32
+	},
 /turf/open/floor/plasteel/dark,
 /area/science/mixing)
 "aVT" = (
@@ -33284,14 +33292,6 @@
 /obj/structure/chair{
 	dir = 4
 	},
-/obj/machinery/computer/security/telescreen{
-	desc = "Used for watching the test chamber.";
-	dir = 8;
-	layer = 4;
-	name = "Test Chamber Telescreen";
-	network = list("toxins");
-	pixel_x = 30
-	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
@@ -33792,14 +33792,6 @@
 	id = "toxinsdriver";
 	pixel_x = 24;
 	pixel_y = -24
-	},
-/obj/machinery/computer/security/telescreen{
-	desc = "Used for watching the test chamber.";
-	dir = 8;
-	layer = 4;
-	name = "Test Chamber Telescreen";
-	network = list("toxins");
-	pixel_x = 30
 	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
@@ -54029,7 +54021,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/obj/machinery/vending/autodrobe/all_access,
+/obj/machinery/vending/autodrobe,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/locker)
@@ -62905,6 +62897,11 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer1,
 /obj/structure/extinguisher_cabinet{
 	pixel_x = 24
+	},
+/obj/machinery/button/electrochromatic{
+	pixel_x = 38;
+	pixel_y = -5;
+	id = "!interrogation_room"
 	},
 /turf/open/floor/plasteel,
 /area/security/warden)
@@ -73512,7 +73509,7 @@
 	},
 /mob/living/simple_animal/bot/cleanbot{
 	auto_patrol = 1;
-	name = "\imprper Cleaner Bot"
+	name = "\improper Cleaner Bot"
 	},
 /turf/open/floor/plasteel/showroomfloor,
 /area/security/prison)
@@ -78316,7 +78313,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
-/obj/machinery/vending/autodrobe/all_access,
+/obj/machinery/vending/autodrobe,
 /obj/structure/noticeboard{
 	dir = 4;
 	pixel_x = -27
@@ -84861,7 +84858,7 @@
 /turf/open/floor/engine,
 /area/engine/engineering)
 "iLn" = (
-/obj/machinery/vending/boozeomat/all_access,
+/obj/machinery/vending/boozeomat,
 /turf/open/floor/wood,
 /area/maintenance/port/fore)
 "iMb" = (
@@ -85513,6 +85510,12 @@
 "uRM" = (
 /turf/open/floor/wood,
 /area/security/vacantoffice)
+"vjT" = (
+/obj/effect/spawner/structure/window/reinforced/tinted/electrochromatic{
+	electrochromatic_id = "!interrogation_room"
+	},
+/turf/open/floor/plating,
+/area/security/warden)
 "vle" = (
 /obj/structure/festivus,
 /turf/open/floor/wood,
@@ -107879,7 +107882,7 @@ agX
 agX
 agX
 aef
-acH
+vjT
 aBH
 aef
 aef
@@ -126371,7 +126374,7 @@ bki
 bhQ
 bkN
 bIG
-bki
+bhQ
 bMB
 blH
 bhQ

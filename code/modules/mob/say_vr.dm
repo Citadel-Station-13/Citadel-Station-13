@@ -23,7 +23,6 @@ proc/get_top_level_mob(var/mob/S)
 	message = null
 	mob_type_blacklist_typecache = list(/mob/living/brain)
 
-
 /datum/emote/living/subtle/proc/check_invalid(mob/user, input)
 	if(stop_bad_mime.Find(input, 1, 1))
 		to_chat(user, "<span class='danger'>Invalid emote.</span>")

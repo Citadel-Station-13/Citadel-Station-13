@@ -192,27 +192,6 @@
 
 #define COMSIG_MOB_SPELL_CAN_CAST "mob_spell_can_cast"			//from base of /obj/effect/proc_holder/spell/can_cast(): (spell)
 
-#define COMSIG_MOB_ACTION_SKILL_MOD "mob_action_skill_mod"		//from base of /datum/skill_holder/action_skills_mod() : (proc args list, list/mod_values)
-	#define ACTION_SKILL_MOD_SKILL 1 //redundancy.
-	#define ACTION_SKILL_MOD_VALUE 2
-	#define ACTION_SKILL_MOD_THRESHOLD 3
-	#define ACTION_SKILL_MOD_IS_MULTI 4
-	//other mod values, kept separate from the args
-	#define MOD_VALUES_SKILL_MOD 1
-
-#define COMSIG_MOB_ITEM_ACTION_SKILLS_MOD "mob_item_action_skills_mod"	//from base of /datum/skill_holder/item_action_skills_mod() : (proc args list, mod_values)
-	#define ITEM_SKILLS_MOD_ITEM 1 //redundancy
-	#define ITEM_SKILLS_MOD_VALUE 2
-	#define ITEM_SKILLS_MOD_FLAGS 3
-	#define ITEM_SKILLS_MOD_BAD_FLAGS 4
-	#define ITEM_SKILLS_MOD_IS_MULTI 5
-	//other mod values, kept separate from the args
-	#define MOD_VALUES_ITEM_SKILLS_SUM 1
-	#define MOD_VALUES_ITEM_SKILLS_DIV 2
-	#define MOD_VALUES_ITEM_SKILLS_CHECKED 3
-
-#define COMSIG_MOB_SKILL_GET_AFFINITY "mob_skill_get_affinity"	//from base of /datum/skill_holder/get_skill_affinity(): (skill_path, list/return_value)
-
 #define COMSIG_ROBOT_UPDATE_ICONS "robot_update_icons"			//from base of robot/update_icons(): ()
 
 // /mob/living signals
@@ -290,6 +269,9 @@
 // THE FOLLOWING TWO BLOCKS SHOULD RETURN BLOCK FLAGS AS DEFINED IN __DEFINES/combat.dm!
 #define COMSIG_ITEM_CHECK_BLOCK "check_block"					//from base of obj/item/check_block(): (mob/living/owner, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return)
 #define COMSIG_ITEM_RUN_BLOCK "run_block"						//from base of obj/item/run_block(): (mob/living/owner, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return)
+// Item mouse siganls
+#define COMSIG_ITEM_MOUSE_EXIT "item_mouse_exit"				//from base of obj/item/MouseExited(): (location, control, params)
+#define COMSIG_ITEM_MOUSE_ENTER "item_mouse_enter"				//from base of obj/item/MouseEntered(): (location, control, params)
 #define COMSIG_ITEM_DECONSTRUCTOR_DEEPSCAN "deconstructor_deepscan"			//Called by deconstructive analyzers deepscanning an item: (obj/machinery/rnd/destructive_analyzer/analyzer_machine, mob/user, list/information_list)
 	// Uncovered information
 	#define COMPONENT_DEEPSCAN_UNCOVERED_INFORMATION		1

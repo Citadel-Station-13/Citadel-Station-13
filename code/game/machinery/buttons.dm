@@ -18,7 +18,7 @@
 
 /obj/machinery/button/Initialize(mapload, ndir = 0, built = 0)
 	if(istext(id) && mapload)
-		if(copytext(id, 1, 2) == "!")
+		if(id[1] == "!")
 			id = SSmapping.get_obfuscated_id(id)
 	. = ..()
 	if(built)

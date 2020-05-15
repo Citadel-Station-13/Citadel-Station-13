@@ -96,6 +96,7 @@
 	var/stop_bleeding = 1800
 	var/heal_brute = 5
 	self_delay = 10
+	custom_price = 100
 
 /obj/item/stack/medical/gauze/heal(mob/living/M, mob/user)
 	if(ishuman(M))
