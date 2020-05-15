@@ -133,10 +133,6 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	qdel(src)
 
 
-	if(..() || !ishuman(hit_atom))
-		return
-	var/mob/living/carbon/human/C = hit_atom
-
 /obj/item/stack/ore/glass/ex_act(severity, target)
 	if (severity == EXPLODE_NONE)
 		return
