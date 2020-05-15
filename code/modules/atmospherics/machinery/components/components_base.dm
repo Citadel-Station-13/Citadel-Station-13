@@ -3,7 +3,7 @@
 
 /obj/machinery/atmospherics/components
 	/// Pipenet flags for how we behave when connected to a pipenet. THIS SHOULD NEVER BE CHANGED IN RUNTIME.
-	VAR_FINAL(aircomponent_flags) = NONE
+	VAR_FINAL/aircomponent_flags = NONE
 	/// The volumes of our nodes. NEVER DIRECTLY EDIT THIS LIST, COPY IT FIRST! THIS IS A TYPELIST.
 	var/list/node_volumes
 	/// Only valid if we are NOT directly connected: The airs of our nodes.
@@ -44,30 +44,26 @@
 
 // Pipenet stuff; housekeeping
 
-/obj/machinery/atmospherics/components/nullifyNode(i)
-	if(nodes[i])
-		nullifyPipenet(parents[i])
-		QDEL_NULL(airs[i])
-	..()
-
-/obj/machinery/atmospherics/components/on_construction()
-	..()
+/obj/machinery/atmospherics/components/form_networks()
+	for(var/i in 1 to device_type)
+		if(node_pipelines[i]))
+			continue
+		var/datum/pipeline/P = new
+		node_pipelines[i] = P
+		P.build_network(src)
 	update_parents()
 
-/obj/machinery/atmospherics/components/build_network()
-	for(var/i in 1 to device_type)
-		if(!parents[i])
-			parents[i] = new /datum/pipeline()
-			var/datum/pipeline/P = parents[i]
-			P.build_pipeline(src)
-
-/obj/machinery/atmospherics/components/proc/nullifyPipenet(datum/pipeline/reference)
-	if(!reference)
-		CRASH("nullifyPipenet(null) called by [type] on [COORD(src)]")
-	var/i = parents.Find(reference)
-	reference.other_airs -= airs[i]
-	reference.other_atmosmch -= src
-	parents[i] = null
+/obj/machinery/atmospherics/components/break_networks()
+	if(aircomponent_flags & AIRCOMPONENT_DIRECT_ATTACH)
+		QDEL_LIST(node_pipelines)
+		node_pipelines.len = device_type
+	else
+		for(var/i in 1 to device_type)
+			var/datum/pipeline/P = node_pipelines[i]
+			P.component_airs -= node_airs[i]
+			P.indirect_components -= src
+			P.total_volume -= node_airs[i].volume
+		node_pipelines = new(4)
 
 /obj/machinery/atmospherics/components/return_pipenet_air(node = 1)
 	return (aircomponent_flags & AIRCOMPONENT_DIRECT_ATTACH)
@@ -78,8 +74,17 @@
 		return list(nodes[parents.Find(from)])
 	return ..()
 
-/obj/machinery/atmospherics/components/on_pipeline_join(obj/machinery/atmospherics/expanded_from, datum/pipeline/line)
-	parents[nodes.Find(expanded_from)] = line
+/obj/machinery/atmospherics/components/pipeline_join(obj/machinery/atmospherics/expanded_from, datum/pipeline/line)
+	var/nodeindex = nodes.Find(expanded_from) || node_pipelines.Find(line)
+	if(!nodeindex)
+		CRASH("pipeline join on component couldn't find nodeindex.")
+	if(node_pipelines[nodeindex])
+		var/datum/pipeline/P = node_pipelines[nodeindex]
+		P.merge(line)
+	else
+		line.add_member(expanded_from, src)
+		for(var/obj/machinery/atmospherics/A in pipeline_expansion())
+			line.expand_to(src, A)
 
 /obj/machinery/atmospherics/components/on_pipeline_replace(datum/pipeline/old, datum/pipeline/with)
 	var/pl_index = node_pipelines.Find(old)
@@ -90,30 +95,17 @@
 /obj/machinery/atmospherics/components/returnPipenet(obj/machinery/atmospherics/A = nodes[1]) //returns parents[1] if called without argument
 	return parents[nodes.Find(A)]
 
-/obj/machinery/atmospherics/components/unsafe_pressure_release(var/mob/user, var/pressures)
-	..()
-
+/obj/machinery/atmospherics/components/ReleaseAirToTurf()
 	var/turf/T = get_turf(src)
-	if(T)
-		//Remove the gas from airs and assume it
-		var/datum/gas_mixture/environment = T.return_air()
-		var/lost = null
-		var/times_lost = 0
-		for(var/i in 1 to device_type)
-			var/datum/gas_mixture/air = airs[i]
-			lost += pressures*environment.volume/(air.temperature * R_IDEAL_GAS_EQUATION)
-			times_lost++
-		var/shared_loss = lost/times_lost
-
-		var/datum/gas_mixture/to_release
-		for(var/i in 1 to device_type)
-			var/datum/gas_mixture/air = airs[i]
-			if(!to_release)
-				to_release = air.remove(shared_loss)
-				continue
-			to_release.merge(air.remove(shared_loss))
-		T.assume_air(to_release)
-		air_update_turf(1)
+	var/datum/gas_mixture/release = new
+	for(var/i in 1 to length(temporary_node_airs))
+		var/datum/gas_mixture/G = temporary_node_airs[i]
+		if(!G)
+			continue
+		release.merge(G)
+	temporary_node_airs = null
+	T.assume_air(release)
+	air_update_turf()
 
 /obj/machinery/atmospherics/components/proc/safe_input(var/title, var/text, var/default_set)
 	var/new_value = input(usr,text,title,default_set) as num

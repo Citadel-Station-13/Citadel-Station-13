@@ -70,7 +70,7 @@
 		invisibility = i ? INVISIBILITY_MAXIMUM : 0
 	update_icon()
 
-/obj/machinery/atmospherics/pipe/proc/releaseAirToTurf()
+/obj/machinery/atmospherics/pipe/proc/ReleaseAirToTurf()
 	if(air_temporary)
 		var/turf/T = loc
 		T.assume_air(air_temporary)
@@ -107,10 +107,8 @@
 	if(parent)
 		line.merge(parent)
 	else
-		parent = line
-		parent.adjustDirectVolume(volume)
-		parent.pipes += src
-		for(var/obj/machinery/atmospherics/A in pipeline_expansion)
+		line.add_member(expanded_from, src)
+		for(var/obj/machinery/atmospherics/A in pipeline_expansion())
 			parent.expand_to(src, A)
 
 /obj/machinery/atmospherics/pipe/on_pipeline_replace(datum/pipeline/old, datum/pipeline/with)

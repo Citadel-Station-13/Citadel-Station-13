@@ -101,7 +101,7 @@
 	total_volume = 0
 	volume = 0
 	air_temporary = new
-	add_member(base)
+	add_member(base, base)
 	var/list/possible = list(base)
 	var/list/gathered = list()			//lmfao we have like 4 lists this is faster
 	while(length(possible))
@@ -126,81 +126,51 @@
 	parent = new
 	parent.build_network(src)
 
-/datum/pipeline/proc/add_member(obj/machinery/atmospherics/A)
+/datum/pipeline/proc/join_air(datum/gas_mixture/other)
+	if(parent)
+		parent.air.merge(other)
+	else
+		air_temporary.merge(other)
+
+/datum/pipeline/proc/add_member(obj/machinery/atmospherics/from, obj/machinery/atmospherics/A)
 	if(istype(A, /obj/machinery/atmospherics/pipe))
 		var/obj/machinery/atmospherics/pipe/P = A
+		if(P.parent && (P.parent != src))
+			CRASH("Attempted to add a new member [A] from [from] with a different pipeline than us! SOMETHING HAS GONE TERRIBLY WRONG!")
 		pipes += P
-		volume += P.volume
-		total_volume += P.volume
+		adjustDirectVolume(P.volume)
 		join_air(P.air_temporary)
 		P.air_temporary = null
 		P.parent = src
 	else if(istype(A, /obj/machinery/atmospherics/components))
 		var/obj/machinery/atmospherics/components/C = A
+		var/nodeindex = A.nodes.Find(from) || A.node_pipelines.Find(src)
+		if(!nodeindex)
+			CRASH("Attempted to add an atmospherics component but could not find the index we're expanding into or from!")
+		var/their_volume
 		if(C.aircomponent_flags & AIRCOMPONENT_DIRECT_ATTACH)
 			direct_components += C
+			their_volume = (C.node_volumes && !isnull(C.node_volumes[nodeindex]))? C.node_volumes[nodeindex] : 200
+			adjustDirectVolume(their_volume)
+			if(C.temporary_node_airs && C.temporary_node_airs[nodeindex])
+				join_air(C.temporary_node_airs[nodeindex])
+				QDEL_NULL(C.temporary_node_airs[nodeindex])
+				var/empty = TRUE
+				for(var/i in 1 to length(C.temporary_node_airs))
+					if(C.temporary_node_airs[i])
+						empty = FALSE
+						break
+				C.temporary_node_airs = null
 		else
 			indirect_components += C
-
+			their_volume = C.node_airs[nodeindex]
+			component_airs += C.node_airs[nodeindex]
+			adjustIndirectVolume(their_volume)
+		C.node_pipelines[nodeindex] = src
 		if(C.aircomponent_flags & AIRCOMPONENT_POTENTIAL_VALVE)
 			valve_components += C
 	else
 		CRASH("Attempted to add member that wasn't a pipe or a component: [A].")
-
-	if(istype(base, /obj/machinery/atmospherics/pipe))
-		var/obj/machinery/atmospherics/pipe/P = base
-		volume += P.volume
-		total_volume += P.volume
-		pipes += P
-		if(P.air_temporary)
-			air_temporary = P.air_temporary
-			P.air_temporary = null
-	else
-
-
-	var/volume = 0
-	if(istype(base, /obj/machinery/atmospherics/pipe))
-		var/obj/machinery/atmospherics/pipe/E = base
-		volume = E.volume
-		members += E
-		if(E.air_temporary)
-			air = E.air_temporary
-			E.air_temporary = null
-	else
-		addMachineryMember(base)
-	if(!air)
-		air = new
-
-/datum/pipeline/proc/addMachineryMember(obj/machinery/atmospherics/components/C)
-	other_atmosmch |= C
-	var/datum/gas_mixture/G = C.returnPipenetAir(src)
-	if(!G)
-		stack_trace("addMachineryMember: Null gasmix added to pipeline datum from [C] which is of type [C.type]. Nearby: ([C.x], [C.y], [C.z])")
-	other_airs |= G
-
-/**
-  * Add an atmospherics machinery to us.
-  */
-/datum/pipeline/proc/(obj/machinery/atmospherics/FROM, obj/machinery/atmospherics/TO)
-
-/datum/pipeline/proc/addMember(obj/machinery/atmospherics/A, obj/machinery/atmospherics/N)
-	if(istype(A, /obj/machinery/atmospherics/pipe))
-		var/obj/machinery/atmospherics/pipe/P = A
-		if(P.parent)
-			merge(P.parent)
-		P.parent = src
-		var/list/adjacent = P.pipeline_expansion()
-		for(var/obj/machinery/atmospherics/pipe/I in adjacent)
-			if(I.parent == src)
-				continue
-			var/datum/pipeline/E = I.parent
-			merge(E)
-		if(!members.Find(P))
-			members += P
-			air.volume += P.volume
-	else
-		A.setPipenet(src, N)
-		addMachineryMember(A)
 
 /**
   * Expands to expansion from source.
@@ -230,6 +200,9 @@
 /datum/pipeline/proc/merge(datum/pipeline/P)
 	if(E == src)
 		return
+	// simple heuristic
+	if(length(pipes) < length(P.pipes))
+		return P.merge(src)
 	breakdown_parent()
 	P.breakdown_parent()
 	volume += P.volume

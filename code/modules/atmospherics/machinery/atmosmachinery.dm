@@ -371,9 +371,9 @@
 	CRASH("Tried to get the pipenet air of a base atmospherics machinery. Either this check should be removed, or, more likely, someone screwed up.")
 
 /**
-  * Informs us that a specific node was set to a pipenet.
+  * Joins us to pipeline after being expanded to from expanded_from.
   */
-/obj/machinery/atmospherics/proc/on_pipeline_join(obj/machinery/atmospherics/expanded_from, datum/pipeline/line)
+/obj/machinery/atmospherics/proc/pipeline_join(obj/machinery/atmospherics/expanded_from, datum/pipeline/line)
 	CRASH("The pipenet of a base atmospherics machinery was on_join'd. Someone screwed up.")
 
 /**
