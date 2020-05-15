@@ -188,7 +188,7 @@
 	if(air1.gases.len)
 		if(mob_occupant.bodytemperature < T0C) // Sleepytime. Why? More cryo magic.
 			// temperature factor goes from 1 to about 2.5
-			var/amount = max(1, log(T0C - mob_occupant.bodytemperature) - 3) * knockout_factor * base_knockout
+			var/amount = max(1, (4 * log(T0C - mob_occupant.bodytemperature)) - 20) * knockout_factor * base_knockout
 		if(beaker)
 			if(reagent_transfer == 0) // Magically transfer reagents. Because cryo magic.
 				beaker.reagents.trans_to(occupant, 1, efficiency * 0.25) // Transfer reagents.
