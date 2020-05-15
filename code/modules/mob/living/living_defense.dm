@@ -506,3 +506,11 @@
 		used_item = get_active_held_item()
 	..()
 	floating_need_update = TRUE
+
+
+/mob/living/proc/getBruteLoss_nonProsthetic()
+	return getBruteLoss()
+	
+/mob/living/proc/getFireLoss_nonProsthetic()
+	return getFireLoss()
+	
