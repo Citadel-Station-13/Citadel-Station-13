@@ -45,6 +45,7 @@
 
 /datum/pipe_network/proc/build_network(datum/pipeline/base)
 	breakdown()		//make sure we break down (even though reusing networks is a bad idea)
+	pipelines = list()
 	var/total_volume = 0
 	air = new
 	var/list/datum/pipeline/expand_through = list(base)
@@ -62,6 +63,9 @@
 		if(P.temporary_air)
 			air.merge(P.temporary_air)
 			QDEL_NULL(P.temporary_air)
+		// finally, add them to us.
+		pipelines += P
+		P.parent = src
 		// now, if they have any potentially valve components
 		for(var/i in P.valve_components)
 			// expand through them
