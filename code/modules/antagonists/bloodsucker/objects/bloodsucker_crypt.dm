@@ -328,8 +328,8 @@
 		//	to_chat(user, "<span class='danger'><i>The ritual has been interrupted!</i></span>")
 		//	useLock = FALSE
 		//	return
-		user.playsound_local(null, 'sound/effects/explosion_distant.ogg', 40, TRUE) 	
-		target.playsound_local(null, 'sound/effects/explosion_distant.ogg', 40, TRUE) 	
+		user.playsound_local(null, 'sound/effects/explosion_distant.ogg', 40, TRUE)
+		target.playsound_local(null, 'sound/effects/explosion_distant.ogg', 40, TRUE)
 		target.playsound_local(null, 'sound/effects/singlebeat.ogg', 40, TRUE)
 		target.Jitter(25)
 		target.emote("laugh")
@@ -490,13 +490,14 @@
 	update_icon()
 
 /obj/structure/bloodsucker/candelabrum/process()
-	if(lit)
-		for(var/mob/living/carbon/human/H in viewers(7, src))
-			var/datum/antagonist/vassal/T = H.mind.has_antag_datum(ANTAG_DATUM_VASSAL)
-			if(AmBloodsucker(H) || T) //We dont want vassals or vampires affected by this
-				return
-			H.hallucination = 20
-			SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, "vampcandle", /datum/mood_event/vampcandle)
+	if(!lit)
+		return
+	for(var/mob/living/carbon/human/H in get_actual_viewers(7, src))
+		var/datum/antagonist/vassal/T = H.mind.has_antag_datum(ANTAG_DATUM_VASSAL)
+		if(AmBloodsucker(H) || T) //We dont want vassals or vampires affected by this
+			return
+		H.hallucination = 20
+		SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, "vampcandle", /datum/mood_event/vampcandle)
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   OTHER THINGS TO USE: HUMAN BLOOD. /obj/effect/decal/cleanable/blood
 

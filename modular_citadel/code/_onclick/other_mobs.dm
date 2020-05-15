@@ -12,7 +12,7 @@
 	if(isturf(A) || incapacitated()) // pretty annoying to wave your fist at floors and walls. And useless.
 		return TRUE
 	changeNext_move(CLICK_CD_RANGE)
-	var/list/target_viewers = viewers(11, A) //Byond proc, doesn't check for blindness.
+	var/list/target_viewers = get_actual_viewers(11, A) //doesn't check for blindness.
 	if(!(src in target_viewers)) //click catcher issuing calls for out of view objects.
 		return TRUE
 	if(!has_active_hand())
@@ -26,16 +26,16 @@
 	switch(a_intent)
 		if(INTENT_DISARM)
 			the_action = "shoos away [A]"
-			what_action = "shoo away something you can't see"
+			what_action = "shoo away something out of your vision"
 			self_action = "shoo away [A]"
 		if(INTENT_GRAB)
 			the_action = "beckons [A] to come"
-			what_action = "beckons something you can't see to come"
+			what_action = "beckons something out of your vision to come"
 			self_action = "beckon [A] to come"
 		if(INTENT_HARM)
 			var/pronoun = "[p_their()]"
 			the_action = "shakes [pronoun] fist at [A]"
-			what_action = "shakes [pronoun] fist at something you can't see"
+			what_action = "shakes [pronoun] fist at something out of your vision"
 			self_action = "shake your fist at [A]"
 
 	if(!eye_blind)
