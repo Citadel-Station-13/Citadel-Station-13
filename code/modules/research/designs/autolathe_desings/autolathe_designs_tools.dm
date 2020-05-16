@@ -139,7 +139,7 @@
 	id = "tool_box"
 	build_type = AUTOLATHE
 	materials = list(MAT_CATEGORY_RIGID = 500)
-	build_path = /obj/item/storage/toolbox
+	build_path = /obj/item/storage/toolbox/greyscale
 	category = list("initial","Tools")
 
 /datum/design/spraycan

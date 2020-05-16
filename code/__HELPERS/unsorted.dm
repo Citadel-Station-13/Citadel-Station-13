@@ -1,5 +1,3 @@
-
-
 /*
  * A large number of misc global procs.
  */
@@ -390,6 +388,16 @@ Turf and target are separate in case you want to teleport some distance from a t
 		if(stop_type && istype(loc, stop_type))
 			break
 	return loc
+
+//Returns a list of all locations the target is within.
+/proc/get_nested_locs(atom/movable/M, include_turf = FALSE)
+	. = list()
+	var/atom/A = M.loc
+	while(A && !isturf(A))
+		. += A
+		A = A.loc
+	if(A && include_turf) //At this point, only the turf is left.
+		. += A
 
 // returns the turf located at the map edge in the specified direction relative to A
 // used for mass driver

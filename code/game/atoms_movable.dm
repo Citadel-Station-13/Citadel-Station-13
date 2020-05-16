@@ -179,14 +179,15 @@
 	return TRUE
 
 /atom/movable/proc/stop_pulling()
-	if(pulling)
-		pulling.pulledby = null
-		var/mob/living/ex_pulled = pulling
-		pulling = null
-		setGrabState(0)
-		if(isliving(ex_pulled))
-			var/mob/living/L = ex_pulled
-			L.update_mobility()// mob gets up if it was lyng down in a chokehold
+	if(!pulling)
+		return
+	pulling.pulledby = null
+	var/mob/living/ex_pulled = pulling
+	pulling = null
+	setGrabState(0)
+	if(isliving(ex_pulled))
+		var/mob/living/L = ex_pulled
+		L.update_mobility()// mob gets up if it was lyng down in a chokehold
 
 /atom/movable/proc/Move_Pulled(atom/A)
 	if(!pulling)
