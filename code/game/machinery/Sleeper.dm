@@ -26,6 +26,8 @@
 	var/list/chem_buttons	//Used when emagged to scramble which chem is used, eg: antitoxin -> morphine
 	var/scrambled_chems = FALSE //Are chem buttons scrambled? used as a warning
 	var/enter_message = "<span class='notice'><b>You feel cool air surround you. You go numb as your senses turn inward.</b></span>"
+	payment_department = ACCOUNT_MED
+	fair_market_price = 5
 
 /obj/machinery/sleeper/Initialize()
 	. = ..()
@@ -35,6 +37,11 @@
 	reset_chem_buttons()
 	RefreshParts()
 	add_inital_chems()
+	new_occupant_dir = dir
+
+/obj/machinery/sleeper/setDir(newdir)
+	. = ..()
+	new_occupant_dir = dir
 
 /obj/machinery/sleeper/on_deconstruction()
 	var/obj/item/reagent_containers/sleeper_buffer/buffer = new (loc)
@@ -205,6 +212,13 @@
 		ui = new(user, src, ui_key, "sleeper", name, 550, 700, master_ui, state)
 		ui.open()
 
+/obj/machinery/sleeper/process()
+	..()
+	check_nap_violations()
+
+/obj/machinery/sleeper/nap_violation(mob/violator)
+	open_machine()
+
 /obj/machinery/sleeper/ui_data()
 	var/list/data = list()
 	var/chemical_list = list()
@@ -250,7 +264,7 @@
 		data["occupant"]["fireLoss"] = mob_occupant.getFireLoss()
 		data["occupant"]["cloneLoss"] = mob_occupant.getCloneLoss()
 		data["occupant"]["brainLoss"] = mob_occupant.getOrganLoss(ORGAN_SLOT_BRAIN)
-		
+
 		if(mob_occupant.reagents.reagent_list.len)
 			for(var/datum/reagent/R in mob_occupant.reagents.reagent_list)
 				chemical_list += list(list("name" = R.name, "volume" = R.volume))
@@ -290,7 +304,7 @@
 	if(..())
 		return
 	var/mob/living/mob_occupant = occupant
-
+	check_nap_violations()
 	switch(action)
 		if("door")
 			if(state_open)

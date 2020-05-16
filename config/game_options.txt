@@ -603,6 +603,9 @@ NIGHTSHIFT_TOGGLE_PUBLIC_REQUIRES_AUTH
 ## A cap on how many monkeys may be created via monkey cubes
 MONKEYCAP 64
 
+## Enable the capitalist agenda on your server.
+ECONOMY
+
 ## Uncomment to use TG-style combat
 #DISABLE_STAMBUFFER
 
@@ -656,3 +659,7 @@ BODY_SIZE_SLOWDOWN_MULTIPLIER 0.25
 
 ## Allows players to set a hexadecimal color of their choice as skin tone, on top of the standard ones.
 ALLOW_CUSTOM_SKINTONES
+
+## Enables the FoV component, which hides objects and mobs behind the parent from their sight, unless they turn around, duh.
+## Camera mobs, AIs, ghosts and some other are of course exempt from this. This also doesn't influence simplemob AI, for the best.
+#USE_FIELD_OF_VISION

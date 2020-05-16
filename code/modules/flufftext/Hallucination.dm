@@ -679,9 +679,7 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 	var/list/mob/living/carbon/people = list()
 	var/mob/living/carbon/person = null
 	var/datum/language/understood_language = target.get_random_understood_language()
-	for(var/mob/living/carbon/H in view(target))
-		if(H == target)
-			continue
+	for(var/mob/living/carbon/H in view(target) - target)
 		if(!person)
 			person = H
 		else
@@ -1064,6 +1062,8 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 	qdel(src)
 
 /obj/effect/hallucination/danger
+	layer = TURF_LAYER
+	plane = FLOOR_PLANE
 	var/image/image
 
 /obj/effect/hallucination/danger/proc/show_icon()
@@ -1087,7 +1087,8 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 	name = "lava"
 
 /obj/effect/hallucination/danger/lava/show_icon()
-	image = image('icons/turf/floors/lava.dmi',src,"smooth",TURF_LAYER)
+	image = image('icons/turf/floors/lava.dmi',src,"smooth",layer)
+	image.plane = plane
 	if(target.client)
 		target.client.images += image
 
@@ -1257,7 +1258,7 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 	..()
 	if(!target.halbody)
 		var/list/possible_points = list()
-		for(var/turf/open/floor/F in view(target,world.view))
+		for(var/turf/open/floor/F in target.visible_atoms(world.view))
 			possible_points += F
 		if(possible_points.len)
 			var/turf/open/floor/husk_point = pick(possible_points)
@@ -1288,7 +1289,7 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 	set waitfor = FALSE
 	..()
 	var/list/turf/startlocs = list()
-	for(var/turf/open/T in view(world.view+1,target)-view(world.view,target))
+	for(var/turf/open/T in target.visible_atoms(world.view+1)-view(world.view,target))
 		startlocs += T
 	if(!startlocs.len)
 		qdel(src)

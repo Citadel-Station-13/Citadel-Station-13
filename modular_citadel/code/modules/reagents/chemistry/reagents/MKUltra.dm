@@ -194,14 +194,14 @@ Creating a chem with a low purity will make you permanently fall in love with so
 		if (M.ckey == creatorID && creatorName == M.real_name)//If the creator drinks it, they fall in love randomly. If someone else drinks it, the creator falls in love with them.
 			if(M.has_status_effect(STATUS_EFFECT_INLOVE))//Can't be enthralled when enthralled, so to speak.
 				return
-			var/list/seen = viewers(7, get_turf(M))
+			var/list/seen = (M.visible_atoms(M.client?.view || world.view) - M) | viewers(M.client?.view || world.view, M)
 			for(var/victim in seen)
 				if(ishuman(victim))
 					var/mob/living/carbon/V = victim
-					if((V == M) || (!V.client) || (V.stat == DEAD))
-						seen = seen - victim
+					if(!V.client || V.stat == DEAD)
+						seen -= victim
 				else
-					seen = seen - victim
+					seen -= victim
 
 			if(LAZYLEN(seen))
 				return
@@ -213,7 +213,7 @@ Creating a chem with a low purity will make you permanently fall in love with so
 			var/mob/living/carbon/C = get_mob_by_key(creatorID)
 			if(M.has_status_effect(STATUS_EFFECT_INLOVE))
 				return
-			if((C in viewers(7, get_turf(M))) && (C.client))
+			if(C.client && (M in C.visible_atoms(C.client.view)))
 				M.reagents.del_reagent(type)
 				FallInLove(C, M)
 			return
@@ -279,15 +279,13 @@ Creating a chem with a low purity will make you permanently fall in love with so
 	if(HAS_TRAIT(M, TRAIT_MINDSHIELD))
 		return ..()
 	if(!M.has_status_effect(STATUS_EFFECT_INLOVE))
-		var/list/seen = viewers(7, get_turf(M))//Sound and sight checkers
+		var/list/seen = (M.visible_atoms(M.client?.view || world.view) - M) | viewers(M.client?.view || world.view, M)
 		for(var/victim in seen)
-			if((istype(victim, /mob/living/simple_animal/pet/)) || (victim == M) || (M.stat == DEAD) || (!isliving(victim)))
-				seen = seen - victim
-		if(seen.len == 0)
+			if((isanimal(victim)) || (!isliving(victim)))
+				seen -= victim
+		if(!length(seen))
 			return
 		love = pick(seen)
-		if(!love)
-			return
 		M.apply_status_effect(STATUS_EFFECT_INLOVE, love)
 		lewd = (M.client?.prefs.cit_toggles & HYPNO) && (love.client?.prefs.cit_toggles & HYPNO)
 		to_chat(M, "[(lewd?"<span class='love'>":"<span class='warning'>")][(lewd?"You develop a sudden crush on [love], your heart beginning to race as you look upon them with new eyes.":"You suddenly feel like making friends with [love].")] You feel strangely drawn towards them.</span>")

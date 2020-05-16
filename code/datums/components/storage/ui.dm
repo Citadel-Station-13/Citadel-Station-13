@@ -92,6 +92,8 @@
 	var/list/volume_by_item = list()
 	var/list/percentage_by_item = list()
 	for(var/obj/item/I in contents)
+		if(QDELETED(I))
+			continue
 		volume = I.get_w_volume()
 		used += volume
 		volume_by_item[I] = volume
@@ -123,6 +125,7 @@
 	var/obj/item/I
 	// start at this pixel from screen_start_x.
 	var/current_pixel = VOLUMETRIC_STORAGE_EDGE_PADDING
+	var/first = TRUE
 	var/row = 1
 
 	LAZYINITLIST(ui_item_blocks)
@@ -140,10 +143,10 @@
 			addrow = TRUE
 
 		// now that we have pixels_to_use, place our thing and add it to the returned list.
-
-		B.screen_loc = I.screen_loc = "[screen_start_x]:[round(current_pixel + (pixels_to_use * 0.5) + VOLUMETRIC_STORAGE_ITEM_PADDING, 1)],[screen_start_y+row-1]:[screen_pixel_y]"
+		B.screen_loc = I.screen_loc = "[screen_start_x]:[round(current_pixel + (pixels_to_use * 0.5) + (first? 0 : VOLUMETRIC_STORAGE_ITEM_PADDING), 1)],[screen_start_y+row-1]:[screen_pixel_y]"
 		// add the used pixels to pixel after we place the object
-		current_pixel += pixels_to_use + VOLUMETRIC_STORAGE_ITEM_PADDING
+		current_pixel += pixels_to_use + (first? 0 : VOLUMETRIC_STORAGE_ITEM_PADDING)
+		first = FALSE		//apply padding to everything after this
 
 		// set various things
 		B.set_pixel_size(pixels_to_use)
@@ -163,6 +166,7 @@
 		// go up a row if needed
 		if(addrow)
 			row++
+			first = TRUE		//first in the row, don't apply between-item padding.
 			current_pixel = VOLUMETRIC_STORAGE_EDGE_PADDING
 
 	// Then, continuous section.

@@ -23,6 +23,7 @@
 	obj_damage = 0
 	environment_smash = ENVIRONMENT_SMASH_NONE
 	del_on_death = 0
+	has_field_of_vision = FALSE //Legacy. Also they only have one dir visually.
 
 	do_footstep = TRUE
 

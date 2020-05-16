@@ -353,8 +353,12 @@
 /datum/component/storage/proc/_remove_and_refresh(datum/source, atom/movable/thing)
 	_removal_reset(thing)
 	if(LAZYACCESS(ui_item_blocks, thing))
-		qdel(ui_item_blocks[thing])
+		var/obj/screen/storage/volumetric_box/center/C = ui_item_blocks[thing]
+		for(var/i in can_see_contents())		//runtimes result if mobs can access post deletion.
+			var/mob/M = i
+			M.client?.screen -= C.on_screen_objects()
 		ui_item_blocks -= thing
+		qdel(C)
 	refresh_mob_views()
 
 //Call this proc to handle the removal of an item from the storage item. The item will be moved to the new_location target, if that is null it's being deleted
@@ -567,10 +571,9 @@
 		return
 	if(rustle_sound)
 		playsound(parent, "rustle", 50, 1, -5)
-	for(var/mob/viewing in viewers(user, null))
-		if(M == viewing)
-			to_chat(usr, "<span class='notice'>You put [I] [insert_preposition]to [parent].</span>")
-		else if(in_range(M, viewing)) //If someone is standing close enough, they can tell what it is...
+	to_chat(user, "<span class='notice'>You put [I] [insert_preposition]to [parent].</span>")
+	for(var/mob/viewing in get_actual_viewers(world.view, user)-M)
+		if(in_range(M, viewing)) //If someone is standing close enough, they can tell what it is...
 			viewing.show_message("<span class='notice'>[M] puts [I] [insert_preposition]to [parent].</span>", MSG_VISUAL)
 		else if(I && I.w_class >= 3) //Otherwise they can only see large or normal items from a distance...
 			viewing.show_message("<span class='notice'>[M] puts [I] [insert_preposition]to [parent].</span>", MSG_VISUAL)
