@@ -86,10 +86,10 @@
 	RegisterSignal(M, COMSIG_MOB_CLIENT_LOGOUT, .proc/on_mob_logout)
 	RegisterSignal(M, COMSIG_MOB_GET_VISIBLE_MESSAGE, .proc/on_visible_message)
 	RegisterSignal(M, COMSIG_MOB_EXAMINATE, .proc/on_examinate)
-	RegisterSignal(M, COMSIG_MOB_VISIBLE_ATOMS, .proc/on_visible_atoms)
+	RegisterSignal(M, COMSIG_MOB_FOV_VIEW, .proc/on_fov_view)
 	RegisterSignal(M, COMSIG_MOB_CLIENT_CHANGE_VIEW, .proc/on_change_view)
 	RegisterSignal(M, COMSIG_MOB_RESET_PERSPECTIVE, .proc/on_reset_perspective)
-	RegisterSignal(M, COMSIG_MOB_IS_VIEWER, .proc/is_viewer)
+	RegisterSignal(M, COMSIG_MOB_FOV_VIEWER, .proc/is_viewer)
 
 /datum/component/field_of_vision/UnregisterFromParent()
 	. = ..()
@@ -109,8 +109,8 @@
 		UNREGISTER_NESTED_LOCS(nested_locs, COMSIG_MOVABLE_MOVED, 1)
 	UnregisterSignal(M, list(COMSIG_MOB_CLIENT_LOGIN, COMSIG_MOB_CLIENT_LOGOUT,
 							COMSIG_MOB_GET_VISIBLE_MESSAGE, COMSIG_MOB_EXAMINATE,
-							COMSIG_MOB_VISIBLE_ATOMS, COMSIG_MOB_RESET_PERSPECTIVE,
-							COMSIG_MOB_CLIENT_CHANGE_VIEW, COMSIG_MOB_IS_VIEWER))
+							COMSIG_MOB_FOV_VIEW, COMSIG_MOB_RESET_PERSPECTIVE,
+							COMSIG_MOB_CLIENT_CHANGE_VIEW, COMSIG_MOB_FOV_VIEWER))
 
 /**
   * Generates the holder and images (if not generated yet) and adds them to client.images.

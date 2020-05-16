@@ -321,7 +321,7 @@ mob/visible_message(message, self_message, blind_message, vision_distance = DEFA
 //view() but with a signal, to allow blacklisting some of the otherwise visible atoms.
 /mob/proc/fov_view(dist = world.view)
 	. = view(dist, src)
-	SEND_SIGNAL(src, COMSIG_MOB_VISIBLE_ATOMS, .)
+	SEND_SIGNAL(src, COMSIG_MOB_FOV_VIEW, .)
 
 //mob verbs are faster than object verbs. See https://secure.byond.com/forum/?post=1326139&page=2#comment8198716 for why this isn't atom/verb/examine()
 /mob/verb/examinate(atom/A as mob|obj|turf in fov_view()) //It used to be oview(12), but I can't really say why
