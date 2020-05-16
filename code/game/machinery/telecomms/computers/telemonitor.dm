@@ -47,11 +47,11 @@
 	data_out["selected"] = list(
 		name = SelectedMachine.name,
 		id = SelectedMachine.id,
-		status = (SelectedMachine.stat & (NOPOWER|BROKEN)),
+		status = SelectedMachine.on,
 		traffic = SelectedMachine.traffic,
 		netspeed = SelectedMachine.netspeed,
 		freq_listening = SelectedMachine.freq_listening,
-		long_range_link = SelectedMachine.long_range_link
+		long_range_link = SelectedMachine.long_range_link,
 		ref = REF(SelectedMachine)
 	)
 	data_out["selected_servers"] = list()

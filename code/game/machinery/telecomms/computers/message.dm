@@ -125,6 +125,13 @@
 		data_out["servers"] += list(data)	// This /might/ cause an oom. Too bad!
 	data_out["servers"] = sortList(data_out["servers"]) //a-z sort
 
+	data_out["fake_message"] = list(
+		sender = customsender,
+		job = customjob,
+		message = custommessage,
+		recepient = customrecepient.owner
+	)
+
 	if(!linkedServer)
 		data_out["selected"] = null
 		return data_out
@@ -183,8 +190,10 @@
 			if(LINKED_SERVER_NONRESPONSIVE)
 				message = noserver
 				return
-
-			var/dkey = trim(input(usr, "Please enter the decryption key.") as text|null)
+			if(auth)
+				auth = FALSE
+				return
+			var/dkey = stripped_input(usr, "Please enter the decryption key.")
 			if(dkey && dkey == "")
 				return
 			if(linkedServer.decryptkey == dkey)
@@ -192,7 +201,27 @@
 			else
 				message = incorrectkey
 			update_static_data(usr)
+		if("change_auth")
+			if(!auth)
+				message = "WARNING: Auth failed! Please log in to change the password!"
+				return
+			else if(LINKED_SERVER_NONRESPONSIVE)
+				message = noserver
+				return
 
+			var/dkey = stripped_input(usr, "Please enter the old decryption key.")
+			if(dkey && dkey != "")
+				if(linkedServer.decryptkey == dkey)
+					var/newkey = stripped_input(usr, "Please enter the new key (3 - 20 characters max):")
+					if(ISINRANGE(length(newkey), 3, 20))
+						message = "NOTICE: Decryption key length too long/short!"
+						return
+					if(newkey && newkey != "")
+						linkedServer.decryptkey = newkey
+						message = "NOTICE: Decryption key set."
+					return
+			message = incorrectkey
+			
 		if("hack")
 			if(LINKED_SERVER_NONRESPONSIVE)
 				message = noserver
@@ -238,6 +267,50 @@
 			if(what == "rc_msgs")
 				linkedServer.rc_msgs = list()
 			update_static_data(usr)
+		if("fake")
+			if("reset" in params)
+				ResetMessage()
+				return
+			if("send" in params)
+				if(isnull(customrecepient))
+					message = "NOTICE: No recepient selected!"
+					return
+				if(isnull(custommessage) || custommessage == "")
+					message = "NOTICE: No message entered!"
+					return
+
+				if(isnull(customsender) || customsender == "")
+					customsender = "UNKNOWN"
+
+				var/datum/signal/subspace/pda/signal = new(src, list(
+					"name" = customsender,
+					"job" = customjob,
+					"message" = custommessage,
+					"emojis" = TRUE,
+					"targets" = list("[customrecepient.owner] ([customrecepient.ownjob])")
+				))
+				// this will log the signal and transmit it to the target
+				linkedServer.receive_information(signal, null)
+				usr.log_message("(PDA: [name] | [usr.real_name]) sent \"[custommessage]\" to [signal.format_target()]", LOG_PDA)
+				return
+			// Do not check if it's blank yet
+			if("sender" in params)
+				customsender = params["sender"]
+				return
+			if("job" in params)
+				customjob = params["job"]
+				return
+			if("message" in params)
+				custommessage = params["message"]
+				return
+			if("recepient" in params)
+				// Get out list of viable PDAs
+				var/list/obj/item/pda/sendPDAs = get_viewable_pdas()
+				if(GLOB.PDAs && LAZYLEN(GLOB.PDAs) > 0)
+					customrecepient = input(usr, "Select a PDA from the list.") as null|anything in sortNames(sendPDAs)
+				else
+					customrecepient = null
+				return
 		if("refresh")
 			update_static_data(usr)
 
@@ -263,8 +336,7 @@
 	var/obj/item/paper/monitorkey/MK = new(loc, linkedServer)
 	// Will help make emagging the console not so easy to get away with.
 	MK.info += "<br><br><font color='red'>�%@%(*$%&(�&?*(%&�/{}</font>"
-	var/time = 100 * length(linkedServer.decryptkey)
-	addtimer(CALLBACK(src, .proc/UnmagConsole), time)
+	addtimer(CALLBACK(src, .proc/UnmagConsole), 100 * length(linkedServer.decryptkey))
 	message = rebootmsg
 	return TRUE
 

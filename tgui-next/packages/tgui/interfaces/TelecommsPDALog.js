@@ -7,6 +7,7 @@ export const TelePDALog = props => {
   const { act, data } = useBackend(props);
   const {
     network,
+    notice = "",
     authenticated = false,
     status = true,
     canhack = false,
@@ -15,6 +16,12 @@ export const TelePDALog = props => {
     message_logs = [],
     recon_logs = [],
   } = data;
+  const fake_message = data.fake_message || {
+    'sender': 'System Administrator',
+    'job': 'Admin',
+    'recepient': null,
+    'message': 'This is a test, please ignore',
+  };
   const valid = (status && selected && authenticated);
 
   if (data.hacking) {
@@ -33,11 +40,17 @@ export const TelePDALog = props => {
 
   return (
     <Fragment>
+      {!!notice && (
+        <NoticeBox>
+          {notice}
+        </NoticeBox>
+      )}
       <Section title="Network Control">
         <LabeledList>
           <LabeledList.Item label="Network">
             <Input
               value={network}
+              width="150px"
               maxLength={15}
               onChange={(e, value) => act('network', {
                 'value': value,
@@ -78,6 +91,7 @@ export const TelePDALog = props => {
                 {canhack && (
                   <Button
                     content="Brute Force"
+                    color="bad"
                     disabled={authenticated || !selected}
                     onClick={() => act('hack')}
                   />
@@ -91,13 +105,15 @@ export const TelePDALog = props => {
             buttons={(
               <Fragment>
                 <Button
-                  content="Authenticate"
+                  content={!authenticated ? 'Login' : 'Logout'}
                   icon={authenticated ? 'unlock' : 'lock'}
+                  color={authenticated ? 'good' : 'bad'}
                   disabled={!selected}
                   onClick={() => act('auth')}
                 />
                 <Button
                   content="Disconnect"
+                  icon="minus-circle"
                   disabled={!selected}
                   onClick={() => act('mainmenu')}
                 />
@@ -114,9 +130,9 @@ export const TelePDALog = props => {
             color={(status && selected) ? 'good' : 'bad'}>
             {selected ? (
               status ? (
-              'Running'
+                'Running'
               ) : (
-              'Server down! Log functionality unaccessable!'
+                'Server down! Log functionality unaccessable!'
               )
             ):(
               'No server selected'
@@ -159,7 +175,7 @@ export const TelePDALog = props => {
           key="message_logs"
           label="Message Logs"
           disabled={!valid}>
-          <Section label="Options">
+          <Section title="Logs">
             <Button
               content="Refresh"
               onClick={() => act('refresh')}
@@ -167,55 +183,59 @@ export const TelePDALog = props => {
             <Button
               content="Delete All Logs"
               disabled={!(message_logs && message_logs.length)}
-              onClick={() => act('delete', {
-                'value': 'message_log',
+              onClick={() => act('clear_log', {
+                'value': 'pda_logs',
               })}
             />
-          </Section>
-          <Section label="Messages">
-            {(message_logs && message_logs.length) ? (message_logs.map(message => {
-              return (
-                <Section key={message.ref}>
-                  <LabeledList>
-                    <LabeledList.Item label="Sender">
-                      {message.sender}
-                    </LabeledList.Item>
-                    <LabeledList.Item label="Recipient">
-                      {message.recipient}
-                    </LabeledList.Item>
-                    <LabeledList.Item
-                      label="Message"
-                      buttons={(
-                        <Fragment>
-                          <Button
-                            content="Delete"
-                            onClick={() => act('delete', {
-                              'value': message.ref,
-                            })}
-                          />
-                          {message.image && (
-                            <Button // Had to use _act for this.
-                              content="Image"
-                              onClick={() => _act(message.ref, 'photo')}
+            <Section
+              title="Messages"
+              level={2}>
+              {(message_logs && message_logs.length) ? (
+                message_logs.map(message => {
+                  return (
+                    <Section key={message.ref}>
+                      <LabeledList>
+                        <LabeledList.Item label="Sender"
+                          buttons={(
+                            <Button
+                              content="Delete"
+                              onClick={() => act('del_log', {
+                                'ref': message.ref,
+                              })}
                             />
-                          )}
-                        </Fragment>
-                      )}>
-                      {message.message}
-                    </LabeledList.Item>
-                  </LabeledList>
-                </Section>
-              )})
-            ) : (
-              'Error: Logs empty'
-            )}
+                          )}>
+                          {message.sender}
+                        </LabeledList.Item>
+                        <LabeledList.Item label="Recipient">
+                          {message.recipient}
+                        </LabeledList.Item>
+                        <LabeledList.Item
+                          label="Message"
+                          buttons={(
+                            message.image && (
+                              <Button // Had to use _act for this.
+                                content="Image"
+                                onClick={() => _act(message.ref, 'photo')}
+                              />
+                            )
+                          )}>
+                          {message.message}
+                        </LabeledList.Item>
+                      </LabeledList>
+                    </Section>
+                  );
+                })
+              ) : (
+                'Error: Logs empty'
+              )}
+            </Section>
           </Section>
         </Tabs.Tab>
         <Tabs.Tab
           key="recon_logs"
           label="Req. Console Logs"
           disabled={!valid}>
-          <Section label="Options">
+          <Section title="Logs">
             <Button
               content="Refresh"
               onClick={() => act('refresh')}
@@ -223,56 +243,119 @@ export const TelePDALog = props => {
             <Button
               content="Delete All Logs"
               disabled={!(recon_logs && recon_logs.length)}
-              onClick={() => act('delete', {
-                'value': 'recon_logs',
+              onClick={() => act('clear_log', {
+                'value': 'rc_msgs',
               })}
             />
-          </Section>
-          <Section label="Requests">
-            {(recon_logs && recon_logs.length) ? (recon_logs.map(message => {
-              return (
-                <Section key={message.ref}>
-                  <LabeledList>
-                    <LabeledList.Item label="Sending Dep.">
-                      {message.sender}
-                    </LabeledList.Item>
-                    <LabeledList.Item label="Receiving Dep.">
-                      {message.recipient}
-                    </LabeledList.Item>
-                    <LabeledList.Item
-                      label="Message"
-                      buttons={(
-                        <Button
-                          content="Delete"
-                          onClick={() => act('delete', {
-                            'value': message.ref,
-                          })}
-                        />
-                      )}>
-                      {message.message}
-                    </LabeledList.Item>
-                    <LabeledList.Item label="Stamp">
-                      {message.stamp ? message.stamp : "null"}
-                    </LabeledList.Item>
-                    <LabeledList.Item label="ID Auth.">
-                      {message.id_auth ? message.id_auth : "null"}
-                    </LabeledList.Item>
-                    <LabeledList.Item label="Priority">
-                      {message.recon_logs ? message.recon_logs : "low"}
-                    </LabeledList.Item>
-                  </LabeledList>
-                </Section>
-              )})
-            ):(
-              'Error: No logs found'
-            )}
+            <Section
+              title="Requests"
+              level={2}>
+              {(recon_logs && recon_logs.length) ? (
+                recon_logs.map(message => {
+                  return (
+                    <Section key={message.ref}>
+                      <LabeledList>
+                        <LabeledList.Item label="Sending Dep."
+                          buttons={(
+                            <Button
+                              content="Delete"
+                              onClick={() => act('del_log', {
+                                'ref': message.ref,
+                              })}
+                            />
+                          )}>
+                          {message.sender}
+                        </LabeledList.Item>
+                        <LabeledList.Item label="Receiving Dep.">
+                          {message.recipient}
+                        </LabeledList.Item>
+                        <LabeledList.Item label="Message">
+                          {message.message}
+                        </LabeledList.Item>
+                        <LabeledList.Item label="Stamp">
+                          {message.stamp}
+                        </LabeledList.Item>
+                        <LabeledList.Item label="ID Authentication">
+                          {message.auth}
+                        </LabeledList.Item>
+                        <LabeledList.Item label="Priority">
+                          {message.priority}
+                        </LabeledList.Item>
+                      </LabeledList>
+                    </Section>
+                  );
+                })
+              ) : (
+                'Error: No logs found'
+              )}
+            </Section>
           </Section>
         </Tabs.Tab>
         <Tabs.Tab
           key="custom_pda"
           label="Set Admin Message"
           disabled={!authenticated}>
-
+          <Section title="Custom Message">
+            <Button
+              content="Reset"
+              icon="sync"
+              onClick={() => act('fake', {
+                'reset': true,
+              })}
+            />
+            <Button
+              content="Send"
+              onClick={() => act('fake', {
+                'send': true,
+              })}
+            />
+            <br /><br />
+            <LabeledList>
+              <LabeledList.Item label="Sender">
+                <Input
+                  value={fake_message.sender}
+                  width="250px"
+                  maxLength={255}
+                  onChange={(e, value) => act('fake', {
+                    'sender': value,
+                  })}
+                />
+              </LabeledList.Item>
+              <LabeledList.Item label="Sender's Job">
+                <Input
+                  value={fake_message.job}
+                  width="250px"
+                  maxLength={255}
+                  onChange={(e, value) => act('fake', {
+                    'job': value,
+                  })}
+                />
+              </LabeledList.Item>
+              <LabeledList.Item label="Recipient">
+                <Button
+                  content={fake_message.recepient ? (
+                    fake_message.recepient
+                  ) : (
+                    'Select'
+                  )}
+                  onClick={() => act('fake', {
+                    'recepient': true,
+                  })}
+                />
+              </LabeledList.Item>
+              <LabeledList.Item label="Message">
+                <Input
+                  value={fake_message.message}
+                  width="500px"
+                  height="150px"
+                  maxLength={2000}
+                  onChange={(e, value) => act('fake', {
+                    'message': value,
+                  })}
+                />
+              </LabeledList.Item>
+            </LabeledList>
+          </Section>
         </Tabs.Tab>
       </Tabs>
     </Fragment>

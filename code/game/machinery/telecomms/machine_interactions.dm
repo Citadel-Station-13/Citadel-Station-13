@@ -9,9 +9,9 @@
 	var/temp = "" // output message
 
 /obj/machinery/telecomms/attackby(obj/item/P, mob/user, params)
-
 	var/icon_closed = initial(icon_state)
 	var/icon_open = "[initial(icon_state)]_o"
+	
 	if(!on)
 		icon_closed = "[initial(icon_state)]_off"
 		icon_open = "[initial(icon_state)]_o_off"
@@ -26,7 +26,23 @@
 		return
 	else
 		return ..()
+/*
+/obj/machinery/telecomms/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE,\
+														datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
+	if(!hasSiliconAccessInArea(user))
+		// istype returns false if the value is null
+		if(!istype(user.get_active_held_item(), /obj/item/multitool))
+			return
+	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 
+	if(!ui)
+		ui = new(user, src, ui_key, "teleinteract", "[name] Access", 727, 510, master_ui, state)
+		ui.open()
+
+/obj/machinery/telecomms/ui_data(mob/user)
+	var/list/data_out = list()
+	return data_out
+*/
 /obj/machinery/telecomms/ui_interact(mob/user)
 	. = ..()
 	// You need a multitool to use this, or be silicon
@@ -94,7 +110,6 @@
 // Returns a multitool from a user depending on their mobtype.
 
 /obj/machinery/telecomms/proc/get_multitool(mob/user)
-
 	var/obj/item/multitool/P = null
 	// Let's double check
 	if(!hasSiliconAccessInArea(user) && istype(user.get_active_held_item(), /obj/item/multitool))

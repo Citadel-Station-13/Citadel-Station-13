@@ -23,6 +23,7 @@ export const TeleLogBrowser = props => {
           <LabeledList.Item label="Network">
             <Input
               value={network}
+              width="150px"
               maxLength={15}
               onChange={(e, value) => act('network', {
                 'value': value,
@@ -66,14 +67,15 @@ export const TeleLogBrowser = props => {
             )}
           </LabeledList.Item>
           <LabeledList.Item label="Recorded Traffic">
-              {selected ? (selected.traffic <= 1024 ? (
-                  `${selected.traffic} Gigabytes`
-                ):(
-                  `${Math.round(selected.traffic/1024)} Terrabytes`
-                )
-              ):(
-                '0 Gigabytes'
-              )}
+            {selected ? (
+              selected.traffic <= 1024 ? (
+                `${selected.traffic} Gigabytes`
+              ) : (
+                `${Math.round(selected.traffic/1024)} Terrabytes`
+              )
+            ) : (
+              '0 Gigabytes'
+            )}
           </LabeledList.Item>
         </LabeledList>
       </Section>
@@ -111,11 +113,14 @@ export const TeleLogBrowser = props => {
         <Tabs.Tab
           key="messages"
           label="Messages">
-          <Section>
+          <Section title="Logs">
             {selected_logs ? (
               selected_logs.map(logs => {
                 return (
-                  <Section key={logs.ref}>
+                  <Section
+                    title={logs.name}
+                    level={4}
+                    key={logs.ref}>
                     <LabeledList>
                       <LabeledList.Item
                         label="Filename"

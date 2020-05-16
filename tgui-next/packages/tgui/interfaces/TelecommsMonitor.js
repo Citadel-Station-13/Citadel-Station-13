@@ -1,6 +1,7 @@
 import { Fragment } from 'inferno';
 import { useBackend } from '../backend';
-import { Button, Dropdown, LabeledList, NoticeBox, Section, Tabs, Input } from '../components';
+import { Button, LabeledList, NoticeBox, Section, Tabs, Input } from '../components';
+
 
 export const Telemonitor = props => {
   const { act, data } = useBackend(props);
@@ -11,6 +12,19 @@ export const Telemonitor = props => {
     selected = null,
     selected_servers,
   } = data;
+  const operational = (selected && selected.status);
+  const freqcolorMap = { // red team, blue team and syndie is not included
+    1337: '#686868', // central
+    1347: '#a8732b', // cargonia
+    1349: '#008000', // service
+    1351: '#993399', // science
+    1353: '#948f02', // command
+    1355: '#337296', // medical
+    1357: '#fb5613', // engineering
+    1359: '#a30000', // security
+    1459: '#008000', // common
+  };
+
   return (
     <Fragment>
       {!!notice && (
@@ -23,6 +37,7 @@ export const Telemonitor = props => {
           <LabeledList.Item label="Network">
             <Input
               value={network}
+              width="150px"
               maxLength={15}
               onChange={(e, value) => act('network', {
                 'value': value,
@@ -63,6 +78,7 @@ export const Telemonitor = props => {
             buttons={(
               <Button
                 content="Disconnect"
+                icon="minus-circle"
                 disabled={!selected}
                 onClick={() => act('mainmenu')}
               />
@@ -78,69 +94,103 @@ export const Telemonitor = props => {
       <Tabs>
         <Tabs.Tab label="Network Entities">
           <Section title="Detected Network Entities">
-            {selected_servers ? (
+            {(servers && servers.length) ? (
               <LabeledList>
-                {selected_servers.map(servers => {
+                {servers.map(server => {
                   return (
                     <LabeledList.Item
-                      key={servers.name}
-                      label={`${servers.ref}`} // should i just md5 this and cut
+                      key={server.name}
+                      label={server.ref}
                       buttons={(
                         <Button
                           content="Connect"
+                          selected={selected
+                            && (server.ref === selected.ref)}
                           onClick={() => act('viewmachine', {
-                            'value': servers.id,
+                            'value': server.id,
                           })} />
                       )}>
-                      {`${servers.name} (${servers.id})`}
+                      {`${server.name} (${server.id})`}
                     </LabeledList.Item>
                   );
                 })}
               </LabeledList>
             ) : (
-              "Connected devices is empty!"
+              '404 Servers not found. Have you tried scanning the network?'
             )}
           </Section>
         </Tabs.Tab>
-        <Tabs.Tab label="Entity Status">
-          <Section>
+        <Tabs.Tab
+          label="Entity Status"
+          disabled={!selected}>
+          <Section title="Network Entity Status">
             <LabeledList>
-              <LabeledList.Item label="Status">
-                {selected.status ? (
+              <LabeledList.Item
+                label="Status"
+                color={operational ? 'good' : 'bad'}>
+                {operational ? (
                   'Running'
                 ) : (
                   'Server down!'
                 )}
               </LabeledList.Item>
-              <LabeledList.Item label="Network Traffic">
-                {selected.traffic <= 1024 ? (
-                  `${selected.traffic} Gigabytes`
-                ):(
-                  `${Math.round(selected.traffic/1024)} Terrabytes`
+              <LabeledList.Item
+                label="Network Traffic"
+                color={operational && (selected.netspeed < selected.traffic) ? (
+                  'bad'
+                ) : (
+                  'good'
+                )}>
+                {operational ? ( // Not to be confused to totaltraffic
+                  selected.traffic <= 1024 ? (
+                    `${Math.max(selected.traffic, 0)} Gigabytes`
+                  ) : (
+                    `${Math.round(selected.traffic/1024)} Terrabytes`
+                  )
+                ) : (
+                  '0 Giabytes'
                 )}
               </LabeledList.Item>
               <LabeledList.Item label="Network Speed">
-                {selected.netspeed <= 1024 ? (
-                  `${selected.netspeed} Gigabytes/second`
-                ):(
-                  `${Math.round(selected.netspeed/1024)} Terrabytes/second`
+                {operational ? (
+                  selected.netspeed <= 1024 ? (
+                    `${selected.netspeed} Gigabytes/second`
+                  ) : (
+                    `${Math.round(selected.netspeed/1024)} Terrabytes/second`
+                  )
+                ) : (
+                  '0 Giabytes/second'
                 )}
               </LabeledList.Item>
-              <LabeledList.Item label="Multi-Z Link">
-                {selected.long_range_link ? 'true' : 'false'}
+              <LabeledList.Item
+                label="Multi-Z Link"
+                color={(operational && selected.long_range_link) ? (
+                  'good'
+                ) : (
+                  'bad'
+                )}>
+                {(operational && selected.long_range_link) ? (
+                  'true'
+                ) : (
+                  'false'
+                )}
               </LabeledList.Item>
               <LabeledList.Item label="Frequency Listening">
-                {selected.freq_listening}
+                instead of this garbage, do some fancy thing
+                {operational ? JSON.stringify(selected.freq_listening) : '[]'}
               </LabeledList.Item>
+              <br />
             </LabeledList>
-            <Section label="Servers Connected">
-              {servers ? (
+            <Section
+              title="Servers Linked"
+              level={3}>
+              {(operational && selected_servers) ? (
                 <LabeledList>
-                  {servers.map(server => {
+                  {selected_servers.map(server => {
                     return (
                       <LabeledList.Item
                         key={server.name}
-                        label={`${server.ref}`} // should i just md5 this and cut
+                        label={server.ref}
                         buttons={(
                           <Button
                             content="Connect"
