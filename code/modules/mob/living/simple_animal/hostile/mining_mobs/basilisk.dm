@@ -84,6 +84,7 @@
 	butcher_results = list(/obj/item/stack/ore/diamond = 2, /obj/item/stack/sheet/sinew = 2, /obj/item/stack/sheet/bone = 1)
 	search_objects = 1
 	wanted_objects = list(/obj/item/pen/survival, /obj/item/stack/ore/diamond)
+	field_of_vision_type = FOV_270_DEGREES //Obviously, it's one eyeball.
 
 /mob/living/simple_animal/hostile/asteroid/basilisk/watcher/Life()
 	. = ..()

@@ -20116,20 +20116,6 @@
 /obj/machinery/conveyor_switch/oneway{
 	id = "QMLoad"
 	},
-/obj/machinery/button/door{
-	id = "QMLoaddoor2";
-	layer = 4;
-	name = "Loading Doors";
-	pixel_x = 24;
-	pixel_y = -8
-	},
-/obj/machinery/button/door{
-	id = "QMLoaddoor";
-	layer = 4;
-	name = "Loading Doors";
-	pixel_x = 24;
-	pixel_y = 8
-	},
 /obj/machinery/camera{
 	c_tag = "Cargo Supply Dock";
 	dir = 8
@@ -21567,6 +21553,20 @@
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
+	},
+/obj/machinery/button/door{
+	id = "QMLoaddoor2";
+	layer = 4;
+	name = "Loading Doors";
+	pixel_x = 24;
+	pixel_y = -8
+	},
+/obj/machinery/button/door{
+	id = "QMLoaddoor";
+	layer = 4;
+	name = "Loading Doors";
+	pixel_x = 24;
+	pixel_y = 8
 	},
 /turf/open/floor/plasteel,
 /area/quartermaster/storage)
@@ -52603,12 +52603,6 @@
 /obj/machinery/status_display/ai,
 /turf/closed/wall/r_wall,
 /area/engine/supermatter)
-"cCO" = (
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/turf/closed/wall,
-/area/security/brig)
 "cCP" = (
 /obj/effect/turf_decal/bot/right,
 /turf/open/floor/plasteel/white,
@@ -55293,6 +55287,9 @@
 /turf/open/floor/plasteel/dark,
 /area/science/xenobiology)
 "ivO" = (
+/obj/machinery/atmospherics/pipe/simple/cyan/hidden{
+	dir = 4
+	},
 /mob/living/simple_animal/bot/secbot{
 	arrest_type = 1;
 	health = 45;
@@ -55300,9 +55297,6 @@
 	idcheck = 1;
 	name = "Sergeant-at-Armsky";
 	weaponscheck = 1
-	},
-/obj/machinery/atmospherics/pipe/simple/cyan/hidden{
-	dir = 4
 	},
 /turf/open/floor/plasteel/dark,
 /area/security/armory)
@@ -89169,7 +89163,7 @@ apj
 ajM
 ajM
 ajM
-cCO
+ajM
 ajM
 ajM
 avL

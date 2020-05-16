@@ -47,7 +47,18 @@ export const Vending = props => {
       <Section title="Products" >
         <Table>
           {inventory.map((product => {
-            const suffix = ' cr' + data.cost_text;
+            const free = (
+              !data.onstation
+              || product.price === 0
+              || (
+                data.cost_mult === 0
+                && !product.premium
+              )
+            );
+            const suffix = (!product.premium
+              ? ' cr' + data.cost_text
+              : ' cr'
+            );
             return (
               <Table.Row key={product.name}>
                 <Table.Cell>
@@ -91,15 +102,14 @@ export const Vending = props => {
                       disabled={(
                         data.stock[product.namename] === 0
                         || (
-                          data.cost_mult !== 0
+                          !free
                           && (
                             !data.user
                             || product.price > data.user.cash
                           )
                         )
                       )}
-                      content={(data.onstation
-                        && product.price !== 0)
+                      content={!free
                         ? Math.round(product.price * data.cost_mult) + suffix
                         : 'FREE'}
                       onClick={() => act(ref, 'vend', {

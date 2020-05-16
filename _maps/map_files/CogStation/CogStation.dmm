@@ -72366,6 +72366,9 @@
 /obj/item/pen,
 /turf/open/floor/plasteel,
 /area/engine/atmos)
+"xxP" = (
+/turf/closed/wall,
+/area/quartermaster/storage)
 "xCy" = (
 /obj/machinery/atmospherics/components/binary/pump,
 /obj/machinery/atmospherics/pipe/simple/supplymain/hidden{
@@ -121112,7 +121115,7 @@ bgT
 bjr
 bkr
 ble
-bgT
+xxP
 bnC
 boD
 bgT

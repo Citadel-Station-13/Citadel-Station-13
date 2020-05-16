@@ -110,7 +110,8 @@ Class Procs:
 	var/state_open = FALSE
 	var/critical_machine = FALSE //If this machine is critical to station operation and should have the area be excempted from power failures.
 	var/list/occupant_typecache //if set, turned into typecache in Initialize, other wise, defaults to mob/living typecache
-	var/atom/movable/occupant = null
+	var/atom/movable/occupant
+	var/new_occupant_dir = SOUTH //The direction the occupant will be set to look at when entering the machine.
 	var/speed_process = FALSE // Process as fast as possible?
 	var/obj/item/circuitboard/circuit // Circuit to be created and inserted when the machinery is created
 		// For storing and overriding ui id and dimensions
@@ -217,6 +218,7 @@ Class Procs:
 	if(target && !target.has_buckled_mobs() && (!isliving(target) || !mobtarget.buckled))
 		occupant = target
 		target.forceMove(src)
+		target.setDir(new_occupant_dir)
 	updateUsrDialog()
 	update_icon()
 
