@@ -296,7 +296,7 @@
 	if(fov.alpha)
 		FOV_ANGLE_CHECK(source, target, return, return COMPONENT_NO_VISIBLE_MESSAGE)
 
-/datum/component/field_of_vision/proc/on_visible_atoms(mob/source, list/atoms)
+/datum/component/field_of_vision/proc/on_fov_view(mob/source, list/atoms)
 	if(!fov.alpha)
 		return
 	for(var/k in atoms)

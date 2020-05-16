@@ -250,7 +250,7 @@
 		processing += A.contents
 
 //viewers() but with a signal, for blacklisting.
-/proc/get_actual_viewers(depth = world.view, atom/center)
+/proc/fov_viewers(depth = world.view, atom/center)
 	if(!center)
 		return
 	. = viewers(depth, center)

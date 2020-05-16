@@ -149,7 +149,7 @@
 
 // /mob signals
 #define COMSIG_MOB_CLICKED_SHIFT_ON "mob_shift_click_on"		//from base of /atom/ShiftClick(): (atom/A), for return values, see COMSIG_CLICK_SHIFT
-#define COMSIG_MOB_VISIBLE_ATOMS "mob_visible_atoms"			//from base of mob/visible_atoms(): (list/visible_atoms)
+#define COMSIG_MOB_VISIBLE_ATOMS "mob_visible_atoms"			//from base of mob/fov_view(): (list/visible_atoms)
 #define COMSIG_MOB_EXAMINATE "mob_examinate"					//from base of /mob/verb/examinate(): (atom/A), for return values, see COMSIG_CLICK_SHIFT
 	#define COMPONENT_EXAMINATE_BLIND 3 //outputs the "something is there but you can't see it" message.
 #define COMSIG_MOB_DEATH "mob_death"							//from base of mob/death(): (gibbed)
@@ -185,7 +185,7 @@
 	#define SPEECH_LANGUAGE 5
 //	#define SPEECH_IGNORE_SPAM 6
 //	#define SPEECH_FORCED 7
-#define COMSIG_MOB_IS_VIEWER "mob_is_viewer"					//from base of /get_actual_viewers(): (atom/center, depth, viewers_list)
+#define COMSIG_MOB_IS_VIEWER "mob_is_viewer"					//from base of /fov_viewers(): (atom/center, depth, viewers_list)
 #define COMSIG_MOB_GET_VISIBLE_MESSAGE "mob_get_visible_message" //from base of atom/visible_message(): (atom/A, msg, range, ignored_mobs)
 	#define COMPONENT_NO_VISIBLE_MESSAGE 1 //exactly what's said on the tin.
 #define COMSIG_MOB_ANTAG_ON_GAIN "mob_antag_on_gain"			//from base of /datum/antagonist/on_gain(): (antag_datum)

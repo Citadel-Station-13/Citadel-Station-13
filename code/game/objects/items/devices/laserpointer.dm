@@ -135,7 +135,7 @@
 			outmsg = "<span class='warning'>You miss the lens of [C] with [src]!</span>"
 
 	//catpeople
-	var/list/viewers = get_actual_viewers(1,targloc)
+	var/list/viewers = fov_viewers(1,targloc)
 	for(var/mob/living/carbon/human/H in viewers)
 		if(!iscatperson(H) || H.incapacitated() || H.eye_blind )
 			continue

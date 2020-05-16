@@ -43,7 +43,7 @@
 			Snake = L
 			break
 		if(Snake)
-			alerted = get_actual_viewers(world.view,src)
+			alerted = fov_viewers(world.view,src)
 	..()
 	if(LAZYLEN(alerted))
 		egged = world.time + SNAKE_SPAM_TICKS
