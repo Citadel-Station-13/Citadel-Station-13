@@ -213,14 +213,15 @@
 
 	if(sanity_level != old_sanity_level)
 		if(sanity_level >= 4)
-			if(!length(free_maluses))
-				ADD_SKILL_MODIFIER_BODY(/datum/skill_modifier/bad_mood, malus_id++, master, malus)
-			else
-				malus = pick_n_take(free_maluses)
-				if(master.mind)
-					master.mind.add_skill_modifier(malus.identifier)
+			if(!malus)
+				if(!length(free_maluses))
+					ADD_SKILL_MODIFIER_BODY(/datum/skill_modifier/bad_mood, malus_id++, master, malus)
 				else
-					malus.RegisterSignal(master, COMSIG_MOB_ON_NEW_MIND, /datum/skill_modifier.proc/on_mob_new_mind, TRUE)
+					malus = pick_n_take(free_maluses)
+					if(master.mind)
+						master.mind.add_skill_modifier(malus.identifier)
+					else
+						malus.RegisterSignal(master, COMSIG_MOB_ON_NEW_MIND, /datum/skill_modifier.proc/on_mob_new_mind, TRUE)
 			malus.value_mod = malus.level_mod = 1 - (sanity_level - 3) * MOOD_INSANITY_MALUS
 		else if(malus)
 			if(master.mind)
@@ -237,7 +238,7 @@
 		return
 
 	var/mob/living/L = parent
-	if(newval <= ECSTATIC_SANITY_PEN)
+	if(newval == ECSTATIC_SANITY_PEN && !bonus)
 		ADD_SKILL_MODIFIER_BODY(/datum/skill_modifier/great_mood, null, L, bonus)
 	else if(bonus)
 		REMOVE_SKILL_MODIFIER_BODY(/datum/skill_modifier/great_mood, null, L)
