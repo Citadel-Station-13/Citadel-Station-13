@@ -890,7 +890,6 @@
 
 /obj/item/circuitboard/machine/bepis
 	name = "BEPIS Chamber (Machine Board)"
-	icon_state = "science"
 	build_path = /obj/machinery/rnd/bepis
 	req_components = list(
 		/obj/item/stack/cable_coil = 5,
