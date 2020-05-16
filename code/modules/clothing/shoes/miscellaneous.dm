@@ -71,6 +71,7 @@
 	equip_delay_other = 50
 	resistance_flags = NONE
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 40, "acid" = 75)
+	custom_price = 600
 
 /obj/item/clothing/shoes/galoshes/dry
 	name = "absorbent galoshes"
@@ -180,6 +181,10 @@
 	name = "mining boots"
 	desc = "Steel-toed mining boots for mining in hazardous environments. Very good at keeping toes uncrushed."
 	icon_state = "explorer"
+	cold_protection = FEET|LEGS
+	min_cold_protection_temperature = SHOES_MIN_TEMP_PROTECT
+	heat_protection = FEET|LEGS
+	max_heat_protection_temperature = SHOES_MAX_TEMP_PROTECT
 	resistance_flags = FIRE_PROOF
 
 /obj/item/clothing/shoes/cult
@@ -378,6 +383,7 @@
 /obj/item/clothing/shoes/cowboyboots
 	name = "cowboy boots"
 	desc = "A standard pair of brown cowboy boots."
+	custom_price = 60 //remember to replace these lame cosmetics with tg's YEEEEHAW counterparts.
 	icon_state = "cowboyboots"
 
 /obj/item/clothing/shoes/cowboyboots/black

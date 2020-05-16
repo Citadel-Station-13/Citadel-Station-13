@@ -12,6 +12,7 @@
 	meat = /obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/plant
 	disliked_food = MEAT | DAIRY
 	liked_food = VEGETABLES | FRUIT | GRAIN
+	species_language_holder = /datum/language_holder/sylvan
 	var/light_nutrition_gain_factor = 10
 	var/light_toxheal = 1
 	var/light_oxyheal = 1
@@ -35,9 +36,7 @@
 	if(isturf(H.loc)) //else, there's considered to be no light
 		var/turf/T = H.loc
 		light_amount = min(1,T.get_lumcount()) - 0.5
-		H.nutrition += light_amount * light_nutrition_gain_factor
-		if(H.nutrition >= NUTRITION_LEVEL_FULL)
-			H.nutrition = NUTRITION_LEVEL_FULL - 1
+		H.adjust_nutrition(light_amount * light_nutrition_gain_factor, NUTRITION_LEVEL_FULL)
 		if(light_amount > 0.2) //if there's enough light, heal
 			H.heal_overall_damage(light_bruteheal, light_burnheal)
 			H.adjustToxLoss(-light_toxheal)
@@ -69,8 +68,7 @@
 				H.adjustFireLoss(rand(5,15))
 				H.show_message("<span class='userdanger'>The radiation beam singes you!</span>")
 		if(/obj/item/projectile/energy/florayield)
-			H.nutrition = min(H.nutrition+30, NUTRITION_LEVEL_FULL)
-
+			H.adjust_nutrition(30, NUTRITION_LEVEL_FULL)
 
 /datum/species/pod/pseudo_weak
 	name = "Anthromorphic Plant"

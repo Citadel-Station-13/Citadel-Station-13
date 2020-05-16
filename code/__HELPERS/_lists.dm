@@ -37,6 +37,7 @@
 	* TYPECONT: The typepath of the contents of the list
 	* COMPARE: The object to compare against, usualy the same as INPUT
 	* COMPARISON: The variable on the objects to compare
+	* COMPTYPE: How the current bin item to compare against COMPARE is fetched. By key or value.
 	*/
 #define BINARY_INSERT(INPUT, LIST, TYPECONT, COMPARE, COMPARISON, COMPTYPE) \
 	do {\
@@ -628,6 +629,8 @@
 				value = "[REF(value)]"
 			L["[key]"] = "[value]"
 	return list2params(L)
+
+#define NUMLIST2TEXTLIST(list) splittext(list2params(list), "&")
 
 //Picks from the list, with some safeties, and returns the "default" arg if it fails
 #define DEFAULTPICK(L, default) ((islist(L) && length(L)) ? pick(L) : default)

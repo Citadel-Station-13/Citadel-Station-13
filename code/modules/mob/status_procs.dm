@@ -88,18 +88,20 @@
 /mob/proc/add_eyeblur()
 	if(!client)
 		return
-	var/obj/screen/plane_master/game_world/GW = locate(/obj/screen/plane_master/game_world) in client.screen
-	var/obj/screen/plane_master/floor/F = locate(/obj/screen/plane_master/floor) in client.screen
-	GW.add_filter("blurry_eyes", 2, EYE_BLUR(clamp(eye_blurry*0.1,0.6,3)))
-	F.add_filter("blurry_eyes", 2, EYE_BLUR(clamp(eye_blurry*0.1,0.6,3)))
+	var/list/screens = list(hud_used.plane_masters["[GAME_PLANE]"], hud_used.plane_masters["[FLOOR_PLANE]"],
+							hud_used.plane_masters["[WALL_PLANE]"], hud_used.plane_masters["[ABOVE_WALL_PLANE]"])
+	for(var/A in screens)
+		var/obj/screen/plane_master/P = A
+		P.add_filter("blurry_eyes", 2, EYE_BLUR(clamp(eye_blurry*0.1,0.6,3)))
 
 /mob/proc/remove_eyeblur()
 	if(!client)
 		return
-	var/obj/screen/plane_master/game_world/GW = locate(/obj/screen/plane_master/game_world) in client.screen
-	var/obj/screen/plane_master/floor/F = locate(/obj/screen/plane_master/floor) in client.screen
-	GW.remove_filter("blurry_eyes")
-	F.remove_filter("blurry_eyes")
+	var/list/screens = list(hud_used.plane_masters["[GAME_PLANE]"], hud_used.plane_masters["[FLOOR_PLANE]"],
+							hud_used.plane_masters["[WALL_PLANE]"], hud_used.plane_masters["[ABOVE_WALL_PLANE]"])
+	for(var/A in screens)
+		var/obj/screen/plane_master/P = A
+		P.remove_filter("blurry_eyes")
 
 ///Adjust the drugginess of a mob
 /mob/proc/adjust_drugginess(amount)

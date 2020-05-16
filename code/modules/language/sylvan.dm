@@ -14,10 +14,5 @@
     	"incas", "int", "elc", "ent", "aws", "qip", "nas", "vil", "jens", "dila", "fa",
     	"la", "re", "do", "ji", "ae", "so", "qe", "ce", "na", "mo", "ha", "yu"
 	)
-	icon = 'icons/obj/hydroponics/harvest.dmi'
-	icon_state = "lily"
+	icon_state = "plant"
 	default_priority = 90
-
-/datum/language_holder/venus
-	languages = list(/datum/language/common, /datum/language/sylvan, /datum/language/machine)
-	only_speaks_language = /datum/language/sylvan
