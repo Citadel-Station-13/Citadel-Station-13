@@ -49,7 +49,6 @@
 	var/original_name
 	desc = "A large piece of space-resistant printed paper."
 	icon = 'icons/obj/contraband.dmi'
-	plane = ABOVE_WALL_PLANE
 	anchored = TRUE
 	var/ruined = FALSE
 	var/random_basetype

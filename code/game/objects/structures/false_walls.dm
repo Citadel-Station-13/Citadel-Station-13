@@ -7,7 +7,6 @@
 	anchored = TRUE
 	icon = 'icons/turf/walls/wall.dmi'
 	icon_state = "wall"
-	plane = WALL_PLANE
 	layer = LOW_OBJ_LAYER
 	density = TRUE
 	opacity = 1

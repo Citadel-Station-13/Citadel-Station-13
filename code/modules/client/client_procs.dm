@@ -902,27 +902,23 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 			new_size = "15x15"
 //END OF CIT CHANGES
 
-	var/list/old_view = getviewsize(view)
 	view = new_size
-	var/list/actualview = getviewsize(view)
-	apply_clickcatcher(actualview)
+	apply_clickcatcher()
 	mob.reload_fullscreen()
 	if (isliving(mob))
 		var/mob/living/M = mob
 		M.update_damage_hud()
 	if (prefs.auto_fit_viewport)
 		fit_viewport()
-	SEND_SIGNAL(mob, COMSIG_MOB_CLIENT_CHANGE_VIEW, src, old_view, actualview)
 
 /client/proc/generate_clickcatcher()
 	if(!void)
 		void = new()
 		screen += void
 
-/client/proc/apply_clickcatcher(list/actualview)
+/client/proc/apply_clickcatcher()
 	generate_clickcatcher()
-	if(!actualview)
-		actualview = getviewsize(view)
+	var/list/actualview = getviewsize(view)
 	void.UpdateGreed(actualview[1],actualview[2])
 
 /client/proc/AnnouncePR(announcement)

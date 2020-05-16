@@ -232,7 +232,6 @@ Difficulty: Hard
 	density = FALSE
 	faction = list("mining", "boss")
 	weather_immunities = list("lava","ash")
-	has_field_of_vision = FALSE
 
 /mob/living/simple_animal/hostile/asteroid/hivelordbrood/slaughter/CanPass(atom/movable/mover, turf/target)
 	if(istype(mover, /mob/living/simple_animal/hostile/megafauna/bubblegum))

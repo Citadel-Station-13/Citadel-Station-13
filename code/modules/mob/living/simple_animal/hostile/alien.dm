@@ -80,7 +80,6 @@
 	icon_state = "alienq"
 	icon_living = "alienq"
 	icon_dead = "alienq_dead"
-	pixel_x = -16
 	threat = 8
 	health = 250
 	maxHealth = 250
