@@ -129,6 +129,7 @@
 	dog_fashion = /datum/dog_fashion/head/pirate
 
 /obj/item/clothing/head/pirate/captain
+	name = "pirate captain hat"
 	icon_state = "hgpiratecap"
 	item_state = "hgpiratecap"
 

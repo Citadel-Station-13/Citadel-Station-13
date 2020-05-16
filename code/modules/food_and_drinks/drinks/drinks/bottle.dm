@@ -254,6 +254,7 @@
 	var/shortname = pickweight(
 		list("T&T" = 1, "A&A" = 1, "Generic" = 1))
 	var/fullname
+	var/removals = GLOB.redacted_strings.Copy()
 	switch(shortname)
 		if("T&T")
 			fullname = "Teal and Tealer"
@@ -261,9 +262,6 @@
 			fullname = "Ash and Asher"
 		if("Generic")
 			fullname = "Nanotrasen Cheap Imitations"
-	var/removals = list("\[REDACTED\]", "\[EXPLETIVE DELETED\]",
-		"\[EXPUNGED\]", "\[INFORMATION ABOVE YOUR SECURITY CLEARANCE\]",
-		"\[MOVE ALONG CITIZEN\]", "\[NOTHING TO SEE HERE\]")
 	var/chance = 50
 
 	if(prob(chance))
@@ -348,6 +346,7 @@
 /obj/item/reagent_containers/food/drinks/bottle/applejack
 	name = "Buckin' Bronco's Applejack"
 	desc = "Kicks like a horse, tastes like an apple!"
+	custom_price = 100
 	icon_state = "applejack_bottle"
 	list_reagents = list(/datum/reagent/consumable/ethanol/applejack = 100)
 	foodtype = FRUIT
@@ -358,6 +357,7 @@
 /obj/item/reagent_containers/food/drinks/bottle/champagne
 	name = "Eau d' Dandy Brut Champagne"
 	desc = "Finely sourced from only the most pretentious French vineyards."
+	custom_premium_price = 250
 	icon_state = "champagne_bottle"
 	list_reagents = list(/datum/reagent/consumable/ethanol/champagne = 100)
 
@@ -376,6 +376,7 @@
 /obj/item/reagent_containers/food/drinks/bottle/trappist
 	name = "Mont de Requin Trappistes Bleu"
 	desc = "Brewed in space-Belgium. Fancy!"
+	custom_premium_price = 170
 	icon_state = "trappistbottle"
 	volume = 50
 	list_reagents = list(/datum/reagent/consumable/ethanol/trappist = 50)
@@ -388,6 +389,7 @@
 /obj/item/reagent_containers/food/drinks/bottle/orangejuice
 	name = "orange juice"
 	desc = "Full of vitamins and deliciousness!"
+	custom_price = 100
 	icon_state = "orangejuice"
 	item_state = "carton"
 	lefthand_file = 'icons/mob/inhands/equipment/kitchen_lefthand.dmi'
@@ -409,6 +411,7 @@
 /obj/item/reagent_containers/food/drinks/bottle/cream
 	name = "milk cream"
 	desc = "It's cream. Made from milk. What else did you think you'd find in there?"
+	custom_price = 100
 	icon_state = "cream"
 	item_state = "carton"
 	lefthand_file = 'icons/mob/inhands/equipment/kitchen_lefthand.dmi'
@@ -420,6 +423,7 @@
 /obj/item/reagent_containers/food/drinks/bottle/tomatojuice
 	name = "tomato juice"
 	desc = "Well, at least it LOOKS like tomato juice. You can't tell with all that redness."
+	custom_price = 100
 	icon_state = "tomatojuice"
 	item_state = "carton"
 	lefthand_file = 'icons/mob/inhands/equipment/kitchen_lefthand.dmi'
@@ -431,6 +435,7 @@
 /obj/item/reagent_containers/food/drinks/bottle/limejuice
 	name = "lime juice"
 	desc = "Sweet-sour goodness."
+	custom_price = 100
 	icon_state = "limejuice"
 	item_state = "carton"
 	lefthand_file = 'icons/mob/inhands/equipment/kitchen_lefthand.dmi'
@@ -464,6 +469,7 @@
 /obj/item/reagent_containers/food/drinks/bottle/menthol
 	name = "menthol"
 	desc = "Tastes naturally minty, and imparts a very mild numbing sensation."
+	custom_price = 100
 	icon_state = "mentholbox"
 	item_state = "carton"
 	lefthand_file = 'icons/mob/inhands/equipment/kitchen_lefthand.dmi'
@@ -474,6 +480,7 @@
 /obj/item/reagent_containers/food/drinks/bottle/grenadine
 	name = "Jester Grenadine"
 	desc = "Contains 0% real cherries!"
+	custom_price = 100
 	icon_state = "grenadine"
 	isGlass = TRUE
 	list_reagents = list(/datum/reagent/consumable/grenadine = 100)

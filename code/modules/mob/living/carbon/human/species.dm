@@ -10,6 +10,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 	var/default_color = "#FFF"	// if alien colors are disabled, this is the color that will be used by that race
 
 	var/sexes = 1 // whether or not the race has sexual characteristics. at the moment this is only 0 for skeletons and shadows
+	var/has_field_of_vision = TRUE
 
 	//Species Icon Drawing Offsets - Pixel X, Pixel Y, Aka X = Horizontal and Y = Vertical, from bottom left corner
 	var/list/offset_features = list(
@@ -103,6 +104,9 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 	var/whitelisted = 0 		//Is this species restricted to certain players?
 	var/whitelist = list() 		//List the ckeys that can use this species, if it's whitelisted.: list("John Doe", "poopface666", "SeeALiggerPullTheTrigger") Spaces & capitalization can be included or ignored entirely for each key as it checks for both.
 	var/icon_limbs //Overrides the icon used for the limbs of this species. Mainly for downstream, and also because hardcoded icons disgust me. Implemented and maintained as a favor in return for a downstream's implementation of synths.
+
+	/// Our default override for typing indicator state
+	var/typing_indicator_state
 
 ///////////
 // PROCS //
@@ -328,6 +332,9 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 		if(mutant_bodyparts["meat_type"]) //I can't believe it's come to the meat
 			H.type_of_meat = GLOB.meat_types[H.dna.features["meat_type"]]
 
+		if(H.client && has_field_of_vision && CONFIG_GET(flag/use_field_of_vision))
+			H.LoadComponent(/datum/component/field_of_vision, H.field_of_vision_type)
+
 	C.add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/species, TRUE, multiplicative_slowdown = speedmod)
 
 	SEND_SIGNAL(C, COMSIG_SPECIES_GAIN, src, old_species)
@@ -360,6 +367,11 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 		var/location = C.dna.mutation_index.Find(inert_mutation)
 		C.dna.mutation_index[location] = new_species.inert_mutation
 		C.dna.mutation_index[new_species.inert_mutation] = create_sequence(new_species.inert_mutation)
+
+	if(!new_species.has_field_of_vision && has_field_of_vision && ishuman(C) && CONFIG_GET(flag/use_field_of_vision))
+		var/datum/component/field_of_vision/F = GetComponent(/datum/component/field_of_vision)
+		if(F)
+			qdel(F)
 
 	SEND_SIGNAL(C, COMSIG_SPECIES_LOSS, src)
 
@@ -1288,7 +1300,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 				H.Jitter(5)
 			hunger_rate = 3 * HUNGER_FACTOR
 		hunger_rate *= H.physiology.hunger_mod
-		H.nutrition = max(0, H.nutrition - hunger_rate)
+		H.adjust_nutrition(-hunger_rate)
 
 
 	if (H.nutrition > NUTRITION_LEVEL_FULL)
@@ -1541,9 +1553,9 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 	else if(aim_for_mouth && ( target_on_help || target_restrained || target_aiming_for_mouth))
 		playsound(target.loc, 'sound/weapons/slap.ogg', 50, 1, -1)
 
-		user.visible_message(\
-			"<span class='danger'>\The [user] slaps \the [target] in the face!</span>",\
-			"<span class='notice'>You slap [user == target ? "yourself" : "\the [target]"] in the face! </span>",\
+		target.visible_message(\
+			"<span class='warning'>\The [user] slaps \the [target] in the face!</span>",\
+			"<span class='danger'>You [user == target ? "slap yourself" : "are slapped by \the [target]"] in the face! </span>",\
 			"You hear a slap."
 		)
 		user.do_attack_animation(target, ATTACK_EFFECT_FACE_SLAP)
@@ -1563,9 +1575,9 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 		if (!HAS_TRAIT(target, TRAIT_PERMABONER))
 			stop_wagging_tail(target)
 		playsound(target.loc, 'sound/weapons/slap.ogg', 50, 1, -1)
-		user.visible_message(\
+		target.visible_message(\
 			"<span class='danger'>\The [user] slaps \the [target]'s ass!</span>",\
-			"<span class='notice'>You slap [user == target ? "your" : "\the [target]'s"] ass!</span>",\
+			"<span class='danger'>You slap [user == target ? "slap your" : "are slapped by \the [target]'s in the"] ass!</span>",\
 			"You hear a slap."
 		)
 		return FALSE
@@ -1861,19 +1873,19 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 			var/targetatrest = !CHECK_MOBILITY(target, MOBILITY_STAND)
 			if((directional_blocked || !(target_collateral_human || target_shove_turf.shove_act(target, user))) && !targetatrest)
 				target.DefaultCombatKnockdown(SHOVE_KNOCKDOWN_SOLID)
-				user.visible_message("<span class='danger'>[user.name] shoves [target.name], knocking them down!</span>",
-					"<span class='danger'>You shove [target.name], knocking them down!</span>", null, COMBAT_MESSAGE_RANGE)
+				target.visible_message("<span class='danger'>[user.name] shoves [target.name], knocking them down!</span>",
+					"<span class='danger'>You are shoved by [user.name] and knocked down!</span>", null, COMBAT_MESSAGE_RANGE)
 				log_combat(user, target, "shoved", "knocking them down")
 			else if(target_collateral_human && !targetatrest)
 				target.DefaultCombatKnockdown(SHOVE_KNOCKDOWN_HUMAN)
 				target_collateral_human.DefaultCombatKnockdown(SHOVE_KNOCKDOWN_COLLATERAL)
-				user.visible_message("<span class='danger'>[user.name] shoves [target.name] into [target_collateral_human.name]!</span>",
-					"<span class='danger'>You shove [target.name] into [target_collateral_human.name]!</span>", null, COMBAT_MESSAGE_RANGE)
+				target.visible_message("<span class='danger'>[user.name] shoves [target.name] into [target_collateral_human.name]!</span>",
+					"<span class='danger'>You are shoved by [user.name] into [target_collateral_human.name]!</span>", null, COMBAT_MESSAGE_RANGE)
 				append_message += ", into [target_collateral_human.name]"
 
 		else
-			user.visible_message("<span class='danger'>[user.name] shoves [target.name]!</span>",
-				"<span class='danger'>You shove [target.name]!</span>", null, COMBAT_MESSAGE_RANGE)
+			target.visible_message("<span class='danger'>[user.name] shoves [target.name]!</span>",
+				"<span class='danger'>You are shoved by [user.name]!</span>", null, COMBAT_MESSAGE_RANGE)
 		var/obj/item/target_held_item = target.get_active_held_item()
 		if(!is_type_in_typecache(target_held_item, GLOB.shove_disarming_types))
 			target_held_item = null

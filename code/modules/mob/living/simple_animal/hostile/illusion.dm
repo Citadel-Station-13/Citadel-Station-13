@@ -20,6 +20,7 @@
 	var/multiply_chance = 0 //if we multiply on hit
 	del_on_death = 1
 	deathmessage = "vanishes into thin air! It was a fake!"
+	has_field_of_vision = FALSE //not meant to be played anyway.
 
 
 /mob/living/simple_animal/hostile/illusion/Life()

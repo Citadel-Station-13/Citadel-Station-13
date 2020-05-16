@@ -144,7 +144,7 @@
 	return ..()
 
 /datum/nanite_program/metabolic_synthesis/active_effect()
-	host_mob.nutrition -= 0.5
+	host_mob.adjust_nutrition(-0.5)
 	nanites.adjust_nanites(src, 0.5)
 
 /datum/nanite_program/research

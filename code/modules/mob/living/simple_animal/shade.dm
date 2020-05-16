@@ -32,6 +32,7 @@
 	del_on_death = TRUE
 	initial_language_holder = /datum/language_holder/construct
 	blood_volume = 0
+	has_field_of_vision = FALSE //we are a spoopy ghost
 
 /mob/living/simple_animal/shade/death()
 	deathmessage = "lets out a contented sigh as [p_their()] form unwinds."
