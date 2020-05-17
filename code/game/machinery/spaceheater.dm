@@ -161,12 +161,15 @@
 		update_icon()
 		if(panel_open)
 			interact(user)
-	else if(default_unfasten_wrench(user, I))
-		return
 	else if(default_deconstruction_crowbar(I))
 		return
 	else
 		return ..()
+
+/obj/machinery/space_heater/wrench_act(mob/living/user, obj/item/I)
+	..()
+	default_unfasten_wrench(user, I, 5)
+	return TRUE
 
 /obj/machinery/space_heater/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
 										datum/tgui/master_ui = null, datum/ui_state/state = GLOB.physical_state)
