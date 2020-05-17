@@ -73,12 +73,12 @@ obj/item/shield/riot/ratvarian/proc/calc_bash_mult()
 		if(..()) //If this bash actually hit someone
 			if(actual_bash_mult > 1)
 				playsound(user, 'sound/magic/fireball.ogg', 50, TRUE, frequency = 1.25)
-			dam_absorbed -= calc_bash_absorb_use()
+				dam_absorbed -= calc_bash_absorb_use()
 			return TRUE
 		else
 			return FALSE
-		shieldbash_knockback = initial(shieldbash_knockback)
-		shieldbash_brutedamage = initial(shieldbash_brutedamage)
-		shieldbash_stamdmg = initial(shieldbash_stamdmg)
 	else
+		shieldbash_knockback = initial(shieldbash_knockback)
+		shieldbash_brutedamage = initial(shieldbash_brutedamage) //Prevention for funky stuff that might happen otherwise
+		shieldbash_stamdmg = initial(shieldbash_stamdmg)
 		return ..()
