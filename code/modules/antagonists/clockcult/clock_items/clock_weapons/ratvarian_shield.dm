@@ -77,5 +77,8 @@ obj/item/shield/riot/ratvarian/proc/calc_bash_mult()
 			return TRUE
 		else
 			return FALSE
+		shieldbash_knockback = initial(shieldbash_knockback)
+		shieldbash_brutedamage = initial(shieldbash_brutedamage)
+		shieldbash_stamdmg = initial(shieldbash_stamdmg)
 	else
 		return ..()
