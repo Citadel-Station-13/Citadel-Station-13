@@ -2321,7 +2321,7 @@
 /area/mine/laborcamp)
 "mL" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/item/twohanded/required/kirbyplants/random,
+/obj/item/kirbyplants/random,
 /turf/open/floor/plasteel,
 /area/mine/laborcamp)
 "mS" = (
@@ -2493,7 +2493,7 @@
 	dir = 4;
 	network = list("labor")
 	},
-/obj/item/twohanded/required/kirbyplants/random,
+/obj/item/kirbyplants/random,
 /turf/open/floor/plasteel,
 /area/mine/laborcamp)
 "pu" = (

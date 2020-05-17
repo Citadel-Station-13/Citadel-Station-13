@@ -91,7 +91,7 @@
 		else
 			to_chat(user, "<span class='notice'>\the [src] already has this mop!</span>")
 
-	if(istype(W, /obj/item/twohanded/broom))
+	if(istype(W, /obj/item/broom))
 		if(bot_core.allowed(user) && open && broom == TRUE)
 			to_chat(user, "<span class='notice'>You add to \the [src] a broom speeding it up!</span>")
 			broom = TRUE

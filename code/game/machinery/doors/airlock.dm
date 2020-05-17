@@ -1052,11 +1052,11 @@
 		to_chat(user, "<span class='warning'>The airlock's bolts prevent it from being forced!</span>")
 	else if( !welded && !operating)
 		if(!beingcrowbarred) //being fireaxe'd
-			var/obj/item/twohanded/fireaxe/F = I
-			if(F.wielded)
-				INVOKE_ASYNC(src, (density ? .proc/open : .proc/close), 2)
-			else
-				to_chat(user, "<span class='warning'>You need to be wielding the fire axe to do that!</span>")
+			var/obj/item/fireaxe/axe = I
+			if(!axe.wielded)
+				to_chat(user, "<span class='warning'>You need to be wielding \the [axe] to do that!</span>")
+				return
+		 	INVOKE_ASYNC(src, (density ? .proc/open : .proc/close), 2)
 		else
 			INVOKE_ASYNC(src, (density ? .proc/open : .proc/close), 2)
 

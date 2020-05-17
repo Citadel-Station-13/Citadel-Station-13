@@ -317,7 +317,7 @@
 				suit = /obj/item/clothing/suit/armor/bone
 				gloves = /obj/item/clothing/gloves/bracer
 			if(prob(5))
-				back = pickweight(list(/obj/item/twohanded/bonespear = 3, /obj/item/twohanded/fireaxe/boneaxe = 2))
+				back = pickweight(list(/obj/item/spear/bonespear = 3, /obj/item/fireaxe/boneaxe = 2))
 			if(prob(10))
 				belt = /obj/item/storage/belt/mining/primitive
 			if(prob(30))
@@ -404,7 +404,7 @@
 			if(prob(5))
 				gloves = /obj/item/clothing/gloves/color/yellow
 			if(prob(10))
-				back = /obj/item/twohanded/spear
+				back = /obj/item/spear
 			else if(prob(80)) //Now they dont always have a backpack
 				back = /obj/item/storage/backpack
 				backpack_contents = list(/obj/item/stack/cable_coil = 1, /obj/item/assembly/flash = 1, /obj/item/storage/fancy/donut_box = 1, /obj/item/storage/fancy/cigarettes/cigpack_shadyjims = 1, /obj/item/lighter = 1)
