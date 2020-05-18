@@ -56,16 +56,18 @@ GLOBAL_LIST_EMPTY(potential_mods_per_skill)
 		for(var/path in L)
 			var/list/mod_L = GLOB.potential_mods_per_skill[path]
 			if(!mod_L)
-				mod_L = GLOB.potential_mods_per_skill[target_skills] = list()
+				mod_L = GLOB.potential_mods_per_skill[path] = list()
 			else
 				BINARY_INSERT(identifier, mod_L, datum/skill_modifier, src, priority, COMPARE_VALUE)
 			mod_L[identifier] = src
 
 /datum/skill_modifier/Destroy()
-	for(var/A in GLOB.potential_skills_per_mod["[target_skills]"])
-		LAZYREMOVEASSOC(GLOB.potential_mods_per_skill, A, identifier)
-	GLOB.potential_skills_per_mod -= "[target_skills]"
-	GLOB.skill_modifiers -= src
+	for(var/path in GLOB.potential_skills_per_mod["[target_skills]"])
+		var/mod_L = GLOB.potential_mods_per_skill[path]
+		mod_L -= identifier
+		if(!length(mod_L))
+			GLOB.potential_mods_per_skill -= path
+	GLOB.skill_modifiers -= identifier
 	return ..()
 
 #define ADD_MOD_STEP(L, P, O, G) \
@@ -106,7 +108,7 @@ GLOBAL_LIST_EMPTY(potential_mods_per_skill)
 	if(M.modifier_flags & MODIFIER_SKILL_BODYBOUND)
 		M.RegisterSignal(src, COMSIG_MIND_TRANSFER, /datum/skill_modifier.proc/on_mind_transfer)
 		M.RegisterSignal(current, COMSIG_MOB_ON_NEW_MIND, /datum/skill_modifier.proc/on_mob_new_mind, TRUE)
-	RegisterSignal(M, COMSIG_PARENT_QDELETING, .proc/on_skill_modifier_deletion)
+	RegisterSignal(M, COMSIG_PARENT_PREQDELETED, .proc/on_skill_modifier_deletion)
 
 #undef ADD_MOD_STEP
 
@@ -128,16 +130,16 @@ GLOBAL_LIST_EMPTY(potential_mods_per_skill)
 	for(var/path in GLOB.potential_skills_per_mod["[M.target_skills]"])
 		if(M.modifier_flags & MODIFIER_SKILL_VALUE && skill_holder.skill_value_mods)
 			REMOVE_MOD_STEP(skill_holder.skill_value_mods, path, skill_holder.original_values)
-		if(M.modifier_flags & MODIFIER_SKILL_AFFINITY)
+		if(M.modifier_flags & MODIFIER_SKILL_AFFINITY && skill_holder.skill_affinity_mods)
 			REMOVE_MOD_STEP(skill_holder.skill_affinity_mods, path, skill_holder.original_affinities)
-		if(M.modifier_flags & MODIFIER_SKILL_LEVEL)
+		if(M.modifier_flags & MODIFIER_SKILL_LEVEL && skill_holder.skill_level_mods)
 			REMOVE_MOD_STEP(skill_holder.skill_level_mods, path, skill_holder.original_levels)
 	LAZYREMOVE(skill_holder.all_current_skill_modifiers, id)
 
 	if(!mind_transfer && M.modifier_flags & MODIFIER_SKILL_BODYBOUND)
 		M.UnregisterSignal(src, COMSIG_MIND_TRANSFER)
 		M.UnregisterSignal(current, list(COMSIG_MOB_ON_NEW_MIND))
-	UnregisterSignal(M, COMSIG_PARENT_QDELETING)
+	UnregisterSignal(M, COMSIG_PARENT_PREQDELETED)
 
 #undef REMOVE_MOD_STEP
 
