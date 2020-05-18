@@ -418,7 +418,7 @@
 	else
 		..()
 
-/mob/living/simple_animal/bot/medbot/examinate(atom/A as mob|obj|turf in view())
+/mob/living/simple_animal/bot/medbot/examinate(atom/A as mob|obj|turf in fov_view())
 	..()
 	if(!is_blind(src))
 		chemscan(src, A)

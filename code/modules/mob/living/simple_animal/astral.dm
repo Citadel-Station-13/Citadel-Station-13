@@ -5,6 +5,7 @@
 	icon_state = "ghost"
 	icon_living = "ghost"
 	mob_biotypes = MOB_SPIRIT
+	has_field_of_vision = FALSE //we are a spoopy ghost
 	attack_verb_continuous = "raises the hair on the neck of"
 	attack_verb_simple = "raise the hair on the neck of"
 	response_harm_continuous = "disrupts the concentration of"

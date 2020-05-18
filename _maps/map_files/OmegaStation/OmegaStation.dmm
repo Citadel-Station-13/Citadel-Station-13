@@ -2150,11 +2150,6 @@
 /obj/machinery/status_display/supply,
 /turf/closed/wall,
 /area/quartermaster/storage)
-"adq" = (
-/obj/effect/spawner/structure/window/reinforced,
-/obj/structure/sign/warning/vacuum,
-/turf/open/floor/plating,
-/area/quartermaster/storage)
 "adr" = (
 /obj/structure/cable{
 	icon_state = "4-8"
@@ -37688,6 +37683,10 @@
 /obj/machinery/atmospherics/miner/carbon_dioxide,
 /turf/open/floor/engine/co2,
 /area/engine/atmos)
+"hQH" = (
+/obj/structure/sign/warning/vacuum,
+/turf/closed/wall,
+/area/quartermaster/storage)
 "hTn" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/machinery/door/airlock/research/glass{
@@ -38292,14 +38291,6 @@
 /obj/structure/flora/ausbushes/ywflowers,
 /turf/open/floor/grass,
 /area/hallway/secondary/entry)
-"lvt" = (
-/obj/effect/spawner/structure/window/reinforced,
-/obj/structure/sign/warning/vacuum,
-/obj/machinery/light{
-	dir = 4
-	},
-/turf/open/floor/plating,
-/area/quartermaster/storage)
 "lvw" = (
 /obj/machinery/atmospherics/pipe/simple/orange/visible,
 /obj/effect/decal/cleanable/dirt,
@@ -91224,7 +91215,7 @@ aac
 swM
 aeh
 agB
-ado
+adn
 agB
 ahq
 adp
@@ -91478,13 +91469,13 @@ aaa
 aaa
 aaa
 aaa
-adq
+ado
 aeg
 aeX
-adp
+hQH
 agC
 ahr
-lvt
+ado
 aae
 aae
 aae

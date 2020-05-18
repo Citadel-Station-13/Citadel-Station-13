@@ -23,7 +23,6 @@
 	mouse_opacity = 2
 	density = TRUE
 	ventcrawler = VENTCRAWLER_ALWAYS
-	gold_core_spawnable = FRIENDLY_SPAWN
 	verb_say = "chitters"
 	verb_ask = "chitters inquisitively"
 	verb_exclaim = "chitters loudly"
