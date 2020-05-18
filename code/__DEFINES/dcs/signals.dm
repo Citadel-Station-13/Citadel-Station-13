@@ -338,6 +338,12 @@
 //NTnet
 #define COMSIG_COMPONENT_NTNET_RECEIVE "ntnet_receive"			//called on an object by its NTNET connection component on receive. (sending_id(number), sending_netname(text), data(datum/netdata))
 
+//Area of Effect
+#define COMSIG_AOE_RANGE_CALCULATED "aoe_range_calculated"		//Called when the AoE turfs/targets lists are created or recalculated as the parent moves: ( list/old_targets, list/old_turfs, list/new_targets, list/new_turfs)
+#define COMSIG_AOE_TURF_CHANGED "aoe_turf_changed"				//Called when a turf within its area has changed: (turf/T)
+#define COMSIG_AOE_TRIGGERED "aoe_triggered"					//Called when the area of effect comsig is called.
+	#define AOE_PREVENT_TRIGGER 1 //Prevents return values from being returned.
+
 //Nanites
 #define COMSIG_HAS_NANITES "has_nanites"						//() returns TRUE if nanites are found
 #define COMSIG_NANITE_IS_STEALTHY "nanite_is_stealthy"			//() returns TRUE if nanites have stealth

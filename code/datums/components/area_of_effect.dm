@@ -4,27 +4,21 @@
 	var/range_or_view = "range"
 	var/comsig_value
 	var/return_value
-	var/datum/callback/comsig_callback
-	var/datum/callback/parent_moved_callback
-	var/datum/callback/turf_callback
 	var/range_view_list
 	var/range_view_turf_list = list()
 	var/list/whitelist_typecache
 	var/list/blacklist_typecache
 	var/protect_self = TRUE
 
-/datum/component/area_of_effect/Initialize(dist = 5, r_or_v = "range", comsig, value, callback, move_callback, t_callback, whitelist, blacklist, self = TRUE)
+/datum/component/area_of_effect/Initialize(dist = 5, r_or_v = "range", comsig, value, whitelist, blacklist, self = TRUE)
 	. = ..()
-	if(!isatom(parent) || isarea(parent) || !comsig || !(value || callback || move_callback || t_callback))
+	if(!isatom(parent) || isarea(parent) || !comsig)
 		return COMPONENT_INCOMPATIBLE
 
 	distance = dist
 	range_or_view = r_or_v
 	comsig_value = comsig
 	return_value = value
-	comsig_callback = callback
-	parent_moved_callback = move_callback
-	turf_callback = t_callback
 	whitelist_typecache = whitelist
 	blacklist_typecache = blacklist
 	protect_self = self
@@ -47,14 +41,7 @@
 			continue
 		RegisterSignal(A,  comsig_value, .proc/return_value)
 
-	parent_moved_callback?.Invoke(null, null, range_view_list, range_view_turf_list)
-
-/datum/component/area_of_effect/Destroy()
-	if(comsig_callback)
-		QDEL_NULL(comsig_callback)
-	if(parent_moved_callback)
-		QDEL_NULL(parent_moved_callback)
-	return ..()
+	SEND_SIGNAL(parent, COMSIG_AOE_RANGE_CALCULATED, null, null, range_view_list, range_view_turf_list)
 
 /datum/component/area_of_effect/proc/on_atom_entered(turf/T, atom/movable/entered, atom/oldloc)
 	if(entered == parent || (oldloc in range_view_turf_list))
@@ -104,7 +91,7 @@
 				continue
 			RegisterSignal(A,  comsig_value, .proc/return_value)
 	range_view_list = L
-	parent_moved_callback?.Invoke(old_diff, old_turf_diff, new_diff, new_turfs)
+	SEND_SIGNAL(parent, COMSIG_AOE_RANGE_CALCULATED, old_diff, old_turf_diff, new_diff, new_turfs)
 
 /datum/component/area_of_effect/proc/on_new_content(turf/T, atom/movable/A)
 	if((whitelist_typecache && !whitelist_typecache[A.type]) || (blacklist_typecache && blacklist_typecache[A.type]) || A == parent)
@@ -122,13 +109,11 @@
 	RegisterSignal(T, COMSIG_TURF_CHANGE, .proc/transfer_sigs)
 	RegisterSignal(T, COMSIG_ATOM_NEW_CONTENT, .proc/on_new_content)
 	range_view_turf_list += T
-	turf_callback?.Invoke(T)
+	SEND_SIGNAL(parent, COMSIG_AOE_TURF_CHANGED, T)
 
 /datum/component/area_of_effect/proc/return_value(atom/source)
-	if(!(comsig_callback?.Invoke(source)))
+	if(!(SEND_SIGNAL(parent, COMSIG_AOE_TRIGGERED, source) & AOE_PREVENT_TRIGGER))
 		return return_value
-
-
 
 /obj/structure/machinery/emp_protector
 	name = "\improper EMP dissipator"
@@ -137,11 +122,29 @@
 	icon_state = "shieldon"
 	anchored = TRUE
 	density = TRUE
+	var/obj/effect/overlay/tile_visual
 
 /obj/structure/machinery/emp_protector/ComponentInitialize()
 	. = ..()
+	tile_visual = new
+	tile_visual.icon = 'icons/effects/effects.dmi'
+	tile_visual.icon_state = "tile_shield"
+	tile_visual.color = "#0000FFAA" //Blue with 170 alpha.
+	RegisterSignal(src, COMSIG_AOE_RANGE_CALCULATED, .proc/apply_visual)
+	RegisterSignal(src, COMSIG_AOE_TURF_CHANGED, .proc/aoe_turf_change)
 	if(anchored)
 		AddComponent(/datum/component/area_of_effect, dist = 2, comsig = COMSIG_ATOM_EMP_ACT, value = EMP_PROTECT_CONTENTS|EMP_PROTECT_WIRES|EMP_PROTECT_SELF)
+
+/obj/structure/machinery/emp_protector/proc/apply_visual(datum/component/area_of_effect/source, list/old_targets, list/old_turfs, list/new_targets, list/new_turfs)
+	for(var/A in old_turfs)
+		var/turf/T = A
+		T.vis_contents -= tile_visual
+	for(var/A in new_turfs)
+		var/turf/T = A
+		T.vis_contents += tile_visual
+
+/obj/structure/machinery/emp_protector/proc/aoe_turf_change(datum/component/area_of_effect/source, turf/T)
+	T.vis_contents += tile_visual
 
 /obj/structure/machinery/emp_protector/examine(mob/user)
 	. = ..()
