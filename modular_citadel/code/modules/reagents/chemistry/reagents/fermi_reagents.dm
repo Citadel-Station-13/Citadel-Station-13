@@ -118,7 +118,7 @@
 				to_chat(M, "You find yourself unable to supress the desire to howl!")
 				M.emote("awoo")
 			if(prob(20))
-				var/list/seen = M.visible_atoms() - M //Sound and sight checkers
+				var/list/seen = M.fov_view() - M //Sound and sight checkers
 				for(var/victim in seen)
 					if(isanimal(victim) || !isliving(victim))
 						seen -= victim
@@ -139,7 +139,7 @@
 				to_chat(M, "You find yourself unable to supress the desire to howl!")
 				M.emote("awoo")
 			if(prob(5))
-				var/list/seen = M.visible_atoms() - M //Sound and sight checkers
+				var/list/seen = M.fov_view() - M //Sound and sight checkers
 				for(var/victim in seen)
 					if(isanimal(victim) || !isliving(victim))
 						seen -= victim
