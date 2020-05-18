@@ -465,6 +465,9 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["feature_insect_wings"]			>> features["insect_wings"]
 	S["feature_insect_fluff"]			>> features["insect_fluff"]
 	S["feature_insect_markings"]		>> features["insect_markings"]
+	S["feature_horns_color"]			>> features["horns_color"]
+	S["feature_wings_color"]			>> features["wings_color"]
+
 
 	//Custom names
 	for(var/custom_name_id in GLOB.preferences_custom_names)
@@ -716,8 +719,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["shirt_color"]				, shirt_color)
 	WRITE_FILE(S["socks"]					, socks)
 	WRITE_FILE(S["socks_color"]				, socks_color)
-	WRITE_FILE(S["horns_color"]				, features["horns_color"])
-	WRITE_FILE(S["wings_color"]				, features["wings_color"])
 	WRITE_FILE(S["backbag"]					, backbag)
 	WRITE_FILE(S["jumpsuit_style"]			, jumpsuit_style)
 	WRITE_FILE(S["uplink_loc"]				, uplink_spawn_loc)
@@ -733,6 +734,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["feature_lizard_body_markings"]	, features["body_markings"])
 	WRITE_FILE(S["feature_lizard_legs"]				, features["legs"])
 	WRITE_FILE(S["feature_deco_wings"]				, features["deco_wings"])
+	WRITE_FILE(S["feature_horns_color"]				, features["horns_color"])
+	WRITE_FILE(S["feature_wings_color"]				, features["wings_color"])
 	WRITE_FILE(S["feature_insect_wings"]			, features["insect_wings"])
 	WRITE_FILE(S["feature_insect_fluff"]			, features["insect_fluff"])
 	WRITE_FILE(S["feature_insect_markings"]			, features["insect_markings"])
