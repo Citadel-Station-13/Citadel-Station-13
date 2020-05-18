@@ -32,7 +32,7 @@
 		BB.def_zone = user.zone_selected
 	BB.suppressed = quiet
 	
-	if(istype(fired_from, /obj/item/gun))
+	if(isgun(fired_from))
 		var/obj/item/gun/G = fired_from
 		BB.damage *= G.projectile_damage_multiplier
 
