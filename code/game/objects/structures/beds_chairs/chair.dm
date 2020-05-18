@@ -108,7 +108,9 @@
 		if(!istype(poordude))
 			return TRUE
 		user.visible_message("<span class='notice'>[user] pulls [src] out from under [poordude].</span>", "<span class='notice'>You pull [src] out from under [poordude].</span>")
-		var/C = new item_chair(loc)
+		var/obj/item/chair/C = new item_chair(loc)
+		C.set_custom_materials(custom_materials)
+		TransferComponents(C)
 		user.put_in_hands(C)
 		poordude.DefaultCombatKnockdown(20)//rip in peace
 		user.adjustStaminaLoss(5)

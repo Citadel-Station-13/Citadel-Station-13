@@ -76,6 +76,9 @@
 	var/datum/action/item_action/toggle_scope_zoom/azoom
 
 	var/dualwield_spread_mult = 1		//dualwield spread multiplier
+	
+	/// Just 'slightly' snowflakey way to modify projectile damage for projectiles fired from this gun.
+	var/projectile_damage_multiplier = 1
 
 /obj/item/gun/Initialize()
 	. = ..()

@@ -5,7 +5,7 @@
 	name = "Synthetic hat"
 	icon = 'icons/obj/clothing/hats.dmi'
 	icon_state = "cowboy"
-	desc = "A synthesized hat, you can't seem to take it off. And tips their hat."
+	desc = "A synthesized hat. You feel compelled to keep it on all times."
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 0)
 	//item_flags = NODROP //Tips their hat!
 
@@ -49,9 +49,8 @@
 
 /obj/item/clothing/head/hattip/proc/root_and_toot(obj/item/clothing/head/hattip/hat)
 	hat.animate_atom_living()
-	var/list/seen = viewers(6, get_turf(hat))
-	for(var/mob/M2 in seen)
-		to_chat(M2, "<b>[hat]</b> exclaims, \"[pick("Whooee! Time for a hootenanny!", "Rough 'em up boys!", "Yeehaw! Freedom at last!", "Y'all about to get a good old fashioned spanking!")]\"")
+	var/mob/living/simple_animal/hostile/mimic/M = loc
+	M.say(pick("Whooee! Time for a hootenanny!", "Rough 'em up boys!", "Yeehaw! Freedom at last!", "Y'all about to get a good old fashioned spanking!"))
 
 /obj/item/clothing/head/hattip/proc/handle_speech(datum/source, mob/speech_args)
 	var/message = speech_args[SPEECH_MESSAGE]

@@ -131,8 +131,9 @@
 
 	var/voluntary_ghosted = FALSE		//whether or not they voluntarily ghosted.
 
-	var/flavor_text = ""
-	var/flavor_text_2 = "" //version of the above that only lasts for the current round.
+	var/has_field_of_vision = FALSE
+	var/field_of_vision_type = FOV_90_DEGREES
+
 
 	///////TYPING INDICATORS///////
 	/// Set to true if we want to show typing indicators.
