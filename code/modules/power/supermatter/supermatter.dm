@@ -433,7 +433,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 			env.merge(removed)
 			air_update_turf()
 
-	for(var/mob/living/carbon/human/l in get_actual_viewers(HALLUCINATION_RANGE(power), src)) // If they can see it without mesons on.  Bad on them.
+	for(var/mob/living/carbon/human/l in fov_viewers(HALLUCINATION_RANGE(power), src)) // If they can see it without mesons on.  Bad on them.
 		if(!istype(l.glasses, /obj/item/clothing/glasses/meson))
 			var/D = sqrt(1 / max(1, get_dist(l, src)))
 			l.hallucination += power * config_hallucination_power * D
@@ -666,7 +666,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 
 	//Some poor sod got eaten, go ahead and irradiate people nearby.
 	radiation_pulse(src, 3000, 2, TRUE)
-	var/list/viewers = get_actual_viewers(world.view, src)
+	var/list/viewers = fov_viewers(world.view, src)
 	for(var/mob/living/L in range(10))
 		investigate_log("has irradiated [key_name(L)] after consuming [AM].", INVESTIGATE_SUPERMATTER)
 		if(L in viewers)

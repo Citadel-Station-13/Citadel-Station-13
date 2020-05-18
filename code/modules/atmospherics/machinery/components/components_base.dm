@@ -32,7 +32,7 @@
 	var/turf/T = loc
 	if(level == 2 || (istype(T) && !T.intact))
 		showpipe = TRUE
-		plane = GAME_PLANE
+		plane = ABOVE_WALL_PLANE
 	else
 		showpipe = FALSE
 		plane = FLOOR_PLANE

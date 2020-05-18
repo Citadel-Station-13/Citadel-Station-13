@@ -42,6 +42,7 @@
 #define BLACKNESS_PLANE 0 //To keep from conflicts with SEE_BLACKNESS internals
 #define BLACKNESS_PLANE_RENDER_TARGET "BLACKNESS_PLANE"
 
+///Layers most often used by atoms of plane lower than GAME_PLANE
 #define SPACE_LAYER 1.8
 //#define TURF_LAYER 2 //For easy recordkeeping; this is a byond define
 #define MID_TURF_LAYER 2.02
@@ -61,11 +62,12 @@
 #define GAS_PIPE_VISIBLE_LAYER 2.47
 #define GAS_FILTER_LAYER 2.48
 #define GAS_PUMP_LAYER 2.49
+
 #define LOW_OBJ_LAYER 2.5
 #define LOW_SIGIL_LAYER 2.52
 #define SIGIL_LAYER 2.54
 #define HIGH_SIGIL_LAYER 2.56
-
+///Layers most often used by atoms of plane equal or higher than GAME_PLANE
 #define BELOW_OPEN_DOOR_LAYER 2.6
 #define BLASTDOOR_LAYER 2.65
 #define OPEN_DOOR_LAYER 2.7
