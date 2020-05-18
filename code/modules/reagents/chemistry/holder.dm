@@ -535,7 +535,7 @@
 					add_reagent(P, cached_results[P]*multiplier, null, chem_temp)
 
 
-				var/list/seen = get_actual_viewers(4, get_turf(my_atom))//Sound and sight checkers
+				var/list/seen = fov_viewers(4, get_turf(my_atom))//Sound and sight checkers
 				var/iconhtml = icon2html(cached_my_atom, seen)
 				if(cached_my_atom)
 					if(!ismob(cached_my_atom)) // No bubbling mobs

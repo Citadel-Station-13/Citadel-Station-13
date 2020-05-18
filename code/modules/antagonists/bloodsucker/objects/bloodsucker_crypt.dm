@@ -492,7 +492,7 @@
 /obj/structure/bloodsucker/candelabrum/process()
 	if(!lit)
 		return
-	for(var/mob/living/carbon/human/H in get_actual_viewers(7, src))
+	for(var/mob/living/carbon/human/H in fov_viewers(7, src))
 		var/datum/antagonist/vassal/T = H.mind.has_antag_datum(ANTAG_DATUM_VASSAL)
 		if(AmBloodsucker(H) || T) //We dont want vassals or vampires affected by this
 			return

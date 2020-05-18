@@ -250,13 +250,13 @@
 		processing += A.contents
 
 //viewers() but with a signal, for blacklisting.
-/proc/get_actual_viewers(depth = world.view, atom/center)
+/proc/fov_viewers(depth = world.view, atom/center)
 	if(!center)
 		return
 	. = viewers(depth, center)
 	for(var/k in .)
 		var/mob/M = k
-		SEND_SIGNAL(M, COMSIG_MOB_IS_VIEWER, center, depth, .)
+		SEND_SIGNAL(M, COMSIG_MOB_FOV_VIEWER, center, depth, .)
 
 /proc/get_mobs_in_radio_ranges(list/obj/item/radio/radios)
 	. = list()
