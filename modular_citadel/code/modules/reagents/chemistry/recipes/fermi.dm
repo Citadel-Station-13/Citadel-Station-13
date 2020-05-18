@@ -172,9 +172,7 @@
 		S.rabid = 1//Make them an angery boi
 		S.color = "#810010"
 	my_atom.reagents.clear_reagents()
-	var/list/seen = viewers(8, get_turf(my_atom))
-	for(var/mob/M in seen)
-		to_chat(M, "<span class='warning'>The cells clump up into a horrifying tumour!</span>")
+	my_atom.visible_message("<span class='warning'>An horrifying tumoural mass forms in [my_atom]!</span>")
 
 /datum/chemical_reaction/fermi/breast_enlarger
 	name = "Sucubus milk"
@@ -211,9 +209,7 @@
 
 /datum/chemical_reaction/fermi/breast_enlarger/FermiExplode(datum/reagents, var/atom/my_atom, volume, temp, pH)
 	var/obj/item/organ/genital/breasts/B = new /obj/item/organ/genital/breasts(get_turf(my_atom))
-	var/list/seen = viewers(8, get_turf(my_atom))
-	for(var/mob/M in seen)
-		to_chat(M, "<span class='warning'>The reaction suddenly condenses, creating a pair of breasts!</b></span>")
+	my_atom.visible_message("<span class='warning'>The reaction suddenly condenses, creating a pair of breasts!</b></span>")
 	var/datum/reagent/fermi/breast_enlarger/BE = locate(/datum/reagent/fermi/breast_enlarger) in my_atom.reagents.reagent_list
 	B.size = ((BE.volume * BE.purity) / 10) //half as effective.
 	my_atom.reagents.clear_reagents()
@@ -243,9 +239,7 @@
 
 /datum/chemical_reaction/fermi/penis_enlarger/FermiExplode(datum/reagents, var/atom/my_atom, volume, temp, pH)
 	var/obj/item/organ/genital/penis/P = new /obj/item/organ/genital/penis(get_turf(my_atom))
-	var/list/seen = viewers(8, get_turf(my_atom))
-	for(var/mob/M in seen)
-		to_chat(M, "<span class='warning'>The reaction suddenly condenses, creating a penis!</b></span>")
+	my_atom.visible_message("<span class='warning'>The reaction suddenly condenses, creating a penis!</b></span>")
 	var/datum/reagent/fermi/penis_enlarger/PE = locate(/datum/reagent/fermi/penis_enlarger) in my_atom.reagents.reagent_list
 	P.length = ((PE.volume * PE.purity) / 10)//half as effective.
 	my_atom.reagents.clear_reagents()
@@ -383,9 +377,7 @@
 	for(var/i in 1 to amount_to_spawn)
 		var/obj/item/clothing/head/hattip/hat = new /obj/item/clothing/head/hattip(get_turf(my_atom))
 		hat.animate_atom_living()
-	var/list/seen = viewers(8, get_turf(my_atom))
-	for(var/mob/M in seen)
-		to_chat(M, "<span class='warning'>The [my_atom] makes an off sounding pop, as a hat suddenly climbs out of it!</b></span>")
+	my_atom.visible_message("<span class='warning'>The [my_atom] makes an off sounding pop, as a hat suddenly climbs out of it!</b></span>")
 	my_atom.reagents.clear_reagents()
 
 /datum/chemical_reaction/fermi/furranium
@@ -543,9 +535,7 @@
 
 /datum/chemical_reaction/fermi/secretcatchem/FermiExplode(datum/reagents, var/atom/my_atom, volume, temp, pH)
 	var/mob/living/simple_animal/pet/cat/custom_cat/catto = new(get_turf(my_atom))
-	var/list/seen = viewers(8, get_turf(my_atom))
-	for(var/mob/M in seen)
-		to_chat(M, "<span class='warning'>The reaction suddenly gives out a meow, condensing into a chemcat!</b></span>")//meow!
+	my_atom.visible_message("<span class='warning'>The reaction suddenly gives out a meow, condensing into a chemcat!</b></span>")//meow!
 	playsound(get_turf(my_atom), 'modular_citadel/sound/voice/merowr.ogg', 50, 1, -1)
 	catto.name = "Chemcat"
 	catto.desc = "A cute chem cat, created by a lot of compicated and confusing chemistry!"

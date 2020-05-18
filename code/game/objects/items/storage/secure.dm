@@ -105,10 +105,7 @@
 				if (length(code) > 5)
 					code = "ERROR"
 		add_fingerprint(usr)
-		for(var/mob/M in viewers(1, loc))
-			if ((M.client && M.machine == src))
-				attack_self(M)
-			return
+		attack_self(usr)
 	return
 
 
@@ -158,6 +155,7 @@
 /obj/item/storage/secure/safe
 	name = "secure safe"
 	icon = 'icons/obj/storage.dmi'
+	plane = ABOVE_WALL_PLANE
 	icon_state = "safe"
 	icon_opened = "safe0"
 	icon_locking = "safeb"

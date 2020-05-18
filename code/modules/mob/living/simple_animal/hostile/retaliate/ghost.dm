@@ -32,6 +32,7 @@
 	pressure_resistance = 300
 	gold_core_spawnable = NO_SPAWN //too spooky for science
 	blood_volume = 0
+	has_field_of_vision = FALSE
 	var/ghost_hair_style
 	var/ghost_hair_color
 	var/mutable_appearance/ghost_hair
