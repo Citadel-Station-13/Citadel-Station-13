@@ -17,6 +17,9 @@
 	force = 5
 	item_flags = NEEDS_PERMIT | NO_ATTACK_CHAIN_SOFT_STAMCRIT
 	attack_verb = list("struck", "hit", "bashed")
+	
+	/// See __DEFINES/flags/guns.dm
+	var/gun_flags = NONE
 
 	var/fire_sound = "gunshot"
 	var/suppressed = null					//whether or not a message is displayed when fired
@@ -212,15 +215,17 @@
 	var/loop_counter = 0
 
 	bonus_spread += getinaccuracy(user) //CIT CHANGE - adds bonus spread while not aiming
-	if(ishuman(user) && user.a_intent == INTENT_HARM)
-		var/mob/living/carbon/human/H = user
-		for(var/obj/item/gun/G in H.held_items)
-			if(G == src || G.weapon_weight >= WEAPON_MEDIUM)
-				continue
-			else if(G.can_trigger_gun(user))
-				bonus_spread += 24 * G.weapon_weight * G.dualwield_spread_mult
-				loop_counter++
-				addtimer(CALLBACK(G, /obj/item/gun.proc/process_fire, target, user, TRUE, params, null, bonus_spread), loop_counter)
+	
+	if(!(gun_flags & GUN_FLAG_DUAL_WIELDING_EXCLUDED))
+		if(ishuman(user) && user.a_intent == INTENT_HARM)
+			var/mob/living/carbon/human/H = user
+			for(var/obj/item/gun/G in H.held_items)
+				if((G == src) || (G.weapon_weight >= WEAPON_MEDIUM) || (G.gun_flags & GUN_FLAG_DUAL_WIELDING_EXCLUDED))
+					continue
+				else if(G.can_trigger_gun(user))
+					bonus_spread += 24 * G.weapon_weight * G.dualwield_spread_mult
+					loop_counter++
+					addtimer(CALLBACK(G, /obj/item/gun.proc/process_fire, target, user, TRUE, params, null, bonus_spread), loop_counter)
 
 	process_fire(target, user, TRUE, params, null, bonus_spread)
 
