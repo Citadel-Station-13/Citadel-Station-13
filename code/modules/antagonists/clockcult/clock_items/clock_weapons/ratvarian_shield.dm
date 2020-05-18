@@ -65,8 +65,6 @@ obj/item/shield/riot/ratvarian/proc/calc_bash_mult()
 	new /obj/item/clockwork/alloy_shards/large(get_turf(src))
 
 /obj/item/shield/riot/ratvarian/user_shieldbash(mob/living/user, atom/target, harmful)
-
-
 	if(!harmful || !is_servant_of_ratvar(user)) // No fun for non-clockies, but you can keep the normal bashes. Until you try to block with it.
 		shieldbash_knockback = initial(shieldbash_knockback)
 		shieldbash_brutedamage = initial(shieldbash_brutedamage) //Prevention for funky stuff that might happen otherwise
