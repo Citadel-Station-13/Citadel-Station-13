@@ -234,37 +234,43 @@
 		var/obj/item/organ/O = X
 		O.emp_act(severity)
 
+///Adds to the parent by also adding functionality to propagate shocks through pulling and doing some fluff effects.
 /mob/living/carbon/electrocute_act(shock_damage, source, siemens_coeff = 1, flags = NONE)
-	if((flags & SHOCK_TESLA) && (flags_1 & TESLA_IGNORE_1))
-		return FALSE
-	if(HAS_TRAIT(src, TRAIT_SHOCKIMMUNE))
-		return FALSE
-	shock_damage *= siemens_coeff
-	if(dna && dna.species)
-		shock_damage *= dna.species.siemens_coeff
-	if(shock_damage < 1)
-		return 0
-	if(reagents.has_reagent(/datum/reagent/teslium))
-		shock_damage *= 1.5 //If the mob has teslium in their body, shocks are 50% more damaging!
-	if((flags & SHOCK_ILLUSION))
-		adjustStaminaLoss(shock_damage)
-	else
-		take_overall_damage(0,shock_damage)
-	visible_message(
-		"<span class='danger'>[src] was shocked by \the [source]!</span>", \
-		"<span class='userdanger'>You feel a powerful shock coursing through your body!</span>", \
-		"<span class='italics'>You hear a heavy electrical crack.</span>" \
-		)
-	jitteriness += 1000 //High numbers for violent convulsions
+	. = ..()
+	if(!.)
+		return
+	//Propagation through pulling, fireman carry
+	if(!(flags & SHOCK_ILLUSION))
+		var/list/shocking_queue = list()
+		if(iscarbon(pulling) && source != pulling)
+			shocking_queue += pulling
+		if(iscarbon(pulledby) && source != pulledby)
+			shocking_queue += pulledby
+		if(iscarbon(buckled) && source != buckled)
+			shocking_queue += buckled
+		for(var/mob/living/carbon/carried in buckled_mobs)
+			if(source != carried)
+				shocking_queue += carried
+		//Found our victims, now lets shock them all
+		for(var/victim in shocking_queue)
+			var/mob/living/carbon/C = victim
+			C.electrocute_act(shock_damage*0.75, src, 1, flags)
+	//Stun
+	var/should_stun = (!(flags & SHOCK_TESLA) || siemens_coeff > 0.5) && !(flags & SHOCK_NOSTUN)
+	if(should_stun)
+		Stun(40)
+	//Jitter and other fluff.
+	jitteriness += 1000
 	do_jitter_animation(jitteriness)
 	stuttering += 2
-	if((!(flags & SHOCK_TESLA) || siemens_coeff > 0.5) && !(flags & SHOCK_NOSTUN))
-		Stun(40)
-	spawn(20)
-		jitteriness = max(jitteriness - 990, 10) //Still jittery, but vastly less
-		if((!(flags & SHOCK_TESLA) || siemens_coeff > 0.5) && !(flags & SHOCK_NOSTUN))
-			DefaultCombatKnockdown(60)
+	addtimer(CALLBACK(src, .proc/secondary_shock, should_stun), 20)
 	return shock_damage
+
+///Called slightly after electrocute act to reduce jittering and apply a secondary stun.
+/mob/living/carbon/proc/secondary_shock(should_stun)
+	jitteriness = max(jitteriness - 990, 10)
+	if(should_stun)
+		DefaultCombatKnockdown(60)
 
 /mob/living/carbon/proc/help_shake_act(mob/living/carbon/M)
 	if(on_fire)
@@ -433,3 +439,17 @@
 	var/obj/item/organ/ears/ears = getorganslot(ORGAN_SLOT_EARS)
 	if(istype(ears) && !ears.deaf)
 		. = TRUE
+
+/mob/living/carbon/getBruteLoss_nonProsthetic()
+	var/amount = 0
+	for(var/obj/item/bodypart/BP in bodyparts)
+		if (BP.status < 2)
+			amount += BP.brute_dam
+	return amount
+
+/mob/living/carbon/getFireLoss_nonProsthetic()
+	var/amount = 0
+	for(var/obj/item/bodypart/BP in bodyparts)
+		if (BP.status < 2)
+			amount += BP.burn_dam
+	return amount

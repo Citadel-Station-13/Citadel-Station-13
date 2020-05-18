@@ -27,3 +27,4 @@
 
 	faction = list("spooky")
 	del_on_death = 1
+	field_of_vision_type = FOV_270_DEGREES //Obviously, it's one eyeball.

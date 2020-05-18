@@ -34,7 +34,7 @@ GLOBAL_LIST_EMPTY(network_holopads)
 	desc = "It's a floor-mounted device for projecting holographic images."
 	icon_state = "holopad0"
 	layer = LOW_OBJ_LAYER
-	plane = FLOOR_PLANE
+	plane = ABOVE_WALL_PLANE
 	flags_1 = HEAR_1
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 5

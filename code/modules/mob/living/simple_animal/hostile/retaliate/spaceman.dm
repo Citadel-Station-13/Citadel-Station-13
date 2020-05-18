@@ -24,6 +24,7 @@
 	environment_smash = ENVIRONMENT_SMASH_NONE
 	del_on_death = 0
 	footstep_type = FOOTSTEP_MOB_SHOE
+	has_field_of_vision = FALSE //Legacy gameplay experience. Also they only have one dir visually.
 
 /mob/living/simple_animal/hostile/retaliate/nanotrasenpeace //this should be in a different file
 	name = "Nanotrasen Private Security Officer"
