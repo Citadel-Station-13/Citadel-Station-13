@@ -81,6 +81,9 @@
 		H.forceMove(P)
 		if(P.canclank == TRUE || (P.canclank == IFFY && P.dpdir != 3 && P.dpdir != 12))
 			playsound(P, H.hasmob ? "clang" : "clangsmall", H.hasmob ? 50 : 25, 1)
+			if(H.hasmob && prob(33))
+				for(var/mob/living/L in H.contents)
+					L.take_bodypart_damage(rand(1, 3))
 		return P
 	else			// if wasn't a pipe, then they're now in our turf
 		H.forceMove(get_turf(src))
