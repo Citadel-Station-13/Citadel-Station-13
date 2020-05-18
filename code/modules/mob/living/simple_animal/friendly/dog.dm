@@ -15,7 +15,7 @@
 	turns_per_move = 10
 	var/held_icon = "corgi"
 
-	do_footstep = TRUE
+	footstep_type = FOOTSTEP_MOB_CLAW
 
 /mob/living/simple_animal/pet/dog/ComponentInitialize()
 	. = ..()
