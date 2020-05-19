@@ -116,7 +116,6 @@ GLOBAL_LIST_INIT(cargo_shuttle_leave_behind_typecache, typecacheof(list(
 		if(!empty_turfs.len)
 			break
 
-		SSshuttle.points -= SO.pack.cost
 		SSshuttle.supply.callTime += SO.pack.loading_time
 		var/price = SO.pack.cost
 		var/datum/bank_account/D
