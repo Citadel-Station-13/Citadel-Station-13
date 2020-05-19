@@ -2157,6 +2157,7 @@
 #include "code\modules\keybindings\keybind\mob.dm"
 #include "code\modules\keybindings\keybind\movement.dm"
 #include "code\modules\keybindings\keybind\robot.dm"
+#include "code\modules\keybindings\keybind\targeting.dm"
 #include "code\modules\language\aphasia.dm"
 #include "code\modules\language\beachbum.dm"
 #include "code\modules\language\codespeak.dm"
