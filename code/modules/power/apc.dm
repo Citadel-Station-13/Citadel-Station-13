@@ -849,11 +849,6 @@
 	if((stat & MAINT) && !opened) //no board; no interface
 		return
 
-/obj/machinery/power/apc/oui_canview(mob/user)
-	if(area.hasSiliconAccessInArea(user)) //some APCs are mapped outside their assigned area, so this is required.
-		return TRUE
-	return ..()
-
 /obj/machinery/power/apc/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
 										datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
