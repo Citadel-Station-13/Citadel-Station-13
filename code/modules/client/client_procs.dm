@@ -262,6 +262,7 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 
 	if(prefs)
 		prefs.parent = src
+		update_movement_keys()
 	else
 		prefs = new /datum/preferences(src)
 		GLOB.preferences_datums[ckey] = prefs

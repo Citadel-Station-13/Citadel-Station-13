@@ -67,3 +67,13 @@
 	var/mob/living/L = user.mob
 	L.default_toggle_sprint(FALSE)
 	return TRUE
+
+/datum/keybinding/living/toggle_resting
+	hotkey_keys = list("V")
+	name = "toggle_resting"
+	full_name = "Toggle Resting"
+	description = "Toggles whether or not you are intentionally laying down."
+
+/datum/keybinding/living/toggle_resting/down(client/user)
+	var/mob/living/L = user.mob
+	L.lay_down()
