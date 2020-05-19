@@ -412,21 +412,26 @@
 	take_bodypart_damage(acidpwr * min(1, acid_volume * 0.1))
 	return 1
 
+///As the name suggests, this should be called to apply electric shocks.
 /mob/living/proc/electrocute_act(shock_damage, source, siemens_coeff = 1, flags = NONE)
 	SEND_SIGNAL(src, COMSIG_LIVING_ELECTROCUTE_ACT, shock_damage, source, siemens_coeff, flags)
-	if((flags & SHOCK_TESLA) && (flags_1 & TESLA_IGNORE_1))
+	shock_damage *= siemens_coeff
+	if((flags & SHOCK_TESLA) && HAS_TRAIT(src, TRAIT_TESLA_SHOCKIMMUNE))
 		return FALSE
 	if(HAS_TRAIT(src, TRAIT_SHOCKIMMUNE))
 		return FALSE
-	if(shock_damage > 0)
-		if(!(flags & SHOCK_ILLUSION))
-			adjustFireLoss(shock_damage)
-		visible_message(
-			"<span class='danger'>[src] was shocked by \the [source]!</span>", \
-			"<span class='userdanger'>You feel a powerful shock coursing through your body!</span>", \
-			"<span class='italics'>You hear a heavy electrical crack.</span>" \
-		)
-		return shock_damage
+	if(shock_damage < 1)
+		return FALSE
+	if(!(flags & SHOCK_ILLUSION))
+		adjustFireLoss(shock_damage)
+	else
+		adjustStaminaLoss(shock_damage)
+	visible_message(
+		"<span class='danger'>[src] was shocked by \the [source]!</span>", \
+		"<span class='userdanger'>You feel a powerful shock coursing through your body!</span>", \
+		"<span class='hear'>You hear a heavy electrical crack.</span>" \
+	)
+	return shock_damage
 
 /mob/living/emp_act(severity)
 	. = ..()
@@ -509,7 +514,6 @@
 
 /mob/living/proc/getBruteLoss_nonProsthetic()
 	return getBruteLoss()
-	
+
 /mob/living/proc/getFireLoss_nonProsthetic()
 	return getFireLoss()
-	
