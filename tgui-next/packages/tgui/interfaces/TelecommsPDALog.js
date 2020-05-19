@@ -22,24 +22,40 @@ export const TelePDALog = props => {
     'message': 'This is a test, please ignore',
   };
   const prioritycolorMap = {
-    'Normal':'warning',
-    'High':'bad',
-    'Extreme':'bad',
+    'Normal': 'warning',
+    'High': 'bad',
+    'Extreme': 'bad',
   };
   const valid = (selected && selected.status && authenticated);
 
   if (data.hacking) {
     return ( // should have used en -> jp unicode -> other encoding method->utf8
-      <Fragment>
-        <NoticeBox>
-          <b><h3>{"INTRN@L ACfES VIOL�TIa█ DEtE₡TED!"}</h3></b>
-          <i>
+      <NoticeBox>
+        <b><h3>{"INTRN@L ACfES VIOL�TIa█ DEtE₡TED!"}</h3></b>
+        <i>
           {"Ree3ARcinG A█ BAaKUP RdST�RE PbINT [0xcff32ca] - PLfASE aAIT"}
-          </i>
-          <br />
-          {data.hacking_msg}
-        </NoticeBox>
-      </Fragment> // ai gets to see normaltext while people see base64
+        </i>
+        <br />
+        {data.borg ? (
+          <Fragment>
+            Brute-forcing for server key. <br />
+            It will take 20 secondsfor every character that the password has.
+            <br />
+            In the meantime, this console can reveal your
+            true intentions if you let someone access it.
+            Make sure no humans enter the room during that time.
+          </Fragment>
+        ) : (
+          <Fragment>
+            QnJ1dGUtZm9yY2luZyBmb3Igc2VydmVyIGtleS48YnI+IEl0IHdpbG<br />
+            wgdGFrZSAyMCBzZWNvbmRzIGZvciBldmVyeSBjaGFyYWN0ZXIgdGhh<br />
+            dCB0aGUgcGFzc3dvcmQgaGFzLiBJbiB0aGUgbWVhbnRpbWUsIHRoaX<br />
+            MgY29uc29sZSBjYW4gcmV2ZWFsIHlvdXIgdHJ1ZSBpbnRlbnRpb25z<br />
+            IGlmIHlvdSBsZXQgc29tZW9uZSBhY2Nlc3MgaXQuIE1ha2Ugc3VyZS<br />
+            BubyBodW1hbnMgZW50ZXIgdGhlIHJvb20gZHVyaW5nIHRoYXQgdGltZS4=<br />
+          </Fragment>
+        )}
+      </NoticeBox>
     );
   }
 
@@ -382,14 +398,14 @@ export const TelePDALog = props => {
               </LabeledList.Item>
               <LabeledList.Item label="Message">
                 <Input
-                    value={fake_message.message}
-                    width="500px"
-                    height="150px"
-                    maxLength={2000}
-                    onChange={(e, value) => act('fake', {
-                      'message': value,
-                    })}
-                  />
+                  value={fake_message.message}
+                  width="500px"
+                  height="150px"
+                  maxLength={2000}
+                  onChange={(e, value) => act('fake', {
+                    'message': value,
+                  })}
+                />
               </LabeledList.Item>
             </LabeledList>
           </Section>

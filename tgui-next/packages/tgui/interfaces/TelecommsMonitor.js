@@ -179,15 +179,13 @@ export const Telemonitor = props => {
                 <Box>
                   {operational && selected.freq_listening.map(thing => {
                     return (
-                      <Fragment>
-                        {(thing in freqcolorMap) ? (
-                          <span style={`color: ${freqcolorMap[thing]}`}>
-                            {`${thing} `}
-                          </span>
-                        ) : (
-                          `${thing} `
-                        )}
-                      </Fragment>
+                      (thing in freqcolorMap) ? (
+                        <span style={`color: ${freqcolorMap[thing]}`}>
+                          {`${thing} `}
+                        </span>
+                      ) : (
+                        `${thing} `
+                      )
                     );
                   })}
                 </Box>
