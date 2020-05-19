@@ -21,7 +21,6 @@
 	resistance_flags = FLAMMABLE
 	max_integrity = 50
 	dog_fashion = /datum/dog_fashion/head
-	/*
 
 	var/info		//What's actually written on the paper.
 	var/info_links	//A different version of the paper which includes html links at fields and EOF
@@ -43,11 +42,11 @@
 		if(!istype(G) || G.transfer_prints)
 			H.reagents.add_reagent(contact_poison,contact_poison_volume)
 			contact_poison = null
-	ui.check_view_all()
+	//ui.check_view_all()
 	..()
 
 /obj/item/paper/dropped(mob/user)
-	ui.check_view(user)
+	//ui.check_view(user)
 	return ..()
 
 
@@ -55,11 +54,11 @@
 	. = ..()
 	pixel_y = rand(-8, 8)
 	pixel_x = rand(-9, 9)
-	ui = new /datum/oracle_ui(src, 420, 600, get_asset_datum(/datum/asset/spritesheet/simple/paper))
-	ui.can_resize = FALSE
+	//ui = new /datum/oracle_ui(src, 420, 600, get_asset_datum(/datum/asset/spritesheet/simple/paper))
+	//ui.can_resize = FALSE
 	update_icon()
 	updateinfolinks()
-
+/*
 /obj/item/paper/oui_getcontent(mob/target)
 	if(!target.is_literate() || force_stars)
 		force_stars = FALSE
@@ -78,7 +77,7 @@
 	if(iscyborg(target))
 		return get_dist(src, target) < 2
 	return ..()
-
+*/
 /obj/item/paper/update_icon_state()
 	if(resistance_flags & ON_FIRE)
 		icon_state = "paper_onfire"
@@ -92,10 +91,6 @@
 /obj/item/paper/examine(mob/user)
 	. = ..()
 	. += "<span class='notice'>Alt-click to fold it.</span>"
-	if(oui_canview(user))
-		ui.render(user)
-	else
-		. += "<span class='warning'>You're too far away to read it!</span>"
 
 /obj/item/paper/proc/show_content(mob/user)
 	user.examinate(src)
@@ -118,7 +113,7 @@
 	if((loc == usr && usr.stat == CONSCIOUS))
 		name = "paper[(n_name ? text("- '[n_name]'") : null)]"
 	add_fingerprint(usr)
-	ui.render_all()
+	//ui.render_all()
 
 /obj/item/paper/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] scratches a grid on [user.p_their()] wrist with the paper! It looks like [user.p_theyre()] trying to commit sudoku...</span>")
@@ -184,7 +179,7 @@
 	for(var/i in 1 to min(fields, 15))
 		addtofield(i, "<font face=\"[PEN_FONT]\"><A href='?src=[REF(src)];write=[i]'>write</A></font>", 1)
 	info_links = info_links + "<font face=\"[PEN_FONT]\"><A href='?src=[REF(src)];write=end'>write</A></font>"
-	ui.render_all()
+	//ui.render_all()
 
 
 /obj/item/paper/proc/clearpaper()
@@ -324,7 +319,7 @@
 		add_overlay(stampoverlay)
 
 		to_chat(user, "<span class='notice'>You stamp the paper with your rubber stamp.</span>")
-		ui.render_all()
+		//ui.render_all()
 
 	if(P.get_temperature())
 		if(HAS_TRAIT(user, TRAIT_CLUMSY) && prob(10))
@@ -385,5 +380,3 @@
 
 /obj/item/paper/crumpled/bloody
 	icon_state = "scrap_bloodied"
-
-*/
