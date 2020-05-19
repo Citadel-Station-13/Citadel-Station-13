@@ -27,7 +27,8 @@
 #define DEF_SKILL_GAIN					1
 #define SKILL_GAIN_SURGERY_PER_STEP		0.25
 
-#define SKILL_AFFINITY_MOOD_BONUS 		1.25
+//An extra point for each few seconds of delay when using a tool. Before the multiplier.
+#define SKILL_GAIN_DELAY_DIVISOR		3 SECONDS
 
 ///Items skill_traits and other defines
 #define SKILL_USE_TOOL			"use_tool"

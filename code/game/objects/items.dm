@@ -831,11 +831,13 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	if(delay >= MIN_TOOL_SOUND_DELAY)
 		play_tool_sound(target, volume)
 
+
 	if(user.mind && used_skills && skill_gain_mult)
+		var/gain = skill_gain + delay/SKILL_GAIN_DELAY_DIVISOR
 		for(var/skill in used_skills)
 			if(!(SKILL_TRAINING_TOOL in used_skills[skill]))
 				continue
-			user.mind.auto_gain_experience(skill, skill_gain*skill_gain_mult, GET_STANDARD_LVL(max_level))
+			user.mind.auto_gain_experience(skill, gain*skill_gain_mult, GET_STANDARD_LVL(max_level))
 
 	return TRUE
 
