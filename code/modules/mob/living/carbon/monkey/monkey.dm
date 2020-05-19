@@ -45,6 +45,7 @@
 /mob/living/carbon/monkey/ComponentInitialize()
 	. = ..()
 	AddElement(/datum/element/mob_holder, worn_state = "monkey", inv_slots = ITEM_SLOT_HEAD)
+	AddComponent(/datum/component/footstep, FOOTSTEP_MOB_BAREFOOT, 1, 2)
 
 
 /mob/living/carbon/monkey/Destroy()
@@ -74,9 +75,10 @@
 /mob/living/carbon/monkey/updatehealth()
 	. = ..()
 	var/slow = 0
-	var/health_deficiency = (100 - health)
-	if(health_deficiency >= 45)
-		slow += (health_deficiency / 25)
+	if(!HAS_TRAIT(src, TRAIT_IGNOREDAMAGESLOWDOWN))
+		var/health_deficiency = (maxHealth - health)
+		if(health_deficiency >= 45)
+			slow += (health_deficiency / 25)
 	add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/monkey_health_speedmod, TRUE, slow)
 
 /mob/living/carbon/monkey/adjust_bodytemperature(amount)

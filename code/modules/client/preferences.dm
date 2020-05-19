@@ -1,11 +1,6 @@
-		/* CAUTION! CAUTION! CAUTION! CAUTION! CAUTION! *\
-		|		THIS FILE CONTAINS HOOKS FOR FOR		 |
-		|		CHANGES SPECIFIC TO CITADEL. IF			 |
-		|		 YOU'RE FIXING A MERGE CONFLICT			 |
-		|		HERE, PLEASE ASK FOR REVIEW FROM		 |
-		|		ANOTHER MAINTAINER TO ENSURE YOU		 |
-		|		  DON'T INTRODUCE REGRESSIONS.			 |
-		\*												*/
+#define DEFAULT_SLOT_AMT	2
+#define HANDS_SLOT_AMT		2
+#define BACKPACK_SLOT_AMT	4
 
 GLOBAL_LIST_EMPTY(preferences_datums)
 
@@ -48,6 +43,9 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/UI_style = null
 	var/buttons_locked = FALSE
 	var/hotkeys = FALSE
+	var/chat_on_map = TRUE
+	var/max_chat_length = CHAT_MESSAGE_MAX_LENGTH
+	var/see_chat_non_mob = TRUE
 	var/tgui_fancy = TRUE
 	var/tgui_lock = TRUE
 	var/windowflashing = TRUE
@@ -91,8 +89,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/skin_tone = "caucasian1"		//Skin color
 	var/use_custom_skin_tone = FALSE
 	var/eye_color = "000"				//Eye color
-	var/horn_color = "85615a"			//Horn color
-	var/wing_color = "fff"				//Wing color
 	var/datum/species/pref_species = new /datum/species/human()	//Mutant race
 	var/list/features = list("mcolor" = "FFF",
 		"mcolor2" = "FFF",
@@ -101,8 +97,10 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		"tail_human" = "None",
 		"snout" = "Round",
 		"horns" = "None",
+		"horns_color" = "85615a",
 		"ears" = "None",
 		"wings" = "None",
+		"wings_color" = "FFF",
 		"frills" = "None",
 		"deco_wings" = "None",
 		"spines" = "None",
@@ -150,6 +148,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		"ipc_screen" = "Sunburst",
 		"ipc_antenna" = "None",
 		"flavor_text" = "",
+		"ooc_notes" = "",
 		"meat_type" = "Mammalian",
 		"body_model" = MALE,
 		"body_size" = RESIZE_DEFAULT_SIZE
@@ -200,6 +199,10 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/vore_flags = 0
 	var/list/belly_prefs = list()
 	var/vore_taste = "nothing in particular"
+	var/toggleeatingnoise = TRUE
+	var/toggledigestionnoise = TRUE
+	var/hound_sleeper = TRUE
+	var/cit_toggles = TOGGLES_CITADEL
 
 	//backgrounds
 	var/mutable_appearance/character_background
@@ -209,6 +212,19 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/show_mismatched_markings = FALSE //determines whether or not the markings lists should show markings that don't match the currently selected species. Intentionally left unsaved.
 
 	var/no_tetris_storage = FALSE
+
+	///loadout stuff
+	var/gear_points = 10
+	var/list/gear_categories
+	var/list/chosen_gear = list()
+	var/gear_tab
+
+	var/screenshake = 100
+	var/damagescreenshake = 2
+	var/arousable = TRUE
+	var/widescreenpref = TRUE
+	var/autostand = TRUE
+	var/auto_ooc = FALSE
 
 /datum/preferences/New(client/C)
 	parent = C
@@ -345,6 +361,16 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					dat += "[features["flavor_text"]]"
 			else
 				dat += "[TextPreview(features["flavor_text"])]...<BR>"
+			dat += "<h2>OOC notes</h2>"
+			dat += "<a href='?_src_=prefs;preference=ooc_notes;task=input'><b>Set OOC notes</b></a><br>"
+			var/ooc_notes_len = length(features["ooc_notes"])
+			if(ooc_notes_len <= 40)
+				if(!ooc_notes_len)
+					dat += "\[...\]"
+				else
+					dat += "[features["ooc_notes"]]"
+			else
+				dat += "[TextPreview(features["ooc_notes"])]...<BR>"
 			dat += "<h2>Body</h2>"
 			dat += "<b>Gender:</b><a style='display:block;width:100px' href='?_src_=prefs;preference=gender;task=input'>[gender == MALE ? "Male" : (gender == FEMALE ? "Female" : (gender == PLURAL ? "Non-binary" : "Object"))]</a><BR>"
 			if(gender != NEUTER && pref_species.sexes)
@@ -381,7 +407,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				mutant_colors = TRUE
 
 			if (CONFIG_GET(number/body_size_min) != CONFIG_GET(number/body_size_max))
-				dat += "<b>Sprite Size:</b> <a href='?_src_=prefs;preference=body_size;task=input'>[features["body_size"]]%</a><br>"
+				dat += "<b>Sprite Size:</b> <a href='?_src_=prefs;preference=body_size;task=input'>[features["body_size"]*100]%</a><br>"
 
 			if((EYECOLOR in pref_species.species_traits) && !(NOEYES in pref_species.species_traits))
 
@@ -493,7 +519,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				dat += "<h3>Horns</h3>"
 
 				dat += "<a style='display:block;width:100px' href='?_src_=prefs;preference=horns;task=input'>[features["horns"]]</a>"
-				dat += "<span style='border:1px solid #161616; background-color: #[horn_color];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=horns_color;task=input'>Change</a><BR>"
+				dat += "<span style='border:1px solid #161616; background-color: #[features["horns_color"]];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=horns_color;task=input'>Change</a><BR>"
 
 
 				mutant_category++
@@ -606,7 +632,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				dat += "<h3>Decorative wings</h3>"
 
 				dat += "<a style='display:block;width:100px' href='?_src_=prefs;preference=deco_wings;task=input'>[features["deco_wings"]]</a>"
-				dat += "<span style='border:1px solid #161616; background-color: #[wing_color];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=wings_color;task=input'>Change</a><BR>"
+				dat += "<span style='border:1px solid #161616; background-color: #[features["wings_color"]];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=wings_color;task=input'>Change</a><BR>"
 
 			if(pref_species.mutant_bodyparts["insect_wings"])
 				if(!mutant_category)
@@ -615,7 +641,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				dat += "<h3>Insect wings</h3>"
 
 				dat += "<a style='display:block;width:100px' href='?_src_=prefs;preference=insect_wings;task=input'>[features["insect_wings"]]</a>"
-				dat += "<span style='border:1px solid #161616; background-color: #[wing_color];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=wings_color;task=input'>Change</a><BR>"
+				dat += "<span style='border:1px solid #161616; background-color: #[features["wings_color"]];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=wings_color;task=input'>Change</a><BR>"
 				mutant_category++
 				if(mutant_category >= MAX_MUTANT_ROWS)
 					dat += "</td>"
@@ -824,6 +850,9 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			dat += "<b>UI Style:</b> <a href='?_src_=prefs;task=input;preference=ui'>[UI_style]</a><br>"
 			dat += "<b>tgui Monitors:</b> <a href='?_src_=prefs;preference=tgui_lock'>[(tgui_lock) ? "Primary" : "All"]</a><br>"
 			dat += "<b>tgui Style:</b> <a href='?_src_=prefs;preference=tgui_fancy'>[(tgui_fancy) ? "Fancy" : "No Frills"]</a><br>"
+			dat += "<b>Show Runechat Chat Bubbles:</b> <a href='?_src_=prefs;preference=chat_on_map'>[chat_on_map ? "Enabled" : "Disabled"]</a><br>"
+			dat += "<b>Runechat message char limit:</b> <a href='?_src_=prefs;preference=max_chat_length;task=input'>[max_chat_length]</a><br>"
+			dat += "<b>See Runechat for non-mobs:</b> <a href='?_src_=prefs;preference=see_chat_non_mob'>[see_chat_non_mob ? "Enabled" : "Disabled"]</a><br>"
 			dat += "<br>"
 			dat += "<b>Action Buttons:</b> <a href='?_src_=prefs;preference=action_buttons'>[(buttons_locked) ? "Locked In Place" : "Unlocked"]</a><br>"
 			dat += "<b>Keybindings:</b> <a href='?_src_=prefs;preference=hotkeys'>[(hotkeys) ? "Hotkeys" : "Default"]</a><br>"
@@ -901,7 +930,12 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 			dat += "<b>Ghosts of Others:</b> <a href='?_src_=prefs;task=input;preference=ghostothers'>[button_name]</a><br>"
 			dat += "<br>"
+
 			dat += "<b>FPS:</b> <a href='?_src_=prefs;preference=clientfps;task=input'>[clientfps]</a><br>"
+
+			dat += "<b>Income Updates:</b> <a href='?_src_=prefs;preference=income_pings'>[(chat_toggles & CHAT_BANKCARD) ? "Allowed" : "Muted"]</a><br>"
+			dat += "<br>"
+
 			dat += "<b>Parallax (Fancy Space):</b> <a href='?_src_=prefs;preference=parallaxdown' oncontextmenu='window.location.href=\"?_src_=prefs;preference=parallaxup\";return false;'>"
 			switch (parallax)
 				if (PARALLAX_LOW)
@@ -1504,6 +1538,11 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					if(!isnull(msg))
 						features["flavor_text"] = html_decode(msg)
 
+				if("ooc_notes")
+					var/msg = stripped_multiline_input(usr, "Set always-visible OOC notes related to content preferences. THIS IS NOT FOR CHARACTER DESCRIPTIONS!", "OOC notes", features["ooc_notes"], MAX_FLAVOR_LEN, TRUE)
+					if(!isnull(msg))
+						features["ooc_notes"] = html_decode(msg)
+
 				if("hair")
 					var/new_hair = input(user, "Choose your character's hair colour:", "Character Preference","#"+hair_color) as color|null
 					if(new_hair)
@@ -1764,12 +1803,12 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						features["horns"] = new_horns
 
 				if("horns_color")
-					var/new_horn_color = input(user, "Choose your character's horn colour:", "Character Preference","#"+horn_color) as color|null
+					var/new_horn_color = input(user, "Choose your character's horn colour:", "Character Preference","#"+features["horns_color"]) as color|null
 					if(new_horn_color)
 						if (new_horn_color == "#000000")
-							horn_color = "#85615A"
+							features["horns_color"] = "85615A"
 						else
-							horn_color = sanitize_hexcolor(new_horn_color)
+							features["horns_color"] = sanitize_hexcolor(new_horn_color)
 
 				if("wings")
 					var/new_wings
@@ -1778,12 +1817,12 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						features["wings"] = new_wings
 
 				if("wings_color")
-					var/new_wing_color = input(user, "Choose your character's wing colour:", "Character Preference","#"+wing_color) as color|null
+					var/new_wing_color = input(user, "Choose your character's wing colour:", "Character Preference","#"+features["wings_color"]) as color|null
 					if(new_wing_color)
 						if (new_wing_color == "#000000")
-							wing_color = "#FFFFFF"
+							features["wings_color"] = "#FFFFFF"
 						else
-							wing_color = sanitize_hexcolor(new_wing_color)
+							features["wings_color"] = sanitize_hexcolor(new_wing_color)
 
 				if("frills")
 					var/new_frills
@@ -2134,6 +2173,10 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					var/pickedPDASkin = input(user, "Choose your PDA reskin.", "Character Preference", pda_skin) as null|anything in GLOB.pda_reskins
 					if(pickedPDASkin)
 						pda_skin = pickedPDASkin
+				if ("max_chat_length")
+					var/desiredlength = input(user, "Choose the max character length of shown Runechat messages. Valid range is 1 to [CHAT_MESSAGE_MAX_LENGTH] (default: [initial(max_chat_length)]))", "Character Preference", max_chat_length)  as null|num
+					if (!isnull(desiredlength))
+						max_chat_length = clamp(desiredlength, 1, CHAT_MESSAGE_MAX_LENGTH)
 
 				if("hud_toggle_color")
 					var/new_toggle_color = input(user, "Choose your HUD toggle flash color:", "Game Preference",hud_toggle_color) as color|null
@@ -2236,6 +2279,10 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						winset(user, null, "input.focus=true input.background-color=[COLOR_INPUT_ENABLED] mainwindow.macro=default")
 					else
 						winset(user, null, "input.focus=true input.background-color=[COLOR_INPUT_ENABLED] mainwindow.macro=old_default")
+				if("chat_on_map")
+					chat_on_map = !chat_on_map
+				if("see_chat_non_mob")
+					see_chat_non_mob = !see_chat_non_mob
 				if("action_buttons")
 					buttons_locked = !buttons_locked
 				if("tgui_fancy")
@@ -2288,6 +2335,9 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 				if("ghost_pda")
 					chat_toggles ^= CHAT_GHOSTPDA
+
+				if("income_pings")
+					chat_toggles ^= CHAT_BANKCARD
 
 				if("pull_requests")
 					chat_toggles ^= CHAT_PULLR
@@ -2347,8 +2397,12 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				if("ambientocclusion")
 					ambientocclusion = !ambientocclusion
 					if(parent && parent.screen && parent.screen.len)
-						var/obj/screen/plane_master/game_world/PM = locate(/obj/screen/plane_master/game_world) in parent.screen
-						PM.backdrop(parent.mob)
+						var/obj/screen/plane_master/game_world/G = parent.mob.hud_used.plane_masters["[GAME_PLANE]"]
+						var/obj/screen/plane_master/above_wall/A = parent.mob.hud_used.plane_masters["[ABOVE_WALL_PLANE]"]
+						var/obj/screen/plane_master/wall/W = parent.mob.hud_used.plane_masters["[WALL_PLANE]"]
+						G.backdrop(parent.mob)
+						A.backdrop(parent.mob)
+						W.backdrop(parent.mob)
 
 				if("auto_fit_viewport")
 					auto_fit_viewport = !auto_fit_viewport
@@ -2445,9 +2499,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		organ_eyes.old_eye_color = eye_color
 	character.hair_color = hair_color
 	character.facial_hair_color = facial_hair_color
-	character.horn_color = horn_color
-	character.wing_color = wing_color
-
 	character.skin_tone = skin_tone
 	character.dna.skin_tone_override = use_custom_skin_tone ? skin_tone : null
 	character.hair_style = hair_style
@@ -2543,3 +2594,25 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	if(!cached_holoform_icons[filter_type])
 		cached_holoform_icons[filter_type] = process_holoform_icon_filter(custom_holoform_icon, filter_type)
 	return cached_holoform_icons[filter_type]
+
+/datum/preferences/proc/is_loadout_slot_available(slot)
+	var/list/L
+	LAZYINITLIST(L)
+	for(var/i in chosen_gear)
+		var/datum/gear/G = i
+		var/occupied_slots = L[slot_to_string(initial(G.category))] ? L[slot_to_string(initial(G.category))] + 1 : 1
+		LAZYSET(L, slot_to_string(initial(G.category)), occupied_slots)
+	switch(slot)
+		if(SLOT_IN_BACKPACK)
+			if(L[slot_to_string(SLOT_IN_BACKPACK)] < BACKPACK_SLOT_AMT)
+				return TRUE
+		if(SLOT_HANDS)
+			if(L[slot_to_string(SLOT_HANDS)] < HANDS_SLOT_AMT)
+				return TRUE
+		else
+			if(L[slot_to_string(slot)] < DEFAULT_SLOT_AMT)
+				return TRUE
+
+#undef DEFAULT_SLOT_AMT
+#undef HANDS_SLOT_AMT
+#undef BACKPACK_SLOT_AMT

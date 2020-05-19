@@ -1,6 +1,8 @@
 /datum/wires/radio
 	holder_type = /obj/item/radio
 	proper_name = "Radio"
+	req_knowledge = JOB_SKILL_TRAINED
+	req_skill = JOB_SKILL_UNTRAINED
 
 /datum/wires/radio/New(atom/holder)
 	wires = list(

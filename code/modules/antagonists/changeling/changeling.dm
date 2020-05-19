@@ -78,6 +78,7 @@
 	create_initial_profile()
 	if(give_objectives)
 		forge_objectives()
+	owner.current.grant_all_languages(FALSE, FALSE, TRUE)	//Grants omnitongue. We are able to transform our body after all.
 	remove_clownmut()
 	. = ..()
 
@@ -563,7 +564,7 @@
 			if(objective.completable)
 				var/completion = objective.check_completion()
 				if(completion >= 1)
-					parts += "<B>Objective #[count]</B>: [objective.explanation_text] <span class='greentext'><B>Success!</span>"
+					parts += "<B>Objective #[count]</B>: [objective.explanation_text] <span class='greentext'><B>Success!</B></span>"
 				else if(completion <= 0)
 					parts += "<B>Objective #[count]</B>: [objective.explanation_text] <span class='redtext'>Fail.</span>"
 					changelingwin = FALSE

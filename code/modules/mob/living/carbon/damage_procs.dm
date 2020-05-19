@@ -38,7 +38,7 @@
 			adjustCloneLoss(damage_amount, forced = forced)
 		if(STAMINA)
 			if(BP)
-				if(damage > 0 ? BP.receive_damage(0, 0, damage_amount) : BP.heal_damage(0, 0, abs(damage_amount)))
+				if(damage > 0 ? BP.receive_damage(0, 0, damage_amount) : BP.heal_damage(0, 0, abs(damage_amount), FALSE, FALSE))
 					update_damage_overlays()
 			else
 				adjustStaminaLoss(damage_amount, forced = forced)
@@ -63,7 +63,7 @@
 
 
 /mob/living/carbon/adjustBruteLoss(amount, updating_health = TRUE, forced = FALSE)
-	if (!forced && amount < 0 && HAS_TRAIT(src,TRAIT_NONATURALHEAL))
+	if(!forced && amount < 0 && HAS_TRAIT(src,TRAIT_NONATURALHEAL))
 		return FALSE
 	if(!forced && (status_flags & GODMODE))
 		return FALSE
@@ -74,7 +74,7 @@
 	return amount
 
 /mob/living/carbon/adjustFireLoss(amount, updating_health = TRUE, forced = FALSE)
-	if (!forced && amount < 0 && HAS_TRAIT(src,TRAIT_NONATURALHEAL))	//Vamps don't heal naturally.
+	if(!forced && amount < 0 && HAS_TRAIT(src,TRAIT_NONATURALHEAL))	//Vamps don't heal naturally.
 		return FALSE
 	if(!forced && (status_flags & GODMODE))
 		return FALSE

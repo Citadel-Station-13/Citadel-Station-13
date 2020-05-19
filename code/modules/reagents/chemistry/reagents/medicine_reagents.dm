@@ -246,6 +246,13 @@
 	metabolization_rate = 5 * REAGENTS_METABOLISM
 	overdose_threshold = 50
 
+/datum/reagent/medicine/silver_sulfadiazine/reaction_obj(obj/O, reac_volume)
+	if(istype(O, /obj/item/stack/medical/gauze))
+		var/obj/item/stack/medical/gauze/G = O
+		reac_volume = min((reac_volume / 10), G.amount)
+		new/obj/item/stack/medical/ointment(get_turf(G), reac_volume)
+		G.use(reac_volume)
+
 /datum/reagent/medicine/silver_sulfadiazine/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message = 1)
 	if(iscarbon(M) && M.stat != DEAD)
 		if(method in list(INGEST, VAPOR, INJECT))
@@ -321,6 +328,12 @@
 			SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "painful_medicine", /datum/mood_event/painful_medicine)
 	..()
 
+/datum/reagent/medicine/styptic_powder/reaction_obj(obj/O, reac_volume)
+	if(istype(O, /obj/item/stack/medical/gauze))
+		var/obj/item/stack/medical/gauze/G = O
+		reac_volume = min((reac_volume / 10), G.amount)
+		new/obj/item/stack/medical/bruise_pack(get_turf(G), reac_volume)
+		G.use(reac_volume)
 
 /datum/reagent/medicine/styptic_powder/on_mob_life(mob/living/carbon/M)
 	M.adjustBruteLoss(-2*REM, 0)
@@ -400,7 +413,7 @@ datum/reagent/medicine/styptic_powder/overdose_start(mob/living/M)
 /datum/reagent/medicine/mine_salve/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message = 1)
 	if(iscarbon(M) && M.stat != DEAD)
 		if(method in list(INGEST, VAPOR, INJECT))
-			M.nutrition -= 5
+			M.adjust_nutrition(-5)
 			if(show_message)
 				to_chat(M, "<span class='warning'>Your stomach feels empty and cramps!</span>")
 		else
@@ -1205,15 +1218,15 @@ datum/reagent/medicine/styptic_powder/overdose_start(mob/living/M)
 	value = REAGENT_VALUE_VERY_RARE
 
 /datum/reagent/medicine/lesser_syndicate_nanites/on_mob_life(mob/living/carbon/M)
-	M.adjustBruteLoss(-3*REM, FALSE) // hidden gold shh
-	M.adjustFireLoss(-3*REM, FALSE)
-	M.adjustOxyLoss(-15, FALSE)
-	M.adjustToxLoss(-3*REM, FALSE)
-	M.adjustOrganLoss(ORGAN_SLOT_BRAIN, -15*REM)
-	M.adjustCloneLoss(-3*REM, FALSE)
-	M.adjustStaminaLoss(-20*REM,FALSE)
+	M.adjustBruteLoss(-2*REM, FALSE)
+	M.adjustFireLoss(-2*REM, FALSE)
+	M.adjustOxyLoss(-5*REM, FALSE)
+	M.adjustToxLoss(-2*REM, FALSE)
+	M.adjustOrganLoss(ORGAN_SLOT_BRAIN, -5*REM)
+	M.adjustCloneLoss(-1.25*REM, FALSE)
+	M.adjustStaminaLoss(-4*REM,FALSE)
 	if(M.blood_volume < (BLOOD_VOLUME_NORMAL*M.blood_ratio))
-		M.blood_volume += 20 // blood fall out man bad
+		M.blood_volume += 3
 	..()
 	. = 1
 

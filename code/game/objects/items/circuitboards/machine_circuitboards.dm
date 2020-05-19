@@ -229,10 +229,11 @@
 	def_components = list(/obj/item/stack/ore/bluespace_crystal = /obj/item/stack/ore/bluespace_crystal/artificial)
 
 /obj/item/circuitboard/machine/vendor
-	name = "Booze-O-Mat Vendor (Machine Board)"
+	name = "Custom Vendor (Machine Board)"
 	desc = "You can turn the \"brand selection\" dial using a screwdriver."
-	build_path = /obj/machinery/vending/boozeomat
-	req_components = list(/obj/item/vending_refill/boozeomat = 1)
+	custom_premium_price = 100
+	build_path = /obj/machinery/vending/custom
+	req_components = list(/obj/item/vending_refill/custom = 1)
 
 	var/static/list/vending_names_paths = list(
 		/obj/machinery/vending/boozeomat = "Booze-O-Mat",
@@ -269,7 +270,8 @@
 		/obj/machinery/vending/wardrobe/viro_wardrobe = "ViroDrobe",
 		/obj/machinery/vending/clothing = "ClothesMate",
 		/obj/machinery/vending/medical = "NanoMed Plus",
-		/obj/machinery/vending/wallmed = "NanoMed")
+		/obj/machinery/vending/wallmed = "NanoMed",
+		/obj/machinery/vending/custom = "Custom Vendor")
 
 /obj/item/circuitboard/machine/vendor/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/screwdriver))
@@ -1040,6 +1042,11 @@
 	build_path = /obj/machinery/ore_silo
 	req_components = list()
 
+/obj/item/circuitboard/machine/paystand
+	name = "Pay Stand (Machine Board)"
+	build_path = /obj/machinery/paystand
+	req_components = list()
+
 /obj/item/circuitboard/machine/autobottler
 	name = "Auto-Bottler (Machine Board)"
 	build_path = /obj/machinery/rnd/production/protolathe/department/autobottler //Manips make you print things cheaper, even chems
@@ -1054,9 +1061,9 @@
 	build_path = /obj/machinery/vending/kink
 	req_components = list(/obj/item/vending_refill/kink = 1)
 
-/obj/item/circuitboard/machine/autoylathe
+/obj/item/circuitboard/machine/autolathe/toy
 	name = "Autoylathe (Machine Board)"
-	build_path = /obj/machinery/autoylathe
+	build_path = /obj/machinery/autolathe/toy
 	req_components = list(
 		/obj/item/stock_parts/matter_bin = 3,
 		/obj/item/stock_parts/manipulator = 1,

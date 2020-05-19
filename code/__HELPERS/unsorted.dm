@@ -1,5 +1,3 @@
-
-
 /*
  * A large number of misc global procs.
  */
@@ -391,6 +389,16 @@ Turf and target are separate in case you want to teleport some distance from a t
 			break
 	return loc
 
+//Returns a list of all locations the target is within.
+/proc/get_nested_locs(atom/movable/M, include_turf = FALSE)
+	. = list()
+	var/atom/A = M.loc
+	while(A && !isturf(A))
+		. += A
+		A = A.loc
+	if(A && include_turf) //At this point, only the turf is left.
+		. += A
+
 // returns the turf located at the map edge in the specified direction relative to A
 // used for mass driver
 /proc/get_edge_target_turf(atom/A, direction)
@@ -434,6 +442,29 @@ Turf and target are separate in case you want to teleport some distance from a t
 
 	return locate(x,y,A.z)
 
+/**
+  * Get ranged target turf, but with direct targets as opposed to directions
+  *
+  * Starts at atom A and gets the exact angle between A and target
+  * Moves from A with that angle, Range amount of times, until it stops, bound to map size
+  * Arguments:
+  * * A - Initial Firer / Position
+  * * target - Target to aim towards
+  * * range - Distance of returned target turf from A
+  * * offset - Angle offset, 180 input would make the returned target turf be in the opposite direction
+  */
+/proc/get_ranged_target_turf_direct(atom/A, atom/target, range, offset)
+	var/angle = arctan(target.x - A.x, target.y - A.y)
+	if(offset)
+		angle += offset
+	var/turf/T = get_turf(A)
+	for(var/i in 1 to range)
+		var/turf/check = locate(A.x + cos(angle) * i, A.y + sin(angle) * i, A.z)
+		if(!check)
+			break
+		T = check
+
+	return T
 
 // returns turf relative to A offset in dx and dy tiles
 // bound to map limits
@@ -1024,6 +1055,27 @@ B --><-- A
 
 /proc/get_random_station_turf()
 	return safepick(get_area_turfs(pick(GLOB.the_station_areas)))
+
+/proc/get_safe_random_station_turf() //excludes dense turfs (like walls) and areas that have valid_territory set to FALSE
+	for (var/i in 1 to 5)
+		var/list/L = get_area_turfs(pick(GLOB.the_station_areas))
+		var/turf/target
+		while (L.len && !target)
+			var/I = rand(1, L.len)
+			var/turf/T = L[I]
+			var/area/X = get_area(T)
+			if(!T.density && X.valid_territory)
+				var/clear = TRUE
+				for(var/obj/O in T)
+					if(O.density)
+						clear = FALSE
+						break
+				if(clear)
+					target = T
+			if (!target)
+				L.Cut(I,I+1)
+		if (target)
+			return target
 
 /proc/get_closest_atom(type, list, source)
 	var/closest_atom

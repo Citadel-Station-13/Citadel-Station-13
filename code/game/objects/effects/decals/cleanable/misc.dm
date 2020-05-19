@@ -133,7 +133,7 @@
 			if(reagents)
 				for(var/datum/reagent/consumable/R in reagents.reagent_list)
 					if(R.nutriment_factor > 0)
-						H.nutrition += R.nutriment_factor * R.volume
+						H.adjust_nutrition(R.nutriment_factor * R.volume)
 						reagents.del_reagent(R.type)
 			reagents.trans_to(H, reagents.total_volume)
 			qdel(src)

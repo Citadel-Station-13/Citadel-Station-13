@@ -232,7 +232,7 @@
 		Feedstop(0, 0)
 		return
 
-	add_nutrition((rand(7, 15) * CONFIG_GET(number/damage_multiplier)))
+	adjust_nutrition((rand(7, 15) * CONFIG_GET(number/damage_multiplier)), get_max_nutrition(), TRUE)
 
 	//Heal yourself.
 	adjustBruteLoss(-3)
@@ -244,15 +244,13 @@
 		return
 
 	if(prob(15))
-		nutrition -= 1 + is_adult
+		adjust_nutrition(-1 - is_adult)
 
-	if(nutrition <= 0)
-		nutrition = 0
-		if(prob(75))
-			adjustBruteLoss(rand(0,5))
+	if(nutrition <= 0 && prob(75))
+		adjustBruteLoss(rand(0,5))
 
 	else if (nutrition >= get_grow_nutrition() && amount_grown < SLIME_EVOLUTION_THRESHOLD)
-		nutrition -= 20
+		adjust_nutrition(-20)
 		amount_grown++
 		update_action_buttons_icon()
 
@@ -262,9 +260,11 @@
 		else
 			Evolve()
 
-/mob/living/simple_animal/slime/proc/add_nutrition(nutrition_to_add = 0)
-	nutrition = min((nutrition + nutrition_to_add), get_max_nutrition())
-	if(nutrition >= get_grow_nutrition())
+/mob/living/simple_animal/slime/adjust_nutrition(change, max = INFINITY, slime_check = FALSE)
+	. = ..()
+	if(!slime_check)
+		return
+	if(nutrition == max)
 		if(powerlevel<10)
 			if(prob(30-powerlevel*2))
 				powerlevel++

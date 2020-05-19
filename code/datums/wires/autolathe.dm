@@ -1,6 +1,7 @@
 /datum/wires/autolathe
 	holder_type = /obj/machinery/autolathe
 	proper_name = "Autolathe"
+	req_knowledge = JOB_SKILL_EXPERT
 
 /datum/wires/autolathe/New(atom/holder)
 	wires = list(

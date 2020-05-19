@@ -11,6 +11,7 @@
 	spillable = TRUE
 	resistance_flags = ACID_PROOF
 	obj_flags = UNIQUE_RENAME
+	custom_price = 25
 
 /obj/item/reagent_containers/food/drinks/drinkingglass/on_reagent_change(changetype)
 	cut_overlays()
@@ -46,6 +47,7 @@
 	possible_transfer_amounts = list()
 	volume = 15
 	custom_materials = list(/datum/material/glass=100)
+	custom_price = 20
 
 /obj/item/reagent_containers/food/drinks/drinkingglass/shotglass/on_reagent_change(changetype)
 	cut_overlays()

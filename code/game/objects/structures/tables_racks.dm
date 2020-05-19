@@ -183,7 +183,7 @@
 
 /obj/structure/table/alt_attack_hand(mob/user)
 	if(user && Adjacent(user) && !user.incapacitated())
-		user.setClickCooldown(4)
+		user.changeNext_move(CLICK_CD_MELEE*0.5)
 		if(istype(user) && user.a_intent == INTENT_HARM)
 			user.visible_message("<span class='warning'>[user] slams [user.p_their()] palms down on [src].</span>", "<span class='warning'>You slam your palms down on [src].</span>")
 			playsound(src, 'sound/weapons/sonic_jackhammer.ogg', 50, 1)
@@ -211,7 +211,7 @@
 /obj/structure/table/greyscale
 	icon = 'icons/obj/smooth_structures/table_greyscale.dmi'
 	icon_state = "table"
-	material_flags = MATERIAL_ADD_PREFIX | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS
+	material_flags = MATERIAL_ADD_PREFIX | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS | MATERIAL_EFFECTS
 	buildstack = null //No buildstack, so generate from mat datums
 
 /*

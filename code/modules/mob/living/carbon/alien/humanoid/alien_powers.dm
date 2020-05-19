@@ -21,10 +21,10 @@ Doesn't work on other aliens/AI.*/
 	. = ..()
 	action = new(src)
 
-/obj/effect/proc_holder/alien/Trigger(mob/living/carbon/user, skip_cost_check)
+/obj/effect/proc_holder/alien/Trigger(mob/living/carbon/user, skip_cost_check = FALSE)
 	if(!istype(user))
 		return TRUE
-	if(!skip_cost_check || cost_check(check_turf,user))
+	if(skip_cost_check || cost_check(check_turf,user))
 		if(fire(user) && user) // Second check to prevent runtimes when evolving
 			user.adjustPlasma(-plasma_cost)
 	return TRUE

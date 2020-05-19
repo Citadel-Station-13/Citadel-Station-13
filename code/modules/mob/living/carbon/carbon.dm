@@ -22,9 +22,6 @@
 	QDEL_NULL(dna)
 	GLOB.carbon_list -= src
 
-/mob/living/carbon/initialize_footstep()
-	AddComponent(/datum/component/footstep, 0.6, 2)
-
 /mob/living/carbon/relaymove(mob/user, direction)
 	if(user in src.stomach_contents)
 		if(prob(40))
@@ -199,7 +196,7 @@
 			to_chat(src, "<span class='notice'>You set [I] down gently on the ground.</span>")
 			return
 
-		adjustStaminaLossBuffered(I.getweight()*2)//CIT CHANGE - throwing items shall be more tiring than swinging em. Doubly so.
+		adjustStaminaLossBuffered(I.getweight(src, STAM_COST_THROW_MULT, SKILL_THROW_STAM_COST))
 
 	if(thrown_thing)
 		visible_message("<span class='danger'>[src] has thrown [thrown_thing].</span>")
@@ -256,7 +253,8 @@
 			var/obj/item/ITEM = get_item_by_slot(slot)
 			if(ITEM && istype(ITEM, /obj/item/tank) && wear_mask && (wear_mask.clothing_flags & ALLOWINTERNALS))
 				visible_message("<span class='danger'>[usr] tries to [internal ? "close" : "open"] the valve on [src]'s [ITEM.name].</span>", \
-								"<span class='userdanger'>[usr] tries to [internal ? "close" : "open"] the valve on [src]'s [ITEM.name].</span>")
+								"<span class='userdanger'>[usr] tries to [internal ? "close" : "open"] the valve on your [ITEM.name].</span>", \
+								target = usr, target_message = "<span class='danger'>You try to [internal ? "close" : "open"] the valve on [src]'s [ITEM.name].</span>")
 				if(do_mob(usr, src, POCKET_STRIP_DELAY))
 					if(internal)
 						internal = null
@@ -267,7 +265,8 @@
 							update_internals_hud_icon(1)
 
 					visible_message("<span class='danger'>[usr] [internal ? "opens" : "closes"] the valve on [src]'s [ITEM.name].</span>", \
-									"<span class='userdanger'>[usr] [internal ? "opens" : "closes"] the valve on [src]'s [ITEM.name].</span>")
+									"<span class='userdanger'>[usr] [internal ? "opens" : "closes"] the valve on your [ITEM.name].</span>", \
+									target = usr, target_message = "<span class='danger'>You [internal ? "opens" : "closes"] the valve on [src]'s [ITEM.name].</span>")
 
 
 /mob/living/carbon/fall(forced)
@@ -520,7 +519,7 @@
 	playsound(get_turf(src), 'sound/effects/splat.ogg', 50, 1)
 	var/turf/T = get_turf(src)
 	if(!blood)
-		nutrition -= lost_nutrition
+		adjust_nutrition(-lost_nutrition)
 		adjustToxLoss(-3)
 	for(var/i=0 to distance)
 		if(blood)
@@ -540,15 +539,22 @@
 	return 1
 
 /mob/living/carbon/proc/spew_organ(power = 5, amt = 1)
+	var/list/spillable_organs = list()
+	for(var/A in internal_organs)
+		var/obj/item/organ/O = A
+		if(!(O.organ_flags & ORGAN_NO_DISMEMBERMENT))
+			spillable_organs += O
 	for(var/i in 1 to amt)
-		if(!internal_organs.len)
+		if(!spillable_organs.len)
 			break //Guess we're out of organs!
-		var/obj/item/organ/guts = pick(internal_organs)
+		var/obj/item/organ/guts = pick(spillable_organs)
+		spillable_organs -= guts
 		var/turf/T = get_turf(src)
 		guts.Remove()
 		guts.forceMove(T)
 		var/atom/throw_target = get_edge_target_turf(guts, dir)
 		guts.throw_at(throw_target, power, 4, src)
+
 
 
 /mob/living/carbon/fully_replace_character_name(oldname,newname)

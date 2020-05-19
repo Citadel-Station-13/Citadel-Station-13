@@ -107,10 +107,18 @@
 	departmental_flags = DEPARTMENTAL_FLAG_ALL
 	category = list ("Medical Machinery")
 
+/datum/design/board/paystand
+	name = "Machine Design (Pay Stand)"
+	desc = "The circuit board for a paystand."
+	id = "paystand"
+	build_path = /obj/item/circuitboard/machine/paystand
+	category = list ("Misc. Machinery")
+	departmental_flags = DEPARTMENTAL_FLAG_ALL
+
 /datum/design/board/autoylathe
 	name = "Machine Design (Autoylathe)"
 	desc = "The circuit board for an autoylathe."
 	id = "autoylathe"
-	build_path = /obj/item/circuitboard/machine/autoylathe
+	build_path = /obj/item/circuitboard/machine/autolathe/toy
 	departmental_flags = DEPARTMENTAL_FLAG_ALL
 	category = list("Misc. Machinery")

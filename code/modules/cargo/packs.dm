@@ -22,10 +22,16 @@
 // These are vage for a reason, and that is to allow others to use/exspand on them
 // To see permit types see cargo datums
 	var/permits = 0
+	var/can_private_buy = TRUE //Can it be purchased privately by each crewmember?
 
-/datum/supply_pack/proc/generate(atom/A)
-	var/obj/structure/closet/crate/C = new crate_type(A)
-	C.name = crate_name
+/datum/supply_pack/proc/generate(atom/A, datum/bank_account/paying_account)
+	var/obj/structure/closet/crate/C
+	if(paying_account)
+		C = new /obj/structure/closet/crate/secure/owned(A, paying_account)
+		C.name = "[crate_name] - Purchased by [paying_account.account_holder]"
+	else
+		C = new crate_type(A)
+		C.name = crate_name
 	if(access)
 		C.req_access = list(access)
 	if(access_any)
@@ -34,7 +40,6 @@
 	SSshuttle.supply.callTime -= loading_time
 
 	fill(C)
-
 	return C
 
 /datum/supply_pack/proc/fill(obj/structure/closet/crate/C)
