@@ -95,24 +95,11 @@
 	var/mob/living/silicon/S = user
 	if(istype(S) && S.hack_software)
 		data_out["canhack"] = TRUE
+
 	if(hacking)
 		data_out["hacking"] = TRUE
 		data_out["borg"] = (isAI(user) || iscyborg(user))
-		var/data = ""
-		if(isAI(user) || iscyborg(user)) //screen 2
-			data += "Brute-forcing for server key. It will take 20 seconds for every character that the password has."
-			data += "In the meantime, this console can reveal your true intentions if you let someone access it. Make sure no humans enter the room during that time."
-		else
-			//It's the same message as the one above but in base64. Base64 is better than bin, change my mind
-			data += {"\
-			QnJ1dGUtZm9yY2luZyBmb3Igc2VydmVyIGtleS48YnI+IEl0IHdpbG<br>\
-			wgdGFrZSAyMCBzZWNvbmRzIGZvciBldmVyeSBjaGFyYWN0ZXIgdGhh<br>\
-			dCB0aGUgcGFzc3dvcmQgaGFzLiBJbiB0aGUgbWVhbnRpbWUsIHRoaX<br>\
-			MgY29uc29sZSBjYW4gcmV2ZWFsIHlvdXIgdHJ1ZSBpbnRlbnRpb25z<br>\
-			IGlmIHlvdSBsZXQgc29tZW9uZSBhY2Nlc3MgaXQuIE1ha2Ugc3VyZS<br>\
-			BubyBodW1hbnMgZW50ZXIgdGhlIHJvb20gZHVyaW5nIHRoYXQgdGltZS4=<br>\
-			"}
-		data_out["hacking_msg"] = data
+		return data_out
 
 	data_out["servers"] = list()
 	for(var/obj/machinery/telecomms/message_server/T in machinelist)

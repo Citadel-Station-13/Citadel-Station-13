@@ -46,7 +46,8 @@
 	data_out["selected"] = list(
 		name = SelectedMachine.name,
 		id = SelectedMachine.id,
-		traffic = SelectedMachine.totaltraffic,
+		status = SelectedMachine.on,
+		traffic = SelectedMachine.totaltraffic, //note: total traffic, not traffic!
 		ref = REF(SelectedMachine)
 	)
 	data_out["selected_logs"] = list()
@@ -58,7 +59,7 @@
 		var/list/data = list()
 		data["name"] = C.name	//name of the file
 		data["ref"] = REF(C)
-		data["input_type"] = C.input_type	//type of input ("Speech File" | "Execution Error"). Let js handle this
+		data["input_type"] = C.input_type	//type of input ("Speech File" | "Execution Error").
 
 		if(C.input_type == "Speech File") //there is a reason why this is not a switch.
 			data["source"] = list(
@@ -160,83 +161,3 @@
 			notice = "DELETED ENTRY: [D.name]"
 			LAZYREMOVE(SelectedMachine.log_entries, D)
 			qdel(D)
-/*
-/obj/machinery/computer/telecomms/server/ui_interact(mob/user)
-			if(SelectedServer.totaltraffic >= 1024)
-				dat += "<br>Total recorded traffic: [round(SelectedServer.totaltraffic / 1024)] Terrabytes<br><br>"
-			else
-				dat += "<br>Total recorded traffic: [SelectedServer.totaltraffic] Gigabytes<br><br>"
-
-			dat += "Stored Logs: <ol>"
-
-			var/i = 0
-			for(var/datum/comm_log_entry/C in SelectedServer.log_entries)
-				i++
-
-
-				// If the log is a speech file
-				if(C.input_type == "Speech File")
-					dat += "<li><font color = #008F00>[C.name]</font>  <font color = #FF0000><a href='?src=[REF(src)];delete=[i]'>\[X\]</a></font><br>"
-
-					// -- Determine race of orator --
-
-					var/mobtype = C.parameters["mobtype"]
-					var/race			   // The actual race of the mob
-
-					if(ispath(mobtype, /mob/living/carbon/human) || ispath(mobtype, /mob/living/brain))
-						race = "Humanoid"
-
-					// NT knows a lot about slimes, but not aliens. Can identify slimes
-					else if(ispath(mobtype, /mob/living/simple_animal/slime))
-						race = "Slime"
-
-					else if(ispath(mobtype, /mob/living/carbon/monkey))
-						race = "Monkey"
-
-					// sometimes M gets deleted prematurely for AIs... just check the job
-					else if(ispath(mobtype, /mob/living/silicon) || C.parameters["job"] == "AI")
-						race = "Artificial Life"
-
-					else if(isobj(mobtype))
-						race = "Machinery"
-
-					else if(ispath(mobtype, /mob/living/simple_animal))
-						race = "Domestic Animal"
-
-					else
-						race = "<i>Unidentifiable</i>"
-
-					dat += "<u><font color = #18743E>Data type</font></u>: [C.input_type]<br>"
-					dat += "<u><font color = #18743E>Source</font></u>: [C.parameters["name"]] (Job: [C.parameters["job"]])<br>"
-					dat += "<u><font color = #18743E>Class</font></u>: [race]<br>"
-					var/message = C.parameters["message"]
-					var/language = C.parameters["language"]
-
-					// based on [/atom/movable/proc/lang_treat]
-					if (universal_translate || user.has_language(language))
-						message = "\"[message]\""
-					else if (!user.has_language(language))
-						var/datum/language/D = GLOB.language_datum_instances[language]
-						message = "\"[D.scramble(message)]\""
-					else if (language)
-						message = "<i>(unintelligible)</i>"
-
-					dat += "<u><font color = #18743E>Contents</font></u>: [message]<br>"
-					dat += "</li><br>"
-
-				else if(C.input_type == "Execution Error")
-					dat += "<li><font color = #990000>[C.name]</font>  <a href='?src=[REF(src)];delete=[i]'>\[X\]</a><br>"
-					dat += "<u><font color = #787700>Error</font></u>: \"[C.parameters["message"]]\"<br>"
-					dat += "</li><br>"
-
-				else
-					dat += "<li><font color = #000099>[C.name]</font>  <a href='?src=[REF(src)];delete=[i]'>\[X\]</a><br>"
-					dat += "<u><font color = #18743E>Data type</font></u>: [C.input_type]<br>"
-					dat += "<u><font color = #18743E>Contents</font></u>: <i>(unintelligible)</i><br>"
-					dat += "</li><br>"
-
-
-			dat += "</ol>"
-
-
-*/
