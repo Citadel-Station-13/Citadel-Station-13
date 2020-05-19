@@ -58128,7 +58128,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 1
 	},
-/turf/closed/wall,
+/turf/open/floor/plasteel,
 /area/security/brig)
 "rdl" = (
 /obj/effect/spawner/structure/window/reinforced,

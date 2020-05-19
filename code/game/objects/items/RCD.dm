@@ -143,7 +143,7 @@ RLD
 	//if user can't be seen from A (only checks surroundings' opaqueness) and can't see A.
 	//jarring, but it should stop people from targetting atoms they can't see...
 	//excluding darkness, to allow RLD to be used to light pitch black dark areas.
-	if(!((user in view(view_range, A)) || (user in get_actual_viewers(view_range, A))))
+	if(!((user in view(view_range, A)) || (user in fov_viewers(view_range, A))))
 		to_chat(user, "<span class='warning'>You focus, pointing \the [src] at whatever outside your field of vision in that direction... to no avail.</span>")
 		return FALSE
 	return TRUE

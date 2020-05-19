@@ -42,7 +42,7 @@
 
 /obj/machinery/hypnochair/ui_data()
 	var/list/data = list()
-	data["occupied"] = occupant ? 1 : 0
+	data["occupied"] = occupant ? TRUE : FALSE
 	data["open"] = state_open
 	data["interrogating"] = interrogating
 

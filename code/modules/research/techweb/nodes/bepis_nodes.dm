@@ -64,7 +64,7 @@
 	id = "interrogation"
 	display_name = "Enhanced Interrogation Technology"
 	description = "By cross-referencing several declassified documents from past dictatorial regimes, we were able to develop an incredibly effective interrogation device. \
-	Ethical concerns about loss of free will do not apply to criminals, according to galactic law."
+	Ethical concerns about loss of free will may still apply, according to galactic law."
 	prereq_ids = list("base")
 	design_ids = list("hypnochair")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 3500)

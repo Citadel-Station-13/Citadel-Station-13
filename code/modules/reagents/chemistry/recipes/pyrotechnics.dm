@@ -429,7 +429,7 @@
 	noexplosion = TRUE
 	mix_message = "<span class='boldannounce'>The teslium starts to spark as electricity arcs away from it!</span>"
 	mix_sound = 'sound/machines/defib_zap.ogg'
-	var/tesla_flags = TESLA_MOB_DAMAGE | TESLA_OBJ_DAMAGE | TESLA_MOB_STUN
+	var/zap_flags = ZAP_MOB_DAMAGE | ZAP_OBJ_DAMAGE | ZAP_MOB_STUN
 
 /datum/chemical_reaction/reagent_explosion/teslium_lightning/on_reaction(datum/reagents/holder, multiplier)
 	var/T1 = multiplier * 20		//100 units : Zap 3 times, with powers 2000/5000/12000. Tesla revolvers have a power of 10000 for comparison.
@@ -437,15 +437,15 @@
 	var/T3 = multiplier * 120
 	sleep(5)
 	if(multiplier >= 75)
-		tesla_zap(holder.my_atom, 7, T1, tesla_flags)
+		tesla_zap(holder.my_atom, 7, T1, zap_flags)
 		playsound(holder.my_atom, 'sound/machines/defib_zap.ogg', 50, 1)
 		sleep(15)
 	if(multiplier >= 40)
-		tesla_zap(holder.my_atom, 7, T2, tesla_flags)
+		tesla_zap(holder.my_atom, 7, T2, zap_flags)
 		playsound(holder.my_atom, 'sound/machines/defib_zap.ogg', 50, 1)
 		sleep(15)
 	if(multiplier >= 10)			//10 units minimum for lightning, 40 units for secondary blast, 75 units for tertiary blast.
-		tesla_zap(holder.my_atom, 7, T3, tesla_flags)
+		tesla_zap(holder.my_atom, 7, T3, zap_flags)
 		playsound(holder.my_atom, 'sound/machines/defib_zap.ogg', 50, 1)
 	..()
 
