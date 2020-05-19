@@ -3807,7 +3807,8 @@
 	movement_type = 1;
 	name = "Sergeant Araneus";
 	real_name = "Sergeant Araneus";
-	response_help = "pets";
+	response_help_continuous = "pets";
+	response_help_simple = "pet";
 	turns_per_move = 10
 	},
 /turf/open/floor/carpet,
@@ -6660,9 +6661,7 @@
 /obj/structure/cable/yellow{
 	icon_state = "2-8"
 	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden,
 /turf/open/floor/plasteel/showroomfloor,
 /area/security/warden)
 "amc" = (
@@ -7778,9 +7777,6 @@
 "aop" = (
 /obj/structure/bed,
 /obj/item/bedsheet,
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 9
-	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
@@ -7791,6 +7787,9 @@
 /obj/effect/turf_decal/tile/red,
 /obj/effect/turf_decal/tile/red{
 	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
+	dir = 4
 	},
 /turf/open/floor/plasteel/white,
 /area/security/brig)
@@ -9147,6 +9146,7 @@
 /area/maintenance/port/fore)
 "aqY" = (
 /obj/machinery/computer/security/labor,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel/dark,
 /area/security/brig)
 "aqZ" = (
@@ -10144,14 +10144,6 @@
 /obj/structure/chair,
 /turf/open/floor/plasteel/grimy,
 /area/security/main)
-"asN" = (
-/obj/structure/chair,
-/obj/machinery/computer/security/telescreen/interrogation{
-	dir = 1;
-	pixel_y = -30
-	},
-/turf/open/floor/plasteel/grimy,
-/area/security/main)
 "asO" = (
 /obj/item/paper_bin{
 	pixel_x = -3;
@@ -10708,7 +10700,9 @@
 /turf/open/floor/plating,
 /area/security/main)
 "atZ" = (
-/obj/effect/spawner/structure/window/reinforced/tinted,
+/obj/effect/spawner/structure/window/reinforced/tinted/electrochromatic{
+	electrochromatic_id = "!interrogation_room"
+	},
 /turf/open/floor/plating,
 /area/security/main)
 "aua" = (
@@ -11924,9 +11918,6 @@
 /turf/open/floor/plating,
 /area/maintenance/fore)
 "awC" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on{
-	dir = 1
-	},
 /obj/machinery/light/small{
 	dir = 1
 	},
@@ -14823,12 +14814,18 @@
 /obj/structure/cable/yellow{
 	icon_state = "2-8"
 	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
 /turf/open/floor/plasteel/dark,
 /area/security/brig)
 "aCr" = (
 /obj/machinery/door/airlock/security{
 	name = "Court Cell";
 	req_access_txt = "63"
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
 	},
 /turf/open/floor/plasteel/dark,
 /area/security/brig)
@@ -45054,7 +45051,7 @@
 /turf/open/floor/plating,
 /area/maintenance/port)
 "bLe" = (
-/obj/machinery/vending/autodrobe/all_access,
+/obj/machinery/vending/autodrobe,
 /turf/open/floor/plating,
 /area/maintenance/port)
 "bLf" = (
@@ -46092,7 +46089,7 @@
 /area/bridge/showroom/corporate)
 "bNg" = (
 /obj/machinery/light_switch{
-	pixel_y = 24
+	pixel_y = 25
 	},
 /obj/machinery/light/small{
 	dir = 1
@@ -52691,7 +52688,9 @@
 /area/maintenance/starboard)
 "caX" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/obj/machinery/light_switch,
+/obj/machinery/light_switch{
+	pixel_y = 25
+	},
 /turf/closed/wall,
 /area/maintenance/disposal/incinerator)
 "caY" = (
@@ -57077,7 +57076,7 @@
 /turf/open/floor/plating/airless,
 /area/engine/atmos)
 "cjp" = (
-/obj/machinery/vending/boozeomat/all_access,
+/obj/machinery/vending/boozeomat,
 /turf/open/floor/wood,
 /area/maintenance/port/aft)
 "cjq" = (
@@ -62405,7 +62404,7 @@
 	dir = 10
 	},
 /obj/machinery/light_switch{
-	pixel_y = 24
+	pixel_y = 25
 	},
 /obj/effect/turf_decal/tile/blue,
 /obj/effect/turf_decal/tile/blue{
@@ -63920,7 +63919,7 @@
 	dir = 8
 	},
 /obj/machinery/light_switch{
-	pixel_y = 24
+	pixel_y = 25
 	},
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
@@ -66312,6 +66311,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
+/obj/structure/sign/warning/biohazard,
 /turf/closed/wall,
 /area/science/mixing)
 "cAM" = (
@@ -66336,14 +66336,6 @@
 "cAO" = (
 /obj/structure/chair{
 	dir = 4
-	},
-/obj/machinery/computer/security/telescreen{
-	desc = "Used for watching the test chamber.";
-	dir = 8;
-	layer = 4;
-	name = "Test Chamber Telescreen";
-	network = list("toxins");
-	pixel_x = 30
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
@@ -66768,14 +66760,6 @@
 	pixel_x = 24;
 	pixel_y = -24
 	},
-/obj/machinery/computer/security/telescreen{
-	desc = "Used for watching the test chamber.";
-	dir = 8;
-	layer = 4;
-	name = "Test Chamber Telescreen";
-	network = list("toxins");
-	pixel_x = 30
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
@@ -67188,6 +67172,15 @@
 	req_access_txt = "7"
 	},
 /obj/effect/turf_decal/loading_area,
+/obj/machinery/computer/security/telescreen{
+	desc = "Used for watching the test chamber.";
+	dir = 4;
+	layer = 4;
+	name = "Test Chamber Telescreen";
+	network = list("toxins");
+	pixel_x = -32;
+	pixel_y = 0
+	},
 /turf/open/floor/plasteel,
 /area/science/mixing)
 "cCH" = (
@@ -74543,7 +74536,7 @@
 	dir = 8
 	},
 /obj/machinery/light_switch{
-	pixel_x = -23
+	pixel_y = 25
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
@@ -79861,13 +79854,13 @@
 	c_tag = "Chapel - Funeral Parlour";
 	dir = 8
 	},
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 4
+	},
 /turf/open/floor/plasteel/dark,
 /area/chapel/main)
 "djk" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 5
-	},
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden,
 /turf/closed/wall,
 /area/chapel/main)
 "djr" = (
@@ -80610,9 +80603,11 @@
 /area/security/brig)
 "dBH" = (
 /obj/effect/spawner/structure/window/reinforced,
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/structure/cable/yellow{
 	icon_state = "0-4"
+	},
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
+	dir = 8
 	},
 /turf/open/floor/plating,
 /area/security/brig)
@@ -81872,6 +81867,14 @@
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/port)
+"kRi" = (
+/obj/structure/chair,
+/obj/machinery/button/electrochromatic{
+	id = "!interrogation_room";
+	pixel_x = -25
+	},
+/turf/open/floor/plasteel/grimy,
+/area/security/main)
 "kVo" = (
 /obj/structure/cable/yellow{
 	icon_state = "1-2"
@@ -82162,6 +82165,12 @@
 /obj/item/storage/fancy/candle_box,
 /turf/open/floor/engine/cult,
 /area/library)
+"oaM" = (
+/obj/machinery/computer/security/telescreen/interrogation{
+	pixel_y = 32
+	},
+/turf/open/floor/plasteel/grimy,
+/area/security/main)
 "obb" = (
 /obj/structure/target_stake,
 /obj/effect/turf_decal/stripes/line{
@@ -82215,6 +82224,10 @@
 /obj/machinery/status_display/supply,
 /turf/closed/wall,
 /area/quartermaster/sorting)
+"orJ" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/turf/closed/wall,
+/area/security/brig)
 "oub" = (
 /obj/structure/sign/poster/official/random,
 /turf/closed/wall,
@@ -82299,6 +82312,12 @@
 	},
 /turf/closed/wall/r_wall,
 /area/maintenance/disposal/incinerator)
+"pvk" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/turf/closed/wall/r_wall,
+/area/security/detectives_office)
 "pvA" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -99936,7 +99955,7 @@ aIg
 aIg
 aKN
 dIs
-aIg
+aUe
 dIs
 aQg
 aIg
@@ -104390,7 +104409,7 @@ cLa
 cPF
 cQb
 djj
-djr
+cQb
 cRq
 cPA
 aaa
@@ -107370,7 +107389,7 @@ akv
 alO
 anf
 aop
-ahx
+orJ
 aqY
 asn
 atK
@@ -112777,7 +112796,7 @@ axp
 dBF
 azO
 aBi
-ajm
+axw
 ajm
 ajm
 ajm
@@ -113291,7 +113310,7 @@ axr
 ayF
 ayF
 ayF
-ayF
+pvk
 ayJ
 ayJ
 aGt
@@ -115339,7 +115358,7 @@ aiJ
 aoK
 aqa
 arv
-asM
+kRi
 atZ
 avk
 aww
@@ -115595,8 +115614,8 @@ amr
 anD
 aoL
 ajD
-arv
-asN
+oaM
+asM
 atZ
 avk
 awx
@@ -118507,7 +118526,7 @@ krD
 czD
 cAL
 cBG
-cyy
+czD
 czD
 czD
 cFu

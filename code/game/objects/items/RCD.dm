@@ -143,8 +143,8 @@ RLD
 	//if user can't be seen from A (only checks surroundings' opaqueness) and can't see A.
 	//jarring, but it should stop people from targetting atoms they can't see...
 	//excluding darkness, to allow RLD to be used to light pitch black dark areas.
-	if(!((user in view(view_range, A)) || (user in viewers(view_range, A))))
-		to_chat(user, "<span class='warning'>You focus, pointing \the [src] at whatever outside your field of vision in the given direction... to no avail.</span>")
+	if(!((user in view(view_range, A)) || (user in fov_viewers(view_range, A))))
+		to_chat(user, "<span class='warning'>You focus, pointing \the [src] at whatever outside your field of vision in that direction... to no avail.</span>")
 		return FALSE
 	return TRUE
 
@@ -154,6 +154,7 @@ RLD
 	icon_state = "rcd"
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
+	custom_price = 900
 	max_matter = 160
 	item_flags = NO_MAT_REDEMPTION | NOBLUDGEON
 	has_ammobar = TRUE

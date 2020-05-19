@@ -622,6 +622,7 @@
 	item_state = "zippo"
 	w_class = WEIGHT_CLASS_TINY
 	slot_flags = ITEM_SLOT_BELT
+	custom_price = 20
 
 /obj/item/storage/box/matches/ComponentInitialize()
 	. = ..()

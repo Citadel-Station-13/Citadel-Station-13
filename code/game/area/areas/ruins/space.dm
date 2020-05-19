@@ -129,7 +129,26 @@
 	icon_state = "crew_quarters"
 
 
+//Ruin of Space Diner
 
+/area/ruin/space/diner
+	name = "Space Diner"
+
+/area/ruin/space/diner/interior
+	name = "Space Diner"
+	icon_state = "maintbar"
+	has_gravity = STANDARD_GRAVITY
+	blob_allowed = FALSE //Nope, no winning in the diner as a blob. Gotta eat the main station.
+
+/area/ruin/space/diner/solars
+	requires_power = FALSE
+	dynamic_lighting = DYNAMIC_LIGHTING_IFSTARLIGHT
+	valid_territory = FALSE
+	blob_allowed = FALSE
+	flags_1 = NONE
+	ambientsounds = ENGINEERING
+	name = "Space Diner Solar Array"
+	icon_state = "yellow"
 
 //Ruin of Derelict Oupost
 
