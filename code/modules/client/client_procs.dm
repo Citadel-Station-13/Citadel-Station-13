@@ -262,10 +262,10 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 
 	if(prefs)
 		prefs.parent = src
-		update_movement_keys()
 	else
 		prefs = new /datum/preferences(src)
 		GLOB.preferences_datums[ckey] = prefs
+	update_movement_keys(prefs)
 
 	prefs.last_ip = address				//these are gonna be used for banning
 	prefs.last_id = computer_id			//these are gonna be used for banning
