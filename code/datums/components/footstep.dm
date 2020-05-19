@@ -1,26 +1,52 @@
+///Footstep component. Plays footsteps at parents location when it is appropriate.
 /datum/component/footstep
+	///How many steps the parent has taken since the last time a footstep was played
 	var/steps = 0
+	///volume determines the extra volume of the footstep. This is multiplied by the base volume, should there be one.
 	var/volume
+	///e_range stands for extra range - aka how far the sound can be heard. This is added to the base value and ignored if there isn't a base value.
 	var/e_range
+	///footstep_type is a define which determines what kind of sounds should get chosen.
+	var/footstep_type
+	///This can be a list OR a soundfile OR null. Determines whatever sound gets played.
+	var/footstep_sounds
 
-/datum/component/footstep/Initialize(volume_ = 0.5, e_range_ = -1)
+/datum/component/footstep/Initialize(footstep_type_ = FOOTSTEP_MOB_BAREFOOT, volume_ = 0.5, e_range_ = -1)
 	if(!isliving(parent))
 		return COMPONENT_INCOMPATIBLE
 	volume = volume_
 	e_range = e_range_
-	RegisterSignal(parent, list(COMSIG_MOVABLE_MOVED), .proc/play_footstep)
+	footstep_type = footstep_type_
+	switch(footstep_type)
+		if(FOOTSTEP_MOB_HUMAN)
+			if(!ishuman(parent))
+				return COMPONENT_INCOMPATIBLE
+			RegisterSignal(parent, COMSIG_MOVABLE_MOVED, .proc/play_humanstep)
+			return
+		if(FOOTSTEP_MOB_CLAW)
+			footstep_sounds = GLOB.clawfootstep
+		if(FOOTSTEP_MOB_BAREFOOT)
+			footstep_sounds = GLOB.barefootstep
+		if(FOOTSTEP_MOB_HEAVY)
+			footstep_sounds = GLOB.heavyfootstep
+		if(FOOTSTEP_MOB_SHOE)
+			footstep_sounds = GLOB.footstep
+		if(FOOTSTEP_MOB_SLIME)
+			footstep_sounds = 'sound/effects/footstep/slime1.ogg'
+		if(FOOTSTEP_MOB_CRAWL)
+			footstep_sounds = 'sound/effects/footstep/crawl1.ogg'
+	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, .proc/play_simplestep) //Note that this doesn't get called for humans.
 
-/datum/component/footstep/proc/play_footstep()
+///Prepares a footstep. Determines if it should get played. Returns the turf it should get played on. Note that it is always a /turf/open
+/datum/component/footstep/proc/prepare_step()
 	var/turf/open/T = get_turf(parent)
 	if(!istype(T))
 		return
 
 	var/mob/living/LM = parent
-	var/v = volume
-	var/e = e_range
 	if(!T.footstep || LM.buckled || !CHECK_MOBILITY(LM, MOBILITY_STAND) || LM.buckled || LM.throwing || (LM.movement_type & (VENTCRAWLING | FLYING)))
 		if (LM.lying && !LM.buckled && !(!T.footstep || LM.movement_type & (VENTCRAWLING | FLYING))) //play crawling sound if we're lying
-			playsound(T, 'sound/effects/footstep/crawl1.ogg', 15 * v)
+			playsound(T, 'sound/effects/footstep/crawl1.ogg', 15 * volume)
 		return
 
 	if(HAS_TRAIT(LM, TRAIT_SILENT_STEP))
@@ -30,79 +56,83 @@
 		var/mob/living/carbon/C = LM
 		if(!C.get_bodypart(BODY_ZONE_L_LEG) && !C.get_bodypart(BODY_ZONE_R_LEG))
 			return
-		if(ishuman(C) && C.m_intent == MOVE_INTENT_WALK)
-			v /= 2
-			e -= 5
+		if(C.m_intent == MOVE_INTENT_WALK)
+			return
 	steps++
 
-	if(steps >= 3)
+	if(steps >= 6)
 		steps = 0
 
-	else
+	if(steps % 2)
 		return
 
-	if(prob(80) && !LM.has_gravity(T)) // don't need to step as often when you hop around
+	if(steps != 0 && !LM.has_gravity(T)) // don't need to step as often when you hop around
 		return
+	return T
 
-	//begin playsound shenanigans//
-
-	//for barefooted non-clawed mobs like monkeys
-	if(isbarefoot(LM))
-		playsound(T, pick(GLOB.barefootstep[T.barefootstep][1]),
-			GLOB.barefootstep[T.barefootstep][2] * v,
-			TRUE,
-			GLOB.barefootstep[T.barefootstep][3] + e)
+/datum/component/footstep/proc/play_simplestep()
+	var/turf/open/T = prepare_step()
+	if(!T)
 		return
-
-	//for xenomorphs, dogs, and other clawed mobs
-	if(isclawfoot(LM))
-		if(isalienadult(LM)) //xenos are stealthy and get quieter footsteps
-			v /= 3
-			e -= 5
-
-		playsound(T, pick(GLOB.clawfootstep[T.clawfootstep][1]),
-				GLOB.clawfootstep[T.clawfootstep][2] * v,
-				TRUE,
-				GLOB.clawfootstep[T.clawfootstep][3] + e)
+	if(isfile(footstep_sounds) || istext(footstep_sounds))
+		playsound(T, footstep_sounds, volume)
 		return
-
-	//for megafauna and other large and imtimidating mobs such as the bloodminer
-	if(isheavyfoot(LM))
-		playsound(T, pick(GLOB.heavyfootstep[T.heavyfootstep][1]),
-				GLOB.heavyfootstep[T.heavyfootstep][2] * v,
-				TRUE,
-				GLOB.heavyfootstep[T.heavyfootstep][3] + e)
+	var/turf_footstep
+	switch(footstep_type)
+		if(FOOTSTEP_MOB_CLAW)
+			turf_footstep = T.clawfootstep
+		if(FOOTSTEP_MOB_BAREFOOT)
+			turf_footstep = T.barefootstep
+		if(FOOTSTEP_MOB_HEAVY)
+			turf_footstep = T.heavyfootstep
+		if(FOOTSTEP_MOB_SHOE)
+			turf_footstep = T.footstep
+	if(!turf_footstep)
 		return
+	playsound(T, pick(footstep_sounds[turf_footstep][1]), footstep_sounds[turf_footstep][2] * volume, TRUE, footstep_sounds[turf_footstep][3] + e_range)
 
-	//for slimes
-	if(isslime(LM))
-		playsound(T, 'sound/effects/footstep/slime1.ogg', 15 * v)
+/datum/component/footstep/proc/play_humanstep()
+	var/turf/open/T = prepare_step()
+	if(!T)
 		return
-
-	//for (simple) humanoid mobs (clowns, russians, pirates, etc.)
-	if(isshoefoot(LM))
-		if(!ishuman(LM))
-			playsound(T, pick(GLOB.footstep[T.footstep][1]),
-				GLOB.footstep[T.footstep][2] * v,
-				TRUE,
-				GLOB.footstep[T.footstep][3] + e)
-			return
-		if(ishuman(LM)) //for proper humans, they're special
-			var/mob/living/carbon/human/H = LM
-			var/feetCover = (H.wear_suit && (H.wear_suit.body_parts_covered & FEET)) || (H.w_uniform && (H.w_uniform.body_parts_covered & FEET) || (H.shoes && (H.shoes.body_parts_covered & FEET)))
-
-			if (H.dna.features["taur"] == "Naga" || H.dna.features["taur"] == "Tentacle") //are we a naga or tentacle taur creature
-				playsound(T, 'sound/effects/footstep/crawl1.ogg', 15 * v)
+	var/mob/living/carbon/human/H = parent
+	var/list/L = GLOB.barefootstep
+	var/turf_footstep = T.barefootstep
+	var/special = FALSE
+	if(H.physiology.footstep_type)
+		switch(H.physiology.footstep_type)
+			if(FOOTSTEP_MOB_CLAW)
+				turf_footstep = T.clawfootstep
+				L = GLOB.clawfootstep
+			if(FOOTSTEP_MOB_BAREFOOT)
+				turf_footstep = T.barefootstep
+				L = GLOB.barefootstep
+			if(FOOTSTEP_MOB_HEAVY)
+				turf_footstep = T.heavyfootstep
+				L = GLOB.heavyfootstep
+			if(FOOTSTEP_MOB_SHOE)
+				turf_footstep = T.footstep
+				L = GLOB.footstep
+			if(FOOTSTEP_MOB_SLIME)
+				playsound(T, 'sound/effects/footstep/slime1.ogg', 50 * volume)
 				return
+			if(FOOTSTEP_MOB_CRAWL)
+				playsound(T, 'sound/effects/footstep/crawl1.ogg', 50 * volume)
+				return
+		special = TRUE
+	else
+		var/feetCover = (H.wear_suit && (H.wear_suit.body_parts_covered & FEET)) || (H.w_uniform && (H.w_uniform.body_parts_covered & FEET) || (H.shoes && (H.shoes.body_parts_covered & FEET)))
+		if(feetCover) //are we wearing shoes
+			playsound(T, pick(GLOB.footstep[T.footstep][1]),
+				GLOB.footstep[T.footstep][2] * volume,
+				TRUE,
+				GLOB.footstep[T.footstep][3] + e_range)
+			return
 
-			if(feetCover) //are we wearing shoes
-				playsound(T, pick(GLOB.footstep[T.footstep][1]),
-					GLOB.footstep[T.footstep][2] * v,
-					TRUE,
-					GLOB.footstep[T.footstep][3] + e)
-
-			if(!feetCover) //are we NOT wearing shoes
-				playsound(T, pick(GLOB.barefootstep[T.barefootstep][1]),
-					GLOB.barefootstep[T.barefootstep][2] * v,
-					TRUE,
-					GLOB.barefootstep[T.barefootstep][3] + e)
+	if(!special && H.dna.species.special_step_sounds)
+		playsound(T, pick(H.dna.species.special_step_sounds), 50, TRUE)
+	else
+		playsound(T, pick(L[turf_footstep][1]),
+			L[turf_footstep][2] * volume,
+			TRUE,
+			L[turf_footstep][3] + e_range)

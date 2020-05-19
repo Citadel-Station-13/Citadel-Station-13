@@ -23,7 +23,8 @@
 	obj_damage = 40
 	melee_damage_lower = 15
 	melee_damage_upper = 15
-	attacktext = "slices"
+	attack_verb_continuous = "slices"
+	attack_verb_simple = "slice"
 	attack_sound = 'sound/weapons/bladeslice.ogg'
 	vision_range = 7
 	aggro_vision_range = 7
@@ -55,8 +56,9 @@
 		if(isclosedturf(T))
 			continue
 		possible_ends |= T
-	var/turf/end = pick(possible_ends)
-	do_teleport(src, end, 0,  channel=TELEPORT_CHANNEL_BLUESPACE, forced = TRUE)
+	if(length(possible_ends))
+		var/turf/end = pick(possible_ends)
+		do_teleport(src, end, 0,  channel=TELEPORT_CHANNEL_BLUESPACE, forced = TRUE)
 	SLEEP_CHECK_DEATH(8)
 	return ..()
 

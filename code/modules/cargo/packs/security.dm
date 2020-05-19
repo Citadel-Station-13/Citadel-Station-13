@@ -10,6 +10,7 @@
 	group = "Security"
 	access = ACCESS_SECURITY
 	crate_type = /obj/structure/closet/crate/secure/gear
+	can_private_buy = FALSE
 
 /datum/supply_pack/security/ammo
 	name = "Ammo Crate - General Purpose"
@@ -57,6 +58,7 @@
 					/obj/item/toy/crayon/white,
 					/obj/item/clothing/head/fedora/det_hat)
 	crate_name = "forensics crate"
+	can_private_buy = TRUE
 
 /datum/supply_pack/security/helmets
 	name = "Helmets Crate"
@@ -99,11 +101,11 @@
 	crate_type = /obj/structure/closet/crate/internals
 
 /datum/supply_pack/security/russianmosin
-	name = "Russian Minutemen Gear"
-	desc = "An old russian Minutemen crate, comes with a full russian outfit, a mosin and a stripper clip."
+	name = "Russian Partisan Gear"
+	desc = "An old russian partisan equipment crate, comes with a full russian outfit, a loaded surplus rifle and a second magazine."
 	contraband = TRUE
 	access = FALSE
-	cost = 6500 //
+	cost = 6500
 	contains = list(/obj/item/clothing/suit/armor/navyblue/russian,
 					/obj/item/clothing/shoes/combat,
 					/obj/item/clothing/head/ushanka,
@@ -111,8 +113,8 @@
 					/obj/item/clothing/head/helmet/alt,
 					/obj/item/clothing/gloves/tackler/combat/insulated,
 					/obj/item/clothing/mask/gas,
-					/obj/item/gun/ballistic/shotgun/boltaction,
-					/obj/item/ammo_box/a762)
+					/obj/item/ammo_box/magazine/m10mm/rifle,
+					/obj/item/gun/ballistic/automatic/surplus)
 	crate_name = "surplus russian gear"
 	crate_type = /obj/structure/closet/crate/internals
 
@@ -134,6 +136,7 @@
 					/obj/item/grenade/barrier)
 	cost = 2000
 	crate_name = "security barriers crate"
+	can_private_buy = TRUE
 
 /datum/supply_pack/security/securityclothes
 	name = "Security Clothing Crate"
@@ -152,6 +155,7 @@
 					/obj/item/clothing/suit/armor/hos/navyblue,
 					/obj/item/clothing/head/beret/sec/navyhos)
 	crate_name = "security clothing crate"
+	can_private_buy = TRUE
 
 /datum/supply_pack/security/supplies
 	name = "Security Supplies Crate"
@@ -179,6 +183,7 @@
 	contains = list(/obj/item/clothing/head/helmet/justice,
 					/obj/item/clothing/mask/gas/sechailer)
 	crate_name = "security clothing crate"
+	can_private_buy = TRUE
 
 /datum/supply_pack/security/baton
 	name = "Stun Batons Crate"
@@ -207,3 +212,19 @@
 					/obj/item/storage/box/wall_flash,
 					/obj/item/storage/box/wall_flash)
 	crate_name = "wall-mounted flash crate"
+
+/datum/supply_pack/security/hunting
+	name = "Hunting Gear"
+	desc = "Even in space, we can find prey to hunt, this crate contains everthing a fine hunter needs to have a sporting time. This crate needs armory access to open. A true huntter only needs a fine bottle of cognac, a nice coat, some good o' cigars, and of cource a hunting shotgun. "
+	cost = 3500
+	contraband = TRUE
+	contains = list(/obj/item/clothing/head/flatcap,
+					/obj/item/clothing/suit/hooded/wintercoat/captain,
+					/obj/item/reagent_containers/food/drinks/bottle/cognac,
+					/obj/item/storage/fancy/cigarettes/cigars/havana,
+					/obj/item/clothing/gloves/color/white,
+					/obj/item/clothing/under/rank/civilian/curator,
+					/obj/item/gun/ballistic/shotgun/lethal)
+	access = ACCESS_ARMORY
+	crate_name = "sporting crate"
+	crate_type = /obj/structure/closet/crate/secure // Would have liked a wooden crate but access >:(
