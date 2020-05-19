@@ -14,7 +14,8 @@
 	move_to_delay = 10
 	ranged = 1
 	ranged_cooldown_time = 60
-	friendly = "wails at"
+	friendly_verb_continuous = "wails at"
+	friendly_verb_simple = "wail at"
 	speak_emote = list("bellows")
 	speed = 3
 	maxHealth = 300
@@ -23,7 +24,8 @@
 	obj_damage = 100
 	melee_damage_lower = 18
 	melee_damage_upper = 18
-	attacktext = "pulverizes"
+	attack_verb_continuous = "pulverizes"
+	attack_verb_simple = "pulverize"
 	attack_sound = 'sound/weapons/punch1.ogg'
 	throw_message = "does nothing to the rocky hide of the"
 	vision_range = 4
@@ -35,7 +37,7 @@
 	var/pre_attack_icon = "Goliath_preattack"
 	loot = list(/obj/item/stack/sheet/animalhide/goliath_hide)
 
-	do_footstep = TRUE
+	footstep_type = FOOTSTEP_MOB_HEAVY
 
 /mob/living/simple_animal/hostile/asteroid/goliath/Life()
 	. = ..()

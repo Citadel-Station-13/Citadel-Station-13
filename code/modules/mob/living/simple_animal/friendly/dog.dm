@@ -2,9 +2,12 @@
 
 /mob/living/simple_animal/pet/dog
 	mob_biotypes = MOB_ORGANIC|MOB_BEAST
-	response_help  = "pets"
-	response_disarm = "bops"
-	response_harm   = "kicks"
+	response_help_continuous = "pets"
+	response_help_simple = "pet"
+	response_disarm_continuous = "bops"
+	response_disarm_simple = "bop"
+	response_harm_continuous = "kicks"
+	response_harm_simple = "kick"
 	speak = list("YAP", "Woof!", "Bark!", "AUUUUUU")
 	speak_emote = list("barks", "woofs")
 	emote_hear = list("barks!", "woofs!", "yaps.","pants.")
@@ -15,7 +18,7 @@
 	turns_per_move = 10
 	var/held_icon = "corgi"
 
-	do_footstep = TRUE
+	footstep_type = FOOTSTEP_MOB_CLAW
 
 /mob/living/simple_animal/pet/dog/ComponentInitialize()
 	. = ..()
@@ -332,9 +335,6 @@
 	desc = "It's the HoP's beloved corgi."
 	var/turns_since_scan = 0
 	var/obj/movement_target
-	response_help  = "pets"
-	response_disarm = "bops"
-	response_harm   = "kicks"
 	gold_core_spawnable = NO_SPAWN
 	unique_pet = TRUE
 	var/age = 0
@@ -604,9 +604,6 @@
 	icon_state = "lisa"
 	icon_living = "lisa"
 	icon_dead = "lisa_dead"
-	response_help  = "pets"
-	response_disarm = "bops"
-	response_harm   = "kicks"
 	var/turns_since_scan = 0
 	var/puppies = 0
 	held_icon = "lisa"

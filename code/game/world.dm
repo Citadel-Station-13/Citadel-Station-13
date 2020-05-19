@@ -1,6 +1,7 @@
 #define RESTART_COUNTER_PATH "data/round_counter.txt"
 
 GLOBAL_VAR(restart_counter)
+GLOBAL_VAR_INIT(tgs_initialized, FALSE)
 
 GLOBAL_VAR(topic_status_lastcache)
 GLOBAL_LIST(topic_status_cache)
@@ -23,9 +24,10 @@ GLOBAL_LIST(topic_status_cache)
 
 	make_datum_references_lists()	//initialises global lists for referencing frequently used datums (so that we only ever do it once)
 
-	TgsNew(minimum_required_security_level = TGS_SECURITY_TRUSTED)
 
 	GLOB.revdata = new
+
+	InitTgs()
 
 	config.Load(params[OVERRIDE_CONFIG_DIRECTORY_PARAMETER])
 
@@ -61,6 +63,15 @@ GLOBAL_LIST(topic_status_cache)
 
 	if(TEST_RUN_PARAMETER in params)
 		HandleTestRun()
+
+/world/proc/InitTgs()
+	TgsNew(new /datum/tgs_event_handler/impl, TGS_SECURITY_TRUSTED)
+	GLOB.revdata.load_tgs_info()
+#ifdef USE_CUSTOM_ERROR_HANDLER
+	if (TgsAvailable())
+		world.log = file("[GLOB.log_directory]/dd.log") //not all runtimes trigger world/Error, so this is the only way to ensure we can see all of them.
+#endif
+	GLOB.tgs_initialized = TRUE
 
 /world/proc/HandleTestRun()
 	//trigger things to run the whole process
@@ -223,15 +234,16 @@ GLOBAL_LIST(topic_status_cache)
 	qdel(src)	//shut it down
 
 /world/Reboot(reason = 0, fast_track = FALSE)
-	TgsReboot()
 	if (reason || fast_track) //special reboot, do none of the normal stuff
 		if (usr)
 			log_admin("[key_name(usr)] Has requested an immediate world restart via client side debugging tools")
 			message_admins("[key_name_admin(usr)] Has requested an immediate world restart via client side debugging tools")
-		to_chat(world, "<span class='boldannounce'>Rebooting World immediately due to host request</span>")
+		to_chat(world, "<span class='boldannounce'>Rebooting World immediately due to host request.</span>")
 	else
 		to_chat(world, "<span class='boldannounce'>Rebooting world...</span>")
 		Master.Shutdown()	//run SS shutdowns
+
+	TgsReboot()
 
 	if(TEST_RUN_PARAMETER in params)
 		FinishTestRun()
