@@ -6,7 +6,10 @@ SUBSYSTEM_DEF(input)
 	priority = FIRE_PRIORITY_INPUT
 	runlevels = RUNLEVELS_DEFAULT | RUNLEVEL_LOBBY
 
+	/// Macro set for hotkeys
 	var/list/macro_set
+	/// Macro set for classic. We don't want ANY normal key bound, as it won't be properly overridden.
+	var/list/classic_set
 
 /datum/controller/subsystem/input/Initialize()
 	setup_default_macro_sets()
@@ -31,6 +34,14 @@ SUBSYSTEM_DEF(input)
 	"Y" = "whisper",
 	"Ctrl+O" = "looc",
 	"Back" = "\".winset \\\"input.text=\\\"\\\"\\\"\"",
+	"Tab" = "\".winset \\\"input.focus=true?map.focus=true input.background-color=[COLOR_INPUT_DISABLED]:input.focus=true input.background-color=[COLOR_INPUT_ENABLED]\\\"\"",
+	"Escape" = "\".winset \\\"input.text=\\\"\\\"\\\"\"")
+	classic_set = list(
+	"Any" = "\"KeyDown \[\[*\]\]\"",
+	"Any+UP" = "\"KeyUp \[\[*\]\]\"",
+	"Ctrl+T" = "say_indicator",
+	"Ctrl+M" = "me_indicator",
+	"Ctrl+O" = "looc",
 	"Tab" = "\".winset \\\"input.focus=true?map.focus=true input.background-color=[COLOR_INPUT_DISABLED]:input.focus=true input.background-color=[COLOR_INPUT_ENABLED]\\\"\"",
 	"Escape" = "\".winset \\\"input.text=\\\"\\\"\\\"\"")
 

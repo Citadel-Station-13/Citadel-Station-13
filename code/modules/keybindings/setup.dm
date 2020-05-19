@@ -25,7 +25,7 @@
 
 	erase_all_macros()
 
-	var/list/macro_set = SSinput.macro_set
+	var/list/macro_set = prefs?.hotkeys? SSinput.macro_set : SSinput.classic_set
 	for(var/k in 1 to length(macro_set))
 		var/key = macro_set[k]
 		var/command = macro_set[key]
