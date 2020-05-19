@@ -56,10 +56,11 @@
 	if(preop(user, target, target_zone, tool, surgery) == -1)
 		surgery.step_in_progress = FALSE
 		return FALSE
+	var/xp_mult = 1
 	if(tool)
-		speed_mod = tool.toolspeed
+		xp_mult = speed_mod = tool.toolspeed //faster tools mean faster surgeries, but also less experience.
 	if(user.mind)
-		speed_mod = user.mind.action_skill_mod(/datum/skill/numerical/surgery, speed_mod, THRESHOLD_COMPETENT, FALSE)
+		speed_mod = user.mind.action_skill_mod(/datum/skill/numerical/surgery, speed_mod, THRESHOLD_UNTRAINED, FALSE)
 	if(do_after(user, time * speed_mod, target = target))
 		var/prob_chance = 100
 		if(implement_type)	//this means it isn't a require hand or any item step.
@@ -68,7 +69,9 @@
 
 		if((prob(prob_chance) || (iscyborg(user) && !silicons_obey_prob)) && chem_check(target) && !try_to_fail)
 			if(success(user, target, target_zone, tool, surgery))
-				user.mind?.auto_gain_experience(/datum/skill/numerical/surgery, SKILL_GAIN_SURGERY_PER_STEP)
+				if(repeatable)
+					xp_mult *= 0.33 //Spammable surgeries award less experience.
+				user.mind?.auto_gain_experience(/datum/skill/numerical/surgery, SKILL_GAIN_SURGERY_PER_STEP * xp_mult)
 				advance = TRUE
 		else
 			if(failure(user, target, target_zone, tool, surgery))

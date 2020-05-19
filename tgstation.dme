@@ -591,6 +591,7 @@
 #include "code\datums\skills\medical.dm"
 #include "code\datums\skills\modifiers\job.dm"
 #include "code\datums\skills\modifiers\mood.dm"
+#include "code\datums\skills\modifiers\organs.dm"
 #include "code\datums\status_effects\buffs.dm"
 #include "code\datums\status_effects\debuffs.dm"
 #include "code\datums\status_effects\gas.dm"
