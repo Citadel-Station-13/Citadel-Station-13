@@ -3,8 +3,6 @@
 	Lets you read PDA and request console messages.
 */
 
-#define LINKED_SERVER_NONRESPONSIVE  (!linkedServer || (linkedServer.stat & (NOPOWER|BROKEN)))
-
 // The monitor itself.
 /obj/machinery/computer/message_monitor
 	name = "message monitor console"
@@ -99,9 +97,10 @@
 		data_out["canhack"] = TRUE
 	if(hacking)
 		data_out["hacking"] = TRUE
+		data_out["borg"] = (isAI(user) || iscyborg(user))
 		var/data = ""
 		if(isAI(user) || iscyborg(user)) //screen 2
-			data += "Brute-forcing for server key.<br> It will take 20 seconds for every character that the password has."
+			data += "Brute-forcing for server key. It will take 20 seconds for every character that the password has."
 			data += "In the meantime, this console can reveal your true intentions if you let someone access it. Make sure no humans enter the room during that time."
 		else
 			//It's the same message as the one above but in base64. Base64 is better than bin, change my mind
@@ -129,7 +128,7 @@
 		sender = customsender,
 		job = customjob,
 		message = custommessage,
-		recepient = customrecepient.owner
+		recepient = (customrecepient ? "[customrecepient.owner] ([customrecepient.ownjob])" : null)
 	)
 
 	if(!linkedServer)
@@ -140,7 +139,7 @@
 		name = linkedServer.name,
 		id = linkedServer.id,
 		ref = REF(linkedServer),
-		status = !LINKED_SERVER_NONRESPONSIVE // returns true if server is running
+		status = linkedServer.on // returns true if server is running
 	)
 	return data_out
 
@@ -187,7 +186,7 @@
 					break
 
 		if("auth")
-			if(LINKED_SERVER_NONRESPONSIVE)
+			if(!linkedServer.on)
 				message = noserver
 				return
 			if(auth)
@@ -205,7 +204,7 @@
 			if(!auth)
 				message = "WARNING: Auth failed! Please log in to change the password!"
 				return
-			else if(LINKED_SERVER_NONRESPONSIVE)
+			else if(linkedServer.on)
 				message = noserver
 				return
 
@@ -213,7 +212,7 @@
 			if(dkey && dkey != "")
 				if(linkedServer.decryptkey == dkey)
 					var/newkey = stripped_input(usr, "Please enter the new key (3 - 20 characters max):")
-					if(ISINRANGE(length(newkey), 3, 20))
+					if(!ISINRANGE(length(newkey), 3, 20))
 						message = "NOTICE: Decryption key length too long/short!"
 						return
 					if(newkey && newkey != "")
@@ -223,7 +222,7 @@
 			message = incorrectkey
 			
 		if("hack")
-			if(LINKED_SERVER_NONRESPONSIVE)
+			if(!linkedServer.on)
 				message = noserver
 				return
 
@@ -231,14 +230,13 @@
 			if(istype(S) && S.hack_software)
 				hacking = TRUE
 				//Time it takes to bruteforce is dependant on the password length.
-				var/time = 100 * length(linkedServer.decryptkey)
-				addtimer(CALLBACK(src, .proc/BruteForce, usr), time)
+				addtimer(CALLBACK(src, .proc/BruteForce, usr), (10 SECONDS) * length(linkedServer.decryptkey))
 
 		if("del_log")
 			if(!auth)
-				message = "WARNING: Auth failed! Delete abotrted!"
+				message = "WARNING: Auth failed! Delete aborted!"
 				return
-			else if(LINKED_SERVER_NONRESPONSIVE)
+			else if(!linkedServer.on)
 				message = noserver
 				return
 			
@@ -255,9 +253,9 @@
 
 		if("clear_log")
 			if(!auth)
-				message = "WARNING: Auth failed! Delete abotrted!"
+				message = "WARNING: Auth failed! Delete aborted!"
 				return
-			else if(LINKED_SERVER_NONRESPONSIVE)
+			else if(!linkedServer.on)
 				message = noserver
 				return
 
@@ -268,6 +266,9 @@
 				linkedServer.rc_msgs = list()
 			update_static_data(usr)
 		if("fake")
+			if(!auth)
+				message = "WARNING: Auth failed! Operation aborted!"
+				return
 			if("reset" in params)
 				ResetMessage()
 				return
@@ -336,7 +337,7 @@
 	var/obj/item/paper/monitorkey/MK = new(loc, linkedServer)
 	// Will help make emagging the console not so easy to get away with.
 	MK.info += "<br><br><font color='red'>�%@%(*$%&(�&?*(%&�/{}</font>"
-	addtimer(CALLBACK(src, .proc/UnmagConsole), 100 * length(linkedServer.decryptkey))
+	addtimer(CALLBACK(src, .proc/UnmagConsole), (10 SECONDS) * length(linkedServer.decryptkey))
 	message = rebootmsg
 	return TRUE
 
@@ -364,8 +365,8 @@
 
 	if(hacking || (obj_flags & EMAGGED))
 		screen = 2
-	else if(!auth || LINKED_SERVER_NONRESPONSIVE)
-		if(LINKED_SERVER_NONRESPONSIVE)
+	else if(!auth || linkedServer.on)
+		if(linkedServer.on)
 			message = noserver
 		screen = 0
 
@@ -376,7 +377,7 @@
 			var/i = 0
 			dat += "<dd><A href='?src=[REF(src)];find=1'>&#09;[++i]. Link To A Server</a></dd>"
 			if(auth)
-				if(LINKED_SERVER_NONRESPONSIVE)
+				if(linkedServer.on)
 					dat += "<dd><A>&#09;ERROR: Server not found!</A><br></dd>"
 				else
 					dat += "<dd><A href='?src=[REF(src)];view_logs=1'>&#09;[++i]. View Message Logs </a><br></dd>"
@@ -514,10 +515,11 @@
 		var/currentKey = linkedServer.decryptkey
 		to_chat(user, "<span class='warning'>Brute-force completed! The key is '[currentKey]'.</span>")
 	hacking = FALSE
-	//screen = 0 // Return the screen back to normal
+	message = ""
 
 /obj/machinery/computer/message_monitor/proc/UnmagConsole()
 	DISABLE_BITFIELD(obj_flags, EMAGGED)
+	message = ""
 
 /obj/machinery/computer/message_monitor/proc/ResetMessage()
 	customsender 	= "System Administrator"
@@ -533,7 +535,7 @@
 	if(usr.contents.Find(src) || (in_range(src, usr) && isturf(loc)) || hasSiliconAccessInArea(usr))
 		//Authenticate
 		if (href_list["auth"])
-			if(LINKED_SERVER_NONRESPONSIVE)
+			if(linkedServer.on)
 				message = noserver
 			else if(auth)
 				auth = FALSE
@@ -548,7 +550,7 @@
 
 		//Turn the server on/off.
 		if (href_list["active"])
-			if(LINKED_SERVER_NONRESPONSIVE)
+			if(linkedServer.on)
 				message = noserver
 			else if(auth)
 				linkedServer.toggled = !linkedServer.toggled
@@ -569,28 +571,28 @@
 
 		//View the logs - KEY REQUIRED
 		if (href_list["view_logs"])
-			if(LINKED_SERVER_NONRESPONSIVE)
+			if(linkedServer.on)
 				message = noserver
 			else if(auth)
 				screen = 1
 
 		//Clears the logs - KEY REQUIRED
 		if (href_list["clear_logs"])
-			if(LINKED_SERVER_NONRESPONSIVE)
+			if(linkedServer.on)
 				message = noserver
 			else if(auth)
 				linkedServer.pda_msgs = list()
 				message = "<span class='notice'>NOTICE: Logs cleared.</span>"
 		//Clears the request console logs - KEY REQUIRED
 		if (href_list["clear_requests"])
-			if(LINKED_SERVER_NONRESPONSIVE)
+			if(linkedServer.on)
 				message = noserver
 			else if(auth)
 				linkedServer.rc_msgs = list()
 				message = "<span class='notice'>NOTICE: Logs cleared.</span>"
 		//Change the password - KEY REQUIRED
 		if (href_list["pass"])
-			if(LINKED_SERVER_NONRESPONSIVE)
+			if(linkedServer.on)
 				message = noserver
 			else if(auth)
 				var/dkey = stripped_input(usr, "Please enter the decryption key.")
@@ -621,7 +623,7 @@
 		if (href_list["delete_logs"])
 			//Are they on the view logs screen?
 			if(screen == 1)
-				if(LINKED_SERVER_NONRESPONSIVE)
+				if(linkedServer.on)
 					message = noserver
 				else //if(istype(href_list["delete_logs"], /datum/data_pda_msg))
 					linkedServer.pda_msgs -= locate(href_list["delete_logs"])
@@ -630,20 +632,20 @@
 		if (href_list["delete_requests"])
 			//Are they on the view logs screen?
 			if(screen == 4)
-				if(LINKED_SERVER_NONRESPONSIVE)
+				if(linkedServer.on)
 					message = noserver
 				else //if(istype(href_list["delete_logs"], /datum/data_pda_msg))
 					linkedServer.rc_msgs -= locate(href_list["delete_requests"])
 					message = "<span class='notice'>NOTICE: Log Deleted!</span>"
 		//Create a custom message
 		if (href_list["msg"])
-			if(LINKED_SERVER_NONRESPONSIVE)
+			if(linkedServer.on)
 				message = noserver
 			else if(auth)
 				screen = 3
 		//Fake messaging selection - KEY REQUIRED
 		if (href_list["select"])
-			if(LINKED_SERVER_NONRESPONSIVE)
+			if(linkedServer.on)
 				message = noserver
 				screen = 0
 			else
@@ -701,7 +703,7 @@
 
 		//Request Console Logs - KEY REQUIRED
 		if(href_list["view_requests"])
-			if(LINKED_SERVER_NONRESPONSIVE)
+			if(linkedServer.on)
 				message = noserver
 			else if(auth)
 				screen = 4
@@ -711,7 +713,6 @@
 
 	return attack_hand(usr)
 */
-#undef LINKED_SERVER_NONRESPONSIVE
 
 /obj/item/paper/monitorkey
 	name = "monitor decryption key"

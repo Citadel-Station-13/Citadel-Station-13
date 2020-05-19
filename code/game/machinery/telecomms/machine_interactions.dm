@@ -36,13 +36,54 @@
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 
 	if(!ui)
-		ui = new(user, src, ui_key, "teleinteract", "[name] Access", 727, 510, master_ui, state)
+		ui = new(user, src, ui_key, "teleinteract", "[name] Access", 520, 500, master_ui, state)
 		ui.open()
-
-/obj/machinery/telecomms/ui_data(mob/user)
-	var/list/data_out = list()
-	return data_out
 */
+/obj/machinery/telecomms/ui_data(mob/user)
+	var/obj/item/multitool/P = get_multitool(user)
+	. = list() //cpypaste from the vending bus
+	.["notice"] = temp
+	
+	if(P)
+		var/obj/machinery/telecomms/T = P.buffer
+		if(istype(T))
+			.["multitool_buf"] = list(
+				name = T.name,
+				id = T.id,
+				ref = REF(T)
+			)
+
+	.["machine"] = list()
+	.["machine"]["power"] = toggled
+	.["machine"]["id"] = id
+	.["machine"]["network"] = network
+	.["machine"]["prefab"] = LAZYLEN(autolinkers) ? TRUE : FALSE
+	.["machine"]["hidden"] = hide
+
+	.["links"] = list()
+	for(var/obj/machinery/telecomms/T in links)
+		if(T.hide && !hide)
+			continue
+		var/list/data = list(
+			name = T.name,
+			id = T.id,
+			ref = REF(T)
+		)
+		.["links"] += list(data)
+
+	.["frequency"] = list()
+	for(var/x in freq_listening)
+		LAZYADD(.["frequency"], format_frequency(x))//concat
+
+/obj/machinery/telecomms/relay/ui_data(mob/user)
+	. = ..()
+	.["machine"]["broadcast"] = broadcasting
+	.["machine"]["receiving"] = receiving
+
+/obj/machinery/telecomms/bus/ui_data(mob/user)
+	. = ..()
+	.["machine"]["chang_frequency"] = change_frequency
+
 /obj/machinery/telecomms/ui_interact(mob/user)
 	. = ..()
 	// You need a multitool to use this, or be silicon
@@ -72,7 +113,7 @@
 
 		var/i = 0
 		for(var/obj/machinery/telecomms/T in links)
-			i++
+			i++ //ARGH, USE LOCATE YOU DEGENERADES
 			if(T.hide && !hide)
 				continue
 			dat += "<li>[REF(T)] [T.name] ([T.id])  <a href='?src=[REF(src)];unlink=[i]'>\[X\]</a></li>"

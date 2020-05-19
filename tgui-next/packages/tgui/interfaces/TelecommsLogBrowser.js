@@ -11,6 +11,7 @@ export const TeleLogBrowser = props => {
     selected = null,
     selected_logs,
   } = data;
+  const operational = (selected && selected.status);
   return (
     <Fragment>
       {!!notice && (
@@ -52,7 +53,7 @@ export const TeleLogBrowser = props => {
             )}
           </LabeledList.Item>
           <LabeledList.Item
-            label="Selected Entity"
+            label="Selected Server"
             buttons={(
               <Button
                 content="Disconnect"
@@ -75,6 +76,15 @@ export const TeleLogBrowser = props => {
               )
             ) : (
               '0 Gigabytes'
+            )}
+          </LabeledList.Item>
+          <LabeledList.Item
+            label="Server Status"
+            color={operational ? 'good' : 'bad'}>
+            {operational ? (
+              'Running'
+            ) : (
+              'Server down!'
             )}
           </LabeledList.Item>
         </LabeledList>
@@ -112,13 +122,13 @@ export const TeleLogBrowser = props => {
         </Tabs.Tab>
         <Tabs.Tab
           key="messages"
-          label="Messages">
+          label="Messages"
+          disabled={!operational}>
           <Section title="Logs">
-            {selected_logs ? (
+            {(operational && selected_logs) ? (
               selected_logs.map(logs => {
                 return (
                   <Section
-                    title={logs.name}
                     level={4}
                     key={logs.ref}>
                     <LabeledList>

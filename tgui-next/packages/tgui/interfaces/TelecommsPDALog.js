@@ -9,7 +9,6 @@ export const TelePDALog = props => {
     network,
     notice = "",
     authenticated = false,
-    status = true,
     canhack = false,
     selected = null,
     servers = [],
@@ -22,18 +21,24 @@ export const TelePDALog = props => {
     'recepient': null,
     'message': 'This is a test, please ignore',
   };
-  const valid = (status && selected && authenticated);
+  const prioritycolorMap = {
+    'Normal':'warning',
+    'High':'bad',
+    'Extreme':'bad',
+  };
+  const valid = (selected && selected.status && authenticated);
 
   if (data.hacking) {
     return ( // should have used en -> jp unicode -> other encoding method->utf8
       <Fragment>
         <NoticeBox>
-          {"%$�(�:SYS&EM INTRN@L ACfES VIOL�TIa█ DEtE₡TED! Ree3AR\
-            cinG A█ BAaKUP RdST�RE PbINT [0xcff32ca/ - PLfASE aAIT"}
-        </NoticeBox>
-        <Section>
+          <b><h3>{"INTRN@L ACfES VIOL�TIa█ DEtE₡TED!"}</h3></b>
+          <i>
+          {"Ree3ARcinG A█ BAaKUP RdST�RE PbINT [0xcff32ca] - PLfASE aAIT"}
+          </i>
+          <br />
           {data.hacking_msg}
-        </Section>
+        </NoticeBox>
       </Fragment> // ai gets to see normaltext while people see base64
     );
   }
@@ -86,7 +91,7 @@ export const TelePDALog = props => {
                 <Button
                   content="Change Password"
                   disabled={!authenticated || !selected}
-                  onClick={() => act('changepass')}
+                  onClick={() => act('change_auth')}
                 />
                 {canhack && (
                   <Button
@@ -127,12 +132,12 @@ export const TelePDALog = props => {
           </LabeledList.Item>
           <LabeledList.Item
             label="PDA Server Status"
-            color={(status && selected) ? 'good' : 'bad'}>
+            color={(selected && selected.status) ? 'good' : 'bad'}>
             {selected ? (
-              status ? (
+              selected.status ? (
                 'Running'
               ) : (
-                'Server down! Log functionality unaccessable!'
+                'Server down! Logging and messaging functionality unavailable!'
               )
             ):(
               'No server selected'
@@ -178,10 +183,12 @@ export const TelePDALog = props => {
           <Section title="Logs">
             <Button
               content="Refresh"
+              icon="sync"
               onClick={() => act('refresh')}
             />
             <Button
               content="Delete All Logs"
+              icon="trash"
               disabled={!(message_logs && message_logs.length)}
               onClick={() => act('clear_log', {
                 'value': 'pda_logs',
@@ -238,10 +245,12 @@ export const TelePDALog = props => {
           <Section title="Logs">
             <Button
               content="Refresh"
+              icon="sync"
               onClick={() => act('refresh')}
             />
             <Button
               content="Delete All Logs"
+              icon="trash"
               disabled={!(recon_logs && recon_logs.length)}
               onClick={() => act('clear_log', {
                 'value': 'rc_msgs',
@@ -272,14 +281,40 @@ export const TelePDALog = props => {
                         <LabeledList.Item label="Message">
                           {message.message}
                         </LabeledList.Item>
-                        <LabeledList.Item label="Stamp">
-                          {message.stamp}
+                        <LabeledList.Item
+                          label="Stamp"
+                          color={message.stamp !== "Unstamped" ? (
+                            'label'
+                          ) : (
+                            'bad'
+                          )}>
+                          {message.stamp !== 'Unstamped' ? (
+                            <b>{message.stamp}</b>
+                          ) : (
+                            message.stamp
+                          )}
                         </LabeledList.Item>
-                        <LabeledList.Item label="ID Authentication">
+                        <LabeledList.Item
+                          label="ID Authentication"
+                          color={message.auth !== "Unauthenticated" ? (
+                            'good'
+                          ) : (
+                            'bad'
+                          )}>
                           {message.auth}
                         </LabeledList.Item>
-                        <LabeledList.Item label="Priority">
-                          {message.priority}
+                        <LabeledList.Item
+                          label="Priority"
+                          color={(message.priority in prioritycolorMap) ? (
+                            prioritycolorMap[message.priority]
+                          ) : (
+                            'good'
+                          )}>
+                          {message.priority === 'Extreme' ? (
+                            <b>!!{message.priority}!!</b>
+                          ) : (
+                            message.priority
+                          )}
                         </LabeledList.Item>
                       </LabeledList>
                     </Section>
@@ -294,7 +329,7 @@ export const TelePDALog = props => {
         <Tabs.Tab
           key="custom_pda"
           label="Set Admin Message"
-          disabled={!authenticated}>
+          disabled={!valid}>
           <Section title="Custom Message">
             <Button
               content="Reset"
@@ -305,6 +340,7 @@ export const TelePDALog = props => {
             />
             <Button
               content="Send"
+              disabled={!fake_message.recepient || !fake_message.message}
               onClick={() => act('fake', {
                 'send': true,
               })}
@@ -338,6 +374,7 @@ export const TelePDALog = props => {
                   ) : (
                     'Select'
                   )}
+                  selected={fake_message.recepient}
                   onClick={() => act('fake', {
                     'recepient': true,
                   })}
@@ -345,14 +382,14 @@ export const TelePDALog = props => {
               </LabeledList.Item>
               <LabeledList.Item label="Message">
                 <Input
-                  value={fake_message.message}
-                  width="500px"
-                  height="150px"
-                  maxLength={2000}
-                  onChange={(e, value) => act('fake', {
-                    'message': value,
-                  })}
-                />
+                    value={fake_message.message}
+                    width="500px"
+                    height="150px"
+                    maxLength={2000}
+                    onChange={(e, value) => act('fake', {
+                      'message': value,
+                    })}
+                  />
               </LabeledList.Item>
             </LabeledList>
           </Section>

@@ -1,6 +1,6 @@
 import { Fragment } from 'inferno';
 import { useBackend } from '../backend';
-import { Button, LabeledList, NoticeBox, Section, Tabs, Input } from '../components';
+import { Box, Button, LabeledList, NoticeBox, Section, Tabs, Input } from '../components';
 
 
 export const Telemonitor = props => {
@@ -148,7 +148,7 @@ export const Telemonitor = props => {
                     `${Math.round(selected.traffic/1024)} Terrabytes`
                   )
                 ) : (
-                  '0 Giabytes'
+                  '0 Gigabytes'
                 )}
               </LabeledList.Item>
               <LabeledList.Item label="Network Speed">
@@ -159,7 +159,7 @@ export const Telemonitor = props => {
                     `${Math.round(selected.netspeed/1024)} Terrabytes/second`
                   )
                 ) : (
-                  '0 Giabytes/second'
+                  '0 Gigabytes/second'
                 )}
               </LabeledList.Item>
               <LabeledList.Item
@@ -176,10 +176,22 @@ export const Telemonitor = props => {
                 )}
               </LabeledList.Item>
               <LabeledList.Item label="Frequency Listening">
-                instead of this garbage, do some fancy thing
-                {operational ? JSON.stringify(selected.freq_listening) : '[]'}
+                <Box>
+                  {operational && selected.freq_listening.map(thing => {
+                    return (
+                      <Fragment>
+                        {(thing in freqcolorMap) ? (
+                          <span style={`color: ${freqcolorMap[thing]}`}>
+                            {`${thing} `}
+                          </span>
+                        ) : (
+                          `${thing} `
+                        )}
+                      </Fragment>
+                    );
+                  })}
+                </Box>
               </LabeledList.Item>
-              <br />
             </LabeledList>
             <Section
               title="Servers Linked"
@@ -204,7 +216,11 @@ export const Telemonitor = props => {
                   })}
                 </LabeledList>
               ) : (
-                "Buffer is empty!"
+                !operational ? (
+                  "Server currently down! Cannot fetch the buffer list!"
+                ) : (
+                  "Buffer is empty!"
+                )
               )}
             </Section>
           </Section>
