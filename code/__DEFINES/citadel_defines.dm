@@ -117,8 +117,6 @@
 #define TOGGLES_CITADEL (EATING_NOISES|DIGESTION_NOISES|BREAST_ENLARGEMENT|PENIS_ENLARGEMENT)
 
 //component stuff
-#define COMSIG_COMBAT_TOGGLED "combatmode_toggled" //called by combat mode toggle on all equipped items. args: (mob/user, combatmode)
-
 #define COMSIG_VORE_TOGGLED "voremode_toggled" // totally not copypasta
 
 //belly sound pref things
