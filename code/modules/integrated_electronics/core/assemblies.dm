@@ -873,3 +873,8 @@
 			pixel_x = -31
 		if(WEST)
 			pixel_x = 31
+	plane = ABOVE_WALL_PLANE
+
+/obj/item/electronic_assembly/wallmount/Moved(atom/OldLoc, Dir, Forced = FALSE) //reset the plane if moved off the wall.
+	. = ..()
+	plane = GAME_PLANE

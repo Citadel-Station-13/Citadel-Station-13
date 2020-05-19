@@ -6,6 +6,7 @@
 	max_integrity = 350
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 100, "bomb" = 0, "bio" = 100, "rad" = 100, "fire" = 30, "acid" = 30)
 	layer = ABOVE_WINDOW_LAYER
+	plane = GAME_PLANE
 	state_open = FALSE
 	circuit = /obj/item/circuitboard/machine/cryo_tube
 	pipe_flags = PIPING_ONE_PER_TURF | PIPING_DEFAULT_LAYER_ONLY
@@ -15,8 +16,8 @@
 	var/volume = 100
 
 	var/efficiency = 1
-	var/sleep_factor = 0.00125
-	var/unconscious_factor = 0.001
+	var/base_knockout = 30 SECONDS
+	var/knockout_factor = 1
 	var/heat_capacity = 20000
 	var/conduction_coefficient = 0.3
 
@@ -32,6 +33,9 @@
 	var/escape_in_progress = FALSE
 	var/message_cooldown
 	var/breakout_time = 300
+
+	fair_market_price = 10
+	payment_department = ACCOUNT_MED
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/Initialize()
 	. = ..()
@@ -50,10 +54,9 @@
 	var/C
 	for(var/obj/item/stock_parts/matter_bin/M in component_parts)
 		C += M.rating
-
+	// 2 bins total, so C ranges from 2 to 8.
 	efficiency = initial(efficiency) * C
-	sleep_factor = initial(sleep_factor) * C
-	unconscious_factor = initial(unconscious_factor) * C
+	knockout_factor = initial(knockout_factor) / max(1, (C * 0.33))
 	heat_capacity = initial(heat_capacity) / C
 	conduction_coefficient = initial(conduction_coefficient) * C
 
@@ -149,6 +152,9 @@
 	add_overlay("cover-on")
 	addtimer(CALLBACK(src, .proc/run_anim, anim_up, occupant_overlay), 7, TIMER_UNIQUE)
 
+/obj/machinery/atmospherics/components/unary/cryo_cell/nap_violation(mob/violator)
+	open_machine()
+
 /obj/machinery/atmospherics/components/unary/cryo_cell/process()
 	..()
 
@@ -162,7 +168,8 @@
 		return
 
 	var/mob/living/mob_occupant = occupant
-
+	if(!check_nap_violations())
+		return
 	if(mob_occupant.stat == DEAD) // We don't bother with dead people.
 		return
 
@@ -181,8 +188,10 @@
 
 	if(air1.gases.len)
 		if(mob_occupant.bodytemperature < T0C) // Sleepytime. Why? More cryo magic.
-			mob_occupant.Sleeping((mob_occupant.bodytemperature * sleep_factor) * 2000)
-			mob_occupant.Unconscious((mob_occupant.bodytemperature * unconscious_factor) * 2000)
+			// temperature factor goes from 1 to about 2.5
+			var/amount = max(1, (4 * log(T0C - mob_occupant.bodytemperature)) - 20) * knockout_factor * base_knockout
+			mob_occupant.Sleeping(amount)
+			mob_occupant.Unconscious(amount)
 		if(beaker)
 			if(reagent_transfer == 0) // Magically transfer reagents. Because cryo magic.
 				beaker.reagents.trans_to(occupant, 1, efficiency * 0.25) // Transfer reagents.

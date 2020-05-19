@@ -17073,7 +17073,7 @@
 /area/security/brig)
 "aLl" = (
 /obj/effect/turf_decal/delivery,
-/obj/machinery/vending/autodrobe/all_access,
+/obj/machinery/vending/autodrobe,
 /turf/open/floor/plasteel,
 /area/hallway/primary/port/fore)
 "aLm" = (
@@ -28450,7 +28450,7 @@
 /turf/open/floor/plasteel,
 /area/quartermaster/warehouse)
 "bjN" = (
-/obj/machinery/vending/autodrobe/all_access,
+/obj/machinery/vending/autodrobe,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
 /area/quartermaster/office)
@@ -72362,6 +72362,9 @@
 /obj/item/pen,
 /turf/open/floor/plasteel,
 /area/engine/atmos)
+"xxP" = (
+/turf/closed/wall,
+/area/quartermaster/storage)
 "xCy" = (
 /obj/machinery/atmospherics/components/binary/pump,
 /obj/machinery/atmospherics/pipe/simple/supplymain/hidden{
@@ -121108,7 +121111,7 @@ bgT
 bjr
 bkr
 ble
-bgT
+xxP
 bnC
 boD
 bgT

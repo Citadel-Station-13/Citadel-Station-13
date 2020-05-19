@@ -20,9 +20,7 @@
 
 // Standard values for job starting skill affinities
 
-#define STARTING_SKILL_AFFINITY_SURGERY_MEDICAL			1.2
-
-#define STARTING_SKILL_AFFINITY_WIRING_ENGI_ROBO		1.2
+#define STARTING_SKILL_AFFINITY_DEF_JOB		1.2
 
 // Standard values for skill gain (this is multiplied by affinity)
 
@@ -75,3 +73,26 @@
 #define DORF_SKILL_COMPETENT	3
 #define DORF_SKILL_EXPERT		8
 #define DORF_SKILL_MASTER		12
+
+/// Skill modifier defines and flags.
+#define MODIFIER_SKILL_VALUE		(1<<0)
+#define MODIFIER_SKILL_AFFINITY 	(1<<1)
+#define MODIFIER_SKILL_LEVEL		(1<<2)
+///makes the skill modifier a multiplier, not an addendum.
+#define MODIFIER_SKILL_MULT			(1<<3)
+///Sets the skill to the defined value if lower than that. Highly reccomended you don't use it with MODIFIER_SKILL_MULT.
+#define MODIFIER_SKILL_VIRTUE		(1<<4)
+///Does the opposite of the above. combining both effectively results in the skill being locked to the specified value.
+#define MODIFIER_SKILL_HANDICAP		(1<<5)
+///Makes it untransferred by mind.transfer_to()
+#define MODIFIER_SKILL_BODYBOUND	(1<<6)
+///Adds the difference of the current value and the value stored at the time the modifier was added to the result.
+#define MODIFIER_SKILL_ORIGIN_DIFF	(1<<7)
+
+#define MODIFIER_TARGET_VALUE		"value"
+#define MODIFIER_TARGET_LEVEL		"level"
+#define MODIFIER_TARGET_AFFINITY	"affinity"
+
+///Ascending priority defines.
+#define MODIFIER_SKILL_PRIORITY_DEF 50
+#define MODIFIER_SKILL_PRIORITY_MAX 100 //max priority, meant for job/antag modifiers so they don't null out any debuff
