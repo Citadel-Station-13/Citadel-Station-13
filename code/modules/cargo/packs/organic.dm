@@ -370,22 +370,6 @@
 /////////////////////////////////// Misc /////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////
 
-/datum/supply_pack/organic/hunting
-	name = "Hunting Gear"
-	desc = "Even in space, we can find prey to hunt, this crate contains everthing a fine hunter needs to have a sporting time. This crate needs armory access to open. A true huntter only needs a fine bottle of cognac, a nice coat, some good o' cigars, and of cource a hunting shotgun. "
-	cost = 3500
-	contraband = TRUE
-	contains = list(/obj/item/clothing/head/flatcap,
-					/obj/item/clothing/suit/hooded/wintercoat/captain,
-					/obj/item/reagent_containers/food/drinks/bottle/cognac,
-					/obj/item/storage/fancy/cigarettes/cigars/havana,
-					/obj/item/clothing/gloves/color/white,
-					/obj/item/clothing/under/rank/civilian/curator,
-					/obj/item/gun/ballistic/shotgun/lethal)
-	access = ACCESS_ARMORY
-	crate_name = "sporting crate"
-	crate_type = /obj/structure/closet/crate/secure // Would have liked a wooden crate but access >:(
-
 /datum/supply_pack/organic/party
 	name = "Party Equipment"
 	desc = "Celebrate both life and death on the station with Nanotrasen's Party Essentials(tm)! Contains seven colored glowsticks, four beers, two ales, a drinking shaker, and a bottle of patron & goldschlager!"
