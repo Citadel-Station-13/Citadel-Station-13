@@ -517,11 +517,16 @@
 	turns_per_move = 5
 	see_in_dark = 6
 	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab = 3)
-	response_help = "pets"
-	response_disarm = "gently nudges"
-	response_harm = "kicks"
-	attacktext = "bucks"
+	response_help_continuous = "pets"
+	response_help_simple = "pet"
+	response_disarm_continuous = "gently nudges"
+	response_disarm_simple = "gently nudge"
+	response_harm_continuous = "kicks"
+	response_harm_simple = "kick"
+	attack_verb_continuous = "bucks"
+	attack_verb_simple = "buck"
 	attack_sound = 'sound/weapons/punch1.ogg'
 	health = 75
 	maxHealth = 75
 	blood_volume = BLOOD_VOLUME_NORMAL
+	footstep_type = FOOTSTEP_MOB_SHOE
