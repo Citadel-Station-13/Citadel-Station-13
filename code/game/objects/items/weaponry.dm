@@ -303,7 +303,6 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	custom_materials = list(/datum/material/iron=500, /datum/material/glass=500)
 	resistance_flags = FIRE_PROOF
 
-
 /obj/item/switchblade
 	name = "switchblade"
 	icon_state = "switchblade"
@@ -525,6 +524,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	icon_state = "skateboard2"
 	item_state = "skateboard2"
 	board_item_type = /obj/vehicle/ridden/scooter/skateboard/pro
+	custom_premium_price = 500
 
 /obj/item/melee/skateboard/hoverboard
 	name = "hoverboard"
@@ -532,6 +532,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	icon_state = "hoverboard_red"
 	item_state = "hoverboard_red"
 	board_item_type = /obj/vehicle/ridden/scooter/skateboard/hoverboard
+	custom_premium_price = 2015
 
 /obj/item/melee/skateboard/hoverboard/admin
 	name = "\improper Board Of Directors"
@@ -639,6 +640,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	w_class = WEIGHT_CLASS_SMALL
 	//Things in this list will be instantly splatted.  Flyman weakness is handled in the flyman species weakness proc.
 	var/list/strong_against
+	var/list/spider_panic
 
 /obj/item/melee/flyswatter/Initialize()
 	. = ..()
@@ -648,7 +650,10 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 					/mob/living/simple_animal/cockroach,
 					/obj/item/queen_bee
 	))
-
+	spider_panic = typecacheof(list(
+					/mob/living/simple_animal/banana_spider,
+					/mob/living/simple_animal/hostile/poison/giant_spider,
+	))
 
 /obj/item/melee/flyswatter/afterattack(atom/target, mob/user, proximity_flag)
 	. = ..()
@@ -659,6 +664,11 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 			if(istype(target, /mob/living/))
 				var/mob/living/bug = target
 				bug.death(1)
+		if(is_type_in_typecache(target, spider_panic))
+			to_chat(user, "<span class='warning'>You easily land a critical blow on the [target].</span>")
+			if(istype(target, /mob/living/))
+				var/mob/living/bug = target
+				bug.adjustBruteLoss(-35) //What kinda mad man would go into melee with a spider?!
 			else
 				qdel(target)
 

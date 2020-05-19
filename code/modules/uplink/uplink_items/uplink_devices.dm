@@ -188,13 +188,22 @@
 	item = /obj/item/healthanalyzer/rad_laser
 	cost = 3
 
+/datum/uplink_item/device_tools/riflery_primer
+	name = "Riflery Primer"
+	desc = "An old book with blood and vodka stains on it. Freshly pulled from a dusty crate in some old warehouse, \
+			this primer of questionable worth and value is rumored to increase your rifle-bolt-working and/or shotgun \
+			racking fivefold. Then again, the techniques here only work on bolt-actions and pump-actions..."
+	item = /obj/item/book/granter/trait/rifleman
+	cost = 3
+	restricted_roles = list("Operative") // i want it to be surplusable but i also want it to be mostly nukie only, please advise
+	surplus = 90
+
 /datum/uplink_item/device_tools/stimpack
 	name = "Stimpack"
 	desc = "Stimpacks, the tool of many great heroes, make you nearly immune to stuns and knockdowns for about \
-			5 minutes after fully injecting yourself. Can inject yourself, or others, 5 times and through hardsuits. \
-			Each injection will gives around a minute of stimulants."
-	item = /obj/item/reagent_containers/hypospray/medipen/stimulants
-	cost = 5
+			5 minutes after injection."
+	item = /obj/item/reagent_containers/syringe/stimulants
+	cost = 3
 	surplus = 90
 
 /datum/uplink_item/device_tools/medkit
@@ -262,3 +271,15 @@
 	cost = 2
 	include_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops)
 	restricted = TRUE
+
+/* for now
+/datum/uplink_item/device_tools/suspiciousphone
+	name = "Protocol CRAB-17 Phone"
+	desc = "The Protocol CRAB-17 Phone, a phone borrowed from an unknown third party, it can be used to crash the space market, funneling the losses of the crew to your bank account.\
+	The crew can move their funds to a new banking site though, unless they HODL, in which case they deserve it."
+	item = /obj/item/suspiciousphone
+	cost = 7
+	restricted = TRUE
+	limited_stock = 1
+*/
+

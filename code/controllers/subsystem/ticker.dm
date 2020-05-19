@@ -387,6 +387,9 @@ SUBSYSTEM_DEF(ticker)
 	for(var/mob/dead/new_player/N in GLOB.player_list)
 		var/mob/living/carbon/human/player = N.new_character
 		if(istype(player) && player.mind && player.mind.assigned_role)
+			var/datum/job/J = SSjob.GetJob(player.mind.assigned_role)
+			if(J)
+				J.standard_assign_skills(player.mind)
 			if(player.mind.assigned_role == "Captain")
 				captainless=0
 			if(player.mind.assigned_role != player.mind.special_role)

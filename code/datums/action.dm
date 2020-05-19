@@ -171,7 +171,7 @@
 	if(!..())
 		return 0
 	var/mob/M = target
-	M.ghostize(1)
+	M.ghostize(can_reenter_corpse = TRUE, voluntary = TRUE)
 
 /datum/action/proc/OnUpdatedIcon()
 	UpdateButtonIcon()
@@ -186,6 +186,8 @@
 
 /datum/action/item_action/New(Target)
 	..()
+	if(button_icon_state)
+		use_target_appearance = FALSE
 	var/obj/item/I = target
 	LAZYINITLIST(I.actions)
 	I.actions += src
@@ -345,6 +347,7 @@
 /datum/action/item_action/clock/quickbind
 	name = "Quickbind"
 	desc = "If you're seeing this, file a bug report."
+	use_target_appearance = FALSE
 	var/scripture_index = 0 //the index of the scripture we're associated with
 
 /datum/action/item_action/toggle_helmet_flashlight

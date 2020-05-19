@@ -6,7 +6,7 @@
 	var/directstamloss = (bufferedstam + amount) - stambuffer
 	if(directstamloss > 0)
 		adjustStaminaLoss(directstamloss)
-	bufferedstam = CLAMP(bufferedstam + amount, 0, stambuffer)
+	bufferedstam = clamp(bufferedstam + amount, 0, stambuffer)
 	stambufferregentime = world.time + 10
 	if(updating_health)
 		update_health_hud()
@@ -15,7 +15,7 @@
 	if(!forced && (status_flags & GODMODE))
 		return FALSE
 	var/obj/item/bodypart/BP = isbodypart(affected_zone)? affected_zone : (get_bodypart(check_zone(affected_zone)) || bodyparts[1])
-	if(amount > 0? BP.receive_damage(0, 0, amount * incomingstammult) : BP.heal_damage(0, 0, abs(amount)))
+	if(amount > 0? BP.receive_damage(0, 0, amount * incomingstammult) : BP.heal_damage(0, 0, abs(amount), FALSE, FALSE))
 		update_damage_overlays()
 	if(updating_health)
 		updatehealth()

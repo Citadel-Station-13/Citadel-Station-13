@@ -505,9 +505,7 @@
 /turf/open/floor/plasteel/dark,
 /area/shuttle/syndicate/airlock)
 "bd" = (
-/obj/structure/sign/warning/vacuum/external{
-	layer = 4
-	},
+/obj/structure/sign/warning/vacuum/external,
 /turf/closed/wall/r_wall/syndicate,
 /area/shuttle/syndicate/airlock)
 "be" = (
@@ -808,6 +806,10 @@
 "bQ" = (
 /obj/structure/closet/syndicate/personal,
 /obj/effect/turf_decal/bot_white,
+/obj/item/pickaxe/drill/diamonddrill,
+/obj/item/pickaxe/drill/diamonddrill,
+/obj/item/pickaxe/drill/diamonddrill,
+/obj/item/gun/energy/plasmacutter,
 /turf/open/floor/plasteel/dark,
 /area/shuttle/syndicate/armory)
 "bR" = (
@@ -848,6 +850,10 @@
 "bX" = (
 /obj/structure/closet/syndicate/nuclear,
 /obj/effect/turf_decal/bot_white,
+/obj/item/pickaxe/drill/diamonddrill,
+/obj/item/pickaxe/drill/diamonddrill,
+/obj/item/pickaxe/drill/diamonddrill,
+/obj/item/gun/energy/plasmacutter,
 /turf/open/floor/plasteel/dark,
 /area/shuttle/syndicate/armory)
 "bY" = (

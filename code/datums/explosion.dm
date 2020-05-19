@@ -76,7 +76,9 @@ GLOBAL_LIST_EMPTY(explosions)
 	//I would make this not ex_act the thing that triggered the explosion,
 	//but everything that explodes gives us their loc or a get_turf()
 	//and somethings expect us to ex_act them so they can qdel()
-	stoplag() //tldr, let the calling proc call qdel(src) before we explode
+	//stoplag() //tldr, let the calling proc call qdel(src) before we explode
+	// no - use sleep. stoplag() results in quirky things like explosions taking too long to process and hanging mid-air for no reason.
+	sleep(0)
 
 	EX_PREPROCESS_EXIT_CHECK
 
@@ -121,14 +123,14 @@ GLOBAL_LIST_EMPTY(explosions)
 				if(dist <= round(max_range + world.view - 2, 1))
 					M.playsound_local(epicenter, null, 100, 1, frequency, falloff = 5, S = explosion_sound)
 					if(baseshakeamount > 0)
-						shake_camera(M, 25, CLAMP(baseshakeamount, 0, 10))
+						shake_camera(M, 25, clamp(baseshakeamount, 0, 10))
 				// You hear a far explosion if you're outside the blast radius. Small bombs shouldn't be heard all over the station.
 				else if(dist <= far_dist)
-					var/far_volume = CLAMP(far_dist, 30, 50) // Volume is based on explosion size and dist
+					var/far_volume = clamp(far_dist, 30, 50) // Volume is based on explosion size and dist
 					far_volume += (dist <= far_dist * 0.5 ? 50 : 0) // add 50 volume if the mob is pretty close to the explosion
 					M.playsound_local(epicenter, null, far_volume, 1, frequency, falloff = 5, S = far_explosion_sound)
 					if(baseshakeamount > 0)
-						shake_camera(M, 10, CLAMP(baseshakeamount*0.25, 0, 2.5))
+						shake_camera(M, 10, clamp(baseshakeamount*0.25, 0, 2.5))
 			EX_PREPROCESS_CHECK_TICK
 
 	//postpone processing for a bit

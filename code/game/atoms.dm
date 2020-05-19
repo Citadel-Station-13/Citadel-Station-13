@@ -32,6 +32,9 @@
 
 	var/list/filter_data //For handling persistent filters
 
+	var/custom_price
+	var/custom_premium_price
+
 	var/datum/component/orbiter/orbiters
 
 	var/rad_flags = NONE // Will move to flags_1 when i can be arsed to
@@ -49,6 +52,13 @@
 	var/list/fingerprintshidden
 	var/list/blood_DNA
 	var/list/suit_fibers
+
+	/// Last name used to calculate a color for the chatmessage overlays
+	var/chat_color_name
+	/// Last color calculated for the the chatmessage overlays
+	var/chat_color
+	/// A luminescence-shifted value of the last color calculated for chatmessage overlays
+	var/chat_color_darkened
 
 /atom/New(loc, ...)
 	//atom creation method that preloads variables at creation
@@ -192,7 +202,7 @@
 				reagents = new()
 			reagents.reagent_list.Add(A)
 			reagents.conditional_update()
-		else if(ismovableatom(A))
+		else if(ismovable(A))
 			var/atom/movable/M = A
 			if(isliving(M.loc))
 				var/mob/living/L = M.loc
@@ -571,6 +581,14 @@
 	SEND_SIGNAL(src, COMSIG_ATOM_RCD_ACT, user, the_rcd, passed_mode)
 	return FALSE
 
+/**
+  * Respond to a electric bolt action on our item
+  *
+  * Default behaviour is to return, we define here to allow for cleaner code later on
+  */
+/atom/proc/zap_act(power, zap_flags, shocked_targets)
+	return
+
 /atom/proc/storage_contents_dump_act(obj/item/storage/src_object, mob/user)
 	if(GetComponent(/datum/component/storage))
 		return component_storage_contents_dump_act(src_object, user)
@@ -692,7 +710,7 @@
 /atom/vv_get_dropdown()
 	. = ..()
 	VV_DROPDOWN_OPTION("", "---------")
-	if(!ismovableatom(src))
+	if(!ismovable(src))
 		var/turf/curturf = get_turf(src)
 		if(curturf)
 			. += "<option value='?_src_=holder;[HrefToken()];adminplayerobservecoodjump=1;X=[curturf.x];Y=[curturf.y];Z=[curturf.z]'>Jump To</option>"
@@ -917,14 +935,14 @@ Proc for attack log creation, because really why not
 		target.log_message(reverse_message, LOG_ATTACK, color="orange", log_globally=FALSE)
 
 // Filter stuff
-/atom/movable/proc/add_filter(name,priority,list/params)
+/atom/proc/add_filter(name,priority,list/params)
 	LAZYINITLIST(filter_data)
 	var/list/p = params.Copy()
 	p["priority"] = priority
 	filter_data[name] = p
 	update_filters()
 
-/atom/movable/proc/update_filters()
+/atom/proc/update_filters()
 	filters = null
 	filter_data = sortTim(filter_data, /proc/cmp_filter_data_priority, TRUE)
 	for(var/f in filter_data)
@@ -933,11 +951,11 @@ Proc for attack log creation, because really why not
 		arguments -= "priority"
 		filters += filter(arglist(arguments))
 
-/atom/movable/proc/get_filter(name)
+/atom/proc/get_filter(name)
 	if(filter_data && filter_data[name])
 		return filters[filter_data.Find(name)]
 
-/atom/movable/proc/remove_filter(name)
+/atom/proc/remove_filter(name)
 	if(filter_data && filter_data[name])
 		filter_data -= name
 		update_filters()
@@ -965,7 +983,7 @@ Proc for attack log creation, because really why not
 	for(var/x in materials)
 		var/datum/material/custom_material = SSmaterials.GetMaterialRef(x)
 
-		if(!(material_flags & MATERIAL_NO_EFFECTS))
+		if(material_flags & MATERIAL_EFFECTS)
 			custom_material.on_applied(src, materials[custom_material] * multiplier * material_modifier, material_flags)
 		custom_materials[custom_material] += materials[x] * multiplier
 

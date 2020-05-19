@@ -6,7 +6,6 @@ SUBSYSTEM_DEF(lighting)
 	name = "Lighting"
 	wait = 2
 	init_order = INIT_ORDER_LIGHTING
-	flags = SS_TICKER
 
 /datum/controller/subsystem/lighting/stat_entry()
 	..("L:[GLOB.lighting_update_lights.len]|C:[GLOB.lighting_update_corners.len]|O:[GLOB.lighting_update_objects.len]")

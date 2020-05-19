@@ -52,6 +52,7 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 	inverse_chem_val 		= 0.5
 	inverse_chem		= /datum/reagent/impure/SDZF
 	can_synth = TRUE
+	value = REAGENT_VALUE_RARE
 
 
 //Main SDGF chemical
@@ -109,16 +110,16 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 
 				to_chat(M, "<span class='warning'>You feel a strange sensation building in your mind as you realise there's two of you, before you get a chance to think about it, you suddenly split from your old body, and find yourself face to face with yourself.</span>")
 				M.visible_message("[M] suddenly shudders, and splits into two identical twins!")
-				SM.copy_known_languages_from(M, FALSE)
+				SM.copy_languages(M, LANGUAGE_MIND)
 				playerClone =  TRUE
 				M.next_move_modifier = 1
-				M.nutrition -= 500
+				M.adjust_nutrition(-500)
 
 				//Damage the clone
 				SM.blood_volume = (BLOOD_VOLUME_NORMAL*SM.blood_ratio)/2
 				SM.adjustCloneLoss(60, 0)
 				SM.setOrganLoss(ORGAN_SLOT_BRAIN, 40)
-				SM.nutrition = startHunger/2
+				SM.set_nutrition(startHunger/2)
 
 				//Transfer remaining reagent to clone. I think around 30u will make a healthy clone, otherwise they'll have clone damage, blood loss, brain damage and hunger.
 				SM.reagents.add_reagent(/datum/reagent/fermi/SDGFheal, volume)
@@ -146,23 +147,23 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 						if(21)
 							to_chat(M, "<span class='notice'>You feel the synethic cells rest uncomfortably within your body as they start to pulse and grow rapidly.</span>")
 						if(22 to 29)
-							M.nutrition = M.nutrition + (M.nutrition/10)
+							M.adjust_nutrition(M.nutrition/10)
 						if(30)
 							to_chat(M, "<span class='notice'>You feel the synethic cells grow and expand within yourself, bloating your body outwards.</span>")
 						if(31 to 49)
-							M.nutrition = M.nutrition + (M.nutrition/5)
+							M.adjust_nutrition(M.nutrition/5)
 						if(50)
 							to_chat(M, "<span class='notice'>The synthetic cells begin to merge with your body, it feels like your body is made of a viscous water, making your movements difficult.</span>")
 							M.next_move_modifier += 4//If this makes you fast then please fix it, it should make you slow!!
 							//candidates = pollGhostCandidates("Do you want to play as a clone of [M.name] and do you agree to respect their character and act in a similar manner to them? I swear to god if you diddle them I will be very disapointed in you. ", "FermiClone", null, ROLE_SENTIENCE, 300) // see poll_ignore.dm, should allow admins to ban greifers or bullies
 						if(51 to 79)
-							M.nutrition = M.nutrition + (M.nutrition/2)
+							M.adjust_nutrition(M.nutrition/2)
 						if(80)
 							to_chat(M, "<span class='notice'>The cells begin to precipitate outwards of your body, you feel like you'll split soon...</span>")
 							if (M.nutrition < 20000)
-								M.nutrition = 20000 //https://www.youtube.com/watch?v=Bj_YLenOlZI
+								M.set_nutrition(20000) //https://www.youtube.com/watch?v=Bj_YLenOlZI
 						if(86)//Upon splitting, you get really hungry and are capable again. Deletes the chem after you're done.
-							M.nutrition = 15//YOU BEST BE EATTING AFTER THIS YOU CUTIE
+							M.set_nutrition(15)//YOU BEST BE EATTING AFTER THIS YOU CUTIE
 							M.next_move_modifier -= 4
 							to_chat(M, "<span class='notice'>Your body splits away from the cell clone of yourself, leaving you with a drained and hollow feeling inside.</span>")
 
@@ -203,7 +204,7 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 		M.heal_bodypart_damage(1,1)
 		M.next_move_modifier = 1
 		if (M.nutrition < 1500)
-			M.nutrition += 250
+			M.adjust_nutrition(250)
 	else if (unitCheck == TRUE && !M.has_status_effect(/datum/status_effect/chem/SGDF))// If they're ingested a little bit (10u minimum), then give them a little healing.
 		unitCheck = FALSE
 		to_chat(M, "<span class='notice'>the cells fail to hold enough mass to generate a clone, instead diffusing into your system.</span>")
@@ -212,7 +213,7 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 		M.blood_volume += 100
 		M.next_move_modifier = 1
 		if (M.nutrition < 1500)
-			M.nutrition += 500
+			M.adjust_nutrition(500)
 
 /datum/reagent/fermi/SDGF/reaction_mob(mob/living/carbon/human/M, method=TOUCH, reac_volume)
 	if(volume<5)
@@ -244,7 +245,7 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 			SM.blood_volume = (BLOOD_VOLUME_NORMAL*SM.blood_ratio)/1.5
 			SM.adjustCloneLoss((bodydamage/10), 0)
 			SM.setOrganLoss(ORGAN_SLOT_BRAIN, (bodydamage/10))
-			SM.nutrition = 400
+			SM.adjust_nutrition(400)
 		if(bodydamage>200)
 			SM.gain_trauma_type(BRAIN_TRAUMA_MILD)
 		if(bodydamage>300)
@@ -284,7 +285,7 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 		M.blood_volume += 10
 	M.adjustCloneLoss(-2, 0)
 	M.setOrganLoss(ORGAN_SLOT_BRAIN, -1)
-	M.nutrition += 10
+	M.adjust_nutrition(10)
 	..()
 
 //Unobtainable, used if SDGF is impure but not too impure
@@ -309,6 +310,7 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 	can_synth = TRUE
 	taste_description = "a weird chemical fleshy flavour"
 	chemical_flags = REAGENT_SNEAKYNAME
+	value = REAGENT_VALUE_RARE
 
 /datum/reagent/impure/SDZF/on_mob_life(mob/living/carbon/M) //If you're bad at fermichem, turns your clone into a zombie instead.
 	switch(current_cycle)//Pretends to be normal
@@ -316,27 +318,27 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 			to_chat(M, "<span class='notice'>You feel the synethic cells rest uncomfortably within your body as they start to pulse and grow rapidly.</span>")
 			startHunger = M.nutrition
 		if(21 to 29)
-			M.nutrition = M.nutrition + (M.nutrition/10)
+			M.adjust_nutrition(M.nutrition/10)
 		if(30)
 			to_chat(M, "<span class='notice'>You feel the synethic cells grow and expand within yourself, bloating your body outwards.</span>")
 		if(31 to 49)
-			M.nutrition = M.nutrition + (M.nutrition/5)
+			M.adjust_nutrition(M.nutrition/5)
 		if(50)
 			to_chat(M, "<span class='notice'>The synethic cells begin to merge with your body, it feels like your body is made of a viscous water, making your movements difficult.</span>")
 			M.next_move_modifier = 4//If this makes you fast then please fix it, it should make you slow!!
 		if(51 to 73)
-			M.nutrition = M.nutrition + (M.nutrition/2)
+			M.adjust_nutrition(M.nutrition/2)
 		if(74)
 			to_chat(M, "<span class='notice'>The cells begin to precipitate outwards of your body, but... something is wrong, the sythetic cells are beginnning to rot...</span>")
 			if (M.nutrition < 20000) //whoever knows the maxcap, please let me know, this seems a bit low.
-				M.nutrition = 20000 //https://www.youtube.com/watch?v=Bj_YLenOlZI
+				M.set_nutrition(20000) //https://www.youtube.com/watch?v=Bj_YLenOlZI
 		if(75 to 85)
 			M.adjustToxLoss(1, 0)// the warning!
 
 		if(86)//mean clone time!
 			if (!M.reagents.has_reagent(/datum/reagent/medicine/pen_acid))//Counterplay is pent.)
 				message_admins("(non-infectious) SDZF: Zombie spawned at [M] [COORD(M)]!")
-				M.nutrition = startHunger - 500//YOU BEST BE RUNNING AWAY AFTER THIS YOU BADDIE
+				M.set_nutrition(startHunger - 500) //YOU BEST BE RUNNING AWAY AFTER THIS YOU BADDIE
 				M.next_move_modifier = 1
 				to_chat(M, "<span class='warning'>Your body splits away from the cell clone of yourself, your attempted clone birthing itself violently from you as it begins to shamble around, a terrifying abomination of science.</span>")
 				M.visible_message("[M] suddenly shudders, and splits into a funky smelling copy of themselves!")
@@ -352,7 +354,7 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 
 			else//easier to deal with
 				to_chat(M, "<span class='notice'>The pentetic acid seems to have stopped the decay for now, clumping up the cells into a horrifying tumour!</span>")
-				M.nutrition = startHunger - 500
+				M.set_nutrition(startHunger - 500)
 				var/mob/living/simple_animal/slime/S = new(get_turf(M.loc),"grey") //TODO: replace slime as own simplemob/add tumour slime cores for science/chemistry interplay
 				S.damage_coeff = list(BRUTE = ((1 / volume)**0.1) , BURN = 2, TOX = 1, CLONE = 1, STAMINA = 0, OXY = 1)
 				S.name = "Living teratoma"

@@ -308,7 +308,7 @@ obj/item/integrated_circuit/atmospherics/connector/portableConnectorReturnAir()
 
 /obj/item/integrated_circuit/atmospherics/pump/filter/on_data_written()
 	var/amt = get_pin_data(IC_INPUT, 5)
-	target_pressure = CLAMP(amt, 0, PUMP_MAX_PRESSURE)
+	target_pressure = clamp(amt, 0, PUMP_MAX_PRESSURE)
 
 /obj/item/integrated_circuit/atmospherics/pump/filter/do_work()
 	activate_pin(2)

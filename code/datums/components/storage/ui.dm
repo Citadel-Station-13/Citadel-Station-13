@@ -27,8 +27,8 @@
 		numbered_contents = _process_numerical_display()
 		adjusted_contents = numbered_contents.len
 
-	var/columns = CLAMP(max_items, 1, maxcolumns ? maxcolumns : screen_max_columns)
-	var/rows = CLAMP(CEILING(adjusted_contents / columns, 1), 1, screen_max_rows)
+	var/columns = clamp(max_items, 1, maxcolumns ? maxcolumns : screen_max_columns)
+	var/rows = clamp(CEILING(adjusted_contents / columns, 1), 1, screen_max_rows)
 
 	// First, boxes.
 	ui_boxes = get_ui_boxes()
@@ -92,6 +92,8 @@
 	var/list/volume_by_item = list()
 	var/list/percentage_by_item = list()
 	for(var/obj/item/I in contents)
+		if(QDELETED(I))
+			continue
 		volume = I.get_w_volume()
 		used += volume
 		volume_by_item[I] = volume
@@ -105,7 +107,7 @@
 	// after this point we are sure we can somehow fit all items into our max number of rows.
 
 	// determine rows
-	var/rows = CLAMP(CEILING(min_pixels / horizontal_pixels, 1), 1, screen_max_rows)
+	var/rows = clamp(CEILING(min_pixels / horizontal_pixels, 1), 1, screen_max_rows)
 
 	var/overrun = FALSE
 	if(used > our_volume)
@@ -123,6 +125,7 @@
 	var/obj/item/I
 	// start at this pixel from screen_start_x.
 	var/current_pixel = VOLUMETRIC_STORAGE_EDGE_PADDING
+	var/first = TRUE
 	var/row = 1
 
 	LAZYINITLIST(ui_item_blocks)
@@ -140,10 +143,10 @@
 			addrow = TRUE
 
 		// now that we have pixels_to_use, place our thing and add it to the returned list.
-
-		B.screen_loc = I.screen_loc = "[screen_start_x]:[round(current_pixel + (pixels_to_use * 0.5) + VOLUMETRIC_STORAGE_ITEM_PADDING, 1)],[screen_start_y+row-1]:[screen_pixel_y]"
+		B.screen_loc = I.screen_loc = "[screen_start_x]:[round(current_pixel + (pixels_to_use * 0.5) + (first? 0 : VOLUMETRIC_STORAGE_ITEM_PADDING), 1)],[screen_start_y+row-1]:[screen_pixel_y]"
 		// add the used pixels to pixel after we place the object
-		current_pixel += pixels_to_use + VOLUMETRIC_STORAGE_ITEM_PADDING
+		current_pixel += pixels_to_use + (first? 0 : VOLUMETRIC_STORAGE_ITEM_PADDING)
+		first = FALSE		//apply padding to everything after this
 
 		// set various things
 		B.set_pixel_size(pixels_to_use)
@@ -163,6 +166,7 @@
 		// go up a row if needed
 		if(addrow)
 			row++
+			first = TRUE		//first in the row, don't apply between-item padding.
 			current_pixel = VOLUMETRIC_STORAGE_EDGE_PADDING
 
 	// Then, continuous section.
@@ -198,7 +202,7 @@
 			M.active_storage.ui_hide(M)
 		M.active_storage = src
 	LAZYOR(is_using, M)
-	if(volumetric_ui())
+	if(!M.client?.prefs?.no_tetris_storage && volumetric_ui())
 		//new volumetric ui bay-style
 		M.client.screen |= orient2hud_volumetric(M, maxallowedscreensize)
 	else
@@ -233,7 +237,7 @@
 	if(!M.client)
 		return TRUE
 	UnregisterSignal(M, COMSIG_MOB_CLIENT_LOGOUT)
-	M.client.screen -= list(ui_boxes, ui_close, ui_left, ui_continuous) + get_ui_item_objects_hide()
+	M.client.screen -= list(ui_boxes, ui_close, ui_left, ui_continuous) + get_ui_item_objects_hide(M)
 	if(M.active_storage == src)
 		M.active_storage = null
 	LAZYREMOVE(is_using, M)
@@ -249,8 +253,8 @@
 /**
   * Gets the ui item objects to ui_hide.
   */
-/datum/component/storage/proc/get_ui_item_objects_hide()
-	if(!volumetric_ui())
+/datum/component/storage/proc/get_ui_item_objects_hide(mob/M)
+	if(!volumetric_ui() || M.client?.prefs?.no_tetris_storage)
 		var/atom/real_location = real_location()
 		return real_location.contents
 	else

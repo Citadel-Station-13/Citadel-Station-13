@@ -38,11 +38,12 @@
 #define BLOCK_GAS_SMOKE_EFFECT	(1<<2)	//blocks the effect that chemical clouds would have on a mob --glasses, mask and helmets ONLY!
 #define ALLOWINTERNALS		  	(1<<3)	//mask allows internals
 #define NOSLIP                  (1<<4)	//prevents from slipping on wet floors, in space etc
-#define THICKMATERIAL			(1<<5)	//prevents syringes, parapens and hypos if the external suit or helmet (if targeting head) has this flag. Example: space suits, biosuit, bombsuits, thick suits that cover your body.
-#define VOICEBOX_TOGGLABLE 		(1<<6)	//The voicebox in this clothing can be toggled.
-#define VOICEBOX_DISABLED 		(1<<7)	//The voicebox is currently turned off.
-#define IGNORE_HAT_TOSS			(1<<8)	//Hats with negative effects when worn (i.e the tinfoil hat).
-#define SCAN_REAGENTS			(1<<9)	// Allows helmets and glasses to scan reagents.
+#define NOSLIP_ICE				(1<<5)	 //prevents from slipping on frozen floors
+#define THICKMATERIAL			(1<<6)	//prevents syringes, parapens and hypos if the external suit or helmet (if targeting head) has this flag. Example: space suits, biosuit, bombsuits, thick suits that cover your body.
+#define VOICEBOX_TOGGLABLE 		(1<<7)	//The voicebox in this clothing can be toggled.
+#define VOICEBOX_DISABLED 		(1<<8)	//The voicebox is currently turned off.
+#define IGNORE_HAT_TOSS			(1<<9)	//Hats with negative effects when worn (i.e the tinfoil hat).
+#define SCAN_REAGENTS			(1<<10)	// Allows helmets and glasses to scan reagents.
 
 // Flags for the organ_flags var on /obj/item/organ
 
@@ -52,3 +53,4 @@
 #define ORGAN_EXTERNAL			(1<<3)	//Was this organ implanted/inserted/etc, if true will not be removed during species change.
 #define ORGAN_VITAL				(1<<4)	//Currently only the brain
 #define ORGAN_NO_SPOIL			(1<<5)	//Do not spoil under any circumstances
+#define ORGAN_NO_DISMEMBERMENT	(1<<6)	//Immune to disembowelment.

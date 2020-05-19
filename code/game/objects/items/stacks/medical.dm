@@ -59,6 +59,9 @@
 	self_delay = 20
 	grind_results = list(/datum/reagent/medicine/styptic_powder = 10)
 
+/obj/item/stack/medical/bruise_pack/one
+	amount = 1
+
 /obj/item/stack/medical/bruise_pack/heal(mob/living/M, mob/user)
 	if(M.stat == DEAD)
 		to_chat(user, "<span class='notice'> [M] is dead. You can not help [M.p_them()]!</span>")
@@ -93,6 +96,7 @@
 	var/stop_bleeding = 1800
 	var/heal_brute = 5
 	self_delay = 10
+	custom_price = 100
 
 /obj/item/stack/medical/gauze/heal(mob/living/M, mob/user)
 	if(ishuman(M))
@@ -100,6 +104,7 @@
 		if(!H.bleedsuppress && H.bleed_rate) //so you can't stack bleed suppression
 			H.suppress_bloodloss(stop_bleeding)
 			to_chat(user, "<span class='notice'>You stop the bleeding of [M]!</span>")
+			H.adjustBruteLoss(-(heal_brute))
 			return TRUE
 	to_chat(user, "<span class='notice'>You can not use \the [src] on [M]!</span>")
 
@@ -127,6 +132,15 @@
 	stop_bleeding = 900
 	heal_brute = 0
 
+/obj/item/stack/medical/gauze/adv
+	name = "sterilized medical gauze"
+	desc = "A roll of elastic sterilized cloth that is extremely effective at stopping bleeding, heals minor wounds and cleans them."
+	singular_name = "sterilized medical gauze"
+	self_delay = 5
+
+/obj/item/stack/medical/gauze/adv/one
+	amount = 1
+
 /obj/item/stack/medical/gauze/cyborg
 	custom_materials = null
 	is_cyborg = 1
@@ -143,6 +157,9 @@
 	var/heal_burn = 20
 	self_delay = 20
 	grind_results = list(/datum/reagent/medicine/silver_sulfadiazine = 10)
+
+/obj/item/stack/medical/ointment/one
+	amount = 1
 
 /obj/item/stack/medical/ointment/heal(mob/living/M, mob/user)
 	if(M.stat == DEAD)

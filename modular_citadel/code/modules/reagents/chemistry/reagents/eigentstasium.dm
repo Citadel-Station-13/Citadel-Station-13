@@ -29,6 +29,7 @@
 	var/teleBool = FALSE
 	pH = 3.7
 	can_synth = TRUE
+	value = REAGENT_VALUE_EXCEPTIONAL
 
 /datum/reagent/fermi/eigenstate/on_new(list/data)
 	location_created = data["location_created"]
@@ -93,7 +94,7 @@
 		to_chat(M, "<span class='userdanger'>Your wavefunction feels like it's been ripped in half. You feel empty inside.</span>")
 		log_game("FERMICHEM: [M] ckey: [M.key] has become addicted to eigenstasium")
 		M.Jitter(10)
-	M.nutrition = M.nutrition - (M.nutrition/15)
+	M.adjust_nutrition(-M.nutrition/15)
 	..()
 
 /datum/reagent/fermi/eigenstate/addiction_act_stage2(mob/living/M)

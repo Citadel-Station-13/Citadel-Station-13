@@ -3,6 +3,8 @@
 	body_parts_covered = GROIN|LEGS
 	fitted = NO_FEMALE_UNIFORM
 	can_adjust = FALSE
+	custom_price = 60
+	mutantrace_variation = STYLE_DIGITIGRADE //how do they show up on taurs otherwise?
 
 /obj/item/clothing/under/pants/classicjeans
 	name = "classic jeans"
@@ -13,6 +15,7 @@
 	name = "Must Hang jeans"
 	desc = "Made in the finest space jeans factory this side of Alpha Centauri."
 	icon_state = "jeansmustang"
+	custom_price = 180
 
 /obj/item/clothing/under/pants/blackjeans
 	name = "black jeans"

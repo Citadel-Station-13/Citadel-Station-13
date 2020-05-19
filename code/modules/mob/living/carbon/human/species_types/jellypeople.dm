@@ -21,20 +21,19 @@
 	coldmod = 6   // = 3x cold damage
 	heatmod = 0.5 // = 1/4x heat damage
 	burnmod = 0.5 // = 1/2x generic burn damage
+	species_language_holder = /datum/language_holder/jelly
 
 /datum/species/jelly/on_species_loss(mob/living/carbon/C)
 	if(regenerate_limbs)
 		regenerate_limbs.Remove(C)
 	if(slime_change)	//CIT CHANGE
 		slime_change.Remove(C)	//CIT CHANGE
-	C.remove_language(/datum/language/slime)
 	C.faction -= "slime"
 	..()
 	C.faction -= "slime"
 
 /datum/species/jelly/on_species_gain(mob/living/carbon/C, datum/species/old_species)
 	..()
-	C.grant_language(/datum/language/slime)
 	if(ishuman(C))
 		regenerate_limbs = new
 		regenerate_limbs.Grant(C)
@@ -606,7 +605,7 @@
 		var/max_D = CONFIG_GET(number/penis_max_inches_prefs)
 		var/new_length = input(owner, "Penis length in inches:\n([min_D]-[max_D])", "Genital Alteration") as num|null
 		if(new_length)
-			H.dna.features["cock_length"] = CLAMP(round(new_length), min_D, max_D)
+			H.dna.features["cock_length"] = clamp(round(new_length), min_D, max_D)
 		H.update_genitals()
 		H.apply_overlay()
 		H.give_genital(/obj/item/organ/genital/testicles)

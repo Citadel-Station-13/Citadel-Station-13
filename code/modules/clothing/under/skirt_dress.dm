@@ -1,4 +1,4 @@
-/obj/item/clothing/under/dress/skirt
+/obj/item/clothing/under/dress
 	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
 
 /obj/item/clothing/under/dress/skirt
@@ -17,6 +17,7 @@
 	body_parts_covered = CHEST|GROIN|ARMS
 	fitted = FEMALE_UNIFORM_TOP
 	can_adjust = FALSE
+	custom_price = 60
 
 /obj/item/clothing/under/dress/skirt/red
 	name = "red skirt"
@@ -26,6 +27,7 @@
 	body_parts_covered = CHEST|GROIN|ARMS
 	fitted = FEMALE_UNIFORM_TOP
 	can_adjust = FALSE
+	custom_price = 60
 
 /obj/item/clothing/under/dress/skirt/purple
 	name = "purple skirt"
@@ -35,6 +37,7 @@
 	body_parts_covered = CHEST|GROIN|ARMS
 	fitted = FEMALE_UNIFORM_TOP
 	can_adjust = FALSE
+	custom_price = 60
 
 /obj/item/clothing/under/dress/sundress
 	name = "sundress"
@@ -148,6 +151,7 @@
 	fitted = FEMALE_UNIFORM_TOP
 	can_adjust = TRUE
 	alt_covers_chest = TRUE
+	custom_price = 60
 
 /obj/item/clothing/under/dress/skirt/plaid/blue
 	name = "blue plaid skirt"
@@ -182,7 +186,6 @@
 	icon_state = "bride_white"
 	item_state = "bride_white"
 	can_adjust = FALSE
-	mutantrace_variation = NONE
 
 /obj/item/clothing/under/dress/wedding/orange
 	name = "orange wedding dress"
@@ -213,7 +216,6 @@
 	desc = "A fancy skirt made with polychromic threads."
 	icon_state = "polyskirt"
 	item_state = "rainbow"
-	mutantrace_variation = NONE
 	var/list/poly_colors = list("#FFFFFF", "#F08080", "#808080")
 
 /obj/item/clothing/under/dress/skirt/polychromic/ComponentInitialize()
@@ -226,5 +228,4 @@
 	icon_state = "polypleat"
 	item_state = "rainbow"
 	body_parts_covered = CHEST|GROIN|ARMS
-	mutantrace_variation = NONE
 	poly_colors = list("#8CC6FF", "#808080", "#FF3535")

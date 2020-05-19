@@ -1218,6 +1218,58 @@ GLOBAL_LIST_EMPTY(custom_outfits) //Admin created outfits
 
 	SSblackbox.record_feedback("nested tally", "admin_toggle", 1, list("Toggled Hub Visibility", "[GLOB.hub_visibility ? "Enabled" : "Disabled"]")) //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
+/client/proc/cmd_admin_toggle_fov()
+	set category = "Fun"
+	set name = "Enable/Disable Field of Vision"
+
+	var/static/busy_toggling_fov = FALSE
+	if(!check_rights(R_ADMIN) || !check_rights(R_FUN))
+		return
+
+	var/on_off = CONFIG_GET(flag/use_field_of_vision)
+
+	if(busy_toggling_fov)
+		to_chat(usr, "<span class='warning'>A previous call of this function is still busy toggling FoV [on_off ? "on" : "off"]. Have some patiece</span>.")
+		return
+	busy_toggling_fov = TRUE
+
+	log_admin("[key_name(usr)] has [on_off ? "disabled" : "enabled"] the Field of Vision configuration.")
+	CONFIG_SET(flag/use_field_of_vision, !on_off)
+
+	SSblackbox.record_feedback("nested tally", "admin_toggle", 1, list("Toggled Field of Vision", "[on_off ? "Enabled" : "Disabled"]"))
+
+	if(on_off)
+		for(var/k in GLOB.mob_list)
+			if(!k)
+				continue
+			var/mob/M = k
+			if(ishuman(M))
+				var/mob/living/carbon/human/H = M
+				if(!(H.dna?.species.has_field_of_vision))
+					continue
+			else if(!M.has_field_of_vision)
+				continue
+			var/datum/component/field_of_vision/FoV = M.GetComponent(/datum/component/field_of_vision)
+			if(FoV)
+				qdel(FoV)
+			CHECK_TICK
+	else
+		for(var/k in GLOB.clients)
+			if(!k)
+				continue
+			var/client/C = k
+			var/mob/M = C.mob
+			if(ishuman(M))
+				var/mob/living/carbon/human/H = M
+				if(!(H.dna?.species.has_field_of_vision))
+					continue
+			else if(!M.has_field_of_vision)
+				continue
+			M.LoadComponent(/datum/component/field_of_vision, M.field_of_vision_type)
+			CHECK_TICK
+
+	busy_toggling_fov = FALSE
+
 /client/proc/smite(mob/living/carbon/human/target as mob)
 	set name = "Smite"
 	set category = "Fun"
@@ -1379,3 +1431,47 @@ GLOBAL_LIST_EMPTY(custom_outfits) //Admin created outfits
 	else
 		message_admins("[key_name_admin(usr)] has [newstate ? "activated" : "deactivated"] job exp exempt status on [key_name_admin(C)]")
 		log_admin("[key_name(usr)] has [newstate ? "activated" : "deactivated"] job exp exempt status on [key_name(C)]")
+
+/// Allow admin to add or remove traits of datum
+/datum/admins/proc/modify_traits(datum/D)
+	if(!D)
+		return
+
+	var/add_or_remove = input("Remove/Add?", "Trait Remove/Add") as null|anything in list("Add","Remove")
+	if(!add_or_remove)
+		return
+	var/list/availible_traits = list()
+
+	switch(add_or_remove)
+		if("Add")
+			for(var/key in GLOB.traits_by_type)
+				if(istype(D,key))
+					availible_traits += GLOB.traits_by_type[key]
+		if("Remove")
+			if(!GLOB.trait_name_map)
+				GLOB.trait_name_map = generate_trait_name_map()
+			for(var/trait in D.status_traits)
+				var/name = GLOB.trait_name_map[trait] || trait
+				availible_traits[name] = trait
+
+	var/chosen_trait = input("Select trait to modify", "Trait") as null|anything in sortList(availible_traits)
+	if(!chosen_trait)
+		return
+	chosen_trait = availible_traits[chosen_trait]
+
+	var/source = "adminabuse"
+	switch(add_or_remove)
+		if("Add") //Not doing source choosing here intentionally to make this bit faster to use, you can always vv it.
+			ADD_TRAIT(D,chosen_trait,source)
+		if("Remove")
+			var/specific = input("All or specific source ?", "Trait Remove/Add") as null|anything in list("All","Specific")
+			if(!specific)
+				return
+			switch(specific)
+				if("All")
+					source = null
+				if("Specific")
+					source = input("Source to be removed","Trait Remove/Add") as null|anything in sortList(D.status_traits[chosen_trait])
+					if(!source)
+						return
+			REMOVE_TRAIT(D,chosen_trait,source)

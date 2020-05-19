@@ -373,7 +373,7 @@
 /////////////
 
 /obj/item/storage/belt/organbox
-	name = "Organ Storge"
+	name = "Organ Storage"
 	desc = "A compact box that helps hold massive amounts of implants, organs, and some tools. Has a belt clip for easy carrying"
 	w_class = WEIGHT_CLASS_BULKY
 	icon = 'icons/obj/mysterybox.dmi'
@@ -392,6 +392,12 @@
 	STR.can_hold = typecacheof(list(
 	/obj/item/storage/pill_bottle,
 	/obj/item/reagent_containers/hypospray,
+	/obj/item/pinpointer/crew,
+	/obj/item/tele_iv,
+	/obj/item/sequence_scanner,
+	/obj/item/sensor_device,
+	/obj/item/bodybag,
+	/obj/item/surgicaldrill/advanced,
 	/obj/item/healthanalyzer,
 	/obj/item/reagent_containers/syringe,
 	/obj/item/clothing/glasses/hud/health,
@@ -407,6 +413,8 @@
 	/obj/item/implantcase,
 	/obj/item/implanter,
 	/obj/item/circuitboard/computer/operating,
+	/obj/item/circuitboard/computer/crew,
+	/obj/item/stack/sheet/glass,
 	/obj/item/stack/sheet/mineral/silver,
 	/obj/item/organ_storage
 	))
@@ -422,6 +430,8 @@
 	throw_range = 7
 	var/empty = FALSE
 	item_state = "firstaid"
+	custom_price = 300
+	custom_premium_price = 500
 
 /obj/item/storage/hypospraykit/ComponentInitialize()
 	. = ..()

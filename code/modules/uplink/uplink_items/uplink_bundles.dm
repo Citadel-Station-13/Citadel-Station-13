@@ -40,6 +40,17 @@
 	cost = 20
 	player_minimum = 30
 	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops)
+	restricted = TRUE
+
+/datum/uplink_item/bundles_TC/northstar_bundle
+	name = "Northstar Bundle"
+	desc = "An item usually reserved for the Gorlex Marauders and their operatives, now available for recreational use.  \
+			These armbands let the user punch people very fast and with the lethality of a legendary martial artist. \
+			Does not improve weapon attack speed or the meaty fists of a hulk, but you will be unmatched in martial power. \
+			Combines with all martial arts, but the user will be unable to bring themselves to use guns, nor remove the armbands."
+	item = /obj/item/storage/box/syndie_kit/northstar
+	cost = 20
+	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops)
 
 /datum/uplink_item/suits/infiltrator_bundle
 	name = "Insidious Infiltration Gear Case"

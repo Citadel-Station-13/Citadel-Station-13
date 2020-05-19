@@ -10400,7 +10400,6 @@
 /obj/machinery/requests_console{
 	department = "AI";
 	departmentType = 5;
-	pixel_x = 0;
 	pixel_y = 28
 	},
 /obj/machinery/door/window/eastright{
@@ -17074,7 +17073,7 @@
 /area/security/brig)
 "aLl" = (
 /obj/effect/turf_decal/delivery,
-/obj/machinery/vending/autodrobe/all_access,
+/obj/machinery/vending/autodrobe,
 /turf/open/floor/plasteel,
 /area/hallway/primary/port/fore)
 "aLm" = (
@@ -28451,7 +28450,7 @@
 /turf/open/floor/plasteel,
 /area/quartermaster/warehouse)
 "bjN" = (
-/obj/machinery/vending/autodrobe/all_access,
+/obj/machinery/vending/autodrobe,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
 /area/quartermaster/office)
@@ -42089,18 +42088,14 @@
 /turf/open/floor/plasteel/white,
 /area/medical/virology)
 "bMD" = (
-/obj/structure/flora/tree/palm{
-	pixel_x = 0
-	},
+/obj/structure/flora/tree/palm,
 /obj/machinery/light{
 	dir = 8
 	},
 /turf/open/floor/grass,
 /area/medical/virology)
 "bME" = (
-/obj/structure/flora/tree/palm{
-	pixel_x = 0
-	},
+/obj/structure/flora/tree/palm,
 /obj/machinery/light{
 	dir = 4;
 	light_color = "#c1caff"
@@ -42181,9 +42176,7 @@
 /turf/open/space/basic,
 /area/space/nearstation)
 "bML" = (
-/obj/structure/flora/tree/palm{
-	pixel_x = 0
-	},
+/obj/structure/flora/tree/palm,
 /turf/open/floor/grass,
 /area/medical/virology)
 "bMM" = (
@@ -71649,8 +71642,7 @@
 /obj/machinery/atmospherics/pipe/simple/orange/hidden,
 /obj/machinery/flasher{
 	id = "ID";
-	pixel_x = 24;
-	pixel_y = 0
+	pixel_x = 24
 	},
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/turret_protected/ai)
@@ -72370,6 +72362,9 @@
 /obj/item/pen,
 /turf/open/floor/plasteel,
 /area/engine/atmos)
+"xxP" = (
+/turf/closed/wall,
+/area/quartermaster/storage)
 "xCy" = (
 /obj/machinery/atmospherics/components/binary/pump,
 /obj/machinery/atmospherics/pipe/simple/supplymain/hidden{
@@ -121116,7 +121111,7 @@ bgT
 bjr
 bkr
 ble
-bgT
+xxP
 bnC
 boD
 bgT
