@@ -306,6 +306,18 @@
 	color_src = MATRIXED
 	icon = 'modular_citadel/icons/mob/mam_tails.dmi'
 
+/datum/sprite_accessory/tails/human/tamamo_kitsune
+	name = "Tamamo Kitsune Tails" //Tamamo-no-Tiro, let it be known!
+	icon_state = "9sune"
+	color_src = MATRIXED
+	icon = 'modular_citadel/icons/mob/mam_tails.dmi'
+
+/datum/sprite_accessory/tails_animated/human/tamamo_kitsune
+	name = "Tamamo Kitsune Tails"
+	icon_state = "9sune"
+	color_src = MATRIXED
+	icon = 'modular_citadel/icons/mob/mam_tails.dmi'
+
 /datum/sprite_accessory/tails/human/murid
 	name = "Murid"
 	icon_state = "murid"
