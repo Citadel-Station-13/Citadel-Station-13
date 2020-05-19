@@ -63,11 +63,6 @@
 	L.default_toggle_sprint(TRUE)
 	return TRUE
 
-/datum/keybinding/living/toggle_sprint/up(client/user)
-	var/mob/living/L = user.mob
-	L.default_toggle_sprint(FALSE)
-	return TRUE
-
 /datum/keybinding/living/toggle_resting
 	hotkey_keys = list("V")
 	name = "toggle_resting"

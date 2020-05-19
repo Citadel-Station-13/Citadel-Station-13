@@ -18,14 +18,17 @@
 		erase_output = "[erase_output];[macro_name].parent=null"
 	winset(src, null, erase_output)
 
-/client/proc/set_macros()
+/client/proc/set_macros(datum/preferences/prefs_override)
 	set waitfor = FALSE
+
+	if(!prefs_override)
+		prefs_override = prefs
 
 	keys_held.Cut()
 
 	erase_all_macros()
 
-	var/list/macro_set = prefs?.hotkeys? SSinput.macro_set : SSinput.classic_set
+	var/list/macro_set = prefs_override?.hotkeys? SSinput.macro_set : SSinput.classic_set
 	for(var/k in 1 to length(macro_set))
 		var/key = macro_set[k]
 		var/command = macro_set[key]
