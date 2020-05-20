@@ -8,8 +8,12 @@
 	max_integrity = 100
 	var/oreAmount = 5
 	var/material_drop_type = /obj/item/stack/sheet/metal
+	var/impressiveness = 15 //hack till the art component is also added.
 	CanAtmosPass = ATMOS_PASS_DENSITY
 
+/obj/structure/statue/Initialize()
+	. = ..()
+	addtimer(CALLBACK(src, /datum.proc/_AddComponent, list(/datum/component/beauty, impressiveness *  75)), 0)
 
 /obj/structure/statue/attackby(obj/item/W, mob/living/user, params)
 	add_fingerprint(user)
