@@ -15,7 +15,7 @@
 	/// All pipenets that are in us.
 	var/list/datum/pipeline/pipelines
 	/// Has our air changed? If so, we'll need to equalization_tick().
-	var/update = FALSE
+	var/update = TRUE		// true on first run
 	/// Marks us as being invalid for air operations due to being mid-rebuild or destroy.
 	var/invalid = TRUE
 

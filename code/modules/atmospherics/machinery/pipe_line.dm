@@ -82,7 +82,7 @@
 	temporary_air.copy_from(parent_air)
 	var/list/temp_gases = temporary_air.gases
 	for(var/gasid in temp_gases)
-		temp_gases[gasid] *= (volume / parent_air.volume
+		temp_gases[gasid] *= (volume / parent_air.volume)
 
 /**
   * Builds our network, expanding through whatever pipes we need to.
@@ -121,7 +121,7 @@
   * Builds our pipe network.
   */
 /datum/pipeline/proc/build_parent()
-	if(parent)
+	if(!QDELETED(parent))
 		return
 	parent = new
 	parent.build_network(src)

@@ -37,14 +37,17 @@
 
 /obj/machinery/atmospherics/components/binary/relief_valve/proc/open()
 	opened = TRUE
+	rebuild_pipe_networks()
 	update_icon_nopipes()
-	update_parents()
-	var/datum/pipeline/parent1 = parents[1]
-	parent1.reconcile_air()
 
 /obj/machinery/atmospherics/components/binary/relief_valve/proc/close()
 	opened = FALSE
+	rebuild_pipe_networks()
 	update_icon_nopipes()
+
+/obj/machinery/atmospherics/components/binary/relief_valve/directly_connected_pipelines(datum/pipeline/from)
+	ensure_pipelines_exists_for_network_build()
+	return return_pipenets()
 
 /obj/machinery/atmospherics/components/binary/relief_valve/process_atmos()
 	..()

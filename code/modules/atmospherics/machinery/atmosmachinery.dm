@@ -333,10 +333,10 @@
 /**
   * Finds a valid node in a direction.
   */
- /obj/machinery/atmospherics/proc/find_valid_node(direction, node_index, prompted_layer)
- 	for(var/obj/machinery/atmospherics/target in get_step_multiz(src, direction))
- 		if(can_be_node(target, node_index, prompted_layer))
- 			return target
+/obj/machinery/atmospherics/proc/find_valid_node(direction, node_index, prompted_layer)
+	for(var/obj/machinery/atmospherics/target in get_step_multiz(src, direction))
+		if(can_be_node(target, node_index, prompted_layer))
+			return target
 
 /**
   * Returns atmospherics machinery that we are connected to that we are directly going to expand our pipenet to (so a logical no-block straight instantenously conducting connection).
@@ -351,6 +351,21 @@
   */
 /obj/machinery/atmospherics/proc/SetInitDirections()
 	return
+
+/**
+  * Manually rebuilds our pipe networks but not pipe lines, for things like valves opening.
+  */
+/obj/machinery/atmospherics/proc/rebuild_pipe_networks()
+	var/list/datum/pipeline/lines = return_pipenets()
+	// break down
+	var/datum/pipeline/PL
+	for(var/i in lines)
+		PL = i
+		PL.breakdown_parent()
+	// form
+	for(var/i in lines)
+		PL = i
+		PL.build_parent()
 
 /**
   * Returns the pipenet of the specified node.

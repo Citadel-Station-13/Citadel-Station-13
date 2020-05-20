@@ -26,7 +26,7 @@
 	return ..()
 
 /obj/machinery/atmospherics/pipe/form_networks(build_pipe_networks = TRUE)
-	if(parent)
+	if(!QDELETED(parent))
 		return
 	parent = new
 	parent.build_network(src, build_pipe_networks)
@@ -57,7 +57,7 @@
 	temporary_air.copy_from(parent_air)
 	var/list/temp_gases = temporary_air.gases
 	for(var/gasid in temp_gases)
-		temp_gases[gasid] *= (volume / parent_air.volume
+		temp_gases[gasid] *= (volume / parent_air.volume)
 
 /obj/machinery/atmospherics/pipe/PropEdit(var_name, var_value)
 	if(var_name == NAMEOF(src, volume))

@@ -36,7 +36,8 @@
 	LAZYINITLIST(temporary_node_airs)
 	temporary_node_airs.len = device_type
 	var/datum/gas_mixture/parent_air = from.air
-	var/datum/gas_mixture/temporary_air = temporary_node_airs[nodeindex] = new /datum/gas_mixture(node_volumes? (node_volumes[i] || 200) : 200)
+	var/datum/gas_mixture/temporary_air = new /datum/gas_mixture(node_volumes? (node_volumes[i] || 200) : 200)
+	temporary_node_airs[nodeindex] = temporary_air
 	temporary_air.copy_from(parent_air)
 	var/list/temp_gases = temporary_air.gases
 	for(var/gasid in temp_gases)
@@ -45,10 +46,12 @@
 // Pipenet stuff; housekeeping
 
 /obj/machinery/atmospherics/components/form_networks(build_pipe_networks = TRUE)
+	var/datum/pipeline/P
 	for(var/i in 1 to device_type)
-		if(node_pipelines[i]))
+		P = node_pipelines[i]
+		if(!QDELETED(P))
 			continue
-		var/datum/pipeline/P = new
+		P = new
 		node_pipelines[i] = P
 		P.build_network(src, build_pipe_networks)
 	update_parents()
@@ -143,7 +146,14 @@
   * Returns pipelines that are directly connected to each other through us
   */
 /obj/machinery/atmospherics/components/proc/directly_connected_pipelines(datum/pipeline/from)
-	return
+	ensure_pipelines_exists_for_network_build()
+	return list(from)
+
+/**
+  * Ensures all pipelines are built. Doesn't build overarching pipe network.
+  */
+/obj/machinery/atmospherics/components/proc/ensure_pipelines_exists_for_network_build()
+	form_networks(FALSE)
 
 // Helpers
 
