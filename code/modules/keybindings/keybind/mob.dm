@@ -85,7 +85,7 @@
 
 /datum/keybinding/mob/say_with_indicator/down(client/user)
 	var/mob/M = user.mob
-	M.say_with_indicator()
+	M.say_typing_indicator()
 	return TRUE
 
 /datum/keybinding/mob/me_with_indicator
@@ -96,7 +96,7 @@
 
 /datum/keybinding/mob/say_with_indicator/down(client/user)
 	var/mob/M = user.mob
-	M.me_with_indicator()
+	M.me_typing_indicator()
 	return TRUE
 
 /datum/keybinding/living/subtle
