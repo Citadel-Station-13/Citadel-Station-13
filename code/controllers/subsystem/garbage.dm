@@ -464,5 +464,5 @@ SUBSYSTEM_DEF(garbage)
 		fdel("data/DATUMCOUNT.txt")
 	var/outfile = file("data/DATUMCOUNT.txt")
 	for(var/path in datums)
-		outfile << "[datums[path]]\t\t\t\t\t[path]\n"
+		outfile << "[datums[path]]\t\t\t\t\t[path]"
 #endif
