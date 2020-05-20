@@ -119,8 +119,8 @@ GLOBAL_VAR_INIT(total_runtimes_skipped, 0)
 	if(GLOB.error_cache)
 		GLOB.error_cache.log_error(E, desclines)
 
+	var/main_line = "\[[TIME_STAMP("hh:mm:ss", FALSE)]] Runtime in [E.file],[E.line]: [E]"
 	if(!TgsAvailable())		// not tgs, send to DD window
-		var/main_line = "\[[TIME_STAMP("hh:mm:ss", FALSE)]] Runtime in [E.file],[E.line]: [E]"
 		SEND_TEXT(world.log, main_line)
 		for(var/line in desclines)
 			SEND_TEXT(world.log, line)
