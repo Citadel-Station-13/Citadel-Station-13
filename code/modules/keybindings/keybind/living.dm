@@ -30,39 +30,6 @@
 	C.user_toggle_intentional_combat_mode()
 	return TRUE
 
-/datum/keybinding/living/hold_sprint
-	hotkey_keys = list("Shift")
-	name = "hold_sprint"
-	full_name = "Sprint (hold down)"
-	description = "Hold down to sprint"
-
-/datum/keybinding/living/hold_sprint/can_use(client/user)
-	return ishuman(user.mob) || iscyborg(user.mob)
-
-/datum/keybinding/living/hold_sprint/down(client/user)
-	var/mob/living/L = user.mob
-	L.sprint_hotkey(TRUE)
-	return TRUE
-
-/datum/keybinding/living/hold_sprint/up(client/user)
-	var/mob/living/L = user.mob
-	L.sprint_hotkey(FALSE)
-	return TRUE
-
-/datum/keybinding/living/toggle_sprint
-	hotkey_keys = list()
-	name = "toggle_sprint"
-	full_name = "Sprint (toggle)"
-	description = "Press to toggle sprint"
-
-/datum/keybinding/living/toggle_sprint/can_use(client/user)
-	return ishuman(user.mob) || iscyborg(user.mob)
-
-/datum/keybinding/living/toggle_sprint/down(client/user)
-	var/mob/living/L = user.mob
-	L.default_toggle_sprint(TRUE)
-	return TRUE
-
 /datum/keybinding/living/toggle_resting
 	hotkey_keys = list("V")
 	name = "toggle_resting"

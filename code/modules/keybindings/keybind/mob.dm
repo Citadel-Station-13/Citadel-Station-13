@@ -77,33 +77,6 @@
 		user.mob.dropItemToGround(I)
 	return TRUE
 
-/datum/keybinding/mob/toggle_move_intent
-	hotkey_keys = list("Alt")
-	name = "toggle_move_intent"
-	full_name = "Hold to toggle move intent"
-	description = "Held down to cycle to the other move intent, release to cycle back"
-
-/datum/keybinding/mob/toggle_move_intent/down(client/user)
-	var/mob/M = user.mob
-	M.toggle_move_intent()
-	return TRUE
-
-/datum/keybinding/mob/toggle_move_intent/up(client/user)
-	var/mob/M = user.mob
-	M.toggle_move_intent()
-	return TRUE
-
-/datum/keybinding/mob/toggle_move_intent_alternative
-	hotkey_keys = list("Unbound")
-	name = "toggle_move_intent_alt"
-	full_name = "press to cycle move intent"
-	description = "Pressing this cycle to the opposite move intent, does not cycle back"
-
-/datum/keybinding/mob/toggle_move_intent_alternative/down(client/user)
-	var/mob/M = user.mob
-	M.toggle_move_intent()
-	return TRUE
-
 /datum/keybinding/mob/say_with_indicator
 	hotkey_keys = list("CtrlT")
 	classic_keys = list()
@@ -125,3 +98,26 @@
 	var/mob/M = user.mob
 	M.me_indicator()
 	return TRUE
+
+/datum/keybinding/mob/subtle
+	hotkey_keys = list("5")
+	classic_keys = list()
+	name = "subtle_emote"
+	full_name = "Subtle Emote"
+
+/datum/keybinding/mob/subtle/down(client/user)
+	var/mob/M = user.mob
+	M.subtle_keybind()
+	return TRUE
+
+/datum/keybinding/mob/whisper
+	hotkey_keys = list("Y")
+	classic_keys = list()
+	name = "whisper"
+	full_name = "Whisper"
+
+/datum/keybinding/mob/whisper/down(client/user)
+	var/mob/M = user.mob
+	M.whisper_keybind()
+	return TRUE
+

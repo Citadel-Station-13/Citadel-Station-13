@@ -52,7 +52,10 @@ SUBSYSTEM_DEF(input)
 	for(var/i in 65 to 90)
 		classic_ctrl_override_keys += ascii2text(i)
 	// let's play the game of clientside bind overrides!
-	classic_ctrl_override_keys -= list("T", "O")
+	classic_ctrl_override_keys -= list("T", "O", "M", "L")
+	macroset_classic_input["Ctrl+T"] = "say"
+	macroset_classic_input["Ctrl+O"] = "ooc"
+	macroset_classic_input["Ctrl+L"] = "looc"
 	// let's play the list iteration game x2
 	for(var/key in classic_ctrl_override_keys)
 		macroset_classic_input["Ctrl+[key]"] = "\"KeyDown [key]\""
@@ -60,12 +63,18 @@ SUBSYSTEM_DEF(input)
 	// Misc
 	macroset_classic_input["Tab"] = "\".winset \\\"mainwindow.macro=[SKIN_MACROSET_CLASSIC_HOTKEYS] map.focus=true input.background_color=[COLOR_INPUT_DISABLED]\\\"\""
 	macroset_classic_input["Escape"] = "\".winset \\\"input.text=\\\"\\\"\\\"\"")
-	macroset_classic_input["Ctrl+T"] = "say"
-	macroset_classic_input["Ctrl+O"] = "ooc"
 
 	// FINALLY, WE CAN DO SOMETHING MORE NORMAL FOR THE SNOWFLAKE-BUT-LESS KEYSET.
 	macroset_classic_hotkey = list(
-
+	"Any" = "\"KeyDown \[\[*\]\]\"",
+	"Any+UP" = "\"KeyUp \[\[*\]\]\"",
+	"Tab" = "\".winset \\\"mainwindow.macro=[SKIN_MACROSET_CLASSIC_INPUT] input.focus=true input.background_color=[COLOR_INPUT_ENABLED]\\\"\"",
+	"Escape" = "\".winset \\\"input.text=\\\"\\\"\\\"\""
+	"Back" = "\".winset \\\"input.text=\\\"\\\"\\\"\"",
+	"O" = "ooc",
+	"T" = "say",
+	"L" = "looc",
+	"M" = "me"
 	)
 
 	// And finally, the modern set.
@@ -74,63 +83,12 @@ SUBSYSTEM_DEF(input)
 	"Any+UP" = "\"KeyUp \[\[*\]\]\"",
 	"Tab" = "\".winset \\\"input.focus=true?map.focus=true input.background-color=[COLOR_INPUT_DISABLED]:input.focus=true input.background-color=[COLOR_INPUT_ENABLED]\\\"\"",
 	"Escape" = "\".winset \\\"input.text=\\\"\\\"\\\"\""
+	"Back" = "\".winset \\\"input.text=\\\"\\\"\\\"\"",
 	"O" = "ooc",
 	"T" = "say",
+	"L" = "looc",
 	"M" = "me"
 	)
-
-
-// This is for when macro sets are eventualy datumized
-/datum/controller/subsystem/input/proc/setup_default_macro_sets()
-
-	hotkey_mode_reserved = list(
-	"T" = TRUE,
-	"O" = TRUE,
-	"M" = TRUE,
-	"Tab" = TRUE
-	"Escape" = TRUE,
-	"Back" = TRUE
-	)
-	hotkey_mode_macros = list(
-	"Tab" = "\".winset \\\"mainwindow.macro=
-	"Any" = "\"KeyDown \[\[*\]\]\"",
-	"Any+UP" = "\"KeyUp \[\[*\]\]\"",
-	"O" = "ooc",
-	"T" = "say",
-	"M" = "me",
-	)
-	input_mode_reserved = list(
-	"CtrlT" = TRUE,
-	"CtrlO" = TRUE,
-	"CtrlM" = TRUE,
-	"Tab" = TRUE,
-	"Escape" = TRUE
-	)
-	input_mode_macros = list(
-	)
-
-	"5" = "subtle",
-	"Y" = "whisper",
-	"Ctrl+O" = "looc",
-	"Back" = "\".winset \\\"input.text=\\\"\\\"\\\"\"",
-	"Tab" = "\".winset \\\"input.focus=true?map.focus=true input.background-color=[COLOR_INPUT_DISABLED]:input.focus=true input.background-color=[COLOR_INPUT_ENABLED]\\\"\"",
-	"Escape" = "\".winset \\\"input.text=\\\"\\\"\\\"\"")
-	classic_set = list(
-	"Any" = "\"KeyDown \[\[*\]\]\"",
-	"Any+UP" = "\"KeyUp \[\[*\]\]\"",
-	"Ctrl+T" = "say_indicator",
-	"Ctrl+M" = "me_indicator",
-	"Ctrl+O" = "looc",
-	"Tab" = "\".winset \\\"input.focus=true?map.focus=true input.background-color=[COLOR_INPUT_DISABLED]:input.focus=true input.background-color=[COLOR_INPUT_ENABLED]\\\"\"",
-	"Escape" = "\".winset \\\"input.text=\\\"\\\"\\\"\"")
-
-
-	/// Macroset name of hotkeys/keybind only/modern mode
-#define SKIN_MACROSET_HOTKEYS "hotkeys"
-/// Macroset name of classic hotkey mode
-#define SKIN_MACROSET_CLASSIC_HOTKEYS "oldhotkeys"
-/// Macroset name of classic input mode
-#define SKIN_MACROSET_CLASSIC_INPUT "oldinput"
 
 // Badmins just wanna have fun ♪
 /datum/controller/subsystem/input/proc/refresh_client_macro_sets()

@@ -73,3 +73,67 @@
 	var/mob/M = user.mob
 	M.westface()
 	return TRUE
+
+/datum/keybinding/living/hold_sprint
+	hotkey_keys = list("Shift")
+	name = "hold_sprint"
+	full_name = "Sprint (hold down)"
+	description = "Hold down to sprint"
+    category = CATEGORY_MOVEMENT
+
+/datum/keybinding/living/hold_sprint/can_use(client/user)
+	return ishuman(user.mob) || iscyborg(user.mob)
+
+/datum/keybinding/living/hold_sprint/down(client/user)
+	var/mob/living/L = user.mob
+	L.sprint_hotkey(TRUE)
+	return TRUE
+
+/datum/keybinding/living/hold_sprint/up(client/user)
+	var/mob/living/L = user.mob
+	L.sprint_hotkey(FALSE)
+	return TRUE
+
+/datum/keybinding/living/toggle_sprint
+	hotkey_keys = list()
+	name = "toggle_sprint"
+	full_name = "Sprint (toggle)"
+	description = "Press to toggle sprint"
+    category = CATEGORY_MOVEMENT
+
+/datum/keybinding/living/toggle_sprint/can_use(client/user)
+	return ishuman(user.mob) || iscyborg(user.mob)
+
+/datum/keybinding/living/toggle_sprint/down(client/user)
+	var/mob/living/L = user.mob
+	L.default_toggle_sprint(TRUE)
+	return TRUE
+
+/datum/keybinding/mob/toggle_move_intent
+	hotkey_keys = list("Alt")
+	name = "toggle_move_intent"
+	full_name = "Hold to toggle move intent"
+	description = "Held down to cycle to the other move intent, release to cycle back"
+    category = CATEGORY_MOVEMENT
+
+/datum/keybinding/mob/toggle_move_intent/down(client/user)
+	var/mob/M = user.mob
+	M.toggle_move_intent()
+	return TRUE
+
+/datum/keybinding/mob/toggle_move_intent/up(client/user)
+	var/mob/M = user.mob
+	M.toggle_move_intent()
+	return TRUE
+
+/datum/keybinding/mob/toggle_move_intent_alternative
+	hotkey_keys = list("Unbound")
+	name = "toggle_move_intent_alt"
+	full_name = "press to cycle move intent"
+	description = "Pressing this cycle to the opposite move intent, does not cycle back"
+    category = CATEGORY_MOVEMENT
+
+/datum/keybinding/mob/toggle_move_intent_alternative/down(client/user)
+	var/mob/M = user.mob
+	M.toggle_move_intent()
+	return TRUE
