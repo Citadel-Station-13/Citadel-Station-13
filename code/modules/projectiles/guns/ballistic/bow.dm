@@ -59,7 +59,7 @@
 
 /obj/item/gun/ballistic/bow/pipe
 	name = "pipe bow"
-	desc = "Some sort of pipe made projectile weapon made of a silk string and lots of bending. Used to fire arrows."
+	desc = "Some sort of pipe made projectile weapon made of a durathread string and lots of bending. Used to fire arrows."
 	icon_state = "pipebow"
 	item_state = "pipebow"
 	force = 0
