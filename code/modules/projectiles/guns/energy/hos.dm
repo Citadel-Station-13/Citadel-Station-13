@@ -16,6 +16,10 @@
 
 	var/charge_sections = 6
 
+/obj/item/gun/ballistic/revolver/mws/examine(mob/user)
+	. = ..()
+	. += "<span class='notice'>Alt-click to remove the magazine.</span>"
+
 /obj/item/gun/ballistic/revolver/mws/shoot_with_empty_chamber(mob/living/user as mob|obj)
 	process_chamber(user)
 	if(!chambered || !chambered.BB)
