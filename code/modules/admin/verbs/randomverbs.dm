@@ -811,6 +811,19 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		message_admins("Admin [key_name_admin(usr)] has disabled random events.")
 	SSblackbox.record_feedback("nested tally", "admin_toggle", 1, list("Toggle Random Events", "[new_are ? "Enabled" : "Disabled"]")) //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
+/client/proc/admin_enable_disk_inactive_msg()
+	set category = "Server"
+	set name = "Toggle nuke disk stationary admin logging"
+	set desc = "Toggles nuke disk stationary admin logs for all admins"
+	var/current_state = !CONFIG_GET(flag/admin_disk_inactive_msg)
+	CONFIG_SET(flag/admin_disk_inactive_msg, current_state)
+	if(current_state)
+		to_chat(usr, "Inactive disk admin logging enabled")
+		message_admins("Admin [key_name_admin(usr)] has enabled inactive disk admin logging")
+	else
+		to_chat(usr, "Inactive disk admin logging disabled")
+		message_admins("Admin [key_name_admin(usr)] has disabled inactive disk admin logging")
+	SSblackbox.record_feedback("nested tally", "admin_toggle", 1, list("Toggle nuke disk stationary admin logging", "[current_state ? "Enabled" : "Disabled"]"))
 
 /client/proc/admin_change_sec_level()
 	set category = "Special Verbs"
