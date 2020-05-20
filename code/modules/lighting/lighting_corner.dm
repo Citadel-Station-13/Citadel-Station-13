@@ -28,12 +28,13 @@
 // Diagonal is our direction FROM them, not to.
 /datum/lighting_corner/New(turf/new_turf, diagonal)
 	. = ..()
+
 #define SET_DIAGONAL(turf, diagonal) \
 	switch(diagonal){ \
-		if(SOUTHWEST) { northeast = turf; turf.bottomleft = src; } \
-		if(SOUTHEAST) { northwest = turf; turf.bottomright = src; } \
-		if(NORTHEAST) { southwest = turf; turf.topright = src; } \
-		if(NORTHWEST) { southeast = turf; turf.topleft = src; } \
+		if(SOUTHWEST) { northeast = turf; turf.lc_bottomleft = src; } \
+		if(SOUTHEAST) { northwest = turf; turf.lc_bottomright = src; } \
+		if(NORTHEAST) { southwest = turf; turf.lc_topright = src; } \
+		if(NORTHWEST) { southeast = turf; turf.lc_topleft = src; } \
 	}
 	SET_DIAGONAL(new_turf, diagonal)
 	z = new_turf.z
@@ -50,10 +51,10 @@
 	SET_DIAGONAL(T, turn(diagonal, 180))
 	// Build horizontal
 	T = get_step(new_turf, horizontal)
-	SET_DIAGONAL(T, turn((T.x > x) ? EAST : WEST) | ((T.y > y) ? NORTH : SOUTH, 180))
+	SET_DIAGONAL(T, turn(((T.x > x) ? EAST : WEST) | ((T.y > y) ? NORTH : SOUTH), 180))
 	// Build vertical
 	T = get_step(new_turf, vertical)
-	SET_DIAGONAL(T, turn((T.x > x) ? EAST : WEST) | ((T.y > y) ? NORTH : SOUTH, 180))
+	SET_DIAGONAL(T, turn(((T.x > x) ? EAST : WEST) | ((T.y > y) ? NORTH : SOUTH), 180))
 
 	update_active()
 
@@ -102,7 +103,7 @@
 	#endif
 	cache_mx = round(mx, LIGHTING_ROUND_VALUE)
 
-	#define QUEUE(turf) if(turf.lighting_object && !turf.lighting_object.needs_update) turf.lighting_object.needs_update = TRUE; GLOB.lighting_update_objects += turf.lighitng_object
+	#define QUEUE(turf) if(turf.lighting_object && !turf.lighting_object.needs_update) { turf.lighting_object.needs_update = TRUE; GLOB.lighting_update_objects += turf.lighting_object }
 	QUEUE(northeast)
 	QUEUE(northwest)
 	QUEUE(southeast)

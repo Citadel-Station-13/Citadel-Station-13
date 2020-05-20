@@ -65,7 +65,7 @@
 		return 1
 
 	var/totallums = lc_topright.lum_r + lc_topright.lum_g + lc_topright.lum_b \
-	+ lc_bottomright.lum_r + lc_bottomright.lum_g + lc_bottomright.lumb_b \
+	+ lc_bottomright.lum_r + lc_bottomright.lum_g + lc_bottomright.lum_b \
 	+ lc_bottomleft.lum_r + lc_bottomleft.lum_g + lc_bottomleft.lum_b \
 	+ lc_topleft.lum_r + lc_topleft.lum_g + lc_topleft.lum_b
 
@@ -108,16 +108,6 @@
 				lighting_build_overlay()
 			else
 				lighting_clear_overlay()
-
-/turf/proc/_get_corners()
-	if (!IS_DYNAMIC_LIGHTING(src) && !light_sources)
-		return null
-	if (!lighting_corners_initialised)
-		generate_missing_corners()
-	if (has_opaque_atom)
-		return null // Since this proc gets used in a for loop, null won't be looped though.
-
-	return corners
 
 /turf/proc/generate_missing_corners()
 	if (!IS_DYNAMIC_LIGHTING(src) && !light_sources)
