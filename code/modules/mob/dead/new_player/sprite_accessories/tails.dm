@@ -828,6 +828,14 @@ datum/sprite_accessory/mam_tails/insect
 	name = "Squirrel"
 	icon_state = "squirrel"
 
+/datum/sprite_accessory/mam_tails/tamamo_kitsune
+	name = "Tamamo Kitsune Tails"
+	icon_state = "9sune"
+
+/datum/sprite_accessory/mam_tails_animated/tamamo_kitsune
+	name = "Tamamo Kitsune Tails"
+	icon_state = "9sune"
+
 /datum/sprite_accessory/mam_tails/tentacle
 	name = "Tentacle"
 	icon_state = "tentacle"
