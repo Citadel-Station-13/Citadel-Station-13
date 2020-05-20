@@ -13,6 +13,7 @@
 	desc = "Inject a secret chemical that will counteract all movement-impairing effect."
 	button_icon_state = "repulse"
 	icon_icon = 'icons/mob/actions/actions_spells.dmi'
+	required_mobility_flags = NONE
 
 /datum/action/item_action/ninjapulse
 	name = "EM Burst (25E)"
