@@ -237,6 +237,7 @@
 		return //nothing's changed
 
 	var/list/datum/lighting_corner/corners = list()
+	var/datum/lighting_corner/C
 	var/list/turf/turfs                    = list()
 	var/thing
 	var/turf/T
