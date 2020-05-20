@@ -111,8 +111,9 @@ GLOBAL_LIST(topic_status_cache)
 		GLOB.picture_logging_prefix = "O_[override_dir]_"
 		GLOB.picture_log_directory = "data/picture_logs/[override_dir]"
 
-	// Special DD runtime logs
-	world.log = file("[GLOB.log_directory]/dd.log") //not all runtimes trigger world/Error, so this is the only way to ensure we can see all of them.
+	if(!TgsAvailable())
+		// Special DD runtime logs, only needed if this isn't a live deployment where you won't see the DD window.
+		world.log = file("[GLOB.log_directory]/dd.log") //not all runtimes trigger world/Error, so this is the only way to ensure we can see all of them.
 
 	GLOB.world_game_log = "[GLOB.log_directory]/game.log"
 	GLOB.world_virus_log = "[GLOB.log_directory]/virus.log"
