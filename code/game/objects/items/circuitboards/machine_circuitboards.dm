@@ -692,8 +692,9 @@
 	def_components = list(/obj/item/stock_parts/cell = /obj/item/stock_parts/cell/high)
 	needs_anchored = FALSE
 
-/obj/item/circuitboard/machine/chem_dispenser/apotechary
+/obj/item/circuitboard/machine/chem_dispenser/apothecary
 	name = "Apotechary Chem Dispenser (Machine Board)"
+	build_path = /obj/machinery/chem_dispenser/apothecary
 	req_components = list(
 		/obj/item/stock_parts/matter_bin = 1,
 		/obj/item/stock_parts/capacitor = 1,

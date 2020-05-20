@@ -721,14 +721,14 @@
 	component_parts += new /obj/item/stock_parts/cell/bluespace(null)
 	RefreshParts()
 
-///An unique, less efficient model found in the medbay apotechary room.
-/obj/machinery/chem_dispenser/apotechary
-	name = "apotechary chem dispenser"
+///An unique, less efficient model found in the medbay apothecary room.
+/obj/machinery/chem_dispenser/apothecary
+	name = "apothecary chem dispenser"
 	desc = "A cheaper chem dispenser meant for small scale medicine production."
 	icon_state = "minidispenser"
 	working_state = "minidispenser_working"
 	nopower_state = "minidispenser_nopower"
-	circuit = /obj/item/circuitboard/machine/chem_dispenser/apotechary
+	circuit = /obj/item/circuitboard/machine/chem_dispenser/apothecary
 	powerefficiency = 0.0833333
 	dispensable_reagents = list( //radium and stable plasma moved to upgrade tier 1 and 2, they've little to do with most medicines anyway.
 		/datum/reagent/hydrogen,
