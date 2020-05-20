@@ -61,13 +61,13 @@
 
 // Used to get a scaled lumcount.
 /turf/proc/get_lumcount(var/minlum = 0, var/maxlum = 1)
-	if (!lighting_object)
+	if(!lighting_object)
 		return 1
 
-	var/totallums = lc_topright.lum_r + lc_topright.lum_g + lc_topright.lum_b \
-	+ lc_bottomright.lum_r + lc_bottomright.lum_g + lc_bottomright.lum_b \
-	+ lc_bottomleft.lum_r + lc_bottomleft.lum_g + lc_bottomleft.lum_b \
-	+ lc_topleft.lum_r + lc_topleft.lum_g + lc_topleft.lum_b
+	var/totallums = (lc_topright? (lc_topright.lum_r + lc_topright.lum_g + lc_topright.lum_b) : 0) \
+	+ (lc_bottomright? (lc_bottomright.lum_r + lc_bottomright.lum_g + lc_bottomright.lum_b) : 0) \
+	+ (lc_bottomleft? (lc_bottomleft.lum_r + lc_bottomleft.lum_g + lc_bottomleft.lum_b) : 0) \
+	+ (lc_topleft? (lc_topleft.lum_r + lc_topleft.lum_g + lc_topleft.lum_b) : 0)
 
 	totallums /= 12 // 4 corners, each with 3 channels, get the average.
 
