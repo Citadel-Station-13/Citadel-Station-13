@@ -36,6 +36,10 @@
 		qdel(src)
 		return
 
+	if(_key == "Tab")
+		ForceAllKeysUp()		//groan, more hacky kevcode
+		return
+
 	if(length(keys_held) > MAX_HELD_KEYS)
 		keys_held.Cut(1,2)
 	keys_held[_key] = TRUE
@@ -63,6 +67,18 @@
 
 	holder?.key_down(_key, src)
 	mob.focus?.key_down(_key, src)
+
+/// Keyup's all keys held down.
+/client/proc/ForceAllKeysUp()
+	var/ctrl = keys_held["Ctrl"]
+	var/alt = keys_held["Alt"]
+	var/shift = keys_held["Shift"]
+	// simulate a user releasing all keys except for the mod keys. groan. i hate this. thanks, byond. why aren't keyups able to be forced to fire on macro change aoaoaoao.
+	// groan
+	for(var/key in keys_held)		// all of these won't be the 3 mod keys.
+		if((key == "Ctrl") || (key == "Alt") || (key == "Shift"))
+			continue
+		keyUp("[key]")
 
 /client/verb/keyUp(_key as text)
 	set instant = TRUE
