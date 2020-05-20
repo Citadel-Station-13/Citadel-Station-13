@@ -24,7 +24,6 @@ GLOBAL_LIST(topic_status_cache)
 
 	make_datum_references_lists()	//initialises global lists for referencing frequently used datums (so that we only ever do it once)
 
-
 	GLOB.revdata = new
 
 	InitTgs()
@@ -35,11 +34,8 @@ GLOBAL_LIST(topic_status_cache)
 	//DB schema and set RoundID if we can
 	SSdbcore.CheckSchemaVersion()
 	SSdbcore.SetRoundID()
-	SetupLogs()
 
-#ifndef USE_CUSTOM_ERROR_HANDLER
-	world.log = file("[GLOB.log_directory]/dd.log")
-#endif
+	SetupLogs()
 
 	load_admins()
 	load_mentors()
@@ -67,10 +63,6 @@ GLOBAL_LIST(topic_status_cache)
 /world/proc/InitTgs()
 	TgsNew(new /datum/tgs_event_handler/impl, TGS_SECURITY_TRUSTED)
 	GLOB.revdata.load_tgs_info()
-#ifdef USE_CUSTOM_ERROR_HANDLER
-	if (TgsAvailable())
-		world.log = file("[GLOB.log_directory]/dd.log") //not all runtimes trigger world/Error, so this is the only way to ensure we can see all of them.
-#endif
 	GLOB.tgs_initialized = TRUE
 
 /world/proc/HandleTestRun()
@@ -118,6 +110,9 @@ GLOBAL_LIST(topic_status_cache)
 		GLOB.log_directory = "data/logs/[override_dir]"
 		GLOB.picture_logging_prefix = "O_[override_dir]_"
 		GLOB.picture_log_directory = "data/picture_logs/[override_dir]"
+
+	// Special DD runtime logs
+	world.log = file("[GLOB.log_directory]/dd.log") //not all runtimes trigger world/Error, so this is the only way to ensure we can see all of them.
 
 	GLOB.world_game_log = "[GLOB.log_directory]/game.log"
 	GLOB.world_virus_log = "[GLOB.log_directory]/virus.log"
