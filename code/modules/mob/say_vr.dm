@@ -129,7 +129,7 @@ proc/get_top_level_mob(var/mob/S)
 		user.visible_message(message=message,self_message=message,vision_distance=1, ignored_mobs = GLOB.dead_mob_list)
 
 ///////////////// VERB CODE
-/mob/proc/subtle_keybind()
+/mob/living/proc/subtle_keybind()
 	var/message = input(src, "", "subtle") as text|null
 	if(!length(message))
 		return

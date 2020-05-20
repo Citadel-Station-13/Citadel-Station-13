@@ -34,14 +34,14 @@
 
 	erase_all_macros()
 
-	apply_macro_set(SKIN_MACROSET_HOTKEY, SSinput.macroset_hotkey)
-	apply_macro_Set(SKIN_MACROSET_CLASSIC_HOTKEYS, SSinput.macroset_classic_hotkey)
-	apply_macro_Set(SKIN_MACROSET_CLASSIC_INPUT, SSinput.macroset_classic_input)
+	apply_macro_set(SKIN_MACROSET_HOTKEYS, SSinput.macroset_hotkey)
+	apply_macro_set(SKIN_MACROSET_CLASSIC_HOTKEYS, SSinput.macroset_classic_hotkey)
+	apply_macro_set(SKIN_MACROSET_CLASSIC_INPUT, SSinput.macroset_classic_input)
 
 	set_hotkeys_preference()
 
 /client/proc/set_hotkeys_preference(datum/preferences/prefs_override = prefs)
 	if(prefs_override.hotkeys)
-		winset(src, null, "map.focus=true input.background-color=[COLOR_INPUT_DISABLED] mainwindow.macro=[SKIN_MACROSET_HHOTKEY]")
+		winset(src, null, "map.focus=true input.background-color=[COLOR_INPUT_DISABLED] mainwindow.macro=[SKIN_MACROSET_HOTKEYS]")
 	else
 		winset(src, null, "input.focus=true input.background-color=[COLOR_INPUT_ENABLED] mainwindow.macro=[SKIN_MACROSET_CLASSIC_INPUT]")
