@@ -125,6 +125,7 @@ GLOBAL_LIST(topic_status_cache)
 	GLOB.subsystem_log = "[GLOB.log_directory]/subsystem.log"
 	GLOB.reagent_log = "[GLOB.log_directory]/reagents.log"
 	GLOB.world_crafting_log = "[GLOB.log_directory]/crafting.log"
+	GLOb.click_log = "[GLOB.log_directory]/click.log"
 
 
 #ifdef UNIT_TESTS
@@ -144,6 +145,7 @@ GLOBAL_LIST(topic_status_cache)
 	start_log(GLOB.subsystem_log)
 	start_log(GLOB.reagent_log)
 	start_log(GLOB.world_crafting_log)
+	start_log(GLOB.click_log)
 
 	GLOB.changelog_hash = md5('html/changelog.html') //for telling if the changelog has changed recently
 	if(fexists(GLOB.config_error_log))
