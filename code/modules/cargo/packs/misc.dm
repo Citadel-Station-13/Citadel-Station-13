@@ -336,41 +336,27 @@
 /datum/supply_pack/misc/carpet_exotic
 	name = "Exotic Carpet Crate"
 	desc = "Exotic carpets straight from Space Russia, for all your decorating needs. Contains 100 tiles each of 10 different flooring patterns."
-	cost = 7000
-	contains = list(/obj/item/stack/tile/carpet/blue/fifty,
-					/obj/item/stack/tile/carpet/blue/fifty,
-					/obj/item/stack/tile/carpet/cyan/fifty,
-					/obj/item/stack/tile/carpet/cyan/fifty,
-					/obj/item/stack/tile/carpet/green/fifty,
-					/obj/item/stack/tile/carpet/green/fifty,
-					/obj/item/stack/tile/carpet/orange/fifty,
-					/obj/item/stack/tile/carpet/orange/fifty,
-					/obj/item/stack/tile/carpet/purple/fifty,
-					/obj/item/stack/tile/carpet/purple/fifty,
-					/obj/item/stack/tile/carpet/red/fifty,
-					/obj/item/stack/tile/carpet/red/fifty,
-					/obj/item/stack/tile/carpet/royalblue/fifty,
-					/obj/item/stack/tile/carpet/royalblue/fifty,
-					/obj/item/stack/tile/carpet/royalblack/fifty,
-					/obj/item/stack/tile/carpet/royalblack/fifty,
-					/obj/item/stack/tile/carpet/blackred/fifty,
-					/obj/item/stack/tile/carpet/blackred/fifty,
-					/obj/item/stack/tile/carpet/monochrome/fifty,
-					/obj/item/stack/tile/carpet/monochrome/fifty)
+	cost = 6000
+	contains = list(/obj/item/stack/tile/carpet/blue/twenty,
+					/obj/item/stack/tile/carpet/cyan/twenty,
+					/obj/item/stack/tile/carpet/green/twenty,
+					/obj/item/stack/tile/carpet/orange/twenty,
+					/obj/item/stack/tile/carpet/purple/twenty,
+					/obj/item/stack/tile/carpet/red/twenty,
+					/obj/item/stack/tile/carpet/royalblue/twenty,
+					/obj/item/stack/tile/carpet/royalblack/twenty,
+					/obj/item/stack/tile/carpet/blackred/twenty,
+					/obj/item/stack/tile/carpet/monochrome/twenty)
 	crate_name = "exotic carpet crate"
 
 /datum/supply_pack/misc/carpet
 	name = "Premium Carpet Crate"
 	desc = "Plasteel floor tiles getting on your nerves? These stacks of extra soft carpet will tie any room together. Contains some classic carpet, along with black, red, and monochrome varients."
 	cost = 1350
-	contains = list(/obj/item/stack/tile/carpet/fifty,
-					/obj/item/stack/tile/carpet/fifty,
-					/obj/item/stack/tile/carpet/black/fifty,
-					/obj/item/stack/tile/carpet/black/fifty,
-					/obj/item/stack/tile/carpet/blackred/fifty,
-					/obj/item/stack/tile/carpet/blackred/fifty,
-					/obj/item/stack/tile/carpet/monochrome/fifty,
-					/obj/item/stack/tile/carpet/monochrome/fifty)
+	contains = list(/obj/item/stack/tile/carpet/twenty,
+					/obj/item/stack/tile/carpet/black/twenty,
+					/obj/item/stack/tile/carpet/blackred/twenty,
+					/obj/item/stack/tile/carpet/monochrome/twenty)
 	crate_name = "premium carpet crate"
 
 /datum/supply_pack/misc/noslipfloor
