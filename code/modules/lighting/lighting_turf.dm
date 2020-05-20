@@ -46,11 +46,13 @@
 	var/datum/light_source/S
 	var/i
 #define OPERATE(corner) \
-	if(corner && !corner.active) \
-		for(i in corner.affecting) \
-			S = i \
-			S.recalc_corner(corner) \
-			corner.active = TRUE
+	if(corner && !corner.active) { \
+		for(i in corner.affecting) { \
+			S = i ; \
+			S.recalc_corner(corner) ; \
+			corner.active = TRUE ; \
+		} \
+	}
 	OPERATE(lc_topright)
 	OPERATE(lc_bottomright)
 	OPERATE(lc_bottomleft)
