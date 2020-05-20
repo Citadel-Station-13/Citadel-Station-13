@@ -336,7 +336,7 @@
 /datum/supply_pack/misc/carpet_exotic
 	name = "Exotic Carpet Crate"
 	desc = "Exotic carpets straight from Space Russia, for all your decorating needs. Contains 100 tiles each of 10 different flooring patterns."
-	cost = 6000
+	cost = 7000
 	contains = list(/obj/item/stack/tile/carpet/blue/twenty,
 					/obj/item/stack/tile/carpet/cyan/twenty,
 					/obj/item/stack/tile/carpet/green/twenty,
