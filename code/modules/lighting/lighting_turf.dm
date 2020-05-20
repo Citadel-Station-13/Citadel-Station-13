@@ -51,10 +51,10 @@
 			S = i \
 			S.recalc_corner(corner) \
 			corner.active = TRUE
-	operate(lc_topright)
-	operate(lc_bottomright)
-	operate(lc_bottomleft)
-	operate(lc_topleft)
+	OPERATE(lc_topright)
+	OPERATE(lc_bottomright)
+	OPERATE(lc_bottomleft)
+	OPERATE(lc_topleft)
 #undef OPERATE
 
 // Used to get a scaled lumcount.

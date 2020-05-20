@@ -30,10 +30,10 @@
 	. = ..()
 #define SET_DIAGONAL(turf, diagonal) \
 	switch(diagonal){ \
-		if(SOUTHWEST) northeast = turf; turf.bottomleft = src; \
-		if(SOUTHEAST) northwest = turf; turf.bottomright = src; \
-		if(NORTHEAST) southwest = turf; turf.topright = src; \
-		if(NORTHWEST) southeast = turf; turf.topleft = src; \
+		if(SOUTHWEST) { northeast = turf; turf.bottomleft = src; } \
+		if(SOUTHEAST) { northwest = turf; turf.bottomright = src; } \
+		if(NORTHEAST) { southwest = turf; turf.topright = src; } \
+		if(NORTHWEST) { southeast = turf; turf.topleft = src; } \
 	}
 	SET_DIAGONAL(new_turf, diagonal)
 	z = new_turf.z
@@ -102,7 +102,7 @@
 	#endif
 	cache_mx = round(mx, LIGHTING_ROUND_VALUE)
 
-	#define QUEUE(turf) if(turf.lighting_object && !turf.lighting_object.needs_update) T.lighting_object.needs_update = TRUE; GLOB.lighting_update_objects += T.lighitng_object
+	#define QUEUE(turf) if(turf.lighting_object && !turf.lighting_object.needs_update) turf.lighting_object.needs_update = TRUE; GLOB.lighting_update_objects += turf.lighitng_object
 	QUEUE(northeast)
 	QUEUE(northwest)
 	QUEUE(southeast)
