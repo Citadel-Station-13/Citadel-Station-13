@@ -71,15 +71,10 @@
 	// See LIGHTING_CORNER_DIAGONAL in lighting_corner.dm for why these values are what they are.
 	var/static/datum/lighting_corner/dummy/dummy_lighting_corner = new
 
-	var/datum/lighting_corner/cr = dummy_lighting_corner
-	var/datum/lighting_corner/cg = dummy_lighting_corner
-	var/datum/lighting_corner/cb = dummy_lighting_corner
-	var/datum/lighting_corner/ca = dummy_lighting_corner
-	if (corners) //done this way for speed
-		cr = myturf.lc_bottomleft|| dummy_lighting_corner
-		cg = myturf.lc_bottomright || dummy_lighting_corner
-		cb = myturf.lc_topleft || dummy_lighting_corner
-		ca = myturf.lc_topright || dummy_lighting_corner
+	var/datum/lighting_corner/cr = myturf.lc_bottom || dummy_lighting_corner
+	var/datum/lighting_corner/cg = myturf.lc_bottomright || dummy_lighting_corner
+	var/datum/lighting_corner/cb = myturf.lc_topleft || dummy_lighting_corner
+	var/datum/lighting_corner/ca = myturf.lc_topright || dummy_lighting_corner
 
 	var/max = max(cr.cache_mx, cg.cache_mx, cb.cache_mx, ca.cache_mx)
 
