@@ -18,7 +18,6 @@ GLOBAL_VAR_INIT(total_runtimes_skipped, 0)
 		return //this will never happen.
 	else if(copytext(E.name,1,18) == "Out of resources!")//18 == length() of that string + 1
 		log_world("BYOND out of memory. Restarting")
-		log_game("BYOND out of memory. Restarting")
 		TgsEndProcess()
 		Reboot(reason = 1)
 		return ..()
@@ -120,17 +119,17 @@ GLOBAL_VAR_INIT(total_runtimes_skipped, 0)
 	if(GLOB.error_cache)
 		GLOB.error_cache.log_error(E, desclines)
 
-	var/main_line = "\[[TIME_STAMP("hh:mm:ss", FALSE)]] Runtime in [E.file],[E.line]: [E]"
-	SEND_TEXT(world.log, main_line)
-	for(var/line in desclines)
-		SEND_TEXT(world.log, line)
+	if(!TgsAvailable())		// not tgs, send to DD window
+		var/main_line = "\[[TIME_STAMP("hh:mm:ss", FALSE)]] Runtime in [E.file],[E.line]: [E]"
+		SEND_TEXT(world.log, main_line)
+		for(var/line in desclines)
+			SEND_TEXT(world.log, line)
 
 #ifdef UNIT_TESTS
 	if(GLOB.current_test)
 		//good day, sir
 		GLOB.current_test.Fail("[main_line]\n[desclines.Join("\n")]")
 #endif
-
 
 	// This writes the regular format (unwrapping newlines and inserting timestamps as needed).
 	log_runtime("runtime error: [E.name]\n[E.desc]")
