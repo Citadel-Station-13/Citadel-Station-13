@@ -211,7 +211,7 @@
 /**
   * Forms required pipeline datums.
   */
-/obj/machinery/atmospherics/proc/form_networks()
+/obj/machinery/atmospherics/proc/form_networks(build_pipe_networks = TRUE)
 	CRASH("form_networks() of base atmospherics machinery called.")
 
 /**
@@ -235,7 +235,7 @@
 		var/nodeindex = nodes.Find(connecting)
 		if(!nodeindex)
 			stack_trace("on_connect called but the connecting thing was not collected successfully into our nodes! Something has gone horribly wrong!")
-		do_node_pipeline_expansion(nodeindex, connecting)
+		expand_pipeline_to(connecting)
 	update_icon()
 
 /**
@@ -371,6 +371,12 @@
 	CRASH("Tried to get the pipenet air of a base atmospherics machinery. Either this check should be removed, or, more likely, someone screwed up.")
 
 /**
+  * Returns the direct pipenet airs of all nodes.
+  */
+/obj/machinery/atmospherics/proc/return_all_pipenet_airs()
+	CRASH("Tried to get all pipenet airs of a base atmospherics machinery. Either this check should be removed, or, more likely, someone screwed up.")
+
+/**
   * Joins us to pipeline after being expanded to from expanded_from.
   */
 /obj/machinery/atmospherics/proc/pipeline_join(obj/machinery/atmospherics/expanded_from, datum/pipeline/line)
@@ -387,7 +393,7 @@
   * And by usually, I mean don't touch or use this unless you know what this is doing.
   */
 /obj/machinery/atmospherics/proc/expand_pipeline_to(obj/machinery/atmospherics/expand_to)
-	CRASH("Attempted to do_node_pipeline_expansion([nodeindex], [expand_to]) on base atmospherics machinery.")
+	CRASH("Attempted to expand_pipeline_to([expand_to]) on base atmospherics machinery.")
 
 /**
   * Queues up a pipenet rebuild on a specified node.

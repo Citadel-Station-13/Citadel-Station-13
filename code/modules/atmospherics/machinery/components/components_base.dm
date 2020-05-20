@@ -44,16 +44,16 @@
 
 // Pipenet stuff; housekeeping
 
-/obj/machinery/atmospherics/components/form_networks()
+/obj/machinery/atmospherics/components/form_networks(build_pipe_networks = TRUE)
 	for(var/i in 1 to device_type)
 		if(node_pipelines[i]))
 			continue
 		var/datum/pipeline/P = new
 		node_pipelines[i] = P
-		P.build_network(src)
+		P.build_network(src, build_pipe_networks)
 	update_parents()
 
-/obj/machinery/atmospherics/components/break_networks()
+/obj/machinery/atmospherics/components/breakdown_networks()
 	if(aircomponent_flags & AIRCOMPONENT_DIRECT_ATTACH)
 		QDEL_LIST(node_pipelines)
 		node_pipelines.len = device_type
@@ -66,8 +66,15 @@
 		node_pipelines = new(4)
 
 /obj/machinery/atmospherics/components/return_pipenet_air(node = 1)
-	return (aircomponent_flags & AIRCOMPONENT_DIRECT_ATTACH)
-	return airs[parents.Find(reference)]
+	var/datum/pipeline/PL = node_pipelines[node]
+	return PL.return_air()
+
+/obj/machinery/atmospherics/components/return_all_pipenet_airs()
+	. = list()
+	var/datum/pipeline/PL
+	for(var/i in 1 to device_type)
+		PL = node_pipelines[i]
+		. += PL.return_air()
 
 /obj/machinery/atmospherics/components/pipeline_expansion(datum/pipeline/from)
 	if(from)
@@ -92,8 +99,27 @@
 		CRASH("Attempted to pipeline replace and could not find the old pipeline as ours! SOMETHING HAS GONE TERRIBLY WRONG!")
 	node_pipelines[pl_index] = with
 
-/obj/machinery/atmospherics/components/returnPipenet(obj/machinery/atmospherics/A = nodes[1]) //returns parents[1] if called without argument
-	return parents[nodes.Find(A)]
+/obj/machinery/atmospherics/components/return_pipenet(node = 1)
+	return node_pipelines[node]
+
+/obj/machinery/atmospherics/components/return_pipenets()
+	return node_pipelines
+
+/obj/machinery/atmospherics/components/QueuePipenetRebuild(node = 1)
+	for(var/datum/pipeline/PL in node_pipelines)
+		PL.invalid = TRUE
+	SSair.add_to_rebuild_queue(src)
+
+/obj/machinery/atmospherics/components/RebuildNodePipenet(node = 1)
+	var/datum/pipeline/PL = node_pipelines[node]
+	if(PL)
+		PL.invalid = TRUE
+	node_pipelines[node] = PL = new /datum/pipeline
+	PL.build_network(src)
+
+/obj/machinery/atmospherics/components/RebuildAllPipenets()
+	breakdown_networks()
+	form_networks()
 
 /obj/machinery/atmospherics/components/ReleaseAirToTurf()
 	var/turf/T = get_turf(src)
@@ -145,7 +171,7 @@
 // Tool acts
 
 /obj/machinery/atmospherics/components/analyzer_act(mob/living/user, obj/item/I)
-	atmosanalyzer_scan(airs, user, src)
+	atmosanalyzer_scan((flags & ATMOSCOMPONENT_DIRECT_ATTACH)? return_all_pipenet_airs() : node_airs, user, src)
 
 // Iconnery
 

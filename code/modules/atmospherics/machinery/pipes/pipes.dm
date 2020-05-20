@@ -25,11 +25,11 @@
 		volume = 35 * device_type
 	return ..()
 
-/obj/machinery/atmospherics/pipe/form_networks()
+/obj/machinery/atmospherics/pipe/form_networks(build_pipe_networks = TRUE)
 	if(parent)
 		return
 	parent = new
-	parent.build_network(src)
+	parent.build_network(src, build_pipe_networks)
 
 /obj/machinery/atmospherics/pipe/breakdown_networks()
 	QDEL_NULL(parent)
@@ -102,6 +102,9 @@
 
 /obj/machinery/atmospherics/pipe/return_pipenet_air()
 	return parent.return_air()
+
+/obj/machinery/atmoshperics/pipe/return_all_pipenet_airs()
+	return list(parent.return_air())
 
 /obj/machinery/atmospherics/pipe/on_pipeline_join(obj/machinery/atmospherics/expanded_from, datum/pipeline/line)
 	if(parent)
