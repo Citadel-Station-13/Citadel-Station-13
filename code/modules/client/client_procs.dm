@@ -266,7 +266,7 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 		prefs = new /datum/preferences(src)
 		GLOB.preferences_datums[ckey] = prefs
 	if(SSinput.initialized)
-		set_macros(prefs)
+		set_macros()
 	update_movement_keys(prefs)
 
 	prefs.last_ip = address				//these are gonna be used for banning
@@ -816,9 +816,6 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 		// unfocus the text bar. This removes the red color from the text bar
 		// so that the visual focus indicator matches reality.
 		winset(src, null, "input.background-color=[COLOR_INPUT_DISABLED]")
-
-	else
-		winset(src, null, "input.focus=true input.background-color=[COLOR_INPUT_ENABLED]")
 
 	..()
 

@@ -9,3 +9,10 @@
 #define MAX_KEYPRESS_AUTOKICK 100
 /// Max keys that can be held down at once by a client
 #define MAX_HELD_KEYS 15
+
+/// Macroset name of hotkeys/keybind only/modern mode
+#define SKIN_MACROSET_HOTKEYS "hotkeys"
+/// Macroset name of classic hotkey mode
+#define SKIN_MACROSET_CLASSIC_HOTKEYS "oldhotkeys"
+/// Macroset name of classic input mode
+#define SKIN_MACROSET_CLASSIC_INPUT "oldinput"
