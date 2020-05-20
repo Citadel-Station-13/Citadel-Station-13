@@ -103,3 +103,25 @@
 	var/mob/M = user.mob
 	M.toggle_move_intent()
 	return TRUE
+
+/datum/keybinding/mob/say_with_indicator
+	hotkey_keys = list("CtrlT")
+	classic_keys = list()
+	name = "say_with_indicator"
+	full_name = "Say with Typing Indicator"
+
+/datum/keybinding/mob/say_with_indicator/down(client/user)
+	var/mob/M = user.mob
+	M.say_indicator()
+	return TRUE
+
+/datum/keybinding/mob/me_with_indicator
+	hotkey_keys = list("CtrlM")
+	classic_keys = list()
+	name = "me_with_indicator"
+	full_name = "Me (emote) with Typing Indicator"
+
+/datum/keybinding/mob/say_with_indicator/down(client/user)
+	var/mob/M = user.mob
+	M.me_indicator()
+	return TRUE
