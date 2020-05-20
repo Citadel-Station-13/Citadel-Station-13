@@ -43,7 +43,7 @@ SUBSYSTEM_DEF(input)
 	// LET'S PLAY THE BIND EVERY KEY GAME!
 	// oh except for Backspace and Enter; if you want to use those you shouldn't have used oldmode!
 	var/list/classic_ctrl_override_keys = list(
-	"\[", "\]", "\\", ";", "'", ",", ".", "/", "-", "=", "`"
+	"\[", "\]", "\\", ";", "'", ",", ".", "/", "-", "\\=", "`"
 	)
 	// i'm lazy let's play the list iteration game of numbers
 	for(var/i in 0 to 9)
