@@ -641,9 +641,10 @@ This is here to make the tiles around the station mininuke change when it's arme
 			var/datum/round_event_control/operative/loneop = locate(/datum/round_event_control/operative) in SSevents.control
 			if(istype(loneop))
 				loneop.weight += 1
-				if(loneop.weight % 5 == 0)
+				if(loneop.weight % 5 == 0 && (CONFIG_GET(flag/admin_disk_inactive_msg)))
 					message_admins("[src] is stationary in [ADMIN_VERBOSEJMP(newturf)]. The weight of Lone Operative is now [loneop.weight].")
-				log_game("[src] is stationary for too long in [loc_name(newturf)], and has increased the weight of the Lone Operative event to [loneop.weight].")
+				if(CONFIG_GET(flag/admin_disk_inactive_msg))
+					log_game("[src] is stationary for too long in [loc_name(newturf)], and has increased the weight of the Lone Operative event to [loneop.weight].")
 	else
 		lastlocation = newturf
 		last_disk_move = world.time
