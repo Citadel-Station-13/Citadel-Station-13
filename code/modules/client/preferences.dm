@@ -2350,10 +2350,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				if("hotkeys")
 					hotkeys = !hotkeys
 					user.client.set_macros()
-					if(hotkeys)
-						winset(user, null, "input.focus=true input.background-color=[COLOR_INPUT_ENABLED]")
-					else
-						winset(user, null, "input.focus=true input.background-color=[COLOR_INPUT_DISABLED]")
 
 				if("keybindings_capture")
 					var/datum/keybinding/kb = GLOB.keybindings_by_name[href_list["keybinding"]]

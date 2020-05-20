@@ -36,11 +36,6 @@
 		qdel(src)
 		return
 
-	//Focus Chat failsafe. Overrides movement checks to prevent WASD.
-	if(!prefs.hotkeys && length(_key) == 1 && _key != "Alt" && _key != "Ctrl" && _key != "Shift")
-		winset(src, null, "input.focus=true ; input.text=[url_encode(_key)]")
-		return
-
 	if(length(keys_held) > MAX_HELD_KEYS)
 		keys_held.Cut(1,2)
 	keys_held[_key] = TRUE
