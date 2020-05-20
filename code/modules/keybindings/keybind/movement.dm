@@ -1,6 +1,6 @@
 /datum/keybinding/movement
-    category = CATEGORY_MOVEMENT
-    weight = WEIGHT_HIGHEST
+	category = CATEGORY_MOVEMENT
+	weight = WEIGHT_HIGHEST
 
 /datum/keybinding/movement/north
 	hotkey_keys = list("W", "North")
@@ -79,7 +79,7 @@
 	name = "hold_sprint"
 	full_name = "Sprint (hold down)"
 	description = "Hold down to sprint"
-    category = CATEGORY_MOVEMENT
+	category = CATEGORY_MOVEMENT
 
 /datum/keybinding/living/hold_sprint/can_use(client/user)
 	return ishuman(user.mob) || iscyborg(user.mob)
@@ -99,7 +99,7 @@
 	name = "toggle_sprint"
 	full_name = "Sprint (toggle)"
 	description = "Press to toggle sprint"
-    category = CATEGORY_MOVEMENT
+	category = CATEGORY_MOVEMENT
 
 /datum/keybinding/living/toggle_sprint/can_use(client/user)
 	return ishuman(user.mob) || iscyborg(user.mob)
@@ -114,7 +114,7 @@
 	name = "toggle_move_intent"
 	full_name = "Hold to toggle move intent"
 	description = "Held down to cycle to the other move intent, release to cycle back"
-    category = CATEGORY_MOVEMENT
+	category = CATEGORY_MOVEMENT
 
 /datum/keybinding/mob/toggle_move_intent/down(client/user)
 	var/mob/M = user.mob
@@ -131,7 +131,7 @@
 	name = "toggle_move_intent_alt"
 	full_name = "press to cycle move intent"
 	description = "Pressing this cycle to the opposite move intent, does not cycle back"
-    category = CATEGORY_MOVEMENT
+	category = CATEGORY_MOVEMENT
 
 /datum/keybinding/mob/toggle_move_intent_alternative/down(client/user)
 	var/mob/M = user.mob
