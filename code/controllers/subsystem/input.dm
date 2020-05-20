@@ -61,14 +61,14 @@ SUBSYSTEM_DEF(input)
 		macroset_classic_input["Ctrl+[key]"] = "\"KeyDown [key]\""
 		macroset_classic_input["Ctrl+[key]+UP"] = "\"KeyUp [key]\""
 	// Misc
-	macroset_classic_input["Tab"] = "\".winset \\\"mainwindow.macro=[SKIN_MACROSET_CLASSIC_HOTKEYS] map.focus=true input.background_color=[COLOR_INPUT_DISABLED]\\\"\""
+	macroset_classic_input["Tab"] = "\".winset \\\"mainwindow.macro=[SKIN_MACROSET_CLASSIC_HOTKEYS] map.focus=true input.background-color=[COLOR_INPUT_DISABLED]\\\"\""
 	macroset_classic_input["Escape"] = "\".winset \\\"input.text=\\\"\\\"\\\"\""
 
 	// FINALLY, WE CAN DO SOMETHING MORE NORMAL FOR THE SNOWFLAKE-BUT-LESS KEYSET.
 	macroset_classic_hotkey = list(
 	"Any" = "\"KeyDown \[\[*\]\]\"",
 	"Any+UP" = "\"KeyUp \[\[*\]\]\"",
-	"Tab" = "\".winset \\\"mainwindow.macro=[SKIN_MACROSET_CLASSIC_INPUT] input.focus=true input.background_color=[COLOR_INPUT_ENABLED]\\\"\"",
+	"Tab" = "\".winset \\\"mainwindow.macro=[SKIN_MACROSET_CLASSIC_INPUT] input.focus=true input.background-color=[COLOR_INPUT_ENABLED]\\\"\"",
 	"Escape" = "\".winset \\\"input.text=\\\"\\\"\\\"\"",
 	"Back" = "\".winset \\\"input.text=\\\"\\\"\\\"\"",
 	"O" = "ooc",

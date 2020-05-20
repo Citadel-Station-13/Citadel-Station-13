@@ -94,7 +94,7 @@
 	name = "me_with_indicator"
 	full_name = "Me (emote) with Typing Indicator"
 
-/datum/keybinding/mob/say_with_indicator/down(client/user)
+/datum/keybinding/mob/me_with_indicator/down(client/user)
 	var/mob/M = user.mob
 	M.me_typing_indicator()
 	return TRUE
