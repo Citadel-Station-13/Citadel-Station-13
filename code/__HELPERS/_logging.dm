@@ -154,10 +154,10 @@
 
 /* Log to both DD and the logfile. */
 /proc/log_world(text)
+	SEND_TEXT(world.log, text)
 #ifdef USE_CUSTOM_ERROR_HANDLER
 	WRITE_LOG(GLOB.world_runtime_log, text)
 #endif
-	SEND_TEXT(world.log, text)
 
 /* Log to the logfile only. */
 /proc/log_runtime(text)
