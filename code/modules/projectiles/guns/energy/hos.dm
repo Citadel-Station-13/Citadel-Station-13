@@ -16,7 +16,14 @@
 
 	var/charge_sections = 6
 
-/obj/item/gun/ballistic/revolver/mws/process_chamber()
+/obj/item/gun/ballistic/revolver/mws/shoot_with_empty_chamber(mob/living/user as mob|obj)
+	process_chamber(user)
+	if(!chambered || !chambered.BB)
+		to_chat(user, "<span class='danger'>*click*</span>")
+		playsound(src, "gun_dry_fire", 30, 1)
+
+
+/obj/item/gun/ballistic/revolver/mws/process_chamber(mob/living/user)
 	if(chambered && !chambered.BB) //if BB is null, i.e the shot has been fired...
 		var/obj/item/ammo_casing/mws_batt/shot = chambered
 		if(shot.cell.charge >= shot.e_cost)
@@ -24,8 +31,9 @@
 		else
 			for(var/B in magazine.stored_ammo)
 				var/obj/item/ammo_casing/mws_batt/other_batt = B
-				if(other_batt == chambered.type && other_batt.cell.charge >= other_batt.e_cost)
-					switch_to(other_batt)
+				if(istype(other_batt,shot) && other_batt.cell.charge >= other_batt.e_cost)
+					switch_to(other_batt, user)
+					break
 	update_overlays()
 
 /obj/item/gun/ballistic/revolver/mws/proc/switch_to(obj/item/ammo_casing/mws_batt/new_batt, mob/living/user)
