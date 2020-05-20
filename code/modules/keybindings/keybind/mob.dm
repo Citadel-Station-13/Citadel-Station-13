@@ -77,26 +77,26 @@
 		user.mob.dropItemToGround(I)
 	return TRUE
 
-/datum/keybinding/living/say_with_indicator
+/datum/keybinding/mob/say_with_indicator
 	hotkey_keys = list("CtrlT")
 	classic_keys = list()
 	name = "say_with_indicator"
 	full_name = "Say with Typing Indicator"
 
-/datum/keybinding/living/say_with_indicator/down(client/user)
-	var/mob/living/L = user.mob
-	L.say_indicator()
+/datum/keybinding/mob/say_with_indicator/down(client/user)
+	var/mob/M = user.mob
+	M.say_with_indicator()
 	return TRUE
 
-/datum/keybinding/living/me_with_indicator
+/datum/keybinding/mob/me_with_indicator
 	hotkey_keys = list("CtrlM")
 	classic_keys = list()
 	name = "me_with_indicator"
 	full_name = "Me (emote) with Typing Indicator"
 
-/datum/keybinding/living/say_with_indicator/down(client/user)
-	var/mob/living/L = user.mob
-	L.me_indicator()
+/datum/keybinding/mob/say_with_indicator/down(client/user)
+	var/mob/M = user.mob
+	M.me_with_indicator()
 	return TRUE
 
 /datum/keybinding/living/subtle
