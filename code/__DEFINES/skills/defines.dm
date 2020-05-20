@@ -98,6 +98,6 @@
 #define MODIFIER_TARGET_AFFINITY	"affinity"
 
 ///Ascending priority defines.
-#define MODIFIER_SKILL_PRIORITY_LOW 25
+#define MODIFIER_SKILL_PRIORITY_LOW 100
 #define MODIFIER_SKILL_PRIORITY_DEF 50
-#define MODIFIER_SKILL_PRIORITY_MAX 100 //max priority, meant for job/antag modifiers so they don't null out other (de)buffs
+#define MODIFIER_SKILL_PRIORITY_MAX 1 //max priority, meant for job/antag modifiers so they don't null out other (de)buffs

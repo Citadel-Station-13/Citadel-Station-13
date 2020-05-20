@@ -40,7 +40,7 @@ GLOBAL_LIST_EMPTY(potential_mods_per_skill)
 		CRASH("Skill modifier identifier \"[identifier]\" already taken.")
 	GLOB.skill_modifiers[identifier] = src
 	if(ispath(target_skills))
-		target_skills_key = target_skills_key
+		target_skills_key = target_skills
 		var/list/mod_L = GLOB.potential_mods_per_skill[target_skills]
 		if(!mod_L)
 			mod_L = GLOB.potential_mods_per_skill[target_skills] = list()
@@ -163,14 +163,13 @@ GLOBAL_LIST_EMPTY(potential_mods_per_skill)
 
 	if(modifier_flags & MODIFIER_USE_THRESHOLDS && istext(mod))
 		var/datum/skill/S = GLOB.skill_datums[skillpath]
-		if(method == MODIFIER_TARGET_VALUE)
-			if(S.progression_type == SKILL_PROGRESSION_LEVEL)
-				var/datum/skill/level/L = S
-				switch(L.level_up_method)
-					if(STANDARD_LEVEL_UP)
-						mod = XP_LEVEL(L.standard_xp_lvl_up, L.xp_lvl_multiplier, S.competency_thresholds[mod])
-					if(DWARFY_LEVEL_UP)
-						mod = DORF_XP_LEVEL(L.standard_xp_lvl_up, L.xp_lvl_multiplier, S.competency_thresholds[mod])
+		if(method == MODIFIER_TARGET_VALUE && S.progression_type == SKILL_PROGRESSION_LEVEL)
+			var/datum/skill/level/L = S
+			switch(L.level_up_method)
+				if(STANDARD_LEVEL_UP)
+					mod = XP_LEVEL(L.standard_xp_lvl_up, L.xp_lvl_multiplier, S.competency_thresholds[mod])
+				if(DWARFY_LEVEL_UP)
+					mod = DORF_XP_LEVEL(L.standard_xp_lvl_up, L.xp_lvl_multiplier, S.competency_thresholds[mod])
 		else
 			mod = S.competency_thresholds[mod]
 
