@@ -16,8 +16,7 @@
 	src.comsig = comsig
 
 	var/mob/living/L = target
-	var/was_lying = (L.lying != 0)
-	if(was_lying)
+	if(L.lying != 0)
 		L.transform = L.transform.Scale(SHORT, 1)
 	else
 		L.transform = L.transform.Scale(1, SHORT)
@@ -32,8 +31,7 @@
 	. = ..()
 	if(QDELETED(L))
 		return
-	var/is_lying = (L.lying != 0)
-	if(is_lying)
+	if(L.lying != 0)
 		L.transform = L.transform.Scale(TALL, 1)
 	else
 		L.transform = L.transform.Scale(1, TALL)
