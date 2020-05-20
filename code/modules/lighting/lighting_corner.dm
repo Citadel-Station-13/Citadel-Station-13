@@ -65,7 +65,7 @@
 
 /datum/lighting_corner/proc/update_active()
 	active = FALSE
-	if(northeast.lighting_object || northwest.lighting_object || southeast.lighting_object || southwest.lighting_object)
+	if(northeast?.lighting_object || northwest?.lighting_object || southeast?.lighting_object || southwest?.lighting_object)
 		active = TRUE
 
 // God that was a mess, now to do the rest of the corner code! Hooray!
@@ -106,7 +106,7 @@
 	#endif
 	cache_mx = round(mx, LIGHTING_ROUND_VALUE)
 
-	#define QUEUE(turf) if(turf.lighting_object && !turf.lighting_object.needs_update) { turf.lighting_object.needs_update = TRUE; GLOB.lighting_update_objects += turf.lighting_object }
+	#define QUEUE(turf) if(turf?.lighting_object && !turf.lighting_object.needs_update) { turf.lighting_object.needs_update = TRUE; GLOB.lighting_update_objects += turf.lighting_object }
 	QUEUE(northeast)
 	QUEUE(northwest)
 	QUEUE(southeast)
