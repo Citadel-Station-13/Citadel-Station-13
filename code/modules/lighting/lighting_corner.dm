@@ -48,13 +48,16 @@
 	var/turf/T
 	// Build diagonal one
 	T = get_step(new_turf, diagonal)
-	SET_DIAGONAL(T, turn(diagonal, 180))
+	if(T)
+		SET_DIAGONAL(T, turn(diagonal, 180))
 	// Build horizontal
 	T = get_step(new_turf, horizontal)
-	SET_DIAGONAL(T, turn(((T.x > x) ? EAST : WEST) | ((T.y > y) ? NORTH : SOUTH), 180))
+	if(T)
+		SET_DIAGONAL(T, turn(((T.x > x) ? EAST : WEST) | ((T.y > y) ? NORTH : SOUTH), 180))
 	// Build vertical
 	T = get_step(new_turf, vertical)
-	SET_DIAGONAL(T, turn(((T.x > x) ? EAST : WEST) | ((T.y > y) ? NORTH : SOUTH), 180))
+	if(T)
+		SET_DIAGONAL(T, turn(((T.x > x) ? EAST : WEST) | ((T.y > y) ? NORTH : SOUTH), 180))
 
 	update_active()
 
