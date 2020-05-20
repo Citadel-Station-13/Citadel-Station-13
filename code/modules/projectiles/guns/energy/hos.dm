@@ -223,12 +223,6 @@
 	type_name = "<span style='color:#d084d6;font-weight:bold;'>ION</span>"
 	projectile_type = /obj/item/projectile/ion
 
-/obj/item/gunbox
-	name = "Modular Weapon Box"
-	desc = "A box containing a micro-fabricator capable of creating one of two different weapon selections. How fancy!"
-	icon = 'icons/obj/storage.dmi'
-	icon_state = "lockbox+l"
-	item_state = "syringe_kit"
 
 /obj/item/choice_beacon/hosgun
 	name = "personal weapon beacon"
