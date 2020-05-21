@@ -18,6 +18,7 @@
 	for(var/k in T)
 		var/atom/movable/AM = k
 		RegisterSignal(AM, COMSIG_ATOM_EMP_ACT, .proc/return_flags)
+		RegisterSignal(AM COMSIG_ATOM_NEW_CONTENT, .proc/add_protected_atom)
 		protected_atoms |= AM
 
 /datum/proximity_monitor/advanced/emp_protection/cleanup_field_turf(turf/T)
@@ -27,6 +28,7 @@
 	for(var/k in T)
 		var/atom/movable/AM = k
 		UnregisterSignal(AM, COMSIG_ATOM_EMP_ACT)
+		UnregisterSignal(AM COMSIG_ATOM_NEW_CONTENT)
 		protected_atoms -= AM
 
 
@@ -44,6 +46,10 @@
 
 /datum/proximity_monitor/advanced/emp_protection/proc/return_flags()
 	return flags
+
+/datum/proximity_monitor/advanced/emp_protection/proc/add_protected_atom(turf/T, atom/movable/new_content)
+	RegisterSignal(AM, COMSIG_ATOM_EMP_ACT, .proc/return_flags)
+	protected_atoms |= AM
 
 /obj/machinery/emp_protection
 	name = "\improper EMP dissipator"
