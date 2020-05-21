@@ -154,8 +154,8 @@
 	. = value
 	var/sum = 0
 	var/divisor = 0
-	var/one_trait = is_text(traits)
-	var/one_bad_trait = is_text(bad_traits)
+	var/one_trait = istext(traits)
+	var/one_bad_trait = istext(bad_traits)
 	for(var/k in I.used_skills)
 		var/datum/skill/S = GLOB.skill_datums[k]
 		if(!S)
