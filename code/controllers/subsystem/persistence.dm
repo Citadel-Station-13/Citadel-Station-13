@@ -267,6 +267,7 @@ SUBSYSTEM_DEF(persistence)
 		CollectAntagReputation()
 	SaveRandomizedRecipes()
 	SavePanicBunker()
+	SavePaintings()
 
 /datum/controller/subsystem/persistence/proc/LoadPanicBunker()
 	var/bunker_path = file("data/bunker_passthrough.json")

@@ -63,7 +63,7 @@
 
 	if(!SSmapping.empty_space)
 		SSmapping.empty_space = SSmapping.add_new_zlevel("Empty Area For Pirates", list(ZTRAIT_LINKAGE = SELFLOOPING))
-	
+
 	var/datum/map_template/shuttle/pirate/default/ship = new
 	var/x = rand(TRANSITIONEDGE,world.maxx - TRANSITIONEDGE - ship.width)
 	var/y = rand(TRANSITIONEDGE,world.maxy - TRANSITIONEDGE - ship.height)
@@ -159,11 +159,12 @@
 	active = FALSE
 	STOP_PROCESSING(SSobj,src)
 
-/obj/machinery/shuttle_scrambler/update_icon_state()
+/obj/machinery/shuttle_scrambler/update_overlays()
+	. = ..()
 	if(active)
-		icon_state = "dominator-blue"
-	else
-		icon_state = "dominator"
+		var/mutable_appearance/M = mutable_appearance(icon, "dominator-overlay")
+		M.color = "#00FFFF"
+		. += M
 
 /obj/machinery/shuttle_scrambler/Destroy()
 	toggle_off()

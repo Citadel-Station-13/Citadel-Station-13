@@ -5,10 +5,15 @@
 	icon_state = "ghost"
 	icon_living = "ghost"
 	mob_biotypes = MOB_SPIRIT
-	attacktext = "raises the hairs on the neck of"
-	response_harm = "disrupts the concentration of"
-	response_disarm = "wafts"
-	friendly = "communes with"
+	has_field_of_vision = FALSE //we are a spoopy ghost
+	attack_verb_continuous = "raises the hair on the neck of"
+	attack_verb_simple = "raise the hair on the neck of"
+	response_harm_continuous = "disrupts the concentration of"
+	response_harm_simple = "disrupt the concentration of"
+	response_disarm_continuous = "wafts"
+	response_disarm_simple = "waft"
+	friendly_verb_continuous = "communes with"
+	friendly_verb_simple = "commute with"
 	loot = null
 	maxHealth = 10
 	health = 10
@@ -18,7 +23,6 @@
 	deathmessage = "disappears as if it was never really there to begin with"
 	incorporeal_move = 1
 	alpha = 50
-	attacktext = "touches the mind of"
 	speak_emote = list("echos")
 	movement_type = FLYING
 	var/pseudo_death = FALSE
@@ -32,7 +36,6 @@
 /mob/living/simple_animal/astral/death()
 	icon_state = "shade_dead"
 	Stun(1000)
-	friendly = "deads at"
 	pseudo_death = TRUE
 	incorporeal_move = 0
 	to_chat(src, "<span class='notice'>Your astral projection is interrupted and your mind is sent back to your body with a shock!</span>")

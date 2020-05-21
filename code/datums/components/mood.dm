@@ -1,40 +1,51 @@
+#define ECSTATIC_SANITY_PEN -1
 #define SLIGHT_INSANITY_PEN 1
 #define MINOR_INSANITY_PEN 5
 #define MAJOR_INSANITY_PEN 10
-#define MOOD_INSANITY_MALUS 0.0054 // per point of sanity below SANITY_DISTURBED, a 40% debuff to skills at rock bottom depression.
+#define MOOD_INSANITY_MALUS 0.13 // 13% debuff per sanity_level above the default of 4 (higher is worser), overall a 39% debuff to skills at rock bottom depression.
 
 /datum/component/mood
 	var/mood //Real happiness
 	var/sanity = 100 //Current sanity
 	var/shown_mood //Shown happiness, this is what others can see when they try to examine you, prevents antag checking by noticing traitors are always very happy.
 	var/mood_level = 5 //To track what stage of moodies they're on
-	var/sanity_level = 5 //To track what stage of sanity they're on
+	var/sanity_level = 3 //To track what stage of sanity they're on
 	var/mood_modifier = 1 //Modifier to allow certain mobs to be less affected by moodlets
 	var/list/datum/mood_event/mood_events = list()
 	var/insanity_effect = 0 //is the owner being punished for low mood? If so, how much?
 	var/obj/screen/mood/screen_obj
+	var/datum/skill_modifier/bad_mood/malus
+	var/datum/skill_modifier/great_mood/bonus
+	var/static/malus_id = 0
+	var/static/list/free_maluses = list()
 
 /datum/component/mood/Initialize()
 	if(!isliving(parent))
 		return COMPONENT_INCOMPATIBLE
 
-	START_PROCESSING(SSmood, src)
+	var/mob/living/owner = parent
+	if(owner.stat != DEAD)
+		START_PROCESSING(SSdcs, src)
 
 	RegisterSignal(parent, COMSIG_ADD_MOOD_EVENT, .proc/add_event)
 	RegisterSignal(parent, COMSIG_CLEAR_MOOD_EVENT, .proc/clear_event)
 	RegisterSignal(parent, COMSIG_MODIFY_SANITY, .proc/modify_sanity)
 	RegisterSignal(parent, COMSIG_LIVING_REVIVE, .proc/on_revive)
 	RegisterSignal(parent, COMSIG_MOB_HUD_CREATED, .proc/modify_hud)
-	var/mob/living/owner = parent
+	RegisterSignal(parent, COMSIG_MOB_DEATH, .proc/stop_processing)
+
 	if(owner.hud_used)
 		modify_hud()
 		var/datum/hud/hud = owner.hud_used
 		hud.show_hud(hud.hud_version)
 
 /datum/component/mood/Destroy()
-	STOP_PROCESSING(SSmood, src)
+	STOP_PROCESSING(SSdcs, src)
 	unmodify_hud()
 	return ..()
+
+/datum/component/mood/proc/stop_processing()
+	STOP_PROCESSING(SSdcs, src)
 
 /datum/component/mood/proc/print_mood(mob/user)
 	var/msg = "<span class='info'>*---------*\n<EM>Your current mood</EM>\n"
@@ -127,7 +138,7 @@
 		else
 			screen_obj.icon_state = "mood[mood_level]"
 
-/datum/component/mood/process() //Called on SSmood process
+/datum/component/mood/process() //Called on SSdcs process
 	if(QDELETED(parent)) // workaround to an obnoxious sneaky periodical runtime.
 		qdel(src)
 		return
@@ -167,13 +178,13 @@
 	else if(sanity > maximum && amount > sanity - 0.5)
 		amount = sanity - 0.5
 
-	var/old_sanity = sanity
 	// Disturbed stops you from getting any more sane
 	if(HAS_TRAIT(master, TRAIT_UNSTABLE))
 		sanity = min(amount,sanity)
 	else
 		sanity = amount
 
+	var/old_sanity_level = sanity_level
 	switch(sanity)
 		if(-INFINITY to SANITY_CRAZY)
 			setInsanityEffect(MAJOR_INSANITY_PEN)
@@ -196,27 +207,43 @@
 			master.remove_movespeed_modifier(MOVESPEED_ID_SANITY)
 			sanity_level = 2
 		if(SANITY_GREAT+1 to INFINITY)
-			setInsanityEffect(0)
+			setInsanityEffect(ECSTATIC_SANITY_PEN) //It's not a penalty but w/e
 			master.remove_movespeed_modifier(MOVESPEED_ID_SANITY)
 			sanity_level = 1
 
-	if(old_sanity > 1 && sanity == 1)
-		RegisterSignal(master, COMSIG_MOB_SKILL_GET_AFFINITY, .proc/on_get_skill_affinity)
-	else if(old_sanity == 1 && sanity > 1)
-		UnregisterSignal(master, COMSIG_MOB_SKILL_GET_AFFINITY)
+	if(sanity_level != old_sanity_level)
+		if(sanity_level >= 4)
+			if(!malus)
+				if(!length(free_maluses))
+					ADD_SKILL_MODIFIER_BODY(/datum/skill_modifier/bad_mood, malus_id++, master, malus)
+				else
+					malus = pick_n_take(free_maluses)
+					if(master.mind)
+						master.mind.add_skill_modifier(malus.identifier)
+					else
+						malus.RegisterSignal(master, COMSIG_MOB_ON_NEW_MIND, /datum/skill_modifier.proc/on_mob_new_mind, TRUE)
+			malus.value_mod = malus.level_mod = 1 - (sanity_level - 3) * MOOD_INSANITY_MALUS
+		else if(malus)
+			if(master.mind)
+				master.mind.remove_skill_modifier(malus.identifier)
+			else
+				malus.UnregisterSignal(master, COMSIG_MOB_ON_NEW_MIND)
+			free_maluses += malus
+			malus = null
 
 	//update_mood_icon()
 
 /datum/component/mood/proc/setInsanityEffect(newval)//More code so that the previous proc works
 	if(newval == insanity_effect)
 		return
-	//var/mob/living/master = parent
-	//master.crit_threshold = (master.crit_threshold - insanity_effect) + newval
-	if(!insanity_effect && newval)
-		RegisterSignal(parent, COMSIG_MOB_ACTION_SKILL_MOD, .proc/on_mob_action_skill_mod)
-		RegisterSignal(parent, COMSIG_MOB_ITEM_ACTION_SKILLS_MOD, .proc/on_item_action_skills_mod)
-	else if(insanity_effect && !newval)
-		UnregisterSignal(parent, list(COMSIG_MOB_ACTION_SKILL_MOD, COMSIG_MOB_ITEM_ACTION_SKILLS_MOD))
+
+	var/mob/living/L = parent
+	if(newval == ECSTATIC_SANITY_PEN && !bonus)
+		ADD_SKILL_MODIFIER_BODY(/datum/skill_modifier/great_mood, null, L, bonus)
+	else if(bonus)
+		REMOVE_SKILL_MODIFIER_BODY(/datum/skill_modifier/great_mood, null, L)
+		bonus = null
+
 	insanity_effect = newval
 
 /datum/component/mood/proc/modify_sanity(datum/source, amount, minimum = SANITY_INSANE, maximum = SANITY_AMAZING)
@@ -294,46 +321,15 @@
 		if(0 to NUTRITION_LEVEL_STARVING)
 			add_event(null, "nutrition", /datum/mood_event/starving)
 
-///Called when parent is ahealed.
+///Called when parent is revived.
 /datum/component/mood/proc/on_revive(datum/source, full_heal)
+	START_PROCESSING(SSdcs, src)
 	if(!full_heal)
 		return
 	remove_temp_moods()
 	setSanity(initial(sanity))
 
-/datum/component/mood/proc/on_mob_action_skill_mod(mob/source, list/skill_args, list/mod_values)
-	var/datum/skill/S = GLOB.skill_datums[skill_args[ACTION_SKILL_MOD_SKILL]]
-	if(!(S.skill_flags & SKILL_USE_MOOD))
-		return
-	var/debuff = 1 - (SANITY_DISTURBED - sanity) * MOOD_INSANITY_MALUS
-	mod_values[MOD_VALUES_SKILL_MOD] *= skill_args[ACTION_SKILL_MOD_IS_MULTI] ? debuff : 1/debuff
-
-/datum/component/mood/proc/on_item_action_skills_mod(mob/source, list/skill_args, list/mod_values)
-	if(skill_args[ITEM_SKILLS_MOD_BAD_FLAGS] & SKILL_USE_MOOD)
-		return
-	var/divisor = mod_values[MOD_VALUES_ITEM_SKILLS_DIV]
-	if(!divisor)
-		return
-	var/obj/item/I = skill_args[ITEM_SKILLS_MOD_ITEM]
-	var/list/L = mod_values[MOD_VALUES_ITEM_SKILLS_CHECKED]
-	var/skills_len = length(L)
-	var/affected_skills = skills_len
-	for(var/k in L)
-		var/datum/skill/S = k
-		var/our_flags = I.used_skills[S.type]|S.skill_flags
-		if(!(our_flags & SKILL_USE_MOOD))
-			affected_skills--
-	if(!affected_skills)
-		return
-	var/debuff = 1 - (SANITY_DISTURBED - sanity) * MOOD_INSANITY_MALUS * (affected_skills/skills_len)
-	mod_values[MOD_VALUES_ITEM_SKILLS_SUM] *= skill_args[ITEM_SKILLS_MOD_IS_MULTI] ? debuff : 1/debuff
-
-/datum/component/mood/proc/on_get_skill_affinity(mob/source, skill_path, list/return_value)
-	var/datum/skill/S = GLOB.skill_datums[skill_path]
-	if(!S || !(S.skill_flags & SKILL_TRAIN_MOOD))
-		return
-	return_value[1] *= SKILL_AFFINITY_MOOD_BONUS
-
+#undef ECSTATIC_SANITY_PEN
 #undef SLIGHT_INSANITY_PEN
 #undef MINOR_INSANITY_PEN
 #undef MAJOR_INSANITY_PEN

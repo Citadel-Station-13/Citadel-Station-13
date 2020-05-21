@@ -4127,12 +4127,11 @@
 /turf/open/floor/plasteel,
 /area/security/main)
 "ahO" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
-	dir = 4;
-	pixel_y = 5
-	},
 /obj/structure/chair/sofa/left{
 	dir = 1
+	},
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 4
 	},
 /turf/open/floor/plasteel,
 /area/crew_quarters/fitness)
@@ -13863,8 +13862,7 @@
 /area/crew_quarters/dorms)
 "aFk" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
-	dir = 4;
-	pixel_y = 5
+	dir = 4
 	},
 /turf/open/floor/wood,
 /area/crew_quarters/bar)
@@ -14364,11 +14362,10 @@
 /turf/closed/wall,
 /area/crew_quarters/theatre)
 "aGw" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on{
-	dir = 4;
-	pixel_y = 5
-	},
 /obj/machinery/light/small{
+	dir = 4
+	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 4
 	},
 /turf/open/floor/wood,
@@ -15021,10 +15018,6 @@
 /turf/open/floor/plasteel,
 /area/crew_quarters/dorms)
 "aHV" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on{
-	dir = 1;
-	pixel_x = 5
-	},
 /obj/machinery/light/small{
 	dir = 4
 	},
@@ -15037,6 +15030,9 @@
 /obj/item/reagent_containers/rag/towel/random,
 /obj/item/reagent_containers/rag/towel/random,
 /obj/item/reagent_containers/rag/towel/random,
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 1
+	},
 /turf/open/floor/mineral/titanium/blue,
 /area/crew_quarters/toilet)
 "aHY" = (
@@ -16644,10 +16640,6 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
-/obj/structure/sign/poster/contraband/robust_softdrinks{
-	pixel_x = -32;
-	pixel_y = 32
-	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "aMh" = (
@@ -17870,7 +17862,6 @@
 /obj/structure/cable{
 	icon_state = "0-8"
 	},
-/obj/machinery/status_display/evac,
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/preopen{
 	id = "bridge blast";
@@ -17888,21 +17879,6 @@
 /obj/structure/cable{
 	icon_state = "0-2"
 	},
-/obj/effect/spawner/structure/window/reinforced,
-/obj/machinery/door/poddoor/preopen{
-	id = "bridge blast";
-	name = "bridge blast door"
-	},
-/turf/open/floor/plating,
-/area/bridge)
-"aPW" = (
-/obj/structure/cable{
-	icon_state = "0-8"
-	},
-/obj/structure/cable{
-	icon_state = "0-4"
-	},
-/obj/machinery/status_display/evac,
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/preopen{
 	id = "bridge blast";
@@ -19084,6 +19060,7 @@
 /obj/structure/cable{
 	icon_state = "4-8"
 	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plating,
 /area/maintenance/port)
 "aSY" = (
@@ -48879,8 +48856,8 @@
 "cpn" = (
 /obj/machinery/light,
 /obj/effect/turf_decal/stripes/line,
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 6
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
+	dir = 1
 	},
 /turf/open/floor/plasteel,
 /area/engine/engine_smes)
@@ -53762,6 +53739,10 @@
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/security/range)
+"dZm" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/turf/closed/wall,
+/area/storage/art)
 "eaI" = (
 /obj/structure/table/reinforced,
 /obj/item/radio/intercom{
@@ -55075,8 +55056,8 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 6
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
+	dir = 8
 	},
 /turf/closed/wall,
 /area/quartermaster/warehouse)
@@ -55912,6 +55893,10 @@
 /area/maintenance/fore/secondary)
 "khV" = (
 /obj/machinery/vending/cola/red,
+/obj/structure/sign/poster/contraband/robust_softdrinks{
+	pixel_x = -32;
+	pixel_y = 32
+	},
 /turf/open/floor/plasteel/dark,
 /area/hallway/primary/central)
 "kls" = (
@@ -57544,6 +57529,9 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
 /turf/open/floor/wood,
 /area/crew_quarters/bar)
 "plS" = (
@@ -58369,6 +58357,10 @@
 	},
 /turf/open/floor/plasteel,
 /area/science/mixing)
+"rNG" = (
+/obj/machinery/status_display/evac,
+/turf/closed/wall,
+/area/ai_monitored/storage/eva)
 "rPU" = (
 /turf/open/floor/plasteel/white/side{
 	dir = 4
@@ -59444,11 +59436,10 @@
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "uQS" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
-	dir = 1;
-	pixel_x = 5
-	},
 /obj/machinery/light/small,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 1
+	},
 /turf/open/floor/mineral/titanium/blue,
 /area/crew_quarters/toilet)
 "uRd" = (
@@ -60797,6 +60788,10 @@
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plating,
 /area/maintenance/fore/secondary)
+"yeA" = (
+/obj/machinery/status_display/evac,
+/turf/closed/wall,
+/area/hallway/primary/central)
 "yhx" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 5
@@ -78938,7 +78933,7 @@ blW
 blW
 bqi
 cyD
-blW
+aZE
 cyD
 bvS
 blW
@@ -81490,7 +81485,7 @@ aPF
 aQZ
 aRa
 aTF
-aPG
+dZm
 aSX
 hPP
 aZF
@@ -87907,7 +87902,7 @@ ayL
 ayW
 ayW
 ayW
-ayW
+rNG
 aJq
 aJq
 aOE
@@ -90481,7 +90476,7 @@ aKF
 aMf
 aNB
 aOE
-aPW
+aPS
 aRr
 aSD
 ceh
@@ -91505,7 +91500,7 @@ gfD
 woR
 dgz
 aJw
-aJw
+yeA
 aMh
 aJq
 aOE

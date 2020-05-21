@@ -37,6 +37,11 @@
 	reset_chem_buttons()
 	RefreshParts()
 	add_inital_chems()
+	new_occupant_dir = dir
+
+/obj/machinery/sleeper/setDir(newdir)
+	. = ..()
+	new_occupant_dir = dir
 
 /obj/machinery/sleeper/on_deconstruction()
 	var/obj/item/reagent_containers/sleeper_buffer/buffer = new (loc)

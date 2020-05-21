@@ -80,7 +80,7 @@
 
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
-		ui = new(user, src, ui_key, "Canvas", name, ui_x, ui_y, master_ui, state)
+		ui = new(user, src, ui_key, "canvas", name, ui_x, ui_y, master_ui, state)
 		ui.set_autoupdate(FALSE)
 		ui.open()
 
@@ -240,6 +240,7 @@
 /obj/structure/sign/painting/Initialize(mapload, dir, building)
 	. = ..()
 	SSpersistence.painting_frames += src
+	AddComponent(/datum/component/art, 20)
 	if(dir)
 		setDir(dir)
 	if(building)
