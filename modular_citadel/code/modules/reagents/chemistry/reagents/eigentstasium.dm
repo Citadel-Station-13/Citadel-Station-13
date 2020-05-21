@@ -37,7 +37,7 @@
 //Main functions
 /datum/reagent/fermi/eigenstate/on_mob_life(mob/living/M) //Teleports to chemistry!
 	if(current_cycle == 0)
-		log_game("FERMICHEM: [M] ckey: [M.key] took eigenstasium")
+		log_reagent("FERMICHEM: [M] ckey: [M.key] took eigenstasium")
 
 		//make hologram at return point
 		Eigenstate = new(loc)
@@ -55,7 +55,7 @@
 		if(cached_purity > 0.9) //Teleports you home if it's pure enough
 			if(!location_created && data) //Just in case
 				location_created = data["location_created"]
-			log_game("FERMICHEM: [M] ckey: [M.key] returned to [location_created] using eigenstasium")
+			log_reagent("FERMICHEM: [M] ckey: [M.key] returned to [location_created] using eigenstasium")
 			do_sparks(5,FALSE,M)
 			do_teleport(M, location_created, 0, asoundin = 'sound/effects/phasein.ogg')
 			do_sparks(5,FALSE,M)
@@ -78,7 +78,7 @@
 /datum/reagent/fermi/eigenstate/overdose_start(mob/living/M) //Overdose, makes you teleport randomly
 	. = ..()
 	to_chat(M, "<span class='userdanger'>Oh god, you feel like your wavefunction is about to tear.</span>")
-	log_game("FERMICHEM: [M] ckey: [M.key] has overdosed on eigenstasium")
+	log_reagent("FERMICHEM: [M] ckey: [M.key] has overdosed on eigenstasium")
 	M.Jitter(20)
 	metabolization_rate += 0.5 //So you're not stuck forever teleporting.
 
@@ -92,7 +92,7 @@
 /datum/reagent/fermi/eigenstate/addiction_act_stage1(mob/living/M) //Welcome to Fermis' wild ride.
 	if(addiction_stage == 1)
 		to_chat(M, "<span class='userdanger'>Your wavefunction feels like it's been ripped in half. You feel empty inside.</span>")
-		log_game("FERMICHEM: [M] ckey: [M.key] has become addicted to eigenstasium")
+		log_reagent("FERMICHEM: [M] ckey: [M.key] has become addicted to eigenstasium")
 		M.Jitter(10)
 	M.adjust_nutrition(-M.nutrition/15)
 	..()
@@ -158,7 +158,7 @@
 		M.DefaultCombatKnockdown(100)
 		to_chat(M, "<span class='userdanger'>You feel your eigenstate settle, snapping an alternative version of yourself into reality. All your previous memories are lost and replaced with the alternative version of yourself.</span>")
 		M.emote("me",1,"flashes into reality suddenly, gasping as they gaze around in a bewildered and highly confused fashion!",TRUE)
-		log_game("FERMICHEM: [M] ckey: [M.key] has become an alternative universe version of themselves.")
+		log_reagent("FERMICHEM: [M] ckey: [M.key] has become an alternative universe version of themselves.")
 		M.reagents.remove_all_type(/datum/reagent, 100, 0, 1)
 		/*
 		for(var/datum/mood_event/Me in M)
