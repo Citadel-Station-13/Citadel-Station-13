@@ -143,8 +143,8 @@
 		
 		M << browse_rsc(picture.picture_image, "pda_photo.png") 
 		
-		var/dat = "<div style='overflow:hidden; margin:0; text-align:center'>"
-		dat += "<img src='pda_photo.png' width='192' style='-ms-interpolation-mode:nearest-neighbor'/>"
+		var/dat = "<div style='overflow: hidden; margin :0; text-align: center'>"
+		dat += "<img src='pda_photo.png' width='192' style='-ms-interpolation-mode:nearest-neighbor' />"
 		dat += "</div>"
 
 		var/datum/browser/popup = new(M, "pdaphoto", "PDA Photo", picture.psize_x, picture.psize_y)

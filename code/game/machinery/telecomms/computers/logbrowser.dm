@@ -124,7 +124,7 @@
 		if("network") //network change, flush the selected machine and buffer
 			var/newnet = trim(html_encode(params["value"]), 15)
 			if(length(newnet) > 15)	//i'm looking at you, you href fuckers
-				notice = "FAILED: NETWORK TAG STRING TOO LENGHTLY"
+				notice = "FAILED: Network tag string too lengthy"
 				return
 			network = newnet
 			SelectedMachine = null
@@ -132,7 +132,7 @@
 			return
 		if("probe")
 			if(LAZYLEN(machinelist) > 0)
-				notice = "FAILED: CANNOT PROBE WHEN BUFFER FULL"
+				notice = "FAILED: Cannot probe when buffer full"
 				return
 			
 			for(var/obj/machinery/telecomms/T in GLOB.telecomms_list) //telecomms just went global!
@@ -140,7 +140,7 @@
 					LAZYADD(machinelist, T)
 
 			if(!LAZYLEN(machinelist))
-				notice = "FAILED: UNABLE TO LOCATE NETWORK ENTITIES IN \[[network]\]"
+				notice = "FAILED: Unable to locate network entities in \[[network]\]"
 				return
 		if("viewmachine")
 			for(var/obj/machinery/telecomms/T in machinelist)
@@ -153,11 +153,12 @@
 				return
 
 			if(!SelectedMachine)
+				notice = "ALERT: No server detected. Server may be nonresponsive."
 				return
 			var/datum/comm_log_entry/D = locate(params["value"])
 			if(!istype(D))
-				notice = "OBJECT NOT FOUND"		
+				notice = "NOTICE: Object not found"		
 				return
-			notice = "DELETED ENTRY: [D.name]"
+			notice = "Deleted entry: [D.name]"
 			LAZYREMOVE(SelectedMachine.log_entries, D)
 			qdel(D)

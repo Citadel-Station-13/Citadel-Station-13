@@ -1,5 +1,6 @@
 import { Fragment } from 'inferno';
 import { useBackend } from '../backend';
+import { RADIO_CHANNELS } from '../constants';
 import { Box, Button, LabeledList, NoticeBox, Section, Tabs, Input } from '../components';
 
 
@@ -13,17 +14,6 @@ export const Telemonitor = props => {
     selected_servers,
   } = data;
   const operational = (selected && selected.status);
-  const freqcolorMap = { // red team, blue team and syndie is not included
-    1337: '#686868', // central
-    1347: '#a8732b', // cargonia
-    1349: '#008000', // service
-    1351: '#993399', // science
-    1353: '#948f02', // command
-    1355: '#337296', // medical
-    1357: '#fb5613', // engineering
-    1359: '#a30000', // security
-    1459: '#008000', // common
-  };
 
   return (
     <Fragment>
@@ -178,13 +168,15 @@ export const Telemonitor = props => {
               <LabeledList.Item label="Frequency Listening">
                 <Box>
                   {operational && selected.freq_listening.map(thing => {
+                    const valid = RADIO_CHANNELS
+                      .find(channel => channel.freq === thing);
                     return (
-                      (thing in freqcolorMap) ? (
-                        <span style={`color: ${freqcolorMap[thing]}`}>
-                          {`${thing} `}
+                      (valid) ? (
+                        <span style={`color: ${valid.color}`}>
+                          {`[${thing}] (${valid.name}) `}
                         </span>
                       ) : (
-                        `${thing} `
+                        `[${thing}] `
                       )
                     );
                   })}

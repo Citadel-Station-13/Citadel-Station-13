@@ -81,7 +81,7 @@
 		if("network") //network change, flush the selected machine and buffer
 			var/newnet = trim(html_encode(params["value"]), 15)
 			if(length(newnet) > 15)	//i'm looking at you, you href fuckers
-				notice = "FAILED: NETWORK TAG STRING TOO LENGHTLY"
+				notice = "FAILED: Network tag string too lengthy"
 				return
 			network = newnet
 			SelectedMachine = null
@@ -89,7 +89,7 @@
 			return
 		if("probe")
 			if(LAZYLEN(machinelist) > 0)
-				notice = "FAILED: CANNOT PROBE WHEN BUFFER FULL"
+				notice = "FAILED: Cannot probe when buffer full"
 				return
 			
 			for(var/obj/machinery/telecomms/T in GLOB.telecomms_list)
@@ -97,7 +97,7 @@
 					LAZYADD(machinelist, T)
 
 			if(!LAZYLEN(machinelist))
-				notice = "FAILED: UNABLE TO LOCATE NETWORK ENTITIES IN \[[network]\]"
+				notice = "FAILED: Unable to locate network entities in \[[network]\]"
 				return
 		if("viewmachine")
 			for(var/obj/machinery/telecomms/T in machinelist)

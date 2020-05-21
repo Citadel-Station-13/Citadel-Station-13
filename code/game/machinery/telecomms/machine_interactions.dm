@@ -26,25 +26,28 @@
 		return
 	else
 		return ..()
-/*
+
 /obj/machinery/telecomms/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE,\
-														datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
+									datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
+	/*
 	if(!hasSiliconAccessInArea(user))
 		// istype returns false if the value is null
 		if(!istype(user.get_active_held_item(), /obj/item/multitool))
 			return
+	*/
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 
 	if(!ui)
 		ui = new(user, src, ui_key, "teleinteract", "[name] Access", 520, 500, master_ui, state)
 		ui.open()
-*/
+
 /obj/machinery/telecomms/ui_data(mob/user)
 	var/obj/item/multitool/P = get_multitool(user)
 	. = list() //cpypaste from the vending bus
 	.["notice"] = temp
 	
 	if(P)
+		.["multitool"] = TRUE
 		var/obj/machinery/telecomms/T = P.buffer
 		if(istype(T))
 			.["multitool_buf"] = list(
@@ -71,9 +74,7 @@
 		)
 		.["links"] += list(data)
 
-	.["frequency"] = list()
-	for(var/x in freq_listening)
-		LAZYADD(.["frequency"], format_frequency(x))//concat
+	.["freq_listening"] = freq_listening
 
 /obj/machinery/telecomms/relay/ui_data(mob/user)
 	. = ..()
@@ -84,6 +85,21 @@
 	. = ..()
 	.["machine"]["chang_frequency"] = change_frequency
 
+// Returns a multitool from a user depending on their mobtype.
+/obj/machinery/telecomms/proc/get_multitool(mob/user)
+	var/obj/item/multitool/P = null
+	// Let's double check
+	if(!hasSiliconAccessInArea(user) && istype(user.get_active_held_item(), /obj/item/multitool))
+		P = user.get_active_held_item()
+	else if(isAI(user))
+		var/mob/living/silicon/ai/U = user
+		P = U.aiMulti
+	else if(iscyborg(user) && in_range(user, src))
+		if(istype(user.get_active_held_item(), /obj/item/multitool))
+			P = user.get_active_held_item()
+	return P
+
+/*
 /obj/machinery/telecomms/ui_interact(mob/user)
 	. = ..()
 	// You need a multitool to use this, or be silicon
@@ -147,21 +163,6 @@
 	user << browse(dat, "window=tcommachine;size=520x500;can_resize=0")
 	onclose(user, "tcommachine")
 	return TRUE
-
-// Returns a multitool from a user depending on their mobtype.
-
-/obj/machinery/telecomms/proc/get_multitool(mob/user)
-	var/obj/item/multitool/P = null
-	// Let's double check
-	if(!hasSiliconAccessInArea(user) && istype(user.get_active_held_item(), /obj/item/multitool))
-		P = user.get_active_held_item()
-	else if(isAI(user))
-		var/mob/living/silicon/ai/U = user
-		P = U.aiMulti
-	else if(iscyborg(user) && in_range(user, src))
-		if(istype(user.get_active_held_item(), /obj/item/multitool))
-			P = user.get_active_held_item()
-	return P
 
 // Additional Options for certain machines. Use this when you want to add an option to a specific machine.
 // Example of how to use below.
@@ -324,7 +325,7 @@
 	usr.set_machine(src)
 
 	updateUsrDialog()
-
+*/
 /obj/machinery/telecomms/proc/canAccess(mob/user)
 	if(hasSiliconAccessInArea(user) || in_range(user, src))
 		return TRUE

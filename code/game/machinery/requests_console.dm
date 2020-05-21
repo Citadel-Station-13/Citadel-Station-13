@@ -349,10 +349,6 @@ GLOBAL_LIST_EMPTY(allConsoles)
 		if(msgStamped)
 			sending += "<span class='boldnotice'>[msgStamped]</span> <br>"
 		//so you're telling me is you cheated, by making fail happen, then quickly replacing it with 6
-		if(!sending)
-			screen = 7
-			updateUsrDialog()
-			return
 
 		var/workingServer = FALSE
 		var/datum/data_rc_msg/log = new(href_list["department"], department, message, msgStamped, msgVerified, priority)
@@ -451,14 +447,10 @@ GLOBAL_LIST_EMPTY(allConsoles)
 			screen = 0
 
 	//Handle silencing the console
-	switch(href_list["setSilent"])
-		if(null)//skip
-			updateUsrDialog()
-			return
-		if("1")
-			silent = TRUE
-		else
-			silent = FALSE
+	if(href_list["setSilent"] == "1")
+		silent = TRUE
+	else
+		silent = FALSE
 
 	updateUsrDialog()
 	return
@@ -499,7 +491,7 @@ GLOBAL_LIST_EMPTY(allConsoles)
 			//we ignore the silent option because this is !!!IMPORTANT!!!
 			playsound(src, 'sound/machines/twobeep.ogg', 50, 1)
 			say(title)
-			messages += "<span class='bad'>!!!Extreme Priority!!!</span><br><b>From:</b> [linkedsender]<br>[message]"
+			messages += "<span class='bad'><b>!!!Extreme Priority!!!</span></b><br><b>From:</b> [linkedsender]<br>[message]"
 
 		else		// Normal priority
 			if(newmessagepriority < NORMAL_MESSAGE_PRIORITY)

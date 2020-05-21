@@ -21,7 +21,6 @@
 	//Messages - Saves me time if I want to change something.
 	var/noserver = "ALERT: No server detected. Server may be nonresponsive."
 	var/incorrectkey = "ALERT: Incorrect decryption key!"
-	var/defaultmsg = "Welcome. Please select an option."
 	var/rebootmsg = "%$�(�:SYS&EM INTRN@L ACfES VIOL�TIa█ DEtE₡TED! Ree3ARcinG A█ BAaKUP RdST�RE PbINT \[0xcff32ca/ - PLfASE aAIT"
 
 	//Computer properties
@@ -98,7 +97,7 @@
 
 	if(hacking)
 		data_out["hacking"] = TRUE
-		data_out["borg"] = (isAI(user) || iscyborg(user))
+		data_out["borg"] = ((isAI(user) || iscyborg(user)) && !CHECK_BITFIELD(obj_flags, EMAGGED)) //even borgs can't read emag
 		return data_out
 
 	data_out["servers"] = list()
@@ -146,7 +145,7 @@
 		if("network") //network change, flush the selected machine and buffer, and de-auth them
 			var/newnet = trim(html_encode(params["value"]), 15)
 			if(length(newnet) > 15)	//i'm looking at you, you href fuckers
-				message = "FAILED: NETWORK TAG STRING TOO LENGHTLY"
+				message = "FAILED: Network tag string too lengthy"
 				return
 			network = newnet
 			linkedServer = null
@@ -156,7 +155,7 @@
 			return
 		if("probe") //probe network for the pda serbs
 			if(LAZYLEN(machinelist) > 0)
-				message = "FAILED: CANNOT PROBE WHEN BUFFER FULL"
+				message = "FAILED: Cannot probe when buffer full"
 				return
 			
 			for(var/obj/machinery/telecomms/message_server/T in GLOB.telecomms_list)
@@ -164,7 +163,7 @@
 					LAZYADD(machinelist, T)
 
 			if(!LAZYLEN(machinelist))
-				message = "FAILED: UNABLE TO LOCATE NETWORK ENTITIES IN \[[network]\]"
+				message = "FAILED: Unable to locate network entities in \[[network]\]"
 				return
 		if("viewmachine")	//selected but not authorized
 			for(var/obj/machinery/telecomms/message_server/T in machinelist)
@@ -178,6 +177,7 @@
 				return
 			if(auth)
 				auth = FALSE
+				update_static_data(usr) //make sure it's cleared!
 				return
 			var/dkey = stripped_input(usr, "Please enter the decryption key.")
 			if(dkey && dkey == "")
@@ -254,8 +254,12 @@
 			update_static_data(usr)
 		if("fake")
 			if(!auth)
-				message = "WARNING: Auth failed! Operation aborted!"
+				message = "WARNING: Auth failed! Delete aborted!"
 				return
+			else if(!linkedServer.on)
+				message = noserver
+				return
+	
 			if("reset" in params)
 				ResetMessage()
 				return
@@ -291,6 +295,7 @@
 			if("message" in params)
 				custommessage = params["message"]
 				return
+			
 			if("recepient" in params)
 				// Get out list of viable PDAs
 				var/list/obj/item/pda/sendPDAs = get_viewable_pdas()
@@ -318,14 +323,14 @@
 		to_chat(user, "<span class='notice'>A no server error appears on the screen.</span>")
 		return
 	ENABLE_BITFIELD(obj_flags, EMAGGED)
-	
+	hacking = TRUE
 	spark_system.set_up(5, 0, src)
 	spark_system.start()
 	var/obj/item/paper/monitorkey/MK = new(loc, linkedServer)
 	// Will help make emagging the console not so easy to get away with.
 	MK.info += "<br><br><font color='red'>�%@%(*$%&(�&?*(%&�/{}</font>"
 	addtimer(CALLBACK(src, .proc/UnmagConsole), (10 SECONDS) * length(linkedServer.decryptkey))
-	message = rebootmsg
+	//message = rebootmsg
 	return TRUE
 
 /obj/machinery/computer/message_monitor/New()
@@ -505,6 +510,7 @@
 	message = ""
 
 /obj/machinery/computer/message_monitor/proc/UnmagConsole()
+	hacking = FALSE
 	DISABLE_BITFIELD(obj_flags, EMAGGED)
 	message = ""
 
