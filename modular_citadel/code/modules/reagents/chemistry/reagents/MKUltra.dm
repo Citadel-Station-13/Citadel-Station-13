@@ -194,7 +194,7 @@ Creating a chem with a low purity will make you permanently fall in love with so
 		if (M.ckey == creatorID && creatorName == M.real_name)//If the creator drinks it, they fall in love randomly. If someone else drinks it, the creator falls in love with them.
 			if(M.has_status_effect(STATUS_EFFECT_INLOVE))//Can't be enthralled when enthralled, so to speak.
 				return
-			var/list/seen = (M.visible_atoms(M.client?.view || world.view) - M) | viewers(M.client?.view || world.view, M)
+			var/list/seen = (M.fov_view(M.client?.view || world.view) - M) | viewers(M.client?.view || world.view, M)
 			for(var/victim in seen)
 				if(ishuman(victim))
 					var/mob/living/carbon/V = victim
@@ -213,7 +213,7 @@ Creating a chem with a low purity will make you permanently fall in love with so
 			var/mob/living/carbon/C = get_mob_by_key(creatorID)
 			if(M.has_status_effect(STATUS_EFFECT_INLOVE))
 				return
-			if(C.client && (M in C.visible_atoms(C.client.view)))
+			if(C.client && (M in C.fov_view(C.client.view)))
 				M.reagents.del_reagent(type)
 				FallInLove(C, M)
 			return
@@ -279,7 +279,7 @@ Creating a chem with a low purity will make you permanently fall in love with so
 	if(HAS_TRAIT(M, TRAIT_MINDSHIELD))
 		return ..()
 	if(!M.has_status_effect(STATUS_EFFECT_INLOVE))
-		var/list/seen = (M.visible_atoms(M.client?.view || world.view) - M) | viewers(M.client?.view || world.view, M)
+		var/list/seen = (M.fov_view(M.client?.view || world.view) - M) | viewers(M.client?.view || world.view, M)
 		for(var/victim in seen)
 			if((isanimal(victim)) || (!isliving(victim)))
 				seen -= victim
