@@ -433,7 +433,6 @@
 #include "code\datums\components\summoning.dm"
 #include "code\datums\components\swarming.dm"
 #include "code\datums\components\tackle.dm"
-#include "code\datums\components\tactical.dm"
 #include "code\datums\components\thermite.dm"
 #include "code\datums\components\uplink.dm"
 #include "code\datums\components\virtual_reality.dm"
