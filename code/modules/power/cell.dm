@@ -313,7 +313,7 @@
 
 /obj/item/stock_parts/cell/emproof/ComponentInitialize()
 	. = ..()
-	AddComponent(/datum/component/empprotection, EMP_PROTECT_SELF)
+	AddElement(/datum/element/empprotection, EMP_PROTECT_SELF)
 
 /obj/item/stock_parts/cell/emproof/empty
 	start_charged = FALSE
