@@ -64,7 +64,7 @@
 		var/turf/T = get_turf(user)
 		if(T && T.lighting_object && T.get_lumcount()>= 0.1)
 			// B) Check for Viewers
-			for(var/mob/living/M in get_actual_viewers(world.view, get_turf(owner)) - owner)
+			for(var/mob/living/M in fov_viewers(world.view, get_turf(owner)) - owner)
 				if(M.client && !M.silicon_privileges && !M.eye_blind)
 					am_seen = TRUE
 					if (!M.mind.has_antag_datum(ANTAG_DATUM_BLOODSUCKER))

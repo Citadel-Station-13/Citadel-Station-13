@@ -82,7 +82,7 @@
 	if(..())
 		return
 	ADD_TRAIT(owner, TRAIT_DWARF, GENETIC_MUTATION)
-	owner.transform = owner.transform.Scale(1, 0.8)
+	AddElement(/datum/element/dwarfism, COMSIG_HUMAN_MUTATION_LOSS, src)
 	passtable_on(owner, GENETIC_MUTATION)
 	owner.visible_message("<span class='danger'>[owner] suddenly shrinks!</span>", "<span class='notice'>Everything around you seems to grow..</span>")
 

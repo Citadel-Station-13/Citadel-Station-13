@@ -91,7 +91,7 @@
 
 /datum/design/mag_oldsmg
 	name = "WT-550 Semi-Auto SMG Magazine (4.6x30mm)"
-	desc = "A 20 round magazine for the out of date security WT-550 Semi-Auto SMG."
+	desc = "A 32 round magazine for the out of date security WT-550 Semi-Auto SMG."
 	id = "mag_oldsmg"
 	build_type = PROTOLATHE
 	materials = list(/datum/material/iron = 4000)
@@ -101,7 +101,7 @@
 
 /datum/design/mag_oldsmg/ap_mag
 	name = "WT-550 Semi-Auto SMG Armour Piercing Magazine (4.6x30mm AP)"
-	desc = "A 20 round armour piercing magazine for the out of date security WT-550 Semi-Auto SMG."
+	desc = "A 32 round armour piercing magazine for the out of date security WT-550 Semi-Auto SMG."
 	id = "mag_oldsmg_ap"
 	materials = list(/datum/material/iron = 6000, /datum/material/silver = 600)
 	build_path = /obj/item/ammo_box/magazine/wt550m9/wtap
@@ -109,7 +109,7 @@
 
 /datum/design/mag_oldsmg/ic_mag
 	name = "WT-550 Semi-Auto SMG Incendiary Magazine (4.6x30mm IC)"
-	desc = "A 20 round armour piercing magazine for the out of date security WT-550 Semi-Auto SMG."
+	desc = "A 32 round armour piercing magazine for the out of date security WT-550 Semi-Auto SMG."
 	id = "mag_oldsmg_ic"
 	materials = list(/datum/material/iron = 6000, /datum/material/silver = 600, /datum/material/glass = 1000)
 	build_path = /obj/item/ammo_box/magazine/wt550m9/wtic
@@ -117,7 +117,7 @@
 
 /datum/design/mag_oldsmg/tx_mag
 	name = "WT-550 Semi-Auto SMG Uranium Magazine (4.6x30mm TX)"
-	desc = "A 20 round uranium tipped magazine for the out of date security WT-550 Semi-Auto SMG."
+	desc = "A 32 round uranium tipped magazine for the out of date security WT-550 Semi-Auto SMG."
 	id = "mag_oldsmg_tx"
 	materials = list(/datum/material/iron = 6000, /datum/material/silver = 600, /datum/material/uranium = 2000)
 	build_path = /obj/item/ammo_box/magazine/wt550m9/wttx
@@ -125,7 +125,7 @@
 
 /datum/design/mag_oldsmg/rubber_mag
 	name = "WT-550 Semi-Auto SMG rubberbullets Magazine (4.6x30mm rubber)"
-	desc = "A 20 round rubber shots magazine for the out of date security WT-550 Semi-Auto SMG"
+	desc = "A 32 round rubber shots magazine for the out of date security WT-550 Semi-Auto SMG"
 	id = "mag_oldsmg_rubber"
 	materials = list(/datum/material/iron = 6000)
 	build_path = /obj/item/ammo_box/magazine/wt550m9/wtrubber

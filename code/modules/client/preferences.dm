@@ -1,11 +1,6 @@
-		/* CAUTION! CAUTION! CAUTION! CAUTION! CAUTION! *\
-		|		THIS FILE CONTAINS HOOKS FOR FOR		 |
-		|		CHANGES SPECIFIC TO CITADEL. IF			 |
-		|		 YOU'RE FIXING A MERGE CONFLICT			 |
-		|		HERE, PLEASE ASK FOR REVIEW FROM		 |
-		|		ANOTHER MAINTAINER TO ENSURE YOU		 |
-		|		  DON'T INTRODUCE REGRESSIONS.			 |
-		\*												*/
+#define DEFAULT_SLOT_AMT	2
+#define HANDS_SLOT_AMT		2
+#define BACKPACK_SLOT_AMT	4
 
 GLOBAL_LIST_EMPTY(preferences_datums)
 
@@ -51,6 +46,11 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/chat_on_map = TRUE
 	var/max_chat_length = CHAT_MESSAGE_MAX_LENGTH
 	var/see_chat_non_mob = TRUE
+
+	/// Custom Keybindings
+	var/list/key_bindings = list()
+
+
 	var/tgui_fancy = TRUE
 	var/tgui_lock = TRUE
 	var/windowflashing = TRUE
@@ -189,9 +189,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 	var/uplink_spawn_loc = UPLINK_PDA
 
-	var/sprint_spacebar = FALSE
-	var/sprint_toggle = FALSE
-
 	var/hud_toggle_flash = TRUE
 	var/hud_toggle_color = "#ffffff"
 
@@ -204,6 +201,10 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/vore_flags = 0
 	var/list/belly_prefs = list()
 	var/vore_taste = "nothing in particular"
+	var/toggleeatingnoise = TRUE
+	var/toggledigestionnoise = TRUE
+	var/hound_sleeper = TRUE
+	var/cit_toggles = TOGGLES_CITADEL
 
 	//backgrounds
 	var/mutable_appearance/character_background
@@ -213,6 +214,19 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/show_mismatched_markings = FALSE //determines whether or not the markings lists should show markings that don't match the currently selected species. Intentionally left unsaved.
 
 	var/no_tetris_storage = FALSE
+
+	///loadout stuff
+	var/gear_points = 10
+	var/list/gear_categories
+	var/list/chosen_gear = list()
+	var/gear_tab
+
+	var/screenshake = 100
+	var/damagescreenshake = 2
+	var/arousable = TRUE
+	var/widescreenpref = TRUE
+	var/autostand = TRUE
+	var/auto_ooc = FALSE
 
 /datum/preferences/New(client/C)
 	parent = C
@@ -233,6 +247,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			return
 	//we couldn't load character data so just randomize the character appearance + name
 	random_character()		//let's create a random character then - rather than a fat, bald and naked man.
+	key_bindings = deepCopyList(GLOB.hotkey_keybinding_list_by_key) // give them default keybinds and update their movement keys
+	C?.update_movement_keys(src)
 	real_name = pref_species.random_name(gender,1)
 	if(!loaded_preferences_successfully)
 		save_preferences()
@@ -254,6 +270,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	dat += "<a href='?_src_=prefs;preference=tab;tab=3' [current_tab == 3 ? "class='linkOn'" : ""]>Loadout</a>"
 	dat += "<a href='?_src_=prefs;preference=tab;tab=1' [current_tab == 1 ? "class='linkOn'" : ""]>Game Preferences</a>"
 	dat += "<a href='?_src_=prefs;preference=tab;tab=4' [current_tab == 4 ? "class='linkOn'" : ""]>Content Preferences</a>"
+	dat += "<a href='?_src_=prefs;preference=tab;tab=5' [current_tab == 5 ? "class='linkOn'" : ""]>Keybindings</a>"
 
 	if(!path)
 		dat += "<div class='notice'>Please create an account to save your preferences</div>"
@@ -395,7 +412,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				mutant_colors = TRUE
 
 			if (CONFIG_GET(number/body_size_min) != CONFIG_GET(number/body_size_max))
-				dat += "<b>Sprite Size:</b> <a href='?_src_=prefs;preference=body_size;task=input'>[features["body_size"]]%</a><br>"
+				dat += "<b>Sprite Size:</b> <a href='?_src_=prefs;preference=body_size;task=input'>[features["body_size"]*100]%</a><br>"
 
 			if((EYECOLOR in pref_species.species_traits) && !(NOEYES in pref_species.species_traits))
 
@@ -843,7 +860,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			dat += "<b>See Runechat for non-mobs:</b> <a href='?_src_=prefs;preference=see_chat_non_mob'>[see_chat_non_mob ? "Enabled" : "Disabled"]</a><br>"
 			dat += "<br>"
 			dat += "<b>Action Buttons:</b> <a href='?_src_=prefs;preference=action_buttons'>[(buttons_locked) ? "Locked In Place" : "Unlocked"]</a><br>"
-			dat += "<b>Keybindings:</b> <a href='?_src_=prefs;preference=hotkeys'>[(hotkeys) ? "Hotkeys" : "Default"]</a><br>"
 			dat += "<br>"
 			dat += "<b>PDA Color:</b> <span style='border:1px solid #161616; background-color: [pda_color];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=pda_color;task=input'>Change</a><BR>"
 			dat += "<b>PDA Style:</b> <a href='?_src_=prefs;task=input;preference=pda_style'>[pda_style]</a><br>"
@@ -939,8 +955,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			dat += "</a><br>"
 			dat += "<b>Ambient Occlusion:</b> <a href='?_src_=prefs;preference=ambientocclusion'>[ambientocclusion ? "Enabled" : "Disabled"]</a><br>"
 			dat += "<b>Fit Viewport:</b> <a href='?_src_=prefs;preference=auto_fit_viewport'>[auto_fit_viewport ? "Auto" : "Manual"]</a><br>"
-			dat += "<b>Sprint Key:</b> <a href='?_src_=prefs;preference=sprint_key'>[sprint_spacebar ? "Space" : "Shift"]</a><br>"
-			dat += "<b>Toggle Sprint:</b> <a href='?_src_=prefs;preference=sprint_toggle'>[sprint_toggle ? "Enabled" : "Disabled"]</a><br>"
 			dat += "<b>HUD Button Flashes:</b> <a href='?_src_=prefs;preference=hud_toggle_flash'>[hud_toggle_flash ? "Enabled" : "Disabled"]</a><br>"
 			dat += "<b>HUD Button Flash Color:</b> <span style='border: 1px solid #161616; background-color: [hud_toggle_color];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=hud_toggle_color;task=input'>Change</a><br>"
 
@@ -1063,6 +1077,56 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			dat += "<b>Ass Slapping:</b> <a href='?_src_=prefs;preference=ass_slap'>[(cit_toggles & NO_ASS_SLAP) ? "Disallowed" : "Allowed"]</a><br>"
 			dat += "</tr></table>"
 			dat += "<br>"
+		if(5) // Custom keybindings
+			dat += "<b>Keybindings:</b> <a href='?_src_=prefs;preference=hotkeys'>[(hotkeys) ? "Hotkeys" : "Input"]</a><br>"
+			dat += "Keybindings mode controls how the game behaves with tab and map/input focus.<br>If it is on <b>Hotkeys</b>, the game will always attempt to force you to map focus, meaning keypresses are sent \
+			directly to the map instead of the input. You will still be able to use the command bar, but you need to tab to do it every time you click on the game map.<br>\
+			If it is on <b>Input</b>, the game will not force focus away from the input bar, and you can switch focus using TAB between these two modes: If the input bar is pink, that means that you are in non-hotkey mode, sending all keypresses of the normal \
+			alphanumeric characters, punctuation, spacebar, backspace, enter, etc, typing keys into the input bar. If the input bar is white, you are in hotkey mode, meaning all keypresses go into the game's keybind handling system unless you \
+			manually click on the input bar to shift focus there.<br>\
+			Input mode is the closest thing to the old input system.<br>\
+			<b>IMPORTANT:</b> While in input mode's non hotkey setting (tab toggled), Ctrl + KEY will send KEY to the keybind system as the key itself, not as Ctrl + KEY. This means Ctrl + T/W/A/S/D/all your familiar stuff still works, but you \
+			won't be able to access any regular Ctrl binds.<br>"
+			// Create an inverted list of keybindings -> key
+			var/list/user_binds = list()
+			for (var/key in key_bindings)
+				for(var/kb_name in key_bindings[key])
+					user_binds[kb_name] += list(key)
+
+			var/list/kb_categories = list()
+			// Group keybinds by category
+			for (var/name in GLOB.keybindings_by_name)
+				var/datum/keybinding/kb = GLOB.keybindings_by_name[name]
+				kb_categories[kb.category] += list(kb)
+
+			dat += "<style>label { display: inline-block; width: 200px; }</style><body>"
+
+			for (var/category in kb_categories)
+				dat += "<h3>[category]</h3>"
+				for (var/i in kb_categories[category])
+					var/datum/keybinding/kb = i
+					if(!length(user_binds[kb.name]))
+						dat += "<label>[kb.full_name]</label> <a href ='?_src_=prefs;preference=keybindings_capture;keybinding=[kb.name];old_key=["Unbound"]'>Unbound</a>"
+						var/list/default_keys = hotkeys ? kb.hotkey_keys : kb.classic_keys
+						if(LAZYLEN(default_keys))
+							dat += "| Default: [default_keys.Join(", ")]"
+						dat += "<br>"
+					else
+						var/bound_key = user_binds[kb.name][1]
+						dat += "<label>[kb.full_name]</label> <a href ='?_src_=prefs;preference=keybindings_capture;keybinding=[kb.name];old_key=[bound_key]'>[bound_key]</a>"
+						for(var/bound_key_index in 2 to length(user_binds[kb.name]))
+							bound_key = user_binds[kb.name][bound_key_index]
+							dat += " | <a href ='?_src_=prefs;preference=keybindings_capture;keybinding=[kb.name];old_key=[bound_key]'>[bound_key]</a>"
+						if(length(user_binds[kb.name]) < MAX_KEYS_PER_KEYBIND)
+							dat += "| <a href ='?_src_=prefs;preference=keybindings_capture;keybinding=[kb.name]'>Add Secondary</a>"
+						var/list/default_keys = hotkeys ? kb.classic_keys : kb.hotkey_keys
+						if(LAZYLEN(default_keys))
+							dat += "| Default: [default_keys.Join(", ")]"
+						dat += "<br>"
+
+			dat += "<br><br>"
+			dat += "<a href ='?_src_=prefs;preference=keybindings_reset'>\[Reset to default\]</a>"
+			dat += "</body>"
 
 
 	dat += "<hr><center>"
@@ -1082,6 +1146,31 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 #undef APPEARANCE_CATEGORY_COLUMN
 #undef MAX_MUTANT_ROWS
+
+/datum/preferences/proc/CaptureKeybinding(mob/user, datum/keybinding/kb, var/old_key)
+	var/HTML = {"
+	<div id='focus' style="outline: 0;" tabindex=0>Keybinding: [kb.full_name]<br>[kb.description]<br><br><b>Press any key to change<br>Press ESC to clear</b></div>
+	<script>
+	var deedDone = false;
+	document.onkeyup = function(e) {
+		if(deedDone){ return; }
+		var alt = e.altKey ? 1 : 0;
+		var ctrl = e.ctrlKey ? 1 : 0;
+		var shift = e.shiftKey ? 1 : 0;
+		var numpad = (95 < e.keyCode && e.keyCode < 112) ? 1 : 0;
+		var escPressed = e.keyCode == 27 ? 1 : 0;
+		var url = 'byond://?_src_=prefs;preference=keybindings_set;keybinding=[kb.name];old_key=[old_key];clear_key='+escPressed+';key='+e.key+';alt='+alt+';ctrl='+ctrl+';shift='+shift+';numpad='+numpad+';key_code='+e.keyCode;
+		window.location=url;
+		deedDone = true;
+	}
+	document.getElementById('focus').focus();
+	</script>
+	"}
+	winshow(user, "capturekeypress", TRUE)
+	var/datum/browser/popup = new(user, "capturekeypress", "<div align='center'>Keybindings</div>", 350, 300)
+	popup.set_content(HTML)
+	popup.open(FALSE)
+	onclose(user, "capturekeypress", src)
 
 /datum/preferences/proc/SetChoices(mob/user, limit = 17, list/splitJobs = list("Chief Engineer"), widthPerColumn = 295, height = 620)
 	if(!SSjob)
@@ -2263,10 +2352,73 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 				if("hotkeys")
 					hotkeys = !hotkeys
-					if(hotkeys)
-						winset(user, null, "input.focus=true input.background-color=[COLOR_INPUT_ENABLED] mainwindow.macro=default")
-					else
-						winset(user, null, "input.focus=true input.background-color=[COLOR_INPUT_ENABLED] mainwindow.macro=old_default")
+					user.client.set_macros()
+
+				if("keybindings_capture")
+					var/datum/keybinding/kb = GLOB.keybindings_by_name[href_list["keybinding"]]
+					var/old_key = href_list["old_key"]
+					CaptureKeybinding(user, kb, old_key)
+					return
+
+				if("keybindings_set")
+					var/kb_name = href_list["keybinding"]
+					if(!kb_name)
+						user << browse(null, "window=capturekeypress")
+						ShowChoices(user)
+						return
+
+					var/clear_key = text2num(href_list["clear_key"])
+					var/old_key = href_list["old_key"]
+					if(clear_key)
+						if(key_bindings[old_key])
+							key_bindings[old_key] -= kb_name
+							if(!length(key_bindings[old_key]))
+								key_bindings -= old_key
+						user << browse(null, "window=capturekeypress")
+						save_preferences()
+						ShowChoices(user)
+						return
+
+					var/new_key = uppertext(href_list["key"])
+					var/AltMod = text2num(href_list["alt"]) ? "Alt" : ""
+					var/CtrlMod = text2num(href_list["ctrl"]) ? "Ctrl" : ""
+					var/ShiftMod = text2num(href_list["shift"]) ? "Shift" : ""
+					var/numpad = text2num(href_list["numpad"]) ? "Numpad" : ""
+					// var/key_code = text2num(href_list["key_code"])
+
+					if(GLOB._kbMap[new_key])
+						new_key = GLOB._kbMap[new_key]
+
+					var/full_key
+					switch(new_key)
+						if("Alt")
+							full_key = "[new_key][CtrlMod][ShiftMod]"
+						if("Ctrl")
+							full_key = "[AltMod][new_key][ShiftMod]"
+						if("Shift")
+							full_key = "[AltMod][CtrlMod][new_key]"
+						else
+							full_key = "[AltMod][CtrlMod][ShiftMod][numpad][new_key]"
+					if(key_bindings[old_key])
+						key_bindings[old_key] -= kb_name
+						if(!length(key_bindings[old_key]))
+							key_bindings -= old_key
+					key_bindings[full_key] += list(kb_name)
+					key_bindings[full_key] = sortList(key_bindings[full_key])
+
+					user << browse(null, "window=capturekeypress")
+					user.client.update_movement_keys()
+					save_preferences()
+
+				if("keybindings_reset")
+					var/choice = tgalert(user, "Would you prefer 'hotkey' or 'classic' defaults?", "Setup keybindings", "Hotkey", "Classic", "Cancel")
+					if(choice == "Cancel")
+						ShowChoices(user)
+						return
+					hotkeys = (choice == "Hotkey")
+					key_bindings = (hotkeys) ? deepCopyList(GLOB.hotkey_keybinding_list_by_key) : deepCopyList(GLOB.classic_keybinding_list_by_key)
+					user.client.update_movement_keys()
+
 				if("chat_on_map")
 					chat_on_map = !chat_on_map
 				if("see_chat_non_mob")
@@ -2385,22 +2537,17 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				if("ambientocclusion")
 					ambientocclusion = !ambientocclusion
 					if(parent && parent.screen && parent.screen.len)
-						var/obj/screen/plane_master/game_world/PM = parent.mob.hud_used.plane_masters["[GAME_PLANE]"]
+						var/obj/screen/plane_master/game_world/G = parent.mob.hud_used.plane_masters["[GAME_PLANE]"]
+						var/obj/screen/plane_master/above_wall/A = parent.mob.hud_used.plane_masters["[ABOVE_WALL_PLANE]"]
 						var/obj/screen/plane_master/wall/W = parent.mob.hud_used.plane_masters["[WALL_PLANE]"]
-						PM.backdrop(parent.mob)
+						G.backdrop(parent.mob)
+						A.backdrop(parent.mob)
 						W.backdrop(parent.mob)
 
 				if("auto_fit_viewport")
 					auto_fit_viewport = !auto_fit_viewport
 					if(auto_fit_viewport && parent)
 						parent.fit_viewport()
-
-				if("sprint_key")
-					sprint_spacebar = !sprint_spacebar
-
-				if("sprint_toggle")
-					sprint_toggle = !sprint_toggle
-
 
 				if("hud_toggle_flash")
 					hud_toggle_flash = !hud_toggle_flash
@@ -2580,3 +2727,37 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	if(!cached_holoform_icons[filter_type])
 		cached_holoform_icons[filter_type] = process_holoform_icon_filter(custom_holoform_icon, filter_type)
 	return cached_holoform_icons[filter_type]
+
+//Used in savefile update 32, can be removed once that is no longer relevant.
+/datum/preferences/proc/force_reset_keybindings()
+	var/choice = tgalert(parent.mob, "Your basic keybindings need to be reset, emotes will remain as before. Would you prefer 'hotkey' or 'classic' mode?", "Reset keybindings", "Hotkey", "Classic")
+	hotkeys = (choice != "Classic")
+	var/list/oldkeys = key_bindings
+	key_bindings = (hotkeys) ? deepCopyList(GLOB.hotkey_keybinding_list_by_key) : deepCopyList(GLOB.classic_keybinding_list_by_key)
+
+	for(var/key in oldkeys)
+		if(!key_bindings[key])
+			key_bindings[key] = oldkeys[key]
+	parent.update_movement_keys()
+
+/datum/preferences/proc/is_loadout_slot_available(slot)
+	var/list/L
+	LAZYINITLIST(L)
+	for(var/i in chosen_gear)
+		var/datum/gear/G = i
+		var/occupied_slots = L[slot_to_string(initial(G.category))] ? L[slot_to_string(initial(G.category))] + 1 : 1
+		LAZYSET(L, slot_to_string(initial(G.category)), occupied_slots)
+	switch(slot)
+		if(SLOT_IN_BACKPACK)
+			if(L[slot_to_string(SLOT_IN_BACKPACK)] < BACKPACK_SLOT_AMT)
+				return TRUE
+		if(SLOT_HANDS)
+			if(L[slot_to_string(SLOT_HANDS)] < HANDS_SLOT_AMT)
+				return TRUE
+		else
+			if(L[slot_to_string(slot)] < DEFAULT_SLOT_AMT)
+				return TRUE
+
+#undef DEFAULT_SLOT_AMT
+#undef HANDS_SLOT_AMT
+#undef BACKPACK_SLOT_AMT
