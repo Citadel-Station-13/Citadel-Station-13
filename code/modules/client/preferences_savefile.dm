@@ -317,6 +317,11 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	no_tetris_storage		= sanitize_integer(no_tetris_storage, 0, 1, initial(no_tetris_storage))
 	key_bindings 	= sanitize_islist(key_bindings, list())
 
+	verify_keybindings_valid()		// one of these days this will runtime and you'll be glad that i put it in a different proc so no one gets their saves wiped
+
+	return 1
+
+/datum/preferences/proc/verify_keybindings_valid()
 	// Sanitize the actual keybinds to make sure they exist.
 	for(var/key in key_bindings)
 		if(!islist(key_bindings[key]))
@@ -328,8 +333,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		if(!length(binds))
 			key_bindings -= key
 	// End
-
-	return 1
 
 /datum/preferences/proc/save_preferences()
 	if(!path)
