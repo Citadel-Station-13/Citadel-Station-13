@@ -528,6 +528,7 @@
 #include "code\datums\elements\cleaning.dm"
 #include "code\datums\elements\dusts_on_catatonia.dm"
 #include "code\datums\elements\dusts_on_leaving_area.dm"
+#include "code\datums\elements\dwarfism.dm"
 #include "code\datums\elements\earhealing.dm"
 #include "code\datums\elements\firestacker.dm"
 #include "code\datums\elements\flavor_text.dm"
