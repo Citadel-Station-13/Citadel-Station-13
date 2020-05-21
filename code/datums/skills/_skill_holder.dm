@@ -162,7 +162,7 @@
 			continue
 		var/our_traits = S.skill_traits
 		our_traits |= I.used_skills[k]
-		if((traits && !(one_trait ? (traits in our_traits) : length(our_traits & traits)))
+		if(traits && !(one_trait ? (traits in our_traits) : length(our_traits & traits)))
 			continue
 		if(bad_traits && (one_bad_trait ? (bad_traits in our_traits) : length(our_traits & bad_traits)))
 			continue
