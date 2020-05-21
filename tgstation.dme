@@ -3353,10 +3353,8 @@
 #include "modular_citadel\code\datums\status_effects\chems.dm"
 #include "modular_citadel\code\game\objects\cit_screenshake.dm"
 #include "modular_citadel\code\game\objects\effects\temporary_visuals\souldeath.dm"
-#include "modular_citadel\code\modules\admin\chat_commands.dm"
 #include "modular_citadel\code\modules\admin\holder2.dm"
 #include "modular_citadel\code\modules\admin\secrets.dm"
-#include "modular_citadel\code\modules\client\client_defines.dm"
 #include "modular_citadel\code\modules\client\client_procs.dm"
 #include "modular_citadel\code\modules\client\preferences_savefile.dm"
 #include "modular_citadel\code\modules\client\preferences_toggles.dm"
@@ -3423,5 +3421,4 @@
 #include "modular_citadel\code\modules\reagents\chemistry\recipes\fermi.dm"
 #include "modular_citadel\code\modules\reagents\objects\clothes.dm"
 #include "modular_citadel\code\modules\reagents\objects\items.dm"
-#include "modular_citadel\code\modules\reagents\reagents\cit_reagents.dm"
 // END_INCLUDE
