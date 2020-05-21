@@ -23646,10 +23646,7 @@
 /area/crew_quarters/bar/atrium)
 "aTH" = (
 /obj/structure/table/wood,
-/obj/item/reagent_containers/food/drinks/coffee{
-	pixel_x = -4;
-	pixel_y = 2
-	},
+/obj/item/reagent_containers/food/drinks/coffee,
 /obj/effect/turf_decal/tile/red{
 	dir = 1
 	},
@@ -60676,6 +60673,10 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
+/obj/machinery/airalarm{
+	dir = 1;
+	pixel_y = -22
+	},
 /obj/machinery/door/firedoor,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -60690,6 +60691,10 @@
 	dir = 4
 	},
 /obj/machinery/light,
+/obj/machinery/firealarm{
+	dir = 1;
+	pixel_y = -26
+	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
@@ -62739,36 +62744,43 @@
 /turf/open/floor/plasteel/dark,
 /area/library)
 "cct" = (
-/obj/structure/table/wood/fancy,
-/obj/machinery/door/window{
-	name = "Secure Art Exhibition"
+/obj/structure/table/wood,
+/obj/item/flashlight/lamp,
+/obj/machinery/computer/security/telescreen/entertainment{
+	pixel_x = -32
 	},
-/obj/structure/sign/painting/library_secure{
-	pixel_y = 32
+/obj/item/radio/intercom{
+	name = "Station Intercom";
+	pixel_y = 26
 	},
-/turf/open/floor/carpet,
+/turf/open/floor/plasteel/dark,
 /area/library)
 "ccu" = (
-/obj/structure/table/wood/fancy,
-/obj/structure/window/reinforced{
+/obj/machinery/light/small{
+	dir = 1
+	},
+/obj/structure/table/wood,
+/obj/item/folder,
+/obj/item/pen,
+/obj/machinery/newscaster{
+	pixel_y = 32
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
-/obj/structure/window/reinforced,
-/obj/structure/sign/painting/library_secure{
-	pixel_y = 32
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
 	},
-/turf/open/floor/carpet,
+/turf/open/floor/plasteel/dark,
 /area/library)
 "ccv" = (
-/obj/structure/extinguisher_cabinet{
-	pixel_y = 32
-	},
-/obj/machinery/camera{
-	c_tag = "Library - Aft";
-	dir = 2;
-	name = "library camera"
-	},
-/turf/open/floor/wood,
+/obj/machinery/computer/libraryconsole,
+/obj/structure/table/wood,
+/turf/open/floor/plasteel/dark,
 /area/library)
 "ccw" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
@@ -63910,7 +63922,7 @@
 /obj/structure/chair/office/dark{
 	dir = 8
 	},
-/obj/effect/landmark/start/assistant,
+/obj/effect/landmark/start/librarian,
 /turf/open/floor/plasteel/dark,
 /area/library)
 "ceg" = (
@@ -63923,21 +63935,71 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 8
 	},
-/turf/open/floor/plasteel/grimy,
-/area/library)
-"cej" = (
-/obj/effect/landmark/start/librarian,
-/turf/open/floor/plasteel/grimy,
-/area/library)
-"cel" = (
-/obj/structure/chair/sofa/right{
-	icon_state = "sofaend_right";
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/obj/structure/sign/painting/library{
+/turf/open/floor/plasteel/dark,
+/area/library)
+"cei" = (
+/obj/structure/chair/comfy/black{
+	dir = 8
+	},
+/obj/machinery/newscaster{
 	pixel_x = 32
 	},
-/turf/open/floor/wood,
+/obj/machinery/camera{
+	c_tag = "Library - Fore";
+	dir = 8;
+	name = "library camera"
+	},
+/turf/open/floor/plasteel/dark,
+/area/library)
+"cej" = (
+/obj/machinery/photocopier,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
+/area/library)
+"cek" = (
+/obj/structure/chair/office/dark{
+	dir = 1
+	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on,
+/turf/open/floor/plasteel/dark,
+/area/library)
+"cel" = (
+/obj/structure/table/wood,
+/obj/item/paper_bin,
+/obj/item/pen,
+/obj/machinery/status_display/evac{
+	pixel_x = 32
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
 /area/library)
 "cem" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
@@ -65114,15 +65176,33 @@
 	},
 /turf/open/floor/plasteel/grimy,
 /area/library)
-"cfZ" = (
-/obj/item/radio/intercom{
-	name = "Station Intercom";
-	pixel_x = -26
-	},
-/obj/structure/sign/painting/library{
-	pixel_y = -32
+"cfY" = (
+/obj/item/twohanded/required/kirbyplants/random,
+/obj/machinery/light/small{
+	dir = 4
 	},
 /turf/open/floor/wood,
+/area/library)
+"cfZ" = (
+/obj/structure/sign/warning/nosmoking,
+/turf/closed/wall,
+/area/library)
+"cga" = (
+/obj/machinery/door/morgue{
+	name = "Private Study"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
 /area/library)
 "cgb" = (
 /obj/structure/sign/plaques/kiddie/library{
@@ -66271,28 +66351,61 @@
 /obj/item/twohanded/required/kirbyplants/random,
 /turf/open/floor/wood,
 /area/library)
-"chV" = (
-/obj/machinery/newscaster{
-	pixel_x = -32
+"chQ" = (
+/obj/machinery/bookbinder,
+/turf/open/floor/wood,
+/area/library)
+"chR" = (
+/obj/machinery/light{
+	dir = 1
 	},
-/turf/open/floor/plasteel/dark,
+/obj/machinery/newscaster{
+	pixel_y = 32
+	},
+/obj/structure/bookcase/random,
+/turf/open/floor/wood,
+/area/library)
+"chS" = (
+/obj/structure/chair/comfy/brown,
+/obj/effect/landmark/start/assistant,
+/turf/open/floor/wood,
+/area/library)
+"chT" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/turf/open/floor/wood,
+/area/library)
+"chU" = (
+/obj/machinery/photocopier,
+/obj/structure/extinguisher_cabinet{
+	pixel_y = 32
+	},
+/turf/open/floor/wood,
+/area/library)
+"chV" = (
+/obj/machinery/light{
+	dir = 1
+	},
+/obj/machinery/newscaster{
+	pixel_y = 32
+	},
+/obj/structure/bookcase/manuals/research_and_development,
+/obj/machinery/camera{
+	c_tag = "Library";
+	name = "library camera"
+	},
+/turf/open/floor/wood,
 /area/library)
 "chW" = (
-/obj/machinery/holopad,
-/obj/effect/turf_decal/bot,
-/turf/open/floor/plasteel/grimy,
+/obj/structure/chair/comfy/brown,
+/obj/item/radio/intercom{
+	name = "Station Intercom";
+	pixel_y = 26
+	},
+/turf/open/floor/wood,
 /area/library)
 "chX" = (
-/obj/structure/table/wood,
-/obj/item/newspaper{
-	pixel_x = 3;
-	pixel_y = 3
-	},
-/obj/item/reagent_containers/food/drinks/coffee{
-	pixel_x = -4;
-	pixel_y = 2
-	},
-/turf/open/floor/plasteel/dark,
+/obj/machinery/vending/coffee,
+/turf/open/floor/wood,
 /area/library)
 "chY" = (
 /obj/machinery/door/poddoor/shutters/preopen{
@@ -67179,6 +67292,10 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
+/turf/open/floor/plasteel/grimy,
+/area/library)
+"cju" = (
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden,
 /turf/open/floor/plasteel/grimy,
 /area/library)
 "cjv" = (
@@ -68803,6 +68920,10 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/wood,
 /area/library)
+"cmv" = (
+/obj/machinery/holopad,
+/turf/open/floor/wood,
+/area/library)
 "cmw" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/extinguisher_cabinet{
@@ -69679,7 +69800,7 @@
 /turf/open/floor/wood,
 /area/library)
 "cnP" = (
-/obj/structure/bookcase/random,
+/obj/structure/bookcase/manuals/medical,
 /turf/open/floor/wood,
 /area/library)
 "cnQ" = (
@@ -74447,6 +74568,8 @@
 /area/library)
 "cwr" = (
 /obj/structure/easel,
+/obj/item/canvas/twentythreeXnineteen,
+/obj/item/canvas/twentythreeXtwentythree,
 /obj/item/canvas/twentythreeXtwentythree,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -78377,10 +78500,7 @@
 	pixel_x = 3;
 	pixel_y = 3
 	},
-/obj/item/newspaper{
-	pixel_x = 3;
-	pixel_y = 3
-	},
+/obj/item/newspaper,
 /obj/machinery/status_display/evac{
 	pixel_x = -32
 	},
@@ -80093,10 +80213,7 @@
 	pixel_x = 7;
 	pixel_y = 11
 	},
-/obj/item/newspaper{
-	pixel_x = 3;
-	pixel_y = 3
-	},
+/obj/item/newspaper,
 /obj/item/pen/red,
 /turf/open/floor/wood{
 	icon_state = "wood-broken2"
@@ -109993,10 +110110,7 @@
 	pixel_x = 3;
 	pixel_y = 3
 	},
-/obj/item/newspaper{
-	pixel_x = 3;
-	pixel_y = 3
-	},
+/obj/item/newspaper,
 /turf/open/floor/plating,
 /area/security/detectives_office/private_investigators_office)
 "dFu" = (
@@ -110859,10 +110973,7 @@
 /area/crew_quarters/theatre/abandoned)
 "dGH" = (
 /obj/structure/table/wood,
-/obj/item/newspaper{
-	pixel_x = 3;
-	pixel_y = 3
-	},
+/obj/item/newspaper,
 /obj/item/clothing/head/bowler,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -125378,17 +125489,6 @@
 /obj/structure/closet/crate/coffin,
 /turf/open/floor/plating,
 /area/chapel/office)
-"gjg" = (
-/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj/machinery/airalarm{
-	dir = 1;
-	pixel_y = -22
-	},
-/turf/open/floor/plasteel,
-/area/hallway/primary/port)
 "gmj" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/closed/wall/r_wall,
@@ -125457,12 +125557,6 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/science/mixing)
-"gOM" = (
-/obj/structure/sign/painting/library{
-	pixel_y = -32
-	},
-/turf/open/floor/wood,
-/area/library)
 "gPv" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -125762,12 +125856,6 @@
 /obj/item/integrated_circuit_printer,
 /turf/open/floor/plasteel/white/side,
 /area/science/circuit)
-"jqs" = (
-/obj/structure/sign/painting/library{
-	pixel_y = 32
-	},
-/turf/open/floor/wood,
-/area/library)
 "jqM" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/stripes/line{
@@ -125886,17 +125974,6 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plating,
 /area/science/mixing)
-"jVB" = (
-/obj/structure/table/wood/fancy,
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/window/reinforced,
-/obj/structure/sign/painting/library_secure{
-	pixel_y = 32
-	},
-/turf/open/floor/carpet,
-/area/library)
 "kam" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/conveyor{
@@ -126309,12 +126386,6 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/science/research)
-"mRS" = (
-/obj/machinery/light{
-	dir = 1
-	},
-/turf/open/floor/wood,
-/area/library)
 "mWZ" = (
 /obj/machinery/atmospherics/components/binary/pump,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -126354,17 +126425,6 @@
 /obj/machinery/atmospherics/pipe/simple/general/hidden,
 /turf/closed/wall/r_wall,
 /area/maintenance/disposal/incinerator)
-"oek" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/obj/machinery/camera{
-	c_tag = "Library - Aft";
-	dir = 2;
-	name = "library camera"
-	},
-/turf/open/floor/plasteel/grimy,
-/area/library)
 "oHk" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -126580,10 +126640,6 @@
 	},
 /turf/open/floor/plating,
 /area/science/research/abandoned)
-"pLF" = (
-/obj/machinery/light,
-/turf/open/floor/wood,
-/area/library)
 "pQm" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable/white{
@@ -126873,15 +126929,6 @@
 "tCh" = (
 /turf/closed/wall,
 /area/science/misc_lab)
-"tDx" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/obj/machinery/light{
-	dir = 1
-	},
-/turf/open/floor/plasteel/grimy,
-/area/library)
 "tMk" = (
 /turf/open/floor/plasteel/white/side{
 	dir = 10
@@ -127038,16 +127085,6 @@
 	},
 /turf/open/floor/plating,
 /area/engine/atmos)
-"vLX" = (
-/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
-	dir = 8
-	},
-/obj/structure/sign/plaques/kiddie/library{
-	pixel_x = 32;
-	pixel_y = 32
-	},
-/turf/open/floor/plasteel/grimy,
-/area/library)
 "wei" = (
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plasteel,
@@ -127067,19 +127104,6 @@
 /obj/effect/turf_decal/tile/purple,
 /turf/open/floor/plasteel/white,
 /area/science/misc_lab)
-"wEg" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj/machinery/firealarm{
-	dir = 1;
-	pixel_y = -26
-	},
-/turf/open/floor/plasteel,
-/area/hallway/primary/port)
 "wFu" = (
 /obj/structure/lattice,
 /obj/structure/grille,
@@ -127268,13 +127292,6 @@
 /obj/structure/fans/tiny/invisible,
 /turf/open/space/basic,
 /area/space)
-"yin" = (
-/obj/structure/chair/sofa/left{
-	icon_state = "sofaend_left";
-	dir = 8
-	},
-/turf/open/floor/wood,
-/area/library)
 "yiv" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/neutral{
@@ -158275,7 +158292,7 @@ ccq
 ceg
 ccq
 chO
-vLX
+ceg
 ckQ
 cmr
 ccq
@@ -158528,11 +158545,11 @@ bUt
 bWD
 bYM
 caH
-cwq
+ccr
 ceh
-caG
-caG
-oek
+cfY
+chP
+cjt
 ckR
 cms
 cnO
@@ -158783,12 +158800,12 @@ bDl
 bDl
 bUu
 bWE
-gjg
+bYO
 caG
-mRS
-cxV
+ccs
+cei
 cfZ
-caG
+chQ
 cjt
 ckR
 cms
@@ -159042,11 +159059,11 @@ bUv
 bWC
 bYR
 caG
-jqs
-cxV
-gOM
 caG
-tDx
+caG
+caG
+chR
+cjt
 ckR
 cmt
 cmt
@@ -159299,10 +159316,10 @@ bUq
 bWI
 bYM
 caG
-jqs
-cxV
-gOM
+cct
+cej
 caG
+chS
 cjt
 ckR
 cms
@@ -159556,11 +159573,11 @@ bUq
 bWD
 bYM
 caG
-jqs
-cxV
-gOM
-caG
-cjt
+ccu
+cek
+cga
+chT
+cju
 ckR
 cms
 cnQ
@@ -159814,9 +159831,9 @@ bWD
 bYM
 caG
 ccv
-cxV
-pLF
+cel
 caG
+chU
 cjt
 ckR
 xuu
@@ -160070,9 +160087,9 @@ bUq
 bWD
 bYS
 caG
-jVB
-cxV
-cmt
+caG
+caG
+caG
 chV
 cjt
 ckT
@@ -160329,7 +160346,7 @@ bYM
 caG
 cct
 cej
-cxV
+caG
 chW
 cjt
 ckR
@@ -160585,12 +160602,12 @@ bWD
 bYM
 caG
 ccu
-cmt
-cmt
-ccr
-cjt
+cek
+cga
+chT
+cju
 ckR
-cmt
+cmv
 cnU
 cpy
 cqT
@@ -160839,11 +160856,11 @@ bQu
 bQv
 bUr
 bWD
-wEg
+bYM
 caG
-chP
+ccv
 cel
-yin
+caG
 chX
 cjt
 ckR
