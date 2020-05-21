@@ -100,8 +100,9 @@ I'd like to point out from my calculations it'll take about 60-80 minutes to die
 	..()
 
 /datum/reagent/fermi/astral/on_mob_delete(mob/living/carbon/M)
-	if(!(G.mind))
-		qdel(G)
+	if(!(G?.mind))
+		if(!G)
+			qdel(G)
 		return  ..()
 	if(M.mind) //Just in case someone else is inside of you, it makes them a ghost and should hopefully bring them home at the end.
 		var/mob/living/simple_animal/astral/G2 = new(get_turf(M))
