@@ -14,7 +14,9 @@ export const ClockworkSlab = props => {
   } = data;
 
   return (
-    <Window style="clockwork">
+    <Window
+      theme="clockwork"
+      resizable>
       <Section>
         <Button
           content={recollection ? "Recital" : "Recollection"}
@@ -27,7 +29,7 @@ export const ClockworkSlab = props => {
           {recollection_categories.map(categories => {
             return (
               <Window>
-                <br key='weh'/>
+                <br key={category.name} />
                 <Button
                   content={`${categories.name} - ${categories.desc}`}
                   onClick={() => act('rec_category', {
@@ -55,11 +57,11 @@ export const ClockworkSlab = props => {
                 {() => (
                   <Section>
                     <LabeledList>
-                      {data.scripture.driver.map(script => { // HEY! Make sure the data gets built byondside!
+                      {data.scripture.driver.map(script => {
                         return (
                           <LabeledList.Item
                             key={script.name}
-                            label={script.name} // should i just md5 this and cut
+                            label={script.name}
                             buttons={(
                               <Window>
                                 <Button
@@ -68,7 +70,9 @@ export const ClockworkSlab = props => {
                                     'category': script.name,
                                   })} />
                                 <Button
-                                  content={script.quickbind ? `Unbind ${script.quickbind}` : 'Quickbind'}
+                                  content={script.quickbind
+                                    ? `Unbind ${script.quickbind}`
+                                    : 'Quickbind'}
                                   onClick={() => act('bind', {
                                     'category': script.name,
                                   })} />
@@ -88,11 +92,11 @@ export const ClockworkSlab = props => {
                 {() => (
                   <Section>
                     <LabeledList>
-                      {data.scripture.script.map(script => { // HEY! Make sure the data gets built byondside!
+                      {data.scripture.script.map(script => {
                         return (
                           <LabeledList.Item
                             key={script.name}
-                            label={script.name} // should i just md5 this and cut
+                            label={script.name}
                             buttons={(
                               <Window>
                                 <Button
@@ -101,7 +105,9 @@ export const ClockworkSlab = props => {
                                     'category': script.name,
                                   })} />
                                 <Button
-                                  content={script.quickbind ? `Unbind ${script.quickbind}` : 'Quickbind'}
+                                  content={script.quickbind
+                                    ? `Unbind ${script.quickbind}`
+                                    : 'Quickbind'}
                                   onClick={() => act('bind', {
                                     'category': script.name,
                                   })} />
@@ -121,11 +127,11 @@ export const ClockworkSlab = props => {
                 {() => (
                   <Section>
                     <LabeledList>
-                      {data.scripture.application.map(script => { // HEY! Make sure the data gets built byondside!
+                      {data.scripture.application.map(script => {
                         return (
                           <LabeledList.Item
                             key={script.name}
-                            label={script.name} // should i just md5 this and cut
+                            label={script.name}
                             buttons={(
                               <Window>
                                 <Button
@@ -134,7 +140,9 @@ export const ClockworkSlab = props => {
                                     'category': script.name,
                                   })} />
                                 <Button
-                                  content={script.quickbind ? `Unbind ${script.quickbind}` : 'Quickbind'}
+                                  content={script.quickbind
+                                    ? `Unbind ${script.quickbind}`
+                                    : 'Quickbind'}
                                   onClick={() => act('bind', {
                                     'category': script.name,
                                   })} />
