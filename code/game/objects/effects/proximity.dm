@@ -53,7 +53,7 @@
 	current_range = range
 
 	var/list/checkers_local = checkers
-	var/old_checkers_len = checkers_local.len
+	var/old_checkers_len = length(checkers_local)
 
 	var/atom/_host = host
 
