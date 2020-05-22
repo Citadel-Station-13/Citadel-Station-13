@@ -6,13 +6,20 @@ SUBSYSTEM_DEF(input)
 	priority = FIRE_PRIORITY_INPUT
 	runlevels = RUNLEVELS_DEFAULT | RUNLEVEL_LOBBY
 
-	var/list/macro_sets
-	var/list/movement_keys
+	/// Classic mode input focused macro set. Manually set because we can't define ANY or ANY+UP for classic.
+	var/static/list/macroset_classic_input
+	/// Classic mode map focused macro set. Manually set because it needs to be clientside and go to macroset_classic_input.
+	var/static/list/macroset_classic_hotkey
+	/// New hotkey mode macro set. All input goes into map, game keeps incessently setting your focus to map, we can use ANY all we want here; we don't care about the input bar, the user has to force the input bar every time they want to type.
+	var/static/list/macroset_hotkey
+
+	/// Macro set for hotkeys
+	var/list/hotkey_mode_macros
+	/// Macro set for classic.
+	var/list/input_mode_macros
 
 /datum/controller/subsystem/input/Initialize()
-	setup_default_macro_sets()
-
-	setup_default_movement_keys()
+	setup_macrosets()
 
 	initialized = TRUE
 
@@ -20,90 +27,68 @@ SUBSYSTEM_DEF(input)
 
 	return ..()
 
-// This is for when macro sets are eventualy datumized
-/datum/controller/subsystem/input/proc/setup_default_macro_sets()
-	var/list/static/default_macro_sets
-
-	if(default_macro_sets)
-		macro_sets = default_macro_sets
-		return
-
-	default_macro_sets = list(
-		"default" = list(
-			"Tab" = "\".winset \\\"input.focus=true?map.focus=true input.background-color=[COLOR_INPUT_DISABLED]:input.focus=true input.background-color=[COLOR_INPUT_ENABLED]\\\"\"",
-			"O" = "ooc",
-			"Ctrl+O" = "looc",
-			"T" = "say",
-			"Ctrl+T" = "whisper",
-			"M" = "me",
-			"Ctrl+M" = "subtle",
-			"Back" = "\".winset \\\"input.text=\\\"\\\"\\\"\"", // This makes it so backspace can remove default inputs
-			"Any" = "\"KeyDown \[\[*\]\]\"",
-			"Any+UP" = "\"KeyUp \[\[*\]\]\"",
-			),
-		"old_default" = list(
-			"Tab" = "\".winset \\\"mainwindow.macro=old_hotkeys map.focus=true input.background-color=[COLOR_INPUT_DISABLED]\\\"\"",
-			"Ctrl+T" = "say",
-			"Ctrl+O" = "ooc",
-			),
-		"old_hotkeys" = list(
-			"Tab" = "\".winset \\\"mainwindow.macro=old_default input.focus=true input.background-color=[COLOR_INPUT_ENABLED]\\\"\"",
-			"O" = "ooc",
-			"L" = "looc",
-			"T" = "say",
-			"M" = "me",
-			"Back" = "\".winset \\\"input.text=\\\"\\\"\\\"\"", // This makes it so backspace can remove default inputs
-			"Any" = "\"KeyDown \[\[*\]\]\"",
-			"Any+UP" = "\"KeyUp \[\[*\]\]\"",
-			),
-		)
-
-	// Because i'm lazy and don't want to type all these out twice
-	var/list/old_default = default_macro_sets["old_default"]
-
-	var/list/static/oldmode_keys = list(
+/// Sets up the key list for classic mode for when badmins screw up vv's.
+/datum/controller/subsystem/input/proc/setup_macrosets()
+	// First, let's do the snowflake keyset!
+	macroset_classic_input = list()
+	var/list/classic_mode_keys = list(
 		"North", "East", "South", "West",
 		"Northeast", "Southeast", "Northwest", "Southwest",
-		"Insert", "Delete", "Ctrl", "Alt",
+		"Insert", "Delete", "Ctrl", "Alt", "Shift",
 		"F1", "F2", "F3", "F4", "F5", "F6", "F7", "F8", "F9", "F10", "F11", "F12",
 		)
+	for(var/key in classic_mode_keys)
+		macroset_classic_input[key] = "\"KeyDown [key]\""
+		macroset_classic_input["[key]+UP"] = "\"KeyUp [key]\""
+	// LET'S PLAY THE BIND EVERY KEY GAME!
+	// oh except for Backspace and Enter; if you want to use those you shouldn't have used oldmode!
+	var/list/classic_ctrl_override_keys = list(
+	"\[", "\]", "\\", ";", "'", ",", ".", "/", "-", "\\=", "`"
+	)
+	// i'm lazy let's play the list iteration game of numbers
+	for(var/i in 0 to 9)
+		classic_ctrl_override_keys += "[i]"
+	// let's play the ascii game of A to Z (UPPERCASE)
+	for(var/i in 65 to 90)
+		classic_ctrl_override_keys += ascii2text(i)
+	// let's play the game of clientside bind overrides!
+	classic_ctrl_override_keys -= list("T", "O", "M", "L")
+	macroset_classic_input["Ctrl+T"] = "say"
+	macroset_classic_input["Ctrl+O"] = "ooc"
+	macroset_classic_input["Ctrl+L"] = "looc"
+	// let's play the list iteration game x2
+	for(var/key in classic_ctrl_override_keys)
+		macroset_classic_input["Ctrl+[key]"] = "\"KeyDown [key]\""
+		macroset_classic_input["Ctrl+[key]+UP"] = "\"KeyUp [key]\""
+	// Misc
+	macroset_classic_input["Tab"] = "\".winset \\\"mainwindow.macro=[SKIN_MACROSET_CLASSIC_HOTKEYS] map.focus=true input.background-color=[COLOR_INPUT_DISABLED]\\\"\""
+	macroset_classic_input["Escape"] = "\".winset \\\"input.text=\\\"\\\"\\\"\""
 
-	for(var/i in 1 to oldmode_keys.len)
-		var/key = oldmode_keys[i]
-		old_default[key] = "\"KeyDown [key]\""
-		old_default["[key]+UP"] = "\"KeyUp [key]\""
+	// FINALLY, WE CAN DO SOMETHING MORE NORMAL FOR THE SNOWFLAKE-BUT-LESS KEYSET.
+	macroset_classic_hotkey = list(
+	"Any" = "\"KeyDown \[\[*\]\]\"",
+	"Any+UP" = "\"KeyUp \[\[*\]\]\"",
+	"Tab" = "\".winset \\\"mainwindow.macro=[SKIN_MACROSET_CLASSIC_INPUT] input.focus=true input.background-color=[COLOR_INPUT_ENABLED]\\\"\"",
+	"Escape" = "\".winset \\\"input.text=\\\"\\\"\\\"\"",
+	"Back" = "\".winset \\\"input.text=\\\"\\\"\\\"\"",
+	"O" = "ooc",
+	"T" = "say",
+	"L" = "looc",
+	"M" = "me"
+	)
 
-	var/list/static/oldmode_ctrl_override_keys = list(
-		"W" = "W", "A" = "A", "S" = "S", "D" = "D", // movement
-		"1" = "1", "2" = "2", "3" = "3", "4" = "4", // intent
-		"B" = "B", // resist
-		"E" = "E", // quick equip
-		"F" = "F", // intent left
-		"G" = "G", // intent right
-		"H" = "H", // stop pulling
-		"Q" = "Q", // drop
-		"R" = "R", // throw
-		"X" = "X", // switch hands
-		"Y" = "Y", // activate item
-		"Z" = "Z", // activate item
-		)
-
-	for(var/i in 1 to oldmode_ctrl_override_keys.len)
-		var/key = oldmode_ctrl_override_keys[i]
-		var/override = oldmode_ctrl_override_keys[key]
-		old_default["Ctrl+[key]"] = "\"KeyDown [override]\""
-		old_default["Ctrl+[key]+UP"] = "\"KeyUp [override]\""
-
-	macro_sets = default_macro_sets
-
-// For initially setting up or resetting to default the movement keys
-/datum/controller/subsystem/input/proc/setup_default_movement_keys()
-	var/static/list/default_movement_keys = list(
-		"W" = NORTH, "A" = WEST, "S" = SOUTH, "D" = EAST,				// WASD
-		"North" = NORTH, "West" = WEST, "South" = SOUTH, "East" = EAST,	// Arrow keys & Numpad
-		)
-
-	movement_keys = default_movement_keys.Copy()
+	// And finally, the modern set.
+	macroset_hotkey = list(
+	"Any" = "\"KeyDown \[\[*\]\]\"",
+	"Any+UP" = "\"KeyUp \[\[*\]\]\"",
+	"Tab" = "\".winset \\\"input.focus=true?map.focus=true input.background-color=[COLOR_INPUT_DISABLED]:input.focus=true input.background-color=[COLOR_INPUT_ENABLED]\\\"\"",
+	"Escape" = "\".winset \\\"input.text=\\\"\\\"\\\"\"",
+	"Back" = "\".winset \\\"input.text=\\\"\\\"\\\"\"",
+	"O" = "ooc",
+	"T" = "say",
+	"L" = "looc",
+	"M" = "me"
+	)
 
 // Badmins just wanna have fun ♪
 /datum/controller/subsystem/input/proc/refresh_client_macro_sets()
@@ -111,9 +96,10 @@ SUBSYSTEM_DEF(input)
 	for(var/i in 1 to clients.len)
 		var/client/user = clients[i]
 		user.set_macros()
+		user.update_movement_keys()
 
 /datum/controller/subsystem/input/fire()
 	var/list/clients = GLOB.clients // Let's sing the list cache song
-	for(var/i in 1 to length(clients))
+	for(var/i in 1 to clients.len)
 		var/client/C = clients[i]
 		C.keyLoop()

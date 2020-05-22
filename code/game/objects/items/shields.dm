@@ -197,10 +197,10 @@
 		if(obj_integrity >= max_integrity)
 			to_chat(user, "<span class='warning'>[src] is already in perfect condition.</span>")
 		else
-			var/obj/item/stack/sheet/mineral/titanium/T = W
-			T.use(1)
+			var/obj/item/stack/S = W
+			S.use(1)
 			obj_integrity = max_integrity
-			to_chat(user, "<span class='notice'>You repair [src] with [T].</span>")
+			to_chat(user, "<span class='notice'>You repair [src] with [S].</span>")
 	else
 		return ..()
 

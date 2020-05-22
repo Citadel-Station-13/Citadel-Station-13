@@ -160,11 +160,8 @@
 /obj/item/reagent_containers/microwave_act(obj/machinery/microwave/M)
 	reagents.expose_temperature(1000)
 	if(container_flags & TEMP_WEAK)
-		var/list/seen = viewers(5, get_turf(src))
-		var/iconhtml = icon2html(src, seen)
-		for(var/mob/H in seen)
-			to_chat(H, "<span class='notice'>[iconhtml] \The [src]'s melts from the temperature!</span>")
-			playsound(get_turf(src), 'sound/FermiChem/heatmelt.ogg', 80, 1)
+		visible_message("<span class='notice'>[icon2html(src, viewers(DEFAULT_MESSAGE_RANGE, src))] [src]'s melts from the temperature!</span>")
+		playsound(src, 'sound/FermiChem/heatmelt.ogg', 80, 1)
 		qdel(src)
 	..()
 
@@ -184,7 +181,7 @@
 		if((reagents.pH < 1.5) || (reagents.pH > 12.5))
 			START_PROCESSING(SSobj, src)
 	else if((reagents.pH < -3) || (reagents.pH > 17))
-		visible_message("<span class='notice'>[icon2html(src, viewers(src))] \The [src] is damaged by the super pH and begins to deform!</span>")
+		visible_message("<span class='notice'>[icon2html(src, viewers(DEFAULT_MESSAGE_RANGE, src))] \The [src] is damaged by the super pH and begins to deform!</span>")
 		reagents.pH = clamp(reagents.pH, -3, 17)
 		container_HP -= 1
 
@@ -221,15 +218,11 @@
 
 	container_HP -= damage
 
-	var/list/seen = viewers(5, get_turf(src))
-	var/iconhtml = icon2html(src, seen)
-
 	var/damage_percent = ((container_HP / initial(container_HP)*100))
 	switch(damage_percent)
 		if(-INFINITY to 0)
-			for(var/mob/M in seen)
-				to_chat(M, "<span class='notice'>[iconhtml] \The [src]'s melts [cause]!</span>")
-				playsound(get_turf(src), 'sound/FermiChem/acidmelt.ogg', 80, 1)
+			visible_message("<span class='notice'>[icon2html(src, viewers(DEFAULT_MESSAGE_RANGE, src))] [src]'s melts [cause]!</span>")
+			playsound(src, 'sound/FermiChem/acidmelt.ogg', 80, 1)
 			SSblackbox.record_feedback("tally", "fermi_chem", 1, "Times beakers have melted")
 			STOP_PROCESSING(SSobj, src)
 			qdel(src)
@@ -246,5 +239,4 @@
 
 	update_icon()
 	if(prob(25))
-		for(var/mob/M in seen)
-			to_chat(M, "<span class='notice'>[iconhtml] \The [src]'s is damaged by [cause] and begins to deform!</span>")
+		visible_message("<span class='notice'>[icon2html(src, viewers(DEFAULT_MESSAGE_RANGE, src))] [src]'s is damaged by [cause] and begins to deform!</span>")
