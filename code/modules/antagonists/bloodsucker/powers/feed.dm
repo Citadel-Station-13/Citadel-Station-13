@@ -63,6 +63,9 @@
 		return FALSE
 	if(ishuman(target))
 		var/mob/living/carbon/human/H = target
+		if(!H.can_inject(owner, TRUE, BODY_ZONE_HEAD)) //Cant suck through thick clothing.
+			to_chat(OWNER, "<span class='alert'>There is no exposed flesh or thin material [above_neck(target_zone) ? "on [p_their()] head" : "on [p_their()] body"].</span>")
+			return FALSE
 		if(NOBLOOD in H.dna.species.species_traits)// || owner.get_blood_id() != target.get_blood_id())
 			if(display_error)
 				to_chat(owner, "<span class='warning'>Your victim's blood is not suitable for you to take.</span>")
