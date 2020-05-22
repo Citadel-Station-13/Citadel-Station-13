@@ -45,12 +45,7 @@
 		// Bloodsuckers:
 		else if(ishuman(target))
 			var/mob/living/carbon/human/H = target
-			var/arm_to_bite
-			if(prob(50))
-				arm_to_bite = BODY_ZONE_L_ARM
-			else
-				arm_to_bite = BODY_ZONE_R_ARM
-			if(!H.can_inject(owner, TRUE, arm_to_bite))
+			if(!H.can_inject(owner, TRUE, BODY_ZONE_CHEST))
 				return FALSE
 			if(target.mind && target.mind.has_antag_datum(ANTAG_DATUM_BLOODSUCKER))
 				if(display_error)
@@ -72,7 +67,7 @@
 		return FALSE
 	if(ishuman(target))
 		var/mob/living/carbon/human/H = target
-		if(!H.can_inject(owner, TRUE, BODY_ZONE_HEAD)) //Cant suck through thick clothing.
+		if(!H.can_inject(owner, TRUE, BODY_ZONE_HEAD) && target == owner.pulling && owner.grab_state < GRAB_AGGRESSIVE)
 			return FALSE
 		if(NOBLOOD in H.dna.species.species_traits)// || owner.get_blood_id() != target.get_blood_id())
 			if(display_error)
