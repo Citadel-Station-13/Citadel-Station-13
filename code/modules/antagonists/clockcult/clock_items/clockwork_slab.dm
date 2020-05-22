@@ -308,8 +308,6 @@
 	list("name" = "Conversion", "desc" = "Converting the crew, cyborgs, and very walls to your cause."), \
 	)
 	data["rec_text"] = recollection()
-	data["rec_section"] = GLOB.ratvar_awakens ? "" : get_recollection_text(recollection_category)
-	data["rec_binds"] = GLOB.ratvar_awakens ? "" : get_recollection_quickbinds()
 	return data
 
 /obj/item/clockwork/slab/ui_act(action, params)
