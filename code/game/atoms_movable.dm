@@ -37,6 +37,8 @@
 	var/throwforce = 0
 	var/datum/component/orbiter/orbiting
 	var/can_be_z_moved = TRUE
+	///If we were without gravity and another animation happened, the bouncing will stop, and we need to restart it in next life().
+	var/floating_need_update = FALSE
 
 	var/zfalling = FALSE
 
@@ -55,10 +57,6 @@
 			render_target = ref(src)
 			em_block = new(src, render_target)
 			vis_contents += em_block
-
-/atom/movable/Destroy()
-	QDEL_NULL(em_block)
-	return ..()
 
 /atom/movable/proc/update_emissive_block()
 	if(blocks_emissive != EMISSIVE_BLOCK_GENERIC)
@@ -183,14 +181,15 @@
 	return TRUE
 
 /atom/movable/proc/stop_pulling()
-	if(pulling)
-		pulling.pulledby = null
-		var/mob/living/ex_pulled = pulling
-		pulling = null
-		setGrabState(0)
-		if(isliving(ex_pulled))
-			var/mob/living/L = ex_pulled
-			L.update_mobility()// mob gets up if it was lyng down in a chokehold
+	if(!pulling)
+		return
+	pulling.pulledby = null
+	var/mob/living/ex_pulled = pulling
+	pulling = null
+	setGrabState(0)
+	if(isliving(ex_pulled))
+		var/mob/living/L = ex_pulled
+		L.update_mobility()// mob gets up if it was lyng down in a chokehold
 
 /atom/movable/proc/Move_Pulled(atom/A)
 	if(!pulling)
@@ -232,10 +231,12 @@
 /atom/movable/Destroy(force)
 	QDEL_NULL(proximity_monitor)
 	QDEL_NULL(language_holder)
+	QDEL_NULL(em_block)
 
 	unbuckle_all_mobs(force=1)
 
 	. = ..()
+
 	if(loc)
 		//Restore air flow if we were blocking it (movables with ATMOS_PASS_PROC will need to do this manually if necessary)
 		if(((CanAtmosPass == ATMOS_PASS_DENSITY && density) || CanAtmosPass == ATMOS_PASS_NO) && isturf(loc))
@@ -493,15 +494,16 @@
 /atom/movable/proc/float(on)
 	if(throwing)
 		return
-	if(on && !(movement_type & FLOATING))
+	if(on && (!(movement_type & FLOATING) || floating_need_update))
 		animate(src, pixel_y = pixel_y + 2, time = 10, loop = -1)
 		sleep(10)
 		animate(src, pixel_y = pixel_y - 2, time = 10, loop = -1)
-		setMovetype(movement_type | FLOATING)
-	else if (!on && (movement_type & FLOATING))
+		if(!(movement_type & FLOATING))
+			setMovetype(movement_type | FLOATING)
+	else if (!on && movement_type & FLOATING)
 		animate(src, pixel_y = initial(pixel_y), time = 10)
 		setMovetype(movement_type & ~FLOATING)
-
+	floating_need_update = FALSE
 
 /* 	Language procs
 *	Unless you are doing something very specific, these are the ones you want to use.

@@ -100,6 +100,24 @@
 	quickbind = TRUE
 	quickbind_desc = "Creates a Judicial Visor, which can smite an area, applying Belligerent and briefly stunning."
 
+//Nezbere's shield: Creates a ratvarian shield which absorbs attacks, see ratvarian_shield.dm for details.
+/datum/clockwork_scripture/create_object/nezberes_shield
+	descname = "Shield with empowerable bashes"
+	name = "Nezbere's shield"
+	desc = "Creates a shield which generates charge from blocking damage, using it to empower its bashes tremendously. It is repaired with brass, and while very durable, extremely weak to lasers and, even more so, to energy weaponry."
+	invocations = list("Shield me...", "... from the coming dark!")
+	channel_time = 20
+	power_cost = 600 //Shouldn't be too spammable but not too hard to get either
+	whispered = TRUE
+	creator_message = "You form a ratvarian shield, which is capable of absorbing blocked attacks to empower its bashes."
+	object_path = /obj/item/shield/riot/ratvarian
+	usage_tip = "Bashes will only use charge when performed with intent to harm."
+	tier = SCRIPTURE_SCRIPT
+	space_allowed = TRUE
+	primary_component = VANGUARD_COGWHEEL
+	sort_priority = 5
+	quickbind = TRUE
+	quickbind_desc = "Creates a Ratvarian shield, which can absorb energy from attacks for use in powerful bashes."
 
 //Clockwork Armaments: Grants the invoker the ability to call forth a Ratvarian spear and clockwork armor.
 /datum/clockwork_scripture/clockwork_armaments
@@ -113,7 +131,7 @@
 	usage_tip = "Throwing the spear at a mob will do massive damage and knock them down, but break the spear. You will need to wait for 30 seconds before resummoning it."
 	tier = SCRIPTURE_SCRIPT
 	primary_component = VANGUARD_COGWHEEL
-	sort_priority = 5
+	sort_priority = 6
 	important = TRUE
 	quickbind = TRUE
 	quickbind_desc = "Permanently binds clockwork armor and a Ratvarian spear to you."
@@ -213,7 +231,7 @@
 	usage_tip = "This gateway is strictly one-way and will only allow things through the invoker's portal."
 	tier = SCRIPTURE_SCRIPT
 	primary_component = GEIS_CAPACITOR
-	sort_priority = 6
+	sort_priority = 7
 	quickbind = TRUE
 	quickbind_desc = "Allows you to create a one-way Spatial Gateway to a living Servant or Clockwork Obelisk."
 

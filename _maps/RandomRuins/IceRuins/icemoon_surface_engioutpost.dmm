@@ -265,12 +265,6 @@
 /obj/machinery/atmospherics/pipe/manifold/cyan/visible{
 	dir = 1
 	},
-/obj/effect/turf_decal/stripes/corner{
-	dir = 4
-	},
-/obj/effect/turf_decal/stripes/corner{
-	dir = 1
-	},
 /obj/machinery/light/small{
 	dir = 1
 	},
@@ -297,9 +291,6 @@
 /area/icemoon/surface/outdoors)
 "aZ" = (
 /obj/machinery/atmospherics/pipe/manifold/green/visible{
-	dir = 1
-	},
-/obj/effect/turf_decal/stripes/corner{
 	dir = 1
 	},
 /turf/open/floor/plating/snowed/smoothed/icemoon,
@@ -945,10 +936,6 @@
 /turf/open/floor/plating/snowed/smoothed/icemoon,
 /area/icemoon/surface/outdoors)
 "cO" = (
-/obj/effect/turf_decal/stripes/corner,
-/obj/effect/turf_decal/stripes/corner{
-	dir = 8
-	},
 /obj/machinery/light/small,
 /turf/open/floor/plating/snowed/smoothed/icemoon,
 /area/icemoon/surface/outdoors)
@@ -962,9 +949,6 @@
 "cQ" = (
 /obj/machinery/atmospherics/pipe/simple/dark/visible{
 	dir = 9
-	},
-/obj/effect/turf_decal/stripes/corner{
-	dir = 8
 	},
 /turf/open/floor/plating/snowed/smoothed/icemoon,
 /area/icemoon/surface/outdoors)
@@ -1218,6 +1202,10 @@
 	},
 /turf/open/floor/plating/icemoon,
 /area/icemoon/surface/outdoors)
+"xh" = (
+/mob/living/simple_animal/hostile/bear/snow,
+/turf/open/floor/plating/snowed/smoothed/icemoon,
+/area/icemoon/surface/outdoors)
 "CR" = (
 /obj/structure/cable{
 	icon_state = "0-8"
@@ -1279,17 +1267,17 @@ aa
 ak
 an
 ak
-ae
+ak
 an
 ab
 aa
 by
 bQ
 bQ
+aO
 ae
-ae
-ae
-ae
+ak
+ak
 ae
 aO
 aa
@@ -1564,28 +1552,28 @@ al
 al
 al
 ds
-ae
+aO
 aa
 "}
 (16,1,1) = {"
-ae
-ae
-ae
-ae
+aO
+aO
 ae
 ae
 ae
 aO
+ae
+aO
 bi
 ae
+aO
 ae
 ae
+aO
 ae
+aO
 ae
-ae
-ae
-ae
-ae
+aO
 aa
 "}
 (17,1,1) = {"
@@ -1599,7 +1587,7 @@ ae
 aL
 bb
 bD
-ae
+aO
 aa
 aa
 aa
@@ -1634,9 +1622,9 @@ aa
 af
 aa
 aa
-aa
+ak
 an
-aB
+dj
 ae
 aP
 bk
@@ -1644,7 +1632,7 @@ aP
 ae
 aB
 aB
-aB
+dj
 aB
 aB
 aB
@@ -1689,7 +1677,7 @@ aB
 cE
 ab
 cY
-aB
+dj
 aa
 aa
 "}
@@ -1700,7 +1688,7 @@ af
 ab
 ab
 ab
-ab
+xh
 ab
 bj
 ab
@@ -1710,7 +1698,7 @@ aP
 cH
 ab
 de
-aB
+dj
 aa
 aa
 "}
@@ -1826,7 +1814,7 @@ aa
 aa
 an
 an
-aB
+dj
 ae
 bj
 bH
@@ -1872,7 +1860,7 @@ aa
 ae
 bq
 bH
-ae
+aO
 aa
 aa
 aa
@@ -1895,9 +1883,9 @@ bq
 bJ
 ae
 ae
+aO
 ae
-ae
-ae
+aO
 aa
 aa
 aa
@@ -1918,10 +1906,10 @@ bZ
 ck
 cs
 cL
+aO
 ae
 ae
-ae
-ae
+aO
 aa
 "}
 (33,1,1) = {"
@@ -1973,7 +1961,7 @@ aa
 ae
 ae
 ae
-ae
+aO
 aW
 bu
 bN
@@ -1982,9 +1970,9 @@ cn
 cv
 cO
 ae
-ae
-ae
-ae
+aO
+aO
+aO
 aa
 "}
 (36,1,1) = {"
@@ -2034,8 +2022,8 @@ aa
 aa
 aa
 ae
-ae
-ae
+aO
+aO
 ae
 aZ
 bu
@@ -2045,9 +2033,9 @@ cd
 cy
 cQ
 ae
-ae
-ae
-ae
+aO
+aO
+aO
 aa
 "}
 (39,1,1) = {"
@@ -2079,14 +2067,14 @@ aa
 aa
 aa
 ae
+aO
+aO
 ae
 ae
 ae
+aO
 ae
-ae
-ae
-ae
-ae
+aO
 aa
 aa
 aa
