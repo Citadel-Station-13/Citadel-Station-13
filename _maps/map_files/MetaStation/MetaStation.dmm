@@ -67115,7 +67115,6 @@
 	name = "Test Chamber Telescreen";
 	network = list("toxins");
 	pixel_x = -32;
-	pixel_y = 0
 	},
 /turf/open/floor/plasteel,
 /area/science/mixing)
