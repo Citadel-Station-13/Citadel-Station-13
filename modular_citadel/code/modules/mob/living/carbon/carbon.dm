@@ -25,5 +25,5 @@
 /mob/living/carbon/onMouseMove(object, location, control, params)
 	if(!(combat_flags & COMBAT_FLAG_COMBAT_ACTIVE))
 		return
-	face_atom(object, TRUE)
+	mouse_face_atom(object)
 	lastmousedir = dir

@@ -7,7 +7,7 @@
 								"Wines",
 								"Beers",
 								"Brands",
-								"Storage",
+								"Storge",
 								)
 	production_animation = "protolathe_n"
 	allowed_buildtypes = AUTOBOTTLER

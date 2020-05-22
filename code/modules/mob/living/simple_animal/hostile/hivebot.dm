@@ -16,8 +16,7 @@
 	healable = 0
 	melee_damage_lower = 10
 	melee_damage_upper = 10
-	attack_verb_continuous = "saw"
-	attack_verb_simple = "saw"
+	attacktext = "saw"
 	attack_sound = 'sound/weapons/bladeslice.ogg'
 	projectilesound = 'sound/weapons/gunshot.ogg'
 	projectiletype = /obj/item/projectile/hivebotbullet
@@ -31,7 +30,7 @@
 	loot = list(/obj/effect/decal/cleanable/robot_debris)
 	blood_volume = 0
 
-	footstep_type = FOOTSTEP_MOB_CLAW
+	do_footstep = TRUE
 
 /mob/living/simple_animal/hostile/hivebot/Initialize()
 	. = ..()

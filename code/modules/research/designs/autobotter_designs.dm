@@ -14,7 +14,7 @@
 /datum/design/bottle
 	materials = list(/datum/material/glass = 1200)
 	build_type = AUTOBOTTLER
-	category = list("Storage")
+	category = list("Storge")
 
 /datum/design/bottle/wine
 	name = "Bottle Design (Wine)"

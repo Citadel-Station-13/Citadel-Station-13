@@ -242,7 +242,6 @@
 	if((isnull(user) || istype(user)) && state_open && !panel_open)
 		..(user)
 		var/mob/living/mob_occupant = occupant
-		investigate_log("Cryogenics machine closed with occupant [key_name(occupant)] by user [key_name(user)].", INVESTIGATE_CRYOGENICS)
 		if(mob_occupant && mob_occupant.stat != DEAD)
 			to_chat(occupant, "<span class='boldnotice'>You feel cool air surround you. You go numb as your senses turn inward.</span>")
 		if(mob_occupant.client)//if they're logged in
@@ -252,15 +251,12 @@
 	icon_state = "cryopod"
 
 /obj/machinery/cryopod/open_machine()
-	if(occupant)
-		investigate_log("Cryogenics machine opened with occupant [key_name(occupant)] inside.", INVESTIGATE_CRYOGENICS)
 	..()
 	icon_state = "cryopod-open"
 	density = TRUE
 	name = initial(name)
 
 /obj/machinery/cryopod/container_resist(mob/living/user)
-	investigate_log("Cryogenics machine container resisted by [key_name(user)] with occupant [key_name(occupant)].", INVESTIGATE_CRYOGENICS)
 	visible_message("<span class='notice'>[occupant] emerges from [src]!</span>",
 		"<span class='notice'>You climb out of [src]!</span>")
 	open_machine()
@@ -308,8 +304,6 @@
 
 	var/mob/living/mob_occupant = occupant
 	var/list/obj/item/cryo_items = list()
-	
-	investigate_log("Despawning [key_name(mob_occupant)].", INVESTIGATE_CRYOGENICS)
 
 	//Handle Borg stuff first
 	if(iscyborg(mob_occupant))

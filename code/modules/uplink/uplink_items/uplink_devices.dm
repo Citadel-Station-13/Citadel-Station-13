@@ -280,6 +280,4 @@
 	item = /obj/item/suspiciousphone
 	cost = 7
 	restricted = TRUE
-	limited_stock = 1
 */
-

@@ -119,7 +119,6 @@
 	var/list/data = list()
 	data["requestonly"] = requestonly
 	data["supplies"] = list()
-	data["emagged"] = obj_flags & EMAGGED
 	for(var/pack in SSshuttle.supply_packs)
 		var/datum/supply_pack/P = SSshuttle.supply_packs[pack]
 		if(!data["supplies"][P.group])
@@ -134,8 +133,7 @@
 			"cost" = P.cost,
 			"id" = pack,
 			"desc" = P.desc || P.name, // If there is a description, use it. Otherwise use the pack's name.
-			"access" = P.access,
-			"can_private_buy" = P.can_private_buy
+			"access" = P.access
 		))
 	return data
 
@@ -197,10 +195,9 @@
 				rank = "Silicon"
 
 			var/datum/bank_account/account
-			if(self_paid)
-				if(!pack.can_private_buy && !(obj_flags & EMAGGED))
-					return
-				var/obj/item/card/id/id_card = usr.get_idcard(TRUE)
+			if(self_paid && ishuman(usr))
+				var/mob/living/carbon/human/H = usr
+				var/obj/item/card/id/id_card = H.get_idcard(TRUE)
 				if(!istype(id_card))
 					say("No ID card detected.")
 					return

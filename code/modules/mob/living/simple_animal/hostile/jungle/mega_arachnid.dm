@@ -25,7 +25,7 @@
 	projectilesound = 'sound/weapons/pierce.ogg'
 	alpha = 50
 
-	footstep_type = FOOTSTEP_MOB_CLAW
+	do_footstep = TRUE
 
 /mob/living/simple_animal/hostile/jungle/mega_arachnid/Life()
 	..()

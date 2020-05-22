@@ -38,10 +38,8 @@
 	health = 25
 	density = FALSE
 	speech_span = "spooky"
-	friendly_verb_continuous = "pets"
-	friendly_verb_simple = "pet"
-	response_help_continuous = "chats with"
-	response_help_simple = "chat with"
+	friendly = "pets"
+	response_help  = "chats with"
 	light_range = 3
 	light_color = "#ff9842"
 	var/last_poof

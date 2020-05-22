@@ -3,7 +3,6 @@
 	desc = "A remote control switch."
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "doorctrl"
-	plane = ABOVE_WALL_PLANE
 	var/skin = "doorctrl"
 	power_channel = ENVIRON
 	var/obj/item/assembly/device
@@ -18,7 +17,7 @@
 
 /obj/machinery/button/Initialize(mapload, ndir = 0, built = 0)
 	if(istext(id) && mapload)
-		if(id[1] == "!")
+		if(copytext(id, 1, 2) == "!")
 			id = SSmapping.get_obfuscated_id(id)
 	. = ..()
 	if(built)

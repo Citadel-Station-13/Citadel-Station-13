@@ -4058,7 +4058,6 @@
 	pixel_y = -3
 	},
 /obj/item/gun/energy/e_gun/advtaser,
-/obj/machinery/atmospherics/pipe/simple/cyan/hidden,
 /turf/open/floor/plasteel/dark,
 /area/security/armory)
 "akM" = (
@@ -20116,6 +20115,20 @@
 /obj/machinery/conveyor_switch/oneway{
 	id = "QMLoad"
 	},
+/obj/machinery/button/door{
+	id = "QMLoaddoor2";
+	layer = 4;
+	name = "Loading Doors";
+	pixel_x = 24;
+	pixel_y = -8
+	},
+/obj/machinery/button/door{
+	id = "QMLoaddoor";
+	layer = 4;
+	name = "Loading Doors";
+	pixel_x = 24;
+	pixel_y = 8
+	},
 /obj/machinery/camera{
 	c_tag = "Cargo Supply Dock";
 	dir = 8
@@ -21553,20 +21566,6 @@
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
-	},
-/obj/machinery/button/door{
-	id = "QMLoaddoor2";
-	layer = 4;
-	name = "Loading Doors";
-	pixel_x = 24;
-	pixel_y = -8
-	},
-/obj/machinery/button/door{
-	id = "QMLoaddoor";
-	layer = 4;
-	name = "Loading Doors";
-	pixel_x = 24;
-	pixel_y = 8
 	},
 /turf/open/floor/plasteel,
 /area/quartermaster/storage)
@@ -52410,23 +52409,6 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/library)
-"cBi" = (
-/obj/machinery/flasher/portable,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj/machinery/atmospherics/pipe/simple/cyan/hidden{
-	dir = 5
-	},
-/turf/open/floor/plasteel/dark,
-/area/security/armory)
 "cBk" = (
 /obj/machinery/vending/boozeomat/pubby_maint,
 /turf/closed/wall,
@@ -52603,6 +52585,12 @@
 /obj/machinery/status_display/ai,
 /turf/closed/wall/r_wall,
 /area/engine/supermatter)
+"cCO" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/closed/wall,
+/area/security/brig)
 "cCP" = (
 /obj/effect/turf_decal/bot/right,
 /turf/open/floor/plasteel/white,
@@ -55287,9 +55275,6 @@
 /turf/open/floor/plasteel/dark,
 /area/science/xenobiology)
 "ivO" = (
-/obj/machinery/atmospherics/pipe/simple/cyan/hidden{
-	dir = 4
-	},
 /mob/living/simple_animal/bot/secbot{
 	arrest_type = 1;
 	health = 45;
@@ -55683,13 +55668,6 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/science/xenobiology)
-"juw" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/obj/machinery/atmospherics/pipe/simple/cyan/hidden{
-	dir = 4
-	},
-/turf/open/floor/plasteel/dark,
-/area/security/armory)
 "jvi" = (
 /obj/structure/cable{
 	icon_state = "4-8"
@@ -58268,15 +58246,6 @@
 	},
 /turf/open/floor/plating,
 /area/security/execution/transfer)
-"pfB" = (
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
-/obj/machinery/atmospherics/pipe/manifold/cyan/hidden{
-	dir = 4
-	},
-/turf/open/floor/plasteel/dark,
-/area/security/armory)
 "pfP" = (
 /obj/structure/table,
 /obj/item/storage/box/syringes,
@@ -84528,7 +84497,7 @@ aiL
 ajg
 ajP
 akL
-cBi
+alA
 amh
 amV
 anF
@@ -84785,7 +84754,7 @@ aiM
 aiM
 ajQ
 akM
-juw
+akM
 ami
 amW
 anG
@@ -85299,7 +85268,7 @@ aiN
 aji
 ajS
 akO
-pfB
+akO
 amk
 amY
 anI
@@ -89163,7 +89132,7 @@ apj
 ajM
 ajM
 ajM
-ajM
+cCO
 ajM
 ajM
 avL

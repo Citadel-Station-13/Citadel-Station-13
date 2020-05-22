@@ -116,8 +116,7 @@
 			owner.apply_overlay(layer_used)
 		if(power)
 			owner.RemoveSpell(power)
-			qdel(power)
-		SEND_SIGNAL(owner, COMSIG_HUMAN_MUTATION_LOSS, src)
+			qdel(src)
 		return 0
 	return 1
 

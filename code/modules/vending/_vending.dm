@@ -299,7 +299,6 @@ GLOBAL_LIST_EMPTY(vending_products)
 			R.amount = amount
 		R.max_amount = amount
 		R.custom_price = initial(temp.custom_price)
-		R.custom_premium_price = initial(temp.custom_premium_price)
 		recordlist += R
 /**
   * Refill a vending machine from a refill canister
@@ -578,13 +577,12 @@ GLOBAL_LIST_EMPTY(vending_products)
 		if(cost_mult != 1)
 			.["cost_mult"] = cost_mult
 			if(cost_mult < 1)
-				.["cost_text"] = " ([(1 - cost_mult) * 100]% OFF)"
+				.["cost_text"] = " [(1 - cost_mult) * 100]% OFF"
 			else
-				.["cost_text"] = " ([(cost_mult - 1) * 100]% EXTRA)"
+				.["cost_text"] = " [(cost_mult - 1) * 100]% EXTRA"
 	.["stock"] = list()
 	for (var/datum/data/vending_product/R in product_records + coin_records + hidden_records)
 		.["stock"][R.name] = R.amount
-		.
 	.["extended_inventory"] = extended_inventory
 
 /obj/machinery/vending/ui_act(action, params)
@@ -607,7 +605,9 @@ GLOBAL_LIST_EMPTY(vending_products)
 			if(!R || !istype(R) || !R.product_path)
 				vend_ready = TRUE
 				return
-			var/price_to_use = R.custom_price || default_price
+			var/price_to_use = default_price
+			if(R.custom_price)
+				price_to_use = R.custom_price
 			if(R in hidden_records)
 				if(!extended_inventory)
 					vend_ready = TRUE
@@ -634,9 +634,9 @@ GLOBAL_LIST_EMPTY(vending_products)
 					vend_ready = TRUE
 					return
 				var/datum/bank_account/account = C.registered_account
-				if(coin_records.Find(R))
-					price_to_use = R.custom_premium_price || extra_price
-				else if(!hidden_records.Find(R))
+				if(coin_records.Find(R) || hidden_records.Find(R))
+					price_to_use = R.custom_premium_price ? R.custom_premium_price : extra_price
+				else
 					price_to_use = round(price_to_use * get_best_discount(C))
 				if(price_to_use && !account.adjust_money(-price_to_use))
 					say("You do not possess the funds to purchase [R.name].")

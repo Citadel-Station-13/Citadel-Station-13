@@ -450,18 +450,6 @@
 	color_src = MATRIXED
 	icon = 'modular_citadel/icons/mob/mam_tails.dmi'
 
-/datum/sprite_accessory/tails/human/tamamo_kitsune
-	name = "Tamamo Kitsune Tails" //Tamamo-no-Tiro, let it be known!
-	icon_state = "9sune"
-	color_src = MATRIXED
-	icon = 'modular_citadel/icons/mob/mam_tails.dmi'
-
-/datum/sprite_accessory/tails_animated/human/tamamo_kitsune
-	name = "Tamamo Kitsune Tails"
-	icon_state = "9sune"
-	color_src = MATRIXED
-	icon = 'modular_citadel/icons/mob/mam_tails.dmi'
-
 /datum/sprite_accessory/tails/human/tentacle
 	name = "Tentacle"
 	icon_state = "tentacle"
@@ -827,14 +815,6 @@ datum/sprite_accessory/mam_tails/insect
 /datum/sprite_accessory/mam_tails_animated/squirrel
 	name = "Squirrel"
 	icon_state = "squirrel"
-
-/datum/sprite_accessory/mam_tails/tamamo_kitsune
-	name = "Tamamo Kitsune Tails"
-	icon_state = "9sune"
-
-/datum/sprite_accessory/mam_tails_animated/tamamo_kitsune
-	name = "Tamamo Kitsune Tails"
-	icon_state = "9sune"
 
 /datum/sprite_accessory/mam_tails/tentacle
 	name = "Tentacle"

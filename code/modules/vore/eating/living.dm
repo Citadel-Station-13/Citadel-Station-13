@@ -358,9 +358,6 @@
 	if(incapacitated(ignore_restraints = TRUE))
 		to_chat(src, "<span class='warning'>You can't do that while incapacitated.</span>")
 		return
-	if(next_move > world.time)
-		to_chat(src, "<span class='warning'>You can't do that so fast, slow down.</span>")
-		return
 
 	var/list/choices
 	for(var/mob/living/L in view(1))
@@ -375,7 +372,7 @@
 	if(QDELETED(tasted) || (tasted.ckey && !(tasted.client?.prefs.vore_flags & LICKABLE)) || !Adjacent(tasted) || incapacitated(ignore_restraints = TRUE))
 		return
 
-	changeNext_move(CLICK_CD_MELEE)
+	setClickCooldown(100)
 
 	visible_message("<span class='warning'>[src] licks [tasted]!</span>","<span class='notice'>You lick [tasted]. They taste rather like [tasted.get_taste_message()].</span>","<b>Slurp!</b>")
 

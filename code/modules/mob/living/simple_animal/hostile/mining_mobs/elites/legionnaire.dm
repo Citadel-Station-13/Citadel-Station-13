@@ -29,8 +29,9 @@
 	health = 800
 	melee_damage_lower = 30
 	melee_damage_upper = 30
-	attack_verb_continuous = "slashes its arms at"
-	attack_verb_simple = "slash your arms at"
+	attacktext = "slashes its arms at"
+	/*attack_verb_continuous = "slashes its arms at"
+	attack_verb_simple = "slash your arms at"*/
 	attack_sound = 'sound/weapons/bladeslice.ogg'
 	throw_message = "doesn't affect the sturdiness of"
 	speed = 1
@@ -226,8 +227,9 @@
 	health = 80
 	melee_damage_lower = 10
 	melee_damage_upper = 10
-	attack_verb_continuous = "bites at"
-	attack_verb_simple = "bite at"
+	attacktext = "bites at"
+	/*attack_verb_continuous = "bites at"
+	attack_verb_simple = "bite at"*/
 	attack_sound = 'sound/effects/curse1.ogg'
 	throw_message = "simply misses"
 	speed = 0

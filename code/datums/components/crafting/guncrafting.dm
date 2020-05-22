@@ -1,16 +1,10 @@
 // PARTS //
-/obj/item/weaponcrafting
-	icon = 'icons/obj/improvised.dmi'
 
 /obj/item/weaponcrafting/stock
 	name = "rifle stock"
 	desc = "A classic rifle stock that doubles as a grip, roughly carved out of wood."
+	icon = 'icons/obj/improvised.dmi'
 	icon_state = "riflestock"
-
-/obj/item/weaponcrafting/durathread_string
-	name = "durathread string"
-	desc = "A long piece of durathread with some resemblance to cable coil."
-	icon_state = "durastring"
 
 ////////////////////////////////
 // KAT IMPROVISED WEAPON PARTS//
@@ -57,4 +51,3 @@
 	name = "wooden firearm body"
 	desc = "A crudely fashioned wooden body to help keep higher calibre improvised weapons from blowing themselves apart."
 	icon_state = "wooden_body"
-

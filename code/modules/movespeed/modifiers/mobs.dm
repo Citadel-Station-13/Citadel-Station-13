@@ -24,8 +24,7 @@
 	variable = TRUE
 
 /datum/movespeed_modifier/damage_slowdown_flying
-	movetypes = FLYING
-	blacklisted_movetypes = FLOATING
+	movetypes = FLOATING
 	variable = TRUE
 
 /datum/movespeed_modifier/equipment_speedmod

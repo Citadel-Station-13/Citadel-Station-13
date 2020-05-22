@@ -110,7 +110,7 @@
 	include_subtypes = FALSE
 
 /datum/export/glasswork_lens
-	cost = 1600
+	cost = 1800
 	unit_name = "small glass lens"
 	export_types = list(/obj/item/glasswork/glass_base/lens)
 
@@ -133,13 +133,13 @@
 	include_subtypes = FALSE
 
 /datum/export/glasswork_teaplate
-	cost = 1000
+	cost = 1200
 	unit_name = "tea gear"
 	export_types = list(/obj/item/tea_plate)
 	include_subtypes = FALSE
 
 /datum/export/glasswork_teacup
-	cost = 1600
+	cost = 1800
 	unit_name = "tea gear"
 	export_types = list(/obj/item/tea_cup)
 	include_subtypes = FALSE

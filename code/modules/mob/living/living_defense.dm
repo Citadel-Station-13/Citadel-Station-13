@@ -43,21 +43,21 @@
 			P.setAngle(SIMPLIFY_DEGREES(P.Angle + rand(120, 240)))
 			if(!silent)
 				visible_message("<span class='danger'>[P] gets deflected by [src]!</span>", \
-					"<span class='userdanger'>You deflect [P]!</span>")
+					"<span class='userdanger'>[P] gets deflected by [src]!</span>")
 		if(REDIRECT_METHOD_REFLECT)
 			P.setAngle(SIMPLIFY_DEGREES(P.Angle + 180))
 			if(!silent)
 				visible_message("<span class='danger'>[P] gets reflected by [src]!</span>", \
-					"<span class='userdanger'>You reflect [P]!</span>")
+					"<span class='userdanger'>[P] gets reflected by [src]!</span>")
 		if(REDIRECT_METHOD_PASSTHROUGH)
 			if(!silent)
 				visible_message("<span class='danger'>[P] passes through [src]!</span>", \
-					"<span class='userdanger'>[P] passes through you!</span>")
+					"<span class='userdanger'>[P] passes through [src]!</span>")
 			return
 		if(REDIRECT_METHOD_RETURN_TO_SENDER)
 			if(!silent)
 				visible_message("<span class='danger'>[src] deflects [P] back at their attacker!</span>", \
-					"<span class='userdanger'>You deflect [P] back at your attacker!</span>")
+					"<span class='userdanger'>[src] deflects [P] back at their attacker!</span>")
 			if(P.firer)
 				P.setAngle(Get_Angle(src, P.firer))
 			else
@@ -141,7 +141,7 @@
 			playsound(loc, 'sound/weapons/throwtap.ogg', 1, volume, -1)//...play throwtap.ogg.
 		if(!blocked)
 			visible_message("<span class='danger'>[src] has been hit by [I].</span>", \
-							"<span class='userdanger'>You have been hit by [I].</span>")
+							"<span class='userdanger'>[src] has been hit by [I].</span>")
 			var/armor = run_armor_check(impacting_zone, "melee", "Your armor has protected your [parse_zone(impacting_zone)].", "Your armor has softened hit to your [parse_zone(impacting_zone)].",I.armour_penetration)
 			apply_damage(I.throwforce, dtype, impacting_zone, armor)
 			if(I.thrownby)
@@ -175,15 +175,12 @@
 				return
 		updatehealth()
 		visible_message("<span class='danger'>[M.name] has hit [src]!</span>", \
-						"<span class='userdanger'>[M.name] has hit you!</span>", null, COMBAT_MESSAGE_RANGE, null,
-						M.occupant, "<span class='danger'>You hit [src] with your [M.name]!</span>")
+						"<span class='userdanger'>[M.name] has hit [src]!</span>", null, COMBAT_MESSAGE_RANGE)
 		log_combat(M.occupant, src, "attacked", M, "(INTENT: [uppertext(M.occupant.a_intent)]) (DAMTYPE: [uppertext(M.damtype)])")
 	else
 		step_away(src,M)
 		log_combat(M.occupant, src, "pushed", M)
-		visible_message("<span class='warning'>[M] pushes [src] out of the way.</span>", \
-			"<span class='warning'>[M] pushes you out of the way.</span>", null, COMBAT_MESSAGE_RANGE, null,
-			M.occupant, "<span class='warning'>You push [src] out of the way with your [M.name].</span>")
+		visible_message("<span class='warning'>[M] pushes [src] out of the way.</span>", null, null, 5)
 
 /mob/living/fire_act()
 	adjust_fire_stacks(3)
@@ -227,8 +224,7 @@
 			var/old_grab_state = user.grab_state
 			var/grab_upgrade_time = instant ? 0 : 30
 			visible_message("<span class='danger'>[user] starts to tighten [user.p_their()] grip on [src]!</span>", \
-				"<span class='userdanger'>[user] starts to tighten [user.p_their()] grip on you!</span>", target = user,
-				target_message = "<span class='danger'>You start to tighten your grip on [src]!</span>")
+				"<span class='userdanger'>[user] starts to tighten [user.p_their()] grip on you!</span>")
 			switch(user.grab_state)
 				if(GRAB_AGGRESSIVE)
 					log_combat(user, src, "attempted to neck grab", addition="neck grab")
@@ -246,29 +242,25 @@
 				var/add_log = ""
 				if(HAS_TRAIT(user, TRAIT_PACIFISM))
 					visible_message("<span class='danger'>[user] has firmly gripped [src]!</span>",
-						"<span class='danger'>[user] has firmly gripped you!</span>", target = user,
-						target_message = "<span class='danger'>You have firmly gripped [src]!</span>")
+						"<span class='danger'>[user] has firmly gripped you!</span>")
 					add_log = " (pacifist)"
 				else
 					visible_message("<span class='danger'>[user] has grabbed [src] aggressively!</span>", \
-									"<span class='userdanger'>[user] has grabbed you aggressively!</span>", target = user, \
-									target_message = "<span class='danger'>You have grabbed [src] aggressively!</span>")
+									"<span class='userdanger'>[user] has grabbed you aggressively!</span>")
 					update_mobility()
 				stop_pulling()
 				log_combat(user, src, "grabbed", addition="aggressive grab[add_log]")
 			if(GRAB_NECK)
 				log_combat(user, src, "grabbed", addition="neck grab")
 				visible_message("<span class='danger'>[user] has grabbed [src] by the neck!</span>",\
-								"<span class='userdanger'>[user] has grabbed you by the neck!</span>", target = user, \
-								target_message = "<span class='danger'>You have grabbed [src] by the neck!</span>")
+								"<span class='userdanger'>[user] has grabbed you by the neck!</span>")
 				update_mobility() //we fall down
 				if(!buckled && !density)
 					Move(user.loc)
 			if(GRAB_KILL)
 				log_combat(user, src, "strangled", addition="kill grab")
 				visible_message("<span class='danger'>[user] is strangling [src]!</span>", \
-								"<span class='userdanger'>[user] is strangling you!</span>", target = user, \
-								target_message = "<span class='danger'>You are strangling [src]!</span>")
+								"<span class='userdanger'>[user] is strangling you!</span>")
 				update_mobility() //we fall down
 				if(!buckled && !density)
 					Move(user.loc)
@@ -280,9 +272,7 @@
 	SEND_SIGNAL(src, COMSIG_MOB_ATTACK_HAND, user)
 	if((user != src) && user.a_intent != INTENT_HELP && (mob_run_block(user, 0, user.name, ATTACK_TYPE_UNARMED | ATTACK_TYPE_MELEE, null, user, check_zone(user.zone_selected), null) & BLOCK_SUCCESS))
 		log_combat(user, src, "attempted to touch")
-		visible_message("<span class='warning'>[user] attempted to touch [src]!</span>",
-			"<span class='warning'>[user] attempted to touch you!</span>", target = user,
-			target_message = "<span class='warning'>You attempted to touch [src]!</span>")
+		visible_message("<span class='warning'>[user] attempted to touch [src]!</span>")
 		return TRUE
 
 /mob/living/attack_hulk(mob/living/carbon/human/user, does_attack_animation = FALSE)
@@ -320,16 +310,13 @@
 		log_combat(M, src, "attacked")
 		M.do_attack_animation(src)
 		visible_message("<span class='danger'>The [M.name] glomps [src]!</span>", \
-				"<span class='userdanger'>The [M.name] glomps [src]!</span>", null, COMBAT_MESSAGE_RANGE, null,
-				M, "<span class='danger'>You glomp [src]!</span>")
+				"<span class='userdanger'>The [M.name] glomps [src]!</span>", null, COMBAT_MESSAGE_RANGE)
 		return TRUE
 
 /mob/living/attack_animal(mob/living/simple_animal/M)
 	M.face_atom(src)
 	if(M.melee_damage_upper == 0)
-		M.visible_message("<span class='notice'>\The [M] [M.friendly_verb_continuous] [src]!</span>",
-			"<span class='notice'>You [M.friendly_verb_simple] [src]!</span>", target = src,
-			target_message = "<span class='notice'>\The [M] [M.friendly_verb_continuous] you!</span>")
+		M.visible_message("<span class='notice'>\The [M] [M.friendly] [src]!</span>")
 		return FALSE
 	else
 		if(HAS_TRAIT(M, TRAIT_PACIFISM))
@@ -340,9 +327,8 @@
 		if(M.attack_sound)
 			playsound(loc, M.attack_sound, 50, 1, 1)
 		M.do_attack_animation(src)
-		visible_message("<span class='danger'>\The [M] [M.attack_verb_continuous] [src]!</span>", \
-						"<span class='userdanger'>\The [M] [M.attack_verb_continuous] you!</span>", null, COMBAT_MESSAGE_RANGE, null,
-						M, "<span class='danger'>You [M.attack_verb_simple] [src]!</span>")
+		visible_message("<span class='danger'>\The [M] [M.attacktext] [src]!</span>", \
+						"<span class='userdanger'>\The [M] [M.attacktext] [src]!</span>", null, COMBAT_MESSAGE_RANGE)
 		log_combat(M, src, "attacked")
 		return TRUE
 
@@ -361,21 +347,17 @@
 			log_combat(M, src, "attacked")
 			playsound(loc, 'sound/weapons/bite.ogg', 50, 1, -1)
 			visible_message("<span class='danger'>[M.name] bites [src]!</span>", \
-					"<span class='userdanger'>[M.name] bites you!</span>", null, COMBAT_MESSAGE_RANGE, null,
-					M, "<span class='danger'>You bite [src]!</span>")
+					"<span class='userdanger'>[M.name] bites [src]!</span>", null, COMBAT_MESSAGE_RANGE)
 			return TRUE
 		else
 			visible_message("<span class='danger'>[M.name] has attempted to bite [src]!</span>", \
-				"<span class='userdanger'>[M.name] has attempted to bite [src]!</span>", null, COMBAT_MESSAGE_RANGE, null,
-				M, "<span class='danger'>You have attempted to bite [src]!</span>")
+				"<span class='userdanger'>[M.name] has attempted to bite [src]!</span>", null, COMBAT_MESSAGE_RANGE)
 	return FALSE
 
 /mob/living/attack_larva(mob/living/carbon/alien/larva/L)
 	switch(L.a_intent)
 		if(INTENT_HELP)
-			visible_message("<span class='notice'>[L.name] rubs its head against [src].</span>",
-				"<span class='notice'>[L.name] rubs its head against you.</span>", target = L, \
-				target_message = "<span class='notice'>You rub your head against [src].</span>")
+			visible_message("<span class='notice'>[L.name] rubs its head against [src].</span>")
 			return FALSE
 
 		else
@@ -388,26 +370,21 @@
 			if(prob(90))
 				log_combat(L, src, "attacked")
 				visible_message("<span class='danger'>[L.name] bites [src]!</span>", \
-					"<span class='userdanger'>[L.name] bites you!</span>", null, COMBAT_MESSAGE_RANGE, null, L, \
-					"<span class='danger'>You bite [src]!</span>")
+					"<span class='userdanger'>[L.name] bites [src]!</span>", null, COMBAT_MESSAGE_RANGE)
 				playsound(loc, 'sound/weapons/bite.ogg', 50, 1, -1)
 				return TRUE
 			else
 				visible_message("<span class='danger'>[L.name] has attempted to bite [src]!</span>", \
-					"<span class='userdanger'>[L.name] has attempted to bite you!</span>", null, COMBAT_MESSAGE_RANGE, null, L, \
-					"<span class='danger'>You have attempted to bite [src]!</span>")
+					"<span class='userdanger'>[L.name] has attempted to bite [src]!</span>", null, COMBAT_MESSAGE_RANGE)
 
 /mob/living/attack_alien(mob/living/carbon/alien/humanoid/M)
 	if((M != src) && M.a_intent != INTENT_HELP && (mob_run_block(M, 0, "the [M.name]", ATTACK_TYPE_MELEE | ATTACK_TYPE_UNARMED, 0, M, check_zone(M.zone_selected), null) & BLOCK_SUCCESS))
-		visible_message("<span class='danger'>[M] attempted to touch [src]!</span>",
-			"<span class='danger'>[M] attempted to touch you!</span>")
+		visible_message("<span class='danger'>[M] attempted to touch [src]!</span>")
 		return FALSE
 	switch(M.a_intent)
 		if (INTENT_HELP)
 			if(!isalien(src)) //I know it's ugly, but the alien vs alien attack_alien behaviour is a bit different.
-				visible_message("<span class='notice'>[M] caresses [src] with its scythe like arm.</span>",
-					"<span class='notice'>[M] caresses you with its scythe like arm.</span>", target = M,
-					target_message = "<span class='notice'>You caress [src] with your scythe like arm.</span>")
+				visible_message("<span class='notice'>[M] caresses [src] with its scythe like arm.</span>")
 			return FALSE
 		if (INTENT_GRAB)
 			grabbedby(M)
@@ -435,26 +412,21 @@
 	take_bodypart_damage(acidpwr * min(1, acid_volume * 0.1))
 	return 1
 
-///As the name suggests, this should be called to apply electric shocks.
 /mob/living/proc/electrocute_act(shock_damage, source, siemens_coeff = 1, flags = NONE)
 	SEND_SIGNAL(src, COMSIG_LIVING_ELECTROCUTE_ACT, shock_damage, source, siemens_coeff, flags)
-	shock_damage *= siemens_coeff
-	if((flags & SHOCK_TESLA) && HAS_TRAIT(src, TRAIT_TESLA_SHOCKIMMUNE))
+	if((flags & SHOCK_TESLA) && (flags_1 & TESLA_IGNORE_1))
 		return FALSE
 	if(HAS_TRAIT(src, TRAIT_SHOCKIMMUNE))
 		return FALSE
-	if(shock_damage < 1)
-		return FALSE
-	if(!(flags & SHOCK_ILLUSION))
-		adjustFireLoss(shock_damage)
-	else
-		adjustStaminaLoss(shock_damage)
-	visible_message(
-		"<span class='danger'>[src] was shocked by \the [source]!</span>", \
-		"<span class='userdanger'>You feel a powerful shock coursing through your body!</span>", \
-		"<span class='hear'>You hear a heavy electrical crack.</span>" \
-	)
-	return shock_damage
+	if(shock_damage > 0)
+		if(!(flags & SHOCK_ILLUSION))
+			adjustFireLoss(shock_damage)
+		visible_message(
+			"<span class='danger'>[src] was shocked by \the [source]!</span>", \
+			"<span class='userdanger'>You feel a powerful shock coursing through your body!</span>", \
+			"<span class='italics'>You hear a heavy electrical crack.</span>" \
+		)
+		return shock_damage
 
 /mob/living/emp_act(severity)
 	. = ..()
@@ -533,11 +505,4 @@
 	if(!used_item)
 		used_item = get_active_held_item()
 	..()
-	floating_need_update = TRUE
-
-
-/mob/living/proc/getBruteLoss_nonProsthetic()
-	return getBruteLoss()
-
-/mob/living/proc/getFireLoss_nonProsthetic()
-	return getFireLoss()
+	setMovetype(movement_type & ~FLOATING) // If we were without gravity, the bouncing animation got stopped, so we make sure we restart the bouncing after the next movement.

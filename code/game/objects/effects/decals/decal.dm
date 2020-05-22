@@ -35,7 +35,6 @@
 	icon = 'icons/turf/decals.dmi'
 	icon_state = "warningline"
 	layer = TURF_DECAL_LAYER
-	plane = ABOVE_WALL_PLANE
 
 /obj/effect/turf_decal/Initialize()
 	..()

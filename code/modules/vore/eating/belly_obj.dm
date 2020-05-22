@@ -542,7 +542,7 @@
 	if (!(R in contents))
 		return  // User is not in this belly
 
-	R.changeNext_move(CLICK_CD_BREAKOUT*0.5)
+	R.setClickCooldown(50)
 
 	if(owner.stat) //If owner is stat (dead, KO) we can actually escape
 		to_chat(R,"<span class='warning'>You attempt to climb out of \the [lowertext(name)]. (This will take around [escapetime/10] seconds.)</span>")

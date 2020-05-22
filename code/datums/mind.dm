@@ -67,7 +67,7 @@
 	var/datum/skill_holder/skill_holder
 
 /datum/mind/New(var/key)
-	skill_holder = new()
+	skill_holder = new(src)
 	src.key = key
 	soulOwner = src
 	martial_art = default_martial_art

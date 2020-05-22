@@ -100,8 +100,7 @@
 		if(mob.throwing)
 			mob.throwing.finalize(FALSE)
 
-	var/atom/movable/AM = L.pulling
-	if(AM && AM.density && !(L.combat_flags & COMBAT_FLAG_COMBAT_ACTIVE) && !ismob(AM))
+	if(L.pulling && !(L.combat_flags & COMBAT_FLAG_COMBAT_ACTIVE))
 		L.setDir(turn(L.dir, 180))
 
 	SEND_SIGNAL(mob, COMSIG_MOB_CLIENT_MOVE, src, direction, n, oldloc)

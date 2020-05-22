@@ -23,7 +23,7 @@
 	attack_sound = 'sound/hallucinations/growl1.ogg'
 	var/list/copies = list()
 
-	footstep_type = FOOTSTEP_MOB_SHOE
+	do_footstep = TRUE
 
 
 //Summon Ability

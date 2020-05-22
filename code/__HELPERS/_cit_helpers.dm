@@ -1,6 +1,9 @@
 //THIS FILE CONTAINS CONSTANTS, PROCS, AND OTHER THINGS//
 /////////////////////////////////////////////////////////
 
+/mob/proc/setClickCooldown(var/timeout)
+	next_move = max(world.time + timeout, next_move)
+
 /proc/get_matrix_largest()
 	var/matrix/mtrx=new()
 	return mtrx.Scale(2)

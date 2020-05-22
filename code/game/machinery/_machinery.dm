@@ -110,8 +110,7 @@ Class Procs:
 	var/state_open = FALSE
 	var/critical_machine = FALSE //If this machine is critical to station operation and should have the area be excempted from power failures.
 	var/list/occupant_typecache //if set, turned into typecache in Initialize, other wise, defaults to mob/living typecache
-	var/atom/movable/occupant
-	var/new_occupant_dir = SOUTH //The direction the occupant will be set to look at when entering the machine.
+	var/atom/movable/occupant = null
 	var/speed_process = FALSE // Process as fast as possible?
 	var/obj/item/circuitboard/circuit // Circuit to be created and inserted when the machinery is created
 		// For storing and overriding ui id and dimensions
@@ -218,7 +217,6 @@ Class Procs:
 	if(target && !target.has_buckled_mobs() && (!isliving(target) || !mobtarget.buckled))
 		occupant = target
 		target.forceMove(src)
-		target.setDir(new_occupant_dir)
 	updateUsrDialog()
 	update_icon()
 
@@ -522,11 +520,11 @@ Class Procs:
 /obj/machinery/proc/can_be_overridden()
 	. = 1
 
-/obj/machinery/zap_act(power, zap_flags, shocked_objects)
-	. = ..()
-	if(prob(85) && (zap_flags & ZAP_MACHINE_EXPLOSIVE))
+/obj/machinery/tesla_act(power, tesla_flags, shocked_objects)
+	..()
+	if(prob(85) && (tesla_flags & TESLA_MACHINE_EXPLOSIVE))
 		explosion(src, 1, 2, 4, flame_range = 2, adminlog = FALSE, smoke = FALSE)
-	else if(zap_flags & ZAP_OBJ_DAMAGE)
+	if(tesla_flags & TESLA_OBJ_DAMAGE)
 		take_damage(power/2000, BURN, "energy")
 		if(prob(40))
 			emp_act(EMP_LIGHT)

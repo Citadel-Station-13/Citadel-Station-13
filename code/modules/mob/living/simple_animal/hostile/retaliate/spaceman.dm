@@ -8,12 +8,9 @@
 	mob_biotypes = MOB_ORGANIC|MOB_HUMANOID
 	gender = MALE
 	turns_per_move = 5
-	response_help_continuous = "pokes"
-	response_help_simple = "poke"
-	response_disarm_continuous = "gently pushes aside"
-	response_disarm_simple = "gently push aside"
-	response_harm_continuous = "punches"
-	response_harm_simple = "punch"
+	response_help = "pokes"
+	response_disarm = "gently pushes aside"
+	response_harm = "punches"
 	a_intent = INTENT_HARM
 	maxHealth = 100
 	health = 100
@@ -21,14 +18,13 @@
 	harm_intent_damage = 8
 	melee_damage_lower = 10
 	melee_damage_upper = 10
-	attack_verb_continuous = "hits"
-	attack_verb_simple = "hit"
+	attacktext = "hits"
 	attack_sound = 'sound/weapons/punch1.ogg'
 	obj_damage = 0
 	environment_smash = ENVIRONMENT_SMASH_NONE
 	del_on_death = 0
-	footstep_type = FOOTSTEP_MOB_SHOE
-	has_field_of_vision = FALSE //Legacy gameplay experience. Also they only have one dir visually.
+
+	do_footstep = TRUE
 
 /mob/living/simple_animal/hostile/retaliate/nanotrasenpeace //this should be in a different file
 	name = "Nanotrasen Private Security Officer"
@@ -39,12 +35,9 @@
 	icon_dead = null
 	icon_gib = "syndicate_gib"
 	turns_per_move = 5
-	response_help_continuous = "pokes"
-	response_help_simple = "poke"
-	response_disarm_continuous = "shoves"
-	response_disarm_simple = "shove"
-	response_harm_continuous = "hits"
-	response_harm_simple = "hit"
+	response_help = "pokes"
+	response_disarm = "shoves"
+	response_harm = "hits"
 	speed = 0
 	stat_attack = UNCONSCIOUS
 	robust_searching = 1
@@ -54,8 +47,7 @@
 	harm_intent_damage = 5
 	melee_damage_lower = 10
 	melee_damage_upper = 15
-	attack_verb_continuous = "punches"
-	attack_verb_simple = "punch"
+	attacktext = "punches"
 	attack_sound = 'sound/weapons/punch1.ogg'
 	faction = list("nanotrasenprivate")
 	a_intent = INTENT_HARM

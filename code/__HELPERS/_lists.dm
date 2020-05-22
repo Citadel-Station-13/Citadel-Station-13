@@ -37,7 +37,6 @@
 	* TYPECONT: The typepath of the contents of the list
 	* COMPARE: The object to compare against, usualy the same as INPUT
 	* COMPARISON: The variable on the objects to compare
-	* COMPTYPE: How the current bin item to compare against COMPARE is fetched. By key or value.
 	*/
 #define BINARY_INSERT(INPUT, LIST, TYPECONT, COMPARE, COMPARISON, COMPTYPE) \
 	do {\
@@ -671,13 +670,3 @@
 	for(var/key in input)
 		ret += key
 	return ret
-
-/proc/is_type_in_ref_list(path, list/L)
-	if(!ispath(path))//not a path
-		return
-	for(var/i in L)
-		var/datum/D = i
-		if(!istype(D))//not an usable reference
-			continue
-		if(istype(D, path))
-			return TRUE

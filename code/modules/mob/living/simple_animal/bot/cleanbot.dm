@@ -20,7 +20,9 @@
 	weather_immunities = list("lava","ash")
 
 	var/clean_time = 50 //How long do we take to clean?
-	var/upgrades = 0
+	var/broom = FALSE //Do we have an speed buff from a broom?
+	var/adv_mop = FALSE //Do we have a cleaning buff from a better mop?
+
 
 	var/blood = 1
 	var/trash = 0
@@ -77,38 +79,26 @@
 			if(open)
 				to_chat(user, "<span class='warning'>Please close the access panel before locking it.</span>")
 			else
-				to_chat(user, "<span class='notice'>The [src] doesn't seem to respect your authority.</span>")
+				to_chat(user, "<span class='notice'>\The [src] doesn't seem to respect your authority.</span>")
 
-	else if(istype(W, /obj/item/mop/advanced))
-		if(bot_core.allowed(user) && open && !CHECK_BITFIELD(upgrades,UPGRADE_CLEANER_ADVANCED_MOP))
+	if(istype(W, /obj/item/mop/advanced))
+		if(bot_core.allowed(user) && open && adv_mop == TRUE)
 			to_chat(user, "<span class='notice'>You replace \the [src] old mop with a new better one!</span>")
-			upgrades |= UPGRADE_CLEANER_ADVANCED_MOP
+			adv_mop = TRUE
 			clean_time = 20 //2.5 the speed!
 			window_name = "Automatic Station Cleaner v2.1 BETA" //New!
 			qdel(W)
-		if(!open)
-			to_chat(user, "<span class='notice'>The [src] access pannle is not open!</span>")
-			return
-		if(!bot_core.allowed(user))
-			to_chat(user, "<span class='notice'>The [src] access pannel locked off to you!</span>")
-			return
 		else
-			to_chat(user, "<span class='notice'>The [src] already has this mop!</span>")
+			to_chat(user, "<span class='notice'>\the [src] already has this mop!</span>")
 
-	else if(istype(W, /obj/item/twohanded/broom))
-		if(bot_core.allowed(user) && open && !CHECK_BITFIELD(upgrades,UPGRADE_CLEANER_BROOM))
+	if(istype(W, /obj/item/twohanded/broom))
+		if(bot_core.allowed(user) && open && broom == TRUE)
 			to_chat(user, "<span class='notice'>You add to \the [src] a broom speeding it up!</span>")
-			upgrades |= UPGRADE_CLEANER_BROOM
+			broom = TRUE
 			base_speed = 1 //2x faster!
 			qdel(W)
-		if(!open)
-			to_chat(user, "<span class='notice'>The [src] access pannel is not open!</span>")
-			return
-		if(!bot_core.allowed(user))
-			to_chat(user, "<span class='notice'>The [src] access pannel locked off to you!</span>")
-			return
 		else
-			to_chat(user, "<span class='notice'>The [src] already has a broom!</span>")
+			to_chat(user, "<span class='notice'>\the [src] already has a broom!</span>")
 
 	else
 		return ..()

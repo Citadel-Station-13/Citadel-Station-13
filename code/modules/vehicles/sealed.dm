@@ -1,6 +1,5 @@
 /obj/vehicle/sealed
 	var/enter_delay = 20
-	flags_1 = BLOCK_FACE_ATOM_1
 
 /obj/vehicle/sealed/generate_actions()
 	. = ..()
@@ -52,7 +51,7 @@
 	if(randomstep)
 		var/turf/target_turf = get_step(exit_location(M), pick(GLOB.cardinals))
 		M.throw_at(target_turf, 5, 10)
-
+		
 	if(!silent)
 		M.visible_message("<span class='notice'>[M] drops out of \the [src]!</span>")
 	return TRUE
@@ -103,13 +102,7 @@
 			if(iscarbon(i))
 				var/mob/living/carbon/C = i
 				C.DefaultCombatKnockdown(40)
-
-
+			
+			
 /obj/vehicle/sealed/AllowDrop()
 	return FALSE
-
-/obj/vehicle/sealed/setDir(newdir)
-	. = ..()
-	for(var/k in occupants)
-		var/mob/M = k
-		M.setDir(newdir)

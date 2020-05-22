@@ -7,7 +7,6 @@
 	name = "circulator/heat exchanger"
 	desc = "A gas circulator pump and heat exchanger."
 	icon_state = "circ-off-0"
-	plane = GAME_PLANE
 
 	var/active = FALSE
 

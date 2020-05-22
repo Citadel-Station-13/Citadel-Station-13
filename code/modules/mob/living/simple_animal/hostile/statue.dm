@@ -11,10 +11,9 @@
 	a_intent = INTENT_HARM
 	mob_biotypes = MOB_HUMANOID
 	threat = 3
-	response_help_continuous = "touches"
-	response_help_simple = "touch"
-	response_disarm_continuous = "pushes"
-	response_disarm_simple = "push"
+	response_help = "touches"
+	response_disarm = "pushes"
+
 	speed = -1
 	maxHealth = 50000
 	health = 50000
@@ -25,8 +24,7 @@
 	obj_damage = 100
 	melee_damage_lower = 68
 	melee_damage_upper = 83
-	attack_verb_continuous = "claws"
-	attack_verb_simple = "claw"
+	attacktext = "claws"
 	attack_sound = 'sound/hallucinations/growl1.ogg'
 
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
@@ -127,10 +125,14 @@
 
 	// This loop will, at most, loop twice.
 	for(var/atom/check in check_list)
-		for(var/mob/living/M in fov_viewers(world.view + 1, check) - src)
+		for(var/mob/living/M in viewers(world.view + 1, check) - src)
 			if(M.client && CanAttack(M) && !M.silicon_privileges)
 				if(!M.eye_blind)
 					return M
+		for(var/obj/mecha/M in view(world.view + 1, check)) //assuming if you can see them they can see you
+			if(M.occupant && M.occupant.client)
+				if(!M.occupant.eye_blind)
+					return M.occupant
 	return null
 
 // Cannot talk

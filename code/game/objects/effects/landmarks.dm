@@ -469,7 +469,6 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 /obj/effect/landmark/stationroom
 	var/list/templates = list()
 	layer = BULLET_HOLE_LAYER
-	plane = ABOVE_WALL_PLANE
 
 /obj/effect/landmark/stationroom/New()
 	..()

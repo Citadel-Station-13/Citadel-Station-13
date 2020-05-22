@@ -17,7 +17,6 @@
 	cost = 2500
 	contains = list (/obj/item/reagent_containers/food/snacks/cube/ape)
 	crate_name = "ape cube crate"
-	can_private_buy = FALSE
 
 /datum/supply_pack/science/beakers
 	name = "Chemistry Beakers Crate"

@@ -32,11 +32,13 @@
 	name = "Grounded Nerves"
 	desc = "Nerves form a safe path for electricity to traverse, protecting the body from electric shocks."
 	mod_type = BIOWARE_NERVES
+	var/prev_coeff
 
 /datum/bioware/grounded_nerves/on_gain()
 	..()
-	ADD_TRAIT(owner, TRAIT_SHOCKIMMUNE, "grounded_nerves")
+	prev_coeff = owner.physiology.siemens_coeff
+	owner.physiology.siemens_coeff = 0
 
 /datum/bioware/grounded_nerves/on_lose()
 	..()
-	REMOVE_TRAIT(owner, TRAIT_SHOCKIMMUNE, "grounded_nerves")
+	owner.physiology.siemens_coeff = prev_coeff

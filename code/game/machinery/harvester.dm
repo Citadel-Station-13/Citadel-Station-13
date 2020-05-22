@@ -20,11 +20,6 @@
 	. = ..()
 	if(prob(1))
 		name = "auto-autopsy"
-	new_occupant_dir = dir
-
-/obj/machinery/harvester/setDir(newdir)
-	. = ..()
-	new_occupant_dir = dir
 
 /obj/machinery/harvester/RefreshParts()
 	interval = 0
