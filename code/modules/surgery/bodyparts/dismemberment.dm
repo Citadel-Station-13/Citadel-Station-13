@@ -44,7 +44,7 @@
 	return TRUE
 
 /obj/item/bodypart/head/dismember()
-	if(HAS_TRAIT(C, TRAIT_NODECAP))
+	if(HAS_TRAIT(owner, TRAIT_NODECAP))
 		return FALSE
 	..()
 
@@ -56,7 +56,7 @@
 		return FALSE
 	if(HAS_TRAIT(C, TRAIT_NODISMEMBER))
 		return FALSE
-	if(HAS_TRAIT(C. TRAIT_NOGUT)) //Just for not allowing gutting
+	if(HAS_TRAIT(C, TRAIT_NOGUT)) //Just for not allowing gutting
 		return FALSE
 	. = list()
 	var/organ_spilled = 0
