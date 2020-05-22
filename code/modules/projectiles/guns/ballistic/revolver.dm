@@ -320,7 +320,7 @@
 /obj/item/gun/ballistic/revolver/doublebarrel/improvised
 	name = "improvised shotgun"
 	desc = "Essentially a tube that aims shotgun shells."
-	desc = "A shoddy break-action breechloaded shotgun.
+	desc = "A shoddy break-action breechloaded shotgun."
 	icon_state = "ishotgun"
 	item_state = "shotgun"
 	w_class = WEIGHT_CLASS_BULKY
