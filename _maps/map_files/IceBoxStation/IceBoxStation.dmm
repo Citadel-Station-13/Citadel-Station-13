@@ -56859,10 +56859,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/security/brig)
-"kQO" = (
-/obj/structure/reagent_dispensers/keg/semen,
-/turf/open/floor/plating,
-/area/maintenance/bar)
 "kSb" = (
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
@@ -59046,18 +59042,6 @@
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel/dark,
 /area/engine/engineering)
-"rca" = (
-/obj/machinery/atmospherics/pipe/simple/orange/visible{
-	dir = 4
-	},
-/obj/structure/closet/secure_closet/atmospherics,
-/obj/effect/turf_decal/tile/yellow{
-	dir = 4
-	},
-/turf/open/floor/plasteel/dark/corner{
-	dir = 1
-	},
-/area/engine/atmos)
 "rcD" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -84144,7 +84128,7 @@ mrR
 dKP
 odx
 rBq
-kQO
+evR
 bCq
 bUs
 bLv
@@ -93127,7 +93111,7 @@ bOX
 bQm
 bRv
 bRs
-rca
+glY
 bTP
 bVX
 bWQ
@@ -93384,7 +93368,7 @@ bOW
 bQl
 bRu
 bRs
-rca
+glY
 bUI
 bVR
 bWQ

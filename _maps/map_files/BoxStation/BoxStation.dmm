@@ -56260,10 +56260,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/security/brig)
-"kQO" = (
-/obj/structure/reagent_dispensers/keg/semen,
-/turf/open/floor/plating,
-/area/maintenance/bar)
 "kSb" = (
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
@@ -82641,7 +82637,7 @@ mrR
 dKP
 odx
 rBq
-kQO
+evR
 bCq
 bUs
 bLv
