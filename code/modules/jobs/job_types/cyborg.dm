@@ -12,7 +12,7 @@
 	exp_requirements = 120
 	exp_type = EXP_TYPE_CREW
 
-	starting_skills = list(/datum/skill/level/job/wiring = GET_STANDARD_LVL(JOB_SKILL_BASIC))
+	starting_modifiers = list(/datum/skill_modifier/job/level/wiring/basic)
 
 	display_order = JOB_DISPLAY_ORDER_CYBORG
 

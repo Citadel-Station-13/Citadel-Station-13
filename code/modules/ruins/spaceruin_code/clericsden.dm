@@ -27,7 +27,8 @@
 	melee_damage_lower = 8
 	melee_damage_upper = 10
 	retreat_distance = 4 //AI proteons will rapidly move in and out of combat to avoid conflict, but will still target and follow you.
-	attacktext = "pinches"
+	attack_verb_continuous = "pinches"
+	attack_verb_simple = "pinch"
 	environment_smash = ENVIRONMENT_SMASH_WALLS
 	attack_sound = 'sound/weapons/punch2.ogg'
 	playstyle_string = "<b>You are a Proteon. Your abilities in combat are outmatched by most combat constructs, but you are still fast and nimble. Run metal and supplies, and cooperate with your fellow cultists.</b>"

@@ -4,6 +4,7 @@
 	desc = "Mirror mirror on the wall, who's the most robust of them all?"
 	icon = 'icons/obj/watercloset.dmi'
 	icon_state = "mirror"
+	plane = ABOVE_WALL_PLANE
 	density = FALSE
 	anchored = TRUE
 	max_integrity = 200

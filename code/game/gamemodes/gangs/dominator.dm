@@ -48,9 +48,6 @@
 /obj/machinery/dominator/hulk_damage()
 	return (max_integrity - integrity_failure) / DOM_HULK_HITS_REQUIRED
 
-/obj/machinery/dominator/tesla_act()
-	qdel(src)
-
 /obj/machinery/dominator/update_icon()
 	cut_overlays()
 	if(stat & BROKEN)

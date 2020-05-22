@@ -1,5 +1,6 @@
 /datum/export/gear
 	include_subtypes = FALSE
+	k_elasticity = 0 //We always want clothing/gear
 
 //blanket
 /datum/export/gear/hat

@@ -99,6 +99,7 @@
 	contains = list(/obj/machinery/vending/security)
 	crate_name = "SecTech supply crate"
 	crate_type = /obj/structure/closet/crate/secure/gear
+	can_private_buy = FALSE
 
 /datum/supply_pack/vending/snack
 	name = "Snack Supply Crate"
