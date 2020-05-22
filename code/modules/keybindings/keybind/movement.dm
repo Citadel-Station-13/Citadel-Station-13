@@ -62,6 +62,18 @@
 	M.southface()
 	return TRUE
 
+/datum/keybinding/mob/face_west
+	hotkey_keys = list("CtrlA", "CtrlWest")
+	name = "face_west"
+	full_name = "Face West"
+	description = ""
+	category = CATEGORY_MOVEMENT
+
+/datum/keybinding/mob/face_west/down(client/user)
+	var/mob/M = user.mob
+	M.westface()
+	return TRUE
+
 /datum/keybinding/mob/shift_north
 	hotkey_keys = list("CtrlShiftW", "CtrlShiftNorth")
 	name = "pixel_shift_north"

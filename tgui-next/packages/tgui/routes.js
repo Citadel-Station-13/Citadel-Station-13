@@ -13,6 +13,7 @@ import { BluespaceArtillery } from './interfaces/BluespaceArtillery';
 import { Bepis } from './interfaces/Bepis';
 import { BorgPanel } from './interfaces/BorgPanel';
 import { BrigTimer } from './interfaces/BrigTimer';
+import { Canvas } from './interfaces/Canvas';
 import { Canister } from './interfaces/Canister';
 import { Cargo, CargoExpress } from './interfaces/Cargo';
 import { CellularEmporium } from './interfaces/CellularEmporium';
@@ -164,6 +165,10 @@ const ROUTES = {
   },
   bsa: {
     component: () => BluespaceArtillery,
+    scrollable: false,
+  },
+  canvas: {
+    component: () => Canvas,
     scrollable: false,
   },
   canister: {
