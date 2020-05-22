@@ -1,13 +1,15 @@
 import { useBackend } from '../backend';
 import { Box, Section, LabeledList, Button, ProgressBar, AnimatedNumber } from '../components';
+import { Fragment } from 'inferno';
 import { Window } from '../layouts';
 
-export const Sleeper = props => {
-  const { act, data } = useBackend(props);
+export const Sleeper = (props, context) => {
+  const { act, data } = useBackend(context);
+
   const {
-    occupied,
     open,
-    occupant = [],
+    occupant = {},
+    occupied,
   } = data;
 
   const preSortChems = data.chems || [];
@@ -69,7 +71,7 @@ export const Sleeper = props => {
             </Box>
           )}>
           {!!occupied && (
-            <Window>
+            <Fragment>
               <ProgressBar
                 value={occupant.health}
                 minValue={occupant.minHealth}
@@ -112,7 +114,7 @@ export const Sleeper = props => {
                   {occupant.brainLoss ? 'Abnormal' : 'Healthy'}
                 </LabeledList.Item>
               </LabeledList>
-            </Window>
+            </Fragment>
           )}
         </Section>
         <Section title="Chemical Analysis">
@@ -178,6 +180,5 @@ export const Sleeper = props => {
         </Section>
       </Window.Content>
     </Window>
-
   );
 };

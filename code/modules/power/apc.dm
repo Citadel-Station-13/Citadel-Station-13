@@ -854,7 +854,7 @@
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 
 	if(!ui)
-		ui = new(user, src, ui_key, "Apc", name, 450, 460, master_ui, state)
+		ui = new(user, src, ui_key, "Apc", name, 480, 460, master_ui, state)
 		ui.open()
 
 /obj/machinery/power/apc/ui_data(mob/user)
