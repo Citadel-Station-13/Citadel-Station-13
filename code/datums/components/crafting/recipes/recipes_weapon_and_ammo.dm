@@ -449,7 +449,7 @@
 /datum/crafting_recipe/trigger_assembly
 	name = "Trigger Assembly"
 	result = /obj/item/weaponcrafting/improvised_parts/trigger_assembly
-	reqs = list(/obj/item/stack/sheet/metal = 5,
+	reqs = list(/obj/item/stack/sheet/metal = 3,
 				/obj/item/assembly/igniter = 1)
 	tools = list(TOOL_SCREWDRIVER, TOOL_WELDER)
 	time = 150

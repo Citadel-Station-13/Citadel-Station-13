@@ -6,19 +6,13 @@
 	icon = 'icons/obj/improvised.dmi'
 	icon_state = "riflestock"
 
-/obj/item/weaponcrafting/silkstring
-	name = "silkstring"
-	desc = "A long piece of silk with some resemblance to cable coil."
-	icon = 'icons/obj/improvised.dmi'
-	icon_state = "silkstring"
-
 ////////////////////////////////
 // KAT IMPROVISED WEAPON PARTS//
 ////////////////////////////////
 
 /obj/item/weaponcrafting/improvised_parts
-	name = "Nuclear Syndicate Hyper Giga-Operative Undercover 5th-Dimensional Super-Tank"
-	desc = "An undercover hypno sissification operative attempting to make Nanotrasen homosexual. Report this to Central immediately. Something is off here."
+	name = "Eerie bunch of coloured dots."
+	desc = "You feel the urge to report to Central that the parent type of guncrafting, which should never appear in this reality, has appeared. Whatever that means."
 	icon = 'icons/obj/guns/gun_parts.dmi'
 	icon_state = "palette"
 

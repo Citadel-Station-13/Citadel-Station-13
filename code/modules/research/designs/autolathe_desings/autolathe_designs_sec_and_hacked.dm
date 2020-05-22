@@ -16,7 +16,6 @@
 
 /datum/design/rubbershot
 	name = "Rubber Shot"
-	name = "12g Rubber Shot"
 	id = "rubber_shot"
 	build_type = AUTOLATHE
 	materials = list(/datum/material/iron = 4000)
@@ -85,14 +84,14 @@
 
 /datum/design/shotgun_slug
 	name = "Shotgun Slug"
-	id = "12g shotgun_slug"
+	id = "shotgun_slug"
 	build_type = AUTOLATHE | NO_PUBLIC_LATHE
 	materials = list(/datum/material/iron = 4000)
 	build_path = /obj/item/ammo_casing/shotgun
 	category = list("hacked", "Security")
 
 /datum/design/buckshot_shell
-	name = "12g Buckshot Shell"
+	name = "Buckshot Shell"
 	id = "buckshot_shell"
 	build_type = AUTOLATHE | NO_PUBLIC_LATHE
 	materials = list(/datum/material/iron = 4000)
@@ -100,7 +99,7 @@
 	category = list("hacked", "Security")
 
 /datum/design/shotgun_dart
-	name = "12g Shotgun Dart"
+	name = "Shotgun Dart"
 	id = "shotgun_dart"
 	build_type = AUTOLATHE | NO_PUBLIC_LATHE
 	materials = list(/datum/material/iron = 4000)
@@ -108,7 +107,7 @@
 	category = list("hacked", "Security")
 
 /datum/design/incendiary_slug
-	name = "12g Incendiary Slug"
+	name = "Incendiary Slug"
 	id = "incendiary_slug"
 	build_type = AUTOLATHE | NO_PUBLIC_LATHE
 	materials = list(/datum/material/iron = 4000)
