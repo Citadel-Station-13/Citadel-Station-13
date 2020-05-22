@@ -43,10 +43,19 @@
 				to_chat(owner, "<span class='warning'>Lesser beings require a tighter grip.</span>")
 			return FALSE
 		// Bloodsuckers:
-		else if(iscarbon(target) && target.mind && target.mind.has_antag_datum(ANTAG_DATUM_BLOODSUCKER))
-			if(display_error)
-				to_chat(owner, "<span class='warning'>Other Bloodsuckers will not fall for your subtle approach.</span>")
-			return FALSE
+		else if(ishuman(target))
+			var/mob/living/carbon/human/H = target
+			var/arm_to_bite
+			if(prob(50))
+				arm_to_bite = BODY_ZONE_L_ARM
+			else
+				arm_to_bite = BODY_ZONE_R_ARM
+			if(!H.can_inject(owner, TRUE, arm_to_bite))
+				return FALSE
+			if(target.mind && target.mind.has_antag_datum(ANTAG_DATUM_BLOODSUCKER))
+				if(display_error)
+					to_chat(owner, "<span class='warning'>Other Bloodsuckers will not fall for your subtle approach.</span>")
+				return FALSE
 	// Must have Target
 	if(!target)	 //  || !ismob(target)
 		if(display_error)
@@ -64,7 +73,6 @@
 	if(ishuman(target))
 		var/mob/living/carbon/human/H = target
 		if(!H.can_inject(owner, TRUE, BODY_ZONE_HEAD)) //Cant suck through thick clothing.
-			to_chat(OWNER, "<span class='alert'>There is no exposed flesh or thin material [above_neck(target_zone) ? "on [p_their()] head" : "on [p_their()] body"].</span>")
 			return FALSE
 		if(NOBLOOD in H.dna.species.species_traits)// || owner.get_blood_id() != target.get_blood_id())
 			if(display_error)
