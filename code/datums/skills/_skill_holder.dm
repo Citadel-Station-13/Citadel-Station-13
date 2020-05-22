@@ -154,15 +154,17 @@
 	. = value
 	var/sum = 0
 	var/divisor = 0
+	var/one_trait = istext(traits)
+	var/one_bad_trait = istext(bad_traits)
 	for(var/k in I.used_skills)
 		var/datum/skill/S = GLOB.skill_datums[k]
 		if(!S)
 			continue
 		var/our_traits = S.skill_traits
-		var/item_traits = I.used_skills[k]
-		if(item_traits)
-			our_traits |= item_traits
-		if((traits && !(our_traits[traits] || length(our_traits & traits))) || (bad_traits && (our_traits[bad_traits] || length(our_traits & bad_traits))))
+		our_traits |= I.used_skills[k]
+		if(traits && !(one_trait ? (traits in our_traits) : length(our_traits & traits)))
+			continue
+		if(bad_traits && (one_bad_trait ? (bad_traits in our_traits) : length(our_traits & bad_traits)))
 			continue
 		var/mod = S.base_multiplier
 		switch(S.progression_type)
