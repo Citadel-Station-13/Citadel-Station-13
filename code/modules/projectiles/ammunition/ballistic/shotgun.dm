@@ -143,32 +143,3 @@
 	reagents.add_reagent(/datum/reagent/toxin/acid/fluacid, 5) //this and the acid equal about 25ish burn, not counting the minute toxin damage dealt by their metabolism, this makes each dart about as lethal as a stechkin shot in upfront damage
 	reagents.add_reagent(/datum/reagent/toxin/acid, 5)
 	reagents.add_reagent(/datum/reagent/consumable/frostoil, 10) //tempgun slowdown goes both ways and adds to the burn
-
-//////////////////
-//    20 BORE   //
-//////////////////
-
-/obj/item/ammo_casing/shotgun_20bore
-	name = "20 bore shotgun slug"
-	desc = "A 20 gauge lead slug."
-	icon_state = "20slug"
-	caliber = "shotgun20bore"
-	projectile_type = /obj/item/projectile/bullet/shotgun_slug/twentybore_slug
-	custom_materials = list(/datum/material/iron=3000)
-
-/obj/item/ammo_casing/shotgun_20bore/buckshot
-	name = "20 bore buckshot shell"
-	desc = "A 20 gauge buckshot shell."
-	icon_state = "20buckshot"
-	projectile_type = /obj/item/projectile/bullet/pellet/shotgun_buckshot/twentybore_buckshot
-
-/obj/item/ammo_casing/shotgun_20bore/incendiary
-	name = "20 bore incendiary slug"
-	icon_state = "20incendiary"
-	projectile_type = /obj/item/projectile/bullet/incendiary/shotgun/twentybore_incendiary
-
-/obj/item/ammo_casing/shotgun_20bore/beanbag
-	name = "20 bore beanbag slug"
-	icon_state = "20beanbag"
-	projectile_type = /obj/item/projectile/bullet/shotgun_beanbag/twentybore_beanbag
-	custom_materials = list(/datum/material/iron=200)

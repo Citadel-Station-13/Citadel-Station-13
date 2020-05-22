@@ -1,16 +1,5 @@
 // PARTS //
 
-/obj/item/weaponcrafting/receiver
-	name = "modular receiver"
-	desc = "A prototype modular receiver and trigger assembly for a firearm."
-	name = "broken gun part" // Replaced with new receivers below!!
-	desc = "An irreparably broken receiver. This is beyond saving and cannot be used. OOC: Outdated item, report to coders, you shouldn't get this." // Replaced with new receivers below!!
-	icon = 'icons/obj/improvised.dmi'
-	icon_state = "receiver"
-
-// OLD NAME 	name = "modular receiver"
-// OLD DESC 	desc = "A prototype modular receiver and trigger assembly for a firearm."
-
 /obj/item/weaponcrafting/stock
 	name = "rifle stock"
 	desc = "A classic rifle stock that doubles as a grip, roughly carved out of wood."

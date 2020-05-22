@@ -34,7 +34,7 @@
 		add_atom_colour(saw_colors[our_color], FIXED_COLOUR_PRIORITY)
 		update_icon()
 	if(prob(75))
-		pixel_y = rand(0, 16)
+		pixel_y = rand(-8, 8)
 
 /obj/item/hatchet/saw/update_overlays()
 	. = ..()

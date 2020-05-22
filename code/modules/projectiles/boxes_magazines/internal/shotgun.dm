@@ -44,9 +44,7 @@
 /obj/item/ammo_box/magazine/internal/shot/improvised
 	name = "improvised shotgun internal magazine"
 	ammo_type = /obj/item/ammo_casing/shotgun/improvised
-	ammo_type = /obj/item/ammo_casing/shotgun_20bore // New improvised shotgun fires 20 gauge instead of 12 gauge.
 	max_ammo = 1
-	caliber = "shotgun20bore"
 
 /obj/item/ammo_box/magazine/internal/shot/riot
 	name = "riot shotgun internal magazine"
