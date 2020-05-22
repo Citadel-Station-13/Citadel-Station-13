@@ -270,7 +270,7 @@
 	data["scriptures"] = list()
 	for(var/s in GLOB.all_scripture)
 		var/datum/clockwork_scripture/S = GLOB.all_scripture[s]
-		var/scripture_color = get_component_color_bright(S.primary_component)
+		//var/scripture_color = get_component_color_bright(S.primary_component)
 		var/list/temp_info = list("name" = "[S.name]",
 		"descname" = "[S.descname]",
 		"tip" = "[S.desc]\n[S.usage_tip]",
