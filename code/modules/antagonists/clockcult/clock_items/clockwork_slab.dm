@@ -229,7 +229,7 @@
 			textlist += "HONOR RATVAR "
 		textlist += ""
 	else
-		textlist = list(" <center>[text2ratvar("Purge all untruths and honor Engine.")]</center>\
+		textlist = list(" [text2ratvar("Purge all untruths and honor Engine.")]\
 		\
 		NOTICE: This information is out of date. Read the Ark & You primer in your backpack or read the wiki page for current info.\
 		<hr>\
