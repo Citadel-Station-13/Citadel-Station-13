@@ -28,8 +28,8 @@ export const ClockworkSlab = props => {
           {rec_text}
           {recollection_categories.map(categories => {
             return (
-              <Window>
-                <br key={category.name} />
+              <Window key={rec_section} >
+                <br />
                 <Button
                   content={`${categories.name} - ${categories.desc}`}
                   onClick={() => act('rec_category', {

@@ -1,63 +1,50 @@
 import { Fragment } from 'inferno';
 import { useBackend } from '../backend';
 import { Box, Button, LabeledList, NoticeBox, ProgressBar, Section } from '../components';
-import { Window } from '../layouts';
 import { InterfaceLockNoticeBox } from './common/InterfaceLockNoticeBox';
 
-export const Apc = (props, context) => {
-  return (
-    <Window resizable>
-      <Window.Content scrollable>
-        <ApcContent />
-      </Window.Content>
-    </Window>
-  );
-};
-
-const powerStatusMap = {
-  2: {
-    color: 'good',
-    externalPowerText: 'External Power',
-    chargingText: 'Fully Charged',
-  },
-  1: {
-    color: 'average',
-    externalPowerText: 'Low External Power',
-    chargingText: 'Charging',
-  },
-  0: {
-    color: 'bad',
-    externalPowerText: 'No External Power',
-    chargingText: 'Not Charging',
-  },
-};
-
-const malfMap = {
-  1: {
-    icon: 'terminal',
-    content: 'Override Programming',
-    action: 'hack',
-  },
-  2: {
-    icon: 'caret-square-down',
-    content: 'Shunt Core Process',
-    action: 'occupy',
-  },
-  3: {
-    icon: 'caret-square-left',
-    content: 'Return to Main Core',
-    action: 'deoccupy',
-  },
-  4: {
-    icon: 'caret-square-down',
-    content: 'Shunt Core Process',
-    action: 'occupy',
-  },
-};
-
-const ApcContent = (props, context) => {
-  const { act, data } = useBackend(context);
+export const Apc = props => {
+  const { act, data } = useBackend(props);
   const locked = data.locked && !data.siliconUser;
+  const powerStatusMap = {
+    2: {
+      color: 'good',
+      externalPowerText: 'External Power',
+      chargingText: 'Fully Charged',
+    },
+    1: {
+      color: 'average',
+      externalPowerText: 'Low External Power',
+      chargingText: 'Charging',
+    },
+    0: {
+      color: 'bad',
+      externalPowerText: 'No External Power',
+      chargingText: 'Not Charging',
+    },
+  };
+  const malfMap = {
+    1: {
+      icon: 'terminal',
+      content: 'Override Programming',
+      action: 'hack',
+    },
+    2: {
+      icon: 'caret-square-down',
+      content: 'Shunt Core Process',
+      action: 'occupy',
+    },
+    3: {
+      icon: 'caret-square-left',
+      content: 'Return to Main Core',
+      action: 'deoccupy',
+    },
+    4: {
+      icon: 'caret-square-down',
+      content: 'Shunt Core Process',
+      action: 'occupy',
+    },
+  };
   const externalPowerStatus = powerStatusMap[data.externalPower]
     || powerStatusMap[0];
   const chargingStatus = powerStatusMap[data.chargingStatus]
@@ -65,6 +52,7 @@ const ApcContent = (props, context) => {
   const channelArray = data.powerChannels || [];
   const malfStatus = malfMap[data.malfStatus] || malfMap[0];
   const adjustedCellChange = data.powerCellStatus / 100;
+
   if (data.failTime > 0) {
     return (
       <NoticeBox>
@@ -85,7 +73,10 @@ const ApcContent = (props, context) => {
 
   return (
     <Fragment>
-      <InterfaceLockNoticeBox />
+      <InterfaceLockNoticeBox
+        siliconUser={data.siliconUser}
+        locked={data.locked}
+        onLockStatusChange={() => act('lock')} />
       <Section title="Power Status">
         <LabeledList>
           <LabeledList.Item
@@ -206,9 +197,33 @@ const ApcContent = (props, context) => {
             <Button
               icon="lightbulb-o"
               content={data.nightshiftLights ? 'Enabled' : 'Disabled'}
+              disabled={locked}
               onClick={() => act('toggle_nightshift')} />
           )} />
       </Section>
+      {data.hijackable && (
+        <Section
+          title="Hijacking"
+          buttons={(
+            <Fragment>
+              <Button
+                icon="unlock"
+                content="Hijack"
+                disabled={data.hijacker}
+                onClick={() => act('hijack')} />
+              <Button
+                icon="lock"
+                content="Lockdown"
+                disabled={!data.lockdownavail}
+                onClick={() => act('lockdown')} />
+              <Button
+                icon="lightbulb-o"
+                content="Drain"
+                disabled={!data.drainavail}
+                onClick={() => act('drain')} />
+            </Fragment>
+          )} />
+      )}
     </Fragment>
   );
 };
