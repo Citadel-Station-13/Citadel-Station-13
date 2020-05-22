@@ -154,6 +154,10 @@ const Catalog = props => {
             </td>
             <td className="LabeledList__cell LabeledList__buttons">
               <Button fluid
+                disabled={(data.self_paid
+                  && !pack.can_private_buy
+                  && !data.emagged
+                )}
                 content={(data.self_paid
                   ? Math.round(pack.cost * 1.1)
                   : pack.cost) + ' credits'}

@@ -89,7 +89,7 @@
 #define COMSIG_EXIT_AREA "exit_area" 							//from base of area/Exited(): (/area)
 
 #define COMSIG_CLICK "atom_click"								//from base of atom/Click(): (location, control, params, mob/user)
-#define COMSIG_CLICK_SHIFT "shift_click"						//from base of atom/ShiftClick(): (/mob)
+#define COMSIG_CLICK_SHIFT "shift_click"						//from base of atom/ShiftClick(): (/mob), return flags also used by other signals.
 	#define COMPONENT_ALLOW_EXAMINATE 1
 	#define COMPONENT_DENY_EXAMINATE 2 //Higher priority compared to the above one
 
@@ -141,13 +141,17 @@
 	#define HEARING_SOURCE 8*/
 #define COMSIG_MOVABLE_DISPOSING "movable_disposing"			//called when the movable is added to a disposal holder object for disposal movement: (obj/structure/disposalholder/holder, obj/machinery/disposal/source)
 #define COMSIG_MOVABLE_TELEPORTED "movable_teleported"			//from base of do_teleport(): (channel, turf/origin, turf/destination)
+
 // /mind signals
 #define  COMSIG_PRE_MIND_TRANSFER "pre_mind_transfer"			//from base of mind/transfer_to() before it's done: (new_character, old_character)
 	#define COMPONENT_STOP_MIND_TRANSFER 1						//stops the mind transfer from happening.
 #define COMSIG_MIND_TRANSFER "mind_transfer"					//from base of mind/transfer_to() when it's done: (new_character, old_character)
 
 // /mob signals
-#define COMSIG_MOB_EXAMINATE "mob_examinate"					//from base of /mob/verb/examinate(): (atom/A)
+#define COMSIG_MOB_CLICKED_SHIFT_ON "mob_shift_click_on"		//from base of /atom/ShiftClick(): (atom/A), for return values, see COMSIG_CLICK_SHIFT
+#define COMSIG_MOB_FOV_VIEW "mob_visible_atoms"			//from base of mob/fov_view(): (list/visible_atoms)
+#define COMSIG_MOB_EXAMINATE "mob_examinate"					//from base of /mob/verb/examinate(): (atom/A), for return values, see COMSIG_CLICK_SHIFT
+	#define COMPONENT_EXAMINATE_BLIND 3 //outputs the "something is there but you can't see it" message.
 #define COMSIG_MOB_DEATH "mob_death"							//from base of mob/death(): (gibbed)
 	#define COMPONENT_BLOCK_DEATH_BROADCAST 1					//stops the death from being broadcasted in deadchat.
 #define COMSIG_MOB_CLICKON "mob_clickon"						//from base of mob/clickon(): (atom/A, params)
@@ -181,30 +185,14 @@
 	#define SPEECH_LANGUAGE 5
 //	#define SPEECH_IGNORE_SPAM 6
 //	#define SPEECH_FORCED 7
+#define COMSIG_MOB_FOV_VIEWER "mob_is_viewer"					//from base of /fov_viewers(): (atom/center, depth, viewers_list)
+#define COMSIG_MOB_GET_VISIBLE_MESSAGE "mob_get_visible_message" //from base of atom/visible_message(): (atom/A, msg, range, ignored_mobs)
+	#define COMPONENT_NO_VISIBLE_MESSAGE 1 //exactly what's said on the tin.
 #define COMSIG_MOB_ANTAG_ON_GAIN "mob_antag_on_gain"			//from base of /datum/antagonist/on_gain(): (antag_datum)
 
 #define COMSIG_MOB_SPELL_CAN_CAST "mob_spell_can_cast"			//from base of /obj/effect/proc_holder/spell/can_cast(): (spell)
 
-#define COMSIG_MOB_ACTION_SKILL_MOD "mob_action_skill_mod"		//from base of /datum/skill_holder/action_skills_mod() : (proc args list, list/mod_values)
-	#define ACTION_SKILL_MOD_SKILL 1 //redundancy.
-	#define ACTION_SKILL_MOD_VALUE 2
-	#define ACTION_SKILL_MOD_THRESHOLD 3
-	#define ACTION_SKILL_MOD_IS_MULTI 4
-	//other mod values, kept separate from the args
-	#define MOD_VALUES_SKILL_MOD 1
-
-#define COMSIG_MOB_ITEM_ACTION_SKILLS_MOD "mob_item_action_skills_mod"	//from base of /datum/skill_holder/item_action_skills_mod() : (proc args list, mod_values)
-	#define ITEM_SKILLS_MOD_ITEM 1 //redundancy
-	#define ITEM_SKILLS_MOD_VALUE 2
-	#define ITEM_SKILLS_MOD_FLAGS 3
-	#define ITEM_SKILLS_MOD_BAD_FLAGS 4
-	#define ITEM_SKILLS_MOD_IS_MULTI 5
-	//other mod values, kept separate from the args
-	#define MOD_VALUES_ITEM_SKILLS_SUM 1
-	#define MOD_VALUES_ITEM_SKILLS_DIV 2
-	#define MOD_VALUES_ITEM_SKILLS_CHECKED 3
-
-#define COMSIG_MOB_SKILL_GET_AFFINITY "mob_skill_get_affinity"	//from base of /datum/skill_holder/get_skill_affinity(): (skill_path, list/return_value)
+#define COMSIG_ROBOT_UPDATE_ICONS "robot_update_icons"			//from base of robot/update_icons(): ()
 
 // /mob/living signals
 #define COMSIG_LIVING_REGENERATE_LIMBS "living_regenerate_limbs"	//from base of /mob/living/regenerate_limbs(): (noheal, excluded_limbs)
@@ -214,9 +202,13 @@
 #define COMSIG_LIVING_ELECTROCUTE_ACT "living_electrocute_act"		//from base of mob/living/electrocute_act(): (shock_damage, source, siemens_coeff, flags)
 #define COMSIG_LIVING_MINOR_SHOCK "living_minor_shock"			//sent by stuff like stunbatons and tasers: ()
 #define COMSIG_LIVING_REVIVE "living_revive"					//from base of mob/living/revive() (full_heal, admin_revive)
-#define COMSIG_MOB_CLIENT_LOGIN "comsig_mob_client_login"		//sent when a mob/login() finishes: (client)
-#define COMSIG_MOB_CLIENT_LOGOUT "comsig_mob_client_logout"		//sent when a mob/logout() starts: (client)
-#define COMSIG_MOB_CLIENT_MOVE "comsig_mob_client_move"			//sent when client/Move() finishes with no early returns: (client, direction, n, oldloc)
+
+#define COMSIG_MOB_CLIENT_LOGIN "mob_client_login"					//sent when a mob/login() finishes: (client)
+#define COMSIG_MOB_CLIENT_LOGOUT "mob_client_logout"				//sent when a mob/logout() starts: (client)
+#define COMSIG_MOB_CLIENT_MOVE "mob_client_move"					//sent when client/Move() finishes with no early returns: (client, direction, n, oldloc)
+#define COMSIG_MOB_CLIENT_CHANGE_VIEW "mob_client_change_view"		//from base of /client/change_view(): (client, old_view, view)
+
+#define COMSIG_MOB_RESET_PERSPECTIVE "mob_reset_perspective"		//from base of /mob/reset_perspective(): (atom/target)
 #define COMSIG_LIVING_GUN_PROCESS_FIRE "living_gun_process_fire"	//from base of /obj/item/gun/proc/process_fire(): (atom/target, params, zone_override)
 // This returns flags as defined for block in __DEFINES/combat.dm!
 #define COMSIG_LIVING_RUN_BLOCK "living_do_run_block"				//from base of mob/living/do_run_block(): (real_attack, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone)
@@ -277,6 +269,9 @@
 // THE FOLLOWING TWO BLOCKS SHOULD RETURN BLOCK FLAGS AS DEFINED IN __DEFINES/combat.dm!
 #define COMSIG_ITEM_CHECK_BLOCK "check_block"					//from base of obj/item/check_block(): (mob/living/owner, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return)
 #define COMSIG_ITEM_RUN_BLOCK "run_block"						//from base of obj/item/run_block(): (mob/living/owner, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return)
+// Item mouse siganls
+#define COMSIG_ITEM_MOUSE_EXIT "item_mouse_exit"				//from base of obj/item/MouseExited(): (location, control, params)
+#define COMSIG_ITEM_MOUSE_ENTER "item_mouse_enter"				//from base of obj/item/MouseEntered(): (location, control, params)
 #define COMSIG_ITEM_DECONSTRUCTOR_DEEPSCAN "deconstructor_deepscan"			//Called by deconstructive analyzers deepscanning an item: (obj/machinery/rnd/destructive_analyzer/analyzer_machine, mob/user, list/information_list)
 	// Uncovered information
 	#define COMPONENT_DEEPSCAN_UNCOVERED_INFORMATION		1
@@ -322,6 +317,9 @@
 // /datum/species signals
 #define COMSIG_SPECIES_GAIN "species_gain"						//from datum/species/on_species_gain(): (datum/species/new_species, datum/species/old_species)
 #define COMSIG_SPECIES_LOSS "species_loss"						//from datum/species/on_species_loss(): (datum/species/lost_species)
+
+// /datum/mutation signals
+#define COMSIG_HUMAN_MUTATION_LOSS "human_mutation_loss"		//from datum/mutation/human/on_losing(): (datum/mutation/human/lost_mutation)
 
 /*******Component Specific Signals*******/
 //Janitor

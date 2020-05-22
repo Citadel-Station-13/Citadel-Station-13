@@ -20,8 +20,7 @@
 	paycheck = PAYCHECK_MEDIUM
 	paycheck_department = ACCOUNT_ENG
 
-	starting_skills = list(/datum/skill/level/job/wiring = GET_STANDARD_LVL(JOB_SKILL_BASIC))
-	skill_affinities = list(/datum/skill/level/job/wiring = STARTING_SKILL_AFFINITY_WIRING_ENGI_ROBO)
+	starting_modifiers = list(/datum/skill_modifier/job/level/wiring/basic, /datum/skill_modifier/job/affinity/wiring)
 
 	display_order = JOB_DISPLAY_ORDER_ATMOSPHERIC_TECHNICIAN
 	threat = 0.5

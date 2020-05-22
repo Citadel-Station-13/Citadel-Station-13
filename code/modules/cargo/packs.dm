@@ -15,6 +15,7 @@
 	var/special_enabled = FALSE
 	var/DropPodOnly = FALSE //only usable by the Bluespace Drop Pod via the express cargo console
 	var/admin_spawned = FALSE //Can only an admin spawn this crate?
+	var/can_private_buy = TRUE //Can it be purchased privately by each crewmember?
 
 /datum/supply_pack/proc/generate(atom/A, datum/bank_account/paying_account)
 	var/obj/structure/closet/crate/C
