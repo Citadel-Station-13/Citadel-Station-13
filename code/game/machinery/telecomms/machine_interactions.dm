@@ -42,10 +42,11 @@
 /obj/machinery/telecomms/ui_data(mob/user)
 	. = list() //cpypaste from the vending bus
 	.["notice"] = temp
-	
+	.["multitool"] = FALSE
 	var/obj/item/multitool/P = get_multitool(user)
 	if(P)
 		.["multitool"] = TRUE
+		.["multitool_buf"] = null //to clean the list!
 		var/obj/machinery/telecomms/T = P.buffer
 		if(istype(T))
 			.["multitool_buf"] = list(
@@ -113,7 +114,7 @@
 			if("network" in params)
 				if(!canAccess(usr))
 					return
-				var/newnet = sanitize(sanitize_text(params["value"], network))	
+				var/newnet = sanitize(sanitize_text(params["network"], network))	
 				if(length(newnet) > 15)
 					temp = "-% Too many characters in new network tag. %-"
 					return
@@ -190,7 +191,7 @@
 					return
 
 				LAZYADD(freq_listening, newfreq)
-				temp = "<font color = #666633>-% New frequency filter assigned: \"[newfreq] GHz\" %-</font color>"
+				temp = "-% New frequency filter assigned: \"[newfreq] GHz\" %-"
 
 			if("remove" in params)
 				if(!canAccess(usr))
@@ -225,7 +226,7 @@
 				change_frequency = !change_frequency
 				return
 			if("adjust" in params)
-				var/newfreq = params["adjust"]
+				var/newfreq = text2num(params["adjust"])
 				if(!canAccess(usr) || !newfreq)
 					return
 				// this should return true, unless the href is handcrafted
@@ -248,7 +249,7 @@
 	return FALSE
 // Check if the user is nearby and has a multitool.
 /obj/machinery/telecomms/proc/canAccess(mob/user)
-	if(canInteract(user) && in_range(user, src))
+	if((canInteract(user) && in_range(user, src)) || hasSiliconAccessInArea(user))
 		return TRUE
 	return FALSE
 

@@ -107,12 +107,12 @@ export const TeleInteract = props => {
                       unit="kHz"
                       step={0.2}
                       stepPixelSize={10}
-                      minValue={1337 / 10}
+                      minValue={1201 / 10}
                       maxValue={1599 / 10}
                       value={machine.chang_freq_value / 10}
                       format={value => toFixed(value, 1)}
                       onChange={(e, value) => act('frequency', {
-                        'adjust': (value / 10),
+                        'adjust': value,
                       })} />
                   ) : (
                     ''

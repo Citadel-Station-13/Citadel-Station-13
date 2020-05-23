@@ -254,7 +254,7 @@
 			update_static_data(usr)
 		if("fake")
 			if(!auth)
-				message = "WARNING: Auth failed! Delete aborted!"
+				message = "WARNING: Auth failed!"
 				return
 			else if(!(linkedServer.on && (linkedServer.toggled != FALSE)))
 				message = noserver
@@ -291,26 +291,26 @@
 			// Do not check if it's blank yet
 			// But do check if it's above our set limit (for people who manualy send hrefs at us!)
 			if("sender" in params)
-				var/cache = params["sender"]
-				if(length(cache) > MAX_NAME_LEN)
+				var/S = params["sender"]
+				if(length(S) > MAX_NAME_LEN)
 					message = "FAILED: Job string too lengthy"
-				return
-				customsender = cache
+					return
+				customsender = S
 				return
 			if("job" in params)
-				var/cache = params["job"]
-				if(length(cache) > 100)
+				var/J = params["job"]
+				if(length(J) > 100)
 					message = "FAILED: Job string too lengthy"
-				return
+					return
 
-				customjob = cache
+				customjob = J
 				return
 			if("message" in params)
-				var/cache = params["message"]
-				if(length(cache) > MAX_MESSAGE_LEN)
+				var/M = params["message"]
+				if(length(M) > MAX_MESSAGE_LEN)
 					message = "FAILED: Message string too lengthy"
-				return
-				custommessage = cache
+					return
+				custommessage = M
 				return
 			
 			if("recepient" in params)
@@ -340,7 +340,6 @@
 		to_chat(user, "<span class='notice'>A no server error appears on the screen.</span>")
 		return
 	ENABLE_BITFIELD(obj_flags, EMAGGED)
-	hacking = TRUE
 	spark_system.set_up(5, 0, src)
 	spark_system.start()
 	var/obj/item/paper/monitorkey/MK = new(loc, linkedServer)
