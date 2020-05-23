@@ -14,7 +14,7 @@
 	spread = 0
 	recoil = 0.1
 	casing_ejector = FALSE
-	inaccuracy_modifier = 0
+	inaccuracy_modifier = 0.15
 	dualwield_spread_mult = 1.4
 	weapon_weight = WEAPON_MEDIUM
 	w_class = WEIGHT_CLASS_BULKY

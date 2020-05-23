@@ -116,7 +116,7 @@
 	icon_state = "moistnugget"
 	item_state = "moistnugget"
 	slot_flags = 0 //no ITEM_SLOT_BACK sprite, alas
-	inaccuracy_modifier = 0
+	inaccuracy_modifier = 0.5
 	mag_type = /obj/item/ammo_box/magazine/internal/boltaction
 	var/bolt_open = FALSE
 	can_bayonet = TRUE

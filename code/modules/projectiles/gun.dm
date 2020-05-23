@@ -216,7 +216,7 @@
 	var/bonus_spread = 0
 	var/loop_counter = 0
 
-	bonus_spread += getinaccuracy(user, stamloss) //CIT CHANGE - adds bonus spread while not aiming
+	bonus_spread = getinaccuracy(user, bonus_spread, stamloss) //CIT CHANGE - adds bonus spread while not aiming
 	if(ishuman(user) && user.a_intent == INTENT_HARM)
 		var/mob/living/carbon/human/H = user
 		for(var/obj/item/gun/G in H.held_items)
@@ -569,16 +569,23 @@
 		chambered = null
 		update_icon()
 
-/obj/item/gun/proc/getinaccuracy(mob/living/user, stamloss)
-	if(!user)
-		return 0
+/obj/item/gun/proc/getinaccuracy(mob/living/user, bonus_spread, stamloss)
+	if(!user || inaccuracy_modifier == 0)
+		return bonus_spread
 	var/base_inaccuracy = weapon_weight * 25 * inaccuracy_modifier
+	var/aiming_delay = 0 //Otherwise aiming would be meaningless for slower guns such as sniper rifles and launchers.
+	if(fire_delay)
+		var/penalty = world.time - (last_fire + GUN_AIMING_TIME + fire_delay)
+		if(penalty > 0) //Yet we only penalize users firing it multiple times in a haste. fire_delay isn't necessarily cumbersomeness.
+			aiming_delay = penalty
 	if(user.combat_flags & COMBAT_FLAG_COMBAT_ACTIVE) //To be removed in favor of something less tactless later.
 		base_inaccuracy /= 1.5
 	if(stamloss >= STAMINA_SOFTCRIT) //This can null out the above bonus.
 		base_inaccuracy *= (STAMINA_NEAR_CRIT - stamloss)/(STAMINA_NEAR_CRIT - STAMINA_SOFTCRIT)*1.5
-	var/mult = max((GUN_AIMING_TIME - world.time - user.last_click_move)/GUN_AIMING_TIME, -0.5) //Yes, you get a bonus for taking time aiming.
-	return (base_inaccuracy * mult)
+	var/mult = max((GUN_AIMING_TIME + aiming_delay + user.last_click_move - world.time)/GUN_AIMING_TIME, -0.5) //Yes, there is a bonus for taking time aiming.
+	if(mult < 0) //accurate weapons should provide a proper bonus with negative inaccuracy. the opposite is true too.
+		mult *= 1/inaccuracy_modifier
+	return max(bonus_spread + (base_inaccuracy * mult), 0) //no negative spread.
 
 /obj/item/gun/proc/getstamcost(mob/living/carbon/user)
 	. = recoil
