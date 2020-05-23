@@ -113,7 +113,7 @@
 /obj/attacked_by(obj/item/I, mob/living/user)
 	var/totitemdamage = I.force
 	var/bad_trait
-	if(!(user.combat_flags & COMBAT_FLAG_COMBAT_ACTIVE) && iscarbon(user))
+	if(!SEND_SIGNAL(user, COMSIG_HAS_COMBAT_MODE_DISABLED))
 		totitemdamage *= 0.5
 		bad_trait = SKILL_COMBAT_MODE //blacklist combat skills.
 	if(I.used_skills && user.mind)
@@ -155,9 +155,11 @@
 /mob/living/proc/pre_attacked_by(obj/item/I, mob/living/user)
 	. = I.force
 	var/bad_trait
-	if(!(user.combat_flags & COMBAT_FLAG_COMBAT_ACTIVE) && iscarbon(user))
+	if(SEND_SIGNAL(user, COMSIG_HAS_COMBAT_MODE_DISABLED))
 		. *= 0.5
 		bad_trait = SKILL_COMBAT_MODE //blacklist combat skills.
+	if(SEND_SIGNAL(src, COMSIG_HAS_COMBAT_MODE_DISABLED))
+		. *= 1.5
 	if(!CHECK_MOBILITY(user, MOBILITY_STAND))
 		. *= 0.5
 	if(!user.mind || !I.used_skills)
@@ -169,10 +171,6 @@
 			continue
 		user.mind.auto_gain_experience(skill, I.skill_gain)
 
-/mob/living/carbon/pre_attacked_by(obj/item/I, mob/living/user)
-	. = ..()
-	if(!(combat_flags & COMBAT_FLAG_COMBAT_ACTIVE))
-		. *= 1.5
 
 // Proximity_flag is 1 if this afterattack was called on something adjacent, in your square, or on your person.
 // Click parameters is the params string from byond Click() code, see that documentation.
@@ -212,7 +210,7 @@
 	if(!user)
 		return
 	var/bad_trait
-	if(iscarbon(user) && !(user.combat_flags & COMBAT_FLAG_COMBAT_ACTIVE))
+	if(SEND_SIGNAL(user, COMSIG_HAS_COMBAT_MODE_DISABLED))
 		. *= STAM_COST_NO_COMBAT_MULT
 		bad_trait = SKILL_COMBAT_MODE
 	if(used_skills && user.mind)

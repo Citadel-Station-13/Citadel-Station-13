@@ -93,7 +93,9 @@
 
 	. = ..()
 
-	if((direction & (direction - 1)) && mob.loc == n) //moved diagonally successfully
+	if((L.combat_flags & COMBAT_FLAG_COMBAT_ACTIVE) && direction == REVERSE_DIR(L.dir))
+		add_delay *= 1.5
+	else if((direction & (direction - 1)) && mob.loc == n) //moved diagonally successfully
 		add_delay *= 2
 	move_delay += add_delay
 	if(.) // If mob is null here, we deserve the runtime

@@ -443,14 +443,14 @@
 
 	//dropItemToGround(I) CIT CHANGE - makes it so the item doesn't drop if the modifier rolls above 100
 
-	var/modifier = 0
+	var/modifier = 50
 
 	if(HAS_TRAIT(src, TRAIT_CLUMSY))
 		modifier -= 40 //Clumsy people are more likely to hit themselves -Honk!
 
 	//CIT CHANGES START HERE
-	else if(combat_flags & COMBAT_FLAG_COMBAT_ACTIVE)
-		modifier += 50
+	else if(SEND_SIGNAL(src, COMSIG_HAS_COMBAT_MODE_DISABLED))
+		modifier -= 50
 
 	if(modifier < 100)
 		dropItemToGround(I)
@@ -828,13 +828,13 @@
 			return
 		if(IsUnconscious() || IsSleeping() || getOxyLoss() > 50 || (HAS_TRAIT(src, TRAIT_DEATHCOMA)) || (health <= HEALTH_THRESHOLD_FULLCRIT && !HAS_TRAIT(src, TRAIT_NOHARDCRIT)))
 			stat = UNCONSCIOUS
-			disable_intentional_combat_mode(FALSE, FALSE)
+			SEND_SIGNAL(src, COMSIG_DISABLE_COMBAT_MODE)
 			if(!eye_blind)
 				blind_eyes(1)
 		else
 			if(health <= crit_threshold && !HAS_TRAIT(src, TRAIT_NOSOFTCRIT))
 				stat = SOFT_CRIT
-				disable_intentional_combat_mode(FALSE, FALSE)
+				SEND_SIGNAL(src, COMSIG_DISABLE_COMBAT_MODE)
 			else
 				stat = CONSCIOUS
 			adjust_blindness(-1)
@@ -1122,10 +1122,6 @@
 	if(mood)
 		if(mood.sanity < SANITY_UNSTABLE)
 			return TRUE
-
-/mob/living/carbon/transfer_ckey(mob/new_mob, send_signal = TRUE)
-	disable_intentional_combat_mode(TRUE, FALSE)
-	return ..()
 
 /mob/living/carbon/can_see_reagents()
 	. = ..()

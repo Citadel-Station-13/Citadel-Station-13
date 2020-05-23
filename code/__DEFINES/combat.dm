@@ -29,21 +29,20 @@
 #define EFFECT_DROWSY		"drowsy"
 #define EFFECT_JITTER		"jitter"
 
-// /mob/living/combat_flags
-#define CAN_TOGGLE_COMBAT_MODE(mob)			FORCE_BOOLEAN((mob.stat == CONSCIOUS) && !(mob.combat_flags & COMBAT_FLAG_HARD_STAMCRIT))
-
-/// Default combat flags for those affected by ((stamina combat))
+/// Default combat flags for those affected by sprinting (combat mode has been made into its own component)
 #define COMBAT_FLAGS_DEFAULT					NONE
-/// Default combat flags for everyone else (so literally everyone but humans)
-#define COMBAT_FLAGS_STAMSYSTEM_EXEMPT			(COMBAT_FLAG_SPRINT_ACTIVE | COMBAT_FLAG_COMBAT_ACTIVE | COMBAT_FLAG_SPRINT_TOGGLED | COMBAT_FLAG_COMBAT_TOGGLED | COMBAT_FLAG_SPRINT_FORCED | COMBAT_FLAG_COMBAT_FORCED)
-/// Default combat flags for those only affected by sprint (so just silicons)
-#define COMBAT_FLAGS_STAMEXEMPT_YESSPRINT		(COMBAT_FLAG_COMBAT_ACTIVE | COMBAT_FLAG_COMBAT_TOGGLED | COMBAT_FLAG_COMBAT_FORCED)
+/// Default combat flags for everyone else (so literally everyone but humans).
+#define COMBAT_FLAGS_SPRINT_EXEMPT			(COMBAT_FLAG_SPRINT_ACTIVE | COMBAT_FLAG_SPRINT_TOGGLED | COMBAT_FLAG_SPRINT_FORCED)
 
 /// The user wants combat mode on
 #define COMBAT_FLAG_COMBAT_TOGGLED			(1<<0)
 /// The user wants sprint mode on
 #define COMBAT_FLAG_SPRINT_TOGGLED			(1<<1)
-/// Combat mode is currently active
+/**
+  * Wheter combat mode is active or not.
+  * Please use the COMSIG_HAS_COMBAT_MODE_ENABLED and COMSIG_HAS_COMBAT_MODE_DISABLED signals if possible,
+  * So mobs without combat mode won't get penalized.
+  */
 #define COMBAT_FLAG_COMBAT_ACTIVE			(1<<2)
 /// Sprint is currently active
 #define COMBAT_FLAG_SPRINT_ACTIVE			(1<<3)
