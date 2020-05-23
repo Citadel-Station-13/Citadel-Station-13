@@ -216,7 +216,7 @@
 	var/bonus_spread = 0
 	var/loop_counter = 0
 
-	bonus_spread += getinaccuracy(user) //CIT CHANGE - adds bonus spread while not aiming
+	bonus_spread += getinaccuracy(user, stamloss) //CIT CHANGE - adds bonus spread while not aiming
 	if(ishuman(user) && user.a_intent == INTENT_HARM)
 		var/mob/living/carbon/human/H = user
 		for(var/obj/item/gun/G in H.held_items)
@@ -569,12 +569,14 @@
 		chambered = null
 		update_icon()
 
-/obj/item/gun/proc/getinaccuracy(mob/living/user)
+/obj/item/gun/proc/getinaccuracy(mob/living/user, stamloss)
 	if(!user)
 		return 0
 	var/base_inaccuracy = weapon_weight * 25 * inaccuracy_modifier
 	if(user.combat_flags & COMBAT_FLAG_COMBAT_ACTIVE) //To be removed in favor of something less tactless later.
 		base_inaccuracy /= 1.5
+	if(stamloss >= STAMINA_SOFTCRIT) //This can null out the above bonus.
+		base_inaccuracy *= (STAMINA_NEAR_CRIT - stamloss)/(STAMINA_NEAR_CRIT - STAMINA_SOFTCRIT)*1.5
 	var/mult = max((GUN_AIMING_TIME - world.time - user.last_click_move)/GUN_AIMING_TIME, -0.5) //Yes, you get a bonus for taking time aiming.
 	return (base_inaccuracy * mult)
 
