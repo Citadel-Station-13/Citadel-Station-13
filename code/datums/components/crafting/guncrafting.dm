@@ -40,11 +40,13 @@
 	name = "bolt action receiver"
 	desc = "A crudely constructed receiver to create an improvised bolt-action breechloaded rifle."
 	icon_state = "receiver_rifle"
+	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/weaponcrafting/improvised_parts/shotgun_receiver
 	name = "break-action assembly"
 	desc = "An improvised receiver to create a break-action breechloaded shotgun."
 	icon_state = "receiver_shotgun"
+	w_class = WEIGHT_CLASS_SMALL
 
 // MISC
 
@@ -52,6 +54,7 @@
 	name = "firearm trigger assembly"
 	desc = "A modular trigger assembly with a firing pin, this can be used to make a whole bunch of improvised firearss."
 	icon_state = "trigger_assembly"
+	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/weaponcrafting/improvised_parts/wooden_body
 	name = "wooden firearm body"
