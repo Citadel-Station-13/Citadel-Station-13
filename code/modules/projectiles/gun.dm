@@ -173,8 +173,8 @@
 	if(firing)
 		return
 	var/stamloss = user.getStaminaLoss()
-	if(stamloss >= STAMINA_SOFTCRIT) //The more tired you are, the less damage you do.
-		var/penalty = (STAMINA_NEAR_CRIT - stamloss)/(STAMINA_NEAR_CRIT - STAMINA_SOFTCRIT)*STAM_CRIT_GUN_DELAY
+	if(stamloss >= STAMINA_NEAR_SOFTCRIT) //The more tired you are, the less damage you do.
+		var/penalty = (stamloss - STAMINA_NEAR_SOFTCRIT)/(STAMINA_NEAR_CRIT - STAMINA_NEAR_SOFTCRIT)*STAM_CRIT_GUN_DELAY
 		user.changeNext_move(CLICK_CD_RANGE+(CLICK_CD_RANGE*penalty))
 	if(flag) //It's adjacent, is the user, or is on the user's person
 		if(target in user.contents) //can't shoot stuff inside us.
@@ -580,8 +580,8 @@
 			aiming_delay = penalty
 	if(user.combat_flags & COMBAT_FLAG_COMBAT_ACTIVE) //To be removed in favor of something less tactless later.
 		base_inaccuracy /= 1.5
-	if(stamloss >= STAMINA_SOFTCRIT) //This can null out the above bonus.
-		base_inaccuracy *= (STAMINA_NEAR_CRIT - stamloss)/(STAMINA_NEAR_CRIT - STAMINA_SOFTCRIT)*1.5
+	if(stamloss > STAMINA_NEAR_SOFTCRIT) //This can null out the above bonus.
+		base_inaccuracy *= 1 + (stamloss - STAMINA_NEAR_SOFTCRIT)/(STAMINA_NEAR_CRIT - STAMINA_NEAR_SOFTCRIT)*0.5
 	var/mult = max((GUN_AIMING_TIME + aiming_delay + user.last_click_move - world.time)/GUN_AIMING_TIME, -0.5) //Yes, there is a bonus for taking time aiming.
 	if(mult < 0) //accurate weapons should provide a proper bonus with negative inaccuracy. the opposite is true too.
 		mult *= 1/inaccuracy_modifier

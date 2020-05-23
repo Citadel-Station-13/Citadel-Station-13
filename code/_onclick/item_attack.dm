@@ -110,8 +110,8 @@
 
 	var/stamloss = user.getStaminaLoss()
 	var/next_move_mult = 1
-	if(stamloss >= STAMINA_SOFTCRIT) //The more tired you are, the less damage you do.
-		var/penalty = (STAMINA_NEAR_CRIT - stamloss)/(STAMINA_NEAR_CRIT - STAMINA_SOFTCRIT)*STAM_CRIT_ITEM_ATTACK_PENALTY
+	if(stamloss > STAMINA_NEAR_SOFTCRIT) //The more tired you are, the less damage you do.
+		var/penalty = (stamloss - STAMINA_NEAR_SOFTCRIT)/(STAMINA_NEAR_CRIT - STAMINA_NEAR_SOFTCRIT)*STAM_CRIT_ITEM_ATTACK_PENALTY
 		totitemdamage *= 1 - penalty
 		next_move_mult += penalty*STAM_CRIT_ITEM_ATTACK_DELAY
 	user.changeNext_move(I.click_delay*next_move_mult)
@@ -166,8 +166,8 @@
 	var/stamloss = user.getStaminaLoss()
 	var/stam_mobility_mult = 1
 	var/next_move_mult = 1
-	if(stamloss >= STAMINA_SOFTCRIT) //The more tired you are, the less damage you do.
-		var/penalty = (STAMINA_NEAR_CRIT - stamloss)/(STAMINA_NEAR_CRIT - STAMINA_SOFTCRIT)*STAM_CRIT_ITEM_ATTACK_PENALTY
+	if(stamloss > STAMINA_NEAR_SOFTCRIT) //The more tired you are, the less damage you do.
+		var/penalty = (stamloss - STAMINA_NEAR_SOFTCRIT)/(STAMINA_NEAR_CRIT - STAMINA_NEAR_SOFTCRIT)*STAM_CRIT_ITEM_ATTACK_PENALTY
 		stam_mobility_mult -= penalty
 		next_move_mult += penalty*STAM_CRIT_ITEM_ATTACK_DELAY
 	if(stam_mobility_mult > LYING_DAMAGE_PENALTY && !CHECK_MOBILITY(user, MOBILITY_STAND)) //damage penalty for fighting prone, doesn't stack with the above.
