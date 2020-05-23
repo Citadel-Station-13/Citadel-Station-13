@@ -18,7 +18,7 @@
 	RegisterSignal(parent, COMSIG_MOB_CLIENT_LOGOUT, .proc/on_logout)
 	RegisterSignal(parent, COMSIG_MOB_HUD_CREATED, .proc/on_mob_hud_created)
 	RegisterSignal(parent, COMSIG_HAS_COMBAT_MODE_ENABLED, .proc/check_enabled)
-	RegisterSignal(parent, COMSIG_HAS_COMBAT_MODE_ENABLED, .proc/check_disabled)
+	RegisterSignal(parent, COMSIG_HAS_COMBAT_MODE_DISABLED, .proc/check_disabled)
 
 	update_combat_lock()
 
