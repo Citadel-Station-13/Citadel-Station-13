@@ -31,30 +31,34 @@ export const TelePDALog = props => {
   if (data.hacking) {
     return ( // should have used en -> jp unicode -> other encoding method->utf8
       <NoticeBox>
-        <b><h3>{"INTRN@L ACfES VIOL�TIa█ DEtE₡TED!"}</h3></b>
+        <b>
+          <h3>
+            {"INTRN@L ACfES VIOL�TIa█ DEtE₡TED! Ree3ARcinG A█ \
+            BAaKUP RdST�RE PbINT [0xcff32ca] - PLfASE aAIT"}
+          </h3>
+        </b>
         <i>
-          {"Ree3ARcinG A█ BAaKUP RdST�RE PbINT [0xcff32ca] - PLfASE aAIT"}
+          {data.borg ? (
+            <Fragment>
+              Brute-forcing for server key. <br />
+              It will take 20 seconds for every character that the password has.
+              <br />
+              In the meantime, this console can reveal your
+              true intentions if you let someone access it.
+              Make sure no humans enter the room during that time.
+            </Fragment>
+          ) : (
+            <Fragment>
+              QnJ1dGUtZm9yY2luZyBmb3Igc2VydmVyIGtleS48YnI+IEl0IHdpbG<br />
+              wgdGFrZSAyMCBzZWNvbmRzIGZvciBldmVyeSBjaGFyYWN0ZXIgdGhh<br />
+              dCB0aGUgcGFzc3dvcmQgaGFzLiBJbiB0aGUgbWVhbnRpbWUsIHRoaX<br />
+              MgY29uc29sZSBjYW4gcmV2ZWFsIHlvdXIgdHJ1ZSBpbnRlbnRpb25z<br />
+              IGlmIHlvdSBsZXQgc29tZW9uZSBhY2Nlc3MgaXQuIE1ha2Ugc3VyZS<br />
+              BubyBodW1hbnMgZW50ZXIgdGhlIHJvb20gZHVyaW5nIHRoYXQgdGltZS4=<br />
+              <br />
+            </Fragment>
+          )}
         </i>
-        <br />
-        {data.borg ? (
-          <Fragment>
-            Brute-forcing for server key. <br />
-            It will take 20 secondsfor every character that the password has.
-            <br />
-            In the meantime, this console can reveal your
-            true intentions if you let someone access it.
-            Make sure no humans enter the room during that time.
-          </Fragment>
-        ) : (
-          <Fragment>
-            QnJ1dGUtZm9yY2luZyBmb3Igc2VydmVyIGtleS48YnI+IEl0IHdpbG<br />
-            wgdGFrZSAyMCBzZWNvbmRzIGZvciBldmVyeSBjaGFyYWN0ZXIgdGhh<br />
-            dCB0aGUgcGFzc3dvcmQgaGFzLiBJbiB0aGUgbWVhbnRpbWUsIHRoaX<br />
-            MgY29uc29sZSBjYW4gcmV2ZWFsIHlvdXIgdHJ1ZSBpbnRlbnRpb25z<br />
-            IGlmIHlvdSBsZXQgc29tZW9uZSBhY2Nlc3MgaXQuIE1ha2Ugc3VyZS<br />
-            BubyBodW1hbnMgZW50ZXIgdGhlIHJvb20gZHVyaW5nIHRoYXQgdGltZS4=<br />
-          </Fragment>
-        )}
       </NoticeBox>
     );
   }
@@ -367,7 +371,7 @@ export const TelePDALog = props => {
                 <Input
                   value={fake_message.sender}
                   width="250px"
-                  maxLength={255}
+                  maxLength={42}
                   onChange={(e, value) => act('fake', {
                     'sender': value,
                   })}
@@ -377,7 +381,7 @@ export const TelePDALog = props => {
                 <Input
                   value={fake_message.job}
                   width="250px"
-                  maxLength={255}
+                  maxLength={100}
                   onChange={(e, value) => act('fake', {
                     'job': value,
                   })}
@@ -401,7 +405,7 @@ export const TelePDALog = props => {
                   value={fake_message.message}
                   width="500px"
                   height="150px"
-                  maxLength={2000}
+                  maxLength={2048}
                   onChange={(e, value) => act('fake', {
                     'message': value,
                   })}

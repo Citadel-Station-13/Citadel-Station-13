@@ -122,7 +122,7 @@
 			notice = ""
 			return
 		if("network") //network change, flush the selected machine and buffer
-			var/newnet = trim(html_encode(params["value"]), 15)
+			var/newnet = sanitize(sanitize_text(params["value"], network))
 			if(length(newnet) > 15)	//i'm looking at you, you href fuckers
 				notice = "FAILED: Network tag string too lengthy"
 				return

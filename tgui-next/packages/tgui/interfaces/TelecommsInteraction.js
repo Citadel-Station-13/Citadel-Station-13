@@ -20,9 +20,9 @@ export const TeleInteract = props => {
     network,
     prefab = false,
     hidden = false,
+    isrelay = false,
+    isbus = false,
   } = machine;
-  const isrelay = (machine && machine.broadcast && machine.receiving);
-  const isbus = (machine && machine.chang_frequency);
   return (
     <Fragment>
       {!!notice && (
@@ -32,14 +32,17 @@ export const TeleInteract = props => {
       )}
       <Section title="Network Access">
         <LabeledList>
-          <LabeledList.Item
-            label="Power Status"
-            color={power ? 'good' : 'bad'}>
-            {power ? 'On' : 'Off'}
+          <LabeledList.Item label="Power Status">
+            <Button
+              content={power ? 'On' : 'Off'}
+              icon={power ? 'power-off' : 'times'}
+              color={power ? 'good' : 'bad'}
+              onClick={() => act('toggle')}
+            />
           </LabeledList.Item>
-          {power && (
+          {power ? (
             <Fragment>
-              <LabeledList.Item label="Identification String:">
+              <LabeledList.Item label="Identification String">
                 <Input
                   value={id}
                   width="150px"
@@ -62,50 +65,70 @@ export const TeleInteract = props => {
                 color={power ? 'good' : 'bad'}>
                 {prefab ? 'TRUE' : 'FALSE'}
               </LabeledList.Item>
-              {isrelay && (
+              {isrelay ? (
                 <Fragment>
                   <LabeledList.Item label="Broadcasting">
-                    <Input
-                      value={machine.broadcast}
-                      width="150px"
-                      maxLength={15}
-                      onChange={(e, value) => act('relay', {
-                        'broadcast': value,
-                      })} />
+                    <Button
+                      content={machine.broadcast ? 'YES' : 'NO'}
+                      icon={machine.broadcast ? 'check' : 'times'}
+                      color={machine.broadcast ? 'good' : 'bad'}
+                      onClick={() => act('relay', {
+                        'broadcast': true,
+                      })}
+                    />
                   </LabeledList.Item>
                   <LabeledList.Item label="Receiving">
-                    <Input
-                      value={machine.receiving}
-                      width="150px"
-                      maxLength={15}
-                      onChange={(e, value) => act('relay', {
-                        'receiving': value,
-                      })} />
+                    <Button
+                      content={machine.receiving ? 'YES' : 'NO'}
+                      icon={machine.receiving ? 'check' : 'times'}
+                      color={machine.receiving ? 'good' : 'bad'}
+                      onClick={() => act('relay', {
+                        'receiving': true,
+                      })}
+                    />
                   </LabeledList.Item>
                 </Fragment>
+              ) : (
+                ''
               )}
-              {isbus && (
+              {isbus ? (
                 <LabeledList.Item label="Change Signal Frequency">
-                  <NumberInput
-                    animate
-                    unit="kHz"
-                    step={0.2}
-                    stepPixelSize={10}
-                    minValue={1337 / 10}
-                    maxValue={1599 / 10}
-                    value={machine.chang_frequency / 10}
-                    format={value => toFixed(value, 1)}
-                    onDrag={(e, value) => act('frequency', {
-                      adjust: (value - machine.chang_frequency / 10),
-                    })} />
+                  <Button
+                    content={machine.chang_frequency ? 'Enabled' : 'Disabled'}
+                    icon={machine.chang_frequency ? 'power-off' : 'times'}
+                    color={machine.chang_frequency ? 'good' : 'bad'}
+                    onClick={() => act('frequency', {
+                      'toggle': true,
+                    })}
+                  />
+                  {machine.chang_frequency ? (
+                    <NumberInput
+                      animate
+                      unit="kHz"
+                      step={0.2}
+                      stepPixelSize={10}
+                      minValue={1337 / 10}
+                      maxValue={1599 / 10}
+                      value={machine.chang_freq_value / 10}
+                      format={value => toFixed(value, 1)}
+                      onChange={(e, value) => act('frequency', {
+                        'adjust': (value / 10),
+                      })} />
+                  ) : (
+                    ''
+                  )}
                 </LabeledList.Item>
+              ) : (
+                ''
               )}
-              {hidden && (
+              {hidden ? (
                 <LabeledList.Item label="Shadow Link">
                   {'ACTIVE'}
                 </LabeledList.Item>
+              ) : (
+                ''
               )}
-              {multitool && (
+              {multitool ? (
                 <LabeledList.Item
                   label="Multitool buffer"
                   buttons={multitool_buf ? (
@@ -123,7 +146,7 @@ export const TeleInteract = props => {
                         })}
                       />
                     </Fragment>
-                  ):(
+                  ) : (
                     <Button
                       content="Add Machine"
                       onClick={() => act('multitool', {
@@ -132,16 +155,20 @@ export const TeleInteract = props => {
                     />
                   )}>
                   {multitool_buf ? (
-                    `${multitool_buf.name} ${multitool_buf.id}`
+                    `${multitool_buf.name} (${multitool_buf.id})`
                   ) : (
-                    'Add Machine'
+                    ''
                   )}
                 </LabeledList.Item>
+              ) : (
+                ''
               )}
             </Fragment>
+          ) : (
+            ''
           )}
         </LabeledList>
-        {power && (
+        {power ? (
           <Fragment>
             <Section
               title="Linked Network Entities"
@@ -155,7 +182,7 @@ export const TeleInteract = props => {
                       buttons={(
                         <Button
                           content="Remove"
-                          onClick={() => act('links', {
+                          onClick={() => act('unlink', {
                             'value': entity.ref,
                           })}
                         />
@@ -175,34 +202,35 @@ export const TeleInteract = props => {
                   'add': true,
                 })}
               />
-              <LabeledList>
-                {(freq_listening && freq_listening.length) && (
-                  freq_listening.map(thing => {
-                    const valid = RADIO_CHANNELS
-                      .find(channel => channel.freq === thing);
-                    return (
-                      <Fragment
-                        key={thing}>
-                        {(valid) ? (
-                          <span style={`color: ${valid.color}`}>
-                            {`[${thing}] (${valid.name}) `}
-                          </span>
-                        ) : (
-                          `[${thing}] `
-                        )}
-                        <Button
-                          content="Remove"
-                          onClick={() => act('freq', {
-                            'remove': thing,
-                          })}
-                        />
-                      </Fragment>
-                    );
-                  })
-                )}
-              </LabeledList>
+              <br />
+              <br />
+              {(freq_listening && freq_listening.length) ? (
+                freq_listening.map(thing => {
+                  const valid = RADIO_CHANNELS
+                    .find(channel => channel.freq === thing);
+                  return (
+                    <Button
+                      key={thing}
+                      content={valid ? (
+                        <span style={`color: ${valid.color}`}>
+                          {`${thing} (${valid.name})`}
+                        </span>
+                      ) : (
+                        thing
+                      )}
+                      onClick={() => act('freq', {
+                        'remove': thing,
+                      })}
+                    />
+                  );
+                })
+              ) : (
+                ''
+              )}
             </Section>
           </Fragment>
+        ) : (
+          ''
         )}
       </Section>
     </Fragment>
