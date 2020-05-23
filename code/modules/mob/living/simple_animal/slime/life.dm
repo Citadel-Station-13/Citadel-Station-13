@@ -264,7 +264,7 @@
 	. = ..()
 	if(!slime_check)
 		return
-	if(nutrition == max)
+	if(nutrition >= get_grow_nutrition())
 		if(powerlevel<10)
 			if(prob(30-powerlevel*2))
 				powerlevel++

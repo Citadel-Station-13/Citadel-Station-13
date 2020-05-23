@@ -122,16 +122,22 @@
   * * modifier_is_multiplier : wheter the modifier is a multiplier or a divisor.
   */
 /datum/mind/proc/action_skill_mod(skill, value, threshold, modifier_is_multiplier = TRUE)
-	var/mod
 	var/datum/skill/S = GLOB.skill_datums[skill]
 	if(!S)
-		return
+		return value
+	var/mod = S.base_multiplier
 	switch(S.progression_type)
 		if(SKILL_PROGRESSION_LEVEL)
-			mod = get_skill_level(S.type)
+			var/datum/skill/level/L = S
+			var/skill_lvl = get_skill_level(L.type)
+			mod += skill_lvl/(L.max_levels+max(L.competency_thresholds[threshold]-skill_lvl, 0))*L.competency_multiplier
+		if(SKILL_PROGRESSION_NUMERICAL)
+			var/datum/skill/numerical/N = S
+			var/skill_val = get_skill_value(N.type)
+			mod += skill_val/(N.max_value+max(N.competency_thresholds[threshold]-skill_val, 0))*N.competency_multiplier
 		else
-			mod = get_skill_value(S.type)
-	mod = (1+(mod-S.competency_thresholds[threshold])*S.competency_mults[threshold])
+			var/comp_threshold = S.competency_thresholds[threshold]
+			mod += (comp_threshold ? (get_skill_value(S.type) / comp_threshold) : get_skill_value(S.type))*S.competency_multiplier
 	. = modifier_is_multiplier ? value*mod : value/mod
 
 /**
@@ -139,29 +145,42 @@
   * Args:
   * * item/I : the item used in this action. its used_skills list variable contains the skills exercised with it.
   * * value : the value to modify, may be a delay, damage, probability.
-  * * flags : the required flags that each skill (either in I.used_skills or the skill datum skill_flags) must have to influence
+  * * traits : the required traits each skill (either in I.used_skills or the skill datum skill_traits) must have to influence
   * * 			the value.
-  * * bad_flags : the opposite of the above, skills that must not be present to impact the value.
+  * * bad_traits : the opposite of the above.
   * * modifier_is_multiplier : wheter the modifier is a multiplier or a divisor.
   */
-/datum/mind/proc/item_action_skills_mod(obj/item/I, value, flags = NONE, bad_flags = NONE, modifier_is_multiplier = TRUE)
+/datum/mind/proc/item_action_skills_mod(obj/item/I, value, traits, bad_traits, modifier_is_multiplier = TRUE)
 	. = value
 	var/sum = 0
 	var/divisor = 0
+	var/one_trait = istext(traits)
+	var/one_bad_trait = istext(bad_traits)
 	for(var/k in I.used_skills)
 		var/datum/skill/S = GLOB.skill_datums[k]
 		if(!S)
 			continue
-		var/our_flags = (I.used_skills[k]|S.skill_flags)
-		if((flags && !(our_flags & flags)) || (bad_flags && our_flags & bad_flags))
+		var/our_traits = S.skill_traits
+		our_traits |= I.used_skills[k]
+		if(traits && !(one_trait ? (traits in our_traits) : length(our_traits & traits)))
 			continue
-		var/mod
+		if(bad_traits && (one_bad_trait ? (bad_traits in our_traits) : length(our_traits & bad_traits)))
+			continue
+		var/mod = S.base_multiplier
 		switch(S.progression_type)
 			if(SKILL_PROGRESSION_LEVEL)
-				mod = get_skill_level(S.type)
+				var/datum/skill/level/L = S
+				var/skill_lvl = get_skill_level(L.type)
+				mod += skill_lvl/(L.max_levels+max(L.competency_thresholds[I.skill_difficulty]-skill_lvl, 0))*L.competency_multiplier
+			if(SKILL_PROGRESSION_NUMERICAL)
+				var/datum/skill/numerical/N = S
+				var/skill_val = get_skill_value(N.type)
+				mod += skill_val/(N.max_value+max(N.competency_thresholds[I.skill_difficulty]-skill_val, 0))*N.competency_multiplier
 			else
-				mod = get_skill_value(S.type)
-		sum += 1+(mod - S.competency_thresholds[I.skill_difficulty])*S.competency_mults[I.skill_difficulty]
+				var/comp_threshold = S.competency_thresholds[I.skill_difficulty]
+				mod += (comp_threshold ? (get_skill_value(S.type) / comp_threshold) : get_skill_value(S.type))*S.competency_multiplier
+		sum += mod
+		divisor++
 	if(divisor)
 		. = modifier_is_multiplier ? value*(sum/divisor) : value/(sum/divisor)
 

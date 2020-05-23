@@ -20,18 +20,20 @@ GLOBAL_LIST_INIT_TYPED(skill_datums, /datum/skill, init_skill_datums())
 	var/desc
 	/// Color of the name as shown in the html readout
 	var/name_color = "#F0F0F0" // White on dark surface.
-	/// Our progression type
+	/// Our progression type. These are mostly used to skip typechecks overhead, don't go around messing with these.
 	var/progression_type
 	/// Abstract type
 	var/abstract_type = /datum/skill
 	/// List of max levels. Only used in level skills, but present here for helper macros.
 	var/max_levels = INFINITY
-	/// skill threshold used in generic skill competency calculations.
-	var/list/competency_thresholds = list(0, 0, 0)
-	/// Multiplier of the difference of the holder skill value and the selected threshold.
-	var/list/competency_mults = list(0, 0, 0)
-	/// In which way this skil can affect or be affected through actions and skill modifiers.
-	var/skill_flags = SKILL_USE_MOOD|SKILL_TRAIN_MOOD
+	/// skill threshold used in generic skill competency operations.
+	var/list/competency_thresholds
+	/// Base multiplier used in skill competency operations.
+	var/base_multiplier = 1
+	/// Value added to the base multiplier depending on overall competency compared to maximum value/level.
+	var/competency_multiplier = 1
+	/// A list of ways this skill can affect or be affected through actions and skill modifiers.
+	var/list/skill_traits = list(SKILL_SANITY, SKILL_INTELLIGENCE)
 
 /**
   * Ensures what someone's setting as a value for this skill is valid.
@@ -66,8 +68,7 @@ GLOBAL_LIST_INIT_TYPED(skill_datums, /datum/skill, init_skill_datums())
 /datum/skill/binary
 	abstract_type = /datum/skill/binary
 	progression_type = SKILL_PROGRESSION_BINARY
-	competency_thresholds = list(FALSE, TRUE, TRUE)
-	competency_mults = list(0.5, 0.5, 0.5)
+	competency_thresholds = list(THRESHOLD_COMPETENT = FALSE, THRESHOLD_EXPERT = TRUE, THRESHOLD_MASTER = TRUE)
 
 /datum/skill/binary/sanitize_value(new_value)
 	return new_value? TRUE : FALSE
@@ -78,6 +79,7 @@ GLOBAL_LIST_INIT_TYPED(skill_datums, /datum/skill, init_skill_datums())
 /datum/skill/numerical
 	abstract_type = /datum/skill/numerical
 	progression_type = SKILL_PROGRESSION_NUMERICAL
+	competency_thresholds = list(THRESHOLD_COMPETENT = 25, THRESHOLD_EXPERT = 50, THRESHOLD_MASTER = 75)
 	/// Max value of this skill
 	var/max_value = 100
 	/// Min value of this skill
@@ -180,8 +182,7 @@ GLOBAL_LIST_INIT_TYPED(skill_datums, /datum/skill, init_skill_datums())
 /datum/skill/level/job
 	abstract_type = /datum/skill/level/job
 	levels = list("Basic", "Trained", "Experienced", "Master")
-	competency_thresholds = list(JOB_SKILL_TRAINED, JOB_SKILL_EXPERT, JOB_SKILL_MASTER)
-	competency_mults = list(0.15, 0.1, 0.1)
+	competency_thresholds = list(THRESHOLD_COMPETENT = JOB_SKILL_TRAINED, THRESHOLD_EXPERT = JOB_SKILL_EXPERT, THRESHOLD_MASTER = JOB_SKILL_MASTER)
 	associative = TRUE
 
 //quite the reference, no?
@@ -195,7 +196,6 @@ GLOBAL_LIST_INIT_TYPED(skill_datums, /datum/skill, init_skill_datums())
 				"Proficient", "Talented", "Adept", "Expert",
 				"Professional", "Accomplished", "Great", "Master",
 				"High Master", "Grand Master", "Legendary")
-	competency_thresholds = list(DORF_SKILL_COMPETENT, DORF_SKILL_EXPERT, DORF_SKILL_MASTER)
-	competency_mults = list(0.15, 0.1, 0.08)
+	competency_thresholds = list(THRESHOLD_COMPETENT = DORF_SKILL_COMPETENT, THRESHOLD_EXPERT = DORF_SKILL_EXPERT, THRESHOLD_MASTER = DORF_SKILL_MASTER)
 	associative = TRUE
 	unskilled_tier = "Dabbling"
