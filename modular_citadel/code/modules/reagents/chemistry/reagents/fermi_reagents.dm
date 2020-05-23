@@ -156,7 +156,7 @@
 		to_chat(M, "<span class='notice'>You feel your tongue.... unfluffify...?</span>")
 		M.say("Pleh!")
 	else
-		log_game("FERMICHEM: [M] ckey: [M.key]'s tongue has been made permanent")
+		log_reagent("FERMICHEM: [M] ckey: [M.key]'s tongue has been made permanent")
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
@@ -374,7 +374,7 @@ datum/reagent/fermi/nanite_b_gone/reaction_obj(obj/O, reac_volume)
 	catto.color = "#[H.dna.features["mcolor"]]"
 	catto.pseudo_death = TRUE
 	H.forceMove(catto)
-	log_game("FERMICHEM: [H] ckey: [H.key] has been made into a cute catto.")
+	log_reagent("FERMICHEM: [H] ckey: [H.key] has been made into a cute catto.")
 	SSblackbox.record_feedback("tally", "fermi_chem", 1, "cats")
 	if(H.InCritical())
 		perma = TRUE
@@ -408,7 +408,7 @@ datum/reagent/fermi/nanite_b_gone/reaction_obj(obj/O, reac_volume)
 		H.say("*wag")//force update sprites.
 	to_chat(H, "<span class='notice'>[words]</span>")
 	qdel(catto)
-	log_game("FERMICHEM: [H] ckey: [H.key] has returned to normal")
+	log_reagent("FERMICHEM: [H] ckey: [H.key] has returned to normal")
 
 
 /datum/reagent/fermi/secretcatchem/reaction_mob(var/mob/living/L)
@@ -417,7 +417,7 @@ datum/reagent/fermi/nanite_b_gone/reaction_obj(obj/O, reac_volume)
 		if(catto.origin)
 			var/mob/living/carbon/human/H = catto.origin
 			H.stat = CONSCIOUS
-			log_game("FERMICHEM: [catto] ckey: [catto.key] has returned to normal.")
+			log_reagent("FERMICHEM: [catto] ckey: [catto.key] has returned to normal.")
 			to_chat(catto, "<span class='notice'>Your body shifts back to normal!</span>")
 			H.forceMove(catto.loc)
 			catto.mind.transfer_to(H)
