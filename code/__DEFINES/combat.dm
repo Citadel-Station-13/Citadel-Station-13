@@ -274,7 +274,7 @@ GLOBAL_LIST_INIT(shove_disarming_types, typecacheof(list(
 ///Multiplier of the (STAMINA_NEAR_CRIT - user current stamina loss) : (STAMINA_NEAR_CRIT - STAMINA_SOFTCRIT) ratio used in damage penalties when stam soft-critted.
 #define STAM_CRIT_ITEM_ATTACK_PENALTY	0.5
 /// changeNext_move penalty multiplier of the above.
-#define STAM_CRIT_ITEM_ATTACK_DELAY		1.5
+#define STAM_CRIT_ITEM_ATTACK_DELAY		1.75
 /// Damage penalty when fighting prone.
 #define LYING_DAMAGE_PENALTY			0.5
 /// Added delay when firing guns stam-softcritted. Summed with a hardset CLICK_CD_RANGE delay, similar to STAM_CRIT_DAMAGE_DELAY otherwise.
