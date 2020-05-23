@@ -46,7 +46,7 @@
 		return 0
 	. = ..()
 
-/obj/item/gun/ballistic/automatic/magrifle/shoot_live_shot()
+/obj/item/gun/ballistic/automatic/magrifle/shoot_live_shot(mob/living/user, pointblank = FALSE, mob/pbtarget, message = 1, stam_cost = 0)
 	var/obj/item/ammo_casing/caseless/magnetic/shot = chambered
 	cell.use(shot.energy_cost)
 	. = ..()

@@ -3398,7 +3398,6 @@
 #include "modular_citadel\code\modules\mob\living\carbon\reindex_screams.dm"
 #include "modular_citadel\code\modules\mob\living\carbon\human\human.dm"
 #include "modular_citadel\code\modules\mob\living\carbon\human\human_defense.dm"
-#include "modular_citadel\code\modules\projectiles\gun.dm"
 #include "modular_citadel\code\modules\projectiles\ammunition\caseless.dm"
 #include "modular_citadel\code\modules\projectiles\ammunition\ballistic\smg\smg.dm"
 #include "modular_citadel\code\modules\projectiles\boxes_magazines\ammo_boxes.dm"
