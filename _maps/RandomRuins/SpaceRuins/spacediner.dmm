@@ -441,6 +441,10 @@
 	icon_state = "bulb-broken";
 	dir = 1
 	},
+/obj/machinery/power/apc/highcap/five_k{
+	name = "Space Diner APC";
+	pixel_y = 24
+	},
 /turf/open/floor/plasteel,
 /area/ruin/space/diner/interior)
 "bu" = (
@@ -962,6 +966,7 @@
 	icon_state = "pipe11-2";
 	dir = 4
 	},
+/obj/item/beacon,
 /turf/open/floor/plasteel/dark,
 /area/ruin/space/diner/interior)
 "cA" = (
