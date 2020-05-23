@@ -102,7 +102,7 @@
 	. = ..()
 	safe_calibers = magazine.caliber
 
-/obj/item/gun/ballistic/revolver/detective/process_fire(atom/target, mob/living/user, message = TRUE, params = null, zone_override = "", bonus_spread = 0)
+/obj/item/gun/ballistic/revolver/detective/process_fire(atom/target, mob/living/user, message = TRUE, params = null, zone_override = "", bonus_spread = 0, stam_cost = 0)
 	if(chambered && !(chambered.caliber in safe_calibers))
 		if(prob(70 - (magazine.ammo_count() * 10)))	//minimum probability of 10, maximum of 60
 			playsound(user, fire_sound, 50, 1)
