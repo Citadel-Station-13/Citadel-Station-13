@@ -377,7 +377,7 @@ mob/visible_message(message, self_message, blind_message, vision_distance = DEFA
 		return FALSE
 
 	new /obj/effect/temp_visual/point(A,invisibility)
-
+	SEND_SIGNAL(src, COMSIG_MOB_POINTED, A)
 	return TRUE
 
 /mob/proc/can_resist()

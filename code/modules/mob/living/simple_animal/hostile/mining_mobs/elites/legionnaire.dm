@@ -298,5 +298,5 @@
 	var/mob/living/simple_animal/hostile/asteroid/hivelordbrood/legion/A = new /mob/living/simple_animal/hostile/asteroid/hivelordbrood/legion(user.loc)
 	A.flags_1 |= (flags_1 & ADMIN_SPAWNED_1)
 	A.GiveTarget(target)
-	A.friends = user
+	A.friends[user]++
 	A.faction = user.faction.Copy()
