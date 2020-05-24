@@ -477,9 +477,11 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	throw_speed = 5
 	throw_range = 2
 	attack_verb = list("busted")
+	var/impressiveness = 45
 
 /obj/item/statuebust/Initialize()
 	. = ..()
+	AddComponent(/datum/component/art, impressiveness)
 	addtimer(CALLBACK(src, /datum.proc/_AddComponent, list(/datum/component/beauty, 1000)), 0)
 
 /obj/item/tailclub

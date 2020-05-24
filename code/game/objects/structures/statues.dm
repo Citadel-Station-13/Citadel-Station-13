@@ -8,16 +8,16 @@
 	max_integrity = 100
 	var/oreAmount = 5
 	var/material_drop_type = /obj/item/stack/sheet/metal
-	var/impressiveness = 15 //hack till the art component is also added.
+	var/impressiveness = 15
 	CanAtmosPass = ATMOS_PASS_DENSITY
+
 
 /obj/structure/statue/Initialize()
 	. = ..()
+	AddComponent(art_type, impressiveness)
 	addtimer(CALLBACK(src, /datum.proc/_AddComponent, list(/datum/component/beauty, impressiveness *  75)), 0)
-
 /obj/structure/statue/attackby(obj/item/W, mob/living/user, params)
 	add_fingerprint(user)
-	user.changeNext_move(CLICK_CD_MELEE)
 	if(!(flags_1 & NODECONSTRUCT_1))
 		if(default_unfasten_wrench(user, W))
 			return
@@ -33,15 +33,6 @@
 				deconstruct(TRUE)
 			return
 	return ..()
-
-/obj/structure/statue/attack_hand(mob/living/user)
-	. = ..()
-	if(.)
-		return
-	user.changeNext_move(CLICK_CD_MELEE)
-	add_fingerprint(user)
-	user.visible_message("[user] rubs some dust off from the [name]'s surface.", \
-						 "<span class='notice'>You rub some dust off from the [name]'s surface.</span>")
 
 /obj/structure/statue/deconstruct(disassembled = TRUE)
 	if(!(flags_1 & NODECONSTRUCT_1))
@@ -62,6 +53,7 @@
 	material_drop_type = /obj/item/stack/sheet/mineral/uranium
 	var/last_event = 0
 	var/active = null
+	impressiveness = 25 // radiation makes an impression
 
 /obj/structure/statue/uranium/nuke
 	name = "statue of a nuclear fission explosive"
@@ -105,6 +97,7 @@
 	max_integrity = 200
 	material_drop_type = /obj/item/stack/sheet/mineral/plasma
 	desc = "This statue is suitably made from plasma."
+	impressiveness = 20
 
 /obj/structure/statue/plasma/scientist
 	name = "statue of a scientist"
@@ -155,6 +148,7 @@
 	max_integrity = 300
 	material_drop_type = /obj/item/stack/sheet/mineral/gold
 	desc = "This is a highly valuable statue made from gold."
+	impressiveness = 30
 
 /obj/structure/statue/gold/hos
 	name = "statue of the head of security"
@@ -182,6 +176,7 @@
 	max_integrity = 300
 	material_drop_type = /obj/item/stack/sheet/mineral/silver
 	desc = "This is a valuable statue made from silver."
+	impressiveness = 25
 
 /obj/structure/statue/silver/md
 	name = "statue of a medical officer"
@@ -209,6 +204,7 @@
 	max_integrity = 1000
 	material_drop_type = /obj/item/stack/sheet/mineral/diamond
 	desc = "This is a very expensive diamond statue."
+	impressiveness = 60
 
 /obj/structure/statue/diamond/captain
 	name = "statue of THE captain."
@@ -229,6 +225,7 @@
 	material_drop_type = /obj/item/stack/sheet/mineral/bananium
 	desc = "A bananium statue with a small engraving:'HOOOOOOONK'."
 	var/spam_flag = 0
+	impressiveness = 65
 
 /obj/structure/statue/bananium/clown
 	name = "statue of a clown"
