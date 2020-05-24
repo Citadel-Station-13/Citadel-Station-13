@@ -58,8 +58,8 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
     lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
     righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
     slot_flags = ITEM_SLOT_BELT
-    force = 8
-    throwforce = 4
+    force = 6
+    throwforce = 3
     w_class = WEIGHT_CLASS_BULKY
     hitsound = 'sound/weapons/bladeslice.ogg'
     attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
@@ -73,8 +73,8 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
     lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
     righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
     slot_flags = ITEM_SLOT_BELT
-    force = 16
-    throwforce = 8
+    force = 12
+    throwforce = 6
     w_class = WEIGHT_CLASS_BULKY
     hitsound = 'sound/weapons/bladeslice.ogg'
     attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
