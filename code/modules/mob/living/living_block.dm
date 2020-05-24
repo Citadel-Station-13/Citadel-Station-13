@@ -94,7 +94,7 @@
   * Considers a block return_list and calculates damage to use from that.
   */
 /proc/block_calculate_resultant_damage(damage, list/block_return)
-	if(!isnull(block_return[BLOCK_RETURN_SET_DAMAGE_TO))	// higher priority
+	if(!isnull(block_return[BLOCK_RETURN_SET_DAMAGE_TO]))	// higher priority
 		return block_return[BLOCK_RETURN_SET_DAMAGE_TO]
 	else if(!isnull(block_return[BLOCK_RETURN_MITIGATION_PERCENT]))
 		return damage * ((100 - block_return[BLOCK_RETURN_MITIGATION_PERCENT]) * 0.01)
