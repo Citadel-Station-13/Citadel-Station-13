@@ -50,6 +50,36 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	"<span class='suicide'>You try to impale yourself with [src], but it's USELESS...</span>")
 	return SHAME
 
+/obj/item/woodensword
+	name = "wooden sword"
+	desc = "A wooden blade of questionable quality."
+	icon_state = "wooden_sword"
+	item_state = "wooden_sword"
+	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
+	slot_flags = ITEM_SLOT_BELT
+	force = 8
+	throwforce = 4
+	w_class = WEIGHT_CLASS_BULKY
+	hitsound = 'sound/weapons/bladeslice.ogg'
+	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
+	sharpness = IS_SHARP
+
+/obj/item/steelsword
+	name = "steel sword"
+	desc = "A steel blade of decent quality."
+	icon_state = "steel_sword"
+	item_state = "steel_sword"
+	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
+	slot_flags = ITEM_SLOT_BELT
+	force = 16
+	throwforce = 8
+	w_class = WEIGHT_CLASS_BULKY
+	hitsound = 'sound/weapons/bladeslice.ogg'
+	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
+	sharpness = IS_SHARP
+
 /obj/item/claymore
 	name = "claymore"
 	desc = "What are you standing around staring at this for? Get to killing!"
