@@ -241,12 +241,6 @@
 	icon_state = "whitekeg"
 	reagent_id = /datum/reagent/consumable/milk
 
-/obj/structure/reagent_dispensers/keg/semen
-	name = "keg of semen"
-	desc = "Dear lord, where did this even come from?"
-	icon_state = "whitekeg"
-	reagent_id = /datum/reagent/consumable/semen
-
 /obj/structure/reagent_dispensers/keg/gargle
 	name = "keg of pan galactic gargleblaster"
 	desc = "A keg of... wow that's a long name."
