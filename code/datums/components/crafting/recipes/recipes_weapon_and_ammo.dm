@@ -192,7 +192,7 @@
 	result =  /obj/item/gun/ballistic/bow/pipe
 	reqs = list(/obj/item/pipe = 5,
 	/obj/item/stack/sheet/plastic = 15,
-	/obj/item/weaponcrafting/silkstring = 5)
+	/obj/item/weaponcrafting/durathread_string = 5)
 	time = 450
 	category = CAT_WEAPONRY
 	subcategory = CAT_WEAPON
@@ -281,7 +281,7 @@
 	result = /obj/item/ammo_casing/caseless/arrow/wood
 	time = 30
 	reqs = list(/obj/item/stack/sheet/mineral/wood = 1,
-				 /obj/item/stack/sheet/silk = 1,
+				 /obj/item/stack/sheet/durathread = 1,
 				 /obj/item/stack/rods = 1) // 1 metal sheet = 2 rods = 2 arrows
 	category = CAT_WEAPONRY
 	subcategory = CAT_AMMO

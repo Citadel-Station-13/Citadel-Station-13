@@ -296,6 +296,7 @@
 	var/x_abs = clamp(T.x + target_x_rel, 0, world.maxx)
 	var/y_abs = clamp(T.y + target_y_rel, 0, world.maxy)
 	var/range = round(clamp(sqrt(target_x_rel*target_x_rel+target_y_rel*target_y_rel),0,8),1)
+	playsound(src, 'sound/weapons/sonic_jackhammer.ogg', 50, 1)
 	assembly.visible_message("<span class='danger'>\The [assembly] has thrown [A]!</span>")
 	log_attack("[assembly] [REF(assembly)] has thrown [A] with lethal force.")
 	A.forceMove(drop_location())

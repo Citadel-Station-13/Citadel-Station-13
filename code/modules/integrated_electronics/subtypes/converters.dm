@@ -426,7 +426,7 @@
 	activators = list("compute abs coordinates" = IC_PINTYPE_PULSE_IN, "on convert" = IC_PINTYPE_PULSE_OUT)
 	spawn_flags = IC_SPAWN_DEFAULT|IC_SPAWN_RESEARCH
 
-/obj/item/integrated_circuit/converter/abs_to_rel_coords/do_work()
+/obj/item/integrated_circuit/converter/rel_to_abs_coords/do_work()
 	var/x1 = get_pin_data(IC_INPUT, 1)
 	var/y1 = get_pin_data(IC_INPUT, 2)
 
@@ -456,7 +456,7 @@
 	activators = list("compute abs coordinates" = IC_PINTYPE_PULSE_IN, "on convert" = IC_PINTYPE_PULSE_OUT)
 	spawn_flags = IC_SPAWN_DEFAULT|IC_SPAWN_RESEARCH
 
-/obj/item/integrated_circuit/converter/abs_to_rel_coords/do_work()
+/obj/item/integrated_circuit/converter/adv_rel_to_abs_coords/do_work()
 	var/turf/T = get_turf(src)
 
 	if(!T)

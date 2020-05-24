@@ -28,7 +28,7 @@
 		return 0
 
 	var/list/choices = list()
-	for(var/mob/living/C in visible_atoms(1,src))
+	for(var/mob/living/C in fov_view(1,src))
 		if(C!=src && Adjacent(C))
 			choices += C
 

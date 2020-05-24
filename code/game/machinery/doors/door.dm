@@ -290,8 +290,6 @@
 	operating = TRUE
 	do_animate("closing")
 	layer = closingLayer
-	if(!safe)
-		crush()
 	sleep(5)
 	density = TRUE
 	sleep(5)
@@ -303,6 +301,8 @@
 	update_freelook_sight()
 	if(safe)
 		CheckForMobs()
+	else
+		crush()
 	return 1
 
 /obj/machinery/door/proc/CheckForMobs()

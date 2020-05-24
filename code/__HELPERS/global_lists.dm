@@ -75,6 +75,8 @@
 		var/datum/emote/E = new path()
 		E.emote_list[E.key] = E
 
+	init_keybindings()
+
 	//Uplink Items
 	for(var/path in subtypesof(/datum/uplink_item))
 		var/datum/uplink_item/I = path

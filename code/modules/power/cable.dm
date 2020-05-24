@@ -39,6 +39,7 @@ By design, d1 is the smallest direction and d2 is the highest
 	icon = 'icons/obj/power_cond/cables.dmi'
 	icon_state = "0-1"
 	level = 1 //is underfloor
+	plane = ABOVE_WALL_PLANE
 	layer = WIRE_LAYER //Above hidden pipes, GAS_PIPE_HIDDEN_LAYER
 	anchored = TRUE
 	obj_flags = CAN_BE_HIT | ON_BLUEPRINTS
