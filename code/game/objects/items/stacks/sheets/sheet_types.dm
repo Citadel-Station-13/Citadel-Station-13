@@ -402,8 +402,6 @@ GLOBAL_LIST_INIT(cloth_recipes, list ( \
 	resistance_flags = FLAMMABLE
 	force = 0
 	throwforce = 0
-	pull_effort = 90
-	is_fabric = TRUE
 	merge_type = /obj/item/stack/sheet/cloth
 
 /obj/item/stack/sheet/cloth/get_main_recipes()
@@ -424,7 +422,7 @@ GLOBAL_LIST_INIT(durathread_recipes, list ( \
 	new/datum/stack_recipe("durathread beret", /obj/item/clothing/head/beret/durathread, 2, time = 40), \
 	new/datum/stack_recipe("durathread beanie", /obj/item/clothing/head/beanie/durathread, 2, time = 40), \
 	new/datum/stack_recipe("durathread bandana", /obj/item/clothing/mask/bandana/durathread, 1, time = 25), \
-	new/datum/stack_recipe("durathread string", /obj/item/weaponcrafting/durathread_string, 1, time = 40) \
+	new/datum/stack_recipe("durathread string", /obj/item/weaponcrafting/durathread_string, 1, time = 40), \
 	))
 
 /obj/item/stack/sheet/durathread
@@ -816,13 +814,12 @@ new /datum/stack_recipe("paper frame door", /obj/structure/mineral_door/paperfra
 	max_amount = 80
 	singular_name = "raw cotton ball"
 	icon_state = "sheet-cotton"
-	is_fabric = TRUE
 	resistance_flags = FLAMMABLE
 	force = 0
 	throwforce = 0
 	merge_type = /obj/item/stack/sheet/cotton
-	pull_effort = 30
-	loom_result = /obj/item/stack/sheet/cloth
+	var/pull_effort = 30
+	var/loom_result = /obj/item/stack/sheet/cloth
 
 /obj/item/stack/sheet/cotton/ten
 	amount = 10
