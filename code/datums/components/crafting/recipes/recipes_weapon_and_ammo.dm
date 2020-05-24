@@ -51,6 +51,24 @@
 	category = CAT_WEAPONRY
 	subcategory = CAT_WEAPON
 
+/datum/crafting_recipe/woodensword
+    name = "Wooden Sword"
+    result = /obj/item/woodensword
+    reqs = list(/obj/item/stack/sheet/mineral/wood = 5)
+    time = 40
+    category = CAT_WEAPONRY
+    subcategory = CAT_WEAPON
+
+/datum/crafting_recipe/steelsword
+    name = "Steel Sword"
+    result = /obj/item/steelsword
+    reqs = list(/obj/item/stack/sheet/plasteel = 5,
+                /obj/item/woodensword = 1)
+    tools = list(TOOL_WELDER)
+    time = 60
+    category = CAT_WEAPONRY
+    subcategory = CAT_WEAPON
+
 /datum/crafting_recipe/stunprod
 	name = "Stunprod"
 	result = /obj/item/melee/baton/cattleprod
