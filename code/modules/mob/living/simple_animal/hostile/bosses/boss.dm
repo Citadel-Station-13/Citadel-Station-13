@@ -87,7 +87,7 @@
 	var/list/abilities //a list of /datum/action/boss owned by a boss mob
 	var/point_regen_delay = 5
 	var/max_points = 100
-	var/points = 50 //1-100, start with 50 so we can use some abilities but not insta-buttfug somebody
+	var/points = 50 //start with 50 so we can use some abilities but not insta-buttfug somebody
 	var/next_point_time = 0
 	var/chance_to_hold_onto_points = 50
 	var/highest_cost = 0
@@ -121,9 +121,9 @@
 
 
 /datum/boss_active_timed_battle/process()
-	if(world.time >= next_point_time)
+	if(world.time >= next_point_time && points < max_points)
 		next_point_time = world.time + point_regen_delay
-		points = min(100, ++points) //has to be out of 100
+		points = min(max_points, ++points) //has to be out of 100
 
 	if(abilities)
 		chance_to_hold_onto_points = highest_cost*0.5
