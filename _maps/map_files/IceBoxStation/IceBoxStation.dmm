@@ -38265,7 +38265,7 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
-/obj/machinery/chem_dispenser,
+/obj/machinery/chem_dispenser/apothecary,
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
 "bLV" = (

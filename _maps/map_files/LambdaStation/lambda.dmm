@@ -38258,12 +38258,10 @@
 /turf/open/floor/plasteel/white,
 /area/medical/chemistry)
 "btD" = (
-/obj/machinery/chem_dispenser{
-	layer = 2.7
-	},
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 1
 	},
+/obj/machinery/chem_dispenser/apothecary,
 /turf/open/floor/plasteel/white,
 /area/medical/chemistry)
 "btE" = (
