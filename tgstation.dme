@@ -2161,6 +2161,7 @@
 #include "code\modules\keybindings\keybind\admin.dm"
 #include "code\modules\keybindings\keybind\carbon.dm"
 #include "code\modules\keybindings\keybind\client.dm"
+#include "code\modules\keybindings\keybind\combat.dm"
 #include "code\modules\keybindings\keybind\emote.dm"
 #include "code\modules\keybindings\keybind\human.dm"
 #include "code\modules\keybindings\keybind\living.dm"
