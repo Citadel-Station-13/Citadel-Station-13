@@ -23470,9 +23470,7 @@
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,
-/obj/structure/closet/l3closet/scientist{
-	pixel_x = -2
-	},
+/obj/structure/closet/l3closet/scientist,
 /turf/open/floor/plasteel/white,
 /area/science/explab)
 "aQI" = (
@@ -81493,6 +81491,10 @@
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/aft)
+"sZf" = (
+/obj/machinery/rnd/bepis,
+/turf/open/floor/engine,
+/area/science/explab)
 "tbT" = (
 /obj/machinery/power/emitter/anchored{
 	dir = 1;
@@ -113779,7 +113781,7 @@ aFb
 aFO
 aGD
 aHo
-aGD
+aHp
 aDr
 aaA
 aaA
@@ -114035,7 +114037,7 @@ aEj
 aFc
 aFO
 aGD
-aHp
+aGD
 aGD
 aDr
 apk
@@ -114548,9 +114550,9 @@ aJP
 aKA
 aFe
 aDr
-aGD
 aHq
 aGD
+sZf
 aDr
 aJI
 aKB

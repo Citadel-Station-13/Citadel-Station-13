@@ -29367,14 +29367,7 @@
 /turf/open/floor/plating,
 /area/maintenance/starboard)
 "brz" = (
-/obj/structure/table,
-/obj/item/pen,
-/obj/machinery/camera{
-	c_tag = "Experimentor Lab";
-	network = list("ss13","rd")
-	},
-/obj/item/hand_labeler,
-/obj/item/stack/packageWrap,
+/obj/machinery/rnd/bepis,
 /turf/open/floor/plasteel/white/side,
 /area/science/explab)
 "brA" = (
@@ -29396,6 +29389,10 @@
 	pixel_y = 23
 	},
 /obj/item/radio/off,
+/obj/machinery/camera{
+	c_tag = "Experimentor Lab";
+	network = list("ss13","rd")
+	},
 /turf/open/floor/plasteel/white/side,
 /area/science/explab)
 "brD" = (
