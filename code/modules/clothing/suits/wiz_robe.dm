@@ -170,7 +170,7 @@
 		return FALSE
 	return ..()
 
-//Stickmemes
+//Stickmemes. VV-friendly.
 /datum/action/item_action/stickmen
 	name = "Summon Stick Minions"
 	desc = "Allows you to summon faithful stickmen allies to aide you in battle."
@@ -178,6 +178,7 @@
 	button_icon_state = "art_summon"
 	var/ready = TRUE
 	var/list/summoned_stickmen = list()
+	var/summoned_mob_path = /mob/living/simple_animal/hostile/stickman //Must be an hostile animal path.
 	var/max_stickmen = 8
 	var/cooldown = 3 SECONDS
 	var/list/book_of_grudges = list()
@@ -189,7 +190,7 @@
 
 /datum/action/item_action/stickmen/Destroy()
 	for(var/A in summoned_stickmen)
-		var/mob/living/simple_animal/hostile/stickman/S = A
+		var/mob/living/simple_animal/hostile/S = A
 		if(S.client)
 			to_chat(S, "<span class='danger'>A dizzying sensation strikes you as the comglomerate of pencil lines you call \
 						your body crumbles under the pressure of an invisible eraser, soon to join bilions discarded sketches. \
@@ -211,7 +212,7 @@
 	if(book_of_grudges[M]) //Stop attacking your new master.
 		book_of_grudges -= M
 		for(var/A in summoned_stickmen)
-			var/mob/living/simple_animal/hostile/stickman/S = A
+			var/mob/living/simple_animal/hostile/S = A
 			if(!S.mind)
 				S.LoseTarget()
 
@@ -229,7 +230,7 @@
 		return FALSE
 	var/summon = TRUE
 	if(length(summoned_stickmen) >= max_stickmen)
-		var/mob/living/simple_animal/hostile/stickman/S = popleft(summoned_stickmen)
+		var/mob/living/simple_animal/hostile/S = popleft(summoned_stickmen)
 		if(!S.client)
 			qdel(S)
 		else
@@ -241,7 +242,7 @@
 	owner.say("Rise, my creation! Off your page into this realm!", forced = "stickman summoning")
 	playsound(owner, 'sound/magic/summon_magic.ogg', 50, 1, 1)
 	if(summon)
-		var/mob/living/simple_animal/hostile/stickman/S = new (get_turf(usr))
+		var/mob/living/simple_animal/hostile/S = new summoned_mob_path (get_turf(usr))
 		S.faction = owner.faction
 		S.foes = book_of_grudges
 		RegisterSignal(S, COMSIG_PARENT_QDELETING, .proc/remove_from_list)
@@ -280,7 +281,7 @@
 				RegisterSignal(L, list(COMSIG_PARENT_QDELETING, COMSIG_MOB_DEATH), .proc/grudge_settled)
 				book_of_grudges[L] = TRUE
 	for(var/k in summoned_stickmen) //Shamelessly copied from the blob rally power
-		var/mob/living/simple_animal/hostile/stickman/S = k
+		var/mob/living/simple_animal/hostile/S = k
 		if(!S.mind && isturf(S.loc) && get_dist(S, T) <= 10)
 			S.LoseTarget()
 			S.Goto(pick(surrounding_turfs), S.move_to_delay)

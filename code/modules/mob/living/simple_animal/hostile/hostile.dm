@@ -211,7 +211,7 @@
 	if(search_objects < 2)
 		if(isliving(the_target))
 			var/mob/living/L = the_target
-			var/faction_check = !foes[L] ? faction_check_mob(L) : !attack_same
+			var/faction_check = !foes[L] && faction_check_mob(L)
 			if(robust_searching)
 				if(faction_check && !attack_same)
 					return FALSE
