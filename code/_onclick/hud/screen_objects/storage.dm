@@ -65,6 +65,7 @@
 	return ..()
 
 /obj/screen/storage/volumetric_box/Destroy()
+	makeItemInactive()
 	our_item = null
 	return ..()
 
@@ -87,10 +88,14 @@
 	makeItemInactive()
 
 /obj/screen/storage/volumetric_box/proc/makeItemInactive()
+	if(!our_item)
+		return
 	our_item.layer = VOLUMETRIC_STORAGE_ITEM_LAYER
 	our_item.plane = VOLUMETRIC_STORAGE_ITEM_PLANE
 
 /obj/screen/storage/volumetric_box/proc/makeItemActive()
+	if(!our_item)
+		return
 	our_item.layer = VOLUMETRIC_STORAGE_ACTIVE_ITEM_LAYER		//make sure we display infront of the others!
 	our_item.plane = VOLUMETRIC_STORAGE_ACTIVE_ITEM_PLANE
 
