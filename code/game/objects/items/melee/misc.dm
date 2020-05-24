@@ -304,7 +304,7 @@
 			return
 	else
 		if(cooldown_check < world.time)
-			if(target.run_block(src, 0, "[user]'s [name]", ATTACK_TYPE_MELEE, 0, user) & BLOCK_SUCCESS)
+			if(target.mob_run_block(src, 0, "[user]'s [name]", ATTACK_TYPE_MELEE, 0, user, null, null) & BLOCK_SUCCESS)
 				playsound(target, 'sound/weapons/genhit.ogg', 50, 1)
 				return
 			if(ishuman(target))
@@ -325,7 +325,7 @@
 			else
 				target.LAssailant = WEAKREF(user)
 			cooldown_check = world.time + cooldown
-			user.adjustStaminaLossBuffered(getweight())//CIT CHANGE - makes swinging batons cost stamina
+			user.adjustStaminaLossBuffered(getweight(user, STAM_COST_BATON_MOB_MULT))
 		else
 			var/wait_desc = get_wait_description()
 			if(wait_desc)

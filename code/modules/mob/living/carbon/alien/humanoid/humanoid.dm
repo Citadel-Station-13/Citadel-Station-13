@@ -25,6 +25,7 @@
 /mob/living/carbon/alien/humanoid/Initialize()
 	AddAbility(new/obj/effect/proc_holder/alien/regurgitate(null))
 	. = ..()
+	AddComponent(/datum/component/footstep, FOOTSTEP_MOB_CLAW, 0.5, -3)
 
 /mob/living/carbon/alien/humanoid/restrained(ignore_grab)
 	return handcuffed

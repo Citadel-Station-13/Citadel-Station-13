@@ -48,7 +48,7 @@
 /obj/machinery/power/apc
 	name = "area power controller"
 	desc = "A control terminal for the area's electrical systems."
-
+	plane = ABOVE_WALL_PLANE
 	icon_state = "apc0"
 	use_power = NO_POWER_USE
 	req_access = null
@@ -597,19 +597,15 @@
 		user.visible_message("[user.name] adds cables to the APC frame.", \
 							"<span class='notice'>You start adding cables to the APC frame...</span>")
 		playsound(src.loc, 'sound/items/deconstruct.ogg', 50, 1)
-		if(do_after(user, 20, target = src))
-			if (C.get_amount() < 10 || !C)
+		if(C.use_tool(src, user, 20, 10) && !terminal && opened && has_electronics)
+			var/turf/T = get_turf(src)
+			var/obj/structure/cable/N = T.get_cable_node()
+			if (prob(50) && electrocute_mob(usr, N, N, 1, TRUE))
+				do_sparks(5, TRUE, src)
 				return
-			if (C.get_amount() >= 10 && !terminal && opened && has_electronics)
-				var/turf/T = get_turf(src)
-				var/obj/structure/cable/N = T.get_cable_node()
-				if (prob(50) && electrocute_mob(usr, N, N, 1, TRUE))
-					do_sparks(5, TRUE, src)
-					return
-				C.use(10)
-				to_chat(user, "<span class='notice'>You add cables to the APC frame.</span>")
-				make_terminal()
-				terminal.connect_to_network()
+			to_chat(user, "<span class='notice'>You add cables to the APC frame.</span>")
+			make_terminal()
+			terminal.connect_to_network()
 	else if (istype(W, /obj/item/electronics/apc) && opened)
 		if (has_electronics)
 			to_chat(user, "<span class='warning'>There is already a board inside the [src]!</span>")
@@ -1583,4 +1579,5 @@
 /obj/item/electronics/apc
 	name = "power control module"
 	icon_state = "power_mod"
+	custom_price = 50
 	desc = "Heavy-duty switching circuits for power control."

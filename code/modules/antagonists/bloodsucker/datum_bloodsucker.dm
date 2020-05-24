@@ -20,7 +20,7 @@
 	var/poweron_feed = FALSE			// Am I feeding?
 	var/poweron_masquerade = FALSE
 	// STATS
-	var/bloodsucker_level 
+	var/bloodsucker_level
 	var/bloodsucker_level_unspent = 1
 	var/regen_rate = 0.3				// How fast do I regenerate?
 	var/additional_regen                // How much additional blood regen we gain from bonuses such as high blood.
@@ -39,7 +39,7 @@
 	var/passive_blood_drain = -0.1        //The amount of blood we loose each bloodsucker life() tick
 	// LISTS
 	var/static/list/defaultTraits = list (TRAIT_STABLEHEART, TRAIT_NOBREATH, TRAIT_SLEEPIMMUNE, TRAIT_NOCRITDAMAGE, TRAIT_RESISTCOLD, TRAIT_RADIMMUNE, TRAIT_NIGHT_VISION, \
-										  TRAIT_NOSOFTCRIT, TRAIT_NOHARDCRIT, TRAIT_AGEUSIA, TRAIT_COLDBLOODED, TRAIT_NONATURALHEAL, TRAIT_NOMARROW, TRAIT_NOPULSE, TRAIT_VIRUSIMMUNE)
+										  TRAIT_NOSOFTCRIT, TRAIT_NOHARDCRIT, TRAIT_AGEUSIA, TRAIT_COLDBLOODED, TRAIT_NONATURALHEAL, TRAIT_NOMARROW, TRAIT_NOPULSE, TRAIT_VIRUSIMMUNE, TRAIT_NODECAP, TRAIT_NOGUT)
 
 /datum/antagonist/bloodsucker/on_gain()
 	SSticker.mode.bloodsuckers |= owner // Add if not already in here (and you might be, if you were picked at round start)
@@ -209,7 +209,7 @@
 	// Physiology
 	CheckVampOrgans() // Heart, Eyes
 	// Language
-	owner.current.grant_language(/datum/language/vampiric)
+	owner.current.grant_language(/datum/language/vampiric, TRUE, TRUE, LANGUAGE_BLOODSUCKER)
 	owner.hasSoul = FALSE 		// If false, renders the character unable to sell their soul.
 	owner.isholy = FALSE 		// is this person a chaplain or admin role allowed to use bibles
 	// Disabilities
@@ -246,7 +246,7 @@
 	// Update Health
 	owner.current.setMaxHealth(100)
 	// Language
-	owner.current.remove_language(/datum/language/vampiric)
+	owner.current.remove_language(/datum/language/vampiric, TRUE, TRUE, LANGUAGE_BLOODSUCKER)
 	// Soul
 	if (owner.soulOwner == owner) // Return soul, if *I* own it.
 		owner.hasSoul = TRUE
@@ -649,10 +649,10 @@
 		return TRUE
 	// Check 3) If I am a BLOODSUCKER, then are they my Vassal?
 	if (mob_B && atom_V && (atom_V in mob_B.vassals))
-		return TRUE 
+		return TRUE
 	// Check 4) If we are both VASSAL, then do we have the same master?
 	if (atom_V && mob_V && atom_V.master == mob_V.master)
-		return TRUE 
+		return TRUE
 	return FALSE
 
 
@@ -710,7 +710,7 @@
 	invisibility = INVISIBILITY_ABSTRACT
 
 /obj/screen/bloodsucker/proc/update_counter(value, valuecolor)
-	invisibility = 0 
+	invisibility = 0
 
 /obj/screen/bloodsucker/blood_counter
 	icon = 'icons/mob/actions/bloodsucker.dmi'
@@ -758,7 +758,7 @@
 
 /obj/screen/bloodsucker/sunlight_counter/update_counter(value, valuecolor)
 	..()
-	maptext = "<div align='center' valign='bottom' style='position:relative; top:0px; left:6px'><font color='[valuecolor]'>[value]</font></div>"	
+	maptext = "<div align='center' valign='bottom' style='position:relative; top:0px; left:6px'><font color='[valuecolor]'>[value]</font></div>"
 
 /datum/antagonist/bloodsucker/proc/count_vassals(datum/mind/master)
 	var/datum/antagonist/bloodsucker/B = master.has_antag_datum(ANTAG_DATUM_BLOODSUCKER)

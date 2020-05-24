@@ -139,6 +139,12 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	 */
 	var/datum/block_parry_data/block_parry_data
 
+	///Skills vars
+	//list of skill PATHS exercised when using this item. An associated bitfield can be set to indicate additional ways the skill is used by this specific item.
+	var/list/datum/skill/used_skills
+	var/skill_difficulty = THRESHOLD_UNTRAINED //how difficult it's to use this item in general.
+	var/skill_gain = DEF_SKILL_GAIN //base skill value gain from using this item.
+
 /obj/item/Initialize()
 
 	if (attack_verb)
@@ -785,14 +791,17 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 		var/user = usr
 		tip_timer = addtimer(CALLBACK(src, .proc/openTip, location, control, params, user), timedelay, TIMER_STOPPABLE)//timer takes delay in deciseconds, but the pref is in milliseconds. dividing by 100 converts it.
 
-/obj/item/MouseExited()
+/obj/item/MouseExited(location,control,params)
+	SEND_SIGNAL(src, COMSIG_ITEM_MOUSE_EXIT, location, control, params)
 	deltimer(tip_timer)//delete any in-progress timer if the mouse is moved off the item before it finishes
 	closeToolTip(usr)
 
+/obj/item/MouseEntered(location,control,params)
+	SEND_SIGNAL(src, COMSIG_ITEM_MOUSE_ENTER, location, control, params)
 
 // Called when a mob tries to use the item as a tool.
 // Handles most checks.
-/obj/item/proc/use_tool(atom/target, mob/living/user, delay, amount=0, volume=0, datum/callback/extra_checks)
+/obj/item/proc/use_tool(atom/target, mob/living/user, delay, amount=0, volume=0, datum/callback/extra_checks, skill_gain_mult = 1, max_level = INFINITY)
 	// No delay means there is no start message, and no reason to call tool_start_check before use_tool.
 	// Run the start check here so we wouldn't have to call it manually.
 	if(!delay && !tool_start_check(user, amount))
@@ -804,6 +813,9 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	play_tool_sound(target, volume)
 
 	if(delay)
+		if(user.mind && used_skills)
+			delay = user.mind.item_action_skills_mod(src, delay, skill_difficulty, SKILL_USE_TOOL, null, FALSE)
+
 		// Create a callback with checks that would be called every tick by do_after.
 		var/datum/callback/tool_check = CALLBACK(src, .proc/tool_check_callback, user, amount, extra_checks)
 
@@ -827,6 +839,14 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	// but only if the delay between the beginning and the end is not too small
 	if(delay >= MIN_TOOL_SOUND_DELAY)
 		play_tool_sound(target, volume)
+
+
+	if(user.mind && used_skills && skill_gain_mult)
+		var/gain = skill_gain + delay/SKILL_GAIN_DELAY_DIVISOR
+		for(var/skill in used_skills)
+			if(!(SKILL_TRAINING_TOOL in used_skills[skill]))
+				continue
+			user.mind.auto_gain_experience(skill, gain*skill_gain_mult, GET_STANDARD_LVL(max_level))
 
 	return TRUE
 

@@ -35,9 +35,9 @@
 /// Default combat flags for those affected by ((stamina combat))
 #define COMBAT_FLAGS_DEFAULT					NONE
 /// Default combat flags for everyone else (so literally everyone but humans)
-#define COMBAT_FLAGS_STAMSYSTEM_EXEMPT			(COMBAT_FLAG_SPRINT_ACTIVE | COMBAT_FLAG_COMBAT_ACTIVE | COMBAT_FLAG_SPRINT_TOGGLED | COMBAT_FLAG_COMBAT_TOGGLED)
+#define COMBAT_FLAGS_STAMSYSTEM_EXEMPT			(COMBAT_FLAG_SPRINT_ACTIVE | COMBAT_FLAG_COMBAT_ACTIVE | COMBAT_FLAG_SPRINT_TOGGLED | COMBAT_FLAG_COMBAT_TOGGLED | COMBAT_FLAG_SPRINT_FORCED | COMBAT_FLAG_COMBAT_FORCED)
 /// Default combat flags for those only affected by sprint (so just silicons)
-#define COMBAT_FLAGS_STAMEXEMPT_YESSPRINT		(COMBAT_FLAG_COMBAT_ACTIVE | COMBAT_FLAG_COMBAT_TOGGLED)
+#define COMBAT_FLAGS_STAMEXEMPT_YESSPRINT		(COMBAT_FLAG_COMBAT_ACTIVE | COMBAT_FLAG_COMBAT_TOGGLED | COMBAT_FLAG_COMBAT_FORCED)
 
 /// The user wants combat mode on
 #define COMBAT_FLAG_COMBAT_TOGGLED			(1<<0)
@@ -57,6 +57,10 @@
 #define COMBAT_FLAG_INTENTIONALLY_RESTING	(1<<7)
 /// Currently stamcritted but not as violently
 #define COMBAT_FLAG_SOFT_STAMCRIT			(1<<8)
+/// Force combat mode on at all times, overrides everything including combat disable traits.
+#define COMBAT_FLAG_COMBAT_FORCED			(1<<9)
+/// Force sprint mode on at all times, overrides everything including sprint disable traits.
+#define COMBAT_FLAG_SPRINT_FORCED			(1<<10)
 
 // Helpers for getting someone's stamcrit state. Cast to living.
 #define NOT_STAMCRIT 0
@@ -247,6 +251,15 @@ GLOBAL_LIST_INIT(shove_disarming_types, typecacheof(list(
 #define TOTAL_MASS_HAND_REPLACEMENT	5 //standard punching stamina cost. most hand replacements are huge items anyway.
 #define TOTAL_MASS_MEDIEVAL_WEAPON	3.6 //very, very generic average sword/warpick/etc. weight in pounds.
 #define TOTAL_MASS_TOY_SWORD 1.5
+
+//stamina cost defines.
+#define STAM_COST_ATTACK_OBJ_MULT	1.2
+#define STAM_COST_ATTACK_MOB_MULT	0.8
+#define STAM_COST_BATON_MOB_MULT	1
+#define STAM_COST_NO_COMBAT_MULT	1.25
+#define STAM_COST_W_CLASS_MULT		1.25
+#define STAM_COST_THROW_MULT		2
+
 
 //bullet_act() return values
 #define BULLET_ACT_HIT				"HIT"		//It's a successful hit, whatever that means in the context of the thing it's hitting.

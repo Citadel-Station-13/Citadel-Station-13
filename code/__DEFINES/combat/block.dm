@@ -1,3 +1,13 @@
+/// Check whether or not we can block, without "triggering" a block. Basically run checks without effects like depleting shields.
+/// Wrapper for do_run_block(). The arguments on that means the same as for this.
+#define mob_check_block(object, damage, attack_text, attack_type, armour_penetration, attacker, def_zone, return_list)\
+	do_run_block(FALSE, object, damage, attack_text, attack_type, armour_penetration, attacker, check_zone(def_zone), return_list)
+
+/// Runs a block "sequence", effectively checking and then doing effects if necessary.
+/// Wrapper for do_run_block(). The arguments on that means the same as for this.
+#define mob_run_block(object, damage, attack_text, attack_type, armour_penetration, attacker, def_zone, return_list)\
+	do_run_block(TRUE, object, damage, attack_text, attack_type, armour_penetration, attacker, check_zone(def_zone), return_list)
+
 // Don't ask why there's block_parry.dm and this. This is for the run_block() system, which is the "parent" system of the directional block and parry systems.
 
 /// Bitflags for check_block() and handle_block(). Meant to be combined. You can be hit and still reflect, for example, if you do not use BLOCK_SUCCESS.

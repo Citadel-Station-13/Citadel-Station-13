@@ -17,6 +17,7 @@ GLOBAL_LIST_INIT(dwarf_last, world.file2list("strings/names/dwarf_last.txt")) //
 	disliked_food = JUNKFOOD | FRIED //Dwarves hate foods that have no nutrition other than alcohol.
 	mutant_organs = list(/obj/item/organ/dwarfgland) //Dwarven alcohol gland, literal gland warrior
 	mutantliver = /obj/item/organ/liver/dwarf //Dwarven super liver (Otherwise they r doomed)
+	species_language_holder = /datum/language_holder/dwarf
 
 /mob/living/carbon/human/species/dwarf //species admin spawn path
 	race = /datum/species/dwarf //and the race the path is set to.
@@ -30,17 +31,14 @@ GLOBAL_LIST_INIT(dwarf_last, world.file2list("strings/names/dwarf_last.txt")) //
 	. = ..()
 	var/dwarf_hair = pick("Beard (Dwarf)", "Beard (Very Long)", "Beard (Long)") //beard roullette
 	var/mob/living/carbon/human/H = C
-	H.grant_language(/datum/language/dwarf)
 	H.facial_hair_style = dwarf_hair
 	H.update_hair()
-	H.transform = H.transform.Scale(1, 0.8) //We use scale, and yeah. Dwarves can become gnomes with DWARFISM.
+	H.AddElement(/datum/element/dwarfism, COMSIG_SPECIES_LOSS, src)
 	RegisterSignal(C, COMSIG_MOB_SAY, .proc/handle_speech) //We register handle_speech is being used.
 
 /datum/species/dwarf/on_species_loss(mob/living/carbon/H, datum/species/new_species)
 	. = ..()
-	H.transform = H.transform.Scale(1, 1.25) //And we undo it.
 	UnregisterSignal(H, COMSIG_MOB_SAY) //We register handle_speech is not being used.
-	H.remove_language(/datum/language/dwarf)
 
 //Dwarf Name stuff
 /proc/dwarf_name() //hello caller: my name is urist mcuristurister
@@ -122,7 +120,7 @@ GLOBAL_LIST_INIT(dwarf_last, world.file2list("strings/names/dwarf_last.txt")) //
 		return
 	//Filth Reactions - Since miasma now exists
 	var/filth_counter = 0 //Holder for the filth check cycle, basically contains how much filth dwarf sees numerically.
-	for(var/fuck in view(owner,7)) //hello byond for view loop.
+	for(var/fuck in owner.fov_view(7)) //hello byond for view loop.
 		if(istype(fuck, /mob/living/carbon/human))
 			var/mob/living/carbon/human/H = fuck
 			if(H.stat == DEAD || (HAS_TRAIT(H, TRAIT_FAKEDEATH)))

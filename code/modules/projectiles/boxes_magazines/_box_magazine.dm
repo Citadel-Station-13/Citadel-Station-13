@@ -113,7 +113,7 @@
 
 /obj/item/ammo_box/update_icon()
 	. = ..()
-	desc = "[initial(desc)] There are [stored_ammo.len] shell\s left!"
+	desc = "[initial(desc)] There [stored_ammo.len == 1 ? "is" : "are"] [stored_ammo.len] shell\s left!"
 	for (var/material in bullet_cost)
 		var/material_amount = bullet_cost[material]
 		material_amount = (material_amount*stored_ammo.len) + base_cost[material]

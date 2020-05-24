@@ -1,12 +1,5 @@
-// This file has a weird name, but it's for anything related to the checks for shields, blocking, dodging, and similar "stop this attack before it actually impacts the target" as opposed to "defend once it has hit".
-
-///Check whether or not we can block, without "triggering" a block. Basically run checks without effects like depleting shields. Wrapper for do_run_block(). The arguments on that means the same as for this.
-/mob/living/proc/check_block(atom/object, damage, attack_text = "the attack", attack_type, armour_penetration, mob/attacker, def_zone, list/return_list, attack_direction)
-	return do_run_block(FALSE, object, damage, attack_text, attack_type, armour_penetration, attacker, check_zone(def_zone), return_list, attack_direction)
-
-/// Runs a block "sequence", effectively checking and then doing effects if necessary. Wrapper for do_run_block(). The arguments on that means the same as for this.
-/mob/living/proc/run_block(atom/object, damage, attack_text = "the attack", attack_type, armour_penetration, mob/attacker, def_zone, list/return_list, attack_direction)
-	return do_run_block(TRUE, object, damage, attack_text, attack_type, armour_penetration, attacker, check_zone(def_zone), return_list, attack_direction)
+// This file has a weird name, but it's for anything related to the checks for shields, blocking, dodging,
+// and similar "stop this attack before it actually impacts the target" as opposed to "defend once it has hit".
 
 /** The actual proc for block checks. DO NOT USE THIS DIRECTLY UNLESS YOU HAVE VERY GOOD REASON TO. To reduce copypaste for differences between handling for real attacks and virtual checks.
   * Automatically checks all held items for /obj/item/proc/run_block() with the same parameters.
@@ -84,7 +77,8 @@
 	if(. & BLOCK_SUCCESS)
 		return
 	if(prob(final_block_chance))
-		owner.visible_message("<span class='danger'>[owner] blocks [attack_text] with [src]!</span>")
+		owner.visible_message("<span class='danger'>[owner] blocks [attack_text] with [src]!</span>",
+			"<span class='danger'>You block [attack_text] with [src]!</span>")
 		return . | BLOCK_SUCCESS | BLOCK_PHYSICAL_EXTERNAL
 	return . | BLOCK_NONE
 
