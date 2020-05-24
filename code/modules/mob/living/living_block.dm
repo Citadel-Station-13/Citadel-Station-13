@@ -93,3 +93,15 @@
 	SEND_SIGNAL(src, COMSIG_ITEM_CHECK_BLOCK, owner, object, damage, attack_text, attack_type, armour_penetration, attacker, def_zone, final_block_chance, block_return)
 	var/existing = block_return[BLOCK_RETURN_NORMAL_BLOCK_CHANCE]
 	block_return[BLOCK_RETURN_NORMAL_BLOCK_CHANCE] = max(existing || 0, final_block_chance)
+
+// HELPER PROCS
+
+/**
+  * Considers a block return_list and calculates damage to use from that.
+  */
+/proc/block_calculate_resultant_damage(damage, list/block_return)
+	if(!isnull(block_return[BLOCK_RETURN_SET_DAMAGE_TO))	// higher priority
+		return block_return[BLOCK_RETURN_SET_DAMAGE_TO]
+	else if(!isnull(block_return[BLOCK_RETURN_MITIGATION_PERCENT]))
+		return damage * ((100 - block_return[BLOCK_RETURN_MITIGATION_PERCENT]) * 0.01)
+	return damage

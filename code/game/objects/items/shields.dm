@@ -25,6 +25,8 @@
 	var/shieldbash_push_distance = 1
 
 /datum/block_parry_data/shield
+	block_stamina_efficiency = 1
+	block_stamina_cost_per_second = 3
 
 /obj/item/shield/examine(mob/user)
 	. = ..()

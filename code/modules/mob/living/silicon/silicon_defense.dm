@@ -113,6 +113,7 @@
 	flash_act(affect_silicon = 1)
 
 /mob/living/silicon/bullet_act(obj/item/projectile/P, def_zone)
+	var/totaldamage = P.damage
 	if(P.original != src || P.firer != src) //try to block or reflect the bullet, can't do so when shooting oneself
 		var/list/returnlist = list()
 		var/returned = run_block(P, P.damage, "the [P.name]", ATTACK_TYPE_PROJECTILE, P.armour_penetration, P.firer, def_zone, returnlist)
@@ -123,17 +124,14 @@
 		if(returned & BLOCK_SUCCESS)
 			P.on_hit(src, 100, def_zone)
 			return BULLET_ACT_BLOCK
+		totaldamage = block_calculate_resultant_damage(totaldamage, returnlist)
 	if((P.damage_type == BRUTE || P.damage_type == BURN))
-		adjustBruteLoss(P.damage)
-		if(prob(P.damage*1.5))
-			for(var/mob/living/M in buckled_mobs)
-				M.visible_message("<span class='boldwarning'>[M] is knocked off of [src]!</span>")
-				unbuckle_mob(M)
-				M.DefaultCombatKnockdown(40)
-	if(P.stun || P.knockdown)
+		adjustBruteLoss(totaldamage)
+	if((P.damage >= 10) || P.stun || P.knockdown || (P.stamina >= 20))
 		for(var/mob/living/M in buckled_mobs)
+			M.visible_message("<span class='boldwarning'>[M] is knocked off of [src]!</span>")
 			unbuckle_mob(M)
-			M.visible_message("<span class='boldwarning'>[M] is knocked off of [src] by the [P]!</span>")
+			M.DefaultCombatKnockdown(40)
 	P.on_hit(src)
 	return BULLET_ACT_HIT
 

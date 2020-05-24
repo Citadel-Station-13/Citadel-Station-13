@@ -51,6 +51,8 @@
 #define BLOCK_RETURN_SET_DAMAGE_TO								"set_damage_to"
 /// For [BLOCK_SHOULD_PARTIAL_MITIGATE]. Percentage mitigation.
 #define BLOCK_RETURN_MITIGATION_PERCENT							"partial_mitigation"
+/// Used internally by run_parry proc, use on an on_active_parry() proc to override parrying efficiency.
+#define BLOCK_RETURN_OVERRIDE_PARRY_EFFICIENCY					"override_parry_efficiency"
 
 /// Default if the above isn't set in the list.
 #define DEFAULT_REDIRECT_METHOD_PROJECTILE REDIRECT_METHOD_DEFLECT

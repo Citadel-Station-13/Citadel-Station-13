@@ -108,7 +108,6 @@ GLOBAL_LIST_EMPTY(block_parry_data)
 	var/parry_stamina_cost = 5
 	#warn implement
 
-
 	/// Parry windup duration in deciseconds. 0 to this is windup, afterwards is main stage.
 	var/parry_time_windup = 2
 	/// Parry spindown duration in deciseconds. main stage end to this is the spindown stage, afterwards the parry fully ends.
@@ -170,17 +169,17 @@ GLOBAL_LIST_EMPTY(block_parry_data)
 
 //Stubs.
 
-/obj/item/proc/on_active_parry(mob/living/owner, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return, parry_efficiency)
+/obj/item/proc/on_active_parry(mob/living/owner, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return, parry_efficiency, parry_time)
 
-/mob/living/proc/on_active_parry(mob/living/owner, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return, parry_efficiency)
+/mob/living/proc/on_active_parry(mob/living/owner, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return, parry_efficiency, parry_time)
 
-/datum/martial_art/proc/on_active_parry(mob/living/owner, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return, parry_efficiency)
+/datum/martial_art/proc/on_active_parry(mob/living/owner, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return, parry_efficiency, parry_time)
 
-/obj/item/proc/active_parry_reflex_counter(atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, list/return_list)
+/obj/item/proc/active_parry_reflex_counter(mob/living/owner, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, list/return_list, parry_efficiency)
 
-/mob/living/proc/active_parry_reflex_counter(atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, list/return_list)
+/mob/living/proc/active_parry_reflex_counter(mob/living/owner, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, list/return_list, parry_efficiency)
 
-/datum/martial_art/proc/active_parry_reflex_counter(atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, list/return_list)
+/datum/martial_art/proc/active_parry_reflex_counter(mob/living/owner, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, list/return_list, parry_efficiency)
 
 /**
   * Gets the stage of our parry sequence we're currently in.
@@ -203,6 +202,8 @@ GLOBAL_LIST_EMPTY(block_parry_data)
 
 /**
   * Gets the percentage efficiency of our parry.
+  *
+  * Returns a percentage in normal 0 to 100 scale, but not clamped to just 0 to 100.
   */
 /mob/living/proc/get_parry_efficiency(attack_type)
 	var/datum/block_parry_data/data = get_parry_data()
@@ -236,16 +237,18 @@ GLOBAL_LIST_EMPTY(block_parry_data)
 	var/efficiency = get_parry_efficiency(attack_type)
 	switch(parrying)
 		if(ITEM_PARRY)
-			. = active_parry_item.on_active_parry(object, damage, attack_text, attack_type, armour_penetration, attacker, def_zone, return_list, efficiency)
+			. = active_parry_item.on_active_parry(src, object, damage, attack_text, attack_type, armour_penetration, attacker, def_zone, return_list, efficiency, get_parry_time())
 		if(UNARMED_PARRY)
-			. = on_active_parry(object, damage, attack_text, attack_type, armour_penetration, attacker, def_zone, return_list, efficiency)
+			. = on_active_parry(src, object, damage, attack_text, attack_type, armour_penetration, attacker, def_zone, return_list, efficiency, get_parry_time())
 		if(MARTIAL_PARRY)
-			. = mind.martial_art.on_active_parry(object, damage, attack_text, attack_type, armour_penetration, attacker, def_zone, return_list, efficiency)
-	if(efficiency <= 0)
+			. = mind.martial_art.on_active_parry(src, object, damage, attack_text, attack_type, armour_penetration, attacker, def_zone, return_list, efficiency, get_parry_time())
+	if(!isnull(return_list[BLOCK_RETURN_OVERRIDE_PARRY_EFFICIENCY]))		// one of our procs overrode
+		efficiency = return_list[BLOCK_RETURN_OVERRIDE_PARRY_EFFICIENCY]
+	if(efficiency <= 0)		// Do not allow automatically handled/standardized parries that increase damage for now.
 		return
 	. |= BLOCK_SHOULD_PARTIAL_MITIGATE
-	var/current = return_list[BLOCK_RETURN_MITIGATION_PERCENT] || 0
-	return_list[BLOCK_RETURN_MITIGATION_PERCENT] = 100 - (clamp(100 - current, 0, 100) * clamp(1 - (efficiency / 100), 0, 1))
+	if(isnull(return_list[BLOCK_RETURN_MITIGATION_PERCENT]))		//  if one of the on_active_parry procs overrode. We don't have to worry about interference since parries are the first thing checked in the [do_run_block()] sequence.
+		return_list[BLOCK_RETURN_MITIGATION_PERCENT] = clamp(efficiency, 0, 100)		// do not allow > 100% or < 0% for now.
 	var/list/effect_text = run_parry_countereffects(object, damage, attack_text, attack_type, armour_penetration, attacker, def_zone, return_list, efficiency)
 	if(data.parry_default_handle_feedback)
 		handle_parry_feedback(object, damage, attack_text, attack_type, armour_penetration, attacker, def_zone, return_list, efficiency, effect_text)
@@ -269,11 +272,11 @@ GLOBAL_LIST_EMPTY(block_parry_data)
 			if(PARRY_COUNTERATTACK_PROC)
 				switch(parrying)
 					if(ITEM_PARRY)
-						active_parry_item.active_parry_reflex_counter(object, damage, attack_text, attack_type, armour_penetration, attacker, def_zone, return_list)
+						active_parry_item.active_parry_reflex_counter(src, object, damage, attack_text, attack_type, armour_penetration, attacker, def_zone, return_list, parry_efficiency)
 					if(UNARMED_PARRY)
-						active_parry_reflex_counter(object, damage, attack_text, attack_type, armour_penetration, attacker, def_zone, return_list)
+						active_parry_reflex_counter(src, object, damage, attack_text, attack_type, armour_penetration, attacker, def_zone, return_list, parry_efficiency)
 					if(MARTIAL_PARRY)
-						mind.martial_art.active_parry_reflex_counter(object, damage, attack_text, attack_type, armour_penetration, attacker, def_zone, return_list)
+						mind.martial_art.active_parry_reflex_counter(src, object, damage, attack_text, attack_type, armour_penetration, attacker, def_zone, return_list, parry_efficiency)
 			if(PARRY_COUNTERATTACK_MELEE_ATTACK_CHAIN)
 				switch(parrying)
 					if(ITEM_PARRY)

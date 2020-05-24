@@ -125,8 +125,10 @@
 	if(!CHECK_MOBILITY(user, MOBILITY_STAND))
 		totitemdamage *= 0.5
 	//CIT CHANGES END HERE
-	if((user != src) && run_block(I, totitemdamage, "the [I.name]", ATTACK_TYPE_MELEE, I.armour_penetration, user) & BLOCK_SUCCESS)
+	var/list/block_return = list()
+	if((user != src) && run_block(I, totitemdamage, "the [I.name]", ATTACK_TYPE_MELEE, I.armour_penetration, user, return_list = block_return) & BLOCK_SUCCESS)
 		return FALSE
+	totitemdamage = block_calculate_resultant_damage(totitemdamage, block_return)
 	send_item_attack_message(I, user)
 	I.do_stagger_action(src, user)
 	if(I.force)
