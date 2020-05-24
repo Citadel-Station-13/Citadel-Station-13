@@ -135,7 +135,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	///Skills vars
 	//list of skill PATHS exercised when using this item. An associated bitfield can be set to indicate additional ways the skill is used by this specific item.
 	var/list/datum/skill/used_skills
-	var/skill_difficulty = THRESHOLD_COMPETENT //how difficult it's to use this item in general.
+	var/skill_difficulty = THRESHOLD_UNTRAINED //how difficult it's to use this item in general.
 	var/skill_gain = DEF_SKILL_GAIN //base skill value gain from using this item.
 
 /obj/item/Initialize()
@@ -805,7 +805,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 
 	if(delay)
 		if(user.mind && used_skills)
-			delay = user.mind.item_action_skills_mod(src, delay, skill_difficulty, SKILL_USE_TOOL, NONE, FALSE)
+			delay = user.mind.item_action_skills_mod(src, delay, skill_difficulty, SKILL_USE_TOOL, null, FALSE)
 
 		// Create a callback with checks that would be called every tick by do_after.
 		var/datum/callback/tool_check = CALLBACK(src, .proc/tool_check_callback, user, amount, extra_checks)
@@ -831,11 +831,13 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	if(delay >= MIN_TOOL_SOUND_DELAY)
 		play_tool_sound(target, volume)
 
+
 	if(user.mind && used_skills && skill_gain_mult)
+		var/gain = skill_gain + delay/SKILL_GAIN_DELAY_DIVISOR
 		for(var/skill in used_skills)
-			if(!(used_skills[skill] & SKILL_TRAINING_TOOL))
+			if(!(SKILL_TRAINING_TOOL in used_skills[skill]))
 				continue
-			user.mind.auto_gain_experience(skill, skill_gain*skill_gain_mult, GET_STANDARD_LVL(max_level))
+			user.mind.auto_gain_experience(skill, gain*skill_gain_mult, GET_STANDARD_LVL(max_level))
 
 	return TRUE
 

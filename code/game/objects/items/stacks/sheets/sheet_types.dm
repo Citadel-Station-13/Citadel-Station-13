@@ -5,7 +5,6 @@
  * Wood
  * Bamboo
  * Cloth
- * Silk
  * Durathread
  * Cardboard
  * Runed Metal (cult)
@@ -268,6 +267,7 @@ GLOBAL_LIST_INIT(wood_recipes, list ( \
 	new/datum/stack_recipe("apiary", /obj/structure/beebox, 40, time = 50),\
 	null, \
 	new/datum/stack_recipe("picture frame", /obj/item/wallframe/picture, 1, time = 10),\
+	new/datum/stack_recipe("painting frame", /obj/item/wallframe/painting, 1, time = 10),\
 	new/datum/stack_recipe("mortar", /obj/item/reagent_containers/glass/mortar, 3), \
 	new/datum/stack_recipe("honey frame", /obj/item/honey_frame, 5, time = 10),\
 	))
@@ -388,6 +388,9 @@ GLOBAL_LIST_INIT(cloth_recipes, list ( \
 	null, \
 	new/datum/stack_recipe("blindfold", /obj/item/clothing/glasses/sunglasses/blindfold, 2), \
 	null, \
+	new/datum/stack_recipe("19x19 canvas", /obj/item/canvas/nineteenXnineteen, 3), \
+	new/datum/stack_recipe("23x19 canvas", /obj/item/canvas/twentythreeXnineteen, 4), \
+	new/datum/stack_recipe("23x23 canvas", /obj/item/canvas/twentythreeXtwentythree, 5), \
 	))
 
 /obj/item/stack/sheet/cloth
@@ -401,7 +404,6 @@ GLOBAL_LIST_INIT(cloth_recipes, list ( \
 	throwforce = 0
 	pull_effort = 90
 	is_fabric = TRUE
-	loom_result = /obj/item/stack/sheet/silk
 	merge_type = /obj/item/stack/sheet/cloth
 
 /obj/item/stack/sheet/cloth/get_main_recipes()
@@ -415,30 +417,6 @@ GLOBAL_LIST_INIT(cloth_recipes, list ( \
 	amount = 30
 
 /*
- * Silk
- */
-
-	GLOBAL_LIST_INIT(silk_recipes, list ( \
-	new/datum/stack_recipe("white jumpsuit", /obj/item/clothing/under/color/white, 4, time = 40), \
-	new/datum/stack_recipe("white gloves", /obj/item/clothing/gloves/color/white, 2, time = 40), \
-	null, \
-	new/datum/stack_recipe("silk string", /obj/item/weaponcrafting/silkstring, 1, time = 40), \
-	))
-
-/obj/item/stack/sheet/silk
-	name = "silk"
-	desc = "A long, soft material. Made out of refined cotton, instead of relying on the habits of spiders or silkworms."
-	singular_name = "silk sheet"
-	icon_state = "sheet-silk"
-	item_state = "sheet-cloth"
-	novariants = TRUE
-	merge_type = /obj/item/stack/sheet/silk
-
-/obj/item/stack/sheet/silk/get_main_recipes()
-	. = ..()
-	. += GLOB.silk_recipes
-
-/*
  * Durathread
  */
 GLOBAL_LIST_INIT(durathread_recipes, list ( \
@@ -446,6 +424,7 @@ GLOBAL_LIST_INIT(durathread_recipes, list ( \
 	new/datum/stack_recipe("durathread beret", /obj/item/clothing/head/beret/durathread, 2, time = 40), \
 	new/datum/stack_recipe("durathread beanie", /obj/item/clothing/head/beanie/durathread, 2, time = 40), \
 	new/datum/stack_recipe("durathread bandana", /obj/item/clothing/mask/bandana/durathread, 1, time = 25), \
+	new/datum/stack_recipe("durathread string", /obj/item/weaponcrafting/durathread_string, 1, time = 40) \
 	))
 
 /obj/item/stack/sheet/durathread
