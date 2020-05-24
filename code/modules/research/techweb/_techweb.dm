@@ -199,6 +199,10 @@
 	researched_designs -= design.id
 	return TRUE
 
+/datum/techweb/proc/get_point_total(list/pointlist)
+	for(var/i in pointlist)
+		. += pointlist[i]
+
 /datum/techweb/proc/can_afford(list/pointlist)
 	for(var/i in pointlist)
 		if(research_points[i] < pointlist[i])
@@ -227,6 +231,10 @@
 	for(var/id in node.design_ids)
 		add_design_by_id(id)
 	update_node_status(node)
+	if(!istype(src, /datum/techweb/admin))
+		var/datum/bank_account/D = SSeconomy.get_dep_account(ACCOUNT_SCI)
+		if(D)
+			D.adjust_money(SSeconomy.techweb_bounty)
 	return TRUE
 
 /datum/techweb/proc/unresearch_node_id(id)
@@ -344,6 +352,7 @@
 
 /datum/techweb/specialized/autounlocking
 	var/design_autounlock_buildtypes = NONE
+	var/design_autounlock_skip_types = NONE
 	var/design_autounlock_categories = list("initial")		//if a design has a buildtype that matches the abovea and either has a category in this or this is null, unlock it.
 	var/node_autounlock_ids = list()				//autounlock nodes of this type.
 
@@ -356,7 +365,7 @@
 		research_node_id(id, TRUE, FALSE)
 	for(var/id in SSresearch.techweb_designs)
 		var/datum/design/D = SSresearch.techweb_design_by_id(id)
-		if(D.build_type & design_autounlock_buildtypes)
+		if(D.build_type & (design_autounlock_buildtypes & allowed_buildtypes) && !(D.build_type & design_autounlock_skip_types))
 			for(var/i in D.category)
 				if(i in design_autounlock_categories)
 					add_design_by_id(D.id)
@@ -364,7 +373,16 @@
 
 /datum/techweb/specialized/autounlocking/autolathe
 	design_autounlock_buildtypes = AUTOLATHE
-	allowed_buildtypes = AUTOLATHE
+	allowed_buildtypes = AUTOLATHE|TOYLATHE
+
+/datum/techweb/specialized/autounlocking/autolathe/public
+	design_autounlock_skip_types = NO_PUBLIC_LATHE
+
+/datum/techweb/specialized/autounlocking/autolathe/toy
+	design_autounlock_buildtypes = TOYLATHE
+
+/datum/techweb/specialized/autounlocking/autolathe/toy/public
+	design_autounlock_skip_types = NO_PUBLIC_LATHE
 
 /datum/techweb/specialized/autounlocking/limbgrower
 	design_autounlock_buildtypes = LIMBGROWER
@@ -380,10 +398,6 @@
 
 /datum/techweb/specialized/autounlocking/exofab
 	allowed_buildtypes = MECHFAB
-
-/datum/techweb/specialized/autounlocking/autoylathe
-	design_autounlock_buildtypes = AUTOYLATHE
-	allowed_buildtypes = AUTOYLATHE
 
 /datum/techweb/specialized/autounlocking/autobottler
 	design_autounlock_buildtypes = AUTOBOTTLER

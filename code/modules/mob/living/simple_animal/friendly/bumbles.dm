@@ -5,14 +5,18 @@
 	icon_living = "bumbles"
 	icon_dead = "bumbles_dead"
 	turns_per_move = 1
-	response_help = "pets"
-	response_disarm = "brushes aside"
-	response_harm = "squashes"
+	response_help_continuous = "pets"
+	response_help_simple = "pet"
+	response_disarm_continuous = "brushes aside"
+	response_help_simple = "brush aside"
+	response_harm_continuous = "squashes"
+	response_harm_simple = "squash"
 	speak_emote = list("buzzes")
 	maxHealth = 100
 	health = 100
 	harm_intent_damage = 1
-	friendly = "bzzs"
+	friendly_verb_continuous = "bzzs"
+	friendly_verb_simple = "bzz"
 	density = FALSE
 	movement_type = FLYING
 	pass_flags = PASSTABLE | PASSGRILLE | PASSMOB
@@ -49,7 +53,7 @@
 
 /mob/living/simple_animal/pet/bumbles/handle_automated_movement()
 	. = ..()
-	if(!isturf(loc) || !CHECK_MOBILITY(src, MOBILITY_MOVE)  || buckled)
+	if(!isturf(loc) || buckled)
 		return
 	if(!resting && prob(1))
 		emote("me", EMOTE_VISIBLE, pick("curls up on the surface below ", "is looking very sleepy.", "buzzes softly ", "looks around for a flower nap "))
@@ -57,6 +61,7 @@
 	else if (resting && prob(1))
 		emote("me", EMOTE_VISIBLE, pick("wakes up with a smiling buzz.", "rolls upside down before waking up.", "stops resting."))
 		set_resting(FALSE)
+
 /mob/living/simple_animal/pet/bumbles/update_mobility()
 	. = ..()
 	if(stat != DEAD)

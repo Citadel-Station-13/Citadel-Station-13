@@ -79,7 +79,9 @@
 
 	for(var/I in assembly_components)
 		var/obj/item/integrated_circuit/IC = I
-		. += IC.external_examine(user)
+		var/text = IC.external_examine(user)
+		if(text)
+			. += text
 	if(opened)
 		interact(user)
 
@@ -149,7 +151,7 @@
 	var/total_complexity = return_total_complexity()
 	var/HTML = ""
 
-	HTML += "<html><head><title>[name]</title></head><body>"
+	HTML += "<html><head><meta http-equiv='Content-Type' content='text/html; charset=UTF-8'><title>[name]</title></head><body>"
 
 	HTML += "<a href='?src=[REF(src)]'>\[Refresh\]</a>  |  <a href='?src=[REF(src)];rename=1'>\[Rename\]</a><br>"
 	HTML += "[total_part_size]/[max_components] ([round((total_part_size / max_components) * 100, 0.1)]%) space taken up in the assembly.<br>"
@@ -871,3 +873,8 @@
 			pixel_x = -31
 		if(WEST)
 			pixel_x = 31
+	plane = ABOVE_WALL_PLANE
+
+/obj/item/electronic_assembly/wallmount/Moved(atom/OldLoc, Dir, Forced = FALSE) //reset the plane if moved off the wall.
+	. = ..()
+	plane = GAME_PLANE

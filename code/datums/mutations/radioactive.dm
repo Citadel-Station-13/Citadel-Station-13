@@ -7,7 +7,7 @@
 	instability = 5
 	difficulty = 8
 
-/datum/mutation/human/radioactive/on_life(mob/living/carbon/human/owner)
+/datum/mutation/human/radioactive/on_life()
 	radiation_pulse(owner, 20)
 
 /datum/mutation/human/radioactive/New(class_ = MUT_OTHER, timer, datum/mutation/human/copymut)

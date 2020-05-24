@@ -23,7 +23,7 @@
 
 	var/disabled = BODYPART_NOT_DISABLED //If disabled, limb is as good as missing
 	var/body_damage_coeff = 1 //Multiplier of the limb's damage that gets applied to the mob
-	var/stam_damage_coeff = 0.5
+	var/stam_damage_coeff = 0.75
 	var/brutestate = 0
 	var/burnstate = 0
 	var/brute_dam = 0
@@ -164,8 +164,8 @@
 		return FALSE
 
 	switch(animal_origin)
-		if(ALIEN_BODYPART,LARVA_BODYPART) //aliens take double burn //nothing can burn with so much snowflake code around
-			burn *= 2
+		if(ALIEN_BODYPART,LARVA_BODYPART) //aliens take some additional burn //nothing can burn with so much snowflake code around
+			burn *= 1.2
 
 	var/can_inflict = max_damage - get_damage()
 	if(can_inflict <= 0)
@@ -183,7 +183,7 @@
 	//We've dealt the physical damages, if there's room lets apply the stamina damage.
 	var/current_damage = get_damage(TRUE)		//This time around, count stamina loss too.
 	var/available_damage = max_damage - current_damage
-	stamina_dam += round(CLAMP(stamina, 0, min(max_stamina_damage - stamina_dam, available_damage)), DAMAGE_PRECISION)
+	stamina_dam += round(clamp(stamina, 0, min(max_stamina_damage - stamina_dam, available_damage)), DAMAGE_PRECISION)
 
 	if(disabled && stamina > 10)
 		incoming_stam_mult = max(0.01, incoming_stam_mult/(stamina*0.1))
@@ -220,7 +220,7 @@
 /obj/item/bodypart/proc/get_damage(include_stamina = FALSE)
 	var/total = brute_dam + burn_dam
 	if(include_stamina)
-		total += stamina_dam
+		total = max(total, stamina_dam)
 	return total
 
 //Checks disabled status thresholds
@@ -347,10 +347,11 @@
 		else
 			skin_tone = ""
 
-		body_gender = H.gender
+		body_gender = H.dna.features["body_model"]
 		should_draw_gender = S.sexes
 
-		if(MUTCOLORS in S.species_traits)
+		var/mut_colors = (MUTCOLORS in S.species_traits)
+		if(mut_colors)
 			if(S.fixed_mut_color)
 				species_color = S.fixed_mut_color
 			else
@@ -358,18 +359,18 @@
 			base_bp_icon = (base_bp_icon == DEFAULT_BODYPART_ICON) ? DEFAULT_BODYPART_ICON_ORGANIC : base_bp_icon
 		else
 			species_color = ""
-		
-		if(base_bp_icon != DEFAULT_BODYPART_ICON)
-			color_src = MUTCOLORS //TODO - Add color matrix support to base limbs
 
-		if("legs" in S.default_features)
+		if(base_bp_icon != DEFAULT_BODYPART_ICON)
+			color_src = mut_colors ? MUTCOLORS : ((H.dna.skin_tone_override && S.use_skintones == USE_SKINTONES_GRAYSCALE_CUSTOM) ? CUSTOM_SKINTONE : SKINTONE)
+
+		if(S.mutant_bodyparts["legs"])
 			if(body_zone == BODY_ZONE_L_LEG || body_zone == BODY_ZONE_R_LEG)
 				if(DIGITIGRADE in S.species_traits)
 					digitigrade_type = lowertext(H.dna.features["legs"])
 			else
 				digitigrade_type = null
 
-		if("mam_body_markings" in S.default_features)
+		if(S.mutant_bodyparts["mam_body_markings"])
 			var/datum/sprite_accessory/Smark
 			Smark = GLOB.mam_body_markings_list[H.dna.features["mam_body_markings"]]
 			if(Smark)
@@ -436,7 +437,7 @@
 
 		if(!isnull(body_markings) && status == BODYPART_ORGANIC)
 			if(!use_digitigrade)
-				if(BODY_ZONE_CHEST)
+				if(body_zone == BODY_ZONE_CHEST)
 					. += image(body_markings_icon, "[body_markings]_[body_zone]_[icon_gender]", -MARKING_LAYER, image_dir)
 				else
 					. += image(body_markings_icon, "[body_markings]_[body_zone]", -MARKING_LAYER, image_dir)
@@ -544,13 +545,23 @@
 		return
 
 	if(color_src) //TODO - add color matrix support for base species limbs
-		var/draw_color = mutation_color || species_color || (skin_tone && skintone2hex(skin_tone))
+		var/draw_color = mutation_color || species_color
+		var/grayscale = FALSE
+		if(!draw_color)
+			draw_color = SKINTONE2HEX(skin_tone)
+			grayscale = color_src == CUSTOM_SKINTONE //Cause human limbs have a very pale pink hue by def.
+		else
+			draw_color = "#[draw_color]"
 		if(draw_color)
-			limb.color = "#[draw_color]"
+			if(grayscale)
+				limb.icon_state += "_g"
+			limb.color = draw_color
 			if(aux_icons)
 				for(var/a in aux)
 					var/image/I = a
-					I.color = "#[draw_color]"
+					if(grayscale)
+						I.icon_state += "_g"
+					I.color = draw_color
 				if(!isnull(aux_marking))
 					for(var/a in auxmarking)
 						var/image/I = a

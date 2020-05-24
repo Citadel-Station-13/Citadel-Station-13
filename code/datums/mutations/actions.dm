@@ -41,7 +41,7 @@
 	desc = "You can breathe fire at a target."
 	school = "evocation"
 	charge_max = 600
-	clothes_req = FALSE
+	clothes_req = NONE
 	range = 20
 	base_icon_state = "fireball"
 	action_icon_state = "fireball0"
@@ -111,7 +111,7 @@
 	energy_coeff = 1
 	synchronizer_coeff = 1
 
-/datum/mutation/human/void/on_life(mob/living/carbon/human/owner)
+/datum/mutation/human/void/on_life()
 	if(!isturf(owner.loc))
 		return
 	if(prob((0.5+((100-dna.stability)/20))) * GET_MUTATION_SYNCHRONIZER(src)) //very rare, but enough to annoy you hopefully. +0.5 probability for every 10 points lost in stability
@@ -121,7 +121,7 @@
 	name = "Convoke Void" //magic the gathering joke here
 	desc = "A rare genome that attracts odd forces not usually observed. May sometimes pull you in randomly."
 	school = "evocation"
-	clothes_req = FALSE
+	clothes_req = NONE
 	charge_max = 600
 	invocation = "DOOOOOOOOOOOOOOOOOOOOM!!!"
 	invocation_type = "shout"
@@ -155,7 +155,7 @@
 	dropmessage = "You let the electricity from your hand dissipate."
 	hand_path = /obj/item/melee/touch_attack/shock
 	charge_max = 400
-	clothes_req = FALSE
+	clothes_req = NONE
 	action_icon_state = "zap"
 
 /obj/item/melee/touch_attack/shock
@@ -211,7 +211,7 @@
 	name = "Remember the Scent"
 	desc = "Get a scent off of the item you're currently holding to track it. With an empty hand, you'll track the scent you've remembered."
 	charge_max = 100
-	clothes_req = FALSE
+	clothes_req = NONE
 	range = -1
 	include_user = TRUE
 	action_icon_state = "nose"
@@ -289,8 +289,7 @@
 /obj/effect/proc_holder/spell/self/self_amputation
 	name = "Drop a limb"
 	desc = "Concentrate to make a random limb pop right off your body."
-	clothes_req = FALSE
-	human_req = FALSE
+	clothes_req = NONE
 	charge_max = 100
 	action_icon_state = "autotomy"
 
@@ -327,8 +326,7 @@
 /obj/effect/proc_holder/spell/self/lay_genetic_web
 	name = "Lay Web"
 	desc = "Drops a web. Only you will be able to traverse your web easily, making it pretty good for keeping you safe."
-	clothes_req = FALSE
-	human_req = FALSE
+	clothes_req = NONE
 	charge_max = 4 SECONDS //the same time to lay a web
 	action_icon = 'icons/mob/actions/actions_genetic.dmi'
 	action_icon_state = "lay_web"
@@ -369,8 +367,7 @@
 /obj/effect/proc_holder/spell/self/tongue_spike
 	name = "Launch spike"
 	desc = "Shoot your tongue out in the direction you're facing, embedding it and dealing damage until they remove it."
-	clothes_req = FALSE
-	human_req = TRUE
+	clothes_req = NONE
 	charge_max = 100
 	action_icon = 'icons/mob/actions/actions_genetic.dmi'
 	action_icon_state = "spike"

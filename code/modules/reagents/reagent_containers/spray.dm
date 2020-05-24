@@ -66,7 +66,7 @@
 
 
 /obj/item/reagent_containers/spray/proc/spray(atom/A)
-	var/range = CLAMP(get_dist(src, A), 1, current_range)
+	var/range = clamp(get_dist(src, A), 1, current_range)
 	var/obj/effect/decal/chempuff/D = new /obj/effect/decal/chempuff(get_turf(src))
 	D.create_reagents(amount_per_transfer_from_this, NONE, NO_REAGENTS_VALUE)
 	var/puff_reagent_left = range //how many turf, mob or dense objet we can react with before we consider the chem puff consumed

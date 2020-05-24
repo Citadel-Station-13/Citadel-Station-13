@@ -98,8 +98,6 @@
 	wine_power = 35
 	tastes = list("thistle" = 2, "artichoke" = 1)
 
-
-
 // Cabbage
 /obj/item/seeds/cabbage
 	name = "pack of cabbage seeds"
@@ -266,6 +264,7 @@
 	throwforce = 5
 	hitsound = 'sound/weapons/klonk.ogg'
 	attack_verb = list("klonked", "donked", "bonked")
+	distill_reagent = "creme_de_coconut"
 	var/opened = FALSE
 	var/carved = FALSE
 	var/chopped = FALSE
@@ -493,9 +492,6 @@
 		return
 	var/turf/T = get_turf(src)
 	reagents.chem_temp = 1000
-	//Disable seperated contents when the grenade primes
-	if (seed.get_gene(/datum/plant_gene/trait/noreact))
-		DISABLE_BITFIELD(reagents.reagents_holder_flags, NO_REACT)
 	reagents.handle_reactions()
 	log_game("Coconut bomb detonation at [AREACOORD(T)], location [loc]")
 	qdel(src)

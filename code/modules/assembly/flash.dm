@@ -229,6 +229,7 @@
 	var/flashcd = 20
 	var/overheat = 0
 	var/obj/item/organ/cyberimp/arm/flash/I = null
+	var/active_light_strength = 7
 
 /obj/item/assembly/flash/armimplant/burn_out()
 	if(I && I.owner)
@@ -248,6 +249,12 @@
 	update_icon(1)
 	return TRUE
 
+/obj/item/assembly/flash/armimplant/Moved(oldLoc, dir)
+	. = ..()
+	if(!ismob(loc))
+		set_light(0)
+	else
+		set_light(7)
 
 /obj/item/assembly/flash/armimplant/proc/cooldown()
 	overheat = FALSE
@@ -312,7 +319,7 @@
 	if(holder)
 		holder.update_icon()
 
-/obj/item/assembly/flash/shield/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
+/obj/item/assembly/flash/shield/run_block(mob/living/owner, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return)
 	activate()
 	return ..()
 

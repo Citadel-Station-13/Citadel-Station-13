@@ -14,6 +14,10 @@
 	var/ban_cache = null //Used to cache this client's bans to save on DB queries
 	var/last_message	= "" //Contains the last message sent by this client - used to protect against copy-paste spamming.
 	var/last_message_count = 0 //contins a number of how many times a message identical to last_message was sent.
+	///How many messages sent in the last 10 seconds
+	var/total_message_count = 0
+	///Next tick to reset the total message counter
+	var/total_count_reset = 0
 	var/ircreplyamount = 0
 
 		/////////
@@ -76,7 +80,24 @@
 
 	var/list/char_render_holders			//Should only be a key-value list of north/south/east/west = obj/screen.
 
+	/// Keys currently held
+	var/list/keys_held = list()
+	/// These next two vars are to apply movement for keypresses and releases made while move delayed.
+	/// Because discarding that input makes the game less responsive.
+ 	/// On next move, add this dir to the move that would otherwise be done
+	var/next_move_dir_add
+ 	/// On next move, subtract this dir from the move that would otherwise be done
+	var/next_move_dir_sub
+	/// Amount of keydowns in the last keysend checking interval
 	var/client_keysend_amount = 0
+	/// World tick time where client_keysend_amount will reset
 	var/next_keysend_reset = 0
+	/// World tick time where keysend_tripped will reset back to false
 	var/next_keysend_trip_reset = 0
+	/// When set to true, user will be autokicked if they trip the keysends in a second limit again
 	var/keysend_tripped = FALSE
+	/// custom movement keys for this client
+	var/list/movement_keys = list()
+
+	/// Messages currently seen by this client
+	var/list/seen_messages

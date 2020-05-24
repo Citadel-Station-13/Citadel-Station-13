@@ -48,20 +48,24 @@
 	status_type = STATUS_EFFECT_REPLACE
 	alert_type = /obj/screen/alert/status_effect/vanguard
 	var/datum/progressbar/progbar
+	var/stamhealed = 0 //How much stamina did we regenerate?
 
 /obj/screen/alert/status_effect/vanguard
 	name = "Vanguard"
-	desc = "You're absorbing stuns! Your stamina is greatly increased, but not infinite. 25% of all stuns taken will affect you after this effect ends."
+	desc = "You're absorbing stuns aswell as quickly regenerating stamina, but be careful: 50% of stamina restored and 25% of stuns absorbed will affect you after this effect ends."
 	icon_state = "vanguard"
 	alerttooltipstyle = "clockcult"
 
 /obj/screen/alert/status_effect/vanguard/MouseEntered(location,control,params)
 	var/mob/living/L = usr
+	var/datum/status_effect/vanguard_shield/E = attached_effect
 	if(istype(L)) //this is probably more safety than actually needed
 		var/vanguard = L.stun_absorption["vanguard"]
 		desc = initial(desc)
 		desc += "<br><b>[FLOOR(vanguard["stuns_absorbed"] * 0.1, 1)]</b> seconds of stuns held back.\
-		[GLOB.ratvar_awakens ? "":"<br><b>[FLOOR(min(vanguard["stuns_absorbed"] * 0.025, 20), 1)]</b> seconds of stun will affect you."]"
+		<br><b>[E.stamhealed]</b> stamina regenerated.\
+		[GLOB.ratvar_awakens ? "":"<br><b>[FLOOR(min(vanguard["stuns_absorbed"] * 0.025, 20), 1)]</b> seconds of stun will affect you.\
+		<br>You will incur <b>[E.stamhealed * 0.5]</b> staminaloss."]"
 	..()
 
 /datum/status_effect/vanguard_shield/Destroy()
@@ -72,9 +76,8 @@
 /datum/status_effect/vanguard_shield/on_apply()
 	owner.log_message("gained Vanguard stun immunity", LOG_ATTACK)
 	owner.add_stun_absorption("vanguard", INFINITY, 1, "'s yellow aura momentarily intensifies!", "Your ward absorbs the stun!", " radiating with a soft yellow light!")
-	owner.visible_message("<span class='warning'>[owner] begins to faintly glow!</span>", "<span class='brass'>You will absorb all stuns for the next twenty seconds.</span>")
+	owner.visible_message("<span class='warning'>[owner] begins to faintly glow!</span>", "<span class='brass'>You will absorb all stuns aswell as quickly regenerate stamina for the next twenty seconds .</span>")
 	owner.SetAllImmobility(0, FALSE)
-	owner.setStaminaLoss(0, FALSE)
 	progbar = new(owner, duration, owner)
 	progbar.bar.color = list("#FAE48C", "#FAE48C", "#FAE48C", rgb(0,0,0))
 	progbar.update(duration - world.time)
@@ -82,6 +85,9 @@
 
 /datum/status_effect/vanguard_shield/tick()
 	progbar.update(duration - world.time)
+	var/oldstamloss = owner.getStaminaLoss()
+	owner.adjustStaminaLoss(-6) //up to 30 stam / second for now, lets see...
+	stamhealed += oldstamloss - owner.getStaminaLoss()
 
 /datum/status_effect/vanguard_shield/on_remove()
 	. = ..()
@@ -96,8 +102,9 @@
 		for(var/i in owner.stun_absorption)
 			if(owner.stun_absorption[i]["end_time"] > world.time && owner.stun_absorption[i]["priority"] > vanguard["priority"])
 				otheractiveabsorptions = TRUE
-		if(!GLOB.ratvar_awakens && stuns_blocked && !otheractiveabsorptions)
+		if(!GLOB.ratvar_awakens && (stuns_blocked && !otheractiveabsorptions || stamhealed))
 			owner.DefaultCombatKnockdown(stuns_blocked)
+			owner.adjustStaminaLoss(stamhealed * 0.5)
 			message_to_owner = "<span class='boldwarning'>The weight of the Vanguard's protection crashes down upon you!</span>"
 			if(stuns_blocked >= 300)
 				message_to_owner += "\n<span class='userdanger'>You faint from the exertion!</span>"
@@ -106,7 +113,7 @@
 		else
 			stuns_blocked = 0 //so logging is correct in cases where there were stuns blocked but we didn't stun for other reasons
 		owner.visible_message("<span class='warning'>[owner]'s glowing aura fades!</span>", message_to_owner)
-		owner.log_message("lost Vanguard stun immunity[stuns_blocked ? "and was stunned for [stuns_blocked]":""]", LOG_ATTACK)
+		owner.log_message("lost Vanguard stun immunity[stuns_blocked ? "and was stunned for [stuns_blocked]":""] [stamhealed ? ", incurring [stamhealed * 0.25] staminaloss" : ""]", LOG_ATTACK)
 
 /datum/status_effect/inathneqs_endowment
 	id = "inathneqs_endowment"
@@ -543,3 +550,30 @@
 			else if(isanimal(L))
 				var/mob/living/simple_animal/SM = L
 				SM.adjustHealth(-3.5, forced = TRUE)
+
+/obj/screen/alert/status_effect/regenerative_core
+	name = "Reinforcing Tendrils"
+	desc = "You can move faster than your broken body could normally handle!"
+	icon_state = "regenerative_core"
+	name = "Regenerative Core Tendrils"
+
+/datum/status_effect/regenerative_core
+	id = "Regenerative Core"
+	duration = 1 MINUTES
+	status_type = STATUS_EFFECT_REPLACE
+	alert_type = /obj/screen/alert/status_effect/regenerative_core
+
+/datum/status_effect/regenerative_core/on_apply()
+	. = ..()
+	ADD_TRAIT(owner, TRAIT_IGNOREDAMAGESLOWDOWN, "regenerative_core")
+	owner.adjustBruteLoss(-25)
+	if(!AmBloodsucker(owner))	//use your coffin you lazy bastard
+		owner.adjustFireLoss(-25)
+	owner.remove_CC()
+	owner.bodytemperature = BODYTEMP_NORMAL
+	return TRUE
+
+/datum/status_effect/regenerative_core/on_remove()
+	. = ..()
+	REMOVE_TRAIT(owner, TRAIT_IGNOREDAMAGESLOWDOWN, "regenerative_core")
+	owner.updatehealth()

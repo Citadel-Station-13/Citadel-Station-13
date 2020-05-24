@@ -12,7 +12,8 @@
 	meat = /obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/plant
 	disliked_food = MEAT | DAIRY
 	liked_food = VEGETABLES | FRUIT | GRAIN
-	var/light_nutrition_gain_factor = 10
+	species_language_holder = /datum/language_holder/sylvan
+	var/light_nutrition_gain_factor = 4
 	var/light_toxheal = 1
 	var/light_oxyheal = 1
 	var/light_burnheal = 1
@@ -35,9 +36,7 @@
 	if(isturf(H.loc)) //else, there's considered to be no light
 		var/turf/T = H.loc
 		light_amount = min(1,T.get_lumcount()) - 0.5
-		H.nutrition += light_amount * light_nutrition_gain_factor
-		if(H.nutrition >= NUTRITION_LEVEL_FULL)
-			H.nutrition = NUTRITION_LEVEL_FULL - 1
+		H.adjust_nutrition(light_amount * light_nutrition_gain_factor, NUTRITION_LEVEL_FULL)
 		if(light_amount > 0.2) //if there's enough light, heal
 			H.heal_overall_damage(light_bruteheal, light_burnheal)
 			H.adjustToxLoss(-light_toxheal)
@@ -69,21 +68,19 @@
 				H.adjustFireLoss(rand(5,15))
 				H.show_message("<span class='userdanger'>The radiation beam singes you!</span>")
 		if(/obj/item/projectile/energy/florayield)
-			H.nutrition = min(H.nutrition+30, NUTRITION_LEVEL_FULL)
-
+			H.adjust_nutrition(30, NUTRITION_LEVEL_FULL)
 
 /datum/species/pod/pseudo_weak
 	name = "Anthromorphic Plant"
 	id = "podweak"
 	species_traits = list(EYECOLOR,HAIR,FACEHAIR,LIPS,MUTCOLORS)
-	mutant_bodyparts = list("mam_tail", "mam_ears", "mam_body_markings", "mam_snouts", "taur", "legs")
-	default_features = list("mcolor" = "FFF","mcolor2" = "FFF","mcolor3" = "FFF", "mam_snouts" = "Husky", "mam_tail" = "Husky", "mam_ears" = "Husky", "mam_body_markings" = "Husky", "taur" = "None", "legs" = "Normal Legs")
+	mutant_bodyparts = list("mcolor" = "FFF","mcolor2" = "FFF","mcolor3" = "FFF", "mam_snouts" = "Husky", "mam_tail" = "Husky", "mam_ears" = "Husky", "mam_body_markings" = "Husky", "taur" = "None", "legs" = "Normal Legs")
 	limbs_id = "pod"
-	light_nutrition_gain_factor = 7.5
+	light_nutrition_gain_factor = 3
 	light_bruteheal = 0.2
 	light_burnheal = 0.2
 	light_toxheal = 0.7
-	
+
 /datum/species/pod/pseudo_weak/spec_death(gibbed, mob/living/carbon/human/H)
 	if(H)
 		stop_wagging_tail(H)
@@ -94,19 +91,19 @@
 	. = ..()
 
 /datum/species/pod/pseudo_weak/can_wag_tail(mob/living/carbon/human/H)
-	return ("mam_tail" in mutant_bodyparts) || ("mam_waggingtail" in mutant_bodyparts)
+	return mutant_bodyparts["mam_tail"] || mutant_bodyparts["mam_waggingtail"]
 
 /datum/species/pod/pseudo_weak/is_wagging_tail(mob/living/carbon/human/H)
-	return ("mam_waggingtail" in mutant_bodyparts)
+	return mutant_bodyparts["mam_waggingtail"]
 
 /datum/species/pod/pseudo_weak/start_wagging_tail(mob/living/carbon/human/H)
-	if("mam_tail" in mutant_bodyparts)
+	if(mutant_bodyparts["mam_tail"])
+		mutant_bodyparts["mam_waggingtail"] = mutant_bodyparts["mam_tail"]
 		mutant_bodyparts -= "mam_tail"
-		mutant_bodyparts |= "mam_waggingtail"
 	H.update_body()
 
 /datum/species/pod/pseudo_weak/stop_wagging_tail(mob/living/carbon/human/H)
-	if("mam_waggingtail" in mutant_bodyparts)
+	if(mutant_bodyparts["mam_waggingtail"])
+		mutant_bodyparts["mam_tail"] = mutant_bodyparts["mam_waggingtail"]
 		mutant_bodyparts -= "mam_waggingtail"
-		mutant_bodyparts |= "mam_tail"
 	H.update_body()

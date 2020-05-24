@@ -21,6 +21,7 @@
 	icon = 'icons/obj/status_display.dmi'
 	icon_state = "frame"
 	desc = "A remote control for a door."
+	plane = ABOVE_WALL_PLANE
 	req_access = list(ACCESS_SECURITY)
 	density = FALSE
 	var/id			// id of linked machinery/lockers
@@ -135,7 +136,7 @@
 		. /= 10
 
 /obj/machinery/door_timer/proc/set_timer(value)
-	var/new_time = CLAMP(value,0,MAX_TIMER)
+	var/new_time = clamp(value,0,MAX_TIMER)
 	. = new_time == timer_duration //return 1 on no change
 	timer_duration = new_time
 

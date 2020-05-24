@@ -299,7 +299,7 @@
 
 /datum/outfit/butler
 	name = "Butler"
-	uniform = /obj/item/clothing/under/suit_jacket/really_black
+	uniform = /obj/item/clothing/under/suit/black_really
 	shoes = /obj/item/clothing/shoes/laceup
 	head = /obj/item/clothing/head/bowler
 	glasses = /obj/item/clothing/glasses/monocle
@@ -309,7 +309,7 @@
 	name = "Summon Servant"
 	desc = "This spell can be used to call your servant, whenever you need it."
 	charge_max = 100
-	clothes_req = 0
+	clothes_req = NONE
 	invocation = "JE VES"
 	invocation_type = "whisper"
 	range = -1

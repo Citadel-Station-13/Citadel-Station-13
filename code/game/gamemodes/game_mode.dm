@@ -272,7 +272,7 @@
 		reports += config.mode_reports[config_tag]
 		Count++
 	for(var/i in Count to rand(3,5)) //Between three and five wrong entries on the list.
-		var/false_report_type = pickweightAllowZero(report_weights)
+		var/false_report_type = pickweight(report_weights, 0)
 		report_weights[false_report_type] = 0 //Make it so the same false report won't be selected twice
 		reports += config.mode_reports[false_report_type]
 
@@ -323,7 +323,7 @@
 	var/free_tickets = CONFIG_GET(number/default_antag_tickets)
 	//Max extra tickets you can use
 	var/additional_tickets = CONFIG_GET(number/max_tickets_per_roll)
-	
+
 	var/list/ckey_to_mind = list()		//this is admittedly shitcode but I'm webediting
 	var/list/prev_tickets = SSpersistence.antag_rep		//cache for hyper-speed in theory. how many tickets someone has stored
 	var/list/curr_tickets = list()				//how many tickets someone has for *this* antag roll, so with the free tickets
@@ -337,7 +337,7 @@
 			continue
 		curr_tickets[mind_ckey] = amount
 		ckey_to_mind[mind_ckey] = M			//make sure we can look them up after picking
-	
+
 	if(!return_list)		//return a single guy
 		var/ckey
 		if(length(curr_tickets))
@@ -417,7 +417,7 @@
 				if(player.assigned_role == job)
 					candidates -= player
 
-	if(candidates.len < recommended_enemies)
+	if(candidates.len < recommended_enemies && CONFIG_GET(keyed_list/force_antag_count)[config_tag])
 		for(var/mob/dead/new_player/player in players)
 			if(player.client && player.ready == PLAYER_READY_TO_PLAY)
 				if(!(role in player.client.prefs.be_special)) // We don't have enough people who want to be antagonist, make a separate list of people who don't want to be one
@@ -584,7 +584,7 @@
 //By default nuke just ends the round
 /datum/game_mode/proc/OnNukeExplosion(off_station)
 	nuke_off_station = off_station
-	if(off_station < 2)
+	if(!off_station)
 		station_was_nuked = TRUE //Will end the round on next check.
 
 //Additional report section in roundend report
@@ -603,4 +603,8 @@
 
 /// Mode specific admin panel.
 /datum/game_mode/proc/admin_panel()
+	return
+
+/// Mode specific info for ghost game_info
+/datum/game_mode/proc/ghost_info()
 	return

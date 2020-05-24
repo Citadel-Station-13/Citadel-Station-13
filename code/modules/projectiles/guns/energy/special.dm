@@ -89,6 +89,7 @@
 	suppressed = TRUE
 	ammo_type = list(/obj/item/ammo_casing/energy/bolt)
 	weapon_weight = WEAPON_LIGHT
+	inaccuracy_modifier = 0
 	obj_flags = 0
 	overheat_time = 20
 	holds_charge = TRUE
@@ -125,6 +126,7 @@
 	attack_verb = list("attacked", "slashed", "cut", "sliced")
 	force = 12
 	sharpness = IS_SHARP
+	inaccuracy_modifier = 0
 	can_charge = 0
 
 	heat = 3800
@@ -180,6 +182,7 @@
 	item_state = null
 	icon_state = "wormhole_projector"
 	pin = null
+	inaccuracy_modifier = 0
 	var/obj/effect/portal/p_blue
 	var/obj/effect/portal/p_orange
 	var/atmos_link = FALSE
@@ -315,6 +318,7 @@
 	icon_state = "emitter_carbine"
 	force = 12
 	w_class = WEIGHT_CLASS_SMALL
+	inaccuracy_modifier = 0
 	cell_type = /obj/item/stock_parts/cell/super
 	ammo_type = list(/obj/item/ammo_casing/energy/emitter)
 

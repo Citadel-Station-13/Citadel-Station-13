@@ -43,15 +43,26 @@ GLOBAL_LIST_EMPTY(mob_config_movespeed_type_lookup)
 GLOBAL_LIST_EMPTY(latejoiners) //CIT CHANGE - All latejoining people, for traitor-target purposes.
 
 /proc/update_config_movespeed_type_lookup(update_mobs = TRUE)
-	var/list/mob_types = list()
+	// NOTE: This is entirely based on the fact that byond typesof/subtypesof gets longer/deeper paths before shallower ones.
+	// If that ever breaks this entire proc breaks.
+	var/list/mob_types = typesof(/mob)
 	var/list/entry_value = CONFIG_GET(keyed_list/multiplicative_movespeed)
+	var/list/configured_types = list()
 	for(var/path in entry_value)
 		var/value = entry_value[path]
-		if(!value)
+		if(isnull(value))
 			continue
+		// associative list sets for elements that already exist preserve order
+		mob_types[path] = value
+	// now go back up through it to set everything, making absolute sure that base paths are overridden by child paths all the way down the path tree.
+	for(var/i in length(mob_types) to 1 step -1)
+		var/path = mob_types[i]
+		if(isnull(mob_types[path]))
+			continue
+		// we're going from bottom to top so it should be safe to do this without further checks..
 		for(var/subpath in typesof(path))
-			mob_types[subpath] = value
-	GLOB.mob_config_movespeed_type_lookup = mob_types
+			configured_types[subpath] = mob_types[path]
+	GLOB.mob_config_movespeed_type_lookup = configured_types
 	if(update_mobs)
 		update_mob_config_movespeeds()
 

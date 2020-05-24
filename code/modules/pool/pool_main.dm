@@ -173,7 +173,7 @@
 	if(istype(W, /obj/item/mop) && filled)
 		W.reagents.add_reagent("water", 5)
 		to_chat(user, "<span class='notice'>You wet [W] in [src].</span>")
-		playsound(loc, 'sound/effects/slosh.ogg', 25, TRUE)
+		playsound(src, 'sound/effects/slosh.ogg', 25, TRUE)
 	else
 		return ..()
 

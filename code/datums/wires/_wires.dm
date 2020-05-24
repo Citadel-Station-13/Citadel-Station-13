@@ -33,12 +33,14 @@
 	var/list/assemblies = list() // List of attached assemblies.
 	var/randomize = 0 // If every instance of these wires should be random.
 					  // Prevents wires from showing up in station blueprints
+	var/req_knowledge = INFINITY //wiring skill level on which the functions are revealed.
+	var/req_skill = JOB_SKILL_BASIC //used in user's cutting/pulsing/mending speed calculations.
+	var/list/current_users //list of untrained people currently interacting with this set of wires.
 
 /datum/wires/New(atom/holder)
 	..()
 	if(!istype(holder, holder_type))
 		CRASH("Wire holder is not of the expected type!")
-		return
 
 	src.holder = holder
 	if(randomize)
@@ -131,8 +133,22 @@
 		cut_wires += wire
 		on_cut(wire, mend = FALSE)
 
-/datum/wires/proc/cut_color(color)
+/datum/wires/proc/cut_color(color, mob/living/user)
+	LAZYINITLIST(current_users)
+	if(current_users[user])
+		return FALSE
+	if(req_skill && user?.mind)
+		var/level_diff = req_skill - user.mind.get_skill_level(/datum/skill/level/job/wiring, round = TRUE)
+		if(level_diff > 0)
+			LAZYSET(current_users, user, TRUE)
+			to_chat(user, "<span class='notice'>You begin cutting [holder]'s [color] wire...</span>")
+			if(!do_after(user, 0.75 SECONDS * level_diff, target = holder) || !interactable(user))
+				LAZYREMOVE(current_users, user)
+				return FALSE
+			LAZYREMOVE(current_users, user)
+	to_chat(user, "<span class='notice'>You cut [holder]'s [color] wire.</span>")
 	cut(get_wire(color))
+	return TRUE
 
 /datum/wires/proc/cut_random()
 	cut(wires[rand(1, wires.len)])
@@ -147,7 +163,21 @@
 	on_pulse(wire, user)
 
 /datum/wires/proc/pulse_color(color, mob/living/user)
+	LAZYINITLIST(current_users)
+	if(current_users[user])
+		return FALSE
+	if(req_skill && user?.mind)
+		var/level_diff = req_skill - user.mind.get_skill_level(/datum/skill/level/job/wiring, round = TRUE)
+		if(level_diff > 0)
+			LAZYSET(current_users, user, TRUE)
+			to_chat(user, "<span class='notice'>You begin pulsing [holder]'s [color] wire...</span>")
+			if(!do_after(user, 1.5 SECONDS * level_diff, target = holder) || !interactable(user))
+				LAZYREMOVE(current_users, user)
+				return FALSE
+			LAZYREMOVE(current_users, user)
+	to_chat(user, "<span class='notice'>You pulse [holder]'s [color] wire.</span>")
 	pulse(get_wire(color), user)
+	return TRUE
 
 /datum/wires/proc/pulse_assembly(obj/item/assembly/S)
 	for(var/color in assemblies)
@@ -225,7 +255,7 @@
 	var/reveal_wires = FALSE
 
 	// Admin ghost can see a purpose of each wire.
-	if(IsAdminGhost(user))
+	if(IsAdminGhost(user) || user.mind.get_skill_level(/datum/skill/level/job/wiring) >= req_knowledge)
 		reveal_wires = TRUE
 
 	// Same for anyone with an abductor multitool.
@@ -260,18 +290,16 @@
 		if("cut")
 			I = L.is_holding_tool_quality(TOOL_WIRECUTTER)
 			if(I || IsAdminGhost(usr))
-				if(I && holder)
+				if(cut_color(target_wire, L) && I && holder)
 					I.play_tool_sound(holder, 20)
-				cut_color(target_wire)
 				. = TRUE
 			else
 				to_chat(L, "<span class='warning'>You need wirecutters!</span>")
 		if("pulse")
 			I = L.is_holding_tool_quality(TOOL_MULTITOOL)
 			if(I || IsAdminGhost(usr))
-				if(I && holder)
+				if(pulse_color(target_wire, L) && I && holder)
 					I.play_tool_sound(holder, 20)
-				pulse_color(target_wire, L)
 				. = TRUE
 			else
 				to_chat(L, "<span class='warning'>You need a multitool!</span>")

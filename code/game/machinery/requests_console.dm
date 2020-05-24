@@ -16,6 +16,7 @@ GLOBAL_LIST_EMPTY(allConsoles)
 	desc = "A console intended to send requests to different departments on the station."
 	icon = 'icons/obj/terminals.dmi'
 	icon_state = "req_comp0"
+	plane = ABOVE_WALL_PLANE
 	var/department = "Unknown" //The list of all departments on the station (Determined from this variable on each unit) Set this to the same thing if you want several consoles in one department
 	var/list/messages = list() //List of all messages
 	var/departmentType = 0
@@ -469,7 +470,6 @@ GLOBAL_LIST_EMPTY(allConsoles)
 			if(newmessagepriority < EXTREME_MESSAGE_PRIORITY)
 				newmessagepriority = EXTREME_MESSAGE_PRIORITY
 				update_icon()
-			if(1)
 				playsound(src, 'sound/machines/twobeep.ogg', 50, 1)
 				say(title)
 			messages += "<span class='bad'>!!!Extreme Priority!!!</span><BR><b>From:</b> [linkedsender]<BR>[message]"

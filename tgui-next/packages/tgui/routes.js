@@ -13,13 +13,17 @@ import { BluespaceArtillery } from './interfaces/BluespaceArtillery';
 import { Bepis } from './interfaces/Bepis';
 import { BorgPanel } from './interfaces/BorgPanel';
 import { BrigTimer } from './interfaces/BrigTimer';
+import { Canvas } from './interfaces/Canvas';
 import { Canister } from './interfaces/Canister';
 import { Cargo, CargoExpress } from './interfaces/Cargo';
 import { CellularEmporium } from './interfaces/CellularEmporium';
 import { CentcomPodLauncher } from './interfaces/CentcomPodLauncher';
 import { ChemAcclimator } from './interfaces/ChemAcclimator';
 import { ChemDebugSynthesizer } from './interfaces/ChemDebugSynthesizer';
+import { ChemDispenser } from './interfaces/ChemDispenser';
 import { ChemFilter } from './interfaces/ChemFilter';
+import { ChemHeater } from './interfaces/ChemHeater';
+import { ChemMaster } from './interfaces/ChemMaster';
 import { ChemPress } from './interfaces/ChemPress';
 import { ChemReactionChamber } from './interfaces/ChemReactionChamber';
 import { ChemSplitter } from './interfaces/ChemSplitter';
@@ -76,6 +80,7 @@ import { RapidPipeDispenser } from './interfaces/RapidPipeDispenser';
 import { SatelliteControl } from './interfaces/SatelliteControl';
 import { ScannerGate } from './interfaces/ScannerGate';
 import { ShuttleManipulator } from './interfaces/ShuttleManipulator';
+import { Sleeper } from './interfaces/Sleeper';
 import { SlimeBodySwapper } from './interfaces/SlimeBodySwapper';
 import { Signaler } from './interfaces/Signaler';
 import { SmartVend } from './interfaces/SmartVend';
@@ -93,6 +98,7 @@ import { ThermoMachine } from './interfaces/ThermoMachine';
 import { TurbineComputer } from './interfaces/TurbineComputer';
 import { Uplink } from './interfaces/Uplink';
 import { VaultController } from './interfaces/VaultController';
+import { Vending } from './interfaces/Vending';
 import { Wires } from './interfaces/Wires';
 import { AtmosRelief } from './interfaces/AtmosRelief';
 
@@ -161,6 +167,10 @@ const ROUTES = {
     component: () => BluespaceArtillery,
     scrollable: false,
   },
+  canvas: {
+    component: () => Canvas,
+    scrollable: false,
+  },
   canister: {
     component: () => Canister,
     scrollable: false,
@@ -185,8 +195,20 @@ const ROUTES = {
     component: () => ChemAcclimator,
     scrollable: false,
   },
+  chem_dispenser: {
+    component: () => ChemDispenser,
+    scrollable: true,
+  },
   chemical_filter: {
     component: () => ChemFilter,
+    scrollable: true,
+  },
+  chem_heater: {
+    component: () => ChemHeater,
+    scrollable: true,
+  },
+  chem_master: {
+    component: () => ChemMaster,
     scrollable: true,
   },
   chem_press: {
@@ -441,6 +463,10 @@ const ROUTES = {
     component: () => ShuttleManipulator,
     scrollable: true,
   },
+  sleeper: {
+    component: () => Sleeper,
+    scrollable: false,
+  },
   slime_swap_body: {
     component: () => SlimeBodySwapper,
     scrollable: true,
@@ -509,6 +535,10 @@ const ROUTES = {
   vault_controller: {
     component: () => VaultController,
     scrollable: false,
+  },
+  vending: {
+    component: () => Vending,
+    scrollable: true,
   },
   wires: {
     component: () => Wires,

@@ -121,11 +121,10 @@
 					if(isalienadult(ass) || istype(ass, /mob/living/simple_animal/hostile/alien)) //Xenos have their own asses, thanks to Pybro.
 						temp_img = icon('icons/ass/assalien.png')
 					else if(ishuman(ass)) //Suit checks are in check_ass
-						if(ass.gender == MALE)
-							temp_img = icon('icons/ass/assmale.png')
-						else if(ass.gender == FEMALE)
+						var/mob/living/carbon/human/H = ass
+						if(H.dna.features["body_model"] == FEMALE)
 							temp_img = icon('icons/ass/assfemale.png')
-						else 									//In case anyone ever makes the generic ass. For now I'll be using male asses.
+						else
 							temp_img = icon('icons/ass/assmale.png')
 					else if(isdrone(ass)) //Drones are hot
 						temp_img = icon('icons/ass/assdrone.png')

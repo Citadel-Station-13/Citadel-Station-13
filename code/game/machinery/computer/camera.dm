@@ -45,11 +45,11 @@
 	if (ismob(user) && !isliving(user)) // ghosts don't need cameras
 		return
 	if (!network)
-		CRASH("No camera network")
+		stack_trace("No camera network")
 		user.unset_machine()
 		return FALSE
 	if (!(islist(network)))
-		CRASH("Camera network is not a list")
+		stack_trace("Camera network is not a list")
 		user.unset_machine()
 		return FALSE
 
@@ -169,6 +169,7 @@
 	desc = "Used for watching an empty arena."
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "telescreen"
+	plane = ABOVE_WALL_PLANE
 	network = list("thunder")
 	density = FALSE
 	circuit = null

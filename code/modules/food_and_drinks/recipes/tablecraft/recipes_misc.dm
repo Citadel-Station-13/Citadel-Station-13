@@ -14,6 +14,15 @@
 	result = /obj/item/reagent_containers/food/snacks/chawanmushi
 	subcategory = CAT_MISCFOOD
 
+/datum/crafting_recipe/food/wrap
+	name = "Egg Wrap"
+	reqs = list(/datum/reagent/consumable/soysauce = 10,
+		/obj/item/reagent_containers/food/snacks/friedegg = 1,
+		/obj/item/reagent_containers/food/snacks/grown/cabbage = 1,
+	)
+	result = /obj/item/reagent_containers/food/snacks/eggwrap
+	subcategory = CAT_MISCFOOD
+
 /datum/crafting_recipe/food/khachapuri
 	name = "Khachapuri"
 	reqs = list(
@@ -28,7 +37,8 @@
 	name = "Raw Khinkali"
 	reqs = list(
 		/obj/item/reagent_containers/food/snacks/doughslice = 1,
-		/obj/item/reagent_containers/food/snacks/faggot = 1
+		/obj/item/reagent_containers/food/snacks/meatball = 1,
+		/obj/item/reagent_containers/food/snacks/grown/garlic = 1
 	)
 	result =  /obj/item/reagent_containers/food/snacks/rawkhinkali
 	subcategory = CAT_MISCFOOD
@@ -38,7 +48,7 @@
 	reqs = list(
 		/datum/reagent/consumable/soysauce = 5,
 		/obj/item/reagent_containers/food/snacks/bun = 1,
-		/obj/item/reagent_containers/food/snacks/faggot = 1,
+		/obj/item/reagent_containers/food/snacks/meatball = 1,
 		/obj/item/reagent_containers/food/snacks/grown/cabbage = 1
 	)
 	result = /obj/item/reagent_containers/food/snacks/meatbun

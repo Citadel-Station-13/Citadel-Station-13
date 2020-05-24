@@ -15,6 +15,7 @@
 	var/show_filling = TRUE
 	custom_materials = list(/datum/material/iron=10, /datum/material/glass=20)
 	reagent_flags = TRANSPARENT
+	custom_price = 100
 
 /obj/item/reagent_containers/syringe/Initialize()
 	. = ..()
@@ -180,7 +181,7 @@
 ///Used by update_icon() and update_overlays()
 /obj/item/reagent_containers/syringe/proc/get_rounded_vol()
 	if(reagents && reagents.total_volume)
-		return CLAMP(round((reagents.total_volume / volume * 15),5), 1, 15)
+		return clamp(round((reagents.total_volume / volume * 15),5), 1, 15)
 	else
 		return 0
 

@@ -35,15 +35,15 @@ Will print: "/mob/living/carbon/human/death" (you can optionally embed it in a s
 #define BODY_ADJ_LAYER			27		//certain mutantrace features (snout, body markings) that must appear above the body parts
 #define GENITALS_FRONT_LAYER	26		//Draws some genitalia above clothes and the TAUR body if need be.
 #define BODY_LAYER				25		//underwear, undershirts, socks, eyes, lips(makeup)
-#define FRONT_MUTATIONS_LAYER	24		//mutations that should appear above body, body_adj and bodyparts layer (e.g. laser eyes)
-#define DAMAGE_LAYER			23		//damage indicators (cuts and burns)
-#define UNIFORM_LAYER			22
-#define ID_LAYER				21
-#define HANDS_PART_LAYER		20
-#define SHOES_LAYER				19
-#define GLOVES_LAYER			18
-#define EARS_LAYER				17
-#define BODY_TAUR_LAYER			16
+#define BODY_ADJ_UPPER_LAYER	24
+#define FRONT_MUTATIONS_LAYER	23		//mutations that should appear above body, body_adj and bodyparts layer (e.g. laser eyes)
+#define DAMAGE_LAYER			22		//damage indicators (cuts and burns)
+#define UNIFORM_LAYER			21
+#define ID_LAYER				20
+#define HANDS_PART_LAYER		19
+#define SHOES_LAYER				18
+#define GLOVES_LAYER			17
+#define EARS_LAYER				16
 #define SUIT_LAYER				15
 #define GENITALS_EXPOSED_LAYER	14
 #define GLASSES_LAYER			13
@@ -70,14 +70,6 @@ Will print: "/mob/living/carbon/human/death" (you can optionally embed it in a s
 //AND -1 MEANS "ABOVE", OK?, OK!?!
 #define ABOVE_SHOES_LAYER			(SHOES_LAYER-1)
 #define ABOVE_BODY_FRONT_LAYER		(BODY_FRONT_LAYER-1)
-
-
-//Security levels
-#define SEC_LEVEL_GREEN	0
-#define SEC_LEVEL_BLUE	1
-#define SEC_LEVEL_AMBER 2
-#define SEC_LEVEL_RED	3
-#define SEC_LEVEL_DELTA	4
 
 //some arbitrary defines to be used by self-pruning global lists. (see master_controller)
 #define PROCESS_KILL 26	//Used to trigger removal from a processing list
@@ -345,11 +337,10 @@ GLOBAL_LIST_INIT(pda_reskins, list(PDA_SKIN_CLASSIC = 'icons/obj/pda.dmi', PDA_S
 #define COLOUR_PRIORITY_AMOUNT 4 //how many priority levels there are.
 
 //Endgame Results
-#define NUKE_NEAR_MISS 1
-#define NUKE_MISS_STATION 2
-#define NUKE_SYNDICATE_BASE 3
-#define STATION_DESTROYED_NUKE 4
-#define STATION_EVACUATED 5
+#define NUKE_MISS_STATION 1
+#define NUKE_SYNDICATE_BASE 2
+#define STATION_DESTROYED_NUKE 3
+#define STATION_EVACUATED 4
 #define BLOB_WIN 8
 #define BLOB_NUKE 9
 #define BLOB_DESTROYED 10
@@ -466,13 +457,13 @@ GLOBAL_LIST_INIT(pda_reskins, list(PDA_SKIN_CLASSIC = 'icons/obj/pda.dmi', PDA_S
 #define EGG_LAYING_MESSAGES list("lays an egg.","squats down and croons.","begins making a huge racket.","begins clucking raucously.")
 
 // list of all null rod weapons
-#define HOLY_WEAPONS /obj/item/nullrod, /obj/item/twohanded/dualsaber/hypereutactic/chaplain, /obj/item/gun/energy/laser/redtag/hitscan/chaplain, /obj/item/multitool/chaplain, /obj/item/melee/baseball_bat/chaplain
+#define HOLY_WEAPONS /obj/item/nullrod, /obj/item/twohanded/dualsaber/hypereutactic/chaplain, /obj/item/gun/energy/laser/redtag/hitscan/chaplain, /obj/item/multitool/chaplain, /obj/item/clothing/gloves/fingerless/pugilist/chaplain, /obj/item/melee/baseball_bat/chaplain
 
 // Used by PDA and cartridge code to reduce repetitiveness of spritesheets
 #define PDAIMG(what) {"<span class="pda16x16 [#what]"></span>"}
 
 //Filters
-#define AMBIENT_OCCLUSION list("type"="drop_shadow","x"=0,"y"=-2,"size"=4,"color"="#04080FAA")
+#define AMBIENT_OCCLUSION(_size, _color) list("type"="drop_shadow","x"=0,"y"=-2,"size"=_size,"color"=_color)
 #define EYE_BLUR(size) list("type"="blur", "size"=size)
 #define GRAVITY_MOTION_BLUR list("type"="motion_blur","x"=0,"y"=0)
 
@@ -524,3 +515,17 @@ GLOBAL_LIST_INIT(pda_reskins, list(PDA_SKIN_CLASSIC = 'icons/obj/pda.dmi', PDA_S
 #define NIGHTSHIFT_AREA_NONE				4		//default/highest.
 
 #define UNTIL(X) while(!(X)) stoplag()
+
+
+//Scavenging element defines for special loot "events".
+#define SCAVENGING_FOUND_NOTHING	"found_nothing"
+#define SCAVENGING_SPAWN_MOUSE		"spawn_mouse"
+#define SCAVENGING_SPAWN_MICE		"spawn_mice"
+#define SCAVENGING_SPAWN_TOM		"spawn_tom_the_mouse"
+
+//Scavenging element defines for ckey/mind restrictions.
+#define NO_LOOT_RESTRICTION			0
+#define LOOT_RESTRICTION_MIND		1
+#define LOOT_RESTRICTION_CKEY		2
+#define LOOT_RESTRICTION_MIND_PILE	3 //limited to the current pile.
+#define LOOT_RESTRICTION_CKEY_PILE	4 //Idem

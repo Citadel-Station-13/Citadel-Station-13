@@ -1,5 +1,6 @@
 /datum/traitor_class/ai // this one is special, so has no weight
 	name = "Malfunctioning AI"
+	threat = 20
 
 /datum/traitor_class/ai/forge_objectives(datum/antagonist/traitor/T)
 	var/objective_count = 0
@@ -64,5 +65,5 @@
 /datum/traitor_class/ai/finalize_traitor(datum/antagonist/traitor/T)
 	T.add_law_zero()
 	T.owner.current.playsound_local(get_turf(T.owner.current), 'sound/ambience/antag/malf.ogg', 100, FALSE, pressure_affected = FALSE)
-	T.owner.current.grant_language(/datum/language/codespeak)
+	T.owner.current.grant_language(/datum/language/codespeak, TRUE, TRUE, LANGUAGE_MALF)
 	return FALSE

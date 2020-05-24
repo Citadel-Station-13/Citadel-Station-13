@@ -486,6 +486,7 @@
 		/datum/reagent/consumable/pwr_game,
 		/datum/reagent/consumable/shamblers,
 		/datum/reagent/consumable/sugar,
+		/datum/reagent/consumable/pineapplejuice,
 		/datum/reagent/consumable/orangejuice,
 		/datum/reagent/consumable/grenadine,
 		/datum/reagent/consumable/limejuice,
@@ -494,21 +495,26 @@
 		/datum/reagent/consumable/menthol
 	)
 	upgrade_reagents = list(
-		/datum/reagent/drug/mushroomhallucinogen,
-		/datum/reagent/consumable/nothing,
-		/datum/reagent/medicine/cryoxadone
+		/datum/reagent/consumable/banana,
+		/datum/reagent/consumable/berryjuice,
+		/datum/reagent/consumable/strawberryjuice
 	)
 	upgrade_reagents2 = list(
-		/datum/reagent/consumable/banana,
-		/datum/reagent/consumable/berryjuice
+		/datum/reagent/consumable/applejuice,
+		/datum/reagent/consumable/carrotjuice,
+		/datum/reagent/consumable/pumpkinjuice,
+		/datum/reagent/consumable/watermelonjuice
 	)
-	upgrade_reagents3 = null
+	upgrade_reagents3 = list(
+		/datum/reagent/drug/mushroomhallucinogen,
+		/datum/reagent/consumable/nothing,
+		/datum/reagent/consumable/peachjuice
+	)
 	emagged_reagents = list(
-		/datum/reagent/consumable/ethanol/thirteenloko,
-		/datum/reagent/consumable/ethanol/changelingsting,
-		/datum/reagent/consumable/ethanol/whiskey_cola,
 		/datum/reagent/toxin/mindbreaker,
-		/datum/reagent/toxin/staminatoxin
+		/datum/reagent/toxin/staminatoxin,
+		/datum/reagent/medicine/cryoxadone,
+		/datum/reagent/iron
 	)
 
 /obj/machinery/chem_dispenser/drinks/fullupgrade //fully ugpraded stock parts, emagged
@@ -551,6 +557,7 @@
 		/datum/reagent/consumable/ethanol/hcider,
 		/datum/reagent/consumable/ethanol/creme_de_menthe,
 		/datum/reagent/consumable/ethanol/creme_de_cacao,
+		/datum/reagent/consumable/ethanol/creme_de_coconut,
 		/datum/reagent/consumable/ethanol/triple_sec,
 		/datum/reagent/consumable/ethanol/sake,
 		/datum/reagent/consumable/ethanol/applejack
@@ -562,13 +569,12 @@
 	upgrade_reagents2 = null
 	upgrade_reagents3 = null
 	emagged_reagents = list(
-		/datum/reagent/iron,
 		/datum/reagent/consumable/ethanol/alexander,
 		/datum/reagent/consumable/clownstears,
 		/datum/reagent/toxin/minttoxin,
 		/datum/reagent/consumable/ethanol/atomicbomb,
-		/datum/reagent/drug/aphrodisiac,
-		/datum/reagent/drug/aphrodisiacplus
+		/datum/reagent/consumable/ethanol/thirteenloko,
+		/datum/reagent/consumable/ethanol/changelingsting
 	)
 
 /obj/machinery/chem_dispenser/drinks/beer/fullupgrade //fully ugpraded stock parts, emagged

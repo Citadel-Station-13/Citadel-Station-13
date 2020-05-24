@@ -95,7 +95,7 @@
 	name = "scatter laser shell"
 	desc = "An advanced shotgun shell that uses a micro laser to replicate the effects of a scatter laser weapon in a ballistic package."
 	icon_state = "lshell"
-	projectile_type = /obj/item/projectile/beam/weak
+	projectile_type = /obj/item/projectile/beam/scatter
 	pellets = 6
 	variance = 35
 
@@ -130,12 +130,16 @@
 	ENABLE_BITFIELD(reagents.reagents_holder_flags, NO_REACT)
 
 /obj/item/ammo_casing/shotgun/dart/bioterror
-	desc = "A shotgun dart filled with deadly toxins."
+	desc = "A shotgun dart filled with an obscene amount of lethal reagents. God help whoever is shot with this."
+	projectile_type = /obj/item/projectile/bullet/dart/piercing
+	reagent_amount = 50
 
 /obj/item/ammo_casing/shotgun/dart/bioterror/Initialize()
 	. = ..()
-	reagents.add_reagent(/datum/reagent/toxin/fentanyl, 6)
-	reagents.add_reagent(/datum/reagent/toxin/spore, 6)
-	reagents.add_reagent(/datum/reagent/toxin/mutetoxin, 6) //;HELP OPS IN MAINT
-	reagents.add_reagent(/datum/reagent/toxin/coniine, 6)
-	reagents.add_reagent(/datum/reagent/toxin/sodium_thiopental, 6)
+	reagents.add_reagent(/datum/reagent/toxin/amanitin, 12) //for a nasty surprise after you get shot and somehow escape and don't think to quickly purge, and even shock those who are loaded up on purging agents
+	reagents.add_reagent(/datum/reagent/toxin/chloralhydrate, 6)
+	reagents.add_reagent(/datum/reagent/toxin/mutetoxin, 6) //;HELPIES OPS IN MAINT
+	reagents.add_reagent(/datum/reagent/impedrezene, 6)
+	reagents.add_reagent(/datum/reagent/toxin/acid/fluacid, 5) //this and the acid equal about 25ish burn, not counting the minute toxin damage dealt by their metabolism, this makes each dart about as lethal as a stechkin shot in upfront damage
+	reagents.add_reagent(/datum/reagent/toxin/acid, 5)
+	reagents.add_reagent(/datum/reagent/consumable/frostoil, 10) //tempgun slowdown goes both ways and adds to the burn

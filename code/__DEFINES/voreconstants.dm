@@ -7,6 +7,19 @@
 #define DM_ABSORB "Absorb"
 #define DM_UNABSORB "Un-absorb"
 
+#define DIGESTABLE 		(1<<0)
+#define SHOW_VORE_PREFS (1<<1)
+#define DEVOURABLE		(1<<2)
+#define FEEDING			(1<<3)
+#define NO_VORE			(1<<4)
+#define OPEN_PANEL		(1<<5)
+#define ABSORBED		(1<<6)
+#define VORE_INIT		(1<<7)
+#define VOREPREF_INIT	(1<<8)
+#define LICKABLE		(1<<9)
+
+#define MAX_VORE_FLAG	(1<<10)-1 // change this whenever you add a vore flag, must be largest vore flag*2-1
+
 #define isbelly(A) istype(A, /obj/belly)
 
 #define QDEL_NULL_LIST(x) if(x) { for(var/y in x) { qdel(y) } ; x = null }
