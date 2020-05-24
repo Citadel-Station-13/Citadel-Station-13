@@ -196,6 +196,7 @@
 						It seems whatever was keeping you in this realm has come to an end, like all things.</span>")
 		animate(S, alpha = 0, time = 5 SECONDS)
 		QDEL_IN(S, 5 SECONDS)
+	return ..()
 
 /datum/action/item_action/stickmen/proc/give_infos(atom/source, mob/user, list/examine_list)
 	examine_list += "<span class='notice'>Making sure you are properly wearing or holding it, \
