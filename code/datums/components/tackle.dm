@@ -164,7 +164,7 @@
 			user.visible_message("<span class='warning'>[user] lands a weak [tackle_word] on [target], briefly knocking [target.p_them()] off-balance!</span>", "<span class='userdanger'>You land a weak [tackle_word] on [target], briefly knocking [target.p_them()] off-balance!</span>", target)
 			to_chat(target, "<span class='userdanger'>[user] lands a weak [tackle_word] on you, briefly knocking you off-balance!</span>")
 			user.Knockdown(30)
-			target.adjustStaminaLoss(30)
+			target.adjustStaminaLoss(15)
 			target.apply_status_effect(STATUS_EFFECT_TASED_WEAK, 6 SECONDS)
 
 		if(-1 to 0) // decent hit, both parties are about equally inconvenienced
@@ -180,7 +180,7 @@
 			user.visible_message("<span class='warning'>[user] lands a solid [tackle_word] on [target], knocking them both down hard!</span>", "<span class='userdanger'>You land a solid [tackle_word] on [target], knocking you both down hard!</span>", target)
 			to_chat(target, "<span class='userdanger'>[user] lands a solid [tackle_word] on you, knocking you both down hard!</span>")
 
-			target.adjustStaminaLoss(50)
+			target.adjustStaminaLoss(40)
 			target.Paralyze(5)
 			user.Knockdown(10)
 			target.Knockdown(20)
@@ -193,8 +193,8 @@
 			user.set_resting(FALSE, TRUE, FALSE)
 			user.forceMove(get_turf(target))
 			target.adjustStaminaLoss(50)
-			target.Paralyze(8) //Otherwise the victim can just instantly get out of the grab.
-			target.Knockdown(40) //So they cant get up instantly.
+			target.Paralyze(3) //Otherwise the victim can just instantly get out of the grab.
+			target.DefaultCombatKnockdown(20) //So they cant get up instantly.
 			if(ishuman(target) && iscarbon(user))
 				target.grabbedby(user)
 
@@ -205,9 +205,9 @@
 			user.SetKnockdown(0)
 			user.set_resting(FALSE, TRUE, FALSE)
 			user.forceMove(get_turf(target))
-			target.adjustStaminaLoss(80)
+			target.adjustStaminaLoss(65)
 			target.Paralyze(10) 
-			target.Knockdown(50)
+			target.KnockdDefaultCombatKnockdownown(20)
 			if(ishuman(target) && iscarbon(user))
 				target.grabbedby(user)
 				target.grippedby(user, instant = TRUE)
