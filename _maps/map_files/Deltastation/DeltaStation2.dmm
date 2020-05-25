@@ -62743,9 +62743,6 @@
 /obj/machinery/door/window{
 	name = "Secure Art Exhibition"
 	},
-/obj/structure/sign/painting/library_secure{
-	pixel_y = 32
-	},
 /turf/open/floor/carpet,
 /area/library)
 "ccu" = (
@@ -62754,9 +62751,6 @@
 	dir = 4
 	},
 /obj/structure/window/reinforced,
-/obj/structure/sign/painting/library_secure{
-	pixel_y = 32
-	},
 /turf/open/floor/carpet,
 /area/library)
 "ccv" = (
@@ -63933,9 +63927,6 @@
 /obj/structure/chair/sofa/right{
 	icon_state = "sofaend_right";
 	dir = 8
-	},
-/obj/structure/sign/painting/library{
-	pixel_x = 32
 	},
 /turf/open/floor/wood,
 /area/library)
@@ -65118,9 +65109,6 @@
 /obj/item/radio/intercom{
 	name = "Station Intercom";
 	pixel_x = -26
-	},
-/obj/structure/sign/painting/library{
-	pixel_y = -32
 	},
 /turf/open/floor/wood,
 /area/library)
@@ -97855,7 +97843,6 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
 	},
-/obj/machinery/rnd/bepis,
 /turf/open/floor/plasteel,
 /area/science/explab)
 "djD" = (
@@ -111995,23 +111982,11 @@
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
 /area/science/storage)
-"dIB" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/obj/structure/cable/white{
-	icon_state = "4-8"
-	},
-/obj/effect/turf_decal/bot,
-/turf/open/floor/plasteel,
-/area/science/storage)
 "dIC" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/structure/cable/white{
 	icon_state = "4-8"
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
 	},
 /turf/open/floor/plasteel,
 /area/science/storage)
@@ -112021,6 +111996,7 @@
 	icon_state = "4-8"
 	},
 /obj/effect/turf_decal/delivery,
+/obj/machinery/portable_atmospherics/scrubber/huge,
 /turf/open/floor/plasteel,
 /area/science/storage)
 "dIE" = (
@@ -112028,6 +112004,7 @@
 	icon_state = "2-8"
 	},
 /obj/effect/turf_decal/delivery,
+/obj/machinery/portable_atmospherics/scrubber/huge,
 /turf/open/floor/plasteel,
 /area/science/storage)
 "dIF" = (
@@ -112770,18 +112747,17 @@
 /turf/open/floor/plasteel,
 /area/science/mixing)
 "dJT" = (
-/obj/structure/tank_dispenser,
 /obj/effect/turf_decal/bot,
+/obj/structure/rack,
+/obj/item/clothing/mask/gas,
+/obj/item/clothing/head/hardhat/red,
+/obj/item/clothing/suit/fire/firefighter,
 /turf/open/floor/plasteel,
 /area/science/mixing)
 "dJU" = (
-/obj/structure/rack,
 /obj/structure/extinguisher_cabinet{
 	pixel_y = -32
 	},
-/obj/item/clothing/suit/fire/firefighter,
-/obj/item/clothing/head/hardhat/red,
-/obj/item/clothing/mask/gas,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 5
 	},
@@ -112840,9 +112816,6 @@
 /turf/closed/wall/r_wall,
 /area/science/mixing)
 "dJZ" = (
-/obj/structure/table,
-/obj/item/paper_bin,
-/obj/item/pen,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
@@ -112852,30 +112825,29 @@
 	name = "science camera";
 	network = list("ss13","rd")
 	},
-/obj/effect/turf_decal/bot,
+/obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plasteel,
 /area/science/storage)
 "dKa" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 9
 	},
-/obj/effect/turf_decal/bot,
+/obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plasteel,
 /area/science/storage)
 "dKb" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
+/obj/effect/turf_decal/stripes/corner{
+	dir = 1
 	},
+/obj/effect/turf_decal/stripes/corner,
 /turf/open/floor/plasteel,
 /area/science/storage)
 "dKc" = (
-/obj/machinery/portable_atmospherics/scrubber/huge,
-/obj/effect/turf_decal/bot,
+/obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plasteel,
 /area/science/storage)
 "dKd" = (
-/obj/machinery/portable_atmospherics/scrubber/huge,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/power/apc{
 	areastring = "/area/science/storage";
@@ -112884,7 +112856,7 @@
 	pixel_x = 26
 	},
 /obj/structure/cable/white,
-/obj/effect/turf_decal/bot,
+/obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plasteel,
 /area/science/storage)
 "dKe" = (
@@ -113190,8 +113162,8 @@
 /turf/open/floor/plasteel,
 /area/science/mixing)
 "dKF" = (
-/obj/machinery/portable_atmospherics/canister/carbon_dioxide,
 /obj/effect/turf_decal/bot,
+/obj/structure/tank_dispenser,
 /turf/open/floor/plasteel,
 /area/science/storage)
 "dKG" = (
@@ -114847,6 +114819,9 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
 /turf/open/floor/plasteel,
 /area/science/storage)
 "dNC" = (
@@ -115255,6 +115230,9 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
 	},
 /turf/open/floor/plasteel,
 /area/science/storage)
@@ -125443,11 +125421,11 @@
 /turf/open/floor/plasteel/dark,
 /area/science/mixing)
 "gOM" = (
-/obj/structure/sign/painting/library{
-	pixel_y = -32
-	},
-/turf/open/floor/wood,
-/area/library)
+/obj/item/paper_bin,
+/obj/item/pen,
+/obj/structure/table,
+/turf/open/floor/plasteel,
+/area/science/storage)
 "gPv" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -125748,11 +125726,15 @@
 /turf/open/floor/plasteel/white/side,
 /area/science/circuit)
 "jqs" = (
-/obj/structure/sign/painting/library{
-	pixel_y = 32
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
 	},
-/turf/open/floor/wood,
-/area/library)
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/science/storage)
 "jqM" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/stripes/line{
@@ -125877,9 +125859,6 @@
 	dir = 8
 	},
 /obj/structure/window/reinforced,
-/obj/structure/sign/painting/library_secure{
-	pixel_y = 32
-	},
 /turf/open/floor/carpet,
 /area/library)
 "kam" = (
@@ -127286,6 +127265,11 @@
 	},
 /turf/open/floor/plating,
 /area/science/research/abandoned)
+"yky" = (
+/obj/effect/turf_decal/bot,
+/obj/machinery/portable_atmospherics/canister/carbon_dioxide,
+/turf/open/floor/plasteel,
+/area/science/storage)
 
 (1,1,1) = {"
 oZp
@@ -159027,9 +159011,9 @@ bUv
 bWC
 bYR
 caG
-jqs
+cmt
 cxV
-gOM
+cmt
 caG
 tDx
 ckR
@@ -159284,9 +159268,9 @@ bUq
 bWI
 bYM
 caG
-jqs
+cmt
 cxV
-gOM
+cmt
 caG
 cjt
 ckR
@@ -159541,9 +159525,9 @@ bUq
 bWD
 bYM
 caG
-jqs
+cmt
 cxV
-gOM
+cmt
 caG
 cjt
 ckR
@@ -160113,7 +160097,7 @@ dHl
 dIA
 dJZ
 dKF
-dLZ
+yky
 dLZ
 dOo
 dOT
@@ -160367,10 +160351,10 @@ dDt
 dEw
 dFN
 dHm
-dIB
+dIC
 dKa
-dKF
-dLZ
+gOM
+yky
 dLZ
 dOo
 dOT
@@ -160626,8 +160610,8 @@ dFO
 dHn
 dIC
 dKb
-dKb
-dKb
+jqs
+jqs
 dNB
 dOp
 dOT

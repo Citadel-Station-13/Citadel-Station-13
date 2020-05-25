@@ -49338,13 +49338,13 @@
 /area/science/explab)
 "cbg" = (
 /obj/machinery/portable_atmospherics/canister/nitrogen,
-/turf/open/floor/plating,
+/turf/open/floor/engine,
 /area/science/storage)
 "cbh" = (
 /obj/machinery/atmospherics/components/binary/pump{
 	dir = 1
 	},
-/turf/open/floor/plating,
+/turf/open/floor/engine,
 /area/science/storage)
 "cbi" = (
 /obj/effect/spawner/structure/window/reinforced,
@@ -49403,7 +49403,10 @@
 	layer = 2.9
 	},
 /obj/machinery/portable_atmospherics/pump,
-/turf/open/floor/plating,
+/obj/effect/turf_decal/stripes/line{
+	dir = 10
+	},
+/turf/open/floor/engine,
 /area/science/storage)
 "cbo" = (
 /obj/machinery/disposal/bin,
@@ -49444,10 +49447,8 @@
 /area/science/explab)
 "cbu" = (
 /obj/machinery/portable_atmospherics/canister/nitrous_oxide,
-/obj/machinery/light/small{
-	dir = 1
-	},
-/turf/open/floor/plating,
+/obj/effect/turf_decal/stripes/line,
+/turf/open/floor/engine,
 /area/science/storage)
 "cbv" = (
 /obj/machinery/atmospherics/pipe/simple/general/visible,
@@ -49499,7 +49500,10 @@
 	})
 "cbC" = (
 /obj/machinery/portable_atmospherics/canister/nitrous_oxide,
-/turf/open/floor/plating,
+/obj/effect/turf_decal/stripes/line{
+	dir = 6
+	},
+/turf/open/floor/engine,
 /area/science/storage)
 "cbD" = (
 /obj/effect/turf_decal/tile/neutral{
@@ -52711,7 +52715,7 @@
 /obj/structure/cable{
 	icon_state = "2-4"
 	},
-/turf/open/floor/plating,
+/turf/open/floor/engine,
 /area/science/storage)
 "chS" = (
 /obj/machinery/suit_storage_unit/atmos,
@@ -52725,7 +52729,14 @@
 /obj/machinery/atmospherics/components/unary/tank/air{
 	dir = 1
 	},
-/turf/open/floor/plating,
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/machinery/light{
+	dir = 8;
+	light_color = "#e8eaff"
+	},
+/turf/open/floor/engine,
 /area/science/storage)
 "chU" = (
 /obj/effect/turf_decal/tile/yellow{
@@ -52742,7 +52753,7 @@
 /obj/machinery/atmospherics/pipe/manifold/general/visible{
 	dir = 1
 	},
-/turf/open/floor/plating,
+/turf/open/floor/engine,
 /area/science/storage)
 "chW" = (
 /obj/effect/turf_decal/tile/neutral{
@@ -54326,7 +54337,7 @@
 /area/science/xenobiology)
 "clc" = (
 /obj/machinery/atmospherics/pipe/manifold/general/visible,
-/turf/open/floor/plating,
+/turf/open/floor/engine,
 /area/science/storage)
 "cld" = (
 /obj/effect/turf_decal/tile/neutral{
@@ -55073,7 +55084,7 @@
 /obj/machinery/atmospherics/components/binary/valve{
 	dir = 4
 	},
-/turf/open/floor/plating,
+/turf/open/floor/engine,
 /area/science/storage)
 "cmL" = (
 /obj/effect/landmark/blobstart,
@@ -55494,7 +55505,7 @@
 /obj/machinery/atmospherics/components/unary/portables_connector/visible{
 	dir = 8
 	},
-/turf/open/floor/plating,
+/turf/open/floor/engine,
 /area/science/storage)
 "cnA" = (
 /obj/effect/turf_decal/tile/brown{
@@ -55629,7 +55640,8 @@
 /turf/open/space/basic,
 /area/solar/starboard/aft)
 "cnO" = (
-/turf/open/floor/plating,
+/obj/effect/landmark/event_spawn,
+/turf/open/floor/engine,
 /area/science/storage)
 "cnP" = (
 /obj/structure/lattice/catwalk,
@@ -55691,7 +55703,11 @@
 /obj/structure/cable{
 	icon_state = "1-2"
 	},
-/turf/open/floor/plating,
+/obj/machinery/light{
+	dir = 4;
+	light_color = "#e8eaff"
+	},
+/turf/open/floor/engine,
 /area/science/storage)
 "cnW" = (
 /obj/structure/chair/office/dark{
@@ -56573,7 +56589,10 @@
 /area/space/station_ruins)
 "cpD" = (
 /obj/machinery/portable_atmospherics/canister/air,
-/turf/open/floor/plating,
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/turf/open/floor/engine,
 /area/science/storage)
 "cpE" = (
 /obj/structure/fans/tiny,
@@ -57505,7 +57524,7 @@
 /area/engine/teg_cold)
 "crn" = (
 /obj/machinery/atmospherics/components/binary/valve,
-/turf/open/floor/plating,
+/turf/open/floor/engine,
 /area/science/storage)
 "cro" = (
 /turf/closed/wall/r_wall/rust,
@@ -58314,8 +58333,7 @@
 	name = "Engine Room"
 	})
 "csR" = (
-/obj/effect/landmark/xeno_spawn,
-/turf/open/floor/plating,
+/turf/open/floor/engine,
 /area/science/storage)
 "csS" = (
 /obj/machinery/atmospherics/pipe/manifold/general/visible{
@@ -66333,10 +66351,50 @@
 /turf/open/floor/plasteel/white,
 /area/science/xenobiology)
 "cGF" = (
-/obj/effect/landmark/event_spawn,
-/turf/open/floor/plating,
+/obj/machinery/portable_atmospherics/scrubber,
+/turf/open/floor/engine,
 /area/science/storage)
 "cGG" = (
+/obj/machinery/power/apc{
+	areastring = "/area/science/storage";
+	dir = 4;
+	name = "Toxins Storage APC";
+	pixel_x = 24
+	},
+/obj/structure/cable,
+/turf/open/floor/engine,
+/area/science/storage)
+"cGH" = (
+/obj/machinery/camera{
+	c_tag = "Toxins Lab - Storage";
+	dir = 1
+	},
+/obj/machinery/portable_atmospherics/canister/air,
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/turf/open/floor/engine,
+/area/science/storage)
+"cGI" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/visible,
+/turf/open/floor/engine,
+/area/science/storage)
+"cGJ" = (
+/obj/machinery/portable_atmospherics/canister/oxygen,
+/obj/effect/turf_decal/stripes/line{
+	dir = 9
+	},
+/turf/open/floor/engine,
+/area/science/storage)
+"cGK" = (
+/obj/structure/window/reinforced{
+	dir = 4;
+	layer = 2.9
+	},
+/obj/machinery/portable_atmospherics/canister/carbon_dioxide,
+/turf/open/floor/engine,
+/area/science/storage)
+"cGL" = (
 /obj/structure/table,
 /obj/item/extinguisher,
 /obj/item/storage/toolbox/mechanical,
@@ -66346,48 +66404,11 @@
 	pixel_x = -7;
 	pixel_y = 3
 	},
-/obj/structure/cable,
-/obj/machinery/power/apc{
-	areastring = "/area/science/storage";
-	dir = 4;
-	name = "Toxins Storage APC";
-	pixel_x = 24
-	},
-/turf/open/floor/plating,
-/area/science/storage)
-"cGH" = (
-/obj/machinery/portable_atmospherics/canister/oxygen,
-/obj/machinery/camera{
-	c_tag = "Toxins Lab - Storage";
-	dir = 1
-	},
-/turf/open/floor/plating,
-/area/science/storage)
-"cGI" = (
-/obj/machinery/portable_atmospherics/canister/oxygen,
-/obj/machinery/atmospherics/pipe/simple/scrubbers/visible,
-/turf/open/floor/plating,
-/area/science/storage)
-"cGJ" = (
-/obj/machinery/portable_atmospherics/canister/oxygen,
-/turf/open/floor/plating,
-/area/science/storage)
-"cGK" = (
-/obj/structure/window/reinforced{
-	dir = 4;
-	layer = 2.9
-	},
-/obj/machinery/portable_atmospherics/canister/carbon_dioxide,
-/turf/open/floor/plating,
-/area/science/storage)
-"cGL" = (
-/obj/structure/reagent_dispensers/fueltank,
-/obj/machinery/light/small,
-/turf/open/floor/plating,
+/turf/open/floor/engine,
 /area/science/storage)
 "cGM" = (
 /obj/structure/tank_dispenser,
-/turf/open/floor/plating,
+/turf/open/floor/engine,
 /area/science/storage)
 "cGN" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/visible{
@@ -66410,7 +66431,7 @@
 	name = "Plasma Canister Storage";
 	req_access_txt = "7;8"
 	},
-/turf/open/floor/plating,
+/turf/open/floor/engine,
 /area/science/storage)
 "cGR" = (
 /obj/effect/landmark/start/scientist,
@@ -66445,11 +66466,18 @@
 /area/science/storage)
 "cGV" = (
 /obj/machinery/portable_atmospherics/canister/toxins,
-/turf/open/floor/plating,
+/obj/effect/turf_decal/delivery,
+/turf/open/floor/engine,
 /area/science/storage)
 "cGW" = (
 /obj/effect/landmark/blobstart,
-/turf/open/floor/plating,
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/turf/open/floor/engine,
 /area/science/storage)
 "cGX" = (
 /obj/structure/cable{
@@ -66485,7 +66513,8 @@
 	c_tag = "Toxins Lab - Plasma Storage";
 	dir = 1
 	},
-/turf/open/floor/plating,
+/obj/effect/turf_decal/delivery,
+/turf/open/floor/engine,
 /area/science/storage)
 "cHb" = (
 /obj/structure/cable{
@@ -71699,6 +71728,13 @@
 /obj/machinery/meter,
 /turf/open/floor/plasteel,
 /area/engine/atmos)
+"dYm" = (
+/obj/machinery/portable_atmospherics/canister/oxygen,
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/turf/open/floor/engine,
+/area/science/storage)
 "eCy" = (
 /obj/machinery/atmospherics/pipe/simple/orange/visible{
 	dir = 9
@@ -71838,6 +71874,17 @@
 	},
 /turf/open/space/basic,
 /area/space/nearstation)
+"gVV" = (
+/obj/structure/window/reinforced{
+	dir = 4;
+	layer = 2.9
+	},
+/obj/machinery/portable_atmospherics/canister/carbon_dioxide,
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/turf/open/floor/engine,
+/area/science/storage)
 "hcR" = (
 /obj/machinery/atmospherics/pipe/simple/orange/hidden{
 	dir = 5
@@ -71877,6 +71924,13 @@
 	},
 /turf/open/floor/plasteel,
 /area/engine/atmos)
+"hFa" = (
+/obj/machinery/portable_atmospherics/canister/nitrogen,
+/obj/effect/turf_decal/stripes/line{
+	dir = 6
+	},
+/turf/open/floor/engine,
+/area/science/storage)
 "hKC" = (
 /obj/machinery/atmospherics/pipe/simple/yellow/visible{
 	dir = 5
@@ -72018,14 +72072,26 @@
 /turf/open/space/basic,
 /area/space/nearstation)
 "mBP" = (
-/obj/machinery/rnd/bepis,
-/turf/open/floor/plasteel/white,
-/area/science/circuit)
+/obj/effect/landmark/xeno_spawn,
+/turf/open/floor/plasteel,
+/area/science/mixing)
 "mEa" = (
 /obj/machinery/atmospherics/pipe/manifold/cyan/visible,
 /obj/machinery/meter,
 /turf/open/floor/plasteel,
 /area/engine/atmos)
+"mIm" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/machinery/light{
+	light_color = "#cee5d2"
+	},
+/turf/open/floor/engine,
+/area/science/storage)
 "mIT" = (
 /obj/structure/lattice/catwalk,
 /obj/machinery/atmospherics/pipe/simple/supplymain/visible,
@@ -91053,7 +91119,7 @@ bwK
 bAz
 bAN
 cGN
-cbg
+hFa
 chV
 crn
 cGI
@@ -91313,7 +91379,7 @@ bKH
 cbh
 clc
 cGJ
-cGJ
+dYm
 cGO
 cGU
 cGZ
@@ -91556,7 +91622,7 @@ aaa
 aaa
 bcy
 bdf
-bdf
+mBP
 crJ
 blT
 bqJ
@@ -91569,7 +91635,7 @@ bfn
 cbb
 cbn
 cmK
-cnO
+gVV
 cGK
 cbb
 cbb
@@ -92083,11 +92149,11 @@ cbP
 bcy
 cbC
 cnO
-cnO
+csR
 csR
 cGQ
 cGW
-cGV
+mIm
 cbb
 bKa
 cGq
@@ -93376,7 +93442,7 @@ aTE
 bTG
 aVF
 cGs
-mBP
+aVF
 caw
 caA
 cHk
