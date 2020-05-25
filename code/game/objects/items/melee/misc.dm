@@ -230,6 +230,19 @@
 /obj/item/melee/classic_baton/Initialize()
 	. = ..()
 
+// For when we want to swap from Brute damage to Staminda and vise versa
+/obj/item/melee/classic_baton/AltClick(mob/user)
+	. = ..()
+	if(damtype == "brute")
+		damtype = STAMINA
+		user.visible_message("<span class='notice'>[user] welds the [src] is a non-lethal way.</span>")
+		return
+	if(damtype == STAMINA)
+		damtype = "brute"
+		user.visible_message("<span class='warning'>[user] welds the [src] is a lethal way!</span>")
+		return
+	return
+
 // Description for trying to stun when still on cooldown.
 /obj/item/melee/classic_baton/proc/get_wait_description()
 	return
