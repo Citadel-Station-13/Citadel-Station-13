@@ -481,8 +481,8 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 
 /obj/item/statuebust/Initialize()
 	. = ..()
-	AddComponent(/datum/component/art, impressiveness)
-	addtimer(CALLBACK(src, /datum.proc/_AddComponent, list(/datum/component/beauty, 1000)), 0)
+	AddElement(/datum/element/art, impressiveness)
+	addtimer(CALLBACK(src, /datum.proc/_AddElement, list(/datum/element/beauty, 1000)), 0)
 
 /obj/item/tailclub
 	name = "tail club"

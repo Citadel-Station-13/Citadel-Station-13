@@ -692,6 +692,17 @@
 	def_components = list(/obj/item/stock_parts/cell = /obj/item/stock_parts/cell/high)
 	needs_anchored = FALSE
 
+/obj/item/circuitboard/machine/chem_dispenser/apothecary
+	name = "Apotechary Chem Dispenser (Machine Board)"
+	build_path = /obj/machinery/chem_dispenser/apothecary
+	req_components = list(
+		/obj/item/stock_parts/matter_bin = 1,
+		/obj/item/stock_parts/capacitor = 1,
+		/obj/item/stock_parts/manipulator = 1,
+		/obj/item/stack/sheet/glass = 1,
+		/obj/item/stock_parts/cell = 1)
+	def_components = list(/obj/item/stock_parts/cell = /obj/item/stock_parts/cell/upgraded/plus)
+
 /obj/item/circuitboard/machine/chem_dispenser/drinks
 	name = "Soda Dispenser (Machine Board)"
 	build_path = /obj/machinery/chem_dispenser/drinks
@@ -706,6 +717,10 @@
 	build_path = /obj/machinery/chem_dispenser/abductor
 	def_components = list(/obj/item/stock_parts/cell = /obj/item/stock_parts/cell/high)
 	needs_anchored = FALSE
+
+/obj/item/circuitboard/machine/sleeper/party
+	name = "Party Pod (Machine Board)"
+	build_path = /obj/machinery/sleeper/party
 
 /obj/item/circuitboard/machine/smoke_machine
 	name = "Smoke Machine (Machine Board)"
@@ -883,6 +898,16 @@
 /obj/item/circuitboard/machine/protolathe/department/service
 	name = "Departmental Protolathe - Service (Machine Board)"
 	build_path = /obj/machinery/rnd/production/protolathe/department/service
+
+/obj/item/circuitboard/machine/bepis
+	name = "BEPIS Chamber (Machine Board)"
+	build_path = /obj/machinery/rnd/bepis
+	req_components = list(
+		/obj/item/stack/cable_coil = 5,
+		/obj/item/stock_parts/capacitor = 1,
+		/obj/item/stock_parts/manipulator = 1,
+		/obj/item/stock_parts/micro_laser = 1,
+		/obj/item/stock_parts/scanning_module = 1)
 
 /obj/item/circuitboard/machine/techfab
 	name = "\improper Techfab (Machine Board)"
@@ -1068,3 +1093,12 @@
 		/obj/item/stock_parts/matter_bin = 3,
 		/obj/item/stock_parts/manipulator = 1,
 		/obj/item/stack/sheet/glass = 1)
+
+/obj/item/circuitboard/machine/hypnochair
+	name = "Enhanced Interrogation Chamber (Machine Board)"
+	icon_state = "security"
+	build_path = /obj/machinery/hypnochair
+	req_components = list(
+		/obj/item/stock_parts/micro_laser = 2,
+		/obj/item/stock_parts/scanning_module = 2
+	)

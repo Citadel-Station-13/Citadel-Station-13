@@ -42,7 +42,7 @@ Simple datum which is instanced once per type and is used for every object of sa
 		on_applied_obj(source, amount, material_flags)
 
 	if(beauty_modifier)
-		addtimer(CALLBACK(source, /datum.proc/_AddComponent, list(/datum/component/beauty, beauty_modifier * amount)), 0)
+		addtimer(CALLBACK(source, /datum.proc/_AddElement, list(/datum/element/beauty, beauty_modifier * amount)), 0)
 
 ///This proc is called when the material is added to an object specifically.
 /datum/material/proc/on_applied_obj(var/obj/o, amount, material_flags)

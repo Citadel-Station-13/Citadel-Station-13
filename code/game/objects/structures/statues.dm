@@ -14,8 +14,9 @@
 
 /obj/structure/statue/Initialize()
 	. = ..()
-	AddComponent(/datum/component/art, impressiveness)
-	addtimer(CALLBACK(src, /datum.proc/_AddComponent, list(/datum/component/beauty, impressiveness *  75)), 0)
+	AddElement(/datum/element/art, impressiveness)
+	addtimer(CALLBACK(src, /datum.proc/_AddElement, list(/datum/element/beauty, impressiveness *  75)), 0)
+
 /obj/structure/statue/attackby(obj/item/W, mob/living/user, params)
 	add_fingerprint(user)
 	if(!(flags_1 & NODECONSTRUCT_1))
