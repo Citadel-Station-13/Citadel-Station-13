@@ -230,7 +230,7 @@
 /obj/item/melee/classic_baton/Initialize()
 	. = ..()
 
-// For when we want to swap from Brute damage to Staminda and vise versa
+// For when we want to swap from Brute damage to Stamina and vise versa
 /obj/item/melee/classic_baton/AltClick(mob/user)
 	. = ..()
 	if(damtype == "brute")
