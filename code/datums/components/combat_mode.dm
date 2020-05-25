@@ -171,9 +171,9 @@
 
 /obj/screen/combattoggle/update_icon_state()
 	var/mob/living/user = hud?.mymob
-	if(!user)
+	if(!user || !component)
 		return
-	if((master.mode_flags & COMBAT_MODE_ACTIVE))
+	if((component.mode_flags & COMBAT_MODE_ACTIVE))
 		icon_state = "combat"
 	else if(HAS_TRAIT(user, TRAIT_COMBAT_MODE_LOCKED))
 		icon_state = "combat_locked"
@@ -183,10 +183,10 @@
 /obj/screen/combattoggle/update_overlays()
 	. = ..()
 	var/mob/living/carbon/user = hud?.mymob
-	if(!(user.client))
+	if(!component !(user?.client))
 		return
 
-	if((master.mode_flags & COMBAT_MODE_ACTIVE) && user.client.prefs.hud_toggle_flash)
+	if((component.mode_flags & COMBAT_MODE_ACTIVE) && user.client.prefs.hud_toggle_flash)
 		if(!flashy)
 			flashy = mutable_appearance('icons/mob/screen_gen.dmi', "togglefull_flash")
 		if(flashy.color != user.client.prefs.hud_toggle_color)
