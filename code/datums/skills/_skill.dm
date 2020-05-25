@@ -8,6 +8,7 @@ GLOBAL_LIST_INIT_TYPED(skill_datums, /datum/skill, init_skill_datums())
 			continue
 		S = new path
 		.[S.type] = S
+	. = sortTim(., /proc/cmp_skill_categories, TRUE)
 
 /**
   * Skill datums
@@ -34,6 +35,8 @@ GLOBAL_LIST_INIT_TYPED(skill_datums, /datum/skill, init_skill_datums())
 	var/competency_multiplier = 1
 	/// A list of ways this skill can affect or be affected through actions and skill modifiers.
 	var/list/skill_traits = list(SKILL_SANITY, SKILL_INTELLIGENCE)
+	/// Index of this skill in the UI
+	var/ui_category = SKILL_UI_CAT_MISC
 
 /**
   * Ensures what someone's setting as a value for this skill is valid.

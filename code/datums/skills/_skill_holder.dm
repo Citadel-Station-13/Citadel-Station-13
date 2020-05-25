@@ -20,6 +20,15 @@
 	var/list/original_values
 	var/list/original_affinities
 	var/list/original_levels
+	/// The mind datum this skill is associated with, only used for the check_skills UI
+	var/datum/mind/owner
+	/// For static UI update.
+	var/need_static_data_update = TRUE
+
+
+/datum/skill_holder/New(owner)
+	..()
+	src.owner = owner
 
 /**
   * Grabs the value of a skill.
@@ -79,6 +88,7 @@
 		CRASH("Invalid set_skill_value call. Use skill typepaths.")	//until a time when we somehow need text ids for dynamic skills, I'm enforcing this.
 	var/datum/skill/S = GLOB.skill_datums[skill]
 	value = S.sanitize_value(value)
+	skill_holder.need_static_data_update = TRUE
 	if(!isnull(value))
 		LAZYINITLIST(skill_holder.skills)
 		S.set_skill_value(skill_holder, value, src, silent)

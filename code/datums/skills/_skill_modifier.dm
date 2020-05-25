@@ -7,6 +7,9 @@ GLOBAL_LIST_EMPTY(potential_mods_per_skill)
   * and cause lots of edge cases. These are fairly simple overall... make a subtype though, don't use this one.
   */
 /datum/skill_modifier
+	/// Name and description of the skill modifier, used in the UI
+	var/name = "???"
+	var/desc = ""
 	/// flags for this skill modifier.
 	var/modifier_flags = NONE
 	/// target skills, can be a specific skill typepath or a list of skill traits.
@@ -23,6 +26,8 @@ GLOBAL_LIST_EMPTY(potential_mods_per_skill)
 	var/level_mod = 1
 	/// Priority of this skill modifier compared to other ones.
 	var/priority = MODIFIER_SKILL_PRIORITY_DEF
+	/// Skill modifier icon, used in the UI
+	var/icon = "default"
 
 /datum/skill_modifier/New(id, register = FALSE)
 	identifier = GET_SKILL_MOD_ID(type, id)
@@ -110,6 +115,7 @@ GLOBAL_LIST_EMPTY(potential_mods_per_skill)
 		if(M.modifier_flags & MODIFIER_SKILL_LEVEL)
 			ADD_MOD_STEP(skill_holder.skill_level_mods, path, skill_holder.original_levels, get_skill_level(path, FALSE))
 	LAZYSET(skill_holder.all_current_skill_modifiers, id, TRUE)
+	skill_holder.need_static_data_update = TRUE
 
 	if(M.modifier_flags & MODIFIER_SKILL_BODYBOUND)
 		M.RegisterSignal(src, COMSIG_MIND_TRANSFER, /datum/skill_modifier.proc/on_mind_transfer)
@@ -141,6 +147,7 @@ GLOBAL_LIST_EMPTY(potential_mods_per_skill)
 		if(M.modifier_flags & MODIFIER_SKILL_LEVEL && skill_holder.skill_level_mods)
 			REMOVE_MOD_STEP(skill_holder.skill_level_mods, path, skill_holder.original_levels)
 	LAZYREMOVE(skill_holder.all_current_skill_modifiers, id)
+	skill_holder.need_static_data_update = TRUE
 
 	if(!mind_transfer && M.modifier_flags & MODIFIER_SKILL_BODYBOUND)
 		M.UnregisterSignal(src, COMSIG_MIND_TRANSFER)

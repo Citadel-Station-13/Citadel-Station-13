@@ -744,3 +744,7 @@ GLOBAL_LIST_EMPTY(asset_datums)
 		"dna_undiscovered.gif"	= 'html/dna_undiscovered.gif',
 		"dna_extra.gif" 		= 'html/dna_extra.gif'
 )
+
+/datum/asset/spritesheet/simple/skills
+	name = "skills"
+

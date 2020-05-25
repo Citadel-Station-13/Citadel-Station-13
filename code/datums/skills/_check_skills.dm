@@ -11,6 +11,70 @@
 	if(!mind.skill_holder)
 		to_chat(usr, "<span class='warning'>How do you check the skills of [(usr == src)? "yourself when you are" : "something"] without the capability for skills? (PROBABLY A BUG, PRESS F1.)</span>")
 		return
-	var/datum/browser/B = new(usr, "skilldisplay_[REF(src)]", "Skills of [src]")
-	B.set_content(mind.skill_html_readout())
-	B.open()
+
+	mind.skill_holder.ui_interact(src)
+
+/datum/skill_holder/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.always_state)
+	if(need_static_data_update)
+		update_static_data(user)
+		need_static_data_update = FALSE
+	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+	if(!ui)
+		ui = new(user, src, ui_key, "check_skills", "[owner.name]'s Skills", 900, 480, master_ui, state)
+		ui.open()
+
+/datum/skill_holder/ui_static_data(mob/user)
+	. = list()
+	var/datum/asset/spritesheet/simple/assets = get_asset_datum(/datum/asset/spritesheet/simple/skills)
+
+	.["skills"] = list()
+	var/list/current
+	var/category
+	for(var/path in GLOB.skill_datums)
+		var/datum/skill/S = GLOB.skill_datums[path]
+		if(!current || S.ui_category != category)
+			if(category)
+				.["skills"][category] = current
+			current = list()
+			category = S.ui_category
+
+		var/skill_value = owner.get_skill_value(path, FALSE)
+		var/skill_level = owner.get_skill_level(path, FALSE)
+		var/list/mod_ids = list()
+
+		var/value_mods = LAZYACCESS(skill_value_mods, path)
+		var/mod_value = skill_value
+		for(var/k in value_mods)
+			var/datum/skill_modifier/M = GLOB.skill_modifiers[k]
+			mod_ids |= M.identifier
+			mod_value = M.apply_modifier(mod_value, path, src, MODIFIER_TARGET_VALUE)
+
+		var/lvl_mods = LAZYACCESS(skill_level_mods, path)
+		var/mod_level = skill_level
+		for(var/k in lvl_mods)
+			var/datum/skill_modifier/M = GLOB.skill_modifiers[k]
+			mod_ids |= M.identifier
+			mod_level = M.apply_modifier(mod_level, path, src, MODIFIER_TARGET_LEVEL)
+		mod_level = SANITIZE_SKILL_LEVEL(S.type, round(mod_level, 1))
+
+		var/list/data = list(
+			name = S.name,
+			color = S.name_color,
+			skill_base = S.standard_render_value(skill_value, skill_level),
+			skill_mod = S.standard_render_value(mod_value, mod_level),
+			mod_ids = mod_ids
+		)
+		current += list(data)
+
+	if(category)
+		.["skills"][category] = current
+
+	var/all_mods = list()
+	for(var/id in all_current_skill_modifiers)
+		var/datum/skill_modifier/M = GLOB.skill_modifiers[id]
+		all_mods[id] = list(
+			name = M.name,
+			desc = M.desc,
+			icon = assets.icon_class_name(M.icon)
+		)
+	.["modifiers"] = all_mods
