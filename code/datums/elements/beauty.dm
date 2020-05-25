@@ -19,6 +19,7 @@
 	var/area/A = get_area(target)
 	if(A)
 		exit_area(null, A)
+	return ..()
 
 /datum/element/beauty/proc/enter_area(datum/source, area/A)
 	if(A.outdoors)

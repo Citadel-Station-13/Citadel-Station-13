@@ -8,7 +8,7 @@
 	id_arg_index = 2
 	var/impressiveness = 0
 
-/datum/element/art/Initialize(datum/target, impress)
+/datum/element/art/Attach(datum/target, impress)
 	. = ..()
 	if(. == ELEMENT_INCOMPATIBLE || !isatom(target) || isarea(target))
 		return ELEMENT_INCOMPATIBLE
@@ -21,6 +21,10 @@
 			RegisterSignal(target, COMSIG_ITEM_ATTACK_SELF, .proc/apply_moodlet)
 	else
 		RegisterSignal(target, COMSIG_PARENT_EXAMINE, .proc/on_other_examine)
+
+/datum/element/art/Detach(datum/target)
+	UnregisterSignal(target, list(COMSIG_PARENT_EXAMINE, COMSIG_ATOM_ATTACK_HAND, COMSIG_ITEM_ATTACK_SELF))
+	return ..()
 
 /datum/element/art/proc/apply_moodlet(atom/source, mob/M, impress)
 	M.visible_message("<span class='notice'>[M] stops and looks intently at [source].</span>", \
