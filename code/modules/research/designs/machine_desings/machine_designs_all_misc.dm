@@ -122,3 +122,11 @@
 	build_path = /obj/item/circuitboard/machine/autolathe/toy
 	departmental_flags = DEPARTMENTAL_FLAG_ALL
 	category = list("Misc. Machinery")
+
+/datum/design/board/hypnochair
+	name = "Machine Design (Enhanced Interrogation Chamber)"
+	desc = "Allows for the construction of circuit boards used to build an Enhanced Interrogation Chamber."
+	id = "hypnochair"
+	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
+	build_path = /obj/item/circuitboard/machine/hypnochair
+	category = list("Misc. Machinery")

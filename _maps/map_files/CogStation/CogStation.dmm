@@ -72017,6 +72017,10 @@
 	},
 /turf/open/space/basic,
 /area/space/nearstation)
+"mBP" = (
+/obj/machinery/rnd/bepis,
+/turf/open/floor/plasteel/white,
+/area/science/circuit)
 "mEa" = (
 /obj/machinery/atmospherics/pipe/manifold/cyan/visible,
 /obj/machinery/meter,
@@ -93372,7 +93376,7 @@ aTE
 bTG
 aVF
 cGs
-aVF
+mBP
 caw
 caA
 cHk
