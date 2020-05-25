@@ -197,34 +197,32 @@ SLIME SCANNER
 			var/obj/item/organ/O = organ
 
 			//EYES
-			if(istype(O, /obj/item/organ/eyes))
+			if(istype(O, /obj/item/organ/eyes) && advanced)
 				var/obj/item/organ/eyes/eyes = O
-				if(advanced)
-					if(HAS_TRAIT(C, TRAIT_BLIND))
-						temp_message += " <span class='alert'>Subject is blind.</span>"
-					if(HAS_TRAIT(C, TRAIT_NEARSIGHT))
-						temp_message += " <span class='alert'>Subject is nearsighted.</span>"
-					if(eyes.damage > 30)
-						damage_message += " <span class='alert'>Subject has severe eye damage.</span>"
-					else if(eyes.damage > 20)
-						damage_message += " <span class='alert'>Subject has significant eye damage.</span>"
-					else if(eyes.damage)
-						damage_message += " <span class='alert'>Subject has minor eye damage.</span>"
+				if(HAS_TRAIT_NOT_FROM(C, TRAIT_BLIND, EYES_COVERED))
+					temp_message += " <span class='alert'>Subject is blind.</span>"
+				if(HAS_TRAIT_NOT_FROM(C, TRAIT_NEARSIGHT, EYES_COVERED))
+					temp_message += " <span class='alert'>Subject is nearsighted.</span>"
+				if(eyes.damage > 30)
+					damage_message += " <span class='alert'>Subject has severe eye damage.</span>"
+				else if(eyes.damage > 20)
+					damage_message += " <span class='alert'>Subject has significant eye damage.</span>"
+				else if(eyes.damage)
+					damage_message += " <span class='alert'>Subject has minor eye damage.</span>"
 
 
 			//EARS
-			else if(istype(O, /obj/item/organ/ears))
+			else if(istype(O, /obj/item/organ/ears) && advanced)
 				var/obj/item/organ/ears/ears = O
-				if(advanced)
-					if(HAS_TRAIT_FROM(C, TRAIT_DEAF, GENETIC_MUTATION))
-						temp_message += " <span class='alert'>Subject is genetically deaf.</span>"
-					else if(HAS_TRAIT(C, TRAIT_DEAF))
-						temp_message += " <span class='alert'>Subject is deaf.</span>"
-					else
-						if(ears.damage)
-							damage_message += " <span class='alert'>Subject has [ears.damage > ears.maxHealth ? "permanent ": "temporary "]hearing damage.</span>"
-						if(ears.deaf)
-							damage_message += " <span class='alert'>Subject is [ears.damage > ears.maxHealth ? "permanently ": "temporarily "] deaf.</span>"
+				if(HAS_TRAIT_FROM(C, TRAIT_DEAF, GENETIC_MUTATION))
+					temp_message += " <span class='alert'>Subject is genetically deaf.</span>"
+				else if(HAS_TRAIT(C, TRAIT_DEAF))
+					temp_message += " <span class='alert'>Subject is deaf.</span>"
+				else
+					if(ears.damage)
+						damage_message += " <span class='alert'>Subject has [ears.damage > ears.maxHealth ? "permanent ": "temporary "]hearing damage.</span>"
+					if(ears.deaf)
+						damage_message += " <span class='alert'>Subject is [ears.damage > ears.maxHealth ? "permanently ": "temporarily "] deaf.</span>"
 
 
 			//BRAIN
