@@ -37,9 +37,9 @@
 				if(!I)
 					to_chat(usr, "<span class='warning'>You need the item with you to give it!")
 					return
-/*sadly broken	if(TRAIT_NODROP || ABSTRACT_ITEM_TRAIT)
+				if(HAS_TRAIT(I, TRAIT_NODROP) || HAS_TRAIT(I, ABSTRACT_ITEM_TRAIT)) //thanks trigg
 					to_chat(usr, "<span class='notice'>That's not something you can give.</span>")
-					return */
+					return
 				if(src.stat != CONSCIOUS | src.client == null)
 					to_chat(usr, "<span class='notice'>They are not awake!")
 					return
