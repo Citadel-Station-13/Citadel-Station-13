@@ -419,7 +419,7 @@
 	A.BB.damage = hitdamage
 	if(hitdamage)
 		A.BB.nodamage = FALSE
-	A.BB.speed = 0.5
+	A.BB.pixels_per_second = TILES_TO_PIXELS(20)
 	playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
 	A.fire_casing(target, user, params, 0, 0, null, 0, src)
 	user.visible_message("<span class='warning'>[user] blasts a flying lollipop at [target]!</span>")
@@ -434,7 +434,7 @@
 	A.BB.damage = hitdamage
 	if(hitdamage)
 		A.BB.nodamage = FALSE
-	A.BB.speed = 0.5
+	A.BB.pixels_per_second = TILES_TO_PIXELS(20)
 	A.BB.color = rgb(rand(0, 255), rand(0, 255), rand(0, 255))
 	playsound(src.loc, 'sound/weapons/bulletflyby3.ogg', 50, 1)
 	A.fire_casing(target, user, params, 0, 0, null, 0, src)
@@ -671,13 +671,13 @@
 	if(track_projectile)
 		tracked[P] = P.damage
 	P.damage *= projectile_damage_coefficient
-	P.speed *= projectile_speed_coefficient
+	P.pixels_per_second *= projectile_speed_coefficient
 	P.add_overlay(projectile_effect)
 
 /obj/item/borg/projectile_dampen/proc/restore_projectile(obj/item/projectile/P)
 	tracked -= P
 	P.damage *= (1/projectile_damage_coefficient)
-	P.speed *= (1/projectile_speed_coefficient)
+	P.pixels_per_second *= (1/projectile_speed_coefficient)
 	P.cut_overlay(projectile_effect)
 
 /**********************************************************************

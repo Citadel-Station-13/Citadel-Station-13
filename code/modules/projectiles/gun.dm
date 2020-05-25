@@ -76,17 +76,16 @@
 	var/datum/action/item_action/toggle_scope_zoom/azoom
 
 	var/dualwield_spread_mult = 1		//dualwield spread multiplier
-	
+
 	/// Just 'slightly' snowflakey way to modify projectile damage for projectiles fired from this gun.
 	var/projectile_damage_multiplier = 1
 
 /obj/item/gun/Initialize()
 	. = ..()
-	if(pin)
-		if(no_pin_required)
-			pin = null
-		else
-			pin = new pin(src)
+	if(no_pin_required)
+		pin = null
+	else if(pin)
+		pin = new pin(src)
 	if(gun_light)
 		alight = new (src)
 	if(zoomable)
@@ -215,7 +214,7 @@
 	var/loop_counter = 0
 
 	bonus_spread += getinaccuracy(user) //CIT CHANGE - adds bonus spread while not aiming
-	if(ishuman(user) && user.a_intent == INTENT_HARM)
+	if(ishuman(user) && user.a_intent == INTENT_HARM && weapon_weight <= WEAPON_LIGHT)
 		var/mob/living/carbon/human/H = user
 		for(var/obj/item/gun/G in H.held_items)
 			if(G == src || G.weapon_weight >= WEAPON_MEDIUM)

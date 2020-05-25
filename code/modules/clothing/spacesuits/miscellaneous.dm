@@ -395,10 +395,18 @@ Contains:
 	actions_types = list()
 	resistance_flags = FIRE_PROOF
 	mutantrace_variation = NONE
+	var/charges = INFINITY
 
-/obj/item/clothing/suit/space/hardsuit/ert/paranormal/Initialize()
+/obj/item/clothing/head/helmet/space/hardsuit/ert/paranormal/Initialize()
 	. = ..()
-	AddComponent(/datum/component/anti_magic, FALSE, FALSE, TRUE, ITEM_SLOT_HEAD)
+	AddComponent(/datum/component/anti_magic, FALSE, FALSE, TRUE, ITEM_SLOT_HEAD, charges, TRUE, null, CALLBACK(src, .proc/anti_magic_gone))
+
+/obj/item/clothing/head/helmet/space/hardsuit/ert/paranormal/proc/anti_magic_gone()
+	var/mob/M = loc
+	if(!istype(M))
+		return
+	do_sparks(2, TRUE, M)
+	M.show_message("<span class='warning'>\The [src] sparks and fizzles as its psychic wards wane away at last...</span>", MSG_VISUAL)
 
 /obj/item/clothing/suit/space/hardsuit/ert/paranormal
 	name = "paranormal response team suit"
@@ -408,10 +416,18 @@ Contains:
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/ert/paranormal
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 	resistance_flags = FIRE_PROOF
+	var/charges = INFINITY
 
 /obj/item/clothing/suit/space/hardsuit/ert/paranormal/Initialize()
 	. = ..()
-	AddComponent(/datum/component/anti_magic, TRUE, TRUE, FALSE, ITEM_SLOT_OCLOTHING)
+	AddComponent(/datum/component/anti_magic, TRUE, TRUE, FALSE, ITEM_SLOT_OCLOTHING, charges, TRUE, null, CALLBACK(src, .proc/anti_magic_gone))
+
+/obj/item/clothing/suit/space/hardsuit/ert/paranormal/proc/anti_magic_gone()
+	var/mob/M = loc
+	if(!istype(M))
+		return
+	do_sparks(2, TRUE, M)
+	M.show_message("<span class='warning'>\The [src] sparks and fizzles as its anti magic wards wane away at last...</span>", MSG_VISUAL)
 
 /obj/item/clothing/suit/space/hardsuit/ert/paranormal/inquisitor
 	name = "inquisitor's hardsuit"
@@ -423,6 +439,19 @@ Contains:
 	name = "inquisitor's helmet"
 	icon_state = "hardsuit0-inq"
 	item_state = "hardsuit0-inq"
+
+/obj/item/clothing/suit/space/hardsuit/ert/paranormal/inquisitor/old
+	desc = "Powerful wards are built into this hardsuit, protecting the user from all manner of paranormal threats. Alas, this one looks pretty worn out and rusted."
+	armor = list("melee" = 55, "bullet" = 40, "laser" = 40, "energy" = 40, "bomb" = 40, "bio" = 80, "rad" = 80, "fire" = 60, "acid" = 60)
+	slowdown = 0.8
+	obj_flags = IMMUTABLE_SLOW //rest in peace rusty joints.
+	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/ert/paranormal/inquisitor/old
+	charges = 12
+
+/obj/item/clothing/head/helmet/space/hardsuit/ert/paranormal/inquisitor/old
+	desc = "A helmet worn by those who deal with paranormal threats for a living. Alas, this one looks pretty worn out and rusted."
+	armor = list("melee" = 55, "bullet" = 40, "laser" = 40, "energy" = 40, "bomb" = 40, "bio" = 80, "rad" = 80, "fire" = 60, "acid" = 60)
+	charges = 12
 
 /obj/item/clothing/suit/space/hardsuit/ert/paranormal/beserker
 	name = "champion's hardsuit"
@@ -436,6 +465,19 @@ Contains:
 	desc = "Peering into the eyes of the helmet is enough to seal damnation."
 	icon_state = "hardsuit0-beserker"
 	item_state = "hardsuit0-beserker"
+
+/obj/item/clothing/suit/space/hardsuit/ert/paranormal/beserker/old
+	desc = "Voices echo from the hardsuit, driving the user insane. This one is pretty battle-worn, but still fearsome."
+	armor = list("melee" = 55, "bullet" = 40, "laser" = 40, "energy" = 40, "bomb" = 40, "bio" = 80, "rad" = 80, "fire" = 60, "acid" = 60)
+	slowdown = 0.8
+	obj_flags = IMMUTABLE_SLOW //rest in peace rusty joints.
+	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/ert/paranormal/inquisitor/old
+	charges = 6
+
+/obj/item/clothing/head/helmet/space/hardsuit/ert/paranormal/beserker/old
+	desc = "Peering into the eyes of the helmet is enough to seal damnation. This one is pretty battle-worn, but still fearsome."
+	armor = list("melee" = 55, "bullet" = 40, "laser" = 40, "energy" = 40, "bomb" = 40, "bio" = 80, "rad" = 80, "fire" = 60, "acid" = 60)
+	charges = 6
 
 /obj/item/clothing/head/helmet/space/fragile
 	name = "emergency space helmet"
