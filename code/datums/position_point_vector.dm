@@ -189,6 +189,12 @@
 	x += mpx * (multiplier)
 	y += mpy * (multiplier)
 
+/datum/point/vector/proc/pixel_increment(pixels = 32, update_iteration = TRUE, realistic_iteration = FALSE)
+	if(update_iteration)
+		iteration += realistic_iteration? round(pixels / speed) : 1
+	x += sin(angle) * pixels
+	y += cos(angle) * pixels
+
 /datum/point/vector/proc/return_vector_after_increments(amount = 7, multiplier = 1, force_simulate = FALSE)
 	var/datum/point/vector/v = copy_to()
 	if(force_simulate)

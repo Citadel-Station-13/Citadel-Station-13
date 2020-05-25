@@ -1254,12 +1254,12 @@
 							if (trigger2 == "speak" || trigger2 == "echo")
 								var/trigger3 = html_decode(stripped_input(user, "Enter the phrase spoken. Abusing this to self antag is bannable.", MAX_MESSAGE_LEN))
 								E.customTriggers[trigger] = list(trigger2, trigger3)
-								log_game("FERMICHEM: [H] has been implanted by [user] with [trigger], triggering [trigger2], to send [trigger3].")
+								log_reagent("FERMICHEM: [H] has been implanted by [user] with [trigger], triggering [trigger2], to send [trigger3].")
 								if(findtext(trigger3, "admin"))
 									message_admins("FERMICHEM: [user] maybe be trying to abuse MKUltra by implanting by [H] with [trigger], triggering [trigger2], to send [trigger3].")
 							else
 								E.customTriggers[trigger] = trigger2
-								log_game("FERMICHEM: [H] has been implanted by [user] with [trigger], triggering [trigger2].")
+								log_reagent("FERMICHEM: [H] has been implanted by [user] with [trigger], triggering [trigger2].")
 							E.mental_capacity -= 5
 							addtimer(CALLBACK(GLOBAL_PROC, .proc/to_chat, H, "<span class='notice'>[(E.lewd?"your [E.enthrallGender]":"[E.master]")] whispers you a new trigger.</span>"), 5)
 							to_chat(user, "<span class='notice'><i>You sucessfully set the trigger word [trigger] in [H]</i></span>")
@@ -1322,7 +1322,7 @@
 						objective = replacetext(lowertext(objective), "strangle", "meow at")
 						objective = replacetext(lowertext(objective), "suicide", "self-love")
 						message_admins("[H] has been implanted by [user] with the objective [objective].")
-						log_game("FERMICHEM: [H] has been implanted by [user] with the objective [objective] via MKUltra.")
+						log_reagent("FERMICHEM: [H] has been implanted by [user] with the objective [objective] via MKUltra.")
 						addtimer(CALLBACK(GLOBAL_PROC, .proc/to_chat, H, "<span class='notice'>[(E.lewd?"Your [E.enthrallGender]":"[E.master]")] whispers you a new objective.</span>"), 5)
 						brainwash(H, objective)
 						E.mental_capacity -= 200
@@ -1341,7 +1341,7 @@
 				var/instill = stripped_input(user, "Instill an emotion in [H].", MAX_MESSAGE_LEN)
 				to_chat(H, "<i>[instill]</i>")
 				to_chat(user, "<span class='notice'><i>You sucessfully instill a feeling in [H]</i></span>")
-				log_game("FERMICHEM: [H] has been instilled by [user] with [instill] via MKUltra.")
+				log_reagent("FERMICHEM: [H] has been instilled by [user] with [instill] via MKUltra.")
 				E.cooldown += 1
 
 	//RECOGNISE
@@ -1455,7 +1455,7 @@
 
 	if(message_admins || debug)//Do you want this in?
 		message_admins("[ADMIN_LOOKUPFLW(user)] has said '[log_message]' with a Velvet Voice, affecting [english_list(listeners)], with a power multiplier of [power_multiplier].")
-	log_game("FERMICHEM: [key_name(user)] ckey: [user.key] has said '[log_message]' with a Velvet Voice, affecting [english_list(listeners)], with a power multiplier of [power_multiplier].")
+	log_reagent("FERMICHEM: [key_name(user)] ckey: [user.key] has said '[log_message]' with a Velvet Voice, affecting [english_list(listeners)], with a power multiplier of [power_multiplier].")
 	SSblackbox.record_feedback("tally", "fermi_chem", 1, "Times people have spoken with a velvet voice")
 	//SSblackbox.record_feedback("tally", "Velvet_voice", 1, log_message) If this is on, it fills the thing up and OOFs the server
 

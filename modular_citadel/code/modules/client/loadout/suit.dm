@@ -91,6 +91,12 @@
 	path = /obj/item/clothing/suit/hooded/wintercoat/medical
 	restricted_roles = list("Chief Medical Officer", "Medical Doctor") // Reserve it to Medical Doctors and their boss, the Chief Medical Officer
 
+/datum/gear/coat/paramedic
+	name = "Paramedic winter coat"
+	category = SLOT_WEAR_SUIT
+	path = /obj/item/clothing/suit/hooded/wintercoat/paramedic
+	restricted_roles = list("Chief Medical Officer", "Paramedic") // Reserve it to Paramedics and their boss, the Chief Medical Officer
+
 /datum/gear/coat/robotics
 	name = "Robotics winter coat"
 	category = SLOT_WEAR_SUIT

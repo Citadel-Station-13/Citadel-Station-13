@@ -1051,7 +1051,7 @@ GLOBAL_VAR_INIT(exploit_warn_spam_prevention, 0)
 
 ///Adjust the nutrition of a mob
 /mob/proc/adjust_nutrition(change, max = INFINITY) //Honestly FUCK the oldcoders for putting nutrition on /mob someone else can move it up because holy hell I'd have to fix SO many typechecks
-	nutrition = clamp(0, nutrition + change, max)
+	nutrition = clamp(nutrition + change, 0, max)
 
 ///Force set the mob nutrition
 /mob/proc/set_nutrition(var/change) //Seriously fuck you oldcoders.

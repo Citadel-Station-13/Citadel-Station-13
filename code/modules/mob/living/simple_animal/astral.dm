@@ -52,14 +52,14 @@
 						to_chat(src, "<span class='warning'><b><i>The intensity of the astrogen in your body is too much allow you to return to yourself yet!</b></i></span>")
 						return
 					to_chat(src, "<b><i>You astrally possess [H]!</b></i>")
-					log_game("FERMICHEM: [src] has astrally possessed [A]!")
+					log_reagent("FERMICHEM: [src] has astrally possessed [A]!")
 					src.mind.transfer_to(H)
 					qdel(src)
 			var/message = html_decode(stripped_input(src, "Enter a message to send to [A]", MAX_MESSAGE_LEN))
 			if(!message)
 				return
 			to_chat(A, "[src] projects into your mind, <b><i> \"[message]\"</b></i>")
-			log_game("FERMICHEM: [src] has astrally transmitted [message] into [A]")
+			log_reagent("FERMICHEM: [src] has astrally transmitted [message] into [A]")
 
 //Delete the mob if there's no mind! Pay that mob no mind.
 /mob/living/simple_animal/astral/Life()
