@@ -1,13 +1,3 @@
-/obj/screen/restbutton
-	name = "rest"
-	icon = 'modular_citadel/icons/ui/screen_midnight.dmi'
-	icon_state = "rest"
-
-/obj/screen/restbutton/Click()
-	if(isliving(usr))
-		var/mob/living/theuser = usr
-		theuser.lay_down()
-
 /obj/screen/voretoggle
 	name = "toggle vore mode"
 	icon = 'modular_citadel/icons/ui/screen_midnight.dmi'
@@ -17,7 +7,7 @@
 	if(usr != hud.mymob)
 		return
 	var/mob/living/carbon/C = usr
-	if(SEND_SIGNAL(usr, COMSIG_HAS_COMBAT_MODE_ENABLED))
+	if(SEND_SIGNAL(usr, COMSIG_COMBAT_MODE_CHECK, COMBAT_MODE_ACTIVE))
 		to_chat(usr, "<span class='warning'>Disable combat mode first.</span>")
 		return
 	C.toggle_vore_mode()

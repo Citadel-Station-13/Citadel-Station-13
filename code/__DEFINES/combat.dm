@@ -34,32 +34,22 @@
 /// Default combat flags for everyone else (so literally everyone but humans).
 #define COMBAT_FLAGS_SPRINT_EXEMPT			(COMBAT_FLAG_SPRINT_ACTIVE | COMBAT_FLAG_SPRINT_TOGGLED | COMBAT_FLAG_SPRINT_FORCED)
 
-/// The user wants combat mode on
-#define COMBAT_FLAG_COMBAT_TOGGLED			(1<<0)
 /// The user wants sprint mode on
-#define COMBAT_FLAG_SPRINT_TOGGLED			(1<<1)
-/**
-  * Wheter combat mode is active or not.
-  * Please use the COMSIG_HAS_COMBAT_MODE_ENABLED and COMSIG_HAS_COMBAT_MODE_DISABLED signals if possible,
-  * So mobs without combat mode won't get penalized.
-  */
-#define COMBAT_FLAG_COMBAT_ACTIVE			(1<<2)
+#define COMBAT_FLAG_SPRINT_TOGGLED			(1<<0)
 /// Sprint is currently active
-#define COMBAT_FLAG_SPRINT_ACTIVE			(1<<3)
+#define COMBAT_FLAG_SPRINT_ACTIVE			(1<<1)
 /// Currently attempting to crawl under someone
-#define COMBAT_FLAG_ATTEMPTING_CRAWL		(1<<4)
+#define COMBAT_FLAG_ATTEMPTING_CRAWL		(1<<2)
 /// Currently stamcritted
-#define COMBAT_FLAG_HARD_STAMCRIT			(1<<5)
+#define COMBAT_FLAG_HARD_STAMCRIT			(1<<3)
 /// Currently attempting to resist up from the ground
-#define COMBAT_FLAG_RESISTING_REST			(1<<6)
+#define COMBAT_FLAG_RESISTING_REST			(1<<4)
 /// Intentionally resting
-#define COMBAT_FLAG_INTENTIONALLY_RESTING	(1<<7)
+#define COMBAT_FLAG_INTENTIONALLY_RESTING	(1<<5)
 /// Currently stamcritted but not as violently
-#define COMBAT_FLAG_SOFT_STAMCRIT			(1<<8)
-/// Force combat mode on at all times, overrides everything including combat disable traits.
-#define COMBAT_FLAG_COMBAT_FORCED			(1<<9)
+#define COMBAT_FLAG_SOFT_STAMCRIT			(1<<6)
 /// Force sprint mode on at all times, overrides everything including sprint disable traits.
-#define COMBAT_FLAG_SPRINT_FORCED			(1<<10)
+#define COMBAT_FLAG_SPRINT_FORCED			(1<<7)
 
 // Helpers for getting someone's stamcrit state. Cast to living.
 #define NOT_STAMCRIT 0

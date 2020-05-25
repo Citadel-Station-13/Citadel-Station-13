@@ -61,7 +61,7 @@
 	switch(contents.len)
 		if(0)
 			icon_state = "[initial(icon_state)]"
-		if(0 to 11)
+		if(1 to 11)
 			icon_state = "[initial(icon_state)]1"
 		if(11 to 20)
 			icon_state = "[initial(icon_state)]2"

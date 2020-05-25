@@ -113,7 +113,7 @@
 /obj/attacked_by(obj/item/I, mob/living/user)
 	var/totitemdamage = I.force
 	var/bad_trait
-	if(!SEND_SIGNAL(user, COMSIG_HAS_COMBAT_MODE_DISABLED))
+	if(!SEND_SIGNAL(user, COMSIG_COMBAT_MODE_CHECK, COMBAT_MODE_INACTIVE))
 		totitemdamage *= 0.5
 		bad_trait = SKILL_COMBAT_MODE //blacklist combat skills.
 	if(I.used_skills && user.mind)
@@ -155,10 +155,10 @@
 /mob/living/proc/pre_attacked_by(obj/item/I, mob/living/user)
 	. = I.force
 	var/bad_trait
-	if(SEND_SIGNAL(user, COMSIG_HAS_COMBAT_MODE_DISABLED))
+	if(SEND_SIGNAL(user, COMSIG_COMBAT_MODE_CHECK, COMBAT_MODE_INACTIVE))
 		. *= 0.5
 		bad_trait = SKILL_COMBAT_MODE //blacklist combat skills.
-	if(SEND_SIGNAL(src, COMSIG_HAS_COMBAT_MODE_DISABLED))
+	if(SEND_SIGNAL(src, COMSIG_COMBAT_MODE_CHECK, COMBAT_MODE_INACTIVE))
 		. *= 1.5
 	if(!CHECK_MOBILITY(user, MOBILITY_STAND))
 		. *= 0.5
@@ -210,7 +210,7 @@
 	if(!user)
 		return
 	var/bad_trait
-	if(SEND_SIGNAL(user, COMSIG_HAS_COMBAT_MODE_DISABLED))
+	if(SEND_SIGNAL(user, COMSIG_COMBAT_MODE_CHECK, COMBAT_MODE_INACTIVE))
 		. *= STAM_COST_NO_COMBAT_MULT
 		bad_trait = SKILL_COMBAT_MODE
 	if(used_skills && user.mind)

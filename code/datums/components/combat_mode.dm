@@ -1,4 +1,5 @@
 /datum/component/combat_mode
+	var/mode_flags = COMBAT_MODE_INACTIVE
 	var/combatmessagecooldown
 	var/lastmousedir
 	var/obj/screen/combattoggle/hud_icon
@@ -17,8 +18,7 @@
 	RegisterSignal(parent, COMSIG_MOB_DEATH, .proc/on_death)
 	RegisterSignal(parent, COMSIG_MOB_CLIENT_LOGOUT, .proc/on_logout)
 	RegisterSignal(parent, COMSIG_MOB_HUD_CREATED, .proc/on_mob_hud_created)
-	RegisterSignal(parent, COMSIG_HAS_COMBAT_MODE_ENABLED, .proc/check_enabled)
-	RegisterSignal(parent, COMSIG_HAS_COMBAT_MODE_DISABLED, .proc/check_disabled)
+	RegisterSignal(parent, COMSIG_COMBAT_MODE_CHECK, .proc/check_flags)
 
 	update_combat_lock()
 
@@ -37,26 +37,26 @@
 	source.hud_used.static_inventory += hud_icon
 
 /datum/component/combat_mode/proc/update_combat_lock()
-	var/mob/living/L = parent
-	var/locked = HAS_TRAIT(L, TRAIT_COMBAT_MODE_LOCKED)
-	var/desired = (L.combat_flags & COMBAT_FLAG_COMBAT_TOGGLED)
-	var/actual = (L.combat_flags & COMBAT_FLAG_COMBAT_ACTIVE)
+	var/locked = HAS_TRAIT(parent, TRAIT_COMBAT_MODE_LOCKED)
+	var/desired = (mode_flags & COMBAT_MODE_TOGGLED)
+	var/actual = (mode_flags & COMBAT_MODE_ACTIVE)
 	if(actual)
 		if(locked)
-			disable_combat_mode(L, FALSE, TRUE)
+			disable_combat_mode(parent, FALSE, TRUE)
 		else if(!desired)
-			disable_combat_mode(L, TRUE, TRUE)
+			disable_combat_mode(parent, TRUE, TRUE)
 	else
 		if(desired && !locked)
-			enable_combat_mode(L, FALSE, TRUE)
+			enable_combat_mode(parent, FALSE, TRUE)
 
 /datum/component/combat_mode/proc/enable_combat_mode(mob/living/source, silent = TRUE, forced = TRUE, visible = FALSE, locked = FALSE, playsound = FALSE)
 	if(locked)
 		hud_icon?.update_icon()
 		return
-	if(source.combat_flags & COMBAT_FLAG_COMBAT_ACTIVE)
+	if(mode_flags & COMBAT_MODE_ACTIVE)
 		return
-	source.combat_flags |= COMBAT_FLAG_COMBAT_ACTIVE
+	mode_flags |= COMBAT_MODE_ACTIVE
+	mode_flags &= ~COMBAT_MODE_INACTIVE
 	SEND_SIGNAL(source, COMSIG_LIVING_COMBAT_ENABLED, forced)
 	if(!silent)
 		var/self_message = forced? "<span class='warning'>Your muscles reflexively tighten!</span>" : "<span class='warning'>You drop into a combative stance!</span>"
@@ -75,15 +75,17 @@
 			source.playsound_local(source, 'sound/misc/ui_toggle.ogg', 50, FALSE, pressure_affected = FALSE) //Sound from interbay!
 	RegisterSignal(source, COMSIG_MOB_CLIENT_MOUSEMOVE, .proc/onMouseMove)
 	RegisterSignal(source, COMSIG_MOVABLE_MOVED, .proc/on_move)
+	RegisterSignal(source, COMSIG_MOB_CLIENT_MOVE, .proc/on_client_move)
 	hud_icon?.update_icon()
 
 /datum/component/combat_mode/proc/disable_combat_mode(mob/living/source, silent = TRUE, forced = TRUE, visible = FALSE, locked = FALSE, playsound = FALSE)
 	if(locked)
 		hud_icon?.update_icon()
 		return
-	if(!(source.combat_flags & COMBAT_FLAG_COMBAT_ACTIVE) || (source.combat_flags & COMBAT_FLAG_COMBAT_FORCED))
+	if(!(mode_flags & COMBAT_MODE_ACTIVE))
 		return
-	source.combat_flags &= ~COMBAT_FLAG_COMBAT_ACTIVE
+	mode_flags &= ~COMBAT_MODE_ACTIVE
+	mode_flags |= COMBAT_MODE_INACTIVE
 	SEND_SIGNAL(source, COMSIG_LIVING_COMBAT_DISABLED, forced)
 	if(!silent)
 		var/self_message = forced? "<span class='warning'>Your muscles are forcibly relaxed!</span>" : "<span class='warning'>You relax your stance.</span>"
@@ -94,12 +96,16 @@
 		if(playsound)
 			source.playsound_local(source, 'sound/misc/ui_toggleoff.ogg', 50, FALSE, pressure_affected = FALSE) //Slightly modified version of the toggleon sound!
 	hud_icon?.update_icon()
-	UnregisterSignal(source, list(COMSIG_MOB_CLIENT_MOUSEMOVE, COMSIG_MOVABLE_MOVED))
+	UnregisterSignal(source, list(COMSIG_MOB_CLIENT_MOUSEMOVE, COMSIG_MOVABLE_MOVED, COMSIG_MOB_CLIENT_MOVE))
 
-/datum/component/combat_mode/proc/on_move(atom/movable/AM, dir, atom/oldloc, forced)
-	var/mob/living/L = AM
-	if(L.combat_flags & COMBAT_FLAG_COMBAT_ACTIVE && L.client && lastmousedir && lastmousedir != dir)
+/datum/component/combat_mode/proc/on_move(atom/movable/source, dir, atom/oldloc, forced)
+	var/mob/living/L = source
+	if(mode_flags & COMBAT_MODE_ACTIVE && L.client && lastmousedir && lastmousedir != dir)
 		L.setDir(lastmousedir, ismousemovement = TRUE)
+
+/datum/component/combat_mode/proc/on_client_move(mob/source, client/client, direction, n, oldloc, added_delay)
+	if(oldloc != n && direction == REVERSE_DIR(source.dir))
+		client.move_delay += added_delay*0.5
 
 /datum/component/combat_mode/proc/onMouseMove(mob/source, object, location, control, params)
 	if(source.client.show_popup_menus)
@@ -109,16 +115,16 @@
 
 /// Toggles whether the user is intentionally in combat mode. THIS should be the proc you generally use! Has built in visual/to other player feedback, as well as an audible cue to ourselves.
 /datum/component/combat_mode/proc/user_toggle_intentional_combat_mode(mob/living/source)
-	if(source.combat_flags & COMBAT_FLAG_COMBAT_TOGGLED)
+	if(mode_flags & COMBAT_MODE_TOGGLED)
 		safe_disable_combat_mode(source)
 	else if(source.stat == CONSCIOUS && !(source.combat_flags & COMBAT_FLAG_HARD_STAMCRIT))
 		safe_enable_combat_mode(source)
 
 /// Enables intentionally being in combat mode. Please try not to use this proc for feedback whenever possible.
 /datum/component/combat_mode/proc/safe_enable_combat_mode(mob/living/source, silent = FALSE, visible = TRUE)
-	if((source.combat_flags & COMBAT_FLAG_COMBAT_TOGGLED) && (source.combat_flags & COMBAT_FLAG_COMBAT_ACTIVE))
+	if((mode_flags & COMBAT_MODE_TOGGLED) && (mode_flags & COMBAT_MODE_ACTIVE))
 		return TRUE
-	source.combat_flags |= COMBAT_FLAG_COMBAT_TOGGLED
+	mode_flags |= COMBAT_MODE_TOGGLED
 	enable_combat_mode(source, silent, FALSE, visible, HAS_TRAIT(source, TRAIT_COMBAT_MODE_LOCKED), TRUE)
 	if(source.client)
 		source.client.show_popup_menus = FALSE
@@ -130,23 +136,16 @@
 
 /// Disables intentionally being in combat mode. Please try not to use this proc for feedback whenever possible.
 /datum/component/combat_mode/proc/safe_disable_combat_mode(mob/living/source, silent = FALSE, visible = FALSE)
-	if(!(source.combat_flags & COMBAT_FLAG_COMBAT_TOGGLED) && !(source.combat_flags & COMBAT_FLAG_COMBAT_ACTIVE))
+	if(!(mode_flags & COMBAT_MODE_TOGGLED) && !(mode_flags & COMBAT_MODE_ACTIVE))
 		return TRUE
-	if(source.combat_flags & COMBAT_FLAG_COMBAT_FORCED)
-		if(!silent)
-			to_chat(source, "<span class='warning'>You are unable to relax your muscles.</span>")
-		return FALSE
-	source.combat_flags &= ~COMBAT_FLAG_COMBAT_TOGGLED
-	disable_combat_mode(source, silent, FALSE, visible, !(source.combat_flags & COMBAT_FLAG_COMBAT_ACTIVE), TRUE)
+	mode_flags &= ~COMBAT_MODE_TOGGLED
+	disable_combat_mode(source, silent, FALSE, visible, !(mode_flags & COMBAT_MODE_ACTIVE), TRUE)
 	if(source.client)
 		source.client.show_popup_menus = TRUE
 	return TRUE
 
-/datum/component/combat_mode/proc/check_enabled(mob/living/source)
-	return (source.combat_flags & COMBAT_FLAG_COMBAT_ACTIVE)
-
-/datum/component/combat_mode/proc/check_disabled(mob/living/source)
-	return !(source.combat_flags & COMBAT_FLAG_COMBAT_ACTIVE)
+/datum/component/combat_mode/proc/check_flags(mob/living/source, flags)
+	return ((mode_flags & (flags)) == (flags))
 
 /datum/component/combat_mode/proc/on_death(mob/living/source)
 	safe_disable_combat_mode(source)
@@ -159,7 +158,12 @@
 	name = "toggle combat mode"
 	icon = 'modular_citadel/icons/ui/screen_midnight.dmi'
 	icon_state = "combat_off"
+	var/datum/component/combat_mode/component
 	var/mutable_appearance/flashy
+
+/obj/screen/combattoggle/Initialize(mapload, datum/component/combat_mode/C)
+	. = ..()
+	src.component = C
 
 /obj/screen/combattoggle/Click()
 	if(hud && usr == hud.mymob)
@@ -169,7 +173,7 @@
 	var/mob/living/user = hud?.mymob
 	if(!user)
 		return
-	if((user.combat_flags & COMBAT_FLAG_COMBAT_ACTIVE))
+	if((master.mode_flags & COMBAT_MODE_ACTIVE))
 		icon_state = "combat"
 	else if(HAS_TRAIT(user, TRAIT_COMBAT_MODE_LOCKED))
 		icon_state = "combat_locked"
@@ -182,7 +186,7 @@
 	if(!(user.client))
 		return
 
-	if((user.combat_flags & COMBAT_FLAG_COMBAT_ACTIVE) && user.client.prefs.hud_toggle_flash)
+	if((master.mode_flags & COMBAT_MODE_ACTIVE) && user.client.prefs.hud_toggle_flash)
 		if(!flashy)
 			flashy = mutable_appearance('icons/mob/screen_gen.dmi', "togglefull_flash")
 		if(flashy.color != user.client.prefs.hud_toggle_color)

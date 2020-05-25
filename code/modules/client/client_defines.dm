@@ -101,3 +101,5 @@
 
 	/// Messages currently seen by this client
 	var/list/seen_messages
+	///When was the last time we warned them about not cryoing without an ahelp, set to -5 minutes so that rounstart cryo still warns
+	var/cryo_warned = -5 MINUTES

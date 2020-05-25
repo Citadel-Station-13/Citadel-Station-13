@@ -74,11 +74,3 @@
 	prereq_ids = list("nanite_harmonic", "alientech")
 	design_ids = list("spreading_nanites","mindcontrol_nanites","mitosis_nanites")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 10000)
-
-/datum/techweb_node/nanite_replication_protocols
-	id = "nanite_replication_protocols"
-	display_name = "Nanite Replication Protocols"
-	description = "Advanced behaviours that allow nanites to exploit certain circumstances to replicate faster."
-	prereq_ids = list("nanite_smart")
-	design_ids = list("kickstart_nanites","factory_nanites","tinker_nanites","offline_nanites","synergy_nanites")
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 5000)

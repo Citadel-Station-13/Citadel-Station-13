@@ -288,7 +288,7 @@
 	if(istype(object, /obj/screen) && !istype(object, /obj/screen/click_catcher))
 		return
 	process_aim()
-	if(fire_check())
+	if(fire_check() && can_trigger_gun(M))
 		sync_ammo()
 		do_fire(M.client.mouseObject, M, FALSE, M.client.mouseParams, M.zone_selected)
 	stop_aiming()

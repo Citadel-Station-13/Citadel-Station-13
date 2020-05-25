@@ -420,7 +420,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 		return usr.client.Click(src, src_location, src_control, params)
 	var/list/directaccess = usr.DirectAccess()	//This, specifically, is what requires the copypaste. If this were after the adjacency check, then it'd be impossible to use items in your inventory, among other things.
 												//If this were before the above checks, then trying to click on items would act a little funky and signal overrides wouldn't work.
-	if(SEND_SIGNAL(usr, COMSIG_HAS_COMBAT_MODE_ENABLED) && ((usr.CanReach(src) || (src in directaccess)) && (usr.CanReach(over) || (over in directaccess))))
+	if(SEND_SIGNAL(usr, COMSIG_COMBAT_MODE_CHECK, COMBAT_MODE_ACTIVE) && ((usr.CanReach(src) || (src in directaccess)) && (usr.CanReach(over) || (over in directaccess))))
 		if(!usr.get_active_held_item())
 			usr.UnarmedAttack(src, TRUE)
 			if(usr.get_active_held_item() == src)

@@ -449,7 +449,7 @@
 		modifier -= 40 //Clumsy people are more likely to hit themselves -Honk!
 
 	//CIT CHANGES START HERE
-	else if(SEND_SIGNAL(src, COMSIG_HAS_COMBAT_MODE_DISABLED))
+	else if(SEND_SIGNAL(src, COMSIG_COMBAT_MODE_CHECK, COMBAT_MODE_INACTIVE))
 		modifier -= 50
 
 	if(modifier < 100)

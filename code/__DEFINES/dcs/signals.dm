@@ -205,6 +205,7 @@
 #define COMSIG_LIVING_IGNITED "living_ignite"					//from base of mob/living/IgniteMob() (/mob/living)
 #define COMSIG_LIVING_EXTINGUISHED "living_extinguished"		//from base of mob/living/ExtinguishMob() (/mob/living)
 #define COMSIG_LIVING_ELECTROCUTE_ACT "living_electrocute_act"		//from base of mob/living/electrocute_act(): (shock_damage, source, siemens_coeff, flags)
+#define COMSIG_LIVING_SHOCK_PREVENTED "living_shock_prevented"  //sent when items with siemen coeff. of 0 block a shock: (power_source, source, siemens_coeff, dist_check)
 #define COMSIG_LIVING_MINOR_SHOCK "living_minor_shock"			//sent by stuff like stunbatons and tasers: ()
 #define COMSIG_LIVING_REVIVE "living_revive"					//from base of mob/living/revive() (full_heal, admin_revive)
 
@@ -344,13 +345,12 @@
 #define COMSIG_COMPONENT_NTNET_RECEIVE "ntnet_receive"			//called on an object by its NTNET connection component on receive. (sending_id(number), sending_netname(text), data(datum/netdata))
 
 //Combat mode
-#define COMSIG_TOGGLE_COMBAT_MODE "toggle_combat_mode"				//toggles combat mode.
-#define COMSIG_DISABLE_COMBAT_MODE "disable_combat_mode"			//disables combat mode.
-#define COMSIG_ENABLE_COMBAT_MODE "enable_combat_mode"				//enables combat mode.
+#define COMSIG_TOGGLE_COMBAT_MODE "toggle_combat_mode"				//safely toggles combat mode.
+#define COMSIG_DISABLE_COMBAT_MODE "disable_combat_mode"			//safely disables combat mode.
+#define COMSIG_ENABLE_COMBAT_MODE "enable_combat_mode"				//safely enables combat mode.
 #define COMSIG_LIVING_COMBAT_ENABLED "combatmode_enabled"			//from base of datum/component/combat_mode/enable_combat_mode() (was_forced)
 #define COMSIG_LIVING_COMBAT_DISABLED "combatmode_disabled"			//from base of datum/component/combat_mode/disable_combat_mode() (was_forced)
-#define COMSIG_HAS_COMBAT_MODE_ENABLED "has_combatmode_enabled"		//called when checking if the user has combat mode and if it's also enabled.
-#define COMSIG_HAS_COMBAT_MODE_DISABLED "has_combatmode_disabled"	//called when checking if the user has combat mode and if it's also disabled.
+#define COMSIG_COMBAT_MODE_CHECK "combatmode_check"					//called when checking the combat mode flags (enabled/disabled/forced)
 
 //Nanites
 #define COMSIG_HAS_NANITES "has_nanites"						//() returns TRUE if nanites are found

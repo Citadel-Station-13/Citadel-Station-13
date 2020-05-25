@@ -82,11 +82,10 @@
 
 /obj/item/gun/Initialize()
 	. = ..()
-	if(pin)
-		if(no_pin_required)
-			pin = null
-		else
-			pin = new pin(src)
+	if(no_pin_required)
+		pin = null
+	else if(pin)
+		pin = new pin(src)
 	if(gun_light)
 		alight = new (src)
 	if(zoomable)
@@ -216,7 +215,7 @@
 
 	if(user)
 		bonus_spread += getinaccuracy(user) //CIT CHANGE - adds bonus spread while not aiming
-	if(ishuman(user) && user.a_intent == INTENT_HARM)
+	if(ishuman(user) && user.a_intent == INTENT_HARM && weapon_weight <= WEAPON_LIGHT)
 		var/mob/living/carbon/human/H = user
 		for(var/obj/item/gun/G in H.held_items)
 			if(G == src || G.weapon_weight >= WEAPON_MEDIUM)
@@ -566,6 +565,6 @@
 		update_icon()
 
 /obj/item/gun/proc/getinaccuracy(mob/user)
-	if(user && SEND_SIGNAL(user, COMSIG_HAS_COMBAT_MODE_DISABLED))
+	if(SEND_SIGNAL(user, COMSIG_COMBAT_MODE_CHECK, COMBAT_MODE_INACTIVE))
 		return ((weapon_weight * 25) * inaccuracy_modifier)
 	return 0

@@ -39,11 +39,11 @@
 /datum/martial_art/proc/damage_roll(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	//Here we roll for our damage to be added into the damage var in the various attack procs. This is changed depending on whether we are in combat mode, lying down, or if our target is in combat mode.
 	var/damage = rand(A.dna.species.punchdamagelow, A.dna.species.punchdamagehigh)
-	if(SEND_SIGNAL(D, COMSIG_HAS_COMBAT_MODE_DISABLED))
+	if(SEND_SIGNAL(D, COMSIG_COMBAT_MODE_CHECK, COMBAT_MODE_INACTIVE))
 		damage *= 1.5
 	if(!CHECK_MOBILITY(A, MOBILITY_STAND))
 		damage *= 0.5
-	if(SEND_SIGNAL(A, COMSIG_HAS_COMBAT_MODE_DISABLED))
+	if(SEND_SIGNAL(A, COMSIG_COMBAT_MODE_CHECK, COMBAT_MODE_INACTIVE))
 		damage *= 0.25
 	return damage
 
