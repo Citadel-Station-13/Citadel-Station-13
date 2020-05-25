@@ -15,7 +15,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/muted = 0
 	var/last_ip
 	var/last_id
-	var/log_clicks = FALSE
+	var/log_clicks = TRUE
 
 	var/icon/custom_holoform_icon
 	var/list/cached_holoform_icons
