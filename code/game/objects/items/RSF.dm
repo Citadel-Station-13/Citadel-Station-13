@@ -7,7 +7,7 @@ RSF
 	name = "\improper Rapid-Service-Fabricator"
 	desc = "A device used to rapidly deploy service items."
 	icon = 'icons/obj/tools.dmi'
-	icon_state = "rcd"
+	icon_state = "rsf"
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
 	opacity = 0
@@ -110,7 +110,7 @@ RSF
 	name = "Cookie Synthesizer"
 	desc = "A self-recharging device used to rapidly deploy cookies."
 	icon = 'icons/obj/tools.dmi'
-	icon_state = "rcd"
+	icon_state = "rsf"
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
 	var/matter = 10

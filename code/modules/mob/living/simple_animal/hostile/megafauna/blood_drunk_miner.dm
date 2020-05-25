@@ -75,7 +75,7 @@ Difficulty: Medium
 
 /obj/item/projectile/kinetic/miner
 	damage = 40
-	speed = 0.9
+	pixels_per_second = TILES_TO_PIXELS(11.111)
 	icon_state = "ka_tracer"
 	range = MINER_DASH_RANGE
 
