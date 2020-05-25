@@ -243,6 +243,14 @@
 		return
 	return
 
+/obj/item/melee/classic_baton/examine(mob/user)
+	. = ..()
+		. += "<span class='notice'>[src] can be alt clicked to swap from brute damage to stamina damage or vis versa.</span>"
+	if(damtype == "brute")
+		. += "<span class='notice'>[src] is being used in a lethal manner.</span>"
+	if(damtype == STAMINA)
+		. += "<span class='notice'>[src] is being used in a non-lethal manner.</span>"
+
 // Description for trying to stun when still on cooldown.
 /obj/item/melee/classic_baton/proc/get_wait_description()
 	return
