@@ -43,7 +43,7 @@ SUBSYSTEM_DEF(input)
 	// LET'S PLAY THE BIND EVERY KEY GAME!
 	// oh except for Backspace and Enter; if you want to use those you shouldn't have used oldmode!
 	var/list/classic_ctrl_override_keys = list(
-	"\[", "\]", "\\", ";", "'", ",", ".", "/", "-", "\\=", "`"
+	"\[", "\]", "\\\\", ";", "'", ",", ".", "/", "-", "=", "`"
 	)
 	// i'm lazy let's play the list iteration game of numbers
 	for(var/i in 0 to 9)
@@ -58,8 +58,9 @@ SUBSYSTEM_DEF(input)
 	macroset_classic_input["Ctrl+L"] = "looc"
 	// let's play the list iteration game x2
 	for(var/key in classic_ctrl_override_keys)
-		macroset_classic_input["Ctrl+[key]"] = "\"KeyDown [key]\""
-		macroset_classic_input["Ctrl+[key]+UP"] = "\"KeyUp [key]\""
+		// make sure to double double quote to ensure things are treated as a key combo instead of addition/semicolon logic.
+		macroset_classic_input["\"Ctrl+[key]\""] = "\"KeyDown [istext(classic_ctrl_override_keys[key])? classic_ctrl_override_keys[key] : key]\""
+		macroset_classic_input["\"Ctrl+[key]+UP\""] = "\"KeyUp [istext(classic_ctrl_override_keys[key])? classic_ctrl_override_keys[key] : key]\""
 	// Misc
 	macroset_classic_input["Tab"] = "\".winset \\\"mainwindow.macro=[SKIN_MACROSET_CLASSIC_HOTKEYS] map.focus=true input.background-color=[COLOR_INPUT_DISABLED]\\\"\""
 	macroset_classic_input["Escape"] = "\".winset \\\"input.text=\\\"\\\"\\\"\""
