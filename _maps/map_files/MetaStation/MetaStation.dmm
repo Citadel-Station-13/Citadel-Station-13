@@ -76320,6 +76320,10 @@
 	icon_state = "platingdmg3"
 	},
 /area/maintenance/aft)
+"iFu" = (
+/obj/machinery/vending/boozeomat,
+/turf/open/floor/wood,
+/area/maintenance/port/aft)
 "iHc" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 6
@@ -97269,7 +97273,7 @@ aaa
 ddx
 aaa
 dux
-jTS
+iFu
 fcy
 wiS
 qUn
