@@ -235,20 +235,20 @@
 	. = ..()
 	if(damtype == "brute")
 		damtype = STAMINA
-		user.visible_message("<span class='notice'>[user] welds the [src] is a non-lethal way.</span>")
+		user.visible_message("<span class='notice'>[user] wields the [src] is a non-lethal way.</span>")
 		return
 	if(damtype == STAMINA)
 		damtype = "brute"
-		user.visible_message("<span class='warning'>[user] welds the [src] is a lethal way!</span>")
+		user.visible_message("<span class='warning'>[user] wields the [src] is a lethal way!</span>")
 		return
 	return
 
 /obj/item/melee/classic_baton/examine(mob/user)
 	. = ..()
 	if(damtype == "brute")
-		. += "<span class='notice'>[src] is being used in a lethal manner. [src] can be alt clicked to swap from brute damage to stamina damage or vis versa.</span>"
+		. += "<span class='notice'>[src] is being used in a lethal manner. [src] can be alt clicked to swap from brute damage to stamina damage or vice versa.</span>"
 	if(damtype == STAMINA)
-		. += "<span class='notice'>[src] is being used in a non-lethal manner. [src] can be alt clicked to swap from brute damage to stamina damage or vis versa.</span>"
+		. += "<span class='notice'>[src] is being used in a non-lethal manner. [src] can be alt clicked to swap from brute damage to stamina damage or vice versa.</span>"
 
 // Description for trying to stun when still on cooldown.
 /obj/item/melee/classic_baton/proc/get_wait_description()
