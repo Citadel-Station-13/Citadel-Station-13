@@ -76956,7 +76956,7 @@
 	},
 /obj/machinery/meter,
 /obj/effect/turf_decal/stripes/corner{
-	dir = 4
+	dir = 8
 	},
 /turf/open/floor/plasteel/white,
 /area/science/mixing)
