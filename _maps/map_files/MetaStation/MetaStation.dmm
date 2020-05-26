@@ -50250,6 +50250,8 @@
 /area/maintenance/port/aft)
 "bXG" = (
 /obj/effect/turf_decal/stripes/line,
+/obj/item/mop,
+/obj/structure/mopbucket,
 /turf/open/floor/plating,
 /area/maintenance/port)
 "bXH" = (
@@ -51909,10 +51911,12 @@
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/front_office)
 "cbD" = (
-/obj/item/trash/candy,
-/turf/open/floor/plating{
-	icon_state = "panelscorched"
+/obj/machinery/space_heater,
+/obj/machinery/atmospherics/components/unary/portables_connector/visible{
+	dir = 4
 	},
+/obj/item/storage/toolbox/emergency,
+/turf/open/floor/plating,
 /area/maintenance/port)
 "cbE" = (
 /obj/structure/cable/yellow{
@@ -52620,8 +52624,8 @@
 	icon_state = "1-4"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/turf/open/floor/plating,
-/area/maintenance/port)
+/turf/open/floor/plasteel/white,
+/area/medical/medbay/zone2)
 "cdm" = (
 /obj/structure/reagent_dispensers/watertank,
 /turf/open/floor/plating,
@@ -52635,7 +52639,7 @@
 	icon_state = "4-8"
 	},
 /turf/open/floor/plating,
-/area/maintenance/port)
+/area/medical/medbay/zone2)
 "cdo" = (
 /obj/effect/turf_decal/tile/yellow{
 	dir = 8
@@ -52967,11 +52971,12 @@
 /turf/open/floor/plasteel/dark,
 /area/medical/morgue)
 "cev" = (
-/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
-	dir = 4
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/structure/chair/office/light{
+	dir = 8
 	},
-/turf/open/floor/plating,
-/area/maintenance/port)
+/turf/open/floor/plasteel/white,
+/area/medical/medbay/zone2)
 "cew" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/structure/disposalpipe/segment{
@@ -53405,10 +53410,9 @@
 /turf/open/floor/plasteel/dark,
 /area/medical/medbay/zone2)
 "cfF" = (
-/obj/structure/mopbucket,
-/obj/item/mop,
-/turf/open/floor/plating,
-/area/maintenance/port)
+/obj/machinery/chem_heater,
+/turf/open/floor/plasteel/white,
+/area/medical/medbay/zone2)
 "cfG" = (
 /obj/structure/table/reinforced,
 /obj/machinery/door/window/northleft{
@@ -53921,22 +53925,19 @@
 	req_access_txt = "5"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/turf/open/floor/plasteel/white,
+/area/medical/medbay/zone2)
+"cgP" = (
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
+	},
+/obj/machinery/door/airlock{
+	name = "Medbay Emergency Storage";
+	req_access_txt = "5"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plating,
 /area/maintenance/port)
-"cgP" = (
-/obj/structure/plasticflaps/opaque,
-/obj/machinery/navbeacon{
-	codes_txt = "delivery;dir=4";
-	dir = 4;
-	freq = 1400;
-	location = "Medbay"
-	},
-/obj/machinery/door/window/northleft{
-	name = "MuleBot Access";
-	req_access_txt = "50"
-	},
-/turf/open/floor/plasteel,
-/area/medical/medbay/zone2)
 "cgT" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
@@ -55868,9 +55869,19 @@
 /turf/open/floor/plating,
 /area/science/explab)
 "clU" = (
-/obj/structure/sign/warning/electricshock,
-/turf/closed/wall/r_wall,
-/area/science/explab)
+/obj/machinery/door/window/northleft{
+	name = "MuleBot Access";
+	req_access_txt = "50"
+	},
+/obj/structure/plasticflaps/opaque,
+/obj/machinery/navbeacon{
+	codes_txt = "delivery;dir=4";
+	dir = 4;
+	freq = 1400;
+	location = "Medbay"
+	},
+/turf/open/floor/plating,
+/area/medical/medbay/zone2)
 "clV" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/preopen{
@@ -56186,8 +56197,8 @@
 /turf/open/floor/plasteel,
 /area/science/explab)
 "cmT" = (
-/obj/structure/table/reinforced,
 /obj/effect/turf_decal/stripes/line,
+/obj/machinery/rnd/bepis,
 /turf/open/floor/plasteel,
 /area/science/explab)
 "cmU" = (
@@ -64757,11 +64768,9 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
-/obj/item/storage/toolbox/emergency,
-/obj/item/hand_labeler,
-/obj/effect/landmark/xeno_spawn,
-/turf/open/floor/plating,
-/area/maintenance/port)
+/obj/machinery/chem_master,
+/turf/open/floor/plasteel/white,
+/area/medical/medbay/zone2)
 "cHm" = (
 /obj/effect/turf_decal/tile/yellow,
 /turf/open/floor/plasteel/white,
@@ -64835,16 +64844,22 @@
 /turf/open/floor/plasteel/dark,
 /area/medical/medbay/zone2)
 "cHt" = (
-/obj/machinery/atmospherics/components/unary/portables_connector/visible{
-	dir = 4
-	},
-/turf/open/floor/plating,
-/area/maintenance/port)
+/obj/machinery/chem_dispenser/apothecary,
+/turf/open/floor/plasteel/white,
+/area/medical/medbay/zone2)
 "cHu" = (
-/obj/item/trash/candy,
-/obj/effect/spawner/lootdrop/maintenance,
-/turf/open/floor/plating,
-/area/maintenance/port)
+/obj/structure/table,
+/obj/item/reagent_containers/glass/beaker{
+	pixel_x = 8;
+	pixel_y = 2
+	},
+/obj/item/reagent_containers/glass/beaker,
+/obj/item/reagent_containers/syringe/epinephrine{
+	pixel_x = -1;
+	pixel_y = 2
+	},
+/turf/open/floor/plasteel/white,
+/area/medical/medbay/zone2)
 "cHv" = (
 /obj/effect/turf_decal/tile/yellow{
 	dir = 8
@@ -65282,12 +65297,9 @@
 /turf/open/floor/plasteel/dark,
 /area/medical/medbay/zone2)
 "cIw" = (
-/obj/effect/turf_decal/stripes/line,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/turf/open/floor/plating{
-	icon_state = "panelscorched"
-	},
-/area/maintenance/port)
+/turf/open/floor/plasteel/white,
+/area/medical/medbay/zone2)
 "cIx" = (
 /obj/structure/sign/warning/biohazard{
 	pixel_y = 32
@@ -73589,7 +73601,10 @@
 /obj/structure/cable/yellow{
 	icon_state = "1-2"
 	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
+	dir = 4
+	},
+/obj/effect/landmark/xeno_spawn,
 /turf/open/floor/plating,
 /area/maintenance/port)
 "dvt" = (
@@ -73604,8 +73619,8 @@
 /obj/structure/cable/yellow{
 	icon_state = "4-8"
 	},
-/turf/open/floor/plating,
-/area/maintenance/port)
+/turf/open/floor/plasteel/white,
+/area/medical/medbay/zone2)
 "dvY" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/cable/yellow{
@@ -75351,6 +75366,16 @@
 /obj/machinery/atmospherics/pipe/simple/general/visible,
 /turf/open/space,
 /area/space/nearstation)
+"fGJ" = (
+/obj/structure/table,
+/obj/item/reagent_containers/glass/beaker,
+/obj/item/reagent_containers/glass/beaker{
+	pixel_x = 4;
+	pixel_y = 4
+	},
+/obj/item/reagent_containers/syringe/epinephrine,
+/turf/open/floor/plasteel/white,
+/area/medical/medbay/zone2)
 "fGY" = (
 /obj/machinery/portable_atmospherics/canister/nitrous_oxide,
 /obj/effect/turf_decal/bot,
@@ -103143,8 +103168,8 @@ bue
 div
 bXI
 alK
-aqO
 cbD
+dwj
 cHl
 cHt
 cfF
@@ -103401,7 +103426,7 @@ pMX
 bzC
 csL
 dvq
-bzC
+cgP
 cdl
 cev
 cIw
@@ -103658,11 +103683,11 @@ bWd
 aqK
 alK
 auF
-aqK
+clU
 dvE
 cHu
-aob
-cgP
+fGJ
+dwj
 cin
 cjN
 cld
@@ -117543,7 +117568,7 @@ cgq
 chx
 ciU
 chx
-clU
+cgq
 cmT
 cqT
 cpB
