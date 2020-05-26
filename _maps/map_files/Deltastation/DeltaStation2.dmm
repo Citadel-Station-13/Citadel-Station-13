@@ -124873,10 +124873,6 @@
 	},
 /turf/open/floor/plasteel/airless/solarpanel,
 /area/solar/port/aft)
-"egC" = (
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/plating,
-/area/chapel/office)
 "egD" = (
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 1
@@ -162453,7 +162449,7 @@ edT
 eeC
 efp
 egd
-egC
+efg
 aaa
 aad
 aaa
@@ -162710,7 +162706,7 @@ edU
 eeD
 efq
 ege
-egC
+efg
 aaa
 aad
 aaa
@@ -162967,7 +162963,7 @@ edV
 eeE
 efr
 ege
-egC
+efg
 aad
 ajr
 aaa
