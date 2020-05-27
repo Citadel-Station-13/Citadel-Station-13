@@ -18,6 +18,7 @@ import './styles/themes/hackerman.scss';
 import './styles/themes/retro.scss';
 import './styles/themes/syndicate.scss';
 import './styles/themes/clockcult.scss';
+import './styles/themes/paper.scss';
 
 import { loadCSS } from 'fg-loadcss';
 import { render } from 'inferno';
