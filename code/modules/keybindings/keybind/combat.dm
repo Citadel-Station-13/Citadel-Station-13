@@ -27,7 +27,7 @@
 
 /datum/keybinding/living/active_block/up(client/user)
 	var/mob/living/L = user.mob
-	L.keybind_start_active_blocking()
+	L.keybind_stop_active_blocking()
 
 /datum/keybinding/living/active_parry
 	hotkey_keys = list("Insert", "G")

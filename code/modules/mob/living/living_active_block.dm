@@ -125,8 +125,10 @@
 /obj/item/proc/can_active_block()
 	return item_flags & ITEM_CAN_BLOCK
 
-/// The amount of damage that is blocked.
-/obj/item/proc/active_block_damage_mitigation(mob/living/owner, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return)
+/**
+  * Calculates FINAL ATTACK DAMAGE after mitigation
+  */
+/obj/item/proc/active_block_calculate_final_damage(mob/living/owner, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return)
 	var/datum/block_parry_data/data = get_block_parry_data()
 	var/absorption = data.attack_type_list_scan(data.block_damage_absorption_override, attack_type)
 	var/efficiency = data.attack_type_list_scan(data.block_damage_multiplier_override, attack_type)
@@ -183,6 +185,9 @@
 	else
 		owner.adjustStaminaLossBuffered(stamina_amount)
 
+/obj/item/proc/on_active_block(mob/living/owner, atom/object, damage, damage_blocked, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return, override_direction)
+	return
+
 /obj/item/proc/active_block(mob/living/owner, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return, override_direction)
 	if(!can_active_block())
 		return BLOCK_NONE
@@ -199,11 +204,11 @@
 	else if(!can_block_direction(owner.dir, incoming_direction))
 		return BLOCK_NONE
 	block_return[BLOCK_RETURN_ACTIVE_BLOCK] = TRUE
-	var/damage_mitigated = active_block_damage_mitigation(owner, object, damage, attack_text, attack_type, armour_penetration, attacker, def_zone, final_block_chance, block_return)
-	var/final_damage = max(0, damage - damage_mitigated)
-	var/stamina_cost = active_block_stamina_cost(owner, object, final_damage, attack_text, attack_type, armour_penetration, attacker, def_zone, final_block_chance, block_return)
+	var/final_damage = active_block_calculate_final_damage(owner, object, damage, attack_text, attack_type, armour_penetration, attacker, def_zone, final_block_chance, block_return)
+	var/damage_blocked = damage - final_damage
+	var/stamina_cost = active_block_stamina_cost(owner, object, damage_blocked, attack_text, attack_type, armour_penetration, attacker, def_zone, final_block_chance, block_return)
 	active_block_do_stamina_damage(owner, object, stamina_cost, attack_text, attack_type, armour_penetration, attacker, def_zone, final_block_chance, block_return)
-	block_return[BLOCK_RETURN_ACTIVE_BLOCK_DAMAGE_MITIGATED] = damage_mitigated
+	block_return[BLOCK_RETURN_ACTIVE_BLOCK_DAMAGE_MITIGATED] = damage - final_damage
 	block_return[BLOCK_RETURN_SET_DAMAGE_TO] = final_damage
 	. = BLOCK_SHOULD_CHANGE_DAMAGE
 	if(final_damage <= 0)
@@ -213,6 +218,7 @@
 		owner.visible_message("<span class='warning'>[owner] dampens \the [attack_text] with [src]!</span>")
 	if(length(data.block_sounds))
 		playsound(loc, pickweight(data.block_sounds), 75, TRUE)
+	on_active_block(owner, object, damage, damage_blocked, attack_text, attack_type, armour_penetration, attacker, def_zone, final_block_chance, block_return, override_direction)
 
 /obj/item/proc/check_active_block(mob/living/owner, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return)
 	if(!can_active_block())
@@ -221,7 +227,7 @@
 	if(!can_block_direction(owner.dir, incoming_direction))
 		return
 	block_return[BLOCK_RETURN_ACTIVE_BLOCK] = TRUE
-	block_return[BLOCK_RETURN_ACTIVE_BLOCK_DAMAGE_MITIGATED] = active_block_damage_mitigation(owner, object, damage, attack_text, attack_type, armour_penetration, attacker, def_zone, final_block_chance, block_return)
+	block_return[BLOCK_RETURN_ACTIVE_BLOCK_DAMAGE_MITIGATED] = damage - active_block_calculate_final_damage(owner, object, damage, attack_text, attack_type, armour_penetration, attacker, def_zone, final_block_chance, block_return)
 
 /**
   * Gets the block direction bitflags of what we can block.

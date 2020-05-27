@@ -3,10 +3,16 @@
 	update_turf_movespeed(loc)
 	//Hide typing indicator if we move.
 	clear_typing_indicator()
-	if(is_shifted)
-		is_shifted = FALSE
-		pixel_x = get_standard_pixel_x_offset(lying)
-		pixel_y = get_standard_pixel_y_offset(lying)
+	update_pixel_shifting()
+
+/mob/living/proc/update_pixel_shifting()
+	if(active_blocking)
+		animate(src, pixel_x = get_standard_pixel_x_offset(), pixel_y = get_standard_pixel_y_offset(), time = 1.5, easing = SINE_EASING | EASE_OUT , flags = ANIMATION_END_NOW)
+	else
+		if(is_shifted)
+			is_shifted = FALSE
+			pixel_x = get_standard_pixel_x_offset(lying)
+			pixel_y = get_standard_pixel_y_offset(lying)
 
 /mob/living/CanPass(atom/movable/mover, turf/target)
 	if((mover.pass_flags & PASSMOB))
