@@ -24,7 +24,7 @@
 	var/shieldbash_push_distance = 1
 
 /datum/block_parry_data/shield
-	block_stamina_efficiency = 1
+	block_stamina_efficiency = 1.5
 	block_stamina_cost_per_second = 3
 
 /obj/item/shield/examine(mob/user)
@@ -193,7 +193,7 @@
 	var/repair_material = /obj/item/stack/sheet/mineral/titanium
 	var/can_shatter = TRUE
 	shield_flags = SHIELD_FLAGS_DEFAULT | SHIELD_TRANSPARENT
-	max_integrity = 300
+	max_integrity = 450
 
 /obj/item/shield/riot/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/melee/baton))
@@ -246,13 +246,13 @@
 	lefthand_file = 'icons/mob/inhands/equipment/shields_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/shields_righthand.dmi'
 	shield_flags = SHIELD_FLAGS_DEFAULT
-	max_integrity = 200
+	max_integrity = 300
 
 obj/item/shield/riot/bullet_proof
 	name = "bullet resistant shield"
 	desc = "A far more frail shield made of resistant plastics and kevlar meant to block ballistics."
 	armor = list("melee" = 30, "bullet" = 80, "laser" = 0, "energy" = 0, "bomb" = -40, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 50)
-	max_integrity = 200
+	max_integrity = 300
 
 /obj/item/shield/riot/roman
 	name = "\improper Roman shield"
