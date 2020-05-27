@@ -138,6 +138,9 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	var/skill_difficulty = THRESHOLD_UNTRAINED //how difficult it's to use this item in general.
 	var/skill_gain = DEF_SKILL_GAIN //base skill value gain from using this item.
 
+	var/canMouseDown = FALSE
+
+
 /obj/item/Initialize()
 
 	if (attack_verb)

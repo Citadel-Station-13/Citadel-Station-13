@@ -80,6 +80,8 @@
 	/// Just 'slightly' snowflakey way to modify projectile damage for projectiles fired from this gun.
 	var/projectile_damage_multiplier = 1
 
+	var/automatic = 0 //can gun use it, 0 is no, anything above 0 is the delay between clicks in ds
+
 /obj/item/gun/Initialize()
 	. = ..()
 	if(no_pin_required)
