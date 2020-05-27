@@ -385,7 +385,7 @@
 	chant_invocations = list("Use charge to kill!", "Slay with power!", "Hunt with energy!")
 	chant_amount = 5
 	chant_interval = 4
-	power_cost = 200
+	power_cost = 500
 	usage_tip = "Though it requires you to stand still, this scripture can do massive damage."
 	tier = SCRIPTURE_SCRIPT
 	primary_component = HIEROPHANT_ANSIBLE
@@ -393,7 +393,7 @@
 	quickbind = TRUE
 	quickbind_desc = "Allows you to fire energy rays at target locations.<br><b>Maximum 5 chants.</b>"
 	var/static/list/nzcrentr_insults = list("You're not very good at aiming.", "You hunt badly.", "What a waste of energy.", "Almost funny to watch.",
-	"Boss says </span><span class='heavy_brass'>\"Click something, you idiot!\"</span><span class='nzcrentr'>.", "Stop wasting components if you can't aim.")
+	"Boss says </span><span class='heavy_brass'>\"Click something, you idiot!\"</span><span class='nzcrentr'>.", "Stop wasting power if you can't aim.")
 
 /datum/clockwork_scripture/channeled/volt_blaster/chant_effects(chant_number)
 	slab.busy = null
