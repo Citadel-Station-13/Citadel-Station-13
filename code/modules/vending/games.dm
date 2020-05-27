@@ -7,6 +7,7 @@
 					/obj/item/storage/pill_bottle/dice = 10,
 					/obj/item/toy/cards/deck/cas = 3,
 					/obj/item/toy/cards/deck/cas/black = 3)
+					/obj/item/toy/cards/deck/unum = 3,
 	contraband = list(/obj/item/dice/fudge = 9)
 	premium = list(/obj/item/melee/skateboard/pro = 3,
 					/obj/item/melee/skateboard/hoverboard = 1)
