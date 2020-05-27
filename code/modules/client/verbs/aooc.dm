@@ -31,10 +31,17 @@ GLOBAL_VAR_INIT(normal_aooc_colour, "#ce254f")
 			to_chat(usr, "<span class='danger'>You aren't an antagonist!</span>")
 		if(handle_spam_prevention(msg,MUTE_OOC))
 			return
+		if(findtext(msg, "byond://"))
+			to_chat(src, "<B>Advertising other servers is not allowed.</B>")
+			log_admin("[key_name(src)] has attempted to advertise in LOOC: [msg]")
+			return
 		if(mob.stat)
 			to_chat(usr, "<span class='danger'>You cannot use AOOC while unconscious or dead.</span>")
 			return
-		if(HAS_TRAIT(mob, TRAIT_LOOC_MUTE))
+		if(isdead(mob))
+			to_chat(src, "<span class='danger'>You cannot use AOOC while ghosting.</span>")
+			return
+		if(HAS_TRAIT(mob, TRAIT_AOOC_MUTE))
 			to_chat(src, "<span class='danger'>You cannot use AOOC right now.</span>")
 			return
 

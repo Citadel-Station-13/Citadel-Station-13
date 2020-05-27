@@ -35,7 +35,7 @@ GLOBAL_VAR_INIT(normal_looc_colour, "#6699CC")
 			return
 		if(findtext(msg, "byond://"))
 			to_chat(src, "<B>Advertising other servers is not allowed.</B>")
-			log_admin("[key_name(src)] has a ttempted to advertise in LOOC: [msg]")
+			log_admin("[key_name(src)] has attempted to advertise in LOOC: [msg]")
 			return
 		if(mob.stat)
 			to_chat(src, "<span class='danger'>You cannot use LOOC while unconscious or dead.</span>")
