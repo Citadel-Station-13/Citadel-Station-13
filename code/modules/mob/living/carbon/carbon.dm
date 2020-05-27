@@ -837,7 +837,8 @@
 				disable_intentional_combat_mode(FALSE, FALSE)
 			else
 				stat = CONSCIOUS
-			adjust_blindness(-1)
+			if(eye_blind <= 1)
+				adjust_blindness(-1)
 		update_mobility()
 	update_damage_hud()
 	update_health_hud()
