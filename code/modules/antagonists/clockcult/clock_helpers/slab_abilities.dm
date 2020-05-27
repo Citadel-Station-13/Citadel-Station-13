@@ -153,8 +153,10 @@
 		playsound(ranged_ability_user, 'sound/effects/light_flicker.ogg', 50, 1)
 		T = get_turf(target)
 		new/obj/effect/temp_visual/ratvar/volt_hit(T, ranged_ability_user)
-		add_logs(ranged_ability_user, T, "fired a volt ray")
+		log_combat(ranged_ability_user, T, "fired a volt ray")
 		remove_ranged_ability()
+
+	return TRUE
 
 //For the Kindle scripture; stuns and mutes a target non-servant.
 /obj/effect/proc_holder/slab/kindle
