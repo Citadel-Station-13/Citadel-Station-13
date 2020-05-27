@@ -104,7 +104,7 @@
 	light_power = 2
 	light_color = LIGHT_COLOR_ORANGE
 	var/mob/user
-	var/damage = 25
+	var/damage = 18
 
 /obj/effect/temp_visual/ratvar/volt_hit/Initialize(mapload, caster)
 	. = ..()
@@ -117,7 +117,7 @@
 
 /obj/effect/temp_visual/ratvar/volt_hit/proc/volthit()
 	if(user)
-		Beam(get_turf(user), "volt_ray", time=duration, maxdistance=8, beam_type=/obj/effect/ebeam/volt_ray)
+		Beam(get_turf(user), "volt_ray", time=duration, maxdistance=6, beam_type=/obj/effect/ebeam/volt_ray)
 	var/hit_amount = 0
 	var/turf/T = get_turf(src)
 	for(var/mob/living/L in T)
