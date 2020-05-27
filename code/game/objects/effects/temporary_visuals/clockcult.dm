@@ -123,14 +123,14 @@
 	for(var/mob/living/L in T)
 		if(is_servant_of_ratvar(L))
 			continue
-		var/obj/item/I = L.null_rod_check()
+		var/obj/item/I = L.anti_magic_check()
 		if(I)
 			L.visible_message("<span class='warning'>Strange energy flows into [L]'s [I.name]!</span>", \
 			"<span class='userdanger'>Your [I.name] shields you from [src]!</span>")
 			continue
 		L.visible_message("<span class='warning'>[L] is struck by a [name]!</span>", "<span class='userdanger'>You're struck by a [name]!</span>")
 		L.apply_damage(damage, BURN, "chest", L.run_armor_check("chest", "laser", "Your armor absorbs [src]!", "Your armor blocks part of [src]!", 0, "Your armor was penetrated by [src]!"))
-		add_logs(user, L, "struck with a volt blast")
+		log_combat(user, L, "struck with a volt blast")
 		hit_amount++
 	for(var/obj/mecha/M in T)
 		if(M.occupant)
