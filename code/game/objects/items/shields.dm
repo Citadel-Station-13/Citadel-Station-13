@@ -26,6 +26,7 @@
 /datum/block_parry_data/shield
 	block_stamina_efficiency = 1.5
 	block_stamina_cost_per_second = 3
+	block_start_delay = 3
 
 /obj/item/shield/examine(mob/user)
 	. = ..()

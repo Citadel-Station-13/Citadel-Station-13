@@ -5,9 +5,14 @@
 	clear_typing_indicator()
 	update_pixel_shifting(TRUE)
 
+/mob/living/setDir(newdir, ismousemovement)
+	. = ..()
+	if(ismousemovement)
+		update_pixel_shifting()
+
 /mob/living/proc/update_pixel_shifting(moved = FALSE)
 	if(active_blocking)
-		animate(src, pixel_x = get_standard_pixel_x_offset(), pixel_y = get_standard_pixel_y_offset(), time = 1.5, flags = ANIMATION_END_NOW)
+		animate(src, pixel_x = get_standard_pixel_x_offset(), pixel_y = get_standard_pixel_y_offset(), time = 2.5, flags = ANIMATION_END_NOW)
 	else if(moved)
 		if(is_shifted)
 			is_shifted = FALSE
