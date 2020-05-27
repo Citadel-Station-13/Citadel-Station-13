@@ -261,6 +261,11 @@ LINEN BINS
 	var/list/sheets = list()
 	var/obj/item/hidden = null
 
+/obj/structure/bedsheetbin/empty
+	amount = 0
+	icon_state = "linenbin-empty"
+	anchored = FALSE
+
 /obj/structure/bedsheetbin/examine(mob/user)
 	. = ..()
 	if(amount < 1)

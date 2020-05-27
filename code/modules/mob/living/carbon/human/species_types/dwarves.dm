@@ -6,8 +6,8 @@ GLOBAL_LIST_INIT(dwarf_last, world.file2list("strings/names/dwarf_last.txt")) //
 	name = "Dwarf"
 	id = "dwarf" //Also called Homo sapiens pumilionis
 	default_color = "FFFFFF"
-	species_traits = list(EYECOLOR,HAIR,FACEHAIR,LIPS,NO_UNDERWEAR,TRAIT_DWARF)
-	inherent_traits = list()
+	species_traits = list(EYECOLOR,HAIR,FACEHAIR,LIPS)
+	inherent_traits = list(TRAIT_DWARF,TRAIT_SNOB)
 	limbs_id = "human"
 	use_skintones = USE_SKINTONES_GRAYSCALE_CUSTOM
 	say_mod = "bellows" //high energy, EXTRA BIOLOGICAL FUEL
@@ -87,9 +87,7 @@ GLOBAL_LIST_INIT(dwarf_last, world.file2list("strings/names/dwarf_last.txt")) //
 	var/heal_rate = 0.5 //The rate they heal damages over 400 alcohol stored. Default is 0.5 so we times 3 since 3 seconds.
 	var/alcohol_rate = 0.25 //The rate the alcohol ticks down per each iteration of dwarf_eth_ticker completing.
 	//These count in on_life ticks which should be 2 seconds per every increment of 1 in a perfect world.
-	var/dwarf_filth_ticker = 0 //Currently set =< 4, that means this will fire the proc around every 4-8 seconds.
 	var/dwarf_eth_ticker = 0 //Currently set =< 1, that means this will fire the proc around every 2 seconds
-	var/last_filth_spam
 	var/last_alcohol_spam
 
 /obj/item/organ/dwarfgland/prepare_eat()
@@ -100,64 +98,10 @@ GLOBAL_LIST_INIT(dwarf_last, world.file2list("strings/names/dwarf_last.txt")) //
 /obj/item/organ/dwarfgland/on_life() //Primary loop to hook into to start delayed loops for other loops..
 	. = ..()
 	if(owner && owner.stat != DEAD)
-		dwarf_cycle_ticker()
-
-//Handles the delayed tick cycle by just adding on increments per each on_life() tick
-/obj/item/organ/dwarfgland/proc/dwarf_cycle_ticker()
-	dwarf_eth_ticker++
-	dwarf_filth_ticker++
-
-	if(dwarf_filth_ticker >= 4) //Should be around 4-8 seconds since a tick is around 2 seconds.
-		dwarf_filth_cycle()		//On_life will adjust regarding other factors, so we are along for the ride.
-		dwarf_filth_ticker = 0 //We set the ticker back to 0 to go again.
-	if(dwarf_eth_ticker >= 1) //Alcohol reagent check should be around 2 seconds, since a tick is around 2 seconds.
-		dwarf_eth_cycle()
-		dwarf_eth_ticker = 0
-
-//If this still friggin uses too much CPU, I'll make a for view subsystem If I have to.
-/obj/item/organ/dwarfgland/proc/dwarf_filth_cycle()
-	if(!owner?.client || !owner?.mind)
-		return
-	//Filth Reactions - Since miasma now exists
-	var/filth_counter = 0 //Holder for the filth check cycle, basically contains how much filth dwarf sees numerically.
-	for(var/fuck in owner.fov_view(7)) //hello byond for view loop.
-		if(istype(fuck, /mob/living/carbon/human))
-			var/mob/living/carbon/human/H = fuck
-			if(H.stat == DEAD || (HAS_TRAIT(H, TRAIT_FAKEDEATH)))
-				filth_counter += 10
-		if(istype(fuck, /obj/effect/decal/cleanable/blood))
-			if(istype(fuck, /obj/effect/decal/cleanable/blood/gibs))
-				filth_counter += 1
-			else
-				filth_counter += 0.1
-		if(istype(fuck,/obj/effect/decal/cleanable/vomit)) //They are disgusted by their own vomit too.
-			filth_counter += 10 //Dwarves could technically chainstun each other in a vomit tantrum spiral.
-	switch(filth_counter)
-		if(11 to 25)
-			if(last_filth_spam + 40 SECONDS < world.time)
-				to_chat(owner, "<span class = 'warning'>Someone should really clean up in here!</span>")
-				last_filth_spam = world.time
-		if(26 to 50)
-			if(prob(6)) //And then the probability they vomit along with it.
-				to_chat(owner, "<span class = 'danger'>The stench makes you queasy.</span>")
-				owner.vomit(10) //I think vomit should stay over a disgust adjustment.
-		if(51 to 75)
-			if(prob(9))
-				to_chat(owner, "<span class = 'danger'>By Armok! You won't be able to keep alcohol down at all!</span>")
-				owner.vomit(20) //Its more funny
-		if(76 to 100)
-			if(prob(11))
-				to_chat(owner, "<span class = 'userdanger'>You can't live in such FILTH!</span>")
-				owner.adjustToxLoss(10) //Now they start dying.
-				owner.vomit(20)
-		if(101 to INFINITY) //Now they will really start dying
-			if(last_filth_spam + 12 SECONDS < world.time)
-				to_chat(owner, "<span class = 'userdanger'> THERES TOO MUCH FILTH, OH GODS THE FILTH!</span>")
-				last_filth_spam = world.time
-			if(prob(40))
-				owner.adjustToxLoss(15)
-				owner.vomit(30)
-	CHECK_TICK //Check_tick right here, its motherfuckin magic. (To me at least)
+		dwarf_eth_ticker++
+		if(dwarf_eth_ticker >= 1) //Alcohol reagent check should be around 2 seconds, since a tick is around 2 seconds.
+			dwarf_eth_cycle()
+			dwarf_eth_ticker = 0
 
 //Handles the dwarf alcohol cycle tied to on_life, it ticks in dwarf_cycle_ticker.
 /obj/item/organ/dwarfgland/proc/dwarf_eth_cycle()

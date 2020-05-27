@@ -154,8 +154,8 @@
 /proc/log_subsystem(subsystem, text)
 	WRITE_LOG(GLOB.subsystem_log, "[subsystem]: [text]")
 
-/proc/log_click(object, location, control, params, client/C, event = "clicked")
-	WRITE_LOG(GLOB.click_log, "CLICK: [C.ckey] - [event] : [object] | [location] | [control] | [params]")
+/proc/log_click(atom/object, atom/location, control, params, client/C, event = "clicked", unexpected)
+	WRITE_LOG(GLOB.click_log, "[unexpected? "ERROR" :"CLICK"]: [C.ckey] - [event] : [istype(object)? "[object] ([COORD(object)])" : object] | [istype(location)? "[location] ([COORD(location)])" : location] | [control] | [params]")
 
 /* Log to both DD and the logfile. */
 /proc/log_world(text)
