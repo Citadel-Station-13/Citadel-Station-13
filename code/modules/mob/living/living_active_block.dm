@@ -61,17 +61,17 @@
 	. = ..()
 	if(active_blocking || active_block_starting)
 		if(dir & EAST)
-			. += 12
+			. += 8
 		if(dir & WEST)
-			. -= 12
+			. -= 8
 
 /mob/living/get_standard_pixel_y_offset()
 	. = ..()
 	if(active_blocking || active_block_starting)
 		if(dir & NORTH)
-			. += 12
+			. += 8
 		if(dir & SOUTH)
-			. -= 12
+			. -= 8
 
 /**
   * Proc called by keybindings to toggle active blocking.
