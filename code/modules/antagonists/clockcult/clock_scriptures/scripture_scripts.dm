@@ -375,3 +375,48 @@
 	new /obj/effect/temp_visual/ratvar/mending_mantra(get_turf(invoker))
 	return TRUE
 
+//Volt Blaster: Channeled for up to five times over ten seconds to fire up to five rays of energy at target locations.
+/datum/clockwork_scripture/channeled/volt_blaster
+	descname = "Channeled, Targeted Energy Blasts"
+	name = "Volt Blaster"
+	desc = "Allows you to fire five energy rays at target locations. Channeled every fourth of a second for a maximum of ten seconds."
+	channel_time = 30
+	invocations = list("Amperage...", "...grant me your power!")
+	chant_invocations = list("Use charge to kill!", "Slay with power!", "Hunt with energy!")
+	chant_amount = 5
+	chant_interval = 4
+	power_cost = 200
+	usage_tip = "Though it requires you to stand still, this scripture can do massive damage."
+	tier = SCRIPTURE_SCRIPT
+	primary_component = HIEROPHANT_ANSIBLE
+	sort_priority = 10
+	quickbind = TRUE
+	quickbind_desc = "Allows you to fire energy rays at target locations.<br><b>Maximum 5 chants.</b>"
+	var/static/list/nzcrentr_insults = list("You're not very good at aiming.", "You hunt badly.", "What a waste of energy.", "Almost funny to watch.",
+	"Boss says </span><span class='heavy_brass'>\"Click something, you idiot!\"</span><span class='nzcrentr'>.", "Stop wasting components if you can't aim.")
+
+/datum/clockwork_scripture/channeled/volt_blaster/chant_effects(chant_number)
+	slab.busy = null
+	var/datum/clockwork_scripture/ranged_ability/volt_ray/ray = new
+	ray.slab = slab
+	ray.invoker = invoker
+	var/turf/T = get_turf(invoker)
+	if(!ray.run_scripture() && slab && invoker)
+		if(can_recite() && T == get_turf(invoker))
+			to_chat(invoker, "<span class='nzcrentr'>\"[text2ratvar(pick(nzcrentr_insults))]\"</span>")
+		else
+			return FALSE
+	return TRUE
+
+/obj/effect/ebeam/volt_ray
+	name = "volt_ray"
+	layer = LYING_MOB_LAYER
+
+/datum/clockwork_scripture/ranged_ability/volt_ray
+	name = "Volt Ray"
+	slab_icon = "volt"
+	allow_mobility = FALSE
+	ranged_type = /obj/effect/proc_holder/slab/volt
+	ranged_message = "<span class='nzcrentr_small'><i>You charge the clockwork slab with shocking might.</i>\n\
+	<b>Left-click a target to fire, quickly!</b></span>"
+	timeout_time = 20
