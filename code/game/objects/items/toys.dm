@@ -777,6 +777,7 @@
 	var/cooldown = 0
 	var/obj/machinery/computer/holodeck/holo = null // Holodeck cards should not be infinite
 	var/list/cards = list()
+	var/original_size = 52
 
 /obj/item/toy/cards/deck/Initialize()
 	. = ..()
@@ -832,16 +833,16 @@
 	user.visible_message("[user] draws a card from the deck.", "<span class='notice'>You draw a card from the deck.</span>")
 	update_icon()
 
-/obj/item/toy/cards/deck/update_icon_state()
-	switch(cards.len)
-		if(27 to INFINITY)
-			icon_state = "deck_[deckstyle]_full"
-		if(11 to 27)
-			icon_state = "deck_[deckstyle]_half"
-		if(1 to 11)
-			icon_state = "deck_[deckstyle]_low"
-		else
-			icon_state = "deck_[deckstyle]_empty"
+
+/obj/item/toy/cards/deck/update_icon()
+	if(cards.len > original_size/2)
+		icon_state = "deck_[deckstyle]_full"
+	else if(cards.len > original_size/4)
+		icon_state = "deck_[deckstyle]_half"
+	else if(cards.len > 0)
+		icon_state = "deck_[deckstyle]_low"
+	else if(cards.len == 0)
+		icon_state = "deck_[deckstyle]_empty"
 
 /obj/item/toy/cards/deck/attack_self(mob/user)
 	if(cooldown < world.time - 50)
