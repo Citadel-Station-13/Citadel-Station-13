@@ -27,10 +27,11 @@
 					/obj/item/storage/hypospraykit/toxin = 2,
 					/obj/item/storage/hypospraykit/o2 = 2,
 					/obj/item/storage/hypospraykit/brute = 2,
-					/obj/item/storage/hypospraykit/enlarge = 2,
+//					/obj/item/storage/hypospraykit/enlarge = 0,
 					/obj/item/reagent_containers/glass/bottle/vial/small = 5,
 					/obj/item/storage/briefcase/medical = 2)
-	contraband = list(/obj/item/reagent_containers/pill/tox = 3,
+	contraband = list(/obj/item/gun/syringe = 2,
+					/obj/item/reagent_containers/pill/tox = 3,
 					/obj/item/reagent_containers/pill/morphine = 4,
 					/obj/item/reagent_containers/pill/charcoal = 6)
 	premium = list(/obj/item/reagent_containers/medspray/synthflesh = 2,
