@@ -146,4 +146,5 @@
 	. = ..()
 
 /obj/item/gun/ballistic/minigun/dropped(mob/living/user)
+	. = ..()
 	ammo_pack.attach_gun(user)

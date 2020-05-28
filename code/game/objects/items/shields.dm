@@ -27,6 +27,7 @@
 	block_stamina_efficiency = 1.5
 	block_stamina_cost_per_second = 3
 	block_start_delay = 3
+	block_damage_absorption = 0
 
 /obj/item/shield/examine(mob/user)
 	. = ..()

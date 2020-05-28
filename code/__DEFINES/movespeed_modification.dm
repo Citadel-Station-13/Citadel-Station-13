@@ -72,5 +72,4 @@
 
 #define MOVESPEED_ID_ACTIVE_BLOCK						"ACTIVE_BLOCK"
 
-#define MOVESPEED_ID_MOB_GRAB_STATE				"mob_grab_state"
 #define MOVESPEED_ID_MOB_WALK_RUN				"mob_walk_run"

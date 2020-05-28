@@ -90,7 +90,7 @@
 /mob/living/proc/keybind_start_active_blocking()
 	if(active_blocking || active_block_starting)
 		return FALSE
-	if(!CHECK_BITFIELD(combat_flags, COMBAT_FLAG_COMBAT_ACTIVE))
+	if(!SEND_SIGNAL(src, COMSIG_COMBAT_MODE_CHECK, COMBAT_MODE_ACTIVE))
 		to_chat(src, "<span class='warning'>You must be in combat mode to actively block!</span>")
 		return FALSE
 	var/obj/item/I = get_active_held_item()
