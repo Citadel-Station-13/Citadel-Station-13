@@ -223,16 +223,13 @@
 	reagent_id = /datum/reagent/consumable/ethanol/mead
 
 /obj/structure/reagent_dispensers/keg/aphro
-	name = "keg of aphrodisiac"
-	desc = "A keg of aphrodisiac."
-	icon_state = "pinkkeg"
-	reagent_id = /datum/reagent/drug/aphrodisiac
+	name = "keg"
+	desc = "A keg."
 	tank_volume = 150
 
 /obj/structure/reagent_dispensers/keg/aphro/strong
-	name = "keg of strong aphrodisiac"
-	desc = "A keg of strong and addictive aphrodisiac."
-	reagent_id = /datum/reagent/drug/aphrodisiacplus
+	name = "keg"
+	desc = "A keg."
 	tank_volume = 120
 
 /obj/structure/reagent_dispensers/keg/milk
