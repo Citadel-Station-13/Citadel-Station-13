@@ -215,7 +215,8 @@
 	var/bonus_spread = 0
 	var/loop_counter = 0
 
-	bonus_spread += getinaccuracy(user) //CIT CHANGE - adds bonus spread while not aiming
+	if(user)
+		bonus_spread += getinaccuracy(user) //CIT CHANGE - adds bonus spread while not aiming
 	if(ishuman(user) && user.a_intent == INTENT_HARM && weapon_weight <= WEAPON_LIGHT)
 		var/mob/living/carbon/human/H = user
 		for(var/obj/item/gun/G in H.held_items)
@@ -565,12 +566,7 @@
 		chambered = null
 		update_icon()
 
-/obj/item/gun/proc/getinaccuracy(mob/living/user)
-	if(!isliving(user))
-		return FALSE
-	else
-		var/mob/living/holdingdude = user
-		if(istype(holdingdude) && (holdingdude.combat_flags & COMBAT_FLAG_COMBAT_ACTIVE))
-			return 0
-		else
-			return ((weapon_weight * 25) * inaccuracy_modifier)
+/obj/item/gun/proc/getinaccuracy(mob/user)
+	if(SEND_SIGNAL(user, COMSIG_COMBAT_MODE_CHECK, COMBAT_MODE_INACTIVE))
+		return ((weapon_weight * 25) * inaccuracy_modifier)
+	return 0

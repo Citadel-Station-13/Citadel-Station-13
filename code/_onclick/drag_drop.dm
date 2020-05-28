@@ -92,15 +92,9 @@
 	mouseLocation = location
 	mouseObject = object
 	mouseControlObject = control
-	if(mob && LAZYLEN(mob.mousemove_intercept_objects))
-		for(var/datum/D in mob.mousemove_intercept_objects)
-			D.onMouseMove(object, location, control, params)
-	if(!show_popup_menus && mob)	//CIT CHANGE - passes onmousemove() to mobs
-		mob.onMouseMove(object, location, control, params)	//CIT CHANGE - ditto
+	if(mob)
+		SEND_SIGNAL(mob, COMSIG_MOB_CLIENT_MOUSEMOVE, object, location, control, params)
 	..()
-
-/datum/proc/onMouseMove(object, location, control, params)
-	return
 
 /client/MouseDrag(src_object,atom/over_object,src_location,over_location,src_control,over_control,params)
 	var/list/L = params2list(params)
