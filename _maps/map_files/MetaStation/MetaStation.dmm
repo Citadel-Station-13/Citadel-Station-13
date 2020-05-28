@@ -12883,6 +12883,9 @@
 "azN" = (
 /obj/structure/chair,
 /obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 1
+	},
 /turf/open/floor/plasteel,
 /area/security/brig)
 "azP" = (
@@ -75883,6 +75886,13 @@
 "hml" = (
 /turf/open/space,
 /area/space)
+"hmD" = (
+/obj/machinery/door/airlock/maintenance{
+	name = "Surgery Maintenance";
+	req_access_txt = "45"
+	},
+/turf/open/floor/plating,
+/area/maintenance/port/aft)
 "hqW" = (
 /obj/structure/disposalpipe/segment{
 	dir = 6
@@ -78163,13 +78173,6 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
-"ndB" = (
-/obj/machinery/door/airlock/maintenance{
-	name = "Surgery Maintenance";
-	req_access_txt = "45"
-	},
-/turf/open/floor/plating,
-/area/maintenance/port/aft)
 "nhy" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/structure/disposalpipe/segment,
@@ -99587,7 +99590,7 @@ dDw
 trM
 dDw
 dDw
-ndB
+hmD
 dDw
 dDw
 dDw
