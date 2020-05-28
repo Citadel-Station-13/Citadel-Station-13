@@ -90,6 +90,17 @@
 //////////////////////////////////////////////////////////////////////////////
 //////////////////////////////// Entertainment ///////////////////////////////
 //////////////////////////////////////////////////////////////////////////////
+/datum/supply_pack/misc/randombedsheets
+	name = "Bedsheet Crate (R)"
+	desc = "Snuggle up in some sweet sheets with this assorted bedsheet crate. Each set comes with eight random bedsheets for your slumbering pleasure!"
+	cost = 2000
+	contains = list(/obj/item/bedsheet/random)
+	crate_name = "random bedsheet crate"
+
+/datum/supply_pack/misc/randombedsheets/generate()
+	. = ..()
+	for(var/i in 1 to 7)
+		new /obj/item/bedsheet/random(.)
 
 /datum/supply_pack/misc/coloredsheets
 	name = "Bedsheet Crate"
@@ -384,7 +395,7 @@
 //////////////////////////////////////////////////////////////////////////////
 //////////////////////////////// Lewd Supplies ///////////////////////////////
 //////////////////////////////////////////////////////////////////////////////
-
+/*
 /datum/supply_pack/misc/lewd
 	name = "Lewd Crate" // OwO
 	desc = "Pssst, want to have a good time with your sluts? Well I got what you want! Maid clothing, dildos, collars and more!"
@@ -415,5 +426,4 @@
 	contains = list(/obj/structure/reagent_dispensers/keg/aphro/strong)
 	crate_name = "deluxe keg"
 	crate_type = /obj/structure/closet/crate
-
-
+*/
