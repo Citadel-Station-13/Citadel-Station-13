@@ -107,13 +107,9 @@ GLOBAL_LIST_INIT(maintenance_loot, list(
 	/obj/item/toy/eightball = 1,
 	/obj/item/reagent_containers/pill/floorpill = 1,
 	/obj/item/reagent_containers/food/snacks/cannedpeaches/maint = 2,
-	/obj/item/storage/daki = 3, //VERY IMPORTANT CIT CHANGE - adds bodypillows to maint
-	/obj/item/storage/pill_bottle/penis_enlargement = 2,
-	/obj/item/storage/pill_bottle/breast_enlargement = 2,
+	/obj/item/storage/daki = 2, //VERY IMPORTANT CIT CHANGE - adds bodypillows to maint
 	/obj/item/clothing/shoes/wheelys = 1,
 	/obj/item/clothing/shoes/kindleKicks = 1,
-	/obj/item/autosurgeon/penis = 1,
-	/obj/item/autosurgeon/testicles = 1,
 	/obj/item/storage/box/marshmallow = 2,
 	/obj/item/clothing/gloves/tackler/offbrand = 1,
 	"" = 3
