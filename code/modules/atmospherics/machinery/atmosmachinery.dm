@@ -365,7 +365,8 @@
 	// form
 	for(var/i in lines)
 		PL = i
-		PL.build_parent()
+		PL.build_
+	CRASH("Attempted to rebuild_pipe_networks() on a base atmospherics machinery.")
 
 /**
   * Returns the pipenet of the specified node.

@@ -222,7 +222,9 @@
 	P.valve_components.len = 0
 	parent = new
 	parent.build_network(src)
-	update = TRUE
+
+/datum/pipeline/proc/mark_for_update()
+	parent?.update = TRUE
 
 /datum/pipeline/proc/temperature_interact(turf/target, share_volume, thermal_conductivity)
 	return parent.temperature_interact(target, share_volume, thermal_conductivity)

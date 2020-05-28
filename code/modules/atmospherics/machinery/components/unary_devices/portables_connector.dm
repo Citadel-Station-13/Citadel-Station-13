@@ -10,13 +10,9 @@
 	pipe_flags = PIPING_ONE_PER_TURF
 	pipe_state = "connector"
 
+	node_volumes = list(0)
+
 	var/obj/machinery/portable_atmospherics/connected_device
-
-/obj/machinery/atmospherics/components/unary/portables_connector/New()
-	..()
-	var/datum/gas_mixture/air_contents = airs[1]
-
-	air_contents.volume = 0
 
 /obj/machinery/atmospherics/components/unary/portables_connector/Destroy()
 	if(connected_device)
@@ -45,7 +41,6 @@
 
 /obj/proc/portableConnectorReturnAir()
 	return
-
 
 /obj/machinery/atmospherics/components/unary/portables_connector/layer1
 	piping_layer = 1

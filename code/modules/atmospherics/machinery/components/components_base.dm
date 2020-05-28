@@ -25,6 +25,7 @@
 		node_airs = new(device_type)
 		for(var/i in 1 to device_type)
 			var/datum/gas_mixture/A = new(node_volumes? (node_volumes[i] || 200) : 200)		//defaults to 200 liters.
+		node_volumes = null		//let's not
 	return ..()
 
 /obj/machinery/atmospherics/components/temporarily_store_air(datum/pipeline/from)
@@ -163,7 +164,7 @@
 		if(!parent)
 			stack_trace("Component is missing a pipenet! Rebuilding...")
 			SSair.add_to_rebuild_queue(src)
-		parent.update = 1
+		parent.mark_for_update()
 
 /obj/machinery/atmospherics/components/returnPipenets()
 	. = list()

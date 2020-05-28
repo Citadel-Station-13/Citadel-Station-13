@@ -115,34 +115,6 @@
 			for(var/gasid in total_gases)
 				gaslist[gasid] = (air.volume / total_volume) * total_gases[gasid]
 
-#warn wip below
-
-/datum/pipeline/proc/reconcile_air()
-	var/list/datum/gas_mixture/GL = list()
-	var/list/datum/pipeline/PL = list()
-	PL += src
-
-	for(var/i = 1; i <= PL.len; i++) //can't do a for-each here because we may add to the list within the loop
-		var/datum/pipeline/P = PL[i]
-		if(!P)
-			continue
-		GL += P.return_air()
-		for(var/atmosmch in P.other_atmosmch)
-			if (istype(atmosmch, /obj/machinery/atmospherics/components/binary/valve))
-				var/obj/machinery/atmospherics/components/binary/valve/V = atmosmch
-				if(V.on)
-					PL |= V.parents[1]
-					PL |= V.parents[2]
-			else if (istype(atmosmch,/obj/machinery/atmospherics/components/binary/relief_valve))
-				var/obj/machinery/atmospherics/components/binary/relief_valve/V = atmosmch
-				if(V.opened)
-					PL |= V.parents[1]
-					PL |= V.parents[2]
-			else if (istype(atmosmch, /obj/machinery/atmospherics/components/unary/portables_connector))
-				var/obj/machinery/atmospherics/components/unary/portables_connector/C = atmosmch
-				if(C.connected_device)
-					GL += C.portableConnectorReturnAir()
-
 /datum/pipe_network/process()
 	if(invalid)
 		return

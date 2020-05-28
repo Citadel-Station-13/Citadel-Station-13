@@ -54,8 +54,8 @@
 	//Perform the connection
 	connected_port = new_port
 	connected_port.connected_device = src
-	var/datum/pipeline/connected_port_parent = connected_port.parents[1]
-	connected_port_parent.reconcile_air()
+	connected_port.node_airs[1] = air_contents
+	connected_port.update_parents()
 
 	anchored = TRUE //Prevent movement
 	pixel_x = new_port.pixel_x
@@ -73,6 +73,7 @@
 	anchored = FALSE
 	connected_port.connected_device = null
 	connected_port = null
+	connected_port.node_airs[1] = new /datum/gas_mixture(0)
 	pixel_x = 0
 	pixel_y = 0
 	return TRUE
