@@ -16,7 +16,7 @@
 	var/list/chat_channels
 
 /datum/tgs_api/v5/ApiVersion()
-	return new /datum/tgs_version("5.1.1")
+	return new /datum/tgs_version("5.2.1")
 
 /datum/tgs_api/v5/OnWorldNew(minimum_required_security_level)
 	server_port = world.params[DMAPI5_PARAM_SERVER_PORT]
@@ -24,7 +24,7 @@
 
 	var/datum/tgs_version/api_version = ApiVersion()
 	version = null
-	var/list/bridge_response = Bridge(DMAPI5_BRIDGE_COMMAND_STARTUP, list(DMAPI5_BRIDGE_PARAMETER_MINIMUM_SECURITY_LEVEL = minimum_required_security_level, DMAPI5_BRIDGE_PARAMETER_VERSION = api_version.raw_parameter, DMAPI5_BRIDGE_PARAMETER_CUSTOM_COMMANDS = ListCustomCommands()))
+	var/list/bridge_response = Bridge(DMAPI5_BRIDGE_COMMAND_STARTUP, list(DMAPI5_BRIDGE_PARAMETER_MINIMUM_SECURITY_LEVEL = minimum_required_security_level, DMAPI5_BRIDGE_PARAMETER_VERSION = api_version.raw_parameter, DMAPI5_PARAMETER_CUSTOM_COMMANDS = ListCustomCommands()))
 	if(!istype(bridge_response))
 		TGS_ERROR_LOG("Failed initial bridge request!")
 		return FALSE
@@ -201,17 +201,27 @@
 		if(DMAPI5_TOPIC_COMMAND_HEARTBEAT)
 			return TopicResponse()
 		if(DMAPI5_TOPIC_COMMAND_WATCHDOG_REATTACH)
+			var/new_port = topic_parameters[DMAPI5_TOPIC_PARAMETER_NEW_PORT]
+			var/error_message = null
+			if (new_port != null)
+				if (!isnum(new_port) || !(new_port > 0))
+					error_message = "Invalid [DMAPI5_TOPIC_PARAMETER_NEW_PORT]]"
+				else
+					server_port = new_port
+
 			var/new_version_string = topic_parameters[DMAPI5_TOPIC_PARAMETER_NEW_SERVER_VERSION]
 			if (!istext(new_version_string))
-				return TopicResponse("Invalid or missing [DMAPI5_TOPIC_PARAMETER_NEW_SERVER_VERSION]]")
+				if(error_message != null)
+					error_message += ", "
+				error_message += "Invalid or missing [DMAPI5_TOPIC_PARAMETER_NEW_SERVER_VERSION]]"
+			else
+				var/datum/tgs_version/new_version = new(new_version_string)
+				if (event_handler)
+					event_handler.HandleEvent(TGS_EVENT_WATCHDOG_REATTACH, new_version)
 
-			var/datum/tgs_version/new_version = new(new_version_string)
-			if (event_handler)
-				event_handler.HandleEvent(TGS_EVENT_WATCHDOG_REATTACH, new_version)
+				version = new_version
 
-			version = new_version
-
-			return TopicResponse()
+			return json_encode(list(DMAPI5_RESPONSE_ERROR_MESSAGE = error_message, DMAPI5_PARAMETER_CUSTOM_COMMANDS = ListCustomCommands()))
 
 	return TopicResponse("Unknown command: [command]")
 
@@ -343,30 +353,3 @@
 /datum/tgs_api/v5/SecurityLevel()
 	RequireInitialBridgeResponse()
 	return security_level
-
-/*
-The MIT License
-
-Copyright (c) 2020 Jordan Brown
-
-Permission is hereby granted, free of charge,
-to any person obtaining a copy of this software and
-associated documentation files (the "Software"), to
-deal in the Software without restriction, including
-without limitation the rights to use, copy, modify,
-merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom
-the Software is furnished to do so,
-subject to the following conditions:
-
-The above copyright notice and this permission notice
-shall be included in all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
-EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
-OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
-IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR
-ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
-TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
-SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-*/
