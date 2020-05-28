@@ -53920,11 +53920,11 @@
 /turf/open/floor/plating,
 /area/maintenance/aft)
 "cgO" = (
-/obj/machinery/door/airlock{
-	name = "Medbay Emergency Storage";
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/machinery/door/airlock/medical{
+	name = "Apothecary";
 	req_access_txt = "5"
 	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/zone2)
 "cgP" = (
@@ -54627,10 +54627,6 @@
 /area/medical/medbay/front_office)
 "ciD" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/research{
-	name = "Research and Development Lab";
-	req_one_access_txt = "7"
-	},
 /obj/effect/turf_decal/tile/purple{
 	dir = 4
 	},
@@ -54645,6 +54641,10 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/cable/yellow{
 	icon_state = "1-2"
+	},
+/obj/machinery/door/airlock/research{
+	name = "Research Division Access";
+	req_access_txt = "47"
 	},
 /turf/open/floor/plasteel/white,
 /area/science/lab)
@@ -57202,10 +57202,6 @@
 /area/science/research)
 "cpz" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/research{
-	name = "Experimentation Lab";
-	req_access_txt = "8"
-	},
 /obj/effect/turf_decal/tile/purple{
 	dir = 1
 	},
@@ -57224,6 +57220,10 @@
 	},
 /obj/structure/cable/yellow{
 	icon_state = "4-8"
+	},
+/obj/machinery/door/airlock/research{
+	name = "Experimentation Lab";
+	req_access_txt = "47"
 	},
 /turf/open/floor/plasteel/white,
 /area/science/explab)
@@ -58088,16 +58088,16 @@
 /turf/open/floor/plasteel/white,
 /area/security/checkpoint/science/research)
 "csc" = (
-/obj/machinery/door/airlock/maintenance{
-	name = "Research Maintenance";
-	req_one_access_txt = "7;47;29"
-	},
 /obj/machinery/door/poddoor/preopen{
 	id = "scienceLock";
 	name = "Biohazard Lockdown"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
+	},
+/obj/machinery/door/airlock/maintenance{
+	name = "Experimentation Lab Maintenance";
+	req_access_txt = "47"
 	},
 /turf/open/floor/plating,
 /area/maintenance/starboard)
@@ -58603,10 +58603,6 @@
 /area/crew_quarters/heads/cmo)
 "ctC" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/medical/glass{
-	name = "Medbay Storage";
-	req_access_txt = "45"
-	},
 /obj/structure/cable/yellow{
 	icon_state = "1-2"
 	},
@@ -58619,6 +58615,10 @@
 	},
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
+	},
+/obj/machinery/door/airlock/medical/glass{
+	name = "Medbay Storage";
+	req_access_txt = "5"
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/storage)
@@ -60017,6 +60017,11 @@
 /obj/item/radio/intercom{
 	pixel_y = 21
 	},
+/obj/structure/sink{
+	dir = 8;
+	pixel_x = -12;
+	pixel_y = 2
+	},
 /turf/open/floor/plasteel,
 /area/medical/medbay/central)
 "cxc" = (
@@ -60155,10 +60160,6 @@
 /area/medical/medbay/zone3)
 "cxu" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/medical/glass{
-	name = "Medbay Storage";
-	req_access_txt = "45"
-	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
@@ -60177,6 +60178,10 @@
 /obj/effect/turf_decal/tile/blue,
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
+	},
+/obj/machinery/door/airlock/medical/glass{
+	name = "Medbay Storage";
+	req_access_txt = "5"
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/storage)
@@ -61936,16 +61941,16 @@
 /area/medical/medbay/central)
 "cAY" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/medical/glass{
-	id_tag = "CloningDoor";
-	name = "Cloning Lab";
-	req_access_txt = "5; 68"
-	},
 /obj/effect/mapping_helpers/airlock/unres,
 /obj/structure/cable/yellow{
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/machinery/door/airlock/medical/glass{
+	id_tag = "GeneticsDoor";
+	name = "Genetics";
+	req_access_txt = "5; 68"
+	},
 /turf/open/floor/plasteel/dark,
 /area/medical/genetics/cloning)
 "cBb" = (
@@ -62469,6 +62474,12 @@
 /obj/item/flashlight/pen{
 	pixel_x = 4;
 	pixel_y = 3
+	},
+/obj/item/storage/pill_bottle/mannitol{
+	pixel_x = -10
+	},
+/obj/item/storage/pill_bottle/mutadone{
+	pixel_x = 9
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/genetics)
@@ -63279,6 +63290,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
+/obj/item/radio/headset/headset_medsci,
 /turf/open/floor/plasteel/white,
 /area/medical/genetics)
 "cDY" = (
@@ -63689,12 +63701,12 @@
 /area/medical/genetics/cloning)
 "cEQ" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/medical{
-	name = "Genetics Lab";
-	req_one_access_txt = "9"
-	},
 /obj/structure/cable/yellow{
 	icon_state = "4-8"
+	},
+/obj/machinery/door/airlock/research/glass{
+	name = "Genetics Research";
+	req_access_txt = "5; 9; 68"
 	},
 /turf/open/floor/plasteel/dark,
 /area/medical/genetics)
@@ -63728,15 +63740,15 @@
 /area/medical/genetics)
 "cEU" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/medical{
-	name = "Genetics Lab";
-	req_one_access_txt = "9"
-	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
+	},
+/obj/machinery/door/airlock/research/glass{
+	name = "Genetics Research";
+	req_access_txt = "5; 9; 68"
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/genetics)
@@ -63923,15 +63935,6 @@
 /obj/structure/disposalpipe/segment,
 /obj/structure/cable/yellow{
 	icon_state = "1-2"
-	},
-/obj/machinery/doorButtons/airlock_controller{
-	idExterior = "xeno_airlock_exterior";
-	idInterior = "xeno_airlock_interior";
-	idSelf = "xeno_airlock_control";
-	name = "Access Console";
-	pixel_x = -25;
-	pixel_y = 25;
-	req_access_txt = "55"
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 4
@@ -64523,7 +64526,6 @@
 	},
 /obj/item/reagent_containers/syringe/antiviral,
 /obj/item/reagent_containers/dropper,
-/obj/item/reagent_containers/spray/cleaner,
 /obj/structure/cable/yellow{
 	icon_state = "2-8"
 	},
@@ -65626,10 +65628,6 @@
 /area/maintenance/aft)
 "cJv" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/medical/glass{
-	name = "Chemistry Lab";
-	req_access_txt = "33"
-	},
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/effect/turf_decal/tile/yellow{
@@ -65641,6 +65639,10 @@
 	},
 /obj/effect/turf_decal/tile/yellow{
 	dir = 8
+	},
+/obj/machinery/door/airlock/medical/glass{
+	name = "Chemistry Lab";
+	req_access_txt = "5; 33"
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/chemistry)
@@ -67357,7 +67359,7 @@
 "cNq" = (
 /obj/machinery/door/airlock/research{
 	name = "Toxins Launch Room";
-	req_access_txt = "8"
+	req_access_txt = "7"
 	},
 /obj/machinery/door/firedoor,
 /obj/effect/turf_decal/delivery,
@@ -69254,13 +69256,13 @@
 /obj/structure/cable/yellow{
 	icon_state = "4-8"
 	},
-/obj/machinery/door/airlock/research/glass{
-	name = "Toxins Lab";
-	req_access_txt = "8"
-	},
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "toxinsLockdown";
 	name = "Emergency Shutters"
+	},
+/obj/machinery/door/airlock/research{
+	name = "Toxins Lab";
+	req_access_txt = "7"
 	},
 /turf/open/floor/plasteel,
 /area/science/mixing)
@@ -70452,15 +70454,15 @@
 /area/science/research)
 "dbt" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/research{
-	name = "Toxins Storage";
-	req_access_txt = "8"
-	},
 /obj/effect/turf_decal/delivery,
 /obj/structure/cable/yellow{
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/machinery/door/airlock/research{
+	name = "Toxins Storage";
+	req_access_txt = "8"
+	},
 /turf/open/floor/plasteel,
 /area/science/storage)
 "dbv" = (
@@ -73637,7 +73639,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/machinery/door/airlock/grunge{
 	name = "Morgue";
-	req_access_txt = "5"
+	req_access_txt = "6;5"
 	},
 /turf/open/floor/plasteel/dark,
 /area/medical/morgue)
@@ -74758,15 +74760,8 @@
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/zone3)
 "dJo" = (
-/obj/structure/disposalpipe/segment,
-/obj/structure/cable/yellow{
-	icon_state = "1-2"
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/machinery/door/airlock/maintenance{
-	req_one_access_txt = "12;5;39;25;28"
-	},
-/turf/open/floor/plating,
+/obj/machinery/vending/boozeomat,
+/turf/open/floor/wood,
 /area/maintenance/port/aft)
 "dLd" = (
 /obj/structure/cable/yellow{
@@ -75488,14 +75483,6 @@
 /turf/open/space/basic,
 /area/space/nearstation)
 "fZU" = (
-/obj/structure/sink{
-	dir = 8;
-	pixel_x = -12;
-	pixel_y = 2
-	},
-/obj/machinery/newscaster{
-	pixel_x = -32
-	},
 /turf/open/floor/plasteel/white/side{
 	dir = 4
 	},
@@ -76320,10 +76307,6 @@
 	icon_state = "platingdmg3"
 	},
 /area/maintenance/aft)
-"iFu" = (
-/obj/machinery/vending/boozeomat,
-/turf/open/floor/wood,
-/area/maintenance/port/aft)
 "iHc" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 6
@@ -78180,6 +78163,13 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
+"ndB" = (
+/obj/machinery/door/airlock/maintenance{
+	name = "Surgery Maintenance";
+	req_access_txt = "45"
+	},
+/turf/open/floor/plating,
+/area/maintenance/port/aft)
 "nhy" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/structure/disposalpipe/segment,
@@ -80145,6 +80135,9 @@
 /obj/structure/table,
 /obj/item/surgical_drapes,
 /obj/item/retractor,
+/obj/machinery/newscaster{
+	pixel_x = -32
+	},
 /turf/open/floor/plasteel,
 /area/medical/medbay/central)
 "svQ" = (
@@ -97273,7 +97266,7 @@ aaa
 ddx
 aaa
 dux
-iFu
+dJo
 fcy
 wiS
 qUn
@@ -99338,7 +99331,7 @@ qQK
 diJ
 fhz
 isQ
-dJo
+diJ
 kDx
 eYX
 dAx
@@ -99594,7 +99587,7 @@ dDw
 trM
 dDw
 dDw
-dDw
+ndB
 dDw
 dDw
 dDw
