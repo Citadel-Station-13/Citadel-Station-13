@@ -21,11 +21,6 @@
 		return 1
 
 /mob/living/carbon/Moved()
-	wrongdirmovedelay = FALSE
-	if((combat_flags & COMBAT_FLAG_COMBAT_ACTIVE) && client && lastmousedir)
-		if(lastmousedir != dir)
-			wrongdirmovedelay = TRUE
-			setDir(lastmousedir, ismousemovement = TRUE)
 	. = ..()
 	if(. && (movement_type & FLOATING)) //floating is easy
 		if(HAS_TRAIT(src, TRAIT_NOHUNGER))

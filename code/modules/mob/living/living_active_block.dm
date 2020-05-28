@@ -55,6 +55,8 @@
 	animate(src, pixel_x = get_standard_pixel_x_offset(), pixel_y = get_standard_pixel_y_offset(), time = 2.5, FALSE, SINE_EASING | EASE_IN)
 
 /mob/living/proc/continue_starting_active_block()
+	if(SEND_SIGNAL(src, COMSIG_COMBAT_MODE_CHECK, COMBAT_MODE_INACTIVE))
+		return DO_AFTER_STOP
 	return (active_block_starting != ACTIVE_BLOCK_STARTING_INTERRUPT)? DO_AFTER_CONTINUE : DO_AFTER_STOP
 
 /mob/living/get_standard_pixel_x_offset()
@@ -102,7 +104,7 @@
 	var/delay = data.block_start_delay
 	active_block_starting = TRUE
 	animate(src, pixel_x = get_standard_pixel_x_offset(), pixel_y = get_standard_pixel_y_offset(), time = delay, FALSE, SINE_EASING | EASE_IN)
-	if(!do_after_advanced(src, delay, src, DO_AFTER_REQUIRES_USER_ON_TURF|DO_AFTER_NO_COEFFICIENT|DO_AFTER_DISALLOW_ACTIVE_ITEM_CHANGE, CALLBACK(src, .proc/continue_starting_active_block), MOBILITY_USE, COMBAT_FLAG_COMBAT_ACTIVE, null, I))
+	if(!do_after_advanced(src, delay, src, DO_AFTER_REQUIRES_USER_ON_TURF|DO_AFTER_NO_COEFFICIENT|DO_AFTER_DISALLOW_ACTIVE_ITEM_CHANGE, CALLBACK(src, .proc/continue_starting_active_block), MOBILITY_USE, null, null, I))
 		to_chat(src, "<span class='warning'>You fail to raise [I].</span>")
 		active_block_starting = FALSE
 		animate(src, pixel_x = get_standard_pixel_x_offset(), pixel_y = get_standard_pixel_y_offset(), time = 2.5, FALSE, SINE_EASING | EASE_IN, ANIMATION_END_NOW)
