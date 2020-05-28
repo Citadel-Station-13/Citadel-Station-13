@@ -201,7 +201,7 @@
 	if(E == src)
 		return
 	// simple heuristic
-	if(length(pipes) < length(P.pipes))
+	if(!P.invalid && (length(pipes) < length(P.pipes)))
 		return P.merge(src)
 	breakdown_parent()
 	P.breakdown_parent()
