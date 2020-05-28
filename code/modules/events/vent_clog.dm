@@ -41,7 +41,7 @@
 		/datum/reagent/consumable/laughter,
 		/datum/reagent/concentrated_barbers_aid,
 		/datum/reagent/baldium,
-		/datum/reagent/colorful_reagent,
+//		/datum/reagent/colorful_reagent,
 		/datum/reagent/peaceborg_confuse,
 		/datum/reagent/peaceborg_tire,
 		/datum/reagent/consumable/sodiumchloride,
@@ -141,20 +141,20 @@
 	max_occurrences = 0
 
 /datum/round_event_control/vent_clog/female
-	name = "Clogged Vents; Girlcum"
-	typepath = /datum/round_event/vent_clog/female
+	name = "Clogged Vents:F"
+	typepath = /datum/round_event/vent_clog/beer
 	max_occurrences = 0
 
 /datum/round_event/vent_clog/female
-	reagentsAmount = 100
+	reagentsAmount = 0
 
 /datum/round_event_control/vent_clog/male
-	name = "Clogged Vents: Semen"
-	typepath = /datum/round_event/vent_clog/male
+	name = "Clogged Vents:M"
+	typepath = /datum/round_event/vent_clog/beer
 	max_occurrences = 0
 
 /datum/round_event/vent_clog/male
-	reagentsAmount = 100
+	reagentsAmount = 0
 
 /datum/round_event/vent_clog/beer/announce()
 	priority_announce("The scrubbers network is experiencing an unexpected surge of pressurized beer. Some ejection of contents may occur.", "Atmospherics alert")
