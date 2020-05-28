@@ -97,14 +97,6 @@
 	if(quirk_holder)
 		quirk_holder.remove_client_colour(/datum/client_colour/monochrome)
 
-/datum/quirk/maso
-	name = "Masochism"
-	desc = "You are aroused by pain."
-	value = 0
-	mob_trait = TRAIT_MASO
-	gain_text = "<span class='notice'>You desire to be hurt.</span>"
-	lose_text = "<span class='notice'>Pain has become less exciting for you.</span>"
-
 /datum/quirk/alcohol_intolerance
 	name = "Alcohol Intolerance"
 	desc = "You take toxin damage from alcohol rather than getting drunk."
