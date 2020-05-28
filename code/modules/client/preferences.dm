@@ -202,9 +202,9 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/vore_flags = 0
 	var/list/belly_prefs = list()
 	var/vore_taste = "nothing in particular"
-	var/toggleeatingnoise = TRUE
-	var/toggledigestionnoise = TRUE
-	var/hound_sleeper = TRUE
+	var/toggleeatingnoise = FALSE
+	var/toggledigestionnoise = FALSE
+	var/hound_sleeper = FALSE
 	var/cit_toggles = TOGGLES_CITADEL
 
 	//backgrounds
@@ -224,9 +224,9 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 	var/screenshake = 100
 	var/damagescreenshake = 2
-	var/arousable = TRUE
-	var/widescreenpref = TRUE
-	var/autostand = TRUE
+	var/arousable = FALSE
+	var/widescreenpref = FALSE
+	var/autostand = FALSE
 	var/auto_ooc = FALSE
 
 /datum/preferences/New(client/C)
