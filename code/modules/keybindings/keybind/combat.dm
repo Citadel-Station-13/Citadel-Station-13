@@ -5,12 +5,8 @@
 	category = CATEGORY_COMBAT
 	description = "Toggles whether or not you're in combat mode."
 
-/datum/keybinding/living/toggle_combat_mode/can_use(client/user)
-	return iscarbon(user.mob)		// for now, only carbons should be using combat mode, although all livings have combat mode implemented.
-
 /datum/keybinding/living/toggle_combat_mode/down(client/user)
-	var/mob/living/carbon/C = user.mob
-	C.user_toggle_intentional_combat_mode()
+	SEND_SIGNAL(user.mob, COMSIG_TOGGLE_COMBAT_MODE)
 	return TRUE
 
 /datum/keybinding/living/active_block

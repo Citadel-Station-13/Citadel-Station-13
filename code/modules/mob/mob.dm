@@ -128,15 +128,13 @@
   * * target (optional) is the other mob involved with the visible message. For example, the attacker in many combat messages.
   * * target_message (optional) is what the target mob will see e.g. "[src] does something to you!"
   */
-/atom/proc/visible_message(message, self_message, blind_message, vision_distance = DEFAULT_MESSAGE_RANGE, list/ignored_mobs, mob/target, target_message)
+/atom/proc/visible_message(message, self_message, blind_message, vision_distance = DEFAULT_MESSAGE_RANGE, ignored_mobs, mob/target, target_message)
 	var/turf/T = get_turf(src)
 	if(!T)
 		return
 	var/list/hearers = get_hearers_in_view(vision_distance, src) //caches the hearers and then removes ignored mobs.
 	if(!length(hearers))
 		return
-	if(!islist(ignored_mobs))
-		ignored_mobs = list(ignored_mobs)
 	hearers -= ignored_mobs
 
 	if(target_message && target && istype(target) && target.client)
@@ -150,7 +148,7 @@
 			msg = blind_message
 		if(msg)
 			target.show_message(msg, MSG_VISUAL,blind_message, MSG_AUDIBLE)
-	else if(self_message)
+	if(self_message)
 		hearers -= src
 	for(var/mob/M in hearers)
 		if(!M.client)
@@ -185,15 +183,13 @@ mob/visible_message(message, self_message, blind_message, vision_distance = DEFA
   * * hearing_distance (optional) is the range, how many tiles away the message can be heard.
   * * ignored_mobs (optional) doesn't show any message to any given mob in the list.
   */
-/atom/proc/audible_message(message, deaf_message, hearing_distance = DEFAULT_MESSAGE_RANGE, self_message, list/ignored_mobs)
+/atom/proc/audible_message(message, deaf_message, hearing_distance = DEFAULT_MESSAGE_RANGE, self_message, ignored_mobs)
 	var/turf/T = get_turf(src)
 	if(!T)
 		return
 	var/list/hearers = get_hearers_in_view(hearing_distance, src)
 	if(!length(hearers))
 		return
-	if(!islist(ignored_mobs))
-		ignored_mobs = list(ignored_mobs)
 	hearers -= ignored_mobs
 	if(self_message)
 		hearers -= src
@@ -377,7 +373,7 @@ mob/visible_message(message, self_message, blind_message, vision_distance = DEFA
 		return FALSE
 
 	new /obj/effect/temp_visual/point(A,invisibility)
-
+	SEND_SIGNAL(src, COMSIG_MOB_POINTED, A)
 	return TRUE
 
 /mob/proc/can_resist()
