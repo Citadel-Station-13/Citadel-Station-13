@@ -47,6 +47,8 @@
 	///Modifier that raises/lowers the effect of the amount of a material, prevents small and easy to get items from being death machines.
 	var/material_modifier = 1
 
+	var/datum/wires/wires = null
+
 	var/icon/blood_splatter_icon
 	var/list/fingerprints
 	var/list/fingerprintshidden
