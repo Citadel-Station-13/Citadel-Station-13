@@ -833,16 +833,16 @@
 	user.visible_message("[user] draws a card from the deck.", "<span class='notice'>You draw a card from the deck.</span>")
 	update_icon()
 
-
-/obj/item/toy/cards/deck/update_icon()
-	if(cards.len > original_size/2)
-		icon_state = "deck_[deckstyle]_full"
-	else if(cards.len > original_size/4)
-		icon_state = "deck_[deckstyle]_half"
-	else if(cards.len > 0)
-		icon_state = "deck_[deckstyle]_low"
-	else if(cards.len == 0)
-		icon_state = "deck_[deckstyle]_empty"
+/obj/item/toy/cards/deck/update_icon_state()
+	switch(cards.len)
+		if(INFINITY to original_size/2)
+			icon_state = "deck_[deckstyle]_full"
+		if(original_size/2 to  original_size/4)
+			icon_state = "deck_[deckstyle]_half"
+		if(original_size/4 to 1)
+			icon_state = "deck_[deckstyle]_low"
+		else
+			icon_state = "deck_[deckstyle]_empty"
 
 /obj/item/toy/cards/deck/attack_self(mob/user)
 	if(cooldown < world.time - 50)
