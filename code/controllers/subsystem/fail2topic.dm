@@ -87,9 +87,9 @@ SUBSYSTEM_DEF(fail2topic)
 	fail_counts -= ip
 	rate_limiting -= ip
 
-	if (world.system_type == UNIX)
+//	if (world.system_type == UNIX)
 //		. = shell("iptables -A [rule_name] -s [ip] -j DROP")
-	else
+//	else
 //		. = shell("netsh advfirewall firewall add rule name=\"[rule_name]\" dir=in interface=any action=block remoteip=[ip]")
 
 	if (.)
@@ -105,9 +105,9 @@ SUBSYSTEM_DEF(fail2topic)
 
 	active_bans = list()
 
-	if (world.system_type == UNIX)
+//	if (world.system_type == UNIX)
 //		. = shell("iptables -F [rule_name]") //Let's just assume that folks running linux are smart enough to have a dedicated chain configured for this.
-	else
+//	else
 //		. = shell("netsh advfirewall firewall delete rule name=\"[rule_name]\"")
 
 	if (.)
