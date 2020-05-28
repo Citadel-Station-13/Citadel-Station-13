@@ -16,7 +16,7 @@
   * - obj/item/tool - The tool we're using. See do_after flags for details.
   */
 #define INVOKE_CALLBACK cb_return = extra_checks?.Invoke(user, delay, target, world.time - starttime, do_after_flags, required_mobility_flags, required_combat_flags, mob_redirect, stage, initially_held_item, tool)
-#define CHECK_FLAG_FAILURE ((required_mobility_flags || required_combat_flags) && (!living_user || !CHECK_ALL_MOBILITY(living_user, required_mobility_flags) || !CHECK_MULTIPLE_BITFIELDS(living_user.combat_flags, required_combat_flags)))
+#define CHECK_FLAG_FAILURE ((required_mobility_flags || required_combat_flags) && (!living_user || (required_mobility_flags && !CHECK_ALL_MOBILITY(living_user, required_mobility_flags)) || (required_combat_flags && !CHECK_MULTIPLE_BITFIELDS(living_user.combat_flags, required_combat_flags))))
 #define TIMELEFT (world.time - starttime)
 /proc/do_after_advanced(atom/user, delay, atom/target, do_after_flags, datum/callback/extra_checks, required_mobility_flags, required_combat_flags, mob/living/mob_redirect, obj/item/tool)
 	// CHECK AND SET VARIABLES
