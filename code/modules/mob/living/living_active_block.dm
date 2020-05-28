@@ -1,14 +1,4 @@
 // Active directional block system. Shared code is in [living_blocking_parrying.dm]
-/mob/living
-	/// Whether or not the user is actively blocking.
-	var/active_blocking = FALSE
-	/// Whether or not we can actively block. Disabled by default since a lot of mobs do not support stamina damage. Imagine a dextrous guardian with a shield..
-	var/active_block_enabled = FALSE
-	/// Whether or not we are in the process of raising our shield/whatever.
-	var/active_block_starting = FALSE
-	/// The item the user is actively blocking with if any.
-	var/obj/item/active_block_item
-
 /mob/living/on_item_dropped(obj/item/I)
 	if(I == active_block_item)
 		stop_active_blocking()

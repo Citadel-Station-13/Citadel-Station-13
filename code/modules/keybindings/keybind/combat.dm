@@ -12,7 +12,7 @@
 /datum/keybinding/living/active_block
 	hotkey_keys = list("Northwest", "F") // HOME
 	name = "active_block"
-	full_name = "Block"
+	full_name = "Block (Hold)"
 	category = CATEGORY_COMBAT
 	description = "Hold down to actively block with your currently in-hand object."
 
