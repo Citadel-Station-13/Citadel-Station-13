@@ -165,7 +165,7 @@
 		multiplier = data.attack_type_list_scan(data.block_resting_stamina_penalty_multiplier_override, attack_type)
 		if(isnull(multiplier))
 			multiplier = data.block_resting_stamina_penalty_multiplier
-	return (damage_blocked / efficiency)
+	return (damage_blocked / efficiency) * multiplier
 
 /// Apply the stamina damage to our user, notice how damage argument is stamina_amount.
 /obj/item/proc/active_block_do_stamina_damage(mob/living/owner, atom/object, stamina_amount, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return)
