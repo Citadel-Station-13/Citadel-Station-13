@@ -104,7 +104,7 @@
 		using.screen_loc = ui_boxarea // CIT CHANGE
 	using.hud = src
 	static_inventory += using
-
+/*
 	using = new /obj/screen/voretoggle() //We fancy Vore now
 	using.icon = tg_ui_icon_to_cit_ui(ui_style)
 	using.screen_loc = ui_voremode
@@ -112,7 +112,7 @@
 		using.screen_loc = ui_boxvore
 	using.hud = src
 	static_inventory += using
-
+*/
 	action_intent = new /obj/screen/act_intent/segmented
 	action_intent.icon_state = mymob.a_intent
 	action_intent.hud = src
