@@ -1,6 +1,3 @@
-#define HOS_GUN list(/obj/item/gun/energy/e_gun/hos, /obj/item/gun/ballistic/revolver/mws)
-
-
 //Contains the target item datums for Steal objectives.
 
 /datum/objective_item
@@ -36,9 +33,10 @@
 
 /datum/objective_item/steal/hoslaser
 	name = "the head of security's personal laser gun."
-	targetitem = HOS_GUN
+	targetitem = /obj/item/gun/energy/e_gun/hos
 	difficulty = 10
 	excludefromjob = list("Head Of Security")
+	altitems = list(/obj/item/gun/ballistic/revolver/mws)
 
 /datum/objective_item/steal/handtele
 	name = "a hand teleporter."

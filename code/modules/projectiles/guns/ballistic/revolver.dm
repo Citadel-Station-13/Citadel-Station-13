@@ -372,3 +372,114 @@
 		user.emote("scream")
 		user.drop_all_held_items()
 		user.DefaultCombatKnockdown(80)
+
+// -------------- HoS Modular Weapon System -------------
+// ---------- Code originally from VoreStation ----------
+/obj/item/gun/ballistic/revolver/mws
+	name = "MWS-01 'Big Iron'"
+	desc = "Modular Weapons System"
+
+	icon = 'icons/obj/guns/projectile.dmi'
+	icon_state = "mws"
+
+	fire_sound = 'sound/weapons/Taser.ogg'
+
+	mag_type = /obj/item/ammo_box/magazine/mws_mag
+	spawnwithmagazine = FALSE
+
+	recoil = 0
+
+	var/charge_sections = 6
+
+/obj/item/gun/ballistic/revolver/mws/examine(mob/user)
+	. = ..()
+	. += "<span class='notice'>Alt-click to remove the magazine.</span>"
+
+/obj/item/gun/ballistic/revolver/mws/shoot_with_empty_chamber(mob/living/user as mob|obj)
+	process_chamber(user)
+	if(!chambered || !chambered.BB)
+		to_chat(user, "<span class='danger'>*click*</span>")
+		playsound(src, "gun_dry_fire", 30, 1)
+
+
+/obj/item/gun/ballistic/revolver/mws/process_chamber(mob/living/user)
+	if(chambered && !chambered.BB) //if BB is null, i.e the shot has been fired...
+		var/obj/item/ammo_casing/mws_batt/shot = chambered
+		if(shot.cell.charge >= shot.e_cost)
+			shot.chargeshot()
+		else
+			for(var/B in magazine.stored_ammo)
+				var/obj/item/ammo_casing/mws_batt/other_batt = B
+				if(istype(other_batt,shot) && other_batt.cell.charge >= other_batt.e_cost)
+					switch_to(other_batt, user)
+					break
+	update_icon()
+
+/obj/item/gun/ballistic/revolver/mws/proc/switch_to(obj/item/ammo_casing/mws_batt/new_batt, mob/living/user)
+	if(ishuman(user))
+		if(chambered && new_batt.type == chambered.type)
+			to_chat(user,"<span class='warning'>[src] is now using the next [new_batt.type_name] power cell.</span>")
+		else
+			to_chat(user,"<span class='warning'>[src] is now firing [new_batt.type_name].</span>")
+
+	chambered = new_batt
+	update_icon()
+
+/obj/item/gun/ballistic/revolver/mws/attack_self(mob/living/user)
+	if(!chambered)
+		return
+
+	var/list/stored_ammo = magazine.stored_ammo
+
+	if(stored_ammo.len == 1)
+		return //silly you.
+
+	//Find an ammotype that ISN'T the same, or exhaust the list and don't change.
+	var/our_slot = stored_ammo.Find(chambered)
+
+	for(var/index in 1 to stored_ammo.len)
+		var/true_index = ((our_slot + index - 1) % stored_ammo.len) + 1 // Stupid ONE BASED lists!
+		var/obj/item/ammo_casing/mws_batt/next_batt = stored_ammo[true_index]
+		if(chambered != next_batt && !istype(next_batt, chambered.type) && next_batt.cell.charge >= next_batt.e_cost)
+			switch_to(next_batt, user)
+			break
+
+/obj/item/gun/ballistic/revolver/mws/AltClick(mob/living/user)
+	.=..()
+	if(magazine)
+		user.put_in_hands(magazine)
+		magazine.update_icon()
+		if(magazine.ammo_count())
+			playsound(src, 'sound/weapons/gun_magazine_remove_full.ogg', 70, 1)
+		else
+			playsound(src, "gun_remove_empty_magazine", 70, 1)
+		magazine = null
+		to_chat(user, "<span class='notice'>You pull the magazine out of [src].</span>")
+		if(chambered)
+			chambered = null
+		update_icon()
+
+/obj/item/gun/ballistic/revolver/mws/update_overlays()
+	.=..()
+	if(!chambered)
+		return
+
+	var/obj/item/ammo_casing/mws_batt/batt = chambered
+	var/batt_color = batt.type_color //Used many times
+
+	//Mode bar
+	var/image/mode_bar = image(icon, icon_state = "[initial(icon_state)]_type")
+	mode_bar.color = batt_color
+	. += mode_bar
+
+	//Barrel color
+	var/mutable_appearance/barrel_color = mutable_appearance(icon, "[initial(icon_state)]_barrel", color = batt_color)
+	barrel_color.alpha = 150
+	. += barrel_color
+
+	//Charge bar
+	var/ratio = can_shoot() ? CEILING(clamp(batt.cell.charge / batt.cell.maxcharge, 0, 1) * charge_sections, 1) : 0
+	for(var/i = 0, i < ratio, i++)
+		var/mutable_appearance/charge_bar = mutable_appearance(icon,  "[initial(icon_state)]_charge", color = batt_color)
+		charge_bar.pixel_x = i
+		. += charge_bar
