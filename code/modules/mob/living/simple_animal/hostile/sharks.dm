@@ -12,9 +12,12 @@
 	speak_chance = 0
 	turns_per_move = 3
 	butcher_results = list(/obj/item/reagent_containers/food/snacks/carpmeat = 3)
-	response_help = "pets"
-	response_disarm = "gently pushes aside"
-	response_harm = "hits"
+	response_help_continuous = "pets"
+	response_help_simple = "pet"
+	response_disarm_continuous = "gently pushes aside"
+	response_disarm_simple = "gently push aside"
+	response_harm_continuous = "kicks"
+	response_harm_simple = "kick"
 	speed = 0
 	threat = 1
 	maxHealth = 75
@@ -22,7 +25,8 @@
 	harm_intent_damage = 18
 	melee_damage_lower = 18
 	melee_damage_upper = 18
-	attacktext = "maims"
+	attack_verb_continuous = "maims"
+	attack_verb_simple = "maim"
 	attack_sound = 'sound/weapons/bite.ogg'
 	gold_core_spawnable = 1
 	//Space shark aren't affected by cold.
@@ -82,7 +86,8 @@
 	harm_intent_damage = 0
 	melee_damage_lower = 0
 	melee_damage_upper = 0
-	attacktext = "violently hugs"
+	attack_verb_continuous = "violently hugs"
+	attack_verb_simple = "violently hug"
 	vision_range = 0
 
 /mob/living/simple_animal/hostile/shark/kawaii/death()

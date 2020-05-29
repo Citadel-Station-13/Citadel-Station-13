@@ -9,11 +9,13 @@ GLOBAL_LIST_EMPTY(potential_mods_per_skill)
 /datum/skill_modifier
 	/// flags for this skill modifier.
 	var/modifier_flags = NONE
-	/// target skills, can be a specific skill typepath or a set of skill flags.
-	var/target_skills = NONE
+	/// target skills, can be a specific skill typepath or a list of skill traits.
+	var/target_skills = /datum/skill
+	/// the GLOB.potential_skills_per_mod key generated on runtime. You shouldn't be var-editing it.
+	var/target_skills_key
 	/// The identifier key this skill modifier is associated with.
 	var/identifier
-	/// skill affinity modifier, can be a multiplier or addendum, depending on the modifier_flags flags.
+	/// skill affinity modifier, can be a multiplier or addendum, depending on the modifier_flags.
 	var/affinity_mod = 1
 	/// skill value modifier, see above.
 	var/value_mod = 1
@@ -38,34 +40,40 @@ GLOBAL_LIST_EMPTY(potential_mods_per_skill)
 		CRASH("Skill modifier identifier \"[identifier]\" already taken.")
 	GLOB.skill_modifiers[identifier] = src
 	if(ispath(target_skills))
+		target_skills_key = target_skills
 		var/list/mod_L = GLOB.potential_mods_per_skill[target_skills]
 		if(!mod_L)
 			mod_L = GLOB.potential_mods_per_skill[target_skills] = list()
 		else
 			BINARY_INSERT(identifier, mod_L, datum/skill_modifier, src, priority, COMPARE_VALUE)
 		mod_L[identifier] = src
-		GLOB.potential_skills_per_mod["[target_skills]"] = list(target_skills)
-	else //Should be a bitfield.
-		var/list/L = GLOB.potential_skills_per_mod["[target_skills]"]
+		GLOB.potential_skills_per_mod[target_skills_key] = list(target_skills)
+	else //Should be a list.
+		var/list/T = target_skills
+		T = sortTim(target_skills, /proc/cmp_text_asc) //Sort the list contents alphabetically.
+		target_skills_key = T.Join("-")
+		var/list/L = GLOB.potential_skills_per_mod[target_skills_key]
 		if(!L)
 			L = list()
 			for(var/path in GLOB.skill_datums)
-				if(GLOB.skill_datums[path].skill_flags & target_skills)
+				if(GLOB.skill_datums[path].skill_traits & target_skills)
 					L += path
-			GLOB.potential_skills_per_mod["[target_skills]"] = L
+			GLOB.potential_skills_per_mod[target_skills_key] = L
 		for(var/path in L)
 			var/list/mod_L = GLOB.potential_mods_per_skill[path]
 			if(!mod_L)
-				mod_L = GLOB.potential_mods_per_skill[target_skills] = list()
+				mod_L = GLOB.potential_mods_per_skill[path] = list()
 			else
 				BINARY_INSERT(identifier, mod_L, datum/skill_modifier, src, priority, COMPARE_VALUE)
 			mod_L[identifier] = src
 
 /datum/skill_modifier/Destroy()
-	for(var/A in GLOB.potential_skills_per_mod["[target_skills]"])
-		LAZYREMOVEASSOC(GLOB.potential_mods_per_skill, A, identifier)
-	GLOB.potential_skills_per_mod -= "[target_skills]"
-	GLOB.skill_modifiers -= src
+	for(var/path in GLOB.potential_skills_per_mod[target_skills_key])
+		var/mod_L = GLOB.potential_mods_per_skill[path]
+		mod_L -= identifier
+		if(!length(mod_L))
+			GLOB.potential_mods_per_skill -= path
+	GLOB.skill_modifiers -= identifier
 	return ..()
 
 #define ADD_MOD_STEP(L, P, O, G) \
@@ -94,7 +102,7 @@ GLOBAL_LIST_EMPTY(potential_mods_per_skill)
 		LAZYINITLIST(skill_holder.skill_affinity_mods)
 	if(M.modifier_flags & MODIFIER_SKILL_LEVEL)
 		LAZYINITLIST(skill_holder.skill_level_mods)
-	for(var/path in GLOB.potential_skills_per_mod["[M.target_skills]"])
+	for(var/path in GLOB.potential_skills_per_mod[M.target_skills_key])
 		if(M.modifier_flags & MODIFIER_SKILL_VALUE)
 			ADD_MOD_STEP(skill_holder.skill_value_mods, path, skill_holder.original_values, get_skill_value(path, FALSE))
 		if(M.modifier_flags & MODIFIER_SKILL_AFFINITY)
@@ -106,7 +114,7 @@ GLOBAL_LIST_EMPTY(potential_mods_per_skill)
 	if(M.modifier_flags & MODIFIER_SKILL_BODYBOUND)
 		M.RegisterSignal(src, COMSIG_MIND_TRANSFER, /datum/skill_modifier.proc/on_mind_transfer)
 		M.RegisterSignal(current, COMSIG_MOB_ON_NEW_MIND, /datum/skill_modifier.proc/on_mob_new_mind, TRUE)
-	RegisterSignal(M, COMSIG_PARENT_QDELETING, .proc/on_skill_modifier_deletion)
+	RegisterSignal(M, COMSIG_PARENT_PREQDELETED, .proc/on_skill_modifier_deletion)
 
 #undef ADD_MOD_STEP
 
@@ -125,19 +133,19 @@ GLOBAL_LIST_EMPTY(potential_mods_per_skill)
 
 	if(!skill_holder.skill_value_mods && !skill_holder.skill_affinity_mods && !skill_holder.skill_level_mods)
 		return
-	for(var/path in GLOB.potential_skills_per_mod["[M.target_skills]"])
+	for(var/path in GLOB.potential_skills_per_mod[M.target_skills_key])
 		if(M.modifier_flags & MODIFIER_SKILL_VALUE && skill_holder.skill_value_mods)
 			REMOVE_MOD_STEP(skill_holder.skill_value_mods, path, skill_holder.original_values)
-		if(M.modifier_flags & MODIFIER_SKILL_AFFINITY)
+		if(M.modifier_flags & MODIFIER_SKILL_AFFINITY && skill_holder.skill_affinity_mods)
 			REMOVE_MOD_STEP(skill_holder.skill_affinity_mods, path, skill_holder.original_affinities)
-		if(M.modifier_flags & MODIFIER_SKILL_LEVEL)
+		if(M.modifier_flags & MODIFIER_SKILL_LEVEL && skill_holder.skill_level_mods)
 			REMOVE_MOD_STEP(skill_holder.skill_level_mods, path, skill_holder.original_levels)
 	LAZYREMOVE(skill_holder.all_current_skill_modifiers, id)
 
 	if(!mind_transfer && M.modifier_flags & MODIFIER_SKILL_BODYBOUND)
 		M.UnregisterSignal(src, COMSIG_MIND_TRANSFER)
 		M.UnregisterSignal(current, list(COMSIG_MOB_ON_NEW_MIND))
-	UnregisterSignal(M, COMSIG_PARENT_QDELETING)
+	UnregisterSignal(M, COMSIG_PARENT_PREQDELETED)
 
 #undef REMOVE_MOD_STEP
 
@@ -152,6 +160,18 @@ GLOBAL_LIST_EMPTY(potential_mods_per_skill)
 			mod = level_mod
 		if(MODIFIER_TARGET_AFFINITY)
 			mod = affinity_mod
+
+	if(modifier_flags & MODIFIER_USE_THRESHOLDS && istext(mod))
+		var/datum/skill/S = GLOB.skill_datums[skillpath]
+		if(method == MODIFIER_TARGET_VALUE && S.progression_type == SKILL_PROGRESSION_LEVEL)
+			var/datum/skill/level/L = S
+			switch(L.level_up_method)
+				if(STANDARD_LEVEL_UP)
+					mod = XP_LEVEL(L.standard_xp_lvl_up, L.xp_lvl_multiplier, S.competency_thresholds[mod])
+				if(DWARFY_LEVEL_UP)
+					mod = DORF_XP_LEVEL(L.standard_xp_lvl_up, L.xp_lvl_multiplier, S.competency_thresholds[mod])
+		else
+			mod = S.competency_thresholds[mod]
 
 	var/diff = 0
 	if(modifier_flags & (MODIFIER_SKILL_VIRTUE|MODIFIER_SKILL_HANDICAP))

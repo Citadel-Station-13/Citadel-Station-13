@@ -5,6 +5,7 @@
 	clockwork_desc = "A sigil of some purpose."
 	icon_state = "sigil"
 	layer = LOW_OBJ_LAYER
+	plane = ABOVE_WALL_PLANE
 	alpha = 50
 	resistance_flags = NONE
 	var/affects_servants = FALSE

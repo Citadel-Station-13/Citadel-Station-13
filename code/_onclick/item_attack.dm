@@ -112,13 +112,13 @@
 
 /obj/attacked_by(obj/item/I, mob/living/user)
 	var/totitemdamage = I.force
-	var/bad_flag = NONE
-	if(!(user.combat_flags & COMBAT_FLAG_COMBAT_ACTIVE) && iscarbon(user))
+	var/bad_trait
+	if(!SEND_SIGNAL(user, COMSIG_COMBAT_MODE_CHECK, COMBAT_MODE_INACTIVE))
 		totitemdamage *= 0.5
-		bad_flag |= SKILL_COMBAT_MODE //blacklist combat skills.
+		bad_trait = SKILL_COMBAT_MODE //blacklist combat skills.
 	if(I.used_skills && user.mind)
 		if(totitemdamage)
-			totitemdamage = user.mind.item_action_skills_mod(I, totitemdamage, I.skill_difficulty, SKILL_ATTACK_OBJ, bad_flag)
+			totitemdamage = user.mind.item_action_skills_mod(I, totitemdamage, I.skill_difficulty, SKILL_ATTACK_OBJ, bad_trait)
 		for(var/skill in I.used_skills)
 			if(!(I.used_skills[skill] & SKILL_TRAIN_ATTACK_OBJ))
 				continue
@@ -154,25 +154,23 @@
 
 /mob/living/proc/pre_attacked_by(obj/item/I, mob/living/user)
 	. = I.force
-	var/bad_flag = NONE
-	if(!(user.combat_flags & COMBAT_FLAG_COMBAT_ACTIVE) && iscarbon(user))
+	var/bad_trait
+	if(SEND_SIGNAL(user, COMSIG_COMBAT_MODE_CHECK, COMBAT_MODE_INACTIVE))
 		. *= 0.5
-		bad_flag |= SKILL_COMBAT_MODE //blacklist combat skills.
+		bad_trait = SKILL_COMBAT_MODE //blacklist combat skills.
+	if(SEND_SIGNAL(src, COMSIG_COMBAT_MODE_CHECK, COMBAT_MODE_INACTIVE))
+		. *= 1.5
 	if(!CHECK_MOBILITY(user, MOBILITY_STAND))
 		. *= 0.5
 	if(!user.mind || !I.used_skills)
 		return
 	if(.)
-		. = user.mind.item_action_skills_mod(I, ., I.skill_difficulty, SKILL_ATTACK_MOB, bad_flag)
+		. = user.mind.item_action_skills_mod(I, ., I.skill_difficulty, SKILL_ATTACK_MOB, bad_trait)
 	for(var/skill in I.used_skills)
 		if(!(I.used_skills[skill] & SKILL_TRAIN_ATTACK_MOB))
 			continue
 		user.mind.auto_gain_experience(skill, I.skill_gain)
 
-/mob/living/carbon/pre_attacked_by(obj/item/I, mob/living/user)
-	. = ..()
-	if(!(combat_flags & COMBAT_FLAG_COMBAT_ACTIVE))
-		. *= 1.5
 
 // Proximity_flag is 1 if this afterattack was called on something adjacent, in your square, or on your person.
 // Click parameters is the params string from byond Click() code, see that documentation.
@@ -207,16 +205,16 @@
 	return 1
 
 /// How much stamina this takes to swing this is not for realism purposes hecc off.
-/obj/item/proc/getweight(mob/living/user, multiplier = 1, flags = SKILL_STAMINA_COST)
+/obj/item/proc/getweight(mob/living/user, multiplier = 1, trait = SKILL_STAMINA_COST)
 	. = (total_mass || w_class * STAM_COST_W_CLASS_MULT) * multiplier
 	if(!user)
 		return
-	var/bad_flag = NONE
-	if(iscarbon(user) && !(user.combat_flags & COMBAT_FLAG_COMBAT_ACTIVE))
+	var/bad_trait
+	if(SEND_SIGNAL(user, COMSIG_COMBAT_MODE_CHECK, COMBAT_MODE_INACTIVE))
 		. *= STAM_COST_NO_COMBAT_MULT
-		bad_flag |= SKILL_COMBAT_MODE
+		bad_trait = SKILL_COMBAT_MODE
 	if(used_skills && user.mind)
-		. = user.mind.item_action_skills_mod(src, ., skill_difficulty, flags, bad_flag, FALSE)
+		. = user.mind.item_action_skills_mod(src, ., skill_difficulty, trait, bad_trait, FALSE)
 
 /// How long this staggers for. 0 and negatives supported.
 /obj/item/proc/melee_stagger_duration(force_override)

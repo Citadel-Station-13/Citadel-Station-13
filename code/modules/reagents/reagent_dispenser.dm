@@ -120,9 +120,10 @@
 /obj/structure/reagent_dispensers/fueltank/fire_act(exposed_temperature, exposed_volume)
 	boom()
 
-/obj/structure/reagent_dispensers/fueltank/tesla_act()
+/obj/structure/reagent_dispensers/fueltank/zap_act(power, zap_flags, shocked_objects)
 	..() //extend the zap
-	boom()
+	if(ZAP_OBJ_DAMAGE & zap_flags)
+		boom()
 
 /obj/structure/reagent_dispensers/fueltank/bullet_act(obj/item/projectile/P)
 	. = ..()
@@ -239,12 +240,6 @@
 	desc = "A keg of pasteurised, homogenised, filtered and semi-skimmed space milk."
 	icon_state = "whitekeg"
 	reagent_id = /datum/reagent/consumable/milk
-
-/obj/structure/reagent_dispensers/keg/semen
-	name = "keg of semen"
-	desc = "Dear lord, where did this even come from?"
-	icon_state = "whitekeg"
-	reagent_id = /datum/reagent/consumable/semen
 
 /obj/structure/reagent_dispensers/keg/gargle
 	name = "keg of pan galactic gargleblaster"

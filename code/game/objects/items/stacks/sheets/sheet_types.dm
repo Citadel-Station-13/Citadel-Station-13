@@ -5,7 +5,6 @@
  * Wood
  * Bamboo
  * Cloth
- * Silk
  * Durathread
  * Cardboard
  * Runed Metal (cult)
@@ -63,7 +62,7 @@ GLOBAL_LIST_INIT(metal_recipes, list ( \
 	new/datum/stack_recipe("floor tile", /obj/item/stack/tile/plasteel, 1, 4, 20), \
 	new/datum/stack_recipe("metal rod", /obj/item/stack/rods, 1, 2, 60), \
 	null, \
-	new/datum/stack_recipe("wall girders", /obj/structure/girder, 2, time = 40, one_per_turf = TRUE, on_floor = TRUE), \
+	new/datum/stack_recipe("wall girders", /obj/structure/girder, 2, time = 40, one_per_turf = TRUE, on_floor = TRUE, trait_booster = TRAIT_QUICK_BUILD, trait_modifier = 0.75), \
 	null, \
 	new/datum/stack_recipe("computer frame", /obj/structure/frame/computer, 5, time = 25, one_per_turf = TRUE, on_floor = TRUE), \
 	new/datum/stack_recipe("modular console", /obj/machinery/modular_computer/console/buildable/, 10, time = 25, one_per_turf = TRUE, on_floor = TRUE), \
@@ -241,6 +240,7 @@ GLOBAL_LIST_INIT(wood_recipes, list ( \
 		new /datum/stack_recipe("pew (right)", /obj/structure/chair/pew/right, 3, one_per_turf = TRUE, on_floor = TRUE),\
 		)),
 	null, \
+	new/datum/stack_recipe("wooden firearm body", /obj/item/weaponcrafting/improvised_parts/wooden_body, 10, time = 40), \
 	new/datum/stack_recipe("rifle stock", /obj/item/weaponcrafting/stock, 10, time = 40), \
 	new/datum/stack_recipe("rolling pin", /obj/item/kitchen/rollingpin, 2, time = 30), \
 	new/datum/stack_recipe("wooden bucket", /obj/item/reagent_containers/glass/bucket/wood, 2, time = 30), \
@@ -268,6 +268,7 @@ GLOBAL_LIST_INIT(wood_recipes, list ( \
 	new/datum/stack_recipe("apiary", /obj/structure/beebox, 40, time = 50),\
 	null, \
 	new/datum/stack_recipe("picture frame", /obj/item/wallframe/picture, 1, time = 10),\
+	new/datum/stack_recipe("painting frame", /obj/item/wallframe/painting, 1, time = 10),\
 	new/datum/stack_recipe("mortar", /obj/item/reagent_containers/glass/mortar, 3), \
 	new/datum/stack_recipe("honey frame", /obj/item/honey_frame, 5, time = 10),\
 	))
@@ -279,11 +280,13 @@ GLOBAL_LIST_INIT(wood_recipes, list ( \
 	icon_state = "sheet-wood"
 	item_state = "sheet-wood"
 	icon = 'icons/obj/stack_objects.dmi'
+	custom_materials = list(/datum/material/wood=MINERAL_MATERIAL_AMOUNT)
 	sheettype = "wood"
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 0)
 	resistance_flags = FLAMMABLE
 	merge_type = /obj/item/stack/sheet/mineral/wood
 	novariants = TRUE
+	material_type = /datum/material/wood
 	grind_results = list(/datum/reagent/carbon = 20)
 
 /obj/item/stack/sheet/mineral/wood/attackby(obj/item/W, mob/user, params) // NOTE: sheet_types.dm is where the WOOD stack lives. Maybe move this over there.
@@ -388,6 +391,9 @@ GLOBAL_LIST_INIT(cloth_recipes, list ( \
 	null, \
 	new/datum/stack_recipe("blindfold", /obj/item/clothing/glasses/sunglasses/blindfold, 2), \
 	null, \
+	new/datum/stack_recipe("19x19 canvas", /obj/item/canvas/nineteenXnineteen, 3), \
+	new/datum/stack_recipe("23x19 canvas", /obj/item/canvas/twentythreeXnineteen, 4), \
+	new/datum/stack_recipe("23x23 canvas", /obj/item/canvas/twentythreeXtwentythree, 5), \
 	))
 
 /obj/item/stack/sheet/cloth
@@ -399,9 +405,6 @@ GLOBAL_LIST_INIT(cloth_recipes, list ( \
 	resistance_flags = FLAMMABLE
 	force = 0
 	throwforce = 0
-	pull_effort = 90
-	is_fabric = TRUE
-	loom_result = /obj/item/stack/sheet/silk
 	merge_type = /obj/item/stack/sheet/cloth
 
 /obj/item/stack/sheet/cloth/get_main_recipes()
@@ -415,30 +418,6 @@ GLOBAL_LIST_INIT(cloth_recipes, list ( \
 	amount = 30
 
 /*
- * Silk
- */
-
-	GLOBAL_LIST_INIT(silk_recipes, list ( \
-	new/datum/stack_recipe("white jumpsuit", /obj/item/clothing/under/color/white, 4, time = 40), \
-	new/datum/stack_recipe("white gloves", /obj/item/clothing/gloves/color/white, 2, time = 40), \
-	null, \
-	new/datum/stack_recipe("silk string", /obj/item/weaponcrafting/silkstring, 1, time = 40), \
-	))
-
-/obj/item/stack/sheet/silk
-	name = "silk"
-	desc = "A long, soft material. Made out of refined cotton, instead of relying on the habits of spiders or silkworms."
-	singular_name = "silk sheet"
-	icon_state = "sheet-silk"
-	item_state = "sheet-cloth"
-	novariants = TRUE
-	merge_type = /obj/item/stack/sheet/silk
-
-/obj/item/stack/sheet/silk/get_main_recipes()
-	. = ..()
-	. += GLOB.silk_recipes
-
-/*
  * Durathread
  */
 GLOBAL_LIST_INIT(durathread_recipes, list ( \
@@ -446,6 +425,7 @@ GLOBAL_LIST_INIT(durathread_recipes, list ( \
 	new/datum/stack_recipe("durathread beret", /obj/item/clothing/head/beret/durathread, 2, time = 40), \
 	new/datum/stack_recipe("durathread beanie", /obj/item/clothing/head/beanie/durathread, 2, time = 40), \
 	new/datum/stack_recipe("durathread bandana", /obj/item/clothing/mask/bandana/durathread, 1, time = 25), \
+	new/datum/stack_recipe("durathread string", /obj/item/weaponcrafting/durathread_string, 1, time = 40), \
 	))
 
 /obj/item/stack/sheet/durathread
@@ -837,13 +817,12 @@ new /datum/stack_recipe("paper frame door", /obj/structure/mineral_door/paperfra
 	max_amount = 80
 	singular_name = "raw cotton ball"
 	icon_state = "sheet-cotton"
-	is_fabric = TRUE
 	resistance_flags = FLAMMABLE
 	force = 0
 	throwforce = 0
 	merge_type = /obj/item/stack/sheet/cotton
-	pull_effort = 30
-	loom_result = /obj/item/stack/sheet/cloth
+	var/pull_effort = 30
+	var/loom_result = /obj/item/stack/sheet/cloth
 
 /obj/item/stack/sheet/cotton/ten
 	amount = 10

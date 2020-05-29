@@ -237,7 +237,7 @@
 	if(!M.client)
 		return TRUE
 	UnregisterSignal(M, COMSIG_MOB_CLIENT_LOGOUT)
-	M.client.screen -= list(ui_boxes, ui_close, ui_left, ui_continuous) + get_ui_item_objects_hide()
+	M.client.screen -= list(ui_boxes, ui_close, ui_left, ui_continuous) + get_ui_item_objects_hide(M)
 	if(M.active_storage == src)
 		M.active_storage = null
 	LAZYREMOVE(is_using, M)
@@ -253,8 +253,8 @@
 /**
   * Gets the ui item objects to ui_hide.
   */
-/datum/component/storage/proc/get_ui_item_objects_hide()
-	if(!volumetric_ui())
+/datum/component/storage/proc/get_ui_item_objects_hide(mob/M)
+	if(!volumetric_ui() || M.client?.prefs?.no_tetris_storage)
 		var/atom/real_location = real_location()
 		return real_location.contents
 	else

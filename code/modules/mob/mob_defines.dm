@@ -12,6 +12,9 @@
 
 	vis_flags = VIS_INHERIT_PLANE //when this be added to vis_contents of something it inherit something.plane, important for visualisation of mob in openspace.
 
+	/// What receives our keyboard input. src by default.
+	var/datum/focus
+
 	var/lighting_alpha = LIGHTING_PLANE_ALPHA_VISIBLE
 	var/datum/mind/mind
 	var/list/datum/action/actions = list()
@@ -123,6 +126,13 @@
 	var/datum/click_intercept
 
 	var/registered_z
+
+	var/list/alerts = list() // contains /obj/screen/alert only // On /mob so clientless mobs will throw alerts properly
+	var/list/screens = list()
+	var/list/client_colours = list()
+	var/hud_type = /datum/hud
+
+	var/datum/hSB/sandbox = null
 
 	var/mob/audiovisual_redirect //Mob to redirect messages, speech, and sounds to
 

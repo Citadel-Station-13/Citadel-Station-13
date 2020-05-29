@@ -2,14 +2,14 @@
 #define SLIGHT_INSANITY_PEN 1
 #define MINOR_INSANITY_PEN 5
 #define MAJOR_INSANITY_PEN 10
-#define MOOD_INSANITY_MALUS 0.0054 // per point of sanity below SANITY_DISTURBED, a 40% debuff to skills at rock bottom depression.
+#define MOOD_INSANITY_MALUS 0.13 // 13% debuff per sanity_level above the default of 4 (higher is worser), overall a 39% debuff to skills at rock bottom depression.
 
 /datum/component/mood
 	var/mood //Real happiness
 	var/sanity = 100 //Current sanity
 	var/shown_mood //Shown happiness, this is what others can see when they try to examine you, prevents antag checking by noticing traitors are always very happy.
 	var/mood_level = 5 //To track what stage of moodies they're on
-	var/sanity_level = 5 //To track what stage of sanity they're on
+	var/sanity_level = 3 //To track what stage of sanity they're on
 	var/mood_modifier = 1 //Modifier to allow certain mobs to be less affected by moodlets
 	var/list/datum/mood_event/mood_events = list()
 	var/insanity_effect = 0 //is the owner being punished for low mood? If so, how much?
@@ -17,7 +17,7 @@
 	var/datum/skill_modifier/bad_mood/malus
 	var/datum/skill_modifier/great_mood/bonus
 	var/static/malus_id = 0
-	var/static/bonus_id = 0
+	var/static/list/free_maluses = list()
 
 /datum/component/mood/Initialize()
 	if(!isliving(parent))
@@ -182,6 +182,7 @@
 	else
 		sanity = amount
 
+	var/old_sanity_level = sanity_level
 	switch(sanity)
 		if(-INFINITY to SANITY_CRAZY)
 			setInsanityEffect(MAJOR_INSANITY_PEN)
@@ -208,6 +209,26 @@
 			master.remove_movespeed_modifier(MOVESPEED_ID_SANITY)
 			sanity_level = 1
 
+	if(sanity_level != old_sanity_level)
+		if(sanity_level >= 4)
+			if(!malus)
+				if(!length(free_maluses))
+					ADD_SKILL_MODIFIER_BODY(/datum/skill_modifier/bad_mood, malus_id++, master, malus)
+				else
+					malus = pick_n_take(free_maluses)
+					if(master.mind)
+						master.mind.add_skill_modifier(malus.identifier)
+					else
+						malus.RegisterSignal(master, COMSIG_MOB_ON_NEW_MIND, /datum/skill_modifier.proc/on_mob_new_mind, TRUE)
+			malus.value_mod = malus.level_mod = 1 - (sanity_level - 3) * MOOD_INSANITY_MALUS
+		else if(malus)
+			if(master.mind)
+				master.mind.remove_skill_modifier(malus.identifier)
+			else
+				malus.UnregisterSignal(master, COMSIG_MOB_ON_NEW_MIND)
+			free_maluses += malus
+			malus = null
+
 	//update_mood_icon()
 
 /datum/component/mood/proc/setInsanityEffect(newval)//More code so that the previous proc works
@@ -215,21 +236,11 @@
 		return
 
 	var/mob/living/L = parent
-	var/apply_malus = newval >= SLIGHT_INSANITY_PEN
-	var/apply_bonus = !apply_malus && newval <= ECSTATIC_SANITY_PEN
-	if(apply_malus)
-		if(!malus)
-			ADD_SKILL_MODIFIER_BODY(/datum/skill_modifier/bad_mood, malus_id++, L, malus)
-		var/debuff = 1 - (SANITY_DISTURBED - sanity) * MOOD_INSANITY_MALUS
-		malus.value_mod = malus.level_mod = debuff
-	else if(malus)
-		QDEL_NULL(malus)
-
-	if(apply_bonus)
-		if(!bonus)
-			ADD_SKILL_MODIFIER_BODY(/datum/skill_modifier/great_mood, bonus_id++, L, bonus)
+	if(newval == ECSTATIC_SANITY_PEN && !bonus)
+		ADD_SKILL_MODIFIER_BODY(/datum/skill_modifier/great_mood, null, L, bonus)
 	else if(bonus)
-		QDEL_NULL(bonus)
+		REMOVE_SKILL_MODIFIER_BODY(/datum/skill_modifier/great_mood, null, L)
+		bonus = null
 
 	insanity_effect = newval
 
@@ -307,6 +318,28 @@
 			add_event(null, "nutrition", /datum/mood_event/hungry)
 		if(0 to NUTRITION_LEVEL_STARVING)
 			add_event(null, "nutrition", /datum/mood_event/starving)
+
+/datum/component/mood/proc/update_beauty(area/A)
+	if(A.outdoors) //if we're outside, we don't care.
+		clear_event(null, "area_beauty")
+		return FALSE
+	if(HAS_TRAIT(parent, TRAIT_SNOB))
+		switch(A.beauty)
+			if(-INFINITY to BEAUTY_LEVEL_HORRID)
+				add_event(null, "area_beauty", /datum/mood_event/horridroom)
+				return
+			if(BEAUTY_LEVEL_HORRID to BEAUTY_LEVEL_BAD)
+				add_event(null, "area_beauty", /datum/mood_event/badroom)
+				return
+	switch(A.beauty)
+		if(-INFINITY to BEAUTY_LEVEL_DECENT)
+			clear_event(null, "area_beauty")
+		if(BEAUTY_LEVEL_DECENT to BEAUTY_LEVEL_GOOD)
+			add_event(null, "area_beauty", /datum/mood_event/decentroom)
+		if(BEAUTY_LEVEL_GOOD to BEAUTY_LEVEL_GREAT)
+			add_event(null, "area_beauty", /datum/mood_event/goodroom)
+		if(BEAUTY_LEVEL_GREAT to INFINITY)
+			add_event(null, "area_beauty", /datum/mood_event/greatroom)
 
 ///Called when parent is revived.
 /datum/component/mood/proc/on_revive(datum/source, full_heal)
