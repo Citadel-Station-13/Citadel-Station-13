@@ -39,14 +39,14 @@
 	time = 10
 	reqs = list(/obj/item/paper = 20)
 	category = CAT_CLOTHING
-	
+
 /datum/crafting_recipe/armwraps
 	name = "Armwraps"
 	result = /obj/item/clothing/gloves/fingerless/pugilist
 	time = 60
 	tools = list(TOOL_WIRECUTTER)
 	reqs = list(/obj/item/stack/sheet/cloth = 4,
-				/obj/item/stack/sheet/silk = 2,
+				/obj/item/stack/sheet/durathread = 2,
 				/obj/item/stack/sheet/leather = 2)
 	category = CAT_CLOTHING
 

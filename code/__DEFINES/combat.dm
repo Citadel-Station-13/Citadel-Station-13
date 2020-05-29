@@ -29,34 +29,27 @@
 #define EFFECT_DROWSY		"drowsy"
 #define EFFECT_JITTER		"jitter"
 
-// /mob/living/combat_flags
-#define CAN_TOGGLE_COMBAT_MODE(mob)			FORCE_BOOLEAN((mob.stat == CONSCIOUS) && !(mob.combat_flags & COMBAT_FLAG_HARD_STAMCRIT))
-
-/// Default combat flags for those affected by ((stamina combat))
+/// Default combat flags for those affected by sprinting (combat mode has been made into its own component)
 #define COMBAT_FLAGS_DEFAULT					NONE
-/// Default combat flags for everyone else (so literally everyone but humans)
-#define COMBAT_FLAGS_STAMSYSTEM_EXEMPT			(COMBAT_FLAG_SPRINT_ACTIVE | COMBAT_FLAG_COMBAT_ACTIVE | COMBAT_FLAG_SPRINT_TOGGLED | COMBAT_FLAG_COMBAT_TOGGLED)
-/// Default combat flags for those only affected by sprint (so just silicons)
-#define COMBAT_FLAGS_STAMEXEMPT_YESSPRINT		(COMBAT_FLAG_COMBAT_ACTIVE | COMBAT_FLAG_COMBAT_TOGGLED)
+/// Default combat flags for everyone else (so literally everyone but humans).
+#define COMBAT_FLAGS_SPRINT_EXEMPT			(COMBAT_FLAG_SPRINT_ACTIVE | COMBAT_FLAG_SPRINT_TOGGLED | COMBAT_FLAG_SPRINT_FORCED)
 
-/// The user wants combat mode on
-#define COMBAT_FLAG_COMBAT_TOGGLED			(1<<0)
 /// The user wants sprint mode on
-#define COMBAT_FLAG_SPRINT_TOGGLED			(1<<1)
-/// Combat mode is currently active
-#define COMBAT_FLAG_COMBAT_ACTIVE			(1<<2)
+#define COMBAT_FLAG_SPRINT_TOGGLED			(1<<0)
 /// Sprint is currently active
-#define COMBAT_FLAG_SPRINT_ACTIVE			(1<<3)
+#define COMBAT_FLAG_SPRINT_ACTIVE			(1<<1)
 /// Currently attempting to crawl under someone
-#define COMBAT_FLAG_ATTEMPTING_CRAWL		(1<<4)
+#define COMBAT_FLAG_ATTEMPTING_CRAWL		(1<<2)
 /// Currently stamcritted
-#define COMBAT_FLAG_HARD_STAMCRIT			(1<<5)
+#define COMBAT_FLAG_HARD_STAMCRIT			(1<<3)
 /// Currently attempting to resist up from the ground
-#define COMBAT_FLAG_RESISTING_REST			(1<<6)
+#define COMBAT_FLAG_RESISTING_REST			(1<<4)
 /// Intentionally resting
-#define COMBAT_FLAG_INTENTIONALLY_RESTING	(1<<7)
+#define COMBAT_FLAG_INTENTIONALLY_RESTING	(1<<5)
 /// Currently stamcritted but not as violently
-#define COMBAT_FLAG_SOFT_STAMCRIT			(1<<8)
+#define COMBAT_FLAG_SOFT_STAMCRIT			(1<<6)
+/// Force sprint mode on at all times, overrides everything including sprint disable traits.
+#define COMBAT_FLAG_SPRINT_FORCED			(1<<7)
 
 // Helpers for getting someone's stamcrit state. Cast to living.
 #define NOT_STAMCRIT 0
@@ -263,7 +256,17 @@ GLOBAL_LIST_INIT(shove_disarming_types, typecacheof(list(
 #define BULLET_ACT_FORCE_PIERCE		"PIERCE"	//It pierces through the object regardless of the bullet being piercing by default.
 #define BULLET_ACT_TURF				"TURF"		//It hit us but it should hit something on the same turf too. Usually used for turfs.
 
-/// Bitflags for check_block() and handle_block(). Meant to be combined. You can be hit and still reflect, for example, if you do not use BLOCK_SUCCESS.
+/// Check whether or not we can block, without "triggering" a block. Basically run checks without effects like depleting shields.
+/// Wrapper for do_run_block(). The arguments on that means the same as for this.
+#define mob_check_block(object, damage, attack_text, attack_type, armour_penetration, attacker, def_zone, return_list)\
+	do_run_block(FALSE, object, damage, attack_text, attack_type, armour_penetration, attacker, check_zone(def_zone), return_list)
+
+/// Runs a block "sequence", effectively checking and then doing effects if necessary.
+/// Wrapper for do_run_block(). The arguments on that means the same as for this.
+#define mob_run_block(object, damage, attack_text, attack_type, armour_penetration, attacker, def_zone, return_list)\
+	do_run_block(TRUE, object, damage, attack_text, attack_type, armour_penetration, attacker, check_zone(def_zone), return_list)
+
+/// Bitflags for check_block() and run_block(). Meant to be combined. You can be hit and still reflect, for example, if you do not use BLOCK_SUCCESS.
 /// Attack was not blocked
 #define BLOCK_NONE						NONE
 /// Attack was blocked, do not do damage. THIS FLAG MUST BE THERE FOR DAMAGE/EFFECT PREVENTION!

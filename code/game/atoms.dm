@@ -32,6 +32,9 @@
 
 	var/list/filter_data //For handling persistent filters
 
+	var/custom_price
+	var/custom_premium_price
+
 	var/datum/component/orbiter/orbiters
 
 	var/rad_flags = NONE // Will move to flags_1 when i can be arsed to
@@ -43,6 +46,8 @@
 	var/material_flags = NONE
 	///Modifier that raises/lowers the effect of the amount of a material, prevents small and easy to get items from being death machines.
 	var/material_modifier = 1
+
+	var/datum/wires/wires = null
 
 	var/icon/blood_splatter_icon
 	var/list/fingerprints
@@ -310,10 +315,11 @@
 		. += desc
 
 	if(custom_materials)
+		var/list/materials_list = list()
 		for(var/i in custom_materials)
 			var/datum/material/M = i
-			. += "<u>It is made out of [M.name]</u>."
-
+			materials_list += "[M.name]"
+		. += "<u>It is made out of [english_list(materials_list)]</u>."
 	if(reagents)
 		if(reagents.reagents_holder_flags & TRANSPARENT)
 			. += "It contains:"
@@ -577,6 +583,14 @@
 /atom/proc/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, passed_mode)
 	SEND_SIGNAL(src, COMSIG_ATOM_RCD_ACT, user, the_rcd, passed_mode)
 	return FALSE
+
+/**
+  * Respond to a electric bolt action on our item
+  *
+  * Default behaviour is to return, we define here to allow for cleaner code later on
+  */
+/atom/proc/zap_act(power, zap_flags, shocked_targets)
+	return
 
 /atom/proc/storage_contents_dump_act(obj/item/storage/src_object, mob/user)
 	if(GetComponent(/datum/component/storage))
@@ -924,14 +938,14 @@ Proc for attack log creation, because really why not
 		target.log_message(reverse_message, LOG_ATTACK, color="orange", log_globally=FALSE)
 
 // Filter stuff
-/atom/movable/proc/add_filter(name,priority,list/params)
+/atom/proc/add_filter(name,priority,list/params)
 	LAZYINITLIST(filter_data)
 	var/list/p = params.Copy()
 	p["priority"] = priority
 	filter_data[name] = p
 	update_filters()
 
-/atom/movable/proc/update_filters()
+/atom/proc/update_filters()
 	filters = null
 	filter_data = sortTim(filter_data, /proc/cmp_filter_data_priority, TRUE)
 	for(var/f in filter_data)
@@ -940,11 +954,11 @@ Proc for attack log creation, because really why not
 		arguments -= "priority"
 		filters += filter(arglist(arguments))
 
-/atom/movable/proc/get_filter(name)
+/atom/proc/get_filter(name)
 	if(filter_data && filter_data[name])
 		return filters[filter_data.Find(name)]
 
-/atom/movable/proc/remove_filter(name)
+/atom/proc/remove_filter(name)
 	if(filter_data && filter_data[name])
 		filter_data -= name
 		update_filters()

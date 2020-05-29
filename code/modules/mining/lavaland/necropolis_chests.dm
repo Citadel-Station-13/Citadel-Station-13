@@ -39,7 +39,7 @@
 		if(11)
 			new /obj/item/ship_in_a_bottle(src)
 		if(12)
-			new /obj/item/clothing/suit/space/hardsuit/ert/paranormal/beserker(src)
+			new /obj/item/clothing/suit/space/hardsuit/ert/paranormal/beserker/old(src)
 		if(13)
 			new /obj/item/jacobs_ladder(src)
 		if(14)
@@ -67,7 +67,7 @@
 			new /obj/item/grenade/clusterbuster/inferno(src)
 		if(24)
 			new /obj/item/reagent_containers/food/drinks/bottle/holywater/hell(src)
-			new /obj/item/clothing/suit/space/hardsuit/ert/paranormal/inquisitor(src)
+			new /obj/item/clothing/suit/space/hardsuit/ert/paranormal/inquisitor/old(src)
 		if(25)
 			new /obj/item/book/granter/spell/summonitem(src)
 		if(26)
@@ -564,7 +564,7 @@
 
 /obj/item/book_of_babel/attack_self(mob/user)
 	to_chat(user, "You flip through the pages of the book, quickly and conveniently learning every language in existence. Somewhat less conveniently, the aging book crumbles to dust in the process. Whoops.")
-	user.grant_all_languages(omnitongue=TRUE)
+	user.grant_all_languages()
 	new /obj/effect/decal/cleanable/ash(get_turf(user))
 	qdel(src)
 

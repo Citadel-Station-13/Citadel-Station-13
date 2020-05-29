@@ -30,9 +30,12 @@
 	turns_per_move = 5
 	see_in_dark = 10
 	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab/spider = 2, /obj/item/reagent_containers/food/snacks/spiderleg = 8)
-	response_help  = "pets"
-	response_disarm = "gently pushes aside"
-	response_harm   = "hits"
+	response_help_continuous = "pets"
+	response_help_simple = "pet"
+	response_disarm_continuous = "gently pushes aside"
+	response_disarm_simple = "gently push aside"
+	response_harm_continuous = "kicks"
+	response_harm_simple = "kick"
 	maxHealth = 200
 	health = 200
 	obj_damage = 60
@@ -43,17 +46,18 @@
 	pass_flags = PASSTABLE
 	move_to_delay = 6
 	ventcrawler = VENTCRAWLER_ALWAYS
-	attacktext = "bites"
+	attack_verb_continuous = "bites"
+	attack_verb_simple = "bite"
 	attack_sound = 'sound/weapons/bite.ogg'
 	unique_name = 1
 	gold_core_spawnable = HOSTILE_SPAWN
 	see_in_dark = 4
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
+	footstep_type = FOOTSTEP_MOB_CLAW
+	has_field_of_vision = FALSE // 360° vision.
 	var/playable_spider = FALSE
 	var/datum/action/innate/spider/lay_web/lay_web
 	var/directive = "" //Message passed down to children, to relay the creator's orders
-
-	do_footstep = TRUE
 
 /mob/living/simple_animal/hostile/poison/giant_spider/Initialize()
 	. = ..()

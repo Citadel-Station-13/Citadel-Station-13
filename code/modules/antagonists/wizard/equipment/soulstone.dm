@@ -233,7 +233,7 @@
 	newstruct.cancel_camera()
 
 
-/obj/item/soulstone/proc/init_shade(mob/living/carbon/human/T, mob/U, vic = 0)
+/obj/item/soulstone/proc/init_shade(mob/living/carbon/human/T, mob/user, vic = 0)
 	new /obj/effect/decal/remains/human(T.loc) //Spawns a skeleton
 	T.stop_sound_channel(CHANNEL_HEARTBEAT)
 	T.invisibility = INVISIBILITY_ABSTRACT
@@ -245,20 +245,23 @@
 	S.name = "Shade of [T.real_name]"
 	S.real_name = "Shade of [T.real_name]"
 	T.transfer_ckey(S)
-	S.language_holder = U.language_holder.copy(S)
-	if(U)
-		S.faction |= "[REF(U)]" //Add the master as a faction, allowing inter-mob cooperation
-	if(U && iscultist(U))
+	S.copy_languages(T, LANGUAGE_MIND)//Copies the old mobs languages into the new mob holder.
+	S.copy_languages(user, LANGUAGE_MASTER)
+	S.update_atom_languages()
+	grant_all_languages(FALSE, FALSE, TRUE)	//Grants omnitongue
+	if(user)
+		S.faction |= "[REF(user)]" //Add the master as a faction, allowing inter-mob cooperation
+	if(user && iscultist(user))
 		SSticker.mode.add_cultist(S.mind, 0)
 	S.cancel_camera()
 	name = "soulstone: Shade of [T.real_name]"
 	icon_state = "soulstone2"
-	if(U && (iswizard(U) || usability))
-		to_chat(S, "Your soul has been captured! You are now bound to [U.real_name]'s will. Help [U.p_them()] succeed in [U.p_their()] goals at all costs.")
-	else if(U && iscultist(U))
+	if(user && (iswizard(user) || usability))
+		to_chat(S, "Your soul has been captured! You are now bound to [user.real_name]'s will. Help [user.p_them()] succeed in [user.p_their()] goals at all costs.")
+	else if(user && iscultist(user))
 		to_chat(S, "Your soul has been captured! You are now bound to the cult's will. Help them succeed in their goals at all costs.")
-	if(vic && U)
-		to_chat(U, "<span class='info'><b>Capture successful!</b>:</span> [T.real_name]'s soul has been ripped from [T.p_their()] body and stored within the soul stone.")
+	if(vic && user)
+		to_chat(user, "<span class='info'><b>Capture successful!</b>:</span> [T.real_name]'s soul has been ripped from [T.p_their()] body and stored within the soul stone.")
 
 
 /obj/item/soulstone/proc/getCultGhost(mob/living/carbon/human/T, mob/U)

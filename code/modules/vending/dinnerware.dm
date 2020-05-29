@@ -20,15 +20,17 @@
 					/obj/item/reagent_containers/food/condiment/saltshaker = 5,
 					/obj/item/reagent_containers/food/condiment/peppermill = 5)
 	contraband = list(
-					/obj/item/reagent_containers/food/snacks/cube/monkey= 1,
 					/obj/item/kitchen/knife/butcher = 2,
 					/obj/item/reagent_containers/syringe = 3)
 	premium = list(
-					/obj/item/reagent_containers/food/condiment/enzyme = 1,
-					/obj/item/reagent_containers/glass/bottle/cryoxadone = 2) // Bartender can literally make this with upgraded parts, or it gets stolen from medical.
+					/obj/item/reagent_containers/food/condiment/enzyme = 1)
 	armor = list("melee" = 100, "bullet" = 100, "laser" = 100, "energy" = 100, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 50)
 	refill_canister = /obj/item/vending_refill/dinnerware
 	resistance_flags = FIRE_PROOF
+	default_price = 50
+	extra_price = 250
+	payment_department = ACCOUNT_SRV
+	cost_multiplier_per_dept = list(ACCOUNT_SRV = 0)
 
 /obj/item/vending_refill/dinnerware
 	icon_state = "refill_cook"

@@ -13,9 +13,12 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 	gender = NEUTER
 	mob_biotypes = NONE
 	bubble_icon = "guardian"
-	response_help  = "passes through"
-	response_disarm = "flails at"
-	response_harm   = "punches"
+	response_help_continuous = "passes through"
+	response_help_simple = "pass through"
+	response_disarm_continuous = "flails at"
+	response_disarm_simple = "flail at"
+	response_harm_continuous = "punches"
+	response_harm_simple = "punch"
 	icon = 'icons/mob/guardian.dmi'
 	icon_state = "magicbase"
 	icon_living = "magicbase"
@@ -29,7 +32,8 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 0
 	maxbodytemp = INFINITY
-	attacktext = "punches"
+	attack_verb_continuous = "punches"
+	attack_verb_simple = "punch"
 	maxHealth = INFINITY //The spirit itself is invincible
 	health = INFINITY
 	healable = FALSE //don't brusepack the guardian
@@ -109,7 +113,8 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 			icon_dead = "holocarp"
 			speak_emote = list("gnashes")
 			desc = "A mysterious fish that stands by its charge, ever vigilant."
-			attacktext = "bites"
+			attack_verb_continuous = "bites"
+			attack_verb_simple = "bite"
 			attack_sound = 'sound/weapons/bite.ogg'
 			recolorentiresprite = TRUE
 	if(!recolorentiresprite) //we want this to proc before stand logs in, so the overlay isnt gone for some reason

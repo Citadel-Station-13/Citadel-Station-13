@@ -249,10 +249,8 @@
 /obj/item/book/granter/spell/smoke/recoil(mob/user)
 	..()
 	to_chat(user,"<span class='caution'>Your stomach rumbles...</span>")
-	if(user.nutrition)
-		user.nutrition = 200
-		if(user.nutrition <= 0)
-			user.nutrition = 0
+	if(user.nutrition > NUTRITION_LEVEL_STARVING + 50)
+		user.set_nutrition(NUTRITION_LEVEL_STARVING + 50)
 
 /obj/item/book/granter/spell/blind
 	spell = /obj/effect/proc_holder/spell/targeted/trigger/blind

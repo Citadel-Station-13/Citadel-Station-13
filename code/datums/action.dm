@@ -186,6 +186,8 @@
 
 /datum/action/item_action/New(Target)
 	..()
+	if(button_icon_state)
+		use_target_appearance = FALSE
 	var/obj/item/I = target
 	LAZYINITLIST(I.actions)
 	I.actions += src
@@ -345,6 +347,7 @@
 /datum/action/item_action/clock/quickbind
 	name = "Quickbind"
 	desc = "If you're seeing this, file a bug report."
+	use_target_appearance = FALSE
 	var/scripture_index = 0 //the index of the scripture we're associated with
 
 /datum/action/item_action/toggle_helmet_flashlight
@@ -727,14 +730,6 @@
 		UpdateButtonIcon()
 		if(next_use_time > world.time)
 			START_PROCESSING(SSfastprocess, src)
-
-
-//Stickmemes
-/datum/action/item_action/stickmen
-	name = "Summon Stick Minions"
-	desc = "Allows you to summon faithful stickmen allies to aide you in battle."
-	icon_icon = 'icons/mob/actions/actions_minor_antag.dmi'
-	button_icon_state = "art_summon"
 
 //surf_ss13
 /datum/action/item_action/bhop

@@ -139,7 +139,7 @@
 	id = "tool_box"
 	build_type = AUTOLATHE
 	materials = list(MAT_CATEGORY_RIGID = 500)
-	build_path = /obj/item/storage/toolbox
+	build_path = /obj/item/storage/toolbox/greyscale
 	category = list("initial","Tools")
 
 /datum/design/spraycan
@@ -156,4 +156,12 @@
 	build_type = AUTOLATHE
 	materials = list(/datum/material/iron = 150, /datum/material/glass = 150)
 	build_path = /obj/item/geiger_counter
+	category = list("initial", "Tools")
+
+/datum/design/saw
+	name = "Hand Saw"
+	id = "handsaw"
+	build_type = AUTOLATHE
+	materials = list(/datum/material/iron = 500)
+	build_path = /obj/item/hatchet/saw
 	category = list("initial", "Tools")

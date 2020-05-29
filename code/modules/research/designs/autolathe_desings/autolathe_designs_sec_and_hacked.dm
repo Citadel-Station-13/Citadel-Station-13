@@ -10,6 +10,7 @@
 	id = "beanbag_slug"
 	build_type = AUTOLATHE
 	materials = list(/datum/material/iron = 250)
+	materials = list(/datum/material/iron = 1000)
 	build_path = /obj/item/ammo_casing/shotgun/beanbag
 	category = list("initial", "Security")
 
@@ -73,12 +74,12 @@
 	build_path = /obj/item/restraints/handcuffs
 	category = list("hacked", "Security")
 
-/datum/design/receiver
-	name = "Modular Receiver"
-	id = "receiver"
-	build_type = AUTOLATHE | NO_PUBLIC_LATHE
-	materials = list(/datum/material/iron = 15000)
-	build_path = /obj/item/weaponcrafting/receiver
+/datum/design/rifle_receiver
+	name = "Rifle Receiver"
+	id = "rifle_receiver"
+	build_type = AUTOLATHE
+	materials = list(/datum/material/iron = 40000)
+	build_path = /obj/item/weaponcrafting/improvised_parts/rifle_receiver
 	category = list("hacked", "Security")
 
 /datum/design/shotgun_slug
@@ -112,6 +113,10 @@
 	materials = list(/datum/material/iron = 4000)
 	build_path = /obj/item/ammo_casing/shotgun/incendiary
 	category = list("hacked", "Security")
+
+/////////////////
+//   Bullets   //
+/////////////////
 
 /datum/design/riot_dart
 	name = "Foam Riot Dart"

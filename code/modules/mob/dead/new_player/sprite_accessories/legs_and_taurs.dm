@@ -64,6 +64,7 @@
 	taur_mode = STYLE_HOOF_TAURIC
 	alt_taur_mode = STYLE_PAW_TAURIC
 	color_src = MUTCOLORS
+	extra = TRUE
 
 /datum/sprite_accessory/taur/drake
 	name = "Drake"
@@ -71,6 +72,12 @@
 	taur_mode = STYLE_PAW_TAURIC
 	color_src = MUTCOLORS
 	extra = TRUE
+
+/datum/sprite_accessory/taur/drake/old
+	name = "Drake (Old)"
+	icon_state = "drake_old"
+	color_src = MATRIXED
+	extra = FALSE
 
 /datum/sprite_accessory/taur/drider
 	name = "Drider"

@@ -47,8 +47,8 @@
 	destination.dna.uni_identity = uni_identity
 	destination.dna.blood_type = blood_type
 	destination.dna.skin_tone_override = skin_tone_override
-	destination.set_species(species.type, icon_update=0)
 	destination.dna.features = features.Copy()
+	destination.set_species(species.type, icon_update=0)
 	destination.dna.real_name = real_name
 	destination.dna.nameless = nameless
 	destination.dna.custom_species = custom_species
@@ -152,10 +152,11 @@
 	return .
 
 /datum/dna/proc/generate_dna_blocks()
-	var/bonus
+	var/list/mutations_temp = GLOB.good_mutations + GLOB.bad_mutations + GLOB.not_good_mutations
 	if(species && species.inert_mutation)
-		bonus = GET_INITIALIZED_MUTATION(species.inert_mutation)
-	var/list/mutations_temp = GLOB.good_mutations + GLOB.bad_mutations + GLOB.not_good_mutations + bonus
+		var/bonus = GET_INITIALIZED_MUTATION(species.inert_mutation)
+		if(bonus)
+			mutations_temp += bonus
 	if(!LAZYLEN(mutations_temp))
 		return
 	mutation_index.Cut()
@@ -245,6 +246,17 @@
 			construct_block(GLOB.mam_body_markings_list.Find(features["mam_body_markings"]), GLOB.mam_body_markings_list.len)
 		if(DNA_TAUR_BLOCK)
 			construct_block(GLOB.taur_list.Find(features["taur"]), GLOB.taur_list.len)
+			if(species.mutant_bodyparts["taur"] && ishuman(holder))
+				var/datum/sprite_accessory/taur/T = GLOB.taur_list[features["taur"]]
+				switch(T?.taur_mode)
+					if(STYLE_HOOF_TAURIC)
+						H.physiology.footstep_type = FOOTSTEP_MOB_SHOE
+					if(STYLE_PAW_TAURIC)
+						H.physiology.footstep_type = FOOTSTEP_MOB_CLAW
+					if(STYLE_SNEK_TAURIC)
+						H.physiology.footstep_type = FOOTSTEP_MOB_CRAWL
+					else
+						H.physiology.footstep_type = null
 
 //Please use add_mutation or activate_mutation instead
 /datum/dna/proc/force_give(datum/mutation/human/HM)
@@ -355,6 +367,11 @@
 		var/datum/species/old_species = dna.species
 		dna.species = new_race
 		dna.species.on_species_gain(src, old_species, pref_load)
+		if(ishuman(src))
+			qdel(language_holder)
+			var/species_holder = initial(mrace.species_language_holder)
+			language_holder = new species_holder(src)
+		update_atom_languages()
 
 /mob/living/carbon/human/set_species(datum/species/mrace, icon_update = TRUE, pref_load = FALSE)
 	..()
@@ -374,16 +391,6 @@
 
 /mob/living/carbon/human/proc/hardset_dna(ui, list/mutation_index, newreal_name, newblood_type, datum/species/mrace, newfeatures)
 
-	if(newfeatures)
-		var/old_size = dna.features["body_size"]
-		dna.features = newfeatures
-		dna.update_body_size(old_size)
-
-	if(mrace)
-		var/datum/species/newrace = new mrace.type
-		newrace.copy_properties_from(mrace)
-		set_species(newrace, icon_update=0)
-
 	if(newreal_name)
 		real_name = newreal_name
 		dna.generate_unique_enzymes()
@@ -393,7 +400,17 @@
 
 	if(ui)
 		dna.uni_identity = ui
-		updateappearance(icon_update=0)
+		updateappearance(icon_update=FALSE)
+
+	if(newfeatures)
+		var/old_size = dna.features["body_size"]
+		dna.features = newfeatures
+		dna.update_body_size(old_size)
+
+	if(mrace)
+		var/datum/species/newrace = new mrace.type
+		newrace.copy_properties_from(mrace)
+		set_species(newrace, icon_update=FALSE)
 
 	if(LAZYLEN(mutation_index))
 		dna.mutation_index = mutation_index.Copy()

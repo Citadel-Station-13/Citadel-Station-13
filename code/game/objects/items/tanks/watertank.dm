@@ -145,6 +145,7 @@
 	desc = "A janitorial watertank backpack with nozzle to clean dirt and graffiti."
 	icon_state = "waterbackpackjani"
 	item_state = "waterbackpackjani"
+	custom_price = 1000
 
 /obj/item/watertank/janitor/Initialize()
 	. = ..()
@@ -209,6 +210,7 @@
 	power = 8
 	force = 10
 	precision = 1
+	total_mass = 0.2
 	cooling_power = 5
 	w_class = WEIGHT_CLASS_HUGE
 	item_flags = ABSTRACT  // don't put in storage

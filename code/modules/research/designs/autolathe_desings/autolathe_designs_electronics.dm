@@ -82,3 +82,11 @@
 	materials = list(/datum/material/iron = 100, /datum/material/glass = 100)
 	build_path = /obj/item/assembly/control/electrochromatic
 	category = list("initial", "Electronics")
+
+/datum/design/electrochromatic_kit
+	name = "Electrochromatic Upgrade Kit"
+	id = "electrochromatic_kit"
+	build_type = AUTOLATHE
+	materials = list(/datum/material/iron = 2010, /datum/material/glass = 5)
+	build_path = /obj/item/electronics/electrochromatic_kit
+	category = list("initial", "Electronics")

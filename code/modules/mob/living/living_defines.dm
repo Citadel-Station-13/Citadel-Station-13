@@ -4,6 +4,9 @@
 	see_in_dark = 2
 	hud_possible = list(HEALTH_HUD,STATUS_HUD,ANTAG_HUD,NANITE_HUD,DIAG_NANITE_FULL_HUD,RAD_HUD)
 	pressure_resistance = 10
+	has_field_of_vision = TRUE
+
+	typing_indicator_enabled = TRUE
 
 	var/resize = 1 //Badminnery resize
 	var/lastattacker = null
@@ -98,8 +101,6 @@
 
 	var/datum/riding/riding_datum
 
-	var/datum/language/selected_default_language
-
 	var/last_words	//used for database logging
 
 	var/list/obj/effect/proc_holder/abilities = list()
@@ -121,7 +122,7 @@
 
 	//// CITADEL STATION COMBAT ////
 	/// See __DEFINES/combat.dm
-	var/combat_flags = COMBAT_FLAGS_STAMSYSTEM_EXEMPT
+	var/combat_flags = COMBAT_FLAGS_SPRINT_EXEMPT
 	/// Next world.time when we will show a visible message on entering combat mode voluntarily again.
 	var/combatmessagecooldown = 0
 

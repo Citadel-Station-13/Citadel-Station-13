@@ -69,6 +69,7 @@
 #define CAT_WEAPONRY	"Weaponry"
 #define CAT_WEAPON	"Weapons"
 #define CAT_AMMO	"Ammunition"
+#define CAT_PARTS	"Weapon Parts"
 #define CAT_ROBOT	"Robots"
 #define CAT_MISC	"Misc"
 #define CAT_MISCELLANEOUS	"Miscellaneous"
@@ -104,3 +105,8 @@
 
 #define RCD_UPGRADE_FRAMES 1
 #define RCD_UPGRADE_SIMPLE_CIRCUITS 2
+
+//Electrochromatic window defines.
+#define NOT_ELECTROCHROMATIC		0
+#define ELECTROCHROMATIC_OFF		1
+#define ELECTROCHROMATIC_DIMMED		2
