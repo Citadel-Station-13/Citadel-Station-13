@@ -103,6 +103,14 @@
 		CRASH("Attempted to pipeline replace and could not find the old pipeline as ours! SOMETHING HAS GONE TERRIBLY WRONG!")
 	node_pipelines[pl_index] = with
 
+/**
+  * Air component proc to return a node's air depending on if it's directly attached or not.
+  * If it's directly attached, it returns the pipenet air of the pipenet it's connected to.
+  * If not, it returns the node air of the node stored locally as a "component air" instead.
+  */
+/obj/machinery/atmospherics/components/proc/return_node_air(node = 1)
+	return (aircomponent_flags & AIRCOMPONENT_DIRECT_ATTACH)? return_pipenet_air(node) : node_airs[node]
+
 /obj/machinery/atmospherics/components/return_pipenet(node = 1)
 	return node_pipelines[node]
 
