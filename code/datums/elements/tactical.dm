@@ -14,12 +14,12 @@
 
 /datum/element/tactical/Detach(datum/target)
 	UnregisterSignal(target, list(COMSIG_ITEM_EQUIPPED, COMSIG_ITEM_DROPPED))
-	unmodify()
+	unmodify(target)
 	return ..()
 
 /datum/element/tactical/proc/modify(obj/item/source, mob/user, slot)
 	if(allowed_slot && slot != allowed_slot)
-		unmodify()
+		unmodify(source, user)
 		return
 
 	var/image/I = image(icon = source.icon, icon_state = source.icon_state, loc = user)
