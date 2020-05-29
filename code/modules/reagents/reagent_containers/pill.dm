@@ -27,9 +27,9 @@
 
 /obj/item/reagent_containers/pill/get_w_volume()
 	switch(reagents.total_volume)
-		if(0 to 9.5)
+		if(0 to 10)
 			return 1
-		if(9.5 to 25)
+		if(10 to 26)
 			return DEFAULT_VOLUME_TINY
 		else
 			return DEFAULT_VOLUME_SMALL
