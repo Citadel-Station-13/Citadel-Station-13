@@ -283,8 +283,8 @@
 				/obj/item/weaponcrafting/improvised_parts/pistol_receiver = 1,
 				/obj/item/weaponcrafting/improvised_parts/trigger_assembly = 1,
 				/obj/item/weaponcrafting/improvised_parts/wooden_grip = 1,
-				/obj/item/stack/packageWrap = 5)
-	tools = list(TOOL_SCREWDRIVER)
+				/obj/item/stack/sheet/plastic = 1)
+	tools = list(TOOL_SCREWDRIVER, TOOL_WELDER)
 	time = 100
 	category = CAT_WEAPONRY
 	subcategory = CAT_WEAPON
@@ -479,7 +479,8 @@
 /datum/crafting_recipe/pistol_barrel
 	name = "Improvised Pistol Barrel"
 	result = /obj/item/weaponcrafting/improvised_parts/barrel_pistol
-	reqs = list(/obj/item/pipe = 1)
+	reqs = list(/obj/item/pipe = 1,
+				/obj/item/stack/sheet/plasteel = 1)
 	tools = list(TOOL_WELDER,TOOL_SAW)
 	time = 150
 	category = CAT_WEAPONRY
@@ -511,7 +512,7 @@
 	result = /obj/item/weaponcrafting/improvised_parts/pistol_receiver
 	reqs = list(/obj/item/stack/sheet/metal = 5,
 				/obj/item/stack/sheet/plasteel = 1)
-	tools = list(TOOL_SCREWDRIVER, TOOL_WELDER)
+	tools = list(TOOL_SCREWDRIVER, TOOL_WELDER, TOOL_SAW)
 	time = 50
 	category = CAT_WEAPONRY
 	subcategory = CAT_PARTS
