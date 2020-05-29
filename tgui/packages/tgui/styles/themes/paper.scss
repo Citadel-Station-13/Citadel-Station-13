@@ -8,7 +8,7 @@
  @use 'sass:meta';
 
  @use '../colors.scss' with (
-   $primary: #000000,
+   $primary: #ffffff,
    $fg-map-keys: (),
    $bg-map-keys: (),
  );
@@ -48,13 +48,5 @@
    .Layout__content {
      background-image: none;
    }
-
- .code {
-   font-family: Consolas,"courier new";
-   color: black;
-   background-color: #f1f1f1;
-   padding: 2px;
-   font-size: 85%;
- }
 
  }
