@@ -97843,6 +97843,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
 	},
+/obj/machinery/rnd/bepis,
 /turf/open/floor/plasteel,
 /area/science/explab)
 "djD" = (

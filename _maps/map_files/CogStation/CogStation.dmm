@@ -72072,6 +72072,7 @@
 /turf/open/space/basic,
 /area/space/nearstation)
 "mBP" = (
+/obj/machinery/rnd/bepis,
 /obj/effect/landmark/xeno_spawn,
 /turf/open/floor/plasteel,
 /area/science/mixing)
