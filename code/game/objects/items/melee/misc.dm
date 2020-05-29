@@ -68,6 +68,19 @@
 	hitsound = 'sound/weapons/rapierhit.ogg'
 	custom_materials = list(/datum/material/iron = 1000)
 	total_mass = 3.4
+	item_flags = NEEDS_PERMIT | ITEM_CAN_PARRY
+	block_parry_data = /datum/block_parry_data/captain_saber
+
+/datum/block_parry_data/captain_saber
+	parry_time_windup = 1
+	parry_time_active = 3
+	parry_time_spindown = 1
+	parry_time_perfect = 2.5
+	parry_time_perfect_leeway = 0.5
+	parry_imperfect_falloff_percent = 20
+	parry_efficiency_perfect = 100
+	parry_failed_stagger_duration = 3 SECONDS
+	parry_failed_clickcd_duration = 2 SECONDS
 
 /obj/item/melee/sabre/Initialize()
 	. = ..()

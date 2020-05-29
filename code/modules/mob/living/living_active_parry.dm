@@ -174,6 +174,8 @@
 	if(stage == NOT_PARRYING)
 		return BLOCK_NONE
 	var/datum/block_parry_data/data = get_parry_data()
+	if(attack_type && !(attack_type & data.parry_attack_types))
+		return BLOCK_NONE
 	var/efficiency = get_parry_efficiency(attack_type)
 	switch(parrying)
 		if(ITEM_PARRY)

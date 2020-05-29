@@ -25,6 +25,8 @@ GLOBAL_LIST_EMPTY(block_parry_data)
 
 	/// See defines. Point of reference is someone facing north.
 	var/can_block_directions = BLOCK_DIR_NORTH | BLOCK_DIR_NORTHEAST | BLOCK_DIR_NORTHWEST
+	/// Attacks we can block
+	var/can_block_attack_types = ALL
 	/// Our slowdown added while blocking
 	var/block_slowdown = 2
 	/// Clickdelay added to user after block ends
@@ -89,6 +91,8 @@ GLOBAL_LIST_EMPTY(block_parry_data)
 	var/parry_respect_clickdelay = TRUE
 	/// Parry stamina cost
 	var/parry_stamina_cost = 5
+	/// Attack types we can block
+	var/parry_attack_types = ALL
 
 	/// Parry windup duration in deciseconds. 0 to this is windup, afterwards is main stage.
 	var/parry_time_windup = 2

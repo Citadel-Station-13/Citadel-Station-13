@@ -184,6 +184,8 @@
 	if(!can_active_block())
 		return BLOCK_NONE
 	var/datum/block_parry_data/data = get_block_parry_data()
+	if(attack_type && !(attack_type & data.can_block_attack_types))
+		return BLOCK_NONE
 	var/incoming_direction
 	if(isnull(override_direction))
 		if(istype(object, /obj/item/projectile))
