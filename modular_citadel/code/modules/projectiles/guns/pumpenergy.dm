@@ -178,7 +178,7 @@
 	name = "positron blast"
 	damage = 80
 	range = 14
-	speed = 0.6
+	pixels_per_second = TILES_TO_PIXELS(16.667)
 	icon_state = "disablerslug"
 
 /obj/item/projectile/beam/pump

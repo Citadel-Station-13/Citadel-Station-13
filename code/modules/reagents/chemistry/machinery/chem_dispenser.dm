@@ -23,7 +23,7 @@
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	circuit = /obj/item/circuitboard/machine/chem_dispenser
 	var/obj/item/stock_parts/cell/cell
-	var/powerefficiency = 0.1
+	var/powerefficiency = 0.0666666
 	var/amount = 30
 	var/recharge_amount = 10
 	var/recharge_counter = 0
@@ -387,7 +387,7 @@
 
 /obj/machinery/chem_dispenser/RefreshParts()
 	recharge_amount = initial(recharge_amount)
-	var/newpowereff = 0.0666666
+	var/newpowereff = initial(powerefficiency)
 	for(var/obj/item/stock_parts/cell/P in component_parts)
 		cell = P
 	for(var/obj/item/stock_parts/matter_bin/M in component_parts)
@@ -720,3 +720,58 @@
 	component_parts += new /obj/item/stack/sheet/glass(null)
 	component_parts += new /obj/item/stock_parts/cell/bluespace(null)
 	RefreshParts()
+
+///An unique, less efficient model found in the medbay apothecary room.
+/obj/machinery/chem_dispenser/apothecary
+	name = "apothecary chem dispenser"
+	desc = "A cheaper chem dispenser meant for small scale medicine production."
+	icon_state = "minidispenser"
+	working_state = "minidispenser_working"
+	nopower_state = "minidispenser_nopower"
+	circuit = /obj/item/circuitboard/machine/chem_dispenser/apothecary
+	powerefficiency = 0.0833333
+	dispensable_reagents = list( //radium and stable plasma moved to upgrade tier 1 and 2, they've little to do with most medicines anyway.
+		/datum/reagent/hydrogen,
+		/datum/reagent/lithium,
+		/datum/reagent/carbon,
+		/datum/reagent/nitrogen,
+		/datum/reagent/oxygen,
+		/datum/reagent/fluorine,
+		/datum/reagent/sodium,
+		/datum/reagent/aluminium,
+		/datum/reagent/silicon,
+		/datum/reagent/phosphorus,
+		/datum/reagent/sulfur,
+		/datum/reagent/chlorine,
+		/datum/reagent/potassium,
+		/datum/reagent/iron,
+		/datum/reagent/copper,
+		/datum/reagent/mercury,
+		/datum/reagent/water,
+		/datum/reagent/consumable/ethanol,
+		/datum/reagent/consumable/sugar,
+		/datum/reagent/toxin/acid,
+		/datum/reagent/fuel,
+		/datum/reagent/silver,
+		/datum/reagent/iodine,
+		/datum/reagent/bromine
+	)
+	upgrade_reagents = list(
+		/datum/reagent/oil,
+		/datum/reagent/ammonia,
+		/datum/reagent/radium
+	)
+	upgrade_reagents2 = list(
+		/datum/reagent/acetone,
+		/datum/reagent/phenol,
+		/datum/reagent/stable_plasma
+	)
+	upgrade_reagents3 = list(
+		/datum/reagent/medicine/mine_salve
+	)
+
+	emagged_reagents = list(
+		/datum/reagent/drug/space_drugs,
+		/datum/reagent/toxin/carpotoxin,
+		/datum/reagent/medicine/morphine
+	)
