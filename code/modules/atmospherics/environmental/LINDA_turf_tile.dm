@@ -89,7 +89,7 @@
 	temperature_archived = temperature
 
 /turf/open/archive()
-	ARCHIVE_TEMPERATURE(air)
+	ARCHIVE(air)
 	archived_cycle = SSair.times_fired
 	temperature_archived = temperature
 
@@ -215,7 +215,7 @@
 	if (planet_atmos) //share our air with the "atmosphere" "above" the turf
 		var/datum/gas_mixture/G = new
 		G.copy_from_turf(src)
-		ARCHIVE_TEMPERATURE(G)
+		ARCHIVE(G)
 		if(our_air.compare(G))
 			if(!our_excited_group)
 				var/datum/excited_group/EG = new

@@ -477,6 +477,12 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	throw_speed = 5
 	throw_range = 2
 	attack_verb = list("busted")
+	var/impressiveness = 45
+
+/obj/item/statuebust/Initialize()
+	. = ..()
+	AddElement(/datum/element/art, impressiveness)
+	addtimer(CALLBACK(src, /datum.proc/_AddElement, list(/datum/element/beauty, 1000)), 0)
 
 /obj/item/tailclub
 	name = "tail club"
@@ -524,6 +530,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	icon_state = "skateboard2"
 	item_state = "skateboard2"
 	board_item_type = /obj/vehicle/ridden/scooter/skateboard/pro
+	custom_premium_price = 500
 
 /obj/item/melee/skateboard/hoverboard
 	name = "hoverboard"
@@ -531,6 +538,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	icon_state = "hoverboard_red"
 	item_state = "hoverboard_red"
 	board_item_type = /obj/vehicle/ridden/scooter/skateboard/hoverboard
+	custom_premium_price = 2015
 
 /obj/item/melee/skateboard/hoverboard/admin
 	name = "\improper Board Of Directors"
@@ -550,6 +558,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	force = 10
 	throwforce = 12
 	attack_verb = list("beat", "smacked")
+	custom_materials = list(/datum/material/wood = MINERAL_MATERIAL_AMOUNT * 3.5)
 	w_class = WEIGHT_CLASS_BULKY
 	var/homerun_ready = 0
 	var/homerun_able = 0

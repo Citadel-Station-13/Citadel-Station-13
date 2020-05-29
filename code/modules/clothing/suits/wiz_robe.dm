@@ -165,31 +165,134 @@
 	var/robe_charge = TRUE
 	actions_types = list(/datum/action/item_action/stickmen)
 
+/obj/item/clothing/suit/wizrobe/paper/item_action_slot_check(slot, mob/user, datum/action/A)
+	if(A.type == /datum/action/item_action/stickmen && slot != SLOT_WEAR_SUIT)
+		return FALSE
+	return ..()
 
-/obj/item/clothing/suit/wizrobe/paper/ui_action_click(mob/user, action)
-	stickmen()
+//Stickmemes. VV-friendly.
+/datum/action/item_action/stickmen
+	name = "Summon Stick Minions"
+	desc = "Allows you to summon faithful stickmen allies to aide you in battle."
+	icon_icon = 'icons/mob/actions/actions_minor_antag.dmi'
+	button_icon_state = "art_summon"
+	var/ready = TRUE
+	var/list/summoned_stickmen = list()
+	var/summoned_mob_path = /mob/living/simple_animal/hostile/stickman //Must be an hostile animal path.
+	var/max_stickmen = 8
+	var/cooldown = 3 SECONDS
+	var/list/book_of_grudges = list()
+
+/datum/action/item_action/stickmen/New(Target)
+	..()
+	if(isitem(Target))
+		RegisterSignal(Target, COMSIG_PARENT_EXAMINE, .proc/give_infos)
+
+/datum/action/item_action/stickmen/Destroy()
+	for(var/A in summoned_stickmen)
+		var/mob/living/simple_animal/hostile/S = A
+		if(S.client)
+			to_chat(S, "<span class='danger'>A dizzying sensation strikes you as the comglomerate of pencil lines you call \
+						your body crumbles under the pressure of an invisible eraser, soon to join bilions discarded sketches. \
+						It seems whatever was keeping you in this realm has come to an end, like all things.</span>")
+		animate(S, alpha = 0, time = 5 SECONDS)
+		QDEL_IN(S, 5 SECONDS)
+	return ..()
+
+/datum/action/item_action/stickmen/proc/give_infos(atom/source, mob/user, list/examine_list)
+	examine_list += "<span class='notice'>Making sure you are properly wearing or holding it, \
+					point at whatever you want to rally your minions to its position."
+	examine_list += "While on <b>harm</b> intent, pointed mobs (minus you and the minions) \
+					 will also be marked as foes for your minions to attack for the next 2 minutes.</span>"
+
+/datum/action/item_action/stickmen/Grant(mob/M)
+	. = ..()
+	if(owner)
+		RegisterSignal(M, COMSIG_MOB_POINTED, .proc/rally)
+	if(book_of_grudges[M]) //Stop attacking your new master.
+		book_of_grudges -= M
+		for(var/A in summoned_stickmen)
+			var/mob/living/simple_animal/hostile/S = A
+			if(!S.mind)
+				S.LoseTarget()
 
 
-/obj/item/clothing/suit/wizrobe/paper/verb/stickmen()
-	set category = "Object"
-	set name = "Summon Stick Minions"
-	set src in usr
-	if(!isliving(usr))
+/datum/action/item_action/stickmen/Remove(mob/M)
+	. = ..()
+	UnregisterSignal(M, COMSIG_MOB_POINTED)
+
+/datum/action/item_action/stickmen/Trigger()
+	. = ..()
+	if(!.)
 		return
-	if(!robe_charge)
-		to_chat(usr, "<span class='warning'>\The robe's internal magic supply is still recharging!</span>")
+	if(!ready)
+		to_chat(owner, "<span class='warning'>[src]'s internal magic supply is still recharging!</span>")
+		return FALSE
+	var/summon = TRUE
+	if(length(summoned_stickmen) >= max_stickmen)
+		var/mob/living/simple_animal/hostile/S = popleft(summoned_stickmen)
+		if(!S.client)
+			qdel(S)
+		else
+			S.forceMove(owner.drop_location())
+			S.revive(TRUE)
+			summoned_stickmen[S] = TRUE
+			summon = FALSE
+
+	owner.say("Rise, my creation! Off your page into this realm!", forced = "stickman summoning")
+	playsound(owner, 'sound/magic/summon_magic.ogg', 50, 1, 1)
+	if(summon)
+		var/mob/living/simple_animal/hostile/S = new summoned_mob_path (get_turf(usr))
+		S.faction = owner.faction
+		S.foes = book_of_grudges
+		RegisterSignal(S, COMSIG_PARENT_QDELETING, .proc/remove_from_list)
+	ready = FALSE
+	addtimer(CALLBACK(src, .proc/ready_again), cooldown)
+
+/datum/action/item_action/stickmen/proc/remove_from_list(datum/source, forced)
+	summoned_stickmen -= source
+
+/datum/action/item_action/stickmen/proc/ready_again()
+	ready = TRUE
+	if(owner)
+		to_chat(owner, "<span class='notice'>[src] hums, its internal magic supply restored.</span>")
+
+/**
+  * Rallies your army of stickmen to whichever target the user is pointing.
+  * Should the user be on harm intent and the target be a living mob that's not the user or a fellow stickman,
+  * said target will be added to a list of foes which the stickmen will gladly dispose regardless of faction.
+  * This is designed so stickmen will move toward whatever you point at even when you don't want to, that's the downside.
+  */
+/datum/action/item_action/stickmen/proc/rally(mob/source, atom/A)
+	var/turf/T = get_turf(A)
+	var/list/surrounding_turfs = block(locate(T.x - 1, T.y - 1, T.z), locate(T.x + 1, T.y + 1, T.z))
+	if(!surrounding_turfs.len)
 		return
+	if(source.a_intent == INTENT_HARM && A != source && !summoned_stickmen[A])
+		var/mob/living/L
+		if(isliving(A)) //Gettem boys!
+			L = A
+		else if(ismecha(A))
+			var/obj/mecha/M = A
+			L = M.occupant
+		if(L && L.stat != DEAD && !HAS_TRAIT(L, TRAIT_DEATHCOMA)) //Taking revenge on the deads would be proposterous.
+			addtimer(CALLBACK(src, .proc/clear_grudge, L), 2 MINUTES, TIMER_OVERRIDE|TIMER_UNIQUE)
+			if(!book_of_grudges[L])
+				RegisterSignal(L, list(COMSIG_PARENT_QDELETING, COMSIG_MOB_DEATH), .proc/grudge_settled)
+				book_of_grudges[L] = TRUE
+	for(var/k in summoned_stickmen) //Shamelessly copied from the blob rally power
+		var/mob/living/simple_animal/hostile/S = k
+		if(!S.mind && isturf(S.loc) && get_dist(S, T) <= 10)
+			S.LoseTarget()
+			S.Goto(pick(surrounding_turfs), S.move_to_delay)
 
-	usr.say("Rise, my creation! Off your page into this realm!", forced = "stickman summoning")
-	playsound(src.loc, 'sound/magic/summon_magic.ogg', 50, 1, 1)
-	var/mob/living/M = new /mob/living/simple_animal/hostile/stickman(get_turf(usr))
-	var/list/factions = usr.faction
-	M.faction = factions
-	src.robe_charge = FALSE
-	sleep(30)
-	src.robe_charge = TRUE
-	to_chat(usr, "<span class='notice'>\The robe hums, its internal magic supply restored.</span>")
+/datum/action/item_action/stickmen/proc/clear_grudge(mob/living/L)
+	if(!QDELETED(L))
+		book_of_grudges -= L
 
+/datum/action/item_action/stickmen/proc/grudge_settled(mob/living/L)
+	UnregisterSignal(L, list(COMSIG_PARENT_QDELETING, COMSIG_MOB_DEATH))
+	book_of_grudges -= L
 
 //Shielded Armour
 

@@ -228,7 +228,6 @@
 
 	if(!new_mob)
 		return
-	new_mob.grant_language(/datum/language/common)
 
 	// Some forms can still wear some items
 	for(var/obj/item/W in contents)
@@ -435,12 +434,12 @@
 	damage = 15
 	damage_type = BURN
 	nodamage = 0
-	speed = 0.3
+	pixels_per_second = TILES_TO_PIXELS(33.33)
 	flag = "magic"
 
-	var/tesla_power = 20000
-	var/tesla_range = 15
-	var/tesla_flags = TESLA_MOB_DAMAGE | TESLA_MOB_STUN | TESLA_OBJ_DAMAGE
+	var/zap_power = 20000
+	var/zap_range = 15
+	var/zap_flags = ZAP_MOB_DAMAGE | ZAP_MOB_STUN | ZAP_OBJ_DAMAGE
 	var/chain
 	var/mob/living/caster
 
@@ -457,7 +456,7 @@
 			visible_message("<span class='warning'>[src] fizzles on contact with [target]!</span>")
 			qdel(src)
 			return BULLET_ACT_BLOCK
-	tesla_zap(src, tesla_range, tesla_power, tesla_flags)
+	tesla_zap(src, zap_range, zap_power, zap_flags)
 	qdel(src)
 
 /obj/item/projectile/magic/aoe/lightning/Destroy()

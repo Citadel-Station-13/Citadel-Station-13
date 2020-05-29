@@ -31,6 +31,10 @@
 	else
 		BB.def_zone = user.zone_selected
 	BB.suppressed = quiet
+	
+	if(isgun(fired_from))
+		var/obj/item/gun/G = fired_from
+		BB.damage *= G.projectile_damage_multiplier
 
 	if(reagents && BB.reagents)
 		reagents.trans_to(BB, reagents.total_volume) //For chemical darts/bullets

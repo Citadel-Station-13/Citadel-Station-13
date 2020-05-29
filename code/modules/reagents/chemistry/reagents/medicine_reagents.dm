@@ -274,7 +274,11 @@
 
 /datum/reagent/medicine/silver_sulfadiazine/overdose_start(mob/living/M)
 	metabolization_rate = 15 * REAGENTS_METABOLISM
-	M.adjustBruteLoss(2*REM, 0)
+	..()
+	. = 1
+
+/datum/reagent/medicine/silver_sulfadiazine/overdose_process(mob/living/M)
+	M.adjustFireLoss(2*REM, 0)
 	var/obj/item/organ/liver/L = M.getorganslot(ORGAN_SLOT_LIVER)
 	if(L)
 		L.applyOrganDamage(1)
@@ -340,8 +344,12 @@
 	..()
 	. = 1
 
-datum/reagent/medicine/styptic_powder/overdose_start(mob/living/M)
+/datum/reagent/medicine/styptic_powder/overdose_start(mob/living/M)
 	metabolization_rate = 15 * REAGENTS_METABOLISM
+	..()
+	. = 1
+
+/datum/reagent/medicine/styptic_powder/overdose_process(mob/living/M)
 	M.adjustBruteLoss(2*REM, 0)
 	var/obj/item/organ/liver/L = M.getorganslot(ORGAN_SLOT_LIVER)
 	if(L)
@@ -413,7 +421,7 @@ datum/reagent/medicine/styptic_powder/overdose_start(mob/living/M)
 /datum/reagent/medicine/mine_salve/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message = 1)
 	if(iscarbon(M) && M.stat != DEAD)
 		if(method in list(INGEST, VAPOR, INJECT))
-			M.nutrition -= 5
+			M.adjust_nutrition(-5)
 			if(show_message)
 				to_chat(M, "<span class='warning'>Your stomach feels empty and cramps!</span>")
 		else
@@ -1218,15 +1226,15 @@ datum/reagent/medicine/styptic_powder/overdose_start(mob/living/M)
 	value = REAGENT_VALUE_VERY_RARE
 
 /datum/reagent/medicine/lesser_syndicate_nanites/on_mob_life(mob/living/carbon/M)
-	M.adjustBruteLoss(-3*REM, FALSE) // hidden gold shh
-	M.adjustFireLoss(-3*REM, FALSE)
-	M.adjustOxyLoss(-15, FALSE)
-	M.adjustToxLoss(-3*REM, FALSE)
-	M.adjustOrganLoss(ORGAN_SLOT_BRAIN, -15*REM)
-	M.adjustCloneLoss(-3*REM, FALSE)
-	M.adjustStaminaLoss(-20*REM,FALSE)
+	M.adjustBruteLoss(-2*REM, FALSE)
+	M.adjustFireLoss(-2*REM, FALSE)
+	M.adjustOxyLoss(-5*REM, FALSE)
+	M.adjustToxLoss(-2*REM, FALSE)
+	M.adjustOrganLoss(ORGAN_SLOT_BRAIN, -5*REM)
+	M.adjustCloneLoss(-1.25*REM, FALSE)
+	M.adjustStaminaLoss(-4*REM,FALSE)
 	if(M.blood_volume < (BLOOD_VOLUME_NORMAL*M.blood_ratio))
-		M.blood_volume += 20 // blood fall out man bad
+		M.blood_volume += 3
 	..()
 	. = 1
 

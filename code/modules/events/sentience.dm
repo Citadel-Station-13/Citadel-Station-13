@@ -9,7 +9,7 @@
 	role_name = "random animal"
 	var/animals = 1
 	var/one = "one"
-	/// Blacklisted mob_biotypes - Hey can we like, not have player controlled megafauna? 
+	/// Blacklisted mob_biotypes - Hey can we like, not have player controlled megafauna?
 	var/blacklisted_biotypes = MOB_EPIC
 	fakeable = TRUE
 
@@ -54,7 +54,7 @@
 
 		SG.transfer_ckey(SA, FALSE)
 
-		SA.grant_all_languages(TRUE)
+		SA.grant_all_languages(TRUE, FALSE, FALSE)
 
 		SA.sentience_act()
 

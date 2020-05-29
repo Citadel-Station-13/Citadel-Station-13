@@ -290,7 +290,7 @@ Nothing else in the console has ID requirements.
 			continue
 		var/temp_material
 		var/c = 50
-		var/coeff = linked_lathe.efficiency_coeff
+		var/coeff = linked_lathe.print_cost_coeff
 		if(!linked_lathe.efficient_with(D.build_path))
 			coeff = 1
 
@@ -299,9 +299,9 @@ Nothing else in the console has ID requirements.
 			var/t = linked_lathe.check_mat(D, M)
 			temp_material += " | "
 			if (t < 1)
-				temp_material += "<span class='bad'>[all_materials[M]/coeff] [CallMaterialName(M)]</span>"
+				temp_material += "<span class='bad'>[all_materials[M] * coeff] [CallMaterialName(M)]</span>"
 			else
-				temp_material += " [all_materials[M]/coeff] [CallMaterialName(M)]"
+				temp_material += " [all_materials[M] * coeff] [CallMaterialName(M)]"
 			c = min(c,t)
 
 		var/clearance = !(linked_lathe.obj_flags & EMAGGED) && (linked_lathe.offstation_security_levels || is_station_level(linked_lathe.z))
@@ -356,16 +356,16 @@ Nothing else in the console has ID requirements.
 		var/temp_material
 		var/c = 50
 		var/all_materials = D.materials + D.reagents_list
-		var/coeff = linked_lathe.efficiency_coeff
+		var/coeff = linked_lathe.print_cost_coeff
 		if(!linked_lathe.efficient_with(D.build_path))
 			coeff = 1
 		for(var/M in all_materials)
 			var/t = linked_lathe.check_mat(D, M)
 			temp_material += " | "
 			if (t < 1)
-				temp_material += "<span class='bad'>[all_materials[M]/coeff] [CallMaterialName(M)]</span>"
+				temp_material += "<span class='bad'>[all_materials[M] * coeff] [CallMaterialName(M)]</span>"
 			else
-				temp_material += " [all_materials[M]/coeff] [CallMaterialName(M)]"
+				temp_material += " [all_materials[M] * coeff] [CallMaterialName(M)]"
 			c = min(c,t)
 
 		if (c >= 1)
@@ -457,7 +457,7 @@ Nothing else in the console has ID requirements.
 		var/check_materials = TRUE
 
 		var/all_materials = D.materials + D.reagents_list
-		var/coeff = linked_imprinter.efficiency_coeff
+		var/coeff = linked_imprinter.print_cost_coeff
 		if(!linked_imprinter.efficient_with(D.build_path))
 			coeff = 1
 
@@ -465,9 +465,9 @@ Nothing else in the console has ID requirements.
 			temp_materials += " | "
 			if (!linked_imprinter.check_mat(D, M))
 				check_materials = FALSE
-				temp_materials += " <span class='bad'>[all_materials[M]/coeff] [CallMaterialName(M)]</span>"
+				temp_materials += " <span class='bad'>[all_materials[M] * coeff] [CallMaterialName(M)]</span>"
 			else
-				temp_materials += " [all_materials[M]/coeff] [CallMaterialName(M)]"
+				temp_materials += " [all_materials[M] * coeff] [CallMaterialName(M)]"
 		if (check_materials)
 			l += "<A href='?src=[REF(src)];imprint=[D.id]'>[D.name]</A>[temp_materials]"
 		else
@@ -488,16 +488,16 @@ Nothing else in the console has ID requirements.
 		var/temp_materials
 		var/check_materials = TRUE
 		var/all_materials = D.materials + D.reagents_list
-		var/coeff = linked_imprinter.efficiency_coeff
+		var/coeff = linked_imprinter.print_cost_coeff
 		if(!linked_imprinter.efficient_with(D.build_path))
 			coeff = 1
 		for(var/M in all_materials)
 			temp_materials += " | "
 			if (!linked_imprinter.check_mat(D, M))
 				check_materials = FALSE
-				temp_materials += " <span class='bad'>[all_materials[M]/coeff] [CallMaterialName(M)]</span>"
+				temp_materials += " <span class='bad'>[all_materials[M] * coeff] [CallMaterialName(M)]</span>"
 			else
-				temp_materials += " [all_materials[M]/coeff] [CallMaterialName(M)]"
+				temp_materials += " [all_materials[M] * coeff] [CallMaterialName(M)]"
 		if (check_materials)
 			l += "<A href='?src=[REF(src)];imprint=[D.id]'>[D.name]</A>[temp_materials]"
 		else

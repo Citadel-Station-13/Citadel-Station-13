@@ -287,12 +287,12 @@ Works together with spawning an observer, noted above.
 				var/maximumRoundEnd = SSautotransfer.starttime + SSautotransfer.voteinterval * SSautotransfer.maxvotes
 				if(penalty - SSshuttle.realtimeofstart > maximumRoundEnd + SSshuttle.emergencyCallTime + SSshuttle.emergencyDockTime + SSshuttle.emergencyEscapeTime)
 					penalty = CANT_REENTER_ROUND
-			if(!(ckey in GLOB.client_ghost_timeouts))
-				GLOB.client_ghost_timeouts += ckey
-				GLOB.client_ghost_timeouts[ckey] = 0
-			else if(GLOB.client_ghost_timeouts[ckey] == CANT_REENTER_ROUND)
+			if(!(ghost.ckey in GLOB.client_ghost_timeouts))
+				GLOB.client_ghost_timeouts += ghost.ckey
+				GLOB.client_ghost_timeouts[ghost.ckey] = 0
+			else if(GLOB.client_ghost_timeouts[ghost.ckey] == CANT_REENTER_ROUND)
 				return
-			GLOB.client_ghost_timeouts[ckey] = max(GLOB.client_ghost_timeouts[ckey],penalty)
+			GLOB.client_ghost_timeouts[ghost.ckey] = max(GLOB.client_ghost_timeouts[ghost.ckey],penalty)
 	// needs to be done AFTER the ckey transfer, too
 	return ghost
 
@@ -707,7 +707,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 //this is a mob verb instead of atom for performance reasons
 //see /mob/verb/examinate() in mob.dm for more info
 //overridden here and in /mob/living for different point span classes and sanity checks
-/mob/dead/observer/pointed(atom/A as mob|obj|turf in view())
+/mob/dead/observer/pointed(atom/A as mob|obj|turf in fov_view())
 	if(!..())
 		return 0
 	usr.visible_message("<span class='deadsay'><b>[src]</b> points to [A].</span>")

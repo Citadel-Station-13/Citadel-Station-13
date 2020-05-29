@@ -451,7 +451,7 @@
 /obj/item/reagent_containers/food/snacks/donkpocket/initialize_cooked_food(obj/item/reagent_containers/food/snacks/donkpocket/S, cooking_efficiency = 1)
 	. = ..()
 	if(istype(S))
-		desc = initial(desc) //reset the desc since will now cool down.
+		S.desc = initial(S.desc) //reset the desc since will now cool down.
 		for(var/R in S.bonus_reagents)
 			LAZYSET(S.cached_reagents_amount, R, S.reagents.get_reagent_amount(R))
 		S.previous_typepath = type

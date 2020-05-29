@@ -43,6 +43,7 @@
 	icon_state = "utilitybelt"
 	item_state = "utility"
 	content_overlays = TRUE
+	custom_premium_price = 300
 	rad_flags = RAD_PROTECT_CONTENTS | RAD_NO_CONTAMINATE //because this is easier than trying to have showers wash all contents.
 
 /obj/item/storage/belt/utility/ComponentInitialize()
@@ -712,6 +713,7 @@
 	icon_state = "fannypack_leather"
 	item_state = "fannypack_leather"
 	dying_key = DYE_REGISTRY_FANNYPACK
+	custom_price = 100
 
 /obj/item/storage/belt/fannypack/ComponentInitialize()
 	. = ..()

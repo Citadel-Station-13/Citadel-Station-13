@@ -9,6 +9,9 @@
 #define TEXT_EAST			"[EAST]"
 #define TEXT_WEST			"[WEST]"
 
+/// world.icon_size
+#define PIXELS 32
+
 //These get to go at the top, because they're special
 //You can use these defines to get the typepath of the currently running proc/verb (yes procs + verbs are objects)
 /* eg:
@@ -463,7 +466,7 @@ GLOBAL_LIST_INIT(pda_reskins, list(PDA_SKIN_CLASSIC = 'icons/obj/pda.dmi', PDA_S
 #define PDAIMG(what) {"<span class="pda16x16 [#what]"></span>"}
 
 //Filters
-#define AMBIENT_OCCLUSION list("type"="drop_shadow","x"=0,"y"=-2,"size"=4,"color"="#04080FAA")
+#define AMBIENT_OCCLUSION(_size, _color) list("type"="drop_shadow","x"=0,"y"=-2,"size"=_size,"color"=_color)
 #define EYE_BLUR(size) list("type"="blur", "size"=size)
 #define GRAVITY_MOTION_BLUR list("type"="motion_blur","x"=0,"y"=0)
 
