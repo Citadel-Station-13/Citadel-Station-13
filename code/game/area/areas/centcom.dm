@@ -32,7 +32,8 @@
 /area/centcom/vip
 	name = "VIP Zone"
 	dynamic_lighting = DYNAMIC_LIGHTING_DISABLED
- /area/centcom/winterball
+
+/area/centcom/winterball
 	name = "winterball Zone"
 	dynamic_lighting = DYNAMIC_LIGHTING_DISABLED
 

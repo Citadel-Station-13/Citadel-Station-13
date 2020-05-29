@@ -27,7 +27,7 @@
 	glide_size = 2
 	footstep_type = FOOTSTEP_MOB_CLAW
 
-/mob/living/simple_animal/pet/fox/ComponentInitialize()
+/mob/living/simple_animal/pet/sloth/ComponentInitialize()
 	. = ..()
 	AddElement(/datum/element/mob_holder, "sloth") //finally oranges can be held
 

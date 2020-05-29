@@ -5,6 +5,7 @@ k// PARTS //
 /obj/item/weaponcrafting/stock
 	name = "rifle stock"
 	desc = "A classic rifle stock that doubles as a grip, roughly carved out of wood."
+	custom_materials = list(/datum/material/wood = MINERAL_MATERIAL_AMOUNT * 6)
 	icon_state = "riflestock"
 
 /obj/item/weaponcrafting/durathread_string

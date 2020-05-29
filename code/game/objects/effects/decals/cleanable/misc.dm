@@ -3,6 +3,7 @@
 	desc = "Someone should clean that up."
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "shards"
+	beauty = -50
 
 /obj/effect/decal/cleanable/ash
 	name = "ashes"
@@ -10,6 +11,7 @@
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "ash"
 	mergeable_decal = FALSE
+	beauty = -50
 
 /obj/effect/decal/cleanable/ash/Initialize()
 	. = ..()
@@ -24,6 +26,7 @@
 /obj/effect/decal/cleanable/ash/large
 	name = "large pile of ashes"
 	icon_state = "big_ash"
+	beauty = -100
 
 /obj/effect/decal/cleanable/ash/large/Initialize()
 	. = ..()
@@ -34,6 +37,7 @@
 	desc = "Back to sand."
 	icon = 'icons/obj/shards.dmi'
 	icon_state = "tiny"
+	beauty = -100
 
 /obj/effect/decal/cleanable/glass/Initialize()
 	. = ..()
@@ -52,6 +56,7 @@
 	canSmoothWith = list(/obj/effect/decal/cleanable/dirt, /turf/closed/wall, /obj/structure/falsewall)
 	smooth = SMOOTH_FALSE
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	beauty = -75
 
 /obj/effect/decal/cleanable/dirt/Initialize()
 	. = ..()
@@ -72,6 +77,10 @@
 	desc = "It's still good. Four second rule!"
 	icon_state = "flour"
 
+/obj/effect/decal/cleanable/dirt/dust
+	name = "dust"
+	desc = "A thin layer of dust coating the floor."
+
 /obj/effect/decal/cleanable/greenglow/ecto
 	name = "ectoplasmic puddle"
 	desc = "You know who to call."
@@ -80,8 +89,11 @@
 /obj/effect/decal/cleanable/greenglow
 	name = "glowing goo"
 	desc = "Jeez. I hope that's not for lunch."
+	light_power = 1
+	light_range = 1
 	light_color = LIGHT_COLOR_GREEN
 	icon_state = "greenglow"
+	beauty = -300
 
 /obj/effect/decal/cleanable/greenglow/Initialize(mapload)
 	. = ..()
@@ -97,6 +109,7 @@
 	layer = WALL_OBJ_LAYER
 	icon_state = "cobweb1"
 	resistance_flags = FLAMMABLE
+	beauty = -100
 
 /obj/effect/decal/cleanable/cobweb/cobweb2
 	icon_state = "cobweb2"
@@ -108,10 +121,12 @@
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "molten"
 	mergeable_decal = FALSE
+	beauty = -150
 
 /obj/effect/decal/cleanable/molten_object/large
 	name = "big gooey grey mass"
 	icon_state = "big_molten"
+	beauty = -300
 
 //Vomit (sorry)
 /obj/effect/decal/cleanable/vomit
@@ -120,6 +135,7 @@
 	icon = 'icons/effects/blood.dmi'
 	icon_state = "vomit_1"
 	random_icon_states = list("vomit_1", "vomit_2", "vomit_3", "vomit_4")
+	beauty = -150
 
 /obj/effect/decal/cleanable/vomit/attack_hand(mob/user)
 	. = ..()
@@ -152,6 +168,7 @@
 	gender = NEUTER
 	icon = 'icons/effects/tomatodecal.dmi'
 	random_icon_states = list("tomato_floor1", "tomato_floor2", "tomato_floor3")
+	beauty = -100
 
 /obj/effect/decal/cleanable/plant_smudge
 	name = "plant smudge"
