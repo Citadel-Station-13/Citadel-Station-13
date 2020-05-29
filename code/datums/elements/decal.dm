@@ -50,7 +50,6 @@
 		target.cut_overlay(pic, TRUE)
 	if(isitem(target))
 		addtimer(CALLBACK(target, /obj/item/.proc/update_slot_icon), 0, TIMER_UNIQUE)
-	return ..()
 
 /datum/element/decal/proc/apply(atom/target, init = FALSE)
 	pic.dir = first_dir == NORTH ? target.dir : turn(first_dir, dir2angle(target.dir))
