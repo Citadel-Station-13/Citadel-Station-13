@@ -48,81 +48,61 @@ $require_changelogs = false;
 
 /* Common configs:
 The following config items can be added to both game server and discord announcement endpoints. Simply replace the $servers part with $discordWebHooks:
-
 include_repos - List of repos in owner/repo format to send to this endpoint. (defaults to all repos if not defined)
 	* can be given in place of repo to match all repos under an organization
 $servers[$configitem]['include_repos'][] = "tgstation/*";
-
 exclude_repos - List of repos in owner/repo format to not send to this endpoint.
 	* can be given in place of repo to match all repos under an organization
 $servers[$configitem]['exclude_repos'][] = 'tgstation/TerraGov-Marine-Corps';
 $servers[$configitem]['exclude_repos'][] = 'tgstation/tgstation13.org';
-
 exclude_events - List of events to not announce, values: opened, closed, reopened, or merged
 $servers[$configitem]['exclude_events'][] = 'closed';
 $servers[$configitem]['exclude_events'][] = 'reopened';
-
 announce_secret - Announce secret/security prs that have a [s] in front of the title? Defaults to no.
 	Can also be set to 'only' to only announce secret prs.
 $servers[$configitem]['announce_secret'] = false;
 $servers[$configitem]['announce_secret'] = 'only';
-
 announce_unvalidated - Announce prs by unvalidated users (see the validation setting above)? Defaults to no. 
 	Can also be set to 'only' to only announce prs by unvalidated users.
 $servers[$configitem]['announce_unvalidated'] = false;
-
-//Note: the same webhook or game server can be given in mutiple announce endpoints with different settings, allowing you to say, have embeds only show on prs to certain repos by excluding the repo in a endpoint with embed = false, and including the repo in a endpoint with embed = true true. This could also be used to only block closed and reopened events on prs by unvalidated users.
-
-
-
+//Note: the same webhook or game server can be given in mutiple announce endpoints with different settings, allowing you to say, have embeds only show on prs to certain repos by excluding the repo in an endpoint with embed = false, and including the repo in an endpoint with embed = true true. This could also be used to only block closed and reopened events on prs by unvalidated users.
 //Game servers to announce PRs to.
 /*
 $configitem = -1;//ignore me
-
 //Game Server Start
 $servers[++$configitem] = array();
 $servers[$configitem]['address'] = 'game.tgstation13.org';
 $servers[$configitem]['port'] = '1337';
 $servers[$configitem]['comskey'] = '89aj90cq2fm0amc90832mn9rm90';
 //Game Server End
-
 //Game Server Start
 $servers[++$configitem] = array();
 $servers[$configitem]['address'] = 'game.tgstation13.org';
 $servers[$configitem]['port'] = '2337';
 $servers[$configitem]['comskey'] = '89aj90cq2fm0amc90832mn9rm90';
 //Game Server End
-
 unset($configitem);//ignore
 */
 
 //discord webhooks to announce PRs to.
 /*
 $configitem = -1;//ignore me
-
 //Discord Webhook Start
 $discordWebHooks[++$configitem] = array();
-
 // Webhook Url (you can get this from discord via the webhook setting menu of the server or a channel.)
 $discordWebHooks[$configitem]['url'] = 'https://discordapp.com/api/webhooks/538933489920245771/xaoYtVuype-P1rb_uthQLkh_C4iVL3sjtIvFEp7rsfhbBs8tDsSJgE0a9MNWJaoSPBPK';
-
 // show an embed with more info?
 $discordWebHooks[$configitem]['embed'] = true;
-
 // if the above is true, don't include the text portion before the embed.
 //	 (This option is not advised as it's not compatible with users who disable embeds).
 $discordWebHooks[$configitem]['no_text'] = false;
 //Discord Webhook End
-
 //Discord Webhook Start
 $discordWebHooks[++$configitem] = array();
-
 // Webhook Url (you can get this from discord via the webhook setting menu of the server or a channel.)
 $discordWebHooks[$configitem]['url'] = 'https://discordapp.com/api/webhooks/538933686956064769/q0uDel7S6eutvRIyEwsuZo_ppzAoxqUNeU2PRChYVsYoJmmn2f2YYSDoMjy9FhhXKqpI';
-
 // show an embed with more info?
 $discordWebHooks[$configitem]['embed'] = true;
-
 // if the above is true, don't include the text portion before the embed.
 //	 (This option is not advised as it's not compatible with users who disable embeds).
 $discordWebHooks[$configitem]['no_text'] = false;
@@ -130,4 +110,3 @@ $discordWebHooks[$configitem]['no_text'] = false;
 */
 
 unset($configitem); //ignore
-

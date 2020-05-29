@@ -4,4 +4,4 @@ about: Suggest an idea for this project
 
 ---
 
-Please be aware that feature discussions most often take place on the Citadel Station Discord and should not be requested here.
+Feature requests are not handled in the repository. The best place to discuss these ideas would be on the Citadel Station Discord and should not be requested here.
