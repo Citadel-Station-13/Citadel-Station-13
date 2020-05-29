@@ -207,7 +207,7 @@
 			user.forceMove(get_turf(target))
 			target.adjustStaminaLoss(65)
 			target.Paralyze(10) 
-			target.KnockdDefaultCombatKnockdownown(20)
+			target.DefaultCombatKnockdown(20)
 			if(ishuman(target) && iscarbon(user))
 				target.grabbedby(user)
 				target.grippedby(user, instant = TRUE)
