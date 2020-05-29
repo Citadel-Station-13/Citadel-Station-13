@@ -17,11 +17,11 @@
 
 /datum/species/shadow/on_species_gain(mob/living/carbon/C, datum/species/old_species)
 	. = ..()
-	C.AddElement(/datum/element/photosynthesis, brute = 1, burn = 1, tox = 0, oxy = 0, nutri = 0, minus = 0, bonus = SHADOW_SPECIES_LIGHT_THRESHOLD, malus = SHADOW_SPECIES_LIGHT_THRESHOLD)
+	C.AddElement(/datum/element/photosynthesis, 1, 1, 0, 0, 0, 0, SHADOW_SPECIES_LIGHT_THRESHOLD, SHADOW_SPECIES_LIGHT_THRESHOLD)
 
 /datum/species/shadow/on_species_loss(mob/living/carbon/C)
 	. = ..()
-	C.RemoveElement(/datum/element/photosynthesis, brute = 1, burn = 1, tox = 0, oxy = 0, nutri = 0, minus = 0, bonus = SHADOW_SPECIES_LIGHT_THRESHOLD, malus = SHADOW_SPECIES_LIGHT_THRESHOLD)
+	C.RemoveElement(/datum/element/photosynthesis, 1, 1, 0, 0, 0, 0, SHADOW_SPECIES_LIGHT_THRESHOLD, SHADOW_SPECIES_LIGHT_THRESHOLD)
 
 /datum/species/shadow/check_roundstart_eligible()
 	if(SSevents.holidays && SSevents.holidays[HALLOWEEN])

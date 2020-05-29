@@ -17,7 +17,7 @@
 	var/bonus_lum = 0.2
 	///the maximum lum count under which the target damage is inversely adjusted.
 	var/malus_lum = 0
-	///List of atoms this element is attached to. Also acts as a multiplier if the same element is attached multiple times to the same target.
+	///List of atoms this element is attached to. Doubles as a multiplier if the same element is attached multiple times to a target multiple times.
 	var/list/attached_atoms
 
 /datum/element/photosynthesis/Attach(datum/target, brute = -1, burn = -1, tox = -1, oxy = -1, nutri = 4, minus = 0.5, bonus = 0.2, malus = 0)
@@ -52,28 +52,28 @@
 		var/light_amount = 0 //how much light there is in the place, affects receiving nutrition and healing
 		if(isturf(AM.loc)) //else, there's considered to be no light
 			var/turf/T = AM.loc
-			light_amount = (T.get_lumcount() - lum_minus) * attached_atoms[AM]
+			light_amount = (T.get_lumcount() - lum_minus)
 
 		if(isliving(AM))
 			var/mob/living/L = AM
 			if(L.stat == DEAD)
 				continue
 			if(light_nutrition_gain)
-				L.adjust_nutrition(light_amount * light_nutrition_gain, NUTRITION_LEVEL_FULL)
+				L.adjust_nutrition(light_amount * light_nutrition_gain * attached_atoms[AM], NUTRITION_LEVEL_FULL)
 			if(light_amount > bonus_lum || light_amount < malus_lum)
-				var/sign_mult = (light_amount > bonus_lum) ? 1 : -1
+				var/mult = ((light_amount > bonus_lum) ? 1 : -1) * attached_atoms[AM]
 				if(light_bruteheal)
-					L.adjustBruteLoss(light_bruteheal * sign_mult)
+					L.adjustBruteLoss(light_bruteheal * mult)
 				if(light_burnheal)
-					L.adjustFireLoss(light_burnheal * sign_mult)
+					L.adjustFireLoss(light_burnheal * mult)
 				if(light_toxheal)
-					L.adjustToxLoss(light_toxheal * sign_mult)
+					L.adjustToxLoss(light_toxheal * mult)
 				if(light_oxyheal)
-					L.adjustOxyLoss(light_oxyheal * sign_mult)
+					L.adjustOxyLoss(light_oxyheal * mult)
 
 		else if(light_amount > bonus_lum || light_amount < malus_lum)
 			var/obj/O = AM
-			var/damage = light_bruteheal * ((light_amount > bonus_lum) ? 1 : -1)
+			var/damage = light_bruteheal * ((light_amount > bonus_lum) ? 1 : -1) * attached_atoms[AM]
 			if(damage < 0 && O.obj_integrity < O.max_integrity)
 				O.obj_integrity = min(O.obj_integrity + damage, O.max_integrity) //Till we get a obj heal proc...
 			else
