@@ -62743,6 +62743,9 @@
 /obj/machinery/door/window{
 	name = "Secure Art Exhibition"
 	},
+/obj/structure/sign/painting/library_secure{
+	pixel_y = 32
+	},
 /turf/open/floor/carpet,
 /area/library)
 "ccu" = (
@@ -62751,6 +62754,9 @@
 	dir = 4
 	},
 /obj/structure/window/reinforced,
+/obj/structure/sign/painting/library_secure{
+	pixel_y = 32
+	},
 /turf/open/floor/carpet,
 /area/library)
 "ccv" = (
@@ -63927,6 +63933,9 @@
 /obj/structure/chair/sofa/right{
 	icon_state = "sofaend_right";
 	dir = 8
+	},
+/obj/structure/sign/painting/library_secure{
+	pixel_y = 32
 	},
 /turf/open/floor/wood,
 /area/library)
@@ -65109,6 +65118,9 @@
 /obj/item/radio/intercom{
 	name = "Station Intercom";
 	pixel_x = -26
+	},
+/obj/structure/sign/painting/library_secure{
+	pixel_y = 32
 	},
 /turf/open/floor/wood,
 /area/library)
