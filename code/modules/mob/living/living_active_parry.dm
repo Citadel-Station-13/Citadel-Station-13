@@ -66,6 +66,8 @@
 /mob/living/proc/end_parry_sequence()
 	if(!parrying)
 		return
+	REMOVE_TRAIT(src, TRAIT_MOBILITY_NOUSE, ACTIVE_PARRY_TRAIT)
+	REMOVE_TRAIT(src, TRAIT_SPRINT_LOCKED, ACTIVE_PARRY_TRAIT)
 	if(parry_visual_effect)
 		QDEL_NULL(parry_visual_effect)
 	var/datum/block_parry_data/data = get_parry_data()
