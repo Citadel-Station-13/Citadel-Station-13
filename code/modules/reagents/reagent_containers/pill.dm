@@ -25,14 +25,8 @@
 /obj/item/reagent_containers/pill/attack_self(mob/user)
 	return
 
-/obj/item/reagent_containers/pill/get_w_volume()
-	switch(reagents.total_volume)
-		if(0 to 10)
-			return 1
-		if(10 to 26)
-			return DEFAULT_VOLUME_TINY
-		else
-			return DEFAULT_VOLUME_SMALL
+/obj/item/reagent_containers/pill/get_w_volume() // DEFAULT_VOLUME_TINY at 25u, DEFAULT_VOLUME_SMALL at 50u
+	return DEFAULT_VOLUME_TINY/2 + reagents.total_volume / reagents.maximum_volume * DEFAULT_VOLUME_TINY
 
 /obj/item/reagent_containers/pill/attack(mob/M, mob/user, def_zone)
 	if(!canconsume(M, user))
