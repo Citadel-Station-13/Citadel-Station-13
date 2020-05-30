@@ -553,6 +553,15 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	else //We have no old flavortext, default to new
 		S["feature_flavor_text"]		>> features["flavor_text"]
 
+	if((S["silicon_flavor_text"] != "") && (S["silicon_flavor_text"] != null) && S["silicon_flavor_text"]) // dont change what isnt broken
+		S["silicon_flavor_text"]				>> features["silicon_flavor_text"] 
+
+		WRITE_FILE(S["silicon_feature_flavor_text"], features["silicon_flavor_text"]) 
+		WRITE_FILE(S["silicon_flavor_text"]	, "") 
+
+	else //We have no old flavortext, default to new
+		S["feature_flavor_text"]		>> features["flavor_text"]
+
 	S["feature_ooc_notes"]				>> features["ooc_notes"]
 
 	S["vore_flags"]						>> vore_flags
@@ -678,6 +687,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 
 	features["flavor_text"]			= copytext(features["flavor_text"], 1, MAX_FLAVOR_LEN)
+	features["silicon_flavor_text"]			= copytext(features["flavor_text"], 1, MAX_FLAVOR_LEN)
 	features["ooc_notes"]			= copytext(features["ooc_notes"], 1, MAX_FLAVOR_LEN)
 
 	joblessrole	= sanitize_integer(joblessrole, 1, 3, initial(joblessrole))
