@@ -141,3 +141,15 @@ GLOBAL_LIST_EMPTY(block_parry_data)
 	if(!div)
 		return
 	return total/div	//groan
+
+/**
+  * Called every life tick to handle blocking/parrying effects.
+  */
+/mob/living/proc/handle_block_parry(seconds = 1)
+	if(active_blocking)
+		var/datum/block_parry_data/data = return_block_parry_datum(active_block_item.block_parry_data)
+		adjustStaminaLossBuffered(data.block_stamina_cost_per_second * seconds)
+	if(parrying)
+		if(!CHECK_MOBILITY(src, MOBILITY_USE))
+			to_chat(src, "<span class='warning'>Your parry is interrupted!</span>")
+			end_parry_sequence()

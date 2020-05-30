@@ -10,11 +10,14 @@
   * Initiates a parrying sequence.
   */
 /mob/living/proc/initiate_parry_sequence()
+	if(parrying)
+		return		// already parrying
 	if(!CHECK_MOBILITY(src, MOBILITY_USE))
 		to_chat(src, "<span class='warning'>You are incapacitated, or otherwise unable to swing a weapon to parry with!")
 		return FALSE
-	if(parrying)
-		return		// already parrying
+	if(!SEND_SIGNAL(src, COMSIG_COMBAT_MODE_CHECK, COMBAT_MODE_ACTIVE))
+		to_chat(src, "<span class='warning'>You must be in combat mode to parry!</span>")
+		return FALSE
 	var/datum/block_parry_data/data
 	// Prioritize item, then martial art, then unarmed.
 	// yanderedev else if time
@@ -54,6 +57,8 @@
   * Called via timer when the parry sequence ends.
   */
 /mob/living/proc/end_parry_sequence()
+	if(!parrying)
+		return
 	var/datum/block_parry_data/data = get_parry_data()
 	var/list/effect_text = list()
 	if(!length(successful_parries))		// didn't parry anything successfully
@@ -93,14 +98,6 @@
   */
 /obj/item/proc/get_block_parry_data()
 	return return_block_parry_datum(block_parry_data)
-
-/**
-  * Called every life tick to handle blocking/parrying effects.
-  */
-/mob/living/proc/handle_block_parry(seconds = 1)
-	if(active_blocking)
-		var/datum/block_parry_data/data = return_block_parry_datum(active_block_item.block_parry_data)
-		adjustStaminaLossBuffered(data.block_stamina_cost_per_second * seconds)
 
 //Stubs.
 
@@ -186,6 +183,9 @@
 	var/stage = get_parry_stage()
 	if(stage == NOT_PARRYING)
 		return BLOCK_NONE
+	if(!CHECK_MOBILITY(src, MOBILITY_USE))
+		to_chat(src, "<span class='warning'>Your parry is interrupted!</span>")
+		end_parry_sequence()
 	var/datum/block_parry_data/data = get_parry_data()
 	if(attack_type && !(attack_type & data.parry_attack_types))
 		return BLOCK_NONE
