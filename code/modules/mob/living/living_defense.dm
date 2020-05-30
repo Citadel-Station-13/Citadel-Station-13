@@ -337,13 +337,16 @@
 		M.visible_message("<span class='notice'>\The [M] [M.friendly_verb_continuous] [src]!</span>",
 			"<span class='notice'>You [M.friendly_verb_simple] [src]!</span>", target = src,
 			target_message = "<span class='notice'>\The [M] [M.friendly_verb_continuous] you!</span>")
-		return FALSE
+		return 0
 	else
 		if(HAS_TRAIT(M, TRAIT_PACIFISM))
 			to_chat(M, "<span class='notice'>You don't want to hurt anyone!</span>")
 			return FALSE
-		if(mob_run_block(M, rand(M.melee_damage_lower, M.melee_damage_upper), "the [M.name]", ATTACK_TYPE_MELEE, M.armour_penetration, M, check_zone(M.zone_selected), null) & BLOCK_SUCCESS)
-			return FALSE
+		var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
+		var/list/return_list = list()
+		if(mob_run_block(M, damage, "the [M.name]", ATTACK_TYPE_MELEE, M.armour_penetration, M, check_zone(M.zone_selected), return_list) & BLOCK_SUCCESS)
+			return 0
+		damage = block_calculate_resultant_damage(damage, return_list)
 		if(M.attack_sound)
 			playsound(loc, M.attack_sound, 50, 1, 1)
 		M.do_attack_animation(src)
@@ -351,7 +354,7 @@
 						"<span class='userdanger'>\The [M] [M.attack_verb_continuous] you!</span>", null, COMBAT_MESSAGE_RANGE, null,
 						M, "<span class='danger'>You [M.attack_verb_simple] [src]!</span>")
 		log_combat(M, src, "attacked")
-		return TRUE
+		return damage
 
 /mob/living/attack_paw(mob/living/carbon/monkey/M)
 	if (M.a_intent == INTENT_HARM)

@@ -33,7 +33,7 @@
 /mob/living/silicon/attack_animal(mob/living/simple_animal/M)
 	. = ..()
 	if(.)
-		var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
+		var/damage = .
 		if(prob(damage))
 			for(var/mob/living/N in buckled_mobs)
 				N.DefaultCombatKnockdown(20)
