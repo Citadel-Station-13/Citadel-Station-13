@@ -308,10 +308,6 @@
 	block_stamina_efficiency = 2
 	// slowdown
 	block_slowdown = 1
-	// more efficient vs projectiles
-	block_stamina_efficiency_override = list(
-		"[ATTACK_TYPE_PROJECTILE]" = 4
-	)
 	// no attacking while blocking
 	block_lock_attacking = TRUE
 
@@ -332,6 +328,16 @@
 	parry_failed_stagger_duration = 3 SECONDS
 	parry_failed_clickcd_duration = CLICK_CD_MELEE
 	parry_cooldown = 3 SECONDS
+
+// KEV, WHY AREN'T YOU JUST PUTTING IT IN THE DEFINITION?!?!?!?!
+// I'LL TELL YOU WHY, BECAUSE BYOND DOESN'T CONSIDER "[(1<<0)]" A "CONSTANT EXPRESSION"
+// WHAT EVEN IS MORE CONSTANT THAN 1 BITSHIFTED TO THE LEFT BY 0 PLACES AS A STRING?
+/datum/block_parry_data/dual_esword/New()
+	// more efficient vs projectiles
+	block_stamina_efficiency_override = list(
+		"[ATTACK_TYPE_PROJECTILE]" = 4
+	)
+	return ..()
 
 /obj/item/twohanded/dualsaber/suicide_act(mob/living/carbon/user)
 	if(wielded)
