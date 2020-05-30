@@ -13,6 +13,8 @@
 	if(!CHECK_MOBILITY(src, MOBILITY_USE))
 		to_chat(src, "<span class='warning'>You are incapacitated, or otherwise unable to swing a weapon to parry with!")
 		return FALSE
+	if(parrying)
+		return		// already parrying
 	var/datum/block_parry_data/data
 	// Prioritize item, then martial art, then unarmed.
 	// yanderedev else if time
@@ -70,9 +72,8 @@
   * Handles starting effects for parrying.
   */
 /mob/living/proc/handle_parry_starting_effects(datum/block_parry_data/data)
-	set waitfor = FALSE			// this is required don't touch it.
-	new /obj/effect/abstract/parry/main(null, data, src)
 	playsound(src, data.parry_start_sound, 75, 1)
+	new /obj/effect/abstract/parry/main(null, data, src)
 	switch(parrying)
 		if(ITEM_PARRY)
 			visible_message("<span class='warning'>[src] swings [active_parry_item]!</span>")
@@ -85,7 +86,7 @@
 /mob/living/proc/handle_parry_ending_effects(datum/block_parry_data/data, list/failed_effect_text)
 	if(length(successful_parries))
 		return
-	visible_message("<span class='warning'>[src] fails to connect their parry[failed_effect_text? english_list(failed_effect_text) : ""]!")
+	visible_message("<span class='warning'>[src] fails to connect their parry[failed_effect_text? ", [english_list(failed_effect_text)]" : ""]!")
 
 /**
   * Gets this item's datum/block_parry_data
@@ -281,7 +282,7 @@
 	if(owner)
 		attach_to(owner)
 	if(data)
-		run_animation(data.parry_time_windup, data.parry_time_active, data.parry_time_spindown, TRUE)
+		INVOKE_ASYNC(src, .proc/run_animation, data.parry_time_windup, data.parry_time_active, data.parry_time_spindown, TRUE)
 
 /obj/effect/abstract/parry/main/Destroy()
 	detach_from(owner)
