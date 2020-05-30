@@ -156,7 +156,7 @@ GLOBAL_LIST_EMPTY(block_parry_data)
   * Called every life tick to handle blocking/parrying effects.
   */
 /mob/living/proc/handle_block_parry(seconds = 1)
-	if(active_blocking)
+	if(combat_flags & COMBAT_FLAG_ACTIVE_BLOCKING)
 		var/datum/block_parry_data/data = return_block_parry_datum(active_block_item.block_parry_data)
 		adjustStaminaLossBuffered(data.block_stamina_cost_per_second * seconds)
 	if(parrying)

@@ -44,7 +44,6 @@
 	var/obj/effect/abstract/parry/parry_visual_effect
 	/// world.time of last parry end
 	var/parry_end_time_last = 0
-	#warn implement above
 	/// Successful parries within the current parry cycle. It's a list of efficiency percentages.
 	var/list/successful_parries
 

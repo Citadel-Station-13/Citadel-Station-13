@@ -12,8 +12,11 @@
 /mob/living/proc/initiate_parry_sequence()
 	if(parrying)
 		return		// already parrying
+	if(!(combat_flags & COMBAT_FLAG_PARRY_CAPABLE))
+		to_chat(src, "<span class='warning'>You are not something that can parry attacks.</span>")
+		return
 	if(!CHECK_MOBILITY(src, MOBILITY_USE))
-		to_chat(src, "<span class='warning'>You are incapacitated, or otherwise unable to swing a weapon to parry with!")
+		to_chat(src, "<span class='warning'>You are incapacitated, or otherwise unable to swing a weapon to parry with!</span>")
 		return FALSE
 	if(!SEND_SIGNAL(src, COMSIG_COMBAT_MODE_CHECK, COMBAT_MODE_ACTIVE))
 		to_chat(src, "<span class='warning'>You must be in combat mode to parry!</span>")
@@ -29,7 +32,7 @@
 	else if(mind?.martial_art?.can_martial_parry)
 		data = mind.martial_art.block_parry_data
 		method = MARTIAL_PARRY
-	else if(parry_while_unarmed)
+	else if(combat_flags & COMBAT_FLAG_UNARMED_PARRY)
 		data = block_parry_data
 		method = UNARMED_PARRY
 	else
@@ -82,6 +85,7 @@
 	handle_parry_ending_effects(data, effect_text)
 	parrying = NOT_PARRYING
 	parry_start_time = 0
+	parry_end_time_last = world.time
 	successful_parries = null
 
 /**

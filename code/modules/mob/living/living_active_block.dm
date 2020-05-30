@@ -5,10 +5,10 @@
 	return ..()
 
 /mob/living/proc/stop_active_blocking(was_forced = FALSE)
-	if(!active_blocking)
+	if(!(combat_flags & (COMBAT_FLAG_ACTIVE_BLOCK_STARTING | COMBAT_FLAG_ACTIVE_BLOCKING)))
 		return FALSE
 	var/obj/item/I = active_block_item
-	active_blocking = FALSE
+	combat_flags &= ~(COMBAT_FLAG_ACTIVE_BLOCKING | COMBAT_FLAG_ACTIVE_BLOCK_STARTING)
 	active_block_effect_end()
 	active_block_item = null
 	REMOVE_TRAIT(src, TRAIT_MOBILITY_NOUSE, ACTIVE_BLOCK_TRAIT)
@@ -19,14 +19,14 @@
 	return TRUE
 
 /mob/living/proc/start_active_blocking(obj/item/I)
-	if(active_blocking)
+	if(combat_flags & (COMBAT_FLAG_ACTIVE_BLOCK_STARTING | COMBAT_FLAG_ACTIVE_BLOCKING))
 		return FALSE
 	if(!(I in held_items))
 		return FALSE
 	var/datum/block_parry_data/data = I.get_block_parry_data()
 	if(!istype(data))		//Typecheck because if an admin/coder screws up varediting or something we do not want someone being broken forever, the CRASH logs feedback so we know what happened.
 		CRASH("start_active_blocking called with an item with no valid data: [I] --> [I.block_parry_data]!")
-	active_blocking = TRUE
+	combat_flags |= COMBAT_FLAG_ACTIVE_BLOCKING
 	active_block_item = I
 	if(data.block_lock_attacking)
 		ADD_TRAIT(src, TRAIT_MOBILITY_NOUSE, ACTIVE_BLOCK_TRAIT)		//probably should be something else at some point
@@ -47,11 +47,11 @@
 /mob/living/proc/continue_starting_active_block()
 	if(SEND_SIGNAL(src, COMSIG_COMBAT_MODE_CHECK, COMBAT_MODE_INACTIVE))
 		return DO_AFTER_STOP
-	return (active_block_starting != ACTIVE_BLOCK_STARTING_INTERRUPT)? DO_AFTER_CONTINUE : DO_AFTER_STOP
+	return (combat_flags & COMBAT_FLAG_ACTIVE_BLOCK_STARTING)? DO_AFTER_CONTINUE : DO_AFTER_STOP
 
 /mob/living/get_standard_pixel_x_offset()
 	. = ..()
-	if(active_blocking || active_block_starting)
+	if(combat_flags & (COMBAT_FLAG_ACTIVE_BLOCK_STARTING | COMBAT_FLAG_ACTIVE_BLOCKING))
 		if(dir & EAST)
 			. += 8
 		if(dir & WEST)
@@ -59,7 +59,7 @@
 
 /mob/living/get_standard_pixel_y_offset()
 	. = ..()
-	if(active_blocking || active_block_starting)
+	if(combat_flags & (COMBAT_FLAG_ACTIVE_BLOCK_STARTING | COMBAT_FLAG_ACTIVE_BLOCKING))
 		if(dir & NORTH)
 			. += 8
 		if(dir & SOUTH)
@@ -69,7 +69,7 @@
   * Proc called by keybindings to toggle active blocking.
   */
 /mob/living/proc/keybind_toggle_active_blocking()
-	if(active_blocking || active_block_starting)
+	if(combat_flags & (COMBAT_FLAG_ACTIVE_BLOCK_STARTING | COMBAT_FLAG_ACTIVE_BLOCKING))
 		return keybind_stop_active_blocking()
 	else
 		return keybind_start_active_blocking()
@@ -78,7 +78,7 @@
   * Proc called by keybindings to start active blocking.
   */
 /mob/living/proc/keybind_start_active_blocking()
-	if(active_blocking || active_block_starting)
+	if(combat_flags & (COMBAT_FLAG_ACTIVE_BLOCK_STARTING | COMBAT_FLAG_ACTIVE_BLOCKING))
 		return FALSE
 	if(!SEND_SIGNAL(src, COMSIG_COMBAT_MODE_CHECK, COMBAT_MODE_ACTIVE))
 		to_chat(src, "<span class='warning'>You must be in combat mode to actively block!</span>")
@@ -92,23 +92,23 @@
 		return
 	var/datum/block_parry_data/data = I.get_block_parry_data()
 	var/delay = data.block_start_delay
-	active_block_starting = TRUE
+	combat_flags |= COMBAT_FLAG_ACTIVE_BLOCK_STARTING
 	animate(src, pixel_x = get_standard_pixel_x_offset(), pixel_y = get_standard_pixel_y_offset(), time = delay, FALSE, SINE_EASING | EASE_IN)
 	if(!do_after_advanced(src, delay, src, DO_AFTER_REQUIRES_USER_ON_TURF|DO_AFTER_NO_COEFFICIENT|DO_AFTER_DISALLOW_ACTIVE_ITEM_CHANGE, CALLBACK(src, .proc/continue_starting_active_block), MOBILITY_USE, null, null, I))
 		to_chat(src, "<span class='warning'>You fail to raise [I].</span>")
-		active_block_starting = FALSE
+		combat_flags &= ~(COMBAT_FLAG_ACTIVE_BLOCK_STARTING)
 		animate(src, pixel_x = get_standard_pixel_x_offset(), pixel_y = get_standard_pixel_y_offset(), time = 2.5, FALSE, SINE_EASING | EASE_IN, ANIMATION_END_NOW)
 		return
-	active_block_starting = FALSE
+	combat_flags &= ~(COMBAT_FLAG_ACTIVE_BLOCK_STARTING)
 	start_active_blocking(I)
 
 /**
   * Proc called by keybindings to stop active blocking.
   */
 /mob/living/proc/keybind_stop_active_blocking()
-	if(active_block_starting)
-		active_block_starting = ACTIVE_BLOCK_STARTING_INTERRUPT
-	stop_active_blocking(FALSE)
+	combat_flags &= ~(COMBAT_FLAG_ACTIVE_BLOCK_STARTING)
+	if(combat_flags & COMBAT_FLAG_ACTIVE_BLOCKING)
+		stop_active_blocking(FALSE)
 	return TRUE
 
 /**

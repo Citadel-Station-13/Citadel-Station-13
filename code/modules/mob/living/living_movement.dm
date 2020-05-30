@@ -11,7 +11,7 @@
 		update_pixel_shifting()
 
 /mob/living/proc/update_pixel_shifting(moved = FALSE)
-	if(active_blocking)
+	if(combat_flags & COMBAT_FLAG_ACTIVE_BLOCKING)
 		animate(src, pixel_x = get_standard_pixel_x_offset(), pixel_y = get_standard_pixel_y_offset(), time = 2.5, flags = ANIMATION_END_NOW)
 	else if(moved)
 		if(is_shifted)

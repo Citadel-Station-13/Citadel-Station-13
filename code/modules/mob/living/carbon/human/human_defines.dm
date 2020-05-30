@@ -13,8 +13,6 @@
 
 	blocks_emissive = EMISSIVE_BLOCK_UNIQUE
 
-	active_block_enabled = TRUE
-
 	//Hair colour and style
 	var/hair_color = "000"
 	var/hair_style = "Bald"
