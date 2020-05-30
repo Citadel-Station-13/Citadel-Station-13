@@ -118,6 +118,8 @@ GLOBAL_LIST_EMPTY(block_parry_data)
 		)
 	/// Enable default handling of audio/visual feedback
 	var/parry_default_handle_feedback = TRUE
+	/// Parry start sound
+	var/parry_start_sound = 'sound/block_parry/sfx-parry.ogg'
 	/// Sounds for parrying
 	var/list/parry_sounds = list('sound/block_parry/block_metal1.ogg' = 1, 'sound/block_parry/block_metal1.ogg' = 1)
 	/// Stagger duration post-parry if you fail to parry an attack

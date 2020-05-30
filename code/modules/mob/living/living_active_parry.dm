@@ -45,7 +45,7 @@
 	parry_start_time = world.time
 	successful_parries = list()
 	addtimer(CALLBACK(src, .proc/end_parry_sequence), full_parry_duration)
-	handle_parry_starting_effects()
+	handle_parry_starting_effects(data)
 	return TRUE
 
 /**
@@ -53,12 +53,15 @@
   */
 /mob/living/proc/end_parry_sequence()
 	var/datum/block_parry_data/data = get_parry_data()
+	var/list/effect_text = list()
 	if(!length(successful_parries))		// didn't parry anything successfully
 		if(data.parry_failed_stagger_duration)
 			Stagger(data.parry_failed_stagger_duration)
+			effect_text += "staggering themselves"
 		if(data.parry_failed_clickcd_duration)
 			changeNext_move(data.parry_failed_clickcd_duration)
-	handle_parry_ending_effects()
+			effect_text += "throwing themselves off balance"
+	handle_parry_ending_effects(data, effect_text)
 	parrying = NOT_PARRYING
 	parry_start_time = 0
 	successful_parries = null
@@ -68,12 +71,20 @@
   */
 /mob/living/proc/handle_parry_starting_effects(datum/block_parry_data/data)
 	new /obj/effect/abstract/parry/main(null, data, src)
+	playsound(src, data.parry_start_sound, 75, 1)
+	switch(parrying)
+		if(ITEM_PARRY)
+			visible_message("<span class='warning'>[src] swings [active_parry_item], !</span>")
+		else
+			visible_message("<span class='warning'>[src] rushes forwards!</span>")
 
 /**
   * Handles ending effects for parrying.
   */
-/mob/living/proc/handle_parry_ending_effects()
-	return
+/mob/living/proc/handle_parry_ending_effects(datum/block_parry_data/data, list/failed_effect_text)
+	if(length(successful_parries))
+		return
+	visible_message("<span class='warning'>[src] fails to connect their parry[failed_effect_text? english_list(failed_effect_text) : ""]!")
 
 /**
   * Gets this item's datum/block_parry_data
@@ -261,6 +272,7 @@
 	var/mob/living/owner
 
 /obj/effect/abstract/parry/main
+	name = null
 	icon_state = "parry_bm_hold"
 
 /obj/effect/abstract/parry/main/Initialize(mapload, datum/block_parry_data/data, mob/living/owner)
