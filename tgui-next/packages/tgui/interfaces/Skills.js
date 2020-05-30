@@ -1,120 +1,93 @@
 import { decodeHtmlEntities } from 'common/string';
 import { Component, Fragment } from 'inferno';
 import { act } from '../byond';
-import { Box, Button, Input, Section, Table, Tabs } from '../components';
+import { Box, Button, Section, Table, Tabs } from '../components';
 
-// It's a class because we need to store state in the form of
-// the current hovered item
-export class Uplink extends Component {
-  constructor() {
-    super();
-    this.state = {
-      hoveredItem: {},
-    };
-  }
-
-  setHoveredItem(hoveredItem) {
-    this.setState({
-      hoveredItem,
-    });
-  }
-
-  render() {
-    const { state } = this.props;
-    const { config, data } = state;
-    const { ref } = config;
-    const {
-      see_skill_mods,
-      compact_mode,
-      categories = [],
-    } = data;
-    return (
-      <Section
-        title={(
-          <Box
-            inline
-            color={telecrystals > 0 ? 'good' : 'bad'}>
-            {telecrystals} TC
-          </Box>
-        )}
-        buttons={(
-            <Button
-              icon={see_skill_mods ? 'check-square-o' : 'square-o'}
-              content='Show modifiers'}
-              onClick={() => act(ref, 'toggle_mods')} />
-            <Button
-              icon={compact_mode ? 'list' : 'info'}
-              content={compact_mode ? 'Compact' : 'Detailed'}
-              onClick={() => act(ref, 'compact_toggle')} />
-            )}
-          </Fragment>
-        )}>
-        {(
-          <Tabs vertical>
-            {categories.map(category => {
-              const { name, skills } = category;
-              if (name != selected_category) {
-                return;
-              }
-              return (
-                <Tabs.Tab
-                  key={name}
-                  label={`${name} (${skills.length})`}>
+export const Skills = props => {
+  const { state } = props;
+  const { config, data } = state;
+  const { ref } = config;
+  const {
+    name,
+    compact_mode,
+    selected_category,
+    categories = [],
+  } = props;
+  return (
+    <Section
+      buttons={(
+          <Button
+            icon={see_skill_mods ? 'check-square-o' : 'square-o'}
+            content='Show modifiers'}
+            onClick={() => act(ref, 'toggle_mods')} />
+          <Button
+            icon={compact_mode ? 'list' : 'info'}
+            content={compact_mode ? 'Compact' : 'Detailed'}
+            onClick={() => act(ref, 'compact_toggle')} />
+          )}
+        </Fragment>
+      )}>
+      {(
+        <Tabs vertical>
+          {categories.map(category => {
+            const { name, skills } = category;
+            return (
+              <Tabs.Tab
+                key={name}
+                label={`${name} (${skills.length})`}>
+				if (name != selected_category) {
                   {() => (
                     <skillList
                       compact={compact_mode}
                       skills={skills}
-                      hoveredItem={hoveredItem}
-                      onBuyMouseOver={skill => this.setHoveredItem(skill)}
-                      onBuyMouseOut={skill => this.setHoveredItem({})}
-                      onBuy={skill => act(ref, 'buy', {
-                        skill: skill.name,
-                      })} />
+					  see_mods={see_skill_mods}
+                    />
                   )}
-                </Tabs.Tab>
-              );
-            })}
-          </Tabs>
-        )}
-      </Section>
-    );
-  }
+				}
+              </Tabs.Tab>
+            );
+          })}
+        </Tabs>
+      )}
+    </Section>
+  );
 }
 
 const skillList = props => {
   const {
-    skills,
-    hoveredItem,
     compact,
-    onBuy,
-    onBuyMouseOver,
-    onBuyMouseOut,
+    skills,
+	see_mods
   } = props;
-  const hoveredCost = hoveredItem && hoveredItem.cost || 0;
   if (compact) {
     return (
       <Table>
-        {items.map(item => {
-          const notSameItem = hoveredItem && hoveredItem.name !== item.name;
-          const notEnoughHovered = telecrystals - hoveredCost < item.cost;
-          const disabledDueToHovered = notSameItem && notEnoughHovered;
+        {skills.map(skill => {
           return (
             <Table.Row
-              key={item.name}
+              key={skill.name}
               className="candystripe">
               <Table.Cell bold>
-                {decodeHtmlEntities(item.name)}
+                <Box color=skill.color>
+                  {decodeHtmlEntities(skill.name)}
+                </Box>
               </Table.Cell>
               <Table.Cell collapsing textAlign="right">
                 <Button
                   fluid
-                  content={item.cost + " TC"}
-                  disabled={telecrystals < item.cost || disabledDueToHovered}
-                  tooltip={item.desc}
+                  content={see_mods
+                    ? skill.skill_base
+                    : skill.skill_mod
+                  }
+                  tooltip={skill.mods_tooltip
+                    ? (skill.desc
+                      + "\nModifiers: "
+                      + skill.mods_tooltip
+                    )
+                    : skill.desc
+                  }
                   tooltipPosition="left"
-                  onmouseover={() => onBuyMouseOver(item)}
-                  onmouseout={() => onBuyMouseOut(item)}
-                  onClick={() => onBuy(item)} />
+                />
               </Table.Cell>
             </Table.Row>
           );
@@ -122,24 +95,32 @@ const skillList = props => {
       </Table>
     );
   }
-  return items.map(item => {
-    const notSameItem = hoveredItem && hoveredItem.name !== item.name;
-    const notEnoughHovered = telecrystals - hoveredCost < item.cost;
-    const disabledDueToHovered = notSameItem && notEnoughHovered;
+  return skills.map(skill => {
     return (
       <Section
-        key={item.name}
-        title={item.name}
+        key={skill.name}
+        title={skill.name}
         level={2}
         buttons={(
           <Button
-            content={item.cost + ' TC'}
-            disabled={telecrystals < item.cost || disabledDueToHovered}
-            onmouseover={() => onBuyMouseOver(item)}
-            onmouseout={() => onBuyMouseOut(item)}
-            onClick={() => onBuy(item)} />
+            content={see_mods
+              ? skill.skill_base
+              : skill.skill_mod
+            }
+          />
         )}>
-        {decodeHtmlEntities(item.desc)}
+        {decodeHtmlEntities(skill.desc)}
+        modifiers:
+        {skill.modifiers.map(modifier => {
+          <Button
+            textAlign="center"
+            color="transparent"
+            tooltip={
+              "<b>"+modifier.name+"</b>\n"+modifier.desc
+            }
+            <Box className={modifier.icon_class} />
+          />
+        })}
       </Section>
     );
   });

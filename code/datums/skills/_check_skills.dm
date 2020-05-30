@@ -28,6 +28,15 @@
 	. = list()
 	var/datum/asset/spritesheet/simple/assets = get_asset_datum(/datum/asset/spritesheet/simple/skills)
 
+	var/all_mods = list()
+	for(var/id in all_current_skill_modifiers)
+		var/datum/skill_modifier/M = GLOB.skill_modifiers[id]
+		all_mods[id] = list(
+			name = M.name,
+			desc = M.desc,
+			icon = assets.icon_class_name(M.icon)
+		)
+
 	.["categories"] = list()
 	var/list/current
 	var/category
@@ -42,12 +51,15 @@
 
 		var/skill_value = owner.get_skill_value(path, FALSE)
 		var/skill_level = owner.get_skill_level(path, FALSE)
+		var/list/mod_list = list()
+		var/list/modifiers
 		var/list/mod_ids = list()
 
 		var/value_mods = LAZYACCESS(skill_value_mods, path)
 		var/mod_value = skill_value
 		for(var/k in value_mods)
 			var/datum/skill_modifier/M = GLOB.skill_modifiers[k]
+			mod_list |= M.name
 			mod_ids |= M.identifier
 			mod_value = M.apply_modifier(mod_value, path, src, MODIFIER_TARGET_VALUE)
 
@@ -55,33 +67,30 @@
 		var/mod_level = skill_level
 		for(var/k in lvl_mods)
 			var/datum/skill_modifier/M = GLOB.skill_modifiers[k]
+			mod_list |= M.name
 			mod_ids |= M.identifier
 			mod_level = M.apply_modifier(mod_level, path, src, MODIFIER_TARGET_LEVEL)
 		mod_level = SANITIZE_SKILL_LEVEL(S.type, round(mod_level, 1))
 
+		for(var/k in mod_ids)
+			var/list/mod = all_current_skill_modifiers[k]
+			if(mod)
+				LAZYADD(modifiers, list(mod))
+
 		var/list/data = list(
 			name = S.name,
+			desc = S.desc,
 			color = S.name_color,
 			skill_base = S.standard_render_value(skill_value, skill_level),
 			skill_mod = S.standard_render_value(mod_value, mod_level),
-			mod_ids = mod_ids
+			mods_tooltip = english_list(mod_list, null),
+			modifiers = modifiers
 		)
 		current += list(data)
 
 	if(category)
 		var/list/cat = list("name" = category, "skills" = current)
 		.["categories"] += list(cat)
-
-
-	var/all_mods = list()
-	for(var/id in all_current_skill_modifiers)
-		var/datum/skill_modifier/M = GLOB.skill_modifiers[id]
-		all_mods[id] = list(
-			name = M.name,
-			desc = M.desc,
-			icon = assets.icon_class_name(M.icon)
-		)
-	.["modifiers"] = all_mods
 
 /datum/skill_holder/ui_data(mob/user)
 	. = list()
