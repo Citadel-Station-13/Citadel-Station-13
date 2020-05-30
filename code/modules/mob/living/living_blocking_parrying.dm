@@ -43,7 +43,7 @@ GLOBAL_LIST_EMPTY(block_parry_data)
 	/// Override absorption, list("[ATTACK_TYPE_DEFINE]" = absorption), see [block_damage_absorption]
 	var/list/block_damage_absorption_override
 
-	/// Ratio of damage block above absorption amount, coefficient, lower is better, this is multiplied by damage to determine how much is blocked.
+	/// Ratio of damage to allow through above absorption and below limit. Multiplied by damage to determine how much to let through. Lower is better.
 	var/block_damage_multiplier = 0.5
 	/// Override damage overrun efficiency, list("[ATTACK_TYPE_DEFINE]" = absorption), see [block_damage_efficiency]
 	var/list/block_damage_multiplier_override
@@ -170,3 +170,10 @@ GLOBAL_LIST_EMPTY(block_parry_data)
 		if(!CHECK_MOBILITY(src, MOBILITY_USE))
 			to_chat(src, "<span class='warning'>Your parry is interrupted!</span>")
 			end_parry_sequence()
+
+/mob/living/on_item_dropped(obj/item/I)
+	if(I == active_block_item)
+		stop_active_blocking()
+	if(I == active_parry_item))
+		end_parry_sequence()
+	return ..()

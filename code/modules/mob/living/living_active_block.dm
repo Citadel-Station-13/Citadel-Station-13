@@ -1,9 +1,4 @@
 // Active directional block system. Shared code is in [living_blocking_parrying.dm]
-/mob/living/on_item_dropped(obj/item/I)
-	if(I == active_block_item)
-		stop_active_blocking()
-	return ..()
-
 /mob/living/proc/stop_active_blocking(was_forced = FALSE)
 	if(!(combat_flags & (COMBAT_FLAG_ACTIVE_BLOCK_STARTING | COMBAT_FLAG_ACTIVE_BLOCKING)))
 		return FALSE
