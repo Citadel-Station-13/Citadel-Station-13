@@ -395,17 +395,7 @@
 	return dna
 
 
-/mob/living/carbon/human/proc/hardset_dna(ui, list/mutation_index, list/default_mutation_genes, newreal_name, newblood_type, datum/species/mrace, newfeatures, list/mutations, force_transfer_mutations)
-//Do not use force_transfer_mutations for stuff like cloners without some precautions, otherwise some conditional mutations could break (timers, drill hat etc)
-	if(newfeatures)
-		var/old_size = dna.features["body_size"]
-		dna.features = newfeatures
-		dna.update_body_size(old_size)
-
-	if(mrace)
-		var/datum/species/newrace = new mrace.type
-		newrace.copy_properties_from(mrace)
-		set_species(newrace, icon_update=0)
+/mob/living/carbon/human/proc/hardset_dna(ui, list/mutation_index, newreal_name, newblood_type, datum/species/mrace, newfeatures)
 
 	if(newreal_name)
 		real_name = newreal_name
@@ -416,7 +406,17 @@
 
 	if(ui)
 		dna.uni_identity = ui
-		updateappearance(icon_update=0)
+		updateappearance(icon_update=FALSE)
+
+	if(newfeatures)
+		var/old_size = dna.features["body_size"]
+		dna.features = newfeatures
+		dna.update_body_size(old_size)
+
+	if(mrace)
+		var/datum/species/newrace = new mrace.type
+		newrace.copy_properties_from(mrace)
+		set_species(newrace, icon_update=FALSE)
 
 	if(LAZYLEN(mutation_index))
 		dna.mutation_index = mutation_index.Copy()

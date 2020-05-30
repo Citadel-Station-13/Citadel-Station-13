@@ -302,3 +302,6 @@
 
 /obj/item/paper/crumpled/bloody
 	icon_state = "scrap_bloodied"
+
+/obj/item/paper/crumpled/muddy
+	icon_state = "scrap_mud"

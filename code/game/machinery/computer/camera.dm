@@ -225,11 +225,16 @@
 	desc = "Used for watching an empty arena."
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "telescreen"
-	plane = ABOVE_WALL_PLANE
 	network = list("thunder")
 	density = FALSE
 	circuit = null
 	light_power = 0
+
+/obj/machinery/computer/security/telescreen/Initialize()
+	. = ..()
+	var/turf/T = get_turf_pixel(src)
+	if(iswallturf(T))
+		plane = ABOVE_WALL_PLANE
 
 /obj/machinery/computer/security/telescreen/update_icon_state()
 	icon_state = initial(icon_state)

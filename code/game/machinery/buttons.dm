@@ -3,7 +3,6 @@
 	desc = "A remote control switch."
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "doorctrl"
-	plane = ABOVE_WALL_PLANE
 	var/skin = "doorctrl"
 	power_channel = ENVIRON
 	var/obj/item/assembly/device
@@ -17,17 +16,19 @@
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 
 /obj/machinery/button/Initialize(mapload, ndir = 0, built = 0)
-	if(istext(id) && mapload)
-		if(id[1] == "!")
-			id = SSmapping.get_obfuscated_id(id)
+	if(istext(id) && mapload && id[1] == "!")
+		id = SSmapping.get_obfuscated_id(id)
 	. = ..()
+	var/turf/T = get_turf_pixel(src)
+	if(iswallturf(T))
+		plane = ABOVE_WALL_PLANE
+
 	if(built)
 		setDir(ndir)
 		pixel_x = (dir & 3)? 0 : (dir == 4 ? -24 : 24)
 		pixel_y = (dir & 3)? (dir ==1 ? -24 : 24) : 0
 		panel_open = TRUE
 		update_icon()
-
 
 	if(!built && !device && device_type)
 		device = new device_type(src)

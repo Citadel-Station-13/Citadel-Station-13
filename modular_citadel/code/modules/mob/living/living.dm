@@ -37,7 +37,7 @@
 		if(!(combat_flags & COMBAT_FLAG_HARD_STAMCRIT) && total_health >= STAMINA_CRIT && !stat)
 			to_chat(src, "<span class='notice'>You're too exhausted to keep going...</span>")
 			set_resting(TRUE, FALSE, FALSE)
-			disable_intentional_combat_mode(TRUE, FALSE)
+			SEND_SIGNAL(src, COMSIG_DISABLE_COMBAT_MODE)
 			ENABLE_BITFIELD(combat_flags, COMBAT_FLAG_HARD_STAMCRIT)
 			filters += CIT_FILTER_STAMINACRIT
 			update_mobility()
