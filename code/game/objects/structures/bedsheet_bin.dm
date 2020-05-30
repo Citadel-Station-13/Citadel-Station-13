@@ -328,8 +328,6 @@ LINEN BINS
 		else
 			var/chosen = pick(sheet_types)
 			B = new chosen
-			if(flags_1 & HOLOGRAM_1)
-				B.flags_1 |= HOLOGRAM_1
 
 		B.forceMove(drop_location())
 		user.put_in_hands(B)
