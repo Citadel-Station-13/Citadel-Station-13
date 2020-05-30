@@ -20,21 +20,23 @@
 		need_static_data_update = FALSE
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
-		ui = new(user, src, ui_key, "check_skills", "[owner.name]'s Skills", 900, 480, master_ui, state)
+		ui.set_autoupdate(FALSE) // This UI is only ever opened by one person, and never is updated outside of user input.
+		ui = new(user, src, ui_key, "skills", "[owner.name]'s Skills", 620, 580, master_ui, state)
 		ui.open()
 
 /datum/skill_holder/ui_static_data(mob/user)
 	. = list()
 	var/datum/asset/spritesheet/simple/assets = get_asset_datum(/datum/asset/spritesheet/simple/skills)
 
-	.["skills"] = list()
+	.["categories"] = list()
 	var/list/current
 	var/category
 	for(var/path in GLOB.skill_datums)
 		var/datum/skill/S = GLOB.skill_datums[path]
 		if(!current || S.ui_category != category)
 			if(category)
-				.["skills"][category] = current
+				var/list/cat = list("name" = category, "skills" = current)
+				.["categories"] += list(cat)
 			current = list()
 			category = S.ui_category
 
@@ -67,7 +69,9 @@
 		current += list(data)
 
 	if(category)
-		.["skills"][category] = current
+		var/list/cat = list("name" = category, "skills" = current)
+		.["categories"] += list(cat)
+
 
 	var/all_mods = list()
 	for(var/id in all_current_skill_modifiers)
@@ -78,3 +82,22 @@
 			icon = assets.icon_class_name(M.icon)
 		)
 	.["modifiers"] = all_mods
+
+/datum/skill_holder/ui_data(mob/user)
+	. = list()
+	.["see_skill_mods"] = see_skill_mods
+	.["compact_mode"] = compact_mode
+	.["selected_category"] = selected_category
+
+/datum/skill_holder/ui_act(action, params)
+	. = ..()
+	if(.)
+		return
+	switch(action)
+		if("toggle_mods")
+			see_skill_mods = !see_skill_mods
+			return TRUE
+		if("compact_toggle")
+			compact_mode = !compact_mode
+		if("select")
+			selected_category = params["category"]
