@@ -560,7 +560,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		WRITE_FILE(S["silicon_flavor_text"]	, "") 
 
 	else //We have no old flavortext, default to new
-		S["feature_flavor_text"]		>> features["flavor_text"]
+		S["silicon_feature_flavor_text"]		>> features["silicon_flavor_text"]
 
 	S["feature_ooc_notes"]				>> features["ooc_notes"]
 
