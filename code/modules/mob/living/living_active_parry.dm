@@ -333,4 +333,4 @@
 	transform = matrix(0.1, 0, 0, 0, 0.1, 0)
 	animate(src, transform = current, time = windup_time)
 	sleep(active_time)
-	flick(icon, "parry_bm_end")
+	animate(src, alpha = 0, spindown_time)

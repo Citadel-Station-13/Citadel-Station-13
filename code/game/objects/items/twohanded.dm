@@ -275,6 +275,8 @@
 	throw_range = 5
 	w_class = WEIGHT_CLASS_SMALL
 	var/w_class_on = WEIGHT_CLASS_BULKY
+	item_flags = ITEM_CAN_PARRY | SLOWS_WHILE_IN_HAND
+	block_parry_data = /datum/block_parry_data/dual_esword
 	force_unwielded = 3
 	force_wielded = 34
 	wieldsound = 'sound/weapons/saberon.ogg'
@@ -285,7 +287,6 @@
 	var/saber_color = "green"
 	light_color = "#00ff00"//green
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
-	block_chance = 75
 	max_integrity = 200
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 70)
 	resistance_flags = FIRE_PROOF
@@ -298,6 +299,24 @@
 	var/spinnable = TRUE
 	total_mass = 0.4 //Survival flashlights typically weigh around 5 ounces.
 	var/total_mass_on = 3.4
+
+/datum/block_parry_data/dual_esword
+	parry_time_windup = 0
+	parry_time_active = 40
+	parry_time_spindown = 0
+	// we want to signal to players the most dangerous phase, the time when automatic counterattack is a thing.
+	parry_time_windup_visual_override = 1
+	parry_time_active_visual_override = 7
+	parry_time_spindown_visual_override = 12
+	parry_flags = PARRY_DEFAULT_HANDLE_FEEDBACK		// esword users can attack while parrying.
+	parry_time_perfect = 3		// first ds isn't perfect
+	parry_time_perfect_leeway = 2
+	parry_imperfect_falloff_percent = 3.5
+	parry_efficiency_to_counterattack = 100
+	parry_efficiency_considered_successful = 65		// VERY generous
+	parry_efficiency_perfect = 100
+	parry_failed_stagger_duration = 4 SECONDS
+	parry_cooldown = 1 SECONDS
 
 /obj/item/twohanded/dualsaber/suicide_act(mob/living/carbon/user)
 	if(wielded)

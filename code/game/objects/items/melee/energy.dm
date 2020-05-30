@@ -111,21 +111,21 @@
 
 /datum/block_parry_data/energy_sword
 	parry_time_windup = 0
-	parry_time_active = 20
+	parry_time_active = 25
 	parry_time_spindown = 0
 	// we want to signal to players the most dangerous phase, the time when automatic counterattack is a thing.
 	parry_time_windup_visual_override = 1
 	parry_time_active_visual_override = 3
 	parry_time_spindown_visual_override = 12
-	parry_flags = PARRY_DEFAULT_HANDLE_FEEDBACK		// esword users can attack while parrying.
+	parry_flags = PARRY_DEFAULT_HANDLE_FEEDBACK		// esword users can attack while
 	parry_time_perfect = 2.5		// first ds isn't perfect
 	parry_time_perfect_leeway = 1.5
-	parry_imperfect_falloff_percent = 10
+	parry_imperfect_falloff_percent = 5
 	parry_efficiency_to_counterattack = 100
 	parry_efficiency_considered_successful = 65		// VERY generous
 	parry_efficiency_perfect = 100
-	parry_failed_stagger_duration = 2 SECONDS
-	parry_cooldown = 2 SECONDS
+	parry_failed_stagger_duration = 4 SECONDS
+	parry_cooldown = 0.5 SECONDS
 
 /obj/item/melee/transforming/energy/sword/Initialize(mapload)
 	. = ..()
