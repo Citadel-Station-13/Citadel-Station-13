@@ -141,14 +141,18 @@
 	var/windup_end = data.parry_time_windup
 	var/active_end = windup_end + data.parry_time_active
 	var/spindown_end = active_end + data.parry_time_spindown
-	switch(get_parry_time())
-		if(0 to windup_end)
-			return PARRY_WINDUP
-		if(windup_end to active_end)
-			return PARRY_ACTIVE
-		if(active_end to spindown_end)
-			return PARRY_SPINDOWN
-	return NOT_PARRYING
+	var/current_time = get_parry_time()
+	// Not a switch statement because byond switch statements don't support floats at time of writing with "to" keyword.
+	if(current_time < 0)
+		return NOT_PARRYING
+	else if(current_time < windup_end)
+		return PARRY_WINDUP
+	else if(current_time <= active_end)		// this uses <= on purpose, give a slight bit of advantage because time is rounded to world.tick_lag
+		return PARRY_ACTIVE
+	else if(current_time <= spindown_end)
+		return PARRY_SPINDOWN
+	else
+		return NOT_PARRYING
 
 /**
   * Gets the percentage efficiency of our parry.
