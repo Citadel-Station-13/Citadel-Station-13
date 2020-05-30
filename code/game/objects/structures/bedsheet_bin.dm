@@ -126,6 +126,17 @@ LINEN BINS
 	icon_state = "sheetmedical"
 	dream_messages = list("healing", "life", "surgery", "a doctor")
 
+/obj/item/bedsheet/medical/holo
+	desc = "It's a sterilized blanket commonly used in the Medbay." //Cant get a hologram not sterilized!
+	dream_messages = list("nothing", "dreams", "fake", "hardlight", "holodeck")
+
+/obj/item/bedsheet/medical/holo/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/wirecutters) || I.get_sharpness())
+		qdel(src)
+		to_chat(user, "<span class='notice'>You tear [src] up and watch it fade into nothing...</span>")
+	else
+		return ..()
+
 /obj/item/bedsheet/cmo
 	name = "chief medical officer's bedsheet"
 	desc = "It's a sterilized blanket that has a cross emblem. There's some cat fur on it, likely from Runtime."
