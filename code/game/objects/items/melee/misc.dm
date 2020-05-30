@@ -75,8 +75,8 @@
 	parry_time_windup = 1
 	parry_time_active = 3
 	parry_time_spindown = 1
-	parry_time_perfect = 2.5
-	parry_time_perfect_leeway = 0.5
+	parry_time_perfect = 1.5
+	parry_time_perfect_leeway = 0.25
 	parry_imperfect_falloff_percent = 20
 	parry_efficiency_perfect = 100
 	parry_failed_stagger_duration = 3 SECONDS
