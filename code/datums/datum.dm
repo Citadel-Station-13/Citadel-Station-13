@@ -39,6 +39,9 @@
 	/// A weak reference to another datum
 	var/datum/weakref/weak_reference
 
+	///Lazy associative list of currently active cooldowns.
+	var/list/cooldowns
+
 #ifdef TESTING
 	var/running_find_references
 	var/last_find_references = 0
@@ -201,3 +204,10 @@
 		qdel(D)
 	else
 		return returned
+
+
+///Callback called by a timer to end an associative-list-indexed cooldown.
+/proc/end_cooldown(datum/source, index)
+	if(QDELETED(source))
+		return
+	COOLDOWN_END(source, index)
