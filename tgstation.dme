@@ -121,6 +121,7 @@
 #include "code\__DEFINES\_flags\item_flags.dm"
 #include "code\__DEFINES\_flags\obj_flags.dm"
 #include "code\__DEFINES\admin\keybindings.dm"
+#include "code\__DEFINES\combat\attack_types.dm"
 #include "code\__DEFINES\combat\block.dm"
 #include "code\__DEFINES\combat\block_parry.dm"
 #include "code\__DEFINES\dcs\flags.dm"
