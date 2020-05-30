@@ -272,7 +272,7 @@
 			return TRUE
 
 	var/distance = get_dist(T, starting) // Get the distance between the turf shot from and the mob we hit and use that for the calculations.
-	if(check_zone(def_zone) != BODY_ZONE_CHEST)
+	if(def_zone && check_zone(def_zone) != BODY_ZONE_CHEST)
 		def_zone = ran_zone(def_zone, max(100-(7*distance), 5) * zone_accuracy_factor) //Lower accurancy/longer range tradeoff. 7 is a balanced number to use.
 
 	if(isturf(A) && hitsound_wall)
