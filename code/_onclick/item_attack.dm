@@ -116,7 +116,7 @@
 		next_move_mult += penalty*STAM_CRIT_ITEM_ATTACK_DELAY
 	user.changeNext_move(I.click_delay*next_move_mult)
 
-	if(!(user.combat_flags & COMBAT_FLAG_COMBAT_ACTIVE))
+	if(SEND_SIGNAL(user, COMSIG_COMBAT_MODE_CHECK, COMBAT_MODE_INACTIVE))
 		bad_trait = SKILL_COMBAT_MODE //blacklist combat skills.
 
 	if(I.used_skills && user.mind)
@@ -178,11 +178,11 @@
 
 	var/bad_trait
 	if(!(I.item_flags & NO_COMBAT_MODE_FORCE_MODIFIER))
-		if(!(user.combat_flags & COMBAT_FLAG_COMBAT_ACTIVE))
+		if(SEND_SIGNAL(user, COMSIG_COMBAT_MODE_CHECK, COMBAT_MODE_INACTIVE))
 			bad_trait = SKILL_COMBAT_MODE //blacklist combat skills.
-			if(combat_flags & COMBAT_FLAG_COMBAT_ACTIVE)
+			if(SEND_SIGNAL(src, COMSIG_COMBAT_MODE_CHECK, COMBAT_MODE_ACTIVE))
 				. *= 0.5
-		else if(!(combat_flags & COMBAT_FLAG_COMBAT_ACTIVE))
+		else if(SEND_SIGNAL(src, COMSIG_COMBAT_MODE_CHECK, COMBAT_MODE_INACTIVE))
 			. *= 1.5
 
 	if(!user.mind || !I.used_skills)
@@ -234,7 +234,7 @@
 	if(!user)
 		return
 	var/bad_trait
-	if(iscarbon(user) && !(user.combat_flags & COMBAT_FLAG_COMBAT_ACTIVE))
+	if(SEND_SIGNAL(user, COMSIG_COMBAT_MODE_CHECK, COMBAT_MODE_INACTIVE))
 		. *= STAM_COST_NO_COMBAT_MULT
 		bad_trait = SKILL_COMBAT_MODE
 	if(used_skills && user.mind)

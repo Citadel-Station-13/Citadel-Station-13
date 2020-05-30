@@ -11,6 +11,8 @@
 	var/cistern = 0			//if the cistern bit is open
 	var/w_items = 0			//the combined w_class of all the items in the cistern
 	var/mob/living/swirlie = null	//the mob being given a swirlie
+	var/buildstacktype = /obj/item/stack/sheet/metal //they're metal now, shut up
+	var/buildstackamount = 1
 
 /obj/structure/toilet/Initialize()
 	. = ..()
@@ -72,7 +74,18 @@
 /obj/structure/toilet/update_icon_state()
 	icon_state = "toilet[open][cistern]"
 
+/obj/structure/toilet/deconstruct()
+	if(!(flags_1 & NODECONSTRUCT_1))
+		if(buildstacktype)
+			new buildstacktype(loc,buildstackamount)
+		else
+			for(var/i in custom_materials)
+				var/datum/material/M = i
+				new M.sheet_type(loc, FLOOR(custom_materials[M] / MINERAL_MATERIAL_AMOUNT, 1))
+	..()
+
 /obj/structure/toilet/attackby(obj/item/I, mob/living/user, params)
+	add_fingerprint(user)
 	if(istype(I, /obj/item/crowbar))
 		to_chat(user, "<span class='notice'>You start to [cistern ? "replace the lid on the cistern" : "lift the lid off the cistern"]...</span>")
 		playsound(loc, 'sound/effects/stonedoor_openclose.ogg', 50, 1)
@@ -80,7 +93,9 @@
 			user.visible_message("[user] [cistern ? "replaces the lid on the cistern" : "lifts the lid off the cistern"]!", "<span class='notice'>You [cistern ? "replace the lid on the cistern" : "lift the lid off the cistern"]!</span>", "<span class='italics'>You hear grinding porcelain.</span>")
 			cistern = !cistern
 			update_icon()
-
+	else if(I.tool_behaviour == TOOL_WRENCH && !(flags_1&NODECONSTRUCT_1))
+		I.play_tool_sound(src)
+		deconstruct()
 	else if(cistern)
 		if(user.a_intent != INTENT_HARM)
 			if(I.w_class > WEIGHT_CLASS_NORMAL)
@@ -95,6 +110,10 @@
 			w_items += I.w_class
 			to_chat(user, "<span class='notice'>You carefully place [I] into the cistern.</span>")
 
+	if(istype(I, /obj/item/reagent_containers/food/snacks/cube))
+		var/obj/item/reagent_containers/food/snacks/cube/cube = I
+		cube.Expand()
+		return
 	else if(istype(I, /obj/item/reagent_containers))
 		if (!open)
 			return
@@ -129,6 +148,11 @@
 
 /obj/structure/toilet/secret/prison
 	secret_type = /obj/effect/spawner/lootdrop/prison_loot_toilet
+
+/obj/structure/toilet/greyscale
+
+	material_flags = MATERIAL_ADD_PREFIX | MATERIAL_COLOR
+	buildstacktype = null
 
 /obj/structure/urinal
 	name = "urinal"
@@ -459,6 +483,8 @@
 	anchored = TRUE
 	var/busy = FALSE 	//Something's being washed at the moment
 	var/dispensedreagent = /datum/reagent/water // for whenever plumbing happens
+	var/buildstacktype = /obj/item/stack/sheet/metal
+	var/buildstackamount = 1
 
 /obj/structure/sink/attack_hand(mob/living/user)
 	. = ..()
@@ -520,7 +546,7 @@
 	if(istype(O, /obj/item/melee/baton))
 		var/obj/item/melee/baton/B = O
 		if(B.cell)
-			if(B.cell.charge > 0 && B.status == 1)
+			if(B.cell.charge > 0 && B.turned_on)
 				flick("baton_active", src)
 				var/stunforce = B.stamforce
 				user.DefaultCombatKnockdown(stunforce * 2)
@@ -535,6 +561,11 @@
 		O.reagents.add_reagent(dispensedreagent, 5)
 		to_chat(user, "<span class='notice'>You wet [O] in [src].</span>")
 		playsound(loc, 'sound/effects/slosh.ogg', 25, 1)
+		return
+
+	if(O.tool_behaviour == TOOL_WRENCH && !(flags_1&NODECONSTRUCT_1))
+		O.play_tool_sound(src)
+		deconstruct()
 		return
 
 	if(istype(O, /obj/item/stack/medical/gauze))
@@ -568,9 +599,18 @@
 	else
 		return ..()
 
-/obj/structure/sink/deconstruct(disassembled = TRUE)
-	new /obj/item/stack/sheet/metal (loc, 3)
-	qdel(src)
+/obj/structure/sink/deconstruct()
+	if(!(flags_1 & NODECONSTRUCT_1))
+		drop_materials()
+	..()
+
+/obj/structure/sink/proc/drop_materials()
+	if(buildstacktype)
+		new buildstacktype(loc,buildstackamount)
+	else
+		for(var/i in custom_materials)
+			var/datum/material/M = i
+			new M.sheet_type(loc, FLOOR(custom_materials[M] / MINERAL_MATERIAL_AMOUNT, 1))
 
 /obj/structure/sink/kitchen
 	name = "kitchen sink"
@@ -655,6 +695,11 @@
 	icon_state = "puddle"
 	resistance_flags = UNACIDABLE
 
+/obj/structure/sink/greyscale
+	icon_state = "sink_greyscale"
+	material_flags = MATERIAL_ADD_PREFIX | MATERIAL_COLOR
+	buildstacktype = null
+
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/structure/sink/puddle/attack_hand(mob/M)
 	icon_state = "puddle-splash"
@@ -668,6 +713,10 @@
 
 /obj/structure/sink/puddle/deconstruct(disassembled = TRUE)
 	qdel(src)
+
+/obj/structure/sink/greyscale
+	material_flags = MATERIAL_ADD_PREFIX | MATERIAL_COLOR
+	buildstacktype = null
 
 //Shower Curtains//
 //Defines used are pre-existing in layers.dm//

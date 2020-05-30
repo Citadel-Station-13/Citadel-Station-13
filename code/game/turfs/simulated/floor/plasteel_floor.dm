@@ -146,3 +146,95 @@
 
 /turf/open/floor/plasteel/sepia
 	icon_state = "sepia"
+
+///////////////////////////////
+// Pre-Applied Decal Floors //
+//////////////////////////////
+
+// Neutral
+/turf/open/floor/plasteel/neutral
+	icon_state = "neutral_full"
+/turf/open/floor/plasteel/neutral/side
+	icon_state = "neutral"
+/turf/open/floor/plasteel/neutral/corner
+	icon_state = "neutral_corner"
+
+// Dark Neutral
+/turf/open/floor/plasteel/dark/neutral
+	icon_state = "dark_neutral_full"
+/turf/open/floor/plasteel/dark/neutral/checker
+	icon_state = "dark_neutral_checker"
+/turf/open/floor/plasteel/dark/neutral/side
+	icon_state = "dark_neutral"
+/turf/open/floor/plasteel/dark/neutral/corner
+	icon_state = "dark_neutral_corner"
+
+// Dark Security
+/turf/open/floor/plasteel/dark/security
+	icon_state = "dark_red_full"
+/turf/open/floor/plasteel/dark/security/checker
+	icon_state = "dark_red_checker"
+/turf/open/floor/plasteel/dark/security/side
+	icon_state = "dark_red"
+/turf/open/floor/plasteel/dark/security/corner
+	icon_state = "dark_red_corner"
+
+// Engineering
+/turf/open/floor/plasteel/engineering
+	icon_state = "engineering_full"
+/turf/open/floor/plasteel/engineering/side
+	icon_state = "engineering"
+/turf/open/floor/plasteel/engineering/corner
+	icon_state = "engineering_corner"
+
+// Atmospherics
+/turf/open/floor/plasteel/atmospherics
+	icon_state = "atmospherics_full"
+/turf/open/floor/plasteel/atmospherics/side
+	icon_state = "atmospherics"
+/turf/open/floor/plasteel/atmospherics/corner
+	icon_state = "atmospherics_corner"
+
+// Command
+/turf/open/floor/plasteel/command
+	icon_state = "command_full"
+/turf/open/floor/plasteel/command/side
+	icon_state = "command"
+/turf/open/floor/plasteel/command/corner
+	icon_state = "command_corner"
+
+// Medical
+/turf/open/floor/plasteel/medical
+	icon_state = "medical_full"
+/turf/open/floor/plasteel/medical/alt
+	icon_state = "medical_alt"
+/turf/open/floor/plasteel/medical/side
+	icon_state = "medical"
+/turf/open/floor/plasteel/medical/corner
+	icon_state = "medical_corner"
+
+// Security
+/turf/open/floor/plasteel/security
+	icon_state = "security_full"
+/turf/open/floor/plasteel/security/side
+	icon_state = "security"
+/turf/open/floor/plasteel/security/corner
+	icon_state = "security_corner"
+
+// Cargo
+/turf/open/floor/plasteel/cargo
+	icon_state = "cargo_full"
+/turf/open/floor/plasteel/cargo/side
+	icon_state = "cargo"
+/turf/open/floor/plasteel/cargo/corner
+	icon_state = "cargo_corner"
+
+// Misc
+/turf/open/floor/plasteel/showroomfloor/shower
+	icon_state = "shower"
+/turf/open/floor/plasteel/goonplaque/alien
+	icon_state = "plaque1"
+	desc = "\"This is a plaque is a collaboration of iconography celebrating the peaceful collaboration between the people of Earth and distant alien species."
+/turf/open/floor/plasteel/goonplaque/charter
+	icon_state = "plaque2"
+	desc = "\"A golden plaque. Etched into it is the introductory article for a cross-species interplanetary constitution, guaranteeing equal rights between species that Nanotrasen relunctantly agreed to."
