@@ -231,22 +231,23 @@
 			if(PARRY_COUNTERATTACK_PROC)
 				switch(parrying)
 					if(ITEM_PARRY)
-						active_parry_item.active_parry_reflex_counter(src, object, damage, attack_text, attack_type, armour_penetration, attacker, def_zone, return_list, parry_efficiency, effect_list)
+						active_parry_item.active_parry_reflex_counter(src, object, damage, attack_text, attack_type, armour_penetration, attacker, def_zone, return_list, parry_efficiency, effect_text)
 					if(UNARMED_PARRY)
-						active_parry_reflex_counter(src, object, damage, attack_text, attack_type, armour_penetration, attacker, def_zone, return_list, parry_efficiency, effect_list)
+						active_parry_reflex_counter(src, object, damage, attack_text, attack_type, armour_penetration, attacker, def_zone, return_list, parry_efficiency, effect_text)
 					if(MARTIAL_PARRY)
-						mind.martial_art.active_parry_reflex_counter(src, object, damage, attack_text, attack_type, armour_penetration, attacker, def_zone, return_list, parry_efficiency, effect_list)
-			if(PARRY_COUNTERATTACK_MELEE_ATTACK_CHAIN && Adjacent(attacker))	// adjacent is probably a shit check but whatever.
-				switch(parrying)
-					if(ITEM_PARRY)
-						active_parry_item.melee_attack_chain(src, attacker, null)
-						effect_text += "reflexively counterattacking with [active_parry_item]"
-					if(UNARMED_PARRY)
-						UnarmedAttack(attacker)
-						effect_text += "reflexively counterattacking in the process"
-					if(MARTIAL_PARRY)
-						UnarmedAttack(attacker)
-						effect_text += "reflexively maneuvering to retaliate"
+						mind.martial_art.active_parry_reflex_counter(src, object, damage, attack_text, attack_type, armour_penetration, attacker, def_zone, return_list, parry_efficiency, effect_text)
+			if(PARRY_COUNTERATTACK_MELEE_ATTACK_CHAIN)	// adjacent is probably a shit check but whatever.
+				if(Adjacent(attacker))
+					switch(parrying)
+						if(ITEM_PARRY)
+							active_parry_item.melee_attack_chain(src, attacker, null)
+							effect_text += "reflexively counterattacking with [active_parry_item]"
+						if(UNARMED_PARRY)
+							UnarmedAttack(attacker)
+							effect_text += "reflexively counterattacking in the process"
+						if(MARTIAL_PARRY)
+							UnarmedAttack(attacker)
+							effect_text += "reflexively maneuvering to retaliate"
 	if(data.parry_data[PARRY_DISARM_ATTACKER])
 		L.drop_all_held_items()
 		effect_text += "disarming"
