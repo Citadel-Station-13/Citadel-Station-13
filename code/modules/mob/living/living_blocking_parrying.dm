@@ -102,6 +102,13 @@ GLOBAL_LIST_EMPTY(block_parry_data)
 	var/parry_time_spindown = 3
 	/// Main parry window in deciseconds. This is between [parry_time_windup] and [parry_time_spindown]
 	var/parry_time_active = 5
+	// Visual overrides
+	/// If set, overrides visual duration of windup
+	var/parry_time_windup_visual_override
+	/// If set, overrides visual duration of active period
+	var/parry_time_active_visual_override
+	/// If set, overrides visual duration of spindown
+	var/parry_time_spindown_visual_override
 	/// Perfect parry window in deciseconds from the start of the main window. 3 with main 5 = perfect on third decisecond of main window.
 	var/parry_time_perfect = 2.5
 	/// Time on both sides of perfect parry that still counts as part of the perfect window.
@@ -122,7 +129,7 @@ GLOBAL_LIST_EMPTY(block_parry_data)
 	var/parry_efficiency_considered_successful = 0.1
 	/// Efficiency must be at least this to run automatic counterattack
 	var/parry_efficiency_to_counterattack = 0.1
-	/// Maximum attacks to parry successfully or unsuccessfully during active period, hitting this immediately ends the sequence.
+	/// Maximum attacks to parry successfully or unsuccessfully (but not efficiency < 0) during active period, hitting this immediately ends the sequence.
 	var/parry_max_attacks = INFINITY
 	/// Visual icon state override for parrying
 	var/parry_effect_icon_state = "parry_bm_hold"

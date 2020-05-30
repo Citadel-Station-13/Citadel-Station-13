@@ -93,7 +93,7 @@
   */
 /mob/living/proc/handle_parry_starting_effects(datum/block_parry_data/data)
 	playsound(src, data.parry_start_sound, 75, 1)
-	parry_visual_effect = new /obj/effect/abstract/parry/main(null, data, src, data.parry_effect_icon_state)
+	parry_visual_effect = new /obj/effect/abstract/parry/main(null, TRUE, src, data.parry_effect_icon_state, data.parry_time_windup_visual_override || data.parry_time_windup, data.parry_time_active_visual_override || data.parry_time_active, data.parry_time_spindown_visual_override || data.parry_time_spindown)
 	switch(parrying)
 		if(ITEM_PARRY)
 			visible_message("<span class='warning'>[src] swings [active_parry_item]!</span>")
@@ -303,13 +303,13 @@
 /obj/effect/abstract/parry/main
 	name = null
 
-/obj/effect/abstract/parry/main/Initialize(mapload, datum/block_parry_data/data, mob/living/owner, icon_state)
+/obj/effect/abstract/parry/main/Initialize(mapload, autorun, mob/living/owner, set_icon_state, windup, active, spindown)
 	. = ..()
-	src.icon_state = icon_state
+	icon_state = set_icon_state
 	if(owner)
 		attach_to(owner)
-	if(data)
-		INVOKE_ASYNC(src, .proc/run_animation, data.parry_time_windup, data.parry_time_active, data.parry_time_spindown, TRUE)
+	if(autorun)
+		INVOKE_ASYNC(src, .proc/run_animation, windup, active, spindown)
 
 /obj/effect/abstract/parry/main/Destroy()
 	detach_from(owner)
@@ -326,9 +326,7 @@
 		owner = null
 	detaching.vis_contents -= src
 
-/obj/effect/abstract/parry/main/proc/run_animation(windup_time = 2, active_time = 5, spindown_time = 3, qdel_end = TRUE)
-	if(qdel_end)
-		QDEL_IN(src, windup_time + active_time + spindown_time)
+/obj/effect/abstract/parry/main/proc/run_animation(windup_time = 2, active_time = 5, spindown_time = 3)
 	var/matrix/current = transform
 	transform = matrix(0.1, 0, 0, 0, 0.1, 0)
 	animate(src, transform = current, time = windup_time)

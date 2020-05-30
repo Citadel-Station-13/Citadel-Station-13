@@ -115,18 +115,6 @@
 #define GRAB_NECK					2
 #define GRAB_KILL					3
 
-/// Attack types for check_block()/run_block(). Flags, combinable.
-/// Attack was melee, whether or not armed.
-#define ATTACK_TYPE_MELEE			(1<<0)
-/// Attack was with a gun or something that should count as a gun (but not if a gun shouldn't count for a gun, crazy right?)
-#define ATTACK_TYPE_PROJECTILE		(1<<1)
-/// Attack was unarmed.. this usually means hand to hand combat.
-#define ATTACK_TYPE_UNARMED			(1<<2)
-/// Attack was a thrown atom hitting the victim.
-#define ATTACK_TYPE_THROWN			(1<<3)
-/// Attack was a bodyslam/leap/tackle. See: Xenomorph leap tackles.
-#define ATTACK_TYPE_TACKLE			(1<<4)
-
 //attack visual effects
 #define ATTACK_EFFECT_PUNCH		"punch"
 #define ATTACK_EFFECT_KICK		"kick"

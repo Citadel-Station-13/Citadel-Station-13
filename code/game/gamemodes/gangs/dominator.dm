@@ -145,9 +145,9 @@
 		new /obj/item/stack/sheet/plasteel(src.loc)
 	qdel(src)
 
-/obj/machinery/dominator/attacked_by(obj/item/I, mob/living/user)
+/obj/machinery/dominator/attacked_by(obj/item/I, mob/living/user, attackchain_flags = NONE, damage_multiplier = 1)
 	add_fingerprint(user)
-	..()
+	return ..()
 
 /obj/machinery/dominator/attack_hand(mob/user)
 	if(operating || (stat & BROKEN))

@@ -61,7 +61,6 @@
 	force = 18
 	throwforce = 15
 	w_class = WEIGHT_CLASS_BULKY
-	block_chance = 50
 	armour_penetration = 75
 	sharpness = IS_SHARP
 	attack_verb = list("slashed", "cut")
@@ -72,12 +71,12 @@
 	block_parry_data = /datum/block_parry_data/captain_saber
 
 /datum/block_parry_data/captain_saber
-	parry_time_windup = 1
-	parry_time_active = 3
+	parry_time_windup = 0.5
+	parry_time_active = 4
 	parry_time_spindown = 1
-	parry_time_perfect = 1.5
-	parry_time_perfect_leeway = 0.25
-	parry_imperfect_falloff_percent = 20
+	parry_time_perfect = 0.75
+	parry_time_perfect_leeway = 0.75
+	parry_imperfect_falloff_percent = 30
 	parry_efficiency_perfect = 100
 	parry_failed_stagger_duration = 3 SECONDS
 	parry_failed_clickcd_duration = 2 SECONDS

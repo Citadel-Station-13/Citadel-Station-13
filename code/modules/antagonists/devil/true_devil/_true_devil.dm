@@ -117,9 +117,9 @@
 	return 2
 
 
-/mob/living/carbon/true_devil/attacked_by(obj/item/I, mob/living/user, def_zone)
+/mob/living/carbon/true_devil/attacked_by(obj/item/I, mob/living/user, def_zone, attackchain_flags = NONE, damage_multiplier = 1)
 	var/weakness = check_weakness(I, user)
-	apply_damage(I.force * weakness, I.damtype, def_zone)
+	apply_damage(I.force * weakness * damage_multiplier, I.damtype, def_zone)
 	var/message_verb = ""
 	if(I.attack_verb && I.attack_verb.len)
 		message_verb = "[pick(I.attack_verb)]"
