@@ -126,8 +126,9 @@
 /obj/item/gun/ballistic/shotgun/boltaction/improvised
 	name = "Makeshift 7.62mm Rifle"
 	icon_state = "ishotgun"
+	icon_state = "irifle"
 	item_state = "shotgun"
-	desc = "A large zip gun more or less that takes a single 7.62mm bullet"
+	desc = "A bolt-action breechloaded rifle that takes 7.62mm bullets."
 	mag_type = /obj/item/ammo_box/magazine/internal/boltaction/improvised
 	can_bayonet = FALSE
 

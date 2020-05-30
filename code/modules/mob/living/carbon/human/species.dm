@@ -628,6 +628,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 	H.remove_overlay(BODY_ADJ_LAYER)
 	H.remove_overlay(BODY_ADJ_UPPER_LAYER)
 	H.remove_overlay(BODY_FRONT_LAYER)
+	H.remove_overlay(HORNS_LAYER)
 
 	if(!mutant_bodyparts)
 		return
@@ -839,8 +840,13 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 		if(!S.mutant_part_string)
 			dna_feature_as_text_string[S] = bodypart
 
-	var/static/list/layer_text = list("[BODY_BEHIND_LAYER]" = "BEHIND", "[BODY_ADJ_LAYER]" = "ADJ", \
-								"[BODY_ADJ_UPPER_LAYER]" = "ADJUP", "[BODY_FRONT_LAYER]" = "FRONT")
+	var/static/list/layer_text = list(
+		"[BODY_BEHIND_LAYER]" = "BEHIND",
+		"[BODY_ADJ_LAYER]" = "ADJ",
+		"[BODY_ADJ_UPPER_LAYER]" = "ADJUP",
+		"[BODY_FRONT_LAYER]" = "FRONT",
+		"[HORNS_LAYER]" = "HORNS",
+		)
 
 	var/g = (H.dna.features["body_model"] == FEMALE) ? "f" : "m"
 	var/list/colorlist = list()
@@ -1020,6 +1026,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 	H.apply_overlay(BODY_ADJ_LAYER)
 	H.apply_overlay(BODY_ADJ_UPPER_LAYER)
 	H.apply_overlay(BODY_FRONT_LAYER)
+	H.apply_overlay(HORNS_LAYER)
 
 
 /*
