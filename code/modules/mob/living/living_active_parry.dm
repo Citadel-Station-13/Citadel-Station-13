@@ -70,11 +70,12 @@
   * Handles starting effects for parrying.
   */
 /mob/living/proc/handle_parry_starting_effects(datum/block_parry_data/data)
+	set waitfor = FALSE			// this is required don't touch it.
 	new /obj/effect/abstract/parry/main(null, data, src)
 	playsound(src, data.parry_start_sound, 75, 1)
 	switch(parrying)
 		if(ITEM_PARRY)
-			visible_message("<span class='warning'>[src] swings [active_parry_item], !</span>")
+			visible_message("<span class='warning'>[src] swings [active_parry_item]!</span>")
 		else
 			visible_message("<span class='warning'>[src] rushes forwards!</span>")
 
