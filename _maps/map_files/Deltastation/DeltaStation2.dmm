@@ -63934,8 +63934,8 @@
 	icon_state = "sofaend_right";
 	dir = 8
 	},
-/obj/structure/sign/painting/library_secure{
-	pixel_y = 32
+/obj/structure/sign/painting/library{
+	pixel_x = 32
 	},
 /turf/open/floor/wood,
 /area/library)
@@ -65119,8 +65119,8 @@
 	name = "Station Intercom";
 	pixel_x = -26
 	},
-/obj/structure/sign/painting/library_secure{
-	pixel_y = 32
+/obj/structure/sign/painting/library{
+	pixel_x = 32
 	},
 /turf/open/floor/wood,
 /area/library)
