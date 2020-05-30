@@ -93,6 +93,8 @@ GLOBAL_LIST_EMPTY(block_parry_data)
 	var/parry_stamina_cost = 5
 	/// Attack types we can block
 	var/parry_attack_types = ALL
+	/// Parry flags
+	var/parry_flags = PARRY_DEFAULT_HANDLE_FEEDBACK | PARRY_LOCK_ATTACKING
 
 	/// Parry windup duration in deciseconds. 0 to this is windup, afterwards is main stage.
 	var/parry_time_windup = 2
@@ -116,8 +118,16 @@ GLOBAL_LIST_EMPTY(block_parry_data)
 	var/list/parry_data = list(
 		PARRY_REFLEX_COUNTERATTACK = PARRY_COUNTERATTACK_MELEE_ATTACK_CHAIN
 		)
-	/// Enable default handling of audio/visual feedback
-	var/parry_default_handle_feedback = TRUE
+	/// Efficiency must be at least this to be considered successful
+	var/parry_efficiency_considered_successful = 0.1
+	/// Efficiency must be at least this to run automatic counterattack
+	var/parry_efficiency_to_counterattack = 0.1
+	/// Maximum attacks to parry successfully or unsuccessfully during active period, hitting this immediately ends the sequence.
+	var/parry_max_attacks = INFINITY
+	/// Visual icon state override for parrying
+	var/parry_effect_icon_state = "parry_bm_hold"
+	/// Parrying cooldown, separate of clickdelay. It must be this much deciseconds since their last parry for them to parry with this object.
+	var/parry_cooldown = 0
 	/// Parry start sound
 	var/parry_start_sound = 'sound/block_parry/sfx-parry.ogg'
 	/// Sounds for parrying

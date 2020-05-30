@@ -29,10 +29,11 @@
 #define EFFECT_DROWSY		"drowsy"
 #define EFFECT_JITTER		"jitter"
 
+// mob/living/var/combat_flags variable.
 /// Default combat flags for those affected by sprinting (combat mode has been made into its own component)
-#define COMBAT_FLAGS_DEFAULT					NONE
+#define COMBAT_FLAGS_DEFAULT				(COMBAT_FLAG_PARRY_CAPABLE | COMBAT_FLAG_BLOCK_CAPABLE)
 /// Default combat flags for everyone else (so literally everyone but humans).
-#define COMBAT_FLAGS_SPRINT_EXEMPT			(COMBAT_FLAG_SPRINT_ACTIVE | COMBAT_FLAG_SPRINT_TOGGLED | COMBAT_FLAG_SPRINT_FORCED)
+#define COMBAT_FLAGS_SPRINT_EXEMPT			(COMBAT_FLAG_SPRINT_ACTIVE | COMBAT_FLAG_SPRINT_TOGGLED | COMBAT_FLAG_SPRINT_FORCED | COMBAT_FLAG_PARRY_CAPABLE | COMBAT_FLAG_BLOCK_CAPABLE)
 
 /// The user wants sprint mode on
 #define COMBAT_FLAG_SPRINT_TOGGLED			(1<<0)
@@ -50,6 +51,16 @@
 #define COMBAT_FLAG_SOFT_STAMCRIT			(1<<6)
 /// Force sprint mode on at all times, overrides everything including sprint disable traits.
 #define COMBAT_FLAG_SPRINT_FORCED			(1<<7)
+/// This mob is capable of using the active parrying system.
+#define COMBAT_FLAG_PARRY_CAPABLE			(1<<8)
+/// This mob is capable of using the active blocking system.
+#define COMBAT_FLAG_BLOCK_CAPABLE			(1<<9)
+/// This mob is capable of unarmed parrying
+#define COMBAT_FLAG_UNARMED_PARRY			(1<<10)
+/// This mob is currently actively blocking
+#define COMBAT_FLAG_ACTIVE_BLOCKING			(1<<11)
+/// This mob is currently starting an active block
+#define COMBAT_FLAG_ACTIVE_BLOCK_STARTING	(1<<12)
 
 // Helpers for getting someone's stamcrit state. Cast to living.
 #define NOT_STAMCRIT 0

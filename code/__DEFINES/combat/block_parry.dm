@@ -37,6 +37,14 @@ GLOBAL_LIST_INIT(dir2blockdir, list(
 #define PARRY_ACTIVE			2
 #define PARRY_SPINDOWN			3
 
+// /datum/block_parry_data/var/parry_flags
+/// Default handling for audio/visual feedback
+#define PARRY_DEFAULT_HANDLE_FEEDBACK		(1<<0)
+/// Lock sprinting while parrying
+#define PARRY_LOCK_SPRINTING				(1<<1)
+/// Lock attacking while parrying
+#define PARRY_LOCK_ATTACKING				(1<<2)
+
 /// Parry effects.
 /// List association must be one of the things underneath
 #define PARRY_REFLEX_COUNTERATTACK			"reflex_counter"

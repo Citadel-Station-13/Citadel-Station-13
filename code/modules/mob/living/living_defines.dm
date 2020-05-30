@@ -29,14 +29,8 @@
 
 	// Combat - Blocking/Parrying system
 	/// Our block_parry_data for unarmed blocks/parries. Currently only used for parrying, as unarmed block isn't implemented yet. YOU MUST RUN [get_block_parry_data(this)] INSTEAD OF DIRECTLY ACCESSING!
-	var/datum/block_parry_data/block_parry_data
+	var/datum/block_parry_data/block_parry_data = /datum/block_parry_data		// defaults to *something* because [combat_flags] dictates whether or not we can unarmed block/parry.
 	// Blocking
-	/// Whether or not the user is actively blocking.
-	var/active_blocking = FALSE
-	/// Whether or not we can actively block. Disabled by default since a lot of mobs do not support stamina damage. Imagine a dextrous guardian with a shield..
-	var/active_block_enabled = FALSE
-	/// Whether or not we are in the process of raising our shield/whatever.
-	var/active_block_starting = FALSE
 	/// The item the user is actively blocking with if any.
 	var/obj/item/active_block_item
 	// Parrying
@@ -46,8 +40,11 @@
 	var/obj/item/active_parry_item
 	/// world.time of parry action start
 	var/parry_start_time = 0
-	/// Whether or not we can unarmed parry
-	var/parry_while_unarmed = FALSE
+	/// Current parry effect.
+	var/obj/effect/abstract/parry/parry_visual_effect
+	/// world.time of last parry end
+	var/parry_end_time_last = 0
+	#warn implement above
 	/// Successful parries within the current parry cycle. It's a list of efficiency percentages.
 	var/list/successful_parries
 

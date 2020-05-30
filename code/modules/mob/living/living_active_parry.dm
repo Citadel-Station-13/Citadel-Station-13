@@ -39,7 +39,7 @@
 	var/full_parry_duration = data.parry_time_windup + data.parry_time_active + data.parry_time_spindown
 	// no system in place to "fallback" if out of the 3 the top priority one can't parry due to constraints but something else can.
 	// can always implement it later, whatever.
-	if(data.parry_respect_clickdelay && (next_move > world.time))
+	if((data.parry_respect_clickdelay && (next_move > world.time)) || ((parry_end_time_last + data.parry_cooldown) > world.time))
 		to_chat(src, "<span class='warning'>You are not ready to parry (again)!</span>")
 		return
 	// Point of no return, make sure everything is set.
@@ -50,6 +50,10 @@
 	parry_start_time = world.time
 	successful_parries = list()
 	addtimer(CALLBACK(src, .proc/end_parry_sequence), full_parry_duration)
+	if(data.parry_flags & PARRY_LOCK_ATTACKING)
+		ADD_TRAIT(src, TRAIT_MOBILITY_NOUSE, ACTIVE_PARRY_TRAIT)
+	if(data.parry_flags & PARRY_LOCK_SPRINTING)
+		ADD_TRAIT(src, TRAIT_SPRINT_LOCKED, ACTIVE_PARRY_TRAIT)
 	handle_parry_starting_effects(data)
 	return TRUE
 
@@ -59,9 +63,16 @@
 /mob/living/proc/end_parry_sequence()
 	if(!parrying)
 		return
+	if(parry_visual_effect)
+		QDEL_NULL(parry_visual_effect)
 	var/datum/block_parry_data/data = get_parry_data()
 	var/list/effect_text = list()
-	if(!length(successful_parries))		// didn't parry anything successfully
+	var/successful = FALSE
+	for(var/efficiency in successful_parries)
+		if(efficiency >= data.parry_efficiency_considered_successful)
+			successful = TRUE
+			break
+	if(!successful)		// didn't parry anything successfully
 		if(data.parry_failed_stagger_duration)
 			Stagger(data.parry_failed_stagger_duration)
 			effect_text += "staggering themselves"
@@ -78,7 +89,7 @@
   */
 /mob/living/proc/handle_parry_starting_effects(datum/block_parry_data/data)
 	playsound(src, data.parry_start_sound, 75, 1)
-	new /obj/effect/abstract/parry/main(null, data, src)
+	parry_visual_effect = new /obj/effect/abstract/parry/main(null, data, src, data.parry_effect_icon_state)
 	switch(parrying)
 		if(ITEM_PARRY)
 			visible_message("<span class='warning'>[src] swings [active_parry_item]!</span>")
@@ -185,7 +196,7 @@
 /// same return values as normal blocking, called with absolute highest priority in the block "chain".
 /mob/living/proc/run_parry(atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, list/return_list = list())
 	var/stage = get_parry_stage()
-	if(stage == NOT_PARRYING)
+	if(stage != PARRY_ACTIVE)
 		return BLOCK_NONE
 	if(!CHECK_MOBILITY(src, MOBILITY_USE))
 		to_chat(src, "<span class='warning'>Your parry is interrupted!</span>")
@@ -208,10 +219,14 @@
 	. |= BLOCK_SHOULD_PARTIAL_MITIGATE
 	if(isnull(return_list[BLOCK_RETURN_MITIGATION_PERCENT]))		//  if one of the on_active_parry procs overrode. We don't have to worry about interference since parries are the first thing checked in the [do_run_block()] sequence.
 		return_list[BLOCK_RETURN_MITIGATION_PERCENT] = clamp(efficiency, 0, 100)		// do not allow > 100% or < 0% for now.
-	var/list/effect_text = run_parry_countereffects(object, damage, attack_text, attack_type, armour_penetration, attacker, def_zone, return_list, efficiency)
-	if(data.parry_default_handle_feedback)
+	var/list/effect_text
+	if(efficiency >= data.parry_efficiency_to_counterattack)
+		run_parry_countereffects(object, damage, attack_text, attack_type, armour_penetration, attacker, def_zone, return_list, efficiency)
+	if(data.parry_flags & PARRY_DEFAULT_HANDLE_FEEDBACK)
 		handle_parry_feedback(object, damage, attack_text, attack_type, armour_penetration, attacker, def_zone, return_list, efficiency, effect_text)
 	successful_parries += efficiency
+	if(length(successful_parries) >= data.parry_max_attacks)
+		end_parry_sequence()
 
 /mob/living/proc/handle_parry_feedback(atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, list/return_list = list(), parry_efficiency, list/effect_text)
 	var/datum/block_parry_data/data = get_parry_data()
@@ -283,10 +298,10 @@
 
 /obj/effect/abstract/parry/main
 	name = null
-	icon_state = "parry_bm_hold"
 
-/obj/effect/abstract/parry/main/Initialize(mapload, datum/block_parry_data/data, mob/living/owner)
+/obj/effect/abstract/parry/main/Initialize(mapload, datum/block_parry_data/data, mob/living/owner, icon_state)
 	. = ..()
+	src.icon_state = icon_state
 	if(owner)
 		attach_to(owner)
 	if(data)
