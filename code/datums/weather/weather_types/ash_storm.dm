@@ -16,8 +16,9 @@
 	end_duration = 300
 	end_overlay = "light_ash"
 
-	area_type = /area/lavaland/surface/outdoors
-	target_trait = ZTRAIT_MINING
+	area_type = /area
+	protect_indoors = TRUE
+	target_trait = ZTRAIT_ASHSTORM
 
 	immunity_type = "ash"
 
@@ -94,7 +95,7 @@
 	if(is_ash_immune(L))
 		return
 	if(is_species(L, /datum/species/lizard/ashwalker))
-		if(L.getStaminaLoss() <= STAMINA_SOFTCRIT)
+		if(!IS_STAMCRIT(L))
 			L.adjustStaminaLossBuffered(4)
 		return
 	L.adjustFireLoss(4)

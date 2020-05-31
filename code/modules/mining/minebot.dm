@@ -24,7 +24,8 @@
 	environment_smash = ENVIRONMENT_SMASH_NONE
 	check_friendly_fire = TRUE
 	stop_automated_movement_when_pulled = TRUE
-	attacktext = "drills"
+	attack_verb_continuous = "drills"
+	attack_verb_simple = "drill"
 	attack_sound = 'sound/weapons/circsawhit.ogg'
 	sentience_type = SENTIENCE_MINEBOT
 	speak_emote = list("states")
@@ -68,22 +69,22 @@
 	check_friendly_fire = 0
 
 /mob/living/simple_animal/hostile/mining_drone/examine(mob/user)
-	..()
+	. = ..()
 	var/t_He = p_they(TRUE)
 	var/t_him = p_them()
 	var/t_s = p_s()
 	if(health < maxHealth)
 		if(health >= maxHealth * 0.5)
-			to_chat(user, "<span class='warning'>[t_He] look[t_s] slightly dented.</span>")
+			. += "<span class='warning'>[t_He] look[t_s] slightly dented.</span>"
 		else
-			to_chat(user, "<span class='boldwarning'>[t_He] look[t_s] severely dented!</span>")
-	to_chat(user, "<span class='notice'>Using a mining scanner on [t_him] will instruct [t_him] to drop stored ore. <b>[max(0, LAZYLEN(contents) - 1)] Stored Ore</b>\n\
-	Field repairs can be done with a welder.")
+			. += "<span class='boldwarning'>[t_He] look[t_s] severely dented!</span>"
+	. += "<span class='notice'>Using a mining scanner on [t_him] will instruct [t_him] to drop stored ore. <b>[max(0, LAZYLEN(contents) - 1)] Stored Ore</b>\n\
+	Field repairs can be done with a welder."
 	if(stored_gun && stored_gun.max_mod_capacity)
-		to_chat(user, "<b>[stored_gun.get_remaining_mod_capacity()]%</b> mod capacity remaining.")
+		. += "<b>[stored_gun.get_remaining_mod_capacity()]%</b> mod capacity remaining."
 		for(var/A in stored_gun.get_modkits())
 			var/obj/item/borg/upgrade/modkit/M = A
-			to_chat(user, "<span class='notice'>There is \a [M] installed, using <b>[M.cost]%</b> capacity.</span>")
+			. += "<span class='notice'>There is \a [M] installed, using <b>[M.cost]%</b> capacity.</span>"
 
 /mob/living/simple_animal/hostile/mining_drone/welder_act(mob/living/user, obj/item/I)
 	. = TRUE

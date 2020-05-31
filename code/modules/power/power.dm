@@ -42,13 +42,13 @@
 
 /obj/machinery/power/proc/surplus()
 	if(powernet)
-		return CLAMP(powernet.avail-powernet.load, 0, powernet.avail)
+		return clamp(powernet.avail-powernet.load, 0, powernet.avail)
 	else
 		return 0
 
-/obj/machinery/power/proc/avail()
+/obj/machinery/power/proc/avail(amount)
 	if(powernet)
-		return powernet.avail
+		return amount ? powernet.avail >= amount : powernet.avail
 	else
 		return 0
 
@@ -58,7 +58,7 @@
 
 /obj/machinery/power/proc/delayed_surplus()
 	if(powernet)
-		return CLAMP(powernet.newavail - powernet.delayedload, 0, powernet.newavail)
+		return clamp(powernet.newavail - powernet.delayedload, 0, powernet.newavail)
 	else
 		return 0
 
@@ -310,6 +310,7 @@
 		if(H.gloves)
 			var/obj/item/clothing/gloves/G = H.gloves
 			if(G.siemens_coefficient == 0)
+				SEND_SIGNAL(M, COMSIG_LIVING_SHOCK_PREVENTED, power_source, source, siemens_coeff, dist_check)
 				return 0		//to avoid spamming with insulated glvoes on
 
 	var/area/source_area
@@ -382,6 +383,7 @@
 	return null
 
 /area/proc/get_apc()
+	var/target = base_area ? base_area : src
 	for(var/obj/machinery/power/apc/APC in GLOB.apcs_list)
-		if(APC.area == src)
+		if(APC.area == target)
 			return APC

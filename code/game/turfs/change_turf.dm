@@ -1,6 +1,7 @@
 // This is a list of turf types we dont want to assign to baseturfs unless through initialization or explicitly
 GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 	/turf/open/space,
+	/turf/baseturf_bottom
 	)))
 
 /turf/proc/empty(turf_type=/turf/open/space, baseturf_type, list/ignore_typecache, flags)
@@ -56,12 +57,20 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 // Creates a new turf
 // new_baseturfs can be either a single type or list of types, formated the same as baseturfs. see turf.dm
 /turf/proc/ChangeTurf(path, list/new_baseturfs, flags)
-	if(!path)
-		return
-	if(path == /turf/open/space/basic)
-		// basic doesn't initialize and this will cause issues
-		// no warning though because this can happen naturaly as a result of it being built on top of
-		path = /turf/open/space
+	switch(path)
+		if(null)
+			return
+		if(/turf/baseturf_bottom)
+			path = SSmapping.level_trait(z, ZTRAIT_BASETURF) || /turf/open/space
+			if (!ispath(path))
+				path = text2path(path)
+				if (!ispath(path))
+					warning("Z-level [z] has invalid baseturf '[SSmapping.level_trait(z, ZTRAIT_BASETURF)]'")
+					path = /turf/open/space
+		if(/turf/open/space/basic)
+			// basic doesn't initialize and this will cause issues
+			// no warning though because this can happen naturaly as a result of it being built on top of
+			path = /turf/open/space
 	if(!GLOB.use_preloader && path == type && !(flags & CHANGETURF_FORCEOP)) // Don't no-op if the map loader requires it to be reconstructed
 		return src
 	if(flags & CHANGETURF_SKIP)
@@ -71,7 +80,10 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 	var/old_dynamic_lighting = dynamic_lighting
 	var/old_affecting_lights = affecting_lights
 	var/old_lighting_object = lighting_object
-	var/old_corners = corners
+	var/old_lc_topright = lc_topright
+	var/old_lc_topleft = lc_topleft
+	var/old_lc_bottomright = lc_bottomright
+	var/old_lc_bottomleft = lc_bottomleft
 
 	var/old_exl = explosion_level
 	var/old_exi = explosion_id
@@ -110,7 +122,10 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 		recalc_atom_opacity()
 		lighting_object = old_lighting_object
 		affecting_lights = old_affecting_lights
-		corners = old_corners
+		lc_topright = old_lc_topright
+		lc_topleft = old_lc_topleft
+		lc_bottomright = old_lc_bottomright
+		lc_bottomleft = old_lc_bottomleft
 		if (old_opacity != opacity || dynamic_lighting != old_dynamic_lighting)
 			reconsider_lights()
 
@@ -128,16 +143,15 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 /turf/open/ChangeTurf(path, list/new_baseturfs, flags)
 	if ((flags & CHANGETURF_INHERIT_AIR) && ispath(path, /turf/open))
 		SSair.remove_from_active(src)
-		var/stashed_air = air
-		air = null // so that it doesn't get deleted
+		var/datum/gas_mixture/stashed_air = new()
+		stashed_air.copy_from(air)
 		. = ..()
-		if (!. || . == src) // changeturf failed or didn't do anything
-			air = stashed_air
+		if (!.) // changeturf failed or didn't do anything
+			QDEL_NULL(stashed_air)
 			return
 		var/turf/open/newTurf = .
-		if (!istype(newTurf.air, /datum/gas_mixture/immutable/space))
-			QDEL_NULL(newTurf.air)
-			newTurf.air = stashed_air
+		newTurf.air.copy_from(stashed_air)
+		QDEL_NULL(stashed_air)
 		SSair.add_to_active(newTurf)
 	else
 		if(ispath(path,/turf/closed))
@@ -215,7 +229,7 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 			newT.assemble_baseturfs(initial(fake_turf_type.baseturfs)) // The baseturfs list is created like roundstart
 			if(!length(newT.baseturfs))
 				newT.baseturfs = list(baseturfs)
-			newT.baseturfs -= newT.baseturfs & GLOB.blacklisted_automated_baseturfs
+			newT.baseturfs -= GLOB.blacklisted_automated_baseturfs
 			newT.baseturfs.Insert(1, old_baseturfs) // The old baseturfs are put underneath
 			return newT
 		if(!length(baseturfs))
@@ -248,9 +262,9 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 	if(depth)
 		var/list/target_baseturfs
 		if(length(copytarget.baseturfs))
-			// with default inputs this would be Copy(CLAMP(2, -INFINITY, baseturfs.len))
+			// with default inputs this would be Copy(clamp(2, -INFINITY, baseturfs.len))
 			// Don't forget a lower index is lower in the baseturfs stack, the bottom is baseturfs[1]
-			target_baseturfs = copytarget.baseturfs.Copy(CLAMP(1 + ignore_bottom, 1 + copytarget.baseturfs.len - depth, copytarget.baseturfs.len))
+			target_baseturfs = copytarget.baseturfs.Copy(clamp(1 + ignore_bottom, 1 + copytarget.baseturfs.len - depth, copytarget.baseturfs.len))
 		else if(!ignore_bottom)
 			target_baseturfs = list(copytarget.baseturfs)
 		if(target_baseturfs)
@@ -315,5 +329,5 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 	SSair.add_to_active(src)
 
 /turf/proc/ReplaceWithLattice()
-	ScrapeAway()
+	ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
 	new /obj/structure/lattice(locate(x, y, z))

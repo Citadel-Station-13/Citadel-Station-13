@@ -32,7 +32,7 @@
 
 /obj/effect/particle_effect/smoke/Initialize()
 	. = ..()
-	create_reagents(500)
+	create_reagents(500, NONE, NO_REAGENTS_VALUE)
 	START_PROCESSING(SSobj, src)
 
 

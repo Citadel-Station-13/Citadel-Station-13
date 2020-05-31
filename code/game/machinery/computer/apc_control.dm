@@ -92,9 +92,7 @@
 	if(!usr || !usr.canUseTopic(src) || stat || QDELETED(src))
 		return
 	if(href_list["authenticate"])
-		var/obj/item/card/id/ID = usr.get_active_held_item()
-		if(!istype(ID))
-			ID = usr.get_idcard()
+		var/obj/item/card/id/ID = usr.get_idcard(TRUE)
 		if(ID && istype(ID))
 			if(check_access(ID))
 				authenticated = TRUE
@@ -152,7 +150,7 @@
 			return
 		log_activity("changed greater than charge filter to \"[new_filter]\"")
 		if(new_filter)
-			new_filter = CLAMP(new_filter, 0, 100)
+			new_filter = clamp(new_filter, 0, 100)
 		playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, 0)
 		result_filters["Charge Above"] = new_filter
 	if(href_list["below_filter"])
@@ -162,7 +160,7 @@
 			return
 		log_activity("changed lesser than charge filter to \"[new_filter]\"")
 		if(new_filter)
-			new_filter = CLAMP(new_filter, 0, 100)
+			new_filter = clamp(new_filter, 0, 100)
 		playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, 0)
 		result_filters["Charge Below"] = new_filter
 	if(href_list["access_filter"])
@@ -200,7 +198,7 @@
 
 /obj/machinery/computer/apc_control/proc/log_activity(log_text)
 	var/op_string = operator && !(obj_flags & EMAGGED) ? operator : "\[NULL OPERATOR\]"
-	LAZYADD(logs, "<b>([STATION_TIME_TIMESTAMP("hh:mm:ss")])</b> [op_string] [log_text]")
+	LAZYADD(logs, "<b>([STATION_TIME_TIMESTAMP("hh:mm:ss", world.time)])</b> [op_string] [log_text]")
 
 /mob/proc/using_power_flow_console()
 	for(var/obj/machinery/computer/apc_control/A in range(1, src))

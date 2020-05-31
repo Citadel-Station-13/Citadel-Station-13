@@ -25,7 +25,7 @@
 /datum/bounty/item/science/nightvision_goggles
 	name = "Night Vision Goggles"
 	description = "An electrical storm has busted all the lights at CentCom. While management is waiting for replacements, perhaps some night vision goggles can be shipped?"
-	reward = 1000
+	reward = 1250
 	wanted_types = list(/obj/item/clothing/glasses/night, /obj/item/clothing/glasses/meson/night, /obj/item/clothing/glasses/hud/health/night, /obj/item/clothing/glasses/hud/security/night, /obj/item/clothing/glasses/hud/diagnostic/night)
 
 /datum/bounty/item/science/experimental_welding_tool
@@ -55,7 +55,7 @@
 
 /datum/bounty/item/science/advanced_mop
 	name = "Advanced Mop"
-	description = "Excuse me. I'd like to request $17 for a push broom rebristling. Either that, or an advanced mop."
+	description = "Excuse me. I'd like to request 17 cr for a push broom rebristling. Either that, or an advanced mop."
 	reward = 3000
 	wanted_types = list(/obj/item/mop/advanced)
 
@@ -108,7 +108,7 @@
 	wanted_types = list(/obj/item/stock_parts/micro_laser/quadultra)
 
 /datum/bounty/item/science/fakecrystals
-	name = "synthetic bluespace crystals"
+	name = "Synthetic Bluespace Crystals"
 	description = "Don't, uh, tell anyone, but one of our BSA arrays might have had a little... accident. Send us some bluespace crystals so we can recalibrate it before anyone realizes. The whole set uses artificial bluespace crystals, so we need and not any other type of bluespace crystals..."
 	reward = 8000
 	required_count = 5
@@ -116,3 +116,50 @@
 	exclude_types = list(/obj/item/stack/ore/bluespace_crystal,
 						 /obj/item/stack/sheet/bluespace_crystal,
 						 /obj/item/stack/ore/bluespace_crystal/refined)
+
+/datum/bounty/item/science/noneactive_reactivearmor
+	name = "Reactive Armor Shells"
+	description = "Do to the breakthroughs in anomalies, we can not keep up in making reactive armor shells, can you send us a few?"
+	reward = 2000
+	required_count = 5
+	wanted_types = list(/obj/item/reactive_armour_shell, /obj/item/clothing/suit/armor/reactive)
+	exclude_types = list(/obj/item/clothing/suit/armor/reactive/repulse,
+						 /obj/item/clothing/suit/armor/reactive/tesla,
+						 /obj/item/clothing/suit/armor/reactive/teleport,
+						 /obj/item/clothing/suit/armor/reactive/stealth,
+						 /obj/item/clothing/suit/armor/reactive/fire)
+
+/datum/bounty/item/science/anomaly_core
+	name = "Anomaly Core"
+	description = "A new theory has begun that each sector of space has different anomalies, this all started when a local station tried to make a fire based reactive suit and failed making a stealth version, please send us a core so we may study it more."
+	reward = 2500
+	required_count = 1
+	wanted_types = list(/obj/item/assembly/signaler/anomaly)
+
+/datum/bounty/item/science/anomaly_neutralizer
+	name = "Anomaly Neutralizers"
+	description = "An idea for a long time was to use an unstable Supermatter Shard to help create  the breeding grounds for an unstable part of space to harvest any anomalies we want. It worked a little too well and now were out of anomaly neutralizers please send us a baker's dozen."
+	reward = 2500
+	required_count = 13
+	wanted_types = list(/obj/item/anomaly_neutralizer)
+
+/datum/bounty/item/science/integrated_circuit_printer
+	name = "Integrated Circuit Printer"
+	description = "due to a paperwork error, a newly made integrated circuit manufacturer line is missing three of its printers needed to operate. Until the paper work is corrected we are outsourcing this problem, so please send us three integrated circuit printers."
+	reward = 2000
+	required_count = 3
+	wanted_types = list(/obj/item/integrated_circuit_printer)
+
+/datum/bounty/item/science/integrated_circuit_disks
+	name = "Integrated Circuit Printer Upgrade Disks"
+	description = "HR has requested ten more integrated circuit printer upgrade disks, please send them to CC as soon as possible."
+	reward = 2000
+	required_count = 10 //Its just metal
+	wanted_types = list(/obj/item/disk/integrated_circuit/upgrade)
+
+/datum/bounty/item/science/nanite_trash
+	name = "Nanite Based Gear"
+	description = "CC wants to make nanite based gear available to a new wing of devolvement but lacks the hand held tools to get it full up and running. Please send us any you have."
+	reward = 2500
+	required_count = 20 //Its just metal
+	wanted_types = list( /obj/item/nanite_remote, /obj/item/nanite_remote/comm, /obj/item/nanite_scanner)

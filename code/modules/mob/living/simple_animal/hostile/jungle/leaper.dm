@@ -10,7 +10,8 @@
 	icon_state = "leaper"
 	icon_living = "leaper"
 	icon_dead = "leaper_dead"
-	mob_biotypes = list(MOB_ORGANIC, MOB_BEAST)
+	mob_biotypes = MOB_ORGANIC|MOB_BEAST
+	threat = 2
 	maxHealth = 300
 	health = 300
 	ranged = TRUE
@@ -26,7 +27,7 @@
 	var/hop_cooldown = 0 //Strictly for player controlled leapers
 	var/projectile_ready = FALSE //Stopping AI leapers from firing whenever they want, and only doing it after a hop has finished instead
 
-	do_footstep = TRUE
+	footstep_type = FOOTSTEP_MOB_HEAVY
 
 /obj/item/projectile/leaper
 	name = "leaper bubble"
@@ -42,7 +43,7 @@
 	..()
 	if(iscarbon(target))
 		var/mob/living/carbon/C = target
-		C.reagents.add_reagent("leaper_venom", 5)
+		C.reagents.add_reagent(/datum/reagent/toxin/leaper_venom, 5)
 		return
 	if(isanimal(target))
 		var/mob/living/simple_animal/L = target
@@ -93,10 +94,10 @@
 		var/mob/living/L = AM
 		if(!istype(L, /mob/living/simple_animal/hostile/jungle/leaper))
 			playsound(src,'sound/effects/snap.ogg',50, 1, -1)
-			L.Knockdown(50)
+			L.DefaultCombatKnockdown(50)
 			if(iscarbon(L))
 				var/mob/living/carbon/C = L
-				C.reagents.add_reagent("leaper_venom", 5)
+				C.reagents.add_reagent(/datum/reagent/toxin/leaper_venom, 5)
 			if(isanimal(L))
 				var/mob/living/simple_animal/A = L
 				A.adjustHealth(25)
@@ -105,7 +106,6 @@
 
 /datum/reagent/toxin/leaper_venom
 	name = "Leaper venom"
-	id = "leaper_venom"
 	description = "A toxin spat out by leapers that, while harmless in small doses, quickly creates a toxic reaction if too much is in the body."
 	color = "#801E28" // rgb: 128, 30, 40
 	toxpwr = 0
@@ -249,7 +249,7 @@
 /mob/living/simple_animal/hostile/jungle/leaper/Goto()
 	return
 
-/mob/living/simple_animal/hostile/jungle/leaper/throw_impact()
+/mob/living/simple_animal/hostile/jungle/leaper/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	return
 
 /mob/living/simple_animal/hostile/jungle/leaper/update_icons()

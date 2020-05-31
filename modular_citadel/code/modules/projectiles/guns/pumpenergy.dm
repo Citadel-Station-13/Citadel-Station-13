@@ -46,34 +46,22 @@
 		cell.use(shot.e_cost)//... drain the cell cell
 	chambered = 0 //either way, released the prepared shot
 
-/obj/item/gun/energy/pumpaction/select_fire(mob/living/user)	//makes it so that it doesn't rack itself when changing firing modes unless already racked
-	select++
-	if (select > ammo_type.len)
-		select = 1
-	var/obj/item/ammo_casing/energy/shot = ammo_type[select]
-	fire_sound = shot.fire_sound
-	fire_delay = shot.delay
-	if (shot.select_name)
-		to_chat(user, "<span class='notice'>[src] is now set to [shot.select_name].</span>")
-	if(chambered)
-		chambered = 0
-		recharge_newshot(1)
-	update_icon()
-	if(ismob(loc))		//forces inhands to update
-		var/mob/M = loc
-		M.update_inv_hands()
-	return
+/obj/item/gun/energy/pumpaction/post_set_firemode()
+	var/has_shot = chambered
+	. = ..(recharge_newshot = FALSE)
+	if(has_shot)
+		recharge_newshot(TRUE)
 
 /obj/item/gun/energy/pumpaction/update_icon()	//adds racked indicators
 	..()
-	var/obj/item/ammo_casing/energy/shot = ammo_type[select]
+	var/obj/item/ammo_casing/energy/shot = ammo_type[current_firemode_index]
 	if(chambered)
 		add_overlay("[icon_state]_rack_[shot.select_name]")
 	else
 		add_overlay("[icon_state]_rack_empty")
 
 /obj/item/gun/energy/pumpaction/proc/pump(mob/M)	//pumping proc. Checks if the gun is empty and plays a different sound if it is.
-	var/obj/item/ammo_casing/energy/shot = ammo_type[select]
+	var/obj/item/ammo_casing/energy/shot = ammo_type[current_firemode_index]
 	if(cell.charge < shot.e_cost)
 		playsound(M, 'sound/weapons/laserPumpEmpty.ogg', 100, 1)	//Ends with three beeps made from highly processed knife honing noises
 	else
@@ -83,24 +71,26 @@
 	return 1
 
 /obj/item/gun/energy/pumpaction/AltClick(mob/living/user)	//for changing firing modes since attackself is already used for pumping
+	. = ..()
 	if(!in_range(src, user))	//Basic checks to prevent abuse
-		return
-	if(user.incapacitated() || !istype(user))
-		to_chat(user, "<span class='warning'>You can't do that right now!</span>")
 		return
 
 	if(ammo_type.len > 1)
-		select_fire(user)
-		update_icon()
+		if(user.incapacitated() || !istype(user))
+			to_chat(user, "<span class='warning'>You can't do that right now!</span>")
+		else
+			select_fire(user)
+			update_icon()
+		return TRUE
 
 /obj/item/gun/energy/pumpaction/examine(mob/user)	//so people don't ask HOW TO CHANGE FIRING MODE
-	..()
-	to_chat(user, "<span class='notice'>Alt-click to change firing modes.</span>")
+	. = ..()
+	. += "<span class='notice'>Alt-click to change firing modes.</span>"
 
-/obj/item/gun/energy/pumpaction/worn_overlays(isinhands, icon_file)	//ammo counter for inhands
+/obj/item/gun/energy/pumpaction/worn_overlays(isinhands, icon_file, used_state, style_flags = NONE)	//ammo counter for inhands
 	. = ..()
 	var/ratio = CEILING((cell.charge / cell.maxcharge) * charge_sections, 1)
-	var/obj/item/ammo_casing/energy/shot = ammo_type[select]
+	var/obj/item/ammo_casing/energy/shot = ammo_type[current_firemode_index]
 	if(isinhands)
 		if(cell.charge < shot.e_cost)
 			var/mutable_appearance/ammo_inhand = mutable_appearance(icon_file, "[item_state]_empty")
@@ -141,7 +131,7 @@
 	item_state = "particleblaster"
 	lefthand_file = 'modular_citadel/icons/mob/inhands/guns_lefthand.dmi'
 	righthand_file = 'modular_citadel/icons/mob/inhands/guns_righthand.dmi'
-	ammo_type = list(/obj/item/ammo_casing/energy/electrode/pump, /obj/item/ammo_casing/energy/laser/pump)
+	ammo_type = list(/obj/item/ammo_casing/energy/disabler/pump, /obj/item/ammo_casing/energy/laser/pump)
 	ammo_x_offset = 2
 	modifystate = 1
 
@@ -162,19 +152,19 @@
 	fire_sound = 'sound/weapons/LaserSlugv3.ogg'
 
 /obj/item/ammo_casing/energy/laser/pump
-	projectile_type = /obj/item/projectile/beam/weak
-	e_cost = 200
+	projectile_type = /obj/item/projectile/beam/pump
+	e_cost = 350
 	select_name = "kill"
-	pellets = 3
+	pellets = 6
 	variance = 15
 	fire_sound = 'sound/weapons/ParticleBlaster.ogg'
 
-/obj/item/ammo_casing/energy/electrode/pump
-	projectile_type = /obj/item/projectile/energy/electrode/pump
-	select_name = "stun"
+/obj/item/ammo_casing/energy/disabler/pump
+	projectile_type = /obj/item/projectile/energy/disabler/pump
+	select_name = "disable"
 	fire_sound = 'sound/weapons/LaserSlugv3.ogg'
-	e_cost = 300
-	pellets = 3
+	e_cost = 150
+	pellets = 6
 	variance = 20
 
 //PROJECTILES
@@ -183,25 +173,21 @@
 	name = "particle blast"
 	damage = 13
 	icon_state = "disablerpellet"
-	icon = 'modular_citadel/icons/obj/projectiles.dmi'
 
 /obj/item/projectile/beam/disabler/slug
 	name = "positron blast"
 	damage = 80
 	range = 14
-	speed = 0.6
+	pixels_per_second = TILES_TO_PIXELS(16.667)
 	icon_state = "disablerslug"
-	icon = 'modular_citadel/icons/obj/projectiles.dmi'
 
-/obj/item/projectile/energy/electrode/pump
-	name = "electron blast"
-	icon_state = "stunjectile"
-	icon = 'modular_citadel/icons/obj/projectiles.dmi'
+/obj/item/projectile/beam/pump
+	damage = 9
+	range = 6
+
+/obj/item/projectile/energy/disabler/pump
+	name = "disabling blast"
+	icon_state = "disablerslug"
 	color = null
-	nodamage = 1
-	knockdown = 100
-	stamina = 5
-	stutter = 5
-	jitter = 20
-	hitsound = 'sound/weapons/taserhit.ogg'
-	range = 7
+	stamina = 13
+	range = 6

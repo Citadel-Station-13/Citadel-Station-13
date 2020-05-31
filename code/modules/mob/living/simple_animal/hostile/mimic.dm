@@ -5,19 +5,24 @@
 	icon_state = "crate"
 	icon_living = "crate"
 
-	response_help = "touches"
-	response_disarm = "pushes"
-	response_harm = "hits"
+	response_help_continuous = "touches"
+	response_help_simple = "touch"
+	response_disarm_continuous = "pushes"
+	response_disarm_simple = "push"
+	response_harm_continuous = "hits"
+	response_harm_simple = "hit"
 	speed = 0
 	maxHealth = 250
 	health = 250
+	blood_volume = 0
 	gender = NEUTER
-	mob_biotypes = list(MOB_INORGANIC)
+	mob_biotypes = NONE
 
 	harm_intent_damage = 5
 	melee_damage_lower = 8
 	melee_damage_upper = 12
-	attacktext = "attacks"
+	attack_verb_continuous = "attacks"
+	attack_verb_simple = "attack"
 	attack_sound = 'sound/weapons/punch1.ogg'
 	emote_taunt = list("growls")
 	speak_emote = list("creaks")
@@ -33,7 +38,8 @@
 
 // Aggro when you try to open them. Will also pickup loot when spawns and drop it when dies.
 /mob/living/simple_animal/hostile/mimic/crate
-	attacktext = "bites"
+	attack_verb_continuous = "bites"
+	attack_verb_simple = "bite"
 	speak_emote = list("clatters")
 	stop_automated_movement = 1
 	wander = 0
@@ -69,7 +75,7 @@
 		icon_state = initial(icon_state)
 		if(prob(15) && iscarbon(target))
 			var/mob/living/carbon/C = target
-			C.Knockdown(40)
+			C.DefaultCombatKnockdown(40)
 			C.visible_message("<span class='danger'>\The [src] knocks down \the [C]!</span>", \
 					"<span class='userdanger'>\The [src] knocks you down!</span>")
 
@@ -179,7 +185,7 @@ GLOBAL_LIST_INIT(protected_objects, list(/obj/structure/table, /obj/structure/ca
 	. = ..()
 	if(knockdown_people && . && prob(15) && iscarbon(target))
 		var/mob/living/carbon/C = target
-		C.Knockdown(40)
+		C.DefaultCombatKnockdown(40)
 		C.visible_message("<span class='danger'>\The [src] knocks down \the [C]!</span>", \
 				"<span class='userdanger'>\The [src] knocks you down!</span>")
 
@@ -196,8 +202,6 @@ GLOBAL_LIST_INIT(protected_objects, list(/obj/structure/table, /obj/structure/ca
 		if(R.connected_ai == creator) // Only attack robots that aren't synced to our creator AI.
 			return 0
 	return ..()
-
-
 
 /mob/living/simple_animal/hostile/mimic/copy/ranged
 	var/obj/item/gun/TrueGun = null
@@ -229,14 +233,13 @@ GLOBAL_LIST_INIT(protected_objects, list(/obj/structure/table, /obj/structure/ca
 			casingtype = initial(M.ammo_type)
 		if(istype(G, /obj/item/gun/energy))
 			Zapgun = G
-			var/selectfiresetting = Zapgun.select
-			var/obj/item/ammo_casing/energy/E = Zapgun.ammo_type[selectfiresetting]
+			var/obj/item/ammo_casing/energy/E = Zapgun.ammo_type[Zapgun.current_firemode_index]
 			projectiletype = initial(E.projectile_type)
 
 /mob/living/simple_animal/hostile/mimic/copy/ranged/OpenFire(the_target)
 	if(Zapgun)
 		if(Zapgun.cell)
-			var/obj/item/ammo_casing/energy/shot = Zapgun.ammo_type[Zapgun.select]
+			var/obj/item/ammo_casing/energy/shot = Zapgun.ammo_type[Zapgun.current_firemode_index]
 			if(Zapgun.cell.charge >= shot.e_cost)
 				Zapgun.cell.use(shot.e_cost)
 				Zapgun.update_icon()

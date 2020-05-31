@@ -88,7 +88,7 @@
 	sort_priority = 4
 	quickbind = TRUE
 	quickbind_desc = "Creates a Sigil of Submission, which will convert non-Servants that remain on it."
-
+	requires_full_power = TRUE
 
 //Kindle: Charges the slab with blazing energy. It can be released to stun and silence a target.
 /datum/clockwork_scripture/ranged_ability/kindle
@@ -138,11 +138,11 @@
 	quickbind_desc = "Applies handcuffs to a struck target."
 
 
-//Vanguard: Provides twenty seconds of greatly increased stamina and stun immunity. At the end of the twenty seconds, 25% of all stuns absorbed are applied to the invoker.
+//Vanguard: Provides twenty seconds of greatly increased stamina regeneration and stun immunity. At the end of the twenty seconds, 25% of all stuns absorbed aswell as 50% of healed stamloss are applied to the invoker.
 /datum/clockwork_scripture/vanguard
 	descname = "Self Stun Immunity"
 	name = "Vanguard"
-	desc = "Provides twenty seconds of greatly increased stamina and stun immunity. At the end of the twenty seconds, the invoker is knocked down for the equivalent of 25% of all stuns they absorbed. \
+	desc = "Provides twenty seconds of greatly increased stamina regeneration and stun immunity. At the end of the twenty seconds, the invoker is knocked down for the equivalent of 25% of all stuns they absorbed aswell as incurring 50% of the stamina regenerated as stamina loss \
 	Excessive absorption will cause unconsciousness."
 	invocations = list("Shield me...", "...from darkness!")
 	channel_time = 30
@@ -152,7 +152,7 @@
 	primary_component = VANGUARD_COGWHEEL
 	sort_priority = 7
 	quickbind = TRUE
-	quickbind_desc = "Allows you to temporarily have quickly regenerating stamina and absorb stuns. All stuns absorbed will affect you when disabled."
+	quickbind_desc = "Allows you to temporarily have quickly regenerating stamina and absorb stuns. Part of the stuns absorbed and staminaloss healed will affect you when disabled."
 
 /datum/clockwork_scripture/vanguard/check_special_requirements()
 	if(!GLOB.ratvar_awakens && islist(invoker.stun_absorption) && invoker.stun_absorption["vanguard"] && invoker.stun_absorption["vanguard"]["end_time"] > world.time)
@@ -211,6 +211,7 @@
 	quickbind = TRUE
 	quickbind_desc = "Returns you to Reebe."
 	var/client_color
+	requires_full_power = TRUE
 
 /datum/clockwork_scripture/abscond/check_special_requirements()
 	if(is_reebe(invoker.z))

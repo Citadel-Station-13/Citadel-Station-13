@@ -34,18 +34,17 @@
 	.=..()
 	update_icon()
 
-/obj/item/integrated_electronics/detailer/update_icon()
-	cut_overlays()
-	var/mutable_appearance/detail_overlay = mutable_appearance('icons/obj/assemblies/electronic_tools.dmi', "detailer-color")
-	detail_overlay.color = detail_color
-	add_overlay(detail_overlay)
+/obj/item/integrated_electronics/detailer/update_overlays()
+	. = ..()
+	. += mutable_appearance('icons/obj/assemblies/electronic_tools.dmi', "detailer-color", color = detail_color)
+
 
 /obj/item/integrated_electronics/detailer/attack_self(mob/user)
 	var/color_choice = input(user, "Select color.", "Assembly Detailer") as null|anything in color_list
 	if(!color_list[color_choice])
 		return
 	if(!in_range(src, user))
-		return		
+		return
 	if(color_choice == "custom")
 		detail_color = input(user,"","Choose Color",detail_color) as color|null
 	else

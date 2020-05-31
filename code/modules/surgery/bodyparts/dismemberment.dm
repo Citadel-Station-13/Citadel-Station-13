@@ -14,19 +14,22 @@
 		return FALSE
 	if(HAS_TRAIT(C, TRAIT_NODISMEMBER))
 		return FALSE
-
 	var/obj/item/bodypart/affecting = C.get_bodypart(BODY_ZONE_CHEST)
-	affecting.receive_damage(CLAMP(brute_dam/2 * affecting.body_damage_coeff, 15, 50), CLAMP(burn_dam/2 * affecting.body_damage_coeff, 0, 50)) //Damage the chest based on limb's existing damage
+	affecting.receive_damage(clamp(brute_dam/2 * affecting.body_damage_coeff, 15, 50), clamp(burn_dam/2 * affecting.body_damage_coeff, 0, 50)) //Damage the chest based on limb's existing damage
 	C.visible_message("<span class='danger'><B>[C]'s [src.name] has been violently dismembered!</B></span>")
 	C.emote("scream")
 	SEND_SIGNAL(C, COMSIG_ADD_MOOD_EVENT, "dismembered", /datum/mood_event/dismembered)
 	drop_limb()
+	C.update_equipment_speed_mods() // Update in case speed affecting item unequipped by dismemberment
 
+	C.bleed(40)
+
+	if(QDELETED(src)) //Could have dropped into lava/explosion/chasm/whatever
+		return TRUE
 	if(dam_type == BURN)
 		burn()
-		return 1
+		return TRUE
 	add_mob_blood(C)
-	C.bleed(40)
 	var/direction = pick(GLOB.cardinals)
 	var/t_range = rand(2,max(throw_range/2, 2))
 	var/turf/target_turf = get_turf(src)
@@ -38,8 +41,12 @@
 		if(new_turf.density)
 			break
 	throw_at(target_turf, throw_range, throw_speed)
-	return 1
+	return TRUE
 
+/obj/item/bodypart/head/dismember()
+	if(HAS_TRAIT(owner, TRAIT_NODECAP))
+		return FALSE
+	..()
 
 /obj/item/bodypart/chest/dismember()
 	if(!owner)
@@ -49,6 +56,8 @@
 		return FALSE
 	if(HAS_TRAIT(C, TRAIT_NODISMEMBER))
 		return FALSE
+	if(HAS_TRAIT(C, TRAIT_NOGUT)) //Just for not allowing gutting
+		return FALSE
 	. = list()
 	var/organ_spilled = 0
 	var/turf/T = get_turf(C)
@@ -56,10 +65,9 @@
 	playsound(get_turf(C), 'sound/misc/splort.ogg', 80, 1)
 	for(var/X in C.internal_organs)
 		var/obj/item/organ/O = X
-		var/org_zone = check_zone(O.zone)
-		if(org_zone != BODY_ZONE_CHEST)
+		if(O.organ_flags & ORGAN_NO_DISMEMBERMENT || check_zone(O.zone) != BODY_ZONE_CHEST)
 			continue
-		O.Remove(C)
+		O.Remove()
 		O.forceMove(T)
 		organ_spilled = 1
 		. += X
@@ -99,6 +107,7 @@
 	for(var/obj/item/I in embedded_objects)
 		embedded_objects -= I
 		I.forceMove(src)
+		I.unembedded()
 	if(!C.has_embedded_objects())
 		C.clear_alert("embeddedobject")
 		SEND_SIGNAL(C, COMSIG_CLEAR_MOOD_EVENT, "embedded")
@@ -108,7 +117,7 @@
 			for(var/X in C.dna.mutations) //some mutations require having specific limbs to be kept.
 				var/datum/mutation/human/MT = X
 				if(MT.limb_req && MT.limb_req == body_zone)
-					MT.force_lose(C)
+					C.dna.force_lose(MT)
 
 		for(var/X in C.internal_organs) //internal organs inside the dismembered limb are dropped.
 			var/obj/item/organ/O = X
@@ -121,7 +130,7 @@
 	C.update_health_hud() //update the healthdoll
 	C.update_body()
 	C.update_hair()
-	C.update_canmove()
+	C.update_mobility()
 
 	if(!Tsec)	// Tsec = null happens when a "dummy human" used for rendering icons on prefs screen gets its limbs replaced.
 		qdel(src)
@@ -138,18 +147,17 @@
 
 //when a limb is dropped, the internal organs are removed from the mob and put into the limb
 /obj/item/organ/proc/transfer_to_limb(obj/item/bodypart/LB, mob/living/carbon/C)
-	Remove(C)
+	Remove()
 	forceMove(LB)
 
 /obj/item/organ/brain/transfer_to_limb(obj/item/bodypart/head/LB, mob/living/carbon/human/C)
-	Remove(C)	//Changeling brain concerns are now handled in Remove
+	Remove()	//Changeling brain concerns are now handled in Remove
 	forceMove(LB)
 	LB.brain = src
 	if(brainmob)
 		LB.brainmob = brainmob
 		brainmob = null
 		LB.brainmob.forceMove(LB)
-		LB.brainmob.container = LB
 		LB.brainmob.stat = DEAD
 
 /obj/item/organ/eyes/transfer_to_limb(obj/item/bodypart/head/LB, mob/living/carbon/human/C)
@@ -291,13 +299,13 @@
 		O.Insert(C)
 
 	update_bodypart_damage_state()
+	update_disabled()
 
 	C.updatehealth()
 	C.update_body()
 	C.update_hair()
 	C.update_damage_overlays()
-	C.update_canmove()
-
+	C.update_mobility()
 
 /obj/item/bodypart/head/attach_limb(mob/living/carbon/C, special)
 	//Transfer some head appearance vars over

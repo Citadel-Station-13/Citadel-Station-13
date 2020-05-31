@@ -4,10 +4,12 @@
 
 /datum/sprite_accessory/body_markings
 	icon = 'icons/mob/mutant_bodyparts.dmi'
+	relevant_layers = list(BODY_ADJ_LAYER)
 
 /datum/sprite_accessory/body_markings/none
 	name = "None"
 	icon_state = "none"
+	relevant_layers = null
 
 /datum/sprite_accessory/body_markings/dtiger
 	name = "Dark Tiger Body"
@@ -38,12 +40,14 @@
 	color_src = MATRIXED
 	gender_specific = 0
 	icon = 'modular_citadel/icons/mob/mam_markings.dmi'
+	recommended_species = list("mammal", "xeno", "slimeperson", "podweak")
 
 /datum/sprite_accessory/mam_body_markings/none
 	name = "None"
 	icon_state = "none"
 	ckeys_allowed = list("yousshouldnteverbeseeingthisyoumeme")
 	icon = 'modular_citadel/icons/mob/markings_notmammals.dmi'
+	relevant_layers = null
 
 /datum/sprite_accessory/mam_body_markings/plain
 	name = "Plain"
@@ -218,10 +222,12 @@
 /datum/sprite_accessory/insect_fluff
 	icon = 'icons/mob/wings.dmi'
 	color_src = 0
+	relevant_layers = list(BODY_FRONT_LAYER)
 
 /datum/sprite_accessory/insect_fluff/none
 	name = "None"
 	icon_state = "none"
+	relevant_layers = null
 
 /datum/sprite_accessory/insect_fluff/plain
 	name = "Plain"
@@ -274,6 +280,18 @@
 /datum/sprite_accessory/insect_fluff/snow
 	name = "Snow"
 	icon_state = "snow"
+
+/datum/sprite_accessory/insect_fluff/oakworm
+	name = "Oak Worm"
+	icon_state = "oakworm"
+
+/datum/sprite_accessory/insect_fluff/jungle
+	name = "Jungle"
+	icon_state = "jungle"
+
+/datum/sprite_accessory/insect_fluff/witchwing
+	name = "Witch Wing"
+	icon_state = "witchwing"
 
 /datum/sprite_accessory/insect_fluff/colored
 	name = "Colored (Hair)"

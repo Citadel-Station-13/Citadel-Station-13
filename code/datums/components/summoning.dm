@@ -24,6 +24,7 @@
 	src.faction = faction
 
 /datum/component/summoning/RegisterWithParent()
+	. = ..()
 	if(ismachinery(parent) || isstructure(parent) || isgun(parent)) // turrets, etc
 		RegisterSignal(parent, COMSIG_PROJECTILE_ON_HIT, .proc/projectile_hit)
 	else if(isitem(parent))
@@ -32,6 +33,7 @@
 		RegisterSignal(parent, COMSIG_HOSTILE_ATTACKINGTARGET, .proc/hostile_attackingtarget)
 
 /datum/component/summoning/UnregisterFromParent()
+	. = ..()
 	UnregisterSignal(parent, list(COMSIG_ITEM_AFTERATTACK, COMSIG_HOSTILE_ATTACKINGTARGET, COMSIG_PROJECTILE_ON_HIT))
 
 /datum/component/summoning/proc/item_afterattack(obj/item/source, atom/target, mob/user, proximity_flag, click_parameters)
@@ -57,7 +59,7 @@
 	var/mob/living/simple_animal/L = new chosen_mob_type(spawn_location)
 	if(ishostile(L))
 		var/mob/living/simple_animal/hostile/H = L
-		H.friends += summoner // do not attack our summon boy
+		H.friends[summoner]++ // do not attack our summon boy
 	spawned_mobs += L
 	if(faction != null)
 		L.faction = faction

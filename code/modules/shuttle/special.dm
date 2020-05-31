@@ -21,7 +21,7 @@
 		desc = "Oh no, not again."
 	update_icon()
 
-/obj/machinery/power/emitter/energycannon/magical/update_icon()
+/obj/machinery/power/emitter/energycannon/magical/update_icon_state()
 	if(active)
 		icon_state = icon_state_on
 	else
@@ -122,7 +122,7 @@
 /obj/structure/table/abductor/wabbajack/proc/sleeper_dreams(mob/living/sleeper)
 	if(sleeper in sleepers)
 		to_chat(sleeper, "<span class='revennotice'>While you slumber, you have the strangest dream, like you can see yourself from the outside.</span>")
-		sleeper.ghostize(TRUE)
+		sleeper.ghostize(TRUE, voluntary = TRUE)
 
 /obj/structure/table/abductor/wabbajack/left
 	desc = "You sleep so it may wake."
@@ -186,7 +186,7 @@
 		// No climbing on the bar please
 		var/mob/living/M = AM
 		var/throwtarget = get_edge_target_turf(src, boot_dir)
-		M.Knockdown(40)
+		M.DefaultCombatKnockdown(40)
 		M.throw_at(throwtarget, 5, 1)
 		to_chat(M, "<span class='notice'>No climbing on the bar please.</span>")
 	else
@@ -199,7 +199,7 @@
 		if(H.mind && H.mind.assigned_role == "Bartender")
 			return TRUE
 
-	var/obj/item/card/id/ID = user.get_idcard()
+	var/obj/item/card/id/ID = user.get_idcard(FALSE)
 	if(ID && (ACCESS_CENT_BAR in ID.access))
 		return TRUE
 

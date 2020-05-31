@@ -73,7 +73,7 @@
 				M.putItemFromInventoryInHandIfPossible(src, H.held_index)
 
 
-/obj/item/minigunpack/update_icon()
+/obj/item/minigunpack/update_icon_state()
 	if(armed)
 		icon_state = "notholstered"
 	else
@@ -102,7 +102,7 @@
 	slowdown = 1
 	slot_flags = null
 	w_class = WEIGHT_CLASS_HUGE
-	materials = list()
+	custom_materials = null
 	burst_size = 3
 	automatic = 0
 	fire_delay = 1

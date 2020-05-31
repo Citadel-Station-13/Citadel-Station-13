@@ -77,21 +77,15 @@
 
 /obj/structure/blob/CanAStarPass(ID, dir, caller)
 	. = 0
-	if(ismovableatom(caller))
+	if(ismovable(caller))
 		var/atom/movable/mover = caller
 		. = . || (mover.pass_flags & PASSBLOB)
 
 /obj/structure/blob/update_icon() //Updates color based on overmind color if we have an overmind.
 	if(overmind)
-		add_atom_colour(overmind.blob_reagent_datum.color, FIXED_COLOUR_PRIORITY)
+		add_atom_colour(overmind.blobstrain.color, FIXED_COLOUR_PRIORITY)
 	else
 		remove_atom_colour(FIXED_COLOUR_PRIORITY)
-
-/obj/structure/blob/process()
-	Life()
-
-/obj/structure/blob/proc/Life()
-	return
 
 /obj/structure/blob/proc/Pulse_Area(mob/camera/blob/pulsing_overmind, claim_range = 10, pulse_range = 3, expand_range = 2)
 	if(QDELETED(pulsing_overmind))
@@ -148,10 +142,10 @@
 	O.setDir(dir)
 	if(controller)
 		var/mob/camera/blob/BO = controller
-		O.color = BO.blob_reagent_datum.color
+		O.color = BO.blobstrain.color
 		O.alpha = 200
 	else if(overmind)
-		O.color = overmind.blob_reagent_datum.color
+		O.color = overmind.blobstrain.color
 	if(A)
 		O.do_attack_animation(A) //visually attack the whatever
 	return O //just in case you want to do something to the animation.
@@ -192,7 +186,7 @@
 			B.forceMove(T)
 			B.update_icon()
 			if(B.overmind && expand_reaction)
-				B.overmind.blob_reagent_datum.expand_reaction(src, B, T, controller)
+				B.overmind.blobstrain.expand_reaction(src, B, T, controller)
 			return B
 		else
 			blob_attack_animation(T, controller)
@@ -209,14 +203,14 @@
 		return
 	if(severity > 0)
 		if(overmind)
-			overmind.blob_reagent_datum.emp_reaction(src, severity)
+			overmind.blobstrain.emp_reaction(src, severity)
 		if(prob(100 - severity * 30))
 			new /obj/effect/temp_visual/emp(get_turf(src))
 
-/obj/structure/blob/tesla_act(power)
-	..()
+/obj/structure/blob/zap_act(power)
+	. = ..()
 	if(overmind)
-		if(overmind.blob_reagent_datum.tesla_reaction(src, power))
+		if(overmind.blobstrain.tesla_reaction(src, power))
 			take_damage(power/400, BURN, "energy")
 	else
 		take_damage(power/400, BURN, "energy")
@@ -224,7 +218,7 @@
 /obj/structure/blob/extinguish()
 	..()
 	if(overmind)
-		overmind.blob_reagent_datum.extinguish_reaction(src)
+		overmind.blobstrain.extinguish_reaction(src)
 
 /obj/structure/blob/hulk_damage()
 	return 15
@@ -244,17 +238,20 @@
 		return ..()
 
 /obj/structure/blob/proc/chemeffectreport(mob/user)
+	RETURN_TYPE(/list)
+	. = list()
 	if(overmind)
-		to_chat(user, "<b>Material: <font color=\"[overmind.blob_reagent_datum.color]\">[overmind.blob_reagent_datum.name]</font><span class='notice'>.</span></b>")
-		to_chat(user, "<b>Material Effects:</b> <span class='notice'>[overmind.blob_reagent_datum.analyzerdescdamage]</span>")
-		to_chat(user, "<b>Material Properties:</b> <span class='notice'>[overmind.blob_reagent_datum.analyzerdesceffect]</span><br>")
+		to_chat(user, "<b>Material: <font color=\"[overmind.blobstrain.color]\">[overmind.blobstrain.name]</font><span class='notice'>.</span></b>")
+		to_chat(user, "<b>Material Effects:</b> <span class='notice'>[overmind.blobstrain.analyzerdescdamage]</span>")
+		to_chat(user, "<b>Material Properties:</b> <span class='notice'>[overmind.blobstrain.analyzerdesceffect]</span><br>")
 	else
-		to_chat(user, "<b>No Material Detected!</b><br>")
+		. += "<b>No Material Detected!</b><br>"
 
-/obj/structure/blob/proc/typereport(mob/user)
-	to_chat(user, "<b>Blob Type:</b> <span class='notice'>[uppertext(initial(name))]</span>")
-	to_chat(user, "<b>Health:</b> <span class='notice'>[obj_integrity]/[max_integrity]</span>")
-	to_chat(user, "<b>Effects:</b> <span class='notice'>[scannerreport()]</span>")
+/obj/structure/blob/proc/typereport()
+	RETURN_TYPE(/list)
+	. = list("<b>Blob Type:</b> <span class='notice'>[uppertext(initial(name))]</span>")
+	. += "<b>Health:</b> <span class='notice'>[obj_integrity]/[max_integrity]</span>"
+	. += "<b>Effects:</b> <span class='notice'>[scannerreport()]</span>"
 
 /obj/structure/blob/attack_animal(mob/living/simple_animal/M)
 	if(ROLE_BLOB in M.faction) //sorry, but you can't kill the blob as a blobbernaut
@@ -285,7 +282,7 @@
 		armor_protection = armor.getRating(damage_flag)
 	damage_amount = round(damage_amount * (100 - armor_protection)*0.01, 0.1)
 	if(overmind && damage_flag)
-		damage_amount = overmind.blob_reagent_datum.damage_reaction(src, damage_amount, damage_type, damage_flag)
+		damage_amount = overmind.blobstrain.damage_reaction(src, damage_amount, damage_type, damage_flag)
 	return damage_amount
 
 /obj/structure/blob/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, attack_dir)
@@ -295,13 +292,12 @@
 
 /obj/structure/blob/obj_destruction(damage_flag)
 	if(overmind)
-		overmind.blob_reagent_datum.death_reaction(src, damage_flag)
+		overmind.blobstrain.death_reaction(src, damage_flag)
 	..()
 
 /obj/structure/blob/proc/change_to(type, controller)
 	if(!ispath(type))
-		throw EXCEPTION("change_to(): invalid type for blob")
-		return
+		CRASH("change_to(): invalid type for blob")
 	var/obj/structure/blob/B = new type(src.loc, controller)
 	B.creation_action()
 	B.update_icon()
@@ -310,28 +306,28 @@
 	return B
 
 /obj/structure/blob/examine(mob/user)
-	..()
+	. = ..()
 	var/datum/atom_hud/hud_to_check = GLOB.huds[DATA_HUD_MEDICAL_ADVANCED]
 	if(user.research_scanner || hud_to_check.hudusers[user])
-		to_chat(user, "<b>Your HUD displays an extensive report...</b><br>")
+		. += "<b>Your HUD displays an extensive report...</b><br>"
 		if(overmind)
-			to_chat(user, "<b>Progress to Critical Mass:</b> <span class='notice'>[overmind.blobs_legit.len]/[overmind.blobwincount].</span>")
+			. += "<b>Progress to Critical Mass:</b> <span class='notice'>[overmind.blobs_legit.len]/[overmind.blobwincount].</span>"
 		else
-			to_chat(user, "<b>Core neutralized. Critical mass no longer attainable.</b>")
-		chemeffectreport(user)
-		typereport(user)
+			. += "<b>Core neutralized. Critical mass no longer attainable.</b>"
+		. += chemeffectreport()
+		. += typereport()
 	else
 		if(isobserver(user) && overmind)
-			to_chat(user, "<b>Progress to Critical Mass:</b> <span class='notice'>[overmind.blobs_legit.len]/[overmind.blobwincount].</span>")
-		to_chat(user, "It seems to be made of [get_chem_name()].")
+			. += "<b>Progress to Critical Mass:</b> <span class='notice'>[overmind.blobs_legit.len]/[overmind.blobwincount].</span>"
+		. += "It seems to be made of [get_chem_name()]."
 
 /obj/structure/blob/proc/scannerreport()
 	return "A generic blob. Looks like someone forgot to override this proc, adminhelp this."
 
 /obj/structure/blob/proc/get_chem_name()
 	if(overmind)
-		return overmind.blob_reagent_datum.name
-	return "an unknown variant"
+		return overmind.blobstrain.name
+	return "some kind of organic tissue"
 
 /obj/structure/blob/normal
 	name = "normal blob"

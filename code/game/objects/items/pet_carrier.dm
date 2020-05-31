@@ -15,7 +15,7 @@
 	w_class = WEIGHT_CLASS_BULKY
 	throw_speed = 2
 	throw_range = 3
-	materials = list(MAT_METAL = 7500, MAT_GLASS = 100)
+	custom_materials = list(/datum/material/iron = 7500, /datum/material/glass = 100)
 	var/open = TRUE
 	var/locked = FALSE
 	var/list/occupants = list()
@@ -43,17 +43,17 @@
 	..()
 
 /obj/item/pet_carrier/examine(mob/user)
-	..()
+	. = ..()
 	if(occupants.len)
 		for(var/V in occupants)
 			var/mob/living/L = V
-			to_chat(user, "<span class='notice'>It has [L] inside.</span>")
+			. += "<span class='notice'>It has [L] inside.</span>"
 	else
-		to_chat(user, "<span class='notice'>It has nothing inside.</span>")
+		. += "<span class='notice'>It has nothing inside.</span>"
 	if(user.canUseTopic(src))
-		to_chat(user, "<span class='notice'>Activate it in your hand to [open ? "close" : "open"] its door.</span>")
+		. += "<span class='notice'>Activate it in your hand to [open ? "close" : "open"] its door.</span>"
 		if(!open)
-			to_chat(user, "<span class='notice'>Alt-click to [locked ? "unlock" : "lock"] its door.</span>")
+			. += "<span class='notice'>Alt-click to [locked ? "unlock" : "lock"] its door.</span>"
 
 /obj/item/pet_carrier/attack_self(mob/living/user)
 	if(open)
@@ -70,6 +70,7 @@
 	update_icon()
 
 /obj/item/pet_carrier/AltClick(mob/living/user)
+	. = ..()
 	if(open || !user.canUseTopic(src, BE_CLOSE))
 		return
 	locked = !locked
@@ -79,6 +80,7 @@
 	else
 		playsound(user, 'sound/machines/boltsup.ogg', 30, TRUE)
 	update_icon()
+	return TRUE
 
 /obj/item/pet_carrier/attack(mob/living/target, mob/living/user)
 	if(user.a_intent == INTENT_HARM)
@@ -141,22 +143,25 @@
 		update_icon()
 		remove_occupant(user)
 
-/obj/item/pet_carrier/update_icon()
-	cut_overlay("unlocked")
-	cut_overlay("locked")
+/obj/item/pet_carrier/update_icon_state()
 	if(open)
 		icon_state = initial(icon_state)
 	else
 		icon_state = "pet_carrier_[!occupants.len ? "closed" : "occupied"]"
-		add_overlay("[locked ? "" : "un"]locked")
+
+/obj/item/pet_carrier/update_overlays()
+	. = ..()
+	if(!open)
+		. += "[locked ? "" : "un"]locked"
 
 /obj/item/pet_carrier/MouseDrop(atom/over_atom)
-	. = ..()
 	if(isopenturf(over_atom) && usr.canUseTopic(src, BE_CLOSE, ismonkey(usr)) && usr.Adjacent(over_atom) && open && occupants.len)
 		usr.visible_message("<span class='notice'>[usr] unloads [src].</span>", \
 		"<span class='notice'>You unload [src] onto [over_atom].</span>")
 		for(var/V in occupants)
 			remove_occupant(V, over_atom)
+	else
+		return ..()
 
 /obj/item/pet_carrier/proc/load_occupant(mob/living/user, mob/living/target)
 	if(pet_carrier_full(src))

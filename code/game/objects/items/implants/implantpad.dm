@@ -13,34 +13,31 @@
 	var/broadcasting = null
 	var/listening = 1
 
-
-/obj/item/implantpad/update_icon()
-	if(case)
-		icon_state = "implantpad-1"
-	else
-		icon_state = "implantpad-0"
-
-
-/obj/item/implantpad/attack_hand(mob/user)
+/obj/item/implantpad/examine(mob/user)
 	. = ..()
-	if(.)
-		return
-	if(case && user.is_holding(src))
-		user.put_in_active_hand(case)
+	if(case)
+		. += "<span class='notice'>Alt-click [src] to remove the inserted implant case.</span>"
+
+/obj/item/implantpad/update_icon_state()
+	icon_state = "implantpad-[case ? TRUE : FALSE]"
+
+/obj/item/implantpad/AltClick(mob/user)
+	. = ..()
+	if(case && user.can_hold_items() && user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
+		user.put_in_hands(case)
 
 		case.add_fingerprint(user)
 		case = null
 
 		add_fingerprint(user)
 		update_icon()
+		return TRUE
 
 /obj/item/implantpad/attackby(obj/item/implantcase/C, mob/user, params)
-	if(istype(C, /obj/item/implantcase))
-		if(!case)
-			if(!user.transferItemToLoc(C, src))
-				return
+	if(istype(C))
+		if(!case && user.transferItemToLoc(C, src))
 			case = C
-		update_icon()
+			update_icon()
 	else
 		return ..()
 
@@ -69,7 +66,7 @@
 		if(ismob(loc))
 			attack_self(loc)
 		else
-			for(var/mob/M in viewers(1, src))
+			for(var/mob/M in fov_viewers(1, src))
 				if(M.client)
 					attack_self(M)
 		add_fingerprint(usr)

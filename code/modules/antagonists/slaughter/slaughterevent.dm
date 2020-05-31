@@ -3,6 +3,7 @@
 	typepath = /datum/round_event/ghost_role/slaughter
 	weight = 1 //Very rare
 	max_occurrences = 1
+	gamemode_blacklist = list("dynamic")
 	earliest_start = 1 HOURS
 	min_players = 20
 
@@ -24,6 +25,9 @@
 
 	var/list/spawn_locs = list()
 	for(var/obj/effect/landmark/carpspawn/L in GLOB.landmarks_list)
+		if(isturf(L.loc))
+			spawn_locs += L.loc
+	for(var/obj/effect/landmark/loneopspawn/L in GLOB.landmarks_list)
 		if(isturf(L.loc))
 			spawn_locs += L.loc
 

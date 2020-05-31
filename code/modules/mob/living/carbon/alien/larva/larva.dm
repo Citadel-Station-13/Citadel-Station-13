@@ -6,6 +6,7 @@
 	mob_size = MOB_SIZE_SMALL
 	density = FALSE
 	hud_type = /datum/hud/larva
+	mouse_opacity = MOUSE_OPACITY_OPAQUE
 
 	maxHealth = 25
 	health = 25
@@ -14,9 +15,8 @@
 	var/max_grown = 100
 	var/time_of_birth
 
-	rotate_on_lying = 0
+	rotate_on_lying = FALSE
 	bodyparts = list(/obj/item/bodypart/chest/larva, /obj/item/bodypart/head/larva)
-
 
 //This is fine right now, if we're adding organ specific damage this needs to be updated
 /mob/living/carbon/alien/larva/Initialize()
@@ -57,7 +57,7 @@
 /mob/living/carbon/alien/larva/toggle_throw_mode()
 	return
 
-/mob/living/carbon/alien/larva/start_pulling()
+/mob/living/carbon/alien/larva/start_pulling(atom/movable/AM, state, force = move_force, supress_message = FALSE)
 	return
 
 /mob/living/carbon/alien/larva/stripPanelUnequip(obj/item/what, mob/who)

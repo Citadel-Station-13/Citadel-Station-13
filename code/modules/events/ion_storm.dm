@@ -3,6 +3,7 @@
 /datum/round_event_control/ion_storm
 	name = "Ion Storm"
 	typepath = /datum/round_event/ion_storm
+	gamemode_blacklist = list("dynamic")
 	weight = 15
 	min_players = 2
 

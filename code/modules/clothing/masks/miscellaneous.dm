@@ -7,7 +7,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 	gas_transfer_coefficient = 0.9
 	equip_delay_other = 20
-	mutantrace_variation = MUTANTRACE_VARIATION
+	mutantrace_variation = STYLE_MUZZLE
 
 /obj/item/clothing/mask/muzzle/attack_paw(mob/user)
 	if(iscarbon(user))
@@ -31,7 +31,7 @@
 	permeability_coefficient = 0.01
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 0, "bio" = 25, "rad" = 0, "fire" = 0, "acid" = 0)
 	actions_types = list(/datum/action/item_action/adjust)
-	mutantrace_variation = MUTANTRACE_VARIATION
+	mutantrace_variation = STYLE_MUZZLE
 
 /obj/item/clothing/mask/surgical/attack_self(mob/user)
 	adjustmask(user)
@@ -41,7 +41,7 @@
 	desc = "Warning: moustache is fake."
 	icon_state = "fake-moustache"
 	flags_inv = HIDEFACE
-	mutantrace_variation = MUTANTRACE_VARIATION
+	mutantrace_variation = STYLE_MUZZLE
 
 /obj/item/clothing/mask/fakemoustache/italian
 	name = "italian moustache"
@@ -71,7 +71,7 @@
 	name = "joy mask"
 	desc = "Express your happiness or hide your sorrows with this laughing face with crying tears of joy cutout."
 	icon_state = "joy"
-	mutantrace_variation = MUTANTRACE_VARIATION
+	mutantrace_variation = STYLE_MUZZLE
 
 /obj/item/clothing/mask/pig
 	name = "pig mask"
@@ -132,7 +132,6 @@
 /obj/item/clothing/mask/cowmask
 	name = "Cow mask with a builtin voice modulator."
 	desc = "A rubber cow mask,"
-	icon = 'icons/mob/mask.dmi'
 	icon_state = "cowmask"
 	item_state = "cowmask"
 	clothing_flags = VOICEBOX_TOGGLABLE
@@ -242,10 +241,34 @@
 	slot_flags = ITEM_SLOT_MASK
 	adjusted_flags = ITEM_SLOT_HEAD
 	icon_state = "bandbotany"
-	mutantrace_variation = MUTANTRACE_VARIATION
+	mutantrace_variation = STYLE_MUZZLE
 
 /obj/item/clothing/mask/bandana/attack_self(mob/user)
 	adjustmask(user)
+
+/obj/item/clothing/mask/bandana/AltClick(mob/user)
+	. = ..()
+	if(iscarbon(user))
+		var/mob/living/carbon/C = user
+		if((C.get_item_by_slot(SLOT_HEAD == src)) || (C.get_item_by_slot(SLOT_WEAR_MASK) == src))
+			to_chat(user, "<span class='warning'>You can't tie [src] while wearing it!</span>")
+			return
+	if(slot_flags & ITEM_SLOT_HEAD)
+		to_chat(user, "<span class='warning'>You must undo [src] before you can tie it into a neckerchief!</span>")
+	else
+		if(user.is_holding(src))
+			var/obj/item/clothing/neck/neckerchief/nk = new(src)
+			nk.name = "[name] neckerchief"
+			nk.desc = "[desc] It's tied up like a neckerchief."
+			nk.icon_state = icon_state
+			nk.sourceBandanaType = src.type
+			var/currentHandIndex = user.get_held_index_of_item(src)
+			user.transferItemToLoc(src, null)
+			user.put_in_hand(nk, currentHandIndex)
+			user.visible_message("<span class='notice'>You tie [src] up like a neckerchief.</span>", "<span class='notice'>[user] ties [src] up like a neckerchief.</span>")
+			qdel(src)
+		else
+			to_chat(user, "<span class='warning'>You must be holding [src] in order to tie it!")
 
 /obj/item/clothing/mask/bandana/red
 	name = "red bandana"
@@ -319,3 +342,55 @@
 	desc =  "A bandana made from durathread, you wish it would provide some protection to its wearer, but it's far too thin..."
 	icon_state = "banddurathread"
 
+/obj/item/clothing/mask/paper
+	name = "paper mask"
+	desc = "A neat, circular mask made out of paper."
+	icon_state = "plainmask"
+	item_state = "plainmask"
+	flags_inv = HIDEFACE|HIDEFACIALHAIR
+	resistance_flags = FLAMMABLE
+	max_integrity = 100
+	actions_types = list(/datum/action/item_action/adjust)
+	var/list/papermask_designs = list()
+
+
+/obj/item/clothing/mask/paper/Initialize(mapload)
+	.=..()
+	papermask_designs = list(
+		"Blank" = image(icon = src.icon, icon_state = "plainmask"),
+		"Neutral" = image(icon = src.icon, icon_state = "neutralmask"),
+		"Eyes" = image(icon = src.icon, icon_state = "eyemask"),
+		"Sleeping" = image(icon = src.icon, icon_state = "sleepingmask"),
+		"Heart" = image(icon = src.icon, icon_state = "heartmask"),
+		"Core" = image(icon = src.icon, icon_state = "coremask"),
+		"Plus" = image(icon = src.icon, icon_state = "plusmask"),
+		"Square" = image(icon = src.icon, icon_state = "squaremask"),
+		"Bullseye" = image(icon = src.icon, icon_state = "bullseyemask"),
+		"Vertical" = image(icon = src.icon, icon_state = "verticalmask"),
+		"Horizontal" = image(icon = src.icon, icon_state = "horizontalmask"),
+		"X" = image(icon = src.icon, icon_state = "xmask"),
+		"Bugeyes" = image(icon = src.icon, icon_state = "bugmask"),
+		"Double" = image(icon = src.icon, icon_state = "doublemask"),
+		"Mark" = image(icon = src.icon, icon_state = "markmask")
+		)
+
+/obj/item/clothing/mask/paper/ui_action_click(mob/user)
+	if(!istype(user) || user.incapacitated())
+		return
+
+	var/static/list/options = list("Blank" = "plainmask", "Neutral" = "neutralmask", "Eyes" = "eyemask",
+							"Sleeping" ="sleepingmask", "Heart" = "heartmask", "Core" = "coremask",
+							"Plus" = "plusmask", "Square" ="squaremask", "Bullseye" = "bullseyemask",
+							"Vertical" = "verticalmask", "Horizontal" = "horizontalmask", "X" ="xmask",
+							"Bugeyes" = "bugmask", "Double" = "doublemask", "Mark" = "markmask")
+
+	var/choice = show_radial_menu(user,src, papermask_designs, custom_check = FALSE, radius = 36, require_near = TRUE)
+
+	if(src && choice && !user.incapacitated() && in_range(user,src))
+		icon_state = options[choice]
+		user.update_inv_wear_mask()
+		for(var/X in actions)
+			var/datum/action/A = X
+			A.UpdateButtonIcon()
+		to_chat(user, "<span class='notice'>Your paper mask now has a [choice] symbol!</span>")
+		return 1

@@ -11,13 +11,12 @@
 
 /datum/reagent/fermi/eigenstate
 	name = "Eigenstasium"
-	id = "eigenstate"
 	description = "A strange mixture formed from a controlled reaction of bluespace with plasma, that causes localised eigenstate fluxuations within the patient"
 	taste_description = "wiggly cosmic dust."
 	color = "#5020F4" // rgb: 50, 20, 255
 	overdose_threshold = 15
 	addiction_threshold = 15
-	metabolization_rate = 1.2 * REAGENTS_METABOLISM
+	metabolization_rate = 1 * REAGENTS_METABOLISM
 	addiction_stage2_end = 30
 	addiction_stage3_end = 41
 	addiction_stage4_end = 44 //Incase it's too long
@@ -30,14 +29,15 @@
 	var/teleBool = FALSE
 	pH = 3.7
 	can_synth = TRUE
+	value = REAGENT_VALUE_EXCEPTIONAL
 
 /datum/reagent/fermi/eigenstate/on_new(list/data)
-	location_created = data.["location_created"]
+	location_created = data["location_created"]
 
 //Main functions
 /datum/reagent/fermi/eigenstate/on_mob_life(mob/living/M) //Teleports to chemistry!
 	if(current_cycle == 0)
-		log_game("FERMICHEM: [M] ckey: [M.key] took eigenstasium")
+		log_reagent("FERMICHEM: [M] ckey: [M.key] took eigenstasium")
 
 		//make hologram at return point
 		Eigenstate = new(loc)
@@ -52,10 +52,10 @@
 
 		location_return = get_turf(M)	//sets up return point
 		to_chat(M, "<span class='userdanger'>You feel your wavefunction split!</span>")
-		if(purity > 0.9) //Teleports you home if it's pure enough
+		if(cached_purity > 0.9) //Teleports you home if it's pure enough
 			if(!location_created && data) //Just in case
-				location_created = data.["location_created"]
-			log_game("FERMICHEM: [M] ckey: [M.key] returned to [location_created] using eigenstasium")
+				location_created = data["location_created"]
+			log_reagent("FERMICHEM: [M] ckey: [M.key] returned to [location_created] using eigenstasium")
 			do_sparks(5,FALSE,M)
 			do_teleport(M, location_created, 0, asoundin = 'sound/effects/phasein.ogg')
 			do_sparks(5,FALSE,M)
@@ -69,15 +69,16 @@
 /datum/reagent/fermi/eigenstate/on_mob_delete(mob/living/M) //returns back to original location
 	do_sparks(5,FALSE,M)
 	to_chat(M, "<span class='userdanger'>You feel your wavefunction collapse!</span>")
-	do_teleport(M, location_return, 0, asoundin = 'sound/effects/phasein.ogg') //Teleports home
-	do_sparks(5,FALSE,M)
+	if(!M.reagents.has_reagent(/datum/reagent/stabilizing_agent))
+		do_teleport(M, location_return, 0, asoundin = 'sound/effects/phasein.ogg') //Teleports home
+		do_sparks(5,FALSE,M)
 	qdel(Eigenstate)
 	..()
 
 /datum/reagent/fermi/eigenstate/overdose_start(mob/living/M) //Overdose, makes you teleport randomly
 	. = ..()
 	to_chat(M, "<span class='userdanger'>Oh god, you feel like your wavefunction is about to tear.</span>")
-	log_game("FERMICHEM: [M] ckey: [M.key] has overdosed on eigenstasium")
+	log_reagent("FERMICHEM: [M] ckey: [M.key] has overdosed on eigenstasium")
 	M.Jitter(20)
 	metabolization_rate += 0.5 //So you're not stuck forever teleporting.
 
@@ -91,16 +92,16 @@
 /datum/reagent/fermi/eigenstate/addiction_act_stage1(mob/living/M) //Welcome to Fermis' wild ride.
 	if(addiction_stage == 1)
 		to_chat(M, "<span class='userdanger'>Your wavefunction feels like it's been ripped in half. You feel empty inside.</span>")
-		log_game("FERMICHEM: [M] ckey: [M.key] has become addicted to eigenstasium")
+		log_reagent("FERMICHEM: [M] ckey: [M.key] has become addicted to eigenstasium")
 		M.Jitter(10)
-	M.nutrition = M.nutrition - (M.nutrition/15)
+	M.adjust_nutrition(-M.nutrition/15)
 	..()
 
 /datum/reagent/fermi/eigenstate/addiction_act_stage2(mob/living/M)
 	if(addiction_stage == 11)
 		to_chat(M, "<span class='userdanger'>You start to convlse violently as you feel your consciousness split and merge across realities as your possessions fly wildy off your body.</span>")
 		M.Jitter(200)
-		M.Knockdown(200)
+		M.DefaultCombatKnockdown(200)
 		M.Stun(80)
 	var/items = M.get_contents()
 	if(!LAZYLEN(items))
@@ -154,10 +155,10 @@
 		do_sparks(5,FALSE,M)
 		M.Sleeping(100, 0)
 		M.Jitter(50)
-		M.Knockdown(100)
-		to_chat(M, "<span class='userdanger'>You feel your eigenstate settle, snapping an alternative version of yourself into reality. All your previous memories are lost and replaced with the alternative version of yourself. This version of you feels more [pick("affectionate", "happy", "lusty", "radical", "shy", "ambitious", "frank", "voracious", "sensible", "witty")] than your previous self, sent to god knows what universe.</span>")
+		M.DefaultCombatKnockdown(100)
+		to_chat(M, "<span class='userdanger'>You feel your eigenstate settle, snapping an alternative version of yourself into reality. All your previous memories are lost and replaced with the alternative version of yourself.</span>")
 		M.emote("me",1,"flashes into reality suddenly, gasping as they gaze around in a bewildered and highly confused fashion!",TRUE)
-		log_game("FERMICHEM: [M] ckey: [M.key] has become an alternative universe version of themselves.")
+		log_reagent("FERMICHEM: [M] ckey: [M.key] has become an alternative universe version of themselves.")
 		M.reagents.remove_all_type(/datum/reagent, 100, 0, 1)
 		/*
 		for(var/datum/mood_event/Me in M)
@@ -168,7 +169,7 @@
 
 	if(prob(20))
 		do_sparks(5,FALSE,M)
-	SEND_SIGNAL(M, COMSIG_CLEAR_MOOD_EVENT, "[id]_overdose")//holdover until above fix works
+	SEND_SIGNAL(M, COMSIG_CLEAR_MOOD_EVENT, "[type]_overdose")//holdover until above fix works
 	..()
 
 /datum/reagent/fermi/eigenstate/reaction_turf(turf/T, reac_volume)

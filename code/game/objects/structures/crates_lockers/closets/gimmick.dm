@@ -4,6 +4,8 @@
 	icon_state = "cabinet"
 	resistance_flags = FLAMMABLE
 	max_integrity = 70
+	material_drop = /obj/item/stack/sheet/mineral/wood
+	cutting_tool = /obj/item/screwdriver
 
 /obj/structure/closet/acloset
 	name = "strange closet"
@@ -25,7 +27,7 @@
 	for(var/i in 1 to 5)
 		new /obj/item/clothing/head/ushanka(src)
 	for(var/i in 1 to 5)
-		new /obj/item/clothing/under/soviet(src)
+		new /obj/item/clothing/under/costume/soviet(src)
 
 /obj/structure/closet/gimmick/tacticool
 	name = "tacticool gear closet"
@@ -35,8 +37,8 @@
 	..()
 	new /obj/item/clothing/glasses/eyepatch(src)
 	new /obj/item/clothing/glasses/sunglasses(src)
-	new /obj/item/clothing/gloves/combat(src)
-	new /obj/item/clothing/gloves/combat(src)
+	new /obj/item/clothing/gloves/tackler/combat(src)
+	new /obj/item/clothing/gloves/tackler/combat(src)
 	new /obj/item/clothing/head/helmet/swat(src)
 	new /obj/item/clothing/head/helmet/swat(src)
 	new /obj/item/clothing/mask/gas/sechailer/swat(src)

@@ -14,10 +14,13 @@
 
 	access = list(ACCESS_LAWYER, ACCESS_COURT, ACCESS_SEC_DOORS)
 	minimal_access = list(ACCESS_LAWYER, ACCESS_COURT, ACCESS_SEC_DOORS)
+	paycheck = PAYCHECK_EASY
+	paycheck_department = ACCOUNT_CIV
 
 	mind_traits = list(TRAIT_LAW_ENFORCEMENT_METABOLISM)
 
 	display_order = JOB_DISPLAY_ORDER_LAWYER
+	threat = 0.3
 
 /datum/outfit/job/lawyer
 	name = "Lawyer"
@@ -25,7 +28,7 @@
 
 	belt = /obj/item/pda/lawyer
 	ears = /obj/item/radio/headset/headset_sec
-	uniform = /obj/item/clothing/under/lawyer/bluesuit
+	uniform = /obj/item/clothing/under/rank/civilian/lawyer/bluesuit
 	suit = /obj/item/clothing/suit/toggle/lawyer
 	shoes = /obj/item/clothing/shoes/laceup
 	l_hand = /obj/item/storage/briefcase/lawyer
@@ -35,7 +38,7 @@
 	chameleon_extras = /obj/item/stamp/law
 
 
-/datum/outfit/job/lawyer/pre_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+/datum/outfit/job/lawyer/pre_equip(mob/living/carbon/human/H, visualsOnly = FALSE, client/preference_source)
 	..()
 	if(visualsOnly)
 		return
@@ -43,5 +46,5 @@
 	var/datum/job/lawyer/J = SSjob.GetJobType(jobtype)
 	J.lawyers++
 	if(J.lawyers>1)
-		uniform = /obj/item/clothing/under/lawyer/purpsuit
+		uniform = /obj/item/clothing/under/rank/civilian/lawyer/purpsuit
 		suit = /obj/item/clothing/suit/toggle/lawyer/purple

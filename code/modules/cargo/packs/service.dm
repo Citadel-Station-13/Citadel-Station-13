@@ -9,142 +9,39 @@
 /datum/supply_pack/service
 	group = "Service"
 
-/datum/supply_pack/service/advlighting
-	name = "Advanced Lighting crate"
-	desc = "Thanks to advanced lighting tech we here at the Lamp Factory have be able to produce more lamps and lamp items! This crate has three lamps, a box of lights and a state of the art rapid-light-device!"
-	cost = 2750
-	contains = list(/obj/item/construction/rld,
-					/obj/item/flashlight/lamp,
-					/obj/item/flashlight/lamp,
-					/obj/item/flashlight/lamp/green,
-					/obj/item/storage/box/lights/mixed)
-	crate_name = "advanced lighting crate"
-	crate_type = /obj/structure/closet/crate/secure
+//////////////////////////////////////////////////////////////////////////////
+//////////////////////////////// Cargo ///////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////
+
+/datum/supply_pack/service/wrapping_paper
+	name = "Cargo Packaging Crate"
+	desc = "Want to mail your loved ones gift-wrapped chocolates, stuffed animals, or the Clown's severed head? You can do all that, with this crate full of festive (and normal) wrapping paper. Also contains a hand labeler and a destination tagger for easy shipping!"
+	cost = 1000
+	contains = list(/obj/item/stack/wrapping_paper,
+					/obj/item/stack/wrapping_paper,
+					/obj/item/stack/wrapping_paper,
+					/obj/item/stack/packageWrap,
+					/obj/item/stack/packageWrap,
+					/obj/item/stack/packageWrap,
+					/obj/item/destTagger,
+					/obj/item/hand_labeler)
+	crate_type = /obj/structure/closet/crate/wooden
+	crate_name = "wrapping paper crate"
 
 /datum/supply_pack/service/cargo_supples
 	name = "Cargo Supplies Crate"
-	desc = "Sold everything that wasn't bolted down? You can get right back to work with this crate containing stamps, an export scanner, destination tagger, hand labeler and some package wrapping."
+	desc = "Sold everything that wasn't bolted down? You can get right back to work with this crate containing stamps, an export scanner, destination tagger, hand labeler and some package wrapping. Now with extra toner cartidges!"
 	cost = 1000
 	contains = list(/obj/item/stamp,
 					/obj/item/stamp/denied,
 					/obj/item/export_scanner,
 					/obj/item/destTagger,
 					/obj/item/hand_labeler,
+					/obj/item/toner,
+					/obj/item/toner,
+					/obj/item/stack/packageWrap,
 					/obj/item/stack/packageWrap)
 	crate_name = "cargo supplies crate"
-
-/datum/supply_pack/service/carpet_exotic
-	name = "Exotic Carpet Crate"
-	desc = "Exotic carpets straight from Space Russia, for all your decorating needs. Contains 100 tiles each of 10 different flooring patterns."
-	cost = 7000
-	contains = list(/obj/item/stack/tile/carpet/blue/fifty,
-					/obj/item/stack/tile/carpet/blue/fifty,
-					/obj/item/stack/tile/carpet/cyan/fifty,
-					/obj/item/stack/tile/carpet/cyan/fifty,
-					/obj/item/stack/tile/carpet/green/fifty,
-					/obj/item/stack/tile/carpet/green/fifty,
-					/obj/item/stack/tile/carpet/orange/fifty,
-					/obj/item/stack/tile/carpet/orange/fifty,
-					/obj/item/stack/tile/carpet/purple/fifty,
-					/obj/item/stack/tile/carpet/purple/fifty,
-					/obj/item/stack/tile/carpet/red/fifty,
-					/obj/item/stack/tile/carpet/red/fifty,
-					/obj/item/stack/tile/carpet/royalblue/fifty,
-					/obj/item/stack/tile/carpet/royalblue/fifty,
-					/obj/item/stack/tile/carpet/royalblack/fifty,
-					/obj/item/stack/tile/carpet/royalblack/fifty,
-					/obj/item/stack/tile/carpet/blackred/fifty,
-					/obj/item/stack/tile/carpet/blackred/fifty,
-					/obj/item/stack/tile/carpet/monochrome/fifty,
-					/obj/item/stack/tile/carpet/monochrome/fifty)
-	crate_name = "exotic carpet crate"
-
-/datum/supply_pack/service/food_cart
-	name = "Food Cart Crate"
-	desc = "Want to sell food on the go? Cook lost their cart? Well we just so happen to have a few carts to spare!"
-	cost = 1000
-	contains = list(/obj/machinery/food_cart)
-	crate_name = "food cart crate"
-	crate_type = /obj/structure/closet/crate
-
-/datum/supply_pack/service/noslipfloor
-	name = "High-traction Floor Tiles"
-	desc = "Make slipping a thing of the past with sixty industrial-grade anti-slip floortiles!"
-	cost = 2000
-	contains = list(/obj/item/stack/tile/noslip/thirty,
-					/obj/item/stack/tile/noslip/thirty)
-	crate_name = "high-traction floor tiles crate"
-
-/datum/supply_pack/service/icecream_cart
-	name = "Ice Cream Cart Crate"
-	desc = "Plasma fire a to hot for you, want a nice treat after a hard days work? Well now we have the cart for you! This Ice Cream Vat has everthing you need to make you and your friends so ice cream treats! This cart comes stocked with some ingredients for each type of scoopable icecream."
-	cost = 2750 //Comes prestocked with basic ingredients
-	contains = list(/obj/machinery/icecream_vat)
-	crate_name = "ice cream vat crate"
-	crate_type = /obj/structure/closet/crate
-
-/datum/supply_pack/service/janitor
-	name = "Janitorial Supplies Crate"
-	desc = "Fight back against dirt and grime with Nanotrasen's Janitorial Essentials(tm)! Contains three buckets, caution signs, and cleaner grenades. Also has a single mop, spray cleaner, rag, NT soap and a trash bag."
-	cost = 1300
-	contains = list(/obj/item/reagent_containers/glass/bucket,
-					/obj/item/reagent_containers/glass/bucket,
-					/obj/item/reagent_containers/glass/bucket,
-					/obj/item/mop,
-					/obj/item/caution,
-					/obj/item/caution,
-					/obj/item/caution,
-					/obj/item/storage/bag/trash,
-					/obj/item/reagent_containers/spray/cleaner,
-					/obj/item/reagent_containers/rag,
-					/obj/item/grenade/chem_grenade/cleaner,
-					/obj/item/grenade/chem_grenade/cleaner,
-					/obj/item/grenade/chem_grenade/cleaner,
-					/obj/item/soap/nanotrasen)
-	crate_name = "janitorial supplies crate"
-
-/datum/supply_pack/service/janitor/janicart
-	name = "Janitorial Cart and Galoshes Crate"
-	desc = "The keystone to any successful janitor. As long as you have feet, this pair of galoshes will keep them firmly planted on the ground. Also contains a janitorial cart."
-	cost = 2000
-	contains = list(/obj/structure/janitorialcart,
-					/obj/item/clothing/shoes/galoshes)
-	crate_name = "janitorial cart crate"
-	crate_type = /obj/structure/closet/crate/large
-
-/datum/supply_pack/service/janitor/janitank
-	name = "Janitor Backpack Crate"
-	desc = "Call forth divine judgement upon dirt and grime with this high capacity janitor backpack. Contains 500 units of station-cleansing cleaner. Requires janitor access to open."
-	cost = 1000
-	access = ACCESS_JANITOR
-	contains = list(/obj/item/watertank/janitor)
-	crate_name = "janitor backpack crate"
-	crate_type = /obj/structure/closet/crate/secure
-
-/datum/supply_pack/service/janitor/janpremium
-	name = "Janitor Premium Supplies"
-	desc = "Do to the union for better supplies, we have desided to make a deal for you, In this crate you can get a brand new chem, Drying Angent this stuff is the work of slimes or magic! This crate also contains a rag to test out the Drying Angent magic, three wet floor signs, and some spare bottles of ammonia."
-	cost = 1750
-	access = ACCESS_JANITOR
-	contains = list(/obj/item/caution,
-					/obj/item/caution,
-					/obj/item/caution,
-					/obj/item/reagent_containers/rag,
-					/obj/item/reagent_containers/glass/bottle/ammonia,
-					/obj/item/reagent_containers/glass/bottle/ammonia,
-					/obj/item/reagent_containers/glass/bottle/ammonia,
-					/obj/item/reagent_containers/spray/drying_agent)
-	crate_name = "janitor backpack crate"
-
-/datum/supply_pack/service/janitor/janpimp
-	name = "Custodial Cruiser"
-	desc = "Clown steal your ride? Assistant lock it in the dorms? Order a new one and get back to cleaning in style!"
-	cost = 3000
-	access = ACCESS_JANITOR
-	contains = list(/obj/vehicle/ridden/janicart,
-					/obj/item/key/janitor)
-	crate_name = "janitor ride crate"
-	crate_type = /obj/structure/closet/crate/large
 
 /datum/supply_pack/service/mule
 	name = "MULEbot Crate"
@@ -153,59 +50,6 @@
 	contains = list(/mob/living/simple_animal/bot/mulebot)
 	crate_name = "\improper MULEbot Crate"
 	crate_type = /obj/structure/closet/crate/large
-
-/datum/supply_pack/service/party
-	name = "Party Equipment"
-	desc = "Celebrate both life and death on the station with Nanotrasen's Party Essentials(tm)! Contains seven colored glowsticks, four beers, two ales, and a bottle of patron, goldschlager, and shaker!"
-	cost = 2000
-	contains = list(/obj/item/storage/box/drinkingglasses,
-					/obj/item/reagent_containers/food/drinks/shaker,
-					/obj/item/reagent_containers/food/drinks/bottle/patron,
-					/obj/item/reagent_containers/food/drinks/bottle/goldschlager,
-					/obj/item/reagent_containers/food/drinks/ale,
-					/obj/item/reagent_containers/food/drinks/ale,
-					/obj/item/reagent_containers/food/drinks/beer,
-					/obj/item/reagent_containers/food/drinks/beer,
-					/obj/item/reagent_containers/food/drinks/beer,
-					/obj/item/reagent_containers/food/drinks/beer,
-					/obj/item/flashlight/glowstick,
-					/obj/item/flashlight/glowstick/red,
-					/obj/item/flashlight/glowstick/blue,
-					/obj/item/flashlight/glowstick/cyan,
-					/obj/item/flashlight/glowstick/orange,
-					/obj/item/flashlight/glowstick/yellow,
-					/obj/item/flashlight/glowstick/pink)
-	crate_name = "party equipment crate"
-
-/datum/supply_pack/service/carpet
-	name = "Premium Carpet Crate"
-	desc = "Plasteel floor tiles getting on your nerves? These stacks of extra soft carpet will tie any room together.  Contains the classics."
-	cost = 1000
-	contains = list(/obj/item/stack/tile/carpet/fifty,
-					/obj/item/stack/tile/carpet/fifty,
-					/obj/item/stack/tile/carpet/black/fifty,
-					/obj/item/stack/tile/carpet/black/fifty)
-	crate_name = "premium carpet crate"
-
-/datum/supply_pack/service/carpet2
-	name = "Premium Carpet Crate #2"
-	desc = "Plasteel floor tiles getting on your nerves? These stacks of extra soft carpet will tie any room together.  Contains red, and monochrome"
-	cost = 1000
-	contains = list(/obj/item/stack/tile/carpet/blackred/fifty,
-					/obj/item/stack/tile/carpet/blackred/fifty,
-					/obj/item/stack/tile/carpet/monochrome/fifty,
-					/obj/item/stack/tile/carpet/monochrome/fifty)
-	crate_name = "premium carpet crate #2"
-
-/datum/supply_pack/service/lightbulbs
-	name = "Replacement Lights"
-	desc = "May the light of Aether shine upon this station! Or at least, the light of forty two light tubes and twenty one light bulbs as well as a light replacer."
-	cost = 1200
-	contains = list(/obj/item/storage/box/lights/mixed,
-					/obj/item/storage/box/lights/mixed,
-					/obj/item/storage/box/lights/mixed,
-					/obj/item/lightreplacer)
-	crate_name = "replacement lights"
 
 /datum/supply_pack/service/minerkit
 	name = "Shaft Miner Starter Kit"
@@ -223,44 +67,208 @@
 	crate_type = /obj/structure/closet/crate/secure
 
 //////////////////////////////////////////////////////////////////////////////
-/////////////////////////// Vending Restocks /////////////////////////////////
+/////////////////////// Chef, Botanist, Bartender ////////////////////////////
 //////////////////////////////////////////////////////////////////////////////
 
-/datum/supply_pack/service/vending/bartending
-	name = "Bartending Supply Crate"
-	desc = "Bring on the booze with vending machine refills, as well as a free book containing the well-kept secrets to the bartending trade!"
-	cost = 2000
-	contains = list(/obj/item/vending_refill/boozeomat,
-					/obj/item/vending_refill/coffee,
-					/obj/item/book/granter/action/drink_fling)
-	crate_name = "bartending supply crate"
+/datum/supply_pack/service/buildabar
+	name = "Build a Bar Crate"
+	desc = "Looking to set up your own little safe haven? Maintenance bar too much of a bummer to work on? Maybe you just want to set up shop right in front of the bartender. Whatever your reasons, get a jump-start on this with this handy kit. Contains circuitboards for bar equipment, some parts, and some basic bartending supplies. (Batteries not Included)"
+	cost = 3750
+	contains = list(/obj/item/storage/box/drinkingglasses,
+					/obj/item/storage/box/drinkingglasses,
+					/obj/item/stock_parts/matter_bin,
+					/obj/item/stock_parts/matter_bin,
+					/obj/item/stock_parts/matter_bin,
+					/obj/item/stock_parts/matter_bin,
+					/obj/item/stock_parts/matter_bin,
+					/obj/item/stock_parts/matter_bin,
+					/obj/item/stock_parts/manipulator,
+					/obj/item/stock_parts/manipulator,
+					/obj/item/stock_parts/manipulator,
+					/obj/item/stock_parts/capacitor,
+					/obj/item/stock_parts/capacitor,
+					/obj/item/stack/sheet/metal/ten,
+					/obj/item/stack/sheet/metal/five,
+					/obj/item/stack/sheet/glass/five,
+					/obj/item/stack/cable_coil/random,
+					/obj/item/reagent_containers/rag,
+					/obj/item/book/manual/wiki/barman_recipes,
+					/obj/item/book/granter/action/drink_fling,
+					/obj/item/reagent_containers/food/drinks/shaker,
+					/obj/item/circuitboard/machine/chem_dispenser/drinks/beer,
+					/obj/item/circuitboard/machine/chem_dispenser/drinks,
+					/obj/item/circuitboard/machine/dish_drive)
+	crate_name = "build a bar crate"
 
-/datum/supply_pack/service/vending/cigarette
-	name = "Cigarette Supply Crate"
-	desc = "Don't believe the reports - smoke today! Contains a cigarette vending machine refill."
-	cost = 1500
-	contains = list(/obj/item/vending_refill/cigarette)
-	crate_name = "cigarette supply crate"
-	crate_type = /obj/structure/closet/crate
-
-/datum/supply_pack/service/vending/games
-	name = "Games Supply Crate"
-	desc = "Get your game on with this game vending machine refill."
+/datum/supply_pack/service/food_cart
+	name = "Food Cart Crate"
+	desc = "Want to sell food on the go? Cook lost their cart? Well we just so happen to have a few carts to spare!"
 	cost = 1000
-	contains = list(/obj/item/vending_refill/games)
-	crate_name = "games supply crate"
+	contains = list(/obj/machinery/food_cart)
+	crate_name = "food cart crate"
 	crate_type = /obj/structure/closet/crate
 
-/datum/supply_pack/service/vending/snack
-	name = "Snack Supply Crate"
-	desc = "One vending machine refill of cavity-bringin' goodness! The number one dentist recommended order!"
-	cost = 1500
-	contains = list(/obj/item/vending_refill/snack)
-	crate_name = "snacks supply crate"
+/datum/supply_pack/service/icecream_cart
+	name = "Ice Cream Cart Crate"
+	desc = "Plasma fire too hot for you? Want a nice treat after a hard days work? Well now we have the cart for you! This Ice Cream Vat has everthing you need to make you and your friends so ice cream treats! This cart comes stocked with some ingredients for each type of scoopable icecream."
+	cost = 2750 //Comes prestocked with basic ingredients
+	contains = list(/obj/machinery/icecream_vat)
+	crate_name = "ice cream vat crate"
+	crate_type = /obj/structure/closet/crate
 
-/datum/supply_pack/service/vending/cola
-	name = "Softdrinks Supply Crate"
-	desc = "Got whacked by a toolbox, but you still have those pesky teeth? Get rid of those pearly whites with this soda machine refill, today!"
-	cost = 1500
-	contains = list(/obj/item/vending_refill/cola)
-	crate_name = "soft drinks supply crate"
+/datum/supply_pack/service/grill
+	name = "Grilling Starter Kit"
+	desc = "Hey dad I'm Hungry. Hi Hungry I'm THE NEW GRILLING STARTER KIT ONLY 5000 BUX GET NOW! Contains a cooking grill and five fuel coal sheets."
+	cost = 3000
+	contains = list(/obj/item/stack/sheet/mineral/coal/five,
+					/obj/machinery/grill/unwrenched)
+	crate_name = "grilling starter kit crate"
+	crate_type = /obj/structure/closet/crate
+
+/datum/supply_pack/service/grillfuel
+	name = "Grilling Fuel Kit"
+	desc = "Contains coal and coal accessories. (Note: only ten coal sheets.)"
+	cost = 1000
+	contains = list(/obj/item/stack/sheet/mineral/coal/ten)
+	crate_name = "grilling fuel kit crate"
+	crate_type = /obj/structure/closet/crate
+
+/datum/supply_pack/service/cutlery
+	name = "Kitchen Cutlery Deluxe Set"
+	desc = "Need to slice and dice away those \"Tomatoes\"? Well we got what you need! From a nice set of knifes, forks, plates, glasses, and a whetstone for when you got some grizzle that is a bit harder to slice then normal."
+	cost = 10000
+	contraband = TRUE
+	contains = list(/obj/item/sharpener, //Deluxe for a reason
+					/obj/item/kitchen/fork,
+					/obj/item/kitchen/fork,
+					/obj/item/kitchen/knife,
+					/obj/item/kitchen/knife,
+					/obj/item/kitchen/knife,
+					/obj/item/kitchen/knife,
+					/obj/item/kitchen/knife/butcher,
+					/obj/item/kitchen/knife/butcher,
+					/obj/item/kitchen/rollingpin,
+					/obj/item/trash/plate,
+					/obj/item/trash/plate,
+					/obj/item/trash/plate,
+					/obj/item/trash/plate,
+					/obj/item/reagent_containers/food/drinks/drinkingglass,
+					/obj/item/reagent_containers/food/drinks/drinkingglass,
+					/obj/item/reagent_containers/food/drinks/drinkingglass,
+					/obj/item/reagent_containers/food/drinks/drinkingglass/shotglass,
+					/obj/item/reagent_containers/food/drinks/drinkingglass/shotglass)
+	crate_name = "kitchen cutlery deluxe set"
+
+/datum/supply_pack/service/replacementdb
+	name = "Replacement Defensive Bar Shotgun"
+	desc = "Someone stole the Bartender's twin-barreled possession? Give them another one at a significant markup. Comes with one unused double-barrel shotgun, shells not included. Requires bartender access to open."
+	cost = 2200
+	access = ACCESS_BAR
+	contraband = TRUE
+	contains = list(/obj/item/gun/ballistic/revolver/doublebarrel)
+	crate_name = "replacement double-barrel crate"
+	crate_type = /obj/structure/closet/crate/secure
+
+//////////////////////////////////////////////////////////////////////////////
+/////////////////////////////// Janitor //////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////
+
+/datum/supply_pack/service/advlighting
+	name = "Advanced Lighting crate"
+	desc = "Thanks to advanced lighting tech we here at the Lamp Factory have be able to produce more lamps and lamp items! This crate has three lamps, a box of lights and a state of the art rapid-light-device!"
+	cost = 2750
+	contains = list(/obj/item/construction/rld,
+					/obj/item/flashlight/lamp,
+					/obj/item/flashlight/lamp,
+					/obj/item/flashlight/lamp/green,
+					/obj/item/storage/box/lights/mixed)
+	crate_name = "advanced lighting crate"
+	crate_type = /obj/structure/closet/crate/secure
+
+/datum/supply_pack/service/lightbulbs
+	name = "Replacement Lights" //Subgrouping this with Advanced Lighting Crate, they're both lighting related.
+	desc = "May the light of Aether shine upon this station! Or at least, the light of forty two light tubes and twenty one light bulbs as well as a light replacer."
+	cost = 1200
+	contains = list(/obj/item/storage/box/lights/mixed,
+					/obj/item/storage/box/lights/mixed,
+					/obj/item/storage/box/lights/mixed,
+					/obj/item/lightreplacer)
+	crate_name = "replacement lights"
+
+/datum/supply_pack/service/janitor/advanced
+	name = "Advanced Sanitation Crate"
+	desc = "Contains all the essentials for an advanced spacefaring cleanup crew. This kit includes a trashbag, an advanced mop, a bottle of space cleaner, a floor buffer, and a holosign projector. Requires Janitorial Access to Open"
+	cost = 5700
+	access = ACCESS_JANITOR
+	contains = list(/obj/item/storage/bag/trash/bluespace,
+					/obj/item/reagent_containers/spray/cleaner,
+					/obj/item/mop/advanced,
+					/obj/item/lightreplacer,
+					/obj/item/janiupgrade,
+					/obj/item/holosign_creator)
+	crate_name = "advanced santation crate"
+	crate_type = /obj/structure/closet/crate/secure
+
+/datum/supply_pack/service/janitor/janpimp
+	name = "Custodial Cruiser"
+	desc = "Clown steal your ride? Assistant lock it in the dorms? Order a new one and get back to cleaning in style!"
+	cost = 3000
+	access = ACCESS_JANITOR
+	contains = list(/obj/vehicle/ridden/janicart,
+					/obj/item/key/janitor)
+	crate_name = "janitor ride crate"
+	crate_type = /obj/structure/closet/crate/large
+
+/datum/supply_pack/service/janitor/janitank
+	name = "Janitor Backpack Crate"
+	desc = "Call forth divine judgement upon dirt and grime with this high capacity janitor backpack. Contains 500 units of station-cleansing cleaner. Requires janitor access to open."
+	cost = 1000
+	access = ACCESS_JANITOR
+	contains = list(/obj/item/watertank/janitor)
+	crate_name = "janitor backpack crate"
+	crate_type = /obj/structure/closet/crate/secure
+
+/datum/supply_pack/service/janitor/janpremium
+	name = "Janitor Supplies (Premium)"
+	desc = "The custodial union is in a tizzy, so we've gathered up some better supplies for you. In this crate you can get a brand new chem, Drying Agent. This stuff is the work of slimes or magic! This crate also contains a rag to test out the Drying Angent magic, several cleaning grenades, some spare bottles of ammonia, and an MCE (or Massive Cleaning Explosive)."
+	cost = 2700
+	contains = list(/obj/item/grenade/clusterbuster/cleaner,
+					/obj/item/grenade/chem_grenade/cleaner,
+					/obj/item/grenade/chem_grenade/cleaner,
+					/obj/item/grenade/chem_grenade/cleaner,
+					/obj/item/reagent_containers/rag,
+					/obj/item/reagent_containers/glass/bottle/ammonia,
+					/obj/item/reagent_containers/glass/bottle/ammonia,
+					/obj/item/reagent_containers/glass/bottle/ammonia,
+					/obj/item/reagent_containers/spray/drying_agent)
+	crate_name = "premium janitorial crate"
+
+/datum/supply_pack/service/janitor/starter
+	name = "Janitorial Supplies (Standard)"
+	desc = "Fight back against dirt and grime with Nanotrasen's Janitorial Essentials(tm)! Contains three buckets, caution signs, and cleaner grenades. Also has a single mop, spray cleaner, rag, NT soap and a trash bag."
+	cost = 1300
+	contains = list(/obj/item/reagent_containers/glass/bucket,
+					/obj/item/reagent_containers/glass/bucket,
+					/obj/item/reagent_containers/glass/bucket,
+					/obj/item/mop,
+					/obj/item/caution,
+					/obj/item/caution,
+					/obj/item/caution,
+					/obj/item/storage/bag/trash,
+					/obj/item/reagent_containers/spray/cleaner,
+					/obj/item/reagent_containers/rag,
+					/obj/item/grenade/chem_grenade/cleaner,
+					/obj/item/grenade/chem_grenade/cleaner,
+					/obj/item/grenade/chem_grenade/cleaner,
+					/obj/item/soap/nanotrasen)
+	crate_name = "standard janitorial crate"
+
+/datum/supply_pack/service/janitor/janicart
+	name = "Janicart and Galoshes Crate"
+	desc = "The keystone to any successful janitor. As long as you have feet, this pair of galoshes will keep them firmly planted on the ground. Also contains a janitorial cart."
+	cost = 2000
+	contains = list(/obj/structure/janitorialcart,
+					/obj/item/clothing/shoes/galoshes)
+	crate_name = "janitorial cart crate"
+	crate_type = /obj/structure/closet/crate/large
+

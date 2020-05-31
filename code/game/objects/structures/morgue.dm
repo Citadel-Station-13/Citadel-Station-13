@@ -45,9 +45,6 @@ GLOBAL_LIST_EMPTY(bodycontainers) //Let them act as spawnpoints for revenants an
 	..()
 	update_icon()
 
-/obj/structure/bodycontainer/update_icon()
-	return
-
 /obj/structure/bodycontainer/relaymove(mob/user)
 	if(user.stat || !isturf(loc))
 		return
@@ -163,17 +160,18 @@ GLOBAL_LIST_EMPTY(bodycontainers) //Let them act as spawnpoints for revenants an
 	..()
 
 /obj/structure/bodycontainer/morgue/examine(mob/user)
-	..()
-	to_chat(user, "<span class='notice'>The speaker is [beeper ? "enabled" : "disabled"]. Alt-click to toggle it.</span>")
+	. = ..()
+	. += "<span class='notice'>The speaker is [beeper ? "enabled" : "disabled"]. Alt-click to toggle it.</span>"
 
 /obj/structure/bodycontainer/morgue/AltClick(mob/user)
-	..()
-	if(!user.canUseTopic(src, !issilicon(user)))
+	. = ..()
+	if(!user.canUseTopic(src, !hasSiliconAccessInArea(user)))
 		return
 	beeper = !beeper
 	to_chat(user, "<span class='notice'>You turn the speaker function [beeper ? "on" : "off"].</span>")
+	return TRUE
 
-/obj/structure/bodycontainer/morgue/update_icon()
+/obj/structure/bodycontainer/morgue/update_icon_state()
 	if (!connected || connected.loc != src) // Open or tray is gone.
 		icon_state = "morgue0"
 	else
@@ -192,7 +190,7 @@ GLOBAL_LIST_EMPTY(bodycontainers) //Let them act as spawnpoints for revenants an
 					icon_state = "morgue4" // Cloneable
 					if(mob_occupant.stat == DEAD && beeper)
 						if(world.time > next_beep)
-							playsound(src, 'sound/weapons/smg_empty_alarm.ogg', 50, 0) //Clone them you blind fucks
+							playsound(src, 'sound/machines/beeping_alarm.ogg', 50, 0) //Clone them you blind fucks
 							next_beep = world.time + beep_cooldown
 					break
 
@@ -227,20 +225,17 @@ GLOBAL_LIST_EMPTY(crematoriums)
 	GLOB.crematoriums.Add(src)
 	..()
 
-/obj/structure/bodycontainer/crematorium/update_icon()
+/obj/structure/bodycontainer/crematorium/update_icon_state()
 	if(!connected || connected.loc != src)
 		icon_state = "crema0"
 	else
-
-		if(src.contents.len > 1)
-			src.icon_state = "crema2"
+		if(contents.len > 1)
+			icon_state = "crema2"
 		else
-			src.icon_state = "crema1"
+			icon_state = "crema1"
 
 		if(locked)
-			src.icon_state = "crema_active"
-
-	return
+			icon_state = "crema_active"
 
 /obj/structure/bodycontainer/crematorium/proc/cremate(mob/user)
 	if(locked)
@@ -338,7 +333,7 @@ GLOBAL_LIST_EMPTY(crematoriums)
 		to_chat(user, "<span class='warning'>That's not connected to anything!</span>")
 
 /obj/structure/tray/MouseDrop_T(atom/movable/O as mob|obj, mob/user)
-	if(!ismovableatom(O) || O.anchored || !Adjacent(user) || !user.Adjacent(O) || O.loc == user)
+	if(!ismovable(O) || O.anchored || !Adjacent(user) || !user.Adjacent(O) || O.loc == user)
 		return
 	if(!ismob(O))
 		if(!istype(O, /obj/structure/closet/body_bag))
@@ -380,6 +375,6 @@ GLOBAL_LIST_EMPTY(crematoriums)
 
 /obj/structure/tray/m_tray/CanAStarPass(ID, dir, caller)
 	. = !density
-	if(ismovableatom(caller))
+	if(ismovable(caller))
 		var/atom/movable/mover = caller
 		. = . || (mover.pass_flags & PASSTABLE)

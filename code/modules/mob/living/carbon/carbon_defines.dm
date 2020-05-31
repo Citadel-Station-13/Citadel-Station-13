@@ -40,7 +40,7 @@
 
 	var/gib_type = /obj/effect/decal/cleanable/blood/gibs
 
-	var/rotate_on_lying = 1
+	rotate_on_lying = TRUE
 
 	var/tinttotal = 0	// Total level of visualy impairing items
 
@@ -49,7 +49,6 @@
 	//Gets filled up in create_bodyparts()
 
 	var/list/hand_bodyparts = list() //a collection of arms (or actually whatever the fug /bodyparts you monsters use to wreck my systems)
-	var/list/leg_bodyparts = list()
 
 	var/icon_render_key = ""
 	var/static/list/limb_icon_cache = list()
@@ -64,3 +63,4 @@
 	var/damageoverlaytemp = 0
 
 	var/drunkenness = 0 //Overall drunkenness - check handle_alcohol() in life.dm for effects
+	var/tackling = FALSE //Whether or not we are tackling, this will prevent the knock into effects for carbons

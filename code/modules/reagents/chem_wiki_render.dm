@@ -1,18 +1,11 @@
 //Generates a markdown txt file for use with the wiki
 
 /proc/find_reagent(input)
-	. = FALSE
-	if(GLOB.chemical_reagents_list[input]) //prefer IDs!
-		var/datum/reagent/R = GLOB.chemical_reagents_list[input]
-		return R
-	else
-		for(var/X in GLOB.chemical_reagents_list)
-			var/datum/reagent/R = GLOB.chemical_reagents_list[X]
-			if(input == replacetext(lowertext(R.name), " ", ""))
-				return R
-			if(input == replacetext(lowertext(R.id), " ", ""))
-				return R
-
+	//prefer types!
+	. = GLOB.chemical_reagents_list[text2path(input)]
+	if(.)
+		return
+	. = GLOB.name2reagent[ckey(input)]
 
 
 
@@ -24,7 +17,7 @@
 
 
 	var/prefix = "|Name | Reagents | Reaction vars | Description | Chem properties |\n|---|---|---|-----------|---|\n"
-	var/input_reagent = replacetext(lowertext(input("Input the name/id of a reagent to get it's description on it's own, or leave blank to parse every chem.", "Input") as text), " ", "") //95% of the time, the reagent id is a lowercase/no spaces version of the name
+	var/input_reagent = replacetext(lowertext(input("Input the name/type of a reagent to get it's description on it's own, or leave blank to parse every chem.", "Input") as text), " ", "") //95% of the time, the reagent type is a lowercase, no spaces / underscored version of the name
 	if(input_reagent)
 		var/input_reagent2 = find_reagent(input_reagent)
 		if(!input_reagent2)
@@ -68,98 +61,23 @@
 	var/impure = ""
 
 	//Chem_dispencer
-	var/list/dispensable_reagents = list(
-		"hydrogen",
-		"lithium",
-		"carbon",
-		"nitrogen",
-		"oxygen",
-		"fluorine",
-		"sodium",
-		"aluminium",
-		"silicon",
-		"phosphorus",
-		"sulfur",
-		"chlorine",
-		"potassium",
-		"iron",
-		"copper",
-		"mercury",
-		"radium",
-		"water",
-		"ethanol",
-		"sugar",
-		"sacid",
-		"welding_fuel",
-		"silver",
-		"iodine",
-		"bromine",
-		"stable_plasma"
-	)
-	var/list/components = list(
-		"oil",
-		"ammonia",
-		"ash",
-		"acetone",
-		"phenol",
-		"diethylamine",
-		"saltpetre",
-		"sodiumchloride",
-		"lye"
-	)
+	var/obj/machinery/chem_dispenser/C
+	var/list/dispensable_reagents = initial(C.dispensable_reagents)
+	var/list/components = initial(C.upgrade_reagents) + initial(C.upgrade_reagents2) + initial(C.upgrade_reagents3)
 
 	var/list/grind = list(
-		"bluespace",
-		"gold",
-		"plasma",
-		"uranium"
+		/datum/reagent/bluespace,
+		/datum/reagent/gold,
+		/datum/reagent/toxin/plasma,
+		/datum/reagent/uranium
 	)
 
 	//Bartender
-	var/dispence_drinks = list(
-		"water",
-		"ice",
-		"coffee",
-		"cream",
-		"tea",
-		"icetea",
-		"cola",
-		"spacemountainwind",
-		"dr_gibb",
-		"space_up",
-		"tonic",
-		"sodawater",
-		"lemon_lime",
-		"pwr_game",
-		"shamblers",
-		"sugar",
-		"orangejuice",
-		"grenadine",
-		"limejuice",
-		"tomatojuice",
-		"lemonjuice",
-		"menthol"
-	)
-	var/dispence_alco = list(
-		"beer",
-		"kahlua",
-		"whiskey",
-		"wine",
-		"vodka",
-		"gin",
-		"rum",
-		"tequila",
-		"vermouth",
-		"cognac",
-		"ale",
-		"absinthe",
-		"hcider",
-		"creme_de_menthe",
-		"creme_de_cacao",
-		"triple_sec",
-		"sake",
-		"applejack"
-	)
+	var/obj/machinery/chem_dispenser/drinks/D
+	var/dispence_drinks = initial(D.dispensable_reagents)
+
+	var/obj/machinery/chem_dispenser/drinks/beer/B
+	var/dispence_alco = initial(B.dispensable_reagents)
 
 	var/breakout = FALSE
 	for(var/i = 1, i <= 2, i+=1)
@@ -169,31 +87,31 @@
 				continue
 
 			for(var/Y in dispensable_reagents) //Why do you have to do this
-				if(R.id == Y)
+				if(R.type == Y)
 					basic += generate_chemwiki_line(R, X, processCR)
 					breakout = TRUE
 					continue
 
 			for(var/Y in components)
-				if(R.id == Y)
+				if(R.type == Y)
 					upgraded += generate_chemwiki_line(R, X, processCR)
 					breakout = TRUE
 					continue
 
 			for(var/Y in dispence_drinks)
-				if(R.id == Y)
+				if(R.type == Y)
 					drinks += generate_chemwiki_line(R, X, processCR)
 					breakout = TRUE
 					continue
 
 			for(var/Y in dispence_alco)
-				if(R.id == Y)
+				if(R.type == Y)
 					alco += generate_chemwiki_line(R, X, processCR)
 					breakout = TRUE
 					continue
 
 			for(var/Y in grind)
-				if(R.id == Y)
+				if(R.type == Y)
 					grinded += generate_chemwiki_line(R, X, processCR)
 					breakout = TRUE
 					continue
@@ -273,22 +191,22 @@
 /proc/generate_chemwiki_line(datum/reagent/R, X, processCR)
 	//name | Reagent pH | reagents | reaction temp | explosion temp | pH range | Kinetics | description | OD level | Addiction level | Metabolism rate | impure chem | inverse chem
 
-	var/datum/chemical_reaction/CR = get_chemical_reaction(R.id)
+	var/datum/chemical_reaction/CR = get_chemical_reaction(R.type)
 	if((!CR && processCR) || (CR && !processCR)) // Do reactions first.
 		return ""
 
 
-	var/outstring = "|<a href=\"#[R.name]\"><h5 id=\"[R.name]\">!\[[R.color]\](https://placehold.it/15/[copytext(R.color, 2, 8)]/000000?text=+)[R.name]</h5></a> pH: [R.pH] | "
+	var/outstring = "|<a href=\"#[R.name]\"><h5 id=\"[R.name]\">!\[[R.color]\](https://placehold.it/15/[copytext_char(R.color, 2, 8)]/000000?text=+)[R.name]</h5></a> pH: [R.pH] | "
 	var/datum/reagent/R3
 	if(CR)
 		outstring += "<ul>"
 		for(var/R2 in CR.required_reagents)
 			R3 = GLOB.chemical_reagents_list[R2]//What a convoluted mess
-			outstring += "<li><a href=\"#[R3.name]\">[R3.name]</a>: [CR.required_reagents[R3.id]]u</li>"
+			outstring += "<li><a href=\"#[R3.name]\">[R3.name]</a>: [CR.required_reagents[R3.type]]u</li>"
 		if(CR.required_catalysts)
 			for(var/R2 in CR.required_catalysts)
 				R3 = GLOB.chemical_reagents_list[R2]
-				outstring += "<li>Catalyst: <a href=\"#[R3.name]\">[R3.name]</a>: [CR.required_catalysts[R3.id]]u</li>"
+				outstring += "<li>Catalyst: <a href=\"#[R3.name]\">[R3.name]</a>: [CR.required_catalysts[R3.type]]u</li>"
 		outstring += "</ul> | "
 	else
 		outstring += "N/A | "
@@ -332,11 +250,11 @@
 	//Description, OD, Addict, Meta
 	outstring += "[R.description] | <ul><li>Metabolism rate: [R.metabolization_rate/2]u/s</li> [(R.overdose_threshold?"<li>Overdose: [R.overdose_threshold]u</li>":"")] [(R.addiction_threshold?"<li>Addiction: [R.addiction_threshold]u</li>":"")] "
 
-	if(R.impure_chem && R.impure_chem != "fermiTox")
+	if(R.impure_chem && R.impure_chem != /datum/reagent/impure/fermiTox)
 		R3 = GLOB.chemical_reagents_list[R.impure_chem]
 		outstring += "<li>Impure chem:<a href=\"#[R3.name]\">[R3.name]</a></li>"
 
-	if(R.inverse_chem && R.impure_chem != "fermiTox")
+	if(R.inverse_chem && R.impure_chem != /datum/reagent/impure/fermiTox)
 		R3 = GLOB.chemical_reagents_list[R.inverse_chem]
 		outstring += "<li>Inverse chem:<a href=\"#[R3.name]\">[R3.name]</a></li> [(R3.inverse_chem_val?"<li>Inverse purity: [R3.inverse_chem_val]</li>":"")] "
 
@@ -361,11 +279,11 @@
 	var/datum/reagent/R3
 	for(var/R2 in CR.required_reagents)
 		R3 = GLOB.chemical_reagents_list[R2]
-		outstring += "<li><a href=\"#[R3.name]\">[R3.name]</a>: [CR.required_reagents[R3.id]]u</li>"
+		outstring += "<li><a href=\"#[R3.name]\">[R3.name]</a>: [CR.required_reagents[R3.type]]u</li>"
 	if(CR.required_catalysts)
 		for(var/R2 in CR.required_catalysts)
 			R3 = GLOB.chemical_reagents_list[R2]
-			outstring += "<li>Catalyst: <a href=\"#[R3.name]\">[R3.name]</a>: [CR.required_catalysts[R3.id]]u</li>"
+			outstring += "<li>Catalyst: <a href=\"#[R3.name]\">[R3.name]</a>: [CR.required_catalysts[R3.type]]u</li>"
 	outstring += "</ul> | <ul>"
 
 	//Reaction vars

@@ -52,23 +52,23 @@
 	return
 
 /obj/item/his_grace/examine(mob/user)
-	..()
+	. = ..()
 	if(awakened)
 		switch(bloodthirst)
 			if(HIS_GRACE_SATIATED to HIS_GRACE_PECKISH)
-				to_chat(user, "<span class='his_grace'>[src] isn't very hungry. Not yet.</span>")
+				. += "<span class='his_grace'>[src] isn't very hungry. Not yet.</span>"
 			if(HIS_GRACE_PECKISH to HIS_GRACE_HUNGRY)
-				to_chat(user, "<span class='his_grace'>[src] would like a snack.</span>")
+				. += "<span class='his_grace'>[src] would like a snack.</span>"
 			if(HIS_GRACE_HUNGRY to HIS_GRACE_FAMISHED)
-				to_chat(user, "<span class='his_grace'>[src] is quite hungry now.</span>")
+				. += "<span class='his_grace'>[src] is quite hungry now.</span>"
 			if(HIS_GRACE_FAMISHED to HIS_GRACE_STARVING)
-				to_chat(user, "<span class='his_grace'>[src] is openly salivating at the sight of you. Be careful.</span>")
+				. += "<span class='his_grace'>[src] is openly salivating at the sight of you. Be careful.</span>"
 			if(HIS_GRACE_STARVING to HIS_GRACE_CONSUME_OWNER)
-				to_chat(user, "<span class='his_grace bold'>You walk a fine line. [src] is very close to devouring you.</span>")
+				. += "<span class='his_grace bold'>You walk a fine line. [src] is very close to devouring you.</span>"
 			if(HIS_GRACE_CONSUME_OWNER to HIS_GRACE_FALL_ASLEEP)
-				to_chat(user, "<span class='his_grace bold'>[src] is shaking violently and staring directly at you.</span>")
+				. += "<span class='his_grace bold'>[src] is shaking violently and staring directly at you.</span>"
 	else
-		to_chat(user, "<span class='his_grace'>[src] is latched closed.</span>")
+		. += "<span class='his_grace'>[src] is latched closed.</span>"
 
 /obj/item/his_grace/relaymove(mob/living/user) //Allows changelings, etc. to climb out of Him after they revive, provided He isn't active
 	if(!awakened)
@@ -92,7 +92,7 @@
 				master.emote("scream")
 				master.remove_status_effect(STATUS_EFFECT_HISGRACE)
 				REMOVE_TRAIT(src, TRAIT_NODROP, HIS_GRACE_TRAIT)
-				master.Knockdown(60)
+				master.DefaultCombatKnockdown(60)
 				master.adjustBruteLoss(master.maxHealth)
 				playsound(master, 'sound/effects/splat.ogg', 100, 0)
 			else
@@ -197,9 +197,9 @@
 /obj/item/his_grace/proc/adjust_bloodthirst(amt)
 	prev_bloodthirst = bloodthirst
 	if(prev_bloodthirst < HIS_GRACE_CONSUME_OWNER && !ascended)
-		bloodthirst = CLAMP(bloodthirst + amt, HIS_GRACE_SATIATED, HIS_GRACE_CONSUME_OWNER)
+		bloodthirst = clamp(bloodthirst + amt, HIS_GRACE_SATIATED, HIS_GRACE_CONSUME_OWNER)
 	else if(!ascended)
-		bloodthirst = CLAMP(bloodthirst + amt, HIS_GRACE_CONSUME_OWNER, HIS_GRACE_FALL_ASLEEP)
+		bloodthirst = clamp(bloodthirst + amt, HIS_GRACE_CONSUME_OWNER, HIS_GRACE_FALL_ASLEEP)
 	update_stats()
 
 /obj/item/his_grace/proc/update_stats()

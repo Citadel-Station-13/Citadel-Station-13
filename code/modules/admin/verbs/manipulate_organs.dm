@@ -58,7 +58,7 @@
 
 			if(isorgan(organ))
 				O = organ
-				O.Remove(C)
+				O.Remove()
 			else
 				I = organ
 				I.removed(C)

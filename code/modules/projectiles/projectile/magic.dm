@@ -17,7 +17,7 @@
 		var/mob/M = target
 		if(M.anti_magic_check())
 			M.visible_message("<span class='warning'>[src] vanishes on contact with [target]!</span>")
-			return
+			return BULLET_ACT_BLOCK
 		M.death(0)
 
 /obj/item/projectile/magic/resurrection
@@ -31,10 +31,10 @@
 	. = ..()
 	if(isliving(target))
 		if(target.hellbound)
-			return
+			return BULLET_ACT_BLOCK
 		if(target.anti_magic_check())
 			target.visible_message("<span class='warning'>[src] vanishes on contact with [target]!</span>")
-			return
+			return BULLET_ACT_BLOCK
 		if(iscarbon(target))
 			var/mob/living/carbon/C = target
 			C.regenerate_limbs()
@@ -60,7 +60,7 @@
 		var/mob/M = target
 		if(M.anti_magic_check())
 			M.visible_message("<span class='warning'>[src] fizzles on contact with [target]!</span>")
-			return
+			return BULLET_ACT_BLOCK
 	var/teleammount = 0
 	var/teleloc = target
 	if(!isturf(target))
@@ -93,7 +93,7 @@
 /obj/item/projectile/magic/door/proc/CreateDoor(turf/T)
 	var/door_type = pick(door_types)
 	var/obj/structure/mineral_door/D = new door_type(T)
-	T.ChangeTurf(/turf/open/floor/plating)
+	T.ChangeTurf(/turf/open/floor/plating, flags = CHANGETURF_INHERIT_AIR)
 	D.Open()
 
 /obj/item/projectile/magic/door/proc/OpenDoor(var/obj/machinery/door/D)
@@ -116,7 +116,7 @@
 		if(M.anti_magic_check())
 			M.visible_message("<span class='warning'>[src] fizzles on contact with [M]!</span>")
 			qdel(src)
-			return
+			return BULLET_ACT_BLOCK
 	wabbajack(change)
 	qdel(src)
 
@@ -124,8 +124,8 @@
 	if(!istype(M) || M.stat == DEAD || M.notransform || (GODMODE & M.status_flags))
 		return
 
-	M.notransform = 1
-	M.canmove = 0
+	M.notransform = TRUE
+	M.Paralyze(INFINITY)
 	M.icon = null
 	M.cut_overlays()
 	M.invisibility = INVISIBILITY_ABSTRACT
@@ -153,6 +153,7 @@
 			var/robot = pick(200;/mob/living/silicon/robot,
 							/mob/living/silicon/robot/modules/syndicate,
 							/mob/living/silicon/robot/modules/syndicate/medical,
+							/mob/living/silicon/robot/modules/syndicate/saboteur,
 							200;/mob/living/simple_animal/drone/polymorphed)
 			new_mob = new robot(M.loc)
 			if(issilicon(new_mob))
@@ -181,18 +182,14 @@
 			var/path = pick(/mob/living/simple_animal/hostile/carp,
 							/mob/living/simple_animal/hostile/bear,
 							/mob/living/simple_animal/hostile/mushroom,
-							/mob/living/simple_animal/hostile/statue,
 							/mob/living/simple_animal/hostile/retaliate/bat,
 							/mob/living/simple_animal/hostile/retaliate/goat,
 							/mob/living/simple_animal/hostile/killertomato,
 							/mob/living/simple_animal/hostile/poison/giant_spider,
 							/mob/living/simple_animal/hostile/poison/giant_spider/hunter,
 							/mob/living/simple_animal/hostile/blob/blobbernaut/independent,
-							/mob/living/simple_animal/hostile/carp/ranged,
-							/mob/living/simple_animal/hostile/carp/ranged/chaos,
 							/mob/living/simple_animal/hostile/asteroid/basilisk/watcher,
 							/mob/living/simple_animal/hostile/asteroid/goliath/beast,
-							/mob/living/simple_animal/hostile/headcrab,
 							/mob/living/simple_animal/hostile/morph,
 							/mob/living/simple_animal/hostile/stickman,
 							/mob/living/simple_animal/hostile/stickman/dog,
@@ -231,7 +228,6 @@
 
 	if(!new_mob)
 		return
-	new_mob.grant_language(/datum/language/common)
 
 	// Some forms can still wear some items
 	for(var/obj/item/W in contents)
@@ -263,7 +259,7 @@
 
 /obj/item/projectile/magic/animate/on_hit(atom/target, blocked = FALSE)
 	target.animate_atom_living(firer)
-	..()
+	. = ..()
 
 /atom/proc/animate_atom_living(var/mob/living/owner = null)
 	if((isitem(src) || isstructure(src)) && !is_type_in_list(src, GLOB.protected_objects))
@@ -283,7 +279,7 @@
 				if(L.mind)
 					L.mind.transfer_to(S)
 					if(owner)
-						to_chat(S, "<span class='userdanger'>You are an animate statue. You cannot move when monitored, but are nearly invincible and deadly when unobserved! Do not harm [owner], your creator.</span>")
+						to_chat(S, "<span class='userdanger'>You are an animated statue. You cannot move when monitored, but are nearly invincible and deadly when unobserved! Do not harm [owner], your creator.</span>")
 				P.forceMove(S)
 				return
 		else
@@ -314,7 +310,7 @@
 		if(M.anti_magic_check())
 			M.visible_message("<span class='warning'>[src] vanishes on contact with [target]!</span>")
 			qdel(src)
-			return
+			return BULLET_ACT_BLOCK
 	. = ..()
 
 /obj/item/projectile/magic/arcane_barrage
@@ -333,7 +329,7 @@
 		if(M.anti_magic_check())
 			M.visible_message("<span class='warning'>[src] vanishes on contact with [target]!</span>")
 			qdel(src)
-			return
+			return BULLET_ACT_BLOCK
 	. = ..()
 
 
@@ -438,12 +434,12 @@
 	damage = 15
 	damage_type = BURN
 	nodamage = 0
-	speed = 0.3
+	pixels_per_second = TILES_TO_PIXELS(33.33)
 	flag = "magic"
 
-	var/tesla_power = 20000
-	var/tesla_range = 15
-	var/tesla_flags = TESLA_MOB_DAMAGE | TESLA_MOB_STUN | TESLA_OBJ_DAMAGE
+	var/zap_power = 20000
+	var/zap_range = 15
+	var/zap_flags = ZAP_MOB_DAMAGE | ZAP_MOB_STUN | ZAP_OBJ_DAMAGE
 	var/chain
 	var/mob/living/caster
 
@@ -459,8 +455,8 @@
 		if(M.anti_magic_check())
 			visible_message("<span class='warning'>[src] fizzles on contact with [target]!</span>")
 			qdel(src)
-			return
-	tesla_zap(src, tesla_range, tesla_power, tesla_flags)
+			return BULLET_ACT_BLOCK
+	tesla_zap(src, zap_range, zap_power, zap_flags)
 	qdel(src)
 
 /obj/item/projectile/magic/aoe/lightning/Destroy()
@@ -486,7 +482,7 @@
 		var/mob/living/M = target
 		if(M.anti_magic_check())
 			visible_message("<span class='warning'>[src] vanishes into smoke on contact with [target]!</span>")
-			return
+			return BULLET_ACT_BLOCK
 		M.take_overall_damage(0,10) //between this 10 burn, the 10 brute, the explosion brute, and the onfire burn, your at about 65 damage if you stop drop and roll immediately
 	var/turf/T = get_turf(target)
 	explosion(T, -1, exp_heavy, exp_light, exp_flash, 0, flame_range = exp_fire)
@@ -503,7 +499,36 @@
 	if(ismob(target))
 		var/mob/living/M = target
 		if(M.anti_magic_check())
-			return
+			return BULLET_ACT_BLOCK
 	var/turf/T = get_turf(target)
 	for(var/i=0, i<50, i+=10)
 		addtimer(CALLBACK(GLOBAL_PROC, .proc/explosion, T, -1, exp_heavy, exp_light, exp_flash, FALSE, FALSE, exp_fire), i)
+
+/obj/item/projectile/magic/nuclear
+	name = "\proper blazing manliness"
+	icon_state = "nuclear"
+	nodamage = TRUE
+	var/mob/living/victim = null
+	var/used = 0
+
+/obj/item/projectile/magic/nuclear/on_hit(target)
+	if(used)
+		return BULLET_ACT_HIT
+	new/obj/effect/temp_visual/slugboom(get_turf(src))
+	if(ismob(target))
+		if(target == victim)
+			return BULLET_ACT_FORCE_PIERCE
+		used = 1
+		visible_message("<span class='danger'>[victim] slams into [target] with explosive force!</span>")
+		explosion(src, 2, 3, 4, -1, TRUE, FALSE, 5)
+	else
+		used = 1
+		victim.take_overall_damage(30,30)
+		victim.DefaultCombatKnockdown(60)
+		explosion(src, -1, -1, -1, -1, FALSE, FALSE, 5)
+	return BULLET_ACT_HIT
+
+/obj/item/projectile/magic/nuclear/Destroy()
+	for(var/atom/movable/AM in contents)
+		AM.forceMove(get_turf(src))
+	. = ..()

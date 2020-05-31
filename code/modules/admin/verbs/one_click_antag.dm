@@ -165,9 +165,9 @@
 
 /datum/admins/proc/makeWizard()
 
-	var/list/mob/dead/observer/candidates = pollGhostCandidates("Do you wish to be considered for the position of a Wizard Foundation 'diplomat'?", ROLE_WIZARD, null)
+	var/list/mob/candidates = pollGhostCandidates("Do you wish to be considered for the position of a Wizard Foundation 'diplomat'?", ROLE_WIZARD, null)
 
-	var/mob/dead/observer/selected = pick_n_take(candidates)
+	var/mob/selected = pick_n_take(candidates)
 
 	var/mob/living/carbon/human/new_character = makeBody(selected)
 	new_character.mind.make_Wizard()
@@ -242,9 +242,9 @@
 
 /datum/admins/proc/makeNukeTeam()
 	var/datum/game_mode/nuclear/temp = new
-	var/list/mob/dead/observer/candidates = pollGhostCandidates("Do you wish to be considered for a nuke team being sent in?", ROLE_OPERATIVE, temp)
-	var/list/mob/dead/observer/chosen = list()
-	var/mob/dead/observer/theghost = null
+	var/list/mob/candidates = pollGhostCandidates("Do you wish to be considered for a nuke team being sent in?", ROLE_OPERATIVE, temp)
+	var/list/mob/chosen = list()
+	var/mob/theghost = null
 
 	if(candidates.len)
 		var/numagents = 5
@@ -406,7 +406,7 @@
 		ertemplate.enforce_human = prefs["enforce_human"]["value"] == "Yes" ? TRUE : FALSE
 		ertemplate.opendoors = prefs["open_armory"]["value"] == "Yes" ? TRUE : FALSE
 
-		var/list/mob/dead/observer/candidates = pollGhostCandidates("Do you wish to be considered for [ertemplate.polldesc] ?", "deathsquad", null)
+		var/list/mob/candidates = pollGhostCandidates("Do you wish to be considered for [ertemplate.polldesc] ?", "deathsquad", null)
 		var/teamSpawned = FALSE
 
 		if(candidates.len > 0)
@@ -432,7 +432,7 @@
 					numagents--
 					continue // This guy's unlucky, not enough spawn points, we skip him.
 				var/spawnloc = spawnpoints[numagents]
-				var/mob/dead/observer/chosen_candidate = pick(candidates)
+				var/mob/chosen_candidate = pick(candidates)
 				candidates -= chosen_candidate
 				if(!chosen_candidate.key)
 					continue

@@ -14,20 +14,23 @@
 	var/force_replace_ai_name = FALSE
 	var/overrides_aicore_laws = FALSE // Whether the laws on the MMI, if any, override possible pre-existing laws loaded on the AI core.
 
-/obj/item/mmi/update_icon()
+/obj/item/mmi/update_icon_state()
 	if(!brain)
 		icon_state = "mmi_off"
-		return
-	if(istype(brain, /obj/item/organ/brain/alien))
+	else if(istype(brain, /obj/item/organ/brain/alien))
 		icon_state = "mmi_brain_alien"
-		braintype = "Xenoborg" //HISS....Beep.
 	else
 		icon_state = "mmi_brain"
-		braintype = "Cyborg"
+
+/obj/item/mmi/update_overlays()
+	. = ..()
+	. += add_mmi_overlay()
+
+/obj/item/mmi/proc/add_mmi_overlay()
 	if(brainmob && brainmob.stat != DEAD)
-		add_overlay("mmi_alive")
+		. += "mmi_alive"
 	else
-		add_overlay("mmi_dead")
+		. += "mmi_dead"
 
 /obj/item/mmi/Initialize()
 	. = ..()
@@ -68,6 +71,10 @@
 
 		name = "Man-Machine Interface: [brainmob.real_name]"
 		update_icon()
+		if(istype(brain, /obj/item/organ/brain/alien))
+			braintype = "Xenoborg" //HISS....Beep.
+		else
+			braintype = "Cyborg"
 
 		SSblackbox.record_feedback("amount", "mmis_filled", 1)
 
@@ -85,7 +92,7 @@
 		to_chat(user, "<span class='notice'>You unlock and upend the MMI, spilling the brain onto the floor.</span>")
 		eject_brain(user)
 		update_icon()
-		name = "Man-Machine Interface"
+		name = initial(name)
 
 /obj/item/mmi/proc/eject_brain(mob/user)
 	brainmob.container = null //Reset brainmob mmi var.
@@ -125,10 +132,14 @@
 	else if(!brain)
 		brain = new(src)
 		brain.name = "[L.real_name]'s brain"
+	brain.organ_flags |= ORGAN_FROZEN
 
 	name = "Man-Machine Interface: [brainmob.real_name]"
 	update_icon()
-	return
+	if(istype(brain, /obj/item/organ/brain/alien))
+		braintype = "Xenoborg" //HISS....Beep.
+	else
+		braintype = "Cyborg"
 
 /obj/item/mmi/proc/replacement_ai_name()
 	return brainmob.name
@@ -188,17 +199,17 @@
 	qdel(src)
 
 /obj/item/mmi/examine(mob/user)
-	..()
+	. = ..()
 	if(brainmob)
 		var/mob/living/brain/B = brainmob
 		if(!B.key || !B.mind || B.stat == DEAD)
-			to_chat(user, "<span class='warning'>The MMI indicates the brain is completely unresponsive.</span>")
+			. += "<span class='warning'>The MMI indicates the brain is completely unresponsive.</span>"
 
 		else if(!B.client)
-			to_chat(user, "<span class='warning'>The MMI indicates the brain is currently inactive; it might change.</span>")
+			. += "<span class='warning'>The MMI indicates the brain is currently inactive; it might change.</span>"
 
 		else
-			to_chat(user, "<span class='notice'>The MMI indicates the brain is active.</span>")
+			. += "<span class='notice'>The MMI indicates the brain is active.</span>"
 
 /obj/item/mmi/relaymove(mob/user)
 	return //so that the MMI won't get a warning about not being able to move if it tries to move

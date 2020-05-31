@@ -13,5 +13,4 @@
 
 #define is_away_level(z) SSmapping.level_trait(z, ZTRAIT_AWAY)
 
-// If true, the singularity cannot strip away asteroid turf on this Z
-#define is_planet_level(z) SSmapping.level_trait(z, ZTRAIT_PLANET)
+#define is_vr_level(z) SSmapping.level_trait(z, ZTRAIT_VR)

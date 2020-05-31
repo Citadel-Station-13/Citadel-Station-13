@@ -147,7 +147,6 @@
 			return "health-85"
 		else
 			return "health-100"
-	return "0"
 
 //HOOKS
 
@@ -189,7 +188,13 @@
 		if(tod)
 			var/tdelta = round(world.time - timeofdeath)
 			if(tdelta < (DEFIB_TIME_LIMIT * 10))
-				holder.icon_state = "huddefib"
+				var/obj/item/organ/heart/He = getorgan(/obj/item/organ/heart)
+				if(He)
+					holder.icon_state = "huddefib"
+					if(He.organ_flags & ORGAN_FAILING)
+						holder.icon_state = "huddefibheart"
+				else
+					holder.icon_state = "huddefibheart"
 				return
 		holder.icon_state = "huddead"
 	else
@@ -317,7 +322,6 @@
 			return "crit"
 		else
 			return "dead"
-	return "dead"
 
 //Sillycone hooks
 /mob/living/silicon/proc/diag_hud_set_health()

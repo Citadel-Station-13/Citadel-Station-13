@@ -84,7 +84,6 @@
 	result = /obj/item/reagent_containers/food/snacks/peanutbutter_sandwich
 	subcategory = CAT_SANDWICH
 
-
 /datum/crafting_recipe/food/notasandwich
 	name = "Not a sandwich"
 	reqs = list(
@@ -113,4 +112,4 @@
 		/obj/item/reagent_containers/food/snacks/sausage = 1
 	)
 	result = /obj/item/reagent_containers/food/snacks/hotdog
-	subcategory = CAT_SANDWICH
+	subcategory = CAT_SANDWICH //I don't agree with this.

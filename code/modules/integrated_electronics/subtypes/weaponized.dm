@@ -81,9 +81,13 @@
 		to_chat(user, "<span class='notice'>There's no weapon to remove from the mechanism.</span>")
 
 /obj/item/integrated_circuit/weaponized/weapon_firing/do_work()
-	if(!installed_gun || !installed_gun.handle_pins())
+	if(!assembly || !installed_gun)
 		return
-	if(!isturf(assembly.loc) && !(assembly.can_fire_equipped && ishuman(assembly.loc)))
+	if(isliving(assembly.loc))
+		var/mob/living/L = assembly.loc
+		if(!assembly.can_fire_equipped || !L.is_holding(assembly) || !installed_gun.can_trigger_gun(L)) //includes pins, hulk and other chunky fingers checks.
+			return
+	else if(!isturf(assembly.loc) || !installed_gun.handle_pins())
 		return
 	set_pin_data(IC_OUTPUT, 1, WEAKREF(installed_gun))
 	push_data()
@@ -92,18 +96,17 @@
 	var/datum/integrated_io/mode1 = inputs[3]
 
 	mode = mode1.data
-	if(assembly)
-		if(isnum(xo.data))
-			xo.data = round(xo.data, 1)
-		if(isnum(yo.data))
-			yo.data = round(yo.data, 1)
+	if(isnum(xo.data))
+		xo.data = round(xo.data, 1)
+	if(isnum(yo.data))
+		yo.data = round(yo.data, 1)
 
-		var/turf/T = get_turf(assembly)
-		var/target_x = CLAMP(T.x + xo.data, 0, world.maxx)
-		var/target_y = CLAMP(T.y + yo.data, 0, world.maxy)
+	var/turf/T = get_turf(assembly)
+	var/target_x = clamp(T.x + xo.data, 0, world.maxx)
+	var/target_y = clamp(T.y + yo.data, 0, world.maxy)
 
-		assembly.visible_message("<span class='danger'>[assembly] fires [installed_gun]!</span>")
-		shootAt(locate(target_x, target_y, T.z))
+	assembly.visible_message("<span class='danger'>[assembly] fires [installed_gun]!</span>")
+	shootAt(locate(target_x, target_y, T.z))
 
 /obj/item/integrated_circuit/weaponized/weapon_firing/proc/shootAt(turf/target)
 	var/turf/T = get_turf(src)
@@ -188,7 +191,7 @@
 		var/datum/integrated_io/detonation_time = inputs[1]
 		var/dt
 		if(isnum(detonation_time.data) && detonation_time.data > 0)
-			dt = CLAMP(detonation_time.data, 1, 12)*10
+			dt = clamp(detonation_time.data, 1, 12)*10
 		else
 			dt = 15
 		addtimer(CALLBACK(attached_grenade, /obj/item/grenade.proc/prime), dt)
@@ -246,24 +249,28 @@
 	if(!A || A.anchored || A.throwing || A == assembly || istype(A, /obj/item/twohanded) || istype(A, /obj/item/transfer_valve))
 		return
 
-	if(!AT || !AT.air_contents)
+	var/obj/item/I = get_object()
+	var/turf/T = get_turf(I)
+	if(!T)
+		return
+	if(isliving(I.loc))
+		var/mob/living/L = I.loc
+		if(!I.can_trigger_gun(L)) //includes hulk and other chunky fingers checks.
+			return
+		if(HAS_TRAIT(L, TRAIT_PACIFISM) && A.throwforce)
+			to_chat(L, "<span class='notice'> [I] is lethally chambered! You don't want to risk harming anyone...</span>")
+			return
+	else if(T != I.loc)
 		return
 
-	if (istype(assembly.loc, /obj/item/implant/storage)) //Prevents the more abusive form of chestgun.
+	if(!AT || !AT.air_contents)
 		return
 
 	if(max_w_class && (A.w_class > max_w_class))
 		return
 
-	if(!assembly.can_fire_equipped && ishuman(assembly.loc))
-		return
-
 	// Is the target inside the assembly or close to it?
 	if(!check_target(A, exclude_components = TRUE))
-		return
-
-	var/turf/T = get_turf(get_object())
-	if(!T)
 		return
 
 	// If the item is in mob's inventory, try to remove it from there.
@@ -286,9 +293,10 @@
 	// If the item is in a grabber circuit we'll update the grabber's outputs after we've thrown it.
 	var/obj/item/integrated_circuit/manipulation/grabber/G = A.loc
 
-	var/x_abs = CLAMP(T.x + target_x_rel, 0, world.maxx)
-	var/y_abs = CLAMP(T.y + target_y_rel, 0, world.maxy)
-	var/range = round(CLAMP(sqrt(target_x_rel*target_x_rel+target_y_rel*target_y_rel),0,8),1)
+	var/x_abs = clamp(T.x + target_x_rel, 0, world.maxx)
+	var/y_abs = clamp(T.y + target_y_rel, 0, world.maxy)
+	var/range = round(clamp(sqrt(target_x_rel*target_x_rel+target_y_rel*target_y_rel),0,8),1)
+	playsound(src, 'sound/weapons/sonic_jackhammer.ogg', 50, 1)
 	assembly.visible_message("<span class='danger'>\The [assembly] has thrown [A]!</span>")
 	log_attack("[assembly] [REF(assembly)] has thrown [A] with lethal force.")
 	A.forceMove(drop_location())
@@ -317,7 +325,7 @@
 
 
 /obj/item/integrated_circuit/weaponized/stun/do_work()
-	var/stunforce = CLAMP(get_pin_data(IC_INPUT, 1),1,70)
+	var/stunforce = clamp(get_pin_data(IC_INPUT, 1),1,70)
 	var/mob/living/L = assembly.loc
 	if(attempt_stun(L,stunforce))
 		activate_pin(2)
@@ -329,7 +337,7 @@
 	if(!L || !isliving(L))
 		return 0
 
-	L.Knockdown(stunforce)
+	L.DefaultCombatKnockdown(stunforce)
 	SEND_SIGNAL(L, COMSIG_LIVING_MINOR_SHOCK)
 
 	message_admins("stunned someone with an assembly. Last touches: Assembly: [assembly.fingerprintslast] Circuit: [fingerprintslast]")

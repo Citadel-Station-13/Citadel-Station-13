@@ -4,26 +4,32 @@
 	var/obj/screen/using
 
 	healths = new /obj/screen/healths/guardian()
+	healths.hud = src
 	infodisplay += healths
 
 	using = new /obj/screen/guardian/Manifest()
 	using.screen_loc = ui_hand_position(2)
+	using.hud = src
 	static_inventory += using
 
 	using = new /obj/screen/guardian/Recall()
 	using.screen_loc = ui_hand_position(1)
+	using.hud = src
 	static_inventory += using
 
 	using = new owner.toggle_button_type()
 	using.screen_loc = ui_storage1
+	using.hud = src
 	static_inventory += using
 
 	using = new /obj/screen/guardian/ToggleLight()
 	using.screen_loc = ui_inventory
+	using.hud = src
 	static_inventory += using
 
 	using = new /obj/screen/guardian/Communicate()
 	using.screen_loc = ui_back
+	using.hud = src
 	static_inventory += using
 
 /datum/hud/dextrous/guardian/New(mob/living/simple_animal/hostile/guardian/owner) //for a dextrous guardian

@@ -26,7 +26,6 @@
 	var/working = 0
 	var/balance = 0 //How much money is in the machine, ready to be CONSUMED.
 	var/jackpots = 0
-	var/list/coinvalues = list()
 	var/list/reels = list(list("", "", "") = 0, list("", "", "") = 0, list("", "", "") = 0, list("", "", "") = 0, list("", "", "") = 0)
 	var/list/symbols = list(SEVEN = 1, "<font color='orange'>&</font>" = 2, "<font color='yellow'>@</font>" = 2, "<font color='green'>$</font>" = 2, "<font color='blue'>?</font>" = 2, "<font color='grey'>#</font>" = 2, "<font color='white'>!</font>" = 2, "<font color='fuchsia'>%</font>" = 2) //if people are winning too much, multiply every number in this list by 2 and see if they are still winning too much.
 
@@ -45,10 +44,6 @@
 
 	toggle_reel_spin(0)
 
-	for(var/cointype in typesof(/obj/item/coin))
-		var/obj/item/coin/C = cointype
-		coinvalues["[cointype]"] = initial(C.value)
-
 /obj/machinery/computer/slot_machine/Destroy()
 	if(balance)
 		give_coins(balance)
@@ -61,7 +56,7 @@
 
 	money++ //SPESSH MAJICKS
 
-/obj/machinery/computer/slot_machine/update_icon()
+/obj/machinery/computer/slot_machine/update_icon_state()
 	if(stat & NOPOWER)
 		icon_state = "slots0"
 
@@ -92,7 +87,7 @@
 		else
 			if(!user.temporarilyRemoveItemFromInventory(C))
 				return
-			to_chat(user, "<span class='notice'>You insert a [C.cmineral] coin into [src]'s slot!</span>")
+			to_chat(user, "<span class='notice'>You insert [C] into [src]'s slot!</span>")
 			balance += C.value
 			qdel(C)
 	else
@@ -294,19 +289,22 @@
 
 	return amount
 
-/obj/machinery/computer/slot_machine/proc/dispense(amount = 0, cointype = /obj/item/coin/silver, mob/living/target, throwit = 0)
-	var/value = coinvalues["[cointype]"]
+/obj/machinery/computer/slot_machine/proc/dispense(amount = 0, cointype = /obj/item/coin/silver, mob/living/target, throwit = FALSE)
+	var/value = GLOB.coin_values[cointype] || GLOB.coin_values[/obj/item/coin/iron]
+	INVOKE_ASYNC(src, .proc/become_rich, amount, value, cointype, target, throwit)
+	return amount % value
 
-
-	while(amount >= value)
+/obj/machinery/computer/slot_machine/proc/become_rich(amount, value, cointype = /obj/item/coin/silver, mob/living/target, throwit = FALSE)
+	if(value <= 0)
+		return
+	while(amount >= value && !QDELETED(src))
 		var/obj/item/coin/C = new cointype(loc) //DOUBLE THE PAIN
 		amount -= value
 		if(throwit && target)
 			C.throw_at(target, 3, 10)
 		else
 			random_step(C, 2, 40)
-
-	return amount
+		CHECK_TICK
 
 #undef SEVEN
 #undef SPIN_TIME

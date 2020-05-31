@@ -23,7 +23,7 @@
 		return
 	template = SSmapping.shelter_templates[template_id]
 	if(!template)
-		throw EXCEPTION("Shelter template ([template_id]) not found!")
+		stack_trace("Shelter template ([template_id]) not found!")
 		qdel(src)
 
 /obj/item/survivalcapsule/Destroy()
@@ -33,8 +33,8 @@
 /obj/item/survivalcapsule/examine(mob/user)
 	. = ..()
 	get_template()
-	to_chat(user, "This capsule has the [template.name] stored.")
-	to_chat(user, template.description)
+	. += "This capsule has the [template.name] stored."
+	. += template.description
 
 /obj/item/survivalcapsule/attack_self()
 	//Can't grab when capsule is New() because templates aren't loaded then
@@ -67,10 +67,17 @@
 		new /obj/effect/particle_effect/smoke(get_turf(src))
 		qdel(src)
 
+//Non-default pods
+
 /obj/item/survivalcapsule/luxury
 	name = "luxury bluespace shelter capsule"
 	desc = "An exorbitantly expensive luxury suite stored within a pocket of bluespace."
 	template_id = "shelter_beta"
+
+/obj/item/survivalcapsule/luxuryelite
+	name = "luxury elite bar capsule"
+	desc = "A luxury bar in a capsule. Bartender required and not included."
+	template_id = "shelter_charlie"
 
 //Pod objects
 
@@ -132,11 +139,13 @@
 	icon = 'icons/obj/lavaland/survival_pod.dmi'
 	icon_state = "sleeper"
 
-/obj/machinery/sleeper/survival_pod/update_icon()
-	if(state_open)
-		cut_overlays()
-	else
-		add_overlay("sleeper_cover")
+/obj/machinery/sleeper/survival_pod/update_icon_state()
+	return
+
+/obj/machinery/sleeper/survival_pod/update_overlays()
+	. = ..()
+	if(!state_open)
+		. += "sleeper_cover"
 
 //Computer
 /obj/item/gps/computer
@@ -183,8 +192,9 @@
 	flags_1 = NODECONSTRUCT_1
 	var/empty = FALSE
 
-/obj/machinery/smartfridge/survival_pod/update_icon()
-	return
+/obj/machinery/smartfridge/survival_pod/ComponentInitialize()
+	. = ..()
+	AddElement(/datum/element/update_icon_blocker)
 
 /obj/machinery/smartfridge/survival_pod/Initialize(mapload)
 	. = ..()
@@ -260,6 +270,7 @@
 	desc = "A sign of relief for weary miners, and a warning for would-be competitors to Nanotrasen's mining claims."
 	icon = 'icons/turf/walls/survival_pod_walls.dmi'
 	icon_state = "ntpod"
+	buildable_sign = FALSE
 
 /obj/structure/sign/mining/survival
 	name = "shelter sign"

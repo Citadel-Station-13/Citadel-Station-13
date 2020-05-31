@@ -6,10 +6,14 @@
 	icon_dead = "bat_dead"
 	icon_gib = "bat_dead"
 	turns_per_move = 1
-	response_help = "brushes aside"
-	response_disarm = "flails at"
-	response_harm = "hits"
-	mob_biotypes = list(MOB_ORGANIC, MOB_BEAST)
+	blood_volume = 250
+	response_help_continuous = "brushes aside"
+	response_help_simple = "brush aside"
+	response_disarm_continuous = "flails at"
+	response_disarm_simple = "flail at"
+	response_harm_continuous = "hits"
+	response_harm_simple = "hit"
+	mob_biotypes = MOB_ORGANIC|MOB_BEAST
 	speak_chance = 0
 	maxHealth = 15
 	health = 15
@@ -18,7 +22,8 @@
 	harm_intent_damage = 6
 	melee_damage_lower = 6
 	melee_damage_upper = 5
-	attacktext = "bites"
+	attack_verb_continuous = "bites"
+	attack_verb_simple = "bite"
 	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab = 1)
 	pass_flags = PASSTABLE
 	faction = list("hostile")
@@ -46,7 +51,8 @@
 	icon_gib = "secbat_dead"
 	desc = "A fruit bat with a tiny little security hat who is ready to inject cuteness into any security operation."
 	emote_see = list("is ready to law down the law.", "flaps about with an air of authority.")
-	response_help = "respects the authority of"
+	response_help_continuous = "respects the authority of"
+	response_help_simple = "respect the authority of"
 	gold_core_spawnable = FRIENDLY_SPAWN
 
 /mob/living/simple_animal/hostile/retaliate/bat/vampire_bat

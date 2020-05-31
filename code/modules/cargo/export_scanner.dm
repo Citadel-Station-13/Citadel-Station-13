@@ -12,9 +12,9 @@
 	var/obj/machinery/computer/cargo/cargo_console = null
 
 /obj/item/export_scanner/examine(user)
-	..()
+	. = ..()
 	if(!cargo_console)
-		to_chat(user, "<span class='notice'>[src] is not currently linked to a cargo console.</span>")
+		. += "<span class='notice'>[src] is not currently linked to a cargo console.</span>"
 
 /obj/item/export_scanner/afterattack(obj/O, mob/user, proximity)
 	. = ..()
@@ -36,6 +36,8 @@
 		var/price = 0
 		for(var/x in ex.total_amount)
 			price += ex.total_value[x]
+		for(var/x in ex.reagents_value)
+			price += ex.reagents_value[x]
 
 		if(price)
 			to_chat(user, "<span class='notice'>Scanned [O], value: <b>[price]</b> credits[O.contents.len ? " (contents included)" : ""].</span>")

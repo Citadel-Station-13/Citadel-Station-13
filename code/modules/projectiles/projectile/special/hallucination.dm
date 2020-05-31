@@ -50,7 +50,7 @@
 	if(M == hal_target)
 		to_chat(hal_target, "<span class='userdanger'>[M] is hit by \a [src] in the chest!</span>")
 		hal_apply_effect()
-	else if(M in view(hal_target))
+	else if(M in hal_target.fov_view())
 		to_chat(hal_target, "<span class='danger'>[M] is hit by \a [src] in the chest!!</span>")
 	if(damage_type == BRUTE)
 		var/splatter_dir = dir
@@ -166,7 +166,7 @@
 	hal_impact_effect_wall = null
 
 /obj/item/projectile/hallucination/taser/hal_apply_effect()
-	hal_target.Knockdown(100)
+	hal_target.DefaultCombatKnockdown(100)
 	hal_target.stuttering += 20
 	if(hal_target.dna && hal_target.dna.check_mutation(HULK))
 		hal_target.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ), forced = "hulk")
@@ -199,7 +199,7 @@
 	hal_impact_effect_wall = null
 
 /obj/item/projectile/hallucination/ebow/hal_apply_effect()
-	hal_target.Knockdown(100)
+	hal_target.DefaultCombatKnockdown(100)
 	hal_target.stuttering += 5
 	hal_target.adjustStaminaLoss(8)
 

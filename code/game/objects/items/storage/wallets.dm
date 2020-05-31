@@ -16,6 +16,7 @@
 	STR.cant_hold = typecacheof(list(/obj/item/screwdriver/power))
 	STR.can_hold = typecacheof(list(
 		/obj/item/stack/spacecash,
+		/obj/item/holochip,
 		/obj/item/card,
 		/obj/item/clothing/mask/cigarette,
 		/obj/item/flashlight/pen,
@@ -37,7 +38,15 @@
 		/obj/item/screwdriver,
 		/obj/item/valentine,
 		/obj/item/stamp,
-		/obj/item/key))
+		/obj/item/key,
+		/obj/item/cartridge,
+		/obj/item/camera_film,
+		/obj/item/stack/ore/bluespace_crystal,
+		/obj/item/reagent_containers/food/snacks/grown/poppy,
+		/obj/item/instrument/harmonica,
+		/obj/item/mining_voucher,
+		/obj/item/suit_voucher,
+		/obj/item/reagent_containers/pill))
 
 /obj/item/storage/wallet/Exited(atom/movable/AM)
 	. = ..()
@@ -58,7 +67,7 @@
 	. = ..()
 	refreshID()
 
-/obj/item/storage/wallet/update_icon()
+/obj/item/storage/wallet/update_icon_state()
 	var/new_state = "wallet"
 	if(front_id)
 		new_state = "wallet_id"
@@ -67,6 +76,21 @@
 
 /obj/item/storage/wallet/GetID()
 	return front_id
+
+/obj/item/storage/wallet/RemoveID()
+	if(!front_id)
+		return
+	. = front_id
+	front_id.forceMove(get_turf(src))
+
+/obj/item/storage/wallet/InsertID(obj/item/inserting_item)
+	var/obj/item/card/inserting_id = inserting_item.RemoveID()
+	if(!inserting_id)
+		return FALSE
+	attackby(inserting_id)
+	if(inserting_id in contents)
+		return TRUE
+	return FALSE
 
 /obj/item/storage/wallet/GetAccess()
 	if(LAZYLEN(combined_access))
@@ -78,17 +102,5 @@
 	icon_state = "random_wallet"
 
 /obj/item/storage/wallet/random/PopulateContents()
-	var/item1_type = pick( /obj/item/stack/spacecash/c10, /obj/item/stack/spacecash/c100, /obj/item/stack/spacecash/c1000, /obj/item/stack/spacecash/c20, /obj/item/stack/spacecash/c200, /obj/item/stack/spacecash/c50, /obj/item/stack/spacecash/c500)
-	var/item2_type
-	if(prob(50))
-		item2_type = pick( /obj/item/stack/spacecash/c10, /obj/item/stack/spacecash/c100, /obj/item/stack/spacecash/c1000, /obj/item/stack/spacecash/c20, /obj/item/stack/spacecash/c200, /obj/item/stack/spacecash/c50, /obj/item/stack/spacecash/c500)
-	var/item3_type = pick( /obj/item/coin/silver, /obj/item/coin/silver, /obj/item/coin/gold, /obj/item/coin/iron, /obj/item/coin/iron, /obj/item/coin/iron )
-
-	spawn(2)
-		if(item1_type)
-			new item1_type(src)
-		if(item2_type)
-			new item2_type(src)
-		if(item3_type)
-			new item3_type(src)
-	update_icon()
+	new /obj/item/holochip(src, rand(5,30))
+	icon_state = "wallet"

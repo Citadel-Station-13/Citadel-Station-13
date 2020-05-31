@@ -5,7 +5,7 @@
 	if(contained_id)
 		contained_id.forceMove(get_turf(src))
 	return ..()
-	
+
 
 /obj/machinery/computer/prisoner/examine(mob/user)
 	. = ..()
@@ -15,8 +15,9 @@
 
 
 /obj/machinery/computer/prisoner/AltClick(mob/user)
+	..()
 	id_eject(user)
-	return ..()
+	return TRUE
 
 /obj/machinery/computer/prisoner/proc/id_insert(mob/user, obj/item/card/id/prisoner/P)
 	if(istype(P))

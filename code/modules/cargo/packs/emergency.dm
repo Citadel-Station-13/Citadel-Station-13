@@ -11,17 +11,34 @@
 
 /datum/supply_pack/emergency/vehicle
 	name = "Biker Gang Kit" //TUNNEL SNAKES OWN THIS TOWN
-	desc = "TUNNEL SNAKES OWN THIS TOWN. Contains an unbranded All Terrain Vehicle, and a complete gang outfit -- consists of black gloves, a menacing skull bandanna, and a SWEET leather overcoat!"
+	desc = "TUNNEL SNAKES OWN THIS TOWN. Contains an unbranded All Terrain Vehicle, two cans of spraypaint, and a complete gang outfit -- consists of black gloves, a menacing skull bandanna, and a SWEET leather overcoat!"
 	cost = 2500
 	contraband = TRUE
 	contains = list(/obj/vehicle/ridden/atv,
 					/obj/item/key,
+					/obj/item/toy/crayon/spraycan,
+					/obj/item/toy/crayon/spraycan,
 					/obj/item/clothing/suit/jacket/leather/overcoat,
 					/obj/item/clothing/gloves/color/black,
 					/obj/item/clothing/head/soft,
 					/obj/item/clothing/mask/bandana/skull)//so you can properly #cargoniabikergang
 	crate_name = "Biker Kit"
 	crate_type = /obj/structure/closet/crate/large
+
+/datum/supply_pack/emergency/bio
+	name = "Biological Emergency Crate"
+	desc = "This crate holds 2 full bio suits which will protect you from viruses, along with a bio bag and two spaceacillin syringes."
+	cost = 2000
+	contains = list(/obj/item/clothing/head/bio_hood,
+					/obj/item/clothing/head/bio_hood,
+					/obj/item/clothing/suit/bio_suit,
+					/obj/item/clothing/suit/bio_suit,
+					/obj/item/storage/bag/bio,
+					/obj/item/reagent_containers/syringe/antiviral,
+					/obj/item/reagent_containers/syringe/antiviral,
+					/obj/item/clothing/gloves/color/latex/nitrile,
+					/obj/item/clothing/gloves/color/latex/nitrile)
+	crate_name = "bio suit crate"
 
 /datum/supply_pack/emergency/equipment
 	name = "Emergency Bot/Internals Crate"
@@ -44,8 +61,51 @@
 	crate_name = "emergency crate"
 	crate_type = /obj/structure/closet/crate/internals
 
+/datum/supply_pack/emergency/medicalemergency
+	name = "Emergency Medical Supplies" //Almost all of this can be ordered seperatly for a much cheaper price, but the HUD increases it.
+	desc = "Emergency supplies for a front-line medic. Contains two boxes of body bags, a medical HUD, a defib unit, medical belt, toxin bottles, epipens, and several types of medical kits."
+	cost = 10000
+	contains = list(/obj/item/storage/box/bodybags,
+					/obj/item/storage/box/bodybags,
+					/obj/item/clothing/glasses/hud/health,
+					/obj/item/defibrillator/loaded,
+					/obj/item/storage/belt/medical,
+					/obj/item/storage/firstaid/toxin,
+					/obj/item/storage/firstaid/o2,
+					/obj/item/storage/firstaid/brute,
+					/obj/item/storage/firstaid/fire,
+					/obj/item/reagent_containers/glass/bottle/toxin,
+					/obj/item/reagent_containers/glass/bottle/toxin,
+					/obj/item/storage/box/medipens)
+	crate_name = "medical emergency crate"
+	crate_type = /obj/structure/closet/crate/medical
+
+/datum/supply_pack/emergency/medemergencylite
+	name = "Emergency Medical Supplies (Lite)"
+	desc = "A less than optimal, but still effective, set of tools for emergency care. Contains a box of bodybags, some normal (and advanced) health analyzers, healing sprays, a single first aid kit, charcoal, some gauze, a bottle of toxins, and some spare medipens."
+	cost = 2800
+	contains = list(/obj/item/storage/box/bodybags,
+					/obj/item/stack/medical/gauze,
+					/obj/item/stack/medical/gauze,
+					/obj/item/healthanalyzer,
+					/obj/item/healthanalyzer,
+					/obj/item/healthanalyzer/advanced,
+					/obj/item/storage/firstaid/regular,
+					/obj/item/reagent_containers/medspray/styptic,
+					/obj/item/reagent_containers/medspray/silver_sulf,
+					/obj/item/reagent_containers/medspray/synthflesh,
+					/obj/item/reagent_containers/glass/bottle/charcoal,
+					/obj/item/reagent_containers/glass/bottle/charcoal,
+					/obj/item/reagent_containers/glass/bottle/toxin,
+					/obj/item/reagent_containers/hypospray/medipen,
+					/obj/item/reagent_containers/hypospray/medipen,
+					/obj/item/reagent_containers/hypospray/medipen,
+					/obj/item/reagent_containers/hypospray/medipen)
+	crate_name = "medical emergency crate (lite)"
+	crate_type = /obj/structure/closet/crate/medical
+
 /datum/supply_pack/emergency/radiatione_emergency
-	name = "Emergenc Radiation Protection Crate"
+	name = "Emergency Radiation Protection Crate"
 	desc = "Survive the Nuclear Apocalypse and Supermatter Engine alike with two sets of Radiation suits. Each set contains a helmet, suit, and Geiger counter. We'll even throw in a few pill bottles that are able to handles radiation and the affects of the poisoning."
 	cost = 2500
 	contains = list(/obj/item/clothing/head/radiation,
@@ -61,27 +121,24 @@
 
 /datum/supply_pack/emergency/rcds
 	name = "Emergency RCDs"
-	desc = "Bombs going off on station? SME blown and now you need to fix the hole it left behind? Well this crate has a pare of Rcds to be able to easily fix up any problem you may have!"
+	desc = "Bombs going off on station? SME blown and now you need to fix the hole it left behind? Well this crate has a pare of RCDs to be able to easily fix up any problem you may have!"
 	cost = 1500
 	contains = list(/obj/item/construction/rcd,
 					/obj/item/construction/rcd)
 	crate_name = "emergency rcds"
 	crate_type = /obj/structure/closet/crate/internals
 
-/datum/supply_pack/emergency/soft_suit
-	name = "Emergency Space Suit "
-	desc = "Is there bombs going off left and right? Is there meteors shooting around the station? Well we have two fragile space suit for emergencys as well as air and masks."
-	cost = 1200
-	contains = list(/obj/item/tank/internals/air,
-					/obj/item/tank/internals/air,
+/datum/supply_pack/emergency/bomb
+	name = "Explosive Emergency Crate"
+	desc = "Science gone bonkers? Beeping behind the airlock? Buy now and become the hero the station des... I mean needs! Time not included, but a full bomb suit and hood, as well as a mask and defusal kit are! Non-Nuclear ordnances only."
+	cost = 1500
+	contains = list(/obj/item/clothing/head/bomb_hood,
+					/obj/item/clothing/suit/bomb_suit,
 					/obj/item/clothing/mask/gas,
-					/obj/item/clothing/mask/gas,
-					/obj/item/clothing/suit/space/fragile,
-					/obj/item/clothing/suit/space/fragile,
-					/obj/item/clothing/head/helmet/space/fragile,
-					/obj/item/clothing/head/helmet/space/fragile)
-	crate_name = "emergency crate"
-	crate_type = /obj/structure/closet/crate/internals
+					/obj/item/screwdriver,
+					/obj/item/wirecutters,
+					/obj/item/multitool)
+	crate_name = "bomb suit crate"
 
 /datum/supply_pack/emergency/firefighting
 	name = "Firefighting Crate"
@@ -137,29 +194,17 @@
 					/obj/item/storage/box/metalfoam)
 	crate_name = "metal foam grenade crate"
 
-/datum/supply_pack/emergency/syndicate
-	name = "NULL_ENTRY"
-	desc = "(#@&^$THIS PACKAGE CONTAINS 30TC WORTH OF SOME RANDOM SYNDICATE GEAR WE HAD LYING AROUND THE WAREHOUSE. GIVE EM HELL, OPERATIVE@&!*() "
-	hidden = TRUE
-	cost = 20000
-	contains = list()
-	crate_name = "emergency crate"
-	crate_type = /obj/structure/closet/crate/internals
-	dangerous = TRUE
-
-/datum/supply_pack/emergency/syndicate/fill(obj/structure/closet/crate/C)
-	var/crate_value = 30
-	var/list/uplink_items = get_uplink_items(SSticker.mode)
-	while(crate_value)
-		var/category = pick(uplink_items)
-		var/item = pick(uplink_items[category])
-		var/datum/uplink_item/I = uplink_items[category][item]
-		if(!I.surplus_nullcrates || prob(100 - I.surplus_nullcrates))
-			continue
-		if(crate_value < I.cost)
-			continue
-		crate_value -= I.cost
-		new I.item(C)
+/datum/supply_pack/emergency/mre
+	name = "MRE Packs (Emergency Rations)"
+	desc = "The lights are out. Oxygen's running low. You've run out of food except space weevils. Don't let this be you! Order our NT branded MRE kits today! This pack contains 5 MRE packs with a randomized menu and an oxygen tank."
+	cost = 2000
+	contains = list(/obj/item/storage/box/mre/menu1/safe,
+					/obj/item/storage/box/mre/menu1/safe,
+					/obj/item/storage/box/mre/menu2/safe,
+					/obj/item/storage/box/mre/menu2/safe,
+					/obj/item/storage/box/mre/menu3,
+					/obj/item/storage/box/mre/menu4/safe)
+	crate_name = "MRE crate (emergency rations)"
 
 /datum/supply_pack/emergency/plasma_spacesuit
 	name = "Plasmaman Space Envirosuits"
@@ -205,7 +250,6 @@
 	name = "Space Suit Crate"
 	desc = "Contains two aging suits from Space-Goodwill. Requires EVA access to open."
 	cost = 3000
-	access = ACCESS_EVA
 	contains = list(/obj/item/clothing/suit/space,
 					/obj/item/clothing/suit/space,
 					/obj/item/clothing/head/helmet/space,
@@ -214,6 +258,21 @@
 					/obj/item/clothing/mask/breath)
 	crate_name = "space suit crate"
 	crate_type = /obj/structure/closet/crate/secure
+
+/datum/supply_pack/emergency/soft_suit
+	name = "Space Suits (Fragile)"
+	desc = "Are there bombs going off left and right? Are there meteors shooting around the station? Well then! Here's two fragile space suits for emergencies. Comes with air and masks."
+	cost = 1200
+	contains = list(/obj/item/tank/internals/air,
+					/obj/item/tank/internals/air,
+					/obj/item/clothing/mask/gas,
+					/obj/item/clothing/mask/gas,
+					/obj/item/clothing/suit/space/fragile,
+					/obj/item/clothing/suit/space/fragile,
+					/obj/item/clothing/head/helmet/space/fragile,
+					/obj/item/clothing/head/helmet/space/fragile)
+	crate_name = "emergency crate"
+	crate_type = /obj/structure/closet/crate/internals
 
 /datum/supply_pack/emergency/spacejets
 	name = "Spare EVA Jetpacks"
@@ -228,7 +287,7 @@
 
 /datum/supply_pack/emergency/specialops
 	name = "Special Ops Supplies"
-	desc = "(*!&@#TOO CHEAP FOR THAT NULL_ENTRY, HUH OPERATIVE? WELL, THIS LITTLE ORDER CAN STILL HELP YOU OUT IN A PINCH. CONTAINS A BOX OF FIVE EMP GRENADES, THREE SMOKEBOMBS, AN INCENDIARY GRENADE, AND A \"SLEEPY PEN\" FULL OF NICE TOXINS!#@*$"
+	desc = "(*!&@#NEED SOMETHING TO DEAL WITH THE GREYTIDE, HUH OPERATIVE? WELL, THIS LITTLE ORDER CAN HELP YOU OUT IN A PINCH. CONTAINS A BOX OF FIVE EMP GRENADES, THREE SMOKEBOMBS, AN INCENDIARY GRENADE, AND A \"SLEEPY PEN\" FULL OF NICE TOXINS!#@*$"
 	hidden = TRUE
 	cost = 2200
 	contains = list(/obj/item/storage/box/emps,
@@ -253,23 +312,3 @@
 					/obj/item/reagent_containers/spray/plantbgone)
 	crate_name = "weed control crate"
 	crate_type = /obj/structure/closet/crate/secure/hydroponics
-
-/datum/supply_pack/medical/anitvirus
-	name = "Virus Containment Crate"
-	desc = "Viro let out a death plague Mk II again? Someone didnt wash there hands? Old plagues born anew? Well this crate is for you! Hope you cure it before it brakes out of the station... This crate needs medical access to open and has two bio suits, a box of needles and beakers, five spaceacillin needles, and a medibot."
-	cost = 3000
-	access = ACCESS_MEDICAL
-	contains = list(/mob/living/simple_animal/bot/medbot,
-					/obj/item/clothing/head/bio_hood,
-					/obj/item/clothing/head/bio_hood,
-					/obj/item/clothing/suit/bio_suit,
-					/obj/item/clothing/suit/bio_suit,
-					/obj/item/reagent_containers/syringe/antiviral,
-					/obj/item/reagent_containers/syringe/antiviral,
-					/obj/item/reagent_containers/syringe/antiviral,
-					/obj/item/reagent_containers/syringe/antiviral,
-					/obj/item/reagent_containers/syringe/antiviral,
-					/obj/item/storage/box/syringes,
-					/obj/item/storage/box/beakers)
-	crate_name = "virus containment unit crate"
-	crate_type = /obj/structure/closet/crate/secure/plasma

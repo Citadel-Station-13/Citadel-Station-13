@@ -18,11 +18,13 @@
 
 /obj/item/organ/body_egg/alien_embryo/prepare_eat()
 	var/obj/S = ..()
-	S.reagents.add_reagent("sacid", 10)
+	S.reagents.add_reagent(/datum/reagent/toxin/acid, 10)
 	return S
 
 /obj/item/organ/body_egg/alien_embryo/on_life()
 	. = ..()
+	if(!owner)
+		return
 	switch(stage)
 		if(2, 3)
 			if(prob(2))
@@ -89,8 +91,8 @@
 	var/mob/living/carbon/alien/larva/new_xeno = new(xeno_loc)
 	ghost.transfer_ckey(new_xeno, FALSE)
 	SEND_SOUND(new_xeno, sound('sound/voice/hiss5.ogg',0,0,0,100))	//To get the player's attention
-	new_xeno.canmove = 0 //so we don't move during the bursting animation
-	new_xeno.notransform = 1
+	new_xeno.Paralyze(6)
+	new_xeno.notransform = TRUE
 	new_xeno.invisibility = INVISIBILITY_MAXIMUM
 
 	sleep(6)
@@ -99,19 +101,21 @@
 		return
 
 	if(new_xeno)
-		new_xeno.canmove = 1
-		new_xeno.notransform = 0
+		new_xeno.SetParalyzed(0)
+		new_xeno.notransform = FALSE
 		new_xeno.invisibility = 0
 
+	var/mob/living/carbon/old_owner = owner
 	if(kill_on_sucess) //ITS TOO LATE
 		new_xeno.visible_message("<span class='danger'>[new_xeno] bursts out of [owner]!</span>", "<span class='userdanger'>You exit [owner], your previous host.</span>", "<span class='italics'>You hear organic matter ripping and tearing!</span>")
 		owner.apply_damage(rand(100,300),BRUTE,zone,FALSE) //Random high damage to torso so health sensors don't metagame.
-		owner.spill_organs(TRUE,FALSE,TRUE) //Lets still make the death gruesome and impossible to just simply defib someone.
+		var/obj/item/bodypart/B = owner.get_bodypart(zone)
+		B.drop_organs(owner) //Lets still make the death gruesome and impossible to just simply defib someone.
 		owner.death(FALSE) //Just in case some freak occurance occurs where you somehow survive all your organs being removed from you and the 100-300 brute damage.
 	else //When it is removed via surgery at a late stage, rather than forced.
 		new_xeno.visible_message("<span class='danger'>[new_xeno] wriggles out of [owner]!</span>", "<span class='userdanger'>You exit [owner], your previous host.</span>")
 		owner.adjustBruteLoss(40)
-	owner.cut_overlay(overlay)
+	old_owner.cut_overlay(overlay)
 	qdel(src)
 
 
@@ -133,5 +137,6 @@ Des: Removes all images from the mob infected by this embryo
 	for(var/mob/living/carbon/alien/alien in GLOB.player_list)
 		if(alien.client)
 			for(var/image/I in alien.client.images)
-				if(dd_hasprefix_case(I.icon_state, "infected") && I.loc == C)
+				var/searchfor = "infected"
+				if(I.loc == owner && findtext(I.icon_state, searchfor, 1, length(searchfor) + 1))
 					qdel(I)

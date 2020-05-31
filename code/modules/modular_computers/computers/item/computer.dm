@@ -26,10 +26,11 @@
 	var/icon_state_unpowered = null							// Icon state when the computer is turned off.
 	var/icon_state_powered = null							// Icon state when the computer is turned on.
 	var/icon_state_menu = "menu"							// Icon state overlay when the computer is turned on, but no program is loaded that would override the screen.
+	var/display_overlays = TRUE								// If FALSE, don't draw overlays on this device at all
 	var/max_hardware_size = 0								// Maximal hardware w_class. Tablets/PDAs have 1, laptops 2, consoles 4.
 	var/steel_sheet_cost = 5								// Amount of steel sheets refunded when disassembling an empty frame of this computer.
 
-	integrity_failure = 50
+	integrity_failure = 0.5
 	max_integrity = 100
 	armor = list("melee" = 0, "bullet" = 20, "laser" = 20, "energy" = 100, "bomb" = 0, "bio" = 100, "rad" = 100, "fire" = 0, "acid" = 0)
 
@@ -126,7 +127,7 @@
 			portable_drive.verb_pickup()
 
 /obj/item/modular_computer/AltClick(mob/user)
-	..()
+	. = ..()
 	if(issilicon(user))
 		return
 
@@ -142,7 +143,7 @@
 				return
 			if(ai_slot)
 				ai_slot.try_eject(null, user)
-
+		return TRUE
 
 // Gets IDs/access levels from card slot. Would be useful when/if PDAs would become modular PCs.
 /obj/item/modular_computer/GetAccess()
@@ -156,6 +157,21 @@
 	if(card_slot)
 		return card_slot.GetID()
 	return ..()
+
+/obj/item/modular_computer/RemoveID()
+	var/obj/item/computer_hardware/card_slot/card_slot = all_components[MC_CARD]
+	if(!card_slot)
+		return
+	return card_slot.RemoveID()
+
+/obj/item/modular_computer/InsertID(obj/item/inserting_item)
+	var/obj/item/computer_hardware/card_slot/card_slot = all_components[MC_CARD]
+	if(!card_slot)
+		return FALSE
+	var/obj/item/card/inserting_id = inserting_item.RemoveID()
+	if(!inserting_id)
+		return FALSE
+	return card_slot.try_insert(inserting_id)
 
 /obj/item/modular_computer/MouseDrop(obj/over_object, src_location, over_location)
 	var/mob/M = usr
@@ -187,26 +203,32 @@
 	return TRUE
 
 /obj/item/modular_computer/examine(mob/user)
-	..()
-	if(obj_integrity <= integrity_failure)
-		to_chat(user, "<span class='danger'>It is heavily damaged!</span>")
+	. = ..()
+	if(obj_integrity <= integrity_failure * max_integrity)
+		. += "<span class='danger'>It is heavily damaged!</span>"
 	else if(obj_integrity < max_integrity)
-		to_chat(user, "<span class='warning'>It is damaged.</span>")
+		. += "<span class='warning'>It is damaged.</span>"
 
-/obj/item/modular_computer/update_icon()
-	cut_overlays()
+/obj/item/modular_computer/update_icon_state()
 	if(!enabled)
 		icon_state = icon_state_unpowered
 	else
 		icon_state = icon_state_powered
-		if(active_program)
-			add_overlay(active_program.program_icon_state ? active_program.program_icon_state : icon_state_menu)
-		else
-			add_overlay(icon_state_menu)
 
-	if(obj_integrity <= integrity_failure)
-		add_overlay("bsod")
-		add_overlay("broken")
+
+/obj/item/modular_computer/update_overlays()
+	. = ..()
+	if(!display_overlays)
+		return
+	if(enabled)
+		if(active_program)
+			. += active_program.program_icon_state ? active_program.program_icon_state : icon_state_menu
+		else
+			. += icon_state_menu
+
+	if(obj_integrity <= integrity_failure * max_integrity)
+		. += "bsod"
+		. += "broken"
 
 
 // On-click handling. Turns on the computer if it's off and opens the GUI.
@@ -218,7 +240,7 @@
 
 /obj/item/modular_computer/proc/turn_on(mob/user)
 	var/issynth = issilicon(user) // Robots and AIs get different activation messages.
-	if(obj_integrity <= integrity_failure)
+	if(obj_integrity <= integrity_failure * max_integrity)
 		if(issynth)
 			to_chat(user, "<span class='warning'>You send an activation signal to \the [src], but it responds with an error code. It must be damaged.</span>")
 		else
@@ -250,7 +272,7 @@
 		last_power_usage = 0
 		return 0
 
-	if(obj_integrity <= integrity_failure)
+	if(obj_integrity <= integrity_failure * max_integrity)
 		shutdown_computer()
 		return 0
 
@@ -301,7 +323,7 @@
 				data["PC_batteryicon"] = "batt_20.gif"
 			else
 				data["PC_batteryicon"] = "batt_5.gif"
-		data["PC_batterypercent"] = "[round(battery_module.battery.percent())] %"
+		data["PC_batterypercent"] = "[round(battery_module.battery.percent())]%"
 		data["PC_showbatteryicon"] = 1
 	else
 		data["PC_batteryicon"] = "batt_5.gif"
@@ -333,7 +355,7 @@
 
 		data["PC_programheaders"] = program_headers
 
-	data["PC_stationtime"] = STATION_TIME_TIMESTAMP("hh:mm:ss")
+	data["PC_stationtime"] = STATION_TIME_TIMESTAMP("hh:mm:ss", world.time)
 	data["PC_hasheader"] = 1
 	data["PC_showexitprogram"] = active_program ? 1 : 0 // Hides "Exit Program" button on mainscreen
 	return data

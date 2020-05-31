@@ -57,10 +57,10 @@
 							if(item.parent)
 								var/static/pipenetwarnings = 10
 								if(pipenetwarnings > 0)
-									warning("build_pipeline(): [item.type] added to a pipenet while still having one. (pipes leading to the same spot stacking in one turf) Nearby: ([item.x], [item.y], [item.z])")
+									log_mapping("build_pipeline(): [item.type] added to a pipenet while still having one. (pipes leading to the same spot stacking in one turf) Nearby: ([item.x], [item.y], [item.z]).")
 									pipenetwarnings -= 1
 									if(pipenetwarnings == 0)
-										warning("build_pipeline(): further messages about pipenets will be suppressed")
+										log_mapping("build_pipeline(): further messages about pipenets will be suppressed")
 							members += item
 							possible_expansions += item
 
@@ -131,7 +131,6 @@
 	var/datum/pipeline/P = returnPipenet(A)
 	if(!P)
 		CRASH("null.addMember() called by [type] on [COORD(src)]")
-		return
 	P.addMember(A, src)
 
 
@@ -208,7 +207,7 @@
 /datum/pipeline/proc/return_air()
 	. = other_airs + air
 	if(null in .)
-		stack_trace("[src] has one or more null gas mixtures, which may cause bugs. Null mixtures will not be considered in reconcile_air().")
+		stack_trace("[src]([REF(src)]) has one or more null gas mixtures, which may cause bugs. Null mixtures will not be considered in reconcile_air().")
 		return removeNullsFromList(.)
 
 /datum/pipeline/proc/reconcile_air()
@@ -225,6 +224,11 @@
 			if (istype(atmosmch, /obj/machinery/atmospherics/components/binary/valve))
 				var/obj/machinery/atmospherics/components/binary/valve/V = atmosmch
 				if(V.on)
+					PL |= V.parents[1]
+					PL |= V.parents[2]
+			else if (istype(atmosmch,/obj/machinery/atmospherics/components/binary/relief_valve))
+				var/obj/machinery/atmospherics/components/binary/relief_valve/V = atmosmch
+				if(V.opened)
 					PL |= V.parents[1]
 					PL |= V.parents[2]
 			else if (istype(atmosmch, /obj/machinery/atmospherics/components/unary/portables_connector))

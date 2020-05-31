@@ -21,7 +21,7 @@
 
 /turf/open/floor/holofloor/plating/burnmix
 	name = "burn-mix floor"
-	initial_gas_mix = "o2=2500;plasma=5000;TEMP=370"
+	initial_gas_mix = BURNMIX_ATMOS
 
 /turf/open/floor/holofloor/grass
 	gender = PLURAL
@@ -111,11 +111,10 @@
 
 /turf/open/floor/holofloor/carpet/Initialize()
 	. = ..()
-	addtimer(CALLBACK(src, .proc/update_icon), 1)
+	addtimer(CALLBACK(src, /atom/.proc/update_icon), 1)
 
 /turf/open/floor/holofloor/carpet/update_icon()
-	if(!..())
-		return 0
+	. = ..()
 	if(intact)
 		queue_smooth(src)
 

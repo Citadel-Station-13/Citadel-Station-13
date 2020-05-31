@@ -86,8 +86,8 @@
 			tag_overlay.pixel_y = boxes.len * 3
 			add_overlay(tag_overlay)
 
-/obj/item/pizzabox/worn_overlays(isinhands, icon_file)
-	. = list()
+/obj/item/pizzabox/worn_overlays(isinhands, icon_file, used_state, style_flags = NONE)
+	. = ..()
 	var/current_offset = 2
 	if(isinhands)
 		for(var/V in boxes) //add EXTRA BOX per box
@@ -125,7 +125,7 @@
 				return
 			else
 				bomb_timer = input(user, "Set the [bomb] timer from [BOMB_TIMER_MIN] to [BOMB_TIMER_MAX].", bomb, bomb_timer) as num
-				bomb_timer = CLAMP(CEILING(bomb_timer / 2, 1), BOMB_TIMER_MIN, BOMB_TIMER_MAX)
+				bomb_timer = clamp(CEILING(bomb_timer / 2, 1), BOMB_TIMER_MIN, BOMB_TIMER_MAX)
 				bomb_defused = FALSE
 
 				var/message = "[ADMIN_LOOKUPFLW(user)] has trapped a [src] with [bomb] set to [bomb_timer * 2] seconds."
@@ -220,7 +220,7 @@
 			unprocess()
 			qdel(src)
 	if(!bomb_active || bomb_defused)
-		if(bomb_defused && bomb in src)
+		if(bomb_defused && (bomb in src))
 			bomb.defuse()
 			bomb_active = FALSE
 			unprocess()
@@ -231,7 +231,7 @@
 	if(boxes.len >= 3 && prob(25 * boxes.len))
 		disperse_pizzas()
 
-/obj/item/pizzabox/throw_impact(atom/movable/AM)
+/obj/item/pizzabox/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	if(boxes.len >= 2 && prob(20 * boxes.len))
 		disperse_pizzas()
 
@@ -319,9 +319,9 @@
 		pizza_preferences = list()
 
 /obj/item/pizzabox/infinite/examine(mob/user)
-	..()
+	. = ..()
 	if(isobserver(user))
-		to_chat(user, "<span class='deadsay'>This pizza box is anomalous, and will produce infinite pizza.</span>")
+		. += "<span class='deadsay'>This pizza box is anomalous, and will produce infinite pizza.</span>"
 
 /obj/item/pizzabox/infinite/attack_self(mob/living/user)
 	QDEL_NULL(pizza)

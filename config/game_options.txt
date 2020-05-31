@@ -39,7 +39,7 @@ WALK_DELAY 4
 ## Entries completely override all subtypes. Later entries have precedence over earlier entries.
 ## This means if you put /mob 0 on the last entry, it will null out all changes, while if you put /mob as the first entry and
 ## /mob/living/carbon/human on the last entry, the last entry will override the first.
-##MULTIPLICATIVE_MOVESPEED /mob/living/carbon/human 0
+MULTIPLICATIVE_MOVESPEED /mob/living/carbon/human 1
 ##MULTIPLICATIVE_MOVESPEED /mob/living/silicon/robot 0
 ##MULTIPLICATIVE_MOVESPEED /mob/living/carbon/monkey 0
 ##MULTIPLICATIVE_MOVESPEED /mob/living/carbon/alien 0
@@ -94,6 +94,7 @@ PROBABILITY DEVIL_AGENTS 0
 PROBABILITY CLOWNOPS 0
 PROBABILITY TRAITORVAMP 3
 PROBABILITY VAMPIRE 3
+PROBABILITY BLOODSUCKER 0
 
 ## You probably want to keep sandbox off by default for secret and random.
 PROBABILITY SANDBOX 0
@@ -116,6 +117,7 @@ CONTINUOUS CLOCKWORK_CULT
 CONTINUOUS CHANGELING
 CONTINUOUS WIZARD
 #CONTINUOUS MONKEY
+CONTINUOUS BLOODSUCKER
 
 ##Note: do not toggle continuous off for these modes, as they have no antagonists and would thus end immediately!
 
@@ -138,6 +140,20 @@ MIDROUND_ANTAG CLOCKWORK_CULT
 MIDROUND_ANTAG CHANGELING
 MIDROUND_ANTAG WIZARD
 #MIDROUND_ANTAG  MONKEY
+
+## Toggles for whether this mode should force antags even if not enough players have it enabled.
+## If it's off, it just won't roll as many antags.
+#FORCE_ANTAG_COUNT TRAITOR
+#FORCE_ANTAG_COUNT TRAITORBRO
+#FORCE_ANTAG_COUNT TRAITORCHAN
+#FORCE_ANTAG_COUNT INTERNAL_AFFAIRS
+FORCE_ANTAG_COUNT  NUCLEAR
+FORCE_ANTAG_COUNT  REVOLUTION
+FORCE_ANTAG_COUNT CULT
+FORCE_ANTAG_COUNT CLOCKWORK_CULT
+#FORCE_ANTAG_COUNT CHANGELING
+#FORCE_ANTAG_COUNT WIZARD
+#FORCE_ANTAG_COUNT  MONKEY
 
 ## Uncomment these for overrides of the minimum / maximum number of players in a round type.
 ## If you set any of these occasionally check to see if you still need them as the modes
@@ -256,148 +272,6 @@ EVENTS_MIN_TIME_MUL 1
 ## Set to 0 to make dangerous events avaliable for all populations.
 EVENTS_MIN_PLAYERS_MUL 1
 
-
-
-### DYNAMIC MODE ###
-
-## Injection delays: how long (in minutes) will pass before a midround or latejoin antag is injected.
-DYNAMIC_MIDROUND_DELAY_MIN 15
-DYNAMIC_MIDROUND_DELAY_MAX 35
-DYNAMIC_LATEJOIN_DELAY_MIN 5
-DYNAMIC_LATEJOIN_DELAY_MAX 25
-
-## How many roundstart players required for high population override to take effect.
-DYNAMIC_HIGH_POP_LIMIT 55
-
-## Pop range per requirement.
-## If the value is five the range is:
-## 0-4, 5-9, 10-14, 15-19, 20-24, 25-29, 30-34, 35-39, 40-54, 45+
-## If it is six the range is:
-## 0-5, 6-11, 12-17, 18-23, 24-29, 30-35, 36-41, 42-47, 48-53, 54+
-## If it is seven the range is:
-## 0-6, 7-13, 14-20, 21-27, 28-34, 35-41, 42-48, 49-55, 56-62, 63+
-## Options outside this range can be used, of course.
-DYNAMIC_POP_PER_REQUIREMENT 6
-
-## 1 -> 9, probability for this rule to be picked against other rules.
-## Note that requirements must also be met, and some requirements are impossible to meet.
-DYNAMIC_WEIGHT TRAITOR 5
-DYNAMIC_WEIGHT TRAITORBRO 4
-DYNAMIC_WEIGHT CHANGELING 3
-DYNAMIC_WEIGHT WIZARD 1
-DYNAMIC_WEIGHT CULT 3
-DYNAMIC_WEIGHT NUCLEAR 3
-DYNAMIC_WEIGHT REVOLUTION 2
-# All below are impossible-by-default
-DYNAMIC_WEIGHT EXTENDED 3
-DYNAMIC_WEIGHT CLOCKWORK_CULT 3
-DYNAMIC_WEIGHT CLOWNOPS 3
-DYNAMIC_WEIGHT DEVIL 3
-DYNAMIC_WEIGHT MONKEY 3
-DYNAMIC_WEIGHT METEOR 3
-
-## Midround antags
-DYNAMIC_WEIGHT MIDROUND_TRAITOR 7
-DYNAMIC_WEIGHT MALF_AI 3
-DYNAMIC_WEIGHT MIDROUND_WIZARD 1
-DYNAMIC_WEIGHT MIDROUND_NUCLEAR 5
-DYNAMIC_WEIGHT BLOB 4
-DYNAMIC_WEIGHT XENOS 3
-DYNAMIC_WEIGHT NIGHTMARE 3
-
-## Latejoin antags
-DYNAMIC_WEIGHT LATEJOIN_TRAITOR 7
-DYNAMIC_WEIGHT LATEJOIN_REVOLUTION 2
-
-## Threat cost. This is decreased from the mode's threat when the rule is executed.
-DYNAMIC_COST TRAITOR 10
-DYNAMIC_COST TRAITORBRO 10
-DYNAMIC_COST CHANGELING 30
-DYNAMIC_COST WIZARD 30
-DYNAMIC_COST CULT 30
-DYNAMIC_COST NUCLEAR 40
-DYNAMIC_COST REVOLUTION 35
-# All below are impossible-by-default
-DYNAMIC_COST EXTENDED 0
-DYNAMIC_COST CLOCKWORK_CULT 0
-DYNAMIC_COST CLOWNOPS 40
-DYNAMIC_COST DEVIL 0
-DYNAMIC_COST MONKEY 0
-DYNAMIC_COST METEOR 0
-
-## Midround antags
-DYNAMIC_COST MIDROUND_TRAITOR 10
-DYNAMIC_COST MALF_AI 35
-DYNAMIC_COST MIDROUND_WIZARD 20
-DYNAMIC_COST MIDROUND_NUCLEAR 35
-DYNAMIC_COST BLOB 10
-DYNAMIC_COST XENOS 10
-DYNAMIC_COST NIGHTMARE 10
-
-## Latejoin antags
-DYNAMIC_COST LATEJOIN_TRAITOR 5
-DYNAMIC_COST LATEJOIN_REVOLUTION 20
-
-## Rule will not be generated with threat levels below requirement at a pop value. Pop values are determined by dynamic's pop-per-requirement. 
-## By default  it's 0-5, 6-11, 12-17, 18-23, 24-29, 30-35, 36-41, 42-47, 48-53, 54+. 
-## This means that 40 30 30 20 20 20 15 15 15 10 will not generate below 40 at 0-5, 30 at 6-11 etc.
-DYNAMIC_REQUIREMENTS TRAITOR 10 10 10 10 10 10 10 10 10 10
-DYNAMIC_REQUIREMENTS TRAITORBRO 40 30 30 20 20 15 15 15 10 10
-DYNAMIC_REQUIREMENTS CHANGELING 80 70 60 50 40 20 20 10 10 10
-DYNAMIC_REQUIREMENTS WIZARD 90 90 70 40 30 20 10 10 10 10
-DYNAMIC_REQUIREMENTS CULT 100 90 80 60 40 30 10 10 10 10
-DYNAMIC_REQUIREMENTS NUCLEAR 90 90 90 80 60 40 30 20 10 10
-DYNAMIC_REQUIREMENTS REVOLUTION 101 101 70 40 30 20 10 10 10 10
-# All below are impossible-by-default
-DYNAMIC_REQUIREMENTS EXTENDED 101 101 101 101 101 101 101 101 101 101
-DYNAMIC_REQUIREMENTS CLOCKWORK_CULT 101 101 101 101 101 101 101 101 101 101
-DYNAMIC_REQUIREMENTS CLOWNOPS 101 101 101 101 101 101 101 101 101 101
-DYNAMIC_REQUIREMENTS DEVIL 101 101 101 101 101 101 101 101 101 101
-DYNAMIC_REQUIREMENTS MONKEY 101 101 101 101 101 101 101 101 101 101
-DYNAMIC_REQUIREMENTS METEOR 101 101 101 101 101 101 101 101 101 101
-
-## Midround antags
-DYNAMIC_REQUIREMENTS MIDROUND_TRAITOR 50 40 30 20 10 10 10 10 10 10
-DYNAMIC_REQUIREMENTS MALF_AI 101 101 80 70 60 60 50 50 40 40
-DYNAMIC_REQUIREMENTS MIDROUND_WIZARD 90 90 70 40 30 20 10 10 10 10
-DYNAMIC_REQUIREMENTS MIDROUND_NUCLEAR 90 90 90 80 60 40 30 20 10 10
-DYNAMIC_REQUIREMENTS BLOB 101 101 101 80 60 50 30 20 10 10
-DYNAMIC_REQUIREMENTS XENOS 101 101 101 70 50 40 20 15 10 10
-DYNAMIC_REQUIREMENTS NIGHTMARE 101 101 101 70 50 40 20 15 10 10
-
-## Latejoin antags
-DYNAMIC_REQUIREMENTS LATEJOIN_TRAITOR 40 30 20 10 10 10 10 10 10 10
-DYNAMIC_REQUIREMENTS LATEJOIN_REVOLUTION 101 101 70 40 30 20 20 20 20 20
-
-## An alternative, static requirement used instead when pop is over mode's high_pop_limit.
-DYNAMIC_HIGH_POPULATION_REQUIREMENT TRAITOR 10
-DYNAMIC_HIGH_POPULATION_REQUIREMENT TRAITORBRO 15
-DYNAMIC_HIGH_POPULATION_REQUIREMENT CHANGELING 10
-DYNAMIC_HIGH_POPULATION_REQUIREMENT WIZARD 10
-DYNAMIC_HIGH_POPULATION_REQUIREMENT CULT 10
-DYNAMIC_HIGH_POPULATION_REQUIREMENT NUCLEAR 10
-DYNAMIC_HIGH_POPULATION_REQUIREMENT REVOLUTION 10
-# All below are impossible-by-default
-DYNAMIC_HIGH_POPULATION_REQUIREMENT EXTENDED 101
-DYNAMIC_HIGH_POPULATION_REQUIREMENT CLOCKWORK_CULT 101
-DYNAMIC_HIGH_POPULATION_REQUIREMENT CLOWNOPS 101
-DYNAMIC_HIGH_POPULATION_REQUIREMENT DEVIL 101
-DYNAMIC_HIGH_POPULATION_REQUIREMENT MONKEY 101
-DYNAMIC_HIGH_POPULATION_REQUIREMENT METEOR 101
-
-## Midround antags
-DYNAMIC_HIGH_POPULATION_REQUIREMENT MIDROUND_TRAITOR 10
-DYNAMIC_HIGH_POPULATION_REQUIREMENT MALF_AI 35
-DYNAMIC_HIGH_POPULATION_REQUIREMENT MIDROUND_WIZARD 50
-DYNAMIC_HIGH_POPULATION_REQUIREMENT MIDROUND_NUCLEAR 10
-DYNAMIC_HIGH_POPULATION_REQUIREMENT BLOB 50
-DYNAMIC_HIGH_POPULATION_REQUIREMENT XENOS 50
-DYNAMIC_HIGH_POPULATION_REQUIREMENT NIGHTMARE 50
-
-## Latejoin antags
-DYNAMIC_HIGH_POPULATION_REQUIREMENT LATEJOIN_TRAITOR 10
-DYNAMIC_HIGH_POPULATION_REQUIREMENT LATEJOIN_REVOLUTION 50
-
 ## AI ###
 
 ## Allow the AI job to be picked.
@@ -429,6 +303,9 @@ MINIMUM_SECBORG_ALERT 3
 
 ## Uncomment to load one of the missions from awaymissionconfig.txt at roundstart.
 #ROUNDSTART_AWAY
+
+## Uncomment to load one of the virtual reality levels from vr_config at roundstart.
+#ROUNDSTART_VR
 
 ## How long the delay is before the Away Mission gate opens. Default is half an hour.
 ## 600 is one minute.
@@ -563,11 +440,13 @@ ROUNDSTART_RACES human
 
 ## Races that are strictly worse than humans that could probably be turned on without balance concerns
 ROUNDSTART_RACES lizard
+ROUNDSTART_RACES synthliz
 #ROUNDSTART_RACES fly
 #ROUNDSTART_RACES insect
 ROUNDSTART_RACES plasmaman
 #ROUNDSTART_RACES shadow
 ROUNDSTART_RACES felinid
+ROUNDSTART_RACES dwarf
 
 ## Races that are better than humans in some ways, but worse in others
 #ROUNDSTART_RACES jelly
@@ -625,17 +504,17 @@ MIDROUND_ANTAG_TIME_CHECK 60
 ## A ratio of living to total crew members, the lower this is, the more people will have to die in order for midround antag to be skipped
 MIDROUND_ANTAG_LIFE_CHECK 0.7
 
-## A time, in real-time deciseconds, applied upon suicide, cryosleep or ghosting whilst alive
-## during which the player shouldn't be able to come back through
+## A "timeout", in real-time minutes, applied upon suicide, cryosleep or ghosting whilst alive,
+## during which the player shouldn't be able to come back into the round through
 ## midround playable roles or mob spawners.
 ## Set to 0 to completely disable it.
-SUICIDE_REENTER_ROUND_TIMER 18000
+SUICIDE_REENTER_ROUND_TIMER 30
 
-## A time, in real-time deciseconds, below which the player receives
-## a timed penalty, for purposes similar to the aforementioned one (can also stack)
-## and equal to this config difference with world.time.
+## A world time threshold, in minutes, under which the player receives
+## an extra timeout, purposely similar to the above one (and also stacks with),
+## equal to the difference between the current world.time and this threshold.
 ## Both configs are indipendent from each other, disabling one won't affect the other.
-ROUNDSTART_SUICIDE_TIME_LIMIT 18000
+ROUNDSTART_SUICIDE_TIME_LIMIT 30
 
 ##Limit Spell Choices##
 ## Uncomment to disallow wizards from using certain spells that may be too chaotic/fun for your playerbase
@@ -669,8 +548,14 @@ BOMBCAP 20
 ## of ruins.
 LAVALAND_BUDGET 60
 
-## Space Ruin Budged
+## Ice Moon Budget
+ICEMOON_BUDGET 90
+
+## Space Ruin Budget
 Space_Budget 16
+
+## Station Ruin Budget
+STATION_SPACE_BUDGET 10
 
 ## Time in ds from when a player latejoins till the arrival shuttle docks at the station
 ## Must be at least 30. At least 55 recommended to be visually/aurally appropriate
@@ -702,6 +587,15 @@ ROUNDSTART_TRAITS
 ## Enable night shifts ##
 #ENABLE_NIGHT_SHIFTS
 
+## Makes night shifts only affect in-code public-flagged areas. Nightshifts hit the level as defined in __DEFINES/misc.dm that this is set to and anything below. ##
+NIGHT_SHIFT_PUBLIC_AREAS_ONLY 1
+
+## Nightshift toggles REQUIRE APC authorization ##
+#NIGHTSHIFT_TOGGLE_REQUIRES_AUTH
+
+## Nightshift toggles in public areas REQUIRE APC authorization ##
+NIGHTSHIFT_TOGGLE_PUBLIC_REQUIRES_AUTH
+
 ## Enable randomized shift start times##
 #RANDOMIZE_SHIFT_TIME
 
@@ -711,5 +605,63 @@ ROUNDSTART_TRAITS
 ## A cap on how many monkeys may be created via monkey cubes
 MONKEYCAP 64
 
+## Enable the capitalist agenda on your server.
+ECONOMY
+
 ## Uncomment to use TG-style combat
 #DISABLE_STAMBUFFER
+
+#Replaces standard extended/secret dichotomy with extended and calm/chaotic votes for dynamic.
+#DYNAMIC_VOTING
+
+## Choose which Engine to start the round with. Weight is after the comma. Setting the weight to 0 removes the engine from rotation.
+BOX_RANDOM_ENGINE Box SM,3
+BOX_RANDOM_ENGINE Box Tesla,3
+BOX_RANDOM_ENGINE Box Singulo,3
+BOX_RANDOM_ENGINE Box SM 1x3,1
+BOX_RANDOM_ENGINE Box SM 5x5,1
+BOX_RANDOM_ENGINE Box SM 3x,0
+BOX_RANDOM_ENGINE Box TEG,3
+BOX_RANDOM_ENGINE Box Empty,0
+BOX_RANDOM_ENGINE Box Antimatter,1
+BOX_RANDOM_ENGINE Box P.A.C.M.A.N,1
+
+## Whether or not there's a mode tier list vote after the secret/extended vote.
+MODETIER_VOTING
+
+## Number of modes dropped by the modetier vote during mode selection, after vote.
+DROPPED_MODES 3
+
+## Whether the suicide verb is allowed.
+# SUICIDE_ALLOWED
+
+## Breast cups selectable from the character creation menu. Keep em lowercase.
+BREASTS_CUPS_PREFS a
+BREASTS_CUPS_PREFS b
+BREASTS_CUPS_PREFS c
+BREASTS_CUPS_PREFS d
+BREASTS_CUPS_PREFS e
+
+## Minimum and maximum limits for penis length from the character creation menu.
+PENIS_MIN_INCHES_PREFS 1
+PENIS_MAX_INCHES_PREFS 20
+
+## Body size configs, the feature will be disabled if both min and max have the same value.
+BODY_SIZE_MIN 1
+BODY_SIZE_MAX 1
+
+## Pun-Pun movement slowdown given to characters with a body size smaller than this value,
+## to compensate for their smaller hitbox.
+## To disable, just make sure the value is lower than 'body_size_min'
+THRESHOLD_BODY_SIZE_SLOWDOWN 0.85
+
+## Multiplier used in the smaller strides slowdown calculation.
+## Doesn't apply to floating or crawling mobs.
+BODY_SIZE_SLOWDOWN_MULTIPLIER 0.25
+
+## Allows players to set a hexadecimal color of their choice as skin tone, on top of the standard ones.
+ALLOW_CUSTOM_SKINTONES
+
+## Enables the FoV component, which hides objects and mobs behind the parent from their sight, unless they turn around, duh.
+## Camera mobs, AIs, ghosts and some other are of course exempt from this. This also doesn't influence simplemob AI, for the best.
+#USE_FIELD_OF_VISION

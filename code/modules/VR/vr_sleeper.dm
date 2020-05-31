@@ -22,6 +22,11 @@
 	sparks.set_up(2,0)
 	sparks.attach(src)
 	update_icon()
+	new_occupant_dir = dir
+
+/obj/machinery/vr_sleeper/setDir(newdir)
+	. = ..()
+	new_occupant_dir = dir
 
 /obj/machinery/vr_sleeper/attackby(obj/item/I, mob/user, params)
 	if(!state_open && !occupant)
@@ -52,20 +57,18 @@
 	flags_1 = NODECONSTRUCT_1
 	only_current_user_can_interact = TRUE
 
-/obj/machinery/vr_sleeper/hugbox/emag_act(mob/user)
-	return SEND_SIGNAL(src, COMSIG_ATOM_EMAG_ACT)
-
 /obj/machinery/vr_sleeper/emag_act(mob/user)
 	. = ..()
 	if(!(obj_flags & EMAGGED))
 		return
-	obj_flags |= EMAGGED
-	you_die_in_the_game_you_die_for_real = TRUE
-	sparks.start()
-	addtimer(CALLBACK(src, .proc/emagNotify), 150)
-	return TRUE
+	if(!only_current_user_can_interact)
+		obj_flags |= EMAGGED
+		you_die_in_the_game_you_die_for_real = TRUE
+		sparks.start()
+		addtimer(CALLBACK(src, .proc/emagNotify), 150)
+		return TRUE
 
-/obj/machinery/vr_sleeper/update_icon()
+/obj/machinery/vr_sleeper/update_icon_state()
 	icon_state = "[initial(icon_state)][state_open ? "-open" : ""]"
 
 /obj/machinery/vr_sleeper/open_machine()
@@ -76,7 +79,7 @@
 	return ..()
 
 /obj/machinery/vr_sleeper/MouseDrop_T(mob/target, mob/user)
-	if(user.stat || user.lying || !Adjacent(user) || !user.Adjacent(target) || !iscarbon(target) || !user.IsAdvancedToolUser())
+	if(user.lying || !iscarbon(target) || !Adjacent(target) || !user.canUseTopic(src, BE_CLOSE, TRUE, NO_TK))
 		return
 	close_machine(target)
 
@@ -91,26 +94,25 @@
 		return
 	switch(action)
 		if("vr_connect")
-			var/mob/living/carbon/human/human_occupant = occupant
-			if(human_occupant && human_occupant.mind && usr == occupant)
-
-				to_chat(occupant, "<span class='warning'>Transferring to virtual reality...</span>")
-				if(vr_mob && (!istype(vr_mob) || !vr_mob.InCritical()) && !vr_mob.GetComponent(/datum/component/virtual_reality))
-					vr_mob.AddComponent(/datum/component/virtual_reality, human_occupant, src, you_die_in_the_game_you_die_for_real)
-					to_chat(vr_mob, "<span class='notice'>Transfer successful! You are now playing as [vr_mob] in VR!</span>")
-				else
+			var/mob/M = occupant
+			if(M?.mind && M == usr)
+				to_chat(M, "<span class='warning'>Transferring to virtual reality...</span>")
+				var/datum/component/virtual_reality/VR
+				if(vr_mob)
+					VR = vr_mob.GetComponent(/datum/component/virtual_reality)
+				if(!(VR?.connect(M)))
 					if(allow_creating_vr_mobs)
-						to_chat(occupant, "<span class='warning'>Virtual avatar not found, attempting to create one...</span>")
+						to_chat(occupant, "<span class='warning'>Virtual avatar [vr_mob ? "corrupted" : "missing"], attempting to create one...</span>")
 						var/obj/effect/landmark/vr_spawn/V = get_vr_spawnpoint()
 						var/turf/T = get_turf(V)
 						if(T)
-							SStgui.close_user_uis(occupant, src)
 							new_player(occupant, T, V.vr_outfit)
-							to_chat(vr_mob, "<span class='notice'>Transfer successful! You are now playing as [vr_mob] in VR!</span>")
 						else
 							to_chat(occupant, "<span class='warning'>Virtual world misconfigured, aborting transfer</span>")
 					else
 						to_chat(occupant, "<span class='warning'>The virtual world does not support the creation of new virtual avatars, aborting transfer</span>")
+				else
+					to_chat(vr_mob, "<span class='notice'>Transfer successful! You are now playing as [vr_mob] in VR!</span>")
 			. = TRUE
 		if("delete_avatar")
 			if(!occupant || usr == occupant)
@@ -157,17 +159,31 @@
 	for(var/obj/effect/landmark/vr_spawn/V in GLOB.landmarks_list)
 		GLOB.vr_spawnpoints[V.vr_category] = V
 
-/obj/machinery/vr_sleeper/proc/new_player(mob/living/carbon/human/H, location, datum/outfit/outfit, transfer = TRUE)
-	if(!H)
+/obj/machinery/vr_sleeper/proc/new_player(mob/M, location, datum/outfit/outfit, transfer = TRUE)
+	if(!M)
 		return
 	cleanup_vr_mob()
 	vr_mob = new virtual_mob_type(location)
-	if(vr_mob.build_virtual_character(H, outfit))
-		var/mob/living/carbon/human/vr_H = vr_mob
-		vr_H.updateappearance(TRUE, TRUE, TRUE)
-	if(!transfer || !H.mind)
-		return
-	vr_mob.AddComponent(/datum/component/virtual_reality, H, src, you_die_in_the_game_you_die_for_real)
+	if(vr_mob.build_virtual_character(M, outfit) && iscarbon(vr_mob))
+		var/mob/living/carbon/C = vr_mob
+		C.updateappearance(TRUE, TRUE, TRUE)
+	var/datum/component/virtual_reality/VR = vr_mob.AddComponent(/datum/component/virtual_reality, you_die_in_the_game_you_die_for_real)
+	if(VR.connect(M))
+		RegisterSignal(VR, COMSIG_COMPONENT_UNREGISTER_PARENT, .proc/unset_vr_mob)
+		RegisterSignal(VR, COMSIG_COMPONENT_REGISTER_PARENT, .proc/set_vr_mob)
+		if(!only_current_user_can_interact)
+			VR.RegisterSignal(src, COMSIG_ATOM_EMAG_ACT, /datum/component/virtual_reality.proc/you_only_live_once)
+		VR.RegisterSignal(src, COMSIG_MACHINE_EJECT_OCCUPANT, /datum/component/virtual_reality.proc/revert_to_reality)
+		VR.RegisterSignal(src, COMSIG_PARENT_QDELETING, /datum/component/virtual_reality.proc/machine_destroyed)
+		to_chat(vr_mob, "<span class='notice'>Transfer successful! You are now playing as [vr_mob] in VR!</span>")
+	else
+		to_chat(M, "<span class='notice'>Transfer failed! virtual reality data likely corrupted!</span>")
+
+/obj/machinery/vr_sleeper/proc/unset_vr_mob(datum/component/virtual_reality/VR)
+	vr_mob = null
+
+/obj/machinery/vr_sleeper/proc/set_vr_mob(datum/component/virtual_reality/VR)
+	vr_mob = VR.parent
 
 /obj/machinery/vr_sleeper/proc/cleanup_vr_mob()
 	if(vr_mob)
@@ -211,17 +227,23 @@
 
 /obj/effect/vr_clean_master/Initialize()
 	. = ..()
-	vr_area = get_area(src)
-	addtimer(CALLBACK(src, .proc/clean_up), 3 MINUTES)
+	vr_area = get_base_area(src)
+	if(!vr_area)
+		return INITIALIZE_HINT_QDEL
+	addtimer(CALLBACK(src, .proc/clean_up), 3 MINUTES, TIMER_LOOP)
 
 /obj/effect/vr_clean_master/proc/clean_up()
-	if (vr_area)
-		for (var/obj/item/ammo_casing/casing in vr_area)
-			qdel(casing)
-		for(var/obj/effect/decal/cleanable/C in vr_area)
-			qdel(C)
-		for (var/A in corpse_party)
-			var/mob/M = A
-			if(get_area(M) == vr_area && M.stat == DEAD)
-				qdel(M)
-		addtimer(CALLBACK(src, .proc/clean_up), 3 MINUTES)
+	if (!vr_area)
+		qdel(src)
+		return
+	var/list/contents = get_sub_areas_contents(vr_area)
+	for (var/obj/item/ammo_casing/casing in contents)
+		qdel(casing)
+	for(var/obj/effect/decal/cleanable/C in contents)
+		qdel(C)
+	for (var/A in corpse_party)
+		var/mob/M = A
+		if(!QDELETED(M) && (M in contents) && M.stat == DEAD)
+			qdel(M)
+		corpse_party -= M
+	addtimer(CALLBACK(src, .proc/clean_up), 3 MINUTES)

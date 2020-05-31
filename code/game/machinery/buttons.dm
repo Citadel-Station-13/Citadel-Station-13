@@ -16,14 +16,19 @@
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 
 /obj/machinery/button/Initialize(mapload, ndir = 0, built = 0)
+	if(istext(id) && mapload && id[1] == "!")
+		id = SSmapping.get_obfuscated_id(id)
 	. = ..()
+	var/turf/T = get_turf_pixel(src)
+	if(iswallturf(T))
+		plane = ABOVE_WALL_PLANE
+
 	if(built)
 		setDir(ndir)
 		pixel_x = (dir & 3)? 0 : (dir == 4 ? -24 : 24)
 		pixel_y = (dir & 3)? (dir ==1 ? -24 : 24) : 0
 		panel_open = TRUE
 		update_icon()
-
 
 	if(!built && !device && device_type)
 		device = new device_type(src)
@@ -38,21 +43,22 @@
 			board.one_access = 1
 			board.accesses = req_one_access
 
-
-/obj/machinery/button/update_icon()
-	cut_overlays()
+/obj/machinery/button/update_icon_state()
 	if(panel_open)
 		icon_state = "button-open"
-		if(device)
-			add_overlay("button-device")
-		if(board)
-			add_overlay("button-board")
-
+	else if(stat & (NOPOWER|BROKEN))
+		icon_state = "[skin]-p"
 	else
-		if(stat & (NOPOWER|BROKEN))
-			icon_state = "[skin]-p"
-		else
-			icon_state = skin
+		icon_state = skin
+
+/obj/machinery/button/update_overlays()
+	. = ..()
+	if(!panel_open)
+		return
+	if(device)
+		. += "button-device"
+	if(board)
+		. += "button-board"
 
 /obj/machinery/button/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/screwdriver))
@@ -168,7 +174,7 @@
 	if(device)
 		device.pulsed()
 
-	addtimer(CALLBACK(src, .proc/update_icon), 15)
+	addtimer(CALLBACK(src, /atom/.proc/update_icon), 15)
 
 /obj/machinery/button/power_change()
 	..()
@@ -259,9 +265,14 @@
 	req_access = list()
 	id = 1
 
+/obj/machinery/button/electrochromatic
+	name = "window dim control"
+	desc = "Controls linked electrochromatic windows"
+	device_type = /obj/item/assembly/control/electrochromatic
+
 /obj/item/wallframe/button
 	name = "button frame"
 	desc = "Used for building buttons."
 	icon_state = "button"
 	result_path = /obj/machinery/button
-	materials = list(MAT_METAL=MINERAL_MATERIAL_AMOUNT)
+	custom_materials = list(/datum/material/iron = MINERAL_MATERIAL_AMOUNT)

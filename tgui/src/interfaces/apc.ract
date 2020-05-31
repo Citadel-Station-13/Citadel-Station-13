@@ -132,7 +132,7 @@
 	</ui-notice>
 	<ui-notice>
 	  <ui-section label='Night Shift Lighting'>
-	    {{#if data.locked && !data.siliconUser}}
+	    {{#if data.locked && !data.siliconUser && data.lock_nightshift}}
 	      <span>{{data.nightshiftLights ? "Enabled" : "Disabled"}}</span>
 	    {{else}}
 	      <ui-button icon='lightbulb-o' action='toggle_nightshift'>{{data.nightshiftLights ? "Enabled" : "Disabled"}}</ui-button>
@@ -148,4 +148,18 @@
 		{{/if}}
 	  </ui-section>
 	</ui-notice>
+	{{#if data.hijackable}}
+		<ui-display title='Hijacking'>
+			{{#if !data.hijacker}}
+		  		<ui-button icon='unlock' action='hijack'>Hijack APC</ui-button>
+			{{else}}
+				{{#if data.drainavail}}
+					<ui-button icon='lightbulb-o' action='drain'>Drain APC</ui-button>
+				{{/if}}
+				{{#if data.lockdownavail}}
+					<ui-button icon='lock' action='lockdown'>Lockdown Room</ui-button>
+				{{/if}}
+			{{/if}}
+	 	</ui-display>
+	{{/if}}
 {{/if}}

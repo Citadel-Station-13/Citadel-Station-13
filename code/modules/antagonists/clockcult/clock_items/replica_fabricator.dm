@@ -44,16 +44,16 @@
 		speed_multiplier = initial(speed_multiplier)
 
 /obj/item/clockwork/replica_fabricator/examine(mob/living/user)
-	..()
+	. = ..()
 	if(is_servant_of_ratvar(user) || isobserver(user))
-		to_chat(user, "<span class='brass'>Can be used to replace walls, floors, tables, windows, windoors, and airlocks with Clockwork variants.</span>")
-		to_chat(user, "<span class='brass'>Can construct Clockwork Walls on Clockwork Floors and deconstruct Clockwork Walls to Clockwork Floors.</span>")
+		. += "<span class='brass'>Can be used to replace walls, floors, tables, windows, windoors, and airlocks with Clockwork variants.</span>"
+		. += "<span class='brass'>Can construct Clockwork Walls on Clockwork Floors and deconstruct Clockwork Walls to Clockwork Floors.</span>"
 		if(uses_power)
-			to_chat(user, "<span class='alloy'>It can consume floor tiles, rods, metal, and plasteel for power at rates of <b>2:[DisplayPower(POWER_ROD)]</b>, <b>1:[DisplayPower(POWER_ROD)]</b>, <b>1:[DisplayPower(POWER_METAL)]</b>, \
-			and <b>1:[DisplayPower(POWER_PLASTEEL)]</b>, respectively.</span>")
-			to_chat(user, "<span class='alloy'>It can also consume brass sheets for power at a rate of <b>1:[DisplayPower(POWER_FLOOR)]</b>.</span>")
-			to_chat(user, "<span class='alloy'>Use it in-hand to produce <b>5</b> brass sheets at a cost of <b>[DisplayPower(POWER_WALL_TOTAL)]</b> power.</span>")
-			to_chat(user, "<span class='alloy'>It has access to <b>[DisplayPower(get_clockwork_power())]</b> of power.</span>")
+			. += "<span class='alloy'>It can consume floor tiles, rods, metal, and plasteel for power at rates of <b>2:[DisplayPower(POWER_ROD)]</b>, <b>1:[DisplayPower(POWER_ROD)]</b>, <b>1:[DisplayPower(POWER_METAL)]</b>, \
+			and <b>1:[DisplayPower(POWER_PLASTEEL)]</b>, respectively.</span>"
+			. += "<span class='alloy'>It can also consume brass sheets for power at a rate of <b>1:[DisplayPower(POWER_FLOOR)]</b>.</span>"
+			. += "<span class='alloy'>Use it in-hand to produce <b>5</b> brass sheets at a cost of <b>[DisplayPower(POWER_WALL_TOTAL)]</b> power.</span>"
+			. += "<span class='alloy'>It has access to <b>[DisplayPower(get_clockwork_power())]</b> of power.</span>"
 
 /obj/item/clockwork/replica_fabricator/attack_self(mob/living/user)
 	if(is_servant_of_ratvar(user))
@@ -68,8 +68,8 @@
 
 /obj/item/clockwork/replica_fabricator/pre_attack(atom/target, mob/living/user, params)
 	if(!target || !user || !is_servant_of_ratvar(user) || istype(target, /obj/item/storage))
-		return TRUE
-	return fabricate(target, user)
+		return ..()
+	return !fabricate(target, user)
 
 //A note here; return values are for if we CAN BE PUT ON A TABLE, not IF WE ARE SUCCESSFUL, unless no_table_check is TRUE
 /obj/item/clockwork/replica_fabricator/proc/fabricate(atom/target, mob/living/user, silent, no_table_check)
@@ -139,7 +139,7 @@
 	var/new_thing_type = fabrication_values["new_obj_type"]
 	if(isturf(target)) //if our target is a turf, we're just going to ChangeTurf it and assume it'll work out.
 		var/turf/T = target
-		T.ChangeTurf(new_thing_type)
+		T.ChangeTurf(new_thing_type, flags = CHANGETURF_INHERIT_AIR)
 	else
 		if(new_thing_type)
 			if(fabrication_values["dir_in_new"])

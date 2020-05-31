@@ -15,12 +15,13 @@
 #define SD_AI_EMOTE 1  // 1 = AI emoticon
 #define SD_AI_BSOD 2  // 2 = Blue screen of death
 
-/// Status display which can show images and scrolling text.
+/// Status display which can show images and scrolling text. !!!USE /obj/machinery/status_display/evac NOT THIS!!!
 /obj/machinery/status_display
 	name = "status display"
 	desc = null
 	icon = 'icons/obj/status_display.dmi'
 	icon_state = "frame"
+	plane = ABOVE_WALL_PLANE
 	density = FALSE
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 10
@@ -55,14 +56,14 @@
 /// Call with no arguments to disable.
 /obj/machinery/status_display/proc/set_message(m1, m2)
 	if(m1)
-		index1 = (length(m1) > CHARS_PER_LINE)
+		index1 = (length_char(m1) > CHARS_PER_LINE)
 		message1 = m1
 	else
 		message1 = ""
 		index1 = 0
 
 	if(m2)
-		index2 = (length(m2) > CHARS_PER_LINE)
+		index2 = (length_char(m2) > CHARS_PER_LINE)
 		message2 = m2
 	else
 		message2 = ""
@@ -77,19 +78,19 @@
 
 	var/line1 = message1
 	if(index1)
-		line1 = copytext("[message1]|[message1]", index1, index1+CHARS_PER_LINE)
-		var/message1_len = length(message1)
+		line1 = copytext_char("[message1]|[message1]", index1, index1+CHARS_PER_LINE)
+		var/message1_len = length_char(message1)
 		index1 += SCROLL_SPEED
-		if(index1 > message1_len)
-			index1 -= message1_len
+		if(index1 > message1_len + 1)
+			index1 -= (message1_len + 1)
 
 	var/line2 = message2
 	if(index2)
-		line2 = copytext("[message2]|[message2]", index2, index2+CHARS_PER_LINE)
+		line2 = copytext_char("[message2]|[message2]", index2, index2+CHARS_PER_LINE)
 		var/message2_len = length(message2)
 		index2 += SCROLL_SPEED
-		if(index2 > message2_len)
-			index2 -= message2_len
+		if(index2 > message2_len + 1)
+			index2 -= (message2_len + 1)
 
 	update_display(line1, line2)
 	if (!index1 && !index2)
@@ -114,12 +115,11 @@
 /obj/machinery/status_display/examine(mob/user)
 	. = ..()
 	if (message1 || message2)
-		var/list/msg = list("The display says:")
+		. += "The display says:"
 		if (message1)
-			msg += "<br>\t<tt>[html_encode(message1)]</tt>"
+			. += "\t<tt>[html_encode(message1)]</tt>"
 		if (message2)
-			msg += "<br>\t<tt>[html_encode(message2)]</tt>"
-		to_chat(user, msg.Join())
+			. += "\t<tt>[html_encode(message2)]</tt>"
 
 // Helper procs for child display types.
 /obj/machinery/status_display/proc/display_shuttle_status(obj/docking_port/mobile/shuttle)
@@ -131,7 +131,7 @@
 		var/line1 = "-[shuttle.getModeStr()]-"
 		var/line2 = shuttle.getTimerStr()
 
-		if(length(line2) > CHARS_PER_LINE)
+		if(length_char(line2) > CHARS_PER_LINE)
 			line2 = "error"
 		update_display(line1, line2)
 	else
@@ -146,9 +146,9 @@
 				modestr = "<br>\t<tt>[modestr]: [shuttle.getTimerStr()]</tt>"
 			else
 				modestr = "<br>\t<tt>[modestr]</tt>"
-		to_chat(user, "The display says:<br>\t<tt>[shuttle.name]</tt>[modestr]")
+		return "The display says:<br>\t<tt>[shuttle.name]</tt>[modestr]"
 	else
-		to_chat(user, "The display says:<br>\t<tt>Shuttle missing!</tt>")
+		return "The display says:<br>\t<tt>Shuttle missing!</tt>"
 
 
 /// Evac display which shows shuttle timer or message set by Command.
@@ -195,9 +195,9 @@
 /obj/machinery/status_display/evac/examine(mob/user)
 	. = ..()
 	if(mode == SD_EMERGENCY)
-		examine_shuttle(user, SSshuttle.emergency)
+		. += examine_shuttle(user, SSshuttle.emergency)
 	else if(!message1 && !message2)
-		to_chat(user, "The display is blank.")
+		. += "The display is blank."
 
 /obj/machinery/status_display/evac/receive_signal(datum/signal/signal)
 	switch(signal.data["command"])
@@ -243,7 +243,7 @@
 	else
 		line1 = "CARGO"
 		line2 = SSshuttle.supply.getTimerStr()
-		if(length(line2) > CHARS_PER_LINE)
+		if(length_char(line2) > CHARS_PER_LINE)
 			line2 = "Error"
 	update_display(line1, line2)
 
@@ -257,9 +257,9 @@
 	else
 		shuttleMsg = "[shuttle.getModeStr()]: [shuttle.getTimerStr()]"
 	if (shuttleMsg)
-		to_chat(user, "The display says:<br>\t<tt>[shuttleMsg]</tt>")
+		. += "The display says:<br>\t<tt>[shuttleMsg]</tt>"
 	else
-		to_chat(user, "The display is blank.")
+		. += "The display is blank."
 
 
 /// General-purpose shuttle status display.
@@ -278,9 +278,9 @@
 /obj/machinery/status_display/shuttle/examine(mob/user)
 	. = ..()
 	if(shuttle_id)
-		examine_shuttle(user, SSshuttle.getShuttle(shuttle_id))
+		. += examine_shuttle(user, SSshuttle.getShuttle(shuttle_id))
 	else
-		to_chat(user, "The display is blank.")
+		. += "The display is blank."
 
 /obj/machinery/status_display/shuttle/vv_edit_var(var_name, var_value)
 	. = ..()

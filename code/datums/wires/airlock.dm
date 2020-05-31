@@ -1,6 +1,7 @@
 /datum/wires/airlock
 	holder_type = /obj/machinery/door/airlock
 	proper_name = "Generic Airlock"
+	req_skill = JOB_SKILL_UNTRAINED //Training wheel, as per request.
 	var/wiretype
 
 /datum/wires/airlock/secure
@@ -52,10 +53,11 @@
 
 /datum/wires/airlock/interactable(mob/user)
 	var/obj/machinery/door/airlock/A = holder
-	if(!issilicon(user) && A.isElectrified() && A.shock(user, 100))
+	if(!A.panel_open)
 		return FALSE
-	if(A.panel_open)
-		return TRUE
+	if(!A.hasSiliconAccessInArea(user) && A.isElectrified() && A.shock(user, 100))
+		return FALSE
+	return TRUE
 
 /datum/wires/airlock/get_status()
 	var/obj/machinery/door/airlock/A = holder
@@ -85,6 +87,8 @@
 					INVOKE_ASYNC(A, /obj/machinery/door/airlock.proc/open)
 				else
 					INVOKE_ASYNC(A, /obj/machinery/door/airlock.proc/close)
+			else
+				holder.visible_message("<span class='notice'>You hear a a grinding noise coming from the airlock.</span>")
 		if(WIRE_BOLTS) // Pulse to toggle bolts (but only raise if power is on).
 			if(!A.locked)
 				A.bolt()

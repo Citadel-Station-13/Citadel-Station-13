@@ -39,11 +39,6 @@ GLOBAL_LIST_EMPTY(telecomms_list)
 		return
 	var/send_count = 0
 
-	// Apply some lag based on traffic rates
-	var/netlag = round(traffic / 50)
-	if(netlag > signal.data["slow"])
-		signal.data["slow"] = netlag
-
 	// Loop through all linked machines and send the signal or copy.
 	for(var/obj/machinery/telecomms/machine in links)
 		if(filter && !istype( machine, filter ))
@@ -107,8 +102,9 @@ GLOBAL_LIST_EMPTY(telecomms_list)
 			for(var/x in autolinkers)
 				if(x in T.autolinkers)
 					links |= T
+					T.links |= src
 
-/obj/machinery/telecomms/update_icon()
+/obj/machinery/telecomms/update_icon_state()
 	if(on)
 		if(panel_open)
 			icon_state = "[initial(icon_state)]_o"

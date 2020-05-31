@@ -103,7 +103,7 @@
 		return FALSE
 	var/temp = text2num(trim(str_val))
 	if(!isnull(temp))
-		config_entry_value = CLAMP(integer ? round(temp) : temp, min_val, max_val)
+		config_entry_value = clamp(integer ? round(temp) : temp, min_val, max_val)
 		if(config_entry_value != temp && !(datum_flags & DF_VAR_EDITED))
 			log_config("Changing [name] from [temp] to [config_entry_value]!")
 		return TRUE
@@ -151,6 +151,7 @@
 	var/key_mode
 	var/value_mode
 	var/splitter = " "
+	var/lowercase = TRUE
 
 /datum/config_entry/keyed_list/New()
 	. = ..()
@@ -167,8 +168,11 @@
 	var/key_value = null
 
 	if(key_pos || value_mode == VALUE_MODE_FLAG)
-		key_name = lowertext(copytext(str_val, 1, key_pos))
-		key_value = copytext(str_val, key_pos + 1)
+		key_name = copytext(str_val, 1, key_pos)
+		if(lowercase)
+			key_name = lowertext(key_name)
+		if(key_pos)
+			key_value = copytext(str_val, key_pos + length(str_val[key_pos]))
 		var/new_key
 		var/new_value
 		var/continue_check_value
@@ -211,3 +215,27 @@
 
 /datum/config_entry/keyed_list/vv_edit_var(var_name, var_value)
 	return var_name != "splitter" && ..()
+
+//snowflake for donator things being on one line smh
+/datum/config_entry/multi_keyed_flag
+	vv_VAS = FALSE
+	abstract_type = /datum/config_entry/multi_keyed_flag
+	config_entry_value = list()
+	var/delimiter = "|"
+
+/datum/config_entry/multi_keyed_flag/vv_edit_var(var_name, var_value)
+	if(var_name == NAMEOF(src, delimiter))
+		return FALSE
+	return ..()
+
+/datum/config_entry/multi_keyed_flag/ValidateAndSet(str_val)
+	if(!VASProcCallGuard(str_val))
+		return FALSE
+	str_val = trim(str_val)
+	var/list/keys = splittext(str_val, delimiter)
+	for(var/i in keys)
+		config_entry_value[process_key(i)] = TRUE
+	return length(keys)? TRUE : FALSE
+
+/datum/config_entry/multi_keyed_flag/proc/process_key(key)
+	return trim(key)

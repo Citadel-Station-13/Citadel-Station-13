@@ -5,11 +5,13 @@
 	icon = 'icons/obj/toy.dmi'
 	icon_state = "rag"
 	item_flags = NOBLUDGEON
-	reagent_flags = OPENCONTAINER
+	reagent_flags = REFILLABLE | DRAINABLE
 	amount_per_transfer_from_this = 5
 	possible_transfer_amounts = list()
+	container_flags = APTFT_VERB
 	volume = 5
 	spillable = FALSE
+	reagent_value = NO_REAGENTS_VALUE
 	var/wipe_sound
 	var/soak_efficiency = 1
 	var/extinguish_efficiency = 0
@@ -23,9 +25,9 @@
 /obj/item/reagent_containers/rag/examine(mob/user)
 	. = ..()
 	if(reagents.total_volume)
-		to_chat(user, "<span class='notice'>Alt-Click to squeeze the liquids out of it.</span>")
+		. += "<span class='notice'>It's soaked. Alt-Click to squeeze it dry, and perhaps gather the liquids into another held open container.</span>"
 
-/obj/item/reagent_containers/rag/afterattack(atom/A as obj|turf|area, mob/user,proximity)
+/obj/item/reagent_containers/rag/afterattack(atom/A, mob/user,proximity)
 	. = ..()
 	if(!proximity)
 		return
@@ -44,14 +46,14 @@
 			C.visible_message("<span class='notice'>[user] has touched \the [C] with \the [src].</span>")
 			log_combat(user, C, "touched", log_object)
 
-	else if(istype(A) && src in user)
+	else if(istype(A) && (src in user))
 		user.visible_message("[user] starts to wipe down [A] with [src]!", "<span class='notice'>You start to wipe down [A] with [src]...</span>")
 		if(do_after(user, action_speed, target = A))
 			user.visible_message("[user] finishes wiping off [A]!", "<span class='notice'>You finish wiping off [A].</span>")
 			SEND_SIGNAL(A, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_MEDIUM)
 	return
 
-/obj/item/reagent_containers/rag/pre_altattackby(mob/living/M, mob/living/user, params)
+/obj/item/reagent_containers/rag/alt_pre_attack(mob/living/M, mob/living/user, params)
 	if(istype(M) && user.a_intent == INTENT_HELP)
 		user.changeNext_move(CLICK_CD_MELEE)
 		if(M.on_fire)
@@ -73,9 +75,9 @@
 				if(M.fire_stacks)
 					var/minus_plus = M.fire_stacks < 0 ? 1 : -1
 					var/amount = min(abs(M.fire_stacks), soak_efficiency)
-					var/r_id = "fuel"
+					var/r_id = /datum/reagent/fuel
 					if(M.fire_stacks < 0)
-						r_id = "water"
+						r_id = /datum/reagent/water
 					reagents.add_reagent(r_id, amount * 0.3)
 					M.adjust_fire_stacks(minus_plus * amount)
 				M.wash_cream()
@@ -85,15 +87,27 @@
 /obj/item/reagent_containers/rag/AltClick(mob/user)
 	. = ..()
 	if(reagents.total_volume && user.canUseTopic(src, BE_CLOSE))
-		to_chat(user, "<span class='notice'>You start squeezing the liquids out of \the [src]...</span>")
+		to_chat(user, "<span class='notice'>You start squeezing \the [src] dry...</span>")
 		if(do_after(user, action_speed, TRUE, src))
-			to_chat(user, "<span class='notice'>You squeeze \the [src] dry.</span>")
-			var/atom/react_loc = get_turf(src)
-			if(ismob(react_loc))
-				react_loc = react_loc.loc
-			if(react_loc)
-				reagents.reaction(react_loc, TOUCH)
-			reagents.clear_reagents()
+			var/msg = "You squeeze \the [src]"
+			var/obj/item/target
+			if(Adjacent(user)) //Allows the user to drain the reagents into a beaker if adjacent (no telepathy).
+				for(var/obj/item/I in user.held_items)
+					if(I == src)
+						continue
+					if(I.is_open_container() && !I.reagents.holder_full())
+						target = I
+						break
+			if(!target)
+				msg += " dry"
+				reagents.reaction(get_turf(src), TOUCH)
+				reagents.clear_reagents()
+			else
+				msg += "'s liquids into \the [target]"
+				reagents.trans_to(target, reagents.total_volume)
+			to_chat(user, "<span class='notice'>[msg].</span>")
+		return TRUE
+
 
 /obj/item/reagent_containers/rag/towel
 	name = "towel"
@@ -105,6 +119,7 @@
 	item_flags = NOBLUDGEON | NO_UNIFORM_REQUIRED //so it can be worn on the belt slot even with no uniform.
 	force = 1
 	w_class = WEIGHT_CLASS_NORMAL
+	mutantrace_variation = STYLE_DIGITIGRADE
 	attack_verb = list("whipped")
 	hitsound = 'sound/items/towelwhip.ogg'
 	volume = 10

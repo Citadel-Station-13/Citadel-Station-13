@@ -13,41 +13,50 @@
 		spark_system.start()
 	return ..()
 
+/mob/living/silicon/robot/attack_hulk(mob/living/carbon/human/user, does_attack_animation = FALSE)
+	. = ..()
+	if(.)
+		spark_system.start()
+		spawn(0)
+			step_away(src,user,15)
+			sleep(3)
+			step_away(src,user,15)
+
 /mob/living/silicon/robot/attack_alien(mob/living/carbon/alien/humanoid/M)
+	. = ..()
+	if(!.) // the attack was blocked or was help/grab intent
+		return
 	if (M.a_intent == INTENT_DISARM)
 		if(!(lying))
 			M.do_attack_animation(src, ATTACK_EFFECT_DISARM)
 			var/obj/item/I = get_active_held_item()
 			if(I)
 				uneq_active()
-				visible_message("<span class='danger'>[M] disarmed [src]!</span>", \
-					"<span class='userdanger'>[M] has disabled [src]'s active module!</span>", null, COMBAT_MESSAGE_RANGE)
+				visible_message("<span class='danger'>[M] has disarmed [src]!</span>", \
+					"<span class='userdanger'>[M] has disabled your active module!</span>", null, COMBAT_MESSAGE_RANGE, null, M,
+					"<span class='danger'>You have disarmed [src]!</span>")
 				log_combat(M, src, "disarmed", "[I ? " removing \the [I]" : ""]")
 			else
-				Stun(40)
+				Paralyze(40)
 				step(src,get_dir(M,src))
 				log_combat(M, src, "pushed")
 				visible_message("<span class='danger'>[M] has forced back [src]!</span>", \
-					"<span class='userdanger'>[M] has forced back [src]!</span>", null, COMBAT_MESSAGE_RANGE)
+					"<span class='userdanger'>[M] has forced you back!</span>", null, COMBAT_MESSAGE_RANGE, null, M,
+					"<span class='danger'>You have forced back [src]!</span>")
 			playsound(loc, 'sound/weapons/pierce.ogg', 50, 1, -1)
-	else
-		..()
-	return
 
 /mob/living/silicon/robot/attack_slime(mob/living/simple_animal/slime/M)
-	if(..()) //successful slime shock
-		flash_act()
-		var/stunprob = M.powerlevel * 7 + 10
-		if(prob(stunprob) && M.powerlevel >= 8)
-			adjustBruteLoss(M.powerlevel * rand(6,10))
-
-	var/damage = rand(1, 3)
-
+	. = ..()
+	if(!.) //unsuccessful slime shock
+		return
+	var/stunprob = M.powerlevel * 7 + 10
+	var/damage = M.powerlevel * rand(6,10)
+	if(prob(stunprob) && M.powerlevel >= 8)
+		flash_act(affect_silicon = TRUE) //my borg eyes!
 	if(M.is_adult)
-		damage = rand(20, 40)
+		damage += rand(10, 20)
 	else
-		damage = rand(5, 35)
-	damage = round(damage / 2) // borgs receive half damage
+		damage += rand(2, 17)
 	adjustBruteLoss(damage)
 	updatehealth()
 
@@ -56,23 +65,17 @@
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 /mob/living/silicon/robot/attack_hand(mob/living/carbon/human/user)
 	add_fingerprint(user)
-	if(opened && !wiresexposed && !issilicon(user))
-		if(cell)
-			cell.update_icon()
-			cell.add_fingerprint(user)
-			user.put_in_active_hand(cell)
-			to_chat(user, "<span class='notice'>You remove \the [cell].</span>")
-			cell = null
-			update_icons()
-			diag_hud_set_borgcell()
+	if(opened && !wiresexposed && cell && !issilicon(user))
+		cell.update_icon()
+		cell.add_fingerprint(user)
+		user.put_in_active_hand(cell)
+		to_chat(user, "<span class='notice'>You remove \the [cell].</span>")
+		cell = null
+		update_icons()
+		diag_hud_set_borgcell()
 
 	if(!opened)
-		if(..()) // hulk attack
-			spark_system.start()
-			spawn(0)
-				step_away(src,user,15)
-				sleep(3)
-				step_away(src,user,15)
+		return ..()
 
 /mob/living/silicon/robot/fire_act()
 	if(!on_fire) //Silicons don't gain stacks from hotspots, but hotspots can ignite them
@@ -85,9 +88,9 @@
 		return
 	switch(severity)
 		if(1)
-			Stun(160)
+			Paralyze(160)
 		if(2)
-			Stun(60)
+			Paralyze(60)
 
 
 /mob/living/silicon/robot/emag_act(mob/user)
@@ -182,9 +185,8 @@
 			if (stat != DEAD)
 				adjustBruteLoss(30)
 
-/mob/living/silicon/robot/bullet_act(var/obj/item/projectile/Proj)
-	..(Proj)
+/mob/living/silicon/robot/bullet_act(obj/item/projectile/P, def_zone)
+	. = ..()
 	updatehealth()
-	if(prob(75) && Proj.damage > 0)
+	if(prob(75) && P.damage > 0)
 		spark_system.start()
-	return 2

@@ -5,13 +5,12 @@
 	item_state = "signaler"
 	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
-	materials = list(MAT_METAL=400, MAT_GLASS=120)
+	custom_materials = list(/datum/material/iron=400, /datum/material/glass=120)
 	wires = WIRE_RECEIVE | WIRE_PULSE | WIRE_RADIO_PULSE | WIRE_RADIO_RECEIVE
 	attachable = TRUE
 
 	var/code = DEFAULT_SIGNALER_CODE
 	var/frequency = FREQ_SIGNALER
-	var/delay = 0
 	var/datum/radio_frequency/radio_connection
 	var/suicider = null
 	var/hearing_range = 1
@@ -48,63 +47,49 @@
 		holder.update_icon()
 	return
 
-/obj/item/assembly/signaler/ui_interact(mob/user, flag1)
-	. = ..()
-	if(is_secured(user))
-		var/t1 = "-------"
-		var/dat = {"
-<TT>
-
-<A href='byond://?src=[REF(src)];send=1'>Send Signal</A><BR>
-<B>Frequency/Code</B> for signaler:<BR>
-Frequency:
-[format_frequency(src.frequency)]
-<A href='byond://?src=[REF(src)];set=freq'>Set</A><BR>
-
-Code:
-[src.code]
-<A href='byond://?src=[REF(src)];set=code'>Set</A><BR>
-[t1]
-</TT>"}
-		user << browse(dat, "window=radio")
-		onclose(user, "radio")
+/obj/item/assembly/signaler/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
+	if(!is_secured(user))
 		return
+	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+	if(!ui)
+		var/ui_width = 280
+		var/ui_height = 132
+		ui = new(user, src, ui_key, "signaler", name, ui_width, ui_height, master_ui, state)
+		ui.open()
 
+/obj/item/assembly/signaler/ui_data(mob/user)
+	var/list/data = list()
+	data["frequency"] = frequency
+	data["code"] = code
+	data["minFrequency"] = MIN_FREE_FREQ
+	data["maxFrequency"] = MAX_FREE_FREQ
 
-/obj/item/assembly/signaler/Topic(href, href_list)
-	..()
+	return data
 
-	if(!usr.canUseTopic(src, BE_CLOSE))
-		usr << browse(null, "window=radio")
-		onclose(usr, "radio")
+/obj/item/assembly/signaler/ui_act(action, params)
+	if(..())
 		return
+	switch(action)
+		if("signal")
+			INVOKE_ASYNC(src, .proc/signal)
+			. = TRUE
+		if("freq")
+			frequency = unformat_frequency(params["freq"])
+			frequency = sanitize_frequency(frequency, TRUE)
+			set_frequency(frequency)
+			. = TRUE
+		if("code")
+			code = text2num(params["code"])
+			code = round(code)
+			. = TRUE
+		if("reset")
+			if(params["reset"] == "freq")
+				frequency = initial(frequency)
+			else
+				code = initial(code)
+			. = TRUE
 
-	if (href_list["set"])
-
-		if(href_list["set"] == "freq")
-			var/new_freq = input(usr, "Input a new signalling frequency", "Remote Signaller Frequency", format_frequency(frequency)) as num|null
-			if(!usr.canUseTopic(src, BE_CLOSE))
-				return
-			new_freq = unformat_frequency(new_freq)
-			new_freq = sanitize_frequency(new_freq, TRUE)
-			set_frequency(new_freq)
-
-		if(href_list["set"] == "code")
-			var/new_code = input(usr, "Input a new signalling code", "Remote Signaller Code", code) as num|null
-			if(!usr.canUseTopic(src, BE_CLOSE))
-				return
-			new_code = round(new_code)
-			new_code = CLAMP(new_code, 1, 100)
-			code = new_code
-
-	if(href_list["send"])
-		spawn( 0 )
-			signal()
-
-	if(usr)
-		attack_self(usr)
-
-	return
+	update_icon()
 
 /obj/item/assembly/signaler/attackby(obj/item/W, mob/user, params)
 	if(issignaler(W))
@@ -169,14 +154,13 @@ Code:
 	return TRUE
 
 /obj/item/assembly/signaler/receiver/examine(mob/user)
-	..()
-	to_chat(user, "<span class='notice'>The radio receiver is [on?"on":"off"].</span>")
+	. = ..()
+	. += "<span class='notice'>The radio receiver is [on?"on":"off"].</span>"
 
 /obj/item/assembly/signaler/receiver/receive_signal(datum/signal/signal)
 	if(!on)
 		return
 	return ..(signal)
-
 
 // Embedded signaller used in anomalies.
 /obj/item/assembly/signaler/anomaly
@@ -194,12 +178,53 @@ Code:
 		return FALSE
 	if(signal.data["code"] != code)
 		return FALSE
+	if(suicider)
+		manual_suicide(suicider)
 	for(var/obj/effect/anomaly/A in get_turf(src))
 		A.anomalyNeutralize()
 	return TRUE
 
-/obj/item/assembly/signaler/anomaly/attack_self()
-	return
+/obj/item/assembly/signaler/anomaly/manual_suicide(mob/living/carbon/user)
+	user.visible_message("<span class='suicide'>[user]'s [src] is reacting to the radio signal, warping [user.p_their()] body!</span>")
+	user.suiciding = TRUE
+	user.suicide_log()
+	user.gib()
+
+/obj/item/assembly/signaler/anomaly/attackby(obj/item/I, mob/user, params)
+	if(I.tool_behaviour == TOOL_ANALYZER)
+		to_chat(user, "<span class='notice'>Analyzing... [src]'s stabilized field is fluctuating along frequency [format_frequency(frequency)], code [code].</span>")
+	..()
+
+//Anomaly cores
+/obj/item/assembly/signaler/anomaly/pyro
+	name = "\improper pyroclastic anomaly core"
+	desc = "The neutralized core of a pyroclastic anomaly. It feels warm to the touch. It'd probably be valuable for research."
+	icon_state = "pyro core"
+	anomaly_type = /obj/effect/anomaly/pyro
+
+/obj/item/assembly/signaler/anomaly/grav
+	name = "\improper gravitational anomaly core"
+	desc = "The neutralized core of a gravitational anomaly. It feels much heavier than it looks. It'd probably be valuable for research."
+	icon_state = "grav core"
+	anomaly_type = /obj/effect/anomaly/grav
+
+/obj/item/assembly/signaler/anomaly/flux
+	name = "\improper flux anomaly core"
+	desc = "The neutralized core of a flux anomaly. Touching it makes your skin tingle. It'd probably be valuable for research."
+	icon_state = "flux core"
+	anomaly_type = /obj/effect/anomaly/flux
+
+/obj/item/assembly/signaler/anomaly/bluespace
+	name = "\improper bluespace anomaly core"
+	desc = "The neutralized core of a bluespace anomaly. It keeps phasing in and out of view. It'd probably be valuable for research."
+	icon_state = "anomaly core"
+	anomaly_type = /obj/effect/anomaly/bluespace
+
+/obj/item/assembly/signaler/anomaly/vortex
+	name = "\improper vortex anomaly core"
+	desc = "The neutralized core of a vortex anomaly. It won't sit still, as if some invisible force is acting on it. It'd probably be valuable for research."
+	icon_state = "vortex core"
+	anomaly_type = /obj/effect/anomaly/bhole
 
 /obj/item/assembly/signaler/cyborg
 

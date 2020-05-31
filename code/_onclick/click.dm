@@ -75,6 +75,9 @@
 	if(notransform)
 		return
 
+	if(SEND_SIGNAL(src, COMSIG_MOB_CLICKON, A, params) & COMSIG_MOB_CANCEL_CLICKON)
+		return
+
 	var/list/modifiers = params2list(params)
 	if(modifiers["shift"] && modifiers["middle"])
 		ShiftMiddleClickOn(A)
@@ -152,10 +155,10 @@
 		else
 			if(ismob(A))
 				changeNext_move(CLICK_CD_MELEE)
-			UnarmedAttack(A,1)
+			UnarmedAttack(A, 1)
 	else
 		if(W)
-			W.afterattack(A,src,0,params)
+			W.ranged_attack_chain(src, A, params)
 		else
 			RangedAttack(A,params)
 
@@ -319,10 +322,11 @@
 /mob/proc/ShiftClickOn(atom/A)
 	A.ShiftClick(src)
 	return
+
 /atom/proc/ShiftClick(mob/user)
-	SEND_SIGNAL(src, COMSIG_CLICK_SHIFT, user)
-	user.examinate(src)
-	return
+	var/flags = SEND_SIGNAL(src, COMSIG_CLICK_SHIFT, user) | SEND_SIGNAL(user, COMSIG_MOB_CLICKED_SHIFT_ON, src)
+	if(!(flags & COMPONENT_DENY_EXAMINATE) && user.client && (user.client.eye == user || user.client.eye == user.loc || flags & COMPONENT_ALLOW_EXAMINATE))
+		user.examinate(src)
 
 /*
 	Ctrl click
@@ -353,8 +357,17 @@
 	Unused except for AI
 */
 /mob/proc/AltClickOn(atom/A)
-	A.AltClick(src)
-	return
+	if(!A.AltClick(src))
+		altclick_listed_turf(A)
+
+/mob/proc/altclick_listed_turf(atom/A)
+	var/turf/T = get_turf(A)
+	if(T == A.loc || T == A)
+		if(T == listed_turf)
+			listed_turf = null
+		else if(TurfAdjacent(T))
+			listed_turf = T
+			client.statpanel = T.name
 
 /mob/living/carbon/AltClickOn(atom/A)
 	if(!stat && mind && iscarbon(A) && A != src)
@@ -366,18 +379,7 @@
 	..()
 
 /atom/proc/AltClick(mob/user)
-	SEND_SIGNAL(src, COMSIG_CLICK_ALT, user)
-	var/turf/T = get_turf(src)
-	if(T && user.TurfAdjacent(T))
-		user.listed_turf = T
-		user.client.statpanel = T.name
-
-// Use this instead of /mob/proc/AltClickOn(atom/A) where you only want turf content listing without additional atom alt-click interaction
-/atom/proc/AltClickNoInteract(mob/user, atom/A)
-	var/turf/T = get_turf(A)
-	if(T && user.TurfAdjacent(T))
-		user.listed_turf = T
-		user.client.statpanel = T.name
+	. = SEND_SIGNAL(src, COMSIG_CLICK_ALT, user)
 
 /mob/proc/TurfAdjacent(turf/T)
 	return T.Adjacent(src)
@@ -421,32 +423,36 @@
 	LE.fire()
 
 // Simple helper to face what you clicked on, in case it should be needed in more than one place
-/mob/proc/face_atom(atom/A)
-	if( buckled || stat != CONSCIOUS || !A || !x || !y || !A.x || !A.y )
+/mob/proc/face_atom(atom/A, ismousemovement = FALSE)
+	if( buckled || stat != CONSCIOUS || !loc || !A || !A.x || !A.y )
 		return
-	var/dx = A.x - x
-	var/dy = A.y - y
+	var/atom/L = loc
+	if(L.flags_1 & BLOCK_FACE_ATOM_1)
+		return
+	var/turf/T = get_turf(src)
+	var/dx = A.x - T.x
+	var/dy = A.y - T.y
 	if(!dx && !dy) // Wall items are graphically shifted but on the floor
 		if(A.pixel_y > 16)
-			setDir(NORTH)
+			setDir(NORTH, ismousemovement)
 		else if(A.pixel_y < -16)
-			setDir(SOUTH)
+			setDir(SOUTH, ismousemovement)
 		else if(A.pixel_x > 16)
-			setDir(EAST)
+			setDir(EAST, ismousemovement)
 		else if(A.pixel_x < -16)
-			setDir(WEST)
+			setDir(WEST, ismousemovement)
 		return
 
 	if(abs(dx) < abs(dy))
 		if(dy > 0)
-			setDir(NORTH)
+			setDir(NORTH, ismousemovement)
 		else
-			setDir(SOUTH)
+			setDir(SOUTH, ismousemovement)
 	else
 		if(dx > 0)
-			setDir(EAST)
+			setDir(EAST, ismousemovement)
 		else
-			setDir(WEST)
+			setDir(WEST, ismousemovement)
 
 //debug
 /obj/screen/proc/scale_to(x1,y1)

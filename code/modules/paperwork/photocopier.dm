@@ -18,7 +18,7 @@
 	active_power_usage = 200
 	power_channel = EQUIP
 	max_integrity = 300
-	integrity_failure = 100
+	integrity_failure = 0.33
 	var/obj/item/paper/copy = null	//what's in the copier!
 	var/obj/item/photo/photocopy = null
 	var/obj/item/documents/doccopy = null
@@ -121,11 +121,10 @@
 					if(isalienadult(ass) || istype(ass, /mob/living/simple_animal/hostile/alien)) //Xenos have their own asses, thanks to Pybro.
 						temp_img = icon('icons/ass/assalien.png')
 					else if(ishuman(ass)) //Suit checks are in check_ass
-						if(ass.gender == MALE)
-							temp_img = icon('icons/ass/assmale.png')
-						else if(ass.gender == FEMALE)
+						var/mob/living/carbon/human/H = ass
+						if(H.dna.features["body_model"] == FEMALE)
 							temp_img = icon('icons/ass/assfemale.png')
-						else 									//In case anyone ever makes the generic ass. For now I'll be using male asses.
+						else
 							temp_img = icon('icons/ass/assmale.png')
 					else if(isdrone(ass)) //Drones are hot
 						temp_img = icon('icons/ass/assdrone.png')
@@ -335,6 +334,18 @@
 	name = "toner cartridge"
 	icon = 'icons/obj/device.dmi'
 	icon_state = "tonercartridge"
-	grind_results = list("iodine" = 40, "iron" = 10)
+	grind_results = list(/datum/reagent/iodine = 40, /datum/reagent/iron = 10)
 	var/charges = 5
 	var/max_charges = 5
+
+/obj/item/toner/large
+	name = "large toner cartridge"
+	grind_results = list(/datum/reagent/iodine = 90, /datum/reagent/iron = 10)
+	charges = 15
+	max_charges = 15
+
+/obj/item/toner/extreme
+	name = "extremely large toner cartridge"
+	desc = "Why would ANYONE need THIS MUCH TONER?"
+	charges = 200
+	max_charges = 200

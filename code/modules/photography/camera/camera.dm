@@ -14,7 +14,8 @@
 	w_class = WEIGHT_CLASS_SMALL
 	flags_1 = CONDUCT_1
 	slot_flags = ITEM_SLOT_NECK
-	materials = list(MAT_METAL = 50, MAT_GLASS = 150)
+	custom_materials = list(/datum/material/iron = 50, /datum/material/glass = 150)
+	custom_price = 120
 	var/flash_enabled = TRUE
 	var/state_on = "camera"
 	var/state_off = "camera_off"
@@ -33,6 +34,8 @@
 	var/picture_size_y_min = 1
 	var/picture_size_x_max = 4
 	var/picture_size_y_max = 4
+	var/can_customise = TRUE
+	var/default_picture_name
 
 /obj/item/camera/attack_self(mob/user)
 	if(!disk)
@@ -43,16 +46,17 @@
 
 /obj/item/camera/examine(mob/user)
 	. = ..()
-	to_chat(user, "<span class='notice'>Alt-click to change its focusing, allowing you to set how big of an area it will capture.</span>")
+	. += "<span class='notice'>Alt-click to change its focusing, allowing you to set how big of an area it will capture.</span>"
 
 /obj/item/camera/AltClick(mob/user)
+	. = ..()
 	if(!user.canUseTopic(src, BE_CLOSE))
 		return
 	var/desired_x = input(user, "How high do you want the camera to shoot, between [picture_size_x_min] and [picture_size_x_max]?", "Zoom", picture_size_x) as num
 	var/desired_y = input(user, "How wide do you want the camera to shoot, between [picture_size_y_min] and [picture_size_y_max]?", "Zoom", picture_size_y) as num
-	picture_size_x = min(CLAMP(desired_x, picture_size_x_min, picture_size_x_max), CAMERA_PICTURE_SIZE_HARD_LIMIT)
-	picture_size_y = min(CLAMP(desired_y, picture_size_y_min, picture_size_y_max), CAMERA_PICTURE_SIZE_HARD_LIMIT)
-
+	picture_size_x = min(clamp(desired_x, picture_size_x_min, picture_size_x_max), CAMERA_PICTURE_SIZE_HARD_LIMIT)
+	picture_size_y = min(clamp(desired_y, picture_size_y_min, picture_size_y_max), CAMERA_PICTURE_SIZE_HARD_LIMIT)
+	return TRUE
 
 /obj/item/camera/attack(mob/living/carbon/human/M, mob/user)
 	return
@@ -81,8 +85,8 @@
 	..()
 
 /obj/item/camera/examine(mob/user)
-	..()
-	to_chat(user, "It has [pictures_left] photos left.")
+	. = ..()
+	. += "It has [pictures_left] photos left."
 
 //user can be atom or mob
 /obj/item/camera/proc/can_target(atom/target, mob/user, prox_flag)
@@ -152,8 +156,8 @@
 	if(!isturf(target_turf))
 		blending = FALSE
 		return FALSE
-	size_x = CLAMP(size_x, 0, CAMERA_PICTURE_SIZE_HARD_LIMIT)
-	size_y = CLAMP(size_y, 0, CAMERA_PICTURE_SIZE_HARD_LIMIT)
+	size_x = clamp(size_x, 0, CAMERA_PICTURE_SIZE_HARD_LIMIT)
+	size_y = clamp(size_y, 0, CAMERA_PICTURE_SIZE_HARD_LIMIT)
 	var/list/desc = list("This is a photo of an area of [size_x+1] meters by [size_y+1] meters.")
 	var/ai_user = isAI(user)
 	var/list/seen
@@ -198,8 +202,10 @@
 		user.put_in_hands(p)
 		pictures_left--
 		to_chat(user, "<span class='notice'>[pictures_left] photos left.</span>")
-		var/customize = alert(user, "Do you want to customize the photo?", "Customization", "Yes", "No")
-		if(customize == "Yes")
+		var/customise = "No"
+		if(can_customise)
+			customise = alert(user, "Do you want to customize the photo?", "Customization", "Yes", "No")
+		if(customise == "Yes")
 			var/name1 = stripped_input(user, "Set a name for this photo, or leave blank. 32 characters max.", "Name", max_length = 32)
 			var/desc1 = stripped_input(user, "Set a description to add to photo, or leave blank. 128 characters max.", "Caption", max_length = 128)
 			var/caption = stripped_input(user, "Set a caption for this photo, or leave blank. 256 characters max.", "Caption", max_length = 256)
@@ -209,6 +215,10 @@
 				picture.picture_desc = "[desc1] - [picture.picture_desc]"
 			if(caption)
 				picture.caption = caption
+		else
+			if(default_picture_name)
+				picture.picture_name = default_picture_name
+
 		p.set_picture(picture, TRUE, TRUE)
 		if(CONFIG_GET(flag/picture_logging_camera))
 			picture.log_to_file()

@@ -260,7 +260,7 @@
 	if(..())
 		return
 
-	if(usr.contents.Find(src) || (in_range(src, usr) && isturf(loc)) || issilicon(usr))
+	if(usr.contents.Find(src) || (in_range(src, usr) && isturf(loc)) || hasSiliconAccessInArea(usr))
 		//Authenticate
 		if (href_list["auth"])
 			if(LINKED_SERVER_NONRESPONSIVE)
@@ -421,12 +421,12 @@
 							"name" = "[customsender]",
 							"job" = "[customjob]",
 							"message" = custommessage,
-							"emoji_message" = emoji_parse(custommessage),
+							"emojis" = TRUE,
 							"targets" = list("[customrecepient.owner] ([customrecepient.ownjob])")
 						))
 						// this will log the signal and transmit it to the target
 						linkedServer.receive_information(signal, null)
-						usr.log_message("(PDA: [name]) sent \"[custommessage]\" to [signal.format_target()]", LOG_PDA)
+						usr.log_message("(PDA: [name] | [usr.real_name]) sent \"[custommessage]\" to [signal.format_target()]", LOG_PDA)
 
 
 		//Request Console Logs - KEY REQUIRED

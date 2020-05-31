@@ -11,7 +11,7 @@
 	potency = 15
 	icon_dead = "wheat-dead"
 	mutatelist = list(/obj/item/seeds/wheat/oat, /obj/item/seeds/wheat/meat)
-	reagents_add = list("nutriment" = 0.04)
+	reagents_add = list(/datum/reagent/consumable/nutriment = 0.04)
 
 /obj/item/reagent_containers/food/snacks/grown/wheat
 	seed = /obj/item/seeds/wheat
@@ -22,9 +22,9 @@
 	filling_color = "#F0E68C"
 	bitesize_mod = 2
 	foodtype = GRAIN
-	grind_results = list("flour" = 0)
+	grind_results = list(/datum/reagent/consumable/flour = 0)
 	tastes = list("wheat" = 1)
-	distill_reagent = "beer"
+	distill_reagent = /datum/reagent/consumable/ethanol/beer
 
 // Oat
 /obj/item/seeds/wheat/oat
@@ -33,6 +33,7 @@
 	icon_state = "seed-oat"
 	species = "oat"
 	plantname = "Oat Stalks"
+	rarity = 10 //Not really new, just better
 	product = /obj/item/reagent_containers/food/snacks/grown/oat
 	mutatelist = list()
 
@@ -45,9 +46,9 @@
 	filling_color = "#556B2F"
 	bitesize_mod = 2
 	foodtype = GRAIN
-	grind_results = list("flour" = 0)
+	grind_results = list(/datum/reagent/consumable/flour = 0.5) //So when it grinds it has 50% more flour
 	tastes = list("oat" = 1)
-	distill_reagent = "ale"
+	distill_reagent = /datum/reagent/consumable/ethanol/ale
 
 // Rice
 /obj/item/seeds/wheat/rice
@@ -69,9 +70,9 @@
 	filling_color = "#FAFAD2"
 	bitesize_mod = 2
 	foodtype = GRAIN
-	grind_results = list("rice" = 0)
+	grind_results = list(/datum/reagent/consumable/rice = 0)
 	tastes = list("rice" = 1)
-	distill_reagent = "sake"
+	distill_reagent = /datum/reagent/consumable/ethanol/sake
 
 //Meatwheat - grows into synthetic meat
 /obj/item/seeds/wheat/meat
@@ -81,6 +82,7 @@
 	species = "meatwheat"
 	plantname = "Meatwheat"
 	product = /obj/item/reagent_containers/food/snacks/grown/meatwheat
+	rarity = 40
 	mutatelist = list()
 
 /obj/item/reagent_containers/food/snacks/grown/meatwheat
@@ -92,7 +94,7 @@
 	bitesize_mod = 2
 	seed = /obj/item/seeds/wheat/meat
 	foodtype = MEAT | GRAIN
-	grind_results = list("flour" = 0, "blood" = 0)
+	grind_results = list(/datum/reagent/consumable/flour = 0, /datum/reagent/blood = 0)
 	tastes = list("meatwheat" = 1)
 	can_distill = FALSE
 

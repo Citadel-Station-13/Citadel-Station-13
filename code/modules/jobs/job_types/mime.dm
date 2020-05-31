@@ -13,10 +13,15 @@
 
 	access = list(ACCESS_THEATRE)
 	minimal_access = list(ACCESS_THEATRE)
+	paycheck = PAYCHECK_MINIMAL
+	paycheck_department = ACCOUNT_SRV
 
 	display_order = JOB_DISPLAY_ORDER_MIME
 
+	threat = 0
+
 /datum/job/mime/after_spawn(mob/living/carbon/human/H, mob/M)
+	. = ..()
 	H.apply_pref_name("mime", M.client)
 
 /datum/outfit/job/mime
@@ -25,7 +30,7 @@
 
 	belt = /obj/item/pda/mime
 	ears = /obj/item/radio/headset/headset_srv
-	uniform = /obj/item/clothing/under/rank/mime
+	uniform = /obj/item/clothing/under/rank/civilian/mime
 	mask = /obj/item/clothing/mask/gas/mime
 	gloves = /obj/item/clothing/gloves/color/white
 	head = /obj/item/clothing/head/frenchberet
@@ -36,7 +41,7 @@
 	satchel = /obj/item/storage/backpack/mime
 
 
-/datum/outfit/job/mime/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+/datum/outfit/job/mime/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE, client/preference_source)
 	..()
 
 	if(visualsOnly)
@@ -46,4 +51,10 @@
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/conjure/mime_wall(null))
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/mime/speak(null))
 		H.mind.miming = 1
+
+	var/client/C = H.client || preference_source
+	if(C)
+		H.apply_pref_name("mime", C)
+	else
+		H.fully_replace_character_name(H.real_name, pick(GLOB.mime_names))
 

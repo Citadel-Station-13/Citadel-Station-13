@@ -1,6 +1,7 @@
 //we vlambeer now
 
 /obj/proc/shake_camera(mob/M, duration, strength=1)//byond's wonky with this shit
+	set waitfor = FALSE
 	if(!M || !M.client || duration <= 0)
 		return
 	var/client/C = M.client
@@ -53,7 +54,7 @@
 				if (1)
 					shake_camera(M, ((force - 10) * 0.015 + 1), ((force - 10) * 0.015))
 				if (2)
-					if (!M.canmove)
+					if(!CHECK_MOBILITY(M, MOBILITY_MOVE))
 						shake_camera(M, ((force - 10) * 0.015 + 1), ((force - 10) * 0.015))
 
 /obj/item/attack_obj(obj/O, mob/living/user)

@@ -54,7 +54,7 @@
 		return FALSE
 	return ..()
 
-/obj/structure/stairs/update_icon()
+/obj/structure/stairs/update_icon_state()
 	if(isTerminator())
 		icon_state = "stairs_t"
 	else
@@ -102,13 +102,13 @@
 /obj/structure/stairs/proc/force_open_above()
 	var/turf/open/openspace/T = get_step_multiz(get_turf(src), UP)
 	if(T && !istype(T))
-		T.ChangeTurf(/turf/open/openspace)
+		T.ChangeTurf(/turf/open/openspace, flags = CHANGETURF_INHERIT_AIR)
 
 /obj/structure/stairs/proc/on_multiz_new(turf/source, dir)
 	if(dir == UP)
 		var/turf/open/openspace/T = get_step_multiz(get_turf(src), UP)
 		if(T && !istype(T))
-			T.ChangeTurf(/turf/open/openspace)
+			T.ChangeTurf(/turf/open/openspace, flags = CHANGETURF_INHERIT_AIR)
 
 /obj/structure/stairs/intercept_zImpact(atom/movable/AM, levels = 1)
 	. = ..()

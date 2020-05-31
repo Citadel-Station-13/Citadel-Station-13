@@ -19,7 +19,7 @@
 	icon_state = "welding"
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
 	item_state = "welding"
-	materials = list(MAT_METAL=1750, MAT_GLASS=400)
+	custom_materials = list(/datum/material/iron=1750, /datum/material/glass=400)
 	flash_protect = 2
 	tint = 2
 	armor = list("melee" = 10, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 60)
@@ -28,8 +28,7 @@
 	visor_flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE
 	visor_flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
 	resistance_flags = FIRE_PROOF
-	mutantrace_variation = MUTANTRACE_VARIATION
-	clothing_flags = SNUG_FIT
+	mutantrace_variation = STYLE_MUZZLE
 
 /obj/item/clothing/head/welding/attack_self(mob/user)
 	weldingvisortoggle(user)
@@ -43,7 +42,7 @@
 	desc = "You put the cake on your head. Brilliant."
 	icon_state = "hardhat0_cakehat"
 	item_state = "hardhat0_cakehat"
-	item_color = "cakehat"
+	hat_type = "cakehat"
 	hitsound = 'sound/weapons/tap.ogg'
 	flags_inv = HIDEEARS|HIDEHAIR
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 0)
@@ -87,6 +86,7 @@
 	desc = "Perfect for winter in Siberia, da?"
 	icon_state = "ushankadown"
 	item_state = "ushankadown"
+	alternate_screams = list('sound/voice/human/cyka1.ogg', 'sound/voice/human/cheekibreeki.ogg')
 	flags_inv = HIDEEARS|HIDEHAIR
 	var/earflaps = 1
 	cold_protection = HEAD
@@ -114,9 +114,7 @@
 	desc = "A jack o' lantern! Believed to ward off evil spirits."
 	icon_state = "hardhat0_pumpkin"
 	item_state = "hardhat0_pumpkin"
-	item_color = "pumpkin"
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
-	clothing_flags = SNUG_FIT
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 0)
 	brightness_on = 2 //luminosity when on
 	flags_cover = HEADCOVERSEYES
@@ -152,7 +150,6 @@
 	desc = "Some fake antlers and a very fake red nose."
 	icon_state = "hardhat0_reindeer"
 	item_state = "hardhat0_reindeer"
-	item_color = "reindeer"
 	flags_inv = 0
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 0)
 	brightness_on = 1 //luminosity when on
@@ -165,8 +162,8 @@
 	desc = "A helmet made out of a box."
 	icon_state = "cardborg_h"
 	item_state = "cardborg_h"
-	clothing_flags = SNUG_FIT
 	flags_cover = HEADCOVERSEYES
+	alternate_screams = list('modular_citadel/sound/voice/scream_silicon.ogg')
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
 
 	dog_fashion = /datum/dog_fashion/head/cardborg
@@ -188,41 +185,40 @@
 /obj/item/clothing/head/wig
 	name = "wig"
 	desc = "A bunch of hair without a head attached."
-	icon_state = ""
-	item_state = "pwig"
+	icon = 'icons/mob/human_face.dmi'	  // default icon for all hairs
+	icon_state = "hair_vlong"
 	flags_inv = HIDEHAIR
+	color = "#000"
 	var/hair_style = "Very Long Hair"
-	var/hair_color = "#000"
 
 /obj/item/clothing/head/wig/Initialize(mapload)
 	. = ..()
+	icon_state = "" //Shitty hack that i dont know if it is even neccesary to deal with the vendor stack exception
 	update_icon()
 
-/obj/item/clothing/head/wig/update_icon()
-	cut_overlays()
+/obj/item/clothing/head/wig/update_icon_state()
 	var/datum/sprite_accessory/S = GLOB.hair_styles_list[hair_style]
 	if(!S)
+		icon = 'icons/obj/clothing/hats.dmi'
 		icon_state = "pwig"
 	else
-		var/mutable_appearance/M = mutable_appearance(S.icon,S.icon_state)
-		M.appearance_flags |= RESET_COLOR
-		M.color = hair_color
-		add_overlay(M)
+		icon = S.icon
+		icon_state = S.icon_state
 
-/obj/item/clothing/head/wig/worn_overlays(isinhands = FALSE, file2use)
-	. = list()
+/obj/item/clothing/head/wig/worn_overlays(isinhands = FALSE, icon_file, used_state, style_flags = NONE)
+	. = ..()
 	if(!isinhands)
 		var/datum/sprite_accessory/S = GLOB.hair_styles_list[hair_style]
 		if(!S)
 			return
 		var/mutable_appearance/M = mutable_appearance(S.icon, S.icon_state,layer = -HAIR_LAYER)
 		M.appearance_flags |= RESET_COLOR
-		M.color = hair_color
+		M.color = color
 		. += M
 
 /obj/item/clothing/head/wig/random/Initialize(mapload)
 	hair_style = pick(GLOB.hair_styles_list - "Bald") //Don't want invisible wig
-	hair_color = "#[random_short_color()]"
+	color = "#[random_short_color()]"
 	. = ..()
 
 /obj/item/clothing/head/bronze
@@ -230,7 +226,6 @@
 	desc = "A crude helmet made out of bronze plates. It offers very little in the way of protection."
 	icon = 'icons/obj/clothing/clockwork_garb.dmi'
 	icon_state = "clockwork_helmet_old"
-	clothing_flags = SNUG_FIT
 	flags_inv = HIDEEARS|HIDEHAIR
 	armor = list("melee" = 5, "bullet" = 0, "laser" = -5, "energy" = 0, "bomb" = 10, "bio" = 0, "rad" = 0, "fire" = 20, "acid" = 20)
 
@@ -243,7 +238,7 @@
 	equip_delay_other = 140
 	var/datum/brain_trauma/mild/phobia/paranoia
 	var/warped = FALSE
-	clothing_flags = ANTI_TINFOIL_MANEUVER
+	clothing_flags = IGNORE_HAT_TOSS
 
 /obj/item/clothing/head/foilhat/Initialize(mapload)
 	. = ..()
@@ -258,8 +253,8 @@
 		return
 	if(paranoia)
 		QDEL_NULL(paranoia)
-	paranoia = new()
-	user.gain_trauma(paranoia, TRAUMA_RESILIENCE_MAGIC, "conspiracies")
+	paranoia = new("conspiracies")
+	user.gain_trauma(paranoia, TRAUMA_RESILIENCE_MAGIC)
 	to_chat(user, "<span class='warning'>As you don the foiled hat, an entire world of conspiracy theories and seemingly insane ideas suddenly rush into your mind. What you once thought unbelievable suddenly seems.. undeniable. Everything is connected and nothing happens just by accident. You know too much and now they're out to get you. </span>")
 
 /obj/item/clothing/head/foilhat/MouseDrop(atom/over_object)
@@ -301,3 +296,16 @@
 	. = ..()
 	if(!warped)
 		warp_up()
+
+/obj/item/clothing/head/flakhelm	//Actually the M1 Helmet
+	name = "flak helmet"
+	icon_state = "m1helm"
+	item_state = "helmet"
+	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0.1, "bio" = 0, "rad" = 0, "fire" = -10, "acid" = -15)
+	desc = "A dilapidated helmet used in ancient wars. This one is brittle and essentially useless. An ace of spades is tucked into the band around the outer shell."
+	pocket_storage_component_path = /datum/component/storage/concrete/pockets/tiny/spacenam	//So you can stuff other things in the elastic band instead of it simply being a fluff thing.
+
+//The "pocket" for the M1 helmet so you can tuck things into the elastic band
+
+/datum/component/storage/concrete/pockets/tiny/spacenam
+	attack_hand_interact = TRUE		//So you can actually see what you stuff in there

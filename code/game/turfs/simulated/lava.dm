@@ -23,6 +23,10 @@
 /turf/open/lava/MakeSlippery(wet_setting, min_wet_time, wet_time_to_add, max_wet_time, permanent)
 	return
 
+/turf/open/lava/Melt()
+	to_be_destroyed = FALSE
+	return src
+
 /turf/open/lava/acid_act(acidpwr, acid_volume)
 	return
 
@@ -30,13 +34,13 @@
 	return
 
 /turf/open/lava/airless
-	initial_gas_mix = "TEMP=2.7"
+	initial_gas_mix = AIRLESS_ATMOS
 
 /turf/open/lava/Entered(atom/movable/AM)
 	if(burn_stuff(AM))
 		START_PROCESSING(SSobj, src)
 
-/turf/open/lava/hitby(atom/movable/AM)
+/turf/open/lava/hitby(atom/movable/AM, skipcatch, hitpush, blocked, datum/thrownthing/throwingdatum)
 	if(burn_stuff(AM))
 		START_PROCESSING(SSobj, src)
 
@@ -54,7 +58,7 @@
 	switch(passed_mode)
 		if(RCD_FLOORWALL)
 			to_chat(user, "<span class='notice'>You build a floor.</span>")
-			PlaceOnTop(/turf/open/floor/plating)
+			PlaceOnTop(/turf/open/floor/plating, flags = CHANGETURF_INHERIT_AIR)
 			return TRUE
 	return FALSE
 
@@ -77,10 +81,25 @@
 
 /turf/open/lava/TakeTemperature(temp)
 
+/turf/open/lava/attackby(obj/item/C, mob/user, params)
+	..()
+	if(istype(C, /obj/item/stack/rods/lava))
+		var/obj/item/stack/rods/lava/R = C
+		var/obj/structure/lattice/lava/H = locate(/obj/structure/lattice/lava, src)
+		if(H)
+			to_chat(user, "<span class='warning'>There is already a lattice here!</span>")
+			return
+		if(R.use(1))
+			to_chat(user, "<span class='notice'>You construct a lattice.</span>")
+			playsound(src, 'sound/weapons/genhit.ogg', 50, TRUE)
+			new /obj/structure/lattice/lava(locate(x, y, z))
+		else
+			to_chat(user, "<span class='warning'>You need one rod to build a heatproof lattice.</span>")
+		return
 
 /turf/open/lava/proc/is_safe()
 	//if anything matching this typecache is found in the lava, we don't burn things
-	var/static/list/lava_safeties_typecache = typecacheof(list(/obj/structure/lattice/catwalk, /obj/structure/stone_tile))
+	var/static/list/lava_safeties_typecache = typecacheof(list(/obj/structure/lattice/catwalk, /obj/structure/stone_tile, /obj/structure/lattice/lava))
 	var/list/found_safeties = typecache_filter_list(contents, lava_safeties_typecache)
 	for(var/obj/structure/stone_tile/S in found_safeties)
 		if(S.fallen)
@@ -158,4 +177,4 @@
 	baseturfs = /turf/open/lava/smooth/lava_land_surface
 
 /turf/open/lava/smooth/airless
-	initial_gas_mix = "TEMP=2.7"
+	initial_gas_mix = AIRLESS_ATMOS

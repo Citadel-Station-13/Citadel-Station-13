@@ -4,13 +4,17 @@
 	icon_state = "faithless"
 	icon_living = "faithless"
 	icon_dead = "faithless_dead"
-	mob_biotypes = list(MOB_ORGANIC, MOB_HUMANOID)
+	threat = 1
+	mob_biotypes = MOB_ORGANIC|MOB_HUMANOID
 	gender = MALE
 	speak_chance = 0
 	turns_per_move = 5
-	response_help = "passes through"
-	response_disarm = "shoves"
-	response_harm = "hits"
+	response_help_continuous = "passes through"
+	response_help_simple = "pass through"
+	response_disarm_continuous = "shoves"
+	response_disarm_simple = "shove"
+	response_harm_continuous = "hits"
+	response_harm_simple = "hit"
 	emote_taunt = list("wails")
 	taunt_chance = 25
 	speed = 0
@@ -19,12 +23,14 @@
 	spacewalk = TRUE
 	stat_attack = UNCONSCIOUS
 	robust_searching = 1
+	blood_volume = 0
 
 	harm_intent_damage = 10
 	obj_damage = 50
 	melee_damage_lower = 15
 	melee_damage_upper = 15
-	attacktext = "grips"
+	attack_verb_continuous = "grips"
+	attack_verb_simple = "grip"
 	attack_sound = 'sound/hallucinations/growl1.ogg'
 	speak_emote = list("growls")
 
@@ -34,12 +40,12 @@
 	faction = list("faithless")
 	gold_core_spawnable = HOSTILE_SPAWN
 
-	do_footstep = TRUE
+	footstep_type = FOOTSTEP_MOB_SHOE
 
 /mob/living/simple_animal/hostile/faithless/AttackingTarget()
 	. = ..()
 	if(. && prob(12) && iscarbon(target))
 		var/mob/living/carbon/C = target
-		C.Knockdown(60)
+		C.DefaultCombatKnockdown(60)
 		C.visible_message("<span class='danger'>\The [src] knocks down \the [C]!</span>", \
 				"<span class='userdanger'>\The [src] knocks you down!</span>")

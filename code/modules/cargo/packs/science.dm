@@ -10,27 +10,17 @@
 	group = "Science"
 	crate_type = /obj/structure/closet/crate/science
 
-/* For later
-/datum/supply_pack/science/monkey
+/datum/supply_pack/science/ape  //Ape out!
 	name = "Ape Cube Crate"
 	desc = "Pss what a new test subject with supper strangth, speed, and love for bananas all at the same time? Say no more... Contains a single ape cube. Dont add water!"
 	contraband = TRUE
 	cost = 2500
-	contains = list (/obj/item/reagent_containers/food/snacks/monkeycube/ape)
+	contains = list (/obj/item/reagent_containers/food/snacks/cube/ape)
 	crate_name = "ape cube crate"
-*/
-
-/datum/supply_pack/science/aliens
-	name = "Advanced Alien Alloy Crate Crate"
-	desc = "Hello brothers from the stars!!! Our fellow brethren have made contact at long last and gave us gifts man! They really did build the prymi- Connection Error- Bro we’ll send you a sheet of advanced alien alloy."
-	cost = 15000
-	contraband = TRUE
-	DropPodOnly = TRUE
-	contains = list(/obj/item/stack/sheet/mineral/abductor)
-	crate_name = "alien bro alloy crate"
+	can_private_buy = FALSE
 
 /datum/supply_pack/science/beakers
-	name = "Chemistry Beackers Crate"
+	name = "Chemistry Beakers Crate"
 	desc = "Glassware for any chemistry lab! Contains four small beakers, three large, two plastic, and one metamaterial. As well as three droppers and two pairs of latex gloves."
 	cost = 1500
 	contains = list(/obj/item/reagent_containers/glass/beaker,
@@ -54,7 +44,7 @@
 /datum/supply_pack/science/robotics/mecha_odysseus
 	name = "Circuit Crate (Odysseus)"
 	desc = "Ever wanted to build your own giant medical robot? Well, now you can! Contains the Odysseus main control board and Odysseus peripherals board. Requires Robotics access to open."
-	cost = 2500
+	cost = 1500
 	access = ACCESS_ROBOTICS
 	contains = list(/obj/item/circuitboard/mecha/odysseus/peripherals,
 					/obj/item/circuitboard/mecha/odysseus/main)
@@ -64,7 +54,7 @@
 /datum/supply_pack/science/robotics/mecha_ripley
 	name = "Circuit Crate (Ripley APLU)"
 	desc = "Rip apart rocks and xenomorphs alike with the Ripley APLU. Contains the Main Ripley control board, as well as the Ripley Peripherals board. Requires Robotics access to open."
-	cost = 3000
+	cost = 1200
 	access = ACCESS_ROBOTICS
 	contains = list(/obj/item/book/manual/ripley_build_and_repair,
 					/obj/item/circuitboard/mecha/ripley/main,
@@ -82,6 +72,16 @@
 					/obj/item/integrated_electronics/wirer)
 	crate_name = "circuitry starter pack crate"
 
+/datum/supply_pack/science/glasswork
+	name = "Glass Blower Kit Crate"
+	desc = "Learn and make glassworks of useful things for a profit! Contains glassworking tools and blowing rods. Glass not included."
+	cost = 1000
+	contains = list(/obj/item/glasswork/glasskit,
+					/obj/item/glasswork/glasskit,
+					/obj/item/glasswork/blowing_rod,
+					/obj/item/glasswork/blowing_rod)
+	crate_name = "glassblower gear crate"
+
 /datum/supply_pack/science/monkey
 	name = "Monkey Cube Crate"
 	desc = "Stop monkeying around! Contains seven monkey cubes. Just add water!"
@@ -97,17 +97,6 @@
 					/obj/item/clothing/gloves/color/latex/nitrile,
 					/obj/item/clothing/gloves/color/latex/nitrile)
 	crate_name = "nitrile gloves crate"
-
-/datum/supply_pack/science/nuke_b_gone
-	name = "Nuke Defusal Kit"
-	desc = "Contains set of tools to defuse a nuke."
-	cost = 7500 //Usefull for traitors/nukies that fucked up
-	dangerous = TRUE
-	DropPodOnly = TRUE
-	contains = list(/obj/item/nuke_core_container/nt,
-					/obj/item/screwdriver/nuke/nt,
-					/obj/item/paper/guides/nt/nuke_instructions)
-	crate_name = "safe defusal kit storage"
 
 /datum/supply_pack/science/plasma
 	name = "Plasma Assembly Crate"
@@ -131,7 +120,7 @@
 
 /datum/supply_pack/science/relic
 	name = "Relic Crate"
-	desc = "Ever want to play with old discounted toys? Look no more. Contains two relics."
+	desc = "Ever wanted to play with old discounted toys? Look no further. Contains two relics."
 	cost = 1000
 	contraband = TRUE
 	contains = list(/obj/item/relic,
@@ -152,6 +141,13 @@
 					/obj/item/stock_parts/cell/high)
 	crate_name = "robotics assembly crate"
 	crate_type = /obj/structure/closet/crate/secure/science
+
+/datum/supply_pack/science/rped
+	name = "RPED crate"
+	desc = "Need to rebuild the ORM but science got annihilated after a bomb test? Buy this for the most advanced parts NT can give you."
+	cost = 1500
+	contains = list(/obj/item/storage/part_replacer/cargo)
+	crate_name = "\improper RPED crate"
 
 /datum/supply_pack/science/shieldwalls
 	name = "Shield Generator Crate"
@@ -174,21 +170,10 @@
 	crate_name = "slime core crate"
 	crate_type = /obj/structure/closet/crate/secure/science
 
-/datum/supply_pack/science/supermater
-	name = "Supermatter Extraction Tools Crate"
-	desc = "Contains a set of tools to extract a sliver of supermatter. Consult your CE today!"
-	cost = 7500 //Usefull for traitors that fucked up
-	hidden = TRUE
-	contains = list(/obj/item/nuke_core_container/supermatter,
-					/obj/item/scalpel/supermatter,
-					/obj/item/hemostat/supermatter,
-					/obj/item/paper/guides/antag/supermatter_sliver)
-	crate_name = "supermatter extraction kit crate"
-
 /datum/supply_pack/science/tablets
 	name = "Tablet Crate"
 	desc = "What's a computer? Contains five cargo tablets."
-	cost = 3000
+	cost = 1500
 	contains = list(/obj/item/modular_computer/tablet/preset/cargo,
 					/obj/item/modular_computer/tablet/preset/cargo,
 					/obj/item/modular_computer/tablet/preset/cargo,
@@ -207,10 +192,3 @@
 	crate_type = /obj/structure/closet/crate/secure/science
 	dangerous = TRUE
 
-/datum/supply_pack/science/tech_slugs
-	name = "Tech Slug Ammo Shells"
-	desc = "A new type of shell that is able to be made into a few different dangerous types. Contains two boxes of tech slugs, 14 shells in all."
-	cost = 1700
-	contains = list(/obj/item/storage/box/techsslug,
-					/obj/item/storage/box/techsslug)
-	crate_name = "tech slug crate"

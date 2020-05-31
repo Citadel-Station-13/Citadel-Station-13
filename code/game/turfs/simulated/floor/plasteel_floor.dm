@@ -5,8 +5,8 @@
 	burnt_states = list("floorscorched1", "floorscorched2")
 
 /turf/open/floor/plasteel/examine(mob/user)
-	..()
-	to_chat(user, "<span class='notice'>There's a <b>small crack</b> on the edge of it.</span>")
+	. = ..()
+	. += "<span class='notice'>There's a <b>small crack</b> on the edge of it.</span>"
 
 /turf/open/floor/plasteel/update_icon()
 	if(!..())
@@ -16,17 +16,17 @@
 
 
 /turf/open/floor/plasteel/airless
-	initial_gas_mix = "TEMP=2.7"
+	initial_gas_mix = AIRLESS_ATMOS
 /turf/open/floor/plasteel/telecomms
-	initial_gas_mix = "n2=100;TEMP=80"
+	initial_gas_mix = TCOMMS_ATMOS
 
 
 /turf/open/floor/plasteel/dark
 	icon_state = "darkfull"
 /turf/open/floor/plasteel/dark/airless
-	initial_gas_mix = "TEMP=2.7"
+	initial_gas_mix = AIRLESS_ATMOS
 /turf/open/floor/plasteel/dark/telecomms
-	initial_gas_mix = "n2=100;TEMP=80"
+	initial_gas_mix = TCOMMS_ATMOS
 /turf/open/floor/plasteel/airless/dark
 	icon_state = "darkfull"
 /turf/open/floor/plasteel/dark/side
@@ -50,7 +50,7 @@
 /turf/open/floor/plasteel/airless/white/corner
 	icon_state = "whitecorner"
 /turf/open/floor/plasteel/white/telecomms
-	initial_gas_mix = "n2=100;TEMP=80"
+	initial_gas_mix = TCOMMS_ATMOS
 
 
 /turf/open/floor/plasteel/yellowsiding
@@ -68,6 +68,9 @@
 /turf/open/floor/plasteel/chapel
 	icon_state = "chapel"
 
+/turf/open/floor/plasteel/chapel_floor
+	icon_state = "chapel_alt"
+
 /turf/open/floor/plasteel/showroomfloor
 	icon_state = "showroomfloor"
 
@@ -82,7 +85,7 @@
 /turf/open/floor/plasteel/freezer
 	icon_state = "freezerfloor"
 /turf/open/floor/plasteel/freezer/airless
-	initial_gas_mix = "TEMP=2.7"
+	initial_gas_mix = AIRLESS_ATMOS
 
 /turf/open/floor/plasteel/grimy
 	icon_state = "grimy"
@@ -111,7 +114,7 @@
 /turf/open/floor/plasteel/cult/narsie_act()
 	return
 /turf/open/floor/plasteel/cult/airless
-	initial_gas_mix = "TEMP=2.7"
+	initial_gas_mix = AIRLESS_ATMOS
 
 
 /turf/open/floor/plasteel/stairs
@@ -143,3 +146,95 @@
 
 /turf/open/floor/plasteel/sepia
 	icon_state = "sepia"
+
+///////////////////////////////
+// Pre-Applied Decal Floors //
+//////////////////////////////
+
+// Neutral
+/turf/open/floor/plasteel/neutral
+	icon_state = "neutral_full"
+/turf/open/floor/plasteel/neutral/side
+	icon_state = "neutral"
+/turf/open/floor/plasteel/neutral/corner
+	icon_state = "neutral_corner"
+
+// Dark Neutral
+/turf/open/floor/plasteel/dark/neutral
+	icon_state = "dark_neutral_full"
+/turf/open/floor/plasteel/dark/neutral/checker
+	icon_state = "dark_neutral_checker"
+/turf/open/floor/plasteel/dark/neutral/side
+	icon_state = "dark_neutral"
+/turf/open/floor/plasteel/dark/neutral/corner
+	icon_state = "dark_neutral_corner"
+
+// Dark Security
+/turf/open/floor/plasteel/dark/security
+	icon_state = "dark_red_full"
+/turf/open/floor/plasteel/dark/security/checker
+	icon_state = "dark_red_checker"
+/turf/open/floor/plasteel/dark/security/side
+	icon_state = "dark_red"
+/turf/open/floor/plasteel/dark/security/corner
+	icon_state = "dark_red_corner"
+
+// Engineering
+/turf/open/floor/plasteel/engineering
+	icon_state = "engineering_full"
+/turf/open/floor/plasteel/engineering/side
+	icon_state = "engineering"
+/turf/open/floor/plasteel/engineering/corner
+	icon_state = "engineering_corner"
+
+// Atmospherics
+/turf/open/floor/plasteel/atmospherics
+	icon_state = "atmospherics_full"
+/turf/open/floor/plasteel/atmospherics/side
+	icon_state = "atmospherics"
+/turf/open/floor/plasteel/atmospherics/corner
+	icon_state = "atmospherics_corner"
+
+// Command
+/turf/open/floor/plasteel/command
+	icon_state = "command_full"
+/turf/open/floor/plasteel/command/side
+	icon_state = "command"
+/turf/open/floor/plasteel/command/corner
+	icon_state = "command_corner"
+
+// Medical
+/turf/open/floor/plasteel/medical
+	icon_state = "medical_full"
+/turf/open/floor/plasteel/medical/alt
+	icon_state = "medical_alt"
+/turf/open/floor/plasteel/medical/side
+	icon_state = "medical"
+/turf/open/floor/plasteel/medical/corner
+	icon_state = "medical_corner"
+
+// Security
+/turf/open/floor/plasteel/security
+	icon_state = "security_full"
+/turf/open/floor/plasteel/security/side
+	icon_state = "security"
+/turf/open/floor/plasteel/security/corner
+	icon_state = "security_corner"
+
+// Cargo
+/turf/open/floor/plasteel/cargo
+	icon_state = "cargo_full"
+/turf/open/floor/plasteel/cargo/side
+	icon_state = "cargo"
+/turf/open/floor/plasteel/cargo/corner
+	icon_state = "cargo_corner"
+
+// Misc
+/turf/open/floor/plasteel/showroomfloor/shower
+	icon_state = "shower"
+/turf/open/floor/plasteel/goonplaque/alien
+	icon_state = "plaque1"
+	desc = "\"This is a plaque is a collaboration of iconography celebrating the peaceful collaboration between the people of Earth and distant alien species."
+/turf/open/floor/plasteel/goonplaque/charter
+	icon_state = "plaque2"
+	desc = "\"A golden plaque. Etched into it is the introductory article for a cross-species interplanetary constitution, guaranteeing equal rights between species that Nanotrasen relunctantly agreed to."

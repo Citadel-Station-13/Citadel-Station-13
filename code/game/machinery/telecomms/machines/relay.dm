@@ -19,6 +19,11 @@
 	var/broadcasting = 1
 	var/receiving = 1
 
+/obj/machinery/telecomms/relay/RefreshParts()
+	idle_power_usage = 30
+	for(var/obj/item/stock_parts/manipulator/P in component_parts)
+		idle_power_usage -= (P.rating * 1.5) //Has 2 manipulators
+
 /obj/machinery/telecomms/relay/receive_information(datum/signal/subspace/signal, obj/machinery/telecomms/machine_from)
 	// Add our level and send it back
 	var/turf/T = get_turf(src)
@@ -49,6 +54,11 @@
 /obj/machinery/telecomms/relay/preset
 	network = "tcommsat"
 
+/obj/machinery/telecomms/relay/Initialize(mapload)
+	. = ..()
+	if(autolinkers.len) //We want lateloaded presets to autolink (lateloaded aways/ruins/shuttles)
+		return INITIALIZE_HINT_LATELOAD
+
 /obj/machinery/telecomms/relay/preset/station
 	id = "Station Relay"
 	autolinkers = list("s_relay")
@@ -74,3 +84,8 @@
 	icon = 'icons/obj/clockwork_objects.dmi'
 	hide = TRUE
 	autolinkers = list("h_relay")
+
+//Generic preset relay
+/obj/machinery/telecomms/relay/preset/auto
+	hide = TRUE
+	autolinkers = list("autorelay")

@@ -44,8 +44,6 @@
 	var/cell_type = /obj/item/stock_parts/cell
 	var/vest_type = /obj/item/clothing/suit/armor/vest
 
-	do_footstep = TRUE
-
 
 /mob/living/simple_animal/bot/ed209/Initialize(mapload,created_name,created_lasercolor)
 	. = ..()
@@ -110,7 +108,7 @@ Maintenance panel panel is [open ? "opened" : "closed"]<BR>"},
 
 "<A href='?src=[REF(src)];power=1'>[on ? "On" : "Off"]</A>" )
 
-	if(!locked || issilicon(user)|| IsAdminGhost(user))
+	if(!locked || hasSiliconAccessInArea(user)|| IsAdminGhost(user))
 		if(!lasercolor)
 			dat += text({"<BR>
 Arrest Unidentifiable Persons: []<BR>
@@ -210,7 +208,7 @@ Auto Patrol[]"},
 		if((Proj.damage_type == BURN) || (Proj.damage_type == BRUTE))
 			if(!Proj.nodamage && Proj.damage < src.health && ishuman(Proj.firer))
 				retaliate(Proj.firer)
-	..()
+	return ..()
 
 /mob/living/simple_animal/bot/ed209/handle_automated_action()
 	if(!..())
@@ -276,7 +274,7 @@ Auto Patrol[]"},
 		if(BOT_PREP_ARREST)		// preparing to arrest target
 
 			// see if he got away. If he's no no longer adjacent or inside a closet or about to get up, we hunt again.
-			if(!Adjacent(target) || !isturf(target.loc) || !target.recoveringstam || target.getStaminaLoss() <= 120) // CIT CHANGE - replaces amountknockdown with recoveringstam and staminaloss checks
+			if(!Adjacent(target) || !isturf(target.loc) || !(target.combat_flags & COMBAT_FLAG_HARD_STAMCRIT) || target.getStaminaLoss() <= 120) // CIT CHANGE - replaces amountknockdown with recoveringstam and staminaloss checks
 				back_to_hunt()
 				return
 
@@ -303,7 +301,7 @@ Auto Patrol[]"},
 				back_to_idle()
 				return
 
-			if(!Adjacent(target) || !isturf(target.loc) || (target.loc != target_lastloc && !target.recoveringstam && target.getStaminaLoss() <= 120)) //if he's changed loc and about to get up or not adjacent or got into a closet, we prep arrest again. CIT CHANGE - replaces amountknockdown with recoveringstam and staminaloss checks
+			if(!Adjacent(target) || !isturf(target.loc) || (target.loc != target_lastloc && !(target.combat_flags & COMBAT_FLAG_HARD_STAMCRIT) && target.getStaminaLoss() <= 120)) //if he's changed loc and about to get up or not adjacent or got into a closet, we prep arrest again. CIT CHANGE - replaces amountknockdown with recoveringstam and staminaloss checks
 				back_to_hunt()
 				return
 			else
@@ -379,7 +377,7 @@ Auto Patrol[]"},
 	var/atom/Tsec = drop_location()
 
 	var/obj/item/bot_assembly/ed209/Sa = new (Tsec)
-	Sa.build_step = 1
+	Sa.build_step = ASSEMBLY_SECOND_STEP
 	Sa.add_overlay("hs_hole")
 	Sa.created_name = name
 	new /obj/item/assembly/prox_sensor(Tsec)
@@ -510,11 +508,9 @@ Auto Patrol[]"},
 			spawn(100)
 				disabled = 0
 				icon_state = "[lasercolor]ed2091"
-			return 1
-		else
-			..(Proj)
-	else
-		..(Proj)
+			return BULLET_ACT_HIT
+		return ..()
+	return ..()
 
 /mob/living/simple_animal/bot/ed209/bluetag
 	lasercolor = "b"
@@ -527,7 +523,7 @@ Auto Patrol[]"},
 		return
 	if(iscarbon(A))
 		var/mob/living/carbon/C = A
-		if(C.canmove || arrest_type) // CIT CHANGE - makes sentient ed209s check for canmove rather than !isstun.
+		if(CHECK_MOBILITY(C, MOBILITY_STAND|MOBILITY_MOVE|MOBILITY_USE) || arrest_type) // CIT CHANGE - makes sentient ed209s check for canmove rather than !isstun.
 			stun_attack(A)
 		else if(C.canBeHandcuffed() && !C.handcuffed)
 			cuff(A)
@@ -545,7 +541,7 @@ Auto Patrol[]"},
 	spawn(2)
 		icon_state = "[lasercolor]ed209[on]"
 	var/threat = 5
-	C.Knockdown(100)
+	C.DefaultCombatKnockdown(100)
 	C.stuttering = 5
 	if(ishuman(C))
 		var/mob/living/carbon/human/H = C

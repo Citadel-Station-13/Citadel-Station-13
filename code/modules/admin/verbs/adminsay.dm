@@ -5,7 +5,7 @@
 	if(!check_rights(0))
 		return
 
-	msg = copytext(sanitize(msg), 1, MAX_MESSAGE_LEN)
+	msg = copytext_char(sanitize(msg), 1, MAX_MESSAGE_LEN)
 	if(!msg)
 		return
 	msg = emoji_parse(msg)

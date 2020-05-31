@@ -93,7 +93,7 @@
 		qdel(SC)
 	update_icon()
 
-/obj/item/toy/cards/deck/cas/update_icon()
+/obj/item/toy/cards/deck/cas/update_icon_state()
 	if(cards.len < 26)
 		icon_state = "deck_[deckstyle]_low"
 
@@ -107,14 +107,14 @@
 	var/buffertext = "A funny bit of text."
 
 /obj/item/toy/cards/singlecard/cas/examine(mob/user)
-	..()
+	. = ..()
 	if (flipped)
-		to_chat(user, "<span class='notice'>The card is face down.</span>")
+		. += "<span class='notice'>The card is face down.</span>"
 	else if (blank)
-		to_chat(user, "<span class='notice'>The card is blank. Write on it with a pen.</span>")
+		. += "<span class='notice'>The card is blank. Write on it with a pen.</span>"
 	else
-		to_chat(user, "<span class='notice'>The card reads: [name]</span>")
-	to_chat(user, "<span class='notice'>Alt-click to flip it.</span>")
+		. += "<span class='notice'>The card reads: [name]</span>"
+	. += "<span class='notice'>Alt-click to flip it.</span>"
 
 /obj/item/toy/cards/singlecard/cas/Flip()
 	set name = "Flip Card"
@@ -130,11 +130,13 @@
 	update_icon()
 
 /obj/item/toy/cards/singlecard/cas/AltClick(mob/living/user)
+	. = ..()
 	if(!ishuman(user) || !user.canUseTopic(src, BE_CLOSE))
 		return
 	Flip()
+	return TRUE
 
-/obj/item/toy/cards/singlecard/cas/update_icon()
+/obj/item/toy/cards/singlecard/cas/update_icon_state()
 	if(flipped)
 		icon_state = "[card_face]_flipped"
 	else

@@ -4,7 +4,7 @@
 	var/list/vv_values
 	var/list/stored_access
 
-/datum/outfit/varedit/pre_equip(mob/living/carbon/human/H, visualsOnly)
+/datum/outfit/varedit/pre_equip(mob/living/carbon/human/H, visualsOnly = FALSE, client/preference_source)
 	H.delete_equipment() //Applying VV to wrong objects is not reccomended.
 	. = ..()
 
@@ -120,7 +120,7 @@
 	GLOB.custom_outfits += O
 	to_chat(usr,"Outfit registered, use select equipment to equip it.")
 
-/datum/outfit/varedit/post_equip(mob/living/carbon/human/H, visualsOnly)
+/datum/outfit/varedit/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE, client/preference_source)
 	. = ..()
 	//Apply VV
 	for(var/slot in vv_values)

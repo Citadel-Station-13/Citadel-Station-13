@@ -42,28 +42,35 @@
 	var/declare_crit = 1 //If active, the bot will transmit a critical patient alert to MedHUD users.
 	var/declare_cooldown = 0 //Prevents spam of critical patient alerts.
 	var/stationary_mode = 0 //If enabled, the Medibot will not move automatically.
+	var/injection_time = 30 //How long we take to inject someone
 	//Setting which reagents to use to treat what by default. By id.
-	var/treatment_brute_avoid = "tricordrazine"
-	var/treatment_brute = "bicaridine"
+	var/treatment_brute_avoid = /datum/reagent/medicine/tricordrazine
+	var/treatment_brute = /datum/reagent/medicine/bicaridine
 	var/treatment_oxy_avoid = null
-	var/treatment_oxy = "dexalin"
-	var/treatment_fire_avoid = "tricordrazine"
-	var/treatment_fire = "kelotane"
-	var/treatment_tox_avoid = "tricordrazine"
-	var/treatment_tox = "charcoal"
-	var/treatment_tox_toxlover = "toxin"
+	var/treatment_oxy = /datum/reagent/medicine/dexalin
+	var/treatment_fire_avoid = /datum/reagent/medicine/tricordrazine
+	var/treatment_fire = /datum/reagent/medicine/kelotane
+	var/treatment_tox_avoid = /datum/reagent/medicine/tricordrazine
+	var/treatment_tox = /datum/reagent/medicine/charcoal
+	var/treatment_tox_toxlover = /datum/reagent/toxin //Injects toxins into people that heal via toxins
 	var/treatment_virus_avoid = null
-	var/treatment_virus = "spaceacillin"
+	var/treatment_virus = /datum/reagent/medicine/spaceacillin
 	var/treat_virus = 1 //If on, the bot will attempt to treat viral infections, curing them if possible.
 	var/shut_up = 0 //self explanatory :)
+
+	var/upgrades = 0
+	var/upgraded_dispenser_1 //Do we have the nicer chemicals? - replaces dex with salbutamol
+	var/upgraded_dispenser_2 //Do we have the nicer chemicals? - replaces kep with oxandrolone
+	var/upgraded_dispenser_3 //Do we have the nicer chemicals? - replaces bic with sal acid
+	var/upgraded_dispenser_4 //Do we have the nicer chemicals? - replaces charcoal/toxin with pentetic acid / pentetic jelly
 
 /mob/living/simple_animal/bot/medbot/mysterious
 	name = "\improper Mysterious Medibot"
 	desc = "International Medibot of mystery."
 	skin = "bezerk"
-	treatment_brute = "tricordrazine"
-	treatment_fire = "tricordrazine"
-	treatment_tox = "tricordrazine"
+	treatment_brute = /datum/reagent/medicine/regen_jelly
+	treatment_fire = /datum/reagent/medicine/regen_jelly
+	treatment_tox = /datum/reagent/medicine/regen_jelly
 
 /mob/living/simple_animal/bot/medbot/derelict
 	name = "\improper Old Medibot"
@@ -71,13 +78,13 @@
 	skin = "bezerk"
 	heal_threshold = 0
 	declare_crit = 0
-	treatment_oxy = "pancuronium"
+	treatment_oxy = /datum/reagent/toxin/pancuronium
 	treatment_brute_avoid = null
-	treatment_brute = "pancuronium"
+	treatment_brute = /datum/reagent/toxin/pancuronium
 	treatment_fire_avoid = null
-	treatment_fire = "sodium_thiopental"
+	treatment_fire = /datum/reagent/toxin/sodium_thiopental
 	treatment_tox_avoid = null
-	treatment_tox = "sodium_thiopental"
+	treatment_tox = /datum/reagent/toxin/sodium_thiopental
 
 /mob/living/simple_animal/bot/medbot/update_icon()
 	cut_overlays()
@@ -106,7 +113,7 @@
 	skin = new_skin
 	update_icon()
 
-/mob/living/simple_animal/bot/medbot/update_canmove()
+/mob/living/simple_animal/bot/medbot/update_mobility()
 	. = ..()
 	update_icon()
 
@@ -148,7 +155,7 @@
 	else
 		dat += "None Loaded"
 	dat += "<br>Behaviour controls are [locked ? "locked" : "unlocked"]<hr>"
-	if(!locked || issilicon(user) || IsAdminGhost(user))
+	if(!locked || hasSiliconAccessInArea(user) || IsAdminGhost(user))
 		dat += "<TT>Healing Threshold: "
 		dat += "<a href='?src=[REF(src)];adj_threshold=-10'>--</a> "
 		dat += "<a href='?src=[REF(src)];adj_threshold=-5'>-</a> "
@@ -220,7 +227,6 @@
 
 /mob/living/simple_animal/bot/medbot/attackby(obj/item/W as obj, mob/user as mob, params)
 	if(istype(W, /obj/item/reagent_containers/glass))
-		. = 1 //no afterattack
 		if(locked)
 			to_chat(user, "<span class='warning'>You cannot insert a beaker because the panel is locked!</span>")
 			return
@@ -233,6 +239,97 @@
 		reagent_glass = W
 		to_chat(user, "<span class='notice'>You insert [W].</span>")
 		show_controls(user)
+
+	else if(istype(W, /obj/item/reagent_containers/syringe/piercing))
+		if(bot_core.allowed(user) && open && !CHECK_BITFIELD(upgrades,UPGRADE_MEDICAL_PIERERCING))
+			to_chat(user, "<span class='notice'>You replace \the [src] syringe with a diamond-tipped one!</span>")
+			upgrades |= UPGRADE_MEDICAL_PIERERCING
+			qdel(W)
+		if(!open)
+			to_chat(user, "<span class='notice'>The [src] access pannel is not open!</span>")
+			return
+		if(!bot_core.allowed(user))
+			to_chat(user, "<span class='notice'>The [src] access pannel locked off to you!</span>")
+			return
+		else
+			to_chat(user, "<span class='notice'>The [src] already has a diamond-tipped syringe!</span>")
+
+	else if(istype(W, /obj/item/hypospray/mkii))
+		if(bot_core.allowed(user) && open && !CHECK_BITFIELD(upgrades,UPGRADE_MEDICAL_HYPOSPRAY))
+			to_chat(user, "<span class='notice'>You replace \the [src] syringe base with a DeForest Medical MK.II Hypospray!</span>")
+			upgrades |= UPGRADE_MEDICAL_HYPOSPRAY
+			injection_time = 15 //Half the time half the death!
+			window_name = "Automatic Medical Unit v2.4 ALPHA"
+			qdel(W)
+		if(!open)
+			to_chat(user, "<span class='notice'>The [src] access pannel is not open!</span>")
+			return
+		if(!bot_core.allowed(user))
+			to_chat(user, "<span class='notice'>The [src] access pannel locked off to you!</span>")
+			return
+		else
+			to_chat(user, "<span class='notice'>The [src] already has a DeForest Medical Hypospray base!</span>")
+
+	else if(istype(W, /obj/item/circuitboard/machine/chem_dispenser))
+		if(bot_core.allowed(user) && open && !CHECK_BITFIELD(upgrades,UPGRADE_MEDICAL_CHEM_BOARD))
+			to_chat(user, "<span class='notice'>You add in the board upgrading \the [src] reagent banks!</span>")
+			upgrades |= UPGRADE_MEDICAL_CHEM_BOARD
+			treatment_oxy = /datum/reagent/medicine/salbutamol //Replaces Dex with salbutamol "better" healing of o2
+			qdel(W)
+		if(!open)
+			to_chat(user, "<span class='notice'>The [src] access pannel is not open!</span>")
+			return
+		if(!bot_core.allowed(user))
+			to_chat(user, "<span class='notice'>The [src] access pannel locked off to you!</span>")
+			return
+		else
+			to_chat(user, "<span class='notice'>The [src] already has this upgrade!</span>")
+
+	else if(istype(W, /obj/item/circuitboard/machine/cryo_tube))
+		if(bot_core.allowed(user) && open && !CHECK_BITFIELD(upgrades,UPGRADE_MEDICAL_CRYO_BOARD))
+			to_chat(user, "<span class='notice'>You add in the board upgrading \the [src] reagent banks!</span>")
+			upgrades |= UPGRADE_MEDICAL_CRYO_BOARD
+			treatment_fire = /datum/reagent/medicine/oxandrolone //Replaces Kep with oxandrolone "better" healing of burns
+			qdel(W)
+		if(!open)
+			to_chat(user, "<span class='notice'>The [src] access pannel is not open!</span>")
+			return
+		if(!bot_core.allowed(user))
+			to_chat(user, "<span class='notice'>The [src] access pannel locked off to you!</span>")
+			return
+		else
+			to_chat(user, "<span class='notice'>The [src] already has this upgrade!</span>")
+
+	else if(istype(W, /obj/item/circuitboard/machine/chem_master))
+		if(bot_core.allowed(user) && open && !CHECK_BITFIELD(upgrades,UPGRADE_MEDICAL_CHEM_MASTER))
+			to_chat(user, "<span class='notice'>You add in the board upgrading \the [src] reagent banks!</span>")
+			upgrades |= UPGRADE_MEDICAL_CHEM_MASTER
+			treatment_brute = /datum/reagent/medicine/sal_acid //Replaces Bic with Sal Acid "better" healing of brute
+			qdel(W)
+		if(!open)
+			to_chat(user, "<span class='notice'>the [src] access pannel is not open!</span>")
+			return
+		if(!bot_core.allowed(user))
+			to_chat(user, "<span class='notice'>the [src] access pannel locked off to you!</span>")
+			return
+		else
+			to_chat(user, "<span class='notice'>the [src] already has this upgrade!</span>")
+
+	else if(istype(W, /obj/item/circuitboard/machine/sleeper))
+		if(bot_core.allowed(user) && open && !CHECK_BITFIELD(upgrades,UPGRADE_MEDICAL_SLEEP_BOARD))
+			to_chat(user, "<span class='notice'>You add in the board upgrading \the [src] reagent banks!</span>")
+			upgrades |= UPGRADE_MEDICAL_SLEEP_BOARD
+			treatment_tox = /datum/reagent/medicine/pen_acid //replaces charcoal with pen acid a "better" healing of toxins
+			treatment_tox_toxlover = /datum/reagent/medicine/pen_acid/pen_jelly //Injects pen jelly into people that heal via toxins
+			qdel(W)
+		if(!open)
+			to_chat(user, "<span class='notice'>The [src] access pannle is not open!</span>")
+			return
+		if(!bot_core.allowed(user))
+			to_chat(user, "<span class='notice'>The [src] access pannel locked off to you!</span>")
+			return
+		else
+			to_chat(user, "<span class='notice'>The [src] already has this upgrade!</span>")
 
 	else
 		var/current_health = health
@@ -249,6 +346,8 @@
 		audible_message("<span class='danger'>[src] buzzes oddly!</span>")
 		flick("medibot_spark", src)
 		playsound(src, "sparks", 75, 1)
+		if(!CHECK_BITFIELD(upgrades,UPGRADE_MEDICAL_PIERERCING))
+			upgrades |= UPGRADE_MEDICAL_PIERERCING //Jabs even harder through the clothing!
 		if(user)
 			oldpatient = user
 
@@ -264,6 +363,9 @@
 		if((last_newpatient_speak + 300) < world.time) //Don't spam these messages!
 			var/list/messagevoice = list("Hey, [H.name]! Hold on, I'm coming." = 'sound/voice/medbot/coming.ogg',"Wait [H.name]! I want to help!" = 'sound/voice/medbot/help.ogg',"[H.name], you appear to be injured!" = 'sound/voice/medbot/injured.ogg')
 			var/message = pick(messagevoice)
+			if(prob(1) && ISINRANGE_EX(H.getFireLoss(), 0, 20))
+				message = "Notices your minor burns*OwO what's this?"
+				messagevoice[message] = 'sound/voice/medbot/owo.ogg'
 			speak(message)
 			playsound(loc, messagevoice[message], 50, 0)
 			last_newpatient_speak = world.time
@@ -358,7 +460,7 @@
 
 	if(ishuman(C))
 		var/mob/living/carbon/human/H = C
-		if (H.wear_suit && H.head && istype(H.wear_suit, /obj/item/clothing) && istype(H.head, /obj/item/clothing))
+		if (H.wear_suit && H.head && istype(H.wear_suit, /obj/item/clothing) && istype(H.head, /obj/item/clothing) && !CHECK_BITFIELD(upgrades,UPGRADE_MEDICAL_PIERERCING))
 			var/obj/item/clothing/CS = H.wear_suit
 			var/obj/item/clothing/CH = H.head
 			if (CS.clothing_flags & CH.clothing_flags & THICKMATERIAL)
@@ -369,8 +471,9 @@
 
 	//If they're injured, we're using a beaker, and don't have one of our WONDERCHEMS.
 	if((reagent_glass) && (use_beaker) && ((C.getBruteLoss() >= heal_threshold) || (C.getToxLoss() >= heal_threshold) || (C.getToxLoss() >= heal_threshold) || (C.getOxyLoss() >= (heal_threshold + 15))))
-		for(var/datum/reagent/R in reagent_glass.reagents.reagent_list)
-			if(!C.reagents.has_reagent(R.id))
+		for(var/A in reagent_glass.reagents.reagent_list)
+			var/datum/reagent/R = A
+			if(!C.reagents.has_reagent(R.type))
 				return TRUE
 
 	//They're injured enough for it!
@@ -414,7 +517,7 @@
 	else
 		..()
 
-/mob/living/simple_animal/bot/medbot/examinate(atom/A as mob|obj|turf in view())
+/mob/living/simple_animal/bot/medbot/examinate(atom/A as mob|obj|turf in fov_view())
 	..()
 	if(!is_blind(src))
 		chemscan(src, A)
@@ -440,7 +543,7 @@
 	var/reagent_id = null
 
 	if(emagged == 2) //Emagged! Time to poison everybody.
-		reagent_id = "toxin"
+		reagent_id = HAS_TRAIT(C, TRAIT_TOXINLOVER)? "charcoal" : "toxin"
 
 	else
 		if(treat_virus)
@@ -477,8 +580,9 @@
 
 		//If the patient is injured but doesn't have our special reagent in them then we should give it to them first
 		if(reagent_id && use_beaker && reagent_glass && reagent_glass.reagents.total_volume)
-			for(var/datum/reagent/R in reagent_glass.reagents.reagent_list)
-				if(!C.reagents.has_reagent(R.id))
+			for(var/A in reagent_glass.reagents.reagent_list)
+				var/datum/reagent/R = A
+				if(!C.reagents.has_reagent(R.type))
 					reagent_id = "internal_beaker"
 					break
 
@@ -499,7 +603,7 @@
 			"<span class='userdanger'>[src] is trying to inject you!</span>")
 
 		var/failed = FALSE
-		if(do_mob(src, patient, 30))	//Is C == patient? This is so confusing
+		if(do_mob(src, patient, injection_time))	//Is C == patient? This is so confusing
 			if((get_dist(src, patient) <= 1) && (on) && assess_patient(patient))
 				if(reagent_id == "internal_beaker")
 					if(use_beaker && reagent_glass && reagent_glass.reagents.total_volume)
@@ -520,9 +624,6 @@
 		update_icon()
 		soft_reset()
 		return
-
-	reagent_id = null
-	return
 
 /mob/living/simple_animal/bot/medbot/proc/check_overdose(mob/living/carbon/patient,reagent_id,injection_amount)
 	var/datum/reagent/R  = GLOB.chemical_reagents_list[reagent_id]

@@ -56,7 +56,8 @@
 		/obj/item/scalpel, /obj/item/reagent_containers/syringe, /obj/item/dnainjector,
 		/obj/item/reagent_containers/hypospray/medipen, /obj/item/reagent_containers/dropper,
 		/obj/item/implanter, /obj/item/screwdriver, /obj/item/weldingtool/mini,
-		/obj/item/firing_pin, /obj/item/gun/ballistic/automatic/pistol
+		/obj/item/firing_pin, /obj/item/gun/ballistic/automatic/pistol, /obj/item/gun/ballistic/automatic/magrifle/pistol,
+		/obj/item/toy/plush/snakeplushie
 		))
 
 /datum/component/storage/concrete/pockets/shoes/clown/Initialize()
@@ -87,3 +88,12 @@
 /datum/component/storage/concrete/pockets/pocketprotector/real_location()
 	// if the component is reparented to a jumpsuit, the items still go in the protector
 	return original_parent
+
+/datum/component/storage/concrete/pockets/small/rushelmet
+	max_items = 1
+	quickdraw = TRUE
+
+/datum/component/storage/concrete/pockets/small/rushelmet/Initialize()
+	. = ..()
+	can_hold = typecacheof(list(/obj/item/reagent_containers/glass/bottle,
+								/obj/item/ammo_box/a762))

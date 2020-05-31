@@ -9,7 +9,7 @@
 	icon = 'icons/obj/assemblies/electronic_setups.dmi'
 	icon_state = "setup_small"
 	item_flags = NOBLUDGEON
-	materials = list()		// To be filled later
+	custom_materials = null		// To be filled later
 	datum_flags = DF_USE_TAG
 	var/list/assembly_components = list()
 	var/list/ckeys_allowed_to_scan = list() // Players who built the circuit can scan it as a ghost.
@@ -70,16 +70,18 @@
 /obj/item/electronic_assembly/examine(mob/user)
 	. = ..()
 	if(can_anchor)
-		to_chat(user, "<span class='notice'>The anchoring bolts [anchored ? "are" : "can be"] <b>wrenched</b> in place and the maintenance panel [opened ? "can be" : "is"] <b>screwed</b> in place.</span>")
+		. += "<span class='notice'>The anchoring bolts [anchored ? "are" : "can be"] <b>wrenched</b> in place and the maintenance panel [opened ? "can be" : "is"] <b>screwed</b> in place.</span>"
 	else
-		to_chat(user, "<span class='notice'>The maintenance panel [opened ? "can be" : "is"] <b>screwed</b> in place.</span>")
+		. += "<span class='notice'>The maintenance panel [opened ? "can be" : "is"] <b>screwed</b> in place.</span>"
 
 	if((isobserver(user) && ckeys_allowed_to_scan[user.ckey]) || IsAdminGhost(user))
-		to_chat(user, "You can <a href='?src=[REF(src)];ghostscan=1'>scan</a> this circuit.")
+		. += "You can <a href='?src=[REF(src)];ghostscan=1'>scan</a> this circuit."
 
 	for(var/I in assembly_components)
 		var/obj/item/integrated_circuit/IC = I
-		IC.external_examine(user)
+		var/text = IC.external_examine(user)
+		if(text)
+			. += text
 	if(opened)
 		interact(user)
 
@@ -95,9 +97,9 @@
 			D.open()
 
 /obj/item/electronic_assembly/Initialize()
+	LAZYSET(custom_materials, /datum/material/iron, round((max_complexity + max_components) * 0.25) * SScircuit.cost_multiplier)
 	.=..()
 	START_PROCESSING(SScircuit, src)
-	materials[MAT_METAL] = round((max_complexity + max_components) / 4) * SScircuit.cost_multiplier
 
 	//sets up diagnostic hud view
 	prepare_huds()
@@ -149,7 +151,7 @@
 	var/total_complexity = return_total_complexity()
 	var/HTML = ""
 
-	HTML += "<html><head><title>[name]</title></head><body>"
+	HTML += "<html><head><meta http-equiv='Content-Type' content='text/html; charset=UTF-8'><title>[name]</title></head><body>"
 
 	HTML += "<a href='?src=[REF(src)]'>\[Refresh\]</a>  |  <a href='?src=[REF(src)];rename=1'>\[Rename\]</a><br>"
 	HTML += "[total_part_size]/[max_components] ([round((total_part_size / max_components) * 100, 0.1)]%) space taken up in the assembly.<br>"
@@ -305,17 +307,17 @@
 /obj/item/electronic_assembly/proc/can_move()
 	return FALSE
 
-/obj/item/electronic_assembly/update_icon()
+/obj/item/electronic_assembly/update_icon_state()
 	if(opened)
 		icon_state = initial(icon_state) + "-open"
 	else
 		icon_state = initial(icon_state)
-	cut_overlays()
+
+/obj/item/electronic_assembly/update_overlays()
+	. = ..()
 	if(detail_color == COLOR_ASSEMBLY_BLACK) //Black colored overlay looks almost but not exactly like the base sprite, so just cut the overlay and avoid it looking kinda off.
 		return
-	var/mutable_appearance/detail_overlay = mutable_appearance('icons/obj/assemblies/electronic_setups.dmi', "[icon_state]-color")
-	detail_overlay.color = detail_color
-	add_overlay(detail_overlay)
+	. += mutable_appearance('icons/obj/assemblies/electronic_setups.dmi', "[icon_state]-color", color = detail_color)
 
 /obj/item/electronic_assembly/proc/return_total_complexity()
 	. = 0
@@ -615,6 +617,11 @@
 		return
 	..()
 
+/obj/item/electronic_assembly/can_trigger_gun(mob/living/user) //sanity checks against pocket death weapon circuits
+	if(!can_fire_equipped || !user.is_holding(src))
+		return FALSE
+	return ..()
+
 /obj/item/electronic_assembly/default //The /default electronic_assemblys are to allow the introduction of the new naming scheme without breaking old saves.
 	name = "type-a electronic assembly"
 
@@ -866,3 +873,8 @@
 			pixel_x = -31
 		if(WEST)
 			pixel_x = 31
+	plane = ABOVE_WALL_PLANE
+
+/obj/item/electronic_assembly/wallmount/Moved(atom/OldLoc, Dir, Forced = FALSE) //reset the plane if moved off the wall.
+	. = ..()
+	plane = GAME_PLANE
