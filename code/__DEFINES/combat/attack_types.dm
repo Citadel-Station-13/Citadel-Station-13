@@ -15,9 +15,9 @@
 // Requires for datum definitions to not error with must be a constant statement when used in lists as text associative keys.
 // KEEP IN SYNC WITH ABOVE!
 
-#define TEXT_ATTACK_TYPE_MELEE					1
-#define TEXT_ATTACK_TYPE_PROJECTILE				2
-#define TEXT_ATTACK_TYPE_UNARMED				4
-#define TEXT_ATTACK_TYPE_THROWN					8
-#define TEXT_ATTACK_TYPE_TACKLE					16
-#define TEXT_ATTACK_TYPE_PARRY_COUNTERATTACK	32
+#define TEXT_ATTACK_TYPE_MELEE					"1"
+#define TEXT_ATTACK_TYPE_PROJECTILE				"2"
+#define TEXT_ATTACK_TYPE_UNARMED				"4"
+#define TEXT_ATTACK_TYPE_THROWN					"8"
+#define TEXT_ATTACK_TYPE_TACKLE					"16"
+#define TEXT_ATTACK_TYPE_PARRY_COUNTERATTACK	"32"

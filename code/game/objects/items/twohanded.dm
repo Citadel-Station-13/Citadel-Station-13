@@ -275,7 +275,7 @@
 	throw_range = 5
 	w_class = WEIGHT_CLASS_SMALL
 	var/w_class_on = WEIGHT_CLASS_BULKY
-	item_flags = ITEM_CAN_PARRY | SLOWS_WHILE_IN_HAND |
+	item_flags = ITEM_CAN_PARRY | SLOWS_WHILE_IN_HAND | ITEM_CAN_BLOCK
 	block_parry_data = /datum/block_parry_data/dual_esword
 	force_unwielded = 3
 	force_wielded = 34
