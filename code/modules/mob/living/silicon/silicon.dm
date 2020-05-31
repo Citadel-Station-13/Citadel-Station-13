@@ -56,7 +56,6 @@
 	diag_hud_set_status()
 	diag_hud_set_health()
 
-
 /mob/living/silicon/ComponentInitialize()
 	. = ..()
 	AddElement(/datum/element/flavor_text, _name = "Silicon Flavor Text", _save_key = "silicon_flavor_text")
