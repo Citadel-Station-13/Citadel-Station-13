@@ -261,6 +261,7 @@
 	blood_used = 20
 	action_background_icon_state = "bg_demon"
 	vamp_req = TRUE
+	clothes_req = NONE
 
 /obj/effect/proc_holder/spell/targeted/ethereal_jaunt/mistform/Initialize()
 	. = ..()
