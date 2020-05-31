@@ -187,7 +187,7 @@
 	var/datum/block_parry_data/data = get_parry_data()
 	if(attack_type && (!(attack_type & data.parry_attack_types) || (attack_type & ATTACK_TYPE_PARRY_COUNTERATTACK)))		// if this attack is from a parry do not parry it lest we infinite loop.
 		return BLOCK_NONE
-	var/efficiency = get_parry_efficiency(attack_type)
+	var/efficiency = data.get_parry_efficiency(attack_type, get_parry_time())
 	switch(parrying)
 		if(ITEM_PARRY)
 			if(!active_parry_item.can_active_parry())
