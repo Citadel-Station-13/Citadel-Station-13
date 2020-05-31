@@ -42,7 +42,7 @@
 		if(!V)
 			return FALSE
 		if(V.usable_blood < 15)
-			to_chat(user, "<span class='warning'>You do not have enough blood to cast this!</span>")
+			to_chat(caster, "<span class='warning'>You do not have enough blood to cast this!</span>")
 			revert_cast(caster)
 			return FALSE
 	. = ..()
