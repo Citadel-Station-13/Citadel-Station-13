@@ -234,7 +234,6 @@
 	. = ..()
 	if(iscarbon(target))
 		var/mob/living/carbon/H = target
-		var/loss = H.getStaminaLoss()
 		H.Dizzy(10)
 		H.adjustStaminaLoss(30)
 		if(CHECK_STAMCRIT(H) != NOT_STAMCRIT)

@@ -339,7 +339,7 @@
 
 	// more efficient vs projectiles
 	block_stamina_efficiency_override = list(
-		"[TEXT_ATTACK_TYPE_PROJECTILE]" = 4
+		TEXT_ATTACK_TYPE_PROJECTILE = 4
 	)
 
 /obj/item/twohanded/dualsaber/suicide_act(mob/living/carbon/user)
@@ -1093,8 +1093,8 @@
 /datum/block_parry_data/electrostaff
 	block_damage_absorption = 0
 	block_damage_multiplier = 1
-	block_attack_types = ~ATTACK_TYPE_PROJECTILE		// only able to parry non projectiles
-	block_damage_multiplier_override(
+	can_block_attack_types = ~ATTACK_TYPE_PROJECTILE		// only able to parry non projectiles
+	block_damage_multiplier_override = list(
 		TEXT_ATTACK_TYPE_MELEE = 0.5,		// only useful on melee and unarmed
 		TEXT_ATTACK_TYPE_UNARMED = 0.3
 	)
@@ -1114,9 +1114,6 @@
 	parry_time_perfect = 0
 	parry_time_perfect_leeway = 1.5
 	parry_efficiency_perfect = 100
-	parry_efficiency_perfect_override = list(
-		TEXT_ATTACK_TYPE_PROJECTILE = 80			// no perfect projectile blocking
-	)
 	parry_imperfect_falloff_percent = 15
 	parry_imperfect_falloff_percent_override = list(
 		TEXT_ATTACK_TYPE_PROJECTILE = 35		// really crappy vs projectiles

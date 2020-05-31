@@ -266,7 +266,7 @@
 		if(data.parry_data[PARRY_COUNTERATTACK_MELEE_ATTACK_CHAIN])
 			switch(parrying)
 				if(ITEM_PARRY)
-					active_parry_item.melee_attack_chain(src, attacker, null, ATTACKCHAIN_PARRY_COUNTERATTACK, data.parry_data[PARRY_COUNTERATTACK_DAMAGE_MULTIPLIER])
+					active_parry_item.melee_attack_chain(src, attacker, null, ATTACKCHAIN_PARRY_COUNTERATTACK, data.parry_data[PARRY_COUNTERATTACK_MELEE_ATTACK_CHAIN])
 					effect_text += "reflexively counterattacking with [active_parry_item]"
 				if(UNARMED_PARRY)		// WARNING: If you are using these two, the attackchain parry counterattack flags and damage multipliers are unimplemented. Be careful with how you handle this.
 					UnarmedAttack(attacker)
