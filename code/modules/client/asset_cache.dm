@@ -743,4 +743,9 @@ GLOBAL_LIST_EMPTY(asset_datums)
 		"dna_discovered.gif"	= 'html/dna_discovered.gif',
 		"dna_undiscovered.gif"	= 'html/dna_undiscovered.gif',
 		"dna_extra.gif" 		= 'html/dna_extra.gif'
-)
+	)
+
+/datum/asset/simple/vv
+	assets = list(
+		"view_variables.css" = 'html/admin/view_variables.css'
+	)
