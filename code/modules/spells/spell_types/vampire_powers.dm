@@ -19,7 +19,10 @@
 	if(vamp_req)
 		clothes_req = NONE
 		range = 1
-		mob_whitelist |= /mob/living/simple_animal/hostile/retaliate/bat
+		if(mobs_whitelist)
+			mobs_whitelist |= /mob/living/simple_animal/hostile/retaliate/bat/vampire_bat
+		if(mobs_blacklist)
+			mobs_blacklist -= /mob/living/simple_animal/hostile/retaliate/bat/vampire_bat
 	return ..()
 
 /obj/effect/proc_holder/spell/before_cast(list/targets)
@@ -87,13 +90,9 @@
 /obj/effect/proc_holder/spell/self/rejuvenate/cast(list/targets, mob/user = usr)
 	var/mob/living/carbon/U = user
 	U.stuttering = 0
-	U.SetSleeping(0)
-	U.SetUnconscious(0)
-	U.resting = 0
-	U.lying = 0
-	U.update_canmove()
-	U.Stun(0)
-	U.adjustStaminaLoss(-50)  //Hey, lets not just stand in one place because we are too tired to move
+	U.SetAllImmobility(0)
+	U.set_resting(FALSE)
+	U.adjustStaminaLoss(-75)  //Hey, lets not just stand in one place because we are too tired to move
 
 	var/datum/antagonist/vampire/V = U.mind.has_antag_datum(/datum/antagonist/vampire)
 	if(!V) //sanity check

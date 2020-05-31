@@ -171,12 +171,15 @@
 		return
 	var/ax = C.x
 	var/ay = C.y
+	// is this good math? probably not.
+	var/dx = sin(SSsun.azimuth)
+	var/dy = cos(SSsun.azimuth)
 
 	for(var/i = 1 to 20)
-		ax += SSsun.dx
-		ay += SSsun.dy
+		ax += dx
+		ay += dy
 
-		var/turf/T = locate(round(ax, 0.5), round(ay, 0.5), C.z)
+		var/turf/T = locate(round(ax, 1), round(ay, 1), C.z)
 
 		if(T.x == 1 || T.x == world.maxx || T.y == 1 || T.y == world.maxy)
 			break
