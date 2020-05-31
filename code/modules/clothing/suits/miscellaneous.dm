@@ -1000,7 +1000,7 @@
 	desc = "The strength of the vampire is that people will not believe in them."
 	icon_state = "chaplain_hood"
 	item_state = "chaplain_hood"
-	icon = 'icons/mob/head.dmi'
+	icon = 'icons/mob/clothing/head.dmi'
 	armor = list("melee" = 41, "bullet" = 40, "laser" = 30, "energy" = 40, "bomb" = 100, "bio" = 100, "rad" = 20)
 	body_parts_covered = HEAD
 	cold_protection = HEAD

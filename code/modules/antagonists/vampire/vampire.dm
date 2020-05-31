@@ -32,8 +32,7 @@
 		/datum/vampire_passive/regen = 425,
 		/obj/effect/proc_holder/spell/targeted/ethereal_jaunt/mistform = 500,
 		/datum/vampire_passive/full = 666,
-		/obj/effect/proc_holder/spell/self/summon_coat = 666,
-		/obj/effect/proc_holder/spell/targeted/vampirize = 666) //The number has a very specific meaning.
+		/obj/effect/proc_holder/spell/self/summon_coat = 666) //The number has a very specific meaning.
 
 /datum/antagonist/vampire/get_admin_commands()
 	. = ..()
@@ -118,7 +117,6 @@
 
 /datum/antagonist/vampire/proc/add_objective(var/datum/objective/O)
 	objectives += O
-	owner.objectives += O
 
 /datum/antagonist/vampire/proc/forge_single_objective() //Returns how many objectives are added
 	.=1
