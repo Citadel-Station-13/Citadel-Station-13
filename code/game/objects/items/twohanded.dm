@@ -335,7 +335,7 @@
 	parry_efficiency_perfect = 90
 	parry_failed_stagger_duration = 3 SECONDS
 	parry_failed_clickcd_duration = CLICK_CD_MELEE
-	parry_cooldown = 3 SECONDS
+	parry_cooldown = 2 SECONDS
 
 	// more efficient vs projectiles
 	block_stamina_efficiency_override = list(
@@ -1122,7 +1122,7 @@
 		TEXT_ATTACK_TYPE_PROJECTILE = 1		// extremely harsh window for projectiles
 	)
 	// not extremely punishing to fail, but no spamming the parry.
-	parry_cooldown = 5 SECONDS
+	parry_cooldown = 2.5 SECONDS
 	parry_failed_stagger_duration = 1.5 SECONDS
 	parry_failed_clickcd_duration = 1 SECONDS
 

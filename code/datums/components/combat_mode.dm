@@ -120,6 +120,7 @@
 		hud_icon.combat_on = FALSE
 		hud_icon.update_icon()
 	source.stop_active_blocking()
+	source.end_parry_sequence()
 
 ///Changes the user direction to (try) keep match the pointer.
 /datum/component/combat_mode/proc/on_move(atom/movable/source, dir, atom/oldloc, forced)

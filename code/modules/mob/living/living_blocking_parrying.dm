@@ -30,7 +30,7 @@ GLOBAL_LIST_EMPTY(block_parry_data)
 	/// Our slowdown added while blocking
 	var/block_slowdown = 2
 	/// Clickdelay added to user after block ends
-	var/block_end_click_cd_add = 4
+	var/block_end_click_cd_add = 0
 	/// Disallow attacking during block
 	var/block_lock_attacking = TRUE
 	/// The priority we get in [mob/do_run_block()] while we're being used to parry.
@@ -180,6 +180,15 @@ GLOBAL_LIST_EMPTY(block_parry_data)
 	} \
 	dat += "[english_list(assembled__##varname)]</th>";
 
+/datum/block_parry_data/Topic(href, href_list)
+	. = ..()
+	if(.)
+		return
+	if(href_list["render"])
+		var/datum/browser/B = new(usr, REF(src), href_list["name"], 400, 1000)
+		B.set_content(render_html_readout(href_list["block"], href_list["parry"]))
+		B.open()
+
 /**
   * Generates a HTML render of this datum for self-documentation
   * Maybe make this tgui-next someday haha god this is ugly as sin.
@@ -256,10 +265,6 @@ GLOBAL_LIST_EMPTY(block_parry_data)
 	if(combat_flags & COMBAT_FLAG_ACTIVE_BLOCKING)
 		var/datum/block_parry_data/data = return_block_parry_datum(active_block_item.block_parry_data)
 		adjustStaminaLossBuffered(data.block_stamina_cost_per_second * seconds)
-	if(parrying)
-		if(!CHECK_MOBILITY(src, MOBILITY_USE))
-			to_chat(src, "<span class='warning'>Your parry is interrupted!</span>")
-			end_parry_sequence()
 
 /mob/living/on_item_dropped(obj/item/I)
 	if(I == active_block_item)

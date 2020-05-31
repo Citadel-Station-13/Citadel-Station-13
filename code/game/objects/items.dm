@@ -238,9 +238,10 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 			. += "[src] is made of cold-resistant materials."
 		if(resistance_flags & FIRE_PROOF)
 			. += "[src] is made of fire-retardant materials."
-
-
-
+	
+	if(item_flags & (ITEM_CAN_BLOCK | ITEM_CAN_PARRY))
+		var/datum/block_parry_data/data = return_block_parry_datum(block_parry_data)
+		. += "[src] has the capacity to be used to block and/or parry. <a href='?src=[REF(data)];name=[name];block=[item_flags & ITEM_CAN_BLOCK];parry=[item_flags & ITEM_CAN_PARRY];render=1'>\[Show Stats\]</a>"
 
 	if(!user.research_scanner)
 		return

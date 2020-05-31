@@ -20,9 +20,6 @@
 	if(!(combat_flags & COMBAT_FLAG_PARRY_CAPABLE))
 		to_chat(src, "<span class='warning'>You are not something that can parry attacks.</span>")
 		return
-	if(!CHECK_MOBILITY(src, MOBILITY_USE))
-		to_chat(src, "<span class='warning'>You are incapacitated, or otherwise unable to swing a weapon to parry with!</span>")
-		return FALSE
 	if(!SEND_SIGNAL(src, COMSIG_COMBAT_MODE_CHECK, COMBAT_MODE_ACTIVE))
 		to_chat(src, "<span class='warning'>You must be in combat mode to parry!</span>")
 		return FALSE
@@ -209,9 +206,6 @@
 	var/stage = get_parry_stage()
 	if(stage != PARRY_ACTIVE)
 		return BLOCK_NONE
-	if(!CHECK_MOBILITY(src, MOBILITY_USE))
-		to_chat(src, "<span class='warning'>Your parry is interrupted!</span>")
-		end_parry_sequence()
 	var/datum/block_parry_data/data = get_parry_data()
 	if(attack_type && (!(attack_type & data.parry_attack_types) || (attack_type & ATTACK_TYPE_PARRY_COUNTERATTACK)))		// if this attack is from a parry do not parry it lest we infinite loop.
 		return BLOCK_NONE
