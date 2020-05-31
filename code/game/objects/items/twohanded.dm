@@ -312,7 +312,7 @@
 	block_damage_absorption = 5
 	block_damage_multiplier = 0.3
 	block_start_delay = 0		// instantaneous block
-	block_stamina_cost_per_second = 6
+	block_stamina_cost_per_second = 3
 	block_stamina_efficiency = 2
 	// slowdown
 	block_slowdown = 1
@@ -335,7 +335,6 @@
 	parry_efficiency_perfect = 90
 	parry_failed_stagger_duration = 3 SECONDS
 	parry_failed_clickcd_duration = CLICK_CD_MELEE
-	parry_cooldown = 2 SECONDS
 
 	// more efficient vs projectiles
 	block_stamina_efficiency_override = list(
@@ -1079,7 +1078,6 @@
 	total_mass = 5		//yeah this is a heavy thing, beating people with it while it's off is not going to do you any favors. (to curb stun-kill rampaging without it being on)
 	var/obj/item/stock_parts/cell/cell = /obj/item/stock_parts/cell/high
 	var/on = FALSE
-	var/can_block_projectiles = FALSE		//can't block guns
 	var/lethal_cost = 400			//10000/400*20 = 500. decent enough?
 	var/lethal_damage = 20
 	var/lethal_stam_cost = 4
@@ -1099,24 +1097,24 @@
 		TEXT_ATTACK_TYPE_UNARMED = 0.3
 	)
 	block_start_delay = 0.5		// near instantaneous block
-	block_stamina_cost_per_second = 6
+	block_stamina_cost_per_second = 3
 	block_stamina_efficiency = 2		// haha this is a horrible idea
 	// more slowdown that deswords because security
 	block_slowdown = 2
 	// no attacking while blocking
 	block_lock_attacking = TRUE
 	
-	parry_time_windup = 1.5
+	parry_time_windup = 1
 	parry_time_active = 5
 	parry_time_spindown = 0
 	parry_time_spindown_visual_override = 1
 	parry_flags = PARRY_DEFAULT_HANDLE_FEEDBACK | PARRY_LOCK_ATTACKING		// no attacking while parrying
 	parry_time_perfect = 0
-	parry_time_perfect_leeway = 1.5
+	parry_time_perfect_leeway = 0.5
 	parry_efficiency_perfect = 100
-	parry_imperfect_falloff_percent = 15
+	parry_imperfect_falloff_percent = 1
 	parry_imperfect_falloff_percent_override = list(
-		TEXT_ATTACK_TYPE_PROJECTILE = 35		// really crappy vs projectiles
+		TEXT_ATTACK_TYPE_PROJECTILE = 45		// really crappy vs projectiles
 	)
 	parry_time_perfect_leeway_override = list(
 		TEXT_ATTACK_TYPE_PROJECTILE = 1		// extremely harsh window for projectiles

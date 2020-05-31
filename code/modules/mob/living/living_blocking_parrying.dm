@@ -123,7 +123,7 @@ GLOBAL_LIST_EMPTY(block_parry_data)
 	var/parry_efficiency_perfect = 120
 	/// Parry effect data.
 	var/list/parry_data = list(
-		PARRY_REFLEX_COUNTERATTACK = PARRY_COUNTERATTACK_MELEE_ATTACK_CHAIN
+		PARRY_COUNTERATTACK_MELEE_ATTACK_CHAIN = 1
 		)
 	/// Efficiency must be at least this to be considered successful
 	var/parry_efficiency_considered_successful = 0.1
@@ -159,31 +159,48 @@ GLOBAL_LIST_EMPTY(block_parry_data)
 		return
 	return total/div	//groan
 
+/**
+  * Gets the percentage efficiency of our parry.
+  *
+  * Returns a percentage in normal 0 to 100 scale, but not clamped to just 0 to 100.
+  * This is a proc to allow for overriding.
+  * @params
+  * * attack_type - int, bitfield of the attack type(s)
+  * * parry_time - deciseconds since start of the parry.
+  */
+/datum/block_parry_data/proc/get_parry_efficiency(attack_type, parry_time)
+	var/difference = abs(parry_time - (parry_time_perfect + parry_time_windup))
+	var/leeway = attack_type_list_scan(parry_time_perfect_leeway_override, attack_type)
+	if(isnull(leeway))
+		leeway = parry_time_perfect_leeway
+	difference -= leeway
+	. = parry_efficiency_perfect
+	if(difference <= 0)
+		return
+	var/falloff = attack_type_list_scan(parry_imperfect_falloff_percent_override, attack_type)
+	if(isnull(falloff))
+		falloff = parry_imperfect_falloff_percent
+	. -= falloff * difference
+
 #define RENDER_VARIABLE_SIMPLE(varname, desc) dat += "<tr><th>[#varname]<br><i>[desc]</i></th><th>[varname]</th></tr>"
 #define RENDER_OVERRIDE_LIST(varname, desc) \
 	dat += "<tr><th>[#varname]<br><i>[desc]</i></th><th>"; \
 	var/list/assembled__##varname = list(); \
-	for(var/textbit in GLOB.attack_type_names){ \
-		if(textbit in varname){ \
-			assembled__##varname += "[GLOB.attack_type_names[textbit]] = [varname[textbit]]"; \
-		} \
+	for(var/textbit in varname){ \
+		assembled__##varname += "[GLOB.attack_type_names[textbit]] = [varname[textbit]]"; \
 	} \
 	dat += "[english_list(assembled__##varname)]</th>";
 #define RENDER_ATTACK_TYPES(varname, desc)	dat += "<tr><th>[#varname]<br><i>[desc]</i></th><th>"; \
 	var/list/assembled__##varname = list(); \
-	for(var/textbit in bitfield2list(varname)){ \
-		if(textbit in varname){ \
-			assembled__##varname += "[GLOB.attack_type_names[textbit]]"; \
-		} \
+	for(var/bit in bitfield2list(varname)){ \
+		assembled__##varname += "[GLOB.attack_type_names[num2text(bit)]]"; \
 	} \
 	dat += "[english_list(assembled__##varname)]</th>";
 #define RENDER_BLOCK_DIRECTIONS(varname, desc) \
 	dat += "<tr><th>[#varname]<br><i>[desc]</i></th><th>"; \
 	var/list/assembled__##varname = list(); \
-	for(var/textbit in GLOB.block_direction_names){ \
-		if(textbit in varname){ \
-			assembled__##varname += "[GLOB.block_direction_names[textbit]] = [varname[textbit]]"; \
-		} \
+	for(var/bit in bitfield2list(varname)){ \
+		assembled__##varname += "[GLOB.block_direction_names[num2text(bit)]]"; \
 	} \
 	dat += "[english_list(assembled__##varname)]</th>";
 

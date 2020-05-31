@@ -162,7 +162,6 @@
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 	force = 15
 	throwforce = 25
-	block_chance = 50
 	armour_penetration = 200 //Apparently this gives it the ability to pierce block
 	flags_1 = CONDUCT_1
 	obj_flags = UNIQUE_RENAME

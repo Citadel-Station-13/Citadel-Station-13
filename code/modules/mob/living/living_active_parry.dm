@@ -174,28 +174,6 @@
 		return NOT_PARRYING
 
 /**
-  * Gets the percentage efficiency of our parry.
-  *
-  * Returns a percentage in normal 0 to 100 scale, but not clamped to just 0 to 100.
-  */
-/mob/living/proc/get_parry_efficiency(attack_type)
-	var/datum/block_parry_data/data = get_parry_data()
-	if(get_parry_stage() != PARRY_ACTIVE)
-		return 0
-	var/difference = abs(get_parry_time() - (data.parry_time_perfect + data.parry_time_windup))
-	var/leeway = data.attack_type_list_scan(data.parry_time_perfect_leeway_override, attack_type)
-	if(isnull(leeway))
-		leeway = data.parry_time_perfect_leeway
-	difference -= leeway
-	. = data.parry_efficiency_perfect
-	if(difference <= 0)
-		return
-	var/falloff = data.attack_type_list_scan(data.parry_imperfect_falloff_percent_override, attack_type)
-	if(isnull(falloff))
-		falloff = data.parry_imperfect_falloff_percent
-	. -= falloff * difference
-
-/**
   * Gets the current decisecond "frame" of an active parry.
   */
 /mob/living/proc/get_parry_time()
