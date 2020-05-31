@@ -1,4 +1,9 @@
 // Active parry system goes in here.
+/**
+  * Determines if we can actively parry.
+  */
+/obj/item/proc/can_active_parry()
+	return item_flags & ITEM_CAN_PARRY
 
 /**
   * Called from keybindings.
@@ -26,7 +31,7 @@
 	// yanderedev else if time
 	var/obj/item/using_item = get_active_held_item()
 	var/method
-	if(using_item.item_flags & ITEM_CAN_PARRY)
+	if(using_item.can_active_parry())
 		data = using_item.block_parry_data
 		method = ITEM_PARRY
 	else if(mind?.martial_art?.can_martial_parry)
@@ -213,6 +218,8 @@
 	var/efficiency = get_parry_efficiency(attack_type)
 	switch(parrying)
 		if(ITEM_PARRY)
+			if(!active_parry_item.can_active_parry())
+				return BLOCK_NONE
 			. = active_parry_item.on_active_parry(src, object, damage, attack_text, attack_type, armour_penetration, attacker, def_zone, return_list, efficiency, get_parry_time())
 		if(UNARMED_PARRY)
 			. = on_active_parry(src, object, damage, attack_text, attack_type, armour_penetration, attacker, def_zone, return_list, efficiency, get_parry_time())

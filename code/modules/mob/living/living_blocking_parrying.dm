@@ -159,6 +159,132 @@ GLOBAL_LIST_EMPTY(block_parry_data)
 		return
 	return total/div	//groan
 
+#define RENDER_VARIABLE_SIMPLE(varname, desc) dat += "<tr><th>[#varname]<br><i>[desc]</i></th><th>[varname]</th></tr>"
+#define RENDER_OVERRIDE_LIST
+/**
+  * Generates a HTML render of this datum for self-documentation
+  * Maybe make this tgui-next someday haha
+  * Does NOT include the popout or title or anything. Just the variables and explanations..
+  */
+/datum/block_parry_data/proc/render_html_readout(block_data = FALSE, parry_data = FALSE)
+	var/list/dat = list()
+	if(block_data)
+		dat += "<div class='statusDisplay'><h3>Block Stats</h3><table style='width:100%'><tr><th>Name/Description</th><th>Value</th></tr>"
+		// can_block_directions
+		dat += "
+		// can_block_attack_types
+		dat += "
+		RENDER_VARIABLE_SIMPLE(block_slowdown, "How much slowdown is applied to the user while blocking. Lower is better.")
+		RENDER_VARIABLE_SIMPLE(block_end_click_cd_add, "How much click delay in deciseconds is applied to the user when blocking ends. Lower is better.")
+		RENDER_VARIABLE_SIMPLE(block_lock_attacking, "Whether or not (1 or 0) the user is locked from atacking and/or item usage while blocking.")
+		RENDER_VARIABLE_SIMPLE(block_active_priority, "The priority of this item in the block sequence. This will probably mean nothing to you unless you are a coder.")
+		RENDER_VARIABLE_SIMPLE(block_start_delay, "The amount of time in deciseconds it takes to start a block with this item. Lower is better.")
+		RENDER_VARIABLE_SIMPLE(block_damage_absorption, "The amount of damage that is absorbed by default. Higher is better.")
+		RENDER_OVERRIDE_LIST(block_damage_absorption_override, "Overrides for the above for each attack type")
+		RENDER_VARIABLE_SIMPLE(block_damage_multiplier, "Damage between absorption and limit is multiplied by this. Lower is better.")
+		RENDER_OVERRIDE_LIST(block_damage_multiplier_override, "Overrides for the above for each attack type")
+		RENDER_VARIABLE_SIMPLE(block_damage_limit, "Damage above this passes right through and is not impacted. Higher is better.")
+		RENDER_OVERRIDE_LIST(block_damage_limit_override, "Overrides for the above for each attack type.")
+		RENDER_VARIABLE_SIMPLE(block_stamina_efficiency, "Coefficient for stamina damage dealt to user by damage blocked. Higher is better.")
+		RENDER_OVERRIDE_LIST(block_stamina_efficiency_override, "Overrides for the above for each attack type.")
+		RENDER_VARIABLE_SIMPLE(block_stamina_limb_ratio, "The ratio of stamina that is applied to the limb holding this object (if applicable) rather than whole body/chest.")
+		RENDER_VARIABLE_SIMPLE(block_stamina_buffer_ratio, "The ratio of stamina incurred by chest/whole body that is buffered rather than direct (buffer = your stamina buffer, direct = direct stamina damage like from a disabler.)")
+		
+
+		dat += "</div></table>"
+	if(parry_data)
+		dat += "<div class='statusDisplay'><h3>Parry Stats</h3><table style='width:100%'><tr><th>Name/Description</th><th>Value</th></tr>"
+		
+		dat += "</div></table>"
+	return dat.Join("")
+#undef RENDER_VARIABLE_SIMPLE
+#undef RENDER_OVERRIDE_LIST
+
+	/// NOTE: FOR ATTACK_TYPE_DEFINE, you MUST wrap it in "[DEFINE_HERE]"! The defines are bitflags, and therefore, NUMBERS!
+
+	/// See defines. Point of reference is someone facing north.
+	var/can_block_directions = BLOCK_DIR_NORTH | BLOCK_DIR_NORTHEAST | BLOCK_DIR_NORTHWEST
+	/// Attacks we can block
+	var/can_block_attack_types = ALL
+
+	/// Stamina dealt directly via adjustStaminaLossBuffered() per SECOND of block.
+	var/block_stamina_cost_per_second = 1.5
+
+	/// Bitfield for attack types that we can block while down. This will work in any direction.
+	var/block_resting_attack_types_anydir = ATTACK_TYPE_MELEE | ATTACK_TYPE_UNARMED | ATTACK_TYPE_TACKLE
+	/// Bitfield for attack types that we can block while down but only in our normal directions.
+	var/block_resting_attack_types_directional = ATTACK_TYPE_PROJECTILE | ATTACK_TYPE_THROWN
+	/// Multiplier to stamina damage taken for attacks blocked while downed.
+	var/block_resting_stamina_penalty_multiplier = 1.5
+	/// Override list for multiplier to stamina damage taken for attacks blocked while down. list("[ATTACK_TYPE_DEFINE]" = multiplier_number)
+	var/list/block_resting_stamina_penalty_multiplier_override
+
+	/// Sounds for blocking
+	var/list/block_sounds = list('sound/block_parry/block_metal1.ogg' = 1, 'sound/block_parry/block_metal1.ogg' = 1)
+
+	/////////// PARRYING ////////////
+	/// Prioriry for [mob/do_run_block()] while we're being used to parry.
+	//  None - Parry is always highest priority!
+	/// Parry doesn't work if you aren't able to otherwise attack due to clickdelay
+	var/parry_respect_clickdelay = TRUE
+	/// Parry stamina cost
+	var/parry_stamina_cost = 5
+	/// Attack types we can block
+	var/parry_attack_types = ALL
+	/// Parry flags
+	var/parry_flags = PARRY_DEFAULT_HANDLE_FEEDBACK | PARRY_LOCK_ATTACKING
+
+	/// Parry windup duration in deciseconds. 0 to this is windup, afterwards is main stage.
+	var/parry_time_windup = 2
+	/// Parry spindown duration in deciseconds. main stage end to this is the spindown stage, afterwards the parry fully ends.
+	var/parry_time_spindown = 3
+	/// Main parry window in deciseconds. This is between [parry_time_windup] and [parry_time_spindown]
+	var/parry_time_active = 5
+	// Visual overrides
+	/// If set, overrides visual duration of windup
+	var/parry_time_windup_visual_override
+	/// If set, overrides visual duration of active period
+	var/parry_time_active_visual_override
+	/// If set, overrides visual duration of spindown
+	var/parry_time_spindown_visual_override
+	/// Perfect parry window in deciseconds from the start of the main window. 3 with main 5 = perfect on third decisecond of main window.
+	var/parry_time_perfect = 2.5
+	/// Time on both sides of perfect parry that still counts as part of the perfect window.
+	var/parry_time_perfect_leeway = 1
+	/// [parry_time_perfect_leeway] override for attack types, list("[ATTACK_TYPE_DEFINE]" = deciseconds)
+	var/list/parry_time_perfect_leeway_override
+	/// Parry "efficiency" falloff in percent per decisecond once perfect window is over.
+	var/parry_imperfect_falloff_percent = 20
+	/// [parry_imperfect_falloff_percent] override for attack types, list("[ATTACK_TYPE_DEFINE]" = deciseconds)
+	var/list/parry_imperfect_falloff_percent_override
+	/// Efficiency in percent on perfect parry.
+	var/parry_efficiency_perfect = 120
+	/// Parry effect data.
+	var/list/parry_data = list(
+		PARRY_REFLEX_COUNTERATTACK = PARRY_COUNTERATTACK_MELEE_ATTACK_CHAIN
+		)
+	/// Efficiency must be at least this to be considered successful
+	var/parry_efficiency_considered_successful = 0.1
+	/// Efficiency must be at least this to run automatic counterattack
+	var/parry_efficiency_to_counterattack = 0.1
+	/// Maximum attacks to parry successfully or unsuccessfully (but not efficiency < 0) during active period, hitting this immediately ends the sequence.
+	var/parry_max_attacks = INFINITY
+	/// Visual icon state override for parrying
+	var/parry_effect_icon_state = "parry_bm_hold"
+	/// Parrying cooldown, separate of clickdelay. It must be this much deciseconds since their last parry for them to parry with this object.
+	var/parry_cooldown = 0
+	/// Parry start sound
+	var/parry_start_sound = 'sound/block_parry/sfx-parry.ogg'
+	/// Sounds for parrying
+	var/list/parry_sounds = list('sound/block_parry/block_metal1.ogg' = 1, 'sound/block_parry/block_metal1.ogg' = 1)
+	/// Stagger duration post-parry if you fail to parry an attack
+	var/parry_failed_stagger_duration = 3.5 SECONDS
+	/// Clickdelay duration post-parry if you fail to parry an attack
+	var/parry_failed_clickcd_duration = 2 SECONDS
+
+
+// MOB PROCS
+
 /**
   * Called every life tick to handle blocking/parrying effects.
   */

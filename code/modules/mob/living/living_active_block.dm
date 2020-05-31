@@ -83,7 +83,7 @@
 		to_chat(src, "<span class='warning'>You can't block with your bare hands!</span>")
 		return
 	if(!I.can_active_block())
-		to_chat(src, "<span class='warning'>[I] is not capable of actively being used to block!</span>")
+		to_chat(src, "<span class='warning'>[I] is either not capable of being used to actively block, or is not currently in a state that can! (Try wielding it if it's twohanded, for example.)</span>")
 		return
 	var/datum/block_parry_data/data = I.get_block_parry_data()
 	var/delay = data.block_start_delay

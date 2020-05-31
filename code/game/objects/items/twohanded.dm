@@ -30,6 +30,8 @@
 	var/wieldsound = null
 	var/unwieldsound = null
 	var/slowdown_wielded = 0
+	/// Do we need to be wielded to actively block/parry?
+	var/requires_wield_to_block_parry = TRUE
 	item_flags = SLOWS_WHILE_IN_HAND
 
 /obj/item/twohanded/proc/unwield(mob/living/carbon/user, show_message = TRUE)
@@ -89,6 +91,12 @@
 	O.wielded = TRUE
 	user.put_in_inactive_hand(O)
 	set_slowdown(slowdown + slowdown_wielded)
+
+/obj/item/twohanded/can_active_block()
+	return ..() && (!requires_wield_to_block_parry || wielded)
+
+/obj/item/twohanded/can_active_parry()
+	return ..() && (!requires_wield_to_block_parry || wielded)
 
 /obj/item/twohanded/dropped(mob/user)
 	. = ..()
