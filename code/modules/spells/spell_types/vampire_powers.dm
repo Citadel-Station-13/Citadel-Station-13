@@ -17,11 +17,10 @@
 
 /obj/effect/proc_holder/spell/Initialize()
 	if(vamp_req)
-		clothes_req = FALSE
+		clothes_req = NONE
 		range = 1
-		human_req = FALSE //so we can cast stuff while a bat, too
-	.=..()
-
+		mob_whitelist |= /mob/living/simple_animal/hostile/retaliate/bat
+	return ..()
 
 /obj/effect/proc_holder/spell/before_cast(list/targets)
 	. = ..()
