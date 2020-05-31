@@ -216,7 +216,7 @@ GLOBAL_LIST_EMPTY(block_parry_data)
 	if(.)
 		return
 	if(href_list["render"])
-		var/datum/browser/B = new(usr, REF(src), href_list["name"], 400, 1000)
+		var/datum/browser/B = new(usr, REF(src), href_list["name"], 800, 1000)
 		B.set_content(render_html_readout(href_list["block"], href_list["parry"]))
 		B.open()
 
