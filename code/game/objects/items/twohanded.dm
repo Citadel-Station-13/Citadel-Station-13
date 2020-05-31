@@ -667,7 +667,7 @@
 		force_wielded = 19
 		force_unwielded = 11
 		throwforce = 21
-		embedding = list("embedded_impact_pain_multiplier" = 1.5, "embed_chance" = 75) //plasmaglass spears are sharper
+		embedding = getEmbeddingBehavior(embed_chance = 75, embedded_pain_multiplier = 1.5) //plasmaglass spears are sharper
 		icon_prefix = "spearplasma"
 	qdel(tip)
 	var/obj/item/twohanded/spear/S = locate() in parts_list
