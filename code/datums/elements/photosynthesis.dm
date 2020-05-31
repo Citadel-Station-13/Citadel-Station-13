@@ -35,7 +35,7 @@
 
 	if(!attached_atoms)
 		attached_atoms = list()
-		START_PROCESSING(SSdcs, src)
+		START_PROCESSING(SSobj, src)
 	attached_atoms[target]++
 
 /datum/element/photosynthesis/Detach(datum/target)
@@ -43,7 +43,8 @@
 	if(!attached_atoms[target])
 		attached_atoms -= target
 		if(!length(attached_atoms))
-			STOP_PROCESSING(SSdcs, src)
+			STOP_PROCESSING(SSobj, src)
+			attached_atoms = null
 	return ..()
 
 /datum/element/photosynthesis/process()
