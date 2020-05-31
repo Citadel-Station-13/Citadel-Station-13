@@ -19,15 +19,23 @@
 	},
 /area/ruin/unpowered)
 "e" = (
-/obj/machinery/door/airlock/wood,
-/turf/open/floor/sepia{
-	blocks_air = 0;
-	slowdown = 10
-	},
+/obj/structure/sign/poster/official/fruit_bowl,
+/turf/closed/indestructible/riveted,
 /area/ruin/unpowered)
 "f" = (
 /obj/structure/table/wood,
-/obj/item/reagent_containers/food/snacks/grown/citrus/orange,
+/obj/item/reagent_containers/glass/bowl,
+/obj/item/reagent_containers/food/snacks/grown/grapes{
+	pixel_y = 10;
+	pixel_x = 10
+	},
+/obj/item/reagent_containers/food/snacks/grown/apple{
+	pixel_y = 8;
+	pixel_x = -8
+	},
+/obj/item/reagent_containers/food/snacks/grown/citrus/orange{
+	pixel_y = 8
+	},
 /turf/open/floor/sepia{
 	blocks_air = 0;
 	slowdown = 10
@@ -36,6 +44,13 @@
 "g" = (
 /obj/structure/bed,
 /obj/item/bedsheet/brown,
+/turf/open/floor/sepia{
+	blocks_air = 0;
+	slowdown = 10
+	},
+/area/ruin/unpowered)
+"j" = (
+/obj/machinery/door/airlock/wood,
 /turf/open/floor/sepia{
 	blocks_air = 0;
 	slowdown = 10
@@ -93,7 +108,7 @@ a
 (5,1,1) = {"
 a
 b
-a
+e
 d
 d
 d
@@ -344,299 +359,11 @@ a
 "}
 (26,1,1) = {"
 a
-b
 a
-d
 a
 a
-a
-a
-b
-a
-"}
-(27,1,1) = {"
-a
-b
-a
-d
-d
-d
-d
-a
-b
-a
-"}
-(28,1,1) = {"
-a
-b
-a
-a
-a
-a
-d
-a
-b
-a
-"}
-(29,1,1) = {"
-a
-b
-a
-d
-d
-d
-d
-a
-b
-a
-"}
-(30,1,1) = {"
-a
-b
-a
-d
-a
-a
-a
-a
-b
-a
-"}
-(31,1,1) = {"
-a
-b
-a
-d
-d
-d
-d
-a
-b
-a
-"}
-(32,1,1) = {"
-a
-b
-a
-a
-a
-a
-d
-a
-b
-a
-"}
-(33,1,1) = {"
-a
-b
-a
-d
-d
-d
-d
-a
-b
-a
-"}
-(34,1,1) = {"
-a
-b
-a
-d
-a
-a
-a
-a
-b
-a
-"}
-(35,1,1) = {"
-a
-b
-a
-d
-d
-d
-d
-a
-b
-a
-"}
-(36,1,1) = {"
-a
-b
-a
-a
-a
-a
-d
-a
-b
-a
-"}
-(37,1,1) = {"
-a
-b
-a
-d
-d
-d
-d
-a
-b
-a
-"}
-(38,1,1) = {"
-a
-b
-a
-d
-a
-a
-a
-a
-b
-a
-"}
-(39,1,1) = {"
-a
-b
-a
-d
-d
-d
-d
-a
-b
-a
-"}
-(40,1,1) = {"
-a
-b
-a
-a
-a
-a
-d
-a
-b
-a
-"}
-(41,1,1) = {"
-a
-b
-a
-d
-d
-d
-d
-a
-b
-a
-"}
-(42,1,1) = {"
-a
-b
-a
-d
-a
-a
-a
-a
-b
-a
-"}
-(43,1,1) = {"
-a
-b
-a
-d
-d
-d
-d
-a
-b
-a
-"}
-(44,1,1) = {"
-a
-b
-a
-a
-a
-a
-d
-a
-b
-a
-"}
-(45,1,1) = {"
-a
-b
-a
-d
-d
-d
-d
-a
-b
-a
-"}
-(46,1,1) = {"
-a
-b
-a
-d
-a
-a
-a
-a
-b
-a
-"}
-(47,1,1) = {"
-a
-b
-a
-d
-d
-d
-d
-a
-b
-a
-"}
-(48,1,1) = {"
-a
-b
-a
-a
-a
-a
-d
-a
-b
-a
-"}
-(49,1,1) = {"
-a
-b
-a
-d
-d
-d
-d
-a
-b
-a
-"}
-(50,1,1) = {"
-a
-a
-a
-a
-e
-e
+j
+j
 a
 a
 a

@@ -28,28 +28,31 @@
 /obj/structure/fans/tiny/invisible,
 /turf/open/floor/engine/cult,
 /area/ruin/unpowered)
+"G" = (
+/turf/closed/wall/rust,
+/area/ruin/unpowered)
 
 (1,1,1) = {"
 a
+G
+G
+G
+G
+G
+G
 b
-b
-b
-b
-b
-b
-b
-b
-b
-b
-b
-b
-b
-b
-b
+G
+G
+G
+G
+G
+G
+G
+G
 "}
 (2,1,1) = {"
 a
-b
+G
 d
 f
 f
@@ -63,11 +66,11 @@ d
 f
 f
 d
-b
+G
 "}
 (3,1,1) = {"
-b
-b
+G
+G
 e
 g
 f
@@ -81,10 +84,10 @@ g
 f
 g
 f
-b
+G
 "}
 (4,1,1) = {"
-b
+G
 c
 f
 f
@@ -102,8 +105,8 @@ f
 h
 "}
 (5,1,1) = {"
-b
-b
+G
+G
 e
 f
 f
@@ -117,11 +120,11 @@ f
 f
 f
 f
-b
+G
 "}
 (6,1,1) = {"
 a
-b
+G
 d
 g
 f
@@ -135,23 +138,23 @@ d
 f
 g
 d
-b
+G
 "}
 (7,1,1) = {"
 a
-b
-b
-b
-b
-b
-b
-b
-b
-b
-b
-b
-b
-b
-b
-b
+G
+G
+G
+G
+G
+G
+G
+G
+G
+G
+G
+G
+G
+G
+G
 "}
