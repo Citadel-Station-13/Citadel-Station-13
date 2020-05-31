@@ -23,11 +23,11 @@
 		/obj/effect/proc_holder/spell/self/revive = 0, //So new vampires can revive themselves if they were turned while dead.
 		/obj/effect/proc_holder/spell/targeted/hypnotise = 0,
 		/datum/vampire_passive/vision = 175,
-		/obj/effect/proc_holder/spell/targeted/shapeshift/vampire_batform = 175,
+		/obj/effect/proc_holder/spell/self/shapeshift = 175,
 		/obj/effect/proc_holder/spell/self/cloak = 225,
 		/obj/effect/proc_holder/spell/targeted/disease = 275,
 		/obj/effect/proc_holder/spell/bats = 330,
-		/obj/effect/proc_holder/spell/self/batform = 300,
+		/obj/effect/proc_holder/spell/targeted/shapeshift/vampire_batform = 300,
 		/obj/effect/proc_holder/spell/self/screech = 380,
 		/datum/vampire_passive/regen = 425,
 		/obj/effect/proc_holder/spell/targeted/ethereal_jaunt/mistform = 500,
