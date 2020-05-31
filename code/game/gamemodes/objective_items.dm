@@ -36,6 +36,7 @@
 	targetitem = /obj/item/gun/energy/e_gun/hos
 	difficulty = 10
 	excludefromjob = list("Head Of Security")
+	altitems = list(/obj/item/gun/ballistic/revolver/mws)
 
 /datum/objective_item/steal/handtele
 	name = "a hand teleporter."

@@ -46,4 +46,4 @@
 	var/turf/T = loc
 	if(!istype(T)) //you know this will happen somehow
 		CRASH("Turf decal initialized in an object/nullspace")
-	T.AddComponent(/datum/component/decal, icon, icon_state, dir, CLEAN_GOD, color, null, null, alpha)
+	T.AddElement(/datum/element/decal, icon, icon_state, turn(dir, -dir2angle(T.dir)), CLEAN_GOD, color, null, null, alpha)
