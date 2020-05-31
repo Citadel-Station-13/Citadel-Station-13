@@ -254,8 +254,8 @@
 
 /obj/effect/proc_holder/spell/bats/cast(list/targets, mob/user = usr)
 	for(var/T in targets)
-		new /mob/living/simple_animal/hostile/retaliate/bat/vampire_bat(T)
-
+		var/mob/living/simple_animal/hostile/retaliate/bat/vampire_bat/vb = new(T)
+		vb.Retaliate()		// snowflakey.
 
 /obj/effect/proc_holder/spell/targeted/ethereal_jaunt/mistform
 	name = "Mist Form (20)"

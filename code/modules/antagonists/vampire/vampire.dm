@@ -121,19 +121,13 @@
 /datum/antagonist/vampire/proc/forge_single_objective() //Returns how many objectives are added
 	.=1
 	if(prob(50))
-		var/list/active_ais = active_ais()
-		if(active_ais.len && prob(100/GLOB.joined_player_list.len))
-			var/datum/objective/destroy/destroy_objective = new
-			destroy_objective.owner = owner
-			destroy_objective.find_target()
-			add_objective(destroy_objective)
-		else if(prob(30))
+		if(prob(30))
 			var/datum/objective/maroon/maroon_objective = new
 			maroon_objective.owner = owner
 			maroon_objective.find_target()
 			add_objective(maroon_objective)
 		else
-			var/datum/objective/assassinate/kill_objective = new
+			var/datum/objective/assassinate/once/kill_objective = new
 			kill_objective.owner = owner
 			kill_objective.find_target()
 			add_objective(kill_objective)
@@ -213,7 +207,6 @@
 		var/datum/antagonist/vampire/L = mind.has_antag_datum(/datum/antagonist/vampire)
 		if(on_fire && stat == DEAD && L && !L.get_ability(/datum/vampire_passive/full))
 			dust()
-
 
 /datum/antagonist/vampire/proc/handle_bloodsucking(mob/living/carbon/human/H)
 	draining = H
