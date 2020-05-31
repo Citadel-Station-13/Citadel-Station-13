@@ -167,14 +167,13 @@ GLOBAL_LIST_EMPTY(block_parry_data)
 
 /**
   * Generates a HTML render of this datum for self-documentation
-  * Maybe make this tgui-next someday haha
+  * Maybe make this tgui-next someday haha god this is ugly as sin.
   * Does NOT include the popout or title or anything. Just the variables and explanations..
   */
 /datum/block_parry_data/proc/render_html_readout(block_data = FALSE, parry_data = FALSE)
 	var/list/dat = list()
 	if(block_data)
 		dat += "<div class='statusDisplay'><h3>Block Stats</h3><table style='width:100%'><tr><th>Name/Description</th><th>Value</th></tr>"
-		// can_block_directions
 		RENDER_BLOCK_DIRECTIONS(can_block_directions, "Which directions this can block in.")
 		RENDER_ATTACK_TYPES(can_block_attack_types, "The kinds of attacks this can block.")
 		RENDER_VARIABLE_SIMPLE(block_slowdown, "How much slowdown is applied to the user while blocking. Lower is better.")
@@ -219,32 +218,19 @@ GLOBAL_LIST_EMPTY(block_parry_data)
 		RENDER_VARIABLE_SIMPLE(parry_efficiency_perfect, "Efficiency in percentage a parry in the perfect window is considered.")
 		// parry_data
 		dat += ""
-		
+		RENDER_VARIABLE_SIMPLE(parry_efficiency_considered_successful, "Minimum parry efficiency to be considered a successful parry.")
+		RENDER_VARIABLE_SIMPLE(parry_efficiency_to_counterattack, "Minimum parry efficiency to trigger counterattack effects.")
+		RENDER_VARIABLE_SIMPLE(parry_max_attacks, "Max attacks parried per parry cycle.")
+		RENDER_VARIABLE_SIMPLE(parry_effect_icon_state, "Parry effect image name")
+		RENDER_VARIABLE_SIMPLE(parry_cooldown, "Deciseconds it has to be since the last time a parry sequence <b>ended</b> for you before you can parry again.")
+		RENDER_VARIABLE_SIMPLE(parry_failed_stagger_duration, "Deciseconds you are staggered for at the of the parry sequence if you do not successfully parry anything.")
+		RENDER_VARIABLE_SIMPLE(parry_failed_clickcd_duration, "Deciseconds you are put on attack cooldown at the end of the parry sequence if you do not successfully parry anything.")
 		dat += "</div></table>"
 	return dat.Join("")
 #undef RENDER_VARIABLE_SIMPLE
 #undef RENDER_OVERRIDE_LIST
 #undef RENDER_ATTACK_TYPES
 #undef RENDER_BLOCK_DIRECTIONS
-
-	var/parry_efficiency_considered_successful = 0.1
-	/// Efficiency must be at least this to run automatic counterattack
-	var/parry_efficiency_to_counterattack = 0.1
-	/// Maximum attacks to parry successfully or unsuccessfully (but not efficiency < 0) during active period, hitting this immediately ends the sequence.
-	var/parry_max_attacks = INFINITY
-	/// Visual icon state override for parrying
-	var/parry_effect_icon_state = "parry_bm_hold"
-	/// Parrying cooldown, separate of clickdelay. It must be this much deciseconds since their last parry for them to parry with this object.
-	var/parry_cooldown = 0
-	/// Parry start sound
-	var/parry_start_sound = 'sound/block_parry/sfx-parry.ogg'
-	/// Sounds for parrying
-	var/list/parry_sounds = list('sound/block_parry/block_metal1.ogg' = 1, 'sound/block_parry/block_metal1.ogg' = 1)
-	/// Stagger duration post-parry if you fail to parry an attack
-	var/parry_failed_stagger_duration = 3.5 SECONDS
-	/// Clickdelay duration post-parry if you fail to parry an attack
-	var/parry_failed_clickcd_duration = 2 SECONDS
-
 
 // MOB PROCS
 
