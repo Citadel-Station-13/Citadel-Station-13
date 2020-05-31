@@ -682,7 +682,7 @@
 	if(G)
 		explosive = G
 		name = "explosive lance"
-		embedding = list("embedded_impact_pain_multiplier" = 1, "embed_chance" = 0)//elances should not be embeddable
+		embedding = getEmbeddingBehavior(embed_chance = 0, embedded_pain_multiplier = 1)//elances should not be embeddable
 		desc = "A makeshift spear with [G] attached to it."
 	update_icon()
 
