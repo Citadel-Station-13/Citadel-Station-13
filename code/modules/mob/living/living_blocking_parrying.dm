@@ -161,9 +161,24 @@ GLOBAL_LIST_EMPTY(block_parry_data)
 
 #define RENDER_VARIABLE_SIMPLE(varname, desc) dat += "<tr><th>[#varname]<br><i>[desc]</i></th><th>[varname]</th></tr>"
 #define RENDER_OVERRIDE_LIST(varname, desc) \
-
+	dat += "<tr><th>[#varname]<br><i>[desc]</i></th><th>"; \
+	var/list/assembled__##varname = list(); \
+	for(var/textbit in GLOB.attack_type_names){ \
+		if(textbit in varname){ \
+			assembled__##varname += "[GLOB.attack_type_names[textbit]] = varname[textbit]"; \
+		} \
+	} \
+	dat += "[english_list(assembled__##varname)]</th>";
 #define RENDER_ATTACK_TYPES(varname, desc) dat += "<tr><th>[#varname]<br><i>[desc]</i></th><th>[english_list(bitfield2list(varname, GLOB.attack_type_names))]</th>"
 #define RENDER_BLOCK_DIRECTIONS(varname, desc) \
+	dat += "<tr><th>[#varname]<br><i>[desc]</i></th><th>"; \
+	var/list/assembled__##varname = list(); \
+	for(var/textbit in GLOB.block_direction_names){ \
+		if(textbit in varname){ \
+			assembled__##varname += "[GLOB.block_direction_names[textbit]] = varname[textbit]"; \
+		} \
+	} \
+	dat += "[english_list(assembled__##varname)]</th>";
 
 /**
   * Generates a HTML render of this datum for self-documentation

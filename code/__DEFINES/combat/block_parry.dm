@@ -23,6 +23,18 @@ GLOBAL_LIST_INIT(dir2blockdir, list(
 
 #define DIR2BLOCKDIR(d)			(GLOB.dir2blockdir["[d]"])
 
+GLOBAL_LIST_INIT(block_direction_names, list(
+	"[BLOCK_DIR_NORTH]" = "Front",
+	"[BLOCK_DIR_NORTHEAST]" = "Front Right",
+	"[BLOCK_DIR_NORTHWEST]" = "Front Left",
+	"[BLOCK_DIR_WEST]" = "Left",
+	"[BLOCK_DIR_EAST]" = "Right",
+	"[BLOCK_DIR_SOUTH]" = "Behind",
+	"[BLOCK_DIR_SOUTHEAST]" = "Behind Right",
+	"[BLOCK_DIR_SOUTHWEST]" = "Behind Left",
+	"[BLOCK_DIR_ONTOP]" = "Ontop"
+))
+
 /// If this is the value of active_block_starting it signals we want to interrupt the start
 #define ACTIVE_BLOCK_STARTING_INTERRUPT "INTERRUPT"
 
