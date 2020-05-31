@@ -309,11 +309,11 @@
 	var/total_mass_on = 3.4
 
 /datum/block_parry_data/dual_esword
-	block_damage_absorption = 5
+	block_damage_absorption = 2
 	block_damage_multiplier = 0.3
 	block_start_delay = 0		// instantaneous block
-	block_stamina_cost_per_second = 3
-	block_stamina_efficiency = 2
+	block_stamina_cost_per_second = 2
+	block_stamina_efficiency = 3
 	// slowdown
 	block_slowdown = 1
 	// no attacking while blocking
@@ -329,7 +329,7 @@
 	parry_flags = PARRY_DEFAULT_HANDLE_FEEDBACK		// esword users can attack while parrying.
 	parry_time_perfect = 2		// first ds isn't perfect
 	parry_time_perfect_leeway = 1
-	parry_imperfect_falloff_percent = 20
+	parry_imperfect_falloff_percent = 10
 	parry_efficiency_to_counterattack = 100
 	parry_efficiency_considered_successful = 25		// VERY generous
 	parry_efficiency_perfect = 90

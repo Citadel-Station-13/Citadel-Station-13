@@ -159,6 +159,7 @@ GLOBAL_LIST_EMPTY(block_parry_data)
 		return
 	return total/div	//groan
 
+
 /**
   * Gets the percentage efficiency of our parry.
   *
@@ -193,14 +194,20 @@ GLOBAL_LIST_EMPTY(block_parry_data)
 #define RENDER_ATTACK_TYPES(varname, desc)	dat += "<tr><th>[#varname]<br><i>[desc]</i></th><th>"; \
 	var/list/assembled__##varname = list(); \
 	for(var/bit in bitfield2list(varname)){ \
-		assembled__##varname += "[GLOB.attack_type_names[num2text(bit)]]"; \
+		var/name = GLOB.attack_type_names[num2text(bit)]; \
+		if(name){ \
+			assembled__##varname += "[name]"; \
+		} \
 	} \
 	dat += "[english_list(assembled__##varname)]</th>";
 #define RENDER_BLOCK_DIRECTIONS(varname, desc) \
 	dat += "<tr><th>[#varname]<br><i>[desc]</i></th><th>"; \
 	var/list/assembled__##varname = list(); \
 	for(var/bit in bitfield2list(varname)){ \
-		assembled__##varname += "[GLOB.block_direction_names[num2text(bit)]]"; \
+		var/name = GLOB.block_direction_names[num2text(bit)]; \
+		if(name){ \
+			assembled__##varname += "[name]"; \
+		} \
 	} \
 	dat += "[english_list(assembled__##varname)]</th>";
 

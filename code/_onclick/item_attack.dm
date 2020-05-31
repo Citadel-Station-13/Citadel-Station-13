@@ -14,7 +14,7 @@
 			if(IS_STAMCRIT(L))
 				to_chat(L, "<span class='warning'>You are too exhausted to swing [src]!</span>")
 				return
-		if(!CHECK_MOBILITY(L, MOBILITY_USE))
+		if(!CHECK_MOBILITY(L, MOBILITY_USE) && !(flags & ATTACKCHAIN_PARRY_COUNTERATTACK))
 			to_chat(L, "<span class='warning'>You are unable to swing [src] right now!</span>")
 			return
 	if(tool_behaviour && target.tool_act(user, src, tool_behaviour))
