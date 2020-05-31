@@ -6,6 +6,7 @@
 	custom_materials = list(/datum/material/iron=6000, /datum/material/glass=3000)
 	item_flags = SURGICAL_TOOL
 	flags_1 = CONDUCT_1
+	rad_flags = RAD_NO_CONTAMINATE
 	w_class = WEIGHT_CLASS_TINY
 	tool_behaviour = TOOL_RETRACTOR
 	toolspeed = 1
@@ -50,6 +51,7 @@
 	custom_materials = list(/datum/material/iron=5000, /datum/material/glass=2500)
 	item_flags = SURGICAL_TOOL
 	flags_1 = CONDUCT_1
+	rad_flags = RAD_NO_CONTAMINATE
 	w_class = WEIGHT_CLASS_TINY
 	attack_verb = list("attacked", "pinched")
 	tool_behaviour = TOOL_HEMOSTAT
@@ -66,7 +68,6 @@
 	toolspeed = 0.5
 	attack_verb = list("attacked", "pinched")
 
-
 /obj/item/cautery
 	name = "cautery"
 	desc = "This stops bleeding."
@@ -75,6 +76,7 @@
 	custom_materials = list(/datum/material/iron=2500, /datum/material/glass=750)
 	item_flags = SURGICAL_TOOL
 	flags_1 = CONDUCT_1
+	rad_flags = RAD_NO_CONTAMINATE
 	w_class = WEIGHT_CLASS_TINY
 	attack_verb = list("burnt")
 	tool_behaviour = TOOL_CAUTERY
@@ -91,7 +93,6 @@
 	toolspeed = 0.5
 	attack_verb = list("burnt")
 
-
 /obj/item/surgicaldrill
 	name = "surgical drill"
 	desc = "You can drill using this item. You dig?"
@@ -102,6 +103,7 @@
 	hitsound = 'sound/weapons/circsawhit.ogg'
 	custom_materials = list(/datum/material/iron=10000, /datum/material/glass=6000)
 	item_flags = SURGICAL_TOOL
+	rad_flags = RAD_NO_CONTAMINATE
 	flags_1 = CONDUCT_1
 	force = 15
 	w_class = WEIGHT_CLASS_NORMAL
@@ -148,7 +150,6 @@
 	toolspeed = 0.5
 	attack_verb = list("drilled")
 
-
 /obj/item/scalpel
 	name = "scalpel"
 	desc = "Cut, cut, and once more cut."
@@ -157,6 +158,7 @@
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	flags_1 = CONDUCT_1
+	rad_flags = RAD_NO_CONTAMINATE
 	force = 10
 	w_class = WEIGHT_CLASS_TINY
 	throwforce = 5
@@ -229,7 +231,6 @@
 	user.visible_message("<span class='suicide'>[user] is slitting [user.p_their()] [pick("wrists", "throat", "stomach")] with [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	return (BRUTELOSS)
 
-
 /obj/item/circular_saw
 	name = "circular saw"
 	desc = "For heavy duty cutting."
@@ -241,6 +242,7 @@
 	throwhitsound =  'sound/weapons/pierce.ogg'
 	item_flags = SURGICAL_TOOL
 	flags_1 = CONDUCT_1
+	rad_flags = RAD_NO_CONTAMINATE
 	force = 15
 	w_class = WEIGHT_CLASS_NORMAL
 	throwforce = 9
@@ -281,6 +283,7 @@
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "surgical_drapes"
 	w_class = WEIGHT_CLASS_TINY
+	rad_flags = RAD_NO_CONTAMINATE
 	attack_verb = list("slapped")
 
 /obj/item/surgical_drapes/attack(mob/living/M, mob/user)
@@ -312,6 +315,7 @@
 	desc = "A container for holding body parts."
 	icon = 'icons/obj/storage.dmi'
 	icon_state = "evidenceobj"
+	rad_flags = RAD_NO_CONTAMINATE
 	item_flags = SURGICAL_TOOL
 
 /obj/item/organ_storage/afterattack(obj/item/I, mob/user, proximity)
@@ -359,6 +363,7 @@
 	icon = 'icons/obj/device.dmi'
 	icon_state = "spectrometer"
 	item_flags = NOBLUDGEON
+	rad_flags = RAD_NO_CONTAMINATE
 	var/list/advanced_surgeries = list()
 
 /obj/item/surgical_processor/afterattack(obj/item/O, mob/user, proximity)
