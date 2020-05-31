@@ -275,7 +275,7 @@
 	throw_range = 5
 	w_class = WEIGHT_CLASS_SMALL
 	var/w_class_on = WEIGHT_CLASS_BULKY
-	item_flags = ITEM_CAN_PARRY | SLOWS_WHILE_IN_HAND
+	item_flags = ITEM_CAN_PARRY | SLOWS_WHILE_IN_HAND |
 	block_parry_data = /datum/block_parry_data/dual_esword
 	force_unwielded = 3
 	force_wielded = 34
@@ -329,15 +329,10 @@
 	parry_failed_clickcd_duration = CLICK_CD_MELEE
 	parry_cooldown = 3 SECONDS
 
-// KEV, WHY AREN'T YOU JUST PUTTING IT IN THE DEFINITION?!?!?!?!
-// I'LL TELL YOU WHY, BECAUSE BYOND DOESN'T CONSIDER "[(1<<0)]" A "CONSTANT EXPRESSION"
-// WHAT EVEN IS MORE CONSTANT THAN 1 BITSHIFTED TO THE LEFT BY 0 PLACES AS A STRING?
-/datum/block_parry_data/dual_esword/New()
 	// more efficient vs projectiles
 	block_stamina_efficiency_override = list(
-		"[ATTACK_TYPE_PROJECTILE]" = 4
+		"[TEXT_ATTACK_TYPE_PROJECTILE]" = 4
 	)
-	return ..()
 
 /obj/item/twohanded/dualsaber/suicide_act(mob/living/carbon/user)
 	if(wielded)
@@ -1070,8 +1065,8 @@
 	force_wielded = 10
 	throwforce = 15			//if you are a madman and finish someone off with this, power to you.
 	throw_speed = 1
-	item_flags = NO_MAT_REDEMPTION | SLOWS_WHILE_IN_HAND
-	block_chance = 30
+	item_flags = NO_MAT_REDEMPTION | SLOWS_WHILE_IN_HAND | ITEM_CAN_BLOCK | ITEM_CAN_PARRY
+	block_parry_data = /datum/block_parry_data/electrostaff
 	attack_verb = list("struck", "beaten", "thwacked", "pulped")
 	total_mass = 5		//yeah this is a heavy thing, beating people with it while it's off is not going to do you any favors. (to curb stun-kill rampaging without it being on)
 	var/obj/item/stock_parts/cell/cell = /obj/item/stock_parts/cell/high
@@ -1085,6 +1080,46 @@
 	var/stun_stamdmg = 40
 	var/stun_status_duration = 25
 	var/stun_stam_cost = 3.5
+
+// haha security desword time /s
+/datum/block_parry_data/electrostaff
+	block_damage_absorption = 0
+	block_damage_multiplier = 1
+	block_attack_types = ~ATTACK_TYPE_PROJECTILE		// only able to parry non projectiles
+	block_damage_multiplier_override(
+		TEXT_ATTACK_TYPE_MELEE = 0.5,		// only useful on melee and unarmed
+		TEXT_ATTACK_TYPE_UNARMED = 0.3
+	)
+	block_start_delay = 0.5		// near instantaneous block
+	block_stamina_cost_per_second = 6
+	block_stamina_efficiency = 2		// haha this is a horrible idea
+	// more slowdown that deswords because security
+	block_slowdown = 2
+	// no attacking while blocking
+	block_lock_attacking = TRUE
+	
+	parry_time_windup = 1.5
+	parry_time_active = 5
+	parry_time_spindown = 0
+	parry_time_spindown_visual_override = 1
+	parry_flags = PARRY_DEFAULT_HANDLE_FEEDBACK | PARRY_LOCK_ATTACKING		// no attacking while parrying
+	parry_time_perfect = 0
+	parry_time_perfect_leeway = 1.5
+	parry_efficiency_perfect = 100
+	parry_efficiency_perfect_override = list(
+		TEXT_ATTACK_TYPE_PROJECTILE = 80			// no perfect projectile blocking
+	)
+	parry_imperfect_falloff_percent = 15
+	parry_imperfect_falloff_percent_override = list(
+		TEXT_ATTACK_TYPE_PROJECTILE = 35		// really crappy vs projectiles
+	)
+	parry_time_perfect_leeway_override = list(
+		TEXT_ATTACK_TYPE_PROJECTILE = 1		// extremely harsh window for projectiles
+	)
+	// not extremely punishing to fail, but no spamming the parry.
+	parry_cooldown = 5 SECONDS
+	parry_failed_stagger_duration = 1.5 SECONDS
+	parry_failed_clickcd_duration = 1 SECONDS
 
 /obj/item/twohanded/electrostaff/Initialize(mapload)
 	. = ..()
@@ -1100,11 +1135,6 @@
 	if(iscyborg(loc))
 		var/mob/living/silicon/robot/R = loc
 		. = R.get_cell()
-
-/obj/item/twohanded/electrostaff/run_block(mob/living/owner, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return)
-	if(!on || (!can_block_projectiles && (attack_type & ATTACK_TYPE_PROJECTILE)))
-		return BLOCK_NONE
-	return ..()
 
 /obj/item/twohanded/electrostaff/proc/min_hitcost()
 	return min(stun_cost, lethal_cost)

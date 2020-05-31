@@ -171,15 +171,46 @@
 	attack_verb = list("stabs", "punctures", "pierces", "pokes")
 	hitsound = 'sound/weapons/rapierhit.ogg'
 	total_mass = 0.4
+	item_flags = ITEM_CAN_PARRY | NEEDS_PERMIT
+	block_parry_data = /datum/block_parry_data/traitor_rapier
+
+// Fast, efficient parry.
+/datum/block_parry_data/traitor_rapier
+	parry_time_windup = 0.5
+	parry_time_active = 5
+	parry_time_spindown = 0
+	parry_time_active_visual_override = 3
+	parry_time_spindown_visual_override = 2
+	parry_flags = PARRY_DEFAULT_HANDLE_FEEDBACK | PARRY_LOCK_ATTACKING
+	parry_time_perfect = 0
+	parry_time_perfect_leeway = 3
+	parry_time_perfect_leeway_override = list(
+		TEXT_ATTACK_TYPE_PROJECTILE = 1
+	)
+	parry_imperfect_falloff_percent_override = list(
+		TEXT_ATTACK_TYPE_PROJECTILE = 50				// useless after 3rd decisecond
+	)
+	parry_imperfect_falloff_percent = 30
+	parry_efficiency_to_counterattack = 100
+	parry_efficiency_considered_successful = 1
+	parry_efficiency_perfect = 100
+	parry_data = list(
+		PARRY_DISARM_ATTACKER = TRUE,
+		PARRY_KNOCKDOWN_ATTACKER = 10
+	)
+	parry_failed_stagger_duration = 2 SECONDS
+	parry_failed_clickcd_duration = CLICK_CD_RANGE
+	parry_cooldown = 0
+
+/obj/item/melee/rapier/active_parry_reflex_counter(mob/living/owner, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, list/return_list, parry_efficiency, list/effect_text)
+	. = ..()
+	if((attack_type & ATTACK_TYPE_PROJECTILE) && (parry_efficiency >= 100))
+		. |= BLOCK_SHOULD_REDIRECT
+		return_list[BLOCK_RETURN_REDIRECT_METHOD] = REDIRECT_METHOD_DEFLECT
 
 /obj/item/melee/rapier/Initialize()
 	. = ..()
 	AddComponent(/datum/component/butchering, 20, 65, 0)
-
-/obj/item/melee/rapier/run_block(mob/living/owner, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return)
-	if(attack_type == ATTACK_TYPE_PROJECTILE)
-		final_block_chance = 0
-	return ..()
 
 /obj/item/melee/rapier/on_exit_storage(datum/component/storage/S)
 	var/obj/item/storage/belt/sabre/rapier/B = S.parent
@@ -206,7 +237,7 @@
 		var/loss = H.getStaminaLoss()
 		H.Dizzy(10)
 		H.adjustStaminaLoss(30)
-		if((loss > 40) && prob(loss)) // if above 40, roll for sleep using 1% every 1 stamina damage
+		if(CHECK_STAMCRIT(H) != NOT_STAMCRIT)
 			H.Sleeping(180)
 
 /obj/item/melee/classic_baton

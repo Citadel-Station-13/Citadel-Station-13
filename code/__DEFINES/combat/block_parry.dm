@@ -46,13 +46,9 @@ GLOBAL_LIST_INIT(dir2blockdir, list(
 #define PARRY_LOCK_ATTACKING				(1<<2)
 
 /// Parry effects.
-/// List association must be one of the things underneath
-#define PARRY_REFLEX_COUNTERATTACK			"reflex_counter"
-	// Uses active_parry_reflex_counter() on the mob (if unarmed)/item/martial art used to parry.
-	#define PARRY_COUNTERATTACK_PROC					"proc"
-	// Automatically melee attacks back normally, LMB equivalent action of an harm intent attack.
-	#define PARRY_COUNTERATTACK_MELEE_ATTACK_CHAIN		"default"
-/// No list association
+/// Automatically melee attacks back normally, LMB equivalent action of an harm intent attack. List association should be defaulting to 1, being the attack damage multiplier for said counterattack
+#define PARRY_COUNTERATTACK_MELEE_ATTACK_CHAIN		"melee_counterattack_chain"
+/// List association should be TRUE.
 #define PARRY_DISARM_ATTACKER				"disarm_attacker"
 /// List association should be duration or null for just plain knockdown.
 #define PARRY_KNOCKDOWN_ATTACKER			"knockdown_attacker"
@@ -60,3 +56,5 @@ GLOBAL_LIST_INIT(dir2blockdir, list(
 #define PARRY_STAGGER_ATTACKER				"stagger_attacker"
 /// List association should be amount of time to daze attacker.
 #define PARRY_DAZE_ATTACKER					"daze_attacker"
+/// Set to TRUE in list association to ignore adjacency checks
+#define PARRY_COUNTERATTACK_IGNORE_ADJACENCY			"ignore_adjacency"
