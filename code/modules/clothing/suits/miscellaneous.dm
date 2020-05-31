@@ -1001,7 +1001,7 @@
 	icon_state = "chaplain_hood"
 	item_state = "chaplain_hood"
 	icon = 'icons/mob/clothing/head.dmi'
-	armor = list("melee" = 41, "bullet" = 40, "laser" = 30, "energy" = 40, "bomb" = 100, "bio" = 100, "rad" = 20)
+	armor = list("melee" = 45, "bullet" = 40, "laser" = 40, "energy" = 30, "bomb" = 100, "bio" = 100, "rad" = 20)
 	body_parts_covered = HEAD
 	cold_protection = HEAD
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
