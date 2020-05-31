@@ -748,3 +748,10 @@ GLOBAL_LIST_EMPTY(asset_datums)
 /datum/asset/spritesheet/simple/skills
 	name = "skills"
 
+/datum/asset/spritesheet/simple/skills/register()
+	InsertAll("", 'icons/UI_icons/skills.dmi')
+
+/datum/asset/simple/vv
+	assets = list(
+		"view_variables.css" = 'html/admin/view_variables.css'
+	)

@@ -76,17 +76,18 @@
 	var/datum/action/item_action/toggle_scope_zoom/azoom
 
 	var/dualwield_spread_mult = 1		//dualwield spread multiplier
-	
+
 	/// Just 'slightly' snowflakey way to modify projectile damage for projectiles fired from this gun.
 	var/projectile_damage_multiplier = 1
 
+	var/automatic = 0 //can gun use it, 0 is no, anything above 0 is the delay between clicks in ds
+
 /obj/item/gun/Initialize()
 	. = ..()
-	if(pin)
-		if(no_pin_required)
-			pin = null
-		else
-			pin = new pin(src)
+	if(no_pin_required)
+		pin = null
+	else if(pin)
+		pin = new pin(src)
 	if(gun_light)
 		alight = new (src)
 	if(zoomable)
@@ -127,7 +128,7 @@
 		zoom(user, FALSE) //we can only stay zoomed in if it's in our hands	//yeah and we only unzoom if we're actually zoomed using the gun!!
 
 //called after the gun has successfully fired its chambered ammo.
-/obj/item/gun/proc/process_chamber()
+/obj/item/gun/proc/process_chamber(mob/living/user)
 	return FALSE
 
 //check if there's enough ammo/energy/whatever to shoot one time
@@ -214,8 +215,9 @@
 	var/bonus_spread = 0
 	var/loop_counter = 0
 
-	bonus_spread += getinaccuracy(user) //CIT CHANGE - adds bonus spread while not aiming
-	if(ishuman(user) && user.a_intent == INTENT_HARM)
+	if(user)
+		bonus_spread += getinaccuracy(user) //CIT CHANGE - adds bonus spread while not aiming
+	if(ishuman(user) && user.a_intent == INTENT_HARM && weapon_weight <= WEAPON_LIGHT)
 		var/mob/living/carbon/human/H = user
 		for(var/obj/item/gun/G in H.held_items)
 			if(G == src || G.weapon_weight >= WEAPON_MEDIUM)
@@ -304,7 +306,7 @@
 		else
 			shoot_with_empty_chamber(user)
 			return
-		process_chamber()
+		process_chamber(user)
 		update_icon()
 
 	SSblackbox.record_feedback("tally", "gun_fired", 1, type)
@@ -343,7 +345,7 @@
 		shoot_with_empty_chamber(user)
 		firing = FALSE
 		return FALSE
-	process_chamber()
+	process_chamber(user)
 	update_icon()
 	return TRUE
 
@@ -564,12 +566,7 @@
 		chambered = null
 		update_icon()
 
-/obj/item/gun/proc/getinaccuracy(mob/living/user)
-	if(!isliving(user))
-		return FALSE
-	else
-		var/mob/living/holdingdude = user
-		if(istype(holdingdude) && (holdingdude.combat_flags & COMBAT_FLAG_COMBAT_ACTIVE))
-			return 0
-		else
-			return ((weapon_weight * 25) * inaccuracy_modifier)
+/obj/item/gun/proc/getinaccuracy(mob/user)
+	if(SEND_SIGNAL(user, COMSIG_COMBAT_MODE_CHECK, COMBAT_MODE_INACTIVE))
+		return ((weapon_weight * 25) * inaccuracy_modifier)
+	return 0

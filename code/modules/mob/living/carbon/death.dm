@@ -8,8 +8,6 @@
 	if(!gibbed)
 		emote("deathgasp")
 
-	disable_intentional_combat_mode(TRUE, FALSE)
-
 	. = ..()
 
 	for(var/T in get_traumas())
@@ -62,7 +60,3 @@
 		var/obj/item/bodypart/BP = X
 		BP.drop_limb()
 		BP.throw_at(get_edge_target_turf(src,pick(GLOB.alldirs)),rand(1,3),5)
-
-/mob/living/carbon/ghostize(can_reenter_corpse = TRUE, special = FALSE, penalize = FALSE, voluntary = FALSE)
-	disable_intentional_combat_mode(TRUE, FALSE)
-	return ..()

@@ -27,7 +27,7 @@ GLOBAL_LIST_EMPTY(potential_mods_per_skill)
 	/// Priority of this skill modifier compared to other ones.
 	var/priority = MODIFIER_SKILL_PRIORITY_DEF
 	/// Skill modifier icon, used in the UI
-	var/icon = "default"
+	var/icon_name = "default_mod"
 
 /datum/skill_modifier/New(id, register = FALSE)
 	identifier = GET_SKILL_MOD_ID(type, id)

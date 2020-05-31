@@ -571,12 +571,13 @@
 /mob/living/proc/cure_blind(source)
 	REMOVE_TRAIT(src, TRAIT_BLIND, source)
 	if(!HAS_TRAIT(src, TRAIT_BLIND))
-		update_blindness()
+		if(eye_blind <= 1) //little hack now that we don't actively check for trait and unconsciousness on update_blindness.
+			adjust_blindness(-1)
 
 /mob/living/proc/become_blind(source)
 	if(!HAS_TRAIT(src, TRAIT_BLIND)) // not blind already, add trait then overlay
 		ADD_TRAIT(src, TRAIT_BLIND, source)
-		update_blindness()
+		blind_eyes(1)
 	else
 		ADD_TRAIT(src, TRAIT_BLIND, source)
 

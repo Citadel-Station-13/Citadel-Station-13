@@ -34,7 +34,7 @@
 		all_mods[id] = list(
 			name = M.name,
 			desc = M.desc,
-			icon = assets.icon_class_name(M.icon)
+			icon = assets.icon_class_name(M.icon_name)
 		)
 
 	.["categories"] = list()

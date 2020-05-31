@@ -30477,9 +30477,8 @@
 	dir = 4
 	},
 /obj/machinery/light{
-	dir = 4
+	dir = 1
 	},
-/obj/machinery/computer/nanite_cloud_controller,
 /turf/open/floor/plasteel/dark,
 /area/science/research)
 "aXx" = (
@@ -30591,7 +30590,8 @@
 	name = "science camera";
 	network = list("ss13","rd")
 	},
-/obj/machinery/computer/nanite_chamber_control,
+/obj/structure/table/reinforced,
+/obj/item/storage/bag/money,
 /turf/open/floor/plasteel/dark,
 /area/science/research)
 "aXG" = (
@@ -31259,8 +31259,6 @@
 	dir = 1
 	},
 /obj/structure/table/reinforced,
-/obj/item/nanite_scanner,
-/obj/item/nanite_remote,
 /turf/open/floor/plasteel/dark,
 /area/science/research)
 "aYO" = (
@@ -35120,7 +35118,6 @@
 	dir = 4
 	},
 /obj/effect/landmark/event_spawn,
-/obj/machinery/nanite_program_hub,
 /turf/open/floor/plasteel/dark,
 /area/science/research)
 "beE" = (
@@ -85141,7 +85138,7 @@
 	dir = 8
 	},
 /obj/effect/turf_decal/bot,
-/obj/machinery/nanite_chamber,
+/obj/machinery/rnd/bepis,
 /turf/open/floor/plasteel/dark,
 /area/science/research)
 "kSc" = (
@@ -85408,14 +85405,6 @@
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
 /area/hallway/secondary/entry)
-"sfp" = (
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/machinery/nanite_programmer,
-/turf/open/floor/plasteel/dark,
-/area/science/research)
 "swG" = (
 /obj/item/reagent_containers/food/drinks/drinkingglass{
 	pixel_x = 4;
@@ -123520,7 +123509,7 @@ aZv
 aXw
 kRh
 aXI
-sfp
+aXI
 beD
 bbj
 aNF
