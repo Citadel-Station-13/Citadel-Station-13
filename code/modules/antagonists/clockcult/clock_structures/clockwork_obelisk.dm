@@ -53,7 +53,7 @@
 	if(!is_servant_of_ratvar(user) || !can_access_clockwork_power(src, hierophant_cost) || !anchored)
 		to_chat(user, "<span class='warning'>You place your hand on [src], but it doesn't react.</span>")
 		return
-	var/choice = alert(user,"You place your hand on [src]...",,/*"Hierophant Broadcast",*/"Spatial Gateway","Stable Reebe Gateway","Cancel") //TODO: Find a good way to do this because choice does only support up to six args, not seven as needed
+	var/choice = alert(user,"You place your hand on [src]...",,/*"Hierophant Broadcast",*/"Spatial Gateway","Stable Reebe Gateway","Cancel") //TODO: Find a good way to do this because choice / alert does only support up to six args, not seven as needed
 	switch(choice)
 		if("Hierophant Broadcast")
 			if(active)
