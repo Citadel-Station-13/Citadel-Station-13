@@ -13,17 +13,6 @@
 			return FALSE
 		if(V.usable_blood < blood_used)
 			to_chat(user, "<span class='warning'>You do not have enough blood to cast this!</span>")
-			return FALSE
-
-/obj/effect/proc_holder/spell/Initialize()
-	if(vamp_req)
-		clothes_req = NONE
-		range = 1
-		if(mobs_whitelist)
-			mobs_whitelist |= /mob/living/simple_animal/hostile/retaliate/bat/vampire_bat
-		if(mobs_blacklist)
-			mobs_blacklist -= /mob/living/simple_animal/hostile/retaliate/bat/vampire_bat
-	return ..()
 
 /obj/effect/proc_holder/spell/before_cast(list/targets)
 	. = ..()
@@ -78,13 +67,14 @@
 
 /obj/effect/proc_holder/spell/self/rejuvenate
 	name = "Rejuvenate"
-	desc= "Flush your system with spare blood to remove any incapacitating effects."
+	desc = "Flush your system with spare blood to remove any incapacitating effects."
 	action_icon_state = "rejuv"
 	charge_max = 200
 	stat_allowed = 1
 	action_icon = 'icons/mob/vampire.dmi'
 	action_background_icon_state = "bg_demon"
 	vamp_req = TRUE
+	clothes_req = NONE
 
 /obj/effect/proc_holder/spell/self/rejuvenate/cast(list/targets, mob/user = usr)
 	var/mob/living/carbon/U = user
@@ -114,6 +104,8 @@
 	action_icon = 'icons/mob/vampire.dmi'
 	action_background_icon_state = "bg_demon"
 	vamp_req = TRUE
+	clothes_req = NONE
+	range = 1
 
 //Todo, make the targeted abilities auto activate if theres only one target in range.
 /obj/effect/proc_holder/spell/targeted/hypnotise/cast(list/targets, mob/user = usr)
@@ -138,6 +130,7 @@
 	action_background_icon_state = "bg_demon"
 	blood_used = 50
 	vamp_req = TRUE
+	clothes_req = NONE
 
 //T0D0, steal VGs vampires polymorph.
 /obj/effect/proc_holder/spell/self/shapeshift/cast(list/targets, mob/user = usr)
@@ -156,6 +149,7 @@
 	action_icon = 'icons/mob/vampire.dmi'
 	action_background_icon_state = "bg_demon"
 	vamp_req = TRUE
+	clothes_req = NONE
 
 /obj/effect/proc_holder/spell/self/cloak/Initialize()
 	update_name()
@@ -186,6 +180,8 @@
 	blood_used = 45
 	vamp_req = TRUE
 	charge_max = 500
+	clothes_req = NONE
+	range = 1
 
 /obj/effect/proc_holder/spell/targeted/disease/cast(list/targets, mob/user = usr) //Its actually frightningly robust, if only people thought to use it.
 	for(var/mob/living/carbon/target in targets)
@@ -207,6 +203,7 @@
 	blood_used = 25
 	charge_max = 600 //so you cant do it twice to stamcrit.
 	vamp_req = TRUE
+	clothes_req = NONE
 
 /obj/effect/proc_holder/spell/self/screech/cast(list/targets, mob/user = usr)
 	user.visible_message("<span class='warning'>[user] lets out an ear piercing shriek!</span>", "<span class='warning'>You let out a loud shriek.</span>", "<span class='warning'>You hear a loud painful shriek!</span>")
@@ -234,6 +231,8 @@
 	charge_max = 800
 	vamp_req = TRUE
 	blood_used = 55
+	clothes_req = NONE
+	range = 1
 	var/num_bats = 2
 
 /obj/effect/proc_holder/spell/bats/choose_targets(mob/user = usr)
@@ -277,6 +276,8 @@
 	action_icon_state = "oath"
 	blood_used = 350
 	vamp_req = TRUE
+	clothes_req = NONE
+	range = 1
 
 /obj/effect/proc_holder/spell/targeted/vampirize/cast(list/targets, mob/user = usr)
 	for(var/mob/living/carbon/target in targets)
@@ -323,6 +324,7 @@
 	action_icon_state = "coffin"
 	action_background_icon_state = "bg_demon"
 	vamp_req = TRUE
+	clothes_req = NONE
 
 /obj/effect/proc_holder/spell/self/revive/cast(list/targets, mob/user = usr)
 	if(!is_vampire(user) || !isliving(user))
@@ -363,6 +365,7 @@
 	action_icon_state = "coat"
 	action_background_icon_state = "bg_demon"
 	vamp_req = TRUE
+	clothes_req = NONE
 
 /obj/effect/proc_holder/spell/self/summon_coat/cast(list/targets, mob/user = usr)
 	if(!is_vampire(user) || !isliving(user))
