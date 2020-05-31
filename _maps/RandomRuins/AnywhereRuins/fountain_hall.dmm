@@ -2,34 +2,47 @@
 "a" = (
 /turf/template_noop,
 /area/template_noop)
-"b" = (
-/turf/closed/wall/mineral/cult,
-/area/ruin/unpowered)
 "c" = (
 /obj/structure/healingfountain,
-/turf/open/floor/engine/cult,
+/turf/open/floor/carpet/purple,
 /area/ruin/unpowered)
 "d" = (
 /obj/structure/fluff/divine/conduit,
-/turf/open/floor/engine/cult,
+/turf/open/floor/mineral/plasma,
 /area/ruin/unpowered)
 "e" = (
 /obj/structure/sacrificealtar,
-/turf/open/floor/engine/cult,
+/turf/open/floor/carpet/purple,
 /area/ruin/unpowered)
 "f" = (
-/turf/open/floor/engine/cult,
+/mob/living/simple_animal/butterfly,
+/turf/open/floor/carpet/purple,
 /area/ruin/unpowered)
 "g" = (
 /mob/living/simple_animal/butterfly,
-/turf/open/floor/engine/cult,
+/turf/open/floor/carpet/red,
 /area/ruin/unpowered)
 "h" = (
 /obj/structure/fans/tiny/invisible,
-/turf/open/floor/engine/cult,
+/turf/open/floor/carpet/red,
+/area/ruin/unpowered)
+"u" = (
+/turf/open/floor/carpet/purple,
 /area/ruin/unpowered)
 "G" = (
-/turf/closed/wall/rust,
+/turf/closed/wall/mineral/cult{
+	sheet_amount = 0
+	},
+/area/ruin/unpowered)
+"J" = (
+/mob/living/simple_animal/butterfly,
+/turf/open/floor/carpet/royalblack,
+/area/ruin/unpowered)
+"T" = (
+/turf/open/floor/carpet/royalblack,
+/area/ruin/unpowered)
+"U" = (
+/turf/open/floor/carpet/red,
 /area/ruin/unpowered)
 
 (1,1,1) = {"
@@ -40,7 +53,7 @@ G
 G
 G
 G
-b
+G
 G
 G
 G
@@ -54,17 +67,17 @@ G
 a
 G
 d
-f
-f
-d
-f
-f
-d
-f
-f
-d
-f
-f
+U
+T
+T
+T
+J
+T
+T
+T
+T
+T
+T
 d
 G
 "}
@@ -73,70 +86,70 @@ G
 G
 e
 g
-f
-f
+U
+d
 g
-f
-f
-f
-f
-g
-f
-g
-f
+U
+d
+U
+U
+d
+U
+U
+u
 G
 "}
 (4,1,1) = {"
 G
 c
 f
-f
-f
-f
-f
-f
-f
-f
-f
-f
-f
-f
-f
+U
+T
+u
+T
+T
+u
+T
+T
+u
+T
+T
+T
 h
 "}
 (5,1,1) = {"
 G
 G
 e
-f
-f
-f
-f
 g
-f
-f
-f
-f
-f
-f
-f
+U
+d
+g
+U
+d
+U
+U
+d
+U
+U
+u
 G
 "}
 (6,1,1) = {"
 a
 G
 d
-g
-f
-d
-f
-f
-d
-f
-f
-d
-f
-g
+U
+T
+T
+T
+J
+T
+T
+T
+T
+T
+T
 d
 G
 "}
