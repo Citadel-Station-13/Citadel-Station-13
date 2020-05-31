@@ -127,6 +127,13 @@
 
 	var/registered_z
 
+	var/list/alerts = list() // contains /obj/screen/alert only // On /mob so clientless mobs will throw alerts properly
+	var/list/screens = list()
+	var/list/client_colours = list()
+	var/hud_type = /datum/hud
+
+	var/datum/hSB/sandbox = null
+
 	var/mob/audiovisual_redirect //Mob to redirect messages, speech, and sounds to
 
 	var/siliconaccessareas = list()
