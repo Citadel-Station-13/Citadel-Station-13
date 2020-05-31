@@ -48,11 +48,11 @@
 		if(LAZYLEN(targets))
 			to_chat(usr, "<span class='notice'><b>You have [vampire.usable_blood] left to use.</b></span>")
 
-
 /obj/effect/proc_holder/spell/can_target(mob/living/target)
 	. = ..()
 	if(vamp_req && is_vampire(target))
 		return FALSE
+
 /datum/vampire_passive
 	var/gain_desc
 
@@ -60,7 +60,6 @@
 	..()
 	if(!gain_desc)
 		gain_desc = "You have gained \the [src] ability."
-
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -106,7 +105,6 @@
 			U.adjustFireLoss(-2)
 		sleep(7.5)
 
-
 /obj/effect/proc_holder/spell/targeted/hypnotise
 	name = "Hypnotize (30)"
 	desc= "A piercing stare that knocks out your victim for a short lenght of time"
@@ -140,6 +138,7 @@
 	action_background_icon_state = "bg_demon"
 	blood_used = 50
 	vamp_req = TRUE
+
 //T0D0, steal VGs vampires polymorph.
 /obj/effect/proc_holder/spell/self/shapeshift/cast(list/targets, mob/user = usr)
 	if(ishuman(user))
@@ -160,7 +159,7 @@
 
 /obj/effect/proc_holder/spell/self/cloak/Initialize()
 	update_name()
-	.=..()
+	. = ..()
 
 /obj/effect/proc_holder/spell/self/cloak/proc/update_name()
 	var/mob/living/user = loc
@@ -378,39 +377,3 @@
 		V.coat.forceMove(user.loc)
 	user.put_in_hands(V.coat)
 	to_chat(user, "<span class='notice'>You summon your vampire coat.</span>")
-
-
-/obj/effect/proc_holder/spell/self/batform
-	name = "Bat Form (15)"
-	gain_desc = "You now have the Bat Form ability, which allows you to turn into a bat (and back!)"
-	desc = "Transform into a bat!"
-	action_icon_state = "bat"
-	charge_max = 200
-	blood_used = 0 //this is only 0 so we can do our own custom checks
-	action_icon = 'icons/mob/vampire.dmi'
-	action_background_icon_state = "bg_demon"
-	vamp_req = TRUE
-	var/mob/living/simple_animal/hostile/retaliate/bat/vampire_bat/bat
-
-/obj/effect/proc_holder/spell/self/batform/cast(list/targets, mob/user = usr)
-	var/datum/antagonist/vampire/V = user.mind.has_antag_datum(/datum/antagonist/vampire)
-	if(!V)
-		return FALSE
-	if(!bat || bat.stat == DEAD)
-		if(V.usable_blood < 15)
-			to_chat(user, "<span class='warning'>You do not have enough blood to cast this!</span>")
-			return FALSE
-		bat = new /mob/living/simple_animal/hostile/retaliate/bat/vampire_bat(user.loc)
-		user.forceMove(bat)
-		bat.controller = user
-		user.status_flags |= GODMODE
-		user.mind.transfer_to(bat)
-		charge_counter = charge_max //so you don't need to wait 20 seconds to turn BACK.
-		recharging = FALSE
-		action.UpdateButtonIcon()
-	else
-		bat.controller.forceMove(bat.loc)
-		bat.controller.status_flags &= ~GODMODE
-		bat.mind.transfer_to(bat.controller)
-		bat.controller = null //just so we don't accidently trigger the death() thing
-		qdel(bat)

@@ -8,9 +8,6 @@
 	if(is_vampire(src))
 		to_chat(M, "<span class='warning'>Your fangs fail to pierce [name]'s cold flesh</span>")
 		return FALSE
-	if(is_species(src, /datum/species/skeleton))
-		to_chat(M, "<span class='warning'>There is no blood in a skeleton!</span>")
-		return FALSE
 	if(!ckey)
 		to_chat(M, "<span class='warning'>[src]'s blood is stale and useless.</span>")
 		return FALSE

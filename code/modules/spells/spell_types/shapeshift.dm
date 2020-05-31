@@ -22,6 +22,32 @@
 		/mob/living/simple_animal/hostile/poison/giant_spider/hunter/viper,\
 		/mob/living/simple_animal/hostile/construct/armored)
 
+/obj/effect/proc_holder/spell/targeted/shapeshift/vampire_batform
+	die_with_shapeshifted_form = FALSE
+	convert_damage = FALSE
+	name = "Bat Form (15)"
+	gain_desc = "You now have the Bat Form ability, which allows you to turn into a bat (and back!)"
+	desc = "Transform into a bat!"
+	action_icon_state = "bat"
+	charge_max = 200
+	blood_used = 0 //this is only 0 so we can do our own custom checks
+	action_icon = 'icons/mob/vampire.dmi'
+	action_background_icon_state = "bg_demon"
+	vamp_req = TRUE
+	possible_shapes = list(/mob/living/simple_animal/hostile/retaliate/bat/vampire_bat)
+
+/obj/effect/proc_holder/spell/targeted/shapeshift/vampire_batform/Shapeshift(mob/living/caster)
+	if(vamp_req)
+		var/datum/antagonist/vampire/V = user.mind.has_antag_datum(/datum/antagonist/vampire)
+		if(!V)
+			return FALSE
+		if(V.usable_blood < 15)
+			to_chat(user, "<span class='warning'>You do not have enough blood to cast this!</span>")
+			revert_cast(caster)
+			return FALSE
+	. = ..()
+	charge_counter = charge_max
+
 /obj/effect/proc_holder/spell/targeted/shapeshift/cast(list/targets,mob/user = usr)
 	if(src in user.mob_spell_list)
 		user.mob_spell_list.Remove(src)
@@ -47,7 +73,6 @@
 			Restore(M)
 		else
 			Shapeshift(M)
-
 
 /obj/effect/proc_holder/spell/targeted/shapeshift/proc/Shapeshift(mob/living/caster)
 	var/obj/shapeshift_holder/H = locate() in caster
@@ -79,7 +104,6 @@
 	invocation = "RAAAAAAAAWR!"
 
 	shapeshift_type = /mob/living/simple_animal/hostile/megafauna/dragon/lesser
-
 
 /obj/shapeshift_holder
 	name = "Shapeshift holder"
