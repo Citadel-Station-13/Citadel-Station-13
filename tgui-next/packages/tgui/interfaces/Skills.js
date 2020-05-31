@@ -1,7 +1,7 @@
 import { decodeHtmlEntities } from 'common/string';
 import { Component, Fragment } from 'inferno';
 import { act } from '../byond';
-import { Box, Button, Section, Table, Tabs } from '../components';
+import { Box, Button, Section, LabeledList, Table, Tabs } from '../components';
 
 export const Skills = props => {
   const { state } = props;
@@ -11,39 +11,46 @@ export const Skills = props => {
     name,
     compact_mode,
     selected_category,
+    see_skill_mods,
     categories = [],
   } = props;
   return (
     <Section
       buttons={(
+        <Fragment>
           <Button
             icon={see_skill_mods ? 'check-square-o' : 'square-o'}
-            content='Show modifiers'}
+            content={'Show modifiers'}
             onClick={() => act(ref, 'toggle_mods')} />
           <Button
             icon={compact_mode ? 'list' : 'info'}
             content={compact_mode ? 'Compact' : 'Detailed'}
             onClick={() => act(ref, 'compact_toggle')} />
-          )}
         </Fragment>
       )}>
       {(
         <Tabs vertical>
           {categories.map(category => {
             const { name, skills } = category;
+            if (name !== selected_category) {
+              return (
+                <Tabs.Tab
+                  key={name}
+                  label={`${name} (${skills.length})`}>
+                </Tabs.Tab>
+              );
+            }
             return (
               <Tabs.Tab
                 key={name}
                 label={`${name} (${skills.length})`}>
-				if (name != selected_category) {
-                  {() => (
-                    <skillList
-                      compact={compact_mode}
-                      skills={skills}
-					  see_mods={see_skill_mods}
-                    />
-                  )}
-				}
+                {() => (
+                  <skillList
+                    compact={compact_mode}
+                    skills={skills}
+                    see_mods={see_skill_mods}
+                  />
+                )}
               </Tabs.Tab>
             );
           })}
@@ -51,13 +58,13 @@ export const Skills = props => {
       )}
     </Section>
   );
-}
+};
 
 const skillList = props => {
   const {
     compact,
     skills,
-	see_mods
+    see_mods,
   } = props;
   if (compact) {
     return (
@@ -68,23 +75,25 @@ const skillList = props => {
               key={skill.name}
               className="candystripe">
               <Table.Cell bold>
-                <Box color=skill.color>
+                <Box color={skill.color}>
                   {decodeHtmlEntities(skill.name)}
                 </Box>
               </Table.Cell>
               <Table.Cell collapsing textAlign="right">
                 <Button
                   fluid
-                  content={see_mods
-                    ? skill.skill_base
-                    : skill.skill_mod
+                  content={
+                    see_mods
+                      ? skill.skill_base
+                      : skill.skill_mod
                   }
-                  tooltip={skill.mods_tooltip
-                    ? (skill.desc
-                      + "\nModifiers: "
-                      + skill.mods_tooltip
-                    )
-                    : skill.desc
+                  tooltip={
+                    skill.mods_tooltip
+                      ? (skill.desc
+                        + "\nModifiers: "
+                        + skill.mods_tooltip
+                      )
+                      : skill.desc
                   }
                   tooltipPosition="left"
                 />
@@ -103,24 +112,30 @@ const skillList = props => {
         level={2}
         buttons={(
           <Button
-            content={see_mods
-              ? skill.skill_base
-              : skill.skill_mod
+            content={
+              see_mods
+                ? skill.skill_base
+                : skill.skill_mod
             }
           />
         )}>
         {decodeHtmlEntities(skill.desc)}
-        modifiers:
-        {skill.modifiers.map(modifier => {
-          <Button
-            textAlign="center"
-            color="transparent"
-            tooltip={
-              "<b>"+modifier.name+"</b>\n"+modifier.desc
-            }
-            <Box className={modifier.icon_class} />
-          />
-        })}
+        {skill.modifiers && (
+          <LabeledList>
+            <LabeledList.Item label="Current Modifiers">
+              {skill.modifiers.map(modifier => {
+                <Button
+                  textAlign="center"
+                  color="transparent"
+                  tooltip={
+                    "<b>"+modifier.name+"</b>\n"+modifier.desc
+                  }>
+                  <Box className={modifier.icon_class} />
+                </Button>; // What did I even do to deserve this semicolon?
+              })}
+            </LabeledList.Item>
+          </LabeledList>
+        )}
       </Section>
     );
   });
