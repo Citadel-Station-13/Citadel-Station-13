@@ -38,7 +38,7 @@
 
 /obj/effect/proc_holder/spell/targeted/shapeshift/vampire_batform/Shapeshift(mob/living/caster)
 	if(vamp_req)
-		var/datum/antagonist/vampire/V = user.mind.has_antag_datum(/datum/antagonist/vampire)
+		var/datum/antagonist/vampire/V = caster.mind.has_antag_datum(/datum/antagonist/vampire)
 		if(!V)
 			return FALSE
 		if(V.usable_blood < 15)
