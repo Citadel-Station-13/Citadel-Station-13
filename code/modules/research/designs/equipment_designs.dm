@@ -32,6 +32,17 @@
 	category = list("Misc")
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING */
 
+/datum/design/clown_hardsuit
+	name = "Comedic Hardsuit"
+	desc = "A colourfull hardsuit, designed for EVA comedy and hazardous joke delivery"
+	id = "clown_hardsuit"
+	build_type = PROTOLATHE
+	build_path = /obj/item/clothing/suit/space/hardsuit/clown
+	materials = list(/datum/material/iron=28000, /datum/material/glass = 10000,  /datum/material/bananium = 8000, /datum/material/gold = 3000, /datum/material/silver = 3000, /datum/material/titanium = 12000)
+	construction_time = 100
+	category = list("Misc")
+	departmental_flags = DEPARTMENTAL_FLAG_ALL	//HONK!
+
 /datum/design/constructionhardsuit
 	name = "Construction Hardsuit"
 	desc = "A hardsuit, designed for EVA construction and hazardous material transportation"
