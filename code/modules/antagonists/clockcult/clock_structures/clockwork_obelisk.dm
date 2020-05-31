@@ -41,6 +41,11 @@
 		affected += try_use_power(MIN_CLOCKCULT_POWER*4)
 	return affected
 
+/obj/structure/destructible/clockwork/powered/clockwork_obelisk/Destroy()
+	for(var/obj/effect/clockwork/spatial_gateway/SG in loc)
+		SG.ex_act(EXPLODE_DEVASTATE)
+	return ..()
+
 /obj/structure/destructible/clockwork/powered/clockwork_obelisk/attack_hand(mob/living/user)
 	. = ..()
 	if(.)
@@ -48,7 +53,7 @@
 	if(!is_servant_of_ratvar(user) || !can_access_clockwork_power(src, hierophant_cost) || !anchored)
 		to_chat(user, "<span class='warning'>You place your hand on [src], but it doesn't react.</span>")
 		return
-	var/choice = alert(user,"You place your hand on [src]...",,"Hierophant Broadcast","Spatial Gateway","Cancel")
+	var/choice = alert(user,"You place your hand on [src]...",,/*"Hierophant Broadcast",*/"Spatial Gateway","Stable Reebe Gateway","Cancel") //TODO: Find a good way to do this because choice does only support up to six args, not seven as needed
 	switch(choice)
 		if("Hierophant Broadcast")
 			if(active)
@@ -91,12 +96,32 @@
 					clockwork_say(user, text2ratvar("Spatial Gateway, activate!"))
 					return
 			adjust_clockwork_power(gateway_cost) //if we didn't return above, ie, successfully create a gateway, we give the power back
+		if("Stable Reebe Gateway")
+			if(active)
+				to_chat(user, "<span class='warning'>[src] is already sustaining a gateway!</span>")
+				return
+			if(!user.can_speak_vocal())
+				to_chat(user, "<span class='warning'>You need to be able to speak to open a stable gateway!</span>")
+				return
+			if(is_reebe(z))
+				to_chat(user, "<span class='brass'>You are already on reebe, child...</span>")
+				return
+			if(!try_use_power(gateway_cost)) //Maybe set it a bit higher than a normal portal? Eh should be fine, balance will tell..
+				to_chat(user, "<span class='warning'>[src] lacks the power to open a stable gateway!</span>")
+				return
+			if(procure_reebe_gateway(user))
+				process()
+				if(!active)
+					active = TRUE
+					clockwork_say(user, text2ratvar("Stable Gateway, activate!"))
+					return
+			adjust_clockwork_power(gateway_cost) //Same as before
 
 /obj/structure/destructible/clockwork/powered/clockwork_obelisk/process()
 	if(!anchored)
 		return
 	var/obj/effect/clockwork/spatial_gateway/SG = locate(/obj/effect/clockwork/spatial_gateway) in loc
-	if(SG && SG.timerid) //it's a valid gateway, we're active
+	if(SG && (SG.timerid || SG.is_stable)) //it's a valid gateway, we're active
 		icon_state = active_icon
 		density = FALSE
 		active = TRUE
@@ -104,3 +129,26 @@
 		icon_state = inactive_icon
 		density = TRUE
 		active = FALSE
+
+//Special proc used for station-reebe stable gateways created by Obilisks on the station. Not done as subtype of the proc because it's quite a bit different.\
+  Chooses one random non-active obilisk on reebe to link to.
+/obj/structure/destructible/clockwork/powered/clockwork_obelisk/proc/procure_reebe_gateway(mob/living/user)
+	var/list/possible_reebe_obilisks = list()
+	for(var/obj/structure/destructible/clockwork/powered/clockwork_obelisk/O in GLOB.all_clockwork_objects)
+		if(is_reebe(O.z) && !O.active && O.anchored)
+			possible_reebe_obilisks += O
+
+	if(!possible_reebe_obilisks.len)
+		to_chat(user, "<span class='warning'>There are no eligible Obilisks on reebe!</span>")
+		return FALSE
+	var/obj/structure/destructible/clockwork/powered/clockwork_obelisk/target = pick(possible_reebe_obilisks)
+
+	target.active = TRUE
+	src.active = TRUE
+	user.visible_message("<span class='warning'>The air in front of [user] ripples before suddenly tearing open!</span>", \
+	"<span class='brass'>With a word, you open a stable rift between reebe and the mortal realm.</span>")
+	var/obj/effect/clockwork/spatial_gateway/stable/S1 = new(get_turf(src))
+	var/obj/effect/clockwork/spatial_gateway/stable/S2 = new(get_turf(target))
+	S1.setup_gateway(S2, 1, 1, TRUE) //The two 1s are irrelevant since it's a stable gateway
+	S2.visible_message("<span class='warning'>The air in front of [target] ripples before suddenly tearing open!</span>")
+	return TRUE
