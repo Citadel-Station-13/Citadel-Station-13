@@ -151,7 +151,7 @@ GLOBAL_LIST_EMPTY(block_parry_data)
 	var/total = 0
 	var/div = 0
 	for(var/flagtext in L)
-		if(attack_type & num2text(flagtext))
+		if(attack_type & text2num(flagtext))
 			total += L[flagtext]
 			div++
 	// if none, return null.
@@ -165,17 +165,24 @@ GLOBAL_LIST_EMPTY(block_parry_data)
 	var/list/assembled__##varname = list(); \
 	for(var/textbit in GLOB.attack_type_names){ \
 		if(textbit in varname){ \
-			assembled__##varname += "[GLOB.attack_type_names[textbit]] = varname[textbit]"; \
+			assembled__##varname += "[GLOB.attack_type_names[textbit]] = [varname[textbit]]"; \
 		} \
 	} \
 	dat += "[english_list(assembled__##varname)]</th>";
-#define RENDER_ATTACK_TYPES(varname, desc) dat += "<tr><th>[#varname]<br><i>[desc]</i></th><th>[english_list(bitfield2list(varname, GLOB.attack_type_names))]</th>"
+#define RENDER_ATTACK_TYPES(varname, desc)	dat += "<tr><th>[#varname]<br><i>[desc]</i></th><th>"; \
+	var/list/assembled__##varname = list(); \
+	for(var/textbit in bitfield2list(varname)){ \
+		if(textbit in varname){ \
+			assembled__##varname += "[GLOB.attack_type_names[textbit]]"; \
+		} \
+	} \
+	dat += "[english_list(assembled__##varname)]</th>";
 #define RENDER_BLOCK_DIRECTIONS(varname, desc) \
 	dat += "<tr><th>[#varname]<br><i>[desc]</i></th><th>"; \
 	var/list/assembled__##varname = list(); \
 	for(var/textbit in GLOB.block_direction_names){ \
 		if(textbit in varname){ \
-			assembled__##varname += "[GLOB.block_direction_names[textbit]] = varname[textbit]"; \
+			assembled__##varname += "[GLOB.block_direction_names[textbit]] = [varname[textbit]]"; \
 		} \
 	} \
 	dat += "[english_list(assembled__##varname)]</th>";
