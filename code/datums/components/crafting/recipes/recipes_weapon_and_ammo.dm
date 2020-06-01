@@ -283,8 +283,9 @@
 				/obj/item/weaponcrafting/improvised_parts/pistol_receiver = 1,
 				/obj/item/weaponcrafting/improvised_parts/trigger_assembly = 1,
 				/obj/item/weaponcrafting/improvised_parts/wooden_grip = 1,
-				/obj/item/stack/sheet/plastic = 1)
-	tools = list(TOOL_SCREWDRIVER, TOOL_WELDER)
+				/obj/item/stack/sheet/plastic = 15,
+				/obj/item/stack/sheet/plasteel = 1)
+	tools = list(TOOL_SCREWDRIVER, TOOL_WELDER, TOOL_WIRECUTTER)
 	time = 100
 	category = CAT_WEAPONRY
 	subcategory = CAT_WEAPON
