@@ -1,7 +1,7 @@
 import { decodeHtmlEntities } from 'common/string';
 import { Component, Fragment } from 'inferno';
 import { act } from '../byond';
-import { Box, Button, Section, LabeledList, Table, Tabs } from '../components';
+import { Box, Button, Section, LabeledList, Table, Tabs, Tooltip } from '../components';
 
 export const Skills = props => {
   const { state } = props;
@@ -80,23 +80,23 @@ const skillList = props => {
                 </Box>
               </Table.Cell>
               <Table.Cell collapsing textAlign="right">
-                <Button
-                  fluid
-                  content={
-                    see_mods
-                      ? skill.skill_base
-                      : skill.skill_mod
-                  }
-                  tooltip={
+                <Box mr={1}>
+                  (see_mods
+                    ? skill.skill_base
+                    : skill.skill_mod
+                  )
+                  <Tooltip
+                    content={
                     skill.mods_tooltip
-                      ? (skill.desc
-                        + "\nModifiers: "
-                        + skill.mods_tooltip
-                      )
-                      : skill.desc
-                  }
-                  tooltipPosition="left"
-                />
+                      ? (multiline`${skill.desc}
+                        \nModifiers: 
+                        ${skill.mods_tooltip}
+                      `)
+                      : multiline`${skill.desc}`
+                    }
+                    position="left"
+                  />
+                </Box>
               </Table.Cell>
             </Table.Row>
           );
@@ -111,27 +111,27 @@ const skillList = props => {
         title={skill.name}
         level={2}
         buttons={(
-          <Button
+          <Box mr={1}>
             content={
               see_mods
                 ? skill.skill_base
                 : skill.skill_mod
             }
-          />
+          </Box>
         )}>
         {decodeHtmlEntities(skill.desc)}
         {skill.modifiers && (
           <LabeledList>
             <LabeledList.Item label="Current Modifiers">
               {skill.modifiers.map(modifier => {
-                <Button
-                  textAlign="center"
-                  color="transparent"
-                  tooltip={
-                    "<b>"+modifier.name+"</b>\n"+modifier.desc
-                  }>
-                  <Box className={modifier.icon_class} />
-                </Button>; // What did I even do to deserve this semicolon?
+                <Box className={modifier.icon_class} mr={1}>
+                  <Tooltip
+                    content={multiline`
+                      "<b>"+modifier.name+"</b>\n"+modifier.desc
+                    `}
+                    position="relative"
+                  />
+                </Box>
               })}
             </LabeledList.Item>
           </LabeledList>
