@@ -66,6 +66,11 @@
 /obj/item/instrument/proc/is_tuned()
 	return tune_time_left > 0
 
+/obj/item/instrument/dropped(mob/user)
+	. = ..()
+	if((loc != user) && (user.machine == src))
+		user.set_machine(null)
+
 /obj/item/instrument/interact(mob/user)
 	ui_interact(user)
 

@@ -20,12 +20,12 @@
 	dizziness = max(amount, 0)
 
 /**
-  * Sets a mob's blindness to an amount if it was not above it already, similar to how status effects work 
+  * Sets a mob's blindness to an amount if it was not above it already, similar to how status effects work
   */
 /mob/proc/blind_eyes(amount)
-	var/old_blind = eye_blind || HAS_TRAIT(src, TRAIT_BLIND)
-	eye_blind = max(eye_blind, amount)
-	var/new_blind = eye_blind || HAS_TRAIT(src, TRAIT_BLIND)
+	var/old_blind = eye_blind
+	eye_blind = max((!eye_blind && stat == UNCONSCIOUS || HAS_TRAIT(src, TRAIT_BLIND)) ? 1 : eye_blind , amount)
+	var/new_blind = eye_blind
 	if(old_blind != new_blind)
 		update_blindness()
 
@@ -36,21 +36,21 @@
   */
 /mob/proc/adjust_blindness(amount)
 	var/old_eye_blind = eye_blind
-	eye_blind = max(0, eye_blind + amount)
-	if(!old_eye_blind || !eye_blind && !HAS_TRAIT(src, TRAIT_BLIND))
+	eye_blind = max((stat == UNCONSCIOUS || HAS_TRAIT(src, TRAIT_BLIND)) ? 1 : 0, eye_blind + amount)
+	if(!old_eye_blind || !eye_blind)
 		update_blindness()
 /**
   * Force set the blindness of a mob to some level
   */
 /mob/proc/set_blindness(amount)
 	var/old_eye_blind = eye_blind
-	eye_blind = max(amount, 0)
-	if(!old_eye_blind || !eye_blind && !HAS_TRAIT(src, TRAIT_BLIND))
+	eye_blind = max(amount, (stat == UNCONSCIOUS || HAS_TRAIT(src, TRAIT_BLIND)) ? 1 : 0)
+	if(!old_eye_blind || !eye_blind)
 		update_blindness()
 
 /// proc that adds and removes blindness overlays when necessary
 /mob/proc/update_blindness()
-	if(stat == UNCONSCIOUS || HAS_TRAIT(src, TRAIT_BLIND) || eye_blind) // UNCONSCIOUS or has blind trait, or has temporary blindness
+	if(eye_blind) // UNCONSCIOUS or has blind trait, or has temporary blindness
 		if(stat == CONSCIOUS || stat == SOFT_CRIT)
 			throw_alert("blind", /obj/screen/alert/blind)
 		overlay_fullscreen("blind", /obj/screen/fullscreen/blind)
@@ -88,18 +88,20 @@
 /mob/proc/add_eyeblur()
 	if(!client)
 		return
-	var/obj/screen/plane_master/game_world/GW = locate(/obj/screen/plane_master/game_world) in client.screen
-	var/obj/screen/plane_master/floor/F = locate(/obj/screen/plane_master/floor) in client.screen
-	GW.add_filter("blurry_eyes", 2, EYE_BLUR(CLAMP(eye_blurry*0.1,0.6,3)))
-	F.add_filter("blurry_eyes", 2, EYE_BLUR(CLAMP(eye_blurry*0.1,0.6,3)))
+	var/list/screens = list(hud_used.plane_masters["[GAME_PLANE]"], hud_used.plane_masters["[FLOOR_PLANE]"],
+							hud_used.plane_masters["[WALL_PLANE]"], hud_used.plane_masters["[ABOVE_WALL_PLANE]"])
+	for(var/A in screens)
+		var/obj/screen/plane_master/P = A
+		P.add_filter("blurry_eyes", 2, EYE_BLUR(clamp(eye_blurry*0.1,0.6,3)))
 
 /mob/proc/remove_eyeblur()
 	if(!client)
 		return
-	var/obj/screen/plane_master/game_world/GW = locate(/obj/screen/plane_master/game_world) in client.screen
-	var/obj/screen/plane_master/floor/F = locate(/obj/screen/plane_master/floor) in client.screen
-	GW.remove_filter("blurry_eyes")
-	F.remove_filter("blurry_eyes")
+	var/list/screens = list(hud_used.plane_masters["[GAME_PLANE]"], hud_used.plane_masters["[FLOOR_PLANE]"],
+							hud_used.plane_masters["[WALL_PLANE]"], hud_used.plane_masters["[ABOVE_WALL_PLANE]"])
+	for(var/A in screens)
+		var/obj/screen/plane_master/P = A
+		P.remove_filter("blurry_eyes")
 
 ///Adjust the drugginess of a mob
 /mob/proc/adjust_drugginess(amount)
@@ -120,4 +122,4 @@
 ///Adjust the body temperature of a mob, with min/max settings
 /mob/proc/adjust_bodytemperature(amount,min_temp=0,max_temp=INFINITY)
 	if(bodytemperature >= min_temp && bodytemperature <= max_temp)
-		bodytemperature = CLAMP(bodytemperature + amount,min_temp,max_temp)
+		bodytemperature = clamp(bodytemperature + amount,min_temp,max_temp)

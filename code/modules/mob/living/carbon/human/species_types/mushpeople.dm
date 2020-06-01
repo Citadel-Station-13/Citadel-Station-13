@@ -12,9 +12,9 @@
 	inherent_traits = list(TRAIT_NOBREATH)
 	speedmod = 1.5 //faster than golems but not by much
 
-	punchdamagelow = 6
-	punchdamagehigh = 14
-	punchstunthreshold = 14 //about 44% chance to stun
+	punchdamagelow = 2
+	punchdamagehigh = 12 //still better than humans
+	punchstunthreshold = 10
 
 	no_equip = list(SLOT_WEAR_MASK, SLOT_WEAR_SUIT, SLOT_GLOVES, SLOT_SHOES, SLOT_W_UNIFORM)
 
@@ -22,11 +22,8 @@
 	heatmod = 1.5
 
 	mutanteyes = /obj/item/organ/eyes/night_vision/mushroom
-	use_skintones = FALSE
 	var/datum/martial_art/mushpunch/mush
-
-/datum/species/mush/after_equip_job(datum/job/J, mob/living/carbon/human/H)
-	H.grant_language(/datum/language/mushroom) //pomf pomf
+	species_language_holder = /datum/language_holder/mushroom
 
 /datum/species/mush/on_species_gain(mob/living/carbon/C, datum/species/old_species)
 	. = ..()

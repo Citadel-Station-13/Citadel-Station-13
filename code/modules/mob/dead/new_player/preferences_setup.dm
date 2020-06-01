@@ -11,22 +11,17 @@
 	shirt_color = random_short_color()
 	socks = random_socks()
 	socks_color = random_short_color()
+	use_custom_skin_tone = FALSE
 	skin_tone = random_skin_tone()
 	hair_style = random_hair_style(gender)
 	facial_hair_style = random_facial_hair_style(gender)
 	hair_color = random_short_color()
 	facial_hair_color = hair_color
 	eye_color = random_eye_color()
-	horn_color = "85615a"
-	wing_color = "fff"
 	if(!pref_species)
 		var/rando_race = pick(GLOB.roundstart_races)
 		pref_species = new rando_race()
-	features = random_features(pref_species?.id)
-	if(gender == MALE || gender != FEMALE)
-		features["body_model"] = gender
-	else if(gender == PLURAL)
-		features["body_model"] = pick(MALE,FEMALE)
+	features = random_features(pref_species?.id, gender)
 	age = rand(AGE_MIN,AGE_MAX)
 
 /datum/preferences/proc/update_preview_icon(equip_job = TRUE)

@@ -87,37 +87,12 @@
 	crate_type = /obj/structure/closet/crate/wooden
 	crate_name = "calligraphy crate"
 
-/datum/supply_pack/misc/paper_work
-	name = "Freelance Paper work"
-	desc = "The Nanotrasen Primary Bureaucratic Database Intelligence (PDBI) reports that the station has not completed its funding and grant paperwork this solar cycle. In order to gain further funding, your station is required to fill out (10) ten of these forms or no additional capital will be disbursed. We have sent you ten copies of the following form and we expect every one to be up to Nanotrasen Standards." // Disbursement. It's not a typo, look it up.
-	cost = 700 // Net of 0 credits but makes (120 x 10 = 1200)
-	contains = list(/obj/item/folder/paperwork,
-					/obj/item/pen/fountain
-					)
-	crate_name = "Paperwork"
-
-/datum/supply_pack/misc/paper_work/generate()
-	. = ..()
-	for(var/i in 1 to 9)
-		new /obj/item/folder/paperwork(.)
 //////////////////////////////////////////////////////////////////////////////
 //////////////////////////////// Entertainment ///////////////////////////////
 //////////////////////////////////////////////////////////////////////////////
 
-/datum/supply_pack/misc/randombedsheets
-	name = "Bedsheet Crate (R)"
-	desc = "Snuggle up in some sweet sheets with this assorted bedsheet crate. Each set comes with eight random bedsheets for your slumbering pleasure!"
-	cost = 2000
-	contains = list(/obj/item/bedsheet/random)
-	crate_name = "random bedsheet crate"
-
-/datum/supply_pack/misc/randombedsheets/generate()
-	. = ..()
-	for(var/i in 1 to 7)
-		new /obj/item/bedsheet/random(.)
-
 /datum/supply_pack/misc/coloredsheets
-	name = "Bedsheet Crate (C)"
+	name = "Bedsheet Crate"
 	desc = "Give your night life a splash of color with this crate filled with bedsheets! Contains a total of nine different-colored sheets."
 	cost = 1250
 	contains = list(/obj/item/bedsheet/blue,
@@ -330,7 +305,7 @@
 /datum/supply_pack/misc/religious_supplies
 	name = "Religious Supplies Crate"
 	desc = "Keep your local chaplain happy and well-supplied, lest they call down judgement upon your cargo bay. Contains two bottles of holywater, bibles, chaplain robes, and burial garmets."
-	cost = 4000	// it costs so much because the Space Church is ran by Space Jews
+	cost = 4000	// it costs so much because the Space Church needs funding to build a cathedral
 	contains = list(/obj/item/reagent_containers/food/drinks/bottle/holywater,
 					/obj/item/reagent_containers/food/drinks/bottle/holywater,
 					/obj/item/storage/book/bible/booze,

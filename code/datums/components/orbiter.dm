@@ -22,14 +22,14 @@
 /datum/component/orbiter/RegisterWithParent()
 	. = ..()
 	var/atom/target = parent
-	while(ismovableatom(target))
+	while(ismovable(target))
 		RegisterSignal(target, COMSIG_MOVABLE_MOVED, .proc/move_react)
 		target = target.loc
 
 /datum/component/orbiter/UnregisterFromParent()
 	. = ..()
 	var/atom/target = parent
-	while(ismovableatom(target))
+	while(ismovable(target))
 		UnregisterSignal(target, COMSIG_MOVABLE_MOVED)
 		target = target.loc
 
@@ -62,7 +62,9 @@
 	orbiters[orbiter] = TRUE
 	orbiter.orbiting = src
 	RegisterSignal(orbiter, COMSIG_MOVABLE_MOVED, .proc/orbiter_move_react)
+
 	var/matrix/initial_transform = matrix(orbiter.transform)
+	orbiters[orbiter] = initial_transform
 
 	// Head first!
 	if(pre_rotation)
@@ -79,8 +81,6 @@
 
 	orbiter.SpinAnimation(rotation_speed, -1, clockwise, rotation_segments, parallel = FALSE)
 
-	//we stack the orbits up client side, so we can assign this back to normal server side without it breaking the orbit
-	orbiter.transform = initial_transform
 	orbiter.forceMove(get_turf(parent))
 	to_chat(orbiter, "<span class='notice'>Now orbiting [parent].</span>")
 
@@ -89,6 +89,8 @@
 		return
 	UnregisterSignal(orbiter, COMSIG_MOVABLE_MOVED)
 	orbiter.SpinAnimation(0, 0)
+	if(istype(orbiters[orbiter],/matrix)) //This is ugly.
+		orbiter.transform = orbiters[orbiter]
 	orbiters -= orbiter
 	orbiter.stop_orbit(src)
 	orbiter.orbiting = null
@@ -111,12 +113,12 @@
 	// These are prety rarely activated, how often are you following something in a bag?
 	if(oldloc && !isturf(oldloc)) // We used to be registered to it, probably
 		var/atom/target = oldloc
-		while(ismovableatom(target))
+		while(ismovable(target))
 			UnregisterSignal(target, COMSIG_MOVABLE_MOVED)
 			target = target.loc
 	if(orbited?.loc && orbited.loc != newturf) // We want to know when anything holding us moves too
 		var/atom/target = orbited.loc
-		while(ismovableatom(target))
+		while(ismovable(target))
 			RegisterSignal(target, COMSIG_MOVABLE_MOVED, .proc/move_react, TRUE)
 			target = target.loc
 

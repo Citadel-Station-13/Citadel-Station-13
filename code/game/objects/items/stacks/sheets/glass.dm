@@ -22,6 +22,8 @@ GLOBAL_LIST_INIT(glass_recipes, list ( \
 		new/datum/stack_recipe("spout flask", /obj/item/glasswork/glass_base/spouty, 20), \
 		new/datum/stack_recipe("small bulb flask", /obj/item/glasswork/glass_base/flask_small, 5), \
 		new/datum/stack_recipe("large bottle flask", /obj/item/glasswork/glass_base/flask_large, 15), \
+		new/datum/stack_recipe("tea cup", /obj/item/glasswork/glass_base/tea_plate, 5), \
+		new/datum/stack_recipe("tea plate", /obj/item/glasswork/glass_base/tea_cup, 5), \
 	)), \
 ))
 
@@ -67,7 +69,7 @@ GLOBAL_LIST_INIT(glass_recipes, list ( \
 		if (get_amount() < 1 || CC.get_amount() < 5)
 			to_chat(user, "<span class='warning>You need five lengths of coil and one sheet of glass to make wired glass!</span>")
 			return
-		CC.use(5)
+		CC.use_tool(src, user, 0, 5, max_level = JOB_SKILL_BASIC)
 		use(1)
 		to_chat(user, "<span class='notice'>You attach wire to the [name].</span>")
 		var/obj/item/stack/light_w/new_tile = new(user.loc)
@@ -107,7 +109,6 @@ GLOBAL_LIST_INIT(pglass_recipes, list ( \
 	merge_type = /obj/item/stack/sheet/plasmaglass
 	grind_results = list(/datum/reagent/silicon = 20, /datum/reagent/toxin/plasma = 10)
 	tableVariant = /obj/structure/table/plasmaglass
-	material_flags = MATERIAL_NO_EFFECTS
 	shard_type = /obj/item/shard/plasma
 
 /obj/item/stack/sheet/plasmaglass/fifty
@@ -207,7 +208,6 @@ GLOBAL_LIST_INIT(prglass_recipes, list ( \
 	custom_materials = list(/datum/material/plasma=MINERAL_MATERIAL_AMOUNT * 0.5, /datum/material/glass=MINERAL_MATERIAL_AMOUNT, /datum/material/iron=MINERAL_MATERIAL_AMOUNT * 0.5,)
 	armor = list("melee" = 20, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 80, "acid" = 100)
 	resistance_flags = ACID_PROOF
-	material_flags = MATERIAL_NO_EFFECTS
 	merge_type = /obj/item/stack/sheet/plasmarglass
 	grind_results = list(/datum/reagent/silicon = 20, /datum/reagent/toxin/plasma = 10, /datum/reagent/iron = 10)
 	point_value = 23
@@ -257,7 +257,6 @@ GLOBAL_LIST_INIT(plastitaniumglass_recipes, list(
 	item_state = "sheet-plastitaniumglass"
 	custom_materials = list(/datum/material/titanium=MINERAL_MATERIAL_AMOUNT * 0.5, /datum/material/plasma=MINERAL_MATERIAL_AMOUNT * 0.5, /datum/material/glass=MINERAL_MATERIAL_AMOUNT)
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 80, "acid" = 100)
-	material_flags = MATERIAL_NO_EFFECTS
 	resistance_flags = ACID_PROOF
 	merge_type = /obj/item/stack/sheet/plastitaniumglass
 	shard_type = /obj/item/shard

@@ -139,6 +139,20 @@ MIDROUND_ANTAG CHANGELING
 MIDROUND_ANTAG WIZARD
 #MIDROUND_ANTAG  MONKEY
 
+## Toggles for whether this mode should force antags even if not enough players have it enabled.
+## If it's off, it just won't roll as many antags.
+#FORCE_ANTAG_COUNT TRAITOR
+#FORCE_ANTAG_COUNT TRAITORBRO
+#FORCE_ANTAG_COUNT TRAITORCHAN
+#FORCE_ANTAG_COUNT INTERNAL_AFFAIRS
+FORCE_ANTAG_COUNT  NUCLEAR
+FORCE_ANTAG_COUNT  REVOLUTION
+FORCE_ANTAG_COUNT CULT
+FORCE_ANTAG_COUNT CLOCKWORK_CULT
+#FORCE_ANTAG_COUNT CHANGELING
+#FORCE_ANTAG_COUNT WIZARD
+#FORCE_ANTAG_COUNT  MONKEY
+
 ## Uncomment these for overrides of the minimum / maximum number of players in a round type.
 ## If you set any of these occasionally check to see if you still need them as the modes
 ## will still be actively rebalanced around the SUGGESTED populations, not your overrides.
@@ -287,6 +301,9 @@ MINIMUM_SECBORG_ALERT 3
 
 ## Uncomment to load one of the missions from awaymissionconfig.txt at roundstart.
 #ROUNDSTART_AWAY
+
+## Uncomment to load one of the virtual reality levels from vr_config at roundstart.
+#ROUNDSTART_VR
 
 ## How long the delay is before the Away Mission gate opens. Default is half an hour.
 ## 600 is one minute.
@@ -529,7 +546,10 @@ BOMBCAP 20
 ## of ruins.
 LAVALAND_BUDGET 60
 
-## Space Ruin Budged
+## Ice Moon Budget
+ICEMOON_BUDGET 90
+
+## Space Ruin Budget
 Space_Budget 16
 
 ## Station Ruin Budget
@@ -583,11 +603,14 @@ NIGHTSHIFT_TOGGLE_PUBLIC_REQUIRES_AUTH
 ## A cap on how many monkeys may be created via monkey cubes
 MONKEYCAP 64
 
+## Enable the capitalist agenda on your server.
+ECONOMY
+
 ## Uncomment to use TG-style combat
 #DISABLE_STAMBUFFER
 
 #Replaces standard extended/secret dichotomy with extended and calm/chaotic votes for dynamic.
-DYNAMIC_VOTING
+#DYNAMIC_VOTING
 
 ## Choose which Engine to start the round with. Weight is after the comma. Setting the weight to 0 removes the engine from rotation.
 BOX_RANDOM_ENGINE Box SM,3
@@ -620,3 +643,23 @@ BREASTS_CUPS_PREFS e
 ## Minimum and maximum limits for penis length from the character creation menu.
 PENIS_MIN_INCHES_PREFS 1
 PENIS_MAX_INCHES_PREFS 20
+
+## Body size configs, the feature will be disabled if both min and max have the same value.
+BODY_SIZE_MIN 1
+BODY_SIZE_MAX 1
+
+## Pun-Pun movement slowdown given to characters with a body size smaller than this value,
+## to compensate for their smaller hitbox.
+## To disable, just make sure the value is lower than 'body_size_min'
+THRESHOLD_BODY_SIZE_SLOWDOWN 0.85
+
+## Multiplier used in the smaller strides slowdown calculation.
+## Doesn't apply to floating or crawling mobs.
+BODY_SIZE_SLOWDOWN_MULTIPLIER 0.25
+
+## Allows players to set a hexadecimal color of their choice as skin tone, on top of the standard ones.
+ALLOW_CUSTOM_SKINTONES
+
+## Enables the FoV component, which hides objects and mobs behind the parent from their sight, unless they turn around, duh.
+## Camera mobs, AIs, ghosts and some other are of course exempt from this. This also doesn't influence simplemob AI, for the best.
+#USE_FIELD_OF_VISION

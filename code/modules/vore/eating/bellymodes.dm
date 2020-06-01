@@ -1,6 +1,6 @@
 // Process the predator's effects upon the contents of its belly (i.e digestion/transformation etc)
 /obj/belly/proc/process_belly(var/times_fired,var/wait) //Passed by controller
-	if((times_fired < next_process) || !contents.len)
+	if((times_fired < next_process) || !length(contents))
 		recent_sound = FALSE
 		return SSBELLIES_IGNORED
 
@@ -27,7 +27,7 @@
 		var/list/EL = emote_lists[digest_mode]
 		if(LAZYLEN(EL))
 			for(var/mob/living/M in contents)
-				if(M.digestable || !(digest_mode == DM_DIGEST)) // don't give digesty messages to indigestible people
+				if((M.vore_flags & DIGESTABLE) || !(digest_mode == DM_DIGEST)) // don't give digesty messages to indigestible people
 					to_chat(M,"<span class='notice'>[pick(EL)]</span>")
 
 ///////////////////// Prey Loop Refresh/hack //////////////////////
@@ -51,7 +51,7 @@
 
 //////////////////////// Absorbed Handling ////////////////////////
 	for(var/mob/living/M in contents)
-		if(M.absorbed)
+		if(M.vore_flags & ABSORBED)
 			M.Stun(5)
 
 ////////////////////////// Sound vars /////////////////////////////
@@ -76,7 +76,7 @@
 					play_sound = pick(pred_digest)
 
 				//Pref protection!
-				if (!M.digestable || M.absorbed)
+				if (!M.vore_flags & DIGESTABLE || M.vore_flags & ABSORBED)
 					continue
 
 				//Person just died in guts!
@@ -98,7 +98,7 @@
 					to_chat(M, "<span class='warning'>[digest_alert_prey]</span>")
 					M.visible_message("<span class='notice'>You watch as [owner]'s form loses its additions.</span>")
 
-					owner.nutrition += 400 // so eating dead mobs gives you *something*.
+					owner.adjust_nutrition(400) // so eating dead mobs gives you *something*.
 					play_sound = pick(pred_death)
 					if(M && M.client && M.client.prefs.cit_toggles & DIGESTION_NOISES)
 						SEND_SOUND(M,prey_death)
@@ -112,7 +112,7 @@
 				// Deal digestion damage (and feed the pred)
 				if(!(M.status_flags & GODMODE))
 					M.adjustFireLoss(digest_burn)
-					owner.nutrition += 1
+					owner.adjust_nutrition(1)
 
 			//Contaminate or gurgle items
 			var/obj/item/T = pick(touchable_items)
@@ -130,7 +130,7 @@
 					if(owner.nutrition >= NUTRITION_LEVEL_STARVING && (M.health < M.maxHealth))
 						M.adjustBruteLoss(-3)
 						M.adjustFireLoss(-3)
-						owner.nutrition -= 5
+						owner.adjust_nutrition(-5)
 
 	//for when you just want people to squelch around
 		if(DM_NOISY)
@@ -150,13 +150,13 @@
 						SEND_SOUND(M,prey_digest)
 					play_sound = pick(pred_digest)
 
-				if(M.absorbed)
+				if(M.vore_flags & ABSORBED)
 					continue
 
 				if(M.nutrition >= 100) //Drain them until there's no nutrients left. Slowly "absorb" them.
 					var/oldnutrition = (M.nutrition * 0.05)
-					M.nutrition = (M.nutrition * 0.95)
-					owner.nutrition += oldnutrition
+					M.set_nutrition(M.nutrition * 0.95)
+					owner.adjust_nutrition(oldnutrition)
 				else if(M.nutrition < 100) //When they're finally drained.
 					absorb_living(M)
 					to_update = TRUE
@@ -164,11 +164,11 @@
 		if(DM_UNABSORB)
 
 			for (var/mob/living/M in contents)
-				if(M.absorbed && owner.nutrition >= 100)
-					M.absorbed = FALSE
+				if(M.vore_flags & ABSORBED && owner.nutrition >= 100)
+					DISABLE_BITFIELD(M.vore_flags, ABSORBED)
 					to_chat(M,"<span class='notice'>You suddenly feel solid again </span>")
 					to_chat(owner,"<span class='notice'>You feel like a part of you is missing.</span>")
-					owner.nutrition -= 100
+					owner.adjust_nutrition(-100)
 					to_update = TRUE
 
 	//because dragons need snowflake guts

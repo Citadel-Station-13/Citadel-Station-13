@@ -14,6 +14,7 @@
 	var/gibtime = 40 // Time from starting until meat appears
 	var/meat_produced = 0
 	var/ignore_clothing = FALSE
+	var/meat_quality = 35 //food_quality of meat produced
 
 
 /obj/machinery/gibber/Initialize()
@@ -23,8 +24,10 @@
 /obj/machinery/gibber/RefreshParts()
 	gibtime = 40
 	meat_produced = 0
+	meat_quality = 35 // unupgraded this means quality is 50, and max upgraded it is 95
 	for(var/obj/item/stock_parts/matter_bin/B in component_parts)
 		meat_produced += B.rating
+		meat_quality += B.rating * 15
 	for(var/obj/item/stock_parts/manipulator/M in component_parts)
 		gibtime -= 5 * M.rating
 		if(M.rating >= 2)
@@ -183,6 +186,7 @@
 		var/obj/item/reagent_containers/food/snacks/meat/slab/newmeat = new typeofmeat
 		newmeat.name = "[sourcename] [newmeat.name]"
 		if(istype(newmeat))
+			newmeat.adjust_food_quality(meat_quality)
 			newmeat.subjectname = sourcename
 			newmeat.reagents.add_reagent (/datum/reagent/consumable/nutriment, sourcenutriment / meat_produced) // Thehehe. Fat guys go first
 			if(sourcejob)

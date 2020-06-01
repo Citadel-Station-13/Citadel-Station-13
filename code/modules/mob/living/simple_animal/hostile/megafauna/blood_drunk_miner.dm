@@ -54,7 +54,7 @@ Difficulty: Medium
 	deathmessage = "falls to the ground, decaying into glowing particles."
 	death_sound = "bodyfall"
 
-	do_footstep = TRUE
+	footstep_type = FOOTSTEP_MOB_HEAVY
 
 /mob/living/simple_animal/hostile/megafauna/blood_drunk_miner/guidance
 	guidance = TRUE
@@ -75,7 +75,7 @@ Difficulty: Medium
 
 /obj/item/projectile/kinetic/miner
 	damage = 40
-	speed = 0.9
+	pixels_per_second = TILES_TO_PIXELS(11.111)
 	icon_state = "ka_tracer"
 	range = MINER_DASH_RANGE
 
@@ -264,5 +264,13 @@ Difficulty: Medium
 	gpstag = "Resonant Signal"
 	desc = "The sweet blood, oh, it sings to me."
 	invisibility = 100
+
+/mob/living/simple_animal/hostile/megafauna/blood_drunk_miner/doom
+	name = "hostile-environment miner"
+	desc = "A miner destined to hop across dimensions for all eternity, hunting anomalous creatures."
+	speed = 8
+	move_to_delay = 8
+	ranged_cooldown_time = 8
+	dash_cooldown = 8
 
 #undef MINER_DASH_RANGE

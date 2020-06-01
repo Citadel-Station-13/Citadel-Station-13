@@ -10,9 +10,12 @@
 	speak_chance = 0
 	turns_per_move = 5
 	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab = 2)
-	response_help = "pets"
-	response_disarm = "gently pushes aside"
-	response_harm = "kicks"
+	response_help_continuous = "pets"
+	response_help_simple = "pet"
+	response_disarm_continuous = "gently pushes aside"
+	response_disarm_simple = "gently push aside"
+	response_harm_continuous = "kicks"
+	response_harm_simple = "kick"
 	emote_taunt = list("hisses")
 	taunt_chance = 30
 	speed = 0
@@ -21,7 +24,8 @@
 	harm_intent_damage = 5
 	melee_damage_lower = 5
 	melee_damage_upper = 5
-	attacktext = "pecks"
+	attack_verb_continuous = "pecks"
+	attack_verb_simple = "peck"
 	attack_sound = "goose"
 	speak_emote = list("honks")
 	faction = list("neutral")

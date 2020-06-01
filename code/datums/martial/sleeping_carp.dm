@@ -7,6 +7,7 @@
 	id = MARTIALART_SLEEPINGCARP
 	allow_temp_override = FALSE
 	help_verb = /mob/living/carbon/human/proc/sleeping_carp_help
+	pugilist = TRUE
 
 /datum/martial_art/the_sleeping_carp/proc/check_streak(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	if(findtext(streak,STRONG_PUNCH_COMBO))
@@ -23,7 +24,7 @@
 		return TRUE
 	return FALSE
 
-///Gnashing Teeth: Harm Harm, consistent 20 force punch on every second harm punch, has a chance to crit
+///Gnashing Teeth: Harm Harm, high force punch on every second harm punch, has a chance to crit for near triple damage
 /datum/martial_art/the_sleeping_carp/proc/strongPunch(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	///this var is so that the strong punch is always aiming for the body part the user is targeting and not trying to apply to the chest before deviating
 	var/obj/item/bodypart/affecting = D.get_bodypart(ran_zone(A.zone_selected))
@@ -31,50 +32,53 @@
 	var/atk_verb = pick("precisely kick", "brutally chop", "cleanly hit", "viciously slam")
 	///this is the critical hit damage added to the attack if it rolls, it starts at 0 because it'll be changed when rolled
 	var/crit_damage = 0
+	var/damage = damage_roll(A,D)
 	D.visible_message("<span class='danger'>[A] [atk_verb]s [D]!</span>", \
 					"<span class='userdanger'>[A] [atk_verb]s you!</span>", null, null, A)
 	to_chat(A, "<span class='danger'>You [atk_verb] [D]!</span>")
 	if(prob(10))
-		crit_damage += 20
+		crit_damage += (damage*2 + 15)
 		playsound(get_turf(D), 'sound/weapons/bite.ogg', 50, TRUE, -1)
-		D.visible_message("<span class='warning'>[D] sputters blood as the blow strikes them with inhuman force!</span>", "<span class='userdanger'>You are struck with incredible precision by [A]!</span>")
+		D.visible_message("<span class='warning'>[D] staggers as the blow strikes them with inhuman force!</span>", "<span class='userdanger'>You are struck with incredible precision by [A]!</span>")
 		log_combat(A, D, "critcal strong punched (Sleeping Carp)")//log it here because a critical can swing for 40 force and it's important for the sake of how hard they hit
 	else
 		playsound(get_turf(D), 'sound/weapons/punch1.ogg', 25, TRUE, -1)
 		log_combat(A, D, "strong punched (Sleeping Carp)")//so as to not double up on logging
-	D.apply_damage(20 + crit_damage, BRUTE, affecting)
-	return
+	D.apply_damage((damage + 15) + crit_damage, BRUTE, affecting)
+	return TRUE
 
 ///Crashing Wave Kick: Harm Disarm combo, throws people seven tiles backwards
 /datum/martial_art/the_sleeping_carp/proc/launchKick(mob/living/carbon/human/A, mob/living/carbon/human/D)
+	var/damage = (damage_roll(A,D) + 15)
 	A.do_attack_animation(D, ATTACK_EFFECT_KICK)
 	D.visible_message("<span class='warning'>[A] kicks [D] square in the chest, sending them flying!</span>", \
 					"<span class='userdanger'>You are kicked square in the chest by [A], sending you flying!</span>", "<span class='hear'>You hear a sickening sound of flesh hitting flesh!</span>", COMBAT_MESSAGE_RANGE, A)
 	playsound(get_turf(A), 'sound/effects/hit_kick.ogg', 50, TRUE, -1)
 	var/atom/throw_target = get_edge_target_turf(D, A.dir)
 	D.throw_at(throw_target, 7, 14, A)
-	D.apply_damage(15, BRUTE, BODY_ZONE_CHEST)
+	D.apply_damage(damage, BRUTE, BODY_ZONE_CHEST)
 	log_combat(A, D, "launchkicked (Sleeping Carp)")
-	return
+	return TRUE
 
 ///Keelhaul: Harm Grab combo, knocks people down, deals stamina damage while they're on the floor
 /datum/martial_art/the_sleeping_carp/proc/dropKick(mob/living/carbon/human/A, mob/living/carbon/human/D)
+	var/damage = damage_roll(A,D)
 	A.do_attack_animation(D, ATTACK_EFFECT_KICK)
 	playsound(get_turf(A), 'sound/effects/hit_kick.ogg', 50, TRUE, -1)
 	if((D.mobility_flags & MOBILITY_STAND))
-		D.apply_damage(10, BRUTE, BODY_ZONE_HEAD)
+		D.apply_damage(damage, BRUTE, BODY_ZONE_HEAD)
 		D.DefaultCombatKnockdown(50, override_hardstun = 0.01, override_stamdmg = 0)
-		D.adjustStaminaLoss(40) //A cit specific change form the tg port to really punish anyone who tries to stand up
+		D.apply_damage(damage + 35, STAMINA, BODY_ZONE_HEAD) //A cit specific change form the tg port to really punish anyone who tries to stand up
 		D.visible_message("<span class='warning'>[A] kicks [D] in the head, sending them face first into the floor!</span>", \
 					"<span class='userdanger'>You are kicked in the head by [A], sending you crashing to the floor!</span>", "<span class='hear'>You hear a sickening sound of flesh hitting flesh!</span>", COMBAT_MESSAGE_RANGE, A)
-	else if(!(D.mobility_flags & MOBILITY_STAND))
-		D.apply_damage(5, BRUTE, BODY_ZONE_HEAD)
-		D.adjustStaminaLoss(40)
+	else
+		D.apply_damage(damage*0.5, BRUTE, BODY_ZONE_HEAD)
+		D.apply_damage(damage + 35, STAMINA, BODY_ZONE_HEAD)
 		D.drop_all_held_items()
 		D.visible_message("<span class='warning'>[A] kicks [D] in the head!</span>", \
 					"<span class='userdanger'>You are kicked in the head by [A]!</span>", "<span class='hear'>You hear a sickening sound of flesh hitting flesh!</span>", COMBAT_MESSAGE_RANGE, A)
 	log_combat(A, D, "dropkicked (Sleeping Carp)")
-	return
+	return TRUE
 
 /datum/martial_art/the_sleeping_carp/grab_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	add_to_streak("G",D)
@@ -85,6 +89,8 @@
 
 /datum/martial_art/the_sleeping_carp/harm_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	add_to_streak("H",D)
+	var/damage = (damage_roll(A,D) + 5)
+	var/stunthreshold = A.dna.species.punchstunthreshold
 	if(check_streak(A,D))
 		return TRUE
 	var/obj/item/bodypart/affecting = D.get_bodypart(ran_zone(A.zone_selected))
@@ -93,8 +99,11 @@
 	D.visible_message("<span class='danger'>[A] [atk_verb]s [D]!</span>", \
 					"<span class='userdanger'>[A] [atk_verb]s you!</span>", null, null, A)
 	to_chat(A, "<span class='danger'>You [atk_verb] [D]!</span>")
-	D.apply_damage(rand(10,15), BRUTE, affecting)
+	D.apply_damage(damage, BRUTE, affecting)
 	playsound(get_turf(D), 'sound/weapons/punch1.ogg', 25, TRUE, -1)
+	if(CHECK_MOBILITY(D, MOBILITY_STAND) && damage >= stunthreshold)
+		to_chat(D, "<span class='danger'>You stumble and fall!</span>")
+		D.DefaultCombatKnockdown(10, override_hardstun = 0.01, override_stamdmg = damage)
 	log_combat(A, D, "punched (Sleeping Carp)")
 	return TRUE
 
@@ -110,7 +119,7 @@
 	. = ..()
 	if(A.incapacitated(FALSE, TRUE)) //NO STUN
 		return BULLET_ACT_HIT
-	if(!(A.mobility_flags & MOBILITY_USE)) //NO UNABLE TO USE
+	if(!CHECK_ALL_MOBILITY(A, MOBILITY_USE|MOBILITY_STAND)) //NO UNABLE TO USE, NO DEFLECTION ON THE FLOOR
 		return BULLET_ACT_HIT
 	if(A.dna && A.dna.check_mutation(HULK)) //NO HULK
 		return BULLET_ACT_HIT
@@ -121,6 +130,7 @@
 		playsound(get_turf(A), pick('sound/weapons/bulletflyby.ogg', 'sound/weapons/bulletflyby2.ogg', 'sound/weapons/bulletflyby3.ogg'), 75, TRUE)
 		P.firer = A
 		P.setAngle(rand(0, 360))//SHING
+		A.adjustStaminaLossBuffered (3) //Citadel change to stop infinite bullet sponging as you run away, but it is buffered!
 		return BULLET_ACT_FORCE_PIERCE
 	return BULLET_ACT_HIT
 
@@ -131,9 +141,10 @@
 	ADD_TRAIT(H, TRAIT_NOGUNS, SLEEPING_CARP_TRAIT)
 	ADD_TRAIT(H, TRAIT_PIERCEIMMUNE, SLEEPING_CARP_TRAIT)
 	ADD_TRAIT(H, TRAIT_NODISMEMBER, SLEEPING_CARP_TRAIT)
+	ADD_TRAIT(H, TRAIT_TASED_RESISTANCE, SLEEPING_CARP_TRAIT)
 	H.physiology.brute_mod *= 0.4 //brute is really not gonna cut it
 	H.physiology.burn_mod *= 0.7 //burn is distinctly more useful against them than brute but they're still resistant
-	H.physiology.stamina_mod *= 0.5 //stun batons prove to be one of the few ways to fight them. They have stun resistance already, so I think doubling down too hard on this resistance is a bit much.
+	H.physiology.stamina_mod *= 0.5 //You take less stamina damage overall, but you do not reduce the damage from stun batons
 	H.physiology.stun_mod *= 0.3 //for those rare stuns
 	H.physiology.pressure_mod *= 0.3 //go hang out with carp
 	H.physiology.cold_mod *= 0.3 //cold mods are different to burn mods, they do stack however
@@ -146,6 +157,7 @@
 	REMOVE_TRAIT(H, TRAIT_NOGUNS, SLEEPING_CARP_TRAIT)
 	REMOVE_TRAIT(H, TRAIT_PIERCEIMMUNE, SLEEPING_CARP_TRAIT)
 	REMOVE_TRAIT(H, TRAIT_NODISMEMBER, SLEEPING_CARP_TRAIT)
+	REMOVE_TRAIT(H, TRAIT_TASED_RESISTANCE, SLEEPING_CARP_TRAIT)
 	H.physiology.brute_mod = initial(H.physiology.brute_mod)
 	H.physiology.burn_mod = initial(H.physiology.burn_mod)
 	H.physiology.stamina_mod = initial(H.physiology.stamina_mod)

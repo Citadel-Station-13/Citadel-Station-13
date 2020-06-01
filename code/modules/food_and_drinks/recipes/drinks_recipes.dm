@@ -915,3 +915,80 @@
 	results = list(/datum/reagent/consumable/ethanol/commander_and_chief = 50)
 	required_reagents = list(/datum/reagent/consumable/ethanol/alliescocktail = 50, /datum/reagent/consumable/ethanol/champagne = 20, /datum/reagent/consumable/doctor_delight = 10, /datum/reagent/consumable/ethanol/quintuple_sec = 10, /datum/reagent/consumable/ethanol/screwdrivercocktail = 10)
 	mix_message = "When your powers combine, I am Captain Pl-..."
+
+////////////////////////////////////////// Race Base Drinks //////////////////////////////////////
+
+/datum/chemical_reaction/coldscales
+	name = "Cold Scales"
+	id = /datum/reagent/consumable/ethanol/coldscales
+	results = list(/datum/reagent/consumable/ethanol/coldscales = 3)
+	required_reagents = list(/datum/reagent/consumable/tea = 1, /datum/reagent/toxin/slimejelly = 1,  /datum/reagent/consumable/menthol = 1)
+
+/datum/chemical_reaction/oil_drum
+	name = "Oil Drum"
+	id = /datum/reagent/consumable/ethanol/oil_drum
+	results = list(/datum/reagent/consumable/ethanol/oil_drum = 3)
+	required_reagents = list(/datum/reagent/consumable/ethanol = 1,  /datum/reagent/oil = 1, /datum/reagent/consumable/ethanol/champagne = 12)
+
+/datum/chemical_reaction/nord_king
+	name = "Nord King"
+	id = /datum/reagent/consumable/ethanol/nord_king
+	results = list(/datum/reagent/consumable/ethanol/nord_king = 10)
+	required_reagents = list(/datum/reagent/consumable/ethanol = 5,  /datum/reagent/consumable/honey = 1, /datum/reagent/consumable/ethanol/red_mead = 10)
+
+/datum/chemical_reaction/velvet_kiss
+	name = "Velvet Kiss"
+	id = /datum/reagent/consumable/ethanol/velvet_kiss
+	results = list(/datum/reagent/consumable/ethanol/velvet_kiss = 15) //Limited races use this
+	required_reagents = list(/datum/reagent/blood = 5,  /datum/reagent/consumable/tea = 1, /datum/reagent/consumable/ethanol/wine = 10)
+
+/datum/chemical_reaction/abduction_fruit
+	name = "Abduction Fruit"
+	id = /datum/reagent/consumable/ethanol/abduction_fruit
+	results = list(/datum/reagent/consumable/ethanol/abduction_fruit = 3)
+	required_reagents = list(/datum/reagent/consumable/limejuice = 10,  /datum/reagent/consumable/strawberryjuice = 5, /datum/reagent/consumable/watermelonjuice = 10)
+
+/datum/chemical_reaction/bug_zapper
+	name = "Bug Zapper"
+	id = /datum/reagent/consumable/ethanol/bug_zapper
+	results = list(/datum/reagent/consumable/ethanol/bug_zapper = 20) //Harder to make
+	required_reagents = list(/datum/reagent/consumable/lemonjuice = 10,  /datum/reagent/teslium = 1, /datum/reagent/copper = 10)
+
+/datum/chemical_reaction/mush_crush
+	name = "Mush Crush"
+	id = /datum/reagent/consumable/ethanol/mush_crush
+	results = list(/datum/reagent/consumable/ethanol/mush_crush = 10)
+	required_reagents = list(/datum/reagent/iron = 5,  /datum/reagent/ash = 5, /datum/reagent/toxin/coffeepowder = 10)
+
+/datum/chemical_reaction/darkbrew
+	name = "Darkbrew"
+	id = /datum/reagent/consumable/ethanol/darkbrew
+	results = list(/datum/reagent/consumable/ethanol/darkbrew = 20)//Limited races use this
+	required_reagents = list(/datum/reagent/liquid_dark_matter = 5,  /datum/reagent/toxin/bungotoxin = 5, /datum/reagent/toxin/coffeepowder = 10)
+
+/datum/chemical_reaction/hollow_bone
+	name = "Hollow Bone"
+	id = /datum/reagent/consumable/ethanol/hollow_bone
+	results = list(/datum/reagent/consumable/ethanol/hollow_bone = 10)
+	required_reagents = list(/datum/reagent/toxin/bonehurtingjuice = 5,  /datum/reagent/consumable/milk = 10, /datum/reagent/consumable/coconutmilk = 10)
+
+/datum/chemical_reaction/frisky_kitty
+	name = "Frisky Kitty"
+	id = /datum/reagent/consumable/ethanol/frisky_kitty
+	results = list(/datum/reagent/consumable/ethanol/frisky_kitty = 2)
+	required_reagents = list(/datum/reagent/consumable/catnip_tea = 1,  /datum/reagent/consumable/milk = 1)
+	required_temp = 296 //Just above room temp (22.85'C)
+
+/datum/chemical_reaction/jell_wyrm
+	name = "Jell Wyrm"
+	id = /datum/reagent/consumable/ethanol/jell_wyrm
+	results = list(/datum/reagent/consumable/ethanol/jell_wyrm = 2)
+	required_reagents = list(/datum/reagent/toxin/slimejelly = 1,  /datum/reagent/toxin/carpotoxin = 1, /datum/reagent/carbondioxide = 5)
+	required_temp = 333 // (59.85'C)
+
+/datum/chemical_reaction/laval_spit
+	name = "Laval Spit"
+	id = /datum/reagent/consumable/ethanol/laval_spit
+	results = list(/datum/reagent/consumable/ethanol/laval_spit = 20) //Limited use
+	required_reagents = list(/datum/reagent/iron = 5,  /datum/reagent/consumable/ethanol/mauna_loa = 10, /datum/reagent/sulfur = 5)
+	required_temp = 900 // (626.85'C)

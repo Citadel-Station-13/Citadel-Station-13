@@ -80,7 +80,56 @@
 
 	var/list/char_render_holders			//Should only be a key-value list of north/south/east/west = obj/screen.
 
+	/// Keys currently held
+	var/list/keys_held = list()
+	/// These next two vars are to apply movement for keypresses and releases made while move delayed.
+	/// Because discarding that input makes the game less responsive.
+ 	/// On next move, add this dir to the move that would otherwise be done
+	var/next_move_dir_add
+ 	/// On next move, subtract this dir from the move that would otherwise be done
+	var/next_move_dir_sub
+	/// Amount of keydowns in the last keysend checking interval
 	var/client_keysend_amount = 0
+	/// World tick time where client_keysend_amount will reset
 	var/next_keysend_reset = 0
+	/// World tick time where keysend_tripped will reset back to false
 	var/next_keysend_trip_reset = 0
+	/// When set to true, user will be autokicked if they trip the keysends in a second limit again
 	var/keysend_tripped = FALSE
+	/// custom movement keys for this client
+	var/list/movement_keys = list()
+
+	///Autoclick list of two elements, first being the clicked thing, second being the parameters.
+	var/list/atom/selected_target[2]
+	///Autoclick variable referencing the associated item.
+	var/obj/item/active_mousedown_item = null
+	///Used in MouseDrag to preserve the original mouse click parameters
+	var/mouseParams = ""
+	///Used in MouseDrag to preserve the last mouse-entered location.
+	var/mouseLocation = null
+	///Used in MouseDrag to preserve the last mouse-entered object.
+	var/mouseObject = null
+	var/mouseControlObject = null
+	//Middle-mouse-button click dragtime control for aimbot exploit detection.
+	var/middragtime = 0
+	//Middle-mouse-button clicked object control for aimbot exploit detection.
+	var/atom/middragatom
+
+	/// Messages currently seen by this client
+	var/list/seen_messages
+	///When was the last time we warned them about not cryoing without an ahelp, set to -5 minutes so that rounstart cryo still warns
+	var/cryo_warned = -5 MINUTES
+
+	var/list/parallax_layers
+	var/list/parallax_layers_cached
+	var/atom/movable/movingmob
+	var/turf/previous_turf
+	///world.time of when we can state animate()ing parallax again
+	var/dont_animate_parallax
+	///world.time of last parallax update
+	var/last_parallax_shift
+	///ds between parallax updates
+	var/parallax_throttle = 0
+	var/parallax_movedir = 0
+	var/parallax_layers_max = 3
+	var/parallax_animate_timer

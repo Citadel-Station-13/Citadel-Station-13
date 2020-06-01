@@ -24,13 +24,6 @@
 			Radio headset does not include encryption key. No gun included."
 	item = /obj/item/storage/box/syndie_kit/centcom_costume
 
-/datum/uplink_item/badass/claymore
-	name = "Claymore"
-	cost = 8
-	player_minimum = 25
-	desc = "A claymore. We don't know why you'd do this."
-	item = /obj/item/claymore
-
 /datum/uplink_item/badass/costumes/clown
 	name = "Clown Costume"
 	desc = "Nothing is more terrifying than clowns with fully automatic weaponry."
@@ -58,6 +51,7 @@
 			manufactured to pack a little bit more of a punch if your client needs some convincing."
 	item = /obj/item/storage/secure/briefcase/syndie
 	cost = 1
+	restricted = TRUE
 
 /datum/uplink_item/badass/syndiecards
 	name = "Syndicate Playing Cards"
@@ -84,11 +78,3 @@
 	limited_stock = 1
 	cant_discount = TRUE
 	include_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops)
-
-/datum/uplink_item/badass/shades
-	name = "Big Sunglasses"
-	desc = "Prevents flashes and looks badbass with some Smokes."
-	item = /obj/item/clothing/glasses/sunglasses/big
-	cost = 1
-	surplus = 5
-	illegal_tech = FALSE

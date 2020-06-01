@@ -334,7 +334,7 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 		return
 
 	var/datum/antagonist/cult/antag = mob_viewer.mind.has_antag_datum(/datum/antagonist/cult,TRUE)
-	if(!antag)
+	if(!antag?.cult_team)
 		return
 	var/datum/objective/sacrifice/sac_objective = locate() in antag.cult_team.objectives
 
@@ -641,9 +641,6 @@ so as to remain in compliance with the most up-to-date laws."
 		alert.screen_loc = .
 		mymob.client.screen |= alert
 	return 1
-
-/mob
-	var/list/alerts = list() // contains /obj/screen/alert only // On /mob so clientless mobs will throw alerts properly
 
 /obj/screen/alert/Click(location, control, params)
 	if(!usr || !usr.client)

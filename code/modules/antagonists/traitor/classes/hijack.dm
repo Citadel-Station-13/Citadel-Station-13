@@ -16,3 +16,6 @@
 /datum/traitor_class/human/hijack/finalize_traitor(datum/antagonist/traitor/T)
 	T.hijack_speed=1
 	return TRUE
+
+/datum/traitor_class/human/hijack/clean_up_traitor(datum/antagonist/traitor/T)
+	T.hijack_speed = 0.5

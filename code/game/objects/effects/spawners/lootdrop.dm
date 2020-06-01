@@ -2,6 +2,7 @@
 	icon = 'icons/effects/landmarks_static.dmi'
 	icon_state = "random_loot"
 	layer = OBJ_LAYER
+	var/spawn_on_turf = TRUE
 	var/lootcount = 1		//how many items will be spawned
 	var/lootdoubles = TRUE	//if the same item can be spawned twice
 	var/list/loot			//a list of possible items to spawn e.g. list(/obj/item, /obj/structure, /obj/effect)
@@ -10,7 +11,7 @@
 /obj/effect/spawner/lootdrop/Initialize(mapload)
 	..()
 	if(loot && loot.len)
-		var/turf/T = get_turf(src)
+		var/atom/A = spawn_on_turf ? get_turf(src) : loc
 		var/loot_spawned = 0
 		while((lootcount-loot_spawned) && loot.len)
 			var/lootspawn = pickweight(loot)
@@ -18,7 +19,7 @@
 				loot.Remove(lootspawn)
 
 			if(lootspawn)
-				var/atom/movable/spawned_loot = new lootspawn(T)
+				var/atom/movable/spawned_loot = new lootspawn(A)
 				if (!fan_out_items)
 					if (pixel_x != 0)
 						spawned_loot.pixel_x = pixel_x
@@ -263,7 +264,6 @@
 			LAZYSET(loot, M, our_chance)
 	return ..()
 
-
 // Tech storage circuit board spawners
 // For these, make sure that lootcount equals the number of list items
 
@@ -449,6 +449,7 @@
 /obj/effect/spawner/lootdrop/low_loot_toilet
 	name = "random low toilet spawner"
 	lootcount = 1
+	spawn_on_turf = FALSE
 //Note this is out of a 100 - Meaning the number you see is also the percent its going to pick that
 //This is ment for "low" loot that anyone could fine in a toilet, for better gear use high loot toilet
 	loot = list("" = 30,
@@ -458,41 +459,42 @@
 		/obj/item/clothing/glasses/sunglasses/blindfold = 4,
 		/obj/item/clothing/glasses/sunglasses = 1,
 		/obj/item/toy/plush/random = 5,
-		/obj/effect/spawner/lootdrop/gloves = 5,
-		/obj/effect/spawner/lootdrop/glowstick = 5,
-		/obj/effect/spawner/lootdrop/coin = 3,
-		/obj/effect/spawner/lootdrop/cig_packs = 10,
-		/obj/effect/spawner/lootdrop/cigars_cases = 2,
-		/obj/effect/spawner/lootdrop/space_cash = 5,
+		/obj/effect/spawner/lootdrop/gloves/no_turf = 5,
+		/obj/effect/spawner/lootdrop/glowstick/no_turf = 5,
+		/obj/effect/spawner/lootdrop/coin/no_turf = 3,
+		/obj/effect/spawner/lootdrop/cig_packs/no_turf = 10,
+		/obj/effect/spawner/lootdrop/cigars_cases/no_turf = 2,
+		/obj/effect/spawner/lootdrop/space_cash/no_turf = 5,
 		/obj/item/reagent_containers/food/snacks/grown/cannabis = 5,
 		/obj/item/storage/pill_bottle/dice = 5,
 		/obj/item/toy/cards/deck = 5,
-		/obj/effect/spawner/lootdrop/druggie_pill = 5
+		/obj/effect/spawner/lootdrop/druggie_pill/no_turf = 5
 		)
 
 /obj/effect/spawner/lootdrop/prison_loot_toilet
 	name = "random prison toilet spawner"
 	lootcount = 1
+	spawn_on_turf = FALSE
 //Note this is out of a 100 - Meaning the number you see is also the percent its going to pick that
 //This is ment for "prison" loot that is rather rare and ment for "prisoners if they get a crowbar to fine, or sec.
 	loot = list("" = 10,
 		/obj/item/lighter = 5,
 		/obj/item/poster/random_contraband = 5,
 		/obj/item/clothing/glasses/sunglasses = 5,
-		/obj/effect/spawner/lootdrop/coin = 5,
-		/obj/effect/spawner/lootdrop/cig_packs = 10,
-		/obj/effect/spawner/lootdrop/cigars_cases = 5,
+		/obj/effect/spawner/lootdrop/coin/no_turf = 5,
+		/obj/effect/spawner/lootdrop/cig_packs/no_turf = 10,
+		/obj/effect/spawner/lootdrop/cigars_cases/no_turf = 5,
 		/obj/item/reagent_containers/food/snacks/grown/cannabis = 5,
 		/obj/item/storage/pill_bottle/dice = 5,
 		/obj/item/toy/cards/deck = 5,
-		/obj/effect/spawner/lootdrop/druggie_pill = 5,
+		/obj/effect/spawner/lootdrop/druggie_pill/no_turf = 5,
 		/obj/item/kitchen/knife = 5,
 		/obj/item/screwdriver = 5,
-		/obj/item/crowbar/red = 0.5, //Dont you need a crowbar to open this?
+		/obj/item/crowbar/red = 1, //Dont you need a crowbar to open this?
 		/obj/item/stack/medical/bruise_pack = 3,
 		/obj/item/reagent_containers/food/drinks/bottle/vodka = 2,
 		/obj/item/radio = 5,
-		/obj/item/flashlight = 4.5,
+		/obj/item/flashlight = 4,
 		/obj/item/clothing/mask/breath = 2,
 		/obj/item/tank/internals/emergency_oxygen = 3,
 		/obj/item/storage/box/mre/menu4/safe = 3,
@@ -502,13 +504,14 @@
 /obj/effect/spawner/lootdrop/high_loot_toilet
 	name = "random high toilet spawner"
 	lootcount = 1
+	spawn_on_turf = FALSE
 //Note this is out of a 100 - Meaning the number you see is also the percent its going to pick that
 //The items inside are always going to be something usefull, illegal and likely traitorous.
 	loot = list(
 		/obj/item/clothing/glasses/sunglasses = 5,
-		/obj/effect/spawner/lootdrop/coin = 5,
-		/obj/effect/spawner/lootdrop/space_cash = 5,
-		/obj/effect/spawner/lootdrop/druggie_pill = 5,
+		/obj/effect/spawner/lootdrop/coin/no_turf = 5,
+		/obj/effect/spawner/lootdrop/space_cash/no_turf = 5,
+		/obj/effect/spawner/lootdrop/druggie_pill/no_turf = 5,
 		/obj/item/storage/fancy/cigarettes/cigpack_syndicate = 5,
 		/obj/item/suppressor = 5,
 		/obj/item/toy/cards/deck/syndicate = 5,
@@ -518,6 +521,126 @@
 		/obj/item/gun/ballistic/automatic/toy/pistol = 5,
 		/obj/item/firing_pin = 5,
 		/obj/item/grenade/empgrenade = 15,
-		/obj/item/clothing/gloves/combat = 10,
+		/obj/item/clothing/gloves/tackler/combat/insulated = 10,
 		/obj/item/clothing/shoes/sneakers/noslip = 10
 		)
+
+/obj/effect/spawner/lootdrop/low_tools
+	name = "random basic tool(s) spawner"
+	lootcount = 1
+	loot = list(
+		/obj/item/screwdriver = 1,
+		/obj/item/wrench = 1,
+		/obj/item/weldingtool/mini = 1,
+		/obj/item/crowbar = 1,
+		/obj/item/wirecutters = 1,
+		/obj/item/analyzer = 1,
+		/obj/item/t_scanner = 1
+		)
+
+/obj/effect/spawner/lootdrop/high_tools
+	name = "random adv tool(s) spawner"
+	lootcount = 1
+	loot = list(
+		/obj/item/screwdriver/power = 1,
+		/obj/item/weldingtool/experimental = 1,
+		/obj/item/crowbar/power = 1,
+		/obj/item/analyzer = 1,
+		/obj/item/multitool = 1
+		)
+
+/obj/effect/spawner/lootdrop/welder_tools
+	name = "random safe welder tool(s) spawner"
+	lootcount = 1
+	loot = list(
+		/obj/item/weldingtool = 1,
+		/obj/item/weldingtool/mini = 1,
+		/obj/item/weldingtool/hugetank = 1,
+		/obj/item/weldingtool/largetank = 1
+		)
+
+/obj/effect/spawner/lootdrop/tool_box
+	name = "random safe tool box(es) spawner"
+	lootcount = 1
+	loot = list(
+		/obj/item/storage/toolbox/mechanical = 1,
+		/obj/item/storage/toolbox/mechanical/old = 1,
+		/obj/item/storage/toolbox/emergency = 1,
+		/obj/item/storage/toolbox/emergency/old = 1,
+		/obj/item/storage/toolbox/electrical = 1,
+		/obj/item/storage/toolbox/syndicate = 1,
+		/obj/item/storage/toolbox/artistic = 1,
+		/obj/item/storage/toolbox/gold_fake = 1,
+		/obj/item/storage/toolbox/rubber = 1
+		)
+
+/obj/effect/spawner/lootdrop/healing_kits
+	name = "random safe medical kit(s) spawner"
+	lootcount = 1
+	loot = list(
+		/obj/item/storage/firstaid/regular = 1,
+		/obj/item/storage/firstaid/ancient = 1,
+		/obj/item/storage/firstaid/fire = 1,
+		/obj/item/storage/firstaid/toxin = 1,
+		/obj/item/storage/firstaid/radbgone = 1,
+		/obj/item/storage/firstaid/o2 = 1,
+		/obj/item/storage/firstaid/brute = 1
+		)
+
+/obj/effect/spawner/lootdrop/breathing_tanks
+	name = "random internal tank(s) spawner"
+	lootcount = 1
+	loot = list(
+		/obj/item/tank/internals/oxygen = 1,
+		/obj/item/tank/internals/oxygen/yellow = 1,
+		/obj/item/tank/internals/oxygen/red = 1,
+		/obj/item/tank/internals/air = 1,
+		/obj/item/tank/internals/plasmaman = 1,
+		/obj/item/tank/internals/plasmaman/belt = 1,
+		/obj/item/tank/internals/emergency_oxygen = 1,
+		/obj/item/tank/internals/emergency_oxygen/engi = 1,
+		/obj/item/tank/internals/emergency_oxygen/double = 1
+		)
+
+/obj/effect/spawner/lootdrop/breathing_masks
+	name = "random internal mask(s) spawner"
+	lootcount = 1
+	loot = list(
+		/obj/item/clothing/mask/gas = 2,
+		/obj/item/clothing/mask/gas/glass = 4,
+		/obj/item/clothing/mask/breath = 5,
+		/obj/item/clothing/mask/breath/medical = 1
+		)
+ 
+/obj/effect/spawner/lootdrop/welder_tools/no_turf
+	spawn_on_turf = FALSE
+
+/obj/effect/spawner/lootdrop/low_tools/no_turf
+	spawn_on_turf = FALSE
+ 
+/obj/effect/spawner/lootdrop/breathing_tanks/no_turf
+	spawn_on_turf = FALSE
+
+/obj/effect/spawner/lootdrop/breathing_masks/no_turf
+	spawn_on_turf = FALSE
+
+/obj/effect/spawner/lootdrop/coin/no_turf
+	spawn_on_turf = FALSE
+
+/obj/effect/spawner/lootdrop/space_cash/no_turf
+	spawn_on_turf = FALSE
+
+/obj/effect/spawner/lootdrop/druggie_pill/no_turf
+	spawn_on_turf = FALSE
+
+/obj/effect/spawner/lootdrop/gloves/no_turf
+	spawn_on_turf = FALSE
+
+/obj/effect/spawner/lootdrop/cig_packs/no_turf
+	spawn_on_turf = FALSE
+
+/obj/effect/spawner/lootdrop/cigars_cases/no_turf
+	spawn_on_turf = FALSE
+
+/obj/effect/spawner/lootdrop/glowstick/no_turf
+	spawn_on_turf = FALSE
