@@ -117,9 +117,9 @@ GLOBAL_LIST_EMPTY(telecomms_list)
 			icon_state = "[initial(icon_state)]_off"
 
 /obj/machinery/telecomms/proc/update_power()
-
 	if(toggled)
-		if(stat & (BROKEN|NOPOWER|EMPED)) // if powered, on. if not powered, off. if too damaged, off
+		// if powered, on. if not powered, off. if too damaged, off
+		if(CHECK_BITFIELD(stat, (BROKEN | NOPOWER | EMPED))) 
 			on = FALSE
 		else
 			on = TRUE
@@ -137,11 +137,11 @@ GLOBAL_LIST_EMPTY(telecomms_list)
 
 /obj/machinery/telecomms/emp_act(severity)
 	. = ..()
-	if(. & EMP_PROTECT_SELF)
+	if(CHECK_BITFIELD(., EMP_PROTECT_SELF))
 		return
-	if(prob(100/severity))
-		if(!(stat & EMPED))
-			stat |= EMPED
-			var/duration = (300 * 10)/severity
+	if(prob(100 / severity))
+		if(!CHECK_BITFIELD(stat, EMPED))
+			ENABLE_BITFIELD(stat, EMPED)
+			var/duration = (300 * 10) / severity
 			spawn(rand(duration - 20, duration + 20)) // Takes a long time for the machines to reboot.
-				stat &= ~EMPED
+				DISABLE_BITFIELD(stat, EMPED)
