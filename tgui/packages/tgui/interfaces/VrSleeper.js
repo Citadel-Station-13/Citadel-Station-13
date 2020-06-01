@@ -1,5 +1,5 @@
 import { useBackend } from '../backend';
-import { Button, ProgressBar, Section } from '../components';
+import { Button, ProgressBar, Section, Box } from '../components';
 import { Window } from '../layouts';
 
 export const VrSleeper = (props, context) => {
@@ -7,45 +7,58 @@ export const VrSleeper = (props, context) => {
   return (
     <Window>
       <Window.Content>
-        {!!data.emagged === 1 && (
-          <span>Safety restraints disabled.</span>
+        {!!data.emagged && (
+          <Section>
+            <Box color="bad">
+              Safety restraints disabled.
+            </Box>
+          </Section>
         )}
-        {!!data.vr_avatar && (
-          <ProgressBar
-            title={"Avatar Health: "}
-            value={data.vr_avatar.maxhealth / 100}
-            ranges={{
-              good: [90, Infinity],
-              average: [70, 89],
-              bad: [-Infinity, 69],
-            }} />
-        )}
+         {...!!data.vr_avatar && (
+           <Section title={"Virtual Avatar"}>
+             <ProgressBar
+               title={"Avatar Status: "}
+               value={data.vr_avatar.maxhealth / 100}
+               ranges={{
+                 good: [90, Infinity],
+                 average: [70, 89],
+                 bad: [-Infinity, 69],
+               }} />
+           </Section>
+         ) && (
+           <Section>
+             <Box>
+               No Avatar detected
+             </Box>
+           </Section>
+         )
+        }
         <Section
-          title="VR Commands">
-          buttons={(
-            <Button
-              content={data.toggle_open
-                ? 'Open VR Sleeper'
-                : 'Close VR Sleeper'}
-              icon={data.toggle_open ? 'lock' : 'unlock'}
-              disabled={data.stored < data.max}
-              onClick={() => act('toggle_open')} />
-          )}
-          {!!data.isoccupant && (
-            <Button
+           title="VR Commands">
+           <Button
+            content={data.toggle_open
+               ? 'Open VR Sleeper'
+               : 'Close VR Sleeper'}
+            icon={data.toggle_open ? 'unlock' : 'lock'}
+            disabled={data.stored < data.max}
+            onClick={() => act('toggle_open')} />
+           <Section>
+            {!!data.isoccupant && (
+               <Button
+              color={'blue'}
               content={'Connect to VR'}
               onClick={() => act('vr_connect')}
               icon={'unlock'} />
-          ) || ("You need to be inside the VR sleeper to connect to VR"
-          )}
-          {!!data.vr_avatar && (
-            <Button
-              content={"Delete VR avatar"}
-              icon={'recycle'}
-              onClick={() => act('delete_avatar')} />
-          ) || ("VR avatar not detected."
-          )}
-        </Section>
+             )
+          || ("You need to be inside the VR sleeper to connect to VR")}
+          </Section>
+           {!!data.vr_avatar && (
+          <Button
+               content={"Delete VR avatar"}
+               icon={'recycle'}
+               onClick={() => act('delete_avatar')} />
+           )}
+         </Section>
       </Window.Content>
     </Window>
   );
