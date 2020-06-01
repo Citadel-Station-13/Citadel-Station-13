@@ -2,7 +2,7 @@ import { useBackend } from '../backend';
 import { Button, ProgressBar, Section } from '../components';
 import { Window } from '../layouts';
 
-export const VrSleeper = context => {
+export const VrSleeper = (props, context) => {
   const { act, data } = useBackend(context);
   return (
     <Window>
@@ -22,6 +22,7 @@ export const VrSleeper = context => {
         )}
         <Section
           title="VR Commands">
+          buttons={(
             <Button
               content={data.toggle_open
                 ? 'Open VR Sleeper'
@@ -29,6 +30,7 @@ export const VrSleeper = context => {
               icon={data.toggle_open ? 'lock' : 'unlock'}
               disabled={data.stored < data.max}
               onClick={() => act('toggle_open')} />
+          )}
           {!!data.isoccupant && (
             <Button
               content={'Connect to VR'}
