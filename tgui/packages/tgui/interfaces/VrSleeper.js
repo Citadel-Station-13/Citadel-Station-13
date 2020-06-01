@@ -22,7 +22,6 @@ export const VrSleeper = context => {
         )}
         <Section
           title="VR Commands">
-          buttons={(
             <Button
               content={data.toggle_open
                 ? 'Open VR Sleeper'
@@ -30,7 +29,6 @@ export const VrSleeper = context => {
               icon={data.toggle_open ? 'lock' : 'unlock'}
               disabled={data.stored < data.max}
               onClick={() => act('toggle_open')} />
-          )}
           {!!data.isoccupant && (
             <Button
               content={'Connect to VR'}
