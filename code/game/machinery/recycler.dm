@@ -100,7 +100,7 @@
 	eat(AM)
 	. = ..()
 
-/obj/machinery/recycler/proc/eat(atom/AM0, sound=TRUE)
+/obj/machinery/recycler/proc/eat(atom/AM0)
 	if(stat & (BROKEN|NOPOWER) || safety_mode)
 		return
 
@@ -141,7 +141,7 @@
 			buzz = TRUE
 			AM.forceMove(loc)
 
-	if(items_recycled && sound)
+	if(items_recycled)
 		playsound(src, item_recycle_sound, 50, 1)
 	if(buzz)
 		playsound(src, 'sound/machines/buzz-sigh.ogg', 50, 0)
