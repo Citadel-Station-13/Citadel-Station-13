@@ -106,7 +106,7 @@
 
 	var/list/to_eat
 
-	to_eat = AM0.GetAllContentsIgnoring(GLOB.typecache_mob)
+	to_eat = AM0.GetAllContents()
 
 	var/items_recycled = 0
 	for(var/i in to_eat)
@@ -116,22 +116,26 @@
 		var/brain_holder = istype(AM, /obj/item/organ/brain) || (istype(as_head) && as_head.brain) || (istype(as_mmi) && as_mmi.brain) || isbrain(AM) || istype(AM, /obj/item/dullahan_relay)
 		if(brain_holder)
 			emergency_stop(AM)
+			return
 		else if(isliving(AM))
 			if((obj_flags & EMAGGED)||((!allowed(AM))&&(!ishuman(AM))))
 				crush_living(AM)
 			else
 				emergency_stop(AM)
+				return
 		else if(isitem(AM))
 			var/obj/O = AM
 			if(O.resistance_flags & INDESTRUCTIBLE)
 				playsound(src, 'sound/machines/buzz-sigh.ogg', 50, 0)
 				O.forceMove(loc)
+				to_eat -= AM.GetAllContents()
 			else
 				recycle_item(AM)
 				items_recycled++
 		else
 			playsound(src, 'sound/machines/buzz-sigh.ogg', 50, 0)
 			AM.forceMove(loc)
+			to_eat -= AM.GetAllContents()
 
 	if(items_recycled && sound)
 		playsound(src, item_recycle_sound, 50, 1)
