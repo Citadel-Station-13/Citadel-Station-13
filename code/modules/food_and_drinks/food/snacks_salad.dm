@@ -125,3 +125,11 @@
 	bonus_reagents = list(/datum/reagent/medicine/earthsblood = 1, /datum/reagent/iron = 4)
 	tastes = list("iron" = 1, "conspiracy" = 1)
 	foodtype = VEGETABLES
+
+/obj/item/reagent_containers/food/snacks/salad/edensalad
+	name = "Salad of Eden"
+	desc = "A salad brimming with untapped potential."
+	iconstate = "eden_salad"
+	trash = /obj/item/reagent_containers/glass/bowl
+	list_reagents = list(/datum/reagent/consumable/nutriment = 7, /datum/reagent/consumable/nutriment/vitamin = 5, /datum/reagent/medicine/earthsblood = 3, /datum/reagent/medicine/omnizine = 5, /datum/reagent/drug/happiness = 2)
+	tastes = list("medicinal bitterness" = 1, "lingering sweetness" = 1)
