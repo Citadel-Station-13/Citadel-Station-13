@@ -110,7 +110,7 @@
 		fail_tick--
 	..()
 
-/obj/item/gun/energy/e_gun/nuclear/shoot_live_shot()
+/obj/item/gun/energy/e_gun/nuclear/shoot_live_shot(mob/living/user, pointblank = FALSE, mob/pbtarget, message = 1, stam_cost = 0)
 	failcheck()
 	update_icon()
 	..()

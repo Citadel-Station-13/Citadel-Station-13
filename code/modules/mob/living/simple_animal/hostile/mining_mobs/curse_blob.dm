@@ -105,6 +105,7 @@ IGNORE_PROC_IF_NOT_TARGET(attack_slime)
 
 /mob/living/simple_animal/hostile/asteroid/curseblob/attacked_by(obj/item/I, mob/living/L)
 	if(L != set_target)
+		L.changeNext_move(I.click_delay) //pre_attacked_by not called
 		return
 	return ..()
 

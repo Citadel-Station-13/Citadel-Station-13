@@ -237,7 +237,7 @@
 		return FALSE
 	return TRUE
 
-/obj/item/gun/energy/dueling/process_fire(atom/target, mob/living/user, message, params, zone_override, bonus_spread)
+/obj/item/gun/energy/dueling/process_fire(atom/target, mob/living/user, message, params, zone_override, bonus_spread = 0, stam_cost = 0)
 	if(duel.state == DUEL_READY)
 		duel.confirmations[src] = TRUE
 		to_chat(user,"<span class='notice'>You confirm your readiness.</span>")
