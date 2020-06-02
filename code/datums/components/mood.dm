@@ -25,7 +25,7 @@
 
 	var/mob/living/owner = parent
 	if(owner.stat != DEAD)
-		START_PROCESSING(SSdcs, src)
+		START_PROCESSING(SSobj, src)
 
 	RegisterSignal(parent, COMSIG_ADD_MOOD_EVENT, .proc/add_event)
 	RegisterSignal(parent, COMSIG_CLEAR_MOOD_EVENT, .proc/clear_event)
@@ -40,12 +40,12 @@
 		hud.show_hud(hud.hud_version)
 
 /datum/component/mood/Destroy()
-	STOP_PROCESSING(SSdcs, src)
+	STOP_PROCESSING(SSobj, src)
 	unmodify_hud()
 	return ..()
 
 /datum/component/mood/proc/stop_processing()
-	STOP_PROCESSING(SSdcs, src)
+	STOP_PROCESSING(SSobj, src)
 
 /datum/component/mood/proc/print_mood(mob/user)
 	var/msg = "<span class='info'>*---------*\n<EM>Your current mood</EM>\n"
@@ -138,7 +138,7 @@
 		else
 			screen_obj.icon_state = "mood[mood_level]"
 
-/datum/component/mood/process() //Called on SSdcs process
+/datum/component/mood/process() //Called on SSobj process
 	if(QDELETED(parent)) // workaround to an obnoxious sneaky periodical runtime.
 		qdel(src)
 		return
@@ -345,7 +345,7 @@
 
 ///Called when parent is revived.
 /datum/component/mood/proc/on_revive(datum/source, full_heal)
-	START_PROCESSING(SSdcs, src)
+	START_PROCESSING(SSobj, src)
 	if(!full_heal)
 		return
 	remove_temp_moods()

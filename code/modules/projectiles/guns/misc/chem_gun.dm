@@ -9,7 +9,7 @@
 	throw_speed = 3
 	throw_range = 7
 	force = 4
-	inaccuracy_modifier = 0
+	inaccuracy_modifier = 0.25
 	custom_materials = list(/datum/material/iron=2000)
 	clumsy_check = FALSE
 	fire_sound = 'sound/items/syringeproj.ogg'

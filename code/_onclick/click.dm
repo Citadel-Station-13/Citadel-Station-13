@@ -21,6 +21,7 @@
 	next_move = world.time + ((num+next_move_adjust)*next_move_modifier)
 
 /mob/living/changeNext_move(num)
+	last_click_move = next_move
 	var/mod = next_move_modifier
 	var/adj = next_move_adjust
 	for(var/i in status_effects)

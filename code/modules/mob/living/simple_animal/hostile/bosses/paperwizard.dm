@@ -36,6 +36,7 @@
 	boss_cost = 30
 	boss_type = /mob/living/simple_animal/hostile/boss/paper_wizard
 	needs_target = FALSE
+	req_statuses = list(AI_ON)
 	say_when_triggered = "Rise, my creations! Jump off your pages and into this realm!"
 	var/list/summoned_minions = list()
 	var/maximum_stickmen = 6
@@ -85,6 +86,7 @@
 	usage_probability = 30
 	boss_cost = 40
 	boss_type = /mob/living/simple_animal/hostile/boss/paper_wizard
+	req_statuses = list(AI_ON)
 	say_when_triggered = ""
 
 /datum/action/boss/wizard_mimic/Trigger()
