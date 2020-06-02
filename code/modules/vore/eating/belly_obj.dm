@@ -465,7 +465,7 @@
 		log_attack("[key_name(owner)] digested [key_name(M)].")
 
 	// If digested prey is also a pred... anyone inside their bellies gets moved up.
-	if(is_vore_predator(M))
+	if(has_vore_belly(M))
 		M.release_vore_contents(include_absorbed = TRUE, silent = TRUE)
 
 	//Drop all items into the belly

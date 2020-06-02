@@ -582,7 +582,7 @@
 	force_wielded = 18
 	throwforce = 20
 	throw_speed = 4
-	embedding = list("embedded_impact_pain_multiplier" = 3, "embed_chance" = 90)
+	embedding = list("embedded_impact_pain_multiplier" = 1.5, "embed_chance" = 65)
 	armour_penetration = 10
 	custom_materials = list(/datum/material/iron=1150, /datum/material/glass=2075)
 	hitsound = 'sound/weapons/bladeslice.ogg'
@@ -667,6 +667,7 @@
 		force_wielded = 19
 		force_unwielded = 11
 		throwforce = 21
+		embedding = getEmbeddingBehavior(embed_chance = 75, embedded_pain_multiplier = 1.5) //plasmaglass spears are sharper
 		icon_prefix = "spearplasma"
 	qdel(tip)
 	var/obj/item/twohanded/spear/S = locate() in parts_list
@@ -681,6 +682,7 @@
 	if(G)
 		explosive = G
 		name = "explosive lance"
+		embedding = getEmbeddingBehavior(embed_chance = 0, embedded_pain_multiplier = 1)//elances should not be embeddable
 		desc = "A makeshift spear with [G] attached to it."
 	update_icon()
 

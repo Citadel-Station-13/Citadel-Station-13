@@ -731,14 +731,6 @@
 		if(next_use_time > world.time)
 			START_PROCESSING(SSfastprocess, src)
 
-
-//Stickmemes
-/datum/action/item_action/stickmen
-	name = "Summon Stick Minions"
-	desc = "Allows you to summon faithful stickmen allies to aide you in battle."
-	icon_icon = 'icons/mob/actions/actions_minor_antag.dmi'
-	button_icon_state = "art_summon"
-
 //surf_ss13
 /datum/action/item_action/bhop
 	name = "Activate Jump Boots"
