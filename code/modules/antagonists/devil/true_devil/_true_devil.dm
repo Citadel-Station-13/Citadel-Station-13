@@ -118,22 +118,10 @@
 
 
 /mob/living/carbon/true_devil/attacked_by(obj/item/I, mob/living/user, def_zone)
-	var/weakness = check_weakness(I, user)
-	apply_damage(I.force * weakness, I.damtype, def_zone)
-	var/message_verb = ""
-	if(I.attack_verb && I.attack_verb.len)
-		message_verb = "[pick(I.attack_verb)]"
-	else if(I.force)
-		message_verb = "attacked"
-
-	var/attack_message = "[src] has been [message_verb] with [I]."
-	if(user)
-		user.do_attack_animation(src)
-		if(user in viewers(src, null))
-			attack_message = "[user] has [message_verb] [src] with [I]!"
-	if(message_verb)
-		visible_message("<span class='danger'>[attack_message]</span>",
-		"<span class='userdanger'>[attack_message]</span>", null, COMBAT_MESSAGE_RANGE)
+	var/totitemdamage = pre_attacked_by(I, user)
+	totitemdamage *= check_weakness(I, user)
+	apply_damage(totitemdamage, I.damtype, def_zone)
+	send_item_attack_message(I, user, null, totitemdamage)
 	return TRUE
 
 /mob/living/carbon/true_devil/singularity_act()

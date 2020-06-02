@@ -272,7 +272,7 @@
 			return TRUE
 
 	var/distance = get_dist(T, starting) // Get the distance between the turf shot from and the mob we hit and use that for the calculations.
-	if(check_zone(def_zone) != BODY_ZONE_CHEST)
+	if(def_zone && check_zone(def_zone) != BODY_ZONE_CHEST)
 		def_zone = ran_zone(def_zone, max(100-(7*distance), 5) * zone_accuracy_factor) //Lower accurancy/longer range tradeoff. 7 is a balanced number to use.
 
 	if(isturf(A) && hitsound_wall)
@@ -548,7 +548,7 @@
 			var/safety = CEILING(pixel_increment_amount / world.icon_size, 1) * 2 + 1
 			while(T != loc)
 				if(!--safety)
-					CRASH("Projectile took more than pixel incrememnt speed times 2 to get to its location, this is probably something seriously scuffed going on.")
+					CRASH("[type] took too long (allowed: [CEILING(pixel_increment_amount/world.icon_size,1)*2] moves) to get to its location.")
 				step_towards(src, T)
 				if(QDELETED(src))
 					return
