@@ -420,3 +420,62 @@
 	ranged_message = "<span class='nzcrentr_small'><i>You charge the clockwork slab with shocking might.</i>\n\
 	<b>Left-click a target to fire, quickly!</b></span>"
 	timeout_time = 20
+
+/datum/clockwork_scripture/channeled/void_volt
+	descname = "Channeled, Power Drain"
+	name = "Void Volt"
+	desc = "A channled chant that quickly drains any powercells in a large radius, but burns the invoker. \
+	Can be channeled with more cultists to increase range and decrease damage in relation to power absorbed. \
+	Also charges clockwork power by a small percentage of the drained power, which can help offset the scriptures powercost."
+	chant_invocations = list("Make their lights fall dark!", "Their power shall fuel Engine!")
+	chant_amount = 20
+	chant_interval = 10 //100KW drain per pulse for guns / 1MW for other cells = 10 chants / 100ds / 10s to drain a charged weapon or a baton with a nonupgraded cell
+	channel_time = 50
+	power_cost = 300
+	multiple_invokers_used = TRUE
+	multiple_invokers_optional = TRUE
+	usage_tip = "It may be useful to end channelling early if the burning gets too much."
+	tier = SCRIPTURE_SCRIPT
+	primary_component = GEIS_CAPACITOR
+	sort_priority = 11
+	quickbind = TRUE
+	quickbind_desc = "Quickly drains power in an area around the invoker, causing burns due to the high amount of energy channeled.<br><b>Maximum of 20 chants.</b>"
+
+/datum/clockwork_scripture/channeled/void_volt/scripture_effects()
+	invoker.visible_message("<span class='warning'>[invoker] glows in a brilliant golden light!</span>")
+	invoker.add_atom_colour("#FFD700", ADMIN_COLOUR_PRIORITY) //#EC8A2D? #E2B007? TODO: Find a good color, maybe make them actually glow too and not just have the sigil effect do that
+	return ..()
+
+
+/datum/clockwork_scripture/channeled/void_volt/chant_effects(chant_number)
+	var/power_drained = 0
+	var/power_mod = 0.0035 //TODO: Find a well balanced powermod
+	var/drain_range = 8
+	var/additional_chanters = 0
+	var/list/chanters = list()
+	chanters += invoker
+	for(var/mob/living/L in range(1, invoker))
+		if(!L.stat && is_servant_of_ratvar(L))
+			additional_chanters++
+			chanters += L
+	drain_range = min(drain_range + 2 * additional_chanters, drain_range * 2) //s u c c
+	for(var/t in spiral_range_turfs(drain_range, invoker))
+		var/turf/T = t
+		for(var/M in T)
+			var/atom/movable/A = M
+			power_drained += A.power_drain(TRUE, TRUE) //Yes, this absolutely does drain weaponry TODO: At the moment, far too strong vs. guns / cells in general
+	new /obj/effect/temp_visual/ratvar/sigil/transgression(invoker.loc, 1 + (power_drained * power_mod))
+	var/datum/effect_system/spark_spread/S = new
+	S.set_up(round(1 + (power_drained * power_mod), 1),0,get_turf(invoker))
+	S.start()
+	adjust_clockwork_power(power_drained * power_mod) //TODO: Balance this too
+	for(var/mob/living/L in chanters)
+		L.adjustFireLoss(round(clamp(power_drained * power_mod / (1 + additional_chanters), 0.1, 20), 0.1)) //No you won't just immediately melt if you do this in a very power-rich area
+
+
+	return TRUE
+
+/datum/clockwork_scripture/channeled/void_volt/chant_end_effects()
+	invoker.visible_message("<span class='warning'>[invoker] stops glowing...</span>")
+	invoker.remove_atom_colour(ADMIN_COLOUR_PRIORITY)
+	return ..()
