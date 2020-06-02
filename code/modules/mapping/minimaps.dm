@@ -90,7 +90,8 @@
 /datum/minimap_group/New(list/maps, name)
 	id = ++next_id
 	src.name = name
-	minimaps = maps
+	if(maps)
+		minimaps = maps
 
 /datum/minimap_group/proc/show(mob/user)
 	if(!length(minimaps))
