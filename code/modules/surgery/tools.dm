@@ -6,7 +6,6 @@
 	custom_materials = list(/datum/material/iron=6000, /datum/material/glass=3000)
 	item_flags = SURGICAL_TOOL
 	flags_1 = CONDUCT_1
-	rad_flags = RAD_NO_CONTAMINATE
 	w_class = WEIGHT_CLASS_TINY
 	tool_behaviour = TOOL_RETRACTOR
 	toolspeed = 1
@@ -51,7 +50,6 @@
 	custom_materials = list(/datum/material/iron=5000, /datum/material/glass=2500)
 	item_flags = SURGICAL_TOOL
 	flags_1 = CONDUCT_1
-	rad_flags = RAD_NO_CONTAMINATE
 	w_class = WEIGHT_CLASS_TINY
 	attack_verb = list("attacked", "pinched")
 	tool_behaviour = TOOL_HEMOSTAT
@@ -76,7 +74,6 @@
 	custom_materials = list(/datum/material/iron=2500, /datum/material/glass=750)
 	item_flags = SURGICAL_TOOL
 	flags_1 = CONDUCT_1
-	rad_flags = RAD_NO_CONTAMINATE
 	w_class = WEIGHT_CLASS_TINY
 	attack_verb = list("burnt")
 	tool_behaviour = TOOL_CAUTERY
@@ -103,7 +100,6 @@
 	hitsound = 'sound/weapons/circsawhit.ogg'
 	custom_materials = list(/datum/material/iron=10000, /datum/material/glass=6000)
 	item_flags = SURGICAL_TOOL
-	rad_flags = RAD_NO_CONTAMINATE
 	flags_1 = CONDUCT_1
 	force = 15
 	w_class = WEIGHT_CLASS_NORMAL
@@ -158,7 +154,6 @@
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	flags_1 = CONDUCT_1
-	rad_flags = RAD_NO_CONTAMINATE
 	force = 10
 	w_class = WEIGHT_CLASS_TINY
 	throwforce = 5
@@ -242,7 +237,6 @@
 	throwhitsound =  'sound/weapons/pierce.ogg'
 	item_flags = SURGICAL_TOOL
 	flags_1 = CONDUCT_1
-	rad_flags = RAD_NO_CONTAMINATE
 	force = 15
 	w_class = WEIGHT_CLASS_NORMAL
 	throwforce = 9
@@ -283,7 +277,6 @@
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "surgical_drapes"
 	w_class = WEIGHT_CLASS_TINY
-	rad_flags = RAD_NO_CONTAMINATE
 	attack_verb = list("slapped")
 
 /obj/item/surgical_drapes/attack(mob/living/M, mob/user)
@@ -315,7 +308,6 @@
 	desc = "A container for holding body parts."
 	icon = 'icons/obj/storage.dmi'
 	icon_state = "evidenceobj"
-	rad_flags = RAD_NO_CONTAMINATE
 	item_flags = SURGICAL_TOOL
 
 /obj/item/organ_storage/afterattack(obj/item/I, mob/user, proximity)
@@ -363,7 +355,6 @@
 	icon = 'icons/obj/device.dmi'
 	icon_state = "spectrometer"
 	item_flags = NOBLUDGEON
-	rad_flags = RAD_NO_CONTAMINATE
 	var/list/advanced_surgeries = list()
 
 /obj/item/surgical_processor/afterattack(obj/item/O, mob/user, proximity)
