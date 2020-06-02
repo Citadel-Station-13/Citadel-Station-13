@@ -561,3 +561,23 @@
 	HIonRelease 	= 0.1
 	RateUpLim 		= 2
 	FermiChem 		= TRUE
+
+/datum/chemical_reaction/fermi/zeolites
+	name = "Zeolites"
+	id = /datum/reagent/fermi/zeolites
+	results = list(/datum/reagent/fermi/zeolites = 5) //We make a lot!
+	required_reagents = list(/datum/reagent/medicine/potass_iodide = 1, /datum/reagent/aluminium = 1, /datum/reagent/silicon = 1, /datum/reagent/oxygen = 1)
+	//FermiChem vars:
+	OptimalTempMin 	= 300
+	OptimalTempMax 	= 900
+	ExplodeTemp 	= 1000 //check to see overflow doesn't happen!
+	OptimalpHMin 	= 4.0
+	OptimalpHMax 	= 6.0
+	ReactpHLim 		= 4
+	//CatalystFact 	= 0
+	CurveSharpT 	= 4
+	CurveSharppH 	= 0
+	ThermicConstant = 0
+	HIonRelease 	= 0.01
+	RateUpLim 		= 15
+	FermiChem 		= TRUE
