@@ -60,3 +60,23 @@
 				turret.pixel_x = 12
 				turret.pixel_y = 4
 				turret.layer = OBJ_LAYER
+
+/obj/vehicle/ridden/atv/snowmobile
+	name = "snowmobile"
+	desc = "a tracked vehicle designed for use in the snow, it looks like it would have difficulty moving elsewhere, however."
+	icon_state = "snowmobile"
+
+/obj/vehicle/ridden/atv/snowmobile/Moved()
+	. = ..()
+	var/static/list/snow_typecache = typecacheof(list(/turf/open/floor/plating/asteroid/snow/icemoon, /turf/open/floor/plating/snowed/smoothed/icemoon))
+	var/datum/component/riding/E = LoadComponent(/datum/component/riding)
+	if(snow_typecache[loc.type])
+		E.vehicle_move_delay = 1
+	else
+		E.vehicle_move_delay = 2
+
+/obj/vehicle/ridden/atv/snowmobile/snowcurity
+	name = "security snowmobile"
+	desc = "for when you want to look like even more of a tool than riding a secway."
+	icon_state = "snowcurity"
+	key_type = /obj/item/key/security

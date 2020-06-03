@@ -71,7 +71,7 @@
 		return ..()
 
 /obj/machinery/porta_turret_cover/attacked_by(obj/item/I, mob/user, attackchain_flags = NONE, damage_multiplier = 1)
-	parent_turret.attacked_by(I, user, attackchain_flags, damage_multiplier)
+	return parent_turret.attacked_by(I, user)
 
 /obj/machinery/porta_turret_cover/attack_alien(mob/living/carbon/alien/humanoid/user)
 	parent_turret.attack_alien(user)

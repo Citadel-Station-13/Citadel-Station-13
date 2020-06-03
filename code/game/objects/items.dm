@@ -55,6 +55,15 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	/// How long, in deciseconds, this staggers for, if null it will autocalculate from w_class and force. Unlike total mass this supports 0 and negatives.
 	var/stagger_force
 
+	/**
+	  * Set FALSE and then checked at the end of on mob/living/attackby(), set TRUE on living/pre_attacked_by().
+	  * Should it be FALSE by the end of the item/attack(), that means the item overrode the standard attack behaviour
+	  * and the user still needs the delay applied. We can't be using return values since that'll stop afterattack() from being triggered.
+	  */
+	var/attack_delay_done = FALSE
+	///next_move click/attack delay of this item.
+	var/click_delay = CLICK_CD_MELEE
+
 	var/slot_flags = 0		//This is used to determine on which slots an item can fit.
 	pass_flags = PASSTABLE
 	pressure_resistance = 4
