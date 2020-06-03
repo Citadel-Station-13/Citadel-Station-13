@@ -273,6 +273,10 @@
 	light_color = "#37FFF7"
 	actions_types = list()
 
+/obj/item/melee/transforming/energy/sword/cx/Initialize()
+	icon_state_on = icon_state
+	return ..()
+
 /obj/item/melee/transforming/energy/sword/cx/ComponentInitialize()
 	. = ..()
 	AddElement(/datum/element/update_icon_updates_onmob)
@@ -289,6 +293,7 @@
 	playsound(user, active ? 'sound/weapons/nebon.ogg' : 'sound/weapons/neboff.ogg', 65, 1)
 	if(!supress_message_text)
 		to_chat(user, "<span class='notice'>[src] [active ? "is now active":"can now be concealed"].</span>")
+
 
 /obj/item/melee/transforming/energy/sword/cx/update_overlays()
 	. = ..()
