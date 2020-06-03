@@ -115,7 +115,7 @@
 	tier = SCRIPTURE_SCRIPT
 	space_allowed = TRUE
 	primary_component = VANGUARD_COGWHEEL
-	sort_priority = 5
+	sort_priority = 6
 	quickbind = TRUE
 	quickbind_desc = "Creates a Ratvarian shield, which can absorb energy from attacks for use in powerful bashes."
 
@@ -131,7 +131,7 @@
 	usage_tip = "Throwing the spear at a mob will do massive damage and knock them down, but break the spear. You will need to wait for 30 seconds before resummoning it."
 	tier = SCRIPTURE_SCRIPT
 	primary_component = VANGUARD_COGWHEEL
-	sort_priority = 6
+	sort_priority = 7
 	important = TRUE
 	quickbind = TRUE
 	quickbind_desc = "Permanently binds clockwork armor and a Ratvarian spear to you."
@@ -231,7 +231,7 @@
 	usage_tip = "This gateway is strictly one-way and will only allow things through the invoker's portal."
 	tier = SCRIPTURE_SCRIPT
 	primary_component = GEIS_CAPACITOR
-	sort_priority = 7
+	sort_priority = 9
 	quickbind = TRUE
 	quickbind_desc = "Allows you to create a one-way Spatial Gateway to a living Servant or Clockwork Obelisk."
 
@@ -276,7 +276,7 @@
 	usage_tip = "This is a very effective way to rapidly reinforce a base after an attack."
 	tier = SCRIPTURE_SCRIPT
 	primary_component = VANGUARD_COGWHEEL
-	sort_priority = 7
+	sort_priority = 8
 	quickbind = TRUE
 	quickbind_desc = "Repairs nearby structures and constructs. Servants wearing clockwork armor will also be healed.<br><b>Maximum 10 chants.</b>"
 	var/heal_attempts = 4
@@ -388,8 +388,8 @@
 	power_cost = 500
 	usage_tip = "Though it requires you to stand still, this scripture can do massive damage."
 	tier = SCRIPTURE_SCRIPT
-	primary_component = HIEROPHANT_ANSIBLE
-	sort_priority = 10
+	primary_component = BELLIGERENT_EYE
+	sort_priority = 5
 	quickbind = TRUE
 	quickbind_desc = "Allows you to fire energy rays at target locations.<br><b>Maximum 5 chants.</b>"
 	var/static/list/nzcrentr_insults = list("You're not very good at aiming.", "You hunt badly.", "What a waste of energy.", "Almost funny to watch.",
@@ -437,11 +437,15 @@
 	usage_tip = "It may be useful to end channelling early if the burning gets too much."
 	tier = SCRIPTURE_SCRIPT
 	primary_component = GEIS_CAPACITOR
-	sort_priority = 11
+	sort_priority = 10
 	quickbind = TRUE
 	quickbind_desc = "Quickly drains power in an area around the invoker, causing burns due to the high amount of energy channeled.<br><b>Maximum of 20 chants.</b>"
 
 /datum/clockwork_scripture/channeled/void_volt/scripture_effects()
+	invoker.light_power = 2
+	invoker.light_range = 2
+	invoker.light_color = LIGHT_COLOR_FIRE
+	invoker.update_light()
 	invoker.visible_message("<span class='warning'>[invoker] glows in a brilliant golden light!</span>")
 	invoker.add_atom_colour("#FFD700", ADMIN_COLOUR_PRIORITY) //#EC8A2D? #E2B007? TODO: Find a good color, maybe make them actually glow too and not just have the sigil effect do that
 	return ..()
@@ -476,6 +480,9 @@
 	return TRUE
 
 /datum/clockwork_scripture/channeled/void_volt/chant_end_effects()
+	invoker.light_power = 0
+	invoker.light_range = 0
+	invoker.update_light()
 	invoker.visible_message("<span class='warning'>[invoker] stops glowing...</span>")
 	invoker.remove_atom_colour(ADMIN_COLOUR_PRIORITY)
 	return ..()
