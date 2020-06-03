@@ -125,9 +125,9 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 	var/scan_id = TRUE
 	var/obj/item/coin/coin
 	///Default price of items if not overridden
-	var/default_price = 20
+	var/default_price = 25
 	///Default price of premium items if not overridden
-	var/extra_price = 40
+	var/extra_price = 50
 	///cost multiplier per department or access
 	var/list/cost_multiplier_per_dept = list()
   	/**

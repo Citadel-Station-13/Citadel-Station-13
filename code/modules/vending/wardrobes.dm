@@ -2,8 +2,8 @@
 	icon_state = "refill_clothes"
 
 /obj/machinery/vending/wardrobe
-	default_price = 280
-	extra_price = 320
+	default_price = 350
+	extra_price = 400
 	payment_department = NO_FREEBIES
 	input_display_header = "Returned Clothing"
 

@@ -23,8 +23,8 @@
 	premium = list()
 
 	refill_canister = /obj/item/vending_refill/soviet
-	default_price = 0
-	extra_price = 0
+	default_price = 1
+	extra_price = 1
 	payment_department = NO_FREEBIES
 
 /obj/item/vending_refill/soviet
