@@ -173,8 +173,8 @@
 					/obj/item/clothing/suit/jacket/letterman_nanotrasen = 5,
 					/obj/item/clothing/suit/hooded/wintercoat/polychromic = 5)
 	refill_canister = /obj/item/vending_refill/clothing
-	default_price = 60
-	extra_price = 120
+	default_price = 50
+	extra_price = 100
 	payment_department = NO_FREEBIES
 
 /obj/machinery/vending/clothing/canLoadItem(obj/item/I,mob/user)
