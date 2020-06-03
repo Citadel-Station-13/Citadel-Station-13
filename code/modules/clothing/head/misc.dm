@@ -129,6 +129,7 @@
 	dog_fashion = /datum/dog_fashion/head/pirate
 
 /obj/item/clothing/head/pirate/captain
+	name = "pirate captain hat"
 	icon_state = "hgpiratecap"
 	item_state = "hgpiratecap"
 
@@ -433,3 +434,4 @@
 	desc = "A symbol of discipline, honor, and lots and lots of removal of some type of skewered food."
 	icon_state = "russobluecamohat"
 	item_state = "russobluecamohat"
+	dynamic_hair_suffix = ""

@@ -21,6 +21,7 @@
 	layer = LARGE_MOB_LAYER
 	sentience_type = SENTIENCE_BOSS
 	hud_type = /datum/hud/lavaland_elite
+	has_field_of_vision = FALSE //You are a frikkin mini-boss
 	var/chosen_attack = 1
 	var/list/attack_action_types = list()
 	var/can_talk = FALSE

@@ -169,8 +169,7 @@
 				if(do_after(user, 40, target = src))
 					if(!src || !anchored || src.state != "01")
 						return
-					var/obj/item/stack/cable_coil/CC = W
-					if(!CC.use(1))
+					if(!W.use_tool(src, user, 0, 1))
 						to_chat(user, "<span class='warning'>You need more cable to do this!</span>")
 						return
 					to_chat(user, "<span class='notice'>You wire the windoor.</span>")

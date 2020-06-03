@@ -66,6 +66,16 @@
 	crate_name = "shaft miner starter kit"
 	crate_type = /obj/structure/closet/crate/secure
 
+/datum/supply_pack/service/snowmobile
+	name = "Snowmobile kit"
+	desc = "trapped on a frigid wasteland? need to get around fast? purchase a refurbished snowmobile, with a FREE 10 microsecond warranty!"
+	cost = 1500 // 1000 points cheaper than ATV
+	contains = list(/obj/vehicle/ridden/atv/snowmobile = 1,
+			/obj/item/key = 1,
+			/obj/item/clothing/mask/gas/explorer = 1)
+	crate_name = "Snowmobile kit"
+	crate_type = /obj/structure/closet/crate/large
+
 //////////////////////////////////////////////////////////////////////////////
 /////////////////////// Chef, Botanist, Bartender ////////////////////////////
 //////////////////////////////////////////////////////////////////////////////

@@ -313,6 +313,11 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 	name = "carpspawn"
 	icon_state = "carp_spawn"
 
+// lone op (optional)
+/obj/effect/landmark/loneopspawn
+	name = "loneop+ninjaspawn"
+	icon_state = "snukeop_spawn"
+
 // observer-start.
 /obj/effect/landmark/observer_start
 	name = "Observer-Start"
@@ -464,6 +469,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 /obj/effect/landmark/stationroom
 	var/list/templates = list()
 	layer = BULLET_HOLE_LAYER
+	plane = ABOVE_WALL_PLANE
 
 /obj/effect/landmark/stationroom/New()
 	..()
@@ -512,3 +518,9 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 /obj/effect/landmark/stationroom/lavaland/station
 	templates = list("Public Mining Base" = 3)
 	icon = 'icons/rooms/Lavaland/Mining.dmi'
+
+// handled in portals.dm, id connected to one-way portal
+/obj/effect/landmark/portal_exit
+	name = "portal exit"
+	icon_state = "portal_exit"
+	var/id

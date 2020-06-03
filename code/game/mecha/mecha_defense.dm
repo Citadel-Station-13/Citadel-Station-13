@@ -77,7 +77,7 @@
 /obj/mecha/attack_animal(mob/living/simple_animal/user)
 	mecha_log_message("Attack by simple animal. Attacker - [user].", color="red")
 	if(!user.melee_damage_upper && !user.obj_damage)
-		user.emote("custom", message = "[user.friendly] [src].")
+		user.emote("custom", message = "[user.friendly_verb_continuous] [src].")
 		return 0
 	else
 		var/play_soundeffect = 1
@@ -220,8 +220,7 @@
 		return
 	else if(istype(W, /obj/item/stack/cable_coil))
 		if(state == 3 && (internal_damage & MECHA_INT_SHORT_CIRCUIT))
-			var/obj/item/stack/cable_coil/CC = W
-			if(CC.use(2))
+			if(W.use_tool(src, user, 0, 2))
 				clearInternalDamage(MECHA_INT_SHORT_CIRCUIT)
 				to_chat(user, "<span class='notice'>You replace the fused wires.</span>")
 			else
@@ -285,7 +284,7 @@
 
 /obj/mecha/attacked_by(obj/item/I, mob/living/user)
 	mecha_log_message("Attacked by [I]. Attacker - [user]")
-	..()
+	return ..()
 
 /obj/mecha/proc/mech_toxin_damage(mob/living/target)
 	playsound(src, 'sound/effects/spray2.ogg', 50, 1)

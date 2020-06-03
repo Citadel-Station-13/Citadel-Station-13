@@ -1,6 +1,7 @@
 /obj/item/flashlight
 	name = "flashlight"
 	desc = "A hand-held emergency light."
+	custom_price = 100
 	icon = 'icons/obj/lighting.dmi'
 	icon_state = "flashlight"
 	item_state = "flashlight"
@@ -351,6 +352,12 @@
 	light_color = "#FFAA44"
 	flashlight_power = 0.8
 
+/obj/item/flashlight/lantern/jade
+	name = "jade lantern"
+	desc = "An ornate, green lantern."
+	color = LIGHT_COLOR_GREEN
+	light_color = LIGHT_COLOR_GREEN 
+
 /obj/item/flashlight/slime
 	gender = PLURAL
 	name = "glowing slime extract"
@@ -422,6 +429,7 @@
 /obj/item/flashlight/glowstick
 	name = "glowstick"
 	desc = "A military-grade glowstick."
+	custom_price = 50
 	w_class = WEIGHT_CLASS_SMALL
 	brightness_on = 4
 	color = LIGHT_COLOR_GREEN

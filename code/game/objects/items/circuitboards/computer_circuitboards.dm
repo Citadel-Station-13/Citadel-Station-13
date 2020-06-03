@@ -293,6 +293,10 @@
 	name = "Mining Shuttle (Computer Board)"
 	build_path = /obj/machinery/computer/shuttle/mining
 
+/obj/item/circuitboard/computer/snow_taxi
+	name = "Snow Taxi (Computer Board)"
+	build_path = /obj/machinery/computer/shuttle/snow_taxi
+
 /obj/item/circuitboard/computer/white_ship
 	name = "White Ship (Computer Board)"
 	build_path = /obj/machinery/computer/shuttle/white_ship

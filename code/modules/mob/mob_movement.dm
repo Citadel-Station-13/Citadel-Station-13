@@ -100,15 +100,17 @@
 		if(mob.throwing)
 			mob.throwing.finalize(FALSE)
 
-	var/atom/movable/P = mob.pulling
-	if(P && !ismob(P) && P.density)
-		mob.setDir(turn(mob.dir, 180))
+	var/atom/movable/AM = L.pulling
+	if(AM && AM.density && !SEND_SIGNAL(L, COMSIG_COMBAT_MODE_CHECK, COMBAT_MODE_ACTIVE) && !ismob(AM))
+		L.setDir(turn(L.dir, 180))
 
-	SEND_SIGNAL(mob, COMSIG_MOB_CLIENT_MOVE, src, direction, n, oldloc)
+	SEND_SIGNAL(mob, COMSIG_MOB_CLIENT_MOVE, src, direction, n, oldloc, add_delay)
 
 /// Process_Grab(): checks for grab, attempts to break if so. Return TRUE to prevent movement.
 /client/proc/Process_Grab()
 	if(mob.pulledby)
+		if((mob.pulledby == mob.pulling) && (mob.pulledby.grab_state == GRAB_PASSIVE))			//Don't autoresist passive grabs if we're grabbing them too.
+			return
 		if(mob.incapacitated(ignore_restraints = 1))
 			move_delay = world.time + 10
 			return TRUE
