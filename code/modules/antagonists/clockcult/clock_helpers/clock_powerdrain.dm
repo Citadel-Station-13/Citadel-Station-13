@@ -1,13 +1,14 @@
 //horrifying power drain proc made for clockcult's power drain in lieu of six istypes or six for(x in view) loops
-/atom/movable/proc/power_drain(clockcult_user, drain_weapons = FALSE) //This proc as of now is only in use for void volt.
+/atom/movable/proc/power_drain(clockcult_user, drain_weapons = FALSE) //This proc as of now is only in use for void volt
 	var/obj/item/stock_parts/cell/cell = get_cell()
 	if(cell)
 		return cell.power_drain(clockcult_user)
-	return 0 //Returns 0 instead of false to symbolise it returning the power amount in other cases, not TRUE aka 1
+	return 0 //Returns 0 instead of FALSE to symbolise it returning the power amount in other cases, not TRUE aka 1
 
 /obj/item/melee/baton/power_drain(clockcult_user, drain_weapons = FALSE)	//balance memes
 	if(!drain_weapons)
 		return 0
+	message_admins("Succ successfully performed on [src], see next cell drain report for closer info.")
 	return ..()
 
 /obj/item/gun/power_drain(clockcult_user, drain_weapons = FALSE)	//balance memes
@@ -25,7 +26,7 @@
 	if(cell && cell.charge)
 		playsound(src, "sparks", 50, 1)
 		flick("apc-spark", src)
-		. = min(cell.charge, MIN_CLOCKCULT_POWER*3)
+		. = min(cell.charge, MIN_CLOCKCULT_POWER*4)
 		cell.use(.) //Better than a power sink!
 		if(!cell.charge && !shorted)
 			shorted = 1
@@ -35,7 +36,7 @@
 
 /obj/machinery/power/smes/power_drain(clockcult_user, drain_weapons = FALSE)
 	if(charge)
-		. = min(charge, MIN_CLOCKCULT_POWER*3)
+		. = min(charge, MIN_CLOCKCULT_POWER*4)
 		charge -= . * 50
 		if(!charge && !panel_open)
 			panel_open = TRUE
@@ -46,8 +47,8 @@
 
 /obj/item/stock_parts/cell/power_drain(clockcult_user, drain_weapons = FALSE)
 	if(charge)
-		. = min(charge, MIN_CLOCKCULT_POWER * 4)
-		use(. * 10) //Usually cell-powered equipment that is not a gun has at least ten times the capacity of a gun / 5 times the amount of an APC. This adjusts the drain to account for that.
+		. = min(charge, MIN_CLOCKCULT_POWER * 4) //Done like this because normal cells are usually quite a bit bigger than the ones used in guns / APCs
+		use(min(charge, . * 10)) //Usually cell-powered equipment that is not a gun has at least ten times the capacity of a gun / 5 times the amount of an APC. This adjusts the drain to account for that.
 		update_icon()
 
 /mob/living/silicon/robot/power_drain(clockcult_user, drain_weapons = FALSE)
