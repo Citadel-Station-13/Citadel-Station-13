@@ -786,7 +786,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 			dat +="<td width='220px' height='300px' valign='top'>"
 			if(NOGENITALS in pref_species.species_traits)
-				dat += "<b>Your species ([pref_species.name]) does not support genitals!</b><br>"
+				dat += "<b>Your species ([pref_species.name]) does not support!</b><br>"
 			else
 				if(pref_species.use_skintones)
 					dat += "<b>use skintone:</b><a href='?_src_=prefs;preference=genital_colour'>[features["genitals_use_skintone"] == TRUE ? "Yes" : "No"]</a>"
