@@ -444,4 +444,4 @@
 	STR.max_combined_w_class = 30
 	STR.max_items = 3
 	STR.display_numerical_stacking = FALSE
-	STR.can_hold = typecacheof(list(/obj/item/ammo_box/magazine, /obj/item/ammo_casing, ))
+	STR.can_hold = typecacheof(list(/obj/item/ammo_box/magazine, /obj/item/ammo_casing))
