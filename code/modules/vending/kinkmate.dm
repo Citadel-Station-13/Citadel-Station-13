@@ -40,8 +40,8 @@
 				/obj/item/clothing/under/pants/chaps = 5
 				)
 	refill_canister = /obj/item/vending_refill/kink
-	default_price = 80
-	extra_price = 250
+	default_price = 60
+	extra_price = 200
 	payment_department = NO_FREEBIES
 
 /obj/item/vending_refill/kink
