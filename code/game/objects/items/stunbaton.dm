@@ -141,7 +141,7 @@
 /obj/item/melee/baton/attack(mob/M, mob/living/carbon/human/user)
 	var/interrupt = common_baton_melee(M, user, FALSE)
 	if(!interrupt)
-		..()
+		return ..()
 
 /obj/item/melee/baton/alt_pre_attack(atom/A, mob/living/user, params)
 	. = common_baton_melee(A, user, TRUE)		//return true (attackchain interrupt) if this also returns true. no harm-disarming.
@@ -154,7 +154,7 @@
 	if(turned_on && HAS_TRAIT(user, TRAIT_CLUMSY) && prob(50))
 		clowning_around(user)
 	if(IS_STAMCRIT(user))			//CIT CHANGE - makes it impossible to baton in stamina softcrit
-		to_chat(user, "<span class='danger'>You're too exhausted for that.</span>")
+		to_chat(user, "<span class='danger'>You're too exhausted to use [src] properly.</span>")
 		return TRUE
 	if(ishuman(M))
 		var/mob/living/carbon/human/L = M
