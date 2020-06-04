@@ -284,7 +284,7 @@
 
 /obj/mecha/attacked_by(obj/item/I, mob/living/user)
 	mecha_log_message("Attacked by [I]. Attacker - [user]")
-	..()
+	return ..()
 
 /obj/mecha/proc/mech_toxin_damage(mob/living/target)
 	playsound(src, 'sound/effects/spray2.ogg', 50, 1)

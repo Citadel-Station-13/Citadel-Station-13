@@ -147,7 +147,7 @@
 
 /obj/machinery/dominator/attacked_by(obj/item/I, mob/living/user)
 	add_fingerprint(user)
-	..()
+	return ..()
 
 /obj/machinery/dominator/attack_hand(mob/user)
 	if(operating || (stat & BROKEN))
