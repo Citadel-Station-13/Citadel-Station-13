@@ -42,6 +42,14 @@
 	design_ids = list("smes", "super_cell", "hyper_cell", "super_capacitor", "superpacman", "mrspacman", "power_turbine", "power_turbine_console", "power_compressor", "circulator", "teg")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 3000)
 
+/datum/techweb_node/int_tank
+	id = "int_tank"
+	display_name = "Internal Tanks"
+	description = "How to compress air into smaller containers."
+	prereq_ids = list("engineering")
+	design_ids = list("oxygen_tank", "plasma_tank", "emergency_oxygen", "emergency_oxygen_engi", "plasmaman_tank_belt")
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
+
 /*
 /datum/techweb_node/basic_meteor_defense
 	id = "basic_meteor_defense"
