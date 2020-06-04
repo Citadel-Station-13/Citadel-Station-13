@@ -8,7 +8,6 @@
 /obj/item/melee/baton/power_drain(clockcult_user, drain_weapons = FALSE)	//balance memes
 	if(!drain_weapons)
 		return 0
-	message_admins("Succ successfully performed on [src], see next cell drain report for closer info.")
 	return ..()
 
 /obj/item/gun/power_drain(clockcult_user, drain_weapons = FALSE)	//balance memes
