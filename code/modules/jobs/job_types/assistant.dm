@@ -40,7 +40,13 @@ Assistant
 		else
 			uniform = /obj/item/clothing/under/color/jumpskirt/grey
 	else
-		if(suited)
-			uniform = /obj/item/clothing/under/color/random
+		if(SSevents.holidays && SSevents.holidays[PRIDE_MONTH])
+			if(suited)
+				uniform = /obj/item/clothing/under/color/rainbow
+			else
+				uniform = /obj/item/clothing/under/color/jumpskirt/rainbow
 		else
-			uniform = /obj/item/clothing/under/color/jumpskirt/random
+			if(suited)
+				uniform = /obj/item/clothing/under/color/random
+			else
+				uniform = /obj/item/clothing/under/color/jumpskirt/random
