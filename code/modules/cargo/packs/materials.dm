@@ -69,6 +69,11 @@
 	contains = list(/obj/item/grown/log)
 	crate_name = "lumber crate"
 
+/datum/supply_pack/materials/rawlumber/generate()
+	. = ..()
+	for(var/i in 1 to 49)
+		new /obj/item/grown/log(.)
+
 /datum/supply_pack/materials/wood50
 	name = "50 Wood Planks"
 	desc = "Turn cargo's boring metal groundwork into beautiful panelled flooring and much more with fifty wooden planks!"
@@ -76,39 +81,8 @@
 	contains = list(/obj/item/stack/sheet/mineral/wood/fifty)
 	crate_name = "wood planks crate"
 
-/datum/supply_pack/materials/rawcotton
-	name = "Raw Cotton Crate"
-	desc = "Plushies have been on the down in the market, and now due to a flood of raw cotton the price of it is so cheap, its a steal! Contains 40 raw cotton sheets."
-	cost = 800 // 100 net cost, 20 x 20 = 400. 300 profit if turned into cloth sheets or more if turned to silk then 10 x 200 = 2000
-	contains = list(/obj/item/stack/sheet/cotton/thirty,
-					/obj/item/stack/sheet/cotton/ten
-					)
-	crate_name = "cotton crate"
-	crate_type = /obj/structure/closet/crate/hydroponics
-
-/datum/supply_pack/materials/rawcottonbulk
-	name = "Raw Cotton Crate (Bulk)"
-	desc = "We have so much of this stuff we need to get rid of it in -bulk- now. This crate contains 240 raw cotton sheets."
-	cost = 1300 // 100 net cost (per 40 cotton) , 20 x 20 = 400. 300 profit if turned into cloth sheets or more if turned to silk then 10 x 200 = 2000
-	contains = list(/obj/item/stack/sheet/cotton/thirty,
-					/obj/item/stack/sheet/cotton/thirty,
-					/obj/item/stack/sheet/cotton/thirty,
-					/obj/item/stack/sheet/cotton/thirty,
-					/obj/item/stack/sheet/cotton/thirty,
-					/obj/item/stack/sheet/cotton/thirty,
-					/obj/item/stack/sheet/cotton/thirty,
-					/obj/item/stack/sheet/cotton/thirty,
-					)
-	crate_name = "bulk cotton crate"
-	crate_type = /obj/structure/closet/crate/hydroponics
-
-/datum/supply_pack/critter/animal_feed/generate()
-	. = ..()
-	for(var/i in 1 to 49)
-		new /obj/item/grown/log(.)
-
 /datum/supply_pack/materials/rcdammo
-	name = "Spare RDC ammo"
+	name = "Spare RCD ammo"
 	desc = "This crate contains sixteen RCD compressed matter packs, to help with any holes or projects people might be working on."
 	cost = 3750
 	contains = list(/obj/item/rcd_ammo,
@@ -128,14 +102,6 @@
 					/obj/item/rcd_ammo,
 					/obj/item/rcd_ammo)
 	crate_name = "rcd ammo"
-
-/datum/supply_pack/materials/loom
-	name = "Loom"
-	desc = "A large pre-made loom."
-	cost = 1000
-	contains = list(/obj/structure/loom/unanchored)
-	crate_name = "loom crate"
-	crate_type = /obj/structure/closet/crate/large
 
 //////////////////////////////////////////////////////////////////////////////
 ///////////////////////////// Canisters //////////////////////////////////////

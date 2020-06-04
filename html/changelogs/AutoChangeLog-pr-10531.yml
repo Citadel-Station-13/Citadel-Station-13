@@ -1,6 +1,0 @@
-author: "Trilbyspaceclone"
-delete-after: True
-changes: 
-  - rscadd: "Seed packs now have RnD points inside them"
-  - rscadd: "New tips that reflect the now use seed packs have for Rnd / Chems affect on plants"
-  - code_imp: "Made the research file look nice rather then an eye harming list"

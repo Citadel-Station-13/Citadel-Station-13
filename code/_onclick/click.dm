@@ -21,6 +21,7 @@
 	next_move = world.time + ((num+next_move_adjust)*next_move_modifier)
 
 /mob/living/changeNext_move(num)
+	last_click_move = next_move
 	var/mod = next_move_modifier
 	var/adj = next_move_adjust
 	for(var/i in status_effects)
@@ -73,6 +74,9 @@
 		return
 
 	if(notransform)
+		return
+
+	if(SEND_SIGNAL(src, COMSIG_MOB_CLICKON, A, params) & COMSIG_MOB_CANCEL_CLICKON)
 		return
 
 	var/list/modifiers = params2list(params)
@@ -152,10 +156,10 @@
 		else
 			if(ismob(A))
 				changeNext_move(CLICK_CD_MELEE)
-			UnarmedAttack(A,1)
+			UnarmedAttack(A, 1)
 	else
 		if(W)
-			W.afterattack(A,src,0,params)
+			W.ranged_attack_chain(src, A, params)
 		else
 			RangedAttack(A,params)
 
@@ -319,10 +323,11 @@
 /mob/proc/ShiftClickOn(atom/A)
 	A.ShiftClick(src)
 	return
+
 /atom/proc/ShiftClick(mob/user)
-	SEND_SIGNAL(src, COMSIG_CLICK_SHIFT, user)
-	user.examinate(src)
-	return
+	var/flags = SEND_SIGNAL(src, COMSIG_CLICK_SHIFT, user) | SEND_SIGNAL(user, COMSIG_MOB_CLICKED_SHIFT_ON, src)
+	if(!(flags & COMPONENT_DENY_EXAMINATE) && user.client && (user.client.eye == user || user.client.eye == user.loc || flags & COMPONENT_ALLOW_EXAMINATE))
+		user.examinate(src)
 
 /*
 	Ctrl click
@@ -419,32 +424,36 @@
 	LE.fire()
 
 // Simple helper to face what you clicked on, in case it should be needed in more than one place
-/mob/proc/face_atom(atom/A)
-	if( buckled || stat != CONSCIOUS || !A || !x || !y || !A.x || !A.y )
+/mob/proc/face_atom(atom/A, ismousemovement = FALSE)
+	if( buckled || stat != CONSCIOUS || !loc || !A || !A.x || !A.y )
 		return
-	var/dx = A.x - x
-	var/dy = A.y - y
+	var/atom/L = loc
+	if(L.flags_1 & BLOCK_FACE_ATOM_1)
+		return
+	var/turf/T = get_turf(src)
+	var/dx = A.x - T.x
+	var/dy = A.y - T.y
 	if(!dx && !dy) // Wall items are graphically shifted but on the floor
 		if(A.pixel_y > 16)
-			setDir(NORTH)
+			setDir(NORTH, ismousemovement)
 		else if(A.pixel_y < -16)
-			setDir(SOUTH)
+			setDir(SOUTH, ismousemovement)
 		else if(A.pixel_x > 16)
-			setDir(EAST)
+			setDir(EAST, ismousemovement)
 		else if(A.pixel_x < -16)
-			setDir(WEST)
+			setDir(WEST, ismousemovement)
 		return
 
 	if(abs(dx) < abs(dy))
 		if(dy > 0)
-			setDir(NORTH)
+			setDir(NORTH, ismousemovement)
 		else
-			setDir(SOUTH)
+			setDir(SOUTH, ismousemovement)
 	else
 		if(dx > 0)
-			setDir(EAST)
+			setDir(EAST, ismousemovement)
 		else
-			setDir(WEST)
+			setDir(WEST, ismousemovement)
 
 //debug
 /obj/screen/proc/scale_to(x1,y1)

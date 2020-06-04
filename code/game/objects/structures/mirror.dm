@@ -4,10 +4,11 @@
 	desc = "Mirror mirror on the wall, who's the most robust of them all?"
 	icon = 'icons/obj/watercloset.dmi'
 	icon_state = "mirror"
+	plane = ABOVE_WALL_PLANE
 	density = FALSE
 	anchored = TRUE
 	max_integrity = 200
-	integrity_failure = 100
+	integrity_failure = 0.5
 
 /obj/structure/mirror/Initialize(mapload)
 	. = ..()
@@ -20,14 +21,14 @@
 		return
 	if(broken || !Adjacent(user))
 		return
-		
+
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
 		//see code/modules/mob/dead/new_player/preferences.dm at approx line 545 for comments!
 		//this is largely copypasted from there.
 
 		//handle facial hair (if necessary)
-		if(H.gender == MALE)
+		if(H.gender != FEMALE)
 			var/new_style = input(user, "Select a facial hair style", "Grooming")  as null|anything in GLOB.facial_hair_styles_list
 			if(!user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 				return	//no tele-grooming
@@ -133,7 +134,7 @@
 
 	switch(choice)
 		if("name")
-			var/newname = copytext(sanitize(input(H, "Who are we again?", "Name change", H.name) as null|text),1,MAX_NAME_LEN)
+			var/newname = reject_bad_name(stripped_input(H, "Who are we again?", "Name change", H.name, MAX_NAME_LEN))
 
 			if(!newname)
 				return
@@ -158,11 +159,24 @@
 			H.set_species(newrace, icon_update=0)
 
 			if(H.dna.species.use_skintones)
-				var/new_s_tone = input(user, "Choose your skin tone:", "Race change")  as null|anything in GLOB.skin_tones
-
+				var/list/choices = GLOB.skin_tones
+				if(CONFIG_GET(flag/allow_custom_skintones))
+					choices += "custom"
+				var/new_s_tone = input(H, "Choose your skin tone:", "Race change")  as null|anything in choices
 				if(new_s_tone)
-					H.skin_tone = new_s_tone
-					H.dna.update_ui_block(DNA_SKIN_TONE_BLOCK)
+					if(new_s_tone == "custom")
+						var/default = H.dna.skin_tone_override || null
+						var/custom_tone = input(user, "Choose your custom skin tone:", "Race change", default) as color|null
+						if(custom_tone)
+							var/temp_hsv = RGBtoHSV(new_s_tone)
+							if(ReadHSV(temp_hsv)[3] >= ReadHSV("#202020")[3])
+								to_chat(H,"<span class='danger'>Invalid color. Your color is not bright enough.</span>")
+							else
+								H.skin_tone = custom_tone
+								H.dna.skin_tone_override = custom_tone
+					else
+						H.skin_tone = new_s_tone
+						H.dna.update_ui_block(DNA_SKIN_TONE_BLOCK)
 
 			if(MUTCOLORS in H.dna.species.species_traits)
 				var/new_mutantcolor = input(user, "Choose your skin color:", "Race change","#"+H.dna.features["mcolor"]) as color|null

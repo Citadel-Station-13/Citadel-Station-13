@@ -21,19 +21,22 @@ In all, this is a lot like the monkey code. /N
 		return
 	switch(M.a_intent)
 		if (INTENT_HELP)
-			if(!recoveringstam)
-				resting = 0
-			AdjustStun(-60)
-			AdjustKnockdown(-60)
-			AdjustUnconscious(-60)
-			AdjustSleeping(-100)
-			visible_message("<span class='notice'>[M.name] nuzzles [src] trying to wake [p_them()] up!</span>")
+			if(!(combat_flags & COMBAT_FLAG_HARD_STAMCRIT))
+				set_resting(FALSE, TRUE, FALSE)
+			AdjustAllImmobility(-60, FALSE)
+			AdjustUnconscious(-60, FALSE)
+			AdjustSleeping(-100, FALSE)
+			update_mobility()
+			visible_message("<span class='notice'>[M.name] nuzzles [src] trying to wake [p_them()] up!</span>",
+				"<span class='notice'>[M.name] nuzzles you trying to wake you up!</span>", target = M,
+				target_message = "<span class='notice'>You nuzzle [src] trying to wake [p_them()] up!</span>")
 		if(INTENT_DISARM, INTENT_HARM)
 			if(health > 0)
 				M.do_attack_animation(src, ATTACK_EFFECT_BITE)
 				playsound(loc, 'sound/weapons/bite.ogg', 50, 1, -1)
 				visible_message("<span class='danger'>[M.name] bites [src]!</span>", \
-						"<span class='userdanger'>[M.name] bites [src]!</span>", null, COMBAT_MESSAGE_RANGE)
+						"<span class='userdanger'>[M.name] bites [src]!</span>", null, COMBAT_MESSAGE_RANGE, null, M,
+						"<span class='danger'>You bite [src]!</span>")
 				adjustBruteLoss(1)
 				log_combat(M, src, "attacked")
 				updatehealth()

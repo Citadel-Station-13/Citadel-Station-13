@@ -4,6 +4,7 @@
 	var/emp_damage = 0//Handles a type of MMI damage
 	var/datum/dna/stored/stored_dna // dna var for brain. Used to store dna, brain dna is not considered like actual dna, brain.has_dna() returns FALSE.
 	stat = DEAD //we start dead by default
+	has_field_of_vision = FALSE //Not really worth it.
 	see_invisible = SEE_INVISIBLE_LIVING
 	possible_a_intents = list(INTENT_HELP, INTENT_HARM) //for mechas
 	speech_span = SPAN_ROBOT
@@ -39,12 +40,8 @@
 	container = null
 	return ..()
 
-/mob/living/brain/update_canmove()
-	if(in_contents_of(/obj/mecha))
-		canmove = 1
-	else
-		canmove = 0
-	return canmove
+/mob/living/brain/update_mobility()
+	return ((mobility_flags = (container?.in_contents_of(/obj/mecha)? MOBILITY_FLAGS_DEFAULT : NONE)))
 
 /mob/living/brain/ex_act() //you cant blow up brainmobs because it makes transfer_to() freak out when borgs blow up.
 	return

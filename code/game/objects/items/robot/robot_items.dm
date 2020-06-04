@@ -11,7 +11,7 @@
 	var/charge_cost = 30
 
 /obj/item/borg/stun/attack(mob/living/M, mob/living/user)
-	if(M.check_shields(src, 0, "[M]'s [name]", MELEE_ATTACK))
+	if(M.mob_run_block(src, 0, "[M]'s [name]", ATTACK_TYPE_MELEE, 0, user, ran_zone(user.zone_selected), null) & BLOCK_SUCCESS)
 		playsound(M, 'sound/weapons/genhit.ogg', 50, 1)
 		return FALSE
 	if(iscyborg(user))
@@ -20,7 +20,7 @@
 			return
 
 	user.do_attack_animation(M)
-	M.Knockdown(100)
+	M.DefaultCombatKnockdown(100)
 	M.apply_effect(EFFECT_STUTTER, 5)
 
 	M.visible_message("<span class='danger'>[user] has prodded [M] with [src]!</span>", \
@@ -80,9 +80,8 @@
 					else
 						user.visible_message("<span class='notice'>[user] hugs [M] to make [M.p_them()] feel better!</span>", \
 								"<span class='notice'>You hug [M] to make [M.p_them()] feel better!</span>")
-					if(M.resting && !M.recoveringstam)
-						M.resting = FALSE
-						M.update_canmove()
+					if(M.resting && !(M.combat_flags & COMBAT_FLAG_HARD_STAMCRIT))
+						M.set_resting(FALSE, TRUE)
 				else
 					user.visible_message("<span class='notice'>[user] pets [M]!</span>", \
 							"<span class='notice'>You pet [M]!</span>")
@@ -100,9 +99,8 @@
 					else
 						user.visible_message("<span class='warning'>[user] hugs [M] in a firm bear-hug! [M] looks uncomfortable...</span>", \
 								"<span class='warning'>You hug [M] firmly to make [M.p_them()] feel better! [M] looks uncomfortable...</span>")
-					if(M.resting && !M.recoveringstam)
-						M.resting = FALSE
-						M.update_canmove()
+					if(!CHECK_MOBILITY(M, MOBILITY_STAND) && !(M.combat_flags & COMBAT_FLAG_HARD_STAMCRIT))
+						M.set_resting(FALSE, TRUE)
 				else
 					user.visible_message("<span class='warning'>[user] bops [M] on the head!</span>", \
 							"<span class='warning'>You bop [M] on the head!</span>")
@@ -111,10 +109,9 @@
 			if(scooldown < world.time)
 				if(M.health >= 0)
 					if(ishuman(M)||ismonkey(M))
-						M.electrocute_act(5, "[user]", safety = 1)
+						M.electrocute_act(5, "[user]", flags = SHOCK_NOGLOVES)
 						user.visible_message("<span class='userdanger'>[user] electrocutes [M] with [user.p_their()] touch!</span>", \
 							"<span class='danger'>You electrocute [M] with your touch!</span>")
-						M.update_canmove()
 					else
 						if(!iscyborg(M))
 							M.adjustFireLoss(10)
@@ -154,11 +151,7 @@
 	var/static/list/charge_machines = typecacheof(list(/obj/machinery/cell_charger, /obj/machinery/recharger, /obj/machinery/recharge_station, /obj/machinery/mech_bay_recharge_port))
 	var/static/list/charge_items = typecacheof(list(/obj/item/stock_parts/cell, /obj/item/gun/energy))
 
-/obj/item/borg/charger/Initialize()
-	. = ..()
-
-/obj/item/borg/charger/update_icon()
-	..()
+/obj/item/borg/charger/update_icon_state()
 	icon_state = "charger_[mode]"
 
 /obj/item/borg/charger/attack_self(mob/user)
@@ -330,7 +323,7 @@
 					C.stuttering += 10
 					C.Jitter(10)
 				if(2)
-					C.Knockdown(40)
+					C.DefaultCombatKnockdown(40)
 					C.confused += 10
 					C.stuttering += 15
 					C.Jitter(25)
@@ -364,7 +357,7 @@
 /obj/item/borg/lollipop/equipped()
 	check_amount()
 
-/obj/item/borg/lollipop/dropped()
+/obj/item/borg/lollipop/dropped(mob/user)
 	check_amount()
 
 /obj/item/borg/lollipop/proc/check_amount()	//Doesn't even use processing ticks.
@@ -426,7 +419,7 @@
 	A.BB.damage = hitdamage
 	if(hitdamage)
 		A.BB.nodamage = FALSE
-	A.BB.speed = 0.5
+	A.BB.pixels_per_second = TILES_TO_PIXELS(20)
 	playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
 	A.fire_casing(target, user, params, 0, 0, null, 0, src)
 	user.visible_message("<span class='warning'>[user] blasts a flying lollipop at [target]!</span>")
@@ -441,7 +434,7 @@
 	A.BB.damage = hitdamage
 	if(hitdamage)
 		A.BB.nodamage = FALSE
-	A.BB.speed = 0.5
+	A.BB.pixels_per_second = TILES_TO_PIXELS(20)
 	A.BB.color = rgb(rand(0, 255), rand(0, 255), rand(0, 255))
 	playsound(src.loc, 'sound/weapons/bulletflyby3.ogg', 50, 1)
 	A.fire_casing(target, user, params, 0, 0, null, 0, src)
@@ -596,7 +589,7 @@
 	update_icon()
 	to_chat(user, "<span class='boldnotice'>You [active? "activate":"deactivate"] [src].</span>")
 
-/obj/item/borg/projectile_dampen/update_icon()
+/obj/item/borg/projectile_dampen/update_icon_state()
 	icon_state = "[initial(icon_state)][active]"
 
 /obj/item/borg/projectile_dampen/proc/activate_field()
@@ -627,7 +620,7 @@
 			return host.loc
 	return null
 
-/obj/item/borg/projectile_dampen/dropped()
+/obj/item/borg/projectile_dampen/dropped(mob/user)
 	. = ..()
 	host = loc
 
@@ -656,7 +649,7 @@
 			continue
 		usage += projectile_tick_speed_ecost
 		usage += (tracked[I] * projectile_damage_tick_ecost_coefficient)
-	energy = CLAMP(energy - usage, 0, maxenergy)
+	energy = clamp(energy - usage, 0, maxenergy)
 	if(energy <= 0)
 		deactivate_field()
 		visible_message("<span class='warning'>[src] blinks \"ENERGY DEPLETED\".</span>")
@@ -666,7 +659,7 @@
 		if(iscyborg(host.loc))
 			host = host.loc
 		else
-			energy = CLAMP(energy + energy_recharge, 0, maxenergy)
+			energy = clamp(energy + energy_recharge, 0, maxenergy)
 			return
 	if(host.cell && (host.cell.charge >= (host.cell.maxcharge * cyborg_cell_critical_percentage)) && (energy < maxenergy))
 		host.cell.use(energy_recharge*energy_recharge_cyborg_drain_coefficient)
@@ -678,13 +671,13 @@
 	if(track_projectile)
 		tracked[P] = P.damage
 	P.damage *= projectile_damage_coefficient
-	P.speed *= projectile_speed_coefficient
+	P.pixels_per_second *= projectile_speed_coefficient
 	P.add_overlay(projectile_effect)
 
 /obj/item/borg/projectile_dampen/proc/restore_projectile(obj/item/projectile/P)
 	tracked -= P
 	P.damage *= (1/projectile_damage_coefficient)
-	P.speed *= (1/projectile_speed_coefficient)
+	P.pixels_per_second *= (1/projectile_speed_coefficient)
 	P.cut_overlay(projectile_effect)
 
 /**********************************************************************
@@ -910,3 +903,46 @@
 	desc = "A robotic ID strip used for claiming and transferring mining points. Must be held in an active slot to transfer points."
 	access = list(ACCESS_MINING, ACCESS_MINING_STATION, ACCESS_MAILSORTING, ACCESS_MINERAL_STOREROOM)
 	icon_state = "data_1"
+
+
+///Mere cosmetic dogborg items, remnants of what were once the most annoying cyborg modules.
+/obj/item/dogborg_tongue
+	name = "synthetic tongue"
+	desc = "Useful for slurping mess off the floor before affectionally licking the crew members in the face."
+	icon = 'icons/mob/robot_items.dmi'
+	icon_state = "synthtongue"
+	hitsound = 'sound/effects/attackblob.ogg'
+	desc = "For giving affectionate kisses."
+	item_flags = NOBLUDGEON
+
+/obj/item/dogborg_tongue/afterattack(atom/target, mob/user, proximity)
+	. = ..()
+	if(!proximity || !isliving(target))
+		return
+	var/mob/living/silicon/robot/R = user
+	var/mob/living/L = target
+	if(L.ckey && !(L.client?.prefs.vore_flags & LICKABLE))
+		to_chat(R, "<span class='danger'>ERROR ERROR: Target not lickable. Aborting display-of-affection subroutine.</span>")
+		return
+
+	if(check_zone(R.zone_selected) == "head")
+		R.visible_message("<span class='warning'>\the [R] affectionally licks \the [L]'s face!</span>", "<span class='notice'>You affectionally lick \the [L]'s face!</span>")
+		playsound(R, 'sound/effects/attackblob.ogg', 50, 1)
+	else
+		R.visible_message("<span class='warning'>\the [R] affectionally licks \the [L]!</span>", "<span class='notice'>You affectionally lick \the [L]!</span>")
+		playsound(R, 'sound/effects/attackblob.ogg', 50, 1)
+
+/obj/item/dogborg_nose
+	name = "boop module"
+	desc = "The BOOP module"
+	icon = 'icons/mob/robot_items.dmi'
+	icon_state = "nose"
+	flags_1 = CONDUCT_1|NOBLUDGEON
+	force = 0
+
+/obj/item/dogborg_nose/afterattack(atom/target, mob/user, proximity)
+	. = ..()
+	if(!proximity)
+		return
+	do_attack_animation(target, null, src)
+	user.visible_message("<span class='notice'>[user] [pick("nuzzles", "pushes", "boops")] \the [target.name] with their nose!</span>")

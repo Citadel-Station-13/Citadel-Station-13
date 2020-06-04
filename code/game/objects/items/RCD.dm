@@ -22,7 +22,7 @@ RLD
 	throw_speed = 3
 	throw_range = 5
 	w_class = WEIGHT_CLASS_NORMAL
-	materials = list(MAT_METAL=100000)
+	custom_materials = list(/datum/material/iron=100000)
 	req_access_txt = "11"
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 50)
 	resistance_flags = FIRE_PROOF
@@ -143,8 +143,8 @@ RLD
 	//if user can't be seen from A (only checks surroundings' opaqueness) and can't see A.
 	//jarring, but it should stop people from targetting atoms they can't see...
 	//excluding darkness, to allow RLD to be used to light pitch black dark areas.
-	if(!((user in view(view_range, A)) || (user in viewers(view_range, A))))
-		to_chat(user, "<span class='warning'>You focus, pointing \the [src] at whatever outside your field of vision in the given direction... to no avail.</span>")
+	if(!((user in view(view_range, A)) || (user in fov_viewers(view_range, A))))
+		to_chat(user, "<span class='warning'>You focus, pointing \the [src] at whatever outside your field of vision in that direction... to no avail.</span>")
 		return FALSE
 	return TRUE
 
@@ -154,6 +154,7 @@ RLD
 	icon_state = "rcd"
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
+	custom_price = 900
 	max_matter = 160
 	item_flags = NO_MAT_REDEMPTION | NOBLUDGEON
 	has_ammobar = TRUE
@@ -196,7 +197,7 @@ RLD
 
 /obj/item/construction/rcd/verb/change_airlock_access(mob/user)
 
-	if (!ishuman(user) && !user.has_unlimited_silicon_privilege)
+	if (!ishuman(user) && !user.silicon_privileges)
 		return
 
 	var/t1 = ""
@@ -552,8 +553,8 @@ RLD
 	explosion(src, 0, 0, 3, 1, flame_range = 1)
 	qdel(src)
 
-/obj/item/construction/rcd/update_icon()
-	..()
+/obj/item/construction/rcd/update_overlays()
+	. = ..()
 	if(has_ammobar)
 		var/ratio = CEILING((matter / max_matter) * ammo_sections, 1)
 		cut_overlays()	//To prevent infinite stacking of overlays
@@ -603,7 +604,7 @@ RLD
 	energyfactor = 66
 
 /obj/item/construction/rcd/loaded
-	materials = list(MAT_METAL=48000, MAT_GLASS=32000)
+	custom_materials = list(/datum/material/iron = 48000, /datum/material/glass = 32000)
 	matter = 160
 
 /obj/item/construction/rcd/loaded/upgraded
@@ -635,13 +636,13 @@ RLD
 	item_state = "rcdammo"
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
-	materials = list(MAT_METAL=12000, MAT_GLASS=8000)
+	custom_materials = list(/datum/material/iron=12000, /datum/material/glass=8000)
 	var/ammoamt = 40
 
 /obj/item/rcd_ammo/large
 	name = "large compressed matter cartridge"
 	desc = "Highly compressed matter for the RCD. Has four times the matter packed into the same space as a normal cartridge."
-	materials = list(MAT_METAL=48000, MAT_GLASS=32000)
+	custom_materials = list(/datum/material/iron=48000, /datum/material/glass=32000)
 	ammoamt = 160
 
 
@@ -707,11 +708,10 @@ RLD
 	else
 		..()
 
-/obj/item/construction/rld/update_icon()
-	..()
+/obj/item/construction/rld/update_overlays()
+	. = ..()
 	var/ratio = CEILING((matter / max_matter) * ammo_sections, 1)
-	cut_overlays()	//To prevent infinite stacking of overlays
-	add_overlay("rld_light[ratio]")
+	. += "rld_light[ratio]"
 
 /obj/item/construction/rld/attack_self(mob/user)
 	..()
@@ -745,7 +745,7 @@ RLD
 			if(istype(A, /obj/machinery/light/))
 				if(checkResource(deconcost, user))
 					to_chat(user, "<span class='notice'>You start deconstructing [A]...</span>")
-					user.Beam(A,icon_state="nzcrentrs_power",time=15)
+					user.Beam(A,icon_state="light_beam",time=15)
 					playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
 					if(do_after(user, decondelay, target = A))
 						if(!useResource(deconcost, user))
@@ -759,7 +759,7 @@ RLD
 				var/turf/closed/wall/W = A
 				if(checkResource(floorcost, user))
 					to_chat(user, "<span class='notice'>You start building a wall light...</span>")
-					user.Beam(A,icon_state="nzcrentrs_power",time=15)
+					user.Beam(A,icon_state="light_beam",time=15)
 					playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
 					playsound(src.loc, 'sound/effects/light_flicker.ogg', 50, 0)
 					if(do_after(user, floordelay, target = A))
@@ -805,7 +805,7 @@ RLD
 				var/turf/open/floor/F = A
 				if(checkResource(floorcost, user))
 					to_chat(user, "<span class='notice'>You start building a floor light...</span>")
-					user.Beam(A,icon_state="nzcrentrs_power",time=15)
+					user.Beam(A,icon_state="light_beam",time=15)
 					playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
 					playsound(src.loc, 'sound/effects/light_flicker.ogg', 50, 1)
 					if(do_after(user, floordelay, target = A))
@@ -833,6 +833,12 @@ RLD
 				G.update_brightness()
 				return TRUE
 			return FALSE
+
+/obj/item/construction/rld/mini
+	name = "mini-rapid-light-device (MRLD)"
+	desc = "A device used to rapidly provide lighting sources to an area. Reload with metal, plasteel, glass or compressed matter cartridges."
+	matter = 100
+	max_matter = 100
 
 /obj/item/rcd_upgrade
 	name = "RCD advanced design disk"

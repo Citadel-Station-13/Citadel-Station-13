@@ -5,8 +5,9 @@
 	desc = "A wall-mounted flashbulb device."
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "mflash1"
+	plane = ABOVE_WALL_PLANE
 	max_integrity = 250
-	integrity_failure = 100
+	integrity_failure = 0.4
 	light_color = LIGHT_COLOR_WHITE
 	light_power = FLASH_LIGHT_POWER
 	var/obj/item/assembly/flash/handheld/bulb
@@ -20,6 +21,7 @@
 	name = "portable flasher"
 	desc = "A portable flashing device. Wrench to activate and deactivate. Cannot detect slow movements."
 	icon_state = "pflash1-p"
+	plane = GAME_PLANE
 	strength = 80
 	anchored = FALSE
 	base_state = "pflash"
@@ -115,7 +117,7 @@
 			continue
 
 		if(L.flash_act(affect_silicon = 1))
-			L.Knockdown(strength)
+			L.DefaultCombatKnockdown(strength)
 			flashed = TRUE
 
 	if(flashed)

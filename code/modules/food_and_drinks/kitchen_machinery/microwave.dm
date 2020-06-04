@@ -19,6 +19,8 @@
 	var/broken = 0 // 0, 1 or 2 // How broken is it???
 	var/max_n_of_items = 10
 	var/efficiency = 0
+	var/quality_increase = 5 // how much do we increase the quality of microwaved items
+	var/productivity = 0
 	var/datum/looping_sound/microwave/soundloop
 	var/list/ingredients = list() // may only contain /atom/movables
 
@@ -43,11 +45,16 @@
 	. = ..()
 
 /obj/machinery/microwave/RefreshParts()
-	efficiency = 0
+	efficiency = 0.6
+	productivity = 0
+	max_n_of_items = 5
 	for(var/obj/item/stock_parts/micro_laser/M in component_parts)
-		efficiency += M.rating
+		efficiency += M.rating * 0.4
+		productivity += M.rating
 	for(var/obj/item/stock_parts/matter_bin/M in component_parts)
+
 		max_n_of_items = 10 * M.rating
+		quality_increase = M.rating * 5
 		break
 
 /obj/machinery/microwave/examine(mob/user)
@@ -55,7 +62,7 @@
 	if(!operating)
 		. += "<span class='notice'>Alt-click [src] to turn it on.</span>"
 
-	if(!in_range(user, src) && !issilicon(user) && !isobserver(user))
+	if(!in_range(user, src) && !hasSiliconAccessInArea(user) && !isobserver(user))
 		. += "<span class='warning'>You're too far away to examine [src]'s contents and display!</span>"
 		return
 	if(operating)
@@ -63,7 +70,7 @@
 		return
 
 	if(length(ingredients))
-		if(issilicon(user))
+		if(hasSiliconAccessInArea(user))
 			. += "<span class='notice'>\The [src] camera shows:</span>"
 		else
 			. += "<span class='notice'>\The [src] contains:</span>"
@@ -83,9 +90,9 @@
 	if(!(stat & (NOPOWER|BROKEN)))
 		. += "<span class='notice'>The status display reads:</span>"
 		. += "<span class='notice'>- Capacity: <b>[max_n_of_items]</b> items.<span>"
-		. += "<span class='notice'>- Cook time reduced by <b>[(efficiency - 1) * 25]%</b>.<span>"
+		. += "<span class='notice'>- Cook time reduced by <b>[(productivity - 1) * 25]%</b>.<span>"
 
-/obj/machinery/microwave/update_icon()
+/obj/machinery/microwave/update_icon_state()
 	if(broken)
 		icon_state = "mwb"
 	else if(dirty_anim_playing)
@@ -187,14 +194,14 @@
 
 /obj/machinery/microwave/AltClick(mob/user)
 	. = ..()
-	if(user.canUseTopic(src, !issilicon(usr)))
+	if(user.canUseTopic(src, !hasSiliconAccessInArea(user)))
 		cook()
 		return TRUE
 
 /obj/machinery/microwave/ui_interact(mob/user)
 	. = ..()
 
-	if(operating || panel_open || !anchored || !user.canUseTopic(src, !issilicon(user)))
+	if(operating || panel_open || !anchored || !user.canUseTopic(src, !hasSiliconAccessInArea(user)))
 		return
 	if(isAI(user) && (stat & NOPOWER))
 		return
@@ -206,10 +213,10 @@
 			to_chat(user, "<span class='warning'>\The [src] is empty.</span>")
 		return
 
-	var/choice = show_radial_menu(user, src, isAI(user) ? ai_radial_options : radial_options, require_near = !issilicon(user))
+	var/choice = show_radial_menu(user, src, isAI(user) ? ai_radial_options : radial_options, require_near = !hasSiliconAccessInArea(user))
 
 	// post choice verification
-	if(operating || panel_open || !anchored || !user.canUseTopic(src, !issilicon(user)))
+	if(operating || panel_open || !anchored || !user.canUseTopic(src, !hasSiliconAccessInArea(user)))
 		return
 	if(isAI(user) && (stat & NOPOWER))
 		return
@@ -240,7 +247,7 @@
 		playsound(src, 'sound/machines/buzz-sigh.ogg', 50, 0)
 		return
 
-	if(prob(max((5 / efficiency) - 5, dirty * 5))) //a clean unupgraded microwave has no risk of failure
+	if(prob(dirty * 5 / (5 * efficiency))) //a clean unupgraded microwave has no risk of failure
 		muck()
 		return
 	for(var/obj/O in ingredients)
@@ -285,9 +292,9 @@
 	update_icon()
 	loop(MICROWAVE_MUCK, 4)
 
-/obj/machinery/microwave/proc/loop(type, time, wait = max(12 - 2 * efficiency, 2)) // standard wait is 10
+/obj/machinery/microwave/proc/loop(type, time, wait = max(12 - 2 * productivity, 2)) // standard wait is 10
 	if(stat & (NOPOWER|BROKEN))
-		if(MICROWAVE_PRE)
+		if(type == MICROWAVE_PRE)
 			pre_fail()
 		return
 	if(!time)
@@ -309,8 +316,8 @@
 	var/metal = 0
 	for(var/obj/item/O in ingredients)
 		O.microwave_act(src)
-		if(O.materials[MAT_METAL])
-			metal += O.materials[MAT_METAL]
+		if(O.custom_materials?.len)
+			metal += O.custom_materials[SSmaterials.GetMaterialRef(/datum/material/iron)]
 
 	if(metal)
 		spark()

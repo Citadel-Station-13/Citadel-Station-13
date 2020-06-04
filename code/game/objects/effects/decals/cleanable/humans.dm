@@ -5,12 +5,13 @@
 	icon_state = "floor1"
 	random_icon_states = list("floor1", "floor2", "floor3", "floor4", "floor5", "floor6", "floor7")
 	blood_state = BLOOD_STATE_BLOOD
-	bloodiness = MAX_SHOE_BLOODINESS
+	bloodiness = BLOOD_AMOUNT_PER_DECAL
 	color = BLOOD_COLOR_HUMAN //default so we don't have white splotches everywhere.
+	beauty = -100
 
 /obj/effect/decal/cleanable/blood/replace_decal(obj/effect/decal/cleanable/blood/C)
 	if (C.blood_DNA)
-		blood_DNA |= C.blood_DNA.Copy()
+		blood_DNA |= C.blood_DNA
 	update_icon()
 	..()
 
@@ -45,12 +46,14 @@
 	icon_state = "tracks"
 	desc = "They look like tracks left by wheels."
 	random_icon_states = null
+	beauty = -50
 
 /obj/effect/decal/cleanable/trail_holder //not a child of blood on purpose
 	name = "blood"
 	icon_state = "ltrails_1"
 	desc = "Your instincts say you shouldn't be following these."
 	random_icon_states = null
+	beauty = -50
 	var/list/existing_dirs = list()
 
 /obj/effect/decal/cleanable/trail_holder/update_icon()

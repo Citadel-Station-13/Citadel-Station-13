@@ -13,7 +13,8 @@ SUBSYSTEM_DEF(persistence)
 	var/list/saved_messages = list()
 	var/list/saved_modes = list(1,2,3)
 	var/list/saved_dynamic_rules = list(list(),list(),list())
-	var/list/saved_storytellers = list("foo","bar","baz","foo again","bar again")
+	var/list/saved_storytellers = list("foo","bar","baz")
+	var/list/average_dynamic_threat = 50
 	var/list/saved_maps
 	var/list/saved_trophies = list()
 	var/list/spawned_objects = list()
@@ -23,6 +24,8 @@ SUBSYSTEM_DEF(persistence)
 	var/list/saved_votes = list()
 	var/list/obj/structure/sign/picture_frame/photo_frames
 	var/list/obj/item/storage/photo_album/photo_albums
+	var/list/obj/structure/sign/painting/painting_frames = list()
+	var/list/paintings = list()
 
 /datum/controller/subsystem/persistence/Initialize()
 	LoadSatchels()
@@ -39,6 +42,7 @@ SUBSYSTEM_DEF(persistence)
 	if(CONFIG_GET(flag/use_antag_rep))
 		LoadAntagReputation()
 	LoadRandomizedRecipes()
+	LoadPanicBunker()
 	return ..()
 
 /datum/controller/subsystem/persistence/proc/LoadSatchels()
@@ -190,6 +194,9 @@ SUBSYSTEM_DEF(persistence)
 	if(!json)
 		return
 	saved_storytellers = json["data"]
+	if(saved_storytellers.len > 3)
+		average_dynamic_threat = saved_storytellers[4]
+	saved_storytellers.len = 3
 
 /datum/controller/subsystem/persistence/proc/LoadRecentMaps()
 	var/json_file = file("data/RecentMaps.json")
@@ -259,6 +266,17 @@ SUBSYSTEM_DEF(persistence)
 	if(CONFIG_GET(flag/use_antag_rep))
 		CollectAntagReputation()
 	SaveRandomizedRecipes()
+	SavePanicBunker()
+	SavePaintings()
+
+/datum/controller/subsystem/persistence/proc/LoadPanicBunker()
+	var/bunker_path = file("data/bunker_passthrough.json")
+	if(fexists(bunker_path))
+		var/list/json = json_decode(file2text(bunker_path))
+		GLOB.bunker_passthrough = json["data"]
+		for(var/ckey in GLOB.bunker_passthrough)
+			if(daysSince(GLOB.bunker_passthrough[ckey]) >= CONFIG_GET(number/max_bunker_days))
+				GLOB.bunker_passthrough -= ckey
 
 /datum/controller/subsystem/persistence/proc/GetPhotoAlbums()
 	var/album_path = file("data/photo_albums.json")
@@ -381,6 +399,13 @@ SUBSYSTEM_DEF(persistence)
 	fdel(json_file)
 	WRITE_FILE(json_file, json_encode(file_data))
 
+/datum/controller/subsystem/persistence/proc/SavePanicBunker()
+	var/json_file = file("data/bunker_passthrough.json")
+	var/list/file_data = list()
+	file_data["data"] = GLOB.bunker_passthrough
+	fdel(json_file)
+	WRITE_FILE(json_file,json_encode(file_data))
+
 /datum/controller/subsystem/persistence/proc/remove_duplicate_trophies(list/trophies)
 	var/list/ukeys = list()
 	. = list()
@@ -411,15 +436,14 @@ SUBSYSTEM_DEF(persistence)
 	WRITE_FILE(json_file, json_encode(file_data))
 
 /datum/controller/subsystem/persistence/proc/CollectStoryteller(var/datum/game_mode/dynamic/mode)
-	saved_storytellers.len = 5
-	saved_storytellers[5] = saved_storytellers[4]
-	saved_storytellers[4] = saved_storytellers[3]
+	saved_storytellers.len = 3
 	saved_storytellers[3] = saved_storytellers[2]
 	saved_storytellers[2] = saved_storytellers[1]
 	saved_storytellers[1] = mode.storyteller.name
+	average_dynamic_threat = (mode.threat_average + average_dynamic_threat) / 2
 	var/json_file = file("data/RecentStorytellers.json")
 	var/list/file_data = list()
-	file_data["data"] = saved_storytellers
+	file_data["data"] = saved_storytellers + average_dynamic_threat
 	fdel(json_file)
 	WRITE_FILE(json_file, json_encode(file_data))
 
@@ -507,3 +531,19 @@ SUBSYSTEM_DEF(persistence)
 		file_data["data"] = saved_votes[ckey]
 		fdel(json_file)
 		WRITE_FILE(json_file, json_encode(file_data))
+
+/datum/controller/subsystem/persistence/proc/LoadPaintings()
+	var/json_file = file("data/paintings.json")
+	if(fexists(json_file))
+		paintings = json_decode(file2text(json_file))
+
+	for(var/obj/structure/sign/painting/P in painting_frames)
+		P.load_persistent()
+
+/datum/controller/subsystem/persistence/proc/SavePaintings()
+	for(var/obj/structure/sign/painting/P in painting_frames)
+		P.save_persistent()
+
+	var/json_file = file("data/paintings.json")
+	fdel(json_file)
+	WRITE_FILE(json_file, json_encode(paintings))

@@ -15,7 +15,7 @@
 	req_access = list(ACCESS_ENGINE_EQUIP)
 //	use_power = NO_POWER_USE
 	max_integrity = 350
-	integrity_failure = 80
+	integrity_failure = 0.2
 	circuit = /obj/item/circuitboard/machine/rad_collector
 	var/obj/item/tank/internals/plasma/loaded_tank = null
 	var/stored_power = 0
@@ -28,11 +28,19 @@
 	var/bitcoinproduction_drain = 0.15
 	var/bitcoinmining = FALSE
 	rad_insulation = RAD_EXTREME_INSULATION
+	var/obj/item/radio/Radio
 
 /obj/machinery/power/rad_collector/anchored
 	anchored = TRUE
 
+/obj/machinery/power/rad_collector/Initialize()
+	. = ..()
+	Radio = new /obj/item/radio(src)
+	Radio.listening = 0
+	Radio.set_frequency(FREQ_ENGINEERING)
+
 /obj/machinery/power/rad_collector/Destroy()
+	QDEL_NULL(Radio)
 	return ..()
 
 /obj/machinery/power/rad_collector/process()
@@ -42,6 +50,7 @@
 		if(!loaded_tank.air_contents.gases[/datum/gas/plasma])
 			investigate_log("<font color='red'>out of fuel</font>.", INVESTIGATE_SINGULO)
 			playsound(src, 'sound/machines/ding.ogg', 50, 1)
+			Radio.talk_into(src, "Insufficient plasma in [get_area(src)] [src], ejecting \the [loaded_tank].", FREQ_ENGINEERING)
 			eject()
 		else
 			var/gasdrained = min(powerproduction_drain*drainratio,loaded_tank.air_contents.gases[/datum/gas/plasma])
@@ -55,6 +64,7 @@
 	else if(is_station_level(z) && SSresearch.science_tech)
 		if(!loaded_tank.air_contents.gases[/datum/gas/tritium] || !loaded_tank.air_contents.gases[/datum/gas/oxygen])
 			playsound(src, 'sound/machines/ding.ogg', 50, 1)
+			Radio.talk_into(src, "Insufficient oxygen and tritium in [get_area(src)] [src] to produce research points, ejecting \the [loaded_tank].", FREQ_ENGINEERING)
 			eject()
 		else
 			var/gasdrained = bitcoinproduction_drain*drainratio
@@ -62,7 +72,11 @@
 			loaded_tank.air_contents.gases[/datum/gas/oxygen] -= gasdrained
 			loaded_tank.air_contents.gases[/datum/gas/carbon_dioxide] += gasdrained*2
 			GAS_GARBAGE_COLLECT(loaded_tank.air_contents.gases)
-			SSresearch.science_tech.add_point_type(TECHWEB_POINT_TYPE_DEFAULT, stored_power*RAD_COLLECTOR_MINING_CONVERSION_RATE)
+			var/bitcoins_mined = stored_power*RAD_COLLECTOR_MINING_CONVERSION_RATE
+			var/datum/bank_account/D = SSeconomy.get_dep_account(ACCOUNT_ENG)
+			if(D)
+				D.adjust_money(bitcoins_mined)
+			SSresearch.science_tech.add_point_type(TECHWEB_POINT_TYPE_DEFAULT, bitcoins_mined)
 			last_push = stored_power
 			stored_power = 0
 
@@ -204,14 +218,14 @@
 	if(loaded_tank && active && pulse_strength > RAD_COLLECTOR_EFFICIENCY)
 		stored_power += (pulse_strength-RAD_COLLECTOR_EFFICIENCY)*RAD_COLLECTOR_COEFFICIENT
 
-/obj/machinery/power/rad_collector/update_icon()
-	cut_overlays()
+/obj/machinery/power/rad_collector/update_overlays()
+	. = ..()
 	if(loaded_tank)
-		add_overlay("ptank")
+		. += "ptank"
 	if(stat & (NOPOWER|BROKEN))
 		return
 	if(active)
-		add_overlay("on")
+		. += "on"
 
 
 /obj/machinery/power/rad_collector/proc/toggle_power()

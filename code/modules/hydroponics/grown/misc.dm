@@ -82,9 +82,10 @@
 	mutatelist = list()
 	reagents_add = list(/datum/reagent/consumable/nutriment = 0.05, /datum/reagent/medicine/silibinin = 0.1)
 
-/obj/item/seeds/galaxythistle/Initialize()
-	..()
-	unset_mutability(/datum/plant_gene/trait/invasive, PLANT_GENE_REMOVABLE)
+/obj/item/seeds/galaxythistle/Initialize(mapload, nogenes = FALSE)
+	. = ..()
+	if(!nogenes)
+		unset_mutability(/datum/plant_gene/trait/invasive, PLANT_GENE_REMOVABLE)
 
 /obj/item/reagent_containers/food/snacks/grown/galaxythistle
 	seed = /obj/item/seeds/galaxythistle
@@ -96,8 +97,6 @@
 	foodtype = VEGETABLES
 	wine_power = 35
 	tastes = list("thistle" = 2, "artichoke" = 1)
-
-
 
 // Cabbage
 /obj/item/seeds/cabbage
@@ -233,19 +232,6 @@
 	reagents.chem_temp = 1000 //Sets off the black powder
 	reagents.handle_reactions()
 
-// Lavaland cactus
-
-/obj/item/seeds/lavaland/cactus
-	name = "pack of fruiting cactus seeds"
-	desc = "These seeds grow into fruiting cacti."
-	icon_state = "seed-cactus"
-	species = "cactus"
-	plantname = "Fruiting Cactus"
-	product = /obj/item/reagent_containers/food/snacks/grown/ash_flora/cactus_fruit
-	growing_icon = 'icons/obj/hydroponics/growing_fruits.dmi'
-	growthstages = 2
-
-
 // Coconut
 /obj/item/seeds/coconut
 	name = "pack of coconut seeds"
@@ -278,6 +264,7 @@
 	throwforce = 5
 	hitsound = 'sound/weapons/klonk.ogg'
 	attack_verb = list("klonked", "donked", "bonked")
+	distill_reagent = "creme_de_coconut"
 	var/opened = FALSE
 	var/carved = FALSE
 	var/chopped = FALSE
@@ -505,9 +492,6 @@
 		return
 	var/turf/T = get_turf(src)
 	reagents.chem_temp = 1000
-	//Disable seperated contents when the grenade primes
-	if (seed.get_gene(/datum/plant_gene/trait/noreact))
-		DISABLE_BITFIELD(reagents.reagents_holder_flags, NO_REACT)
 	reagents.handle_reactions()
 	log_game("Coconut bomb detonation at [AREACOORD(T)], location [loc]")
 	qdel(src)

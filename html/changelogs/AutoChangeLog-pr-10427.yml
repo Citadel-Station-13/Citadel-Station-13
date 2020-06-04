@@ -1,4 +1,0 @@
-author: "Hatterhat"
-delete-after: True
-changes: 
-  - tweak: "tweaks some values around with beaker transfer amounts, adds a transfer value verb (altclick)"

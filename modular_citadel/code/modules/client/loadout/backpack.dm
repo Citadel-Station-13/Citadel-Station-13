@@ -69,18 +69,6 @@
 	path = /obj/item/toy/katana
 	cost = 3
 
-/datum/gear/box
-	name = "Spare box"
-	category = SLOT_IN_BACKPACK
-	path = /obj/item/storage/box
-	cost = 2
-
-/datum/gear/crowbar
-	name = "Pocket Crowbar"
-	category = SLOT_IN_BACKPACK
-	path = /obj/item/crowbar
-	cost = 2
-
 /datum/gear/tapeplayer
 	name = "Taperecorder"
 	category = SLOT_IN_BACKPACK
@@ -95,11 +83,6 @@
 	name = "Newspaper"
 	category = SLOT_IN_BACKPACK
 	path = /obj/item/newspaper
-  
-/datum/gear/paperbin
-	name = "Paper Bin"
-	category = SLOT_IN_BACKPACK
-	path = /obj/item/paper_bin
 
 /datum/gear/crayons
 	name = "Box of crayons"
@@ -116,3 +99,34 @@
 	category = SLOT_IN_BACKPACK
 	path = /obj/item/pen/fountain
 	cost = 2
+
+/datum/gear/modular_tablet
+	name = "A modular tablet"
+	category = SLOT_IN_BACKPACK
+	path = /obj/item/modular_computer/tablet/preset/cheap/
+	cost = 4
+
+/datum/gear/modular_laptop
+	name = "A modular laptop"
+	category = SLOT_IN_BACKPACK
+	path = /obj/item/modular_computer/laptop/preset/civilian
+	cost = 7
+
+/datum/gear/ringbox_gold
+	name = "A gold ring box"
+	category = SLOT_IN_BACKPACK
+	path = /obj/item/storage/fancy/ringbox
+	cost = 3
+
+/datum/gear/ringbox_silver
+	name = "A silver ring box"
+	category = SLOT_IN_BACKPACK
+	path = /obj/item/storage/fancy/ringbox/silver
+	cost = 3
+
+/datum/gear/ringbox_diamond
+	name = "A diamond ring box"
+	category = SLOT_IN_BACKPACK
+	path = /obj/item/storage/fancy/ringbox/diamond
+	cost = 5
+

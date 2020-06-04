@@ -107,7 +107,7 @@
 	var/convert_progress = 3		// Resets on each new character to be added to the chair. Some effects should lower it...
 	var/disloyalty_confirm = FALSE	// Command & Antags need to CONFIRM they are willing to lose their role (and will only do it if the Vassal'ing succeeds)
 	var/disloyalty_offered = FALSE	// Has the popup been issued? Don't spam them.
-	var/convert_cost = 100
+
 
 /obj/structure/bloodsucker/vassalrack/deconstruct(disassembled = TRUE)
 	new /obj/item/stack/sheet/metal(src.loc, 4)
@@ -115,13 +115,15 @@
 	qdel(src)
 
 /obj/structure/bloodsucker/vassalrack/examine(mob/user)
+	var/datum/antagonist/bloodsucker/B = user.mind.has_antag_datum(ANTAG_DATUM_BLOODSUCKER)
 	. = ..()
-	if((user.mind.has_antag_datum(ANTAG_DATUM_BLOODSUCKER)) || isobserver(user))
+	if(B || isobserver(user))
 		. += {"<span class='cult'>This is the vassal rack, which allows you to thrall crewmembers into loyal minions in your service.</span>"}
 		. += {"<span class='cult'>You need to first secure the vassal rack by clicking on it while it is in your lair.</span>"}
-		. += {"<span class='cult'>Simply click and hold on a victim, and then drag their sprite on the vassal rack.</span>"}
+		. += {"<span class='cult'>Simply click and hold on a victim, and then drag their sprite on the vassal rack. Alt click on the vassal rack to unbuckle them.</span>"}
 		. += {"<span class='cult'>Make sure that the victim is handcuffed, or else they can simply run away or resist, as the process is not instant.</span>"}
 		. += {"<span class='cult'>To convert the victim, simply click on the vassal rack itself. Sharp weapons work faster than other tools.</span>"}
+		. += {"<span class='cult'> You have only the power for [B.bloodsucker_level - B.count_vassals(user.mind)] vassals</span>"}
 /*	if(user.mind.has_antag_datum(ANTAG_DATUM_VASSAL)
 	. += {"<span class='cult'>This is the vassal rack, which allows your master to thrall crewmembers into his minions.\n
 	Aid your master in bringing their victims here and keeping them secure.\n
@@ -130,7 +132,7 @@
 /obj/structure/bloodsucker/vassalrack/MouseDrop_T(atom/movable/O, mob/user)
 	if(!O.Adjacent(src) || O == user || !isliving(O) || !isliving(user) || useLock || has_buckled_mobs() || user.incapacitated())
 		return
-	if(!anchored && isvamp(user))
+	if(!anchored && AmBloodsucker(user))
 		to_chat(user, "<span class='danger'>Until this rack is secured in place, it cannot serve its purpose.</span>")
 		return
 	// PULL TARGET: Remember if I was pullin this guy, so we can restore this
@@ -177,20 +179,20 @@
 	M.pixel_y = -2 //M.get_standard_pixel_y_offset(120)//180)
 	update_icon()
 	// Torture Stuff
-	convert_progress = 2 			// Goes down unless you start over.
+	convert_progress = 4 			// Goes down unless you start over.
 	disloyalty_confirm = FALSE		// New guy gets the chance to say NO if he's special.
 	disloyalty_offered = FALSE		// Prevents spamming torture window.
 
 /obj/structure/bloodsucker/vassalrack/user_unbuckle_mob(mob/living/M, mob/user)
 	// Attempt Unbuckle
-	if(!isvamp(user))
+	if(!AmBloodsucker(user))
 		if(M == user)
 			M.visible_message("<span class='danger'>[user] tries to release themself from the rack!</span>",\
 							"<span class='danger'>You attempt to release yourself from the rack!</span>") //  For sound if not seen -->  "<span class='italics'>You hear a squishy wet noise.</span>")
 		else
 			M.visible_message("<span class='danger'>[user] tries to pull [M] rack!</span>",\
 							"<span class='danger'>[user] attempts to release you from the rack!</span>") //  For sound if not seen -->  "<span class='italics'>You hear a squishy wet noise.</span>")
-		if(!do_mob(user, M, 100))
+		if(!do_mob(user, M, 200))
 			return
 	// Did the time. Now try to do it.
 	..()
@@ -205,7 +207,7 @@
 	buckled_mob.pixel_y = buckled_mob.get_standard_pixel_y_offset(180)
 	src.visible_message(text("<span class='danger'>[buckled_mob][buckled_mob.stat==DEAD?"'s corpse":""] slides off of the rack.</span>"))
 	density = FALSE
-	buckled_mob.AdjustKnockdown(30)
+	buckled_mob.DefaultCombatKnockdown(30)
 	update_icon()
 	useLock = FALSE // Failsafe
 
@@ -222,15 +224,15 @@
 	// Go away. Torturing.
 	if(useLock)
 		return
-	var/datum/antagonist/bloodsucker/bloodsuckerdatum = user.mind.has_antag_datum(ANTAG_DATUM_BLOODSUCKER)
+	var/datum/antagonist/bloodsucker/B = user.mind.has_antag_datum(ANTAG_DATUM_BLOODSUCKER)
 	// CHECK ONE: Am I claiming this? Is it in the right place?
-	if(istype(bloodsuckerdatum) && !owner)
-		if(!bloodsuckerdatum.lair)
+	if(istype(B) && !owner)
+		if(!B.lair)
 			to_chat(user, "<span class='danger'>You don't have a lair. Claim a coffin to make that location your lair.</span>")
-		if(bloodsuckerdatum.lair != get_area(src))
-			to_chat(user, "<span class='danger'>You may only activate this structure in your lair: [bloodsuckerdatum.lair].</span>")
+		if(B.lair != get_area(src))
+			to_chat(user, "<span class='danger'>You may only activate this structure in your lair: [B.lair].</span>")
 			return
-		switch(alert(user,"Do you wish to afix this structure here? Be aware you wont be able to unsecure it anymore","Secure [src]","Yes", "No"))
+		switch(alert(user,"Do you wish to afix this structure here? Be aware you wont be able to unsecure it anymore", "Secure [src]", "Yes", "No"))
 			if("Yes")
 				owner = user
 				density = FALSE
@@ -241,24 +243,30 @@
 		return
 	// CHECK TWO: Am I a non-bloodsucker?
 	var/mob/living/carbon/C = pick(buckled_mobs)
-	if(!istype(bloodsuckerdatum))
+	if(!istype(B))
 		// Try to release this guy
 		user_unbuckle_mob(C, user)
 		return
 	// Bloodsucker Owner! Let the boy go.
 	if(C.mind)
-		var/datum/antagonist/vassal/vassaldatum = C.mind.has_antag_datum(ANTAG_DATUM_VASSAL)
-		if (istype(vassaldatum) && vassaldatum.master == bloodsuckerdatum || C.stat >= DEAD)
+		var/datum/antagonist/vassal/V = C.mind.has_antag_datum(ANTAG_DATUM_VASSAL)
+		if(istype(V) && V.master == B || C.stat >= DEAD)
 			unbuckle_mob(C)
 			useLock = FALSE // Failsafe
 			return
 	// Just torture the boy
 	torture_victim(user, C)
 
+#define CONVERT_COST 150
+
 /obj/structure/bloodsucker/vassalrack/proc/torture_victim(mob/living/user, mob/living/target)
+	var/datum/antagonist/bloodsucker/B = user.mind.has_antag_datum(ANTAG_DATUM_BLOODSUCKER)
 	// Check Bloodmob/living/M, force = FALSE, check_loc = TRUE
-	if(user.blood_volume < convert_cost + 5)
+	if(user.blood_volume < CONVERT_COST + 5)
 		to_chat(user, "<span class='notice'>You don't have enough blood to initiate the Dark Communion with [target].</span>")
+		return
+	if(B.count_vassals(user.mind) > B.bloodsucker_level)
+		to_chat(user, "<span class='notice'>Your power is yet too weak to bring more vassals under your control....</span>")
 		return
 	// Prep...
 	useLock = TRUE
@@ -275,7 +283,7 @@
 			// All done!
 			if(convert_progress <= 0)
 				// FAIL: Can't be Vassal
-				if(!SSticker.mode.can_make_vassal(target, user, display_warning=FALSE) || HAS_TRAIT(target, TRAIT_MINDSHIELD)) // If I'm an unconvertable Antag ONLY
+				if(!SSticker.mode.can_make_vassal(target, user, display_warning = FALSE) || HAS_TRAIT(target, TRAIT_MINDSHIELD)) // If I'm an unconvertable Antag ONLY
 					to_chat(user, "<span class='danger'>[target] doesn't respond to your persuasion. It doesn't appear they can be converted to follow you, they either have a mindshield or their external loyalties are too difficult for you to break.<i>\[ALT+click to release\]</span>")
 					convert_progress ++ // Pop it back up some. Avoids wasting Blood on a lost cause.
 				// SUCCESS: All done!
@@ -300,13 +308,13 @@
 		useLock = FALSE
 		return
 	// Check: Blood
-	if(user.blood_volume < convert_cost)
-		to_chat(user, "<span class='notice'>You don't have enough blood to initiate the Dark Communion with [target].</span>")
+	if(user.blood_volume < CONVERT_COST)
+		to_chat(user, "<span class='notice'>You don't have enough blood to initiate the Dark Communion with [target], you need [CONVERT_COST - user.blood_volume] units more!</span>")
 		useLock = FALSE
 		return
-	var/datum/antagonist/bloodsucker/bloodsuckerdatum = user.mind.has_antag_datum(ANTAG_DATUM_BLOODSUCKER)
-	bloodsuckerdatum.AddBloodVolume(-convert_cost)
-	target.add_mob_blood(user)
+	B.AddBloodVolume(-CONVERT_COST)
+	target.add_mob_blood(user, "<span class='danger'>Youve used [CONVERT_COST] amount of blood to gain a new vassal!</span>")
+	to_chat(user, )
 	user.visible_message("<span class='notice'>[user] marks a bloody smear on [target]'s forehead and puts a wrist up to [target.p_their()] mouth!</span>", \
 				  	  "<span class='notice'>You paint a bloody marking across [target]'s forehead, place your wrist to [target.p_their()] mouth, and subject [target.p_them()] to the Dark Communion.</span>")
 	if(!do_mob(user, src, 50))
@@ -314,21 +322,22 @@
 		useLock = FALSE
 		return
 	// Convert to Vassal!
-	if(bloodsuckerdatum && bloodsuckerdatum.attempt_turn_vassal(target))
+	if(B && B.attempt_turn_vassal(target))
 		//remove_loyalties(target) // In case of Mindshield, or appropriate Antag (Traitor, Internal, etc)
 		//if (!target.buckled)
 		//	to_chat(user, "<span class='danger'><i>The ritual has been interrupted!</i></span>")
 		//	useLock = FALSE
 		//	return
-		user.playsound_local(null, 'sound/effects/explosion_distant.ogg', 40, 1) 	// Play THIS sound for user only. The "null" is where turf would go if a location was needed. Null puts it right in their head.
-		target.playsound_local(null, 'sound/effects/explosion_distant.ogg', 40, 1) 	// Play THIS sound for user only. The "null" is where turf would go if a location was needed. Null puts it right in their head.
-		target.playsound_local(null, 'sound/effects/singlebeat.ogg', 40, 1) 		// Play THIS sound for user only. The "null" is where turf would go if a location was needed. Null puts it right in their head.
+		user.playsound_local(null, 'sound/effects/explosion_distant.ogg', 40, TRUE)
+		target.playsound_local(null, 'sound/effects/explosion_distant.ogg', 40, TRUE)
+		target.playsound_local(null, 'sound/effects/singlebeat.ogg', 40, TRUE)
 		target.Jitter(25)
 		target.emote("laugh")
 		//remove_victim(target) // Remove on CLICK ONLY!
 	useLock = FALSE
 
-/obj/structure/bloodsucker/vassalrack/proc/do_torture(mob/living/user, mob/living/target, mult=1)
+#undef CONVERT_COST
+/obj/structure/bloodsucker/vassalrack/proc/do_torture(mob/living/user, mob/living/target, mult = 1)
 	var/torture_time = 15 // Fifteen seconds if you aren't using anything. Shorter with weapons and such.
 	var/torture_dmg_brute = 2
 	var/torture_dmg_burn = 0
@@ -448,12 +457,12 @@
 /obj/structure/bloodsucker/candelabrum/Destroy()
 	STOP_PROCESSING(SSobj, src)
 
-/obj/structure/bloodsucker/candelabrum/update_icon()
+/obj/structure/bloodsucker/candelabrum/update_icon_state()
 	icon_state = "candelabrum[lit ? "_lit" : ""]"
 
 /obj/structure/bloodsucker/candelabrum/examine(mob/user)
 	. = ..()
-	if((isvamp()) || isobserver(user))
+	if((AmBloodsucker(user)) || isobserver(user))
 		. += {"<span class='cult'>This is a magical candle which drains at the sanity of mortals who are not under your command while it is active.</span>"}
 		. += {"<span class='cult'>You can alt click on it from any range to turn it on remotely, or simply be next to it and click on it to turn it on and off normally.</span>"}
 /*	if(user.mind.has_antag_datum(ANTAG_DATUM_VASSAL)
@@ -462,12 +471,12 @@
 
 /obj/structure/bloodsucker/candelabrum/attack_hand(mob/user)
 	var/datum/antagonist/vassal/T = user.mind.has_antag_datum(ANTAG_DATUM_VASSAL)
-	if(isvamp(user) || istype(T))
+	if(AmBloodsucker(user) || istype(T))
 		toggle()
 
 /obj/structure/bloodsucker/candelabrum/AltClick(mob/user)
 	// Bloodsuckers can turn their candles on from a distance. SPOOOOKY.
-	if(isvamp(user))
+	if(AmBloodsucker(user))
 		toggle()
 
 /obj/structure/bloodsucker/candelabrum/proc/toggle(mob/user)
@@ -481,13 +490,14 @@
 	update_icon()
 
 /obj/structure/bloodsucker/candelabrum/process()
-	if(lit)
-		for(var/mob/living/carbon/human/H in viewers(7, src))
-			var/datum/antagonist/vassal/T = H.mind.has_antag_datum(ANTAG_DATUM_VASSAL)
-			if(isvamp(H) || T) //We dont want vassals or vampires affected by this
-				return
-			H.hallucination = 20
-			SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, "vampcandle", /datum/mood_event/vampcandle)
+	if(!lit)
+		return
+	for(var/mob/living/carbon/human/H in fov_viewers(7, src))
+		var/datum/antagonist/vassal/T = H.mind.has_antag_datum(ANTAG_DATUM_VASSAL)
+		if(AmBloodsucker(H) || T) //We dont want vassals or vampires affected by this
+			return
+		H.hallucination = 20
+		SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, "vampcandle", /datum/mood_event/vampcandle)
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   OTHER THINGS TO USE: HUMAN BLOOD. /obj/effect/decal/cleanable/blood
 

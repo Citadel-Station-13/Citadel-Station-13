@@ -10,9 +10,9 @@
 	var/datum/outfit/outfit = /datum/outfit/ert/security
 	var/role = "Security Officer"
 	var/list/name_source
+	threat = -5
 	show_in_antagpanel = FALSE
 	antag_moodlet = /datum/mood_event/focused
-	can_hijack = HIJACK_PREVENT
 
 /datum/antagonist/ert/on_gain()
 	update_name()
@@ -51,6 +51,7 @@
 /datum/antagonist/ert/engineer
 	role = "Engineer"
 	outfit = /datum/outfit/ert/engineer
+	skill_modifiers = list(/datum/skill_modifier/job/level/wiring)
 
 /datum/antagonist/ert/engineer/amber
 	outfit = /datum/outfit/ert/engineer/alert
@@ -61,6 +62,7 @@
 /datum/antagonist/ert/medic
 	role = "Medical Officer"
 	outfit = /datum/outfit/ert/medic
+	skill_modifiers = list(/datum/skill_modifier/job/affinity/surgery)
 
 /datum/antagonist/ert/medic/amber
 	outfit = /datum/outfit/ert/medic/alert

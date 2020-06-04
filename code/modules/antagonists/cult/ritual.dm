@@ -59,6 +59,9 @@ This file contains the cult dagger and rune list code
 	rune_to_scribe = GLOB.rune_types[entered_rune_name]
 	if(!rune_to_scribe)
 		return
+	if(!iscultist(user, initial(rune_to_scribe.requires_full_power)))
+		to_chat(user, "<span class='warning'>You aren't strongly connected enough to Nar'sie to do draw this.</span>")
+		return
 	if(initial(rune_to_scribe.req_keyword))
 		chosen_keyword = stripped_input(user, "Enter a keyword for the new rune.", "Words of Power")
 		if(!chosen_keyword)
@@ -84,8 +87,8 @@ This file contains the cult dagger and rune list code
 			to_chat(user, "<span class='cultlarge'>Only one ritual site remains - it must be reserved for the final summoning!</span>")
 			return
 	if(ispath(rune_to_scribe, /obj/effect/rune/narsie))
-		var/datum/objective/eldergod/summon_objective = locate() in user_antag.cult_team.objectives
-		var/datum/objective/sacrifice/sac_objective = locate() in user_antag.cult_team.objectives
+		var/datum/objective/eldergod/summon_objective = locate() in user_antag.cult_team?.objectives
+		var/datum/objective/sacrifice/sac_objective = locate() in user_antag.cult_team?.objectives
 		if(!summon_objective)
 			to_chat(user, "<span class='warning'>Nar'Sie does not wish to be summoned!</span>")
 			return
@@ -116,7 +119,7 @@ This file contains the cult dagger and rune list code
 	if(user.blood_volume)
 		user.apply_damage(initial(rune_to_scribe.scribe_damage), BRUTE, pick(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM))
 	var/scribe_mod = initial(rune_to_scribe.scribe_delay)
-	if(istype(get_turf(user), /turf/open/floor/engine/cult))
+	if(istype(get_turf(user), /turf/open/floor/engine/cult) && !(ispath(rune_to_scribe, /obj/effect/rune/narsie)))
 		scribe_mod *= 0.5
 	if(!do_after(user, scribe_mod, target = get_turf(user)))
 		for(var/V in shields)

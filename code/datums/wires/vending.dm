@@ -1,6 +1,7 @@
 /datum/wires/vending
 	holder_type = /obj/machinery/vending
 	proper_name = "Vending Unit"
+	req_knowledge = JOB_SKILL_EXPERT
 
 /datum/wires/vending/New(atom/holder)
 	wires = list(
@@ -12,7 +13,7 @@
 
 /datum/wires/vending/interactable(mob/user)
 	var/obj/machinery/vending/V = holder
-	if(!issilicon(user) && V.seconds_electrified && V.shock(user, 100))
+	if(!V.hasSiliconAccessInArea(user) && V.seconds_electrified && V.shock(user, 100))
 		return FALSE
 	if(V.panel_open)
 		return TRUE

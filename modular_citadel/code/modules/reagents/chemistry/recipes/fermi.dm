@@ -10,7 +10,7 @@
 	if(clear_conversion == REACTION_CLEAR_IMPURE | REACTION_CLEAR_INVERSE)
 		for(var/id in results)
 			var/datum/reagent/R = my_atom.reagents.has_reagent(id)
-			if(R.purity == 1)
+			if(!R || R.purity == 1)
 				continue
 
 			var/cached_volume = R.volume
@@ -25,7 +25,6 @@
 				my_atom.reagents.add_reagent(R.impure_chem, impureVol, FALSE, other_purity = 1)
 				R.cached_purity = R.purity
 				R.purity = 1
-	return
 
 //Called when temperature is above a certain threshold, or if purity is too low.
 /datum/chemical_reaction/proc/FermiExplode(datum/reagents/R0, var/atom/my_atom, volume, temp, pH, Exploding = FALSE)
@@ -96,7 +95,7 @@
 
 	if(!ImpureTot == 0) //If impure, v.small emp (0.6 or less)
 		ImpureTot *= volume
-		var/empVol = CLAMP (volume/10, 0, 15)
+		var/empVol = clamp(volume/10, 0, 15)
 		empulse(T, empVol, ImpureTot/10, 1)
 
 	my_atom.reagents.clear_reagents() //just in case
@@ -173,9 +172,7 @@
 		S.rabid = 1//Make them an angery boi
 		S.color = "#810010"
 	my_atom.reagents.clear_reagents()
-	var/list/seen = viewers(8, get_turf(my_atom))
-	for(var/mob/M in seen)
-		to_chat(M, "<span class='warning'>The cells clump up into a horrifying tumour!</span>")
+	my_atom.visible_message("<span class='warning'>An horrifying tumoural mass forms in [my_atom]!</span>")
 
 /datum/chemical_reaction/fermi/breast_enlarger
 	name = "Sucubus milk"
@@ -200,8 +197,10 @@
 	FermiExplode 			= TRUE
 	PurityMin 				= 0.1
 
-/datum/chemical_reaction/fermi/breast_enlarger/FermiFinish(datum/reagents/holder, var/atom/my_atom)
+/datum/chemical_reaction/fermi/breast_enlarger/FermiFinish(datum/reagents/holder, atom/my_atom)
 	var/datum/reagent/fermi/breast_enlarger/BE = locate(/datum/reagent/fermi/breast_enlarger) in my_atom.reagents.reagent_list
+	if(!BE)
+		return
 	var/cached_volume = BE.volume
 	if(BE.purity < 0.35)
 		holder.remove_reagent(type, cached_volume)
@@ -210,9 +209,7 @@
 
 /datum/chemical_reaction/fermi/breast_enlarger/FermiExplode(datum/reagents, var/atom/my_atom, volume, temp, pH)
 	var/obj/item/organ/genital/breasts/B = new /obj/item/organ/genital/breasts(get_turf(my_atom))
-	var/list/seen = viewers(8, get_turf(my_atom))
-	for(var/mob/M in seen)
-		to_chat(M, "<span class='warning'>The reaction suddenly condenses, creating a pair of breasts!</b></span>")
+	my_atom.visible_message("<span class='warning'>The reaction suddenly condenses, creating a pair of breasts!</b></span>")
 	var/datum/reagent/fermi/breast_enlarger/BE = locate(/datum/reagent/fermi/breast_enlarger) in my_atom.reagents.reagent_list
 	B.size = ((BE.volume * BE.purity) / 10) //half as effective.
 	my_atom.reagents.clear_reagents()
@@ -242,15 +239,15 @@
 
 /datum/chemical_reaction/fermi/penis_enlarger/FermiExplode(datum/reagents, var/atom/my_atom, volume, temp, pH)
 	var/obj/item/organ/genital/penis/P = new /obj/item/organ/genital/penis(get_turf(my_atom))
-	var/list/seen = viewers(8, get_turf(my_atom))
-	for(var/mob/M in seen)
-		to_chat(M, "<span class='warning'>The reaction suddenly condenses, creating a penis!</b></span>")
+	my_atom.visible_message("<span class='warning'>The reaction suddenly condenses, creating a penis!</b></span>")
 	var/datum/reagent/fermi/penis_enlarger/PE = locate(/datum/reagent/fermi/penis_enlarger) in my_atom.reagents.reagent_list
 	P.length = ((PE.volume * PE.purity) / 10)//half as effective.
 	my_atom.reagents.clear_reagents()
 
-/datum/chemical_reaction/fermi/penis_enlarger/FermiFinish(datum/reagents/holder, var/atom/my_atom)
+/datum/chemical_reaction/fermi/penis_enlarger/FermiFinish(datum/reagents/holder, atom/my_atom)
 	var/datum/reagent/fermi/penis_enlarger/PE = locate(/datum/reagent/fermi/penis_enlarger) in my_atom.reagents.reagent_list
+	if(!PE)
+		return
 	var/cached_volume = PE.volume
 	if(PE.purity < 0.35)
 		holder.remove_reagent(type, cached_volume)
@@ -306,13 +303,11 @@
 /datum/chemical_reaction/fermi/enthrall/FermiFinish(datum/reagents/holder, var/atom/my_atom)
 	var/datum/reagent/blood/B = locate(/datum/reagent/blood) in my_atom.reagents.reagent_list
 	var/datum/reagent/fermi/enthrall/E = locate(/datum/reagent/fermi/enthrall) in my_atom.reagents.reagent_list
-	if(!B)
+	if(!B || !E)
 		return
 	if(!B.data)
-		var/list/seen = viewers(5, get_turf(my_atom))
-		for(var/mob/M in seen)
-			to_chat(M, "<span class='warning'>The reaction splutters and fails to react properly.</span>") //Just in case
-			E.purity = 0
+		my_atom.visible_message("<span class='warning'>The reaction splutters and fails to react properly.</span>") //Just in case
+		E.purity = 0
 	if (B.data["gender"] == "female")
 		E.data["creatorGender"] = "Mistress"
 		E.creatorGender = "Mistress"
@@ -332,11 +327,11 @@
 /datum/chemical_reaction/fermi/enthrall/slime/FermiFinish(datum/reagents/holder, var/atom/my_atom)
 	var/datum/reagent/blood/jellyblood/B = locate(/datum/reagent/blood/jellyblood) in my_atom.reagents.reagent_list//The one line change.
 	var/datum/reagent/fermi/enthrall/E = locate(/datum/reagent/fermi/enthrall) in my_atom.reagents.reagent_list
+	if(!B || !E)
+		return
 	if(!B.data)
-		var/list/seen = viewers(5, get_turf(my_atom))
-		for(var/mob/M in seen)
-			to_chat(M, "<span class='warning'>The reaction splutters and fails to react.</span>") //Just in case
-			E.purity = 0
+		my_atom.visible_message("<span class='warning'>The reaction splutters and fails to react properly.</span>") //Just in case
+		E.purity = 0
 	if (B.data["gender"] == "female")
 		E.data["creatorGender"] = "Mistress"
 		E.creatorGender = "Mistress"
@@ -348,14 +343,9 @@
 	E.data["creatorID"] = B.data["ckey"]
 	E.creatorID = B.data["ckey"]
 
-/datum/chemical_reaction/fermi/enthrall/FermiExplode(datum/reagents, var/atom/my_atom, volume, temp, pH)
-	var/turf/T = get_turf(my_atom)
-	var/datum/reagents/R = new/datum/reagents(1000)
-	var/datum/effect_system/smoke_spread/chem/s = new()
-	R.add_reagent(/datum/reagent/fermi/enthrallExplo, volume)
-	s.set_up(R, volume/2, T)
-	s.start()
-	my_atom.reagents.clear_reagents()
+/datum/chemical_reaction/fermi/enthrall/FermiExplode(datum/reagents/R0, var/atom/my_atom, volume, temp, pH)
+	R0.clear_reagents()
+	..()
 
 /datum/chemical_reaction/fermi/hatmium // done
 	name = "Hat growth serum"
@@ -387,9 +377,7 @@
 	for(var/i in 1 to amount_to_spawn)
 		var/obj/item/clothing/head/hattip/hat = new /obj/item/clothing/head/hattip(get_turf(my_atom))
 		hat.animate_atom_living()
-	var/list/seen = viewers(8, get_turf(my_atom))
-	for(var/mob/M in seen)
-		to_chat(M, "<span class='warning'>The [my_atom] makes an off sounding pop, as a hat suddenly climbs out of it!</b></span>")
+	my_atom.visible_message("<span class='warning'>The [my_atom] makes an off sounding pop, as a hat suddenly climbs out of it!</b></span>")
 	my_atom.reagents.clear_reagents()
 
 /datum/chemical_reaction/fermi/furranium
@@ -466,9 +454,9 @@
 
 
 /datum/chemical_reaction/fermi/acidic_buffer/FermiFinish(datum/reagents/holder, var/atom/my_atom) //might need this
-	if(!locate(/datum/reagent/fermi/acidic_buffer) in my_atom.reagents.reagent_list)
-		return
 	var/datum/reagent/fermi/acidic_buffer/Fa = locate(/datum/reagent/fermi/acidic_buffer) in my_atom.reagents.reagent_list
+	if(!Fa)
+		return
 	Fa.data = 0.1//setting it to 0 means byond thinks it's not there.
 
 /datum/chemical_reaction/fermi/basic_buffer//done test
@@ -493,10 +481,10 @@
 	FermiChem 		= TRUE
 
 
-/datum/chemical_reaction/fermi/basic_buffer/FermiFinish(datum/reagents/holder, var/atom/my_atom) //might need this
-	if(!locate(/datum/reagent/fermi/basic_buffer) in my_atom.reagents.reagent_list)
-		return
+/datum/chemical_reaction/fermi/basic_buffer/FermiFinish(datum/reagents/holder, atom/my_atom) //might need this
 	var/datum/reagent/fermi/basic_buffer/Fb = locate(/datum/reagent/fermi/basic_buffer) in my_atom.reagents.reagent_list
+	if(!Fb)
+		return
 	Fb.data = 14
 
 //secretcatchemcode, shh!! Of couse I hide it amongst cats. Though, I moved it with your requests.
@@ -547,9 +535,7 @@
 
 /datum/chemical_reaction/fermi/secretcatchem/FermiExplode(datum/reagents, var/atom/my_atom, volume, temp, pH)
 	var/mob/living/simple_animal/pet/cat/custom_cat/catto = new(get_turf(my_atom))
-	var/list/seen = viewers(8, get_turf(my_atom))
-	for(var/mob/M in seen)
-		to_chat(M, "<span class='warning'>The reaction suddenly gives out a meow, condensing into a chemcat!</b></span>")//meow!
+	my_atom.visible_message("<span class='warning'>The reaction suddenly gives out a meow, condensing into a chemcat!</b></span>")//meow!
 	playsound(get_turf(my_atom), 'modular_citadel/sound/voice/merowr.ogg', 50, 1, -1)
 	catto.name = "Chemcat"
 	catto.desc = "A cute chem cat, created by a lot of compicated and confusing chemistry!"

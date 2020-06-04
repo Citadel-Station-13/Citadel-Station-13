@@ -12,6 +12,8 @@
 	exp_requirements = 120
 	exp_type = EXP_TYPE_CREW
 
+	starting_modifiers = list(/datum/skill_modifier/job/level/wiring/basic)
+
 	display_order = JOB_DISPLAY_ORDER_CYBORG
 
 /datum/job/cyborg/equip(mob/living/carbon/human/H, visualsOnly = FALSE, announce = TRUE, latejoin = FALSE, datum/outfit/outfit_override = null, client/preference_source = null)

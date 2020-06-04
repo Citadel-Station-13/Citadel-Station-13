@@ -1,6 +1,7 @@
 /obj/item/electronics/airlock
 	name = "airlock electronics"
 	req_access = list(ACCESS_MAINT_TUNNELS)
+	custom_price = 50
 
 	var/list/accesses = list()
 	var/one_access = 0
@@ -14,7 +15,7 @@
 													datum/tgui/master_ui = null, datum/ui_state/state = GLOB.hands_state)
 	SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
-		ui = new(user, src, ui_key, "airlock_electronics", name, 975, 420, master_ui, state)
+		ui = new(user, src, ui_key, "airlock_electronics", name, 420, 485, master_ui, state)
 		ui.open()
 
 /obj/item/electronics/airlock/ui_data()
@@ -43,12 +44,15 @@
 	if(..())
 		return
 	switch(action)
-		if("clear")
+		if("clear_all")
 			accesses = list()
 			one_access = 0
 			. = TRUE
 		if("one_access")
 			one_access = !one_access
+			. = TRUE
+		if("grant_all")
+			accesses = get_all_accesses()
 			. = TRUE
 		if("set")
 			var/access = text2num(params["access"])

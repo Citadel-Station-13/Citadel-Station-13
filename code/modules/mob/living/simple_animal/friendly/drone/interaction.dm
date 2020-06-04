@@ -29,12 +29,6 @@
 				if("Nothing")
 					return
 
-//picky up the drone c:
-/mob/living/simple_animal/drone/attack_hand(mob/user)
-	if(user.a_intent != INTENT_HELP)
-		return ..() // TODO: convert picking up mobs into an element or component.
-	mob_try_pickup(user)
-
 /mob/living/simple_animal/drone/proc/try_reactivate(mob/living/user)
 	var/mob/dead/observer/G = get_ghost()
 	if(!client && (!G || !G.client))
@@ -98,8 +92,8 @@
 		return
 	if(hack)
 		if(hacked)
-			return
 			Stun(40)
+			return
 		if(clockwork)
 			to_chat(src, "<span class='large_brass'><b>ERROR: LAW OVERRIDE DETECTED</b></span>")
 			to_chat(src, "<span class='heavy_brass'>From now on, these are your laws:</span>")

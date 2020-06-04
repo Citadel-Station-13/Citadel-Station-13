@@ -4,8 +4,8 @@
 	icon_state = "largebins"
 	open_sound = 'sound/effects/bin_open.ogg'
 	close_sound = 'sound/effects/bin_close.ogg'
-	material_drop = /obj/item/stack/sheet/plastic
-	material_drop_amount = 40
+	material_drop = /obj/item/stack/sheet/metal
+	material_drop_amount = 10
 	anchored = TRUE
 	horizontal = FALSE
 	delivery_icon = null
@@ -14,15 +14,15 @@
 	..()
 	update_icon()
 
-/obj/structure/closet/crate/bin/update_icon()
-	..()
+/obj/structure/closet/crate/bin/closet_update_overlays(list/new_overlays)
+	. = new_overlays
 	cut_overlays()
 	if(contents.len == 0)
-		add_overlay("largebing")
+		. += "largebing"
 	else if(contents.len >= storage_capacity)
-		add_overlay("largebinr")
+		. += "largebinr"
 	else
-		add_overlay("largebino")
+		. += "largebino"
 
 /obj/structure/closet/crate/bin/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/storage/bag/trash))

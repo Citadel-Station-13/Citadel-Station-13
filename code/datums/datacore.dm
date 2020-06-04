@@ -236,7 +236,12 @@
 		G.fields["fingerprint"]	= md5(H.dna.uni_identity)
 		G.fields["p_stat"]		= "Active"
 		G.fields["m_stat"]		= "Stable"
-		G.fields["sex"]			= H.gender
+		if(H.gender == MALE)
+			G.fields["gender"]  = "Male"
+		else if(H.gender == FEMALE)
+			G.fields["gender"]  = "Female"
+		else
+			G.fields["gender"]  = "Other"
 		G.fields["photo_front"]	= photo_front
 		G.fields["photo_side"]	= photo_side
 		general += G
@@ -274,10 +279,14 @@
 		L.fields["name"]		= H.real_name
 		L.fields["rank"] 		= H.mind.assigned_role
 		L.fields["age"]			= H.age
-		L.fields["sex"]			= H.gender
+		if(H.gender == MALE)
+			G.fields["gender"]  = "Male"
+		else if(H.gender == FEMALE)
+			G.fields["gender"]  = "Female"
+		else
+			G.fields["gender"]  = "Other"
 		L.fields["blood_type"]	= H.dna.blood_type
 		L.fields["b_dna"]		= H.dna.unique_enzymes
-		L.fields["enzymes"]		= H.dna.struc_enzymes
 		L.fields["identity"]	= H.dna.uni_identity
 		L.fields["species"]		= H.dna.species.type
 		L.fields["features"]	= H.dna.features

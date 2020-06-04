@@ -124,7 +124,7 @@
 	. = ..()
 	if(.)
 		return
-	if(locked && !issilicon(user))
+	if(locked && !hasSiliconAccessInArea(user))
 		to_chat(user, "<span class='warning'>The machine is locked, you are unable to use it!</span>")
 		return
 	if(panel_open)
@@ -160,10 +160,7 @@
 			to_chat(user, "<span class='warning'>You need one length of cable to repair [src]!</span>")
 			return
 		to_chat(user, "<span class='notice'>You begin to replace the wires...</span>")
-		if(do_after(user, 30, target = src))
-			if(coil.get_amount() < 1)
-				return
-			coil.use(1)
+		if(W.use_tool(src, user, 30, 1))
 			obj_integrity = max_integrity
 			stat &= ~BROKEN
 			to_chat(user, "<span class='notice'>You repair \the [src].</span>")
@@ -208,7 +205,7 @@
 	to_chat(user, "<span class='warning'>You short out the access controller.</span>")
 	return TRUE
 
-/obj/machinery/shieldgen/update_icon()
+/obj/machinery/shieldgen/update_icon_state()
 	if(active)
 		icon_state = (stat & BROKEN) ? "shieldonbr":"shieldon"
 	else
@@ -270,7 +267,7 @@
 	use_stored_power(50)
 
 /obj/machinery/shieldwallgen/proc/use_stored_power(amount)
-	power = CLAMP(power - amount, 0, maximum_stored_power)
+	power = clamp(power - amount, 0, maximum_stored_power)
 	update_activity()
 
 /obj/machinery/shieldwallgen/proc/update_activity()
@@ -370,7 +367,7 @@
 	if(!anchored)
 		to_chat(user, "<span class='warning'>\The [src] needs to be firmly secured to the floor first!</span>")
 		return
-	if(locked && !issilicon(user))
+	if(locked && !hasSiliconAccessInArea(user))
 		to_chat(user, "<span class='warning'>The controls are locked!</span>")
 		return
 	if(!power)

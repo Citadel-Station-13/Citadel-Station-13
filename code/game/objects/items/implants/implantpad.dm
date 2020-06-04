@@ -18,7 +18,7 @@
 	if(case)
 		. += "<span class='notice'>Alt-click [src] to remove the inserted implant case.</span>"
 
-/obj/item/implantpad/update_icon()
+/obj/item/implantpad/update_icon_state()
 	icon_state = "implantpad-[case ? TRUE : FALSE]"
 
 /obj/item/implantpad/AltClick(mob/user)
@@ -66,7 +66,7 @@
 		if(ismob(loc))
 			attack_self(loc)
 		else
-			for(var/mob/M in viewers(1, src))
+			for(var/mob/M in fov_viewers(1, src))
 				if(M.client)
 					attack_self(M)
 		add_fingerprint(usr)

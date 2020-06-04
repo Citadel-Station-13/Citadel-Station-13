@@ -1,6 +1,8 @@
 /datum/wires/robot
 	holder_type = /mob/living/silicon/robot
 	randomize = TRUE
+	req_knowledge = JOB_SKILL_MASTER
+	req_skill = JOB_SKILL_TRAINED
 
 /datum/wires/robot/New(atom/holder)
 	wires = list(
@@ -22,7 +24,7 @@
 	status += "The law sync module is [R.lawupdate ? "on" : "off"]."
 	status += "The intelligence link display shows [R.connected_ai ? R.connected_ai.name : "NULL"]."
 	status += "The camera light is [!isnull(R.builtInCamera) && R.builtInCamera.status ? "on" : "off"]."
-	status += "The lockdown indicator is [R.lockcharge ? "on" : "off"]."
+	status += "The lockdown indicator is [R.locked_down ? "on" : "off"]."
 	status += "The reset module hardware light is [R.has_module() ? "on" : "off"]."
 	return status
 
@@ -54,7 +56,7 @@
 				R.lawsync()
 				R.show_laws()
 		if(WIRE_LOCKDOWN)
-			R.SetLockdown(!R.lockcharge) // Toggle
+			R.SetLockdown(!R.locked_down) // Toggle
 		if(WIRE_RESET_MODULE)
 			if(R.has_module())
 				R.visible_message("[R]'s module servos twitch.", "Your module display flickers.")

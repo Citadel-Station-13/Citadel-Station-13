@@ -20,6 +20,7 @@
 	var/list/ingredients = list()
 	var/ingredients_placement = INGREDIENTS_FILL
 	var/customname = "custom"
+	var/total_quality = 0 //quality of all ingredients added together
 
 /obj/item/reagent_containers/food/snacks/customizable/examine(mob/user)
 	. = ..()
@@ -56,6 +57,9 @@
 			S.reagents.trans_to(src,min(S.reagents.total_volume, 15)) //limit of 15, we don't want our custom food to be completely filled by just one ingredient with large reagent volume.
 			foodtype |= S.foodtype
 			update_snack_overlays(S)
+			//quality of customised food is average of the ingredient's qualities
+			total_quality += S.food_quality
+			food_quality = total_quality / length(ingredients)
 			to_chat(user, "<span class='notice'>You add the [I.name] to the [name].</span>")
 			update_name(S)
 	else
@@ -293,7 +297,7 @@
 	icon = 'icons/obj/food/soupsalad.dmi'
 	icon_state = "bowl"
 	reagent_flags = OPENCONTAINER
-	materials = list(MAT_GLASS = 500)
+	custom_materials = list(/datum/material/glass = 500)
 	w_class = WEIGHT_CLASS_NORMAL
 
 /obj/item/reagent_containers/glass/bowl/attackby(obj/item/I,mob/user, params)
@@ -318,14 +322,17 @@
 	..()
 	update_icon()
 
-/obj/item/reagent_containers/glass/bowl/update_icon()
-	cut_overlays()
+
+/obj/item/reagent_containers/glass/bowl/update_icon_state()
+	if(!reagents || !reagents.total_volume)
+		icon_state = "bowl"
+
+/obj/item/reagent_containers/glass/bowl/update_overlays()
+	. = ..()
 	if(reagents && reagents.total_volume)
 		var/mutable_appearance/filling = mutable_appearance('icons/obj/food/soupsalad.dmi', "fullbowl")
 		filling.color = mix_color_from_reagents(reagents.reagent_list)
-		add_overlay(filling)
-	else
-		icon_state = "bowl"
+		. += filling
 
 #undef INGREDIENTS_FILL
 #undef INGREDIENTS_SCATTER

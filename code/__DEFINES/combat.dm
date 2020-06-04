@@ -29,12 +29,61 @@
 #define EFFECT_DROWSY		"drowsy"
 #define EFFECT_JITTER		"jitter"
 
+/// Default combat flags for those affected by sprinting (combat mode has been made into its own component)
+#define COMBAT_FLAGS_DEFAULT					NONE
+/// Default combat flags for everyone else (so literally everyone but humans).
+#define COMBAT_FLAGS_SPRINT_EXEMPT			(COMBAT_FLAG_SPRINT_ACTIVE | COMBAT_FLAG_SPRINT_TOGGLED | COMBAT_FLAG_SPRINT_FORCED)
+
+/// The user wants sprint mode on
+#define COMBAT_FLAG_SPRINT_TOGGLED			(1<<0)
+/// Sprint is currently active
+#define COMBAT_FLAG_SPRINT_ACTIVE			(1<<1)
+/// Currently attempting to crawl under someone
+#define COMBAT_FLAG_ATTEMPTING_CRAWL		(1<<2)
+/// Currently stamcritted
+#define COMBAT_FLAG_HARD_STAMCRIT			(1<<3)
+/// Currently attempting to resist up from the ground
+#define COMBAT_FLAG_RESISTING_REST			(1<<4)
+/// Intentionally resting
+#define COMBAT_FLAG_INTENTIONALLY_RESTING	(1<<5)
+/// Currently stamcritted but not as violently
+#define COMBAT_FLAG_SOFT_STAMCRIT			(1<<6)
+/// Force sprint mode on at all times, overrides everything including sprint disable traits.
+#define COMBAT_FLAG_SPRINT_FORCED			(1<<7)
+
+// Helpers for getting someone's stamcrit state. Cast to living.
+#define NOT_STAMCRIT 0
+#define SOFT_STAMCRIT 1
+#define HARD_STAMCRIT 2
+
+// Stamcrit check helpers
+#define IS_STAMCRIT(mob)					(CHECK_STAMCRIT(mob) != NOT_STAMCRIT)
+#define CHECK_STAMCRIT(mob)					((mob.combat_flags & COMBAT_FLAG_HARD_STAMCRIT)? HARD_STAMCRIT : ((mob.combat_flags & COMBAT_FLAG_SOFT_STAMCRIT)? SOFT_STAMCRIT : NOT_STAMCRIT))
+
+//stamina stuff
+///Threshold over which attacks start being hindered.
+#define STAMINA_NEAR_SOFTCRIT				90
+///softcrit for stamina damage. prevents standing up, some actions that cost stamina, etc, but doesn't force a rest or stop movement
+#define STAMINA_SOFTCRIT					100
+///sanity cap to prevent stamina actions (that are still performable) from sending you into crit.
+#define STAMINA_NEAR_CRIT					130
+///crit for stamina damage. forces a rest, and stops movement until stamina goes back to stamina softcrit
+#define STAMINA_CRIT						140
+///same as STAMINA_SOFTCRIT except for the more traditional health calculations
+#define STAMINA_SOFTCRIT_TRADITIONAL		0
+///ditto, but for STAMINA_CRIT
+#define STAMINA_CRIT_TRADITIONAL			-40
+
+#define CRAWLUNDER_DELAY							30 //Delay for crawling under a standing mob
+
 //Bitflags defining which status effects could be or are inflicted on a mob
+// This is a bit out of date/inaccurate in light of all the new status effects and is probably pending rework.
 #define CANSTUN			(1<<0)
 #define CANKNOCKDOWN	(1<<1)
 #define CANUNCONSCIOUS	(1<<2)
 #define CANPUSH			(1<<3)
 #define GODMODE			(1<<4)
+#define CANSTAGGER		(1<<5)
 
 //Health Defines
 #define HEALTH_THRESHOLD_CRIT 0
@@ -63,15 +112,17 @@
 #define GRAB_NECK					2
 #define GRAB_KILL					3
 
-//slowdown when in softcrit
-#define SOFTCRIT_ADD_SLOWDOWN 6
-
-//Attack types for checking shields/hit reactions
-#define MELEE_ATTACK 1
-#define UNARMED_ATTACK 2
-#define PROJECTILE_ATTACK 3
-#define THROWN_PROJECTILE_ATTACK 4
-#define LEAP_ATTACK 5
+/// Attack types for check_block()/run_block(). Flags, combinable.
+/// Attack was melee, whether or not armed.
+#define ATTACK_TYPE_MELEE			(1<<0)
+/// Attack was with a gun or something that should count as a gun (but not if a gun shouldn't count for a gun, crazy right?)
+#define ATTACK_TYPE_PROJECTILE		(1<<1)
+/// Attack was unarmed.. this usually means hand to hand combat.
+#define ATTACK_TYPE_UNARMED			(1<<2)
+/// Attack was a thrown atom hitting the victim.
+#define ATTACK_TYPE_THROWN			(1<<3)
+/// Attack was a bodyslam/leap/tackle. See: Xenomorph leap tackles.
+#define ATTACK_TYPE_TACKLE			(1<<4)
 
 //attack visual effects
 #define ATTACK_EFFECT_PUNCH		"punch"
@@ -139,6 +190,9 @@ GLOBAL_LIST_INIT(shove_disarming_types, typecacheof(list(
 #define EGUN_SELFCHARGE 1
 #define EGUN_SELFCHARGE_BORG 2
 
+///Time to spend without clicking on other things required for your shots to become accurate.
+#define GUN_AIMING_TIME (2 SECONDS)
+
 //Object/Item sharpness
 #define IS_BLUNT			0
 #define IS_SHARP			1
@@ -184,7 +238,7 @@ GLOBAL_LIST_INIT(shove_disarming_types, typecacheof(list(
 #define BODY_ZONE_PRECISE_R_FOOT	"r_foot"
 
 //We will round to this value in damage calculations.
-#define DAMAGE_PRECISION 0.1
+#define DAMAGE_PRECISION 0.01
 
 //items total mass, used to calculate their attacks' stamina costs. If not defined, the cost will be (w_class * 1.25)
 #define TOTAL_MASS_TINY_ITEM		1.25
@@ -198,8 +252,93 @@ GLOBAL_LIST_INIT(shove_disarming_types, typecacheof(list(
 #define TOTAL_MASS_MEDIEVAL_WEAPON	3.6 //very, very generic average sword/warpick/etc. weight in pounds.
 #define TOTAL_MASS_TOY_SWORD 1.5
 
+//stamina cost defines.
+#define STAM_COST_ATTACK_OBJ_MULT	1.2
+#define STAM_COST_ATTACK_MOB_MULT	0.8
+#define STAM_COST_BATON_MOB_MULT	1
+#define STAM_COST_NO_COMBAT_MULT	1.25
+#define STAM_COST_W_CLASS_MULT		1.25
+#define STAM_COST_THROW_MULT		2
+
+///Multiplier of the (STAMINA_NEAR_CRIT - user current stamina loss) : (STAMINA_NEAR_CRIT - STAMINA_SOFTCRIT) ratio used in damage penalties when stam soft-critted.
+#define STAM_CRIT_ITEM_ATTACK_PENALTY	0.66
+/// changeNext_move penalty multiplier of the above.
+#define STAM_CRIT_ITEM_ATTACK_DELAY		1.75
+/// Damage penalty when fighting prone.
+#define LYING_DAMAGE_PENALTY			0.5
+/// Added delay when firing guns stam-softcritted. Summed with a hardset CLICK_CD_RANGE delay, similar to STAM_CRIT_DAMAGE_DELAY otherwise.
+#define STAM_CRIT_GUN_DELAY			2.75
+
+/**
+  * should the current-attack-damage be lower than the item force multiplied by this value,
+  * a "inefficiently" prefix will be added to the message.
+  */
+#define INEFFICIENT_ATTACK_MSG_THRESHOLD 0.7
+
+
 //bullet_act() return values
 #define BULLET_ACT_HIT				"HIT"		//It's a successful hit, whatever that means in the context of the thing it's hitting.
 #define BULLET_ACT_BLOCK			"BLOCK"		//It's a blocked hit, whatever that means in the context of the thing it's hitting.
 #define BULLET_ACT_FORCE_PIERCE		"PIERCE"	//It pierces through the object regardless of the bullet being piercing by default.
 #define BULLET_ACT_TURF				"TURF"		//It hit us but it should hit something on the same turf too. Usually used for turfs.
+
+/// Check whether or not we can block, without "triggering" a block. Basically run checks without effects like depleting shields.
+/// Wrapper for do_run_block(). The arguments on that means the same as for this.
+#define mob_check_block(object, damage, attack_text, attack_type, armour_penetration, attacker, def_zone, return_list)\
+	do_run_block(FALSE, object, damage, attack_text, attack_type, armour_penetration, attacker, check_zone(def_zone), return_list)
+
+/// Runs a block "sequence", effectively checking and then doing effects if necessary.
+/// Wrapper for do_run_block(). The arguments on that means the same as for this.
+#define mob_run_block(object, damage, attack_text, attack_type, armour_penetration, attacker, def_zone, return_list)\
+	do_run_block(TRUE, object, damage, attack_text, attack_type, armour_penetration, attacker, check_zone(def_zone), return_list)
+
+/// Bitflags for check_block() and run_block(). Meant to be combined. You can be hit and still reflect, for example, if you do not use BLOCK_SUCCESS.
+/// Attack was not blocked
+#define BLOCK_NONE						NONE
+/// Attack was blocked, do not do damage. THIS FLAG MUST BE THERE FOR DAMAGE/EFFECT PREVENTION!
+#define BLOCK_SUCCESS					(1<<1)
+
+/// The below are for "metadata" on "how" the attack was blocked.
+
+/// Attack was and should be redirected according to list argument REDIRECT_METHOD (NOTE: the SHOULD here is important, as it says "the thing blocking isn't handling the reflecting for you so do it yourself"!)
+#define BLOCK_SHOULD_REDIRECT			(1<<2)
+/// Attack was redirected (whether by us or by SHOULD_REDIRECT flagging for automatic handling)
+#define BLOCK_REDIRECTED				(1<<3)
+/// Attack was blocked by something like a shield.
+#define BLOCK_PHYSICAL_EXTERNAL			(1<<4)
+/// Attack was blocked by something worn on you.
+#define BLOCK_PHYSICAL_INTERNAL			(1<<5)
+/// Attack outright missed because the target dodged. Should usually be combined with redirection passthrough or something (see martial arts)
+#define BLOCK_TARGET_DODGED				(1<<7)
+/// Meta-flag for run_block/do_run_block : By default, BLOCK_SUCCESS tells do_run_block() to assume the attack is completely blocked and not continue the block chain. If this is present, it will continue to check other items in the chain rather than stopping.
+#define BLOCK_CONTINUE_CHAIN			(1<<8)
+
+/// For keys in associative list/block_return as we don't want to saturate our (somewhat) limited flags.
+#define BLOCK_RETURN_REDIRECT_METHOD			"REDIRECT_METHOD"
+	/// Pass through victim
+	#define REDIRECT_METHOD_PASSTHROUGH			"passthrough"
+	/// Deflect at randomish angle
+	#define REDIRECT_METHOD_DEFLECT				"deflect"
+	/// reverse 180 angle, basically (as opposed to "realistic" wall reflections)
+	#define REDIRECT_METHOD_REFLECT				"reflect"
+	/// "do not taser the bad man with the desword" - actually aims at the firer/attacker rather than just reversing
+	#define REDIRECT_METHOD_RETURN_TO_SENDER		"no_you"
+
+/// These keys are generally only applied to the list if real_attack is FALSE. Used incase we want to make "smarter" mob AI in the future or something.
+/// Tells the caller how likely from 0 (none) to 100 (always) we are to reflect energy projectiles
+#define BLOCK_RETURN_REFLECT_PROJECTILE_CHANCE					"reflect_projectile_chance"
+/// Tells the caller how likely we are to block attacks from 0 to 100 in general
+#define BLOCK_RETURN_NORMAL_BLOCK_CHANCE						"normal_block_chance"
+/// Tells the caller about how many hits we can soak on average before our blocking fails.
+#define BLOCK_RETURN_BLOCK_CAPACITY								"block_capacity"
+
+/// Default if the above isn't set in the list.
+#define DEFAULT_REDIRECT_METHOD_PROJECTILE REDIRECT_METHOD_DEFLECT
+
+/// Block priorities
+#define BLOCK_PRIORITY_HELD_ITEM				100
+#define BLOCK_PRIORITY_WEAR_SUIT				75
+#define BLOCK_PRIORITY_CLOTHING					50
+#define BLOCK_PRIORITY_UNIFORM					25
+
+#define BLOCK_PRIORITY_DEFAULT BLOCK_PRIORITY_HELD_ITEM

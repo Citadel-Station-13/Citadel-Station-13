@@ -3,7 +3,7 @@
 // If you add something to this list, please group it by type and sort it alphabetically instead of just jamming it in like an animal
 // cost = 700- Minimum cost, or infinite points are possible.
 //////////////////////////////////////////////////////////////////////////////
-//////////////////////////// Engineering /////////////////////////////////////
+///////////////////////////// Engineering ////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////
 
 /datum/supply_pack/engineering
@@ -20,15 +20,9 @@
 
 /datum/supply_pack/engineering/conveyor
 	name = "Conveyor Assembly Crate"
-	desc = "Keep production moving along with six conveyor belts. Conveyor switch included. If you have any questions, check out the enclosed instruction book."
+	desc = "Keep production moving along with fifteen conveyor belts. Conveyor switch included. If you have any questions, check out the enclosed instruction book."
 	cost = 750
-	contains = list(/obj/item/conveyor_construct,
-					/obj/item/conveyor_construct,
-					/obj/item/conveyor_construct,
-					/obj/item/conveyor_construct,
-					/obj/item/conveyor_construct,
-					/obj/item/conveyor_construct,
-					/obj/item/conveyor_switch_construct,
+	contains = list(/obj/item/stack/conveyor/fifteen,
 					/obj/item/paper/guides/conveyor)
 	crate_name = "conveyor assembly crate"
 
@@ -51,6 +45,7 @@
 					/obj/item/clothing/glasses/meson/engine,
 					/obj/item/clothing/glasses/meson/engine)
 	crate_name = "engineering gear crate"
+	crate_type = /obj/structure/closet/crate/secure/engineering
 
 /datum/supply_pack/engineering/engihardsuit
 	name = "Engineering Hardsuit"
@@ -61,6 +56,7 @@
 					/obj/item/clothing/mask/gas,
 					/obj/item/clothing/suit/space/hardsuit/engine)
 	crate_name = "engineering hardsuit"
+	crate_type = /obj/structure/closet/crate/secure/engineering
 
 /datum/supply_pack/engineering/atmoshardsuit
 	name = "Atmospherics Hardsuit"
@@ -73,14 +69,15 @@
 	crate_name = "atmospherics hardsuit"
 	crate_type = /obj/structure/closet/crate/secure/engineering
 
-/datum/supply_pack/engineering/radhardsuit
-	name = "Radiation Hardsuit"
+/datum/supply_pack/engineering/radvoidsuit
+	name = "Radiation Voidsuit"
 	desc = "The Singulo is loose? Do you need to do a few changes to its containment and don't want to spent the rest of the shift under the shower? Get this Radiation Hardsuit! It protect from radiations and space only."
 	cost = 3500
 	access = ACCESS_ENGINE
 	contains = list(/obj/item/tank/internals/air,
 					/obj/item/clothing/mask/gas,
-					/obj/item/clothing/suit/space/hardsuit/engine/rad)
+					/obj/item/clothing/suit/space/rad,
+					/obj/item/clothing/head/helmet/space/rad)
 	crate_name = "radiation hardsuit"
 	crate_type = /obj/structure/closet/crate/secure/engineering
 
@@ -118,6 +115,22 @@
 	contains = list(/obj/machinery/power/port_gen/pacman)
 	crate_name = "PACMAN generator crate"
 	crate_type = /obj/structure/closet/crate/engineering/electrical
+
+/datum/supply_pack/engineering/airpump
+	name = "Portable Air Pump Crate"
+	desc = "We all know you work in a high pressure workplace. Keep it that way with two additional air pumps!"
+	cost = 3000
+	contains = list(/obj/machinery/portable_atmospherics/pump,
+					/obj/machinery/portable_atmospherics/pump)
+	crate_name = "portable air pump crate"
+
+/datum/supply_pack/engineering/airscrubber
+	name = "Portable Scrubber Crate"
+	desc = "Miasma got you down? Plasma in the vents? Freshen up with these two brand-new air scrubbers!"
+	cost = 3000
+	contains = list(/obj/machinery/portable_atmospherics/scrubber,
+					/obj/machinery/portable_atmospherics/scrubber)
+	crate_name = "portable scrubber crate"
 
 /datum/supply_pack/engineering/power
 	name = "Power Cell Crate"

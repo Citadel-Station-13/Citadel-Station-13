@@ -10,7 +10,7 @@
 /obj/effect/decal/cleanable/crayon/gang
 	icon = 'icons/effects/crayondecal.dmi'
 	layer = ABOVE_NORMAL_TURF_LAYER //Harder to hide
-	plane = GAME_PLANE
+	plane = ABOVE_WALL_PLANE
 	do_icon_rotate = FALSE //These are designed to always face south, so no rotation please.
 	var/datum/team/gang/gang
 
@@ -19,7 +19,7 @@
 		return INITIALIZE_HINT_QDEL
 	gang = G
 	var/newcolor = G.color
-	var/area/territory = get_area(src)
+	var/area/territory = get_base_area(src)
 	icon_state = G.name
 	G.new_territories |= list(territory.type = territory.name)
 	//If this isn't tagged by a specific gangster there's no bonus income.
@@ -27,7 +27,7 @@
 
 /obj/effect/decal/cleanable/crayon/gang/Destroy()
 	if(gang)
-		var/area/territory = get_area(src)
+		var/area/territory = get_base_area(src)
 		gang.territories -= territory.type
 		gang.new_territories -= territory.type
 		gang.lost_territories |= list(territory.type = territory.name)

@@ -153,7 +153,13 @@
 	mood_change = -4
 	timeout = 2400
 
+/datum/mood_event/graverobbing
+	description ="<span class='boldwarning'>I just desecrated someone's grave... I can't believe I did that...</span>\n"
+	mood_change = -8
+	timeout = 3 MINUTES
+
 //These are unused so far but I want to remember them to use them later
+
 /datum/mood_event/cloned_corpse
 	description = "<span class='boldwarning'>I recently saw my own corpse...</span>\n"
 	mood_change = -6
@@ -161,6 +167,8 @@
 /datum/mood_event/surgery
 	description = "<span class='boldwarning'>HE'S CUTTING ME OPEN!!</span>\n"
 	mood_change = -8
+
+//End unused
 
 /datum/mood_event/sad_empath
 	description = "<span class='warning'>Someone seems upset...</span>\n"
@@ -199,54 +207,66 @@
 	mood_change = -2
 	timeout = 1 MINUTES
 
+//Cursed stuff end.
+
 /datum/mood_event/vampcandle
 	description = "<span class='umbra'>Something is making your mind feel... loose...</span>\n"
-	mood_change = -10
+	mood_change = -15
 	timeout = 1 MINUTES
 
 /datum/mood_event/drankblood_bad
 	description = "<span class='boldwarning'>I drank the blood of a lesser creature. Disgusting.</span>\n"
 	mood_change = -4
-	timeout = 900
+	timeout = 8 MINUTES
 
 /datum/mood_event/drankblood_dead
 	description = "<span class='boldwarning'>I drank dead blood. I am better than this.</span>\n"
 	mood_change = -7
-	timeout = 900
+	timeout = 10 MINUTES
 
 /datum/mood_event/drankblood_synth
 	description = "<span class='boldwarning'>I drank synthetic blood. What is wrong with me?</span>\n"
 	mood_change = -7
-	timeout = 900
+	timeout = 15 MINUTES
 
 /datum/mood_event/drankkilled
 	description = "<span class='boldwarning'>I drank from my victim until they died. I feel...less human.</span>\n"
 	mood_change = -12
-	timeout = 6000
+	timeout = 25 MINUTES
 
 /datum/mood_event/madevamp
 	description = "<span class='boldwarning'>A soul has been cursed to undeath by my own hand.</span>\n"
 	mood_change = -10
-	timeout = 10000
+	timeout = 30 MINUTES
 
 /datum/mood_event/vampatefood
 	description = "<span class='boldwarning'>Mortal nourishment no longer sustains me. I feel unwell.</span>\n"
 	mood_change = -6
-	timeout = 1000
+	timeout = 10 MINUTES
 
 /datum/mood_event/daylight_1
 	description = "<span class='boldwarning'>I slept poorly in a makeshift coffin during the day.</span>\n"
 	mood_change = -3
-	timeout = 1000
+	timeout = 10 MINUTES
+
+/datum/mood_event/daylight_2
+	description = "<span class='boldwarning'>I have been scorched by the unforgiving rays of the sun.</span>\n"
+	mood_change = -6
+	timeout = 15 MINUTES
+
+/datum/mood_event/bloodsucker_disgust
+	description = "<span class='boldwarning'>Something I recently ate was horrifyingly disgusting.</span>\n"
+	mood_change = -5
+	timeout = 5 MINUTES
 
 /datum/mood_event/nanite_sadness
 	description = "<span class='warning robot'>+++++++HAPPINESS SUPPRESSION+++++++</span>\n"
 	mood_change = -7
-/datum/mood_event/daylight_2
-	description = "<span class='boldwarning'>I have been scorched by the unforgiving rays of the sun.</span>\n"
-	mood_change = -6
-	timeout = 1200
 
 /datum/mood_event/nanite_sadness/add_effects(message)
 	description = "<span class='warning robot'>+++++++[message]+++++++</span>\n"
 
+/datum/mood_event/artbad
+	description = "<span class='warning'>I've produced better art than that from my ass.</span>\n"
+	mood_change = -2
+	timeout = 1200

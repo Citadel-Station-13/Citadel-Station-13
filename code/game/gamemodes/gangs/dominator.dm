@@ -13,7 +13,7 @@
 	anchored = TRUE
 	layer = HIGH_OBJ_LAYER
 	max_integrity = 300
-	integrity_failure = 100
+	integrity_failure = 0.33
 	armor = list("melee" = 20, "bullet" = 50, "laser" = 50, "energy" = 50, "bomb" = 10, "bio" = 100, "rad" = 100, "fire" = 10, "acid" = 70)
 	var/datum/team/gang/gang
 	var/operating = FALSE	//false=standby or broken, true=takeover
@@ -47,9 +47,6 @@
 
 /obj/machinery/dominator/hulk_damage()
 	return (max_integrity - integrity_failure) / DOM_HULK_HITS_REQUIRED
-
-/obj/machinery/dominator/tesla_act()
-	qdel(src)
 
 /obj/machinery/dominator/update_icon()
 	cut_overlays()
@@ -101,7 +98,7 @@
 			playsound(loc, 'sound/items/timer.ogg', 10, 0)
 			if(!warned && (time_remaining < 180))
 				warned = TRUE
-				var/area/domloc = get_area(loc)
+				var/area/domloc = get_base_area(loc)
 				gang.message_gangtools("Less than 3 minutes remains in hostile takeover. Defend your dominator at [domloc.map_name]!")
 				for(var/G in GLOB.gangs)
 					var/datum/team/gang/tempgang = G
@@ -150,7 +147,7 @@
 
 /obj/machinery/dominator/attacked_by(obj/item/I, mob/living/user)
 	add_fingerprint(user)
-	..()
+	return ..()
 
 /obj/machinery/dominator/attack_hand(mob/user)
 	if(operating || (stat & BROKEN))
@@ -179,7 +176,7 @@
 		if((tempgang.domination_time != NOT_DOMINATING) || !tempgang.dom_attempts || !in_range(src, user) || !isturf(loc))
 			return 0
 
-		var/area/A = get_area(loc)
+		var/area/A = get_base_area(loc)
 		var/locname = A.map_name
 
 		gang = tempgang
@@ -229,7 +226,7 @@
 			if(!was_stranded)
 				priority_announce("All hostile activity within station systems has ceased.","Network Alert")
 
-			if(get_security_level() == "delta")
+			if(NUM2SECLEVEL(GLOB.security_level) == "delta")
 				set_security_level("red")
 
 		SSshuttle.clearHostileEnvironment(src)

@@ -27,6 +27,7 @@
 									 "How do I vore people?",
 									 "ERP?",
 									 "Not epic bros...")
+	threat = 5
 
 
 /datum/round_event/brand_intelligence/announce(fake)

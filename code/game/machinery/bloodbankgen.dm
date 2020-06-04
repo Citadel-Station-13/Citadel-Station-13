@@ -32,7 +32,7 @@
 	if(bag)
 		. += "<span class='notice'>It has \a [bag.name] hooked to its <b>input</b> slot. The counter reads: \"Current Capacity: [bag.reagents.total_volume] of [bag.reagents.maximum_volume]\"</span>"
 	if(outbag)
-		. += "<span class='notice'>It has \a [bag.name] hooked to its <b>output</b> slot. The counter reads: \"Current Capacity: [outbag.reagents.total_volume] of [outbag.reagents.maximum_volume]\"</span>"
+		. += "<span class='notice'>It has \a [outbag.name] hooked to its <b>output</b> slot. The counter reads: \"Current Capacity: [outbag.reagents.total_volume] of [outbag.reagents.maximum_volume]\"</span>"
 
 
 /obj/machinery/bloodbankgen/handle_atom_del(atom/A)
@@ -54,16 +54,17 @@
 	efficiency = E
 	productivity = P
 
-/obj/machinery/bloodbankgen/update_icon()
-	cut_overlays()
+/obj/machinery/bloodbankgen/update_icon_state()
 	if(is_operational())
-		icon_state = "bloodbank-on"
+		icon_state = "bloodbank-[is_operational() ? "on" : "off"]"
 
+/obj/machinery/bloodbankgen/update_overlays()
+	. = ..()
 	if(panel_open)
-		add_overlay("bloodbank-panel")
+		. += "bloodbank-panel"
 
-	if(src.bag)
-		add_overlay("bloodbag-input")
+	if(bag)
+		. += "bloodbag-input"
 		if(bag.reagents.total_volume)
 			var/mutable_appearance/filling_overlay = mutable_appearance(icon, "input-reagent")
 
@@ -85,10 +86,10 @@
 					filling_overlay.icon_state = "input-reagent100"
 
 			filling_overlay.color = list(mix_color_from_reagents(bag.reagents.reagent_list))
-			add_overlay(filling_overlay)
+			. += filling_overlay
 
-	if(src.outbag)
-		add_overlay("bloodbag-output")
+	if(outbag)
+		. += "bloodbag-output"
 		if(outbag.reagents.total_volume)
 			var/mutable_appearance/filling_overlay = mutable_appearance(icon, "output-reagent")
 
@@ -110,8 +111,7 @@
 					filling_overlay.icon_state = "output-reagent100"
 
 			filling_overlay.color = list(mix_color_from_reagents(outbag.reagents.reagent_list))
-			add_overlay(filling_overlay)
-	return
+			. += filling_overlay
 
 /obj/machinery/bloodbankgen/process()
 	if(!is_operational())
@@ -274,20 +274,20 @@
 
 	return TRUE
 
-/obj/machinery/bloodbankgen/proc/detachinput()
+/obj/machinery/bloodbankgen/proc/detachinput(mob/user)
 	if(bag)
 		bag.forceMove(drop_location())
-		if(usr && Adjacent(usr) && !issiliconoradminghost(usr))
-			usr.put_in_hands(bag)
+		if(user && Adjacent(usr) && user.can_hold_items())
+			user.put_in_hands(bag)
 		bag = null
 		draining = null
 		update_icon()
 
-/obj/machinery/bloodbankgen/proc/detachoutput()
+/obj/machinery/bloodbankgen/proc/detachoutput(mob/user)
 	if(outbag)
 		outbag.forceMove(drop_location())
-		if(usr && Adjacent(usr) && !issiliconoradminghost(usr))
-			usr.put_in_hands(outbag)
+		if(user && Adjacent(user) && user.can_hold_items())
+			user.put_in_hands(outbag)
 		outbag = null
 		filling = null
 		update_icon()
@@ -325,12 +325,12 @@
 		activateinput()
 
 	else if(href_list["detachinput"])
-		detachinput()
+		detachinput(usr)
 
 	else if(href_list["activateoutput"])
 		activateoutput()
 
 	else if(href_list["detachoutput"])
-		detachoutput()
+		detachoutput(usr)
 
 	updateUsrDialog()

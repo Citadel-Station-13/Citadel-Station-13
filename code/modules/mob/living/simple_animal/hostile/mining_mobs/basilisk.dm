@@ -8,7 +8,8 @@
 	icon_aggro = "Basilisk_alert"
 	icon_dead = "Basilisk_dead"
 	icon_gib = "syndicate_gib"
-	mob_biotypes = list(MOB_ORGANIC, MOB_BEAST)
+	threat = 4
+	mob_biotypes = MOB_ORGANIC|MOB_BEAST
 	move_to_delay = 20
 	projectiletype = /obj/item/projectile/temp/basilisk
 	projectilesound = 'sound/weapons/pierce.ogg'
@@ -24,7 +25,8 @@
 	obj_damage = 60
 	melee_damage_lower = 12
 	melee_damage_upper = 12
-	attacktext = "bites into"
+	attack_verb_continuous = "bites into"
+	attack_verb_simple = "bite into"
 	a_intent = INTENT_HARM
 	speak_emote = list("chitters")
 	attack_sound = 'sound/weapons/bladeslice.ogg'
@@ -71,7 +73,8 @@
 	throw_message = "bounces harmlessly off of"
 	melee_damage_lower = 15
 	melee_damage_upper = 15
-	attacktext = "impales"
+	attack_verb_continuous = "impales"
+	attack_verb_simple = "impale"
 	a_intent = INTENT_HARM
 	speak_emote = list("telepathically cries")
 	attack_sound = 'sound/weapons/bladeslice.ogg'
@@ -81,6 +84,32 @@
 	crusher_loot = /obj/item/crusher_trophy/watcher_wing
 	loot = list()
 	butcher_results = list(/obj/item/stack/ore/diamond = 2, /obj/item/stack/sheet/sinew = 2, /obj/item/stack/sheet/bone = 1)
+	search_objects = 1
+	wanted_objects = list(/obj/item/pen/survival, /obj/item/stack/ore/diamond)
+	field_of_vision_type = FOV_270_DEGREES //Obviously, it's one eyeball.
+
+/mob/living/simple_animal/hostile/asteroid/basilisk/watcher/Life()
+	. = ..()
+	if(stat == CONSCIOUS)
+		consume_bait()
+
+/mob/living/simple_animal/hostile/asteroid/basilisk/watcher/proc/consume_bait()
+	var/obj/item/stack/ore/diamond/diamonds = locate(/obj/item/stack/ore/diamond) in oview(src, 9)
+	var/obj/item/pen/survival/bait = locate(/obj/item/pen/survival) in oview(src, 9)
+	if(!diamonds && !bait)
+		return
+	if(diamonds)
+		var/distanced = 0
+		distanced = get_dist(loc,diamonds.loc)
+		if(distanced <= 1 && diamonds)
+			qdel(diamonds)
+			src.visible_message("<span class='notice'>[src] consumes [diamonds], and it disappears! ...At least, you think.</span>")
+	if(bait)
+		var/distanceb = 0
+		distanceb = get_dist(loc,bait.loc)
+		if(distanceb <= 1 && bait)
+			qdel(bait)
+			visible_message("<span class='notice'>[src] examines [bait] closer, and telekinetically shatters the pen.</span>")
 
 /mob/living/simple_animal/hostile/asteroid/basilisk/watcher/random/Initialize()
 	. = ..()
@@ -131,7 +160,7 @@
 
 /obj/item/projectile/temp/basilisk/magmawing/on_hit(atom/target, blocked = FALSE)
 	. = ..()
-	if(.)
+	if(. && isliving(target))
 		var/mob/living/L = target
 		if (istype(L))
 			L.adjust_fire_stacks(0.1)
@@ -144,7 +173,7 @@
 
 /obj/item/projectile/temp/basilisk/icewing/on_hit(atom/target, blocked = FALSE)
 	. = ..()
-	if(.)
+	if(. && isliving(target))
 		var/mob/living/L = target
 		L.apply_status_effect(/datum/status_effect/freon/watcher)
 

@@ -97,8 +97,7 @@
 		to_chat(user, "<span class='notice'>You add [A] to the [initial(name)] assembly.</span>")
 
 	else if(stage == EMPTY && istype(I, /obj/item/stack/cable_coil))
-		var/obj/item/stack/cable_coil/C = I
-		if (C.use(1))
+		if (I.use_tool(src, user, 0, 1, max_level = JOB_SKILL_BASIC))
 			det_time = 50 // In case the cable_coil was removed and readded.
 			stage_change(WIRED)
 			to_chat(user, "<span class='notice'>You rig the [initial(name)] assembly.</span>")
@@ -117,7 +116,7 @@
 				if(!O.reagents)
 					continue
 				var/reagent_list = pretty_string_from_reagent_list(O.reagents)
-				user.log_message("removed [O] ([reagent_list]) from [src]")
+				user.log_message("removed [O] ([reagent_list]) from [src]", LOG_GAME)
 			beakers = list()
 			to_chat(user, "<span class='notice'>You open the [initial(name)] assembly and remove the payload.</span>")
 			return // First use of the wrench remove beakers, then use the wrench to remove the activation mechanism.
@@ -177,7 +176,7 @@
 
 /obj/item/grenade/chem_grenade/prime()
 	if(stage != READY)
-		return
+		return FALSE
 
 	var/list/datum/reagents/reactants = list()
 	for(var/obj/item/reagent_containers/glass/G in beakers)
@@ -192,7 +191,7 @@
 				O.forceMove(drop_location())
 			beakers = list()
 		stage_change(EMPTY)
-		return
+		return FALSE
 
 	if(nadeassembly)
 		var/mob/M = get_mob_by_ckey(assemblyattacher)
@@ -205,6 +204,7 @@
 	update_mob()
 
 	qdel(src)
+	return TRUE
 
 //Large chem grenades accept slime cores and use the appropriately.
 /obj/item/grenade/chem_grenade/large
@@ -219,7 +219,7 @@
 
 /obj/item/grenade/chem_grenade/large/prime()
 	if(stage != READY)
-		return
+		return FALSE
 
 	for(var/obj/item/slime_extract/S in beakers)
 		if(S.Uses)
@@ -237,7 +237,7 @@
 				else
 					S.forceMove(get_turf(src))
 					no_splash = TRUE
-	..()
+	return ..()
 
 	//I tried to just put it in the allowed_containers list but
 	//if you do that it must have reagents.  If you're going to
@@ -288,7 +288,7 @@
 
 /obj/item/grenade/chem_grenade/adv_release/prime()
 	if(stage != READY)
-		return
+		return FALSE
 
 	var/total_volume = 0
 	for(var/obj/item/reagent_containers/RC in beakers)
@@ -296,7 +296,7 @@
 	if(!total_volume)
 		qdel(src)
 		qdel(nadeassembly)
-		return
+		return FALSE
 	var/fraction = unit_spread/total_volume
 	var/datum/reagents/reactants = new(unit_spread)
 	reactants.my_atom = src
@@ -313,6 +313,7 @@
 	else
 		addtimer(CALLBACK(src, .proc/prime), det_time)
 	log_game("A grenade detonated at [AREACOORD(DT)]")
+	return TRUE
 
 
 

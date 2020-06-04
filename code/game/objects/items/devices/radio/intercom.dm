@@ -2,6 +2,7 @@
 	name = "station intercom"
 	desc = "Talk through this."
 	icon_state = "intercom"
+	plane = ABOVE_WALL_PLANE
 	anchored = TRUE
 	w_class = WEIGHT_CLASS_BULKY
 	canhear_range = 2
@@ -147,4 +148,4 @@
 	result_path = /obj/item/radio/intercom/unscrewed
 	pixel_shift = 29
 	inverse = TRUE
-	materials = list(MAT_METAL = 75, MAT_GLASS = 25)
+	custom_materials = list(/datum/material/iron = 75, /datum/material/glass = 25)

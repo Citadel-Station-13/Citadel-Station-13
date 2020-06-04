@@ -18,6 +18,7 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 	/datum/hallucination/items = 4,
 	/datum/hallucination/fire = 3,
 	/datum/hallucination/self_delusion = 2,
+	/datum/hallucination/naked = 2,
 	/datum/hallucination/delusion = 2,
 	/datum/hallucination/shock = 1,
 	/datum/hallucination/death = 1,
@@ -65,6 +66,9 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 
 //Returns a random turf in a ring around the target mob, useful for sound hallucinations
 /datum/hallucination/proc/random_far_turf()
+	var/turf/target_T = get_turf(target)
+	if(!target_T)
+		return
 	var/x_based = prob(50)
 	var/first_offset = pick(-8,-7,-6,-5,5,6,7,8)
 	var/second_offset = rand(-8,8)
@@ -76,7 +80,7 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 	else
 		y_off = first_offset
 		x_off = second_offset
-	var/turf/T = locate(target.x + x_off, target.y + y_off, target.z)
+	var/turf/T = locate(target_T.x + x_off, target_T.y + y_off, target_T.z)
 	return T
 
 /obj/effect/hallucination
@@ -216,8 +220,8 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 
 /obj/effect/hallucination/simple/xeno/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	update_icon("alienh_pounce")
-	if(hit_atom == target && target.stat!=DEAD)
-		target.Knockdown(100)
+	if(hit_atom == target && target.stat != DEAD)
+		target.DefaultCombatKnockdown(100)
 		target.visible_message("<span class='danger'>[target] flails around wildly.</span>","<span class ='userdanger'>[name] pounces on you!</span>")
 
 /datum/hallucination/xeno_attack
@@ -304,7 +308,7 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 		shake_camera(target, 2, 1)
 		if(bubblegum.Adjacent(target) && !charged)
 			charged = TRUE
-			target.Knockdown(80)
+			target.DefaultCombatKnockdown(80)
 			target.adjustStaminaLoss(40)
 			step_away(target, bubblegum)
 			shake_camera(target, 4, 3)
@@ -675,9 +679,7 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 	var/list/mob/living/carbon/people = list()
 	var/mob/living/carbon/person = null
 	var/datum/language/understood_language = target.get_random_understood_language()
-	for(var/mob/living/carbon/H in view(target))
-		if(H == target)
-			continue
+	for(var/mob/living/carbon/H in view(target) - target)
 		if(!person)
 			person = H
 		else
@@ -697,6 +699,9 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 			target.client.images |= speech_overlay
 			sleep(30)
 			target.client.images.Remove(speech_overlay)
+		var/spans = list(person.speech_span)
+		if (target.client?.prefs.chat_on_map)
+			target.create_chat_message(person, understood_language, chosen, spans, 0)
 	else // Radio talk
 		var/chosen = specific_message
 		if(!chosen)
@@ -895,7 +900,7 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 			SEND_SOUND(target, get_announcer_sound("aimalf"))
 		if("meteors") //Meteors inbound!
 			to_chat(target, "<h1 class='alert'>Meteor Alert</h1>")
-			to_chat(target, "<br><br><span class='alert'>Meteors have been detected on collision course with the station. Estimated time until impact: [round(rand(180,360)/60)] minutes.</span><br><br>")
+			to_chat(target, "<br><br><span class='alert'>[generateMeteorString(rand(60, 90),FALSE,pick(GLOB.cardinals))]</span><br><br>")
 			SEND_SOUND(target, get_announcer_sound("meteors"))
 		if("supermatter")
 			SEND_SOUND(target, 'sound/magic/charge.ogg')
@@ -1057,6 +1062,8 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 	qdel(src)
 
 /obj/effect/hallucination/danger
+	layer = TURF_LAYER
+	plane = FLOOR_PLANE
 	var/image/image
 
 /obj/effect/hallucination/danger/proc/show_icon()
@@ -1080,7 +1087,8 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 	name = "lava"
 
 /obj/effect/hallucination/danger/lava/show_icon()
-	image = image('icons/turf/floors/lava.dmi',src,"smooth",TURF_LAYER)
+	image = image('icons/turf/floors/lava.dmi',src,"smooth",layer)
+	image.plane = plane
 	if(target.client)
 		target.client.images += image
 
@@ -1102,7 +1110,7 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 		if(istype(target, /obj/effect/dummy/phased_mob))
 			return
 		to_chat(target, "<span class='userdanger'>You fall into the chasm!</span>")
-		target.Knockdown(40)
+		target.DefaultCombatKnockdown(40)
 		addtimer(CALLBACK(GLOBAL_PROC, .proc/to_chat, target, "<span class='notice'>It's surprisingly shallow.</span>"), 15)
 		QDEL_IN(src, 30)
 
@@ -1241,7 +1249,7 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 
 /datum/hallucination/shock/proc/shock_drop()
 	target.jitteriness = max(target.jitteriness - 990, 10) //Still jittery, but vastly less
-	target.Knockdown(60)
+	target.DefaultCombatKnockdown(60)
 
 /datum/hallucination/husks
 
@@ -1250,7 +1258,7 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 	..()
 	if(!target.halbody)
 		var/list/possible_points = list()
-		for(var/turf/open/floor/F in view(target,world.view))
+		for(var/turf/open/floor/F in target.fov_view(world.view))
 			possible_points += F
 		if(possible_points.len)
 			var/turf/open/floor/husk_point = pick(possible_points)
@@ -1281,7 +1289,7 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 	set waitfor = FALSE
 	..()
 	var/list/turf/startlocs = list()
-	for(var/turf/open/T in view(world.view+1,target)-view(world.view,target))
+	for(var/turf/open/T in target.fov_view(world.view+1)-view(world.view,target))
 		startlocs += T
 	if(!startlocs.len)
 		qdel(src)
@@ -1314,7 +1322,30 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 						  "<span class='userdanger'>[G] grabs your wrist and violently wrenches it to the side!</span>")
 		C.emote("scream")
 		C.dropItemToGround(C.get_active_held_item())
-		C.Knockdown(60)
+		C.DefaultCombatKnockdown(60)
 	else
 		to_chat(C,"<span class='userdanger'>[G] violently grabs you!</span>")
 	qdel(src)
+
+/datum/hallucination/naked
+	var/image/image
+
+/datum/hallucination/naked/New(mob/living/carbon/C, forced = TRUE)
+	set waitfor = FALSE
+	..()
+	if (C.client && C.client.prefs)
+		var/datum/preferences/prefs = C.client.prefs
+		var/mob/living/carbon/human/dummy/M = generate_or_wait_for_human_dummy(DUMMY_HUMAN_SLOT_HALLUCINATION)
+		prefs.copy_to(M)
+		COMPILE_OVERLAYS(M)
+		CHECK_TICK
+		image = image(M,C)
+		unset_busy_human_dummy(DUMMY_HUMAN_SLOT_HALLUCINATION)
+		image.override = TRUE
+		target.client.images |= image
+		QDEL_IN(src, 20 SECONDS)
+
+/datum/hallucination/naked/Destroy()
+	if(target.client)
+		target.client.images.Remove(image)
+	return ..()

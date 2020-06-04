@@ -230,7 +230,7 @@
 /obj/machinery/door/proc/unelectrify()
 	secondsElectrified = 0
 
-/obj/machinery/door/update_icon()
+/obj/machinery/door/update_icon_state()
 	if(density)
 		icon_state = "door1"
 	else
@@ -288,7 +288,6 @@
 				return
 
 	operating = TRUE
-
 	do_animate("closing")
 	layer = closingLayer
 	sleep(5)
@@ -320,10 +319,10 @@
 		else if(ishuman(L)) //For humans
 			L.adjustBruteLoss(DOOR_CRUSH_DAMAGE)
 			L.emote("scream")
-			L.Knockdown(100)
+			L.DefaultCombatKnockdown(100)
 		else if(ismonkey(L)) //For monkeys
 			L.adjustBruteLoss(DOOR_CRUSH_DAMAGE)
-			L.Knockdown(100)
+			L.DefaultCombatKnockdown(100)
 		else //for simple_animals & borgs
 			L.adjustBruteLoss(DOOR_CRUSH_DAMAGE)
 		var/turf/location = get_turf(src)

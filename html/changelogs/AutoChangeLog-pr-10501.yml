@@ -1,5 +1,0 @@
-author: "Putnam"
-delete-after: True
-changes: 
-  - rscadd: "Two relief valves for atmospherics, available in your RPD today: a unary one that opens to air and a binary one that connects two pipenets, like a manual valve."
-  - tweak: "The atmos waste outlet injector on box has been replaced with an atmos waste relief valve."

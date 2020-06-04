@@ -50,7 +50,6 @@
 		return FALSE
 	return ..()
 
-
 //Vitality Matrix: Creates a sigil which will drain health from nonservants and can use that health to heal or even revive servants.
 /datum/clockwork_scripture/create_object/vitality_matrix
 	descname = "Trap, Damage to Healing"
@@ -77,6 +76,10 @@
 		return FALSE
 	return ..()
 
+/datum/clockwork_scripture/create_object/vitality_matrix/get_spawn_path(mob/user)
+	if(!is_servant_of_ratvar(user, TRUE))
+		return /obj/effect/clockwork/sigil/vitality/neutered
+	return ..()
 
 //Judicial Visor: Creates a judicial visor, which can smite an area.
 /datum/clockwork_scripture/create_object/judicial_visor
@@ -97,6 +100,24 @@
 	quickbind = TRUE
 	quickbind_desc = "Creates a Judicial Visor, which can smite an area, applying Belligerent and briefly stunning."
 
+//Nezbere's shield: Creates a ratvarian shield which absorbs attacks, see ratvarian_shield.dm for details.
+/datum/clockwork_scripture/create_object/nezberes_shield
+	descname = "Shield with empowerable bashes"
+	name = "Nezbere's shield"
+	desc = "Creates a shield which generates charge from blocking damage, using it to empower its bashes tremendously. It is repaired with brass, and while very durable, extremely weak to lasers and, even more so, to energy weaponry."
+	invocations = list("Shield me...", "... from the coming dark!")
+	channel_time = 20
+	power_cost = 600 //Shouldn't be too spammable but not too hard to get either
+	whispered = TRUE
+	creator_message = "You form a ratvarian shield, which is capable of absorbing blocked attacks to empower its bashes."
+	object_path = /obj/item/shield/riot/ratvarian
+	usage_tip = "Bashes will only use charge when performed with intent to harm."
+	tier = SCRIPTURE_SCRIPT
+	space_allowed = TRUE
+	primary_component = VANGUARD_COGWHEEL
+	sort_priority = 5
+	quickbind = TRUE
+	quickbind_desc = "Creates a Ratvarian shield, which can absorb energy from attacks for use in powerful bashes."
 
 //Clockwork Armaments: Grants the invoker the ability to call forth a Ratvarian spear and clockwork armor.
 /datum/clockwork_scripture/clockwork_armaments
@@ -110,7 +131,7 @@
 	usage_tip = "Throwing the spear at a mob will do massive damage and knock them down, but break the spear. You will need to wait for 30 seconds before resummoning it."
 	tier = SCRIPTURE_SCRIPT
 	primary_component = VANGUARD_COGWHEEL
-	sort_priority = 5
+	sort_priority = 6
 	important = TRUE
 	quickbind = TRUE
 	quickbind_desc = "Permanently binds clockwork armor and a Ratvarian spear to you."
@@ -150,7 +171,7 @@
 	/obj/item/clothing/head/helmet/space,
 	/obj/item/clothing/shoes/magboots)) //replace this only if ratvar is up
 
-/datum/action/innate/clockwork_armaments/IsAvailable()
+/datum/action/innate/clockwork_armaments/IsAvailable(silent = FALSE)
 	if(!is_servant_of_ratvar(owner))
 		qdel(src)
 		return
@@ -210,7 +231,7 @@
 	usage_tip = "This gateway is strictly one-way and will only allow things through the invoker's portal."
 	tier = SCRIPTURE_SCRIPT
 	primary_component = GEIS_CAPACITOR
-	sort_priority = 6
+	sort_priority = 7
 	quickbind = TRUE
 	quickbind_desc = "Allows you to create a one-way Spatial Gateway to a living Servant or Clockwork Obelisk."
 
@@ -242,3 +263,160 @@
 		duration = max(duration, 100)
 	return slab.procure_gateway(invoker, duration, portal_uses)
 
+
+//Mending Mantra: Channeled for up to ten times over twenty seconds to repair structures and heal allies
+/datum/clockwork_scripture/channeled/mending_mantra
+	descname = "Channeled, Area Healing and Repair"
+	name = "Mending Mantra"
+	desc = "Repairs nearby structures and constructs. Servants wearing clockwork armor will also be healed. Channeled every two seconds for a maximum of twenty seconds."
+	chant_invocations = list("Mend our dents!", "Heal our scratches!", "Repair our gears!")
+	chant_amount = 10
+	chant_interval = 20
+	power_cost = 400
+	usage_tip = "This is a very effective way to rapidly reinforce a base after an attack."
+	tier = SCRIPTURE_SCRIPT
+	primary_component = VANGUARD_COGWHEEL
+	sort_priority = 7
+	quickbind = TRUE
+	quickbind_desc = "Repairs nearby structures and constructs. Servants wearing clockwork armor will also be healed.<br><b>Maximum 10 chants.</b>"
+	var/heal_attempts = 4
+	var/heal_amount = 2.5
+	var/static/list/damage_heal_order = list(BRUTE, BURN, OXY)
+	var/static/list/heal_finish_messages = list("There, all mended!", "Try not to get too damaged.", "No more dents and scratches for you!", "Champions never die.", "All patched up.", \
+	"Ah, child, it's okay now.", "Pain is temporary.", "What you do for the Justiciar is eternal.", "Bear this for me.", "Be strong, child.", "Please, be careful!", \
+	"If you die, you will be remembered.")
+	var/static/list/heal_target_typecache = typecacheof(list(
+	/obj/structure/destructible/clockwork,
+	/obj/machinery/door/airlock/clockwork,
+	/obj/machinery/door/window/clockwork,
+	/obj/structure/window/reinforced/clockwork,
+	/obj/structure/table/reinforced/brass))
+	var/static/list/ratvarian_armor_typecache = typecacheof(list(
+	/obj/item/clothing/suit/armor/clockwork,
+	/obj/item/clothing/head/helmet/clockwork,
+	/obj/item/clothing/gloves/clockwork,
+	/obj/item/clothing/shoes/clockwork))
+
+/datum/clockwork_scripture/channeled/mending_mantra/chant_effects(chant_number)
+	var/turf/T
+	for(var/atom/movable/M in range(7, invoker))
+		if(isliving(M))
+			if(isclockmob(M) || istype(M, /mob/living/simple_animal/drone/cogscarab))
+				var/mob/living/simple_animal/S = M
+				if(S.health == S.maxHealth || S.stat == DEAD)
+					continue
+				T = get_turf(M)
+				for(var/i in 1 to heal_attempts)
+					if(S.health < S.maxHealth)
+						S.adjustHealth(-heal_amount)
+						new /obj/effect/temp_visual/heal(T, "#1E8CE1")
+						if(i == heal_attempts && S.health >= S.maxHealth) //we finished healing on the last tick, give them the message
+							to_chat(S, "<span class='inathneq'>\"[text2ratvar(pick(heal_finish_messages))]\"</span>")
+							break
+					else
+						to_chat(S, "<span class='inathneq'>\"[text2ratvar(pick(heal_finish_messages))]\"</span>")
+						break
+			else if(issilicon(M))
+				var/mob/living/silicon/S = M
+				if(S.health == S.maxHealth || S.stat == DEAD || !is_servant_of_ratvar(S))
+					continue
+				T = get_turf(M)
+				for(var/i in 1 to heal_attempts)
+					if(S.health < S.maxHealth)
+						S.heal_ordered_damage(heal_amount, damage_heal_order)
+						new /obj/effect/temp_visual/heal(T, "#1E8CE1")
+						if(i == heal_attempts && S.health >= S.maxHealth)
+							to_chat(S, "<span class='inathneq'>\"[text2ratvar(pick(heal_finish_messages))]\"</span>")
+							break
+					else
+						to_chat(S, "<span class='inathneq'>\"[text2ratvar(pick(heal_finish_messages))]\"</span>")
+						break
+			else if(ishuman(M))
+				var/mob/living/carbon/human/H = M
+				if(H.health == H.maxHealth || H.stat == DEAD || !is_servant_of_ratvar(H))
+					continue
+				T = get_turf(M)
+				var/heal_ticks = 0 //one heal tick for each piece of ratvarian armor worn
+				var/obj/item/I = H.get_item_by_slot(SLOT_WEAR_SUIT)
+				if(is_type_in_typecache(I, ratvarian_armor_typecache))
+					heal_ticks++
+				I = H.get_item_by_slot(SLOT_HEAD)
+				if(is_type_in_typecache(I, ratvarian_armor_typecache))
+					heal_ticks++
+				I = H.get_item_by_slot(SLOT_GLOVES)
+				if(is_type_in_typecache(I, ratvarian_armor_typecache))
+					heal_ticks++
+				I = H.get_item_by_slot(SLOT_SHOES)
+				if(is_type_in_typecache(I, ratvarian_armor_typecache))
+					heal_ticks++
+				if(heal_ticks)
+					for(var/i in 1 to heal_ticks)
+						if(H.health < H.maxHealth)
+							H.heal_ordered_damage(heal_amount, damage_heal_order)
+							new /obj/effect/temp_visual/heal(T, "#1E8CE1")
+							if(i == heal_ticks && H.health >= H.maxHealth)
+								to_chat(H, "<span class='inathneq'>\"[text2ratvar(pick(heal_finish_messages))]\"</span>")
+								break
+						else
+							to_chat(H, "<span class='inathneq'>\"[text2ratvar(pick(heal_finish_messages))]\"</span>")
+							break
+		else if(is_type_in_typecache(M, heal_target_typecache))
+			var/obj/structure/destructible/clockwork/C = M
+			if(C.obj_integrity == C.max_integrity || (istype(C) && !C.can_be_repaired))
+				continue
+			T = get_turf(M)
+			for(var/i in 1 to heal_attempts)
+				if(C.obj_integrity < C.max_integrity)
+					C.obj_integrity = min(C.obj_integrity + 5, C.max_integrity)
+					C.update_icon()
+					new /obj/effect/temp_visual/heal(T, "#1E8CE1")
+				else
+					break
+	new /obj/effect/temp_visual/ratvar/mending_mantra(get_turf(invoker))
+	return TRUE
+
+//Volt Blaster: Channeled for up to five times over ten seconds to fire up to five rays of energy at target locations.
+/datum/clockwork_scripture/channeled/volt_blaster
+	descname = "Channeled, Targeted Energy Blasts"
+	name = "Volt Blaster"
+	desc = "Allows you to fire five energy rays at target locations. Channeled every fourth of a second for a maximum of ten seconds."
+	channel_time = 30
+	invocations = list("Amperage...", "...grant me your power!")
+	chant_invocations = list("Use charge to kill!", "Slay with power!", "Hunt with energy!")
+	chant_amount = 5
+	chant_interval = 4
+	power_cost = 500
+	usage_tip = "Though it requires you to stand still, this scripture can do massive damage."
+	tier = SCRIPTURE_SCRIPT
+	primary_component = HIEROPHANT_ANSIBLE
+	sort_priority = 10
+	quickbind = TRUE
+	quickbind_desc = "Allows you to fire energy rays at target locations.<br><b>Maximum 5 chants.</b>"
+	var/static/list/nzcrentr_insults = list("You're not very good at aiming.", "You hunt badly.", "What a waste of energy.", "Almost funny to watch.",
+	"Boss says </span><span class='heavy_brass'>\"Click something, you idiot!\"</span><span class='nzcrentr'>.", "Stop wasting power if you can't aim.")
+
+/datum/clockwork_scripture/channeled/volt_blaster/chant_effects(chant_number)
+	slab.busy = null
+	var/datum/clockwork_scripture/ranged_ability/volt_ray/ray = new
+	ray.slab = slab
+	ray.invoker = invoker
+	var/turf/T = get_turf(invoker)
+	if(!ray.run_scripture() && slab && invoker)
+		if(can_recite() && T == get_turf(invoker))
+			to_chat(invoker, "<span class='nzcrentr'>\"[text2ratvar(pick(nzcrentr_insults))]\"</span>")
+		else
+			return FALSE
+	return TRUE
+
+/obj/effect/ebeam/volt_ray
+	name = "volt_ray"
+	layer = LYING_MOB_LAYER
+
+/datum/clockwork_scripture/ranged_ability/volt_ray
+	name = "Volt Ray"
+	slab_overlay = "volt"
+	allow_mobility = FALSE
+	ranged_type = /obj/effect/proc_holder/slab/volt
+	ranged_message = "<span class='nzcrentr_small'><i>You charge the clockwork slab with shocking might.</i>\n\
+	<b>Left-click a target to fire, quickly!</b></span>"
+	timeout_time = 20

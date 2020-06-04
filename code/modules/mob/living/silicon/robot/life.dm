@@ -21,7 +21,7 @@
 	if(cell && cell.charge)
 		if(cell.charge <= 100)
 			uneq_all()
-		var/amt = CLAMP((lamp_intensity - 2) * 2,1,cell.charge) //Always try to use at least one charge per tick, but allow it to completely drain the cell.
+		var/amt = clamp((lamp_intensity - 2) * 2,1,cell.charge) //Always try to use at least one charge per tick, but allow it to completely drain the cell.
 		cell.use(amt) //Usage table: 1/tick if off/lowest setting, 4 = 4/tick, 6 = 8/tick, 8 = 12/tick, 10 = 16/tick
 	else
 		uneq_all()
@@ -91,12 +91,3 @@
 		add_overlay(fire_overlay)
 	else
 		cut_overlay(fire_overlay)
-
-/mob/living/silicon/robot/update_canmove()
-	if(stat || buckled || lockcharge || resting) //CITADEL EDIT resting dogborg-os
-		canmove = 0
-	else
-		canmove = 1
-	update_transform()
-	update_action_buttons_icon()
-	return canmove

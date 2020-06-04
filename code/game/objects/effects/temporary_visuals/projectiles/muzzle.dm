@@ -32,3 +32,7 @@
 /obj/effect/projectile/muzzle/laser/wavemotion
 	name = "particle backblast"
 	icon_state = "muzzle_wavemotion"
+
+/obj/effect/projectile/muzzle/laser/emitter
+	name = "emitter flash"
+	icon_state = "muzzle_emitter"

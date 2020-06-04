@@ -104,6 +104,12 @@ God bless America.
 		else if(!frying && user.transferItemToLoc(I, src))
 			to_chat(user, "<span class='notice'>You put [I] into [src].</span>")
 			frying = new/obj/item/reagent_containers/food/snacks/deepfryholder(src, I)
+			//setup food quality for item depending on if it's edible or not
+			if(isfood(I))
+				var/obj/item/reagent_containers/food/original_food = I
+				frying.adjust_food_quality(original_food.food_quality) //food quality remains unchanged until degree of frying is calculated
+			else
+				frying.adjust_food_quality(10) //inedible fried item has low quality
 			icon_state = "fryer_on"
 			fry_loop.start()
 
@@ -152,6 +158,6 @@ God bless America.
 		reagents.reaction(C, TOUCH)
 		C.apply_damage(min(30, reagents.total_volume), BURN, BODY_ZONE_HEAD)
 		reagents.remove_any((reagents.total_volume/2))
-		C.Knockdown(60)
+		C.DefaultCombatKnockdown(60)
 		user.changeNext_move(CLICK_CD_MELEE)
 	return ..()

@@ -8,15 +8,10 @@
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	var/obj/item/clothing/suit/space/chronos/suit = null
 
-/obj/item/clothing/head/helmet/space/chronos/dropped()
+/obj/item/clothing/head/helmet/space/chronos/dropped(mob/user)
 	if(suit)
 		suit.deactivate(1, 1)
 	..()
-
-/obj/item/clothing/head/helmet/space/chronos/Destroy()
-	dropped()
-	return ..()
-
 
 /obj/item/clothing/suit/space/chronos
 	name = "Chronosuit"
@@ -57,14 +52,10 @@
 		else
 			deactivate()
 
-/obj/item/clothing/suit/space/chronos/dropped()
+/obj/item/clothing/suit/space/chronos/dropped(mob/user)
 	if(activated)
 		deactivate()
 	..()
-
-/obj/item/clothing/suit/space/chronos/Destroy()
-	dropped()
-	return ..()
 
 /obj/item/clothing/suit/space/chronos/emp_act(severity)
 	. = ..()
@@ -220,8 +211,8 @@
 			teleport_now.Remove(user)
 			if(user.wear_suit == src)
 				if(hard_landing)
-					user.electrocute_act(35, src, safety = 1)
-					user.Knockdown(200)
+					user.electrocute_act(35, src, flags = SHOCK_NOGLOVES)
+					user.DefaultCombatKnockdown(200)
 				if(!silent)
 					to_chat(user, "\nroot@ChronosuitMK4# chronowalk4 --stop\n")
 					if(camera)
@@ -330,7 +321,7 @@
 	check_flags = AB_CHECK_CONSCIOUS //|AB_CHECK_INSIDE
 	var/obj/item/clothing/suit/space/chronos/chronosuit = null
 
-/datum/action/innate/chrono_teleport/IsAvailable()
+/datum/action/innate/chrono_teleport/IsAvailable(silent = FALSE)
 	return (chronosuit && chronosuit.activated && chronosuit.camera && !chronosuit.teleporting)
 
 /datum/action/innate/chrono_teleport/Activate()

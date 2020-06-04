@@ -62,11 +62,11 @@
 /obj/item/paper/oui_getcontent(mob/target)
 	if(!target.is_literate() || force_stars)
 		force_stars = FALSE
-		return "<HTML><HEAD><TITLE>[name]</TITLE></HEAD><BODY>[stars(info)]<HR>[stamps]</BODY></HTML>"
+		return "<HTML><HEAD><meta http-equiv='Content-Type' content='text/html; charset=UTF-8'><TITLE>[name]</TITLE></HEAD><BODY>[stars(info)]<HR>[stamps]</BODY></HTML>"
 	else if(istype(target.get_active_held_item(), /obj/item/pen) | istype(target.get_active_held_item(), /obj/item/toy/crayon))
-		return "<HTML><HEAD><TITLE>[name]</TITLE></HEAD><BODY>[info_links]<HR>[stamps]</BODY><div align='right'style='position:fixed;bottom:0;font-style:bold;'><A href='?src=[REF(src)];help=1'>\[?\]</A></div></HTML>"
+		return "<HTML><HEAD><meta http-equiv='Content-Type' content='text/html; charset=UTF-8'><TITLE>[name]</TITLE></HEAD><BODY>[info_links]<HR>[stamps]</BODY><div align='right'style='position:fixed;bottom:0;font-style:bold;'><A href='?src=[REF(src)];help=1'>\[?\]</A></div></HTML>"
 	else
-		return "<HTML><HEAD><TITLE>[name]</TITLE></HEAD><BODY>[info]<HR>[stamps]</BODY></HTML>"
+		return "<HTML><HEAD><meta http-equiv='Content-Type' content='text/html; charset=UTF-8'><TITLE>[name]</TITLE></HEAD><BODY>[info]<HR>[stamps]</BODY></HTML>"
 
 /obj/item/paper/oui_canview(mob/target)
 	if(check_rights_for(target.client, R_FUN)) //Allows admins to view faxes
@@ -78,8 +78,7 @@
 		return get_dist(src, target) < 2
 	return ..()
 
-/obj/item/paper/update_icon()
-
+/obj/item/paper/update_icon_state()
 	if(resistance_flags & ON_FIRE)
 		icon_state = "paper_onfire"
 		return
@@ -152,7 +151,10 @@
 		if(istart == 0)
 			return	//No field found with matching id
 
-		laststart = istart+1
+		if(links)
+			laststart = istart + length(info_links[istart])
+		else
+			laststart = istart + length(info[istart])
 		locid++
 		if(locid == id)
 			var/iend = 1
@@ -229,7 +231,7 @@
 
 
 /obj/item/paper/proc/openhelp(mob/user)
-	user << browse({"<HTML><HEAD><TITLE>Paper Help</TITLE></HEAD>
+	user << browse({"<HTML><HEAD><meta http-equiv='Content-Type' content='text/html; charset=UTF-8'><TITLE>Paper Help</TITLE></HEAD>
 	<BODY>
 		You can use backslash (\\) to escape special characters.<br>
 		<br>
@@ -376,8 +378,12 @@
 	icon_state = "scrap"
 	slot_flags = null
 
-/obj/item/paper/crumpled/update_icon()
-	return
+/obj/item/paper/crumpled/ComponentInitialize()
+	. = ..()
+	AddElement(/datum/element/update_icon_blocker)
 
 /obj/item/paper/crumpled/bloody
 	icon_state = "scrap_bloodied"
+
+/obj/item/paper/crumpled/muddy
+	icon_state = "scrap_mud"

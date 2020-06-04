@@ -10,23 +10,21 @@
 	attack_verb = list("whipped", "lashed", "disciplined")
 	max_integrity = 300
 	var/content_overlays = FALSE //If this is true, the belt will gain overlays based on what it's holding
-	var/worn_overlays = FALSE //worn counterpart of the above.
+	var/onmob_overlays = FALSE //worn counterpart of the above.
 
 /obj/item/storage/belt/suicide_act(mob/living/carbon/user)
 	user.visible_message("<span class='suicide'>[user] begins belting [user.p_them()]self with \the [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	return BRUTELOSS
 
-/obj/item/storage/belt/update_icon()
-	cut_overlays()
+/obj/item/storage/belt/update_overlays()
+	. = ..()
 	if(content_overlays)
 		for(var/obj/item/I in contents)
-			var/mutable_appearance/M = I.get_belt_overlay()
-			add_overlay(M)
-	..()
+			. += I.get_belt_overlay()
 
-/obj/item/storage/belt/worn_overlays(isinhands, icon_file, style_flags = NONE)
+/obj/item/storage/belt/worn_overlays(isinhands, icon_file, used_state, style_flags = NONE)
 	. = ..()
-	if(!isinhands && worn_overlays)
+	if(!isinhands && onmob_overlays)
 		for(var/obj/item/I in contents)
 			. += I.get_worn_belt_overlay(icon_file)
 
@@ -34,12 +32,18 @@
 	. = ..()
 	update_icon()
 
+/obj/item/storage/belt/ComponentInitialize()
+	. = ..()
+	if(onmob_overlays)
+		AddElement(/datum/element/update_icon_updates_onmob)
+
 /obj/item/storage/belt/utility
 	name = "toolbelt" //Carn: utility belt is nicer, but it bamboozles the text parsing.
 	desc = "Holds tools."
 	icon_state = "utilitybelt"
 	item_state = "utility"
 	content_overlays = TRUE
+	custom_premium_price = 300
 	rad_flags = RAD_PROTECT_CONTENTS | RAD_NO_CONTAMINATE //because this is easier than trying to have showers wash all contents.
 
 /obj/item/storage/belt/utility/ComponentInitialize()
@@ -179,17 +183,23 @@
 		/obj/item/pinpointer/crew
 		))
 
-
 /obj/item/storage/belt/medical/surgery_belt_adv
 	name = "surgical supply belt"
 	desc = "A specialized belt designed for holding surgical equipment. It seems to have specific pockets for each and every surgical tool you can think of."
 	content_overlays = FALSE
+	var/advanced_drapes = FALSE
 
 /obj/item/storage/belt/medical/surgery_belt_adv/PopulateContents()
 	new /obj/item/scalpel/advanced(src)
 	new /obj/item/retractor/advanced(src)
 	new /obj/item/surgicaldrill/advanced(src)
-	new /obj/item/surgical_drapes(src)
+	if(advanced_drapes)
+		new /obj/item/surgical_drapes/advanced(src)
+	else
+		new /obj/item/surgical_drapes(src)
+
+/obj/item/storage/belt/medical/surgery_belt_adv/cmo
+	advanced_drapes = TRUE
 
 /obj/item/storage/belt/security
 	name = "security belt"
@@ -328,7 +338,7 @@
 	desc = "Proves to the world that you are the strongest!"
 	icon_state = "championbelt"
 	item_state = "champion"
-	materials = list(MAT_GOLD=400)
+	custom_materials = list(/datum/material/gold=400)
 
 /obj/item/storage/belt/champion/ComponentInitialize()
 	. = ..()
@@ -575,6 +585,7 @@
 		/obj/item/key/janitor,
 		/obj/item/clothing/gloves,
 		/obj/item/melee/flyswatter,
+		/obj/item/twohanded/broom,
 		/obj/item/paint/paint_remover,
 		/obj/item/assembly/mousetrap,
 		/obj/item/screwdriver,
@@ -610,6 +621,21 @@
 	STR.display_numerical_stacking = TRUE
 	STR.can_hold = typecacheof(list(
 		/obj/item/ammo_casing
+		))
+
+/obj/item/storage/belt/quiver
+	name = "leather quiver"
+	desc = "A quiver made from the hide of some animal. Used to hold arrows."
+	icon_state = "quiver"
+	item_state = "quiver"
+
+/obj/item/storage/belt/quiver/ComponentInitialize()
+	. = ..()
+	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
+	STR.max_items = 15
+	STR.display_numerical_stacking = TRUE
+	STR.can_hold = typecacheof(list(
+		/obj/item/ammo_casing/caseless/arrow
 		))
 
 /obj/item/storage/belt/medolier
@@ -670,7 +696,10 @@
 		/obj/item/gun/ballistic/revolver,
 		/obj/item/ammo_box,
 		/obj/item/toy/gun,
-		/obj/item/gun/energy/e_gun/mini
+		/obj/item/gun/energy/e_gun/mini,
+		/obj/item/gun/ballistic/automatic/magrifle/pistol,
+		/obj/item/gun/energy/disabler,
+		/obj/item/gun/energy/taser
 		))
 
 /obj/item/storage/belt/holster/full/PopulateContents()
@@ -683,6 +712,8 @@
 	desc = "A dorky fannypack for keeping small items in."
 	icon_state = "fannypack_leather"
 	item_state = "fannypack_leather"
+	dying_key = DYE_REGISTRY_FANNYPACK
+	custom_price = 100
 
 /obj/item/storage/belt/fannypack/ComponentInitialize()
 	. = ..()
@@ -747,7 +778,7 @@
 	item_state = "sheath"
 	w_class = WEIGHT_CLASS_BULKY
 	content_overlays = TRUE
-	worn_overlays = TRUE
+	onmob_overlays = TRUE
 	var/list/fitting_swords = list(/obj/item/melee/sabre, /obj/item/melee/baton/stunsword)
 	var/starting_sword = /obj/item/melee/sabre
 
@@ -765,29 +796,18 @@
 	if(length(contents))
 		. += "<span class='notice'>Alt-click it to quickly draw the blade.</span>"
 
-/obj/item/storage/belt/sabre/update_icon()
-	. = ..()
-	if(isliving(loc))
-		var/mob/living/L = loc
-		L.regenerate_icons()
-
 /obj/item/storage/belt/sabre/PopulateContents()
 	new starting_sword(src)
 
 /obj/item/storage/belt/sabre/rapier
 	name = "rapier sheath"
-	desc = "A black, thin sheath that looks to house only a long thin blade. Feels like its made of metal."
+	desc = "A sinister, thin sheath, suitable for a rapier."
 	icon_state = "rsheath"
 	item_state = "rsheath"
 	force = 5
 	throwforce = 15
-	block_chance = 30
 	w_class = WEIGHT_CLASS_BULKY
 	attack_verb = list("bashed", "slashes", "prods", "pokes")
 	fitting_swords = list(/obj/item/melee/rapier)
 	starting_sword = /obj/item/melee/rapier
 
-/obj/item/storage/belt/sabre/rapier/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
-	if(attack_type == PROJECTILE_ATTACK)
-		final_block_chance = 0 //To thin to block bullets
-	return ..()

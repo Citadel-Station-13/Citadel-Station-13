@@ -26,6 +26,8 @@
 	var/list/chem_buttons	//Used when emagged to scramble which chem is used, eg: antitoxin -> morphine
 	var/scrambled_chems = FALSE //Are chem buttons scrambled? used as a warning
 	var/enter_message = "<span class='notice'><b>You feel cool air surround you. You go numb as your senses turn inward.</b></span>"
+	payment_department = ACCOUNT_MED
+	fair_market_price = 5
 
 /obj/machinery/sleeper/Initialize()
 	. = ..()
@@ -35,6 +37,11 @@
 	reset_chem_buttons()
 	RefreshParts()
 	add_inital_chems()
+	new_occupant_dir = dir
+
+/obj/machinery/sleeper/setDir(newdir)
+	. = ..()
+	new_occupant_dir = dir
 
 /obj/machinery/sleeper/on_deconstruction()
 	var/obj/item/reagent_containers/sleeper_buffer/buffer = new (loc)
@@ -71,7 +78,7 @@
 		reagents.maximum_volume = (500*E)
 
 
-/obj/machinery/sleeper/update_icon()
+/obj/machinery/sleeper/update_icon_state()
 	icon_state = initial(icon_state)
 	if(state_open)
 		icon_state += "-open"
@@ -182,7 +189,7 @@
 
 /obj/machinery/sleeper/AltClick(mob/user)
 	. = ..()
-	if(!user.canUseTopic(src, !issilicon(user)))
+	if(!user.canUseTopic(src, !hasSiliconAccessInArea(user)))
 		return
 	if(state_open)
 		close_machine()
@@ -205,13 +212,23 @@
 		ui = new(user, src, ui_key, "sleeper", name, 550, 700, master_ui, state)
 		ui.open()
 
+/obj/machinery/sleeper/process()
+	..()
+	check_nap_violations()
+
+/obj/machinery/sleeper/nap_violation(mob/violator)
+	open_machine()
+
 /obj/machinery/sleeper/ui_data()
 	var/list/data = list()
+	var/chemical_list = list()
+	var/blood_percent = 0
+
 	data["occupied"] = occupant ? 1 : 0
 	data["open"] = state_open
-	data["efficiency"] = efficiency
-	data["current_vol"] = reagents.total_volume
-	data["tot_capacity"] = reagents.maximum_volume
+	data["blood_levels"] = blood_percent
+	data["blood_status"] = "Patient either has no blood, or does not require it to function."
+	data["chemical_list"] = chemical_list
 
 	data["chems"] = list()
 	for(var/chem in available_chems)
@@ -247,10 +264,13 @@
 		data["occupant"]["fireLoss"] = mob_occupant.getFireLoss()
 		data["occupant"]["cloneLoss"] = mob_occupant.getCloneLoss()
 		data["occupant"]["brainLoss"] = mob_occupant.getOrganLoss(ORGAN_SLOT_BRAIN)
-		data["occupant"]["reagents"] = list()
-		if(mob_occupant.reagents && mob_occupant.reagents.reagent_list.len)
+
+		if(mob_occupant.reagents.reagent_list.len)
 			for(var/datum/reagent/R in mob_occupant.reagents.reagent_list)
-				data["occupant"]["reagents"] += list(list("name" = R.name, "volume" = R.volume))
+				chemical_list += list(list("name" = R.name, "volume" = R.volume))
+		else
+			chemical_list = "Patient has no reagents."
+
 		data["occupant"]["failing_organs"] = list()
 		var/mob/living/carbon/C = mob_occupant
 		if(C)
@@ -259,28 +279,32 @@
 					continue
 				data["occupant"]["failing_organs"] += list(list("name" = Or.name))
 
-		if(mob_occupant.has_dna()) // Blood-stuff is mostly a copy-paste from the healthscanner.
-			var/blood_id = C.get_blood_id()
-			if(blood_id)
-				data["occupant"]["blood"] = list() // We can start populating this list.
-				var/blood_type = C.dna.blood_type
-				if(blood_id != "blood") // special blood substance
-					var/datum/reagent/R = GLOB.chemical_reagents_list[blood_id]
-					if(R)
-						blood_type = R.name
-					else
-						blood_type = blood_id
-				data["occupant"]["blood"]["maxBloodVolume"] = (BLOOD_VOLUME_NORMAL*C.blood_ratio)
-				data["occupant"]["blood"]["currentBloodVolume"] = C.blood_volume
-				data["occupant"]["blood"]["dangerBloodVolume"] = BLOOD_VOLUME_SAFE
-				data["occupant"]["blood"]["bloodType"] = blood_type
+		if(istype(C)) //Non-carbons shouldn't be able to enter sleepers, but this is to prevent runtimes if something ever breaks
+			if(mob_occupant.has_dna()) // Blood-stuff is mostly a copy-paste from the healthscanner.
+				blood_percent = round((C.blood_volume / BLOOD_VOLUME_NORMAL)*100)
+				var/blood_id = C.get_blood_id()
+				var/blood_warning = ""
+				if(blood_percent < 80)
+					blood_warning = "Patient has low blood levels."
+				if(blood_percent < 60)
+					blood_warning = "Patient has DANGEROUSLY low blood levels."
+				if(blood_id)
+					var/blood_type = C.dna.blood_type
+					if(!(blood_id in GLOB.blood_reagent_types)) // special blood substance
+						var/datum/reagent/R = GLOB.chemical_reagents_list[blood_id]
+						if(R)
+							blood_type = R.name
+						else
+							blood_type = blood_id
+					data["blood_status"] = "Patient has [blood_type] type blood. [blood_warning]"
+				data["blood_levels"] = blood_percent
 	return data
 
 /obj/machinery/sleeper/ui_act(action, params)
 	if(..())
 		return
 	var/mob/living/mob_occupant = occupant
-
+	check_nap_violations()
 	switch(action)
 		if("door")
 			if(state_open)
@@ -309,14 +333,14 @@
 			if(allowed(usr))
 				if(!is_operational())
 					return
-				reagents.remove_reagent(chem, 10)
+				reagents.remove_reagent(chem, 1000)
 				return
 			if(chem in available_chems)
 				if(!is_operational())
 					return
 				/*var/datum/reagent/R = reagents.has_reagent(chem) //For when purity effects are in
 				if(R.purity < 0.8)*/
-				reagents.remove_reagent(chem, 10)
+				reagents.remove_reagent(chem, 1000)
 			else
 				visible_message("<span class='warning'>Access Denied.</span>")
 				playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, 0)
@@ -410,3 +434,45 @@
 
 /obj/machinery/sleeper/old
 	icon_state = "oldpod"
+
+/obj/machinery/sleeper/party
+	name = "party pod"
+	desc = "'Sleeper' units were once known for their healing properties, until a lengthy investigation revealed they were also dosing patients with deadly lead acetate. This appears to be one of those old 'sleeper' units repurposed as a 'Party Pod'. It’s probably not a good idea to use it."
+	icon_state = "partypod"
+	idle_power_usage = 3000
+	circuit = /obj/item/circuitboard/machine/sleeper/party
+	var/leddit = FALSE //Get it like reddit and lead alright fine
+	ui_x = 310
+	ui_y = 400
+
+	controls_inside = TRUE
+	possible_chems = list(
+		list(/datum/reagent/consumable/ethanol/beer, /datum/reagent/consumable/laughter),
+		list(/datum/reagent/spraytan,/datum/reagent/barbers_aid),
+		list(/datum/reagent/colorful_reagent,/datum/reagent/hair_dye),
+		list(/datum/reagent/drug/space_drugs,/datum/reagent/baldium)
+	)//Exclusively uses non-lethal, "fun" chems. At an obvious downside.
+	var/spray_chems = list(
+		/datum/reagent/spraytan, /datum/reagent/hair_dye, /datum/reagent/baldium, /datum/reagent/barbers_aid
+	)//Chemicals that need to have a touch or vapor reaction to be applied, not the standard chamber reaction.
+	enter_message = "<span class='notice'><b>You're surrounded by some funky music inside the chamber. You zone out as you feel waves of krunk vibe within you.</b></span>"
+
+/obj/machinery/sleeper/party/inject_chem(chem, mob/user)
+	if(leddit)
+		occupant.reagents.add_reagent(/datum/reagent/toxin/leadacetate, 4) //You're injecting chemicals into yourself from a recalled, decrepit medical machine. What did you expect?
+	else if (prob(20))
+		occupant.reagents.add_reagent(/datum/reagent/toxin/leadacetate, rand(1,3))
+	if(chem in spray_chems)
+		var/datum/reagents/holder = new()
+		holder.add_reagent(chem_buttons[chem], 10) //I hope this is the correct way to do this.
+		holder.reaction(occupant, VAPOR, 0)
+		holder.trans_to(occupant, 10)
+		playsound(src.loc, 'sound/effects/spray2.ogg', 50, TRUE, -6)
+		if(user)
+			log_combat(user, occupant, "sprayed [chem] into", addition = "via [src]")
+		return TRUE
+	..()
+
+/obj/machinery/sleeper/party/emag_act(mob/user)
+	..()
+	leddit = TRUE

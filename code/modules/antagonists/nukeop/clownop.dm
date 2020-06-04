@@ -3,14 +3,15 @@
 	name = "Clown Operative"
 	roundend_category = "clown operatives"
 	antagpanel_category = "ClownOp"
+	threat = 7
 	nukeop_outfit = /datum/outfit/syndicate/clownop
 
 /datum/antagonist/nukeop/clownop/on_gain()
 	. = ..()
-	ADD_TRAIT(owner, TRAIT_CLOWN_MENTALITY, NUKEOP_ANTAGONIST)
+	ADD_TRAIT(owner, TRAIT_CLOWN_MENTALITY, CLOWNOP_TRAIT)
 
 /datum/antagonist/nukeop/clownop/on_removal()
-	REMOVE_TRAIT(owner, TRAIT_CLOWN_MENTALITY, NUKEOP_ANTAGONIST)
+	REMOVE_TRAIT(owner, TRAIT_CLOWN_MENTALITY, CLOWNOP_TRAIT)
 	return ..()
 
 /datum/antagonist/nukeop/leader/clownop

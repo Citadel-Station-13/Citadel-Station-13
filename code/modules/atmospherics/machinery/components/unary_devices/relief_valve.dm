@@ -4,6 +4,7 @@
 	icon = 'icons/obj/atmospherics/components/relief_valve.dmi'
 	icon_state = "relief_valve-e-map"
 	can_unwrench = TRUE
+	interaction_flags_machine = INTERACT_MACHINE_OFFLINE | INTERACT_MACHINE_WIRES_IF_OPEN | INTERACT_MACHINE_ALLOW_SILICON | INTERACT_MACHINE_OPEN_SILICON | INTERACT_MACHINE_SET_MACHINE
 	var/opened = FALSE
 	var/open_pressure = ONE_ATMOSPHERE * 3
 	var/close_pressure = ONE_ATMOSPHERE
@@ -91,7 +92,7 @@
 				pressure = text2num(pressure)
 				. = TRUE
 			if(.)
-				open_pressure = CLAMP(pressure, close_pressure, 50*ONE_ATMOSPHERE)
+				open_pressure = clamp(pressure, close_pressure, 50*ONE_ATMOSPHERE)
 				investigate_log("open pressure was set to [open_pressure] kPa by [key_name(usr)]", INVESTIGATE_ATMOS)
 		if("close_pressure")
 			var/pressure = params["close_pressure"]
@@ -106,6 +107,6 @@
 				pressure = text2num(pressure)
 				. = TRUE
 			if(.)
-				close_pressure = CLAMP(pressure, 0, open_pressure)
+				close_pressure = clamp(pressure, 0, open_pressure)
 				investigate_log("close pressure was set to [close_pressure] kPa by [key_name(usr)]", INVESTIGATE_ATMOS)
 	update_icon()

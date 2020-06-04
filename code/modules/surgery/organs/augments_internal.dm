@@ -89,10 +89,10 @@
 	stored_items = list()
 
 
-/obj/item/organ/cyberimp/brain/anti_drop/Remove(var/mob/living/carbon/M, special = 0)
+/obj/item/organ/cyberimp/brain/anti_drop/Remove(special = FALSE)
 	if(active)
 		ui_action_click()
-	..()
+	return ..()
 
 
 /obj/item/organ/cyberimp/brain/anti_stun
@@ -102,14 +102,11 @@
 	slot = ORGAN_SLOT_BRAIN_ANTISTUN
 
 /obj/item/organ/cyberimp/brain/anti_stun/on_life()
-	..()
-	if(crit_fail || !(organ_flags & ORGAN_FAILING))
+	. = ..()
+	if(!. || crit_fail)
 		return
-	owner.adjustStaminaLoss(-3.5) //Citadel edit, makes it more useful in Stamina based combat
-	if(owner.AmountStun() > STUN_SET_AMOUNT)
-		owner.SetStun(STUN_SET_AMOUNT)
-	if(owner.AmountKnockdown() > STUN_SET_AMOUNT)
-		owner.SetKnockdown(STUN_SET_AMOUNT)
+	owner.adjustStaminaLoss(-3.5, FALSE) //Citadel edit, makes it more useful in Stamina based combat
+	owner.HealAllImmobilityUpTo(STUN_SET_AMOUNT)
 
 /obj/item/organ/cyberimp/brain/anti_stun/emp_act(severity)
 	. = ..()

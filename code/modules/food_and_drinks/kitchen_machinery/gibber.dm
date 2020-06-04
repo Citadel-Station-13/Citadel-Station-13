@@ -14,6 +14,7 @@
 	var/gibtime = 40 // Time from starting until meat appears
 	var/meat_produced = 0
 	var/ignore_clothing = FALSE
+	var/meat_quality = 35 //food_quality of meat produced
 
 
 /obj/machinery/gibber/Initialize()
@@ -21,12 +22,14 @@
 	add_overlay("grjam")
 
 /obj/machinery/gibber/RefreshParts()
-	var/gib_time = 40
+	gibtime = 40
+	meat_produced = 0
+	meat_quality = 35 // unupgraded this means quality is 50, and max upgraded it is 95
 	for(var/obj/item/stock_parts/matter_bin/B in component_parts)
 		meat_produced += B.rating
+		meat_quality += B.rating * 15
 	for(var/obj/item/stock_parts/manipulator/M in component_parts)
-		gib_time -= 5 * M.rating
-		gibtime = gib_time
+		gibtime -= 5 * M.rating
 		if(M.rating >= 2)
 			ignore_clothing = TRUE
 
@@ -38,18 +41,18 @@
 			if(M.rating >= 2)
 				. += "<span class='notice'>Gibber has been upgraded to process inorganic materials.</span>"
 
-/obj/machinery/gibber/update_icon()
-	cut_overlays()
+/obj/machinery/gibber/update_overlays()
+	. = ..()
 	if (dirty)
-		add_overlay("grbloody")
+		. += "grbloody"
 	if(stat & (NOPOWER|BROKEN))
 		return
 	if (!occupant)
-		add_overlay("grjam")
+		. += "grjam"
 	else if (operating)
-		add_overlay("gruse")
+		. += "gruse"
 	else
-		add_overlay("gridle")
+		. += "gridle"
 
 /obj/machinery/gibber/attack_paw(mob/user)
 	return attack_hand(user)
@@ -183,6 +186,7 @@
 		var/obj/item/reagent_containers/food/snacks/meat/slab/newmeat = new typeofmeat
 		newmeat.name = "[sourcename] [newmeat.name]"
 		if(istype(newmeat))
+			newmeat.adjust_food_quality(meat_quality)
 			newmeat.subjectname = sourcename
 			newmeat.reagents.add_reagent (/datum/reagent/consumable/nutriment, sourcenutriment / meat_produced) // Thehehe. Fat guys go first
 			if(sourcejob)
@@ -212,7 +216,7 @@
 		meatslab.throw_at(pick(nearby_turfs),i,3)
 		for (var/turfs=1 to meat_produced)
 			var/turf/gibturf = pick(nearby_turfs)
-			if (!gibturf.density && src in view(gibturf))
+			if (!gibturf.density && (src in view(gibturf)))
 				new gibtype(gibturf,i,diseases)
 
 	pixel_x = initial(pixel_x) //return to its spot after shaking

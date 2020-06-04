@@ -2,7 +2,7 @@
 /datum/disease/advance/cold
 	copy_type = /datum/disease/advance
 
-/datum/disease/advance/cold/New()
+/datum/disease/advance/cold/New(make_typecache = TRUE)
 	name = "Cold"
 	symptoms = list(new/datum/symptom/sneeze)
 	..()
@@ -11,7 +11,7 @@
 /datum/disease/advance/flu
 	copy_type = /datum/disease/advance
 
-/datum/disease/advance/flu/New()
+/datum/disease/advance/flu/New(make_typecache = TRUE)
 	name = "Flu"
 	symptoms = list(new/datum/symptom/cough)
 	..()
@@ -21,7 +21,7 @@
 	name = "Experimental Disease"
 	copy_type = /datum/disease/advance
 
-/datum/disease/advance/random/New(max_symptoms, max_level = 8)
+/datum/disease/advance/random/New(make_typecache = TRUE, max_symptoms, max_level = 8)
 	if(!max_symptoms)
 		max_symptoms = rand(1, VIRUS_SYMPTOM_LIMIT)
 	var/list/datum/symptom/possible_symptoms = list()
@@ -37,6 +37,6 @@
 		if(chosen_symptom)
 			var/datum/symptom/S = new chosen_symptom
 			symptoms += S
-	Refresh()
 
 	name = "Sample #[rand(1,10000)]"
+	..()

@@ -59,7 +59,7 @@
 	var/mob/living/simple_animal/L = new chosen_mob_type(spawn_location)
 	if(ishostile(L))
 		var/mob/living/simple_animal/hostile/H = L
-		H.friends += summoner // do not attack our summon boy
+		H.friends[summoner]++ // do not attack our summon boy
 	spawned_mobs += L
 	if(faction != null)
 		L.faction = faction

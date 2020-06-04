@@ -2,7 +2,6 @@
 	name = "pAI"
 	icon = 'icons/mob/pai.dmi'
 	icon_state = "repairbot"
-	mouse_opacity = MOUSE_OPACITY_OPAQUE
 	density = FALSE
 	pass_flags = PASSTABLE | PASSMOB
 	mob_size = MOB_SIZE_TINY
@@ -11,7 +10,8 @@
 	health = 500
 	maxHealth = 500
 	layer = BELOW_MOB_LAYER
-	can_be_held = TRUE
+	var/obj/item/instrument/piano_synth/internal_instrument
+	silicon_privileges = PRIVILEDGES_PAI
 
 	var/network = "ss13"
 	var/obj/machinery/camera/current = null
@@ -27,6 +27,7 @@
 	var/speakDoubleExclamation = "alarms"
 	var/speakQuery = "queries"
 
+	var/obj/item/radio/headset			// The pAI's headset
 	var/obj/item/pai_cable/cable		// The cable we produce and use when door or camera jacking
 
 	var/master				// Name of the one who commands us
@@ -54,6 +55,7 @@
 
 	var/obj/item/integrated_signaler/signaler // AI's signaller
 
+	var/encryptmod = FALSE
 	var/holoform = FALSE
 	var/canholo = TRUE
 	var/obj/item/card/id/access_card = null
@@ -64,9 +66,6 @@
 	var/list/possible_chassis			//initialized in initialize.
 	var/list/dynamic_chassis_icons		//ditto.
 	var/list/chassis_pixel_offsets_x	//stupid dogborgs
-	var/static/item_head_icon = 'icons/mob/pai_item_head.dmi'
-	var/static/item_lh_icon = 'icons/mob/pai_item_lh.dmi'
-	var/static/item_rh_icon = 'icons/mob/pai_item_rh.dmi'
 
 	var/emitterhealth = 20
 	var/emittermaxhealth = 20
@@ -77,16 +76,17 @@
 	var/emitteroverloadcd = 100
 
 	var/radio_short = FALSE
-	var/radio_short_cooldown = 5 MINUTES
+	var/radio_short_cooldown = 3 MINUTES
 	var/radio_short_timerid
 
-	canmove = FALSE
+	mobility_flags = NONE
 	var/silent = FALSE
 	var/brightness_power = 5
 
 	var/icon/custom_holoform_icon
 
 /mob/living/silicon/pai/Destroy()
+	QDEL_NULL(internal_instrument)
 	if (loc != card)
 		card.forceMove(drop_location())
 	card.pai = null
@@ -100,7 +100,6 @@
 	START_PROCESSING(SSfastprocess, src)
 	GLOB.pai_list += src
 	make_laws()
-	canmove = 0
 	if(!istype(P)) //when manually spawning a pai, we create a card to put it into.
 		var/newcardloc = P
 		P = new /obj/item/paicard(newcardloc)
@@ -109,7 +108,7 @@
 	card = P
 	signaler = new(src)
 	if(!radio)
-		radio = new /obj/item/radio(src)
+		radio = new /obj/item/radio/headset/silicon/pai(src)
 
 	//PDA
 	pda = new(src)
@@ -142,6 +141,11 @@
 	ALM.Grant(src)
 	emitter_next_use = world.time + 10 SECONDS
 
+/mob/living/silicon/pai/ComponentInitialize()
+	. = ..()
+	if(possible_chassis[chassis])
+		AddElement(/datum/element/mob_holder, chassis, 'icons/mob/pai_item_head.dmi', 'icons/mob/pai_item_rh.dmi', 'icons/mob/pai_item_lh.dmi', ITEM_SLOT_HEAD)
+
 /mob/living/silicon/pai/Life()
 	if(hacking)
 		process_hack()
@@ -150,7 +154,7 @@
 /mob/living/silicon/pai/proc/process_hack()
 
 	if(cable && cable.machine && istype(cable.machine, /obj/machinery/door) && cable.machine == hackdoor && get_dist(src, hackdoor) <= 1)
-		hackprogress = CLAMP(hackprogress + 4, 0, 100)
+		hackprogress = clamp(hackprogress + 4, 0, 100)
 	else
 		temp = "Door Jack: Connection to airlock has been lost. Hack aborted."
 		hackprogress = 0
@@ -269,9 +273,9 @@
 /mob/living/silicon/pai/Process_Spacemove(movement_dir = 0)
 	. = ..()
 	if(!.)
-		add_movespeed_modifier(MOVESPEED_ID_PAI_SPACEWALK_SPEEDMOD, TRUE, 100, multiplicative_slowdown = 2)
+		add_movespeed_modifier(/datum/movespeed_modifier/pai_spacewalk)
 		return TRUE
-	remove_movespeed_modifier(MOVESPEED_ID_PAI_SPACEWALK_SPEEDMOD, TRUE)
+	remove_movespeed_modifier(/datum/movespeed_modifier/pai_spacewalk)
 	return TRUE
 
 /mob/living/silicon/pai/examine(mob/user)
@@ -297,7 +301,18 @@
 	update_stat()
 
 /mob/living/silicon/pai/process()
-	emitterhealth = CLAMP((emitterhealth + emitterregen), -50, emittermaxhealth)
+	emitterhealth = clamp((emitterhealth + emitterregen), -50, emittermaxhealth)
+
+/obj/item/paicard/attackby(obj/item/W, mob/user, params)
+	..()
+	user.set_machine(src)
+	var/encryption_key_stuff = W.tool_behaviour == TOOL_SCREWDRIVER || istype(W, /obj/item/encryptionkey)
+	if(!encryption_key_stuff)
+		return
+	if(pai?.encryptmod)
+		pai.radio.attackby(W, user, params)
+	else
+		to_chat(user, "Encryption Key ports not configured.")
 
 /mob/living/silicon/pai/proc/short_radio()
 	if(radio_short_timerid)

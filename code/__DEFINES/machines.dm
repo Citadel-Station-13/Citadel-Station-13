@@ -22,14 +22,14 @@
 
 //used in design to specify which machine can build it
 #define IMPRINTER		(1<<0)	//For circuits. Uses glass/chemicals.
-#define PROTOLATHE		(1<<1)	//New stuff. Uses glass/metal/chemicals
-#define AUTOLATHE		(1<<2)	//Uses glass/metal only.
-#define CRAFTLATHE		(1<<3)	//Uses fuck if I know. For use eventually.
-#define MECHFAB			(1<<4) 	//Remember, objects utilising this flag should have construction_time and construction_cost vars.
-#define BIOGENERATOR	(1<<5) 	//Uses biomass
-#define LIMBGROWER		(1<<6) 	//Uses synthetic flesh
-#define SMELTER			(1<<7) 	//uses various minerals
-#define AUTOYLATHE		(1<<8)  // CITADEL ADD
+#define PROTOLATHE		(1<<1)	//New stuff. Uses materials/chemicals
+#define AUTOLATHE		(1<<2)	//Uses materials only.
+#define TOYLATHE		(1<<3)	//Glass/metal/plastic. Meant for toys.
+#define NO_PUBLIC_LATHE	(1<<4)	//prevents the design from being auto-unlocked by public auto(y)lathes.
+#define MECHFAB			(1<<5) 	//Remember, objects utilising this flag should have construction_time and construction_cost vars.
+#define BIOGENERATOR	(1<<6) 	//Uses biomass
+#define LIMBGROWER		(1<<7) 	//Uses synthetic flesh
+#define SMELTER			(1<<8) 	//uses various minerals
 #define NANITE_COMPILER (1<<9) //Prints nanite disks
 #define AUTOBOTTLER  	(1<<10) //Uses booze, for printing
 //Note: More then one of these can be added to a design but imprinter and lathe designs are incompatable.
@@ -96,11 +96,21 @@
 #define NUKESTATE_CORE_EXPOSED	1
 #define NUKESTATE_CORE_REMOVED	0
 
+#define NUKEUI_AWAIT_DISK 0
+#define NUKEUI_AWAIT_CODE 1
+#define NUKEUI_AWAIT_TIMER 2
+#define NUKEUI_AWAIT_ARM 3
+#define NUKEUI_TIMING 4
+#define NUKEUI_EXPLODED 5
+
 #define NUKE_OFF_LOCKED		0
 #define NUKE_OFF_UNLOCKED	1
 #define NUKE_ON_TIMING		2
 #define NUKE_ON_EXPLODING	3
 
+#define MACHINE_NOT_ELECTRIFIED 0
+#define MACHINE_ELECTRIFIED_PERMANENT -1
+#define MACHINE_DEFAULT_ELECTRIFY_TIME 30
 
 //these flags are used to tell the DNA modifier if a plant gene cannot be extracted or modified.
 #define PLANT_GENE_REMOVABLE	(1<<0)

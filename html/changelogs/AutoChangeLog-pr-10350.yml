@@ -1,7 +1,0 @@
-author: "Putnam3145"
-delete-after: True
-changes: 
-  - rscadd: "Ghost cafe mobs can now ghostize"
-  - rscadd: "Ghost cafe now has a cremator"
-  - rscadd: "Ghost cafe mobs are now eligible for ghost roles"
-  - refactor: "Ghost roles now use an element for eligibility purposes"

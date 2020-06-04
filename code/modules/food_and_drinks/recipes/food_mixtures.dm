@@ -1,13 +1,13 @@
 /datum/crafting_recipe/food
 	var/real_parts
 	category = CAT_FOOD
+	time = 5
 
 /datum/crafting_recipe/food/New()
 	real_parts = parts.Copy()
 	parts |= reqs
 
 //////////////////////////////////////////FOOD MIXTURES////////////////////////////////////
-
 /datum/chemical_reaction/tofu
 	name = "Tofu"
 	id = "tofu"
@@ -15,9 +15,9 @@
 	required_catalysts = list(/datum/reagent/consumable/enzyme = 5)
 	mob_react = FALSE
 
-/datum/chemical_reaction/tofu/on_reaction(datum/reagents/holder, created_volume)
+/datum/chemical_reaction/tofu/on_reaction(datum/reagents/holder, multiplier)
 	var/location = get_turf(holder.my_atom)
-	for(var/i = 1, i <= created_volume, i++)
+	for(var/i = 1, i <= multiplier, i++)
 		new /obj/item/reagent_containers/food/snacks/tofu(location)
 	return
 
@@ -26,9 +26,9 @@
 	id = "chocolate_bar"
 	required_reagents = list(/datum/reagent/consumable/soymilk = 2, /datum/reagent/consumable/coco = 2, /datum/reagent/consumable/sugar = 2)
 
-/datum/chemical_reaction/chocolate_bar/on_reaction(datum/reagents/holder, created_volume)
+/datum/chemical_reaction/chocolate_bar/on_reaction(datum/reagents/holder, multiplier)
 	var/location = get_turf(holder.my_atom)
-	for(var/i = 1, i <= created_volume, i++)
+	for(var/i = 1, i <= multiplier, i++)
 		new /obj/item/reagent_containers/food/snacks/chocolatebar(location)
 	return
 
@@ -39,9 +39,9 @@
 	required_reagents = list(/datum/reagent/consumable/milk/chocolate_milk = 4, /datum/reagent/consumable/sugar = 2)
 	mob_react = FALSE
 
-/datum/chemical_reaction/chocolate_bar2/on_reaction(datum/reagents/holder, created_volume)
+/datum/chemical_reaction/chocolate_bar2/on_reaction(datum/reagents/holder, multiplier)
 	var/location = get_turf(holder.my_atom)
-	for(var/i = 1, i <= created_volume, i++)
+	for(var/i = 1, i <= multiplier, i++)
 		new /obj/item/reagent_containers/food/snacks/chocolatebar(location)
 	return
 
@@ -90,9 +90,9 @@
 	required_reagents = list(/datum/reagent/consumable/milk = 40)
 	required_catalysts = list(/datum/reagent/consumable/enzyme = 5)
 
-/datum/chemical_reaction/cheesewheel/on_reaction(datum/reagents/holder, created_volume)
+/datum/chemical_reaction/cheesewheel/on_reaction(datum/reagents/holder, multiplier)
 	var/location = get_turf(holder.my_atom)
-	for(var/i = 1, i <= created_volume, i++)
+	for(var/i = 1, i <= multiplier, i++)
 		new /obj/item/reagent_containers/food/snacks/store/cheesewheel(location)
 
 /datum/chemical_reaction/synthmeat
@@ -101,9 +101,13 @@
 	required_reagents = list(/datum/reagent/blood = 5, /datum/reagent/medicine/cryoxadone = 1)
 	mob_react = FALSE
 
-/datum/chemical_reaction/synthmeat/on_reaction(datum/reagents/holder, created_volume)
+/datum/chemical_reaction/synthmeat/synthblood
+	id = "synthmeat_synthblood"
+	required_reagents = list(/datum/reagent/blood/synthetics = 5, /datum/reagent/medicine/cryoxadone = 1)
+
+/datum/chemical_reaction/synthmeat/on_reaction(datum/reagents/holder, multiplier)
 	var/location = get_turf(holder.my_atom)
-	for(var/i = 1, i <= created_volume, i++)
+	for(var/i = 1, i <= multiplier, i++)
 		new /obj/item/reagent_containers/food/snacks/meat/slab/synthmeat(location)
 
 /datum/chemical_reaction/hot_ramen
@@ -137,9 +141,9 @@
 	required_reagents = list(/datum/reagent/water = 10, /datum/reagent/consumable/flour = 15)
 	mix_message = "The ingredients form a dough."
 
-/datum/chemical_reaction/dough/on_reaction(datum/reagents/holder, created_volume)
+/datum/chemical_reaction/dough/on_reaction(datum/reagents/holder, multiplier)
 	var/location = get_turf(holder.my_atom)
-	for(var/i = 1, i <= created_volume, i++)
+	for(var/i = 1, i <= multiplier, i++)
 		new /obj/item/reagent_containers/food/snacks/dough(location)
 
 /datum/chemical_reaction/cakebatter
@@ -148,9 +152,9 @@
 	required_reagents = list(/datum/reagent/consumable/eggyolk = 15, /datum/reagent/consumable/flour = 15, /datum/reagent/consumable/sugar = 5)
 	mix_message = "The ingredients form a cake batter."
 
-/datum/chemical_reaction/cakebatter/on_reaction(datum/reagents/holder, created_volume)
+/datum/chemical_reaction/cakebatter/on_reaction(datum/reagents/holder, multiplier)
 	var/location = get_turf(holder.my_atom)
-	for(var/i = 1, i <= created_volume, i++)
+	for(var/i = 1, i <= multiplier, i++)
 		new /obj/item/reagent_containers/food/snacks/cakebatter(location)
 
 /datum/chemical_reaction/cakebatter/vegan

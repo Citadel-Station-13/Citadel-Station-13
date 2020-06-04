@@ -1,0 +1,2 @@
+/datum/news
+	var/author = ""
