@@ -139,8 +139,8 @@
 					/obj/item/clothing/under/costume/drfreeze = 1)
 
 	refill_canister = /obj/item/vending_refill/autodrobe
-	default_price = 180
-	extra_price = 360
+	default_price = 0
+	extra_price = 200
 	payment_department = ACCOUNT_SRV
 
 /obj/machinery/vending/autodrobe/Initialize()
