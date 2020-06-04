@@ -400,7 +400,6 @@
 				informed = TRUE
 			switch(severity)
 				if(1)
-					L.receive_damage(0,10)
 					Stun(200)
 					if(!isrobotic(src))
 						L.receive_damage(0,10)
