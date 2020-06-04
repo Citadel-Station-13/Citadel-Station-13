@@ -32,15 +32,17 @@
 			var/obj/item/I = get_active_held_item()
 			if(I)
 				uneq_active()
-				visible_message("<span class='danger'>[M] disarmed [src]!</span>", \
-					"<span class='userdanger'>[M] has disabled [src]'s active module!</span>", null, COMBAT_MESSAGE_RANGE)
+				visible_message("<span class='danger'>[M] has disarmed [src]!</span>", \
+					"<span class='userdanger'>[M] has disabled your active module!</span>", null, COMBAT_MESSAGE_RANGE, null, M,
+					"<span class='danger'>You have disarmed [src]!</span>")
 				log_combat(M, src, "disarmed", "[I ? " removing \the [I]" : ""]")
 			else
 				Paralyze(40)
 				step(src,get_dir(M,src))
 				log_combat(M, src, "pushed")
 				visible_message("<span class='danger'>[M] has forced back [src]!</span>", \
-					"<span class='userdanger'>[M] has forced back [src]!</span>", null, COMBAT_MESSAGE_RANGE)
+					"<span class='userdanger'>[M] has forced you back!</span>", null, COMBAT_MESSAGE_RANGE, null, M,
+					"<span class='danger'>You have forced back [src]!</span>")
 			playsound(loc, 'sound/weapons/pierce.ogg', 50, 1, -1)
 
 /mob/living/silicon/robot/attack_slime(mob/living/simple_animal/slime/M)

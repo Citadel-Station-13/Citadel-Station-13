@@ -2,6 +2,7 @@
 
 /obj/item/electronics/firealarm
 	name = "fire alarm electronics"
+	custom_price = 50
 	desc = "A fire alarm circuit. Can handle heat levels up to 40 degrees celsius."
 
 /obj/item/wallframe/firealarm
@@ -16,6 +17,7 @@
 	desc = "<i>\"Pull this in case of emergency\"</i>. Thus, keep pulling it forever."
 	icon = 'icons/obj/monitors.dmi'
 	icon_state = "fire0"
+	plane = ABOVE_WALL_PLANE
 	max_integrity = 250
 	integrity_failure = 0.4
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 100, "rad" = 100, "fire" = 90, "acid" = 30)

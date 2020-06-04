@@ -11,9 +11,6 @@
 		if(A.attachable)
 			return TRUE
 
-/atom
-	var/datum/wires/wires = null
-
 /atom/proc/attempt_wire_interaction(mob/user)
 	if(!wires)
 		return WIRE_INTERACTION_FAIL
@@ -138,11 +135,11 @@
 	if(current_users[user])
 		return FALSE
 	if(req_skill && user?.mind)
-		var/level_diff = req_skill - user.mind.skill_holder.get_skill_level(/datum/skill/level/job/wiring)
+		var/level_diff = req_skill - user.mind.get_skill_level(/datum/skill/level/job/wiring, round = TRUE)
 		if(level_diff > 0)
 			LAZYSET(current_users, user, TRUE)
 			to_chat(user, "<span class='notice'>You begin cutting [holder]'s [color] wire...</span>")
-			if(!do_after(user, 1.5 SECONDS * level_diff, target = holder) || !interactable(user))
+			if(!do_after(user, 0.75 SECONDS * level_diff, target = holder) || !interactable(user))
 				LAZYREMOVE(current_users, user)
 				return FALSE
 			LAZYREMOVE(current_users, user)
@@ -167,7 +164,7 @@
 	if(current_users[user])
 		return FALSE
 	if(req_skill && user?.mind)
-		var/level_diff = req_skill - user.mind.skill_holder.get_skill_level(/datum/skill/level/job/wiring)
+		var/level_diff = req_skill - user.mind.get_skill_level(/datum/skill/level/job/wiring, round = TRUE)
 		if(level_diff > 0)
 			LAZYSET(current_users, user, TRUE)
 			to_chat(user, "<span class='notice'>You begin pulsing [holder]'s [color] wire...</span>")
@@ -255,7 +252,7 @@
 	var/reveal_wires = FALSE
 
 	// Admin ghost can see a purpose of each wire.
-	if(IsAdminGhost(user) || user.mind.skill_holder.get_skill_level(/datum/skill/level/job/wiring) >= req_knowledge)
+	if(IsAdminGhost(user) || user.mind.get_skill_level(/datum/skill/level/job/wiring) >= req_knowledge)
 		reveal_wires = TRUE
 
 	// Same for anyone with an abductor multitool.

@@ -3,7 +3,7 @@
 	desc = "Graffiti. Damn kids."
 	icon = 'icons/effects/crayondecal.dmi'
 	icon_state = "rune1"
-	plane = GAME_PLANE //makes the graffiti visible over a wall.
+	plane = ABOVE_WALL_PLANE //makes the graffiti visible over a wall.
 	gender = NEUTER
 	mergeable_decal = FALSE
 	var/do_icon_rotate = TRUE

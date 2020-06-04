@@ -7,7 +7,8 @@
 	icon_dead = "whitewolf_dead"
 	mob_biotypes = MOB_ORGANIC|MOB_BEAST
 	mouse_opacity = MOUSE_OPACITY_ICON
-	friendly = "howls at"
+	friendly_verb_continuous = "howls at"
+	friendly_verb_simple = "howl at"
 	speak_emote = list("howls")
 	speed = 5
 	move_to_delay = 5
@@ -19,7 +20,8 @@
 	rapid_melee = 2 // every second attack
 	dodging = TRUE
 	dodge_prob = 50
-	attacktext = "bites"
+	attack_verb_continuous = "bites"
+	attack_verb_simple = "bite"
 	attack_sound = 'sound/weapons/bite.ogg'
 	vision_range = 7
 	aggro_vision_range = 7

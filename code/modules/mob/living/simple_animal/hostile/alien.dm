@@ -8,9 +8,12 @@
 	icon_gib = "syndicate_gib"
 	gender = FEMALE
 	threat = 1
-	response_help = "pokes"
-	response_disarm = "shoves"
-	response_harm = "hits"
+	response_help_continuous = "pokes"
+	response_help_simple = "poke"
+	response_disarm_continuous = "shoves"
+	response_disarm_simple = "shove"
+	response_harm_continuous = "hits"
+	response_harm_simple = "hit"
 	speed = 0
 	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab/xeno = 4,
 							/obj/item/stack/sheet/animalhide/xeno = 1)
@@ -20,7 +23,8 @@
 	obj_damage = 60
 	melee_damage_lower = 25
 	melee_damage_upper = 25
-	attacktext = "slashes"
+	attack_verb_continuous = "slashes"
+	attack_verb_simple = "slash"
 	speak_emote = list("hisses")
 	bubble_icon = "alien"
 	a_intent = INTENT_HARM
@@ -37,7 +41,9 @@
 	death_sound = 'sound/voice/hiss6.ogg'
 	deathmessage = "lets out a waning guttural screech, green blood bubbling from its maw..."
 
-	do_footstep = TRUE
+/mob/living/simple_animal/hostile/alien/Initialize()
+	. = ..()
+	AddComponent(/datum/component/footstep, FOOTSTEP_MOB_CLAW)
 
 /mob/living/simple_animal/hostile/alien/drone
 	name = "alien drone"
@@ -80,6 +86,7 @@
 	icon_state = "alienq"
 	icon_living = "alienq"
 	icon_dead = "alienq_dead"
+	pixel_x = -16
 	threat = 8
 	health = 250
 	maxHealth = 250
@@ -162,7 +169,8 @@
 	melee_damage_upper = 0
 	threat = -1
 	a_intent = INTENT_HELP
-	friendly = "caresses"
+	friendly_verb_continuous = "caresses"
+	friendly_verb_simple = "caress"
 	obj_damage = 0
 	environment_smash = ENVIRONMENT_SMASH_NONE
 	gold_core_spawnable = HOSTILE_SPAWN

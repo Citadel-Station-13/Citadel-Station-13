@@ -249,6 +249,15 @@
 			SEND_SIGNAL(A, COMSIG_ATOM_HEARER_IN_VIEW, processing, .)
 		processing += A.contents
 
+//viewers() but with a signal, for blacklisting.
+/proc/fov_viewers(depth = world.view, atom/center)
+	if(!center)
+		return
+	. = viewers(depth, center)
+	for(var/k in .)
+		var/mob/M = k
+		SEND_SIGNAL(M, COMSIG_MOB_FOV_VIEWER, center, depth, .)
+
 /proc/get_mobs_in_radio_ranges(list/obj/item/radio/radios)
 	. = list()
 	// Returns a list of mobs who can hear any of the radios given in @radios
@@ -505,6 +514,19 @@
 	if(!C || (!C.prefs.windowflashing && !ignorepref))
 		return
 	winset(C, "mainwindow", "flash=5")
+
+//Recursively checks if an item is inside a given type, even through layers of storage. Returns the atom if it finds it.
+/proc/recursive_loc_check(atom/movable/target, type)
+	var/atom/A = target
+	if(istype(A, type))
+		return A
+
+	while(!istype(A.loc, type))
+		if(!A.loc)
+			return
+		A = A.loc
+
+	return A.loc
 
 /proc/AnnounceArrival(var/mob/living/carbon/human/character, var/rank)
 	if(!SSticker.IsRoundInProgress() || QDELETED(character))

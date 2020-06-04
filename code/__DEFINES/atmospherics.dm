@@ -298,6 +298,8 @@ GLOBAL_LIST_INIT(atmos_adjacent_savings, list(0,0))
 
 #define ARCHIVE_TEMPERATURE(gas) gas.temperature_archived = gas.temperature
 
+#define ARCHIVE(gas) gas.temperature_archived = gas.temperature; gas.gas_archive = gas.gases.Copy();
+
 GLOBAL_LIST_INIT(pipe_paint_colors, list(
 		"amethyst" = rgb(130,43,255), //supplymain
 		"blue" = rgb(0,0,255),

@@ -15,7 +15,7 @@
 	result = /obj/item/reagent_containers/food/snacks/banana_split
 	subcategory = CAT_ICE
 
-	/datum/crafting_recipe/food/bluecharrie_float
+/datum/crafting_recipe/food/bluecharrie_float
 	name = "Blue Cherry Shake"
 	always_availible = FALSE
 	reqs = list(

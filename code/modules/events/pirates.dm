@@ -29,7 +29,9 @@
 	if(fake)
 		return
 	threat_message = new
-	payoff = round(SSshuttle.points * 0.80)
+	var/datum/bank_account/D = SSeconomy.get_dep_account(ACCOUNT_CAR)
+	if(D)
+		payoff = round(D.account_balance * 0.80)
 	threat_message.title = "Business proposition"
 	threat_message.content = "This is [ship_name]. Pay up [payoff] credits or you'll walk the plank."
 	threat_message.possible_answers = list("We'll pay.","No way.")
@@ -38,13 +40,14 @@
 
 /datum/round_event/pirates/proc/answered()
 	if(threat_message && threat_message.answered == 1)
-		if(SSshuttle.points >= payoff)
-			SSshuttle.points -= payoff
-			priority_announce("Thanks for the credits, landlubbers.",sender_override = ship_name)
-			paid_off = TRUE
-			return
-		else
-			priority_announce("Trying to cheat us? You'll regret this!",sender_override = ship_name)
+		var/datum/bank_account/D = SSeconomy.get_dep_account(ACCOUNT_CAR)
+		if(D)
+			if(D.adjust_money(-payoff))
+				priority_announce("Thanks for the credits, landlubbers.",sender_override = ship_name)
+				paid_off = TRUE
+				return
+			else
+				priority_announce("Trying to cheat us? You'll regret this!",sender_override = ship_name)
 	if(!shuttle_spawned)
 		spawn_shuttle()
 
@@ -60,7 +63,7 @@
 
 	if(!SSmapping.empty_space)
 		SSmapping.empty_space = SSmapping.add_new_zlevel("Empty Area For Pirates", list(ZTRAIT_LINKAGE = SELFLOOPING))
-	
+
 	var/datum/map_template/shuttle/pirate/default/ship = new
 	var/x = rand(TRANSITIONEDGE,world.maxx - TRANSITIONEDGE - ship.width)
 	var/y = rand(TRANSITIONEDGE,world.maxy - TRANSITIONEDGE - ship.height)
@@ -104,9 +107,10 @@
 /obj/machinery/shuttle_scrambler/process()
 	if(active)
 		if(is_station_level(z))
-			var/siphoned = min(SSshuttle.points,siphon_per_tick)
-			SSshuttle.points -= siphoned
-			credits_stored += siphoned
+			var/datum/bank_account/D = SSeconomy.get_dep_account(ACCOUNT_CAR)
+			if(D)
+				var/siphoned = min(D.account_balance,siphon_per_tick)
+				D.adjust_money(-siphoned)
 			interrupt_research()
 		else
 			return
@@ -142,12 +146,7 @@
 		new /obj/effect/temp_visual/emp(get_turf(S))
 
 /obj/machinery/shuttle_scrambler/proc/dump_loot(mob/user)
-	if(credits_stored < 200)
-		to_chat(user,"<span class='notice'>Not enough credits to retrieve.</span>")
-		return
-	while(credits_stored >= 200)
-		new /obj/item/stack/spacecash/c200(drop_location())
-		credits_stored -= 200
+	new /obj/item/holochip(drop_location(), credits_stored)
 	to_chat(user,"<span class='notice'>You retrieve the siphoned credits!</span>")
 	credits_stored = 0
 
@@ -160,11 +159,12 @@
 	active = FALSE
 	STOP_PROCESSING(SSobj,src)
 
-/obj/machinery/shuttle_scrambler/update_icon_state()
+/obj/machinery/shuttle_scrambler/update_overlays()
+	. = ..()
 	if(active)
-		icon_state = "dominator-blue"
-	else
-		icon_state = "dominator"
+		var/mutable_appearance/M = mutable_appearance(icon, "dominator-overlay")
+		M.color = "#00FFFF"
+		. += M
 
 /obj/machinery/shuttle_scrambler/Destroy()
 	toggle_off()
@@ -459,3 +459,12 @@
 /datum/export/pirate/cash/get_amount(obj/O)
 	var/obj/item/stack/spacecash/C = O
 	return ..() * C.amount * C.value
+
+/datum/export/pirate/holochip
+	cost = 1
+	unit_name = "holochip"
+	export_types = list(/obj/item/holochip)
+
+/datum/export/pirate/holochip/get_cost(atom/movable/AM)
+	var/obj/item/holochip/H = AM
+	return H.credits

@@ -333,10 +333,13 @@
 		send_byjax(occupant,"exosuit.browser","t_port_connection","[internal_tank.connected_port?"Disconnect from":"Connect to"] gas port")
 
 	if(href_list["dna_lock"])
-		if(occupant && !iscarbon(occupant))
-			to_chat(occupant, "<span class='danger'> You do not have any DNA!</span>")
+		if(!occupant)
 			return
-		dna_lock = occupant.dna.unique_enzymes
+		var/mob/living/carbon/C = occupant
+		if(!istype(C) || !C.dna)
+			to_chat(C, "<span class='danger'> You do not have any DNA!</span>")
+			return
+		dna_lock = C.dna.unique_enzymes
 		occupant_message("You feel a prick as the needle takes your DNA sample.")
 
 	if(href_list["reset_dna"])
