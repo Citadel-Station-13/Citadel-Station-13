@@ -177,7 +177,7 @@
 	worth += gases[/datum/gas/miasma]*1
 	worth += gases[/datum/gas/tritium]*4
 	worth += gases[/datum/gas/pluoxium]*3
-	worth += gases[/datum/gas/nitryl]*25
+	worth += gases[/datum/gas/nitryl]*30
 	return worth
 
 
