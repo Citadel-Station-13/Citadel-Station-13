@@ -9,14 +9,14 @@
 					/obj/item/cartridge/engineering = 10,
 					/obj/item/cartridge/security = 10,
 					/obj/item/cartridge/janitor = 10,
-					/obj/item/cartridge/signal/toxins = 10,
-					/obj/item/pda/heads = 10,
-					/obj/item/cartridge/captain = 3,
-					/obj/item/cartridge/quartermaster = 10)
+					/obj/item/cartridge/signal/toxins = 10)
+	contraband = list(/obj/item/pda/heads = 10,
+					/obj/item/cartridge/captain = 2,
+					/obj/item/cartridge/quartermaster = 2)
 	armor = list("melee" = 100, "bullet" = 100, "laser" = 100, "energy" = 100, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 50)
 	refill_canister = /obj/item/vending_refill/cart
 	resistance_flags = FIRE_PROOF
-	default_price = 250
+	default_price = 200
 	extra_price = 500
 	payment_department = ACCOUNT_SRV
 	cost_multiplier_per_dept = list(ACCOUNT_SRV = 0)
