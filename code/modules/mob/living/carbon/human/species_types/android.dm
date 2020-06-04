@@ -2,7 +2,7 @@
 	name = "Android"
 	id = "android"
 	say_mod = "states"
-	species_traits = list(NOBLOOD,NOGENITALS,NOAROUSAL)
+	species_traits = list(NOBLOOD,NOGENITALS,NOAROUSAL,ROBOTIC_LIMBS)
 	inherent_traits = list(TRAIT_RESISTHEAT,TRAIT_NOBREATH,TRAIT_RESISTCOLD,TRAIT_RESISTHIGHPRESSURE,TRAIT_RESISTLOWPRESSURE,TRAIT_RADIMMUNE,TRAIT_NOFIRE,TRAIT_PIERCEIMMUNE,TRAIT_NOHUNGER,TRAIT_LIMBATTACHMENT)
 	inherent_biotypes = MOB_ROBOTIC|MOB_HUMANOID
 	meat = null
@@ -11,15 +11,3 @@
 	mutanttongue = /obj/item/organ/tongue/robot
 	species_language_holder = /datum/language_holder/synthetic
 	limbs_id = "synth"
-
-/datum/species/android/on_species_gain(mob/living/carbon/C)
-	. = ..()
-	for(var/X in C.bodyparts)
-		var/obj/item/bodypart/O = X
-		O.change_bodypart_status(BODYPART_ROBOTIC, FALSE, TRUE)
-
-/datum/species/android/on_species_loss(mob/living/carbon/C)
-	. = ..()
-	for(var/X in C.bodyparts)
-		var/obj/item/bodypart/O = X
-		O.change_bodypart_status(BODYPART_ORGANIC,FALSE, TRUE)

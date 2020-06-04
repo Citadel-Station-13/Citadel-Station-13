@@ -17,8 +17,9 @@
 	var/quality = 0	//affects mood, typically higher for mixed drinks with more complex recipes
 
 /datum/reagent/consumable/on_mob_life(mob/living/carbon/M)
-	current_cycle++
-	M.adjust_nutrition(nutriment_factor, max_nutrition)
+	if(!HAS_TRAIT(M, TRAIT_NO_PROCESS_FOOD))
+		current_cycle++
+		M.adjust_nutrition(nutriment_factor, max_nutrition)
 	M.CheckBloodsuckerEatFood(nutriment_factor)
 	holder.remove_reagent(type, metabolization_rate)
 
@@ -49,10 +50,11 @@
 	var/burn_heal = 0
 
 /datum/reagent/consumable/nutriment/on_mob_life(mob/living/carbon/M)
-	if(prob(50))
-		M.heal_bodypart_damage(brute_heal,burn_heal, 0)
-		. = 1
-	..()
+if(!HAS_TRAIT(M, TRAIT_NO_PROCESS_FOOD))
+		if(prob(50))
+			M.heal_bodypart_damage(brute_heal,burn_heal, 0)
+			. = 1
+		..()
 
 /datum/reagent/consumable/nutriment/on_new(list/supplied_data)
 	// taste data can sometimes be ("salt" = 3, "chips" = 1)

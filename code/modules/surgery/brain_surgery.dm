@@ -10,7 +10,7 @@
 
 	target_mobtypes = list(/mob/living/carbon/human, /mob/living/carbon/monkey)
 	possible_locs = list(BODY_ZONE_HEAD)
-	requires_bodypart_type = 0
+	requires_bodypart_type = BODYPART_ORGANIC
 /datum/surgery_step/fix_brain
 	name = "fix brain"
 	implements = list(TOOL_HEMOSTAT = 85, TOOL_SCREWDRIVER = 35, /obj/item/pen = 15) //don't worry, pouring some alcohol on their open brain will get that chance to 100

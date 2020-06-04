@@ -352,6 +352,11 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 
 	C.add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/species, TRUE, multiplicative_slowdown = speedmod)
 
+	if(ROBOTIC_LIMBS in species_traits)
+		for(var/obj/item/bodypart/B in C.bodyparts)
+			B.change_bodypart_status(BODYPART_ROBOTIC, FALSE, TRUE) // Makes all Bodyparts robotic.
+			B.render_like_organic = TRUE
+
 	SEND_SIGNAL(C, COMSIG_SPECIES_GAIN, src, old_species)
 
 
@@ -388,6 +393,12 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 		if(F)
 			qdel(F)
 
+
+	if(ROBOTIC_LIMBS in species_traits)
+		for(var/obj/item/bodypart/B in C.bodyparts)
+			B.change_bodypart_status(BODYPART_ORGANIC, FALSE, TRUE)
+			B.render_like_organic = FALSE
+
 	SEND_SIGNAL(C, COMSIG_SPECIES_LOSS, src)
 
 /datum/species/proc/handle_hair(mob/living/carbon/human/H, forced_colour)
@@ -408,7 +419,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 	var/dynamic_fhair_suffix = ""
 
 	//for augmented heads
-	if(HD.status == BODYPART_ROBOTIC)
+	if(HD.status == BODYPART_ROBOTIC && !HD.render_like_organic)
 		return
 
 	//we check if our hat or helmet hides our facial hair.
@@ -667,7 +678,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 			bodyparts_to_add -= "waggingspines"
 
 	if(mutant_bodyparts["snout"]) //Take a closer look at that snout!
-		if((H.wear_mask && (H.wear_mask.flags_inv & HIDESNOUT)) || (H.head && (H.head.flags_inv & HIDESNOUT)) || !HD || HD.status == BODYPART_ROBOTIC)
+		if((H.wear_mask && (H.wear_mask.flags_inv & HIDESNOUT)) || (H.head && (H.head.flags_inv & HIDESNOUT)) || !HD || (HD.status == BODYPART_ROBOTIC && !HD.render_like_organic))
 			bodyparts_to_add -= "snout"
 
 	if(mutant_bodyparts["frills"])
@@ -675,11 +686,11 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 			bodyparts_to_add -= "frills"
 
 	if(mutant_bodyparts["horns"])
-		if(!H.dna.features["horns"] || H.dna.features["horns"] == "None" || H.head && (H.head.flags_inv & HIDEHAIR) || (H.wear_mask && (H.wear_mask.flags_inv & HIDEHAIR)) || !HD || HD.status == BODYPART_ROBOTIC)
+		if(!H.dna.features["horns"] || H.dna.features["horns"] == "None" || H.head && (H.head.flags_inv & HIDEHAIR) || (H.wear_mask && (H.wear_mask.flags_inv & HIDEHAIR)) || !HD || (HD.status == BODYPART_ROBOTIC && !HD.render_like_organic))
 			bodyparts_to_add -= "horns"
 
 	if(mutant_bodyparts["ears"])
-		if(!H.dna.features["ears"] || H.dna.features["ears"] == "None" || H.head && (H.head.flags_inv & HIDEEARS) || (H.wear_mask && (H.wear_mask.flags_inv & HIDEEARS)) || !HD || HD.status == BODYPART_ROBOTIC)
+		if(!H.dna.features["ears"] || H.dna.features["ears"] == "None" || H.head && (H.head.flags_inv & HIDEEARS) || (H.wear_mask && (H.wear_mask.flags_inv & HIDEEARS)) || !HD || (HD.status == BODYPART_ROBOTIC && !HD.render_like_organic))
 			bodyparts_to_add -= "ears"
 
 	if(mutant_bodyparts["wings"])
@@ -703,7 +714,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 		if(!H.dna.features["xenodorsal"] || H.dna.features["xenodorsal"] == "None" || (H.wear_suit && (H.wear_suit.flags_inv & HIDEJUMPSUIT)))
 			bodyparts_to_add -= "xenodorsal"
 	if(mutant_bodyparts["xenohead"])//This is an overlay for different castes using different head crests
-		if(!H.dna.features["xenohead"] || H.dna.features["xenohead"] == "None" || H.head && (H.head.flags_inv & HIDEHAIR) || (H.wear_mask && (H.wear_mask.flags_inv & HIDEHAIR)) || !HD || HD.status == BODYPART_ROBOTIC)
+		if(!H.dna.features["xenohead"] || H.dna.features["xenohead"] == "None" || H.head && (H.head.flags_inv & HIDEHAIR) || (H.wear_mask && (H.wear_mask.flags_inv & HIDEHAIR)) || !HD || (HD.status == BODYPART_ROBOTIC && !HD.render_like_organic))
 			bodyparts_to_add -= "xenohead"
 	if(mutant_bodyparts["xenotail"])
 		if(!H.dna.features["xenotail"] || H.dna.features["xenotail"] == "None" || H.wear_suit && (H.wear_suit.flags_inv & HIDEJUMPSUIT))
@@ -721,11 +732,11 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 			bodyparts_to_add -= "mam_waggingtail"
 
 	if(mutant_bodyparts["mam_ears"])
-		if(!H.dna.features["mam_ears"] || H.dna.features["mam_ears"] == "None" || H.head && (H.head.flags_inv & HIDEEARS) || (H.wear_mask && (H.wear_mask.flags_inv & HIDEEARS)) || !HD || HD.status == BODYPART_ROBOTIC)
+		if(!H.dna.features["mam_ears"] || H.dna.features["mam_ears"] == "None" || H.head && (H.head.flags_inv & HIDEEARS) || (H.wear_mask && (H.wear_mask.flags_inv & HIDEEARS)) || !HD || (HD.status == BODYPART_ROBOTIC && !HD.render_like_organic))
 			bodyparts_to_add -= "mam_ears"
 
 	if(mutant_bodyparts["mam_snouts"]) //Take a closer look at that snout!
-		if((H.wear_mask && (H.wear_mask.flags_inv & HIDESNOUT)) || (H.head && (H.head.flags_inv & HIDESNOUT)) || !HD || HD.status == BODYPART_ROBOTIC)
+		if((H.wear_mask && (H.wear_mask.flags_inv & HIDESNOUT)) || (H.head && (H.head.flags_inv & HIDESNOUT)) || !HD || (HD.status == BODYPART_ROBOTIC && !HD.render_like_organic))
 			bodyparts_to_add -= "mam_snouts"
 
 	if(mutant_bodyparts["taur"])

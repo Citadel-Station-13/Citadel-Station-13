@@ -140,6 +140,8 @@
 #define CUSTOM_SKINTONE	24	//adds a "_g" suffix to bodypart overlays icon states if a custom skintone is used.
 #define HORNCOLOR		25
 #define WINGCOLOR		26
+#define ROBOTIC_LIMBS	27 //has robotic limbs that render like organic ones
+
 
 //organ slots
 #define ORGAN_SLOT_BRAIN "brain"

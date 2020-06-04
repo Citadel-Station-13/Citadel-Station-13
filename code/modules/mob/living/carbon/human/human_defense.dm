@@ -402,9 +402,26 @@
 				if(1)
 					L.receive_damage(0,10)
 					Stun(200)
+					if(!isrobotic(src))
+						L.receive_damage(0,10)
+						Stun(200)
+					else
+						// robotic species take far less damage, and roll to have their parts fly off on a heavy emp
+						// this is to stop emps outright killing them, and also because their organs have emp acts
+						L.receive_damage(0,4)
+						Stun(50)
+						if(!(L.body_part == CHEST || L.body_part == HEAD)) // only dismember legs/arms
+							if(prob(20))
+								L.dismember()
 				if(2)
 					L.receive_damage(0,5)
 					Stun(100)
+					if(!isrobotic(src))
+						L.receive_damage(0,5)
+						Stun(100)
+					else
+						L.receive_damage(0,2)
+						Stun(25)
 
 /mob/living/carbon/human/acid_act(acidpwr, acid_volume, bodyzone_hit)
 	var/list/damaged = list()

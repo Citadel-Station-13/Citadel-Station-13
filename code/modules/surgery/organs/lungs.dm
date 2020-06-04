@@ -464,8 +464,19 @@
 	return S
 
 /obj/item/organ/lungs/ipc
-	name = "ipc lungs"
+	name = "ipc cooling system"
 	icon_state = "lungs-c"
+
+/obj/item/organ/lungs/ipc/emp_act(severity) //Should probably put it somewhere else later
+	. = ..()
+	if(. & EMP_PROTECT_SELF)
+		return
+	to_chat(owner, "<span class='warning'>Alert: Critical cooling system failure!</span>")
+	switch(severity)
+		if(1)
+			owner.adjust_bodytemperature(100*TEMPERATURE_DAMAGE_COEFFICIENT)
+		if(2)
+			owner.adjust_bodytemperature(30*TEMPERATURE_DAMAGE_COEFFICIENT)
 
 /obj/item/organ/lungs/plasmaman
 	name = "plasma filter"
