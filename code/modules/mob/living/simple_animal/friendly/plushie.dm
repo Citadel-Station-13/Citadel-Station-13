@@ -9,7 +9,6 @@
 	maxHealth = 50
 	health = 50
 	density = FALSE
-	movement_type = FLYING
 	pass_flags = PASSTABLE | PASSGRILLE | PASSMOB
 	mob_size = MOB_SIZE_TINY
 	mob_biotypes = MOB_ORGANIC
@@ -34,7 +33,7 @@
 	var/askDelay = 600 //1 minute cooldown on polling for ghosts
 	var/mob/living/brain/brainmob = null
 
-/obj/item/toy/plushie/shell/Initialize()
+/obj/item/toy/plush/shell/Initialize()
 	next_ask = world.time
 
 //attacking yourself transfers your mind into the plush!

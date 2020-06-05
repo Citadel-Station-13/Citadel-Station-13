@@ -175,7 +175,7 @@
 
 /datum/reagent/fermi/plushmium/reaction_obj(obj/O, reac_volume)
 	if(istype(O, /obj/item/toy/plush) && reac_volume >= 5)
-		O.loc.visible_message("<span class='warning'>The [O] seems to be staring back at you.</span>")
+		O.loc.visible_message("<span class='warning'>The plushie seems to be staring back at you.</span>")
 		var/obj/item/toy/plushie/shell/new_shell = new /obj/item/toy/plushie/shell(O.loc)
 		new_shell.name = O.name
 		new_shell.icon = O.icon
