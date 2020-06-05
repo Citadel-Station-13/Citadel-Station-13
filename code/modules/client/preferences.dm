@@ -1104,9 +1104,12 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			holding down shift for sprint. <b>Each keybind can only have one independent binding, and each key can only have one keybind independently bound to it.</b>"
 			// Create an inverted list of keybindings -> key
 			var/list/user_binds = list()
+			var/list/user_modless_binds = list()
 			for (var/key in key_bindings)
 				for(var/kb_name in key_bindings[key])
 					user_binds[kb_name] += list(key)
+			for (var/key in modless_key_bindings)
+				user_modless_binds[modless_key_bindings[key]] = key
 
 			var/list/kb_categories = list()
 			// Group keybinds by category
@@ -1120,7 +1123,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				dat += "<h3>[category]</h3>"
 				for (var/i in kb_categories[category])
 					var/datum/keybinding/kb = i
-					var/current_independent_binding = modless_key_bindings[kb.name] || "Unbound"
+					var/current_independent_binding = user_modless_binds[kb.name] || "Unbound"
 					if(!length(user_binds[kb.name]))
 						dat += "<span class='bindings'>[kb.full_name]</span> <a href ='?_src_=prefs;preference=keybindings_capture;keybinding=[kb.name];old_key=["Unbound"]'>Unbound</a>"
 						var/list/default_keys = hotkeys ? kb.hotkey_keys : kb.classic_keys
@@ -2447,6 +2450,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						return
 					hotkeys = (choice == "Hotkey")
 					key_bindings = (hotkeys) ? deepCopyList(GLOB.hotkey_keybinding_list_by_key) : deepCopyList(GLOB.classic_keybinding_list_by_key)
+					modless_key_bindings = (hotkeys) ? GLOB.hotkey_modless_keybinding_defaults.Copy() : GLOB.classic_modless_keybinding_defaults.Copy()
 					user.client.update_movement_keys()
 
 				if("chat_on_map")
