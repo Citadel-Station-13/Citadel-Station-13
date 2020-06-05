@@ -7,8 +7,8 @@
 	icon_living = "debug"
 	icon_dead = "debug"
 	speak_emote = list("squeaks")
-	maxHealth = 100
-	health = 100
+	maxHealth = 50
+	health = 50
 	density = FALSE
 	pass_flags = PASSTABLE | PASSGRILLE | PASSMOB
 	mob_size = MOB_SIZE_TINY
@@ -56,6 +56,10 @@
 
 		//add sounds to mob
 		new_plushie.AddComponent(/datum/component/squeak, stored_plush.squeak_override)
+		if(length(stored_plush.squeak_override) > 0)
+			new_plushie.attack_sound = stored_plush.squeak_override[1]
+		else
+			new_plushie.attack_sound = 'sound/items/toysqueak1.ogg'
 
 		//take care of the user's old body and the old shell
 		user.dust(drop_items = TRUE)
