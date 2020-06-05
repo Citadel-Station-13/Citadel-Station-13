@@ -1,10 +1,10 @@
 //HIVEMIND COMMUNICATION //MODE_TOKEN_CHANGELING / :g
 /obj/effect/proc_holder/changeling/hivemind_comms
 	name = "Hivemind Communication"
-	desc = "We tune our senses to the airwaves to allow us to discreetly communicate and exchange DNA with other changelings."
+	desc = "We are one. We are all. Our unity cannot be divided."
 	helptext = "We will be able to talk with other changelings with :g. Exchanged DNA do not count towards absorb objectives." //MODE_TOKEN_CHANGELING needs to be manually updated here.
-	dna_cost = 1
-	chemical_cost = -1
+	dna_cost = 0
+	chemical_cost = 0
 	action_icon = 'icons/mob/actions/actions_xeno.dmi'
 	action_icon_state = "alien_whisper"
 	action_background_icon_state = "bg_ling"
