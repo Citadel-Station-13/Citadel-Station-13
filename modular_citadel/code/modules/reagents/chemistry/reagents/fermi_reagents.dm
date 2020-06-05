@@ -176,11 +176,12 @@
 /datum/reagent/fermi/plushmium/reaction_obj(obj/O, reac_volume)
 	if(istype(O, /obj/item/toy/plush) && reac_volume >= 5)
 		O.loc.visible_message("<span class='warning'>The plushie seems to be staring back at you.</span>")
-		var/obj/item/toy/plush/shell/new_shell = new /obj/item/toy/plush/shell(O.loc)
+		var/obj/item/toy/plushie_shell/new_shell = new /obj/item/toy/plushie_shell(O.loc)
 		new_shell.name = O.name
 		new_shell.icon = O.icon
 		new_shell.icon_state = O.icon_state
-		qdel(O)
+		new_shell.stored_plush = O
+		O.forceMove(new_shell)
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
 //Nanite removal

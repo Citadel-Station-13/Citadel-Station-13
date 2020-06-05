@@ -8,7 +8,7 @@
 	resistance_flags = FLAMMABLE
 	var/list/squeak_override //Weighted list; If you want your plush to have different squeak sounds use this
 	var/stuffed = TRUE //If the plushie has stuffing in it
-	var/obj/item/grenade/grenade //You can remove the stuffing from a plushie and add a grenade to it for *nefarious uses*
+	var/obj/item/stored_item //You can remove the stuffing from a plushie and add a small objects to it, including grenades for *nefarious uses*
 	//--love ~<3--
 	gender = NEUTER
 	var/obj/item/toy/plush/lover
@@ -65,7 +65,7 @@
 		set_snowflake_from_config(set_snowflake_id)
 
 /obj/item/toy/plush/Destroy()
-	QDEL_NULL(grenade)
+	QDEL_NULL(stored_item)
 
 	//inform next of kin and... acquaintances
 	if(partner)
@@ -150,16 +150,17 @@
 		S?.override_squeak_sounds = squeak_override
 
 /obj/item/toy/plush/handle_atom_del(atom/A)
-	if(A == grenade)
-		grenade = null
+	if(A == stored_item)
+		stored_item = null
 	..()
 
 /obj/item/toy/plush/attack_self(mob/user)
 	. = ..()
-	if(stuffed || grenade)
+	if(stuffed || stored_item)
 		to_chat(user, "<span class='notice'>You pet [src]. D'awww.</span>")
-		if(grenade && !grenade.active)
-			if(istype(grenade, /obj/item/grenade/chem_grenade))
+		if(istype(stored_item, /obj/item/grenade/chem_grenade))
+			var/obj/item/grenade/chem_grenade/grenade = stored_item
+			if(grenade && !grenade.active)
 				var/obj/item/grenade/chem_grenade/G = grenade
 				if(G.nadeassembly) //We're activated through different methods
 					return
@@ -172,7 +173,7 @@
 
 /obj/item/toy/plush/attackby(obj/item/I, mob/living/user, params)
 	if(I.get_sharpness())
-		if(!grenade)
+		if(!stored_item)
 			if(!stuffed)
 				to_chat(user, "<span class='warning'>You already murdered it!</span>")
 				return
@@ -181,28 +182,28 @@
 			stuffed = FALSE
 			SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT,"plushjack", /datum/mood_event/plushjack)
 		else
-			to_chat(user, "<span class='notice'>You remove the grenade from [src].</span>")
-			user.put_in_hands(grenade)
-			grenade = null
-		return
-	if(istype(I, /obj/item/grenade))
-		if(stuffed)
-			to_chat(user, "<span class='warning'>You need to remove some stuffing first!</span>")
-			return
-		if(grenade)
-			to_chat(user, "<span class='warning'>[src] already has a grenade!</span>")
-			return
-		if(!user.transferItemToLoc(I, src))
-			return
-		user.visible_message("<span class='warning'>[user] slides [grenade] into [src].</span>", \
-		"<span class='danger'>You slide [I] into [src].</span>")
-		grenade = I
-		var/turf/grenade_turf = get_turf(src)
-		log_game("[key_name(user)] added a grenade ([I.name]) to [src] at [AREACOORD(grenade_turf)].")
+			to_chat(user, "<span class='notice'>You remove the [stored_item] from [src].</span>")
+			user.put_in_hands(stored_item)
+			stored_item = null
 		return
 	if(istype(I, /obj/item/toy/plush))
 		love(I, user)
 		SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT,"plushplay", /datum/mood_event/plushplay)
+		return
+	if(istype(I, /obj/item/grenade) || I.w_class <= WEIGHT_CLASS_TINY)
+		if(stuffed)
+			to_chat(user, "<span class='warning'>You need to remove some stuffing first!</span>")
+			return
+		if(stored_item)
+			to_chat(user, "<span class='warning'>[src] already has an item inside!</span>")
+			return
+		if(!user.transferItemToLoc(I, src))
+			return
+		user.visible_message("<span class='warning'>[user] slides [stored_item] into [src].</span>", \
+		"<span class='danger'>You slide [I] into [src].</span>")
+		stored_item = I
+		var/turf/item_turf = get_turf(src)
+		log_game("[key_name(user)] added item ([I.name]) to [src] at [AREACOORD(item_turf)].")
 		return
 	return ..()
 
@@ -436,13 +437,13 @@ GLOBAL_LIST_INIT(valid_plushie_paths, valid_plushie_paths())
 /obj/item/toy/plush/random/Initialize()
 	var/newtype
 	var/list/snowflake_list = CONFIG_GET(keyed_list/snowflake_plushies)
-	
+
 	/// If there are no snowflake plushies we'll default to base plush, so we grab from the valid list
 	if (snowflake_list.len)
 		newtype = prob(CONFIG_GET(number/snowflake_plushie_prob)) ? /obj/item/toy/plush/random_snowflake : pick(GLOB.valid_plushie_paths)
-	else 
+	else
 		newtype = pick(GLOB.valid_plushie_paths)
-	
+
 	new newtype(loc)
 	return INITIALIZE_HINT_QDEL
 
