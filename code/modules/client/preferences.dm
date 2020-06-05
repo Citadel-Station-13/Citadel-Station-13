@@ -1117,9 +1117,14 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				var/datum/keybinding/kb = GLOB.keybindings_by_name[name]
 				kb_categories[kb.category] += list(kb)
 
-			dat += "<style>span.bindname { display: inline-block; position: absolute; left: 10px; width: 20%; padding: 20px; } \
-			span.bindings { display: inline-block; width: auto; left: 20%; width: 20%; padding: 20px; } \
-			span.independent { display: inline-block; right: 10px; width: 20%; padding: 20px; position: absolute; } </style><body>"
+			dat +=
+			{"
+			<style>
+			span.bindname { display: inline-block; position: absolute; width: 20% ; left: 5px; padding: 5px; } \
+			span.bindings { display: inline-block; position: relative; width: auto; left: 20%; width: auto; right: 20%; padding: 5px; } \
+			span.independent { display: inline-block; position: absolute; width: 20%; right: 5px; padding: 5px; } \
+			</style><body>
+			"}
 
 			for (var/category in kb_categories)
 				dat += "<h3>[category]</h3>"
