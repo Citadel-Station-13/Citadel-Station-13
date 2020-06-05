@@ -135,4 +135,11 @@
 	tastes = list("medicinal bitterness" = 1, "hope" = 1)
 	foodtype = VEGETABLES
 
-
+/obj/item/reagent_containers/food/snacks/salad/gumbo
+	name = "black eyed gumbo"
+	desc = "A spicy and savory meat and rice dish."
+	icon_state = "gumbo"
+	trash = /obj/item/reagent_containers/glass/bowl
+	list_reagents = list(/datum/reagent/consumable/capsaicin = 2, /datum/reagent/consumable/nutriment/vitamin = 3, /datum/reagent/consumable/nutriment = 5)
+	tastes = list("savory meat and vegtables" = 2, "building heat" = 1)
+	foodtype = GRAIN | MEAT | VEGETABLES
