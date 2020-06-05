@@ -2450,7 +2450,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						return
 					hotkeys = (choice == "Hotkey")
 					key_bindings = (hotkeys) ? deepCopyList(GLOB.hotkey_keybinding_list_by_key) : deepCopyList(GLOB.classic_keybinding_list_by_key)
-					modless_key_bindings = (hotkeys) ? GLOB.hotkey_modless_keybinding_defaults.Copy() : GLOB.classic_modless_keybinding_defaults.Copy()
+					modless_key_bindings = list()
 					user.client.update_movement_keys()
 
 				if("chat_on_map")
