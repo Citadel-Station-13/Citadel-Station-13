@@ -129,7 +129,7 @@
 		if(returned & BLOCK_REDIRECTED)
 			return BULLET_ACT_FORCE_PIERCE
 		if(returned & BLOCK_SUCCESS)
-			P.on_hit(src, 100, def_zone)
+			P.on_hit(src, returnlist[BLOCK_RETURN_PROJECTILE_BLOCK_PERCENTAGE], def_zone)
 			return BULLET_ACT_BLOCK
 		totaldamage = block_calculate_resultant_damage(totaldamage, returnlist)
 	if((P.damage_type == BRUTE || P.damage_type == BURN))
@@ -140,7 +140,7 @@
 				"<span class='boldwarning'>You are knocked off of [src] by the [P]!</span>")
 			unbuckle_mob(M)
 			M.DefaultCombatKnockdown(40)
-	P.on_hit(src)
+	P.on_hit(src, 0, def_zone)
 	return BULLET_ACT_HIT
 
 /mob/living/silicon/flash_act(intensity = 1, override_blindness_check = 0, affect_silicon = 0, visual = 0, type = /obj/screen/fullscreen/flash/static)

@@ -204,6 +204,8 @@
 	. |= BLOCK_SHOULD_PARTIAL_MITIGATE
 	if(isnull(return_list[BLOCK_RETURN_MITIGATION_PERCENT]))		//  if one of the on_active_parry procs overrode. We don't have to worry about interference since parries are the first thing checked in the [do_run_block()] sequence.
 		return_list[BLOCK_RETURN_MITIGATION_PERCENT] = clamp(efficiency, 0, 100)		// do not allow > 100% or < 0% for now.
+	if((return_list[BLOCK_RETURN_MITIGATION_PERCENT] >= 100) || (damage <= 0))
+		. |= BLOCK_SUCCESS
 	var/list/effect_text
 	if(efficiency >= data.parry_efficiency_to_counterattack)
 		run_parry_countereffects(object, damage, attack_text, attack_type, armour_penetration, attacker, def_zone, return_list, efficiency)

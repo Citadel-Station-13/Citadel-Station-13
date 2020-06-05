@@ -24,6 +24,7 @@
 	// Component signal block runs have highest priority.. for now.
 	. = SEND_SIGNAL(src, COMSIG_LIVING_RUN_BLOCK, real_attack, object, damage, attack_text, attack_type, armour_penetration, attacker, def_zone, return_list, attack_direction)
 	if((. & BLOCK_SUCCESS) && !(. & BLOCK_CONTINUE_CHAIN))
+		return_list[BLOCK_RETURN_PROJECTILE_BLOCK_PERCENTAGE] = 100
 		return
 	var/list/obj/item/tocheck = get_blocking_items()
 	sortTim(tocheck, /proc/cmp_numeric_dsc, TRUE)
@@ -49,6 +50,10 @@
 				I.check_active_block(src, object, damage, attack_text, attack_type, armour_penetration, attacker, def_zone, final_block_chance, return_list, attack_direction)
 			else
 				I.check_block(src, object, damage, attack_text, attack_type, armour_penetration, attacker, def_zone, final_block_chance, return_list)
+	if(. & BLOCK_SUCCESS)
+		return_list[BLOCK_RETURN_PROJECTILE_BLOCK_PERCENTAGE] = 100
+	else if(isnull(return_list[BLOCK_RETURN_PROJECTILE_BLOCK_PERCENTAGE]))
+		return_list[BLOCK_RETURN_PROJECTILE_BLOCK_PERCENTAGE] = return_list[BLOCK_RETURN_MITIGATION_PERCENT]
 
 /// Gets an unsortedlist of objects to run block checks on. List must have associative values for priorities!
 /mob/living/proc/get_blocking_items()

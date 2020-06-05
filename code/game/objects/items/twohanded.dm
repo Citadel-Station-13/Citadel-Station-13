@@ -318,6 +318,7 @@
 	block_slowdown = 1
 	// no attacking while blocking
 	block_lock_attacking = TRUE
+	block_projectile_mitigation = 75
 
 	parry_time_windup = 0
 	parry_time_active = 8

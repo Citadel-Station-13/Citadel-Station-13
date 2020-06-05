@@ -29,6 +29,7 @@
 	block_start_delay = 3
 	block_damage_absorption = 0
 	block_resting_stamina_penalty_multiplier = 2
+	block_projectile_mitigation = 50
 
 /obj/item/shield/examine(mob/user)
 	. = ..()

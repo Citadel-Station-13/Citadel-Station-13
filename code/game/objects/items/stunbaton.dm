@@ -170,10 +170,12 @@
 	return disarming || (user.a_intent != INTENT_HARM)
 
 /obj/item/melee/baton/proc/baton_stun(mob/living/L, mob/user, disarming = FALSE)
-	if(L.mob_run_block(src, 0, "[user]'s [name]", ATTACK_TYPE_MELEE, 0, user, null, null) & BLOCK_SUCCESS) //No message; check_shields() handles that
+	var/list/return_list = list()
+	if(L.mob_run_block(src, 0, "[user]'s [name]", ATTACK_TYPE_MELEE, 0, user, null, return_list) & BLOCK_SUCCESS) //No message; check_shields() handles that
 		playsound(L, 'sound/weapons/genhit.ogg', 50, 1)
 		return FALSE
 	var/stunpwr = stamforce
+	stunpwr = block_calculate_resultant_damage(stunpwr, return_list)
 	var/obj/item/stock_parts/cell/our_cell = get_cell()
 	if(!our_cell)
 		switch_status(FALSE)

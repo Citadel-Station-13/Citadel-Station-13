@@ -53,6 +53,9 @@ GLOBAL_LIST_EMPTY(block_parry_data)
 	/// Override upper bound of damage block, list("[ATTACK_TYPE_DEFINE]" = absorption), see [block_damage_limit]
 	var/list/block_damage_limit_override
 
+	/// The blocked variable of on_hit() on projectiles is impacted by this. Higher is better, 0 to 100, percentage.
+	var/block_projectile_mitigation = 50
+
 	/*
 	 * NOTE: Overrides for attack types for most the block_stamina variables were removed,
 	 * because at the time of writing nothing needed to use it. Add them if you need it,

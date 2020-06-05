@@ -200,11 +200,12 @@
 	block_return[BLOCK_RETURN_ACTIVE_BLOCK_DAMAGE_MITIGATED] = damage - final_damage
 	block_return[BLOCK_RETURN_SET_DAMAGE_TO] = final_damage
 	. = BLOCK_SHOULD_CHANGE_DAMAGE
-	if(final_damage <= 0)
+	if((final_damage <= 0) || (damage <= 0))
 		. |= BLOCK_SUCCESS			//full block
 		owner.visible_message("<span class='warning'>[owner] blocks \the [attack_text] with [src]!</span>")
 	else
 		owner.visible_message("<span class='warning'>[owner] dampens \the [attack_text] with [src]!</span>")
+	block_return[BLOCK_RETURN_PROJECTILE_BLOCK_PERCENTAGE] = data.block_projectile_mitigation
 	if(length(data.block_sounds))
 		playsound(loc, pickweight(data.block_sounds), 75, TRUE)
 	on_active_block(owner, object, damage, damage_blocked, attack_text, attack_type, armour_penetration, attacker, def_zone, final_block_chance, block_return, override_direction)

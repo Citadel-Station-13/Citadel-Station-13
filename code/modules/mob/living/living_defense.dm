@@ -67,15 +67,17 @@
 
 /mob/living/bullet_act(obj/item/projectile/P, def_zone)
 	var/totaldamage = P.damage
+	var/final_percent = 0
 	if(P.original != src || P.firer != src) //try to block or reflect the bullet, can't do so when shooting oneself
 		var/list/returnlist = list()
 		var/returned = mob_run_block(P, P.damage, "the [P.name]", ATTACK_TYPE_PROJECTILE, P.armour_penetration, P.firer, def_zone, returnlist)
+		final_percent = returnlist[BLOCK_RETURN_PROJECTILE_BLOCK_PERCENTAGE]
 		if(returned & BLOCK_SHOULD_REDIRECT)
 			handle_projectile_attack_redirection(P, returnlist[BLOCK_RETURN_REDIRECT_METHOD])
 		if(returned & BLOCK_REDIRECTED)
 			return BULLET_ACT_FORCE_PIERCE
 		if(returned & BLOCK_SUCCESS)
-			P.on_hit(src, 100, def_zone)
+			P.on_hit(src, final_percent, def_zone)
 			return BULLET_ACT_BLOCK
 		totaldamage = block_calculate_resultant_damage(totaldamage, returnlist)
 	var/armor = run_armor_check(def_zone, P.flag, null, null, P.armour_penetration, null)
@@ -83,7 +85,11 @@
 		apply_damage(totaldamage, P.damage_type, def_zone, armor)
 		if(P.dismemberment)
 			check_projectile_dismemberment(P, def_zone)
-	return P.on_hit(src, armor) ? BULLET_ACT_HIT : BULLET_ACT_BLOCK
+	var/missing = 100 - final_percent
+	var/armor_ratio = armor * 0.01
+	if(missing > 0)
+		final_percent += missing * armor_ratio
+	return P.on_hit(src, final_percent, def_zone) ? BULLET_ACT_HIT : BULLET_ACT_BLOCK
 
 /mob/living/proc/check_projectile_dismemberment(obj/item/projectile/P, def_zone)
 	return 0
