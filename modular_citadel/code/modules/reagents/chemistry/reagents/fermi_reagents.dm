@@ -159,6 +159,29 @@
 		log_reagent("FERMICHEM: [M] ckey: [M.key]'s tongue has been made permanent")
 
 
+////////////////////////////////////////////////////////////////////////////////////////////////////
+//										PLUSHMIUM
+///////////////////////////////////////////////////////////////////////////////////////////////////
+//A chemical you can spray on plushies to turn them into a 'shell'
+//Using the shell in your hand polls ghosts to enter it, whereas using it on yourself turns yourself into the plushie.
+/datum/reagent/fermi/plushmium
+	name = "Plushmium"
+	description = "A strange chemical, seeming almost fluffy, if it were not for it being a liquid. Known to have a strange effect on plushies."
+	color = "#fbcbd7"
+	taste_description = "the soft feeling of a plushie"
+	pH = 5
+	value = 50
+	can_synth = TRUE
+
+/datum/reagent/fermi/plushmium/reaction_obj(obj/O, reac_volume)
+	if(istype(O, /obj/item/toy/plush) && reac_volume >= 5)
+		O.loc.visible_message("<span class='warning'>The [O] seems to be staring back at you.</span>")
+		var/obj/item/toy/plushie/shell/new_shell = new /obj/item/toy/plushie/shell(O.loc)
+		new_shell.name = O.name
+		new_shell.icon = O.icon
+		new_shell.icon_state = O.icon_state
+		qdel(O)
+
 ///////////////////////////////////////////////////////////////////////////////////////////////
 //Nanite removal
 //Writen by Trilby!! Embellsished a little by me.

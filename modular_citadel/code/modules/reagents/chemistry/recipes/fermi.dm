@@ -484,7 +484,7 @@
 	name = "Plushification serum"
 	id = /datum/reagent/fermi/plushmium
 	results = list(/datum/reagent/fermi/plushmium = 5)
-	required_reagents = list(/datum/reagent/medicine/strange_reagent = 5, /datum/reagent/drug/happiness = 3, /datum/reagent/consumable/blood = 10, /datum/reagent/consumable/laughter = 5, /datum/reagent/toxin/bad_food = 6)
+	required_reagents = list(/datum/reagent/medicine/strange_reagent = 5, /datum/reagent/drug/happiness = 3, /datum/reagent/blood = 10, /datum/reagent/consumable/laughter = 5, /datum/reagent/toxin/bad_food = 6)
 	//mix_message = ""
 	//FermiChem vars:
 	OptimalTempMin 	= 400
@@ -504,7 +504,7 @@
 	PurityMin		= 0.6
 
 /datum/chemical_reaction/fermi/plushmium/FermiExplode(datum/reagents, var/atom/my_atom, volume, temp, pH)
-	var/obj/item/organ/genital/penis/P = new /obj/item/toy/plush/random(get_turf(my_atom))
+	new /obj/item/toy/plush/random(get_turf(my_atom))
 	my_atom.visible_message("<span class='warning'>The reaction suddenly zaps, creating a plushie!</b></span>")
 	my_atom.reagents.clear_reagents()
 

@@ -1,3 +1,4 @@
+//simplemob plushie that can be controlled by players
 /mob/living/simple_animal/pet/plushie
 	name = "Plushie"
 	desc = "A living plushie!"
@@ -18,3 +19,20 @@
 	verb_exclaim = "squeaks intensely"
 	verb_yell = "squeaks intensely"
 	speak_chance = 1
+
+//shell that lets people turn into the plush or poll for ghosts
+/obj/item/toy/plushie/shell
+	name = "Plushie Shell"
+	desc = "A plushie. Its eyes seem to be staring right back at you. Something isn't quite right."
+	icon = 'icons/obj/plushes.dmi'
+	icon_state = "debug"
+
+//attacking yourself transfers your mind into the plush!
+/obj/item/toy/plushie/shell/attack_self(mob/user)
+	to_chat(user, "<span class='userdanger'>You hug the strange plushie. You fool.</span>")
+	var/mob/new_plushie = new /mob/living/simple_animal/pet/plushie/(user.loc)
+	new_plushie.icon = src.icon
+	new_plushie.icon_state = src.icon_state
+	if(user.mind)
+		user.mind.transfer_to(new_plushie)
+	qdel(src)
