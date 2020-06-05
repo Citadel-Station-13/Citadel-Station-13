@@ -163,7 +163,7 @@
 //										PLUSHMIUM
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 //A chemical you can spray on plushies to turn them into a 'shell'
-//Using the shell in your hand polls ghosts to enter it, whereas using it on yourself turns yourself into the plushie.
+//Hugging the plushie turns yourself into the plushie!
 /datum/reagent/fermi/plushmium
 	name = "Plushmium"
 	description = "A strange chemical, seeming almost fluffy, if it were not for it being a liquid. Known to have a strange effect on plushies."
