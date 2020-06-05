@@ -5,6 +5,7 @@
 	icon = 'icons/obj/plushes.dmi'
 	icon_state = "debug"
 	icon_living = "debug"
+	icon_dead = "debug"
 	speak_emote = list("squeaks")
 	maxHealth = 100
 	health = 100
@@ -42,7 +43,8 @@
 		//setup the mob
 		var/mob/living/simple_animal/pet/plushie/new_plushie = new /mob/living/simple_animal/pet/plushie/(user.loc)
 		new_plushie.icon = src.icon
-		new_plushie.icon_dead = src.icon
+		new_plushie.icon_living = src.icon_state
+		new_plushie.icon_dead = src.icon_state
 		new_plushie.icon_state = src.icon_state
 		new_plushie.name = src.name
 
