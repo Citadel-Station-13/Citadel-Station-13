@@ -17,6 +17,7 @@
 	return TRUE
 
 /datum/keybinding/mob/cycle_intent_right
+	hotkey_keys = list("Unbound")
 	name = "cycle_intent_right"
 	full_name = "Cycle Action Intent Right"
 	description = ""
@@ -27,6 +28,7 @@
 	return TRUE
 
 /datum/keybinding/mob/cycle_intent_left
+	hotkey_keys = list("Unbound")
 	name = "cycle_intent_left"
 	full_name = "Cycle Action Intent Left"
 	description = ""

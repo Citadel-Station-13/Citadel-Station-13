@@ -28,11 +28,13 @@ GLOBAL_LIST_EMPTY(block_parry_data)
 	/// Attacks we can block
 	var/can_block_attack_types = ALL
 	/// Our slowdown added while blocking
-	var/block_slowdown = 2
+	var/block_slowdown = 1
 	/// Clickdelay added to user after block ends
 	var/block_end_click_cd_add = 0
 	/// Disallow attacking during block
 	var/block_lock_attacking = TRUE
+	/// Disallow sprinting during block
+	var/block_lock_sprinting = FALSE
 	/// The priority we get in [mob/do_run_block()] while we're being used to parry.
 	var/block_active_priority = BLOCK_PRIORITY_ACTIVE_BLOCK
 	/// Windup before we have our blocking active.

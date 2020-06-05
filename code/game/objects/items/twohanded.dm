@@ -310,12 +310,14 @@
 
 /datum/block_parry_data/dual_esword
 	block_damage_absorption = 2
-	block_damage_multiplier = 0.3
+	block_damage_multiplier = 0.15
+	block_damage_multiplier_override = list(
+		ATTACK_TYPE_MELEE = 0.25
+	)
 	block_start_delay = 0		// instantaneous block
-	block_stamina_cost_per_second = 2
+	block_stamina_cost_per_second = 2.5
 	block_stamina_efficiency = 3
-	// slowdown
-	block_slowdown = 1
+	block_lock_sprinting = TRUE
 	// no attacking while blocking
 	block_lock_attacking = TRUE
 	block_projectile_mitigation = 75

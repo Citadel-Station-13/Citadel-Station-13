@@ -7,6 +7,7 @@
 	active_block_effect_end()
 	active_block_item = null
 	REMOVE_TRAIT(src, TRAIT_MOBILITY_NOUSE, ACTIVE_BLOCK_TRAIT)
+	REMOVE_TRAIT(src, TRAIT_SPRINT_LOCKED, ACTIVE_BLOCK_TRAIT)
 	remove_movespeed_modifier(/datum/movespeed_modifier/active_block)
 	var/datum/block_parry_data/data = I.get_block_parry_data()
 	if(timeToNextMove() < data.block_end_click_cd_add)
@@ -25,6 +26,8 @@
 	active_block_item = I
 	if(data.block_lock_attacking)
 		ADD_TRAIT(src, TRAIT_MOBILITY_NOUSE, ACTIVE_BLOCK_TRAIT)		//probably should be something else at some point
+	if(data.block_lock_sprinting)
+		ADD_TRAIT(src, TRAIT_SPRINT_LOCKED, ACTIVE_BLOCK_TRAIT)
 	add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/active_block, multiplicative_slowdown = data.block_slowdown)
 	active_block_effect_start()
 	return TRUE
@@ -75,10 +78,16 @@
 /mob/living/proc/keybind_start_active_blocking()
 	if(combat_flags & (COMBAT_FLAG_ACTIVE_BLOCK_STARTING | COMBAT_FLAG_ACTIVE_BLOCKING))
 		return FALSE
+	if(!(combat_flags & COMBAT_FLAG_BLOCK_CAPABLE))
+		to_chat(src, "<span class='warning'>You're not something that can actively block.</span>")
+		return FALSE
+	// QOL: Attempt to toggle on combat mode if it isn't already
+	SEND_SIGNAL(src, COMSIG_ENABLE_COMBAT_MODE)
 	if(!SEND_SIGNAL(src, COMSIG_COMBAT_MODE_CHECK, COMBAT_MODE_ACTIVE))
 		to_chat(src, "<span class='warning'>You must be in combat mode to actively block!</span>")
 		return FALSE
-	var/obj/item/I = get_active_held_item()
+	// QOL: Instead of trying to just block with held item, grab first available item.
+	var/obj/item/I = find_active_block_item()
 	if(!I)
 		to_chat(src, "<span class='warning'>You can't block with your bare hands!</span>")
 		return
@@ -89,13 +98,25 @@
 	var/delay = data.block_start_delay
 	combat_flags |= COMBAT_FLAG_ACTIVE_BLOCK_STARTING
 	animate(src, pixel_x = get_standard_pixel_x_offset(), pixel_y = get_standard_pixel_y_offset(), time = delay, FALSE, SINE_EASING | EASE_IN)
-	if(!do_after_advanced(src, delay, src, DO_AFTER_REQUIRES_USER_ON_TURF|DO_AFTER_NO_COEFFICIENT|DO_AFTER_DISALLOW_ACTIVE_ITEM_CHANGE, CALLBACK(src, .proc/continue_starting_active_block), MOBILITY_USE, null, null, I))
+	if(!do_after_advanced(src, delay, src, DO_AFTER_REQUIRES_USER_ON_TURF|DO_AFTER_NO_COEFFICIENT, CALLBACK(src, .proc/continue_starting_active_block), MOBILITY_USE, null, null, I))
 		to_chat(src, "<span class='warning'>You fail to raise [I].</span>")
 		combat_flags &= ~(COMBAT_FLAG_ACTIVE_BLOCK_STARTING)
 		animate(src, pixel_x = get_standard_pixel_x_offset(), pixel_y = get_standard_pixel_y_offset(), time = 2.5, FALSE, SINE_EASING | EASE_IN, ANIMATION_END_NOW)
 		return
 	combat_flags &= ~(COMBAT_FLAG_ACTIVE_BLOCK_STARTING)
 	start_active_blocking(I)
+
+/**
+  * Gets the first item we can that can block, but if that fails, default to active held item.COMSIG_ENABLE_COMBAT_MODE
+  */
+/mob/living/proc/find_active_block_item()
+	var/obj/item/held = get_active_held_item()
+	if(!held.can_active_block())
+		for(var/i in held_items - held)
+			var/obj/item/I = i
+			if(I.can_active_block())
+				return I
+	return held
 
 /**
   * Proc called by keybindings to stop active blocking.
@@ -110,7 +131,7 @@
   * Returns if we can actively block.
   */
 /obj/item/proc/can_active_block()
-	return item_flags & ITEM_CAN_BLOCK
+	return block_parry_data && (item_flags & ITEM_CAN_BLOCK)
 
 /**
   * Calculates FINAL ATTACK DAMAGE after mitigation

@@ -3,7 +3,7 @@
   * Determines if we can actively parry.
   */
 /obj/item/proc/can_active_parry()
-	return item_flags & ITEM_CAN_PARRY
+	return block_parry_data && (item_flags & ITEM_CAN_PARRY)
 
 /**
   * Called from keybindings.
@@ -20,6 +20,8 @@
 	if(!(combat_flags & COMBAT_FLAG_PARRY_CAPABLE))
 		to_chat(src, "<span class='warning'>You are not something that can parry attacks.</span>")
 		return
+	//QOL: Try to enable combat mode if it isn't already
+	SEND_SIGNAL(src, COMSIG_ENABLE_COMBAT_MODE)
 	if(!SEND_SIGNAL(src, COMSIG_COMBAT_MODE_CHECK, COMBAT_MODE_ACTIVE))
 		to_chat(src, "<span class='warning'>You must be in combat mode to parry!</span>")
 		return FALSE
@@ -38,8 +40,14 @@
 		data = block_parry_data
 		method = UNARMED_PARRY
 	else
-		to_chat(src, "<span class='warning'>You have nothing to parry with!</span>")
-		return FALSE
+		// QOL: If none of the above work, try to find another item.
+		var/obj/item/backup = find_backup_parry_item()
+		if(!backup)
+			to_chat(src, "<span class='warning'>You have nothing to parry with!</span>")
+			return FALSE
+		data = backup.block_parry_data
+		using_item = backup
+		method = ITEM_PARRY
 	data = return_block_parry_datum(data)
 	var/full_parry_duration = data.parry_time_windup + data.parry_time_active + data.parry_time_spindown
 	// no system in place to "fallback" if out of the 3 the top priority one can't parry due to constraints but something else can.
@@ -61,6 +69,16 @@
 		ADD_TRAIT(src, TRAIT_SPRINT_LOCKED, ACTIVE_PARRY_TRAIT)
 	handle_parry_starting_effects(data)
 	return TRUE
+
+/**
+  * Tries to find a backup parry item.
+  * Does not look at active held item.
+  */
+/mob/living/proc/find_backup_parry_item()
+	for(var/i in held_items - get_active_held_item())
+		var/obj/item/I = i
+		if(I.can_active_parry())
+			return I
 
 /**
   * Called via timer when the parry sequence ends.
