@@ -316,8 +316,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	cit_toggles			= sanitize_integer(cit_toggles, 0, 16777215, initial(cit_toggles))
 	auto_ooc			= sanitize_integer(auto_ooc, 0, 1, initial(auto_ooc))
 	no_tetris_storage		= sanitize_integer(no_tetris_storage, 0, 1, initial(no_tetris_storage))
-	key_bindings 	= sanitize_islist(key_bindings, list())
-	modless_key_bindings = sanitize_islist(key_bindings, list())
+	key_bindings 			= sanitize_islist(key_bindings, list())
+	modless_key_bindings 	= sanitize_islist(modless_key_bindings, list())
 
 	verify_keybindings_valid()		// one of these days this will runtime and you'll be glad that i put it in a different proc so no one gets their saves wiped
 
