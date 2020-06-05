@@ -7,6 +7,8 @@
 	var/category = CATEGORY_MISC
 	var/weight = WEIGHT_LOWEST
 	var/keybind_signal
+	/// The default value for a modifier-independent bind.
+	var/modifier_independent_keybind
 
 /datum/keybinding/New()
 
