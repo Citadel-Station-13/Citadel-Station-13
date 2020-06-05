@@ -18,9 +18,10 @@
 	verb_yell = "squeaks intensely"
 	deathmessage = "lets out a faint squeak as the glint in its eyes disappears"
 	del_on_death = TRUE
-	var/obj/item/toy/plush/corpse_plush = null
 	attacked_sound = 'sound/items/toysqueak1.ogg'
 	death_sound = 'sound/items/toysqueak2.ogg'
+	footstep_type = FOOTSTEP_MOB_BAREFOOT
+	var/obj/item/toy/plush/corpse_plush = null //plushie that the mob is made from, dropped on death containing the brain of the user
 
 /mob/living/simple_animal/pet/plushie/ComponentInitialize()
 	. = ..()
@@ -70,7 +71,7 @@
 	..()
 
 //low regen over time
-/mob/living/simple_animal/pet/plush/Life()
+/mob/living/simple_animal/pet/plushie/Life()
 	if(stat)
 		return
 	if(health < maxHealth)
