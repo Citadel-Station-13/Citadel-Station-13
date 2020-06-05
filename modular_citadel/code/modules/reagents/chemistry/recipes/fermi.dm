@@ -480,12 +480,41 @@
 	RateUpLim 		= 15
 	FermiChem 		= TRUE
 
+/datum/chemical_reaction/fermi/plushmium // done
+	name = "Plushification serum"
+	id = /datum/reagent/fermi/plushmium
+	results = list(/datum/reagent/fermi/plushmium = 5)
+	required_reagents = list(/datum/reagent/medicine/strange_reagent = 5, /datum/reagent/drug/happiness = 3, /datum/reagent/consumable/blood = 10, /datum/reagent/consumable/laughter = 5, /datum/reagent/toxin/bad_food = 6)
+	//mix_message = ""
+	//FermiChem vars:
+	OptimalTempMin 	= 400
+	OptimalTempMax 	= 666
+	ExplodeTemp 	= 800
+	OptimalpHMin 	= 2
+	OptimalpHMax 	= 5
+	ReactpHLim 		= 6
+	//CatalystFact 	= 0 //To do 1
+	CurveSharpT 	= 8
+	CurveSharppH 	= 0.5
+	ThermicConstant = -2
+	HIonRelease 	= -0.1
+	RateUpLim 		= 2
+	FermiChem 		= TRUE
+	FermiExplode 	= TRUE
+	PurityMin		= 0.6
+
+/datum/chemical_reaction/fermi/plushmium/FermiExplode(datum/reagents, var/atom/my_atom, volume, temp, pH)
+	var/obj/item/organ/genital/penis/P = new /obj/item/toy/plush/random(get_turf(my_atom))
+	my_atom.visible_message("<span class='warning'>The reaction suddenly zaps, creating a plushie!</b></span>")
+	my_atom.reagents.clear_reagents()
 
 /datum/chemical_reaction/fermi/basic_buffer/FermiFinish(datum/reagents/holder, atom/my_atom) //might need this
 	var/datum/reagent/fermi/basic_buffer/Fb = locate(/datum/reagent/fermi/basic_buffer) in my_atom.reagents.reagent_list
 	if(!Fb)
 		return
 	Fb.data = 14
+
+
 
 //secretcatchemcode, shh!! Of couse I hide it amongst cats. Though, I moved it with your requests.
 //I'm not trying to be sneaky, I'm trying to keep it a secret!

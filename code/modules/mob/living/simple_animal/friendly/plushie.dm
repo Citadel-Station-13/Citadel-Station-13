@@ -1,0 +1,20 @@
+/mob/living/simple_animal/pet/plushie
+	name = "Plushie"
+	desc = "A living plushie!"
+	icon = 'icons/obj/plushes.dmi'
+	icon_state = "debug"
+	icon_living = "debug"
+	speak_emote = list("squeaks")
+	maxHealth = 50
+	health = 50
+	density = FALSE
+	movement_type = FLYING
+	pass_flags = PASSTABLE | PASSGRILLE | PASSMOB
+	mob_size = MOB_SIZE_TINY
+	mob_biotypes = MOB_ORGANIC
+	gold_core_spawnable = FRIENDLY_SPAWN
+	verb_say = "squeaks"
+	verb_ask = "squeaks inquisitively"
+	verb_exclaim = "squeaks intensely"
+	verb_yell = "squeaks intensely"
+	speak_chance = 1
