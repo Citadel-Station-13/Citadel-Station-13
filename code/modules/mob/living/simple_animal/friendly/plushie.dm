@@ -55,8 +55,9 @@
 		//setup what the mob drops when it dies (the original plushie, with the brain of the user inside)
 		var/obj/item/organ/brain/stored_brain = user.getorganslot(ORGAN_SLOT_BRAIN)
 		stored_brain.Remove()
-		stored_plush.stored_item = stored_brain
+		stored_plush.stuffed = FALSE
 		stored_brain.forceMove(stored_plush)
+		stored_plush.stored_item = stored_brain
 		new_plushie.corpse_plush = stored_plush
 		stored_plush.forceMove(new_plushie)
 
