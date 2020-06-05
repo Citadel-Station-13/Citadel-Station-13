@@ -514,8 +514,6 @@
 		return
 	Fb.data = 14
 
-
-
 //secretcatchemcode, shh!! Of couse I hide it amongst cats. Though, I moved it with your requests.
 //I'm not trying to be sneaky, I'm trying to keep it a secret!
 //I don't know how to do hidden chems like Aurora
