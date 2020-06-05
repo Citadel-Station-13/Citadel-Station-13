@@ -1117,7 +1117,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				var/datum/keybinding/kb = GLOB.keybindings_by_name[name]
 				kb_categories[kb.category] += list(kb)
 
-			dat += "<style>span.bindings { display: inline-block; width: 200px; } span.independent { display: inline-block; width: 50px } </style><body>"
+			dat += "<style>span.bindings { display: inline-block; width: 200px; } span.independent { display: inline-block; right: 10px; width: 250px; padding: 20px; position: absolute; } </style><body>"
 
 			for (var/category in kb_categories)
 				dat += "<h3>[category]</h3>"
@@ -1129,7 +1129,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						var/list/default_keys = hotkeys ? kb.hotkey_keys : kb.classic_keys
 						if(LAZYLEN(default_keys))
 							dat += "| Default: [default_keys.Join(", ")]"
-						dat += "<span class='independent'>Independent Binding: </span> <a href='?_src_=prefs;preference=keybindings_capture;keybinding=[kb.name];old_key=[current_independent_binding];independent=1'>[current_independent_binding]</a>"
+						dat += "<span class='independent'>Independent Binding: <a href='?_src_=prefs;preference=keybindings_capture;keybinding=[kb.name];old_key=[current_independent_binding];independent=1'>[current_independent_binding]</a></span>"
 						dat += "<br>"
 					else
 						var/bound_key = user_binds[kb.name][1]
@@ -1142,7 +1142,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						var/list/default_keys = hotkeys ? kb.classic_keys : kb.hotkey_keys
 						if(LAZYLEN(default_keys))
 							dat += "| Default: [default_keys.Join(", ")]"
-						dat += "<span class='independent'>Independent Binding: </span> <a href='?_src_=prefs;preference=keybindings_capture;keybinding=[kb.name];old_key=[current_independent_binding];independent=1'>[current_independent_binding]</a>"
+						dat += "<span class='independent'>Independent Binding: <a href='?_src_=prefs;preference=keybindings_capture;keybinding=[kb.name];old_key=[current_independent_binding];independent=1'>[current_independent_binding]</a></span>"
 						dat += "<br>"
 
 			dat += "<br><br>"
