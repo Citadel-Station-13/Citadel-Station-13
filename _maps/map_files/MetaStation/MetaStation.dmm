@@ -79781,6 +79781,8 @@
 	pixel_x = 27
 	},
 /obj/structure/window/plasma/reinforced/spawner,
+/obj/machinery/portable_atmospherics/pump,
+/obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
 /area/science/storage)
 "rMC" = (
