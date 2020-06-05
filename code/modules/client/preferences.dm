@@ -2388,7 +2388,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 				if("keybindings_capture")
 					var/datum/keybinding/kb = GLOB.keybindings_by_name[href_list["keybinding"]]
-					CaptureKeybinding(user, kb, href_list["old_key"], href_list["independent"])
+					CaptureKeybinding(user, kb, href_list["old_key"], text2num(href_list["independent"]))
 					return
 
 				if("keybindings_set")
@@ -2403,13 +2403,13 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					var/clear_key = text2num(href_list["clear_key"])
 					var/old_key = href_list["old_key"]
 					if(clear_key)
-						if(!independent)
+						if(independent)
+							modless_key_bindings -= old_key
+						else
 							if(key_bindings[old_key])
 								key_bindings[old_key] -= kb_name
 								if(!length(key_bindings[old_key]))
 									key_bindings -= old_key
-						else
-							modless_key_bindings -= old_key
 						user << browse(null, "window=capturekeypress")
 						save_preferences()
 						ShowChoices(user)
