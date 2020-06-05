@@ -1259,22 +1259,23 @@
 		return
 	if(iscyborg(target))
 		return ..()
-	if(target.mob_run_block(src, 0, "[user]'s [name]", ATTACK_TYPE_MELEE, 0, user, null, null) & BLOCK_SUCCESS) //No message; run_block() handles that
+	var/list/return_list = list()
+	if(target.mob_run_block(src, 0, "[user]'s [name]", ATTACK_TYPE_MELEE, 0, user, null, return_list) & BLOCK_SUCCESS) //No message; run_block() handles that
 		playsound(target, 'sound/weapons/genhit.ogg', 50, 1)
 		return FALSE
 	if(user.a_intent != INTENT_HARM)
-		if(stun_act(target, user))
+		if(stun_act(target, user, null, return_list))
 			user.do_attack_animation(target)
 			user.adjustStaminaLossBuffered(stun_stam_cost)
 		return
-	else if(!harm_act(target, user))
+	else if(!harm_act(target, user, null, return_list))
 		return ..()		//if you can't fry them just beat them with it
 	else		//we did harm act them
 		user.do_attack_animation(target)
 		user.adjustStaminaLossBuffered(lethal_stam_cost)
 
-/obj/item/twohanded/electrostaff/proc/stun_act(mob/living/target, mob/living/user, no_charge_and_force = FALSE)
-	var/stunforce = stun_stamdmg
+/obj/item/twohanded/electrostaff/proc/stun_act(mob/living/target, mob/living/user, no_charge_and_force = FALSE, list/block_return = list())
+	var/stunforce = block_calculate_resultant_damage(stun_stamdmg, block_return)
 	if(!no_charge_and_force)
 		if(!on)
 			target.visible_message("<span class='warning'>[user] has bapped [target] with [src]. Luckily it was off.</span>", \
@@ -1304,8 +1305,8 @@
 		H.forcesay(GLOB.hit_appends)
 	return TRUE
 
-/obj/item/twohanded/electrostaff/proc/harm_act(mob/living/target, mob/living/user, no_charge_and_force = FALSE)
-	var/lethal_force = lethal_damage
+/obj/item/twohanded/electrostaff/proc/harm_act(mob/living/target, mob/living/user, no_charge_and_force = FALSE, list/block_return = list())
+	var/lethal_force = block_calculate_resultant_damage(lethal_damage, block_return)
 	if(!no_charge_and_force)
 		if(!on)
 			return FALSE		//standard item attack
