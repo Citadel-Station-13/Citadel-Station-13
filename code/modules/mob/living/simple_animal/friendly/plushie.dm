@@ -24,7 +24,7 @@
 	AddElement(/datum/element/mob_holder, "plushie")
 
 //shell that lets people turn into the plush or poll for ghosts
-/obj/item/toy/plushie/shell
+/obj/item/toy/plush/shell
 	name = "Plushie Shell"
 	desc = "A plushie. Its eyes seem to be staring right back at you. Something isn't quite right."
 	icon = 'icons/obj/plushes.dmi'
@@ -37,7 +37,7 @@
 	next_ask = world.time
 
 //attacking yourself transfers your mind into the plush!
-/obj/item/toy/plushie/shell/attack(mob/user, mob/M)
+/obj/item/toy/plush/shell/attack(mob/user, mob/M)
 	if(user == M) // make sure they're using it on themselves
 		var/safety = alert(user, "The plushie is staring back at you. This seems like a terrible idea.", "Are you sure about this?", "Hug the plushie", "Abort")
 		if(safety == "Abort" || !in_range(src, user))
@@ -58,7 +58,7 @@
 		return ..()
 
 //using it in your hand polls ghosts to take over the plush instead!
-/obj/item/toy/plushie/shell/attack_self(mob/user)
+/obj/item/toy/plush/shell/attack_self(mob/user)
 	if(next_ask > world.time)
 		return ..()
 	to_chat(user, "You feel tense energy radiating from the plushie!")
