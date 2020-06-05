@@ -38,7 +38,7 @@
 //attacking yourself transfers your mind into the plush!
 /obj/item/toy/plushie_shell/attack_self(mob/user)
 	if(user.mind)
-		var/safety = alert(user, "The plushie is staring back at you intensely, it seems cursed!", "Hugging this is a bad idea.", "Hug it!", "Cancel")
+		var/safety = alert(user, "The plushie is staring back at you intensely, it seems cursed! (Permanently become a plushie)", "Hugging this is a bad idea.", "Hug it!", "Cancel")
 		if(safety == "Cancel" || !in_range(src, user))
 			return
 		to_chat(user, "<span class='userdanger'>You hug the strange plushie. You fool.</span>")
