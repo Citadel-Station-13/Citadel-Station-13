@@ -2195,6 +2195,58 @@
 	color = "#f7685e"
 	metabolization_rate = REAGENTS_METABOLISM * 0.25
 
+/datum/reagent/red_ichor
+	name = "Red Ichor"
+	can_synth = FALSE
+	description = "A unknown red liquid, linked to healing of most moral wounds."
+	color = "#c10000"
+	metabolization_rate = REAGENTS_METABOLISM * 2.5
+
+/datum/reagent/red_ichor/on_mob_life(mob/living/carbon/M)
+	M.adjustBruteLoss(-50)
+	M.adjustOxyLoss(-50)
+	M.adjustBruteLoss(-50)
+	M.adjustFireLoss(-50)
+	M.adjustToxLoss(-50, TRUE) //heals TOXINLOVERs
+	M.adjustCloneLoss(-50)
+	M.adjustStaminaLoss(-50)
+	..()
+
+/datum/reagent/green_ichor
+	name = "Green Ichor"
+	can_synth = FALSE
+	description = "A unknown green liquid, linked to healing of most internal wounds."
+	color = "#158c00"
+	metabolization_rate = REAGENTS_METABOLISM * 2.5
+
+/datum/reagent/green_ichor/on_mob_life(mob/living/carbon/M)
+	M.adjustOrganLoss(ORGAN_SLOT_LUNGS, -100)
+	M.adjustOrganLoss(ORGAN_SLOT_HEART, -100)
+	M.adjustOrganLoss(ORGAN_SLOT_LIVER, -100)
+	M.adjustOrganLoss(ORGAN_SLOT_EARS, -100)
+	M.adjustOrganLoss(ORGAN_SLOT_STOMACH, -100)
+	M.adjustOrganLoss(ORGAN_SLOT_TONGUE, -100)
+	M.adjustOrganLoss(ORGAN_SLOT_EYES, -100)
+	..()
+
+/datum/reagent/blue_ichor
+	name = "Blue Ichor"
+	can_synth = FALSE
+	description = "A unknown blue liquid, linked to healing the mind."
+	color = "#0914e0"
+	metabolization_rate = REAGENTS_METABOLISM * 2.5
+
+/datum/reagent/blue_ichor/on_mob_life(mob/living/carbon/M)
+	M.adjustOrganLoss(ORGAN_SLOT_BRAIN, -100)
+	M.cure_all_traumas(TRAUMA_RESILIENCE_MAGIC)
+	M.hallucination = 0
+	M.dizziness = 0
+	M.disgust = 0
+	M.drowsyness = 0
+	M.stuttering = 0
+	M.confused = 0
+	M.SetSleeping(0, 0)
+	..()
 
 //body bluids
 /datum/reagent/consumable/semen

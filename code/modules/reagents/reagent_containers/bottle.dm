@@ -8,7 +8,6 @@
 	possible_transfer_amounts = list(5,10,15,25,30)
 	volume = 30
 
-
 /obj/item/reagent_containers/glass/bottle/Initialize()
 	. = ..()
 	if(!icon_state)
@@ -411,6 +410,23 @@
 /obj/item/reagent_containers/glass/bottle/bromine
 	name = "bromine bottle"
 	list_reagents = list(/datum/reagent/bromine = 30)
+
+//Ichors
+/obj/item/reagent_containers/glass/bottle/ichor
+	possible_transfer_amounts = list(1)
+	volume = 1
+
+/obj/item/reagent_containers/glass/bottle/ichor/red
+	name = "healing potion"
+	list_reagents = list(/datum/reagent/red_ichor = 1)
+
+/obj/item/reagent_containers/glass/bottle/ichor/blue
+	name = "blue potion"
+	list_reagents = list(/datum/reagent/blue_ichor = 1)
+
+/obj/item/reagent_containers/glass/bottle/ichor/green
+	name = "green potion"
+	list_reagents = list(/datum/reagent/green_ichor = 1)
 
 //Lewd Stuff
 

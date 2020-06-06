@@ -19,7 +19,7 @@
 /obj/structure/closet/crate/necropolis/tendril/misc
 
 /obj/structure/closet/crate/necropolis/tendril/magic/PopulateContents()
-	var/loot = rand(1,8)
+	var/loot = rand(1,10)
 	switch(loot)
 		if(1)
 			new /obj/item/soulstone/anybody(src)
@@ -38,14 +38,20 @@
 			new /obj/item/warp_cube/red(src)
 		if(8)
 			new /obj/item/immortality_talisman(src)
+		if(9)
+			new /obj/item/gun/magic/wand/book/healing(src)
+		if(10)
+			new /obj/item/reagent_containers/glass/bottle/ichor/red(src)
+			new /obj/item/reagent_containers/glass/bottle/ichor/blue(src)
+			new /obj/item/reagent_containers/glass/bottle/ichor/green(src)
 
 /obj/structure/closet/crate/necropolis/tendril/weapon_armor/PopulateContents()
-	var/loot = rand(1,8)
+	var/loot = rand(1,11)
 	switch(loot)
 		if(1)
 			new /obj/item/clothing/suit/space/hardsuit/cult(src)
 		if(2)
-			new /obj/item/katana/cursed(src)
+			new /obj/item/katana/lavaland(src)
 		if(3)
 			if(prob(50))
 				new /obj/item/disk/design_disk/modkit_disc/resonator_blast(src)
@@ -62,9 +68,15 @@
 			new /obj/item/clothing/suit/space/hardsuit/ert/paranormal/inquisitor/old(src)
 		if(8)
 			new /obj/item/grenade/clusterbuster/inferno(src)
+		if(9)
+			new /obj/item/gun/magic/wand/book/shock(src)
+		if(10)
+			new /obj/item/gun/magic/wand/book/page(src)
+		if(11)
+			new /obj/item/gun/magic/wand/book/spark(src)
 
 /obj/structure/closet/crate/necropolis/tendril/misc/PopulateContents()
-	var/loot = rand(1,8)
+	var/loot = rand(1,10)
 	switch(loot)
 		if(1)
 			new /obj/item/shared_storage/red(src)
@@ -85,6 +97,12 @@
 				new /obj/item/disk/design_disk/modkit_disc/bounty(src)
 		if(8)
 			new /obj/item/wisp_lantern(src)
+		if(9)
+			new /obj/item/pickaxe/rosegold(src)
+		if(10)
+			new /obj/item/bedsheet/cosmos(src)
+			new /obj/item/melee/skateboard/hoverboard(src)
+
 
 //KA modkit design discs
 /obj/item/disk/design_disk/modkit_disc
