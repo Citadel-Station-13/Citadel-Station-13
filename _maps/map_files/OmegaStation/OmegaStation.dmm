@@ -3043,7 +3043,6 @@
 	pixel_x = 26
 	},
 /obj/machinery/computer/card/minor/qm{
-	icon_state = "computer";
 	dir = 8
 	},
 /obj/effect/turf_decal/tile/brown{
@@ -9226,7 +9225,6 @@
 	},
 /obj/machinery/computer/security/telescreen/ce{
 	dir = 1;
-	icon_state = "telescreen";
 	pixel_y = -24
 	},
 /turf/open/floor/plasteel,
@@ -28429,7 +28427,7 @@
 /obj/item/storage/belt/medical,
 /obj/item/clothing/neck/stethoscope,
 /obj/item/clothing/neck/stethoscope,
-/obj/item/gun/syringe/dart,
+/obj/item/gun/syringe,
 /turf/open/floor/plasteel,
 /area/medical/medbay/zone3)
 "aXR" = (

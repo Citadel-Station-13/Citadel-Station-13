@@ -53980,7 +53980,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
-/obj/item/gun/syringe/dart,
+/obj/item/gun/syringe,
 /turf/open/floor/plasteel/white,
 /area/medical/storage)
 "cds" = (
@@ -67172,8 +67172,7 @@
 	layer = 4;
 	name = "Test Chamber Telescreen";
 	network = list("toxins");
-	pixel_x = -32;
-	pixel_y = 0
+	pixel_x = -32
 	},
 /turf/open/floor/plasteel,
 /area/science/mixing)

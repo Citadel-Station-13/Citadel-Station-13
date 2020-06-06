@@ -26716,7 +26716,6 @@
 "bgh" = (
 /obj/structure/lattice,
 /obj/machinery/atmospherics/pipe/simple/violet/hidden{
-	icon_state = "pipe11-2";
 	dir = 6
 	},
 /turf/open/space/basic,
@@ -32795,7 +32794,6 @@
 "bsz" = (
 /obj/structure/lattice,
 /obj/machinery/atmospherics/pipe/simple/violet/hidden{
-	icon_state = "pipe11-2";
 	dir = 4
 	},
 /turf/open/space/basic,
@@ -32941,7 +32939,6 @@
 "bsT" = (
 /obj/structure/lattice,
 /obj/machinery/atmospherics/pipe/simple/violet/hidden{
-	icon_state = "pipe11-2";
 	dir = 10
 	},
 /turf/open/space/basic,
@@ -36274,7 +36271,6 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/violet/hidden{
-	icon_state = "pipe11-2";
 	dir = 10
 	},
 /turf/open/space/basic,
@@ -39590,7 +39586,6 @@
 /area/maintenance/solars/starboard/aft)
 "bHA" = (
 /obj/machinery/atmospherics/pipe/simple/violet/hidden{
-	icon_state = "pipe11-2";
 	dir = 5
 	},
 /turf/closed/wall/r_wall,
@@ -39748,7 +39743,6 @@
 /area/maintenance/solars/starboard/aft)
 "bHO" = (
 /obj/machinery/atmospherics/pipe/simple/violet/hidden{
-	icon_state = "pipe11-2";
 	dir = 8
 	},
 /turf/closed/wall/r_wall,
@@ -42178,7 +42172,6 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/violet/hidden{
-	icon_state = "pipe11-2";
 	dir = 5
 	},
 /turf/open/space/basic,
@@ -42302,7 +42295,6 @@
 	pixel_y = -32
 	},
 /obj/machinery/atmospherics/pipe/simple/violet/hidden{
-	icon_state = "pipe11-2";
 	dir = 4
 	},
 /turf/open/space/basic,
@@ -43279,7 +43271,6 @@
 "bPh" = (
 /obj/structure/lattice,
 /obj/machinery/atmospherics/pipe/simple/violet/hidden{
-	icon_state = "pipe11-2";
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
@@ -43375,7 +43366,6 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/supplymain/visible,
 /obj/machinery/atmospherics/pipe/simple/violet/hidden{
-	icon_state = "pipe11-2";
 	dir = 4
 	},
 /turf/open/space/basic,
@@ -43685,7 +43675,6 @@
 "bPX" = (
 /obj/structure/lattice,
 /obj/machinery/atmospherics/pipe/simple/violet/hidden{
-	icon_state = "pipe11-2";
 	dir = 9
 	},
 /turf/open/space/basic,
@@ -44428,7 +44417,6 @@
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/simple/supplymain/visible,
 /obj/machinery/atmospherics/pipe/simple/violet/hidden{
-	icon_state = "pipe11-2";
 	dir = 8
 	},
 /turf/open/space/basic,
@@ -44441,7 +44429,6 @@
 "bRp" = (
 /obj/structure/lattice,
 /obj/machinery/atmospherics/pipe/simple/violet/hidden{
-	icon_state = "pipe11-2";
 	dir = 5
 	},
 /turf/open/space/basic,
@@ -44811,6 +44798,7 @@
 	},
 /obj/item/storage/belt/medical,
 /obj/item/clothing/neck/stethoscope,
+/obj/item/gun/syringe,
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
 "bRZ" = (
@@ -45604,7 +45592,6 @@
 "bTJ" = (
 /obj/structure/lattice,
 /obj/machinery/atmospherics/pipe/simple/violet/hidden{
-	icon_state = "pipe11-2";
 	dir = 8
 	},
 /turf/open/space/basic,
@@ -46231,7 +46218,6 @@
 /obj/structure/lattice,
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/simple/violet/hidden{
-	icon_state = "pipe11-2";
 	dir = 10
 	},
 /turf/open/space/basic,
@@ -48949,7 +48935,6 @@
 /obj/structure/lattice,
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/simple/violet/hidden{
-	icon_state = "pipe11-2";
 	dir = 5
 	},
 /turf/open/space/basic,
@@ -50432,7 +50417,6 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/supplymain/visible,
 /obj/machinery/atmospherics/pipe/simple/violet/hidden{
-	icon_state = "pipe11-2";
 	dir = 8
 	},
 /turf/open/space/basic,
@@ -52880,7 +52864,6 @@
 /obj/effect/turf_decal/delivery,
 /obj/machinery/door/window/westleft{
 	name = "Science Desk";
-	req_access_txt = "0";
 	req_one_access_txt = "29;47"
 	},
 /obj/machinery/atmospherics/pipe/simple/orange/hidden{
@@ -57036,7 +57019,6 @@
 	},
 /obj/structure/noticeboard/qm{
 	dir = 4;
-	icon_state = "nboard00";
 	pixel_x = -32
 	},
 /turf/open/floor/plasteel,
@@ -61071,7 +61053,6 @@
 	name = "Mining Conveyor Access";
 	pixel_x = 8;
 	pixel_y = -24;
-	req_access_txt = "0";
 	req_one_access_txt = "10;24;48"
 	},
 /turf/open/floor/plasteel,

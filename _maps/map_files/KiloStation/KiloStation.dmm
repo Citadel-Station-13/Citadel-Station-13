@@ -22311,7 +22311,7 @@
 /obj/machinery/light_switch{
 	pixel_y = 24
 	},
-/obj/item/gun/syringe/dart,
+/obj/item/gun/syringe,
 /turf/open/floor/plasteel/dark,
 /area/medical/storage)
 "aKZ" = (
@@ -62896,9 +62896,9 @@
 	pixel_x = 24
 	},
 /obj/machinery/button/electrochromatic{
+	id = "!interrogation_room";
 	pixel_x = 38;
-	pixel_y = -5;
-	id = "!interrogation_room"
+	pixel_y = -5
 	},
 /turf/open/floor/plasteel,
 /area/security/warden)

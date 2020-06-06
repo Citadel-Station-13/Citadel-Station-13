@@ -62765,7 +62765,6 @@
 	},
 /obj/machinery/camera{
 	c_tag = "Library - Aft";
-	dir = 2;
 	name = "library camera"
 	},
 /turf/open/floor/wood,
@@ -63931,7 +63930,6 @@
 /area/library)
 "cel" = (
 /obj/structure/chair/sofa/right{
-	icon_state = "sofaend_right";
 	dir = 8
 	},
 /obj/structure/sign/painting/library{
@@ -89981,7 +89979,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
-/obj/item/gun/syringe/dart,
+/obj/item/gun/syringe,
 /turf/open/floor/plasteel,
 /area/medical/storage)
 "cWv" = (
@@ -126341,7 +126339,6 @@
 	},
 /obj/machinery/camera{
 	c_tag = "Library - Aft";
-	dir = 2;
 	name = "library camera"
 	},
 /turf/open/floor/plasteel/grimy,
@@ -127251,7 +127248,6 @@
 /area/space)
 "yin" = (
 /obj/structure/chair/sofa/left{
-	icon_state = "sofaend_left";
 	dir = 8
 	},
 /turf/open/floor/wood,

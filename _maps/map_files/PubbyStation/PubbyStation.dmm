@@ -37700,6 +37700,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
+/obj/item/gun/syringe,
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
 "bIf" = (
