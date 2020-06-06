@@ -319,7 +319,6 @@
 
 /obj/item/gun/ballistic/revolver/doublebarrel/improvised
 	name = "improvised shotgun"
-	desc = "Essentially a tube that aims shotgun shells."
 	desc = "A shoddy break-action breechloaded shotgun. Its lacklustre construction will probably result in it hurting people less than a normal shotgun."
 	icon_state = "ishotgun"
 	item_state = "shotgun"
@@ -330,8 +329,9 @@
 	mag_type = /obj/item/ammo_box/magazine/internal/shot/improvised
 	sawn_desc = "I'm just here for the gasoline."
 	unique_reskin = null
-	projectile_damage_multiplier = 0.8
+	projectile_damage_multiplier = 0.9
 	var/slung = FALSE
+	weapon_weight = WEAPON_HEAVY
 
 /obj/item/gun/ballistic/revolver/doublebarrel/improvised/attackby(obj/item/A, mob/user, params)
 	..()
