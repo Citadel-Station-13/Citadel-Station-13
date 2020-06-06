@@ -17,11 +17,11 @@
 	verb_ask = "squeaks inquisitively"
 	verb_exclaim = "squeaks intensely"
 	verb_yell = "squeaks intensely"
-	var/melee_damage_type = STAMINA
-	var/melee_damage_lower = 0
-	var/melee_damage_upper = 1
-	var/attack_verb_continuous = "squeaks"
-	var/attack_verb_simple = "squeak"
+	melee_damage_type = STAMINA
+	melee_damage_lower = 0
+	melee_damage_upper = 1
+	attack_verb_continuous = "squeaks"
+	attack_verb_simple = "squeak"
 	deathmessage = "lets out a faint squeak as the glint in its eyes disappears"
 	footstep_type = FOOTSTEP_MOB_BAREFOOT
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
