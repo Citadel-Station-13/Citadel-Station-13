@@ -8,6 +8,8 @@
 
 	typing_indicator_enabled = TRUE
 
+	var/last_click_move = 0 // Stores the previous next_move value.
+
 	var/resize = 1 //Badminnery resize
 	var/lastattacker = null
 	var/lastattackerckey = null
@@ -122,7 +124,7 @@
 
 	//// CITADEL STATION COMBAT ////
 	/// See __DEFINES/combat.dm
-	var/combat_flags = COMBAT_FLAGS_STAMSYSTEM_EXEMPT
+	var/combat_flags = COMBAT_FLAGS_SPRINT_EXEMPT
 	/// Next world.time when we will show a visible message on entering combat mode voluntarily again.
 	var/combatmessagecooldown = 0
 

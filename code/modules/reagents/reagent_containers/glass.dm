@@ -351,7 +351,7 @@
 	name = "wooden bucket"
 	desc = "It's a bucket made of wood."
 	icon_state = "bucket_wooden"
-	custom_materials = null
+	custom_materials = list(/datum/material/wood = MINERAL_MATERIAL_AMOUNT * 2)
 	slot_flags = NONE
 	item_flags = NO_MAT_REDEMPTION
 

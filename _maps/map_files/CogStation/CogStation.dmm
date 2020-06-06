@@ -23380,7 +23380,7 @@
 /obj/structure/extinguisher_cabinet{
 	pixel_y = -32
 	},
-/obj/item/paper/guides/cogstation/letter_sec,
+/obj/item/paper/fluff/cogstation/secsolars,
 /turf/open/floor/plasteel,
 /area/security/main)
 "aYJ" = (
@@ -27342,13 +27342,16 @@
 /turf/open/floor/plasteel,
 /area/security/courtroom)
 "bhA" = (
-/obj/machinery/disposal/bin,
-/obj/effect/turf_decal/delivery,
-/obj/structure/disposalpipe/trunk{
-	dir = 4
+/obj/item/stack/cable_coil/red,
+/obj/item/multitool,
+/obj/item/wrench,
+/obj/item/stack/sheet/metal/five{
+	pixel_x = 6;
+	pixel_y = -6
 	},
-/turf/open/floor/plasteel,
-/area/quartermaster/sorting)
+/obj/item/paper/fluff/cogstation/letter_arrd,
+/turf/open/floor/plating,
+/area/maintenance/disposal)
 "bhB" = (
 /obj/structure/table/wood,
 /obj/item/stack/packageWrap,
@@ -28343,6 +28346,7 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 4
 	},
+/obj/item/paper/guides/cogstation/letter_atmos,
 /turf/open/floor/plasteel/dark/corner{
 	dir = 1
 	},
@@ -34940,15 +34944,19 @@
 	},
 /area/maintenance/disposal)
 "bxz" = (
-/obj/item/stack/cable_coil/red,
-/obj/item/multitool,
-/obj/item/wrench,
-/obj/item/stack/sheet/metal/five{
-	pixel_x = 6;
-	pixel_y = -6
+/obj/effect/turf_decal/tile/yellow{
+	dir = 4
 	},
-/turf/open/floor/plating,
-/area/maintenance/disposal)
+/obj/machinery/computer/station_alert,
+/obj/structure/sign/poster/official/safety_eye_protection{
+	pixel_y = 32
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/item/paper/guides/cogstation/letter_eng,
+/turf/open/floor/plasteel,
+/area/engine/break_room)
 "bxA" = (
 /obj/machinery/announcement_system,
 /turf/open/floor/plasteel/dark,
@@ -43875,14 +43883,19 @@
 /turf/open/floor/plasteel/dark,
 /area/science/robotics/lab)
 "bQq" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on,
-/obj/structure/cable{
-	icon_state = "4-8"
+/obj/effect/turf_decal/tile/yellow{
+	dir = 1
 	},
-/obj/effect/landmark/event_spawn,
-/obj/machinery/atmospherics/pipe/simple/orange/hidden{
-	dir = 8
+/obj/effect/turf_decal/tile/yellow,
+/obj/structure/table/wood,
+/obj/machinery/airalarm{
+	pixel_y = 24
 	},
+/obj/item/modular_computer/laptop/preset/civilian,
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/item/paper/guides/cogstation/letter_atmos,
 /turf/open/floor/plasteel,
 /area/engine/break_room)
 "bQr" = (
@@ -51737,27 +51750,17 @@
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "cfU" = (
-/obj/structure/table,
-/obj/effect/turf_decal/tile/purple{
-	dir = 4
+/obj/machinery/atmospherics/components/unary/vent_pump/on,
+/obj/structure/cable{
+	icon_state = "4-8"
 	},
-/obj/effect/turf_decal/tile/purple{
+/obj/effect/landmark/event_spawn,
+/obj/machinery/atmospherics/pipe/simple/orange/hidden{
 	dir = 8
 	},
-/obj/effect/turf_decal/tile/yellow{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/yellow,
-/obj/item/clothing/gloves/color/latex,
-/obj/item/book/manual/wiki/cit/chem_recipies,
-/obj/item/book/manual/wiki/cit/chemistry{
-	pixel_x = 2;
-	pixel_y = -3
-	},
-/obj/item/reagent_containers/dropper,
-/obj/machinery/atmospherics/pipe/manifold/orange/hidden,
-/turf/open/floor/plasteel/white,
-/area/medical/chemistry)
+/obj/item/beacon,
+/turf/open/floor/plasteel,
+/area/engine/break_room)
 "cfV" = (
 /obj/machinery/door/airlock/external{
 	name = "Atmospherics External Airlock";
@@ -57026,18 +57029,18 @@
 /turf/open/floor/plasteel,
 /area/engine/break_room)
 "cqt" = (
-/obj/effect/turf_decal/tile/yellow{
+/obj/machinery/disposal/bin,
+/obj/effect/turf_decal/delivery,
+/obj/structure/disposalpipe/trunk{
 	dir = 4
 	},
-/obj/machinery/computer/station_alert,
-/obj/structure/sign/poster/official/safety_eye_protection{
-	pixel_y = 32
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 1
+/obj/structure/noticeboard/qm{
+	dir = 4;
+	icon_state = "nboard00";
+	pixel_x = -32
 	},
 /turf/open/floor/plasteel,
-/area/engine/break_room)
+/area/quartermaster/sorting)
 "cqu" = (
 /obj/effect/turf_decal/tile/yellow{
 	dir = 4
@@ -57106,20 +57109,28 @@
 /turf/open/floor/plasteel,
 /area/engine/break_room)
 "cqz" = (
+/obj/structure/table,
+/obj/effect/turf_decal/tile/purple{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/purple{
+	dir = 8
+	},
 /obj/effect/turf_decal/tile/yellow{
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/yellow,
-/obj/structure/table/wood,
-/obj/machinery/airalarm{
-	pixel_y = 24
+/obj/item/clothing/gloves/color/latex,
+/obj/item/book/manual/wiki/cit/chem_recipies,
+/obj/item/book/manual/wiki/cit/chemistry{
+	pixel_x = 2;
+	pixel_y = -3
 	},
-/obj/item/modular_computer/laptop/preset/civilian,
-/obj/effect/turf_decal/tile/blue{
-	dir = 4
-	},
-/turf/open/floor/plasteel,
-/area/engine/break_room)
+/obj/machinery/atmospherics/pipe/manifold/orange/hidden,
+/obj/item/paper/fluff/cogstation/chemists,
+/obj/item/reagent_containers/dropper,
+/turf/open/floor/plasteel/white,
+/area/medical/chemistry)
 "cqA" = (
 /obj/structure/cable{
 	icon_state = "1-2"
@@ -72017,6 +72028,10 @@
 	},
 /turf/open/space/basic,
 /area/space/nearstation)
+"mBP" = (
+/obj/machinery/rnd/bepis,
+/turf/open/floor/plasteel/white,
+/area/science/circuit)
 "mEa" = (
 /obj/machinery/atmospherics/pipe/manifold/cyan/visible,
 /obj/machinery/meter,
@@ -93372,7 +93387,7 @@ aTE
 bTG
 aVF
 cGs
-aVF
+mBP
 caw
 caA
 cHk
@@ -96461,7 +96476,7 @@ bBQ
 csV
 bIe
 bYB
-cfU
+cqz
 bIM
 cvt
 cmS
@@ -109281,7 +109296,7 @@ asR
 aSK
 aSr
 aeI
-cqt
+bxz
 bwP
 cBn
 cBH
@@ -110311,7 +110326,7 @@ aUf
 aeI
 bnp
 cmO
-bQq
+cfU
 cmm
 cri
 cdH
@@ -111594,7 +111609,7 @@ aRR
 cpj
 aSr
 aeI
-cqz
+bQq
 cqI
 bQM
 cdl
@@ -114941,7 +114956,7 @@ bbV
 bjf
 bkh
 blu
-bbV
+ciI
 ccZ
 cgs
 cxo
@@ -116738,7 +116753,7 @@ cPH
 bfU
 bFD
 bgO
-bhA
+cqt
 bUQ
 cvj
 cDg
@@ -117986,7 +118001,7 @@ bwb
 aMs
 cAb
 cAl
-bxz
+bhA
 bgP
 bzO
 caD

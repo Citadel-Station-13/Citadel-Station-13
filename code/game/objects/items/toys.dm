@@ -777,6 +777,7 @@
 	var/cooldown = 0
 	var/obj/machinery/computer/holodeck/holo = null // Holodeck cards should not be infinite
 	var/list/cards = list()
+	var/original_size = 52
 
 /obj/item/toy/cards/deck/Initialize()
 	. = ..()
@@ -834,11 +835,11 @@
 
 /obj/item/toy/cards/deck/update_icon_state()
 	switch(cards.len)
-		if(27 to INFINITY)
+		if(original_size*0.5 to INFINITY)
 			icon_state = "deck_[deckstyle]_full"
-		if(11 to 27)
+		if(original_size*0.25 to original_size*0.5)
 			icon_state = "deck_[deckstyle]_half"
-		if(1 to 11)
+		if(1 to original_size*0.25)
 			icon_state = "deck_[deckstyle]_low"
 		else
 			icon_state = "deck_[deckstyle]_empty"

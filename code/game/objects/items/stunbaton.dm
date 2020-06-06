@@ -16,7 +16,7 @@
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 50, "bio" = 0, "rad" = 0, "fire" = 80, "acid" = 80)
 
 	var/stamforce = 35
-	var/status = FALSE
+	var/turned_on = FALSE
 	var/knockdown = TRUE
 	var/obj/item/stock_parts/cell/cell
 	var/hitcost = 750
@@ -49,7 +49,7 @@
 /obj/item/melee/baton/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	..()
 	//Only mob/living types have stun handling
-	if(status && prob(throw_hit_chance) && iscarbon(hit_atom))
+	if(turned_on && prob(throw_hit_chance) && iscarbon(hit_atom))
 		baton_stun(hit_atom)
 
 /obj/item/melee/baton/loaded //this one starts with a cell pre-installed.
@@ -66,16 +66,16 @@
 	copper_top.use(min(chrgdeductamt, copper_top.charge), explode)
 	if(QDELETED(src))
 		return FALSE
-	if(status && (!copper_top || !copper_top.charge || (chargecheck && copper_top.charge < (hitcost * STUNBATON_CHARGE_LENIENCY))))
+	if(turned_on && (!copper_top || !copper_top.charge || (chargecheck && copper_top.charge < (hitcost * STUNBATON_CHARGE_LENIENCY))))
 		//we're below minimum, turn off
 		switch_status(FALSE)
 
 /obj/item/melee/baton/proc/switch_status(new_status = FALSE, silent = FALSE)
-	if(status != new_status)
-		status = new_status
+	if(turned_on != new_status)
+		turned_on = new_status
 		if(!silent)
 			playsound(loc, "sparks", 75, 1, -1)
-		if(status)
+		if(turned_on)
 			START_PROCESSING(SSobj, src)
 		else
 			STOP_PROCESSING(SSobj, src)
@@ -85,7 +85,7 @@
 	deductcharge(round(hitcost * STUNBATON_DEPLETION_RATE), FALSE, FALSE)
 
 /obj/item/melee/baton/update_icon_state()
-	if(status)
+	if(turned_on)
 		icon_state = "[initial(name)]_active"
 	else if(!cell)
 		icon_state = "[initial(name)]_nocell"
@@ -134,14 +134,14 @@
 		else
 			to_chat(user, "<span class='warning'>[src] is out of charge.</span>")
 	else
-		switch_status(!status)
-		to_chat(user, "<span class='notice'>[src] is now [status ? "on" : "off"].</span>")
+		switch_status(!turned_on)
+		to_chat(user, "<span class='notice'>[src] is now [turned_on ? "on" : "off"].</span>")
 	add_fingerprint(user)
 
 /obj/item/melee/baton/attack(mob/M, mob/living/carbon/human/user)
 	var/interrupt = common_baton_melee(M, user, FALSE)
 	if(!interrupt)
-		..()
+		return ..()
 
 /obj/item/melee/baton/alt_pre_attack(atom/A, mob/living/user, params)
 	. = common_baton_melee(A, user, TRUE)		//return true (attackchain interrupt) if this also returns true. no harm-disarming.
@@ -151,16 +151,16 @@
 /obj/item/melee/baton/proc/common_baton_melee(mob/M, mob/living/user, disarming = FALSE)
 	if(iscyborg(M) || !isliving(M))		//can't baton cyborgs
 		return FALSE
-	if(status && HAS_TRAIT(user, TRAIT_CLUMSY) && prob(50))
+	if(turned_on && HAS_TRAIT(user, TRAIT_CLUMSY) && prob(50))
 		clowning_around(user)
 	if(IS_STAMCRIT(user))			//CIT CHANGE - makes it impossible to baton in stamina softcrit
-		to_chat(user, "<span class='danger'>You're too exhausted for that.</span>")
+		to_chat(user, "<span class='danger'>You're too exhausted to use [src] properly.</span>")
 		return TRUE
 	if(ishuman(M))
 		var/mob/living/carbon/human/L = M
 		if(check_martial_counter(L, user))
 			return TRUE
-	if(status)
+	if(turned_on)
 		if(baton_stun(M, user, disarming))
 			user.do_attack_animation(M)
 			user.adjustStaminaLossBuffered(getweight(user, STAM_COST_BATON_MOB_MULT))
@@ -292,6 +292,48 @@
 	sparkler?.activate()
 	. = ..()
 
+/obj/item/melee/baton/boomerang
+	name = "\improper OZtek Boomerang"
+	desc = "A device invented in 2486 for the great Space Emu War by the confederacy of Australicus, these high-tech boomerangs also work exceptionally well at stunning crewmembers. Just be careful to catch it when thrown!"
+	throw_speed = 1
+	icon_state = "boomerang"
+	item_state = "boomerang"
+	force = 5
+	throwforce = 5
+	throw_range = 5
+	hitcost = 2000
+	throw_hit_chance = 99  //Have you prayed today?
+	custom_materials = list(/datum/material/iron = 10000, /datum/material/glass = 4000, /datum/material/silver = 10000, /datum/material/gold = 2000)
+
+/obj/item/melee/baton/boomerang/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0, datum/callback/callback, force)
+	if(turned_on)
+		if(ishuman(thrower))
+			var/mob/living/carbon/human/H = thrower
+			H.throw_mode_off() //so they can catch it on the return.
+	return ..()
+
+/obj/item/melee/baton/boomerang/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
+	if(turned_on)
+		var/caught = hit_atom.hitby(src, FALSE, FALSE, throwingdatum=throwingdatum)
+		if(ishuman(hit_atom) && !caught && prob(throw_hit_chance))//if they are a carbon and they didn't catch it
+			baton_stun(hit_atom)
+		if(thrownby && !caught)
+			sleep(1)
+			if(!QDELETED(src))
+				throw_at(thrownby, throw_range+2, throw_speed, null, TRUE)
+	else
+		return ..()
+
+/obj/item/melee/baton/boomerang/update_icon()
+	if(turned_on)
+		icon_state = "[initial(icon_state)]_active"
+	else if(!cell)
+		icon_state = "[initial(icon_state)]_nocell"
+	else
+		icon_state = "[initial(icon_state)]"
+
+/obj/item/melee/baton/boomerang/loaded //Same as above, comes with a cell.
+	preload_cell_type = /obj/item/stock_parts/cell/high
 
 #undef STUNBATON_CHARGE_LENIENCY
 #undef STUNBATON_DEPLETION_RATE

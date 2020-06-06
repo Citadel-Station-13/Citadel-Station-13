@@ -29,38 +29,27 @@
 #define EFFECT_DROWSY		"drowsy"
 #define EFFECT_JITTER		"jitter"
 
-// /mob/living/combat_flags
-#define CAN_TOGGLE_COMBAT_MODE(mob)			FORCE_BOOLEAN((mob.stat == CONSCIOUS) && !(mob.combat_flags & COMBAT_FLAG_HARD_STAMCRIT))
-
-/// Default combat flags for those affected by ((stamina combat))
+/// Default combat flags for those affected by sprinting (combat mode has been made into its own component)
 #define COMBAT_FLAGS_DEFAULT					NONE
-/// Default combat flags for everyone else (so literally everyone but humans)
-#define COMBAT_FLAGS_STAMSYSTEM_EXEMPT			(COMBAT_FLAG_SPRINT_ACTIVE | COMBAT_FLAG_COMBAT_ACTIVE | COMBAT_FLAG_SPRINT_TOGGLED | COMBAT_FLAG_COMBAT_TOGGLED | COMBAT_FLAG_SPRINT_FORCED | COMBAT_FLAG_COMBAT_FORCED)
-/// Default combat flags for those only affected by sprint (so just silicons)
-#define COMBAT_FLAGS_STAMEXEMPT_YESSPRINT		(COMBAT_FLAG_COMBAT_ACTIVE | COMBAT_FLAG_COMBAT_TOGGLED | COMBAT_FLAG_COMBAT_FORCED)
+/// Default combat flags for everyone else (so literally everyone but humans).
+#define COMBAT_FLAGS_SPRINT_EXEMPT			(COMBAT_FLAG_SPRINT_ACTIVE | COMBAT_FLAG_SPRINT_TOGGLED | COMBAT_FLAG_SPRINT_FORCED)
 
-/// The user wants combat mode on
-#define COMBAT_FLAG_COMBAT_TOGGLED			(1<<0)
 /// The user wants sprint mode on
-#define COMBAT_FLAG_SPRINT_TOGGLED			(1<<1)
-/// Combat mode is currently active
-#define COMBAT_FLAG_COMBAT_ACTIVE			(1<<2)
+#define COMBAT_FLAG_SPRINT_TOGGLED			(1<<0)
 /// Sprint is currently active
-#define COMBAT_FLAG_SPRINT_ACTIVE			(1<<3)
+#define COMBAT_FLAG_SPRINT_ACTIVE			(1<<1)
 /// Currently attempting to crawl under someone
-#define COMBAT_FLAG_ATTEMPTING_CRAWL		(1<<4)
+#define COMBAT_FLAG_ATTEMPTING_CRAWL		(1<<2)
 /// Currently stamcritted
-#define COMBAT_FLAG_HARD_STAMCRIT			(1<<5)
+#define COMBAT_FLAG_HARD_STAMCRIT			(1<<3)
 /// Currently attempting to resist up from the ground
-#define COMBAT_FLAG_RESISTING_REST			(1<<6)
+#define COMBAT_FLAG_RESISTING_REST			(1<<4)
 /// Intentionally resting
-#define COMBAT_FLAG_INTENTIONALLY_RESTING	(1<<7)
+#define COMBAT_FLAG_INTENTIONALLY_RESTING	(1<<5)
 /// Currently stamcritted but not as violently
-#define COMBAT_FLAG_SOFT_STAMCRIT			(1<<8)
-/// Force combat mode on at all times, overrides everything including combat disable traits.
-#define COMBAT_FLAG_COMBAT_FORCED			(1<<9)
+#define COMBAT_FLAG_SOFT_STAMCRIT			(1<<6)
 /// Force sprint mode on at all times, overrides everything including sprint disable traits.
-#define COMBAT_FLAG_SPRINT_FORCED			(1<<10)
+#define COMBAT_FLAG_SPRINT_FORCED			(1<<7)
 
 // Helpers for getting someone's stamcrit state. Cast to living.
 #define NOT_STAMCRIT 0
@@ -72,10 +61,18 @@
 #define CHECK_STAMCRIT(mob)					((mob.combat_flags & COMBAT_FLAG_HARD_STAMCRIT)? HARD_STAMCRIT : ((mob.combat_flags & COMBAT_FLAG_SOFT_STAMCRIT)? SOFT_STAMCRIT : NOT_STAMCRIT))
 
 //stamina stuff
-#define STAMINA_SOFTCRIT					100 //softcrit for stamina damage. prevents standing up, prevents performing actions that cost stamina, etc, but doesn't force a rest or stop movement
-#define STAMINA_CRIT						140 //crit for stamina damage. forces a rest, and stops movement until stamina goes back to stamina softcrit
-#define STAMINA_SOFTCRIT_TRADITIONAL		0	//same as STAMINA_SOFTCRIT except for the more traditional health calculations
-#define STAMINA_CRIT_TRADITIONAL			-40 //ditto, but for STAMINA_CRIT
+///Threshold over which attacks start being hindered.
+#define STAMINA_NEAR_SOFTCRIT				90
+///softcrit for stamina damage. prevents standing up, some actions that cost stamina, etc, but doesn't force a rest or stop movement
+#define STAMINA_SOFTCRIT					100
+///sanity cap to prevent stamina actions (that are still performable) from sending you into crit.
+#define STAMINA_NEAR_CRIT					130
+///crit for stamina damage. forces a rest, and stops movement until stamina goes back to stamina softcrit
+#define STAMINA_CRIT						140
+///same as STAMINA_SOFTCRIT except for the more traditional health calculations
+#define STAMINA_SOFTCRIT_TRADITIONAL		0
+///ditto, but for STAMINA_CRIT
+#define STAMINA_CRIT_TRADITIONAL			-40
 
 #define CRAWLUNDER_DELAY							30 //Delay for crawling under a standing mob
 
@@ -193,6 +190,9 @@ GLOBAL_LIST_INIT(shove_disarming_types, typecacheof(list(
 #define EGUN_SELFCHARGE 1
 #define EGUN_SELFCHARGE_BORG 2
 
+///Time to spend without clicking on other things required for your shots to become accurate.
+#define GUN_AIMING_TIME (2 SECONDS)
+
 //Object/Item sharpness
 #define IS_BLUNT			0
 #define IS_SHARP			1
@@ -259,6 +259,21 @@ GLOBAL_LIST_INIT(shove_disarming_types, typecacheof(list(
 #define STAM_COST_NO_COMBAT_MULT	1.25
 #define STAM_COST_W_CLASS_MULT		1.25
 #define STAM_COST_THROW_MULT		2
+
+///Multiplier of the (STAMINA_NEAR_CRIT - user current stamina loss) : (STAMINA_NEAR_CRIT - STAMINA_SOFTCRIT) ratio used in damage penalties when stam soft-critted.
+#define STAM_CRIT_ITEM_ATTACK_PENALTY	0.66
+/// changeNext_move penalty multiplier of the above.
+#define STAM_CRIT_ITEM_ATTACK_DELAY		1.75
+/// Damage penalty when fighting prone.
+#define LYING_DAMAGE_PENALTY			0.5
+/// Added delay when firing guns stam-softcritted. Summed with a hardset CLICK_CD_RANGE delay, similar to STAM_CRIT_DAMAGE_DELAY otherwise.
+#define STAM_CRIT_GUN_DELAY			2.75
+
+/**
+  * should the current-attack-damage be lower than the item force multiplied by this value,
+  * a "inefficiently" prefix will be added to the message.
+  */
+#define INEFFICIENT_ATTACK_MSG_THRESHOLD 0.7
 
 
 //bullet_act() return values
