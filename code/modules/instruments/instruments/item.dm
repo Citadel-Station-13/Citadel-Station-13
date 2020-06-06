@@ -69,7 +69,7 @@
 /obj/item/instrument/dropped(mob/user)
 	. = ..()
 	if((loc != user) && (user.machine == src))
-		user.set_machine(null)
+		user.unset_machine()
 
 /obj/item/instrument/interact(mob/user)
 	ui_interact(user)
