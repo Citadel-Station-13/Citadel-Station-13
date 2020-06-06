@@ -263,7 +263,7 @@
 		"X*" = list("X*", "SY"),
 		"SY" = list("SY"),
 		"GEL" = list("GEL","SY"),
-		"BUG" = list("BUG", "SY")
+		"BUG" = list("BUG", "SY", "O-", "O+")
 	)
 
 	var/safe = bloodtypes_safe[bloodtype]
