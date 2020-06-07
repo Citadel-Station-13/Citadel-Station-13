@@ -383,9 +383,8 @@
 
 /obj/item/clothing/shoes/cowboyboots
 	name = "cowboy boots"
-	desc = "A standard pair of brown cowboy boots."
-	custom_price = 60 //remember to replace these lame cosmetics with tg's YEEEEHAW counterparts.
-	icon_state = "cowboyboots"
+	desc = "A standard pair of brown cowboy boots." 
+	icon_state = "cowboyboots" //remember to replace these lame cosmetics with tg's YEEEEHAW counterparts.
 
 /obj/item/clothing/shoes/cowboyboots/black
 	name = "black cowboy boots"
