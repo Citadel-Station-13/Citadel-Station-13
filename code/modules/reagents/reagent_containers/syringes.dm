@@ -15,7 +15,7 @@
 	var/show_filling = TRUE
 	custom_materials = list(/datum/material/iron=10, /datum/material/glass=20)
 	reagent_flags = TRANSPARENT
-	custom_price = 100
+	custom_price = 10
 
 /obj/item/reagent_containers/syringe/Initialize()
 	. = ..()
@@ -189,16 +189,19 @@
 	name = "syringe (epinephrine)"
 	desc = "Contains epinephrine - used to stabilize patients."
 	list_reagents = list(/datum/reagent/medicine/epinephrine = 15)
+	custom_price = 50
 
 /obj/item/reagent_containers/syringe/charcoal
 	name = "syringe (charcoal)"
 	desc = "Contains charcoal."
 	list_reagents = list(/datum/reagent/medicine/charcoal = 15)
+	custom_price = 50
 
 /obj/item/reagent_containers/syringe/antiviral
 	name = "syringe (spaceacillin)"
 	desc = "Contains antiviral agents."
 	list_reagents = list(/datum/reagent/medicine/spaceacillin = 15)
+	custom_price = 50
 
 /obj/item/reagent_containers/syringe/bioterror
 	name = "bioterror syringe"
