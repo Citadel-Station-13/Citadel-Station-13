@@ -26,7 +26,7 @@
 	resistance_flags = FIRE_PROOF
 	refill_canister = /obj/item/vending_refill/security
 	default_price = 200
-	extra_price = 500
+	extra_price = 700
 	payment_department = ACCOUNT_SEC
 	cost_multiplier_per_dept = list(ACCOUNT_SEC = 0)
 
