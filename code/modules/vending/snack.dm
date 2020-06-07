@@ -28,7 +28,7 @@
 	refill_canister = /obj/item/vending_refill/snack
 	canload_access_list = list(ACCESS_KITCHEN)
 	default_price = 10
-	extra_price = 50
+	extra_price = 60
 	payment_department = ACCOUNT_SRV
 	cost_multiplier_per_dept = list(ACCOUNT_SRV = 0)
 	input_display_header = "Chef's Food Selection"
