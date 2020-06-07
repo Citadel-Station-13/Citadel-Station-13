@@ -14,6 +14,7 @@ TGS3.json
 .git/objects
 .git/refs
 .vs*
+
 cfg
 data
 SQL
