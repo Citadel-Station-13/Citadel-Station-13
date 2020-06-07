@@ -83,8 +83,10 @@ k// PARTS //
 	name = "wooden pistol grip"
 	desc = "A nice wooden grip hollowed out for pistol magazines."
 	icon_state = "wooden_pistolgrip"
+	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/weaponcrafting/improvised_parts/makeshift_lens
 	name = "makeshift focusing lens"
 	desc = "A properly made lens made with actual glassworking tools would perform much better, but this will have to do."
 	icon_state = "focusing_lens"
+	w_class = WEIGHT_CLASS_TINY
