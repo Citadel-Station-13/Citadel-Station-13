@@ -52,7 +52,7 @@
 	filling_color = "#8B0000"
 	tastes = list("dried raisins" = 1)
 	foodtype = JUNKFOOD | FRUIT | SUGAR
-	custom+price = 15
+	custom_price = 15
 
 /obj/item/reagent_containers/food/snacks/no_raisin/healthy
 	name = "homemade raisins"
