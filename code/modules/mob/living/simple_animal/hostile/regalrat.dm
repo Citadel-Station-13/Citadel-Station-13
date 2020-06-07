@@ -40,7 +40,7 @@
 	if(LAZYLEN(candidates) && !mind)
 		var/mob/dead/observer/C = pick(candidates)
 		key = C.key
-		notify_ghosts("All rise for the rat king, ascendant to the throne in \the [get_area(src)].", source = src, action = NOTIFY_ORBIT, flashwindow = FALSE, header = "Sentient Rat Created")
+		notify_ghosts("All rise for the rat king, ascendant to the throne in \the [get_area(src)].", source = src, action = NOTIFY_ORBIT, flashwindow = FALSE)
 
 /mob/living/simple_animal/hostile/regalrat/handle_automated_action()
 	if(prob(20))
