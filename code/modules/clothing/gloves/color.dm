@@ -10,8 +10,8 @@
 	permeability_coefficient = 0.05
 	resistance_flags = NONE
 	var/can_be_cut = 1
-	custom_price = 1200
-	custom_premium_price = 1200
+	custom_price = 400 //powergaming isn't cheap
+	custom_premium_price = 400
 
 /obj/item/toy/sprayoncan
 	name = "spray-on insulation applicator"
