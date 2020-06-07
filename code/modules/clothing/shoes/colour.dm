@@ -1,6 +1,6 @@
 /obj/item/clothing/shoes/sneakers
 	dying_key = DYE_REGISTRY_SNEAKERS
-	custom_price = 50
+	custom_price = 20
 
 /obj/item/clothing/shoes/sneakers/black
 	name = "black shoes"
