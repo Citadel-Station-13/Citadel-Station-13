@@ -174,7 +174,7 @@
 					/obj/item/clothing/suit/hooded/wintercoat/polychromic = 5)
 	refill_canister = /obj/item/vending_refill/clothing
 	default_price = 25
-	extra_price = 50
+	extra_price = 75
 	payment_department = NO_FREEBIES
 
 /obj/machinery/vending/clothing/canLoadItem(obj/item/I,mob/user)
