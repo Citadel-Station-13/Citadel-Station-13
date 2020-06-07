@@ -18,8 +18,8 @@
 	response_disarm_simple = "skoff at"
 	response_harm_continuous = "slashes"
 	response_harm_simple = "slash"
-	melee_damage_lower = 13
-	melee_damage_upper = 15
+	melee_damage_lower = 10
+	melee_damage_upper = 12
 	attack_verb_continuous = "slashes"
 	attack_verb_simple = "slash"
 	attack_sound = 'sound/weapons/punch1.ogg'
@@ -60,7 +60,7 @@
 				return FALSE
 			else
 				return TRUE
-		return ..()
+	return ..()
 
 /mob/living/simple_animal/hostile/regalrat/examine(mob/user)
 	. = ..()
