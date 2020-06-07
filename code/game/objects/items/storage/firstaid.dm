@@ -4,6 +4,8 @@
  *		First Aid Kits
  * 		Pill Bottles
  *		Dice Pack (in a pill bottle)
+ *		Organ Boxes
+ *		Hypospray Kits
  */
 
 /*
@@ -432,8 +434,8 @@
 	throw_range = 7
 	var/empty = FALSE
 	item_state = "firstaid"
-	custom_price = 300
-	custom_premium_price = 500
+	custom_price = 100
+	custom_premium_price = 200
 
 /obj/item/storage/hypospraykit/ComponentInitialize()
 	. = ..()
