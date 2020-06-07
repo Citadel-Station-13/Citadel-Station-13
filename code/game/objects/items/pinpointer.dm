@@ -78,7 +78,7 @@
 	name = "crew pinpointer"
 	desc = "A handheld tracking device that points to crew suit sensors."
 	icon_state = "pinpointer_crew"
-	custom_price = 600
+	custom_price = 300 //expensive and potentially powerful item
 	var/has_owner = FALSE
 	var/pinpointer_owner = null
 
