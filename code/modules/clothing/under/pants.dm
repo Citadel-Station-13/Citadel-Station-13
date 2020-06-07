@@ -3,7 +3,6 @@
 	body_parts_covered = GROIN|LEGS
 	fitted = NO_FEMALE_UNIFORM
 	can_adjust = FALSE
-	custom_price = 60
 	mutantrace_variation = STYLE_DIGITIGRADE //how do they show up on taurs otherwise?
 
 /obj/item/clothing/under/pants/classicjeans
