@@ -13,3 +13,4 @@ build_script:
   - ps: "[System.IO.Compression.ZipFile]::CreateFromDirectory($env:APPVEYOR_BUILD_FOLDER + '/deploy', $env:APPVEYOR_BUILD_FOLDER + '/deploy.zip')"
 artifacts:
   - path: deploy.zip
+
