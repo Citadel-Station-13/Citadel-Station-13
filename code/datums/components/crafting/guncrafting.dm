@@ -45,7 +45,7 @@ k// PARTS //
 
 /obj/item/weaponcrafting/improvised_parts/rifle_receiver
 	name = "bolt action receiver"
-	desc = "A crudely constructed receiver to create an improvised bolt-action breechloaded rifle."
+	desc = "A crudely constructed receiver to create an improvised bolt-action breechloaded rifle. It's generic enough to modify to create other rifles, potentially."
 	icon_state = "receiver_rifle"
 	w_class = WEIGHT_CLASS_SMALL
 
@@ -60,10 +60,9 @@ k// PARTS //
 	desc = "A mixture of components haphazardly wired together to form an energy emitter."
 	icon_state = "laser_assembly"
 
-
 /obj/item/weaponcrafting/improvised_parts/shotgun_receiver
 	name = "break-action assembly"
-	desc = "An improvised receiver to create a break-action breechloaded shotgun."
+	desc = "An improvised receiver to create a break-action breechloaded shotgun. Parts of this are still useful if you want to make another type of shotgun, however."
 	icon_state = "receiver_shotgun"
 	w_class = WEIGHT_CLASS_SMALL
 
