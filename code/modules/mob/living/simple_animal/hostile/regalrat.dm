@@ -34,6 +34,7 @@
 	. = ..()
 	coffer = new /datum/action/cooldown/coffer
 	coffer.Grant(src)
+	riot = new /datum/action/cooldown/riot
 	riot.Grant(src)
 	var/list/mob/dead/observer/candidates = pollGhostCandidates("Do you want to play as the Royal Rat, cheesey be his crown?", ROLE_SENTIENCE, null, FALSE, 100, POLL_IGNORE_SENTIENCE_POTION)
 	if(LAZYLEN(candidates) && !mind)
