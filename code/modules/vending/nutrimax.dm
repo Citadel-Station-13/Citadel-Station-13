@@ -20,7 +20,7 @@
 	refill_canister = /obj/item/vending_refill/hydronutrients
 	resistance_flags = FIRE_PROOF
 	default_price = 20
-	extra_price = 25
+	extra_price = 45
 	payment_department = ACCOUNT_SRV
 	cost_multiplier_per_dept = list(ACCOUNT_SRV = 0)
 
