@@ -3,7 +3,7 @@
 
 /obj/machinery/vending/wardrobe
 	default_price = 100
-	extra_price = 100
+	extra_price = 200
 	payment_department = NO_FREEBIES
 	input_display_header = "Returned Clothing"
 
