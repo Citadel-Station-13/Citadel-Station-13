@@ -60,7 +60,7 @@
 				return FALSE
 			else
 				return TRUE
-	return ..()
+		return ..()
 
 /mob/living/simple_animal/hostile/regalrat/examine(mob/user)
 	. = ..()
