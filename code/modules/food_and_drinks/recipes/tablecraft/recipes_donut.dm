@@ -121,6 +121,13 @@ datum/crafting_recipe/food/donut/meat
 	)
 	result = /obj/item/reagent_containers/food/snacks/donut/matcha
 
+/datum/crafting_recipie/food/donut/laugh
+	name = "Sweet Pea Donut"
+	reqs = list(
+		/datum/reagent/consumable/laughsyrup = 3,
+		/obj/item/reagent_containers/food/snacks/donut/plain = 1
+		)
+		result = /obj/item/reagent_containers/food/snacks/donut/laugh
 ////////////////////////////////////////////////////JELLY DONUTS///////////////////////////////////////////////////////
 
 /datum/crafting_recipe/food/donut/jelly/apple
@@ -187,6 +194,13 @@ datum/crafting_recipe/food/donut/meat
 	)
 	result = /obj/item/reagent_containers/food/snacks/donut/jelly/trumpet
 
+/datum/crafting_recipie/food/donut/jelly/laugh
+	name = "Sweet Pea Jelly Donut"
+	reqs = list(
+		/datum/reagent/consumable/laughsyrup = 3,
+		/obj/item/reagent_containers/food/snacks/donut/jelly/plain = 1
+	)
+	result = /obj/reagent_containers/food/snacks/donut/jelly/laugh
 ////////////////////////////////////////////////////SLIME  DONUTS///////////////////////////////////////////////////////
 
 /datum/crafting_recipe/food/donut/slimejelly/apple
