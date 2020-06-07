@@ -506,7 +506,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	resistance_flags = FIRE_PROOF
 	light_color = LIGHT_COLOR_FIRE
 	grind_results = list(/datum/reagent/iron = 1, /datum/reagent/fuel = 5, /datum/reagent/oil = 5)
-	custom_price = 55
+	custom_price = 55 //cigs are 25 so this is alright
 
 /obj/item/lighter/Initialize()
 	. = ..()
@@ -616,6 +616,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	desc = "A cheap-as-free lighter."
 	icon_state = "lighter"
 	fancy = FALSE
+	custom_price = 10 //cheap as free
 	overlay_list = list(
 		"transp",
 		"tall",
