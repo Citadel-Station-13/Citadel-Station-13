@@ -41,7 +41,7 @@
 				)
 	refill_canister = /obj/item/vending_refill/kink
 	default_price = 5
-	extra_price = 10
+	extra_price = 15
 	payment_department = NO_FREEBIES
 
 /obj/item/vending_refill/kink
