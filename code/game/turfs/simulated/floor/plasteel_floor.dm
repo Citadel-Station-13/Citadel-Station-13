@@ -38,7 +38,7 @@
 
 
 /turf/open/floor/plasteel/white
-	icon_state = "white"
+	icon_state = "plasteel_white"
 /turf/open/floor/plasteel/white/side
 	icon_state = "whitehall"
 /turf/open/floor/plasteel/white/corner
