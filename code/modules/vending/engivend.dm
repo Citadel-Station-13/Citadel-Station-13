@@ -30,7 +30,7 @@
 	refill_canister = /obj/item/vending_refill/engivend
 	resistance_flags = FIRE_PROOF
 	default_price = 200
-	extra_price = 300
+	extra_price = 500
 	payment_department = ACCOUNT_ENG
 	cost_multiplier_per_dept = list(ACCOUNT_ENG = 0)
 
