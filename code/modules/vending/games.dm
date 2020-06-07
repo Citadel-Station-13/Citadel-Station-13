@@ -13,7 +13,7 @@
 					/obj/item/melee/skateboard/hoverboard = 1)
 	refill_canister = /obj/item/vending_refill/games
 	default_price = 25
-	extra_price = 150
+	extra_price = 175
 	payment_department = ACCOUNT_SRV
 	cost_multiplier_per_dept = list(ACCOUNT_SRV = 0)
 
