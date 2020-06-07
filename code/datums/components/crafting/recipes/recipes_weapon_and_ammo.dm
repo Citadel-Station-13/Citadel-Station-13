@@ -492,8 +492,9 @@
 /datum/crafting_recipe/rifle_receiver
 	name = "Improvised Rifle Receiver"
 	result = /obj/item/weaponcrafting/improvised_parts/rifle_receiver
-	reqs = list(/obj/item/stack/sheet/metal = 20)
-	tools = list(TOOL_SCREWDRIVER, TOOL_WELDER) // Rifle is the easiest to craft and can be made at an autolathe, this is a very light kick in the shin for dual-wielding ishotguns.
+	reqs = list(/obj/item/stack/sheet/metal = 10,
+				/obj/item/stack/sheet/plasteel = 1)
+	tools = list(TOOL_SCREWDRIVER, TOOL_WELDER)
 	time = 50
 	category = CAT_WEAPONRY
 	subcategory = CAT_PARTS
@@ -503,7 +504,7 @@
 	result = /obj/item/weaponcrafting/improvised_parts/shotgun_receiver
 	reqs = list(/obj/item/stack/sheet/metal = 10,
 				/obj/item/stack/sheet/plasteel = 1)
-	tools = list(TOOL_SCREWDRIVER, TOOL_WELDER) // Increased cost is to stop dual-wield alpha striking. ishotgun is a rvolver and can be duel-wielded
+	tools = list(TOOL_SCREWDRIVER, TOOL_WELDER) // Dual wielding has been removed, plasteel is a soft timesink to obtain for most to make mass production harder.
 	time = 50
 	category = CAT_WEAPONRY
 	subcategory = CAT_PARTS

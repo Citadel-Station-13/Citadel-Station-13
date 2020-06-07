@@ -86,7 +86,7 @@
 	name = "Rifle Receiver"
 	id = "rifle_receiver"
 	build_type = AUTOLATHE
-	materials = list(/datum/material/iron = 40000)
+	materials = list(/datum/material/iron = 24000)
 	build_path = /obj/item/weaponcrafting/improvised_parts/rifle_receiver
 	category = list("hacked", "Security")
 
