@@ -311,7 +311,7 @@
 	list_reagents = list(/datum/reagent/consumable/dry_ramen = 30)
 	foodtype = GRAIN
 	isGlass = FALSE
-	custom_price = 20
+	custom_price = 25
 
 /obj/item/reagent_containers/food/drinks/beer
 	name = "space beer"
@@ -319,7 +319,7 @@
 	icon_state = "beer"
 	list_reagents = list(/datum/reagent/consumable/ethanol/beer = 30)
 	foodtype = GRAIN | ALCOHOL
-	custom_price = 20
+	custom_price = 25
 
 /obj/item/reagent_containers/food/drinks/beer/light
 	name = "Carp Lite"
