@@ -432,8 +432,8 @@
 	throw_range = 7
 	var/empty = FALSE
 	item_state = "firstaid"
-	custom_price = 300
-	custom_premium_price = 500
+	custom_price = PRICE_ABOVE_NORMAL
+	custom_premium_price = PRICE_EXPENSIVE
 
 /obj/item/storage/hypospraykit/ComponentInitialize()
 	. = ..()
