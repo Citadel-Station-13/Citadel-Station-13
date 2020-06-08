@@ -1,4 +1,0 @@
-author: "timothyteakettle"
-delete-after: True
-changes: 
-  - bugfix: "newly created areas using blueprints now maintain the previous areas noteleport value"
