@@ -59,7 +59,7 @@ GLOBAL_LIST_INIT(freqtospan, list(
 	var/endspanpart = "</span>"
 
 	//Message
-	var/messagepart = " <span class='message'>[lang_treat(speaker, message_language, raw_message, spans, message_mode)]</span></span>"
+	var/messagepart = " <span class='message'>[say_emphasis(lang_treat(speaker, message_language, raw_message, spans, message_mode))]</span></span>"
 
 	var/languageicon = ""
 	var/datum/language/D = GLOB.language_datum_instances[message_language]
@@ -95,6 +95,21 @@ GLOBAL_LIST_INIT(freqtospan, list(
 	var/spanned = attach_spans(input, spans)
 	return "[say_mod(input, message_mode)][spanned ? ", \"[spanned]\"" : ""]"
 	// Citadel edit [spanned ? ", \"[spanned]\"" : ""]"
+
+/atom/movable/proc/say_emphasis(input)
+	input = encode_html_emphasis(input, "|", "i")
+	input = encode_html_emphasis(input, "_", "u")
+	input = encode_html_emphasis(input, "+", "b")
+	return input
+
+/**
+  * Replaces a character inside message with html tags.  Note that html var must not include brackets.
+  * Will not create an open html tag if it would not have a closing one.
+  */
+/atom/movable/proc/encode_html_emphasis(input, char, html)
+	var/regex/search = regex("([REGEX_QUOTE(char)])(\\b.*\\b)([REGEX_QUOTE(char)])", "g")
+	return search.Replace_char(message, "<[html]>$2</[html]>")
+
 
 /// Quirky citadel proc for our custom sayverbs to strip the verb out. Snowflakey as hell, say rewrite 3.0 when?
 /atom/movable/proc/quoteless_say_quote(input, list/spans = list(speech_span), message_mode)
