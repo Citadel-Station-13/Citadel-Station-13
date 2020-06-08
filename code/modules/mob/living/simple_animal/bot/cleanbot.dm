@@ -191,6 +191,11 @@
 			else
 				shuffle = TRUE	//Shuffle the list the next time we scan so we dont both go the same way.
 			path = list()
+		
+		if(istype(target, /mob/living/carbon) && (emagged == 2))
+			base_speed = 5
+		else
+			base_speed = initial(base_speed)
 
 		if(!path || path.len == 0) //No path, need a new one
 			//Try to produce a path to the target, and ignore airlocks to which it has access.
@@ -305,6 +310,18 @@
 
 	else
 		..()
+
+/mob/living/simple_animal/bot/cleanbot/Crossed(atom/movable/AM)
+	if(ismob(AM) && on && ((emagged == 2) || prob(1)))
+		var/mob/living/carbon/C = AM
+		if(!istype(C))
+			return
+		C.visible_message("<span class='warning'>[src] trips [C] over!</span>", "<span class='warning'>[src] trips you over!</span>")
+		C.DefaultCombatKnockdown(10)
+		playsound(src, 'sound/misc/slip.ogg', 50, 1, -3)
+		sensor_blink()
+		return
+	return ..()
 
 /mob/living/simple_animal/bot/cleanbot/explode()
 	on = FALSE
