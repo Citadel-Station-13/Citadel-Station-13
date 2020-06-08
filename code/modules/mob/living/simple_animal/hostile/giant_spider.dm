@@ -36,11 +36,17 @@
 	response_disarm_simple = "gently push aside"
 	response_harm_continuous = "kicks"
 	response_harm_simple = "kick"
+
+	//Health
 	maxHealth = 200
 	health = 200
+	damage_coeff = list(BRUTE = 1.2 BURN = 1.5, TOX = 0.1, CLONE = 0.1, STAMINA = 0.5, OXY = 0.3) //Spiders are infact weak to crush
+
+	//Damage
 	obj_damage = 60
 	melee_damage_lower = 15
 	melee_damage_upper = 20
+
 	faction = list("spiders")
 	var/busy = SPIDER_IDLE
 	pass_flags = PASSTABLE
@@ -110,8 +116,11 @@
 	icon_dead = "nurse_dead"
 	gender = FEMALE
 	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab/spider = 2, /obj/item/reagent_containers/food/snacks/spiderleg = 8, /obj/item/reagent_containers/food/snacks/spidereggs = 4)
+	//Health
 	maxHealth = 40
 	health = 40
+	damage_coeff = list(BRUTE = 1 BURN = 1, TOX = 0.1, CLONE = 0.1, STAMINA = 0.5, OXY = 0.3) //Blance wise we are less weak
+	//Damage
 	melee_damage_lower = 5
 	melee_damage_upper = 10
 	poison_per_bite = 3
@@ -157,8 +166,11 @@
 	icon_state = "viper"
 	icon_living = "viper"
 	icon_dead = "viper_dead"
+	//Health
 	maxHealth = 40
 	health = 40
+	damage_coeff = list(BRUTE = 1 BURN = 1, TOX = 0.1, CLONE = 0.1, STAMINA = 0.5, OXY = 0.3) //Blance wise we are less weak
+	//Damage
 	melee_damage_lower = 1
 	melee_damage_upper = 1
 	poison_per_bite = 12
