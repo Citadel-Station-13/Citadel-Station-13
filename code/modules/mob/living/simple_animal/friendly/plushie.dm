@@ -63,8 +63,10 @@
 		new_plushie.AddComponent(/datum/component/squeak, stored_plush.squeak_override)
 		if(length(stored_plush.squeak_override) > 0)
 			new_plushie.attack_sound = stored_plush.squeak_override[1]
+			new_plushie.attacked_sound = stored_plush.squeak_override[1]
 		else
 			new_plushie.attack_sound = 'sound/items/toysqueak1.ogg'
+			new_plushie.attacked_sound = 'sound/items/toysqueak1.ogg'
 
 		//take care of the user's old body and the old shell
 		user.dust(drop_items = TRUE)
