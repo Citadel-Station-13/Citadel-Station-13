@@ -23,7 +23,7 @@
 		A.update_icon()
 		update_icon()
 
-/obj/item/gun/ballistic/shotgun/process_chamber(empty_chamber = 0)
+/obj/item/gun/ballistic/shotgun/process_chamber(mob/living/user, empty_chamber = 0)
 	return ..() //changed argument value
 
 /obj/item/gun/ballistic/shotgun/chamber_round()
