@@ -81,11 +81,6 @@
 	if(!(combat_flags & COMBAT_FLAG_BLOCK_CAPABLE))
 		to_chat(src, "<span class='warning'>You're not something that can actively block.</span>")
 		return FALSE
-	// QOL: Attempt to toggle on combat mode if it isn't already
-	SEND_SIGNAL(src, COMSIG_ENABLE_COMBAT_MODE)
-	if(!SEND_SIGNAL(src, COMSIG_COMBAT_MODE_CHECK, COMBAT_MODE_ACTIVE))
-		to_chat(src, "<span class='warning'>You must be in combat mode to actively block!</span>")
-		return FALSE
 	// QOL: Instead of trying to just block with held item, grab first available item.
 	var/obj/item/I = find_active_block_item()
 	if(!I)
@@ -94,6 +89,11 @@
 	if(!I.can_active_block())
 		to_chat(src, "<span class='warning'>[I] is either not capable of being used to actively block, or is not currently in a state that can! (Try wielding it if it's twohanded, for example.)</span>")
 		return
+	// QOL: Attempt to toggle on combat mode if it isn't already
+	SEND_SIGNAL(src, COMSIG_ENABLE_COMBAT_MODE)
+	if(!SEND_SIGNAL(src, COMSIG_COMBAT_MODE_CHECK, COMBAT_MODE_ACTIVE))
+		to_chat(src, "<span class='warning'>You must be in combat mode to actively block!</span>")
+		return FALSE
 	var/datum/block_parry_data/data = I.get_block_parry_data()
 	var/delay = data.block_start_delay
 	combat_flags |= COMBAT_FLAG_ACTIVE_BLOCK_STARTING
@@ -111,9 +111,8 @@
   */
 /mob/living/proc/find_active_block_item()
 	var/obj/item/held = get_active_held_item()
-	if(!held.can_active_block())
-		for(var/i in held_items - held)
-			var/obj/item/I = i
+	if(!held?.can_active_block())
+		for(var/obj/item/I in held_items - held)
 			if(I.can_active_block())
 				return I
 	return held
