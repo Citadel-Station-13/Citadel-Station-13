@@ -14,7 +14,7 @@
 					/obj/item/reagent_containers/food/condiment/sugar = 1)
 
 	refill_canister = /obj/item/vending_refill/coffee
-	default_price = 10
+	default_price = 20 //They have in-game effects so they're more valuable than soda.
 	extra_price = 25
 	payment_department = ACCOUNT_SRV
 
