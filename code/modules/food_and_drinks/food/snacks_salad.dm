@@ -127,12 +127,12 @@
 	foodtype = VEGETABLES
 
 /obj/item/reagent_containers/food/snacks/salad/edensalad
-	name = "Salad of Eden"
+	name = "\improper Salad of Eden"
 	desc = "A salad brimming with untapped potential."
 	icon_state = "eden_salad"
 	trash = /obj/item/reagent_containers/glass/bowl
 	list_reagents = list(/datum/reagent/consumable/nutriment = 7, /datum/reagent/consumable/nutriment/vitamin = 5, /datum/reagent/medicine/earthsblood = 3, /datum/reagent/medicine/omnizine = 5, /datum/reagent/drug/happiness = 2)
-	tastes = list("medicinal bitterness" = 1, "hope" = 1)
+	tastes = list("hope" = 1)
 	foodtype = VEGETABLES
 
 /obj/item/reagent_containers/food/snacks/salad/gumbo
@@ -141,5 +141,5 @@
 	icon_state = "gumbo"
 	trash = /obj/item/reagent_containers/glass/bowl
 	list_reagents = list(/datum/reagent/consumable/capsaicin = 2, /datum/reagent/consumable/nutriment/vitamin = 3, /datum/reagent/consumable/nutriment = 5)
-	tastes = list("savory meat and vegtables" = 2, "building heat" = 1)
+	tastes = list("building heat" = 2, "savory meat and vegtables" = 1)
 	foodtype = GRAIN | MEAT | VEGETABLES
