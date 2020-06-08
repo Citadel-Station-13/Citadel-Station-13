@@ -8,6 +8,9 @@ CIGARS
 SMOKING PIPES
 CHEAP LIGHTERS
 ZIPPO
+ROLLING PAPER
+VAPES
+BONGS
 
 CIGARETTE PACKETS ARE IN FANCY.DM
 */
@@ -506,7 +509,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	resistance_flags = FIRE_PROOF
 	light_color = LIGHT_COLOR_FIRE
 	grind_results = list(/datum/reagent/iron = 1, /datum/reagent/fuel = 5, /datum/reagent/oil = 5)
-	custom_price = 55 //cigs are 25 so this is alright
+	custom_price = 55 //cigs are 30 so this is alright
 
 /obj/item/lighter/Initialize()
 	. = ..()
