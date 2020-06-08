@@ -108,7 +108,7 @@ GLOBAL_LIST_INIT(freqtospan, list(
   */
 /atom/movable/proc/encode_html_emphasis(input, char, html)
 	var/regex/search = regex("([REGEX_QUOTE(char)])(\\b.*\\b)([REGEX_QUOTE(char)])", "g")
-	return search.Replace_char(message, "<[html]>$2</[html]>")
+	return search.Replace_char(input, "<[html]>$2</[html]>")
 
 
 /// Quirky citadel proc for our custom sayverbs to strip the verb out. Snowflakey as hell, say rewrite 3.0 when?
