@@ -99,9 +99,9 @@ GLOBAL_LIST_INIT(freqtospan, list(
 /atom/movable/proc/say_emphasis(input)
 	var/static/regex/italics = regex("\\|(?=\\S)(.*?)(?=\\S)\\|", "g")
 	input = replacetext_char(input, italics, "<i>$1</i>")
-	var/static/regex/bold = regex("\+(?=\S)(.*?)(?=\S)\+", "g")
+	var/static/regex/bold = regex("\\+(?=\\S)(.*?)(?=\\S)\\+", "g")
 	input = replacetext_char(input, bold, "<b>$1</b>")
-	var/static/regex/underline = regex("_+(?=\S)(.*?)(?=\S)\_", "g")
+	var/static/regex/underline = regex("_(?=\\S)(.*?)(?=\\S)_", "g")
 	input = replacetext_char(input, underline, "<u>$1</u>")
 	return input
 
