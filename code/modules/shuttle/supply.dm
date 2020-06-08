@@ -101,7 +101,7 @@ GLOBAL_LIST_INIT(cargo_shuttle_leave_behind_typecache, typecacheof(list(
 	if(!SSshuttle.shoppinglist.len)
 		return
 
-	var/list/miscboxes = list() //miscboxes are combo boxes that contain all goody orders grouped
+	var/list/obj/miscboxes = list() //miscboxes are combo boxes that contain all goody orders grouped
 	var/list/misc_order_num = list() //list of strings of order numbers, so that the manifest can show all orders in a box
 	var/list/misc_contents = list() //list of lists of items that each box will contain
 
