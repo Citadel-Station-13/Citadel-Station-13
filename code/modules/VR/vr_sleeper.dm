@@ -113,10 +113,12 @@
 						to_chat(occupant, "<span class='warning'>The virtual world does not support the creation of new virtual avatars, aborting transfer</span>")
 				else
 					to_chat(vr_mob, "<span class='notice'>Transfer successful! You are now playing as [vr_mob] in VR!</span>")
+					M.ui_close(M) //The UI can get stuck open while in VR, which can be annoying
 			. = TRUE
 		if("delete_avatar")
 			if(!occupant || usr == occupant)
 				if(vr_mob)
+					SStgui.try_update_ui(occupant, src) 
 					cleanup_vr_mob()
 			else
 				to_chat(usr, "<span class='warning'>The VR Sleeper's safeties prevent you from doing that.</span>")

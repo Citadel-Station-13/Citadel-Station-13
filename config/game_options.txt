@@ -303,7 +303,7 @@ MINIMUM_SECBORG_ALERT 3
 #ROUNDSTART_AWAY
 
 ## Uncomment to load one of the virtual reality levels from vr_config at roundstart.
-#ROUNDSTART_VR
+ROUNDSTART_VR
 
 ## How long the delay is before the Away Mission gate opens. Default is half an hour.
 ## 600 is one minute.
