@@ -124,10 +124,11 @@ datum/crafting_recipe/food/donut/meat
 /datum/crafting_recipe/food/donut/laugh
 	name = "Sweet Pea Donut"
 	reqs = list(
-		/datum/reagent/consumable/laughsyrup = 3,
+		datum/reagent/consumable/laughsyrup = 3,
 		/obj/item/reagent_containers/food/snacks/donut/plain = 1
 	)
-		result = /obj/item/reagent_containers/food/snacks/donut/laugh
+	result = /obj/item/reagent_containers/food/snacks/donut/laugh
+	
 ////////////////////////////////////////////////////JELLY DONUTS///////////////////////////////////////////////////////
 
 /datum/crafting_recipe/food/donut/jelly/apple
