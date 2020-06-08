@@ -139,7 +139,7 @@
 					/obj/item/clothing/under/costume/drfreeze = 1)
 
 	refill_canister = /obj/item/vending_refill/autodrobe
-	default_price = 25
+	default_price = 40 //slightly more expensive than average clothes
 	extra_price = 200
 	payment_department = ACCOUNT_SRV
 
