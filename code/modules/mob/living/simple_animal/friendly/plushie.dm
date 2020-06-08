@@ -17,6 +17,8 @@
 	verb_ask = "squeaks inquisitively"
 	verb_exclaim = "squeaks intensely"
 	verb_yell = "squeaks intensely"
+	attack_sound = 'sound/items/toysqueak1.ogg'
+	attacked_sound = 'sound/items/toysqueak1.ogg'
 	melee_damage_type = STAMINA
 	melee_damage_lower = 0
 	melee_damage_upper = 1
@@ -64,9 +66,6 @@
 		if(length(stored_plush.squeak_override) > 0)
 			new_plushie.attack_sound = stored_plush.squeak_override[1]
 			new_plushie.attacked_sound = stored_plush.squeak_override[1]
-		else
-			new_plushie.attack_sound = 'sound/items/toysqueak1.ogg'
-			new_plushie.attacked_sound = 'sound/items/toysqueak1.ogg'
 
 		//take care of the user's old body and the old shell
 		user.dust(drop_items = TRUE)
