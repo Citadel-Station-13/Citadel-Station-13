@@ -40,7 +40,7 @@
 	//Health
 	maxHealth = 200
 	health = 200
-	damage_coeff = list(BRUTE = 1.2 BURN = 1.5, TOX = 0.1, CLONE = 0.1, STAMINA = 0.5, OXY = 0.3) //Spiders are infact weak to crush
+	damage_coeff = list(BRUTE = 1.2, BURN = 1.5, TOX = 0.1, CLONE = 0.1, STAMINA = 0.5, OXY = 0.3) //Spiders are infact weak to crush
 
 	//Damage
 	obj_damage = 60
@@ -119,7 +119,7 @@
 	//Health
 	maxHealth = 40
 	health = 40
-	damage_coeff = list(BRUTE = 1 BURN = 1, TOX = 0.1, CLONE = 0.1, STAMINA = 0.5, OXY = 0.3) //Blance wise we are less weak
+	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 0.1, CLONE = 0.1, STAMINA = 0.5, OXY = 0.3) //Blance wise we are less weak
 	//Damage
 	melee_damage_lower = 5
 	melee_damage_upper = 10
@@ -169,7 +169,7 @@
 	//Health
 	maxHealth = 40
 	health = 40
-	damage_coeff = list(BRUTE = 1 BURN = 1, TOX = 0.1, CLONE = 0.1, STAMINA = 0.5, OXY = 0.3) //Blance wise we are less weak
+	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 0.1, CLONE = 0.1, STAMINA = 0.5, OXY = 0.3) //Blance wise we are less weak
 	//Damage
 	melee_damage_lower = 1
 	melee_damage_upper = 1
