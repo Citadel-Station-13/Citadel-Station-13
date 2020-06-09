@@ -1,0 +1,5 @@
+author: "timothyteakettle"
+delete-after: True
+changes: 
+  - rscadd: "Mice can now breed using cheese wedges"
+  - rscadd: "Royal cheese can be crafted to convert a mouse into king rat"
