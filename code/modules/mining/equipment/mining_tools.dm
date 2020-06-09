@@ -71,7 +71,7 @@
 	icon_state = "rgpickaxe"
 	item_state = "rgpickaxe"
 	toolspeed = 0.1
-	desc = "A pickaxe with a light rose gold head and some red glowing ruins. Extremely robust at cracking rock walls and digging up dirt."
+	desc = "A pickaxe with a light rose gold head and some red glowing runes. Extremely robust at cracking rock walls and digging up dirt."
 	force = 19
 	custom_materials = list(/datum/material/gold=4000)
 	digrange = 3
