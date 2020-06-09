@@ -358,7 +358,7 @@
 
 /obj/item/gun/ballistic/revolver/doublebarrel/improvised/sawn
 	name = "sawn-off improvised shotgun"
-	desc = "A single-shot shotgun. Better not miss."
+	desc = "The barrel and stock have been sawn and filed down; it can fit in backpacks. You still need two hands to fire this, if you value unbroken wrists."
 	icon_state = "ishotgun"
 	item_state = "gun"
 	w_class = WEIGHT_CLASS_NORMAL
