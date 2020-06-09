@@ -1,0 +1,4 @@
+author: "DeltaFire15"
+delete-after: True
+changes: 
+  - bugfix: "Golems / simillar now inherit the neutered antag datum if the creator is neutered."
