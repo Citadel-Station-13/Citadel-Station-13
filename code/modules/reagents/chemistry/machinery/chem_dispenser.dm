@@ -113,7 +113,7 @@
 	if(upgrade_reagents4)
 		upgrade_reagents4 = sortList(upgrade_reagents4, /proc/cmp_reagents_asc)
 	if(upgrade_reagents5)
-		upgrade_reagents5 = sortList(upgrade_reagents4, /proc/cmp_reagents_asc)
+		upgrade_reagents5 = sortList(upgrade_reagents5, /proc/cmp_reagents_asc)
 	dispensable_reagents = sortList(dispensable_reagents, /proc/cmp_reagents_asc)
 	update_icon()
 
@@ -526,10 +526,10 @@
 		/datum/reagent/consumable/nothing,
 		/datum/reagent/consumable/peachjuice
 	)
-	upgrade_reagents4 = null
+	upgrade_reagents4 = list(
+		/datum/reagent/toxin/teapowder
 	)
 	upgrade_reagents5 = list(
-		/datum/reagent/toxin/teapowder,
 		/datum/reagent/consumable/bungojuice,
 		/datum/reagent/consumable/caramel
 	)
