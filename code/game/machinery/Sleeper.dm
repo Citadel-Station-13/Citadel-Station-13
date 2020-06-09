@@ -21,7 +21,8 @@
 		list(/datum/reagent/medicine/epinephrine, /datum/reagent/medicine/morphine, /datum/reagent/medicine/salbutamol, /datum/reagent/medicine/bicaridine, /datum/reagent/medicine/kelotane),
 		list(/datum/reagent/medicine/oculine,/datum/reagent/medicine/inacusiate),
 		list(/datum/reagent/medicine/antitoxin, /datum/reagent/medicine/mutadone, /datum/reagent/medicine/mannitol, /datum/reagent/medicine/pen_acid),
-		list(/datum/reagent/medicine/omnizine)
+		list(/datum/reagent/medicine/omnizine),
+		list(/datum/reagent/medicine/neo_jelly)
 	)
 	var/list/chem_buttons	//Used when emagged to scramble which chem is used, eg: antitoxin -> morphine
 	var/scrambled_chems = FALSE //Are chem buttons scrambled? used as a warning
