@@ -80,10 +80,6 @@
 	)
 
 	var/list/upgrade_reagents4 = list(
-		/datum/reagent/medicine/charcoal
-	)
-
-	var/list/upgrade_reagents5 = list(
 		/datum/reagent/toxin/slimejelly
 	)
 
@@ -112,8 +108,6 @@
 		upgrade_reagents3 = sortList(upgrade_reagents3, /proc/cmp_reagents_asc)
 	if(upgrade_reagents4)
 		upgrade_reagents4 = sortList(upgrade_reagents4, /proc/cmp_reagents_asc)
-	if(upgrade_reagents5)
-		upgrade_reagents5 = sortList(upgrade_reagents5, /proc/cmp_reagents_asc)
 	dispensable_reagents = sortList(dispensable_reagents, /proc/cmp_reagents_asc)
 	update_icon()
 
@@ -415,8 +409,6 @@
 			dispensable_reagents |= upgrade_reagents3
 		if(M.rating > 4)
 			dispensable_reagents |= upgrade_reagents4
-		if(M.rating >= 5)
-			dispensable_reagents |= upgrade_reagents5
 	powerefficiency = round(newpowereff, 0.01)
 
 /obj/machinery/chem_dispenser/proc/replace_beaker(mob/living/user, obj/item/reagent_containers/new_beaker)
@@ -527,9 +519,7 @@
 		/datum/reagent/consumable/peachjuice
 	)
 	upgrade_reagents4 = list(
-		/datum/reagent/toxin/teapowder
-	)
-	upgrade_reagents5 = list(
+		/datum/reagent/toxin/teapowder,
 		/datum/reagent/consumable/bungojuice,
 		/datum/reagent/consumable/caramel
 	)
@@ -592,7 +582,6 @@
 	upgrade_reagents2 = null
 	upgrade_reagents3 = null
 	upgrade_reagents4 = null
-	upgrade_reagents5 = null
 	emagged_reagents = list(
 		/datum/reagent/consumable/ethanol/alexander,
 		/datum/reagent/consumable/clownstears,
