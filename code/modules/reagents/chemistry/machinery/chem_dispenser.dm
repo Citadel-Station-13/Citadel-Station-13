@@ -526,10 +526,7 @@
 		/datum/reagent/consumable/nothing,
 		/datum/reagent/consumable/peachjuice
 	)
-	upgrade_reagents4 = list(
-		/datum/reagent/drug/mushroomhallucinogen,
-		/datum/reagent/consumable/nothing,
-		/datum/reagent/consumable/peachjuice
+	upgrade_reagents4 = null
 	)
 	upgrade_reagents5 = list(
 		/datum/reagent/toxin/teapowder,
