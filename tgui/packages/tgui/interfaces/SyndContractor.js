@@ -303,7 +303,7 @@ const ContractsTab = (props, context) => {
   return (
     <Fragment>
       <Section
-        title="Available Contracts"
+        title="Availible Contracts"
         buttons={(
           <Button
             content="Call Extraction"

@@ -7,14 +7,14 @@
 	righthand_file = 'icons/mob/inhands/weapons/bombs_righthand.dmi'
 	desc = "Regulates the transfer of air between two tanks."
 	w_class = WEIGHT_CLASS_BULKY
-	var/ui_x = 310
-	var/ui_y = 320
 	var/obj/item/tank/tank_one
 	var/obj/item/tank/tank_two
 	var/obj/item/assembly/attached_device
 	var/mob/attacher = null
 	var/valve_open = FALSE
-	var/toggle = TRUE
+	var/toggle = 1
+	var/ui_x = 310
+	var/ui_y = 320
 
 /obj/item/transfer_valve/IsAssemblyHolder()
 	return TRUE
@@ -59,7 +59,7 @@
 		attacher = user
 	return
 
-//These keep attached devices synced up, for example a TTV with a mouse trap being found in a bag so it's triggered, or moving the TTV with an infrared beam sensor to update the beam's direction.
+//Attached device memes
 /obj/item/transfer_valve/Move()
 	. = ..()
 	if(attached_device)
@@ -79,13 +79,57 @@
 	if(attached_device)
 		attached_device.Crossed(AM)
 
-//Triggers mousetraps
-/obj/item/transfer_valve/attack_hand()
+/obj/item/transfer_valve/attack_hand()//Triggers mousetraps
 	. = ..()
 	if(.)
 		return
 	if(attached_device)
 		attached_device.attack_hand()
+
+//These keep attached devices synced up, for example a TTV with a mouse trap being found in a bag so it's triggered, or moving the TTV with an infrared beam sensor to update the beam's direction.
+
+
+/obj/item/transfer_valve/attack_self(mob/user)
+	user.set_machine(src)
+	var/dat = {"<B> Valve properties: </B>
+	<BR> <B> Attachment one:</B> [tank_one] [tank_one ? "<A href='?src=[REF(src)];tankone=1'>Remove</A>" : ""]
+	<BR> <B> Attachment two:</B> [tank_two] [tank_two ? "<A href='?src=[REF(src)];tanktwo=1'>Remove</A>" : ""]
+	<BR> <B> Valve attachment:</B> [attached_device ? "<A href='?src=[REF(src)];device=1'>[attached_device]</A>" : "None"] [attached_device ? "<A href='?src=[REF(src)];rem_device=1'>Remove</A>" : ""]
+	<BR> <B> Valve status: </B> [ valve_open ? "<A href='?src=[REF(src)];open=1'>Closed</A> <B>Open</B>" : "<B>Closed</B> <A href='?src=[REF(src)];open=1'>Open</A>"]"}
+
+	var/datum/browser/popup = new(user, "trans_valve", name)
+	popup.set_content(dat)
+	popup.open()
+	return
+
+/obj/item/transfer_valve/Topic(href, href_list)
+	..()
+	if(!usr.canUseTopic(src))
+		return
+	if(tank_one && href_list["tankone"])
+		split_gases()
+		valve_open = FALSE
+		tank_one.forceMove(drop_location())
+		tank_one = null
+		update_icon()
+	else if(tank_two && href_list["tanktwo"])
+		split_gases()
+		valve_open = FALSE
+		tank_two.forceMove(drop_location())
+		tank_two = null
+		update_icon()
+	else if(href_list["open"])
+		toggle_valve()
+	else if(attached_device)
+		if(href_list["rem_device"])
+			attached_device.on_detach()
+			attached_device = null
+			update_icon()
+		if(href_list["device"])
+			attached_device.attack_self(usr)
+
+	attack_self(usr)
+	add_fingerprint(usr)
 
 /obj/item/transfer_valve/proc/process_activation(obj/item/D)
 	if(toggle)
@@ -98,6 +142,7 @@
 
 /obj/item/transfer_valve/update_icon()
 	cut_overlays()
+	underlays = null
 
 	if(!tank_one && !tank_two && !attached_device)
 		icon_state = "valve_1"
@@ -107,13 +152,9 @@
 	if(tank_one)
 		add_overlay("[tank_one.icon_state]")
 	if(tank_two)
-		var/mutable_appearance/J = mutable_appearance(icon, icon_state = "[tank_two.icon_state]")
-		var/matrix/T = matrix()
-		T.Translate(-13, 0)
-		J.transform = T
-		underlays = list(J)
-	else
-		underlays = null
+		var/icon/J = new(icon, icon_state = "[tank_two.icon_state]")
+		J.Shift(WEST, 13)
+		underlays += J
 	if(attached_device)
 		add_overlay("device")
 		if(istype(attached_device, /obj/item/assembly/infra))
@@ -151,6 +192,7 @@
 	Exadv1: I know this isn't how it's going to work, but this was just to check
 	it explodes properly when it gets a signal (and it does).
 	*/
+
 /obj/item/transfer_valve/proc/toggle_valve()
 	if(!valve_open && tank_one && tank_two)
 		valve_open = TRUE
@@ -176,6 +218,7 @@
 			admin_bomber_message = " - Last touched by: [ADMIN_LOOKUPFLW(bomber)]"
 			bomber_message = " - Last touched by: [key_name_admin(bomber)]"
 
+
 		var/admin_bomb_message = "Bomb valve opened in [ADMIN_VERBOSEJMP(bombturf)][admin_attachment_message][admin_bomber_message]"
 		GLOB.bombers += admin_bomb_message
 		message_admins(admin_bomb_message, 0, 1)
@@ -189,10 +232,9 @@
 		split_gases()
 		valve_open = FALSE
 		update_icon()
-/*
-	This doesn't do anything but the timer etc. expects it to be here
-	eventually maybe have it update icon to show state (timer, prox etc.) like old bombs
-*/
+
+// this doesn't do anything but the timer etc. expects it to be here
+// eventually maybe have it update icon to show state (timer, prox etc.) like old bombs
 /obj/item/transfer_valve/proc/c_state()
 	return
 

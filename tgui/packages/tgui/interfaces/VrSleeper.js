@@ -14,7 +14,7 @@ export const VrSleeper = (props, context) => {
             </Box>
           </Section>
         )}
-         {data.vr_avatar && (
+         {...!!data.vr_avatar && (
            <Section title={"Virtual Avatar"}>
              <ProgressBar
                title={"Avatar Status: "}
@@ -52,7 +52,7 @@ export const VrSleeper = (props, context) => {
              )
           || ("You need to be inside the VR sleeper to connect to VR")}
           </Section>
-           {data.can_delete_avatar && (
+           {!!data.vr_avatar && (
           <Button
                content={"Delete VR avatar"}
                icon={'recycle'}
