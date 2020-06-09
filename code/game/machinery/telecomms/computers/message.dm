@@ -41,7 +41,7 @@
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 
 	if(!ui)
-		ui = new(user, src, ui_key, "telepdalog", name, 727, 510, master_ui, state)
+		ui = new(user, src, ui_key, "TelePDALog", name, 727, 510, master_ui, state)
 		ui.open()
 
 /obj/machinery/computer/message_monitor/ui_static_data(mob/user)

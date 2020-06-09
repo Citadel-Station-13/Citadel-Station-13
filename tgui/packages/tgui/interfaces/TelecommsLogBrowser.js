@@ -2,8 +2,8 @@ import { Fragment } from 'inferno';
 import { useBackend } from '../backend';
 import { Button, LabeledList, NoticeBox, Section, Tabs, Input } from '../components';
 
-export const TeleLogBrowser = props => {
-  const { act, data } = useBackend(props);
+export const TeleLogBrowser = (props, context) => {
+  const { act, data } = useBackend(context);
   const {
     notice,
     network = "NULL",

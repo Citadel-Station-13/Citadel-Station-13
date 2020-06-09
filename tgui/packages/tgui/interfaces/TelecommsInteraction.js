@@ -4,8 +4,8 @@ import { toFixed } from 'common/math';
 import { RADIO_CHANNELS } from '../constants';
 import { Button, LabeledList, NumberInput, NoticeBox, Section, Input } from '../components';
 
-export const TeleInteract = props => {
-  const { act, data } = useBackend(props);
+export const TeleInteract = (props, context) => {
+  const { act, data } = useBackend(context);
   const {
     notice = "",
     multitool = false,
