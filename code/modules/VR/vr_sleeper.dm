@@ -82,8 +82,9 @@
 	if(user.lying || !iscarbon(target) || !Adjacent(target) || !user.canUseTopic(src, BE_CLOSE, TRUE, NO_TK))
 		return
 	close_machine(target)
+	ui_interact(user)
 
-/obj/machinery/vr_sleeper/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
+/obj/machinery/vr_sleeper/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_contained_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
 		ui = new(user, src, ui_key, "VrSleeper", "VR Sleeper", 475, 340, master_ui, state)
@@ -118,6 +119,7 @@
 			if(!occupant || usr == occupant)
 				if(vr_mob)
 					cleanup_vr_mob()
+					SStgui.update_user_uis(occupant, src)
 			else
 				to_chat(usr, "<span class='warning'>The VR Sleeper's safeties prevent you from doing that.</span>")
 			. = TRUE

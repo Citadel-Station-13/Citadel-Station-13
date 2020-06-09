@@ -34,22 +34,25 @@ export const VrSleeper = (props, context) => {
          )
         }
         <Section
-           title="VR Commands">
-           <Button
+          title="VR Commands">
+          <Button
             content={data.toggle_open
-               ? 'Open VR Sleeper'
-               : 'Close VR Sleeper'}
+              ? 'Close VR Sleeper'
+              : 'Open VR Sleeper'}
             icon={data.toggle_open ? 'unlock' : 'lock'}
             disabled={data.stored < data.max}
             onClick={() => act('toggle_open')} />
-           <Section>
+          <Section>
             {!!data.isoccupant && (
-               <Button
-              color={'blue'}
-              content={'Connect to VR'}
-              onClick={() => act('vr_connect')}
-              icon={'unlock'} />
-             )
+              <Button.Confirm
+                color={'blue'}
+                content={'Connect to VR'}
+                onClick={() => {
+                  act('vr_connect');
+                  act('tgui:close');
+                }}
+                icon={'unlock'} />
+            )
           || ("You need to be inside the VR sleeper to connect to VR")}
           </Section>
            {!!data.vr_avatar && (
