@@ -457,6 +457,7 @@
 		message = params
 		if(type_override)
 			emote_type = type_override
+	message = say_emphasis(message)
 	. = ..()
 	message = null
 	emote_type = EMOTE_VISIBLE
