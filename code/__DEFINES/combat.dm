@@ -61,10 +61,18 @@
 #define CHECK_STAMCRIT(mob)					((mob.combat_flags & COMBAT_FLAG_HARD_STAMCRIT)? HARD_STAMCRIT : ((mob.combat_flags & COMBAT_FLAG_SOFT_STAMCRIT)? SOFT_STAMCRIT : NOT_STAMCRIT))
 
 //stamina stuff
-#define STAMINA_SOFTCRIT					100 //softcrit for stamina damage. prevents standing up, prevents performing actions that cost stamina, etc, but doesn't force a rest or stop movement
-#define STAMINA_CRIT						140 //crit for stamina damage. forces a rest, and stops movement until stamina goes back to stamina softcrit
-#define STAMINA_SOFTCRIT_TRADITIONAL		0	//same as STAMINA_SOFTCRIT except for the more traditional health calculations
-#define STAMINA_CRIT_TRADITIONAL			-40 //ditto, but for STAMINA_CRIT
+///Threshold over which attacks start being hindered.
+#define STAMINA_NEAR_SOFTCRIT				90
+///softcrit for stamina damage. prevents standing up, some actions that cost stamina, etc, but doesn't force a rest or stop movement
+#define STAMINA_SOFTCRIT					100
+///sanity cap to prevent stamina actions (that are still performable) from sending you into crit.
+#define STAMINA_NEAR_CRIT					130
+///crit for stamina damage. forces a rest, and stops movement until stamina goes back to stamina softcrit
+#define STAMINA_CRIT						140
+///same as STAMINA_SOFTCRIT except for the more traditional health calculations
+#define STAMINA_SOFTCRIT_TRADITIONAL		0
+///ditto, but for STAMINA_CRIT
+#define STAMINA_CRIT_TRADITIONAL			-40
 
 #define CRAWLUNDER_DELAY							30 //Delay for crawling under a standing mob
 
@@ -182,6 +190,9 @@ GLOBAL_LIST_INIT(shove_disarming_types, typecacheof(list(
 #define EGUN_SELFCHARGE 1
 #define EGUN_SELFCHARGE_BORG 2
 
+///Time to spend without clicking on other things required for your shots to become accurate.
+#define GUN_AIMING_TIME (2 SECONDS)
+
 //Object/Item sharpness
 #define IS_BLUNT			0
 #define IS_SHARP			1
@@ -248,6 +259,21 @@ GLOBAL_LIST_INIT(shove_disarming_types, typecacheof(list(
 #define STAM_COST_NO_COMBAT_MULT	1.25
 #define STAM_COST_W_CLASS_MULT		1.25
 #define STAM_COST_THROW_MULT		2
+
+///Multiplier of the (STAMINA_NEAR_CRIT - user current stamina loss) : (STAMINA_NEAR_CRIT - STAMINA_SOFTCRIT) ratio used in damage penalties when stam soft-critted.
+#define STAM_CRIT_ITEM_ATTACK_PENALTY	0.66
+/// changeNext_move penalty multiplier of the above.
+#define STAM_CRIT_ITEM_ATTACK_DELAY		1.75
+/// Damage penalty when fighting prone.
+#define LYING_DAMAGE_PENALTY			0.5
+/// Added delay when firing guns stam-softcritted. Summed with a hardset CLICK_CD_RANGE delay, similar to STAM_CRIT_DAMAGE_DELAY otherwise.
+#define STAM_CRIT_GUN_DELAY			2.75
+
+/**
+  * should the current-attack-damage be lower than the item force multiplied by this value,
+  * a "inefficiently" prefix will be added to the message.
+  */
+#define INEFFICIENT_ATTACK_MSG_THRESHOLD 0.7
 
 
 //bullet_act() return values

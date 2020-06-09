@@ -191,7 +191,7 @@
 /datum/mind/proc/skill_html_readout()
 	var/list/out = list("<center><h1>Skills</h1></center><hr>")
 	out += "<table style=\"width:100%\"><tr><th><b>Skill</b><th><b>Value</b></tr>"
-	for(var/path in skill_holder.skills|skill_holder.skill_value_mods|skill_holder.skill_level_mods)
+	for(var/path in GLOB.skill_datums)
 		var/datum/skill/S = GLOB.skill_datums[path]
 		var/skill_value = get_skill_value(path)
 		var/skill_level = get_skill_level(path, round = TRUE)

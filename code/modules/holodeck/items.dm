@@ -40,9 +40,6 @@
 		return ..()
 	return ..()
 
-/obj/item/holo/esword/attack(target as mob, mob/user as mob)
-	..()
-
 /obj/item/holo/esword/Initialize()
 	. = ..()
 	saber_color = pick("red","blue","green","purple")

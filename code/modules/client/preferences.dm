@@ -50,6 +50,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 	/// Custom Keybindings
 	var/list/key_bindings = list()
+	/// List with a key string associated to a list of keybindings. Unlike key_bindings, this one operates on raw key, allowing for binding a key that triggers regardless of if a modifier is depressed as long as the raw key is sent.
+	var/list/modless_key_bindings = list()
 
 
 	var/tgui_fancy = TRUE
@@ -154,6 +156,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		"ipc_screen" = "Sunburst",
 		"ipc_antenna" = "None",
 		"flavor_text" = "",
+		"silicon_flavor_text" = "",
 		"ooc_notes" = "",
 		"meat_type" = "Mammalian",
 		"body_model" = MALE,
@@ -367,6 +370,15 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					dat += "[features["flavor_text"]]"
 			else
 				dat += "[TextPreview(features["flavor_text"])]...<BR>"
+			dat += "<h2>Silicon Flavor Text</h2>"
+			dat += "<a href='?_src_=prefs;preference=silicon_flavor_text;task=input'><b>Set Silicon Examine Text</b></a><br>"
+			if(length(features["silicon_flavor_text"]) <= 40)
+				if(!length(features["silicon_flavor_text"]))
+					dat += "\[...\]"
+				else
+					dat += "[features["silicon_flavor_text"]]"
+			else
+				dat += "[TextPreview(features["silicon_flavor_text"])]...<BR>"
 			dat += "<h2>OOC notes</h2>"
 			dat += "<a href='?_src_=prefs;preference=ooc_notes;task=input'><b>Set OOC notes</b></a><br>"
 			var/ooc_notes_len = length(features["ooc_notes"])
@@ -1088,11 +1100,16 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			Input mode is the closest thing to the old input system.<br>\
 			<b>IMPORTANT:</b> While in input mode's non hotkey setting (tab toggled), Ctrl + KEY will send KEY to the keybind system as the key itself, not as Ctrl + KEY. This means Ctrl + T/W/A/S/D/all your familiar stuff still works, but you \
 			won't be able to access any regular Ctrl binds.<br>"
+			dat += "<br><b>Modifier-Independent binding</b> - This is a singular bind that works regardless of if Ctrl/Shift/Alt are held down. For example, if combat mode is bound to C in modifier-independent binds, it'll trigger regardless of if you are \
+			holding down shift for sprint. <b>Each keybind can only have one independent binding, and each key can only have one keybind independently bound to it.</b>"
 			// Create an inverted list of keybindings -> key
 			var/list/user_binds = list()
+			var/list/user_modless_binds = list()
 			for (var/key in key_bindings)
 				for(var/kb_name in key_bindings[key])
 					user_binds[kb_name] += list(key)
+			for (var/key in modless_key_bindings)
+				user_modless_binds[modless_key_bindings[key]] = key
 
 			var/list/kb_categories = list()
 			// Group keybinds by category
@@ -1100,21 +1117,29 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				var/datum/keybinding/kb = GLOB.keybindings_by_name[name]
 				kb_categories[kb.category] += list(kb)
 
-			dat += "<style>label { display: inline-block; width: 200px; }</style><body>"
+			dat += {"
+			<style>
+			span.bindname { display: inline-block; position: absolute; width: 20% ; left: 5px; padding: 5px; } \
+			span.bindings { display: inline-block; position: relative; width: auto; left: 20%; width: auto; right: 20%; padding: 5px; } \
+			span.independent { display: inline-block; position: absolute; width: 20%; right: 5px; padding: 5px; } \
+			</style><body>
+			"}
 
 			for (var/category in kb_categories)
 				dat += "<h3>[category]</h3>"
 				for (var/i in kb_categories[category])
 					var/datum/keybinding/kb = i
+					var/current_independent_binding = user_modless_binds[kb.name] || "Unbound"
 					if(!length(user_binds[kb.name]))
-						dat += "<label>[kb.full_name]</label> <a href ='?_src_=prefs;preference=keybindings_capture;keybinding=[kb.name];old_key=["Unbound"]'>Unbound</a>"
+						dat += "<span class='bindname'>[kb.full_name]</span><span class='bindings'><a href ='?_src_=prefs;preference=keybindings_capture;keybinding=[kb.name];old_key=["Unbound"]'>Unbound</a>"
 						var/list/default_keys = hotkeys ? kb.hotkey_keys : kb.classic_keys
 						if(LAZYLEN(default_keys))
 							dat += "| Default: [default_keys.Join(", ")]"
+						dat += "</span><span class='independent'>Independent Binding: <a href='?_src_=prefs;preference=keybindings_capture;keybinding=[kb.name];old_key=[current_independent_binding];independent=1'>[current_independent_binding]</a></span>"
 						dat += "<br>"
 					else
 						var/bound_key = user_binds[kb.name][1]
-						dat += "<label>[kb.full_name]</label> <a href ='?_src_=prefs;preference=keybindings_capture;keybinding=[kb.name];old_key=[bound_key]'>[bound_key]</a>"
+						dat += "<span class='bindname'l>[kb.full_name]</span><span class='bindings'><a href ='?_src_=prefs;preference=keybindings_capture;keybinding=[kb.name];old_key=[bound_key]'>[bound_key]</a>"
 						for(var/bound_key_index in 2 to length(user_binds[kb.name]))
 							bound_key = user_binds[kb.name][bound_key_index]
 							dat += " | <a href ='?_src_=prefs;preference=keybindings_capture;keybinding=[kb.name];old_key=[bound_key]'>[bound_key]</a>"
@@ -1123,6 +1148,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						var/list/default_keys = hotkeys ? kb.classic_keys : kb.hotkey_keys
 						if(LAZYLEN(default_keys))
 							dat += "| Default: [default_keys.Join(", ")]"
+						dat += "</span><span class='independent'>Independent Binding: <a href='?_src_=prefs;preference=keybindings_capture;keybinding=[kb.name];old_key=[current_independent_binding];independent=1'>[current_independent_binding]</a></span>"
 						dat += "<br>"
 
 			dat += "<br><br>"
@@ -1148,7 +1174,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 #undef APPEARANCE_CATEGORY_COLUMN
 #undef MAX_MUTANT_ROWS
 
-/datum/preferences/proc/CaptureKeybinding(mob/user, datum/keybinding/kb, var/old_key)
+/datum/preferences/proc/CaptureKeybinding(mob/user, datum/keybinding/kb, old_key, independent = FALSE)
 	var/HTML = {"
 	<div id='focus' style="outline: 0;" tabindex=0>Keybinding: [kb.full_name]<br>[kb.description]<br><br><b>Press any key to change<br>Press ESC to clear</b></div>
 	<script>
@@ -1160,7 +1186,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		var shift = e.shiftKey ? 1 : 0;
 		var numpad = (95 < e.keyCode && e.keyCode < 112) ? 1 : 0;
 		var escPressed = e.keyCode == 27 ? 1 : 0;
-		var url = 'byond://?_src_=prefs;preference=keybindings_set;keybinding=[kb.name];old_key=[old_key];clear_key='+escPressed+';key='+e.key+';alt='+alt+';ctrl='+ctrl+';shift='+shift+';numpad='+numpad+';key_code='+e.keyCode;
+		var url = 'byond://?_src_=prefs;preference=keybindings_set;keybinding=[kb.name];old_key=[old_key];[independent?"independent=1":""];clear_key='+escPressed+';key='+e.key+';alt='+alt+';ctrl='+ctrl+';shift='+shift+';numpad='+numpad+';key_code='+e.keyCode;
 		window.location=url;
 		deedDone = true;
 	}
@@ -1615,6 +1641,11 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					var/msg = stripped_multiline_input(usr, "Set the flavor text in your 'examine' verb. This can also be used for OOC notes and preferences!", "Flavor Text", features["flavor_text"], MAX_FLAVOR_LEN, TRUE)
 					if(!isnull(msg))
 						features["flavor_text"] = html_decode(msg)
+
+				if("silicon_flavor_text")
+					var/msg = stripped_multiline_input(usr, "Set the silicon flavor text in your 'examine' verb. This can also be used for OOC notes and preferences!", "Silicon Flavor Text", features["silicon_flavor_text"], MAX_FLAVOR_LEN, TRUE)
+					if(!isnull(msg))
+						features["silicon_flavor_text"] = html_decode(msg)
 
 				if("ooc_notes")
 					var/msg = stripped_multiline_input(usr, "Set always-visible OOC notes related to content preferences. THIS IS NOT FOR CHARACTER DESCRIPTIONS!", "OOC notes", features["ooc_notes"], MAX_FLAVOR_LEN, TRUE)
@@ -2357,8 +2388,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 				if("keybindings_capture")
 					var/datum/keybinding/kb = GLOB.keybindings_by_name[href_list["keybinding"]]
-					var/old_key = href_list["old_key"]
-					CaptureKeybinding(user, kb, old_key)
+					CaptureKeybinding(user, kb, href_list["old_key"], text2num(href_list["independent"]))
 					return
 
 				if("keybindings_set")
@@ -2368,13 +2398,18 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						ShowChoices(user)
 						return
 
+					var/independent = href_list["independent"]
+
 					var/clear_key = text2num(href_list["clear_key"])
 					var/old_key = href_list["old_key"]
 					if(clear_key)
-						if(key_bindings[old_key])
-							key_bindings[old_key] -= kb_name
-							if(!length(key_bindings[old_key]))
-								key_bindings -= old_key
+						if(independent)
+							modless_key_bindings -= old_key
+						else
+							if(key_bindings[old_key])
+								key_bindings[old_key] -= kb_name
+								if(!length(key_bindings[old_key]))
+									key_bindings -= old_key
 						user << browse(null, "window=capturekeypress")
 						save_preferences()
 						ShowChoices(user)
@@ -2400,15 +2435,18 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 							full_key = "[AltMod][CtrlMod][new_key]"
 						else
 							full_key = "[AltMod][CtrlMod][ShiftMod][numpad][new_key]"
-					if(key_bindings[old_key])
-						key_bindings[old_key] -= kb_name
-						if(!length(key_bindings[old_key]))
-							key_bindings -= old_key
-					key_bindings[full_key] += list(kb_name)
-					key_bindings[full_key] = sortList(key_bindings[full_key])
-
-					user << browse(null, "window=capturekeypress")
+					if(independent)
+						modless_key_bindings -= old_key
+						modless_key_bindings[full_key] = kb_name
+					else
+						if(key_bindings[old_key])
+							key_bindings[old_key] -= kb_name
+							if(!length(key_bindings[old_key]))
+								key_bindings -= old_key
+						key_bindings[full_key] += list(kb_name)
+						key_bindings[full_key] = sortList(key_bindings[full_key])
 					user.client.update_movement_keys()
+					user << browse(null, "window=capturekeypress")
 					save_preferences()
 
 				if("keybindings_reset")
@@ -2418,6 +2456,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						return
 					hotkeys = (choice == "Hotkey")
 					key_bindings = (hotkeys) ? deepCopyList(GLOB.hotkey_keybinding_list_by_key) : deepCopyList(GLOB.classic_keybinding_list_by_key)
+					modless_key_bindings = list()
 					user.client.update_movement_keys()
 
 				if("chat_on_map")
@@ -2572,8 +2611,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						current_tab = text2num(href_list["tab"])
 	if(href_list["preference"] == "gear")
 		if(href_list["clear_loadout"])
-			LAZYCLEARLIST(chosen_gear)
-			gear_points = initial(gear_points)
+			chosen_gear = list()
+			gear_points = CONFIG_GET(number/initial_gear_points)
 			save_preferences()
 		if(href_list["select_category"])
 			for(var/i in GLOB.loadout_items)
@@ -2585,7 +2624,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				return
 			var/toggle = text2num(href_list["toggle_gear"])
 			if(!toggle && (G.type in chosen_gear))//toggling off and the item effectively is in chosen gear)
-				LAZYREMOVE(chosen_gear, G.type)
+				chosen_gear -= G.type
 				gear_points += initial(G.cost)
 			else if(toggle && (!(is_type_in_ref_list(G, chosen_gear))))
 				if(!is_loadout_slot_available(G.category))
@@ -2595,7 +2634,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					to_chat(user, "<span class='danger'>This is an item intended for donator use only. You are not authorized to use this item.</span>")
 					return
 				if(gear_points >= initial(G.cost))
-					LAZYADD(chosen_gear, G.type)
+					chosen_gear += G.type
 					gear_points -= initial(G.cost)
 
 	ShowChoices(user)
