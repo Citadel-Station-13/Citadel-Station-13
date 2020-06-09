@@ -27593,9 +27593,6 @@
 /area/quartermaster/office)
 "bpC" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
 /obj/structure/cable{
 	icon_state = "4-8"
 	},
@@ -51547,14 +51544,12 @@
 /turf/open/floor/plasteel/dark,
 /area/hallway/primary/central)
 "doX" = (
-/obj/machinery/atmospherics/pipe/simple/general/visible{
-	dir = 5
-	},
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 4
 	},
-/obj/effect/landmark/start/paramedic,
-/obj/machinery/light,
+/obj/machinery/atmospherics/components/unary/thermomachine/freezer{
+	dir = 1
+	},
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
 "dqb" = (
@@ -51610,8 +51605,13 @@
 /turf/open/floor/carpet,
 /area/crew_quarters/cryopod)
 "dvJ" = (
-/obj/machinery/atmospherics/components/unary/cryo_cell{
-	dir = 8
+/obj/machinery/portable_atmospherics/canister/oxygen,
+/obj/machinery/atmospherics/components/unary/portables_connector/visible{
+	dir = 1
+	},
+/obj/machinery/light{
+	dir = 4;
+	light_color = "#c1caff"
 	},
 /turf/open/floor/plasteel/dark,
 /area/medical/medbay/central)
@@ -55402,13 +55402,6 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
-"kOi" = (
-/obj/machinery/atmospherics/components/unary/portables_connector/visible{
-	dir = 8
-	},
-/obj/machinery/portable_atmospherics/canister/oxygen,
-/turf/open/floor/plasteel/dark,
-/area/medical/medbay/central)
 "kPd" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /obj/structure/cable{
@@ -56504,6 +56497,7 @@
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 4
 	},
+/obj/effect/landmark/start/paramedic,
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
 "nez" = (
@@ -56747,16 +56741,10 @@
 /turf/open/space,
 /area/space/nearstation)
 "nKq" = (
-/obj/machinery/atmospherics/pipe/simple/general/visible{
-	dir = 6
-	},
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 4
 	},
-/obj/effect/landmark/start/paramedic,
-/obj/machinery/light{
-	dir = 1
-	},
+/obj/machinery/atmospherics/components/unary/cryo_cell,
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
 "nLu" = (
@@ -57704,21 +57692,23 @@
 /turf/open/floor/plating,
 /area/security/range)
 "pDL" = (
-/obj/machinery/atmospherics/components/unary/thermomachine/freezer{
-	dir = 8
+/obj/machinery/atmospherics/pipe/manifold/general/visible{
+	dir = 4
 	},
 /turf/open/floor/plasteel/dark,
 /area/medical/medbay/central)
 "pEP" = (
-/obj/machinery/atmospherics/components/unary/cryo_cell{
-	dir = 8
-	},
 /obj/item/radio/intercom{
 	broadcasting = 1;
 	frequency = 1485;
 	listening = 0;
 	name = "Station Intercom (Medbay)";
 	pixel_x = 30
+	},
+/obj/machinery/atmospherics/components/unary/cryo_cell,
+/obj/machinery/light{
+	dir = 4;
+	light_color = "#c1caff"
 	},
 /turf/open/floor/plasteel/dark,
 /area/medical/medbay/central)
@@ -60330,6 +60320,11 @@
 	},
 /turf/open/floor/carpet,
 /area/crew_quarters/theatre)
+"uLM" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/effect/landmark/start/paramedic,
+/turf/open/floor/plasteel/white,
+/area/medical/medbay/central)
 "uNu" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -101589,7 +101584,7 @@ xMq
 wBX
 qJC
 neb
-qJC
+uLM
 qJC
 oxl
 ffz
@@ -102103,7 +102098,7 @@ pqJ
 ddE
 pEP
 pDL
-kOi
+pDL
 dvJ
 ajv
 kST
