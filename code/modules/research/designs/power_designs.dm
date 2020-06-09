@@ -59,7 +59,7 @@
 
 /datum/design/vortex_cell
 	name = "Vortex Power Cell"
-	desc = "A power cell that holds 80 MJ of energy and slowly recharge itself."
+	desc = "A power cell that holds 60 MJ of energy and slowly recharge itself."
 	id = "vortex_cell"
 	build_type = PROTOLATHE | MECHFAB
 	materials = list(/datum/material/iron = 800, /datum/material/gold = 120, /datum/material/glass = 160, /datum/material/diamond = 160, /datum/material/titanium = 300, /datum/material/bluespace = 300)
