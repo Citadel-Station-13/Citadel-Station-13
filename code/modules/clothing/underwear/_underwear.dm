@@ -33,11 +33,10 @@
 
 /obj/item/clothing/underwear/update_overlays()
 	. = ..()
-	cut_overlay(attached_overlay)
+	cut_overlays()
 	attached_overlay = mutable_appearance(initial(icon), icon_state, FLOAT_LAYER, FLOAT_PLANE, overlay_color)
 	add_overlay(attached_overlay)
 	for(var/obj/item/clothing/underwear/U in appended)
-		cut_overlay(U.attached_overlay)
 		add_overlay(U.attached_overlay)
 
 /obj/item/clothing/underwear/examine(mob/user)
