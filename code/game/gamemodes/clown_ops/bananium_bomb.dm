@@ -39,6 +39,11 @@
 			ADD_TRAIT(C, TRAIT_NODROP, CLOWN_NUKE_TRAIT)
 			H.equip_to_slot_or_del(C, SLOT_W_UNIFORM)
 
+		if(!H.w_underwear || H.dropItemToGround(H.w_underwear))
+			C = new /obj/item/clothing/underwear/shirt/clown(H)
+			ADD_TRAIT(C, TRAIT_NODROP, CLOWN_NUKE_TRAIT)
+			H.equip_to_slot_or_del(C, SLOT_W_UNDERWEAR)
+
 		if(!H.shoes || H.dropItemToGround(H.shoes))
 			C = new /obj/item/clothing/shoes/clown_shoes(H)
 			ADD_TRAIT(C, TRAIT_NODROP, CLOWN_NUKE_TRAIT)

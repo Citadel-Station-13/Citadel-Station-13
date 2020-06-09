@@ -7,15 +7,18 @@ GLOBAL_LIST_EMPTY(facial_hair_styles_list)	//stores /datum/sprite_accessory/faci
 GLOBAL_LIST_EMPTY(facial_hair_styles_male_list)	//stores only hair names
 GLOBAL_LIST_EMPTY(facial_hair_styles_female_list)	//stores only hair names
 	//Underwear
-GLOBAL_LIST_EMPTY_TYPED(underwear_list, /datum/sprite_accessory/underwear/bottom)		//stores bottoms indexed by name
+GLOBAL_LIST_EMPTY(underwear_list)		//stores bottoms indexed by name
+GLOBAL_LIST_EMPTY(blacklisted_underwear_list)
 GLOBAL_LIST_EMPTY(underwear_m)	//stores only underwear name
 GLOBAL_LIST_EMPTY(underwear_f)	//stores only underwear name
 	//Undershirts
-GLOBAL_LIST_EMPTY_TYPED(undershirt_list, /datum/sprite_accessory/underwear/top) 	//stores tops indexed by name
+GLOBAL_LIST_EMPTY(undershirt_list) 	//stores tops indexed by name
+GLOBAL_LIST_EMPTY(blacklisted_undershirt_list)
 GLOBAL_LIST_EMPTY(undershirt_m)	 //stores only undershirt name
 GLOBAL_LIST_EMPTY(undershirt_f)	 //stores only undershirt name
 	//Socks
-GLOBAL_LIST_EMPTY_TYPED(socks_list, /datum/sprite_accessory/underwear/socks)		//stores socks indexed by name
+GLOBAL_LIST_EMPTY(socks_list)		//stores socks indexed by name
+GLOBAL_LIST_EMPTY(blacklisted_socks_list)
 	//Lizard Bits (all datum lists indexed by name)
 GLOBAL_LIST_EMPTY(body_markings_list)
 GLOBAL_LIST_EMPTY(tails_list_lizard)

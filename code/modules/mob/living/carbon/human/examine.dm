@@ -29,7 +29,14 @@
 		. += "You can't make out what species they are."
 	else
 		. += "[t_He] [t_is] a [dna.custom_species ? dna.custom_species : dna.species.name]!"
-
+	//underwear
+	if(w_underwear && !(SLOT_W_UNDERWEAR in obscured) && (!w_uniform || w_uniform.hide_underwear_examine))
+		. += "[t_He] [t_is] wearing [w_underwear.get_examine_string(user)]."
+		if(istype(w_underwear, /obj/item/clothing/underwear))
+			var/obj/item/clothing/underwear/U = w_underwear
+			if(U.appended.len)
+				for(var/obj/item/clothing/underwear/und in U.appended)
+					. += "[t_He] [t_is] wearing [und.get_examine_string(user)]."
 	//uniform
 	if(w_uniform && !(SLOT_W_UNIFORM in obscured))
 		//accessory

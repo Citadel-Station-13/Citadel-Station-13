@@ -15,6 +15,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 	//Species Icon Drawing Offsets - Pixel X, Pixel Y, Aka X = Horizontal and Y = Vertical, from bottom left corner
 	var/list/offset_features = list(
 		OFFSET_UNIFORM = list(0,0),
+		OFFSET_UNDERWEAR = list(0,0),
 		OFFSET_ID = list(0,0),
 		OFFSET_GLOVES = list(0,0),
 		OFFSET_GLASSES = list(0,0),
@@ -570,51 +571,6 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 
 			standing += eye_overlay
 
-	//Underwear, Undershirts & Socks
-	if(!(NO_UNDERWEAR in species_traits))
-		var/datum/sprite_accessory/taur/TA
-		if(mutant_bodyparts["taur"] && H.dna.features["taur"])
-			TA = GLOB.taur_list[H.dna.features["taur"]]
-		if(!(TA?.hide_legs) && H.socks && !H.hidden_socks && H.get_num_legs(FALSE) >= 2)
-			if(H.saved_socks)
-				H.socks = H.saved_socks
-				H.saved_socks = ""
-			var/datum/sprite_accessory/underwear/socks/S = GLOB.socks_list[H.socks]
-			if(S)
-				var/digilegs = ((DIGITIGRADE in species_traits) && S.has_digitigrade) ? "_d" : ""
-				var/mutable_appearance/MA = mutable_appearance(S.icon, "[S.icon_state][digilegs]", -BODY_LAYER)
-				if(S.has_color)
-					MA.color = "#[H.socks_color]"
-				standing += MA
-
-		if(H.underwear && !H.hidden_underwear)
-			if(H.saved_underwear)
-				H.underwear = H.saved_underwear
-				H.saved_underwear = ""
-			var/datum/sprite_accessory/underwear/bottom/B = GLOB.underwear_list[H.underwear]
-			if(B)
-				var/digilegs = ((DIGITIGRADE in species_traits) && B.has_digitigrade) ? "_d" : ""
-				var/mutable_appearance/MA = mutable_appearance(B.icon, "[B.icon_state][digilegs]", -BODY_LAYER)
-				if(B.has_color)
-					MA.color = "#[H.undie_color]"
-				standing += MA
-
-		if(H.undershirt && !H.hidden_undershirt)
-			if(H.saved_undershirt)
-				H.undershirt = H.saved_undershirt
-				H.saved_undershirt = ""
-			var/datum/sprite_accessory/underwear/top/T = GLOB.undershirt_list[H.undershirt]
-			if(T)
-				var/state = "[T.icon_state][((DIGITIGRADE in species_traits) && T.has_digitigrade) ? "_d" : ""]"
-				var/mutable_appearance/MA
-				if(H.dna.species.sexes && H.dna.features["body_model"] == FEMALE)
-					MA = wear_alpha_masked_version(state, T.icon, BODY_LAYER, FEMALE_UNIFORM_TOP)
-				else
-					MA = mutable_appearance(T.icon, state, -BODY_LAYER)
-				if(T.has_color)
-					MA.color = "#[H.shirt_color]"
-				standing += MA
-
 	if(standing.len)
 		H.overlays_standing[BODY_LAYER] = standing
 
@@ -750,6 +706,9 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 				should_be_squished = TRUE
 		if(H.w_uniform && !H.wear_suit)
 			if(!(H.w_uniform.mutantrace_variation & STYLE_DIGITIGRADE))
+				should_be_squished = TRUE
+		if(H.w_underwear && !H.wear_suit && !H.w_uniform)
+			if(!(H.w_underwear.mutantrace_variation & STYLE_DIGITIGRADE))
 				should_be_squished = TRUE
 		if(O.use_digitigrade == FULL_DIGITIGRADE && should_be_squished)
 			O.use_digitigrade = SQUISHED_DIGITIGRADE
@@ -1167,6 +1126,12 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 			if( !(I.slot_flags & ITEM_SLOT_ICLOTHING) )
 				return FALSE
 			return equip_delay_self_check(I, H, bypass_equip_delay_self)
+		if(SLOT_W_UNDERWEAR)
+			if(H.w_underwear)
+				return FALSE
+			if(!(I.slot_flags & ITEM_SLOT_UNDERWEAR))
+				return FALSE
+			return equip_delay_self_check(I, H, bypass_equip_delay_self)
 		if(SLOT_WEAR_ID)
 			if(H.wear_id)
 				return FALSE
@@ -1278,8 +1243,8 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 	return FALSE
 
 ////////
-	//LIFE//
-	////////
+//LIFE//
+////////
 
 /datum/species/proc/handle_digestion(mob/living/carbon/human/H)
 	if(HAS_TRAIT(src, TRAIT_NOHUNGER))
@@ -1292,6 +1257,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 			REMOVE_TRAIT(H, TRAIT_FAT, OBESITY)
 			H.remove_movespeed_modifier(/datum/movespeed_modifier/obesity)
 			H.update_inv_w_uniform()
+			H.update_inv_w_underwear()
 			H.update_inv_wear_suit()
 	else
 		if(H.overeatduration >= 100)
@@ -1299,6 +1265,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 			ADD_TRAIT(H, TRAIT_FAT, OBESITY)
 			H.add_movespeed_modifier(/datum/movespeed_modifier/obesity)
 			H.update_inv_w_uniform()
+			H.update_inv_w_underwear()
 			H.update_inv_wear_suit()
 
 	// nutrition decrease and satiety
@@ -1621,6 +1588,8 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 
 		if(target.w_uniform)
 			target.w_uniform.add_fingerprint(user)
+		else if(target.w_underwear)
+			target.w_underwear.add_fingerprint(user)
 		//var/randomized_zone = ran_zone(user.zone_selected) CIT CHANGE - comments out to prevent compiling errors
 		SEND_SIGNAL(target, COMSIG_HUMAN_DISARM_HIT, user, user.zone_selected)
 		if(target.pulling == user)
@@ -1797,6 +1766,9 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 					if(H.w_uniform)
 						H.w_uniform.add_mob_blood(H)
 						H.update_inv_w_uniform()
+					if(H.w_underwear)
+						H.w_underwear.add_mob_blood(H)
+						H.update_inv_w_underwear()
 
 		if(Iforce > 10 || Iforce >= 5 && prob(33))
 			H.forcesay(GLOB.hit_appends)	//forcesay checks stat already.
@@ -1870,6 +1842,8 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 
 		if(target.w_uniform)
 			target.w_uniform.add_fingerprint(user)
+		else if(target.w_underwear)
+			target.w_underwear.add_fingerprint(user)
 		SEND_SIGNAL(target, COMSIG_HUMAN_DISARM_HIT, user, user.zone_selected)
 
 		if(CHECK_MOBILITY(target, MOBILITY_STAND))
@@ -2152,6 +2126,8 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 
 		//CHEST//
 		var/obj/item/clothing/chest_clothes = null
+		if(H.w_underwear && (H.w_underwear.body_parts_covered & CHEST))
+			chest_clothes = H.w_underwear
 		if(H.w_uniform)
 			chest_clothes = H.w_uniform
 		if(H.wear_suit)
@@ -2162,6 +2138,8 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 
 		//ARMS & HANDS//
 		var/obj/item/clothing/arm_clothes = null
+		if(H.w_underwear && ((H.w_underwear.body_parts_covered & HANDS) || (H.w_underwear.body_parts_covered & ARMS)))
+			arm_clothes = H.w_underwear
 		if(H.gloves)
 			arm_clothes = H.gloves
 		if(H.w_uniform && ((H.w_uniform.body_parts_covered & HANDS) || (H.w_uniform.body_parts_covered & ARMS)))
@@ -2175,6 +2153,8 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 		var/obj/item/clothing/leg_clothes = null
 		if(H.shoes)
 			leg_clothes = H.shoes
+		if(H.w_underwear && ((H.w_underwear.body_parts_covered & FEET) || (H.w_underwear.body_parts_covered & LEGS)))
+			leg_clothes = H.w_underwear
 		if(H.w_uniform && ((H.w_uniform.body_parts_covered & FEET) || (H.w_uniform.body_parts_covered & LEGS)))
 			leg_clothes = H.w_uniform
 		if(H.wear_suit && ((H.wear_suit.body_parts_covered & FEET) || (H.wear_suit.body_parts_covered & LEGS)))

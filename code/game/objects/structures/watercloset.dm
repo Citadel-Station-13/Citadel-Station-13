@@ -408,6 +408,8 @@
 				H.update_inv_wear_suit()
 			else if(H.w_uniform && wash_obj(H.w_uniform))
 				H.update_inv_w_uniform()
+			else if(H.w_underwear && wash_obj(H.w_underwear))
+				H.update_inv_w_underwear()
 			if(washgloves)
 				H.clean_blood()
 				SEND_SIGNAL(H, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_WEAK)

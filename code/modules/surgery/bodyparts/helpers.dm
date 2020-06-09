@@ -263,6 +263,8 @@
 		var/mob/living/carbon/human/H = src
 		if(H.w_uniform)
 			H.update_inv_w_uniform()
+		if(H.w_underwear)
+			H.update_inv_w_underwear()
 		if(H.shoes)
 			H.update_inv_shoes()
 		if(H.wear_suit)

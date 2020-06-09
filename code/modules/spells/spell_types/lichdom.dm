@@ -61,6 +61,7 @@
 		if(ishuman(M))
 			var/mob/living/carbon/human/H = M
 			H.dropItemToGround(H.w_uniform)
+			H.dropItemToGround(H.w_underwear)
 			H.dropItemToGround(H.wear_suit)
 			H.dropItemToGround(H.head)
 			H.equip_to_slot_or_del(new /obj/item/clothing/suit/wizrobe/black(H), SLOT_WEAR_SUIT)

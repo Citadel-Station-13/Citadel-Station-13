@@ -80,12 +80,12 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/be_random_body = 0				//whether we'll have a random body every round
 	var/gender = MALE					//gender of character (well duh)
 	var/age = 30						//age of character
-	var/underwear = "Nude"				//underwear type
-	var/undie_color = "FFF"
-	var/undershirt = "Nude"				//undershirt type
-	var/shirt_color = "FFF"
-	var/socks = "Nude"					//socks type
-	var/socks_color = "FFF"
+	var/underwear = "Nude"				//underwear name
+	var/undie_color = "#FFFFFF"
+	var/undershirt = "Nude"				//undershirt name
+	var/shirt_color = "#FFFFFF"
+	var/socks = "Nude"					//socks name
+	var/socks_color = "#FFFFFF"
 	var/backbag = DBACKPACK				//backpack type
 	var/jumpsuit_style = PREF_SUIT		//suit/skirt
 	var/hair_style = "Bald"				//Hair type
@@ -780,15 +780,12 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			dat += "</td>"
 			dat += "<table><tr><td width='340px' height='300px' valign='top'>"
 			dat += "<h2>Clothing & Equipment</h2>"
-			dat += "<b>Underwear:</b><a style='display:block;width:100px' href ='?_src_=prefs;preference=underwear;task=input'>[underwear]</a>"
-			if(GLOB.underwear_list[underwear]?.has_color)
-				dat += "<b>Underwear Color:</b> <span style='border:1px solid #161616; background-color: #[undie_color];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=undie_color;task=input'>Change</a><BR>"
-			dat += "<b>Undershirt:</b><a style='display:block;width:100px' href ='?_src_=prefs;preference=undershirt;task=input'>[undershirt]</a>"
-			if(GLOB.undershirt_list[undershirt]?.has_color)
-				dat += "<b>Undershirt Color:</b> <span style='border:1px solid #161616; background-color: #[shirt_color];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=shirt_color;task=input'>Change</a><BR>"
-			dat += "<b>Socks:</b><a style='display:block;width:100px' href ='?_src_=prefs;preference=socks;task=input'>[socks]</a>"
-			if(GLOB.socks_list[socks]?.has_color)
-				dat += "<b>Socks Color:</b> <span style='border:1px solid #161616; background-color: #[socks_color];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=socks_color;task=input'>Change</a><BR>"
+			dat += "<b>Underwear:</b><a style='display:block;width:100px' href ='?_src_=prefs;preference=underwear;task=input'>[underwear ? underwear : "Nude"]</a>"
+			dat += "<b>Underwear Color:</b> <span style='border:1px solid #161616; background-color: [undie_color];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=undie_color;task=input'>Change</a><BR>"
+			dat += "<b>Undershirt:</b><a style='display:block;width:100px' href ='?_src_=prefs;preference=undershirt;task=input'>[undershirt ? undershirt : "Nude"]</a>"
+			dat += "<b>Undershirt Color:</b> <span style='border:1px solid #161616; background-color: [shirt_color];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=shirt_color;task=input'>Change</a><BR>"
+			dat += "<b>Socks:</b><a style='display:block;width:100px' href ='?_src_=prefs;preference=socks;task=input'>[socks  ? socks : "Nude"]</a>"
+			dat += "<b>Socks Color:</b> <span style='border:1px solid #161616; background-color: [socks_color];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=socks_color;task=input'>Change</a><BR>"
 			dat += "<b>Backpack:</b><a style='display:block;width:100px' href ='?_src_=prefs;preference=bag;task=input'>[backbag]</a>"
 			dat += "<b>Jumpsuit:</b><BR><a href ='?_src_=prefs;preference=suit;task=input'>[jumpsuit_style]</a><BR>"
 			dat += "<b>Uplink Location:</b><a style='display:block;width:100px' href ='?_src_=prefs;preference=uplink_loc;task=input'>[uplink_spawn_loc]</a>"
@@ -1541,22 +1538,22 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				if("age")
 					age = rand(AGE_MIN, AGE_MAX)
 				if("hair")
-					hair_color = random_short_color()
+					hair_color = random_color()
 				if("hair_style")
 					hair_style = random_hair_style(gender)
 				if("facial")
-					facial_hair_color = random_short_color()
+					facial_hair_color = random_color()
 				if("facial_hair_style")
 					facial_hair_style = random_facial_hair_style(gender)
 				if("underwear")
 					underwear = random_underwear(gender)
-					undie_color = random_short_color()
+					undie_color = random_color()
 				if("undershirt")
 					undershirt = random_undershirt(gender)
-					shirt_color = random_short_color()
+					shirt_color = random_color()
 				if("socks")
 					socks = random_socks()
-					socks_color = random_short_color()
+					socks_color = random_color()
 				if(BODY_ZONE_PRECISE_EYES)
 					eye_color = random_eye_color()
 				if("s_tone")
@@ -1681,7 +1678,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				if("undie_color")
 					var/n_undie_color = input(user, "Choose your underwear's color.", "Character Preference", "#[undie_color]") as color|null
 					if(n_undie_color)
-						undie_color = sanitize_hexcolor(n_undie_color)
+						undie_color = n_undie_color
 
 				if("undershirt")
 					var/new_undershirt = input(user, "Choose your character's undershirt:", "Character Preference") as null|anything in GLOB.undershirt_list
@@ -1691,7 +1688,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				if("shirt_color")
 					var/n_shirt_color = input(user, "Choose your undershirt's color.", "Character Preference", "#[shirt_color]") as color|null
 					if(n_shirt_color)
-						shirt_color = sanitize_hexcolor(n_shirt_color)
+						shirt_color = n_shirt_color
 
 				if("socks")
 					var/new_socks = input(user, "Choose your character's socks:", "Character Preference") as null|anything in GLOB.socks_list
@@ -1701,7 +1698,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				if("socks_color")
 					var/n_socks_color = input(user, "Choose your socks' color.", "Character Preference", "#[socks_color]") as color|null
 					if(n_socks_color)
-						socks_color = sanitize_hexcolor(n_socks_color)
+						socks_color = n_socks_color
 
 				if("eyes")
 					var/new_eyes = input(user, "Choose your character's eye colour:", "Character Preference","#"+eye_color) as color|null
@@ -2652,16 +2649,60 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	character.dna.skin_tone_override = use_custom_skin_tone ? skin_tone : null
 	character.hair_style = hair_style
 	character.facial_hair_style = facial_hair_style
-	character.underwear = underwear
-
+	var/obj/item/clothing/underwear/coderwear
+	var/excluded
+	if(underwear && (underwear != "Nude") && GLOB.underwear_list[underwear])
+		var/temp = GLOB.underwear_list[underwear]
+		coderwear = new temp(character)
+		excluded = underwear
+		if(coderwear.has_colors && undie_color)
+			coderwear.overlay_color = undie_color
+	else if(undershirt && (undershirt != "Nude") && GLOB.undershirt_list[undershirt])
+		var/temp = GLOB.undershirt_list[undershirt]
+		coderwear = new temp(character)
+		excluded = undershirt
+		if(coderwear.has_colors && shirt_color)
+			coderwear.overlay_color = shirt_color
+	else if(socks && (socks != "Nude") && GLOB.socks_list[socks])
+		var/temp = GLOB.socks_list[socks]
+		coderwear = new temp(character)
+		excluded = socks
+		if(coderwear.has_colors && socks_color)
+			coderwear.overlay_color = socks_color
+	if(coderwear)
+		character.equip_to_slot_or_del(coderwear, SLOT_W_UNDERWEAR)
 	character.saved_underwear = underwear
-	character.undershirt = undershirt
 	character.saved_undershirt = undershirt
-	character.socks = socks
 	character.saved_socks = socks
 	character.undie_color = undie_color
 	character.shirt_color = shirt_color
 	character.socks_color = socks_color
+	if(coderwear && GLOB.underwear_list.len && istype(coderwear))
+		if(underwear && (underwear != "Nude") && GLOB.underwear_list[underwear])
+			if(!(excluded == underwear))
+				var/temp = GLOB.underwear_list[underwear]
+				var/obj/item/clothing/underwear/U = new temp(character)
+				if(undie_color && U.has_colors)
+					U.overlay_color = undie_color
+				if(!coderwear.attach_underwear(U))
+					qdel(U)
+		if(undershirt && (undershirt != "Nude") && GLOB.undershirt_list[undershirt])
+			if(!(excluded == undershirt))
+				var/temp = GLOB.undershirt_list[undershirt]
+				var/obj/item/clothing/underwear/U = new temp(character)
+				if(shirt_color && U.has_colors)
+					U.overlay_color = shirt_color
+				if(!coderwear.attach_underwear(U))
+					qdel(U)
+		if(socks && (socks != "Nude") && GLOB.socks_list[socks])
+			if(!(excluded == socks))
+				var/temp = GLOB.socks_list[socks]
+				var/obj/item/clothing/underwear/U = new temp(character)
+				if(undie_color && U.has_colors)
+					U.overlay_color = socks_color
+				if(!coderwear.attach_underwear(U))
+					qdel(U)
+		character.update_inv_w_uniform()
 
 	var/datum/species/chosen_species
 	if(!roundstart_checks || (pref_species.id in GLOB.roundstart_races))

@@ -20,32 +20,73 @@
 		else
 			return "000"
 
+/proc/init_underwear()
+	. = TRUE
+	var/list/temp = typesof(/obj/item/clothing/underwear/briefs)
+	//this is probably really fucking dumb
+	//but just put the typepaths of blacklisted items
+	//on the appropriate list.
+	//example of item that should be blacklisted or something:
+	//blood red panties
+	GLOB.blacklisted_underwear_list = list()
+	GLOB.blacklisted_undershirt_list = list()
+	GLOB.blacklisted_socks_list = list()
+	for(var/i in temp)
+		var/obj/item/clothing/underwear/I = new i()
+		if(!(I.type in GLOB.blacklisted_underwear_list))
+			GLOB.underwear_list[I.name] = I.type
+			if(MALE in I.pos_genders)
+				GLOB.underwear_m[I.name] = I.type
+			if(FEMALE in I.pos_genders)
+				GLOB.underwear_f[I.name] = I.type
+	temp = typesof(/obj/item/clothing/underwear/shirt)
+	for(var/i in temp)
+		var/obj/item/clothing/underwear/I = new i()
+		if(!(I.type in GLOB.blacklisted_undershirt_list))
+			GLOB.undershirt_list[I.name] = I.type
+			if(MALE in I.pos_genders)
+				GLOB.undershirt_m[I.name] = I.type
+			if(FEMALE in I.pos_genders)
+				GLOB.undershirt_f[I.name] = I.type
+	temp = typesof(/obj/item/clothing/underwear/socks)
+	for(var/i in temp)
+		var/obj/item/clothing/underwear/I = new i()
+		if(!(I.type in GLOB.blacklisted_socks_list))
+			GLOB.socks_list[I.name] = I.type
+
 /proc/random_underwear(gender)
 	if(!GLOB.underwear_list.len)
-		init_sprite_accessory_subtypes(/datum/sprite_accessory/underwear/bottom, GLOB.underwear_list, GLOB.underwear_m, GLOB.underwear_f)
+		init_underwear()
 	switch(gender)
 		if(MALE)
-			return pick(GLOB.underwear_m)
-		if(FEMALE)
-			return pick(GLOB.underwear_f)
+			if(GLOB.underwear_m.len)
+				return pick(GLOB.underwear_m)
+		else if(FEMALE)
+			if(GLOB.underwear_f.len)
+				return pick(GLOB.underwear_f)
 		else
-			return pick(GLOB.underwear_list)
+			if(GLOB.underwear_list.len)
+				return pick(GLOB.underwear_list)
 
 /proc/random_undershirt(gender)
 	if(!GLOB.undershirt_list.len)
-		init_sprite_accessory_subtypes(/datum/sprite_accessory/underwear/top, GLOB.undershirt_list, GLOB.undershirt_m, GLOB.undershirt_f)
+		init_underwear()
 	switch(gender)
 		if(MALE)
-			return pick(GLOB.undershirt_m)
-		if(FEMALE)
-			return pick(GLOB.undershirt_f)
+			if(GLOB.undershirt_m.len)
+				return pick(GLOB.undershirt_m)
+		else if(FEMALE)
+			if(GLOB.undershirt_f.len)
+				return pick(GLOB.undershirt_f)
 		else
-			return pick(GLOB.undershirt_list)
+			if(GLOB.undershirt_list.len)
+				return pick(GLOB.undershirt_list)
 
 /proc/random_socks()
 	if(!GLOB.socks_list.len)
-		init_sprite_accessory_subtypes(/datum/sprite_accessory/underwear/socks, GLOB.socks_list)
-	return pick(GLOB.socks_list)
+		init_underwear()
+	if(GLOB.socks_list.len)
+		return pick(GLOB.socks_list)
 
 /proc/random_features(intendedspecies, intended_gender)
 	if(!GLOB.tails_list_human.len)
@@ -427,7 +468,7 @@ GLOBAL_LIST_EMPTY(species_list)
 
 		if(needhand)
 			//This might seem like an odd check, but you can still need a hand even when it's empty
-			//i.e the hand is used to pull some item/tool out of the construction
+			//I.e the hand is used to pull some item/tool out of the construction
 			if(!holdingnull)
 				if(!holding)
 					. = 0

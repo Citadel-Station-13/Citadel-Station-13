@@ -46,6 +46,9 @@
 	if(H.w_uniform)
 		H.dropItemToGround(H.w_uniform, TRUE)
 		message = TRUE
+	if(H.w_underwear)
+		H.dropItemToGround(H.underwear, TRUE)
+		message = TRUE
 	if(H.wear_suit)
 		H.dropItemToGround(H.wear_suit, TRUE)
 		message = TRUE

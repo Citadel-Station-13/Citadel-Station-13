@@ -93,7 +93,7 @@
 	H.open_language_menu(usr)
 
 /obj/screen/inventory
-	var/slot_id	// The indentifier for the slot. It has nothing to do with ID cards.
+	var/slot_id	// The identifier for the slot. It has nothing to do with ID cards.
 	var/icon_empty // Icon when empty. For now used only by humans.
 	var/icon_full  // Icon when contains an item. For now used only by humans.
 	var/list/object_overlays = list()

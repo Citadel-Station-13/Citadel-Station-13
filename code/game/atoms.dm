@@ -507,6 +507,9 @@
 	else if(w_uniform)
 		w_uniform.add_blood_DNA(blood_dna, diseases)
 		update_inv_w_uniform()
+	else if(w_underwear)
+		w_underwear.add_blood_DNA(blood_dna, diseases)
+		update_inv_w_underwear()
 	if(gloves)
 		var/obj/item/clothing/gloves/G = gloves
 		G.add_blood_DNA(blood_dna, diseases)

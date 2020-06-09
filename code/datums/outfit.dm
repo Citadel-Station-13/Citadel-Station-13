@@ -2,6 +2,8 @@
 	var/name = "Naked"
 
 	var/uniform = null
+	var/underwear = null
+	var/list/appended_underwear = list()
 	var/suit = null
 	var/toggle_helmet = TRUE
 	var/back = null
@@ -42,6 +44,14 @@
 	//Start with uniform,suit,backpack for additional slots
 	if(uniform)
 		H.equip_to_slot_or_del(new uniform(H),SLOT_W_UNIFORM)
+	if(underwear)
+		var/obj/item/clothing/underwear/U = new underwear(H)
+		H.equip_to_slot_or_del(U, SLOT_W_UNDERWEAR)
+		if(U && !QDELETED(U) && appended_underwear.len)
+			for(var/i in appended_underwear)
+				var/obj/item/I = new i(U)
+				if(!U.attach_underwear(I))
+					qdel(I)
 	if(suit)
 		H.equip_to_slot_or_del(new suit(H),SLOT_WEAR_SUIT)
 	if(back)
@@ -129,6 +139,8 @@
 		H.wear_id.add_fingerprint(H,1)
 	if(H.w_uniform)
 		H.w_uniform.add_fingerprint(H,1)
+	if(H.w_underwear)
+		H.w_underwear.add_fingerprint(H,1)
 	if(H.wear_suit)
 		H.wear_suit.add_fingerprint(H,1)
 	if(H.wear_mask)

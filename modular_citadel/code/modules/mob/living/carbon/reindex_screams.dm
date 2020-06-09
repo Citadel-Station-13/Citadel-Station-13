@@ -19,6 +19,8 @@
 		add_screams(wear_suit.alternate_screams)
 	if(w_uniform)
 		add_screams(w_uniform.alternate_screams)
+	if(w_underwear)
+		add_screams(w_underwear.alternate_screams)
 	if(glasses)
 		add_screams(glasses.alternate_screams)
 	if(gloves)

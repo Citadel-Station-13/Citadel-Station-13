@@ -189,6 +189,11 @@
 		dat += "&nbsp;<A href='?src=[REF(src)];pockets=right'>[(r_store && !(r_store.item_flags & ABSTRACT)) ? "Right (Full)" : "<font color=grey>Right (Empty)</font>"]</A></td></tr>"
 		dat += "<tr><td>&nbsp;&#8627;<B>ID:</B></td><td><A href='?src=[REF(src)];item=[SLOT_WEAR_ID]'>[(wear_id && !(wear_id.item_flags & ABSTRACT)) ? wear_id : "<font color=grey>Empty</font>"]</A></td></tr>"
 
+	if(SLOT_W_UNDERWEAR in obscured)
+		dat += "<tr><td><font color=grey><B>Underwear:</B></font></td><td><font color=grey>Obscured</font></td></tr>"
+	else
+		dat += "<tr><td><B>Underwear:</B></td><td><A href='?src=[REF(src)];item=[SLOT_W_UNDERWEAR]'>[(w_underwear && !(w_underwear.item_flags & ABSTRACT)) ? w_underwear : "<font color=grey>Empty</font>"]</A></td></tr>"
+
 	if(handcuffed)
 		dat += "<tr><td><B>Handcuffed:</B> <A href='?src=[REF(src)];item=[SLOT_HANDCUFFED]'>Remove</A></td></tr>"
 	if(legcuffed)
@@ -536,6 +541,10 @@
 			obscured |= SLOT_W_UNIFORM
 		if(wear_suit.flags_inv & HIDESHOES)
 			obscured |= SLOT_SHOES
+	
+	if(w_uniform)
+		if(w_uniform.flags_inv & HIDEUNDERWEAR)
+			obscured |= SLOT_W_UNDERWEAR
 
 	if(head)
 		if(head.flags_inv & HIDEMASK)

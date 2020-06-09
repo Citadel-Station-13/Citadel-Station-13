@@ -275,6 +275,7 @@ mob/visible_message(message, self_message, blind_message, vision_distance = DEFA
 	if(!slot_priority)
 		slot_priority = list( \
 			SLOT_BACK, SLOT_WEAR_ID,\
+			SLOT_W_UNDERWEAR,\
 			SLOT_W_UNIFORM, SLOT_WEAR_SUIT,\
 			SLOT_WEAR_MASK, SLOT_HEAD, SLOT_NECK,\
 			SLOT_SHOES, SLOT_GLOVES,\

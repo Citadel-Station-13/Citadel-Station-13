@@ -3,8 +3,17 @@
 	desc = "A nicely-crafted wooden dresser. It's filled with lots of undies."
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "dresser"
+	var/list/associated_users = list()
+	var/max_uses_per_user = 3
 	density = TRUE
 	anchored = TRUE
+
+/obj/structure/dresser/examine(mob/user)
+	. = ..()
+	if(associated_users[user])
+		. += "<span class='notice'>You've used \the [src] <b>[associated_users[user]]</b> times, out of a maximum of <b>[max_uses_per_user]</b> uses.</span>"
+	else
+		. += "<span class='notice'>You have yet to use \the [src].</span>"
 
 /obj/structure/dresser/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/wrench))
@@ -21,62 +30,82 @@
 
 /obj/structure/dresser/attack_hand(mob/user)
 	. = ..()
-	if(. || !ishuman(user) || !user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
-		return
-	var/mob/living/carbon/human/H = user
+	var/mob/living/H = user
 
-	if(H.dna && H.dna.species && (NO_UNDERWEAR in H.dna.species.species_traits))
-		to_chat(H, "<span class='warning'>You are not capable of wearing underwear.</span>")
-		return
+	var/list/undergarment_choices = list("Underwear", "Shirt or bra", "Socks", "Color")
 
-	var/list/undergarment_choices = list("Underwear", "Underwear Color", "Undershirt", "Undershirt Color", "Socks", "Socks Color")
-	if(!(GLOB.underwear_list[H.underwear]?.has_color))
-		undergarment_choices -= "Underwear Color"
-	if(!(GLOB.undershirt_list[H.undershirt]?.has_color))
-		undergarment_choices -= "Undershirt Color"
-	if(!(GLOB.socks_list[H.socks]?.has_color))
-		undergarment_choices -= "Socks Color"
-
-	var/choice = input(H, "Underwear, Undershirt, or Socks?", "Changing") as null|anything in undergarment_choices
+	var/choice = input(H, "Color, Underwear, Shirt or bra, or Socks?", "Changing") as null|anything in undergarment_choices
 	if(!H.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 		return
-	var/dye_undie = FALSE
-	var/dye_shirt = FALSE
-	var/dye_socks = FALSE
-	switch(choice)
-		if("Underwear")
-			var/new_undies = input(H, "Select your underwear", "Changing") as null|anything in GLOB.underwear_list
-			if(H.underwear)
-				H.underwear = new_undies
-				H.saved_underwear = new_undies
-				var/datum/sprite_accessory/underwear/bottom/B = GLOB.underwear_list[new_undies]
-				dye_undie = B?.has_color
-		if("Undershirt")
-			var/new_undershirt = input(H, "Select your undershirt", "Changing") as null|anything in GLOB.undershirt_list
-			if(new_undershirt)
-				H.undershirt = new_undershirt
-				H.saved_undershirt = new_undershirt
-				var/datum/sprite_accessory/underwear/top/T = GLOB.undershirt_list[new_undershirt]
-				dye_shirt = T?.has_color
-		if("Socks")
-			var/new_socks = input(H, "Select your socks", "Changing") as null|anything in GLOB.socks_list
-			if(new_socks)
-				H.socks = new_socks
-				H.saved_socks = new_socks
-				var/datum/sprite_accessory/underwear/socks/S = GLOB.socks_list[new_socks]
-				dye_socks = S?.has_color
-	if(dye_undie || choice == "Underwear Color")
-		H.undie_color = recolor_undergarment(H, "underwear", H.undie_color)
-	if(dye_shirt || choice == "Undershirt Color")
-		H.shirt_color = recolor_undergarment(H, "undershirt", H.shirt_color)
-	if(dye_socks || choice == "Socks Color")
-		H.socks_color = recolor_undergarment(H, "socks", H.socks_color)
+	if(!associated_users[user] || (associated_users[user] < max_uses_per_user))
+		switch(choice)
+			if("Underwear")
+				var/choose = input(H, "Select your underwear", "Changing") as null|anything in GLOB.underwear_list
+				if(choose)
+					var/temp = GLOB.underwear_list[choose]
+					var/obj/item/clothing/underwear/U = new temp(get_turf(src))
+					if(U.has_colors)
+						choose = input(H, "Do you want to color the [U]?", "Changing") as null|anything in list("Yes", "No")
+						if(choose == "Yes")
+							choose = input(H, "Choose the new color for the [U]", "Changing") as color
+							U.overlay_color = choose ? choose : initial(U.overlay_color)
+							U.update_icon()
+					if(!associated_users[user])
+						associated_users[user] = 1
+					else
+						associated_users[user]++
+			if("Undershirt")
+				var/choose = input(H, "Select your shirt", "Changing") as null|anything in GLOB.undershirt_list
+				if(choose)
+					var/temp = GLOB.undershirt_list[choose]
+					var/obj/item/clothing/underwear/U = new temp(get_turf(src))
+					if(U.has_colors)
+						choose = input(H, "Do you want to color the [U]?", "Changing") as null|anything in list("Yes", "No")
+						if(choose == "Yes")
+							choose = input(H, "Choose the new color for the [U]", "Changing") as color
+							U.overlay_color = choose ? choose : initial(U.overlay_color)
+							U.update_icon()
+					if(!associated_users[user])
+						associated_users[user] = 1
+					else
+						associated_users[user]++
+			if("Socks")
+				var/choose = input(H, "Select your underwear", "Changing") as null|anything in GLOB.underwear_list
+				if(choose)
+					var/temp = GLOB.underwear_list[choose]
+					var/obj/item/clothing/underwear/U = new temp(get_turf(src))
+					if(U.has_colors)
+						choose = input(H, "Do you want to color the [U]?", "Changing") as null|anything in list("Yes", "No")
+						if(choose == "Yes")
+							choose = input(H, "Choose the new color for the [U]", "Changing") as color
+							U.overlay_color = choose ? choose : initial(U.overlay_color)
+							U.update_icon()
+					if(!associated_users[user])
+						associated_users[user] = 1
+					else
+						associated_users[user]++
+			if("Color")
+				var/list/possible = list()
+				for(var/obj/item/clothing/underwear/U in user)
+					possible[U.name] = U
+				var/choose = input(H, "Select the undergarments you want to color", "Changing") as null|anything in possible
+				if(choose)
+					var/obj/item/clothing/underwear/U = possible[choose]
+					if(U && istype(U) && U.has_colors)
+						choose = input(H, "Reset [U]'s color?", "Changing") as null|anything in list("Yes", "No")
+						if(choose == "Yes")
+							U.overlay_color = initial(U.overlay_color)
+							U.update_icon()
+						else
+							choose = input(H, "Choose the new color for the [U]", "Changing") as color
+							U.overlay_color = choose ? choose : initial(U.overlay_color)
+							U.update_icon()
+						if(!associated_users[user])
+							associated_users[user] = 1
+						else
+							associated_users[user]++
+	else
+		to_chat(user, "<span class='warning'>You've already used the [src] [max_uses_per_user] or more times!</span>")
 
 	add_fingerprint(H)
 	H.update_body(TRUE)
-
-/obj/structure/dresser/proc/recolor_undergarment(mob/living/carbon/human/H, garment_type = "underwear", default_color)
-	var/n_color = input(H, "Choose your [garment_type]'\s color.", "Character Preference", default_color) as color|null
-	if(!n_color || !H.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
-		return default_color
-	return sanitize_hexcolor(n_color, 3, FALSE, default_color)

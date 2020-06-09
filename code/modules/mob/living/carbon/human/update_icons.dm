@@ -150,6 +150,51 @@ There are several things that need to be remembered:
 	apply_overlay(UNIFORM_LAYER)
 	update_mutant_bodyparts()
 
+/mob/living/carbon/human/update_inv_w_underwear()
+	remove_overlay(UNDERWEAR_LAYER)
+
+	if(client && hud_used)
+		var/obj/screen/inventory/inv = hud_used.inv_slots[SLOT_W_UNDERWEAR]
+		inv.update_icon()
+
+	if(istype(w_underwear, /obj/item/clothing/underwear))
+		var/obj/item/clothing/underwear/U = w_underwear
+		U.screen_loc = ui_underwear
+		if(client && hud_used && hud_used.hud_shown)
+			if(hud_used.inventory_shown)
+				client.screen += w_underwear
+		update_observer_view(w_underwear,1)
+
+		if(w_uniform && (w_uniform.flags_inv & HIDEUNDERWEAR))
+			return
+
+		var/alt_worn = U.mob_overlay_icon || 'icons/mob/clothing/underwear.dmi'
+		var/variant_flag = NONE
+
+		if((DIGITIGRADE in dna.species.species_traits) && U.mutantrace_variation & STYLE_DIGITIGRADE && !(U.mutantrace_variation & STYLE_NO_ANTHRO_ICON))
+			alt_worn = U.anthro_mob_worn_overlay || 'icons/mob/clothing/underwear_digi.dmi'
+			variant_flag |= STYLE_DIGITIGRADE
+
+		var/mask
+		if(dna.species.mutant_bodyparts["taur"])
+			var/datum/sprite_accessory/taur/T = GLOB.taur_list[dna.features["taur"]]
+			var/clip_flag = U.mutantrace_variation & T?.hide_legs
+			if(clip_flag)
+				variant_flag |= clip_flag
+				mask = T.alpha_mask_state
+
+		var/mutable_appearance/underwear_overlay
+
+		var/gendered = (dna?.species.sexes && dna.features["body_model"] == FEMALE) ? U.fitted : NO_FEMALE_UNIFORM
+		underwear_overlay = U.build_worn_icon(UNDERWEAR_LAYER, alt_worn, FALSE, gendered, null, variant_flag, FALSE, mask)
+
+		if(OFFSET_UNDERWEAR in dna.species.offset_features)
+			underwear_overlay.pixel_x += dna.species.offset_features[OFFSET_UNDERWEAR][1]
+			underwear_overlay.pixel_y += dna.species.offset_features[OFFSET_UNDERWEAR][2]
+		overlays_standing[UNDERWEAR_LAYER] = underwear_overlay
+
+	apply_overlay(UNDERWEAR_LAYER)
+	update_mutant_bodyparts()
 
 /mob/living/carbon/human/update_inv_wear_id()
 	remove_overlay(ID_LAYER)
@@ -581,7 +626,7 @@ default_icon_file: The icon file to draw states from if no other icon file is sp
 isinhands: If true then mob_overlay_icon is skipped so that default_icon_file is used,
 in this situation default_icon_file is expected to match either the lefthand_ or righthand_ file var
 
-femalueuniform: A value matching a uniform item's fitted var, if this is anything but NO_FEMALE_UNIFORM, we
+femaleuniform: A value matching a uniform item's fitted var, if this is anything but NO_FEMALE_UNIFORM, we
 generate/load female uniform sprites matching all previously decided variables
 
 style_flags: mutant race appearance flags, mostly used for worn_overlays()

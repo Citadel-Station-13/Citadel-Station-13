@@ -156,6 +156,14 @@
 	toggleable_inventory += inv_box
 
 	inv_box = new /obj/screen/inventory()
+	inv_box.name = "underwear"
+	inv_box.icon = ui_style
+	inv_box.slot_id = SLOT_W_UNDERWEAR
+	inv_box.icon_state = "underwear"
+	inv_box.screen_loc = ui_underwear
+	toggleable_inventory += inv_box
+
+	inv_box = new /obj/screen/inventory()
 	inv_box.name = "o_clothing"
 	inv_box.icon = ui_style
 	inv_box.slot_id = SLOT_WEAR_SUIT

@@ -178,6 +178,9 @@
 	if(w_uniform)
 		if(w_uniform.max_heat_protection_temperature && w_uniform.max_heat_protection_temperature >= temperature)
 			thermal_protection_flags |= w_uniform.heat_protection
+	if(w_underwear)
+		if(w_underwear.max_heat_protection_temperature && w_underwear.max_heat_protection_temperature >= temperature)
+			thermal_protection_flags |= w_underwear.heat_protection
 	if(shoes)
 		if(shoes.max_heat_protection_temperature && shoes.max_heat_protection_temperature >= temperature)
 			thermal_protection_flags |= shoes.heat_protection

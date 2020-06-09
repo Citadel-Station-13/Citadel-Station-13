@@ -56,13 +56,6 @@
 /obj/item/organ/genital/proc/is_exposed()
 	if(!owner || genital_flags & (GENITAL_INTERNAL|GENITAL_HIDDEN))
 		return FALSE
-	if(genital_flags & GENITAL_UNDIES_HIDDEN && ishuman(owner))
-		var/mob/living/carbon/human/H = owner
-		if(!(NO_UNDERWEAR in H.dna.species.species_traits))
-			var/datum/sprite_accessory/underwear/top/T = H.hidden_undershirt ? null : GLOB.undershirt_list[H.undershirt]
-			var/datum/sprite_accessory/underwear/bottom/B = H.hidden_underwear ? null : GLOB.underwear_list[H.underwear]
-			if(zone == BODY_ZONE_CHEST ? (T?.covers_chest || B?.covers_chest) : (T?.covers_groin || B?.covers_groin))
-				return FALSE
 	if(genital_flags & GENITAL_THROUGH_CLOTHES)
 		return TRUE
 

@@ -5,7 +5,7 @@
 //	You do not need to raise this if you are adding new values that have sane defaults.
 //	Only raise this value when changing the meaning/format/name/layout of an existing value
 //	where you would want the updater procs below to run
-#define SAVEFILE_VERSION_MAX	32
+#define SAVEFILE_VERSION_MAX	33
 
 /*
 SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Carn
@@ -194,6 +194,11 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	if(current_version < 31)
 		S["wing_color"]			>> features["wings_color"]
 		S["horn_color"]			>> features["horns_color"]
+	
+	if(current_version < 33)
+		undie_color = "FFFFFF"
+		shirt_color = "FFFFFF"
+		socks_color = "FFFFFF"
 
 /datum/preferences/proc/load_path(ckey,filename="preferences.sav")
 	if(!ckey)
@@ -602,12 +607,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 	hair_style					= sanitize_inlist(hair_style, GLOB.hair_styles_list)
 	facial_hair_style			= sanitize_inlist(facial_hair_style, GLOB.facial_hair_styles_list)
-	underwear					= sanitize_inlist(underwear, GLOB.underwear_list)
-	undershirt 					= sanitize_inlist(undershirt, GLOB.undershirt_list)
-	undie_color						= sanitize_hexcolor(undie_color, 3, FALSE, initial(undie_color))
-	shirt_color						= sanitize_hexcolor(shirt_color, 3, FALSE, initial(shirt_color))
-	socks							= sanitize_inlist(socks, GLOB.socks_list)
-	socks_color						= sanitize_hexcolor(socks_color, 3, FALSE, initial(socks_color))
 	age								= sanitize_integer(age, AGE_MIN, AGE_MAX, initial(age))
 	hair_color						= sanitize_hexcolor(hair_color, 3, 0)
 	facial_hair_color				= sanitize_hexcolor(facial_hair_color, 3, 0)

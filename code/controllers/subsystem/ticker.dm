@@ -148,6 +148,8 @@ SUBSYSTEM_DEF(ticker)
 		gametime_offset = rand(0, 23) HOURS
 	else if(CONFIG_GET(flag/shift_time_realtime))
 		gametime_offset = world.timeofday
+	//i didn't know where else to stick this stuff
+	init_underwear()
 	return ..()
 
 /datum/controller/subsystem/ticker/fire()
@@ -603,7 +605,7 @@ SUBSYSTEM_DEF(ticker)
 		if(SHUTTLE_HIJACK)
 			news_message = "During routine evacuation procedures, the emergency shuttle of [station_name()] had its navigation protocols corrupted and went off course, but was recovered shortly after."
 		if(GANG_VICTORY)
-			news_message = "Company officials reaffirmed that sudden deployments of special forces are not in any way connected to rumors of [station_name()] being covered in graffiti."
+			news_message = "Company officials reaffirmed that sudden deployments of special forces are not in any way connected to rumors of [station_name()] being covered in graffitI."
 
 	if(SSblackbox.first_death)
 		var/list/ded = SSblackbox.first_death

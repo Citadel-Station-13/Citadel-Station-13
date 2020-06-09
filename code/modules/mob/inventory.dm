@@ -372,6 +372,8 @@
 		items += wear_suit
 	if(w_uniform)
 		items += w_uniform
+	if(w_underwear)
+		items += w_underwear
 	if(include_pockets)
 		if(l_store)
 			items += l_store

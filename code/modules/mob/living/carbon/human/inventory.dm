@@ -32,6 +32,8 @@
 			return wear_suit
 		if(SLOT_W_UNIFORM)
 			return w_uniform
+		if(SLOT_W_UNDERWEAR)
+			return w_underwear
 		if(SLOT_L_STORE)
 			return l_store
 		if(SLOT_R_STORE)
@@ -56,7 +58,8 @@
 		wear_id,
 		l_store,
 		r_store,
-		w_uniform
+		w_uniform,
+		w_underwear
 		)
 
 /mob/living/carbon/human/proc/get_head_slots()
@@ -126,6 +129,9 @@
 			w_uniform = I
 			update_suit_sensors()
 			update_inv_w_uniform()
+		if(SLOT_W_UNDERWEAR)
+			w_underwear = I
+			update_inv_w_underwear()
 		if(SLOT_L_STORE)
 			l_store = I
 			update_inv_pockets()
@@ -183,6 +189,10 @@
 		update_suit_sensors()
 		if(!QDELETED(src))
 			update_inv_w_uniform()
+	else if(I == w_underwear)
+		w_underwear = null
+		if(!QDELETED(src))
+			update_inv_w_underwear()
 	else if(I == gloves)
 		gloves = null
 		if(!QDELETED(src))

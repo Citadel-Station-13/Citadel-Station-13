@@ -209,6 +209,8 @@
 		H.equip_to_slot_or_del(new master_mob.ears.type, SLOT_EARS)
 	if(master_mob.w_uniform)
 		H.equip_to_slot_or_del(new master_mob.w_uniform.type, SLOT_W_UNIFORM)
+	if(master_mob.w_underwear)
+		H.equip_to_slot_or_del(new master_mob.w_underwear.type, SLOT_W_UNDERWEAR)
 	if(master_mob.shoes)
 		H.equip_to_slot_or_del(new master_mob.shoes.type, SLOT_SHOES)
 	if(master_mob.wear_suit)

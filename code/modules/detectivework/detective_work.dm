@@ -35,6 +35,15 @@
 			fibertext = "Material from a pair of [M.gloves.name]."
 			if(prob(20*item_multiplier) && !(fibertext in suit_fibers))
 				suit_fibers += "Material from a pair of [M.gloves.name]."
+	else if(M.w_underwear)
+		fibertext = "Fibers from \a [M.w_underwear]."
+		if(prob(15*item_multiplier) && !(fibertext in suit_fibers))
+			// "Added fibertext: [fibertext]"
+			suit_fibers += fibertext
+		if(M.gloves)
+			fibertext = "Material from a pair of [M.gloves.name]."
+			if(prob(20*item_multiplier) && !(fibertext in suit_fibers))
+				suit_fibers += "Material from a pair of [M.gloves.name]."
 	else if(M.gloves)
 		fibertext = "Material from a pair of [M.gloves.name]."
 		if(prob(20*item_multiplier) && !(fibertext in suit_fibers))

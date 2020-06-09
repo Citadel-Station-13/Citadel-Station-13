@@ -23,6 +23,7 @@
 #define ITEM_SLOT_HANDS			(1<<14)
 #define ITEM_SLOT_BACKPACK		(1<<15)
 #define ITEM_SLOT_SUITSTORE		(1<<16)
+#define ITEM_SLOT_UNDERWEAR		(1<<17)
 
 //SLOTS
 #define SLOT_BACK			1
@@ -40,12 +41,13 @@
 #define SLOT_SHOES			12
 #define SLOT_WEAR_SUIT		13
 #define SLOT_W_UNIFORM		14
-#define SLOT_L_STORE		15
-#define SLOT_R_STORE		16
-#define SLOT_S_STORE		17
-#define SLOT_IN_BACKPACK	18
-#define SLOT_LEGCUFFED		19
-#define SLOT_GENERC_DEXTROUS_STORAGE	20
+#define SLOT_W_UNDERWEAR	15
+#define SLOT_L_STORE		16
+#define SLOT_R_STORE		17
+#define SLOT_S_STORE		18
+#define SLOT_IN_BACKPACK	19
+#define SLOT_LEGCUFFED		20
+#define SLOT_GENERC_DEXTROUS_STORAGE	21
 
 
 #define SLOTS_AMT			20 // Keep this up to date!
@@ -92,17 +94,18 @@
 #define HIDEGLOVES		(1<<0)
 #define HIDESUITSTORAGE	(1<<1)
 #define HIDEJUMPSUIT	(1<<2)	//these first four are only used in exterior suits
-#define HIDESHOES		(1<<3)
-#define HIDEMASK		(1<<4)	//these last six are only used in masks and headgear.
-#define HIDEEARS		(1<<5)	// (ears means headsets and such)
-#define HIDEEYES		(1<<6)	// Whether eyes and glasses are hidden
-#define HIDEFACE		(1<<7)	// Whether we appear as unknown.
-#define HIDEHAIR		(1<<8)
-#define HIDEFACIALHAIR	(1<<9)
-#define HIDENECK		(1<<10)
-#define HIDETAUR		(1<<11) //gotta hide that snowflake
-#define HIDESNOUT		(1<<12) //or do we actually hide our snoots
-#define HIDEACCESSORY	(1<<13) //hides the jumpsuit accessory.
+#define HIDEUNDERWEAR	(1<<3)
+#define HIDESHOES		(1<<4)
+#define HIDEMASK		(1<<5)	//these last six are only used in masks and headgear.
+#define HIDEEARS		(1<<6)	// (ears means headsets and such)
+#define HIDEEYES		(1<<7)	// Whether eyes and glasses are hidden
+#define HIDEFACE		(1<<8)	// Whether we appear as unknown.
+#define HIDEHAIR		(1<<9)
+#define HIDEFACIALHAIR	(1<<10)
+#define HIDENECK		(1<<11)
+#define HIDETAUR		(1<<12) //gotta hide that snowflake
+#define HIDESNOUT		(1<<13) //or do we actually hide our snoots
+#define HIDEACCESSORY	(1<<14) //hides the jumpsuit accessory.
 
 //bitflags for clothing coverage - also used for limbs
 #define HEAD		(1<<0)

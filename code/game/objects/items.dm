@@ -84,6 +84,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	//Citadel Edit for digitigrade stuff
 	var/mutantrace_variation = NONE //Are there special sprites for specific situations? Don't use this unless you need to.
 
+	var/hide_underwear_examine = FALSE //Does it hide the underwear on examine,  but still display the underwear icons?
 	var/body_parts_covered = 0 //see setup.dm for appropriate bit flags
 	var/gas_transfer_coefficient = 1 // for leaking gas from turf to mask and vice-versa (for masks right now, but at some point, i'd like to include space helmets)
 	var/permeability_coefficient = 1 // for chemicals/diseases
@@ -656,6 +657,8 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 		owner.update_inv_wear_suit()
 	if(flags & ITEM_SLOT_ICLOTHING)
 		owner.update_inv_w_uniform()
+	if(flags & ITEM_SLOT_UNDERWEAR)
+		owner.update_inv_w_underwear()
 	if(flags & ITEM_SLOT_GLOVES)
 		owner.update_inv_gloves()
 	if(flags & ITEM_SLOT_EYES)

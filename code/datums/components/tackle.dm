@@ -253,6 +253,8 @@
 
 		if(isnull(T.wear_suit) && isnull(T.w_uniform)) // who honestly puts all of their effort into tackling a naked guy?
 			defense_mod += 2
+			if(isnull(T.w_underwear))
+				defense_mod += 1
 		if(suit_slot && (istype(suit_slot,/obj/item/clothing/suit/space/hardsuit)))
 			defense_mod += 1
 		if(T.is_shove_knockdown_blocked()) // riot armor and such
