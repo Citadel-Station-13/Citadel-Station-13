@@ -361,7 +361,7 @@
 	icon = 'icons/obj/drinks.dmi'
 	icon_state = "smallbottle"
 	item_state = "bottle"
-	custom_price = 30
+	custom_price = PRICE_CHEAP_AS_FREE
 	list_reagents = list(/datum/reagent/water = 49.5, /datum/reagent/fluorine = 0.5)//see desc, don't think about it too hard
 	custom_materials = list(/datum/material/glass=0)
 	volume = 50
