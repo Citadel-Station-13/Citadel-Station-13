@@ -61268,7 +61268,6 @@
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
 "czQ" = (
-/obj/structure/table/glass,
 /obj/effect/turf_decal/tile/red{
 	dir = 8
 	},
@@ -61284,10 +61283,10 @@
 	dir = 1;
 	network = list("ss13","medbay")
 	},
-/obj/item/healthanalyzer,
 /obj/structure/mirror{
 	pixel_y = -28
 	},
+/obj/machinery/bloodbankgen,
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
 "czR" = (
