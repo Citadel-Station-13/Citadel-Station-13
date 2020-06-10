@@ -124,7 +124,7 @@
 			I.throw_range = max(1, (I.throw_range - 3))
 			if(I.embedding)
 				I.embedding["embed_chance"] = 0
-				I.AddElement(/datum/element/embed, I.embedding)
+				I.updateEmbedding()
 
 		target.add_overlay(plastic_overlay, TRUE)
 		if(!nadeassembly)
@@ -158,7 +158,7 @@
 	shout_syndicate_crap(user)
 	explosion(user,0,2,0) //Cheap explosion imitation because putting prime() here causes runtimes
 	user.gib(1, 1)
-	qdel(src)
+	resolve()
 
 /obj/item/grenade/plastic/update_icon_state()
 	if(nadeassembly)
@@ -210,6 +210,7 @@
 /obj/item/grenade/plastic/c4/prime()
 	if(QDELETED(src))
 		return
+	. = ..()
 	var/turf/location
 	if(target)
 		if(!QDELETED(target))
@@ -221,7 +222,7 @@
 		location = get_turf(src)
 	if(location)
 		explosion(location,0,0,3)
-	qdel(src)
+	resolve()
 
 /obj/item/grenade/plastic/c4/attack(mob/M, mob/user, def_zone)
 	return

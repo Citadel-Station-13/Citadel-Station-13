@@ -220,7 +220,7 @@
 			var/obj/item/I = locate(href_list["embedded_object"]) in L.embedded_objects
 			if(!I || I.loc != src) //no item, no limb, or item is not in limb or in the person anymore
 				return
-			SEND_SIGNAL(src, COMSIG_HUMAN_EMBED_RIP, I, L)
+			SEND_SIGNAL(src, COMSIG_CARBON_EMBED_RIP, I, L)
 			return
 
 		if(href_list["item"])

@@ -178,6 +178,7 @@
 	if(stage != READY)
 		return FALSE
 
+	. = ..()
 	var/list/datum/reagents/reactants = list()
 	for(var/obj/item/reagent_containers/glass/G in beakers)
 		reactants += G.reagents

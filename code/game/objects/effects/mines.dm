@@ -27,6 +27,7 @@
 	s.set_up(3, 1, src)
 	s.start()
 	mineEffect(victim)
+	SEND_SIGNAL(src, COMSIG_MINE_TRIGGERED)
 	triggered = 1
 	qdel(src)
 
@@ -49,6 +50,18 @@
 /obj/effect/mine/stun/mineEffect(mob/living/victim)
 	if(isliving(victim))
 		victim.DefaultCombatKnockdown(stun_time)
+
+/obj/effect/mine/shrapnel
+	name = "shrapnel mine"
+	var/shrapnel_type = /obj/projectile/bullet/shrapnel
+	var/shrapnel_magnitude = 3
+
+/obj/effect/mine/shrapnel/mineEffect(mob/victim)
+	AddComponent(/datum/component/pellet_cloud, projectile_type=shrapnel_type, magnitude=shrapnel_magnitude)
+
+/obj/effect/mine/shrapnel/sting
+	name = "stinger mine"
+	shrapnel_type = /obj/projectile/bullet/pellet/stingball
 
 /obj/effect/mine/kickmine
 	name = "kick mine"

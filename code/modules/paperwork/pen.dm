@@ -203,7 +203,7 @@
 		throwforce = initial(throwforce)
 		playsound(user, 'sound/weapons/saberoff.ogg', 5, 1)
 		to_chat(user, "<span class='warning'>[src] can now be concealed.</span>")
-		RemoveElement(/datum/element/embed, embedding)
+		updateEmbedding()
 	else
 		on = TRUE
 		force = 18
@@ -214,7 +214,7 @@
 		throwforce = 35
 		playsound(user, 'sound/weapons/saberon.ogg', 5, 1)
 		to_chat(user, "<span class='warning'>[src] is now active.</span>")
-		AddElement(/datum/element/embed, embedding)
+		updateEmbedding()
 	update_icon()
 
 /obj/item/pen/edagger/update_icon_state()

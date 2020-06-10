@@ -18,10 +18,30 @@
 	var/display_timer = 1
 	var/clumsy_check = GRENADE_CLUMSY_FUMBLE
 	var/sticky = FALSE
+	// I moved the explosion vars and behavior to base grenades because we want all grenades to call [/obj/item/grenade/proc/prime] so we can send COMSIG_GRENADE_PRIME
+	///how big of a devastation explosion radius on prime
+	var/ex_dev = 0
+	///how big of a heavy explosion radius on prime
+	var/ex_heavy = 0
+	///how big of a light explosion radius on prime
+	var/ex_light = 0
+	///how big of a flame explosion radius on prime
+	var/ex_flame = 0
+
+	// dealing with creating a [/datum/component/pellet_cloud] on prime
+	/// if set, will spew out projectiles of this type
+	var/shrapnel_type
+	/// the higher this number, the more projectiles are created as shrapnel
+	var/shrapnel_radius
+	var/shrapnel_initialized
 
 /obj/item/grenade/suicide_act(mob/living/carbon/user)
 	user.visible_message("<span class='suicide'>[user] primes [src], then eats it! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	if(shrapnel_type && shrapnel_radius)
+		shrapnel_initialized = TRUE
+		AddComponent(/datum/component/pellet_cloud, projectile_type=shrapnel_type, magnitude=shrapnel_radius)
 	playsound(src, 'sound/items/eatfood.ogg', 50, 1)
+	SEND_SIGNAL(src, COMSIG_GRENADE_ARMED, det_time, delayoverride)
 	preprime(user, det_time)
 	user.transferItemToLoc(src, user, TRUE)//>eat a grenade set to 5 seconds >rush captain
 	sleep(det_time)//so you dont die instantly
@@ -96,6 +116,14 @@
 	var/turf/T = get_turf(src)
 	log_game("Grenade detonation at [AREACOORD(T)], location [loc]")
 
+	if(shrapnel_type && shrapnel_radius && !shrapnel_initialized) // add a second check for adding the component in case whatever triggered the grenade went straight to prime (badminnery for example)
+		shrapnel_initialized = TRUE
+		AddComponent(/datum/component/pellet_cloud, projectile_type=shrapnel_type, magnitude=shrapnel_radius)
+
+	SEND_SIGNAL(src, COMSIG_GRENADE_PRIME)
+	if(ex_dev || ex_heavy || ex_light || ex_flame)
+		explosion(loc, ex_dev, ex_heavy, ex_light, flame_range = ex_flame)
+
 /obj/item/grenade/proc/update_mob()
 	if(ismob(loc))
 		var/mob/M = loc
@@ -137,3 +165,13 @@
 
 /obj/item/proc/grenade_prime_react(obj/item/grenade/nade)
 	return
+
+/// Don't call qdel() directly on the grenade after it booms, call this instead so it can still resolve its pellet_cloud component if it has shrapnel, then the component will qdel it
+
+
+
+/obj/item/grenade/proc/resolve()
+	if(shrapnel_type)
+		moveToNullspace()
+	else
+		qdel(src)

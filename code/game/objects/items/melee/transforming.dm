@@ -54,7 +54,7 @@
 		if(attack_verb_on.len)
 			attack_verb = attack_verb_on
 		if(embedding)
-			AddElement(/datum/element/embed, embedding)
+			updateEmbedding()
 		icon_state = icon_state_on
 		w_class = w_class_on
 	else
@@ -65,7 +65,7 @@
 		if(attack_verb_off.len)
 			attack_verb = attack_verb_off
 		if(embedding)
-			RemoveElement(/datum/element/embed, embedding)
+			updateEmbedding()
 		icon_state = initial(icon_state)
 		w_class = initial(w_class)
 		total_mass = initial(total_mass)
