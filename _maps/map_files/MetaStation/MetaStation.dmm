@@ -54539,6 +54539,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
+/obj/machinery/holopad,
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/front_office)
 "civ" = (
@@ -56079,6 +56080,7 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/machinery/holopad,
 /turf/open/floor/plasteel/white,
 /area/science/research)
 "cmK" = (
@@ -57316,6 +57318,7 @@
 	},
 /obj/effect/landmark/start/medical_doctor,
 /obj/effect/landmark/event_spawn,
+/obj/machinery/holopad,
 /turf/open/floor/plasteel/white,
 /area/medical/patients_rooms)
 "cpW" = (
@@ -57397,6 +57400,7 @@
 /obj/structure/chair{
 	dir = 4
 	},
+/obj/machinery/holopad,
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/heads/cmo)
 "cql" = (
@@ -60129,6 +60133,7 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/machinery/holopad,
 /turf/open/floor/plasteel/white,
 /area/medical/storage)
 "cxx" = (
@@ -60339,6 +60344,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
+/obj/machinery/holopad,
 /turf/open/floor/plasteel/white/side{
 	dir = 4
 	},
@@ -60760,6 +60766,7 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/red,
+/obj/machinery/holopad,
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
 "cyO" = (
@@ -62469,6 +62476,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
+/obj/machinery/holopad,
 /turf/open/floor/plasteel/white,
 /area/medical/exam_room)
 "cCm" = (
@@ -63155,6 +63163,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 5
 	},
+/obj/machinery/holopad,
 /turf/open/floor/plasteel/dark,
 /area/medical/genetics/cloning)
 "cDT" = (
@@ -63633,6 +63642,7 @@
 	dir = 4
 	},
 /obj/effect/landmark/event_spawn,
+/obj/machinery/holopad,
 /turf/open/floor/plasteel/white,
 /area/medical/genetics)
 "cET" = (
@@ -74902,6 +74912,10 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
+"etf" = (
+/obj/machinery/holopad,
+/turf/open/floor/plasteel/white,
+/area/medical/medbay/front_office)
 "etr" = (
 /obj/machinery/vr_sleeper,
 /turf/open/floor/plasteel,
@@ -80064,6 +80078,17 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
+"swk" = (
+/obj/effect/turf_decal/stripes/line,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/machinery/holopad,
+/turf/open/floor/plasteel,
+/area/medical/chemistry)
 "sxn" = (
 /obj/structure/disposalpipe/segment,
 /obj/structure/cable/yellow{
@@ -80261,6 +80286,7 @@
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 1
 	},
+/obj/machinery/holopad,
 /turf/open/floor/plasteel/white/side{
 	dir = 8
 	},
@@ -80676,6 +80702,12 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/solars/starboard/aft)
+"tSy" = (
+/obj/machinery/holopad,
+/turf/open/floor/plasteel/cafeteria{
+	dir = 5
+	},
+/area/medical/medbay/zone2)
 "tTj" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -82019,6 +82051,13 @@
 /obj/machinery/door/firedoor,
 /turf/open/floor/plasteel,
 /area/science/xenobiology)
+"wDY" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/machinery/holopad,
+/turf/open/floor/plasteel/white,
+/area/medical/virology)
 "wFH" = (
 /obj/structure/cable/yellow{
 	icon_state = "1-2"
@@ -101585,7 +101624,7 @@ tXp
 cBR
 iwR
 cDJ
-cEM
+wDY
 cFI
 cGA
 cBR
@@ -103112,7 +103151,7 @@ clc
 dwj
 cnt
 coF
-crq
+tSy
 crq
 csq
 dwj
@@ -105416,7 +105455,7 @@ bYU
 cab
 cbM
 cds
-cew
+swk
 cfM
 cgY
 cil
@@ -108765,7 +108804,7 @@ cjU
 clv
 cmB
 cnJ
-crE
+etf
 crE
 crE
 cKJ
