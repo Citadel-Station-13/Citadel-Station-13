@@ -20,10 +20,10 @@
 				/obj/item/clothing/under/misc/gear_harness = 10,
 				/obj/item/dildo/custom = 5,
 				/obj/item/electropack/shockcollar = 3,
-				/obj/item/assembly/signaler = 3
-				/obj/item/clothing/under/shorts/polychromic/pantsu
-				/obj/item/clothing/under/misc/poly_bottomless
-				/obj/item/clothing/under/misc/poly_tanktop
+				/obj/item/assembly/signaler = 3,
+				/obj/item/clothing/under/shorts/polychromic/pantsu,
+				/obj/item/clothing/under/misc/poly_bottomless,
+				/obj/item/clothing/under/misc/poly_tanktop,
 				/obj/item/clothing/under/misc/poly_tanktop/female
 				)
 	contraband = list(
