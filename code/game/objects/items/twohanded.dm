@@ -582,7 +582,7 @@
 	force_wielded = 18
 	throwforce = 20
 	throw_speed = 4
-	embedding = list("embedded_impact_pain_multiplier" = 1.5, "embed_chance" = 65)
+	embedding = list("impact_pain_mult" = 3)
 	armour_penetration = 10
 	custom_materials = list(/datum/material/iron=1150, /datum/material/glass=2075)
 	hitsound = 'sound/weapons/bladeslice.ogg'

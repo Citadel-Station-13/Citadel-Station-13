@@ -124,9 +124,12 @@
 			return TRUE
 		var/dtype = BRUTE
 		var/volume = I.get_volume_by_throwforce_and_or_w_class()
-		SEND_SIGNAL(I, COMSIG_MOVABLE_IMPACT_ZONE, src, impacting_zone)
-		dtype = I.damtype
+		var/nosell_hit = SEND_SIGNAL(I, COMSIG_MOVABLE_IMPACT_ZONE, src, zone, throwingdatum) // TODO: find a better way to handle hitpush and skipcatch for humans
+		if(nosell_hit)
+			skipcatch = TRUE
+			hitpush = FALSE
 
+		dtype = I.damtype
 		if (I.throwforce > 0) //If the weapon's throwforce is greater than zero...
 			if (I.throwhitsound) //...and throwhitsound is defined...
 				playsound(loc, I.throwhitsound, volume, 1, -1) //...play the weapon's throwhitsound.

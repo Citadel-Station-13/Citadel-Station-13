@@ -4,6 +4,9 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 // if true, everyone item when created will have its name changed to be
 // more... RPG-like.
 
+GLOBAL_VAR_INIT(stickpocalypse, FALSE) // if true, all non-embeddable items will be able to harmlessly stick to people when thrown
+GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to embed in people, takes precedence over stickpocalypse
+
 /obj/item
 	name = "item"
 	icon = 'icons/obj/items_and_weapons.dmi'
@@ -104,7 +107,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 
 	mouse_drag_pointer = MOUSE_ACTIVE_POINTER //the icon to indicate this object is being dragged
 
-	var/datum/embedding_behavior/embedding
+	var/list/embedding = NONE
 
 	var/flags_cover = 0 //for flags such as GLASSESCOVERSEYES
 	var/heat = 0
@@ -152,16 +155,13 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 
 /obj/item/Initialize()
 
-	if (attack_verb)
+	if(attack_verb)
 		attack_verb = typelist("attack_verb", attack_verb)
 
 	. = ..()
 	for(var/path in actions_types)
 		new path(src)
 	actions_types = null
-
-	if(GLOB.rpg_loot_items)
-		AddComponent(/datum/component/fantasy)
 
 	if(force_string)
 		item_flags |= FORCE_STRING_OVERRIDE
@@ -172,16 +172,6 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 		if(damtype == "brute")
 			hitsound = "swing_hit"
 
-	if (!embedding)
-		embedding = getEmbeddingBehavior()
-	else if (islist(embedding))
-		embedding = getEmbeddingBehavior(arglist(embedding))
-	else if (!istype(embedding, /datum/embedding_behavior))
-		stack_trace("Invalid type [embedding.type] found in .embedding during /obj/item Initialize()")
-
-	if(sharpness) //give sharp objects butchering functionality, for consistency
-		AddComponent(/datum/component/butchering, 80 * toolspeed)
-
 /obj/item/Destroy()
 	item_flags &= ~DROPDEL	//prevent reqdels
 	if(ismob(loc))
@@ -190,6 +180,27 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	for(var/X in actions)
 		qdel(X)
 	return ..()
+
+/obj/item/ComponentInitialize()
+	. = ..()
+
+	// this proc says it's for initializing components, but we're initializing elements too because it's you and me against the world >:)
+	if(embedding)
+		AddElement(/datum/element/embed, embedding)
+	else if(GLOB.embedpocalypse)
+		embedding = EMBED_POINTY
+		AddElement(/datum/element/embed, embedding)
+		name = "pointy [name]"
+	else if(GLOB.stickpocalypse)
+		embedding = EMBED_HARMLESS
+		AddElement(/datum/element/embed, embedding)
+		name = "sticky [name]"
+
+	if(GLOB.rpg_loot_items)
+		AddComponent(/datum/component/fantasy)
+
+	if(sharpness) //give sharp objects butchering functionality, for consistency
+		AddComponent(/datum/component/butchering, 80 * toolspeed)
 
 /obj/item/proc/check_allowed_items(atom/target, not_inside, target_self)
 	if(((src in target) && !target_self) || (!isturf(target.loc) && !isturf(target) && not_inside))
@@ -928,3 +939,11 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	. = ..()
 	if(var_name == NAMEOF(src, slowdown))
 		set_slowdown(var_value)			//don't care if it's a duplicate edit as slowdown'll be set, do it anyways to force normal behavior.
+
+/**
+  * Does the current embedding var meet the criteria for being harmless? Namely, does it have a pain multiplier and jostle pain mult of 0? If so, return true.
+  *
+  */
+/obj/item/proc/is_embed_harmless()
+	if(embedding)
+		return (!embedding["pain_mult"] && !embedding["jostle_pain_mult"])
