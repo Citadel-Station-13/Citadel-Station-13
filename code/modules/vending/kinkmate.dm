@@ -35,8 +35,8 @@
 				/obj/item/clothing/under/dress/corset = 2
 				)
 	refill_canister = /obj/item/vending_refill/kink
-	default_price = 80
-	extra_price = 250
+	default_price = PRICE_CHEAP
+	extra_price = PRICE_BELOW_NORMAL
 	payment_department = NO_FREEBIES
 
 /obj/item/vending_refill/kink

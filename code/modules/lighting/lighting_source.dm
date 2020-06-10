@@ -9,7 +9,7 @@
 	var/turf/pixel_turf      // The turf the top_atom appears to over.
 	var/light_power    // Intensity of the emitter light.
 	var/light_range      // The range of the emitted light.
-	var/light_color    // The colour of the light, string, decomposed by parse_light_color()
+	var/light_color    // The colour of the light, string, decomposed by PARSE_LIGHT_COLOR()
 
 	// Variables for keeping track of the colour.
 	var/lum_r
@@ -48,11 +48,9 @@
 	light_range = source_atom.light_range
 	light_color = source_atom.light_color
 
-	parse_light_color()
+	PARSE_LIGHT_COLOR(src)
 
 	update()
-
-	return ..()
 
 /datum/light_source/Destroy(force)
 	remove_lum()
@@ -98,17 +96,6 @@
 // Will cause the light source to recalculate turfs that were removed or added to visibility only.
 /datum/light_source/proc/vis_update()
 	EFFECT_UPDATE(LIGHTING_VIS_UPDATE)
-
-// Decompile the hexadecimal colour into lumcounts of each perspective.
-/datum/light_source/proc/parse_light_color()
-	if (light_color)
-		lum_r = GetRedPart   (light_color) / 255
-		lum_g = GetGreenPart (light_color) / 255
-		lum_b = GetBluePart  (light_color) / 255
-	else
-		lum_r = 1
-		lum_g = 1
-		lum_b = 1
 
 // Macro that applies light to a new corner.
 // It is a macro in the interest of speed, yet not having to copy paste it.
@@ -224,7 +211,7 @@
 
 	if (source_atom.light_color != light_color)
 		light_color = source_atom.light_color
-		parse_light_color()
+		PARSE_LIGHT_COLOR(src)
 		update = TRUE
 
 	else if (applied_lum_r != lum_r || applied_lum_g != lum_g || applied_lum_b != lum_b)
@@ -241,17 +228,16 @@
 	var/list/turf/turfs                    = list()
 	var/thing
 	var/turf/T
+
 	if (source_turf)
 		var/oldlum = source_turf.luminosity
 		source_turf.luminosity = CEILING(light_range, 1)
 		for(T in view(CEILING(light_range, 1), source_turf))
 			turfs += T
-			if(!IS_DYNAMIC_LIGHTING(T) && !T.light_sources)
+			if((!IS_DYNAMIC_LIGHTING(T) && !T.light_sources) || T.has_opaque_atom )
 				continue
 			if(!T.lighting_corners_initialised)
 				T.generate_missing_corners()
-			if(T.has_opaque_atom)
-				continue
 			corners[T.lc_topright] = 0
 			corners[T.lc_bottomright] = 0
 			corners[T.lc_bottomleft] = 0

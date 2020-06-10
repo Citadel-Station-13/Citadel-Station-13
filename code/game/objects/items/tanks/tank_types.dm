@@ -93,10 +93,12 @@
 		F.update_icon()
 	else
 		return ..()
+//Makes empty oxygen tanks spawn without gas
+/obj/item/tank/internals/plasma/empty/populate_gas()
+	return
 
 /obj/item/tank/internals/plasma/full/populate_gas()
 	air_contents.gases[/datum/gas/plasma] = (10*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C)
-
 
 /*
  * Plasmaman Plasma Tank
@@ -130,6 +132,7 @@
 	air_contents.gases[/datum/gas/plasma] = (10*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C)
 	return
 
+//makes empty plasma tanks spawn without gas.
 /obj/item/tank/internals/plasmaman/belt/empty/populate_gas()
 	return
 
