@@ -182,7 +182,7 @@
 	attack_verb = list("slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut") //these wont show up if the pen is off
 	sharpness = IS_SHARP
 	var/on = FALSE
-	var/embedding = list(embed_chance = EMBED_CHANCE)
+	embedding = list(embed_chance = EMBED_CHANCE)
 
 /obj/item/pen/edagger/ComponentInitialize()
 	. = ..()

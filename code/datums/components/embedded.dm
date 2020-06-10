@@ -305,15 +305,3 @@
 	weapon.invisibility = initial(weapon.invisibility)
 	weapon.visible_message("<span class='notice'>[weapon] falls loose from [parent].</span>")
 	qdel(src)
-	SHOULD_CALL_PARENT(1)
-	if(type == /datum/element)
-		return ELEMENT_INCOMPATIBLE
-	SEND_SIGNAL(target, COMSIG_ELEMENT_ATTACH, src)
-	if(element_flags & ELEMENT_DETACH)
-		RegisterSignal(target, COMSIG_PARENT_QDELETING, .proc/Detach, override = TRUE)
-
-/// Deactivates the functionality defines by the element on the given datum
-/datum/element/proc/Detach(datum/source, force)
-	SEND_SIGNAL(source, COMSIG_ELEMENT_DETACH, src)
-	SHOULD_CALL_PARENT(1)
-	UnregisterSignal(source, COMSIG_PARENT_QDELETING)
