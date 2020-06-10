@@ -189,6 +189,14 @@
 	begin_day = 22
 	begin_month = APRIL
 
+/datum/holiday/lesbianvisibility
+	name = "Lesbian Visibility Day"
+	begin_day = 26
+	begin_month = APRIL
+
+/datum/holiday/lesbianvisibility/greet()
+	return "Today is Lesbian Visibility Day!"
+
 /datum/holiday/labor
 	name = "Labor Day"
 	begin_day = 1
@@ -211,14 +219,6 @@
 
 /datum/holiday/bee/getStationPrefix()
 	return pick("Bee","Honey","Hive","Africanized","Mead","Buzz")
-
-/datum/holiday/lesbianvisibility
-	name = "Lesbian Visibility Day"
-	begin_day = 24
-	begin_month = MAY
-
-/datum/holiday/lesbianvisibility/greet()
-	return "Today is Lesbian Visibility Day!"
 
 /datum/holiday/summersolstice
 	name = "Summer Solstice"
