@@ -14,27 +14,25 @@ export const VrSleeper = (props, context) => {
             </Box>
           </Section>
         )}
-         {...!!data.vr_avatar && (
-           <Section title={"Virtual Avatar"}>
-             <ProgressBar
-               title={"Avatar Status: "}
-               value={data.vr_avatar.maxhealth / 100}
-               ranges={{
-                 good: [90, Infinity],
-                 average: [70, 89],
-                 bad: [-Infinity, 69],
-               }} />
-           </Section>
-         ) && (
-           <Section>
-             <Box>
-               No Avatar detected
-             </Box>
-           </Section>
-         )
-        }
-        <Section
-          title="VR Commands">
+        {!!data.vr_avatar && (
+          <Section title={"Virtual Avatar"}>
+            <ProgressBar
+              title={"Avatar Status: "}
+              value={data.vr_avatar.maxhealth / 100}
+              ranges={{
+                good: [90, Infinity],
+                average: [70, 89],
+                bad: [-Infinity, 69],
+              }} />
+          </Section>
+        ) && (
+          <Section>
+            <Box>
+              No Avatar detected
+            </Box>
+          </Section>
+        )}
+        <Section title="VR Commands">
           <Button
             content={data.toggle_open
               ? 'Close VR Sleeper'
@@ -55,13 +53,16 @@ export const VrSleeper = (props, context) => {
             )
           || ("You need to be inside the VR sleeper to connect to VR")}
           </Section>
-           {!!data.vr_avatar && (
-          <Button
-               content={"Delete VR avatar"}
-               icon={'recycle'}
-               onClick={() => act('delete_avatar')} />
-           )}
-         </Section>
+          {!!data.vr_avatar && (
+            <Button
+              content={"Delete VR avatar"}
+              icon={'recycle'}
+              onClick={() => {
+                act('delete_avatar');
+                act('tgui:update');
+              }} />
+          )}
+        </Section>
       </Window.Content>
     </Window>
   );
