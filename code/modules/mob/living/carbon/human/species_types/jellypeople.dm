@@ -459,7 +459,7 @@
 
 /datum/action/innate/slime_change/proc/change_form()
 	var/mob/living/carbon/human/H = owner
-	var/select_alteration = input(owner, "Select what part of your form to alter", "Form Alteration", "cancel") in list("Body Color","Hair Style", "Genitals", "Tail", "Snout", "Markings", "Ears", "Taur body", "Penis", "Vagina", "Penis Length", "Breast Size", "Breast Shape", "Cancel")
+	var/select_alteration = input(owner, "Select what part of your form to alter", "Form Alteration", "cancel") in list("Body Color", "Hair Style", "Hair Color", "Genitals", "Tail", "Snout", "Markings", "Ears", "Taur body", "Penis", "Vagina", "Penis Length", "Breast Size", "Breast Shape", "Cancel")
 
 	if(select_alteration == "Body Color")
 		var/new_color = input(owner, "Choose your skin color:", "Race change","#"+H.dna.features["mcolor"]) as color|null
@@ -482,7 +482,18 @@
 		if(new_style)
 			H.hair_style = new_style
 			H.update_hair()
-	else if (select_alteration == "Genitals")
+	else if(select_alteration == "Hair Color")
+		var/new_hair_color = input(H, "Choose your hair color", "Hair Color","#"+H.hair_color) as color|null
+		if(new_hair_color)
+			H.hair_color = sanitize_hexcolor(new_hair_color)
+			H.dna.update_ui_block(DNA_HAIR_COLOR_BLOCK)
+		if(H.gender == "male")
+			var/new_face_color = input(H, "Choose your facial hair color", "Hair Color","#"+H.facial_hair_color) as color|null
+			if(new_face_color)
+				H.facial_hair_color = sanitize_hexcolor(new_face_color)
+				H.dna.update_ui_block(DNA_FACIAL_HAIR_COLOR_BLOCK)
+		H.update_hair()
+	else if(select_alteration == "Genitals")
 		var/operation = input("Select organ operation.", "Organ Manipulation", "cancel") in list("add sexual organ", "remove sexual organ", "cancel")
 		switch(operation)
 			if("add sexual organ")
