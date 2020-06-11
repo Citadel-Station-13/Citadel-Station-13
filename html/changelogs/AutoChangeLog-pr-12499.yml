@@ -1,0 +1,7 @@
+author: "EmeraldSundisk"
+delete-after: True
+changes: 
+  - tweak: "The Detective's Office has been commandeered in order to serve a Head of Security. Detectives will find their new office within starboard maintenance."
+  - rscadd: "Adds the Head of Security's standard equipment to their new office."
+  - tweak: "Slight adjustment/expansion to the main security department"
+  - rscadd: "Additional maintenance work"
