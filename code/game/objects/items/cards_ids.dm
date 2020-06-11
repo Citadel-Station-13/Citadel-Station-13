@@ -187,6 +187,15 @@
 		if(ID_LOCKED_BANK_ACCOUNT)
 			registered_account = new /datum/bank_account/remote/non_transferable(pick(GLOB.redacted_strings))
 
+/obj/item/card/id/Destroy()
+	if(ID_LOCKED_BANK_ACCOUNT)
+		QDEL_NULL(registered_account)
+	else
+		registered_account = null
+	if(my_store)
+		my_store.my_card = null
+		my_store = null
+	return ..()
 
 /obj/item/card/id/vv_edit_var(var_name, var_value)
 	. = ..()
