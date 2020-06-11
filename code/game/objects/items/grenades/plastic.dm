@@ -207,7 +207,7 @@
 	else
 		return ..()
 
-/obj/item/grenade/c4/prime(mob/living/lanced_by)
+/obj/item/grenade/plastic/c4/prime(mob/living/lanced_by)
 	if(QDELETED(src))
 		return
 	. = ..()
