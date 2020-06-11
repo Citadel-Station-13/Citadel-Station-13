@@ -5,19 +5,21 @@
 	anchored = TRUE
 	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "uglymine"
-	var/triggered = 0
+	/// We manually check to see if we've been triggered in case multiple atoms cross us in the time between the mine being triggered and it actually deleting, to avoid a race condition with multiple detonations
+	var/triggered = FALSE
 
 /obj/effect/mine/proc/mineEffect(mob/victim)
 	to_chat(victim, "<span class='danger'>*click*</span>")
 
-/obj/effect/mine/Crossed(AM as mob|obj)
-	if(isturf(loc))
-		if(ismob(AM))
-			var/mob/MM = AM
-			if(!(MM.movement_type & FLYING))
-				triggermine(AM)
-		else
-			triggermine(AM)
+/obj/effect/mine/Crossed(atom/movable/AM)
+	if(triggered || !isturf(loc))
+		return
+	. = ..()
+
+	if(AM.movement_type & FLYING)
+		return
+
+	triggermine(AM)
 
 /obj/effect/mine/proc/triggermine(mob/victim)
 	if(triggered)
@@ -31,6 +33,9 @@
 	triggered = 1
 	qdel(src)
 
+/obj/effect/mine/take_damage(damage_amount, damage_type, damage_flag, sound_effect, attack_dir)
+	. = ..()
+	triggermine()
 
 /obj/effect/mine/explosive
 	name = "explosive mine"
@@ -118,7 +123,7 @@
 /obj/effect/mine/pickup/triggermine(mob/victim)
 	if(triggered)
 		return
-	triggered = 1
+	triggered = TRUE
 	invisibility = INVISIBILITY_ABSTRACT
 	mineEffect(victim)
 	qdel(src)
