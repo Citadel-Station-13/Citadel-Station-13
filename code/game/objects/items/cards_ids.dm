@@ -188,7 +188,7 @@
 			registered_account = new /datum/bank_account/remote/non_transferable(pick(GLOB.redacted_strings))
 
 /obj/item/card/id/Destroy()
-	if(ID_LOCKED_BANK_ACCOUNT)
+	if(bank_support == ID_LOCKED_BANK_ACCOUNT)
 		QDEL_NULL(registered_account)
 	else
 		registered_account = null
