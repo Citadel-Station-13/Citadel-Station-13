@@ -667,7 +667,7 @@
 		force_wielded = 19
 		force_unwielded = 11
 		throwforce = 21
-		embedding = getEmbeddingBehavior(embed_chance = 75, embedded_pain_multiplier = 1.5) //plasmaglass spears are sharper
+		embedding = list(embed_chance = 75, pain_mult = 1.5) //plasmaglass spears are sharper
 		icon_prefix = "spearplasma"
 	qdel(tip)
 	var/obj/item/twohanded/spear/S = locate() in parts_list
@@ -682,7 +682,7 @@
 	if(G)
 		explosive = G
 		name = "explosive lance"
-		embedding = getEmbeddingBehavior(embed_chance = 0, embedded_pain_multiplier = 1)//elances should not be embeddable
+		embedding = list(embed_chance = 0, pain_mult = 1)//elances should not be embeddable
 		desc = "A makeshift spear with [G] attached to it."
 	update_icon()
 

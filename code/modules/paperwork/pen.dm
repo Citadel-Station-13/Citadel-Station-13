@@ -210,7 +210,7 @@
 		w_class = WEIGHT_CLASS_NORMAL
 		name = "energy dagger"
 		hitsound = 'sound/weapons/blade1.ogg'
-		embedding = getEmbeddingBehavior(embed_chance = 100, embedded_fall_chance = 0) //rule of cool
+		embedding = list(embed_chance = 100, fall_chance = 0) //rule of cool
 		throwforce = 35
 		playsound(user, 'sound/weapons/saberon.ogg', 5, 1)
 		to_chat(user, "<span class='warning'>[src] is now active.</span>")

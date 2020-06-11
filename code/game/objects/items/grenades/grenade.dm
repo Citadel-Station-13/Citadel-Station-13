@@ -41,7 +41,7 @@
 		shrapnel_initialized = TRUE
 		AddComponent(/datum/component/pellet_cloud, projectile_type=shrapnel_type, magnitude=shrapnel_radius)
 	playsound(src, 'sound/items/eatfood.ogg', 50, 1)
-	SEND_SIGNAL(src, COMSIG_GRENADE_ARMED, det_time, delayoverride)
+	SEND_SIGNAL(src, COMSIG_GRENADE_ARMED, det_time)
 	preprime(user, det_time)
 	user.transferItemToLoc(src, user, TRUE)//>eat a grenade set to 5 seconds >rush captain
 	sleep(det_time)//so you dont die instantly

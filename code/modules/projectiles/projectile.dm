@@ -303,9 +303,9 @@
 	beam_segments[beam_index] = null
 
 /obj/item/projectile/Bump(atom/A)
+	var/datum/point/pcache = trajectory.copy_to()
 	var/turf/T = get_turf(A)
 	if(trajectory && ricochets < ricochets_max && check_ricochet_flag(A) && check_ricochet(A))
-		var/datum/point/pcache = trajectory.copy_to()
 		ricochets++
 		if(A.handle_ricochet(src))
 			on_ricochet(A)
@@ -391,7 +391,7 @@
 		return T
 	//Returns null if nothing at all was found.
 
-/obj/projectile/proc/check_ricochet(atom/A)
+/obj/item/projectile/proc/check_ricochet(atom/A)
 	var/chance = ricochet_chance * A.ricochet_chance_mod
 	if(firer && HAS_TRAIT(firer, TRAIT_NICE_SHOT))
 		chance += NICE_SHOT_RICOCHET_BONUS

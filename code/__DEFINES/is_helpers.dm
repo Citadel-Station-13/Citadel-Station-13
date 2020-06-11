@@ -181,7 +181,7 @@ GLOBAL_LIST_INIT(turfs_without_ground, typecacheof(list(
 
 #define islandmine(A) (istype(A, /obj/effect/mine))
 
-#define isammocasing(A) (istype(A, /obj/i
+#define isammocasing(A) (istype(A, /obj/item/ammo_casing))
 
 #define isidcard(I) (istype(I, /obj/item/card/id))
 

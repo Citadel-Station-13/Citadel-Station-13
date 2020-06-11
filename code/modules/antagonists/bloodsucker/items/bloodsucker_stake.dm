@@ -93,7 +93,7 @@
 	embedded()
 	add_mob_blood(target)//Place blood on the stake
 	loc = C // Put INSIDE the character
-	B.receive_damage(w_class * embedding.pain_mult)
+	B.receive_damage(w_class * embedding["pain_mult"])
 	if(C.mind)
 		var/datum/antagonist/bloodsucker/bloodsucker = C.mind.has_antag_datum(ANTAG_DATUM_BLOODSUCKER)
 		if(bloodsucker)

@@ -25,9 +25,9 @@
 /obj/item/ammo_casing/mm712x82/match
 	name = "7.12x82mm match bullet casing"
 	desc = "A 7.12x82mm bullet casing manufactured to unfailingly high standards, you could pull off some cool trickshots with this."
-	projectile_type = /obj/projectile/bullet/mm712x82_match
+	projectile_type = /obj/item/projectile/bullet/mm712x82_match
 
-/obj/projectile/bullet/mm712x82_match
+/obj/item/projectile/bullet/mm712x82_match
 	name = "7.12x82mm match bullet"
 	damage = 40
 	ricochets_max = 2

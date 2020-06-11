@@ -72,7 +72,7 @@
 
 
 
-	shrapnel_type = /obj/projectile/bullet/pellet/stingball
+	shrapnel_type = /obj/item/projectile/bullet/pellet/stingball
 
 
 
@@ -96,7 +96,7 @@
 
 
 
-	shrapnel_type = /obj/projectile/bullet/pellet/stingball/mega
+	shrapnel_type = /obj/item/projectile/bullet/pellet/stingball/mega
 
 
 
@@ -212,7 +212,7 @@
 	lefthand_file = 'icons/mob/inhands/equipment/security_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/security_righthand.dmi'
 	var/rots_per_mag = 3 /// how many times we need to "rotate" the charge in hand per extra tile of magnitude
-	shrapnel_type = /obj/projectile/bullet/shrapnel
+	shrapnel_type = /obj/item/projectile/bullet/shrapnel
 	var/rots = 1 /// how many times we've "rotated" the charge
 
 /obj/item/grenade/primer/attack_self(mob/user)
@@ -233,4 +233,4 @@
 	lefthand_file = 'icons/mob/inhands/equipment/security_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/security_righthand.dmi'
 	rots_per_mag = 2
-	shrapnel_type = /obj/projectile/bullet/pellet/stingball
+	shrapnel_type = /obj/item/projectile/bullet/pellet/stingball

@@ -187,7 +187,7 @@
 			break
 
 ///One of our pellets hit something, record what it was and check if we're done (terminated == num_pellets)
-/datum/component/pellet_cloud/proc/pellet_hit(obj/projectile/P, atom/movable/firer, atom/target, Angle)
+/datum/component/pellet_cloud/proc/pellet_hit(obj/item/projectile/P, atom/movable/firer, atom/target, Angle)
 	pellets -= P
 	terminated++
 	hits++
@@ -199,7 +199,7 @@
 		finalize()
 
 ///One of our pellets disappeared due to hitting their max range (or just somehow got qdel'd), remove it from our list and check if we're done (terminated == num_pellets)
-/datum/component/pellet_cloud/proc/pellet_range(obj/projectile/P)
+/datum/component/pellet_cloud/proc/pellet_range(obj/item/projectile/P)
 	pellets -= P
 	terminated++
 	UnregisterSignal(P, list(COMSIG_PARENT_QDELETING, COMSIG_PROJECTILE_RANGE_OUT, COMSIG_PROJECTILE_SELF_ON_HIT))
@@ -208,7 +208,7 @@
 
 /// Minor convenience function for creating each shrapnel piece with circle explosions, mostly stolen from the MIRV component
 /datum/component/pellet_cloud/proc/pew(atom/target, spread=0)
-	var/obj/projectile/P = new projectile_type(get_turf(parent))
+	var/obj/item/projectile/P = new projectile_type(get_turf(parent))
 
 	//Shooting Code:
 	P.spread = spread
@@ -225,7 +225,7 @@
 
 ///All of our pellets are accounted for, time to go target by target and tell them how many things they got hit by.
 /datum/component/pellet_cloud/proc/finalize()
-	var/obj/projectile/P = projectile_type
+	var/obj/item/projectile/P = projectile_type
 	var/proj_name = initial(P.name)
 
 	for(var/atom/target in targets_hit)
@@ -238,10 +238,6 @@
 			target.visible_message("<span class='danger'>[target] is hit by a [proj_name]!</span>", null, null, COMBAT_MESSAGE_RANGE, target)
 			to_chat(target, "<span class='userdanger'>You're hit by a [proj_name]!</span>")
 
-	for(var/M in purple_hearts)
-		var/mob/living/martyr = M
-		if(martyr.stat == DEAD && martyr.client)
-			martyr.client.give_award(/datum/award/achievement/misc/lookoutsir, martyr)
 	UnregisterSignal(parent, COMSIG_PARENT_PREQDELETED)
 	if(queued_delete)
 		qdel(parent)

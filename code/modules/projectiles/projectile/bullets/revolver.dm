@@ -20,7 +20,7 @@
 	ricochet_auto_aim_angle = 10
 	ricochet_auto_aim_range = 3
 
-/obj/projectile/bullet/c38/match
+/obj/item/projectile/bullet/c38/match
 	name = ".38 Match bullet"
 	ricochets_max = 4
 	ricochet_chance = 100
@@ -30,7 +30,7 @@
 	ricochet_decay_chance = 1
 	ricochet_decay_damage = 1
 
-/obj/projectile/bullet/c38/match/bouncy
+/obj/item/projectile/bullet/c38/match/bouncy
 	name = ".38 Rubber bullet"
 	damage = 10
 	stamina = 30
@@ -41,7 +41,7 @@
 	ricochet_decay_damage = 0.8
 	shrapnel_type = NONE
 
-/obj/projectile/bullet/c38/dumdum
+/obj/item/projectile/bullet/c38/dumdum
 	name = ".38 DumDum bullet"
 	damage = 15
 	armour_penetration = -30
@@ -106,7 +106,7 @@
 	armour_penetration = 45
 
 // admin only really, for ocelot memes
-/obj/projectile/bullet/a357/match
+/obj/item/projectile/bullet/a357/match
 	name = ".357 match bullet"
 	ricochets_max = 5
 	ricochet_chance = 140

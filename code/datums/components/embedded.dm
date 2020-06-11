@@ -269,7 +269,7 @@
 
 	var/damage = weapon.w_class * pain_mult
 	var/chance = pain_chance
-	if(pain_stam_pct && victim.stam_paralyzed) //if it's a less-lethal embed, give them a break if they're already stamcritted
+	if(pain_stam_pct && IS_STAMCRIT(victim)) //if it's a less-lethal embed, give them a break if they're already stamcritted
 		chance *= 0.3
 		damage *= 0.7
 

@@ -234,7 +234,6 @@
 	desc = "Contains one speedloader of .38 DumDum ammunition, good for embedding in soft targets. Requires Security or Forensics access to open."
 	cost = 1200
 	access = FALSE
-	small_item = TRUE
 	access_any = list(ACCESS_SECURITY, ACCESS_FORENSICS_LOCKERS)
 	contains = list(/obj/item/ammo_box/c38/dumdum)
 	crate_name = ".38 match crate"
@@ -244,7 +243,6 @@
 	desc = "Contains one speedloader of match grade .38 ammunition, perfect for showing off trickshots. Requires Security or Forensics access to open."
 	cost = 1200
 	access = FALSE
-	small_item = TRUE
 	access_any = list(ACCESS_SECURITY, ACCESS_FORENSICS_LOCKERS)
 	contains = list(/obj/item/ammo_box/c38/match)
 	crate_name = ".38 match crate"
@@ -260,6 +258,5 @@
 	name = "Stingbang Single-Pack"
 	desc = "Contains one \"stingbang\" grenade, perfect for playing meanhearted pranks. Requires Security access to open."
 	cost = 1400
-	small_item = TRUE
 	contains = list(/obj/item/grenade/stingbang)
 
