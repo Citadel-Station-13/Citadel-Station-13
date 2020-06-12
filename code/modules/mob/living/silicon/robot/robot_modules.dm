@@ -377,7 +377,7 @@
 		if("Default")
 			cyborg_base_icon = "medical"
 		if("Zoomba")
-			cyborg_base_icon = "zoomba_med
+			cyborg_base_icon = "zoomba_med"
 		if("Droid")
 			cyborg_base_icon = "medical"
 			cyborg_icon_override = 'modular_citadel/icons/mob/robots.dmi'
