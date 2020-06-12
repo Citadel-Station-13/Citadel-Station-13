@@ -6,12 +6,14 @@ T-RAY
 HEALTH ANALYZER
 GAS ANALYZER
 SLIME SCANNER
+NANITE SCANNER
+GENETICS SCANNER
 
 */
 /obj/item/t_scanner
 	name = "\improper T-ray scanner"
 	desc = "A terahertz-ray emitter and scanner used to detect underfloor objects such as cables and pipes."
-	custom_price = 150
+	custom_price = PRICE_REALLY_CHEAP
 	icon = 'icons/obj/device.dmi'
 	icon_state = "t-ray0"
 	var/on = FALSE
