@@ -154,3 +154,7 @@
 		investigate_log("was smacked with \a [I] by [key_name(user)].", INVESTIGATE_ATMOS)
 		add_fingerprint(user)
 		..()
+
+/obj/machinery/portable_atmospherics/attack_ghost(mob/dead/observer/O)
+	. = ..()
+	atmosanalyzer_scan(air_contents, O, src, FALSE)
