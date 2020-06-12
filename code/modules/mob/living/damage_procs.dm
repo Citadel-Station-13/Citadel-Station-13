@@ -78,8 +78,6 @@
 		apply_damage(brain, BRAIN, def_zone, blocked)
 	return 1
 
-
-
 /mob/living/proc/apply_effect(effect = 0,effecttype = EFFECT_STUN, blocked = FALSE, knockdown_stamoverride, knockdown_stammax)
 	var/hit_percent = (100-blocked)/100
 	if(!effect || (hit_percent <= 0))
@@ -108,7 +106,7 @@
 	return 1
 
 
-/mob/living/proc/apply_effects(stun = 0, knockdown = 0, unconscious = 0, irradiate = 0, slur = 0, stutter = 0, eyeblur = 0, drowsy = 0, blocked = FALSE, stamina = 0, jitter = 0, kd_stamoverride, kd_stammax)
+/mob/living/proc/apply_effects(stun = 0, knockdown = 0, unconscious = 0, irradiate = 0, slur = 0, stutter = 0, eyeblur = 0, drowsy = 0, blocked = 0, stamina = 0, jitter = 0, kd_stamoverride, kd_stammax)
 	if(blocked >= 100)
 		return BULLET_ACT_BLOCK
 	if(stun)

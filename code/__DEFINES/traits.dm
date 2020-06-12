@@ -295,3 +295,7 @@
 #define CLOWNOP_TRAIT "clown-op"
 #define MEGAFAUNA_TRAIT "megafauna"
 #define DEATHSQUAD_TRAIT "deathsquad"
+/// This trait is added by the active directional block system.
+#define ACTIVE_BLOCK_TRAIT				"active_block"
+/// This trait is added by the parry system.
+#define ACTIVE_PARRY_TRAIT				"active_parry"
