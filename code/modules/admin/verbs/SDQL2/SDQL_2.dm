@@ -486,7 +486,7 @@ GLOBAL_DATUM_INIT(sdql2_vv_statobj, /obj/effect/statclick/SDQL2_VV_all, new(null
 	end_time = REALTIMEOFDAY
 	state = SDQL2_STATE_IDLE
 	finished = TRUE
-	text_list += TRUE
+	. += TRUE
 	if(show_next_to_key)
 		var/client/C = GLOB.directory[show_next_to_key]
 		if(C)
@@ -511,9 +511,9 @@ GLOBAL_DATUM_INIT(sdql2_vv_statobj, /obj/effect/statclick/SDQL2_VV_all, new(null
 			state = SDQL2_STATE_HALTING
 			return
 		if("call")
-			text_list += query_tree["on"]
+			. += query_tree["on"]
 		if("select", "delete", "update")
-			text_list += query_tree[query_tree[1]]
+			. += query_tree[query_tree[1]]
 	state = SDQL2_STATE_SWITCHING
 
 /datum/SDQL2_query/proc/Search(list/tree)
@@ -554,7 +554,7 @@ GLOBAL_DATUM_INIT(sdql2_vv_statobj, /obj/effect/statclick/SDQL2_VV_all, new(null
 		obj_count_eligible = objs.len
 	else
 		obj_count_eligible = obj_count_all
-	text_list += objs
+	. += objs
 	state = SDQL2_STATE_SWITCHING
 
 /datum/SDQL2_query/proc/SDQL_from_objs(list/tree)
@@ -694,7 +694,7 @@ GLOBAL_DATUM_INIT(sdql2_vv_statobj, /obj/effect/statclick/SDQL2_VV_all, new(null
   * Limit imposed by callers should be around 10000 objects
   * Seriously, if you hit those limits, you're doing something wrong.
   */
-/datum/SDQL2_query/proc/SDQL_print(object, list/text_list, print_nulls = TRUE, recursion = 0, linebreak = TRUE)
+/datum/SDQL2_query/proc/SDQL_print(datum/object, list/text_list, print_nulls = TRUE, recursion = 0, linebreak = TRUE)
 	if(recursion > 50)
 		text_list += "<font color='red'><b>RECURSION LIMIT REACHED.</font></b>"
 	if(is_object_datatype(object))
