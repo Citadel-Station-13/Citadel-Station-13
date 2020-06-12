@@ -346,7 +346,7 @@ GLOBAL_DATUM_INIT(sdql2_vv_statobj, /obj/effect/statclick/SDQL2_VV_all, new(null
 		//print the key
 		if(islist(key))
 			recursive_list_print(output, key, datum_handler, atom_handler)
-		else if(is_proper_datum(key) && (datum_handler || (isatom(key) && atom_handler)))
+		else if(is_object_datatype(key) && (datum_handler || (isatom(key) && atom_handler)))
 			if(isatom(key) && atom_handler)
 				output += atom_handler.Invoke(key)
 			else
@@ -360,7 +360,7 @@ GLOBAL_DATUM_INIT(sdql2_vv_statobj, /obj/effect/statclick/SDQL2_VV_all, new(null
 			var/value = input[key]
 			if(islist(value))
 				recursive_list_print(output, value, datum_handler, atom_handler)
-			else if(is_proper_datum(value) && (datum_handler || (isatom(value) && atom_handler)))
+			else if(is_object_datatype(value) && (datum_handler || (isatom(value) && atom_handler)))
 				if(isatom(value) && atom_handler)
 					output += atom_handler.Invoke(value)
 				else
@@ -486,7 +486,7 @@ GLOBAL_DATUM_INIT(sdql2_vv_statobj, /obj/effect/statclick/SDQL2_VV_all, new(null
 	end_time = REALTIMEOFDAY
 	state = SDQL2_STATE_IDLE
 	finished = TRUE
-	. = TRUE
+	text_list += TRUE
 	if(show_next_to_key)
 		var/client/C = GLOB.directory[show_next_to_key]
 		if(C)
@@ -511,9 +511,9 @@ GLOBAL_DATUM_INIT(sdql2_vv_statobj, /obj/effect/statclick/SDQL2_VV_all, new(null
 			state = SDQL2_STATE_HALTING
 			return
 		if("call")
-			. = query_tree["on"]
+			text_list += query_tree["on"]
 		if("select", "delete", "update")
-			. = query_tree[query_tree[1]]
+			text_list += query_tree[query_tree[1]]
 	state = SDQL2_STATE_SWITCHING
 
 /datum/SDQL2_query/proc/Search(list/tree)
@@ -554,7 +554,7 @@ GLOBAL_DATUM_INIT(sdql2_vv_statobj, /obj/effect/statclick/SDQL2_VV_all, new(null
 		obj_count_eligible = objs.len
 	else
 		obj_count_eligible = obj_count_all
-	. = objs
+	text_list += objs
 	state = SDQL2_STATE_SWITCHING
 
 /datum/SDQL2_query/proc/SDQL_from_objs(list/tree)
@@ -646,7 +646,7 @@ GLOBAL_DATUM_INIT(sdql2_vv_statobj, /obj/effect/statclick/SDQL2_VV_all, new(null
 	switch(query_tree[1])
 		if("call")
 			for(var/i in found)
-				if(!is_proper_datum(i))
+				if(!is_object_datatype(i))
 					continue
 				world.SDQL_var(i, query_tree["call"][1], null, i, superuser, src)
 				obj_count_finished++
@@ -664,7 +664,10 @@ GLOBAL_DATUM_INIT(sdql2_vv_statobj, /obj/effect/statclick/SDQL2_VV_all, new(null
 			var/list/text_list = list()
 			var/print_nulls = !(options & SDQL2_OPTION_SELECT_OUTPUT_SKIP_NULLS)
 			obj_count_finished = select_refs
+			var/n = 0
 			for(var/i in found)
+				if(++n == 20000)
+					text_list += "<br><font color='red'><b>TRUNCATED - 20000 OBJECT LIMIT HIT</b></font>"
 				SDQL_print(i, text_list, print_nulls)
 				select_refs[REF(i)] = TRUE
 				SDQL2_TICK_CHECK
@@ -675,7 +678,7 @@ GLOBAL_DATUM_INIT(sdql2_vv_statobj, /obj/effect/statclick/SDQL2_VV_all, new(null
 			if("set" in query_tree)
 				var/list/set_list = query_tree["set"]
 				for(var/d in found)
-					if(!is_proper_datum(d))
+					if(!is_object_datatype(d))
 						continue
 					SDQL_internal_vv(d, set_list)
 					obj_count_finished++
@@ -685,47 +688,61 @@ GLOBAL_DATUM_INIT(sdql2_vv_statobj, /obj/effect/statclick/SDQL2_VV_all, new(null
 		obj_count_finished = length(obj_count_finished)
 	state = SDQL2_STATE_SWITCHING
 
-/datum/SDQL2_query/proc/SDQL_print(object, list/text_list, print_nulls = TRUE)
-	if(is_proper_datum(object))
-		text_list += "<A HREF='?_src_=vars;[HrefToken(TRUE)];Vars=[REF(object)]'>[REF(object)]</A> : [object]"
-		if(istype(object, /atom))
-			var/atom/A = object
-			var/turf/T = A.loc
-			var/area/a
-			if(istype(T))
-				text_list += " <font color='gray'>at</font> [T] [ADMIN_COORDJMP(T)]"
-				a = T.loc
-			else
-				var/turf/final = get_turf(T)		//Recursive, hopefully?
-				if(istype(final))
-					text_list += " <font color='gray'>at</font> [final] [ADMIN_COORDJMP(final)]"
-					a = final.loc
+/**
+  * Recursively prints out an object to text list for SDQL2 output to admins, with VV links and all.
+  * Recursion limit: 50
+  * Limit imposed by callers should be around 10000 objects
+  * Seriously, if you hit those limits, you're doing something wrong.
+  */
+/datum/SDQL2_query/proc/SDQL_print(object, list/text_list, print_nulls = TRUE, recursion = 0, linebreak = TRUE)
+	if(recursion > 50)
+		text_list += "<font color='red'><b>RECURSION LIMIT REACHED.</font></b>"
+	if(is_object_datatype(object))
+		if(!islist(object))
+			text_list += "<A HREF='?_src_=vars;[HrefToken(TRUE)];Vars=[REF(object)]'>[REF(object)]([object.type])</A>: [object]"
+			if(istype(object, /atom))
+				var/atom/A = object
+				var/atom/container = A.loc
+				if(isturf(container))
+					text_list += " <font color='gray'>in</font> [container] [ADMIN_COORDJMP(container)] <font color='gray'>at</font> [container.loc]"
+				else if(container)
+					var/turf/T = get_turf(container)
+					var/cref = REF(container)
+					text_list += " <font color='gray'>in</font> <A HREF='?_src_=vars;[HrefToken(TRUE)];Vars=[cref]'>[container]([cref])</A>"
+					if(T)
+						text_list += " <font color='gray'>on</font> [T] [ADMIN_COORDJMP(T)] <font color='gray'>at</font>[T.loc]"
 				else
-					text_list += " <font color='gray'>at</font> nonexistant location"
-			if(a)
-				text_list += " <font color='gray'>in</font> area [a]"
-				if(T.loc != a)
-					text_list += " <font color='gray'>inside</font> [T]"
-		text_list += "<br>"
-	else if(islist(object))
-		var/list/L = object
-		var/first = TRUE
-		text_list += "\["
-		for (var/x in L)
-			if (!first)
-				text_list += ", "
-			first = FALSE
-			SDQL_print(x, text_list)
-			if (!isnull(x) && !isnum(x) && L[x] != null)
-				text_list += " -> "
-				SDQL_print(L[L[x]], text_list)
-		text_list += "]<br>"
+					text_list += " <font color='gray'>in</font> nullspace"
+			if(linebreak)
+				text_list += "<br>"
+			return
+		else		// lists are snowflake and get special treatment.
+			for(var/t in 1 to recursion)
+				text_list += "\t"
+			text_list += "<A HREF='?_src_=vars;[HrefToken(TRUE)];Vars=[REF(object)]'>[REF(object)]</A> \["
+			var/first = TRUE
+			var/list/L = object
+			for(var/key in object)
+				if(!first)
+					text_list += ", "
+				first = FALSE
+				SDQL_print(key, text_list, TRUE, recursion + 1, FALSE)
+				if(IS_VALID_ASSOC_KEY(key) && !isnull(L[key]))
+					text_list += " --> "
+					SDQL_print(L[key], text_list, TRUE, recursion + 1, FALSE)
+			text_list += "\]"
 	else
 		if(isnull(object))
 			if(print_nulls)
 				text_list += "NULL<br>"
+		else if(istext(object))
+			text_list += "STRING: [object]<br>"
+		else if(isnum(object))
+			text_list += "NUM: [object]<br>"
 		else
-			text_list += "[object]<br>"
+			text_list += "UNKNOWN: [object]<br>"
+		if(linebreak)
+			text_list += "<br>"
 
 /datum/SDQL2_query/CanProcCall()
 	if(!allow_admin_interact)
@@ -957,7 +974,7 @@ GLOBAL_DATUM_INIT(sdql2_vv_statobj, /obj/effect/statclick/SDQL2_VV_all, new(null
 	var/static/list/exclude = list("usr", "src", "marked", "global")
 	var/long = start < expression.len
 	var/datum/D
-	if(is_proper_datum(object))
+	if(is_object_datatype(object))
 		D = object
 
 	if (object == world && (!long || expression[start + 1] == ".") && !(expression[start] in exclude)) //3 == length("SS") + 1
@@ -1160,9 +1177,6 @@ GLOBAL_DATUM_INIT(sdql2_vv_statobj, /obj/effect/statclick/SDQL2_VV_all, new(null
 	if(word != "")
 		query_list += word
 	return query_list
-
-/proc/is_proper_datum(thing)
-	return istype(thing, /datum) || istype(thing, /client)
 
 /obj/effect/statclick/SDQL2_delete/Click()
 	var/datum/SDQL2_query/Q = target
