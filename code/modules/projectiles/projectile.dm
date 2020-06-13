@@ -164,7 +164,15 @@
 /obj/item/projectile/proc/prehit(atom/target)
 	return TRUE
 
-/obj/item/projectile/proc/on_hit(atom/target, blocked = FALSE)
+/**
+  * Called when we hit something.
+  *
+  * @params
+  * * target - what we hit
+  * * blocked - 0 to 100 percentage mitigation/block
+  * * def zone - where we hit if we hit a mob.
+  */
+/obj/item/projectile/proc/on_hit(atom/target, blocked = 0, def_zone)
 	if(fired_from)
 		SEND_SIGNAL(fired_from, COMSIG_PROJECTILE_ON_HIT, firer, target, Angle)
 	var/turf/target_loca = get_turf(target)
