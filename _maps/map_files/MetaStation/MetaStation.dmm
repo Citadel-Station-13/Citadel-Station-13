@@ -7349,8 +7349,8 @@
 /turf/open/floor/plasteel/white,
 /area/security/brig)
 "aop" = (
-/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
-	dir = 1
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 10
 	},
 /turf/open/floor/plasteel/white,
 /area/security/brig)
@@ -7359,22 +7359,10 @@
 	dir = 4;
 	name = "Infirmary"
 	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 4
 	},
 /turf/open/floor/plasteel/white,
-/area/security/brig)
-"aor" = (
-/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
-	dir = 4
-	},
-/obj/effect/turf_decal/trimline/blue/filled/line{
-	dir = 8
-	},
-/turf/open/floor/plasteel,
 /area/security/brig)
 "aou" = (
 /obj/structure/rack,
@@ -61517,12 +61505,10 @@
 	c_tag = "Aft Primary Hallway - Middle";
 	dir = 4
 	},
-/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
-	dir = 8
-	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel,
 /area/hallway/primary/aft)
 "cAi" = (
@@ -61535,9 +61521,6 @@
 /turf/open/floor/plasteel,
 /area/hallway/primary/aft)
 "cAj" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
 /obj/effect/turf_decal/tile/neutral,
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 8
@@ -107447,7 +107430,7 @@ ajn
 akx
 alQ
 anh
-aor
+anh
 apE
 dCg
 aoj
@@ -110100,7 +110083,7 @@ car
 cxA
 car
 qJE
-cAi
+car
 car
 car
 car
