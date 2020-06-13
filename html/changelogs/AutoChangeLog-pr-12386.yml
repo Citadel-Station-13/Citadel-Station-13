@@ -1,0 +1,12 @@
+author: "Floof Ball / Kathrin Morrison / Floof Ball#0798"
+delete-after: True
+changes: 
+  - rscadd: "Improvised Pistol + 32 ACP ammo."
+  - rscadd: "Improvised Energy Gun. Fires 5 shots of 10 burn damage each. Can be upgraded with a lens made from glassworking and T4 parts for a minor buff."
+  - rscadd: "Ammo + gun part loot spawners for mappers."
+  - rscadd: "New sprites for Improvised Rifle, the ability to sling the rifle and a sprite for that."
+  - rscadd: "New sprites for the Improvised Shotgun and its sling sprite."
+  - balance: "Improvised shotguns are now two-handed only."
+  - balance: "Improvised shotguns now only have a much less harsh 0.9* modifier, keeping them two hits to crit with slugs and buckshot. It can no longer be dual-wielded but can still be sawn off for w_class medium (can fit in backpacks)."
+  - bugfix: "Missing handsaw icons added in."
+  - tweak: "Crafting table cleaned up into sections."

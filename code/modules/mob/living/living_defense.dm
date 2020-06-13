@@ -66,22 +66,30 @@
 			CRASH("Invalid rediretion mode [redirection_mode]")
 
 /mob/living/bullet_act(obj/item/projectile/P, def_zone)
+	var/totaldamage = P.damage
+	var/final_percent = 0
 	if(P.original != src || P.firer != src) //try to block or reflect the bullet, can't do so when shooting oneself
 		var/list/returnlist = list()
 		var/returned = mob_run_block(P, P.damage, "the [P.name]", ATTACK_TYPE_PROJECTILE, P.armour_penetration, P.firer, def_zone, returnlist)
+		final_percent = returnlist[BLOCK_RETURN_PROJECTILE_BLOCK_PERCENTAGE]
 		if(returned & BLOCK_SHOULD_REDIRECT)
 			handle_projectile_attack_redirection(P, returnlist[BLOCK_RETURN_REDIRECT_METHOD])
 		if(returned & BLOCK_REDIRECTED)
 			return BULLET_ACT_FORCE_PIERCE
 		if(returned & BLOCK_SUCCESS)
-			P.on_hit(src, 100, def_zone)
+			P.on_hit(src, final_percent, def_zone)
 			return BULLET_ACT_BLOCK
+		totaldamage = block_calculate_resultant_damage(totaldamage, returnlist)
 	var/armor = run_armor_check(def_zone, P.flag, null, null, P.armour_penetration, null)
 	if(!P.nodamage)
-		apply_damage(P.damage, P.damage_type, def_zone, armor)
+		apply_damage(totaldamage, P.damage_type, def_zone, armor)
 		if(P.dismemberment)
 			check_projectile_dismemberment(P, def_zone)
-	return P.on_hit(src, armor) ? BULLET_ACT_HIT : BULLET_ACT_BLOCK
+	var/missing = 100 - final_percent
+	var/armor_ratio = armor * 0.01
+	if(missing > 0)
+		final_percent += missing * armor_ratio
+	return P.on_hit(src, final_percent, def_zone) ? BULLET_ACT_HIT : BULLET_ACT_BLOCK
 
 /mob/living/proc/check_projectile_dismemberment(obj/item/projectile/P, def_zone)
 	return 0
@@ -111,10 +119,13 @@
 		I = AM
 		throwpower = I.throwforce
 	var/impacting_zone = ran_zone(BODY_ZONE_CHEST, 65)//Hits a random part of the body, geared towards the chest
-	if(mob_run_block(AM, throwpower, "\the [AM.name]", ATTACK_TYPE_THROWN, 0, throwingdatum?.thrower, impacting_zone, null) & BLOCK_SUCCESS)
+	var/list/block_return = list()
+	var/total_damage = I.throwforce
+	if(mob_run_block(AM, throwpower, "\the [AM.name]", ATTACK_TYPE_THROWN, 0, throwingdatum?.thrower, impacting_zone, block_return) & BLOCK_SUCCESS)
 		hitpush = FALSE
 		skipcatch = TRUE
 		blocked = TRUE
+		total_damage = block_calculate_resultant_damage(total_damage, block_return)
 	else if(I && I.throw_speed >= EMBED_THROWSPEED_THRESHOLD && can_embed(I, src) && prob(I.embedding.embed_chance) && !HAS_TRAIT(src, TRAIT_PIERCEIMMUNE) && (!HAS_TRAIT(src, TRAIT_AUTO_CATCH_ITEM) || incapacitated() || get_active_held_item()))
 		embed_item(I)
 		hitpush = FALSE
@@ -143,7 +154,7 @@
 			visible_message("<span class='danger'>[src] has been hit by [I].</span>", \
 							"<span class='userdanger'>You have been hit by [I].</span>")
 			var/armor = run_armor_check(impacting_zone, "melee", "Your armor has protected your [parse_zone(impacting_zone)].", "Your armor has softened hit to your [parse_zone(impacting_zone)].",I.armour_penetration)
-			apply_damage(I.throwforce, dtype, impacting_zone, armor)
+			apply_damage(total_damage, dtype, impacting_zone, armor)
 			if(I.thrownby)
 				log_combat(I.thrownby, src, "threw and hit", I)
 		else
@@ -313,8 +324,10 @@
 	var/damage = rand(5, 35)
 	if(M.is_adult)
 		damage = rand(20, 40)
-	if(mob_run_block(M, damage, "the [M.name]", ATTACK_TYPE_MELEE, null, M, check_zone(M.zone_selected), null) & BLOCK_SUCCESS)
+	var/list/block_return = list()
+	if(mob_run_block(M, damage, "the [M.name]", ATTACK_TYPE_MELEE, null, M, check_zone(M.zone_selected), block_return) & BLOCK_SUCCESS)
 		return FALSE
+	damage = block_calculate_resultant_damage(damage, block_return)
 
 	if (stat != DEAD)
 		log_combat(M, src, "attacked")
@@ -330,13 +343,16 @@
 		M.visible_message("<span class='notice'>\The [M] [M.friendly_verb_continuous] [src]!</span>",
 			"<span class='notice'>You [M.friendly_verb_simple] [src]!</span>", target = src,
 			target_message = "<span class='notice'>\The [M] [M.friendly_verb_continuous] you!</span>")
-		return FALSE
+		return 0
 	else
 		if(HAS_TRAIT(M, TRAIT_PACIFISM))
 			to_chat(M, "<span class='notice'>You don't want to hurt anyone!</span>")
 			return FALSE
-		if(mob_run_block(M, rand(M.melee_damage_lower, M.melee_damage_upper), "the [M.name]", ATTACK_TYPE_MELEE, M.armour_penetration, M, check_zone(M.zone_selected), null) & BLOCK_SUCCESS)
-			return FALSE
+		var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
+		var/list/return_list = list()
+		if(mob_run_block(M, damage, "the [M.name]", ATTACK_TYPE_MELEE, M.armour_penetration, M, check_zone(M.zone_selected), return_list) & BLOCK_SUCCESS)
+			return 0
+		damage = block_calculate_resultant_damage(damage, return_list)
 		if(M.attack_sound)
 			playsound(loc, M.attack_sound, 50, 1, 1)
 		M.do_attack_animation(src)
@@ -344,7 +360,7 @@
 						"<span class='userdanger'>\The [M] [M.attack_verb_continuous] you!</span>", null, COMBAT_MESSAGE_RANGE, null,
 						M, "<span class='danger'>You [M.attack_verb_simple] [src]!</span>")
 		log_combat(M, src, "attacked")
-		return TRUE
+		return damage
 
 /mob/living/attack_paw(mob/living/carbon/monkey/M)
 	if (M.a_intent == INTENT_HARM)
