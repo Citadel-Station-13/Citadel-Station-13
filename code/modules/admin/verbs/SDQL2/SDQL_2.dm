@@ -699,11 +699,11 @@ GLOBAL_DATUM_INIT(sdql2_vv_statobj, /obj/effect/statclick/SDQL2_VV_all, new(null
 		text_list += "<font color='red'><b>RECURSION LIMIT REACHED.</font></b>"
 	if(is_object_datatype(object))
 		if(!islist(object))
-			text_list += "<A HREF='?_src_=vars;[HrefToken(TRUE)];Vars=[REF(object)]'>[REF(object)]([object.type])</A>: [object]"
+			text_list += "<A HREF='?_src_=vars;[HrefToken(TRUE)];Vars=[REF(object)]'>[object.type] [REF(object)]</A>: [object]"
 			if(istype(object, /atom))
 				if(istype(object, /turf))
 					var/turf/T = object
-					text_list += " <font color='gray'>at</font> [T.loc]"
+					text_list += " [ADMIN_COORDJMP(T)] <font color='gray'>at</font> [T.loc]"
 				else
 					var/atom/A = object
 					var/atom/container = A.loc
@@ -723,7 +723,7 @@ GLOBAL_DATUM_INIT(sdql2_vv_statobj, /obj/effect/statclick/SDQL2_VV_all, new(null
 		else		// lists are snowflake and get special treatment.
 			for(var/t in 1 to recursion)
 				text_list += "\t"
-			text_list += "<A HREF='?_src_=vars;[HrefToken(TRUE)];Vars=[REF(object)]'>[REF(object)]</A> \["
+			text_list += "<A HREF='?_src_=vars;[HrefToken(TRUE)];Vars=[REF(object)]'>/list [REF(object)]</A> \[<br>"
 			var/first = TRUE
 			var/list/L = object
 			for(var/key in object)
@@ -734,17 +734,18 @@ GLOBAL_DATUM_INIT(sdql2_vv_statobj, /obj/effect/statclick/SDQL2_VV_all, new(null
 				if(IS_VALID_ASSOC_KEY(key) && !isnull(L[key]))
 					text_list += " --> "
 					SDQL_print(L[key], text_list, TRUE, recursion + 1, FALSE)
-			text_list += "\]"
+				text_list += "<br>
+			text_list += "\]<br>"
 	else
 		if(isnull(object))
 			if(print_nulls)
-				text_list += "NULL<br>"
+				text_list += "NULL"
 		else if(istext(object))
-			text_list += "STRING: [object]<br>"
+			text_list += "STRING: [object]"
 		else if(isnum(object))
-			text_list += "NUM: [object]<br>"
+			text_list += "NUM: [object]"
 		else
-			text_list += "UNKNOWN: [object]<br>"
+			text_list += "UNKNOWN: [object]"
 		if(linebreak)
 			text_list += "<br>"
 
