@@ -10,7 +10,7 @@
 	desc = "Patient is completely unable to speak."
 	scan_desc = "extensive damage to the brain's speech center"
 	gain_text = "<span class='warning'>You forget how to speak!</span>"
-	lose_text = "<span class='notice'>You suddenly rpaemember how to speak.</span>"
+	lose_text = "<span class='notice'>You suddenly remember how to speak.</span>"
 
 /datum/brain_trauma/severe/mute/on_gain()
 	ADD_TRAIT(owner, TRAIT_MUTE, TRAUMA_TRAIT)
@@ -119,7 +119,7 @@
 
 /datum/brain_trauma/severe/paralysis/spinesnapped
 	random_gain = FALSE
-	paralysis_type = legs
+	paralysis_type = "legs"
 	resilience = TRAUMA_RESILIENCE_LOBOTOMY
 
 /datum/brain_trauma/severe/narcolepsy
