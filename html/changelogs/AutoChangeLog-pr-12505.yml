@@ -1,0 +1,12 @@
+author: "Bhijn"
+delete-after: True
+changes: 
+  - rscadd: "Added Lesbian Visibility Day (April 26th)"
+  - rscadd: "Added Bisexual Visibility Day (September 23rd)"
+  - rscadd: "Added Coming Out Day! (October 11th)"
+  - rscadd: "Added Intersex Awareness Day (October 26th)"
+  - rscadd: "Added Transgender Awareness Week (November 13th - 19th)"
+  - rscadd: "Added the Transgender Day of Remembrance (November 20th)"
+  - rscadd: "Added Asexual Awareness Week (Last full week of October, this year it'll be Oct. 25-31)"
+  - rscadd: "Added the Stonewall Riot Anniversary (June 28)"
+  - bugfix: "Moth week is now *actually* the last full week of July, instead of the 4th of every weekday + the 5th Sunday."
