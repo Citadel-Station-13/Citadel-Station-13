@@ -107,7 +107,7 @@
 	owner.update_disabled_bodyparts()
 
 /datum/brain_trauma/severe/paralysis/on_lose()
-	..()parapl
+	..()
 	for(var/X in paralysis_traits)
 		REMOVE_TRAIT(owner, X, "trauma_paralysis")
 	owner.update_disabled_bodyparts()
