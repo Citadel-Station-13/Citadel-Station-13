@@ -695,7 +695,7 @@ GLOBAL_DATUM_INIT(sdql2_vv_statobj, /obj/effect/statclick/SDQL2_VV_all, new(null
   * Seriously, if you hit those limits, you're doing something wrong.
   */
 /datum/SDQL2_query/proc/SDQL_print(datum/object, list/text_list, print_nulls = TRUE, recursion = 0, linebreak = TRUE)
-	text_list += "<span style='display: inline-block; margin-left: [min(10, recursion) * 10]px;'>
+	text_list += "<span style='display: inline-block; margin-left: [min(10, recursion) * 10]px;'>"
 	if(recursion > 50)
 		text_list += "<font color='red'><b>RECURSION LIMIT REACHED.</font></b>"
 	if(is_object_datatype(object))
@@ -742,7 +742,7 @@ GLOBAL_DATUM_INIT(sdql2_vv_statobj, /obj/effect/statclick/SDQL2_VV_all, new(null
 			text_list += "NUM: [object]"
 		else
 			text_list += "UNKNOWN: [object]"
-	text_list += "</span>
+	text_list += "</span>"
 	if(linebreak)
 		text_list += "<br>"
 
