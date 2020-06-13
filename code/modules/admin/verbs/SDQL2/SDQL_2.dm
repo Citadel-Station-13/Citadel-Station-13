@@ -695,6 +695,7 @@ GLOBAL_DATUM_INIT(sdql2_vv_statobj, /obj/effect/statclick/SDQL2_VV_all, new(null
   * Seriously, if you hit those limits, you're doing something wrong.
   */
 /datum/SDQL2_query/proc/SDQL_print(datum/object, list/text_list, print_nulls = TRUE, recursion = 0, linebreak = TRUE)
+	text_list += "<span style='display: inline-block; margin-left: [min(10, recursion) * 10]px;'>
 	if(recursion > 50)
 		text_list += "<font color='red'><b>RECURSION LIMIT REACHED.</font></b>"
 	if(is_object_datatype(object))
@@ -717,13 +718,8 @@ GLOBAL_DATUM_INIT(sdql2_vv_statobj, /obj/effect/statclick/SDQL2_VV_all, new(null
 							text_list += " <font color='gray'>on</font> [T] [ADMIN_COORDJMP(T)] <font color='gray'>at</font>[T.loc]"
 					else
 						text_list += " <font color='gray'>in</font> nullspace"
-			if(linebreak)
-				text_list += "<br>"
-			return
 		else		// lists are snowflake and get special treatment.
-			for(var/t in 1 to recursion)
-				text_list += "\t"
-			text_list += "<A HREF='?_src_=vars;[HrefToken(TRUE)];Vars=[REF(object)]'>/list [REF(object)]</A> \[<br>"
+			text_list += "<A HREF='?_src_=vars;[HrefToken(TRUE)];Vars=[REF(object)]'>/list [REF(object)]</A> \["
 			var/first = TRUE
 			var/list/L = object
 			for(var/key in object)
@@ -734,8 +730,8 @@ GLOBAL_DATUM_INIT(sdql2_vv_statobj, /obj/effect/statclick/SDQL2_VV_all, new(null
 				if(IS_VALID_ASSOC_KEY(key) && !isnull(L[key]))
 					text_list += " --> "
 					SDQL_print(L[key], text_list, TRUE, recursion + 1, FALSE)
-				text_list += "<br>
-			text_list += "\]<br>"
+				text_list += "<br>"
+			text_list += "\]"
 	else
 		if(isnull(object))
 			if(print_nulls)
@@ -746,8 +742,9 @@ GLOBAL_DATUM_INIT(sdql2_vv_statobj, /obj/effect/statclick/SDQL2_VV_all, new(null
 			text_list += "NUM: [object]"
 		else
 			text_list += "UNKNOWN: [object]"
-		if(linebreak)
-			text_list += "<br>"
+	text_list += "</span>
+	if(linebreak)
+		text_list += "<br>"
 
 /datum/SDQL2_query/CanProcCall()
 	if(!allow_admin_interact)
