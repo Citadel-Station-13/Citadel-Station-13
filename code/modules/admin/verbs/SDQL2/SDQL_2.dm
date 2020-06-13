@@ -696,7 +696,8 @@ GLOBAL_DATUM_INIT(sdql2_vv_statobj, /obj/effect/statclick/SDQL2_VV_all, new(null
   */
 /datum/SDQL2_query/proc/SDQL_print(datum/object, list/text_list, print_nulls = TRUE, recursion = 1, linebreak = TRUE)
 	if(recursion > 50)
-		text_list += "<font color='red'><b>RECURSION LIMIT REACHED.</font></b>"
+		text_list += "<br><font color='red'><b>RECURSION LIMIT REACHED.</font></b><br>"
+		return
 	if(is_object_datatype(object))
 		if(!islist(object))
 			text_list += "<A HREF='?_src_=vars;[HrefToken(TRUE)];Vars=[REF(object)]'>[object.type] [REF(object)]</A>: [object]"
@@ -739,18 +740,20 @@ GLOBAL_DATUM_INIT(sdql2_vv_statobj, /obj/effect/statclick/SDQL2_VV_all, new(null
 							SDQL_print(value, text_list, TRUE, recursion, FALSE)
 					text_list += "<br>"
 			text_list += "\]"
+		if(linebreak)
+			text_list += "<br>"
 	else
 		if(isnull(object))
 			if(print_nulls)
 				text_list += "NULL"
 		else if(istext(object))
-			text_list += "STRING: [object]"
-		else if(isnum(object))
-			text_list += "NUM: [object]"
+			text_list += "\"[object]\""
+		else if(isnum(object) || ispath(object))
+			text_list += "[object]"
 		else
 			text_list += "UNKNOWN: [object]"
-	if(linebreak)
-		text_list += "<br>"
+		if(linebreak)
+			text_list += "<br>"
 
 /datum/SDQL2_query/CanProcCall()
 	if(!allow_admin_interact)
