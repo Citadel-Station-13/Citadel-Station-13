@@ -146,7 +146,7 @@
   * [__DEFINES/projectiles.dm] for return values.
   */
 /atom/proc/check_projectile_ricochet(obj/item/projectile/P)
-	return (flags_1 & CHECK_RICOCHET_1)? PROJECTILE_RICOCHET_YES : PROJECTILE_RICOCHET_NO
+	return (flags_1 & DEFAULT_RICOCHET_1)? PROJECTILE_RICOCHET_YES : PROJECTILE_RICOCHET_NO
 
 /**
   * Handle a projectile ricochet. Return TRUE if we did something to the projectile like reflecting it/whatnot.
