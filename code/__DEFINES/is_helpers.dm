@@ -1,5 +1,5 @@
 /// Checks if something is a BYOND object datatype rather than a primitive, or whatever's closest to one.
-#define is_object_datatype(object)		(!istext(object) && !isnum(object))
+#define is_object_datatype(object)		(object && !istext(object) && !isnum(object))
 
 // simple is_type and similar inline helpers
 
