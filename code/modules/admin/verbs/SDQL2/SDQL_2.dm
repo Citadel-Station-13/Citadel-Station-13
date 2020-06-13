@@ -498,7 +498,7 @@ GLOBAL_DATUM_INIT(sdql2_vv_statobj, /obj/effect/statclick/SDQL2_VV_all, new(null
 			if(length(select_text))
 				var/text = islist(select_text)? select_text.Join() : select_text
 				var/static/result_offset = 0
-				showmob << browse(text, "window=SDQL-result-[result_offset++];size=300x800")
+				showmob << browse(text, "window=SDQL-result-[result_offset++];size=800x1200")
 	show_next_to_key = null
 	if(qdel_on_finish)
 		qdel(src)
@@ -695,7 +695,7 @@ GLOBAL_DATUM_INIT(sdql2_vv_statobj, /obj/effect/statclick/SDQL2_VV_all, new(null
   * Seriously, if you hit those limits, you're doing something wrong.
   */
 /datum/SDQL2_query/proc/SDQL_print(datum/object, list/text_list, print_nulls = TRUE, recursion = 0, linebreak = TRUE)
-	text_list += "<span style='display: inline-block; margin-left: [min(10, recursion) * 2]em;'>"
+	text_list += "<span style='margin-left: [min(10, recursion) * 2]em;'>"
 	if(recursion > 50)
 		text_list += "<font color='red'><b>RECURSION LIMIT REACHED.</font></b>"
 	if(is_object_datatype(object))
@@ -729,8 +729,6 @@ GLOBAL_DATUM_INIT(sdql2_vv_statobj, /obj/effect/statclick/SDQL2_VV_all, new(null
 						text_list += " --> "
 						SDQL_print(L[key], text_list, TRUE, recursion + 1, FALSE)
 					text_list += "<br>"
-					if(lastkey != key)
-						text_list += ", "
 			text_list += "\]"
 	else
 		if(isnull(object))
