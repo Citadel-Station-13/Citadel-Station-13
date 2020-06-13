@@ -1,6 +1,6 @@
 /datum/surgery/advanced/lobotomy
 	name = "Lobotomy"
-	desc = "An invasive surgical procedure which guarantees removal of almost all brain traumas, but might cause another permanent trauma in return."
+	desc = "An invasive surgical procedure which guarantees removal of almost all brain traumas, at the cost of severe, albeit repairable, brain damage."
 	steps = list(
 	/datum/surgery_step/incise,
 	/datum/surgery_step/retract_skin,
