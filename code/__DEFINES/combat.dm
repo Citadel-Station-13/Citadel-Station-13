@@ -272,7 +272,7 @@ GLOBAL_LIST_INIT(shove_disarming_types, typecacheof(list(
   * should the current-attack-damage be lower than the item force multiplied by this value,
   * a "inefficiently" prefix will be added to the message.
   */
-#define INEFFICIENT_ATTACK_MSG_THRESHOLD 0.7
+#define FEEBLE_ATTACK_MSG_THRESHOLD 0.5
 
 
 //bullet_act() return values
