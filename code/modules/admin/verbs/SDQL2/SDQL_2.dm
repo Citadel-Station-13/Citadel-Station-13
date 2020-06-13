@@ -694,8 +694,7 @@ GLOBAL_DATUM_INIT(sdql2_vv_statobj, /obj/effect/statclick/SDQL2_VV_all, new(null
   * Limit imposed by callers should be around 10000 objects
   * Seriously, if you hit those limits, you're doing something wrong.
   */
-/datum/SDQL2_query/proc/SDQL_print(datum/object, list/text_list, print_nulls = TRUE, recursion = 0, linebreak = TRUE)
-	text_list += "<span style='margin-left: [min(10, recursion) * 2]em;'>"
+/datum/SDQL2_query/proc/SDQL_print(datum/object, list/text_list, print_nulls = TRUE, recursion = 1, linebreak = TRUE)
 	if(recursion > 50)
 		text_list += "<font color='red'><b>RECURSION LIMIT REACHED.</font></b>"
 	if(is_object_datatype(object))
@@ -719,15 +718,25 @@ GLOBAL_DATUM_INIT(sdql2_vv_statobj, /obj/effect/statclick/SDQL2_VV_all, new(null
 					else
 						text_list += " <font color='gray'>in</font> nullspace"
 		else		// lists are snowflake and get special treatment.
-			text_list += "<A HREF='?_src_=vars;[HrefToken(TRUE)];Vars=[REF(object)]'>/list [REF(object)]</A> \["
+			text_list += "<A HREF='?_src_=vars;[HrefToken(TRUE)];Vars=[REF(object)]'>/list [REF(object)]</A> \[<br>"
 			var/list/L = object
 			if(length(L))
-				var/lastkey = L[length(L)]
 				for(var/key in object)
-					SDQL_print(key, text_list, TRUE, recursion + 1, FALSE)
+					if(islist(key))
+						text_list += "<span style='margin-left: [min(10, recursion) * 2]em;'>"
+						SDQL_print(key, text_list, TRUE, recursion + 1, FALSE)
+						text_list += "</span>"
+					else
+						SDQL_print(key, text_list, TRUE, recursion, FALSE)
 					if(IS_VALID_ASSOC_KEY(key) && !isnull(L[key]))
+						var/value = L[key]
 						text_list += " --> "
-						SDQL_print(L[key], text_list, TRUE, recursion + 1, FALSE)
+						if(islist(value))
+							text_list += "<span style='margin-left: [min(10, recursion) * 2]em;'>"
+							SDQL_print(value, text_list, TRUE, recursion + 1, FALSE)
+							text_list += "</span>"
+						else
+							SDQL_print(value, text_list, TRUE, recursion, FALSE)
 					text_list += "<br>"
 			text_list += "\]"
 	else
@@ -740,7 +749,6 @@ GLOBAL_DATUM_INIT(sdql2_vv_statobj, /obj/effect/statclick/SDQL2_VV_all, new(null
 			text_list += "NUM: [object]"
 		else
 			text_list += "UNKNOWN: [object]"
-	text_list += "</span>"
 	if(linebreak)
 		text_list += "<br>"
 
