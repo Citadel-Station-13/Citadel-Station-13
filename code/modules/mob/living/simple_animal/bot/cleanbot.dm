@@ -38,6 +38,7 @@
 
 	var/obj/item/weapon
 	var/weapon_orig_force = 0
+	var/chosen_name
 
 	var/list/stolen_valor
 
@@ -58,8 +59,8 @@
 		user.transferItemToLoc(W, src)
 		weapon = W
 		weapon_orig_force = weapon.force
-		weapon.force = weapon.force / 2
-		icon_state = "cleanbot[on]"
+		if(!emagged)
+			weapon.force = weapon.force / 2
 		add_overlay(image(icon=weapon.lefthand_file,icon_state=weapon.item_state))
 
 /mob/living/simple_animal/bot/cleanbot/proc/update_titles()
@@ -73,7 +74,7 @@
 					commissioned = TRUE
 				break
 
-	working_title += initial(name)
+	working_title += chosen_name
 
 	for(var/suf in suffixes)
 		for(var/title in suf)
@@ -90,6 +91,7 @@
 
 /mob/living/simple_animal/bot/cleanbot/Initialize()
 	. = ..()
+	chosen_name = name
 	get_targets()
 	icon_state = "cleanbot[on]"
 
@@ -121,6 +123,8 @@
 
 /mob/living/simple_animal/bot/cleanbot/bot_reset()
 	..()
+	if(weapon && (emagged == 2))
+		weapon.force = weapon_orig_force
 	ignore_list = list() //Allows the bot to clean targets it previously ignored due to being unreachable.
 	target = null
 	oldloc = null
@@ -139,13 +143,12 @@
 		if(!istype(C))
 			return
 
-		weapon.attack(C, src)
-		C.Knockdown(20)
-
 		if(!(C.job in stolen_valor))
 			stolen_valor += C.job
 		update_titles()
-		return
+
+		weapon.attack(C, src)
+		C.Knockdown(20)
 
 /mob/living/simple_animal/bot/cleanbot/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/card/id)||istype(W, /obj/item/pda))
@@ -161,8 +164,8 @@
 				to_chat(user, "<span class='notice'>The [src] doesn't seem to respect your authority.</span>")
 
 	else if(istype(W, /obj/item/kitchen/knife) && user.a_intent != INTENT_HARM)
-		to_chat(user, "<span class='notice'>You start attaching the [W] to \the [src]...</span>")
-		if(do_after(user, 40, target = src))
+		to_chat(user, "<span class='notice'>You start attaching \the [W] to \the [src]...</span>")
+		if(do_after(user, 25, target = src))
 			deputize(W, user)
 
 	else if(istype(W, /obj/item/mop/advanced))
@@ -173,10 +176,10 @@
 			window_name = "Automatic Station Cleaner v2.1 BETA" //New!
 			qdel(W)
 		if(!open)
-			to_chat(user, "<span class='notice'>The [src] access pannle is not open!</span>")
+			to_chat(user, "<span class='notice'>The [src] access panel is not open!</span>")
 			return
 		if(!bot_core.allowed(user))
-			to_chat(user, "<span class='notice'>The [src] access pannel locked off to you!</span>")
+			to_chat(user, "<span class='notice'>The [src] access panel locked off to you!</span>")
 			return
 		else
 			to_chat(user, "<span class='notice'>The [src] already has this mop!</span>")
@@ -202,6 +205,8 @@
 /mob/living/simple_animal/bot/cleanbot/emag_act(mob/user)
 	. = ..()
 	if(emagged == 2)
+		if(weapon)
+			weapon.force = weapon_orig_force
 		if(user)
 			to_chat(user, "<span class='danger'>[src] buzzes and beeps.</span>")
 
