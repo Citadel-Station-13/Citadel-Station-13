@@ -1,5 +1,5 @@
-import { decodeHtmlEntities } from 'common/string';
-import { Component, Fragment } from 'inferno';
+import { multiline, decodeHtmlEntities } from 'common/string';
+import { Fragment } from 'inferno';
 import { act } from '../byond';
 import { Box, Button, Section, LabeledList, Table, Tabs, Tooltip } from '../components';
 
@@ -85,17 +85,23 @@ const skillList = props => {
                     ? skill.skill_base
                     : skill.skill_mod
                   )
-                  <Tooltip
-                    content={
-                    skill.mods_tooltip
-                      ? (multiline`${skill.desc}
-                        \nModifiers: 
-                        ${skill.mods_tooltip}
-                      `)
-                      : multiline`${skill.desc}`
-                    }
-                    position="left"
-                  />
+                  {!!skill.mods_tooltip && (
+                    <Tooltip
+                      content={
+                        decodeHtmlEntities(
+                          `${skill.desc}
+                          \nModifiers: 
+                          ${skill.mods_tooltip}
+                        `)
+                      }
+                      position="left" />
+                  ) || (
+                    <Tooltip
+                      content={
+                        decodeHtmlEntities(`${skill.desc}`)
+                      }
+                      position="left" />
+                  )}
                 </Box>
               </Table.Cell>
             </Table.Row>
@@ -120,18 +126,20 @@ const skillList = props => {
           </Box>
         )}>
         {decodeHtmlEntities(skill.desc)}
-        {skill.modifiers && (
+        {!!skill.modifiers && (
           <LabeledList>
             <LabeledList.Item label="Current Modifiers">
               {skill.modifiers.map(modifier => {
                 <Box className={modifier.icon_class} mr={1}>
                   <Tooltip
-                    content={multiline`
-                      "<b>"+modifier.name+"</b>\n"+modifier.desc
-                    `}
-                    position="relative"
-                  />
-                </Box>
+                    content={
+                      decodeHtmlEntities(
+                        `<b>${modifier.name}</b>
+                        \n${modifier.desc}
+                      `)
+                    }
+                    position="relative" />
+                </Box>;
               })}
             </LabeledList.Item>
           </LabeledList>
