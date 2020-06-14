@@ -1,0 +1,5 @@
+author: "Anturk, kevinz000"
+delete-after: True
+changes: 
+  - bugfix: "VV now properly allows access to datums in associative lists"
+  - rscadd: "SDQL2 printout has been upgraded for the 5th time."
