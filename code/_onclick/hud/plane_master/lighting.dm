@@ -2,7 +2,7 @@
 /obj/screen/plane_master/lighting
 	name = "lighting plane master"
 	plane = LIGHTING_PLANE
-	blend_mode = BLEND_MULTIPLY
+	blend_mode = BLEND_OVERLAY	// our render target holder object has to be BLEND_MULTPLY. The new system separates things to a degree where there's nothing to multiply BY "under" us as we're not directly rendered.
 	appearance_flags = PLANE_MASTER
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	render_target = LIGHTING_RENDER_TARGET
@@ -15,6 +15,10 @@
 /obj/screen/plane_master/lighting/backdrop(mob/mymob)
 	mymob.overlay_fullscreen("lighting_backdrop_lit", /obj/screen/fullscreen/lighting_backdrop/lit)
 	mymob.overlay_fullscreen("lighting_backdrop_unlit", /obj/screen/fullscreen/lighting_backdrop/unlit)
+
+/obj/screen/plane_render_target/lighting
+	name = "Render Holder - Game - Lighting"
+	render_source = LIGHTING_RENDER_TARGET
 
 /**
   * Things placed on this mask the lighting plane. Doesn't render directly.

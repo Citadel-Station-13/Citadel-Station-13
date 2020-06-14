@@ -5,3 +5,8 @@
 	appearance_flags = PLANE_MASTER | NO_CLIENT_COLOR
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	render_target = CHAT_RENDER_TARGET
+
+/obj/screen/plane_render_target/chat_messages
+	name = "Render Holder - Game - Runechat"
+	render_source = CHAT_RENDER_TARGET
+	appearance_flags = APPEARANCE_UI & (~PASS_MOUSE)		// Don't bother passing clicks.
