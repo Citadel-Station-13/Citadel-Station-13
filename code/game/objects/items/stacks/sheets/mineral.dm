@@ -465,3 +465,91 @@ GLOBAL_LIST_INIT(abductor_recipes, list ( \
 
 /obj/item/stack/sheet/mineral/coal/ten
 	amount = 10
+
+/*
+ * Morphium
+ */
+
+/obj/item/stack/sheet/mineral/morphium
+	name = "Morphium"
+	desc = "A powerful material that mimics what the gray's use."
+	icon_state = "sheet-wavy"
+	item_state = "mhydrogen"
+
+/*
+ * Valhollide
+ */
+
+/obj/item/stack/sheet/mineral/valhollide
+	name = "Valhollide"
+	desc = "A powerful material made out of mashing particles into one another, ya science!"
+	icon_state = "sheet-gem"
+	item_state = "diamond"
+
+/*
+ * Supermatter - Forged in the equivalent of Hell, one piece at a time.
+ */
+
+/obj/item/stack/sheet/mineral/supermatter
+	name = "Supermatter"
+	icon_state = "sheet-super"
+	item_state = "diamond"
+	item_flags = SLOWS_WHILE_IN_HAND
+
+GLOBAL_LIST_INIT(supermatter_recipes, list ( \
+	new/datum/stack_recipe("supermatter shard", /obj/machinery/power/supermatter_crystal/shard, 30 , one_per_turf = 1, time = 600, on_floor = 1), \
+	))
+
+/obj/item/stack/sheet/mineral/supermatter/get_main_recipes()
+	. = ..()
+	. += GLOB.supermatter_recipes
+
+/obj/item/stack/sheet/mineral/supermatter/proc/update_mass()	// Due to how dangerous they can be, the item will get heavier and larger the more are in the stack.
+	slowdown = amount / 10
+	w_class = min(5, round(amount / 10) + 1)
+	throw_range = round(amount / 7) + 1
+
+/obj/item/stack/sheet/mineral/supermatter/use(var/used)
+	. = ..()
+	update_mass()
+	return
+
+/obj/item/stack/sheet/mineral/supermatter/attack_hand(mob/user)
+	update_mass()
+	radiate()
+	var/mob/living/M = user
+	if(!istype(M))
+		return
+
+	var/burn_user = TRUE
+	if(istype(M, /mob/living/carbon/human))
+		var/mob/living/carbon/human/H = user
+		var/obj/item/clothing/gloves/G = H.gloves
+		if(istype(G) && ((G.clothing_flags & THICKMATERIAL && prob(70))))
+			burn_user = FALSE
+
+		if(burn_user)
+			H.visible_message("<span class='danger'>\The [src] flashes as it scorches [H]'s hands!</span>")
+			H.apply_damage(amount / 2 + 5, BURN, "r_hand", used_weapon="Supermatter Chunk")
+			H.apply_damage(amount / 2 + 5, BURN, "l_hand", used_weapon="Supermatter Chunk")
+			H.drop_all_held_items()
+			return
+
+	if(istype(user, /mob/living/silicon/robot))
+		burn_user = FALSE
+
+	if(burn_user)
+		M.apply_damage(amount, BURN, null, used_weapon="Supermatter Chunk")
+
+/obj/item/stack/sheet/mineral/supermatter/ex_act(severity)	// An incredibly hard to manufacture material, SM chunks are unstable by their 'stabilized' nature.
+	if(prob((4 / severity) * 20))
+		radiate()
+		explosion(get_turf(src),round(amount / 12) , round(amount / 6), round(amount / 3), round(amount / 25))
+		qdel(src)
+		return
+	radiate()
+	..()
+
+/obj/item/stack/sheet/mineral/supermatter/proc/radiate()
+	radiation_pulse(src, 10 * src.amount)
+	return

@@ -61,7 +61,10 @@
 		/datum/material/plastic,
 		/datum/material/adamantine,
 		/datum/material/mythril,
-		/datum/material/wood
+		/datum/material/wood,
+		/datum/material/valhollide,
+		/datum/material/morphium,
+		/datum/material/supermatter //Oh no..
 		)
 
 	/// Base print speed

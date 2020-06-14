@@ -246,3 +246,40 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	. = ..()
 	if(istype(source, /obj/item))
 		qdel(source.GetComponent(/datum/component/fantasy))
+
+//Partical Smasher Strong
+
+/datum/material/valhollide
+	name = "valhollide"
+	id = "valhollide"
+	desc = "A powerful material made out of mashing particles into one another, ya science!"
+	color = "#6d7e8e"
+	strength_modifier = 1.1
+	categories = list(MAT_CATEGORY_RIGID = TRUE)
+	sheet_type = /obj/item/stack/sheet/mineral/valhollide
+	value_per_unit = 0.25 //Sure
+	beauty_modifier = 2 //It looks nice!
+	armor_modifiers = list("melee" = 1.8, "bullet" = 1.8, "laser" = 1.8, "energy" = 1.8, "bomb" = -1, "bio" = -1, "rad" = -1, "fire" = -1, "acid" = -4)
+
+/datum/material/morphium
+	name = "morphium"
+	id = "morphium"
+	desc = "A powerful material that mimics what the gray's use."
+	color = "#6d7e8e"
+	strength_modifier = 1.5
+	categories = list(MAT_CATEGORY_RIGID = TRUE)
+	sheet_type = /obj/item/stack/sheet/mineral/morphium
+	value_per_unit = 0.30
+	beauty_modifier = 4 //So cool!
+	armor_modifiers = list("melee" = 1.1, "bullet" = 1.1, "laser" = 1.1, "energy" = 1.1, "bomb" = 3, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 0)
+
+/datum/material/supermatter
+	name = "supermatter"
+	id = "supermatter"
+	desc = "An artificial supermatter shard."
+	color = "#6d7e8e"
+	strength_modifier = 2 //Vibe checker
+	sheet_type = /obj/item/stack/sheet/mineral/supermatter
+	value_per_unit = 1 //Its Artificial Supermatter
+	beauty_modifier = 20 //It bruns out your eyes
+	armor_modifiers = list("melee" = -3, "bullet" = -3, "laser" = 3, "energy" = 3, "bomb" = -5, "bio" = 1, "rad" = -10, "fire" = -10, "acid" = -10)

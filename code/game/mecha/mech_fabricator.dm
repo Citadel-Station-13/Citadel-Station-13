@@ -46,7 +46,10 @@
 		/datum/material/uranium,
 		/datum/material/bananium,
 		/datum/material/titanium,
-		/datum/material/bluespace
+		/datum/material/bluespace,
+		/datum/material/valhollide,
+		/datum/material/morphium,
+		/datum/material/supermatter //Oh no..
 		)
 	var/datum/component/material_container/materials = AddComponent(/datum/component/material_container, allowed_types, 0, TRUE, /obj/item/stack, CALLBACK(src, .proc/is_insertion_ready), CALLBACK(src, .proc/AfterMaterialInsert))
 	materials.precise_insertion = TRUE
