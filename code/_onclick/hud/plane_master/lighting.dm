@@ -19,6 +19,7 @@
 /obj/screen/plane_render_target/lighting
 	name = "Render Holder - Game - Lighting"
 	render_source = LIGHTING_RENDER_TARGET
+	blend_mode = BLEND_MULTIPLY		// this, however, does have something to multiply by, the rest of the game world that's "under" it in the final game world render.
 
 /**
   * Things placed on this mask the lighting plane. Doesn't render directly.
