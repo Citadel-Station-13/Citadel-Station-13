@@ -1,0 +1,4 @@
+author: "kevinz000 (port from VOREStation)"
+delete-after: True
+changes: 
+  - imageadd: "Ported zoomba skins for cyborgs."
