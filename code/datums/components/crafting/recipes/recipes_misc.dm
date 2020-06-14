@@ -125,8 +125,8 @@
 	subcategory = CAT_TOOL
 
 /datum/crafting_recipe/bruise_pack
-	name = "Bruise Pack"
-	result = /obj/item/stack/medical/bruise_pack/one
+	name = "Suture"
+	result = /obj/item/stack/medical/suture/one
 	time = 1
 	reqs = list(/obj/item/stack/medical/gauze = 1,
 				/datum/reagent/medicine/styptic_powder = 10)
@@ -134,8 +134,8 @@
 	subcategory = CAT_TOOL
 
 /datum/crafting_recipe/burn_pack
-	name = "Burn Ointment"
-	result = /obj/item/stack/medical/ointment/one
+	name = "Regenerative Mesh"
+	result = /obj/item/stack/medical/mesh/one
 	time = 1
 	reqs = list(/obj/item/stack/medical/gauze = 1,
 				/datum/reagent/medicine/silver_sulfadiazine = 10)
