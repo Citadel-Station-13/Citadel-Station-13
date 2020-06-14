@@ -1,4 +1,0 @@
-author: "Bhijn"
-delete-after: True
-changes: 
-  - bugfix: "raw HTML can no longer be used in flavortext"

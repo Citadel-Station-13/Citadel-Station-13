@@ -1,4 +1,0 @@
-author: "Ghommie"
-delete-after: True
-changes: 
-  - tweak: "changed the weak attack message prefix from \"inefficiently\" to \"limply\", \"feebly\" and \"saplessly\" and lowered the threshold."
