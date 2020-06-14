@@ -17,6 +17,10 @@ Mineral Sheets
 		- Snow
 		- Abductor
 		- Coal
+	Partical Smasher:
+		- Morphium
+		- Valhollide
+		- Supermatter aka Misstakes
 */
 
 /*
@@ -42,6 +46,7 @@ GLOBAL_LIST_INIT(sandstone_recipes, list ( \
 	custom_materials = list(/datum/material/glass=MINERAL_MATERIAL_AMOUNT)
 	sheettype = "sandstone"
 	merge_type = /obj/item/stack/sheet/mineral/sandstone
+	icon_colour = "#D9C179"
 
 /obj/item/stack/sheet/mineral/sandstone/get_main_recipes()
 	. = ..()
@@ -107,6 +112,7 @@ GLOBAL_LIST_INIT(sandbag_recipes, list ( \
 	point_value = 25
 	merge_type = /obj/item/stack/sheet/mineral/diamond
 	material_type = /datum/material/diamond
+	icon_colour = "#00FFE1"
 
 GLOBAL_LIST_INIT(diamond_recipes, list ( \
 	new/datum/stack_recipe("diamond door", /obj/structure/mineral_door/transparent/diamond, 10, one_per_turf = 1, on_floor = 1), \
@@ -135,6 +141,7 @@ GLOBAL_LIST_INIT(diamond_recipes, list ( \
 	point_value = 20
 	merge_type = /obj/item/stack/sheet/mineral/uranium
 	material_type = /datum/material/uranium
+	icon_colour = "#007A00"
 
 GLOBAL_LIST_INIT(uranium_recipes, list ( \
 	new/datum/stack_recipe("uranium door", /obj/structure/mineral_door/uranium, 10, one_per_turf = 1, on_floor = 1), \
@@ -163,6 +170,7 @@ GLOBAL_LIST_INIT(uranium_recipes, list ( \
 	point_value = 20
 	merge_type = /obj/item/stack/sheet/mineral/plasma
 	material_type = /datum/material/plasma
+	icon_colour = "#FC2BC5"
 
 /obj/item/stack/sheet/mineral/plasma/suicide_act(mob/living/carbon/user)
 	user.visible_message("<span class='suicide'>[user] begins licking \the [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
@@ -205,6 +213,7 @@ GLOBAL_LIST_INIT(plasma_recipes, list ( \
 	point_value = 20
 	merge_type = /obj/item/stack/sheet/mineral/gold
 	material_type = /datum/material/gold
+	icon_colour = "#EDD12F"
 
 GLOBAL_LIST_INIT(gold_recipes, list ( \
 	new/datum/stack_recipe("golden door", /obj/structure/mineral_door/gold, 10, one_per_turf = 1, on_floor = 1), \
@@ -236,6 +245,7 @@ GLOBAL_LIST_INIT(gold_recipes, list ( \
 	merge_type = /obj/item/stack/sheet/mineral/silver
 	material_type = /datum/material/silver
 	tableVariant = /obj/structure/table/optable
+	icon_colour = "#D1E6E3"
 
 GLOBAL_LIST_INIT(silver_recipes, list ( \
 	new/datum/stack_recipe("silver door", /obj/structure/mineral_door/silver, 10, one_per_turf = 1, on_floor = 1), \
@@ -294,6 +304,7 @@ GLOBAL_LIST_INIT(bananium_recipes, list ( \
 	point_value = 20
 	merge_type = /obj/item/stack/sheet/mineral/titanium
 	material_type = /datum/material/titanium
+	icon_colour = "#D1E6E3"
 
 GLOBAL_LIST_INIT(titanium_recipes, list ( \
 	new/datum/stack_recipe("titanium tile", /obj/item/stack/tile/mineral/titanium, 1, 4, 20), \
@@ -472,9 +483,10 @@ GLOBAL_LIST_INIT(abductor_recipes, list ( \
 
 /obj/item/stack/sheet/mineral/morphium
 	name = "Morphium"
-	desc = "A powerful material that mimics what the gray's use."
+	desc = "A powerful material that mimics what the gray* use."
 	icon_state = "sheet-wavy"
 	item_state = "mhydrogen"
+	icon_colour = "#37115A"
 
 /*
  * Valhollide
@@ -485,6 +497,7 @@ GLOBAL_LIST_INIT(abductor_recipes, list ( \
 	desc = "A powerful material made out of mashing particles into one another, ya science!"
 	icon_state = "sheet-gem"
 	item_state = "diamond"
+	icon_colour = "#4FE95A"
 
 /*
  * Supermatter - Forged in the equivalent of Hell, one piece at a time.
@@ -495,6 +508,7 @@ GLOBAL_LIST_INIT(abductor_recipes, list ( \
 	icon_state = "sheet-super"
 	item_state = "diamond"
 	item_flags = SLOWS_WHILE_IN_HAND
+	icon_colour = "#FFFF00"
 
 GLOBAL_LIST_INIT(supermatter_recipes, list ( \
 	new/datum/stack_recipe("supermatter shard", /obj/machinery/power/supermatter_crystal/shard, 30 , one_per_turf = 1, time = 600, on_floor = 1), \

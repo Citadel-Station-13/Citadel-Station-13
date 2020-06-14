@@ -14,6 +14,8 @@
 	var/sheettype = null //this is used for girders in the creation of walls/false walls
 	var/point_value = 0 //turn-in value for the gulag stacker - loosely relative to its rarity
 	var/shard_type // the shard debris typepath left over by solar panels and windows etc.
+	// Icons
+	var/icon_colour = "#AAAAAA" // Colour applied to products of this material. By Default we are gray
 
 /obj/item/stack/sheet/Initialize(mapload, new_amount, merge)
 	. = ..()

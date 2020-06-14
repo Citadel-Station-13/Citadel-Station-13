@@ -37,7 +37,7 @@
 	var/image/reagent_layer		// Holds the image used for showing a contained beaker.
 	var/energy = 0				// How many 'energy' units does this have? Acquired by a Particle Accelerator like a Singularity.
 	var/max_energy = 600
-	var/obj/item/stack/material/target	// The material being bombarded.
+	var/obj/item/stack/sheet/mineral/target	// The material being bombarded.
 	var/obj/item/reagent_containers/reagent_container		// Holds the beaker. The process will consume ALL reagents inside it.
 	var/beaker_type = /obj/item/reagent_containers/glass/beaker
 	var/list/storage		// Holds references to items allowed to be used in the fabrication phase.
@@ -67,12 +67,12 @@
 	if(W.type == /obj/item/analyzer)
 		to_chat(user, "<span class='notice'>\The [src] reads an energy level of [energy].</span>")
 	else if(istype(W, /obj/item/stack/sheet/mineral))
-		var/obj/item/stack/material/M = W
-		if(M.uses_charge)
-			to_chat(user, "<span class='notice'>You cannot fill \the [src] with a synthesizer!</span>")
-			return
-		target = M.split(1)
-		target.forceMove(src)
+		var/obj/item/stack/sheet/mineral/M = W
+//		if(M.uses_charge) //To prevent robotic beings from abusing their own mats to endlessly make new better mats
+//			to_chat(user, "<span class='notice'>You cannot fill \the [src] with a synthesizer!</span>")
+//			return
+		M.use(1) //Removes a single or the sheet from the game
+		target = new M.type(src, 1) //Spawn a new single sheet in the smasher
 		update_icon()
 	else if(istype(W, beaker_type))
 		if(reagent_container)
@@ -152,7 +152,7 @@
 
 	if(energy)
 		radiate()
-		energy = (energy - 5, 0, max_energy)
+		energy = clamp(energy - 5, 0, max_energy)
 
 	return
 
@@ -261,7 +261,6 @@
 
 /obj/machinery/particle_smasher/proc/radiate() //Welcome to Particale Fallout
 	radiation_pulse(src, 10 * src.energy + 10) //We Always have SOME radiation
-	last_event = world.time
 	return
 
 /*

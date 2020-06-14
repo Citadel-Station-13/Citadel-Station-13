@@ -138,6 +138,7 @@ GLOBAL_LIST_INIT(metal_recipes, list ( \
 	point_value = 2
 	tableVariant = /obj/structure/table
 	material_type = /datum/material/iron
+	icon_colour = "#666666"
 
 /obj/item/stack/sheet/metal/ratvar_act()
 	new /obj/item/stack/tile/brass(loc, amount)
@@ -214,6 +215,7 @@ GLOBAL_LIST_INIT(plasteel_recipes, list ( \
 	grind_results = list(/datum/reagent/iron = 20, /datum/reagent/toxin/plasma = 20)
 	point_value = 23
 	tableVariant = /obj/structure/table/reinforced
+	icon_colour = "#777777"
 
 /obj/item/stack/sheet/plasteel/get_main_recipes()
 	. = ..()
@@ -289,6 +291,7 @@ GLOBAL_LIST_INIT(wood_recipes, list ( \
 	novariants = TRUE
 	material_type = /datum/material/wood
 	grind_results = list(/datum/reagent/carbon = 20)
+	icon_colour = "#9c5930"
 
 /obj/item/stack/sheet/mineral/wood/attackby(obj/item/W, mob/user, params) // NOTE: sheet_types.dm is where the WOOD stack lives. Maybe move this over there.
 	// Taken from /obj/item/stack/rods/attackby in [rods.dm]
@@ -407,6 +410,7 @@ GLOBAL_LIST_INIT(cloth_recipes, list ( \
 	force = 0
 	throwforce = 0
 	merge_type = /obj/item/stack/sheet/cloth
+	icon_colour = "#FFFFFF"
 
 /obj/item/stack/sheet/cloth/get_main_recipes()
 	. = ..()
@@ -439,6 +443,7 @@ GLOBAL_LIST_INIT(durathread_recipes, list ( \
 	force = 0
 	throwforce = 0
 	merge_type = /obj/item/stack/sheet/durathread
+	icon_colour = "#AAAAAA"
 
 /obj/item/stack/sheet/durathread/get_main_recipes()
 	. = ..()
@@ -519,6 +524,7 @@ GLOBAL_LIST_INIT(cardboard_recipes, list ( \
 	throwforce = 0
 	merge_type = /obj/item/stack/sheet/cardboard
 	novariants = TRUE
+	icon_colour = "#AAAAAA"
 
 /obj/item/stack/sheet/cardboard/get_main_recipes()
 	. = ..()
@@ -562,6 +568,7 @@ GLOBAL_LIST_INIT(runed_metal_recipes, list ( \
 	merge_type = /obj/item/stack/sheet/runed_metal
 	novariants = TRUE
 	grind_results = list(/datum/reagent/iron = 5, /datum/reagent/blood = 15)
+	icon_colour = "#402821"
 
 /obj/item/stack/sheet/runed_metal/ratvar_act()
 	new /obj/item/stack/tile/brass(loc, amount)
@@ -775,6 +782,7 @@ GLOBAL_LIST_INIT(plastic_recipes, list(
 	throwforce = 7
 	grind_results = list(/datum/reagent/glitter/white = 60)
 	merge_type = /obj/item/stack/sheet/plastic
+	icon_colour = "#CCCCCC"
 
 /obj/item/stack/sheet/plastic/fifty
 	amount = 50
