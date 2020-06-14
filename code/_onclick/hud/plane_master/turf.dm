@@ -53,7 +53,7 @@
 /obj/screen/plane_master/wall
 	name = "wall plane master"
 	plane = WALL_PLANE
-	render_target = WALL_RENDER_TARGET
+	render_target = WALL_PLANE_RENDER_TARGET
 	appearance_flags = PLANE_MASTER
 
 /obj/screen/plane_master/wall/backdrop(mob/mymob)

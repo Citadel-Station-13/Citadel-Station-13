@@ -32,11 +32,13 @@
 /obj/screen/plane_master/emissive/Initialize()
 	. = ..()
 	filters += filter(type="alpha", render_source=EMISSIVE_BLOCKER_RENDER_TARGET, flags=MASK_INVERSE)
+	filters += filter(type="alpha", render_source=FIELD_OF_VISION_RENDER_TARGET, flags=MASK_INVERSE)
 
 /**
   * Things placed on this always mask the lighting plane. Doesn't render directly.
   *
   * Always masks the light plane, isn't blocked by anything. Use for on mob glows,
+  * Always masks the light plane, isn't blocked by anything (except Field of Vision). Use for on mob glows,
   * magic stuff, etc.
   */
 
@@ -46,6 +48,10 @@
 	appearance_flags = PLANE_MASTER
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	render_target = EMISSIVE_UNBLOCKABLE_RENDER_TARGET
+
+/obj/screen/plane_master/emissive_unblockable/Initialize()
+	. = ..()
+	filters += filter(type="alpha", render_source=FIELD_OF_VISION_RENDER_TARGET, flags=MASK_INVERSE)
 
 /**
   * Things placed on this layer mask the emissive layer. Doesn't render directly

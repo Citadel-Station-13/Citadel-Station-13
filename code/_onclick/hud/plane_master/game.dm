@@ -12,7 +12,7 @@
 
 /obj/screen/plane_master/game_world/backdrop(mob/mymob)
 	if(istype(mymob) && mymob.client && mymob.client.prefs && mymob.client.prefs.ambientocclusion)
-		add_filter("ambient_occlusion", 0, AMBIENT_OCCLUSION)
+		add_filter("ambient_occlusion", 0, AMBIENT_OCCLUSION(4, "#04080FAA"))
 	else
 		remove_filter("ambient_occlusion")
 	update_filters()
