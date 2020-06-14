@@ -56731,9 +56731,6 @@
 /obj/machinery/rnd/production/techfab/department/service,
 /turf/open/floor/plasteel,
 /area/hallway/secondary/service)
-"cox" = (
-/turf/open/floor/plasteel/white/corner,
-/area/medical/patients_rooms)
 "coy" = (
 /obj/structure/cable/yellow{
 	icon_state = "1-2"
@@ -56745,18 +56742,8 @@
 	dir = 8
 	},
 /area/medical/patients_rooms)
-"coA" = (
-/obj/structure/curtain{
-	icon_state = "closed"
-	},
-/turf/open/floor/plasteel/white/corner{
-	dir = 8
-	},
-/area/medical/patients_rooms)
 "coC" = (
-/turf/open/floor/plasteel/white/corner{
-	dir = 8
-	},
+/turf/open/floor/plasteel/white/side,
 /area/medical/patients_rooms)
 "coE" = (
 /obj/structure/chair/comfy/teal{
@@ -57310,9 +57297,7 @@
 /turf/open/floor/plasteel/white,
 /area/medical/patients_rooms)
 "cpW" = (
-/obj/structure/curtain{
-	icon_state = "closed"
-	},
+/obj/structure/curtain,
 /turf/open/floor/plasteel/white,
 /area/medical/patients_rooms)
 "cpZ" = (
@@ -57651,12 +57636,7 @@
 	dir = 9
 	},
 /turf/open/floor/plasteel/white/side{
-	dir = 8
-	},
-/area/medical/patients_rooms)
-"crn" = (
-/turf/open/floor/plasteel/white/corner{
-	dir = 1
+	dir = 9
 	},
 /area/medical/patients_rooms)
 "crq" = (
@@ -58048,14 +58028,6 @@
 /obj/effect/spawner/lootdrop/maintenance,
 /turf/open/floor/plating,
 /area/maintenance/starboard)
-"csi" = (
-/obj/structure/curtain{
-	icon_state = "closed"
-	},
-/turf/open/floor/plasteel/white/corner{
-	dir = 4
-	},
-/area/medical/patients_rooms)
 "csj" = (
 /obj/structure/cable/yellow{
 	icon_state = "1-2"
@@ -58073,10 +58045,8 @@
 	},
 /area/medical/patients_rooms)
 "csl" = (
-/obj/structure/curtain{
-	icon_state = "closed"
-	},
-/turf/open/floor/plasteel/white/corner{
+/obj/structure/curtain,
+/turf/open/floor/plasteel/white/side{
 	dir = 1
 	},
 /area/medical/patients_rooms)
@@ -69720,6 +69690,10 @@
 	},
 /turf/open/floor/plasteel/cafeteria,
 /area/engine/atmos)
+"cWc" = (
+/obj/structure/curtain,
+/turf/open/floor/plasteel/white/side,
+/area/medical/patients_rooms)
 "cWA" = (
 /obj/effect/spawner/lootdrop/maintenance,
 /turf/open/floor/plating,
@@ -72823,8 +72797,8 @@
 /turf/open/floor/plasteel/white,
 /area/science/research)
 "diI" = (
-/turf/open/floor/plasteel/white/corner{
-	dir = 4
+/turf/open/floor/plasteel/white/side{
+	dir = 1
 	},
 /area/medical/patients_rooms)
 "diJ" = (
@@ -75402,7 +75376,7 @@
 "ggl" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel/white/side{
-	dir = 4
+	dir = 6
 	},
 /area/medical/patients_rooms)
 "ghM" = (
@@ -75484,6 +75458,11 @@
 /obj/structure/rack,
 /turf/open/floor/plating,
 /area/maintenance/aft)
+"gwP" = (
+/turf/open/floor/plasteel/white/side{
+	dir = 10
+	},
+/area/medical/patients_rooms)
 "gxH" = (
 /obj/machinery/atmospherics/components/binary/pump{
 	dir = 4
@@ -77287,7 +77266,7 @@
 	pixel_y = 1
 	},
 /obj/item/paper,
-/turf/open/floor/plasteel/white/corner{
+/turf/open/floor/plasteel/white/side{
 	dir = 1
 	},
 /area/medical/patients_rooms)
@@ -77970,8 +77949,8 @@
 	pixel_x = -32
 	},
 /obj/item/toy/plush/slimeplushie,
-/turf/open/floor/plasteel/white/corner{
-	dir = 4
+/turf/open/floor/plasteel/white/side{
+	dir = 1
 	},
 /area/medical/patients_rooms)
 "mEe" = (
@@ -78309,7 +78288,7 @@
 /area/construction/storage/wing)
 "nJh" = (
 /turf/open/floor/plasteel/white/side{
-	dir = 4
+	dir = 5
 	},
 /area/medical/patients_rooms)
 "nJF" = (
@@ -79877,10 +79856,8 @@
 /turf/open/space/basic,
 /area/space/nearstation)
 "sfe" = (
-/obj/structure/curtain{
-	icon_state = "closed"
-	},
-/turf/open/floor/plasteel/white/corner,
+/obj/structure/curtain,
+/turf/open/floor/plasteel,
 /area/medical/patients_rooms)
 "sgp" = (
 /obj/effect/turf_decal/tile/blue{
@@ -81082,9 +81059,7 @@
 /obj/item/radio/intercom{
 	pixel_y = -28
 	},
-/turf/open/floor/plasteel/white/corner{
-	dir = 8
-	},
+/turf/open/floor/plasteel/white/side,
 /area/medical/patients_rooms)
 "uGW" = (
 /obj/structure/cable/yellow{
@@ -81795,7 +81770,7 @@
 /obj/item/radio/intercom{
 	pixel_y = -28
 	},
-/turf/open/floor/plasteel/white/corner,
+/turf/open/floor/plasteel/white/side,
 /area/medical/patients_rooms)
 "vVR" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -100070,7 +100045,7 @@ cjv
 diG
 dxv
 cnq
-cox
+coC
 cpW
 diI
 diK
@@ -100327,7 +100302,7 @@ cLR
 cRF
 dxv
 cnp
-cox
+coC
 cpW
 diI
 csm
@@ -100584,10 +100559,10 @@ cLS
 dwj
 dxv
 sfe
-sfe
+cWc
 dxv
-csi
-csi
+csl
+sfe
 dxv
 qzU
 cvl
@@ -101355,7 +101330,7 @@ cjN
 ckV
 cml
 coz
-coz
+gwP
 nUJ
 crk
 csk
@@ -101611,11 +101586,11 @@ cic
 cjP
 ckW
 dxv
-coA
-coA
+sfe
+cWc
 dxv
 csl
-csl
+sfe
 dxv
 uZs
 wds
@@ -101871,7 +101846,7 @@ dxv
 cnp
 coC
 cpW
-crn
+diI
 csm
 dxv
 cui
@@ -102128,7 +102103,7 @@ dxv
 cnq
 coC
 cpW
-crn
+diI
 csn
 dxv
 xNk
