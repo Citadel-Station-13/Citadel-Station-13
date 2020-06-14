@@ -124,7 +124,9 @@
 /turf/open/floor/carpet/purple,
 /area/ruin/powered/greed)
 "W" = (
-/turf/closed/wall/mineral/titanium/survival/nodiagonal,
+/turf/closed/wall/mineral/cult{
+	sheet_amount = 0
+	},
 /area/ruin/powered/greed)
 
 (1,1,1) = {"

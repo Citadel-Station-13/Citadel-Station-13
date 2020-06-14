@@ -3,7 +3,6 @@
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "b" = (
-/obj/structure/falsewall/silver,
 /turf/closed/wall/mineral/diamond,
 /area/ruin/powered/pride)
 "c" = (
