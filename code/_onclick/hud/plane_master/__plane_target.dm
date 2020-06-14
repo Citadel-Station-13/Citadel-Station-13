@@ -5,6 +5,7 @@ INITIALIZE_IMMEDIATE(/obj/screen/plane_render_target)
 /obj/screen/plane_render_target
 	name = "plane render target"
 	screen_loc = "CENTER"
+	appearance_flags = APPEARANCE_UI | PASS_MOUSE
 
 /obj/screen/plane_render_target/Initialize(mapload, planename, plane, layer, render_source)
 	. = ..()
