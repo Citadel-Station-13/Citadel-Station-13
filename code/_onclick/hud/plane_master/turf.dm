@@ -7,7 +7,7 @@
 /obj/screen/plane_master/turf_subrender/get_render_holders()
 	. = ..()
 	. += new /obj/screen/plane_render_target/space(src, 1)
-	. += new /obj/screen/plane_render_target/space_parallax(src, 2)
+	. += new /obj/screen/plane_render_target/parallax(src, 2)
 	. += new /obj/screen/plane_render_target/openspace(src, 3)
 	. += new /obj/screen/plane_render_target/floor(src, 4)
 	. += new /obj/screen/plane_render_target/wall(src, 5)
