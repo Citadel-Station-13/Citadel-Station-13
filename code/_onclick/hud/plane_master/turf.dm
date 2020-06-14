@@ -16,7 +16,7 @@
 /obj/screen/plane_render_target/turf_subrender
 	name = "Render Holder - Turf Subrender"
 	render_source = TURF_RENDER_TARGET
-
+w
 ///Things rendered on "openspace"; holes in multi-z
 /obj/screen/plane_master/openspace
 	name = "open space plane master"
@@ -30,7 +30,7 @@
 
 /obj/screen/plane_master/openspace/get_render_holders()
 	. = ..()
-	. += new /obj/screen/plane_render_target(null, "openspace backdrop", plane, 1, OPENSPACE_BACKDROP_RENDER_TARGET)
+	. += new /obj/screen/plane_render_target/openspace_backdrop(src, 1)
 
 /obj/screen/plane_render_target/openspace
 	name = "Render Holder - Turf - Openspace"

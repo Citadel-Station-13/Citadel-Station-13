@@ -9,4 +9,4 @@
 /obj/screen/plane_render_target/chat_messages
 	name = "Render Holder - Game - Runechat"
 	render_source = CHAT_RENDER_TARGET
-	appearance_flags = APPEARANCE_UI & (~PASS_MOUSE)		// Don't bother passing clicks.
+	appearance_flags = APPEARANCE_UI
