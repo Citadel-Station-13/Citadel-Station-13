@@ -124,8 +124,8 @@
 	category = CAT_MISC
 	subcategory = CAT_TOOL
 
-/datum/crafting_recipe/bruise_pack
-	name = "Suture"
+/datum/crafting_recipe/brute_pack
+	name = "Suture Pack"
 	result = /obj/item/stack/medical/suture/one
 	time = 1
 	reqs = list(/obj/item/stack/medical/gauze = 1,
