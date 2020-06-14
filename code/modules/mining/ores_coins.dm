@@ -102,7 +102,22 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 /obj/item/stack/ore/glass/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	if(..() || !ishuman(hit_atom))
 		return
-	var/mob/living/carbon/human/C = hit_atom
+	var/mob/living/carbon/human/poorsod = hit_atom
+	eyesand(poorsod)
+
+/obj/item/stack/ore/glass/attack(mob/living/M, mob/living/user)
+	if(!ishuman(M))
+		return ..()
+	if(user.zone_selected != BODY_ZONE_PRECISE_EYES && user.zone_selected != BODY_ZONE_HEAD)
+		return ..()
+	var/mob/living/carbon/human/poorsod = M
+	visible_message("<span class='danger'>[user] throws the sand at [poorsod]'s face!</span>")
+	if(ishuman(user))
+		var/mob/living/carbon/human/sayer = user
+		sayer.forcesay("POCKET SAAND!!")
+	eyesand(poorsod)
+
+/obj/item/stack/ore/glass/proc/eyesand(mob/living/carbon/human/C)
 	if(C.head && C.head.flags_cover & HEADCOVERSEYES)
 		visible_message("<span class='danger'>[C]'s headgear blocks the sand!</span>")
 		return
@@ -116,7 +131,9 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	C.adjustStaminaLoss(15)//the pain from your eyes burning does stamina damage
 	C.confused += 5
 	to_chat(C, "<span class='userdanger'>\The [src] gets into your eyes! The pain, it burns!</span>")
+	C.forcesay("*scream")
 	qdel(src)
+
 
 /obj/item/stack/ore/glass/ex_act(severity, target)
 	if (severity == EXPLODE_NONE)
@@ -340,6 +357,9 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 		var/datum/material/M = i
 		value += M.value_per_unit * custom_materials[M]
 
+/obj/item/coin/get_item_credit_value()
+	return value
+
 /obj/item/coin/suicide_act(mob/living/user)
 	user.visible_message("<span class='suicide'>[user] contemplates suicide with \the [src]!</span>")
 	if (!attack_self(user))
@@ -363,12 +383,11 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 
 /obj/item/coin/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/stack/cable_coil))
-		var/obj/item/stack/cable_coil/CC = W
 		if(string_attached)
 			to_chat(user, "<span class='warning'>There already is a string attached to this coin!</span>")
 			return
 
-		if (CC.use(1))
+		if (W.use_tool(src, user, 0, 1, max_level = JOB_SKILL_BASIC))
 			add_overlay("coin_string_overlay")
 			string_attached = 1
 			to_chat(user, "<span class='notice'>You attach a string to the coin.</span>")

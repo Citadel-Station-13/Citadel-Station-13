@@ -8,12 +8,14 @@
 					/obj/item/reagent_containers/food/drinks/mug/tea = 25,
 					/obj/item/reagent_containers/food/drinks/mug/coco = 25)
 	contraband = list(/obj/item/reagent_containers/food/drinks/ice = 12)
-	premium = list(/obj/item/reagent_containers/food/snacks/chocolatebar = 3,
-					/obj/item/reagent_containers/food/condiment/milk = 2,
+	premium = list(/obj/item/reagent_containers/food/condiment/milk = 2,
 					/obj/item/reagent_containers/food/drinks/bottle/cream = 2,
 					/obj/item/reagent_containers/food/condiment/sugar = 1)
 
 	refill_canister = /obj/item/vending_refill/coffee
+	default_price = PRICE_REALLY_CHEAP
+	extra_price = PRICE_PRETTY_CHEAP
+	payment_department = ACCOUNT_SRV
 
 /obj/item/vending_refill/coffee
 	machine_name = "Solar's Best Hot Drinks"

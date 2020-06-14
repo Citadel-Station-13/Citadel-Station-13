@@ -707,24 +707,8 @@
 /turf/open/floor/plasteel,
 /area/science/mixing)
 "acc" = (
-/obj/machinery/computer/security/telescreen/toxins{
-	layer = 4;
-	network = list("toxins");
-	pixel_y = 30
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
-	},
-/turf/open/floor/plasteel,
-/area/science/mixing)
-"acd" = (
-/obj/machinery/computer/security/telescreen/toxins{
-	layer = 4;
-	network = list("toxins");
-	pixel_y = 30
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
 	},
 /turf/open/floor/plasteel,
 /area/science/mixing)
@@ -1182,6 +1166,10 @@
 	dir = 4;
 	name = "Mass Driver Door";
 	req_access_txt = "7"
+	},
+/obj/machinery/computer/security/telescreen/toxins{
+	dir = 1;
+	pixel_y = -32
 	},
 /turf/open/floor/plasteel,
 /area/science/mixing)
@@ -23482,9 +23470,7 @@
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,
-/obj/structure/closet/l3closet/scientist{
-	pixel_x = -2
-	},
+/obj/structure/closet/l3closet/scientist,
 /turf/open/floor/plasteel/white,
 /area/science/explab)
 "aQI" = (
@@ -38272,12 +38258,10 @@
 /turf/open/floor/plasteel/white,
 /area/medical/chemistry)
 "btD" = (
-/obj/machinery/chem_dispenser{
-	layer = 2.7
-	},
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 1
 	},
+/obj/machinery/chem_dispenser/apothecary,
 /turf/open/floor/plasteel/white,
 /area/medical/chemistry)
 "btE" = (
@@ -45021,7 +45005,7 @@
 /turf/open/floor/wood,
 /area/maintenance/bar)
 "bGM" = (
-/obj/machinery/vending/boozeomat/all_access,
+/obj/machinery/vending/boozeomat,
 /turf/open/floor/wood,
 /area/maintenance/bar)
 "bGN" = (
@@ -47241,7 +47225,6 @@
 /area/hydroponics/garden/abandoned)
 "bKT" = (
 /obj/item/poster/random_contraband,
-/turf/open/floor/plating,
 /turf/open/floor/plating{
 	icon_state = "platingdmg2"
 	},
@@ -58598,7 +58581,7 @@
 /turf/open/space,
 /area/space/nearstation)
 "cgJ" = (
-/obj/machinery/vending/autodrobe/all_access,
+/obj/machinery/vending/autodrobe,
 /turf/open/floor/plating,
 /area/maintenance/aft)
 "cgK" = (
@@ -62158,7 +62141,6 @@
 /obj/structure/cable{
 	icon_state = "0-4"
 	},
-/turf/open/floor/plating,
 /turf/open/floor/plating{
 	icon_state = "platingdmg2"
 	},
@@ -63619,7 +63601,6 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/turf/open/floor/plating,
 /turf/open/floor/plating{
 	icon_state = "platingdmg2"
 	},
@@ -72658,7 +72639,7 @@
 /turf/open/floor/plasteel/grimy,
 /area/bridge)
 "cIV" = (
-/obj/machinery/vending/boozeomat/all_access,
+/obj/machinery/vending/boozeomat,
 /obj/machinery/status_display/evac{
 	pixel_y = 32
 	},
@@ -75970,7 +75951,6 @@
 	},
 /area/maintenance/department/medical)
 "cPo" = (
-/turf/open/floor/plating,
 /turf/open/floor/plating{
 	icon_state = "platingdmg2"
 	},
@@ -76073,7 +76053,6 @@
 	},
 /area/maintenance/fore/secondary)
 "cPB" = (
-/turf/open/floor/plating,
 /turf/open/floor/plating{
 	icon_state = "platingdmg2"
 	},
@@ -76098,17 +76077,10 @@
 	},
 /area/maintenance/department/crew_quarters/dorms)
 "cPE" = (
-/turf/open/floor/plating,
 /turf/open/floor/plating{
 	icon_state = "platingdmg2"
 	},
 /area/maintenance/department/crew_quarters/dorms)
-"cPF" = (
-/turf/open/floor/plating,
-/turf/open/floor/plating{
-	icon_state = "platingdmg2"
-	},
-/area/maintenance/aft)
 "cPG" = (
 /obj/structure/cable{
 	icon_state = "4-8"
@@ -81517,6 +81489,10 @@
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/aft)
+"sZf" = (
+/obj/machinery/rnd/bepis,
+/turf/open/floor/engine,
+/area/science/explab)
 "tbT" = (
 /obj/machinery/power/emitter/anchored{
 	dir = 1;
@@ -112996,7 +112972,7 @@ aAY
 aAY
 aAY
 abK
-acd
+ace
 acH
 ajC
 abJ
@@ -113803,7 +113779,7 @@ aFb
 aFO
 aGD
 aHo
-aGD
+aHp
 aDr
 aaA
 aaA
@@ -114059,7 +114035,7 @@ aEj
 aFc
 aFO
 aGD
-aHp
+aGD
 aGD
 aDr
 apk
@@ -114572,9 +114548,9 @@ aJP
 aKA
 aFe
 aDr
-aGD
 aHq
 aGD
+sZf
 aDr
 aJI
 aKB
@@ -115439,7 +115415,7 @@ cgm
 thv
 uRw
 boU
-cPF
+cfm
 chI
 cqg
 cWW
@@ -118541,7 +118517,7 @@ aaA
 ceG
 cqt
 bYa
-cPF
+cfm
 ceG
 aaA
 aaA
@@ -119299,7 +119275,7 @@ cQK
 bYa
 bYa
 cRQ
-cPF
+cfm
 chI
 cRv
 bYa
@@ -134623,7 +134599,7 @@ aab
 aab
 aJw
 aKk
-aKk
+aPB
 aLY
 aMU
 aNT

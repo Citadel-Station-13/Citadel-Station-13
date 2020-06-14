@@ -6,6 +6,10 @@
 	blend_mode = BLEND_OVERLAY
 	render_target = GAME_PLANE_RENDER_TARGET
 
+/obj/screen/plane_master/game_world/Initialize()
+	. = ..()
+	add_filter("vision_cone", 100, list(type="alpha", render_source=FIELD_OF_VISION_RENDER_TARGET, flags=MASK_INVERSE))
+
 /obj/screen/plane_master/game_world/backdrop(mob/mymob)
 	if(istype(mymob) && mymob.client && mymob.client.prefs && mymob.client.prefs.ambientocclusion)
 		add_filter("ambient_occlusion", 0, AMBIENT_OCCLUSION)

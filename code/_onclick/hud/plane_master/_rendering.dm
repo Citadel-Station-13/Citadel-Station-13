@@ -45,3 +45,5 @@
 	. += new /obj/screen/plane_render_target(null, "above lighting", plane, 5, ABOVE_LIGHTING_RENDER_TARGET)
 	. += new /obj/screen/plane_render_target(null, "camerastatic", plane, 6, CAMERA_STATIC_RENDER_TARGET)
 	. += new /obj/screen/plane_render_target(null, "fullscreen", plane, 7, FULLSCREEN_RENDER_TARGET)
+	// this is better off being separated from final game plane so effects like potentially rotatium/skewium can be made to not affect chat messages but for now this works.
+	. += new /obj/screen/plane_render_target(null, "runechat", plane, 8, CHAT_RENDER_TARGET)

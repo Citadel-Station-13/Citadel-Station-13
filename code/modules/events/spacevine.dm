@@ -22,7 +22,8 @@
 
 	if(turfs.len) //Pick a turf to spawn at if we can
 		var/turf/T = pick(turfs)
-		new /datum/spacevine_controller(T, pick(subtypesof(/datum/spacevine_mutation)), rand(30,100), rand(5,10), src) //spawn a controller at turf with randomized stats and a single random mutation
+		new /datum/spacevine_controller(T, list(pick(subtypesof(/datum/spacevine_mutation))), rand(30,100), rand(5,10), src) //spawn a controller at turf with randomized stats and a single random mutation
+
 
 
 /datum/spacevine_mutation
@@ -329,8 +330,8 @@
 	if(!override)
 		qdel(src)
 
-/obj/structure/spacevine/attacked_by(obj/item/I, mob/living/user)
-	var/damage_dealt = I.force
+/obj/structure/spacevine/attacked_by(obj/item/I, mob/living/user, attackchain_flags = NONE, damage_multiplier = 1)
+	var/damage_dealt = I.force * damage_multiplier
 	if(I.get_sharpness())
 		damage_dealt *= 4
 	if(I.damtype == BURN)
@@ -382,6 +383,7 @@
 /datum/spacevine_controller/New(turf/location, list/muts, potency, production, datum/round_event/event = null)
 	vines = list()
 	growth_queue = list()
+	spawn_spacevine_piece(location, null, muts)
 	START_PROCESSING(SSobj, src)
 	vine_mutations_list = list()
 	init_subtypes(/datum/spacevine_mutation/, vine_mutations_list)
@@ -416,7 +418,6 @@
 	if(muts && muts.len)
 		for(var/datum/spacevine_mutation/M in muts)
 			M.add_mutation_to_vinepiece(SV)
-		return
 	if(parent)
 		SV.mutations |= parent.mutations
 		var/parentcolor = parent.atom_colours[FIXED_COLOUR_PRIORITY]

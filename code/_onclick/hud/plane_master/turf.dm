@@ -10,6 +10,8 @@
 	. += new /obj/screen/plane_render_target(null, "space parallax", plane, 1, PLANE_SPACE_PARALLAX_RENDER_TARGET)
 	. += new /obj/screen/plane_render_target(null, "openspace", plane, 2, OPENSPACE_RENDER_TARGET)
 	. += new /obj/screen/plane_render_target(null, "floor", plane, 3, FLOOR_PLANE_RENDER_TARGET)
+	. += new /obj/screen/plane_render_target(null, "walls", plane, 5, WALL_PLANE_RENDER_TARGET)
+	. += new /obj/screen/plane_render_target(null, "above_wall_objects", plane, 6, ABOVE_WALL_PLANE_RENDER_TARGET)
 
 ///Things rendered on "openspace"; holes in multi-z
 /obj/screen/plane_master/openspace
@@ -17,6 +19,10 @@
 	plane = OPENSPACE_PLANE
 	appearance_flags = PLANE_MASTER | PIXEL_SCALE
 	render_target = OPENSPACE_RENDER_TARGET
+
+/obj/screen/plane_master/openspace/Initialize()
+	. = ..()
+	filters += filter(type="alpha", render_source=FIELD_OF_VISION_RENDER_TARGET, flags=MASK_INVERSE)
 
 /obj/screen/plane_master/openspace/get_render_holders()
 	. = ..()
@@ -43,3 +49,31 @@
 	appearance_flags = PLANE_MASTER | PIXEL_SCALE
 	blend_mode = BLEND_OVERLAY
 	render_target = FLOOR_PLANE_RENDER_TARGET
+
+/obj/screen/plane_master/wall
+	name = "wall plane master"
+	plane = WALL_PLANE
+	render_target = WALL_RENDER_TARGET
+	appearance_flags = PLANE_MASTER
+
+/obj/screen/plane_master/wall/backdrop(mob/mymob)
+	if(mymob?.client?.prefs.ambientocclusion)
+		add_filter("ambient_occlusion", 0, AMBIENT_OCCLUSION(4, "#04080FAA"))
+	else
+		remove_filter("ambient_occlusion")
+
+/obj/screen/plane_master/above_wall
+	name = "above wall plane master"
+	plane = ABOVE_WALL_PLANE
+	render_target = ABOVE_WALL_PLANE_RENDER_TARGET
+	appearance_flags = PLANE_MASTER
+
+/obj/screen/plane_master/above_wall/Initialize()
+	. = ..()
+	add_filter("vision_cone", 100, list(type="alpha", render_source=FIELD_OF_VISION_RENDER_TARGET, flags=MASK_INVERSE))
+
+/obj/screen/plane_master/above_wall/backdrop(mob/mymob)
+	if(mymob?.client?.prefs.ambientocclusion)
+		add_filter("ambient_occlusion", 0, AMBIENT_OCCLUSION(3, "#04080F64"))
+	else
+		remove_filter("ambient_occlusion")

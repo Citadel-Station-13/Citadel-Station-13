@@ -167,4 +167,4 @@
 				///obj/item/pipe = 2)
 	time = 80
 	category = CAT_WEAPONRY
-	subcategory = CAT_WEAPON
+	subcategory = CAT_MELEE

@@ -111,7 +111,7 @@
 	include_subtypes = FALSE
 
 /datum/export/large/am_control_unit
-	cost = 4000
+	cost = 2000
 	unit_name = "antimatter control unit"
 	export_types = list(/obj/machinery/power/am_control_unit)
 
@@ -171,10 +171,10 @@
 	var/worth = 10
 	var/gases = C.air_contents.gases
 
-	worth += gases[/datum/gas/bz]*4
+	worth += gases[/datum/gas/bz]*3
 	worth += gases[/datum/gas/stimulum]*25
 	worth += gases[/datum/gas/hypernoblium]*1000
-	worth += gases[/datum/gas/miasma]*4
+	worth += gases[/datum/gas/miasma]*2
 	worth += gases[/datum/gas/tritium]*7
 	worth += gases[/datum/gas/pluoxium]*6
 	worth += gases[/datum/gas/nitryl]*30

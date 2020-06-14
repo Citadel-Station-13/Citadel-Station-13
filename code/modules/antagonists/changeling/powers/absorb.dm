@@ -59,12 +59,12 @@
 		changeling.trueabsorbs++
 
 	if(user.nutrition < NUTRITION_LEVEL_WELL_FED)
-		user.nutrition = min((user.nutrition + target.nutrition), NUTRITION_LEVEL_WELL_FED)
+		user.adjust_nutrition(target.nutrition, NUTRITION_LEVEL_WELL_FED)
 
-	if(target.mind)//if the victim has got a mind
-		// Absorb a lizard, speak Draconic.
-		user.copy_known_languages_from(target)
+	// Absorb a lizard, speak Draconic.
+	user.copy_languages(target, LANGUAGE_ABSORB)
 
+	if(target.mind && user.mind)//if the victim and user have minds
 		target.mind.show_memory(user, 0) //I can read your mind, kekeke. Output all their notes.
 
 		//Some of target's recent speech, so the changeling can attempt to imitate them better.

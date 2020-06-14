@@ -14,6 +14,7 @@
 	name = "Must Hang jeans"
 	desc = "Made in the finest space jeans factory this side of Alpha Centauri."
 	icon_state = "jeansmustang"
+	custom_price = PRICE_ABOVE_NORMAL
 
 /obj/item/clothing/under/pants/blackjeans
 	name = "black jeans"

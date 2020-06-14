@@ -1,7 +1,3 @@
-#define NOT_ELECTROCHROMATIC		0
-#define ELECTROCHROMATIC_OFF		1
-#define ELECTROCHROMATIC_DIMMED		2
-
 GLOBAL_LIST_EMPTY(electrochromatic_window_lookup)
 
 /proc/do_electrochromatic_toggle(new_status, id)
@@ -74,9 +70,8 @@ GLOBAL_LIST_EMPTY(electrochromatic_window_lookup)
 	if(reinf && anchored)
 		state = WINDOW_SCREWED_TO_FRAME
 
-	if(mapload && electrochromatic_id)
-		if(copytext(electrochromatic_id, 1, 2) == "!")
-			electrochromatic_id = SSmapping.get_obfuscated_id(electrochromatic_id)
+	if(mapload && electrochromatic_id && electrochromatic_id[1] == "!")
+		electrochromatic_id = SSmapping.get_obfuscated_id(electrochromatic_id)
 
 	ini_dir = dir
 	air_update_turf(1)
@@ -885,7 +880,3 @@ GLOBAL_LIST_EMPTY(electrochromatic_window_lookup)
 			return
 	..()
 	update_icon()
-
-#undef NOT_ELECTROCHROMATIC
-#undef ELECTROCHROMATIC_OFF
-#undef ELECTROCHROMATIC_DIMMED

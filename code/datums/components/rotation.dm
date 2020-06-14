@@ -23,18 +23,12 @@
 
 	if(can_user_rotate)
 		src.can_user_rotate = can_user_rotate
-	else
-		src.can_user_rotate = CALLBACK(src,.proc/default_can_user_rotate)
 
 	if(can_be_rotated)
 		src.can_be_rotated = can_be_rotated
-	else
-		src.can_be_rotated = CALLBACK(src,.proc/default_can_be_rotated)
 
 	if(after_rotation)
 		src.after_rotation = after_rotation
-	else
-		src.after_rotation = CALLBACK(src,.proc/default_after_rotation)
 
 	//Try Clockwise,counter,flip in order
 	if(src.rotation_flags & ROTATION_FLIP)
@@ -103,14 +97,34 @@
 		examine_list += "<span class='notice'>Alt-click to rotate it clockwise.</span>"
 
 /datum/component/simple_rotation/proc/HandRot(datum/source, mob/user, rotation = default_rotation_direction)
-	if(!can_be_rotated.Invoke(user, rotation) || !can_user_rotate.Invoke(user, rotation))
-		return
+	if(can_be_rotated)
+		if(!can_be_rotated.Invoke(user, default_rotation_direction))
+			return
+	else
+		if(!default_can_be_rotated(user, default_rotation_direction))
+			return
+	if(can_user_rotate)
+		if(!can_user_rotate.Invoke(user, default_rotation_direction))
+			return
+	else
+		if(!default_can_user_rotate(user, default_rotation_direction))
+			return
 	BaseRot(user, rotation)
 	return TRUE
 
 /datum/component/simple_rotation/proc/WrenchRot(datum/source, obj/item/I, mob/living/user)
-	if(!can_be_rotated.Invoke(user,default_rotation_direction) || !can_user_rotate.Invoke(user,default_rotation_direction))
-		return
+	if(can_be_rotated)
+		if(!can_be_rotated.Invoke(user, default_rotation_direction))
+			return
+	else
+		if(!default_can_be_rotated(user, default_rotation_direction))
+			return
+	if(can_user_rotate)
+		if(!can_user_rotate.Invoke(user, default_rotation_direction))
+			return
+	else
+		if(!default_can_user_rotate(user, default_rotation_direction))
+			return
 	if(istype(I,/obj/item/wrench))
 		BaseRot(user,default_rotation_direction)
 		return COMPONENT_NO_AFTERATTACK
@@ -126,7 +140,10 @@
 		if(ROTATION_FLIP)
 			rot_degree = 180
 	AM.setDir(turn(AM.dir,rot_degree))
-	after_rotation.Invoke(user,rotation_type)
+	if(after_rotation)
+		after_rotation.Invoke(user, rotation_type)
+	else
+		default_after_rotation(user, rotation_type)
 
 /datum/component/simple_rotation/proc/default_can_user_rotate(mob/living/user, rotation_type)
 	if(!istype(user) || !user.canUseTopic(parent, BE_CLOSE, NO_DEXTERY))

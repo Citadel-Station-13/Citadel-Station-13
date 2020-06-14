@@ -23,7 +23,7 @@
 		A.update_icon()
 		update_icon()
 
-/obj/item/gun/ballistic/shotgun/process_chamber(empty_chamber = 0)
+/obj/item/gun/ballistic/shotgun/process_chamber(mob/living/user, empty_chamber = 0)
 	return ..() //changed argument value
 
 /obj/item/gun/ballistic/shotgun/chamber_round()
@@ -116,7 +116,7 @@
 	icon_state = "moistnugget"
 	item_state = "moistnugget"
 	slot_flags = 0 //no ITEM_SLOT_BACK sprite, alas
-	inaccuracy_modifier = 0
+	inaccuracy_modifier = 0.5
 	mag_type = /obj/item/ammo_box/magazine/internal/boltaction
 	var/bolt_open = FALSE
 	can_bayonet = TRUE
@@ -126,10 +126,12 @@
 /obj/item/gun/ballistic/shotgun/boltaction/improvised
 	name = "Makeshift 7.62mm Rifle"
 	icon_state = "ishotgun"
+	icon_state = "irifle"
 	item_state = "shotgun"
-	desc = "A large zip gun more or less that takes a single 7.62mm bullet"
+	desc = "A bolt-action breechloaded rifle that takes 7.62mm bullets."
 	mag_type = /obj/item/ammo_box/magazine/internal/boltaction/improvised
 	can_bayonet = FALSE
+	var/slung = FALSE
 
 /obj/item/gun/ballistic/shotgun/boltaction/pump(mob/M)
 	playsound(M, 'sound/weapons/shotgunpump.ogg', 60, 1)
@@ -150,6 +152,22 @@
 /obj/item/gun/ballistic/shotgun/boltaction/examine(mob/user)
 	. = ..()
 	. += "The bolt is [bolt_open ? "open" : "closed"]."
+
+/obj/item/gun/ballistic/shotgun/boltaction/improvised/attackby(obj/item/A, mob/user, params)
+	..()
+	if(istype(A, /obj/item/stack/cable_coil) && !sawn_off)
+		if(A.use_tool(src, user, 0, 10, max_level = JOB_SKILL_BASIC))
+			slot_flags = ITEM_SLOT_BACK
+			to_chat(user, "<span class='notice'>You tie the lengths of cable to the rifle, making a sling.</span>")
+			slung = TRUE
+			update_icon()
+		else
+			to_chat(user, "<span class='warning'>You need at least ten lengths of cable if you want to make a sling!</span>")
+
+/obj/item/gun/ballistic/shotgun/boltaction/improvised/update_icon()
+	..()
+	if(slung)
+		icon_state += "sling"
 
 /obj/item/gun/ballistic/shotgun/boltaction/enchanted
 	name = "enchanted bolt action rifle"
@@ -190,7 +208,7 @@
 /obj/item/gun/ballistic/shotgun/boltaction/enchanted/attack_self()
 	return
 
-/obj/item/gun/ballistic/shotgun/boltaction/enchanted/shoot_live_shot(mob/living/user as mob|obj, pointblank = 0, mob/pbtarget = null, message = 1)
+/obj/item/gun/ballistic/shotgun/boltaction/enchanted/shoot_live_shot(mob/living/user, pointblank = FALSE, mob/pbtarget, message = 1, stam_cost = 0)
 	..()
 	if(guns_left)
 		var/obj/item/gun/ballistic/shotgun/boltaction/enchanted/GUN = new gun_type
@@ -204,7 +222,7 @@
 
 // Automatic Shotguns//
 
-/obj/item/gun/ballistic/shotgun/automatic/shoot_live_shot(mob/living/user as mob|obj)
+/obj/item/gun/ballistic/shotgun/automatic/shoot_live_shot(mob/living/user, pointblank = FALSE, mob/pbtarget, message = 1, stam_cost = 0)
 	..()
 	src.pump(user)
 

@@ -58,6 +58,7 @@
 	desc = "A reliable, blue tinted helmet reminding you that you <i>still</i> owe that engineer a beer."
 	icon_state = "blueshift"
 	item_state = "blueshift"
+	custom_premium_price = PRICE_ABOVE_EXPENSIVE
 
 /obj/item/clothing/head/helmet/riot
 	name = "riot helmet"
@@ -273,7 +274,7 @@
 
 //LightToggle
 
-/obj/item/clothing/head/helment/ComponentInitialize()
+/obj/item/clothing/head/helmet/ComponentInitialize()
 	. = ..()
 	AddElement(/datum/element/update_icon_updates_onmob)
 

@@ -24,7 +24,8 @@
 	variable = TRUE
 
 /datum/movespeed_modifier/damage_slowdown_flying
-	movetypes = FLOATING
+	movetypes = FLYING
+	blacklisted_movetypes = FLOATING
 	variable = TRUE
 
 /datum/movespeed_modifier/equipment_speedmod
@@ -118,3 +119,7 @@
 /datum/movespeed_modifier/liver_cirrhosis
 	blacklisted_movetypes = FLOATING
 	variable = TRUE
+
+/datum/movespeed_modifier/active_block
+	variable = TRUE
+	flags = IGNORE_NOSLOW

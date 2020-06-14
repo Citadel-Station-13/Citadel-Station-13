@@ -13278,7 +13278,7 @@
 /turf/open/floor/engine/cult,
 /area/wizard_station)
 "ED" = (
-/obj/machinery/vending/boozeomat/all_access,
+/obj/machinery/vending/boozeomat,
 /turf/closed/indestructible{
 	icon = 'icons/turf/walls/wood_wall.dmi';
 	icon_state = "wood";
@@ -17650,7 +17650,7 @@
 /turf/open/floor/wood,
 /area/syndicate_mothership)
 "Sj" = (
-/obj/machinery/vending/autodrobe/all_access{
+/obj/machinery/vending/autodrobe{
 	extended_inventory = 1
 	},
 /obj/machinery/light,
@@ -58771,7 +58771,7 @@ iX
 iX
 jm
 jr
-iX
+iF
 jr
 jK
 iX

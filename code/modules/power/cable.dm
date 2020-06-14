@@ -39,6 +39,7 @@ By design, d1 is the smallest direction and d2 is the highest
 	icon = 'icons/obj/power_cond/cables.dmi'
 	icon_state = "0-1"
 	level = 1 //is underfloor
+	plane = ABOVE_WALL_PLANE
 	layer = WIRE_LAYER //Above hidden pipes, GAS_PIPE_HIDDEN_LAYER
 	anchored = TRUE
 	obj_flags = CAN_BE_HIT | ON_BLUEPRINTS
@@ -487,6 +488,7 @@ By design, d1 is the smallest direction and d2 is the highest
 
 /obj/item/stack/cable_coil
 	name = "cable coil"
+	custom_price = PRICE_CHEAP_AS_FREE
 	gender = NEUTER //That's a cable coil sounds better than that's some cable coils
 	icon = 'icons/obj/power.dmi'
 	icon_state = "coil"
@@ -510,6 +512,7 @@ By design, d1 is the smallest direction and d2 is the highest
 	full_w_class = WEIGHT_CLASS_SMALL
 	grind_results = list(/datum/reagent/copper = 2) //2 copper per cable in the coil
 	usesound = 'sound/items/deconstruct.ogg'
+	used_skills = list(/datum/skill/level/job/wiring)
 
 /obj/item/stack/cable_coil/cyborg
 	is_cyborg = 1
@@ -590,8 +593,6 @@ By design, d1 is the smallest direction and d2 is the highest
 	else
 		amount += extra
 	update_icon()
-
-
 
 ///////////////////////////////////////////////
 // Cable laying procedures

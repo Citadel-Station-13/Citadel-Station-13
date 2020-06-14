@@ -351,7 +351,7 @@
 	name = "wooden bucket"
 	desc = "It's a bucket made of wood."
 	icon_state = "bucket_wooden"
-	custom_materials = null
+	custom_materials = list(/datum/material/wood = MINERAL_MATERIAL_AMOUNT * 2)
 	slot_flags = NONE
 	item_flags = NO_MAT_REDEMPTION
 
@@ -361,6 +361,7 @@
 	icon = 'icons/obj/drinks.dmi'
 	icon_state = "smallbottle"
 	item_state = "bottle"
+	custom_price = PRICE_CHEAP_AS_FREE
 	list_reagents = list(/datum/reagent/water = 49.5, /datum/reagent/fluorine = 0.5)//see desc, don't think about it too hard
 	custom_materials = list(/datum/material/glass=0)
 	volume = 50
