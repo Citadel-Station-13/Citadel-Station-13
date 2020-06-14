@@ -60910,6 +60910,10 @@
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/tile/purple,
 /obj/machinery/door/firedoor,
+/obj/structure/sign/departments/science{
+	name = "\improper ROBOTICS!";
+	pixel_x = 32
+	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/aft)
 "czi" = (
@@ -63720,15 +63724,15 @@
 /turf/open/floor/plasteel,
 /area/hallway/primary/aft)
 "cFc" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/effect/turf_decal/tile/purple,
 /obj/machinery/light{
 	dir = 4
 	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/structure/sign/departments/science{
 	name = "\improper ROBOTICS!";
 	pixel_x = 32
 	},
-/obj/effect/turf_decal/tile/purple,
 /turf/open/floor/plasteel,
 /area/hallway/primary/aft)
 "cFd" = (
@@ -66688,16 +66692,6 @@
 /turf/open/floor/plasteel,
 /area/hallway/secondary/exit/departure_lounge)
 "cMj" = (
-/obj/machinery/light{
-	dir = 4
-	},
-/obj/machinery/camera{
-	c_tag = "Departure Lounge - Starboard Fore";
-	dir = 8
-	},
-/obj/structure/extinguisher_cabinet{
-	pixel_x = 27
-	},
 /obj/item/twohanded/required/kirbyplants{
 	icon_state = "plant-14"
 	},
@@ -67143,6 +67137,9 @@
 	pixel_x = 26;
 	pixel_y = 6;
 	req_one_access_txt = "29"
+	},
+/obj/machinery/light{
+	dir = 4
 	},
 /turf/open/floor/plasteel,
 /area/hallway/secondary/exit/departure_lounge)
@@ -80366,6 +80363,22 @@
 "tcS" = (
 /turf/open/floor/mech_bay_recharge_floor,
 /area/science/robotics/mechbay)
+"tfO" = (
+/obj/structure/chair{
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/structure/extinguisher_cabinet{
+	pixel_x = 27
+	},
+/obj/machinery/camera{
+	c_tag = "Departure Lounge - Starboard Fore";
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/hallway/secondary/exit/departure_lounge)
 "tfU" = (
 /obj/structure/disposalpipe/segment,
 /obj/structure/cable/yellow{
@@ -80875,6 +80888,14 @@
 /obj/machinery/atmospherics/pipe/manifold4w/general/visible,
 /turf/open/floor/plasteel,
 /area/engine/atmos)
+"umw" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/effect/turf_decal/tile/neutral,
+/obj/structure/extinguisher_cabinet{
+	pixel_x = 27
+	},
+/turf/open/floor/plasteel,
+/area/hallway/primary/aft)
 "unI" = (
 /obj/machinery/door/airlock/medical/glass{
 	name = "Patient Ward";
@@ -82207,10 +82228,6 @@
 /area/maintenance/port/aft)
 "xkG" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/research{
-	name = "Robotics Lab";
-	req_access_txt = "29"
-	},
 /obj/machinery/door/poddoor/preopen{
 	id = "scienceLock";
 	name = "Biohazard Lockdown"
@@ -82230,6 +82247,10 @@
 	},
 /obj/structure/cable/yellow{
 	icon_state = "4-8"
+	},
+/obj/machinery/door/airlock/research{
+	name = "Robotics Lab";
+	req_access_txt = "29"
 	},
 /turf/open/floor/plasteel,
 /area/science/robotics/lab)
@@ -110348,14 +110369,14 @@ cEh
 cFc
 sMY
 iQL
-cvG
+umw
 cIG
 cJG
 cKF
 cLu
 cMj
 cMY
-cMT
+tfO
 cOu
 cPa
 cPu
