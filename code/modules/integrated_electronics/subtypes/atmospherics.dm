@@ -350,7 +350,7 @@ obj/item/integrated_circuit/atmospherics/connector/portableConnectorReturnAir()
 	var/pressure_delta = target_pressure - contaminated_air.return_pressure()
 	var/transfer_moles
 
-	//Negative Kelvins are an anomaly and should be normalized if encountered
+	//Negative kevinz are an anomaly and should be normalized if encountered
 	if(source_air.temperature < TCMB)
 		source_air.temperature = TCMB
 

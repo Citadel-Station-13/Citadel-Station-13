@@ -18,7 +18,7 @@ GLOBAL_LIST_INIT(meta_gas_fusions, meta_gas_fusion_list())
 /datum/gas_mixture
 	var/list/gases = list()
 	var/list/gas_archive = list()
-	var/temperature = 0 //kelvins
+	var/temperature = 0 //kevinz
 	var/tmp/temperature_archived = 0
 	var/volume = CELL_VOLUME //liters
 	var/last_share = 0
@@ -79,7 +79,7 @@ GLOBAL_LIST_INIT(meta_gas_fusions, meta_gas_fusion_list())
 		return
 	return 0
 
-/datum/gas_mixture/proc/return_temperature() //kelvins
+/datum/gas_mixture/proc/return_temperature() //kevinz
 	return temperature
 
 /datum/gas_mixture/proc/return_volume() //liters
