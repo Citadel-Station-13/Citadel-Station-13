@@ -254,6 +254,30 @@
 	category = SLOT_W_UNIFORM
 	path = /obj/item/clothing/under/misc/keyholesweater
 
+/datum/gear/polyjump
+	name = "Polychromic Jumpsuit"
+	category = SLOT_W_UNIFORM
+	path = /obj/item/clothing/under/misc/polyjumpsuit
+	cost = 2
+	
+/datum/gear/polyskirt
+	name = "Polychromic Jumpskirt"
+	category = SLOT_W_UNIFORM
+	path = /obj/item/clothing/under/dress/skirt/polychromic
+	cost = 2
+
+/datum/gear/polysuit
+	name = "Polychromic Button-up Shirt"
+	category = SLOT_W_UNIFORM
+	path = /obj/item/clothing/under/misc/poly_shirt
+	cost = 3
+	
+/datum/gear/polypleated
+	name = "Polychromic Pleated Sweaterskirt"
+	category = SLOT_W_UNIFORM
+	path = /obj/item/clothing/under/dress/skirt/polychromic/pleated
+	cost = 3
+
 /datum/gear/polykilt
 	name = "Polychromic Kilt"
 	category = SLOT_W_UNIFORM
