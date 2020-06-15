@@ -393,12 +393,24 @@
 	//Returns null if nothing at all was found.
 
 /obj/item/projectile/proc/check_ricochet(atom/A)
-	var/chance = ricochet_chance * A.ricochet_chance_mod
-	if(firer && HAS_TRAIT(firer, TRAIT_NICE_SHOT))
-		chance += NICE_SHOT_RICOCHET_BONUS
-	if(prob(chance))
-		return TRUE
-	return FALSE
+	if(ricochets > ricochets_max)		//safety thing, we don't care about what the other thing says about this.
+		return FALSE
+	var/them = A.check_projectile_ricochet(src)
+	switch(them)
+		if(PROJECTILE_RICOCHET_PREVENT)
+			return FALSE
+		if(PROJECTILE_RICOCHET_FORCE)
+			return TRUE
+		if(PROJECTILE_RICOCHET_NO)
+			return FALSE
+		if(PROJECTILE_RICOCHET_YES)
+			var/chance = ricochet_chance * A.ricochet_chance_mod
+			if(firer && HAS_TRAIT(firer, TRAIT_NICE_SHOT))
+			chance += NICE_SHOT_RICOCHET_BONUS
+			if(prob(chance))
+				return TRUE
+		else
+			CRASH("Invalid return value for projectile ricochet check from [A].")
 
 /obj/item/projectile/proc/check_ricochet_flag(atom/A)
 	if((flag in list("energy", "laser")) && (A.flags_ricochet & RICOCHET_SHINY))
@@ -562,7 +574,7 @@
   * The proc to make the projectile go, using a simulated pixel movement line trace.
   * Note: deciseconds_equivalent is currently only used for homing, times is the number of times to move pixel_increment_amount.
   * Trajectory multiplier directly modifies the factor of pixel_increment_amount to go per time.
-  * It's complicated, so probably just don'ot mess with this unless you know what you're doing.
+  * It's complicated, so probably just don't mess with this unless you know what you're doing.
   */
 /obj/item/projectile/proc/pixel_move(times, hitscanning = FALSE, deciseconds_equivalent = world.tick_lag, trajectory_multiplier = 1, allow_animation = TRUE)
 	if(!loc || !trajectory)
@@ -608,14 +620,14 @@
 				if(!--safety)
 					CRASH("[type] took too long (allowed: [CEILING(pixel_increment_amount/world.icon_size,1)*2] moves) to get to its location.")
 				step_towards(src, T)
-				if(QDELETED(src))
+				if(QDELETED(src) || pixel_move_interrupted)		// this doesn't take into account with pixel_move_interrupted the portion of the move cut off by any forcemoves, but we're opting to ignore that for now
+				// the reason is the entire point of moving to pixel speed rather than tile speed is smoothness, which will be crucial when pixel movement is done in the future
+				// reverting back to tile is more or less the only way of fixing this issue.
 					return
 		pixels_range_leftover += pixel_increment_amount
 		if(pixels_range_leftover > world.icon_size)
 			Range()
-			if(QDELETED(src) || pixel_move_interrupted)		// this doesn't take into account with pixel_move_interrupted the portion of the move cut off by any forcemoves, but we're opting to ignore that for now
-				// the reason is the entire point of moving to pixel speed rather than tile speed is smoothness, which will be crucial when pixel movement is done in the future
-				// reverting back to tile is more or less the only way of fixing this issue.
+			if(QDELETED(src))
 				return
 			pixels_range_leftover -= world.icon_size
 	if(!hitscanning && !forcemoved)
