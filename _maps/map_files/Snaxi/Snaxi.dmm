@@ -22555,11 +22555,6 @@
 	icon_state = "0-8"
 	},
 /obj/machinery/shieldwallgen/xenobiologyaccess,
-/obj/machinery/computer/security/telescreen{
-	name = "Test Chamber Monitor";
-	network = list("test");
-	pixel_y = -30
-	},
 /turf/open/floor/plasteel/white,
 /area/science/misc_lab)
 "leq" = (
@@ -25552,6 +25547,10 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/bridge)
+"mVF" = (
+/obj/machinery/rnd/bepis,
+/turf/open/floor/engine,
+/area/science/misc_lab)
 "mVN" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/structure/disposalpipe/segment{
@@ -36933,6 +36932,11 @@
 "tDO" = (
 /obj/machinery/atmospherics/components/unary/portables_connector/visible,
 /obj/machinery/portable_atmospherics/canister/toxins,
+/obj/machinery/computer/security/telescreen{
+	name = "Test Chamber Monitor";
+	network = list("test");
+	pixel_x = -30
+	},
 /turf/open/floor/plasteel/white,
 /area/science/misc_lab)
 "tDY" = (
@@ -79524,7 +79528,7 @@ gZG
 dRF
 lep
 bEa
-bcp
+mVF
 bcp
 bEa
 udT
