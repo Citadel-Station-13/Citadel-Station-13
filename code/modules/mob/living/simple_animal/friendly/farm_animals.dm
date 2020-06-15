@@ -496,8 +496,9 @@
 /obj/item/udder
 	name = "udder"
 
-/obj/item/udder/Initialize(reagent, thing2)
-	message_admins("we got passed [reagent] and [thing2]")
+/obj/item/udder/Initialize(loc, /datum/reagent/reagent)
+	if(!reagent)
+		reagent = /datum/reagent/consumable/milk
 	create_reagents(50, NONE, NO_REAGENTS_VALUE)
 	reagents.add_reagent(reagent, 20)
 	. = ..()
