@@ -3310,6 +3310,19 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/security/brig)
+"aWM" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/navbeacon{
+	codes_txt = "patrol;next_patrol=HOP2";
+	location = "Stbd"
+	},
+/turf/open/floor/plasteel,
+/area/storage/primary)
 "aXh" = (
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
@@ -3333,6 +3346,19 @@
 	},
 /turf/open/floor/plasteel,
 /area/engine/engineering)
+"aYf" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/machinery/navbeacon{
+	codes_txt = "patrol;next_patrol=QM";
+	location = "CHW"
+	},
+/turf/open/floor/plasteel,
+/area/hallway/primary/port)
 "aZz" = (
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
@@ -11419,11 +11445,11 @@
 /turf/open/floor/plasteel,
 /area/storage/auxiliary)
 "ewI" = (
-/obj/machinery/rnd/production/circuit_imprinter,
 /obj/item/radio/intercom{
 	name = "Station Intercom (General)";
 	pixel_y = 29
 	},
+/obj/machinery/rnd/production/circuit_imprinter/department/science,
 /turf/open/floor/plasteel/white,
 /area/science/robotics/lab)
 "ewK" = (
@@ -18124,19 +18150,6 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/bridge)
-"inj" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/obj/machinery/navbeacon{
-	codes_txt = "patrol;next_patrol=QM";
-	location = "CHW"
-	},
-/turf/open/floor/plasteel,
-/area/hallway/primary/port)
 "inq" = (
 /obj/structure/cable{
 	icon_state = "0-2"
@@ -19285,14 +19298,6 @@
 /obj/structure/disposalpipe/junction/flip,
 /turf/open/floor/plasteel/white,
 /area/hallway/primary/port)
-"iVn" = (
-/obj/structure/disposalpipe/segment,
-/obj/machinery/navbeacon{
-	codes_txt = "patrol;next_patrol=HOP";
-	location = "CHE"
-	},
-/turf/open/floor/carpet,
-/area/hallway/secondary/exit/departure_lounge)
 "iVB" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -20107,19 +20112,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/engine/engineering)
-"jzk" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/machinery/navbeacon{
-	codes_txt = "patrol;next_patrol=HOP2";
-	location = "Stbd"
-	},
-/turf/open/floor/plasteel,
-/area/storage/primary)
 "jzx" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/structure/disposalpipe/segment{
@@ -23827,16 +23819,6 @@
 /obj/machinery/rnd/production/techfab/department/medical,
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
-"lTa" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
-/obj/machinery/navbeacon{
-	codes_txt = "patrol;next_patrol=Dorm";
-	location = "HOP2"
-	},
-/turf/open/floor/plasteel,
-/area/hallway/primary/aft)
 "lTh" = (
 /obj/structure/table/glass,
 /obj/item/storage/firstaid/regular,
@@ -24693,6 +24675,10 @@
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/engine,
 /area/engine/engineering)
+"muk" = (
+/obj/machinery/rnd/bepis,
+/turf/open/floor/engine,
+/area/science/misc_lab)
 "muN" = (
 /obj/effect/turf_decal/stripes/corner{
 	dir = 4
@@ -27868,6 +27854,16 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
+"okq" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/machinery/navbeacon{
+	codes_txt = "patrol;next_patrol=Dorm";
+	location = "HOP2"
+	},
+/turf/open/floor/plasteel,
+/area/hallway/primary/aft)
 "okt" = (
 /obj/machinery/light/small,
 /obj/effect/landmark/event_spawn,
@@ -36105,13 +36101,6 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/science/xenobiology)
-"teV" = (
-/obj/machinery/navbeacon{
-	codes_txt = "patrol;next_patrol=CHW";
-	location = "Dorm"
-	},
-/turf/open/floor/carpet,
-/area/crew_quarters/dorms)
 "tfm" = (
 /obj/machinery/airalarm{
 	pixel_y = 23
@@ -39594,6 +39583,13 @@
 	},
 /turf/open/floor/wood,
 /area/crew_quarters/heads/captain)
+"veC" = (
+/obj/machinery/navbeacon{
+	codes_txt = "patrol;next_patrol=CHW";
+	location = "Dorm"
+	},
+/turf/open/floor/carpet,
+/area/crew_quarters/dorms)
 "veF" = (
 /obj/structure/table/wood,
 /obj/item/reagent_containers/food/drinks/drinkingglass{
@@ -43604,6 +43600,14 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/closed/wall,
 /area/maintenance/disposal)
+"xzn" = (
+/obj/structure/disposalpipe/segment,
+/obj/machinery/navbeacon{
+	codes_txt = "patrol;next_patrol=HOP";
+	location = "CHE"
+	},
+/turf/open/floor/carpet,
+/area/hallway/secondary/exit/departure_lounge)
 "xzL" = (
 /obj/effect/turf_decal/tile/red,
 /obj/effect/turf_decal/tile/red{
@@ -43921,10 +43925,6 @@
 	},
 /turf/open/floor/circuit/off,
 /area/ai_monitored/turret_protected/ai)
-"xIK" = (
-/obj/machinery/rnd/bepis,
-/turf/open/floor/engine,
-/area/science/misc_lab)
 "xIT" = (
 /obj/structure/chair/comfy/black{
 	dir = 4
@@ -66163,7 +66163,7 @@ xUL
 dYZ
 jKV
 fYx
-inj
+aYf
 xSN
 wje
 jrH
@@ -78024,7 +78024,7 @@ qGn
 lud
 ngB
 joq
-iVn
+xzn
 wdk
 iOW
 wdk
@@ -79595,7 +79595,7 @@ gZG
 dRF
 lep
 bEa
-xIK
+muk
 bcp
 bEa
 udT
@@ -82593,7 +82593,7 @@ qFH
 tYo
 dJb
 iJs
-teV
+veC
 unt
 raA
 lfV
@@ -89258,7 +89258,7 @@ irQ
 emH
 cfp
 gmH
-lTa
+okq
 skK
 vKa
 vgH
@@ -93645,7 +93645,7 @@ qgm
 hcu
 vju
 eYu
-jzk
+aWM
 vUs
 gUa
 sda
