@@ -45,7 +45,7 @@
 	var/list/recipes	// The list containing the Particle Smasher's recipes.
 
 /obj/machinery/particle_smasher/Initialize()
-	..()
+	. = ..()
 	storage = list()
 	update_icon()
 	prepare_recipes()
@@ -57,14 +57,14 @@
 	..()
 
 /obj/machinery/particle_smasher/examine(mob/user)
-	..()
+	. = ..()
 	if(user in view(1))
 		to_chat(user, "<span class='notice'>\The [src] contains:</span>")
 		for(var/obj/item/I in contents)
 			to_chat(user, "<span class='notice'>\the [I]</span>")
 
-/obj/machinery/particle_smasher/attackby(obj/item/W as obj, mob/user as mob)
-	if(W.type == /obj/item/analyzer)
+/obj/machinery/particle_smasher/attackby(obj/item/W, mob/user)
+	if(istype(W, /obj/item/analyzer))
 		to_chat(user, "<span class='notice'>\The [src] reads an energy level of [energy].</span>")
 	else if(istype(W, /obj/item/stack/sheet/mineral))
 		var/obj/item/stack/sheet/mineral/M = W
@@ -136,7 +136,7 @@
 	else
 		set_light(0, 0, "#FFFFFF")
 
-/obj/machinery/particle_smasher/bullet_act(var/obj/item/projectile/Proj)
+/obj/machinery/particle_smasher/bullet_act(obj/item/projectile/Proj)
 	if(istype(Proj, /obj/item/projectile/beam))
 		if(Proj.damage >= 21)//You need a pluse shot OR an emitter to TryCraft
 			TryCraft()
@@ -189,20 +189,22 @@
 	var/list/possible_recipes = list()
 	var/max_prob = 0
 	for(var/datum/recipe/particle_smasher/R in recipes)	// Only things for the smasher. Don't get things like the chef's cake recipes.
-		if(R.probability)	// It's actually a recipe you're supposed to be able to make.
-			if(istype(target, R.required_material))
-				if(energy >= R.required_energy_min && energy <= R.required_energy_max)	// The machine has enough Vaguely Defined 'Energy'.
-					var/turf/T = get_turf(src)
-					var/datum/gas_mixture/environment = T.return_air()
-					if(environment.temperature >= R.required_atmos_temp_min && environment.temperature <= R.required_atmos_temp_max)	// Too hot, or too cold.
-						if(R.reagents_list && R.reagents_list.len)
-							if(!reagent_container || R.check_reagents(reagent_container.reagents) == -1)	// It doesn't have a reagent storage when it needs it, or it's lacking what is needed.
-								continue
-						if(R.items && R.items.len)
-							if(!(storage && storage.len) || R.check_items(src) == -1)	// It's empty, or it doesn't contain what is needed.
-								continue
-						possible_recipes += R
-						max_prob += R.probability
+		if(!R.probability)	// It's actually a recipe you're supposed to be able to make.
+			continue
+		if(!istype(target, R.required_material))
+			continue
+		if(energy >= R.required_energy_min && energy <= R.required_energy_max)	// The machine has enough Vaguely Defined 'Energy'.
+			var/turf/T = get_turf(src)
+			var/datum/gas_mixture/environment = T.return_air()
+			if(environment.temperature >= R.required_atmos_temp_min && environment.temperature <= R.required_atmos_temp_max)	// Too hot, or too cold.
+				if(R.reagents_list && R.reagents_list.len)
+					if(!reagent_container || R.check_reagents(reagent_container.reagents) == -1)	// It doesn't have a reagent storage when it needs it, or it's lacking what is needed.
+						continue
+				if(R.items && R.items.len)
+					if(!(storage && storage.len) || R.check_items(src) == -1)	// It's empty, or it doesn't contain what is needed.
+						continue
+				possible_recipes += R
+				max_prob += R.probability
 
 	if(possible_recipes.len)
 		var/local_prob = rand(0, max_prob - 1)%max_prob
@@ -225,13 +227,12 @@
 	if(reagent_container)
 		reagent_container.reagents.clear_reagents()
 
-	if(recipe.items && recipe.items.len)
+	if(LAZYLEN(recipe.items))
 		for(var/obj/item/I in storage)
-			for(var/item_type in recipe.items)
-				if(istype(I, item_type))
-					storage -= I
-					qdel(I)
-					break
+			if(is_type_in_list(I, recipe.items))
+				storage -= I
+				qdel(I)
+				break
 
 	var/result = recipe.result
 	var/obj/item/stack/sheet/mineral/M = new result(src)
@@ -279,28 +280,25 @@
 	var/required_atmos_temp_max = 600	// The maximum ambient atmospheric temperature required, in kelvin.
 	var/probability = 0					// The probability for the recipe to be produced. 0 will make it impossible.
 
-/datum/recipe/particle_smasher/check_items(var/obj/container as obj)
-	. = 1
-	if (items && items.len)
-		var/list/checklist = list()
-		checklist = items.Copy() // You should really trust Copy
-		if(istype(container, /obj/machinery/particle_smasher))
-			var/obj/machinery/particle_smasher/machine = container
-			for(var/obj/O in machine.storage)
-				if(istype(O,/obj/item/reagent_containers/food/snacks/grown))
-					continue
-				var/found = 0
-				for(var/i = 1; i < checklist.len+1; i++)
-					var/item_type = checklist[i]
-					if (istype(O,item_type))
-						checklist.Cut(i, i+1)
-						found = 1
-						break
-				if (!found)
-					. = 0
-		if (checklist.len)
-			. = -1
-	return .
+/datum/recipe/particle_smasher/check_items(obj/container)
+	. = FALSE
+	if(!istype(container, /obj/machinery/particle_smasher)) //container is not PS, return
+		return FALSE
+	if(!LAZYLEN(items)) // No items? return
+		return FALSE
+
+	var/list/checklist = items.Copy() // You should really trust Copy
+	var/obj/machinery/particle_smasher/machine = container
+	for(var/obj/O in machine.storage)
+		if(istype(O, /obj/item/reagent_containers/food/snacks/grown))
+			continue
+		for(var/obj/item_type in checklist) //for in loops is faster than for(var/i=0; loop
+			if(istype(O, item_type))
+				checklist -= item_type
+				. = TRUE
+				break
+	if(LAZYLEN(checklist)) //the PS dosen't have enough materials.
+		return -1
 
 /datum/recipe/particle_smasher/valhollide_morphium
 	result = /obj/item/stack/sheet/mineral/morphium
