@@ -713,7 +713,7 @@
 	icon_state = "fannypack_leather"
 	item_state = "fannypack_leather"
 	dying_key = DYE_REGISTRY_FANNYPACK
-	custom_price = 100
+	custom_price = PRICE_ALMOST_CHEAP
 
 /obj/item/storage/belt/fannypack/ComponentInitialize()
 	. = ..()

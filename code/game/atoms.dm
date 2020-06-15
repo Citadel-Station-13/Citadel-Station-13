@@ -141,8 +141,18 @@
 
 	return ..()
 
-/atom/proc/handle_ricochet(obj/item/projectile/P)
-	return
+/**
+  * Checks if a projectile should ricochet off of us. Projectiles get final say.
+  * [__DEFINES/projectiles.dm] for return values.
+  */
+/atom/proc/check_projectile_ricochet(obj/item/projectile/P)
+	return (flags_1 & DEFAULT_RICOCHET_1)? PROJECTILE_RICOCHET_YES : PROJECTILE_RICOCHET_NO
+
+/**
+  * Handle a projectile ricochet. Return TRUE if we did something to the projectile like reflecting it/whatnot.
+  */
+/atom/proc/handle_projectile_ricochet(obj/item/projectile/P)
+	return FALSE
 
 /atom/proc/CanPass(atom/movable/mover, turf/target)
 	return !density
