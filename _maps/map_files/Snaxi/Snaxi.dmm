@@ -15271,13 +15271,13 @@
 /turf/closed/wall/r_wall,
 /area/teleporter)
 "gLO" = (
-/obj/machinery/door/poddoor{
-	id = "trash";
-	name = "disposal bay door"
-	},
 /obj/machinery/conveyor{
 	dir = 4;
 	id = "garbage"
+	},
+/obj/machinery/door/poddoor{
+	id = "trash";
+	name = "disposal bay door"
 	},
 /turf/open/floor/plating,
 /area/maintenance/disposal)
@@ -87654,7 +87654,7 @@ avT
 bBh
 avT
 aKf
-gLO
+irQ
 huF
 cfp
 gxY
@@ -89967,7 +89967,7 @@ avT
 bBh
 avT
 aKf
-irQ
+gLO
 jvV
 evO
 cfp
