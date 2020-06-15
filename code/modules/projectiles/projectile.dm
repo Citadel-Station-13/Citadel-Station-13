@@ -162,7 +162,15 @@
 /obj/item/projectile/proc/prehit(atom/target)
 	return TRUE
 
-/obj/item/projectile/proc/on_hit(atom/target, blocked = FALSE)
+/**
+  * Called when we hit something.
+  *
+  * @params
+  * * target - what we hit
+  * * blocked - 0 to 100 percentage mitigation/block
+  * * def zone - where we hit if we hit a mob.
+  */
+/obj/item/projectile/proc/on_hit(atom/target, blocked = 0, def_zone)
 	if(fired_from)
 		SEND_SIGNAL(fired_from, COMSIG_PROJECTILE_ON_HIT, firer, target, Angle)
 	var/turf/target_loca = get_turf(target)
@@ -272,7 +280,7 @@
 			return TRUE
 
 	var/distance = get_dist(T, starting) // Get the distance between the turf shot from and the mob we hit and use that for the calculations.
-	if(check_zone(def_zone) != BODY_ZONE_CHEST)
+	if(def_zone && check_zone(def_zone) != BODY_ZONE_CHEST)
 		def_zone = ran_zone(def_zone, max(100-(7*distance), 5) * zone_accuracy_factor) //Lower accurancy/longer range tradeoff. 7 is a balanced number to use.
 
 	if(isturf(A) && hitsound_wall)
@@ -548,7 +556,7 @@
 			var/safety = CEILING(pixel_increment_amount / world.icon_size, 1) * 2 + 1
 			while(T != loc)
 				if(!--safety)
-					CRASH("Projectile took more than pixel incrememnt speed times 2 to get to its location, this is probably something seriously scuffed going on.")
+					CRASH("[type] took too long (allowed: [CEILING(pixel_increment_amount/world.icon_size,1)*2] moves) to get to its location.")
 				step_towards(src, T)
 				if(QDELETED(src))
 					return

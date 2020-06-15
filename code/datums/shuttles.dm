@@ -170,6 +170,11 @@
 	port_id = "snowdin"
 	can_be_bought = FALSE
 
+/datum/map_template/shuttle/snow_taxi
+	port_id = "snow"
+	can_be_bought = FALSE
+	suffix = "taxi"
+
 // Shuttles start here:
 
 /datum/map_template/shuttle/emergency/backup
@@ -556,6 +561,10 @@
 /datum/map_template/shuttle/arrival/cog
 	suffix = "cog"
 	name = "arrival shuttle (Cog)"
+
+/datum/map_template/shuttle/arrival/snaxi
+	suffix = "snaxi"
+	name = "arrival shuttle (Snaxi)"
 
 /datum/map_template/shuttle/aux_base/default
 	suffix = "default"

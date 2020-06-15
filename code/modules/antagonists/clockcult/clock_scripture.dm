@@ -203,6 +203,10 @@ Applications: 8 servants, 3 caches, and 100 CV
 		if(!do_after(invoker, chant_interval, target = invoker, extra_checks = CALLBACK(src, .proc/can_recite)))
 			break
 		clockwork_say(invoker, text2ratvar(pick(chant_invocations)), whispered)
+		if(multiple_invokers_used)
+			for(var/mob/living/L in range(1, get_turf(invoker)))
+				if(can_recite_scripture(L) && L != invoker)
+					clockwork_say(L, text2ratvar(pick(chant_invocations)), whispered)
 		if(!chant_effects(i))
 			break
 	if(invoker && slab)
