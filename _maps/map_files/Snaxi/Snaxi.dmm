@@ -19719,12 +19719,6 @@
 /obj/item/stack/sheet/mineral/plasma{
 	amount = 30
 	},
-/obj/item/stack/sheet/mineral/plasma{
-	amount = 30
-	},
-/obj/item/stack/sheet/mineral/plasma{
-	amount = 30
-	},
 /turf/open/floor/plating,
 /area/engine/storage)
 "jkw" = (
