@@ -17,7 +17,11 @@
 				/obj/item/restraints/handcuffs/fake/kinky = 5,
 				/obj/item/clothing/glasses/sunglasses/blindfold = 4,
 				/obj/item/clothing/mask/muzzle = 4,
-				/obj/item/clothing/under/misc/gear_harness = 2
+				/obj/item/clothing/under/misc/gear_harness = 2,
+				/obj/item/clothing/under/shorts/polychromic/pantsu,
+				/obj/item/clothing/under/misc/poly_bottomless,
+				/obj/item/clothing/under/misc/poly_tanktop,
+				/obj/item/clothing/under/misc/poly_tanktop/female
 				)
 	contraband = list(
 				/obj/item/electropack/shockcollar = 3,
