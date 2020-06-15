@@ -67146,9 +67146,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
-/obj/structure/curtain{
-	icon_state = "closed"
-	},
+/obj/structure/curtain,
 /turf/open/floor/plasteel,
 /area/medical/medbay/central)
 "cNh" = (
@@ -76441,9 +76439,7 @@
 /turf/open/floor/plasteel,
 /area/security/prison)
 "jiz" = (
-/obj/structure/curtain{
-	icon_state = "closed"
-	},
+/obj/structure/curtain,
 /turf/open/floor/plasteel,
 /area/medical/medbay/central)
 "jiK" = (
@@ -79098,9 +79094,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/obj/structure/curtain{
-	icon_state = "closed"
-	},
+/obj/structure/curtain,
 /turf/open/floor/plasteel,
 /area/medical/medbay/central)
 "pVU" = (
