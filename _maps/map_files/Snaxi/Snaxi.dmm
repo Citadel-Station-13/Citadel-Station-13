@@ -19175,10 +19175,6 @@
 	name = "Atmospherics Maintenance";
 	req_access_txt = "12;24"
 	},
-/obj/machinery/door/firedoor/border_only{
-	dir = 4;
-	name = "east facing firelock"
-	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
@@ -25740,9 +25736,6 @@
 	name = "Atmospherics Maintenance";
 	req_access_txt = "12;24"
 	},
-/obj/machinery/door/firedoor/border_only{
-	name = "south facing firelock"
-	},
 /turf/open/floor/plasteel,
 /area/maintenance/department/electrical)
 "ncH" = (
@@ -27518,9 +27511,6 @@
 /obj/machinery/door/airlock/engineering/abandoned{
 	name = "Electrical Maintenance";
 	req_access_txt = "11"
-	},
-/obj/machinery/door/firedoor/border_only{
-	dir = 1
 	},
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plating,
@@ -42207,9 +42197,6 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
-	},
-/obj/machinery/door/firedoor/border_only{
-	dir = 8
 	},
 /obj/machinery/door/airlock/atmos/abandoned{
 	name = "Atmospherics Maintenance";
