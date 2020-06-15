@@ -36,7 +36,6 @@
 	ricochet_chance = 40
 	shrapnel_type = /obj/item/shrapnel
 	ricochet_incidence_leeway = 60
-	hit_stunned_targets = TRUE
 
 /obj/item/projectile/bullet/shrapnel/mega
 	name = "flying shrapnel hunk"
@@ -63,6 +62,3 @@
 	name = "megastingball pellet"
 	ricochets_max = 6
 	ricochet_chance = 110
-
-/obj/item/projectile/bullet/pellet/stingball/on_ricochet(atom/A)
-	hit_stunned_targets = TRUE // ducking will save you from the first wave, but not the rebounds

@@ -58,9 +58,23 @@
 	var/nondirectional_sprite = FALSE //Set TRUE to prevent projectiles from having their sprites rotated based on firing angle
 	var/spread = 0			//amount (in degrees) of projectile spread
 	animate_movement = 0	//Use SLIDE_STEPS in conjunction with legacy
+
+	// how many times we've ricochet'd so far (instance variable, not a stat)
 	var/ricochets = 0
-	var/ricochets_max = 2
-	var/ricochet_chance = 30
+	/// how many times we can ricochet max
+	var/ricochets_max = 0
+	/// 0-100, the base chance of ricocheting, before being modified by the atom we shoot and our chance decay
+	var/ricochet_chance = 0
+	/// 0-1 (or more, I guess) multiplier, the ricochet_chance is modified by multiplying this after each ricochet
+	var/ricochet_decay_chance = 0.7
+	/// 0-1 (or more, I guess) multiplier, the projectile's damage is modified by multiplying this after each ricochet
+	var/ricochet_decay_damage = 0.7
+	/// On ricochet, if nonzero, we consider all mobs within this range of our projectile at the time of ricochet to home in on like Revolver Ocelot, as governed by ricochet_auto_aim_angle
+	var/ricochet_auto_aim_range = 0
+	/// On ricochet, if ricochet_auto_aim_range is nonzero, we'll consider any mobs within this range of the normal angle of incidence to home in on, higher = more auto aim
+	var/ricochet_auto_aim_angle = 30
+	/// the angle of impact must be within this many degrees of the struck surface, set to 0 to allow any angle
+	var/ricochet_incidence_leeway = 40
 
 	//Hitscan
 	var/hitscan = FALSE		//Whether this is hitscan. If it is, speed is basically ignored.
@@ -132,6 +146,9 @@
 	var/log_override = FALSE //is this type spammed enough to not log? (KAs)
 
 	var/temporary_unstoppable_movement = FALSE
+
+	///If defined, on hit we create an item of this type then call hitby() on the hit target with this
+	var/shrapnel_type
 
 /obj/item/projectile/Initialize()
 	. = ..()
@@ -259,6 +276,25 @@
 	else
 		return 50 //if the projectile doesn't do damage, play its hitsound at 50% volume
 
+/obj/item/projectile/proc/on_ricochet(atom/A)
+	if(!ricochet_auto_aim_angle || !ricochet_auto_aim_range)
+		return
+
+	var/mob/living/unlucky_sob
+	var/best_angle = ricochet_auto_aim_angle
+	if(firer && HAS_TRAIT(firer, TRAIT_NICE_SHOT))
+		best_angle += NICE_SHOT_RICOCHET_BONUS
+	for(var/mob/living/L in range(ricochet_auto_aim_range, src.loc))
+		if(L.stat == DEAD || !isInSight(src, L))
+			continue
+		var/our_angle = abs(closer_angle_difference(Angle, Get_Angle(src.loc, L.loc)))
+		if(our_angle < best_angle)
+			best_angle = our_angle
+			unlucky_sob = L
+
+	if(unlucky_sob)
+		setAngle(Get_Angle(src, unlucky_sob.loc))
+
 /obj/item/projectile/proc/store_hitscan_collision(datum/point/pcache)
 	beam_segments[beam_index] = pcache
 	beam_index = pcache
@@ -281,42 +317,46 @@
 		if(PROJECTILE_RICOCHET_NO)
 			return FALSE
 		if(PROJECTILE_RICOCHET_YES)
-			return prob(ricochet_chance)
+			var/chance = ricochet_chance * A.ricochet_chance_mod
+			if(firer && HAS_TRAIT(firer, TRAIT_NICE_SHOT))
+				chance += NICE_SHOT_RICOCHET_BONUS
+			return prob(chance)
 		else
 			CRASH("Invalid return value for projectile ricochet check from [A].")
 
-/**
-  * Handles ricocheting off of something.
-  * By default, also asks the thing to handle it, but because we're called first, we get final say.
-  */
-/obj/item/projectile/proc/handle_ricochet(atom/A)
-	ricochets++
-	ignore_source_check = TRUE
-	decayedRange = max(0, decayedRange - reflect_range_decrease)
-	pixel_move_interrupted = TRUE
-	range = decayedRange
-	return A.handle_projectile_ricochet(src)
-
-/obj/item/projectile/Bump(atom/A)
-	if(!trajectory)
-		return
-	var/turf/T = get_turf(A)
-	if(check_ricochet(A))
-		var/datum/point/pcache = trajectory.copy_to()
-		if(hitscan)
-			store_hitscan_collision(pcache)
-		handle_ricochet(A)
+/obj/item/projectile/proc/check_ricochet_flag(atom/A)
+	if((flag in list("energy", "laser")) && (A.flags_ricochet & RICOCHET_SHINY))
 		return TRUE
 
+	if((flag in list("bomb", "bullet")) && (A.flags_ricochet & RICOCHET_HARD))
+		return TRUE
+
+	return FALSE
+
+/obj/item/projectile/Bump(atom/A)
+	var/datum/point/pcache = trajectory.copy_to()
+	var/turf/T = get_turf(A)
+	if(ricochets < ricochets_max && check_ricochet_flag(A) && check_ricochet(A))
+		ricochets++
+		if(A.handle_ricochet(src))
+			on_ricochet(A)
+			ignore_source_check = TRUE
+			decayedRange = max(0, decayedRange - reflect_range_decrease)
+			ricochet_chance *= ricochet_decay_chance
+			damage *= ricochet_decay_damage
+			range = decayedRange
+			if(hitscan)
+				store_hitscan_collision(pcache)
+			return TRUE
+
 	var/distance = get_dist(T, starting) // Get the distance between the turf shot from and the mob we hit and use that for the calculations.
-	if(def_zone && check_zone(def_zone) != BODY_ZONE_CHEST)
-		def_zone = ran_zone(def_zone, max(100-(7*distance), 5) * zone_accuracy_factor) //Lower accurancy/longer range tradeoff. 7 is a balanced number to use.
+	def_zone = ran_zone(def_zone, max(100-(7*distance), 5)) //Lower accurancy/longer range tradeoff. 7 is a balanced number to use.
 
 	if(isturf(A) && hitsound_wall)
 		var/volume = clamp(vol_by_damage() + 20, 0, 100)
 		if(suppressed)
 			volume = 5
-		playsound(loc, hitsound_wall, volume, 1, -1)
+		playsound(loc, hitsound_wall, volume, TRUE, -1)
 
 	return process_hit(T, select_target(T, A))
 
@@ -418,6 +458,9 @@
 /obj/item/projectile/proc/fire(angle, atom/direct_target)
 	if(fired_from)
 		SEND_SIGNAL(fired_from, COMSIG_PROJECTILE_BEFORE_FIRE, src, original)	//If no angle needs to resolve it from xo/yo!
+	//If no angle needs to resolve it from xo/yo!
+	if(shrapnel_type)
+		AddElement(/datum/element/embed, projectile_payload = shrapnel_type)
 	if(!log_override && firer && original)
 		log_combat(firer, original, "fired at", src, "from [get_area_name(src, TRUE)]")
 	if(direct_target)

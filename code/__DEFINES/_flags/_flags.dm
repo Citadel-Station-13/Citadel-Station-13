@@ -141,3 +141,8 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 // melee_attack_chain() attackchain_flags
 /// The attack is from a parry counterattack.
 #define ATTACKCHAIN_PARRY_COUNTERATTACK			(1<<0)
+
+/// If the thing can reflect light (lasers/energy)
+#define RICOCHET_SHINY			(1<<0)
+/// If the thing can reflect matter (bullets/bomb shrapnel)
+#define RICOCHET_HARD			(1<<1)

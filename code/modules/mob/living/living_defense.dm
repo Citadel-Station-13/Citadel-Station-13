@@ -126,7 +126,7 @@
 		skipcatch = TRUE
 		blocked = TRUE
 		total_damage = block_calculate_resultant_damage(total_damage, block_return)
-	else if(I && I.throw_speed >= EMBED_THROWSPEED_THRESHOLD && can_embed(I, src) && prob(I.embedding.embed_chance) && !HAS_TRAIT(src, TRAIT_PIERCEIMMUNE) && (!HAS_TRAIT(src, TRAIT_AUTO_CATCH_ITEM) || incapacitated() || get_active_held_item()))
+	else if(I && I.throw_speed >= EMBED_THROWSPEED_THRESHOLD && can_embed(I, src) && prob(I.embedding["embed_chance"]) && !HAS_TRAIT(src, TRAIT_PIERCEIMMUNE) && (!HAS_TRAIT(src, TRAIT_AUTO_CATCH_ITEM) || incapacitated() || get_active_held_item()))
 		embed_item(I)
 		hitpush = FALSE
 		skipcatch = TRUE //can't catch the now embedded item
