@@ -117,6 +117,11 @@
 	paralysis_type = "legs"
 	resilience = TRAUMA_RESILIENCE_ABSOLUTE
 
+/datum/brain_trauma/severe/paralysis/spinesnapped
+	random_gain = FALSE
+	paralysis_type = "legs"
+	resilience = TRAUMA_RESILIENCE_LOBOTOMY
+
 /datum/brain_trauma/severe/narcolepsy
 	name = "Narcolepsy"
 	desc = "Patient may involuntarily fall asleep during normal activities."

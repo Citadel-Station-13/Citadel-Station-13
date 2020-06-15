@@ -1,7 +1,8 @@
 /obj/item/shield
 	name = "shield"
 	icon = 'icons/obj/shields.dmi'
-	block_chance = 50
+	item_flags = ITEM_CAN_BLOCK
+	block_parry_data = /datum/block_parry_data/shield
 	armor = list("melee" = 50, "bullet" = 50, "laser" = 50, "energy" = 0, "bomb" = 30, "bio" = 0, "rad" = 0, "fire" = 80, "acid" = 70)
 	/// Shield flags
 	var/shield_flags = SHIELD_FLAGS_DEFAULT
@@ -21,6 +22,18 @@
 	var/shieldbash_stagger_duration = 3.5 SECONDS
 	/// Shield bashing push distance
 	var/shieldbash_push_distance = 1
+
+/datum/block_parry_data/shield
+	block_damage_multiplier = 0.25
+	block_stamina_efficiency = 2.5
+	block_stamina_cost_per_second = 3.5
+	block_slowdown = 0
+	block_lock_attacking = FALSE
+	block_lock_sprinting = TRUE
+	block_start_delay = 1.5
+	block_damage_absorption = 5
+	block_resting_stamina_penalty_multiplier = 2
+	block_projectile_mitigation = 75
 
 /obj/item/shield/examine(mob/user)
 	. = ..()
@@ -154,6 +167,22 @@
 	icon_state = "shield_bash"
 	duration = 3
 
+/obj/item/shield/run_block(mob/living/owner, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return)
+	if(ismovable(object))
+		var/atom/movable/AM = object
+		if(CHECK_BITFIELD(shield_flags, SHIELD_TRANSPARENT) && (AM.pass_flags & PASSGLASS))
+			return BLOCK_NONE
+	if(attack_type & ATTACK_TYPE_THROWN)
+		final_block_chance += 30
+	if(attack_type & ATTACK_TYPE_TACKLE)
+		final_block_chance = 100
+	. = ..()
+	if(. & BLOCK_SUCCESS)
+		on_shield_block(owner, object, damage, attack_text, attack_type, armour_penetration, attacker, def_zone, final_block_chance, block_return)
+
+/obj/item/shield/on_active_block(mob/living/owner, atom/object, damage, damage_blocked, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return, override_direction)
+	on_shield_block(owner, object, damage, attack_text, attack_type, armour_penetration, attacker, def_zone, final_block_chance)
+
 /obj/item/shield/riot
 	name = "riot shield"
 	desc = "A shield adept at blocking blunt objects from connecting with the torso of the shield wielder."
@@ -172,20 +201,7 @@
 	var/repair_material = /obj/item/stack/sheet/mineral/titanium
 	var/can_shatter = TRUE
 	shield_flags = SHIELD_FLAGS_DEFAULT | SHIELD_TRANSPARENT
-	max_integrity = 75
-
-/obj/item/shield/run_block(mob/living/owner, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return)
-	if(ismovable(object))
-		var/atom/movable/AM = object
-		if(CHECK_BITFIELD(shield_flags, SHIELD_TRANSPARENT) && (AM.pass_flags & PASSGLASS))
-			return BLOCK_NONE
-	if(attack_type & ATTACK_TYPE_THROWN)
-		final_block_chance += 30
-	if(attack_type & ATTACK_TYPE_TACKLE)
-		final_block_chance = 100
-	. = ..()
-	if(. & BLOCK_SUCCESS)
-		on_shield_block(owner, object, damage, attack_text, attack_type, armour_penetration, attacker, def_zone, final_block_chance, block_return)
+	max_integrity = 450
 
 /obj/item/shield/riot/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/melee/baton))
@@ -238,13 +254,13 @@
 	lefthand_file = 'icons/mob/inhands/equipment/shields_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/shields_righthand.dmi'
 	shield_flags = SHIELD_FLAGS_DEFAULT
-	max_integrity = 55 //Weak
+	max_integrity = 300
 
 obj/item/shield/riot/bullet_proof
 	name = "bullet resistant shield"
 	desc = "A far more frail shield made of resistant plastics and kevlar meant to block ballistics."
 	armor = list("melee" = 30, "bullet" = 80, "laser" = 0, "energy" = 0, "bomb" = -40, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 50)
-	max_integrity = 55 //Weaker
+	max_integrity = 300
 
 /obj/item/shield/riot/roman
 	name = "\improper Roman shield"
@@ -255,13 +271,13 @@ obj/item/shield/riot/bullet_proof
 	righthand_file = 'icons/mob/inhands/equipment/shields_righthand.dmi'
 	repair_material = /obj/item/stack/sheet/mineral/wood
 	shield_flags = SHIELD_FLAGS_DEFAULT
-	max_integrity = 65
+	max_integrity = 250
 
 /obj/item/shield/riot/roman/fake
 	desc = "Bears an inscription on the inside: <i>\"Romanes venio domus\"</i>. It appears to be a bit flimsy."
 	block_chance = 0
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 0)
-	max_integrity = 30
+	max_integrity = 40
 
 /obj/item/shield/riot/roman/shatter(mob/living/carbon/human/owner)
 	playsound(owner, 'sound/effects/grillehit.ogg', 100)
@@ -279,7 +295,7 @@ obj/item/shield/riot/bullet_proof
 	repair_material = /obj/item/stack/sheet/mineral/wood
 	block_chance = 30
 	shield_flags = SHIELD_FLAGS_DEFAULT
-	max_integrity = 55
+	max_integrity = 150
 
 /obj/item/shield/riot/buckler/shatter(mob/living/carbon/human/owner)
 	playsound(owner, 'sound/effects/bang.ogg', 50)
@@ -297,12 +313,15 @@ obj/item/shield/riot/bullet_proof
 	throw_speed = 3
 	throw_range = 4
 	w_class = WEIGHT_CLASS_NORMAL
-	var/active = 0
+	var/active = FALSE
 
 /obj/item/shield/riot/tele/run_block(mob/living/owner, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return)
 	if(!active)
 		return BLOCK_NONE
 	return ..()
+
+/obj/item/shield/riot/tele/can_active_block()
+	return ..() && active
 
 /obj/item/shield/riot/tele/attack_self(mob/living/user)
 	active = !active
@@ -335,8 +354,7 @@ obj/item/shield/riot/bullet_proof
 	icon_state = "makeshift_shield"
 	custom_materials = list(/datum/material/iron = 18000)
 	slot_flags = null
-	block_chance = 35
-	max_integrity = 100 //Made of metal welded together its strong but not unkillable
+	max_integrity = 300 //Made of metal welded together its strong but not unkillable
 	force = 10
 	throwforce = 7
 
@@ -346,7 +364,6 @@ obj/item/shield/riot/bullet_proof
 	armor = list("melee" = 95, "bullet" = 95, "laser" = 75, "energy" = 60, "bomb" = 90, "bio" = 90, "rad" = 0, "fire" = 90, "acid" = 10) //Armor for the item, dosnt transfer to user
 	item_state = "metal"
 	icon_state = "metal"
-	block_chance = 75 //1/4 shots will hit*
 	force = 16
 	slowdown = 2
 	throwforce = 15 //Massive pice of metal
@@ -357,19 +374,17 @@ obj/item/shield/riot/bullet_proof
 /obj/item/shield/riot/tower/swat
 	name = "swat shield"
 	desc = "A massive, heavy shield that can block a lot of attacks, can take a lot of abuse before breaking."
-	max_integrity = 175
-	block_chance = 50
+	max_integrity = 250
 
 /obj/item/shield/riot/implant
 	name = "telescoping shield implant"
 	desc = "A compact, arm-mounted telescopic shield. While nigh-indestructible when powered by a host user, it will eventually overload from damage. Recharges while inside its implant."
 	item_state = "metal"
 	icon_state = "metal"
-	block_chance = 50
 	slowdown = 1
 	shield_flags = SHIELD_FLAGS_DEFAULT
-	max_integrity = 60
-	obj_integrity = 60
+	max_integrity = 100
+	obj_integrity = 100
 	can_shatter = FALSE
 	item_flags = SLOWS_WHILE_IN_HAND
 	var/recharge_timerid

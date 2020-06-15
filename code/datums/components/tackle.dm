@@ -354,7 +354,7 @@
 			playsound(user, 'sound/effects/blobattack.ogg', 60, TRUE)
 			playsound(user, 'sound/effects/splat.ogg', 70, TRUE)
 			user.emote("scream")
-			user.gain_trauma(/datum/brain_trauma/severe/paralysis/paraplegic) // oopsie indeed!
+			user.gain_trauma(/datum/brain_trauma/severe/paralysis/spinesnapped) // oopsie indeed!
 			shake_camera(user, 7, 7)
 			user.overlay_fullscreen("flash", /obj/screen/fullscreen/flash)
 			user.clear_fullscreen("flash", 4.5)

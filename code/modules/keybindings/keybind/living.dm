@@ -16,16 +16,6 @@
 	L.resist()
 	return TRUE
 
-/datum/keybinding/living/toggle_combat_mode
-	hotkey_keys = list("C")
-	name = "toggle_combat_mode"
-	full_name = "Toggle combat mode"
-	description = "Toggles whether or not you're in combat mode."
-
-/datum/keybinding/living/toggle_combat_mode/down(client/user)
-	SEND_SIGNAL(user.mob, COMSIG_TOGGLE_COMBAT_MODE)
-	return TRUE
-
 /datum/keybinding/living/toggle_resting
 	hotkey_keys = list("V")
 	name = "toggle_resting"

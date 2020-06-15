@@ -655,9 +655,10 @@ GENETICS SCANNER
 			amount += inaccurate
 	return DisplayTimeText(max(1,amount))
 
-/proc/atmosanalyzer_scan(mixture, mob/living/user, atom/target = src)
+/proc/atmosanalyzer_scan(mixture, mob/living/user, atom/target = src, visible = TRUE)
 	var/icon = target
-	user.visible_message("[user] has used the analyzer on [icon2html(icon, viewers(user))] [target].", "<span class='notice'>You use the analyzer on [icon2html(icon, user)] [target].</span>")
+	if(visible)
+		user.visible_message("[user] has used the analyzer on [icon2html(icon, viewers(user))] [target].", "<span class='notice'>You use the analyzer on [icon2html(icon, user)] [target].</span>")
 	to_chat(user, "<span class='boldnotice'>Results of analysis of [icon2html(icon, user)] [target].</span>")
 
 	var/list/airs = islist(mixture) ? mixture : list(mixture)

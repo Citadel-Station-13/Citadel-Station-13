@@ -98,6 +98,10 @@
 
 	hud_possible = list(DIAG_STAT_HUD, DIAG_BOT_HUD, DIAG_HUD, DIAG_PATH_HUD = HUD_LIST_LIST) //Diagnostic HUD views
 
+	var/commissioned = FALSE // Will other (noncommissioned) bots salute this bot?
+	var/can_salute = TRUE
+	var/salute_delay = 60 SECONDS
+
 /mob/living/simple_animal/bot/proc/get_mode()
 	if(client) //Player bots do not have modes, thus the override. Also an easy way for PDA users/AI to know when a bot is a player.
 		if(paicard)
@@ -250,6 +254,14 @@
 
 	if(!on || client)
 		return
+
+	if(!commissioned && can_salute)
+		for(var/mob/living/simple_animal/bot/B in get_hearers_in_view(5, get_turf(src)))
+			if(B.commissioned)
+				visible_message("<b>[src]</b> performs an elaborate salute for [B]!")
+				can_salute = FALSE
+				addtimer(VARSET_CALLBACK(src, can_salute, TRUE), salute_delay)
+				break
 
 	switch(mode) //High-priority overrides are processed first. Bots can do nothing else while under direct command.
 		if(BOT_RESPONDING)	//Called by the AI.
