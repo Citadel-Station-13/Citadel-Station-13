@@ -5121,6 +5121,7 @@
 /obj/structure/disposalpipe/trunk{
 	dir = 1
 	},
+/obj/machinery/disposal/bin,
 /turf/open/floor/plasteel,
 /area/quartermaster/qm)
 "bDg" = (
@@ -7177,9 +7178,8 @@
 /obj/structure/cable{
 	icon_state = "0-2"
 	},
-/obj/machinery/door/poddoor/preopen{
-	id = "capshut";
-	name = "privacy shutters"
+/obj/machinery/door/poddoor/shutters{
+	id = "capshut"
 	},
 /turf/open/floor/plating,
 /area/crew_quarters/heads/captain)
@@ -7441,9 +7441,8 @@
 	icon_state = "0-2"
 	},
 /obj/structure/cable,
-/obj/machinery/door/poddoor/preopen{
-	id = "capshut";
-	name = "privacy shutters"
+/obj/machinery/door/poddoor/shutters{
+	id = "capshut"
 	},
 /turf/open/floor/plating,
 /area/crew_quarters/heads/captain)
@@ -7563,9 +7562,8 @@
 /obj/structure/cable{
 	icon_state = "1-4"
 	},
-/obj/machinery/door/poddoor/preopen{
-	id = "capshut";
-	name = "privacy shutters"
+/obj/machinery/door/poddoor/shutters{
+	id = "capshut"
 	},
 /turf/open/floor/plating,
 /area/crew_quarters/heads/captain)
@@ -8980,6 +8978,14 @@
 	pixel_y = 7
 	},
 /obj/item/pen/red,
+/obj/item/stamp{
+	pixel_x = -3;
+	pixel_y = 3
+	},
+/obj/item/stamp/denied{
+	pixel_x = 4;
+	pixel_y = -2
+	},
 /turf/open/floor/plasteel,
 /area/quartermaster/storage)
 "cWO" = (
@@ -19701,15 +19707,7 @@
 /obj/effect/turf_decal/tile/brown{
 	dir = 4
 	},
-/obj/structure/table,
-/obj/item/stamp{
-	pixel_x = -3;
-	pixel_y = 3
-	},
-/obj/item/stamp/denied{
-	pixel_x = 4;
-	pixel_y = -2
-	},
+/obj/machinery/computer/bounty,
 /turf/open/floor/plasteel,
 /area/quartermaster/storage)
 "jjB" = (
@@ -25992,7 +25990,7 @@
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/zone3)
 "nhO" = (
-/obj/machinery/airalarm{
+/obj/machinery/airalarm/server{
 	dir = 1;
 	pixel_y = -22
 	},
@@ -29490,6 +29488,7 @@
 	dir = 1
 	},
 /obj/structure/disposalpipe/trunk,
+/obj/machinery/disposal/bin,
 /turf/open/floor/plating,
 /area/engine/engineering)
 "piX" = (
