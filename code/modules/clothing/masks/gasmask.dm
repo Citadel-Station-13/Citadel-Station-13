@@ -234,6 +234,7 @@
 
 /obj/item/clothing/mask/gas/tiki_mask/yalp_elor
 	icon_state = "tiki_yalp"
+	item_state = "tiki_yalp"
 	actions_types = list()
 
 /obj/item/clothing/mask/gas/hunter
