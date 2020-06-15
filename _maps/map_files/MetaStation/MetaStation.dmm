@@ -77686,9 +77686,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/port)
-"mdc" = (
-/turf/closed/wall,
-/area/space)
 "meI" = (
 /obj/structure/extinguisher_cabinet{
 	pixel_x = -27
@@ -79227,14 +79224,6 @@
 "qhe" = (
 /turf/closed/wall,
 /area/medical/medbay/zone3)
-"qmJ" = (
-/obj/effect/spawner/structure/window/reinforced,
-/obj/machinery/door/poddoor/shutters/preopen{
-	id = "chapel_shutters_crematorium";
-	name = "crematorium shutters"
-	},
-/turf/open/floor/plating,
-/area/space)
 "qvY" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -81434,14 +81423,6 @@
 /obj/machinery/atmospherics/pipe/simple/dark/visible,
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
-"vml" = (
-/obj/effect/spawner/structure/window/reinforced,
-/obj/machinery/door/poddoor/shutters/preopen{
-	id = "chapel_shutters_crematorium";
-	name = "crematorium shutters"
-	},
-/turf/open/floor/plating,
-/area/space/nearstation)
 "vmM" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -102123,13 +102104,13 @@ dAx
 qfz
 bTs
 aaa
-blx
-qmJ
-qmJ
-qmJ
-mdc
-vml
-mdc
+cMI
+fpv
+fpv
+fpv
+cMI
+fpv
+cMI
 aaa
 aaa
 aaa
