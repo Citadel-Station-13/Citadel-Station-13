@@ -1,5 +1,5 @@
 import { useBackend } from '../backend';
-import { Button, ProgressBar, Section, Box } from '../components';
+import { Button, ProgressBar, Section, Box, LabeledList } from '../components';
 import { Window } from '../layouts';
 
 export const VrSleeper = (props, context) => {
@@ -14,24 +14,36 @@ export const VrSleeper = (props, context) => {
             </Box>
           </Section>
         )}
-        {!!data.vr_avatar && (
-          <Section title={"Virtual Avatar"}>
-            <ProgressBar
-              title={"Avatar Status: "}
-              value={data.vr_avatar.maxhealth / 100}
-              ranges={{
-                good: [90, Infinity],
-                average: [70, 89],
-                bad: [-Infinity, 69],
-              }} />
-          </Section>
-        ) && (
-          <Section>
-            <Box>
-              No Avatar detected
-            </Box>
-          </Section>
-        )}
+
+        <Section title={"Virtual Avatar"}>
+          {!!data.vr_avatar && (
+            <LabeledList>
+              <LabeledList.Item
+                label={"Name"} >
+                {data.vr_avatar.name}
+              </LabeledList.Item>
+              <LabeledList.Item
+                label={"Status"} >
+                {data.vr_avatar.status}
+              </LabeledList.Item>
+              {!!data.vr_avatar && (
+                <LabeledList.Item
+                  label={"Health"} >
+                  {<ProgressBar
+                    value={data.vr_avatar.health / data.vr_avatar.maxhealth}
+                    ranges={{
+                      good: [0.9, Infinity],
+                      average: [0.7, 0.8],
+                      bad: [-Infinity, 0.5],
+                    }} />}
+                </LabeledList.Item>
+              )}
+            </LabeledList>
+          ) || (
+            "No Virtual Avatar detected"
+          )}
+        </Section>
+
         <Section title="VR Commands">
           <Button
             content={data.toggle_open
@@ -59,7 +71,6 @@ export const VrSleeper = (props, context) => {
               icon={'recycle'}
               onClick={() => {
                 act('delete_avatar');
-                act('tgui:update');
               }} />
           )}
         </Section>

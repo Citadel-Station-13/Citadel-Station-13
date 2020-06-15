@@ -71,12 +71,6 @@
 /obj/machinery/vr_sleeper/update_icon_state()
 	icon_state = "[initial(icon_state)][state_open ? "-open" : ""]"
 
-/obj/machinery/vr_sleeper/open_machine()
-	if(state_open)
-		return
-	if(occupant)
-		SStgui.close_user_uis(occupant, src)
-	return ..()
 
 /obj/machinery/vr_sleeper/MouseDrop_T(mob/target, mob/user)
 	if(user.lying || !iscarbon(target) || !Adjacent(target) || !user.canUseTopic(src, BE_CLOSE, TRUE, NO_TK))
@@ -119,7 +113,6 @@
 			if(!occupant || usr == occupant)
 				if(vr_mob)
 					cleanup_vr_mob()
-					SStgui.update_user_uis(occupant, src)
 			else
 				to_chat(usr, "<span class='warning'>The VR Sleeper's safeties prevent you from doing that.</span>")
 			. = TRUE
@@ -132,11 +125,13 @@
 
 /obj/machinery/vr_sleeper/ui_data(mob/user)
 	var/list/data = list()
+	var/is_living
 	if(vr_mob && !QDELETED(vr_mob))
+		is_living = isliving(vr_mob)
 		data["can_delete_avatar"] = TRUE
 		data["vr_avatar"] = list("name" = vr_mob.name)
-		data["isliving"] = istype(vr_mob)
-		if(data["isliving"])
+		data["isliving"] = is_living
+		if(is_living)
 			var/status
 			switch(vr_mob.stat)
 				if(CONSCIOUS)
@@ -148,6 +143,11 @@
 				if(SOFT_CRIT)
 					status = "Barely Conscious"
 			data["vr_avatar"] += list("status" = status, "health" = vr_mob.health, "maxhealth" = vr_mob.maxHealth)
+	else 
+		data["can_delete_avatar"] = FALSE
+		data["vr_avatar"] = FALSE
+		data["isliving"] = FALSE
+
 	data["toggle_open"] = state_open
 	data["emagged"] = you_die_in_the_game_you_die_for_real
 	data["isoccupant"] = (user == occupant)
