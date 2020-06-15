@@ -393,6 +393,8 @@
 	if(. & EMP_PROTECT_CONTENTS)
 		return
 	var/informed = FALSE
+	if(isrobotic(src))
+		apply_status_effect(/datum/status_effect/no_combat_mode/robotic_emp, 2.5 * severity)
 	for(var/obj/item/bodypart/L in src.bodyparts)
 		if(L.status == BODYPART_ROBOTIC)
 			if(!informed)
@@ -405,13 +407,9 @@
 						L.receive_damage(0,10)
 						Stun(200)
 					else
-						// robotic species take far less damage, and roll to have their parts fly off on a heavy emp
+						// robotic species take far less damage and get combat mode lock instead of stuns
 						// this is to stop emps outright killing them, and also because their organs have emp acts
-						L.receive_damage(0,4)
-						Stun(50)
-						if(!(L.body_part == CHEST || L.body_part == HEAD)) // only dismember legs/arms
-							if(prob(20))
-								L.dismember()
+						L.receive_damage(0,5)
 				if(2)
 					L.receive_damage(0,5)
 					Stun(100)
@@ -419,8 +417,7 @@
 						L.receive_damage(0,5)
 						Stun(100)
 					else
-						L.receive_damage(0,2)
-						Stun(25)
+						L.receive_damage(0,3)
 
 /mob/living/carbon/human/acid_act(acidpwr, acid_volume, bodyzone_hit)
 	var/list/damaged = list()

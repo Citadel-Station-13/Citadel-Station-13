@@ -113,6 +113,9 @@
 		duration = set_duration
 	. = ..()
 
+/datum/status_effect/no_combat_mode/robotic_emp
+	id = "emp_no_combat_mode"
+
 /datum/status_effect/mesmerize
 	id = "Mesmerize"
 	alert_type = /obj/screen/alert/status_effect/mesmerized
