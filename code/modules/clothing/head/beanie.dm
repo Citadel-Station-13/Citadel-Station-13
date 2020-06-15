@@ -78,5 +78,6 @@
 	name = "red striped bobble hat"
 	desc = "If you're going on a worldwide hike, you'll need some cold protection."
 	icon_state = "waldo_hat"
+	item_state = "waldo_hat"
 
 //No dog fashion sprites yet :(  poor Ian can't be dope like the rest of us yet
