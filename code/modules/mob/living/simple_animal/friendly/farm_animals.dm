@@ -38,7 +38,7 @@
 	footstep_type = FOOTSTEP_MOB_SHOE
 
 /mob/living/simple_animal/hostile/retaliate/goat/Initialize(/datum/reagent/milk_reagent)
-	udder = new (milk_reagent,"hi")
+	udder = new (null, milk_reagent)
 	. = ..()
 
 /mob/living/simple_animal/hostile/retaliate/goat/Destroy()
@@ -145,7 +145,7 @@
 	footstep_type = FOOTSTEP_MOB_SHOE
 
 /mob/living/simple_animal/cow/Initialize()
-	udder = new(milk_reagent, "hi")
+	udder = new(null, milk_reagent)
 	. = ..()
 
 /mob/living/simple_animal/cow/Destroy()
