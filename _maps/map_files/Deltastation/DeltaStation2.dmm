@@ -64841,7 +64841,6 @@
 	pixel_x = -26
 	},
 /obj/structure/sign/painting/library{
-	pixel_x = 0;
 	pixel_y = -32
 	},
 /turf/open/floor/wood,
@@ -125422,7 +125421,6 @@
 /area/chapel/office)
 "iNK" = (
 /obj/structure/sign/painting/library{
-	pixel_x = 0;
 	pixel_y = -32
 	},
 /turf/open/floor/wood,
