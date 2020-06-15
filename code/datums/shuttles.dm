@@ -613,3 +613,15 @@
 /datum/map_template/shuttle/snowdin/excavation
 	suffix = "excavation"
 	name = "Snowdin Excavation Elevator"
+
+/datum/map_template/shuttle/hunter/space_cop
+	suffix = "space_cop"
+	name = "Police Spacevan"
+
+/datum/map_template/shuttle/hunter/russian
+	suffix = "russian"
+	name = "Russian Cargo Ship"
+
+/datum/map_template/shuttle/hunter/bounty
+	suffix = "bounty"
+	name = "Bounty Hunter Ship"
