@@ -1,3 +1,6 @@
+/// Checks if something is a BYOND object datatype rather than a primitive, or whatever's closest to one.
+#define is_object_datatype(object)		(object && !ispath(object) && !istext(object) && !isnum(object))
+
 // simple is_type and similar inline helpers
 
 #define in_range(source, user) (get_dist(source, user) <= 1 && (get_step(source, 0)?:z) == (get_step(user, 0)?:z))

@@ -29,6 +29,26 @@
 
 	var/mobility_flags = MOBILITY_FLAGS_DEFAULT
 
+	// Combat - Blocking/Parrying system
+	/// Our block_parry_data for unarmed blocks/parries. Currently only used for parrying, as unarmed block isn't implemented yet. YOU MUST RUN [get_block_parry_data(this)] INSTEAD OF DIRECTLY ACCESSING!
+	var/datum/block_parry_data/block_parry_data = /datum/block_parry_data		// defaults to *something* because [combat_flags] dictates whether or not we can unarmed block/parry.
+	// Blocking
+	/// The item the user is actively blocking with if any.
+	var/obj/item/active_block_item
+	// Parrying
+	/// Whether or not the user is in the middle of an active parry. Set to [UNARMED_PARRY], [ITEM_PARRY], [MARTIAL_PARRY] if parrying.
+	var/parrying = FALSE
+	/// The itme the user is currently parrying with, if any.
+	var/obj/item/active_parry_item
+	/// world.time of parry action start
+	var/parry_start_time = 0
+	/// Current parry effect.
+	var/obj/effect/abstract/parry/parry_visual_effect
+	/// world.time of last parry end
+	var/parry_end_time_last = 0
+	/// Successful parries within the current parry cycle. It's a list of efficiency percentages.
+	var/list/successful_parries
+
 	var/confused = 0	//Makes the mob move in random directions.
 
 	var/hallucination = 0 //Directly affects how long a mob will hallucinate for

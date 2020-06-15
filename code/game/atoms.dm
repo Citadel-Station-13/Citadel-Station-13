@@ -6,6 +6,7 @@
 
 	var/flags_1 = NONE
 	var/interaction_flags_atom = NONE
+	var/datum/reagents/reagents = null
 
 	var/flags_ricochet = NONE
 
@@ -13,8 +14,6 @@
 	var/ricochet_chance_mod = 1
 	///When a projectile ricochets off this atom, it deals the normal damage * this modifier to this atom
 	var/ricochet_damage_mod = 0.33
-
-	var/datum/reagents/reagents = null
 
 	//This atom's HUD (med/sec, etc) images. Associative list.
 	var/list/image/hud_list = null
@@ -148,6 +147,13 @@
 	QDEL_NULL(light)
 
 	return ..()
+
+/**
+  * Checks if a projectile should ricochet off of us. Projectiles get final say.
+  * [__DEFINES/projectiles.dm] for return values.
+  */
+/atom/proc/check_projectile_ricochet(obj/item/projectile/P)
+	return (flags_1 & DEFAULT_RICOCHET_1)? PROJECTILE_RICOCHET_YES : PROJECTILE_RICOCHET_NO
 
 /atom/proc/handle_ricochet(obj/item/projectile/P)
 	var/turf/p_turf = get_turf(P)
