@@ -406,7 +406,7 @@
 		if(PROJECTILE_RICOCHET_YES)
 			var/chance = ricochet_chance * A.ricochet_chance_mod
 			if(firer && HAS_TRAIT(firer, TRAIT_NICE_SHOT))
-			chance += NICE_SHOT_RICOCHET_BONUS
+				chance += NICE_SHOT_RICOCHET_BONUS
 			if(prob(chance))
 				return TRUE
 		else
