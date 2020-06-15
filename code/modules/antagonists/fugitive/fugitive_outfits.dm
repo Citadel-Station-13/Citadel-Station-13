@@ -126,10 +126,10 @@
 	mask = /obj/item/clothing/mask/scarecrow
 	r_pocket = /obj/item/restraints/handcuffs/cable
 	id = /obj/item/card/id
-	r_hand = /obj/item/gun/ballistic/shotgun/doublebarrel/hook
+	r_hand = /obj/item/gun/ballistic/shotgun/doublebarrel
 
 	backpack_contents = list(
-		/obj/item/ammo_casing/shotgun/beanbag = 6
+		/obj/item/ammo_casing/shotgun/incapacitate = 6
 		)
 
 /datum/outfit/bountygrapple/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
