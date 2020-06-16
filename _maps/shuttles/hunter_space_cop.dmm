@@ -29,7 +29,6 @@
 	height = 12;
 	id = "huntership";
 	name = "hunter shuttle";
-	rechargeTime = 1800;
 	width = 7
 	},
 /obj/machinery/door/poddoor/shutters{
@@ -73,7 +72,8 @@
 	dir = 1
 	},
 /obj/effect/mob_spawn/human/fugitive/spacepol{
-	dir = 1
+	dir = 1;
+	short_desc = null
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/hunter)
