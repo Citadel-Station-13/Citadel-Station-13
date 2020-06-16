@@ -65,7 +65,8 @@
 /area/shuttle/hunter)
 "o" = (
 /obj/effect/mob_spawn/human/fugitive/russian{
-	dir = 4
+	dir = 4;
+	short_desc = null
 	},
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/hunter)

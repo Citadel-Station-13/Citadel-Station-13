@@ -80,10 +80,11 @@
 	name = "shock trap"
 	desc = "A trap that will shock and render you immobile. You'd better avoid it."
 	icon_state = "trap-shock"
+	var/stun_time = 100
 
 /obj/structure/trap/stun/trap_effect(mob/living/L)
 	L.electrocute_act(30, src, flags = SHOCK_NOGLOVES) // electrocute act does a message.
-	L.DefaultCombatKnockdown(100)
+	L.Paralyze(stun_time)
 
 /obj/structure/trap/fire
 	name = "flame trap"
@@ -158,6 +159,7 @@
 	desc = "A trap that only goes off when a fugitive steps on it, announcing the location and stunning the target. You'd better avoid it."
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "bounty_trap_on"
+	stun_time = 200
 	var/obj/item/bountytrap/stored_item
 	var/caught = FALSE
 

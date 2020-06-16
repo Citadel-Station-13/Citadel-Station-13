@@ -92,9 +92,6 @@
 /area/shuttle/hunter)
 "gi" = (
 /obj/structure/table,
-/obj/effect/mob_spawn/human/fugitive/spacepol{
-	dir = 8
-	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/hunter)
 "hB" = (
