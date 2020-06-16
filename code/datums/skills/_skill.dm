@@ -60,10 +60,29 @@ GLOBAL_LIST_INIT_TYPED(skill_datums, /datum/skill, init_skill_datums())
 	return new_value > existing
 
 /**
-  * Standard value "render"
+  * Get a list of data used in the skill panel menu.
   */
-/datum/skill/proc/standard_render_value(value, level)
-	return value
+/datum/skill/proc/get_skill_data(datum/skill_holder/H)
+	var/skill_value = H.owner.get_skill_value(type, FALSE)
+	. = list(
+		"name" = name,
+		"desc" = desc,
+		"name_color" = name_color,
+		"level_based" = progression_type == SKILL_PROGRESSION_LEVEL,
+		"value_base" = skill_value,
+		"value_mod" = skill_value,
+		"base_readout" = skill_value,
+		"mod_readout" = skill_value
+	)
+	var/list/mods = LAZYACCESS(H.skill_value_mods, type)
+	if(mods)
+		var/list/mod_names = list()
+		for(var/k in mods)
+			var/datum/skill_modifier/M = GLOB.skill_modifiers[k]
+			mod_names |= M.name
+			skill_value = M.apply_modifier(skill_value, type, H, MODIFIER_TARGET_VALUE)
+		.["mod_readout"] = .["value_mod"] = skill_value
+		.["modifiers"] = mod_names //Will be jointext()'d later.
 
 // Just saying, the choice to use different sub-parent-types is to force coders to resolve issues as I won't be implementing custom procs to grab skill levels in a certain context.
 // Aka: So people don't forget to change checks if they change a skill's progression type.
@@ -74,10 +93,13 @@ GLOBAL_LIST_INIT_TYPED(skill_datums, /datum/skill, init_skill_datums())
 	competency_thresholds = list(THRESHOLD_COMPETENT = FALSE, THRESHOLD_EXPERT = TRUE, THRESHOLD_MASTER = TRUE)
 
 /datum/skill/binary/sanitize_value(new_value)
-	return new_value? TRUE : FALSE
+	return new_value >= 1 ? TRUE : FALSE
 
-/datum/skill/binary/standard_render_value(value, level)
-	return value? "Yes" : "No"
+/datum/skill/binary/get_skill_data(datum/skill_holder/H)
+	. = ..()
+	.["base_readout"] = .["value_base"] ? "Learned: Yes" : "Learned: No"
+	.["mod_readout"] = .["value_mod"] ? "Learned: Yes" : "Learned: No"
+	.["max_value"] = 1
 
 /datum/skill/numerical
 	abstract_type = /datum/skill/numerical
@@ -87,14 +109,15 @@ GLOBAL_LIST_INIT_TYPED(skill_datums, /datum/skill, init_skill_datums())
 	var/max_value = 100
 	/// Min value of this skill
 	var/min_value = 0
-	/// Display as a percent in standard_render_value?
-	var/display_as_percent = FALSE
 
 /datum/skill/numerical/sanitize_value(new_value)
 	return clamp(new_value, min_value, max_value)
 
-/datum/skill/numerical/standard_render_value(value, level)
-	return display_as_percent? "[round(value/max_value/100, 0.01)]%" : "[value] / [max_value]"
+/datum/skill/numerical/get_skill_data(datum/skill_holder/H)
+	. = ..()
+	.["base_readout"] = "Skill Progress: \[[.["value_base"]] / [max_value]\]"
+	.["mod_readout"] = "Skill Progress: \[[.["value_mod"]] / [max_value]\]"
+	.["max_value"] = max_value
 
 /datum/skill/enum
 	abstract_type = /datum/skill/enum
@@ -170,8 +193,12 @@ GLOBAL_LIST_INIT_TYPED(skill_datums, /datum/skill, init_skill_datums())
 	else if(. < 0)
 		to_chat(M.current, "<span class='warning'>I feel like I've become worse at [name]!</span>")
 
-/datum/skill/level/standard_render_value(value, level)
-	var/current_lvl = associative ? (!level ? unskilled_tier : levels[level]) : level
+/datum/skill/level/get_skill_data(datum/skill_holder/H)
+	. = ..()
+	var/skill_value_base = .["value_base"]
+	var/skill_value_mod = .["value_mod"]
+
+	var/level = LAZYACCESS(H.skill_levels, type) || 0
 	var/current_lvl_xp_sum = 0
 	if(level)
 		current_lvl_xp_sum = associative ? levels[levels[level]] : levels[level]
@@ -179,8 +206,42 @@ GLOBAL_LIST_INIT_TYPED(skill_datums, /datum/skill, init_skill_datums())
 	var/next_lvl_xp = associative ? levels[levels[next_index]] : levels[next_index]
 	if(next_lvl_xp > current_lvl_xp_sum)
 		next_lvl_xp -= current_lvl_xp_sum
+	.["lvl_base"] = .["lvl_mod"] = associative ? (!level ? unskilled_tier : levels[level]) : level
+	.["lvl_base_color"] = .["lvl_mod_color"] = (level+1)*(350/max_levels)
+	.["xp_next_lvl_base"] = "XP To Next Level : \[[skill_value_base - current_lvl_xp_sum]/[next_lvl_xp]\]"
 
-	return "[associative ? current_lvl : "Lvl. [current_lvl]"] ([value - current_lvl_xp_sum]/[next_lvl_xp])[level == max_levels ? " \[MAX!\]" : ""]"
+	.["max_lvls"] = max_levels
+	var/max_value
+	switch(level_up_method)
+		if(STANDARD_LEVEL_UP)
+			max_value = .["max_value"] = XP_LEVEL(standard_xp_lvl_up, xp_lvl_multiplier, max_levels)
+		if(DWARFY_LEVEL_UP)
+			max_value = .["max_value"] = DORF_XP_LEVEL(standard_xp_lvl_up, xp_lvl_multiplier, max_levels)
+
+	.["base_readout"] = "Overall Skill Progress: \[[skill_value_base]/[max_value]\]"
+
+	var/list/mods = LAZYACCESS(H.skill_level_mods, type)
+	if(mods) //I'm not proud of doing a similar process twice a row but here we go.
+		var/list/mod_names = .["modifiers"]
+		if(!mod_names)
+			.["modifiers"] = mod_names = list()
+		for(var/k in mods)
+			var/datum/skill_modifier/M = GLOB.skill_modifiers[k]
+			mod_names |= M.name
+			level = M.apply_modifier(level, type, H, MODIFIER_TARGET_LEVEL)
+
+		if(level)
+			current_lvl_xp_sum = associative ? levels[levels[level]] : levels[level]
+		else
+			current_lvl_xp_sum = 0
+		next_index = min(max_levels, level+1)
+		next_lvl_xp = associative ? levels[levels[next_index]] : levels[next_index]
+		if(next_lvl_xp > current_lvl_xp_sum)
+			next_lvl_xp -= current_lvl_xp_sum
+		.["lvl_mod"] = associative ? (!level ? unskilled_tier : levels[level]) : level
+		.["lvl_mod_color"] = (level+1)*(350/max_levels)
+		.["xp_next_lvl_mod"] = "XP To Next Level : \[[skill_value_mod - current_lvl_xp_sum]/[next_lvl_xp]\]"
+		.["mod_readout"] = "Overall Skill Progress: \[[skill_value_mod]/[max_value]\]"
 
 /datum/skill/level/job
 	abstract_type = /datum/skill/level/job

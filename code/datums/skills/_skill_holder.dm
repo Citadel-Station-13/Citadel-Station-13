@@ -28,15 +28,6 @@
 	var/see_skill_mods = TRUE
 	/// Whether skill descriptions are displayed or not.
 	var/compact_mode = FALSE
-	/// The current selected skill category.
-	var/selected_category
-
-/datum/skill_holder/New(owner)
-	..()
-	src.owner = owner
-	var/datum/skill/S = locate() in GLOB.skill_datums
-	if(S)
-		selected_category = S.ui_category
 
 /**
   * Grabs the value of a skill.
@@ -201,18 +192,3 @@
 		divisor++
 	if(divisor)
 		. = modifier_is_multiplier ? value*(sum/divisor) : value/(sum/divisor)
-
-/**
-  * Generates a HTML readout of our skills.
-  * Port to tgui-next when?
-  */
-/datum/mind/proc/skill_html_readout()
-	var/list/out = list("<center><h1>Skills</h1></center><hr>")
-	out += "<table style=\"width:100%\"><tr><th><b>Skill</b><th><b>Value</b></tr>"
-	for(var/path in GLOB.skill_datums)
-		var/datum/skill/S = GLOB.skill_datums[path]
-		var/skill_value = get_skill_value(path)
-		var/skill_level = get_skill_level(path, round = TRUE)
-		out += "<tr><td><font color='[S.name_color]'>[S.name]</font></td><td>[S.standard_render_value(skill_value, skill_level)]</td></tr>"
-	out += "</table>"
-	return out.Join("")
