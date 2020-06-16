@@ -312,11 +312,15 @@
 	if(!trajectory)
 		return
 	var/turf/T = get_turf(A)
-	if(check_ricochet(A))
+	if(check_ricochet(A) && A.handle_ricochet(src)) //if you can ricochet, attempt to ricochet off the object
+		on_ricochet(A) //if allowed, use autoaim to ricochet into someone, otherwise default to ricocheting off the object from above
 		var/datum/point/pcache = trajectory.copy_to()
 		if(hitscan)
 			store_hitscan_collision(pcache)
-		handle_ricochet(A)
+		decayedRange = max(0, decayedRange - reflect_range_decrease)
+		ricochet_chance *= ricochet_decay_chance
+		damage *= ricochet_decay_damage
+		range = decayedRange
 		return TRUE
 
 	var/distance = get_dist(T, starting) // Get the distance between the turf shot from and the mob we hit and use that for the calculations.
