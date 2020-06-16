@@ -171,36 +171,6 @@
 			foam.start()
 		CHECK_TICK
 
-/datum/round_event/vent_clog/male/announce()
-	priority_announce("The scrubbers network is experiencing a backpressure surge. Some ejaculation of contents may occur.", "Atmospherics alert")
-
-/datum/round_event/vent_clog/male/start()
-	for(var/obj/machinery/atmospherics/components/unary/vent in vents)
-		if(vent && vent.loc && !vent.welded)
-			var/datum/reagents/R = new/datum/reagents(1000)
-			R.my_atom = vent
-			R.add_reagent(/datum/reagent/consumable/semen, reagentsAmount)
-
-			var/datum/effect_system/foam_spread/foam = new
-			foam.set_up(200, get_turf(vent), R)
-			foam.start()
-		CHECK_TICK
-
-/datum/round_event/vent_clog/female/announce()
-	priority_announce("The scrubbers network is experiencing a backpressure squirt. Some ejection of contents may occur.", "Atmospherics alert")
-
-/datum/round_event/vent_clog/female/start()
-	for(var/obj/machinery/atmospherics/components/unary/vent in vents)
-		if(vent && vent.loc && !vent.welded)
-			var/datum/reagents/R = new/datum/reagents(1000)
-			R.my_atom = vent
-			R.add_reagent(/datum/reagent/consumable/femcum, reagentsAmount)
-
-			var/datum/effect_system/foam_spread/foam = new
-			foam.set_up(200, get_turf(vent), R)
-			foam.start()
-		CHECK_TICK
-
 /datum/round_event/vent_clog/plasma_decon/announce()
 	priority_announce("We are deploying an experimental plasma decontamination system. Please stand away from the vents and do not breathe the smoke that comes out.", "Central Command Update")
 
