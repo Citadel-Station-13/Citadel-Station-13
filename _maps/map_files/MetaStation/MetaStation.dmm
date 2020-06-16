@@ -44581,6 +44581,9 @@
 /turf/open/floor/plating,
 /area/gateway)
 "bJY" = (
+/obj/machinery/gateway{
+	dir = 9
+	},
 /obj/effect/turf_decal/bot_white/right,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -44595,6 +44598,9 @@
 /turf/open/floor/plasteel/dark,
 /area/gateway)
 "bJZ" = (
+/obj/machinery/gateway{
+	dir = 1
+	},
 /obj/machinery/status_display/evac{
 	pixel_y = 32
 	},
@@ -44612,6 +44618,9 @@
 /turf/open/floor/plasteel/dark,
 /area/gateway)
 "bKa" = (
+/obj/machinery/gateway{
+	dir = 5
+	},
 /obj/effect/turf_decal/bot_white/left,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -45283,10 +45292,11 @@
 /turf/open/floor/plasteel,
 /area/gateway)
 "bLB" = (
+/obj/structure/table,
+/obj/item/paper/pamphlet/gateway,
 /obj/effect/turf_decal/bot{
 	dir = 1
 	},
-/obj/machinery/computer/gateway_control,
 /turf/open/floor/plasteel{
 	dir = 1
 	},
@@ -45297,6 +45307,9 @@
 /turf/open/floor/plating,
 /area/gateway)
 "bLD" = (
+/obj/machinery/gateway{
+	dir = 8
+	},
 /obj/effect/turf_decal/bot_white,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -45312,6 +45325,23 @@
 /area/gateway)
 "bLE" = (
 /obj/machinery/gateway/centerstation,
+/turf/open/floor/plasteel/dark,
+/area/gateway)
+"bLF" = (
+/obj/machinery/gateway{
+	dir = 4
+	},
+/obj/effect/turf_decal/bot_white,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
 /turf/open/floor/plasteel/dark,
 /area/gateway)
 "bLG" = (
@@ -46165,12 +46195,46 @@
 	dir = 1
 	},
 /area/gateway)
+"bNp" = (
+/obj/machinery/gateway{
+	dir = 10
+	},
+/obj/effect/turf_decal/bot_white/left,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
+/area/gateway)
 "bNq" = (
 /obj/machinery/gateway,
 /obj/structure/cable/yellow{
 	icon_state = "0-2"
 	},
 /obj/effect/turf_decal/bot_white,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
+/area/gateway)
+"bNr" = (
+/obj/machinery/gateway{
+	dir = 6
+	},
+/obj/effect/turf_decal/bot_white/right,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -67109,6 +67173,7 @@
 	name = "Test Chamber Telescreen";
 	network = list("toxins");
 	pixel_x = -32;
+	pixel_y = 0
 	},
 /turf/open/floor/plasteel,
 /area/science/mixing)

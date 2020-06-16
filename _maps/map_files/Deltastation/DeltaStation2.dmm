@@ -64841,6 +64841,7 @@
 	pixel_x = -26
 	},
 /obj/structure/sign/painting/library{
+	pixel_x = 0;
 	pixel_y = -32
 	},
 /turf/open/floor/wood,
@@ -75566,8 +75567,6 @@
 /obj/structure/table,
 /obj/item/storage/firstaid/regular,
 /obj/effect/turf_decal/bot,
-/obj/item/paper/pamphlet/gateway,
-/obj/item/paper/pamphlet/gateway,
 /turf/open/floor/plasteel,
 /area/gateway)
 "cyD" = (
@@ -75578,6 +75577,9 @@
 /turf/open/floor/plating,
 /area/gateway)
 "cyE" = (
+/obj/machinery/gateway{
+	dir = 9
+	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/bot_white/right,
 /obj/effect/turf_decal/tile/neutral{
@@ -75593,6 +75595,9 @@
 /turf/open/floor/plasteel/dark,
 /area/gateway)
 "cyF" = (
+/obj/machinery/gateway{
+	dir = 1
+	},
 /obj/machinery/status_display/evac{
 	pixel_y = 32
 	},
@@ -75611,6 +75616,9 @@
 /turf/open/floor/plasteel/dark,
 /area/gateway)
 "cyG" = (
+/obj/machinery/gateway{
+	dir = 5
+	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/bot_white/left,
 /obj/effect/turf_decal/tile/neutral{
@@ -76568,6 +76576,9 @@
 /turf/open/floor/plating,
 /area/gateway)
 "cAi" = (
+/obj/machinery/gateway{
+	dir = 8
+	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/bot_white,
 /obj/effect/turf_decal/tile/neutral{
@@ -76588,6 +76599,24 @@
 	icon_state = "0-2"
 	},
 /obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel/dark,
+/area/gateway)
+"cAk" = (
+/obj/machinery/gateway{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/bot_white,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
 /turf/open/floor/plasteel/dark,
 /area/gateway)
 "cAl" = (
@@ -77399,6 +77428,9 @@
 /turf/closed/wall,
 /area/gateway)
 "cBD" = (
+/obj/machinery/gateway{
+	dir = 10
+	},
 /obj/machinery/light{
 	dir = 8
 	},
@@ -77439,6 +77471,9 @@
 /turf/open/floor/plasteel/dark,
 /area/gateway)
 "cBF" = (
+/obj/machinery/gateway{
+	dir = 6
+	},
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/camera{
 	c_tag = "Bridge - Gateway Chamber";
@@ -125421,6 +125456,7 @@
 /area/chapel/office)
 "iNK" = (
 /obj/structure/sign/painting/library{
+	pixel_x = 0;
 	pixel_y = -32
 	},
 /turf/open/floor/wood,
@@ -170067,7 +170103,7 @@ cul
 cvE
 cvz
 cyG
-cyG
+cAk
 cBF
 cDm
 cFa

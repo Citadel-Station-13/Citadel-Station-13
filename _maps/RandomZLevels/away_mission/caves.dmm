@@ -398,34 +398,49 @@
 	},
 /area/awaymission/caves/BMP_asteroid/level_three)
 "bi" = (
+/obj/machinery/gateway{
+	dir = 9
+	},
 /turf/open/floor/engine/cult{
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/caves/BMP_asteroid/level_four)
 "bj" = (
+/obj/machinery/gateway{
+	dir = 1
+	},
 /turf/open/floor/engine/cult{
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/caves/BMP_asteroid/level_four)
 "bk" = (
+/obj/machinery/gateway{
+	dir = 5
+	},
 /turf/open/floor/engine/cult{
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/caves/BMP_asteroid/level_four)
 "bl" = (
+/obj/machinery/gateway{
+	dir = 8
+	},
 /turf/open/floor/engine/cult{
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/caves/BMP_asteroid/level_four)
 "bm" = (
-/obj/machinery/gateway/away{
+/obj/machinery/gateway/centeraway{
 	calibrated = 0
 	},
 /turf/open/floor/engine/cult{
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/caves/BMP_asteroid/level_four)
-	"bn" = (
+"bn" = (
+/obj/machinery/gateway{
+	dir = 4
+	},
 /turf/open/floor/engine/cult{
 	initial_gas_mix = "n2=23;o2=14"
 	},
@@ -438,6 +453,9 @@
 	},
 /area/awaymission/caves/BMP_asteroid/level_three)
 "bp" = (
+/obj/machinery/gateway{
+	dir = 10
+	},
 /turf/open/floor/engine/cult{
 	initial_gas_mix = "n2=23;o2=14"
 	},
@@ -58093,9 +58111,9 @@ ao
 ao
 ao
 bf
-ao
-ao
-ao
+bi
+bl
+bp
 aw
 ao
 bz
@@ -58350,9 +58368,9 @@ ao
 ao
 bf
 ap
-ao
+bj
 bm
-ao
+bq
 bf
 bw
 bA
@@ -58607,9 +58625,9 @@ ao
 ao
 ao
 bf
-ao
-ao
-ao
+bk
+bn
+br
 ao
 ao
 bz
