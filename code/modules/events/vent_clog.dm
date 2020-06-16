@@ -140,22 +140,6 @@
 	typepath = /datum/round_event/vent_clog/plasma_decon
 	max_occurrences = 0
 
-/datum/round_event_control/vent_clog/female
-	name = "Clogged Vents; Girlcum"
-	typepath = /datum/round_event/vent_clog/female
-	max_occurrences = 0
-
-/datum/round_event/vent_clog/female
-	reagentsAmount = 100
-
-/datum/round_event_control/vent_clog/male
-	name = "Clogged Vents: Semen"
-	typepath = /datum/round_event/vent_clog/male
-	max_occurrences = 0
-
-/datum/round_event/vent_clog/male
-	reagentsAmount = 100
-
 /datum/round_event/vent_clog/beer/announce()
 	priority_announce("The scrubbers network is experiencing an unexpected surge of pressurized beer. Some ejection of contents may occur.", "Atmospherics alert")
 
