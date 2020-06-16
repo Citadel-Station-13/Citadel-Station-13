@@ -277,11 +277,11 @@
 	desc = "Used for watching the AI and the RD's goons from the safety of his office."
 	network = list("rd", "aicore", "aiupload", "minisat", "xeno", "test")
 
-/obj/machinery/computer/security/telescreen/research
-	name = "research telescreen"
-	desc = "A telescreen with access to the research division's camera network."
+/obj/machinery/computer/security/telescreen/circuitry
+	name = "circuitry telescreen"
+	desc = "Used for watching the other eggheads from the safety of the circuitry lab."
 	network = list("rd")
-
+	
 /obj/machinery/computer/security/telescreen/ce
 	name = "\improper Chief Engineer's telescreen"
 	desc = "Used for watching the engine, telecommunications and the minisat."
