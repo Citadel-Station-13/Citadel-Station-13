@@ -22238,6 +22238,9 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 4
 	},
+/obj/machinery/computer/gateway_control{
+	dir = 8
+	},
 /turf/open/floor/plasteel/dark/side{
 	dir = 4
 	},
@@ -22257,12 +22260,6 @@
 /obj/effect/spawner/lootdrop/maintenance,
 /turf/open/floor/plating,
 /area/maintenance/department/eva)
-"aWr" = (
-/obj/machinery/gateway{
-	dir = 9
-	},
-/turf/open/floor/engine,
-/area/gateway)
 "aWs" = (
 /obj/machinery/light{
 	dir = 8;
@@ -22731,12 +22728,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
-"aXm" = (
-/obj/machinery/gateway{
-	dir = 1
-	},
-/turf/open/floor/engine,
-/area/gateway)
 "aXn" = (
 /obj/effect/turf_decal/tile/bar,
 /obj/effect/turf_decal/tile/bar{
@@ -22777,9 +22768,6 @@
 /turf/open/floor/plasteel,
 /area/ai_monitored/storage/eva)
 "aXs" = (
-/obj/machinery/gateway{
-	dir = 5
-	},
 /obj/machinery/camera{
 	c_tag = "Research - Gateway Chamber";
 	network = list("ss13","rd")
@@ -28013,12 +28001,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/science/mixing)
-"biU" = (
-/obj/machinery/gateway{
-	dir = 10
-	},
-/turf/open/floor/engine,
-/area/gateway)
 "biV" = (
 /turf/closed/wall,
 /area/storage/primary)
@@ -29516,10 +29498,6 @@
 	},
 /turf/closed/wall/r_wall,
 /area/science/mixing)
-"blU" = (
-/obj/machinery/gateway,
-/turf/open/floor/engine,
-/area/gateway)
 "blV" = (
 /obj/machinery/computer/cargo{
 	dir = 8
@@ -29871,9 +29849,6 @@
 /turf/closed/wall,
 /area/crew_quarters/fitness/cogpool)
 "bmG" = (
-/obj/machinery/gateway{
-	dir = 6
-	},
 /turf/open/floor/engine,
 /area/gateway)
 "bmH" = (
@@ -64423,15 +64398,6 @@
 	},
 /turf/open/floor/engine,
 /area/gateway)
-"cDL" = (
-/obj/machinery/gateway{
-	dir = 8
-	},
-/obj/machinery/atmospherics/pipe/simple/orange/hidden{
-	dir = 8
-	},
-/turf/open/floor/engine,
-/area/gateway)
 "cDM" = (
 /obj/machinery/gateway/centerstation,
 /obj/machinery/atmospherics/pipe/simple/orange/hidden{
@@ -64440,9 +64406,6 @@
 /turf/open/floor/engine,
 /area/gateway)
 "cDN" = (
-/obj/machinery/gateway{
-	dir = 4
-	},
 /obj/machinery/atmospherics/pipe/simple/orange/hidden{
 	dir = 8
 	},
@@ -99345,9 +99308,9 @@ aaa
 aaU
 aaa
 aUk
-aWr
-cDL
-biU
+bmG
+cDN
+bmG
 aUk
 bWr
 cEl
@@ -99602,9 +99565,9 @@ aaa
 aaU
 aaa
 aUk
-aXm
+bmG
 cDM
-blU
+bmG
 aUk
 bWc
 bWo
