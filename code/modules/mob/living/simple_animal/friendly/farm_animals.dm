@@ -496,11 +496,11 @@
 /obj/item/udder
 	name = "udder"
 
-/obj/item/udder/Initialize(loc, /datum/reagent/reagent)
-	if(!reagent)
-		reagent = /datum/reagent/consumable/milk
+/obj/item/udder/Initialize(loc, milk_reagent)
+	if(!milk_reagent)
+		milk_reagent = /datum/reagent/consumable/milk
 	create_reagents(50, NONE, NO_REAGENTS_VALUE)
-	reagents.add_reagent(reagent, 20)
+	reagents.add_reagent(milk_reagent, 20)
 	. = ..()
 
 /obj/item/udder/proc/generateMilk(datum/reagent/milk_reagent)
