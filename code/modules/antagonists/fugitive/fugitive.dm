@@ -8,6 +8,14 @@
 	var/is_captured = FALSE
 	var/backstory = "error"
 
+/datum/antagonist/fugitive/apply_innate_effects(mob/living/mob_override)
+	var/mob/living/M = mob_override || owner.current
+	add_antag_hud(ANTAG_HUD_FUGITIVE, "fugitive", M)
+
+/datum/antagonist/fugitive/remove_innate_effects(mob/living/mob_override)
+	var/mob/living/M = mob_override || owner.current
+	remove_antag_hud(ANTAG_HUD_FUGITIVE, M)
+
 /datum/antagonist/fugitive/on_gain()
 	forge_objectives()
 	. = ..()
