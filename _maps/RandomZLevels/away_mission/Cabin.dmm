@@ -581,24 +581,6 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/awaymission/cabin)
-"cb" = (
-/obj/machinery/gateway{
-	dir = 9
-	},
-/turf/open/floor/wood,
-/area/awaymission/cabin)
-"cc" = (
-/obj/machinery/gateway{
-	dir = 1
-	},
-/turf/open/floor/wood,
-/area/awaymission/cabin)
-"cd" = (
-/obj/machinery/gateway{
-	dir = 5
-	},
-/turf/open/floor/wood,
-/area/awaymission/cabin)
 "ce" = (
 /obj/structure/chair/wood{
 	dir = 4
@@ -649,20 +631,8 @@
 /obj/item/bedsheet,
 /turf/open/floor/plasteel/white,
 /area/awaymission/cabin)
-"co" = (
-/obj/machinery/gateway{
-	dir = 8
-	},
-/turf/open/floor/wood,
-/area/awaymission/cabin)
 "cp" = (
-/obj/machinery/gateway/centeraway,
-/turf/open/floor/wood,
-/area/awaymission/cabin)
-"cq" = (
-/obj/machinery/gateway{
-	dir = 4
-	},
+/obj/machinery/gateway/away,
 /turf/open/floor/wood,
 /area/awaymission/cabin)
 "cr" = (
@@ -695,22 +665,6 @@
 /obj/item/storage/firstaid/brute,
 /obj/item/storage/firstaid/fire,
 /turf/open/floor/plasteel/white,
-/area/awaymission/cabin)
-"cw" = (
-/obj/machinery/gateway{
-	dir = 10
-	},
-/turf/open/floor/wood,
-/area/awaymission/cabin)
-"cx" = (
-/obj/machinery/gateway,
-/turf/open/floor/wood,
-/area/awaymission/cabin)
-"cy" = (
-/obj/machinery/gateway{
-	dir = 6
-	},
-/turf/open/floor/wood,
 /area/awaymission/cabin)
 "cz" = (
 /obj/structure/musician/piano,
@@ -31200,9 +31154,9 @@ an
 bk
 bJ
 an
-cb
-co
-cw
+aq
+aq
+aq
 cH
 bu
 az
@@ -31457,9 +31411,9 @@ an
 ar
 an
 an
-cc
+aq
 cp
-cx
+aq
 cH
 aq
 az
@@ -31714,9 +31668,9 @@ an
 aq
 ay
 an
-cd
-cq
-cy
+aq
+aq
+aq
 cH
 bu
 az
