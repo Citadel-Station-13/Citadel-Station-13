@@ -491,7 +491,7 @@
 		/obj/item/kitchen/knife = 5,
 		/obj/item/screwdriver = 5,
 		/obj/item/crowbar/red = 1, //Dont you need a crowbar to open this?
-		/obj/item/stack/medical/bruise_pack = 3,
+		/obj/item/stack/medical/suture = 3,
 		/obj/item/reagent_containers/food/drinks/bottle/vodka = 2,
 		/obj/item/radio = 5,
 		/obj/item/flashlight = 4,
