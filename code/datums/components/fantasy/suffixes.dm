@@ -144,7 +144,7 @@
 	var/obj/item/projectile/picked_projectiletype = pickweight(weighted_projectile_types)
 
 	var/obj/item/master = comp.parent
-	comp.appliedComponents += master.AddComponent(/datum/component/shrapnel, picked_projectiletype)
+	comp.appliedComponents += master.AddComponent(/datum/component/mirv, picked_projectiletype)
 	return "[newName] of [initial(picked_projectiletype.name)] shrapnel"
 
 /datum/fantasy_affix/strength
