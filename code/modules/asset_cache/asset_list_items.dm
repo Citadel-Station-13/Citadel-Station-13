@@ -369,8 +369,11 @@
 		"dna_extra.gif" 		= 'html/dna_extra.gif'
 	)
 
-/*
 /datum/asset/simple/orbit
+	assets = list(
+		"ghost.png"	= 'html/ghost.png'
+	)
+
 	assets = list(
 		"ghost.png"	= 'html/ghost.png'
 	)

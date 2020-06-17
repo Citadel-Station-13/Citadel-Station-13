@@ -7,6 +7,7 @@
 	job_rank = ROLE_ABDUCTOR
 	show_in_antagpanel = FALSE //should only show subtypes
 	threat = 5
+	show_to_ghosts = TRUE
 	var/datum/team/abductor_team/team
 	var/sub_role
 	var/outfit
@@ -31,6 +32,10 @@
 	greet_text = "Use your experimental console and surgical equipment to monitor your agent and experiment upon abducted humans."
 	show_in_antagpanel = TRUE
 	skill_modifiers = list(/datum/skill_modifier/job/affinity/surgery)
+
+/datum/antagonist/abductor/scientist/onemanteam
+	name = "Abductor Solo"
+	outfit = /datum/outfit/abductor/scientist/onemanteam
 
 /datum/antagonist/abductor/create_team(datum/team/abductor_team/new_team)
 	if(!new_team)
