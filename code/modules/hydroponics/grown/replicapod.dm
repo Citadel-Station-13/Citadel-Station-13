@@ -9,7 +9,7 @@
 	product = /mob/living/carbon/human //verrry special -- Urist
 	lifespan = 50
 	endurance = 8
-	maturation = 15
+	maturation = 20 // it takes a very long time to grow
 	production = 1
 	yield = 1 //seeds if there isn't a dna inside
 	potency = 30
@@ -123,6 +123,8 @@
 			// make them themselves, and not a pod
 			podman.hardset_dna(ui, null, podman.real_name, blood_type, old_species, features)
 
+		//deal clone damage because this shouldn't be better than cloning
+		podman.adjustCloneLoss(25 + (50/max(potency,1)) // deal between 25 and 75 clone damage depending on potency
 		podman.set_cloned_appearance()
 
 	else //else, one packet of seeds. maybe two
