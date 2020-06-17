@@ -9,7 +9,7 @@
 	product = /mob/living/carbon/human //verrry special -- Urist
 	lifespan = 50
 	endurance = 8
-	maturation = 10
+	maturation = 15
 	production = 1
 	yield = 1 //seeds if there isn't a dna inside
 	potency = 30
@@ -22,6 +22,8 @@
 	var/list/features = null
 	var/factions = null
 	var/list/quirks = null
+	var/ui = null
+	var/datum/species/old_species = null
 	var/contains_sample = 0
 
 /obj/item/seeds/replicapod/Initialize()
@@ -42,6 +44,8 @@
 				features = B.data["features"]
 				factions = B.data["factions"]
 				quirks = B.data["quirks"]
+				ui = B.data["ui"]
+				species = B.data["species"]
 				contains_sample = TRUE
 				visible_message("<span class='notice'>The [src] is injected with a fresh blood sample.</span>")
 			else
@@ -66,7 +70,8 @@
 
 /obj/item/seeds/replicapod/harvest(mob/user) //now that one is fun -- Urist
 	var/obj/machinery/hydroponics/parent = loc
-	var/make_podman = 0
+	var/make_podman = FALSE
+	var/can_revive = FALSE
 	var/ckey_holder = null
 	var/list/result = list()
 	if(CONFIG_GET(flag/revival_pod_plants))
@@ -75,14 +80,14 @@
 				if(isobserver(M))
 					var/mob/dead/observer/O = M
 					if(O.ckey == ckey && O.can_reenter_corpse)
-						make_podman = 1
+						can_revive = TRUE
 						break
 				else
 					if(M.ckey == ckey && M.stat == DEAD && !M.suiciding && AmBloodsucker(M))
-						make_podman = 1
+						can_revive = TRUE
 						if(isliving(M))
 							var/mob/living/L = M
-							make_podman = !L.hellbound
+							can_revive = !L.hellbound
 						break
 		else //If the player has ghosted from his corpse before blood was drawn, his ckey is no longer attached to the mob, so we need to match up the cloned player through the mind key
 			for(var/mob/M in GLOB.player_list)
@@ -91,14 +96,16 @@
 						var/mob/dead/observer/O = M
 						if(!O.can_reenter_corpse)
 							break
-					make_podman = 1
+					can_revive = TRUE
 					if(isliving(M))
 						var/mob/living/L = M
 						make_podman = !L.hellbound
 					ckey_holder = M.ckey
 					break
 
-	if(make_podman)	//all conditions met!
+	if(can_revive)	//all conditions met!
+		if(potency >= 90)
+			make_podman = TRUE
 		var/mob/living/carbon/human/podman = new /mob/living/carbon/human(parent.loc)
 		if(realName)
 			podman.real_name = realName
@@ -111,11 +118,16 @@
 			podman.ckey = ckey_holder
 		podman.gender = blood_gender
 		podman.faction |= factions
-		if(!features["mcolor"])
-			features["mcolor"] = "#59CE00"
 		for(var/V in quirks)
 			new V(podman)
-		podman.hardset_dna(null,null,podman.real_name,blood_type, new /datum/species/pod,features)//Discard SE's and UI's, podman cloning is inaccurate, and always make them a podman
+		if(make_podman) // make them a podperson
+			if(!features["mcolor"])
+				features["mcolor"] = "#59CE00"
+			podman.hardset_dna(null,null,podman.real_name,blood_type, new /datum/species/pod,features)//Discard SE's and UI's, podman cloning is inaccurate, and always make them a podman
+		else
+			// make them themselves, and not a pod
+			podman.hardset_dna(ui, null, podman.real_name, blood_type, old_species, features)
+
 		podman.set_cloned_appearance()
 
 	else //else, one packet of seeds. maybe two

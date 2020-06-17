@@ -210,6 +210,8 @@
 		blood_data["features"] = dna.features
 		blood_data["factions"] = faction
 		blood_data["quirks"] = list()
+		blood_data["species"] = dna.species
+		blood_data["ui"] = dna.uni_identity
 		for(var/V in roundstart_quirks)
 			var/datum/quirk/T = V
 			blood_data["quirks"] += T.type
