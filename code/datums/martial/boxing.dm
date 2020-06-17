@@ -66,9 +66,9 @@
 	return
 
 /obj/item/clothing/gloves/boxing/dropped(mob/user)
+	. = ..()
 	if(!ishuman(user))
 		return
 	var/mob/living/carbon/human/H = user
 	if(H.get_item_by_slot(SLOT_GLOVES) == src)
 		style.remove(H)
-	return

@@ -122,11 +122,13 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 
 
 /obj/item/claymore/highlander/pickup(mob/living/user)
+	. = ..()
 	to_chat(user, "<span class='notice'>The power of Scotland protects you! You are shielded from all stuns and knockdowns.</span>")
 	user.add_stun_absorption("highlander", INFINITY, 1, " is protected by the power of Scotland!", "The power of Scotland absorbs the stun!", " is protected by the power of Scotland!")
 	user.ignore_slowdown(HIGHLANDER)
 
 /obj/item/claymore/highlander/dropped(mob/living/user)
+	. = ..()
 	user.unignore_slowdown(HIGHLANDER)
 	if(!QDELETED(src))
 		qdel(src) //If this ever happens, it's because you lost an arm
@@ -675,7 +677,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 			to_chat(user, "<span class='warning'>You easily land a critical blow on the [target].</span>")
 			if(istype(target, /mob/living/))
 				var/mob/living/bug = target
-				bug.adjustBruteLoss(-35) //What kinda mad man would go into melee with a spider?!
+				bug.adjustBruteLoss(35) //What kinda mad man would go into melee with a spider?!
 			else
 				qdel(target)
 

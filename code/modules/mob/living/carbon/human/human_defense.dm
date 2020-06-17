@@ -78,7 +78,7 @@
 	..()
 
 
-/mob/living/carbon/human/attacked_by(obj/item/I, mob/living/user)
+/mob/living/carbon/human/attacked_by(obj/item/I, mob/living/user, attackchain_flags = NONE, damage_multiplier = 1)
 	if(!I || !user)
 		return 0
 
@@ -95,7 +95,7 @@
 	SSblackbox.record_feedback("tally", "zone_targeted", 1, target_area)
 
 	// the attacked_by code varies among species
-	return dna.species.spec_attacked_by(I, user, affecting, a_intent, src)
+	return dna.species.spec_attacked_by(I, user, affecting, a_intent, src, attackchain_flags, damage_multiplier)
 
 /mob/living/carbon/human/attack_hulk(mob/living/carbon/human/user, does_attack_animation = FALSE)
 	if(user.a_intent == INTENT_HARM)
@@ -214,7 +214,7 @@
 /mob/living/carbon/human/attack_animal(mob/living/simple_animal/M)
 	. = ..()
 	if(.)
-		var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
+		var/damage = .
 		var/dam_zone = dismembering_strike(M, pick(BODY_ZONE_CHEST, BODY_ZONE_PRECISE_L_HAND, BODY_ZONE_PRECISE_R_HAND, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG))
 		if(!dam_zone) //Dismemberment successful
 			return TRUE
