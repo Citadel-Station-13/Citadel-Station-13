@@ -35,7 +35,8 @@
 	var/list/blood_types = typesof(/datum/reagent/blood)
 	if(changetype == ADD_REAGENT)
 		var/accepted = FALSE
-		for(var/datum/reagent/blood/blood_type in blood_types)
+		for(var/blood_type in blood_types)
+			message_admins("lets see if reagents has [blood_type]")
 			var/datum/reagent/blood/B = reagents.has_reagent(blood_type, 5) //make sure seed pack is full, to stop some funky exploity stuff
 			if(B)
 				if(B.data["mind"] && B.data["cloneable"])
@@ -51,10 +52,10 @@
 					old_species = B.data["species"]
 					contains_sample = TRUE
 					accepted = TRUE
-					visible_message("<span class='notice'>The [src] is injected with a fresh blood sample.</span>")
+					visible_message("<span class='notice'>[src] is injected with a fresh blood sample.</span>") // 'the' is automatically added
 					break
 		if(!accepted)
-			visible_message("<span class='warning'>The [src] rejects the sample!</span>")
+			visible_message("<span class='warning'>[src] rejects the sample!</span>")
 
 /obj/item/seeds/replicapod/get_analyzer_text()
 	var/text = ..()

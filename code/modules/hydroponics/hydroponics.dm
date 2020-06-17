@@ -220,9 +220,9 @@
 				nutrimentMutation()
 				if(myseed && myseed.yield != -1) // Unharvestable shouldn't be harvested
 					harvest = 1
-					myseed.adjust_production(myseed.production - compound_productionmod)
-					myseed.adjust_yield(myseed.yield + compound_yieldmod)
-					myseed.adjust_potency(myseed.potency + compound_potencymod)
+					myseed.adjust_production(-1 * compound_productionmod)
+					myseed.adjust_yield(compound_yieldmod)
+					myseed.adjust_potency(compound_potencymod)
 				else
 					lastproduce = age
 			if(prob(5))  // On each tick, there's a 5 percent chance the pest population will increase
