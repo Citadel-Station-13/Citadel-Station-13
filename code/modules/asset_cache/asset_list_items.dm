@@ -377,4 +377,4 @@
 	assets = list(
 		"ghost.png"	= 'html/ghost.png'
 	)
-*/
+
