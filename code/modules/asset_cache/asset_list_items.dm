@@ -43,6 +43,14 @@
 		"borg_mon.gif"				= 'icons/program_icons/borg_mon.gif'
 	)
 
+/*
+/datum/asset/simple/radar_assets
+	assets = list(
+		"ntosradarbackground.png"	= 'icons/UI_Icons/tgui/ntosradar_background.png',
+		"ntosradarpointer.png"		= 'icons/UI_Icons/tgui/ntosradar_pointer.png',
+		"ntosradarpointerS.png"		= 'icons/UI_Icons/tgui/ntosradar_pointer_S.png'
+	)
+*/
 /datum/asset/spritesheet/simple/pda
 	name = "pda"
 	assets = list(
@@ -166,9 +174,9 @@
 /datum/asset/spritesheet/goonchat/register()
 	InsertAll("emoji", 'icons/emoji.dmi')
 
-	// Pre-loading all language icons also helps to avoid meta
+	// pre-loading all lanugage icons also helps to avoid meta
 	InsertAll("language", 'icons/misc/language.dmi')
-	// Catch languages which are pulling icons from another file
+	// catch languages which are pulling icons from another file
 	for(var/path in typesof(/datum/language))
 		var/datum/language/L = path
 		var/icon = initial(L.icon)
@@ -361,3 +369,10 @@
 		"dna_undiscovered.gif"	= 'html/dna_undiscovered.gif',
 		"dna_extra.gif" 		= 'html/dna_extra.gif'
 	)
+
+/*
+/datum/asset/simple/orbit
+	assets = list(
+		"ghost.png"	= 'html/ghost.png'
+	)
+*/
