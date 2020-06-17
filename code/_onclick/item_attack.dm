@@ -53,6 +53,7 @@
 	return ..() || ((obj_flags & CAN_BE_HIT) && I.attack_obj(src, user))
 
 /mob/living/attackby(obj/item/I, mob/living/user, params, attackchain_flags, damage_multiplier)
+	set waitfor = FALSE
 	if(..())
 		return TRUE
 	I.attack_delay_done = FALSE //Should be set TRUE in pre_attacked_by()
