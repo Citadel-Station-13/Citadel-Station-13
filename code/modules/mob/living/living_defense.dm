@@ -1,6 +1,9 @@
 
-/mob/living/proc/run_armor_check(def_zone = null, attack_flag = "melee", absorb_text = "Your armor absorbs the blow!", soften_text = "Your armor softens the blow!", armour_penetration, penetrated_text = "Your armor was penetrated!")
+/mob/living/proc/run_armor_check(def_zone = null, attack_flag = "melee", absorb_text = "Your armor absorbs the blow!", soften_text = "Your armor softens the blow!", armour_penetration, penetrated_text = "Your armor was penetrated!", silent=FALSE)
 	var/armor = getarmor(def_zone, attack_flag)
+	
+	if(silent)
+		return max(0, armor - armour_penetration)
 
 	//the if "armor" check is because this is used for everything on /living, including humans
 	if(armor && armour_penetration)
@@ -126,7 +129,7 @@
 		skipcatch = TRUE
 		blocked = TRUE
 		total_damage = block_calculate_resultant_damage(total_damage, block_return)
-	else if(I && I.throw_speed >= EMBED_THROWSPEED_THRESHOLD && can_embed(I, src) && prob(I.embedding.embed_chance) && !HAS_TRAIT(src, TRAIT_PIERCEIMMUNE) && (!HAS_TRAIT(src, TRAIT_AUTO_CATCH_ITEM) || incapacitated() || get_active_held_item()))
+	else if(I && I.throw_speed >= EMBED_THROWSPEED_THRESHOLD && can_embed(I, src) && prob(I.embedding["embed_chance"]) && !HAS_TRAIT(src, TRAIT_PIERCEIMMUNE) && (!HAS_TRAIT(src, TRAIT_AUTO_CATCH_ITEM) || incapacitated() || get_active_held_item()))
 		embed_item(I)
 		hitpush = FALSE
 		skipcatch = TRUE //can't catch the now embedded item

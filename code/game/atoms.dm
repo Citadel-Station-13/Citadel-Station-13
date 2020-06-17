@@ -8,6 +8,13 @@
 	var/interaction_flags_atom = NONE
 	var/datum/reagents/reagents = null
 
+	var/flags_ricochet = NONE
+
+	///When a projectile tries to ricochet off this atom, the projectile ricochet chance is multiplied by this
+	var/ricochet_chance_mod = 1
+	///When a projectile ricochets off this atom, it deals the normal damage * this modifier to this atom
+	var/ricochet_damage_mod = 0.33
+
 	//This atom's HUD (med/sec, etc) images. Associative list.
 	var/list/image/hud_list = null
 	//HUD images that this atom can provide.
@@ -148,11 +155,20 @@
 /atom/proc/check_projectile_ricochet(obj/item/projectile/P)
 	return (flags_1 & DEFAULT_RICOCHET_1)? PROJECTILE_RICOCHET_YES : PROJECTILE_RICOCHET_NO
 
-/**
-  * Handle a projectile ricochet. Return TRUE if we did something to the projectile like reflecting it/whatnot.
-  */
-/atom/proc/handle_projectile_ricochet(obj/item/projectile/P)
-	return FALSE
+/atom/proc/handle_ricochet(obj/item/projectile/P)
+	var/turf/p_turf = get_turf(P)
+	var/face_direction = get_dir(src, p_turf)
+	var/face_angle = dir2angle(face_direction)
+	var/incidence_s = GET_ANGLE_OF_INCIDENCE(face_angle, (P.Angle + 180))
+	var/a_incidence_s = abs(incidence_s)
+	if(a_incidence_s > 90 && a_incidence_s < 270)
+		return FALSE
+	if((P.flag in list("bullet", "bomb")) && P.ricochet_incidence_leeway)
+		if((a_incidence_s < 90 && a_incidence_s < 90 - P.ricochet_incidence_leeway) || (a_incidence_s > 270 && a_incidence_s -270 > P.ricochet_incidence_leeway))
+			return
+	var/new_angle_s = SIMPLIFY_DEGREES(face_angle + incidence_s)
+	P.setAngle(new_angle_s)
+	return TRUE
 
 /atom/proc/CanPass(atom/movable/mover, turf/target)
 	return !density
@@ -854,6 +870,9 @@
 	return
 
 /atom/proc/GenerateTag()
+	return
+
+/atom/proc/connect_to_shuttle(obj/docking_port/mobile/port, obj/docking_port/stationary/dock, idnum, override=FALSE)
 	return
 
 // Generic logging helper
