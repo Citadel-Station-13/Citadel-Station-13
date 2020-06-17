@@ -57440,6 +57440,11 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on,
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/heads/cmo)
+"oBj" = (
+/obj/structure/table/reinforced,
+/obj/item/storage/box/bodybags,
+/turf/open/floor/plasteel/dark,
+/area/medical/surgery)
 "oDm" = (
 /obj/machinery/gulag_teleporter,
 /turf/open/floor/plasteel,
@@ -58014,7 +58019,7 @@
 	dir = 4
 	},
 /obj/structure/table/glass,
-/obj/item/stack/medical/gauze,
+/obj/item/storage/box/bodybags,
 /turf/open/floor/plasteel/white,
 /area/medical/sleeper)
 "qaY" = (
@@ -60318,14 +60323,13 @@
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
 "uxq" = (
-/obj/structure/bodycontainer/morgue{
-	dir = 8
-	},
 /obj/structure/window/reinforced,
 /obj/machinery/camera{
 	c_tag = "Medbay Morgue";
 	network = list("ss13","medbay")
 	},
+/obj/structure/table,
+/obj/item/storage/box/bodybags,
 /turf/open/floor/plating,
 /area/medical/morgue)
 "uxY" = (
@@ -98184,7 +98188,7 @@ fiQ
 hIj
 sGE
 wCJ
-qBW
+oBj
 bzc
 dRY
 jVL
@@ -100240,7 +100244,7 @@ ohg
 qdE
 kvF
 shG
-qBW
+oBj
 pBX
 qvG
 pXd
