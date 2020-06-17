@@ -12,7 +12,10 @@
 	var/maxnutri = 10		//The maximum nutrient of water in the tray
 	var/pestlevel = 0		//The amount of pests in the tray (max 10)
 	var/weedlevel = 0		//The amount of weeds in the tray (max 10)
-	var/yieldmod = 1		//Nutriment's effect on yield
+	var/yieldmod = 1		//Nutriment's effect on yield (this won't change the stat, only the final result!)
+	var/compound_yieldmod = 0 //Nutriment's effect on yield (this changes the stat each time it's ready to be harvested)
+	var/compound_potencymod = 0 //Nutriment's effect on potency (again, changes the stat)
+	var/compound_productionmod = 0 //Nutriment's effect on production speed (again, changes the stat)
 	var/mutmod = 1			//Nutriment's effect on mutations
 	var/toxic = 0			//Toxicity in the tray?
 	var/age = 0				//Current age
@@ -217,6 +220,9 @@
 				nutrimentMutation()
 				if(myseed && myseed.yield != -1) // Unharvestable shouldn't be harvested
 					harvest = 1
+					myseed.adjust_production(myseed.production - compound_productionmod)
+					myseed.adjust_yield(myseed.yield + compound_yieldmod)
+					myseed.adjust_potency(myseed.potency + compound_potencymod)
 				else
 					lastproduce = age
 			if(prob(5))  // On each tick, there's a 5 percent chance the pest population will increase
@@ -472,6 +478,7 @@
 		to_chat(user, "<span class='warning'>The pests seem to behave oddly, but quickly settle down...</span>")
 
 /obj/machinery/hydroponics/proc/applyChemicals(datum/reagents/S, mob/user)
+
 	if(myseed)
 		myseed.on_chem_reaction(S) //In case seeds have some special interactions with special chems, currently only used by vines
 
@@ -514,15 +521,26 @@
 	if(S.has_reagent(/datum/reagent/plantnutriment/eznutriment, 1))
 		yieldmod = 1
 		mutmod = 1
+		compound_yieldmod = 0
+		compound_potencymod = 0
+		compound_productionmod = 0
 		adjustNutri(round(S.get_reagent_amount(/datum/reagent/plantnutriment/eznutriment) * 1))
 
 	if(S.has_reagent(/datum/reagent/plantnutriment/left4zednutriment, 1))
 		yieldmod = 0
 		mutmod = 2
+		compound_yieldmod = 0
+		compound_potencymod = 0
+		compound_productionmod = 0
 		adjustNutri(round(S.get_reagent_amount(/datum/reagent/plantnutriment/left4zednutriment) * 1))
 
 	if(S.has_reagent(/datum/reagent/plantnutriment/robustharvestnutriment, 1))
 		yieldmod = 1.3
+		mutmod = 0
+		compound_yieldmod = 0
+		compound_potencymod = 0
+		compound_productionmod = 0
+		yieldmod = 1
 		mutmod = 0
 		adjustNutri(round(S.get_reagent_amount(/datum/reagent/plantnutriment/robustharvestnutriment) *1 ))
 
@@ -638,20 +656,15 @@
 		adjustHealth(round(S.get_reagent_amount(/datum/reagent/medicine/cryoxadone) * 3))
 		adjustToxic(-round(S.get_reagent_amount(/datum/reagent/medicine/cryoxadone) * 3))
 
-	// Ammonia is bad ass.
-	if(S.has_reagent(/datum/reagent/ammonia, 1))
-		adjustHealth(round(S.get_reagent_amount(/datum/reagent/ammonia) * 0.5))
-		adjustNutri(round(S.get_reagent_amount(/datum/reagent/ammonia) * 1))
-		if(myseed)
-			myseed.adjust_yield(round(S.get_reagent_amount(/datum/reagent/ammonia) * 0.01))
-
-	// Saltpetre is used for gardening IRL, to simplify highly, it speeds up growth and strengthens plants
+	// Saltpetre is used for gardening IRL
 	if(S.has_reagent(/datum/reagent/saltpetre, 1))
 		var/salt = S.get_reagent_amount(/datum/reagent/saltpetre)
 		adjustHealth(round(salt * 0.25))
-		if (myseed)
-			myseed.adjust_production(-round(salt/100)-prob(salt%100))
-			myseed.adjust_potency(round(salt*0.5))
+		compound_potencymod = 10 //each time it's ready to be harvested, increase potency by 10
+		compound_productionmod = 1 //each time it's ready to be harvested, decrease production speed by 1 (making it faster)
+		compound_yieldmod = 0
+		yieldmod = 1
+		mutmod = 0
 
 	// Ash is also used IRL in gardening, as a fertilizer enhancer and weed killer
 	if(S.has_reagent(/datum/reagent/ash, 1))
@@ -663,9 +676,12 @@
 	if(S.has_reagent(/datum/reagent/diethylamine, 1))
 		adjustHealth(round(S.get_reagent_amount(/datum/reagent/diethylamine) * 1))
 		adjustNutri(round(S.get_reagent_amount(/datum/reagent/diethylamine) * 2))
-		if(myseed)
-			myseed.adjust_yield(round(S.get_reagent_amount(/datum/reagent/diethylamine) * 0.02))
 		adjustPests(-rand(1,2))
+		compound_yieldmod = 1 //each time it's ready to be harvested, increase yield by 1
+		compound_potencymod = 0
+		compound_productionmod = 0
+		yieldmod = 1
+		mutmod = 0
 
 	// Nutriment Compost, effectively
 	if(S.has_reagent(/datum/reagent/consumable/nutriment, 1))
