@@ -103,7 +103,7 @@
 			new /obj/item/bedsheet/cosmos(src)
 			new /obj/item/melee/skateboard/hoverboard(src)
 		if(11)
-      if(prob(50))
+     		if(prob(50))
 				new /obj/item/malf_upgrade
 			else
 				new /obj/item/disk/tech_disk/illegal
