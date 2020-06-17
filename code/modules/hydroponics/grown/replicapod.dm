@@ -45,7 +45,7 @@
 				factions = B.data["factions"]
 				quirks = B.data["quirks"]
 				ui = B.data["ui"]
-				species = B.data["species"]
+				old_species = B.data["species"]
 				contains_sample = TRUE
 				visible_message("<span class='notice'>The [src] is injected with a fresh blood sample.</span>")
 			else
