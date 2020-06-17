@@ -46,7 +46,7 @@
 /obj/item/t_scanner/adv_mining_scanner/lesser
 	name = "automatic mining scanner"
 	desc = "A scanner that automatically checks surrounding rock for useful minerals; it can also be used to stop gibtonite detonations."
-    icon_state = "mining1"
+	icon_state = "mining1"
 	range = 4
 	cooldown = 50
 
