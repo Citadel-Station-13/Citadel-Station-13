@@ -32,34 +32,29 @@
 	create_reagents(volume, INJECTABLE | DRAWABLE)
 
 /obj/item/seeds/replicapod/on_reagent_change(changetype)
+	var/list/blood_types = typesof(/datum/reagent/blood)
 	if(changetype == ADD_REAGENT)
-		var/datum/reagent/blood/B = reagents.has_reagent(/datum/reagent/blood)
-		if(B)
-			if(B.data["mind"] && B.data["cloneable"])
-				mind = B.data["mind"]
-				ckey = B.data["ckey"]
-				realName = B.data["real_name"]
-				blood_gender = B.data["gender"]
-				blood_type = B.data["blood_type"]
-				features = B.data["features"]
-				factions = B.data["factions"]
-				quirks = B.data["quirks"]
-				ui = B.data["ui"]
-				old_species = B.data["species"]
-				contains_sample = TRUE
-				visible_message("<span class='notice'>The [src] is injected with a fresh blood sample.</span>")
-			else
-				visible_message("<span class='warning'>The [src] rejects the sample!</span>")
-
-	if(!reagents.has_reagent(/datum/reagent/blood))
-		mind = null
-		ckey = null
-		realName = null
-		blood_gender = null
-		blood_type = null
-		features = null
-		factions = null
-		contains_sample = FALSE
+		var/accepted = FALSE
+		for(var/datum/reagent/blood/blood_type in blood_types)
+			var/datum/reagent/blood/B = reagents.has_reagent(blood_type, 5) //make sure seed pack is full, to stop some funky exploity stuff
+			if(B)
+				if(B.data["mind"] && B.data["cloneable"])
+					mind = B.data["mind"]
+					ckey = B.data["ckey"]
+					realName = B.data["real_name"]
+					blood_gender = B.data["gender"]
+					blood_type = B.data["blood_type"]
+					features = B.data["features"]
+					factions = B.data["factions"]
+					quirks = B.data["quirks"]
+					ui = B.data["ui"]
+					old_species = B.data["species"]
+					contains_sample = TRUE
+					accepted = TRUE
+					visible_message("<span class='notice'>The [src] is injected with a fresh blood sample.</span>")
+					break
+		if(!accepted)
+			visible_message("<span class='warning'>The [src] rejects the sample!</span>")
 
 /obj/item/seeds/replicapod/get_analyzer_text()
 	var/text = ..()
