@@ -36,7 +36,6 @@
 	if(changetype == ADD_REAGENT)
 		var/accepted = FALSE
 		for(var/blood_type in blood_types)
-			message_admins("lets see if reagents has [blood_type]")
 			var/datum/reagent/blood/B = reagents.has_reagent(blood_type, 5) //make sure seed pack is full, to stop some funky exploity stuff
 			if(B)
 				if(B.data["mind"] && B.data["cloneable"])
