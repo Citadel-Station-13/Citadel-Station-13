@@ -22,8 +22,8 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 //FLAGS BITMASK
 ///This flag is what recursive_hear_check() uses to determine wether to add an item to the hearer list or not.
 #define HEAR_1						(1<<3)
-///Projectiels will check ricochet on things impacted that have this.
-#define CHECK_RICOCHET_1			(1<<4)
+///Projectiles will use default chance-based ricochet handling on things with this.
+#define DEFAULT_RICOCHET_1			(1<<4)
 ///Conducts electricity (metal etc.).
 #define CONDUCT_1					(1<<5)
 ///For machines and structures that should not break into parts, eg, holodeck stuff.
@@ -137,3 +137,7 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 
 #define MOBILITY_FLAGS_DEFAULT (MOBILITY_MOVE | MOBILITY_STAND | MOBILITY_PICKUP | MOBILITY_USE | MOBILITY_UI | MOBILITY_STORAGE | MOBILITY_PULL | MOBILITY_RESIST)
 #define MOBILITY_FLAGS_ANY_INTERACTION (MOBILITY_USE | MOBILITY_PICKUP | MOBILITY_UI | MOBILITY_STORAGE)
+
+// melee_attack_chain() attackchain_flags
+/// The attack is from a parry counterattack.
+#define ATTACKCHAIN_PARRY_COUNTERATTACK			(1<<0)

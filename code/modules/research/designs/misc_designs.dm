@@ -707,3 +707,57 @@
 	build_path = /obj/item/clothing/gloves/tackler/rocket
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
+
+/////////////////////////////////////////
+/////////////Internal Tanks//////////////
+/////////////////////////////////////////
+
+/datum/design/oxygen_tank
+	name = "Oxygen Tank"
+	desc = "An empty oxygen tank."
+	id = "oxygen_tank"
+	build_type = PROTOLATHE
+	materials = list(/datum/material/iron = 2000)
+	build_path = /obj/item/tank/internals/oxygen/empty
+	category = list("Equipment")
+	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
+
+/datum/design/plasma_tank
+	name = "Plasma Tank"
+	desc = "An empty plasma tank."
+	id = "plasma_tank"
+	build_type = PROTOLATHE
+	materials = list(/datum/material/iron = 2000)
+	build_path = /obj/item/tank/internals/plasma/empty
+	category = list("Equipment")
+	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
+
+/datum/design/emergency_oxygen
+	name = "Emergency Oxygen Tank"
+	desc = "A small emergency oxygen tank."
+	id = "emergency_oxygen"
+	build_type = PROTOLATHE
+	materials = list(/datum/material/iron = 1000)
+	build_path = /obj/item/tank/internals/emergency_oxygen/empty
+	category = list("Equipment")
+	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
+
+/datum/design/plasma_belt_tank
+	name = "Plasmaman Belt Tank"
+	desc = "A small tank of plasma for plasmamen."
+	id = "plasmaman_tank_belt"
+	build_type = PROTOLATHE
+	materials = list(/datum/material/iron = 1000)
+	build_path = /obj/item/tank/internals/plasmaman/belt/empty
+	category = list("Equipment")
+	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
+
+/datum/design/emergency_oxygen_engi
+	name = "Engineering Emergency Oxygen Tank"
+	desc = "An emergency oxygen tank for engineers."
+	id = "emergency_oxygen_engi"
+	build_type = PROTOLATHE
+	materials = list(/datum/material/iron = 1000)
+	build_path = /obj/item/tank/internals/emergency_oxygen/engi/empty
+	category = list("Equipment")
+	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING

@@ -1580,5 +1580,5 @@
 /obj/item/electronics/apc
 	name = "power control module"
 	icon_state = "power_mod"
-	custom_price = 50
+	custom_price = PRICE_CHEAP
 	desc = "Heavy-duty switching circuits for power control."

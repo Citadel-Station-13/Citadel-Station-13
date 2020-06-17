@@ -76,7 +76,7 @@
 			new /obj/item/gun/magic/wand/book/spark(src)
 
 /obj/structure/closet/crate/necropolis/tendril/misc/PopulateContents()
-	var/loot = rand(1,10)
+	var/loot = rand(1,11)
 	switch(loot)
 		if(1)
 			new /obj/item/shared_storage/red(src)
@@ -102,7 +102,11 @@
 		if(10)
 			new /obj/item/bedsheet/cosmos(src)
 			new /obj/item/melee/skateboard/hoverboard(src)
-
+		if(11)
+      if(prob(50))
+				new /obj/item/malf_upgrade
+			else
+				new /obj/item/disk/tech_disk/illegal
 
 //KA modkit design discs
 /obj/item/disk/design_disk/modkit_disc

@@ -102,7 +102,7 @@
 	. = ..()
 	safe_calibers = magazine.caliber
 
-/obj/item/gun/ballistic/revolver/detective/process_fire(atom/target, mob/living/user, message = TRUE, params = null, zone_override = "", bonus_spread = 0)
+/obj/item/gun/ballistic/revolver/detective/process_fire(atom/target, mob/living/user, message = TRUE, params = null, zone_override = "", bonus_spread = 0, stam_cost = 0)
 	if(chambered && !(chambered.caliber in safe_calibers))
 		if(prob(70 - (magazine.ammo_count() * 10)))	//minimum probability of 10, maximum of 60
 			playsound(user, fire_sound, 50, 1)
@@ -242,7 +242,7 @@
 		user.visible_message("<span class='danger'>*click*</span>")
 		playsound(src, "gun_dry_fire", 30, 1)
 
-/obj/item/gun/ballistic/revolver/russian/process_fire(atom/target, mob/living/user, message = TRUE, params = null, zone_override = "", bonus_spread = 0)
+/obj/item/gun/ballistic/revolver/russian/process_fire(atom/target, mob/living/user, message = TRUE, params = null, zone_override = "", bonus_spread = 0, stam_cost = 0)
 	add_fingerprint(user)
 	playsound(src, "gun_dry_fire", 30, TRUE)
 	user.visible_message("<span class='danger'>[user.name] tries to fire \the [src] at the same time, but only succeeds at looking like an idiot.</span>", "<span class='danger'>\The [src]'s anti-combat mechanism prevents you from firing it at the same time!</span>")
@@ -319,7 +319,6 @@
 
 /obj/item/gun/ballistic/revolver/doublebarrel/improvised
 	name = "improvised shotgun"
-	desc = "Essentially a tube that aims shotgun shells."
 	desc = "A shoddy break-action breechloaded shotgun. Its lacklustre construction will probably result in it hurting people less than a normal shotgun."
 	icon_state = "ishotgun"
 	item_state = "shotgun"
@@ -330,8 +329,9 @@
 	mag_type = /obj/item/ammo_box/magazine/internal/shot/improvised
 	sawn_desc = "I'm just here for the gasoline."
 	unique_reskin = null
-	projectile_damage_multiplier = 0.8
+	projectile_damage_multiplier = 0.9
 	var/slung = FALSE
+	weapon_weight = WEAPON_HEAVY
 
 /obj/item/gun/ballistic/revolver/doublebarrel/improvised/attackby(obj/item/A, mob/user, params)
 	..()
@@ -358,7 +358,7 @@
 
 /obj/item/gun/ballistic/revolver/doublebarrel/improvised/sawn
 	name = "sawn-off improvised shotgun"
-	desc = "A single-shot shotgun. Better not miss."
+	desc = "The barrel and stock have been sawn and filed down; it can fit in backpacks. You still need two hands to fire this, if you value unbroken wrists."
 	icon_state = "ishotgun"
 	item_state = "gun"
 	w_class = WEIGHT_CLASS_NORMAL

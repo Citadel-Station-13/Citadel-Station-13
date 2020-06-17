@@ -16073,11 +16073,11 @@
 	pixel_y = -1
 	},
 /obj/item/reagent_containers/dropper,
-/obj/item/stack/medical/bruise_pack{
+/obj/item/stack/medical/suture{
 	pixel_x = -2;
 	pixel_y = 6
 	},
-/obj/item/stack/medical/ointment,
+/obj/item/stack/medical/mesh,
 /obj/item/healthanalyzer,
 /turf/open/floor/plasteel/white,
 /area/science/explab)
@@ -34517,8 +34517,8 @@
 /area/gateway)
 "bmm" = (
 /obj/structure/rack,
-/obj/item/stack/medical/ointment,
-/obj/item/stack/medical/bruise_pack,
+/obj/item/stack/medical/mesh,
+/obj/item/stack/medical/suture,
 /obj/item/reagent_containers/syringe/charcoal,
 /obj/item/reagent_containers/syringe/epinephrine{
 	pixel_x = -1;
@@ -64186,8 +64186,8 @@
 	pixel_y = -32
 	},
 /obj/item/stack/medical/gauze,
-/obj/item/stack/medical/bruise_pack,
-/obj/item/stack/medical/ointment,
+/obj/item/stack/medical/suture,
+/obj/item/stack/medical/mesh,
 /obj/structure/table/glass,
 /turf/open/floor/plating,
 /area/medical/abandoned)
@@ -75822,11 +75822,11 @@
 /obj/item/folder,
 /obj/item/folder,
 /obj/structure/table/reinforced,
-/obj/item/stack/medical/ointment{
+/obj/item/stack/medical/mesh{
 	pixel_x = 3;
 	pixel_y = -2
 	},
-/obj/item/stack/medical/bruise_pack{
+/obj/item/stack/medical/suture{
 	pixel_x = -3;
 	pixel_y = 2
 	},
