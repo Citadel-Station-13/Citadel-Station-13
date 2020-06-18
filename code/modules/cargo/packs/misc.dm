@@ -427,6 +427,7 @@
 	crate_name = "deluxe keg"
 	crate_type = /obj/structure/closet/crate
 */
+
 ///Special supply crate that generates random syndicate gear up to a determined TC value
 
 /datum/supply_pack/misc/syndicate
