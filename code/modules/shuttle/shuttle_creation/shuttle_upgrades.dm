@@ -4,9 +4,9 @@
 	icon = 'icons/obj/module.dmi'
 	icon_state = "shuttledisk"
 	force = 0
-	throwforce = 8
-	throw_speed = 3
-	throw_range = 5
+	throwforce = 0
+	throw_speed = 1
+	throw_range = 7
 	density = FALSE
 	anchored = FALSE
 	item_flags = NOBLUDGEON
