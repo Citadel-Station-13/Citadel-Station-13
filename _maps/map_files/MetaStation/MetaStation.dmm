@@ -53215,12 +53215,6 @@
 	},
 /area/maintenance/starboard)
 "cfg" = (
-/obj/structure/cable/yellow{
-	icon_state = "2-4"
-	},
-/obj/structure/cable/yellow{
-	icon_state = "2-8"
-	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
@@ -53229,6 +53223,9 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
+	},
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
 	},
 /turf/open/floor/plating,
 /area/maintenance/starboard)
@@ -53270,9 +53267,6 @@
 	icon_state = "1-8"
 	},
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden,
-/obj/structure/cable/yellow{
-	icon_state = "4-8"
-	},
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plating,
 /area/maintenance/starboard)
@@ -53280,11 +53274,10 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/obj/machinery/door/airlock{
-	name = "Custodial Closet";
-	req_access_txt = "26"
-	},
 /obj/effect/decal/cleanable/dirt,
+/obj/machinery/door/airlock/maintenance{
+	req_access_txt = "12"
+	},
 /turf/open/floor/plasteel,
 /area/maintenance/starboard)
 "cfl" = (
@@ -67957,6 +67950,11 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
+/obj/machinery/camera{
+	c_tag = "Research - Xenobiology Lab - Central #2";
+	dir = 4;
+	network = list("ss13","rd")
+	},
 /turf/open/floor/plasteel/white,
 /area/science/xenobiology)
 "cPj" = (
@@ -78320,11 +78318,13 @@
 /turf/open/floor/plating/airless,
 /area/maintenance/aft)
 "nMC" = (
-/obj/machinery/atmospherics/pipe/manifold/supply/hidden,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
 /obj/machinery/meter,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 9
+	},
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
 "nOZ" = (
@@ -79322,13 +79322,11 @@
 	},
 /area/medical/medbay/zone2)
 "qBM" = (
-/obj/machinery/atmospherics/pipe/manifold/dark/visible{
-	dir = 4
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
 /obj/machinery/meter,
+/obj/machinery/atmospherics/pipe/simple/dark/visible,
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
 "qGF" = (
@@ -80532,13 +80530,6 @@
 	dir = 1
 	},
 /area/science/mixing)
-"tAr" = (
-/obj/machinery/atmospherics/components/binary/valve{
-	dir = 4;
-	name = "Manual Valve (DO NOT TOUCH)"
-	},
-/turf/open/floor/plating,
-/area/maintenance/starboard/aft)
 "tDM" = (
 /obj/machinery/door/airlock/engineering/glass/critical{
 	heat_proof = 1;
@@ -101554,7 +101545,7 @@ bue
 bue
 bue
 cgH
-dux
+wmt
 dwe
 dwe
 dwe
@@ -102068,7 +102059,7 @@ bSy
 bTx
 bue
 cbE
-dux
+hIt
 dwi
 cFy
 cbA
@@ -102325,7 +102316,7 @@ bSz
 bTy
 bue
 bWd
-dux
+wmt
 dwi
 cFL
 cFO
@@ -121892,7 +121883,7 @@ uMd
 fOs
 rVd
 taN
-tAr
+ddp
 oKn
 dcY
 aaa
