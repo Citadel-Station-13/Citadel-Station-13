@@ -2284,3 +2284,4 @@
 		S = new(T)
 	if(data["blood_DNA"])
 		S.add_blood_DNA(list(data["blood_DNA"] = data["blood_type"]))
+

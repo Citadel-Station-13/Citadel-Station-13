@@ -1,0 +1,4 @@
+author: "Bhijn"
+delete-after: True
+changes: 
+  - bugfix: "Atmos can no longer become completely bricked"
