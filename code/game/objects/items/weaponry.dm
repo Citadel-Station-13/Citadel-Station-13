@@ -759,3 +759,16 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 		to_chat(user, "<span class='warning'>[M] is too close to use [src] on.</span>")
 		return
 	M.attack_hand(user)
+
+/obj/item/melee/hydraulic_blade
+	name = "hydraulic blade"
+	desc = "Extremely dangerous and sharp weapon."
+	icon_state = "hydraulic_blade"
+	item_state = "hydraulic_blade"
+	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
+	force = 18
+	total_mass = TOTAL_MASS_MEDIEVAL_WEAPON
+	sharpness = IS_SHARP
+	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
+	hitsound = 'sound/weapons/bladeslice.ogg'

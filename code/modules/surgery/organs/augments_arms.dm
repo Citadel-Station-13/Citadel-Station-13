@@ -288,3 +288,12 @@
 	var/obj/item/assembly/flash/armimplant/F = new(src)
 	items_list += F
 	F.I = src
+
+/obj/item/organ/cyberimp/arm/hydraulic_blade
+	name = "arm-mounted hydraulic blade"
+	desc = "Highly dangerous implanted plasteel blade."
+	icon_state = "hydraulic_blade"
+	contents = newlist(/obj/item/melee/hydraulic_blade)
+
+/obj/item/organ/cyberimp/arm/hydraulic_blade/l
+	zone = BODY_ZONE_L_ARM
