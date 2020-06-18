@@ -192,3 +192,14 @@
 	icon_state = "hos_parade_fem"
 	item_state = "r_suit"
 	fitted = FEMALE_UNIFORM_TOP
+
+/*
+ *Spacepol
+ */
+
+/obj/item/clothing/under/rank/security/spacepol
+	name = "police uniform"
+	desc = "Space not controlled by megacorporations, planets, or pirates is under the jurisdiction of Spacepol."
+	icon_state = "spacepol"
+	item_state = "spacepol"
+	can_adjust = FALSE
