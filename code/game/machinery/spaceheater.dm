@@ -161,8 +161,6 @@
 		update_icon()
 		if(panel_open)
 			interact(user)
-	else if(default_unfasten_wrench(user, I))
-		return
 	else if(default_deconstruction_crowbar(I))
 		return
 	else

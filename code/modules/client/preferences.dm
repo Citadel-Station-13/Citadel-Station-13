@@ -2323,10 +2323,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 								new_body_size = danger
 						if(dorfy != "No")
 							features["body_size"] = new_body_size
-				if ("max_chat_length")
-					var/desiredlength = input(user, "Choose the max character length of shown Runechat messages. Valid range is 1 to [CHAT_MESSAGE_MAX_LENGTH] (default: [initial(max_chat_length)]))", "Character Preference", max_chat_length)  as null|num
-					if (!isnull(desiredlength))
-						max_chat_length = clamp(desiredlength, 1, CHAT_MESSAGE_MAX_LENGTH)
 
 		else
 			switch(href_list["preference"])
