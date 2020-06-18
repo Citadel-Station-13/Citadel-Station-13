@@ -69,7 +69,7 @@
 	id = "basic_shuttle"
 	display_name = "Basic Shuttle Research"
 	description = "Research the technology required to create and use basic shuttles."
-	prereq_ids = list("bluespace_travel", "adv_engi")
+	prereq_ids = list("practical_bluespace", "adv_engi")
 	design_ids = list("shuttle_creator", "engine_plasma", "engine_heater", "shuttle_control", "shuttle_docker")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 5000)
 
@@ -85,7 +85,7 @@
 	id = "shuttle_route_upgrade_hyper"
 	display_name = "Hyperlane Optimisation Upgrade"
 	description = "Research into bluespace hyperlane, allowing us to reduce flight times by up to 40%!"
-	prereq_ids = list("shuttle_route_upgrade", "micro_bluespace")
+	prereq_ids = list("shuttle_route_upgrade", "bluespace_warping")
 	design_ids = list("disk_shuttle_route_hyper")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 5000)
 
