@@ -124,7 +124,7 @@
 			podman.hardset_dna(ui, null, podman.real_name, blood_type, old_species, features)
 
 		//deal clone damage because this shouldn't be better than cloning
-		podman.adjustCloneLoss(25 + (50/max(potency,1)) // deal between 25 and 75 clone damage depending on potency
+		podman.adjustCloneLoss(25 + (50/max(potency,1))) // deal between 25 and 75 clone damage depending on potency
 		podman.set_cloned_appearance()
 
 	else //else, one packet of seeds. maybe two
