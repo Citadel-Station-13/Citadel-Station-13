@@ -20,7 +20,7 @@
 
 /mob/living/carbon/human/Life(seconds, times_fired)
 	set invisibility = 0
-	if (notransform)
+	if (mob_transforming)
 		return
 
 	. = ..()

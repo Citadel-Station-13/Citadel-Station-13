@@ -120,7 +120,7 @@
 		to_chat(src, "<span class='revenboldnotice'>You are once more concealed.</span>")
 	if(unstun_time && world.time >= unstun_time)
 		unstun_time = 0
-		notransform = FALSE
+		mob_transforming = FALSE
 		to_chat(src, "<span class='revenboldnotice'>You can move again!</span>")
 	if(essence_regenerating && !inhibited && essence < essence_regen_cap) //While inhibited, essence will not regenerate
 		essence = min(essence_regen_cap, essence+essence_regen_amount)
@@ -218,7 +218,7 @@
 		return 0
 	stasis = TRUE
 	to_chat(src, "<span class='revendanger'>NO! No... it's too late, you can feel your essence [pick("breaking apart", "drifting away")]...</span>")
-	notransform = TRUE
+	mob_transforming = TRUE
 	revealed = TRUE
 	invisibility = 0
 	playsound(src, 'sound/effects/screech.ogg', 100, 1)
@@ -260,7 +260,7 @@
 		return
 	if(time <= 0)
 		return
-	notransform = TRUE
+	mob_transforming = TRUE
 	if(!unstun_time)
 		to_chat(src, "<span class='revendanger'>You cannot move!</span>")
 		unstun_time = world.time + time
@@ -271,7 +271,7 @@
 
 /mob/living/simple_animal/revenant/proc/update_spooky_icon()
 	if(revealed)
-		if(notransform)
+		if(mob_transforming)
 			if(draining)
 				icon_state = icon_drain
 			else
@@ -320,7 +320,7 @@
 /mob/living/simple_animal/revenant/proc/death_reset()
 	revealed = FALSE
 	unreveal_time = 0
-	notransform = 0
+	mob_transforming = 0
 	unstun_time = 0
 	inhibited = FALSE
 	draining = FALSE

@@ -678,7 +678,7 @@ GLOBAL_VAR_INIT(exploit_warn_spam_prevention, 0)
 		return FALSE
 	if(anchored)
 		return FALSE
-	if(notransform)
+	if(mob_transforming)
 		return FALSE
 	if(restrained())
 		return FALSE

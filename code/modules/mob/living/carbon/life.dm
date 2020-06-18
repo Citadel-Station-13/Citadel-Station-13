@@ -1,7 +1,7 @@
 /mob/living/carbon/Life()
 	set invisibility = 0
 
-	if(notransform)
+	if(mob_transforming)
 		return
 
 	if(damageoverlaytemp)
