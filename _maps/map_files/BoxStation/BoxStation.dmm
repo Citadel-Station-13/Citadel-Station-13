@@ -54137,13 +54137,13 @@
 	dir = 4
 	},
 /obj/structure/table/glass,
-/obj/item/borg/sight/hud/med{
-	pixel_x = 2
+/obj/item/clothing/glasses/hud/health{
+	pixel_x = 3
 	},
-/obj/item/borg/sight/hud/med{
-	pixel_x = 4
+/obj/item/clothing/glasses/hud/health,
+/obj/item/clothing/glasses/hud/health{
+	pixel_x = -3
 	},
-/obj/item/borg/sight/hud/med,
 /turf/open/floor/plasteel/white,
 /area/medical/sleeper)
 "irA" = (
