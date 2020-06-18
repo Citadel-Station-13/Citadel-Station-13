@@ -100,6 +100,7 @@ GLOBAL_LIST_INIT(maintenance_loot, list(
 	/obj/item/assembly/signaler = 2,
 	/obj/item/assembly/mousetrap = 2,
 	/obj/item/reagent_containers/syringe = 2,
+	/obj/item/gun/syringe = 1,
 	/obj/effect/spawner/lootdrop/gloves = 8,
 	/obj/item/clothing/shoes/laceup = 1,
 	/obj/item/storage/secure/briefcase = 3,
@@ -113,7 +114,6 @@ GLOBAL_LIST_INIT(maintenance_loot, list(
 	/obj/item/storage/box/marshmallow = 2,
 	/obj/item/clothing/gloves/tackler/offbrand = 1,
 	/obj/item/stack/sticky_tape = 1,
-	/obj/item/gun/syringe = 1,
 	"" = 3
 	))
 
