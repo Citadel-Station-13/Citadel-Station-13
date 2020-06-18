@@ -13,6 +13,7 @@
 		if(bprv & BODYPART_LIFE_UPDATE_HEALTH)
 			updatehealth()
 	update_stamina()
+	doSprintBufferRegen()
 
 	if(stat != DEAD)
 		handle_brain_damage()

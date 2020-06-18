@@ -420,8 +420,9 @@
 	fdel(json_file)
 	WRITE_FILE(json_file, json_encode(file_data))
 
-/mob/living/simple_animal/pet/dog/corgi/Ian/Life()
-	..()
+/mob/living/simple_animal/pet/dog/corgi/Ian/BiologicalLife()
+	if(!(. = ..()))
+		return
 
 	//Feeding, chasing food, FOOOOODDDD
 	if(!stat && CHECK_MULTIPLE_BITFIELDS(mobility_flags, MOBILITY_STAND|MOBILITY_MOVE) && !buckled)
