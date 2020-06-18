@@ -183,3 +183,20 @@
 
 	A.other_pair = B
 	B.other_pair = A
+
+/obj/item/pinpointer/shuttle
+	name = "fugitive pinpointer"
+	desc = "A handheld tracking device that locates the bounty hunter shuttle for quick escapes."
+	icon_state = "pinpointer_hunter"
+	var/obj/shuttleport
+
+/obj/item/pinpointer/shuttle/Initialize(mapload)
+	. = ..()
+	shuttleport = SSshuttle.getShuttle("huntership")
+
+/obj/item/pinpointer/shuttle/scan_for_target()
+	target = shuttleport
+
+/obj/item/pinpointer/shuttle/Destroy()
+	shuttleport = null
+	. = ..()
