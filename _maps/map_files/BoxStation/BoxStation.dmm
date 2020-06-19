@@ -51544,6 +51544,7 @@
 "dfh" = (
 /obj/machinery/power/apc{
 	areastring = "/area/science/circuit";
+	dir = 4;
 	name = "Circuitry Lab APC";
 	pixel_x = 30
 	},
