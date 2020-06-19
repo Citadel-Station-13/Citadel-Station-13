@@ -108,12 +108,6 @@
 /mob/living/proc/catch_item(obj/item/I, skip_throw_mode_check = FALSE)
 	return FALSE
 
-/mob/living/proc/embed_item(obj/item/I)
-	return
-
-/mob/living/proc/can_embed(obj/item/I)
-	return FALSE
-
 /mob/living/hitby(atom/movable/AM, skipcatch, hitpush = TRUE, blocked = FALSE, datum/thrownthing/throwingdatum)
 	// Throwingdatum can be null if someone had an accident() while slipping with an item in hand.
 	var/obj/item/I
@@ -129,12 +123,8 @@
 		skipcatch = TRUE
 		blocked = TRUE
 		total_damage = block_calculate_resultant_damage(total_damage, block_return)
-	else if(I && I.throw_speed >= EMBED_THROWSPEED_THRESHOLD && can_embed(I, src) && prob(I.embedding["embed_chance"]) && !HAS_TRAIT(src, TRAIT_PIERCEIMMUNE) && (!HAS_TRAIT(src, TRAIT_AUTO_CATCH_ITEM) || incapacitated() || get_active_held_item()))
-		embed_item(I)
-		hitpush = FALSE
-		skipcatch = TRUE //can't catch the now embedded item
 	if(I)
-		var/nosell_hit = SEND_SIGNAL(I, COMSIG_MOVABLE_IMPACT_ZONE, src, impacting_zone, throwingdatum)
+		var/nosell_hit = SEND_SIGNAL(I, COMSIG_MOVABLE_IMPACT_ZONE, src, impacting_zone, throwingdatum, FALSE, blocked)
 		if(nosell_hit)
 			skipcatch = TRUE
 			hitpush = FALSE

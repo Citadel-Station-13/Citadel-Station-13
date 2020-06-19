@@ -72,8 +72,8 @@
 
 
 /// Checking to see if we're gonna embed into a human
-/datum/element/embed/proc/checkEmbedMob(obj/item/weapon, mob/living/carbon/victim, hit_zone, datum/thrownthing/throwingdatum, forced=FALSE)
-	if(!istype(victim) || HAS_TRAIT(victim, TRAIT_PIERCEIMMUNE))
+/datum/element/embed/proc/checkEmbedMob(obj/item/weapon, mob/living/carbon/victim, hit_zone, datum/thrownthing/throwingdatum, blocked = FALSE, forced = FALSE)
+	if(blocked || !istype(victim) || HAS_TRAIT(victim, TRAIT_PIERCEIMMUNE))
 		return
 
 	var/actual_chance = embed_chance
