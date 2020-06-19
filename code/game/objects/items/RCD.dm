@@ -154,7 +154,8 @@ RLD
 	icon_state = "rcd"
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
-	custom_price = 900
+	custom_price = PRICE_ABOVE_EXPENSIVE
+	custom_premium_price = PRICE_ALMOST_ONE_GRAND
 	max_matter = 160
 	item_flags = NO_MAT_REDEMPTION | NOBLUDGEON
 	has_ammobar = TRUE

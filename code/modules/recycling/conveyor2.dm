@@ -138,6 +138,7 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 	var/turf/T = get_step(src, movedir)
 	if(length(T.contents) > 150)
 		return
+	affecting.len = min(affecting.len, 150 - length(T.contents))
 	for(var/atom/movable/A in affecting)
 		if((A.loc == loc) && A.has_gravity())
 			A.ConveyorMove(movedir)

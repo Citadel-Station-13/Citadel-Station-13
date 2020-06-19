@@ -285,8 +285,6 @@
 	. = ..()
 	var/turf/ai = get_turf(src)
 	var/turf/target = get_turf(A)
-	if (.)
-		return
 
 	if(!target)
 		return

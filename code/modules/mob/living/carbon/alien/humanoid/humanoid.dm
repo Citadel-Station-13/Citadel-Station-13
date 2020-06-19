@@ -77,20 +77,18 @@
 	return TRUE
 
 /mob/living/carbon/alien/humanoid/get_standard_pixel_y_offset(lying = 0)
+	. = ..()
 	if(leaping)
-		return -32
-	else if(custom_pixel_y_offset)
-		return custom_pixel_y_offset
-	else
-		return initial(pixel_y)
+		. -= 32
+	if(custom_pixel_y_offset)
+		. += custom_pixel_y_offset
 
 /mob/living/carbon/alien/humanoid/get_standard_pixel_x_offset(lying = 0)
+	. = ..()
 	if(leaping)
-		return -32
-	else if(custom_pixel_x_offset)
-		return custom_pixel_x_offset
-	else
-		return initial(pixel_x)
+		. -= 32
+	if(custom_pixel_x_offset)
+		. += custom_pixel_x_offset
 
 /mob/living/carbon/alien/humanoid/get_permeability_protection(list/target_zones)
 	return 0.8
