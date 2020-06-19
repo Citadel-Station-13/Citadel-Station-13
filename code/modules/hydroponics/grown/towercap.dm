@@ -153,6 +153,7 @@
 	var/burn_icon = "bonfire_on_fire" //for a softer more burning embers icon, use "bonfire_warm"
 	var/grill = FALSE
 	var/fire_stack_strength = 5
+	var/quality_increase = 0 //bonfires are not the greatest cooking appliance
 
 /obj/structure/bonfire/dense
 	density = TRUE
