@@ -1,0 +1,4 @@
+author: "bunny232"
+delete-after: True
+changes: 
+  - rscdel: "Removed unsavory things from the vent clog event"
