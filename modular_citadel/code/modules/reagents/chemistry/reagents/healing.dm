@@ -197,3 +197,25 @@
 		M.stat = DEAD
 		M.visible_message("The synthetic tissue degrades off [M]'s wounds as they collapse to the floor.")
 //NEEDS ON_MOB_DEAD()
+
+/datum/reagent/fermi/zeolites
+	name = "Artificial Zeolites"
+	description = "Lab made Zeolite, used to clear radiation form people and items alike! Splashing just a small amounts(5u) onto any item can clear away large amouts of contamination."
+	pH = 8
+	color = "#FFDADA"
+	metabolization_rate = 8 * REAGENTS_METABOLISM //Lastes not long in body but heals a lot!
+	value = REAGENT_VALUE_COMMON
+
+/datum/reagent/fermi/zeolites/on_mob_life(mob/living/carbon/M)
+	var/datum/component/radioactive/contamination = M.GetComponent(/datum/component/radioactive)
+	if(M.radiation > 0)
+		M.radiation -= min(M.radiation, 60)
+	if(contamination.strength > 0)
+		contamination.strength -= min(contamination.strength, 100)
+	..()
+
+/datum/reagent/fermi/zeolites/reaction_obj(obj/O, reac_volume)
+	var/datum/component/radioactive/contamination = O.GetComponent(/datum/component/radioactive)
+	if(contamination && reac_volume >= 5)
+		qdel(contamination)
+		return

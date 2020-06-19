@@ -54,6 +54,8 @@ In all, this is a lot like the monkey code. /N
 		return
 	switch(M.a_intent)
 		if(INTENT_HELP)
+			if(M == src && check_self_for_injuries())
+				return
 			help_shake_act(M)
 		if(INTENT_GRAB)
 			grabbedby(M)
