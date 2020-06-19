@@ -18,7 +18,7 @@ export const ChemMaster = props => {
     pillBottleMaxAmount,
   } = data;
   if (screen === "analyze") {
-    return <AnalysisResults state={state}/>;
+    return <AnalysisResults state={state} />;
   }
   return (
     <Fragment>
