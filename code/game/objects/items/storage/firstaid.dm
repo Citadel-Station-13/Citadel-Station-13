@@ -418,7 +418,8 @@
 	/obj/item/circuitboard/computer/crew,
 	/obj/item/stack/sheet/glass,
 	/obj/item/stack/sheet/mineral/silver,
-	/obj/item/organ_storage
+	/obj/item/organ_storage,
+	/obj/item/reagent_containers/chem_pack
 	))
 
 //hijacking the minature first aids for hypospray boxes. <3
