@@ -14,6 +14,10 @@
 	name = "Security Cameras (Computer Board)"
 	build_path = /obj/machinery/computer/security
 
+/obj/item/circuitboard/computer/security/shuttle
+	name = "Shuttlelinking Security Cameras (Computer Board)"
+	build_path = /obj/machinery/computer/security/shuttle
+
 /obj/item/circuitboard/computer/xenobiology
 	name = "circuit board (Xenobiology Console)"
 	build_path = /obj/machinery/computer/camera_advanced/xenobio

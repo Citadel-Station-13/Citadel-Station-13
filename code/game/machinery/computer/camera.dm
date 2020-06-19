@@ -35,11 +35,6 @@
 			M.unset_machine() //to properly reset the view of the users if the console is deleted.
 	return ..()
 
-/obj/machinery/computer/security/connect_to_shuttle(obj/docking_port/mobile/port, obj/docking_port/stationary/dock, idnum, override=FALSE)
-	for(var/i in network)
-		network -= i
-		network += "[idnum][i]"
-
 /obj/machinery/computer/security/can_interact(mob/user)
 	if((!hasSiliconAccessInArea(user) && !Adjacent(user)) || is_blind(user) || !in_view_range(user, src))
 		return FALSE
@@ -262,3 +257,12 @@
 	name = "AI upload monitor"
 	desc = "A telescreen that connects to the AI upload's camera network."
 	network = list("aiupload")
+
+// Subtype that connects to shuttles.
+/obj/machinery/computer/security/shuttle
+	circuit = /obj/item/circuitboard/computer/security/shuttle
+
+/obj/machinery/computer/security/shuttle/connect_to_shuttle(obj/docking_port/mobile/port, obj/docking_port/stationary/dock, idnum, override=FALSE)
+	for(var/i in network)
+		network -= i
+		network += "[idnum][i]"
