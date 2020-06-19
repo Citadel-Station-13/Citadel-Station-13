@@ -26,8 +26,12 @@
 	var/need_static_data_update = TRUE
 	/// Whether modifiers and final skill values or only base values are displayed.
 	var/see_skill_mods = TRUE
-	/// Whether skill descriptions are displayed or not.
-	var/compact_mode = FALSE
+	/// The current selected skill category.
+	var/selected_category
+
+/datum/skill_holder/New(owner)
+	..()
+	src.owner = owner
 
 /**
   * Grabs the value of a skill.

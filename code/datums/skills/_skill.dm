@@ -67,12 +67,11 @@ GLOBAL_LIST_INIT_TYPED(skill_datums, /datum/skill, init_skill_datums())
 	. = list(
 		"name" = name,
 		"desc" = desc,
-		"name_color" = name_color,
-		"level_based" = progression_type == SKILL_PROGRESSION_LEVEL,
+		"path" = type,
 		"value_base" = skill_value,
 		"value_mod" = skill_value,
-		"base_readout" = skill_value,
-		"mod_readout" = skill_value
+		"modifiers" = "None",
+		"max_value" = 1 //To avoid division by zero later on.
 	)
 	var/list/mods = LAZYACCESS(H.skill_value_mods, type)
 	if(mods)
@@ -81,7 +80,7 @@ GLOBAL_LIST_INIT_TYPED(skill_datums, /datum/skill, init_skill_datums())
 			var/datum/skill_modifier/M = GLOB.skill_modifiers[k]
 			mod_names |= M.name
 			skill_value = M.apply_modifier(skill_value, type, H, MODIFIER_TARGET_VALUE)
-		.["mod_readout"] = .["value_mod"] = skill_value
+		.["value_mod"] = skill_value
 		.["modifiers"] = mod_names //Will be jointext()'d later.
 
 // Just saying, the choice to use different sub-parent-types is to force coders to resolve issues as I won't be implementing custom procs to grab skill levels in a certain context.
@@ -99,7 +98,6 @@ GLOBAL_LIST_INIT_TYPED(skill_datums, /datum/skill, init_skill_datums())
 	. = ..()
 	.["base_readout"] = .["value_base"] ? "Learned: Yes" : "Learned: No"
 	.["mod_readout"] = .["value_mod"] ? "Learned: Yes" : "Learned: No"
-	.["max_value"] = 1
 
 /datum/skill/numerical
 	abstract_type = /datum/skill/numerical
@@ -149,13 +147,7 @@ GLOBAL_LIST_INIT_TYPED(skill_datums, /datum/skill, init_skill_datums())
 	var/max_assoc = ""
 	var/max_assoc_start = 1
 	for(var/lvl in 1 to max_levels)
-		var/value
-		switch(level_up_method)
-			if(STANDARD_LEVEL_UP)
-				value = XP_LEVEL(standard_xp_lvl_up, xp_lvl_multiplier, lvl)
-			if(DWARFY_LEVEL_UP)
-				value = DORF_XP_LEVEL(standard_xp_lvl_up, xp_lvl_multiplier, lvl)
-		value = round(value, 1)
+		var/value = round(get_skill_level_value(lvl), 1)
 		if(!associative)
 			levels += value
 			continue
@@ -197,6 +189,7 @@ GLOBAL_LIST_INIT_TYPED(skill_datums, /datum/skill, init_skill_datums())
 	. = ..()
 	var/skill_value_base = .["value_base"]
 	var/skill_value_mod = .["value_mod"]
+	.["level_based"] = TRUE
 
 	var/level = LAZYACCESS(H.skill_levels, type) || 0
 	var/current_lvl_xp_sum = 0
@@ -206,22 +199,20 @@ GLOBAL_LIST_INIT_TYPED(skill_datums, /datum/skill, init_skill_datums())
 	var/next_lvl_xp = associative ? levels[levels[next_index]] : levels[next_index]
 	if(next_lvl_xp > current_lvl_xp_sum)
 		next_lvl_xp -= current_lvl_xp_sum
+	.["lvl_base_num"] = .["lvl_mod_num"] = level
 	.["lvl_base"] = .["lvl_mod"] = associative ? (!level ? unskilled_tier : levels[level]) : level
-	.["lvl_base_color"] = .["lvl_mod_color"] = (level+1)*(350/max_levels)
-	.["xp_next_lvl_base"] = "XP To Next Level : \[[skill_value_base - current_lvl_xp_sum]/[next_lvl_xp]\]"
+	.["base_style"] = .["mod_style"] = "font-weight:bold; color:hsl([(level+1)*(350/max_levels+1)], 50%, 50%)"
+	.["xp_next_lvl_base"] = .["xp_next_lvl_mod"] = "\[[skill_value_base - current_lvl_xp_sum]/[next_lvl_xp]\]"
 
-	.["max_lvls"] = max_levels
-	var/max_value
-	switch(level_up_method)
-		if(STANDARD_LEVEL_UP)
-			max_value = .["max_value"] = XP_LEVEL(standard_xp_lvl_up, xp_lvl_multiplier, max_levels)
-		if(DWARFY_LEVEL_UP)
-			max_value = .["max_value"] = DORF_XP_LEVEL(standard_xp_lvl_up, xp_lvl_multiplier, max_levels)
+	.["max_lvl"] = max_levels
+	var/max_value = associative ? levels[levels[max_levels]] : levels[max_levels]
+	.["max_value"] = max_value
 
 	.["base_readout"] = "Overall Skill Progress: \[[skill_value_base]/[max_value]\]"
+	.["mod_readout"] = "Overall Skill Progress: \[[skill_value_mod]/[max_value]\]"
 
 	var/list/mods = LAZYACCESS(H.skill_level_mods, type)
-	if(mods) //I'm not proud of doing a similar process twice a row but here we go.
+	if(mods) //I'm not proud of doing the same-ish process twice a row but here we go.
 		var/list/mod_names = .["modifiers"]
 		if(!mod_names)
 			.["modifiers"] = mod_names = list()
@@ -238,10 +229,20 @@ GLOBAL_LIST_INIT_TYPED(skill_datums, /datum/skill, init_skill_datums())
 		next_lvl_xp = associative ? levels[levels[next_index]] : levels[next_index]
 		if(next_lvl_xp > current_lvl_xp_sum)
 			next_lvl_xp -= current_lvl_xp_sum
+		.["lvl_mod_num"] = level
 		.["lvl_mod"] = associative ? (!level ? unskilled_tier : levels[level]) : level
-		.["lvl_mod_color"] = (level+1)*(350/max_levels)
-		.["xp_next_lvl_mod"] = "XP To Next Level : \[[skill_value_mod - current_lvl_xp_sum]/[next_lvl_xp]\]"
-		.["mod_readout"] = "Overall Skill Progress: \[[skill_value_mod]/[max_value]\]"
+		.["mod_style"] = "font-weight:bold; color:hsl([(level+1)*(300/(max_levels+1))], 50%, 50%)"
+		.["xp_next_lvl_mod"] = "\[[skill_value_mod - current_lvl_xp_sum]/[next_lvl_xp]\]"
+
+/**
+  * Gets the base value required to reach a level specified by the 'num' arg.
+  */
+/datum/skill/level/proc/get_skill_level_value(num)
+	switch(level_up_method)
+		if(STANDARD_LEVEL_UP)
+			. = XP_LEVEL(standard_xp_lvl_up, xp_lvl_multiplier, num)
+		if(DWARFY_LEVEL_UP)
+			. = DORF_XP_LEVEL(standard_xp_lvl_up, xp_lvl_multiplier, num)
 
 /datum/skill/level/job
 	abstract_type = /datum/skill/level/job

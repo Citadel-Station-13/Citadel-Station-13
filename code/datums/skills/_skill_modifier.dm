@@ -9,7 +9,6 @@ GLOBAL_LIST_EMPTY(potential_mods_per_skill)
 /datum/skill_modifier
 	/// Name and description of the skill modifier, used in the UI
 	var/name = "???"
-	var/desc = ""
 	/// flags for this skill modifier.
 	var/modifier_flags = NONE
 	/// target skills, can be a specific skill typepath or a list of skill traits.
@@ -26,8 +25,6 @@ GLOBAL_LIST_EMPTY(potential_mods_per_skill)
 	var/level_mod = 1
 	/// Priority of this skill modifier compared to other ones.
 	var/priority = MODIFIER_SKILL_PRIORITY_DEF
-	/// Skill modifier icon, used in the UI
-	var/icon_name = "default_mod"
 
 /datum/skill_modifier/New(id, register = FALSE)
 	identifier = GET_SKILL_MOD_ID(type, id)
@@ -172,11 +169,7 @@ GLOBAL_LIST_EMPTY(potential_mods_per_skill)
 		var/datum/skill/S = GLOB.skill_datums[skillpath]
 		if(method == MODIFIER_TARGET_VALUE && S.progression_type == SKILL_PROGRESSION_LEVEL)
 			var/datum/skill/level/L = S
-			switch(L.level_up_method)
-				if(STANDARD_LEVEL_UP)
-					mod = XP_LEVEL(L.standard_xp_lvl_up, L.xp_lvl_multiplier, S.competency_thresholds[mod])
-				if(DWARFY_LEVEL_UP)
-					mod = DORF_XP_LEVEL(L.standard_xp_lvl_up, L.xp_lvl_multiplier, S.competency_thresholds[mod])
+			mod = L.get_skill_level_value(L.competency_thresholds[mod])
 		else
 			mod = S.competency_thresholds[mod]
 
