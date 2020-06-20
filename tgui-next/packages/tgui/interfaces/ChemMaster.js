@@ -16,7 +16,6 @@ export const ChemMaster = props => {
     isPillBottleLoaded,
     pillBottleCurrentAmount,
     pillBottleMaxAmount,
-    fermianalyze,
   } = data;
   if (screen === "analyze") {
     return <AnalysisResults state={state} />;
