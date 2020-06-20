@@ -1,8 +1,0 @@
-author: "timothyteakettle"
-delete-after: True
-changes: 
-  - rscadd: "Adds the brain trauma event, where one player gets a random brain trauma!"
-  - rscadd: "Adds the wisdom cow event, where the wisdom cow appears on the station!"
-  - rscadd: "Adds the fake virus event, where people get fake virus symptoms."
-  - rscadd: "Adds the stray cargo pod event, where a cargo pod crashes into the station."
-  - rscadd: "Adds the fugitives event, where fugitives are loose on the station, and it's the hunters jobs to capture them."

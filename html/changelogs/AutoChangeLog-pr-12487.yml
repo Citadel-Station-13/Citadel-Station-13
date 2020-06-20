@@ -1,4 +1,0 @@
-author: "kevinz000"
-delete-after: True
-changes: 
-  - rscadd: "bay/polaris style say_emphasis has been added. You can now |italicize| _underline_ and +bold+ your messages."
