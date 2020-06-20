@@ -218,7 +218,7 @@
 	id = "chem_pack"
 	build_type = PROTOLATHE
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
-	materials = list(/datum/material/plastic = 2000)
+	materials = list(/datum/material/plastic = 1500)
 	build_path = /obj/item/reagent_containers/chem_pack
 	category = list("Medical Designs")
 
