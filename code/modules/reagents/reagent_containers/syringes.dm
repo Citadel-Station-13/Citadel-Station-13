@@ -15,7 +15,7 @@
 	var/show_filling = TRUE
 	custom_materials = list(/datum/material/iron=10, /datum/material/glass=20)
 	reagent_flags = TRANSPARENT
-	custom_price = 100
+	custom_price = PRICE_CHEAP_AS_FREE
 
 /obj/item/reagent_containers/syringe/Initialize()
 	. = ..()

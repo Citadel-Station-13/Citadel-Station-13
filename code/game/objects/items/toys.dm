@@ -446,6 +446,7 @@
 	throw_range = 5
 	force_unwielded = 0
 	force_wielded = 0
+	block_parry_data = null
 	attack_verb = list("attacked", "struck", "hit")
 	total_mass_on = TOTAL_MASS_TOY_SWORD
 	sharpness = IS_BLUNT
