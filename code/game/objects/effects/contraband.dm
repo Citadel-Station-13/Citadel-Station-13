@@ -428,6 +428,11 @@
 	desc = "A poster decipting a snake shaped into an ominous 'S'!"
 	icon_state = "poster47"
 
+/obj/structure/sign/poster/contraband/bountyhunters
+	name = "Bounty Hunters"
+	desc = "A poster advertising bounty hunting services. \"I hear you got a problem.\""
+	icon_state = "poster48"
+
 /obj/structure/sign/poster/official
 	poster_item_name = "motivational poster"
 	poster_item_desc = "An official Nanotrasen-issued poster to foster a compliant and obedient workforce. It comes with state-of-the-art adhesive backing, for easy pinning to any vertical surface."

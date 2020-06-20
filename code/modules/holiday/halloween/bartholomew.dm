@@ -88,7 +88,7 @@
 	/obj/item/t_scanner = 5,
 	/obj/item/airlock_painter = 1,
 	/obj/item/stack/cable_coil = 6,
-	/obj/item/stack/medical/bruise_pack = 1,
+	/obj/item/stack/medical/suture = 1,
 	/obj/item/stack/rods = 3,
 	/obj/item/stack/sheet/cardboard = 2,
 	/obj/item/stack/sheet/metal = 1,

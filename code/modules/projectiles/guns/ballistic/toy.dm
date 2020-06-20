@@ -57,7 +57,7 @@
 	casing_ejector = FALSE
 	can_suppress = FALSE
 
-/obj/item/gun/ballistic/shotgun/toy/process_chamber(empty_chamber = 0)
+/obj/item/gun/ballistic/shotgun/toy/process_chamber(mob/living/user, empty_chamber = 0)
 	..()
 	if(chambered && !chambered.BB)
 		qdel(chambered)

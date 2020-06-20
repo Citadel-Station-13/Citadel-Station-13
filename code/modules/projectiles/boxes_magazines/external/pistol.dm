@@ -66,3 +66,15 @@
 	caliber = ".50"
 	max_ammo = 7
 	multiple_sprites = 1
+
+/obj/item/ammo_box/magazine/m32acp
+	name = "pistol magazine (.32)"
+	desc = "A crudely construction pistol magazine that holds .32 ACP rounds. It looks like it can only fit eight bullets."
+	icon_state = "32acp"
+	ammo_type = /obj/item/ammo_casing/c32acp
+	caliber = "c32acp"
+	max_ammo = 8
+	multiple_sprites = 2
+
+/obj/item/ammo_box/magazine/m32acp/empty
+	start_empty = 1
