@@ -1,6 +1,0 @@
-author: "LetterN"
-delete-after: True
-changes: 
-  - rscadd: "Asset cache from tg"
-  - tweak: "Made the map viewer not look bad"
-  - bugfix: "Admin matrix right-bracket"
