@@ -1,0 +1,4 @@
+author: "kevinz000"
+delete-after: True
+changes: 
+  - balance: "calculations for punch hit chance has been drastically buffed in favor of the attacker."
