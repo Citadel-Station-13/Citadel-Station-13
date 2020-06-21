@@ -10,7 +10,6 @@
 	var/obj/item/reagent_containers/food/grilled_item
 	var/grill_time = 0
 	var/datum/looping_sound/grill/grill_loop
-	var/quality_increase = 10 //cooking food via a grill gives it slightly higher quality
 
 /obj/machinery/grill/Initialize()
 	. = ..()
