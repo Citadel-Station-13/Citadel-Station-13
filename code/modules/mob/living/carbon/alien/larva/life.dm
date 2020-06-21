@@ -1,14 +1,10 @@
-
-
-/mob/living/carbon/alien/larva/Life()
-	set invisibility = 0
-	if (notransform)
+/mob/living/carbon/alien/larva/BiologicalLife(seconds, times_fired)
+	if(!(. = ..()))
 		return
-	if(..()) //not dead
-		// GROW!
-		if(amount_grown < max_grown)
-			amount_grown++
-			update_icons()
+	// GROW!
+	if(amount_grown < max_grown)
+		amount_grown++
+		update_icons()
 
 
 /mob/living/carbon/alien/larva/update_stat()

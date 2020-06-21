@@ -52,9 +52,9 @@
 			to_chat(affected_mob, pick(stage5))
 		if(QDELETED(affected_mob))
 			return
-		if(affected_mob.notransform)
+		if(affected_mob.mob_transforming)
 			return
-		affected_mob.notransform = 1
+		affected_mob.mob_transforming = 1
 		for(var/obj/item/W in affected_mob.get_equipped_items(TRUE))
 			affected_mob.dropItemToGround(W)
 		for(var/obj/item/I in affected_mob.held_items)
