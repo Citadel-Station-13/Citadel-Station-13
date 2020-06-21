@@ -99,19 +99,44 @@
 	restricted_roles = list("Chief Engineer","Atmospheric Technician","Station Engineer","Warden","Detective","Security Officer","Head of Security","Cargo Technician", "Shaft Miner", "Quartermaster")
 
 // orvilike "original" kepi
-/datum/gear/orvkepi
+/datum/gear/orvkepicom
+	name = "Federation Kepi, command"
+	description = "A visored cap. Intended to be used with ORV uniform."
+	category = SLOT_HEAD
+	path = /obj/item/clothing/head/kepi/orvi/command
+	restricted_desc = "Heads of Staff"
+	restricted_roles = list("Head of Security", "Captain", "Head of Personnel", "Chief Engineer", "Research Director", "Chief Medical Officer", "Quartermaster")
+
+/datum/gear/orvkepiops
+	name = "Federation Kepi, ops/sec"
+	description = "A visored cap. Intended to be used with ORV uniform."
+	category = SLOT_HEAD
+	path = /obj/item/clothing/head/kepi/orvi/engsec
+	restricted_desc = "Engineering, Security and Cargo"
+	restricted_roles = list("Chief Engineer", "Atmospheric Technician", "Station Engineer", "Warden", "Detective", "Security Officer", "Head of Security", "Cargo Technician", "Shaft Miner", "Quartermaster")
+
+/datum/gear/orvkepimedsci
+	name = "Federation Kepi, medsci"
+	description = "A visored cap. Intended to be used with ORV uniform."
+	category = SLOT_HEAD
+	path = /obj/item/clothing/head/kepi/orvi/medsci
+	restricted_desc = "Medical and Science"
+	restricted_roles = list("Chief Medical Officer", "Medical Doctor", "Chemist", "Virologist", "Paramedic", "Geneticist", "Research Director", "Scientist", "Roboticist")
+
+/datum/gear/orvkepisrv
+	name = "Federation Kepi, service"
+	description = "A visored cap. Intended to be used with ORV uniform."
+	category = SLOT_HEAD
+	path = /obj/item/clothing/head/kepi/orvi/service
+	restricted_desc = "Service and Civilian, barring Clown, Mime and Lawyer"
+	restricted_roles = list("Assistant", "Bartender", "Botanist", "Cook", "Curator", "Janitor", "Chaplain")
+
+/datum/gear/orvkepiass
 	name = "Federation Kepi, assistant"
 	description = "A visored cap. Intended to be used with ORV uniform."
 	category = SLOT_HEAD
 	path = /obj/item/clothing/head/kepi/orvi
 	restricted_roles = list("Assistant")
-
-/datum/gear/orvkepi/srv
-	name = "Federation Kepi, service"
-	category = SLOT_HEAD
-	path = /obj/item/clothing/head/kepi/orvi/service
-	restricted_roles = list("Assistant", "Bartender", "Botanist", "Cook", "Curator", "Janitor", "Chaplain")
-	restricted_desc = "Service and Civilian, barring Clown, Mime and Lawyer"
 
 /*Commenting out Until next Christmas or made automatic
 /datum/gear/santahatr

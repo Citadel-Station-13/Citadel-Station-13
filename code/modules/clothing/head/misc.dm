@@ -440,8 +440,9 @@
 
 /obj/item/clothing/head/kepi
 	name = "kepi"
-	desc = "A white cap with visor. Too bad that Solar Foreign Legion isn't created."
+	desc = "A white cap with visor. Oui oui, mon capitane!"
 	icon_state = "kepi"
 
 /obj/item/clothing/head/kepi/old
 	icon_state = "kepi_old"
+	desc = "A flat, white circular cap with a visor, that demands some honor from it's wearer."
