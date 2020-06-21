@@ -87,6 +87,11 @@
 	smooth = SMOOTH_TRUE
 	explosion_block = INFINITY
 
+/turf/closed/indestructible/syndicate
+	icon = 'icons/turf/walls/plastitanium_wall.dmi'
+	icon_state = "map-shuttle"
+	smooth = SMOOTH_TRUE
+
 /turf/closed/indestructible/riveted/uranium
 	icon = 'icons/turf/walls/uranium_wall.dmi'
 	icon_state = "uranium"
