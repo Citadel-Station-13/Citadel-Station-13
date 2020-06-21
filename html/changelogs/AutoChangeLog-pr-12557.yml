@@ -1,0 +1,4 @@
+author: "kevinz000"
+delete-after: True
+changes: 
+  - refactor: "Life() is split into BiologicalLife() and PhysicalLife. A component signal has been added that can prevent either from ticking."
