@@ -63133,8 +63133,8 @@
 /turf/open/floor/plasteel/white,
 /area/medical/genetics)
 "cDU" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
+	dir = 1
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/genetics)
@@ -63583,6 +63583,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 4
 	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel/white,
 /area/medical/genetics)
 "cES" = (
@@ -77853,6 +77854,9 @@
 	name = "Monkey Pen";
 	pixel_y = 2;
 	req_access_txt = "9"
+	},
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 1
 	},
 /turf/open/floor/grass,
 /area/medical/genetics)
