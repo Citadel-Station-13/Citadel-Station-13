@@ -264,7 +264,7 @@
 	construction_time = 600
 	category = list("Gygax")
 
-//Gygax
+//Medical Gygax
 /datum/design/medigax_chassis
 	name = "Exosuit Chassis (\"Medical Gygax\")"
 	id = "medigax_chassis"
