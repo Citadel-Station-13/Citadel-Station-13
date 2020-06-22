@@ -75,7 +75,6 @@
 	//we're done baking, now we ship it.
 	register_asset("minimap-[id].png", map_icon)
 	register_asset("minimap-[id]-meta.png", meta_icon)
-	send_asset_list(user, list("minimap-[id].png" = map_icon, "minimap-[id]-meta.png" = meta_icon))
 
 /datum/minimap/proc/send(mob/user)
 	if(!id)

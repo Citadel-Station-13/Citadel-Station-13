@@ -1,7 +1,7 @@
 #define TRANSFORMATION_DURATION 22
 
 /mob/living/carbon/proc/monkeyize(tr_flags = (TR_KEEPITEMS | TR_KEEPVIRUS | TR_KEEPSTUNS | TR_KEEPREAGENTS | TR_DEFAULTMSG))
-	if (notransform || transformation_timer)
+	if(mob_transforming || transformation_timer)
 		return
 
 	if(tr_flags & TR_KEEPITEMS)
@@ -11,7 +11,7 @@
 			dropItemToGround(W)
 
 	//Make mob invisible and spawn animation
-	notransform = TRUE
+	mob_transforming = TRUE
 	Paralyze(TRANSFORMATION_DURATION, ignore_canstun = TRUE)
 	icon = null
 	cut_overlays()
@@ -156,7 +156,7 @@
 //Could probably be merged with monkeyize but other transformations got their own procs, too
 
 /mob/living/carbon/proc/humanize(tr_flags = (TR_KEEPITEMS | TR_KEEPVIRUS | TR_KEEPSTUNS | TR_KEEPREAGENTS | TR_DEFAULTMSG))
-	if (notransform || transformation_timer)
+	if (mob_transforming || transformation_timer)
 		return
 
 	//now the rest
@@ -169,7 +169,7 @@
 				client.screen -= W
 
 	//Make mob invisible and spawn animation
-	notransform = TRUE
+	mob_transforming = TRUE
 	Paralyze(TRANSFORMATION_DURATION, ignore_canstun = TRUE)
 
 	icon = null
@@ -362,7 +362,7 @@
 	qdel(src)
 
 /mob/living/carbon/human/proc/Robotize(delete_items = 0, transfer_after = TRUE)
-	if (mob_transforming)
+	if(mob_transforming)
 		return
 	for(var/obj/item/W in src)
 		if(delete_items)
