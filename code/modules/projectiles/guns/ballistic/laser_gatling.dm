@@ -53,6 +53,7 @@
 		..()
 
 /obj/item/minigunpack/dropped(mob/user)
+	. = ..()
 	if(armed)
 		user.dropItemToGround(gun, TRUE)
 
@@ -125,12 +126,13 @@
 	return
 
 /obj/item/gun/ballistic/minigun/dropped(mob/user)
+	. = ..()
 	if(ammo_pack)
 		ammo_pack.attach_gun(user)
 	else
 		qdel(src)
 
-/obj/item/gun/ballistic/minigun/process_fire(atom/target, mob/living/user, message = TRUE, params = null, zone_override = "", bonus_spread = 0)
+/obj/item/gun/ballistic/minigun/process_fire(atom/target, mob/living/user, message = TRUE, params = null, zone_override = "", bonus_spread = 0, stam_cost = 0)
 	if(ammo_pack)
 		if(ammo_pack.overheat < ammo_pack.overheat_max)
 			ammo_pack.overheat += burst_size
@@ -144,4 +146,5 @@
 	. = ..()
 
 /obj/item/gun/ballistic/minigun/dropped(mob/living/user)
+	. = ..()
 	ammo_pack.attach_gun(user)

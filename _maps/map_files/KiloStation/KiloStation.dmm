@@ -25243,7 +25243,7 @@
 	pixel_y = 4
 	},
 /obj/item/lighter,
-/obj/item/stack/medical/bruise_pack,
+/obj/item/stack/medical/suture,
 /turf/open/floor/plasteel/dark,
 /area/maintenance/port)
 "aPO" = (
@@ -27105,8 +27105,8 @@
 "aSy" = (
 /obj/structure/table,
 /obj/item/stack/medical/gauze,
-/obj/item/stack/medical/ointment,
-/obj/item/stack/medical/bruise_pack{
+/obj/item/stack/medical/mesh,
+/obj/item/stack/medical/suture{
 	pixel_x = 4
 	},
 /obj/item/storage/firstaid/regular,
@@ -55554,10 +55554,10 @@
 /obj/structure/table,
 /obj/item/storage/firstaid/regular,
 /obj/item/stack/medical/gauze,
-/obj/item/stack/medical/ointment{
+/obj/item/stack/medical/mesh{
 	pixel_y = 4
 	},
-/obj/item/stack/medical/bruise_pack,
+/obj/item/stack/medical/suture,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},

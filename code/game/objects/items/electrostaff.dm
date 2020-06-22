@@ -12,9 +12,9 @@
 	throwforce = 15			//if you are a madman and finish someone off with this, power to you.
 	throw_speed = 1
 	item_flags = NO_MAT_REDEMPTION
-	block_chance = 30
 	attack_verb = list("struck", "beaten", "thwacked", "pulped")
 	total_mass = 5		//yeah this is a heavy thing, beating people with it while it's off is not going to do you any favors. (to curb stun-kill rampaging without it being on)
+	block_parry_data = /datum/block_parry_data/electrostaff
 	var/obj/item/stock_parts/cell/cell = /obj/item/stock_parts/cell/high
 	var/on = FALSE
 	var/can_block_projectiles = FALSE		//can't block guns
@@ -27,6 +27,43 @@
 	var/stun_status_duration = 25
 	var/stun_stam_cost = 3.5
 	var/wielded = FALSE // track wielded status on item
+
+// haha security desword time /s
+/datum/block_parry_data/electrostaff
+	block_damage_absorption = 0
+	block_damage_multiplier = 1
+	can_block_attack_types = ~ATTACK_TYPE_PROJECTILE		// only able to parry non projectiles
+	block_damage_multiplier_override = list(
+		TEXT_ATTACK_TYPE_MELEE = 0.5,		// only useful on melee and unarmed
+		TEXT_ATTACK_TYPE_UNARMED = 0.3
+	)
+	block_start_delay = 0.5		// near instantaneous block
+	block_stamina_cost_per_second = 3
+	block_stamina_efficiency = 2		// haha this is a horrible idea
+	// more slowdown that deswords because security
+	block_slowdown = 2
+	// no attacking while blocking
+	block_lock_attacking = TRUE
+
+	parry_time_windup = 1
+	parry_time_active = 5
+	parry_time_spindown = 0
+	parry_time_spindown_visual_override = 1
+	parry_flags = PARRY_DEFAULT_HANDLE_FEEDBACK | PARRY_LOCK_ATTACKING		// no attacking while parrying
+	parry_time_perfect = 0
+	parry_time_perfect_leeway = 0.5
+	parry_efficiency_perfect = 100
+	parry_imperfect_falloff_percent = 1
+	parry_imperfect_falloff_percent_override = list(
+		TEXT_ATTACK_TYPE_PROJECTILE = 45		// really crappy vs projectiles
+	)
+	parry_time_perfect_leeway_override = list(
+		TEXT_ATTACK_TYPE_PROJECTILE = 1		// extremely harsh window for projectiles
+	)
+	// not extremely punishing to fail, but no spamming the parry.
+	parry_cooldown = 2.5 SECONDS
+	parry_failed_stagger_duration = 1.5 SECONDS
+	parry_failed_clickcd_duration = 1 SECONDS
 
 /obj/item/electrostaff/Initialize(mapload)
 	. = ..()
@@ -50,16 +87,12 @@
 		var/mob/living/silicon/robot/R = loc
 		. = R.get_cell()
 
-/obj/item/electrostaff/run_block(mob/living/owner, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return)
-	if(!on || (!can_block_projectiles && (attack_type & ATTACK_TYPE_PROJECTILE)))
-		return BLOCK_NONE
-	return ..()
-
 /obj/item/electrostaff/proc/min_hitcost()
 	return min(stun_cost, lethal_cost)
 
 /obj/item/electrostaff/proc/turn_on(obj/item/source, mob/user)
 	wielded = TRUE
+	item_flags |= (ITEM_CAN_BLOCK|ITEM_CAN_PARRY)
 	if(!cell)
 		if(user)
 			to_chat(user, "<span class='warning'>[src] has no cell.</span>")
@@ -75,6 +108,7 @@
 
 /obj/item/electrostaff/proc/turn_off(obj/item/source, mob/user)
 	wielded = FALSE
+	item_flags &= ~(ITEM_CAN_BLOCK|ITEM_CAN_PARRY)
 	if(user)
 		to_chat(user, "<span class='warning'>You turn [src] off.</span>")
 	on = FALSE
@@ -137,30 +171,30 @@
 
 /obj/item/electrostaff/attack(mob/living/target, mob/living/user)
 	if(IS_STAMCRIT(user))//CIT CHANGE - makes it impossible to baton in stamina softcrit
-		to_chat(user, "<span class='danger'>You're too exhausted for that.</span>")//CIT CHANGE - ditto
+		to_chat(user, "<span class='danger'>You're too exhausted to use [src] properly.</span>")//CIT CHANGE - ditto
 		return //CIT CHANGE - ditto
 	if(on && HAS_TRAIT(user, TRAIT_CLUMSY) && prob(50))
 		clowning_around(user)			//ouch!
 		return
 	if(iscyborg(target))
-		..()
-		return
-	if(target.mob_run_block(src, 0, "[user]'s [name]", ATTACK_TYPE_MELEE, 0, user, null, null) & BLOCK_SUCCESS) //No message; run_block() handles that
+		return ..()
+	var/list/return_list = list()
+	if(target.mob_run_block(src, 0, "[user]'s [name]", ATTACK_TYPE_MELEE, 0, user, null, return_list) & BLOCK_SUCCESS) //No message; run_block() handles that
 		playsound(target, 'sound/weapons/genhit.ogg', 50, 1)
 		return FALSE
 	if(user.a_intent != INTENT_HARM)
-		if(stun_act(target, user))
+		if(stun_act(target, user, null, return_list))
 			user.do_attack_animation(target)
 			user.adjustStaminaLossBuffered(stun_stam_cost)
 		return
-	else if(!harm_act(target, user))
+	else if(!harm_act(target, user, null, return_list))
 		return ..()		//if you can't fry them just beat them with it
 	else		//we did harm act them
 		user.do_attack_animation(target)
 		user.adjustStaminaLossBuffered(lethal_stam_cost)
 
-/obj/item/electrostaff/proc/stun_act(mob/living/target, mob/living/user, no_charge_and_force = FALSE)
-	var/stunforce = stun_stamdmg
+/obj/item/electrostaff/proc/stun_act(mob/living/target, mob/living/user, no_charge_and_force = FALSE, list/block_return = list())
+	var/stunforce = block_calculate_resultant_damage(stun_stamdmg, block_return)
 	if(!no_charge_and_force)
 		if(!on)
 			target.visible_message("<span class='warning'>[user] has bapped [target] with [src]. Luckily it was off.</span>", \
@@ -190,8 +224,8 @@
 		H.forcesay(GLOB.hit_appends)
 	return TRUE
 
-/obj/item/electrostaff/proc/harm_act(mob/living/target, mob/living/user, no_charge_and_force = FALSE)
-	var/lethal_force = lethal_damage
+/obj/item/electrostaff/proc/harm_act(mob/living/target, mob/living/user, no_charge_and_force = FALSE, list/block_return = list())
+	var/lethal_force = block_calculate_resultant_damage(lethal_damage, block_return)
 	if(!no_charge_and_force)
 		if(!on)
 			return FALSE		//standard item attack

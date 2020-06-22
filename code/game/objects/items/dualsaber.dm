@@ -20,10 +20,10 @@
 	var/saber_color = "green"
 	light_color = "#00ff00"//green
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
-	block_chance = 75
 	max_integrity = 200
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 70)
 	resistance_flags = FIRE_PROOF
+	block_parry_data = /datum/block_parry_data/dual_esword
 	var/hacked = FALSE
 	/// Can this reflect all energy projectiles?
 	var/can_reflect = TRUE
@@ -35,6 +35,42 @@
 	var/total_mass_on = 3.4
 	var/wielded = FALSE // track wielded status on item
 	var/slowdown_wielded = 0
+
+/datum/block_parry_data/dual_esword
+	block_damage_absorption = 2
+	block_damage_multiplier = 0.15
+	block_damage_multiplier_override = list(
+		ATTACK_TYPE_MELEE = 0.25
+	)
+	block_start_delay = 0		// instantaneous block
+	block_stamina_cost_per_second = 2.5
+	block_stamina_efficiency = 3
+	block_lock_sprinting = TRUE
+	// no attacking while blocking
+	block_lock_attacking = TRUE
+	block_projectile_mitigation = 75
+
+	parry_time_windup = 0
+	parry_time_active = 8
+	parry_time_spindown = 0
+	// we want to signal to players the most dangerous phase, the time when automatic counterattack is a thing.
+	parry_time_windup_visual_override = 1
+	parry_time_active_visual_override = 3
+	parry_time_spindown_visual_override = 4
+	parry_flags = PARRY_DEFAULT_HANDLE_FEEDBACK		// esword users can attack while parrying.
+	parry_time_perfect = 2		// first ds isn't perfect
+	parry_time_perfect_leeway = 1
+	parry_imperfect_falloff_percent = 10
+	parry_efficiency_to_counterattack = 100
+	parry_efficiency_considered_successful = 25		// VERY generous
+	parry_efficiency_perfect = 90
+	parry_failed_stagger_duration = 3 SECONDS
+	parry_failed_clickcd_duration = CLICK_CD_MELEE
+
+	// more efficient vs projectiles
+	block_stamina_efficiency_override = list(
+		TEXT_ATTACK_TYPE_PROJECTILE = 4
+	)
 
 /obj/item/dualsaber/ComponentInitialize()
 	. = ..()
@@ -70,6 +106,7 @@
 	START_PROCESSING(SSobj, src)
 	set_light(brightness_on)
 	AddElement(/datum/element/sword_point)
+	item_flags |= (ITEM_CAN_BLOCK|ITEM_CAN_PARRY)
 
 /// Triggered on unwield of two handed item
 /// switch hitsounds
@@ -83,6 +120,7 @@
 	STOP_PROCESSING(SSobj, src)
 	set_light(0)
 	RemoveElement(/datum/element/sword_point)
+	item_flags &= ~(ITEM_CAN_BLOCK|ITEM_CAN_PARRY)
 
 /obj/item/dualsaber/Destroy()
 	STOP_PROCESSING(SSobj, src)

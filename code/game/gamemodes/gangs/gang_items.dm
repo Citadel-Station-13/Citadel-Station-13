@@ -288,7 +288,7 @@ datum/gang_item/clothing/shades //Addition: Why not have cool shades on a gang m
 	name = "Fragmentation Grenade"
 	id = "frag nade"
 	cost = 5
-	item_path = /obj/item/grenade/syndieminibomb/concussion/frag
+	item_path = /obj/item/grenade/frag
 
 /datum/gang_item/equipment/implant_breaker
 	name = "Implant Breaker"

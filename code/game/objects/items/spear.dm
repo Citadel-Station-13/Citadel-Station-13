@@ -10,7 +10,7 @@
 	slot_flags = ITEM_SLOT_BACK
 	throwforce = 20
 	throw_speed = 4
-	embedding = list("embedded_impact_pain_multiplier" = 3, "embed_chance" = 90)
+	embedding = list("impact_pain_mult" = 3)
 	armour_penetration = 10
 	custom_materials = list(/datum/material/iron=1150, /datum/material/glass=2075)
 	hitsound = 'sound/weapons/bladeslice.ogg'
@@ -102,6 +102,8 @@
 	var/obj/item/shard/tip = locate() in parts_list
 	if (istype(tip, /obj/item/shard/plasma))
 		throwforce = 21
+		embedding = list(embed_chance = 75, pain_mult = 1.5) //plasmaglass spears are sharper
+		updateEmbedding()
 		icon_prefix = "spearplasma"
 		AddComponent(/datum/component/two_handed, force_unwielded=11, force_wielded=19, icon_wielded="[icon_prefix]1")
 	qdel(tip)
@@ -117,6 +119,8 @@
 	if(G)
 		explosive = G
 		name = "explosive lance"
+		embedding = list(embed_chance = 0, pain_mult = 1)//elances should not be embeddable
+		updateEmbedding()
 		desc = "A makeshift spear with \a [G] attached to it."
 	update_icon()
 

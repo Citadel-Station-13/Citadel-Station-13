@@ -22,7 +22,6 @@
 	icon_state = "bluetie"
 	item_state = ""	//no inhands
 	w_class = WEIGHT_CLASS_SMALL
-	custom_price = 60
 
 /obj/item/clothing/neck/tie/blue
 	name = "blue tie"
@@ -88,7 +87,6 @@
 /obj/item/clothing/neck/scarf //Default white color, same functionality as beanies.
 	name = "white scarf"
 	icon_state = "scarf"
-	custom_price = 60
 	desc = "A stylish scarf. The perfect winter accessory for those with a keen fashion sense, and those who just can't handle a cold breeze on their necks."
 	dog_fashion = /datum/dog_fashion/head
 

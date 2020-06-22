@@ -133,3 +133,6 @@
 	var/parallax_movedir = 0
 	var/parallax_layers_max = 3
 	var/parallax_animate_timer
+
+	//world.time of when the crew manifest can be accessed
+	var/crew_manifest_delay

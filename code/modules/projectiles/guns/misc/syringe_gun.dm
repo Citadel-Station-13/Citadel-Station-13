@@ -7,7 +7,7 @@
 	throw_speed = 3
 	throw_range = 7
 	force = 4
-	inaccuracy_modifier = 0
+	inaccuracy_modifier = 0.25
 	custom_materials = list(/datum/material/iron=2000)
 	clumsy_check = 0
 	fire_sound = 'sound/items/syringeproj.ogg'
@@ -160,7 +160,7 @@
 	item_state = "blowgun"
 	fire_sound = 'sound/items/syringeproj.ogg'
 
-/obj/item/gun/syringe/blowgun/process_fire(atom/target, mob/living/user, message = TRUE, params = null, zone_override = "", bonus_spread = 0)
+/obj/item/gun/syringe/blowgun/process_fire(atom/target, mob/living/user, message = TRUE, params = null, zone_override = "", bonus_spread = 0, stam_cost = 0)
 	visible_message("<span class='danger'>[user] starts aiming with a blowgun!</span>")
 	if(do_after(user, 25, target = src))
 		user.adjustStaminaLoss(20)

@@ -117,9 +117,9 @@ GLOBAL_LIST_EMPTY(mobs_with_editable_flavor_text) //et tu, hacky code
 		return FALSE
 
 	var/lower_name = lowertext(flavor_name)
-	var/new_text = stripped_multiline_input(user, "Set the [lower_name] displayed on 'examine'. [addendum]", flavor_name, texts_by_atom[usr], max_len, TRUE)
+	var/new_text = stripped_multiline_input(user, "Set the [lower_name] displayed on 'examine'. [addendum]", flavor_name, html_decode(texts_by_atom[usr]), max_len, TRUE)
 	if(!isnull(new_text) && (user in texts_by_atom))
-		texts_by_atom[user] = html_decode(new_text)
+		texts_by_atom[user] = new_text
 		to_chat(src, "Your [lower_name] has been updated.")
 		return TRUE
 	return FALSE

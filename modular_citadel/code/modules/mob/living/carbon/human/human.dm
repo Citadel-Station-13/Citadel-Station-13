@@ -16,7 +16,7 @@
 	if(!I || !L || I.loc != src || !(I in L.embedded_objects))
 		return
 	L.embedded_objects -= I
-	L.receive_damage(I.embedding.embedded_unsafe_removal_pain_multiplier*I.w_class*painmul)//It hurts to rip it out, get surgery you dingus. And if you're ripping it out quickly via resist, it's gonna hurt even more
+	L.receive_damage(I.embedding["remove_pain_mult"]*I.w_class*painmul)//It hurts to rip it out, get surgery you dingus. And if you're ripping it out quickly via resist, it's gonna hurt even more
 	I.forceMove(get_turf(src))
 	I.unembedded()
 	user.put_in_hands(I)

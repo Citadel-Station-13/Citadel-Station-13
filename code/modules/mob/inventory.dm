@@ -333,6 +333,7 @@
 				I.moveToNullspace()
 			else
 				I.forceMove(newloc)
+		on_item_dropped(I)
 		if(I.dropped(src) == ITEM_RELOCATED_BY_DROPPED)
 			return FALSE
 	return TRUE
