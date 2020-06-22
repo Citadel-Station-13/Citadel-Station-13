@@ -52492,6 +52492,7 @@
 	pixel_y = 3
 	},
 /obj/effect/turf_decal/trimline/yellow/filled/line,
+/obj/item/hand_labeler,
 /turf/open/floor/plasteel/dark,
 /area/medical/chemistry)
 "faw" = (
