@@ -22,14 +22,14 @@
 		INVOKE_ASYNC(src, .proc/do_jaunt, target)
 
 /obj/effect/proc_holder/spell/targeted/ethereal_jaunt/proc/do_jaunt(mob/living/target)
-	target.notransform = 1
+	target.mob_transforming = 1
 	var/turf/mobloc = get_turf(target)
 	var/obj/effect/dummy/phased_mob/spell_jaunt/holder = new /obj/effect/dummy/phased_mob/spell_jaunt(mobloc)
 	new jaunt_out_type(mobloc, target.dir)
 	target.ExtinguishMob()
 	target.forceMove(holder)
 	target.reset_perspective(holder)
-	target.notransform=0 //mob is safely inside holder now, no need for protection.
+	target.mob_transforming=0 //mob is safely inside holder now, no need for protection.
 	jaunt_steam(mobloc)
 
 	sleep(jaunt_duration)

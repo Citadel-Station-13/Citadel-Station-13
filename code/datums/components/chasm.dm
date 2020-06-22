@@ -109,7 +109,7 @@
 		AM.visible_message("<span class='boldwarning'>[AM] falls into [parent]!</span>", "<span class='userdanger'>[oblivion_message]</span>")
 		if (isliving(AM))
 			var/mob/living/L = AM
-			L.notransform = TRUE
+			L.mob_transforming = TRUE
 			L.Paralyze(200)
 
 		var/oldtransform = AM.transform

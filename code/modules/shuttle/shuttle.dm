@@ -507,7 +507,7 @@
 			if(M.mind && !istype(t, /turf/open/floor/plasteel/shuttle/red) && !istype(t, /turf/open/floor/mineral/plastitanium/red/brig))
 				M.mind.force_escaped = TRUE
 			// Ghostize them and put them in nullspace stasis (for stat & possession checks)
-			M.notransform = TRUE
+			M.mob_transforming = TRUE
 			M.ghostize(FALSE)
 			M.moveToNullspace()
 

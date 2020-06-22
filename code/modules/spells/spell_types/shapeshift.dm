@@ -100,7 +100,7 @@
 	if(stored.mind)
 		stored.mind.transfer_to(shape)
 	stored.forceMove(src)
-	stored.notransform = TRUE
+	stored.mob_transforming = TRUE
 	if(source.convert_damage)
 		var/damage_percent = (stored.maxHealth - stored.health)/stored.maxHealth;
 		var/damapply = damage_percent * shape.maxHealth;
@@ -148,7 +148,7 @@
 	restoring = TRUE
 	qdel(slink)
 	stored.forceMove(get_turf(src))
-	stored.notransform = FALSE
+	stored.mob_transforming = FALSE
 	if(shape.mind)
 		shape.mind.transfer_to(stored)
 	if(death)

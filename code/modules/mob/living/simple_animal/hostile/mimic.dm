@@ -118,8 +118,9 @@ GLOBAL_LIST_INIT(protected_objects, list(/obj/structure/table, /obj/structure/ca
 		overlay_googly_eyes = FALSE
 	CopyObject(copy, creator, destroy_original)
 
-/mob/living/simple_animal/hostile/mimic/copy/Life()
-	..()
+/mob/living/simple_animal/hostile/mimic/copy/BiologicalLife(seconds, times_fired)
+	if(!(. = ..()))
+		return
 	if(idledamage && !target && !ckey) //Objects eventually revert to normal if no one is around to terrorize
 		adjustBruteLoss(1)
 	for(var/mob/living/M in contents) //a fix for animated statues from the flesh to stone spell
