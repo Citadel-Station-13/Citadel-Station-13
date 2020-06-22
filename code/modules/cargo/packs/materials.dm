@@ -14,53 +14,60 @@
 //////////////////////////////////////////////////////////////////////////////
 
 /datum/supply_pack/materials/cardboard50
+	goody = PACK_GOODY_PUBLIC
 	name = "50 Cardboard Sheets"
 	desc = "Create a bunch of boxes."
-	cost = 1000
+	cost = 300 //thrice their export value
 	contains = list(/obj/item/stack/sheet/cardboard/fifty)
-	crate_name = "cardboard sheets crate"
 
 /datum/supply_pack/materials/glass50
+	goody = PACK_GOODY_PUBLIC
 	name = "50 Glass Sheets"
 	desc = "Let some nice light in with fifty glass sheets!"
-	cost = 850
+	cost = 300 //double their export value
 	contains = list(/obj/item/stack/sheet/glass/fifty)
-	crate_name = "glass sheets crate"
 
 /datum/supply_pack/materials/metal50
+	goody = PACK_GOODY_PUBLIC
 	name = "50 Metal Sheets"
 	desc = "Any construction project begins with a good stack of fifty metal sheets!"
-	cost = 850
+	cost = 300 //double their export value
 	contains = list(/obj/item/stack/sheet/metal/fifty)
-	crate_name = "metal sheets crate"
 
 /datum/supply_pack/materials/plasteel20
+	goody = PACK_GOODY_PUBLIC
 	name = "20 Plasteel Sheets"
 	desc = "Reinforce the station's integrity with twenty plasteel sheets!"
-	cost = 4700
+	cost = 4000
 	contains = list(/obj/item/stack/sheet/plasteel/twenty)
-	crate_name = "plasteel sheets crate"
-
-/datum/supply_pack/materials/plasteel50
-	name = "50 Plasteel Sheets"
-	desc = "For when you REALLY have to reinforce something."
-	cost = 9050
-	contains = list(/obj/item/stack/sheet/plasteel/fifty)
-	crate_name = "plasteel sheets crate"
 
 /datum/supply_pack/materials/plastic50
+	goody = PACK_GOODY_PUBLIC
 	name = "50 Plastic Sheets"
 	desc = "Build a limitless amount of toys with fifty plastic sheets!"
-	cost = 950
-	contains = list(/obj/item/stack/sheet/plastic/fifty)
-	crate_name = "plastic sheets crate"
+	cost = 200 // double their export
+	contains = list(/obj/item/stack/sheet/plastic/twenty)
 
 /datum/supply_pack/materials/sandstone30
+	goody = PACK_GOODY_PUBLIC
 	name = "30 Sandstone Blocks"
 	desc = "Neither sandy nor stoney, these thirty blocks will still get the job done."
-	cost = 800
+	cost = 150 // five times their export
 	contains = list(/obj/item/stack/sheet/mineral/sandstone/thirty)
-	crate_name = "sandstone blocks crate"
+
+/datum/supply_pack/materials/wood50
+	goody = PACK_GOODY_PUBLIC
+	name = "50 Wood Planks"
+	desc = "Turn cargo's boring metal groundwork into beautiful panelled flooring and much more with fifty wooden planks!"
+	cost = 400 // 6-7 planks shy from having equal import/export prices
+	contains = list(/obj/item/stack/sheet/mineral/wood/twenty)
+
+/datum/supply_pack/materials/rcdammo
+	goody = PACK_GOODY_PUBLIC
+	name = "Large RCD ammo Single-Pack"
+	desc = "A single large compressed RCD matter pack, to help with any holes or projects people might be working on."
+	cost = 600
+	contains = list(/obj/item/rcd_ammo/large)
 
 /datum/supply_pack/materials/rawlumber
 	name = "50 Towercap Logs"
@@ -73,35 +80,6 @@
 	. = ..()
 	for(var/i in 1 to 49)
 		new /obj/item/grown/log(.)
-
-/datum/supply_pack/materials/wood50
-	name = "50 Wood Planks"
-	desc = "Turn cargo's boring metal groundwork into beautiful panelled flooring and much more with fifty wooden planks!"
-	cost = 1450
-	contains = list(/obj/item/stack/sheet/mineral/wood/fifty)
-	crate_name = "wood planks crate"
-
-/datum/supply_pack/materials/rcdammo
-	name = "Spare RCD ammo"
-	desc = "This crate contains sixteen RCD compressed matter packs, to help with any holes or projects people might be working on."
-	cost = 3750
-	contains = list(/obj/item/rcd_ammo,
-					/obj/item/rcd_ammo,
-					/obj/item/rcd_ammo,
-					/obj/item/rcd_ammo,
-					/obj/item/rcd_ammo,
-					/obj/item/rcd_ammo,
-					/obj/item/rcd_ammo,
-					/obj/item/rcd_ammo,
-					/obj/item/rcd_ammo,
-					/obj/item/rcd_ammo,
-					/obj/item/rcd_ammo,
-					/obj/item/rcd_ammo,
-					/obj/item/rcd_ammo,
-					/obj/item/rcd_ammo,
-					/obj/item/rcd_ammo,
-					/obj/item/rcd_ammo)
-	crate_name = "rcd ammo"
 
 //////////////////////////////////////////////////////////////////////////////
 ///////////////////////////// Canisters //////////////////////////////////////

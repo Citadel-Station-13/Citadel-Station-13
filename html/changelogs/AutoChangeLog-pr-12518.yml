@@ -1,5 +1,0 @@
-author: "kevinz000"
-delete-after: True
-changes: 
-  - refactor: "projectile ricochets now use a less hilariously terrible way of being handled and should be easier to w"
-  - bugfix: "projectile runtime/ricocheting"

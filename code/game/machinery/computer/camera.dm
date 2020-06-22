@@ -336,3 +336,12 @@
 	name = "\improper AI upload monitor"
 	desc = "A telescreen that connects to the AI upload's camera network."
 	network = list("aiupload")
+
+// Subtype that connects to shuttles.
+/obj/machinery/computer/security/shuttle
+	circuit = /obj/item/circuitboard/computer/security/shuttle
+
+/obj/machinery/computer/security/shuttle/connect_to_shuttle(obj/docking_port/mobile/port, obj/docking_port/stationary/dock, idnum, override=FALSE)
+	for(var/i in network)
+		network -= i
+		network += "[idnum][i]"

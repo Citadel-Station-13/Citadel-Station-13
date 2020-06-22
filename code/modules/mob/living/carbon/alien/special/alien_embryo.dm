@@ -92,7 +92,7 @@
 	ghost.transfer_ckey(new_xeno, FALSE)
 	SEND_SOUND(new_xeno, sound('sound/voice/hiss5.ogg',0,0,0,100))	//To get the player's attention
 	new_xeno.Paralyze(6)
-	new_xeno.notransform = TRUE
+	new_xeno.mob_transforming = TRUE
 	new_xeno.invisibility = INVISIBILITY_MAXIMUM
 
 	sleep(6)
@@ -102,7 +102,7 @@
 
 	if(new_xeno)
 		new_xeno.SetParalyzed(0)
-		new_xeno.notransform = FALSE
+		new_xeno.mob_transforming = FALSE
 		new_xeno.invisibility = 0
 
 	var/mob/living/carbon/old_owner = owner
