@@ -31,4 +31,5 @@
 
 /datum/antagonist/abductee/remove_innate_effects(mob/living/mob_override)
 	update_abductor_icons_removed(mob_override ? mob_override.mind : owner)
-	qdel(brain_trauma)
+	if(!QDELETED(brain_trauma))
+		qdel(brain_trauma)

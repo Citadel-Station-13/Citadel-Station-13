@@ -14,6 +14,8 @@ Assistant
 	minimal_access = list()	//See /datum/job/assistant/get_access()
 	outfit = /datum/outfit/job/assistant
 	antag_rep = 7
+	paycheck = PAYCHECK_ASSISTANT // Get a job. Job reassignment changes your paycheck now. Get over it.
+	paycheck_department = ACCOUNT_CIV
 	display_order = JOB_DISPLAY_ORDER_ASSISTANT
 	dresscodecompliant = FALSE
 	threat = 0.2
@@ -33,12 +35,9 @@ Assistant
 	..()
 	var/suited = !preference_source || preference_source.prefs.jumpsuit_style == PREF_SUIT
 	if (CONFIG_GET(flag/grey_assistants))
-		if(suited)
-			uniform = /obj/item/clothing/under/color/grey
-		else
-			uniform = /obj/item/clothing/under/color/jumpskirt/grey
+		uniform = suited ? /obj/item/clothing/under/color/grey : /obj/item/clothing/under/color/jumpskirt/grey
 	else
-		if(suited)
-			uniform = /obj/item/clothing/under/color/random
+		if(SSevents.holidays && SSevents.holidays[PRIDE_MONTH])
+			uniform = suited ? /obj/item/clothing/under/color/rainbow : /obj/item/clothing/under/color/jumpskirt/rainbow
 		else
-			uniform = /obj/item/clothing/under/color/jumpskirt/random
+			uniform = suited ? /obj/item/clothing/under/color/random : /obj/item/clothing/under/color/jumpskirt/random

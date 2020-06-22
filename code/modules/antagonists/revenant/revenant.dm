@@ -27,19 +27,24 @@
 	sight = SEE_SELF
 	throwforce = 0
 	blood_volume = 0
+	has_field_of_vision = FALSE //we are a spoopy ghost
 
 	see_in_dark = 8
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
-	response_help   = "passes through"
-	response_disarm = "swings through"
-	response_harm   = "punches through"
+	response_help_continuous = "passes through"
+	response_help_simple = "pass through"
+	response_disarm_continuous = "swings through"
+	response_disarm_simple = "swing through"
+	response_harm_continuous = "punches through"
+	response_harm_simple = "punch through"
 	unsuitable_atmos_damage = 0
 	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 0, CLONE = 0, STAMINA = 0, OXY = 0) //I don't know how you'd apply those, but revenants no-sell them anyway.
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 0
 	maxbodytemp = INFINITY
 	harm_intent_damage = 0
-	friendly = "touches"
+	friendly_verb_continuous = "touches"
+	friendly_verb_simple = "touch"
 	status_flags = 0
 	wander = FALSE
 	density = FALSE
@@ -102,7 +107,9 @@
 		mind.add_antag_datum(/datum/antagonist/revenant)
 
 //Life, Stat, Hud Updates, and Say
-/mob/living/simple_animal/revenant/Life()
+/mob/living/simple_animal/revenant/BiologicalLife(seconds, times_fired)
+	if(!(. = ..()))
+		return
 	if(stasis)
 		return
 	if(revealed && essence <= 0)
@@ -115,14 +122,13 @@
 		to_chat(src, "<span class='revenboldnotice'>You are once more concealed.</span>")
 	if(unstun_time && world.time >= unstun_time)
 		unstun_time = 0
-		notransform = FALSE
+		mob_transforming = FALSE
 		to_chat(src, "<span class='revenboldnotice'>You can move again!</span>")
 	if(essence_regenerating && !inhibited && essence < essence_regen_cap) //While inhibited, essence will not regenerate
 		essence = min(essence_regen_cap, essence+essence_regen_amount)
 		update_action_buttons_icon() //because we update something required by our spells in life, we need to update our buttons
 	update_spooky_icon()
 	update_health_hud()
-	..()
 
 /mob/living/simple_animal/revenant/Stat()
 	..()
@@ -213,7 +219,7 @@
 		return 0
 	stasis = TRUE
 	to_chat(src, "<span class='revendanger'>NO! No... it's too late, you can feel your essence [pick("breaking apart", "drifting away")]...</span>")
-	notransform = TRUE
+	mob_transforming = TRUE
 	revealed = TRUE
 	invisibility = 0
 	playsound(src, 'sound/effects/screech.ogg', 100, 1)
@@ -255,7 +261,7 @@
 		return
 	if(time <= 0)
 		return
-	notransform = TRUE
+	mob_transforming = TRUE
 	if(!unstun_time)
 		to_chat(src, "<span class='revendanger'>You cannot move!</span>")
 		unstun_time = world.time + time
@@ -266,7 +272,7 @@
 
 /mob/living/simple_animal/revenant/proc/update_spooky_icon()
 	if(revealed)
-		if(notransform)
+		if(mob_transforming)
 			if(draining)
 				icon_state = icon_drain
 			else
@@ -315,7 +321,7 @@
 /mob/living/simple_animal/revenant/proc/death_reset()
 	revealed = FALSE
 	unreveal_time = 0
-	notransform = 0
+	mob_transforming = 0
 	unstun_time = 0
 	inhibited = FALSE
 	draining = FALSE

@@ -30,9 +30,12 @@
 	turns_per_move = 5
 	see_in_dark = 10
 	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab/spider = 2, /obj/item/reagent_containers/food/snacks/spiderleg = 8)
-	response_help  = "pets"
-	response_disarm = "gently pushes aside"
-	response_harm   = "hits"
+	response_help_continuous = "pets"
+	response_help_simple = "pet"
+	response_disarm_continuous = "gently pushes aside"
+	response_disarm_simple = "gently push aside"
+	response_harm_continuous = "kicks"
+	response_harm_simple = "kick"
 	maxHealth = 200
 	health = 200
 	obj_damage = 60
@@ -43,17 +46,18 @@
 	pass_flags = PASSTABLE
 	move_to_delay = 6
 	ventcrawler = VENTCRAWLER_ALWAYS
-	attacktext = "bites"
+	attack_verb_continuous = "bites"
+	attack_verb_simple = "bite"
 	attack_sound = 'sound/weapons/bite.ogg'
 	unique_name = 1
 	gold_core_spawnable = HOSTILE_SPAWN
 	see_in_dark = 4
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
+	footstep_type = FOOTSTEP_MOB_CLAW
+	has_field_of_vision = FALSE // 360° vision.
 	var/playable_spider = FALSE
 	var/datum/action/innate/spider/lay_web/lay_web
 	var/directive = "" //Message passed down to children, to relay the creator's orders
-
-	do_footstep = TRUE
 
 /mob/living/simple_animal/hostile/poison/giant_spider/Initialize()
 	. = ..()
@@ -186,10 +190,10 @@
 	. = ..()
 	if(slowed_by_webs)
 		if(!(locate(/obj/structure/spider/stickyweb) in loc))
-			remove_movespeed_modifier(MOVESPEED_ID_TARANTULA_WEB)
+			remove_movespeed_modifier(/datum/movespeed_modifier/tarantula_web)
 			slowed_by_webs = FALSE
 	else if(locate(/obj/structure/spider/stickyweb) in loc)
-		add_movespeed_modifier(MOVESPEED_ID_TARANTULA_WEB, priority=100, multiplicative_slowdown=3)
+		add_movespeed_modifier(/datum/movespeed_modifier/tarantula_web)
 		slowed_by_webs = TRUE
 
 //midwives are the queen of the spiders, can send messages to all them and web faster. That rare round where you get a queen spider and turn your 'for honor' players into 'r6siege' players will be a fun one.
@@ -400,10 +404,9 @@
 	action.button_icon_state = "wrap_[active]"
 	action.UpdateButtonIcon()
 
-/obj/effect/proc_holder/wrap/Click()
-	if(!istype(usr, /mob/living/simple_animal/hostile/poison/giant_spider/nurse))
+/obj/effect/proc_holder/wrap/Trigger(mob/living/simple_animal/hostile/poison/giant_spider/nurse/user)
+	if(!istype(user))
 		return TRUE
-	var/mob/living/simple_animal/hostile/poison/giant_spider/nurse/user = usr
 	activate(user)
 	return TRUE
 
@@ -444,7 +447,7 @@
 	check_flags = AB_CHECK_CONSCIOUS
 	button_icon_state = "lay_eggs"
 
-/datum/action/innate/spider/lay_eggs/IsAvailable()
+/datum/action/innate/spider/lay_eggs/IsAvailable(silent = FALSE)
 	if(..())
 		if(!istype(owner, /mob/living/simple_animal/hostile/poison/giant_spider/nurse))
 			return 0
@@ -508,7 +511,7 @@
 	desc = "Send a command to all living spiders."
 	button_icon_state = "command"
 
-/datum/action/innate/spider/comm/IsAvailable()
+/datum/action/innate/spider/comm/IsAvailable(silent = FALSE)
 	if(!istype(owner, /mob/living/simple_animal/hostile/poison/giant_spider/nurse/midwife))
 		return FALSE
 	return TRUE

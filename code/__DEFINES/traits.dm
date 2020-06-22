@@ -67,6 +67,8 @@
 #define TRAIT_BLIND 			"blind"
 #define TRAIT_MUTE				"mute"
 #define TRAIT_EMOTEMUTE			"emotemute"
+#define TRAIT_LOOC_MUTE			"looc_mute" //Just like unconsciousness, it disables LOOC salt.
+#define TRAIT_AOOC_MUTE			"aooc_mute" //Same as above but for AOOC.
 #define TRAIT_DEAF				"deaf"
 #define TRAIT_NEARSIGHT			"nearsighted"
 #define TRAIT_FAT				"fat"
@@ -78,6 +80,7 @@
 #define TRAIT_MONKEYLIKE		"monkeylike" //sets IsAdvancedToolUser to FALSE
 #define TRAIT_PACIFISM			"pacifism"
 #define TRAIT_IGNORESLOWDOWN	"ignoreslow"
+#define TRAIT_IGNOREDAMAGESLOWDOWN "ignoredamageslowdown"
 #define TRAIT_DEATHCOMA			"deathcoma" //Causes death-like unconsciousness
 #define TRAIT_FAKEDEATH			"fakedeath" //Makes the owner appear as dead to most forms of medical examination
 #define TRAIT_DISFIGURED		"disfigured"
@@ -87,6 +90,7 @@
 #define TRAIT_SLEEPIMMUNE		"sleep_immunity"
 #define TRAIT_PUSHIMMUNE		"push_immunity"
 #define TRAIT_SHOCKIMMUNE		"shock_immunity"
+#define TRAIT_TESLA_SHOCKIMMUNE	"tesla_shock_immunity"
 #define TRAIT_STABLEHEART		"stable_heart"
 #define TRAIT_STABLELIVER		"stable_liver"
 #define TRAIT_RESISTHEAT		"resist_heat"
@@ -133,6 +137,7 @@
 #define TRAIT_LAW_ENFORCEMENT_METABOLISM "law-enforcement-metabolism"
 #define TRAIT_QUICK_CARRY		"quick-carry"
 #define TRAIT_QUICKER_CARRY		"quicker-carry"
+#define TRAIT_QUICK_BUILD		"quick-build"
 #define TRAIT_STRONG_GRABBER	"strong_grabber"
 #define TRAIT_CALCIUM_HEALER	"calcium_healer"
 #define TRAIT_MAGIC_CHOKE		"magic_choke"
@@ -145,8 +150,53 @@
 #define TRAIT_NORUNNING			"norunning"		// You walk!
 #define TRAIT_NOMARROW			"nomarrow"		// You don't make blood, with chemicals or nanites.
 #define TRAIT_NOPULSE			"nopulse"		// Your heart doesn't beat.
+#define TRAIT_NOGUT				"nogutting"		//Your chest cant be gutted of organs
+#define TRAIT_NODECAP			"nodecapping"	//Your head cant be cut off in combat
 #define TRAIT_EXEMPT_HEALTH_EVENTS	"exempt-health-events"
 #define TRAIT_NO_MIDROUND_ANTAG	"no-midround-antag" //can't be turned into an antag by random events
+#define TRAIT_PUGILIST	"pugilist" //This guy punches people for a living
+#define TRAIT_KI_VAMPIRE	"ki-vampire" //when someone with this trait rolls maximum damage on a punch and stuns the target, they regain some stamina and do clone damage
+#define TRAIT_PASSTABLE			"passtable"
+#define TRAIT_GIANT				"giant"
+#define TRAIT_DWARF				"dwarf"
+#define TRAIT_ALCOHOL_TOLERANCE	"alcohol_tolerance"
+#define TRAIT_AGEUSIA			"ageusia"
+#define TRAIT_HEAVY_SLEEPER		"heavy_sleeper"
+#define TRAIT_NIGHT_VISION		"night_vision"
+#define TRAIT_LIGHT_STEP		"light_step"
+#define TRAIT_SILENT_STEP		"silent_step"
+#define TRAIT_SPEEDY_STEP		"speedy_step"
+#define TRAIT_SPIRITUAL			"spiritual"
+#define TRAIT_VORACIOUS			"voracious"
+#define TRAIT_SELF_AWARE		"self_aware"
+#define TRAIT_FREERUNNING		"freerunning"
+#define TRAIT_SKITTISH			"skittish"
+#define TRAIT_POOR_AIM			"poor_aim"
+#define TRAIT_PROSOPAGNOSIA		"prosopagnosia"
+#define TRAIT_DRUNK_HEALING		"drunk_healing"
+#define TRAIT_TAGGER			"tagger"
+#define TRAIT_PHOTOGRAPHER		"photographer"
+#define TRAIT_MUSICIAN			"musician"
+#define TRAIT_PERMABONER		"permanent_arousal"
+#define TRAIT_NEVERBONER		"never_aroused"
+#define TRAIT_MASO              "masochism"
+#define	TRAIT_HIGH_BLOOD        "high_blood"
+#define TRAIT_PARA              "paraplegic"
+#define TRAIT_EMPATH			"empath"
+#define TRAIT_FRIENDLY			"friendly"
+#define TRAIT_SNOB				"snob"
+#define TRAIT_CULT_EYES 		"cult_eyes"
+#define TRAIT_AUTO_CATCH_ITEM	"auto_catch_item"
+#define TRAIT_CLOWN_MENTALITY	"clown_mentality" // The future is now, clownman.
+#define TRAIT_FREESPRINT		"free_sprinting"
+#define TRAIT_XRAY_VISION       "xray_vision"
+#define TRAIT_THERMAL_VISION    "thermal_vision"
+#define TRAIT_NO_TELEPORT		"no-teleport" //you just can't
+#define TRAIT_NO_INTERNALS		"no-internals"
+#define TRAIT_NO_ALCOHOL		"alcohol_intolerance"
+#define TRAIT_MUTATION_STASIS			"mutation_stasis" //Prevents processed genetics mutations from processing.
+#define TRAIT_FAST_PUMP				"fast_pump"
+#define TRAIT_NICE_SHOT			"nice_shot" //hnnnnnnnggggg..... you're pretty good....
 
 // mobility flag traits
 // IN THE FUTURE, IT WOULD BE NICE TO DO SOMETHING SIMILAR TO https://github.com/tgstation/tgstation/pull/48923/files (ofcourse not nearly the same because I have my.. thoughts on it)
@@ -173,46 +223,12 @@
 
  //non-mob traits
 #define TRAIT_PARALYSIS			"paralysis" //Used for limb-based paralysis, where replacing the limb will fix it
+#define VEHICLE_TRAIT "vehicle" // inherited from riding vehicles
+#define INNATE_TRAIT "innate"
+
 
 // item traits
 #define TRAIT_NODROP            "nodrop"
-
-#define TRAIT_ALCOHOL_TOLERANCE	"alcohol_tolerance"
-#define TRAIT_AGEUSIA			"ageusia"
-#define TRAIT_HEAVY_SLEEPER		"heavy_sleeper"
-#define TRAIT_NIGHT_VISION		"night_vision"
-#define TRAIT_LIGHT_STEP		"light_step"
-#define TRAIT_SILENT_STEP		"silent_step"
-#define TRAIT_SPEEDY_STEP		"speedy_step"
-#define TRAIT_SPIRITUAL			"spiritual"
-#define TRAIT_VORACIOUS			"voracious"
-#define TRAIT_SELF_AWARE		"self_aware"
-#define TRAIT_FREERUNNING		"freerunning"
-#define TRAIT_SKITTISH			"skittish"
-#define TRAIT_POOR_AIM			"poor_aim"
-#define TRAIT_PROSOPAGNOSIA		"prosopagnosia"
-#define TRAIT_DRUNK_HEALING		"drunk_healing"
-#define TRAIT_TAGGER			"tagger"
-#define TRAIT_PHOTOGRAPHER		"photographer"
-#define TRAIT_MUSICIAN			"musician"
-#define TRAIT_PERMABONER		"permanent_arousal"
-#define TRAIT_NEVERBONER		"never_aroused"
-#define TRAIT_NYMPHO			"nymphomania"
-#define TRAIT_MASO              "masochism"
-#define	TRAIT_HIGH_BLOOD        "high_blood"
-#define TRAIT_PARA              "paraplegic"
-#define TRAIT_EMPATH			"empath"
-#define TRAIT_FRIENDLY			"friendly"
-#define TRAIT_CULT_EYES 		"cult_eyes"
-#define TRAIT_AUTO_CATCH_ITEM	"auto_catch_item"
-#define TRAIT_CLOWN_MENTALITY	"clown_mentality" // The future is now, clownman.
-#define TRAIT_FREESPRINT		"free_sprinting"
-#define TRAIT_XRAY_VISION       "xray_vision"
-#define TRAIT_THERMAL_VISION    "thermal_vision"
-#define TRAIT_NO_TELEPORT		"no-teleport" //you just can't
-#define TRAIT_NO_INTERNALS		"no-internals"
-#define TRAIT_NO_ALCOHOL		"alcohol_intolerance"
-#define TRAIT_MUTATION_STASIS			"mutation_stasis" //Prevents processed genetics mutations from processing.
 
 // common trait sources
 #define TRAIT_GENERIC "generic"
@@ -236,11 +252,12 @@
 #define GHOSTROLE_TRAIT "ghostrole"
 #define APHRO_TRAIT "aphro"
 #define BLOODSUCKER_TRAIT "bloodsucker"
-#define CLOTHING_TRAIT "clothing" //used for quirky carrygloves
 #define SHOES_TRAIT "shoes" //inherited from your sweet kicks
+#define GLOVE_TRAIT "glove" //inherited by your cool gloves
+#define BOOK_TRAIT "granter (book)" // knowledge is power
 
 // unique trait sources, still defines
-#define STATUE_MUTE "statue"
+#define STATUE_TRAIT "statue"
 #define CLONING_POD_TRAIT "cloning-pod"
 #define VIRTUAL_REALITY_TRAIT "vr_trait"
 #define CHANGELING_DRAIN "drain"
@@ -271,6 +288,7 @@
 #define LOCKED_HELMET_TRAIT "locked-helmet"
 #define NINJA_SUIT_TRAIT "ninja-suit"
 #define ANTI_DROP_IMPLANT_TRAIT "anti-drop-implant"
+#define MARTIAL_ARTIST_TRAIT "martial_artist"
 #define SLEEPING_CARP_TRAIT "sleeping_carp"
 #define RISING_BASS_TRAIT "rising_bass"
 #define ABDUCTOR_ANTAGONIST "abductor-antagonist"
@@ -280,3 +298,8 @@
 #define CLOWNOP_TRAIT "clown-op"
 #define MEGAFAUNA_TRAIT "megafauna"
 #define DEATHSQUAD_TRAIT "deathsquad"
+/// This trait is added by the active directional block system.
+#define ACTIVE_BLOCK_TRAIT				"active_block"
+/// This trait is added by the parry system.
+#define ACTIVE_PARRY_TRAIT				"active_parry"
+#define STICKY_NODROP "sticky-nodrop" //sticky nodrop sounds like a bad soundcloud rapper's name

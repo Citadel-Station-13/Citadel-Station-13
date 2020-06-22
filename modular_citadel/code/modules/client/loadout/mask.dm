@@ -12,5 +12,5 @@
 	name = "Joy mask"
 	category = SLOT_WEAR_MASK
 	path = /obj/item/clothing/mask/joy
-	cost = 9
-	
+	cost = 3
+

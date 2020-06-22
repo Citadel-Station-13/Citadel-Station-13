@@ -9,6 +9,9 @@
 #define TEXT_EAST			"[EAST]"
 #define TEXT_WEST			"[WEST]"
 
+/// world.icon_size
+#define PIXELS 32
+
 //These get to go at the top, because they're special
 //You can use these defines to get the typepath of the currently running proc/verb (yes procs + verbs are objects)
 /* eg:
@@ -27,14 +30,15 @@ Will print: "/mob/living/carbon/human/death" (you can optionally embed it in a s
 
 //Human Overlays Indexes/////////
 //LOTS OF CIT CHANGES HERE. BE CAREFUL WHEN UPSTREAM ADDS MORE LAYERS
-#define MUTATIONS_LAYER			32		//mutations. Tk headglows, cold resistance glow, etc
-#define GENITALS_BEHIND_LAYER	31		//Some genitalia needs to be behind everything, such as with taurs (Taurs use body_behind_layer
-#define BODY_BEHIND_LAYER		30		//certain mutantrace features (tail when looking south) that must appear behind the body parts
-#define BODYPARTS_LAYER			29		//Initially "AUGMENTS", this was repurposed to be a catch-all bodyparts flag
-#define MARKING_LAYER			28		//Matrixed body markings because clashing with snouts?
-#define BODY_ADJ_LAYER			27		//certain mutantrace features (snout, body markings) that must appear above the body parts
-#define GENITALS_FRONT_LAYER	26		//Draws some genitalia above clothes and the TAUR body if need be.
-#define BODY_LAYER				25		//underwear, undershirts, socks, eyes, lips(makeup)
+#define MUTATIONS_LAYER			33		//mutations. Tk headglows, cold resistance glow, etc
+#define GENITALS_BEHIND_LAYER	32		//Some genitalia needs to be behind everything, such as with taurs (Taurs use body_behind_layer
+#define BODY_BEHIND_LAYER		31		//certain mutantrace features (tail when looking south) that must appear behind the body parts
+#define BODYPARTS_LAYER			30		//Initially "AUGMENTS", this was repurposed to be a catch-all bodyparts flag
+#define MARKING_LAYER			29		//Matrixed body markings because clashing with snouts?
+#define BODY_ADJ_LAYER			28		//certain mutantrace features (snout, body markings) that must appear above the body parts
+#define GENITALS_FRONT_LAYER	27		//Draws some genitalia above clothes and the TAUR body if need be.
+#define BODY_LAYER				26		//underwear, undershirts, socks, eyes, lips(makeup)
+#define BODY_ADJ_UPPER_LAYER	25
 #define FRONT_MUTATIONS_LAYER	24		//mutations that should appear above body, body_adj and bodyparts layer (e.g. laser eyes)
 #define DAMAGE_LAYER			23		//damage indicators (cuts and burns)
 #define UNIFORM_LAYER			22
@@ -43,15 +47,15 @@ Will print: "/mob/living/carbon/human/death" (you can optionally embed it in a s
 #define SHOES_LAYER				19
 #define GLOVES_LAYER			18
 #define EARS_LAYER				17
-#define BODY_TAUR_LAYER			16
-#define SUIT_LAYER				15
-#define GENITALS_EXPOSED_LAYER	14
-#define GLASSES_LAYER			13
-#define BELT_LAYER				12		//Possible make this an overlay of somethign required to wear a belt?
-#define SUIT_STORE_LAYER		11
-#define NECK_LAYER				10
-#define BACK_LAYER				9
-#define HAIR_LAYER				8		//TODO: make part of head layer?
+#define SUIT_LAYER				16
+#define GENITALS_EXPOSED_LAYER	15
+#define GLASSES_LAYER			14
+#define BELT_LAYER				13		//Possible make this an overlay of somethign required to wear a belt?
+#define SUIT_STORE_LAYER		12
+#define NECK_LAYER				11
+#define BACK_LAYER				10
+#define HAIR_LAYER				9		//TODO: make part of head layer?
+#define HORNS_LAYER				8
 #define FACEMASK_LAYER			7
 #define HEAD_LAYER				6
 #define HANDCUFF_LAYER			5
@@ -59,7 +63,7 @@ Will print: "/mob/living/carbon/human/death" (you can optionally embed it in a s
 #define HANDS_LAYER				3
 #define BODY_FRONT_LAYER		2
 #define FIRE_LAYER				1		//If you're on fire
-#define TOTAL_LAYERS			32		//KEEP THIS UP-TO-DATE OR SHIT WILL BREAK ;_;
+#define TOTAL_LAYERS			33		//KEEP THIS UP-TO-DATE OR SHIT WILL BREAK ;_;
 
 //Human Overlay Index Shortcuts for alternate_worn_layer, layers
 //Because I *KNOW* somebody will think layer+1 means "above"
@@ -70,14 +74,6 @@ Will print: "/mob/living/carbon/human/death" (you can optionally embed it in a s
 //AND -1 MEANS "ABOVE", OK?, OK!?!
 #define ABOVE_SHOES_LAYER			(SHOES_LAYER-1)
 #define ABOVE_BODY_FRONT_LAYER		(BODY_FRONT_LAYER-1)
-
-
-//Security levels
-#define SEC_LEVEL_GREEN	0
-#define SEC_LEVEL_BLUE	1
-#define SEC_LEVEL_AMBER 2
-#define SEC_LEVEL_RED	3
-#define SEC_LEVEL_DELTA	4
 
 //some arbitrary defines to be used by self-pruning global lists. (see master_controller)
 #define PROCESS_KILL 26	//Used to trigger removal from a processing list
@@ -465,13 +461,13 @@ GLOBAL_LIST_INIT(pda_reskins, list(PDA_SKIN_CLASSIC = 'icons/obj/pda.dmi', PDA_S
 #define EGG_LAYING_MESSAGES list("lays an egg.","squats down and croons.","begins making a huge racket.","begins clucking raucously.")
 
 // list of all null rod weapons
-#define HOLY_WEAPONS /obj/item/nullrod, /obj/item/twohanded/dualsaber/hypereutactic/chaplain, /obj/item/gun/energy/laser/redtag/hitscan/chaplain, /obj/item/multitool/chaplain, /obj/item/melee/baseball_bat/chaplain
+#define HOLY_WEAPONS /obj/item/nullrod, /obj/item/twohanded/dualsaber/hypereutactic/chaplain, /obj/item/gun/energy/laser/redtag/hitscan/chaplain, /obj/item/multitool/chaplain, /obj/item/clothing/gloves/fingerless/pugilist/chaplain, /obj/item/melee/baseball_bat/chaplain
 
 // Used by PDA and cartridge code to reduce repetitiveness of spritesheets
 #define PDAIMG(what) {"<span class="pda16x16 [#what]"></span>"}
 
 //Filters
-#define AMBIENT_OCCLUSION list("type"="drop_shadow","x"=0,"y"=-2,"size"=4,"color"="#04080FAA")
+#define AMBIENT_OCCLUSION(_size, _color) list("type"="drop_shadow","x"=0,"y"=-2,"size"=_size,"color"=_color)
 #define EYE_BLUR(size) list("type"="blur", "size"=size)
 #define GRAVITY_MOTION_BLUR list("type"="motion_blur","x"=0,"y"=0)
 
@@ -523,3 +519,17 @@ GLOBAL_LIST_INIT(pda_reskins, list(PDA_SKIN_CLASSIC = 'icons/obj/pda.dmi', PDA_S
 #define NIGHTSHIFT_AREA_NONE				4		//default/highest.
 
 #define UNTIL(X) while(!(X)) stoplag()
+
+
+//Scavenging element defines for special loot "events".
+#define SCAVENGING_FOUND_NOTHING	"found_nothing"
+#define SCAVENGING_SPAWN_MOUSE		"spawn_mouse"
+#define SCAVENGING_SPAWN_MICE		"spawn_mice"
+#define SCAVENGING_SPAWN_TOM		"spawn_tom_the_mouse"
+
+//Scavenging element defines for ckey/mind restrictions.
+#define NO_LOOT_RESTRICTION			0
+#define LOOT_RESTRICTION_MIND		1
+#define LOOT_RESTRICTION_CKEY		2
+#define LOOT_RESTRICTION_MIND_PILE	3 //limited to the current pile.
+#define LOOT_RESTRICTION_CKEY_PILE	4 //Idem

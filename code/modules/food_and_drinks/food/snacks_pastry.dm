@@ -144,6 +144,15 @@
 	is_decorated = TRUE
 	filling_color = "#879630"
 
+/obj/item/reagent_containers/food/snacks/donut/laugh
+	name = "sweet pea donut"
+	desc = "Goes great with a glass of Bastion Burbon!"
+	icon_state = "donut_laugh"
+	bonus_reagents = list(/datum/reagent/consumable/laughter = 3)
+	tastes = list("donut" = 3, "fizzy tutti frutti" = 1,)
+	is_decorated = TRUE
+	filling_color = "#803280"
+
 //////////////////////JELLY DONUTS/////////////////////////
 
 /obj/item/reagent_containers/food/snacks/donut/jelly
@@ -234,6 +243,15 @@
 	is_decorated = TRUE
 	filling_color = "#879630"
 
+/obj/item/reagent_containers/food/snacks/donut/jelly/laugh
+	name = "sweet pea jelly donut"
+	desc = "Goes great with a glass of Bastion Burbon!"
+	icon_state = "jelly_laugh"
+	bonus_reagents = list(/datum/reagent/consumable/laughter = 3)
+	tastes = list("jelly" = 3, "donut" = 1, "fizzy tutti frutti" = 1)
+	is_decorated = TRUE
+	filling_color = "#803280"
+
 //////////////////////////SLIME DONUTS/////////////////////////
 
 /obj/item/reagent_containers/food/snacks/donut/jelly/slimejelly
@@ -314,6 +332,15 @@
 	tastes = list("jelly" = 1, "donut" = 3, "matcha" = 1)
 	is_decorated = TRUE
 	filling_color = "#879630"
+
+/obj/item/reagent_containers/food/snacks/donut/jelly/slimejelly/laugh
+	name = "sweet pea jelly donut"
+	desc = "Goes great with a glass of Bastion Burbon!"
+	icon_state = "jelly_laugh"
+	bonus_reagents = list(/datum/reagent/consumable/laughter = 3)
+	tastes = list("jelly" = 3, "donut" = 1, "fizzy tutti frutti" = 1)
+	is_decorated = TRUE
+	filling_color = "#803280"
 
 /obj/item/reagent_containers/food/snacks/donut/glaze
 	name = "glazed donut"
@@ -440,6 +467,40 @@
 	filling_color = "#CD853F"
 	tastes = list("meat" = 2, "dough" = 2, "laziness" = 1)
 	foodtype = GRAIN
+	var/list/cached_reagents_amount
+	var/previous_typepath
+
+/obj/item/reagent_containers/food/snacks/donkpocket/Initialize(mapload)
+	. = ..()
+	if(!cooked_type) //maploaded cooked donk pockets won't cool down anyway.
+		desc += " This one will stay warm for a long time, great."
+
+/obj/item/reagent_containers/food/snacks/donkpocket/initialize_cooked_food(obj/item/reagent_containers/food/snacks/donkpocket/S, cooking_efficiency = 1)
+	. = ..()
+	if(istype(S))
+		S.desc = initial(S.desc) //reset the desc since will now cool down.
+		for(var/R in S.bonus_reagents)
+			LAZYSET(S.cached_reagents_amount, R, S.reagents.get_reagent_amount(R))
+		S.previous_typepath = type
+		addtimer(CALLBACK(S, .proc/cool_down), 7 MINUTES) //canonically they reverted back to normal after 7 minutes.
+
+/obj/item/reagent_containers/food/snacks/donkpocket/proc/cool_down()
+	if(!previous_typepath) //This shouldn't happen.
+		qdel(src)
+		return
+	var/spoiled = FALSE
+	for(var/R in cached_reagents_amount)
+		var/amount = cached_reagents_amount[R]
+		if(reagents.get_reagent_amount(R) < amount)
+			spoiled = TRUE
+		reagents.remove_reagent(R, amount) //no reagent duping please.
+	var/obj/item/reagent_containers/food/snacks/donkpocket/D = new previous_typepath(drop_location())
+	D.create_reagents(D.volume, reagent_flags, reagent_value)
+	reagents.trans_to(D, reagents.total_volume)
+	if(spoiled)
+		D.cooked_type = null
+		D.desc += " This one has gone cold and mushy, pretty unsuitable for cooking."
+	qdel(src)
 
 /obj/item/reagent_containers/food/snacks/donkpocket/warm
 	name = "warm Donk-pocket"

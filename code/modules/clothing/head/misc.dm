@@ -129,6 +129,7 @@
 	dog_fashion = /datum/dog_fashion/head/pirate
 
 /obj/item/clothing/head/pirate/captain
+	name = "pirate captain hat"
 	icon_state = "hgpiratecap"
 	item_state = "hgpiratecap"
 
@@ -372,15 +373,7 @@
 	name = "Telegram cap"
 	desc = "A bright red cap warn by hotel staff. Or people who want to be a singing telegram"
 	icon_state = "telegram"
-	item_color = "telegram"
 	dog_fashion = /datum/dog_fashion/head/telegram
-
-/obj/item/clothing/head/colour
-	name = "Singer cap"
-	desc = "A light white hat that has bands of color. Just makes you want to sing and dance!"
-	icon_state = "colour"
-	item_color = "colour"
-	dog_fashion = /datum/dog_fashion/head/colour
 
 /obj/item/clothing/head/christmashat
 	name = "red santa hat"
@@ -435,3 +428,12 @@
 	desc = "A symbol of discipline, honor, and lots and lots of removal of some type of skewered food."
 	icon_state = "russobluecamohat"
 	item_state = "russobluecamohat"
+	dynamic_hair_suffix = ""
+
+/obj/item/clothing/head/hunter
+	name = "bounty hunting hat"
+	desc = "Ain't nobody gonna cheat the hangman in my town."
+	icon_state = "hunter"
+	item_state = "hunter"
+	armor = list("melee" = 5, "bullet" = 5, "laser" = 5, "energy" = 15, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 0)
+	resistance_flags = FIRE_PROOF | ACID_PROOF

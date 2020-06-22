@@ -104,7 +104,7 @@ GLOBAL_VAR_INIT(cmp_field, "name")
 	var/a_sign = num2sign(initial(A.value) * -1)
 	var/b_sign = num2sign(initial(B.value) * -1)
 
-	// Neutral traits go last.
+	// Neutral traits go last
 	if(a_sign == 0)
 		a_sign = 2
 	if(b_sign == 0)
@@ -117,3 +117,6 @@ GLOBAL_VAR_INIT(cmp_field, "name")
 		return a_sign - b_sign
 	else
 		return sorttext(b_name, a_name)
+
+/proc/cmp_item_block_priority_asc(obj/item/A, obj/item/B)
+	return A.block_priority - B.block_priority

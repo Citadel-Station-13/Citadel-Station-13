@@ -106,7 +106,7 @@ It is possible to destroy the net by the occupant or someone else.
 	playsound(affecting, 'sound/effects/sparks2.ogg', 50, 1)
 	new /obj/effect/temp_visual/dir_setting/ninja/phase(affecting.drop_location(), affecting.dir)
 
-/obj/attack_alien(mob/living/carbon/alien/humanoid/user)
+/obj/structure/energy_net/attack_alien(mob/living/carbon/alien/humanoid/user)
 	if(attack_generic(user, 15, BRUTE, "melee", 0)) //Aliens normally deal 60 damage to structures. They'd one-shot nets without this.
 		playsound(src.loc, 'sound/weapons/slash.ogg', 100, 1)
 

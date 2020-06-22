@@ -132,7 +132,6 @@
 /obj/item/clothing/mask/cowmask
 	name = "Cow mask with a builtin voice modulator."
 	desc = "A rubber cow mask,"
-	icon = 'icons/mob/mask.dmi'
 	icon_state = "cowmask"
 	item_state = "cowmask"
 	clothing_flags = VOICEBOX_TOGGLABLE
@@ -352,30 +351,40 @@
 	resistance_flags = FLAMMABLE
 	max_integrity = 100
 	actions_types = list(/datum/action/item_action/adjust)
+	var/list/papermask_designs = list()
 
+
+/obj/item/clothing/mask/paper/Initialize(mapload)
+	.=..()
+	papermask_designs = list(
+		"Blank" = image(icon = src.icon, icon_state = "plainmask"),
+		"Neutral" = image(icon = src.icon, icon_state = "neutralmask"),
+		"Eyes" = image(icon = src.icon, icon_state = "eyemask"),
+		"Sleeping" = image(icon = src.icon, icon_state = "sleepingmask"),
+		"Heart" = image(icon = src.icon, icon_state = "heartmask"),
+		"Core" = image(icon = src.icon, icon_state = "coremask"),
+		"Plus" = image(icon = src.icon, icon_state = "plusmask"),
+		"Square" = image(icon = src.icon, icon_state = "squaremask"),
+		"Bullseye" = image(icon = src.icon, icon_state = "bullseyemask"),
+		"Vertical" = image(icon = src.icon, icon_state = "verticalmask"),
+		"Horizontal" = image(icon = src.icon, icon_state = "horizontalmask"),
+		"X" = image(icon = src.icon, icon_state = "xmask"),
+		"Bugeyes" = image(icon = src.icon, icon_state = "bugmask"),
+		"Double" = image(icon = src.icon, icon_state = "doublemask"),
+		"Mark" = image(icon = src.icon, icon_state = "markmask")
+		)
 
 /obj/item/clothing/mask/paper/ui_action_click(mob/user)
 	if(!istype(user) || user.incapacitated())
 		return
 
-	var/list/options = list()
-	options["Blank"] = "plainmask"
-	options["Neutral"] = "neutralmask"
-	options["Eyes"] = "eyemask"
-	options["Sleeping"] ="sleepingmask"
-	options["Heart"] = "heartmask"
-	options["Core"] = "coremask"
-	options["Plus"] = "plusmask"
-	options["Square"] ="squaremask"
-	options["Bullseye"] = "bullseyemask"
-	options["Vertical"] = "verticalmask"
-	options["Horizontal"] = "horizontalmask"
-	options["X"] ="xmask"
-	options["Bugeyes"] = "bugmask"
-	options["Double"] = "doublemask"
-	options["Mark"] = "markmask"
+	var/static/list/options = list("Blank" = "plainmask", "Neutral" = "neutralmask", "Eyes" = "eyemask",
+							"Sleeping" ="sleepingmask", "Heart" = "heartmask", "Core" = "coremask",
+							"Plus" = "plusmask", "Square" ="squaremask", "Bullseye" = "bullseyemask",
+							"Vertical" = "verticalmask", "Horizontal" = "horizontalmask", "X" ="xmask",
+							"Bugeyes" = "bugmask", "Double" = "doublemask", "Mark" = "markmask")
 
-	var/choice = input(user,"What symbol would you want on this mask?","Morph Mask") in options
+	var/choice = show_radial_menu(user,src, papermask_designs, custom_check = FALSE, radius = 36, require_near = TRUE)
 
 	if(src && choice && !user.incapacitated() && in_range(user,src))
 		icon_state = options[choice]

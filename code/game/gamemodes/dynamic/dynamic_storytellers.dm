@@ -11,6 +11,7 @@
 		WAROPS_ALWAYS_ALLOWED: Can always do warops, regardless of threat level.
 		USE_PREF_WEIGHTS: Will use peoples' preferences to change the threat centre.
 		FORCE_IF_WON: If this mode won the vote, forces it
+		USE_PREV_ROUND_WEIGHTS: Changes its threat centre based on the average chaos of previous rounds.
 	*/
 	var/flags = 0
 	var/dead_player_weight = 1 // How much dead players matter for threat calculation
@@ -21,11 +22,11 @@
 	var/datum/game_mode/dynamic/mode = null // Cached as soon as it's made, by dynamic.
 
 /**
-Property weights are: 
+Property weights are:
 "story_potential" -- essentially how many different ways the antag can be played.
 "trust" -- How much it makes the crew trust each other. Negative values means they're suspicious. Team antags are like this.
 "chaos" -- How chaotic it makes the round. Has some overlap with "valid" and somewhat contradicts "extended".
-"valid" -- How likely the non-antag-enemy crew are to get involved, e.g. nukies encouraging the warden to 
+"valid" -- How likely the non-antag-enemy crew are to get involved, e.g. nukies encouraging the warden to
            let everyone into the armory, wizard moving around and being a nuisance, nightmare busting lights.
 "extended" -- How much the antag is conducive to a long round. Nukies and cults are bad for this; Wizard is less bad; and so on.
 "conversion" -- Basically a bool. Conversion antags, well, convert. It's its own class for a good reason.
@@ -33,13 +34,13 @@ Property weights are:
 
 /datum/dynamic_storyteller/proc/start_injection_cooldowns()
 	var/latejoin_injection_cooldown_middle = 0.5*(GLOB.dynamic_first_latejoin_delay_max + GLOB.dynamic_first_latejoin_delay_min)
-	mode.latejoin_injection_cooldown = round(CLAMP(EXP_DISTRIBUTION(latejoin_injection_cooldown_middle), GLOB.dynamic_first_latejoin_delay_min, GLOB.dynamic_first_latejoin_delay_max)) + world.time
+	mode.latejoin_injection_cooldown = round(clamp(EXP_DISTRIBUTION(latejoin_injection_cooldown_middle), GLOB.dynamic_first_latejoin_delay_min, GLOB.dynamic_first_latejoin_delay_max)) + world.time
 
 	var/midround_injection_cooldown_middle = 0.5*(GLOB.dynamic_first_midround_delay_min + GLOB.dynamic_first_midround_delay_max)
-	mode.midround_injection_cooldown = round(CLAMP(EXP_DISTRIBUTION(midround_injection_cooldown_middle), GLOB.dynamic_first_midround_delay_min, GLOB.dynamic_first_midround_delay_max)) + world.time
-	
+	mode.midround_injection_cooldown = round(clamp(EXP_DISTRIBUTION(midround_injection_cooldown_middle), GLOB.dynamic_first_midround_delay_min, GLOB.dynamic_first_midround_delay_max)) + world.time
+
 	var/event_injection_cooldown_middle = 0.5*(GLOB.dynamic_event_delay_max + GLOB.dynamic_event_delay_min)
-	mode.event_injection_cooldown = (round(CLAMP(EXP_DISTRIBUTION(event_injection_cooldown_middle), GLOB.dynamic_event_delay_min, GLOB.dynamic_event_delay_max)) + world.time)
+	mode.event_injection_cooldown = (round(clamp(EXP_DISTRIBUTION(event_injection_cooldown_middle), GLOB.dynamic_event_delay_min, GLOB.dynamic_event_delay_max)) + world.time)
 
 /datum/dynamic_storyteller/proc/calculate_threat()
 	var/threat = 0
@@ -92,19 +93,21 @@ Property weights are:
 							mean += 5
 			if(voters)
 				GLOB.dynamic_curve_centre += (mean/voters)
+		if(flags & USE_PREV_ROUND_WEIGHTS)
+			GLOB.dynamic_curve_centre += (50 - SSpersistence.average_dynamic_threat) / 10
 		GLOB.dynamic_forced_threat_level = forced_threat_level
 
 /datum/dynamic_storyteller/proc/get_midround_cooldown()
 	var/midround_injection_cooldown_middle = 0.5*(GLOB.dynamic_midround_delay_max + GLOB.dynamic_midround_delay_min)
-	return round(CLAMP(EXP_DISTRIBUTION(midround_injection_cooldown_middle), GLOB.dynamic_midround_delay_min, GLOB.dynamic_midround_delay_max))
+	return round(clamp(EXP_DISTRIBUTION(midround_injection_cooldown_middle), GLOB.dynamic_midround_delay_min, GLOB.dynamic_midround_delay_max))
 
 /datum/dynamic_storyteller/proc/get_event_cooldown()
 	var/event_injection_cooldown_middle = 0.5*(GLOB.dynamic_event_delay_max + GLOB.dynamic_event_delay_min)
-	return round(CLAMP(EXP_DISTRIBUTION(event_injection_cooldown_middle), GLOB.dynamic_event_delay_min, GLOB.dynamic_event_delay_max))
+	return round(clamp(EXP_DISTRIBUTION(event_injection_cooldown_middle), GLOB.dynamic_event_delay_min, GLOB.dynamic_event_delay_max))
 
 /datum/dynamic_storyteller/proc/get_latejoin_cooldown()
 	var/latejoin_injection_cooldown_middle = 0.5*(GLOB.dynamic_latejoin_delay_max + GLOB.dynamic_latejoin_delay_min)
-	return round(CLAMP(EXP_DISTRIBUTION(latejoin_injection_cooldown_middle), GLOB.dynamic_latejoin_delay_min, GLOB.dynamic_latejoin_delay_max))
+	return round(clamp(EXP_DISTRIBUTION(latejoin_injection_cooldown_middle), GLOB.dynamic_latejoin_delay_min, GLOB.dynamic_latejoin_delay_max))
 
 /datum/dynamic_storyteller/proc/get_injection_chance(dry_run = FALSE)
 	if(mode.forced_injection)
@@ -112,7 +115,7 @@ Property weights are:
 		return 100
 	var/threat_perc = mode.threat/mode.threat_level
 
-	return round(max(0,100*(1-(threat_perc*threat_perc*threat_perc))))
+	return clamp(round(100*(1-(threat_perc*threat_perc))**2,1),0,100)
 
 /datum/dynamic_storyteller/proc/roundstart_draft()
 	var/list/drafted_rules = list()
@@ -141,7 +144,7 @@ Property weights are:
 			if(!(rule.flags & MINOR_RULESET)) // makes the traitor rulesets always possible anyway
 				var/cost_difference = abs(rule.cost-(mode.threat_level-mode.threat))
 				/*	Basically, the closer the cost is to the current threat-level-away-from-threat, the more likely it is to
-					pick this particular ruleset. 
+					pick this particular ruleset.
 					Let's use a toy example: there's 60 threat level and 10 threat spent.
 					We want to pick a ruleset that's close to that, so we run the below equation, on two rulesets.
 					Ruleset 1 has 30 cost, ruleset 2 has 5 cost.
@@ -149,7 +152,7 @@ Property weights are:
 					is 2.26 times as likely to be picked, all other things considered.
 					Of course, we don't want it to GUARANTEE the closest, that's no fun, so it's just a weight.
 				*/
-				threat_weight = 1-abs(1-LOGISTIC_FUNCTION(2,0.05,cost_difference,0))
+				threat_weight = abs(1-abs(1-LOGISTIC_FUNCTION(2,0.05,cost_difference,0)))
 			if (rule.ready())
 				var/property_weight = 0
 				for(var/property in property_weights)
@@ -206,10 +209,10 @@ Property weights are:
 	weight = 1
 	event_frequency_lower = 2 MINUTES
 	event_frequency_upper = 10 MINUTES
-	flags = WAROPS_ALWAYS_ALLOWED
-	min_players = 40
+	flags = WAROPS_ALWAYS_ALLOWED | FORCE_IF_WON
+	min_players = 30
 	var/refund_cooldown = 0
-	
+
 /datum/dynamic_storyteller/chaotic/do_process()
 	if(refund_cooldown < world.time)
 		mode.create_threat(20)
@@ -218,7 +221,7 @@ Property weights are:
 
 /datum/dynamic_storyteller/chaotic/get_midround_cooldown()
 	return ..() / 4
-	
+
 /datum/dynamic_storyteller/chaotic/get_latejoin_cooldown()
 	return ..() / 4
 
@@ -229,8 +232,8 @@ Property weights are:
 	curve_centre = 2
 	curve_width = 1.5
 	weight = 2
-	min_players = 30
-	flags = WAROPS_ALWAYS_ALLOWED
+	min_players = 20
+	flags = WAROPS_ALWAYS_ALLOWED | USE_PREV_ROUND_WEIGHTS
 	property_weights = list("valid" = 3, "trust" = 5)
 
 /datum/dynamic_storyteller/team/get_injection_chance(dry_run = FALSE)
@@ -267,9 +270,6 @@ Property weights are:
 
 /datum/dynamic_storyteller/random/get_injection_chance()
 	return 50 // i would do rand(0,100) but it's actually the same thing when you do the math
-
-/datum/dynamic_storyteller/random/calculate_threat()
-	return 0 // what IS threat
 
 /datum/dynamic_storyteller/random/roundstart_draft()
 	var/list/drafted_rules = list()
@@ -324,19 +324,20 @@ Property weights are:
 	desc = "Antags with options for loadouts and gimmicks. Traitor, wizard, nukies. Has a buildup-climax-falling action threat curve."
 	weight = 2
 	curve_width = 2
+	flags = USE_PREV_ROUND_WEIGHTS
 	property_weights = list("story_potential" = 2)
 
 
 /datum/dynamic_storyteller/story/calculate_threat()
 	var/current_time = (world.time / SSautotransfer.targettime)*180
 	mode.threat_level = round(mode.initial_threat_level*(sin(current_time)+0.25),0.1)
-	..()
+	return ..()
 
 /datum/dynamic_storyteller/classic
 	name = "Classic"
 	config_tag = "classic"
 	desc = "No special antagonist weights. Good variety, but not like random. Uses your chaos preference to weight."
-	flags = USE_PREF_WEIGHTS
+	flags = USE_PREF_WEIGHTS | USE_PREV_ROUND_WEIGHTS
 
 /datum/dynamic_storyteller/suspicion
 	name = "Intrigue"
@@ -345,6 +346,7 @@ Property weights are:
 	weight = 2
 	curve_width = 2
 	dead_player_weight = 2
+	flags = USE_PREV_ROUND_WEIGHTS
 	property_weights = list("trust" = -3)
 
 /datum/dynamic_storyteller/liteextended
@@ -356,7 +358,7 @@ Property weights are:
 	flags = NO_ASSASSIN | FORCE_IF_WON
 	weight = 1
 	dead_player_weight = 5
-	property_weights = list("extended" = 2, "chaos" = -1, "valid" = -1, "story_potential" = 1, "conversion" = -10)
+	property_weights = list("extended" = 2, "chaos" = -1, "valid" = -1, "conversion" = -10)
 
 /datum/dynamic_storyteller/no_antag
 	name = "Extended"

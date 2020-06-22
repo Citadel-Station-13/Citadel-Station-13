@@ -6,11 +6,14 @@ T-RAY
 HEALTH ANALYZER
 GAS ANALYZER
 SLIME SCANNER
+NANITE SCANNER
+GENETICS SCANNER
 
 */
 /obj/item/t_scanner
 	name = "\improper T-ray scanner"
 	desc = "A terahertz-ray emitter and scanner used to detect underfloor objects such as cables and pipes."
+	custom_price = PRICE_REALLY_CHEAP
 	icon = 'icons/obj/device.dmi'
 	icon_state = "t-ray0"
 	var/on = FALSE
@@ -275,10 +278,8 @@ SLIME SCANNER
 			//LIVER
 			else if(istype(O, /obj/item/organ/liver))
 				var/obj/item/organ/liver/L = O
-				if(H.undergoing_liver_failure() && H.stat != DEAD) //might be depreciated
+				if(L.organ_flags & ORGAN_FAILING && H.stat != DEAD) //might be depreciated
 					temp_message += "<span class='danger'>Subject is suffering from liver failure: Apply Corazone and begin a liver transplant immediately!</span>"
-				if(L.swelling > 20)
-					temp_message += " <span class='danger'>Subject is suffering from an enlarged liver.</span>" //i.e. shrink their liver or give them a transplant.
 
 			//HEART
 			else if(ishuman(M) && (istype(O, /obj/item/organ/heart)))
@@ -310,11 +311,11 @@ SLIME SCANNER
 			//GENERAL HANDLER
 			if(!damage_message)
 				if(O.organ_flags & ORGAN_FAILING)
-					damage_message += " <span class='alert'><b>End Stage [O.name] failure detected.</b></span>"
+					damage_message += " <span class='alert'><b>Chronic [O.name] failure detected.</b></span>"
 				else if(O.damage > O.high_threshold)
-					damage_message += " <span class='alert'>Chronic [O.name] failure detected.</span>"
+					damage_message += " <span class='alert'>Acute [O.name] failure detected.</span>"
 				else if(O.damage > O.low_threshold && advanced)
-					damage_message += " <font color='red'>Acute [O.name] failure detected.</span>"
+					damage_message += " <font color='red'>Minor [O.name] failure detected.</span>"
 
 			if(temp_message || damage_message)
 				msg += "\t<b><span class='info'>[uppertext(O.name)]:</b></span> [damage_message] [temp_message]\n"
@@ -654,9 +655,10 @@ SLIME SCANNER
 			amount += inaccurate
 	return DisplayTimeText(max(1,amount))
 
-/proc/atmosanalyzer_scan(mixture, mob/living/user, atom/target = src)
+/proc/atmosanalyzer_scan(mixture, mob/living/user, atom/target = src, visible = TRUE)
 	var/icon = target
-	user.visible_message("[user] has used the analyzer on [icon2html(icon, viewers(user))] [target].", "<span class='notice'>You use the analyzer on [icon2html(icon, user)] [target].</span>")
+	if(visible)
+		user.visible_message("[user] has used the analyzer on [icon2html(icon, viewers(user))] [target].", "<span class='notice'>You use the analyzer on [icon2html(icon, user)] [target].</span>")
 	to_chat(user, "<span class='boldnotice'>Results of analysis of [icon2html(icon, user)] [target].</span>")
 
 	var/list/airs = islist(mixture) ? mixture : list(mixture)

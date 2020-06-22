@@ -2,12 +2,11 @@
 	item_flags = NEEDS_PERMIT
 
 /obj/item/melee/proc/check_martial_counter(mob/living/carbon/human/target, mob/living/carbon/human/user)
-	if(target.check_block())
+	if(target.check_martial_melee_block())
 		target.visible_message("<span class='danger'>[target.name] blocks [src] and twists [user]'s arm behind [user.p_their()] back!</span>",
 					"<span class='userdanger'>You block the attack!</span>")
 		user.Stun(40)
 		return TRUE
-
 
 /obj/item/melee/chainofcommand
 	name = "chain of command"
@@ -62,22 +61,34 @@
 	force = 18
 	throwforce = 15
 	w_class = WEIGHT_CLASS_BULKY
-	block_chance = 50
 	armour_penetration = 75
 	sharpness = IS_SHARP
 	attack_verb = list("slashed", "cut")
 	hitsound = 'sound/weapons/rapierhit.ogg'
 	custom_materials = list(/datum/material/iron = 1000)
 	total_mass = 3.4
+	item_flags = NEEDS_PERMIT | ITEM_CAN_PARRY
+	block_parry_data = /datum/block_parry_data/captain_saber
+
+/datum/block_parry_data/captain_saber
+	parry_time_windup = 0.5
+	parry_time_active = 4
+	parry_time_spindown = 1
+	parry_time_perfect = 0.75
+	parry_time_perfect_leeway = 0.75
+	parry_imperfect_falloff_percent = 30
+	parry_efficiency_perfect = 100
+	parry_failed_stagger_duration = 3 SECONDS
+	parry_failed_clickcd_duration = 2 SECONDS
 
 /obj/item/melee/sabre/Initialize()
 	. = ..()
 	AddComponent(/datum/component/butchering, 30, 95, 5) //fast and effective, but as a sword, it might damage the results.
 	AddElement(/datum/element/sword_point)
 
-/obj/item/melee/sabre/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
-	if(attack_type == PROJECTILE_ATTACK)
-		final_block_chance = 0 //Don't bring a sword to a gunfight
+/obj/item/melee/sabre/run_block(mob/living/owner, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return)
+	if(attack_type & ATTACK_TYPE_PROJECTILE)		// Don't bring a sword to a gunfight.
+		return BLOCK_NONE
 	return ..()
 
 /obj/item/melee/sabre/on_exit_storage(datum/component/storage/S)
@@ -151,7 +162,6 @@
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 	force = 15
 	throwforce = 25
-	block_chance = 50
 	armour_penetration = 200 //Apparently this gives it the ability to pierce block
 	flags_1 = CONDUCT_1
 	obj_flags = UNIQUE_RENAME
@@ -160,15 +170,46 @@
 	attack_verb = list("stabs", "punctures", "pierces", "pokes")
 	hitsound = 'sound/weapons/rapierhit.ogg'
 	total_mass = 0.4
+	item_flags = ITEM_CAN_PARRY | NEEDS_PERMIT
+	block_parry_data = /datum/block_parry_data/traitor_rapier
+
+// Fast, efficient parry.
+/datum/block_parry_data/traitor_rapier
+	parry_time_windup = 0.5
+	parry_time_active = 5
+	parry_time_spindown = 0
+	parry_time_active_visual_override = 3
+	parry_time_spindown_visual_override = 2
+	parry_flags = PARRY_DEFAULT_HANDLE_FEEDBACK | PARRY_LOCK_ATTACKING
+	parry_time_perfect = 0
+	parry_time_perfect_leeway = 3
+	parry_time_perfect_leeway_override = list(
+		TEXT_ATTACK_TYPE_PROJECTILE = 1
+	)
+	parry_imperfect_falloff_percent_override = list(
+		TEXT_ATTACK_TYPE_PROJECTILE = 50				// useless after 3rd decisecond
+	)
+	parry_imperfect_falloff_percent = 30
+	parry_efficiency_to_counterattack = 100
+	parry_efficiency_considered_successful = 1
+	parry_efficiency_perfect = 100
+	parry_data = list(
+		PARRY_DISARM_ATTACKER = TRUE,
+		PARRY_KNOCKDOWN_ATTACKER = 10
+	)
+	parry_failed_stagger_duration = 2 SECONDS
+	parry_failed_clickcd_duration = CLICK_CD_RANGE
+	parry_cooldown = 0
+
+/obj/item/melee/rapier/active_parry_reflex_counter(mob/living/owner, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, list/return_list, parry_efficiency, list/effect_text)
+	. = ..()
+	if((attack_type & ATTACK_TYPE_PROJECTILE) && (parry_efficiency >= 100))
+		. |= BLOCK_SHOULD_REDIRECT
+		return_list[BLOCK_RETURN_REDIRECT_METHOD] = REDIRECT_METHOD_DEFLECT
 
 /obj/item/melee/rapier/Initialize()
 	. = ..()
 	AddComponent(/datum/component/butchering, 20, 65, 0)
-
-/obj/item/melee/rapier/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
-	if(attack_type == PROJECTILE_ATTACK)
-		final_block_chance = 0
-	return ..()
 
 /obj/item/melee/rapier/on_exit_storage(datum/component/storage/S)
 	var/obj/item/storage/belt/sabre/rapier/B = S.parent
@@ -192,10 +233,9 @@
 	. = ..()
 	if(iscarbon(target))
 		var/mob/living/carbon/H = target
-		var/loss = H.getStaminaLoss()
 		H.Dizzy(10)
 		H.adjustStaminaLoss(30)
-		if((loss > 40) && prob(loss)) // if above 40, roll for sleep using 1% every 1 stamina damage
+		if(CHECK_STAMCRIT(H) != NOT_STAMCRIT)
 			H.Sleeping(180)
 
 /obj/item/melee/classic_baton
@@ -305,7 +345,7 @@
 			return
 	else
 		if(cooldown_check < world.time)
-			if(target.check_shields(src, 0, "[user]'s [name]", MELEE_ATTACK))
+			if(target.mob_run_block(src, 0, "[user]'s [name]", ATTACK_TYPE_MELEE, 0, user, null, null) & BLOCK_SUCCESS)
 				playsound(target, 'sound/weapons/genhit.ogg', 50, 1)
 				return
 			if(ishuman(target))
@@ -326,7 +366,7 @@
 			else
 				target.LAssailant = WEAKREF(user)
 			cooldown_check = world.time + cooldown
-			user.adjustStaminaLossBuffered(getweight())//CIT CHANGE - makes swinging batons cost stamina
+			user.adjustStaminaLossBuffered(getweight(user, STAM_COST_BATON_MOB_MULT))
 		else
 			var/wait_desc = get_wait_description()
 			if(wait_desc)
@@ -649,7 +689,7 @@
 	item_state = "mace_greyscale"
 	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
-	material_flags = MATERIAL_ADD_PREFIX | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS //Material type changes the prefix as well as the color.
+	material_flags = MATERIAL_ADD_PREFIX | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS | MATERIAL_EFFECTS //Material type changes the prefix as well as the color.
 	custom_materials = list(/datum/material/iron = 12000)  //Defaults to an Iron Mace.
 	slot_flags = ITEM_SLOT_BELT
 	force = 14

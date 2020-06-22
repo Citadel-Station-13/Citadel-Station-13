@@ -22,7 +22,7 @@
 	var/obj/machinery/atmospherics/oldN = nodes[i]
 	..()
 	if(oldN)
-		oldN.build_network()
+		SSair.add_to_rebuild_queue(oldN)
 
 /obj/machinery/atmospherics/pipe/destroy_network()
 	QDEL_NULL(parent)
@@ -111,3 +111,10 @@
 	pipe_color = paint_color
 	update_node_icon()
 	return TRUE
+
+/obj/machinery/atmospherics/pipe/attack_ghost(mob/dead/observer/O)
+	. = ..()
+	if(parent)
+		atmosanalyzer_scan(parent.air, O, src, FALSE)
+	else
+		to_chat(O, "<span class='warning'>[src] doesn't have a pipenet, which is probably a bug.</span>")

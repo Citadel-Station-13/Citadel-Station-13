@@ -4,7 +4,6 @@
 	status_flags = GODMODE|CANPUSH
 	mouse_drag_pointer = MOUSE_INACTIVE_POINTER
 	var/in_use = FALSE
-	no_vore = TRUE
 
 INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 
@@ -44,5 +43,6 @@ GLOBAL_LIST_EMPTY(dummy_mob_list)
 		return
 	var/mob/living/carbon/human/dummy/D = GLOB.human_dummy_list[slotnumber]
 	if(istype(D))
+		D.set_species(/datum/species/human,icon_update = TRUE, pref_load = TRUE) //for some fucking reason, if you don't change the species every time, some species will dafault certain things when it's their own species on the mannequin two times in a row, like lizards losing spines and tails setting to smooth. If you can find a fix for this that isn't this, good on you
 		D.wipe_state()
 		D.in_use = FALSE

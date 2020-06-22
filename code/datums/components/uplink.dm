@@ -27,6 +27,8 @@ GLOBAL_LIST_EMPTY(uplinks)
 	var/datum/ui_state/checkstate
 	var/compact_mode = FALSE
 	var/debug = FALSE
+	var/saved_player_population = 0
+	var/list/filters = list()
 
 /datum/component/uplink/Initialize(_owner, _lockable = TRUE, _enabled = FALSE, datum/game_mode/_gamemode, starting_tc = 20, datum/ui_state/_checkstate, datum/traitor_class/traitor_class)
 	if(!isitem(parent))
@@ -47,7 +49,6 @@ GLOBAL_LIST_EMPTY(uplinks)
 		RegisterSignal(parent, COMSIG_PEN_ROTATED, .proc/pen_rotation)
 
 	GLOB.uplinks += src
-	var/list/filters = list()
 	if(istype(traitor_class))
 		filters = traitor_class.uplink_filters
 		starting_tc = traitor_class.TC
@@ -68,6 +69,7 @@ GLOBAL_LIST_EMPTY(uplinks)
 	if(!lockable)
 		active = TRUE
 		locked = FALSE
+	saved_player_population = GLOB.joined_player_list.len
 
 /datum/component/uplink/InheritComponent(datum/component/uplink/U)
 	lockable |= U.lockable
@@ -117,7 +119,18 @@ GLOBAL_LIST_EMPTY(uplinks)
 		return
 	active = TRUE
 	if(user)
+		//update the saved population
+		var/previous_player_population = saved_player_population
+		saved_player_population = GLOB.joined_player_list.len
+		//if population has changed, update uplink items
+		if(saved_player_population != previous_player_population)
+			//make sure discounts are not rerolled
+			var/old_discounts = uplink_items["Discounted Gear"]
+			uplink_items = get_uplink_items(gamemode, FALSE, allow_restricted, filters)
+			if(old_discounts)
+				uplink_items["Discounted Gear"] = old_discounts
 		ui_interact(user)
+
 	// an unlocked uplink blocks also opening the PDA or headset menu
 	return COMPONENT_NO_INTERACT
 
@@ -190,7 +203,9 @@ GLOBAL_LIST_EMPTY(uplinks)
 
 			if(item in buyable_items)
 				var/datum/uplink_item/I = buyable_items[item]
-				MakePurchase(usr, I)
+				//check to make sure people cannot buy items when the player pop is below the requirement
+				if(GLOB.joined_player_list.len >= I.player_minimum)
+					MakePurchase(usr, I)
 				. = TRUE
 		if("lock")
 			active = FALSE

@@ -1,20 +1,21 @@
 
 
-/mob/living/carbon/apply_damage(damage, damagetype = BRUTE, def_zone = null, blocked = FALSE, forced = FALSE)
+/mob/living/carbon/apply_damage(damage, damagetype = BRUTE, def_zone = null, blocked = FALSE, forced = FALSE, spread_damage = FALSE)
 	SEND_SIGNAL(src, COMSIG_MOB_APPLY_DAMGE, damage, damagetype, def_zone)
 	var/hit_percent = (100-blocked)/100
 	if(!forced && hit_percent <= 0)
 		return 0
 
 	var/obj/item/bodypart/BP = null
-	if(isbodypart(def_zone)) //we specified a bodypart object
-		BP = def_zone
-	else
-		if(!def_zone)
-			def_zone = ran_zone(def_zone)
-		BP = get_bodypart(check_zone(def_zone))
-		if(!BP)
-			BP = bodyparts[1]
+	if(!spread_damage)
+		if(isbodypart(def_zone)) //we specified a bodypart object
+			BP = def_zone
+		else
+			if(!def_zone)
+				def_zone = ran_zone(def_zone)
+			BP = get_bodypart(check_zone(def_zone))
+			if(!BP)
+				BP = bodyparts[1]
 
 	var/damage_amount = forced ? damage : damage * hit_percent
 	switch(damagetype)
@@ -38,7 +39,7 @@
 			adjustCloneLoss(damage_amount, forced = forced)
 		if(STAMINA)
 			if(BP)
-				if(damage > 0 ? BP.receive_damage(0, 0, damage_amount) : BP.heal_damage(0, 0, abs(damage_amount)))
+				if(damage > 0 ? BP.receive_damage(0, 0, damage_amount) : BP.heal_damage(0, 0, abs(damage_amount), FALSE, FALSE))
 					update_damage_overlays()
 			else
 				adjustStaminaLoss(damage_amount, forced = forced)
@@ -63,7 +64,7 @@
 
 
 /mob/living/carbon/adjustBruteLoss(amount, updating_health = TRUE, forced = FALSE)
-	if (!forced && amount < 0 && HAS_TRAIT(src,TRAIT_NONATURALHEAL))
+	if(!forced && amount < 0 && HAS_TRAIT(src,TRAIT_NONATURALHEAL))
 		return FALSE
 	if(!forced && (status_flags & GODMODE))
 		return FALSE
@@ -74,7 +75,7 @@
 	return amount
 
 /mob/living/carbon/adjustFireLoss(amount, updating_health = TRUE, forced = FALSE)
-	if (!forced && amount < 0 && HAS_TRAIT(src,TRAIT_NONATURALHEAL))	//Vamps don't heal naturally.
+	if(!forced && amount < 0 && HAS_TRAIT(src,TRAIT_NONATURALHEAL))	//Vamps don't heal naturally.
 		return FALSE
 	if(!forced && (status_flags & GODMODE))
 		return FALSE

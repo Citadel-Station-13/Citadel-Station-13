@@ -1,5 +1,5 @@
 /mob/living/carbon/proc/monkeyize(tr_flags = (TR_KEEPITEMS | TR_KEEPVIRUS | TR_DEFAULTMSG))
-	if (notransform)
+	if (mob_transforming)
 		return
 	//Handle items on mob
 
@@ -29,7 +29,7 @@
 			dropItemToGround(W)
 
 	//Make mob invisible and spawn animation
-	notransform = TRUE
+	mob_transforming = TRUE
 	Stun(INFINITY, ignore_canstun = TRUE)
 	icon = null
 	cut_overlays()
@@ -150,7 +150,7 @@
 //Could probably be merged with monkeyize but other transformations got their own procs, too
 
 /mob/living/carbon/proc/humanize(tr_flags = (TR_KEEPITEMS | TR_KEEPVIRUS | TR_DEFAULTMSG))
-	if (notransform)
+	if (mob_transforming)
 		return
 	//Handle items on mob
 
@@ -185,7 +185,7 @@
 
 
 	//Make mob invisible and spawn animation
-	notransform = TRUE
+	mob_transforming = TRUE
 	Stun(22, ignore_canstun = TRUE)
 	icon = null
 	cut_overlays()
@@ -304,7 +304,7 @@
 	qdel(src)
 
 /mob/living/carbon/human/AIize()
-	if (notransform)
+	if (mob_transforming)
 		return
 	for(var/t in bodyparts)
 		qdel(t)
@@ -312,12 +312,12 @@
 	return ..()
 
 /mob/living/carbon/AIize()
-	if(notransform)
+	if(mob_transforming)
 		return
 	for(var/obj/item/W in src)
 		dropItemToGround(W)
 	regenerate_icons()
-	notransform = TRUE
+	mob_transforming = TRUE
 	Paralyze(INFINITY)
 	icon = null
 	invisibility = INVISIBILITY_MAXIMUM
@@ -353,7 +353,7 @@
 	qdel(src)
 
 /mob/living/carbon/human/proc/Robotize(delete_items = 0, transfer_after = TRUE)
-	if (notransform)
+	if (mob_transforming)
 		return
 	for(var/obj/item/W in src)
 		if(delete_items)
@@ -361,7 +361,7 @@
 		else
 			dropItemToGround(W)
 	regenerate_icons()
-	notransform = TRUE
+	mob_transforming = TRUE
 	Paralyze(INFINITY)
 	icon = null
 	invisibility = INVISIBILITY_MAXIMUM
@@ -398,12 +398,12 @@
 
 //human -> alien
 /mob/living/carbon/human/proc/Alienize(mind_transfer = TRUE)
-	if (notransform)
+	if (mob_transforming)
 		return
 	for(var/obj/item/W in src)
 		dropItemToGround(W)
 	regenerate_icons()
-	notransform = 1
+	mob_transforming = 1
 	Paralyze(INFINITY)
 	icon = null
 	invisibility = INVISIBILITY_MAXIMUM
@@ -425,18 +425,19 @@
 		mind.transfer_to(new_xeno)
 	else
 		transfer_ckey(new_xeno)
+	update_atom_languages()
 
 	to_chat(new_xeno, "<B>You are now an alien.</B>")
 	. = new_xeno
 	qdel(src)
 
 /mob/living/carbon/human/proc/slimeize(reproduce, mind_transfer = TRUE)
-	if (notransform)
+	if (mob_transforming)
 		return
 	for(var/obj/item/W in src)
 		dropItemToGround(W)
 	regenerate_icons()
-	notransform = 1
+	mob_transforming = 1
 	Paralyze(INFINITY)
 	icon = null
 	invisibility = INVISIBILITY_MAXIMUM
@@ -449,7 +450,7 @@
 		var/list/babies = list()
 		for(var/i=1,i<=number,i++)
 			var/mob/living/simple_animal/slime/M = new/mob/living/simple_animal/slime(loc)
-			M.nutrition = round(nutrition/number)
+			M.set_nutrition(round(nutrition/number))
 			step_away(M,src)
 			babies += M
 		new_slime = pick(babies)
@@ -476,12 +477,12 @@
 
 
 /mob/living/carbon/human/proc/corgize(mind_transfer = TRUE)
-	if (notransform)
+	if (mob_transforming)
 		return
 	for(var/obj/item/W in src)
 		dropItemToGround(W)
 	regenerate_icons()
-	notransform = TRUE
+	mob_transforming = TRUE
 	Paralyze(INFINITY)
 	icon = null
 	invisibility = INVISIBILITY_MAXIMUM
@@ -500,7 +501,7 @@
 	qdel(src)
 
 /mob/living/carbon/proc/gorillize(mind_transfer = TRUE)
-	if(notransform)
+	if(mob_transforming)
 		return
 
 	SSblackbox.record_feedback("amount", "gorillas_created", 1)
@@ -511,7 +512,7 @@
 		dropItemToGround(W, TRUE)
 
 	regenerate_icons()
-	notransform = TRUE
+	mob_transforming = TRUE
 	Paralyze(INFINITY)
 	icon = null
 	invisibility = INVISIBILITY_MAXIMUM
@@ -534,13 +535,13 @@
 	if(mind)
 		mind_transfer = alert("Want to transfer their mind into the new mob", "Mind Transfer", "Yes", "No") == "Yes" ? TRUE : FALSE
 
-	if(notransform)
+	if(mob_transforming)
 		return
 	for(var/obj/item/W in src)
 		dropItemToGround(W)
 
 	regenerate_icons()
-	notransform = TRUE
+	mob_transforming = TRUE
 	Paralyze(INFINITY)
 	icon = null
 	invisibility = INVISIBILITY_MAXIMUM

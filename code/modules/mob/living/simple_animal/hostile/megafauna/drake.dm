@@ -37,13 +37,15 @@ Difficulty: Medium
 	health = 2500
 	maxHealth = 2500
 	spacewalk = TRUE
-	attacktext = "chomps"
+	attack_verb_continuous = "chomps"
+	attack_verb_simple = "chomp"
 	attack_sound = 'sound/magic/demon_attack1.ogg'
 	icon = 'icons/mob/lavaland/64x64megafauna.dmi'
 	icon_state = "dragon"
 	icon_living = "dragon"
 	icon_dead = "dragon_dead"
-	friendly = "stares down"
+	friendly_verb_continuous = "stares down"
+	friendly_verb_simple = "stare down"
 	speak_emote = list("roars")
 	armour_penetration = 40
 	melee_damage_lower = 40
@@ -64,7 +66,7 @@ Difficulty: Medium
 	death_sound = 'sound/magic/demon_dies.ogg'
 	var/datum/action/small_sprite/smallsprite = new/datum/action/small_sprite/drake()
 
-	do_footstep = TRUE
+	footstep_type = FOOTSTEP_MOB_HEAVY
 
 /mob/living/simple_animal/hostile/megafauna/dragon/Initialize()
 	smallsprite.Grant(src)
@@ -81,7 +83,7 @@ Difficulty: Medium
 		return FALSE
 	return ..()
 
-/mob/living/simple_animal/hostile/megafauna/dragon/visible_message(message, self_message, blind_message, vision_distance = DEFAULT_MESSAGE_RANGE, list/ignored_mobs)
+/mob/living/simple_animal/hostile/megafauna/dragon/visible_message(message, self_message, blind_message, vision_distance = DEFAULT_MESSAGE_RANGE, list/ignored_mobs, mob/target, target_message)
 	if(swooping & SWOOP_INVULNERABLE) //to suppress attack messages without overriding every single proc that could send a message saying we got hit
 		return
 	return ..()
@@ -105,7 +107,7 @@ Difficulty: Medium
 /mob/living/simple_animal/hostile/megafauna/dragon/OpenFire()
 	if(swooping)
 		return
-	anger_modifier = CLAMP(((maxHealth - health)/50),0,20)
+	anger_modifier = clamp(((maxHealth - health)/50),0,20)
 	ranged_cooldown = world.time + ranged_cooldown_time
 
 	if(prob(15 + anger_modifier) && !client)
@@ -394,3 +396,26 @@ Difficulty: Medium
 
 /mob/living/simple_animal/hostile/megafauna/dragon/lesser/grant_achievement(medaltype,scoretype)
 	return
+
+//fire line keeps going even if dragon is deleted
+/proc/dragon_fire_line(source, list/turfs)
+	var/list/hit_list = list()
+	for(var/turf/T in turfs)
+		if(istype(T, /turf/closed))
+			break
+		new /obj/effect/hotspot(T)
+		T.hotspot_expose(700,50,1)
+		for(var/mob/living/L in T.contents)
+			if(L in hit_list || L == source)
+				continue
+			hit_list += L
+			L.adjustFireLoss(20)
+			to_chat(L, "<span class='userdanger'>You're hit by [source]'s fire breath!</span>")
+
+		// deals damage to mechs
+		for(var/obj/mecha/M in T.contents)
+			if(M in hit_list)
+				continue
+			hit_list += M
+			M.take_damage(45, BRUTE, "melee", 1)
+		sleep(1.5)

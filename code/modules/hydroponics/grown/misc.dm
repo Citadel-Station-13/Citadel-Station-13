@@ -223,7 +223,7 @@
 /obj/item/reagent_containers/food/snacks/grown/cherry_bomb/ex_act(severity)
 	qdel(src) //Ensuring that it's deleted by its own explosion. Also prevents mass chain reaction with piles of cherry bombs
 
-/obj/item/reagent_containers/food/snacks/grown/cherry_bomb/proc/prime()
+/obj/item/reagent_containers/food/snacks/grown/cherry_bomb/proc/prime(mob/living/lanced_by)
 	icon_state = "cherry_bomb_lit"
 	playsound(src, 'sound/effects/fuse.ogg', seed.potency, 0)
 	addtimer(CALLBACK(src, /obj/item/reagent_containers/food/snacks/grown/cherry_bomb/proc/detonate), rand(50, 100))
@@ -492,9 +492,6 @@
 		return
 	var/turf/T = get_turf(src)
 	reagents.chem_temp = 1000
-	//Disable seperated contents when the grenade primes
-	if (seed.get_gene(/datum/plant_gene/trait/noreact))
-		DISABLE_BITFIELD(reagents.reagents_holder_flags, NO_REACT)
 	reagents.handle_reactions()
 	log_game("Coconut bomb detonation at [AREACOORD(T)], location [loc]")
 	qdel(src)

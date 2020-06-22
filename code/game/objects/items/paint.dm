@@ -7,7 +7,7 @@
 	desc = "Used to recolor floors and walls. Can be removed by the janitor."
 	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "paint_neutral"
-	item_color = "FFFFFF"
+	var/paint_color = "FFFFFF"
 	item_state = "paintcan"
 	w_class = WEIGHT_CLASS_NORMAL
 	resistance_flags = FLAMMABLE
@@ -16,37 +16,37 @@
 
 /obj/item/paint/red
 	name = "red paint"
-	item_color = "C73232" //"FF0000"
+	paint_color = "C73232" //"FF0000"
 	icon_state = "paint_red"
 
 /obj/item/paint/green
 	name = "green paint"
-	item_color = "2A9C3B" //"00FF00"
+	paint_color = "2A9C3B" //"00FF00"
 	icon_state = "paint_green"
 
 /obj/item/paint/blue
 	name = "blue paint"
-	item_color = "5998FF" //"0000FF"
+	paint_color = "5998FF" //"0000FF"
 	icon_state = "paint_blue"
 
 /obj/item/paint/yellow
 	name = "yellow paint"
-	item_color = "CFB52B" //"FFFF00"
+	paint_color = "CFB52B" //"FFFF00"
 	icon_state = "paint_yellow"
 
 /obj/item/paint/violet
 	name = "violet paint"
-	item_color = "AE4CCD" //"FF00FF"
+	paint_color = "AE4CCD" //"FF00FF"
 	icon_state = "paint_violet"
 
 /obj/item/paint/black
 	name = "black paint"
-	item_color = "333333"
+	paint_color = "333333"
 	icon_state = "paint_black"
 
 /obj/item/paint/white
 	name = "white paint"
-	item_color = "FFFFFF"
+	paint_color = "FFFFFF"
 	icon_state = "paint_white"
 
 
@@ -61,31 +61,31 @@
 		return
 	switch(t1)
 		if("red")
-			item_color = "C73232"
+			paint_color = "C73232"
 		if("pink")
-			item_color = "FFC0CD"
+			paint_color = "FFC0CD"
 		if("blue")
-			item_color = "5998FF"
+			paint_color = "5998FF"
 		if("cyan")
-			item_color = "00FFFF"
+			paint_color = "00FFFF"
 		if("green")
-			item_color = "2A9C3B"
+			paint_color = "2A9C3B"
 		if("lime")
-			item_color = "00FF00"
+			paint_color = "00FF00"
 		if("yellow")
-			item_color = "CFB52B"
+			paint_color = "CFB52B"
 		if("orange")
-			item_color = "fFA700"
+			paint_color = "fFA700"
 		if("violet")
-			item_color = "AE4CCD"
+			paint_color = "AE4CCD"
 		if("purple")
-			item_color = "800080"
+			paint_color = "800080"
 		if("white")
-			item_color = "FFFFFF"
+			paint_color = "FFFFFF"
 		if("gray")
-			item_color = "808080"
+			paint_color = "808080"
 		if("black")
-			item_color = "333333"
+			paint_color = "333333"
 	icon_state = "paint_[t1]"
 	add_fingerprint(user)
 
@@ -99,7 +99,7 @@
 		return
 	if(!isturf(target) || isspaceturf(target))
 		return
-	var/newcolor = "#" + item_color
+	var/newcolor = "#" + paint_color
 	target.add_atom_colour(newcolor, WASHABLE_COLOUR_PRIORITY)
 
 /obj/item/paint/paint_remover
@@ -112,7 +112,7 @@
 	. = ..()
 	if(!proximity)
 		return
-	if(!isturf(target) || !isobj(target))
+	if(!isturf(target) && !isobj(target))
 		return
 	if(target.color != initial(target.color))
 		target.remove_atom_colour(WASHABLE_COLOUR_PRIORITY)

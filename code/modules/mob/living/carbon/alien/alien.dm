@@ -12,6 +12,13 @@
 	bubble_icon = "alien"
 	type_of_meat = /obj/item/reagent_containers/food/snacks/meat/slab/xeno
 
+	/// How much brute damage without armor piercing they do against mobs in melee
+	var/meleeSlashHumanPower = 20
+	/// How much power they have for DefaultCombatKnockdown when attacking humans
+	var/meleeKnockdownPower = 100
+	/// How much brute damage they do to simple animals
+	var/meleeSlashSAPower = 35
+
 	var/obj/item/card/id/wear_id = null // Fix for station bounced radios -- Skie
 	var/has_fine_manipulation = 0
 	var/move_delay_add = 0 // movement delay to add
@@ -133,7 +140,8 @@ Des: Removes all infected images from the alien.
 
 /mob/living/carbon/alien/proc/alien_evolve(mob/living/carbon/alien/new_xeno)
 	to_chat(src, "<span class='noticealien'>You begin to evolve!</span>")
-	visible_message("<span class='alertalien'>[src] begins to twist and contort!</span>")
+	visible_message("<span class='alertalien'>[src] begins to twist and contort!</span>",
+		"<span class='alertalien'>You begin to twist and contort!</span>")
 	new_xeno.setDir(dir)
 	if(!alien_name_regex.Find(name))
 		new_xeno.name = name

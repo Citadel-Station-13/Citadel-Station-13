@@ -236,7 +236,7 @@
 	var/mode = get_pin_data(IC_INPUT, 2)
 	switch(ord)
 		if(1)
-			mode = CLAMP(mode, GRAB_PASSIVE, max_grab)
+			mode = clamp(mode, GRAB_PASSIVE, max_grab)
 			if(AM)
 				if(check_target(AM, exclude_contents = TRUE))
 					acting_object.investigate_log("grabbed ([AM]) using [src].", INVESTIGATE_CIRCUIT)
@@ -329,9 +329,9 @@
 	// If the item is in a grabber circuit we'll update the grabber's outputs after we've thrown it.
 	var/obj/item/integrated_circuit/manipulation/grabber/G = A.loc
 
-	var/x_abs = CLAMP(T.x + target_x_rel, 0, world.maxx)
-	var/y_abs = CLAMP(T.y + target_y_rel, 0, world.maxy)
-	var/range = round(CLAMP(sqrt(target_x_rel*target_x_rel+target_y_rel*target_y_rel),0,8),1)
+	var/x_abs = clamp(T.x + target_x_rel, 0, world.maxx)
+	var/y_abs = clamp(T.y + target_y_rel, 0, world.maxy)
+	var/range = round(clamp(sqrt(target_x_rel*target_x_rel+target_y_rel*target_y_rel),0,8),1)
 	//remove damage
 	A.throwforce = 0
 	A.embedding = list("embed_chance" = 0)
@@ -447,7 +447,7 @@
 			if(!S)
 				activate_pin(4)
 				return
-			if(materials.insert_item(S, CLAMP(get_pin_data(IC_INPUT, 2),0,100), multiplier = 1) )
+			if(materials.insert_item(S, clamp(get_pin_data(IC_INPUT, 2),0,100), multiplier = 1) )
 				AfterMaterialInsert()
 				activate_pin(3)
 			else
@@ -458,7 +458,7 @@
 			for(var/I in 1 to mtypes.len)
 				var/datum/material/M = materials.materials[mtypes[I]]
 				if(M)
-					var/U = CLAMP(get_pin_data(IC_INPUT, I+2),-100000,100000)
+					var/U = clamp(get_pin_data(IC_INPUT, I+2),-100000,100000)
 					if(!U)
 						continue
 					if(!mt) //Invalid input

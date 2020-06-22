@@ -9,9 +9,9 @@
 
 /datum/uplink_item/dangerous/pistol
 	name = "Stechkin Pistol"
-	desc = "A small, easily concealable handgun that uses 10mm auto rounds in 8-round magazines and is compatible \
+	desc = "A sleek box containing a small, easily concealable handgun that uses 10mm auto rounds in 8-round magazines. The handgun is compatible \
 			with suppressors."
-	item = /obj/item/gun/ballistic/automatic/pistol
+	item = /obj/item/storage/box/syndie_kit/pistol
 	cost = 7
 	exclude_modes = list(/datum/game_mode/nuclear/clown_ops)
 
@@ -117,17 +117,6 @@
 /datum/uplink_item/dangerous/doublesword/get_discount()
 	return pick(4;0.8,2;0.65,1;0.5)
 
-/datum/uplink_item/dangerous/cxneb
-	name = "Dragon's Tooth Non-Eutactic Blade"
-	desc = "An illegal modification of a weapon that is functionally identical to the energy sword, \
-			the Non-Eutactic Blade (NEB) forges a hardlight blade on-demand, \
-	 		generating an extremely sharp, unbreakable edge that is guaranteed to satisfy your every need. \
-	 		This particular model has a polychromic hardlight generator, allowing you to murder in style! \
-	 		The illegal modifications bring this weapon up to par with the classic energy sword, and also gives it the energy sword's distinctive sounds."
-	item = /obj/item/melee/transforming/energy/sword/cx/traitor
-	cost = 8
-	exclude_modes = list(/datum/game_mode/nuclear/clown_ops)
-
 /datum/uplink_item/dangerous/sword
 	name = "Energy Sword"
 	desc = "The energy sword is an edged weapon with a blade of pure energy. The sword is small enough to be \
@@ -174,10 +163,13 @@
 	include_modes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/dangerous/rapid
-	name = "Gloves of the North Star"
-	desc = "These gloves let the user punch people very fast. Does not improve weapon attack speed or the meaty fists of a hulk."
-	item = /obj/item/clothing/gloves/rapid
-	cost = 8
+	name = "Bands of the North Star"
+	desc = "These armbands let the user punch people very fast and with the lethality of a legendary martial artist. \
+			Does not improve weapon attack speed or the meaty fists of a hulk, but you will be unmatched in martial power. \
+			Combines with all martial arts, but the user will be unable to bring themselves to use guns, nor remove the armbands."
+	item = /obj/item/clothing/gloves/fingerless/pugilist/rapid
+	cost = 30
+	include_modes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/dangerous/guardian
 	name = "Holoparasites"

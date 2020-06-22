@@ -1,6 +1,7 @@
 /obj/item/flashlight
 	name = "flashlight"
 	desc = "A hand-held emergency light."
+	custom_price = PRICE_REALLY_CHEAP
 	icon = 'icons/obj/lighting.dmi'
 	icon_state = "flashlight"
 	item_state = "flashlight"
@@ -210,6 +211,7 @@
 	light_color = "#CDDDFF"
 	flashlight_power = 0.9
 	hitsound = 'sound/weapons/genhit1.ogg'
+	custom_price = PRICE_ALMOST_CHEAP
 
 // the desk lamps are a bit special
 /obj/item/flashlight/lamp
@@ -350,6 +352,13 @@
 	brightness_on = 6	// luminosity when on
 	light_color = "#FFAA44"
 	flashlight_power = 0.8
+	custom_price = PRICE_CHEAP
+
+/obj/item/flashlight/lantern/jade
+	name = "jade lantern"
+	desc = "An ornate, green lantern."
+	color = LIGHT_COLOR_GREEN
+	light_color = LIGHT_COLOR_GREEN
 
 /obj/item/flashlight/slime
 	gender = PLURAL
@@ -422,6 +431,7 @@
 /obj/item/flashlight/glowstick
 	name = "glowstick"
 	desc = "A military-grade glowstick."
+	custom_price = PRICE_CHEAP_AS_FREE
 	w_class = WEIGHT_CLASS_SMALL
 	brightness_on = 4
 	color = LIGHT_COLOR_GREEN

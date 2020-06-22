@@ -4,6 +4,7 @@
 	weight = 3
 	chaos = 5
 	threat = 3
+	min_players = 25
 	uplink_filters = list(/datum/uplink_item/stealthy_weapons/romerol_kit)
 
 /datum/traitor_class/human/hijack/forge_objectives(datum/antagonist/traitor/T)
@@ -16,3 +17,6 @@
 /datum/traitor_class/human/hijack/finalize_traitor(datum/antagonist/traitor/T)
 	T.hijack_speed=1
 	return TRUE
+
+/datum/traitor_class/human/hijack/clean_up_traitor(datum/antagonist/traitor/T)
+	T.hijack_speed = 0.5

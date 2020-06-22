@@ -45,11 +45,11 @@
 	if (ismob(user) && !isliving(user)) // ghosts don't need cameras
 		return
 	if (!network)
-		CRASH("No camera network")
+		stack_trace("No camera network")
 		user.unset_machine()
 		return FALSE
 	if (!(islist(network)))
-		CRASH("Camera network is not a list")
+		stack_trace("Camera network is not a list")
 		user.unset_machine()
 		return FALSE
 
@@ -175,6 +175,12 @@
 	clockwork = TRUE //it'd look very weird
 	light_power = 0
 
+/obj/machinery/computer/security/telescreen/Initialize()
+	. = ..()
+	var/turf/T = get_turf_pixel(src)
+	if(iswallturf(T))
+		plane = ABOVE_WALL_PLANE
+
 /obj/machinery/computer/security/telescreen/update_icon_state()
 	icon_state = initial(icon_state)
 	if(stat & BROKEN)
@@ -251,3 +257,12 @@
 	name = "AI upload monitor"
 	desc = "A telescreen that connects to the AI upload's camera network."
 	network = list("aiupload")
+
+// Subtype that connects to shuttles.
+/obj/machinery/computer/security/shuttle
+	circuit = /obj/item/circuitboard/computer/security/shuttle
+
+/obj/machinery/computer/security/shuttle/connect_to_shuttle(obj/docking_port/mobile/port, obj/docking_port/stationary/dock, idnum, override=FALSE)
+	for(var/i in network)
+		network -= i
+		network += "[idnum][i]"

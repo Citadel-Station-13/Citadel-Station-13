@@ -12,6 +12,17 @@
 	tastes = list("cheese" = 1)
 	foodtype = DAIRY
 
+
+
+/obj/item/reagent_containers/food/snacks/royalcheese
+	name = "royal cheese"
+	desc = "Ascend the throne. Consume the wheel. Feel the POWER."
+	icon_state = "royalcheese"
+	list_reagents = list(/datum/reagent/consumable/nutriment = 15, /datum/reagent/consumable/nutriment/vitamin = 5, /datum/reagent/gold = 20, /datum/reagent/toxin/mutagen = 5)
+	w_class = WEIGHT_CLASS_BULKY
+	tastes = list("cheese" = 4, "royalty" = 1)
+	foodtype = DAIRY
+
 /obj/item/reagent_containers/food/snacks/cheesewedge
 	name = "cheese wedge"
 	desc = "A wedge of delicious Cheddar. The cheese wheel it was cut from can't have gone far."
@@ -215,7 +226,6 @@
 /obj/item/reagent_containers/food/snacks/tobiko
 	name = "tobiko"
 	desc = "Spider eggs wrapped in a thin salted Kudzu pod"
-	icon = 'modular_citadel/icons/obj/food/food.dmi'
 	icon_state = "sushie_egg"
 	list_reagents = list(/datum/reagent/consumable/nutriment = 6, /datum/reagent/consumable/nutriment/vitamin = 2)
 	filling_color = "#FF3333" // R225 G051 B051
@@ -558,7 +568,6 @@
 /obj/item/reagent_containers/food/snacks/riceball
 	name = "onigiri"
 	desc = "A ball of rice with some light salt and a wrap of Kudzu skin."
-	icon = 'modular_citadel/icons/obj/food/food.dmi'
 	icon_state = "riceball"
 	list_reagents = list(/datum/reagent/consumable/nutriment = 6, /datum/reagent/consumable/sodiumchloride = 2)
 	tastes = list("rice" = 3, "salt" = 1)

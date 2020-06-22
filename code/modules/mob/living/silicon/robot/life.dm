@@ -1,9 +1,6 @@
-/mob/living/silicon/robot/Life()
-	set invisibility = 0
-	if (src.notransform)
+/mob/living/silicon/robot/BiologicalLife(seconds, times_fired)
+	if(!(. = ..()))
 		return
-
-	..()
 	adjustOxyLoss(-10) //we're a robot!
 	handle_robot_hud_updates()
 	handle_robot_cell()
@@ -21,7 +18,7 @@
 	if(cell && cell.charge)
 		if(cell.charge <= 100)
 			uneq_all()
-		var/amt = CLAMP((lamp_intensity - 2) * 2,1,cell.charge) //Always try to use at least one charge per tick, but allow it to completely drain the cell.
+		var/amt = clamp((lamp_intensity - 2) * 2,1,cell.charge) //Always try to use at least one charge per tick, but allow it to completely drain the cell.
 		cell.use(amt) //Usage table: 1/tick if off/lowest setting, 4 = 4/tick, 6 = 8/tick, 8 = 12/tick, 10 = 16/tick
 	else
 		uneq_all()

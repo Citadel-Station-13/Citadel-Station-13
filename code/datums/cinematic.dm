@@ -30,7 +30,7 @@ GLOBAL_LIST_EMPTY(cinematics)
 /datum/cinematic
 	var/id = CINEMATIC_DEFAULT
 	var/list/watching = list() //List of clients watching this
-	var/list/locked = list() //Who had notransform set during the cinematic
+	var/list/locked = list() //Who had mob_transforming set during the cinematic
 	var/is_global = FALSE //Global cinematics will override mob-specific ones
 	var/obj/screen/cinematic/screen
 	var/datum/callback/special_callback //For special effects synced with animation (explosions after the countdown etc)
@@ -45,7 +45,7 @@ GLOBAL_LIST_EMPTY(cinematics)
 	GLOB.cinematics -= src
 	QDEL_NULL(screen)
 	for(var/mob/M in locked)
-		M.notransform = FALSE
+		M.mob_transforming = FALSE
 	return ..()
 
 /datum/cinematic/proc/play(watchers)
@@ -70,7 +70,7 @@ GLOBAL_LIST_EMPTY(cinematics)
 
 	for(var/mob/M in GLOB.mob_list)
 		if(M in watchers)
-			M.notransform = TRUE //Should this be done for non-global cinematics or even at all ?
+			M.mob_transforming = TRUE //Should this be done for non-global cinematics or even at all ?
 			locked += M
 			//Close watcher ui's
 			SStgui.close_user_uis(M)
@@ -79,7 +79,7 @@ GLOBAL_LIST_EMPTY(cinematics)
 				M.client.screen += screen
 		else
 			if(is_global)
-				M.notransform = TRUE
+				M.mob_transforming = TRUE
 				locked += M
 
 	//Actually play it

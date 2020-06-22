@@ -413,8 +413,8 @@
 // shock user with probability prb (if all connections & power are working)
 // returns TRUE if shocked, FALSE otherwise
 // The preceding comment was borrowed from the grille's shock script
-/obj/machinery/door/airlock/proc/shock(mob/user, prb)
-	if(!hasPower())		// unpowered, no shock
+/obj/machinery/door/airlock/proc/shock(mob/living/user, prb)
+	if(!istype(user) || !hasPower())		// unpowered, no shock
 		return FALSE
 	if(shockCooldown > world.time)
 		return FALSE	//Already shocked someone recently?
@@ -577,11 +577,17 @@
 	cut_overlays()
 	add_overlay(frame_overlay)
 	add_overlay(filling_overlay)
-	add_overlay(lights_overlay)
+	if(lights_overlay)
+		add_overlay(lights_overlay)
+		var/mutable_appearance/lights_vis = mutable_appearance(lights_overlay.icon, lights_overlay.icon_state)
+		add_overlay(lights_vis)
 	add_overlay(panel_overlay)
 	add_overlay(weld_overlay)
 	add_overlay(sparks_overlay)
-	add_overlay(damag_overlay)
+	if(damag_overlay)
+		add_overlay(damag_overlay)
+		var/mutable_appearance/damage_vis = mutable_appearance(damag_overlay.icon, damag_overlay.icon_state)
+		add_overlay(damage_vis)
 	add_overlay(note_overlay)
 	check_unres()
 

@@ -37,7 +37,8 @@
 	name = "Raw Khinkali"
 	reqs = list(
 		/obj/item/reagent_containers/food/snacks/doughslice = 1,
-		/obj/item/reagent_containers/food/snacks/faggot = 1
+		/obj/item/reagent_containers/food/snacks/meatball = 1,
+		/obj/item/reagent_containers/food/snacks/grown/garlic = 1
 	)
 	result =  /obj/item/reagent_containers/food/snacks/rawkhinkali
 	subcategory = CAT_MISCFOOD
@@ -47,7 +48,7 @@
 	reqs = list(
 		/datum/reagent/consumable/soysauce = 5,
 		/obj/item/reagent_containers/food/snacks/bun = 1,
-		/obj/item/reagent_containers/food/snacks/faggot = 1,
+		/obj/item/reagent_containers/food/snacks/meatball = 1,
 		/obj/item/reagent_containers/food/snacks/grown/cabbage = 1
 	)
 	result = /obj/item/reagent_containers/food/snacks/meatbun
@@ -192,4 +193,15 @@
 		/datum/reagent/teslium = 1 //To shock the whole thing into life
 	)
 	result = /mob/living/simple_animal/hostile/bear/butter
+	subcategory = CAT_MISCFOOD
+
+/datum/crafting_recipe/food/royalcheese
+	name = "Royal Cheese"
+	reqs = list(
+		/obj/item/reagent_containers/food/snacks/store/cheesewheel = 1,
+		/obj/item/clothing/head/crown = 1,
+		/datum/reagent/medicine/strange_reagent = 5,
+		/datum/reagent/toxin/mutagen = 5
+	)
+	result = /obj/item/reagent_containers/food/snacks/royalcheese
 	subcategory = CAT_MISCFOOD

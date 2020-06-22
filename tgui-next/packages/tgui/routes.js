@@ -13,6 +13,7 @@ import { BluespaceArtillery } from './interfaces/BluespaceArtillery';
 import { Bepis } from './interfaces/Bepis';
 import { BorgPanel } from './interfaces/BorgPanel';
 import { BrigTimer } from './interfaces/BrigTimer';
+import { Canvas } from './interfaces/Canvas';
 import { Canister } from './interfaces/Canister';
 import { Cargo, CargoExpress } from './interfaces/Cargo';
 import { CellularEmporium } from './interfaces/CellularEmporium';
@@ -44,6 +45,7 @@ import { GravityGenerator } from './interfaces/GravityGenerator';
 import { GulagTeleporterConsole } from './interfaces/GulagTeleporterConsole';
 import { GulagItemReclaimer } from './interfaces/GulagItemReclaimer';
 import { Holodeck } from './interfaces/Holodeck';
+import { HypnoChair } from './interfaces/HypnoChair';
 import { ImplantChair } from './interfaces/ImplantChair';
 import { Intellicard } from './interfaces/Intellicard';
 import { KeycardAuth } from './interfaces/KeycardAuth';
@@ -91,12 +93,17 @@ import { SpawnersMenu } from './interfaces/SpawnersMenu';
 import { StationAlertConsole } from './interfaces/StationAlertConsole';
 import { SuitStorageUnit } from './interfaces/SuitStorageUnit';
 import { Tank } from './interfaces/Tank';
+import { TeleLogBrowser } from './interfaces/TelecommsLogBrowser';
+import { Telemonitor } from './interfaces/TelecommsMonitor';
+import { TelePDALog } from './interfaces/TelecommsPDALog';
+import { TeleInteract } from './interfaces/TelecommsInteraction';
 import { TankDispenser } from './interfaces/TankDispenser';
 import { Teleporter } from './interfaces/Teleporter';
 import { ThermoMachine } from './interfaces/ThermoMachine';
 import { TurbineComputer } from './interfaces/TurbineComputer';
 import { Uplink } from './interfaces/Uplink';
 import { VaultController } from './interfaces/VaultController';
+import { Vending } from './interfaces/Vending';
 import { Wires } from './interfaces/Wires';
 import { AtmosRelief } from './interfaces/AtmosRelief';
 
@@ -163,6 +170,10 @@ const ROUTES = {
   },
   bsa: {
     component: () => BluespaceArtillery,
+    scrollable: false,
+  },
+  canvas: {
+    component: () => Canvas,
     scrollable: false,
   },
   canister: {
@@ -288,6 +299,10 @@ const ROUTES = {
   holodeck: {
     component: () => Holodeck,
     scrollable: true,
+  },
+  hypnochair: {
+    component: () => HypnoChair,
+    scrollable: false,
   },
   implantchair: {
     component: () => ImplantChair,
@@ -501,6 +516,25 @@ const ROUTES = {
     component: () => SuitStorageUnit,
     scrollable: false,
   },
+  tcommsserver: {
+    component: () => TeleLogBrowser,
+    scrollable: true,
+    theme: 'ntos',
+  },
+  telemonitor: {
+    component: () => Telemonitor,
+    scrollable: true,
+    theme: 'ntos',
+  },
+  telepdalog: {
+    component: () => TelePDALog,
+    scrollable: true,
+    theme: 'ntos',
+  },
+  teleinteract: {
+    component: () => TeleInteract,
+    scrollable: true,
+  },
   tanks: {
     component: () => Tank,
     scrollable: false,
@@ -529,6 +563,10 @@ const ROUTES = {
   vault_controller: {
     component: () => VaultController,
     scrollable: false,
+  },
+  vending: {
+    component: () => Vending,
+    scrollable: true,
   },
   wires: {
     component: () => Wires,

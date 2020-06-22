@@ -30,6 +30,8 @@
 	var/wieldsound = null
 	var/unwieldsound = null
 	var/slowdown_wielded = 0
+	/// Do we need to be wielded to actively block/parry?
+	var/requires_wield_to_block_parry = TRUE
 	item_flags = SLOWS_WHILE_IN_HAND
 
 /obj/item/twohanded/proc/unwield(mob/living/carbon/user, show_message = TRUE)
@@ -90,6 +92,12 @@
 	user.put_in_inactive_hand(O)
 	set_slowdown(slowdown + slowdown_wielded)
 
+/obj/item/twohanded/can_active_block()
+	return ..() && (!requires_wield_to_block_parry || wielded)
+
+/obj/item/twohanded/can_active_parry()
+	return ..() && (!requires_wield_to_block_parry || wielded)
+
 /obj/item/twohanded/dropped(mob/user)
 	. = ..()
 	//handles unwielding a twohanded weapon when dropped as well as clearing up the offhand
@@ -129,6 +137,7 @@
 	return ..()
 
 /obj/item/twohanded/offhand/dropped(mob/living/user, show_message = TRUE) //Only utilized by dismemberment since you can't normally switch to the offhand to drop it.
+	. = ..()
 	var/obj/I = user.get_active_held_item()
 	if(I && istype(I, /obj/item/twohanded))
 		var/obj/item/twohanded/thw = I
@@ -274,6 +283,8 @@
 	throw_range = 5
 	w_class = WEIGHT_CLASS_SMALL
 	var/w_class_on = WEIGHT_CLASS_BULKY
+	item_flags = ITEM_CAN_PARRY | SLOWS_WHILE_IN_HAND | ITEM_CAN_BLOCK
+	block_parry_data = /datum/block_parry_data/dual_esword
 	force_unwielded = 3
 	force_wielded = 34
 	wieldsound = 'sound/weapons/saberon.ogg'
@@ -281,20 +292,57 @@
 	hitsound = "swing_hit"
 	var/hitsound_on = 'sound/weapons/blade1.ogg'
 	armour_penetration = 35
-	item_color = "green"
+	var/saber_color = "green"
 	light_color = "#00ff00"//green
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
-	block_chance = 75
 	max_integrity = 200
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 70)
 	resistance_flags = FIRE_PROOF
 	var/hacked = FALSE
+	/// Can this reflect all energy projectiles?
+	var/can_reflect = TRUE
 	var/brightness_on = 6 //TWICE AS BRIGHT AS A REGULAR ESWORD
 	var/list/possible_colors = list("red", "blue", "green", "purple")
 	var/list/rainbow_colors = list(LIGHT_COLOR_RED, LIGHT_COLOR_GREEN, LIGHT_COLOR_LIGHT_CYAN, LIGHT_COLOR_LAVENDER)
 	var/spinnable = TRUE
 	total_mass = 0.4 //Survival flashlights typically weigh around 5 ounces.
 	var/total_mass_on = 3.4
+
+/datum/block_parry_data/dual_esword
+	block_damage_absorption = 2
+	block_damage_multiplier = 0.15
+	block_damage_multiplier_override = list(
+		ATTACK_TYPE_MELEE = 0.25
+	)
+	block_start_delay = 0		// instantaneous block
+	block_stamina_cost_per_second = 2.5
+	block_stamina_efficiency = 3
+	block_lock_sprinting = TRUE
+	// no attacking while blocking
+	block_lock_attacking = TRUE
+	block_projectile_mitigation = 75
+
+	parry_time_windup = 0
+	parry_time_active = 8
+	parry_time_spindown = 0
+	// we want to signal to players the most dangerous phase, the time when automatic counterattack is a thing.
+	parry_time_windup_visual_override = 1
+	parry_time_active_visual_override = 3
+	parry_time_spindown_visual_override = 4
+	parry_flags = PARRY_DEFAULT_HANDLE_FEEDBACK		// esword users can attack while parrying.
+	parry_time_perfect = 2		// first ds isn't perfect
+	parry_time_perfect_leeway = 1
+	parry_imperfect_falloff_percent = 10
+	parry_efficiency_to_counterattack = 100
+	parry_efficiency_considered_successful = 25		// VERY generous
+	parry_efficiency_perfect = 90
+	parry_failed_stagger_duration = 3 SECONDS
+	parry_failed_clickcd_duration = CLICK_CD_MELEE
+
+	// more efficient vs projectiles
+	block_stamina_efficiency_override = list(
+		TEXT_ATTACK_TYPE_PROJECTILE = 4
+	)
 
 /obj/item/twohanded/dualsaber/suicide_act(mob/living/carbon/user)
 	if(wielded)
@@ -324,8 +372,8 @@
 /obj/item/twohanded/dualsaber/Initialize()
 	. = ..()
 	if(LAZYLEN(possible_colors))
-		item_color = pick(possible_colors)
-		switch(item_color)
+		saber_color = pick(possible_colors)
+		switch(saber_color)
 			if("red")
 				light_color = LIGHT_COLOR_RED
 			if("green")
@@ -341,7 +389,7 @@
 
 /obj/item/twohanded/dualsaber/update_icon_state()
 	if(wielded)
-		icon_state = "dualsaber[item_color][wielded]"
+		icon_state = "dualsaber[saber_color][wielded]"
 	else
 		icon_state = "dualsaber0"
 	clean_blood()
@@ -373,10 +421,13 @@
 	else
 		user.adjustStaminaLoss(25)
 
-/obj/item/twohanded/dualsaber/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
-	if(wielded)
-		return ..()
-	return 0
+/obj/item/twohanded/dualsaber/run_block(mob/living/owner, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return)
+	if(!wielded)
+		return NONE
+	if(can_reflect && is_energy_reflectable_projectile(object) && (attack_type & ATTACK_TYPE_PROJECTILE))
+		block_return[BLOCK_RETURN_REDIRECT_METHOD] = REDIRECT_METHOD_RETURN_TO_SENDER			//no you
+		return BLOCK_SHOULD_REDIRECT | BLOCK_SUCCESS | BLOCK_REDIRECTED
+	return ..()
 
 /obj/item/twohanded/dualsaber/attack_hulk(mob/living/carbon/human/user, does_attack_animation = 0)  //In case thats just so happens that it is still activated on the groud, prevents hulk from picking it up
 	if(wielded)
@@ -419,10 +470,6 @@
 /obj/item/twohanded/dualsaber/proc/rainbow_process()
 	light_color = pick(rainbow_colors)
 
-/obj/item/twohanded/dualsaber/IsReflect()
-	if(wielded)
-		return 1
-
 /obj/item/twohanded/dualsaber/ignition_effect(atom/A, mob/user)
 	// same as /obj/item/melee/transforming/energy, mostly
 	if(!wielded)
@@ -456,7 +503,7 @@
 		if(!hacked)
 			hacked = TRUE
 			to_chat(user, "<span class='warning'>2XRNBW_ENGAGE</span>")
-			item_color = "rainbow"
+			saber_color = "rainbow"
 			update_icon()
 		else
 			to_chat(user, "<span class='warning'>It's starting to look like a triple rainbow - no, nevermind.</span>")
@@ -530,7 +577,7 @@
 		update_light()
 	return TRUE
 
-/obj/item/twohanded/dualsaber/hypereutactic/worn_overlays(isinhands, icon_file, style_flags = NONE)
+/obj/item/twohanded/dualsaber/hypereutactic/worn_overlays(isinhands, icon_file, used_state, style_flags = NONE)
 	. = ..()
 	if(isinhands)
 		var/mutable_appearance/gem_inhand = mutable_appearance(icon_file, "hypereutactic_gem")
@@ -560,14 +607,12 @@
 	block_chance = 50
 	armour_penetration = 0
 	var/chaplain_spawnable = TRUE
+	can_reflect = FALSE
 	obj_flags = UNIQUE_RENAME
 
 /obj/item/twohanded/dualsaber/hypereutactic/chaplain/ComponentInitialize()
 	. = ..()
 	AddComponent(/datum/component/anti_magic, TRUE, TRUE, FALSE, null, null, FALSE)
-
-/obj/item/twohanded/dualsaber/hypereutactic/chaplain/IsReflect()
-	return FALSE
 
 //spears
 /obj/item/twohanded/spear
@@ -583,7 +628,7 @@
 	force_wielded = 18
 	throwforce = 20
 	throw_speed = 4
-	embedding = list("embedded_impact_pain_multiplier" = 3, "embed_chance" = 90)
+	embedding = list("impact_pain_mult" = 3)
 	armour_penetration = 10
 	custom_materials = list(/datum/material/iron=1150, /datum/material/glass=2075)
 	hitsound = 'sound/weapons/bladeslice.ogg'
@@ -668,6 +713,7 @@
 		force_wielded = 19
 		force_unwielded = 11
 		throwforce = 21
+		embedding = list(embed_chance = 75, pain_mult = 1.5) //plasmaglass spears are sharper
 		icon_prefix = "spearplasma"
 	qdel(tip)
 	var/obj/item/twohanded/spear/S = locate() in parts_list
@@ -682,6 +728,7 @@
 	if(G)
 		explosive = G
 		name = "explosive lance"
+		embedding = list(embed_chance = 0, pain_mult = 1)//elances should not be embeddable
 		desc = "A makeshift spear with [G] attached to it."
 	update_icon()
 
@@ -752,12 +799,16 @@
 	armour_penetration = 100
 	force_on = 30
 
-/obj/item/twohanded/required/chainsaw/doomslayer/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
-	if(attack_type == PROJECTILE_ATTACK)
+/obj/item/twohanded/required/chainsaw/doomslayer/check_block(mob/living/owner, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return)
+	block_return[BLOCK_RETURN_REFLECT_PROJECTILE_CHANCE] = 100
+	return ..()
+
+/obj/item/twohanded/required/chainsaw/doomslayer/run_block(mob/living/owner, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return)
+	if(attack_type & ATTACK_TYPE_PROJECTILE)
 		owner.visible_message("<span class='danger'>Ranged attacks just make [owner] angrier!</span>")
 		playsound(src, pick('sound/weapons/bulletflyby.ogg', 'sound/weapons/bulletflyby2.ogg', 'sound/weapons/bulletflyby3.ogg'), 75, 1)
-		return 1
-	return 0
+		return BLOCK_SUCCESS | BLOCK_PHYSICAL_EXTERNAL
+	return ..()
 
 //GREY TIDE
 /obj/item/twohanded/spear/grey_tide
@@ -844,6 +895,7 @@
 	return (BRUTELOSS)
 
 /obj/item/twohanded/pitchfork/demonic/pickup(mob/living/user)
+	. = ..()
 	if(isliving(user) && user.mind && user.owns_soul() && !is_devil(user))
 		var/mob/living/U = user
 		U.visible_message("<span class='warning'>As [U] picks [src] up, [U]'s arms briefly catch fire.</span>", \
@@ -897,19 +949,20 @@
 	AddComponent(/datum/component/butchering, 20, 105)
 	AddElement(/datum/element/sword_point)
 
-/obj/item/twohanded/vibro_weapon/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
+/obj/item/twohanded/vibro_weapon/run_block(mob/living/owner, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return)
 	if(wielded)
 		final_block_chance *= 2
-	if(wielded || attack_type != PROJECTILE_ATTACK)
+	if(wielded || !(attack_type & ATTACK_TYPE_PROJECTILE))
 		if(prob(final_block_chance))
-			if(attack_type == PROJECTILE_ATTACK)
+			if(attack_type & ATTACK_TYPE_PROJECTILE)
 				owner.visible_message("<span class='danger'>[owner] deflects [attack_text] with [src]!</span>")
 				playsound(src, pick('sound/weapons/bulletflyby.ogg', 'sound/weapons/bulletflyby2.ogg', 'sound/weapons/bulletflyby3.ogg'), 75, 1)
-				return 1
+				block_return[BLOCK_RETURN_REDIRECT_METHOD] = REDIRECT_METHOD_DEFLECT
+				return BLOCK_SUCCESS | BLOCK_REDIRECTED | BLOCK_SHOULD_REDIRECT | BLOCK_PHYSICAL_EXTERNAL
 			else
 				owner.visible_message("<span class='danger'>[owner] parries [attack_text] with [src]!</span>")
-				return 1
-	return 0
+				return BLOCK_SUCCESS | BLOCK_PHYSICAL_EXTERNAL
+	return NONE
 
 /obj/item/twohanded/vibro_weapon/update_icon_state()
 	icon_state = "hfrequency[wielded]"
@@ -1024,13 +1077,12 @@
 	force_wielded = 10
 	throwforce = 15			//if you are a madman and finish someone off with this, power to you.
 	throw_speed = 1
-	item_flags = NO_MAT_REDEMPTION | SLOWS_WHILE_IN_HAND
-	block_chance = 30
+	item_flags = NO_MAT_REDEMPTION | SLOWS_WHILE_IN_HAND | ITEM_CAN_BLOCK | ITEM_CAN_PARRY
+	block_parry_data = /datum/block_parry_data/electrostaff
 	attack_verb = list("struck", "beaten", "thwacked", "pulped")
 	total_mass = 5		//yeah this is a heavy thing, beating people with it while it's off is not going to do you any favors. (to curb stun-kill rampaging without it being on)
 	var/obj/item/stock_parts/cell/cell = /obj/item/stock_parts/cell/high
 	var/on = FALSE
-	var/can_block_projectiles = FALSE		//can't block guns
 	var/lethal_cost = 400			//10000/400*20 = 500. decent enough?
 	var/lethal_damage = 20
 	var/lethal_stam_cost = 4
@@ -1039,6 +1091,43 @@
 	var/stun_stamdmg = 40
 	var/stun_status_duration = 25
 	var/stun_stam_cost = 3.5
+
+// haha security desword time /s
+/datum/block_parry_data/electrostaff
+	block_damage_absorption = 0
+	block_damage_multiplier = 1
+	can_block_attack_types = ~ATTACK_TYPE_PROJECTILE		// only able to parry non projectiles
+	block_damage_multiplier_override = list(
+		TEXT_ATTACK_TYPE_MELEE = 0.5,		// only useful on melee and unarmed
+		TEXT_ATTACK_TYPE_UNARMED = 0.3
+	)
+	block_start_delay = 0.5		// near instantaneous block
+	block_stamina_cost_per_second = 3
+	block_stamina_efficiency = 2		// haha this is a horrible idea
+	// more slowdown that deswords because security
+	block_slowdown = 2
+	// no attacking while blocking
+	block_lock_attacking = TRUE
+
+	parry_time_windup = 1
+	parry_time_active = 5
+	parry_time_spindown = 0
+	parry_time_spindown_visual_override = 1
+	parry_flags = PARRY_DEFAULT_HANDLE_FEEDBACK | PARRY_LOCK_ATTACKING		// no attacking while parrying
+	parry_time_perfect = 0
+	parry_time_perfect_leeway = 0.5
+	parry_efficiency_perfect = 100
+	parry_imperfect_falloff_percent = 1
+	parry_imperfect_falloff_percent_override = list(
+		TEXT_ATTACK_TYPE_PROJECTILE = 45		// really crappy vs projectiles
+	)
+	parry_time_perfect_leeway_override = list(
+		TEXT_ATTACK_TYPE_PROJECTILE = 1		// extremely harsh window for projectiles
+	)
+	// not extremely punishing to fail, but no spamming the parry.
+	parry_cooldown = 2.5 SECONDS
+	parry_failed_stagger_duration = 1.5 SECONDS
+	parry_failed_clickcd_duration = 1 SECONDS
 
 /obj/item/twohanded/electrostaff/Initialize(mapload)
 	. = ..()
@@ -1054,13 +1143,6 @@
 	if(iscyborg(loc))
 		var/mob/living/silicon/robot/R = loc
 		. = R.get_cell()
-
-/obj/item/twohanded/electrostaff/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
-	if(!on)
-		return FALSE
-	if((attack_type == PROJECTILE_ATTACK) && !can_block_projectiles)
-		return FALSE
-	return ..()
 
 /obj/item/twohanded/electrostaff/proc/min_hitcost()
 	return min(stun_cost, lethal_cost)
@@ -1172,30 +1254,30 @@
 
 /obj/item/twohanded/electrostaff/attack(mob/living/target, mob/living/user)
 	if(IS_STAMCRIT(user))//CIT CHANGE - makes it impossible to baton in stamina softcrit
-		to_chat(user, "<span class='danger'>You're too exhausted for that.</span>")//CIT CHANGE - ditto
+		to_chat(user, "<span class='danger'>You're too exhausted to use [src] properly.</span>")//CIT CHANGE - ditto
 		return //CIT CHANGE - ditto
 	if(on && HAS_TRAIT(user, TRAIT_CLUMSY) && prob(50))
 		clowning_around(user)			//ouch!
 		return
 	if(iscyborg(target))
-		..()
-		return
-	if(target.check_shields(src, 0, "[user]'s [name]", MELEE_ATTACK)) //No message; check_shields() handles that
+		return ..()
+	var/list/return_list = list()
+	if(target.mob_run_block(src, 0, "[user]'s [name]", ATTACK_TYPE_MELEE, 0, user, null, return_list) & BLOCK_SUCCESS) //No message; run_block() handles that
 		playsound(target, 'sound/weapons/genhit.ogg', 50, 1)
 		return FALSE
 	if(user.a_intent != INTENT_HARM)
-		if(stun_act(target, user))
+		if(stun_act(target, user, null, return_list))
 			user.do_attack_animation(target)
 			user.adjustStaminaLossBuffered(stun_stam_cost)
 		return
-	else if(!harm_act(target, user))
+	else if(!harm_act(target, user, null, return_list))
 		return ..()		//if you can't fry them just beat them with it
 	else		//we did harm act them
 		user.do_attack_animation(target)
 		user.adjustStaminaLossBuffered(lethal_stam_cost)
 
-/obj/item/twohanded/electrostaff/proc/stun_act(mob/living/target, mob/living/user, no_charge_and_force = FALSE)
-	var/stunforce = stun_stamdmg
+/obj/item/twohanded/electrostaff/proc/stun_act(mob/living/target, mob/living/user, no_charge_and_force = FALSE, list/block_return = list())
+	var/stunforce = block_calculate_resultant_damage(stun_stamdmg, block_return)
 	if(!no_charge_and_force)
 		if(!on)
 			target.visible_message("<span class='warning'>[user] has bapped [target] with [src]. Luckily it was off.</span>", \
@@ -1225,8 +1307,8 @@
 		H.forcesay(GLOB.hit_appends)
 	return TRUE
 
-/obj/item/twohanded/electrostaff/proc/harm_act(mob/living/target, mob/living/user, no_charge_and_force = FALSE)
-	var/lethal_force = lethal_damage
+/obj/item/twohanded/electrostaff/proc/harm_act(mob/living/target, mob/living/user, no_charge_and_force = FALSE, list/block_return = list())
+	var/lethal_force = block_calculate_resultant_damage(lethal_damage, block_return)
 	if(!no_charge_and_force)
 		if(!on)
 			return FALSE		//standard item attack

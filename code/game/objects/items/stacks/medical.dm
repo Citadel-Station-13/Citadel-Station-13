@@ -13,18 +13,33 @@
 	novariants = FALSE
 	item_flags = NOBLUDGEON
 	var/self_delay = 50
+	var/other_delay = 0
+	var/repeating = FALSE
 
 /obj/item/stack/medical/attack(mob/living/M, mob/user)
 	. = ..()
+	try_heal(M, user)
+
+
+/obj/item/stack/medical/proc/try_heal(mob/living/M, mob/user, silent = FALSE)
 	if(!M.can_inject(user, TRUE))
 		return
 	if(M == user)
-		user.visible_message("<span class='notice'>[user] starts to apply \the [src] on [user.p_them()]self...</span>", "<span class='notice'>You begin applying \the [src] on yourself...</span>")
+		if(!silent)
+			user.visible_message("<span class='notice'>[user] starts to apply \the [src] on [user.p_them()]self...</span>", "<span class='notice'>You begin applying \the [src] on yourself...</span>")
 		if(!do_mob(user, M, self_delay, extra_checks=CALLBACK(M, /mob/living/proc/can_inject, user, TRUE)))
 			return
+	else if(other_delay)
+		if(!silent)
+			user.visible_message("<span class='notice'>[user] starts to apply \the [src] on [M].</span>", "<span class='notice'>You begin applying \the [src] on [M]...</span>")
+		if(!do_mob(user, M, other_delay, extra_checks=CALLBACK(M, /mob/living/proc/can_inject, user, TRUE)))
+			return
+
 	if(heal(M, user))
 		log_combat(user, M, "healed", src.name)
 		use(1)
+		if(repeating && amount > 0)
+			try_heal(M, user, TRUE)
 
 
 /obj/item/stack/medical/proc/heal(mob/living/M, mob/user)
@@ -59,6 +74,9 @@
 	self_delay = 20
 	grind_results = list(/datum/reagent/medicine/styptic_powder = 10)
 
+/obj/item/stack/medical/bruise_pack/one
+	amount = 1
+
 /obj/item/stack/medical/bruise_pack/heal(mob/living/M, mob/user)
 	if(M.stat == DEAD)
 		to_chat(user, "<span class='notice'> [M] is dead. You can not help [M.p_them()]!</span>")
@@ -72,6 +90,8 @@
 			to_chat(user, "<span class='notice'> [M] is at full health.</span>")
 			return FALSE
 		user.visible_message("<span class='green'>[user] applies \the [src] on [M].</span>", "<span class='green'>You apply \the [src] on [M].</span>")
+		if(AmBloodsucker(M))
+			return
 		M.heal_bodypart_damage((heal_brute/2))
 		return TRUE
 	if(iscarbon(M))
@@ -91,6 +111,7 @@
 	var/stop_bleeding = 1800
 	var/heal_brute = 5
 	self_delay = 10
+	custom_price = PRICE_REALLY_CHEAP
 
 /obj/item/stack/medical/gauze/heal(mob/living/M, mob/user)
 	if(ishuman(M))
@@ -98,6 +119,7 @@
 		if(!H.bleedsuppress && H.bleed_rate) //so you can't stack bleed suppression
 			H.suppress_bloodloss(stop_bleeding)
 			to_chat(user, "<span class='notice'>You stop the bleeding of [M]!</span>")
+			H.adjustBruteLoss(-(heal_brute))
 			return TRUE
 	to_chat(user, "<span class='notice'>You can not use \the [src] on [M]!</span>")
 
@@ -125,6 +147,15 @@
 	stop_bleeding = 900
 	heal_brute = 0
 
+/obj/item/stack/medical/gauze/adv
+	name = "sterilized medical gauze"
+	desc = "A roll of elastic sterilized cloth that is extremely effective at stopping bleeding, heals minor wounds and cleans them."
+	singular_name = "sterilized medical gauze"
+	self_delay = 5
+
+/obj/item/stack/medical/gauze/adv/one
+	amount = 1
+
 /obj/item/stack/medical/gauze/cyborg
 	custom_materials = null
 	is_cyborg = 1
@@ -142,14 +173,124 @@
 	self_delay = 20
 	grind_results = list(/datum/reagent/medicine/silver_sulfadiazine = 10)
 
+/obj/item/stack/medical/ointment/one
+	amount = 1
+
 /obj/item/stack/medical/ointment/heal(mob/living/M, mob/user)
 	if(M.stat == DEAD)
 		to_chat(user, "<span class='notice'> [M] is dead. You can not help [M.p_them()]!</span>")
 		return
 	if(iscarbon(M))
 		return heal_carbon(M, user, 0, heal_burn)
+	if(AmBloodsucker(M))
+		return
 	to_chat(user, "<span class='notice'>You can't heal [M] with the \the [src]!</span>")
 
 /obj/item/stack/medical/ointment/suicide_act(mob/living/user)
 	user.visible_message("<span class='suicide'>[user] is squeezing \the [src] into [user.p_their()] mouth! [user.p_do(TRUE)]n't [user.p_they()] know that stuff is toxic?</span>")
 	return TOXLOSS
+
+/obj/item/stack/medical/suture
+	name = "suture"
+	desc = "Sterile sutures used to seal up cuts and lacerations."
+	gender = PLURAL
+	singular_name = "suture"
+	icon_state = "suture"
+	self_delay = 30
+	other_delay = 10
+	amount = 15
+	max_amount = 15
+	repeating = TRUE
+	var/heal_brute = 10
+	grind_results = list(/datum/reagent/medicine/spaceacillin = 2)
+
+/obj/item/stack/medical/suture/one
+	amount = 1
+
+/obj/item/stack/medical/suture/heal(mob/living/M, mob/user)
+	. = ..()
+	if(M.stat == DEAD)
+		to_chat(user, "<span class='warning'>[M] is dead! You can not help [M.p_them()].</span>")
+		return
+	if(iscarbon(M))
+		return heal_carbon(M, user, heal_brute, 0)
+	if(isanimal(M))
+		var/mob/living/simple_animal/critter = M
+		if (!(critter.healable))
+			to_chat(user, "<span class='warning'>You cannot use \the [src] on [M]!</span>")
+			return FALSE
+		else if (critter.health == critter.maxHealth)
+			to_chat(user, "<span class='notice'>[M] is at full health.</span>")
+			return FALSE
+		user.visible_message("<span class='green'>[user] applies \the [src] on [M].</span>", "<span class='green'>You apply \the [src] on [M].</span>")
+		M.heal_bodypart_damage(heal_brute)
+		return TRUE
+
+	to_chat(user, "<span class='warning'>You can't heal [M] with the \the [src]!</span>")
+
+/obj/item/stack/medical/mesh
+	name = "regenerative mesh"
+	desc = "A bacteriostatic mesh used to dress burns."
+	gender = PLURAL
+	singular_name = "regenerative mesh"
+	icon_state = "regen_mesh"
+	self_delay = 30
+	other_delay = 10
+	amount = 15
+	max_amount = 15
+	repeating = TRUE
+	var/heal_burn = 10
+	var/is_open = TRUE ///This var determines if the sterile packaging of the mesh has been opened.
+	grind_results = list(/datum/reagent/medicine/spaceacillin = 2)
+
+/obj/item/stack/medical/mesh/one
+	amount = 1
+
+/obj/item/stack/medical/mesh/Initialize()
+	. = ..()
+	if(amount == max_amount)	 //only seal full mesh packs
+		is_open = FALSE
+		update_icon()
+
+/obj/item/stack/medical/mesh/update_icon_state()
+	if(!is_open)
+		icon_state = "regen_mesh_closed"
+	else
+		return ..()
+
+/obj/item/stack/medical/mesh/heal(mob/living/M, mob/user)
+	. = ..()
+	if(M.stat == DEAD)
+		to_chat(user, "<span class='warning'>[M] is dead! You can not help [M.p_them()].</span>")
+		return
+	if(iscarbon(M))
+		return heal_carbon(M, user, 0, heal_burn)
+	to_chat(user, "<span class='warning'>You can't heal [M] with the \the [src]!</span>")
+
+
+/obj/item/stack/medical/mesh/try_heal(mob/living/M, mob/user, silent = FALSE)
+	if(!is_open)
+		to_chat(user, "<span class='warning'>You need to open [src] first.</span>")
+		return
+	. = ..()
+
+/obj/item/stack/medical/mesh/AltClick(mob/living/user)
+	if(!is_open)
+		to_chat(user, "<span class='warning'>You need to open [src] first.</span>")
+		return
+	. = ..()
+
+/obj/item/stack/medical/mesh/attack_hand(mob/user)
+	if(!is_open & user.get_inactive_held_item() == src)
+		to_chat(user, "<span class='warning'>You need to open [src] first.</span>")
+		return
+	. = ..()
+
+/obj/item/stack/medical/mesh/attack_self(mob/user)
+	if(!is_open)
+		is_open = TRUE
+		to_chat(user, "<span class='notice'>You open the sterile mesh package.</span>")
+		update_icon()
+		playsound(src, 'sound/items/poster_ripped.ogg', 20, TRUE)
+		return
+	. = ..()

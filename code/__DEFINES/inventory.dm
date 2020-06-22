@@ -1,13 +1,5 @@
 /*ALL DEFINES RELATED TO INVENTORY OBJECTS, MANAGEMENT, ETC, GO HERE*/
 
-//ITEM INVENTORY WEIGHT, FOR w_class
-#define WEIGHT_CLASS_TINY     1 //Usually items smaller then a human hand, ex: Playing Cards, Lighter, Scalpel, Coins/Money
-#define WEIGHT_CLASS_SMALL    2 //Pockets can hold small and tiny items, ex: Flashlight, Multitool, Grenades, GPS Device
-#define WEIGHT_CLASS_NORMAL   3 //Standard backpacks can carry tiny, small & normal items, ex: Fire extinguisher, Stunbaton, Gas Mask, Metal Sheets
-#define WEIGHT_CLASS_BULKY    4 //Items that can be weilded or equipped but not stored in a normal bag, ex: Defibrillator, Backpack, Space Suits
-#define WEIGHT_CLASS_HUGE     5 //Usually represents objects that require two hands to operate, ex: Shotgun, Two Handed Melee Weapons - Can not fit in Boh
-#define WEIGHT_CLASS_GIGANTIC 6 //Essentially means it cannot be picked up or placed in an inventory, ex: Mech Parts, Safe - Can not fit in Boh
-
 //Inventory depth: limits how many nested storage items you can access directly.
 //1: stuff in mob, 2: stuff in backpack, 3: stuff in box in backpack, etc
 #define INVENTORY_DEPTH		3
@@ -140,13 +132,17 @@
 #define FEMALE_UNIFORM_FULL			1
 #define FEMALE_UNIFORM_TOP			2
 
-//flags for outfits that have mutantrace variants: These are hard sprited too.
+//flags for outfits that have mutant race variants: Most of these require additional sprites to work.
 #define STYLE_DIGITIGRADE		(1<<0) //jumpsuits, suits and shoes
 #define STYLE_MUZZLE			(1<<1) //hats or masks
 #define STYLE_SNEK_TAURIC		(1<<2) //taur-friendly suits
 #define STYLE_PAW_TAURIC		(1<<3)
 #define STYLE_HOOF_TAURIC		(1<<4)
 #define STYLE_ALL_TAURIC		(STYLE_SNEK_TAURIC|STYLE_PAW_TAURIC|STYLE_HOOF_TAURIC)
+#define STYLE_NO_ANTHRO_ICON	(1<<5) //When digis fit the default sprite fine and need no copypasted states. This is the case of skirts and winter coats, for example.
+#define USE_SNEK_CLIP_MASK		(1<<6)
+#define USE_QUADRUPED_CLIP_MASK	(1<<7)
+#define USE_TAUR_CLIP_MASK		(USE_SNEK_CLIP_MASK|USE_QUADRUPED_CLIP_MASK)
 
 //digitigrade legs settings.
 #define NOT_DIGITIGRADE				0
@@ -155,7 +151,7 @@
 
 //flags for covering body parts
 #define GLASSESCOVERSEYES	(1<<0)
-#define MASKCOVERSEYES		(1<<1)		// get rid of some of the other retardation in these flags
+#define MASKCOVERSEYES		(1<<1)		// get rid of some of the other stupidity in these flags
 #define HEADCOVERSEYES		(1<<2)		// feel free to realloc these numbers for other purposes
 #define MASKCOVERSMOUTH		(1<<3)		// on other items, these are just for mask/head
 #define HEADCOVERSMOUTH		(1<<4)
