@@ -101,6 +101,10 @@ GLOBAL_LIST_INIT(cargo_shuttle_leave_behind_typecache, typecacheof(list(
 	if(!SSshuttle.shoppinglist.len)
 		return
 
+	var/list/obj/miscboxes = list() //miscboxes are combo boxes that contain all goody orders grouped
+	var/list/misc_order_num = list() //list of strings of order numbers, so that the manifest can show all orders in a box
+	var/list/misc_contents = list() //list of lists of items that each box will contain
+
 	var/list/empty_turfs = list()
 	for(var/place in shuttle_areas)
 		var/area/shuttle/shuttle_area = place
@@ -117,10 +121,13 @@ GLOBAL_LIST_INIT(cargo_shuttle_leave_behind_typecache, typecacheof(list(
 			break
 
 		var/price = SO.pack.cost
+		if(SO.applied_coupon)
+			price *= (1 - SO.applied_coupon.discount_pct_off)
 		var/datum/bank_account/D
 		if(SO.paying_account) //Someone paid out of pocket
 			D = SO.paying_account
-			price *= 1.1 //TODO make this customizable by the quartermaster
+			if(!SO.pack.goody)
+				price *= 1.1 //TODO make this customizable by the quartermaster
 		else
 			D = cargo_budget
 		if(D)
@@ -136,13 +143,45 @@ GLOBAL_LIST_INIT(cargo_shuttle_leave_behind_typecache, typecacheof(list(
 		value += SO.pack.cost
 		SSshuttle.shoppinglist -= SO
 		SSshuttle.orderhistory += SO
+		QDEL_NULL(SO.applied_coupon)
 
-		SO.generate(pick_n_take(empty_turfs))
+		if(SO.pack.goody) //goody means it gets piled in the miscbox
+			if(SO.paying_account)
+				if(!miscboxes.len || !miscboxes[D.account_holder]) //if there's no miscbox for this person
+					miscboxes[D.account_holder] = new /obj/item/storage/lockbox/order(pick_n_take(empty_turfs))
+					var/obj/item/storage/lockbox/order/our_box = miscboxes[D.account_holder]
+					our_box.buyer_account = SO.paying_account
+					miscboxes[D.account_holder].name = "small items case - purchased by [D.account_holder]"
+					misc_contents[D.account_holder] = list()
+				for (var/item in SO.pack.contains)
+					misc_contents[D.account_holder] += item
+				misc_order_num[D.account_holder] = "[misc_order_num[D.account_holder]]#[SO.id]  "
+			else //No private payment, so we just stuff it all into a generic crate
+				if(!miscboxes.len || !miscboxes["Cargo"])
+					miscboxes["Cargo"] = new /obj/structure/closet/secure_closet/goodies(pick_n_take(empty_turfs))
+					miscboxes["Cargo"].name = "small items closet"
+					misc_contents["Cargo"] = list()
+					miscboxes["Cargo"].req_access = list()
+				for (var/item in SO.pack.contains)
+					misc_contents["Cargo"] += item
+					//new item(miscboxes["Cargo"])
+				if(SO.pack.access)
+					miscboxes["Cargo"].req_access += SO.pack.access
+				misc_order_num["Cargo"] = "[misc_order_num["Cargo"]]#[SO.id]  "
+		else
+			SO.generate(pick_n_take(empty_turfs))
+
 		SSblackbox.record_feedback("nested tally", "cargo_imports", 1, list("[SO.pack.cost]", "[SO.pack.name]"))
 		investigate_log("Order #[SO.id] ([SO.pack.name], placed by [key_name(SO.orderer_ckey)]), paid by [D.account_holder] has shipped.", INVESTIGATE_CARGO)
 		if(SO.pack.dangerous)
 			message_admins("\A [SO.pack.name] ordered by [ADMIN_LOOKUPFLW(SO.orderer_ckey)], paid by [D.account_holder] has shipped.")
 		purchases++
+
+	for(var/I in miscboxes)
+		var/datum/supply_order/SO = new/datum/supply_order()
+		SO.id = misc_order_num[I]
+		SO.generateCombo(miscboxes[I], I, misc_contents[I])
+		qdel(SO)
 
 	investigate_log("[purchases] orders in this shipment, worth [value] credits. [cargo_budget.account_balance] credits left.", INVESTIGATE_CARGO)
 

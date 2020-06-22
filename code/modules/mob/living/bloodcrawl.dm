@@ -37,10 +37,10 @@
 		C.put_in_hands(B1)
 		C.put_in_hands(B2)
 		C.regenerate_icons()
-	src.notransform = TRUE
+	src.mob_transforming = TRUE
 	spawn(0)
 		bloodpool_sink(B)
-		src.notransform = FALSE
+		src.mob_transforming = FALSE
 	return 1
 
 /mob/living/proc/bloodpool_sink(obj/effect/decal/cleanable/B)
@@ -155,7 +155,7 @@
 	addtimer(CALLBACK(src, /atom/.proc/remove_atom_colour, TEMPORARY_COLOUR_PRIORITY, newcolor), 6 SECONDS)
 
 /mob/living/proc/phasein(obj/effect/decal/cleanable/B)
-	if(src.notransform)
+	if(src.mob_transforming)
 		to_chat(src, "<span class='warning'>Finish eating first!</span>")
 		return 0
 	B.visible_message("<span class='warning'>[B] starts to bubble...</span>")

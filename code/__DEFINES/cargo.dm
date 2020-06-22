@@ -33,3 +33,7 @@
     list("gondolapod", "gondola", "The silent walker. This one seems to be part of a delivery agency."),\
     list("", "", "")\
 )
+
+#define PACK_GOODY_NONE		0
+#define PACK_GOODY_PUBLIC	1 //can be bought by both privates and cargo
+#define PACK_GOODY_PRIVATE	2 //can be bought only by privates

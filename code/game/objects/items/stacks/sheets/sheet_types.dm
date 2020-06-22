@@ -781,6 +781,9 @@ GLOBAL_LIST_INIT(plastic_recipes, list(
 /obj/item/stack/sheet/plastic/fifty
 	amount = 50
 
+/obj/item/stack/sheet/plastic/twenty
+	amount = 20
+
 /obj/item/stack/sheet/plastic/five
 	amount = 5
 

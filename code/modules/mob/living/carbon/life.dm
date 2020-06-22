@@ -1,29 +1,19 @@
-/mob/living/carbon/Life()
-	set invisibility = 0
-
-	if(notransform)
-		return
-
-	if(damageoverlaytemp)
-		damageoverlaytemp = 0
-		update_damage_hud()
-
+/mob/living/carbon/BiologicalLife(seconds, times_fired)
+	if(stat == DEAD)
+		return FALSE
 	//Reagent processing needs to come before breathing, to prevent edge cases.
 	handle_organs()
-
-	. = ..()
-
-	if (QDELETED(src))
+	if(!(. = ..()))
 		return
-
-	if(.) //not dead
-		handle_blood()
-
+	handle_blood()
+	// handle_blood *could* kill us.
+	// we should probably have a better system for if we need to check for death or something in the future hmw
 	if(stat != DEAD)
 		var/bprv = handle_bodyparts()
 		if(bprv & BODYPART_LIFE_UPDATE_HEALTH)
 			updatehealth()
 	update_stamina()
+	doSprintBufferRegen()
 
 	if(stat != DEAD)
 		handle_brain_damage()
@@ -35,12 +25,17 @@
 		stop_sound_channel(CHANNEL_HEARTBEAT)
 		handle_death()
 		rot()
+		. = FALSE
 
 	//Updates the number of stored chemicals for powers
 	handle_changeling()
 
-	if(stat != DEAD)
-		return 1
+/mob/living/carbon/PhysicalLife(seconds, times_fired)
+	if(!(. = ..()))
+		return
+	if(damageoverlaytemp)
+		damageoverlaytemp = 0
+		update_damage_hud()
 
 //Procs called while dead
 /mob/living/carbon/proc/handle_death()
