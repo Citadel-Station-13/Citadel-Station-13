@@ -3478,6 +3478,7 @@
 #include "modular_citadel\code\modules\reagents\objects\items.dm"
 #include "sandcode\code\__DEFINES\traits.dm"
 #include "sandcode\code\datums\traits\negative.dm"
+#include "sandcode\code\datums\traits\neutral.dm"
 #include "sandcode\code\game\area\ship_area.dm"
 #include "sandcode\code\game\mecha\mech_fabricator.dm"
 #include "sandcode\code\game\objects\effects\contraband.dm"
