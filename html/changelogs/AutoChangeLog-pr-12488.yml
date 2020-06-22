@@ -1,9 +1,0 @@
-author: "Ghommie (porting PRs by zxaber, Ryll-Ryll, AnturK)"
-delete-after: True
-changes: 
-  - tweak: "Certain small items purchased through cargo now get grouped into a single box. They also are immune to the 10% private account fee."
-  - rscadd: "Added single-order options for several existing products in the Cargo Catalog."
-  - tweak: "Medkit listings are now single-pack items, and considered small items that get grouped into single boxes. Price for medkits is as close to unchanged as is reasonable."
-  - rscadd: "You can now beat on vending machines to try and knock loose free stuff! You can also almost kill yourself doing it, so it's your call if your life is worth ten bucks."
-  - rscadd: "Cigarette packets now have coupons on the back for small cargo items! Smoking DOES pay!"
-  - tweak: "Some single/small items in cargo have been rebranded as goodies, come in lockboxes rather than crates, and can only be purchased with private accounts."
