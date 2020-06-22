@@ -3508,6 +3508,7 @@
 #include "sandcode\code\modules\research\designs\misc_designs.dm"
 #include "sandcode\code\modules\research\designs\weapon_designs.dm"
 #include "sandcode\code\modules\research\techweb\all_nodes.dm"
+#include "sandcode\code\modules\shuttle\spaceship_navigation_beacon.dm"
 #include "sandcode\code\modules\spells\spell_types\shapeshift.dm"
 #include "sandcode\code\modules\surgery\organs\augments_arms.dm"
 #include "sandcode\code\modules\telescience\telepad.dm"
