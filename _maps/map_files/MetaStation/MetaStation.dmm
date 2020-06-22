@@ -59904,7 +59904,9 @@
 /obj/structure/chair{
 	dir = 8
 	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
+	dir = 4
+	},
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
 "cxf" = (
@@ -61208,6 +61210,9 @@
 /obj/structure/disposalpipe/segment,
 /obj/structure/cable/yellow{
 	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 6
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
@@ -62607,14 +62612,14 @@
 	dir = 4;
 	pixel_x = -23
 	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 6
-	},
 /obj/machinery/light/small{
 	dir = 1
 	},
 /obj/machinery/newscaster{
 	pixel_y = 32
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 6
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/virology)
@@ -62910,34 +62915,30 @@
 /turf/open/floor/plasteel/dark,
 /area/science/circuit)
 "cDA" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
+/obj/structure/disposalpipe/segment,
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
 	},
-/turf/closed/wall/r_wall,
-/area/maintenance/aft)
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/turf/open/floor/plasteel/white,
+/area/medical/medbay/central)
 "cDB" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
 /obj/structure/disposalpipe/segment{
 	dir = 6
 	},
-/obj/machinery/meter,
 /turf/open/floor/plating,
 /area/maintenance/aft)
 "cDC" = (
-/obj/structure/disposalpipe/segment{
-	dir = 4
+/obj/effect/spawner/structure/window/reinforced,
+/obj/structure/cable/yellow{
+	icon_state = "0-2"
 	},
-/obj/machinery/atmospherics/components/binary/valve/on{
-	dir = 4
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
+	dir = 1
 	},
 /turf/open/floor/plating,
-/area/maintenance/aft)
+/area/medical/virology)
 "cDD" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
@@ -63509,6 +63510,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plating,
 /area/medical/virology)
 "cEJ" = (
@@ -63928,6 +63930,10 @@
 /obj/structure/cable/yellow{
 	icon_state = "1-4"
 	},
+/mob/living/carbon/monkey,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 1
+	},
 /turf/open/floor/plasteel/freezer,
 /area/medical/virology)
 "cFD" = (
@@ -63944,6 +63950,9 @@
 	icon_state = "1-4"
 	},
 /mob/living/carbon/monkey,
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 1
+	},
 /turf/open/floor/plasteel/freezer,
 /area/medical/virology)
 "cFF" = (
@@ -64346,6 +64355,7 @@
 /turf/open/floor/plasteel/freezer,
 /area/medical/virology)
 "cGw" = (
+/mob/living/carbon/monkey,
 /turf/open/floor/plasteel/freezer,
 /area/medical/virology)
 "cGx" = (
@@ -73152,9 +73162,6 @@
 /turf/open/floor/plating,
 /area/quartermaster/sorting)
 "dmK" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
 /obj/structure/closet/firecloset,
 /turf/open/floor/plating,
 /area/maintenance/aft)
@@ -75841,6 +75848,7 @@
 /obj/structure/cable/yellow{
 	icon_state = "1-2"
 	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
 "hHd" = (
@@ -76302,9 +76310,7 @@
 /obj/structure/cable/yellow{
 	icon_state = "1-2"
 	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden,
 /turf/open/floor/plasteel/white,
 /area/medical/virology)
 "iXj" = (
@@ -76315,6 +76321,7 @@
 /obj/structure/cable/yellow{
 	icon_state = "1-8"
 	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
 "iZd" = (
@@ -76663,12 +76670,6 @@
 	},
 /turf/open/floor/circuit/telecomms,
 /area/science/xenobiology)
-"jRp" = (
-/obj/machinery/atmospherics/components/unary/outlet_injector/on{
-	dir = 4
-	},
-/turf/open/floor/plating/airless,
-/area/maintenance/aft)
 "jRX" = (
 /obj/structure/disposalpipe/segment{
 	dir = 6
@@ -76713,12 +76714,12 @@
 /obj/effect/turf_decal/tile/green{
 	dir = 4
 	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
 /obj/machinery/camera{
 	c_tag = "Medbay - Virology Breakroom";
 	network = list("ss13","medbay")
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/virology)
@@ -80032,17 +80033,6 @@
 /obj/machinery/holopad,
 /turf/open/floor/plasteel,
 /area/medical/chemistry)
-"sxn" = (
-/obj/structure/disposalpipe/segment,
-/obj/structure/cable/yellow{
-	icon_state = "1-2"
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
-/turf/open/floor/plating,
-/area/maintenance/aft)
 "syi" = (
 /obj/structure/table,
 /obj/machinery/recharger{
@@ -80265,6 +80255,7 @@
 /obj/structure/cable/yellow{
 	icon_state = "1-2"
 	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel/white,
 /area/medical/virology)
 "sVl" = (
@@ -80509,9 +80500,6 @@
 "twd" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 9
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 6
@@ -80951,9 +80939,6 @@
 /turf/open/floor/plasteel,
 /area/maintenance/disposal/incinerator)
 "uwC" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 6
-	},
 /obj/machinery/light/small{
 	dir = 4
 	},
@@ -81420,13 +81405,6 @@
 /obj/machinery/atmospherics/pipe/simple/dark/visible,
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
-"vmM" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
-/obj/effect/spawner/lootdrop/maintenance,
-/turf/open/floor/plating,
-/area/maintenance/aft)
 "vmU" = (
 /obj/structure/table,
 /obj/item/razor{
@@ -81666,12 +81644,10 @@
 	dir = 8;
 	pixel_x = -24
 	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 9
-	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel/white,
 /area/medical/virology)
 "vLx" = (
@@ -97205,7 +97181,7 @@ ack
 sIQ
 ack
 ack
-jRp
+rJz
 ezm
 mXk
 sdw
@@ -97462,7 +97438,7 @@ bTs
 njG
 bTs
 bTs
-qTq
+bTs
 jbx
 bTs
 bTs
@@ -97976,7 +97952,7 @@ bTs
 tTv
 bTs
 bTs
-vmM
+cJl
 cKs
 dAx
 cRb
@@ -98233,7 +98209,7 @@ cgJ
 vwM
 cID
 cID
-sxn
+cID
 dND
 xWo
 cID
@@ -98490,7 +98466,7 @@ cLf
 kHW
 dAx
 dAx
-cYT
+dAx
 cKs
 dAx
 dAx
@@ -99003,7 +98979,7 @@ dAx
 cLf
 cRb
 clK
-cDA
+clK
 cEE
 clK
 clK
@@ -99517,7 +99493,7 @@ dDw
 dDw
 bTs
 clK
-cDC
+cKs
 cEG
 cFA
 clK
@@ -100546,7 +100522,7 @@ ePW
 cBR
 lvE
 cDF
-cEI
+cDC
 cFE
 cGw
 cBR
@@ -103366,9 +103342,9 @@ cuj
 lxX
 ljw
 czN
-czN
+cDA
 iXj
-czN
+cDA
 hFf
 sUp
 iWJ
