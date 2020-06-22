@@ -38,6 +38,8 @@ GLOBAL_LIST_EMPTY(electrochromatic_window_lookup)
 	var/hitsound = 'sound/effects/Glasshit.ogg'
 	rad_insulation = RAD_VERY_LIGHT_INSULATION
 	rad_flags = RAD_PROTECT_CONTENTS
+	flags_ricochet = RICOCHET_HARD
+	ricochet_chance_mod = 0.4
 
 	/// Electrochromatic status
 	var/electrochromatic_status = NOT_ELECTROCHROMATIC
@@ -525,6 +527,7 @@ GLOBAL_LIST_EMPTY(electrochromatic_window_lookup)
 	explosion_block = 1
 	glass_type = /obj/item/stack/sheet/rglass
 	rad_insulation = RAD_HEAVY_INSULATION
+	ricochet_chance_mod = 0.8
 
 /obj/structure/window/reinforced/spawner/east
 	dir = EAST
@@ -690,6 +693,7 @@ GLOBAL_LIST_EMPTY(electrochromatic_window_lookup)
 	level = 3
 	glass_type = /obj/item/stack/sheet/titaniumglass
 	glass_amount = 2
+	ricochet_chance_mod = 0.9
 
 /obj/structure/window/shuttle/narsie_act()
 	add_atom_colour("#3C3434", FIXED_COLOUR_PRIORITY)

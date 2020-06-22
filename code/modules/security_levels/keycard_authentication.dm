@@ -20,6 +20,7 @@ GLOBAL_DATUM_INIT(keycard_events, /datum/events, new)
 	var/event = ""
 	var/obj/machinery/keycard_auth/event_source
 	var/mob/triggerer = null
+	var/obj/item/card/id/first_id = null
 	var/waiting = 0
 
 /obj/machinery/keycard_auth/Initialize()
@@ -56,32 +57,37 @@ GLOBAL_DATUM_INIT(keycard_events, /datum/events, new)
 	return ..()
 
 /obj/machinery/keycard_auth/ui_act(action, params)
-	if(..() || waiting || !allowed(usr))
+	if(..() || waiting)
+		return
+	var/obj/item/card/id/ID = usr.get_idcard(TRUE)
+	if(!ID || !istype(ID))
+		return
+	if(!check_access(ID))
 		return
 	switch(action)
 		if("red_alert")
 			if(!event_source)
-				sendEvent(KEYCARD_RED_ALERT)
+				sendEvent(KEYCARD_RED_ALERT, ID)
 				. = TRUE
 		if("emergency_maint")
 			if(!event_source)
-				sendEvent(KEYCARD_EMERGENCY_MAINTENANCE_ACCESS)
+				sendEvent(KEYCARD_EMERGENCY_MAINTENANCE_ACCESS, ID)
 				. = TRUE
 		if("auth_swipe")
-			if(event_source)
+			if(event_source && ID != first_id && first_id)
 				event_source.trigger_event(usr)
 				event_source = null
 				. = TRUE
 		if("bsa_unlock")
 			if(!event_source)
-				sendEvent(KEYCARD_BSA_UNLOCK)
+				sendEvent(KEYCARD_BSA_UNLOCK, ID)
 				. = TRUE
 
-/obj/machinery/keycard_auth/proc/sendEvent(event_type)
+/obj/machinery/keycard_auth/proc/sendEvent(event_type, trigger_id)
 	triggerer = usr
 	event = event_type
 	waiting = 1
-	GLOB.keycard_events.fireEvent("triggerEvent", src)
+	GLOB.keycard_events.fireEvent("triggerEvent", src, trigger_id)
 	addtimer(CALLBACK(src, .proc/eventSent), 20)
 
 /obj/machinery/keycard_auth/proc/eventSent()
@@ -89,14 +95,16 @@ GLOBAL_DATUM_INIT(keycard_events, /datum/events, new)
 	event = ""
 	waiting = 0
 
-/obj/machinery/keycard_auth/proc/triggerEvent(source)
+/obj/machinery/keycard_auth/proc/triggerEvent(source, trigger_id)
 	icon_state = "auth_on"
+	first_id = trigger_id
 	event_source = source
 	addtimer(CALLBACK(src, .proc/eventTriggered), 20)
 
 /obj/machinery/keycard_auth/proc/eventTriggered()
 	icon_state = "auth_off"
 	event_source = null
+	first_id = null
 
 /obj/machinery/keycard_auth/proc/trigger_event(confirmer)
 	log_game("[key_name(triggerer)] triggered and [key_name(confirmer)] confirmed event [event]")

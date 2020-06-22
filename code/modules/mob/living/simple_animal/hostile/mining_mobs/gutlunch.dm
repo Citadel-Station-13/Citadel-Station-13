@@ -114,8 +114,9 @@
 	name = "guthen"
 	gender = FEMALE
 
-/mob/living/simple_animal/hostile/asteroid/gutlunch/guthen/Life()
-	..()
+/mob/living/simple_animal/hostile/asteroid/gutlunch/guthen/BiologicalLife(seconds, times_fired)
+	if(!(. = ..()))
+		return
 	if(udder.reagents.total_volume == udder.reagents.maximum_volume) //Only breed when we're full.
 		make_babies()
 

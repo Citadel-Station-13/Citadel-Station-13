@@ -118,14 +118,14 @@
 				revert_cast()
 				return ..()
 		else
-			user.notransform = TRUE
+			user.mob_transforming = TRUE
 			user.fakefire()
 			to_chat(src, "<span class='warning'>You begin to phase back into sinful flames.</span>")
 			if(do_mob(user,user,150))
 				user.infernalphaseout()
 			else
 				to_chat(user, "<span class='warning'>You must remain still while exiting.</span>")
-				user.notransform = FALSE
+				user.mob_transforming = FALSE
 				user.fakefireextinguish()
 		start_recharge()
 		return
@@ -149,11 +149,11 @@
 	ExtinguishMob()
 	forceMove(holder)
 	holder = holder
-	notransform = 0
+	mob_transforming = 0
 	fakefireextinguish()
 
 /mob/living/proc/infernalphasein()
-	if(notransform)
+	if(mob_transforming)
 		to_chat(src, "<span class='warning'>You're too busy to jaunt in.</span>")
 		return FALSE
 	fakefire()

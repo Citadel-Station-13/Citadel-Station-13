@@ -76,6 +76,8 @@ SUBSYSTEM_DEF(air)
 		var/list/pipenet_rebuilds = pipenets_needing_rebuilt
 		for(var/thing in pipenet_rebuilds)
 			var/obj/machinery/atmospherics/AT = thing
+			if(!istype(AT))
+				continue
 			AT.build_network()
 		cost_rebuilds = MC_AVERAGE(cost_rebuilds, TICK_DELTA_TO_MS(TICK_USAGE_REAL - timer))
 		pipenets_needing_rebuilt.Cut()

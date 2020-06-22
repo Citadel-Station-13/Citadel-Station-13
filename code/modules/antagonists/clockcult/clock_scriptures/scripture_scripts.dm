@@ -115,7 +115,7 @@
 	tier = SCRIPTURE_SCRIPT
 	space_allowed = TRUE
 	primary_component = VANGUARD_COGWHEEL
-	sort_priority = 5
+	sort_priority = 6
 	quickbind = TRUE
 	quickbind_desc = "Creates a Ratvarian shield, which can absorb energy from attacks for use in powerful bashes."
 
@@ -131,7 +131,7 @@
 	usage_tip = "Throwing the spear at a mob will do massive damage and knock them down, but break the spear. You will need to wait for 30 seconds before resummoning it."
 	tier = SCRIPTURE_SCRIPT
 	primary_component = VANGUARD_COGWHEEL
-	sort_priority = 6
+	sort_priority = 7
 	important = TRUE
 	quickbind = TRUE
 	quickbind_desc = "Permanently binds clockwork armor and a Ratvarian spear to you."
@@ -231,7 +231,7 @@
 	usage_tip = "This gateway is strictly one-way and will only allow things through the invoker's portal."
 	tier = SCRIPTURE_SCRIPT
 	primary_component = GEIS_CAPACITOR
-	sort_priority = 7
+	sort_priority = 9
 	quickbind = TRUE
 	quickbind_desc = "Allows you to create a one-way Spatial Gateway to a living Servant or Clockwork Obelisk."
 
@@ -276,7 +276,7 @@
 	usage_tip = "This is a very effective way to rapidly reinforce a base after an attack."
 	tier = SCRIPTURE_SCRIPT
 	primary_component = VANGUARD_COGWHEEL
-	sort_priority = 7
+	sort_priority = 8
 	quickbind = TRUE
 	quickbind_desc = "Repairs nearby structures and constructs. Servants wearing clockwork armor will also be healed.<br><b>Maximum 10 chants.</b>"
 	var/heal_attempts = 4
@@ -388,8 +388,8 @@
 	power_cost = 500
 	usage_tip = "Though it requires you to stand still, this scripture can do massive damage."
 	tier = SCRIPTURE_SCRIPT
-	primary_component = HIEROPHANT_ANSIBLE
-	sort_priority = 10
+	primary_component = BELLIGERENT_EYE
+	sort_priority = 5
 	quickbind = TRUE
 	quickbind_desc = "Allows you to fire energy rays at target locations.<br><b>Maximum 5 chants.</b>"
 	var/static/list/nzcrentr_insults = list("You're not very good at aiming.", "You hunt badly.", "What a waste of energy.", "Almost funny to watch.",
@@ -420,3 +420,70 @@
 	ranged_message = "<span class='nzcrentr_small'><i>You charge the clockwork slab with shocking might.</i>\n\
 	<b>Left-click a target to fire, quickly!</b></span>"
 	timeout_time = 20
+
+/datum/clockwork_scripture/channeled/void_volt
+	descname = "Channeled, Power Drain"
+	name = "Void Volt"
+	desc = "A channeled spell that quickly drains any powercells in a radius of eight tiles, but burns the invoker. \
+	Can be channeled with more cultists to increase range and split the caused damage evenly over all invokers. \
+	Also charges clockwork power by a small percentage of the drained power amount, which can help offset this scriptures powercost."
+	invocations = list("Channel their energy through my body... ", "... so it may fuel Engine!")
+	chant_invocations = list("Make their lights fall dark!", "They shall be powerless!", "Rob them of their power!")
+	chant_amount = 20
+	chant_interval = 10 //100KW drain per pulse for guns / APCs / 1MW for other cells = 10 chants / 100ds / 10s to drain a charged weapon or a baton with a nonupgraded cell
+	channel_time = 50
+	power_cost = 300
+	multiple_invokers_used = TRUE
+	multiple_invokers_optional = TRUE
+	usage_tip = "It may be useful to end channelling early if the burning becomes too much to handle.."
+	tier = SCRIPTURE_SCRIPT
+	primary_component = GEIS_CAPACITOR
+	sort_priority = 10
+	quickbind = TRUE
+	quickbind_desc = "Quickly drains power in an area around the invoker, causing burns proportional to the amount of energy drained.<br><b>Maximum of 20 chants.</b>"
+
+/datum/clockwork_scripture/channeled/void_volt/scripture_effects()
+	invoker.visible_message("<span class='warning'>[invoker] glows in a brilliant golden light!</span>")
+	invoker.add_atom_colour("#FFD700", ADMIN_COLOUR_PRIORITY)
+	invoker.light_power = 2
+	invoker.light_range = 4
+	invoker.light_color = LIGHT_COLOR_FIRE
+	invoker.update_light()
+	return ..()
+
+
+/datum/clockwork_scripture/channeled/void_volt/chant_effects(chant_number)
+	var/power_drained = 0
+	var/power_mod = 0.005 //Amount of power drained (generally) is multiplied with this, and subsequently dealt in damage to the invoker, then 15 times that is added to the clockwork cult's power reserves.
+	var/drain_range = 8
+	var/additional_chanters = 0
+	var/list/chanters = list()
+	chanters += invoker
+	for(var/mob/living/L in range(1, invoker))
+		if(!L.stat && is_servant_of_ratvar(L))
+			additional_chanters++
+			chanters += L
+	drain_range = min(drain_range + 2 * additional_chanters, drain_range * 2) //s u c c
+	for(var/t in spiral_range_turfs(drain_range, invoker))
+		var/turf/T = t
+		for(var/M in T)
+			var/atom/movable/A = M
+			power_drained += A.power_drain(TRUE, TRUE) //Yes, this absolutely does drain weaponry. 10 pulses to drain guns / batons, though of course they can just be recharged.
+	new /obj/effect/temp_visual/ratvar/sigil/transgression(invoker.loc, 1 + (power_drained * power_mod))
+	var/datum/effect_system/spark_spread/S = new
+	S.set_up(round(1 + (power_drained * power_mod), 1), 0, get_turf(invoker))
+	S.start()
+	adjust_clockwork_power(power_drained * power_mod * 15)
+	for(var/mob/living/L in chanters)
+		L.adjustFireLoss(round(clamp(power_drained * power_mod / (1 + additional_chanters), 0, 20), 0.1)) //No you won't just immediately melt if you do this in a very power-rich area
+
+
+	return TRUE
+
+/datum/clockwork_scripture/channeled/void_volt/chant_end_effects()
+	invoker.visible_message("<span class='warning'>[invoker] stops glowing...</span>")
+	invoker.remove_atom_colour(ADMIN_COLOUR_PRIORITY)
+	invoker.light_power = 0
+	invoker.light_range = 0
+	invoker.update_light()
+	return ..()
