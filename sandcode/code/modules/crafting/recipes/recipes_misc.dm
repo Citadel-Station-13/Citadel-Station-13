@@ -18,3 +18,11 @@
 	tools = list(TOOL_WELDER, TOOL_SCREWDRIVER, TOOL_WRENCH)
 	category = CAT_WEAPONRY
 	subcategory = CAT_AMMO
+
+/datum/crafting_recipe/double_o2
+	name = "Double emergency oxygen tank"
+	reqs = list(/obj/item/tank/internals/emergency_oxygen/engi = 2,
+				/obj/item/stack/sheet/metal = 1)
+	result = /obj/item/tank/internals/emergency_oxygen/double/empty
+	tools = list(TOOL_WELDER)
+	category = CAT_MISC
