@@ -386,6 +386,23 @@
 /obj/item/reagent_containers/glass/beaker/waterbottle/large/empty
 	list_reagents = list()
 
+/obj/item/reagent_containers/food/drinks/waterbottle/wataur
+	name = "Bottled Watuar"
+	desc = "Finally, a bottle as proportionate as you."
+	icon = 'icons/obj/drinks.dmi'
+	icon_state = "wataur"
+	item_state = "wataur"
+	list_reagents = list(/datum/reagent/water = 100)
+	custom_materials = list(/datum/material/glass=0)
+	volume = 100
+	amount_per_transfer_from_this = 20
+	possible_transfer_amounts = list(5,10,15,20,25,30,50, 100)
+	container_flags = TEMP_WEAK|APTFT_ALTCLICK|APTFT_VERB
+	container_HP = 1
+
+/obj/item/reagent_containers/food/drinks/waterbottle/wataur/empty
+	list_reagents = list()
+
 /obj/item/reagent_containers/glass/get_belt_overlay()
 	return mutable_appearance('icons/obj/clothing/belt_overlays.dmi', "bottle")
 
