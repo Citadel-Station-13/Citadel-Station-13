@@ -43,6 +43,7 @@
 	Note that this proc can be overridden, and is in the case of screen objects.
 */
 /atom/Click(location,control,params)
+	SHOULD_NOT_SLEEP(TRUE)
 	if(flags_1 & INITIALIZED_1)
 		SEND_SIGNAL(src, COMSIG_CLICK, location, control, params, usr)
 		usr.ClickOn(src, params)
@@ -69,6 +70,7 @@
 	* mob/RangedAttack(atom,params) - used only ranged, only used for tk and laser eyes but could be changed
 */
 /mob/proc/ClickOn( atom/A, params )
+	SHOULD_NOT_SLEEP(TRUE)
 	if(world.time <= next_click)
 		return
 	next_click = world.time + world.tick_lag
