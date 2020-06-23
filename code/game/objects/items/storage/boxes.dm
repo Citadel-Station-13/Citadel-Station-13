@@ -221,6 +221,13 @@
 	for(var/i in 1 to 7)
 		new /obj/item/reagent_containers/hypospray/medipen(src)
 
+/obj/item/storage/box/vials
+	name = "box of hypovials"
+
+/obj/item/storage/box/vials/PopulateContents()
+	for(var/i in 1 to 7)
+		new /obj/item/reagent_containers/glass/bottle/vial/small( src )
+
 /obj/item/storage/box/medipens/utility
 	name = "stimpack value kit"
 	desc = "A box with several stimpack medipens for the economical miner."

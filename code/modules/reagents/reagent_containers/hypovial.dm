@@ -5,7 +5,7 @@
 	desc = "A hypovial compatible with most hyposprays."
 	icon_state = "hypovial"
 	spillable = FALSE
-	volume = 10
+	volume = 30
 	possible_transfer_amounts = list(1,2,5,10)
 	container_flags = APTFT_VERB
 	obj_flags = UNIQUE_RENAME
@@ -19,6 +19,7 @@
 						"pink hypovial" = "hypovial-pink"
 						)
 	always_reskinnable = TRUE
+	custom_price = PRICE_PRETTY_CHEAP
 	cached_icon = "hypovial"
 
 /obj/item/reagent_containers/glass/bottle/vial/Initialize()
@@ -28,7 +29,7 @@
 /obj/item/reagent_containers/glass/bottle/vial/on_reagent_change()
 	update_icon()
 
-/obj/item/reagent_containers/glass/bottle/vial/tiny
+/obj/item/reagent_containers/glass/bottle/vial/tiny // Version printed by chem masters.
 	name = "small hypovial"
 	//Shouldn't be possible to get this without adminbuse
 

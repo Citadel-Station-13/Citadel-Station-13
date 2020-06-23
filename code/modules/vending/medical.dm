@@ -23,10 +23,7 @@
 					/obj/item/reagent_containers/glass/bottle/morphine = 4,
 					/obj/item/reagent_containers/glass/bottle/toxin = 3,
 					/obj/item/reagent_containers/syringe/antiviral = 6,
-					/obj/item/storage/hypospraykit/fire = 2,
-					/obj/item/storage/hypospraykit/toxin = 2,
-					/obj/item/storage/hypospraykit/o2 = 2,
-					/obj/item/storage/hypospraykit/brute = 2,
+					/obj/item/storage/hypospraykit/starter = 3,
 					/obj/item/storage/hypospraykit/enlarge = 2,
 					/obj/item/reagent_containers/glass/bottle/vial/small = 5,
 					/obj/item/storage/briefcase/medical = 2)
@@ -34,6 +31,10 @@
 					/obj/item/reagent_containers/pill/morphine = 4,
 					/obj/item/reagent_containers/pill/charcoal = 6)
 	premium = list(/obj/item/reagent_containers/medspray/synthflesh = 2,
+					/obj/item/storage/hypospraykit/fire = 1,
+					/obj/item/storage/hypospraykit/toxin = 1,
+					/obj/item/storage/hypospraykit/o2 = 1,
+					/obj/item/storage/hypospraykit/brute = 1,
 					/obj/item/storage/box/hug/medical = 1,
 					/obj/item/storage/pill_bottle/psicodine = 2,
 					/obj/item/reagent_containers/hypospray/medipen = 3,

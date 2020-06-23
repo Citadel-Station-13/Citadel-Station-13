@@ -278,7 +278,7 @@
 			else if (item_type == "condimentBottle")
 				vol_each_max = min(50, vol_each_max)
 			else if (item_type == "hypoVial")
-				vol_each_max = min(60, vol_each_max)
+				vol_each_max = min(30, vol_each_max)
 			else if (item_type == "smartDart")
 				vol_each_max = min(20, vol_each_max)
 			else
@@ -366,7 +366,7 @@
 					reagents.trans_to(P, vol_each)
 				return TRUE
 			if(item_type == "hypoVial")
-				var/obj/item/reagent_containers/glass/bottle/vial/small/P
+				var/obj/item/reagent_containers/glass/bottle/vial/tiny/P
 				for(var/i = 0; i < amount; i++)
 					P = new/obj/item/reagent_containers/glass/bottle/vial/small(drop_location())
 					P.name = trim("[name] hypovial")

@@ -444,6 +444,14 @@
 	/obj/item/hypospray/mkii,
 	/obj/item/reagent_containers/glass/bottle/vial))
 
+/// DIY variant found in the non-premium section of med vendors.
+/obj/item/storage/hypospraykit/starter
+
+/obj/item/storage/hypospraykit/starter/PopulateContents()
+	new /obj/item/hypospray/mkii(src)
+	new /obj/item/reagent_containers/glass/bottle/vial/small(src)
+	new /obj/item/reagent_containers/glass/bottle/vial/small(src)
+
 /obj/item/storage/hypospraykit/regular
 	icon_state = "firstaid-mini"
 	desc = "A hypospray kit with general use vials."
@@ -470,6 +478,7 @@
 
 /obj/item/storage/hypospraykit/toxin
 	name = "toxin treatment hypospray kit"
+	desc = "A specialized hypospray kit for toxin treatments."
 	icon_state = "toxin-mini"
 	item_state = "firstaid-toxin"
 
@@ -482,6 +491,7 @@
 
 /obj/item/storage/hypospraykit/o2
 	name = "oxygen deprivation hypospray kit"
+	desc = "A specialized hypospray kit for oxygen deprivation."
 	icon_state = "oxy-mini"
 	item_state = "firstaid-o2"
 
@@ -494,6 +504,7 @@
 
 /obj/item/storage/hypospraykit/enlarge
 	name = "organomegaly trauma hypospray kit"
+	desc = "A specialized hypospray kit for a few specific organomegalies."
 	icon_state = "enlarge-mini"
 	item_state = "firstaid-brute"
 
@@ -510,6 +521,7 @@
 
 /obj/item/storage/hypospraykit/brute
 	name = "brute trauma hypospray kit"
+	desc = "A specialized hypospray kit for brute trauma."
 	icon_state = "brute-mini"
 	item_state = "firstaid-brute"
 
@@ -547,10 +559,3 @@
 	new /obj/item/reagent_containers/glass/bottle/vial/large/salglu(src)
 	new /obj/item/reagent_containers/glass/bottle/vial/large/dexalin(src)
 	new /obj/item/reagent_containers/glass/bottle/vial/large/synthflesh(src)
-
-/obj/item/storage/box/vials
-	name = "box of hypovials"
-
-/obj/item/storage/box/vials/PopulateContents()
-	for(var/i in 1 to 7)
-		new /obj/item/reagent_containers/glass/bottle/vial/small( src )
