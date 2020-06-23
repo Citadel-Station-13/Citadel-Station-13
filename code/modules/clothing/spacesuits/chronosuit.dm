@@ -84,7 +84,7 @@
 		user.alpha = 255
 		user.update_atom_colour()
 		user.animate_movement = FORWARD_STEPS
-		user.notransform = 0
+		user.mob_transforming = 0
 		user.anchored = FALSE
 		teleporting = 0
 		for(var/obj/item/I in user.held_items)
@@ -125,7 +125,7 @@
 			ADD_TRAIT(I, TRAIT_NODROP, CHRONOSUIT_TRAIT)
 		user.animate_movement = NO_STEPS
 		user.changeNext_move(8 + phase_in_ds)
-		user.notransform = 1
+		user.mob_transforming = 1
 		user.anchored = TRUE
 		user.Stun(INFINITY)
 

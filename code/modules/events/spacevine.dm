@@ -330,8 +330,8 @@
 	if(!override)
 		qdel(src)
 
-/obj/structure/spacevine/attacked_by(obj/item/I, mob/living/user)
-	var/damage_dealt = I.force
+/obj/structure/spacevine/attacked_by(obj/item/I, mob/living/user, attackchain_flags = NONE, damage_multiplier = 1)
+	var/damage_dealt = I.force * damage_multiplier
 	if(I.get_sharpness())
 		damage_dealt *= 4
 	if(I.damtype == BURN)

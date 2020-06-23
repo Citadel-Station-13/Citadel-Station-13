@@ -141,7 +141,7 @@
 /obj/item/melee/baton/attack(mob/M, mob/living/carbon/human/user)
 	var/interrupt = common_baton_melee(M, user, FALSE)
 	if(!interrupt)
-		..()
+		return ..()
 
 /obj/item/melee/baton/alt_pre_attack(atom/A, mob/living/user, params)
 	. = common_baton_melee(A, user, TRUE)		//return true (attackchain interrupt) if this also returns true. no harm-disarming.
@@ -154,7 +154,7 @@
 	if(turned_on && HAS_TRAIT(user, TRAIT_CLUMSY) && prob(50))
 		clowning_around(user)
 	if(IS_STAMCRIT(user))			//CIT CHANGE - makes it impossible to baton in stamina softcrit
-		to_chat(user, "<span class='danger'>You're too exhausted for that.</span>")
+		to_chat(user, "<span class='danger'>You're too exhausted to use [src] properly.</span>")
 		return TRUE
 	if(ishuman(M))
 		var/mob/living/carbon/human/L = M
@@ -170,10 +170,12 @@
 	return disarming || (user.a_intent != INTENT_HARM)
 
 /obj/item/melee/baton/proc/baton_stun(mob/living/L, mob/user, disarming = FALSE)
-	if(L.mob_run_block(src, 0, "[user]'s [name]", ATTACK_TYPE_MELEE, 0, user, null, null) & BLOCK_SUCCESS) //No message; check_shields() handles that
+	var/list/return_list = list()
+	if(L.mob_run_block(src, 0, "[user]'s [name]", ATTACK_TYPE_MELEE, 0, user, null, return_list) & BLOCK_SUCCESS) //No message; check_shields() handles that
 		playsound(L, 'sound/weapons/genhit.ogg', 50, 1)
 		return FALSE
 	var/stunpwr = stamforce
+	stunpwr = block_calculate_resultant_damage(stunpwr, return_list)
 	var/obj/item/stock_parts/cell/our_cell = get_cell()
 	if(!our_cell)
 		switch_status(FALSE)

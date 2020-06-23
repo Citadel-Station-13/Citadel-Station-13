@@ -122,11 +122,13 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 
 
 /obj/item/claymore/highlander/pickup(mob/living/user)
+	. = ..()
 	to_chat(user, "<span class='notice'>The power of Scotland protects you! You are shielded from all stuns and knockdowns.</span>")
 	user.add_stun_absorption("highlander", INFINITY, 1, " is protected by the power of Scotland!", "The power of Scotland absorbs the stun!", " is protected by the power of Scotland!")
 	user.ignore_slowdown(HIGHLANDER)
 
 /obj/item/claymore/highlander/dropped(mob/living/user)
+	. = ..()
 	user.unignore_slowdown(HIGHLANDER)
 	if(!QDELETED(src))
 		qdel(src) //If this ever happens, it's because you lost an arm
@@ -297,11 +299,27 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	force = 2
 	throwforce = 20 //This is never used on mobs since this has a 100% embed chance.
 	throw_speed = 4
-	embedding = list("embedded_pain_multiplier" = 4, "embed_chance" = 100, "embedded_fall_chance" = 0)
+	embedding = list("pain_mult" = 4, "embed_chance" = 100, "fall_chance" = 0, "embed_chance_turf_mod" = 15)
+	armour_penetration = 40
+
 	w_class = WEIGHT_CLASS_SMALL
 	sharpness = IS_SHARP
 	custom_materials = list(/datum/material/iron=500, /datum/material/glass=500)
 	resistance_flags = FIRE_PROOF
+
+/obj/item/throwing_star/stamina
+	name = "shock throwing star"
+	desc = "An aerodynamic disc designed to cause excruciating pain when stuck inside fleeing targets, hopefully without causing fatal harm."
+	throwforce = 5
+	embedding = list("pain_chance" = 5, "embed_chance" = 100, "fall_chance" = 0, "jostle_chance" = 10, "pain_stam_pct" = 0.8, "jostle_pain_mult" = 3)
+
+/obj/item/throwing_star/toy
+	name = "toy throwing star"
+	desc = "An aerodynamic disc strapped with adhesive for sticking to people, good for playing pranks and getting yourself killed by security."
+	sharpness = IS_BLUNT
+	force = 0
+	throwforce = 0
+	embedding = list("pain_mult" = 0, "jostle_pain_mult" = 0, "embed_chance" = 100, "fall_chance" = 0)
 
 /obj/item/switchblade
 	name = "switchblade"
@@ -675,7 +693,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 			to_chat(user, "<span class='warning'>You easily land a critical blow on the [target].</span>")
 			if(istype(target, /mob/living/))
 				var/mob/living/bug = target
-				bug.adjustBruteLoss(-35) //What kinda mad man would go into melee with a spider?!
+				bug.adjustBruteLoss(35) //What kinda mad man would go into melee with a spider?!
 			else
 				qdel(target)
 

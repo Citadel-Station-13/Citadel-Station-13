@@ -17,6 +17,8 @@
 		/obj/item/melee/baton,
 		/obj/item/ammo_box/magazine/recharge,
 		/obj/item/modular_computer,
+		/obj/item/ammo_casing/mws_batt,
+		/obj/item/ammo_box/magazine/mws_mag,
 		/obj/item/twohanded/electrostaff,
 		/obj/item/gun/ballistic/automatic/magrifle))
 
@@ -143,6 +145,29 @@
 				using_power = TRUE
 			update_icon()
 			return
+
+		if(istype(charging, /obj/item/ammo_casing/mws_batt))
+			var/obj/item/ammo_casing/mws_batt/R = charging
+			if(R.cell.charge < R.cell.maxcharge)
+				R.cell.give(R.cell.chargerate * recharge_coeff)
+				use_power(250 * recharge_coeff)
+				using_power = 1
+			if(R.BB == null)
+				R.chargeshot()
+			update_icon(using_power)
+
+		if(istype(charging, /obj/item/ammo_box/magazine/mws_mag))
+			var/obj/item/ammo_box/magazine/mws_mag/R = charging
+			for(var/B in R.stored_ammo)
+				var/obj/item/ammo_casing/mws_batt/batt = B
+				if(batt.cell.charge < batt.cell.maxcharge)
+					batt.cell.give(batt.cell.chargerate * recharge_coeff)
+					use_power(250 * recharge_coeff)
+					using_power = 1
+				if(batt.BB == null)
+					batt.chargeshot()
+			update_icon(using_power)
+
 	else
 		return PROCESS_KILL
 
