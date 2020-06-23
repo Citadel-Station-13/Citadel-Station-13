@@ -3505,7 +3505,6 @@
 /turf/open/floor/plasteel/white,
 /area/awaymission/research/interior/cryo)
 "gR" = (
-/obj/item/melee/classic_baton/telescopic,
 /obj/effect/turf_decal/tile/purple{
 	dir = 1
 	},
@@ -3516,6 +3515,7 @@
 /obj/effect/turf_decal/tile/purple{
 	dir = 8
 	},
+/obj/item/melee/baton/cattleprod,
 /turf/open/floor/plasteel/white,
 /area/awaymission/research/interior/cryo)
 "gS" = (
@@ -6439,7 +6439,7 @@
 	},
 /turf/open/floor/plating,
 /area/awaymission/research/interior/maint)
-"II" = (
+"Hs" = (
 /obj/structure/table/wood,
 /obj/item/book/granter/crafting_recipe/bone_bow,
 /turf/open/floor/mineral/plasma,
@@ -6516,11 +6516,6 @@
 	},
 /turf/open/floor/plating,
 /area/awaymission/research/interior/escapepods)
-"TO" = (
-/obj/structure/table/wood,
-/obj/item/book/granter/action/origami,
-/turf/open/floor/mineral/plasma,
-/area/space/nearstation)
 "Uu" = (
 /obj/machinery/door/airlock/security/glass{
 	id_tag = "outerbrig";
@@ -6571,6 +6566,11 @@
 	},
 /turf/open/floor/plating,
 /area/awaymission/research/interior/escapepods)
+"ZZ" = (
+/obj/structure/table/wood,
+/obj/item/book/granter/action/origami,
+/turf/open/floor/mineral/plasma,
+/area/space/nearstation)
 
 (1,1,1) = {"
 aa
@@ -11110,8 +11110,8 @@ ab
 ab
 na
 nb
-II
-TO
+Hs
+ZZ
 na
 ab
 ab
