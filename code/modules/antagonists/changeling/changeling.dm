@@ -91,6 +91,7 @@
 			B.organ_flags |= ORGAN_VITAL
 			B.decoy_override = FALSE
 	remove_changeling_powers()
+	owner.special_role = null
 	. = ..()
 
 /datum/antagonist/changeling/proc/remove_clownmut()

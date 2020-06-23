@@ -51,9 +51,10 @@
 		retreat_message_said = TRUE
 	retreat_distance = 30
 
-/mob/living/simple_animal/hostile/asteroid/wolf/Life()
-	. = ..()
-	if(!. || target)
+/mob/living/simple_animal/hostile/asteroid/wolf/BiologicalLife(seconds, times_fired)
+	if(!(. = ..()))
+		return
+	if(target)
 		return
 	adjustHealth(-maxHealth*0.025)
 	retreat_message_said = FALSE

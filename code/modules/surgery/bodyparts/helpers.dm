@@ -152,26 +152,24 @@
 			disabled += zone
 	return disabled
 
-//Remove all embedded objects from all limbs on the carbon mob
+///Remove a specific embedded item from the carbon mob
+/mob/living/carbon/proc/remove_embedded_object(obj/item/I)
+	SEND_SIGNAL(src, COMSIG_CARBON_EMBED_REMOVAL, I)
+
+///Remove all embedded objects from all limbs on the carbon mob
 /mob/living/carbon/proc/remove_all_embedded_objects()
-	var/turf/T = get_turf(src)
-
 	for(var/X in bodyparts)
 		var/obj/item/bodypart/L = X
 		for(var/obj/item/I in L.embedded_objects)
-			L.embedded_objects -= I
-			I.forceMove(T)
-			I.unembedded()
+			remove_embedded_object(I)
 
-	clear_alert("embeddedobject")
-	SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "embedded")
-
-/mob/living/carbon/proc/has_embedded_objects()
-	. = 0
+/mob/living/carbon/proc/has_embedded_objects(include_harmless=FALSE)
 	for(var/X in bodyparts)
 		var/obj/item/bodypart/L = X
 		for(var/obj/item/I in L.embedded_objects)
-			return 1
+			if(!include_harmless && I.isEmbedHarmless())
+				continue
+			return TRUE
 
 
 //Helper for quickly creating a new limb - used by augment code in species.dm spec_attacked_by

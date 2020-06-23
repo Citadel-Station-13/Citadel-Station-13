@@ -19,6 +19,13 @@
 	open = round(rand(0, 1))
 	update_icon()
 
+/obj/structure/toilet/Destroy()
+	if(loc)
+		for(var/A in contents)
+			var/atom/movable/AM = A
+			AM.forceMove(loc)
+	return ..()
+
 /obj/structure/toilet/attack_hand(mob/living/user)
 	. = ..()
 	if(.)

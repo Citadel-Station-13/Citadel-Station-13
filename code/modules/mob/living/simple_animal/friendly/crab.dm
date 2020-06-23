@@ -22,12 +22,14 @@
 	friendly_verb_continuous = "pinches"
 	friendly_verb_simple = "pinch"
 	ventcrawler = VENTCRAWLER_ALWAYS
+	mob_size = MOB_SIZE_TINY
 	var/obj/item/inventory_head
 	var/obj/item/inventory_mask
 	gold_core_spawnable = FRIENDLY_SPAWN
 
-/mob/living/simple_animal/crab/Life()
-	..()
+/mob/living/simple_animal/crab/BiologicalLife(seconds, times_fired)
+	if(!(. = ..()))
+		return
 	//CRAB movement
 	if(!ckey && !stat)
 		if(isturf(loc) && !resting && !buckled)		//This is so it only moves if it's not inside a closet, gentics machine, etc.
