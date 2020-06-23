@@ -284,7 +284,7 @@
 			temp_info["bound"] = "[found]"
 		if(S.invokers_required > 1)
 			temp_info["invokers"] = "Invokers: [S.invokers_required]"
-		data["scripture"] += list(temp_info)
+		data["scripture"] += temp_info
 	return data
 
 /obj/item/clockwork/slab/ui_static_data(mob/user)
