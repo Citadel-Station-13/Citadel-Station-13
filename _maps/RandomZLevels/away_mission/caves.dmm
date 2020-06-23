@@ -1708,6 +1708,9 @@
 /obj/machinery/gateway{
 	dir = 8
 	},
+/obj/machinery/light{
+	dir = 8
+	},
 /turf/open/floor/plasteel,
 /area/awaymission/caves/listeningpost)
 "fl" = (
@@ -2038,6 +2041,9 @@
 /obj/machinery/gateway{
 	dir = 4
 	},
+/obj/machinery/light{
+	dir = 4
+	},
 /turf/open/floor/plasteel,
 /area/awaymission/caves/listeningpost)
 "gl" = (
@@ -2275,38 +2281,38 @@
 /obj/effect/baseturf_helper/asteroid/basalt,
 /turf/closed/wall,
 /area/awaymission/caves/northblock)
-"mT" = (
+"tk" = (
+/obj/machinery/gateway{
+	dir = 6
+	},
+/turf/open/floor/plasteel,
+/area/awaymission/caves/listeningpost)
+"CY" = (
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/turf/open/floor/plasteel,
+/area/awaymission/caves/listeningpost)
+"GV" = (
 /obj/structure/barricade/wooden,
 /obj/structure/cable{
 	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel,
 /area/awaymission/caves/listeningpost)
-"zX" = (
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
-/turf/open/floor/plasteel,
-/area/awaymission/caves/listeningpost)
-"AD" = (
-/obj/machinery/gateway{
-	dir = 10
-	},
-/turf/open/floor/plasteel,
-/area/awaymission/caves/listeningpost)
-"Nt" = (
-/obj/machinery/gateway{
-	dir = 6
-	},
-/turf/open/floor/plasteel,
-/area/awaymission/caves/listeningpost)
-"Tk" = (
+"Hp" = (
 /obj/machinery/gateway,
 /obj/structure/cable{
 	icon_state = "0-2"
 	},
 /obj/structure/cable{
 	icon_state = "1-2"
+	},
+/turf/open/floor/plasteel,
+/area/awaymission/caves/listeningpost)
+"If" = (
+/obj/machinery/gateway{
+	dir = 10
 	},
 /turf/open/floor/plasteel,
 /area/awaymission/caves/listeningpost)
@@ -10726,7 +10732,7 @@ bM
 eF
 el
 fk
-AD
+If
 eJ
 eF
 ey
@@ -10983,9 +10989,9 @@ bM
 eG
 eB
 fw
-Tk
-zX
-mT
+Hp
+CY
+GV
 ez
 eO
 eJ
@@ -11240,7 +11246,7 @@ bM
 eG
 eE
 gk
-Nt
+tk
 eJ
 eG
 eA
