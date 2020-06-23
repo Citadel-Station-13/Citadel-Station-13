@@ -50,15 +50,13 @@
 /turf/open/floor/circuit/off,
 /area/awaymission/wildwest/vault)
 "an" = (
-/turf/open/floor/plasteel/cult{
-	name = "engraved floor"
-	},
+/turf/open/floor/plasteel/cult,
 /area/awaymission/wildwest/vault)
 "ao" = (
 /turf/open/floor/circuit/green/off,
 /area/awaymission/wildwest/vault)
 "ap" = (
-/obj/machinery/wish_granter_dark,
+/obj/item/nullrod/claymore/glowing,
 /turf/open/floor/circuit/green/off,
 /area/awaymission/wildwest/vault)
 "aq" = (
@@ -69,54 +67,72 @@
 /obj/machinery/gateway{
 	dir = 9
 	},
-/turf/open/floor/circuit/green/off,
-/area/awaymission/wildwest/vault)
+/turf/open/floor/plating/ironsand{
+	icon_state = "ironsand1"
+	},
+/area/awaymission/wildwest/mines)
 "as" = (
 /obj/machinery/gateway{
 	dir = 1
 	},
-/turf/open/floor/circuit/green/off,
-/area/awaymission/wildwest/vault)
+/turf/open/floor/plating/ironsand{
+	icon_state = "ironsand1"
+	},
+/area/awaymission/wildwest/mines)
 "at" = (
 /obj/machinery/gateway{
 	dir = 5
 	},
-/turf/open/floor/circuit/green/off,
-/area/awaymission/wildwest/vault)
+/turf/open/floor/plating/ironsand{
+	icon_state = "ironsand1"
+	},
+/area/awaymission/wildwest/mines)
 "au" = (
 /obj/machinery/gateway{
 	dir = 8
 	},
-/turf/open/floor/circuit/green/off,
-/area/awaymission/wildwest/vault)
+/turf/open/floor/plating/ironsand{
+	icon_state = "ironsand1"
+	},
+/area/awaymission/wildwest/mines)
 "av" = (
 /obj/machinery/gateway/centeraway{
 	calibrated = 0
 	},
-/turf/open/floor/circuit/green/off,
-/area/awaymission/wildwest/vault)
+/turf/open/floor/plating/ironsand{
+	icon_state = "ironsand1"
+	},
+/area/awaymission/wildwest/mines)
 "aw" = (
 /obj/machinery/gateway{
 	dir = 4
 	},
-/turf/open/floor/circuit/green/off,
-/area/awaymission/wildwest/vault)
+/turf/open/floor/plating/ironsand{
+	icon_state = "ironsand1"
+	},
+/area/awaymission/wildwest/mines)
 "ax" = (
 /obj/machinery/gateway{
 	dir = 10
 	},
-/turf/open/floor/circuit/green/off,
-/area/awaymission/wildwest/vault)
+/turf/open/floor/plating/ironsand{
+	icon_state = "ironsand1"
+	},
+/area/awaymission/wildwest/mines)
 "ay" = (
 /obj/machinery/gateway,
-/turf/open/floor/circuit/green/off,
-/area/awaymission/wildwest/vault)
+/turf/open/floor/plating/ironsand{
+	icon_state = "ironsand1"
+	},
+/area/awaymission/wildwest/mines)
 "az" = (
 /obj/machinery/gateway{
 	dir = 6
 	},
-/turf/open/floor/circuit/green/off,
-/area/awaymission/wildwest/vault)
+/turf/open/floor/plating/ironsand{
+	icon_state = "ironsand1"
+	},
+/area/awaymission/wildwest/mines)
 "aA" = (
 /obj/effect/meatgrinder,
 /turf/open/floor/circuit/green/off,
@@ -162,9 +178,7 @@
 /area/awaymission/wildwest/vault)
 "aL" = (
 /obj/item/paper/fluff/awaymissions/wildwest/grinder,
-/turf/open/floor/plasteel/cult{
-	name = "engraved floor"
-	},
+/turf/open/floor/plasteel/cult,
 /area/awaymission/wildwest/vault)
 "aM" = (
 /turf/closed/mineral/silver,
@@ -174,9 +188,7 @@
 /area/awaymission/wildwest/mines)
 "aO" = (
 /obj/effect/mob_spawn/human/corpse/syndicatecommando,
-/turf/open/floor/plasteel/cult{
-	name = "engraved floor"
-	},
+/turf/open/floor/plasteel/cult,
 /area/awaymission/wildwest/vault)
 "aP" = (
 /obj/effect/decal/cleanable/blood/splatter,
@@ -347,11 +359,6 @@
 /area/awaymission/wildwest/mines)
 "bB" = (
 /obj/structure/bed,
-/turf/open/floor/wood,
-/area/awaymission/wildwest/mines)
-"bC" = (
-/obj/structure/table/wood,
-/obj/item/gun/ballistic,
 /turf/open/floor/wood,
 /area/awaymission/wildwest/mines)
 "bD" = (
@@ -595,17 +602,8 @@
 	dir = 5
 	},
 /area/awaymission/wildwest/mines)
-"ch" = (
-/obj/structure/table/wood,
-/obj/item/gun/ballistic,
-/turf/open/floor/plasteel/cafeteria{
-	dir = 5
-	},
-/area/awaymission/wildwest/mines)
 "ci" = (
-/obj/structure/mineral_door/wood{
-	icon_state = "wood"
-	},
+/obj/structure/mineral_door/wood,
 /turf/open/floor/wood,
 /area/awaymission/wildwest/mines)
 "cj" = (
@@ -755,7 +753,7 @@
 /area/awaymission/wildwest/mines)
 "cL" = (
 /obj/structure/table/wood,
-/obj/item/twohanded/dualsaber,
+/obj/item/nullrod/claymore/saber/red,
 /turf/open/floor/wood,
 /area/awaymission/wildwest/gov)
 "cM" = (
@@ -767,9 +765,7 @@
 /turf/open/floor/wood,
 /area/awaymission/wildwest/gov)
 "cO" = (
-/obj/structure/mineral_door/wood{
-	icon_state = "wood"
-	},
+/obj/structure/mineral_door/wood,
 /turf/open/floor/wood,
 /area/awaymission/wildwest/gov)
 "cP" = (
@@ -946,17 +942,13 @@
 /turf/open/floor/carpet,
 /area/awaymission/wildwest/mines)
 "dm" = (
-/obj/structure/mineral_door/wood{
-	icon_state = "wood"
-	},
+/obj/structure/mineral_door/wood,
 /turf/open/floor/plating/ironsand{
 	icon_state = "ironsand1"
 	},
 /area/awaymission/wildwest/mines)
 "dn" = (
-/obj/structure/mineral_door/wood{
-	icon_state = "wood"
-	},
+/obj/structure/mineral_door/wood,
 /obj/effect/decal/cleanable/blood/tracks,
 /turf/open/floor/plating/ironsand{
 	icon_state = "ironsand1"
@@ -1048,9 +1040,7 @@
 	},
 /area/awaymission/wildwest/gov)
 "dD" = (
-/obj/structure/mineral_door/wood{
-	icon_state = "wood"
-	},
+/obj/structure/mineral_door/wood,
 /turf/open/floor/plating/ironsand{
 	icon_state = "ironsand1"
 	},
@@ -1176,7 +1166,6 @@
 /area/awaymission/wildwest/gov)
 "dV" = (
 /obj/machinery/shower{
-	icon_state = "shower";
 	dir = 4
 	},
 /turf/open/floor/plasteel/cafeteria{
@@ -1185,7 +1174,6 @@
 /area/awaymission/wildwest/mines)
 "dW" = (
 /obj/machinery/shower{
-	icon_state = "shower";
 	dir = 8
 	},
 /turf/open/floor/plasteel/cafeteria{
@@ -2009,10 +1997,6 @@
 /obj/machinery/photocopier,
 /turf/open/floor/wood,
 /area/awaymission/wildwest/mines)
-"gm" = (
-/obj/item/gun/ballistic,
-/turf/open/floor/wood,
-/area/awaymission/wildwest/mines)
 "gn" = (
 /mob/living/simple_animal/hostile/netherworld,
 /turf/open/floor/grass,
@@ -2195,10 +2179,9 @@
 /area/awaymission/wildwest/mines)
 "gW" = (
 /obj/structure/table/reinforced,
-/obj/item/clothing/suit/space/syndicate/black/orange,
-/obj/item/clothing/head/helmet/space/syndicate/black/orange,
-/obj/item/clothing/mask/gas/syndicate,
 /obj/item/tank/internals/oxygen,
+/obj/item/clothing/suit/space/syndicate/blue,
+/obj/item/clothing/head/helmet/space/syndicate/blue,
 /turf/open/floor/mineral/titanium/yellow,
 /area/awaymission/wildwest/refine)
 "gX" = (
@@ -32762,9 +32745,9 @@ aT
 aN
 aN
 aT
-aT
-aT
-aT
+ar
+au
+ax
 aT
 aT
 aT
@@ -33019,9 +33002,9 @@ aT
 aN
 aN
 aT
-aT
-aT
-aT
+as
+av
+ay
 aT
 aT
 aT
@@ -33276,9 +33259,9 @@ aT
 aN
 aN
 aT
-aT
-aT
-aT
+at
+aw
+az
 aT
 aT
 aT
@@ -38117,7 +38100,7 @@ bu
 bz
 bM
 bM
-ch
+bM
 by
 bu
 bj
@@ -39913,7 +39896,7 @@ bj
 bj
 aT
 bu
-bC
+bD
 bj
 bj
 bu
@@ -46340,7 +46323,7 @@ aT
 bu
 bD
 bj
-bC
+bD
 cl
 bj
 bj
@@ -47563,9 +47546,9 @@ aa
 ab
 ab
 ab
-ar
-au
-ax
+ao
+ao
+ao
 ao
 ao
 ao
@@ -47820,9 +47803,9 @@ aa
 ab
 ab
 ab
-as
-av
-ay
+ao
+ao
+ao
 ao
 ao
 ao
@@ -48077,9 +48060,9 @@ aa
 aa
 ab
 ab
-at
-aw
-az
+ao
+ao
+ao
 ao
 ao
 ao
@@ -48850,7 +48833,7 @@ aa
 ab
 ab
 ao
-ao
+ap
 ao
 ab
 ab
@@ -51159,7 +51142,7 @@ aa
 aa
 aa
 ab
-ap
+ao
 ao
 aq
 ab
@@ -52283,7 +52266,7 @@ eX
 dj
 bj
 bu
-gm
+bj
 bj
 eM
 bj
