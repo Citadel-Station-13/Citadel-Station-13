@@ -6,8 +6,12 @@
 /turf/closed/wall/r_wall,
 /area/awaymission/academy/headmaster)
 "ac" = (
-/mob/living/simple_animal/hostile/carp/ranged{
-	faction = list("wizard")
+/mob/living/simple_animal/hostile/carp{
+	icon_dead = "magicarp_dead";
+	icon_gib = "magicarp_gib";
+	icon_living = "magicarp";
+	icon_state = "magicarp";
+	name = "bootleg  magicarp"
 	},
 /turf/open/space,
 /area/space/nearstation)
@@ -46,8 +50,6 @@
 	},
 /obj/machinery/power/apc/unlocked{
 	dir = 1;
-	environ = 3;
-	equipment = 3;
 	pixel_y = 32;
 	req_access = null
 	},
@@ -199,7 +201,7 @@
 /area/awaymission/academy/headmaster)
 "aJ" = (
 /obj/structure/destructible/cult/tome,
-/obj/item/dice/d20/fate,
+/obj/item/dice/d20/fate/one_use,
 /turf/open/floor/wood,
 /area/awaymission/academy/headmaster)
 "aK" = (
@@ -929,7 +931,7 @@
 /area/awaymission/academy/classrooms)
 "dg" = (
 /obj/structure/table/wood,
-/obj/item/gun/magic/wand/fireball,
+/obj/item/gun/magic/wand/teleport,
 /turf/open/floor/wood,
 /area/awaymission/academy/classrooms)
 "dh" = (
@@ -1282,8 +1284,6 @@
 	},
 /obj/machinery/power/apc/unlocked{
 	dir = 1;
-	environ = 3;
-	equipment = 3;
 	pixel_y = 32;
 	req_access = null
 	},
@@ -2294,7 +2294,6 @@
 "gH" = (
 /obj/structure/table,
 /obj/item/paper/fluff/awaymissions/academy/grade/aplus,
-/obj/item/gun/ballistic/shotgun/automatic/combat,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -2305,6 +2304,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/obj/item/gun/ballistic/revolver/doublebarrel/improvised,
 /turf/open/floor/plasteel/dark,
 /area/awaymission/academy/classrooms)
 "gI" = (
@@ -2477,15 +2477,11 @@
 /turf/open/floor/plasteel,
 /area/awaymission/academy/classrooms)
 "ha" = (
-/turf/open/floor/plasteel/white/side{
-	dir = 2
-	},
+/turf/open/floor/plasteel/white/side,
 /area/awaymission/academy/classrooms)
 "hb" = (
 /obj/structure/chair/stool,
-/turf/open/floor/plasteel/white/side{
-	dir = 2
-	},
+/turf/open/floor/plasteel/white/side,
 /area/awaymission/academy/classrooms)
 "hc" = (
 /turf/closed/wall/r_wall,
@@ -2537,8 +2533,6 @@
 	},
 /obj/machinery/power/apc/unlocked{
 	dir = 1;
-	environ = 3;
-	equipment = 3;
 	pixel_y = 32;
 	req_access = null
 	},
@@ -2853,23 +2847,17 @@
 /turf/open/floor/plasteel,
 /area/awaymission/academy/academyaft)
 "il" = (
-/turf/open/floor/plasteel/cafeteria{
-	dir = 2
-	},
+/turf/open/floor/plasteel/cafeteria,
 /area/awaymission/academy/academyaft)
 "im" = (
 /obj/structure/mirror{
 	pixel_y = 28
 	},
-/turf/open/floor/plasteel/cafeteria{
-	dir = 2
-	},
+/turf/open/floor/plasteel/cafeteria,
 /area/awaymission/academy/academyaft)
 "in" = (
 /obj/effect/decal/cleanable/cobweb/cobweb2,
-/turf/open/floor/plasteel/cafeteria{
-	dir = 2
-	},
+/turf/open/floor/plasteel/cafeteria,
 /area/awaymission/academy/academyaft)
 "io" = (
 /obj/structure/rack,
@@ -2893,9 +2881,7 @@
 /area/awaymission/academy/academyaft)
 "ir" = (
 /obj/structure/mineral_door/iron,
-/turf/open/floor/plasteel/cafeteria{
-	dir = 2
-	},
+/turf/open/floor/plasteel/cafeteria,
 /area/awaymission/academy/academyaft)
 "is" = (
 /obj/structure/rack,
@@ -2920,17 +2906,13 @@
 	pixel_x = -12;
 	pixel_y = 2
 	},
-/turf/open/floor/plasteel/cafeteria{
-	dir = 2
-	},
+/turf/open/floor/plasteel/cafeteria,
 /area/awaymission/academy/academyaft)
 "iw" = (
 /obj/machinery/light{
 	dir = 4
 	},
-/turf/open/floor/plasteel/cafeteria{
-	dir = 2
-	},
+/turf/open/floor/plasteel/cafeteria,
 /area/awaymission/academy/academyaft)
 "ix" = (
 /obj/machinery/light{
@@ -2948,18 +2930,14 @@
 /obj/machinery/light{
 	dir = 8
 	},
-/turf/open/floor/plasteel/cafeteria{
-	dir = 2
-	},
+/turf/open/floor/plasteel/cafeteria,
 /area/awaymission/academy/academyaft)
 "iA" = (
 /obj/structure/sink{
 	dir = 4;
 	pixel_x = 11
 	},
-/turf/open/floor/plasteel/cafeteria{
-	dir = 2
-	},
+/turf/open/floor/plasteel/cafeteria,
 /area/awaymission/academy/academyaft)
 "iB" = (
 /obj/structure/rack,
@@ -2978,9 +2956,7 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
-/turf/open/floor/plasteel/cafeteria{
-	dir = 2
-	},
+/turf/open/floor/plasteel/cafeteria,
 /area/awaymission/academy/academyaft)
 "iE" = (
 /obj/machinery/light{
@@ -3001,9 +2977,7 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
-/turf/open/floor/plasteel/cafeteria{
-	dir = 2
-	},
+/turf/open/floor/plasteel/cafeteria,
 /area/awaymission/academy/academyaft)
 "iH" = (
 /obj/item/paper,
@@ -3038,9 +3012,7 @@
 	dir = 1
 	},
 /obj/effect/decal/cleanable/vomit,
-/turf/open/floor/plasteel/cafeteria{
-	dir = 2
-	},
+/turf/open/floor/plasteel/cafeteria,
 /area/awaymission/academy/academyaft)
 "iO" = (
 /obj/structure/cable{
@@ -3132,7 +3104,7 @@
 	dir = 1
 	},
 /obj/structure/table,
-/obj/item/soulstone,
+/obj/item/gun/ballistic/revolver/russian/soul,
 /turf/open/floor/plasteel/airless{
 	icon_state = "whitered";
 	dir = 4
@@ -3565,8 +3537,6 @@
 "kh" = (
 /obj/machinery/power/apc/unlocked{
 	dir = 1;
-	environ = 3;
-	equipment = 3;
 	pixel_y = 32;
 	req_access = null
 	},
@@ -3678,9 +3648,7 @@
 /obj/machinery/door/poddoor/shutters{
 	id = "AcademyGate"
 	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 2
-	},
+/obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plating,
 /area/awaymission/academy/academygate)
 "kz" = (
@@ -3728,9 +3696,7 @@
 /area/awaymission/academy/headmaster)
 "kG" = (
 /mob/living/simple_animal/hostile/wizard,
-/turf/open/floor/plasteel/cafeteria{
-	dir = 2
-	},
+/turf/open/floor/plasteel/cafeteria,
 /area/awaymission/academy/academyaft)
 "kH" = (
 /obj/structure/cable{
@@ -3744,9 +3710,7 @@
 /area/awaymission/academy/academyaft)
 "kI" = (
 /obj/structure/cable,
-/obj/machinery/gateway/centeraway{
-	calibrated = 1
-	},
+/obj/machinery/gateway/centeraway,
 /turf/open/floor/plating,
 /area/awaymission/academy/academygate)
 "kJ" = (
@@ -3881,9 +3845,8 @@
 /area/awaymission/academy/academycellar)
 "lk" = (
 /obj/structure/safe/floor,
-/obj/item/voodoo,
-/obj/item/gun/magic/wand/fireball,
 /obj/item/clothing/suit/space/hardsuit/wizard,
+/obj/item/gun/magic/wand/fireball/inert,
 /turf/open/floor/wood,
 /area/awaymission/academy/headmaster)
 "ll" = (
@@ -4051,7 +4014,6 @@
 /area/awaymission/academy/academyengine)
 "lQ" = (
 /obj/structure/table,
-/obj/item/gun/magic/wand/polymorph,
 /turf/open/floor/plating,
 /area/awaymission/academy/academyengine)
 "lR" = (
@@ -4123,14 +4085,14 @@
 /turf/closed/wall/r_wall,
 /area/awaymission/academy/academyengine)
 "me" = (
-/obj/structure/constructshell,
+/obj/structure/fluff/divine/powerpylon,
 /turf/open/floor/plating,
 /area/awaymission/academy/academyengine)
 "mf" = (
-/obj/structure/constructshell,
 /obj/machinery/light{
 	dir = 1
 	},
+/obj/structure/fluff/divine/defensepylon,
 /turf/open/floor/plating,
 /area/awaymission/academy/academyengine)
 "mg" = (
@@ -4149,14 +4111,14 @@
 /area/awaymission/academy/academyengine)
 "mj" = (
 /obj/structure/rack,
-/obj/item/book/granter/spell/summonitem,
 /obj/item/pen/fourcolor,
+/obj/item/book/granter/spell/smoke,
 /turf/open/floor/vault,
 /area/awaymission/academy/academyengine)
 "mk" = (
 /obj/structure/rack,
-/obj/item/claymore,
 /obj/item/toy/figure/wizard,
+/obj/item/claymore/weak/ceremonial,
 /turf/open/floor/vault,
 /area/awaymission/academy/academyengine)
 "ml" = (
@@ -4384,22 +4346,11 @@
 	},
 /area/awaymission/academy/headmaster)
 "ng" = (
-/turf/closed/indestructible/fakeglass{
-	icon_state = "fakewindows";
-	dir = 8
-	},
-/area/awaymission/academy/academyengine)
+/turf/open/space/basic,
+/area/space)
 "nh" = (
-/turf/closed/indestructible/fakeglass{
-	icon_state = "fakewindows2";
-	dir = 8
-	},
-/area/awaymission/academy/academyengine)
-"ni" = (
-/turf/closed/indestructible/fakeglass{
-	icon_state = "fakewindows";
-	dir = 4
-	},
+/obj/structure/fluff/divine/defensepylon,
+/turf/open/floor/plating,
 /area/awaymission/academy/academyengine)
 "nj" = (
 /obj/structure/rack,
@@ -5193,7 +5144,7 @@ aa
 aa
 aa
 aa
-aa
+ac
 aa
 aa
 aa
@@ -5816,7 +5767,7 @@ aa
 aa
 aa
 aa
-aa
+ac
 aa
 aa
 aa
@@ -6217,6 +6168,7 @@ aa
 aa
 aa
 aa
+ac
 aa
 aa
 aa
@@ -6225,8 +6177,7 @@ aa
 aa
 aa
 aa
-aa
-aa
+ac
 aa
 aa
 aa
@@ -6310,6 +6261,8 @@ aa
 aa
 aa
 aa
+ng
+ac
 aa
 aa
 aa
@@ -6322,9 +6275,7 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
+ac
 aa
 aa
 aa
@@ -6429,7 +6380,7 @@ aa
 aa
 aa
 aa
-aa
+ac
 aa
 aa
 aa
@@ -6626,7 +6577,7 @@ aa
 aa
 aa
 aa
-aa
+ac
 aa
 aa
 aa
@@ -7458,6 +7409,7 @@ aa
 aa
 aa
 aa
+ac
 aa
 aa
 aa
@@ -7503,8 +7455,7 @@ aa
 aa
 aa
 aa
-aa
-aa
+ac
 aa
 aa
 aa
@@ -7804,7 +7755,7 @@ aa
 aa
 aa
 aa
-aa
+ac
 aa
 aa
 aa
@@ -8506,7 +8457,7 @@ aa
 aa
 aa
 aa
-aa
+ac
 aa
 aa
 aa
@@ -9059,7 +9010,7 @@ aa
 aa
 aa
 aa
-aa
+ac
 aa
 aa
 aa
@@ -9101,7 +9052,7 @@ aa
 aa
 aa
 aa
-aa
+ac
 aa
 aa
 aa
@@ -9501,7 +9452,7 @@ aa
 aa
 aa
 aa
-aa
+ac
 aa
 aa
 aa
@@ -10073,7 +10024,7 @@ aa
 aa
 aa
 aa
-aa
+ac
 aa
 aa
 aa
@@ -10186,7 +10137,7 @@ aa
 aa
 aa
 aa
-aa
+ac
 aa
 aa
 aa
@@ -11367,7 +11318,7 @@ aa
 aa
 aa
 aa
-aa
+ac
 aa
 aa
 aa
@@ -11460,7 +11411,7 @@ aa
 aa
 aa
 aa
-aa
+ac
 aa
 aa
 aa
@@ -12767,7 +12718,7 @@ aa
 aa
 aa
 aa
-aa
+ac
 aa
 aa
 aa
@@ -13954,7 +13905,7 @@ aa
 aa
 aa
 aa
-aa
+ac
 aa
 aa
 aa
@@ -14834,6 +14785,7 @@ aa
 aa
 aa
 aa
+ac
 aa
 aa
 aa
@@ -14844,8 +14796,7 @@ aa
 aa
 aa
 aa
-aa
-aa
+ac
 aa
 aa
 aa
@@ -15399,7 +15350,7 @@ aa
 aa
 aa
 aa
-aa
+ac
 aa
 aa
 aa
@@ -15928,7 +15879,7 @@ aa
 aa
 aa
 aa
-aa
+ac
 aa
 aa
 aa
@@ -16775,7 +16726,7 @@ aG
 aG
 mc
 me
-me
+nh
 me
 lv
 mm
@@ -16906,7 +16857,7 @@ aG
 mc
 mf
 me
-me
+nh
 lv
 mm
 mm
@@ -17024,7 +16975,7 @@ aa
 aa
 aa
 aa
-aa
+ac
 aa
 aa
 aa
@@ -17369,7 +17320,7 @@ aa
 aa
 aa
 aa
-aa
+ac
 aa
 aa
 aa
@@ -17528,7 +17479,7 @@ aa
 aa
 aa
 aa
-aa
+ac
 aa
 aa
 aa
@@ -17898,7 +17849,7 @@ aa
 aa
 aa
 aa
-aa
+ac
 aa
 aa
 aa
@@ -18346,7 +18297,7 @@ mu
 mu
 mu
 mu
-ng
+lF
 aa
 aa
 aa
@@ -18476,7 +18427,7 @@ mu
 mu
 mA
 mu
-nh
+lF
 aa
 aa
 aa
@@ -18606,7 +18557,7 @@ mu
 my
 mz
 mM
-nh
+lF
 aa
 aa
 aa
@@ -18736,7 +18687,7 @@ mu
 mu
 mC
 mu
-nh
+lF
 aa
 aa
 aa
@@ -18866,7 +18817,7 @@ mu
 mu
 mB
 mu
-nh
+lF
 aa
 aa
 aa
@@ -18996,7 +18947,7 @@ mu
 mu
 mu
 mu
-ni
+lF
 aa
 aa
 aa
@@ -19320,7 +19271,7 @@ aa
 aa
 aa
 aa
-aa
+ac
 aa
 aa
 aa
@@ -19785,7 +19736,7 @@ aa
 aa
 aa
 aa
-aa
+ac
 aa
 aa
 aa
@@ -19986,7 +19937,7 @@ aa
 aa
 aa
 aa
-aa
+ac
 aa
 aa
 aa
@@ -20146,7 +20097,7 @@ aa
 aa
 aa
 aa
-aa
+ac
 aa
 aa
 aa
