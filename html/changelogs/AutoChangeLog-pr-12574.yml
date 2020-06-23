@@ -1,0 +1,4 @@
+author: "DeltaFire15"
+delete-after: True
+changes: 
+  - balance: "Choosing a random item in your uplink will no longer sometimes reroll your contract."
