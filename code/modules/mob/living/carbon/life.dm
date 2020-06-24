@@ -1,8 +1,8 @@
 /mob/living/carbon/BiologicalLife(seconds, times_fired)
-	if(stat == DEAD)
-		return FALSE
 	//Reagent processing needs to come before breathing, to prevent edge cases.
 	handle_organs()
+	if(stat == DEAD)
+		return FALSE
 	if(!(. = ..()))
 		return
 	handle_blood()
