@@ -357,9 +357,9 @@
 /*
  * AI - Not really intelligent, but I'm calling it AI anyway.
  */
-/mob/living/simple_animal/parrot/Life()
-	..()
-
+/mob/living/simple_animal/parrot/BiologicalLife(seconds, times_fired)
+	if(!(. = ..()))
+		return
 	//Sprite update for when a parrot gets pulled
 	if(pulledby && !stat && parrot_state != PARROT_WANDER)
 		if(buckled)
@@ -369,8 +369,6 @@
 		parrot_state = PARROT_WANDER
 		pixel_x = initial(pixel_x)
 		pixel_y = initial(pixel_y)
-		return
-
 
 //-----SPEECH
 	/* Parrot speech mimickry!
@@ -911,11 +909,12 @@
 	if(. && !client && prob(1) && prob(1)) //Only the one true bird may speak across dimensions.
 		world.TgsTargetedChatBroadcast("A stray squawk is heard... \"[message]\"", FALSE)
 
-/mob/living/simple_animal/parrot/Poly/Life()
+/mob/living/simple_animal/parrot/Poly/BiologicalLife(seconds, times_fired)
+	if(!(. = ..()))
+		return
 	if(!stat && SSticker.current_state == GAME_STATE_FINISHED && !memory_saved)
 		Write_Memory(FALSE)
 		memory_saved = TRUE
-	..()
 
 /mob/living/simple_animal/parrot/Poly/death(gibbed)
 	if(!memory_saved)

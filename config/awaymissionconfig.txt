@@ -19,4 +19,4 @@
 #_maps/RandomZLevels/away_mission/caves.dmm
 #_maps/RandomZLevels/away_mission/snowdin.dmm
 #_maps/RandomZLevels/away_mission/research.dmm
-#_maps/RandomZLevels/away_mission/Cabin.dmm
+#_maps/RandomZLevels/away_mission/SnowCabin.dmm

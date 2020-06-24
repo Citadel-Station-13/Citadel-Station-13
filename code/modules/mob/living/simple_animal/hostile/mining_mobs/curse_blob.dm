@@ -103,7 +103,7 @@ IGNORE_PROC_IF_NOT_TARGET(attack_slime)
 		return BULLET_ACT_FORCE_PIERCE
 	return ..()
 
-/mob/living/simple_animal/hostile/asteroid/curseblob/attacked_by(obj/item/I, mob/living/L)
+/mob/living/simple_animal/hostile/asteroid/curseblob/attacked_by(obj/item/I, mob/living/L, attackchain_flags = NONE, damage_multiplier = 1)
 	if(L != set_target)
 		L.changeNext_move(I.click_delay) //pre_attacked_by not called
 		return

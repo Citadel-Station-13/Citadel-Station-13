@@ -231,3 +231,16 @@
 			A.UpdateButtonIcon()
 		to_chat(M, "The Tiki Mask has now changed into the [choice] Mask!")
 		return TRUE
+
+/obj/item/clothing/mask/gas/tiki_mask/yalp_elor
+	icon_state = "tiki_yalp"
+	item_state = "tiki_yalp"
+	actions_types = list()
+
+/obj/item/clothing/mask/gas/hunter
+	name = "bounty hunting mask"
+	desc = "A custom tactical mask with decals added."
+	icon_state = "hunter"
+	item_state = "hunter"
+	resistance_flags = FIRE_PROOF | ACID_PROOF
+	flags_inv = HIDEFACIALHAIR|HIDEFACE|HIDEEYES|HIDEEARS|HIDEHAIR

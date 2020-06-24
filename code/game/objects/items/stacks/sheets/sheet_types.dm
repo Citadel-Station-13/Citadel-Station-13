@@ -242,6 +242,7 @@ GLOBAL_LIST_INIT(wood_recipes, list ( \
 	null, \
 	new/datum/stack_recipe("wooden firearm body", /obj/item/weaponcrafting/improvised_parts/wooden_body, 10, time = 40), \
 	new/datum/stack_recipe("rifle stock", /obj/item/weaponcrafting/stock, 10, time = 40), \
+	new/datum/stack_recipe("pistol grip", /obj/item/weaponcrafting/improvised_parts/wooden_grip, 5, time = 40), \
 	new/datum/stack_recipe("rolling pin", /obj/item/kitchen/rollingpin, 2, time = 30), \
 	new/datum/stack_recipe("wooden bucket", /obj/item/reagent_containers/glass/bucket/wood, 2, time = 30), \
 	new/datum/stack_recipe("wooden buckler", /obj/item/shield/riot/buckler, 20, time = 40), \
@@ -777,6 +778,9 @@ GLOBAL_LIST_INIT(plastic_recipes, list(
 
 /obj/item/stack/sheet/plastic/fifty
 	amount = 50
+
+/obj/item/stack/sheet/plastic/twenty
+	amount = 20
 
 /obj/item/stack/sheet/plastic/five
 	amount = 5

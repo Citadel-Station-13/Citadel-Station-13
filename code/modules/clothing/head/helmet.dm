@@ -386,3 +386,9 @@
 	cold_protection = HEAD
 	min_cold_protection_temperature = SPACE_SUIT_MIN_TEMP_PROTECT
 	armor = list("melee" = 10, "bullet" = 5, "laser" = 5,"energy" = 5, "bomb" = 5, "bio" = 50, "rad" = 20, "fire" = -10, "acid" = 0)
+
+/obj/item/clothing/head/helmet/police
+	name = "police officer's hat"
+	desc = "A police officer's Hat. This hat emphasizes that you are THE LAW."
+	icon_state = "policehelm"
+	dynamic_hair_suffix = ""

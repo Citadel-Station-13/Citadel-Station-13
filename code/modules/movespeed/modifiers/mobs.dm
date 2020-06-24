@@ -119,3 +119,7 @@
 /datum/movespeed_modifier/liver_cirrhosis
 	blacklisted_movetypes = FLOATING
 	variable = TRUE
+
+/datum/movespeed_modifier/active_block
+	variable = TRUE
+	flags = IGNORE_NOSLOW

@@ -33,8 +33,8 @@
 	var/inaccuracy_percentage = 1.5
 	var/positive_cash_offset = 0
 	var/negative_cash_offset = 0
-	var/minor_rewards = list(/obj/item/stack/circuit_stack/full,	//To add a new minor reward, add it here.
-					/obj/item/airlock_painter/decal,
+	var/minor_rewards = list(/obj/item/stack/circuit_stack/full, //To add a new minor reward, add it here.
+					/obj/item/flashlight/flashdark,
 					/obj/item/pen/survival,
 					/obj/item/circuitboard/machine/sleeper/party,
 					/obj/item/toy/sprayoncan)

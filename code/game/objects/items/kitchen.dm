@@ -138,6 +138,7 @@
 	icon_state = "buckknife"
 	item_state = "knife"
 	desc = "A military combat utility survival knife."
+	embedding = list("pain_mult" = 4, "embed_chance" = 65, "fall_chance" = 10, "ignore_throwspeed_threshold" = TRUE)
 	force = 20
 	throwforce = 20
 	attack_verb = list("slashed", "stabbed", "sliced", "torn", "ripped", "cut")
@@ -148,6 +149,7 @@
 	icon_state = "survivalknife"
 	item_state = "knife"
 	desc = "A hunting grade survival knife."
+	embedding = list("pain_mult" = 4, "embed_chance" = 35, "fall_chance" = 10)
 	force = 15
 	throwforce = 15
 	bayonet = TRUE
@@ -159,6 +161,7 @@
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 	desc = "A sharpened bone. The bare minimum in survival."
+	embedding = list("pain_mult" = 4, "embed_chance" = 35, "fall_chance" = 10)
 	force = 15
 	throwforce = 15
 	custom_materials = null
