@@ -437,3 +437,12 @@
 	item_state = "hunter"
 	armor = list("melee" = 5, "bullet" = 5, "laser" = 5, "energy" = 15, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 0)
 	resistance_flags = FIRE_PROOF | ACID_PROOF
+
+/obj/item/clothing/head/kepi
+	name = "kepi"
+	desc = "A white cap with visor. Oui oui, mon capitane!"
+	icon_state = "kepi"
+
+/obj/item/clothing/head/kepi/old
+	icon_state = "kepi_old"
+	desc = "A flat, white circular cap with a visor, that demands some honor from it's wearer."
