@@ -1,0 +1,4 @@
+author: "Anonymous"
+delete-after: True
+changes: 
+  - rscadd: "Added kepi and orvilike kepi. Available through loadout."
