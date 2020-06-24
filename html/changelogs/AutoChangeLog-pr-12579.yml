@@ -1,4 +1,0 @@
-author: "Detective-Google"
-delete-after: True
-changes: 
-  - bugfix: "singulos no longer succ infinite rods out of the ice"

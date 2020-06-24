@@ -1,5 +1,0 @@
-author: "timothyteakettle"
-delete-after: True
-changes: 
-  - bugfix: "bonfires/grills no longer produce infinite quantities of food"
-  - bugfix: "slime's alter form ability now updates their hair colour when changing their body colour"
