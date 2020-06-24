@@ -14,9 +14,9 @@ export const ClockworkSlab = (props, context) => {
     power = 0,
   } = data;
   return (
-    <Window>
+    <Window theme="clockcult" >
       <Window.Content>
-        <Fragment theme="clockwork">
+        <Fragment>
           <Section>
             <Button
               content={recollection
@@ -46,36 +46,25 @@ export const ClockworkSlab = (props, context) => {
           ) : (
             <Fragment>
               <Section title="Power">
-                <b>
-                  {power <= 1000 ? (
-                    `${power} W`
-                  ) : (
-                    `${round(power/1000, 2)} kW`
-                  )}
-                </b>
+                <b>${power}</b>
               </Section>
               <Section title="Recital">
                 {data.tier_info}
                 {data.scripturecolors}
                 <Tabs>
-                  {map((cat_contents, category) => {
-                    const contents = cat_contents || [];
+                {scripture.map(category => {
+                    const script = category|| [];
                     return (
-                      <Tabs.Tab
-                        key={category}
-                        label={category}>
+
                         <Section>
                           <LabeledList>
-                            {contents.map(script => {
-                              return (
                                 <LabeledList.Item
                                   key={script.name}
-                                  label={script.name}
+                                  label={script.important ? `<b>${script.name}</b>` : script.name}
                                   buttons={(
                                     <Fragment>
                                       <Button
-                                        content={`Recite
-                                        (${script.required} W)`}
+                                        content={`Recite ${script.required}`}
                                         disabled={script.required < power}
                                         onClick={() => act('recite', {
                                           'script': script.name,
@@ -91,15 +80,13 @@ export const ClockworkSlab = (props, context) => {
                                         })} />
                                     </Fragment>
                                   )}>
-                                  {`${script.descname} ${script.invokers}`}
+                                  {`${script.descname || ""} ${script.invokers || 1}`}
                                 </LabeledList.Item>
-                              );
-                            })}
+
                           </LabeledList>
                         </Section>
-                      </Tabs.Tab>
                     );
-                  })(scripture)}
+                  })}
                 </Tabs>
               </Section>
             </Fragment>

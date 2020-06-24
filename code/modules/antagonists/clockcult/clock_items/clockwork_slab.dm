@@ -266,25 +266,27 @@
 
 /obj/item/clockwork/slab/ui_data(mob/user) //we display a lot of data via TGUI
 	var/list/data = list()
-	data["power"] = get_clockwork_power()
-	data["scriptures"] = list()
+	data["power"] = DisplayPower(get_clockwork_power())
+	data["rec_text"] = recollection()
+	data["scripture"] = list()
 	for(var/s in GLOB.all_scripture)
 		var/datum/clockwork_scripture/S = GLOB.all_scripture[s]
 		//var/scripture_color = get_component_color_bright(S.primary_component)
-		var/list/temp_info = list("name" = "[S.name]",
+		var/list/temp_info = list(
+		"name" = "[S.name]",
 		"descname" = "[S.descname]",
 		"tip" = "[S.desc]\n[S.usage_tip]",
 		"required" = "([DisplayPower(S.power_cost)][S.special_power_text ? "+ [replacetext(S.special_power_text, "POWERCOST", "[DisplayPower(S.special_power_cost)]")]" : ""])",
 		"type" = "[S.type]",
-		"quickbind" = S.quickbind)
-		if(S.important)
-			temp_info["name"] = "[temp_info["name"]]"
+		"quickbind" = S.quickbind
+		)
+		temp_info["important"] = S.important
 		var/found = quickbound.Find(S.type)
 		if(found)
 			temp_info["bound"] = "[found]"
 		if(S.invokers_required > 1)
 			temp_info["invokers"] = "Invokers: [S.invokers_required]"
-		data["scripture"] += temp_info
+		data["scripture"] += list(temp_info)
 	return data
 
 /obj/item/clockwork/slab/ui_static_data(mob/user)
@@ -307,7 +309,6 @@
 	list("name" = "Power", "desc" = "The power system that certain objects use to function."), \
 	list("name" = "Conversion", "desc" = "Converting the crew, cyborgs, and very walls to your cause."), \
 	)
-	data["rec_text"] = recollection()
 	return data
 
 /obj/item/clockwork/slab/ui_act(action, params)
