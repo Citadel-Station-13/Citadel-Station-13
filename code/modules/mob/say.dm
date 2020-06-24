@@ -50,6 +50,8 @@
 	usr.emote("me",1,message,TRUE)
 
 /mob/say_mod(input, message_mode)
+	if(input[1] == "!")
+		return ""
 	var/customsayverb = findtext(input, "*")
 	if(customsayverb && message_mode != MODE_WHISPER_CRIT)
 		message_mode = MODE_CUSTOM_SAY
