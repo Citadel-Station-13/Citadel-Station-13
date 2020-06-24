@@ -18,31 +18,20 @@
 #define THERMAL_PROTECTION_HAND_LEFT	0.025
 #define THERMAL_PROTECTION_HAND_RIGHT	0.025
 
-/mob/living/carbon/human/Life(seconds, times_fired)
-	set invisibility = 0
-	if (notransform)
+/mob/living/carbon/human/BiologicalLife(seconds, times_fired)
+	if(!(. = ..()))
 		return
+	handle_active_genes()
+	//heart attack stuff
+	handle_heart()
+	dna.species.spec_life(src) // for mutantraces
+	return (stat != DEAD) && !QDELETED(src)
 
-	. = ..()
-
-	if (QDELETED(src))
-		return 0
-
-	if(.) //not dead
-		handle_active_genes()
-
-	if(stat != DEAD)
-		//heart attack stuff
-		handle_heart()
-
+/mob/living/carbon/human/PhysicalLife(seconds, times_fired)
+	if(!(. = ..()))
+		return
 	//Update our name based on whether our face is obscured/disfigured
 	name = get_visible_name()
-
-	dna.species.spec_life(src) // for mutantraces
-
-	if(stat != DEAD)
-		return 1
-
 
 /mob/living/carbon/human/calculate_affecting_pressure(pressure)
 	var/headless = !get_bodypart(BODY_ZONE_HEAD) //should the mob be perennially headless (see dullahans), we only take the suit into account, so they can into space.
