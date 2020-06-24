@@ -155,7 +155,7 @@ Behavior that's still missing from this component that original food items had t
 	if(owner.reagents.total_volume)
 		SEND_SIGNAL(parent, COMSIG_FOOD_EATEN, eater, feeder)
 		var/fraction = min(bite_consumption / owner.reagents.total_volume, 1)
-		reagents.reaction(M, INGEST, fraction)
+		owner.reagents.reaction(eater, INGEST, fraction)
 		owner.reagents.trans_to(eater, bite_consumption)
 		bitecount++
 		On_Consume(eater)
