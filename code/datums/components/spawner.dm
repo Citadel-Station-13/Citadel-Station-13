@@ -37,7 +37,7 @@
 
 // Stopping clientless simple mobs' from indiscriminately bashing their own spawners due DestroySurroundings() et similars.
 /datum/component/spawner/proc/on_attack_generic(datum/source, mob/user, damage_amount, damage_type, damage_flag, sound_effect, armor_penetration)
-	if(!user.client && (user in spawned_mobs))
+	if(!user.client && ((user.faction & faction) || (user in spawned_mobs)))
 		return COMPONENT_STOP_GENERIC_ATTACK
 
 /datum/component/spawner/proc/try_spawn_mob()
