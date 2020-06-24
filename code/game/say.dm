@@ -110,6 +110,8 @@ GLOBAL_LIST_INIT(freqtospan, list(
 
 /// Quirky citadel proc for our custom sayverbs to strip the verb out. Snowflakey as hell, say rewrite 3.0 when?
 /atom/movable/proc/quoteless_say_quote(input, list/spans = list(speech_span), message_mode)
+	if(input[1] == "!")
+		return ""
 	var/pos = findtext(input, "*")
 	return pos? copytext(input, pos + 1) : input
 
