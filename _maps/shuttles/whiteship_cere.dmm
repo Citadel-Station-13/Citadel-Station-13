@@ -3,8 +3,11 @@
 /turf/template_noop,
 /area/template_noop)
 "ab" = (
+/obj/machinery/porta_turret/centcom_shuttle/weak{
+	dir = 1
+	},
 /turf/closed/wall/mineral/titanium,
-/area/shuttle/abandoned)
+/area/shuttle/abandoned/engine)
 "ac" = (
 /obj/machinery/door/airlock/titanium{
 	name = "mech bay external airlock"
@@ -13,85 +16,142 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
+/obj/structure/fans/tiny,
 /obj/docking_port/mobile{
-	dheight = 0;
+	callTime = 250;
+	can_move_docking_ports = 1;
 	dir = 2;
 	dwidth = 8;
 	height = 16;
 	id = "whiteship";
 	launch_status = 0;
+	movement_force = list("KNOCKDOWN" = 0, "THROW" = 0);
 	name = "NT Recovery White-Ship";
 	port_direction = 8;
-	preferred_direction = 1;
 	width = 16
 	},
+/obj/machinery/door/firedoor,
 /turf/open/floor/plating,
-/area/shuttle/abandoned)
+/area/shuttle/abandoned/engine)
 "ad" = (
 /obj/structure/shuttle/engine/propulsion{
 	dir = 1
 	},
 /turf/open/floor/plating/airless,
-/area/shuttle/abandoned)
+/area/shuttle/abandoned/engine)
 "ae" = (
-/obj/machinery/mech_bay_recharge_port{
-	dir = 2
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/obj/machinery/power/smes/engineering{
+	charge = 1e+006
+	},
+/obj/structure/cable/yellow{
+	icon_state = "0-4"
 	},
 /obj/effect/decal/cleanable/dirt{
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/turf/open/floor/mineral/titanium/yellow,
-/area/shuttle/abandoned)
+/turf/open/floor/plating,
+/area/shuttle/abandoned/engine)
 "af" = (
 /obj/effect/decal/cleanable/dirt{
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/obj/structure/closet/crate,
+/obj/item/shovel,
+/obj/item/pickaxe,
+/obj/item/storage/box/lights/mixed,
+/obj/item/storage/box/lights/mixed,
+/obj/item/mining_scanner,
+/obj/effect/turf_decal/bot,
 /obj/machinery/light{
 	dir = 1
 	},
-/turf/open/floor/mineral/titanium/yellow,
-/area/shuttle/abandoned)
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/turf/open/floor/plating,
+/area/shuttle/abandoned/engine)
 "ag" = (
 /obj/effect/decal/cleanable/dirt{
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
+/obj/structure/cable/yellow{
+	icon_state = "2-8"
+	},
+/obj/structure/cable/yellow{
+	icon_state = "2-4"
+	},
+/obj/machinery/shower{
+	pixel_y = 15
+	},
+/obj/effect/turf_decal/stripes/corner{
+	dir = 8
+	},
 /turf/open/floor/mineral/titanium/yellow,
-/area/shuttle/abandoned)
+/area/shuttle/abandoned/engine)
 "ah" = (
 /obj/effect/decal/cleanable/dirt{
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
+	},
+/obj/effect/turf_decal/stripes{
+	dir = 1
+	},
 /turf/open/floor/mineral/titanium,
-/area/shuttle/abandoned)
+/area/shuttle/abandoned/engine)
 "ai" = (
 /obj/effect/decal/cleanable/cobweb/cobweb2,
-/obj/structure/frame/machine,
-/obj/item/stack/cable_coil,
 /obj/effect/decal/cleanable/dirt{
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/turf/open/floor/mineral/titanium/yellow,
-/area/shuttle/abandoned)
+/obj/machinery/mech_bay_recharge_port{
+	dir = 2
+	},
+/obj/structure/cable/yellow{
+	icon_state = "0-8"
+	},
+/turf/open/floor/plating,
+/area/shuttle/abandoned/engine)
 "aj" = (
 /obj/structure/shuttle/engine/heater{
 	dir = 1
 	},
 /obj/structure/window/reinforced,
 /turf/open/floor/plating/airless,
-/area/shuttle/abandoned)
+/area/shuttle/abandoned/engine)
 "ak" = (
-/obj/structure/mecha_wreckage/ripley,
 /obj/effect/decal/cleanable/dirt{
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/turf/open/floor/mech_bay_recharge_floor,
-/area/shuttle/abandoned)
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/obj/structure/cable/yellow{
+	icon_state = "0-2"
+	},
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/turf/open/floor/plating,
+/area/shuttle/abandoned/engine)
 "al" = (
 /obj/effect/decal/cleanable/dirt{
 	desc = "A thin layer of dust coating the floor.";
@@ -101,8 +161,14 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
+	dir = 1
+	},
 /turf/open/floor/mineral/titanium/yellow,
-/area/shuttle/abandoned)
+/area/shuttle/abandoned/engine)
 "am" = (
 /obj/effect/decal/cleanable/dirt{
 	desc = "A thin layer of dust coating the floor.";
@@ -116,38 +182,64 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 8
+	},
 /turf/open/floor/mineral/titanium,
-/area/shuttle/abandoned)
+/area/shuttle/abandoned/engine)
 "an" = (
 /obj/effect/spawner/lootdrop/whiteship_cere_ripley,
-/turf/open/floor/mech_bay_recharge_floor,
-/area/shuttle/abandoned)
-"ao" = (
-/obj/machinery/computer/mech_bay_power_console{
-	dir = 4
+/obj/machinery/airalarm/all_access{
+	dir = 8;
+	pixel_x = 24
 	},
+/turf/open/floor/mech_bay_recharge_floor,
+/area/shuttle/abandoned/engine)
+"ao" = (
 /obj/effect/decal/cleanable/dirt{
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/turf/open/floor/mineral/titanium/yellow,
-/area/shuttle/abandoned)
+/obj/machinery/power/port_gen/pacman{
+	anchored = 1
+	},
+/obj/structure/cable/yellow,
+/obj/item/wrench,
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/obj/effect/turf_decal/bot,
+/turf/open/floor/plating,
+/area/shuttle/abandoned/engine)
 "ap" = (
 /obj/machinery/computer/mech_bay_power_console{
 	dir = 8
 	},
-/turf/open/floor/mineral/titanium/yellow,
-/area/shuttle/abandoned)
+/obj/structure/cable/yellow{
+	icon_state = "0-8"
+	},
+/obj/machinery/firealarm{
+	dir = 4;
+	pixel_x = 24
+	},
+/turf/open/floor/plating,
+/area/shuttle/abandoned/engine)
 "aq" = (
 /obj/machinery/door/airlock/titanium{
 	name = "mech bay"
 	},
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/machinery/door/firedoor,
 /turf/open/floor/mineral/titanium/yellow,
-/area/shuttle/abandoned)
+/area/shuttle/abandoned/engine)
 "ar" = (
 /obj/effect/spawner/structure/window/shuttle,
 /turf/open/floor/plating,
-/area/shuttle/abandoned)
+/area/shuttle/abandoned/engine)
 "as" = (
 /obj/effect/turf_decal/delivery{
 	dir = 1
@@ -170,8 +262,17 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
+/obj/machinery/power/apc{
+	dir = 8;
+	name = "Salvage Ship Cargo APC";
+	pixel_x = -24;
+	req_access = null
+	},
+/obj/structure/cable/yellow{
+	icon_state = "0-4"
+	},
 /turf/open/floor/mineral/titanium/yellow,
-/area/shuttle/abandoned)
+/area/shuttle/abandoned/cargo)
 "at" = (
 /obj/effect/turf_decal/delivery{
 	dir = 1
@@ -187,8 +288,12 @@
 /obj/machinery/light{
 	dir = 1
 	},
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
+	},
+/obj/structure/reagent_dispensers/watertank,
 /turf/open/floor/mineral/titanium/yellow,
-/area/shuttle/abandoned)
+/area/shuttle/abandoned/cargo)
 "au" = (
 /obj/effect/turf_decal/delivery{
 	dir = 1
@@ -197,8 +302,15 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
+	},
+/obj/structure/cable/yellow{
+	icon_state = "1-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/mineral/titanium/yellow,
-/area/shuttle/abandoned)
+/area/shuttle/abandoned/cargo)
 "av" = (
 /obj/effect/turf_decal/delivery{
 	dir = 1
@@ -212,7 +324,7 @@
 	name = "spare equipment crate"
 	},
 /turf/open/floor/mineral/titanium/yellow,
-/area/shuttle/abandoned)
+/area/shuttle/abandoned/cargo)
 "aw" = (
 /obj/effect/turf_decal/delivery{
 	dir = 1
@@ -224,8 +336,9 @@
 /obj/machinery/light{
 	dir = 1
 	},
+/obj/structure/reagent_dispensers/fueltank,
 /turf/open/floor/mineral/titanium/yellow,
-/area/shuttle/abandoned)
+/area/shuttle/abandoned/cargo)
 "ax" = (
 /obj/effect/turf_decal/delivery{
 	dir = 1
@@ -241,11 +354,15 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
+/obj/machinery/airalarm/all_access{
+	dir = 8;
+	pixel_x = 24
+	},
 /turf/open/floor/mineral/titanium/yellow,
-/area/shuttle/abandoned)
+/area/shuttle/abandoned/cargo)
 "ay" = (
 /turf/closed/wall/mineral/titanium/nodiagonal,
-/area/shuttle/abandoned)
+/area/shuttle/abandoned/cargo)
 "az" = (
 /obj/effect/turf_decal/delivery{
 	dir = 1
@@ -260,7 +377,7 @@
 	name = "dust"
 	},
 /turf/open/floor/mineral/titanium/yellow,
-/area/shuttle/abandoned)
+/area/shuttle/abandoned/cargo)
 "aA" = (
 /obj/effect/turf_decal/delivery{
 	dir = 1
@@ -274,7 +391,7 @@
 	name = "dust"
 	},
 /turf/open/floor/mineral/titanium/yellow,
-/area/shuttle/abandoned)
+/area/shuttle/abandoned/cargo)
 "aB" = (
 /obj/effect/turf_decal/delivery{
 	dir = 1
@@ -289,8 +406,12 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/mineral/titanium/yellow,
-/area/shuttle/abandoned)
+/area/shuttle/abandoned/cargo)
 "aC" = (
 /obj/effect/turf_decal/delivery{
 	dir = 1
@@ -308,7 +429,7 @@
 	name = "dust"
 	},
 /turf/open/floor/mineral/titanium/yellow,
-/area/shuttle/abandoned)
+/area/shuttle/abandoned/cargo)
 "aD" = (
 /obj/effect/turf_decal/delivery{
 	dir = 1
@@ -330,7 +451,7 @@
 	name = "dust"
 	},
 /turf/open/floor/mineral/titanium/yellow,
-/area/shuttle/abandoned)
+/area/shuttle/abandoned/cargo)
 "aE" = (
 /obj/effect/turf_decal/delivery{
 	dir = 1
@@ -344,14 +465,19 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
+/mob/living/simple_animal/hostile/syndicate/melee{
+	environment_smash = 0
+	},
 /turf/open/floor/mineral/titanium/yellow,
-/area/shuttle/abandoned)
+/area/shuttle/abandoned/cargo)
 "aF" = (
 /obj/machinery/door/poddoor{
 	id = "cerewhiteleft"
 	},
+/obj/structure/fans/tiny,
+/obj/machinery/door/firedoor,
 /turf/open/floor/plating,
-/area/shuttle/abandoned)
+/area/shuttle/abandoned/cargo)
 "aG" = (
 /obj/effect/decal/cleanable/dirt{
 	desc = "A thin layer of dust coating the floor.";
@@ -362,13 +488,15 @@
 	name = "dust"
 	},
 /turf/open/floor/mineral/titanium,
-/area/shuttle/abandoned)
+/area/shuttle/abandoned/cargo)
 "aH" = (
 /obj/machinery/door/poddoor{
 	id = "cerewhiteright"
 	},
+/obj/structure/fans/tiny,
+/obj/machinery/door/firedoor,
 /turf/open/floor/plating,
-/area/shuttle/abandoned)
+/area/shuttle/abandoned/cargo)
 "aI" = (
 /obj/effect/turf_decal/delivery{
 	dir = 1
@@ -387,7 +515,7 @@
 	},
 /obj/item/clothing/glasses/welding,
 /turf/open/floor/mineral/titanium/yellow,
-/area/shuttle/abandoned)
+/area/shuttle/abandoned/cargo)
 "aJ" = (
 /obj/effect/turf_decal/delivery{
 	dir = 1
@@ -406,7 +534,7 @@
 	},
 /obj/machinery/light,
 /turf/open/floor/mineral/titanium/yellow,
-/area/shuttle/abandoned)
+/area/shuttle/abandoned/cargo)
 "aK" = (
 /obj/effect/decal/cleanable/dirt{
 	desc = "A thin layer of dust coating the floor.";
@@ -424,8 +552,12 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/mineral/titanium,
-/area/shuttle/abandoned)
+/area/shuttle/abandoned/cargo)
 "aL" = (
 /obj/effect/turf_decal/delivery{
 	dir = 1
@@ -440,7 +572,7 @@
 	},
 /obj/machinery/light,
 /turf/open/floor/mineral/titanium/yellow,
-/area/shuttle/abandoned)
+/area/shuttle/abandoned/cargo)
 "aM" = (
 /obj/structure/ore_box,
 /obj/effect/decal/cleanable/dirt{
@@ -448,7 +580,7 @@
 	name = "dust"
 	},
 /turf/open/floor/mineral/titanium/yellow,
-/area/shuttle/abandoned)
+/area/shuttle/abandoned/cargo)
 "aN" = (
 /obj/machinery/door/airlock/titanium{
 	name = "cockpit"
@@ -457,8 +589,13 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/machinery/door/firedoor,
 /turf/open/floor/mineral/titanium/blue,
-/area/shuttle/abandoned)
+/area/shuttle/abandoned/bridge)
 "aO" = (
 /obj/effect/decal/cleanable/dirt{
 	desc = "A thin layer of dust coating the floor.";
@@ -470,7 +607,7 @@
 	pixel_y = 2
 	},
 /turf/open/floor/mineral/titanium/yellow,
-/area/shuttle/abandoned)
+/area/shuttle/abandoned/cargo)
 "aP" = (
 /obj/structure/table,
 /obj/item/gps{
@@ -485,8 +622,29 @@
 /obj/machinery/light{
 	dir = 1
 	},
+/obj/item/megaphone{
+	pixel_x = -2;
+	pixel_y = -4
+	},
+/obj/item/radio/off{
+	pixel_x = 6;
+	pixel_y = 7
+	},
+/obj/machinery/power/apc{
+	dir = 1;
+	name = "Salvage Ship Bridge APC";
+	pixel_y = 24;
+	req_access = null
+	},
+/obj/structure/cable/yellow{
+	icon_state = "0-4"
+	},
+/obj/machinery/firealarm{
+	dir = 8;
+	pixel_x = -24
+	},
 /turf/open/floor/mineral/titanium/blue,
-/area/shuttle/abandoned)
+/area/shuttle/abandoned/bridge)
 "aQ" = (
 /obj/effect/decal/cleanable/dirt{
 	desc = "A thin layer of dust coating the floor.";
@@ -500,8 +658,12 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
+/obj/structure/cable/yellow{
+	icon_state = "1-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/mineral/titanium/blue,
-/area/shuttle/abandoned)
+/area/shuttle/abandoned/bridge)
 "aR" = (
 /obj/effect/decal/cleanable/dirt{
 	desc = "A thin layer of dust coating the floor.";
@@ -512,14 +674,14 @@
 	name = "dust"
 	},
 /turf/open/floor/mineral/titanium/blue,
-/area/shuttle/abandoned)
+/area/shuttle/abandoned/bridge)
 "aS" = (
 /obj/effect/decal/cleanable/dirt{
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
 /turf/open/floor/mineral/titanium/blue,
-/area/shuttle/abandoned)
+/area/shuttle/abandoned/bridge)
 "aT" = (
 /obj/structure/table,
 /obj/effect/decal/cleanable/cobweb/cobweb2,
@@ -531,16 +693,41 @@
 /obj/machinery/light{
 	dir = 1
 	},
+/obj/item/paper_bin{
+	pixel_x = -4
+	},
+/obj/item/pen{
+	pixel_x = -4
+	},
+/obj/machinery/airalarm/all_access{
+	dir = 8;
+	pixel_x = 24
+	},
 /turf/open/floor/mineral/titanium/blue,
-/area/shuttle/abandoned)
+/area/shuttle/abandoned/bridge)
 "aU" = (
 /obj/structure/table,
 /obj/effect/decal/cleanable/dirt{
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
+/obj/machinery/button/door{
+	id = "whiteship_bridge";
+	name = "Bridge Blast Door Control";
+	pixel_y = -8;
+	pixel_x = -24
+	},
+/obj/item/storage/toolbox/emergency{
+	pixel_x = -4;
+	pixel_y = 10
+	},
+/obj/item/wrench{
+	pixel_x = -2
+	},
+/obj/machinery/cell_charger,
+/obj/item/stock_parts/cell/high/plus,
 /turf/open/floor/mineral/titanium/blue,
-/area/shuttle/abandoned)
+/area/shuttle/abandoned/bridge)
 "aV" = (
 /obj/machinery/suit_storage_unit/standard_unit,
 /obj/effect/decal/cleanable/dirt{
@@ -548,7 +735,7 @@
 	name = "dust"
 	},
 /turf/open/floor/mineral/titanium/blue,
-/area/shuttle/abandoned)
+/area/shuttle/abandoned/bridge)
 "aW" = (
 /obj/structure/chair/comfy/black,
 /obj/effect/decal/cleanable/dirt{
@@ -563,8 +750,11 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
+/mob/living/simple_animal/hostile/syndicate/melee{
+	environment_smash = 0
+	},
 /turf/open/floor/mineral/titanium/blue,
-/area/shuttle/abandoned)
+/area/shuttle/abandoned/bridge)
 "aX" = (
 /obj/structure/closet/emcloset,
 /obj/effect/decal/cleanable/dirt{
@@ -572,19 +762,17 @@
 	name = "dust"
 	},
 /turf/open/floor/mineral/titanium/blue,
-/area/shuttle/abandoned)
+/area/shuttle/abandoned/bridge)
 "aZ" = (
-/obj/structure/table,
-/obj/item/phone{
-	pixel_x = -3;
-	pixel_y = 3
-	},
 /obj/effect/decal/cleanable/dirt{
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
+/obj/machinery/computer/security/mining{
+	dir = 1
+	},
 /turf/open/floor/mineral/titanium/blue,
-/area/shuttle/abandoned)
+/area/shuttle/abandoned/bridge)
 "ba" = (
 /obj/machinery/computer/shuttle/white_ship{
 	dir = 1
@@ -594,19 +782,519 @@
 	name = "dust"
 	},
 /turf/open/floor/mineral/titanium/blue,
-/area/shuttle/abandoned)
+/area/shuttle/abandoned/bridge)
 "bb" = (
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/obj/machinery/computer/camera_advanced/shuttle_docker/whiteship{
+	view_range = 14;
+	x_offset = -4;
+	y_offset = -8;
+	dir = 1
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/abandoned/bridge)
+"cb" = (
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/abandoned/cargo)
+"cY" = (
+/obj/machinery/door/airlock/titanium{
+	name = "mech bay"
+	},
+/obj/machinery/door/firedoor,
+/turf/open/floor/mineral/titanium/yellow,
+/area/shuttle/abandoned/engine)
+"dy" = (
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/obj/machinery/power/apc{
+	name = "Salvage Ship Engineering APC";
+	pixel_y = -24;
+	req_access = null
+	},
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/obj/machinery/atmospherics/components/unary/portables_connector/visible{
+	dir = 1
+	},
+/obj/machinery/portable_atmospherics/canister/air,
+/obj/effect/turf_decal/bot,
+/turf/open/floor/plating,
+/area/shuttle/abandoned/engine)
+"er" = (
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
+	},
+/obj/structure/cable/yellow{
+	icon_state = "1-4"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/turf/open/floor/mineral/titanium/yellow,
+/area/shuttle/abandoned/engine)
+"fx" = (
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/abandoned/bridge)
+"gn" = (
+/obj/machinery/porta_turret/centcom_shuttle/weak,
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/abandoned/bridge)
+"jn" = (
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/mob/living/simple_animal/hostile/syndicate/melee{
+	environment_smash = 0
+	},
+/turf/open/floor/plating,
+/area/shuttle/abandoned/engine)
+"jC" = (
+/obj/effect/turf_decal/delivery{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/obj/machinery/firealarm{
+	dir = 4;
+	pixel_x = 24
+	},
+/turf/open/floor/mineral/titanium/yellow,
+/area/shuttle/abandoned/cargo)
+"jU" = (
+/obj/effect/spawner/structure/window/shuttle,
+/obj/machinery/door/poddoor{
+	id = "whiteship_bridge"
+	},
+/turf/open/floor/plating,
+/area/shuttle/abandoned/bridge)
+"oy" = (
+/obj/effect/turf_decal/delivery{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/mob/living/simple_animal/hostile/syndicate/melee{
+	environment_smash = 0
+	},
+/turf/open/floor/mineral/titanium/yellow,
+/area/shuttle/abandoned/cargo)
+"oP" = (
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/abandoned/cargo)
+"qA" = (
+/obj/machinery/door/airlock/titanium{
+	name = "cockpit"
+	},
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/obj/machinery/door/firedoor,
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/abandoned/bridge)
+"qB" = (
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/turf/open/floor/mineral/titanium/yellow,
+/area/shuttle/abandoned/engine)
+"sc" = (
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/abandoned/cargo)
+"sE" = (
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 4
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/abandoned/cargo)
+"sH" = (
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 6
+	},
+/turf/open/floor/plating,
+/area/shuttle/abandoned/engine)
+"tv" = (
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/obj/machinery/portable_atmospherics/canister/air,
+/turf/open/floor/mineral/titanium,
+/area/shuttle/abandoned/cargo)
+"tZ" = (
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 8
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/abandoned/bridge)
+"uP" = (
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
+	},
+/turf/open/floor/mineral/titanium/yellow,
+/area/shuttle/abandoned/engine)
+"vZ" = (
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/abandoned/cargo)
+"wp" = (
 /obj/structure/table,
-/obj/item/paper_bin{
-	pixel_x = -1;
-	pixel_y = 6
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/obj/machinery/recharger,
+/obj/item/storage/box/zipties{
+	pixel_x = 8
+	},
+/obj/machinery/turretid{
+	icon_state = "control_kill";
+	lethal = 1;
+	locked = 0;
+	req_access = null;
+	pixel_x = 29
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/abandoned/bridge)
+"yx" = (
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
 	},
 /obj/effect/decal/cleanable/dirt{
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
 /turf/open/floor/mineral/titanium/blue,
-/area/shuttle/abandoned)
+/area/shuttle/abandoned/bridge)
+"yV" = (
+/obj/machinery/door/poddoor{
+	id = "cerewhiteleft"
+	},
+/obj/structure/fans/tiny,
+/obj/machinery/door/firedoor,
+/obj/machinery/button/door{
+	id = "cerewhiteleft";
+	name = "Cargo Blast Door Toggle";
+	pixel_x = -4;
+	pixel_y = -24
+	},
+/turf/open/floor/plating,
+/area/shuttle/abandoned/cargo)
+"Bz" = (
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/obj/effect/turf_decal/stripes{
+	dir = 4
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/abandoned/cargo)
+"BI" = (
+/obj/effect/turf_decal/delivery{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/turf/open/floor/mineral/titanium/yellow,
+/area/shuttle/abandoned/cargo)
+"Cw" = (
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
+	},
+/obj/machinery/shower{
+	pixel_y = 15
+	},
+/obj/effect/turf_decal/stripes/corner{
+	dir = 4
+	},
+/turf/open/floor/mineral/titanium/yellow,
+/area/shuttle/abandoned/engine)
+"Eu" = (
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/obj/effect/turf_decal/stripes{
+	dir = 8
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/abandoned/cargo)
+"Fv" = (
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/obj/machinery/light{
+	dir = 1
+	},
+/obj/structure/closet/crate,
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
+	},
+/obj/item/stack/sheet/metal/twenty,
+/obj/item/stack/sheet/glass{
+	amount = 10
+	},
+/obj/item/stack/sheet/mineral/plasma{
+	amount = 10
+	},
+/obj/effect/turf_decal/bot,
+/turf/open/floor/plating,
+/area/shuttle/abandoned/engine)
+"FG" = (
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/abandoned/engine)
+"Kh" = (
+/obj/effect/spawner/structure/window/shuttle,
+/turf/open/floor/plating,
+/area/shuttle/abandoned/bridge)
+"MJ" = (
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 5
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/abandoned/bridge)
+"Qh" = (
+/obj/machinery/door/poddoor{
+	id = "cerewhiteright"
+	},
+/obj/structure/fans/tiny,
+/obj/machinery/door/firedoor,
+/obj/machinery/button/door{
+	id = "cerewhiteright";
+	name = "Cargo Blast Door Toggle";
+	pixel_y = -24;
+	pixel_x = 4
+	},
+/turf/open/floor/plating,
+/area/shuttle/abandoned/cargo)
+"Qv" = (
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/abandoned/cargo)
+"RX" = (
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 8
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/abandoned/cargo)
+"Sb" = (
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/turf/open/floor/mineral/titanium,
+/area/shuttle/abandoned/cargo)
+"SV" = (
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/manifold4w/supply/hidden,
+/turf/open/floor/mineral/titanium,
+/area/shuttle/abandoned/cargo)
+"Ud" = (
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
+	},
+/obj/structure/rack,
+/obj/item/reagent_containers/glass/bucket,
+/obj/item/mop,
+/obj/item/storage/bag/trash{
+	pixel_x = 6
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/abandoned/engine)
+"WD" = (
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
+	},
+/turf/open/floor/plating,
+/area/shuttle/abandoned/engine)
+"WJ" = (
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/obj/effect/turf_decal/stripes{
+	dir = 4
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/abandoned/cargo)
 
 (1,1,1) = {"
 aa
@@ -617,7 +1305,7 @@ ad
 aj
 ay
 aF
-aF
+yV
 ay
 aa
 aa
@@ -630,196 +1318,196 @@ aa
 aa
 ad
 aj
-ab
-ab
-ab
+FG
+FG
+FG
 ay
-ah
-ah
+Eu
+Eu
 ay
-ab
-ab
-ab
+Qv
+fx
+gn
 aa
 aa
 aa
 "}
 (3,1,1) = {"
 ab
-ab
-ab
-ab
-ab
-ab
+FG
+FG
+FG
+FG
+Qv
 az
 aG
-aG
+tv
 aI
 aM
-ab
-ab
-ab
-ab
+fx
+fx
+jU
+jU
 aa
 "}
 (4,1,1) = {"
-ab
+FG
 ae
 ak
 ao
-ab
+FG
 as
 aA
-am
-ah
-aA
-ab
-ab
-ab
+sE
+sc
+oy
+Qv
+fx
+fx
 aV
-ab
+jU
 aa
 "}
 (5,1,1) = {"
-ab
+FG
 af
-ag
-ag
-ab
+sH
+dy
+FG
 at
 aA
-am
+cb
 aG
 aJ
-ab
+fx
 aP
 aU
 aS
-ab
-ab
+jU
+jU
 "}
 (6,1,1) = {"
-ab
+FG
 ag
 al
-al
+er
 aq
 au
 aB
-am
-aG
+SV
+Sb
 aK
 aN
 aQ
-aR
-aQ
+MJ
+yx
 aZ
-ar
+jU
 "}
 (7,1,1) = {"
 ac
 ah
 am
-am
+Ud
 ar
-ah
-ah
-am
+sc
+sc
+cb
 aG
 aG
-ar
+Kh
 aR
-aQ
+tZ
 aW
 ba
-ar
+jU
 "}
 (8,1,1) = {"
-ab
-ag
-ag
-ag
-aq
+FG
+Cw
+qB
+uP
+cY
 av
-au
+BI
+oP
 aG
 aG
-aG
-aN
+qA
 aS
 aS
 aR
 bb
-ar
+jU
 "}
 (9,1,1) = {"
-ab
-af
-ag
-ag
-ab
+FG
+Fv
+jn
+WD
+FG
 aw
 aC
-am
-am
+cb
+vZ
 aL
-ab
+fx
 aT
-aU
+wp
 aR
-ab
-ab
+jU
+jU
 "}
 (10,1,1) = {"
-ab
+FG
 ai
 an
 ap
-ab
+FG
 ax
 aD
-am
-am
+RX
+vZ
 av
-ab
-ab
-ab
+Qv
+fx
+fx
 aX
-ab
+jU
 aa
 "}
 (11,1,1) = {"
 ab
-ab
-ab
-ab
-ab
-ab
+FG
+FG
+FG
+FG
+Qv
 aE
-am
+vZ
 aG
-au
+jC
 aO
-ab
-ab
-ab
-ab
+fx
+fx
+jU
+jU
 aa
 "}
 (12,1,1) = {"
 aa
 ad
 aj
-ab
-ab
-ab
+FG
+FG
+FG
 ay
-aG
-ah
+Bz
+WJ
 ay
-ab
-ab
-ab
+Qv
+fx
+gn
 aa
 aa
 aa
@@ -833,7 +1521,7 @@ ad
 aj
 ay
 aH
-aH
+Qh
 ay
 aa
 aa

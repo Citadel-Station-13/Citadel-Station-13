@@ -40,6 +40,10 @@ map snaxi
 	minplayers 25
 endmap
 
+map ministation
+	maxplayers 30
+endmap
+
 map runtimestation
 endmap
 
