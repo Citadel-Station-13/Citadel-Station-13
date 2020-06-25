@@ -9,7 +9,6 @@
 /datum/status_effect/incapacitating/on_creation(mob/living/new_owner, set_duration, updating_canmove)
 	if(isnum(set_duration))
 		duration = set_duration
-	tick_interval = max(world.tick_lag, round(tick_interval, world.tick_lag))
 	. = ..()
 	if(.)
 		if(updating_canmove)
@@ -86,7 +85,7 @@
 		if(carbon_owner)
 			carbon_owner.handle_dreams()
 	// 2% per second, tick interval is in deciseconds
-	if(prob(tick_interval * 0.2) && owner.health > owner.crit_threshold)
+	if(prob(initial(tick_interval) * 0.2) && owner.health > owner.crit_threshold)
 		owner.emote("snore")
 
 /datum/status_effect/staggered
