@@ -1,4 +1,0 @@
-author: "Detective-Google"
-delete-after: True
-changes: 
-  - bugfix: "SMESes can now properly use self charging cells"
