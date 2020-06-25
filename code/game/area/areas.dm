@@ -38,6 +38,10 @@
 	var/poweralm = TRUE
 	var/lightswitch = TRUE
 
+	var/totalbeauty = 0 //All beauty in this area combined, only includes indoor area.
+	var/beauty = 0 // Beauty average per open turf in the area
+	var/beauty_threshold = 150 //If a room is too big it doesn't have beauty.
+
 	var/requires_power = TRUE
 	/// This gets overridden to 1 for space in area/Initialize().
 	var/always_unpowered = FALSE
@@ -65,7 +69,7 @@
 	/// Hides area from player Teleport function.
 	var/hidden = FALSE
 	/// Is the area teleport-safe: no space / radiation / aggresive mobs / other dangers
-	var/safe = FALSE 				
+	var/safe = FALSE
 	/// If false, loading multiple maps with this area type will create multiple instances.
 	var/unique = TRUE
 
@@ -192,6 +196,7 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 /area/LateInitialize()
 	if(!base_area) //we don't want to run it twice.
 		power_change()		// all machines set to current power level, also updates icon
+	update_beauty()
 
 /area/proc/reg_in_areas_in_z()
 	if(contents.len)
@@ -537,6 +542,16 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 			SEND_SOUND(L, sound(sound, repeat = 0, wait = 0, volume = 25, channel = CHANNEL_AMBIENCE))
 			L.client.played = TRUE
 			addtimer(CALLBACK(L.client, /client/proc/ResetAmbiencePlayed), 600)
+
+///Divides total beauty in the room by roomsize to allow us to get an average beauty per tile.
+/area/proc/update_beauty()
+	if(!areasize)
+		beauty = 0
+		return FALSE
+	if(areasize >= beauty_threshold)
+		beauty = 0
+		return FALSE //Too big
+	beauty = totalbeauty / areasize
 
 /area/Exited(atom/movable/M)
 	SEND_SIGNAL(src, COMSIG_AREA_EXITED, M)

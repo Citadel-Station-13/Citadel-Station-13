@@ -1,14 +1,10 @@
-
-
-/mob/living/carbon/alien/larva/Life()
-	set invisibility = 0
-	if (notransform)
+/mob/living/carbon/alien/larva/BiologicalLife(seconds, times_fired)
+	if(!(. = ..()))
 		return
-	if(..()) //not dead
-		// GROW!
-		if(amount_grown < max_grown)
-			amount_grown++
-			update_icons()
+	// GROW!
+	if(amount_grown < max_grown)
+		amount_grown++
+		update_icons()
 
 
 /mob/living/carbon/alien/larva/update_stat()
@@ -24,12 +20,12 @@
 				if(!eye_blind)
 					blind_eyes(1)
 				update_mobility()
-		else
-			if(stat == UNCONSCIOUS)
-				stat = CONSCIOUS
-				if(!(combat_flags & COMBAT_FLAG_HARD_STAMCRIT))
-					set_resting(FALSE, TRUE)
+		else if(stat == UNCONSCIOUS)
+			stat = CONSCIOUS
+			if(!(combat_flags & COMBAT_FLAG_HARD_STAMCRIT))
+				set_resting(FALSE, TRUE)
+			if(eye_blind <= 1)
 				adjust_blindness(-1)
-				update_mobility()
+			update_mobility()
 	update_damage_hud()
 	update_health_hud()

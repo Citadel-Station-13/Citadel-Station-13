@@ -16,6 +16,7 @@
 	var/DropPodOnly = FALSE //only usable by the Bluespace Drop Pod via the express cargo console
 	var/admin_spawned = FALSE //Can only an admin spawn this crate?
 	var/loading_time = 3 //How long does it take to load a packet onto the shuttle? by default its 3 seconds
+	var/goody = PACK_GOODY_NONE //Small items can be grouped into a single crate.They also come in a closet/lockbox instead of a full crate, so the 700 min doesn't apply
 
 // Cargo Restictions //
 // These are used for when you want to stop cargo buying a crate type round start

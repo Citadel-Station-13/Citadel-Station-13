@@ -1,0 +1,5 @@
+author: "Ghommie"
+delete-after: True
+changes: 
+  - bugfix: "Snore spam."
+  - bugfix: "Hostile mobs shouldn't hit their original spawner structures or thoses of the same faction."

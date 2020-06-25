@@ -22,10 +22,11 @@
 	if(reagents.total_volume && roundstart)
 		name += " ([reagents.total_volume]u)"
 
-
 /obj/item/reagent_containers/pill/attack_self(mob/user)
 	return
 
+/obj/item/reagent_containers/pill/get_w_volume() // DEFAULT_VOLUME_TINY at 25u, DEFAULT_VOLUME_SMALL at 50u
+	return DEFAULT_VOLUME_TINY/2 + reagents.total_volume / reagents.maximum_volume * DEFAULT_VOLUME_TINY
 
 /obj/item/reagent_containers/pill/attack(mob/M, mob/user, def_zone)
 	if(!canconsume(M, user))
@@ -137,14 +138,14 @@
 	name = "mannitol pill"
 	desc = "Used to treat brain damage."
 	icon_state = "pill17"
-	list_reagents = list(/datum/reagent/medicine/mannitol = 50)
+	list_reagents = list(/datum/reagent/medicine/mannitol = 25)
 	roundstart = 1
 
 /obj/item/reagent_containers/pill/mutadone
 	name = "mutadone pill"
 	desc = "Used to treat genetic damage."
 	icon_state = "pill20"
-	list_reagents = list(/datum/reagent/medicine/mutadone = 50)
+	list_reagents = list(/datum/reagent/medicine/mutadone = 25)
 	roundstart = 1
 
 /obj/item/reagent_containers/pill/salicyclic
@@ -186,14 +187,14 @@
 	name = "prussian blue pill"
 	desc = "Used to treat heavy radition poisoning."
 	icon_state = "prussian_blue"
-	list_reagents = list(/datum/reagent/medicine/prussian_blue = 25, /datum/reagent/water = 10)
+	list_reagents = list(/datum/reagent/medicine/prussian_blue = 25)
 	roundstart = 1
 
 /obj/item/reagent_containers/pill/mutarad
 	name = "radiation treatment deluxe pill"
 	desc = "Used to treat heavy radition poisoning and genetic defects."
 	icon_state = "anit_rad_fixgene"
-	list_reagents = list(/datum/reagent/medicine/prussian_blue = 15, /datum/reagent/medicine/potass_iodide = 15, /datum/reagent/medicine/mutadone = 15, /datum/reagent/water = 5)
+	list_reagents = list(/datum/reagent/medicine/prussian_blue = 10, /datum/reagent/medicine/potass_iodide = 10, /datum/reagent/medicine/mutadone = 5)
 	roundstart = 1
 
 ///////////////////////////////////////// this pill is used only in a legion mob drop
@@ -216,7 +217,7 @@
 
 /obj/item/reagent_containers/pill/lsd
 	name = "hallucinogen pill"
-	list_reagents = list(/datum/reagent/drug/mushroomhallucinogen = 15, /datum/reagent/toxin/mindbreaker = 15)
+	list_reagents = list(/datum/reagent/drug/mushroomhallucinogen = 12.5, /datum/reagent/toxin/mindbreaker = 12.5)
 
 
 /obj/item/reagent_containers/pill/aranesp

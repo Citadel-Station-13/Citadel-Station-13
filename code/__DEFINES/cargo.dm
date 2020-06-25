@@ -42,3 +42,7 @@
 #define PERMIT_ANIMALS       (1<<4)
 #define PERMIT_ADVSCI        (1<<5)
 
+#define PACK_GOODY_NONE		0
+#define PACK_GOODY_PUBLIC	1 //can be bought by both privates and cargo
+#define PACK_GOODY_PRIVATE	2 //can be bought only by privates
+

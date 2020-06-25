@@ -156,8 +156,37 @@
 		to_chat(M, "<span class='notice'>You feel your tongue.... unfluffify...?</span>")
 		M.say("Pleh!")
 	else
-		log_game("FERMICHEM: [M] ckey: [M.key]'s tongue has been made permanent")
+		log_reagent("FERMICHEM: [M] ckey: [M.key]'s tongue has been made permanent")
 
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+//										PLUSHMIUM
+///////////////////////////////////////////////////////////////////////////////////////////////////
+//A chemical you can spray on plushies to turn them into a 'shell'
+//Hugging the plushie turns yourself into the plushie!
+/datum/reagent/fermi/plushmium
+	name = "Plushmium"
+	description = "A strange chemical, seeming almost fluffy, if it were not for it being a liquid. Known to have a strange effect on plushies."
+	color = "#fbcbd7"
+	taste_description = "the soft feeling of a plushie"
+	pH = 5
+	value = 50
+	can_synth = TRUE
+
+/datum/reagent/fermi/plushmium/reaction_obj(obj/O, reac_volume)
+	if(istype(O, /obj/item/toy/plush) && reac_volume >= 5)
+		O.loc.visible_message("<span class='warning'>The plushie seems to be staring back at you.</span>")
+		var/obj/item/toy/plushie_shell/new_shell = new /obj/item/toy/plushie_shell(O.loc)
+		new_shell.name = O.name
+		new_shell.icon = O.icon
+		new_shell.icon_state = O.icon_state
+		new_shell.stored_plush = O
+		O.forceMove(new_shell)
+
+//Extra interaction for which spraying it on an existing sentient plushie aheals them, so they can be revived!
+/datum/reagent/fermi/plushmium/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
+	if(istype(M, /mob/living/simple_animal/pet/plushie) && reac_volume >= 1)
+		M.revive(full_heal = 1, admin_revive = 1)
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
 //Nanite removal
@@ -374,7 +403,7 @@ datum/reagent/fermi/nanite_b_gone/reaction_obj(obj/O, reac_volume)
 	catto.color = "#[H.dna.features["mcolor"]]"
 	catto.pseudo_death = TRUE
 	H.forceMove(catto)
-	log_game("FERMICHEM: [H] ckey: [H.key] has been made into a cute catto.")
+	log_reagent("FERMICHEM: [H] ckey: [H.key] has been made into a cute catto.")
 	SSblackbox.record_feedback("tally", "fermi_chem", 1, "cats")
 	if(H.InCritical())
 		perma = TRUE
@@ -408,7 +437,7 @@ datum/reagent/fermi/nanite_b_gone/reaction_obj(obj/O, reac_volume)
 		H.say("*wag")//force update sprites.
 	to_chat(H, "<span class='notice'>[words]</span>")
 	qdel(catto)
-	log_game("FERMICHEM: [H] ckey: [H.key] has returned to normal")
+	log_reagent("FERMICHEM: [H] ckey: [H.key] has returned to normal")
 
 
 /datum/reagent/fermi/secretcatchem/reaction_mob(var/mob/living/L)
@@ -417,7 +446,7 @@ datum/reagent/fermi/nanite_b_gone/reaction_obj(obj/O, reac_volume)
 		if(catto.origin)
 			var/mob/living/carbon/human/H = catto.origin
 			H.stat = CONSCIOUS
-			log_game("FERMICHEM: [catto] ckey: [catto.key] has returned to normal.")
+			log_reagent("FERMICHEM: [catto] ckey: [catto.key] has returned to normal.")
 			to_chat(catto, "<span class='notice'>Your body shifts back to normal!</span>")
 			H.forceMove(catto.loc)
 			catto.mind.transfer_to(H)

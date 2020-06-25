@@ -37,10 +37,10 @@
 	if(empty)
 		return
 	new /obj/item/stack/medical/gauze(src)
-	new /obj/item/stack/medical/bruise_pack(src)
-	new /obj/item/stack/medical/bruise_pack(src)
-	new /obj/item/stack/medical/ointment(src)
-	new /obj/item/stack/medical/ointment(src)
+	new /obj/item/stack/medical/suture(src)
+	new /obj/item/stack/medical/suture(src)
+	new /obj/item/stack/medical/mesh(src)
+	new /obj/item/stack/medical/mesh(src)
 	new /obj/item/reagent_containers/hypospray/medipen(src)
 	new /obj/item/healthanalyzer(src)
 
@@ -52,12 +52,12 @@
 	if(empty)
 		return
 	new /obj/item/stack/medical/gauze(src)
-	new /obj/item/stack/medical/bruise_pack(src)
-	new /obj/item/stack/medical/bruise_pack(src)
-	new /obj/item/stack/medical/bruise_pack(src)
-	new /obj/item/stack/medical/ointment(src)
-	new /obj/item/stack/medical/ointment(src)
-	new /obj/item/stack/medical/ointment(src)
+	new /obj/item/stack/medical/suture(src)
+	new /obj/item/stack/medical/suture(src)
+	new /obj/item/stack/medical/suture(src)
+	new /obj/item/stack/medical/mesh(src)
+	new /obj/item/stack/medical/mesh(src)
+	new /obj/item/stack/medical/mesh(src)
 
 /obj/item/storage/firstaid/fire
 	name = "burn treatment kit"
@@ -223,6 +223,8 @@
 /obj/item/storage/pill_bottle/ComponentInitialize()
 	. = ..()
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
+	STR.storage_flags = STORAGE_FLAGS_VOLUME_DEFAULT
+	STR.max_volume = STORAGE_VOLUME_PILL_BOTTLE
 	STR.allow_quick_gather = TRUE
 	STR.click_gather = TRUE
 	STR.can_hold = typecacheof(list(/obj/item/reagent_containers/pill, /obj/item/dice))
@@ -244,7 +246,7 @@
 	desc = "Contains pills used to counter radiation poisoning."
 
 /obj/item/storage/pill_bottle/anitrad/PopulateContents()
-	for(var/i in 1 to 5)
+	for(var/i in 1 to 4)
 		new /obj/item/reagent_containers/pill/antirad(src)
 
 /obj/item/storage/pill_bottle/epinephrine
@@ -276,7 +278,7 @@
 	desc = "Guaranteed to give you that extra burst of energy during a long shift!"
 
 /obj/item/storage/pill_bottle/stimulant/PopulateContents()
-	for(var/i in 1 to 5)
+	for(var/i in 1 to 4)
 		new /obj/item/reagent_containers/pill/stimulant(src)
 
 /obj/item/storage/pill_bottle/mining
@@ -416,7 +418,8 @@
 	/obj/item/circuitboard/computer/crew,
 	/obj/item/stack/sheet/glass,
 	/obj/item/stack/sheet/mineral/silver,
-	/obj/item/organ_storage
+	/obj/item/organ_storage,
+	/obj/item/reagent_containers/chem_pack
 	))
 
 //hijacking the minature first aids for hypospray boxes. <3
@@ -430,8 +433,8 @@
 	throw_range = 7
 	var/empty = FALSE
 	item_state = "firstaid"
-	custom_price = 300
-	custom_premium_price = 500
+	custom_price = PRICE_ABOVE_NORMAL
+	custom_premium_price = PRICE_EXPENSIVE
 
 /obj/item/storage/hypospraykit/ComponentInitialize()
 	. = ..()

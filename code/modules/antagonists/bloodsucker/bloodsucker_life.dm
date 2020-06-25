@@ -177,7 +177,7 @@
 	if(owner.current.blood_volume < BLOOD_VOLUME_BAD / 2)
 		owner.current.blur_eyes(8 - 8 * (owner.current.blood_volume / BLOOD_VOLUME_BAD))
 	// Nutrition
-	owner.current.set_nutrition(min(owner.current.blood_volume, NUTRITION_LEVEL_FULL)) //The amount of blood is how full we are.
+	owner.current.set_nutrition(min(owner.current.blood_volume, NUTRITION_LEVEL_FED)) //The amount of blood is how full we are.
 	//A bit higher regeneration based on blood volume
 	if(owner.current.blood_volume < 700)
 		additional_regen = 0.4

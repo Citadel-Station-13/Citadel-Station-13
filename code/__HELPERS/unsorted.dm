@@ -15,30 +15,8 @@
 	var/textb = copytext(HTMLstring, 6, 8)
 	return rgb(255 - hex2num(textr), 255 - hex2num(textg), 255 - hex2num(textb))
 
-/proc/Get_Angle(atom/movable/start,atom/movable/end)//For beams.
-	if(!start || !end)
-		return 0
-	var/dy
-	var/dx
-	dy=(32*end.y+end.pixel_y)-(32*start.y+start.pixel_y)
-	dx=(32*end.x+end.pixel_x)-(32*start.x+start.pixel_x)
-	if(!dy)
-		return (dx>=0)?90:270
-	.=arctan(dx/dy)
-	if(dy<0)
-		.+=180
-	else if(dx<0)
-		.+=360
-
-/proc/Get_Pixel_Angle(var/y, var/x)//for getting the angle when animating something's pixel_x and pixel_y
-	if(!y)
-		return (x>=0)?90:270
-	.=arctan(x/y)
-	if(y<0)
-		.+=180
-	else if(x<0)
-		.+=360
-
+//Better performant than an artisanal proc and more reliable than Turn(). From TGMC.
+#define REVERSE_DIR(dir) ( ((dir & 85) << 1) | ((dir & 170) >> 1) )
 //Returns location. Returns null if no location was found.
 /proc/get_teleport_loc(turf/location,mob/target,distance = 1, density = FALSE, errorx = 0, errory = 0, eoffsetx = 0, eoffsety = 0)
 /*
@@ -696,12 +674,6 @@ Turf and target are separate in case you want to teleport some distance from a t
 			return loc
 		loc = loc.loc
 	return null
-
-//For objects that should embed, but make no sense being is_sharp or is_pointed()
-//e.g: rods
-GLOBAL_LIST_INIT(can_embed_types, typecacheof(list(
-	/obj/item/stack/rods,
-	/obj/item/pipe)))
 
 /*
 Checks if that loc and dir has an item on the wall
@@ -1600,8 +1572,13 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 //empty string - use TgsTargetBroadcast with admin_only = FALSE
 //other string - use TgsChatBroadcast with the tag that matches config_setting, only works with TGS4, if using TGS3 the above method is used
 /proc/send2chat(message, config_setting)
-	if(config_setting == null || !world.TgsAvailable())
+	if(config_setting == null)
 		return
+
+	UNTIL(GLOB.tgs_initialized)
+	if(!world.TgsAvailable())
+		return
+
 	var/datum/tgs_version/version = world.TgsVersion()
 	if(config_setting == "" || version.suite == 3)
 		world.TgsTargetedChatBroadcast(message, FALSE)

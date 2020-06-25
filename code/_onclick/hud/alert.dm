@@ -242,7 +242,7 @@ If you're feeling frisky, examine yourself and click the underlined item to pull
 
 /obj/screen/alert/embeddedobject/Click()
 	if(isliving(usr))
-		var/mob/living/carbon/human/M = usr
+		var/mob/living/carbon/M = usr
 		return M.help_shake_act(M)
 
 /obj/screen/alert/weightless
@@ -641,9 +641,6 @@ so as to remain in compliance with the most up-to-date laws."
 		alert.screen_loc = .
 		mymob.client.screen |= alert
 	return 1
-
-/mob
-	var/list/alerts = list() // contains /obj/screen/alert only // On /mob so clientless mobs will throw alerts properly
 
 /obj/screen/alert/Click(location, control, params)
 	if(!usr || !usr.client)

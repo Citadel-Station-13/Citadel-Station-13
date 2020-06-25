@@ -36,6 +36,7 @@
 								 "<span class='notice'>You unfasten [src].</span>")
 			var/obj/item/sign_backing/SB = new (get_turf(user))
 			SB.icon_state = icon_state
+			SB.set_custom_materials(custom_materials) //This is here so picture frames and wooden things don't get messed up.
 			SB.sign_path = type
 			SB.setDir(dir)
 			qdel(src)

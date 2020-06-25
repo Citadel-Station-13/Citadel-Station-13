@@ -314,8 +314,11 @@
 	. = ..()
 	SSvis_overlays.remove_vis_overlay(src, managed_vis_overlays)
 	if(on && status == LIGHT_OK)
-		SSvis_overlays.add_vis_overlay(src, overlayicon, base_state, EMISSIVE_UNBLOCKABLE_LAYER, EMISSIVE_UNBLOCKABLE_PLANE, dir, clamp(light_power*250, 30, 200))
-
+		var/overlay_alpha = clamp(light_power*250, 30, 200)
+		SSvis_overlays.add_vis_overlay(src, overlayicon, base_state, EMISSIVE_UNBLOCKABLE_LAYER, EMISSIVE_UNBLOCKABLE_PLANE, dir, overlay_alpha)
+		var/mutable_appearance/M = mutable_appearance(overlayicon, base_state)
+		M.alpha = overlay_alpha
+		. += M
 
 // update the icon_state and luminosity of the light depending on its state
 /obj/machinery/light/proc/update(trigger = TRUE)
@@ -503,7 +506,7 @@
 			cell = null
 	qdel(src)
 
-/obj/machinery/light/attacked_by(obj/item/I, mob/living/user)
+/obj/machinery/light/attacked_by(obj/item/I, mob/living/user, attackchain_flags = NONE, damage_multiplier = 1)
 	..()
 	if(status == LIGHT_BROKEN || status == LIGHT_EMPTY)
 		if(on && (I.flags_1 & CONDUCT_1))

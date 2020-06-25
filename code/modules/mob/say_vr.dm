@@ -60,7 +60,7 @@ proc/get_top_level_mob(var/mob/S)
 		return FALSE
 
 	user.log_message(message, LOG_EMOTE)
-	message = "<b>[user]</b> " + "<i>[message]</i>"
+	message = "<b>[user]</b> " + "<i>[user.say_emphasis(message)]</i>"
 
 	for(var/mob/M in GLOB.dead_mob_list)
 		if(!M.client || isnewplayer(M))
@@ -121,7 +121,7 @@ proc/get_top_level_mob(var/mob/S)
 		return FALSE
 
 	user.log_message(message, LOG_SUBTLER)
-	message = "<b>[user]</b> " + "<i>[message]</i>"
+	message = "<b>[user]</b> " + "<i>[user.say_emphasis(message)]</i>"
 
 	if(emote_type == EMOTE_AUDIBLE)
 		user.audible_message(message=message,hearing_distance=1, ignored_mobs = GLOB.dead_mob_list)
@@ -129,6 +129,12 @@ proc/get_top_level_mob(var/mob/S)
 		user.visible_message(message=message,self_message=message,vision_distance=1, ignored_mobs = GLOB.dead_mob_list)
 
 ///////////////// VERB CODE
+/mob/living/proc/subtle_keybind()
+	var/message = input(src, "", "subtle") as text|null
+	if(!length(message))
+		return
+	return subtle(message)
+
 /mob/living/verb/subtle()
 	set name = "Subtle"
 	set category = "IC"

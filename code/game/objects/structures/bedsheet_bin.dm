@@ -41,7 +41,7 @@ LINEN BINS
 	return
 
 /obj/item/bedsheet/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/wirecutters) || I.get_sharpness())
+	if(!(flags_1 & HOLOGRAM_1) && (istype(I, /obj/item/wirecutters) || I.get_sharpness()))
 		var/obj/item/stack/sheet/cloth/C = new (get_turf(src), 3)
 		transfer_fingerprints_to(C)
 		C.add_fingerprint(user)
@@ -260,6 +260,11 @@ LINEN BINS
 	var/static/allowed_sheets = list(/obj/item/bedsheet, /obj/item/reagent_containers/rag/towel)
 	var/list/sheets = list()
 	var/obj/item/hidden = null
+
+/obj/structure/bedsheetbin/empty
+	amount = 0
+	icon_state = "linenbin-empty"
+	anchored = FALSE
 
 /obj/structure/bedsheetbin/examine(mob/user)
 	. = ..()

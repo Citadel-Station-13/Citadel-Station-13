@@ -628,6 +628,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 	H.remove_overlay(BODY_ADJ_LAYER)
 	H.remove_overlay(BODY_ADJ_UPPER_LAYER)
 	H.remove_overlay(BODY_FRONT_LAYER)
+	H.remove_overlay(HORNS_LAYER)
 
 	if(!mutant_bodyparts)
 		return
@@ -839,8 +840,13 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 		if(!S.mutant_part_string)
 			dna_feature_as_text_string[S] = bodypart
 
-	var/static/list/layer_text = list("[BODY_BEHIND_LAYER]" = "BEHIND", "[BODY_ADJ_LAYER]" = "ADJ", \
-								"[BODY_ADJ_UPPER_LAYER]" = "ADJUP", "[BODY_FRONT_LAYER]" = "FRONT")
+	var/static/list/layer_text = list(
+		"[BODY_BEHIND_LAYER]" = "BEHIND",
+		"[BODY_ADJ_LAYER]" = "ADJ",
+		"[BODY_ADJ_UPPER_LAYER]" = "ADJUP",
+		"[BODY_FRONT_LAYER]" = "FRONT",
+		"[HORNS_LAYER]" = "HORNS",
+		)
 
 	var/g = (H.dna.features["body_model"] == FEMALE) ? "f" : "m"
 	var/list/colorlist = list()
@@ -1020,6 +1026,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 	H.apply_overlay(BODY_ADJ_LAYER)
 	H.apply_overlay(BODY_ADJ_UPPER_LAYER)
 	H.apply_overlay(BODY_FRONT_LAYER)
+	H.apply_overlay(HORNS_LAYER)
 
 
 /*
@@ -1473,11 +1480,11 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 		var/punchedbrute = target.getBruteLoss()
 
 		//CITADEL CHANGES - makes resting and disabled combat mode reduce punch damage, makes being out of combat mode result in you taking more damage
-		if(!(target.combat_flags & COMBAT_FLAG_COMBAT_ACTIVE))
+		if(!SEND_SIGNAL(target, COMSIG_COMBAT_MODE_CHECK, COMBAT_MODE_INACTIVE))
 			damage *= 1.5
 		if(!CHECK_MOBILITY(user, MOBILITY_STAND))
 			damage *= 0.5
-		if(!(user.combat_flags & COMBAT_FLAG_COMBAT_ACTIVE))
+		if(SEND_SIGNAL(user, COMSIG_COMBAT_MODE_CHECK, COMBAT_MODE_INACTIVE))
 			damage *= 0.25
 		//END OF CITADEL CHANGES
 
@@ -1485,12 +1492,12 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 
 		var/miss_chance = 100//calculate the odds that a punch misses entirely. considers stamina and brute damage of the puncher. punches miss by default to prevent weird cases
 		if(user.dna.species.punchdamagelow)
-			if(HAS_TRAIT(user, TRAIT_PUGILIST)) //pugilists have a flat 10% miss chance
-				miss_chance = 10
 			if(atk_verb == ATTACK_EFFECT_KICK) //kicks never miss (provided your species deals more than 0 damage)
 				miss_chance = 0
+			else if(HAS_TRAIT(user, TRAIT_PUGILIST)) //pugilists have a flat 10% miss chance
+				miss_chance = 10
 			else
-				miss_chance = min(10 + ((puncherstam + puncherbrute)*0.5), 100) //probability of miss has a base of 10, and modified based on half brute total. Capped at max 100 to prevent weirdness in prob()
+				miss_chance = min(10 + max(puncherstam * 0.5, puncherbrute * 0.5), 100) //probability of miss has a base of 10, and modified based on half brute total. Capped at max 100 to prevent weirdness in prob()
 
 		if(!damage || !affecting || prob(miss_chance))//future-proofing for species that have 0 damage/weird cases where no zone is targeted
 			playsound(target.loc, user.dna.species.miss_sound, 25, TRUE, -1)
@@ -1625,11 +1632,11 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 			log_combat(user, target, "disarmed out of grab from")
 			return
 		var/randn = rand(1, 100)
-		if(!(target.combat_flags & COMBAT_FLAG_COMBAT_ACTIVE)) // CITADEL CHANGE
+		if(SEND_SIGNAL(target, COMSIG_COMBAT_MODE_CHECK, COMBAT_MODE_INACTIVE)) // CITADEL CHANGE
 			randn += -10 //CITADEL CHANGE - being out of combat mode makes it easier for you to get disarmed
 		if(!CHECK_MOBILITY(user, MOBILITY_STAND)) //CITADEL CHANGE
 			randn += 100 //CITADEL CHANGE - No kosher disarming if you're resting
-		if(!(target.combat_flags & COMBAT_FLAG_COMBAT_ACTIVE)) //CITADEL CHANGE
+		if(SEND_SIGNAL(user, COMSIG_COMBAT_MODE_CHECK, COMBAT_MODE_INACTIVE)) //CITADEL CHANGE
 			randn += 25 //CITADEL CHANGE - Makes it harder to disarm outside of combat mode
 		if(user.pulling == target)
 			randn -= 20 //If you have the time to get someone in a grab, you should have a greater chance at snatching the thing in their hand. Will be made completely obsolete by the grab rework but i've got a poor track record for releasing big projects on time so w/e i guess
@@ -1693,12 +1700,14 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 		if("disarm")
 			disarm(M, H, attacker_style)
 
-/datum/species/proc/spec_attacked_by(obj/item/I, mob/living/user, obj/item/bodypart/affecting, intent, mob/living/carbon/human/H)
-	var/totitemdamage = H.pre_attacked_by(I, user)
+/datum/species/proc/spec_attacked_by(obj/item/I, mob/living/user, obj/item/bodypart/affecting, intent, mob/living/carbon/human/H, attackchain_flags = NONE, damage_multiplier = 1)
+	var/totitemdamage = H.pre_attacked_by(I, user) * damage_multiplier
 	// Allows you to put in item-specific reactions based on species
 	if(user != H)
-		if(H.mob_run_block(I, totitemdamage, "the [I.name]", ATTACK_TYPE_MELEE, I.armour_penetration, user, affecting.body_zone, null) & BLOCK_SUCCESS)
+		var/list/block_return = list()
+		if(H.mob_run_block(I, totitemdamage, "the [I.name]", ((attackchain_flags & ATTACKCHAIN_PARRY_COUNTERATTACK)? ATTACK_TYPE_PARRY_COUNTERATTACK : NONE) | ATTACK_TYPE_MELEE, I.armour_penetration, user, affecting.body_zone, block_return) & BLOCK_SUCCESS)
 			return 0
+		totitemdamage = block_calculate_resultant_damage(totitemdamage, block_return)
 	if(H.check_martial_melee_block())
 		H.visible_message("<span class='warning'>[H] blocks [I]!</span>")
 		return 0
@@ -1713,6 +1722,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 	var/armor_block = H.run_armor_check(affecting, "melee", "<span class='notice'>Your armor has protected your [hit_area].</span>", "<span class='notice'>Your armor has softened a hit to your [hit_area].</span>",I.armour_penetration)
 	armor_block = min(90,armor_block) //cap damage reduction at 90%
 	var/Iforce = I.force //to avoid runtimes on the forcesay checks at the bottom. Some items might delete themselves if you drop them. (stunning yourself, ninja swords)
+
 	var/weakness = H.check_weakness(I, user)
 	apply_damage(totitemdamage * weakness, I.damtype, def_zone, armor_block, H) //CIT CHANGE - replaces I.force with totitemdamage
 
@@ -1827,7 +1837,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 		if(IS_STAMCRIT(user))
 			to_chat(user, "<span class='warning'>You're too exhausted for that.</span>")
 			return
-		if(!(user.combat_flags & COMBAT_FLAG_COMBAT_ACTIVE))
+		if(SEND_SIGNAL(user, COMSIG_COMBAT_MODE_CHECK, COMBAT_MODE_INACTIVE))
 			to_chat(user, "<span class='warning'>You need combat mode to be active to that!</span>")
 			return
 		if(user.IsKnockdown() || user.IsParalyzed() || user.IsStun())
@@ -1929,7 +1939,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 				append_message += ", causing them to drop [target_held_item]"
 		log_combat(user, target, "shoved", append_message)
 
-/datum/species/proc/apply_damage(damage, damagetype = BRUTE, def_zone = null, blocked, mob/living/carbon/human/H, forced = FALSE)
+/datum/species/proc/apply_damage(damage, damagetype = BRUTE, def_zone = null, blocked, mob/living/carbon/human/H, forced = FALSE, spread_damage = FALSE)
 	SEND_SIGNAL(src, COMSIG_MOB_APPLY_DAMGE, damage, damagetype, def_zone)
 	var/hit_percent = (100-(blocked+armor))/100
 	hit_percent = (hit_percent * (100-H.physiology.damage_resistance))/100
@@ -1937,20 +1947,20 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 		return 0
 
 	var/obj/item/bodypart/BP = null
-	if(isbodypart(def_zone))
-		if(damagetype == STAMINA && istype(def_zone, /obj/item/bodypart/head))
-			BP = H.get_bodypart(check_zone(BODY_ZONE_CHEST))
+	if(!spread_damage)
+		if(isbodypart(def_zone))
+			if(damagetype == STAMINA && istype(def_zone, /obj/item/bodypart/head))
+				BP = H.get_bodypart(check_zone(BODY_ZONE_CHEST))
+			else
+				BP = def_zone
 		else
-			BP = def_zone
-	else
-		if(!def_zone)
-			def_zone = ran_zone(def_zone)
-		if(damagetype == STAMINA && def_zone == BODY_ZONE_HEAD)
-			def_zone = BODY_ZONE_CHEST
-		BP = H.get_bodypart(check_zone(def_zone))
-
-	if(!BP)
-		BP = H.bodyparts[1]
+			if(!def_zone)
+				def_zone = ran_zone(def_zone)
+			if(damagetype == STAMINA && def_zone == BODY_ZONE_HEAD)
+				def_zone = BODY_ZONE_CHEST
+			BP = H.get_bodypart(check_zone(def_zone))
+		if(!BP)
+			BP = H.bodyparts[1]
 
 	switch(damagetype)
 		if(BRUTE)

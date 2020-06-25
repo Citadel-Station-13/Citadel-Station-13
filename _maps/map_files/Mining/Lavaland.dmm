@@ -1486,9 +1486,7 @@
 /obj/structure/stone_tile/cracked{
 	dir = 8
 	},
-/obj/item/malf_upgrade,
-/obj/item/disk/tech_disk/illegal,
-/obj/structure/safe,
+/obj/item/storage/firstaid/ancient,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/ruin/unpowered/ash_walkers)
 "pc" = (
@@ -2367,9 +2365,7 @@
 /obj/item/seeds/cotton{
 	yield = 5
 	},
-/obj/item/seeds/cotton{
-	yield = 5
-	},
+/obj/item/seeds/cotton/durathread,
 /turf/open/indestructible/boss,
 /area/ruin/unpowered/ash_walkers)
 "Vj" = (
