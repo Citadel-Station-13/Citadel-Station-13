@@ -1250,11 +1250,10 @@
 /obj/effect/turf_decal/tile/purple{
 	dir = 1
 	},
-/obj/structure/closet/crate/freezer,
 /obj/machinery/firealarm{
 	pixel_y = 26
 	},
-/obj/item/reagent_containers/food/snacks/meat/slab,
+/obj/machinery/washing_machine,
 /turf/open/floor/plasteel,
 /area/crew_quarters/lounge)
 "acW" = (
@@ -2407,6 +2406,7 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 4
 	},
+/obj/machinery/washing_machine,
 /turf/open/floor/plasteel/checker,
 /area/hallway/secondary/entry)
 "afP" = (
@@ -2640,9 +2640,6 @@
 /obj/machinery/atmospherics/pipe/simple/cyan/hidden{
 	dir = 4
 	},
-/mob/living/simple_animal/pet/redpanda{
-	name = "Stinky"
-	},
 /turf/open/floor/plasteel,
 /area/crew_quarters/lounge)
 "agt" = (
@@ -2671,6 +2668,11 @@
 	pixel_y = 28
 	},
 /obj/machinery/atmospherics/pipe/simple/cyan/hidden,
+/obj/structure/displaycase/labcage{
+	desc = "A glass lab container for storing smelly creatures.";
+	name = "stinky panda containment";
+	start_showpiece_type = /mob/living/simple_animal/pet/redpanda/stinky
+	},
 /turf/open/floor/plasteel,
 /area/crew_quarters/lounge)
 "agx" = (
@@ -3801,6 +3803,7 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 8
 	},
+/obj/machinery/washing_machine,
 /turf/open/floor/plasteel/dark/corner{
 	dir = 1
 	},
