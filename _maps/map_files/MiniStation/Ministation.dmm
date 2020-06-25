@@ -374,8 +374,8 @@
 	desc = "A remote control-switch for secure storage.";
 	id = "Secure Storage";
 	name = "Engineering Secure Storage";
-	pixel_y = 24;
-	req_access_txt = "11"
+	req_access_txt = "11";
+	pixel_y = 24
 	},
 /obj/machinery/button/door{
 	id = "ceprivacy";
@@ -412,12 +412,6 @@
 /obj/item/storage/fancy/donut_box,
 /turf/open/floor/carpet/royalblue,
 /area/bridge)
-"bj" = (
-/obj/item/stack/rods{
-	amount = 50
-	},
-/turf/open/floor/plating,
-/area/quartermaster/storage)
 "bk" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/effect/turf_decal/trimline/purple/filled/line,
@@ -475,22 +469,14 @@
 /obj/effect/mapping_helpers/network_builder/power_cable/yellow/auto,
 /turf/open/floor/plating/airless,
 /area/quartermaster/storage)
-"bs" = (
-/obj/structure/ore_box,
-/turf/open/floor/plating{
-	icon_state = "panelscorched"
-	},
-/area/quartermaster/storage)
 "bt" = (
 /obj/machinery/light/small,
 /obj/structure/ore_box,
-/turf/open/floor/plating,
+/turf/open/floor/plating/airless,
 /area/quartermaster/storage)
 "bu" = (
 /obj/structure/ore_box,
-/turf/open/floor/plating{
-	icon_state = "platingdmg1"
-	},
+/turf/open/floor/plating/airless,
 /area/quartermaster/storage)
 "bw" = (
 /obj/machinery/light/small,
@@ -1651,8 +1637,8 @@
 /obj/machinery/button/door{
 	id = "armory3";
 	name = "Armory Shutters";
-	pixel_x = 26;
-	req_access_txt = "3"
+	req_access_txt = "3";
+	pixel_x = 26
 	},
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 4
@@ -2489,8 +2475,8 @@
 /obj/machinery/button/door{
 	id = "armory3";
 	name = "Armory Shutters";
-	pixel_x = -26;
-	req_access_txt = "3"
+	req_access_txt = "3";
+	pixel_x = -26
 	},
 /obj/effect/turf_decal/tile/red{
 	dir = 4
@@ -7577,8 +7563,8 @@
 "tr" = (
 /obj/machinery/computer/bounty,
 /obj/machinery/keycard_auth{
-	pixel_x = 26;
-	pixel_y = 25
+	pixel_y = 25;
+	pixel_x = 26
 	},
 /obj/effect/turf_decal/tile/brown,
 /obj/effect/turf_decal/tile/brown{
@@ -9751,10 +9737,7 @@
 	dir = 4
 	},
 /obj/machinery/air_sensor/atmos/air_tank,
-/turf/open/floor/engine{
-	initial_gas_mix = "o2=2644;n2=10580";
-	name = "air floor"
-	},
+/turf/open/floor/engine/air,
 /area/engine/engineering)
 "zR" = (
 /obj/effect/turf_decal/trimline/yellow/filled/line{
@@ -11137,11 +11120,11 @@
 "DS" = (
 /obj/machinery/computer/security/telescreen{
 	desc = "Used for watching the burn chamber.";
-	dir = 1;
 	layer = 4;
 	name = "Burn Chamber Telescreen";
 	network = list("burnchamber");
-	pixel_y = -30
+	pixel_y = -30;
+	dir = 1
 	},
 /obj/structure/chair/stool,
 /obj/effect/turf_decal/stripes,
@@ -12454,11 +12437,6 @@
 /obj/machinery/telecomms/receiver/preset_left/birdstation,
 /turf/open/floor/circuit/green/telecomms,
 /area/tcommsat/computer)
-"Ix" = (
-/turf/open/floor/plating{
-	icon_state = "platingdmg2"
-	},
-/area/quartermaster/storage)
 "Iz" = (
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 4
@@ -12649,9 +12627,9 @@
 /area/tcommsat/computer)
 "Jc" = (
 /obj/machinery/computer/shuttle/mining{
-	dir = 4;
 	req_access = "0";
-	req_one_access = "0"
+	req_one_access = "0";
+	dir = 4
 	},
 /obj/effect/turf_decal/tile/brown{
 	dir = 1
@@ -13436,9 +13414,6 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/medbay)
-"Mo" = (
-/turf/open/floor/plating,
-/area/quartermaster/storage)
 "Mp" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/effect/turf_decal/trimline/blue/filled/corner{
@@ -14169,9 +14144,7 @@
 /obj/item/stack/rods{
 	amount = 50
 	},
-/turf/open/floor/plating{
-	icon_state = "platingdmg2"
-	},
+/turf/open/floor/plating/airless,
 /area/quartermaster/storage)
 "PL" = (
 /obj/machinery/camera/autoname{
@@ -14181,10 +14154,10 @@
 /area/tcommsat/computer)
 "PM" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
-	dir = 8;
 	external_pressure_bound = 140;
 	name = "killroom vent";
-	pressure_checks = 0
+	pressure_checks = 0;
+	dir = 8
 	},
 /turf/open/floor/circuit/telecomms,
 /area/science/xenobiology)
@@ -15277,9 +15250,9 @@
 /area/science/lab)
 "UA" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/on{
-	dir = 8;
 	external_pressure_bound = 120;
-	name = "killroom vent"
+	name = "killroom vent";
+	dir = 8
 	},
 /turf/open/floor/circuit/telecomms,
 /area/science/xenobiology)
@@ -16402,9 +16375,9 @@
 /area/medical/medbay)
 "YV" = (
 /obj/machinery/door/window/westleft{
-	dir = 2;
 	name = "Monkey Pen";
-	req_access_txt = "9"
+	req_access_txt = "9";
+	dir = 2
 	},
 /mob/living/carbon/monkey,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -16536,9 +16509,7 @@
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "Zw" = (
-/turf/open/floor/plating{
-	icon_state = "platingdmg3"
-	},
+/turf/open/floor/plating/airless,
 /area/quartermaster/storage)
 "Zx" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
@@ -44524,8 +44495,8 @@ aa
 aa
 aa
 am
-bj
-bs
+PH
+bu
 bQ
 bZ
 cu
@@ -45038,7 +45009,7 @@ aa
 aa
 aa
 am
-Mo
+Zw
 bu
 bQ
 Ep
@@ -45296,7 +45267,7 @@ aa
 aa
 aa
 Zw
-Mo
+Zw
 bq
 Ep
 cS
@@ -45553,7 +45524,7 @@ aa
 aa
 aa
 am
-Ix
+Zw
 bq
 cc
 cw
