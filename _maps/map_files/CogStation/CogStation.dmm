@@ -18369,7 +18369,7 @@
 	pixel_x = 22
 	},
 /obj/machinery/power/apc/highcap/fifteen_k{
-	areastring = "area/tcommsat/computer";
+	areastring = "/area/tcommsat/server";
 	dir = 1;
 	name = "Telecomms Server APC";
 	pixel_y = 24
@@ -18378,7 +18378,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel,
-/area/tcommsat/computer)
+/area/tcommsat/server)
 "aND" = (
 /turf/open/floor/plasteel/white,
 /area/medical{
@@ -38554,7 +38554,7 @@
 	},
 /obj/structure/cable,
 /obj/machinery/power/apc{
-	areastring = "area/science/xenobiology";
+	areastring = "/area/science/xenobiology";
 	name = "Xenobiology Lab APC";
 	pixel_y = -24
 	},
@@ -43759,7 +43759,7 @@
 	pixel_x = 22
 	},
 /obj/machinery/turretid{
-	control_area = "area/ai_monitored/turret_protected/ai";
+	control_area = "/area/ai_monitored/turret_protected/ai";
 	dir = 1;
 	name = "AI Chamber turret control";
 	pixel_x = 5;
@@ -60872,10 +60872,6 @@
 /obj/effect/turf_decal/tile/purple{
 	dir = 8
 	},
-/obj/machinery/atmospherics/pipe/simple/general/hidden{
-	dir = 8;
-	icon_state = "intact"
-	},
 /obj/structure/disposalpipe/segment{
 	dir = 9
 	},
@@ -71239,7 +71235,7 @@
 	icon_state = "1-8"
 	},
 /obj/machinery/turretid{
-	control_area = "area/science/server";
+	control_area = "/area/science/server";
 	icon_state = "control_stun";
 	name = "Computer Core turret control";
 	pixel_x = -3;
