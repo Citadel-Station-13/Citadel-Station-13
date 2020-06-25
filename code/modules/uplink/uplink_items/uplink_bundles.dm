@@ -193,6 +193,8 @@
 			var/datum/uplink_item/I = uplink_items[category][item]
 			if(src == I || !I.item)
 				continue
+			if(istype(I, /datum/uplink_item/bundles_TC/reroll)) //oops!
+				continue
 			if(U.telecrystals < I.cost)
 				continue
 			if(I.limited_stock == 0)

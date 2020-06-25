@@ -1,7 +1,7 @@
 
 /mob/living/proc/run_armor_check(def_zone = null, attack_flag = "melee", absorb_text = "Your armor absorbs the blow!", soften_text = "Your armor softens the blow!", armour_penetration, penetrated_text = "Your armor was penetrated!", silent=FALSE)
 	var/armor = getarmor(def_zone, attack_flag)
-	
+
 	if(silent)
 		return max(0, armor - armour_penetration)
 
@@ -108,12 +108,6 @@
 /mob/living/proc/catch_item(obj/item/I, skip_throw_mode_check = FALSE)
 	return FALSE
 
-/mob/living/proc/embed_item(obj/item/I)
-	return
-
-/mob/living/proc/can_embed(obj/item/I)
-	return FALSE
-
 /mob/living/hitby(atom/movable/AM, skipcatch, hitpush = TRUE, blocked = FALSE, datum/thrownthing/throwingdatum)
 	// Throwingdatum can be null if someone had an accident() while slipping with an item in hand.
 	var/obj/item/I
@@ -129,30 +123,17 @@
 		skipcatch = TRUE
 		blocked = TRUE
 		total_damage = block_calculate_resultant_damage(total_damage, block_return)
-	else if(I && I.throw_speed >= EMBED_THROWSPEED_THRESHOLD && can_embed(I, src) && prob(I.embedding["embed_chance"]) && !HAS_TRAIT(src, TRAIT_PIERCEIMMUNE) && (!HAS_TRAIT(src, TRAIT_AUTO_CATCH_ITEM) || incapacitated() || get_active_held_item()))
-		embed_item(I)
-		hitpush = FALSE
-		skipcatch = TRUE //can't catch the now embedded item
 	if(I)
+		var/nosell_hit = SEND_SIGNAL(I, COMSIG_MOVABLE_IMPACT_ZONE, src, impacting_zone, throwingdatum, FALSE, blocked)
+		if(nosell_hit)
+			skipcatch = TRUE
+			hitpush = FALSE
 		if(!skipcatch && isturf(I.loc) && catch_item(I))
 			return TRUE
 		var/dtype = BRUTE
-		var/volume = I.get_volume_by_throwforce_and_or_w_class()
-		SEND_SIGNAL(I, COMSIG_MOVABLE_IMPACT_ZONE, src, impacting_zone)
+
 		dtype = I.damtype
 
-		if (I.throwforce > 0) //If the weapon's throwforce is greater than zero...
-			if (I.throwhitsound) //...and throwhitsound is defined...
-				playsound(loc, I.throwhitsound, volume, 1, -1) //...play the weapon's throwhitsound.
-			else if(I.hitsound) //Otherwise, if the weapon's hitsound is defined...
-				playsound(loc, I.hitsound, volume, 1, -1) //...play the weapon's hitsound.
-			else if(!I.throwhitsound) //Otherwise, if throwhitsound isn't defined...
-				playsound(loc, 'sound/weapons/genhit.ogg',volume, 1, -1) //...play genhit.ogg.
-
-		else if(!I.throwhitsound && I.throwforce > 0) //Otherwise, if the item doesn't have a throwhitsound and has a throwforce greater than zero...
-			playsound(loc, 'sound/weapons/genhit.ogg', volume, 1, -1)//...play genhit.ogg
-		if(!I.throwforce)// Otherwise, if the item's throwforce is 0...
-			playsound(loc, 'sound/weapons/throwtap.ogg', 1, volume, -1)//...play throwtap.ogg.
 		if(!blocked)
 			visible_message("<span class='danger'>[src] has been hit by [I].</span>", \
 							"<span class='userdanger'>You have been hit by [I].</span>")

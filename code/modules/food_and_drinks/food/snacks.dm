@@ -303,12 +303,12 @@ All foods are distributed among various categories. Use common sense.
 	var/obj/item/result
 	if(cooked_type)
 		result = new cooked_type(T)
-		//if the result is food, set its food quality to the original food item's quality
-		if(isfood(result))
-			var/obj/item/reagent_containers/food/food_output = result
-			food_output.adjust_food_quality(food_quality + M.quality_increase)
 		if(istype(M))
 			initialize_cooked_food(result, M.efficiency)
+			//if the result is food, set its food quality to the original food item's quality
+			if(isfood(result))
+				var/obj/item/reagent_containers/food/food_output = result
+				food_output.adjust_food_quality(food_quality + M.quality_increase)
 		else
 			initialize_cooked_food(result, 1)
 		SSblackbox.record_feedback("tally", "food_made", 1, result.type)

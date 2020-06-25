@@ -183,7 +183,7 @@
 		name = "dock[SSshuttle.stationary.len]"
 	if(!area_type)
 		var/area/place = get_area(src)
-		area_type = place?.type // We might be created in nullspace
+		area_type = place?.type || SHUTTLE_DEFAULT_UNDERLYING_AREA // We might be created in nullspace
 
 	if(mapload)
 		for(var/turf/T in return_turfs())
@@ -217,6 +217,9 @@
 		roundstart_template = SSmapping.shuttle_templates[sid]
 		if(!roundstart_template)
 			CRASH("Invalid path ([roundstart_template]) passed to docking port.")
+
+	if(roundstart_template)
+		SSshuttle.manipulator.action_load(roundstart_template, src)
 
 //returns first-found touching shuttleport
 /obj/docking_port/stationary/get_docked()
@@ -504,7 +507,7 @@
 			if(M.mind && !istype(t, /turf/open/floor/plasteel/shuttle/red) && !istype(t, /turf/open/floor/mineral/plastitanium/red/brig))
 				M.mind.force_escaped = TRUE
 			// Ghostize them and put them in nullspace stasis (for stat & possession checks)
-			M.notransform = TRUE
+			M.mob_transforming = TRUE
 			M.ghostize(FALSE)
 			M.moveToNullspace()
 
@@ -704,7 +707,7 @@
 	if(timeleft > 1 HOURS)
 		return "--:--"
 	else if(timeleft > 0)
-		return "[add_leading(num2text((timeleft / 60) % 60), 2, "0")]:[add_leading(num2text(timeleft % 60), 2, " ")]"
+		return "[add_leading(num2text((timeleft / 60) % 60), 2, "0")]:[add_leading(num2text(timeleft % 60), 2, "0")]"
 	else
 		return "00:00"
 

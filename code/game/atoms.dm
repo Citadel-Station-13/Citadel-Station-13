@@ -872,6 +872,14 @@
 /atom/proc/GenerateTag()
 	return
 
+/**
+  * Called after a shuttle is loaded **from map template initially**.
+  *
+  * @params
+  * * port - Mobile port/shuttle
+  * * dock - Stationary dock the shuttle's at
+  * * idnum - ID number of the shuttle
+  */
 /atom/proc/connect_to_shuttle(obj/docking_port/mobile/port, obj/docking_port/stationary/dock, idnum, override=FALSE)
 	return
 

@@ -12,7 +12,7 @@
 		overlays_standing[cache_index] = null
 
 /mob/living/carbon/regenerate_icons()
-	if(notransform)
+	if(mob_transforming)
 		return 1
 	update_inv_hands()
 	update_inv_handcuffed()
