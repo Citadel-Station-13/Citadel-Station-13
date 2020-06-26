@@ -759,3 +759,28 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 		to_chat(user, "<span class='warning'>[M] is too close to use [src] on.</span>")
 		return
 	M.attack_hand(user)
+
+/obj/item/burnt_baguette
+	name = "burnt baguette"
+	desc = "A burnt baguette, hard and sturdy, but also falling apart at a surprising rate.."
+	icon = 'icons/obj/food/burgerbread.dmi'
+	icon_state = "baguette"
+	force = 5 //.. it's a baguette, not a sword.
+	throwforce = 3
+	w_class = WEIGHT_CLASS_NORMAL
+	block_chance = 25
+	attack_verb = list("bonked","thwacked","smacked")
+	item_flags = ITEM_CAN_PARRY
+	block_parry_data = /datum/block_parry_data/hard_baguette
+	color = "#454141"
+
+/datum/block_parry_data/hard_baguette //slightly weaker than captain saber parrying
+	parry_time_windup = 0.6
+	parry_time_active = 3
+	parry_time_spindown = 1
+	parry_time_perfect = 0.75
+	parry_time_perfect_leeway = 0.75
+	parry_imperfect_falloff_percent = 30
+	parry_efficiency_perfect = 100
+	parry_failed_stagger_duration = 3 SECONDS
+	parry_failed_clickcd_duration = 3 SECONDS
