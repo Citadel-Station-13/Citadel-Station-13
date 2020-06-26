@@ -168,6 +168,7 @@
 	icon_state = "witchhunterhat"
 	item_state = "witchhunterhat"
 	flags_cover = HEADCOVERSEYES
+	flags_inv = HIDEEYES|HIDEHAIR
 
 /obj/item/storage/box/holy/follower
 	name = "Followers of the Chaplain Kit"
@@ -449,7 +450,6 @@
 	desc = "Bad references are the DNA of the soul."
 	attack_verb = list("chopped", "sliced", "cut", "zandatsu'd")
 	hitsound = 'sound/weapons/rapierhit.ogg'
-	slot_flags = ITEM_SLOT_BACK
 
 
 /obj/item/nullrod/scythe
