@@ -9,7 +9,6 @@
 /datum/status_effect/incapacitating/on_creation(mob/living/new_owner, set_duration, updating_canmove)
 	if(isnum(set_duration))
 		duration = set_duration
-	tick_interval = max(world.tick_lag, round(tick_interval, world.tick_lag))
 	. = ..()
 	if(.)
 		if(updating_canmove)
@@ -82,11 +81,10 @@
 		owner.adjustStaminaLoss(-0.5) //reduce stamina loss by 0.5 per tick, 10 per 2 seconds
 	if(human_owner && human_owner.drunkenness)
 		human_owner.drunkenness *= 0.997 //reduce drunkenness by 0.3% per tick, 6% per 2 seconds
-	if(prob(20))
-		if(carbon_owner)
-			carbon_owner.handle_dreams()
+	if(carbon_owner && !carbon_owner.dreaming && prob(2))
+		carbon_owner.dream()
 	// 2% per second, tick interval is in deciseconds
-	if(prob(tick_interval * 0.2) && owner.health > owner.crit_threshold)
+	if(prob((tick_interval+1) * 0.2) && owner.health > owner.crit_threshold)
 		owner.emote("snore")
 
 /datum/status_effect/staggered
