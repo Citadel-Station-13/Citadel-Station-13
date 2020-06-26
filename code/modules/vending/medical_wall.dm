@@ -22,6 +22,7 @@
 	extra_price = PRICE_NORMAL
 	payment_department = ACCOUNT_MED
 	cost_multiplier_per_dept = list(ACCOUNT_MED = 0)
+	tiltable = FALSE
 
 /obj/item/vending_refill/wallmed
 	machine_name = "NanoMed"

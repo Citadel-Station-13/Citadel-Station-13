@@ -46,9 +46,10 @@
 	udder = null
 	return ..()
 
-/mob/living/simple_animal/hostile/retaliate/goat/Life()
-	. = ..()
-	if(.)
+/mob/living/simple_animal/hostile/retaliate/goat/BiologicalLife(seconds, times_fired)
+	if(!(. = ..()))
+		return
+	if(stat == CONSCIOUS)
 		//chance to go crazy and start wacking stuff
 		if(!enemies.len && prob(1))
 			Retaliate()
@@ -57,7 +58,6 @@
 			enemies = list()
 			LoseTarget()
 			src.visible_message("<span class='notice'>[src] calms down.</span>")
-	if(stat == CONSCIOUS)
 		udder.generateMilk(milk_reagent)
 		eat_plants()
 		if(!pulledby)
@@ -160,8 +160,9 @@
 	else
 		return ..()
 
-/mob/living/simple_animal/cow/Life()
-	. = ..()
+/mob/living/simple_animal/cow/BiologicalLife(seconds, times_fired)
+	if(!(. = ..()))
+		return
 	if(stat == CONSCIOUS)
 		udder.generateMilk(milk_reagent)
 
@@ -244,9 +245,8 @@
 	pixel_x = rand(-6, 6)
 	pixel_y = rand(0, 10)
 
-/mob/living/simple_animal/chick/Life()
-	. =..()
-	if(!.)
+/mob/living/simple_animal/chick/BiologicalLife(seconds, times_fired)
+	if(!(. = ..()))
 		return
 	if(!stat && !ckey)
 		amount_grown += rand(1,2)
@@ -254,8 +254,9 @@
 			new /mob/living/simple_animal/chicken(src.loc)
 			qdel(src)
 
-/mob/living/simple_animal/chick/holo/Life()
-	..()
+/mob/living/simple_animal/chick/holo/BiologicalLife(seconds, times_fired)
+	if(!(. = ..()))
+		return
 	amount_grown = 0
 
 /mob/living/simple_animal/chicken
@@ -328,9 +329,8 @@
 	else
 		..()
 
-/mob/living/simple_animal/chicken/Life()
-	. =..()
-	if(!.)
+/mob/living/simple_animal/chicken/BiologicalLife(seconds, times_fired)
+	if(!(. = ..()))
 		return
 	if((!stat && prob(3) && eggsleft > 0) && egg_type)
 		visible_message("<span class='alertalien'>[src] [pick(layMessage)]</span>")
@@ -403,9 +403,8 @@
 	. = ..()
 	++kiwi_count
 
-/mob/living/simple_animal/kiwi/Life()
-	. =..()
-	if(!.)
+/mob/living/simple_animal/kiwi/BiologicalLife(seconds, times_fired)
+	if(!(. = ..()))
 		return
 	if((!stat && prob(3) && eggsleft > 0) && egg_type)
 		visible_message("[src] [pick(layMessage)]")
@@ -478,9 +477,8 @@
 	pixel_x = rand(-6, 6)
 	pixel_y = rand(0, 10)
 
-/mob/living/simple_animal/babyKiwi/Life()
-	. =..()
-	if(!.)
+/mob/living/simple_animal/babyKiwi/BiologicalLife(seconds, times_fired)
+	if(!(. = ..()))
 		return
 	if(!stat && !ckey)
 		amount_grown += rand(1,2)

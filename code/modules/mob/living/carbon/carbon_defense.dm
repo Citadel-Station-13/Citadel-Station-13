@@ -65,17 +65,6 @@
 		throw_mode_off()
 		return TRUE
 
-/mob/living/carbon/embed_item(obj/item/I)
-	throw_alert("embeddedobject", /obj/screen/alert/embeddedobject)
-	var/obj/item/bodypart/L = pick(bodyparts)
-	L.embedded_objects |= I
-	I.add_mob_blood(src)//it embedded itself in you, of course it's bloody!
-	I.forceMove(src)
-	I.embedded()
-	L.receive_damage(I.w_class*I.embedding["impact_pain_mult"])
-	visible_message("<span class='danger'>[I] embeds itself in [src]'s [L.name]!</span>","<span class='userdanger'>[I] embeds itself in your [L.name]!</span>")
-	SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "embedded", /datum/mood_event/embedded)
-
 /mob/living/carbon/attacked_by(obj/item/I, mob/living/user, attackchain_flags = NONE, damage_multiplier = 1)
 	var/totitemdamage = pre_attacked_by(I, user) * damage_multiplier
 	var/impacting_zone = (user == src)? check_zone(user.zone_selected) : ran_zone(user.zone_selected)

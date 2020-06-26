@@ -266,6 +266,9 @@
 /obj/item/stack/tile/carpet/blackred/twenty
 	amount = 20
 
+/obj/item/stack/tile/carpet/blackred/thirty
+	amount = 30
+
 /obj/item/stack/tile/carpet/blackred/fifty
 	amount = 50
 
@@ -274,6 +277,9 @@
 
 /obj/item/stack/tile/carpet/monochrome/twenty
 	amount = 20
+
+/obj/item/stack/tile/carpet/monochrome/thirty
+	amount = 30
 
 /obj/item/stack/tile/carpet/monochrome/fifty
 	amount = 50
@@ -284,6 +290,9 @@
 /obj/item/stack/tile/carpet/blue/twenty
 	amount = 20
 
+/obj/item/stack/tile/carpet/blue/thirty
+	amount = 30
+
 /obj/item/stack/tile/carpet/blue/fifty
 	amount = 50
 
@@ -292,6 +301,9 @@
 
 /obj/item/stack/tile/carpet/cyan/twenty
 	amount = 20
+
+/obj/item/stack/tile/carpet/cyan/thirty
+	amount = 30
 
 /obj/item/stack/tile/carpet/cyan/fifty
 	amount = 50
@@ -302,6 +314,9 @@
 /obj/item/stack/tile/carpet/green/twenty
 	amount = 20
 
+/obj/item/stack/tile/carpet/green/thirty
+	amount = 30
+
 /obj/item/stack/tile/carpet/green/fifty
 	amount = 50
 
@@ -310,6 +325,9 @@
 
 /obj/item/stack/tile/carpet/orange/twenty
 	amount = 20
+
+/obj/item/stack/tile/carpet/orange/thirty
+	amount = 30
 
 /obj/item/stack/tile/carpet/orange/fifty
 	amount = 50
@@ -320,6 +338,9 @@
 /obj/item/stack/tile/carpet/purple/twenty
 	amount = 20
 
+/obj/item/stack/tile/carpet/purple/thirty
+	amount = 30
+
 /obj/item/stack/tile/carpet/purple/fifty
 	amount = 50
 
@@ -328,6 +349,9 @@
 
 /obj/item/stack/tile/carpet/red/twenty
 	amount = 20
+
+/obj/item/stack/tile/carpet/red/thirty
+	amount = 30
 
 /obj/item/stack/tile/carpet/red/fifty
 	amount = 50
@@ -338,6 +362,9 @@
 /obj/item/stack/tile/carpet/royalblack/twenty
 	amount = 20
 
+/obj/item/stack/tile/carpet/royalblack/thirty
+	amount = 30
+
 /obj/item/stack/tile/carpet/royalblack/fifty
 	amount = 50
 
@@ -346,6 +373,9 @@
 
 /obj/item/stack/tile/carpet/royalblue/twenty
 	amount = 20
+
+/obj/item/stack/tile/carpet/royalblue/thirty
+	amount = 30
 
 /obj/item/stack/tile/carpet/royalblue/fifty
 	amount = 50

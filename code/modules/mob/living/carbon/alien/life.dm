@@ -1,6 +1,7 @@
-/mob/living/carbon/alien/Life()
+/mob/living/carbon/alien/BiologicalLife(seconds, times_fired)
+	if(!(. = ..()))
+		return
 	findQueen()
-	return..()
 
 /mob/living/carbon/alien/check_breath(datum/gas_mixture/breath)
 	if(status_flags & GODMODE)

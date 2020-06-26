@@ -289,7 +289,7 @@
 
 /obj/effect/sliding_puzzle/prison/dispense_reward()
 	prisoner.forceMove(get_turf(src))
-	prisoner.notransform = FALSE
+	prisoner.mob_transforming = FALSE
 	prisoner = null
 
 //Some armor so it's harder to kill someone by mistake.
@@ -329,7 +329,7 @@
 		return FALSE
 
 	//First grab the prisoner and move them temporarily into the generator so they won't get thrown around.
-	prisoner.notransform = TRUE
+	prisoner.mob_transforming = TRUE
 	prisoner.forceMove(cube)
 	to_chat(prisoner,"<span class='userdanger'>You're trapped by the prison cube! You will remain trapped until someone solves it.</span>")
 
