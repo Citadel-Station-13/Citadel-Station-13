@@ -24,10 +24,10 @@
 	var/list/tiers = list()										//Assoc list, id = number, 1 is available, 2 is all reqs are 1, so on
 
 /datum/techweb/New()
+	hidden_nodes = SSresearch.techweb_nodes_hidden.Copy()
 	for(var/i in SSresearch.techweb_nodes_starting)
 		var/datum/techweb_node/DN = SSresearch.techweb_node_by_id(i)
 		research_node(DN, TRUE, FALSE)
-	hidden_nodes = SSresearch.techweb_nodes_hidden.Copy()
 	return ..()
 
 /datum/techweb/admin

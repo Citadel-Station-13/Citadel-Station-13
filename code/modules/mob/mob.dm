@@ -338,7 +338,7 @@ mob/visible_message(message, self_message, blind_message, vision_distance = DEFA
 	set name = "Examine"
 	set category = "IC"
 
-	if(isturf(A) && !(sight & SEE_TURFS) && !(A in view(client ? client.view : world.view, src)))
+	if(isturf(A) && !(sight & SEE_TURFS) && !(src in viewers(client ? client.view : world.view, A)))
 		// shift-click catcher may issue examinate() calls for out-of-sight turfs
 		return
 

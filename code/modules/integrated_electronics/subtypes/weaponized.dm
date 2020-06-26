@@ -81,7 +81,7 @@
 		to_chat(user, "<span class='notice'>There's no weapon to remove from the mechanism.</span>")
 
 /obj/item/integrated_circuit/weaponized/weapon_firing/do_work()
-	if(!assembly || !installed_gun)
+	if(!assembly || !installed_gun || !installed_gun.can_shoot())
 		return
 	if(isliving(assembly.loc))
 		var/mob/living/L = assembly.loc
