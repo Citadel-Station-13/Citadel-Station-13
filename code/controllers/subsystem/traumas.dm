@@ -152,7 +152,7 @@ SUBSYSTEM_DEF(traumas)
 					"anime" = typecacheof(list(/obj/item/clothing/under/costume/schoolgirl, /obj/item/katana, /obj/item/reagent_containers/food/snacks/sashimi, /obj/item/reagent_containers/food/snacks/chawanmushi,
 					   /obj/item/reagent_containers/food/drinks/bottle/sake, /obj/item/throwing_star, /obj/item/clothing/head/kitty/genuine, /obj/item/clothing/suit/space/space_ninja,
 					   /obj/item/clothing/mask/gas/space_ninja, /obj/item/clothing/shoes/space_ninja, /obj/item/clothing/gloves/space_ninja, /obj/item/twohanded/vibro_weapon,
-					   /obj/item/nullrod/scythe/vibro, /obj/item/energy_katana, /obj/item/toy/katana, /obj/item/nullrod/claymore/katana, /obj/structure/window/paperframe, /obj/structure/mineral_door/paperframe)),
+					   /obj/item/nullrod/claymore/vibro, /obj/item/energy_katana, /obj/item/toy/katana, /obj/item/nullrod/claymore/katana, /obj/structure/window/paperframe, /obj/structure/mineral_door/paperframe)),
 
 					"mimes" = typecacheof(list(/obj/item/pda/mime, /obj/item/clothing/under/rank/civilian/mime, /obj/item/clothing/mask/gas/mime,
 						/obj/item/clothing/head/frenchberet, /obj/item/clothing/suit/suspenders, /obj/item/reagent_containers/food/drinks/bottle/bottleofnothing,

@@ -440,6 +440,17 @@
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 
+/obj/item/nullrod/claymore/vibro
+	icon_state = "hfrequency0"
+	item_state = "hfrequency1"
+	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
+	name = "high frequency blade"
+	desc = "Bad references are the DNA of the soul."
+	attack_verb = list("chopped", "sliced", "cut", "zandatsu'd")
+	hitsound = 'sound/weapons/rapierhit.ogg'
+
+
 /obj/item/nullrod/scythe
 	icon_state = "scythe1"
 	item_state = "scythe1"
@@ -457,15 +468,7 @@
 	. = ..()
 	AddComponent(/datum/component/butchering, 70, 110) //the harvest gives a high bonus chance
 
-/obj/item/nullrod/scythe/vibro
-	icon_state = "hfrequency0"
-	item_state = "hfrequency1"
-	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
-	name = "high frequency blade"
-	desc = "Bad references are the DNA of the soul."
-	attack_verb = list("chopped", "sliced", "cut", "zandatsu'd")
-	hitsound = 'sound/weapons/rapierhit.ogg'
+
 
 
 /obj/item/nullrod/scythe/spellblade

@@ -18303,7 +18303,7 @@
 /area/centcom/supplypod/loading/one)
 "VF" = (
 /obj/structure/rack,
-/obj/item/nullrod/scythe/vibro{
+/obj/item/nullrod/claymore/vibro{
 	damtype = "stamina";
 	force = 30
 	},
