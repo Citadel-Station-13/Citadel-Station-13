@@ -449,6 +449,7 @@
 	desc = "Bad references are the DNA of the soul."
 	attack_verb = list("chopped", "sliced", "cut", "zandatsu'd")
 	hitsound = 'sound/weapons/rapierhit.ogg'
+	slot_flags = ITEM_SLOT_BACK
 
 
 /obj/item/nullrod/scythe
