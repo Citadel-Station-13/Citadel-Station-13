@@ -182,7 +182,7 @@
 	density = TRUE
 	air_update_turf(1)
 	update_freelook_sight()
-	addtimer(CALLBACK(.proc/finish_closing), 10)
+	addtimer(CALLBACK(src, .proc/finish_closing), 10)
 	return TRUE
 
 /obj/machinery/door/window/proc/finish_closing()
