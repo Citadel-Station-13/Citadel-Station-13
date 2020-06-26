@@ -96,7 +96,14 @@
 		mobility_flags &= ~MOBILITY_STAND
 		setMovetype(movement_type | CRAWLING)
 		if(!lying) //force them on the ground
-			lying = pick(90, 270)
+			if(src.dir == 1)
+				lying = pick(90, 270)
+			if(src.dir == 2)
+				lying = pick(90, 270)
+			if(src.dir == 4)
+				lying = 90
+			if(src.dir == 8)
+				lying = 270
 			if(has_gravity() && !buckled)
 				playsound(src, "bodyfall", 20, 1)
 	else
