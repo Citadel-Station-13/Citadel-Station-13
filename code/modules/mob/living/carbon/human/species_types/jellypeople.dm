@@ -42,6 +42,10 @@
 		slime_change.Grant(C)	//CIT CHANGE
 	C.faction |= "slime"
 
+/datum/species/jelly/handle_mutant_bodyparts(mob/living/carbon/human/H)
+	//update blood color to body color
+	H.dna.species.exotic_blood_color = "#" + H.dna.features["mcolor"]
+
 /datum/species/jelly/spec_life(mob/living/carbon/human/H)
 	if(H.stat == DEAD || HAS_TRAIT(H, TRAIT_NOMARROW)) //can't farm slime jelly from a dead slime/jelly person indefinitely, and no regeneration for blooduskers
 		return

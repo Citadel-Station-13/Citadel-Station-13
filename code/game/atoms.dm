@@ -463,8 +463,10 @@
 	if(!new_blood_dna)
 		return FALSE
 	LAZYINITLIST(blood_DNA)	//if our list of DNA doesn't exist yet, initialise it.
+	LAZYINITLIST(blood_DNA["color"])
 	var/old_length = blood_DNA.len
 	blood_DNA |= new_blood_dna
+	blood_DNA["color"] += new_blood_dna["bloodcolor"]
 	if(blood_DNA.len == old_length)
 		return FALSE
 	return TRUE
@@ -472,8 +474,11 @@
 //to add blood dna info to the object's blood_DNA list
 /atom/proc/transfer_blood_dna(list/blood_dna, list/datum/disease/diseases)
 	LAZYINITLIST(blood_DNA)
+	LAZYINITLIST(blood_dna["color"])
+
 	var/old_length = blood_DNA.len
 	blood_DNA |= blood_dna
+	blood_DNA["color"] += blood_dna["bloodcolor"]
 	if(blood_DNA.len > old_length)
 		return TRUE
 		//some new blood DNA was added

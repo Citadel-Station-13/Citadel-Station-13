@@ -70,6 +70,8 @@
 		B = new(T)
 	if(data["blood_DNA"])
 		B.blood_DNA[data["blood_DNA"]] = data["blood_type"]
+		if(!B.blood_DNA["color"])
+			B.blood_DNA["color"] = list(data["bloodcolor"])
 	if(B.reagents)
 		B.reagents.add_reagent(type, reac_volume)
 	B.update_icon()

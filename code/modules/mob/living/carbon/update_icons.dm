@@ -193,9 +193,6 @@
 
 /mob/living/carbon/update_body()
 	update_body_parts()
-	// snowflakey thing: update blood colour if a slimeperson
-	if(isjellyperson(src))
-		dna.species.exotic_blood_color = "#" + dna.features["mcolor"]
 
 /mob/living/carbon/proc/update_body_parts()
 	//CHECK FOR UPDATE
