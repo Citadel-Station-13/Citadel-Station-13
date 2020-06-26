@@ -18,7 +18,7 @@
 
 	var/secondsElectrified = 0
 	var/shockedby
-	var/visible = TRUE // To explain: Wheter the door can block line of sight when closed or not.
+	var/visible = TRUE // To explain: Whether the door can block line of sight when closed or not.
 	var/operating = FALSE
 	var/glass = FALSE
 	var/welded = FALSE
