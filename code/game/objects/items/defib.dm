@@ -619,6 +619,12 @@
 					if(req_defib)
 						if(defib.healdisk)
 							H.heal_overall_damage(25, 25)
+					var/list/policies = CONFIG_GET(keyed_list/policyconfig)
+					var/timelimit = CONFIG_GET(number/defib_cmd_time_limit)
+					var/late = timelimit && (tplus > timelimit)
+					var/policy = late? policies[POLICYCONFIG_ON_DEFIB_LATE] : policies[POLICYCONFIG_ON_DEFIB_INTACT]
+					if(policy)
+						to_chat(occupant, policy)
 				if(req_defib)
 					defib.deductcharge(revivecost)
 					cooldown = 1
