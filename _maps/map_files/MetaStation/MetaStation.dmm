@@ -50781,6 +50781,11 @@
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 5
 	},
+/obj/item/assembly/igniter{
+	pixel_y = 2;
+	pixel_x = 2
+	},
+/obj/item/assembly/igniter,
 /turf/open/floor/plasteel/white,
 /area/medical/chemistry)
 "bZb" = (
