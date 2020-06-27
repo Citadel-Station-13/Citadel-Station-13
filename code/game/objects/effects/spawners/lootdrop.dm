@@ -451,7 +451,7 @@
 	lootcount = 1
 	spawn_on_turf = FALSE
 //Note this is out of a 100 - Meaning the number you see is also the percent its going to pick that
-//This is ment for "low" loot that anyone could fine in a toilet, for better gear use high loot toilet
+//This is meant for "low" loot that anyone could find in a toilet, for better gear use high loot toilet
 	loot = list("" = 30,
 		/obj/item/lighter = 2,
 		/obj/item/tape/random = 1,
@@ -476,7 +476,7 @@
 	lootcount = 1
 	spawn_on_turf = FALSE
 //Note this is out of a 100 - Meaning the number you see is also the percent its going to pick that
-//This is ment for "prison" loot that is rather rare and ment for "prisoners if they get a crowbar to fine, or sec.
+//This is meant for "prison" loot that is rather rare and meant for "prisoners if they get a crowbar to fine, or sec.
 	loot = list("" = 10,
 		/obj/item/lighter = 5,
 		/obj/item/poster/random_contraband = 5,
