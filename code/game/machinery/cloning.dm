@@ -403,6 +403,7 @@
 	var/policy = policies[POLICYCONFIG_ON_CLONE]
 	if(policy)
 		to_chat(occupant, policy)
+	occupant.log_message("revived using cloning, [tplus] deciseconds from time of death.", LOG_GAME)
 
 	occupant.forceMove(T)
 	update_icon()

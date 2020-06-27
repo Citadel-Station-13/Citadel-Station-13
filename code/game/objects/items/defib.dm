@@ -624,7 +624,8 @@
 					var/late = timelimit && (tplus > timelimit)
 					var/policy = late? policies[POLICYCONFIG_ON_DEFIB_LATE] : policies[POLICYCONFIG_ON_DEFIB_INTACT]
 					if(policy)
-						to_chat(occupant, policy)
+						to_chat(H, policy)
+					H.log_message("revived using a defibrillator, [tplus] deciseconds from time of death, considered [late? "late" : "memory-intact"] revival under configured policy limits.", LOG_GAME)
 				if(req_defib)
 					defib.deductcharge(revivecost)
 					cooldown = 1

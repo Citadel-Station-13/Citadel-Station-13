@@ -74,7 +74,9 @@
 		var/late = timelimit && (tplus > timelimit)
 		var/policy = late? policies[POLICYCONFIG_ON_DEFIB_LATE] : policies[POLICYCONFIG_ON_DEFIB_INTACT]
 		if(policy)
-			to_chat(occupant, policy)		return TRUE
+			to_chat(target, policy)
+		target.log_message("revived using surgical revival, [tplus] deciseconds from time of death, considered [late? "late" : "memory-intact"] revival under configured policy limits.", LOG_GAME)
+		return TRUE
 	else
 		user.visible_message("...[target.p_they()] convulses, then lies still.")
 		target.visible_message("...[target.p_they()] convulses, then lies still.")
