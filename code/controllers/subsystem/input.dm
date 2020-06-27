@@ -121,4 +121,4 @@ SUBSYSTEM_DEF(input)
 /// *sigh
 /client/verb/NONSENSICAL_VERB_THAT_DOES_NOTHING()
 	set name = ".NONSENSICAL_VERB_THAT_DOES_NOTHING"
-	set visible = FALSE
+	set hidden = TRUE
