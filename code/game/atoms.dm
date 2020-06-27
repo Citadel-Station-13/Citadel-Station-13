@@ -446,8 +446,10 @@
 		return
 	var/list/blood_dna = list()
 	if(dna)
+		blood_dna["color"] = list(dna.species.exotic_blood_color) //so when combined, the list grows with the number of colors
 		blood_dna[dna.unique_enzymes] = dna.blood_type
 	else
+		blood_dna["color"] = list(BLOOD_COLOR_HUMAN)
 		blood_dna["UNKNOWN DNA"] = "X*"
 	return blood_dna
 
@@ -461,8 +463,10 @@
 	if(!new_blood_dna)
 		return FALSE
 	LAZYINITLIST(blood_DNA)	//if our list of DNA doesn't exist yet, initialise it.
+	LAZYINITLIST(blood_DNA["color"])
 	var/old_length = blood_DNA.len
 	blood_DNA |= new_blood_dna
+	blood_DNA["color"] += new_blood_dna["bloodcolor"]
 	if(blood_DNA.len == old_length)
 		return FALSE
 	return TRUE
@@ -470,8 +474,11 @@
 //to add blood dna info to the object's blood_DNA list
 /atom/proc/transfer_blood_dna(list/blood_dna, list/datum/disease/diseases)
 	LAZYINITLIST(blood_DNA)
+	LAZYINITLIST(blood_dna["color"])
+
 	var/old_length = blood_DNA.len
 	blood_DNA |= blood_dna
+	blood_DNA["color"] += blood_dna["bloodcolor"]
 	if(blood_DNA.len > old_length)
 		return TRUE
 		//some new blood DNA was added
@@ -544,23 +551,22 @@
 
 /atom/proc/blood_DNA_to_color()
 	var/list/colors = list()//first we make a list of all bloodtypes present
-	for(var/bloop in blood_DNA)
-		if(colors[blood_DNA[bloop]])
-			colors[blood_DNA[bloop]]++
+	for(var/blood_color in blood_DNA["color"])
+		if(colors[blood_color])
+			colors[blood_color]++
 		else
-			colors[blood_DNA[bloop]] = 1
+			colors[blood_color] = 1
 
 	var/final_rgb = BLOOD_COLOR_HUMAN	//a default so we don't have white blood graphics if something messed up
-
 	if(colors.len)
 		var/sum = 0 //this is all shitcode, but it works; trust me
-		final_rgb = bloodtype_to_color(colors[1])
+		final_rgb = colors[1]
 		sum = colors[colors[1]]
 		if(colors.len > 1)
 			var/i = 2
 			while(i <= colors.len)
 				var/tmp = colors[colors[i]]
-				final_rgb = BlendRGB(final_rgb, bloodtype_to_color(colors[i]), tmp/(tmp+sum))
+				final_rgb = BlendRGB(final_rgb, colors[i], tmp/(tmp+sum))
 				sum += tmp
 				i++
 

@@ -91,7 +91,7 @@
 		var/mob/living/carbon/human/H = O
 		var/obj/item/clothing/shoes/S = H.shoes
 		if(S && S.bloody_shoes[blood_state])
-			if(color != bloodtype_to_color(S.last_bloodtype))
+			if(color != S.last_blood_color)
 				return
 			S.bloody_shoes[blood_state] = max(S.bloody_shoes[blood_state] - BLOOD_LOSS_PER_STEP, 0)
 			shoe_types |= S.type
@@ -104,7 +104,7 @@
 		var/mob/living/carbon/human/H = O
 		var/obj/item/clothing/shoes/S = H.shoes
 		if(S && S.bloody_shoes[blood_state])
-			if(color != bloodtype_to_color(S.last_bloodtype))//last entry - we check its color
+			if(color != S.last_blood_color)//last entry - we check its color
 				return
 			S.bloody_shoes[blood_state] = max(S.bloody_shoes[blood_state] - BLOOD_LOSS_PER_STEP, 0)
 			shoe_types  |= S.type
