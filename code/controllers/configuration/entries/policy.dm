@@ -3,6 +3,6 @@
 	config_entry_value = 300
 	integer = TRUE
 
-/datum/config_entry/keyed_list/policy_config
+/datum/config_entry/keyed_list/policyconfig
 	key_mode = KEY_MODE_TEXT
 	value_mode = VALUE_MODE_TEXT
