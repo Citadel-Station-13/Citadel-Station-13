@@ -1,0 +1,6 @@
+author: "MrJWhit"
+delete-after: True
+changes: 
+  - rscdel: "Removed air alarm in Snow Snaxi in Tcomms Sat"
+  - rscdel: "Removed trash bins in genetics and mining"
+  - tweak: "Gives cargo techs a cargolathe"
