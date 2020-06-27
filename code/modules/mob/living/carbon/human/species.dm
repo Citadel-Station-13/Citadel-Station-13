@@ -1072,7 +1072,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 
 	if(clothing_check && (slot in H.check_obscured_slots()))
 		if(return_warning)
-			return_warning[1] = "<span class='warning'>You are unable to equip with your current garments in the way!</span>"
+			return_warning[1] = "<span class='warning'>You are unable to equip that with your current garments in the way!</span>"
 		return FALSE
 
 	var/num_arms = H.get_num_arms(FALSE)
