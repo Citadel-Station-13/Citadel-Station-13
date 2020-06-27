@@ -85,6 +85,9 @@
 	if (opacity)
 		has_opaque_atom = TRUE
 
+	// apply materials properly from the default custom_materials value
+	set_custom_materials(custom_materials)
+
 	ComponentInitialize()
 
 	return INITIALIZE_HINT_NORMAL
