@@ -1691,6 +1691,7 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 4
 	},
+/obj/effect/landmark/secequipment,
 /turf/open/floor/plasteel,
 /area/security/brig)
 "aee" = (
@@ -3586,6 +3587,7 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 4
 	},
+/obj/structure/closet/secure_closet/genpop,
 /turf/open/floor/plasteel,
 /area/security/brig)
 "aiL" = (
@@ -3884,19 +3886,14 @@
 /turf/open/floor/plasteel,
 /area/security/brig)
 "ajz" = (
-/obj/structure/closet/emcloset,
-/obj/effect/turf_decal/tile/red{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 8
-	},
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/computer/arcade,
 /turf/open/floor/plasteel,
-/area/security/brig)
+/area/security/prison)
 "ajA" = (
 /obj/effect/turf_decal/bot,
-/obj/structure/closet/secure_closet/brig,
-/turf/open/floor/plasteel,
+/obj/effect/spawner/structure/window/plasma/reinforced,
+/turf/open/floor/plating,
 /area/security/brig)
 "ajB" = (
 /obj/machinery/door/firedoor,
@@ -3931,13 +3928,13 @@
 /turf/open/floor/plating,
 /area/construction/secondary)
 "ajG" = (
-/obj/machinery/computer/arcade,
 /obj/machinery/light{
 	dir = 8;
 	light_color = "#e8eaff"
 	},
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel,
+/obj/effect/spawner/structure/window/plasma/reinforced,
+/turf/open/floor/plating,
 /area/security/prison)
 "ajH" = (
 /obj/structure/rack,
@@ -4842,11 +4839,12 @@
 /turf/open/floor/plasteel,
 /area/crew_quarters/fitness)
 "alM" = (
-/obj/structure/closet/firecloset,
-/obj/effect/turf_decal/tile/red{
-	dir = 1
+/obj/structure/disposalpipe/segment,
+/obj/structure/cable{
+	icon_state = "1-2"
 	},
-/obj/effect/turf_decal/tile/red{
+/obj/machinery/atmospherics/pipe/simple/cyan/hidden,
+/obj/effect/turf_decal/arrows/red{
 	dir = 8
 	},
 /turf/open/floor/plasteel,
@@ -5578,6 +5576,9 @@
 	icon_state = "2-4"
 	},
 /obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/arrows/red{
+	dir = 8
+	},
 /turf/open/floor/plasteel,
 /area/security/prison)
 "anv" = (
@@ -8481,9 +8482,11 @@
 /turf/open/floor/carpet/purple,
 /area/crew_quarters/dorms/purple)
 "atU" = (
-/obj/machinery/atmospherics/pipe/simple/cyan/hidden,
-/obj/structure/disposalpipe/segment{
-	dir = 6
+/obj/effect/turf_decal/bot,
+/obj/machinery/turnstile{
+	name = "Genpop Exit Turnstile";
+	req_access_txt = "70";
+	dir = 4
 	},
 /turf/open/floor/plasteel,
 /area/security/brig)
@@ -8502,15 +8505,8 @@
 /turf/open/floor/plasteel,
 /area/security/brig)
 "atW" = (
-/obj/machinery/disposal/bin{
-	name = "Parolee Exit"
-	},
-/obj/structure/disposalpipe/trunk{
-	dir = 8
-	},
-/obj/effect/turf_decal/delivery,
-/turf/open/floor/plasteel,
-/area/security/brig)
+/turf/open/floor/plating,
+/area/security/prison)
 "atX" = (
 /obj/structure/table,
 /obj/machinery/cell_charger,
@@ -9053,6 +9049,9 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/orange/hidden{
 	dir = 8
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 4
 	},
 /turf/open/floor/plasteel,
 /area/security/prison)
@@ -9731,6 +9730,14 @@
 /obj/machinery/atmospherics/pipe/simple/orange/hidden{
 	dir = 8
 	},
+/obj/machinery/door/airlock/public/glass{
+	name = "Brig";
+	req_access_txt = "2"
+	},
+/obj/machinery/door/firedoor,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
+	},
 /turf/open/floor/plasteel,
 /area/security/prison)
 "awI" = (
@@ -9903,13 +9910,13 @@
 	name = "Thermo-Electric Generator"
 	})
 "awY" = (
-/obj/structure/closet/wardrobe/orange,
 /obj/effect/turf_decal/tile/red{
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/red{
 	dir = 8
 	},
+/obj/structure/closet/secure_closet/genpop,
 /turf/open/floor/plasteel,
 /area/security/brig)
 "awZ" = (
@@ -10015,14 +10022,20 @@
 	pixel_y = 28
 	},
 /obj/effect/turf_decal/bot,
-/obj/structure/closet/secure_closet/brig,
+/obj/machinery/turnstile{
+	name = "Genpop Entrance Turnstile";
+	req_access_txt = "69";
+	dir = 8
+	},
 /turf/open/floor/plasteel,
 /area/security/brig)
 "axj" = (
-/obj/machinery/vr_sleeper{
-	dir = 4
-	},
 /obj/effect/decal/cleanable/dirt,
+/obj/machinery/turnstile{
+	name = "Genpop Entrance Turnstile";
+	req_access_txt = "69";
+	dir = 8
+	},
 /turf/open/floor/plasteel,
 /area/security/prison)
 "axk" = (
@@ -10386,16 +10399,11 @@
 /turf/open/floor/plating,
 /area/maintenance/starboard/fore)
 "axT" = (
-/obj/structure/table,
-/obj/machinery/recharger,
 /obj/effect/turf_decal/tile/red{
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/red{
 	dir = 1
-	},
-/obj/item/storage/crayons{
-	pixel_y = 8
 	},
 /turf/open/floor/plasteel,
 /area/security/brig)
@@ -10790,15 +10798,9 @@
 /turf/open/floor/plasteel,
 /area/hydroponics/lobby)
 "ayQ" = (
-/obj/machinery/vr_sleeper{
-	dir = 4
-	},
-/obj/machinery/light{
-	dir = 8;
-	light_color = "#e8eaff"
-	},
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel,
+/obj/effect/spawner/structure/window/plasma/reinforced,
+/turf/open/floor/plating,
 /area/security/prison)
 "ayR" = (
 /obj/machinery/door/firedoor,
@@ -11044,6 +11046,7 @@
 /obj/machinery/atmospherics/pipe/simple/orange/hidden{
 	dir = 6
 	},
+/obj/structure/closet/secure_closet/genpop,
 /turf/open/floor/plasteel,
 /area/security/brig)
 "azm" = (
@@ -11890,10 +11893,12 @@
 /turf/open/floor/plasteel,
 /area/hallway/primary/port/fore)
 "aAV" = (
-/obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/simple/cyan/hidden,
 /obj/machinery/atmospherics/pipe/simple/orange/hidden{
 	dir = 8
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 6
 	},
 /turf/open/floor/plasteel,
 /area/security/brig)
@@ -11932,6 +11937,9 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/manifold/orange/hidden{
+	dir = 4
+	},
+/obj/structure/disposalpipe/segment{
 	dir = 4
 	},
 /turf/open/floor/plasteel,
@@ -12687,6 +12695,13 @@
 	pixel_x = 24;
 	req_access_txt = "2"
 	},
+/obj/structure/disposalpipe/trunk{
+	dir = 8
+	},
+/obj/machinery/disposal/bin{
+	name = "Parolee Exit"
+	},
+/obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
 /area/security/brig)
 "aCF" = (
@@ -12901,6 +12916,10 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/holopad,
 /obj/machinery/atmospherics/pipe/simple/orange/hidden,
+/obj/machinery/light{
+	dir = 8;
+	light_color = "#e8eaff"
+	},
 /turf/open/floor/plasteel,
 /area/security/prison)
 "aCY" = (
@@ -13009,6 +13028,9 @@
 	},
 /obj/effect/turf_decal/tile/red{
 	dir = 1
+	},
+/obj/machinery/firealarm{
+	pixel_y = 26
 	},
 /turf/open/floor/plasteel,
 /area/security/main)
@@ -13703,6 +13725,9 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/orange/hidden,
+/obj/effect/turf_decal/arrows/red{
+	dir = 4
+	},
 /turf/open/floor/plasteel,
 /area/security/brig)
 "aED" = (
@@ -13772,9 +13797,6 @@
 	icon_state = "1-2"
 	},
 /obj/structure/disposalpipe/segment,
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
 /obj/machinery/atmospherics/pipe/simple/orange/hidden,
 /turf/open/floor/plasteel,
 /area/security/brig)
@@ -15382,6 +15404,10 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/orange/hidden,
+/obj/machinery/camera{
+	c_tag = "Security - Prison Aft";
+	dir = 4
+	},
 /turf/open/floor/plasteel,
 /area/security/prison)
 "aHU" = (
@@ -15773,18 +15799,12 @@
 /turf/open/floor/plasteel,
 /area/security/main)
 "aIG" = (
-/obj/structure/table,
-/obj/machinery/firealarm{
-	pixel_y = 26
-	},
 /obj/effect/turf_decal/tile/red{
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/red{
 	dir = 1
 	},
-/obj/item/paper_bin,
-/obj/item/pen,
 /obj/structure/cable{
 	icon_state = "4-8"
 	},
@@ -16187,13 +16207,12 @@
 /turf/open/floor/plasteel,
 /area/hallway/secondary/civilian)
 "aJt" = (
-/obj/machinery/light{
-	dir = 8;
-	light_color = "#e8eaff"
-	},
-/obj/item/toy/figure/syndie,
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/atmospherics/pipe/simple/orange/hidden,
+/obj/machinery/turnstile{
+	name = "Genpop Exit Turnstile";
+	req_access_txt = "70";
+	dir = 4
+	},
 /turf/open/floor/plasteel,
 /area/security/prison)
 "aJu" = (
@@ -16394,10 +16413,6 @@
 /turf/open/floor/circuit,
 /area/bridge)
 "aJN" = (
-/obj/machinery/camera{
-	c_tag = "Security - Prison Aft";
-	dir = 4
-	},
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/orange/hidden{
 	dir = 5
@@ -17247,9 +17262,6 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/cyan/hidden{
 	dir = 4
-	},
-/obj/item/twohanded/required/kirbyplants{
-	icon_state = "plant-06"
 	},
 /turf/open/floor/plasteel,
 /area/security/brig)
@@ -28284,11 +28296,15 @@
 /turf/open/floor/plating,
 /area/maintenance/department/eva)
 "bjB" = (
-/obj/effect/spawner/structure/window/reinforced,
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
 /obj/structure/cable,
+/obj/machinery/turnstile{
+	name = "Genpop Exit Turnstile";
+	req_access_txt = "70";
+	dir = 8
+	},
 /turf/open/floor/plating,
 /area/security/brig)
 "bjC" = (
@@ -71739,6 +71755,17 @@
 	},
 /turf/open/floor/plasteel,
 /area/engine/atmos)
+"gFe" = (
+/obj/machinery/turnstile{
+	name = "Genpop Exit Turnstile";
+	req_access_txt = "70"
+	},
+/obj/effect/turf_decal/tile/bar,
+/obj/effect/turf_decal/tile/bar{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/security/main)
 "gGG" = (
 /obj/structure/lattice,
 /obj/machinery/atmospherics/pipe/manifold/orange/visible{
@@ -71887,6 +71914,13 @@
 	},
 /turf/closed/wall/r_wall,
 /area/engine/atmos)
+"kdq" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/vr_sleeper{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/security/prison)
 "kxw" = (
 /obj/machinery/atmospherics/pipe/simple/violet/visible,
 /turf/open/space/basic,
@@ -71983,6 +72017,14 @@
 	},
 /turf/open/floor/plasteel,
 /area/engine/atmos)
+"nlQ" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/simple/orange/hidden,
+/obj/effect/turf_decal/arrows/red{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/security/prison)
 "ntC" = (
 /obj/machinery/atmospherics/components/binary/pump{
 	name = "Port to Fuel Pipe"
@@ -72047,6 +72089,17 @@
 	},
 /turf/open/space/basic,
 /area/space/nearstation)
+"ozx" = (
+/obj/machinery/light{
+	dir = 8;
+	light_color = "#e8eaff"
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/vr_sleeper{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/security/prison)
 "oMB" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/simple/cyan/visible{
@@ -72106,6 +72159,14 @@
 	},
 /turf/open/floor/plasteel,
 /area/engine/atmos)
+"rff" = (
+/obj/machinery/turnstile{
+	dir = 1;
+	name = "Genpop Exit Turnstile";
+	req_access_txt = "70"
+	},
+/turf/open/floor/plating,
+/area/security/brig)
 "rTW" = (
 /obj/structure/lattice,
 /obj/machinery/atmospherics/pipe/simple/violet/visible{
@@ -95274,8 +95335,8 @@ acN
 amZ
 acN
 aqY
-ajz
-alM
+acN
+acN
 axK
 axX
 azk
@@ -95287,7 +95348,7 @@ anU
 anU
 anU
 aLw
-abS
+rff
 axT
 aQb
 aaS
@@ -95537,7 +95598,7 @@ aqf
 asV
 aCt
 agE
-atU
+agE
 aAV
 auV
 aGP
@@ -95789,7 +95850,7 @@ ahE
 ahE
 ahE
 ahE
-ahE
+alM
 aqz
 atV
 aCW
@@ -96043,15 +96104,15 @@ adA
 aed
 afl
 afl
-afl
+aiK
 aiK
 ajA
-ajA
+atU
 aew
 avg
 aew
 axi
-atW
+acc
 aCE
 aDW
 anU
@@ -96303,11 +96364,11 @@ aeJ
 aeJ
 aew
 aeJ
-aeJ
+atW
 aeJ
 avF
 aeJ
-aeJ
+atW
 aeJ
 aew
 aCH
@@ -96560,7 +96621,7 @@ agI
 aid
 aew
 ajG
-alU
+aJt
 aew
 awH
 aew
@@ -96569,8 +96630,8 @@ ayQ
 aew
 aDY
 aew
-aew
-aew
+ozx
+kdq
 aQf
 aSX
 aew
@@ -96821,12 +96882,12 @@ anu
 ask
 ayF
 aCX
-aEE
+nlQ
 aEE
 aES
 aGT
 aHT
-aJt
+aEE
 aJN
 aQg
 akv
@@ -97587,7 +97648,7 @@ agD
 ahr
 aiH
 aew
-akw
+ajz
 aoB
 akw
 aqD
@@ -98886,7 +98947,7 @@ ata
 awT
 aAk
 cjN
-atc
+gFe
 aIG
 aRU
 aDX
