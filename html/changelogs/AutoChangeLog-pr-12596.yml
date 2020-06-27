@@ -1,0 +1,13 @@
+author: "Ghommie porting PRs by Qustinnus/Floyd, Willow, cacogen, nemvar, Ghilker and EOBGames (Inept)"
+delete-after: True
+changes: 
+  - bugfix: "Fixes a material duplication bug."
+  - code_imp: "unique combinations of custom_materials lists are now shared between objects"
+  - rscadd: "meat material. yes."
+  - rscadd: "materials can now be used to build walls/floors. meat house"
+  - bugfix: "edible component now does not try to attack if you eat something with it"
+  - rscadd: "Texture support for mat datums with thanks to 4DPlanner!"
+  - bugfix: "you no longer hit yourself with organs when eating"
+  - rscadd: "A whole bunch of materials are now datumised! Check out bronze, runed metal, sand, sandstone, snow, paper, cardboard, bone and bamboo. Oh, and pizza. Yes, pizza."
+  - balance: "Buffs material floor tiles' throwforces from 1 to 10 (same as iron) to better showcase the effect of different materials (e.g. meat vs. titanium)"
+  - bugfix: "Radioactive items no longer output a single . when examined at a distance"
