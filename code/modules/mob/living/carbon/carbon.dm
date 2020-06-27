@@ -1160,3 +1160,16 @@
 			dna.features["body_model"] = MALE
 	if(update_icon)
 		update_body()
+
+/mob/living/carbon/check_obscured_slots()
+	if(head)
+		if(head.flags_inv & HIDEMASK)
+			LAZYOR(., SLOT_WEAR_MASK)
+		if(head.flags_inv & HIDEEYES)
+			LAZYOR(., SLOT_GLASSES)
+		if(head.flags_inv & HIDEEARS)
+			LAZYOR(., SLOT_EARS)
+
+	if(wear_mask)
+		if(wear_mask.flags_inv & HIDEEYES)
+			LAZYOR(., SLOT_GLASSES)
