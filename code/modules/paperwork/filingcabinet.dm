@@ -212,11 +212,11 @@ GLOBAL_LIST_EMPTY(employmentCabinets)
 	new /obj/item/paper/contract/employment(src, employee)
 
 /obj/structure/filingcabinet/employment/interact(mob/user)
-	if(COOLDOWN_CHECK(src, COOLDOWN_EMPLOYMENT_CABINET))
+	if(TIMER_COOLDOWN_CHECK(src, COOLDOWN_EMPLOYMENT_CABINET))
 		to_chat(user, "<span class='warning'>[src] is jammed, give it a few seconds.</span>")
 		return ..()
 
-	COOLDOWN_START(src, COOLDOWN_EMPLOYMENT_CABINET, 10 SECONDS) // prevents the devil from just instantly emptying the cabinet, ensuring an easy win.
+	TIMER_COOLDOWN_START(src, COOLDOWN_EMPLOYMENT_CABINET, 10 SECONDS) // prevents the devil from just instantly emptying the cabinet, ensuring an easy win.
 	if(virgin)
 		fillCurrent()
 		virgin = FALSE
