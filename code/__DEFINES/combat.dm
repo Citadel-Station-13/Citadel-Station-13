@@ -269,12 +269,12 @@ GLOBAL_LIST_INIT(shove_disarming_types, typecacheof(list(
 
 //stamina cost defines.
 #define STAM_COST_ATTACK_OBJ_MULT	1.2
-#define STAM_COST_ATTACK_MOB_MULT	0.8
+#define STAM_COST_ATTACK_MOB_MULT	1
 #define STAM_COST_BATON_MOB_MULT	1
 #define STAM_COST_NO_COMBAT_MULT	1.25
 #define STAM_COST_W_CLASS_MULT		1.25
 #define STAM_COST_THROW_MULT		2
-#define STAM_COST_THROW_MOB			8 //multiplied by mob size + 1.
+#define STAM_COST_THROW_MOB			2.5 //multiplied by (mob size + 1)^2.
 
 ///Multiplier of the (STAMINA_NEAR_CRIT - user current stamina loss) : (STAMINA_NEAR_CRIT - STAMINA_SOFTCRIT) ratio used in damage penalties when stam soft-critted.
 #define STAM_CRIT_ITEM_ATTACK_PENALTY	0.66
@@ -287,9 +287,9 @@ GLOBAL_LIST_INIT(shove_disarming_types, typecacheof(list(
 
 //stamina recovery defines. Blocked if combat mode is on.
 #define STAM_RECOVERY_STAM_CRIT		-7.5
-#define STAM_RECOVERY_RESTING		-5
-#define STAM_RECOVERY_NORMAL		-2
-#define STAM_RECOVERY_LIMB			3 //limbs recover stamina separately from handle_status_effects(), and aren't blocked by combat mode.
+#define STAM_RECOVERY_RESTING		-6
+#define STAM_RECOVERY_NORMAL		-3
+#define STAM_RECOVERY_LIMB			4 //limbs recover stamina separately from handle_status_effects(), and aren't blocked by combat mode.
 
 /**
   * should the current-attack-damage be lower than the item force multiplied by this value,
