@@ -96,7 +96,7 @@
 	for(var/i in 1 to amount)
 		var/obj/O = new path(get_turf(src))
 		if(efficient_with(O.type))
-			O.set_custom_materials(matlist.Copy())
+			O.set_custom_materials(matlist)
 			O.rnd_crafted(src)
 	SSblackbox.record_feedback("nested tally", "item_printed", amount, list("[type]", "[path]"))
 	investigate_log("[key_name(user)] built [amount] of [path] at [src]([type]).", INVESTIGATE_RESEARCH)

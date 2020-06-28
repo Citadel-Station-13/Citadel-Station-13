@@ -170,7 +170,7 @@
 						qdel(src)
 					return
 
-		if(S.sheettype && S.sheettype != "runed")
+		if(S.sheettype != "runed")
 			var/M = S.sheettype
 			if(state == GIRDER_DISPLACED)
 				var/F = text2path("/obj/structure/falsewall/[M]")
@@ -188,9 +188,13 @@
 					transfer_fingerprints_to(FW)
 					qdel(src)
 			else
-				var/F = text2path("/turf/closed/wall/mineral/[M]")
+				var/list/material_list
+				var/F = S.walltype
 				if(!F)
-					return
+					F = /turf/closed/wall/material
+					if(S.material_type)
+						material_list = list()
+						material_list[SSmaterials.GetMaterialRef(S.material_type)] = MINERAL_MATERIAL_AMOUNT * 2
 				if(S.get_amount() < 2)
 					to_chat(user, "<span class='warning'>You need at least two sheets to add plating!</span>")
 					return
@@ -201,7 +205,9 @@
 					S.use(2)
 					to_chat(user, "<span class='notice'>You add the plating.</span>")
 					var/turf/T = get_turf(src)
-					T.PlaceOnTop(F)
+					var/turf/newturf = T.PlaceOnTop(F)
+					if(material_list)
+						newturf.set_custom_materials(material_list)
 					transfer_fingerprints_to(T)
 					qdel(src)
 				return

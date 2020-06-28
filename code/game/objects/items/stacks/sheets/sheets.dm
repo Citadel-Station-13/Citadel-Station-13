@@ -10,10 +10,14 @@
 	throw_range = 3
 	attack_verb = list("bashed", "battered", "bludgeoned", "thrashed", "smashed")
 	novariants = FALSE
-	mats_per_stack = MINERAL_MATERIAL_AMOUNT
-	var/sheettype = null //this is used for girders in the creation of walls/false walls
-	var/point_value = 0 //turn-in value for the gulag stacker - loosely relative to its rarity
-	var/shard_type // the shard debris typepath left over by solar panels and windows etc.
+	///this is used for girders in the creation of walls/false walls
+	var/sheettype = null
+	///turn-in value for the gulag stacker - loosely relative to its rarity
+	var/point_value = 0
+	/// the shard debris typepath left over by solar panels and windows etc.
+	var/shard_type
+	///What type of wall does this sheet spawn
+	var/walltype
 
 /obj/item/stack/sheet/Initialize(mapload, new_amount, merge)
 	. = ..()
