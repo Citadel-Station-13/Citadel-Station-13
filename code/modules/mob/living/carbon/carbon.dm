@@ -182,7 +182,7 @@
 				to_chat(src, "<span class='notice'>You gently let go of [throwable_mob].</span>")
 				return
 
-			adjustStaminaLossBuffered(STAM_COST_THROW_MOB * (throwable_mob.mob_size+1))// throwing an entire person shall be very tiring
+			adjustStaminaLossBuffered(STAM_COST_THROW_MOB * ((throwable_mob.mob_size+1)**2))// throwing an entire person shall be very tiring
 			var/turf/start_T = get_turf(loc) //Get the start and target tile for the descriptors
 			var/turf/end_T = get_turf(target)
 			if(start_T && end_T)
