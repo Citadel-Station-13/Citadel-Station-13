@@ -1,9 +1,13 @@
 /mob/living/carbon/BiologicalLife(seconds, times_fired)
 	//Reagent processing needs to come before breathing, to prevent edge cases.
 	handle_organs()
+	. = ..()		// if . is false, we are dead.
 	if(stat == DEAD)
-		return FALSE
-	if(!(. = ..()))
+		stop_sound_channel(CHANNEL_HEARTBEAT)
+		handle_death()
+		rot()
+		. = FALSE
+	if(!.)
 		return
 	handle_blood()
 	// handle_blood *could* kill us.
@@ -20,12 +24,6 @@
 
 	if(stat != DEAD)
 		handle_liver()
-
-	if(stat == DEAD)
-		stop_sound_channel(CHANNEL_HEARTBEAT)
-		handle_death()
-		rot()
-		. = FALSE
 
 	//Updates the number of stored chemicals for powers
 	handle_changeling()
