@@ -20,7 +20,6 @@
 	mutanteyes = /obj/item/organ/eyes/ipc
 
 	exotic_bloodtype = "HF"
-	exotic_blood_color = BLOOD_COLOR_OIL
 
 	var/datum/action/innate/monitor_change/screen
 
