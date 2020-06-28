@@ -1,4 +1,0 @@
-author: "timothyteakettle"
-delete-after: True
-changes: 
-  - rscadd: "support for custom blood colours implemented, slimes blood colour now equivalent to their body colour"
