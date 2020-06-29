@@ -20,7 +20,7 @@
 	. = ..()
 	if(!.)
 		return
-	if(owner.notransform || !get_turf(owner))
+	if(owner.mob_transforming || !get_turf(owner))
 		return FALSE
 
 	return TRUE
@@ -83,7 +83,7 @@
 	// Freeze Me
 	user.next_move = world.time + mist_delay
 	user.Stun(mist_delay, ignore_canstun = TRUE)
-	user.notransform = TRUE
+	user.mob_transforming = TRUE
 	user.density = FALSE
 	var/invis_was = user.invisibility
 	user.invisibility = INVISIBILITY_MAXIMUM
@@ -106,7 +106,7 @@
 	user.dir = get_dir(my_turf, target_turf)
 	user.next_move = world.time + mist_delay / 2
 	user.Stun(mist_delay / 2, ignore_canstun = TRUE)
-	user.notransform = FALSE
+	user.mob_transforming = FALSE
 	user.density = 1
 	user.invisibility = invis_was
 

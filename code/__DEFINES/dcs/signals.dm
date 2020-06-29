@@ -26,10 +26,16 @@
 #define COMPONENT_ADD_TRAIT (1<<0)
 #define COMPONENT_REMOVE_TRAIT (1<<1)
 
+/// fires on the target datum when an element is attached to it (/datum/element)
+#define COMSIG_ELEMENT_ATTACH "element_attach"
+/// fires on the target datum when an element is attached to it  (/datum/element)
+#define COMSIG_ELEMENT_DETACH "element_detach"
+
 // /atom signals
 #define COMSIG_PARENT_ATTACKBY "atom_attackby"			        //from base of atom/attackby(): (/obj/item, /mob/living, params)
 	#define COMPONENT_NO_AFTERATTACK 1								//Return this in response if you don't want afterattack to be called
 #define COMSIG_ATOM_HULK_ATTACK "hulk_attack"					//from base of atom/attack_hulk(): (/mob/living/carbon/human)
+#define COMSIG_ATOM_ATTACK_ANIMAL "attack_animal"				//from base of atom/animal_attack(): (/mob/user)
 #define COMSIG_PARENT_EXAMINE "atom_examine"                    //from base of atom/examine(): (/mob, list/examine_return_text)
 #define COMSIG_ATOM_GET_EXAMINE_NAME "atom_examine_name"		//from base of atom/get_examine_name(): (/mob, list/overrides)
 	//Positions for overrides list
@@ -227,10 +233,16 @@
 #define COMSIG_LIVING_STATUS_STAGGER "living_stagger"			//from base of mob/living/Stagger() (amount, update, ignore)
 	#define COMPONENT_NO_STUN 1			//For all of them
 
+#define COMSIG_LIVING_LIFE "life_tick"							//from base of mob/living/Life() (seconds, times_fired)
+	#define COMPONENT_INTERRUPT_LIFE_BIOLOGICAL 1		// interrupt biological processes
+	#define COMPONENT_INTERRUPT_LIFE_PHYSICAL 2			// interrupt physical handling
+
 // /mob/living/carbon signals
 #define COMSIG_CARBON_SOUNDBANG "carbon_soundbang"					//from base of mob/living/carbon/soundbang_act(): (list(intensity))
 #define COMSIG_CARBON_IDENTITY_TRANSFERRED_TO "carbon_id_transferred_to" //from datum/dna/transfer_identity(): (datum/dna, transfer_SE)
 #define COMSIG_CARBON_TACKLED "carbon_tackled"						//sends from tackle.dm on tackle completion
+#define COMSIG_CARBON_EMBED_RIP "item_embed_start_rip"						// defined twice, in carbon and human's topics, fired when interacting with a valid embedded_object to pull it out (mob/living/carbon/target, /obj/item, /obj/item/bodypart/L)
+#define COMSIG_CARBON_EMBED_REMOVAL "item_embed_remove_safe"		// called when removing a given item from a mob, from mob/living/carbon/remove_embedded_object(mob/living/carbon/target, /obj/item)
 
 // /mob/living/silicon signals
 #define COMSIG_ROBOT_UPDATE_ICONS "robot_update_icons"			//from base of robot/update_icons(): ()
@@ -243,6 +255,9 @@
 #define COMSIG_OBJ_DECONSTRUCT 	"obj_deconstruct"				//from base of obj/deconstruct(): (disassembled)
 #define COMSIG_OBJ_BREAK		"obj_break"						//from base of /obj/obj_break(): (damage_flag)
 #define COMSIG_OBJ_SETANCHORED 	"obj_setanchored"				//called in /obj/structure/setAnchored(): (value)
+#define COMSIG_OBJ_ATTACK_GENERIC "obj_attack_generic"			//from base of atom/animal_attack(): (/mob/user)
+	#define COMPONENT_STOP_GENERIC_ATTACK 1
+
 
 // /machinery signals
 #define COMSIG_MACHINE_EJECT_OCCUPANT "eject_occupant"			//from base of obj/machinery/dropContents() (occupant)
@@ -269,6 +284,7 @@
 #define COMSIG_ITEM_IMBUE_SOUL "item_imbue_soul" 				//return a truthy value to prevent ensouling, checked in /obj/effect/proc_holder/spell/targeted/lichdom/cast(): (mob/user)
 #define COMSIG_ITEM_HIT_REACT "item_hit_react"					//from base of obj/item/hit_reaction(): (list/args)
 #define COMSIG_ITEM_WEARERCROSSED "wearer_crossed"                //called on item when crossed by something (): (/atom/movable)
+#define COMSIG_ITEM_MICROWAVE_ACT "microwave_act"                //called on item when microwaved (): (obj/machinery/microwave/M)
 #define COMSIG_ITEM_WORN_OVERLAYS "item_worn_overlays"			//from base of obj/item/worn_overlays(): (isinhands, icon_file, used_state, style_flags, list/overlays)
 // THE FOLLOWING TWO BLOCKS SHOULD RETURN BLOCK FLAGS AS DEFINED IN __DEFINES/combat.dm!
 #define COMSIG_ITEM_CHECK_BLOCK "check_block"					//from base of obj/item/check_block(): (mob/living/owner, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return)
@@ -277,8 +293,14 @@
 #define COMSIG_ITEM_MOUSE_EXIT "item_mouse_exit"				//from base of obj/item/MouseExited(): (location, control, params)
 #define COMSIG_ITEM_MOUSE_ENTER "item_mouse_enter"				//from base of obj/item/MouseEntered(): (location, control, params)
 #define COMSIG_ITEM_DECONSTRUCTOR_DEEPSCAN "deconstructor_deepscan"			//Called by deconstructive analyzers deepscanning an item: (obj/machinery/rnd/destructive_analyzer/analyzer_machine, mob/user, list/information_list)
+#define COMSIG_ITEM_DISABLE_EMBED "item_disable_embed"			///from [/obj/item/proc/disableEmbedding]:
+#define COMSIG_MINE_TRIGGERED "minegoboom"						///from [/obj/effect/mine/proc/triggermine]:
 	// Uncovered information
 	#define COMPONENT_DEEPSCAN_UNCOVERED_INFORMATION		1
+
+// /obj/item/grenade signals
+#define COMSIG_GRENADE_PRIME "grenade_prime"					//called in /obj/item/gun/process_fire (user, target, params, zone_override)
+#define COMSIG_GRENADE_ARMED "grenade_armed"					//called in /obj/item/gun/process_fire (user, target, params, zone_override)
 
 // /obj/item/clothing signals
 #define COMSIG_SHOES_STEP_ACTION "shoes_step_action"			//from base of obj/item/clothing/shoes/proc/step_action(): ()
@@ -307,8 +329,15 @@
 #define COMSIG_PEN_ROTATED "pen_rotated"						//called after rotation in /obj/item/pen/attack_self(): (rotation, mob/living/carbon/user)
 
 // /obj/item/projectile signals (sent to the firer)
+#define COMSIG_PROJECTILE_SELF_ON_HIT "projectile_self_on_hit"			// from base of /obj/item/projectile/proc/on_hit(): (atom/movable/firer, atom/target, Angle)
 #define COMSIG_PROJECTILE_ON_HIT "projectile_on_hit"			// from base of /obj/item/projectile/proc/on_hit(): (atom/movable/firer, atom/target, Angle)
 #define COMSIG_PROJECTILE_BEFORE_FIRE "projectile_before_fire" 			// from base of /obj/item/projectile/proc/fire(): (obj/item/projectile, atom/original_target)
+#define COMSIG_PROJECTILE_FIRE "projectile_fire"				///from the base of /obj/projectile/proc/fire(): ()
+#define COMSIG_PROJECTILE_RANGE_OUT "projectile_range_out"				// sent to targets during the process_hit proc of projectiles
+#define COMSIG_EMBED_TRY_FORCE "item_try_embed"					// sent when trying to force an embed (mainly for projectiles, only used in the embed element)
+#define COMSIG_PROJECTILE_PREHIT "com_proj_prehit"				///sent to targets during the process_hit proc of projectiles
+
+#define COMSIG_PELLET_CLOUD_INIT "pellet_cloud_init"				// sent to targets during the process_hit proc of projectiles
 
 // /mob/living/carbon/human signals
 #define COMSIG_HUMAN_MELEE_UNARMED_ATTACK "human_melee_unarmed_attack"			//from mob/living/carbon/human/UnarmedAttack(): (atom/target)

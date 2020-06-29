@@ -216,6 +216,7 @@
 		"ipc_screen"		= snowflake_ipc_antenna_list ? pick(snowflake_ipc_antenna_list) : "None",
 		"ipc_antenna"		= "None",
 		"flavor_text"		= "",
+		"silicon_flavor_text"		= "",
 		"meat_type"			= "Mammalian",
 		"body_model"		= body_model,
 		"body_size"			= RESIZE_DEFAULT_SIZE
@@ -319,173 +320,6 @@ GLOBAL_LIST_EMPTY(species_list)
 		else
 			return "unknown"
 
-/proc/do_mob(mob/user , mob/target, time = 30, uninterruptible = 0, progress = 1, datum/callback/extra_checks = null, ignorehelditem = FALSE, resume_time = 0 SECONDS)
-	if(!user || !target)
-		return 0
-	var/user_loc = user.loc
-
-	var/drifting = 0
-	if(!user.Process_Spacemove(0) && user.inertia_dir)
-		drifting = 1
-
-	var/target_loc = target.loc
-
-	var/holding = user.get_active_held_item()
-	var/datum/progressbar/progbar
-	if (progress)
-		progbar = new(user, time, target)
-
-	var/endtime = world.time+time
-	var/starttime = world.time
-	. = 1
-	while (world.time + resume_time < endtime)
-		stoplag(1)
-		if (progress)
-			progbar.update(world.time - starttime + resume_time)
-		if(QDELETED(user) || QDELETED(target))
-			. = 0
-			break
-		if(uninterruptible)
-			continue
-
-		if(drifting && !user.inertia_dir)
-			drifting = 0
-			user_loc = user.loc
-
-		if((!drifting && user.loc != user_loc) || target.loc != target_loc || (!ignorehelditem && user.get_active_held_item() != holding) || user.incapacitated() || user.lying || (extra_checks && !extra_checks.Invoke()))
-			. = 0
-			break
-	if (progress)
-		qdel(progbar)
-
-
-//some additional checks as a callback for for do_afters that want to break on losing health or on the mob taking action
-/mob/proc/break_do_after_checks(list/checked_health, check_clicks)
-	if(check_clicks && next_move > world.time)
-		return FALSE
-	return TRUE
-
-//pass a list in the format list("health" = mob's health var) to check health during this
-/mob/living/break_do_after_checks(list/checked_health, check_clicks)
-	if(islist(checked_health))
-		if(health < checked_health["health"])
-			return FALSE
-		checked_health["health"] = health
-	return ..()
-
-/proc/do_after(mob/user, var/delay, needhand = 1, atom/target = null, progress = 1, datum/callback/extra_checks = null, required_mobility_flags = (MOBILITY_USE|MOBILITY_MOVE), resume_time = 0 SECONDS)
-	if(!user)
-		return 0
-	var/atom/Tloc = null
-	if(target && !isturf(target))
-		Tloc = target.loc
-
-	var/atom/Uloc = user.loc
-
-	var/drifting = 0
-	if(!user.Process_Spacemove(0) && user.inertia_dir)
-		drifting = 1
-
-	var/holding = user.get_active_held_item()
-
-	var/holdingnull = 1 //User's hand started out empty, check for an empty hand
-	if(holding)
-		holdingnull = 0 //Users hand started holding something, check to see if it's still holding that
-
-	delay *= user.do_after_coefficent()
-
-	var/datum/progressbar/progbar
-	if (progress)
-		progbar = new(user, delay, target)
-
-	var/endtime = world.time + delay
-	var/starttime = world.time
-	. = 1
-	var/mob/living/L = isliving(user) && user			//evals to last thing eval'd
-	while (world.time + resume_time < endtime)
-		stoplag(1)
-		if (progress)
-			progbar.update(world.time - starttime + resume_time)
-
-		if(drifting && !user.inertia_dir)
-			drifting = 0
-			Uloc = user.loc
-
-		if(L && !CHECK_ALL_MOBILITY(L, required_mobility_flags))
-			. = 0
-			break
-
-		if(QDELETED(user) || user.stat || (!drifting && user.loc != Uloc) || (extra_checks && !extra_checks.Invoke()))
-			. = 0
-			break
-
-		if(!QDELETED(Tloc) && (QDELETED(target) || Tloc != target.loc))
-			if((Uloc != Tloc || Tloc != user) && !drifting)
-				. = 0
-				break
-
-		if(needhand)
-			//This might seem like an odd check, but you can still need a hand even when it's empty
-			//i.e the hand is used to pull some item/tool out of the construction
-			if(!holdingnull)
-				if(!holding)
-					. = 0
-					break
-			if(user.get_active_held_item() != holding)
-				. = 0
-				break
-	if (progress)
-		qdel(progbar)
-
-/mob/proc/do_after_coefficent() // This gets added to the delay on a do_after, default 1
-	. = 1
-	return
-
-/proc/do_after_mob(mob/user, var/list/targets, time = 30, uninterruptible = 0, progress = 1, datum/callback/extra_checks)
-	if(!user || !targets)
-		return 0
-	if(!islist(targets))
-		targets = list(targets)
-	var/user_loc = user.loc
-
-	var/drifting = 0
-	if(!user.Process_Spacemove(0) && user.inertia_dir)
-		drifting = 1
-
-	var/list/originalloc = list()
-	for(var/atom/target in targets)
-		originalloc[target] = target.loc
-
-	var/holding = user.get_active_held_item()
-	var/datum/progressbar/progbar
-	if(progress)
-		progbar = new(user, time, targets[1])
-
-	var/endtime = world.time + time
-	var/starttime = world.time
-	. = 1
-	mainloop:
-		while(world.time < endtime)
-			stoplag(1)
-			if(progress)
-				progbar.update(world.time - starttime)
-			if(QDELETED(user) || !targets)
-				. = 0
-				break
-			if(uninterruptible)
-				continue
-
-			if(drifting && !user.inertia_dir)
-				drifting = 0
-				user_loc = user.loc
-
-			for(var/atom/target in targets)
-				if((!drifting && user_loc != user.loc) || QDELETED(target) || originalloc[target] != target.loc || user.get_active_held_item() != holding || user.incapacitated() || user.lying || (extra_checks && !extra_checks.Invoke()))
-					. = 0
-					break mainloop
-	if(progbar)
-		qdel(progbar)
-
 /proc/is_species(A, species_datum)
 	. = FALSE
 	if(ishuman(A))
@@ -540,6 +374,8 @@ GLOBAL_LIST_EMPTY(species_list)
 		if(M.client && M.client.holder && (prefs.chat_toggles & CHAT_DEAD))
 			override = TRUE
 		if(HAS_TRAIT(M, TRAIT_SIXTHSENSE))
+			override = TRUE
+		if(SSticker.current_state == GAME_STATE_FINISHED)
 			override = TRUE
 		if(isnewplayer(M) && !override)
 			continue

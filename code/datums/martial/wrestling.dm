@@ -480,12 +480,12 @@
 	return
 
 /obj/item/storage/belt/champion/wrestling/dropped(mob/user)
+	. = ..()
 	if(!ishuman(user))
 		return
 	var/mob/living/carbon/human/H = user
 	if(H.get_item_by_slot(SLOT_BELT) == src)
 		style.remove(H)
-	return
 
 //Subtype of wrestling, reserved for the wrestling belts found in the holodeck
 /datum/martial_art/wrestling/holodeck

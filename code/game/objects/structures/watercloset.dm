@@ -19,6 +19,13 @@
 	open = round(rand(0, 1))
 	update_icon()
 
+/obj/structure/toilet/Destroy()
+	if(loc)
+		for(var/A in contents)
+			var/atom/movable/AM = A
+			AM.forceMove(loc)
+	return ..()
+
 /obj/structure/toilet/attack_hand(mob/living/user)
 	. = ..()
 	if(.)
@@ -150,8 +157,7 @@
 	secret_type = /obj/effect/spawner/lootdrop/prison_loot_toilet
 
 /obj/structure/toilet/greyscale
-
-	material_flags = MATERIAL_ADD_PREFIX | MATERIAL_COLOR
+	material_flags = MATERIAL_ADD_PREFIX | MATERIAL_COLOR | MATERIAL_EFFECTS
 	buildstacktype = null
 
 /obj/structure/urinal
@@ -575,6 +581,12 @@
 		G.use(1)
 		return
 
+	if(istype(O, /obj/item/stack/ore/glass))
+		new /obj/item/stack/sheet/sandblock(loc)
+		to_chat(user, "<span class='notice'>You wet the sand in the sink and form it into a block.</span>")
+		O.use(1)
+		return
+
 	if(!istype(O))
 		return
 	if(O.item_flags & ABSTRACT) //Abstract items like grabs won't wash. No-drop items will though because it's still technically an item in your hand.
@@ -695,11 +707,6 @@
 	icon_state = "puddle"
 	resistance_flags = UNACIDABLE
 
-/obj/structure/sink/greyscale
-	icon_state = "sink_greyscale"
-	material_flags = MATERIAL_ADD_PREFIX | MATERIAL_COLOR
-	buildstacktype = null
-
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/structure/sink/puddle/attack_hand(mob/M)
 	icon_state = "puddle-splash"
@@ -715,7 +722,8 @@
 	qdel(src)
 
 /obj/structure/sink/greyscale
-	material_flags = MATERIAL_ADD_PREFIX | MATERIAL_COLOR
+	icon_state = "sink_greyscale"
+	material_flags = MATERIAL_ADD_PREFIX | MATERIAL_COLOR | MATERIAL_EFFECTS
 	buildstacktype = null
 
 //Shower Curtains//
