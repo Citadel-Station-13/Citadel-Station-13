@@ -6,3 +6,6 @@
 /datum/config_entry/keyed_list/policyconfig
 	key_mode = KEY_MODE_TEXT
 	value_mode = VALUE_MODE_TEXT
+
+/datum/config_entry/keyed_list/policyconfig/preprocess_key(key)
+	return uppertext(..())
