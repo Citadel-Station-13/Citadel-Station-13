@@ -213,7 +213,7 @@
 	lefthand_file = ""
 	righthand_file = ""
 	max_occupant_weight = MOB_SIZE_HUMAN //can fit people, like a bluespace bodybag!
-	load_time = 50 //loading things into a jar takes longer than a regular pet carrier
+	load_time = 40 //loading things into a jar takes longer than a regular pet carrier
 	entrance_name = "lid"
 	w_class = WEIGHT_CLASS_NORMAL //it can fit in bags, like a bluespace bodybag!
 	max_occupants = 1 //far less than a regular carrier or bluespace bodybag, because it can be thrown to release the contents
@@ -236,8 +236,9 @@
 	..()
 
 /obj/item/pet_carrier/bluespace/return_air()
-	var/datum/gas_mixture/air_contents = new(101)
-	air_contents.gases[/datum/gas/oxygen] = 101 //the jar can host things that require oxygen to survive
+	var/datum/gas_mixture/air_contents = new(2500)
+	air_contents.gases[/datum/gas/oxygen] = 22 //the jar can host things that require oxygen to survive
+	air_contents.gases[/datum/gas/nitrogen] = 82
 	air_contents.temperature = 293.15
 	return air_contents
 
