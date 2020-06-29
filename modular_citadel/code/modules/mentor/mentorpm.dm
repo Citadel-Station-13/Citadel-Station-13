@@ -67,7 +67,7 @@
 	if(C.is_mentor())
 		if(is_mentor())//both are mentors
 			to_chat(C, "<span class='purple'>Mentor PM from-<b>[key_name_mentor(src, C, 1, 0, 0)]</b>: [msg]</span>")
-			to_chat(src, "<span class='green'>Mentor PM to-<b>[key_name_mentor(C, C, 1, 0, 0)]</b>: [msg]</font>")
+			to_chat(src, "<span class='blue'>Mentor PM to-<b>[key_name_mentor(C, C, 1, 0, 0)]</b>: [msg]</font>")
 
 		else		//recipient is a mentor but sender is not
 			to_chat(C, "<span class='purple'>Reply PM from-<b>[key_name_mentor(src, C, 1, 0, show_char)]</b>: [msg]</span>")
