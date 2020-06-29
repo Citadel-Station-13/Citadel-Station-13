@@ -166,8 +166,9 @@
 		if(!hopping)
 			Hop()
 
-/mob/living/simple_animal/hostile/jungle/leaper/Life()
-	. = ..()
+/mob/living/simple_animal/hostile/jungle/leaper/BiologicalLife(seconds, times_fired)
+	if(!(. = ..()))
+		return
 	update_icons()
 
 /mob/living/simple_animal/hostile/jungle/leaper/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
@@ -197,7 +198,7 @@
 	hopping = TRUE
 	density = FALSE
 	pass_flags |= PASSMOB
-	notransform = TRUE
+	mob_transforming = TRUE
 	var/turf/new_turf = locate((target.x + rand(-3,3)),(target.y + rand(-3,3)),target.z)
 	if(player_hop)
 		new_turf = get_turf(target)
@@ -209,7 +210,7 @@
 
 /mob/living/simple_animal/hostile/jungle/leaper/proc/FinishHop()
 	density = TRUE
-	notransform = FALSE
+	mob_transforming = FALSE
 	pass_flags &= ~PASSMOB
 	hopping = FALSE
 	playsound(src.loc, 'sound/effects/meteorimpact.ogg', 100, 1)
@@ -220,7 +221,7 @@
 /mob/living/simple_animal/hostile/jungle/leaper/proc/BellyFlop()
 	var/turf/new_turf = get_turf(target)
 	hopping = TRUE
-	notransform = TRUE
+	mob_transforming = TRUE
 	new /obj/effect/temp_visual/leaper_crush(new_turf)
 	addtimer(CALLBACK(src, .proc/BellyFlopHop, new_turf), 30)
 
@@ -231,7 +232,7 @@
 /mob/living/simple_animal/hostile/jungle/leaper/proc/Crush()
 	hopping = FALSE
 	density = TRUE
-	notransform = FALSE
+	mob_transforming = FALSE
 	playsound(src, 'sound/effects/meteorimpact.ogg', 200, 1)
 	for(var/mob/living/L in orange(1, src))
 		L.adjustBruteLoss(35)

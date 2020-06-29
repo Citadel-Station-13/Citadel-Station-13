@@ -1141,6 +1141,7 @@
 		return
 	if(!is_station_level(z))
 		return
+	malf.ShutOffDoomsdayDevice()
 	occupier = new /mob/living/silicon/ai(src, malf.laws, malf) //DEAR GOD WHY?	//IKR????
 	occupier.adjustOxyLoss(malf.getOxyLoss())
 	if(!findtext(occupier.name, "APC Copy"))
@@ -1580,5 +1581,5 @@
 /obj/item/electronics/apc
 	name = "power control module"
 	icon_state = "power_mod"
-	custom_price = 50
+	custom_price = PRICE_CHEAP
 	desc = "Heavy-duty switching circuits for power control."

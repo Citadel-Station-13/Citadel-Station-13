@@ -67,11 +67,10 @@
 	foes = null
 	return ..()
 
-/mob/living/simple_animal/hostile/Life()
-	. = ..()
-	if(!.) //dead
+/mob/living/simple_animal/hostile/BiologicalLife(seconds, times_fired)
+	if(!(. = ..()))
 		walk(src, 0) //stops walking
-		return 0
+		return
 
 /mob/living/simple_animal/hostile/handle_automated_action()
 	if(AIStatus == AI_OFF)
@@ -117,7 +116,7 @@
 		Move(get_step(src,chosen_dir))
 		face_atom(target) //Looks better if they keep looking at you when dodging
 
-/mob/living/simple_animal/hostile/attacked_by(obj/item/I, mob/living/user)
+/mob/living/simple_animal/hostile/attacked_by(obj/item/I, mob/living/user, attackchain_flags = NONE, damage_multiplier = 1)
 	if(stat == CONSCIOUS && !target && AIStatus != AI_OFF && !client && user)
 		FindTarget(list(user), 1)
 	return ..()

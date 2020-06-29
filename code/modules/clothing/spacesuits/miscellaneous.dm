@@ -469,7 +469,7 @@ Contains:
 	desc = "Voices echo from the hardsuit, driving the user insane. This one is pretty battle-worn, but still fearsome."
 	armor = list("melee" = 55, "bullet" = 40, "laser" = 40, "energy" = 40, "bomb" = 40, "bio" = 80, "rad" = 80, "fire" = 60, "acid" = 60)
 	slowdown = 0.8
-	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/ert/paranormal/inquisitor/old
+	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/ert/paranormal/beserker/old
 	charges = 6
 
 /obj/item/clothing/head/helmet/space/hardsuit/ert/paranormal/beserker/old
@@ -518,3 +518,14 @@ Contains:
 	desc = "A deep blue space helmet with a large red cross on the faceplate to designate the wearer as trained emergency medical personnel."
 	icon_state = "paramedic-eva-helmet"
 	item_state = "paramedic-eva-helmet"
+
+/obj/item/clothing/suit/space/hunter
+	name = "bounty hunting suit"
+	desc = "A custom version of the MK.II SWAT suit, modified to look rugged and tough. Works as a space suit, if you can find a helmet."
+	icon_state = "hunter"
+	item_state = "swat_suit"
+	allowed = list(/obj/item/gun, /obj/item/ammo_box, /obj/item/ammo_casing, /obj/item/melee/baton, /obj/item/restraints/handcuffs, /obj/item/tank/internals, /obj/item/kitchen/knife/combat)
+	armor = list("melee" = 60, "bullet" = 40, "laser" = 40, "energy" = 50, "bomb" = 100, "bio" = 100, "rad" = 100, "fire" = 100, "acid" = 100)
+	strip_delay = 130
+	resistance_flags = FIRE_PROOF | ACID_PROOF
+
