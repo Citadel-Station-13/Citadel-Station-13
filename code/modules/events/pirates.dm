@@ -80,8 +80,9 @@
 				var/mob/M = candidates[1]
 				spawner.create(M.ckey)
 				candidates -= M
+				announce_to_ghosts(M)
 			else
-				notify_ghosts("Space pirates are waking up!", source = spawner, action=NOTIFY_ATTACK, flashwindow = FALSE, ignore_dnr_observers = TRUE)
+				announce_to_ghosts(spawner)
 
 	priority_announce("A report has been downloaded and printed out at all communications consoles.", "Incoming Classified Message", "commandreport") //CITADEL EDIT also metabreak here too
 
