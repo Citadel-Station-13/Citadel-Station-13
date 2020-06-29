@@ -1,0 +1,4 @@
+author: "Ghommie (inspired by MrDoomBringer's work on tgstation)"
+delete-after: True
+changes: 
+  - rscadd: "New check skills UI."
