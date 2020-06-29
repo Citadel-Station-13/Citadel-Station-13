@@ -246,12 +246,13 @@
 						if(istype(P, /obj/item/stack))
 							var/obj/item/stack/S = P
 							var/used_amt = min(round(S.get_amount()), req_components[I])
+							var/merge_type = S.merge_type
 
 							if(used_amt && S.use(used_amt))
-								var/obj/item/stack/NS = locate(S.merge_type) in components
+								var/obj/item/stack/NS = locate(merge_type) in components
 
 								if(!NS)
-									NS = new S.merge_type(src, used_amt)
+									NS = new merge_type(src, used_amt)
 									components += NS
 								else
 									NS.add(used_amt)
