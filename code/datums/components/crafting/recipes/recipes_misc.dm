@@ -92,7 +92,7 @@
 	time = 150
 	subcategory = CAT_MISCELLANEOUS
 	category = CAT_MISC
-	always_availible = FALSE	// Disabled til learned
+	always_availible = FALSE	// Disabled until learned
 
 
 /datum/crafting_recipe/bloodsucker/candelabrum

@@ -87,7 +87,7 @@
 		new /obj/item/stack/sheet/mineral/uranium(location)
 
 /datum/chemical_reaction/bluespacecrystalifaction
-	name = "Crystal Bluespace"
+	name = "Crystallized Bluespace"
 	id = "crystalbluespace"
 	required_reagents = list(/datum/reagent/consumable/frostoil = 5, /datum/reagent/bluespace = 20, /datum/reagent/iron = 1)
 	mob_react = FALSE
