@@ -56,6 +56,7 @@
 	if(..())
 		return TRUE
 	I.attack_delay_done = FALSE //Should be set TRUE in pre_attacked_by()
+	user.changeNext_move(world.tick_lag)
 	. = I.attack(src, user, attackchain_flags, damage_multiplier)
 	if(!I.attack_delay_done) //Otherwise, pre_attacked_by() should handle it.
 		user.changeNext_move(I.click_delay)
@@ -96,6 +97,7 @@
 		return
 	user.do_attack_animation(O)
 	if(!O.attacked_by(src, user))
+		attack_delay_done = TRUE
 		user.changeNext_move(click_delay)
 	var/weight = getweight(user, STAM_COST_ATTACK_OBJ_MULT)
 	if(weight)
@@ -114,6 +116,7 @@
 		var/penalty = (stamloss - STAMINA_NEAR_SOFTCRIT)/(STAMINA_NEAR_CRIT - STAMINA_NEAR_SOFTCRIT)*STAM_CRIT_ITEM_ATTACK_PENALTY
 		totitemdamage *= 1 - penalty
 		next_move_mult += penalty*STAM_CRIT_ITEM_ATTACK_DELAY
+	I.attack_delay_done = TRUE
 	user.changeNext_move(I.click_delay*next_move_mult)
 
 	if(SEND_SIGNAL(user, COMSIG_COMBAT_MODE_CHECK, COMBAT_MODE_INACTIVE))
@@ -156,6 +159,7 @@
 /mob/living/simple_animal/attacked_by(obj/item/I, mob/living/user, attackchain_flags = NONE, damage_multiplier = 1)
 	if(I.force < force_threshold || I.damtype == STAMINA)
 		playsound(loc, 'sound/weapons/tap.ogg', I.get_clamped_volume(), 1, -1)
+		I.attack_delay_done = TRUE
 		user.changeNext_move(I.click_delay) //pre_attacked_by not called
 	else
 		return ..()
