@@ -1,3 +1,8 @@
+	if(prefs.modless_key_bindings[_key])
+		var/datum/keybinding/kb = GLOB.keybindings_by_name[prefs.modless_key_bindings[_key]]
+		if(kb.can_use(src))
+			kb.down(src)
+			keycount++
 // Clients aren't datums so we have to define these procs indpendently.
 // These verbs are called for all key press and release events
 /client/verb/keyDown(_key as text)
@@ -90,6 +95,11 @@
 	var/movement = movement_keys[_key]
 	if(!(next_move_dir_add & movement))
 		next_move_dir_sub |= movement
+
+	if(prefs.modless_key_bindings[_key])
+		var/datum/keybinding/kb = GLOB.keybindings_by_name[prefs.modless_key_bindings[_key]]
+		if(kb.can_use(src))
+			kb.up(src)
 
 	// We don't do full key for release, because for mod keys you
 	// can hold different keys and releasing any should be handled by the key binding specifically
