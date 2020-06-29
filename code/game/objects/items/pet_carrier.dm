@@ -26,6 +26,7 @@
 	var/escape_time = 200 //how long it takes for mobs above small sizes to escape (for small sizes, its randomly 1.5 to 2x this)
 	var/load_time = 30 //how long it takes for mobs to be loaded into the pet carrier
 	var/has_lock_sprites = TRUE //whether to load the lock overlays or not
+	var/allows_hostiles = FALSE //does the pet carrier allow hostile entities to be held within it?
 
 /obj/item/pet_carrier/Destroy()
 	if(occupants.len)
@@ -105,6 +106,8 @@
 	if(user == target)
 		to_chat(user, "<span class='warning'>Why would you ever do that?</span>")
 		return
+	if(ishostile(target) && !allows_hostiles) && target.move_resist < MOVE_FORCE_VERY_STRONG) //don't allow goliaths into pet carriers
+		to_chat(user, "<span class='warning'>You have a feeling you shouldn't keep this as a pet.</span>")
 	load_occupant(user, target)
 
 /obj/item/pet_carrier/relaymove(mob/living/user, direction)
@@ -205,7 +208,6 @@
 /obj/item/pet_carrier/bluespace
 	name = "bluespace jar"
 	desc = "A jar, that seems to be bigger on the inside, somehow allowing lifeforms to fit through its narrow entrance."
-	icon = 'icons/obj/pet_carrier.dmi'
 	icon_state = "bluespace_jar_open"
 	item_state = "bluespace_jar"
 	lefthand_file = ""
@@ -213,13 +215,21 @@
 	max_occupant_weight = MOB_SIZE_HUMAN //can fit people, like a bluespace bodybag!
 	entrance_name = "lid"
 	w_class = WEIGHT_CLASS_NORMAL //it can fit in bags, like a bluespace bodybag!
+	max_occupants = 1 //far less than a regular carrier or bluespace bodybag, because it can be thrown to release the contents
+	allows_hostiles = TRUE //can fit hostile creatures, however only those of a human size or smaller (and not things like goliaths)
 	has_lock_sprites = FALSE //jar doesn't show the regular lock overlay
 	custom_materials = list(/datum/material/glass = 1000, /datum/material/bluespace = 600)
 
-obj/item/pet_carrier/bluespace/update_icon_state()
+/obj/item/pet_carrier/bluespace/update_icon_state()
 	if(open)
 		icon_state = initial(icon_state)
 	else
 		icon_state = "bluespace_jar"
+
+/obj/item/pet_carrier/bluespace/throw_impact()
+	//delete the item upon impact, releasing the creature inside (this is handled by its deletion)
+	qdel(src)
+	playsound(src, "shatter", 70, 1)
+	..()
 
 #undef pet_carrier_full
