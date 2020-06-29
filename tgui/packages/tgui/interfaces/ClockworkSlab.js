@@ -51,13 +51,13 @@ export const ClockworkSlab = (props, context) => {
                 <Box>
                   {(HONOR_RATVAR
                   ) ? (
-                   <Box
-                      as={'span'}
-                      textColor={'#BE8700'}
-                      fontSize={2}
-                      bold>
-                      {REC_RATVAR}
-                   </Box>
+                      <Box
+                        as={'span'}
+                        textColor={'#BE8700'}
+                        fontSize={2}
+                        bold>
+                        {REC_RATVAR}
+                      </Box>
                     ) : (
                       <Fragment>
                         <Box
@@ -77,7 +77,8 @@ export const ClockworkSlab = (props, context) => {
                           Clockwork Justiciar. This section of your slab
                           has information on being as a Servant, advice
                           for what to do next, and pointers for serving the
-                          master well. You should recommended that you check this
+                          master well.
+                          You should recommended that you check this
                           area for help if you get stuck or need guidance on
                           what to do next.
                           <br /> <br />
