@@ -1,5 +1,5 @@
 /datum/species/skeleton
-	name = "Lesser Skeleton"
+	name = "Skeleton"
 	id = "skeleton"
 	say_mod = "rattles"
 	blacklisted = 0
@@ -15,12 +15,12 @@
 	brutemod = 1.25
 	burnmod = 1.25
 
-/datum/species/skeleton/greater
-	// has cold + heat resist, doesn't take 1.25x brute/burn, is halloween race
-	name = "Greater Skeleton"
-	inherent_traits = list(TRAIT_RESISTHEAT,TRAIT_NOBREATH,TRAIT_RESISTCOLD,TRAIT_RADIMMUNE,TRAIT_PIERCEIMMUNE,TRAIT_NOHUNGER,TRAIT_EASYDISMEMBER,TRAIT_LIMBATTACHMENT,TRAIT_FAKEDEATH, TRAIT_CALCIUM_HEALER)
-	brutemod = 1
-	burnmod = 1
+/datum/species/skeleton/New()
+	if(SSevents.holidays && SSevents.holidays[HALLOWEEN]) //skeletons are stronger during the spooky season!
+		inherent_traits |= list(TRAIT_RESISTHEAT,TRAIT_RESISTCOLD)
+		brutemod = 1
+		burnmod = 1
+	..()
 
 /datum/species/skeleton/greater/check_roundstart_eligible()
 	if(SSevents.holidays && SSevents.holidays[HALLOWEEN])
