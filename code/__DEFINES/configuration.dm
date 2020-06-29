@@ -10,6 +10,7 @@
 #define CONFIG_ENTRY_HIDDEN 2	//can't see value
 
 // Policy config keys
+// MAKE SURE THESE ARE UPPERCASE
 /// Displayed to cloned patients
 #define POLICYCONFIG_ON_CLONE "ON_CLONE"
 /// Displayed to defibbed/revival surgery'd patients before the memory loss time threshold
