@@ -22,6 +22,10 @@
 	var/occupant_weight = 0
 	var/max_occupants = 3 //Hard-cap so you can't have infinite mice or something in one carrier
 	var/max_occupant_weight = MOB_SIZE_SMALL //This is calculated from the mob sizes of occupants
+	var/entrance_name = "door" //name of the entrance to the item
+	var/escape_time = 200 //how long it takes for mobs above small sizes to escape (for small sizes, its randomly 1.5 to 2x this)
+	var/load_time = 30 //how long it takes for mobs to be loaded into the pet carrier
+	var/has_lock_sprites = TRUE //whether to load the lock overlays or not
 
 /obj/item/pet_carrier/Destroy()
 	if(occupants.len)
@@ -51,20 +55,20 @@
 	else
 		. += "<span class='notice'>It has nothing inside.</span>"
 	if(user.canUseTopic(src))
-		. += "<span class='notice'>Activate it in your hand to [open ? "close" : "open"] its door.</span>"
+		. += "<span class='notice'>Activate it in your hand to [open ? "close" : "open"] its [entrance_name].</span>"
 		if(!open)
-			. += "<span class='notice'>Alt-click to [locked ? "unlock" : "lock"] its door.</span>"
+			. += "<span class='notice'>Alt-click to [locked ? "unlock" : "lock"] its [entrance_name].</span>"
 
 /obj/item/pet_carrier/attack_self(mob/living/user)
 	if(open)
-		to_chat(user, "<span class='notice'>You close [src]'s door.</span>")
+		to_chat(user, "<span class='notice'>You close [src]'s [entrance_name].</span>")
 		playsound(user, 'sound/effects/bin_close.ogg', 50, TRUE)
 		open = FALSE
 	else
 		if(locked)
 			to_chat(user, "<span class='warning'>[src] is locked!</span>")
 			return
-		to_chat(user, "<span class='notice'>You open [src]'s door.</span>")
+		to_chat(user, "<span class='notice'>You open [src]'s [entrance_name].</span>")
 		playsound(user, 'sound/effects/bin_open.ogg', 50, TRUE)
 		open = TRUE
 	update_icon()
@@ -86,7 +90,7 @@
 	if(user.a_intent == INTENT_HARM)
 		return ..()
 	if(!open)
-		to_chat(user, "<span class='warning'>You need to open [src]'s door!</span>")
+		to_chat(user, "<span class='warning'>You need to open [src]'s [entrance_name]!</span>")
 		return
 	if(target.mob_size > max_occupant_weight)
 		if(ishuman(target))
@@ -94,7 +98,7 @@
 			if(iscatperson(H))
 				to_chat(user, "<span class='warning'>You'd need a lot of catnip and treats, plus maybe a laser pointer, for that to work.</span>")
 			else
-				to_chat(user, "<span class='warning'>Humans, generally, do not fit into pet carriers.</span>")
+				to_chat(user, "<span class='warning'>Humans, generally, do not fit into [name]s.</span>")
 		else
 			to_chat(user, "<span class='warning'>You get the feeling [target] isn't meant for a [name].</span>")
 		return
@@ -110,8 +114,8 @@
 		remove_occupant(user)
 		return
 	else if(!locked)
-		loc.visible_message("<span class='notice'>[user] pushes open the door to [src]!</span>", \
-		"<span class='warning'>[user] pushes open the door of [src]!</span>")
+		loc.visible_message("<span class='notice'>[user] pushes open the [entrance_name] to [src]!</span>", \
+		"<span class='warning'>[user] pushes open the [entrance_name] of [src]!</span>")
 		open = TRUE
 		update_icon()
 		return
@@ -122,9 +126,9 @@
 	user.changeNext_move(CLICK_CD_BREAKOUT)
 	user.last_special = world.time + CLICK_CD_BREAKOUT
 	if(user.mob_size <= MOB_SIZE_SMALL)
-		to_chat(user, "<span class='notice'>You poke a limb through [src]'s bars and start fumbling for the lock switch... (This will take some time.)</span>")
-		to_chat(loc, "<span class='warning'>You see [user] reach through the bars and fumble for the lock switch!</span>")
-		if(!do_after(user, rand(300, 400), target = user) || open || !locked || !(user in occupants))
+		to_chat(user, "<span class='notice'>You begin to try escaping the [src] and start fumbling for the lock switch... (This will take some time.)</span>")
+		to_chat(loc, "<span class='warning'>You see [user] attempting to unlock the [src]!</span>")
+		if(!do_after(user, rand(escape_time * 1.5, escape_time * 2), target = user) || open || !locked || !(user in occupants))
 			return
 		loc.visible_message("<span class='warning'>[user] flips the lock switch on [src] by reaching through!</span>", null, null, null, user)
 		to_chat(user, "<span class='boldannounce'>Bingo! The lock pops open!</span>")
@@ -132,12 +136,12 @@
 		playsound(src, 'sound/machines/boltsup.ogg', 30, TRUE)
 		update_icon()
 	else
-		loc.visible_message("<span class='warning'>[src] starts rattling as something pushes against the door!</span>", null, null, null, user)
+		loc.visible_message("<span class='warning'>[src] starts rattling as something pushes against the [entrance_name]!</span>", null, null, null, user)
 		to_chat(user, "<span class='notice'>You start pushing out of [src]... (This will take about 20 seconds.)</span>")
-		if(!do_after(user, 200, target = user) || open || !locked || !(user in occupants))
+		if(!do_after(user, escape_time, target = user) || open || !locked || !(user in occupants))
 			return
 		loc.visible_message("<span class='warning'>[user] shoves out of	[src]!</span>", null, null, null, user)
-		to_chat(user, "<span class='notice'>You shove open [src]'s door against the lock's resistance and fall out!</span>")
+		to_chat(user, "<span class='notice'>You shove open [src]'s [entrance_name] against the lock's resistance and fall out!</span>")
 		locked = FALSE
 		open = TRUE
 		update_icon()
@@ -151,7 +155,7 @@
 
 /obj/item/pet_carrier/update_overlays()
 	. = ..()
-	if(!open)
+	if(!open && has_lock_sprites)
 		. += "[locked ? "" : "un"]locked"
 
 /obj/item/pet_carrier/MouseDrop(atom/over_atom)
@@ -170,7 +174,7 @@
 	user.visible_message("<span class='notice'>[user] starts loading [target] into [src].</span>", \
 	"<span class='notice'>You start loading [target] into [src]...</span>", null, null, target)
 	to_chat(target, "<span class='userdanger'>[user] starts loading you into [user.p_their()] [name]!</span>")
-	if(!do_mob(user, target, 30))
+	if(!do_mob(user, target, load_time))
 		return
 	if(target in occupants)
 		return
@@ -196,5 +200,26 @@
 	occupants -= occupant
 	occupant_weight -= occupant.mob_size
 	occupant.setDir(SOUTH)
+
+//bluespace jar, a reskin of the pet carrier that can fit people
+/obj/item/pet_carrier/bluespace
+	name = "bluespace jar"
+	desc = "A jar, that seems to be bigger on the inside, somehow allowing lifeforms to fit through its narrow entrance."
+	icon = 'icons/obj/pet_carrier.dmi'
+	icon_state = "bluespace_jar_open"
+	item_state = "bluespace_jar"
+	lefthand_file = ""
+	righthand_file = ""
+	max_occupant_weight = MOB_SIZE_HUMAN //can fit people, like a bluespace bodybag!
+	entrance_name = "lid"
+	w_class = WEIGHT_CLASS_NORMAL //it can fit in bags, like a bluespace bodybag!
+	has_lock_sprites = FALSE //jar doesn't show the regular lock overlay
+	custom_materials = list(/datum/material/glass = 1000, /datum/material/bluespace = 600)
+
+obj/item/pet_carrier/bluespace/update_icon_state()
+	if(open)
+		icon_state = initial(icon_state)
+	else
+		icon_state = "bluespace_jar"
 
 #undef pet_carrier_full

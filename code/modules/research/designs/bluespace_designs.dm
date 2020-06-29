@@ -95,3 +95,23 @@
 	build_path = /obj/item/storage/bag/ore/holding
 	category = list("Bluespace Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_CARGO
+
+/datum/design/bluespace_tray
+	name = "Bluespace Tray"
+	desc = "A tray created using bluespace technology to fit more food on it."
+	id = "bluespace_tray"
+	build_type = PROTOLATHE
+	build_path = /obj/item/storage/bag/tray/bluespace
+	materials = list(/datum/material/iron = 2000, /datum/material/bluespace = 500)
+	category = list("Bluespace Designs")
+	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
+
+/datum/design/bluespace_carrier
+	name = "Bluespace Jar"
+	desc = "A jar used to contain creatures, using the power of bluespace."
+	id = "bluespace_carrier"
+	build_type = PROTOLATHE
+	build_path = /obj/item/pet_carrier/bluespace
+	materials = list(/datum/material/glass = 1000, /datum/material/bluespace = 600)
+	category = list("Bluespace Designs")
+	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
