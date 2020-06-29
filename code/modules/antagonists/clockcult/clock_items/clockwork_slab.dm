@@ -15,10 +15,10 @@
 	var/busy //If the slab is currently being used by something
 	var/no_cost = FALSE //If the slab is admin-only and needs no components and has no scripture locks
 	var/speed_multiplier = 1 //multiples how fast this slab recites scripture
-	var/selected_scripture = SCRIPTURE_DRIVER
+	// var/selected_scripture = SCRIPTURE_DRIVER //handled UI side
 	var/obj/effect/proc_holder/slab/slab_ability //the slab's current bound ability, for certain scripture
 
-	var/recollecting = FALSE //if we're looking at fancy recollection
+	var/recollecting = TRUE //if we're looking at fancy recollection. tutorial enabled by default
 	var/recollection_category = "Default"
 
 	var/list/quickbound = list(/datum/clockwork_scripture/abscond, \
@@ -209,36 +209,18 @@
 		to_chat(user, "<span class='warning'>You need to hold the slab in your active hand to recite scripture!</span>")
 		return FALSE
 	var/initial_tier = initial(scripture.tier)
-	if(initial_tier != SCRIPTURE_PERIPHERAL)
-		if(!GLOB.ratvar_awakens && !no_cost && !SSticker.scripture_states[initial_tier])
-			to_chat(user, "<span class='warning'>That scripture is not unlocked, and cannot be recited!</span>")
-			return FALSE
+	if(initial_tier == SCRIPTURE_PERIPHERAL)
+		to_chat(user, "<span class='warning'>Nice try using href exploits</span>")
+		return
+	if(!GLOB.ratvar_awakens && !no_cost && !SSticker.scripture_states[initial_tier])
+		to_chat(user, "<span class='warning'>That scripture is not unlocked, and cannot be recited!</span>")
+		return FALSE
 	var/datum/clockwork_scripture/scripture_to_recite = new scripture
 	scripture_to_recite.slab = src
 	scripture_to_recite.invoker = user
 	scripture_to_recite.run_scripture()
 	return TRUE
 
-
-//Guide to Serving Ratvar
-/obj/item/clockwork/slab/proc/recollection()
-	var/list/textlist = list("If you're seeing this, file a bug report.")
-	if(GLOB.ratvar_awakens)
-		textlist = list(" ")
-		for(var/i in 1 to 100)
-			textlist += "HONOR RATVAR "
-		textlist += ""
-	else
-		textlist = list(" [text2ratvar("Purge all untruths and honor Engine.")]\
-		\
-		NOTICE: This information is out of date. Read the Ark & You primer in your backpack or read the wiki page for current info.\
-		<hr>\
-		These pages serve as the archives of Ratvar, the Clockwork Justiciar. This section of your slab has information on being as a Servant, advice for what to do next, and \
-		pointers for serving the master well. You should recommended that you check this area for help if you get stuck or need guidance on what to do next.\
-		\
-		Disclaimer: Many objects, terms, and phrases, such as Servant, Cache, and Slab, are capitalized like proper nouns. This is a quirk of the Ratvarian language; \
-		do not let it confuse you! You are free to use the names in pronoun form when speaking in normal languages.")
-	return textlist.Join()
 
 //Gets text for a certain section. "Default" is used for when you first open Recollection.
 //Current sections (make sure to update this if you add one:
@@ -249,78 +231,91 @@
 //- Power
 //- Conversion
 
-//Gets the quickbound scripture as a text block.
-/obj/item/clockwork/slab/proc/get_recollection_quickbinds()
-	var/list/dat = list()
-	dat += " Quickbound Scripture\
-	You can have up to five scriptures bound to action buttons for easy use."
-	if(LAZYLEN(quickbound))
-		for(var/i in 1 to maximum_quickbound)
-			if(LAZYLEN(quickbound) < i || !quickbound[i])
-				dat += "A Quickbind slot, currently set to >Nothing."
-			else
-				var/datum/clockwork_scripture/quickbind_slot = quickbound[i]
-				dat += "A Quickbind slot, currently set to [initial(quickbind_slot.name)]."
-	return dat.Join()
-
-
 /obj/item/clockwork/slab/ui_data(mob/user) //we display a lot of data via TGUI
-	var/list/data = list()
-	data["power"] = DisplayPower(get_clockwork_power())
-	data["rec_text"] = recollection()
-	data["scripture"] = list()
+	. = list()
+	.["recollection"] = recollecting
+	.["power"] = DisplayPower(get_clockwork_power())
+	.["power_unformatted"] = get_clockwork_power()
+	// .["rec_text"] = recollection() handled TGUI side
+	.["HONOR_RATVAR"] = GLOB.ratvar_awakens
+	.["scripture"] = list()
 	for(var/s in GLOB.all_scripture)
 		var/datum/clockwork_scripture/S = GLOB.all_scripture[s]
-		//var/scripture_color = get_component_color_bright(S.primary_component)
-		var/list/temp_info = list(
-		"name" = "[S.name]",
-		"descname" = "[S.descname]",
-		"tip" = "[S.desc]\n[S.usage_tip]",
-		"required" = "([DisplayPower(S.power_cost)][S.special_power_text ? "+ [replacetext(S.special_power_text, "POWERCOST", "[DisplayPower(S.special_power_cost)]")]" : ""])",
-		"type" = "[S.type]",
-		"quickbind" = S.quickbind
-		)
-		temp_info["important"] = S.important
+		if(S.tier == SCRIPTURE_PERIPHERAL) //yes, tiers are the tabs.
+			continue
+		
+		var/list/data = list()
+		data["name"] = S.name
+		data["descname"] = S.descname
+		data["tip"] = "[S.desc]\n[S.usage_tip]"
+		data["required"] = "([DisplayPower(S.power_cost)][S.special_power_text ? "+ [replacetext(S.special_power_text, "POWERCOST", "[DisplayPower(S.special_power_cost)]")]" : ""])"
+		data["required_unformatted"] = S.power_cost
+		data["type"] = "[S.type]"
+		data["quickbind"] = S.quickbind //this is if it cant quickbind
+		data["fontcolor"] = get_component_color_bright(S.primary_component)
+		data["important"] = S.important //italic!
+		
 		var/found = quickbound.Find(S.type)
 		if(found)
-			temp_info["bound"] = "[found]"
+			data["bound"] = found //number (pos) on where is it on the list
 		if(S.invokers_required > 1)
-			temp_info["invokers"] = "Invokers: [S.invokers_required]"
-		data["scripture"] += list(temp_info)
-	return data
+			data["invokers"] = "Invokers: [S.invokers_required]"
+		
+		.["scripture"][S.tier] += list(data)
 
 /obj/item/clockwork/slab/ui_static_data(mob/user)
-	var/list/data = list()
-	data["tier_info"] = "These scriptures are permanently unlocked."
-	data["selected"] = selected_scripture
-	data["scripturecolors"] = "Scriptures in yellow are related to construction and building.\
-	Scriptures in red are related to attacking and offense.\
-	Scriptures in blue are related to healing and defense.\
-	Scriptures in purple are niche but still important!\
-	Scriptures with italicized names are important to success."
-	generate_all_scripture()
-	data["recollection"] = recollecting
-	data["recollection_categories"] = GLOB.ratvar_awakens ? list() : list(\
-	list("name" = "Getting Started", "desc" = "First-time servant? Read this first."), \
-	list("name" = "Basics", "desc" = "A primer on how to play as a servant."), \
-	list("name" = "Terminology", "desc" = "Common acronyms, words, and terms."), \
-	list("name" = "Components", "desc" = "Information on components, your primary resource."), \
-	list("name" = "Scripture", "desc" = "Information on scripture, ancient tools used by the cult."), \
-	list("name" = "Power", "desc" = "The power system that certain objects use to function."), \
-	list("name" = "Conversion", "desc" = "Converting the crew, cyborgs, and very walls to your cause."), \
+	. = list()
+	.["tier_infos"] = list()
+	.["tier_infos"][SCRIPTURE_DRIVER] = list(
+		"requirement" = "None, this is already unlocked",
+		"ready" = TRUE //to bold it on JS side, and to say "These scriptures are permanently unlocked."
 	)
-	return data
+	.["tier_infos"][SCRIPTURE_SCRIPT] = list(
+		"requirement" = "These scriptures will automatically unlock when the Ark is halfway ready or if [DisplayPower(SCRIPT_UNLOCK_THRESHOLD)] of power is reached.",
+		"ready" = SSticker.scripture_states[SCRIPTURE_SCRIPT] //huh, on the gamemode ticker? okay...
+	)
+	.["tier_infos"][SCRIPTURE_APPLICATION] = list(
+		"requirement" = "Unlock these optional scriptures by converting another servant or if [DisplayPower(APPLICATION_UNLOCK_THRESHOLD)] of power is reached..",
+		"ready" = SSticker.scripture_states[SCRIPTURE_APPLICATION]
+	)
+
+	// .["selected"] = selected_scripture
+	generate_all_scripture()
+	.["recollection_categories"] = GLOB.ratvar_awakens ? list() : list(
+		list("name" = "Getting Started", "desc" = "First-time servant? Read this first."),
+		list("name" = "Basics", "desc" = "A primer on how to play as a servant."),
+		list("name" = "Terminology", "desc" = "Common acronyms, words, and terms."),
+		list("name" = "Components", "desc" = "Information on components, your primary resource."),
+		list("name" = "Scripture", "desc" = "Information on scripture, ancient tools used by the cult."),
+		list("name" = "Power", "desc" = "The power system that certain objects use to function."),
+		list("name" = "Conversion", "desc" = "Converting the crew, cyborgs, and very walls to your cause.")
+	)
+	.["rec_binds"] = list()
+	for(var/i in 1 to maximum_quickbound)
+		if(GLOB.ratvar_awakens)
+			return
+		if(LAZYLEN(quickbound) < i || !quickbound[i])
+			.["rec_binds"] += list()
+		else
+			var/datum/clockwork_scripture/quickbind_slot = quickbound[i]
+			.["rec_binds"] += list(
+				"name" = initial(quickbind_slot.name), 
+				"color" = get_component_color_bright(initial(quickbind_slot.primary_component))
+			)
+	// .["rec_section"]["title"] //this is here if ever we decided to return these back.
+	// .["rec_section"]["info"]// wall of info for the thing
 
 /obj/item/clockwork/slab/ui_act(action, params)
 	switch(action)
 		if("toggle")
 			recollecting = !recollecting
 		if("recite")
-			INVOKE_ASYNC(src, .proc/recite_scripture, text2path(params["category"]), usr, FALSE)
-		if("select")
-			selected_scripture = params["category"]
+			INVOKE_ASYNC(src, .proc/recite_scripture, text2path(params["script"]), usr, FALSE)
 		if("bind")
-			var/datum/clockwork_scripture/path = text2path(params["category"]) //we need a path and not a string
+			var/datum/clockwork_scripture/path = text2path(params["script"]) //we need a path and not a string
+			if(!path.quickbind || path.tier == SCRIPTURE_PERIPHERAL) //fuck you href bus
+				to_chat(usr, "<span class='warning'>Nice try using href exploits</span>")
+				return
 			var/found_index = quickbound.Find(path)
 			if(found_index) //hey, we already HAVE this bound
 				if(LAZYLEN(quickbound) == found_index) //if it's the last scripture, remove it instead of leaving a null
@@ -338,7 +333,7 @@
 						quickbind_to_slot(path, target_index)
 		if("rec_category")
 			recollection_category = params["category"]
-			ui_interact(usr)
+			update_static_data()
 	return TRUE
 
 /obj/item/clockwork/slab/proc/quickbind_to_slot(datum/clockwork_scripture/scripture, index) //takes a typepath(typecast for initial()) and binds it to a slot
