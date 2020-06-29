@@ -2,6 +2,12 @@
 	set name = "Auto Authorize Panic Bunker"
 	set desc = "Authorizes your account in the panic bunker of any servers connected to this function."
 	set category = "OOC"
+	
+	var/static/lastuse = 0
+	if(lastuse + 5 SECONDS > world.time)
+		to_chat(src, "<span class='danger'>Function on cooldown, try again in 5 seconds.</span>")
+		return
+	lastuse = world.time
 
 	world.send_cross_server_bunker_overrides(key, src)
 
