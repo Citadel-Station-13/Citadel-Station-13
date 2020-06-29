@@ -216,6 +216,8 @@
 	load_time = 40 //loading things into a jar takes longer than a regular pet carrier
 	entrance_name = "lid"
 	w_class = WEIGHT_CLASS_NORMAL //it can fit in bags, like a bluespace bodybag!
+	throw_speed = 3
+	throw_range = 7
 	max_occupants = 1 //far less than a regular carrier or bluespace bodybag, because it can be thrown to release the contents
 	allows_hostiles = TRUE //can fit hostile creatures, with the move resist restrictions in place, this means they still cannot take things like legions/goliaths/etc regardless
 	has_lock_sprites = FALSE //jar doesn't show the regular lock overlay
@@ -236,10 +238,6 @@
 	..()
 
 /obj/item/pet_carrier/bluespace/return_air()
-	var/datum/gas_mixture/air_contents = new(2500)
-	air_contents.gases[/datum/gas/oxygen] = 22 //the jar can host things that require oxygen to survive
-	air_contents.gases[/datum/gas/nitrogen] = 82
-	air_contents.temperature = 293.15
-	return air_contents
+	return loc.return_air()
 
 #undef pet_carrier_full
