@@ -55,7 +55,7 @@
 		WRITE_LOG(GLOB.world_game_log, "ADMIN: DSAY: [text]")
 
 /proc/log_consent(text)
-	WRITE_LOG(GLOB.world_game_log,"CONSENT: [text]")
+	WRITE_LOG(GLOB.world_game_log, "CONSENT: [text]")
 
 /* All other items are public. */
 /proc/log_game(text)
@@ -65,6 +65,9 @@
 /proc/log_virus(text)
 	if (CONFIG_GET(flag/log_virus))
 		WRITE_LOG(GLOB.world_virus_log, "VIRUS: [text]")
+
+/proc/log_asset(text)
+	WRITE_LOG(GLOB.world_asset_log, "ASSET: [text]")
 
 /proc/log_access(text)
 	if (CONFIG_GET(flag/log_access))

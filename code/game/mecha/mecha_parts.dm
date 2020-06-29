@@ -129,6 +129,47 @@
 	desc = "A set of armor plates designed for the Gygax. Designed to effectively deflect damage with a lightweight construction."
 	icon_state = "gygax_armor"
 
+///////// Medical Gygax
+
+/obj/item/mecha_parts/chassis/medigax
+	name = "\improper Medical Gygax chassis"
+	construct_type = /datum/component/construction/unordered/mecha_chassis/medigax
+
+/obj/item/mecha_parts/part/medigax_torso
+	name = "\improper Medical Gygax torso"
+	desc = "A torso part of Gygax. Contains power unit, processing core and life support systems."
+	icon_state = "medigax_harness"
+
+/obj/item/mecha_parts/part/medigax_head
+	name = "\improper Medical Gygax head"
+	desc = "A Gygax head. Houses advanced surveillance and targeting sensors."
+	icon_state = "medigax_head"
+
+/obj/item/mecha_parts/part/medigax_left_arm
+	name = "\improper Medical Gygax left arm"
+	desc = "A Gygax left arm. Data and power sockets are compatible with most exosuit tools and weapons."
+	icon_state = "medigax_l_arm"
+
+/obj/item/mecha_parts/part/medigax_right_arm
+	name = "\improper Medical Gygax right arm"
+	desc = "A Gygax right arm. Data and power sockets are compatible with most exosuit tools and weapons."
+	icon_state = "medigax_r_arm"
+
+/obj/item/mecha_parts/part/medigax_left_leg
+	name = "\improper Medical Gygax left leg"
+	desc = "A Gygax left leg. Constructed with advanced servomechanisms and actuators to enable faster speed."
+	icon_state = "medigax_l_leg"
+
+/obj/item/mecha_parts/part/medigax_right_leg
+	name = "\improper Medical Gygax right leg"
+	desc = "A Gygax right leg. Constructed with advanced servomechanisms and actuators to enable faster speed."
+	icon_state = "medigax_r_leg"
+
+/obj/item/mecha_parts/part/medigax_armor
+	gender = PLURAL
+	name = "\improper Medical Gygax armor plates"
+	desc = "A set of armor plates designed for the Gygax. Designed to effectively deflect damage with a lightweight construction."
+	icon_state = "medigax_armor"
 
 //////////// Durand
 

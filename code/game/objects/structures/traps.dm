@@ -80,10 +80,11 @@
 	name = "shock trap"
 	desc = "A trap that will shock and render you immobile. You'd better avoid it."
 	icon_state = "trap-shock"
+	var/stun_time = 100
 
 /obj/structure/trap/stun/trap_effect(mob/living/L)
 	L.electrocute_act(30, src, flags = SHOCK_NOGLOVES) // electrocute act does a message.
-	L.DefaultCombatKnockdown(100)
+	L.Paralyze(stun_time)
 
 /obj/structure/trap/fire
 	name = "flame trap"
@@ -151,3 +152,75 @@
 	new /mob/living/simple_animal/hostile/construct/proteon/hostile(loc)
 	new /mob/living/simple_animal/hostile/construct/proteon/hostile(loc)
 	QDEL_IN(src, 30)
+
+//fugitive traps
+/obj/structure/trap/stun/hunter
+	name = "bounty trap"
+	desc = "A trap that only goes off when a fugitive steps on it, announcing the location and stunning the target. You'd better avoid it."
+	icon = 'icons/obj/objects.dmi'
+	icon_state = "bounty_trap_on"
+	stun_time = 200
+	var/obj/item/bountytrap/stored_item
+	var/caught = FALSE
+
+/obj/structure/trap/stun/hunter/Initialize(mapload)
+	. = ..()
+	time_between_triggers = 10
+
+/obj/structure/trap/stun/hunter/Crossed(atom/movable/AM)
+	if(isliving(AM))
+		var/mob/living/L = AM
+		if(!L.mind?.has_antag_datum(/datum/antagonist/fugitive))
+			return
+	caught = TRUE
+	. = ..()
+
+/obj/structure/trap/stun/hunter/flare()
+	..()
+	stored_item.forceMove(get_turf(src))
+	forceMove(stored_item)
+	if(caught)
+		stored_item.announce_fugitive()
+		caught = FALSE
+
+/obj/item/bountytrap
+	name = "bounty trap"
+	desc = "A trap that only goes off when a fugitive steps on it, announcing the location and stunning the target. It's currently inactive."
+	icon = 'icons/obj/objects.dmi'
+	icon_state = "bounty_trap_off"
+	var/obj/structure/trap/stun/hunter/stored_trap
+	var/obj/item/radio/radio
+	var/datum/effect_system/spark_spread/spark_system
+
+/obj/item/bountytrap/Initialize(mapload)
+	. = ..()
+	radio = new(src)
+	radio.subspace_transmission = TRUE
+	radio.canhear_range = 0
+	radio.recalculateChannels()
+	spark_system = new
+	spark_system.set_up(4,1,src)
+	spark_system.attach(src)
+	name = "[name] #[rand(1, 999)]"
+	stored_trap = new(src)
+	stored_trap.name = name
+	stored_trap.stored_item = src
+
+/obj/item/bountytrap/proc/announce_fugitive()
+	spark_system.start()
+	playsound(src, 'sound/machines/ding.ogg', 50, TRUE)
+	radio.talk_into(src, "Fugitive has triggered this trap in the [get_area_name(src)]!", RADIO_CHANNEL_COMMON)
+
+/obj/item/bountytrap/attack_self(mob/living/user)
+	var/turf/T = get_turf(src)
+	if(!user || !user.transferItemToLoc(src, T))//visibly unequips
+		return
+	to_chat(user, "<span class=notice>You set up [src]. Examine while close to disarm it.</span>")
+	stored_trap.forceMove(T)//moves trap to ground
+	forceMove(stored_trap)//moves item into trap
+
+/obj/item/bountytrap/Destroy()
+	qdel(stored_trap)
+	QDEL_NULL(radio)
+	QDEL_NULL(spark_system)
+	. = ..()

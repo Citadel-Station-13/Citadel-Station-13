@@ -1,6 +1,7 @@
 /datum/species/insect
 	name = "Anthromorphic Insect"
 	id = "insect"
+	say_mod = "chitters"
 	default_color = "00FF00"
 	species_traits = list(LIPS,EYECOLOR,HAIR,FACEHAIR,MUTCOLORS,HORNCOLOR,WINGCOLOR)
 	inherent_biotypes = MOB_ORGANIC|MOB_HUMANOID|MOB_BUG
@@ -13,6 +14,8 @@
 	liked_food = MEAT | FRUIT
 	disliked_food = TOXIC
 	icon_limbs = DEFAULT_BODYPART_ICON_CITADEL
+	exotic_bloodtype = "BUG"
+	exotic_blood_color = BLOOD_COLOR_BUG
 
 /datum/species/insect/spec_death(gibbed, mob/living/carbon/human/H)
 	if(H)

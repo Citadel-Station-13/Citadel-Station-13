@@ -76,7 +76,7 @@
 	if(check_click_intercept(params,A))
 		return
 
-	if(notransform)
+	if(mob_transforming)
 		return
 
 	if(SEND_SIGNAL(src, COMSIG_MOB_CLICKON, A, params) & COMSIG_MOB_CANCEL_CLICKON)

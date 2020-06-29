@@ -18,6 +18,7 @@
 	var/obj/item/radio/headset/radio
 	/// var that tracks message cooldown
 	var/message_cooldown
+	var/list/loaded_coupons
 
 	light_color = "#E2853D"//orange
 
@@ -134,6 +135,8 @@
 			"cost" = P.cost,
 			"id" = pack,
 			"desc" = P.desc || P.name, // If there is a description, use it. Otherwise use the pack's name.
+			"private_goody" = P.goody == PACK_GOODY_PRIVATE,
+			"goody" = P.goody == PACK_GOODY_PUBLIC,
 			"access" = P.access,
 			"can_private_buy" = P.can_private_buy
 		))
@@ -215,8 +218,22 @@
 				if(isnull(reason) || ..())
 					return
 
+			if(pack.goody == PACK_GOODY_PRIVATE && !self_paid)
+				playsound(src, 'sound/machines/buzz-sigh.ogg', 50, FALSE)
+				say("ERROR: Private small crates may only be purchased by private accounts.")
+				return
+
+			var/obj/item/coupon/applied_coupon
+			for(var/i in loaded_coupons)
+				var/obj/item/coupon/coupon_check = i
+				if(pack.type == coupon_check.discounted_pack)
+					say("Coupon found! [round(coupon_check.discount_pct_off * 100)]% off applied!")
+					coupon_check.moveToNullspace()
+					applied_coupon = coupon_check
+					break
+
 			var/turf/T = get_turf(src)
-			var/datum/supply_order/SO = new(pack, name, rank, ckey, reason, account)
+			var/datum/supply_order/SO = new(pack, name, rank, ckey, reason, account, applied_coupon)
 			SO.generateRequisition(T)
 			if(requestonly && !self_paid)
 				SSshuttle.requestlist += SO
@@ -229,6 +246,9 @@
 			var/id = text2num(params["id"])
 			for(var/datum/supply_order/SO in SSshuttle.shoppinglist)
 				if(SO.id == id)
+					if(SO.applied_coupon)
+						say("Coupon refunded.")
+						SO.applied_coupon.forceMove(get_turf(src))
 					SSshuttle.shoppinglist -= SO
 					. = TRUE
 					break

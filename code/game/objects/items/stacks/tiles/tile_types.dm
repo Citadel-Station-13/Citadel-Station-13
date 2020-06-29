@@ -9,15 +9,34 @@
 	throw_speed = 3
 	throw_range = 7
 	max_amount = 60
-	mats_per_stack = 500
 	var/turf_type = null
 	var/mineralType = null
 	novariants = TRUE
+	var/human_maxHealth = 100
 
 /obj/item/stack/tile/Initialize(mapload, amount)
 	. = ..()
 	pixel_x = rand(-3, 3)
 	pixel_y = rand(-3, 3) //randomize a little
+
+/obj/item/stack/tile/examine(mob/user)
+	. = ..()
+	if(throwforce && !is_cyborg) //do not want to divide by zero or show the message to borgs who can't throw
+		var/verb
+		switch(CEILING(human_maxHealth / throwforce, 1)) //throws to crit a human
+			if(1 to 3)
+				verb = "superb"
+			if(4 to 6)
+				verb = "great"
+			if(7 to 9)
+				verb = "good"
+			if(10 to 12)
+				verb = "fairly decent"
+			if(13 to 15)
+				verb = "mediocre"
+		if(!verb)
+			return
+		. += "<span class='notice'>Those could work as a [verb] throwing weapon.</span>"
 
 /obj/item/stack/tile/attackby(obj/item/W, mob/user, params)
 
@@ -266,6 +285,9 @@
 /obj/item/stack/tile/carpet/blackred/twenty
 	amount = 20
 
+/obj/item/stack/tile/carpet/blackred/thirty
+	amount = 30
+
 /obj/item/stack/tile/carpet/blackred/fifty
 	amount = 50
 
@@ -274,6 +296,9 @@
 
 /obj/item/stack/tile/carpet/monochrome/twenty
 	amount = 20
+
+/obj/item/stack/tile/carpet/monochrome/thirty
+	amount = 30
 
 /obj/item/stack/tile/carpet/monochrome/fifty
 	amount = 50
@@ -284,6 +309,9 @@
 /obj/item/stack/tile/carpet/blue/twenty
 	amount = 20
 
+/obj/item/stack/tile/carpet/blue/thirty
+	amount = 30
+
 /obj/item/stack/tile/carpet/blue/fifty
 	amount = 50
 
@@ -292,6 +320,9 @@
 
 /obj/item/stack/tile/carpet/cyan/twenty
 	amount = 20
+
+/obj/item/stack/tile/carpet/cyan/thirty
+	amount = 30
 
 /obj/item/stack/tile/carpet/cyan/fifty
 	amount = 50
@@ -302,6 +333,9 @@
 /obj/item/stack/tile/carpet/green/twenty
 	amount = 20
 
+/obj/item/stack/tile/carpet/green/thirty
+	amount = 30
+
 /obj/item/stack/tile/carpet/green/fifty
 	amount = 50
 
@@ -310,6 +344,9 @@
 
 /obj/item/stack/tile/carpet/orange/twenty
 	amount = 20
+
+/obj/item/stack/tile/carpet/orange/thirty
+	amount = 30
 
 /obj/item/stack/tile/carpet/orange/fifty
 	amount = 50
@@ -320,6 +357,9 @@
 /obj/item/stack/tile/carpet/purple/twenty
 	amount = 20
 
+/obj/item/stack/tile/carpet/purple/thirty
+	amount = 30
+
 /obj/item/stack/tile/carpet/purple/fifty
 	amount = 50
 
@@ -328,6 +368,9 @@
 
 /obj/item/stack/tile/carpet/red/twenty
 	amount = 20
+
+/obj/item/stack/tile/carpet/red/thirty
+	amount = 30
 
 /obj/item/stack/tile/carpet/red/fifty
 	amount = 50
@@ -338,6 +381,9 @@
 /obj/item/stack/tile/carpet/royalblack/twenty
 	amount = 20
 
+/obj/item/stack/tile/carpet/royalblack/thirty
+	amount = 30
+
 /obj/item/stack/tile/carpet/royalblack/fifty
 	amount = 50
 
@@ -346,6 +392,9 @@
 
 /obj/item/stack/tile/carpet/royalblue/twenty
 	amount = 20
+
+/obj/item/stack/tile/carpet/royalblue/thirty
+	amount = 30
 
 /obj/item/stack/tile/carpet/royalblue/fifty
 	amount = 50
@@ -440,7 +489,7 @@
 /obj/item/stack/tile/plasteel
 	name = "floor tile"
 	singular_name = "floor tile"
-	desc = "Those could work as a pretty decent throwing weapon."
+	desc = "The ground you walk on."
 	icon_state = "tile"
 	force = 6
 	custom_materials = list(/datum/material/iron=500)
@@ -452,7 +501,15 @@
 	resistance_flags = FIRE_PROOF
 
 /obj/item/stack/tile/plasteel/cyborg
-	desc = "The ground you walk on." //Not the usual floor tile desc as that refers to throwing, Cyborgs can't do that - RR
 	custom_materials = null // All other Borg versions of items have no Metal or Glass - RR
 	is_cyborg = 1
 	cost = 125
+
+/obj/item/stack/tile/material
+	name = "floor tile"
+	singular_name = "floor tile"
+	desc = "The ground you walk on."
+	throwforce = 10
+	icon_state = "material_tile"
+	turf_type = /turf/open/floor/material
+	material_flags = MATERIAL_ADD_PREFIX | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS
