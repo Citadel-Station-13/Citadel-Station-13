@@ -17,7 +17,6 @@
 	var/points = 0 //How many points this ore gets you from the ore redemption machine
 	var/refined_type = null //What this ore defaults to being refined into
 	novariants = TRUE // Ore stacks handle their icon updates themselves to keep the illusion that there's more going
-	mats_per_stack = MINERAL_MATERIAL_AMOUNT
 	var/list/stack_overlays
 
 /obj/item/stack/ore/update_overlays()
@@ -339,7 +338,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	throwforce = 2
 	w_class = WEIGHT_CLASS_TINY
 	custom_materials = list(/datum/material/iron = 400)
-	material_flags = MATERIAL_ADD_PREFIX | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS | MATERIAL_EFFECTS
+	material_flags = MATERIAL_ADD_PREFIX | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS
 	var/string_attached
 	var/list/sideslist = list("heads","tails")
 	var/cooldown = 0

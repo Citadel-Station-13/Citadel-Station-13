@@ -4558,7 +4558,6 @@
 	department = "Mining";
 	pixel_x = -30
 	},
-/obj/structure/closet/crate/bin,
 /turf/open/floor/plasteel,
 /area/quartermaster/miningdock)
 "bzj" = (
@@ -10026,6 +10025,7 @@
 	pixel_x = 32
 	},
 /obj/effect/turf_decal/tile/brown,
+/obj/machinery/rnd/production/techfab/department/cargo,
 /turf/open/floor/plasteel,
 /area/quartermaster/storage)
 "dDf" = (
@@ -14578,6 +14578,10 @@
 	},
 /obj/effect/turf_decal/tile/purple,
 /obj/effect/turf_decal/tile/purple{
+	dir = 8
+	},
+/obj/machinery/disposal/bin,
+/obj/structure/disposalpipe/trunk{
 	dir = 8
 	},
 /turf/open/floor/plasteel/white,
@@ -26013,13 +26017,6 @@
 /obj/effect/landmark/start/paramedic,
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/zone3)
-"nhO" = (
-/obj/machinery/airalarm/server{
-	dir = 1;
-	pixel_y = -22
-	},
-/turf/open/floor/circuit/telecomms/mainframe,
-/area/tcommsat/server)
 "nij" = (
 /obj/machinery/light{
 	dir = 1
@@ -27181,7 +27178,6 @@
 /obj/effect/turf_decal/tile/purple{
 	dir = 1
 	},
-/obj/structure/closet/crate/bin,
 /turf/open/floor/plasteel/white,
 /area/medical/genetics)
 "nSf" = (
@@ -28206,7 +28202,9 @@
 /obj/effect/turf_decal/tile/purple{
 	dir = 8
 	},
-/obj/structure/disposalpipe/segment,
+/obj/structure/disposalpipe/sorting/mail/flip{
+	sortType = 23
+	},
 /turf/open/floor/plasteel/white,
 /area/medical/genetics)
 "ouE" = (
@@ -56146,7 +56144,7 @@ won
 evJ
 fsQ
 mxo
-nhO
+pTw
 apJ
 apJ
 apJ

@@ -1,0 +1,5 @@
+author: "timothyteakettle"
+delete-after: True
+changes: 
+  - rscadd: "you can now select your tongue and speech verb in the character customization menu!"
+  - rscadd: "skeleton is now split into two more types, greater and lesser"

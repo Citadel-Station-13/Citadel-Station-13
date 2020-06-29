@@ -8,8 +8,11 @@
 	if(. == ELEMENT_INCOMPATIBLE || !isatom(target) || isarea(target))
 		return ELEMENT_INCOMPATIBLE
 	beauty = beautyamount
-	RegisterSignal(target, COMSIG_ENTER_AREA, .proc/enter_area)
-	RegisterSignal(target, COMSIG_EXIT_AREA, .proc/exit_area)
+
+	if(ismovable(target))
+		RegisterSignal(target, COMSIG_ENTER_AREA, .proc/enter_area)
+		RegisterSignal(target, COMSIG_EXIT_AREA, .proc/exit_area)
+
 	var/area/A = get_area(target)
 	if(A)
 		enter_area(null, A)

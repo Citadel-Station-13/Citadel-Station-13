@@ -7,6 +7,8 @@ GLOBAL_LIST_EMPTY(potential_mods_per_skill)
   * and cause lots of edge cases. These are fairly simple overall... make a subtype though, don't use this one.
   */
 /datum/skill_modifier
+	/// Name and description of the skill modifier, used in the UI
+	var/name = "???"
 	/// flags for this skill modifier.
 	var/modifier_flags = NONE
 	/// target skills, can be a specific skill typepath or a list of skill traits.
@@ -110,6 +112,7 @@ GLOBAL_LIST_EMPTY(potential_mods_per_skill)
 		if(M.modifier_flags & MODIFIER_SKILL_LEVEL)
 			ADD_MOD_STEP(skill_holder.skill_level_mods, path, skill_holder.original_levels, get_skill_level(path, FALSE))
 	LAZYSET(skill_holder.all_current_skill_modifiers, id, TRUE)
+	skill_holder.need_static_data_update = TRUE
 
 	if(M.modifier_flags & MODIFIER_SKILL_BODYBOUND)
 		M.RegisterSignal(src, COMSIG_MIND_TRANSFER, /datum/skill_modifier.proc/on_mind_transfer)
@@ -141,6 +144,7 @@ GLOBAL_LIST_EMPTY(potential_mods_per_skill)
 		if(M.modifier_flags & MODIFIER_SKILL_LEVEL && skill_holder.skill_level_mods)
 			REMOVE_MOD_STEP(skill_holder.skill_level_mods, path, skill_holder.original_levels)
 	LAZYREMOVE(skill_holder.all_current_skill_modifiers, id)
+	skill_holder.need_static_data_update = TRUE
 
 	if(!mind_transfer && M.modifier_flags & MODIFIER_SKILL_BODYBOUND)
 		M.UnregisterSignal(src, COMSIG_MIND_TRANSFER)
@@ -165,11 +169,7 @@ GLOBAL_LIST_EMPTY(potential_mods_per_skill)
 		var/datum/skill/S = GLOB.skill_datums[skillpath]
 		if(method == MODIFIER_TARGET_VALUE && S.progression_type == SKILL_PROGRESSION_LEVEL)
 			var/datum/skill/level/L = S
-			switch(L.level_up_method)
-				if(STANDARD_LEVEL_UP)
-					mod = XP_LEVEL(L.standard_xp_lvl_up, L.xp_lvl_multiplier, S.competency_thresholds[mod])
-				if(DWARFY_LEVEL_UP)
-					mod = DORF_XP_LEVEL(L.standard_xp_lvl_up, L.xp_lvl_multiplier, S.competency_thresholds[mod])
+			mod = L.get_skill_level_value(L.competency_thresholds[mod])
 		else
 			mod = S.competency_thresholds[mod]
 

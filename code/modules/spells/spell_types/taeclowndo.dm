@@ -10,6 +10,7 @@
 	cooldown_min = 30
 	action_icon = 'icons/obj/food/piecake.dmi'
 	action_icon_state = "pie"
+	antimagic_allowed = TRUE
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -24,6 +25,7 @@
 	range = 7
 	selection_type = "view"
 	projectile_type = null
+	antimagic_allowed = TRUE
 
 	active_msg = "You focus, your mind reaching to the clown dimension, ready to make a peel matrialize wherever you want!"
 	deactive_msg = "You relax, the peel remaining right in the \"thin air\" it would appear out of."
@@ -62,6 +64,7 @@
 	charge_max = 100
 	clothes_req = NONE
 	cooldown_min = 100
+	antimagic_allowed = TRUE
 
 	action_icon = 'icons/mecha/mecha_equipment.dmi'
 	action_icon_state = "mecha_honker"
@@ -76,6 +79,7 @@
 	charge_max = 450
 	clothes_req = NONE
 	cooldown_min = 450
+	antimagic_allowed = TRUE
 
 	action_icon = 'icons/obj/food/piecake.dmi'
 	action_icon_state = "frostypie"
