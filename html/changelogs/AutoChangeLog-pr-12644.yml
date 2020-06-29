@@ -1,4 +1,4 @@
 author: "timothyteakettle"
 delete-after: True
 changes: 
-  - rscadd: "felinids now nya when tabled"
+  - bugfix: "non-carbon blood is now not white"

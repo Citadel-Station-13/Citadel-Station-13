@@ -35,6 +35,7 @@
 #define COMSIG_PARENT_ATTACKBY "atom_attackby"			        //from base of atom/attackby(): (/obj/item, /mob/living, params)
 	#define COMPONENT_NO_AFTERATTACK 1								//Return this in response if you don't want afterattack to be called
 #define COMSIG_ATOM_HULK_ATTACK "hulk_attack"					//from base of atom/attack_hulk(): (/mob/living/carbon/human)
+#define COMSIG_ATOM_ATTACK_ANIMAL "attack_animal"				//from base of atom/animal_attack(): (/mob/user)
 #define COMSIG_PARENT_EXAMINE "atom_examine"                    //from base of atom/examine(): (/mob, list/examine_return_text)
 #define COMSIG_ATOM_GET_EXAMINE_NAME "atom_examine_name"		//from base of atom/get_examine_name(): (/mob, list/overrides)
 	//Positions for overrides list
@@ -140,10 +141,10 @@
 	#define HEARING_SPEAKER 2
 //	#define HEARING_LANGUAGE 3
 	#define HEARING_RAW_MESSAGE 4
-	/* #define HEARING_RADIO_FREQ 5
-	#define HEARING_SPANS 6
+//	 #define HEARING_RADIO_FREQ 5
+//	#define HEARING_SPANS 6
 	#define HEARING_MESSAGE_MODE 7
-	#define HEARING_SOURCE 8*/
+//	#define HEARING_SOURCE 8
 #define COMSIG_MOVABLE_DISPOSING "movable_disposing"			//called when the movable is added to a disposal holder object for disposal movement: (obj/structure/disposalholder/holder, obj/machinery/disposal/source)
 #define COMSIG_MOVABLE_TELEPORTED "movable_teleported"			//from base of do_teleport(): (channel, turf/origin, turf/destination)
 
@@ -283,6 +284,7 @@
 #define COMSIG_ITEM_IMBUE_SOUL "item_imbue_soul" 				//return a truthy value to prevent ensouling, checked in /obj/effect/proc_holder/spell/targeted/lichdom/cast(): (mob/user)
 #define COMSIG_ITEM_HIT_REACT "item_hit_react"					//from base of obj/item/hit_reaction(): (list/args)
 #define COMSIG_ITEM_WEARERCROSSED "wearer_crossed"                //called on item when crossed by something (): (/atom/movable)
+#define COMSIG_ITEM_MICROWAVE_ACT "microwave_act"                //called on item when microwaved (): (obj/machinery/microwave/M)
 #define COMSIG_ITEM_WORN_OVERLAYS "item_worn_overlays"			//from base of obj/item/worn_overlays(): (isinhands, icon_file, used_state, style_flags, list/overlays)
 // THE FOLLOWING TWO BLOCKS SHOULD RETURN BLOCK FLAGS AS DEFINED IN __DEFINES/combat.dm!
 #define COMSIG_ITEM_CHECK_BLOCK "check_block"					//from base of obj/item/check_block(): (mob/living/owner, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return)

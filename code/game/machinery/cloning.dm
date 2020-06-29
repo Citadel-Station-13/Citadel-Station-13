@@ -109,7 +109,7 @@
 	return examine(user)
 
 //Start growing a human clone in the pod!
-/obj/machinery/clonepod/proc/growclone(ckey, clonename, ui, mutation_index, mindref, datum/species/mrace, list/features, factions, list/quirks, datum/bank_account/insurance)
+/obj/machinery/clonepod/proc/growclone(ckey, clonename, ui, mutation_index, mindref, datum/species/mrace, list/features, factions, list/quirks, datum/bank_account/insurance, list/traumas)
 	if(panel_open)
 		return FALSE
 	if(mess || attempting)
@@ -184,6 +184,12 @@
 			var/datum/quirk/Q = new V(H)
 			Q.on_clone(quirks[V])
 
+		for(var/t in traumas)
+			var/datum/brain_trauma/BT = t
+			var/datum/brain_trauma/cloned_trauma = BT.on_clone()
+			if(cloned_trauma)
+				H.gain_trauma(cloned_trauma, BT.resilience)
+
 		H.set_cloned_appearance()
 		H.give_genitals(TRUE)
 
@@ -245,9 +251,6 @@
 				else if(isbodypart(I))
 					var/obj/item/bodypart/BP = I
 					BP.attach_limb(mob_occupant)
-
-			//Premature clones may have brain damage.
-			mob_occupant.adjustOrganLoss(ORGAN_SLOT_BRAIN, -((speed_coeff / 2) * dmg_mult))
 
 			use_power(7500) //This might need tweaking.
 
@@ -374,6 +377,8 @@
 		to_chat(occupant, "<span class='notice'><b>There is a bright flash!</b><br><i>You feel like a new being.</i></span>")
 		mob_occupant.flash_act()
 
+	mob_occupant.adjustOrganLoss(ORGAN_SLOT_BRAIN, mob_occupant.getCloneLoss())
+
 	occupant.forceMove(T)
 	update_icon()
 	mob_occupant.domutcheck(1) //Waiting until they're out before possible monkeyizing. The 1 argument forces powers to manifest.
@@ -449,10 +454,9 @@
 		unattached_flesh.Cut()
 
 	H.setCloneLoss(CLONE_INITIAL_DAMAGE)     //Yeah, clones start with very low health, not with random, because why would they start with random health
-	//H.setOrganLoss(ORGAN_SLOT_BRAIN, CLONE_INITIAL_DAMAGE)
-	// In addition to being cellularly damaged and having barely any
-
-	// brain function, they also have no limbs or internal organs.
+	// In addition to being cellularly damaged, they also have no limbs or internal organs.
+	// Applying brainloss is done when the clone leaves the pod, so application of traumas can happen.
+	// based on the level of damage sustained.
 
 	if(!HAS_TRAIT(H, TRAIT_NODISMEMBER))
 		var/static/list/zones = list(BODY_ZONE_R_ARM, BODY_ZONE_L_ARM, BODY_ZONE_R_LEG, BODY_ZONE_L_LEG)

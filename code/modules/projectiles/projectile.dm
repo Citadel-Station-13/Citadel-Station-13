@@ -239,7 +239,7 @@
 			else
 				if(ishuman(target))
 					var/mob/living/carbon/human/H = target
-					new /obj/effect/temp_visual/dir_setting/bloodsplatter(target_loca, splatter_dir, bloodtype_to_color(H.dna.blood_type))
+					new /obj/effect/temp_visual/dir_setting/bloodsplatter(target_loca, splatter_dir, H.dna.species.exotic_blood_color)
 				else
 					new /obj/effect/temp_visual/dir_setting/bloodsplatter(target_loca, splatter_dir, bloodtype_to_color())
 

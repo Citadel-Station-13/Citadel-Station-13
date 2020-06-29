@@ -432,6 +432,7 @@ GLOBAL_LIST_INIT(pda_reskins, list(PDA_SKIN_CLASSIC = 'icons/obj/pda.dmi', PDA_S
 //text files
 #define BRAIN_DAMAGE_FILE "traumas.json"
 #define ION_FILE "ion_laws.json"
+#define REDPILL_FILE "redpill.json"
 #define PIRATE_NAMES_FILE "pirates.json"
 
 
