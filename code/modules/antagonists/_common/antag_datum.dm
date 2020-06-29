@@ -94,6 +94,9 @@ GLOBAL_LIST_EMPTY(antagonists)
 	if(skill_modifiers)
 		for(var/A in skill_modifiers)
 			ADD_SINGLETON_SKILL_MODIFIER(owner, A, type)
+			var/datum/skill_modifier/job/M = GLOB.skill_modifiers[GET_SKILL_MOD_ID(A, type)]
+			if(istype(M))
+				M.name = "[name] Training"
 	SEND_SIGNAL(owner.current, COMSIG_MOB_ANTAG_ON_GAIN, src)
 
 /datum/antagonist/proc/is_banned(mob/M)

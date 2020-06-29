@@ -69,7 +69,7 @@
 /proc/english_list(list/input, nothing_text = "nothing", and_text = " and ", comma_text = ", ", final_comma_text = "" )
 	var/total = input.len
 	if (!total)
-		return "[nothing_text]"
+		return nothing_text
 	else if (total == 1)
 		return "[input[1]]"
 	else if (total == 2)
