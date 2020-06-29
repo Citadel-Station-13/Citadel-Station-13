@@ -106,7 +106,7 @@
 	if(user == target)
 		to_chat(user, "<span class='warning'>Why would you ever do that?</span>")
 		return
-	if(ishostile(target) && !allows_hostiles) && target.move_resist < MOVE_FORCE_VERY_STRONG) //don't allow goliaths into pet carriers
+	if(ishostile(target) && !allows_hostiles && target.move_resist < MOVE_FORCE_VERY_STRONG) //don't allow goliaths into pet carriers
 		to_chat(user, "<span class='warning'>You have a feeling you shouldn't keep this as a pet.</span>")
 	load_occupant(user, target)
 
@@ -204,7 +204,7 @@
 	occupant_weight -= occupant.mob_size
 	occupant.setDir(SOUTH)
 
-//bluespace jar, a reskin of the pet carrier that can fit people
+//bluespace jar, a reskin of the pet carrier that can fit people and smashes when thrown
 /obj/item/pet_carrier/bluespace
 	name = "bluespace jar"
 	desc = "A jar, that seems to be bigger on the inside, somehow allowing lifeforms to fit through its narrow entrance."
@@ -213,10 +213,11 @@
 	lefthand_file = ""
 	righthand_file = ""
 	max_occupant_weight = MOB_SIZE_HUMAN //can fit people, like a bluespace bodybag!
+	load_time = 50 //loading things into a jar takes longer than a regular pet carrier
 	entrance_name = "lid"
 	w_class = WEIGHT_CLASS_NORMAL //it can fit in bags, like a bluespace bodybag!
 	max_occupants = 1 //far less than a regular carrier or bluespace bodybag, because it can be thrown to release the contents
-	allows_hostiles = TRUE //can fit hostile creatures, however only those of a human size or smaller (and not things like goliaths)
+	allows_hostiles = TRUE //can fit hostile creatures, with the move resist restrictions in place, this means they still cannot take things like legions/goliaths/etc regardless
 	has_lock_sprites = FALSE //jar doesn't show the regular lock overlay
 	custom_materials = list(/datum/material/glass = 1000, /datum/material/bluespace = 600)
 
@@ -228,8 +229,16 @@
 
 /obj/item/pet_carrier/bluespace/throw_impact()
 	//delete the item upon impact, releasing the creature inside (this is handled by its deletion)
+	if(occupants.len)
+		src.loc.visible_message("<span class='warning'>The bluespace jar smashes, releasing [occupants[1]]!</span>")
 	qdel(src)
 	playsound(src, "shatter", 70, 1)
 	..()
+
+/obj/item/pet_carrier/bluespace/return_air()
+	var/datum/gas_mixture/air_contents = new(101)
+	air_contents.gases[/datum/gas/oxygen] = 101 //the jar can host things that require oxygen to survive
+	air_contents.temperature = 293.15
+	return air_contents
 
 #undef pet_carrier_full
