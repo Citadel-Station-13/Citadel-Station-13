@@ -157,7 +157,7 @@
 	secret_type = /obj/effect/spawner/lootdrop/prison_loot_toilet
 
 /obj/structure/toilet/greyscale
-	material_flags = MATERIAL_ADD_PREFIX | MATERIAL_COLOR | MATERIAL_EFFECTS
+	material_flags = MATERIAL_ADD_PREFIX | MATERIAL_COLOR
 	buildstacktype = null
 
 /obj/structure/urinal
@@ -723,7 +723,7 @@
 
 /obj/structure/sink/greyscale
 	icon_state = "sink_greyscale"
-	material_flags = MATERIAL_ADD_PREFIX | MATERIAL_COLOR | MATERIAL_EFFECTS
+	material_flags = MATERIAL_ADD_PREFIX | MATERIAL_COLOR
 	buildstacktype = null
 
 //Shower Curtains//

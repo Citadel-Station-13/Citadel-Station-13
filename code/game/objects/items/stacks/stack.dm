@@ -312,14 +312,14 @@
 
 /obj/item/stack/use(used, transfer = FALSE, check = TRUE) // return 0 = borked; return 1 = had enough
 	if(check && zero_amount())
-		return TRUE
+		return FALSE
 	if (is_cyborg)
 		return source.use_charge(used * cost)
 	if (amount < used)
 		return FALSE
 	amount -= used
 	if(check && zero_amount())
-		return FALSE
+		return TRUE
 	if(length(mats_per_unit))
 		var/temp_materials = custom_materials.Copy()
 		for(var/i in mats_per_unit)
