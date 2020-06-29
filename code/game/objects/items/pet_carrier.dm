@@ -208,7 +208,7 @@
 /obj/item/pet_carrier/bluespace
 	name = "bluespace jar"
 	desc = "A jar, that seems to be bigger on the inside, somehow allowing lifeforms to fit through its narrow entrance."
-	locked = TRUE
+	open = FALSE //starts closed so it looks better on menus
 	icon_state = "bluespace_jar"
 	item_state = "bluespace_jar"
 	lefthand_file = ""
@@ -226,7 +226,7 @@
 
 /obj/item/pet_carrier/bluespace/update_icon_state()
 	if(open)
-		icon_state = initial(icon_state)
+		icon_state = "bluespace_jar_open"
 	else
 		icon_state = "bluespace_jar"
 
