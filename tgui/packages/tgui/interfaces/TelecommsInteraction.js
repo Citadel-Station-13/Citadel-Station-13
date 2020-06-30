@@ -1,8 +1,9 @@
 import { Fragment } from 'inferno';
+import { Window } from '../layouts';
 import { useBackend } from '../backend';
 import { toFixed } from 'common/math';
 import { RADIO_CHANNELS } from '../constants';
-import { Button, LabeledList, NumberInput, NoticeBox, Section, Input, Window } from '../components';
+import { Button, LabeledList, NumberInput, NoticeBox, Section, Input } from '../components';
 
 export const TelecommsInteraction = (props, context) => {
   const { act, data } = useBackend(context);
@@ -24,7 +25,7 @@ export const TelecommsInteraction = (props, context) => {
     isbus = false,
   } = machine;
   return (
-    <Window>
+    <Window resizable>
       <Window.Content scrollable>
         <Fragment>
           {!!notice && (
@@ -96,9 +97,11 @@ export const TelecommsInteraction = (props, context) => {
                   {isbus ? (
                     <LabeledList.Item label="Change Signal Frequency">
                       <Button
-                        content={machine.chang_frequency
-                          ? 'Enabled'
-                          : 'Disabled'}
+                        content={machine.chang_frequency ? (
+                          'Enabled'
+                        ) : (
+                          'Disabled'
+                        )}
                         icon={machine.chang_frequency ? 'power-off' : 'times'}
                         color={machine.chang_frequency ? 'good' : 'bad'}
                         onClick={() => act('frequency', {

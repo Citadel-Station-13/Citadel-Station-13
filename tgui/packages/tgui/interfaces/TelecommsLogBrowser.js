@@ -1,6 +1,7 @@
 import { Fragment } from 'inferno';
-import { useBackend } from '../backend';
-import { Button, LabeledList, NoticeBox, Section, Tabs, Input, Window } from '../components';
+import { Window } from '../layouts';
+import { useBackend, useSharedState } from '../backend';
+import { Button, LabeledList, NoticeBox, Section, Tabs, Input } from '../components';
 
 export const TelecommsLogBrowser = (props, context) => {
   const { act, data } = useBackend(context);
@@ -11,9 +12,16 @@ export const TelecommsLogBrowser = (props, context) => {
     selected = null,
     selected_logs,
   } = data;
+  const [
+    tab,
+    setTab,
+  ] = useSharedState(context, 'tab', 'servers');
   const operational = (selected && selected.status);
+  if (!operational) { // some sanity checks.
+    setTab("servers");
+  }
   return (
-    <Window>
+    <Window theme="ntos">
       <Window.Content scrollable>
         <Fragment>
           {!!notice && (
@@ -93,85 +101,90 @@ export const TelecommsLogBrowser = (props, context) => {
           </Section>
           <Tabs>
             <Tabs.Tab
-              key="servers"
-              label="Servers">
-              <Section>
-                {(servers && servers.length) ? (
-                  <LabeledList>
-                    {servers.map(server => {
-                      return (
-                        <LabeledList.Item
-                          key={server.name}
-                          label={`${server.ref}`}
-                          buttons={(
-                            <Button
-                              content="Connect"
-                              selected={data.selected
-                            && (server.ref === data.selected.ref)}
-                              onClick={() => act('viewmachine', {
-                                'value': server.id,
-                              })} />
-                          )}>
-                          {`${server.name} (${server.id})`}
-                        </LabeledList.Item>
-                      );
-                    })}
-                  </LabeledList>
-                ) : (
-                  '404 Servers not found. Have you tried scanning the network?'
-                )}
-              </Section>
+              selected={tab === "servers"}
+              onClick={() => setTab("servers")}>
+              Servers
             </Tabs.Tab>
             <Tabs.Tab
-              key="messages"
-              label="Messages"
-              disabled={!operational}>
-              <Section title="Logs">
-                {(operational && selected_logs) ? (
-                  selected_logs.map(logs => {
-                    return (
-                      <Section
-                        level={4}
-                        key={logs.ref}>
-                        <LabeledList>
-                          <LabeledList.Item
-                            label="Filename"
-                            buttons={(
-                              <Button
-                                content="Delete"
-                                onClick={() => act('delete', {
-                                  'value': logs.ref,
-                                })} />
-                            )}>
-                            {logs.name}
-                          </LabeledList.Item>
-                          <LabeledList.Item label="Data type">
-                            {logs.input_type}
-                          </LabeledList.Item>
-                          {logs.source && (
-                            <LabeledList.Item label="Source">
-                              {`[${logs.source.name}]
-                               (Job: [${logs.source.job}])`}
-                            </LabeledList.Item>
-                          )}
-                          {logs.race && (
-                            <LabeledList.Item label="Class">
-                              {logs.race}
-                            </LabeledList.Item>
-                          )}
-                          <LabeledList.Item label="Contents">
-                            {logs.message}
-                          </LabeledList.Item>
-                        </LabeledList>
-                      </Section>
-                    );
-                  })
-                ) : (
-                  "No server selected!"
-                )}
-              </Section>
+              disabled={!operational}
+              selected={tab === "messages"}
+              onClick={() => setTab("messages")}>
+              Messages
             </Tabs.Tab>
           </Tabs>
+          {(tab === "messages" && operational) ? (
+            <Section title="Logs">
+              {(operational && selected_logs) ? (
+                selected_logs.map(logs => {
+                  return (
+                    <Section
+                      level={4}
+                      key={logs.ref}>
+                      <LabeledList>
+                        <LabeledList.Item
+                          label="Filename"
+                          buttons={(
+                            <Button
+                              content="Delete"
+                              onClick={() => act('delete', {
+                                'value': logs.ref,
+                              })} />
+                          )}>
+                          {logs.name}
+                        </LabeledList.Item>
+                        <LabeledList.Item label="Data type">
+                          {logs.input_type}
+                        </LabeledList.Item>
+                        {logs.source && (
+                          <LabeledList.Item label="Source">
+                            {`[${logs.source.name}]
+                            (Job: [${logs.source.job}])`}
+                          </LabeledList.Item>
+                        )}
+                        {logs.race && (
+                          <LabeledList.Item label="Class">
+                            {logs.race}
+                          </LabeledList.Item>
+                        )}
+                        <LabeledList.Item label="Contents">
+                          {logs.message}
+                        </LabeledList.Item>
+                      </LabeledList>
+                    </Section>
+                  );
+                })
+              ) : (
+                "No server selected!"
+              )}
+            </Section>
+          ) : (
+            <Section>
+              {(servers && servers.length) ? (
+                <LabeledList>
+                  {servers.map(server => {
+                    return (
+                      <LabeledList.Item
+                        key={server.name}
+                        label={`${server.ref}`}
+                        buttons={(
+                          <Button
+                            content="Connect"
+                            selected={data.selected
+                            && (server.ref === data.selected.ref)}
+                            onClick={() => act('viewmachine', {
+                              'value': server.id,
+                            })} />
+                        )}>
+                        {`${server.name} (${server.id})`}
+                      </LabeledList.Item>
+                    );
+                  })}
+                </LabeledList>
+              ) : (
+                '404 Servers not found. Have you tried scanning the network?'
+              )}
+            </Section>
+          )}
         </Fragment>
       </Window.Content>
     </Window>
