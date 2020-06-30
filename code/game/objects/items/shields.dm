@@ -386,7 +386,7 @@ obj/item/shield/riot/bullet_proof
 	max_integrity = 100
 	obj_integrity = 100
 	can_shatter = FALSE
-	item_flags = SLOWS_WHILE_IN_HAND
+	item_flags = SLOWS_WHILE_IN_HAND | ITEM_CAN_BLOCK
 	var/recharge_timerid
 	var/recharge_delay = 15 SECONDS
 

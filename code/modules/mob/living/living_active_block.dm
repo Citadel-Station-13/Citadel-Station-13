@@ -87,7 +87,7 @@
 	if(SEND_SIGNAL(src, COMSIG_LIVING_ACTIVE_BLOCK_START, I, other_items) & COMPONENT_PREVENT_BLOCK_START)
 		to_chat(src, "<span class='warning'>Something is preventing you from blocking!</span>")
 		return
-	if(!I && length(other_items))
+	if(!I?.can_active_block() && length(other_items))
 		I = other_items[1]
 	if(!I)
 		to_chat(src, "<span class='warning'>You can't block with your bare hands!</span>")
