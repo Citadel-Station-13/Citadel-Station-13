@@ -1,4 +1,0 @@
-author: "silicons"
-delete-after: True
-changes: 
-  - bugfix: "typing indicators no longer generates duplicate message boxes."
