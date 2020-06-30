@@ -70,12 +70,12 @@
 	if(combat_flags & (COMBAT_FLAG_ACTIVE_BLOCK_STARTING | COMBAT_FLAG_ACTIVE_BLOCKING))
 		return keybind_stop_active_blocking()
 	else
-		return keybind_ACTIVE_BLOCK_START()
+		return keybind_start_active_blocking()
 
 /**
   * Proc called by keybindings to start active blocking.
   */
-/mob/living/proc/keybind_ACTIVE_BLOCK_START()
+/mob/living/proc/keybind_start_active_blocking()
 	if(combat_flags & (COMBAT_FLAG_ACTIVE_BLOCK_STARTING | COMBAT_FLAG_ACTIVE_BLOCKING))
 		return FALSE
 	if(!(combat_flags & COMBAT_FLAG_BLOCK_CAPABLE))
