@@ -47,7 +47,7 @@
 			using_item = backup
 			method = ITEM_PARRY
 	var/list/other_items = list()
-	if(SEND_SIGNAL(src, COMSIG_LIVING_START_ACTIVE_PARRYING, method, tool, other_items) & COMPONENT_PREVENT_PARRY_START)
+	if(SEND_SIGNAL(src, COMSIG_LIVING_active_parrying_start, method, tool, other_items) & COMPONENT_PREVENT_PARRY_START)
 		to_chat(src, "<span class='warning'>Something is preventing you from parrying!</span>")
 		return
 	if(!using_item && !method && length(other_items))
