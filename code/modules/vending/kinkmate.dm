@@ -18,10 +18,10 @@
 				/obj/item/clothing/glasses/sunglasses/blindfold = 4,
 				/obj/item/clothing/mask/muzzle = 4,
 				/obj/item/clothing/under/misc/gear_harness = 2,
-				/obj/item/clothing/under/shorts/polychromic/pantsu,
-				/obj/item/clothing/under/misc/poly_bottomless,
-				/obj/item/clothing/under/misc/poly_tanktop,
-				/obj/item/clothing/under/misc/poly_tanktop/female
+				/obj/item/clothing/under/shorts/polychromic/pantsu = 3,
+				/obj/item/clothing/under/misc/poly_bottomless = 3,
+				/obj/item/clothing/under/misc/poly_tanktop = 3,
+				/obj/item/clothing/under/misc/poly_tanktop/female = 3
 				)
 	contraband = list(
 				/obj/item/electropack/shockcollar = 3,
