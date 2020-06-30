@@ -4,7 +4,7 @@ import { RADIO_CHANNELS } from '../constants';
 import { Box, Button, LabeledList, NoticeBox, Section, Tabs, Input, Window } from '../components';
 
 
-export const Telemonitor = (props, context) => {
+export const TelecommsMonitor = (props, context) => {
   const { act, data } = useBackend(context);
   const {
     notice,
