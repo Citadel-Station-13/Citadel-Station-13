@@ -374,8 +374,8 @@
 	desc = "A remote control-switch for secure storage.";
 	id = "Secure Storage";
 	name = "Engineering Secure Storage";
-	req_access_txt = "11";
-	pixel_y = 24
+	pixel_y = 24;
+	req_access_txt = "11"
 	},
 /obj/machinery/button/door{
 	id = "ceprivacy";
@@ -1478,8 +1478,8 @@
 /turf/open/floor/plasteel/white,
 /area/science/xenobiology)
 "dN" = (
-/obj/structure/closet/secure_closet/engineering_personal,
 /obj/effect/turf_decal/trimline/yellow/filled/line,
+/obj/machinery/rnd/production/protolathe/department/engineering,
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "dO" = (
@@ -1637,8 +1637,8 @@
 /obj/machinery/button/door{
 	id = "armory3";
 	name = "Armory Shutters";
-	req_access_txt = "3";
-	pixel_x = 26
+	pixel_x = 26;
+	req_access_txt = "3"
 	},
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 4
@@ -2475,8 +2475,8 @@
 /obj/machinery/button/door{
 	id = "armory3";
 	name = "Armory Shutters";
-	req_access_txt = "3";
-	pixel_x = -26
+	pixel_x = -26;
+	req_access_txt = "3"
 	},
 /obj/effect/turf_decal/tile/red{
 	dir = 4
@@ -3432,7 +3432,7 @@
 /turf/open/floor/engine,
 /area/engine/engineering)
 "is" = (
-/obj/machinery/rnd/production/circuit_imprinter,
+/obj/machinery/rnd/production/circuit_imprinter/department/science,
 /turf/open/floor/plasteel,
 /area/science/lab)
 "it" = (
@@ -3722,6 +3722,7 @@
 /area/bridge)
 "jd" = (
 /obj/effect/turf_decal/stripes,
+/obj/structure/closet/secure_closet/engineering_personal,
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "je" = (
@@ -5680,6 +5681,7 @@
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 6
 	},
+/obj/machinery/rnd/production/techfab/department/medical,
 /turf/open/floor/plasteel/white,
 /area/medical/medbay)
 "om" = (
@@ -7563,8 +7565,8 @@
 "tr" = (
 /obj/machinery/computer/bounty,
 /obj/machinery/keycard_auth{
-	pixel_y = 25;
-	pixel_x = 26
+	pixel_x = 26;
+	pixel_y = 25
 	},
 /obj/effect/turf_decal/tile/brown,
 /obj/effect/turf_decal/tile/brown{
@@ -9231,8 +9233,11 @@
 /turf/open/floor/plating,
 /area/crew_quarters/bar)
 "yv" = (
-/obj/effect/spawner/structure/window,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/machinery/rnd/production/techfab/department/service,
+/obj/machinery/door/window/southright{
+	layer = 3.1
+	},
 /turf/open/floor/plating,
 /area/crew_quarters/bar)
 "yw" = (
@@ -9398,6 +9403,7 @@
 /obj/structure/cable/yellow{
 	icon_state = "4-8"
 	},
+/obj/item/clothing/gloves/color/yellow,
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "yQ" = (
@@ -9437,14 +9443,13 @@
 /turf/open/floor/plating,
 /area/tcommsat/computer)
 "yT" = (
-/obj/structure/table,
-/obj/item/clothing/gloves/color/yellow,
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 1
 	},
 /obj/structure/cable/yellow{
 	icon_state = "4-8"
 	},
+/obj/structure/closet/crate/bin,
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "yU" = (
@@ -9885,15 +9890,17 @@
 /turf/open/floor/plasteel/dark,
 /area/engine/engineering)
 "Ao" = (
-/obj/structure/closet/secure_closet/engineering_personal,
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 10
+	},
+/obj/machinery/computer/rdconsole/production{
+	dir = 1
 	},
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "Ap" = (
 /obj/effect/turf_decal/trimline/yellow/filled/line,
-/obj/structure/closet/crate/bin,
+/obj/machinery/rnd/production/circuit_imprinter,
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "Aq" = (
@@ -9904,7 +9911,6 @@
 /turf/open/floor/plasteel/dark,
 /area/engine/engineering)
 "Ar" = (
-/obj/machinery/power/port_gen/pacman,
 /obj/effect/turf_decal/trimline/yellow/filled/line,
 /turf/open/floor/plasteel,
 /area/engine/engineering)
@@ -10223,6 +10229,7 @@
 	pixel_y = -22
 	},
 /obj/effect/turf_decal/stripes,
+/obj/structure/closet/secure_closet/engineering_personal,
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "Bf" = (
@@ -11120,11 +11127,11 @@
 "DS" = (
 /obj/machinery/computer/security/telescreen{
 	desc = "Used for watching the burn chamber.";
+	dir = 1;
 	layer = 4;
 	name = "Burn Chamber Telescreen";
 	network = list("burnchamber");
-	pixel_y = -30;
-	dir = 1
+	pixel_y = -30
 	},
 /obj/structure/chair/stool,
 /obj/effect/turf_decal/stripes,
@@ -12627,9 +12634,9 @@
 /area/tcommsat/computer)
 "Jc" = (
 /obj/machinery/computer/shuttle/mining{
+	dir = 4;
 	req_access = "0";
-	req_one_access = "0";
-	dir = 4
+	req_one_access = "0"
 	},
 /obj/effect/turf_decal/tile/brown{
 	dir = 1
@@ -13056,7 +13063,7 @@
 /turf/open/floor/plating,
 /area/science/research)
 "KS" = (
-/obj/machinery/rnd/production/protolathe,
+/obj/machinery/rnd/production/protolathe/department/science,
 /turf/open/floor/plasteel,
 /area/science/lab)
 "KV" = (
@@ -14154,10 +14161,10 @@
 /area/tcommsat/computer)
 "PM" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 8;
 	external_pressure_bound = 140;
 	name = "killroom vent";
-	pressure_checks = 0;
-	dir = 8
+	pressure_checks = 0
 	},
 /turf/open/floor/circuit/telecomms,
 /area/science/xenobiology)
@@ -14686,7 +14693,7 @@
 /obj/effect/turf_decal/stripes{
 	dir = 1
 	},
-/obj/structure/closet/crate/bin,
+/obj/machinery/power/port_gen/pacman,
 /turf/open/floor/plasteel/dark,
 /area/engine/engineering)
 "Sn" = (
@@ -15250,9 +15257,9 @@
 /area/science/lab)
 "UA" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/on{
+	dir = 8;
 	external_pressure_bound = 120;
-	name = "killroom vent";
-	dir = 8
+	name = "killroom vent"
 	},
 /turf/open/floor/circuit/telecomms,
 /area/science/xenobiology)
@@ -16375,9 +16382,9 @@
 /area/medical/medbay)
 "YV" = (
 /obj/machinery/door/window/westleft{
+	dir = 2;
 	name = "Monkey Pen";
-	req_access_txt = "9";
-	dir = 2
+	req_access_txt = "9"
 	},
 /mob/living/carbon/monkey,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
