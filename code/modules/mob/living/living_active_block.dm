@@ -14,14 +14,14 @@
 		changeNext_move(data.block_end_click_cd_add)
 	return TRUE
 
-/mob/living/proc/ACTIVE_BLOCKING_START(obj/item/I)
+/mob/living/proc/ACTIVE_BLOCK_START(obj/item/I)
 	if(combat_flags & (COMBAT_FLAG_ACTIVE_BLOCK_STARTING | COMBAT_FLAG_ACTIVE_BLOCKING))
 		return FALSE
 	if(!(I in held_items))
 		return FALSE
 	var/datum/block_parry_data/data = I.get_block_parry_data()
 	if(!istype(data))		//Typecheck because if an admin/coder screws up varediting or something we do not want someone being broken forever, the CRASH logs feedback so we know what happened.
-		CRASH("ACTIVE_BLOCKING_START called with an item with no valid data: [I] --> [I.block_parry_data]!")
+		CRASH("ACTIVE_BLOCK_START called with an item with no valid data: [I] --> [I.block_parry_data]!")
 	combat_flags |= COMBAT_FLAG_ACTIVE_BLOCKING
 	active_block_item = I
 	if(data.block_lock_attacking)
@@ -70,12 +70,12 @@
 	if(combat_flags & (COMBAT_FLAG_ACTIVE_BLOCK_STARTING | COMBAT_FLAG_ACTIVE_BLOCKING))
 		return keybind_stop_active_blocking()
 	else
-		return keybind_ACTIVE_BLOCKING_START()
+		return keybind_ACTIVE_BLOCK_START()
 
 /**
   * Proc called by keybindings to start active blocking.
   */
-/mob/living/proc/keybind_ACTIVE_BLOCKING_START()
+/mob/living/proc/keybind_ACTIVE_BLOCK_START()
 	if(combat_flags & (COMBAT_FLAG_ACTIVE_BLOCK_STARTING | COMBAT_FLAG_ACTIVE_BLOCKING))
 		return FALSE
 	if(!(combat_flags & COMBAT_FLAG_BLOCK_CAPABLE))
@@ -84,7 +84,7 @@
 	// QOL: Instead of trying to just block with held item, grab first available item.
 	var/obj/item/I = find_active_block_item()
 	var/list/other_items = list()
-	if(SEND_SIGNAL(src, COMSIG_LIVING_ACTIVE_BLOCKING_START, I, other_items) & COMPONENT_PREVENT_BLOCK_START)
+	if(SEND_SIGNAL(src, COMSIG_LIVING_ACTIVE_BLOCK_START, I, other_items) & COMPONENT_PREVENT_BLOCK_START)
 		to_chat(src, "<span class='warning'>Something is preventing you from blocking!</span>")
 		return
 	if(!I && length(other_items))
@@ -110,7 +110,7 @@
 		animate(src, pixel_x = get_standard_pixel_x_offset(), pixel_y = get_standard_pixel_y_offset(), time = 2.5, FALSE, SINE_EASING | EASE_IN, ANIMATION_END_NOW)
 		return
 	combat_flags &= ~(COMBAT_FLAG_ACTIVE_BLOCK_STARTING)
-	ACTIVE_BLOCKING_START(I)
+	ACTIVE_BLOCK_START(I)
 
 /**
   * Gets the first item we can that can block, but if that fails, default to active held item.COMSIG_ENABLE_COMBAT_MODE

@@ -283,10 +283,10 @@
 /obj/item/organ/cyberimp/arm/shield/Insert(mob/living/carbon/M, special = FALSE, drop_if_replaced = TRUE)
 	. = ..()
 	if(.)
-		RegisterSignal(M, COMSIG_LIVING_ACTIVE_BLOCKING_START, .proc/on_signal)
+		RegisterSignal(M, COMSIG_LIVING_ACTIVE_BLOCK_START, .proc/on_signal)
 
 /obj/item/organ/cyberimp/arm/shield/Remove(special = FALSE)
-	UnregisterSignal(owner, COMSIG_LIVING_ACTIVE_BLOCKING_START)
+	UnregisterSignal(owner, COMSIG_LIVING_ACTIVE_BLOCK_START)
 	return ..()
 
 /obj/item/organ/cyberimp/arm/shield/proc/on_signal(datum/source, obj/item/blocking_item, list/other_items = list())
