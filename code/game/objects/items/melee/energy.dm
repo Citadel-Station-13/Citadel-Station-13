@@ -369,7 +369,7 @@
 			return
 		else
 			to_chat(user, "<span class='notice'>You combine the two light swords, making a single supermassive blade! You're cool.</span>")
-			new /obj/item/twohanded/dualsaber/hypereutactic(user.drop_location())
+			new /obj/item/dualsaber/hypereutactic(user.drop_location())
 			qdel(W)
 			qdel(src)
 	else
