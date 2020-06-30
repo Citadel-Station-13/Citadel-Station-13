@@ -188,13 +188,13 @@
 /area/ruin/unpowered/xenonest)
 "aT" = (
 /obj/structure/alien/weeds,
-/obj/item/twohanded/required/chainsaw,
+/obj/item/chainsaw,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/ruin/unpowered/xenonest)
 "aU" = (
 /obj/structure/alien/weeds,
 /obj/structure/bed/nest,
-/obj/item/twohanded/fireaxe/boneaxe,
+/obj/item/fireaxe/boneaxe,
 /obj/item/clothing/head/helmet/gladiator,
 /obj/item/clothing/mask/facehugger/impregnated,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,

@@ -661,5 +661,5 @@
 
 /datum/outfit/lavaknight/captain
 	name ="Cydonian Knight Captain"
-	l_pocket = /obj/item/twohanded/dualsaber/hypereutactic
+	l_pocket = /obj/item/dualsaber/hypereutactic
 	id = /obj/item/card/id/knight/captain

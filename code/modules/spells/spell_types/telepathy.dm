@@ -8,6 +8,7 @@
 	action_icon = 'icons/mob/actions/actions_revenant.dmi'
 	action_icon_state = "r_transmit"
 	action_background_icon_state = "bg_spell"
+	antimagic_allowed = TRUE
 	var/notice = "notice"
 	var/boldnotice = "boldnotice"
 	var/magic_check = FALSE

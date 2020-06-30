@@ -16,7 +16,9 @@
 	display_name = "Advanced Engineering"
 	description = "Pushing the boundaries of physics, one chainsaw-fist at a time."
 	prereq_ids = list("engineering", "emp_basic")
-	design_ids = list("engine_goggles", "magboots", "forcefield_projector", "weldingmask" , "rcd_loaded", "rpd", "tray_goggles_prescription", "engine_goggles_prescription", "mesons_prescription", "rcd_upgrade_frames", "rcd_upgrade_simple_circuits", "rcd_ammo_large")
+	design_ids = list("engine_goggles", "magboots", "forcefield_projector", "weldingmask" , "rcd_loaded", "rpd",
+	"tray_goggles_prescription", "engine_goggles_prescription", "mesons_prescription", "rcd_upgrade_frames",
+	"rcd_upgrade_simple_circuits", "rcd_ammo_large", "sheetifier")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 4000)
 
 /datum/techweb_node/anomaly

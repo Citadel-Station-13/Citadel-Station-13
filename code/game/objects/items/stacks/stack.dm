@@ -22,7 +22,7 @@
 	var/merge_type = null // This path and its children should merge with this stack, defaults to src.type
 	var/full_w_class = WEIGHT_CLASS_NORMAL //The weight class the stack should have at amount > 2/3rds max_amount
 	var/novariants = TRUE //Determines whether the item should update it's sprites based on amount.
-	var/mats_per_stack = 0
+	var/list/mats_per_unit //list that tells you how much is in a single unit.
 	///Datum material type that this stack is made of
 	var/material_type
 	//NOTE: When adding grind_results, the amounts should be for an INDIVIDUAL ITEM - these amounts will be multiplied by the stack size in on_grind()
@@ -47,8 +47,11 @@
 	if(!merge_type)
 		merge_type = type
 	if(custom_materials && custom_materials.len)
+		mats_per_unit = list()
+		var/in_process_mat_list = custom_materials.Copy()
 		for(var/i in custom_materials)
-			custom_materials[SSmaterials.GetMaterialRef(i)] = mats_per_stack * amount
+			mats_per_unit[SSmaterials.GetMaterialRef(i)] = in_process_mat_list[i]
+			custom_materials[i] *= amount
 	. = ..()
 	if(merge)
 		for(var/obj/item/stack/S in loc)
@@ -60,7 +63,7 @@
 		var/datum/material/M = SSmaterials.GetMaterialRef(material_type) //First/main material
 		for(var/i in M.categories)
 			switch(i)
-				if(MAT_CATEGORY_RIGID)
+				if(MAT_CATEGORY_BASE_RECIPES)
 					var/list/temp = SSmaterials.rigid_stack_recipes.Copy()
 					recipes += temp
 	update_weight()
@@ -315,10 +318,13 @@
 	if (amount < used)
 		return FALSE
 	amount -= used
-	if(check)
-		zero_amount()
-	for(var/i in custom_materials)
-		custom_materials[i] = amount * mats_per_stack
+	if(check && zero_amount())
+		return TRUE
+	if(length(mats_per_unit))
+		var/temp_materials = custom_materials.Copy()
+		for(var/i in mats_per_unit)
+			temp_materials[i] = mats_per_unit[i] * src.amount
+		set_custom_materials(temp_materials)
 	update_icon()
 	update_weight()
 	return TRUE
@@ -350,10 +356,11 @@
 		source.add_charge(amount * cost)
 	else
 		src.amount += amount
-	if(custom_materials && custom_materials.len)
-		for(var/i in custom_materials)
-			custom_materials[SSmaterials.GetMaterialRef(i)] = MINERAL_MATERIAL_AMOUNT * src.amount
-		set_custom_materials() //Refresh
+	if(length(mats_per_unit))
+		var/temp_materials = custom_materials.Copy()
+		for(var/i in mats_per_unit)
+			temp_materials[i] = mats_per_unit[i] * src.amount
+		set_custom_materials(temp_materials)
 	update_icon()
 	update_weight()
 

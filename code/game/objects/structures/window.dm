@@ -271,29 +271,27 @@ GLOBAL_LIST_EMPTY(electrochromatic_window_lookup)
 	air_update_turf(TRUE)
 	update_nearby_icons()
 
-/obj/structure/window/proc/spraycan_paint(paint_color)
-	if(color_hex2num(paint_color) < 255)
-		set_opacity(255)
-	else
-		set_opacity(initial(opacity))
-	add_atom_colour(paint_color, WASHABLE_COLOUR_PRIORITY)
-
 /obj/structure/window/proc/electrochromatic_dim()
 	if(electrochromatic_status == ELECTROCHROMATIC_DIMMED)
 		return
 	electrochromatic_status = ELECTROCHROMATIC_DIMMED
-	animate(src, color = "#222222", time = 2)
-	set_opacity(TRUE)
+	var/current = color
+	add_atom_colour("#222222", FIXED_COLOUR_PRIORITY)
+	var/newcolor = color
+	if(color != current)
+		color = current
+		animate(src, color = newcolor, time = 2)
 
 /obj/structure/window/proc/electrochromatic_off()
 	if(electrochromatic_status == ELECTROCHROMATIC_OFF)
 		return
 	electrochromatic_status = ELECTROCHROMATIC_OFF
 	var/current = color
-	update_atom_colour()
+	remove_atom_colour(FIXED_COLOUR_PRIORITY, "#222222")
 	var/newcolor = color
-	color = current
-	animate(src, color = newcolor, time = 2)
+	if(color != current)
+		color = current
+		animate(src, color = newcolor, time = 2)
 
 /obj/structure/window/proc/remove_electrochromatic()
 	electrochromatic_off()
@@ -348,11 +346,9 @@ GLOBAL_LIST_EMPTY(electrochromatic_window_lookup)
 	GLOB.electrochromatic_window_lookup[electrochromatic_id] |= src
 
 /obj/structure/window/update_atom_colour()
-	if((electrochromatic_status != ELECTROCHROMATIC_OFF) && (electrochromatic_status != ELECTROCHROMATIC_DIMMED))
-		return FALSE
 	. = ..()
-	if(color && (color_hex2num(color) < 255))
-		set_opacity(255)
+	if(electrochromatic_status == ELECTROCHROMATIC_DIMMED || (color && (color_hex2num(color) < 255)))
+		set_opacity(TRUE)
 	else
 		set_opacity(FALSE)
 

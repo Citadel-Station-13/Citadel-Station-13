@@ -1,7 +1,7 @@
 /obj/item/organ/genital
 	color = "#fcccb3"
 	w_class = WEIGHT_CLASS_SMALL
-	organ_flags = ORGAN_NO_DISMEMBERMENT
+	organ_flags = ORGAN_NO_DISMEMBERMENT|ORGAN_EDIBLE
 	var/shape
 	var/sensitivity = 1 // wow if this were ever used that'd be cool but it's not but i'm keeping it for my unshit code
 	var/genital_flags //see citadel_defines.dm

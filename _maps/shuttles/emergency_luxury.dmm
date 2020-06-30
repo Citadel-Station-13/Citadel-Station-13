@@ -305,7 +305,7 @@
 /turf/open/floor/carpet/royalblue,
 /area/shuttle/escape/luxury)
 "bg" = (
-/obj/item/twohanded/required/kirbyplants{
+/obj/item/kirbyplants{
 	icon_state = "plant-10"
 	},
 /turf/open/floor/carpet/red,
@@ -320,7 +320,7 @@
 /turf/open/floor/carpet/royalblue,
 /area/shuttle/escape/luxury)
 "bj" = (
-/obj/item/twohanded/required/kirbyplants{
+/obj/item/kirbyplants{
 	icon_state = "plant-21";
 	pixel_x = -3;
 	pixel_y = 3
@@ -328,13 +328,13 @@
 /turf/open/floor/wood,
 /area/shuttle/escape/luxury)
 "bk" = (
-/obj/item/twohanded/required/kirbyplants{
+/obj/item/kirbyplants{
 	icon_state = "plant-10"
 	},
 /turf/open/floor/carpet/royalblue,
 /area/shuttle/escape/luxury)
 "bl" = (
-/obj/item/twohanded/required/kirbyplants{
+/obj/item/kirbyplants{
 	icon_state = "plant-21";
 	pixel_x = -3;
 	pixel_y = 3
@@ -437,7 +437,7 @@
 	dir = 4;
 	light_range = 8
 	},
-/obj/item/twohanded/required/kirbyplants{
+/obj/item/kirbyplants{
 	icon_state = "plant-10"
 	},
 /turf/open/floor/carpet/red,

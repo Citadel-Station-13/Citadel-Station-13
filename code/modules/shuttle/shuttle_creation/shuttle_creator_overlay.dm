@@ -12,8 +12,9 @@
 	holder.images += images
 
 /datum/shuttle_creator_overlay_holder/proc/remove_client()
-	holder.images -= images
-	holder = null
+	if(holder)
+		holder.images -= images
+		holder = null
 
 /datum/shuttle_creator_overlay_holder/proc/clear_highlights()
 	if(holder)

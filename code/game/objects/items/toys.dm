@@ -272,7 +272,7 @@
 			return
 		else
 			to_chat(user, "<span class='notice'>You attach the ends of the two plastic swords, making a single double-bladed toy! You're fake-cool.</span>")
-			var/obj/item/twohanded/dualsaber/toy/newSaber = new /obj/item/twohanded/dualsaber/toy(user.loc)
+			var/obj/item/dualsaber/toy/newSaber = new /obj/item/dualsaber/toy(user.loc)
 			if(hacked) // That's right, we'll only check the "original" "sword".
 				newSaber.hacked = TRUE
 			qdel(W)
@@ -363,7 +363,7 @@
 			return
 		else
 			to_chat(user, "<span class='notice'>You combine the two plastic swords, making a single supermassive toy! You're fake-cool.</span>")
-			new /obj/item/twohanded/dualsaber/hypereutactic/toy(user.loc)
+			new /obj/item/dualsaber/hypereutactic/toy(user.loc)
 			qdel(W)
 			qdel(src)
 	else
@@ -437,41 +437,46 @@
 /*
  * Subtype of Double-Bladed Energy Swords
  */
-/obj/item/twohanded/dualsaber/toy
+/obj/item/dualsaber/toy
 	name = "double-bladed toy sword"
 	desc = "A cheap, plastic replica of TWO energy swords.  Double the fun!"
 	force = 0
 	throwforce = 0
 	throw_speed = 3
 	throw_range = 5
-	force_unwielded = 0
-	force_wielded = 0
 	block_parry_data = null
 	attack_verb = list("attacked", "struck", "hit")
 	total_mass_on = TOTAL_MASS_TOY_SWORD
 	sharpness = IS_BLUNT
 
-/obj/item/twohanded/dualsaber/toy/run_block(mob/living/owner, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return)
+/obj/item/dualsaber/toy/ComponentInitialize()
+	. = ..()
+	AddComponent(/datum/component/two_handed, wieldsound='sound/weapons/saberon.ogg', unwieldsound='sound/weapons/saberoff.ogg')
+
+/obj/item/dualsaber/toy/run_block(mob/living/owner, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return)
 	return BLOCK_NONE
 
-/obj/item/twohanded/dualsaber/hypereutactic/toy
+/obj/item/dualsaber/hypereutactic/toy
 	name = "\improper DX Hyper-Euplastic LightSword"
 	desc = "A supermassive toy envisioned to cleave the very fabric of space and time itself in twain. Realistic visuals and sounds! Ages 8 and up."
 	force = 0
 	throwforce = 0
 	throw_speed = 3
 	throw_range = 5
-	force_unwielded = 0
-	force_wielded = 0
+
 	attack_verb = list("attacked", "struck", "hit")
 	total_mass_on = TOTAL_MASS_TOY_SWORD
 	slowdown_wielded = 0
 	sharpness = IS_BLUNT
 
-/obj/item/twohanded/dualsaber/hypereutactic/toy/run_block(mob/living/owner, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return)
+/obj/item/dualsaber/toy/ComponentInitialize()
+	. = ..()
+	AddComponent(/datum/component/two_handed, wieldsound='sound/weapons/saberon.ogg', unwieldsound='sound/weapons/saberoff.ogg')
+
+/obj/item/dualsaber/hypereutactic/toy/run_block(mob/living/owner, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return)
 	return BLOCK_NONE
 
-/obj/item/twohanded/dualsaber/hypereutactic/toy/rainbow
+/obj/item/dualsaber/hypereutactic/toy/rainbow
 	name = "\improper Hyper-Euclidean Reciprocating Trigonometric Zweihander"
 	desc = "A custom-built toy with fancy rainbow lights built-in."
 	hacked = TRUE

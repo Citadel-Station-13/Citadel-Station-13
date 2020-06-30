@@ -76,9 +76,6 @@
 		REMOVE_SKILL_MODIFIER_BODY(/datum/skill_modifier/heavy_brain_damage, null, C)
 		C.update_hair()
 
-/obj/item/organ/brain/prepare_eat()
-	return // Too important to eat.
-
 /obj/item/organ/brain/proc/transfer_identity(mob/living/L)
 	name = "[L.name]'s brain"
 	if(brainmob)

@@ -306,6 +306,7 @@
 	sound = 'sound/magic/tail_swing.ogg'
 	charge_max = 150
 	clothes_req = NONE
+	antimagic_allowed = TRUE
 	range = 2
 	cooldown_min = 150
 	invocation_type = "none"
