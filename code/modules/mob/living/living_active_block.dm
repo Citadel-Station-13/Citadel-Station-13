@@ -83,6 +83,12 @@
 		return FALSE
 	// QOL: Instead of trying to just block with held item, grab first available item.
 	var/obj/item/I = find_active_block_item()
+	var/list/other_items = list()
+	if(SEND_SIGNAL(src, COMSIG_LIVING_START_ACTIVE_BLOCKING, I, other_items) & COMPONENT_PREVENT_BLOCK_START)
+		to_chat(src, "<span class='warning'>Something is preventing you from blocking!</span>")
+		return
+	if(!I && length(other_items))
+		I = other_items[1]
 	if(!I)
 		to_chat(src, "<span class='warning'>You can't block with your bare hands!</span>")
 		return
