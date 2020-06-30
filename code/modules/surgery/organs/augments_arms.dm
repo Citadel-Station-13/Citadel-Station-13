@@ -132,6 +132,7 @@
 		"<span class='notice'>You extend [holder] from your [zone == BODY_ZONE_R_ARM ? "right" : "left"] arm.</span>",
 		"<span class='italics'>You hear a short mechanical noise.</span>")
 	playsound(get_turf(owner), 'sound/mecha/mechmove03.ogg', 50, 1)
+	return TRUE
 
 /obj/item/organ/cyberimp/arm/ui_action_click()
 	if(crit_fail || (organ_flags & ORGAN_FAILING) || (!holder && !contents.len))
@@ -289,7 +290,7 @@
 	UnregisterSignal(owner, COMSIG_LIVING_ACTIVE_BLOCK_START)
 	return ..()
 
-/obj/item/organ/cyberimp/arm/shield/proc/on_signal(datum/source, obj/item/blocking_item, list/other_items = list())
+/obj/item/organ/cyberimp/arm/shield/proc/on_signal(datum/source, obj/item/blocking_item, list/other_items)
 	if(!blocking_item)		//if they don't have something
 		var/obj/item/shield/S = locate() in contents
 		if(!Extend(S, TRUE))

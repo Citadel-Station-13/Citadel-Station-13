@@ -87,11 +87,11 @@
 	if(SEND_SIGNAL(src, COMSIG_LIVING_ACTIVE_BLOCK_START, I, other_items) & COMPONENT_PREVENT_BLOCK_START)
 		to_chat(src, "<span class='warning'>Something is preventing you from blocking!</span>")
 		return
-	if(!I?.can_active_block() && length(other_items))
-		I = other_items[1]
 	if(!I)
-		to_chat(src, "<span class='warning'>You can't block with your bare hands!</span>")
-		return
+		if(!length(other_items))
+			to_chat(src, "<span class='warning'>You can't block with your bare hands!</span>")
+			return
+		I = other_items[1]
 	if(!I.can_active_block())
 		to_chat(src, "<span class='warning'>[I] is either not capable of being used to actively block, or is not currently in a state that can! (Try wielding it if it's twohanded, for example.)</span>")
 		return
@@ -121,7 +121,8 @@
 		for(var/obj/item/I in held_items - held)
 			if(I.can_active_block())
 				return I
-	return held
+	else
+		return held
 
 /**
   * Proc called by keybindings to stop active blocking.
