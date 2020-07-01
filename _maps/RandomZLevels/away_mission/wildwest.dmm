@@ -63,50 +63,15 @@
 /obj/structure/destructible/cult/pylon,
 /turf/open/floor/circuit/green/off,
 /area/awaymission/wildwest/vault)
-"ar" = (
-/turf/open/floor/plating/ironsand{
-	icon_state = "ironsand1"
-	},
-/area/awaymission/wildwest/mines)
-"as" = (
-/turf/open/floor/plating/ironsand{
-	icon_state = "ironsand1"
-	},
-/area/awaymission/wildwest/mines)
-"at" = (
-/turf/open/floor/plating/ironsand{
-	icon_state = "ironsand1"
-	},
-/area/awaymission/wildwest/mines)
-"au" = (
-/turf/open/floor/plating/ironsand{
-	icon_state = "ironsand1"
-	},
-/area/awaymission/wildwest/mines)
-"av" = (
-/turf/open/floor/plating/ironsand{
-	icon_state = "ironsand1"
-	},
-/area/awaymission/wildwest/mines)
 "aw" = (
 /turf/open/floor/plating/ironsand{
 	icon_state = "ironsand1"
-	},
-"ax" = (
-/turf/open/floor/plating/ironsand{
-	icon_state = "ironsand1"
-	},
-/area/awaymission/wildwest/mines)
-"ay" = (
-/turf/open/floor/plating/ironsand{
-	icon_state = "ironsand1"
-	},
-/area/awaymission/wildwest/mines)
+	})
 "az" = (
 /turf/open/floor/plating/ironsand{
 	icon_state = "ironsand1"
 	},
-/area/awaymission/wildwest/mines)
+/area/awaymission/wildwest/mines,
 /area/awaymission/wildwest/mines)
 "aA" = (
 /obj/effect/meatgrinder,
@@ -32720,9 +32685,9 @@ aT
 aN
 aN
 aT
-ar
-au
-ax
+aT
+aT
+aT
 aT
 aT
 aT
@@ -32977,9 +32942,9 @@ aT
 aN
 aN
 aT
-as
-av
-ay
+aT
+aT
+aT
 aT
 aT
 aT
@@ -33234,7 +33199,7 @@ aT
 aN
 aN
 aT
-at
+aT
 aw
 az
 aT
