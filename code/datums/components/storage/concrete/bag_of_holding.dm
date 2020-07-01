@@ -36,6 +36,6 @@
 	. = ..()
 
 /datum/component/storage/concrete/bluespace/bag_of_holding/can_be_inserted(obj/item/I, stop_messages = FALSE, mob/M)
-	if(istype(I, /obj/item/storage/backpack/holding))
+	if(I.GetComponent(datum/component/storage/concrete/bluespace/bag_of_holding))
 		return TRUE
 	return ..()
