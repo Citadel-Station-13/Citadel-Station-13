@@ -9,7 +9,7 @@ k// PARTS //
 	icon_state = "riflestock"
 
 /obj/item/weaponcrafting/string
-	name = "bowstring"
+	name = "wound thread"
 	desc = "A long piece of thread with some resemblance to cable coil."
 	icon_state = "durastring"
 
