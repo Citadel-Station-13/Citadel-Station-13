@@ -101,3 +101,9 @@
 #define MODIFIER_SKILL_PRIORITY_LOW 100
 #define MODIFIER_SKILL_PRIORITY_DEF 50
 #define MODIFIER_SKILL_PRIORITY_MAX 1 //max priority, meant for job/antag modifiers so they don't null out other (de)buffs
+
+// UI Defines
+///Categories of skills, these will be displayed alphabetically.
+#define SKILL_UI_CAT_ENG	"Engineering"
+#define SKILL_UI_CAT_MED	"Medical"
+#define SKILL_UI_CAT_MISC	"Misc"
