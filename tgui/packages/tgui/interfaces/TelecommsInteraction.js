@@ -94,7 +94,7 @@ export const TelecommsInteraction = (props, context) => {
                   ) : (
                     ''
                   )}
-                  {isbus ? (
+                  {!!isbus && (
                     <LabeledList.Item label="Change Signal Frequency">
                       <Button
                         content={machine.chang_frequency ? (
@@ -125,17 +125,13 @@ export const TelecommsInteraction = (props, context) => {
                         ''
                       )}
                     </LabeledList.Item>
-                  ) : (
-                    ''
                   )}
-                  {hidden ? (
+                  {!!hidden && (
                     <LabeledList.Item label="Shadow Link">
                       {'ACTIVE'}
                     </LabeledList.Item>
-                  ) : (
-                    ''
                   )}
-                  {multitool ? (
+                  {!!multitool && (
                     <LabeledList.Item
                       label="Multitool buffer"
                       buttons={multitool_buf ? (
@@ -161,14 +157,10 @@ export const TelecommsInteraction = (props, context) => {
                           })}
                         />
                       )}>
-                      {multitool_buf ? (
+                      {!!multitool_buf && (
                         `${multitool_buf.name} (${multitool_buf.id})`
-                      ) : (
-                        ''
                       )}
                     </LabeledList.Item>
-                  ) : (
-                    ''
                   )}
                 </Fragment>
               ) : (
