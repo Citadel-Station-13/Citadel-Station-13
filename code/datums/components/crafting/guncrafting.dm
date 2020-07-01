@@ -1,4 +1,4 @@
-k// PARTS //
+// PARTS //
 /obj/item/weaponcrafting
 	icon = 'icons/obj/improvised.dmi'
 
@@ -14,26 +14,27 @@ k// PARTS //
 	icon_state = "durastring"
 
 ////////////////////////////////
-// KAT IMPROVISED WEAPON PARTS//
+// IMPROVISED WEAPON PARTS//
 ////////////////////////////////
 
 /obj/item/weaponcrafting/improvised_parts
-	name = "Eerie bunch of coloured dots."
-	desc = "This should not be here. Report this showing up as a bug on the github."
+	name = "Debug Improvised Gun Part"
+	desc = "A badly coded gun part. You should report coders if you see this."
 	icon = 'icons/obj/guns/gun_parts.dmi'
 	icon_state = "palette"
 
 // RECEIVERS
 
 /obj/item/weaponcrafting/improvised_parts/rifle_receiver
-	name = "bolt action receiver"
-	desc = "A crudely constructed receiver to create an improvised bolt-action breechloaded rifle." // removed some text implying that the item had more uses than it does
+	name = "rifle receiver"
+	desc = "A crudely constructed receiver to create an improvised bolt-action breechloaded rifle."  // removed some text implying that the item had more uses than it does
 	icon_state = "receiver_rifle"
 	w_class = WEIGHT_CLASS_SMALL
 
+
 /obj/item/weaponcrafting/improvised_parts/shotgun_receiver
-	name = "break-action assembly"
-	desc = "An improvised receiver to create a break-action breechloaded shotgun." // read above
+	name = "shotgun reciever"
+	desc = "An improvised receiver to create a break-action breechloaded shotgun."  // removed some text implying that the item had more uses than it does
 	icon_state = "receiver_shotgun"
 	w_class = WEIGHT_CLASS_SMALL
 

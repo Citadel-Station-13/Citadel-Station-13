@@ -424,7 +424,6 @@
 	category = CAT_WEAPONRY
 	subcategory = CAT_PARTS
 
-
 // MISC
 
 /datum/crafting_recipe/trigger_assembly
