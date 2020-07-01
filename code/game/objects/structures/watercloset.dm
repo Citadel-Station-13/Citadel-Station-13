@@ -157,7 +157,6 @@
 	secret_type = /obj/effect/spawner/lootdrop/prison_loot_toilet
 
 /obj/structure/toilet/greyscale
-
 	material_flags = MATERIAL_ADD_PREFIX | MATERIAL_COLOR
 	buildstacktype = null
 
@@ -582,6 +581,12 @@
 		G.use(1)
 		return
 
+	if(istype(O, /obj/item/stack/ore/glass))
+		new /obj/item/stack/sheet/sandblock(loc)
+		to_chat(user, "<span class='notice'>You wet the sand in the sink and form it into a block.</span>")
+		O.use(1)
+		return
+
 	if(!istype(O))
 		return
 	if(O.item_flags & ABSTRACT) //Abstract items like grabs won't wash. No-drop items will though because it's still technically an item in your hand.
@@ -673,7 +678,7 @@
 	if(steps == 4 && istype(S, /obj/item/stack/sheet/mineral/wood))
 		if(S.use(3))
 			steps = 5
-			desc = "A dug out well, A dug out well with out rope. Just add some cloth!"
+			desc = "A dug out well, A dug out well without rope. Just add some cloth!"
 			icon_state = "well_4"
 			return TRUE
 		else
@@ -702,11 +707,6 @@
 	icon_state = "puddle"
 	resistance_flags = UNACIDABLE
 
-/obj/structure/sink/greyscale
-	icon_state = "sink_greyscale"
-	material_flags = MATERIAL_ADD_PREFIX | MATERIAL_COLOR
-	buildstacktype = null
-
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/structure/sink/puddle/attack_hand(mob/M)
 	icon_state = "puddle-splash"
@@ -722,6 +722,7 @@
 	qdel(src)
 
 /obj/structure/sink/greyscale
+	icon_state = "sink_greyscale"
 	material_flags = MATERIAL_ADD_PREFIX | MATERIAL_COLOR
 	buildstacktype = null
 

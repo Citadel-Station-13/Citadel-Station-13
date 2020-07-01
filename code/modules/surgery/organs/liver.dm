@@ -23,6 +23,7 @@
 	var/toxLethality = LIVER_DEFAULT_TOX_LETHALITY//affects how much damage toxins do to the liver
 	var/filterToxins = TRUE //whether to filter toxins
 	var/cachedmoveCalc = 1
+	food_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/iron = 5)
 
 /obj/item/organ/liver/on_life()
 	. = ..()
@@ -43,11 +44,6 @@
 
 	if(damage > 10 && prob(damage/3))//the higher the damage the higher the probability
 		to_chat(owner, "<span class='warning'>You feel a dull pain in your abdomen.</span>")
-
-/obj/item/organ/liver/prepare_eat()
-	var/obj/S = ..()
-	S.reagents.add_reagent(/datum/reagent/iron, 5)
-	return S
 
 /obj/item/organ/liver/applyOrganDamage(d, maximum = maxHealth)
 	. = ..()
