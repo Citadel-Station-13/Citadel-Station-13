@@ -423,13 +423,13 @@
 /obj/effect/spawner/lootdrop/space_cash
 	lootcount = 1
 	loot = list(
-				/obj/item/stack/spacecash/c1    = 1,
+				/obj/item/stack/spacecash/c1    = 5,
 				/obj/item/stack/spacecash/c10   = 9,
 				/obj/item/stack/spacecash/c20   = 10,
 				/obj/item/stack/spacecash/c50   = 15,
 				/obj/item/stack/spacecash/c100  = 25,
 				/obj/item/stack/spacecash/c200  = 20,
-				/obj/item/stack/spacecash/c500  = 19,
+				/obj/item/stack/spacecash/c500  = 15,
 				/obj/item/stack/spacecash/c1000 = 1,
 				)
 
@@ -677,7 +677,7 @@
 		/obj/item/weaponcrafting/improvised_parts/makeshift_lens = 3,
 		)
 
-/obj/effect/spawner/lootdrop/weapon_parts
+/obj/effect/spawner/lootdrop/low_weapon_parts
 	name = "random weapon parts spawner 25%"
 	lootcount = 1
 	spawn_on_turf = FALSE
