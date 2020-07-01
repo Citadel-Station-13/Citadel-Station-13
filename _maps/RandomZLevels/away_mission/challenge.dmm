@@ -866,9 +866,7 @@
 	},
 /area/awaymission/challenge/start)
 "cS" = (
-/turf/open/floor/bluespace,
-/area/awaymission/challenge/start)
-"cT" = (
+/obj/machinery/gateway/away,
 /turf/open/floor/bluespace,
 /area/awaymission/challenge/start)
 "cV" = (
@@ -890,13 +888,7 @@
 	},
 /turf/open/floor/bluespace,
 /area/awaymission/challenge/start)
-"cY" = (
-/turf/open/floor/bluespace,
-/area/awaymission/challenge/start)
 "cZ" = (
-/obj/machinery/gateway{
-	dir = 4
-	},
 /obj/structure/cable{
 	icon_state = "1-2"
 	},
@@ -905,15 +897,11 @@
 	},
 /turf/open/floor/bluespace,
 /area/awaymission/challenge/start)
-"da" = (
-/area/awaymission/challenge/start)
-/turf/open/floor/bluespace,
 "db" = (
 /obj/structure/window/reinforced,
 /turf/open/floor/circuit,
 /area/awaymission/challenge/end)
 "dc" = (
-/obj/machinery/gateway,
 /obj/structure/cable{
 	icon_state = "0-4"
 	},
@@ -978,9 +966,6 @@
 /turf/open/floor/plasteel/dark,
 /area/awaymission/challenge/end)
 "dn" = (
-/obj/machinery/gateway{
-	dir = 6
-	},
 /obj/structure/cable{
 	icon_state = "1-8"
 	},
@@ -28091,9 +28076,9 @@ aa
 ab
 ab
 ab
-cS
+dq
 cX
-da
+dq
 ab
 ab
 at
@@ -28348,8 +28333,8 @@ aa
 ab
 aB
 ab
-cT
-cY
+dq
+cS
 dc
 dq
 dq
