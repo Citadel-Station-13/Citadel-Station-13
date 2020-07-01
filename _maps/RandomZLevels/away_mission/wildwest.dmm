@@ -71,7 +71,6 @@
 /turf/open/floor/plating/ironsand{
 	icon_state = "ironsand1"
 	},
-/area/awaymission/wildwest/mines,
 /area/awaymission/wildwest/mines)
 "aA" = (
 /obj/effect/meatgrinder,
