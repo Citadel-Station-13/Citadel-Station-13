@@ -40,7 +40,11 @@
 				)
 	premium = list(
 				/obj/item/clothing/accessory/skullcodpiece/fake = 3,
-				/obj/item/reagent_containers/glass/bottle/hexacrocin = 10,
+				/obj/item/reagent_containers/glass/bottle/hexacrocin = 5,
+				/obj/item/storage/pill_bottle/penis_enlargement = 2,
+				/obj/item/storage/pill_bottle/breast_enlargement = 2,
+				/obj/item/autosurgeon/penis = 1,
+	            /obj/item/autosurgeon/testicles = 1,
 				/obj/item/clothing/under/pants/chaps = 5
 				)
 	refill_canister = /obj/item/vending_refill/kink
