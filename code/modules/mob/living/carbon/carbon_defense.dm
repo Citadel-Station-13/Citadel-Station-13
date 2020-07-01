@@ -76,7 +76,7 @@
 	if(!affecting) //missing limb? we select the first bodypart (you can never have zero, because of chest)
 		affecting = bodyparts[1]
 	SEND_SIGNAL(I, COMSIG_ITEM_ATTACK_ZONE, src, user, affecting)
-	send_item_attack_message(I, user, affecting.name)
+	send_item_attack_message(I, user, affecting.name, totitemdamage)
 	I.do_stagger_action(src, user, totitemdamage)
 	if(I.force)
 		apply_damage(totitemdamage, I.damtype, affecting) //CIT CHANGE - replaces I.force with totitemdamage

@@ -288,7 +288,7 @@
 	icon_state = "fullgrass_[rand(1, 3)]"
 	. = ..()
 
-/obj/item/twohanded/required/kirbyplants
+/obj/item/kirbyplants
 	name = "potted plant"
 	icon = 'icons/obj/flora/plants.dmi'
 	icon_state = "plant-01"
@@ -300,24 +300,25 @@
 	throw_speed = 2
 	throw_range = 4
 
-/obj/item/twohanded/required/kirbyplants/Initialize()
+/obj/item/kirbyplants/ComponentInitialize()
 	. = ..()
 	AddElement(/datum/element/tactical)
 	addtimer(CALLBACK(src, /datum.proc/_AddElement, list(/datum/element/beauty, 500)), 0)
+	AddComponent(/datum/component/two_handed, require_twohands=TRUE, force_unwielded=10, force_wielded=10)
 
-/obj/item/twohanded/required/kirbyplants/random
+/obj/item/kirbyplants/random
 	icon = 'icons/obj/flora/_flora.dmi'
 	icon_state = "random_plant"
 	var/list/static/states
 
-/obj/item/twohanded/required/kirbyplants/random/Initialize()
+/obj/item/kirbyplants/random/Initialize()
 	. = ..()
 	icon = 'icons/obj/flora/plants.dmi'
 	if(!states)
 		generate_states()
 	icon_state = pick(states)
 
-/obj/item/twohanded/required/kirbyplants/random/proc/generate_states()
+/obj/item/kirbyplants/random/proc/generate_states()
 	states = list()
 	for(var/i in 1 to 25)
 		var/number
@@ -329,12 +330,12 @@
 	states += "applebush"
 
 
-/obj/item/twohanded/required/kirbyplants/dead
+/obj/item/kirbyplants/dead
 	name = "RD's potted plant"
 	desc = "A gift from the botanical staff, presented after the RD's reassignment. There's a tag on it that says \"Y'all come back now, y'hear?\"\nIt doesn't look very healthy..."
 	icon_state = "plant-25"
 
-/obj/item/twohanded/required/kirbyplants/photosynthetic
+/obj/item/kirbyplants/photosynthetic
 	name = "photosynthetic potted plant"
 	desc = "A bioluminescent plant."
 	icon_state = "plant-09"

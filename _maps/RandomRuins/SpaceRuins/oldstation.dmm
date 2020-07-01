@@ -619,11 +619,16 @@
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/ancientstation)
 "bP" = (
-/obj/structure/AIcore/deactivated,
-/turf/open/floor/plasteel/dark,
-/area/ruin/space/has_grav/ancientstation/hivebot{
-	name = "Delta Station AI Core"
-	})
+/obj/structure/cable{
+	icon_state = "2-4"
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/item/kirbyplants{
+	icon_state = "plant-25"
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel,
+/area/ruin/space/has_grav/ancientstation)
 "bQ" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
@@ -657,12 +662,9 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/ancientstation)
-"bV" = (
-/obj/effect/turf_decal/stripes/corner,
-/obj/machinery/button/door{
-	id = "proto";
-	name = "Prototype Lab Lockdown";
-	pixel_x = 28
+"bW" = (
+/obj/item/kirbyplants{
+	icon_state = "plant-25"
 	},
 /obj/effect/turf_decal/stripes/corner{
 	dir = 8
@@ -913,8 +915,8 @@
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/ancientstation/deltacorridor)
 "cz" = (
-/obj/structure/window/reinforced{
-	dir = 8
+/obj/item/kirbyplants{
+	icon_state = "plant-25"
 	},
 /obj/structure/window/reinforced{
 	dir = 1
@@ -974,7 +976,27 @@
 	name = "Delta Station AI Core"
 	})
 "cG" = (
-/obj/machinery/light/small{
+/obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/science,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel,
+/area/ruin/space/has_grav/ancientstation/deltacorridor)
+"cH" = (
+/obj/item/kirbyplants{
+	icon_state = "plant-25"
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel,
+/area/ruin/space/has_grav/ancientstation/deltacorridor)
+"cI" = (
+/obj/machinery/door/airlock/maintenance_hatch,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/ancientstation/deltacorridor)
+"cK" = (
+/obj/effect/spawner/structure/window/hollow/reinforced/end{
 	dir = 4
 	},
 /obj/effect/decal/cleanable/shreds,
@@ -1196,11 +1218,24 @@
 /area/ruin/space/has_grav/ancientstation)
 "dn" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/cobweb,
-/obj/structure/cable{
-	icon_state = "2-4"
+/obj/item/kirbyplants{
+	icon_state = "plant-25"
+	},
+/obj/machinery/light/small{
+	dir = 8
+	},
+/obj/machinery/firealarm{
+	dir = 8;
+	pixel_x = -24
+	},
+/obj/effect/turf_decal/tile/green{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/green{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/green{
+	dir = 8
 	},
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/ancientstation/deltacorridor)
@@ -1237,9 +1272,10 @@
 /obj/structure/table,
 /obj/item/storage/firstaid/ancient,
 /obj/effect/decal/cleanable/dirt,
-/obj/item/defibrillator,
-/obj/effect/turf_decal/tile/blue,
-/obj/effect/turf_decal/tile/blue{
+/obj/item/kirbyplants{
+	icon_state = "plant-25"
+	},
+/obj/machinery/light/small{
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/blue{
@@ -4263,6 +4299,9 @@
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
+/obj/item/kirbyplants{
+	icon_state = "plant-25"
+	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
@@ -4307,9 +4346,8 @@
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/ancientstation)
 "jJ" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/light/small{
-	dir = 8
+/obj/item/kirbyplants{
+	icon_state = "plant-25"
 	},
 /obj/machinery/firealarm{
 	dir = 8;
@@ -5537,8 +5575,11 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
-/obj/machinery/light_switch{
-	pixel_x = 26
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/ancientstation)
+"PV" = (
+/obj/item/kirbyplants{
+	icon_state = "plant-25"
 	},
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/ancientstation/betanorth)

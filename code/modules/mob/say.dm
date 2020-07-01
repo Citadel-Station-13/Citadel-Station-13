@@ -57,6 +57,12 @@
 	else
 		return ..()
 
+/proc/uncostumize_say(input, message_mode)
+	. = input
+	if(message_mode == MODE_CUSTOM_SAY)
+		var/customsayverb = findtext(input, "*")
+		return lowertext(copytext_char(input, 1, customsayverb))
+
 /mob/proc/whisper_keybind()
 	var/message = input(src, "", "whisper") as text|null
 	if(!length(message))
