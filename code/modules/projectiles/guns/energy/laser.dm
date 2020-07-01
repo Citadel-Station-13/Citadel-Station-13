@@ -240,4 +240,3 @@
 		chambered.BB.damage *= 5
 
 	process_fire(target, user, TRUE, params)
-
