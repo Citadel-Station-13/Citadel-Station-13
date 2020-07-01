@@ -247,3 +247,17 @@
 	icon_state = "bluekeg"
 	reagent_id = /datum/reagent/consumable/ethanol/gargle_blaster
 	tank_volume = 100
+
+/obj/structure/reagent_dispensers/keg/grog
+	name = "keg of grog"
+	desc = "A keg of Pirate Juice"
+	icon_state = "orangekeg"
+	reagent_id = /datum/reagent/consumable/ethanol/grog
+	tank_volume = 300
+
+/obj/structure/reagent_dispensers/keg/barefoot
+	name = "keg of barefoot"
+	desc = "A keg filled with honor for those who wandered these dark corridors without shoes and met the glass."
+	icon_state = "pinkkeg"
+	reagent_id = /datum/reagent/consumable/ethanol/barefoot
+	tank_volume = 137
