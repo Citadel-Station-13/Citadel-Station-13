@@ -193,7 +193,7 @@
 	reqs = list(/obj/item/pipe = 5,
 	/obj/item/stack/sheet/plastic = 15,
 	/obj/item/weaponcrafting/durathread_string = 5)
-	time = 450
+	time = 200
 	category = CAT_WEAPONRY
 	subcategory = CAT_WEAPON
 
