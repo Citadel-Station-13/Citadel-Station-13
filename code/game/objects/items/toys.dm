@@ -828,12 +828,11 @@
 	var/obj/item/toy/cards/singlecard/H = new/obj/item/toy/cards/singlecard(user.loc)
 	if(holo)
 		holo.spawned += H // track them leaving the holodeck
-	choice = cards[1]
+	choice = popleft(cards)
 	H.cardname = choice
 	H.parentdeck = src
 	var/O = src
 	H.apply_card_vars(H,O)
-	src.cards -= choice
 	H.pickup(user)
 	user.put_in_hands(H)
 	user.visible_message("[user] draws a card from the deck.", "<span class='notice'>You draw a card from the deck.</span>")
