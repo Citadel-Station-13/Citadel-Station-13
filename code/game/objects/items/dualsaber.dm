@@ -72,6 +72,11 @@
 		TEXT_ATTACK_TYPE_PROJECTILE = 4
 	)
 
+/obj/item/dualsaber/Initialize()
+	. = ..()
+	RegisterSignal(src, COMSIG_TWOHANDED_WIELD, .proc/on_wield)
+	RegisterSignal(src, COMSIG_TWOHANDED_UNWIELD, .proc/on_unwield)
+
 /obj/item/dualsaber/ComponentInitialize()
 	. = ..()
 	AddComponent(/datum/component/two_handed, force_unwielded=3, force_wielded=34, \
