@@ -156,11 +156,13 @@
 	// Insert data disk if console disk slot is empty
 	// Swap data disk if there is one already a disk in the console
 	if (istype(I, /obj/item/disk/data)) //INSERT SOME DISKETTES
+		// Insert disk into DNA Console
 		if (!user.transferItemToLoc(I,src))
 			return
+		// If insertion was successful and there's already a diskette in the console, eject the old one.
 		if(diskette)
-			diskette.forceMove(drop_location())
-			diskette = null
+			eject_disk(user)
+		// Set the new diskette.
 		diskette = I
 		to_chat(user, "<span class='notice'>You insert [I].</span>")
 		return
@@ -188,6 +190,14 @@
 			return
 
 	return ..()
+
+
+/obj/machinery/computer/scan_consolenew/AltClick(mob/user)
+	// Make sure the user can interact with the machine.
+	if(!user.canUseTopic(src, !issilicon(user)))
+		return
+
+	eject_disk(user)
 
 /obj/machinery/computer/scan_consolenew/Initialize()
 	. = ..()
@@ -289,7 +299,10 @@
 	data["isViableSubject"] = is_viable_occupant
 	if(is_viable_occupant)
 		data["subjectName"] = scanner_occupant.name
-		data["subjectStatus"] = scanner_occupant.stat
+		if(scanner_occupant.transformation_timer)
+			data["subjectStatus"] = STATUS_TRANSFORMING
+		else
+			data["subjectStatus"] = scanner_occupant.stat
 		data["subjectHealth"] = scanner_occupant.health
 		data["subjectRads"] = scanner_occupant.radiation/(RAD_MOB_SAFE/100)
 		data["subjectEnzymes"] = scanner_occupant.dna.unique_enzymes
@@ -463,10 +476,16 @@
 			if(!(scanner_occupant == connected_scanner.occupant))
 				return
 
+			// GUARD CHECK - Is the occupant currently undergoing some form of
+			//  transformation? If so, we don't want to be pulsing genes.
+			if(scanner_occupant.transformation_timer)
+				to_chat(usr,"<span class='warning'>Gene pulse failed: The scanner occupant undergoing a transformation.</span>")
+				return
+
 			// Resolve mutation's BYOND path from the alias
 			var/alias = params["alias"]
 			var/path = GET_MUTATION_TYPE_FROM_ALIAS(alias)
-
+			to_chat(usr,"<span class='warning'>[path] [alias]</span>")
 			// Make sure the occupant still has this mutation
 			if(!(path in scanner_occupant.dna.mutation_index))
 				return
@@ -1039,13 +1058,7 @@
 
 		// Eject stored diskette from console
 		if("eject_disk")
-			// GUARD CHECK - This code shouldn't even be callable without a diskette
-			//  inserted. Unexpected result
-			if(!diskette)
-				return
-
-			diskette.forceMove(drop_location())
-			diskette = null
+			eject_disk(usr)
 			return
 
 		// Create a Genetic Makeup injector. These injectors are timed and thus are
@@ -1977,6 +1990,29 @@
 	tgui_view_state["storageConsSubMode"] = "mutations"
 	tgui_view_state["storageDiskSubMode"] = "mutations"
 
+/**
+  * Ejects the DNA Disk from the console.
+	*
+	* Will insert into the user's hand if possible, otherwise will drop it at the
+	* console's location.
+	*
+	* Arguments:
+  * * user - The mob that is attempting to eject the diskette.
+  */
+/obj/machinery/computer/scan_consolenew/proc/eject_disk(mob/user)
+	// Check for diskette.
+	if(!diskette)
+		return
+
+	to_chat(user, "<span class='notice'>You eject [diskette] from [src].</span>")
+
+	// Reset the state to console storage.
+	tgui_view_state["storageMode"] = "console"
+
+	// If the disk shouldn't pop into the user's hand for any reason, drop it on the console instead.
+	if(!istype(user) || !Adjacent(user) || !user.put_in_active_hand(diskette))
+		diskette.forceMove(drop_location())
+	diskette = null
 
 #undef INJECTOR_TIMEOUT
 #undef NUMBER_OF_BUFFERS

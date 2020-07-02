@@ -804,7 +804,7 @@ const DnaConsoleSequencer = (props, context) => {
         </Section>
       ) || (isMonkey && mutation?.Name !== 'Monkified') && (
         <Section color="bad">
-          Genetic sequence corrupted. Subject diagnostic report: MONKEY.
+          Genetic sequence corrupted. Subject diagnostic report: MONKEY. Scramble DNA to humanize.
         </Section>
       ) || (subjectStatus === SUBJECT_TRANSFORMING) && (
         <Section color="bad">
