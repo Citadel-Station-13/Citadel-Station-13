@@ -10,6 +10,7 @@
 	id = "beanbag_slug"
 	build_type = AUTOLATHE
 	materials = list(/datum/material/iron = 250)
+	materials = list(/datum/material/iron = 1000)
 	build_path = /obj/item/ammo_casing/shotgun/beanbag
 	category = list("initial", "Security")
 
@@ -27,6 +28,14 @@
 	build_type = AUTOLATHE
 	materials = list(/datum/material/iron = 20000)
 	build_path = /obj/item/ammo_box/c38
+	category = list("initial", "Security")
+
+/datum/design/r32acp
+	name = "Rubber Pistol Bullet (.32)"
+	id = "r32acp"
+	build_type = AUTOLATHE
+	materials = list(/datum/material/iron = 250)
+	build_path = /obj/item/ammo_casing/r32acp
 	category = list("initial", "Security")
 
 /////////////////
@@ -73,12 +82,12 @@
 	build_path = /obj/item/restraints/handcuffs
 	category = list("hacked", "Security")
 
-/datum/design/receiver
-	name = "Modular Receiver"
-	id = "receiver"
-	build_type = AUTOLATHE | NO_PUBLIC_LATHE
-	materials = list(/datum/material/iron = 15000)
-	build_path = /obj/item/weaponcrafting/receiver
+/datum/design/rifle_receiver
+	name = "Rifle Receiver"
+	id = "rifle_receiver"
+	build_type = AUTOLATHE
+	materials = list(/datum/material/iron = 24000)
+	build_path = /obj/item/weaponcrafting/improvised_parts/rifle_receiver
 	category = list("hacked", "Security")
 
 /datum/design/shotgun_slug
@@ -112,6 +121,10 @@
 	materials = list(/datum/material/iron = 4000)
 	build_path = /obj/item/ammo_casing/shotgun/incendiary
 	category = list("hacked", "Security")
+
+/////////////////
+//   Bullets   //
+/////////////////
 
 /datum/design/riot_dart
 	name = "Foam Riot Dart"
@@ -192,3 +205,23 @@
 	materials = list(/datum/material/iron = 5500)
 	build_path = /obj/item/clothing/head/foilhat
 	category = list("hacked", "Misc")
+
+/datum/design/c32acp
+	name = "Pistol Bullet (.32)"
+	id = "c32acp"
+	build_type = AUTOLATHE
+	materials = list(/datum/material/iron = 500)
+	build_path = /obj/item/ammo_casing/c32acp
+	category = list("hacked", "Security")
+
+/////////////////
+//  Magazines  //
+/////////////////
+
+/datum/design/m32acp
+	name = "Empty .32 Magazine"
+	id = "m32acp"
+	build_type = AUTOLATHE
+	materials = list(/datum/material/iron = 10000)
+	build_path = /obj/item/ammo_box/magazine/m32acp/empty
+	category = list("hacked", "Security")

@@ -148,15 +148,34 @@ const Catalog = props => {
               {pack.name}:
             </td>
             <td className="LabeledList__cell">
+              {!!pack.private_goody && (
+                <Fragment>Private Only</Fragment>
+              )}
+            </td>
+            <td className="LabeledList__cell">
+              {!!pack.goody && (
+                <Fragment>Small Item</Fragment>
+              )}
+            </td>
+            <td className="LabeledList__cell">
               {!!pack.access && (
                 <Fragment>Restrictions Apply</Fragment>
               )}
             </td>
             <td className="LabeledList__cell LabeledList__buttons">
               <Button fluid
-                content={(data.self_paid
-                  ? Math.round(pack.cost * 1.1)
-                  : pack.cost) + ' credits'}
+                disabled={(data.self_paid
+                  && !pack.can_private_buy
+                  && !data.emagged
+                )}
+                content={(
+                  (
+                    data.self_paid
+                    && !pack.private_goody
+                    && !pack.goody
+                  )
+                    ? Math.round(pack.cost * 1.1)
+                    : pack.cost) + ' cr'}
                 tooltip={pack.desc}
                 tooltipPosition="left"
                 onClick={() => act(ref, 'add', {

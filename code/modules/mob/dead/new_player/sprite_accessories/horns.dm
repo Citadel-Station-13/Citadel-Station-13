@@ -1,7 +1,7 @@
 /datum/sprite_accessory/horns
 	icon = 'icons/mob/mutant_bodyparts.dmi'
 	color_src = HORNCOLOR
-	relevant_layers = list(BODY_ADJ_LAYER)
+	relevant_layers = list(HORNS_LAYER)
 
 /datum/sprite_accessory/horns/none
 	name = "None"

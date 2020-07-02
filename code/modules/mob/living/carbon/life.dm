@@ -1,29 +1,23 @@
-/mob/living/carbon/Life()
-	set invisibility = 0
-
-	if(notransform)
-		return
-
-	if(damageoverlaytemp)
-		damageoverlaytemp = 0
-		update_damage_hud()
-
+/mob/living/carbon/BiologicalLife(seconds, times_fired)
 	//Reagent processing needs to come before breathing, to prevent edge cases.
 	handle_organs()
-
-	. = ..()
-
-	if (QDELETED(src))
+	. = ..()		// if . is false, we are dead.
+	if(stat == DEAD)
+		stop_sound_channel(CHANNEL_HEARTBEAT)
+		handle_death()
+		rot()
+		. = FALSE
+	if(!.)
 		return
-
-	if(.) //not dead
-		handle_blood()
-
+	handle_blood()
+	// handle_blood *could* kill us.
+	// we should probably have a better system for if we need to check for death or something in the future hmw
 	if(stat != DEAD)
 		var/bprv = handle_bodyparts()
 		if(bprv & BODYPART_LIFE_UPDATE_HEALTH)
 			updatehealth()
 	update_stamina()
+	doSprintBufferRegen()
 
 	if(stat != DEAD)
 		handle_brain_damage()
@@ -31,16 +25,15 @@
 	if(stat != DEAD)
 		handle_liver()
 
-	if(stat == DEAD)
-		stop_sound_channel(CHANNEL_HEARTBEAT)
-		handle_death()
-		rot()
-
 	//Updates the number of stored chemicals for powers
 	handle_changeling()
 
-	if(stat != DEAD)
-		return 1
+/mob/living/carbon/PhysicalLife(seconds, times_fired)
+	if(!(. = ..()))
+		return
+	if(damageoverlaytemp)
+		damageoverlaytemp = 0
+		update_damage_hud()
 
 //Procs called while dead
 /mob/living/carbon/proc/handle_death()
@@ -523,7 +516,7 @@ GLOBAL_LIST_INIT(ballmer_windows_me_msg, list("Yo man, what if, we like, uh, put
 //this updates all special effects: stun, sleeping, knockdown, druggy, stuttering, etc..
 /mob/living/carbon/handle_status_effects()
 	..()
-	if(getStaminaLoss() && !(combat_flags & COMBAT_FLAG_COMBAT_ACTIVE))		//CIT CHANGE - prevents stamina regen while combat mode is active
+	if(getStaminaLoss() && !SEND_SIGNAL(src, COMSIG_COMBAT_MODE_CHECK, COMBAT_MODE_ACTIVE))		//CIT CHANGE - prevents stamina regen while combat mode is active
 		adjustStaminaLoss(!CHECK_MOBILITY(src, MOBILITY_STAND) ? ((combat_flags & COMBAT_FLAG_HARD_STAMCRIT) ? -7.5 : -6) : -3)//CIT CHANGE - decreases adjuststaminaloss to stop stamina damage from being such a joke
 
 	if(!(combat_flags & COMBAT_FLAG_HARD_STAMCRIT) && incomingstammult != 1)

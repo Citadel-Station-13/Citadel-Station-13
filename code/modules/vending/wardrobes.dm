@@ -2,8 +2,8 @@
 	icon_state = "refill_clothes"
 
 /obj/machinery/vending/wardrobe
-	default_price = 350
-	extra_price = 400
+	default_price = PRICE_NORMAL
+	extra_price = PRICE_EXPENSIVE
 	payment_department = NO_FREEBIES
 	input_display_header = "Returned Clothing"
 
@@ -33,6 +33,8 @@
 	refill_canister = /obj/item/vending_refill/wardrobe/sec_wardrobe
 	payment_department = ACCOUNT_SEC
 	cost_multiplier_per_dept = list(ACCOUNT_SEC = 0)
+	default_price = PRICE_ABOVE_NORMAL
+	extra_price = PRICE_EXPENSIVE
 
 /obj/item/vending_refill/wardrobe/sec_wardrobe
 	machine_name = "SecDrobe"
@@ -49,6 +51,7 @@
 					/obj/item/storage/backpack/medic = 5,
 					/obj/item/storage/backpack/satchel/med = 5,
 					/obj/item/clothing/suit/hooded/wintercoat/medical = 5,
+					/obj/item/clothing/suit/hooded/wintercoat/paramedic = 2,
 					/obj/item/clothing/under/rank/medical/doctor/nurse = 5,
 					/obj/item/clothing/head/nursehat = 5,
 					/obj/item/clothing/under/rank/medical/doctor/skirt= 5,
@@ -306,7 +309,7 @@
 					/obj/item/cartridge/janitor = 3,
 					/obj/item/clothing/gloves/color/black = 2,
 					/obj/item/clothing/head/soft/purple = 2,
-					/obj/item/twohanded/broom = 2,
+					/obj/item/broom = 2,
 					/obj/item/paint/paint_remover = 2,
 					/obj/item/melee/flyswatter = 2,
 					/obj/item/flashlight = 2,
@@ -479,6 +482,8 @@
 					/obj/item/clothing/gloves/color/captain = 1)
 	refill_canister = /obj/item/vending_refill/wardrobe/cap_wardrobe
 	payment_department = ACCOUNT_CIV
+	default_price = PRICE_ALMOST_EXPENSIVE
+	extra_price = PRICE_ABOVE_EXPENSIVE
 
 /obj/machinery/vending/wardrobe/cap_wardrobe/Initialize()
 	. = ..()

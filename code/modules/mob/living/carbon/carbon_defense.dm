@@ -65,33 +65,18 @@
 		throw_mode_off()
 		return TRUE
 
-/mob/living/carbon/embed_item(obj/item/I)
-	throw_alert("embeddedobject", /obj/screen/alert/embeddedobject)
-	var/obj/item/bodypart/L = pick(bodyparts)
-	L.embedded_objects |= I
-	I.add_mob_blood(src)//it embedded itself in you, of course it's bloody!
-	I.forceMove(src)
-	I.embedded()
-	L.receive_damage(I.w_class*I.embedding.embedded_impact_pain_multiplier)
-	visible_message("<span class='danger'>[I] embeds itself in [src]'s [L.name]!</span>","<span class='userdanger'>[I] embeds itself in your [L.name]!</span>")
-	SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "embedded", /datum/mood_event/embedded)
-
-/mob/living/carbon/attacked_by(obj/item/I, mob/living/user)
-	var/totitemdamage = pre_attacked_by(I, user)
-	if(!(user.combat_flags & COMBAT_FLAG_COMBAT_ACTIVE))
-		totitemdamage *= 0.5
-	if(!CHECK_MOBILITY(user, MOBILITY_STAND))
-		totitemdamage *= 0.5
-	if(!(combat_flags & COMBAT_FLAG_COMBAT_ACTIVE))
-		totitemdamage *= 1.5
+/mob/living/carbon/attacked_by(obj/item/I, mob/living/user, attackchain_flags = NONE, damage_multiplier = 1)
+	var/totitemdamage = pre_attacked_by(I, user) * damage_multiplier
 	var/impacting_zone = (user == src)? check_zone(user.zone_selected) : ran_zone(user.zone_selected)
-	if((user != src) && (mob_run_block(I, totitemdamage, "the [I]", ATTACK_TYPE_MELEE, I.armour_penetration, user, impacting_zone, null) & BLOCK_SUCCESS))
+	var/list/block_return = list()
+	if((user != src) && (mob_run_block(I, totitemdamage, "the [I]", ((attackchain_flags & ATTACKCHAIN_PARRY_COUNTERATTACK)? ATTACK_TYPE_PARRY_COUNTERATTACK : NONE) | ATTACK_TYPE_MELEE, I.armour_penetration, user, impacting_zone, block_return) & BLOCK_SUCCESS))
 		return FALSE
+	totitemdamage = block_calculate_resultant_damage(totitemdamage, block_return)
 	var/obj/item/bodypart/affecting = get_bodypart(impacting_zone)
 	if(!affecting) //missing limb? we select the first bodypart (you can never have zero, because of chest)
 		affecting = bodyparts[1]
 	SEND_SIGNAL(I, COMSIG_ITEM_ATTACK_ZONE, src, user, affecting)
-	send_item_attack_message(I, user, affecting.name)
+	send_item_attack_message(I, user, affecting.name, totitemdamage)
 	I.do_stagger_action(src, user, totitemdamage)
 	if(I.force)
 		apply_damage(totitemdamage, I.damtype, affecting) //CIT CHANGE - replaces I.force with totitemdamage
@@ -185,7 +170,8 @@
 				M.powerlevel = 0
 
 			visible_message("<span class='danger'>The [M.name] has shocked [src]!</span>", \
-			"<span class='userdanger'>The [M.name] has shocked [src]!</span>")
+			"<span class='userdanger'>The [M.name] has shocked you!</span>", target = M,
+			target_message = "<span class='danger'>You have shocked [src]!</span>")
 
 			do_sparks(5, TRUE, src)
 			var/power = M.powerlevel + rand(0,3)
@@ -277,6 +263,9 @@
 		to_chat(M, "<span class='warning'>You can't put [p_them()] out with just your bare hands!</span>")
 		return
 
+	if(M == src && check_self_for_injuries())
+		return
+
 	if(health >= 0 && !(HAS_TRAIT(src, TRAIT_FAKEDEATH)))
 		var/friendly_check = FALSE
 		if(mob_run_block(M, 0, M.name, ATTACK_TYPE_UNARMED, 0, null, null, null))
@@ -286,12 +275,14 @@
 				to_chat(M, "<span class='warning'>You need to unbuckle [src] first to do that!")
 				return
 			M.visible_message("<span class='notice'>[M] shakes [src] trying to get [p_them()] up!</span>", \
-							"<span class='notice'>You shake [src] trying to get [p_them()] up!</span>")
+							"<span class='notice'>You shake [src] trying to get [p_them()] up!</span>", target = src,
+							target_message = "<span class='notice'>[M] shakes you trying to get you up!</span>")
 
 		else if(M.zone_selected == BODY_ZONE_PRECISE_MOUTH) // I ADDED BOOP-EH-DEH-NOSEH - Jon
 			M.visible_message( \
 				"<span class='notice'>[M] boops [src]'s nose.</span>", \
-				"<span class='notice'>You boop [src] on the nose.</span>", )
+				"<span class='notice'>You boop [src] on the nose.</span>", target = src,
+				target_message = "<span class='notice'>[M] boops your nose.</span>")
 			playsound(src, 'sound/items/Nose_boop.ogg', 50, 0)
 
 		else if(check_zone(M.zone_selected) == BODY_ZONE_HEAD)
@@ -300,7 +291,8 @@
 				S = dna.species
 
 			M.visible_message("<span class='notice'>[M] gives [src] a pat on the head to make [p_them()] feel better!</span>", \
-						"<span class='notice'>You give [src] a pat on the head to make [p_them()] feel better!</span>")
+						"<span class='notice'>You give [src] a pat on the head to make [p_them()] feel better!</span>", target = src,
+						target_message = "<span class='notice'>[M] gives you a pat on the head to make you feel better!</span>")
 			SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "headpat", /datum/mood_event/headpat)
 			friendly_check = TRUE
 			if(S?.can_wag_tail(src) && !dna.species.is_wagging_tail())
@@ -313,11 +305,13 @@
 		else if(check_zone(M.zone_selected) == BODY_ZONE_R_ARM || check_zone(M.zone_selected) == BODY_ZONE_L_ARM)
 			M.visible_message( \
 				"<span class='notice'>[M] shakes [src]'s hand.</span>", \
-				"<span class='notice'>You shake [src]'s hand.</span>", )
+				"<span class='notice'>You shake [src]'s hand.</span>", target = src,
+				target_message = "<span class='notice'>[M] shakes your hand.</span>")
 
 		else
 			M.visible_message("<span class='notice'>[M] hugs [src] to make [p_them()] feel better!</span>", \
-						"<span class='notice'>You hug [src] to make [p_them()] feel better!</span>")
+						"<span class='notice'>You hug [src] to make [p_them()] feel better!</span>", target = src,\
+						target_message = "<span class='notice'>[M] hugs you to make you feel better!</span>")
 			SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "hug", /datum/mood_event/hug)
 			friendly_check = TRUE
 
@@ -339,6 +333,26 @@
 		update_mobility()
 		playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
 
+/// Check ourselves to see if we've got any shrapnel, return true if we do. This is a much simpler version of what humans do, we only indicate we're checking ourselves if there's actually shrapnel
+/mob/living/carbon/proc/check_self_for_injuries()
+	if(stat == DEAD || stat == UNCONSCIOUS)
+		return
+
+	var/embeds = FALSE
+	for(var/X in bodyparts)
+		var/obj/item/bodypart/LB = X
+		for(var/obj/item/I in LB.embedded_objects)
+			if(!embeds)
+				embeds = TRUE
+				// this way, we only visibly try to examine ourselves if we have something embedded, otherwise we'll still hug ourselves :)
+				visible_message("<span class='notice'>[src] examines [p_them()]self.</span>", \
+					"<span class='notice'>You check yourself for shrapnel.</span>")
+			if(I.isEmbedHarmless())
+				to_chat(src, "\t <a href='?src=[REF(src)];embedded_object=[REF(I)];embedded_limb=[REF(LB)]' class='warning'>There is \a [I] stuck to your [LB.name]!</a>")
+			else
+				to_chat(src, "\t <a href='?src=[REF(src)];embedded_object=[REF(I)];embedded_limb=[REF(LB)]' class='warning'>There is \a [I] embedded in your [LB.name]!</a>")
+
+	return embeds
 
 /mob/living/carbon/flash_act(intensity = 1, override_blindness_check = 0, affect_silicon = 0, visual = 0)
 	. = ..()

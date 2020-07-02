@@ -250,7 +250,7 @@
 	if(istype(O, /obj/item/stack/medical/gauze))
 		var/obj/item/stack/medical/gauze/G = O
 		reac_volume = min((reac_volume / 10), G.amount)
-		new/obj/item/stack/medical/ointment(get_turf(G), reac_volume)
+		new/obj/item/stack/medical/mesh(get_turf(G), reac_volume)
 		G.use(reac_volume)
 
 /datum/reagent/medicine/silver_sulfadiazine/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message = 1)
@@ -274,7 +274,11 @@
 
 /datum/reagent/medicine/silver_sulfadiazine/overdose_start(mob/living/M)
 	metabolization_rate = 15 * REAGENTS_METABOLISM
-	M.adjustBruteLoss(2*REM, 0)
+	..()
+	. = 1
+
+/datum/reagent/medicine/silver_sulfadiazine/overdose_process(mob/living/M)
+	M.adjustFireLoss(2*REM, 0)
 	var/obj/item/organ/liver/L = M.getorganslot(ORGAN_SLOT_LIVER)
 	if(L)
 		L.applyOrganDamage(1)
@@ -332,7 +336,7 @@
 	if(istype(O, /obj/item/stack/medical/gauze))
 		var/obj/item/stack/medical/gauze/G = O
 		reac_volume = min((reac_volume / 10), G.amount)
-		new/obj/item/stack/medical/bruise_pack(get_turf(G), reac_volume)
+		new/obj/item/stack/medical/suture(get_turf(G), reac_volume)
 		G.use(reac_volume)
 
 /datum/reagent/medicine/styptic_powder/on_mob_life(mob/living/carbon/M)
@@ -340,8 +344,12 @@
 	..()
 	. = 1
 
-datum/reagent/medicine/styptic_powder/overdose_start(mob/living/M)
+/datum/reagent/medicine/styptic_powder/overdose_start(mob/living/M)
 	metabolization_rate = 15 * REAGENTS_METABOLISM
+	..()
+	. = 1
+
+/datum/reagent/medicine/styptic_powder/overdose_process(mob/living/M)
 	M.adjustBruteLoss(2*REM, 0)
 	var/obj/item/organ/liver/L = M.getorganslot(ORGAN_SLOT_LIVER)
 	if(L)
@@ -1555,3 +1563,20 @@ datum/reagent/medicine/styptic_powder/overdose_start(mob/living/M)
 	M.adjustOrganLoss(ORGAN_SLOT_LUNGS, 0.5)
 	..()
 	. = 1
+
+/datum/reagent/medicine/liquid_wisdom
+	name = "liquid wisdom"
+	description = "the physical representation of wisdom, in liquid form"
+	taste_mult = 4
+	can_synth = FALSE
+	overdose_threshold = 30
+	value = REAGENT_VALUE_UNCOMMON // while it's 'rare', it can be milked from the wisdom cow
+
+/datum/reagent/medicine/liquid_wisdom/on_mob_life(mob/living/carbon/C) //slightly stronger mannitol, from the wisdom cow
+	C.adjustOrganLoss(ORGAN_SLOT_BRAIN, -3*REM)
+	if(prob(20))
+		C.cure_trauma_type(resilience = TRAUMA_RESILIENCE_BASIC)
+	if(prob(3))
+		to_chat(C, "[pick(GLOB.wisdoms)]") //give them a random wisdom
+	..()
+

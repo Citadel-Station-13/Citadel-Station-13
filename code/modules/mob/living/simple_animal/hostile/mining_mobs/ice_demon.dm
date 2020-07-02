@@ -23,7 +23,8 @@
 	obj_damage = 40
 	melee_damage_lower = 15
 	melee_damage_upper = 15
-	attacktext = "slices"
+	attack_verb_continuous = "slices"
+	attack_verb_simple = "slice"
 	attack_sound = 'sound/weapons/bladeslice.ogg'
 	vision_range = 7
 	aggro_vision_range = 7
@@ -61,9 +62,10 @@
 	SLEEP_CHECK_DEATH(8)
 	return ..()
 
-/mob/living/simple_animal/hostile/asteroid/ice_demon/Life()
-	. = ..()
-	if(!. || target)
+/mob/living/simple_animal/hostile/asteroid/ice_demon/BiologicalLife(seconds, times_fired)
+	if(!(. = ..()))
+		return
+	if(target)
 		return
 	adjustHealth(-maxHealth*0.025)
 

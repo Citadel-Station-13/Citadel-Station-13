@@ -44,7 +44,6 @@
 	desc = "A 9mm incendiary bullet casing."
 	projectile_type = /obj/item/projectile/bullet/incendiary/c9mm
 
-
 // .50AE (Desert Eagle)
 
 /obj/item/ammo_casing/a50AE
@@ -53,3 +52,16 @@
 	caliber = ".50"
 	projectile_type = /obj/item/projectile/bullet/a50AE
 
+// .32 ACP (Improvised Pistol)
+
+/obj/item/ammo_casing/c32acp
+	name = ".32 bullet casing"
+	desc = "A .32 bullet casing."
+	caliber = "c32acp"
+	projectile_type = /obj/item/projectile/bullet/c32acp
+
+/obj/item/ammo_casing/r32acp
+	name = ".32 rubber bullet casing"
+	desc = "A .32 rubber bullet casing."
+	caliber = "c32acp"
+	projectile_type = /obj/item/projectile/bullet/r32acp

@@ -7,7 +7,8 @@
 	icon_dead = "ice_whelp_dead"
 	mob_biotypes = MOB_ORGANIC|MOB_BEAST
 	mouse_opacity = MOUSE_OPACITY_ICON
-	friendly = "stares down"
+	friendly_verb_continuous = "stares down"
+	friendly_verb_simple = "stare down"
 	speak_emote = list("roars")
 	speed = 30
 	move_to_delay = 30
@@ -19,7 +20,8 @@
 	armour_penetration = 20
 	melee_damage_lower = 20
 	melee_damage_upper = 20
-	attacktext = "chomps"
+	attack_verb_continuous = "chomps"
+	attack_verb_simple = "chomp"
 	attack_sound = 'sound/magic/demon_attack1.ogg'
 	vision_range = 9
 	aggro_vision_range = 9
@@ -41,9 +43,10 @@
 	var/list/burn_turfs = getline(src, T) - get_turf(src)
 	dragon_fire_line(src, burn_turfs)
 
-/mob/living/simple_animal/hostile/asteroid/ice_whelp/Life()
-	. = ..()
-	if(!. || target)
+/mob/living/simple_animal/hostile/asteroid/ice_whelp/BiologicalLife(seconds, times_fired)
+	if(!(. = ..()))
+		return
+	if(target)
 		return
 	adjustHealth(-maxHealth*0.025)
 

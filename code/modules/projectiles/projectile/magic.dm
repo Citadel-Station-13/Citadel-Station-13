@@ -121,10 +121,10 @@
 	qdel(src)
 
 /proc/wabbajack(mob/living/M)
-	if(!istype(M) || M.stat == DEAD || M.notransform || (GODMODE & M.status_flags))
+	if(!istype(M) || M.stat == DEAD || M.mob_transforming || (GODMODE & M.status_flags))
 		return
 
-	M.notransform = TRUE
+	M.mob_transforming = TRUE
 	M.Paralyze(INFINITY)
 	M.icon = null
 	M.cut_overlays()
@@ -434,7 +434,7 @@
 	damage = 15
 	damage_type = BURN
 	nodamage = 0
-	speed = 0.3
+	pixels_per_second = TILES_TO_PIXELS(33.33)
 	flag = "magic"
 
 	var/zap_power = 20000

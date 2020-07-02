@@ -87,7 +87,7 @@
 		new /obj/item/stack/sheet/mineral/uranium(location)
 
 /datum/chemical_reaction/bluespacecrystalifaction
-	name = "Crystal Bluespace"
+	name = "Crystallized Bluespace"
 	id = "crystalbluespace"
 	required_reagents = list(/datum/reagent/consumable/frostoil = 5, /datum/reagent/bluespace = 20, /datum/reagent/iron = 1)
 	mob_react = FALSE
@@ -630,6 +630,11 @@
 	id = /datum/reagent/concentrated_barbers_aid
 	results = list(/datum/reagent/concentrated_barbers_aid = 2)
 	required_reagents = list(/datum/reagent/barbers_aid = 1, /datum/reagent/toxin/mutagen = 1)
+
+/datum/chemical_reaction/baldium
+	results = list(/datum/reagent/baldium = 1)
+	required_reagents = list(/datum/reagent/radium = 1, /datum/reagent/toxin/acid = 1, /datum/reagent/lye = 1)
+	required_temp = 395
 
 /datum/chemical_reaction/saltpetre
 	name = "saltpetre"

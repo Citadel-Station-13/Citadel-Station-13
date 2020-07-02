@@ -85,6 +85,9 @@
 	if (opacity)
 		has_opaque_atom = TRUE
 
+	// apply materials properly from the default custom_materials value
+	set_custom_materials(custom_materials)
+
 	ComponentInitialize()
 
 	return INITIALIZE_HINT_NORMAL
@@ -179,7 +182,7 @@
 	target.zImpact(A, levels, src)
 	return TRUE
 
-/turf/proc/handleRCL(obj/item/twohanded/rcl/C, mob/user)
+/turf/proc/handleRCL(obj/item/rcl/C, mob/user)
 	if(C.loaded)
 		for(var/obj/structure/cable/LC in src)
 			if(!LC.d1 || !LC.d2)
@@ -202,7 +205,7 @@
 		coil.place_turf(src, user)
 		return TRUE
 
-	else if(istype(C, /obj/item/twohanded/rcl))
+	else if(istype(C, /obj/item/rcl))
 		handleRCL(C, user)
 
 	return FALSE

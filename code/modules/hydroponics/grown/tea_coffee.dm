@@ -48,7 +48,7 @@
 /obj/item/seeds/tea/catnip
 	name = "pack of catnip seeds"
 	icon_state = "seed-catnip"
-	desc = "Long stocks with flowering tips that has a chemical to make feline attracted to it."
+	desc = "Long stocks with flowering tips that contain a chemical to make felines attracted to it."
 	species = "catnip"
 	plantname = "Catnip Plant"
 	growthstages = 3

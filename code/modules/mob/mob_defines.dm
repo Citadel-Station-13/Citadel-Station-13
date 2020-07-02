@@ -12,6 +12,9 @@
 
 	vis_flags = VIS_INHERIT_PLANE //when this be added to vis_contents of something it inherit something.plane, important for visualisation of mob in openspace.
 
+	/// What receives our keyboard input. src by default.
+	var/datum/focus
+
 	var/lighting_alpha = LIGHTING_PLANE_ALPHA_VISIBLE
 	var/datum/mind/mind
 	var/list/datum/action/actions = list()
@@ -34,7 +37,9 @@
 
 	var/next_move = null
 	var/create_area_cooldown
-	var/notransform = null	//Carbon
+	/// Whether or not the mob is currently being transformed into another mob or into another state of being. This will prevent it from moving or doing realistically anything.
+	/// Don't you DARE use this for a cheap way to ensure someone is stunned in your code.
+	var/mob_transforming = FALSE
 	var/eye_blind = 0		//Carbon
 	var/eye_blurry = 0		//Carbon
 	var/real_name = null
@@ -123,6 +128,13 @@
 	var/datum/click_intercept
 
 	var/registered_z
+
+	var/list/alerts = list() // contains /obj/screen/alert only // On /mob so clientless mobs will throw alerts properly
+	var/list/screens = list()
+	var/list/client_colours = list()
+	var/hud_type = /datum/hud
+
+	var/datum/hSB/sandbox = null
 
 	var/mob/audiovisual_redirect //Mob to redirect messages, speech, and sounds to
 

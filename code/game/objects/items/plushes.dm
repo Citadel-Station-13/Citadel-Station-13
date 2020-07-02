@@ -140,7 +140,8 @@
 	if(jsonlist["icon_state"])
 		icon_state = jsonlist["icon_state"]
 		item_state = jsonlist["item_state"]
-		icon = 'config/plushies/sprites.dmi'
+		var/static/config_sprites = file("config/plushies/sprites.dmi")
+		icon = config_sprites
 	if(jsonlist["attack_verb"])
 		attack_verb = jsonlist["attack_verb"]
 	if(jsonlist["squeak_override"])
@@ -436,13 +437,13 @@ GLOBAL_LIST_INIT(valid_plushie_paths, valid_plushie_paths())
 /obj/item/toy/plush/random/Initialize()
 	var/newtype
 	var/list/snowflake_list = CONFIG_GET(keyed_list/snowflake_plushies)
-	
+
 	/// If there are no snowflake plushies we'll default to base plush, so we grab from the valid list
 	if (snowflake_list.len)
 		newtype = prob(CONFIG_GET(number/snowflake_plushie_prob)) ? /obj/item/toy/plush/random_snowflake : pick(GLOB.valid_plushie_paths)
-	else 
+	else
 		newtype = pick(GLOB.valid_plushie_paths)
-	
+
 	new newtype(loc)
 	return INITIALIZE_HINT_QDEL
 

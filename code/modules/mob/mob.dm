@@ -125,17 +125,29 @@
   * * blind_message (optional) is what blind people will hear e.g. "You hear something!"
   * * vision_distance (optional) define how many tiles away the message can be seen.
   * * ignored_mobs (optional) doesn't show any message to any given mob in the list.
+  * * target (optional) is the other mob involved with the visible message. For example, the attacker in many combat messages.
+  * * target_message (optional) is what the target mob will see e.g. "[src] does something to you!"
   */
-/atom/proc/visible_message(message, self_message, blind_message, vision_distance = DEFAULT_MESSAGE_RANGE, list/ignored_mobs)
+/atom/proc/visible_message(message, self_message, blind_message, vision_distance = DEFAULT_MESSAGE_RANGE, ignored_mobs, mob/target, target_message)
 	var/turf/T = get_turf(src)
 	if(!T)
 		return
 	var/list/hearers = get_hearers_in_view(vision_distance, src) //caches the hearers and then removes ignored mobs.
 	if(!length(hearers))
 		return
-	if(!islist(ignored_mobs))
-		ignored_mobs = list(ignored_mobs)
 	hearers -= ignored_mobs
+
+	if(target_message && target && istype(target) && target.client)
+		hearers -= target
+		//This entire if/else chain could be in two lines but isn't for readibilties sake.
+		var/msg = target_message
+		if(target.see_invisible<invisibility) //if src is invisible to us,
+			msg = blind_message
+		//the light object is dark and not invisible to us, darkness does not matter if you're directly next to the target
+		else if(T.lighting_object && T.lighting_object.invisibility <= target.see_invisible && T.is_softly_lit() && !in_range(T,target))
+			msg = blind_message
+		if(msg)
+			target.show_message(msg, MSG_VISUAL,blind_message, MSG_AUDIBLE)
 	if(self_message)
 		hearers -= src
 	for(var/mob/M in hearers)
@@ -155,9 +167,9 @@
 		M.show_message(msg, MSG_VISUAL,blind_message, MSG_AUDIBLE)
 
 ///Adds the functionality to self_message.
-mob/visible_message(message, self_message, blind_message, vision_distance = DEFAULT_MESSAGE_RANGE, list/ignored_mobs)
+mob/visible_message(message, self_message, blind_message, vision_distance = DEFAULT_MESSAGE_RANGE, list/ignored_mobs, mob/target, target_message)
 	. = ..()
-	if(self_message)
+	if(self_message && target != src)
 		show_message(self_message, MSG_VISUAL, blind_message, MSG_AUDIBLE)
 
 /**
@@ -171,15 +183,13 @@ mob/visible_message(message, self_message, blind_message, vision_distance = DEFA
   * * hearing_distance (optional) is the range, how many tiles away the message can be heard.
   * * ignored_mobs (optional) doesn't show any message to any given mob in the list.
   */
-/atom/proc/audible_message(message, deaf_message, hearing_distance = DEFAULT_MESSAGE_RANGE, self_message, list/ignored_mobs)
+/atom/proc/audible_message(message, deaf_message, hearing_distance = DEFAULT_MESSAGE_RANGE, self_message, ignored_mobs)
 	var/turf/T = get_turf(src)
 	if(!T)
 		return
 	var/list/hearers = get_hearers_in_view(hearing_distance, src)
 	if(!length(hearers))
 		return
-	if(!islist(ignored_mobs))
-		ignored_mobs = list(ignored_mobs)
 	hearers -= ignored_mobs
 	if(self_message)
 		hearers -= src
@@ -363,7 +373,7 @@ mob/visible_message(message, self_message, blind_message, vision_distance = DEFA
 		return FALSE
 
 	new /obj/effect/temp_visual/point(A,invisibility)
-
+	SEND_SIGNAL(src, COMSIG_MOB_POINTED, A)
 	return TRUE
 
 /mob/proc/can_resist()
@@ -668,7 +678,7 @@ GLOBAL_VAR_INIT(exploit_warn_spam_prevention, 0)
 		return FALSE
 	if(anchored)
 		return FALSE
-	if(notransform)
+	if(mob_transforming)
 		return FALSE
 	if(restrained())
 		return FALSE
@@ -745,7 +755,11 @@ GLOBAL_VAR_INIT(exploit_warn_spam_prevention, 0)
 	return FALSE
 
 /mob/proc/swap_hand()
-	return
+	var/obj/item/held_item = get_active_held_item()
+	if(SEND_SIGNAL(src, COMSIG_MOB_SWAP_HANDS, held_item) & COMPONENT_BLOCK_SWAP)
+		to_chat(src, "<span class='warning'>Your other hand is too busy holding [held_item].</span>")
+		return FALSE
+	return TRUE
 
 /mob/proc/activate_hand(selhand)
 	return
@@ -1037,7 +1051,7 @@ GLOBAL_VAR_INIT(exploit_warn_spam_prevention, 0)
 
 ///Adjust the nutrition of a mob
 /mob/proc/adjust_nutrition(change, max = INFINITY) //Honestly FUCK the oldcoders for putting nutrition on /mob someone else can move it up because holy hell I'd have to fix SO many typechecks
-	nutrition = clamp(0, nutrition + change, max)
+	nutrition = clamp(nutrition + change, 0, max)
 
 ///Force set the mob nutrition
 /mob/proc/set_nutrition(var/change) //Seriously fuck you oldcoders.
@@ -1076,3 +1090,10 @@ GLOBAL_VAR_INIT(exploit_warn_spam_prevention, 0)
 	for(var/obj/item/I in held_items)
 		if(I.item_flags & SLOWS_WHILE_IN_HAND)
 			. += I.slowdown
+
+/**
+  * Mostly called by doUnEquip()
+  * Like item dropped() on mob side.
+  */
+/mob/proc/on_item_dropped(obj/item/I)
+	return

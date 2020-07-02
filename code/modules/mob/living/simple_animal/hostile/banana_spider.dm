@@ -13,9 +13,12 @@
 	maxbodytemp = INFINITY
 	pass_flags = PASSTABLE | PASSGRILLE | PASSMOB
 	mob_size = MOB_SIZE_TINY
-	response_help  = "pokes"
-	response_disarm = "shoos"
-	response_harm   = "splats"
+	response_help_continuous  = "pokes"
+	response_help_simple = "poke"
+	response_disarm_continuous = "shoos"
+	response_disarm_simple = "shoo"
+	response_harm_continuous = "splats"
+	response_harm_simple = "plat"
 	speak_emote = list("chitters")
 	mouse_opacity = 2
 	density = TRUE

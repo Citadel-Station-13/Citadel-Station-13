@@ -25,18 +25,18 @@
 	return TRUE
 /datum/surgery_step/revive
 	name = "electrically stimulate brain"
-	implements = list(/obj/item/twohanded/shockpaddles = 100, /obj/item/abductor/gizmo = 100, /obj/item/melee/baton = 75, /obj/item/organ/cyberimp/arm/baton = 75, /obj/item/organ/cyberimp/arm/gun/taser = 60, /obj/item/gun/energy/e_gun/advtaser = 60, /obj/item/gun/energy/taser = 60)
+	implements = list(/obj/item/shockpaddles = 100, /obj/item/abductor/gizmo = 100, /obj/item/melee/baton = 75, /obj/item/organ/cyberimp/arm/baton = 75, /obj/item/organ/cyberimp/arm/gun/taser = 60, /obj/item/gun/energy/e_gun/advtaser = 60, /obj/item/gun/energy/taser = 60)
 	time = 120
 /datum/surgery_step/revive/tool_check(mob/user, obj/item/tool)
 	. = TRUE
-	if(istype(tool, /obj/item/twohanded/shockpaddles))
-		var/obj/item/twohanded/shockpaddles/S = tool
+	if(istype(tool, /obj/item/shockpaddles))
+		var/obj/item/shockpaddles/S = tool
 		if((S.req_defib && !S.defib.powered) || !S.wielded || S.cooldown || S.busy)
 			to_chat(user, "<span class='warning'>You need to wield both paddles, and [S.defib] must be powered!</span>")
 			return FALSE
 	if(istype(tool, /obj/item/melee/baton))
 		var/obj/item/melee/baton/B = tool
-		if(!B.status)
+		if(!B.turned_on)
 			to_chat(user, "<span class='warning'>[B] needs to be active!</span>")
 			return FALSE
 	if(istype(tool, /obj/item/gun/energy))

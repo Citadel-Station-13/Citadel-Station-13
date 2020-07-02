@@ -32,7 +32,7 @@
 	for (var/x in 1 to PILL_STYLE_COUNT)
 		var/list/SL = list()
 		SL["id"] = x
-		SL["htmltag"] = assets.icon_tag("pill[x]")
+		SL["htmltag"] = assets.icon_class_name("pill[x]")
 		pillStyles += list(SL)
 
 	. = ..()
@@ -386,7 +386,8 @@
 			return FALSE
 
 		if("analyze")
-			var/datum/reagent/R = GLOB.name2reagent[params["id"]]
+			var/reagent = GLOB.name2reagent[params["id"]]
+			var/datum/reagent/R = GLOB.chemical_reagents_list[reagent]
 			if(R)
 				var/state = "Unknown"
 				if(initial(R.reagent_state) == 1)
@@ -399,13 +400,9 @@
 				var/T = initial(R.metabolization_rate) * (60 / P)
 				if(istype(R, /datum/reagent/fermi))
 					fermianalyze = TRUE
-					var/datum/chemical_reaction/Rcr = get_chemical_reaction(R)
+					var/datum/chemical_reaction/Rcr = get_chemical_reaction(reagent)
 					var/pHpeakCache = (Rcr.OptimalpHMin + Rcr.OptimalpHMax)/2
-					var/datum/reagent/targetReagent = reagents.has_reagent(R)
-
-					if(!targetReagent)
-						CRASH("Tried to find a reagent that doesn't exist in the chem_master!")
-					analyzeVars = list("name" = initial(R.name), "state" = state, "color" = initial(R.color), "description" = initial(R.description), "metaRate" = T, "overD" = initial(R.overdose_threshold), "addicD" = initial(R.addiction_threshold), "purityF" = targetReagent.purity, "inverseRatioF" = initial(R.inverse_chem_val), "purityE" = initial(Rcr.PurityMin), "minTemp" = initial(Rcr.OptimalTempMin), "maxTemp" = initial(Rcr.OptimalTempMax), "eTemp" = initial(Rcr.ExplodeTemp), "pHpeak" = pHpeakCache)
+					analyzeVars = list("name" = initial(R.name), "state" = state, "color" = initial(R.color), "description" = initial(R.description), "metaRate" = T, "overD" = initial(R.overdose_threshold), "addicD" = initial(R.addiction_threshold), "purityF" = R.purity, "inverseRatioF" = initial(R.inverse_chem_val), "purityE" = initial(Rcr.PurityMin), "minTemp" = initial(Rcr.OptimalTempMin), "maxTemp" = initial(Rcr.OptimalTempMax), "eTemp" = initial(Rcr.ExplodeTemp), "pHpeak" = pHpeakCache)
 				else
 					fermianalyze = FALSE
 					analyzeVars = list("name" = initial(R.name), "state" = state, "color" = initial(R.color), "description" = initial(R.description), "metaRate" = T, "overD" = initial(R.overdose_threshold), "addicD" = initial(R.addiction_threshold))

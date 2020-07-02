@@ -70,6 +70,8 @@
 		B = new(T)
 	if(data["blood_DNA"])
 		B.blood_DNA[data["blood_DNA"]] = data["blood_type"]
+		if(!B.blood_DNA["color"])
+			B.blood_DNA["color"] = list(data["bloodcolor"])
 	if(B.reagents)
 		B.reagents.add_reagent(type, reac_volume)
 	B.update_icon()
@@ -77,7 +79,7 @@
 /datum/reagent/blood/on_new(list/data)
 	if(istype(data))
 		SetViruses(src, data)
-		color = bloodtype_to_color(data["blood_type"])
+		color = data["bloodcolor"]
 		if(data["blood_type"] == "SY")
 			name = "Synthetic Blood"
 			taste_description = "oil"
@@ -1735,6 +1737,22 @@
 			H.facial_hair_style = "Very Long Beard"
 			H.update_hair()
 
+/datum/reagent/baldium
+	name = "Baldium"
+	description = "A major cause of hair loss across the world."
+	reagent_state = LIQUID
+	color = "#ecb2cf"
+	taste_description = "bitterness"
+
+/datum/reagent/baldium/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
+	if(method == TOUCH || method == VAPOR)
+		if(M && ishuman(M))
+			var/mob/living/carbon/human/H = M
+			to_chat(H, "<span class='danger'>Your hair is falling out in clumps!</span>")
+			H.hair_style = "Bald"
+			H.facial_hair_style = "Shaved"
+			H.update_hair()
+
 /datum/reagent/saltpetre
 	name = "Saltpetre"
 	description = "Volatile. Controversial. Third Thing."
@@ -2178,3 +2196,94 @@
 	reagent_state = LIQUID
 	color = "#f7685e"
 	metabolization_rate = REAGENTS_METABOLISM * 0.25
+
+
+//body bluids
+/datum/reagent/consumable/semen
+	name = "Semen"
+	description = "Sperm from some animal. Useless for anything but insemination, really."
+	taste_description = "something salty"
+	taste_mult = 2 //Not very overpowering flavor
+	data = list("donor"=null,"viruses"=null,"donor_DNA"=null,"blood_type"=null,"resistances"=null,"trace_chem"=null,"mind"=null,"ckey"=null,"gender"=null,"real_name"=null)
+	reagent_state = LIQUID
+	color = "#FFFFFF" // rgb: 255, 255, 255
+	can_synth = FALSE
+	nutriment_factor = 0.5 * REAGENTS_METABOLISM
+
+/datum/reagent/consumable/semen/reaction_turf(turf/T, reac_volume)
+	if(!istype(T))
+		return
+	if(reac_volume < 10)
+		return
+
+	var/obj/effect/decal/cleanable/semen/S = locate() in T
+	if(!S)
+		S = new(T)
+	if(data["blood_DNA"])
+		S.add_blood_DNA(list(data["blood_DNA"] = data["blood_type"]))
+
+/obj/effect/decal/cleanable/semen
+	name = "semen"
+	desc = null
+	gender = PLURAL
+	density = 0
+	layer = ABOVE_NORMAL_TURF_LAYER
+	icon = 'icons/obj/genitals/effects.dmi'
+	icon_state = "semen1"
+	random_icon_states = list("semen1", "semen2", "semen3", "semen4")
+
+/obj/effect/decal/cleanable/semen/Initialize(mapload)
+	. = ..()
+	dir = GLOB.cardinals
+	add_blood_DNA(list("Non-human DNA" = "A+"))
+
+/obj/effect/decal/cleanable/semen/replace_decal(obj/effect/decal/cleanable/semen/S)
+	if(S.blood_DNA)
+		blood_DNA |= S.blood_DNA
+	return ..()
+
+/datum/reagent/consumable/femcum
+	name = "Female Ejaculate"
+	description = "Vaginal lubricant found in most mammals and other animals of similar nature. Where you found this is your own business."
+	taste_description = "something with a tang" // wew coders who haven't eaten out a girl.
+	taste_mult = 2
+	data = list("donor"=null,"viruses"=null,"donor_DNA"=null,"blood_type"=null,"resistances"=null,"trace_chem"=null,"mind"=null,"ckey"=null,"gender"=null,"real_name"=null)
+	reagent_state = LIQUID
+	color = "#AAAAAA77"
+	can_synth = FALSE
+	nutriment_factor = 0.5 * REAGENTS_METABOLISM
+
+/obj/effect/decal/cleanable/femcum
+	name = "female ejaculate"
+	desc = null
+	gender = PLURAL
+	density = 0
+	layer = ABOVE_NORMAL_TURF_LAYER
+	icon = 'icons/obj/genitals/effects.dmi'
+	icon_state = "fem1"
+	random_icon_states = list("fem1", "fem2", "fem3", "fem4")
+	blood_state = null
+	bloodiness = null
+
+/obj/effect/decal/cleanable/femcum/Initialize(mapload)
+	. = ..()
+	dir = GLOB.cardinals
+	add_blood_DNA(list("Non-human DNA" = "A+"))
+
+/obj/effect/decal/cleanable/femcum/replace_decal(obj/effect/decal/cleanable/femcum/F)
+	if(F.blood_DNA)
+		blood_DNA |= F.blood_DNA
+	return ..()
+
+/datum/reagent/consumable/femcum/reaction_turf(turf/T, reac_volume)
+	if(!istype(T))
+		return
+	if(reac_volume < 10)
+		return
+
+	var/obj/effect/decal/cleanable/femcum/S = locate() in T
+	if(!S)
+		S = new(T)
+	if(data["blood_DNA"])
+		S.add_blood_DNA(list(data["blood_DNA"] = data["blood_type"]))
+

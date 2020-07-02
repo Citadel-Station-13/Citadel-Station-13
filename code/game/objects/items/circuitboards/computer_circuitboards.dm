@@ -14,6 +14,10 @@
 	name = "Security Cameras (Computer Board)"
 	build_path = /obj/machinery/computer/security
 
+/obj/item/circuitboard/computer/security/shuttle
+	name = "Shuttlelinking Security Cameras (Computer Board)"
+	build_path = /obj/machinery/computer/security/shuttle
+
 /obj/item/circuitboard/computer/xenobiology
 	name = "circuit board (Xenobiology Console)"
 	build_path = /obj/machinery/computer/camera_advanced/xenobio
@@ -293,6 +297,10 @@
 	name = "Mining Shuttle (Computer Board)"
 	build_path = /obj/machinery/computer/shuttle/mining
 
+/obj/item/circuitboard/computer/snow_taxi
+	name = "Snow Taxi (Computer Board)"
+	build_path = /obj/machinery/computer/shuttle/snow_taxi
+
 /obj/item/circuitboard/computer/white_ship
 	name = "White Ship (Computer Board)"
 	build_path = /obj/machinery/computer/shuttle/white_ship
@@ -375,3 +383,11 @@
 /obj/item/circuitboard/computer/nanite_cloud_controller
 	name = "Nanite Cloud Control (Computer Board)"
 	build_path = /obj/machinery/computer/nanite_cloud_controller
+
+/obj/item/circuitboard/computer/shuttle/flight_control
+	name = "Shuttle Flight Control (Computer Board)"
+	build_path = /obj/machinery/computer/custom_shuttle
+
+/obj/item/circuitboard/computer/shuttle/docker
+	name = "Shuttle Navigation Computer (Computer Board)"
+	build_path = /obj/machinery/computer/camera_advanced/shuttle_docker/custom
