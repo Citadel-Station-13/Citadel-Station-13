@@ -16,6 +16,7 @@
 	icon_limbs = DEFAULT_BODYPART_ICON_CITADEL
 	exotic_bloodtype = "BUG"
 	exotic_blood_color = BLOOD_COLOR_BUG
+	languagewhitelist = list("Moffic", "Buggy") //Skyrat change - species language whitelist
 
 /datum/species/insect/spec_death(gibbed, mob/living/carbon/human/H)
 	if(H)

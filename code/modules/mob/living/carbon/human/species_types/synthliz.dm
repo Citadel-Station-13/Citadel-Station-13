@@ -16,6 +16,7 @@
 	mutantliver = /obj/item/organ/liver/ipc
 	mutantstomach = /obj/item/organ/stomach/ipc
 	mutanteyes = /obj/item/organ/eyes/ipc
+	languagewhitelist = list("Encoded Audio Language")
 
 	exotic_bloodtype = "S"
 	exotic_blood_color = BLOOD_COLOR_OIL

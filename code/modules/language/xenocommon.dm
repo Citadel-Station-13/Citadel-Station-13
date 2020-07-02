@@ -9,3 +9,6 @@
 	default_priority = 50
 
 	icon_state = "xeno"
+	//SKYRAT CHANGE - language restriction
+	restricted = TRUE //I think humanoid xenos should have a separate language...
+	//

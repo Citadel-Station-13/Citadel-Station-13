@@ -24,6 +24,15 @@
 		/datum/language/slime,
 		/datum/language/vampiric,
 		/datum/language/dwarf,
+		/datum/language/machine, //Skyrat change - adds machine language
+		/datum/language/sandcode/calcic, //Skyrat change - plasmaman language
+		/datum/language/sandcode/dunmeri, //Skyrat change - dunmer language
+		/datum/language/sandcode/moffic, //Skyrat change - insect language
+		/datum/language/sandcode/neokanji, //Skyrat change - generally asian language
+		/datum/language/sandcode/shadowtongue, //Skyrat change - shadowpeople language
+		/datum/language/sandcode/solcommon, //Skyrat change - sol common blah blah
+		/datum/language/sandcode/sylvan, //Skyrat change - plantpeople langauge
+		/datum/language/sandcode/technorussian, //Skyrat change - russian stereotype language
 		/datum/language/sandcode/sergal,
 	))
 	healing_factor = STANDARD_ORGAN_HEALING*5 //Fast!!

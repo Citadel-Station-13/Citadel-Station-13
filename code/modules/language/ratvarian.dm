@@ -9,7 +9,10 @@
 	default_priority = 10
 	spans = list(SPAN_ROBOT)
 	icon_state = "ratvar"
-
+	//SKYRAT CHANGE - language restriction
+	restricted = TRUE
+	//
+	
 /datum/language/ratvar/scramble(var/input)
 	. = text2ratvar(input)
 

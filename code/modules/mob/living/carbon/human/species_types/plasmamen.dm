@@ -21,6 +21,7 @@
 	disliked_food = FRUIT
 	liked_food = VEGETABLES
 	outfit_important_for_life = /datum/outfit/plasmaman
+	languagewhitelist = list("Calcic") //Skyrat change - species language whitelist
 
 /datum/species/plasmaman/spec_life(mob/living/carbon/human/H)
 	var/datum/gas_mixture/environment = H.loc.return_air()

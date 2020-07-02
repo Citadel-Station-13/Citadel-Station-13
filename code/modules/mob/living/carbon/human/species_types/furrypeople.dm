@@ -66,6 +66,7 @@
 	exotic_bloodtype = "X*"
 	damage_overlay_type = "xeno"
 	liked_food = MEAT
+	languagewhitelist = list("Xenomorph")
 
 //Praise the Omnissiah, A challange worthy of my skills - HS
 

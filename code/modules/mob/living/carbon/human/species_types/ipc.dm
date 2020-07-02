@@ -23,6 +23,7 @@
 	exotic_blood_color = BLOOD_COLOR_OIL
 
 	var/datum/action/innate/monitor_change/screen
+	languagewhitelist = list("Encoded Audio Language") //Skyrat change - species language whitelist
 
 /datum/species/ipc/on_species_gain(mob/living/carbon/human/C)
 	if(isipcperson(C) && !screen)

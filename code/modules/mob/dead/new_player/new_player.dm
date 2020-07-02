@@ -429,6 +429,9 @@
 
 	if(humanc && CONFIG_GET(flag/roundstart_traits))
 		SSquirks.AssignQuirks(humanc, humanc.client, TRUE, FALSE, job, FALSE)
+	//skyrat change
+	if(humanc)
+		SSlanguage.AssignLanguage(humanc, humanc.client, TRUE, FALSE, job, FALSE)
 
 	log_manifest(character.mind.key,character.mind,character,latejoin = TRUE)
 

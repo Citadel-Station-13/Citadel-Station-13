@@ -14,6 +14,7 @@
 
 	dangerous_existence = 1
 	mutanteyes = /obj/item/organ/eyes/night_vision
+	languagewhitelist = list("Shadowtongue") //Skyrat change - species language whitelist
 
 /datum/species/shadow/on_species_gain(mob/living/carbon/C, datum/species/old_species)
 	. = ..()
