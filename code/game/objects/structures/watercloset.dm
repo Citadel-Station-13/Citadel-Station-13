@@ -157,7 +157,7 @@
 	secret_type = /obj/effect/spawner/lootdrop/prison_loot_toilet
 
 /obj/structure/toilet/greyscale
-	material_flags = MATERIAL_ADD_PREFIX | MATERIAL_COLOR | MATERIAL_EFFECTS
+	material_flags = MATERIAL_ADD_PREFIX | MATERIAL_COLOR
 	buildstacktype = null
 
 /obj/structure/urinal
@@ -678,7 +678,7 @@
 	if(steps == 4 && istype(S, /obj/item/stack/sheet/mineral/wood))
 		if(S.use(3))
 			steps = 5
-			desc = "A dug out well, A dug out well with out rope. Just add some cloth!"
+			desc = "A dug out well, A dug out well without rope. Just add some cloth!"
 			icon_state = "well_4"
 			return TRUE
 		else
@@ -723,7 +723,7 @@
 
 /obj/structure/sink/greyscale
 	icon_state = "sink_greyscale"
-	material_flags = MATERIAL_ADD_PREFIX | MATERIAL_COLOR | MATERIAL_EFFECTS
+	material_flags = MATERIAL_ADD_PREFIX | MATERIAL_COLOR
 	buildstacktype = null
 
 //Shower Curtains//

@@ -1727,7 +1727,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 	var/weakness = H.check_weakness(I, user)
 	apply_damage(totitemdamage * weakness, I.damtype, def_zone, armor_block, H) //CIT CHANGE - replaces I.force with totitemdamage
 
-	H.send_item_attack_message(I, user, hit_area)
+	H.send_item_attack_message(I, user, hit_area, totitemdamage)
 
 	I.do_stagger_action(H, user, totitemdamage)
 
