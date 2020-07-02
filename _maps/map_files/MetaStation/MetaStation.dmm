@@ -53660,7 +53660,7 @@
 /obj/structure/cable/yellow{
 	icon_state = "4-8"
 	},
-/obj/item/twohanded/required/kirbyplants{
+/obj/item/kirbyplants{
 	icon_state = "plant-21"
 	},
 /obj/effect/turf_decal/trimline/red/filled/corner{
@@ -54207,7 +54207,7 @@
 /obj/structure/cable/yellow{
 	icon_state = "0-4"
 	},
-/obj/item/twohanded/required/kirbyplants{
+/obj/item/kirbyplants{
 	icon_state = "plant-22"
 	},
 /obj/effect/turf_decal/tile/purple{
@@ -54800,7 +54800,7 @@
 	layer = 4;
 	pixel_x = 32
 	},
-/obj/item/twohanded/required/kirbyplants{
+/obj/item/kirbyplants{
 	icon_state = "plant-21"
 	},
 /obj/effect/turf_decal/trimline/purple/filled/line{
@@ -56783,7 +56783,7 @@
 	},
 /area/medical/medbay/zone2)
 "coH" = (
-/obj/item/twohanded/required/kirbyplants{
+/obj/item/kirbyplants{
 	icon_state = "plant-22"
 	},
 /turf/open/floor/plasteel/cafeteria{
@@ -56923,7 +56923,7 @@
 	dir = 4;
 	pixel_x = 24
 	},
-/obj/item/twohanded/required/kirbyplants{
+/obj/item/kirbyplants{
 	icon_state = "plant-10"
 	},
 /obj/effect/turf_decal/trimline/purple/filled/line{
@@ -57281,7 +57281,7 @@
 /obj/structure/cable/yellow{
 	icon_state = "0-4"
 	},
-/obj/item/twohanded/required/kirbyplants{
+/obj/item/kirbyplants{
 	icon_state = "plant-06"
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
@@ -58273,7 +58273,7 @@
 /obj/machinery/light{
 	dir = 4
 	},
-/obj/item/twohanded/required/kirbyplants{
+/obj/item/kirbyplants{
 	icon_state = "plant-18"
 	},
 /obj/effect/turf_decal/trimline/blue/filled/line{
@@ -58725,7 +58725,7 @@
 /turf/open/floor/plasteel,
 /area/crew_quarters/heads/hor)
 "ctV" = (
-/obj/item/twohanded/required/kirbyplants/dead,
+/obj/item/kirbyplants/dead,
 /obj/machinery/light{
 	dir = 1
 	},
@@ -60064,7 +60064,7 @@
 	dir = 8;
 	pixel_x = -24
 	},
-/obj/item/twohanded/required/kirbyplants{
+/obj/item/kirbyplants{
 	icon_state = "applebush"
 	},
 /turf/open/floor/plasteel/dark,
@@ -61443,7 +61443,7 @@
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
 "czV" = (
-/obj/item/twohanded/required/kirbyplants,
+/obj/item/kirbyplants,
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 6
 	},
@@ -62913,7 +62913,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 5
 	},
-/obj/item/twohanded/required/kirbyplants{
+/obj/item/kirbyplants{
 	icon_state = "plant-05";
 	pixel_y = 10
 	},
@@ -64172,7 +64172,7 @@
 /obj/item/radio/intercom{
 	pixel_x = -32
 	},
-/obj/item/twohanded/required/kirbyplants/dead{
+/obj/item/kirbyplants/dead{
 	desc = "A dead looking plant.";
 	name = "Potted plant"
 	},
@@ -64252,7 +64252,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
-/obj/item/twohanded/required/kirbyplants{
+/obj/item/kirbyplants{
 	icon_state = "applebush"
 	},
 /obj/machinery/light_switch{
@@ -66861,7 +66861,7 @@
 /turf/open/floor/plasteel,
 /area/hallway/secondary/exit/departure_lounge)
 "cMj" = (
-/obj/item/twohanded/required/kirbyplants{
+/obj/item/kirbyplants{
 	icon_state = "plant-14"
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -69016,7 +69016,7 @@
 /turf/open/floor/plasteel/dark,
 /area/chapel/main)
 "cRF" = (
-/obj/item/twohanded/required/kirbyplants{
+/obj/item/kirbyplants{
 	icon_state = "plant-18"
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
@@ -82332,7 +82332,7 @@
 /turf/open/floor/plating,
 /area/maintenance/aft)
 "wOE" = (
-/obj/item/twohanded/required/kirbyplants{
+/obj/item/kirbyplants{
 	icon_state = "plant-24"
 	},
 /turf/open/floor/plasteel,
