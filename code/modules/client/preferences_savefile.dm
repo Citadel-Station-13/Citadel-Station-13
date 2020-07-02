@@ -5,7 +5,7 @@
 //	You do not need to raise this if you are adding new values that have sane defaults.
 //	Only raise this value when changing the meaning/format/name/layout of an existing value
 //	where you would want the updater procs below to run
-#define SAVEFILE_VERSION_MAX	33
+#define SAVEFILE_VERSION_MAX	34
 
 /*
 SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Carn
@@ -199,6 +199,10 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		features["flavor_text"] = html_encode(features["flavor_text"])
 		features["silicon_flavor_text"] = html_encode(features["silicon_flavor_text"])
 		features["ooc_notes"] = html_encode(features["ooc_notes"])
+
+	if(current_version < 34)
+		S["custom_tongue"] = "default"
+		S["custom_speech_verb"] = "default"
 
 /datum/preferences/proc/load_path(ckey,filename="preferences.sav")
 	if(!ckey)
