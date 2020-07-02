@@ -256,7 +256,7 @@
 	dir = 8
 	},
 /obj/effect/decal/cleanable/cobweb,
-/obj/item/twohanded/required/kirbyplants/dead{
+/obj/item/kirbyplants/dead{
 	name = "potted plant"
 	},
 /turf/open/floor/plasteel,
@@ -544,7 +544,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
-/obj/item/twohanded/required/kirbyplants/dead{
+/obj/item/kirbyplants/dead{
 	name = "potted plant"
 	},
 /turf/open/floor/plasteel,
@@ -2625,7 +2625,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
-/obj/item/twohanded/required/kirbyplants/dead{
+/obj/item/kirbyplants/dead{
 	name = "potted plant"
 	},
 /turf/open/floor/plasteel,
@@ -4362,7 +4362,7 @@
 /obj/effect/turf_decal/tile/green{
 	dir = 8
 	},
-/obj/item/twohanded/required/kirbyplants/dead{
+/obj/item/kirbyplants/dead{
 	name = "potted plant"
 	},
 /turf/open/floor/plasteel,
@@ -4880,7 +4880,7 @@
 /obj/effect/turf_decal/tile/green{
 	dir = 4
 	},
-/obj/item/twohanded/required/kirbyplants/dead{
+/obj/item/kirbyplants/dead{
 	name = "potted plant"
 	},
 /turf/open/floor/plasteel,
@@ -7131,7 +7131,7 @@
 "Hg" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
-/obj/item/twohanded/required/kirbyplants/dead{
+/obj/item/kirbyplants/dead{
 	name = "potted plant"
 	},
 /obj/structure/cable{
@@ -7756,7 +7756,7 @@
 "Xq" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
-/obj/item/twohanded/required/kirbyplants/dead{
+/obj/item/kirbyplants/dead{
 	name = "potted plant"
 	},
 /turf/open/floor/plasteel,
