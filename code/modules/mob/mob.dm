@@ -227,68 +227,23 @@ mob/visible_message(message, self_message, blind_message, vision_distance = DEFA
 	var/obj/item/W = get_active_held_item()
 
 	if(istype(W))
-		if(equip_to_slot_if_possible(W, slot,0,0,0))
-			return 1
+		if(equip_to_slot_if_possible(W, slot, FALSE, FALSE, FALSE, TRUE))
+			return TRUE
 
 	if(!W)
 		// Activate the item
 		var/obj/item/I = get_item_by_slot(slot)
 		if(istype(I))
+			if(slot in check_obscured_slots())
+				to_chat(src, "<span class='warning'>You are unable to unequip that while wearing other garments over it!</span>")
+				return FALSE
 			I.attack_hand(src)
 
-	return 0
+	return FALSE
 
-//This is a SAFE proc. Use this instead of equip_to_slot()!
-//set qdel_on_fail to have it delete W if it fails to equip
-//set disable_warning to disable the 'you are unable to equip that' warning.
-//unset redraw_mob to prevent the mob from being redrawn at the end.
-/mob/proc/equip_to_slot_if_possible(obj/item/W, slot, qdel_on_fail = FALSE, disable_warning = FALSE, redraw_mob = TRUE, bypass_equip_delay_self = FALSE)
-	if(!istype(W))
-		return FALSE
-	if(!W.mob_can_equip(src, null, slot, disable_warning, bypass_equip_delay_self))
-		if(qdel_on_fail)
-			qdel(W)
-		else
-			if(!disable_warning)
-				to_chat(src, "<span class='warning'>You are unable to equip that!</span>")
-		return FALSE
-	equip_to_slot(W, slot, redraw_mob) //This proc should not ever fail.
-	return TRUE
-
-//This is an UNSAFE proc. It merely handles the actual job of equipping. All the checks on whether you can or can't equip need to be done before! Use mob_can_equip() for that task.
-//In most cases you will want to use equip_to_slot_if_possible()
-/mob/proc/equip_to_slot(obj/item/W, slot)
+/// Checks for slots that are currently obscured by other garments.
+/mob/proc/check_obscured_slots()
 	return
-
-//This is just a commonly used configuration for the equip_to_slot_if_possible() proc, used to equip people when the round starts and when events happen and such.
-//Also bypasses equip delay checks, since the mob isn't actually putting it on.
-/mob/proc/equip_to_slot_or_del(obj/item/W, slot)
-	return equip_to_slot_if_possible(W, slot, TRUE, TRUE, FALSE, TRUE)
-
-//puts the item "W" into an appropriate slot in a human's inventory
-//returns 0 if it cannot, 1 if successful
-/mob/proc/equip_to_appropriate_slot(obj/item/W)
-	if(!istype(W))
-		return 0
-	var/slot_priority = W.slot_equipment_priority
-
-	if(!slot_priority)
-		slot_priority = list( \
-			SLOT_BACK, SLOT_WEAR_ID,\
-			SLOT_W_UNIFORM, SLOT_WEAR_SUIT,\
-			SLOT_WEAR_MASK, SLOT_HEAD, SLOT_NECK,\
-			SLOT_SHOES, SLOT_GLOVES,\
-			SLOT_EARS, SLOT_GLASSES,\
-			SLOT_BELT, SLOT_S_STORE,\
-			SLOT_L_STORE, SLOT_R_STORE,\
-			SLOT_GENERC_DEXTROUS_STORAGE\
-		)
-
-	for(var/slot in slot_priority)
-		if(equip_to_slot_if_possible(W, slot, 0, 1, 1)) //qdel_on_fail = 0; disable_warning = 1; redraw_mob = 1
-			return 1
-
-	return 0
 
 // reset_perspective(thing) set the eye to the thing (if it's equal to current default reset to mob perspective)
 // reset_perspective() set eye to common default : mob on turf, loc otherwise
