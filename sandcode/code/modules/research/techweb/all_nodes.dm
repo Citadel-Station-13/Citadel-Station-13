@@ -46,3 +46,8 @@
 	prereq_ids = list("alien_bio")
 	design_ids = list("ci-toolset-adv","ci-surgery-adv")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 5000)
+
+/datum/techweb_node/bluespace_portal/New()
+	design_ids += "borg_upgrade_bsrpd"
+	design_ids += "bsrpd"
+	. = ..()
