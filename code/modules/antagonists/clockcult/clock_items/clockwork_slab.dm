@@ -295,13 +295,13 @@
 		if(GLOB.ratvar_awakens)
 			return
 		if(LAZYLEN(quickbound) < i || !quickbound[i])
-			.["rec_binds"] += list()
+			.["rec_binds"] += list(list())
 		else
 			var/datum/clockwork_scripture/quickbind_slot = quickbound[i]
-			.["rec_binds"] += list(
+			.["rec_binds"] += list(list(
 				"name" = initial(quickbind_slot.name), 
 				"color" = get_component_color_bright(initial(quickbind_slot.primary_component))
-			)
+			))
 	// .["rec_section"]["title"] //this is here if ever we decided to return these back.
 	// .["rec_section"]["info"]// wall of info for the thing
 
@@ -313,7 +313,7 @@
 			INVOKE_ASYNC(src, .proc/recite_scripture, text2path(params["script"]), usr, FALSE)
 		if("bind")
 			var/datum/clockwork_scripture/path = text2path(params["script"]) //we need a path and not a string
-			if(!path.quickbind || path.tier == SCRIPTURE_PERIPHERAL) //fuck you href bus
+			if(!ispath(path, /datum/clockwork_scripture) || !initial(path.quickbind) || initial(path.tier) == SCRIPTURE_PERIPHERAL) //fuck you href bus
 				to_chat(usr, "<span class='warning'>Nice try using href exploits</span>")
 				return
 			var/found_index = quickbound.Find(path)

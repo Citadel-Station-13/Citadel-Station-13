@@ -68,7 +68,7 @@ export const TelecommsInteraction = (props, context) => {
                     color={power ? 'good' : 'bad'}>
                     {prefab ? 'TRUE' : 'FALSE'}
                   </LabeledList.Item>
-                  {isrelay ? (
+                  {!!isrelay && (
                     <Fragment>
                       <LabeledList.Item label="Broadcasting">
                         <Button
@@ -91,8 +91,6 @@ export const TelecommsInteraction = (props, context) => {
                         />
                       </LabeledList.Item>
                     </Fragment>
-                  ) : (
-                    ''
                   )}
                   {!!isbus && (
                     <LabeledList.Item label="Change Signal Frequency">
@@ -210,6 +208,7 @@ export const TelecommsInteraction = (props, context) => {
                       return (
                         <Button
                           key={thing}
+                          icon="times"
                           content={valid ? (
                             <span style={`color: ${valid.color}`}>
                               {`${thing} (${valid.name})`}

@@ -1,6 +1,7 @@
 import { Fragment } from 'inferno';
 import { useBackend } from '../backend';
-import { Box, Button, LabeledList, ProgressBar, Section, Window } from '../components';
+import { Window } from '../layouts';
+import { Box, Button, LabeledList, ProgressBar, Section } from '../components';
 
 export const SkillPanel = (props, context) => {
   const { act, data } = useBackend(context);
@@ -31,7 +32,7 @@ export const SkillPanel = (props, context) => {
                 <span style={skillyellow}>
                   {skill.desc}
                   <br />
-                  `Modifiers: ${skill.modifiers}`
+                  Modifiers: {skill.modifiers}
                 </span>
                 <br />
                 {!!skill.level_based && (

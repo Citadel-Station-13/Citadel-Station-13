@@ -1,14 +1,8 @@
 import { Fragment } from 'inferno';
 import { Window } from '../layouts';
 import { useBackend, useSharedState } from '../backend';
-import { act as _act } from '../byond'; // something something image shit (untested)
+import { callByond } from '../byond';
 import { Button, LabeledList, NoticeBox, Section, Tabs, Input } from '../components';
-
-const prioritycolorMap = {
-  'Normal': 'warning',
-  'High': 'bad',
-  'Extreme': 'bad',
-};
 
 // This is the entrypoint, don't mind the others
 export const TelecommsPDALog = (props, context) => {
@@ -18,6 +12,8 @@ export const TelecommsPDALog = (props, context) => {
     notice = "",
     authenticated = false,
     canhack = false,
+    silicon = false,
+    hack_status = null,
     selected = null,
     servers = [],
   } = data;
@@ -26,41 +22,46 @@ export const TelecommsPDALog = (props, context) => {
     setTab,
   ] = useSharedState(context, 'tab', 'pdalog-servers');
   const valid = (selected && selected.status && authenticated);
-  if (!valid || data.hacking) { // a sanity check.
-    setTab('pdalog-servers');
-  }
-  if (data.hacking) {
+  // if (!valid || data.hacking) { // a sanity check.
+  //   setTab('pdalog-servers');
+  // }
+  if (hack_status) {
     return ( // should have used en -> jp unicode -> other encoding method->utf8
-      <NoticeBox>
-        <b>
-          <h3>
-            {"INTRN@L ACfES VIOL�TIa█ DEtE₡TED! Ree3ARcinG A█ \
-            BAaKUP RdST�RE PbINT [0xcff32ca] - PLfASE aAIT"}
-          </h3>
-        </b>
-        <i>
-          {data.borg ? (
-            <Fragment>
-              Brute-forcing for server key. <br />
-              It will take 20 seconds for every character that the password has.
-              <br />
-              In the meantime, this console can reveal your
-              true intentions if you let someone access it.
-              Make sure no humans enter the room during that time.
-            </Fragment>
-          ) : (
-            <Fragment>
-              QnJ1dGUtZm9yY2luZyBmb3Igc2VydmVyIGtleS48YnI+IEl0IHdpbG<br />
-              wgdGFrZSAyMCBzZWNvbmRzIGZvciBldmVyeSBjaGFyYWN0ZXIgdGhh<br />
-              dCB0aGUgcGFzc3dvcmQgaGFzLiBJbiB0aGUgbWVhbnRpbWUsIHRoaX<br />
-              MgY29uc29sZSBjYW4gcmV2ZWFsIHlvdXIgdHJ1ZSBpbnRlbnRpb25z<br />
-              IGlmIHlvdSBsZXQgc29tZW9uZSBhY2Nlc3MgaXQuIE1ha2Ugc3VyZS<br />
-              BubyBodW1hbnMgZW50ZXIgdGhlIHJvb20gZHVyaW5nIHRoYXQgdGltZS4=<br />
-              <br />
-            </Fragment>
-          )}
-        </i>
-      </NoticeBox>
+      <Window theme="ntos" resizable>
+        <Window.Content scrollable>
+          <NoticeBox>
+            <b>
+              <h3>
+                {"INTRN@L ACfES VIOL�TIa█ DEtE₡TED! Ree3ARcinG A█ \
+                BAaKUP RdST�RE PbINT [0xcff32ca] - PLfASE aAIT"}
+              </h3>
+            </b>
+            <i>
+              {(silicon && !hack_status.emagging) ? (
+                <Fragment>
+                  Brute-forcing for server key. <br />
+                  It will take 20 seconds for every character that
+                  the password has.
+                  <br />
+                  In the meantime, this console can reveal your
+                  true intentions if you let someone access it.
+                  Make sure no humans enter the room during that time.
+                </Fragment>
+              ) : (
+                <Fragment>
+                  QnJ1dGUtZm9yY2luZyBmb3Igc2VydmVyIGtleS48YnI+IEl0IHdpbG<br />
+                  wgdGFrZSAyMCBzZWNvbmRzIGZvciBldmVyeSBjaGFyYWN0ZXIgdGhh<br />
+                  dCB0aGUgcGFzc3dvcmQgaGFzLiBJbiB0aGUgbWVhbnRpbWUsIHRoaX<br />
+                  MgY29uc29sZSBjYW4gcmV2ZWFsIHlvdXIgdHJ1ZSBpbnRlbnRpb25z<br />
+                  IGlmIHlvdSBsZXQgc29tZW9uZSBhY2Nlc3MgaXQuIE1ha2Ugc3VyZS<br />
+                  BubyBodW1hbnMgZW50ZXIgdGhlIHJvb20gZHVyaW5nIHRoYXQgdGltZS4=
+                  <br /><br />
+                </Fragment>
+              )}
+            </i>
+          </NoticeBox>
+        </Window.Content>
+      </Window>
     );
   }
 
@@ -171,24 +172,28 @@ export const TelecommsPDALog = (props, context) => {
           </Section>
           <Tabs>
             <Tabs.Tab
+              icon="server"
               selected={tab === "pdalog-servers"}
               onClick={() => setTab("pdalog-servers")}>
               Servers
             </Tabs.Tab>
             <Tabs.Tab
               disabled={!valid}
+              icon="file"
               selected={tab === "pdalog-message"}
               onClick={() => setTab("pdalog-message")}>
               Message Logs
             </Tabs.Tab>
             <Tabs.Tab
               disabled={!valid}
+              icon="file"
               selected={tab === "pdalog-reqmsg"}
               onClick={() => setTab("pdalog-reqmsg")}>
               Req. Console Logs
             </Tabs.Tab>
             <Tabs.Tab
               disabled={!valid}
+              icon="server"
               selected={tab === "pdalog-custommsg"}
               onClick={() => setTab("pdalog-custommsg")}>
               Set Admin Message
@@ -223,13 +228,13 @@ export const TelecommsPDALog = (props, context) => {
             </Section>
           ) : (
             <Fragment>
-              {tab === "pdalog-message" && valid && (
+              {tab === "pdalog-message" && (
                 <TeleLogs />
               )}
-              {tab === "pdalog-reqmsg" && valid && (
+              {tab === "pdalog-reqmsg" && (
                 <TeleLogs msgs_log />
               )}
-              {tab === "pdalog-custommsg" && valid && (
+              {tab === "pdalog-custommsg" && (
                 <CustomMsg />
               )}
             </Fragment>
@@ -250,6 +255,11 @@ export const TeleLogs = (props, context) => {
     message_logs = [],
     recon_logs = [],
   } = data;
+  const prioritycolorMap = {
+    'Normal': 'warning',
+    'High': 'bad',
+    'Extreme': 'bad',
+  };
   const log_to_use = (msgs_log ? recon_logs : message_logs) || [];
   return (
     <Section title="Logs">
@@ -269,91 +279,89 @@ export const TeleLogs = (props, context) => {
       <Section
         title="Messages"
         level={2}>
-        {(log_to_use && log_to_use.length) ? (
-          log_to_use.map(message => {
-            return (
-              <Section key={message.ref}>
-                <LabeledList>
-                  <LabeledList.Item
-                    label={msgs_log ? "Sending Dep." : "Sender"}
-                    buttons={(
-                      <Button
-                        content="Delete"
-                        onClick={() => act('del_log', {
-                          'ref': message.ref,
+        {log_to_use?.map(message => {
+          return (
+            <Section key={message.ref}>
+              <LabeledList>
+                <LabeledList.Item
+                  label={msgs_log ? "Sending Dep." : "Sender"}
+                  buttons={(
+                    <Button
+                      content="Delete"
+                      onClick={() => act('del_log', {
+                        'ref': message.ref,
+                      })}
+                    />
+                  )}>
+                  {message.sender}
+                </LabeledList.Item>
+                <LabeledList.Item
+                  label={msgs_log ? "Receiving Dep." : "Recipient"}>
+                  {message.recipient}
+                </LabeledList.Item>
+                <LabeledList.Item
+                  label="Message"
+                  buttons={(
+                    !!message.picture && ( // don't send img over req
+                      <Button // Had to use _act for this.
+                        content="Image"
+                        icon="image"
+                        onClick={() => callByond('', {
+                          'src': message.ref,
+                          'photo': 1,
                         })}
                       />
-                    )}>
-                    {message.sender}
-                  </LabeledList.Item>
-                  <LabeledList.Item
-                    label={msgs_log ? "Receiving Dep." : "Recipient"}>
-                    {message.recipient}
-                  </LabeledList.Item>
-                  <LabeledList.Item
-                    label="Message"
-                    buttons={(
-                      message.image && !msgs_log && ( // don't send img over req
-                        <Button // Had to use _act for this.
-                          content="Image"
-                          onClick={() => _act(message.ref, 'photo')}
-                        />
-                      )
-                    )}>
-                    {message.message}
-                  </LabeledList.Item>
-                  {!!msgs_log && (
-                    <Fragment>
-                      <LabeledList.Item
-                        label="Stamp"
-                        color={message.stamp !== "Unstamped" ? (
-                          'label'
-                        ) : (
-                          'bad'
-                        )}>
-                        {message.stamp !== 'Unstamped' ? (
-                          <b>{message.stamp}</b>
-                        ) : (
-                          message.stamp
-                        )}
-                      </LabeledList.Item>
-                      <LabeledList.Item
-                        label="ID Authentication"
-                        color={message.auth !== "Unauthenticated" ? (
-                          'good'
-                        ) : (
-                          'bad'
-                        )}>
-                        {message.auth}
-                      </LabeledList.Item>
-                      <LabeledList.Item
-                        label="Priority"
-                        color={(message.priority in prioritycolorMap) ? (
-                          prioritycolorMap[message.priority]
-                        ) : (
-                          'good'
-                        )}>
-                        {message.priority === 'Extreme' ? (
-                          <b>!!{message.priority}!!</b>
-                        ) : (
-                          message.priority
-                        )}
-                      </LabeledList.Item>
-                    </Fragment>
-                  )}
-                </LabeledList>
-              </Section>
-            );
-          })
-        ) : (
-          'Error: Logs empty'
-        )}
+                    )
+                  )}>
+                  {message.message}
+                </LabeledList.Item>
+                {!!msgs_log && (
+                  <Fragment>
+                    <LabeledList.Item
+                      label="Stamp"
+                      color={message.stamp !== "Unstamped" ? (
+                        'label'
+                      ) : (
+                        'bad'
+                      )}
+                      bold={message.stamp !== 'Unstamped'}>
+                      {message.stamp}
+                    </LabeledList.Item>
+                    <LabeledList.Item
+                      label="ID Authentication"
+                      color={message.auth !== "Unauthenticated" ? (
+                        'good'
+                      ) : (
+                        'bad'
+                      )}>
+                      {message.auth}
+                    </LabeledList.Item>
+                    <LabeledList.Item
+                      label="Priority"
+                      color={(message.priority in prioritycolorMap) ? (
+                        prioritycolorMap[message.priority]
+                      ) : (
+                        'good'
+                      )}
+                      bold={message.priority === 'Extreme'}>
+                      {message.priority === 'Extreme' ? (
+                        `!!${message.priority}!!`
+                      ) : (
+                        message.priority
+                      )}
+                    </LabeledList.Item>
+                  </Fragment>
+                )}
+              </LabeledList>
+            </Section>
+          );
+        })}
       </Section>
     </Section>
   );
 };
 
-const CustomMsg = (props, context) => {
+export const CustomMsg = (props, context) => {
   const { act, data } = useBackend(context);
   const fake_message = data.fake_message || {
     'sender': 'System Administrator',

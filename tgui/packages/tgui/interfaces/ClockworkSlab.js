@@ -16,6 +16,7 @@ export const ClockworkSlab = (props, context) => {
     recollection = true,
     recollection_categories = [],
     rec_section = null,
+    rec_binds = [],
     scripture = {}, // this is a {}, not a []
     tier_infos = {},
     power = "0 W",
@@ -88,38 +89,37 @@ export const ClockworkSlab = (props, context) => {
                   </Fragment>
                 )}
               </Box>
-              {!!recollection_categories
-                && recollection_categories.map(cat => {
-                  return (
-                    <Fragment key={cat.name} >
-                      <br />
-                      <Button
-                        content={cat.name}
-                        tooltip={cat.desc}
-                        tooltipPosition={'right'}
-                        onClick={() => act('rec_category', {
-                          "category": cat.name,
-                        })} />
-                    </Fragment>
-                  );
-                })}
+              {recollection_categories?.map(cat => {
+                return (
+                  <Fragment key={cat.name} >
+                    <br />
+                    <Button
+                      content={cat.name}
+                      tooltip={cat.desc}
+                      tooltipPosition={'right'}
+                      onClick={() => act('rec_category', {
+                        "category": cat.name,
+                      })} />
+                  </Fragment>
+                );
+              })}
               <Box>
                 {data.rec_section}
                 <Box
                   as={'span'}
                   textColor={'#BE8700'}
                   fontSize={2.3}>
-                  {rec_section ? (
-                    '500 Server Internal archives not found.'
-                  ) : (
+                  {rec_section?.title ? (
                     rec_section.title
+                  ) : (
+                    '500 Server Internal archives not found.'
                   )}
                 </Box>
                 <br /><br />
-                {rec_section ? (
-                  "One of the cogscarabs must've misplaced this section."
-                ) : (
+                {rec_section?.info ? (
                   rec_section.info
+                ) : (
+                  "One of the cogscarabs must've misplaced this section."
                 )}
               </Box>
               <br />
@@ -136,7 +136,7 @@ export const ClockworkSlab = (props, context) => {
                   action buttons for easy use.
                 </Box>
                 <br /><br />
-                {!!data.rec_binds && data.rec_binds.map(bind => (
+                {rec_binds?.map(bind => (
                   <Fragment key={bind.name}>
                     A <b>Quickbind</b> slot ({data.rec_binds[bind]}),
                     currently set to
@@ -144,7 +144,7 @@ export const ClockworkSlab = (props, context) => {
                       as={'span'}
                       textColor={bind ? bind.color : "#BE8700"}
                       bold>
-                      {bind ? bind.name : "None"}
+                      {bind?.name ? bind.name : "None"}
                     </Box>
                     .
                     <br />

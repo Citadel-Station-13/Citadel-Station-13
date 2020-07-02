@@ -17,9 +17,9 @@ export const TelecommsLogBrowser = (props, context) => {
     setTab,
   ] = useSharedState(context, 'tab', 'servers');
   const operational = (selected && selected.status);
-  if (!operational) { // some sanity checks.
-    setTab("servers");
-  }
+  // if (!operational) { // some sanity checks.
+  //   setTab("servers");
+  // }
   return (
     <Window theme="ntos">
       <Window.Content scrollable>
@@ -102,11 +102,13 @@ export const TelecommsLogBrowser = (props, context) => {
           <Tabs>
             <Tabs.Tab
               selected={tab === "servers"}
+              icon="server"
               onClick={() => setTab("servers")}>
               Servers
             </Tabs.Tab>
             <Tabs.Tab
               disabled={!operational}
+              icon="file"
               selected={tab === "messages"}
               onClick={() => setTab("messages")}>
               Messages
