@@ -42,9 +42,9 @@
 		/obj/item/clothing/mask/facehugger/toy = ARCADE_WEIGHT_RARE,
 		/obj/item/gun/ballistic/automatic/toy/pistol/unrestricted = ARCADE_WEIGHT_TRICK,
 		/obj/item/hot_potato/harmless/toy = ARCADE_WEIGHT_RARE,
-		/obj/item/twohanded/dualsaber/toy = ARCADE_WEIGHT_RARE,
-		/obj/item/twohanded/dualsaber/hypereutactic/toy = ARCADE_WEIGHT_RARE,
-		/obj/item/twohanded/dualsaber/hypereutactic/toy/rainbow = ARCADE_WEIGHT_RARE,
+		/obj/item/dualsaber/toy = ARCADE_WEIGHT_RARE,
+		/obj/item/dualsaber/hypereutactic/toy = ARCADE_WEIGHT_RARE,
+		/obj/item/dualsaber/hypereutactic/toy/rainbow = ARCADE_WEIGHT_RARE,
 
 		/obj/item/storage/box/snappops = ARCADE_WEIGHT_TRICK,
 		/obj/item/clothing/under/syndicate/tacticool = ARCADE_WEIGHT_TRICK,
