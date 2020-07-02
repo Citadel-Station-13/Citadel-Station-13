@@ -1,0 +1,5 @@
+author: "Sonic121x"
+delete-after: True
+changes: 
+  - bugfix: "Bringback the ChemMaster pill type button."
+  - bugfix: "Fix Technode icon."
