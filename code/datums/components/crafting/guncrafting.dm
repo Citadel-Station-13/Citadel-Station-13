@@ -18,39 +18,23 @@
 ////////////////////////////////
 
 /obj/item/weaponcrafting/improvised_parts
-	name = "Debug Improvised Gun Part" //Just make it a normal fucking debug item not debug hypno sissy dot shit
+	name = "Debug Improvised Gun Part"
 	desc = "A badly coded gun part. You should report coders if you see this."
 	icon = 'icons/obj/guns/gun_parts.dmi'
 	icon_state = "palette"
-
-// BARRELS
-
-/obj/item/weaponcrafting/improvised_parts/barrel_rifle
-	name = "rifle barrel"
-	desc = "A pipe with a diameter just the right size to fire 7.62 rounds out of."
-	icon_state = "barrel_rifle"
-
-/obj/item/weaponcrafting/improvised_parts/barrel_shotgun
-	name = "shotgun barrel"
-	desc = "A twenty bore shotgun barrel."
-	icon_state = "barrel_shotgun"
 
 // RECEIVERS
 
 /obj/item/weaponcrafting/improvised_parts/rifle_receiver
 	name = "rifle receiver"
-	desc = "A crudely constructed receiver to create an improvised bolt-action breechloaded rifle. It's generic enough to modify to create other rifles, potentially."
+	desc = "A crudely constructed receiver to create an improvised bolt-action breechloaded rifle."  // removed some text implying that the item had more uses than it does
 	icon_state = "receiver_rifle"
 	w_class = WEIGHT_CLASS_SMALL
 
-/obj/item/weaponcrafting/improvised_parts/laser_receiver
-	name = "laser reciever"
-	desc = "A mixture of components haphazardly wired together to form an energy emitter."
-	icon_state = "laser_assembly"
 
 /obj/item/weaponcrafting/improvised_parts/shotgun_receiver
 	name = "shotgun reciever"
-	desc = "An improvised receiver to create a break-action breechloaded shotgun. Parts of this are still useful if you want to make another type of shotgun, however."
+	desc = "An improvised receiver to create a break-action breechloaded shotgun."  // removed some text implying that the item had more uses than it does
 	icon_state = "receiver_shotgun"
 	w_class = WEIGHT_CLASS_SMALL
 

@@ -248,10 +248,10 @@
 	category = CAT_WEAPONRY
 	subcategory = CAT_WEAPON
 
-/datum/crafting_recipe/ishotgun
+/datum/crafting_recipe/ishotgun // smaller and more versatile gun requires some better materials
 	name = "Improvised Shotgun"
 	result = /obj/item/gun/ballistic/revolver/doublebarrel/improvised
-	reqs = list(/obj/item/weaponcrafting/improvised_parts/barrel_shotgun = 1,
+	reqs = list(/obj/item/pipe = 2, // putting a large amount of meaningless timegates by forcing people to turn base resources into upgraded resources kinda sucks
 				/obj/item/weaponcrafting/improvised_parts/shotgun_receiver = 1,
 				/obj/item/weaponcrafting/improvised_parts/trigger_assembly = 1,
 				/obj/item/weaponcrafting/improvised_parts/wooden_body = 1,
@@ -262,10 +262,10 @@
 	category = CAT_WEAPONRY
 	subcategory = CAT_WEAPON
 
-/datum/crafting_recipe/irifle
+/datum/crafting_recipe/irifle // larger and less versatile gun, but a bit easier to make
 	name = "Improvised Rifle (7.62mm)"
 	result = /obj/item/gun/ballistic/shotgun/boltaction/improvised
-	reqs = list(/obj/item/weaponcrafting/improvised_parts/barrel_rifle = 1,
+	reqs = list(/obj/item/pipe = 2, // above
 				/obj/item/weaponcrafting/improvised_parts/rifle_receiver = 1,
 				/obj/item/weaponcrafting/improvised_parts/trigger_assembly = 1,
 				/obj/item/weaponcrafting/improvised_parts/wooden_body = 1,
@@ -403,45 +403,24 @@
 // PARTS CRAFTING //
 ////////////////////
 
-// BARRELS
-
-/datum/crafting_recipe/rifle_barrel
-	name = "Improvised Rifle Barrel"
-	result = /obj/item/weaponcrafting/improvised_parts/barrel_rifle
-	reqs = list(/obj/item/pipe = 2)
-	tools = list(TOOL_WELDER,TOOL_SAW)
-	time = 150
-	category = CAT_WEAPONRY
-	subcategory = CAT_PARTS
-
-/datum/crafting_recipe/shotgun_barrel
-	name = "Improvised Shotgun Barrel"
-	result = /obj/item/weaponcrafting/improvised_parts/barrel_shotgun
-	reqs = list(/obj/item/pipe = 2)
-	tools = list(TOOL_WELDER,TOOL_SAW)
-	time = 150
-	category = CAT_WEAPONRY
-	subcategory = CAT_PARTS
-
 // RECEIVERS
 
 /datum/crafting_recipe/rifle_receiver
 	name = "Improvised Rifle Receiver"
 	result = /obj/item/weaponcrafting/improvised_parts/rifle_receiver
-	reqs = list(/obj/item/stack/sheet/metal = 10,
-				/obj/item/stack/sheet/plasteel = 1)
+	reqs = list(/obj/item/stack/sheet/metal = 15) // you can carry multiple shotguns
 	tools = list(TOOL_SCREWDRIVER, TOOL_WELDER)
-	time = 50
+	time = 25
 	category = CAT_WEAPONRY
 	subcategory = CAT_PARTS
 
 /datum/crafting_recipe/shotgun_receiver
 	name = "Improvised Shotgun Receiver"
 	result = /obj/item/weaponcrafting/improvised_parts/shotgun_receiver
-	reqs = list(/obj/item/stack/sheet/metal = 10,
-				/obj/item/stack/sheet/plasteel = 1)
-	tools = list(TOOL_SCREWDRIVER, TOOL_WELDER) // Dual wielding has been removed, plasteel is a soft timesink to obtain for most to make mass production harder.
-	time = 50
+	reqs = list(/obj/item/stack/sheet/metal = 15,
+				/obj/item/stack/sheet/plasteel = 1) // requires access or hacking since shotgun is better
+	tools = list(TOOL_SCREWDRIVER, TOOL_WELDER)
+	time = 25
 	category = CAT_WEAPONRY
 	subcategory = CAT_PARTS
 
@@ -453,6 +432,6 @@
 	reqs = list(/obj/item/stack/sheet/metal = 3,
 				/obj/item/assembly/igniter = 1)
 	tools = list(TOOL_SCREWDRIVER, TOOL_WELDER)
-	time = 150
+	time = 25
 	category = CAT_WEAPONRY
 	subcategory = CAT_PARTS
