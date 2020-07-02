@@ -41,20 +41,6 @@
 
 /datum/status_effect/chem/breast_enlarger/on_apply()//Removes clothes, they're too small to contain you. You belong to space now.
 	log_reagent("FERMICHEM: [owner]'s breasts has reached comical sizes. ID: [owner.key]")
-	var/mob/living/carbon/human/H = owner
-	var/message = FALSE
-	if(H.w_uniform)
-		H.dropItemToGround(H.w_uniform, TRUE)
-		message = TRUE
-	if(H.wear_suit)
-		H.dropItemToGround(H.wear_suit, TRUE)
-		message = TRUE
-	if(message)
-		playsound(H.loc, 'sound/items/poster_ripped.ogg', 50, 1)
-		H.visible_message("<span class='boldnotice'>[H]'s chest suddenly bursts forth, ripping their clothes off!'</span>", \
-		"<span class='warning'>Your clothes give, ripping into peices under the strain of your swelling breasts! Unless you manage to reduce the size of your breasts, there's no way you're going to be able to put anything on over these melons..!</b></span>")
-	else
-		to_chat(H, "<span class='notice'>Your bountiful bosom is so rich with mass, you seriously doubt you'll be able to fit any clothes over it.</b></span>")
 	return ..()
 
 /datum/status_effect/chem/breast_enlarger/tick()//If you try to wear clothes, you fail. Slows you down if you're comically huge
@@ -64,16 +50,6 @@
 		H.remove_status_effect(src)
 		return
 	moveCalc = 1+((round(B.cached_size) - 9)/3) //Afffects how fast you move, and how often you can click.
-	var/message = FALSE
-	if(H.w_uniform)
-		H.dropItemToGround(H.w_uniform, TRUE)
-		message = TRUE
-	if(H.wear_suit)
-		H.dropItemToGround(H.wear_suit, TRUE)
-		message = TRUE
-	if(message)
-		playsound(H.loc, 'sound/items/poster_ripped.ogg', 50, 1)
-		to_chat(H, "<span class='warning'>Your enormous breasts are way too large to fit anything over them!</b></span>")
 
 	if(last_checked_size != B.cached_size)
 		H.add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/status_effect/breast_hypertrophy, multiplicative_slowdown = moveCalc)
@@ -115,20 +91,6 @@
 
 /datum/status_effect/chem/penis_enlarger/on_apply()//Removes clothes, they're too small to contain you. You belong to space now.
 	log_reagent("FERMICHEM: [owner]'s dick has reached comical sizes. ID: [owner.key]")
-	var/mob/living/carbon/human/H = owner
-	var/message = FALSE
-	if(H.w_uniform)
-		H.dropItemToGround(H.w_uniform, TRUE)
-		message = TRUE
-	if(H.wear_suit)
-		H.dropItemToGround(H.wear_suit, TRUE)
-		message = TRUE
-	if(message)
-		playsound(H.loc, 'sound/items/poster_ripped.ogg', 50, 1)
-		H.visible_message("<span class='boldnotice'>[H]'s schlong suddenly bursts forth, ripping their clothes off!'</span>", \
-		"<span class='warning'>Your clothes give, ripping into peices under the strain of your swelling pecker! Unless you manage to reduce the size of your emancipated trouser snake, there's no way you're going to be able to put anything on over this girth..!</b></span>")
-	else
-		to_chat(H, "<span class='notice'>Your emancipated trouser snake is so ripe with girth, you seriously doubt you'll be able to fit any clothes over it.</b></span>")
 	return ..()
 
 
@@ -140,18 +102,6 @@
 		return
 	moveCalc = 1+((round(P.length) - 21)/3) //effects how fast you can move
 	bloodCalc = 1+((round(P.length) - 21)/15) //effects how much blood you need (I didn' bother adding an arousal check because I'm spending too much time on this organ already.)
-
-	var/message = FALSE
-	if(H.w_uniform)
-		H.dropItemToGround(H.w_uniform, TRUE)
-		message = TRUE
-	if(H.wear_suit)
-		H.dropItemToGround(H.wear_suit, TRUE)
-		message = TRUE
-	if(message)
-		playsound(H.loc, 'sound/items/poster_ripped.ogg', 50, 1)
-		to_chat(H, "<span class='warning'>Your enormous package is way to large to fit anything over!</b></span>")
-
 	if(P.length < 22 && H.has_movespeed_modifier(/datum/movespeed_modifier/status_effect/penis_hypertrophy))
 		to_chat(owner, "<span class='notice'>Your rascally willy has become a more managable size, liberating your movements.</b></span>")
 		H.remove_movespeed_modifier(/datum/movespeed_modifier/status_effect/penis_hypertrophy)

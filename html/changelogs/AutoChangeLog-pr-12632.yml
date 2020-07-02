@@ -1,0 +1,5 @@
+author: "Ghommie"
+delete-after: True
+changes: 
+  - balance: "The stamina cost multiplier for swinging melee weapons against mobs has been brought back to 1 from 0.8"
+  - balance: "The stamina cost for throwing mobs now scales with their mob size variable."

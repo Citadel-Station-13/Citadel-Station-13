@@ -29,6 +29,11 @@
 	RegisterSignal(src, COMSIG_TWOHANDED_UNWIELD, .proc/on_unwield)
 	update_icon()
 
+/obj/item/rcl/ComponentInitialize()
+	. = ..()
+	AddElement(/datum/element/update_icon_updates_onmob)
+	AddComponent(/datum/component/two_handed)
+
 /// triggered on wield of two handed item
 /obj/item/rcl/proc/on_wield(obj/item/source, mob/user)
 	active = TRUE
@@ -36,10 +41,6 @@
 /// triggered on unwield of two handed item
 /obj/item/rcl/proc/on_unwield(obj/item/source, mob/user)
 	active = FALSE
-
-/obj/item/rcl/ComponentInitialize()
-	. = ..()
-	AddElement(/datum/element/update_icon_updates_onmob)
 
 /obj/item/rcl/attackby(obj/item/W, mob/user)
 	if(istype(W, /obj/item/stack/cable_coil))
