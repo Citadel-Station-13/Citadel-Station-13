@@ -104,7 +104,6 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 
 	for(var/i in transferring_comps)
 		W.TakeComponent(i)
-		C.Invoke()
 
 	if(new_baseturfs)
 		W.baseturfs = new_baseturfs

@@ -56,6 +56,10 @@
 	var/list/turf/field_turfs_new = list()
 	var/list/turf/edge_turfs_new = list()
 
+/datum/proximity_monitor/advanced/New()
+	if(requires_processing)
+		START_PROCESSING(SSfields, src)
+
 /datum/proximity_monitor/advanced/Destroy()
 	full_cleanup()
 	STOP_PROCESSING(SSfields, src)
@@ -65,28 +69,27 @@
 	. = TRUE
 	for(var/param in field_params)
 		if(vars[param] || isnull(vars[param]) || (param in vars))
-			if(param == "host")
-				SetHost(field_params[param])
-				continue
 			vars[param] = field_params[param]
 		else
 			. = FALSE
 
-/datum/proximity_monitor/advanced/SetHost(atom/H,atom/R)
-	if(H == host)
-		return
-	if(host)
-		UnregisterSignal(host, COMSIG_MOVABLE_MOVED)
-		if(use_host_turf)
-			UNREGISTER_NESTED_LOCS(nested_locs, COMSIG_MOVABLE_MOVED, 1)
+/datum/proximity_monitor/advanced/SetHost(atom/H,atom/R, forced = FALSE)
+	if(!forced)
+		if(H == host)
+			return
+		if(host)
+			UnregisterSignal(host, COMSIG_MOVABLE_MOVED)
+			if(use_host_turf)
+				UNREGISTER_NESTED_LOCS(nested_locs, COMSIG_MOVABLE_MOVED, 1)
+			full_cleanup()
 	if(R)
 		hasprox_receiver = R
 	else if(hasprox_receiver == host) //Default case
 		hasprox_receiver = H
 	host = H
 	RegisterSignal(host, COMSIG_MOVABLE_MOVED, .proc/HandleMove)
-	last_host_loc = host.loc
-	SetRange(current_range,TRUE)
+	last_host_loc = use_host_turf ? get_turf(host) : host.loc
+	setup_field()
 	if(use_host_turf)
 		nested_locs = list()
 		REGISTER_NESTED_LOCS(H, nested_locs, COMSIG_MOVABLE_MOVED, .proc/handle_loc_move)
@@ -115,12 +118,8 @@
 
 /datum/proximity_monitor/advanced/proc/process_edge_turf(turf/T)
 
-/datum/proximity_monitor/advanced/New()
-	if(requires_processing)
-		START_PROCESSING(SSfields, src)
-
 /datum/proximity_monitor/advanced/proc/Initialize()
-	setup_field()
+	SetHost(host, forced = TRUE)
 	post_setup_field()
 
 /datum/proximity_monitor/advanced/proc/full_cleanup()	 //Full cleanup for when you change something that would require complete resetting.
@@ -130,14 +129,10 @@
 		cleanup_field_turf(T)
 
 /datum/proximity_monitor/advanced/proc/check_movement()
-	if(!use_host_turf)
-		if(host.loc != last_host_loc)
-			last_host_loc = host.loc
-			return TRUE
-	else
-		if(get_turf(host) != last_host_loc)
-			last_host_loc = get_turf(host)
-			return TRUE
+	var/atom/new_host_loc = use_host_turf ? get_turf(host) : host.loc
+	if(new_host_loc != last_host_loc)
+		last_host_loc = new_host_loc
+		return TRUE
 	return FALSE
 
 /datum/proximity_monitor/advanced/proc/recalculate_field(ignore_movement_check = FALSE)	//Call every time the field moves (done automatically if you use update_center) or a setup specification is changed.
@@ -188,24 +183,20 @@
 	return TRUE
 
 /datum/proximity_monitor/advanced/HandleMove()
-	var/atom/new_host_loc = host.loc
-	if(last_host_loc != new_host_loc)
-		recalculate_field()
-		if(use_host_turf)
-			UNREGISTER_NESTED_LOCS(host, COMSIG_MOVABLE_MOVED, 1)
-			REGISTER_NESTED_LOCS(host, nested_locs, COMSIG_MOVABLE_MOVED, .proc/handle_loc_move)
+	recalculate_field()
+	if(use_host_turf)
+		UNREGISTER_NESTED_LOCS(nested_locs, COMSIG_MOVABLE_MOVED, 1)
+		REGISTER_NESTED_LOCS(host, nested_locs, COMSIG_MOVABLE_MOVED, .proc/handle_loc_move)
 
 /datum/proximity_monitor/advanced/proc/handle_loc_move(atom/source, atom/oldloc, dir, forced)
 	if(oldloc == source.loc)
 		return
 	var/index = nested_locs.Find(source)
-	if(index == nested_locs.len) //current movable on the turf. It must have moved around.
+	if(index == nested_locs.len && isturf(source.loc)) //topmost location moving around turfs.
 		recalculate_field()
 		return
 	UNREGISTER_NESTED_LOCS(nested_locs, COMSIG_MOVABLE_MOVED, index)
 	REGISTER_NESTED_LOCS(source, nested_locs, COMSIG_MOVABLE_MOVED, .proc/handle_loc_move)
-	if(get_turf(source) == get_turf(oldloc))
-		return
 	recalculate_field()
 
 /datum/proximity_monitor/advanced/proc/post_setup_field()

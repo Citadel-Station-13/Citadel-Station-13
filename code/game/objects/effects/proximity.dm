@@ -8,10 +8,11 @@
 
 /datum/proximity_monitor/New(atom/_host, range, _ignore_if_not_on_turf = TRUE)
 	checkers = list()
-	last_host_loc = _host.loc
 	ignore_if_not_on_turf = _ignore_if_not_on_turf
 	current_range = range
-	SetHost(_host)
+	if(_host)
+		last_host_loc = _host.loc
+		SetHost(_host)
 
 /datum/proximity_monitor/proc/SetHost(atom/H,atom/R)
 	if(H == host)
@@ -52,8 +53,9 @@
 
 	current_range = range
 
-	var/list/checkers_local = checkers
-	var/old_checkers_len = length(checkers_local)
+	if(!checkers)
+		checkers = list()
+	var/old_checkers_len = length(checkers)
 
 	var/atom/_host = host
 
@@ -62,13 +64,13 @@
 		if(range)
 			var/obj/effect/abstract/proximity_checker/pc
 			if(old_checkers_len)
-				pc = checkers_local[old_checkers_len]
-				--checkers_local.len
-				QDEL_LIST(checkers_local)
+				pc = checkers[old_checkers_len]
+				--checkers.len
+				QDEL_LIST(checkers)
 			else
 				pc = new(loc_to_use, src)
 
-			checkers_local += pc	//only check the host's loc
+			checkers += pc	//only check the host's loc
 		return
 
 	var/list/turfs = RANGE_TURFS(range, loc_to_use)
@@ -78,17 +80,17 @@
 	//reuse what we can
 	for(var/I in 1 to old_checkers_len)
 		if(I <= old_checkers_used)
-			var/obj/effect/abstract/proximity_checker/pc = checkers_local[I]
+			var/obj/effect/abstract/proximity_checker/pc = checkers[I]
 			pc.forceMove(turfs[I])
 		else
-			qdel(checkers_local[I])	//delete the leftovers
+			qdel(checkers[I])	//delete the leftovers
 
 	if(old_checkers_len < turfs_len)
 		//create what we lack
 		for(var/I in (old_checkers_used + 1) to turfs_len)
-			checkers_local += new /obj/effect/abstract/proximity_checker(turfs[I], src)
+			checkers += new /obj/effect/abstract/proximity_checker(turfs[I], src)
 	else
-		checkers_local.Cut(old_checkers_used + 1, old_checkers_len)
+		checkers.Cut(old_checkers_used + 1, old_checkers_len)
 
 /obj/effect/abstract/proximity_checker
 	invisibility = INVISIBILITY_ABSTRACT

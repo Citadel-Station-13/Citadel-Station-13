@@ -1,55 +1,57 @@
-/datum/proximity_monitor/advanced/emp_protection
-	name = "EMP protection zone"
+/datum/proximity_monitor/advanced/flags
+	name = "Generic Comsig Field"
 	setup_field_turfs = TRUE
+	field_shape = FIELD_SHAPE_RADIUS_SQUARE
+	use_host_turf = TRUE
 	var/flags = NONE
+	var/comsig
 	var/list/protected_atoms = list()
 	var/obj/effect/overlay/tile_visual
-	field_shape = FIELD_SHAPE_RADIUS_SQUARE
 
-/datum/proximity_monitor/advanced/emp_protection/Destroy()
+/datum/proximity_monitor/advanced/flags/Destroy()
 	if(tile_visual)
 		QDEL_NULL(tile_visual)
 	return ..()
 
-/datum/proximity_monitor/advanced/emp_protection/setup_field_turf(turf/T)
+/datum/proximity_monitor/advanced/flags/setup_field_turf(turf/T)
 	. = ..()
 	if(tile_visual)
 		T.vis_contents += tile_visual
-	for(var/k in T)
+	RegisterSignal(T, COMSIG_ATOM_NEW_CONTENT, .proc/add_protected_atom)
+	RegisterSignal(T, comsig, .proc/return_flags)
+	for(var/k in T.contents)
 		var/atom/movable/AM = k
-		RegisterSignal(AM, COMSIG_ATOM_EMP_ACT, .proc/return_flags)
-		RegisterSignal(AM COMSIG_ATOM_NEW_CONTENT, .proc/add_protected_atom)
-		protected_atoms |= AM
+		RegisterSignal(AM, comsig, .proc/return_flags)
+		protected_atoms[AM] = TRUE
 
-/datum/proximity_monitor/advanced/emp_protection/cleanup_field_turf(turf/T)
+/datum/proximity_monitor/advanced/flags/cleanup_field_turf(turf/T)
 	. = ..()
 	if(tile_visual)
 		T.vis_contents -= tile_visual
-	for(var/k in T)
+	UnregisterSignal(T, list(comsig, COMSIG_ATOM_NEW_CONTENT))
+	for(var/k in T.contents)
 		var/atom/movable/AM = k
-		UnregisterSignal(AM, COMSIG_ATOM_EMP_ACT)
-		UnregisterSignal(AM COMSIG_ATOM_NEW_CONTENT)
+		UnregisterSignal(AM, comsig)
 		protected_atoms -= AM
 
-
-/datum/proximity_monitor/advanced/emp_protection/field_turf_crossed(atom/movable/AM, obj/effect/abstract/proximity_checker/advanced/field_turf/F)
-	if(AM in protected_atoms)
+/datum/proximity_monitor/advanced/flags/field_turf_crossed(atom/movable/AM, obj/effect/abstract/proximity_checker/advanced/field_turf/F)
+	if(protected_atoms[AM])
 		return
-	RegisterSignal(AM, COMSIG_ATOM_EMP_ACT, .proc/return_flags)
+	RegisterSignal(AM, comsig, .proc/return_flags)
 	protected_atoms |= AM
 
-/datum/proximity_monitor/advanced/emp_protection/field_turf_uncrossed(atom/movable/AM, obj/effect/abstract/proximity_checker/advanced/field_turf/F)
+/datum/proximity_monitor/advanced/flags/field_turf_uncrossed(atom/movable/AM, obj/effect/abstract/proximity_checker/advanced/field_turf/F)
 	if(AM.loc in field_turfs)
 		return
-	UnregisterSignal(AM, COMSIG_ATOM_EMP_ACT)
+	UnregisterSignal(AM, comsig)
 	protected_atoms -= AM
 
-/datum/proximity_monitor/advanced/emp_protection/proc/return_flags()
+/datum/proximity_monitor/advanced/flags/proc/return_flags()
 	return flags
 
-/datum/proximity_monitor/advanced/emp_protection/proc/add_protected_atom(turf/T, atom/movable/new_content)
-	RegisterSignal(AM, COMSIG_ATOM_EMP_ACT, .proc/return_flags)
-	protected_atoms |= AM
+/datum/proximity_monitor/advanced/flags/proc/add_protected_atom(turf/T, atom/movable/new_content)
+	RegisterSignal(new_content, comsig, .proc/return_flags)
+	protected_atoms |= new_content
 
 /obj/machinery/emp_protection
 	name = "\improper EMP dissipator"
@@ -58,10 +60,8 @@
 	icon_state = "shieldon"
 	anchored = TRUE
 	density = TRUE
-	var/datum/proximity_monitor/advanced/emp_protection/shield
+	var/datum/proximity_monitor/advanced/flags/shield
 	var/obj/effect/overlay/tile_visual
-	var/charges = 100
-	var/max_charges = 100
 
 /obj/machinery/emp_protection/Initialize()
 	. = ..()
@@ -71,7 +71,9 @@
 	tile_visual.color = "#0000FF64" //Blue with 100 alpha.
 	tile_visual.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	if(anchored)
-		shield = make_field(/datum/proximity_monitor/advanced/emp_protection, list("current_range" = 3, "host" = src, "flags" = EMP_PROTECT_SELF|EMP_PROTECT_CONTENTS|EMP_PROTECT_WIRES, "tile_visual" = tile_visual))
+		shield = make_field(/datum/proximity_monitor/advanced/flags, list("current_range" = 3, "host" = src,
+							"name" = "EMP protection zone", "comsig" = COMSIG_ATOM_EMP_ACT,
+							"flags" = EMP_PROTECT_SELF|EMP_PROTECT_CONTENTS|EMP_PROTECT_WIRES, "tile_visual" = tile_visual))
 
 /obj/machinery/emp_protection/Destroy()
 	QDEL_NULL(shield)
@@ -95,7 +97,9 @@
 	var/old_anchored = anchored
 	. = ..()
 	if(anchored && !old_anchored)
-		shield = make_field(/datum/proximity_monitor/advanced/emp_protection, list("current_range" = 3, "host" = src, "flags" = EMP_PROTECT_SELF|EMP_PROTECT_CONTENTS|EMP_PROTECT_WIRES, "tile_visual" = tile_visual))
+		shield = make_field(/datum/proximity_monitor/advanced/flags, list("current_range" = 3, "host" = src,
+							"name" = "EMP protection zone", "comsig" = COMSIG_ATOM_EMP_ACT,
+							"flags" = EMP_PROTECT_SELF|EMP_PROTECT_CONTENTS|EMP_PROTECT_WIRES, "tile_visual" = tile_visual))
 	else if(!anchored)
 		QDEL_NULL(shield)
 
