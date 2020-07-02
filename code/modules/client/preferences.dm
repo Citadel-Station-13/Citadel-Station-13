@@ -2737,7 +2737,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	character.dna.update_body_size(old_size)
 
 	//speech stuff
-	if(custom_tongue != default)
+	if(custom_tongue != "default")
 		var/new_tongue = GLOB.roundstart_tongues[custom_tongue]
 		if(new_tongue)
 			var/obj/item/organ/tongue/T = character.getorganslot(ORGAN_SLOT_TONGUE)
