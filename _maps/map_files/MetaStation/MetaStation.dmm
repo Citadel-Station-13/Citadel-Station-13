@@ -69602,7 +69602,7 @@
 	pixel_y = 2
 	},
 /obj/structure/table,
-/obj/item/twohanded/binoculars,
+/obj/item/binoculars,
 /obj/machinery/door/window/eastright{
 	dir = 8;
 	name = "Mass Driver Door";
