@@ -201,8 +201,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		features["ooc_notes"] = html_encode(features["ooc_notes"])
 
 	if(current_version < 34)
-		S["custom_tongue"] = "default"
-		S["custom_speech_verb"] = "default"
+		custom_tongue = "default"
+		custom_speech_verb = "default"
 
 /datum/preferences/proc/load_path(ckey,filename="preferences.sav")
 	if(!ckey)
