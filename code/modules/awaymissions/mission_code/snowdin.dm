@@ -502,7 +502,7 @@
 
 /obj/effect/spawner/lootdrop/snowdin/dungeonheavy
 	name = "dungeon heavy"
-	loot = list(/obj/item/twohanded/fireaxe = 25,
+	loot = list(/obj/item/fireaxe = 25,
 				/obj/item/organ/brain/alien = 17,
 				/obj/item/organ/heart/cursed = 7,
 				/obj/item/book/granter/spell/forcewall = 17,
@@ -518,7 +518,7 @@
 	loot = list(/obj/item/stack/sheet/mineral/snow{amount = 25} = 10,
 				/obj/item/toy/snowball = 15,
 				/obj/item/shovel = 10,
-				/obj/item/twohanded/spear = 8,
+				/obj/item/spear = 8,
 				)
 
 //special items//--

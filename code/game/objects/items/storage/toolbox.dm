@@ -25,7 +25,7 @@ GLOBAL_LIST_EMPTY(rubber_toolbox_icons)
 	icon_state = "toolbox_default"
 	item_state = "toolbox_default"
 	can_rubberify = FALSE
-	material_flags = MATERIAL_ADD_PREFIX | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS | MATERIAL_EFFECTS
+	material_flags = MATERIAL_ADD_PREFIX | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS
 
 /obj/item/storage/toolbox/Initialize(mapload)
 	if(has_latches)

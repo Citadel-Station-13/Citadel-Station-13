@@ -112,7 +112,7 @@
 /turf/open/floor/plating/asteroid,
 /area/ruin/powered)
 "ax" = (
-/obj/item/twohanded/spear,
+/obj/item/spear,
 /turf/open/floor/plating/asteroid,
 /area/ruin/powered)
 "ay" = (
