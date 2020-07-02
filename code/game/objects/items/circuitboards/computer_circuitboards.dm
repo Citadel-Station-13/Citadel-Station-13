@@ -213,7 +213,7 @@
 	name = "Supply Console (Computer Board)"
 	build_path = /obj/machinery/computer/cargo
 	var/contraband = FALSE
-	var/permits = 0
+	var/permits = NONE
 
 /obj/item/circuitboard/computer/cargo/multitool_act(mob/living/user)
 	if(!(obj_flags & EMAGGED))

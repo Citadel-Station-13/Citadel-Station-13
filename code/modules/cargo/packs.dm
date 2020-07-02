@@ -22,7 +22,7 @@
 // These are used for when you want to stop cargo buying a crate type round start
 // These are vage for a reason, and that is to allow others to use/exspand on them
 // To see permit types see cargo datums
-	var/permits = 0
+	var/permits = NONE
 	var/can_private_buy = TRUE //Can it be purchased privately by each crewmember?
 
 /datum/supply_pack/proc/generate(atom/A, datum/bank_account/paying_account)
