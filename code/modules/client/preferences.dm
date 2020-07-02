@@ -2744,7 +2744,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			qdel(T)
 		var/obj/item/organ/tongue/new_custom_tongue = new new_tongue
 		new_custom_tongue.Insert(character)
-	if(custom_speech_verb != "default" && GLOB.speech_verbs[custom_speech_verb])
+	if(custom_speech_verb != "default" && LAZYACCESS(GLOB.speech_verbs, custom_speech_verb))
 		character.dna.species.say_mod = custom_speech_verb
 
 
