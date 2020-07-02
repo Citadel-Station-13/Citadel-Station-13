@@ -436,7 +436,7 @@
 	var/blood_id = get_blood_id()
 	if(!(blood_id in GLOB.blood_reagent_types))
 		return
-	return list("ANIMAL DNA" = "Y-")
+	return list("color" = list(BLOOD_COLOR_HUMAN), "ANIMAL DNA" = "Y-")
 
 /mob/living/carbon/get_blood_dna_list()
 	var/blood_id = get_blood_id()
@@ -452,7 +452,7 @@
 	return blood_dna
 
 /mob/living/carbon/alien/get_blood_dna_list()
-	return list("UNKNOWN DNA" = "X*")
+	return list("color" = list(BLOOD_COLOR_XENO), "UNKNOWN DNA" = "X*")
 
 //to add a mob's dna info into an object's blood_DNA list.
 /atom/proc/transfer_mob_blood_dna(mob/living/L)
@@ -1019,7 +1019,7 @@ Proc for attack log creation, because really why not
 		custom_materials = null
 		return
 
-	if(material_flags & MATERIAL_EFFECTS)
+	if(material_flags)
 		for(var/x in materials)
 			var/datum/material/custom_material = SSmaterials.GetMaterialRef(x)
 			custom_material.on_applied(src, materials[x] * multiplier * material_modifier, material_flags)
