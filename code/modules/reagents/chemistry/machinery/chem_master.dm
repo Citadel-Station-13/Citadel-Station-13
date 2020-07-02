@@ -154,6 +154,11 @@
 	bottle?.forceMove(A)
 	return ..()
 
+//Insert our custom spritesheet css link into the html
+/obj/machinery/chem_master/ui_base_html(html)
+	var/datum/asset/spritesheet/assets = get_asset_datum(/datum/asset/spritesheet/simple/pills)
+	. = replacetext(html, "<!--customheadhtml-->", assets.css_tag())
+
 /obj/machinery/chem_master/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
 										datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
@@ -162,11 +167,6 @@
 		assets.send(user)
 		ui = new(user, src, ui_key, "chem_master", name, 500, 550, master_ui, state)
 		ui.open()
-
-//Insert our custom spritesheet css link into the html
-/obj/machinery/chem_master/ui_base_html(html)
-	var/datum/asset/spritesheet/simple/assets = get_asset_datum(/datum/asset/spritesheet/simple/pills)
-	. = replacetext(html, "<!--customheadhtml-->", assets.css_tag())
 
 /obj/machinery/chem_master/ui_data(mob/user)
 	var/list/data = list()
