@@ -548,6 +548,7 @@
 	return TRUE
 
 /atom/proc/blood_DNA_to_color()
+	return
 	var/list/colors = list()//first we make a list of all bloodtypes present
 	for(var/blood_color in blood_DNA["color"])
 		if(colors[blood_color])
