@@ -261,6 +261,19 @@
 		if(S.invokers_required > 1)
 			data["invokers"] = "Invokers: [S.invokers_required]"
 		
+		.["rec_binds"] = list()
+		for(var/i in 1 to maximum_quickbound)
+			if(GLOB.ratvar_awakens)
+				return
+			if(LAZYLEN(quickbound) < i || !quickbound[i])
+				.["rec_binds"] += list(list())
+			else
+				var/datum/clockwork_scripture/quickbind_slot = quickbound[i]
+				.["rec_binds"] += list(list(
+					"name" = initial(quickbind_slot.name), 
+					"color" = get_component_color_bright(initial(quickbind_slot.primary_component))
+				))
+		
 		.["scripture"][S.tier] += list(data)
 
 /obj/item/clockwork/slab/ui_static_data(mob/user)
@@ -290,18 +303,6 @@
 		list("name" = "Power", "desc" = "The power system that certain objects use to function."),
 		list("name" = "Conversion", "desc" = "Converting the crew, cyborgs, and very walls to your cause.")
 	)
-	.["rec_binds"] = list()
-	for(var/i in 1 to maximum_quickbound)
-		if(GLOB.ratvar_awakens)
-			return
-		if(LAZYLEN(quickbound) < i || !quickbound[i])
-			.["rec_binds"] += list(list())
-		else
-			var/datum/clockwork_scripture/quickbind_slot = quickbound[i]
-			.["rec_binds"] += list(list(
-				"name" = initial(quickbind_slot.name), 
-				"color" = get_component_color_bright(initial(quickbind_slot.primary_component))
-			))
 	// .["rec_section"]["title"] //this is here if ever we decided to return these back.
 	// .["rec_section"]["info"]// wall of info for the thing
 

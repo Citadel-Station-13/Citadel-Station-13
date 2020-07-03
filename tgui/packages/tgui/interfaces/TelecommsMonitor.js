@@ -177,7 +177,7 @@ export const TelecommsMonitor = (props, context) => {
                         .find(channel => channel.freq === thing);
                       return (
                         (valid) ? (
-                          <Box as="span" style={`color: ${valid.color}`}>
+                          <Box as="span" color={valid.color}>
                             {`[${thing}] (${valid.name}) `}
                           </Box>
                         ) : (

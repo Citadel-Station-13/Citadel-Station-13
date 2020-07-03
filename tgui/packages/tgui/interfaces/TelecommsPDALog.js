@@ -268,7 +268,7 @@ export const TeleLogs = (props, context) => {
         icon="sync"
         onClick={() => act('refresh')}
       />
-      <Button
+      <Button.Confirm
         content="Delete All Logs"
         icon="trash"
         disabled={!log_to_use || !(log_to_use && log_to_use.length)}
