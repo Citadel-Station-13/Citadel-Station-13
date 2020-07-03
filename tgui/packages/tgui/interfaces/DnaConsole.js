@@ -559,7 +559,6 @@ const MutationInfo = (props, context) => {
     diskReadOnly,
     hasDisk,
     isInjectorReady,
-    mutationCapacity,
   } = data;
   const diskMutations = data.storage.disk ?? [];
   const mutationStorage = data.storage.console ?? [];
@@ -616,7 +615,6 @@ const MutationInfo = (props, context) => {
         )}
         {mutation.Source === 'console' && (
           <MutationCombiner
-            disabled={mutationCapacity <= 0}
             mutations={combinedMutations}
             source={mutation} />
         )}
@@ -657,7 +655,6 @@ const MutationInfo = (props, context) => {
         <Button
           icon="save"
           disabled={savedToConsole
-            || mutationCapacity <= 0
             || !mutation.Active}
           content="Save to Console"
           onClick={() => act('save_console', {
@@ -804,7 +801,7 @@ const DnaConsoleSequencer = (props, context) => {
         </Section>
       ) || (isMonkey && mutation?.Name !== 'Monkified') && (
         <Section color="bad">
-          Genetic sequence corrupted. Subject diagnostic report: MONKEY. Scramble DNA to humanize.
+          Genetic sequence corrupted. Subject diagnostic report: MONKEY.
         </Section>
       ) || (subjectStatus === SUBJECT_TRANSFORMING) && (
         <Section color="bad">

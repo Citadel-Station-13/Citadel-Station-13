@@ -485,7 +485,6 @@
 			// Resolve mutation's BYOND path from the alias
 			var/alias = params["alias"]
 			var/path = GET_MUTATION_TYPE_FROM_ALIAS(alias)
-			to_chat(usr,"<span class='warning'>[path] [alias]</span>")
 			// Make sure the occupant still has this mutation
 			if(!(path in scanner_occupant.dna.mutation_index))
 				return
