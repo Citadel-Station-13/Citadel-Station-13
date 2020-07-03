@@ -12,6 +12,7 @@
 	range = 0
 	cast_sound = null
 	mobs_whitelist = list(/mob/living/carbon/human)
+	antimagic_allowed = TRUE
 
 	action_icon_state = "mime"
 	action_background_icon_state = "bg_mime"
@@ -40,6 +41,7 @@
 
 	action_icon_state = "mime"
 	action_background_icon_state = "bg_mime"
+	antimagic_allowed = TRUE
 
 /obj/effect/proc_holder/spell/targeted/mime/speak/Trigger(mob/user, skip_can_cast = TRUE)
 	if(user.mind?.miming)
@@ -76,6 +78,7 @@
 
 	action_icon_state = "mime"
 	action_background_icon_state = "bg_mime"
+	antimagic_allowed = TRUE
 
 /obj/effect/proc_holder/spell/targeted/forcewall/mime/Trigger(mob/user, skip_can_cast = TRUE)
 	if(user.mind)
@@ -107,6 +110,7 @@
 	action_icon_state = "mime"
 	action_background_icon_state = "bg_mime"
 	base_icon_state = "mime"
+	antimagic_allowed = TRUE
 
 
 /obj/effect/proc_holder/spell/aimed/finger_guns/Trigger(mob/user, skip_can_cast = TRUE)
@@ -137,6 +141,7 @@
 	action_icon_state = "mime"
 	action_background_icon_state = "bg_mime"
 	hand_path = /obj/item/melee/touch_attack/mimerope
+	antimagic_allowed = TRUE
 
 /obj/effect/proc_holder/spell/targeted/touch/mimerope/Trigger(mob/user, skip_can_cast = TRUE)
 	if(user.mind)

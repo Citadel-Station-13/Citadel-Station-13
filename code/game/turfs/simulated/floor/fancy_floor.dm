@@ -157,7 +157,7 @@
 	planetary_atmos = TRUE
 	floor_tile = null
 	initial_gas_mix = FROZEN_ATMOS
-	slowdown = 1.5 //So digging it out paths are usefull.
+	slowdown = 1.5 //So digging it out paths are useful.
 	bullet_sizzle = TRUE
 	footstep = FOOTSTEP_SAND
 	barefootstep = FOOTSTEP_SAND

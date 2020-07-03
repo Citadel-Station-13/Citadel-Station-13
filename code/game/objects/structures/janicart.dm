@@ -8,7 +8,7 @@
 	//copypaste sorry
 	var/obj/item/storage/bag/trash/mybag
 	var/obj/item/mop/mymop
-	var/obj/item/twohanded/broom/mybroom
+	var/obj/item/broom/mybroom
 	var/obj/item/reagent_containers/spray/cleaner/myspray
 	var/obj/item/lightreplacer/myreplacer
 	var/signs = 0
@@ -48,9 +48,9 @@
 			m.janicart_insert(user, src)
 		else
 			to_chat(user, fail_msg)
-	else if(istype(I, /obj/item/twohanded/broom))
+	else if(istype(I, /obj/item/broom))
 		if(!mybroom)
-			var/obj/item/twohanded/broom/b=I
+			var/obj/item/broom/b=I
 			b.janicart_insert(user,src)
 		else
 			to_chat(user, fail_msg)
