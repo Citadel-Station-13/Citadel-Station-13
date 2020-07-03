@@ -562,7 +562,11 @@
 		sum = colors[colors[1]]
 		if(colors.len > 1)
 			var/i = 2
+			var/safety = 50
 			while(i <= colors.len)
+				if(safety-- == 0)
+					CRASH("More than 50 colors in atom blood DNA, aborting.")
+					return rgb(255, 0, 255)		// unnatural purple :^)
 				var/tmp = colors[colors[i]]
 				final_rgb = BlendRGB(final_rgb, colors[i], tmp/(tmp+sum))
 				sum += tmp
