@@ -33,7 +33,7 @@
 		/obj/item/reagent_containers/food/snacks/grown/tomato = 1,
 		/datum/reagent/consumable/mayonnaise = 5
 	)
-	result = /obj/item/reagent_containers/food/snacks/grilledcheese
+	result = /obj/item/reagent_containers/food/snacks/baconlettucetomato
 	subcategory = CAT_SANDWICH
 
 /datum/crafting_recipe/food/slimesandwich

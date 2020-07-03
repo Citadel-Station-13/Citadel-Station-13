@@ -21,7 +21,7 @@
 	tastes = list("toast" = 1)
 	foodtype = GRAIN
 
-/obj/item/reagent_containers/food/snacks/grilledcheese
+/obj/item/reagent_containers/food/snacks/baconlettucetomato
 	name = "blt sandwich"
 	desc = "The classic bacon, lettuce tomato sandwich."
 	icon = 'icons/obj/food/burgerbread.dmi'
@@ -29,7 +29,7 @@
 	trash = /obj/item/trash/plate
 	bonus_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/nutriment/vitamin = 1)
 	list_reagents = list(/datum/reagent/consumable/nutriment = 8, /datum/reagent/consumable/nutriment/vitamin = 2)
-	tastes = list("bacon" = 3, "lettuce" = 1, "tomato" = 1, "mayo" = 1)
+	tastes = list("bacon" = 1, "lettuce" = 1, "tomato" = 1, "mayo" = 1)
 	foodtype = GRAIN | MEAT | VEGETABLES
 
 /obj/item/reagent_containers/food/snacks/grilledcheese
