@@ -3493,6 +3493,7 @@
 #include "modular_citadel\code\modules\reagents\objects\items.dm"
 #include "sandcode\code\__DEFINES\language.dm"
 #include "sandcode\code\__DEFINES\traits.dm"
+#include "sandcode\code\datums\shuttles.dm"
 #include "sandcode\code\datums\traits\_quirk.dm"
 #include "sandcode\code\datums\traits\negative.dm"
 #include "sandcode\code\datums\traits\neutral.dm"

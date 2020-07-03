@@ -1,0 +1,224 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/custom{
+	name = "Science Outpost Shuttle"
+	})
+"b" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/custom{
+	name = "Science Outpost Shuttle"
+	})
+"c" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/custom{
+	name = "Science Outpost Shuttle"
+	})
+"d" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/machinery/light/small{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/custom{
+	name = "Science Outpost Shuttle"
+	})
+"h" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/machinery/light/small{
+	dir = 4
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/custom{
+	name = "Science Outpost Shuttle"
+	})
+"j" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/structure/chair/comfy/shuttle{
+	dir = 1
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/custom{
+	name = "Science Outpost Shuttle"
+	})
+"q" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/machinery/computer/shuttle{
+	name = "Science Outpost Shuttle Console";
+	possible_destinations = "sciout_station;sciout_dock";
+	shuttleId = "sciout_access"
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/custom{
+	name = "Science Outpost Shuttle"
+	})
+"s" = (
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/shuttle/engine/heater,
+/turf/open/floor/plating,
+/area/shuttle/custom{
+	name = "Science Outpost Shuttle"
+	})
+"x" = (
+/obj/structure/shuttle/engine/propulsion/burst,
+/turf/open/floor/plating,
+/area/shuttle/custom{
+	name = "Science Outpost Shuttle"
+	})
+"E" = (
+/obj/effect/spawner/structure/window/shuttle,
+/turf/open/floor/plating,
+/area/shuttle/custom{
+	name = "Science Outpost Shuttle"
+	})
+"G" = (
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/structure/closet/emcloset/anchored,
+/obj/machinery/light/small{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/custom{
+	name = "Science Outpost Shuttle"
+	})
+"M" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 1
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/custom{
+	name = "Science Outpost Shuttle"
+	})
+"N" = (
+/turf/open/floor/plasteel/dark,
+/area/shuttle/custom{
+	name = "Science Outpost Shuttle"
+	})
+"V" = (
+/obj/machinery/door/airlock/titanium/glass,
+/obj/structure/fans/tiny,
+/obj/docking_port/mobile{
+	dir = 4;
+	dwidth = 3;
+	height = 5;
+	id = "sciout_access";
+	name = "Science Outpost Access Shuttle";
+	port_direction = 8;
+	width = 7
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/custom{
+	name = "Science Outpost Shuttle"
+	})
+"Y" = (
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/structure/closet/firecloset/full{
+	anchored = 1
+	},
+/obj/machinery/light/small{
+	dir = 4
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/custom{
+	name = "Science Outpost Shuttle"
+	})
+
+(1,1,1) = {"
+a
+a
+E
+V
+E
+a
+a
+"}
+(2,1,1) = {"
+E
+d
+c
+N
+M
+G
+a
+"}
+(3,1,1) = {"
+E
+q
+j
+N
+M
+s
+x
+"}
+(4,1,1) = {"
+E
+h
+b
+M
+M
+Y
+a
+"}
+(5,1,1) = {"
+a
+a
+E
+E
+E
+a
+a
+"}
