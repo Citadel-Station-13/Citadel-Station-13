@@ -2800,13 +2800,14 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	character.dna.update_body_size(old_size)
 
 	//speech stuff
-	var/new_tongue = GLOB.roundstart_tongues[custom_tongue]
-	if(new_tongue)
-		var/obj/item/organ/tongue/T = character.getorganslot(ORGAN_SLOT_TONGUE)
-		if(T)
-			qdel(T)
-		var/obj/item/organ/tongue/new_custom_tongue = new new_tongue
-		new_custom_tongue.Insert(character)
+	if(custom_tongue != "default")
+		var/new_tongue = GLOB.roundstart_tongues[custom_tongue]
+		if(new_tongue)
+			var/obj/item/organ/tongue/T = character.getorganslot(ORGAN_SLOT_TONGUE)
+			if(T)
+				qdel(T)
+			var/obj/item/organ/tongue/new_custom_tongue = new new_tongue
+			new_custom_tongue.Insert(character)
 	if(custom_speech_verb != "default")
 		character.dna.species.say_mod = custom_speech_verb
 
