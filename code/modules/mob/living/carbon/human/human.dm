@@ -245,7 +245,7 @@
 			var/slot = text2num(href_list["item"])
 			if(slot in check_obscured_slots())
 				to_chat(usr, "<span class='warning'>You can't reach that! Something is covering it.</span>")
-				return							
+				return
 		if(href_list["pockets"])
 			var/strip_mod = 1
 			var/strip_silence = FALSE
