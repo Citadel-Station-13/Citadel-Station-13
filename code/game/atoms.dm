@@ -562,7 +562,10 @@
 		sum = colors[colors[1]]
 		if(colors.len > 1)
 			var/i = 2
+			var/safety = 10
 			while(i <= colors.len)
+				if(safety-- == 0)
+					break
 				var/tmp = colors[colors[i]]
 				final_rgb = BlendRGB(final_rgb, colors[i], tmp/(tmp+sum))
 				sum += tmp
