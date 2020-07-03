@@ -1,7 +1,0 @@
-author: "LetterN"
-delete-after: True
-changes: 
-  - tweak: "Ported some tags from tgui-3.0 to Vending.js"
-  - bugfix: "vending icons"
-  - bugfix: "r&d icons"
-  - bugfix: "chem master icons"

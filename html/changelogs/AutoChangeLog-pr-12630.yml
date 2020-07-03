@@ -1,4 +1,0 @@
-author: "Ghommie"
-delete-after: True
-changes: 
-  - rscadd: "You can't (un)equip garments on/from obscured inventory slots anymore."
