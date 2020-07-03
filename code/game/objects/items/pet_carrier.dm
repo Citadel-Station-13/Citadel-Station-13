@@ -126,6 +126,13 @@
 		container_resist(user)
 
 /obj/item/pet_carrier/container_resist(mob/living/user)
+	//don't do the whole resist timer thing if it's open!
+	if(open)
+		loc.visible_message("<span class='notice'>[user] climbs out of [src]!</span>", \
+		"<span class='warning'>[user] jumps out of [src]!</span>")
+		remove_occupant(user)
+		return
+
 	user.changeNext_move(CLICK_CD_BREAKOUT)
 	user.last_special = world.time + CLICK_CD_BREAKOUT
 	if(user.mob_size <= MOB_SIZE_SMALL)
@@ -223,6 +230,7 @@
 	allows_hostiles = TRUE //can fit hostile creatures, with the move resist restrictions in place, this means they still cannot take things like legions/goliaths/etc regardless
 	has_lock_sprites = FALSE //jar doesn't show the regular lock overlay
 	custom_materials = list(/datum/material/glass = 1000, /datum/material/bluespace = 600)
+	escape_time = 10 //half the time of a bluespace bodybag
 
 /obj/item/pet_carrier/bluespace/update_icon_state()
 	if(open)
@@ -238,7 +246,11 @@
 	playsound(src, "shatter", 70, 1)
 	..()
 
-/obj/item/pet_carrier/bluespace/return_air()
-	return loc.return_air()
+/obj/item/pet_carrier/bluespace/handle_internal_lifeform()
+	var/datum/gas_mixture/GM = new
+	GM.gases[/datum/gas/oxygen] = MOLES_O2STANDARD
+	GM.gases[/datum/gas/nitrogen] = MOLES_N2STANDARD
+	GM.temperature = T20C
+	return GM
 
 #undef pet_carrier_full
