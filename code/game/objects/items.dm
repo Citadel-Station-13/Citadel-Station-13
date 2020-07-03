@@ -68,6 +68,7 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 	var/click_delay = CLICK_CD_MELEE
 
 	var/slot_flags = 0		//This is used to determine on which slots an item can fit.
+	var/current_equipped_slot
 	pass_flags = PASSTABLE
 	pressure_resistance = 4
 	var/obj/item/master = null
@@ -315,6 +316,10 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 		return
 	if(anchored)
 		return
+	if(loc == user && current_equipped_slot && current_equipped_slot != SLOT_HANDS)
+		if(current_equipped_slot in user.check_obscured_slots())
+			to_chat(src, "<span class='warning'>You are unable to unequip that while wearing other garments over it!</span>")
+			return FALSE
 
 	if(resistance_flags & ON_FIRE)
 		var/mob/living/carbon/C = user
@@ -336,7 +341,7 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 				C.update_damage_overlays()
 			return
 
-	if(acid_level > 20 && !ismob(loc))// so we can still remove the clothes on us that have acid.
+	if(acid_level > 20 && ismob(loc))// so we can still remove the clothes on us that have acid.
 		var/mob/living/carbon/C = user
 		if(istype(C))
 			if(!C.gloves || (!(C.gloves.resistance_flags & (UNACIDABLE|ACID_PROOF))))
@@ -379,6 +384,11 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 		return
 	if(anchored)
 		return
+	if(loc == user && current_equipped_slot && current_equipped_slot != SLOT_HANDS)
+		if(current_equipped_slot in user.check_obscured_slots())
+			to_chat(src, "<span class='warning'>You are unable to unequip that while wearing other garments over it!</span>")
+			return FALSE
+
 
 	SEND_SIGNAL(loc, COMSIG_TRY_STORAGE_TAKE, src, user.loc, TRUE)
 
@@ -423,6 +433,7 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 
 /obj/item/proc/dropped(mob/user)
 	SHOULD_CALL_PARENT(TRUE)
+	current_equipped_slot = null
 	for(var/X in actions)
 		var/datum/action/A = X
 		A.Remove(user)
@@ -470,7 +481,9 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 // for items that can be placed in multiple slots
 // note this isn't called during the initial dressing of a player
 /obj/item/proc/equipped(mob/user, slot)
+	SHOULD_CALL_PARENT(TRUE)
 	. = SEND_SIGNAL(src, COMSIG_ITEM_EQUIPPED, user, slot)
+	current_equipped_slot = slot
 	if(!(. & COMPONENT_NO_GRANT_ACTIONS))
 		for(var/X in actions)
 			var/datum/action/A = X
