@@ -1,42 +1,5 @@
 // rust_g.dm - DM API for rust_g extension library
-//
-// To configure, create a `rust_g.config.dm` and set what you care about from
-// the following options:
-//
-// #define RUST_G "path/to/rust_g"
-// Override the .dll/.so detection logic with a fixed path or with detection
-// logic of your own.
-//
-// #define RUSTG_OVERRIDE_BUILTINS
-// Enable replacement rust-g functions for certain builtins. Off by default.
-
-#ifndef RUST_G
-// Default automatic RUST_G detection.
-// On Windows, looks in the standard places for `rust_g.dll`.
-// On Linux, looks in `.`, `$LD_LIBRARY_PATH`, and `~/.byond/bin` for either of
-// `librust_g.so` (preferred) or `rust_g` (old).
-/proc/__detect_rust_g()
-	var/static/__rust_g
-	. = __rust_g
-	if (!.)
-		if (world.system_type == UNIX)
-			if (fexists("./librust_g.so"))
-				// No need for LD_LIBRARY_PATH badness.
-				. = __rust_g = "./librust_g.so"
-			else if (fexists("./rust_g"))
-				// Old dumb filename.
-				. = __rust_g = "./rust_g"
-			else if (fexists("[world.GetConfig("env", "HOME")]/.byond/bin/rust_g"))
-				// Old dumb filename in `~/.byond/bin`.
-				. = __rust_g = "rust_g"
-			else
-				// It's not in the current directory, so try others
-				. = __rust_g = "librust_g.so"
-		else
-			. = __rust_g = "rust_g"
-
-#define RUST_G __detect_rust_g()
-#endif
+#define RUST_G "rust_g"
 
 #define RUSTG_JOB_NO_RESULTS_YET "NO RESULTS YET"
 #define RUSTG_JOB_NO_SUCH_JOB "NO SUCH JOB"
