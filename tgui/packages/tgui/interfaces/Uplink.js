@@ -70,6 +70,7 @@ export const GenericUplink = (props, context) => {
         <Fragment>
           Search
           <Input
+            autoFocus
             value={searchText}
             onInput={(e, value) => setSearchText(value)}
             mx={1} />
@@ -162,7 +163,7 @@ const ItemList = (props, context) => {
                 onmouseover={() => setHoveredItem(item)}
                 onmouseout={() => setHoveredItem({})}
                 onClick={() => act('buy', {
-                  item: item.name,
+                  name: item.name,
                 })} />
             </Table.Cell>
           </Table.Row>
@@ -182,7 +183,7 @@ const ItemList = (props, context) => {
           onmouseover={() => setHoveredItem(item)}
           onmouseout={() => setHoveredItem({})}
           onClick={() => act('buy', {
-            item: item.name,
+            name: item.name,
           })} />
       )}>
       {decodeHtmlEntities(item.desc)}
