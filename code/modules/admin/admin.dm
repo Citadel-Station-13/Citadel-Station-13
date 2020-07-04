@@ -25,7 +25,10 @@
 		to_chat(usr, "You seem to be selecting a mob that doesn't exist anymore.")
 		return
 
-	var/body = "<html><head><meta http-equiv='Content-Type' content='text/html; charset=UTF-8'><title>Options for [M.key]</title></head>"
+//SKYRAT CHANGES BEGIN
+	var/list/body = list("<html><head><meta http-equiv='Content-Type' content='text/html; charset=UTF-8'><title>Options for [M.key]</title></head>")
+//SKYRAT CHANGES END
+
 	body += "<body>Options panel for <b>[M]</b>"
 	if(M.client)
 		body += " played by <b>[M.client]</b> "
@@ -199,7 +202,12 @@
 	body += "<br>"
 	body += "</body></html>"
 
-	usr << browse(body, "window=adminplayeropts-[REF(M)];size=550x515")
+//SKYRAT CHANGES BEGIN
+	var/datum/browser/popup = new(usr, "adminplayeropts-[REF(M)]", "Player Panel", nwidth = 550, nheight = 515)
+	popup.set_content(body.Join())
+	popup.open()
+//SKYRAT CHANGES END
+
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Player Panel") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 
@@ -592,6 +600,11 @@
 	set category = "Server"
 	set desc="Start the round RIGHT NOW"
 	set name="Start Now"
+	if(!isnull(usr.client.address)) //skyrat edit - confirm early game start unless connecting locally
+		message_admins("[key_name(usr)] is deciding to start the game early")
+		if(alert(usr, "Start game NOW?", "Game Start Confirmation", "Yes", "No")!= "Yes")
+			message_admins("[key_name(usr)] has cancelled starting the game early")
+			return FALSE //end skyrat edit
 	if(SSticker.current_state == GAME_STATE_PREGAME || SSticker.current_state == GAME_STATE_STARTUP)
 		SSticker.start_immediately = TRUE
 		log_admin("[usr.key] has started the game.")
