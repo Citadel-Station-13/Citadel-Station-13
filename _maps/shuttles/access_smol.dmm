@@ -40,9 +40,10 @@
 	name = "AI Access Shuttle"
 	})
 "u" = (
-/obj/machinery/door/airlock/titanium/glass,
-/obj/structure/fans/tiny,
-/turf/open/floor/mineral/titanium,
+/obj/machinery/light/small{
+	dir = 1
+	},
+/turf/open/floor/mineral/titanium/blue,
 /area/shuttle/custom{
 	name = "AI Access Shuttle"
 	})
@@ -51,7 +52,14 @@
 	anchored = 1
 	},
 /obj/item/storage/firstaid/regular,
+/obj/machinery/light/small,
 /turf/open/floor/mineral/titanium/white,
+/area/shuttle/custom{
+	name = "AI Access Shuttle"
+	})
+"B" = (
+/obj/machinery/light/small,
+/turf/open/floor/mineral/titanium/blue,
 /area/shuttle/custom{
 	name = "AI Access Shuttle"
 	})
@@ -79,6 +87,9 @@
 "F" = (
 /obj/structure/closet/emcloset/anchored,
 /obj/structure/closet/emcloset/anchored,
+/obj/machinery/light/small{
+	dir = 1
+	},
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/custom{
 	name = "AI Access Shuttle"
@@ -143,7 +154,7 @@ b
 J
 "}
 (4,1,1) = {"
-u
+J
 E
 E
 E
@@ -158,9 +169,9 @@ J
 "}
 (6,1,1) = {"
 a
-E
+u
 C
-E
+B
 a
 "}
 (7,1,1) = {"
