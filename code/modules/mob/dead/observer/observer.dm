@@ -136,6 +136,11 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 	show_data_huds()
 	data_huds_on = 1
 
+	// Skyrat change START
+	RegisterSignal(src, COMSIG_CLICK_CTRL_SHIFT, .proc/on_click_ctrl_shift)
+	RegisterSignal(src, COMSIG_CLICK_CTRL, .proc/on_click_ctrl)
+	// Skyrat change END
+
 /mob/dead/observer/get_photo_description(obj/item/camera/camera)
 	if(!invisibility || camera.see_ghosts)
 		return "You can also see a g-g-g-g-ghooooost!"
@@ -903,9 +908,12 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	else
 		to_chat(usr, "Can't become a pAI candidate while not dead!")
 
+// Skyrat change - moved to modular/signals.
+/*
 /mob/dead/observer/CtrlShiftClick(mob/user)
 	if(isobserver(user) && check_rights(R_SPAWN))
 		change_mob_type( /mob/living/carbon/human , null, null, TRUE) //always delmob, ghosts shouldn't be left lingering
+*/
 
 /mob/dead/observer/examine(mob/user)
 	. = ..()
