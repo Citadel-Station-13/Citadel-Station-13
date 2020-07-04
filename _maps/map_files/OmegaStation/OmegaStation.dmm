@@ -7140,8 +7140,7 @@
 	},
 /obj/effect/turf_decal/tile/red,
 /obj/machinery/status_display{
-	pixel_x = 32;
-	pixel_y = 0
+	pixel_x = 32
 	},
 /turf/open/floor/plasteel,
 /area/security/brig)
