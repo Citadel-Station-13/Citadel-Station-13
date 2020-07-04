@@ -14,6 +14,20 @@
 	features["mcolor2"]	= sanitize_hexcolor(features["mcolor2"], 3, 0)
 	features["mcolor3"]	= sanitize_hexcolor(features["mcolor3"], 3, 0)
 
+	//skyrat begin
+	erppref = sanitize_text(S["erp_pref"], "Ask")
+	if(!length(erppref)) erppref = "Ask"
+	nonconpref = sanitize_text(S["noncon_pref"], "Ask")
+	if(!length(nonconpref)) nonconpref = "Ask"
+	vorepref = sanitize_text(S["vore_pref"], "Ask")
+	if(!length(vorepref)) vorepref = "Ask"
+	extremepref = sanitize_text(S["extremepref"], "No") //god has forsaken me
+	if(!length(extremepref))
+		extremepref = "No"
+	extremeharm = sanitize_text(S["extremeharm"], "No")
+	if(!length(extremeharm) || (extremepref = "No"))
+		extremeharm = "No"
+	//skyrat end
 
 /datum/preferences/proc/cit_character_pref_save(savefile/S)
 	//ipcs
@@ -37,3 +51,9 @@
 	WRITE_FILE(S["feature_flavor_text"], features["flavor_text"])
 	WRITE_FILE(S["silicon_feature_flavor_text"], features["silicon_flavor_text"])
 
+	//skyrat stuff
+	WRITE_FILE(S["erp_pref"], erppref)
+	WRITE_FILE(S["noncon_pref"], nonconpref)
+	WRITE_FILE(S["vore_pref"], vorepref)
+	WRITE_FILE(S["extremepref"], extremepref)
+	WRITE_FILE(S["extremeharm"], extremeharm)

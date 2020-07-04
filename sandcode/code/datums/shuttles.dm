@@ -22,3 +22,7 @@
 	port_id = "axsscioutpost"
 	name = "Science Outpost Access Shuttle"
 	suffix = "smol"
+
+/datum/map_template/shuttle/mining/large //port tg mining shuttle
+	suffix = "large"
+	name = "mining shuttle (Large)"

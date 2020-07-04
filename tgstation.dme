@@ -3544,4 +3544,13 @@
 #include "sandcode\code\modules\telescience\telesci.dm"
 #include "sandcode\code\modules\telescience\telesci_computer.dm"
 #include "sandcode\code\modules\uplink\uplink_items.dm"
+#include "sandcode\code\interactions\_interaction.dm"
+#include "sandcode\code\interactions\interaction_definitions.dm"
+#include "sandcode\code\interactions\interaction_interface.dm"
+#include "sandcode\code\interactions\interaction_mob.dm"
+#include "sandcode\code\interactions\lewd\_lewd.dm"
+#include "sandcode\code\interactions\lewd\lewd_datums.dm"
+#include "sandcode\code\interactions\lewd\lewd_interactions.dm"
+#include "sandcode\code\interactions\lewd\lewd_species.dm"
+#include "sandcode\code\interactions\lewd\objects.dm"
 // END_INCLUDE
