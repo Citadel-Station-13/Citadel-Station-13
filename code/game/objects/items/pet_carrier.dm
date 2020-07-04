@@ -248,8 +248,8 @@
 
 /obj/item/pet_carrier/bluespace/handle_internal_lifeform()
 	var/datum/gas_mixture/GM = new
-	GM.gases[/datum/gas/oxygen] = MOLES_O2STANDARD
-	GM.gases[/datum/gas/nitrogen] = MOLES_N2STANDARD
+	GM.gases[/datum/gas/oxygen] = MOLES_O2STANDARD/5000 //make sure they have enough oxygen for just that one singular breath (which is achieved by dividing by 5000)
+	GM.gases[/datum/gas/nitrogen] = MOLES_N2STANDARD/5000
 	GM.temperature = T20C
 	return GM
 
