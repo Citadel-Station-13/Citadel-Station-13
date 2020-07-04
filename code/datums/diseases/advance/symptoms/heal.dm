@@ -126,7 +126,7 @@
 		var/datum/reagent/R = E
 		M.reagents.remove_reagent(R.type, actual_power)
 		if(food_conversion)
-			M.nutrition += 0.3
+			M.adjust_nutrition(0.3)
 		if(prob(2))
 			to_chat(M, "<span class='notice'>You feel a mild warmth as your blood purifies itself.</span>")
 	return 1
@@ -164,7 +164,7 @@
 		C.reagents.metabolize(C, can_overdose=TRUE)
 	C.overeatduration = max(C.overeatduration - 2, 0)
 	var/lost_nutrition = 9 - (reduced_hunger * 5)
-	C.nutrition = max(C.nutrition - (lost_nutrition * HUNGER_FACTOR), 0) //Hunger depletes at 10x the normal speed
+	C.adjust_nutrition(-lost_nutrition * HUNGER_FACTOR) //Hunger depletes at 10x the normal speed
 	if(prob(2))
 		to_chat(C, "<span class='notice'>You feel an odd gurgle in your stomach, as if it was working much faster than normal.</span>")
 	return 1
@@ -257,6 +257,8 @@
 /datum/symptom/heal/coma/End(datum/disease/advance/A)
 	if(!..())
 		return
+	if(active_coma)
+		uncoma()
 	REMOVE_TRAIT(A.affected_mob, TRAIT_NOCRITDAMAGE, DISEASE_TRAIT)
 
 /datum/symptom/heal/coma/CanHeal(datum/disease/advance/A)
@@ -277,9 +279,9 @@
 /datum/symptom/heal/coma/proc/coma(mob/living/M)
 	if(deathgasp)
 		M.emote("deathgasp")
-	M.fakedeath("regenerative_coma")
+	M.fakedeath("regenerative_coma", TRUE)
 	M.update_stat()
-	M.update_canmove()
+	M.update_mobility()
 	addtimer(CALLBACK(src, .proc/uncoma, M), 300)
 
 /datum/symptom/heal/coma/proc/uncoma(mob/living/M)
@@ -288,7 +290,7 @@
 	active_coma = FALSE
 	M.cure_fakedeath("regenerative_coma")
 	M.update_stat()
-	M.update_canmove()
+	M.update_mobility()
 
 /datum/symptom/heal/coma/Heal(mob/living/carbon/M, datum/disease/advance/A, actual_power)
 	var/heal_amt = 4 * actual_power
@@ -452,7 +454,7 @@
 	"Transmission 6" = "Additionally heals cellular damage and toxin lovers.",
 	"Resistance 7" = "Increases healing speed.",
 	)
-	
+
 /datum/symptom/heal/radiation/Start(datum/disease/advance/A)
 	if(!..())
 		return

@@ -45,7 +45,7 @@
 			return
 	return ..()
 
-/obj/machinery/jukebox/update_icon()
+/obj/machinery/jukebox/update_icon_state()
 	if(active)
 		icon_state = "[initial(icon_state)]-active"
 	else
@@ -433,5 +433,5 @@
 	. = ..()
 	if(active)
 		for(var/mob/living/M in rangers)
-			if(prob(5+(allowed(M)*4)) && M.canmove)
+			if(prob(5+(allowed(M)*4)) && CHECK_MOBILITY(M, MOBILITY_MOVE))
 				dance(M)

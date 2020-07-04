@@ -18,6 +18,7 @@
 #define INVESTIGATE_CIRCUIT			"circuit"
 #define INVESTIGATE_FERMICHEM       "fermichem"
 #define INVESTIGATE_RCD				"rcd"
+#define INVESTIGATE_CRYOGENICS		"cryogenics"
 
 // Logging types for log_message()
 #define LOG_ATTACK		(1 << 0)
@@ -41,7 +42,7 @@
 //Individual logging panel pages
 #define INDIVIDUAL_ATTACK_LOG		(LOG_ATTACK)
 #define INDIVIDUAL_SAY_LOG			(LOG_SAY | LOG_WHISPER | LOG_DSAY)
-#define INDIVIDUAL_EMOTE_LOG		(LOG_EMOTE)
+#define INDIVIDUAL_EMOTE_LOG		(LOG_EMOTE | LOG_SUBTLER)
 #define INDIVIDUAL_COMMS_LOG		(LOG_PDA | LOG_CHAT | LOG_COMMENT | LOG_TELECOMMS)
 #define INDIVIDUAL_OOC_LOG			(LOG_OOC | LOG_ADMIN)
 #define INDIVIDUAL_OWNERSHIP_LOG	(LOG_OWNERSHIP)

@@ -29,12 +29,72 @@
 #define EFFECT_DROWSY		"drowsy"
 #define EFFECT_JITTER		"jitter"
 
+// mob/living/var/combat_flags variable.
+/// Default combat flags for those affected by sprinting (combat mode has been made into its own component)
+#define COMBAT_FLAGS_DEFAULT				(COMBAT_FLAG_PARRY_CAPABLE | COMBAT_FLAG_BLOCK_CAPABLE)
+/// Default combat flags for everyone else (so literally everyone but humans).
+#define COMBAT_FLAGS_SPRINT_EXEMPT			(COMBAT_FLAG_SPRINT_ACTIVE | COMBAT_FLAG_SPRINT_TOGGLED | COMBAT_FLAG_SPRINT_FORCED | COMBAT_FLAG_PARRY_CAPABLE | COMBAT_FLAG_BLOCK_CAPABLE)
+
+/// The user wants sprint mode on
+#define COMBAT_FLAG_SPRINT_TOGGLED			(1<<0)
+/// Sprint is currently active
+#define COMBAT_FLAG_SPRINT_ACTIVE			(1<<1)
+/// Currently attempting to crawl under someone
+#define COMBAT_FLAG_ATTEMPTING_CRAWL		(1<<2)
+/// Currently stamcritted
+#define COMBAT_FLAG_HARD_STAMCRIT			(1<<3)
+/// Currently attempting to resist up from the ground
+#define COMBAT_FLAG_RESISTING_REST			(1<<4)
+/// Intentionally resting
+#define COMBAT_FLAG_INTENTIONALLY_RESTING	(1<<5)
+/// Currently stamcritted but not as violently
+#define COMBAT_FLAG_SOFT_STAMCRIT			(1<<6)
+/// Force sprint mode on at all times, overrides everything including sprint disable traits.
+#define COMBAT_FLAG_SPRINT_FORCED			(1<<7)
+/// This mob is capable of using the active parrying system.
+#define COMBAT_FLAG_PARRY_CAPABLE			(1<<8)
+/// This mob is capable of using the active blocking system.
+#define COMBAT_FLAG_BLOCK_CAPABLE			(1<<9)
+/// This mob is capable of unarmed parrying
+#define COMBAT_FLAG_UNARMED_PARRY			(1<<10)
+/// This mob is currently actively blocking
+#define COMBAT_FLAG_ACTIVE_BLOCKING			(1<<11)
+/// This mob is currently starting an active block
+#define COMBAT_FLAG_ACTIVE_BLOCK_STARTING	(1<<12)
+
+// Helpers for getting someone's stamcrit state. Cast to living.
+#define NOT_STAMCRIT 0
+#define SOFT_STAMCRIT 1
+#define HARD_STAMCRIT 2
+
+// Stamcrit check helpers
+#define IS_STAMCRIT(mob)					(CHECK_STAMCRIT(mob) != NOT_STAMCRIT)
+#define CHECK_STAMCRIT(mob)					((mob.combat_flags & COMBAT_FLAG_HARD_STAMCRIT)? HARD_STAMCRIT : ((mob.combat_flags & COMBAT_FLAG_SOFT_STAMCRIT)? SOFT_STAMCRIT : NOT_STAMCRIT))
+
+//stamina stuff
+///Threshold over which attacks start being hindered.
+#define STAMINA_NEAR_SOFTCRIT				90
+///softcrit for stamina damage. prevents standing up, some actions that cost stamina, etc, but doesn't force a rest or stop movement
+#define STAMINA_SOFTCRIT					100
+///sanity cap to prevent stamina actions (that are still performable) from sending you into crit.
+#define STAMINA_NEAR_CRIT					130
+///crit for stamina damage. forces a rest, and stops movement until stamina goes back to stamina softcrit
+#define STAMINA_CRIT						140
+///same as STAMINA_SOFTCRIT except for the more traditional health calculations
+#define STAMINA_SOFTCRIT_TRADITIONAL		0
+///ditto, but for STAMINA_CRIT
+#define STAMINA_CRIT_TRADITIONAL			-40
+
+#define CRAWLUNDER_DELAY							30 //Delay for crawling under a standing mob
+
 //Bitflags defining which status effects could be or are inflicted on a mob
+// This is a bit out of date/inaccurate in light of all the new status effects and is probably pending rework.
 #define CANSTUN			(1<<0)
 #define CANKNOCKDOWN	(1<<1)
 #define CANUNCONSCIOUS	(1<<2)
 #define CANPUSH			(1<<3)
 #define GODMODE			(1<<4)
+#define CANSTAGGER		(1<<5)
 
 //Health Defines
 #define HEALTH_THRESHOLD_CRIT 0
@@ -62,16 +122,6 @@
 #define GRAB_AGGRESSIVE				1
 #define GRAB_NECK					2
 #define GRAB_KILL					3
-
-//slowdown when in softcrit
-#define SOFTCRIT_ADD_SLOWDOWN 6
-
-//Attack types for checking shields/hit reactions
-#define MELEE_ATTACK 1
-#define UNARMED_ATTACK 2
-#define PROJECTILE_ATTACK 3
-#define THROWN_PROJECTILE_ATTACK 4
-#define LEAP_ATTACK 5
 
 //attack visual effects
 #define ATTACK_EFFECT_PUNCH		"punch"
@@ -113,9 +163,8 @@ GLOBAL_LIST_INIT(shove_disarming_types, typecacheof(list(
 	/obj/item/gun)))
 
 
-//Combat object defines
-
 //Embedded objects
+
 #define EMBEDDED_PAIN_CHANCE 					15	//Chance for embedded objects to cause pain (damage user)
 #define EMBEDDED_ITEM_FALLOUT 					5	//Chance for embedded object to fall out (causing pain but removing the object)
 #define EMBED_CHANCE							45	//Chance for an object to embed into somebody when thrown (if it's sharp)
@@ -124,7 +173,16 @@ GLOBAL_LIST_INIT(shove_disarming_types, typecacheof(list(
 #define EMBEDDED_IMPACT_PAIN_MULTIPLIER			4	//Coefficient of multiplication for the damage the item does when it first embeds (this*item.w_class)
 #define EMBED_THROWSPEED_THRESHOLD				4	//The minimum value of an item's throw_speed for it to embed (Unless it has embedded_ignore_throwspeed_threshold set to 1)
 #define EMBEDDED_UNSAFE_REMOVAL_PAIN_MULTIPLIER 8	//Coefficient of multiplication for the damage the item does when removed without a surgery (this*item.w_class)
-#define EMBEDDED_UNSAFE_REMOVAL_TIME			150	//A Time in ticks, total removal time = (this/item.w_class)
+#define EMBEDDED_UNSAFE_REMOVAL_TIME			30	//A Time in ticks, total removal time = (this*item.w_class)
+#define EMBEDDED_JOSTLE_CHANCE					5	//Chance for embedded objects to cause pain every time they move (jostle)
+#define EMBEDDED_JOSTLE_PAIN_MULTIPLIER			1	//Coefficient of multiplication for the damage the item does while
+#define EMBEDDED_PAIN_STAM_PCT					0.0	//This percentage of all pain will be dealt as stam damage rather than brute (0-1)
+#define EMBED_CHANCE_TURF_MOD					-15	//You are this many percentage points less likely to embed into a turf (good for things glass shards and spears vs walls)
+
+#define EMBED_HARMLESS list("pain_mult" = 0, "jostle_pain_mult" = 0, "ignore_throwspeed_threshold" = TRUE)
+#define EMBED_HARMLESS_SUPERIOR list("pain_mult" = 0, "jostle_pain_mult" = 0, "ignore_throwspeed_threshold" = TRUE, "embed_chance" = 100, "fall_chance" = 0.1)
+#define EMBED_POINTY list("ignore_throwspeed_threshold" = TRUE)
+#define EMBED_POINTY_SUPERIOR list("embed_chance" = 100, "ignore_throwspeed_threshold" = TRUE)
 
 //Gun weapon weight
 #define WEAPON_LIGHT 1
@@ -138,6 +196,17 @@ GLOBAL_LIST_INIT(shove_disarming_types, typecacheof(list(
 #define EGUN_NO_SELFCHARGE 0
 #define EGUN_SELFCHARGE 1
 #define EGUN_SELFCHARGE_BORG 2
+
+//Gun suppression
+#define SUPPRESSED_NONE 0
+#define SUPPRESSED_QUIET 1 ///standard suppressed
+#define SUPPRESSED_VERY 2 /// no message
+
+//Nice shot bonus
+#define NICE_SHOT_RICOCHET_BONUS	10	//if the shooter has the NICE_SHOT trait and they fire a ricocheting projectile, add this to the ricochet chance and auto aim angle
+
+///Time to spend without clicking on other things required for your shots to become accurate.
+#define GUN_AIMING_TIME (2 SECONDS)
 
 //Object/Item sharpness
 #define IS_BLUNT			0
@@ -198,8 +267,32 @@ GLOBAL_LIST_INIT(shove_disarming_types, typecacheof(list(
 #define TOTAL_MASS_MEDIEVAL_WEAPON	3.6 //very, very generic average sword/warpick/etc. weight in pounds.
 #define TOTAL_MASS_TOY_SWORD 1.5
 
-//bullet_act() return values
-#define BULLET_ACT_HIT				"HIT"		//It's a successful hit, whatever that means in the context of the thing it's hitting.
-#define BULLET_ACT_BLOCK			"BLOCK"		//It's a blocked hit, whatever that means in the context of the thing it's hitting.
-#define BULLET_ACT_FORCE_PIERCE		"PIERCE"	//It pierces through the object regardless of the bullet being piercing by default.
-#define BULLET_ACT_TURF				"TURF"		//It hit us but it should hit something on the same turf too. Usually used for turfs.
+//stamina cost defines.
+#define STAM_COST_ATTACK_OBJ_MULT	1.2
+#define STAM_COST_ATTACK_MOB_MULT	1
+#define STAM_COST_BATON_MOB_MULT	1
+#define STAM_COST_NO_COMBAT_MULT	1.25
+#define STAM_COST_W_CLASS_MULT		1.25
+#define STAM_COST_THROW_MULT		2
+#define STAM_COST_THROW_MOB			2.5 //multiplied by (mob size + 1)^2.
+
+///Multiplier of the (STAMINA_NEAR_CRIT - user current stamina loss) : (STAMINA_NEAR_CRIT - STAMINA_SOFTCRIT) ratio used in damage penalties when stam soft-critted.
+#define STAM_CRIT_ITEM_ATTACK_PENALTY	0.66
+/// changeNext_move penalty multiplier of the above.
+#define STAM_CRIT_ITEM_ATTACK_DELAY		1.75
+/// Damage penalty when fighting prone.
+#define LYING_DAMAGE_PENALTY			0.5
+/// Added delay when firing guns stam-softcritted. Summed with a hardset CLICK_CD_RANGE delay, similar to STAM_CRIT_DAMAGE_DELAY otherwise.
+#define STAM_CRIT_GUN_DELAY			2.75
+
+//stamina recovery defines. Blocked if combat mode is on.
+#define STAM_RECOVERY_STAM_CRIT		-7.5
+#define STAM_RECOVERY_RESTING		-6
+#define STAM_RECOVERY_NORMAL		-3
+#define STAM_RECOVERY_LIMB			4 //limbs recover stamina separately from handle_status_effects(), and aren't blocked by combat mode.
+
+/**
+  * should the current-attack-damage be lower than the item force multiplied by this value,
+  * a "inefficiently" prefix will be added to the message.
+  */
+#define FEEBLE_ATTACK_MSG_THRESHOLD 0.5

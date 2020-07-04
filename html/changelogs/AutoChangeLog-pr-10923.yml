@@ -1,4 +1,0 @@
-author: "Ghommie"
-delete-after: True
-changes: 
-  - bugfix: "Nerfed cargo passive points generation from 500 to 125 creds per minute."

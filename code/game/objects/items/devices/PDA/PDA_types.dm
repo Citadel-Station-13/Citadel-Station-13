@@ -193,8 +193,6 @@
 /obj/item/pda/curator
 	name = "curator PDA"
 	icon_state = "pda-library"
-	overlays_icons = list('icons/obj/pda.dmi' = list("pda-r-library","blank","id_overlay","insert_overlay", "light_overlay", "pai_overlay"),
-						'icons/obj/pda_alt.dmi' = list("pda-r","screen_default","id_overlay","insert_overlay", "light_overlay", "pai_overlay"))
 	current_overlays = list("pda-r-library","blank","id_overlay","insert_overlay", "light_overlay", "pai_overlay")
 	default_cartridge = /obj/item/cartridge/curator
 	inserted_item = /obj/item/pen/fountain

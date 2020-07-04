@@ -2,7 +2,7 @@
 	name = "Space Ninja"
 	uniform = /obj/item/clothing/under/color/black/trackless
 	suit = /obj/item/clothing/suit/space/space_ninja
-	glasses = /obj/item/clothing/glasses/night
+	glasses = /obj/item/clothing/glasses/night/syndicate
 	mask = /obj/item/clothing/mask/gas/space_ninja
 	head = /obj/item/clothing/head/helmet/space/space_ninja
 	ears = /obj/item/radio/headset

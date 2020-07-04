@@ -1,5 +1,0 @@
-author: "Linzolle"
-delete-after: True
-changes: 
-  - bugfix: "Bows now will not delete an arrow if it cant fire it."
-  - bugfix: "bows now like and respect sprite changes"

@@ -249,7 +249,7 @@ GLOBAL_VAR_INIT(hhmysteryRoomNumber, 1337)
 		to_chat(user, "<span class='warning'>The door seems to be malfunctioning and refuses to operate!</span>")
 		return
 	if(alert(user, "Hilbert's Hotel would like to remind you that while we will do everything we can to protect the belongings you leave behind, we make no guarantees of their safety while you're gone, especially that of the health of any living creatures. With that in mind, are you ready to leave?", "Exit", "Leave", "Stay") == "Leave")
-		if(!user.canmove || (get_dist(get_turf(src), get_turf(user)) > 1)) //no teleporting around if they're dead or moved away during the prompt.
+		if(!CHECK_MOBILITY(user, MOBILITY_MOVE) || (get_dist(get_turf(src), get_turf(user)) > 1)) //no teleporting around if they're dead or moved away during the prompt.
 			return
 		user.forceMove(get_turf(parentSphere))
 		do_sparks(3, FALSE, get_turf(user))
@@ -413,13 +413,13 @@ GLOBAL_VAR_INIT(hhmysteryRoomNumber, 1337)
 	. = ..()
 	if(ismob(AM))
 		var/mob/M = AM
-		M.notransform = TRUE
+		M.mob_transforming = TRUE
 
 /obj/item/abstracthotelstorage/Exited(atom/movable/AM, atom/newLoc)
 	. = ..()
 	if(ismob(AM))
 		var/mob/M = AM
-		M.notransform = FALSE
+		M.mob_transforming = FALSE
 
 //Space Ruin stuff
 /area/ruin/space/has_grav/hilbertresearchfacility
@@ -463,7 +463,7 @@ GLOBAL_VAR_INIT(hhmysteryRoomNumber, 1337)
 	id_access_list = list(ACCESS_AWAY_GENERIC3, ACCESS_RESEARCH)
 	instant = TRUE
 	id = /obj/item/card/id/silver
-	uniform = /obj/item/clothing/under/rank/research_director
+	uniform = /obj/item/clothing/under/rank/rnd/research_director
 	shoes = /obj/item/clothing/shoes/sneakers/brown
 	back = /obj/item/storage/backpack/satchel/leather
 	suit = /obj/item/clothing/suit/toggle/labcoat

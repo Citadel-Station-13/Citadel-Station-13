@@ -74,7 +74,7 @@
 	if(!relay_information(signal, /obj/machinery/telecomms/hub))
 		relay_information(signal, /obj/machinery/telecomms/broadcaster)
 
-/obj/machinery/telecomms/message_server/update_icon()
+/obj/machinery/telecomms/message_server/update_icon_state()
 	if((stat & (BROKEN|NOPOWER)))
 		icon_state = "server-nopower"
 	else if (!toggled)
@@ -140,11 +140,16 @@
 	..()
 	if(href_list["photo"])
 		var/mob/M = usr
-		M << browse_rsc(picture.picture_image, "pda_photo.png")
-		M << browse("<html><head><title>PDA Photo</title></head>" \
-		+ "<body style='overflow:hidden;margin:0;text-align:center'>" \
-		+ "<img src='pda_photo.png' width='192' style='-ms-interpolation-mode:nearest-neighbor' />" \
-		+ "</body></html>", "window=pdaphoto;size=[picture.psize_x]x[picture.psize_y];can-close=true")
+		
+		M << browse_rsc(picture.picture_image, "pda_photo.png") 
+		
+		var/dat = "<div style='overflow: hidden; margin :0; text-align: center'>"
+		dat += "<img src='pda_photo.png' width='192' style='-ms-interpolation-mode:nearest-neighbor' />"
+		dat += "</div>"
+
+		var/datum/browser/popup = new(M, "pdaphoto", "PDA Photo", picture.psize_x, picture.psize_y)
+		popup.set_content(dat)
+		popup.open()
 		onclose(M, "pdaphoto")
 
 /datum/data_rc_msg

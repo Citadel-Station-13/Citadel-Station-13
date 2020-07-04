@@ -5,6 +5,7 @@
 	clockwork_desc = "A sigil of some purpose."
 	icon_state = "sigil"
 	layer = LOW_OBJ_LAYER
+	plane = ABOVE_WALL_PLANE
 	alpha = 50
 	resistance_flags = NONE
 	var/affects_servants = FALSE
@@ -80,7 +81,7 @@
 	if(iscultist(L)) //No longer stuns cultists, instead sets them on fire and burns them
 		to_chat(L, "<span class='heavy_brass'>\"Watch your step, wretch.\"</span>")
 		L.adjustFireLoss(10)
-		L.Knockdown(20, FALSE)
+		L.DefaultCombatKnockdown(20, FALSE)
 		L.adjust_fire_stacks(5) //Burn!
 		L.IgniteMob()
 	else
@@ -155,7 +156,7 @@
 		if(brutedamage || burndamage)
 			L.adjustBruteLoss(-(brutedamage * 0.25))
 			L.adjustFireLoss(-(burndamage * 0.25))
-	L.Knockdown(50) //Completely defenseless for five seconds - mainly to give them time to read over the information they've just been presented with
+	L.DefaultCombatKnockdown(50) //Completely defenseless for five seconds - mainly to give them time to read over the information they've just been presented with
 	if(iscarbon(L))
 		var/mob/living/carbon/C = L
 		C.silent += 5
@@ -251,6 +252,7 @@
 	return TRUE
 
 /obj/effect/clockwork/sigil/transmission/update_icon()
+	. = ..()
 	var/power_charge = get_clockwork_power()
 	if(GLOB.ratvar_awakens)
 		alpha = 255
@@ -278,8 +280,14 @@
 	sigil_name = "Vitality Matrix"
 	var/revive_cost = 150
 	var/sigil_active = FALSE
+	var/min_drain_health = -INFINITY
+	var/can_dust = TRUE
 	var/animation_number = 3 //each cycle increments this by 1, at 4 it produces an animation and resets
 	var/static/list/damage_heal_order = list(CLONE, TOX, BURN, BRUTE, OXY) //we heal damage in this order
+
+/obj/effect/clockwork/sigil/vitality/neutered
+	min_drain_health = 20
+	can_dust = FALSE
 
 /obj/effect/clockwork/sigil/vitality/examine(mob/user)
 	. = ..()
@@ -305,7 +313,7 @@
 		animation_number++
 		if(!is_servant_of_ratvar(L))
 			var/vitality_drained = 0
-			if(L.stat == DEAD && !consumed_vitality)
+			if(L.stat == DEAD && !consumed_vitality && can_dust)
 				consumed_vitality = TRUE //Prevent the target from being consumed multiple times
 				vitality_drained = L.maxHealth
 				var/obj/effect/temp_visual/ratvar/sigil/vitality/V = new /obj/effect/temp_visual/ratvar/sigil/vitality(get_turf(src))
@@ -317,7 +325,7 @@
 					if(!L.dropItemToGround(W))
 						qdel(W)
 				L.dust()
-			else
+			else if(L.health > min_drain_health)
 				if(!GLOB.ratvar_awakens && L.stat == CONSCIOUS)
 					vitality_drained = L.adjustToxLoss(1, forced = TRUE)
 				else
@@ -351,9 +359,9 @@
 				break
 			if(!L.client || L.client.is_afk())
 				set waitfor = FALSE
-				var/list/mob/dead/observer/candidates = pollCandidatesForMob("Do you want to play as a [L.name], an inactive clock cultist?", ROLE_SERVANT_OF_RATVAR, null, ROLE_SERVANT_OF_RATVAR, 50, L)
+				var/list/mob/candidates = pollCandidatesForMob("Do you want to play as a [L.name], an inactive clock cultist?", ROLE_SERVANT_OF_RATVAR, null, ROLE_SERVANT_OF_RATVAR, 50, L)
 				if(LAZYLEN(candidates))
-					var/mob/dead/observer/C = pick(candidates)
+					var/mob/C = pick(candidates)
 					to_chat(L, "<span class='userdanger'>Your physical form has been taken over by another soul due to your inactivity! Ahelp if you wish to regain your form!</span>")
 					message_admins("[key_name_admin(C)] has taken control of ([key_name_admin(L)]) to replace an inactive clock cultist.")
 					L.ghostize(0)

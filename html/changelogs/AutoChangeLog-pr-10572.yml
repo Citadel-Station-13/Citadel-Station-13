@@ -1,5 +1,0 @@
-author: "Tupinambis"
-delete-after: True
-changes: 
-  - tweak: "the portion of laws that require harm prevention by silicons has been removed."
-  - server: "silicon_laws.txt config file is required to be modified for full implementation."

@@ -173,37 +173,6 @@
 		R.module.basic_modules += S
 		R.module.add_module(S, FALSE, TRUE)
 
-/obj/item/borg/upgrade/premiumka
-	name = "mining cyborg premium KA"
-	desc = "A premium kinetic accelerator replacement for the mining module's standard kinetic accelerator."
-	icon_state = "cyborg_upgrade3"
-	require_module = 1
-	module_type = list(/obj/item/robot_module/miner)
-
-/obj/item/borg/upgrade/premiumka/action(mob/living/silicon/robot/R, user = usr)
-	. = ..()
-	if(.)
-		for(var/obj/item/gun/energy/kinetic_accelerator/cyborg/KA in R.module)
-			for(var/obj/item/borg/upgrade/modkit/M in KA.modkits)
-				M.uninstall(src)
-			R.module.remove_module(KA, TRUE)
-
-		var/obj/item/gun/energy/kinetic_accelerator/premiumka/cyborg/PKA = new /obj/item/gun/energy/kinetic_accelerator/premiumka/cyborg(R.module)
-		R.module.basic_modules += PKA
-		R.module.add_module(PKA, FALSE, TRUE)
-
-/obj/item/borg/upgrade/premiumka/deactivate(mob/living/silicon/robot/R, user = usr)
-	. = ..()
-	if (.)
-		for(var/obj/item/gun/energy/kinetic_accelerator/premiumka/cyborg/PKA in R.module)
-			for(var/obj/item/borg/upgrade/modkit/M in PKA.modkits)
-				M.uninstall(src)
-			R.module.remove_module(PKA, TRUE)
-
-		var/obj/item/gun/energy/kinetic_accelerator/cyborg/KA = new (R.module)
-		R.module.basic_modules += KA
-		R.module.add_module(KA, FALSE, TRUE)
-
 
 /obj/item/borg/upgrade/advcutter
 	name = "mining cyborg advanced plasma cutter"
@@ -364,12 +333,9 @@
 		to_chat(toggle_action.owner, "<span class='notice'>You activate the self-repair module.</span>")
 		activate_sr()
 
-/obj/item/borg/upgrade/selfrepair/update_icon()
+/obj/item/borg/upgrade/selfrepair/update_icon_state()
 	if(toggle_action)
 		icon_state = "selfrepair_[on ? "on" : "off"]"
-		for(var/X in actions)
-			var/datum/action/A = X
-			A.UpdateButtonIcon()
 	else
 		icon_state = "cyborg_upgrade5"
 
@@ -465,7 +431,7 @@
 	desc = "An upgrade to the Medical module's hypospray, containing \
 		stronger versions of existing chemicals."
 	additional_reagents = list(/datum/reagent/medicine/oxandrolone, /datum/reagent/medicine/sal_acid,
-								/datum/reagent/medicine/rezadone, /datum/reagent/medicine/pen_acid)
+								/datum/reagent/medicine/rezadone, /datum/reagent/medicine/pen_acid, /datum/reagent/medicine/prussian_blue)
 
 /obj/item/borg/upgrade/piercing_hypospray
 	name = "cyborg piercing hypospray"
@@ -493,7 +459,7 @@
 /obj/item/borg/upgrade/defib/deactivate(mob/living/silicon/robot/R, user = usr)
 	. = ..()
 	if (.)
-		var/obj/item/twohanded/shockpaddles/cyborg/S = locate() in R.module
+		var/obj/item/shockpaddles/cyborg/S = locate() in R.module
 		R.module.remove_module(S, TRUE)
 
 /obj/item/borg/upgrade/processor
@@ -579,8 +545,8 @@
 			to_chat(usr, "<span class='notice'>This unit already has an expand module installed!</span>")
 			return FALSE
 
-		R.notransform = TRUE
-		var/prev_lockcharge = R.lockcharge
+		R.mob_transforming = TRUE
+		var/prev_locked_down = R.locked_down
 		R.SetLockdown(1)
 		R.anchored = TRUE
 		var/datum/effect_system/smoke_spread/smoke = new
@@ -590,10 +556,10 @@
 		for(var/i in 1 to 4)
 			playsound(R, pick('sound/items/drill_use.ogg', 'sound/items/jaws_cut.ogg', 'sound/items/jaws_pry.ogg', 'sound/items/welder.ogg', 'sound/items/ratchet.ogg'), 80, 1, -1)
 			sleep(12)
-		if(!prev_lockcharge)
+		if(!prev_locked_down)
 			R.SetLockdown(0)
 		R.anchored = FALSE
-		R.notransform = FALSE
+		R.mob_transforming = FALSE
 		R.resize = 2
 		R.hasExpanded = TRUE
 		R.update_transform()
@@ -697,21 +663,19 @@
 	var/maxReduction = 1
 
 
-/obj/effect/proc_holder/silicon/cyborg/vtecControl/Click(mob/living/silicon/robot/user)
-	var/mob/living/silicon/robot/self = usr
-
+/obj/effect/proc_holder/silicon/cyborg/vtecControl/Trigger(mob/living/silicon/robot/user)
 	currentState = (currentState + 1) % 3
 
-	if(istype(self))
+	if(istype(user))
 		switch(currentState)
 			if (0)
-				self.speed = initial(self.speed)
+				user.speed = initial(user.speed)
 			if (1)
-				self.speed = initial(self.speed) - maxReduction * 0.5
+				user.speed = initial(user.speed) - maxReduction * 0.5
 			if (2)
-				self.speed = initial(self.speed) - maxReduction * 1
+				user.speed = initial(user.speed) - maxReduction * 1
 
 	action.button_icon_state = "Chevron_State_[currentState]"
 	action.UpdateButtonIcon()
 
-	return
+	return TRUE

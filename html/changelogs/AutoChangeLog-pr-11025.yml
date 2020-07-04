@@ -1,5 +1,0 @@
-author: "Arturlang"
-delete-after: True
-changes: 
-  - rscadd: "Nanite interfaces have gotten a rework to TGUI Next, and can now support sub-programs.
-add:Adds the nanite sting program, which will allow you to manually sting people to give them nanites, changeling style."

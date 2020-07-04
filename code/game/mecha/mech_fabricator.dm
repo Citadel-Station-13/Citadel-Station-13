@@ -19,12 +19,14 @@
 	var/processing_queue = 0
 	var/screen = "main"
 	var/temp
+	var/offstation_security_levels = TRUE
 	var/list/part_sets = list(
 								"Cyborg",
 								"Ripley",
 								"Firefighter",
 								"Odysseus",
 								"Gygax",
+								"Medical-Spec Gygax",
 								"Durand",
 								"H.O.N.K",
 								"Phazon",
@@ -35,9 +37,19 @@
 								)
 
 /obj/machinery/mecha_part_fabricator/Initialize()
-	var/datum/component/material_container/materials = AddComponent(/datum/component/material_container,
-	list(/datum/material/iron, /datum/material/glass, /datum/material/silver, /datum/material/gold, /datum/material/diamond, /datum/material/plasma, /datum/material/uranium, /datum/material/bananium, /datum/material/titanium, /datum/material/bluespace), 0,
-		TRUE, /obj/item/stack, CALLBACK(src, .proc/is_insertion_ready), CALLBACK(src, .proc/AfterMaterialInsert))
+	var/static/list/allowed_types = list(
+		/datum/material/iron,
+		/datum/material/glass,
+		/datum/material/silver,
+		/datum/material/gold,
+		/datum/material/diamond,
+		/datum/material/plasma,
+		/datum/material/uranium,
+		/datum/material/bananium,
+		/datum/material/titanium,
+		/datum/material/bluespace
+		)
+	var/datum/component/material_container/materials = AddComponent(/datum/component/material_container, allowed_types, 0, TRUE, /obj/item/stack, CALLBACK(src, .proc/is_insertion_ready), CALLBACK(src, .proc/AfterMaterialInsert))
 	materials.precise_insertion = TRUE
 	stored_research = new
 	return ..()
@@ -62,6 +74,8 @@
 	for(var/obj/item/stock_parts/manipulator/Ml in component_parts)
 		T += Ml.rating
 	time_coeff = round(initial(time_coeff) - (initial(time_coeff)*(T))/5,0.01)
+	var/obj/item/circuitboard/machine/mechfab/C = circuit
+	offstation_security_levels = C.offstation_security_levels
 
 /obj/machinery/mecha_part_fabricator/examine(mob/user)
 	. = ..()
@@ -96,13 +110,27 @@
 			if(!(set_name in D.category))
 				continue
 			output += "<div class='part'>[output_part_info(D)]<br>\["
-			if(check_resources(D))
+			if(check_clearance(D) && check_resources(D))
 				output += "<a href='?src=[REF(src)];part=[D.id]'>Build</a> | "
 			output += "<a href='?src=[REF(src)];add_to_queue=[D.id]'>Add to queue</a>\]\[<a href='?src=[REF(src)];part_desc=[D.id]'>?</a>\]</div>"
 	return output
 
+/obj/machinery/mecha_part_fabricator/proc/check_clearance(datum/design/D)
+	if(!(obj_flags & EMAGGED) && (offstation_security_levels || is_station_level(z)) && !ISINRANGE(GLOB.security_level, D.min_security_level, D.max_security_level))
+		return FALSE
+	return TRUE
+
 /obj/machinery/mecha_part_fabricator/proc/output_part_info(datum/design/D)
-	var/output = "[initial(D.name)] (Cost: [output_part_cost(D)]) [get_construction_time_w_coeff(D)/10]sec"
+	var/clearance = !(obj_flags & EMAGGED) && (offstation_security_levels || is_station_level(z))
+	var/sec_text = ""
+	if(clearance && (D.min_security_level > SEC_LEVEL_GREEN || D.max_security_level < SEC_LEVEL_DELTA))
+		sec_text = " (Allowed security levels: "
+		for(var/n in D.min_security_level to D.max_security_level)
+			sec_text += NUM2SECLEVEL(n)
+			if(n + 1 <= D.max_security_level)
+				sec_text += ", "
+		sec_text += ") "
+	var/output = "[initial(D.name)] (Cost: [output_part_cost(D)]) [sec_text][get_construction_time_w_coeff(D)/10]sec"
 	return output
 
 /obj/machinery/mecha_part_fabricator/proc/output_part_cost(datum/design/D)
@@ -161,7 +189,6 @@
 
 	var/location = get_step(src,(dir))
 	var/obj/item/I = new D.build_path(location)
-	I.material_flags |= MATERIAL_NO_EFFECTS //Find a better way to do this.
 	I.set_custom_materials(res_coef)
 	say("\The [I] is complete.")
 	being_built = null
@@ -206,6 +233,11 @@
 	while(D)
 		if(stat&(NOPOWER|BROKEN))
 			return FALSE
+		if(!check_clearance(D))
+			say("Security level not met. Queue processing stopped.")
+			temp = {"<span class='alert'>Security level not met to build next part.</span><br>
+						<a href='?src=[REF(src)];process_queue=1'>Try again</a> | <a href='?src=[REF(src)];clear_temp=1'>Return</a><a>"}
+			return FALSE
 		if(!check_resources(D))
 			say("Not enough resources. Queue processing stopped.")
 			temp = {"<span class='alert'>Not enough resources to build next part.</span><br>
@@ -226,7 +258,7 @@
 		for(var/datum/design/D in queue)
 			i++
 			var/obj/part = D.build_path
-			output += "<li[!check_resources(D)?" style='color: #f00;'":null]>"
+			output += "<li[(!check_clearance(D) ||!check_resources(D))?" style='color: #f00;'":null]>"
 			output += initial(part.name) + " - "
 			output += "[i>1?"<a href='?src=[REF(src)];queue_move=-1;index=[i]' class='arrow'>&uarr;</a>":null] "
 			output += "[i<queue.len?"<a href='?src=[REF(src)];queue_move=+1;index=[i]' class='arrow'>&darr;</a>":null] "
@@ -287,7 +319,8 @@
 				left_part += "<hr><a href='?src=[REF(src)];screen=main'>Return</a>"
 	dat = {"<html>
 			  <head>
-			  <title>[name]</title>
+				<meta http-equiv='Content-Type' content='text/html; charset=UTF-8'>
+				<title>[name] data</title>
 				<style>
 				.res_name {font-weight: bold; text-transform: capitalize;}
 				.red {color: #f00;}
@@ -429,3 +462,7 @@
 		return FALSE
 
 	return TRUE
+
+/obj/machinery/mecha_part_fabricator/offstation
+	offstation_security_levels = FALSE
+	circuit = /obj/item/circuitboard/machine/mechfab/offstation

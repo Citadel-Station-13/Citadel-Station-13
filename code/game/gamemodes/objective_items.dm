@@ -36,6 +36,7 @@
 	targetitem = /obj/item/gun/energy/e_gun/hos
 	difficulty = 10
 	excludefromjob = list("Head Of Security")
+	altitems = list(/obj/item/gun/ballistic/revolver/mws, /obj/item/choice_beacon/hosgun) //We now look for either the alt verson of the hos gun or the beacon picker.
 
 /datum/objective_item/steal/handtele
 	name = "a hand teleporter."
@@ -205,13 +206,18 @@
 	difficulty = 10
 
 /datum/objective_item/special/boh
-	name = "a bag of holding."
+	name = "a type of bag of holding."
 	targetitem = /obj/item/storage/backpack/holding
 	difficulty = 10
 
-/datum/objective_item/special/hypercell
-	name = "a hyper-capacity power cell."
-	targetitem = /obj/item/stock_parts/cell/hyper
+/datum/objective_item/special/adv_surgical_drapes
+	name = "a set of smart surgical drapes."
+	targetitem = /obj/item/surgical_drapes/advanced
+	difficulty = 10 //would be 15 but cmo rarely have it on themselfs and leave it in their lockers...
+
+/datum/objective_item/special/bluespace
+	name = "a bluespace power cell."
+	targetitem = /obj/item/stock_parts/cell/bluespace
 	difficulty = 5
 
 /datum/objective_item/special/laserpointer

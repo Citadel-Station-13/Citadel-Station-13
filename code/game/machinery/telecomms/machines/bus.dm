@@ -17,31 +17,30 @@
 	idle_power_usage = 50
 	netspeed = 40
 	circuit = /obj/item/circuitboard/machine/telecomms/bus
-	var/change_frequency = 0
+	var/change_frequency = FALSE
+	var/change_freq_value = 0
+
+/obj/machinery/telecomms/bus/RefreshParts()
+	idle_power_usage = 50
+	for(var/obj/item/stock_parts/manipulator/P in component_parts)
+		idle_power_usage -= (P.rating * 2) //Has 2 manipulators
 
 /obj/machinery/telecomms/bus/receive_information(datum/signal/subspace/signal, obj/machinery/telecomms/machine_from)
 	if(!istype(signal) || !is_freq_listening(signal))
 		return
 
-	if(change_frequency && signal.frequency != FREQ_SYNDICATE)
-		signal.frequency = change_frequency
+	if(change_frequency && (change_freq_value && signal.frequency != FREQ_SYNDICATE))
+		signal.frequency = change_freq_value
 
 	if(!istype(machine_from, /obj/machinery/telecomms/processor) && machine_from != src) // Signal must be ready (stupid assuming machine), let's send it
 		// send to one linked processor unit
 		if(relay_information(signal, /obj/machinery/telecomms/processor))
 			return
 
-		// failed to send to a processor, relay information anyway
-		signal.data["slow"] += rand(1, 5) // slow the signal down only slightly
-
 	// Try sending it!
 	var/list/try_send = list(signal.server_type, /obj/machinery/telecomms/hub, /obj/machinery/telecomms/broadcaster)
 
-	var/i = 0
 	for(var/send in try_send)
-		if(i)
-			signal.data["slow"] += rand(0, 1) // slow the signal down only slightly
-		i++
 		if(relay_information(signal, send))
 			break
 

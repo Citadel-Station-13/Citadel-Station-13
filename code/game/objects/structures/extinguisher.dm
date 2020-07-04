@@ -3,6 +3,7 @@
 	desc = "A small wall mounted cabinet designed to hold a fire extinguisher."
 	icon = 'icons/obj/wallmounts.dmi'
 	icon_state = "extinguisher_closed"
+	plane = ABOVE_WALL_PLANE
 	anchored = TRUE
 	density = FALSE
 	max_integrity = 200
@@ -116,7 +117,7 @@
 		opened = !opened
 		update_icon()
 
-/obj/structure/extinguisher_cabinet/update_icon()
+/obj/structure/extinguisher_cabinet/update_icon_state()
 	if(!opened)
 		icon_state = "extinguisher_closed"
 		return

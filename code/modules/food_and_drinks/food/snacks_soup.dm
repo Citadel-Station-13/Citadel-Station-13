@@ -228,6 +228,22 @@
 	tastes = list("beet" = 1)
 	foodtype = VEGETABLES
 
+/obj/item/reagent_containers/food/snacks/soup/onion
+	name = "french onion soup"
+	desc = "Good enough to make a grown mime cry."
+	icon_state = "onionsoup"
+	bonus_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/nutriment/vitamin = 5)
+	tastes = list("caramelized onions" = 1)
+	foodtype = VEGETABLES
+
+/obj/item/reagent_containers/food/snacks/soup/bisque
+	name = "bisque"
+	desc = "A classic entree from Space-France."
+	icon_state = "bisque"
+	bonus_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/consumable/nutriment/vitamin = 6)
+	tastes = list("creamy texture" = 1, "crab" = 4)
+	foodtype = MEAT
+
 /obj/item/reagent_containers/food/snacks/soup/electron
 	name = "electron soup"
 	desc = "A gastronomic curiosity of ethereal origin. It is famed for the minature weather system formed over a properly prepared soup."
@@ -246,3 +262,13 @@
 	tastes = list("bungo" = 2, "hot curry" = 4, "tropical sweetness" = 1)
 	filling_color = "#E6A625"
 	foodtype = VEGETABLES | FRUIT | DAIRY
+
+/obj/item/reagent_containers/food/snacks/soup/peasoup
+	name = "pea soup"
+	desc = "A humble split pea soup."
+	icon_state = "peasoup"
+	bonus_reagents = list (/datum/reagent/consumable/nutriment/vitamin = 6, /datum/reagent/medicine/oculine = 2)
+	list_reagents = list (/datum/reagent/consumable/nutriment = 8)
+	tastes = list("creamy peas"= 2, "parsnip" = 1)
+	filling_color = "#9dc530"
+	foodtype = VEGETABLES

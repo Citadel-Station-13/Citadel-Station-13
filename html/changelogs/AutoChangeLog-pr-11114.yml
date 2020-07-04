@@ -1,6 +1,0 @@
-author: "Psody-Mordheim"
-delete-after: True
-changes: 
-  - rscadd: "You can now make synth-flesh with synthetic blood."
-  - rscadd: "You can now make synthetic blood via mixing saline glucose, iron, stable plasma and heating it to 350 temp."
-  - rscadd: "You can mix synthetic blood and cryoxadone to create synth-meat in addition to normal blood."

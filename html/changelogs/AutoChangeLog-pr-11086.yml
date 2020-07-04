@@ -1,6 +1,0 @@
-author: "YakumoChen"
-delete-after: True
-changes: 
-  - imageadd: "Rings look nicer. Sprites used from RP."
-  - imageadd: "Ring on-hands. Diamond rings sparkle!"
-  - tweak: "You can now propose using a diamond ring in your hand."

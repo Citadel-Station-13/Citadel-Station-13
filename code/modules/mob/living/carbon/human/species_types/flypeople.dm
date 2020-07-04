@@ -11,6 +11,7 @@
 	disliked_food = null
 	liked_food = GROSS
 	exotic_bloodtype = "BUG"
+	exotic_blood_color = BLOOD_COLOR_BUG
 
 /datum/species/fly/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H)
 	if(istype(chem, /datum/reagent/toxin/pestkiller))
@@ -24,7 +25,7 @@
 			H.vomit(0, FALSE, FALSE, 2, TRUE)
 			var/obj/effect/decal/cleanable/vomit/V = locate() in pos
 			if(V)
-				H.reagents.trans_id_to(V, chem, chem.volume)
+				H.reagents.trans_id_to(V, chem.type, chem.volume)
 			playsound(pos, 'sound/effects/splat.ogg', 50, 1)
 			H.visible_message("<span class='danger'>[H] vomits on the floor!</span>", \
 						"<span class='userdanger'>You throw up on the floor!</span>")

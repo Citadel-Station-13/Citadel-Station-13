@@ -91,7 +91,7 @@
 	icon = 'icons/obj/food/snowcones.dmi'
 	icon_state = "flavorless_sc"
 	trash = /obj/item/reagent_containers/food/drinks/sillycup //We dont eat paper cups
-	bonus_reagents = list(/datum/reagent/water = 10) //Base line will allways give water
+	bonus_reagents = list(/datum/reagent/water = 10) //Base line will always give water
 	list_reagents = list(/datum/reagent/water = 1) // We dont get food for water/juices
 	filling_color = "#FFFFFF" //Ice is white
 	tastes = list("ice" = 1, "water" = 1)
@@ -140,7 +140,7 @@
 /obj/item/reagent_containers/food/snacks/snowcones/blue
 	name = "bluecherry snowcone"
 	desc = "Bluecherry syrup drizzled over a snowball in a paper cup, how rare!"
-	icon_state = "blue_sc"
+	icon_state = "red_sc"
 	list_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/bluecherryjelly = 5)
 	tastes = list("ice" = 1, "water" = 1, "blue" = 5, "cherries" = 5)
 	foodtype = FRUIT
@@ -148,7 +148,7 @@
 /obj/item/reagent_containers/food/snacks/snowcones/red
 	name = "cherry snowcone"
 	desc = "Cherry syrup drizzled over a snowball in a paper cup."
-	icon_state = "red_sc"
+	icon_state = "blue_sc"
 	list_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/cherryjelly = 5)
 	tastes = list("ice" = 1, "water" = 1, "red" = 5, "cherries" = 5)
 	foodtype = FRUIT
@@ -197,7 +197,7 @@
 	name = "pineapple snowcone"
 	desc = "Pineapple syrup drizzled over a snowball in a paper cup."
 	icon_state = "pineapple_sc"
-	list_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/water = 10)
+	list_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/pineapplejuice = 5)
 	tastes = list("ice" = 1, "water" = 1, "pineapples" = 5)
 	foodtype = PINEAPPLE //Pineapple to allow all that like pineapple to enjoy
 
@@ -223,7 +223,7 @@
 	tastes = list("ice" = 1, "water" = 1, "cola" = 5)
 
 /obj/item/reagent_containers/food/snacks/snowcones/spacemountainwind
-	name = "Space Mountain Wind snowcone"
+	name = "\improper Space Mountain Wind snowcone"
 	desc = "Space Mountain Wind drizzled over a snowball in a paper cup."
 	icon_state = "kiwi_sc"
 	list_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/spacemountainwind = 5)

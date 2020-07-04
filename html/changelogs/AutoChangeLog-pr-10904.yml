@@ -1,4 +1,0 @@
-author: "Hatterhat"
-delete-after: True
-changes: 
-  - rscadd: "The ships often crashed by Free Golems on Lavaland now have GPSes. They're off, by default, but an awakening Golem could easily turn one on."

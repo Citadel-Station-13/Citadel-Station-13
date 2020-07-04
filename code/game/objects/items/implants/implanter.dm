@@ -14,12 +14,11 @@
 	var/imp_type = null
 
 
-/obj/item/implanter/update_icon()
+/obj/item/implanter/update_icon_state()
 	if(imp)
 		icon_state = "implanter1"
 	else
 		icon_state = "implanter0"
-
 
 /obj/item/implanter/attack(mob/living/M, mob/user)
 	if(!istype(M))

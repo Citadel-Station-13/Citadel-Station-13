@@ -1,5 +1,0 @@
-author: "Hatterhat"
-delete-after: True
-changes: 
-  - bugfix: "Biogenerators can now actually generate universal enzyme."
-  - bugfix: "The Basic Tools node now unlocks the multitool for printing on Engineering and Science fabricators."

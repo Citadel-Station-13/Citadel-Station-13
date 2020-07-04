@@ -27,6 +27,7 @@
 	REMOVE_TRAIT(owner, TRAIT_PACIFISM, "slimestatus")
 	owner.visible_message("<span class='notice'>[owner] stops glowing, the rainbow light fading away.</span>",
 		"<span class='warning'>You no longer feel protected...</span>")
+	return ..()
 
 /obj/screen/alert/status_effect/slimeskin
 	name = "Adamantine Slimeskin"
@@ -56,6 +57,7 @@
 		H.physiology.damage_resistance -= 10
 	owner.visible_message("<span class='warning'>[owner]'s gel coating liquefies and dissolves away.</span>",
 		"<span class='notice'>Your gel second-skin dissolves!</span>")
+	return ..()
 
 /datum/status_effect/slimerecall
 	id = "slime_recall"
@@ -87,6 +89,7 @@
 		"<span class='warning'>The unknown force snatches briefly you from reality, and deposits you next to [target]!</span>")
 	do_sparks(3, TRUE, owner)
 	owner.forceMove(target.loc)
+	return ..()
 
 /obj/screen/alert/status_effect/freon/stasis
 	desc = "You're frozen inside of a protective ice cube! While inside, you can't do anything, but are immune to harm! Resist to get out."
@@ -117,6 +120,7 @@
 		qdel(cube)
 	owner.status_flags &= ~GODMODE
 	UnregisterSignal(owner, COMSIG_LIVING_RESIST)
+	return ..()
 
 /datum/status_effect/slime_clone
 	id = "slime_cloned"
@@ -156,6 +160,7 @@
 	if(clone)
 		clone.unequip_everything()
 		qdel(clone)
+	return ..()
 
 /obj/screen/alert/status_effect/clone_decay
 	name = "Clone Decay"
@@ -186,7 +191,7 @@
 	alert_type = /obj/screen/alert/status_effect/bloodchill
 
 /datum/status_effect/bloodchill/on_apply()
-	owner.add_movespeed_modifier("bloodchilled", TRUE, 100, NONE, override = TRUE, multiplicative_slowdown = 3)
+	owner.add_movespeed_modifier(/datum/movespeed_modifier/status_effect/bloodchill)
 	return ..()
 
 /datum/status_effect/bloodchill/tick()
@@ -194,7 +199,8 @@
 		owner.adjustFireLoss(2)
 
 /datum/status_effect/bloodchill/on_remove()
-	owner.remove_movespeed_modifier("bloodchilled")
+	owner.remove_movespeed_modifier(/datum/movespeed_modifier/status_effect/bloodchill)
+	return ..()
 
 /obj/screen/alert/status_effect/bloodchill
 	name = "Bloodchilled"
@@ -207,7 +213,7 @@
 	alert_type = /obj/screen/alert/status_effect/bonechill
 
 /datum/status_effect/bonechill/on_apply()
-	owner.add_movespeed_modifier("bonechilled", TRUE, 100, NONE, override = TRUE, multiplicative_slowdown = 3)
+	owner.add_movespeed_modifier(/datum/movespeed_modifier/status_effect/bonechill)
 	return ..()
 
 /datum/status_effect/bonechill/tick()
@@ -217,7 +223,8 @@
 		owner.adjust_bodytemperature(-10)
 
 /datum/status_effect/bonechill/on_remove()
-	owner.remove_movespeed_modifier("bonechilled")
+	owner.remove_movespeed_modifier(/datum/movespeed_modifier/status_effect/bonechill)
+	return ..()
 
 /obj/screen/alert/status_effect/bonechill
 	name = "Bonechilled"
@@ -249,6 +256,7 @@ datum/status_effect/rebreathing/tick()
 
 /datum/status_effect/firecookie/on_remove()
 	REMOVE_TRAIT(owner, TRAIT_RESISTCOLD,"firecookie")
+	return ..()
 
 /datum/status_effect/watercookie
 	id = "watercookie"
@@ -266,6 +274,7 @@ datum/status_effect/rebreathing/tick()
 
 /datum/status_effect/watercookie/on_remove()
 	REMOVE_TRAIT(owner, TRAIT_NOSLIPWATER,"watercookie")
+	return ..()
 
 /datum/status_effect/metalcookie
 	id = "metalcookie"
@@ -283,6 +292,7 @@ datum/status_effect/rebreathing/tick()
 	if(ishuman(owner))
 		var/mob/living/carbon/human/H = owner
 		H.physiology.brute_mod /= 0.9
+	return ..()
 
 /datum/status_effect/sparkcookie
 	id = "sparkcookie"
@@ -302,6 +312,7 @@ datum/status_effect/rebreathing/tick()
 	if(ishuman(owner))
 		var/mob/living/carbon/human/H = owner
 		H.physiology.siemens_coeff = original_coeff
+	return ..()
 
 /datum/status_effect/toxincookie
 	id = "toxincookie"
@@ -315,6 +326,7 @@ datum/status_effect/rebreathing/tick()
 
 /datum/status_effect/toxincookie/on_remove()
 	REMOVE_TRAIT(owner, TRAIT_TOXINLOVER,"toxincookie")
+	return ..()
 
 /datum/status_effect/timecookie
 	id = "timecookie"
@@ -332,6 +344,7 @@ datum/status_effect/rebreathing/tick()
 	if(ishuman(owner))
 		var/mob/living/carbon/human/H
 		H.physiology.do_after_speed /= 0.95
+	return ..()
 
 /datum/status_effect/lovecookie
 	id = "lovecookie"
@@ -372,11 +385,12 @@ datum/status_effect/rebreathing/tick()
 	duration = 30
 
 /datum/status_effect/tarfoot/on_apply()
-	owner.add_movespeed_modifier(MOVESPEED_ID_TARFOOT, update=TRUE, priority=100, multiplicative_slowdown=0.5, blacklisted_movetypes=(FLYING|FLOATING))
+	owner.add_movespeed_modifier(/datum/movespeed_modifier/status_effect/tarfoot)
 	return ..()
 
 /datum/status_effect/tarfoot/on_remove()
-	owner.remove_movespeed_modifier(MOVESPEED_ID_TARFOOT)
+	owner.remove_movespeed_modifier(/datum/movespeed_modifier/status_effect/tarfoot)
+	return ..()
 
 /datum/status_effect/spookcookie
 	id = "spookcookie"
@@ -392,6 +406,7 @@ datum/status_effect/rebreathing/tick()
 
 /datum/status_effect/spookcookie/on_remove()
 	owner.remove_alt_appearance("spookyscary")
+	return ..()
 
 /datum/status_effect/peacecookie
 	id = "peacecookie"
@@ -415,6 +430,7 @@ datum/status_effect/rebreathing/tick()
 
 /datum/status_effect/plur/on_remove()
 	REMOVE_TRAIT(owner, TRAIT_PACIFISM, "peacecookie")
+	return ..()
 
 /datum/status_effect/adamantinecookie
 	id = "adamantinecookie"
@@ -432,6 +448,7 @@ datum/status_effect/rebreathing/tick()
 	if(ishuman(owner))
 		var/mob/living/carbon/human/H = owner
 		H.physiology.burn_mod /= 0.9
+	return ..()
 
 ///////////////////////////////////////////////////////
 //////////////////STABILIZED EXTRACTS//////////////////
@@ -488,13 +505,13 @@ datum/status_effect/rebreathing/tick()
 /datum/status_effect/stabilized/purple/tick()
 	var/is_healing = FALSE
 	if(owner.getBruteLoss() > 0)
-		owner.adjustBruteLoss(-0.2)
+		owner.adjustBruteLoss(-0.4)
 		is_healing = TRUE
 	if(owner.getFireLoss() > 0)
-		owner.adjustFireLoss(-0.2)
+		owner.adjustFireLoss(-0.4)
 		is_healing = TRUE
 	if(owner.getToxLoss() > 0)
-		owner.adjustToxLoss(-0.2, forced = TRUE) //Slimepeople should also get healed.
+		owner.adjustToxLoss(-0.4, forced = TRUE) //Slimepeople should also get healed.
 		is_healing = TRUE
 	if(is_healing)
 		examine_text = "<span class='warning'>SUBJECTPRONOUN is regenerating slowly, purplish goo filling in small injuries!</span>"
@@ -513,6 +530,7 @@ datum/status_effect/rebreathing/tick()
 
 datum/status_effect/stabilized/blue/on_remove()
 	REMOVE_TRAIT(owner, TRAIT_NOSLIPWATER, "slimestatus")
+	return ..()
 
 /datum/status_effect/stabilized/metal
 	id = "stabilizedmetal"
@@ -535,7 +553,6 @@ datum/status_effect/stabilized/blue/on_remove()
 			S.amount++
 			to_chat(owner, "<span class='notice'>[linked_extract] adds a layer of slime to [S], which metamorphosizes into another sheet of material!</span>")
 	return ..()
-
 
 /datum/status_effect/stabilized/yellow
 	id = "stabilizedyellow"
@@ -591,6 +608,7 @@ datum/status_effect/stabilized/blue/on_remove()
 /datum/status_effect/stabilized/darkpurple/on_remove()
 	REMOVE_TRAIT(owner, TRAIT_RESISTHEATHANDS, "slimestatus")
 	qdel(fire)
+	return ..()
 
 /datum/status_effect/stabilized/darkblue
 	id = "stabilizeddarkblue"
@@ -606,9 +624,9 @@ datum/status_effect/stabilized/blue/on_remove()
 		O.extinguish() //All shamelessly copied from water's reaction_obj, since I didn't seem to be able to get it here for some reason.
 		O.acid_level = 0
 	// Monkey cube
-	if(istype(O, /obj/item/reagent_containers/food/snacks/monkeycube))
+	if(istype(O, /obj/item/reagent_containers/food/snacks/cube))
 		to_chat(owner, "<span class='warning'>[linked_extract] kept your hands wet! It makes [O] expand!</span>")
-		var/obj/item/reagent_containers/food/snacks/monkeycube/cube = O
+		var/obj/item/reagent_containers/food/snacks/cube/cube = O
 		cube.Expand()
 
 	// Dehydrated carp
@@ -638,6 +656,7 @@ datum/status_effect/stabilized/blue/on_remove()
 	if(ishuman(owner))
 		var/mob/living/carbon/human/H = owner
 		H.physiology.hunger_mod /= 0.8
+	return ..()
 
 //Bluespace has an icon because it's kinda active.
 /obj/screen/alert/status_effect/bluespaceslime
@@ -688,15 +707,16 @@ datum/status_effect/stabilized/blue/on_remove()
 /datum/status_effect/stabilized/sepia/tick()
 	if(prob(50) && mod > -1)
 		mod--
-		owner.add_movespeed_modifier(MOVESPEED_ID_SEPIA, update=TRUE, priority=100, multiplicative_slowdown=-1, blacklisted_movetypes=(FLYING|FLOATING))
+		owner.add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/status_effect/sepia, multiplicative_slowdown = 1)
 	else if(mod < 1)
 		mod++
 		// yeah a value of 0 does nothing but replacing the trait in place is cheaper than removing and adding repeatedly
-		owner.add_movespeed_modifier(MOVESPEED_ID_SEPIA, update=TRUE, priority=100, multiplicative_slowdown=0, blacklisted_movetypes=(FLYING|FLOATING))
+		owner.add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/status_effect/sepia, multiplicative_slowdown = 0)
 	return ..()
 
 /datum/status_effect/stabilized/sepia/on_remove()
-	owner.remove_movespeed_modifier(MOVESPEED_ID_SEPIA)
+	owner.remove_movespeed_modifier(/datum/movespeed_modifier/status_effect/sepia)
+	return ..()
 
 /datum/status_effect/stabilized/cerulean
 	id = "stabilizedcerulean"
@@ -733,6 +753,7 @@ datum/status_effect/stabilized/blue/on_remove()
 		clone.visible_message("<span class='warning'>[clone] dissolves into a puddle of goo!</span>")
 		clone.unequip_everything()
 		qdel(clone)
+	return ..()
 
 /datum/status_effect/stabilized/pyrite
 	id = "stabilizedpyrite"
@@ -749,17 +770,19 @@ datum/status_effect/stabilized/blue/on_remove()
 
 /datum/status_effect/stabilized/pyrite/on_remove()
 	owner.color = originalcolor
+	return ..()
 
 /datum/status_effect/stabilized/red
 	id = "stabilizedred"
 	colour = "red"
 
 /datum/status_effect/stabilized/red/on_apply()
-	owner.ignore_slowdown("slimestatus")
-	return ..()
+	. = ..()
+	owner.add_movespeed_mod_immunities(type, /datum/movespeed_modifier/equipment_speedmod)
 
 /datum/status_effect/stabilized/red/on_remove()
-	owner.unignore_slowdown("slimestatus")
+	owner.remove_movespeed_mod_immunities(type, /datum/movespeed_modifier/equipment_speedmod)
+	return ..()
 
 /datum/status_effect/stabilized/green
 	id = "stabilizedgreen"
@@ -791,6 +814,7 @@ datum/status_effect/stabilized/blue/on_remove()
 		originalDNA.transfer_identity(H)
 		H.real_name = originalname
 		H.updateappearance(mutcolor_update=1)
+	return ..()
 
 /datum/status_effect/brokenpeace
 	id = "brokenpeace"
@@ -854,6 +878,7 @@ datum/status_effect/stabilized/blue/on_remove()
 	for(var/i in owner.faction)
 		if(i == faction_name)
 			owner.faction -= faction_name
+	return ..()
 
 /datum/status_effect/stabilized/oil
 	id = "stabilizedoil"
@@ -892,7 +917,7 @@ datum/status_effect/stabilized/blue/on_remove()
 			healing_types += CLONE
 		if(length(healing_types))
 			owner.apply_damage_type(-heal_amount, damagetype=pick(healing_types))
-		owner.nutrition += 3
+		owner.adjust_nutrition(3)
 		M.adjustCloneLoss(heal_amount * 1.2) //This way, two people can't just convert each other's damage away.
 	else
 		messagedelivered = FALSE
@@ -908,7 +933,6 @@ datum/status_effect/stabilized/blue/on_remove()
 	return ..()
 
 /datum/status_effect/stabilized/lightpink/tick()
-	owner.adjustStaminaLoss(-4.5)
 	for(var/mob/living/carbon/human/H in range(1, get_turf(owner)))
 		if(H != owner && H.stat != DEAD && H.health <= 0 && !H.reagents.has_reagent(/datum/reagent/medicine/epinephrine))
 			to_chat(owner, "[linked_extract] pulses in sync with [H]'s heartbeat, trying to keep [H.p_them()] alive.")
@@ -935,9 +959,10 @@ datum/status_effect/stabilized/blue/on_remove()
 		familiar = new linked.mob_type(get_turf(owner.loc))
 		familiar.name = linked.mob_name
 		familiar.del_on_death = TRUE
-		familiar.copy_known_languages_from(owner, FALSE)
+		familiar.copy_languages(owner, LANGUAGE_MASTER)
 		if(linked.saved_mind)
 			linked.saved_mind.transfer_to(familiar)
+			familiar.update_atom_languages()
 			familiar.ckey = linked.saved_mind.key
 	else
 		if(familiar.mind)
@@ -947,6 +972,7 @@ datum/status_effect/stabilized/blue/on_remove()
 /datum/status_effect/stabilized/gold/on_remove()
 	if(familiar)
 		qdel(familiar)
+	return ..()
 
 /datum/status_effect/stabilized/adamantine/on_apply()
 	if(ishuman(owner))
@@ -958,6 +984,7 @@ datum/status_effect/stabilized/blue/on_remove()
 	if(ishuman(owner))
 		var/mob/living/carbon/human/H = owner
 		H.physiology.damage_resistance -= 5
+	return ..()
 
 /datum/status_effect/stabilized/rainbow
 	id = "stabilizedrainbow"

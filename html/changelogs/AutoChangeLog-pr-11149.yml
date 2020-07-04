@@ -1,4 +1,0 @@
-author: "Putnam3145"
-delete-after: True
-changes: 
-  - bugfix: "Mining vendors no longer fail and eat your points iff you have precisely enough points to pay for an item"

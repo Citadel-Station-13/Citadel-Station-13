@@ -8,12 +8,16 @@
 	health = 5
 	maxHealth = 5
 	faction = list("Lizard")
-	attacktext = "bites"
+	attack_verb_continuous = "bites"
+	attack_verb_simple = "bite"
 	melee_damage_lower = 1
 	melee_damage_upper = 2
-	response_help  = "pets"
-	response_disarm = "shoos"
-	response_harm   = "stomps on"
+	response_help_continuous = "pets"
+	response_help_simple = "pet"
+	response_disarm_continuous = "shoos"
+	response_disarm_simple = "shoo"
+	response_harm_continuous = "stomps on"
+	response_harm_simple = "stomp on"
 	ventcrawler = VENTCRAWLER_ALWAYS
 	density = FALSE
 	pass_flags = PASSTABLE | PASSMOB
@@ -26,7 +30,7 @@
 
 /mob/living/simple_animal/hostile/lizard/ComponentInitialize()
 	. = ..()
-	AddElement(/datum/element/mob_holder, "lizard", null, null, null, SLOT_HEAD) //you can hold lizards now.
+	AddElement(/datum/element/mob_holder, worn_state = "lizard", inv_slots = ITEM_SLOT_HEAD) //you can hold lizards now.
 
 /mob/living/simple_animal/hostile/lizard/CanAttack(atom/the_target)//Can we actually attack a possible target?
 	if(see_invisible < the_target.invisibility)//Target's invisible to us, forget it

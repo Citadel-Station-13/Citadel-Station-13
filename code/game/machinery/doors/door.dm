@@ -12,12 +12,13 @@
 	armor = list("melee" = 30, "bullet" = 30, "laser" = 20, "energy" = 20, "bomb" = 10, "bio" = 100, "rad" = 100, "fire" = 80, "acid" = 70)
 	CanAtmosPass = ATMOS_PASS_DENSITY
 	flags_1 = PREVENT_CLICK_UNDER_1
+	ricochet_chance_mod = 0.8
 
 	interaction_flags_atom = INTERACT_ATOM_UI_INTERACT
 
 	var/secondsElectrified = 0
 	var/shockedby
-	var/visible = TRUE
+	var/visible = TRUE // To explain: Whether the door can block line of sight when closed or not.
 	var/operating = FALSE
 	var/glass = FALSE
 	var/welded = FALSE
@@ -181,7 +182,7 @@
 	return
 
 /obj/machinery/door/attackby(obj/item/I, mob/user, params)
-	if(user.a_intent != INTENT_HARM && (istype(I, /obj/item/crowbar) || istype(I, /obj/item/twohanded/fireaxe)))
+	if(user.a_intent != INTENT_HARM && (istype(I, /obj/item/crowbar) || istype(I, /obj/item/fireaxe)))
 		try_to_crowbar(I, user)
 		return 1
 	else if(istype(I, /obj/item/weldingtool))
@@ -230,7 +231,7 @@
 /obj/machinery/door/proc/unelectrify()
 	secondsElectrified = 0
 
-/obj/machinery/door/update_icon()
+/obj/machinery/door/update_icon_state()
 	if(density)
 		icon_state = "door1"
 	else
@@ -290,8 +291,6 @@
 	operating = TRUE
 	do_animate("closing")
 	layer = closingLayer
-	if(!safe)
-		crush()
 	sleep(5)
 	density = TRUE
 	sleep(5)
@@ -303,6 +302,8 @@
 	update_freelook_sight()
 	if(safe)
 		CheckForMobs()
+	else
+		crush()
 	return 1
 
 /obj/machinery/door/proc/CheckForMobs()
@@ -319,10 +320,10 @@
 		else if(ishuman(L)) //For humans
 			L.adjustBruteLoss(DOOR_CRUSH_DAMAGE)
 			L.emote("scream")
-			L.Knockdown(100)
+			L.DefaultCombatKnockdown(100)
 		else if(ismonkey(L)) //For monkeys
 			L.adjustBruteLoss(DOOR_CRUSH_DAMAGE)
-			L.Knockdown(100)
+			L.DefaultCombatKnockdown(100)
 		else //for simple_animals & borgs
 			L.adjustBruteLoss(DOOR_CRUSH_DAMAGE)
 		var/turf/location = get_turf(src)

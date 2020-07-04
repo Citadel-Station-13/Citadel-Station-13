@@ -1,6 +1,0 @@
-author: "PersianXerxes"
-delete-after: True
-changes: 
-  - rscadd: "SMES and PACMAN attached to gulag Security to power electrified windows
-remove: Removed Sec vendor from gulag Security"
-  - tweak: "Separation of gulag and public mining"

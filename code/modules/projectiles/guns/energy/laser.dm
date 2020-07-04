@@ -24,6 +24,7 @@
 	icon_state = "toyburst"
 	obj_flags = NONE
 	fire_delay = 40
+	w_class = WEIGHT_CLASS_HUGE
 	weapon_weight = WEAPON_HEAVY
 	selfcharge = EGUN_SELFCHARGE
 	charge_delay = 2
@@ -56,12 +57,14 @@
 /obj/item/gun/energy/laser/carbine
 	name = "laser carbine"
 	desc = "A ruggedized laser carbine featuring much higher capacity and improved handling when compared to a normal laser gun."
-	icon = 'icons/obj/guns/energy.dmi'
 	icon_state = "lasernew"
-	item_state = "laser"
+	item_state = "lasernew"
+	slot_flags = ITEM_SLOT_BACK
+	w_class = WEIGHT_CLASS_BULKY
+	weapon_weight = WEAPON_MEDIUM
+	inaccuracy_modifier = 0.7
 	force = 10
 	throwforce = 10
-	ammo_type = list(/obj/item/ammo_casing/energy/lasergun)
 	cell_type = /obj/item/stock_parts/cell/lascarbine
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 
@@ -237,3 +240,20 @@
 		chambered.BB.damage *= 5
 
 	process_fire(target, user, TRUE, params)
+
+////////////////
+// IMPROVISED //
+////////////////
+
+/obj/item/gun/energy/e_gun/old/improvised
+	name = "improvised energy rifle"
+	desc = "A crude imitation of an energy gun. It works, however the beams are poorly focused and most of the energy is wasted before it reaches the target. Welp, it still burns things."
+	icon_state = "improvised"
+	ammo_x_offset = 1
+	shaded_charge = 1
+	ammo_type = list(/obj/item/ammo_casing/energy/lasergun/improvised)
+
+/obj/item/gun/energy/e_gun/old/improvised/upgraded
+	name = "makeshift energy rifle"
+	desc = "The new lens and upgraded parts gives this a higher capacity and more energy output, however, the shoddy construction still leaves it inferior to Nanotrasen's own energy weapons."
+	ammo_type = list(/obj/item/ammo_casing/energy/lasergun/improvised/upgraded)

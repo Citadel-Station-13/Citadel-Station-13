@@ -54,16 +54,17 @@
 	efficiency = E
 	productivity = P
 
-/obj/machinery/bloodbankgen/update_icon()
-	cut_overlays()
+/obj/machinery/bloodbankgen/update_icon_state()
 	if(is_operational())
-		icon_state = "bloodbank-on"
+		icon_state = "bloodbank-[is_operational() ? "on" : "off"]"
 
+/obj/machinery/bloodbankgen/update_overlays()
+	. = ..()
 	if(panel_open)
-		add_overlay("bloodbank-panel")
+		. += "bloodbank-panel"
 
-	if(src.bag)
-		add_overlay("bloodbag-input")
+	if(bag)
+		. += "bloodbag-input"
 		if(bag.reagents.total_volume)
 			var/mutable_appearance/filling_overlay = mutable_appearance(icon, "input-reagent")
 
@@ -85,10 +86,10 @@
 					filling_overlay.icon_state = "input-reagent100"
 
 			filling_overlay.color = list(mix_color_from_reagents(bag.reagents.reagent_list))
-			add_overlay(filling_overlay)
+			. += filling_overlay
 
-	if(src.outbag)
-		add_overlay("bloodbag-output")
+	if(outbag)
+		. += "bloodbag-output"
 		if(outbag.reagents.total_volume)
 			var/mutable_appearance/filling_overlay = mutable_appearance(icon, "output-reagent")
 
@@ -110,8 +111,7 @@
 					filling_overlay.icon_state = "output-reagent100"
 
 			filling_overlay.color = list(mix_color_from_reagents(outbag.reagents.reagent_list))
-			add_overlay(filling_overlay)
-	return
+			. += filling_overlay
 
 /obj/machinery/bloodbankgen/process()
 	if(!is_operational())

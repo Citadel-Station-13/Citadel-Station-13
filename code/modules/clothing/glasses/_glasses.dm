@@ -82,6 +82,7 @@
 	icon_state = "nvgmeson"
 	item_state = "nvgmeson"
 	darkness_view = 8
+	flash_protect = -2
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
 	glass_colour_type = /datum/client_colour/glass_colour/green
 
@@ -96,6 +97,11 @@
 	attack_verb = list("sliced")
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	sharpness = IS_SHARP
+
+/obj/item/clothing/glasses/meson/eyepatch
+	name = "eyepatch mesons"
+	desc = "A meson system that connects directly to the optical nerve of the user, replacing the need for that useless eyeball."
+	icon_state = "mesonpatch"
 
 /obj/item/clothing/glasses/science
 	name = "science goggles"
@@ -114,16 +120,23 @@
 
 /obj/item/clothing/glasses/night
 	name = "night vision goggles"
-	desc = "You can totally see in the dark now!"
+	desc = "You can totally see in the dark now! Just don't look too closely at bright lights. This lacks any flash correction."
 	icon_state = "night"
 	item_state = "glasses"
 	darkness_view = 8
+	flash_protect = -2
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
 	glass_colour_type = /datum/client_colour/glass_colour/green
 
 /obj/item/clothing/glasses/night/prescription
 	name = "prescription night vision goggles"
 	desc = "NVGs but for those with nearsightedness."
+	vision_correction = 1
+
+/obj/item/clothing/glasses/night/syndicate
+	name = "combat night vision goggles"
+	desc = "See everything, without fear."
+	flash_protect = 1
 	vision_correction = 1
 
 /obj/item/clothing/glasses/science/suicide_act(mob/living/carbon/user)
@@ -189,6 +202,12 @@
 	desc = "Made by Uncool. Co."
 	icon_state = "hipster_glasses"
 	item_state = "hipster_glasses"
+
+/obj/item/clothing/glasses/regular/circle
+	name = "circle glasses"
+	desc = "Why would you wear something so controversial yet so brave?"
+	icon_state = "circle_glasses"
+	item_state = "circle_glasses"
 
 //Here lies green glasses, so ugly they died. RIP
 
@@ -333,11 +352,11 @@
 		add_atom_colour("#[user.eye_color]", FIXED_COLOUR_PRIORITY)
 		colored_before = TRUE
 
-/obj/item/clothing/glasses/sunglasses/blindfold/white/worn_overlays(isinhands = FALSE, icon_file, style_flags = NONE)
-	. = list()
+/obj/item/clothing/glasses/sunglasses/blindfold/white/worn_overlays(isinhands = FALSE, icon_file, used_state, style_flags = NONE)
+	. = ..()
 	if(!isinhands && ishuman(loc) && !colored_before)
 		var/mob/living/carbon/human/H = loc
-		var/mutable_appearance/M = mutable_appearance('icons/mob/eyes.dmi', "blindfoldwhite")
+		var/mutable_appearance/M = mutable_appearance('icons/mob/clothing/eyes.dmi', "blindfoldwhite")
 		M.appearance_flags |= RESET_COLOR
 		M.color = "#[H.eye_color]"
 		. += M

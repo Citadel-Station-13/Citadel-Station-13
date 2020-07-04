@@ -1,6 +1,0 @@
-author: "Ghommie"
-delete-after: True
-changes: 
-  - rscdel: "Renamed \"blaster carbine\" and \"blaster rifles\" back to \"energy gun\" and \"laser gun\" respectively"
-  - bugfix: "Fixed magnetic rifles & co being inconsistent with printed energy guns and start with an empty power cell."
-  - imagedel: "Reverted practice laser gun sprites back to their former glory. Mostly."

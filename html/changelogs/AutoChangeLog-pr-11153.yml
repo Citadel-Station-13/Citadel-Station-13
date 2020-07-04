@@ -1,5 +1,0 @@
-author: "BuffEngineering, nemvar."
-delete-after: True
-changes: 
-  - bugfix: "Addicts can now feel like they're getting their fix or kicking it."
-  - bugfix: "Aheals now remove addictions and restore your mood to default."

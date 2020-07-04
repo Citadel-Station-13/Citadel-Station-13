@@ -136,7 +136,7 @@
 		fall_chance += 2
 	if(prob(fall_chance) && !owner.lying && !owner.buckled)
 		to_chat(owner, "<span class='warning'>Your leg gives out!</span>")
-		owner.Knockdown(35)
+		owner.DefaultCombatKnockdown(35)
 
 	else if(owner.get_active_held_item())
 		var/drop_chance = 1

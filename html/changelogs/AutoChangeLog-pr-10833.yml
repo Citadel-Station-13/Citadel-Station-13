@@ -1,4 +1,0 @@
-author: "Ghommie"
-delete-after: True
-changes: 
-  - tweak: "The playback device's cooldown now proportionally increases with messages longer than 60 characters (3 seconds is the default assembly cooldown)."

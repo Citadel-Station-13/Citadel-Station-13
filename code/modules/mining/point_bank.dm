@@ -41,9 +41,8 @@
 	..()
 	update_icon()
 
-/obj/machinery/point_bank/update_icon()
+/obj/machinery/point_bank/update_icon_state()
 	if(powered())
 		icon_state = initial(icon_state)
 	else
 		icon_state = "[initial(icon_state)]-off"
-	return

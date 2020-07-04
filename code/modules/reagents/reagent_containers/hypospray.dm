@@ -96,6 +96,7 @@
 	reagent_flags = DRAWABLE
 	flags_1 = null
 	list_reagents = list(/datum/reagent/medicine/epinephrine = 10, /datum/reagent/preservahyde = 3)
+	custom_premium_price = PRICE_ALMOST_EXPENSIVE
 
 /obj/item/reagent_containers/hypospray/medipen/suicide_act(mob/living/carbon/user)
 	user.visible_message("<span class='suicide'>[user] begins to choke on \the [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
@@ -119,7 +120,7 @@
 			reagents.add_reagent_list(list_reagents)
 			update_icon()
 
-/obj/item/reagent_containers/hypospray/medipen/update_icon()
+/obj/item/reagent_containers/hypospray/medipen/update_icon_state()
 	if(reagents.total_volume > 0)
 		icon_state = initial(icon_state)
 	else
@@ -207,8 +208,8 @@
 #define DELUXE_SELF_SPRAY 10
 #define DELUXE_SELF_INJECT 10
 
-#define COMBAT_WAIT_SPRAY 0
-#define COMBAT_WAIT_INJECT 0
+#define COMBAT_WAIT_SPRAY 15
+#define COMBAT_WAIT_INJECT 15
 #define COMBAT_SELF_SPRAY 0
 #define COMBAT_SELF_INJECT 0
 
@@ -282,13 +283,12 @@
 		vial = new start_vial
 	update_icon()
 
-/obj/item/hypospray/mkii/update_icon()
-	..()
+/obj/item/hypospray/mkii/ComponentInitialize()
+	. = ..()
+	AddElement(/datum/element/update_icon_updates_onmob)
+
+/obj/item/hypospray/mkii/update_icon_state()
 	icon_state = "[initial(icon_state)][vial ? "" : "-e"]"
-	if(ismob(loc))
-		var/mob/M = loc
-		M.update_inv_hands()
-	return
 
 /obj/item/hypospray/mkii/examine(mob/user)
 	. = ..()
@@ -332,7 +332,6 @@
 	else
 		to_chat(user, "<span class='notice'>This doesn't fit in [src].</span>")
 		return FALSE
-	return FALSE
 
 /obj/item/hypospray/mkii/AltClick(mob/user)
 	. = ..()

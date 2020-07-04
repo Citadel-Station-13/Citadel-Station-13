@@ -92,3 +92,7 @@
 /datum/config_entry/keyed_list/storyteller_weight
 	key_mode = KEY_MODE_TEXT
 	value_mode = VALUE_MODE_NUM
+
+/datum/config_entry/keyed_list/storyteller_min_players
+	key_mode = KEY_MODE_TEXT
+	value_mode = VALUE_MODE_NUM

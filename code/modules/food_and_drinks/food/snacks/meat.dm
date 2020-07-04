@@ -1,6 +1,7 @@
 /obj/item/reagent_containers/food/snacks/meat
 	var/subjectname = ""
 	var/subjectjob = null
+	custom_materials = list(/datum/material/meat = MINERAL_MATERIAL_AMOUNT * 4)
 
 /obj/item/reagent_containers/food/snacks/meat/slab
 	name = "meat"
@@ -47,6 +48,7 @@
 		slice.name = "raw [subjectname] cutlet"
 	else if(subjectjob)
 		slice.name = "raw [subjectjob] cutlet"
+	slice.adjust_food_quality(food_quality)
 
 /obj/item/reagent_containers/food/snacks/meat/slab/human/initialize_cooked_food(obj/item/reagent_containers/food/snacks/meat/S, cooking_efficiency)
 	..()
@@ -314,6 +316,15 @@
 	slice_path = /obj/item/reagent_containers/food/snacks/meat/rawcutlet/gondola
 	foodtype = RAW | MEAT
 
+/obj/item/reagent_containers/food/snacks/meat/slab/wisdomcow
+	name = "wisdom cow meat"
+	desc = "The meat from the legendary creature known as the wisdom cow. You monster."
+	list_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/medicine/liquid_wisdom = 5)
+	tastes = list("meat" = 1, "wisdom" = 5)
+	filling_color = "#18e3ca"
+	cooked_type = /obj/item/reagent_containers/food/snacks/meat/steak/wisdomcow
+	slice_path = /obj/item/reagent_containers/food/snacks/meat/rawcutlet/wisdomcow
+
 ////////////////////////////////////// MEAT STEAKS ///////////////////////////////////////////////////////////
 
 
@@ -372,6 +383,10 @@
 /obj/item/reagent_containers/food/snacks/meat/steak/gondola
 	name = "gondola steak"
 	tastes = list("meat" = 1, "tranquility" = 1)
+
+/obj/item/reagent_containers/food/snacks/meat/steak/wisdomcow
+	name = "wisdom cow steak"
+	tastes = list("meat" = 1, "wisdom" = 5)
 
 //////////////////////////////// MEAT CUTLETS ///////////////////////////////////////////////////////
 
@@ -440,6 +455,11 @@
 	cooked_type = /obj/item/reagent_containers/food/snacks/meat/cutlet/gondola
 	tastes = list("meat" = 1, "tranquility" = 1)
 
+/obj/item/reagent_containers/food/snacks/meat/rawcutlet/wisdomcow
+	name = "raw wisdom cow cutlet"
+	cooked_type = /obj/item/reagent_containers/food/snacks/meat/cutlet/wisdomcow
+	tastes = list("meat" = 1, "wisdom" = 5)
+
 //Cooked cutlets
 
 /obj/item/reagent_containers/food/snacks/meat/cutlet
@@ -487,3 +507,7 @@
 /obj/item/reagent_containers/food/snacks/meat/cutlet/chicken
 	name = "chicken cutlet"
 	tastes = list("chicken" = 1)
+
+/obj/item/reagent_containers/food/snacks/meat/cutlet/wisdomcow
+	name = "wisdom cow cutlet"
+	tastes = list("meat" = 1, "wisdom" = 5)

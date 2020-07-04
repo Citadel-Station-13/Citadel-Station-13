@@ -58,6 +58,7 @@
 	desc = "A reliable, blue tinted helmet reminding you that you <i>still</i> owe that engineer a beer."
 	icon_state = "blueshift"
 	item_state = "blueshift"
+	custom_premium_price = PRICE_ABOVE_EXPENSIVE
 
 /obj/item/clothing/head/helmet/riot
 	name = "riot helmet"
@@ -243,7 +244,7 @@
 	icon_state = "knight_greyscale"
 	item_state = "knight_greyscale"
 	armor = list("melee" = 35, "bullet" = 10, "laser" = 10, "energy" = 10, "bomb" = 10, "bio" = 10, "rad" = 10, "fire" = 40, "acid" = 40)
-	material_flags = MATERIAL_ADD_PREFIX | MATERIAL_COLOR //Can change color and add prefix
+	material_flags = MATERIAL_ADD_PREFIX | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS //Can change color and add prefix
 
 /obj/item/clothing/head/helmet/skull
 	name = "skull helmet"
@@ -256,9 +257,28 @@
 	strip_delay = 100
 	mutantrace_variation = STYLE_MUZZLE
 
+/obj/item/clothing/head/helmet/infiltrator
+	name = "insidious helmet"
+	desc = "An insidious armored combat helmet signed with Syndicate insignia. The visor is coated with a resistant paste guaranteed to withstand bright flashes perfectly."
+	icon_state = "infiltrator"
+	item_state = "infiltrator"
+	armor = list("melee" = 40, "bullet" = 40, "laser" = 30, "energy" = 40, "bomb" = 70, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 50)
+	resistance_flags = FIRE_PROOF | ACID_PROOF
+	flash_protect = 2
+	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
+	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
+	dynamic_hair_suffix = ""
+	dynamic_fhair_suffix = ""
+	strip_delay = 80
+	mutantrace_variation = STYLE_MUZZLE
+
 //LightToggle
 
-/obj/item/clothing/head/helmet/update_icon()
+/obj/item/clothing/head/helmet/ComponentInitialize()
+	. = ..()
+	AddElement(/datum/element/update_icon_updates_onmob)
+
+/obj/item/clothing/head/helmet/update_icon_state()
 	var/state = "[initial(icon_state)]"
 	if(F)
 		if(F.on)
@@ -267,10 +287,6 @@
 			state += "-flight" //etc.
 
 	icon_state = state
-
-	if(ishuman(loc))
-		var/mob/living/carbon/human/H = loc
-		H.update_inv_head()
 
 /obj/item/clothing/head/helmet/ui_action_click(mob/user, action)
 	if(istype(action, /datum/action/item_action/toggle_helmet_flashlight))
@@ -370,3 +386,9 @@
 	cold_protection = HEAD
 	min_cold_protection_temperature = SPACE_SUIT_MIN_TEMP_PROTECT
 	armor = list("melee" = 10, "bullet" = 5, "laser" = 5,"energy" = 5, "bomb" = 5, "bio" = 50, "rad" = 20, "fire" = -10, "acid" = 0)
+
+/obj/item/clothing/head/helmet/police
+	name = "police officer's hat"
+	desc = "A police officer's Hat. This hat emphasizes that you are THE LAW."
+	icon_state = "policehelm"
+	dynamic_hair_suffix = ""

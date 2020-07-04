@@ -13,13 +13,17 @@ import { BluespaceArtillery } from './interfaces/BluespaceArtillery';
 import { Bepis } from './interfaces/Bepis';
 import { BorgPanel } from './interfaces/BorgPanel';
 import { BrigTimer } from './interfaces/BrigTimer';
+import { Canvas } from './interfaces/Canvas';
 import { Canister } from './interfaces/Canister';
 import { Cargo, CargoExpress } from './interfaces/Cargo';
 import { CellularEmporium } from './interfaces/CellularEmporium';
 import { CentcomPodLauncher } from './interfaces/CentcomPodLauncher';
 import { ChemAcclimator } from './interfaces/ChemAcclimator';
 import { ChemDebugSynthesizer } from './interfaces/ChemDebugSynthesizer';
+import { ChemDispenser } from './interfaces/ChemDispenser';
 import { ChemFilter } from './interfaces/ChemFilter';
+import { ChemHeater } from './interfaces/ChemHeater';
+import { ChemMaster } from './interfaces/ChemMaster';
 import { ChemPress } from './interfaces/ChemPress';
 import { ChemReactionChamber } from './interfaces/ChemReactionChamber';
 import { ChemSplitter } from './interfaces/ChemSplitter';
@@ -41,6 +45,7 @@ import { GravityGenerator } from './interfaces/GravityGenerator';
 import { GulagTeleporterConsole } from './interfaces/GulagTeleporterConsole';
 import { GulagItemReclaimer } from './interfaces/GulagItemReclaimer';
 import { Holodeck } from './interfaces/Holodeck';
+import { HypnoChair } from './interfaces/HypnoChair';
 import { ImplantChair } from './interfaces/ImplantChair';
 import { Intellicard } from './interfaces/Intellicard';
 import { KeycardAuth } from './interfaces/KeycardAuth';
@@ -76,6 +81,8 @@ import { RapidPipeDispenser } from './interfaces/RapidPipeDispenser';
 import { SatelliteControl } from './interfaces/SatelliteControl';
 import { ScannerGate } from './interfaces/ScannerGate';
 import { ShuttleManipulator } from './interfaces/ShuttleManipulator';
+import { SkillPanel } from './interfaces/SkillPanel';
+import { Sleeper } from './interfaces/Sleeper';
 import { SlimeBodySwapper } from './interfaces/SlimeBodySwapper';
 import { Signaler } from './interfaces/Signaler';
 import { SmartVend } from './interfaces/SmartVend';
@@ -87,12 +94,17 @@ import { SpawnersMenu } from './interfaces/SpawnersMenu';
 import { StationAlertConsole } from './interfaces/StationAlertConsole';
 import { SuitStorageUnit } from './interfaces/SuitStorageUnit';
 import { Tank } from './interfaces/Tank';
+import { TeleLogBrowser } from './interfaces/TelecommsLogBrowser';
+import { Telemonitor } from './interfaces/TelecommsMonitor';
+import { TelePDALog } from './interfaces/TelecommsPDALog';
+import { TeleInteract } from './interfaces/TelecommsInteraction';
 import { TankDispenser } from './interfaces/TankDispenser';
 import { Teleporter } from './interfaces/Teleporter';
 import { ThermoMachine } from './interfaces/ThermoMachine';
 import { TurbineComputer } from './interfaces/TurbineComputer';
 import { Uplink } from './interfaces/Uplink';
 import { VaultController } from './interfaces/VaultController';
+import { Vending } from './interfaces/Vending';
 import { Wires } from './interfaces/Wires';
 import { AtmosRelief } from './interfaces/AtmosRelief';
 
@@ -161,6 +173,10 @@ const ROUTES = {
     component: () => BluespaceArtillery,
     scrollable: false,
   },
+  canvas: {
+    component: () => Canvas,
+    scrollable: false,
+  },
   canister: {
     component: () => Canister,
     scrollable: false,
@@ -185,8 +201,20 @@ const ROUTES = {
     component: () => ChemAcclimator,
     scrollable: false,
   },
+  chem_dispenser: {
+    component: () => ChemDispenser,
+    scrollable: true,
+  },
   chemical_filter: {
     component: () => ChemFilter,
+    scrollable: true,
+  },
+  chem_heater: {
+    component: () => ChemHeater,
+    scrollable: true,
+  },
+  chem_master: {
+    component: () => ChemMaster,
     scrollable: true,
   },
   chem_press: {
@@ -272,6 +300,10 @@ const ROUTES = {
   holodeck: {
     component: () => Holodeck,
     scrollable: true,
+  },
+  hypnochair: {
+    component: () => HypnoChair,
+    scrollable: false,
   },
   implantchair: {
     component: () => ImplantChair,
@@ -441,6 +473,14 @@ const ROUTES = {
     component: () => ShuttleManipulator,
     scrollable: true,
   },
+  skillpanel: {
+    component: () => SkillPanel,
+    scrollable: true,
+  },
+  sleeper: {
+    component: () => Sleeper,
+    scrollable: false,
+  },
   slime_swap_body: {
     component: () => SlimeBodySwapper,
     scrollable: true,
@@ -481,6 +521,25 @@ const ROUTES = {
     component: () => SuitStorageUnit,
     scrollable: false,
   },
+  tcommsserver: {
+    component: () => TeleLogBrowser,
+    scrollable: true,
+    theme: 'ntos',
+  },
+  telemonitor: {
+    component: () => Telemonitor,
+    scrollable: true,
+    theme: 'ntos',
+  },
+  telepdalog: {
+    component: () => TelePDALog,
+    scrollable: true,
+    theme: 'ntos',
+  },
+  teleinteract: {
+    component: () => TeleInteract,
+    scrollable: true,
+  },
   tanks: {
     component: () => Tank,
     scrollable: false,
@@ -509,6 +568,10 @@ const ROUTES = {
   vault_controller: {
     component: () => VaultController,
     scrollable: false,
+  },
+  vending: {
+    component: () => Vending,
+    scrollable: true,
   },
   wires: {
     component: () => Wires,

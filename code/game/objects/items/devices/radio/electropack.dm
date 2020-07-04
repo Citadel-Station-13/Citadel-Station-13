@@ -81,7 +81,7 @@
 			if(!usr.canUseTopic(src, BE_CLOSE))
 				return
 			new_code = round(new_code)
-			new_code = CLAMP(new_code, 1, 100)
+			new_code = clamp(new_code, 1, 100)
 			code = new_code
 
 		if(href_list["set"] == "power")
@@ -118,7 +118,7 @@
 		s.set_up(3, 1, L)
 		s.start()
 
-		L.Knockdown(100)
+		L.DefaultCombatKnockdown(100)
 
 	if(master)
 		master.receive_signal()
@@ -149,7 +149,7 @@ Code:
 	name = "shock collar"
 	desc = "A reinforced metal collar. It seems to have some form of wiring near the front. Strange.."
 	icon = 'modular_citadel/icons/obj/clothing/cit_neck.dmi'
-	alternate_worn_icon = 'modular_citadel/icons/mob/citadel/neck.dmi'
+	mob_overlay_icon = 'modular_citadel/icons/mob/citadel/neck.dmi'
 	icon_state = "shockcollar"
 	item_state = "shockcollar"
 	body_parts_covered = NECK
@@ -192,7 +192,7 @@ Code:
 		s.set_up(3, 1, L)
 		s.start()
 
-		L.Knockdown(100)
+		L.DefaultCombatKnockdown(100)
 
 	if(master)
 		master.receive_signal()

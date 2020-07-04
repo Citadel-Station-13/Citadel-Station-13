@@ -54,12 +54,6 @@
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/vagina, GLOB.vagina_shapes_list)
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/breasts, GLOB.breasts_shapes_list)
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/testicles, GLOB.balls_shapes_list)
-	GLOB.breasts_size_list = list ("a", "b", "c", "d", "e") //We need the list to choose from initialized, but it's no longer a sprite_accessory thing.
-	GLOB.gentlemans_organ_names = list("phallus", "willy", "dick", "prick", "member", "tool", "gentleman's organ",
-	"cock", "wang", "knob", "dong", "joystick", "pecker", "johnson", "weenie", "tadger", "schlong", "thirsty ferret",
-	"baloney pony", "schlanger", "Mutton dagger", "old blind bob","Hanging Johnny", "fishing rod", "Tally whacker", "polly rocket",
-	"One eyed trouser trout", "Ding dong", "ankle spanker", "Pork sword", "engine cranker", "Harry hot dog", "Davy Crockett",
-	"Kidney cracker", "Heat seeking moisture missile", "Giggle stick", "love whistle", "Tube steak", "Uncle Dick", "Purple helmet warrior")
 
 	for(var/gpath in subtypesof(/obj/item/organ/genital))
 		var/obj/item/organ/genital/G = gpath
@@ -81,6 +75,8 @@
 		var/datum/emote/E = new path()
 		E.emote_list[E.key] = E
 
+	init_keybindings()
+
 	//Uplink Items
 	for(var/path in subtypesof(/datum/uplink_item))
 		var/datum/uplink_item/I = path
@@ -94,6 +90,7 @@
 	init_subtypes(/datum/crafting_recipe, GLOB.crafting_recipes)
 
 	INVOKE_ASYNC(GLOBAL_PROC, /proc/init_ref_coin_values) //so the current procedure doesn't sleep because of UNTIL()
+	INVOKE_ASYNC(GLOBAL_PROC, /proc/setupGenetics)
 
 //creates every subtype of prototype (excluding prototype) and adds it to list L.
 //if no list/L is provided, one is created.
@@ -119,3 +116,25 @@
 		UNTIL(C.flags_1 & INITIALIZED_1) //we want to make sure the value is calculated and not null.
 		GLOB.coin_values[path] = C.value
 		qdel(C)
+
+/proc/setupGenetics()
+	var/list/mutations = subtypesof(/datum/mutation/human)
+	shuffle_inplace(mutations)
+	for(var/A in subtypesof(/datum/generecipe))
+		var/datum/generecipe/GR = A
+		GLOB.mutation_recipes[initial(GR.required)] = initial(GR.result)
+	for(var/i in 1 to LAZYLEN(mutations))
+		var/path = mutations[i] //byond gets pissy when we do it in one line
+		var/datum/mutation/human/B = new path ()
+		B.alias = "Mutation #[i]"
+		GLOB.all_mutations[B.type] = B
+		GLOB.full_sequences[B.type] = generate_gene_sequence(B.blocks)
+		if(B.locked)
+			continue
+		if(B.quality == POSITIVE)
+			GLOB.good_mutations |= B
+		else if(B.quality == NEGATIVE)
+			GLOB.bad_mutations |= B
+		else if(B.quality == MINOR_NEGATIVE)
+			GLOB.not_good_mutations |= B
+		CHECK_TICK

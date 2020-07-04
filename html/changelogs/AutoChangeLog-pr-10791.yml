@@ -1,6 +1,0 @@
-author: "Arturlang"
-delete-after: True
-changes: 
-  - rscadd: "Each night for bloodsuckers will last longer due to the sun dimming."
-  - tweak: "You cant level up for free, now you have to pay blood for power."
-  - balance: "Bloodsuckers are no longer as resistant to hard stuns and regenerate less stamina. and a lot of their cooldowns are a lot higher."

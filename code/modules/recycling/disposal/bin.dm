@@ -137,7 +137,7 @@
 		else
 			target.visible_message("<span class='danger'>[user] has placed [target] in [src].</span>", "<span class='userdanger'>[user] has placed [target] in [src].</span>")
 			log_combat(user, target, "stuffed", addition="into [src]")
-			target.LAssailant = user
+			target.LAssailant = WEAKREF(user)
 		update_icon()
 
 /obj/machinery/disposal/proc/can_stuff_mob_in(mob/living/target, mob/living/user, pushing = FALSE)
@@ -190,10 +190,6 @@
 		AM.forceMove(T)
 		AM.pipe_eject(0)
 	update_icon()
-
-// update the icon & overlays to reflect mode & status
-/obj/machinery/disposal/update_icon()
-	return
 
 /obj/machinery/disposal/proc/flush()
 	flushing = TRUE
@@ -372,7 +368,7 @@
 /obj/machinery/disposal/bin/shove_act(mob/living/target, mob/living/user)
 	if(!can_stuff_mob_in(target, user, TRUE))
 		return FALSE
-	target.Knockdown(SHOVE_KNOCKDOWN_SOLID)
+	target.DefaultCombatKnockdown(SHOVE_KNOCKDOWN_SOLID)
 	target.forceMove(src)
 	user.visible_message("<span class='danger'>[user.name] shoves [target.name] into \the [src]!</span>",
 		"<span class='danger'>You shove [target.name] into \the [src]!</span>", null, COMBAT_MESSAGE_RANGE)
@@ -386,8 +382,8 @@
 	pressure_charging = TRUE
 	update_icon()
 
-/obj/machinery/disposal/bin/update_icon()
-	cut_overlays()
+/obj/machinery/disposal/bin/update_overlays()
+	. = ..()
 	if(stat & BROKEN)
 		pressure_charging = FALSE
 		flush = FALSE
@@ -395,7 +391,7 @@
 
 	//flush handle
 	if(flush)
-		add_overlay("dispover-handle")
+		. += "dispover-handle"
 
 	//only handle is shown if no power
 	if(stat & NOPOWER || panel_open)
@@ -403,13 +399,13 @@
 
 	//check for items in disposal - occupied light
 	if(contents.len > 0)
-		add_overlay("dispover-full")
+		. += "dispover-full"
 
 	//charging and ready light
 	if(pressure_charging)
-		add_overlay("dispover-charge")
+		. += "dispover-charge"
 	else if(full_pressure)
-		add_overlay("dispover-ready")
+		. += "dispover-ready"
 
 /obj/machinery/disposal/bin/proc/do_flush()
 	set waitfor = FALSE

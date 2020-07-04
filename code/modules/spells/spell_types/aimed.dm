@@ -11,12 +11,11 @@
 	var/current_amount = 0	//How many projectiles left.
 	var/projectiles_per_fire = 1		//Projectiles per fire. Probably not a good thing to use unless you override ready_projectile().
 
-/obj/effect/proc_holder/spell/aimed/Click()
-	var/mob/living/user = usr
+/obj/effect/proc_holder/spell/aimed/Trigger(mob/user, skip_can_cast = TRUE)
 	if(!istype(user))
 		return
 	var/msg
-	if(!can_cast(user))
+	if(!skip_can_cast && !can_cast(user, FALSE, TRUE))
 		msg = "<span class='warning'>You can no longer cast [name]!</span>"
 		remove_ranged_ability(msg)
 		return
@@ -95,7 +94,6 @@
 	desc = "Fire a high powered lightning bolt at your foes!"
 	school = "evocation"
 	charge_max = 150
-	clothes_req = 1
 	invocation = "ZAP MUTHA'FUCKA"
 	invocation_type = "shout"
 	cooldown_min = 30
@@ -103,7 +101,7 @@
 	base_icon_state = "lightning"
 	sound = 'sound/magic/lightningbolt.ogg'
 	active = FALSE
-	projectile_var_overrides = list("tesla_range" = 15, "tesla_power" = 20000, "tesla_flags" = TESLA_MOB_DAMAGE)
+	projectile_var_overrides = list("zap_range" = 15, "zap_power" = 20000, "zap_flags" = ZAP_MOB_DAMAGE)
 	active_msg = "You energize your hand with arcane lightning!"
 	deactive_msg = "You let the energy flow out of your hands back into yourself..."
 	projectile_type = /obj/item/projectile/magic/aoe/lightning
@@ -113,7 +111,7 @@
 	desc = "This spell fires a fireball at a target and does not require wizard garb."
 	school = "evocation"
 	charge_max = 100
-	clothes_req = 0
+	clothes_req = NONE
 	invocation = "ONI SOMA"
 	invocation_type = "shout"
 	range = 20
@@ -131,7 +129,7 @@
 	desc = "Blazing hot rapid-fire homing cards. Banish your foes with its mystical power!"
 	school = "evocation"
 	charge_max = 50
-	clothes_req = 0
+	clothes_req = NONE
 	invocation = "Sigi'lu M'Fan 'Tasia"
 	invocation_type = "shout"
 	range = 40

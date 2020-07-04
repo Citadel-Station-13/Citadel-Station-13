@@ -16,4 +16,5 @@
 	return FALSE
 
 /obj/item/proc/altafterattack(atom/target, mob/user, proximity_flag, click_parameters)
+	SEND_SIGNAL(src, COMSIG_ITEM_ALT_AFTERATTACK, target, user, proximity_flag, click_parameters)
 	return FALSE

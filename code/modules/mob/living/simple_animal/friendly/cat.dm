@@ -24,15 +24,18 @@
 	animal_species = /mob/living/simple_animal/pet/cat
 	childtype = list(/mob/living/simple_animal/pet/cat/kitten)
 	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab = 2, /obj/item/organ/ears/cat = 1, /obj/item/organ/tail/cat = 1)
-	response_help  = "pets"
-	response_disarm = "gently pushes aside"
-	response_harm   = "kicks"
+	response_help_continuous = "pets"
+	response_help_simple = "pet"
+	response_disarm_continuous = "gently pushes aside"
+	response_disarm_simple = "gently push aside"
+	response_harm_continuous = "kicks"
+	response_harm_simple = "kick"
 	var/turns_since_scan = 0
 	var/mob/living/simple_animal/mouse/movement_target
 	gold_core_spawnable = FRIENDLY_SPAWN
 	collar_type = "cat"
 	var/held_icon = "cat2"
-	do_footstep = TRUE
+	footstep_type = FOOTSTEP_MOB_CLAW
 
 /mob/living/simple_animal/pet/cat/Initialize()
 	. = ..()
@@ -43,10 +46,10 @@
 	AddElement(/datum/element/wuv, "purrs!", EMOTE_AUDIBLE, /datum/mood_event/pet_animal, "hisses!", EMOTE_AUDIBLE)
 	AddElement(/datum/element/mob_holder, held_icon)
 
-/mob/living/simple_animal/pet/cat/update_canmove()
-	..()
+/mob/living/simple_animal/pet/cat/update_mobility()
+	. = ..()
 	if(client && stat != DEAD)
-		if (resting)
+		if(!CHECK_MOBILITY(src, MOBILITY_STAND))
 			icon_state = "[icon_living]_rest"
 			collar_type = "[initial(collar_type)]_rest"
 		else
@@ -87,7 +90,6 @@
 	pass_flags = PASSMOB
 	mob_size = MOB_SIZE_SMALL
 	collar_type = "kitten"
-	held_icon = "cat"
 
 //RUNTIME IS ALIVE! SQUEEEEEEEE~
 /mob/living/simple_animal/pet/cat/Runtime
@@ -99,6 +101,7 @@
 	gender = FEMALE
 	gold_core_spawnable = NO_SPAWN
 	unique_pet = TRUE
+	held_icon = "cat"
 	var/list/family = list()//var restored from savefile, has count of each child type
 	var/list/children = list()//Actual mob instances of children
 	var/cats_deployed = 0
@@ -112,13 +115,14 @@
 	Read_Memory()
 	. = ..()
 
-/mob/living/simple_animal/pet/cat/Runtime/Life()
+/mob/living/simple_animal/pet/cat/Runtime/BiologicalLife(seconds, times_fired)
+	if(!(. = ..()))
+		return
 	if(!cats_deployed && SSticker.current_state >= GAME_STATE_SETTING_UP)
 		Deploy_The_Cats()
 	if(!stat && SSticker.current_state == GAME_STATE_FINISHED && !memory_saved)
 		Write_Memory()
 		memory_saved = TRUE
-	..()
 
 /mob/living/simple_animal/pet/cat/Runtime/make_babies()
 	var/mob/baby = ..()
@@ -174,33 +178,32 @@
 	gold_core_spawnable = NO_SPAWN
 	unique_pet = TRUE
 
-/mob/living/simple_animal/pet/cat/Life()
+/mob/living/simple_animal/pet/cat/BiologicalLife(seconds, times_fired)
+	if(!(. = ..()))
+		return
 	if(!stat && !buckled && !client)
 		if(prob(1))
 			emote("me", EMOTE_VISIBLE, pick("stretches out for a belly rub.", "wags its tail.", "lies down."))
 			icon_state = "[icon_living]_rest"
 			collar_type = "[initial(collar_type)]_rest"
-			resting = 1
-			update_canmove()
+			set_resting(TRUE)
 		else if (prob(1))
 			emote("me", EMOTE_VISIBLE, pick("sits down.", "crouches on its hind legs.", "looks alert."))
 			icon_state = "[icon_living]_sit"
 			collar_type = "[initial(collar_type)]_sit"
-			resting = 1
-			update_canmove()
+			set_resting(TRUE)
 		else if (prob(1))
 			if (resting)
 				emote("me", EMOTE_VISIBLE, pick("gets up and meows.", "walks around.", "stops resting."))
 				icon_state = "[icon_living]"
 				collar_type = "[initial(collar_type)]"
-				resting = 0
-				update_canmove()
+				set_resting(FALSE)
 			else
 				emote("me", EMOTE_VISIBLE, pick("grooms its fur.", "twitches its whiskers.", "shakes out its coat."))
 
 	//MICE!
 	if((src.loc) && isturf(src.loc))
-		if(!stat && !resting && !buckled)
+		if(!stat && CHECK_MULTIPLE_BITFIELDS(mobility_flags, MOBILITY_STAND|MOBILITY_MOVE) && !buckled)
 			for(var/mob/living/simple_animal/mouse/M in view(1,src))
 				if(!M.stat && Adjacent(M))
 					emote("me", EMOTE_VISIBLE, "splats \the [M]!")
@@ -217,7 +220,7 @@
 
 	make_babies()
 
-	if(!stat && !resting && !buckled)
+	if(!stat && CHECK_MULTIPLE_BITFIELDS(mobility_flags, MOBILITY_STAND|MOBILITY_MOVE) && !buckled)
 		turns_since_scan++
 		if(turns_since_scan > 5)
 			walk_to(src,0)
@@ -248,7 +251,8 @@
 	harm_intent_damage = 10
 	butcher_results = list(/obj/item/organ/brain = 1, /obj/item/organ/heart = 1, /obj/item/reagent_containers/food/snacks/cakeslice/birthday = 3,  \
 	/obj/item/reagent_containers/food/snacks/meat/slab = 2)
-	response_harm = "takes a bite out of"
+	response_harm_continuous = "takes a bite out of"
+	response_harm_simple = "take a bite out of"
 	attacked_sound = 'sound/items/eatfood.ogg'
 	deathmessage = "loses its false life and collapses!"
 	death_sound = "bodyfall"
@@ -268,8 +272,9 @@
 		to_chat(src, "<span class='notice'>Your name is now <b>\"new_name\"</b>!</span>")
 		name = new_name
 
-/mob/living/simple_animal/pet/cat/cak/Life()
-	..()
+/mob/living/simple_animal/pet/cat/cak/BiologicalLife(seconds, times_fired)
+	if(!(. = ..()))
+		return
 	if(stat)
 		return
 	if(health < maxHealth)
@@ -309,8 +314,6 @@
 	if (pseudo_death == TRUE) //secret cat chem
 		icon_state = "custom_cat_dead"
 		Stun(1000)
-		canmove = 0
-		friendly = "deads at"
 		return
 	else
 		..()

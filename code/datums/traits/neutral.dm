@@ -10,6 +10,15 @@
 	lose_text = "<span class='notice'>You can taste again!</span>"
 	medical_record_text = "Patient suffers from ageusia and is incapable of tasting food or reagents."
 
+/datum/quirk/snob
+	name = "Snob"
+	desc = "You care about the finer things, if a room doesn't look nice its just not really worth it, is it?"
+	value = 0
+	gain_text = "<span class='notice'>You feel like you understand what things should look like.</span>"
+	lose_text = "<span class='notice'>Well who cares about deco anyways?</span>"
+	medical_record_text = "Patient seems to be rather stuck up."
+	mob_trait = TRAIT_SNOB
+
 /datum/quirk/pineapple_liker
 	name = "Ananas Affinity"
 	desc = "You find yourself greatly enjoying fruits of the ananas genus. You can't seem to ever get enough of their sweet goodness!"
@@ -87,14 +96,6 @@
 /datum/quirk/monochromatic/remove()
 	if(quirk_holder)
 		quirk_holder.remove_client_colour(/datum/client_colour/monochrome)
-
-/datum/quirk/libido
-	name = "Nymphomania"
-	desc = "You're always feeling a bit in heat. Also, you get aroused faster than usual."
-	value = 0
-	mob_trait = TRAIT_PERMABONER
-	gain_text = "<span class='notice'>You are feeling extra wild.</span>"
-	lose_text = "<span class='notice'>You don't feel that burning sensation anymore.</span>"
 
 /datum/quirk/maso
 	name = "Masochism"

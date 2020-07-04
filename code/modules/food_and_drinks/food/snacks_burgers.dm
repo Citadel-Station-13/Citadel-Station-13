@@ -323,6 +323,14 @@
 	tastes = list("bun" = 4, "bacon" = 2)
 	foodtype = GRAIN | MEAT
 
+/obj/item/reagent_containers/food/snacks/burger/empoweredburger
+	name = "empowered burger"
+	desc = "It's shockingly good, if you live off of electricity that is."
+	icon_state = "empoweredburger"
+	list_reagents = list(/datum/reagent/consumable/nutriment = 8, /datum/reagent/consumable/liquidelectricity = 5)
+	tastes = list("bun" = 2, "pure electricity" = 4)
+	foodtype = GRAIN | TOXIC
+
 /obj/item/reagent_containers/food/snacks/burger/soylent
 	name = "soylent burger"
 	desc = "A eco-friendly burger made using upcycled low value biomass."
@@ -330,6 +338,14 @@
 	bonus_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/consumable/nutriment/vitamin = 3)
 	tastes = list("bun" = 2, "assistant" = 4)
 	foodtype = GRAIN | MEAT | DAIRY
+
+/obj/item/reagent_containers/food/snacks/burger/crab
+	name = "crab burger"
+	desc = "A delicious patty of the crabby kind, slapped in between a bun."
+	icon_state = "crabburger"
+	bonus_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/nutriment/vitamin = 3)
+	tastes = list("bun" = 2, "crab meat" = 4)
+	foodtype = GRAIN | MEAT
 
 /obj/item/reagent_containers/food/snacks/burger/rib
 	name = "mcrib"
@@ -349,7 +365,7 @@
 
 /obj/item/reagent_containers/food/snacks/burger/chicken
 	name = "chicken sandwich" //Apparently the proud people of Americlapstan object to this thing being called a burger. Apparently McDonald's just calls it a burger in Europe as to not scare and confuse us.
-	desc = "A delicious chicken sandwich, it is said the proceeds from this treat helps criminalize homosexuality on the space frontier."
+	desc = "A delicious chicken sandwich, it is said the proceeds from this treat helps criminalize disarming people on the space frontier."
 	icon_state = "chickenburger"
 	tastes = list("bun" = 2, "chicken" = 4, "God's covenant" = 1)
 	bonus_reagents = list(/datum/reagent/consumable/mayonnaise = 3, /datum/reagent/consumable/cooking_oil = 2, /datum/reagent/consumable/nutriment = 2)

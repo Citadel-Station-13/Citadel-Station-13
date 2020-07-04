@@ -1,4 +1,0 @@
-author: "kevinz000"
-delete-after: True
-changes: 
-  - bugfix: "fail2topic runtime fix: taking out an ip while incrementing index resulted in accessing the next-next entry instead of the next and results in out of bound errors."

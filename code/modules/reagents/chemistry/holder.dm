@@ -303,6 +303,8 @@
 					if(R.overdose_threshold)
 						if(R.volume > R.overdose_threshold && !R.overdosed)
 							R.overdosed = 1
+							var/turf/CT = get_turf(C)
+							log_reagent("OVERDOSE START: [key_name(C)] at [AREACOORD(CT)] started overdosing on [R.volume] units of [R].")
 							need_mob_update += R.overdose_start(C)
 					if(R.addiction_threshold)
 						if(R.volume > R.addiction_threshold && !is_type_in_list(R, cached_addictions))
@@ -324,29 +326,31 @@
 				var/datum/reagent/R = addiction
 				if(C && R)
 					R.addiction_stage++
-					switch(R.addiction_stage)
-						if(1 to R.addiction_stage1_end)
-							need_mob_update += R.addiction_act_stage1(C)
-						if(R.addiction_stage1_end to R.addiction_stage2_end)
-							need_mob_update += R.addiction_act_stage2(C)
-						if(R.addiction_stage2_end to R.addiction_stage3_end)
-							need_mob_update += R.addiction_act_stage3(C)
-						if(R.addiction_stage3_end to R.addiction_stage4_end)
-							need_mob_update += R.addiction_act_stage4(C)
-						if(R.addiction_stage4_end to INFINITY)
-							remove_addiction(R)
-						else
-							SEND_SIGNAL(C, COMSIG_CLEAR_MOOD_EVENT, "[R.type]_overdose")
+					if(1 <= R.addiction_stage && R.addiction_stage <= R.addiction_stage1_end)
+						need_mob_update += R.addiction_act_stage1(C)
+					else if(R.addiction_stage1_end < R.addiction_stage && R.addiction_stage <= R.addiction_stage2_end)
+						need_mob_update += R.addiction_act_stage2(C)
+					else if(R.addiction_stage2_end < R.addiction_stage && R.addiction_stage <= R.addiction_stage3_end)
+						need_mob_update += R.addiction_act_stage3(C)
+					else if(R.addiction_stage3_end < R.addiction_stage && R.addiction_stage <= R.addiction_stage4_end)
+						need_mob_update += R.addiction_act_stage4(C)
+					else if(R.addiction_stage4_end < R.addiction_stage)
+						remove_addiction(R)
+					else
+						SEND_SIGNAL(C, COMSIG_CLEAR_MOOD_EVENT, "[R.type]_overdose")
 		addiction_tick++
 	if(C && need_mob_update) //some of the metabolized reagents had effects on the mob that requires some updates.
 		C.updatehealth()
-		C.update_canmove()
+		C.update_mobility()
 		C.update_stamina()
 	update_total()
 
 /datum/reagents/proc/remove_addiction(datum/reagent/R)
 	to_chat(my_atom, "<span class='notice'>You feel like you've gotten over your need for [R.name].</span>")
 	SEND_SIGNAL(my_atom, COMSIG_CLEAR_MOOD_EVENT, "[R.type]_overdose")
+	if(ismob(my_atom))
+		var/turf/T = get_turf(my_atom)
+		log_reagent("OVERDOSE STOP: [key_name(my_atom)] at [AREACOORD(T)] got over their need for [R].")
 	addiction_list.Remove(R)
 	qdel(R)
 
@@ -530,7 +534,7 @@
 					add_reagent(P, cached_results[P]*multiplier, null, chem_temp)
 
 
-				var/list/seen = viewers(4, get_turf(my_atom))//Sound and sight checkers
+				var/list/seen = fov_viewers(4, get_turf(my_atom))//Sound and sight checkers
 				var/iconhtml = icon2html(cached_my_atom, seen)
 				if(cached_my_atom)
 					if(!ismob(cached_my_atom)) // No bubbling mobs
@@ -612,10 +616,7 @@
 	handle_reactions()
 	update_total()
 	//Reaction sounds and words
-	var/list/seen = viewers(5, get_turf(my_atom))
-	var/iconhtml = icon2html(my_atom, seen)
-	for(var/mob/M in seen)
-		to_chat(M, "<span class='notice'>[iconhtml] [C.mix_message]</span>")
+	my_atom.visible_message("<span class='notice'>[icon2html(my_atom, viewers(DEFAULT_MESSAGE_RANGE, src))] [C.mix_message]</span>")
 
 /datum/reagents/proc/fermiReact(selected_reaction, cached_temp, cached_pH, reactedVol, targetVol, cached_required_reagents, cached_results, multiplier)
 	var/datum/chemical_reaction/C = selected_reaction
@@ -723,7 +724,7 @@
 		return
 
 	//Make sure things are limited, but superacids/bases can push forward the reaction
-	pH = CLAMP(pH, 0, 14)
+	pH = clamp(pH, 0, 14)
 
 	//return said amount to compare for next step.
 	return (reactedVol)
@@ -844,7 +845,7 @@
 
 /datum/reagents/proc/adjust_thermal_energy(J, min_temp = 2.7, max_temp = 1000)
 	var/S = specific_heat()
-	chem_temp = CLAMP(chem_temp + (J / (S * total_volume)), min_temp, max_temp)
+	chem_temp = clamp(chem_temp + (J / (S * total_volume)), min_temp, max_temp)
 	if(istype(my_atom, /obj/item/reagent_containers))
 		var/obj/item/reagent_containers/RC = my_atom
 		RC.temp_check()
@@ -872,7 +873,7 @@
 			for (var/datum/reagent/reagentgas in reagent_list)
 				R.add_reagent(reagentgas, amount/5)
 				remove_reagent(reagentgas, amount/5)
-			s.set_up(R, CLAMP(amount/10, 0, 2), T)
+			s.set_up(R, clamp(amount/10, 0, 2), T)
 			s.start()
 			return FALSE
 
@@ -967,7 +968,6 @@
 	if(isnull(amount))
 		amount = 0
 		CRASH("null amount passed to reagent code")
-		return FALSE
 
 	if(!isnum(amount))
 		return FALSE
@@ -991,7 +991,7 @@
 				RC.pH_check()//checks beaker resilience)
 			//clamp the removal amount to be between current reagent amount
 			//and zero, to prevent removing more than the holder has stored
-			amount = CLAMP(amount, 0, R.volume)
+			amount = clamp(amount, 0, R.volume)
 			R.volume -= amount
 			update_total()
 			if(!safety)//So it does not handle reactions when it need not to

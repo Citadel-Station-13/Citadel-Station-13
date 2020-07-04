@@ -46,7 +46,7 @@
 
 /datum/status_effect/syphon_mark/on_remove()
 	get_kill()
-	. = ..()
+	return ..()
 
 /obj/screen/alert/status_effect/in_love
 	name = "In Love"
@@ -81,5 +81,5 @@
 	ADD_TRAIT(owner, TRAIT_SOOTHED_THROAT, "[STATUS_EFFECT_TRAIT]_[id]")
 
 /datum/status_effect/throat_soothed/on_remove()
-	. = ..()
 	REMOVE_TRAIT(owner, TRAIT_SOOTHED_THROAT, "[STATUS_EFFECT_TRAIT]_[id]")
+	return ..()

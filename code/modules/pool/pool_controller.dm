@@ -79,6 +79,7 @@
 	linked_filter = null
 	linked_turfs.Cut()
 	mobs_in_pool.Cut()
+	mist_off()
 	return ..()
 
 /obj/machinery/pool/controller/proc/scan_things()
@@ -109,9 +110,11 @@
 		to_chat(user, "<span class='warning'>The interface on [src] is already too damaged to short it again.</span>")
 		return
 
-/obj/machinery/pool/controller/AltClick(mob/user)
+/obj/machinery/pool/controller/AltClick(mob/living/user)
 	. = ..()
-	if(!isliving(user) || !user.Adjacent(src) || !user.CanReach(src) || user.IsStun() || user.IsKnockdown() || user.incapacitated())
+	if(!istype(user))
+		return FALSE
+	if(!user.Adjacent(src) || !user.CanReach(src) || !CHECK_MOBILITY(user, MOBILITY_USE))
 		return FALSE
 	visible_message("<span class='boldwarning'>[user] starts to drain [src]!</span>")
 	draining = TRUE
@@ -294,8 +297,7 @@
 			mist_on()
 	update_icon()
 
-/obj/machinery/pool/controller/update_icon()
-	. = ..()
+/obj/machinery/pool/controller/update_icon_state()
 	icon_state = "poolc_[temperature]"
 
 /obj/machinery/pool/controller/proc/CanUpTemp(mob/user)
@@ -409,6 +411,7 @@
 /obj/machinery/pool/controller/proc/mist_on() //Spawn /obj/effect/mist (from the shower) on all linked pool tiles
 	if(mist_state)
 		return
+	mist_off()			//make sure it cycles and deletes everything
 	mist_state = TRUE
 	for(var/X in linked_turfs)
 		var/turf/open/pool/W = X
@@ -417,6 +420,5 @@
 			linked_mist += M
 
 /obj/machinery/pool/controller/proc/mist_off() //Delete all /obj/effect/mist from all linked pool tiles.
-	for(var/M in linked_mist)
-		qdel(M)
+	QDEL_LIST(linked_mist)
 	mist_state = FALSE

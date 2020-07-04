@@ -75,7 +75,17 @@ export const Cargo = props => {
           {() => (
             <Section
               title="Catalog"
-              buttons={cartButtons}>
+              buttons={(
+                <Fragment>
+                  {cartButtons}
+                  <Button
+                    ml={1}
+                    icon={data.self_paid ? 'check-square-o' : 'square-o'}
+                    content="Buy Privately"
+                    selected={data.self_paid}
+                    onClick={() => act(ref, 'toggleprivate')} />
+                </Fragment>
+              )}>
               <Catalog state={state} supplies={supplies} />
             </Section>
           )}
@@ -138,7 +148,12 @@ const Catalog = props => {
               {pack.name}:
             </td>
             <td className="LabeledList__cell">
-              {!!pack.small_item && (
+              {!!pack.private_goody && (
+                <Fragment>Private Only</Fragment>
+              )}
+            </td>
+            <td className="LabeledList__cell">
+              {!!pack.goody && (
                 <Fragment>Small Item</Fragment>
               )}
             </td>
@@ -149,9 +164,18 @@ const Catalog = props => {
             </td>
             <td className="LabeledList__cell LabeledList__buttons">
               <Button fluid
-                content={(data.self_paid
-                  ? Math.round(pack.cost * 1.1)
-                  : pack.cost) + ' credits'}
+                disabled={(data.self_paid
+                  && !pack.can_private_buy
+                  && !data.emagged
+                )}
+                content={(
+                  (
+                    data.self_paid
+                    && !pack.private_goody
+                    && !pack.goody
+                  )
+                    ? Math.round(pack.cost * 1.1)
+                    : pack.cost) + ' cr'}
                 tooltip={pack.desc}
                 tooltipPosition="left"
                 onClick={() => act(ref, 'add', {

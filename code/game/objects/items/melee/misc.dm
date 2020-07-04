@@ -2,12 +2,11 @@
 	item_flags = NEEDS_PERMIT
 
 /obj/item/melee/proc/check_martial_counter(mob/living/carbon/human/target, mob/living/carbon/human/user)
-	if(target.check_block())
+	if(target.check_martial_melee_block())
 		target.visible_message("<span class='danger'>[target.name] blocks [src] and twists [user]'s arm behind [user.p_their()] back!</span>",
 					"<span class='userdanger'>You block the attack!</span>")
 		user.Stun(40)
 		return TRUE
-
 
 /obj/item/melee/chainofcommand
 	name = "chain of command"
@@ -62,21 +61,34 @@
 	force = 18
 	throwforce = 15
 	w_class = WEIGHT_CLASS_BULKY
-	block_chance = 50
 	armour_penetration = 75
 	sharpness = IS_SHARP
 	attack_verb = list("slashed", "cut")
 	hitsound = 'sound/weapons/rapierhit.ogg'
 	custom_materials = list(/datum/material/iron = 1000)
 	total_mass = 3.4
+	item_flags = NEEDS_PERMIT | ITEM_CAN_PARRY
+	block_parry_data = /datum/block_parry_data/captain_saber
+
+/datum/block_parry_data/captain_saber
+	parry_time_windup = 0.5
+	parry_time_active = 4
+	parry_time_spindown = 1
+	parry_time_perfect = 0.75
+	parry_time_perfect_leeway = 0.75
+	parry_imperfect_falloff_percent = 30
+	parry_efficiency_perfect = 100
+	parry_failed_stagger_duration = 3 SECONDS
+	parry_failed_clickcd_duration = 2 SECONDS
 
 /obj/item/melee/sabre/Initialize()
 	. = ..()
 	AddComponent(/datum/component/butchering, 30, 95, 5) //fast and effective, but as a sword, it might damage the results.
+	AddElement(/datum/element/sword_point)
 
-/obj/item/melee/sabre/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
-	if(attack_type == PROJECTILE_ATTACK)
-		final_block_chance = 0 //Don't bring a sword to a gunfight
+/obj/item/melee/sabre/run_block(mob/living/owner, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return)
+	if(attack_type & ATTACK_TYPE_PROJECTILE)		// Don't bring a sword to a gunfight.
+		return BLOCK_NONE
 	return ..()
 
 /obj/item/melee/sabre/on_exit_storage(datum/component/storage/S)
@@ -142,32 +154,89 @@
 
 /obj/item/melee/rapier
 	name = "plastitanium rapier"
-	desc = "A impossibly thin blade made of plastitanium with a tip made of diamond. It looks to be able to cut through any armor."
+	desc = "A thin blade made of plastitanium with a diamond tip. It appears to be coated in a persistent layer of an unknown substance."
 	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "rapier"
 	item_state = "rapier"
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
-	force = 25
-	throwforce = 35
-	block_chance = 0
-	armour_penetration = 100
+	force = 15
+	throwforce = 25
+	armour_penetration = 200 //Apparently this gives it the ability to pierce block
 	flags_1 = CONDUCT_1
 	obj_flags = UNIQUE_RENAME
 	w_class = WEIGHT_CLASS_BULKY
 	sharpness = IS_SHARP_ACCURATE //It cant be sharpend cook -_-
-	attack_verb = list("slashed", "cut", "pierces", "pokes")
-	total_mass = 3.4
+	attack_verb = list("stabs", "punctures", "pierces", "pokes")
+	hitsound = 'sound/weapons/rapierhit.ogg'
+	total_mass = 0.4
+	item_flags = ITEM_CAN_PARRY | NEEDS_PERMIT
+	block_parry_data = /datum/block_parry_data/traitor_rapier
+
+// Fast, efficient parry.
+/datum/block_parry_data/traitor_rapier
+	parry_time_windup = 0.5
+	parry_time_active = 5
+	parry_time_spindown = 0
+	parry_time_active_visual_override = 3
+	parry_time_spindown_visual_override = 2
+	parry_flags = PARRY_DEFAULT_HANDLE_FEEDBACK | PARRY_LOCK_ATTACKING
+	parry_time_perfect = 0
+	parry_time_perfect_leeway = 3
+	parry_time_perfect_leeway_override = list(
+		TEXT_ATTACK_TYPE_PROJECTILE = 1
+	)
+	parry_imperfect_falloff_percent_override = list(
+		TEXT_ATTACK_TYPE_PROJECTILE = 50				// useless after 3rd decisecond
+	)
+	parry_imperfect_falloff_percent = 30
+	parry_efficiency_to_counterattack = 100
+	parry_efficiency_considered_successful = 1
+	parry_efficiency_perfect = 100
+	parry_data = list(
+		PARRY_DISARM_ATTACKER = TRUE,
+		PARRY_KNOCKDOWN_ATTACKER = 10
+	)
+	parry_failed_stagger_duration = 2 SECONDS
+	parry_failed_clickcd_duration = CLICK_CD_RANGE
+	parry_cooldown = 0
+
+/obj/item/melee/rapier/active_parry_reflex_counter(mob/living/owner, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, list/return_list, parry_efficiency, list/effect_text)
+	. = ..()
+	if((attack_type & ATTACK_TYPE_PROJECTILE) && (parry_efficiency >= 100))
+		. |= BLOCK_SHOULD_REDIRECT
+		return_list[BLOCK_RETURN_REDIRECT_METHOD] = REDIRECT_METHOD_DEFLECT
 
 /obj/item/melee/rapier/Initialize()
 	. = ..()
 	AddComponent(/datum/component/butchering, 20, 65, 0)
+
+/obj/item/melee/rapier/on_exit_storage(datum/component/storage/S)
+	var/obj/item/storage/belt/sabre/rapier/B = S.parent
+	if(istype(B))
+		playsound(B, 'sound/items/unsheath.ogg', 25, 1)
+	..()
+
+/obj/item/melee/rapier/on_enter_storage(datum/component/storage/S)
+	var/obj/item/storage/belt/sabre/rapier/B = S.parent
+	if(istype(B))
+		playsound(B, 'sound/items/sheath.ogg', 25, 1)
+	..()
 
 /obj/item/melee/rapier/get_belt_overlay()
 	return mutable_appearance('icons/obj/clothing/belt_overlays.dmi', "rapier")
 
 /obj/item/melee/rapier/get_worn_belt_overlay(icon_file)
 	return mutable_appearance(icon_file, "-rapier")
+
+/obj/item/melee/rapier/attack(mob/living/target, mob/living/user)
+	. = ..()
+	if(iscarbon(target))
+		var/mob/living/carbon/H = target
+		H.Dizzy(10)
+		H.adjustStaminaLoss(30)
+		if(CHECK_STAMCRIT(H) != NOT_STAMCRIT)
+			H.Sleeping(180)
 
 /obj/item/melee/classic_baton
 	name = "police baton"
@@ -180,26 +249,73 @@
 	slot_flags = ITEM_SLOT_BELT
 	force = 12 //9 hit crit
 	w_class = WEIGHT_CLASS_NORMAL
-	var/cooldown = 13
-	var/on = TRUE
-	var/last_hit = 0
 	var/stun_stam_cost_coeff = 1.25
-	var/hardstun_ds = 1
+	var/hardstun_ds = TRUE
 	var/softstun_ds = 0
 	var/stam_dmg = 30
+	var/cooldown_check = 0 // Used internally, you don't want to modify
+	var/cooldown = 13 // Default wait time until can stun again.
+	var/stun_time_silicon = 60 // How long it stuns silicons for - 6 seconds.
+	var/affect_silicon = FALSE // Does it stun silicons.
+	var/on_sound // "On" sound, played when switching between able to stun or not.
+	var/on_stun_sound = "sound/effects/woodhit.ogg" // Default path to sound for when we stun.
+	var/stun_animation = TRUE // Do we animate the "hit" when stunning.
+	var/on = TRUE // Are we on or off
+	var/on_icon_state // What is our sprite when turned on
+	var/off_icon_state // What is our sprite when turned off
+	var/on_item_state // What is our in-hand sprite when turned on
+	var/force_on // Damage when on - not stunning
+	var/force_off // Damage when off - not stunning
+	var/weight_class_on // What is the new size class when turned on
+
+/obj/item/melee/classic_baton/Initialize()
+	. = ..()
+
+// Description for trying to stun when still on cooldown.
+/obj/item/melee/classic_baton/proc/get_wait_description()
+	return
+
+// Description for when turning their baton "on"
+/obj/item/melee/classic_baton/proc/get_on_description()
+	. = list()
+	.["local_on"] = "<span class ='warning'>You extend the baton.</span>"
+	.["local_off"] = "<span class ='notice'>You collapse the baton.</span>"
+	return .
+
+// Default message for stunning mob.
+/obj/item/melee/classic_baton/proc/get_stun_description(mob/living/target, mob/living/user)
+	. = list()
+	.["visible"] =  "<span class ='danger'>[user] has knocked down [target] with [src]!</span>"
+	.["local"] = "<span class ='danger'>[user] has knocked down [target] with [src]!</span>"
+	return .
+
+// Default message for stunning a silicon.
+/obj/item/melee/classic_baton/proc/get_silicon_stun_description(mob/living/target, mob/living/user)
+	. = list()
+	.["visible"] = "<span class='danger'>[user] pulses [target]'s sensors with the baton!</span>"
+	.["local"] = "<span class='danger'>You pulse [target]'s sensors with the baton!</span>"
+	return .
+
+// Are we applying any special effects when we stun to carbon
+/obj/item/melee/classic_baton/proc/additional_effects_carbon(mob/living/target, mob/living/user)
+	return
+
+// Are we applying any special effects when we stun to silicon
+/obj/item/melee/classic_baton/proc/additional_effects_silicon(mob/living/target, mob/living/user)
+	return
 
 /obj/item/melee/classic_baton/attack(mob/living/target, mob/living/user)
 	if(!on)
 		return ..()
 
-	if(user.getStaminaLoss() >= STAMINA_SOFTCRIT)//CIT CHANGE - makes batons unusuable in stamina softcrit
+	if(IS_STAMCRIT(user))//CIT CHANGE - makes batons unusuable in stamina softcrit
 		to_chat(user, "<span class='warning'>You're too exhausted for that.</span>")//CIT CHANGE - ditto
 		return //CIT CHANGE - ditto
 
 	add_fingerprint(user)
 	if((HAS_TRAIT(user, TRAIT_CLUMSY)) && prob(50))
 		to_chat(user, "<span class ='danger'>You club yourself over the head.</span>")
-		user.Knockdown(60 * force)
+		user.DefaultCombatKnockdown(60 * force)
 		if(ishuman(user))
 			var/mob/living/carbon/human/H = user
 			H.apply_damage(2*force, BRUTE, BODY_ZONE_HEAD)
@@ -207,34 +323,54 @@
 			user.take_bodypart_damage(2*force)
 		return
 	if(iscyborg(target))
-		..()
+		if(user.a_intent != INTENT_HARM)	// We don't stun if we're on harm.
+			if(affect_silicon)
+				var/list/desc = get_silicon_stun_description(target, user)
+				target.flash_act(affect_silicon = TRUE)
+				target.Stun(stun_time_silicon)
+				additional_effects_silicon(target, user)
+				user.visible_message(desc["visible"], desc["local"])
+				playsound(get_turf(src), on_stun_sound, 100, TRUE, -1)
+				if(stun_animation)
+					user.do_attack_animation(target)
+			else
+				..()
+		else
+			..()
 		return
 	if(!isliving(target))
 		return
-	if (user.a_intent == INTENT_HARM)
+	if(user.a_intent == INTENT_HARM)
 		if(!..() || !iscyborg(target))
 			return
 	else
-		if(last_hit < world.time)
-			if(target.check_shields(src, 0, "[user]'s [name]", MELEE_ATTACK))
+		if(cooldown_check < world.time)
+			if(target.mob_run_block(src, 0, "[user]'s [name]", ATTACK_TYPE_MELEE, 0, user, null, null) & BLOCK_SUCCESS)
 				playsound(target, 'sound/weapons/genhit.ogg', 50, 1)
 				return
 			if(ishuman(target))
 				var/mob/living/carbon/human/H = target
 				if(check_martial_counter(H, user))
 					return
-			playsound(get_turf(src), 'sound/effects/woodhit.ogg', 75, 1, -1)
-			target.Knockdown(softstun_ds, TRUE, FALSE, hardstun_ds, stam_dmg)
+			var/list/desc = get_stun_description(target, user)
+			if(stun_animation)
+				user.do_attack_animation(target)
+			playsound(get_turf(src), on_stun_sound, 75, 1, -1)
+			target.DefaultCombatKnockdown(softstun_ds, TRUE, FALSE, hardstun_ds, stam_dmg)
+			additional_effects_carbon(target, user)
 			log_combat(user, target, "stunned", src)
-			src.add_fingerprint(user)
-			target.visible_message("<span class ='danger'>[user] has knocked down [target] with [src]!</span>", \
-				"<span class ='userdanger'>[user] has knocked down [target] with [src]!</span>")
+			add_fingerprint(user)
+			target.visible_message(desc["visible"], desc["local"])
 			if(!iscarbon(user))
 				target.LAssailant = null
 			else
-				target.LAssailant = user
-			last_hit = world.time + cooldown
-			user.adjustStaminaLossBuffered(getweight())//CIT CHANGE - makes swinging batons cost stamina
+				target.LAssailant = WEAKREF(user)
+			cooldown_check = world.time + cooldown
+			user.adjustStaminaLossBuffered(getweight(user, STAM_COST_BATON_MOB_MULT))
+		else
+			var/wait_desc = get_wait_description()
+			if(wait_desc)
+				to_chat(user, wait_desc)
 
 /obj/item/melee/classic_baton/telescopic
 	name = "telescopic baton"
@@ -249,6 +385,13 @@
 	item_flags = NONE
 	force = 0
 	on = FALSE
+	on_sound = 'sound/weapons/batonextend.ogg'
+	on_icon_state = "telebaton_1"
+	off_icon_state = "telebaton_0"
+	on_item_state = "nullrod"
+	force_on = 10
+	force_off = 0
+	weight_class_on = WEIGHT_CLASS_BULKY
 	total_mass = TOTAL_MASS_NORMAL_ITEM
 
 /obj/item/melee/classic_baton/telescopic/suicide_act(mob/user)
@@ -259,7 +402,7 @@
 	if(!on)
 		src.attack_self(user)
 	else
-		playsound(loc, 'sound/weapons/batonextend.ogg', 50, 1)
+		playsound(loc, on_sound, 50, 1)
 		add_fingerprint(user)
 	sleep(3)
 	if (H && !QDELETED(H))
@@ -271,24 +414,56 @@
 
 /obj/item/melee/classic_baton/telescopic/attack_self(mob/user)
 	on = !on
+	var/list/desc = get_on_description()
 	if(on)
-		to_chat(user, "<span class ='warning'>You extend the baton.</span>")
-		icon_state = "telebaton_1"
-		item_state = "nullrod"
-		w_class = WEIGHT_CLASS_BULKY //doesnt fit in backpack when its on for balance
-		force = 10 //stunbaton damage
+		to_chat(user, desc["local_on"])
+		icon_state = on_icon_state
+		item_state = on_item_state
+		w_class = weight_class_on
+		force = force_on
 		attack_verb = list("smacked", "struck", "cracked", "beaten")
 	else
-		to_chat(user, "<span class ='notice'>You collapse the baton.</span>")
-		icon_state = "telebaton_0"
+		to_chat(user, desc["local_off"])
+		icon_state = off_icon_state
 		item_state = null //no sprite for concealment even when in hand
 		slot_flags = ITEM_SLOT_BELT
 		w_class = WEIGHT_CLASS_SMALL
-		force = 0 //not so robust now
+		force = force_off
 		attack_verb = list("hit", "poked")
-
-	playsound(src.loc, 'sound/weapons/batonextend.ogg', 50, 1)
+	playsound(src.loc, on_sound, 50, 1)
 	add_fingerprint(user)
+
+/obj/item/melee/classic_baton/telescopic/contractor_baton
+	name = "contractor baton"
+	desc = "A compact, specialised baton assigned to Syndicate contractors. Applies light electrical shocks to targets."
+	icon = 'icons/obj/items_and_weapons.dmi'
+	icon_state = "contractor_baton_0"
+	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
+	item_state = null
+	slot_flags = ITEM_SLOT_BELT
+	w_class = WEIGHT_CLASS_SMALL
+	item_flags = NONE
+	force = 5
+	cooldown = 20
+	stam_dmg = 45	//4 hit stamcrit
+	affect_silicon = TRUE
+	on_sound = 'sound/weapons/contractorbatonextend.ogg'
+	on_stun_sound = 'sound/effects/contractorbatonhit.ogg'
+	on_icon_state = "contractor_baton_1"
+	off_icon_state = "contractor_baton_0"
+	on_item_state = "contractor_baton"
+	force_on = 16
+	force_off = 5
+	weight_class_on = WEIGHT_CLASS_NORMAL
+
+/obj/item/melee/classic_baton/telescopic/contractor_baton/get_wait_description()
+	return "<span class='danger'>The baton is still charging!</span>"
+
+/obj/item/melee/classic_baton/telescopic/contractor_baton/additional_effects_carbon(mob/living/target, mob/living/user)
+	target.Jitter(20)
+	target.apply_effect(EFFECT_STUTTER, 20)
+	target.apply_status_effect(/datum/status_effect/electrostaff, 30)	//knockdown, disarm, and slowdown, the unholy triumvirate of stam combat
 
 /obj/item/melee/supermatter_sword
 	name = "supermatter sword"
@@ -453,12 +628,10 @@
 		held_sausage = null
 	update_icon()
 
-/obj/item/melee/roastingstick/update_icon()
+/obj/item/melee/roastingstick/update_overlays()
 	. = ..()
-	cut_overlays()
 	if (held_sausage)
-		var/mutable_appearance/sausage = mutable_appearance(icon, "roastingstick_sausage")
-		add_overlay(sausage)
+		. += mutable_appearance(icon, "roastingstick_sausage")
 
 /obj/item/melee/roastingstick/proc/extend(user)
 	to_chat(user, "<span class ='warning'>You extend [src].</span>")
@@ -516,7 +689,7 @@
 	item_state = "mace_greyscale"
 	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
-	material_flags = MATERIAL_ADD_PREFIX | MATERIAL_COLOR //Material type changes the prefix as well as the color.
+	material_flags = MATERIAL_ADD_PREFIX | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS //Material type changes the prefix as well as the color.
 	custom_materials = list(/datum/material/iron = 12000)  //Defaults to an Iron Mace.
 	slot_flags = ITEM_SLOT_BELT
 	force = 14

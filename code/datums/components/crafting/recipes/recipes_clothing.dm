@@ -8,7 +8,7 @@
 
 /datum/crafting_recipe/mummy/body
 	name = "Mummification Bandages (Body)"
-	result = /obj/item/clothing/under/mummy
+	result = /obj/item/clothing/under/costume/mummy
 	reqs = list(/obj/item/stack/sheet/cloth = 5)
 
 /datum/crafting_recipe/lizardhat
@@ -33,11 +33,48 @@
 				/obj/item/organ/ears/cat = 1)
 	category = CAT_CLOTHING
 
+/datum/crafting_recipe/papermask
+	name = "Paper Mask"
+	result = /obj/item/clothing/mask/paper
+	time = 10
+	reqs = list(/obj/item/paper = 20)
+	category = CAT_CLOTHING
+
+/datum/crafting_recipe/armwraps
+	name = "Armwraps"
+	result = /obj/item/clothing/gloves/fingerless/pugilist
+	time = 60
+	tools = list(TOOL_WIRECUTTER)
+	reqs = list(/obj/item/stack/sheet/cloth = 4,
+				/obj/item/stack/sheet/durathread = 2,
+				/obj/item/stack/sheet/leather = 2)
+	category = CAT_CLOTHING
+
+/datum/crafting_recipe/armwrapsplusone
+	name = "Armwraps of Mighty Fists"
+	result = /obj/item/clothing/gloves/fingerless/pugilist/magic
+	time = 300
+	tools = list(TOOL_WIRECUTTER, /obj/item/book/codex_gigas, /obj/item/clothing/head/wizard, /obj/item/clothing/suit/wizrobe)
+	reqs = list(/obj/item/stack/sheet/cloth = 2,
+				/obj/item/stack/sheet/leather = 2,
+				/obj/item/stack/sheet/durathread = 2,
+				/datum/reagent/consumable/ethanol/sake = 100,
+				/datum/reagent/consumable/ethanol/wizz_fizz = 100,
+				/obj/item/stack/sheet/sinew = 1,
+				/obj/item/stack/sheet/mineral/gold = 50)
+	category = CAT_CLOTHING
+
+////////
+//Huds//
+////////
+
 /datum/crafting_recipe/hudsunsec
 	name = "Security HUDsunglasses"
 	result = /obj/item/clothing/glasses/hud/security/sunglasses
 	time = 20
 	tools = list(TOOL_SCREWDRIVER, TOOL_WIRECUTTER)
+	parts = list(/obj/item/clothing/glasses/hud/security = 1,
+					/obj/item/clothing/glasses/sunglasses = 1)
 	reqs = list(/obj/item/clothing/glasses/hud/security = 1,
 				  /obj/item/clothing/glasses/sunglasses = 1,
 				  /obj/item/stack/cable_coil = 5)
@@ -56,9 +93,11 @@
 	result = /obj/item/clothing/glasses/hud/health/sunglasses
 	time = 20
 	tools = list(TOOL_SCREWDRIVER, TOOL_WIRECUTTER)
+	parts = list(/obj/item/clothing/glasses/hud/health = 1,
+				/obj/item/clothing/glasses/sunglasses = 1)
 	reqs = list(/obj/item/clothing/glasses/hud/health = 1,
-				  /obj/item/clothing/glasses/sunglasses = 1,
-				  /obj/item/stack/cable_coil = 5)
+				/obj/item/clothing/glasses/sunglasses = 1,
+				/obj/item/stack/cable_coil = 5)
 	category = CAT_CLOTHING
 
 /datum/crafting_recipe/hudsunmedremoval
@@ -86,6 +125,27 @@
 	tools = list(TOOL_SCREWDRIVER, TOOL_WIRECUTTER)
 	reqs = list(/obj/item/clothing/glasses/sunglasses/reagent = 1)
 	category = CAT_CLOTHING
+
+/datum/crafting_recipe/diagnostic_sunglasses
+	name = "Diagnostic HUDsunglasses"
+	result = /obj/item/clothing/glasses/hud/diagnostic/sunglasses
+	time = 20
+	tools = list(TOOL_SCREWDRIVER, TOOL_WIRECUTTER)
+	parts = list(/obj/item/clothing/glasses/hud/diagnostic = 1,
+				/obj/item/clothing/glasses/sunglasses = 1)
+	reqs = list(/obj/item/clothing/glasses/hud/diagnostic = 1,
+				  /obj/item/clothing/glasses/sunglasses = 1,
+				  /obj/item/stack/cable_coil = 5)
+	category = CAT_CLOTHING
+
+/datum/crafting_recipe/diagnostic_sunglasses_removal
+	name = "Diagnostic HUDsunglasses removal"
+	result = /obj/item/clothing/glasses/sunglasses
+	time = 20
+	tools = list(TOOL_SCREWDRIVER, TOOL_WIRECUTTER)
+	reqs = list(/obj/item/clothing/glasses/hud/diagnostic/sunglasses = 1)
+	category = CAT_CLOTHING
+
 /* //Kevinz doesn't want it as a recipe for now, leaving it in if anything ever changes to let it in
 /datum/crafting_recipe/stunglasses
 	name = "Stunglasses"
@@ -97,6 +157,85 @@
 				  /obj/item/stack/cable_coil = 5)
 	category = CAT_CLOTHING
 */
+
+// Eyepatch Glasses
+
+/datum/crafting_recipe/secpatch
+	name = "Security Eyepatch HUD"
+	result = /obj/item/clothing/glasses/hud/security/sunglasses/eyepatch
+	time = 20
+	tools = list(TOOL_SCREWDRIVER, TOOL_WIRECUTTER)
+	parts = list(/obj/item/clothing/glasses/hud/security/sunglasses = 1,
+				/obj/item/clothing/glasses/eyepatch = 1)
+	reqs = list(/obj/item/clothing/glasses/hud/security/sunglasses = 1,
+				/obj/item/clothing/glasses/eyepatch = 1)
+	category = CAT_CLOTHING
+
+/datum/crafting_recipe/secpatch_removal
+	name = "Security HUDpatch Removal"
+	result = /obj/item/clothing/glasses/eyepatch
+	time = 20
+	tools = list(TOOL_SCREWDRIVER, TOOL_WIRECUTTER)
+	reqs = list(/obj/item/clothing/glasses/hud/security/sunglasses/eyepatch = 1)
+	category = CAT_CLOTHING
+
+/datum/crafting_recipe/medpatch
+	name = "Medical Eyepatch HUD"
+	result = /obj/item/clothing/glasses/hud/health/eyepatch
+	time = 20
+	tools = list(TOOL_SCREWDRIVER, TOOL_WIRECUTTER)
+	parts = list(/obj/item/clothing/glasses/hud/health = 1,
+				/obj/item/clothing/glasses/eyepatch = 1)
+	reqs = list(/obj/item/clothing/glasses/hud/health = 1,
+				/obj/item/clothing/glasses/eyepatch = 1)
+	category = CAT_CLOTHING
+
+/datum/crafting_recipe/medpatch_removal
+	name = "Medical HUDpatch Removal"
+	result = /obj/item/clothing/glasses/eyepatch
+	time = 20
+	tools = list(TOOL_SCREWDRIVER, TOOL_WIRECUTTER)
+	reqs = list(/obj/item/clothing/glasses/hud/health/eyepatch = 1)
+	category = CAT_CLOTHING
+
+/datum/crafting_recipe/diagpatch
+	name = "Diagnostic Eyepatch HUD"
+	result = /obj/item/clothing/glasses/hud/diagnostic/eyepatch
+	time = 20
+	tools = list(TOOL_SCREWDRIVER, TOOL_WIRECUTTER)
+	parts = list(/obj/item/clothing/glasses/hud/diagnostic = 1,
+				/obj/item/clothing/glasses/eyepatch = 1)
+	reqs = list(/obj/item/clothing/glasses/hud/diagnostic = 1,
+				/obj/item/clothing/glasses/eyepatch = 1)
+	category = CAT_CLOTHING
+
+/datum/crafting_recipe/diagpatch_removal
+	name = "Diagnostic HUDpatch Removal"
+	result = /obj/item/clothing/glasses/eyepatch
+	time = 20
+	tools = list(TOOL_SCREWDRIVER, TOOL_WIRECUTTER)
+	reqs = list(/obj/item/clothing/glasses/hud/diagnostic/eyepatch = 1)
+	category = CAT_CLOTHING
+
+/datum/crafting_recipe/mesonpatch
+	name = "Meson Scanner Eyepatch"
+	result = /obj/item/clothing/glasses/meson/eyepatch
+	time = 20
+	tools = list(TOOL_SCREWDRIVER, TOOL_WIRECUTTER)
+	parts = list(/obj/item/clothing/glasses/meson = 1,
+				/obj/item/clothing/glasses/eyepatch = 1)
+	reqs = list(/obj/item/clothing/glasses/meson = 1,
+				/obj/item/clothing/glasses/eyepatch = 1)
+	category = CAT_CLOTHING
+
+/datum/crafting_recipe/mesonpatch_removal
+	name = "Meson Scanner patch Removal"
+	result = /obj/item/clothing/glasses/eyepatch
+	time = 20
+	tools = list(TOOL_SCREWDRIVER, TOOL_WIRECUTTER)
+	reqs = list(/obj/item/clothing/glasses/meson/eyepatch = 1)
+	category = CAT_CLOTHING
+
 /datum/crafting_recipe/ghostsheet
 	name = "Ghost Sheet"
 	result = /obj/item/clothing/suit/ghost_sheet
@@ -130,7 +269,6 @@
 	reqs = list(/obj/item/stack/sheet/durathread = 7,
 				/obj/item/stack/sheet/leather = 3)
 	time = 70
-	always_availible = TRUE
 	category = CAT_CLOTHING
 
 /datum/crafting_recipe/durathread_toolbelt
@@ -139,7 +277,6 @@
 	reqs = list(/obj/item/stack/sheet/durathread = 5,
 				/obj/item/stack/sheet/leather = 2)
 	time = 30
-	always_availible = TRUE
 	category = CAT_CLOTHING
 
 /datum/crafting_recipe/durathread_bandolier
@@ -148,7 +285,6 @@
 	reqs = list(/obj/item/stack/sheet/durathread = 6,
 				/obj/item/stack/sheet/leather = 2)
 	time = 50
-	always_availible = TRUE
 	category = CAT_CLOTHING
 
 /datum/crafting_recipe/durathread_helmet
@@ -157,7 +293,6 @@
 	reqs = list(/obj/item/stack/sheet/durathread = 4,
 				/obj/item/stack/sheet/leather = 2)
 	time = 30
-	always_availible = TRUE
 	category = CAT_CLOTHING
 
 /datum/crafting_recipe/durathread_vest
@@ -166,7 +301,6 @@
 	reqs = list(/obj/item/stack/sheet/durathread = 6,
 				/obj/item/stack/sheet/leather = 3)
 	time = 50
-	always_availible = TRUE
 	category = CAT_CLOTHING
 
 /datum/crafting_recipe/durathread_wintercoat
@@ -183,5 +317,26 @@
 	reqs = list(/obj/item/clothing/suit/hooded/wintercoat = 1,
 				/obj/item/bedsheet/cosmos = 1)
 	time = 60
-	always_availible = TRUE
 	category = CAT_CLOTHING
+
+
+/datum/crafting_recipe/garlic_necklace
+	name = "Garlic Necklace"
+	result = /obj/item/clothing/neck/garlic_necklace
+	reqs = list(/obj/item/reagent_containers/food/snacks/grown/garlic = 15,
+				/obj/item/stack/cable_coil = 10)
+	time = 100 //Takes awhile to put all the garlics on the coil and knot it.
+	category = CAT_CLOTHING
+
+/datum/crafting_recipe/gripperoffbrand
+	name = "Improvised Gripper Gloves"
+	reqs = list(
+            /obj/item/clothing/gloves/fingerless = 1,
+         //   /obj/item/stack/sticky_tape = 1
+		 	/obj/item/stack/cable_coil = 5,
+			/obj/item/stack/sheet/cloth = 2,
+	)
+	result = /obj/item/clothing/gloves/tackler/offbrand
+	category = CAT_CLOTHING
+	tools = list(TOOL_WIRECUTTER)
+	time = 20

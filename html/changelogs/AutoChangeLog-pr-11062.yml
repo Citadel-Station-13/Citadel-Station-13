@@ -1,4 +1,0 @@
-author: "kevinz000"
-delete-after: True
-changes: 
-  - balance: "Organ healing rate doubled. Organ decay rate halved to match its define (15 minutes for full decay, so at around 8-10 minutes it'll be really fucked)."

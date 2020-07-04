@@ -16,11 +16,16 @@ GLOBAL_LIST_EMPTY(rubber_toolbox_icons)
 	attack_verb = list("robusted")
 	hitsound = 'sound/weapons/smash.ogg'
 	custom_materials = list(/datum/material/iron = 500)
-	material_flags = MATERIAL_COLOR
 	var/latches = "single_latch"
 	var/has_latches = TRUE
 	var/can_rubberify = TRUE
 	rad_flags = RAD_PROTECT_CONTENTS | RAD_NO_CONTAMINATE //very protecc too
+
+/obj/item/storage/toolbox/greyscale
+	icon_state = "toolbox_default"
+	item_state = "toolbox_default"
+	can_rubberify = FALSE
+	material_flags = MATERIAL_ADD_PREFIX | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS
 
 /obj/item/storage/toolbox/Initialize(mapload)
 	if(has_latches)
@@ -33,14 +38,11 @@ GLOBAL_LIST_EMPTY(rubber_toolbox_icons)
 	. = ..()
 	update_icon()
 
-/obj/item/storage/toolbox/update_icon()
-	..()
-	cut_overlays()
-	if(length(blood_DNA))
-		add_blood_overlay()
+/obj/item/storage/toolbox/update_overlays()
+	. = ..()
 	if(has_latches)
 		var/icon/I = icon('icons/obj/storage.dmi', latches)
-		add_overlay(I)
+		. += I
 
 
 /obj/item/storage/toolbox/suicide_act(mob/user)
@@ -51,7 +53,6 @@ GLOBAL_LIST_EMPTY(rubber_toolbox_icons)
 	name = "emergency toolbox"
 	icon_state = "red"
 	item_state = "toolbox_red"
-	material_flags = NONE
 
 /obj/item/storage/toolbox/emergency/PopulateContents()
 	new /obj/item/crowbar/red(src)
@@ -76,7 +77,6 @@ GLOBAL_LIST_EMPTY(rubber_toolbox_icons)
 	name = "mechanical toolbox"
 	icon_state = "blue"
 	item_state = "toolbox_blue"
-	material_flags = NONE
 
 /obj/item/storage/toolbox/mechanical/PopulateContents()
 	new /obj/item/screwdriver(src)
@@ -105,7 +105,6 @@ GLOBAL_LIST_EMPTY(rubber_toolbox_icons)
 	name = "electrical toolbox"
 	icon_state = "yellow"
 	item_state = "toolbox_yellow"
-	material_flags = NONE
 
 /obj/item/storage/toolbox/electrical/PopulateContents()
 	var/pickedcolor = pick("red","yellow","green","blue","pink","orange","cyan","white")
@@ -127,7 +126,6 @@ GLOBAL_LIST_EMPTY(rubber_toolbox_icons)
 	desc = "A toolbox painted black with a red stripe. It looks more heavier than normal toolboxes."
 	force = 15
 	throwforce = 18
-	material_flags = NONE
 
 /obj/item/storage/toolbox/syndicate/ComponentInitialize()
 	. = ..()
@@ -141,13 +139,12 @@ GLOBAL_LIST_EMPTY(rubber_toolbox_icons)
 	new /obj/item/crowbar/red(src)
 	new /obj/item/wirecutters(src, "red")
 	new /obj/item/multitool(src)
-	new /obj/item/clothing/gloves/combat(src)
+	new /obj/item/clothing/gloves/tackler/combat/insulated(src)
 
 /obj/item/storage/toolbox/drone
 	name = "mechanical toolbox"
 	icon_state = "blue"
 	item_state = "toolbox_blue"
-	material_flags = NONE
 
 /obj/item/storage/toolbox/drone/PopulateContents()
 	var/pickedcolor = pick("red","yellow","green","blue","pink","orange","cyan","white")
@@ -169,7 +166,6 @@ GLOBAL_LIST_EMPTY(rubber_toolbox_icons)
 	w_class = WEIGHT_CLASS_HUGE
 	attack_verb = list("robusted", "crushed", "smashed")
 	can_rubberify = FALSE
-	material_flags = NONE
 	var/fabricator_type = /obj/item/clockwork/replica_fabricator/scarab
 
 /obj/item/storage/toolbox/brass/ComponentInitialize()
@@ -180,7 +176,8 @@ GLOBAL_LIST_EMPTY(rubber_toolbox_icons)
 	STR.max_items = 28
 
 /obj/item/storage/toolbox/brass/prefilled/PopulateContents()
-	new fabricator_type(src)
+	if(fabricator_type)
+		new fabricator_type(src)
 	new /obj/item/screwdriver/brass(src)
 	new /obj/item/wirecutters/brass(src)
 	new /obj/item/wrench/brass(src)
@@ -211,7 +208,6 @@ GLOBAL_LIST_EMPTY(rubber_toolbox_icons)
 	w_class = WEIGHT_CLASS_HUGE		//heyo no bohing this!
 	force = 18		//spear damage
 	can_rubberify = FALSE
-	material_flags = NONE
 
 /obj/item/storage/toolbox/plastitanium/afterattack(atom/A, mob/user, proximity)
 	. = ..()
@@ -227,7 +223,6 @@ GLOBAL_LIST_EMPTY(rubber_toolbox_icons)
 	icon_state = "green"
 	item_state = "toolbox_green"
 	w_class = WEIGHT_CLASS_GIGANTIC //Holds more than a regular toolbox!
-	material_flags = NONE
 
 /obj/item/storage/toolbox/artistic/ComponentInitialize()
 	. = ..()
@@ -262,13 +257,48 @@ GLOBAL_LIST_EMPTY(rubber_toolbox_icons)
 	new /obj/item/ammo_box/a762(src)
 	new /obj/item/ammo_box/a762(src)
 
+/obj/item/storage/toolbox/infiltrator
+	name = "insidious case"
+	desc = "Bearing the emblem of the Syndicate, this case contains a full infiltrator stealth suit, and has enough room to fit weaponry if necessary while being quite the heavy bludgeoning implement when in a pinch."
+	icon_state = "infiltrator_case"
+	item_state = "infiltrator_case"
+	force = 12
+	throwforce = 16
+	w_class = WEIGHT_CLASS_NORMAL
+	has_latches = FALSE
+
+/obj/item/storage/toolbox/infiltrator/ComponentInitialize()
+	. = ..()
+	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
+	STR.silent = TRUE
+	STR.max_items = 10
+	STR.max_w_class = WEIGHT_CLASS_NORMAL
+	STR.can_hold = typecacheof(list(
+		/obj/item/clothing/head/helmet/infiltrator,
+		/obj/item/clothing/suit/armor/vest/infiltrator,
+		/obj/item/clothing/under/syndicate/bloodred,
+		/obj/item/clothing/gloves/color/latex/nitrile/infiltrator,
+		/obj/item/clothing/mask/infiltrator,
+		/obj/item/clothing/shoes/combat/sneakboots,
+		/obj/item/gun/ballistic/automatic/pistol,
+		/obj/item/gun/ballistic/revolver,
+		/obj/item/ammo_box
+		))
+
+/obj/item/storage/toolbox/infiltrator/PopulateContents()
+	new /obj/item/clothing/head/helmet/infiltrator(src)
+	new /obj/item/clothing/suit/armor/vest/infiltrator(src)
+	new /obj/item/clothing/under/syndicate/bloodred(src)
+	new /obj/item/clothing/gloves/color/latex/nitrile/infiltrator(src)
+	new /obj/item/clothing/mask/infiltrator(src)
+	new /obj/item/clothing/shoes/combat/sneakboots(src)
+
 /obj/item/storage/toolbox/plastitanium/gold_real
 	name = "golden toolbox"
 	desc = "A larger then normal toolbox made of gold plated plastitanium."
 	icon_state = "gold"
 	item_state = "toolbox_gold"
 	has_latches = FALSE
-	material_flags = NONE
 
 /obj/item/storage/toolbox/gold_real/PopulateContents()
 	new /obj/item/screwdriver/nuke(src)
@@ -277,7 +307,7 @@ GLOBAL_LIST_EMPTY(rubber_toolbox_icons)
 	new /obj/item/crowbar/red(src)
 	new /obj/item/wirecutters(src, "red")
 	new /obj/item/multitool/ai_detect(src)
-	new /obj/item/clothing/gloves/combat(src)
+	new /obj/item/clothing/gloves/tackler/combat/insulated(src)
 
 /obj/item/storage/toolbox/gold_real/ComponentInitialize()
 	. = ..()
@@ -294,7 +324,6 @@ GLOBAL_LIST_EMPTY(rubber_toolbox_icons)
 	force = 0
 	throwforce = 0
 	can_rubberify = FALSE
-	material_flags = NONE
 
 /obj/item/storage/toolbox/proc/rubberify()
 	name = "rubber [name]"
@@ -330,7 +359,6 @@ GLOBAL_LIST_EMPTY(rubber_toolbox_icons)
 	throwforce = 15
 	attack_verb = list("robusted", "bounced")
 	can_rubberify = FALSE //we are already the future.
-	material_flags = NONE
 
 /obj/item/storage/toolbox/rubber/Initialize()
 	icon_state = pick("blue", "red", "yellow", "green")

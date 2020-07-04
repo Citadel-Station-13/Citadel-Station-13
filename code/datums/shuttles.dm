@@ -23,14 +23,14 @@
 	mappath = "[prefix][shuttle_id].dmm"
 	. = ..()
 
-/datum/map_template/shuttle/preload_size(path, cache)
+/datum/map_template/shuttle/preload_size(path = mappath, force_cache = FALSE)
 	. = ..(path, TRUE) // Done this way because we still want to know if someone actualy wanted to cache the map
 	if(!cached_map)
 		return
 
 	discover_port_offset()
 
-	if(!cache)
+	if(!cached_map)
 		cached_map = null
 
 /datum/map_template/shuttle/proc/discover_port_offset()
@@ -53,12 +53,11 @@
 				++xcrd
 			--ycrd
 
-/datum/map_template/shuttle/load(turf/T, centered, register=TRUE)
+/datum/map_template/shuttle/load(turf/T, centered = FALSE, orientation = SOUTH, annihilate = default_annihilate, force_cache = FALSE, rotate_placement_to_orientation = FALSE, register = TRUE)
 	. = ..()
 	if(!.)
 		return
-	var/list/turfs = block(	locate(.[MAP_MINX], .[MAP_MINY], .[MAP_MINZ]),
-							locate(.[MAP_MAXX], .[MAP_MAXY], .[MAP_MAXZ]))
+	var/list/turfs = get_last_loaded_turf_block()
 	for(var/i in 1 to turfs.len)
 		var/turf/place = turfs[i]
 		if(istype(place, /turf/open/space)) // This assumes all shuttles are loaded in a single spot then moved to their real destination.
@@ -163,6 +162,10 @@
 	port_id = "pirate"
 	can_be_bought = FALSE
 
+/datum/map_template/shuttle/hunter
+	port_id = "hunter"
+	can_be_bought = FALSE
+
 /datum/map_template/shuttle/ruin //For random shuttles in ruins
 	port_id = "ruin"
 	can_be_bought = FALSE
@@ -170,6 +173,11 @@
 /datum/map_template/shuttle/snowdin
 	port_id = "snowdin"
 	can_be_bought = FALSE
+
+/datum/map_template/shuttle/snow_taxi
+	port_id = "snow"
+	can_be_bought = FALSE
+	suffix = "taxi"
 
 // Shuttles start here:
 
@@ -454,6 +462,10 @@
 	suffix = "whiteship_pod"
 	name = "Salvage Pod"
 
+/datum/map_template/shuttle/whiteship/cog
+	suffix = "cog"
+	name = "NT Prisoner Transport"
+
 /datum/map_template/shuttle/cargo/box
 	suffix = "box"
 	name = "supply shuttle (Box)"
@@ -480,6 +492,12 @@
 	admin_notes = "Comes with turrets that will target any simplemob."
 	credit_cost = 12500
 
+/datum/map_template/shuttle/emergency/cog
+	suffix = "cog"
+	name = "NES Classic"
+	description = "A blast from the past! This recreation of the Nanotrasen Emergency Shuttle Port features the same focus on seating as the original, but on a slightly longer frame to better accommodate modern shuttle docks."
+	credit_cost = 750
+
 /datum/map_template/shuttle/arrival/box
 	suffix = "box"
 	name = "arrival shuttle (Box)"
@@ -499,6 +517,10 @@
 /datum/map_template/shuttle/labour/kilo
 	suffix = "kilo"
 	name = "labour shuttle (Kilo)"
+
+/datum/map_template/shuttle/labour/cog
+	suffix = "cog"
+	name = "labour shuttle (Cog)"
 
 /datum/map_template/shuttle/infiltrator/basic
 	suffix = "basic"
@@ -543,6 +565,14 @@
 /datum/map_template/shuttle/arrival/omega
 	suffix = "omega"
 	name = "arrival shuttle (Omega)"
+
+/datum/map_template/shuttle/arrival/cog
+	suffix = "cog"
+	name = "arrival shuttle (Cog)"
+
+/datum/map_template/shuttle/arrival/snaxi
+	suffix = "snaxi"
+	name = "arrival shuttle (Snaxi)"
 
 /datum/map_template/shuttle/aux_base/default
 	suffix = "default"
@@ -591,3 +621,15 @@
 /datum/map_template/shuttle/snowdin/excavation
 	suffix = "excavation"
 	name = "Snowdin Excavation Elevator"
+
+/datum/map_template/shuttle/hunter/space_cop
+	suffix = "space_cop"
+	name = "Police Spacevan"
+
+/datum/map_template/shuttle/hunter/russian
+	suffix = "russian"
+	name = "Russian Cargo Ship"
+
+/datum/map_template/shuttle/hunter/bounty
+	suffix = "bounty"
+	name = "Bounty Hunter Ship"

@@ -1,18 +1,11 @@
 ///////////////////// Mob Living /////////////////////
 /mob/living
-	var/digestable = FALSE					// Can the mob be digested inside a belly?
+	var/vore_flags = 0
 	var/showvoreprefs = TRUE				// Determines if the mechanical vore preferences button will be displayed on the mob or not.
 	var/obj/belly/vore_selected				// Default to no vore capability.
 	var/list/vore_organs = list()			// List of vore containers inside a mob
-	var/devourable = FALSE					// Can the mob be vored at all?
-	var/feeding = FALSE						// Are we going to feed someone else?
 	var/vore_taste = null					// What the character tastes like
-	var/no_vore = FALSE 					// If the character/mob can vore.
-	var/openpanel = FALSE					// Is the vore panel open?
-	var/absorbed = FALSE					//are we absorbed?
 	var/next_preyloop
-	var/vore_init = FALSE					//Has this mob's vore been initialized yet?
-	var/vorepref_init = FALSE				//Has this mob's voreprefs been initialized?
 
 //
 // Hook for generic creation of stuff on new creatures
@@ -22,7 +15,7 @@
 	M.verbs += /mob/living/proc/lick
 	M.verbs += /mob/living/proc/escapeOOC
 
-	if(M.no_vore) //If the mob isn't supposed to have a stomach, let's not give it an insidepanel so it can make one for itself, or a stomach.
+	if(M.vore_flags & NO_VORE) //If the mob isn't supposed to have a stomach, let's not give it an insidepanel so it can make one for itself, or a stomach.
 		return TRUE
 	M.verbs += /mob/living/proc/insidePanel
 
@@ -35,13 +28,13 @@
 	return TRUE
 
 /mob/living/proc/init_vore()
-	vore_init = TRUE
+	ENABLE_BITFIELD(vore_flags, VORE_INIT)
 	//Something else made organs, meanwhile.
 	if(LAZYLEN(vore_organs))
 		return TRUE
 
 	//We'll load our client's organs if we have one
-	if(client && client.prefs_vr)
+	if(client?.prefs)
 		if(!copy_from_prefs_vr())
 			to_chat(src,"<span class='warning'>ERROR: You seem to have saved vore prefs, but they couldn't be loaded.</span>")
 			return FALSE
@@ -49,8 +42,8 @@
 			vore_selected = vore_organs[1]
 			return TRUE
 
-	//Or, we can create a basic one for them
-	if(!LAZYLEN(vore_organs))
+/mob/living/proc/lazy_init_belly()
+	if(!length(vore_organs))
 		LAZYINITLIST(vore_organs)
 		var/obj/belly/B = new /obj/belly(src)
 		vore_selected = B
@@ -68,6 +61,7 @@
 			// Critical adjustments due to TG grab changes - Poojawa
 
 /mob/living/proc/vore_attack(var/mob/living/user, var/mob/living/prey, var/mob/living/pred)
+	lazy_init_belly()
 	if(!user || !prey || !pred)
 		return
 
@@ -75,46 +69,40 @@
 		return
 
 	if(pred == prey) //you click your target
-		if(!pred.feeding)
+		if(!CHECK_BITFIELD(pred.vore_flags,FEEDING))
 			to_chat(user, "<span class='notice'>They aren't able to be fed.</span>")
 			to_chat(pred, "<span class='notice'>[user] tried to feed you themselves, but you aren't voracious enough to be fed.</span>")
-			return
-		if(!is_vore_predator(pred))
-			to_chat(user, "<span class='notice'>They aren't voracious enough.</span>")
 			return
 		feed_self_to_grabbed(user, pred)
 
 	else if(pred == user) //you click yourself
-		if(!is_vore_predator(src))
-			to_chat(user, "<span class='notice'>You aren't voracious enough.</span>")
-			return
 		feed_grabbed_to_self(user, prey)
 
 	else // click someone other than you/prey
-		if(!pred.feeding)
+		if(!CHECK_BITFIELD(pred.vore_flags,FEEDING))
 			to_chat(user, "<span class='notice'>They aren't voracious enough to be fed.</span>")
 			to_chat(pred, "<span class='notice'>[user] tried to feed you [prey], but you aren't voracious enough to be fed.</span>")
 			return
-		if(!prey.feeding)
+		if(!CHECK_BITFIELD(prey.vore_flags,FEEDING))
 			to_chat(user, "<span class='notice'>They aren't able to be fed to someone.</span>")
 			to_chat(prey, "<span class='notice'>[user] tried to feed you to [pred], but you aren't able to be fed to them.</span>")
-			return
-		if(!is_vore_predator(pred))
-			to_chat(user, "<span class='notice'>They aren't voracious enough.</span>")
 			return
 		feed_grabbed_to_other(user, prey, pred)
 //
 // Eating procs depending on who clicked what
 //
 /mob/living/proc/feed_grabbed_to_self(var/mob/living/user, var/mob/living/prey)
+	user.lazy_init_belly()
 	var/belly = user.vore_selected
 	return perform_the_nom(user, prey, user, belly)
 
 /mob/living/proc/feed_self_to_grabbed(var/mob/living/user, var/mob/living/pred)
+	pred.lazy_init_belly()
 	var/belly = input("Choose Belly") in pred.vore_organs
 	return perform_the_nom(user, user, pred, belly)
 
 /mob/living/proc/feed_grabbed_to_other(var/mob/living/user, var/mob/living/prey, var/mob/living/pred)
+	pred.lazy_init_belly()
 	var/belly = input("Choose Belly") in pred.vore_organs
 	return perform_the_nom(user, prey, pred, belly)
 
@@ -128,7 +116,7 @@
 		testing("[user] attempted to feed [prey] to [pred], via [lowertext(belly.name)] but it went wrong.")
 		return
 
-	if (!prey.devourable)
+	if (!prey.vore_flags & DEVOURABLE)
 		to_chat(user, "This can't be eaten!")
 		return FALSE
 
@@ -158,7 +146,7 @@
 		swallow_time = istype(prey, /mob/living/carbon/human) ? belly.human_prey_swallow_time : belly.nonhuman_prey_swallow_time
 
 	//Timer and progress bar
-	if(!do_after(user, swallow_time, prey))
+	if(!do_after(user, swallow_time, TRUE, prey))
 		return FALSE // Prey escaped (or user disabled) before timer expired.
 
 	if(!prey.Adjacent(user)) //double check'd just in case they moved during the timer and the do_mob didn't fail for whatever reason
@@ -262,47 +250,20 @@
 	else
 		to_chat(src,"<span class='alert'>You aren't inside anyone, though, is the thing.</span>")
 
-//
-//	Verb for saving vore preferences to save file
-//
-/mob/living/proc/save_vore_prefs()
-	if(!client || !client.prefs_vr)
-		return FALSE
-	if(!copy_to_prefs_vr())
-		return FALSE
-	if(!client.prefs_vr.save_vore())
-		return FALSE
-
-	return TRUE
-
-/mob/living/proc/apply_vore_prefs()
-	if(!client || !client.prefs_vr)
-		return FALSE
-	if(!client.prefs_vr.load_vore())
-		return FALSE
-	if(!copy_from_prefs_vr())
-		return FALSE
-
-	return TRUE
-
 /mob/living/proc/copy_to_prefs_vr()
-	if(!client || !client.prefs_vr)
-		to_chat(src,"<span class='warning'>You attempted to save your vore prefs but somehow you're in this character without a client.prefs_vr variable. Tell a dev.</span>")
+	if(!client || !client.prefs)
+		to_chat(src,"<span class='warning'>You attempted to save your vore prefs but somehow you're in this character without a client.prefs variable. Tell a dev.</span>")
 		return FALSE
 
-	var/datum/vore_preferences/P = client.prefs_vr
-
-	P.digestable = src.digestable
-	P.devourable = src.devourable
-	P.feeding = src.feeding
-	P.vore_taste = src.vore_taste
+	client.prefs.vore_flags = vore_flags // there's garbage data in here, but it doesn't matter
+	client.prefs.vore_taste = vore_taste
 
 	var/list/serialized = list()
-	for(var/belly in src.vore_organs)
+	for(var/belly in vore_organs)
 		var/obj/belly/B = belly
 		serialized += list(B.serialize()) //Can't add a list as an object to another list in Byond. Thanks.
 
-	P.belly_prefs = serialized
+	client.prefs.belly_prefs = serialized
 
 	return TRUE
 
@@ -310,21 +271,25 @@
 //	Proc for applying vore preferences, given bellies
 //
 /mob/living/proc/copy_from_prefs_vr()
-	if(!client || !client.prefs_vr)
-		to_chat(src,"<span class='warning'>You attempted to apply your vore prefs but somehow you're in this character without a client.prefs_vr variable. Tell a dev.</span>")
+	if(!client || !client.prefs)
+		to_chat(src,"<span class='warning'>You attempted to apply your vore prefs but somehow you're in this character without a client.prefs variable. Tell a dev.</span>")
 		return FALSE
-	vorepref_init = TRUE
+	ENABLE_BITFIELD(vore_flags,VOREPREF_INIT)
 
-	var/datum/vore_preferences/P = client.prefs_vr
+	// garbage data coming back the other way or breaking absorbed would be bad, so instead we do this
+	vore_flags |= CHECK_BITFIELD(client.prefs.vore_flags,DIGESTABLE) // set to 1 if prefs is 1
+	vore_flags |= CHECK_BITFIELD(client.prefs.vore_flags,DEVOURABLE)
+	vore_flags |= CHECK_BITFIELD(client.prefs.vore_flags,FEEDING)
 
-	digestable = P.digestable
-	devourable = P.devourable
-	feeding = P.feeding
-	vore_taste = P.vore_taste
+	vore_flags &= CHECK_BITFIELD(client.prefs.vore_flags,DIGESTABLE) // set to 0 if prefs is 0
+	vore_flags &= CHECK_BITFIELD(client.prefs.vore_flags,DEVOURABLE)
+	vore_flags &= CHECK_BITFIELD(client.prefs.vore_flags,FEEDING)
+
+	vore_taste = client.prefs.vore_taste
 
 	release_vore_contents(silent = TRUE)
-	vore_organs.Cut()
-	for(var/entry in P.belly_prefs)
+	QDEL_LIST(vore_organs)
+	for(var/entry in client.prefs.belly_prefs)
 		list_to_object(entry,src)
 
 	return TRUE
@@ -376,23 +341,34 @@
 //
 // Clearly super important. Obviously.
 //
-/mob/living/proc/lick(var/mob/living/tasted in oview(1))
+/mob/living/proc/lick()
 	set name = "Lick Someone"
 	set category = "Vore"
 	set desc = "Lick someone nearby!"
 
-	if(!istype(tasted))
+	if(incapacitated(ignore_restraints = TRUE))
+		to_chat(src, "<span class='warning'>You can't do that while incapacitated.</span>")
+		return
+	if(next_move > world.time)
+		to_chat(src, "<span class='warning'>You can't do that so fast, slow down.</span>")
 		return
 
-	if(!tasted.client?.prefs_vr.lickable)
+	var/list/choices
+	for(var/mob/living/L in view(1))
+		if(L != src && (!L.ckey || L.client?.prefs.vore_flags & LICKABLE) && Adjacent(L))
+			LAZYADD(choices, L)
+
+	if(!choices)
 		return
 
-	if(src == stat)
+	var/mob/living/tasted = input(src, "Who would you like to lick? (Excluding yourself and those with the preference disabled)", "Licking") as null|anything in choices
+
+	if(QDELETED(tasted) || (tasted.ckey && !(tasted.client?.prefs.vore_flags & LICKABLE)) || !Adjacent(tasted) || incapacitated(ignore_restraints = TRUE))
 		return
 
-	src.setClickCooldown(100)
+	changeNext_move(CLICK_CD_MELEE)
 
-	src.visible_message("<span class='warning'>[src] licks [tasted]!</span>","<span class='notice'>You lick [tasted]. They taste rather like [tasted.get_taste_message()].</span>","<b>Slurp!</b>")
+	visible_message("<span class='warning'>[src] licks [tasted]!</span>","<span class='notice'>You lick [tasted]. They taste rather like [tasted.get_taste_message()].</span>","<b>Slurp!</b>")
 
 
 /mob/living/proc/get_taste_message(allow_generic = TRUE, datum/species/mrace)
@@ -408,3 +384,11 @@
 		else
 			taste_message += "a plain old normal [src]"
 	return taste_message
+//	Check if an object is capable of eating things, based on vore_organs
+//
+/proc/has_vore_belly(var/mob/living/O)
+	if(istype(O))
+		if(O.vore_organs.len > 0)
+			return TRUE
+
+	return FALSE

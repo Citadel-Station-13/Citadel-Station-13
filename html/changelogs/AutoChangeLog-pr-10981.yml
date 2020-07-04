@@ -1,4 +1,0 @@
-author: "IHOPMommyLich"
-delete-after: True
-changes: 
-  - tweak: "Changed the multiplicative_slowdown of Stimulants from -1 to -0.5"

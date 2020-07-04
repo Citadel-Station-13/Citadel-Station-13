@@ -153,7 +153,7 @@
 	var/image/item_overlay = image(holding)
 	item_overlay.alpha = 92
 
-	if(!user.can_equip(holding, slot_id, TRUE))
+	if(!user.can_equip(holding, slot_id, TRUE, TRUE, TRUE))
 		item_overlay.color = "#FF0000"
 	else
 		item_overlay.color = "#00ff00"
@@ -166,14 +166,12 @@
 	var/static/mutable_appearance/blocked_overlay = mutable_appearance('icons/mob/screen_gen.dmi', "blocked")
 	var/held_index = 0
 
-/obj/screen/inventory/hand/update_icon()
+/obj/screen/inventory/hand/update_overlays()
 	. = ..()
 
 	if(!handcuff_overlay)
 		var/state = (!(held_index % 2)) ? "markus" : "gabrielle"
 		handcuff_overlay = mutable_appearance('icons/mob/screen_gen.dmi', state)
-
-	cut_overlay(list(handcuff_overlay, blocked_overlay, "hand_active"))
 
 	if(!hud?.mymob)
 		return
@@ -181,14 +179,14 @@
 	if(iscarbon(hud.mymob))
 		var/mob/living/carbon/C = hud.mymob
 		if(C.handcuffed)
-			add_overlay(handcuff_overlay)
+			. += handcuff_overlay
 
 		if(held_index)
 			if(!C.has_hand_for_held_index(held_index))
-				add_overlay(blocked_overlay)
+				. += blocked_overlay
 
 	if(held_index == hud.mymob.active_hand_index)
-		add_overlay("hand_active")
+		. += "hand_active"
 
 
 /obj/screen/inventory/hand/Click(location, control, params)
@@ -212,20 +210,6 @@
 		user.swap_hand(held_index)
 	return TRUE
 
-/obj/screen/close
-	name = "close"
-	layer = ABOVE_HUD_LAYER
-	plane = ABOVE_HUD_PLANE
-	icon_state = "backpack_close"
-
-/obj/screen/close/Initialize(mapload, new_master)
-	. = ..()
-	master = new_master
-
-/obj/screen/close/Click()
-	var/datum/component/storage/S = master
-	S.hide_from(usr)
-	return TRUE
 
 /obj/screen/drop
 	name = "drop"
@@ -407,30 +391,6 @@
 		icon_state = "act_rest"
 	else
 		icon_state = "act_rest0"
-
-/obj/screen/storage
-	name = "storage"
-	icon_state = "block"
-	screen_loc = "7,7 to 10,8"
-	layer = HUD_LAYER
-	plane = HUD_PLANE
-
-/obj/screen/storage/Initialize(mapload, new_master)
-	. = ..()
-	master = new_master
-
-/obj/screen/storage/Click(location, control, params)
-	if(world.time <= usr.next_move)
-		return TRUE
-	if(usr.incapacitated())
-		return TRUE
-	if (ismecha(usr.loc)) // stops inventory actions in a mech
-		return TRUE
-	if(master)
-		var/obj/item/I = usr.get_active_held_item()
-		if(I)
-			master.attackby(null, I, usr, params)
-	return TRUE
 
 /obj/screen/throw_catch
 	name = "throw/catch"

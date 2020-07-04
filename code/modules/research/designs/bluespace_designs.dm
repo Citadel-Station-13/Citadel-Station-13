@@ -35,6 +35,17 @@
 	dangerous_construction = TRUE
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
 
+/datum/design/duffelbag_holding
+	name = "Duffel Bag of Holding"
+	desc = "A duffel bag that opens into a localized pocket of bluespace."
+	id = "duffelbag_holding"
+	build_type = PROTOLATHE
+	materials = list(/datum/material/gold = 3000, /datum/material/diamond = 1500, /datum/material/uranium = 250, /datum/material/bluespace = 2000)
+	build_path = /obj/item/storage/backpack/holding/duffel
+	category = list("Bluespace Designs")
+	dangerous_construction = TRUE
+	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
+
 /datum/design/biobag_holding
 	name = "Bio Bag of Holding"
 	desc = "A chemical holding thingy. Mostly used for xenobiology."

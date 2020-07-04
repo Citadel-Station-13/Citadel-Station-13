@@ -1,4 +1,0 @@
-author: "ancientpower"
-delete-after: True
-changes: 
-  - bugfix: "Fixes an error in pH strips' feedback message."

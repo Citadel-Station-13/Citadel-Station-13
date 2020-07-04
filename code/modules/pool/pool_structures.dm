@@ -119,7 +119,7 @@
 							 "<span class='userdanger'>You misstep!</span>")
 			var/atom/throw_target = get_edge_target_turf(src, dir)
 			jumper.throw_at(throw_target, 0, 1, callback = CALLBACK(src, .proc/on_finish_jump, jumper))
-			jumper.Knockdown(100)
+			jumper.DefaultCombatKnockdown(100)
 			jumper.adjustBruteLoss(10)
 
 		if(91 to 100)
@@ -156,4 +156,4 @@
 			to_chat(victim, "<span class='warning'>That was stupid of you..</span>")
 			victim.visible_message("<span class='danger'>[victim] smashes into the ground!</span>")
 			victim.apply_damage(50)
-			victim.Knockdown(200)
+			victim.DefaultCombatKnockdown(200)

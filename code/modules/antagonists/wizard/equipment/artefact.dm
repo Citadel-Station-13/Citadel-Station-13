@@ -159,7 +159,7 @@
 /obj/item/scrying/attack_self(mob/user)
 	to_chat(user, "<span class='notice'>You can see...everything!</span>")
 	visible_message("<span class='danger'>[user] stares into [src], their eyes glazing over.</span>")
-	user.ghostize(1)
+	user.ghostize(1, voluntary = TRUE)
 
 /////////////////////////////////////////Necromantic Stone///////////////////
 
@@ -230,11 +230,11 @@
 
 	var/hat = pick(/obj/item/clothing/head/helmet/roman, /obj/item/clothing/head/helmet/roman/legionnaire)
 	H.equip_to_slot_or_del(new hat(H), SLOT_HEAD)
-	H.equip_to_slot_or_del(new /obj/item/clothing/under/roman(H), SLOT_W_UNIFORM)
+	H.equip_to_slot_or_del(new /obj/item/clothing/under/costume/roman(H), SLOT_W_UNIFORM)
 	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/roman(H), SLOT_SHOES)
 	H.put_in_hands(new /obj/item/shield/riot/roman(H), TRUE)
 	H.put_in_hands(new /obj/item/claymore(H), TRUE)
-	H.equip_to_slot_or_del(new /obj/item/twohanded/spear(H), SLOT_BACK)
+	H.equip_to_slot_or_del(new /obj/item/spear(H), SLOT_BACK)
 
 
 /obj/item/voodoo
@@ -261,7 +261,7 @@
 			GiveHint(target)
 		else if(is_pointed(I))
 			to_chat(target, "<span class='userdanger'>You feel a stabbing pain in [parse_zone(user.zone_selected)]!</span>")
-			target.Knockdown(40)
+			target.DefaultCombatKnockdown(40)
 			GiveHint(target)
 		else if(istype(I, /obj/item/bikehorn))
 			to_chat(target, "<span class='userdanger'>HONK</span>")
@@ -369,7 +369,7 @@
 	var/mob/living/carbon/last_user
 
 /obj/item/warpwhistle/proc/interrupted(mob/living/carbon/user)
-	if(!user || QDELETED(src) || user.notransform)
+	if(!user || QDELETED(src) || user.mob_transforming)
 		on_cooldown = FALSE
 		return TRUE
 	return FALSE
@@ -377,7 +377,10 @@
 /obj/item/warpwhistle/proc/end_effect(mob/living/carbon/user)
 	user.invisibility = initial(user.invisibility)
 	user.status_flags &= ~GODMODE
-	user.canmove = TRUE
+	REMOVE_TRAIT(user, TRAIT_MOBILITY_NOMOVE, src)
+	REMOVE_TRAIT(user, TRAIT_MOBILITY_NOUSE, src)
+	REMOVE_TRAIT(user, TRAIT_MOBILITY_NOPICKUP, src)
+	user.update_mobility()
 
 /obj/item/warpwhistle/attack_self(mob/living/carbon/user)
 	if(!istype(user) || on_cooldown)
@@ -390,7 +393,10 @@
 	on_cooldown = TRUE
 	last_user = user
 	playsound(T,'sound/magic/warpwhistle.ogg', 200, 1)
-	user.canmove = FALSE
+	ADD_TRAIT(user, TRAIT_MOBILITY_NOMOVE, src)
+	ADD_TRAIT(user, TRAIT_MOBILITY_NOUSE, src)
+	ADD_TRAIT(user, TRAIT_MOBILITY_NOPICKUP, src)
+	user.update_mobility()
 	new /obj/effect/temp_visual/tornado(T)
 	sleep(20)
 	if(interrupted(user))
@@ -412,7 +418,6 @@
 			return
 		if(T.z != potential_T.z || abs(get_dist_euclidian(potential_T,T)) > 50 - breakout)
 			do_teleport(user, potential_T, channel = TELEPORT_CHANNEL_MAGIC)
-			user.canmove = 0
 			T = potential_T
 			break
 		breakout += 1

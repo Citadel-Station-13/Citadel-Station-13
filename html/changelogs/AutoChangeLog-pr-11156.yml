@@ -1,8 +1,0 @@
-author: "Psody-Mordheim"
-delete-after: True
-changes: 
-  - rscadd: "Disfiguration Symptom."
-  - rscadd: "Deoxyribonucleic Acid Saboteur Symptom."
-  - rscadd: "Polyvitiligo Symptom."
-  - rscdel: "Revitiligo Symptom."
-  - rscdel: "Vitiligo Symptom."

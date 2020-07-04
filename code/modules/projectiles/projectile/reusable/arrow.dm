@@ -3,13 +3,13 @@
 	desc = "Woosh!"
 	damage = 15
 	icon_state = "arrow"
-	ammo_type = /obj/item/ammo_casing/caseless/arrow
+	ammo_type = /obj/item/ammo_casing/caseless/arrow/wood
 
-/obj/item/projectile/bullet/reusable/arrow/ashen
+/obj/item/projectile/bullet/reusable/arrow/ash
 	name = "ashen arrow"
 	desc = "Fire harderned arrow."
 	damage = 25
-	ammo_type = /obj/item/ammo_casing/caseless/arrow/ashen
+	ammo_type = /obj/item/ammo_casing/caseless/arrow/ash
 
 /obj/item/projectile/bullet/reusable/arrow/bone //AP for ashwalkers
 	name = "bone arrow"

@@ -39,8 +39,7 @@
 		QDEL_NULL(BB)
 	return ..()
 
-/obj/item/ammo_casing/update_icon()
-	..()
+/obj/item/ammo_casing/update_icon_state()
 	icon_state = "[initial(icon_state)][BB ? "-live" : ""]"
 	desc = "[initial(desc)][BB ? "" : " This one is spent."]"
 

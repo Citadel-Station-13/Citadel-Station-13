@@ -1,23 +1,32 @@
 /datum/dynamic_storyteller
-	var/name = "none"
-	var/config_tag = null
-	var/desc = "A coder's idiocy."
-	var/list/property_weights = list()
-	var/curve_centre = 0
-	var/curve_width = 1.8
-	var/forced_threat_level = -1
+	var/name = "none" // Name for voting.
+	var/config_tag = null // Config tag for config weights.
+	var/desc = "A coder's idiocy." // Description for voting.
+	var/list/property_weights = list() // See below.
+	var/curve_centre = 0 // As GLOB.dynamic_curve_centre.
+	var/curve_width = 1.8 // As GLOB.dynamic_curve_width.
+	var/forced_threat_level = -1 // As GLOB.dynamic_forced_threat_level
+	/*
+		NO_ASSASSIN: Will not have permanent assassination targets.
+		WAROPS_ALWAYS_ALLOWED: Can always do warops, regardless of threat level.
+		USE_PREF_WEIGHTS: Will use peoples' preferences to change the threat centre.
+		FORCE_IF_WON: If this mode won the vote, forces it
+		USE_PREV_ROUND_WEIGHTS: Changes its threat centre based on the average chaos of previous rounds.
+	*/
 	var/flags = 0
-	var/weight = 3 // how many rounds need to have been recently played for this storyteller to be left out of the vote
-	var/event_frequency_lower = 6 MINUTES
-	var/event_frequency_upper = 20 MINUTES
-	var/datum/game_mode/dynamic/mode = null
+	var/dead_player_weight = 1 // How much dead players matter for threat calculation
+	var/weight = 3 // Weights for randomly picking storyteller. Multiplied by score after voting.
+	var/event_frequency_lower = 6 MINUTES // How rare events will be, at least.
+	var/event_frequency_upper = 20 MINUTES // How rare events will be, at most.
+	var/min_players = -1 // How many players are required for this one to start.
+	var/datum/game_mode/dynamic/mode = null // Cached as soon as it's made, by dynamic.
 
 /**
-Property weights are: 
+Property weights are:
 "story_potential" -- essentially how many different ways the antag can be played.
 "trust" -- How much it makes the crew trust each other. Negative values means they're suspicious. Team antags are like this.
 "chaos" -- How chaotic it makes the round. Has some overlap with "valid" and somewhat contradicts "extended".
-"valid" -- How likely the non-antag-enemy crew are to get involved, e.g. nukies encouraging the warden to 
+"valid" -- How likely the non-antag-enemy crew are to get involved, e.g. nukies encouraging the warden to
            let everyone into the armory, wizard moving around and being a nuisance, nightmare busting lights.
 "extended" -- How much the antag is conducive to a long round. Nukies and cults are bad for this; Wizard is less bad; and so on.
 "conversion" -- Basically a bool. Conversion antags, well, convert. It's its own class for a good reason.
@@ -25,13 +34,38 @@ Property weights are:
 
 /datum/dynamic_storyteller/proc/start_injection_cooldowns()
 	var/latejoin_injection_cooldown_middle = 0.5*(GLOB.dynamic_first_latejoin_delay_max + GLOB.dynamic_first_latejoin_delay_min)
-	mode.latejoin_injection_cooldown = round(CLAMP(EXP_DISTRIBUTION(latejoin_injection_cooldown_middle), GLOB.dynamic_first_latejoin_delay_min, GLOB.dynamic_first_latejoin_delay_max)) + world.time
+	mode.latejoin_injection_cooldown = round(clamp(EXP_DISTRIBUTION(latejoin_injection_cooldown_middle), GLOB.dynamic_first_latejoin_delay_min, GLOB.dynamic_first_latejoin_delay_max)) + world.time
 
 	var/midround_injection_cooldown_middle = 0.5*(GLOB.dynamic_first_midround_delay_min + GLOB.dynamic_first_midround_delay_max)
-	mode.midround_injection_cooldown = round(CLAMP(EXP_DISTRIBUTION(midround_injection_cooldown_middle), GLOB.dynamic_first_midround_delay_min, GLOB.dynamic_first_midround_delay_max)) + world.time
-	
+	mode.midround_injection_cooldown = round(clamp(EXP_DISTRIBUTION(midround_injection_cooldown_middle), GLOB.dynamic_first_midround_delay_min, GLOB.dynamic_first_midround_delay_max)) + world.time
+
 	var/event_injection_cooldown_middle = 0.5*(GLOB.dynamic_event_delay_max + GLOB.dynamic_event_delay_min)
-	mode.event_injection_cooldown = (round(CLAMP(EXP_DISTRIBUTION(event_injection_cooldown_middle), GLOB.dynamic_event_delay_min, GLOB.dynamic_event_delay_max)) + world.time)
+	mode.event_injection_cooldown = (round(clamp(EXP_DISTRIBUTION(event_injection_cooldown_middle), GLOB.dynamic_event_delay_min, GLOB.dynamic_event_delay_max)) + world.time)
+
+/datum/dynamic_storyteller/proc/calculate_threat()
+	var/threat = 0
+	for(var/datum/antagonist/A in GLOB.antagonists)
+		if(A?.owner?.current && A.owner.current.stat != DEAD)
+			threat += A.threat()
+	for(var/r in SSevents.running)
+		var/datum/round_event/R = r
+		threat += R.threat()
+	for(var/mob/living/simple_animal/hostile/H in GLOB.mob_living_list)
+		var/turf/T = get_turf(H)
+		if(H.stat != DEAD && is_station_level(T.z) && !("Station" in H.faction))
+			threat += H.threat()
+	for(var/obj/item/phylactery/P in GLOB.poi_list)
+		threat += 25 // can't be giving them too much of a break
+	for (var/mob/M in mode.current_players[CURRENT_LIVING_PLAYERS])
+		if (M?.mind?.assigned_role && M.stat != DEAD)
+			var/datum/job/J = SSjob.GetJob(M.mind.assigned_role)
+			if(J)
+				if(length(M.mind.antag_datums))
+					threat += J.GetThreat()
+				else
+					threat -= J.GetThreat()
+	threat += (mode.current_players[CURRENT_DEAD_PLAYERS].len)*dead_player_weight
+	return round(threat,0.1)
 
 /datum/dynamic_storyteller/proc/do_process()
 	return
@@ -59,48 +93,34 @@ Property weights are:
 							mean += 5
 			if(voters)
 				GLOB.dynamic_curve_centre += (mean/voters)
+		if(flags & USE_PREV_ROUND_WEIGHTS)
+			GLOB.dynamic_curve_centre += (50 - SSpersistence.average_dynamic_threat) / 10
 		GLOB.dynamic_forced_threat_level = forced_threat_level
 
 /datum/dynamic_storyteller/proc/get_midround_cooldown()
 	var/midround_injection_cooldown_middle = 0.5*(GLOB.dynamic_midround_delay_max + GLOB.dynamic_midround_delay_min)
-	return round(CLAMP(EXP_DISTRIBUTION(midround_injection_cooldown_middle), GLOB.dynamic_midround_delay_min, GLOB.dynamic_midround_delay_max))
+	return round(clamp(EXP_DISTRIBUTION(midround_injection_cooldown_middle), GLOB.dynamic_midround_delay_min, GLOB.dynamic_midround_delay_max))
 
 /datum/dynamic_storyteller/proc/get_event_cooldown()
 	var/event_injection_cooldown_middle = 0.5*(GLOB.dynamic_event_delay_max + GLOB.dynamic_event_delay_min)
-	return round(CLAMP(EXP_DISTRIBUTION(event_injection_cooldown_middle), GLOB.dynamic_event_delay_min, GLOB.dynamic_event_delay_max))
+	return round(clamp(EXP_DISTRIBUTION(event_injection_cooldown_middle), GLOB.dynamic_event_delay_min, GLOB.dynamic_event_delay_max))
 
 /datum/dynamic_storyteller/proc/get_latejoin_cooldown()
 	var/latejoin_injection_cooldown_middle = 0.5*(GLOB.dynamic_latejoin_delay_max + GLOB.dynamic_latejoin_delay_min)
-	return round(CLAMP(EXP_DISTRIBUTION(latejoin_injection_cooldown_middle), GLOB.dynamic_latejoin_delay_min, GLOB.dynamic_latejoin_delay_max))
+	return round(clamp(EXP_DISTRIBUTION(latejoin_injection_cooldown_middle), GLOB.dynamic_latejoin_delay_min, GLOB.dynamic_latejoin_delay_max))
 
 /datum/dynamic_storyteller/proc/get_injection_chance(dry_run = FALSE)
 	if(mode.forced_injection)
 		mode.forced_injection = !dry_run
 		return 100
-	var/chance = 0
-	// If the high pop override is in effect, we reduce the impact of population on the antag injection chance
-	var/high_pop_factor = (mode.current_players[CURRENT_LIVING_PLAYERS].len >= GLOB.dynamic_high_pop_limit)
-	var/max_pop_per_antag = max(5,15 - round(mode.threat_level/10) - round(mode.current_players[CURRENT_LIVING_PLAYERS].len/(high_pop_factor ? 10 : 5)))
-	if (!mode.current_players[CURRENT_LIVING_ANTAGS].len)
-		chance += 80 // No antags at all? let's boost those odds!
-	else
-		var/current_pop_per_antag = mode.current_players[CURRENT_LIVING_PLAYERS].len / mode.current_players[CURRENT_LIVING_ANTAGS].len
-		if (current_pop_per_antag > max_pop_per_antag)
-			chance += min(50, 25+10*(current_pop_per_antag-max_pop_per_antag))
-		else
-			chance += 25-10*(max_pop_per_antag-current_pop_per_antag)
-	if (mode.current_players[CURRENT_DEAD_PLAYERS].len > mode.current_players[CURRENT_LIVING_PLAYERS].len)
-		chance -= 30 // More than half the crew died? ew, let's calm down on antags
-	if (mode.threat > 70)
-		chance += 15
-	if (mode.threat < 30)
-		chance -= 15
-	return round(max(0,chance))
+	var/threat_perc = mode.threat/mode.threat_level
+
+	return clamp(round(100*(1-(threat_perc*threat_perc))**2,1),0,100)
 
 /datum/dynamic_storyteller/proc/roundstart_draft()
 	var/list/drafted_rules = list()
 	for (var/datum/dynamic_ruleset/roundstart/rule in mode.roundstart_rules)
-		if (rule.acceptable(mode.roundstart_pop_ready, mode.threat_level) && mode.threat >= rule.cost)	// If we got the population and threat required
+		if (rule.acceptable(mode.roundstart_pop_ready, mode.threat_level))	// If we got the population and threat required
 			rule.candidates = mode.candidates.Copy()
 			rule.trim_candidates()
 			if (rule.ready() && rule.candidates.len > 0)
@@ -108,32 +128,43 @@ Property weights are:
 				for(var/property in property_weights)
 					if(property in rule.property_weights) // just treat it as 0 if it's not in there
 						property_weight += rule.property_weights[property] * property_weights[property]
-				drafted_rules[rule] = (rule.get_weight() + property_weight)*rule.weight_mult
+				drafted_rules[rule] = (rule.get_weight() * property_weight)*rule.weight_mult
 	return drafted_rules
 
 /datum/dynamic_storyteller/proc/midround_draft()
 	var/list/drafted_rules = list()
 	for (var/datum/dynamic_ruleset/midround/rule in mode.midround_rules)
 		// if there are antags OR the rule is an antag rule, antag_acceptable will be true.
-		if (rule.acceptable(mode.current_players[CURRENT_LIVING_PLAYERS].len, mode.threat_level) && mode.threat >= rule.cost)
+		if (rule.acceptable(mode.current_players[CURRENT_LIVING_PLAYERS].len, mode.threat_level))
 			// Classic secret : only autotraitor/minor roles
 			if (GLOB.dynamic_classic_secret && !((rule.flags & TRAITOR_RULESET) || (rule.flags & MINOR_RULESET)))
 				continue
 			rule.trim_candidates()
+			var/threat_weight = 1
+			if(!(rule.flags & MINOR_RULESET)) // makes the traitor rulesets always possible anyway
+				var/cost_difference = abs(rule.cost-(mode.threat_level-mode.threat))
+				/*	Basically, the closer the cost is to the current threat-level-away-from-threat, the more likely it is to
+					pick this particular ruleset.
+					Let's use a toy example: there's 60 threat level and 10 threat spent.
+					We want to pick a ruleset that's close to that, so we run the below equation, on two rulesets.
+					Ruleset 1 has 30 cost, ruleset 2 has 5 cost.
+					When we do the math, ruleset 1's threat_weight is 0.538, and ruleset 2's is 0.238, meaning ruleset 1
+					is 2.26 times as likely to be picked, all other things considered.
+					Of course, we don't want it to GUARANTEE the closest, that's no fun, so it's just a weight.
+				*/
+				threat_weight = abs(1-abs(1-LOGISTIC_FUNCTION(2,0.05,cost_difference,0)))
 			if (rule.ready())
 				var/property_weight = 0
 				for(var/property in property_weights)
 					if(property in rule.property_weights)
 						property_weight += rule.property_weights[property] * property_weights[property]
-				drafted_rules[rule] = (rule.get_weight() + property_weight)*rule.weight_mult
-		else if(mode.threat < rule.cost)
-			SSblackbox.record_feedback("tally","dynamic",1,"Times rulesets rejected due to not enough threat to spend")
+				drafted_rules[rule] = round(((rule.get_weight() * property_weight)*rule.weight_mult*threat_weight)*1000,1)
 	return drafted_rules
 
 /datum/dynamic_storyteller/proc/latejoin_draft(mob/living/carbon/human/newPlayer)
 	var/list/drafted_rules = list()
 	for (var/datum/dynamic_ruleset/latejoin/rule in mode.latejoin_rules)
-		if (rule.acceptable(mode.current_players[CURRENT_LIVING_PLAYERS].len, mode.threat_level) && mode.threat >= rule.cost)
+		if (rule.acceptable(mode.current_players[CURRENT_LIVING_PLAYERS].len, mode.threat_level - mode.threat))
 			// Classic secret : only autotraitor/minor roles
 			if (GLOB.dynamic_classic_secret && !((rule.flags & TRAITOR_RULESET) || (rule.flags & MINOR_RULESET)))
 				continue
@@ -144,63 +175,65 @@ Property weights are:
 
 			rule.candidates = list(newPlayer)
 			rule.trim_candidates()
+			var/threat_weight = 1
+			if(!(rule.flags & MINOR_RULESET))
+				var/cost_difference = abs(rule.cost-(mode.threat_level-mode.threat))
+				threat_weight = 1-abs(1-(LOGISTIC_FUNCTION(2,0.05,cost_difference,0)))
 			if (rule.ready())
 				var/property_weight = 0
 				for(var/property in property_weights)
 					if(property in rule.property_weights)
 						property_weight += rule.property_weights[property] * property_weights[property]
-				drafted_rules[rule] = (rule.get_weight() + property_weight)*rule.weight_mult
-		else if(mode.threat < rule.cost)
-			SSblackbox.record_feedback("tally","dynamic",1,"Times rulesets rejected due to not enough threat to spend")
+				drafted_rules[rule] = round(((rule.get_weight() * property_weight)*rule.weight_mult*threat_weight)*1000,1)
 	return drafted_rules
 
 /datum/dynamic_storyteller/proc/event_draft()
 	var/list/drafted_rules = list()
 	for(var/datum/dynamic_ruleset/event/rule in mode.events)
-		if(rule.acceptable(mode.current_players[CURRENT_LIVING_PLAYERS].len, mode.threat_level) && mode.threat >= rule.cost)
+		if(rule.acceptable(mode.current_players[CURRENT_LIVING_PLAYERS].len, mode.threat_level) && (mode.threat_level - mode.threat) >= rule.cost)
 			if(rule.ready())
 				var/property_weight = 0
 				for(var/property in property_weights)
 					if(property in rule.property_weights)
 						property_weight += rule.property_weights[property] * property_weights[property]
 				drafted_rules[rule] = (rule.get_weight() + property_weight)*rule.weight_mult
-		else if(mode.threat < rule.cost)
-			SSblackbox.record_feedback("tally","dynamic",1,"Times rulesets rejected due to not enough threat to spend")
 	return drafted_rules
 
 
-/datum/dynamic_storyteller/cowabunga
+/datum/dynamic_storyteller/chaotic
 	name = "Chaotic"
 	config_tag = "chaotic"
 	curve_centre = 10
-	desc = "Chaos: high. Variation: high. Likely antags: clock cult, revs, wizard."
-	property_weights = list("extended" = -1, "chaos" = 10)
+	desc = "High chaos modes. Revs, wizard, clock cult. Multiple antags at once. Chaos is kept up all round."
+	property_weights = list("extended" = -1, "chaos" = 1)
 	weight = 1
 	event_frequency_lower = 2 MINUTES
 	event_frequency_upper = 10 MINUTES
-	flags = WAROPS_ALWAYS_ALLOWED
+	flags = WAROPS_ALWAYS_ALLOWED | FORCE_IF_WON
+	min_players = 30
 	var/refund_cooldown = 0
-	
-/datum/dynamic_storyteller/cowabunga/get_midround_cooldown()
-	return ..() / 4
-	
-/datum/dynamic_storyteller/cowabunga/get_latejoin_cooldown()
+
+/datum/dynamic_storyteller/chaotic/do_process()
+	if(refund_cooldown < world.time)
+		mode.create_threat(20)
+		mode.log_threat("Chaotic storyteller ramped up the chaos. Threat level is now [mode.threat_level].")
+		refund_cooldown = world.time + 20 MINUTES
+
+/datum/dynamic_storyteller/chaotic/get_midround_cooldown()
 	return ..() / 4
 
-/datum/dynamic_storyteller/cowabunga/do_process()
-	if(refund_cooldown < world.time)
-		mode.refund_threat(20)
-		mode.log_threat("Cowabunga it is. Refunded 20 threat. Threat is now [mode.threat].")
-		refund_cooldown = world.time + 600 SECONDS
+/datum/dynamic_storyteller/chaotic/get_latejoin_cooldown()
+	return ..() / 4
 
 /datum/dynamic_storyteller/team
 	name = "Teamwork"
 	config_tag = "teamwork"
-	desc = "Chaos: high. Variation: low. Likely antags: nukies, clockwork cult, wizard, blob, xenomorph."
+	desc = "Modes where the crew must band together. Nukies, xenos, blob. Only one antag threat at once."
 	curve_centre = 2
 	curve_width = 1.5
 	weight = 2
-	flags = WAROPS_ALWAYS_ALLOWED
+	min_players = 20
+	flags = WAROPS_ALWAYS_ALLOWED | USE_PREV_ROUND_WEIGHTS
 	property_weights = list("valid" = 3, "trust" = 5)
 
 /datum/dynamic_storyteller/team/get_injection_chance(dry_run = FALSE)
@@ -209,56 +242,144 @@ Property weights are:
 /datum/dynamic_storyteller/conversion
 	name = "Conversion"
 	config_tag = "conversion"
-	desc = "Chaos: high. Variation: medium. Likely antags: cults, bloodsuckers, revs."
+	desc = "Conversion antags. Cults, revs."
 	curve_centre = 3
 	curve_width = 1
-	weight = 2
+	weight = 0
 	flags = WAROPS_ALWAYS_ALLOWED
 	property_weights = list("valid" = 1, "conversion" = 20)
 
-/datum/dynamic_storyteller/classic
+/datum/dynamic_storyteller/random
 	name = "Random"
 	config_tag = "random"
-	desc = "Chaos: varies. Variation: highest. No special weights attached."
-	weight = 6
-	flags = USE_PREF_WEIGHTS
-	curve_width = 4
+	weight = 1
+	desc = "No weighting at all; every ruleset has the same chance of happening. Cooldowns vary wildly. As random as it gets."
 
-/datum/dynamic_storyteller/memes
+/datum/dynamic_storyteller/random/on_start()
+	..()
+	GLOB.dynamic_forced_threat_level = rand(0,100)
+
+/datum/dynamic_storyteller/random/get_midround_cooldown()
+	return rand(GLOB.dynamic_midround_delay_min/2, GLOB.dynamic_midround_delay_max*2)
+
+/datum/dynamic_storyteller/random/get_event_cooldown()
+	return rand(GLOB.dynamic_event_delay_min/2, GLOB.dynamic_event_delay_max*2)
+
+/datum/dynamic_storyteller/random/get_latejoin_cooldown()
+	return rand(GLOB.dynamic_latejoin_delay_min/2, GLOB.dynamic_latejoin_delay_max*2)
+
+/datum/dynamic_storyteller/random/get_injection_chance()
+	return 50 // i would do rand(0,100) but it's actually the same thing when you do the math
+
+/datum/dynamic_storyteller/random/roundstart_draft()
+	var/list/drafted_rules = list()
+	for (var/datum/dynamic_ruleset/roundstart/rule in mode.roundstart_rules)
+		if (rule.acceptable(mode.roundstart_pop_ready, mode.threat_level))	// If we got the population and threat required
+			rule.candidates = mode.candidates.Copy()
+			rule.trim_candidates()
+			if (rule.ready() && rule.candidates.len > 0)
+				drafted_rules[rule] = 1
+	return drafted_rules
+
+/datum/dynamic_storyteller/random/midround_draft()
+	var/list/drafted_rules = list()
+	for (var/datum/dynamic_ruleset/midround/rule in mode.midround_rules)
+		if (rule.acceptable(mode.current_players[CURRENT_LIVING_PLAYERS].len, mode.threat_level))
+			// Classic secret : only autotraitor/minor roles
+			if (GLOB.dynamic_classic_secret && !((rule.flags & TRAITOR_RULESET) || (rule.flags & MINOR_RULESET)))
+				continue
+			rule.trim_candidates()
+			if (rule.ready())
+				drafted_rules[rule] = 1
+	return drafted_rules
+
+/datum/dynamic_storyteller/random/latejoin_draft(mob/living/carbon/human/newPlayer)
+	var/list/drafted_rules = list()
+	for (var/datum/dynamic_ruleset/latejoin/rule in mode.latejoin_rules)
+		if (rule.acceptable(mode.current_players[CURRENT_LIVING_PLAYERS].len, mode.threat_level))
+			// Classic secret : only autotraitor/minor roles
+			if (GLOB.dynamic_classic_secret && !((rule.flags & TRAITOR_RULESET) || (rule.flags & MINOR_RULESET)))
+				continue
+			// No stacking : only one round-ender, unless threat level > stacking_limit.
+			if (mode.threat_level > GLOB.dynamic_stacking_limit && GLOB.dynamic_no_stacking)
+				if(rule.flags & HIGHLANDER_RULESET && mode.highlander_executed)
+					continue
+			rule.candidates = list(newPlayer)
+			rule.trim_candidates()
+			if (rule.ready())
+				drafted_rules[rule] = 1
+	return drafted_rules
+
+/datum/dynamic_storyteller/random/event_draft()
+	var/list/drafted_rules = list()
+	for(var/datum/dynamic_ruleset/event/rule in mode.events)
+		if(rule.acceptable(mode.current_players[CURRENT_LIVING_PLAYERS].len, mode.threat_level))
+			if(rule.ready())
+				drafted_rules[rule] = 1
+	return drafted_rules
+
+/datum/dynamic_storyteller/story
 	name = "Story"
 	config_tag = "story"
-	desc = "Chaos: varies. Variation: high. Likely antags: abductors, nukies, wizard, traitor."
-	weight = 4
-	flags = USE_PREF_WEIGHTS
-	curve_width = 4
-	property_weights = list("story_potential" = 10)
+	desc = "Antags with options for loadouts and gimmicks. Traitor, wizard, nukies. Has a buildup-climax-falling action threat curve."
+	weight = 2
+	curve_width = 2
+	flags = USE_PREV_ROUND_WEIGHTS
+	property_weights = list("story_potential" = 2)
+
+
+/datum/dynamic_storyteller/story/calculate_threat()
+	var/current_time = (world.time / SSautotransfer.targettime)*180
+	mode.threat_level = round(mode.initial_threat_level*(sin(current_time)+0.25),0.1)
+	return ..()
+
+/datum/dynamic_storyteller/classic
+	name = "Classic"
+	config_tag = "classic"
+	desc = "No special antagonist weights. Good variety, but not like random. Uses your chaos preference to weight."
+	flags = USE_PREF_WEIGHTS | USE_PREV_ROUND_WEIGHTS
 
 /datum/dynamic_storyteller/suspicion
 	name = "Intrigue"
 	config_tag = "intrigue"
-	desc = "Chaos: low. Variation: high. Likely antags: traitor, bloodsucker. Rare: revs, blood cult."
-	weight = 4
-	flags = USE_PREF_WEIGHTS
-	curve_width = 4
-	property_weights = list("trust" = -5)
+	desc = "Antags that instill distrust in the crew. Traitors, bloodsuckers."
+	weight = 2
+	curve_width = 2
+	dead_player_weight = 2
+	flags = USE_PREV_ROUND_WEIGHTS
+	property_weights = list("trust" = -3)
 
 /datum/dynamic_storyteller/liteextended
 	name = "Calm"
 	config_tag = "calm"
-	desc = "Chaos: low. Variation: medium. Likely antags: bloodsuckers, traitors, sentient disease, revenant."
+	desc = "Low-chaos round. Few antags. No conversion."
+	curve_centre = -3
+	curve_width = 0.5
+	flags = NO_ASSASSIN | FORCE_IF_WON
+	weight = 1
+	dead_player_weight = 5
+	property_weights = list("extended" = 2, "chaos" = -1, "valid" = -1, "conversion" = -10)
+
+/datum/dynamic_storyteller/no_antag
+	name = "Extended"
+	config_tag = "semiextended"
+	desc = "No standard antags. Threatening events may still spawn."
 	curve_centre = -5
 	curve_width = 0.5
-	flags = NO_ASSASSIN
-	weight = 2
-	property_weights = list("extended" = 1, "chaos" = -1, "valid" = -1, "story_potential" = 1, "conversion" = -10)
+	flags = NO_ASSASSIN | FORCE_IF_WON
+	weight = 1
+	property_weights = list("extended" = 2)
 
-/datum/dynamic_storyteller/liteextended/get_injection_chance(dry_run = FALSE)
-	return ..()/2
+/datum/dynamic_storyteller/no_antag/roundstart_draft()
+	return list()
+
+/datum/dynamic_storyteller/no_antag/get_injection_chance(dry_run)
+	return 0
 
 /datum/dynamic_storyteller/extended
-	name = "Extended"
+	name = "Super Extended"
 	config_tag = "extended"
-	desc = "Chaos: none. Variation: none. Likely antags: none."
+	desc = "No antags. No dangerous events."
 	curve_centre = -20
 	weight = 0
 	curve_width = 0.5

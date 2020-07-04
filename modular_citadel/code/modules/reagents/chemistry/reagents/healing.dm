@@ -9,6 +9,7 @@
 	inverse_chem_val 		= 0.4
 	inverse_chem		= /datum/reagent/impure/yamerol_tox
 	can_synth = TRUE
+	value = REAGENT_VALUE_VERY_RARE
 
 /datum/reagent/fermi/yamerol/on_mob_life(mob/living/carbon/C)
 	var/obj/item/organ/tongue/T = C.getorganslot(ORGAN_SLOT_TONGUE)
@@ -100,6 +101,7 @@
 	data = list("grown_volume" = 0, "injected_vol" = 0)
 	var/borrowed_health
 	color = "#FFDADA"
+	value = REAGENT_VALUE_COMMON
 
 /datum/reagent/synthtissue/reaction_mob(mob/living/M, method=TOUCH, reac_volume,show_message = 1)
 	if(iscarbon(M))
@@ -195,3 +197,25 @@
 		M.stat = DEAD
 		M.visible_message("The synthetic tissue degrades off [M]'s wounds as they collapse to the floor.")
 //NEEDS ON_MOB_DEAD()
+
+/datum/reagent/fermi/zeolites
+	name = "Artificial Zeolites"
+	description = "Lab made Zeolite, used to clear radiation from people and items alike! Splashing just a small amount(5u) onto any item can clear away large amounts of contamination."
+	pH = 8
+	color = "#FFDADA"
+	metabolization_rate = 8 * REAGENTS_METABOLISM //Metabolizes fast but heals a lot!
+	value = REAGENT_VALUE_COMMON
+
+/datum/reagent/fermi/zeolites/on_mob_life(mob/living/carbon/M)
+	var/datum/component/radioactive/contamination = M.GetComponent(/datum/component/radioactive)
+	if(M.radiation > 0)
+		M.radiation -= min(M.radiation, 60)
+	if(contamination.strength > 0)
+		contamination.strength -= min(contamination.strength, 100)
+	..()
+
+/datum/reagent/fermi/zeolites/reaction_obj(obj/O, reac_volume)
+	var/datum/component/radioactive/contamination = O.GetComponent(/datum/component/radioactive)
+	if(contamination && reac_volume >= 5)
+		qdel(contamination)
+		return

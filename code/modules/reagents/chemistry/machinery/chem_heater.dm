@@ -22,7 +22,7 @@
 		beaker = null
 		update_icon()
 
-/obj/machinery/chem_heater/update_icon()
+/obj/machinery/chem_heater/update_icon_state()
 	if(beaker)
 		icon_state = "mixer1b"
 	else
@@ -151,7 +151,7 @@
 				target = text2num(target)
 				. = TRUE
 			if(.)
-				target_temperature = CLAMP(target, 0, 1000)
+				target_temperature = clamp(target, 0, 1000)
 		if("eject")
 			on = FALSE
 			replace_beaker(usr)

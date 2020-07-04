@@ -17,7 +17,7 @@
 	target = get_turf(src)
 
 	if(acid_amt)
-		acid_level = min( (CLAMP(round(acid_amt, 1), 0, INFINITY)) *acid_pwr, 12000) //capped so the acid effect doesn't last a half hour on the floor.
+		acid_level = min( (clamp(round(acid_amt, 1), 0, INFINITY)) *acid_pwr, 12000) //capped so the acid effect doesn't last a half hour on the floor.
 
 	//handle APCs and newscasters and stuff nicely
 	pixel_x = target.pixel_x + rand(-4,4)

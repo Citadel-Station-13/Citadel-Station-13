@@ -39,11 +39,6 @@ GLOBAL_LIST_EMPTY(telecomms_list)
 		return
 	var/send_count = 0
 
-	// Apply some lag based on traffic rates
-	var/netlag = round(traffic / 50)
-	if(netlag > signal.data["slow"])
-		signal.data["slow"] = netlag
-
 	// Loop through all linked machines and send the signal or copy.
 	for(var/obj/machinery/telecomms/machine in links)
 		if(filter && !istype( machine, filter ))
@@ -109,7 +104,7 @@ GLOBAL_LIST_EMPTY(telecomms_list)
 					links |= T
 					T.links |= src
 
-/obj/machinery/telecomms/update_icon()
+/obj/machinery/telecomms/update_icon_state()
 	if(on)
 		if(panel_open)
 			icon_state = "[initial(icon_state)]_o"
@@ -122,9 +117,9 @@ GLOBAL_LIST_EMPTY(telecomms_list)
 			icon_state = "[initial(icon_state)]_off"
 
 /obj/machinery/telecomms/proc/update_power()
-
 	if(toggled)
-		if(stat & (BROKEN|NOPOWER|EMPED)) // if powered, on. if not powered, off. if too damaged, off
+		// if powered, on. if not powered, off. if too damaged, off
+		if(CHECK_BITFIELD(stat, (BROKEN | NOPOWER | EMPED))) 
 			on = FALSE
 		else
 			on = TRUE
@@ -142,11 +137,11 @@ GLOBAL_LIST_EMPTY(telecomms_list)
 
 /obj/machinery/telecomms/emp_act(severity)
 	. = ..()
-	if(. & EMP_PROTECT_SELF)
+	if(CHECK_BITFIELD(., EMP_PROTECT_SELF))
 		return
-	if(prob(100/severity))
-		if(!(stat & EMPED))
-			stat |= EMPED
-			var/duration = (300 * 10)/severity
+	if(prob(100 / severity))
+		if(!CHECK_BITFIELD(stat, EMPED))
+			ENABLE_BITFIELD(stat, EMPED)
+			var/duration = (300 * 10) / severity
 			spawn(rand(duration - 20, duration + 20)) // Takes a long time for the machines to reboot.
-				stat &= ~EMPED
+				DISABLE_BITFIELD(stat, EMPED)

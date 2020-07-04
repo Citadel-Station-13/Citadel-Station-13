@@ -11,7 +11,9 @@
 	mob_biotypes = MOB_ORGANIC|MOB_BEAST
 	mouse_opacity = MOUSE_OPACITY_ICON
 	move_to_delay = 5
-	friendly = "floats near"
+	threat = 1
+	friendly_verb_continuous = "floats near"
+	friendly_verb_simple = "float near"
 	speak_emote = list("puffs")
 	vision_range = 5
 	speed = 0
@@ -22,7 +24,8 @@
 	obj_damage = 0
 	melee_damage_lower = 0
 	melee_damage_upper = 0
-	attacktext = "chomps"
+	attack_verb_continuous = "chomps"
+	attack_verb_simple = "chomp"
 	attack_sound = 'sound/weapons/punch1.ogg'
 	throw_message = "is avoided by the"
 	vision_range = 5
@@ -44,12 +47,13 @@
 	QDEL_NULL(E)
 	return ..()
 
-/mob/living/simple_animal/hostile/asteroid/fugu/Life()
+/mob/living/simple_animal/hostile/asteroid/fugu/BiologicalLife(seconds, times_fired)
+	if(!(. = ..()))
+		return
 	if(!wumbo)
 		inflate_cooldown = max((inflate_cooldown - 1), 0)
 	if(target && AIStatus == AI_ON)
 		E.Activate()
-	..()
 
 /mob/living/simple_animal/hostile/asteroid/fugu/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
 	if(!forced && wumbo)

@@ -44,7 +44,7 @@ effective or pretty fucking useless.
 	for(var/mob/living/carbon/human/M in urange(10, user, 1))
 		if(prob(50))
 
-			M.Knockdown(rand(200,400))
+			M.DefaultCombatKnockdown(rand(200,400))
 			to_chat(M, "<span class='userdanger'>You feel a tremendous, paralyzing wave flood your mind.</span>")
 
 		else
@@ -232,7 +232,7 @@ effective or pretty fucking useless.
 			charge = max(0,charge - 25)//Quick decrease in light
 		else
 			charge = min(max_charge,charge + 50) //Charge in the dark
-		animate(user,alpha = CLAMP(255 - charge,0,255),time = 10)
+		animate(user,alpha = clamp(255 - charge,0,255),time = 10)
 
 
 /obj/item/jammer

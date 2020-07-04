@@ -3,6 +3,7 @@
 	desc = "There is a small label that reads \"For Emergency use only\" along with details for safe use of the axe. As if."
 	icon = 'icons/obj/wallmounts.dmi'
 	icon_state = "fireaxe"
+	plane = ABOVE_WALL_PLANE
 	anchored = TRUE
 	density = FALSE
 	armor = list("melee" = 50, "bullet" = 20, "laser" = 0, "energy" = 100, "bomb" = 10, "bio" = 100, "rad" = 100, "fire" = 90, "acid" = 50)
@@ -10,7 +11,7 @@
 	integrity_failure = 0.33
 	var/locked = TRUE
 	var/open = FALSE
-	var/obj/item/twohanded/fireaxe/fireaxe
+	var/obj/item/fireaxe/fireaxe
 
 /obj/structure/fireaxecabinet/Initialize()
 	. = ..()
@@ -49,8 +50,8 @@
 			obj_integrity = max_integrity
 			update_icon()
 	else if(open || broken)
-		if(istype(I, /obj/item/twohanded/fireaxe) && !fireaxe)
-			var/obj/item/twohanded/fireaxe/F = I
+		if(istype(I, /obj/item/fireaxe) && !fireaxe)
+			var/obj/item/fireaxe/F = I
 			if(F.wielded)
 				to_chat(user, "<span class='warning'>Unwield the [F.name] first.</span>")
 				return
@@ -140,30 +141,30 @@
 		update_icon()
 		return
 
-/obj/structure/fireaxecabinet/update_icon()
-	cut_overlays()
+/obj/structure/fireaxecabinet/update_overlays()
+	. = ..()
 	if(fireaxe)
-		add_overlay("axe")
+		. += "axe"
 	if(!open)
 		var/hp_percent = obj_integrity/max_integrity * 100
 		if(broken)
-			add_overlay("glass4")
+			. += "glass4"
 		else
 			switch(hp_percent)
 				if(-INFINITY to 40)
-					add_overlay("glass3")
+					. += "glass3"
 				if(40 to 60)
-					add_overlay("glass2")
+					. += "glass2"
 				if(60 to 80)
-					add_overlay("glass1")
+					. += "glass1"
 				if(80 to INFINITY)
-					add_overlay("glass")
+					. += "glass"
 		if(locked)
-			add_overlay("locked")
+			. += "locked"
 		else
-			add_overlay("unlocked")
+			. += "unlocked"
 	else
-		add_overlay("glass_raised")
+		. += "glass_raised"
 
 /obj/structure/fireaxecabinet/proc/toggle_lock(mob/user)
 	to_chat(user, "<span class = 'caution'> Resetting circuitry...</span>")

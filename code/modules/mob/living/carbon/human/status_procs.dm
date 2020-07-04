@@ -3,7 +3,7 @@
 	amount = dna.species.spec_stun(src,amount)
 	return ..()
 
-/mob/living/carbon/human/Knockdown(amount, updating = TRUE, ignore_canknockdown = FALSE, override_hardstun, override_stamdmg)
+/mob/living/carbon/human/DefaultCombatKnockdown(amount, updating = TRUE, ignore_canknockdown = FALSE, override_hardstun, override_stamdmg)
 	amount = dna.species.spec_stun(src,amount)
 	return ..()
 
@@ -34,12 +34,11 @@
 /mob/living/carbon/human/set_drugginess(amount)
 	..()
 	if(!amount)
-		remove_language(/datum/language/beachbum)
+		remove_language(/datum/language/beachbum, TRUE, TRUE, LANGUAGE_HIGH)
 
 /mob/living/carbon/human/adjust_drugginess(amount)
 	..()
-	if(!dna.check_mutation(STONER))
-		if(druggy)
-			grant_language(/datum/language/beachbum)
-		else
-			remove_language(/datum/language/beachbum)
+	if(druggy)
+		grant_language(/datum/language/beachbum, TRUE, TRUE, LANGUAGE_HIGH)
+	else
+		remove_language(/datum/language/beachbum, TRUE, TRUE, LANGUAGE_HIGH)

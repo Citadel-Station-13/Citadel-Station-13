@@ -31,6 +31,7 @@
 	var/interior = ""
 	var/proper_bomb = TRUE //Please
 	var/obj/effect/countdown/nuclearbomb/countdown
+	var/nuclear_cooldown //used to stop global spam.
 
 /obj/machinery/nuclearbomb/Initialize()
 	. = ..()
@@ -40,7 +41,7 @@
 	STOP_PROCESSING(SSobj, core)
 	update_icon()
 	GLOB.poi_list |= src
-	previous_level = get_security_level()
+	previous_level = NUM2SECLEVEL(GLOB.security_level)
 
 /obj/machinery/nuclearbomb/Destroy()
 	safety = FALSE
@@ -73,16 +74,15 @@
 /obj/machinery/nuclearbomb/syndicate/get_cinematic_type(off_station)
 	var/datum/game_mode/nuclear/NM = SSticker.mode
 	switch(off_station)
-		if(0)
+		if(FALSE)
 			if(istype(NM) && !NM.nuke_team.syndies_escaped())
 				return CINEMATIC_ANNIHILATION
 			else
 				return CINEMATIC_NUKE_WIN
-		if(1)
+		if(NUKE_MISS_STATION)
 			return CINEMATIC_NUKE_MISS
-		if(2)
+		else
 			return CINEMATIC_NUKE_FAR
-	return CINEMATIC_NUKE_FAR
 
 /obj/machinery/nuclearbomb/proc/disk_check(obj/item/disk/nuclear/D)
 	if(D.fake)
@@ -178,23 +178,22 @@
 	else
 		return NUKE_OFF_UNLOCKED
 
-/obj/machinery/nuclearbomb/update_icon()
-	if(deconstruction_state == NUKESTATE_INTACT)
-		switch(get_nuke_state())
-			if(NUKE_OFF_LOCKED, NUKE_OFF_UNLOCKED)
-				icon_state = "nuclearbomb_base"
-				update_icon_interior()
-				update_icon_lights()
-			if(NUKE_ON_TIMING)
-				cut_overlays()
-				icon_state = "nuclearbomb_timing"
-			if(NUKE_ON_EXPLODING)
-				cut_overlays()
-				icon_state = "nuclearbomb_exploding"
-	else
+/obj/machinery/nuclearbomb/update_icon_state()
+	if(deconstruction_state != NUKESTATE_INTACT)
 		icon_state = "nuclearbomb_base"
-		update_icon_interior()
-		update_icon_lights()
+		return
+	switch(get_nuke_state())
+		if(NUKE_OFF_LOCKED, NUKE_OFF_UNLOCKED)
+			icon_state = "nuclearbomb_base"
+		if(NUKE_ON_TIMING)
+			icon_state = "nuclearbomb_timing"
+		if(NUKE_ON_EXPLODING)
+			icon_state = "nuclearbomb_exploding"
+
+/obj/machinery/nuclearbomb/update_overlays()
+	. = ..()
+	update_icon_interior()
+	update_icon_lights()
 
 /obj/machinery/nuclearbomb/proc/update_icon_interior()
 	cut_overlay(interior)
@@ -359,7 +358,7 @@
 							if(NUKEUI_AWAIT_TIMER)
 								var/number_value = text2num(numeric_input)
 								if(number_value)
-									timer_set = CLAMP(number_value, minimum_timer_set, maximum_timer_set)
+									timer_set = clamp(number_value, minimum_timer_set, maximum_timer_set)
 									playsound(src, 'sound/machines/nuke/general_beep.ogg', 50, FALSE)
 									set_safety()
 									. = TRUE
@@ -387,14 +386,14 @@
 		if("anchor")
 			if(auth && yes_code)
 				playsound(src, 'sound/machines/nuke/general_beep.ogg', 50, FALSE)
-				set_anchor()
+				set_anchor(usr)
 			else
 				playsound(src, 'sound/machines/nuke/angry_beep.ogg', 50, FALSE)
 
 
-/obj/machinery/nuclearbomb/proc/set_anchor()
-	if(isinspace() && !anchored)
-		to_chat(usr, "<span class='warning'>There is nothing to anchor to!</span>")
+/obj/machinery/nuclearbomb/proc/set_anchor(mob/user)
+	if((istype(get_area(src), /area/space) || isinspace()) && !anchored)
+		to_chat(user, "<span class='warning'>This is not a suitable platform for anchoring [src]!</span>")
 	else
 		anchored = !anchored
 
@@ -415,14 +414,18 @@
 	if(safety)
 		to_chat(usr, "<span class='danger'>The safety is still on.</span>")
 		return
+	if(!timing && nuclear_cooldown > world.time)
+		to_chat(usr, "<span class='danger'>[src]'s timer protocols are currently on cooldown, please stand by.</span>")
+		return
 	timing = !timing
 	if(timing)
-		previous_level = get_security_level()
+		previous_level = NUM2SECLEVEL(GLOB.security_level)
 		detonation_timer = world.time + (timer_set * 10)
 		for(var/obj/item/pinpointer/nuke/syndicate/S in GLOB.pinpointer_list)
 			S.switch_mode_to(TRACK_INFILTRATOR)
 		countdown.start()
 		set_security_level("delta")
+		nuclear_cooldown = world.time + 15 SECONDS
 
 		if(GLOB.war_declared)
 			var/area/A = get_area(src)
@@ -448,9 +451,9 @@
 		return
 	qdel(src)
 
-/obj/machinery/nuclearbomb/tesla_act(power, tesla_flags)
+/obj/machinery/nuclearbomb/zap_act(power, zap_flags)
 	..()
-	if(tesla_flags & TESLA_MACHINE_EXPLOSIVE)
+	if(zap_flags & ZAP_MACHINE_EXPLOSIVE)
 		qdel(src)//like the singulo, tesla deletes it. stops it from exploding over and over
 
 #define NUKERANGE 127
@@ -476,20 +479,14 @@
 
 	GLOB.enter_allowed = FALSE
 
-	var/off_station = 0
+	var/off_station = FALSE
 	var/turf/bomb_location = get_turf(src)
-	var/area/A = get_area(bomb_location)
-	if(bomb_location && is_station_level(bomb_location.z))
-		if(istype(A, /area/space))
-			off_station = NUKE_NEAR_MISS
-		if((bomb_location.x < (128-NUKERANGE)) || (bomb_location.x > (128+NUKERANGE)) || (bomb_location.y < (128-NUKERANGE)) || (bomb_location.y > (128+NUKERANGE)))
-			off_station = NUKE_NEAR_MISS
+	if(!bomb_location || !is_station_level(bomb_location.z))
+		off_station = NUKE_MISS_STATION
 	else if(bomb_location.onSyndieBase())
 		off_station = NUKE_SYNDICATE_BASE
-	else
-		off_station = NUKE_MISS_STATION
 
-	if(off_station < 2)
+	if(!off_station)
 		SSshuttle.registerHostileEnvironment(src)
 		SSshuttle.lockdown = TRUE
 
@@ -503,7 +500,7 @@
 	INVOKE_ASYNC(GLOBAL_PROC,.proc/KillEveryoneOnZLevel, z)
 
 /obj/machinery/nuclearbomb/proc/get_cinematic_type(off_station)
-	if(off_station < 2)
+	if(!off_station)
 		return CINEMATIC_SELFDESTRUCT
 	else
 		return CINEMATIC_SELFDESTRUCT_MISS
@@ -584,7 +581,7 @@
 This is here to make the tiles around the station mininuke change when it's armed.
 */
 
-/obj/machinery/nuclearbomb/selfdestruct/set_anchor()
+/obj/machinery/nuclearbomb/selfdestruct/set_anchor(mob/user)
 	return
 
 /obj/machinery/nuclearbomb/selfdestruct/set_active()
@@ -609,6 +606,7 @@ This is here to make the tiles around the station mininuke change when it's arme
 	lefthand_file = 'icons/mob/inhands/equipment/idcards_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/idcards_righthand.dmi'
 	icon_state = "datadisk0"
+	w_volume = ITEM_VOLUME_DISK
 
 /obj/item/disk/nuclear
 	name = "nuclear authentication disk"

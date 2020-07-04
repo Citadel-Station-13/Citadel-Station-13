@@ -60,13 +60,18 @@
 	H.update_action_buttons_icon()
 
 
-/obj/item/tank/New()
-	..()
+/obj/item/tank/Initialize()
+	. = ..()
 
 	air_contents = new(volume) //liters
 	air_contents.temperature = T20C
 
+	populate_gas()
+
 	START_PROCESSING(SSobj, src)
+
+/obj/item/tank/proc/populate_gas()
+	return
 
 /obj/item/tank/Destroy()
 	if(air_contents)
@@ -78,9 +83,9 @@
 /obj/item/tank/examine(mob/user)
 	var/obj/icon = src
 	. = ..()
-	if (istype(src.loc, /obj/item/assembly))
+	if(istype(src.loc, /obj/item/assembly))
 		icon = src.loc
-	if(!in_range(src, user))
+	if(!in_range(src, user) && !isobserver(user))
 		if (icon == src)
 			. += "<span class='notice'>If you want any more information you'll need to get closer.</span>"
 		return
@@ -148,6 +153,10 @@
 
 	return (BRUTELOSS)
 
+/obj/item/tank/attack_ghost(mob/dead/observer/O)
+	. = ..()
+	atmosanalyzer_scan(air_contents, O, src, FALSE)
+
 /obj/item/tank/attackby(obj/item/W, mob/user, params)
 	add_fingerprint(user)
 	if(istype(W, /obj/item/assembly_holder))
@@ -204,7 +213,7 @@
 				pressure = text2num(pressure)
 				. = TRUE
 			if(.)
-				distribute_pressure = CLAMP(round(pressure), TANK_MIN_RELEASE_PRESSURE, TANK_MAX_RELEASE_PRESSURE)
+				distribute_pressure = clamp(round(pressure), TANK_MIN_RELEASE_PRESSURE, TANK_MAX_RELEASE_PRESSURE)
 
 /obj/item/tank/remove_air(amount)
 	return air_contents.remove(amount)

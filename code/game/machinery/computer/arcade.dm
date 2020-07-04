@@ -42,9 +42,9 @@
 		/obj/item/clothing/mask/facehugger/toy = ARCADE_WEIGHT_RARE,
 		/obj/item/gun/ballistic/automatic/toy/pistol/unrestricted = ARCADE_WEIGHT_TRICK,
 		/obj/item/hot_potato/harmless/toy = ARCADE_WEIGHT_RARE,
-		/obj/item/twohanded/dualsaber/toy = ARCADE_WEIGHT_RARE,
-		/obj/item/twohanded/dualsaber/hypereutactic/toy = ARCADE_WEIGHT_RARE,
-		/obj/item/twohanded/dualsaber/hypereutactic/toy/rainbow = ARCADE_WEIGHT_RARE,
+		/obj/item/dualsaber/toy = ARCADE_WEIGHT_RARE,
+		/obj/item/dualsaber/hypereutactic/toy = ARCADE_WEIGHT_RARE,
+		/obj/item/dualsaber/hypereutactic/toy/rainbow = ARCADE_WEIGHT_RARE,
 
 		/obj/item/storage/box/snappops = ARCADE_WEIGHT_TRICK,
 		/obj/item/clothing/under/syndicate/tacticool = ARCADE_WEIGHT_TRICK,
@@ -55,7 +55,7 @@
 		/obj/item/stack/tile/fakespace/loaded = ARCADE_WEIGHT_TRICK,
 		/obj/item/stack/tile/fakepit/loaded = ARCADE_WEIGHT_TRICK,
 		/obj/item/restraints/handcuffs/fake = ARCADE_WEIGHT_TRICK,
-		/obj/item/clothing/gloves/rapid/hug = ARCADE_WEIGHT_TRICK,
+		/obj/item/clothing/gloves/fingerless/pugilist/hug = ARCADE_WEIGHT_TRICK,
 
 		/obj/item/grenade/chem_grenade/glitter/pink = ARCADE_WEIGHT_TRICK,
 		/obj/item/grenade/chem_grenade/glitter/blue = ARCADE_WEIGHT_TRICK,

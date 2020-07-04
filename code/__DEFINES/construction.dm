@@ -59,8 +59,6 @@
 //let's just pretend fulltile windows being children of border windows is fine
 #define FULLTILE_WINDOW_DIR NORTHEAST
 
-//The amount of materials you get from a sheet of mineral like iron/diamond/glass etc
-#define MINERAL_MATERIAL_AMOUNT 2000
 //The maximum size of a stack object.
 #define MAX_STACK_SIZE 50
 //maximum amount of cable in a coil
@@ -69,10 +67,16 @@
 //tablecrafting defines
 #define CAT_NONE	""
 #define CAT_WEAPONRY	"Weaponry"
-#define CAT_WEAPON	"Weapons"
+#define CAT_WEAPON	"Ranged Weapons"
+#define CAT_MELEE	"Melee Weapons"
+#define CAT_OTHER	"Misc"
 #define CAT_AMMO	"Ammunition"
+#define CAT_PARTS	"Weapon Parts"
 #define CAT_ROBOT	"Robots"
 #define CAT_MISC	"Misc"
+#define CAT_MISCELLANEOUS	"Miscellaneous"
+#define CAT_TOOL	"Tools & Storage"
+#define CAT_FURNITURE	"Furniture"
 #define CAT_PRIMAL  "Tribal"
 #define CAT_CLOTHING	"Clothing"
 #define CAT_FOOD	"Foods"
@@ -103,3 +107,8 @@
 
 #define RCD_UPGRADE_FRAMES 1
 #define RCD_UPGRADE_SIMPLE_CIRCUITS 2
+
+//Electrochromatic window defines.
+#define NOT_ELECTROCHROMATIC		0
+#define ELECTROCHROMATIC_OFF		1
+#define ELECTROCHROMATIC_DIMMED		2

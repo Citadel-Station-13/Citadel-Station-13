@@ -1,4 +1,0 @@
-author: "ShadeAware"
-delete-after: True
-changes: 
-  - bugfix: "Switchblades no longer regain their old Makeshift sprite after retracting if you've made them fancy with Silver."

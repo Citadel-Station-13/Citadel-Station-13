@@ -82,7 +82,7 @@
 			if(!IsUnconscious())
 				M.do_attack_animation(src, ATTACK_EFFECT_DISARM)
 				if (prob(25))
-					Knockdown(40)
+					DefaultCombatKnockdown(40)
 					playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
 					log_combat(M, src, "pushed")
 					visible_message("<span class='danger'>[M] has pushed down [src]!</span>", \
@@ -126,7 +126,7 @@
 		var/obj/item/I = null
 		playsound(loc, 'sound/weapons/pierce.ogg', 25, 1, -1)
 		if(prob(95))
-			Knockdown(20)
+			DefaultCombatKnockdown(20)
 			visible_message("<span class='danger'>[M] has tackled down [name]!</span>", \
 					"<span class='userdanger'>[M] has tackled down [name]!</span>", null, COMBAT_MESSAGE_RANGE)
 		else
@@ -141,7 +141,7 @@
 /mob/living/carbon/monkey/attack_animal(mob/living/simple_animal/M)
 	. = ..()
 	if(.)
-		var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
+		var/damage = .
 		var/dam_zone = dismembering_strike(M, pick(BODY_ZONE_CHEST, BODY_ZONE_PRECISE_L_HAND, BODY_ZONE_PRECISE_R_HAND, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG))
 		if(!dam_zone) //Dismemberment successful
 			return TRUE

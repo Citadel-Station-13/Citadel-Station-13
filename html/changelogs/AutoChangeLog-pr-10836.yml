@@ -1,5 +1,0 @@
-author: "Hatterhat"
-delete-after: True
-changes: 
-  - rscadd: "The Engineering techfab can now print standard and large RCD compressed matter cartridges."
-  - rscadd: "The Experimental Tools node now has the Combifan projector, blocking both temperature and atmospheric changes."

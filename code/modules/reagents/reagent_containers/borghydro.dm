@@ -28,7 +28,7 @@ Borg Hypospray
 
 	var/list/datum/reagents/reagent_list = list()
 	var/list/reagent_ids = list(/datum/reagent/medicine/dexalin, /datum/reagent/medicine/kelotane, /datum/reagent/medicine/bicaridine, /datum/reagent/medicine/antitoxin,
-								/datum/reagent/medicine/epinephrine, /datum/reagent/medicine/spaceacillin, /datum/reagent/medicine/salglu_solution, /datum/reagent/medicine/insulin)
+								/datum/reagent/medicine/epinephrine, /datum/reagent/medicine/spaceacillin, /datum/reagent/medicine/salglu_solution, /datum/reagent/medicine/insulin, /datum/reagent/medicine/potass_iodide)
 	var/accepts_reagent_upgrades = TRUE //If upgrades can increase number of reagents dispensed.
 	var/list/modes = list() //Basically the inverse of reagent_ids. Instead of having numbers as "keys" and strings as values it has strings as keys and numbers as values.
 								//Used as list for input() in shakers.
@@ -164,7 +164,7 @@ Borg Hypospray
 	icon_state = "borghypo_s"
 	charge_cost = 20
 	recharge_time = 2
-	reagent_ids = list(/datum/reagent/medicine/syndicate_nanites, /datum/reagent/medicine/potass_iodide, /datum/reagent/medicine/morphine, /datum/reagent/medicine/insulin)
+	reagent_ids = list(/datum/reagent/medicine/syndicate_nanites, /datum/reagent/medicine/prussian_blue, /datum/reagent/medicine/morphine, /datum/reagent/medicine/insulin)
 	bypass_protection = 1
 	accepts_reagent_upgrades = FALSE
 
@@ -261,5 +261,5 @@ Borg Shaker
 /obj/item/reagent_containers/borghypo/epi
 	name = "Stabilizer injector"
 	desc = "An advanced chemical synthesizer and injection system, designed to stabilize patients."
-	reagent_ids = list(/datum/reagent/medicine/epinephrine, /datum/reagent/medicine/insulin)
+	reagent_ids = list(/datum/reagent/medicine/epinephrine, /datum/reagent/medicine/insulin, /datum/reagent/medicine/potass_iodide)
 	accepts_reagent_upgrades = FALSE

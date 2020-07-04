@@ -2,16 +2,13 @@
 //returns TRUE if this mob has sufficient access to use this object
 /obj/proc/allowed(mob/M)
 	//check if it doesn't require any access at all
-	if(src.check_access(null))
+	if(check_access(null))
 		return TRUE
+	if(!M)
+		return FALSE
 	if(hasSiliconAccessInArea(M))
-		if(ispAI(M))
-			return FALSE
-		return TRUE	//AI can do whatever it wants
-	if(IsAdminGhost(M))
-		//Access can't stop the abuse
-		return TRUE
-	else if(istype(M) && SEND_SIGNAL(M, COMSIG_MOB_ALLOWED, src))
+		return TRUE	//AI, robots and adminghosts can do whatever they want
+	else if(SEND_SIGNAL(M, COMSIG_MOB_ALLOWED, src))
 		return TRUE
 	else if(ishuman(M))
 		var/mob/living/carbon/human/H = M

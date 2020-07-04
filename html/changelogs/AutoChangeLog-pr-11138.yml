@@ -1,4 +1,0 @@
-author: "kevinz000"
-delete-after: True
-changes: 
-  - tweak: "the game's built in autoclicker aka CanMobAutoclick no longer triggers client/Click()'s anti clickspam guard."

@@ -39,7 +39,6 @@
 				magazine = AM
 				if(oldmag)
 					to_chat(user, "<span class='notice'>You perform a tactical reload on \the [src], replacing the magazine.</span>")
-					oldmag.dropped()
 					oldmag.forceMove(get_turf(src.loc))
 					oldmag.update_icon()
 				else
@@ -366,6 +365,7 @@
 	can_unsuppress = TRUE
 	can_suppress = TRUE
 	w_class = WEIGHT_CLASS_NORMAL
+	inaccuracy_modifier = 0.5
 	zoomable = TRUE
 	zoom_amt = 10 //Long range, enough to see in front of you, but no tiles behind you.
 	zoom_out_amt = 13

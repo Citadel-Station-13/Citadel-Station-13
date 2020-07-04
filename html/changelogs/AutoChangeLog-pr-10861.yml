@@ -1,4 +1,0 @@
-author: "ancientpower"
-delete-after: True
-changes: 
-  - rscadd: "Ported drink sliding from /vg/station."

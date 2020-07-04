@@ -1,5 +1,0 @@
-author: "kevinz000"
-delete-after: True
-changes: 
-  - refactor: "Guncode and energy guns have been refactored a bit."
-  - rscadd: "You can now combat mode ight click on an energy gun to attempt to switch firing modes. This only works on guns without right click functions overridden."

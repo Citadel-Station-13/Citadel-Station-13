@@ -6,10 +6,23 @@
 			return number
 	return default
 
+/proc/sanitize_num_clamp(number, min=0, max=1, default=0, quantize=0)
+	if(!isnum(number))
+		return default
+	. = clamp(number, min, max)
+	if(quantize)
+		. = round(number, quantize)
+
 /proc/sanitize_text(text, default="")
 	if(istext(text))
 		return text
 	return default
+
+/proc/sanitize_islist(value, default)
+	if(islist(value) && length(value))
+		return value
+	if(default)
+		return default
 
 /proc/sanitize_inlist(value, list/List, default)
 	if(value in List)

@@ -21,7 +21,7 @@
 	var/obj/item/cigbutt/butt = /obj/item/cigbutt
 	saved_appearance = initial(butt.appearance)
 
-/obj/item/chameleon/dropped()
+/obj/item/chameleon/dropped(mob/user)
 	..()
 	disrupt()
 

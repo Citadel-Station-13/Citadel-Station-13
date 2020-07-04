@@ -64,8 +64,8 @@
 		var/turf/T = get_turf(user)
 		if(T && T.lighting_object && T.get_lumcount()>= 0.1)
 			// B) Check for Viewers
-			for(var/mob/living/M in viewers(get_turf(owner)))
-				if(M != owner && isliving(M) && M.mind && !M.silicon_privileges && !M.eye_blind) // M.client <--- add this in after testing!
+			for(var/mob/living/M in fov_viewers(world.view, get_turf(owner)) - owner)
+				if(M.client && !M.silicon_privileges && !M.eye_blind)
 					am_seen = TRUE
 					if (!M.mind.has_antag_datum(ANTAG_DATUM_BLOODSUCKER))
 						drop_item = TRUE
@@ -100,8 +100,8 @@
 	var/mob/living/simple_animal/SA = pick(/mob/living/simple_animal/mouse,/mob/living/simple_animal/mouse,/mob/living/simple_animal/mouse, /mob/living/simple_animal/hostile/retaliate/bat) //prob(300) /mob/living/simple_animal/mouse,
 	new SA (owner.loc)
 	// TELEPORT: Move to Coffin & Close it!
+	user.set_resting(TRUE, TRUE, FALSE)
 	do_teleport(owner, bloodsuckerdatum.coffin, no_effects = TRUE, forced = TRUE, channel = TELEPORT_CHANNEL_QUANTUM)
-	user.resting = TRUE
 	user.Stun(30,1)
 	// CLOSE LID: If fail, force me in.
 	if(!bloodsuckerdatum.coffin.close(owner))

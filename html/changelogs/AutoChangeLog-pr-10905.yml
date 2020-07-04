@@ -1,6 +1,0 @@
-author: "Hatterhat"
-delete-after: True
-changes: 
-  - tweak: "Standard RCD ammo can now be printed from Engineering-keyed techfabs once you hit Industrial Engineering."
-  - tweak: "Consoleless interfaces are now default - this means unrestricted protolathes and circuit imprinters can now be interfaced with by interacting with the machine itself."
-  - bugfix: "Multitools can now actually be printed from Engineering and Science protolathes/techfabs once you unlock Basic Tools."

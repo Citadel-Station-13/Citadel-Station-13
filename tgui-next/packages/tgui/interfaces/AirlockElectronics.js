@@ -79,7 +79,7 @@ export const AirlockElectronics = props => {
             />
             <Button
               icon={data.unres_direction & 2 ? 'check-square-o' : 'square-o'}
-              content="East"
+              content="South"
               selected={data.unres_direction & 2}
               onClick={() => act('direc_set', {
                 unres_direction: '2',
@@ -87,7 +87,7 @@ export const AirlockElectronics = props => {
             />
             <Button
               icon={data.unres_direction & 4 ? 'check-square-o' : 'square-o'}
-              content="South"
+              content="East"
               selected={data.unres_direction & 4}
               onClick={() => act('direc_set', {
                 unres_direction: '4',

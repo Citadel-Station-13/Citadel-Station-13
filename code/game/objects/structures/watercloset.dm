@@ -11,13 +11,20 @@
 	var/cistern = 0			//if the cistern bit is open
 	var/w_items = 0			//the combined w_class of all the items in the cistern
 	var/mob/living/swirlie = null	//the mob being given a swirlie
-
+	var/buildstacktype = /obj/item/stack/sheet/metal //they're metal now, shut up
+	var/buildstackamount = 1
 
 /obj/structure/toilet/Initialize()
 	. = ..()
 	open = round(rand(0, 1))
 	update_icon()
 
+/obj/structure/toilet/Destroy()
+	if(loc)
+		for(var/A in contents)
+			var/atom/movable/AM = A
+			AM.forceMove(loc)
+	return ..()
 
 /obj/structure/toilet/attack_hand(mob/living/user)
 	. = ..()
@@ -66,17 +73,26 @@
 			else
 				I.forceMove(drop_location())
 			to_chat(user, "<span class='notice'>You find [I] in the cistern.</span>")
-			w_items -= I.w_class
+			w_items = max(w_items - I.w_class, 0)
 	else
 		open = !open
 		update_icon()
 
-
-/obj/structure/toilet/update_icon()
+/obj/structure/toilet/update_icon_state()
 	icon_state = "toilet[open][cistern]"
 
+/obj/structure/toilet/deconstruct()
+	if(!(flags_1 & NODECONSTRUCT_1))
+		if(buildstacktype)
+			new buildstacktype(loc,buildstackamount)
+		else
+			for(var/i in custom_materials)
+				var/datum/material/M = i
+				new M.sheet_type(loc, FLOOR(custom_materials[M] / MINERAL_MATERIAL_AMOUNT, 1))
+	..()
 
 /obj/structure/toilet/attackby(obj/item/I, mob/living/user, params)
+	add_fingerprint(user)
 	if(istype(I, /obj/item/crowbar))
 		to_chat(user, "<span class='notice'>You start to [cistern ? "replace the lid on the cistern" : "lift the lid off the cistern"]...</span>")
 		playsound(loc, 'sound/effects/stonedoor_openclose.ogg', 50, 1)
@@ -84,7 +100,9 @@
 			user.visible_message("[user] [cistern ? "replaces the lid on the cistern" : "lifts the lid off the cistern"]!", "<span class='notice'>You [cistern ? "replace the lid on the cistern" : "lift the lid off the cistern"]!</span>", "<span class='italics'>You hear grinding porcelain.</span>")
 			cistern = !cistern
 			update_icon()
-
+	else if(I.tool_behaviour == TOOL_WRENCH && !(flags_1&NODECONSTRUCT_1))
+		I.play_tool_sound(src)
+		deconstruct()
 	else if(cistern)
 		if(user.a_intent != INTENT_HARM)
 			if(I.w_class > WEIGHT_CLASS_NORMAL)
@@ -99,6 +117,10 @@
 			w_items += I.w_class
 			to_chat(user, "<span class='notice'>You carefully place [I] into the cistern.</span>")
 
+	if(istype(I, /obj/item/reagent_containers/food/snacks/cube))
+		var/obj/item/reagent_containers/food/snacks/cube/cube = I
+		cube.Expand()
+		return
 	else if(istype(I, /obj/item/reagent_containers))
 		if (!open)
 			return
@@ -116,12 +138,27 @@
 	. = ..()
 	if (secret_type)
 		secret = new secret_type(src)
-		secret.desc += " It's a secret!"
-		w_items += secret.w_class
+		secret.desc += "" //In case you want to add something to the item that spawns
 		contents += secret
 
+/obj/structure/toilet/secret/LateInitialize()
+	. = ..()
+	w_items = 0 //recalculate total weight thanks to the secret.
+	for(var/obj/item/I in contents)
+		w_items += I.w_class
 
+/obj/structure/toilet/secret/low_loot
+	secret_type = /obj/effect/spawner/lootdrop/low_loot_toilet
 
+/obj/structure/toilet/secret/high_loot
+	secret_type = /obj/effect/spawner/lootdrop/high_loot_toilet
+
+/obj/structure/toilet/secret/prison
+	secret_type = /obj/effect/spawner/lootdrop/prison_loot_toilet
+
+/obj/structure/toilet/greyscale
+	material_flags = MATERIAL_ADD_PREFIX | MATERIAL_COLOR
+	buildstacktype = null
 
 /obj/structure/urinal
 	name = "urinal"
@@ -194,7 +231,6 @@
 		exposed = !exposed
 	return TRUE
 
-
 /obj/item/reagent_containers/food/urinalcake
 	name = "urinal cake"
 	desc = "The noble urinal cake, protecting the station's pipes from the station's pee. Do not eat."
@@ -216,8 +252,6 @@
 	density = FALSE
 	use_power = NO_POWER_USE
 	var/on = FALSE
-	var/obj/effect/mist/mymist = null
-	var/ismist = 0				//needs a var so we can make it linger~
 	var/watertemp = "normal"	//freezing, normal, or boiling
 	var/datum/looping_sound/showering/soundloop
 
@@ -240,6 +274,7 @@
 /obj/machinery/shower/interact(mob/M)
 	on = !on
 	update_icon()
+	handle_mist()
 	add_fingerprint(M)
 	if(on)
 		START_PROCESSING(SSmachines, src)
@@ -279,32 +314,30 @@
 		add_hiddenprint(user)
 	return TRUE
 
-
-/obj/machinery/shower/update_icon()	//this is terribly unreadable, but basically it makes the shower mist up
-	cut_overlays()					//once it's been on for a while, in addition to handling the water overlay.
-	if(mymist)
-		qdel(mymist)
-
+/obj/machinery/shower/update_overlays()
+	. = ..()
 	if(on)
-		add_overlay(mutable_appearance('icons/obj/watercloset.dmi', "water", ABOVE_MOB_LAYER))
-		if(watertemp == "freezing")
-			return
-		if(!ismist)
-			spawn(50)
-				if(src && on)
-					ismist = 1
-					mymist = new /obj/effect/mist(loc)
-		else
-			ismist = 1
-			mymist = new /obj/effect/mist(loc)
-	else if(ismist)
-		ismist = 1
-		mymist = new /obj/effect/mist(loc)
-		spawn(250)
-			if(!on && mymist)
-				qdel(mymist)
-				ismist = 0
+		. += mutable_appearance('icons/obj/watercloset.dmi', "water", ABOVE_MOB_LAYER)
 
+/obj/machinery/shower/proc/handle_mist()
+	// If there is no mist, and the shower was turned on (on a non-freezing temp): make mist in 5 seconds
+	// If there was already mist, and the shower was turned off (or made cold): remove the existing mist in 25 sec
+	var/obj/effect/mist/mist = locate() in loc
+	if(!mist && on && watertemp != "freezing")
+		addtimer(CALLBACK(src, .proc/make_mist), 5 SECONDS)
+
+	if(mist && (!on || watertemp == "freezing"))
+		addtimer(CALLBACK(src, .proc/clear_mist), 25 SECONDS)
+
+/obj/machinery/shower/proc/make_mist()
+	var/obj/effect/mist/mist = locate() in loc
+	if(!mist && on && watertemp != "freezing")
+		new /obj/effect/mist(loc)
+
+/obj/machinery/shower/proc/clear_mist()
+	var/obj/effect/mist/mist = locate() in loc
+	if(mist && (!on || watertemp == "freezing"))
+		qdel(mist)
 
 /obj/machinery/shower/Crossed(atom/movable/AM)
 	..()
@@ -317,7 +350,6 @@
 		else if(isobj(AM))
 			wash_obj(AM)
 
-
 /obj/machinery/shower/proc/wash_obj(obj/O)
 	. = SEND_SIGNAL(O, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_WEAK)
 	. = O.clean_blood()
@@ -326,7 +358,6 @@
 		var/obj/item/I = O
 		I.acid_level = 0
 		I.extinguish()
-
 
 /obj/machinery/shower/proc/wash_turf()
 	if(isturf(loc))
@@ -337,7 +368,6 @@
 		for(var/obj/effect/E in tile)
 			if(is_cleanable(E))
 				qdel(E)
-
 
 /obj/machinery/shower/proc/wash_mob(mob/living/L)
 	SEND_SIGNAL(L, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_WEAK)
@@ -444,17 +474,12 @@
 		C.adjustFireLoss(5)
 		to_chat(C, "<span class='danger'>The water is searing!</span>")
 
-
-
-
 /obj/item/bikehorn/rubberducky
 	name = "rubber ducky"
 	desc = "Rubber ducky you're so fine, you make bathtime lots of fuuun. Rubber ducky I'm awfully fooooond of yooooouuuu~"	//thanks doohl
 	icon = 'icons/obj/watercloset.dmi'
 	icon_state = "rubberducky"
 	item_state = "rubberducky"
-
-
 
 /obj/structure/sink
 	name = "sink"
@@ -464,7 +489,8 @@
 	anchored = TRUE
 	var/busy = FALSE 	//Something's being washed at the moment
 	var/dispensedreagent = /datum/reagent/water // for whenever plumbing happens
-
+	var/buildstacktype = /obj/item/stack/sheet/metal
+	var/buildstackamount = 1
 
 /obj/structure/sink/attack_hand(mob/living/user)
 	. = ..()
@@ -526,10 +552,10 @@
 	if(istype(O, /obj/item/melee/baton))
 		var/obj/item/melee/baton/B = O
 		if(B.cell)
-			if(B.cell.charge > 0 && B.status == 1)
+			if(B.cell.charge > 0 && B.turned_on)
 				flick("baton_active", src)
 				var/stunforce = B.stamforce
-				user.Knockdown(stunforce * 2)
+				user.DefaultCombatKnockdown(stunforce * 2)
 				user.stuttering = stunforce/20
 				B.deductcharge(B.hitcost)
 				user.visible_message("<span class='warning'>[user] shocks [user.p_them()]self while attempting to wash the active [B.name]!</span>", \
@@ -543,11 +569,22 @@
 		playsound(loc, 'sound/effects/slosh.ogg', 25, 1)
 		return
 
+	if(O.tool_behaviour == TOOL_WRENCH && !(flags_1&NODECONSTRUCT_1))
+		O.play_tool_sound(src)
+		deconstruct()
+		return
+
 	if(istype(O, /obj/item/stack/medical/gauze))
 		var/obj/item/stack/medical/gauze/G = O
 		new /obj/item/reagent_containers/rag(src.loc)
 		to_chat(user, "<span class='notice'>You tear off a strip of gauze and make a rag.</span>")
 		G.use(1)
+		return
+
+	if(istype(O, /obj/item/stack/ore/glass))
+		new /obj/item/stack/sheet/sandblock(loc)
+		to_chat(user, "<span class='notice'>You wet the sand in the sink and form it into a block.</span>")
+		O.use(1)
 		return
 
 	if(!istype(O))
@@ -574,16 +611,95 @@
 	else
 		return ..()
 
-/obj/structure/sink/deconstruct(disassembled = TRUE)
-	new /obj/item/stack/sheet/metal (loc, 3)
-	qdel(src)
+/obj/structure/sink/deconstruct()
+	if(!(flags_1 & NODECONSTRUCT_1))
+		drop_materials()
+	..()
 
-
+/obj/structure/sink/proc/drop_materials()
+	if(buildstacktype)
+		new buildstacktype(loc,buildstackamount)
+	else
+		for(var/i in custom_materials)
+			var/datum/material/M = i
+			new M.sheet_type(loc, FLOOR(custom_materials[M] / MINERAL_MATERIAL_AMOUNT, 1))
 
 /obj/structure/sink/kitchen
 	name = "kitchen sink"
 	icon_state = "sink_alt"
 
+/obj/structure/sink/well
+	name = "well"
+	desc = "A well, used to get water from an underground reservoir."
+	icon_state = "well"
+
+//The making of the well
+/obj/structure/well_foundation
+	name = "well foundation"
+	desc = "A small patch of dirt, ready for a well to be made over it. Just use a shovel!"
+	icon = 'icons/obj/watercloset.dmi'
+	icon_state = "well_1"
+	density = FALSE
+	anchored = TRUE
+	max_integrity = 1000
+	var/steps = 0
+
+/obj/structure/well_foundation/attackby(obj/item/S, mob/user, params)
+	if(steps == 0 && S.tool_behaviour == TOOL_SHOVEL)
+		S.use_tool(src, user, 80, volume=100)
+		steps = 1
+		desc = "A deep patch of dirt, ready for a well to be made over it. Just add some sandstone!"
+		icon_state = "well_1"
+		return TRUE
+	if(steps == 1 && istype(S, /obj/item/stack/sheet/mineral/sandstone))
+		if(S.use(15))
+			steps = 2
+			desc = "A patch of dirt and bricks. Just add some more sandstone!"
+			icon_state = "well_2"
+			return TRUE
+		else
+			to_chat(user, "<span class='warning'>You need at least fifteen pieces of sandstone!</span>")
+			return
+	if(steps == 2 && istype(S, /obj/item/stack/sheet/mineral/sandstone))
+		if(S.use(25))
+			steps = 3
+			desc = "A large well foundation ready to be dug out. Just use a shovel!"
+			icon_state = "well_3"
+			return TRUE
+		else
+			to_chat(user, "<span class='warning'>You need at least tweenty-five pieces of sandstone!</span>")
+			return
+	if(steps == 3 && S.tool_behaviour == TOOL_SHOVEL)
+		S.use_tool(src, user, 80, volume=100)
+		steps = 4
+		desc = "A deep patch of dirt, needs something to hold a bucket and rope. Just add some wood planks!"
+		icon_state = "well_3"
+		return TRUE
+	if(steps == 4 && istype(S, /obj/item/stack/sheet/mineral/wood))
+		if(S.use(3))
+			steps = 5
+			desc = "A dug out well, A dug out well without rope. Just add some cloth!"
+			icon_state = "well_4"
+			return TRUE
+		else
+			to_chat(user, "<span class='warning'>You need at least three planks!</span>")
+			return
+	if(steps == 5 && istype(S, /obj/item/stack/sheet/cloth))
+		if(S.use(2))
+			steps = 6
+			desc = "A dug out well with a rope. Just add a wooden bucket!"
+			icon_state = "well_5"
+			return TRUE
+		else
+			to_chat(user, "<span class='warning'>You need at least two pieces of cloth!</span>")
+			return
+	if(steps == 6 && istype(S, /obj/item/reagent_containers/glass/bucket/wood))
+		new /obj/structure/sink/well(loc)
+		qdel(S)
+		qdel(src)
+		return
+	else
+		return ..()
 
 /obj/structure/sink/puddle	//splishy splashy ^_^
 	name = "puddle"
@@ -605,10 +721,13 @@
 /obj/structure/sink/puddle/deconstruct(disassembled = TRUE)
 	qdel(src)
 
+/obj/structure/sink/greyscale
+	icon_state = "sink_greyscale"
+	material_flags = MATERIAL_ADD_PREFIX | MATERIAL_COLOR
+	buildstacktype = null
 
 //Shower Curtains//
 //Defines used are pre-existing in layers.dm//
-
 
 /obj/structure/curtain
 	name = "curtain"
@@ -616,9 +735,10 @@
 	icon = 'icons/obj/watercloset.dmi'
 	icon_state = "open"
 	color = "#ACD1E9" //Default color, didn't bother hardcoding other colors, mappers can and should easily change it.
-	alpha = 200 //Mappers can also just set this to 255 if they want curtains that can't be seen through
+	alpha = 200 //Mappers can also just set this to 255 if they want curtains that can't be seen through <- No longer necessary unless you don't want to see through it no matter what.
 	layer = SIGN_LAYER
 	anchored = TRUE
+	max_integrity = 25 //This makes cloth shower curtains as durable as a directional glass window. 300 integrity buildable shower curtains as a cover mechanic is a meta I don't want to see.
 	opacity = 0
 	density = FALSE
 	var/open = TRUE
@@ -627,18 +747,20 @@
 	open = !open
 	update_icon()
 
-/obj/structure/curtain/update_icon()
+/obj/structure/curtain/update_icon_state()
 	if(!open)
 		icon_state = "closed"
 		layer = WALL_OBJ_LAYER
 		density = TRUE
 		open = FALSE
+		opacity = TRUE
 
 	else
 		icon_state = "open"
 		layer = SIGN_LAYER
 		density = FALSE
 		open = TRUE
+		opacity = FALSE
 
 /obj/structure/curtain/attackby(obj/item/W, mob/user)
 	if (istype(W, /obj/item/toy/crayon))
@@ -661,7 +783,6 @@
 		deconstruct()
 
 	return TRUE
-
 
 /obj/structure/curtain/attack_hand(mob/user)
 	. = ..()

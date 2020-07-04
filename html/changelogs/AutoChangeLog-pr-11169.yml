@@ -1,8 +1,0 @@
-author: "PersianXerxes"
-delete-after: True
-changes: 
-  - rscadd: "Added Kilo Station"
-  - tweak: "Adjusts Kilo Station to be more in line with Citadel standards"
-  - imageadd: "Added area icons required to make Kilo Station editable on Citadel code"
-  - code_imp: "Fixed a reagent container on Kilo pointing to a nonexistent reagent"
-  - config: "Adds Kilo Station to the maps config file, does not fix Meta Station's population requirement"

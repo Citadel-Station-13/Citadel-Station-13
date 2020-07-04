@@ -11,6 +11,7 @@
 	icon_living = "leaper"
 	icon_dead = "leaper_dead"
 	mob_biotypes = MOB_ORGANIC|MOB_BEAST
+	threat = 2
 	maxHealth = 300
 	health = 300
 	ranged = TRUE
@@ -26,7 +27,7 @@
 	var/hop_cooldown = 0 //Strictly for player controlled leapers
 	var/projectile_ready = FALSE //Stopping AI leapers from firing whenever they want, and only doing it after a hop has finished instead
 
-	do_footstep = TRUE
+	footstep_type = FOOTSTEP_MOB_HEAVY
 
 /obj/item/projectile/leaper
 	name = "leaper bubble"
@@ -93,7 +94,7 @@
 		var/mob/living/L = AM
 		if(!istype(L, /mob/living/simple_animal/hostile/jungle/leaper))
 			playsound(src,'sound/effects/snap.ogg',50, 1, -1)
-			L.Knockdown(50)
+			L.DefaultCombatKnockdown(50)
 			if(iscarbon(L))
 				var/mob/living/carbon/C = L
 				C.reagents.add_reagent(/datum/reagent/toxin/leaper_venom, 5)
@@ -165,8 +166,9 @@
 		if(!hopping)
 			Hop()
 
-/mob/living/simple_animal/hostile/jungle/leaper/Life()
-	. = ..()
+/mob/living/simple_animal/hostile/jungle/leaper/BiologicalLife(seconds, times_fired)
+	if(!(. = ..()))
+		return
 	update_icons()
 
 /mob/living/simple_animal/hostile/jungle/leaper/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
@@ -196,7 +198,7 @@
 	hopping = TRUE
 	density = FALSE
 	pass_flags |= PASSMOB
-	notransform = TRUE
+	mob_transforming = TRUE
 	var/turf/new_turf = locate((target.x + rand(-3,3)),(target.y + rand(-3,3)),target.z)
 	if(player_hop)
 		new_turf = get_turf(target)
@@ -208,7 +210,7 @@
 
 /mob/living/simple_animal/hostile/jungle/leaper/proc/FinishHop()
 	density = TRUE
-	notransform = FALSE
+	mob_transforming = FALSE
 	pass_flags &= ~PASSMOB
 	hopping = FALSE
 	playsound(src.loc, 'sound/effects/meteorimpact.ogg', 100, 1)
@@ -219,7 +221,7 @@
 /mob/living/simple_animal/hostile/jungle/leaper/proc/BellyFlop()
 	var/turf/new_turf = get_turf(target)
 	hopping = TRUE
-	notransform = TRUE
+	mob_transforming = TRUE
 	new /obj/effect/temp_visual/leaper_crush(new_turf)
 	addtimer(CALLBACK(src, .proc/BellyFlopHop, new_turf), 30)
 
@@ -230,7 +232,7 @@
 /mob/living/simple_animal/hostile/jungle/leaper/proc/Crush()
 	hopping = FALSE
 	density = TRUE
-	notransform = FALSE
+	mob_transforming = FALSE
 	playsound(src, 'sound/effects/meteorimpact.ogg', 200, 1)
 	for(var/mob/living/L in orange(1, src))
 		L.adjustBruteLoss(35)

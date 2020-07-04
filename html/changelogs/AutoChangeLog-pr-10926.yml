@@ -1,9 +1,0 @@
-author: "keronshb"
-delete-after: True
-changes: 
-  - rscadd: "Added repairable turrets"
-  - rscadd: "Adds Tiny Fans to the pirate ship"
-  - tweak: "changes some reinforced windows to plastinanium pirate windows"
-  - tweak: "made the pirate shuttle + turrets bomb resistant"
-  - tweak: "made most pirate machines + consoles indestructible"
-  - tweak: "increased pirate turret health"

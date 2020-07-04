@@ -190,10 +190,10 @@
 		var/cost = 400
 		if(ispath(build_type, /obj/item/electronic_assembly))
 			var/obj/item/electronic_assembly/E = SScircuit.cached_assemblies[build_type]
-			cost = E.custom_materials[getmaterialref(/datum/material/iron)]
+			cost = E.custom_materials[SSmaterials.GetMaterialRef(/datum/material/iron)]
 		else if(ispath(build_type, /obj/item/integrated_circuit))
 			var/obj/item/integrated_circuit/IC = SScircuit.cached_components[build_type]
-			cost = IC.custom_materials[getmaterialref(/datum/material/iron)]
+			cost = IC.custom_materials[SSmaterials.GetMaterialRef(/datum/material/iron)]
 		else if(!(build_type in SScircuit.circuit_fabricator_recipe_list["Tools"]))
 			return
 

@@ -1,6 +1,0 @@
-author: "Trilbyspaceclone"
-delete-after: True
-changes: 
-  - rscadd: "restock crates for each vender"
-  - rscadd: "restock units for all station venders"
-  - bugfix: "Sec-vender missing icon"

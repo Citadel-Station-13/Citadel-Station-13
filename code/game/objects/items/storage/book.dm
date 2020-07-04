@@ -52,7 +52,7 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "bible",  
 		return
 	// If H is the Chaplain, we can set the icon_state of the bible (but only once!)
 	if(!GLOB.bible_icon_state && H.job == "Chaplain")
-		var/dat = "<html><head><title>Pick Bible Style</title></head><body><center><h2>Pick a bible style</h2></center><table>"
+		var/dat = "<html><head><meta http-equiv='Content-Type' content='text/html; charset=UTF-8'><title>Pick Bible Style</title></head><body><center><h2>Pick a bible style</h2></center><table>"
 		for(var/i in 1 to GLOB.biblestates.len)
 			var/icon/bibleicon = icon('icons/obj/storage.dmi', GLOB.biblestates[i])
 			var/nicename = GLOB.biblenames[i]
@@ -173,12 +173,12 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "bible",  
 			var/unholy2clean = A.reagents.get_reagent_amount(/datum/reagent/fuel/unholywater)
 			A.reagents.del_reagent(/datum/reagent/fuel/unholywater)
 			A.reagents.add_reagent(/datum/reagent/water/holywater,unholy2clean)
-	if(istype(A, /obj/item/twohanded/required/cult_bastard) || istype(A, /obj/item/melee/cultblade) && !iscultist(user))
+	if(istype(A, /obj/item/cult_bastard) || istype(A, /obj/item/melee/cultblade) && !iscultist(user))
 		to_chat(user, "<span class='notice'>You begin to exorcise [A].</span>")
 		playsound(src,'sound/hallucinations/veryfar_noise.ogg',40,1)
 		if(do_after(user, 40, target = A))
 			playsound(src,'sound/effects/pray_chaplain.ogg',60,1)
-			if(istype(A, /obj/item/twohanded/required/cult_bastard))
+			if(istype(A, /obj/item/cult_bastard))
 				for(var/obj/item/soulstone/SS in A.contents)
 					SS.usability = TRUE
 					for(var/mob/living/simple_animal/shade/EX in SS)

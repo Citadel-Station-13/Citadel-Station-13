@@ -4,6 +4,7 @@
 	var/name = "team"
 	var/member_name = "member"
 	var/list/objectives = list() //common objectives, these won't be added or removed automatically, subtypes handle this, this is here for bookkeeping purposes.
+	var/show_roundend_report = TRUE
 
 /datum/team/New(starting_members)
 	. = ..()
@@ -25,6 +26,8 @@
 
 //Display members/victory/failure/objectives for the team
 /datum/team/proc/roundend_report()
+	if(!show_roundend_report)
+		return
 	var/list/report = list()
 
 	report += "<span class='header'>[name]:</span>"
@@ -39,7 +42,7 @@
 			if(objective.completable)
 				var/completion = objective.check_completion()
 				if(completion >= 1)
-					report += "<B>Objective #[objective_count]</B>: [objective.explanation_text] <span class='greentext'><B>Success!</span>"
+					report += "<B>Objective #[objective_count]</B>: [objective.explanation_text] <span class='greentext'><B>Success!</B></span>"
 				else if(completion <= 0)
 					report += "<B>Objective #[objective_count]</B>: [objective.explanation_text] <span class='redtext'>Fail.</span>"
 					win = FALSE

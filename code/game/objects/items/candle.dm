@@ -13,13 +13,14 @@
 	var/lit = FALSE
 	var/infinite = FALSE
 	var/start_lit = FALSE
+	var/heats_space = TRUE
 
 /obj/item/candle/Initialize()
 	. = ..()
 	if(start_lit)
 		light()
 
-/obj/item/candle/update_icon()
+/obj/item/candle/update_icon_state()
 	icon_state = "candle[(wax > 400) ? ((wax > 750) ? 1 : 2) : 3][lit ? "_lit" : ""]"
 
 /obj/item/candle/attackby(obj/item/W, mob/user, params)
@@ -35,7 +36,7 @@
 	return ..()
 
 /obj/item/candle/get_temperature()
-	return lit * heat
+	return lit * heat * heats_space
 
 /obj/item/candle/proc/light(show_message)
 	if(!lit)
@@ -67,7 +68,8 @@
 		new /obj/item/trash/candle(loc)
 		qdel(src)
 	update_icon()
-	open_flame()
+	if(heats_space)
+		open_flame()
 
 /obj/item/candle/attack_self(mob/user)
 	if(put_out_candle())
@@ -76,5 +78,8 @@
 /obj/item/candle/infinite
 	infinite = TRUE
 	start_lit = TRUE
+
+/obj/item/candle/infinite/hugbox
+	heats_space = FALSE
 
 #undef CANDLE_LUMINOSITY

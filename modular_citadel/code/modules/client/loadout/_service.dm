@@ -1,7 +1,7 @@
 /datum/gear/greytidestationwide
 	name = "Staff Assistant's jumpsuit"
 	category = SLOT_W_UNIFORM
-	path = /obj/item/clothing/under/staffassistant
+	path = /obj/item/clothing/under/misc/staffassistant
 	restricted_roles = list("Assistant")
 
 /datum/gear/neetsuit

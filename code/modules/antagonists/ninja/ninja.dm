@@ -4,9 +4,13 @@
 	job_rank = ROLE_NINJA
 	show_name_in_check_antagonists = TRUE
 	antag_moodlet = /datum/mood_event/focused
+	threat = 8
 	var/helping_station = FALSE
 	var/give_objectives = TRUE
 	var/give_equipment = TRUE
+
+/datum/antagonist/ninja/threat()
+	return helping_station ? -(..()) : ..()
 
 /datum/antagonist/ninja/apply_innate_effects(mob/living/mob_override)
 	var/mob/living/M = mob_override || owner.current
@@ -70,16 +74,10 @@
 					O.explanation_text = "Protect \the [M.current.real_name], the [M.assigned_role], from harm."
 					objectives += O
 			if(4)	//flavor
-				if(helping_station)
-					var/datum/objective/flavor/ninja_helping/O = new /datum/objective/flavor/ninja_helping
-					O.owner = owner
-					O.forge_objective()
-					objectives += O
-				else
-					var/datum/objective/flavor/ninja_syndie/O = new /datum/objective/flavor/ninja_helping
-					O.owner = owner
-					O.forge_objective()
-					objectives += O
+				var/datum/objective/flavor/O = helping_station ? new /datum/objective/flavor/ninja_helping : new /datum/objective/flavor/ninja_syndie
+				O.owner = owner
+				O.forge_objective()
+				objectives += O
 			else
 				break
 	var/datum/objective/O = new /datum/objective/survive()

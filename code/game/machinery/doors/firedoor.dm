@@ -171,16 +171,20 @@
 		if("closing")
 			flick("door_closing", src)
 
-/obj/machinery/door/firedoor/update_icon()
-	cut_overlays()
+/obj/machinery/door/firedoor/update_icon_state()
 	if(density)
 		icon_state = "door_closed"
-		if(welded)
-			add_overlay("welded")
 	else
 		icon_state = "door_open"
-		if(welded)
-			add_overlay("welded_open")
+
+/obj/machinery/door/firedoor/update_overlays()
+	. = ..()
+	if(!welded)
+		return
+	if(density)
+		. += "welded"
+	else
+		. += "welded_open"
 
 /obj/machinery/door/firedoor/open()
 	. = ..()
@@ -256,6 +260,7 @@
 
 /obj/item/electronics/firelock
 	name = "firelock circuitry"
+	custom_price = PRICE_CHEAP
 	desc = "A circuit board used in construction of firelocks."
 	icon_state = "mainboard"
 
@@ -283,8 +288,7 @@
 		if(CONSTRUCTION_NOCIRCUIT)
 			. += "<span class='notice'>There are no <i>firelock electronics</i> in the frame. The frame could be <b>cut</b> apart.</span>"
 
-/obj/structure/firelock_frame/update_icon()
-	..()
+/obj/structure/firelock_frame/update_icon_state()
 	icon_state = "frame[constructionStep]"
 
 /obj/structure/firelock_frame/attackby(obj/item/C, mob/user)
@@ -397,12 +401,11 @@
 									 "<span class='notice'>You begin adding wires to [src]...</span>")
 				playsound(get_turf(src), 'sound/items/deconstruct.ogg', 50, 1)
 				if(do_after(user, 60, target = src))
-					if(constructionStep != CONSTRUCTION_GUTTED || B.get_amount() < 5 || !B)
+					if(constructionStep != CONSTRUCTION_GUTTED || !B.use_tool(src, user, 0, 5))
 						return
 					user.visible_message("<span class='notice'>[user] adds wires to [src].</span>", \
 										 "<span class='notice'>You wire [src].</span>")
 					playsound(get_turf(src), 'sound/items/deconstruct.ogg', 50, 1)
-					B.use(5)
 					constructionStep = CONSTRUCTION_WIRES_EXPOSED
 					update_icon()
 				return

@@ -1,5 +1,0 @@
-author: "Ghommie"
-delete-after: True
-changes: 
-  - bugfix: "Stopped the ellipsis question mark from being displayed twice in the examine message for masked/unknown human mobs."
-  - tweak: "Made the aforementioned ellipsis question mark display on flavor-text-less masked/unknown human mobs too for consistency."

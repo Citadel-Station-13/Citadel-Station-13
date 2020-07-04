@@ -242,6 +242,7 @@
 	if((isnull(user) || istype(user)) && state_open && !panel_open)
 		..(user)
 		var/mob/living/mob_occupant = occupant
+		investigate_log("Cryogenics machine closed with occupant [key_name(occupant)] by user [key_name(user)].", INVESTIGATE_CRYOGENICS)
 		if(mob_occupant && mob_occupant.stat != DEAD)
 			to_chat(occupant, "<span class='boldnotice'>You feel cool air surround you. You go numb as your senses turn inward.</span>")
 		if(mob_occupant.client)//if they're logged in
@@ -251,12 +252,15 @@
 	icon_state = "cryopod"
 
 /obj/machinery/cryopod/open_machine()
+	if(occupant)
+		investigate_log("Cryogenics machine opened with occupant [key_name(occupant)] inside.", INVESTIGATE_CRYOGENICS)
 	..()
 	icon_state = "cryopod-open"
 	density = TRUE
 	name = initial(name)
 
 /obj/machinery/cryopod/container_resist(mob/living/user)
+	investigate_log("Cryogenics machine container resisted by [key_name(user)] with occupant [key_name(occupant)].", INVESTIGATE_CRYOGENICS)
 	visible_message("<span class='notice'>[occupant] emerges from [src]!</span>",
 		"<span class='notice'>You climb out of [src]!</span>")
 	open_machine()
@@ -287,6 +291,7 @@
 #define CRYO_PRESERVE 1
 #define CRYO_OBJECTIVE 2
 #define CRYO_IGNORE 3
+#define CRYO_DESTROY_LATER 4
 
 /obj/machinery/cryopod/proc/should_preserve_item(obj/item/I)
 	for(var/datum/objective_item/steal/T in control_computer.theft_cache)
@@ -303,13 +308,15 @@
 
 	var/mob/living/mob_occupant = occupant
 	var/list/obj/item/cryo_items = list()
+	
+	investigate_log("Despawning [key_name(mob_occupant)].", INVESTIGATE_CRYOGENICS)
 
 	//Handle Borg stuff first
 	if(iscyborg(mob_occupant))
 		var/mob/living/silicon/robot/R = mob_occupant
 		if(R.mmi?.brain)
-			cryo_items[R.mmi] = CRYO_IGNORE
-			cryo_items[R.mmi.brain] = CRYO_IGNORE
+			cryo_items[R.mmi] = CRYO_DESTROY_LATER
+			cryo_items[R.mmi.brain] = CRYO_DESTROY_LATER
 		for(var/obj/item/I in R.module) // the tools the borg has; metal, glass, guns etc
 			for(var/obj/item/O in I) // the things inside the tools, if anything; mainly for janiborg trash bags
 				cryo_items[O] = should_preserve_item(O)
@@ -318,7 +325,7 @@
 
 	//Drop all items into the pod.
 	for(var/obj/item/I in mob_occupant)
-		if(cryo_items[I] == CRYO_IGNORE)
+		if(cryo_items[I] == CRYO_IGNORE || cryo_items[I] ==CRYO_DESTROY_LATER)
 			continue
 		cryo_items[I] = should_preserve_item(I)
 		mob_occupant.transferItemToLoc(I, src, TRUE)
@@ -334,17 +341,19 @@
 		if(QDELETED(I)) //edge cases and DROPDEL.
 			continue
 		var/preserve = cryo_items[I]
-		if(preserve == CRYO_IGNORE)
+		if(preserve == CRYO_DESTROY_LATER)
 			continue
-		else if(preserve == CRYO_DESTROY)
-			qdel(I)
-		else if(control_computer?.allow_items)
-			control_computer.frozen_items += I
-			if(preserve == CRYO_OBJECTIVE)
-				control_computer.objective_items += I
-			I.moveToNullspace()
-		else
-			I.forceMove(loc)
+		if(preserve != CRYO_IGNORE)
+			if(preserve == CRYO_DESTROY)
+				qdel(I)
+			else if(control_computer?.allow_items)
+				control_computer.frozen_items += I
+				if(preserve == CRYO_OBJECTIVE)
+					control_computer.objective_items += I
+				I.moveToNullspace()
+			else
+				I.forceMove(loc)
+		cryo_items -= I
 
 	//Update any existing objectives involving this mob.
 	for(var/datum/objective/O in GLOB.objectives)
@@ -402,9 +411,13 @@
 
 	// Ghost and delete the mob.
 	if(!mob_occupant.get_ghost(1))
-		mob_occupant.ghostize(FALSE, penalize = TRUE)
+		mob_occupant.ghostize(FALSE, penalize = TRUE, voluntary = TRUE)
 
 	QDEL_NULL(occupant)
+	for(var/I in cryo_items) //only "CRYO_DESTROY_LATER" atoms are left)
+		var/atom/A = I
+		if(!QDELETED(A))
+			qdel(A)
 	open_machine()
 	name = initial(name)
 
@@ -412,6 +425,7 @@
 #undef CRYO_PRESERVE
 #undef CRYO_OBJECTIVE
 #undef CRYO_IGNORE
+#undef CRYO_DESTROY_LATER
 
 /obj/machinery/cryopod/MouseDrop_T(mob/living/target, mob/user)
 	if(!istype(target) || user.incapacitated() || !target.Adjacent(user) || !Adjacent(user) || !ismob(target) || (!ishuman(user) && !iscyborg(user)) || !istype(user.loc, /turf) || target.buckled)

@@ -2,6 +2,7 @@
 	name = "Wishgranter Avatar"
 	show_in_antagpanel = FALSE
 	show_name_in_check_antagonists = TRUE
+	threat = 20
 
 /datum/antagonist/wishgranter/proc/forge_objectives()
 	var/datum/objective/hijack/hijack = new
@@ -24,5 +25,5 @@
 		return
 	H.dna.add_mutation(HULK)
 	H.dna.add_mutation(XRAY)
-	H.dna.add_mutation(COLDRES)
+	H.dna.add_mutation(SPACEMUT)
 	H.dna.add_mutation(TK)

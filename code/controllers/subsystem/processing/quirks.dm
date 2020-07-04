@@ -37,11 +37,11 @@ PROCESSING_SUBSYSTEM_DEF(quirks)
 	if(job?.blacklisted_quirks)
 		cut = filter_quirks(my_quirks, job.blacklisted_quirks)
 	for(var/V in my_quirks)
-		var/datum/quirk/Q = quirks[V]
-		if(Q)
+		if(V in quirks)
+			var/datum/quirk/Q = quirks[V]
 			user.add_quirk(Q, spawn_effects)
 		else
-			stack_trace("Invalid quirk \"[V]\" in client [cli.ckey] preferences")
+			log_admin("Invalid quirk \"[V]\" in client [cli.ckey] preferences")
 			cli.prefs.all_quirks -= V
 			badquirk = TRUE
 	if(badquirk)
@@ -85,7 +85,7 @@ PROCESSING_SUBSYSTEM_DEF(quirks)
 				our_quirks -= i
 				cut += i
 				pointscut += quirk_points_by_name(i)
-			if (pointscut >= 0) //with how it works, it needs to be above zero, not below, as points for positive is positive, and negative is negative, we only want it to break if it's above zero, ie. we cut more positive than negative
+			if (pointscut >= 0)
 				break
 	/*	//Code to automatically reduce positive quirks until balance is even.
 	var/points_used = total_points(our_quirks)
@@ -102,7 +102,7 @@ PROCESSING_SUBSYSTEM_DEF(quirks)
 	*/
 
 	//Nah, let's null all non-neutrals out.
-	if (pointscut != 0)// only if the pointscutting didn't work.
+	if (pointscut < 0)// only if the pointscutting didn't work.
 		if(cut.len)
 			for(var/i in our_quirks)
 				if(quirk_points_by_name(i) != 0)

@@ -19,6 +19,7 @@
 	var/datum/antagonist/bloodsucker/master		// Who made me?
 	var/list/datum/action/powers = list()// Purchased powers
 	var/list/datum/objective/objectives_given = list()	// For removal if needed.
+	threat = 1
 
 /datum/antagonist/vassal/can_be_owned(datum/mind/new_owner)
 	// If we weren't created by a bloodsucker, then we cannot be a vassal (assigned from antag panel)
@@ -47,7 +48,7 @@
 	objectives += vassal_objective
 	objectives_given += vassal_objective
 	give_thrall_eyes()
-	owner.current.grant_language(/datum/language/vampiric)
+	owner.current.grant_language(/datum/language/vampiric, TRUE, TRUE, LANGUAGE_VASSAL)
 	// Add Antag HUD
 	update_vassal_icons_added(owner.current, "vassal")
 	. = ..()
@@ -80,7 +81,7 @@
 		qdel(O)
 	objectives_given = list()
 	remove_thrall_eyes()
-	owner.current.remove_language(/datum/language/vampiric)
+	owner.current.remove_language(/datum/language/vampiric, TRUE, TRUE, LANGUAGE_VASSAL)
 	// Clear Antag HUD
 	update_vassal_icons_removed(owner.current)
 

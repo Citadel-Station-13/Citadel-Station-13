@@ -144,20 +144,7 @@ Creating a chem with a low purity will make you permanently fall in love with so
 	pH = 10
 	chemical_flags = REAGENT_ONMOBMERGE | REAGENT_DONOTSPLIT //Procs on_mob_add when merging into a human
 	can_synth = FALSE
-
-
-/datum/reagent/fermi/enthrall/test
-	name = "MKUltraTest"
-	description = "A forbidden deep red mixture that makes you like Fermis a little too much. Unobtainable and due to be removed from the wiki."
-	data = list("creatorID" = "honkatonkbramblesnatch", "creatorGender" = "Mistress", "creatorName" = "Fermis Yakumo")
-	creatorID  = "honkatonkbramblesnatch"//ckey
-	creatorGender = "Mistress"
-	creatorName = "Fermis Yakumo"
-	purity = 1
-
-/datum/reagent/fermi/enthrall/test/on_new()
-	..()
-	creator = get_mob_by_key(creatorID)
+	value = REAGENT_VALUE_EXCEPTIONAL
 
 /datum/reagent/fermi/enthrall/on_new(list/data)
 	creatorID = data["creatorID"]
@@ -184,10 +171,10 @@ Creating a chem with a low purity will make you permanently fall in love with so
 			E.enthrallGender = creatorGender
 			E.master = get_mob_by_key(creatorID)
 			to_chat(M, "<span class='big love'><i>Your addled, plastic, mind bends under the chemical influence of a new [(E.lewd?"master":"leader")]. Your highest priority is now to stay by [creatorName]'s side, following and aiding them at all costs.</i></span>") //THIS SHOULD ONLY EVER APPEAR IF YOU MINDBREAK YOURSELF AND THEN GET INJECTED FROM SOMEONE ELSE.
-			log_game("FERMICHEM: Narcissist [M] ckey: [M.key] been rebound to [creatorName], ID: [creatorID]")
+			log_reagent("FERMICHEM: Narcissist [M] ckey: [M.key] been rebound to [creatorName], ID: [creatorID]")
 			return
 	if((M.ckey == creatorID) && (creatorName == M.real_name)) //same name AND same player - same instance of the player. (should work for clones?)
-		log_game("FERMICHEM: [M] ckey: [M.key] has been given velvetspeech")
+		log_reagent("FERMICHEM: [M] ckey: [M.key] has been given velvetspeech")
 		var/obj/item/organ/vocal_cords/Vc = M.getorganslot(ORGAN_SLOT_VOICE)
 		var/obj/item/organ/vocal_cords/nVc = new /obj/item/organ/vocal_cords/velvet
 		if(Vc)
@@ -196,9 +183,9 @@ Creating a chem with a low purity will make you permanently fall in love with so
 		qdel(Vc)
 		to_chat(M, "<span class='notice'><i>You feel your vocal chords tingle you speak in a more charasmatic and sultry tone.</i></span>")
 	else
-		log_game("FERMICHEM: MKUltra: [creatorName], [creatorID], is enthralling [M.name], [M.ckey]")
+		log_reagent("FERMICHEM: MKUltra: [creatorName], [creatorID], is enthralling [M.name], [M.ckey]")
 		M.apply_status_effect(/datum/status_effect/chem/enthrall)
-	log_game("FERMICHEM: [M] ckey: [M.key] has taken MKUltra")
+	log_reagent("FERMICHEM: [M] ckey: [M.key] has taken MKUltra")
 
 /datum/reagent/fermi/enthrall/on_mob_life(mob/living/carbon/M)
 	. = ..()
@@ -207,14 +194,14 @@ Creating a chem with a low purity will make you permanently fall in love with so
 		if (M.ckey == creatorID && creatorName == M.real_name)//If the creator drinks it, they fall in love randomly. If someone else drinks it, the creator falls in love with them.
 			if(M.has_status_effect(STATUS_EFFECT_INLOVE))//Can't be enthralled when enthralled, so to speak.
 				return
-			var/list/seen = viewers(7, get_turf(M))
+			var/list/seen = (M.fov_view(M.client?.view || world.view) - M) | viewers(M.client?.view || world.view, M)
 			for(var/victim in seen)
 				if(ishuman(victim))
 					var/mob/living/carbon/V = victim
-					if((V == M) || (!V.client) || (V.stat == DEAD))
-						seen = seen - victim
+					if(!V.client || V.stat == DEAD)
+						seen -= victim
 				else
-					seen = seen - victim
+					seen -= victim
 
 			if(LAZYLEN(seen))
 				return
@@ -226,7 +213,7 @@ Creating a chem with a low purity will make you permanently fall in love with so
 			var/mob/living/carbon/C = get_mob_by_key(creatorID)
 			if(M.has_status_effect(STATUS_EFFECT_INLOVE))
 				return
-			if((C in viewers(7, get_turf(M))) && (C.client))
+			if(C.client && (M in C.fov_view(C.client.view)))
 				M.reagents.del_reagent(type)
 				FallInLove(C, M)
 			return
@@ -264,7 +251,7 @@ Creating a chem with a low purity will make you permanently fall in love with so
 		to_chat(M, "<span class='big love'><i>Your mind shatters under the volume of the mild altering chem inside of you, breaking all will and thought completely. Instead the only force driving you now is the instinctual desire to obey and follow [creatorName]. Your highest priority is now to stay by their side and protect them at all costs.</i></span>")
 	else
 		to_chat(M, "<span class='big warning'><i>The might volume of chemicals in your system overwhelms your mind, and you suddenly agree with what [creatorName] has been saying. Your highest priority is now to stay by their side and protect them at all costs.</i></span>")
-	log_game("FERMICHEM: [M] ckey: [M.key] has been mindbroken for [creatorName] ckey: [creatorID]")
+	log_reagent("FERMICHEM: [M] ckey: [M.key] has been mindbroken for [creatorName] ckey: [creatorID]")
 	M.slurring = 100
 	M.confused = 100
 	E.phase = 4
@@ -292,19 +279,17 @@ Creating a chem with a low purity will make you permanently fall in love with so
 	if(HAS_TRAIT(M, TRAIT_MINDSHIELD))
 		return ..()
 	if(!M.has_status_effect(STATUS_EFFECT_INLOVE))
-		var/list/seen = viewers(7, get_turf(M))//Sound and sight checkers
+		var/list/seen = (M.fov_view(M.client?.view || world.view) - M) | viewers(M.client?.view || world.view, M)
 		for(var/victim in seen)
-			if((istype(victim, /mob/living/simple_animal/pet/)) || (victim == M) || (M.stat == DEAD) || (!isliving(victim)))
-				seen = seen - victim
-		if(seen.len == 0)
+			if((isanimal(victim)) || (!isliving(victim)))
+				seen -= victim
+		if(!length(seen))
 			return
 		love = pick(seen)
-		if(!love)
-			return
 		M.apply_status_effect(STATUS_EFFECT_INLOVE, love)
 		lewd = (M.client?.prefs.cit_toggles & HYPNO) && (love.client?.prefs.cit_toggles & HYPNO)
 		to_chat(M, "[(lewd?"<span class='love'>":"<span class='warning'>")][(lewd?"You develop a sudden crush on [love], your heart beginning to race as you look upon them with new eyes.":"You suddenly feel like making friends with [love].")] You feel strangely drawn towards them.</span>")
-		log_game("FERMICHEM: [M] ckey: [M.key] has temporarily bonded with [love] ckey: [love.key]")
+		log_reagent("FERMICHEM: [M] ckey: [M.key] has temporarily bonded with [love] ckey: [love.key]")
 		SSblackbox.record_feedback("tally", "fermi_chem", 1, "Times people have bonded")
 	else
 		if(get_dist(M, love) < 8)
@@ -329,7 +314,7 @@ Creating a chem with a low purity will make you permanently fall in love with so
 	SEND_SIGNAL(M, COMSIG_CLEAR_MOOD_EVENT, "InLove")
 	SEND_SIGNAL(M, COMSIG_CLEAR_MOOD_EVENT, "MissingLove")
 	to_chat(M, "[(lewd?"<span class='love'>":"<span class='warning'>")]Your feelings for [love] suddenly vanish!")
-	log_game("FERMICHEM: [M] ckey: [M.key] is no longer in temp bond")
+	log_reagent("FERMICHEM: [M] ckey: [M.key] is no longer in temp bond")
 	..()
 
 /datum/reagent/fermi/proc/FallInLove(mob/living/carbon/Lover, mob/living/carbon/Love)
@@ -346,7 +331,7 @@ Creating a chem with a low purity will make you permanently fall in love with so
 	Lover.apply_status_effect(STATUS_EFFECT_INLOVE, Love)
 	forge_valentines_objective(Lover, Love, TRUE)
 	SSblackbox.record_feedback("tally", "fermi_chem", 1, "Times people have become infatuated.")
-	log_game("FERMICHEM: [Lover] ckey: [Lover.key] has been chemically made to fall for [Love] ckey: [Love.key]")
+	log_reagent("FERMICHEM: [Lover] ckey: [Lover.key] has been chemically made to fall for [Love] ckey: [Love.key]")
 	return
 
 //For addiction see chem.dm

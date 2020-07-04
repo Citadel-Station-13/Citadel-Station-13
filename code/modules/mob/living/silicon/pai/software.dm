@@ -78,6 +78,7 @@
 	dat = {"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\" \"http://www.w3.org/TR/html4/loose.dtd\">
 			<html>
 			<head>
+				<meta http-equiv='Content-Type' content='text/html; charset=UTF-8'>
 				<style type=\"text/css\">
 					body { background-image:url('html/paigrid.png'); }
 
@@ -266,9 +267,8 @@
 			if(href_list["toggle"])
 				encryptmod = TRUE
 		if("translator")
-			if(href_list["toggle"])
-				grant_all_languages(TRUE)
-					// this is PERMAMENT.
+			if(href_list["toggle"])	//This is permanent.
+				grant_all_languages(TRUE, TRUE, TRUE, LANGUAGE_SOFTWARE)
 		if("doorjack")
 			if(href_list["jack"])
 				if(cable && cable.machine)
@@ -282,9 +282,7 @@
 				T.visible_message("<span class='warning'>A port on [src] opens to reveal [cable], which promptly falls to the floor.</span>", "<span class='italics'>You hear the soft click of something light and hard falling to the ground.</span>")
 		if("loudness")
 			if(subscreen == 1) // Open Instrument
-				internal_instrument.interact(src)
-			if(subscreen == 2) // Change Instrument type
-				internal_instrument.selectInstrument()
+				internal_instrument.ui_interact(src)
 
 	//updateUsrDialog()		We only need to account for the single mob this is intended for, and he will *always* be able to call this window
 	paiInterface()		 // So we'll just call the update directly rather than doing some default checks
@@ -665,4 +663,4 @@
 	var/dat = "<h3>Sound Synthetizer</h3>"
 	dat += "<a href='byond://?src=[REF(src)];software=loudness;sub=1'>Open Synthesizer Interface</a><br>"
 	dat += "<a href='byond://?src=[REF(src)];software=loudness;sub=2'>Choose Instrument Type</a>"
-	return dat	
+	return dat

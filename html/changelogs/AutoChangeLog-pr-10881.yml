@@ -1,6 +1,0 @@
-author: "Ghommie"
-delete-after: True
-changes: 
-  - refactor: "Refactored mob holders into an element."
-  - bugfix: "Fixed a few minor issues with that feature. such as mismatching sprites for certain held mobs and a slight lack of safety checks."
-  - rscdel: "holdable mobs can't force themselves into people's hands anymore."
