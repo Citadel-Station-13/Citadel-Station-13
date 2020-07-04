@@ -1,0 +1,6 @@
+author: "kappa-sama"
+delete-after: True
+changes: 
+  - rscadd: "cloth string to replace durathread string"
+  - rscdel: "durathread string"
+  - balance: "All bows and arrows have had crafting times significantly reduced, coming out at up to 6 times faster crafting speeds. Improvised bows no longer require durathread; instead, they use cloth materials."
