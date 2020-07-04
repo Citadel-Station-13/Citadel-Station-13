@@ -57,6 +57,12 @@
 	else
 		return ..()
 
+/proc/uncostumize_say(input, message_mode)
+	. = input
+	if(message_mode == MODE_CUSTOM_SAY)
+		var/customsayverb = findtext(input, "*")
+		return lowertext(copytext_char(input, 1, customsayverb))
+
 /mob/proc/whisper_keybind()
 	var/message = input(src, "", "whisper") as text|null
 	if(!length(message))
@@ -113,7 +119,7 @@
 		if(name != real_name)
 			alt_name = " (died as [real_name])"
 
-	var/spanned = say_quote(message)
+	var/spanned = say_quote(say_emphasis(message))
 	message = emoji_parse(message)
 	var/rendered = "<span class='game deadsay'><span class='prefix'>DEAD:</span> <span class='name'>[name]</span>[alt_name] <span class='message'>[emoji_parse(spanned)]</span></span>"
 	log_talk(message, LOG_SAY, tag="DEAD")

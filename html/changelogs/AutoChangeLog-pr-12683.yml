@@ -1,0 +1,4 @@
+author: "silicons"
+delete-after: True
+changes: 
+  - refactor: "blood_DNA[\"color\"] is now a single variable instead of a list"

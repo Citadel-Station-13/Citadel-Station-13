@@ -117,7 +117,7 @@
 /turf/open/floor/plasteel/white,
 /area/awaymission/research/interior/engineering)
 "ax" = (
-/obj/item/twohanded/required/kirbyplants{
+/obj/item/kirbyplants{
 	icon_state = "plant-20";
 	pixel_y = 3
 	},
@@ -919,7 +919,6 @@
 /area/awaymission/research/interior/gateway)
 "ck" = (
 /obj/machinery/door/window/eastright{
-	icon_state = "right";
 	dir = 2
 	},
 /obj/effect/landmark/awaystart,
@@ -1363,16 +1362,6 @@
 "dc" = (
 /turf/open/floor/plasteel/dark,
 /area/awaymission/research/interior/secure)
-"dd" = (
-/obj/structure/closet/crate,
-/obj/item/disk/data{
-	desc = "A specialized data disk for holding critical genetic backup data. Without proper passwords, information will turn up blank on most DNA machines.";
-	name = "encrypted genetic data disk";
-	read_only = 1
-	},
-/obj/item/firing_pin/dna,
-/turf/open/floor/plasteel/dark,
-/area/awaymission/research/interior/secure)
 "de" = (
 /obj/structure/filingcabinet,
 /obj/structure/filingcabinet,
@@ -1391,8 +1380,8 @@
 	name = "encrypted genetic data disk";
 	read_only = 1
 	},
-/obj/item/dnainjector/xraymut,
-/obj/item/dnainjector/xraymut,
+/obj/item/dnainjector/glow,
+/obj/item/storage/toolbox/syndicate,
 /turf/open/floor/plasteel/dark,
 /area/awaymission/research/interior/secure)
 "dg" = (
@@ -1481,18 +1470,6 @@
 "do" = (
 /turf/closed/wall/r_wall,
 /area/awaymission/research/interior/security)
-"dp" = (
-/obj/structure/closet/crate,
-/obj/item/disk/data{
-	desc = "A specialized data disk for holding critical genetic backup data. Without proper passwords, information will turn up blank on most DNA machines.";
-	name = "encrypted genetic data disk";
-	read_only = 1
-	},
-/obj/item/dnainjector/telemut,
-/obj/item/dnainjector/telemut,
-/obj/item/dnainjector/chavmut,
-/turf/open/floor/plasteel/dark,
-/area/awaymission/research/interior/secure)
 "dq" = (
 /obj/machinery/light{
 	dir = 8
@@ -1743,8 +1720,6 @@
 "dJ" = (
 /obj/structure/rack,
 /obj/item/clothing/suit/armor/bulletproof,
-/obj/item/clothing/suit/armor/bulletproof,
-/obj/item/clothing/head/helmet/alt,
 /obj/item/clothing/head/helmet/alt,
 /obj/machinery/light/small{
 	dir = 4
@@ -1770,18 +1745,18 @@
 "dL" = (
 /obj/structure/closet/crate,
 /obj/item/disk/data{
-	desc = "A data disk used to store cloning and genetic records. The name on the label appears to be scratched off with the words 'DO NOT CLONE' hastily written over it.";
-	fields = list("label" = "Buffer1:George Melons", "UI" = "3c300f11b5421ca7014d8", "SE" = "430431205660551642142504334461413202111310233445620533134255", "UE" = "6893e6a0b0076a41897776b10cc2b324", "name" = "George Melons", "blood_type" = "B+");
-	name = "old genetics data disk"
-	},
-/obj/item/disk/data{
 	desc = "A specialized data disk for holding critical genetic backup data. Without proper passwords, information will turn up blank on most DNA machines.";
 	name = "encrypted genetic data disk";
 	read_only = 1
 	},
-/obj/item/firing_pin/dna,
-/obj/item/dnainjector/dwarf,
-/obj/item/dnainjector/dwarf,
+/obj/item/disk/data{
+	desc = "A data disk used to store cloning and genetic records. The name on the label appears to be scratched off.";
+	fields = list("label" = "Buffer1:Kr-$$@##", "UI" = "f8f603857000f930127c4", "SE" = "414401462231053131010241514651403453121613263463440351136366", "UE" = "340008485c321e542aed4df7032ac04d", "name" = "Krystal Symers", "blood_type" = "A+");
+	name = "dusty genetics data disk";
+	read_only = 1
+	},
+/obj/item/dnainjector/insulated,
+/obj/item/gun/energy/disabler,
 /turf/open/floor/plasteel/dark,
 /area/awaymission/research/interior/secure)
 "dM" = (
@@ -1792,15 +1767,17 @@
 	read_only = 1
 	},
 /obj/item/disk/data{
-	desc = "A specialized data disk for holding critical genetic backup data. Without proper passwords, information will turn up blank on most DNA machines.";
-	name = "encrypted genetic data disk";
+	desc = "A data disk used to store cloning and genetic records. The name on the label appears to be scratched off.";
+	fields = list("label" = "Buffer1:Kr-$$@##", "UI" = "f8f603857000f930127c4", "SE" = "414401462231053131010241514651403453121613263463440351136366", "UE" = "340008485c321e542aed4df7032ac04d", "name" = "Krystal Symers", "blood_type" = "A+");
+	name = "dusty genetics data disk";
 	read_only = 1
 	},
-/obj/item/dnainjector/chameleonmut,
+/obj/item/dnainjector/glow,
+/obj/item/storage/toolbox/syndicate,
 /turf/open/floor/plasteel/dark,
 /area/awaymission/research/interior/secure)
 "dN" = (
-/obj/item/twohanded/required/kirbyplants{
+/obj/item/kirbyplants{
 	icon_state = "plant-16"
 	},
 /obj/effect/turf_decal/tile/purple{
@@ -1889,7 +1866,6 @@
 /area/awaymission/research/interior/security)
 "dU" = (
 /obj/structure/rack,
-/obj/item/gun/ballistic/automatic/wt550,
 /obj/item/gun/ballistic/automatic/wt550,
 /obj/item/ammo_box/magazine/wt550m9,
 /obj/item/ammo_box/magazine/wt550m9,
@@ -2069,7 +2045,6 @@
 /area/awaymission/research/interior/security)
 "ep" = (
 /obj/structure/rack,
-/obj/item/gun/ballistic/automatic/pistol/m1911,
 /obj/item/gun/ballistic/automatic/pistol/m1911,
 /obj/item/ammo_box/magazine/m45,
 /obj/item/ammo_box/magazine/m45,
@@ -3071,7 +3046,6 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/door/airlock/highsecurity{
-	aiDisabledIdScanner = 0;
 	name = "Vault Storage";
 	req_access_txt = "36"
 	},
@@ -3531,7 +3505,6 @@
 /turf/open/floor/plasteel/white,
 /area/awaymission/research/interior/cryo)
 "gR" = (
-/obj/item/melee/classic_baton/telescopic,
 /obj/effect/turf_decal/tile/purple{
 	dir = 1
 	},
@@ -3542,6 +3515,7 @@
 /obj/effect/turf_decal/tile/purple{
 	dir = 8
 	},
+/obj/item/melee/baton/cattleprod,
 /turf/open/floor/plasteel/white,
 /area/awaymission/research/interior/cryo)
 "gS" = (
@@ -3914,7 +3888,6 @@
 /area/awaymission/research/interior/cryo)
 "hw" = (
 /obj/machinery/computer/arcade{
-	icon_state = "arcade";
 	dir = 8
 	},
 /turf/open/floor/plasteel/yellowsiding{
@@ -4126,20 +4099,22 @@
 /area/awaymission/research/interior/security)
 "hS" = (
 /obj/structure/closet/crate,
+/obj/item/clothing/head/collectable/petehat{
+	name = "dusty hat"
+	},
 /obj/item/disk/data{
 	desc = "A specialized data disk for holding critical genetic backup data. Without proper passwords, information will turn up blank on most DNA machines.";
 	name = "encrypted genetic data disk";
 	read_only = 1
 	},
 /obj/item/disk/data{
-	desc = "A specialized data disk for holding critical genetic backup data. Without proper passwords, information will turn up blank on most DNA machines. This one has the initials 'C.P' marked on the front. ";
-	name = "encrypted genetic data disk";
+	desc = "A data disk used to store cloning and genetic records. The name on the label appears to be scratched off.";
+	fields = list("label" = "Buffer1:Kr-$$@##", "UI" = "f8f603857000f930127c4", "SE" = "414401462231053131010241514651403453121613263463440351136366", "UE" = "340008485c321e542aed4df7032ac04d", "name" = "Krystal Symers", "blood_type" = "A+");
+	name = "dusty genetics data disk";
 	read_only = 1
 	},
-/obj/item/clothing/head/collectable/petehat{
-	name = "dusty hat"
-	},
-/obj/item/firing_pin/dna,
+/obj/item/dnainjector/gigantism,
+/obj/item/kitchen/knife/combat/survival,
 /turf/open/floor/plasteel/dark,
 /area/awaymission/research/interior/secure)
 "hT" = (
@@ -4150,12 +4125,13 @@
 	read_only = 1
 	},
 /obj/item/disk/data{
-	desc = "A specialized data disk for holding critical genetic backup data. Without proper passwords, information will turn up blank on most DNA machines.";
-	name = "encrypted genetic data disk";
+	desc = "A data disk used to store cloning and genetic records. The name on the label appears to be scratched off.";
+	fields = list("label" = "Buffer1:Kr-$$@##", "UI" = "f8f603857000f930127c4", "SE" = "414401462231053131010241514651403453121613263463440351136366", "UE" = "340008485c321e542aed4df7032ac04d", "name" = "Krystal Symers", "blood_type" = "A+");
+	name = "dusty genetics data disk";
 	read_only = 1
 	},
-/obj/item/firing_pin/dna,
-/obj/item/dnainjector/hulkmut,
+/obj/item/dnainjector/antenna,
+/obj/item/clothing/suit/armor/vest,
 /turf/open/floor/plasteel/dark,
 /area/awaymission/research/interior/secure)
 "hU" = (
@@ -4173,7 +4149,7 @@
 /turf/open/floor/plasteel,
 /area/awaymission/research/interior/genetics)
 "hV" = (
-/obj/item/twohanded/required/kirbyplants{
+/obj/item/kirbyplants{
 	icon_state = "plant-10"
 	},
 /obj/effect/turf_decal/tile/purple{
@@ -4268,7 +4244,7 @@
 /turf/open/floor/plasteel,
 /area/awaymission/research/interior/security)
 "ii" = (
-/obj/item/twohanded/required/kirbyplants{
+/obj/item/kirbyplants{
 	desc = "A potted plant, it doesn't look very healthy...";
 	name = "dead potted plant"
 	},
@@ -4296,10 +4272,14 @@
 	name = "encrypted genetic data disk";
 	read_only = 1
 	},
-/obj/item/firing_pin/dna/dredd,
-/obj/item/firing_pin/dna/dredd,
-/obj/item/dnainjector/lasereyesmut,
-/obj/item/dnainjector/lasereyesmut,
+/obj/item/disk/data{
+	desc = "A data disk used to store cloning and genetic records. The name on the label appears to be scratched off.";
+	fields = list("label" = "Buffer1:Kr-$$@##", "UI" = "f8f603857000f930127c4", "SE" = "414401462231053131010241514651403453121613263463440351136366", "UE" = "340008485c321e542aed4df7032ac04d", "name" = "Krystal Symers", "blood_type" = "A+");
+	name = "dusty genetics data disk";
+	read_only = 1
+	},
+/obj/item/dnainjector/gigantism,
+/obj/item/kitchen/knife/combat/survival,
 /turf/open/floor/plasteel/dark,
 /area/awaymission/research/interior/secure)
 "im" = (
@@ -4603,7 +4583,6 @@
 /area/awaymission/research/interior/bathroom)
 "iN" = (
 /obj/machinery/shower{
-	icon_state = "shower";
 	dir = 8
 	},
 /turf/open/floor/plasteel/freezer,
@@ -4746,7 +4725,7 @@
 /turf/open/floor/wood,
 /area/awaymission/research/interior/dorm)
 "jm" = (
-/obj/item/twohanded/required/kirbyplants{
+/obj/item/kirbyplants{
 	icon_state = "plant-14"
 	},
 /turf/open/floor/plasteel/yellowsiding{
@@ -5350,7 +5329,7 @@
 /turf/open/floor/plating,
 /area/awaymission/research/interior/medbay)
 "kC" = (
-/obj/item/twohanded/required/kirbyplants{
+/obj/item/kirbyplants{
 	icon_state = "plant-22"
 	},
 /turf/open/floor/plasteel/yellowsiding{
@@ -5707,7 +5686,7 @@
 /turf/open/floor/plasteel/white,
 /area/awaymission/research/interior/medbay)
 "ly" = (
-/obj/item/twohanded/required/kirbyplants{
+/obj/item/kirbyplants{
 	icon_state = "plant-16"
 	},
 /turf/open/floor/plasteel/yellowsiding{
@@ -6185,7 +6164,7 @@
 /turf/open/floor/plasteel/white,
 /area/awaymission/research/interior/escapepods)
 "mJ" = (
-/obj/item/twohanded/required/kirbyplants,
+/obj/item/kirbyplants,
 /obj/effect/turf_decal/tile/green{
 	dir = 1
 	},
@@ -6222,7 +6201,7 @@
 /turf/open/floor/grass,
 /area/awaymission/research/interior/escapepods)
 "mN" = (
-/obj/item/twohanded/required/kirbyplants{
+/obj/item/kirbyplants{
 	icon_state = "applebush"
 	},
 /obj/effect/turf_decal/tile/green,
@@ -6335,7 +6314,7 @@
 /area/space/nearstation)
 "nb" = (
 /obj/structure/table/wood,
-/obj/item/book/granter/spell/random,
+/obj/item/book/granter/spell/smoke,
 /turf/open/floor/mineral/plasma,
 /area/space/nearstation)
 "nc" = (
@@ -6460,6 +6439,11 @@
 	},
 /turf/open/floor/plating,
 /area/awaymission/research/interior/maint)
+"Hs" = (
+/obj/structure/table/wood,
+/obj/item/book/granter/crafting_recipe/bone_bow,
+/turf/open/floor/mineral/plasma,
+/area/space/nearstation)
 "Km" = (
 /obj/machinery/door/airlock/security/glass{
 	id_tag = "outerbrig";
@@ -6582,6 +6566,11 @@
 	},
 /turf/open/floor/plating,
 /area/awaymission/research/interior/escapepods)
+"ZZ" = (
+/obj/structure/table/wood,
+/obj/item/book/granter/action/origami,
+/turf/open/floor/mineral/plasma,
+/area/space/nearstation)
 
 (1,1,1) = {"
 aa
@@ -11121,8 +11110,8 @@ ab
 ab
 na
 nb
-nb
-nb
+Hs
+ZZ
 na
 ab
 ab
@@ -31113,8 +31102,8 @@ ad
 ad
 ad
 cQ
-dd
-dp
+dL
+dL
 dL
 cQ
 dc
@@ -31126,7 +31115,7 @@ cQ
 dc
 cQ
 hS
-dM
+il
 il
 cQ
 ad
@@ -32399,7 +32388,7 @@ ad
 ad
 cQ
 df
-dd
+dM
 dM
 cQ
 dc
@@ -32412,7 +32401,7 @@ dc
 cQ
 hT
 hT
-dd
+hT
 cQ
 ad
 ad

@@ -1,3 +1,6 @@
+/// Checks if something is a BYOND object datatype rather than a primitive, or whatever's closest to one.
+#define is_object_datatype(object)		(object && !ispath(object) && !istext(object) && !isnum(object))
+
 // simple is_type and similar inline helpers
 
 #define in_range(source, user) (get_dist(source, user) <= 1 && (get_step(source, 0)?:z) == (get_step(user, 0)?:z))
@@ -132,6 +135,8 @@ GLOBAL_LIST_INIT(turfs_without_ground, typecacheof(list(
 
 #define iscat(A) (istype(A, /mob/living/simple_animal/pet/cat))
 
+#define isdog(A) (istype(A, /mob/living/simple_animal/pet/dog))
+
 #define iscorgi(A) (istype(A, /mob/living/simple_animal/pet/dog/corgi))
 
 #define ishostile(A) (istype(A, /mob/living/simple_animal/hostile))
@@ -176,6 +181,12 @@ GLOBAL_LIST_INIT(turfs_without_ground, typecacheof(list(
 #define isobj(A) istype(A, /obj) //override the byond proc because it returns true on children of /atom/movable that aren't objs
 
 #define isitem(A) (istype(A, /obj/item))
+
+#define isgrenade(A) (istype(A, /obj/item/grenade))
+
+#define islandmine(A) (istype(A, /obj/effect/mine))
+
+#define isammocasing(A) (istype(A, /obj/item/ammo_casing))
 
 #define isidcard(I) (istype(I, /obj/item/card/id))
 

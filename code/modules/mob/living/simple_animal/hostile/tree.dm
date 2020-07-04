@@ -44,8 +44,9 @@
 	gold_core_spawnable = HOSTILE_SPAWN
 	del_on_death = 1
 
-/mob/living/simple_animal/hostile/tree/Life()
-	..()
+/mob/living/simple_animal/hostile/tree/BiologicalLife(seconds, times_fired)
+	if(!(. = ..()))
+		return
 	if(isopenturf(loc))
 		var/turf/open/T = src.loc
 		if(T.air && T.air.gases[/datum/gas/carbon_dioxide])

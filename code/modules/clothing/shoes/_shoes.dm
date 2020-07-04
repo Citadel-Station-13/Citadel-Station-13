@@ -18,6 +18,7 @@
 	mutantrace_variation = STYLE_DIGITIGRADE
 	var/last_bloodtype = ""	//used to track the last bloodtype to have graced these shoes; makes for better performing footprint shenanigans
 	var/last_blood_DNA = ""	//same as last one
+	var/last_blood_color = ""
 
 /obj/item/clothing/shoes/ComponentInitialize()
 	. = ..()
@@ -48,6 +49,7 @@
 	if(blood_dna.len)
 		last_bloodtype = blood_dna[blood_dna[blood_dna.len]]//trust me this works
 		last_blood_DNA = blood_dna[blood_dna.len]
+		last_blood_color = blood_dna["color"]
 
 /obj/item/clothing/shoes/worn_overlays(isinhands = FALSE, icon_file, used_state, style_flags = NONE)
 	. = ..()

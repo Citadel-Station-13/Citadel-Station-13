@@ -103,7 +103,7 @@
 	throw_speed = 3
 	throw_range = 5
 	sharpness = IS_SHARP
-	embedding = list("embed_chance" = 75, "embedded_impact_pain_multiplier" = 10)
+	embedding = list("embed_chance" = 75, "impact_pain_mult" = 10)
 	armour_penetration = 35
 	item_flags = NEEDS_PERMIT | ITEM_CAN_PARRY
 	block_parry_data = /datum/block_parry_data/energy_sword
@@ -369,7 +369,7 @@
 			return
 		else
 			to_chat(user, "<span class='notice'>You combine the two light swords, making a single supermassive blade! You're cool.</span>")
-			new /obj/item/twohanded/dualsaber/hypereutactic(user.drop_location())
+			new /obj/item/dualsaber/hypereutactic(user.drop_location())
 			qdel(W)
 			qdel(src)
 	else

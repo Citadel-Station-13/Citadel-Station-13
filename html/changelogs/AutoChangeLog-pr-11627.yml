@@ -1,5 +1,0 @@
-author: "kevinz000"
-delete-after: True
-changes: 
-  - rscadd: "Directional blocking has been added, keybound to G. This will reduce a portion of incoming damage if done with eligible items at the cost of stamina damage incurred to the user based on damage blocked as well as while active, as well as in most cases preventing the user from doing any attacks while this is active."
-  - rscadd: "Parrying has been added, keybound to F. Timing-based counterattacks, effect heavily dependent on the item, WIP."
