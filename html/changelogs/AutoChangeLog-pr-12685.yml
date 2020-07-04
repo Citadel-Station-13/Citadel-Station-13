@@ -1,0 +1,4 @@
+author: "Ghommie"
+delete-after: True
+changes: 
+  - bugfix: "Opening the View Skill Panel shouldn't trigger messages about insufficient admin priviledges anymore."
