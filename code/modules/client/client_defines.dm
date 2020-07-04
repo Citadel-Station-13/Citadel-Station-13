@@ -19,6 +19,8 @@
 	///Next tick to reset the total message counter
 	var/total_count_reset = 0
 	var/ircreplyamount = 0
+	/// last time they tried to do an autobunker auth
+	var/autobunker_last_try = 0
 
 		/////////
 		//OTHER//
