@@ -206,7 +206,7 @@
 /obj/item/pet_carrier/proc/remove_occupant(mob/living/occupant, turf/new_turf)
 	if(!(occupant in occupants) || !istype(occupant))
 		return
-	occupant.forceMove(new_turf ? new_turf : drop_location())
+	occupant.forceMove(new_turf ? new_turf : get_turf(src))
 	occupants -= occupant
 	occupant_weight -= occupant.mob_size
 	occupant.setDir(SOUTH)
