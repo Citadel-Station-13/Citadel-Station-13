@@ -1,0 +1,7 @@
+author: "Yakumo Chen, kappa-sama"
+delete-after: True
+changes: 
+  - rscdel: "Removes improvised handguns"
+  - rscdel: "removed handsaws, improvised gun barrels (you can use atmos pipes again)"
+  - balance: "Guncrafting is less time and resource intensive"
+  - tweak: "Item names in guncrafting are user-friendly."

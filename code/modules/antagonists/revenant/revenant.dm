@@ -108,8 +108,7 @@
 
 //Life, Stat, Hud Updates, and Say
 /mob/living/simple_animal/revenant/BiologicalLife(seconds, times_fired)
-	if(!(. = ..()))
-		return
+	. = ..()
 	if(stasis)
 		return
 	if(revealed && essence <= 0)

@@ -1,0 +1,4 @@
+author: "silicons"
+delete-after: True
+changes: 
+  - rscadd: "Cybernetic implant shields will auto-extend and be used to block if the user has no item to block with"

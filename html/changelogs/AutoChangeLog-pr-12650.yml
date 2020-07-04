@@ -1,0 +1,4 @@
+author: "silicons"
+delete-after: True
+changes: 
+  - tweak: "active blocking now has a toggle keybind"

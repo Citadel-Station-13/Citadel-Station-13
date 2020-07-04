@@ -24,25 +24,39 @@
 	// yanderedev else if time
 	var/obj/item/using_item = get_active_held_item()
 	var/datum/block_parry_data/data
+	var/datum/tool
 	var/method
 	if(using_item?.can_active_parry())
 		data = using_item.block_parry_data
 		method = ITEM_PARRY
+		tool = using_item
 	else if(mind?.martial_art?.can_martial_parry)
 		data = mind.martial_art.block_parry_data
 		method = MARTIAL_PARRY
+		tool = mind.martial_art
 	else if(combat_flags & COMBAT_FLAG_UNARMED_PARRY)
 		data = block_parry_data
 		method = UNARMED_PARRY
+		tool = src
 	else
 		// QOL: If none of the above work, try to find another item.
 		var/obj/item/backup = find_backup_parry_item()
-		if(!backup)
-			to_chat(src, "<span class='warning'>You have nothing to parry with!</span>")
-			return FALSE
-		data = backup.block_parry_data
-		using_item = backup
+		if(backup)
+			tool = backup
+			data = backup.block_parry_data
+			using_item = backup
+			method = ITEM_PARRY
+	var/list/other_items = list()
+	if(SEND_SIGNAL(src, COMSIG_LIVING_ACTIVE_PARRY_START, method, tool, other_items) & COMPONENT_PREVENT_PARRY_START)
+		to_chat(src, "<span class='warning'>Something is preventing you from parrying!</span>")
+		return
+	if(!using_item && !method && length(other_items))
+		using_item = other_items[1]
 		method = ITEM_PARRY
+		data = using_item.block_parry_data
+	if(!method)
+		to_chat(src, "<span class='warning'>You have nothing to parry with!</span>")
+		return FALSE
 	//QOL: Try to enable combat mode if it isn't already
 	SEND_SIGNAL(src, COMSIG_ENABLE_COMBAT_MODE)
 	if(!SEND_SIGNAL(src, COMSIG_COMBAT_MODE_CHECK, COMBAT_MODE_ACTIVE))

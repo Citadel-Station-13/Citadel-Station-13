@@ -1,0 +1,4 @@
+author: "silicons"
+delete-after: True
+changes: 
+  - balance: "shields take 2.5 stam instead of 3.5 stam per second to maintain block"
