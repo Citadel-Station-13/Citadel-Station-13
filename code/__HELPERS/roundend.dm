@@ -402,7 +402,9 @@
 	for (var/i in GLOB.ai_list)
 		var/mob/living/silicon/ai/aiPlayer = i
 		if(aiPlayer.mind)
-			parts += "<b>[aiPlayer.name]</b> (Played by: <b>[aiPlayer.mind.key]</b>)'s laws [aiPlayer.stat != DEAD ? "at the end of the round" : "when it was <span class='redtext'>deactivated</span>"] were:"
+//SKYRAT CHANGES
+			parts += "<b>[aiPlayer.name]</b> (Played by: <b>[aiPlayer.mind.appear_in_round_end_report ? aiPlayer.mind.key : "Unknown"]</b>)'s laws [aiPlayer.stat != DEAD ? "at the end of the round" : "when it was <span class='redtext'>deactivated</span>"] were:"
+//END OF SKYRAT CHANGES
 			parts += aiPlayer.laws.get_law_list(include_zeroth=TRUE)
 
 		parts += "<b>Total law changes: [aiPlayer.law_change_counter]</b>"
@@ -413,14 +415,18 @@
 			for(var/mob/living/silicon/robot/robo in aiPlayer.connected_robots)
 				borg_num--
 				if(robo.mind)
-					robolist += "<b>[robo.name]</b> (Played by: <b>[robo.mind.key]</b>)[robo.stat == DEAD ? " <span class='redtext'>(Deactivated)</span>" : ""][borg_num ?", ":""]<br>"
+//SKYRAT CHANGES
+					robolist += "<b>[robo.name]</b> (Played by: <b>[robo.mind.appear_in_round_end_report ? robo.mind.key : "Unknown"]</b>)[robo.stat == DEAD ? " <span class='redtext'>(Deactivated)</span>" : ""][borg_num ?", ":""]<br>"
+//END OF SKYRAT CHANGES
 			parts += "[robolist]"
 		if(!borg_spacer)
 			borg_spacer = TRUE
 
 	for (var/mob/living/silicon/robot/robo in GLOB.silicon_mobs)
 		if (!robo.connected_ai && robo.mind)
-			parts += "[borg_spacer?"<br>":""]<b>[robo.name]</b> (Played by: <b>[robo.mind.key]</b>) [(robo.stat != DEAD)? "<span class='greentext'>survived</span> as an AI-less borg!" : "was <span class='redtext'>unable to survive</span> the rigors of being a cyborg without an AI."] Its laws were:"
+//SKYRAT CHANGES
+			parts += "[borg_spacer?"<br>":""]<b>[robo.name]</b> (Played by: <b>[robo.mind.appear_in_round_end_report ? robo.mind.key : "Unknown"]</b>) [(robo.stat != DEAD)? "<span class='greentext'>survived</span> as an AI-less borg!" : "was <span class='redtext'>unable to survive</span> the rigors of being a cyborg without an AI."] Its laws were:"
+//END OF SKYRAT CHANGES
 
 			if(robo) //How the hell do we lose robo between here and the world messages directly above this?
 				parts += robo.laws.get_law_list(include_zeroth=TRUE)

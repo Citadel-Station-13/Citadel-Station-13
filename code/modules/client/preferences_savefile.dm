@@ -239,6 +239,9 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["windowflash"]		>> windowflashing
 	S["be_special"] 		>> be_special
 
+	//SKYRAT CHANGES BEGIN
+	S["appear_in_round_end_report"]	>> appear_in_round_end_report
+	//SKYRAT CHANGES END
 
 	S["default_slot"]		>> default_slot
 	S["chat_toggles"]		>> chat_toggles
@@ -323,6 +326,10 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	no_tetris_storage		= sanitize_integer(no_tetris_storage, 0, 1, initial(no_tetris_storage))
 	key_bindings 			= sanitize_islist(key_bindings, list())
 	modless_key_bindings 	= sanitize_islist(modless_key_bindings, list())
+
+	//SKYRAT CHANGES BEGIN
+	appear_in_round_end_report	= sanitize_integer(appear_in_round_end_report, 0, 1, initial(appear_in_round_end_report))
+	//SKYRAT CHANGES END
 
 	verify_keybindings_valid()		// one of these days this will runtime and you'll be glad that i put it in a different proc so no one gets their saves wiped
 
@@ -411,6 +418,10 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["preferred_chaos"], preferred_chaos)
 	WRITE_FILE(S["auto_ooc"], auto_ooc)
 	WRITE_FILE(S["no_tetris_storage"], no_tetris_storage)
+
+	//SKYRAT CHANGES BEGIN
+	WRITE_FILE(S["appear_in_round_end_report"], appear_in_round_end_report)
+	//SKYRAT CHANGES END
 
 	return 1
 

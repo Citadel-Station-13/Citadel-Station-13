@@ -60,6 +60,10 @@
 	var/unconvertable = FALSE
 	var/late_joiner = FALSE
 
+//SKYRAT CHANGES
+	var/appear_in_round_end_report = TRUE  //Skyrat change
+//END OF SKYRAT CHANGES
+
 	var/force_escaped = FALSE  // Set by Into The Sunset command of the shuttle manipulator
 	var/list/learned_recipes //List of learned recipe TYPES.
 
@@ -131,6 +135,10 @@
 		var/mob/living/L = new_character
 		if(L.client?.prefs && L.client.prefs.auto_ooc && L.client.prefs.chat_toggles & CHAT_OOC)
 			DISABLE_BITFIELD(L.client.prefs.chat_toggles,CHAT_OOC)
+
+//SKYRAT CHANGES
+	appear_in_round_end_report = current.client?.prefs?.appear_in_round_end_report
+//END OF SKYRAT CHANGES
 
 	SEND_SIGNAL(src, COMSIG_MIND_TRANSFER, new_character, old_character)
 	SEND_SIGNAL(new_character, COMSIG_MOB_ON_NEW_MIND)
@@ -775,6 +783,9 @@
 	if(!mind.name)
 		mind.name = real_name
 	mind.current = src
+//SKYRAT CHANGES
+	mind.appear_in_round_end_report = client?.prefs?.appear_in_round_end_report
+//END OF SKYRAT CHANGES
 
 /mob/living/carbon/mind_initialize()
 	..()
