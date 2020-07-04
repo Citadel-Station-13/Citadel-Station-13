@@ -240,9 +240,8 @@ GLOBAL_LIST_INIT(wood_recipes, list ( \
 		new /datum/stack_recipe("pew (right)", /obj/structure/chair/pew/right, 3, one_per_turf = TRUE, on_floor = TRUE),\
 		)),
 	null, \
-	new/datum/stack_recipe("wooden firearm body", /obj/item/weaponcrafting/improvised_parts/wooden_body, 10, time = 40), \
-	new/datum/stack_recipe("rifle stock", /obj/item/weaponcrafting/stock, 10, time = 40), \
-	new/datum/stack_recipe("pistol grip", /obj/item/weaponcrafting/improvised_parts/wooden_grip, 5, time = 40), \
+	new/datum/stack_recipe("wooden firearm body", /obj/item/weaponcrafting/improvised_parts/wooden_body, 10, time = 20), \
+	new/datum/stack_recipe("rifle stock", /obj/item/weaponcrafting/stock, 10, time = 20), \
 	new/datum/stack_recipe("rolling pin", /obj/item/kitchen/rollingpin, 2, time = 30), \
 	new/datum/stack_recipe("wooden bucket", /obj/item/reagent_containers/glass/bucket/wood, 2, time = 30), \
 	new/datum/stack_recipe("wooden buckler", /obj/item/shield/riot/buckler, 20, time = 40), \
@@ -382,6 +381,7 @@ GLOBAL_LIST_INIT(cloth_recipes, list ( \
 	new/datum/stack_recipe("chemistry bag", /obj/item/storage/bag/chemistry, 4), \
 	new/datum/stack_recipe("bio bag", /obj/item/storage/bag/bio, 4), \
 	null, \
+	new/datum/stack_recipe("string", /obj/item/weaponcrafting/string, 1, time = 10), \
 	new/datum/stack_recipe("improvised gauze", /obj/item/stack/medical/gauze/improvised, 1, 2, 6), \
 	new/datum/stack_recipe("rag", /obj/item/reagent_containers/rag, 1), \
 	new/datum/stack_recipe("towel", /obj/item/reagent_containers/rag/towel, 3), \
@@ -429,7 +429,6 @@ GLOBAL_LIST_INIT(durathread_recipes, list ( \
 	new/datum/stack_recipe("durathread beret", /obj/item/clothing/head/beret/durathread, 2, time = 40), \
 	new/datum/stack_recipe("durathread beanie", /obj/item/clothing/head/beanie/durathread, 2, time = 40), \
 	new/datum/stack_recipe("durathread bandana", /obj/item/clothing/mask/bandana/durathread, 1, time = 25), \
-	new/datum/stack_recipe("durathread string", /obj/item/weaponcrafting/durathread_string, 1, time = 40), \
 	))
 
 /obj/item/stack/sheet/durathread
