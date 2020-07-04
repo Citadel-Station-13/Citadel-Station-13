@@ -839,8 +839,9 @@ new /datum/stack_recipe("paper frame door", /obj/structure/mineral_door/paperfra
 	force = 0
 	throwforce = 0
 	merge_type = /obj/item/stack/sheet/cotton
-	var/pull_effort = 30
-	var/loom_result = /obj/item/stack/sheet/cloth
+	pull_effort = 30
+	loom_result = /obj/item/stack/sheet/cloth
+	is_fabric = TRUE
 
 /obj/item/stack/sheet/cotton/ten
 	amount = 10
@@ -853,9 +854,25 @@ new /datum/stack_recipe("paper frame door", /obj/structure/mineral_door/paperfra
 	desc = "A bundle of raw durathread ready to be spun on the loom."
 	singular_name = "raw durathread ball"
 	icon_state = "sheet-durathreadraw"
+	is_fabric = TRUE
 	merge_type = /obj/item/stack/sheet/cotton/durathread
 	pull_effort = 70
 	loom_result = /obj/item/stack/sheet/durathread
+
+/obj/item/stack/sheet/wool
+	name = "wool"
+	desc = "A bundle of wool ready to be spun on the loom."
+	singular_name = "wool ball"
+	icon_state = "sheet-wool"
+	item_state = "sheet-wool"
+	icon = 'icons/obj/stack_objects.dmi'
+	resistance_flags = FLAMMABLE
+	force = 0
+	throwforce = 0
+	merge_type = /obj/item/stack/sheet/wool
+	is_fabric = TRUE
+	pull_effort = 30
+	loom_result = /obj/item/stack/sheet/cloth
 
 /obj/item/stack/sheet/meat
 	name = "meat sheets"

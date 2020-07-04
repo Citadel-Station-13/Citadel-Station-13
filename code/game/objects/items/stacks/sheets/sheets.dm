@@ -18,6 +18,9 @@
 	var/shard_type
 	///What type of wall does this sheet spawn
 	var/walltype
+	var/is_fabric = FALSE //is this  a valid material for the loom?
+	var/loom_result //result from pulling on the loom
+	var/pull_effort = 0 //amount of delay when pulling on the loom
 
 /obj/item/stack/sheet/Initialize(mapload, new_amount, merge)
 	. = ..()

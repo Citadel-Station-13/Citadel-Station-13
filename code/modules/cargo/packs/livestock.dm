@@ -149,6 +149,14 @@
 					/obj/item/clothing/neck/petcollar)
 	crate_name = "pug crate"
 
+/datum/supply_pack/critter/sheep
+	name = "Sheep Crate"
+	desc = "The sheep goes baa! Comes with a complimentary razor."
+	cost = 2000
+	contains = list(/mob/living/simple_animal/sheep,
+					/obj/item/razor)
+	crate_name = "sheep crate"
+
 /datum/supply_pack/critter/kiwi
 	name = "Space kiwi Crate"
 	cost = 2000
