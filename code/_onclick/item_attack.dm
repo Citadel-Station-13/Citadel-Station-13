@@ -123,7 +123,7 @@
 		if(totitemdamage)
 			totitemdamage = user.mind.item_action_skills_mod(I, totitemdamage, I.skill_difficulty, SKILL_ATTACK_OBJ, bad_trait)
 		for(var/skill in I.used_skills)
-			if(!(I.used_skills[skill] & SKILL_TRAIN_ATTACK_OBJ))
+			if(!(SKILL_TRAIN_ATTACK_OBJ in I.used_skills[skill]))
 				continue
 			user.mind.auto_gain_experience(skill, I.skill_gain)
 
@@ -192,9 +192,10 @@
 	if(.)
 		. = user.mind.item_action_skills_mod(I, ., I.skill_difficulty, SKILL_ATTACK_MOB, bad_trait)
 	for(var/skill in I.used_skills)
-		if(!(I.used_skills[skill] & SKILL_TRAIN_ATTACK_MOB))
+		if(!(SKILL_TRAIN_ATTACK_MOB in I.used_skills[skill]))
 			continue
-		user.mind.auto_gain_experience(skill, I.skill_gain)
+		var/datum/skill/S = GLOB.skill_datums[skill]
+		user.mind.auto_gain_experience(skill, I.skill_gain*S.item_skill_gain_multi)
 
 // Proximity_flag is 1 if this afterattack was called on something adjacent, in your square, or on your person.
 // Click parameters is the params string from byond Click() code, see that documentation.

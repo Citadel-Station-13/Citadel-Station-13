@@ -355,6 +355,7 @@
 	emaggedhitdamage = 0
 
 /obj/item/borg/lollipop/equipped()
+	. = ..()
 	check_amount()
 
 /obj/item/borg/lollipop/dropped(mob/user)

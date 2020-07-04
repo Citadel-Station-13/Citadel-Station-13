@@ -219,6 +219,8 @@ Nothing else in the console has ID requirements.
 
 /obj/machinery/computer/rdconsole/proc/ui_header()
 	var/list/l = list()
+	var/datum/asset/spritesheet/sheet = get_asset_datum(/datum/asset/spritesheet/research_designs)
+	l += "[sheet.css_tag()][RDSCREEN_NOBREAK]"
 	l += "<div class='statusDisplay'><b>[stored_research.organization] Research and Development Network</b>"
 	l += "Available points: <BR>[techweb_point_display_rdconsole(stored_research.research_points, stored_research.last_bitcoins)]"
 	l += "Security protocols: [obj_flags & EMAGGED ? "<font color='red'>Disabled</font>" : "<font color='green'>Enabled</font>"]"

@@ -8,9 +8,9 @@ k// PARTS //
 	custom_materials = list(/datum/material/wood = MINERAL_MATERIAL_AMOUNT * 6)
 	icon_state = "riflestock"
 
-/obj/item/weaponcrafting/durathread_string
-	name = "durathread string"
-	desc = "A long piece of durathread with some resemblance to cable coil."
+/obj/item/weaponcrafting/string
+	name = "wound thread"
+	desc = "A long piece of thread with some resemblance to cable coil."
 	icon_state = "durastring"
 
 ////////////////////////////////
