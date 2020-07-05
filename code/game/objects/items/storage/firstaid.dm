@@ -229,7 +229,6 @@
 	STR.click_gather = TRUE
 	STR.can_hold = typecacheof(list(/obj/item/reagent_containers/pill, /obj/item/dice))
 
-
 /obj/item/storage/pill_bottle/AltClick(mob/living/carbon/user)
 	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
 		return
