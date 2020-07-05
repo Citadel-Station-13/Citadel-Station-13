@@ -85,8 +85,11 @@
 					FP.entered_dirs |= dir
 					FP.bloodiness = S.bloody_shoes[S.blood_state]
 					if(S.last_bloodtype)
-						FP.blood_DNA += list(S.last_blood_DNA = S.last_bloodtype)
-						FP.blood_DNA["color"] += S.last_blood_color
+						FP.blood_DNA[S.last_blood_DNA] = S.last_bloodtype
+						if(!FP.blood_DNA["color"])
+							FP.blood_DNA["color"] = S.last_blood_color
+						else
+							FP.blood_DNA["color"] = BlendRGB(FP.blood_DNA["color"], S.last_blood_color)
 					FP.update_icon()
 					update_inv_shoes()
 				//End bloody footprints
