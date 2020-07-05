@@ -451,7 +451,7 @@
 	lootcount = 1
 	spawn_on_turf = FALSE
 //Note this is out of a 100 - Meaning the number you see is also the percent its going to pick that
-//This is ment for "low" loot that anyone could fine in a toilet, for better gear use high loot toilet
+//This is meant for "low" loot that anyone could find in a toilet, for better gear use high loot toilet
 	loot = list("" = 30,
 		/obj/item/lighter = 2,
 		/obj/item/tape/random = 1,
@@ -476,7 +476,7 @@
 	lootcount = 1
 	spawn_on_turf = FALSE
 //Note this is out of a 100 - Meaning the number you see is also the percent its going to pick that
-//This is ment for "prison" loot that is rather rare and ment for "prisoners if they get a crowbar to fine, or sec.
+//This is meant for "prison" loot that is rather rare and meant for "prisoners if they get a crowbar to fine, or sec.
 	loot = list("" = 10,
 		/obj/item/lighter = 5,
 		/obj/item/poster/random_contraband = 5,
@@ -491,7 +491,7 @@
 		/obj/item/kitchen/knife = 5,
 		/obj/item/screwdriver = 5,
 		/obj/item/crowbar/red = 1, //Dont you need a crowbar to open this?
-		/obj/item/stack/medical/bruise_pack = 3,
+		/obj/item/stack/medical/suture = 3,
 		/obj/item/reagent_containers/food/drinks/bottle/vodka = 2,
 		/obj/item/radio = 5,
 		/obj/item/flashlight = 4,
@@ -611,13 +611,13 @@
 		/obj/item/clothing/mask/breath = 5,
 		/obj/item/clothing/mask/breath/medical = 1
 		)
- 
+
 /obj/effect/spawner/lootdrop/welder_tools/no_turf
 	spawn_on_turf = FALSE
 
 /obj/effect/spawner/lootdrop/low_tools/no_turf
 	spawn_on_turf = FALSE
- 
+
 /obj/effect/spawner/lootdrop/breathing_tanks/no_turf
 	spawn_on_turf = FALSE
 
@@ -644,3 +644,76 @@
 
 /obj/effect/spawner/lootdrop/glowstick/no_turf
 	spawn_on_turf = FALSE
+
+// Random Parts
+
+/obj/effect/spawner/lootdrop/stock_parts
+	name = "random stock parts spawner"
+	lootcount = 1
+	loot = list(
+				/obj/item/stock_parts/capacitor,
+				/obj/item/stock_parts/scanning_module,
+				/obj/item/stock_parts/manipulator,
+				/obj/item/stock_parts/micro_laser,
+				/obj/item/stock_parts/matter_bin,
+				/obj/item/stock_parts/cell
+				)
+
+// Random Weapon Parts
+
+/obj/effect/spawner/lootdrop/weapon_parts
+	name = "random weapon parts spawner 50%"
+	lootcount = 1
+	spawn_on_turf = FALSE
+	loot = list("" = 50,
+		/obj/item/weaponcrafting/improvised_parts/rifle_receiver = 13,
+		/obj/item/weaponcrafting/improvised_parts/shotgun_receiver = 13,
+		/obj/item/weaponcrafting/improvised_parts/trigger_assembly = 12,
+		)
+
+/obj/effect/spawner/lootdrop/weapon_parts
+	name = "random weapon parts spawner 20%"
+	lootcount = 1
+	spawn_on_turf = FALSE
+	loot = list("" = 80,
+		/obj/item/weaponcrafting/improvised_parts/rifle_receiver = 5,
+		/obj/item/weaponcrafting/improvised_parts/trigger_assembly = 5,
+		)
+
+/obj/effect/spawner/lootdrop/ammo
+	name = "random ammo 75%"
+	lootcount = 1
+	spawn_on_turf = FALSE
+	loot = list("" = 25,
+		/obj/item/ammo_box/magazine/wt550m9 = 1,
+		/obj/item/ammo_casing/shotgun/buckshot = 7,
+		/obj/item/ammo_casing/shotgun/rubbershot = 7,
+		/obj/item/ammo_casing/a762 = 15,
+		/obj/item/ammo_box/a762 = 15,
+		)
+
+/obj/effect/spawner/lootdrop/ammo/fiftypercent
+	name = "random ammo 50%"
+	lootcount = 1
+	spawn_on_turf = FALSE
+	loot = list("" = 50,
+		/obj/item/ammo_box/magazine/wt550m9 = 2,
+		/obj/item/ammo_casing/shotgun/buckshot = 10,
+		/obj/item/ammo_casing/shotgun/rubbershot = 10,
+		/obj/item/ammo_casing/a762 = 7,
+		/obj/item/ammo_box/a762 = 7,
+		)
+
+/obj/effect/spawner/lootdrop/ammo/shotgun
+	name = "random ammo 50%"
+	lootcount = 1
+	spawn_on_turf = FALSE
+	loot = list("" = 50,
+		/obj/item/ammo_box/shotgun/loaded/buckshot = 5,
+		/obj/item/ammo_box/shotgun/loaded/beanbag = 5,
+		/obj/item/ammo_box/shotgun/loaded/incendiary = 5,
+		/obj/item/ammo_casing/shotgun/buckshot = 8,
+		/obj/item/ammo_casing/shotgun/rubbershot = 9,
+		/obj/item/ammo_casing/shotgun = 8,
+		/obj/item/ammo_casing/shotgun/incendiary = 10,
+		)

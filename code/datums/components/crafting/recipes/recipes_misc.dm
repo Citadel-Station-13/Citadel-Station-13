@@ -92,7 +92,7 @@
 	time = 150
 	subcategory = CAT_MISCELLANEOUS
 	category = CAT_MISC
-	always_availible = FALSE	// Disabled til learned
+	always_availible = FALSE	// Disabled until learned
 
 
 /datum/crafting_recipe/bloodsucker/candelabrum
@@ -124,9 +124,9 @@
 	category = CAT_MISC
 	subcategory = CAT_TOOL
 
-/datum/crafting_recipe/bruise_pack
-	name = "Bruise Pack"
-	result = /obj/item/stack/medical/bruise_pack/one
+/datum/crafting_recipe/brute_pack
+	name = "Suture Pack"
+	result = /obj/item/stack/medical/suture/one
 	time = 1
 	reqs = list(/obj/item/stack/medical/gauze = 1,
 				/datum/reagent/medicine/styptic_powder = 10)
@@ -134,8 +134,8 @@
 	subcategory = CAT_TOOL
 
 /datum/crafting_recipe/burn_pack
-	name = "Burn Ointment"
-	result = /obj/item/stack/medical/ointment/one
+	name = "Regenerative Mesh"
+	result = /obj/item/stack/medical/mesh/one
 	time = 1
 	reqs = list(/obj/item/stack/medical/gauze = 1,
 				/datum/reagent/medicine/silver_sulfadiazine = 10)
@@ -244,7 +244,7 @@
 
 /datum/crafting_recipe/rcl
 	name = "Makeshift Rapid Cable Layer"
-	result = /obj/item/twohanded/rcl/ghetto
+	result = /obj/item/rcl/ghetto
 	time = 40
 	tools = list(TOOL_WELDER, TOOL_SCREWDRIVER, TOOL_WRENCH)
 	reqs = list(/obj/item/stack/sheet/metal = 15)

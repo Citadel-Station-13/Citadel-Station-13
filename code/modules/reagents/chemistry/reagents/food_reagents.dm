@@ -132,8 +132,8 @@
 			"<span class='userdanger'>You're covered in boiling oil!</span>")
 			M.emote("scream")
 			playsound(M, 'sound/machines/fryer/deep_fryer_emerge.ogg', 25, TRUE)
-			var/oil_damage = (holder.chem_temp / fry_temperature) * 0.33 //Damage taken per unit
-			M.adjustFireLoss(min(35, oil_damage * reac_volume)) //Damage caps at 35
+			var/oil_damage = max((holder.chem_temp / fry_temperature) * 0.33,1) //Damage taken per unit
+			M.adjustFireLoss(oil_damage * max(reac_volume,20)) //Damage caps at 20
 	else
 		..()
 	return TRUE
@@ -857,3 +857,13 @@
 	taste_mult = 2.5 //sugar's 1.5, capsacin's 1.5, so a good middle ground.
 	taste_description = "smokey sweetness"
 	value = REAGENT_VALUE_COMMON
+
+/datum/reagent/consumable/laughsyrup
+	name = "Laughin' Syrup"
+	description = "The product of juicing Laughin' Peas. Fizzy, and seems to change flavour based on what it's used with!"
+	nutriment_factor = 5 * REAGENTS_METABOLISM
+	color = "#803280"
+	taste_mult = 2
+	taste_description = "fizzy sweetness"
+	value = REAGENT_VALUE_COMMON
+

@@ -33,7 +33,7 @@
 /mob/living/silicon/attack_animal(mob/living/simple_animal/M)
 	. = ..()
 	if(.)
-		var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
+		var/damage = .
 		if(prob(damage))
 			for(var/mob/living/N in buckled_mobs)
 				N.DefaultCombatKnockdown(20)
@@ -120,6 +120,7 @@
 	flash_act(affect_silicon = 1)
 
 /mob/living/silicon/bullet_act(obj/item/projectile/P, def_zone)
+	var/totaldamage = P.damage
 	if(P.original != src || P.firer != src) //try to block or reflect the bullet, can't do so when shooting oneself
 		var/list/returnlist = list()
 		var/returned = mob_run_block(P, P.damage, "the [P.name]", ATTACK_TYPE_PROJECTILE, P.armour_penetration, P.firer, def_zone, returnlist)
@@ -128,22 +129,18 @@
 		if(returned & BLOCK_REDIRECTED)
 			return BULLET_ACT_FORCE_PIERCE
 		if(returned & BLOCK_SUCCESS)
-			P.on_hit(src, 100, def_zone)
+			P.on_hit(src, returnlist[BLOCK_RETURN_PROJECTILE_BLOCK_PERCENTAGE], def_zone)
 			return BULLET_ACT_BLOCK
+		totaldamage = block_calculate_resultant_damage(totaldamage, returnlist)
 	if((P.damage_type == BRUTE || P.damage_type == BURN))
-		adjustBruteLoss(P.damage)
-		if(prob(P.damage*1.5))
-			for(var/mob/living/M in buckled_mobs)
-				M.visible_message("<span class='boldwarning'>[M] is knocked off of [src]!</span>",
-					"<span class='boldwarning'>You are knocked off of [src]!</span>")
-				unbuckle_mob(M)
-				M.DefaultCombatKnockdown(40)
-	if(P.stun || P.knockdown)
+		adjustBruteLoss(totaldamage)
+	if((P.damage >= 10) || P.stun || P.knockdown || (P.stamina >= 20))
 		for(var/mob/living/M in buckled_mobs)
-			unbuckle_mob(M)
 			M.visible_message("<span class='boldwarning'>[M] is knocked off of [src] by the [P]!</span>",
 				"<span class='boldwarning'>You are knocked off of [src] by the [P]!</span>")
-	P.on_hit(src)
+			unbuckle_mob(M)
+			M.DefaultCombatKnockdown(40)
+	P.on_hit(src, 0, def_zone)
 	return BULLET_ACT_HIT
 
 /mob/living/silicon/flash_act(intensity = 1, override_blindness_check = 0, affect_silicon = 0, visual = 0, type = /obj/screen/fullscreen/flash/static)

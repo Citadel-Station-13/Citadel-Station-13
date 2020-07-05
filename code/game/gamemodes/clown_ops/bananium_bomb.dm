@@ -51,4 +51,4 @@
 
 		H.dna.add_mutation(CLOWNMUT)
 		H.dna.add_mutation(SMILE)
-		H.gain_trauma(/datum/brain_trauma/mild/phobia, TRAUMA_RESILIENCE_LOBOTOMY, "clowns") //MWA HA HA
+		H.gain_trauma(/datum/brain_trauma/mild/phobia/clowns, TRAUMA_RESILIENCE_LOBOTOMY) //MWA HA HA

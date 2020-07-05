@@ -112,3 +112,8 @@
 /obj/item/projectile/bullet/seed
 	damage = 4
 	stamina = 1
+
+/obj/item/projectile/bullet/pellet/shotgun_incapacitate
+	name = "incapacitating pellet"
+	damage = 1
+	stamina = 6
