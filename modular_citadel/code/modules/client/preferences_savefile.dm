@@ -14,6 +14,9 @@
 	features["mcolor2"]	= sanitize_hexcolor(features["mcolor2"], 3, 0)
 	features["mcolor3"]	= sanitize_hexcolor(features["mcolor3"], 3, 0)
 
+	//Skyrat
+	S["enable_personal_chat_color"]			>> enable_personal_chat_color
+	S["personal_chat_color"]			>> personal_chat_color
 	//skyrat begin
 	erppref = sanitize_text(S["erp_pref"], "Ask")
 	if(!length(erppref)) erppref = "Ask"
@@ -28,6 +31,9 @@
 	if(!length(extremeharm) || (extremepref = "No"))
 		extremeharm = "No"
 	//skyrat end
+	//skyrat extras
+	enable_personal_chat_color	= sanitize_integer(enable_personal_chat_color, 0, 1, initial(enable_personal_chat_color))
+	personal_chat_color	= sanitize_hexcolor(personal_chat_color, 6, 1, "#FFFFFF")
 
 /datum/preferences/proc/cit_character_pref_save(savefile/S)
 	//ipcs
@@ -57,3 +63,5 @@
 	WRITE_FILE(S["vore_pref"], vorepref)
 	WRITE_FILE(S["extremepref"], extremepref)
 	WRITE_FILE(S["extremeharm"], extremeharm)
+	WRITE_FILE(S["enable_personal_chat_color"], enable_personal_chat_color)
+	WRITE_FILE(S["personal_chat_color"], personal_chat_color)

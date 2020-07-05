@@ -14,7 +14,9 @@
 	var/z_co = 1
 	var/power_off
 	var/rotation_off
-	//var/angle_off
+	var/angle_off
+	var/offsety
+	var/offsetx
 	var/last_target
 	var/in_use
 
@@ -26,8 +28,8 @@
 	var/teleport_cooldown = 0 // every index requires a bluespace crystal
 	var/list/power_options = list(5, 10, 20, 25, 30, 40, 50, 80, 100)
 	var/teleporting = 0
-	var/starting_crystals = 3
-	var/max_crystals = 4
+	var/starting_crystals = 8
+	var/max_crystals = 8
 	var/list/crystals = list()
 	var/obj/item/gps/inserted_gps
 
@@ -43,8 +45,8 @@
 	return ..()
 
 /obj/machinery/computer/telescience/examine(mob/user)
-	. = ..()
-	. += "<span class='notice'>There are [crystals.len ? crystals.len : "no"] bluespace crystal\s in the crystal slots.</span>"
+	..()
+	to_chat(user, "There are [crystals.len ? crystals.len : "no"] bluespace crystal\s in the crystal slots.")
 
 /obj/machinery/computer/telescience/Initialize(mapload)
 	. = ..()
@@ -91,22 +93,20 @@
 	interact(user)
 
 /obj/machinery/computer/telescience/interact(mob/user)
-	. = ..()	// beat -- fixes
-
 	var/t
 	if(!telepad)
 		in_use = 0     //Yeah so if you deconstruct teleporter while its in the process of shooting it wont disable the console
 		t += "<div class='statusDisplay'>No telepad located. <BR>Please add telepad data.</div><BR>"
 	else
-		if(inserted_gps)	// beat start -- fixes
-			t += "<A href='?src=[REF(src)];ejectGPS=1'>Eject GPS</A>"
+		if(inserted_gps)
+			t += "<A href='?src=\ref[src];ejectGPS=1'>Eject GPS</A>"
 		else
 			t += "<span class='linkOff'>Eject GPS</span>"
 		t += "<div class='statusDisplay'>[temp_msg]</div><BR>"
-		t += "<A href='?src=[REF(src)];setrotation=1'>Set Bearing</A>"
-		t += "<div class='statusDisplay'>[rotation]°</div>"
-		t += "<A href='?src=[REF(src)];setangle=1'>Set Elevation</A>"
-		t += "<div class='statusDisplay'>[angle]°</div>"
+		t += "<A href='?src=\ref[src];setrotation=1'>Set Bearing</A>"
+		t += "<div class='statusDisplay'>[rotation]�</div>"
+		t += "<A href='?src=\ref[src];setangle=1'>Set Elevation</A>"
+		t += "<div class='statusDisplay'>[angle]�</div>"
 		t += "<span class='linkOn'>Set Power</span>"
 		t += "<div class='statusDisplay'>"
 
@@ -117,16 +117,16 @@
 			if(power == power_options[i])
 				t += "<span class='linkOn'>[power_options[i]]</span>"
 				continue
-			t += "<A href='?src=[REF(src)];setpower=[i]'>[power_options[i]]</A>"
+			t += "<A href='?src=\ref[src];setpower=[i]'>[power_options[i]]</A>"
 		t += "</div>"
 
-		t += "<A href='?src=[REF(src)];setz=1'>Set Sector</A>"
+		t += "<A href='?src=\ref[src];setz=1'>Set Sector</A>"
 		t += "<div class='statusDisplay'>[z_co ? z_co : "NULL"]</div>"
 
-		t += "<BR><A href='?src=[REF(src)];send=1'>Send</A>"
-		t += " <A href='?src=[REF(src)];receive=1'>Receive</A>"
-		t += "<BR><A href='?src=[REF(src)];recal=1'>Recalibrate Crystals</A> <A href='?src=[REF(src)];eject=1'>Eject Crystals</A>"
-		// beat -- end
+		t += "<BR><A href='?src=\ref[src];send=1'>Send</A>"
+		t += " <A href='?src=\ref[src];receive=1'>Receive</A>"
+		t += "<BR><A href='?src=\ref[src];recal=1'>Recalibrate Crystals</A> <A href='?src=\ref[src];eject=1'>Eject Crystals</A>"
+
 		// Information about the last teleport
 		t += "<BR><div class='statusDisplay'>"
 		if(!last_tele_data)
@@ -163,13 +163,15 @@
 
 		var/truePower = clamp(power + power_off, 1, 1000)
 		var/trueRotation = rotation + rotation_off
-		var/trueAngle = clamp(angle, 1, 90)
+		var/trueAngle = clamp(angle + angle_off, 1, 90)
+		var/trueoffsetx = offsetx + rand(-1,1) // Where will you land?
+		var/trueoffsety = offsety + rand(-1,1) // You never TRULY know. There are 9 possibilities, IF you calculated the offsetx and offsety.
 
 		var/datum/projectile_data/proj_data = projectile_trajectory(telepad.x, telepad.y, trueRotation, trueAngle, truePower)
 		last_tele_data = proj_data
 
-		var/trueX = clamp(round(proj_data.dest_x, 1), 1, world.maxx)
-		var/trueY = clamp(round(proj_data.dest_y, 1), 1, world.maxy)
+		var/trueX = clamp(round(proj_data.dest_x + trueoffsetx, 1), 1, world.maxx)
+		var/trueY = clamp(round(proj_data.dest_y + trueoffsety, 1), 1, world.maxy)
 		var/spawn_time = round(proj_data.time) * 10
 
 		var/turf/target = locate(trueX, trueY, z_co)
@@ -245,16 +247,16 @@
 								log_msg += "[key_name(Q)], "
 							else
 								log_msg += "[Q.name], "
-						if (findtext(log_msg, "(", length(log_msg) - 1, null))
+						if (dd_hassuffix(log_msg, "("))
 							log_msg += "empty)"
 						else
-							log_msg = copytext(log_msg, 1, length(log_msg) - 2)
+							log_msg = dd_limittext(log_msg, length(log_msg) - 2)
 							log_msg += ")"
 					log_msg += ", "
 				do_teleport(ROI, dest)
 
-			if (findtext(log_msg, ", ", length(log_msg) - 2, null))
-				log_msg = copytext(log_msg, 1, length(log_msg) - 2)
+			if (dd_hassuffix(log_msg, ", "))
+				log_msg = dd_limittext(log_msg, length(log_msg) - 2)
 			else
 				log_msg += "nothing"
 			log_msg += " [sending ? "to" : "from"] [trueX], [trueY], [z_co] ([A ? A.name : "null area"])"
@@ -324,7 +326,7 @@
 		var/new_z = input("Please input desired sector.", name, z_co) as num
 		if(..())
 			return
-		z_co = clamp(round(new_z), 1, 13)	// beat -- added 3 more sectors
+		z_co = clamp(round(new_z), 1, 10)
 
 	if(href_list["ejectGPS"])
 		if(inserted_gps)
@@ -351,7 +353,9 @@
 	updateDialog()
 
 /obj/machinery/computer/telescience/proc/recalibrate()
-	teles_left = rand(30, 40)
-	//angle_off = rand(-25, 25)
+	teles_left = rand(10, 30)
+	angle_off = rand(-15, 15)
 	power_off = rand(-4, 0)
 	rotation_off = rand(-10, 10)
+	offsetx = rand(0, 7)
+	offsety = rand(0, 7)

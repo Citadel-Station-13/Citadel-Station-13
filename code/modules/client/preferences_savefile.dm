@@ -240,6 +240,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["be_special"] 		>> be_special
 
 	//SKYRAT CHANGES BEGIN
+	S["see_chat_emotes"] 	>> see_chat_emotes
 	S["appear_in_round_end_report"]	>> appear_in_round_end_report
 	//SKYRAT CHANGES END
 
@@ -328,6 +329,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	modless_key_bindings 	= sanitize_islist(modless_key_bindings, list())
 
 	//SKYRAT CHANGES BEGIN
+	see_chat_emotes	= sanitize_integer(see_chat_emotes, 0, 1, initial(see_chat_emotes))
 	appear_in_round_end_report	= sanitize_integer(appear_in_round_end_report, 0, 1, initial(appear_in_round_end_report))
 	//SKYRAT CHANGES END
 
@@ -420,6 +422,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["no_tetris_storage"], no_tetris_storage)
 
 	//SKYRAT CHANGES BEGIN
+	WRITE_FILE(S["see_chat_emotes"], see_chat_emotes)
 	WRITE_FILE(S["appear_in_round_end_report"], appear_in_round_end_report)
 	//SKYRAT CHANGES END
 

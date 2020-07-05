@@ -20,6 +20,9 @@
 	var/static/list/emote_list = list()
 	var/static/regex/stop_bad_mime = regex(@"says|exclaims|yells|asks")
 
+	var/chat_popup = TRUE //Skyrat edit
+	var/image_popup
+
 /datum/emote/New()
 	if(key_third_person)
 		emote_list[key_third_person] = src
@@ -55,19 +58,24 @@
 		return
 
 	user.log_message(msg, LOG_EMOTE)
-	msg = "<b>[user]</b> " + msg
+	//msg = "<b>[user]</b> " + msg //SKYRAT CHANGE
+	var/dchatmsg = "<b>[user]</b> " + msg //SKYRAT CHANGE
 
 	for(var/mob/M in GLOB.dead_mob_list)
 		if(!M.client || isnewplayer(M))
 			continue
 		var/T = get_turf(user)
-		if(M.stat == DEAD && M.client && (M.client.prefs.chat_toggles & CHAT_GHOSTSIGHT) && !(M in viewers(T, null)))
-			M.show_message(msg)
+		if(M.stat == DEAD && M.client && (M.client.prefs.chat_toggles & CHAT_GHOSTSIGHT) && !(M in viewers(T, null)) && (user.client)) //SKYRAT CHANGE - only user controlled mobs show their emotes to all-seeing ghosts, to reduce chat spam
+			M.show_message(dchatmsg) //SKYRAT CHANGE
 
 	if(emote_type == EMOTE_AUDIBLE)
-		user.audible_message(msg)
+		user.audible_message(msg, user_msg = TRUE, runechat_popup = chat_popup) //SKYRAT CHANGE
 	else
-		user.visible_message(msg)
+		user.visible_message(msg, user_msg = TRUE, runechat_popup = chat_popup) //SKYRAT CHANGE
+	//Skyrat change
+	if(image_popup)
+		flick_emote_popup_on_mob(user, image_popup, 40)
+	//End of skyrat changes
 
 /datum/emote/proc/replace_pronoun(mob/user, message)
 	if(findtext(message, "their"))

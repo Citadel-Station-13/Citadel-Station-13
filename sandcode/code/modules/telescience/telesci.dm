@@ -30,7 +30,7 @@
 
 	var/distance = time * power_x
 
-	var/dest_x = src_x + distance*sin(rotation);
-	var/dest_y = src_y + distance*cos(rotation);
+	var/dest_x = src_x + distance*sin(rotation); //You can never accurately predict where it lands, at all.
+	var/dest_y = src_y + distance*cos(rotation); //Telethievery has now been killed, thank me later.
 
 	return new /datum/projectile_data(src_x, src_y, time, distance, power_x, power_y, dest_x, dest_y)
