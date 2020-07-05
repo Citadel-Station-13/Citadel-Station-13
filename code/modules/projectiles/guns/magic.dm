@@ -9,7 +9,7 @@
 	fire_sound = 'sound/weapons/emitter.ogg'
 	flags_1 =  CONDUCT_1
 	w_class = WEIGHT_CLASS_HUGE
-	var/checks_antimagic = FALSE
+	var/checks_antimagic = TRUE
 	var/max_charges = 6
 	var/charges = 0
 	var/recharge_rate = 4

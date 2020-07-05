@@ -8,9 +8,6 @@
 /mob/living/carbon/alien/hitby(atom/movable/AM, skipcatch, hitpush, blocked, datum/thrownthing/throwingdatum)
 	return ..(AM, skipcatch = TRUE, hitpush = FALSE)
 
-/mob/living/carbon/alien/can_embed(obj/item/I)
-	return FALSE
-
 /*Code for aliens attacking aliens. Because aliens act on a hivemind, I don't see them as very aggressive with each other.
 As such, they can either help or harm other aliens. Help works like the human help command while harm is a simple nibble.
 In all, this is a lot like the monkey code. /N
@@ -54,6 +51,8 @@ In all, this is a lot like the monkey code. /N
 		return
 	switch(M.a_intent)
 		if(INTENT_HELP)
+			if(M == src && check_self_for_injuries())
+				return
 			help_shake_act(M)
 		if(INTENT_GRAB)
 			grabbedby(M)

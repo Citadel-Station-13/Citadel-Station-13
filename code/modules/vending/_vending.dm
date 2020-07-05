@@ -105,6 +105,12 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 	///Last world tick we sent a slogan message out
 	var/last_slogan
 	var/last_shopper
+	var/tilted = FALSE
+	var/tiltable = TRUE
+	var/squish_damage = 75
+	var/forcecrit = 0
+	var/num_shards = 7
+	var/list/pinned_mobs = list()
 	///How many ticks until we can send another
 	var/slogan_delay = 6000
 	///Icon when vending an item to the user
@@ -372,6 +378,7 @@ GLOBAL_LIST_EMPTY(vending_products)
 	..()
 	if(panel_open)
 		default_unfasten_wrench(user, I, time = 60)
+		unbuckle_all_mobs(TRUE)
 	return TRUE
 
 /obj/machinery/vending/screwdriver_act(mob/living/user, obj/item/I)
@@ -435,6 +442,133 @@ GLOBAL_LIST_EMPTY(vending_products)
 				updateUsrDialog()
 	else
 		. = ..()
+		if(tiltable && !tilted && I.force)
+			switch(rand(1, 100))
+				if(1 to 5)
+					freebie(user, 3)
+				if(6 to 15)
+					freebie(user, 2)
+				if(16 to 25)
+					freebie(user, 1)
+				if(76 to 90)
+					tilt(user)
+				if(91 to 100)
+					tilt(user, crit=TRUE)
+
+/obj/machinery/vending/proc/freebie(mob/fatty, freebies)
+	visible_message("<span class='notice'>[src] yields [freebies > 1 ? "several free goodies" : "a free goody"]!</span>")
+
+	for(var/i in 1 to freebies)
+		playsound(src, 'sound/machines/machine_vend.ogg', 50, TRUE, extrarange = -3)
+		for(var/datum/data/vending_product/R in shuffle(product_records))
+
+			if(R.amount <= 0) //Try to use a record that actually has something to dump.
+				continue
+			var/dump_path = R.product_path
+			if(!dump_path)
+				continue
+
+			R.amount--
+			new dump_path(get_turf(src))
+			break
+
+/obj/machinery/vending/proc/tilt(mob/fatty, crit=FALSE)
+	visible_message("<span class='danger'>[src] tips over!</span>")
+	tilted = TRUE
+	layer = ABOVE_MOB_LAYER
+
+	var/crit_case
+	if(crit)
+		crit_case = rand(1,5)
+
+	if(forcecrit)
+		crit_case = forcecrit
+
+	if(in_range(fatty, src))
+		for(var/mob/living/L in get_turf(fatty))
+			var/mob/living/carbon/C = L
+
+			if(istype(C))
+				var/crit_rebate = 0 // lessen the normal damage we deal for some of the crits
+
+				if(crit_case != 5) // the head asplode case has its own description
+					C.visible_message("<span class='danger'>[C] is crushed by [src]!</span>", \
+						"<span class='userdanger'>You are crushed by [src]!</span>")
+
+				switch(crit_case) // only carbons can have the fun crits
+					if(1) // shatter their legs and bleed 'em
+						crit_rebate = 60
+						C.bleed(150)
+						var/obj/item/bodypart/l_leg/l = C.get_bodypart(BODY_ZONE_L_LEG)
+						if(l)
+							l.receive_damage(brute=200, updating_health=TRUE)
+						var/obj/item/bodypart/r_leg/r = C.get_bodypart(BODY_ZONE_R_LEG)
+						if(r)
+							r.receive_damage(brute=200, updating_health=TRUE)
+						if(l || r)
+							C.visible_message("<span class='danger'>[C]'s legs shatter with a sickening crunch!</span>", \
+								"<span class='userdanger'>Your legs shatter with a sickening crunch!</span>")
+					if(2) // pin them beneath the machine until someone untilts it
+						forceMove(get_turf(C))
+						buckle_mob(C, force=TRUE)
+						C.visible_message("<span class='danger'>[C] is pinned underneath [src]!</span>", \
+							"<span class='userdanger'>You are pinned down by [src]!</span>")
+					if(3) // glass candy
+						crit_rebate = 50
+						for(var/i = 0, i < num_shards, i++)
+							var/obj/item/shard/shard = new /obj/item/shard(get_turf(C))
+							shard.embedding = list(embed_chance = 100, ignore_throwspeed_threshold = TRUE, impact_pain_mult=1, pain_chance=5)
+							shard.updateEmbedding()
+							C.hitby(shard, skipcatch = TRUE, hitpush = FALSE)
+							shard.embedding = list()
+							shard.updateEmbedding()
+					if(4) // paralyze this binch
+						// the new paraplegic gets like 4 lines of losing their legs so skip them
+						visible_message("<span class='danger'>[C]'s spinal cord is obliterated with a sickening crunch!</span>", ignored_mobs = list(C))
+						C.gain_trauma(/datum/brain_trauma/severe/paralysis/spinesnapped)
+					if(5) // skull squish!
+						var/obj/item/bodypart/head/O = C.get_bodypart(BODY_ZONE_HEAD)
+						if(O)
+							C.visible_message("<span class='danger'>[O] explodes in a shower of gore beneath [src]!</span>", \
+								"<span class='userdanger'>Oh f-</span>")
+							O.dismember()
+							O.drop_organs()
+							qdel(O)
+							new /obj/effect/gibspawner/human/bodypartless(get_turf(C))
+
+				C.apply_damage(max(0, squish_damage - crit_rebate), forced=TRUE, spread_damage=TRUE)
+				C.AddElement(/datum/element/squish, 18 SECONDS)
+			else
+				L.visible_message("<span class='danger'>[L] is crushed by [src]!</span>", \
+				"<span class='userdanger'>You are crushed by [src]!</span>")
+				L.apply_damage(squish_damage, forced=TRUE)
+				if(crit_case)
+					L.apply_damage(squish_damage, forced=TRUE)
+
+			L.Paralyze(60)
+			L.emote("scream")
+			playsound(L, 'sound/effects/blobattack.ogg', 40, TRUE)
+			playsound(L, 'sound/effects/splat.ogg', 50, TRUE)
+
+	var/matrix/M = matrix()
+	M.Turn(pick(90, 270))
+	transform = M
+
+	if(get_turf(fatty) != get_turf(src))
+		throw_at(get_turf(fatty), 1, 1, spin=FALSE)
+
+/obj/machinery/vending/proc/untilt(mob/user)
+	user.visible_message("<span class='notice'>[user] rights [src].", \
+		"<span class='notice'>You right [src].")
+
+	unbuckle_all_mobs(TRUE)
+
+	tilted = FALSE
+	layer = initial(layer)
+
+	var/matrix/M = matrix()
+	M.Turn(0)
+	transform = M
 
 /obj/machinery/vending/proc/loadingAttempt(obj/item/I, mob/user)
 	. = TRUE
@@ -446,6 +580,12 @@ GLOBAL_LIST_EMPTY(vending_products)
 		vending_machine_input[format_text(I.name)] = 1
 	to_chat(user, "<span class='notice'>You insert [I] into [src]'s input compartment.</span>")
 	loaded_items++
+
+
+/obj/machinery/vending/unbuckle_mob(mob/living/buckled_mob, force=FALSE)
+	if(!force)
+		return
+	. = ..()
 
 /**
   * Is the passed in user allowed to load this vending machines compartments
@@ -511,6 +651,11 @@ GLOBAL_LIST_EMPTY(vending_products)
 	if(seconds_electrified && !(stat & NOPOWER))
 		if(shock(user, 100))
 			return
+	if(tilted && !user.buckled && !isAI(user))
+		to_chat(user, "<span class='notice'>You begin righting [src].")
+		if(do_after(user, 50, target=src))
+			untilt(user)
+		return
 	return ..()
 
 /obj/machinery/vending/ui_base_html(html)
@@ -922,7 +1067,7 @@ GLOBAL_LIST_EMPTY(vending_products)
 			C = H.get_idcard(TRUE)
 			if(C?.registered_account)
 				private_a = C.registered_account
-				say("\The [src] has been linked to [C].")
+				say("[src] has been linked to [C].")
 
 	if(compartmentLoadAccessCheck(user))
 		if(istype(I, /obj/item/pen))

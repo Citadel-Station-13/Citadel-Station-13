@@ -17,6 +17,9 @@
 // eg: 10*0.5 = 5 deciseconds of delay
 // DOES NOT EFFECT THE BASE 1 DECISECOND DELAY OF NEXT_CLICK
 
+/mob/proc/timeToNextMove()
+	return max(0, next_move - world.time)
+
 /mob/proc/changeNext_move(num)
 	next_move = world.time + ((num+next_move_adjust)*next_move_modifier)
 
@@ -73,7 +76,7 @@
 	if(check_click_intercept(params,A))
 		return
 
-	if(notransform)
+	if(mob_transforming)
 		return
 
 	if(SEND_SIGNAL(src, COMSIG_MOB_CLICKON, A, params) & COMSIG_MOB_CANCEL_CLICKON)

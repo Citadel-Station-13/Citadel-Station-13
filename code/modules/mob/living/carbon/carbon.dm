@@ -47,16 +47,13 @@
 
 
 /mob/living/carbon/swap_hand(held_index)
+	. = ..()
+	if(!.)
+		var/obj/item/held_item = get_active_held_item()
+		to_chat(usr, "<span class='warning'>Your other hand is too busy holding [held_item].</span>")
+		return
 	if(!held_index)
 		held_index = (active_hand_index % held_items.len)+1
-
-	var/obj/item/item_in_hand = src.get_active_held_item()
-	if(item_in_hand) //this segment checks if the item in your hand is twohanded.
-		var/obj/item/twohanded/TH = item_in_hand
-		if(istype(TH))
-			if(TH.wielded == 1)
-				to_chat(usr, "<span class='warning'>Your other hand is too busy holding [TH]</span>")
-				return
 	var/oindex = active_hand_index
 	active_hand_index = held_index
 	if(hud_used)
@@ -182,7 +179,7 @@
 				to_chat(src, "<span class='notice'>You gently let go of [throwable_mob].</span>")
 				return
 
-			adjustStaminaLossBuffered(25)//CIT CHANGE - throwing an entire person shall be very tiring
+			adjustStaminaLossBuffered(STAM_COST_THROW_MOB * ((throwable_mob.mob_size+1)**2))// throwing an entire person shall be very tiring
 			var/turf/start_T = get_turf(loc) //Get the start and target tile for the descriptors
 			var/turf/end_T = get_turf(target)
 			if(start_T && end_T)
@@ -247,7 +244,7 @@
 /mob/living/carbon/Topic(href, href_list)
 	..()
 	//strip panel
-	if(usr.canUseTopic(src, BE_CLOSE, NO_DEXTERY))
+	if(usr.canUseTopic(src, BE_CLOSE))
 		if(href_list["internal"] && !HAS_TRAIT(src, TRAIT_NO_INTERNALS))
 			var/slot = text2num(href_list["internal"])
 			var/obj/item/ITEM = get_item_by_slot(slot)
@@ -267,7 +264,15 @@
 					visible_message("<span class='danger'>[usr] [internal ? "opens" : "closes"] the valve on [src]'s [ITEM.name].</span>", \
 									"<span class='userdanger'>[usr] [internal ? "opens" : "closes"] the valve on your [ITEM.name].</span>", \
 									target = usr, target_message = "<span class='danger'>You [internal ? "opens" : "closes"] the valve on [src]'s [ITEM.name].</span>")
-
+	if(href_list["embedded_object"] && usr.canUseTopic(src, BE_CLOSE))
+		var/obj/item/bodypart/L = locate(href_list["embedded_limb"]) in bodyparts
+		if(!L)
+			return
+		var/obj/item/I = locate(href_list["embedded_object"]) in L.embedded_objects
+		if(!I || I.loc != src) //no item, no limb, or item is not in limb or in the person anymore
+			return
+		SEND_SIGNAL(src, COMSIG_CARBON_EMBED_RIP, I, L)
+		return
 
 /mob/living/carbon/fall(forced)
 	loc.handle_fall(src, forced)//it's loc so it doesn't call the mob's handle_fall which does nothing
@@ -432,10 +437,9 @@
 			return
 
 /mob/living/carbon/get_standard_pixel_y_offset(lying = 0)
+	. = ..()
 	if(lying)
-		return -6
-	else
-		return initial(pixel_y)
+		. -= 6
 
 /mob/living/carbon/proc/accident(obj/item/I)
 	if(!I || (I.item_flags & ABSTRACT) || HAS_TRAIT(I, TRAIT_NODROP))
@@ -1153,3 +1157,16 @@
 			dna.features["body_model"] = MALE
 	if(update_icon)
 		update_body()
+
+/mob/living/carbon/check_obscured_slots()
+	if(head)
+		if(head.flags_inv & HIDEMASK)
+			LAZYOR(., SLOT_WEAR_MASK)
+		if(head.flags_inv & HIDEEYES)
+			LAZYOR(., SLOT_GLASSES)
+		if(head.flags_inv & HIDEEARS)
+			LAZYOR(., SLOT_EARS)
+
+	if(wear_mask)
+		if(wear_mask.flags_inv & HIDEEYES)
+			LAZYOR(., SLOT_GLASSES)

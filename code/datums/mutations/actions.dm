@@ -42,6 +42,7 @@
 	school = "evocation"
 	charge_max = 600
 	clothes_req = NONE
+	antimagic_allowed = TRUE
 	range = 20
 	base_icon_state = "fireball"
 	action_icon_state = "fireball0"
@@ -122,6 +123,7 @@
 	desc = "A rare genome that attracts odd forces not usually observed. May sometimes pull you in randomly."
 	school = "evocation"
 	clothes_req = NONE
+	antimagic_allowed = TRUE
 	charge_max = 600
 	invocation = "DOOOOOOOOOOOOOOOOOOOOM!!!"
 	invocation_type = "shout"
@@ -155,6 +157,7 @@
 	dropmessage = "You let the electricity from your hand dissipate."
 	hand_path = /obj/item/melee/touch_attack/shock
 	charge_max = 400
+	antimagic_allowed = TRUE
 	clothes_req = NONE
 	action_icon_state = "zap"
 
@@ -212,6 +215,7 @@
 	desc = "Get a scent off of the item you're currently holding to track it. With an empty hand, you'll track the scent you've remembered."
 	charge_max = 100
 	clothes_req = NONE
+	antimagic_allowed = TRUE
 	range = -1
 	include_user = TRUE
 	action_icon_state = "nose"
@@ -290,6 +294,7 @@
 	name = "Drop a limb"
 	desc = "Concentrate to make a random limb pop right off your body."
 	clothes_req = NONE
+	antimagic_allowed = TRUE
 	charge_max = 100
 	action_icon_state = "autotomy"
 
@@ -327,6 +332,7 @@
 	name = "Lay Web"
 	desc = "Drops a web. Only you will be able to traverse your web easily, making it pretty good for keeping you safe."
 	clothes_req = NONE
+	antimagic_allowed = TRUE
 	charge_max = 4 SECONDS //the same time to lay a web
 	action_icon = 'icons/mob/actions/actions_genetic.dmi'
 	action_icon_state = "lay_web"
@@ -368,6 +374,7 @@
 	name = "Launch spike"
 	desc = "Shoot your tongue out in the direction you're facing, embedding it and dealing damage until they remove it."
 	clothes_req = NONE
+	antimagic_allowed = TRUE
 	charge_max = 100
 	action_icon = 'icons/mob/actions/actions_genetic.dmi'
 	action_icon_state = "spike"
@@ -406,6 +413,8 @@
 	w_class = WEIGHT_CLASS_SMALL
 	sharpness = IS_SHARP
 	var/mob/living/carbon/human/fired_by
+	/// if we missed our target
+	var/missed = TRUE
 
 /obj/item/hardened_spike/Initialize(mapload, firedby)
 	. = ..()
@@ -413,13 +422,12 @@
 	addtimer(CALLBACK(src, .proc/checkembedded), 5 SECONDS)
 
 /obj/item/hardened_spike/proc/checkembedded()
-	if(ishuman(loc))
-		var/mob/living/carbon/human/embedtest = loc
-		for(var/l in embedtest.bodyparts)
-			var/obj/item/bodypart/limb = l
-			if(src in limb.embedded_objects)
-				return limb
-	unembedded()
+	if(missed)
+		unembedded()
+
+/obj/item/hardened_spike/embedded(atom/target)
+	if(isbodypart(target))
+		missed = FALSE
 
 /obj/item/hardened_spike/unembedded()
 	var/turf/T = get_turf(src)
@@ -490,11 +498,7 @@
 
 	var/obj/item/bodypart/L = spikey.checkembedded()
 
-	L.embedded_objects -= spikey
 	//this is where it would deal damage, if it transfers chems it removes itself so no damage
 	spikey.forceMove(get_turf(L))
 	transfered.visible_message("<span class='notice'>[spikey] falls out of [transfered]!</span>")
-	if(!transfered.has_embedded_objects())
-		transfered.clear_alert("embeddedobject")
-		SEND_SIGNAL(transfered, COMSIG_CLEAR_MOOD_EVENT, "embedded")
-	spikey.unembedded()
+

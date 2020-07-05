@@ -319,24 +319,23 @@
 
 /obj/item/gun/ballistic/revolver/doublebarrel/improvised
 	name = "improvised shotgun"
-	desc = "Essentially a tube that aims shotgun shells."
-	desc = "A shoddy break-action breechloaded shotgun. Its lacklustre construction will probably result in it hurting people less than a normal shotgun."
+	desc = "A shoddy break-action breechloaded shotgun. Its lacklustre construction shows in its lesser effectiveness."
 	icon_state = "ishotgun"
 	item_state = "shotgun"
 	w_class = WEIGHT_CLASS_BULKY
-	weapon_weight = WEAPON_MEDIUM
+	weapon_weight = WEAPON_MEDIUM // prevents shooting 2 at once, but doesn't require 2 hands
 	force = 10
 	slot_flags = null
 	mag_type = /obj/item/ammo_box/magazine/internal/shot/improvised
 	sawn_desc = "I'm just here for the gasoline."
 	unique_reskin = null
-	projectile_damage_multiplier = 0.8
+	projectile_damage_multiplier = 0.9
 	var/slung = FALSE
 
 /obj/item/gun/ballistic/revolver/doublebarrel/improvised/attackby(obj/item/A, mob/user, params)
 	..()
 	if(istype(A, /obj/item/stack/cable_coil) && !sawn_off)
-		if(A.use_tool(src, user, 0, 10, max_level = JOB_SKILL_BASIC))
+		if(A.use_tool(src, user, 0, 10, skill_gain_mult = EASY_USE_TOOL_MULT))
 			slot_flags = ITEM_SLOT_BACK
 			to_chat(user, "<span class='notice'>You tie the lengths of cable to the shotgun, making a sling.</span>")
 			slung = TRUE
@@ -358,7 +357,7 @@
 
 /obj/item/gun/ballistic/revolver/doublebarrel/improvised/sawn
 	name = "sawn-off improvised shotgun"
-	desc = "A single-shot shotgun. Better not miss."
+	desc = "The barrel and stock have been sawn and filed down; it can fit in backpacks. You wont want to shoot two of these at once if you value your wrists."
 	icon_state = "ishotgun"
 	item_state = "gun"
 	w_class = WEIGHT_CLASS_NORMAL

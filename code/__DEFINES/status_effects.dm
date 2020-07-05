@@ -96,6 +96,8 @@
 
 #define STATUS_EFFECT_SPASMS /datum/status_effect/spasms //causes random muscle spasms
 
+#define STATUS_EFFECT_FAKE_VIRUS /datum/status_effect/fake_virus //gives you fluff messages for cough, sneeze, headache, etc but without an actual virus
+
 #define STATUS_EFFECT_BREASTS_ENLARGEMENT /datum/status_effect/chem/breast_enlarger //Applied slowdown due to the ominous bulk.
 
 #define STATUS_EFFECT_PENIS_ENLARGEMENT /datum/status_effect/chem/penis_enlarger //More applied slowdown, just like the above.

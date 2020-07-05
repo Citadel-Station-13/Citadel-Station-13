@@ -7,6 +7,11 @@
 	max_ammo = 7
 	multiple_sprites = 1
 
+/obj/item/ammo_box/a357/match
+	name = "speed loader (.357 Match)"
+	desc = "Designed to quickly reload revolvers. These rounds are manufactured within extremely tight tolerances, making them easy to show off trickshots with."
+	ammo_type = /obj/item/ammo_casing/a357/match
+
 /obj/item/ammo_box/a357/ap
 	name = "speed loader (.357 AP)"
 	ammo_type = /obj/item/ammo_casing/a357/ap
@@ -39,6 +44,16 @@
 	name = "speed loader (.38 Iceblox)"
 	desc = "Designed to quickly reload revolvers. Iceblox bullets contain a cryogenic payload."
 	ammo_type = /obj/item/ammo_casing/c38/iceblox
+
+/obj/item/ammo_box/c38/dumdum
+	name = "speed loader (.38 DumDum)"
+	desc = "Designed to quickly reload revolvers. DumDum bullets shatter on impact and shred the target's innards, likely getting caught inside."
+	ammo_type = /obj/item/ammo_casing/c38/dumdum
+
+/obj/item/ammo_box/c38/match
+	name = "speed loader (.38 Match)"
+	desc = "Designed to quickly reload revolvers. These rounds are manufactured within extremely tight tolerances, making them easy to show off trickshots with."
+	ammo_type = /obj/item/ammo_casing/c38/match
 
 /obj/item/ammo_box/c9mm
 	name = "ammo box (9mm)"

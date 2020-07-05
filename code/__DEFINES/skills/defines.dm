@@ -8,12 +8,6 @@
 /// Levels
 #define SKILL_PROGRESSION_LEVEL					4
 
-
-/// Max value of skill for numerical skills
-#define SKILL_NUMERICAL_MAX			100
-/// Min value of skill for numerical skills
-#define SKILL_NUMERICAL_MIN			0
-
 // Standard values for job starting skills
 
 #define STARTING_SKILL_SURGERY_MEDICAL		35		//out of SKILL_NUMERICAL_MAX
@@ -26,6 +20,13 @@
 
 #define DEF_SKILL_GAIN					1
 #define SKILL_GAIN_SURGERY_PER_STEP		0.25
+#define STD_USE_TOOL_MULT				1
+#define EASY_USE_TOOL_MULT				0.75
+#define TRIVIAL_USE_TOOL_MULT			0.5
+#define BARE_USE_TOOL_MULT				0.25
+
+//multiplier of the difference of max_value and min_value. Mostly for balance purposes between numerical and level-based skills.
+#define STD_NUM_SKILL_ITEM_GAIN_MULTI	0.002
 
 //An extra point for each few seconds of delay when using a tool. Before the multiplier.
 #define SKILL_GAIN_DELAY_DIVISOR		3 SECONDS
@@ -101,3 +102,9 @@
 #define MODIFIER_SKILL_PRIORITY_LOW 100
 #define MODIFIER_SKILL_PRIORITY_DEF 50
 #define MODIFIER_SKILL_PRIORITY_MAX 1 //max priority, meant for job/antag modifiers so they don't null out other (de)buffs
+
+// UI Defines
+///Categories of skills, these will be displayed alphabetically.
+#define SKILL_UI_CAT_ENG	"Engineering"
+#define SKILL_UI_CAT_MED	"Medical"
+#define SKILL_UI_CAT_MISC	"Misc"
