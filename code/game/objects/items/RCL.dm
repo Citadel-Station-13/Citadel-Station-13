@@ -1,4 +1,4 @@
-/obj/item/rcl
+/obj/item/twohanded/rcl
 	name = "rapid cable layer"
 	desc = "A device used to rapidly deploy cables. It has screws on the side which can be removed to slide off the cables. Do not use without insulation!"
 	icon = 'icons/obj/tools.dmi'
@@ -23,26 +23,15 @@
 	var/datum/radial_menu/persistent/wiring_gui_menu
 	var/mob/listeningTo
 
-/obj/item/rcl/Initialize()
+/obj/item/twohanded/rcl/Initialize()
 	. = ..()
-	RegisterSignal(src, COMSIG_TWOHANDED_WIELD, .proc/on_wield)
-	RegisterSignal(src, COMSIG_TWOHANDED_UNWIELD, .proc/on_unwield)
 	update_icon()
 
-/obj/item/rcl/ComponentInitialize()
+/obj/item/twohanded/rcl/ComponentInitialize()
 	. = ..()
 	AddElement(/datum/element/update_icon_updates_onmob)
-	AddComponent(/datum/component/two_handed)
 
-/// triggered on wield of two handed item
-/obj/item/rcl/proc/on_wield(obj/item/source, mob/user)
-	active = TRUE
-
-/// triggered on unwield of two handed item
-/obj/item/rcl/proc/on_unwield(obj/item/source, mob/user)
-	active = FALSE
-
-/obj/item/rcl/attackby(obj/item/W, mob/user)
+/obj/item/twohanded/rcl/attackby(obj/item/W, mob/user)
 	if(istype(W, /obj/item/stack/cable_coil))
 		var/obj/item/stack/cable_coil/C = W
 
@@ -97,26 +86,26 @@
 	else
 		..()
 
-/obj/item/rcl/examine(mob/user)
+/obj/item/twohanded/rcl/examine(mob/user)
 	. = ..()
 	if(loaded)
 		. += "<span class='info'>It contains [loaded.amount]/[max_amount] cables.</span>"
 
-/obj/item/rcl/Destroy()
+/obj/item/twohanded/rcl/Destroy()
 	QDEL_NULL(loaded)
 	last = null
 	listeningTo = null
 	QDEL_NULL(wiring_gui_menu)
 	return ..()
 
-/obj/item/rcl/update_icon_state()
+/obj/item/twohanded/rcl/update_icon_state()
 	icon_state = initial(icon_state)
 	item_state = initial(item_state)
 	if(!loaded || !loaded.amount)
 		icon_state += "-empty"
 		item_state += "-0"
 
-/obj/item/rcl/update_overlays()
+/obj/item/twohanded/rcl/update_overlays()
 	. = ..()
 	if(!loaded || !loaded.amount)
 		return
@@ -124,7 +113,7 @@
 	cable_overlay.color = GLOB.cable_colors[colors[current_color_index]]
 	. += cable_overlay
 
-/obj/item/rcl/worn_overlays(isinhands, icon_file, used_state, style_flags = NONE)
+/obj/item/twohanded/rcl/worn_overlays(isinhands, icon_file, used_state, style_flags = NONE)
 	. = ..()
 	if(!isinhands || !(loaded?.amount))
 		return
@@ -132,7 +121,7 @@
 	cable_overlay.color = GLOB.cable_colors[colors[current_color_index]]
 	. += cable_overlay
 
-/obj/item/rcl/proc/is_empty(mob/user, loud = 1)
+/obj/item/twohanded/rcl/proc/is_empty(mob/user, loud = 1)
 	update_icon()
 	if(!loaded || !loaded.amount)
 		if(loud)
@@ -141,23 +130,26 @@
 			QDEL_NULL(loaded)
 			loaded = null
 		QDEL_NULL(wiring_gui_menu)
+		unwield(user)
+		active = wielded
 		return TRUE
 	return FALSE
 
-/obj/item/rcl/pickup(mob/user)
+/obj/item/twohanded/rcl/pickup(mob/user)
 	..()
 	getMobhook(user)
 
 
 
-/obj/item/rcl/dropped(mob/wearer)
+/obj/item/twohanded/rcl/dropped(mob/wearer)
 	..()
 	UnregisterSignal(wearer, COMSIG_MOVABLE_MOVED)
 	listeningTo = null
 	last = null
 
-/obj/item/rcl/attack_self(mob/user)
+/obj/item/twohanded/rcl/attack_self(mob/user)
 	..()
+	active = wielded
 	if(!active)
 		last = null
 	else if(!last)
@@ -166,7 +158,7 @@
 				last = C
 				break
 
-obj/item/rcl/proc/getMobhook(mob/to_hook)
+obj/item/twohanded/rcl/proc/getMobhook(mob/to_hook)
 	if(listeningTo == to_hook)
 		return
 	if(listeningTo)
@@ -174,7 +166,7 @@ obj/item/rcl/proc/getMobhook(mob/to_hook)
 	RegisterSignal(to_hook, COMSIG_MOVABLE_MOVED, .proc/trigger)
 	listeningTo = to_hook
 
-/obj/item/rcl/proc/trigger(mob/user)
+/obj/item/twohanded/rcl/proc/trigger(mob/user)
 	if(active)
 		layCable(user)
 	if(wiring_gui_menu) //update the wire options as you move
@@ -182,7 +174,7 @@ obj/item/rcl/proc/getMobhook(mob/to_hook)
 
 
 //previous contents of trigger(), lays cable each time the player moves
-/obj/item/rcl/proc/layCable(mob/user)
+/obj/item/twohanded/rcl/proc/layCable(mob/user)
 	if(!isturf(user.loc))
 		return
 	if(is_empty(user, 0))
@@ -215,7 +207,7 @@ obj/item/rcl/proc/getMobhook(mob/to_hook)
 	update_icon()
 
 //searches the current tile for a stub cable of the same colour
-/obj/item/rcl/proc/findLinkingCable(mob/user)
+/obj/item/twohanded/rcl/proc/findLinkingCable(mob/user)
 	var/turf/T
 	if(!isturf(user.loc))
 		return
@@ -231,8 +223,10 @@ obj/item/rcl/proc/getMobhook(mob/to_hook)
 			continue
 		if(C.d1 == 0)
 			return C
+	return
 
-/obj/item/rcl/proc/wiringGuiGenerateChoices(mob/user)
+
+/obj/item/twohanded/rcl/proc/wiringGuiGenerateChoices(mob/user)
 	var/fromdir = 0
 	var/obj/structure/cable/linkingCable = findLinkingCable(user)
 	if(linkingCable)
@@ -249,12 +243,12 @@ obj/item/rcl/proc/getMobhook(mob/to_hook)
 		wiredirs[icondir] = img
 	return wiredirs
 
-/obj/item/rcl/proc/showWiringGui(mob/user)
+/obj/item/twohanded/rcl/proc/showWiringGui(mob/user)
 	var/list/choices = wiringGuiGenerateChoices(user)
 
 	wiring_gui_menu = show_radial_menu_persistent(user, src , choices, select_proc = CALLBACK(src, .proc/wiringGuiReact, user), radius = 42)
 
-/obj/item/rcl/proc/wiringGuiUpdate(mob/user)
+/obj/item/twohanded/rcl/proc/wiringGuiUpdate(mob/user)
 	if(!wiring_gui_menu)
 		return
 
@@ -265,7 +259,7 @@ obj/item/rcl/proc/getMobhook(mob/to_hook)
 
 
 //Callback used to respond to interactions with the wiring menu
-/obj/item/rcl/proc/wiringGuiReact(mob/living/user,choice)
+/obj/item/twohanded/rcl/proc/wiringGuiReact(mob/living/user,choice)
 	if(!choice) //close on a null choice (the center button)
 		QDEL_NULL(wiring_gui_menu)
 		return
@@ -296,7 +290,7 @@ obj/item/rcl/proc/getMobhook(mob/to_hook)
 
 	wiringGuiUpdate(user)
 
-/obj/item/rcl/ui_action_click(mob/user, action)
+/obj/item/twohanded/rcl/ui_action_click(mob/user, action)
 	if(istype(action, /datum/action/item_action/rcl_col))
 		current_color_index++;
 		if (current_color_index > colors.len)
@@ -314,13 +308,13 @@ obj/item/rcl/proc/getMobhook(mob/to_hook)
 		else //open the menu
 			showWiringGui(user)
 
-/obj/item/rcl/pre_loaded/Initialize() //Comes preloaded with cable, for testing stuff
+/obj/item/twohanded/rcl/pre_loaded/Initialize() //Comes preloaded with cable, for testing stuff
 	loaded = new()
 	loaded.max_amount = max_amount
 	loaded.amount = max_amount
 	return ..()
 
-/obj/item/rcl/ghetto
+/obj/item/twohanded/rcl/ghetto
 	actions_types = list()
 	max_amount = 30
 	name = "makeshift rapid cable layer"

@@ -2368,7 +2368,7 @@
 /turf/open/floor/plasteel/airless/white,
 /area/ruin/space/derelict/medical)
 "hW" = (
-/obj/item/stack/medical/suture,
+/obj/item/stack/medical/bruise_pack,
 /turf/open/floor/plasteel/airless/white,
 /area/ruin/space/derelict/medical)
 "hX" = (
@@ -2610,13 +2610,13 @@
 /turf/open/floor/plasteel/airless/white,
 /area/ruin/space/derelict/medical)
 "iM" = (
-/obj/item/stack/medical/suture,
+/obj/item/stack/medical/bruise_pack,
 /turf/open/floor/plasteel/airless{
 	icon_state = "damaged2"
 	},
 /area/ruin/space/derelict/medical)
 "iN" = (
-/obj/item/stack/medical/mesh,
+/obj/item/stack/medical/ointment,
 /turf/open/floor/plasteel/airless{
 	icon_state = "damaged3"
 	},
@@ -2866,7 +2866,7 @@
 /turf/open/floor/plasteel/airless/white,
 /area/ruin/space/derelict/medical)
 "jB" = (
-/obj/item/stack/medical/mesh,
+/obj/item/stack/medical/ointment,
 /turf/open/floor/plasteel/airless/white,
 /area/ruin/space/derelict/medical)
 "jC" = (

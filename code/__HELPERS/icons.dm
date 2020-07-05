@@ -1136,10 +1136,9 @@ GLOBAL_LIST_INIT(freon_color_matrix, list("#2E5E69", "#60A2A8", "#A1AFB1", rgb(0
 	if (!isicon(I))
 		if (isfile(thing)) //special snowflake
 			var/name = sanitize_filename("[generate_asset_name(thing)].png")
-			if(!SSassets.cache[name])
-				register_asset(name, thing)
+			register_asset(name, thing)
 			for (var/thing2 in targets)
-				send_asset(thing2, key)
+				send_asset(thing2, key, FALSE)
 			return "<img class='icon icon-misc' src=\"[url_encode(name)]\">"
 		var/atom/A = thing
 		if (isnull(dir))
@@ -1161,10 +1160,9 @@ GLOBAL_LIST_INIT(freon_color_matrix, list("#2E5E69", "#60A2A8", "#A1AFB1", rgb(0
 	I = icon(I, icon_state, dir, frame, moving)
 
 	key = "[generate_asset_name(I)].png"
-	if(!SSassets.cache[key])
-		register_asset(key, I)
+	register_asset(key, I)
 	for (var/thing2 in targets)
-		send_asset(thing2, key)
+		send_asset(thing2, key, FALSE)
 
 	return "<img class='icon icon-[icon_state]' src=\"[url_encode(key)]\">"
 

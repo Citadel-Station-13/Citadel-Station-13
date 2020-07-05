@@ -100,9 +100,8 @@
 /mob/living/simple_animal/hostile/venus_human_trap/ghost_playable
 	playable_plant = TRUE //For admins that want to buss some harmless plants
 
-/mob/living/simple_animal/hostile/venus_human_trap/BiologicalLife(seconds, times_fired)
-	if(!(. = ..()))
-		return
+/mob/living/simple_animal/hostile/venus_human_trap/Life()
+	. = ..()
 	pull_vines()
 
 /mob/living/simple_animal/hostile/venus_human_trap/AttackingTarget()

@@ -21,7 +21,7 @@
 	var/datum/changelingprofile/chosen_prof = changeling.get_dna(chosen_name)
 	if(!chosen_prof)
 		return
-	if(!user || user.mob_transforming)
+	if(!user || user.notransform)
 		return 0
 	to_chat(user, "<span class='notice'>We transform our appearance.</span>")
 

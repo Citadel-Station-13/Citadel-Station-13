@@ -148,8 +148,7 @@
 	build_type = AUTOLATHE
 	materials = list(/datum/material/iron = 100, /datum/material/glass = 100)
 	build_path = /obj/item/toy/crayon/spraycan
-	category = list("initial", "Tools", "Tool Designs")
-	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
+	category = list("initial", "Tools")
 
 /datum/design/geiger
 	name = "Geiger Counter"
@@ -157,4 +156,12 @@
 	build_type = AUTOLATHE
 	materials = list(/datum/material/iron = 150, /datum/material/glass = 150)
 	build_path = /obj/item/geiger_counter
+	category = list("initial", "Tools")
+
+/datum/design/saw
+	name = "Hand Saw"
+	id = "handsaw"
+	build_type = AUTOLATHE
+	materials = list(/datum/material/iron = 500)
+	build_path = /obj/item/hatchet/saw
 	category = list("initial", "Tools")

@@ -275,16 +275,6 @@
 	for(var/i in 1 to 7)
 		new /obj/item/grenade/flashbang(src)
 
-obj/item/storage/box/stingbangs
-	name = "box of stingbangs (WARNING)"
-	desc = "<B>WARNING: These devices are extremely dangerous and can cause severe injuries or death in repeated use.</B>"
-	icon_state = "secbox"
-	illustration = "flashbang"
-
-/obj/item/storage/box/stingbangs/PopulateContents()
-	for(var/i in 1 to 5)
-		new /obj/item/grenade/stingbang(src)
-
 /obj/item/storage/box/flashes
 	name = "box of flashbulbs"
 	desc = "<B>WARNING: Flashes can cause serious eye damage, protective eyewear is required.</B>"
@@ -755,8 +745,8 @@ obj/item/storage/box/stingbangs
 
 //////
 /obj/item/storage/box/hug/medical/PopulateContents()
-	new /obj/item/stack/medical/suture(src)
-	new /obj/item/stack/medical/mesh(src)
+	new /obj/item/stack/medical/bruise_pack(src)
+	new /obj/item/stack/medical/ointment(src)
 	new /obj/item/reagent_containers/hypospray/medipen(src)
 
 // Clown survival box

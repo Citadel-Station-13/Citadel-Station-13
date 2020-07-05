@@ -39,9 +39,8 @@
 
 	footstep_type = FOOTSTEP_MOB_HEAVY
 
-/mob/living/simple_animal/hostile/asteroid/goliath/BiologicalLife(seconds, times_fired)
-	if(!(. = ..()))
-		return
+/mob/living/simple_animal/hostile/asteroid/goliath/Life()
+	. = ..()
 	handle_preattack()
 
 /mob/living/simple_animal/hostile/asteroid/goliath/proc/handle_preattack()
@@ -130,8 +129,9 @@
 	var/turf/last_location
 	var/tentacle_recheck_cooldown = 100
 
-/mob/living/simple_animal/hostile/asteroid/goliath/beast/ancient/BiologicalLife(seconds, times_fired)
-	if(!(. = ..()))
+/mob/living/simple_animal/hostile/asteroid/goliath/beast/ancient/Life()
+	. = ..()
+	if(!.) // dead
 		return
 	if(isturf(loc))
 		if(!LAZYLEN(cached_tentacle_turfs) || loc != last_location || tentacle_recheck_cooldown <= world.time)

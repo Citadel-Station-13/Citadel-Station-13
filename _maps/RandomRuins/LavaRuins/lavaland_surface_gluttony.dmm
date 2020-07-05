@@ -20,7 +20,7 @@
 /turf/open/floor/plasteel/freezer,
 /area/ruin/powered/gluttony)
 "h" = (
-/obj/item/trash/boritos,
+/obj/item/veilrender/vealrender,
 /turf/open/floor/plasteel/freezer,
 /area/ruin/powered/gluttony)
 "i" = (
@@ -65,7 +65,6 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
-/obj/item/trash/plate/alt,
 /turf/open/floor/plasteel/freezer,
 /area/ruin/powered/gluttony)
 "v" = (
@@ -85,38 +84,12 @@
 	},
 /turf/open/floor/plasteel/freezer,
 /area/ruin/powered/gluttony)
-"B" = (
-/obj/item/veilrender/vealrender,
-/turf/open/floor/plasteel/freezer,
-/area/ruin/powered/gluttony)
-"E" = (
-/obj/machinery/light/small,
-/obj/item/trash/cheesie,
-/turf/open/floor/plasteel/freezer,
-/area/ruin/powered/gluttony)
-"G" = (
-/obj/item/trash/waffles,
-/turf/open/floor/plasteel/freezer,
-/area/ruin/powered/gluttony)
-"L" = (
-/obj/machinery/light/small,
-/obj/item/trash/plate/alt,
-/turf/open/floor/plasteel/freezer,
-/area/ruin/powered/gluttony)
-"N" = (
-/obj/item/trash/cheesie,
-/turf/open/floor/plasteel/freezer,
-/area/ruin/powered/gluttony)
 "R" = (
 /turf/closed/indestructible/riveted/uranium,
 /area/ruin/powered/gluttony)
 "S" = (
 /obj/machinery/door/airlock/uranium,
 /obj/structure/fans/tiny/invisible,
-/turf/open/floor/plasteel/freezer,
-/area/ruin/powered/gluttony)
-"Z" = (
-/obj/item/trash/plate/alt,
 /turf/open/floor/plasteel/freezer,
 /area/ruin/powered/gluttony)
 
@@ -218,7 +191,7 @@ b
 b
 c
 R
-j
+h
 i
 o
 R
@@ -240,9 +213,9 @@ b
 b
 c
 R
-h
-G
-L
+i
+i
+v
 R
 c
 b
@@ -285,7 +258,7 @@ c
 c
 R
 t
-N
+i
 m
 R
 c
@@ -332,10 +305,10 @@ g
 g
 i
 p
-G
+i
 z
 l
-Z
+i
 R
 c
 b
@@ -351,10 +324,10 @@ g
 g
 g
 g
-B
 n
 i
-h
+i
+i
 i
 i
 i
@@ -373,12 +346,12 @@ r
 g
 g
 g
-N
+i
 g
 i
 l
 A
-Z
+i
 q
 R
 c
@@ -395,7 +368,7 @@ R
 R
 R
 g
-h
+i
 v
 R
 R
@@ -418,7 +391,7 @@ c
 R
 r
 i
-q
+i
 R
 c
 c
@@ -462,7 +435,7 @@ c
 R
 j
 i
-E
+v
 R
 c
 b

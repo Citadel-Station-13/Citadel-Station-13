@@ -153,10 +153,6 @@
 
 	return (BRUTELOSS)
 
-/obj/item/tank/attack_ghost(mob/dead/observer/O)
-	. = ..()
-	atmosanalyzer_scan(air_contents, O, src, FALSE)
-
 /obj/item/tank/attackby(obj/item/W, mob/user, params)
 	add_fingerprint(user)
 	if(istype(W, /obj/item/assembly_holder))

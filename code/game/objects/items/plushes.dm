@@ -140,8 +140,7 @@
 	if(jsonlist["icon_state"])
 		icon_state = jsonlist["icon_state"]
 		item_state = jsonlist["item_state"]
-		var/static/config_sprites = file("config/plushies/sprites.dmi")
-		icon = config_sprites
+		icon = 'config/plushies/sprites.dmi'
 	if(jsonlist["attack_verb"])
 		attack_verb = jsonlist["attack_verb"]
 	if(jsonlist["squeak_override"])

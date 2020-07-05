@@ -7,17 +7,17 @@
   *and lastly
   *afterattack. The return value does not matter.
   */
-/obj/item/proc/melee_attack_chain(mob/user, atom/target, params, flags, damage_multiplier = 1)
+/obj/item/proc/melee_attack_chain(mob/user, atom/target, params)
 	if(isliving(user))
 		var/mob/living/L = user
-		if(!CHECK_MOBILITY(L, MOBILITY_USE) && !(flags & ATTACKCHAIN_PARRY_COUNTERATTACK))
+		if(!CHECK_MOBILITY(L, MOBILITY_USE))
 			to_chat(L, "<span class='warning'>You are unable to swing [src] right now!</span>")
 			return
 	if(tool_behaviour && target.tool_act(user, src, tool_behaviour))
 		return
 	if(pre_attack(target, user, params))
 		return
-	if(target.attackby(src, user, params, flags, damage_multiplier))
+	if(target.attackby(src,user, params))
 		return
 	if(QDELETED(src) || QDELETED(target))
 		return
@@ -52,15 +52,15 @@
 /obj/attackby(obj/item/I, mob/living/user, params)
 	return ..() || ((obj_flags & CAN_BE_HIT) && I.attack_obj(src, user))
 
-/mob/living/attackby(obj/item/I, mob/living/user, params, attackchain_flags, damage_multiplier)
+/mob/living/attackby(obj/item/I, mob/living/user, params)
 	if(..())
 		return TRUE
 	I.attack_delay_done = FALSE //Should be set TRUE in pre_attacked_by()
-	. = I.attack(src, user, attackchain_flags, damage_multiplier)
+	. = I.attack(src, user)
 	if(!I.attack_delay_done) //Otherwise, pre_attacked_by() should handle it.
 		user.changeNext_move(I.click_delay)
 
-/obj/item/proc/attack(mob/living/M, mob/living/user, attackchain_flags = NONE, damage_multiplier = 1)
+/obj/item/proc/attack(mob/living/M, mob/living/user)
 	if(SEND_SIGNAL(src, COMSIG_ITEM_ATTACK, M, user) & COMPONENT_ITEM_NO_ATTACK)
 		return
 	SEND_SIGNAL(user, COMSIG_MOB_ITEM_ATTACK, M, user)
@@ -79,7 +79,7 @@
 	M.lastattackerckey = user.ckey
 
 	user.do_attack_animation(M)
-	M.attacked_by(src, user, attackchain_flags, damage_multiplier)
+	M.attacked_by(src, user)
 
 	log_combat(user, M, "attacked", src.name, "(INTENT: [uppertext(user.a_intent)]) (DAMTYPE: [uppertext(damtype)])")
 	add_fingerprint(user)
@@ -104,8 +104,8 @@
 /atom/movable/proc/attacked_by()
 	return
 
-/obj/attacked_by(obj/item/I, mob/living/user, attackchain_flags = NONE, damage_multiplier = 1)
-	var/totitemdamage = I.force * damage_multiplier
+/obj/attacked_by(obj/item/I, mob/living/user)
+	var/totitemdamage = I.force
 	var/bad_trait
 
 	var/stamloss = user.getStaminaLoss()
@@ -123,7 +123,7 @@
 		if(totitemdamage)
 			totitemdamage = user.mind.item_action_skills_mod(I, totitemdamage, I.skill_difficulty, SKILL_ATTACK_OBJ, bad_trait)
 		for(var/skill in I.used_skills)
-			if(!(SKILL_TRAIN_ATTACK_OBJ in I.used_skills[skill]))
+			if(!(I.used_skills[skill] & SKILL_TRAIN_ATTACK_OBJ))
 				continue
 			user.mind.auto_gain_experience(skill, I.skill_gain)
 
@@ -134,12 +134,10 @@
 	take_damage(totitemdamage, I.damtype, "melee", 1)
 	return TRUE
 
-/mob/living/attacked_by(obj/item/I, mob/living/user, attackchain_flags = NONE, damage_multiplier = 1)
-	var/list/block_return = list()
-	var/totitemdamage = pre_attacked_by(I, user) * damage_multiplier
-	if((user != src) && mob_run_block(I, totitemdamage, "the [I.name]", ((attackchain_flags & ATTACKCHAIN_PARRY_COUNTERATTACK)? ATTACK_TYPE_PARRY_COUNTERATTACK : NONE) | ATTACK_TYPE_MELEE, I.armour_penetration, user, null, block_return) & BLOCK_SUCCESS)
+/mob/living/attacked_by(obj/item/I, mob/living/user)
+	var/totitemdamage = pre_attacked_by(I, user)
+	if((user != src) && mob_run_block(I, totitemdamage, "the [I.name]", ATTACK_TYPE_MELEE, I.armour_penetration, user, null, null) & BLOCK_SUCCESS)
 		return FALSE
-	totitemdamage = block_calculate_resultant_damage(totitemdamage, block_return)
 	send_item_attack_message(I, user, null, totitemdamage)
 	I.do_stagger_action(src, user, totitemdamage)
 	if(I.force)
@@ -153,7 +151,7 @@
 					user.add_mob_blood(src)
 		return TRUE //successful attack
 
-/mob/living/simple_animal/attacked_by(obj/item/I, mob/living/user, attackchain_flags = NONE, damage_multiplier = 1)
+/mob/living/simple_animal/attacked_by(obj/item/I, mob/living/user)
 	if(I.force < force_threshold || I.damtype == STAMINA)
 		playsound(loc, 'sound/weapons/tap.ogg', I.get_clamped_volume(), 1, -1)
 		user.changeNext_move(I.click_delay) //pre_attacked_by not called
@@ -192,10 +190,9 @@
 	if(.)
 		. = user.mind.item_action_skills_mod(I, ., I.skill_difficulty, SKILL_ATTACK_MOB, bad_trait)
 	for(var/skill in I.used_skills)
-		if(!(SKILL_TRAIN_ATTACK_MOB in I.used_skills[skill]))
+		if(!(I.used_skills[skill] & SKILL_TRAIN_ATTACK_MOB))
 			continue
-		var/datum/skill/S = GLOB.skill_datums[skill]
-		user.mind.auto_gain_experience(skill, I.skill_gain*S.item_skill_gain_multi)
+		user.mind.auto_gain_experience(skill, I.skill_gain)
 
 // Proximity_flag is 1 if this afterattack was called on something adjacent, in your square, or on your person.
 // Click parameters is the params string from byond Click() code, see that documentation.
@@ -214,8 +211,8 @@
 	var/message_verb = "attacked"
 	if(I.attack_verb && I.attack_verb.len)
 		message_verb = "[pick(I.attack_verb)]"
-	if(current_force < I.force * FEEBLE_ATTACK_MSG_THRESHOLD)
-		message_verb = "[pick("feebly", "limply", "saplessly")] [message_verb]"
+	if(current_force < I.force * INEFFICIENT_ATTACK_MSG_THRESHOLD)
+		message_verb = "inefficiently [message_verb]"
 	else if(!I.force)
 		return
 	var/message_hit_area = ""

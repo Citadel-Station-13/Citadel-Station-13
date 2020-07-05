@@ -188,13 +188,13 @@
 /area/ruin/unpowered/xenonest)
 "aT" = (
 /obj/structure/alien/weeds,
-/obj/item/chainsaw,
+/obj/item/twohanded/required/chainsaw,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/ruin/unpowered/xenonest)
 "aU" = (
 /obj/structure/alien/weeds,
 /obj/structure/bed/nest,
-/obj/item/fireaxe/boneaxe,
+/obj/item/twohanded/fireaxe/boneaxe,
 /obj/item/clothing/head/helmet/gladiator,
 /obj/item/clothing/mask/facehugger/impregnated,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
@@ -219,7 +219,6 @@
 /obj/structure/alien/weeds,
 /obj/effect/decal/cleanable/blood/gibs,
 /mob/living/simple_animal/hostile/alien/drone,
-/obj/structure/alien/weeds/node,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/ruin/unpowered/xenonest)
 "aZ" = (
@@ -536,11 +535,6 @@
 /obj/effect/mob_spawn/alien/corpse/humanoid/queen,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/ruin/unpowered/xenonest)
-"wA" = (
-/obj/structure/alien/weeds,
-/obj/structure/alien/weeds/node,
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/ruin/unpowered/xenonest)
 "yf" = (
 /obj/structure/alien/weeds/node,
 /mob/living/simple_animal/hostile/alien/sentinel,
@@ -555,12 +549,6 @@
 "JM" = (
 /obj/structure/alien/weeds/node,
 /obj/effect/mob_spawn/alien/corpse/humanoid/drone,
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/ruin/unpowered/xenonest)
-"QG" = (
-/obj/structure/alien/weeds,
-/obj/structure/bed/nest,
-/obj/structure/alien/weeds/node,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/ruin/unpowered/xenonest)
 "Uh" = (
@@ -695,7 +683,7 @@ ac
 ac
 aj
 ac
-QG
+am
 ac
 ac
 ac
@@ -812,7 +800,7 @@ ac
 ac
 ac
 ac
-wA
+ag
 ag
 ag
 ar
@@ -896,7 +884,7 @@ aa
 (7,1,1) = {"
 ab
 ac
-wA
+ag
 ag
 ag
 ag
@@ -929,7 +917,7 @@ ac
 ac
 ZT
 ac
-wA
+ag
 ag
 ac
 ab
@@ -1361,7 +1349,7 @@ ar
 lG
 ag
 ag
-wA
+ag
 ad
 ag
 ag
@@ -1567,7 +1555,7 @@ ag
 ac
 aF
 ag
-ar
+ag
 ag
 ag
 ar
@@ -1615,7 +1603,7 @@ ao
 ah
 ac
 ag
-wA
+ag
 ag
 ag
 pE
@@ -1754,7 +1742,7 @@ ag
 ag
 ag
 ag
-aw
+ac
 ar
 ag
 bD
@@ -1803,9 +1791,9 @@ ac
 ac
 ac
 ac
-wA
 ag
-aw
+ag
+ac
 ar
 ag
 bD
@@ -1840,7 +1828,7 @@ ac
 ac
 ag
 Uh
-wA
+ag
 aZ
 be
 bo

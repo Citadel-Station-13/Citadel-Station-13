@@ -94,9 +94,7 @@
 
 			//We want an accurate reading of .len
 			listclearnulls(BP.embedded_objects)
-			for(var/obj/item/embeddies in BP.embedded_objects)
-				if(!embeddies.isEmbedHarmless())
-					temp_bleed += 0.5
+			temp_bleed += 0.5 * BP.embedded_objects.len
 
 			if(brutedamage >= 20)
 				temp_bleed += (brutedamage * 0.013)
@@ -188,7 +186,7 @@
 			blood_data["viruses"] += D.Copy()
 
 		blood_data["blood_DNA"] = dna.unique_enzymes
-		blood_data["bloodcolor"] = dna.species.exotic_blood_color
+		blood_data["bloodcolor"] = bloodtype_to_color(dna.blood_type)
 		if(disease_resistances && disease_resistances.len)
 			blood_data["resistances"] = disease_resistances.Copy()
 		var/list/temp_chem = list()

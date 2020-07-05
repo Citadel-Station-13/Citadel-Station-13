@@ -164,7 +164,7 @@
 		RemoveHelmet()
 	..()
 
-/obj/item/clothing/suit/space/hardsuit/proc/RemoveHelmet(message = TRUE)
+/obj/item/clothing/suit/space/hardsuit/proc/RemoveHelmet()
 	if(!helmet)
 		return
 	suittoggled = FALSE
@@ -174,18 +174,16 @@
 			helmet.attack_self(H)
 		H.transferItemToLoc(helmet, src, TRUE)
 		H.update_inv_wear_suit()
-		if(message)
-			to_chat(H, "<span class='notice'>The helmet on the hardsuit disengages.</span>")
+		to_chat(H, "<span class='notice'>The helmet on the hardsuit disengages.</span>")
 		playsound(src.loc, 'sound/mecha/mechmove03.ogg', 50, 1)
 	else
 		helmet.forceMove(src)
-	return TRUE
 
 /obj/item/clothing/suit/space/hardsuit/dropped(mob/user)
 	..()
 	RemoveHelmet()
 
-/obj/item/clothing/suit/space/hardsuit/proc/ToggleHelmet(message = TRUE)
+/obj/item/clothing/suit/space/hardsuit/proc/ToggleHelmet()
 	var/mob/living/carbon/human/H = loc
 	if(!helmettype)
 		return
@@ -194,19 +192,15 @@
 	if(!suittoggled)
 		if(ishuman(src.loc))
 			if(H.wear_suit != src)
-				if(message)
-					to_chat(H, "<span class='warning'>You must be wearing [src] to engage the helmet!</span>")
+				to_chat(H, "<span class='warning'>You must be wearing [src] to engage the helmet!</span>")
 				return
 			if(H.head)
-				if(message)
-					to_chat(H, "<span class='warning'>You're already wearing something on your head!</span>")
+				to_chat(H, "<span class='warning'>You're already wearing something on your head!</span>")
 				return
 			else if(H.equip_to_slot_if_possible(helmet,SLOT_HEAD,0,0,1))
-				if(message)
-					to_chat(H, "<span class='notice'>You engage the helmet on the hardsuit.</span>")
+				to_chat(H, "<span class='notice'>You engage the helmet on the hardsuit.</span>")
 				suittoggled = TRUE
 				H.update_inv_wear_suit()
 				playsound(src.loc, 'sound/mecha/mechmove03.ogg', 50, 1)
-			return TRUE
 	else
-		return RemoveHelmet(message)
+		RemoveHelmet()

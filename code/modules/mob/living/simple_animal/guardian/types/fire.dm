@@ -13,9 +13,8 @@
 	tech_fluff_string = "<span class='holoparasite'>Boot sequence complete. Crowd control modules activated. Holoparasite swarm online.</span>"
 	carp_fluff_string = "<span class='holoparasite'>CARP CARP CARP! You caught one! OH GOD, EVERYTHING'S ON FIRE. Except you and the fish.</span>"
 
-/mob/living/simple_animal/hostile/guardian/fire/BiologicalLife(seconds, times_fired)
-	if(!(. = ..()))
-		return
+/mob/living/simple_animal/hostile/guardian/fire/Life()
+	. = ..()
 	if(summoner)
 		summoner.ExtinguishMob()
 		summoner.adjust_fire_stacks(-20)

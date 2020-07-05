@@ -53,7 +53,6 @@
 		..()
 
 /obj/item/minigunpack/dropped(mob/user)
-	. = ..()
 	if(armed)
 		user.dropItemToGround(gun, TRUE)
 
@@ -126,7 +125,6 @@
 	return
 
 /obj/item/gun/ballistic/minigun/dropped(mob/user)
-	. = ..()
 	if(ammo_pack)
 		ammo_pack.attach_gun(user)
 	else
@@ -146,5 +144,4 @@
 	. = ..()
 
 /obj/item/gun/ballistic/minigun/dropped(mob/living/user)
-	. = ..()
 	ammo_pack.attach_gun(user)

@@ -397,31 +397,20 @@
 			escape_objective_possible = FALSE
 			break
 	var/changeling_objective = rand(1,3)
-	var/generic_absorb_objective = FALSE
-	var/multiple_lings = length(get_antag_minds(/datum/antagonist/changeling,TRUE)) > 1
 	switch(changeling_objective)
 		if(1)
-			generic_absorb_objective = TRUE
+			var/datum/objective/absorb/absorb_objective = new
+			absorb_objective.owner = owner
+			absorb_objective.gen_amount_goal(6, 8)
+			objectives += absorb_objective
 		if(2)
-			if(multiple_lings)
-				var/datum/objective/absorb_changeling/ac = new
-				ac.owner = owner
-				objectives += ac
-			else
-				generic_absorb_objective = TRUE
+			var/datum/objective/absorb_changeling/ac = new
+			ac.owner = owner
+			objectives += ac
 		if(3)
-			if(multiple_lings)
-				var/datum/objective/absorb_most/ac = new
-				ac.owner = owner
-				objectives += ac
-			else
-				generic_absorb_objective = TRUE
-
-	if(generic_absorb_objective)
-		var/datum/objective/absorb/absorb_objective = new
-		absorb_objective.owner = owner
-		absorb_objective.gen_amount_goal(6, 8)
-		objectives += absorb_objective
+			var/datum/objective/absorb_most/ac = new
+			ac.owner = owner
+			objectives += ac
 
 	if(prob(60))
 		if(prob(85))

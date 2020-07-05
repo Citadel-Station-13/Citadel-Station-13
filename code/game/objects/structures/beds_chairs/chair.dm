@@ -155,7 +155,7 @@
 ///Material chair
 /obj/structure/chair/greyscale
 	icon_state = "chair_greyscale"
-	material_flags = MATERIAL_ADD_PREFIX | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS
+	material_flags = MATERIAL_ADD_PREFIX | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS | MATERIAL_EFFECTS
 	item_chair = /obj/item/chair/greyscale
 	buildstacktype = null //Custom mats handle this
 
@@ -384,7 +384,7 @@
 /obj/item/chair/greyscale
 	icon_state = "chair_greyscale_toppled"
 	item_state = "chair_greyscale"
-	material_flags = MATERIAL_ADD_PREFIX | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS
+	material_flags = MATERIAL_ADD_PREFIX | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS | MATERIAL_EFFECTS
 	origin_type = /obj/structure/chair/greyscale
 
 /obj/item/chair/stool

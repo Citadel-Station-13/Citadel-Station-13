@@ -666,7 +666,7 @@
 	pixel_x = 24;
 	specialfunctions = 4
 	},
-/obj/effect/spawner/lootdrop/bedsheet,
+/obj/item/bedsheet/red,
 /turf/open/floor/wood,
 /area/awaymission/beach)
 "bU" = (
@@ -799,7 +799,9 @@
 /turf/open/floor/wood,
 /area/awaymission/beach)
 "cn" = (
-/obj/machinery/vending/boozeomat,
+/obj/machinery/vending/boozeomat{
+	desc = "A technological marvel, supposedly able to mix just the mixture you'd like to drink the moment you ask for one. May not work for bartenders that don't have Nanotrasen bank accounts."
+	},
 /turf/open/floor/wood,
 /area/awaymission/beach)
 "co" = (
@@ -895,7 +897,9 @@
 /area/awaymission/beach)
 "cD" = (
 /obj/structure/table/wood,
-/obj/item/reagent_containers/rag,
+/obj/item/reagent_containers/rag{
+	pixel_y = 7
+	},
 /turf/open/floor/wood,
 /area/awaymission/beach)
 "cE" = (
@@ -1075,6 +1079,14 @@
 /area/awaymission/beach)
 "dg" = (
 /obj/item/clothing/glasses/heat,
+/turf/open/floor/plating/beach/sand,
+/area/awaymission/beach)
+"iy" = (
+/obj/item/toy/seashell,
+/turf/open/floor/plating/beach/coastline_t,
+/area/awaymission/beach)
+"MD" = (
+/obj/item/toy/seashell,
 /turf/open/floor/plating/beach/sand,
 /area/awaymission/beach)
 
@@ -4648,9 +4660,9 @@ ac
 aw
 af
 ay
+MD
 ak
-ak
-ak
+MD
 aT
 ao
 aY
@@ -4754,7 +4766,7 @@ ac
 aw
 af
 ay
-ak
+MD
 ak
 ak
 ak
@@ -4863,7 +4875,7 @@ ay
 ak
 ak
 ak
-ak
+MD
 ak
 ak
 ak
@@ -5204,7 +5216,7 @@ aY
 ae
 aw
 ag
-ak
+MD
 aZ
 ak
 ak
@@ -5305,7 +5317,7 @@ ak
 ak
 ak
 ak
-ak
+MD
 aT
 aj
 aj
@@ -5316,7 +5328,7 @@ ak
 ak
 ak
 ak
-ak
+MD
 aT
 ao
 ar
@@ -6282,7 +6294,7 @@ ak
 ak
 ak
 ak
-ap
+iy
 ar
 ac
 ac
@@ -6462,7 +6474,7 @@ ac
 ac
 ad
 ag
-ak
+MD
 ak
 ak
 ak
@@ -6810,7 +6822,7 @@ cl
 bd
 bd
 bd
-cC
+cD
 cH
 ba
 ak
@@ -6917,7 +6929,7 @@ cm
 bd
 bd
 bd
-cD
+cC
 cH
 ba
 ak
@@ -8944,7 +8956,7 @@ ak
 ak
 ak
 ak
-ak
+MD
 ak
 ak
 cu
@@ -10316,7 +10328,7 @@ ac
 ac
 aw
 ag
-ak
+MD
 ak
 ak
 ak
@@ -10424,7 +10436,7 @@ ad
 af
 ay
 ak
-ak
+MD
 ak
 ak
 ak
@@ -10562,7 +10574,7 @@ ak
 ak
 cO
 ak
-ap
+iy
 ar
 ac
 ac
@@ -10775,7 +10787,7 @@ ak
 ak
 ak
 aK
-ak
+MD
 ap
 ar
 ac
@@ -10958,7 +10970,7 @@ ac
 ac
 ax
 ag
-ak
+MD
 ak
 ak
 ak
@@ -10988,7 +11000,7 @@ ak
 ak
 ak
 ak
-ak
+MD
 bo
 aq
 ar
@@ -14995,7 +15007,7 @@ ad
 ag
 al
 ak
-ak
+MD
 ap
 ar
 ab

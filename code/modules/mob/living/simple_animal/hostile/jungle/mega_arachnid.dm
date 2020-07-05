@@ -27,9 +27,8 @@
 
 	footstep_type = FOOTSTEP_MOB_CLAW
 
-/mob/living/simple_animal/hostile/jungle/mega_arachnid/BiologicalLife(seconds, times_fired)
-	if(!(. = ..()))
-		return
+/mob/living/simple_animal/hostile/jungle/mega_arachnid/Life()
+	..()
 	if(target && ranged_cooldown > world.time && iscarbon(target))
 		var/mob/living/carbon/C = target
 		if(!C.legcuffed && C.health < 50)
@@ -40,6 +39,7 @@
 	retreat_distance = 0
 	minimum_distance = 0
 	alpha = 255
+
 
 /mob/living/simple_animal/hostile/jungle/mega_arachnid/Aggro()
 	..()

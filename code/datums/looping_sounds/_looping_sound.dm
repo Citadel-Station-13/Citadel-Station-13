@@ -23,14 +23,10 @@
 	var/end_sound
 	var/chance
 	var/volume = 100
-	var/vary = FALSE
 	var/max_loops
 	var/direct
-	var/extra_range = 0
-	var/falloff
 
 	var/timerid
-	var/init_timerid
 
 /datum/looping_sound/New(list/_output_atoms=list(), start_immediately=FALSE, _direct=FALSE)
 	if(!mid_sounds)
@@ -51,15 +47,13 @@
 /datum/looping_sound/proc/start(atom/add_thing)
 	if(add_thing)
 		output_atoms |= add_thing
-	if(timerid || init_timerid)
+	if(timerid)
 		return
 	on_start()
 
 /datum/looping_sound/proc/stop(atom/remove_thing)
 	if(remove_thing)
 		output_atoms -= remove_thing
-	if(init_timerid)
-		deltimer(init_timerid)
 	if(!timerid)
 		return
 	on_stop()
@@ -86,7 +80,7 @@
 		if(direct)
 			SEND_SOUND(thing, S)
 		else
-			playsound(thing, S, volume, vary, extra_range, falloff)
+			playsound(thing, S, volume)
 
 /datum/looping_sound/proc/get_sound(starttime, _mid_sounds)
 	. = _mid_sounds || mid_sounds
@@ -98,7 +92,7 @@
 	if(start_sound)
 		play(start_sound)
 		start_wait = start_length
-	init_timerid = addtimer(CALLBACK(src, .proc/sound_loop), start_wait, TIMER_CLIENT_TIME | TIMER_STOPPABLE)
+	addtimer(CALLBACK(src, .proc/sound_loop), start_wait, TIMER_CLIENT_TIME)
 
 /datum/looping_sound/proc/on_stop()
 	if(end_sound)

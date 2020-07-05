@@ -43,10 +43,9 @@
 	var/list/burn_turfs = getline(src, T) - get_turf(src)
 	dragon_fire_line(src, burn_turfs)
 
-/mob/living/simple_animal/hostile/asteroid/ice_whelp/BiologicalLife(seconds, times_fired)
-	if(!(. = ..()))
-		return
-	if(target)
+/mob/living/simple_animal/hostile/asteroid/ice_whelp/Life()
+	. = ..()
+	if(!. || target)
 		return
 	adjustHealth(-maxHealth*0.025)
 

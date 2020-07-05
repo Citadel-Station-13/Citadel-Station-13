@@ -56,9 +56,8 @@
 	cached_z = z
 	poof()
 
-/mob/living/simple_animal/jacq/BiologicalLife(seconds, times_fired)
-	if(!(. = ..()))
-		return
+/mob/living/simple_animal/jacq/Life()
+	..()
 	if(!ckey)
 		if((last_poof+3 MINUTES) < world.realtime)
 			poof()

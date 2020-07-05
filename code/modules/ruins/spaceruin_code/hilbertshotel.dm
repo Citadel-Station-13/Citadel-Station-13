@@ -413,13 +413,13 @@ GLOBAL_VAR_INIT(hhmysteryRoomNumber, 1337)
 	. = ..()
 	if(ismob(AM))
 		var/mob/M = AM
-		M.mob_transforming = TRUE
+		M.notransform = TRUE
 
 /obj/item/abstracthotelstorage/Exited(atom/movable/AM, atom/newLoc)
 	. = ..()
 	if(ismob(AM))
 		var/mob/M = AM
-		M.mob_transforming = FALSE
+		M.notransform = FALSE
 
 //Space Ruin stuff
 /area/ruin/space/has_grav/hilbertresearchfacility

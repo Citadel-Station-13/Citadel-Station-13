@@ -355,11 +355,9 @@
 	emaggedhitdamage = 0
 
 /obj/item/borg/lollipop/equipped()
-	. = ..()
 	check_amount()
 
 /obj/item/borg/lollipop/dropped(mob/user)
-	. = ..()
 	check_amount()
 
 /obj/item/borg/lollipop/proc/check_amount()	//Doesn't even use processing ticks.

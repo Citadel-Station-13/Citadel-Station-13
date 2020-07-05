@@ -95,9 +95,8 @@
 		if(AOE_SQUARES)
 			aoe_squares(target)
 
-/mob/living/simple_animal/hostile/asteroid/elite/pandora/BiologicalLife(seconds, times_fired)
-	if(!(. = ..()))
-		return
+/mob/living/simple_animal/hostile/asteroid/elite/pandora/Life()
+	. = ..()
 	if(health >= maxHealth * 0.5)
 		cooldown_time = 20
 		return

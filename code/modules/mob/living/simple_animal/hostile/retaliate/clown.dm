@@ -51,9 +51,8 @@
 	..()
 	playsound(src.loc, 'sound/items/bikehorn.ogg', 50, TRUE)
 
-/mob/living/simple_animal/hostile/retaliate/clown/BiologicalLife(seconds, times_fired)
-	if(!(. = ..()))
-		return
+/mob/living/simple_animal/hostile/retaliate/clown/Life()
+	. = ..()
 	if(banana_time && banana_time < world.time)
 		var/turf/T = get_turf(src)
 		var/list/adjacent =  T.GetAtmosAdjacentTurfs(1)

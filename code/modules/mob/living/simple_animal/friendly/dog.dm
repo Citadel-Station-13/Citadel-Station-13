@@ -366,12 +366,11 @@
 		RemoveElement(/datum/element/mob_holder, held_icon)
 		AddElement(/datum/element/mob_holder, "old_corgi")
 
-/mob/living/simple_animal/pet/dog/corgi/Ian/BiologicalLife(seconds, times_fired)
-	if(!(. = ..()))
-		return
+/mob/living/simple_animal/pet/dog/corgi/Ian/Life()
 	if(!stat && SSticker.current_state == GAME_STATE_FINISHED && !memory_saved)
 		Write_Memory(FALSE)
 		memory_saved = TRUE
+	..()
 
 /mob/living/simple_animal/pet/dog/corgi/Ian/death()
 	if(!memory_saved)
@@ -420,9 +419,8 @@
 	fdel(json_file)
 	WRITE_FILE(json_file, json_encode(file_data))
 
-/mob/living/simple_animal/pet/dog/corgi/Ian/BiologicalLife()
-	if(!(. = ..()))
-		return
+/mob/living/simple_animal/pet/dog/corgi/Ian/Life()
+	..()
 
 	//Feeding, chasing food, FOOOOODDDD
 	if(!stat && CHECK_MULTIPLE_BITFIELDS(mobility_flags, MOBILITY_STAND|MOBILITY_MOVE) && !buckled)
@@ -492,9 +490,8 @@
 	nofur = TRUE
 	unique_pet = TRUE
 
-/mob/living/simple_animal/pet/dog/corgi/narsie/BiologicalLife(seconds, times_fired)
-	if(!(. = ..()))
-		return
+/mob/living/simple_animal/pet/dog/corgi/narsie/Life()
+	..()
 	for(var/mob/living/simple_animal/pet/P in range(1, src))
 		if(P != src && prob(5))
 			visible_message("<span class='warning'>[src] devours [P]!</span>", \
@@ -618,9 +615,8 @@
 		return
 	..()
 
-/mob/living/simple_animal/pet/dog/corgi/Lisa/BiologicalLife(seconds, times_fired)
-	if(!(. = ..()))
-		return
+/mob/living/simple_animal/pet/dog/corgi/Lisa/Life()
+	..()
 
 	make_babies()
 
@@ -632,9 +628,8 @@
 					setDir(i)
 					sleep(1)
 
-/mob/living/simple_animal/pet/dog/pug/BiologicalLife(seconds, times_fired)
-	if(!(. = ..()))
-		return
+/mob/living/simple_animal/pet/dog/pug/Life()
+	..()
 	if(!stat && CHECK_MULTIPLE_BITFIELDS(mobility_flags, MOBILITY_STAND|MOBILITY_MOVE) && !buckled)
 		if(prob(1))
 			emote("me", EMOTE_VISIBLE, pick("chases its tail."))

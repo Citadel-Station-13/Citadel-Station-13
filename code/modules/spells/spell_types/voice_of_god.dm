@@ -5,7 +5,6 @@
 	cooldown_min = 0
 	level_max = 1
 	clothes_req = NONE
-	antimagic_allowed = TRUE
 	action_icon = 'icons/mob/actions/actions_items.dmi'
 	action_icon_state = "voice_of_god"
 	var/command

@@ -45,13 +45,12 @@
 
 /obj/item/grenade/iedcasing/attack_self(mob/user) //
 	if(!active)
-		if(!botch_check(user))
+		if(clown_check(user))
 			to_chat(user, "<span class='warning'>You light the [name]!</span>")
 			cut_overlay("improvised_grenade_filled")
 			preprime(user, null, FALSE)
 
-/obj/item/grenade/iedcasing/prime(mob/living/lanced_by) //Blowing that can up
-	. = ..()
+/obj/item/grenade/iedcasing/prime() //Blowing that can up
 	update_mob()
 	explosion(src.loc,-1,-1,2, flame_range = 4)	// small explosion, plus a very large fireball.
 	qdel(src)

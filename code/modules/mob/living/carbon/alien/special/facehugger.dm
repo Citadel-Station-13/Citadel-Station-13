@@ -88,7 +88,6 @@
 		Die()
 
 /obj/item/clothing/mask/facehugger/equipped(mob/M)
-	. = ..()
 	Attach(M)
 
 /obj/item/clothing/mask/facehugger/Crossed(atom/target)
@@ -255,7 +254,7 @@
 		return FALSE
 	if(AmBloodsucker(M))
 		return FALSE
-
+		
 	if(ismonkey(M))
 		return 1
 

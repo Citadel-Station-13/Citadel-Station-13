@@ -101,7 +101,7 @@
 		return 1
 	return ..()
 
-/obj/structure/destructible/clockwork/attacked_by(obj/item/I, mob/living/user, attackchain_flags = NONE, damage_multiplier = 1)
+/obj/structure/destructible/clockwork/attacked_by(obj/item/I, mob/living/user)
 	if(is_servant_of_ratvar(user) && immune_to_servant_attacks)
 		return FALSE
 	return ..()

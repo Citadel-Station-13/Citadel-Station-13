@@ -189,11 +189,8 @@
 		if(user && !silent)
 			to_chat(user, "<span class='notice'>You remove the floor tile.</span>")
 		if(floor_tile && make_tile)
-			spawn_tile()
+			new floor_tile(src)
 	return make_plating()
-
-/turf/open/floor/proc/spawn_tile()
-	new floor_tile(src)
 
 /turf/open/floor/singularity_pull(S, current_size)
 	. = ..()
@@ -208,7 +205,7 @@
 			if(floor_tile)
 				if(prob(70))
 					remove_tile()
-			else if(prob(50) && (/turf/open/space in baseturfs))
+			else if(prob(50))
 				ReplaceWithLattice()
 
 /turf/open/floor/narsie_act(force, ignore_mobs, probability = 20)
@@ -296,13 +293,3 @@
 			return TRUE
 
 	return FALSE
-
-/turf/open/floor/material
-	name = "floor"
-	icon_state = "materialfloor"
-	material_flags = MATERIAL_ADD_PREFIX | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS
-
-/turf/open/floor/material/spawn_tile()
-	for(var/i in custom_materials)
-		var/datum/material/M = i
-		new M.sheet_type(src, FLOOR(custom_materials[M] / MINERAL_MATERIAL_AMOUNT, 1))

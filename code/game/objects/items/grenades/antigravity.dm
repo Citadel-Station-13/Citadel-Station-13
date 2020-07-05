@@ -7,8 +7,7 @@
 	var/forced_value = 0
 	var/duration = 300
 
-/obj/item/grenade/antigravity/prime(mob/living/lanced_by)
-	. = ..()
+/obj/item/grenade/antigravity/prime()
 	update_mob()
 
 	for(var/turf/T in view(range,src))

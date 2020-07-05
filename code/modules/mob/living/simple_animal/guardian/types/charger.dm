@@ -11,9 +11,8 @@
 	var/charging = 0
 	var/obj/screen/alert/chargealert
 
-/mob/living/simple_animal/hostile/guardian/charger/BiologicalLife(seconds, times_fired)
-	if(!(. = ..()))
-		return
+/mob/living/simple_animal/hostile/guardian/charger/Life()
+	. = ..()
 	if(ranged_cooldown <= world.time)
 		if(!chargealert)
 			chargealert = throw_alert("charge", /obj/screen/alert/cancharge)

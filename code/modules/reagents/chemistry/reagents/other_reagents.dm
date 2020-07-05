@@ -70,10 +70,6 @@
 		B = new(T)
 	if(data["blood_DNA"])
 		B.blood_DNA[data["blood_DNA"]] = data["blood_type"]
-		if(!B.blood_DNA["color"])
-			B.blood_DNA["color"] = data["bloodcolor"]
-		else
-			B.blood_DNA["color"] = BlendRGB(B.blood_DNA["color"], data["bloodcolor"])
 	if(B.reagents)
 		B.reagents.add_reagent(type, reac_volume)
 	B.update_icon()
@@ -81,7 +77,7 @@
 /datum/reagent/blood/on_new(list/data)
 	if(istype(data))
 		SetViruses(src, data)
-		color = data["bloodcolor"]
+		color = bloodtype_to_color(data["blood_type"])
 		if(data["blood_type"] == "SY")
 			name = "Synthetic Blood"
 			taste_description = "oil"
@@ -2288,4 +2284,3 @@
 		S = new(T)
 	if(data["blood_DNA"])
 		S.add_blood_DNA(list(data["blood_DNA"] = data["blood_type"]))
-

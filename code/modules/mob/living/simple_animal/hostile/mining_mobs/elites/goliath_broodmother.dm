@@ -97,8 +97,9 @@
 		if(CALL_CHILDREN)
 			call_children()
 
-/mob/living/simple_animal/hostile/asteroid/elite/broodmother/BiologicalLife(seconds, times_fired)
-	if(!(. = ..()))
+/mob/living/simple_animal/hostile/asteroid/elite/broodmother/Life()
+	. = ..()
+	if(!.) //Checks if they are dead as a rock.
 		return
 	if(health < maxHealth * 0.5 && rand_tent < world.time)
 		rand_tent = world.time + 30

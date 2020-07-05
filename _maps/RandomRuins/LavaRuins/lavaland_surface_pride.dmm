@@ -3,8 +3,8 @@
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "b" = (
-/turf/closed/wall/mineral/diamond,
-/area/ruin/powered/pride)
+/turf/closed/mineral/volcanic/lava_land_surface,
+/area/lavaland/surface/outdoors)
 "c" = (
 /turf/open/lava/smooth/lava_land_surface,
 /area/lavaland/surface/outdoors)
@@ -23,10 +23,6 @@
 "g" = (
 /turf/open/floor/mineral/silver,
 /area/ruin/powered/pride)
-"i" = (
-/obj/item/clothing/gloves/ring,
-/turf/open/floor/mineral/silver,
-/area/ruin/powered/pride)
 "j" = (
 /obj/structure/mirror{
 	pixel_x = -32
@@ -37,8 +33,13 @@
 /turf/open/floor/mineral/silver,
 /area/ruin/powered/pride)
 "k" = (
-/obj/structure/mirror/magic/pride,
-/turf/closed/wall/mineral/diamond,
+/obj/structure/mirror{
+	pixel_x = 32
+	},
+/obj/machinery/light/small{
+	dir = 1
+	},
+/turf/open/floor/mineral/silver,
 /area/ruin/powered/pride)
 "l" = (
 /obj/structure/mirror{
@@ -59,71 +60,29 @@
 	},
 /turf/open/floor/mineral/silver,
 /area/ruin/powered/pride)
-"o" = (
-/obj/structure/mirror{
-	pixel_x = -32
-	},
-/obj/item/lipstick/random,
-/turf/open/floor/mineral/silver,
-/area/ruin/powered/pride)
-"q" = (
-/obj/structure/mirror{
-	pixel_x = -32
-	},
-/obj/item/clothing/gloves/ring/silver,
-/turf/open/floor/mineral/silver,
-/area/ruin/powered/pride)
 "r" = (
 /obj/machinery/light/small,
 /turf/open/floor/mineral/silver,
 /area/ruin/powered/pride)
-"u" = (
-/obj/structure/mirror{
-	pixel_x = 32
-	},
-/obj/item/lipstick/random,
-/turf/open/floor/mineral/silver,
-/area/ruin/powered/pride)
-"D" = (
-/obj/item/clothing/head/wig/random,
-/turf/open/floor/mineral/silver,
-/area/ruin/powered/pride)
 "G" = (
-/turf/closed/mineral/volcanic/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"I" = (
-/obj/item/clothing/gloves/ring/silver,
-/turf/open/floor/mineral/silver,
-/area/ruin/powered/pride)
-"J" = (
-/obj/structure/mirror{
-	pixel_x = 32
-	},
-/obj/machinery/light/small{
-	dir = 1
-	},
-/turf/open/floor/mineral/silver,
-/area/ruin/powered/pride)
-"L" = (
-/obj/item/lipstick/random,
-/turf/open/floor/mineral/silver,
+/turf/closed/wall/mineral/diamond,
 /area/ruin/powered/pride)
 "O" = (
-/obj/item/clothing/gloves/ring/diamond,
-/turf/open/floor/mineral/silver,
-/area/ruin/powered/pride)
-"V" = (
-/obj/item/clothing/head/wig,
-/turf/open/floor/mineral/silver,
+/obj/structure/mirror/magic/pride,
+/turf/closed/wall/mineral/diamond,
 /area/ruin/powered/pride)
 "Y" = (
-/obj/machinery/door/airlock/silver/glass,
+/obj/machinery/door/airlock/diamond,
 /turf/open/floor/mineral/silver{
 	blocks_air = 1
 	},
 /area/ruin/powered/pride)
 
 (1,1,1) = {"
+a
+a
+a
+a
 a
 a
 a
@@ -157,71 +116,91 @@ c
 c
 c
 c
+c
+c
+c
+c
 a
 "}
 (3,1,1) = {"
+b
+c
+c
 G
-c
-c
-b
-b
-b
-b
-b
-b
-b
-b
-b
-b
-b
+G
+G
+G
+G
+G
+G
+G
+G
+G
+G
+G
+G
+G
+G
 c
 a
 "}
 (4,1,1) = {"
 c
 c
-b
-b
+G
+G
+G
 j
-q
+e
+e
+l
+e
 e
 l
 e
 e
 l
 e
-o
-b
+e
+G
 c
 a
 "}
 (5,1,1) = {"
 c
-b
-b
+G
+G
+G
+G
+G
 g
 g
 g
-L
 g
-V
 g
-L
-i
+g
+g
+g
+g
+g
 r
-b
+G
 a
 a
 "}
 (6,1,1) = {"
 c
-b
+G
+G
+G
+G
+G
 O
 g
-k
 g
 g
-I
+g
+g
 g
 g
 g
@@ -233,61 +212,77 @@ a
 "}
 (7,1,1) = {"
 c
-b
-b
+G
+G
+G
+G
+G
 g
 g
-L
-D
 g
-L
-i
 g
-D
+g
+g
+g
+g
+g
+g
 r
-b
-a
+G
+c
 a
 "}
 (8,1,1) = {"
 c
 c
-b
-b
-J
+G
+G
+G
+k
 f
 f
 m
 f
 f
 m
-u
 f
-b
+f
+m
+f
+f
+G
 c
 a
 "}
 (9,1,1) = {"
+b
+c
+c
 G
-c
-c
-b
-b
-b
-b
-b
-b
-b
-b
-b
-b
-b
+G
+G
+G
+G
+G
+G
+G
+G
+G
+G
+G
+G
+G
+G
 c
 a
 "}
 (10,1,1) = {"
-G
-G
+b
+b
+c
+c
+c
+c
 c
 c
 c

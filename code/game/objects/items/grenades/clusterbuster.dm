@@ -14,8 +14,7 @@
 	var/max_spawned = 8
 	var/segment_chance = 35
 
-/obj/item/grenade/clusterbuster/prime(mob/living/lanced_by)
-	. = ..()
+/obj/item/grenade/clusterbuster/prime()
 	update_mob()
 	var/numspawned = rand(min_spawned,max_spawned)
 	var/again = 0
@@ -60,7 +59,7 @@
 		step_away(src,loc)
 	addtimer(CALLBACK(src, .proc/prime), rand(15,60))
 
-/obj/item/grenade/clusterbuster/segment/prime(mob/living/lanced_by)
+/obj/item/grenade/clusterbuster/segment/prime()
 	new payload_spawner(drop_location(), payload, rand(min_spawned,max_spawned))
 	playsound(src, prime_sound, 75, 1, -3)
 	qdel(src)

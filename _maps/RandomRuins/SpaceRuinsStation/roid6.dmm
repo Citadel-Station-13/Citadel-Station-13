@@ -44,7 +44,7 @@
 /area/ruin/space/has_grav)
 "C" = (
 /obj/effect/decal/remains/human,
-/obj/item/spear,
+/obj/item/twohanded/spear,
 /turf/open/floor/mineral/titanium/blue,
 /area/ruin/space/has_grav)
 "F" = (

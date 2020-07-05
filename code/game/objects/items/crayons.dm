@@ -737,7 +737,12 @@
 				to_chat(usr, "<span class='warning'>A color that dark on an object like this? Surely not...</span>")
 				return FALSE
 
-			target.add_atom_colour(paint_color, WASHABLE_COLOUR_PRIORITY)
+
+			if(istype(target, /obj/structure/window))
+				var/obj/structure/window/W = target
+				W.spraycan_paint(paint_color)
+			else
+				target.add_atom_colour(paint_color, WASHABLE_COLOUR_PRIORITY)
 
 		. = use_charges(user, 2)
 		var/fraction = min(1, . / reagents.maximum_volume)

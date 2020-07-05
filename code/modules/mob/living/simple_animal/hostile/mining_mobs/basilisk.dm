@@ -88,9 +88,8 @@
 	wanted_objects = list(/obj/item/pen/survival, /obj/item/stack/ore/diamond)
 	field_of_vision_type = FOV_270_DEGREES //Obviously, it's one eyeball.
 
-/mob/living/simple_animal/hostile/asteroid/basilisk/watcher/BiologicalLife(seconds, times_fired)
-	if(!(. = ..()))
-		return
+/mob/living/simple_animal/hostile/asteroid/basilisk/watcher/Life()
+	. = ..()
 	if(stat == CONSCIOUS)
 		consume_bait()
 

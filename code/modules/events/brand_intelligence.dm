@@ -54,7 +54,6 @@
 	vendingMachines.Remove(originMachine)
 	originMachine.shut_up = 0
 	originMachine.shoot_inventory = 1
-	announce_to_ghosts(originMachine)
 
 
 /datum/round_event/brand_intelligence/tick()

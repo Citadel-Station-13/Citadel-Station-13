@@ -136,13 +136,3 @@
 	)
 	result = /obj/item/reagent_containers/food/snacks/fishandchips
 	subcategory = CAT_SEAFOOD
-
-/datum/crafting_recipe/food/fishfry
-	name = "Fish fry"
-	reqs = list(
-		/obj/item/reagent_containers/food/snacks/grown/corn = 1,
-		/obj/item/reagent_containers/food/snacks/grown/peas =1,
-		/obj/item/reagent_containers/food/snacks/carpmeat = 1
-	)
-	result = /obj/item/reagent_containers/food/snacks/fishfry
-	subcategory = CAT_SEAFOOD

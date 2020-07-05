@@ -1,7 +1,11 @@
 
-/mob/living/brain/BiologicalLife(seconds, times_fired)
-	if(!(. = ..()))
+/mob/living/brain/Life()
+	set invisibility = 0
+	if (notransform)
 		return
+	if(!loc)
+		return
+	. = ..()
 	handle_emp_damage()
 
 /mob/living/brain/update_stat()

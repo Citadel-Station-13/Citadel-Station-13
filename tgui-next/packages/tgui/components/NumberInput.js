@@ -209,13 +209,6 @@ export class NumberInput extends Component {
               return;
             }
             const value = clamp(e.target.value, minValue, maxValue);
-            if (isNaN(value))
-            {
-              this.setState({
-                editing: false,
-              });
-              return;
-            }
             this.setState({
               editing: false,
               value,
@@ -231,13 +224,6 @@ export class NumberInput extends Component {
           onKeyDown={e => {
             if (e.keyCode === 13) {
               const value = clamp(e.target.value, minValue, maxValue);
-              if (isNaN(value))
-              {
-                this.setState({
-                  editing: false,
-                });
-                return;
-              }
               this.setState({
                 editing: false,
                 value,

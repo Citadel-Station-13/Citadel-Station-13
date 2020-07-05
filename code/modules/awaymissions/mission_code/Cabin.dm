@@ -1,39 +1,20 @@
 
 /*Cabin areas*/
+/area/awaymission/snowforest
+	name = "Snow Forest"
+	icon_state = "away"
+	requires_power = FALSE
+	dynamic_lighting = DYNAMIC_LIGHTING_ENABLED
+
 /area/awaymission/cabin
 	name = "Cabin"
 	icon_state = "away2"
 	requires_power = TRUE
 	dynamic_lighting = DYNAMIC_LIGHTING_ENABLED
 
-/area/awaymission/cabin/snowforest
-	name = "Snow Forest"
-	icon_state = "away"
-	dynamic_lighting = DYNAMIC_LIGHTING_DISABLED
-
-/area/awaymission/cabin/snowforest/sovietsurface
-	name = "Snow Forest"
-	icon_state = "awaycontent29"
-	requires_power = FALSE
-
-/area/awaymission/cabin/lumbermill
+/area/awaymission/snowforest/lumbermill
 	name = "Lumbermill"
 	icon_state = "away3"
-	requires_power = FALSE
-	dynamic_lighting = DYNAMIC_LIGHTING_DISABLED
-
-/area/awaymission/cabin/caves/sovietcave
-	name = "Soviet Bunker"
-	icon_state = "awaycontent4"
-
-/area/awaymission/cabin/caves
-	name = "North Snowdin Caves"
-	icon_state = "awaycontent15"
-	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
-
-/area/awaymission/cabin/caves/mountain
-	name = "North Snowdin Mountains"
-	icon_state = "awaycontent24"
 
 /obj/structure/firepit
 	name = "firepit"
@@ -111,7 +92,7 @@
 	egg_type = null
 	speak = list()
 
-/*Cabin's forest. Removed in the new cabin map since it was buggy and I prefer manual placement.*/
+/*Cabin's forest*/
 /datum/mapGenerator/snowy
 	modules = list(/datum/mapGeneratorModule/bottomlayer/snow, \
 	/datum/mapGeneratorModule/snow/pineTrees, \

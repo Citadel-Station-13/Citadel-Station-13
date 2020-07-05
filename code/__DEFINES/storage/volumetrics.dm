@@ -24,7 +24,7 @@ GLOBAL_LIST_INIT(default_weight_class_to_volume, list(
 // Let's keep all of this in one place. given what we put above anyways..
 
 // volume amount for items
-#define ITEM_VOLUME_DISK					1
+#define ITEM_VOLUME_DISK				DEFAULT_VOLUME_TINY
 
 // #define SAMPLE_VOLUME_AMOUNT 2
 

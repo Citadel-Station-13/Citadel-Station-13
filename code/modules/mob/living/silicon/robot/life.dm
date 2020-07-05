@@ -1,6 +1,9 @@
-/mob/living/silicon/robot/BiologicalLife(seconds, times_fired)
-	if(!(. = ..()))
+/mob/living/silicon/robot/Life()
+	set invisibility = 0
+	if (src.notransform)
 		return
+
+	..()
 	adjustOxyLoss(-10) //we're a robot!
 	handle_robot_hud_updates()
 	handle_robot_cell()

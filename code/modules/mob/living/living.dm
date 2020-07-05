@@ -19,8 +19,6 @@
 	med_hud_set_status()
 
 /mob/living/Destroy()
-	end_parry_sequence()
-	stop_active_blocking()
 	if(LAZYLEN(status_effects))
 		for(var/s in status_effects)
 			var/datum/status_effect/S = s

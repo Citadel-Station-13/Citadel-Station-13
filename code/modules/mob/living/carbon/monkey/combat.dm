@@ -81,7 +81,7 @@
 /mob/living/carbon/monkey/proc/pickup_and_wear(obj/item/I)
 	if(QDELETED(I) || I.loc != src)
 		return
-	equip_to_appropriate_slot(I, TRUE)
+	equip_to_appropriate_slot(I)
 
 /mob/living/carbon/monkey/resist_restraints()
 	var/obj/item/I = null

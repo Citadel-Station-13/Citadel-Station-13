@@ -51,7 +51,7 @@ GLOBAL_LIST_INIT(maintenance_loot, list(
 	/obj/item/airlock_painter = 1,
 	/obj/item/stack/cable_coil/random = 4,
 	/obj/item/stack/cable_coil/random/five = 6,
-	/obj/item/stack/medical/suture = 1,
+	/obj/item/stack/medical/bruise_pack = 1,
 	/obj/item/stack/rods/ten = 9,
 	/obj/item/stack/rods/twentyfive = 1,
 	/obj/item/stack/rods/fifty = 1,
@@ -116,7 +116,6 @@ GLOBAL_LIST_INIT(maintenance_loot, list(
 	/obj/item/autosurgeon/testicles = 1,
 	/obj/item/storage/box/marshmallow = 2,
 	/obj/item/clothing/gloves/tackler/offbrand = 1,
-	/obj/item/stack/sticky_tape = 1,
 	"" = 3
 	))
 

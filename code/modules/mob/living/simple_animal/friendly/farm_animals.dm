@@ -33,12 +33,11 @@
 	stop_automated_movement_when_pulled = 1
 	blood_volume = BLOOD_VOLUME_NORMAL
 	var/obj/item/udder/udder = null
-	var/datum/reagent/milk_reagent = /datum/reagent/consumable/milk
 
 	footstep_type = FOOTSTEP_MOB_SHOE
 
-/mob/living/simple_animal/hostile/retaliate/goat/Initialize(/datum/reagent/milk_reagent)
-	udder = new (null, milk_reagent)
+/mob/living/simple_animal/hostile/retaliate/goat/Initialize()
+	udder = new()
 	. = ..()
 
 /mob/living/simple_animal/hostile/retaliate/goat/Destroy()
@@ -46,10 +45,9 @@
 	udder = null
 	return ..()
 
-/mob/living/simple_animal/hostile/retaliate/goat/BiologicalLife(seconds, times_fired)
-	if(!(. = ..()))
-		return
-	if(stat == CONSCIOUS)
+/mob/living/simple_animal/hostile/retaliate/goat/Life()
+	. = ..()
+	if(.)
 		//chance to go crazy and start wacking stuff
 		if(!enemies.len && prob(1))
 			Retaliate()
@@ -58,7 +56,8 @@
 			enemies = list()
 			LoseTarget()
 			src.visible_message("<span class='notice'>[src] calms down.</span>")
-		udder.generateMilk(milk_reagent)
+	if(stat == CONSCIOUS)
+		udder.generateMilk()
 		eat_plants()
 		if(!pulledby)
 			for(var/direction in shuffle(list(1,2,4,8,5,6,9,10)))
@@ -138,14 +137,13 @@
 	health = 50
 	maxHealth = 50
 	var/obj/item/udder/udder = null
-	var/datum/reagent/milk_reagent = /datum/reagent/consumable/milk
 	gold_core_spawnable = FRIENDLY_SPAWN
 	blood_volume = BLOOD_VOLUME_NORMAL
 
 	footstep_type = FOOTSTEP_MOB_SHOE
 
 /mob/living/simple_animal/cow/Initialize()
-	udder = new(null, milk_reagent)
+	udder = new()
 	. = ..()
 
 /mob/living/simple_animal/cow/Destroy()
@@ -160,11 +158,10 @@
 	else
 		return ..()
 
-/mob/living/simple_animal/cow/BiologicalLife(seconds, times_fired)
-	if(!(. = ..()))
-		return
+/mob/living/simple_animal/cow/Life()
+	. = ..()
 	if(stat == CONSCIOUS)
-		udder.generateMilk(milk_reagent)
+		udder.generateMilk()
 
 /mob/living/simple_animal/cow/attack_hand(mob/living/carbon/M)
 	if(!stat && M.a_intent == INTENT_DISARM && icon_state != icon_dead)
@@ -191,19 +188,6 @@
 					"<span class='revennotice'>[internal]</span>")
 	else
 		..()
-
-//Wisdom cow, speaks and bestows great wisdoms
-/mob/living/simple_animal/cow/wisdom
-	name = "wisdom cow"
-	desc = "Known for its wisdom, shares it with all"
-	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab/wisdomcow = 1) //truly the best meat
-	gold_core_spawnable = FALSE
-	speak_chance = 30 //the cow is eager to share its wisdom!
-	milk_reagent = /datum/reagent/medicine/liquid_wisdom
-
-/mob/living/simple_animal/cow/wisdom/Initialize()
-	. = ..()
-	speak = GLOB.wisdoms //Done here so it's setup properly
 
 /mob/living/simple_animal/chick
 	name = "\improper chick"
@@ -245,8 +229,9 @@
 	pixel_x = rand(-6, 6)
 	pixel_y = rand(0, 10)
 
-/mob/living/simple_animal/chick/BiologicalLife(seconds, times_fired)
-	if(!(. = ..()))
+/mob/living/simple_animal/chick/Life()
+	. =..()
+	if(!.)
 		return
 	if(!stat && !ckey)
 		amount_grown += rand(1,2)
@@ -254,9 +239,8 @@
 			new /mob/living/simple_animal/chicken(src.loc)
 			qdel(src)
 
-/mob/living/simple_animal/chick/holo/BiologicalLife(seconds, times_fired)
-	if(!(. = ..()))
-		return
+/mob/living/simple_animal/chick/holo/Life()
+	..()
 	amount_grown = 0
 
 /mob/living/simple_animal/chicken
@@ -329,8 +313,9 @@
 	else
 		..()
 
-/mob/living/simple_animal/chicken/BiologicalLife(seconds, times_fired)
-	if(!(. = ..()))
+/mob/living/simple_animal/chicken/Life()
+	. =..()
+	if(!.)
 		return
 	if((!stat && prob(3) && eggsleft > 0) && egg_type)
 		visible_message("<span class='alertalien'>[src] [pick(layMessage)]</span>")
@@ -403,8 +388,9 @@
 	. = ..()
 	++kiwi_count
 
-/mob/living/simple_animal/kiwi/BiologicalLife(seconds, times_fired)
-	if(!(. = ..()))
+/mob/living/simple_animal/kiwi/Life()
+	. =..()
+	if(!.)
 		return
 	if((!stat && prob(3) && eggsleft > 0) && egg_type)
 		visible_message("[src] [pick(layMessage)]")
@@ -477,8 +463,9 @@
 	pixel_x = rand(-6, 6)
 	pixel_y = rand(0, 10)
 
-/mob/living/simple_animal/babyKiwi/BiologicalLife(seconds, times_fired)
-	if(!(. = ..()))
+/mob/living/simple_animal/babyKiwi/Life()
+	. =..()
+	if(!.)
 		return
 	if(!stat && !ckey)
 		amount_grown += rand(1,2)
@@ -494,16 +481,14 @@
 /obj/item/udder
 	name = "udder"
 
-/obj/item/udder/Initialize(loc, milk_reagent)
-	if(!milk_reagent)
-		milk_reagent = /datum/reagent/consumable/milk
+/obj/item/udder/Initialize()
 	create_reagents(50, NONE, NO_REAGENTS_VALUE)
-	reagents.add_reagent(milk_reagent, 20)
+	reagents.add_reagent(/datum/reagent/consumable/milk, 20)
 	. = ..()
 
-/obj/item/udder/proc/generateMilk(datum/reagent/milk_reagent)
+/obj/item/udder/proc/generateMilk()
 	if(prob(5))
-		reagents.add_reagent(milk_reagent, rand(5, 10))
+		reagents.add_reagent(/datum/reagent/consumable/milk, rand(5, 10))
 
 /obj/item/udder/proc/milkAnimal(obj/O, mob/user)
 	var/obj/item/reagent_containers/glass/G = O

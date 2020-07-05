@@ -47,9 +47,8 @@
 	if(regen_amount)
 		regen_cooldown = world.time + REGENERATION_DELAY
 
-/mob/living/simple_animal/hostile/carp/BiologicalLife(seconds, times_fired)
-	if(!(. = ..()))
-		return
+/mob/living/simple_animal/hostile/carp/Life()
+	. = ..()
 	if(regen_amount && regen_cooldown < world.time)
 		heal_overall_damage(regen_amount)
 

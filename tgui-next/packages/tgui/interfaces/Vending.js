@@ -61,7 +61,7 @@ export const Vending = props => {
             );
             return (
               <Table.Row key={product.name}>
-                <Table.Cell collapsing>
+                <Table.Cell>
                   {product.base64 ? (
                     <img
                       src={`data:image/jpeg;base64,${product.img}`}
@@ -71,20 +71,15 @@ export const Vending = props => {
                       }} />
                   ) : (
                     <span
-                      className={classes([
-                        'vending32x32',
-                        product.path,
-                      ])}
+                      className={classes(['vending32x32', product.path])}
                       style={{
                         'vertical-align': 'middle',
                         'horizontal-align': 'middle',
                       }} />
                   )}
+                  <b>{product.name}</b>
                 </Table.Cell>
-                <Table.Cell bold>
-                  {product.name}
-                </Table.Cell>
-                <Table.Cell collapsing textAlign="center">
+                <Table.Cell>
                   <Box color={custom
                     ? 'good'
                     : data.stock[product.name] <= 0
@@ -95,26 +90,24 @@ export const Vending = props => {
                     {data.stock[product.name]} in stock
                   </Box>
                 </Table.Cell>
-                <Table.Cell collapsing textAlign="center">
+                <Table.Cell>
                   {custom && (
                     <Button
-                      fluid
                       content={data.access ? 'FREE' : product.price + ' cr'}
                       onClick={() => act(ref, 'dispense', {
                         'item': product.name,
                       })} />
                   ) || (
                     <Button
-                      fluid
                       disabled={(
                         data.stock[product.namename] === 0
-                          || (
-                            !free
-                            && (
-                              !data.user
-                              || to_pay > data.user.cash
-                            )
+                        || (
+                          !free
+                          && (
+                            !data.user
+                            || to_pay > data.user.cash
                           )
+                        )
                       )}
                       content={!free ? pay_text : 'FREE'}
                       onClick={() => act(ref, 'vend', {

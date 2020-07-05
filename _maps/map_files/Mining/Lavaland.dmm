@@ -192,14 +192,14 @@
 /area/ruin/unpowered/ash_walkers)
 "ft" = (
 /obj/structure/stone_tile/block,
-/obj/item/spear/bonespear,
+/obj/item/twohanded/bonespear,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/ruin/unpowered/ash_walkers)
 "fN" = (
 /obj/structure/stone_tile{
 	dir = 4
 	},
-/obj/item/spear/bonespear,
+/obj/item/twohanded/bonespear,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "fQ" = (
@@ -529,7 +529,7 @@
 	},
 /obj/structure/table/wood,
 /obj/item/clothing/head/helmet/roman/legionnaire,
-/obj/item/spear/bonespear,
+/obj/item/twohanded/bonespear,
 /turf/open/indestructible/boss,
 /area/ruin/unpowered/ash_walkers)
 "iK" = (
@@ -1486,7 +1486,9 @@
 /obj/structure/stone_tile/cracked{
 	dir = 8
 	},
-/obj/item/storage/firstaid/ancient,
+/obj/item/malf_upgrade,
+/obj/item/disk/tech_disk/illegal,
+/obj/structure/safe,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/ruin/unpowered/ash_walkers)
 "pc" = (
@@ -1829,8 +1831,8 @@
 "An" = (
 /obj/structure/stone_tile/slab,
 /obj/structure/table/wood,
-/obj/item/spear/bonespear,
-/obj/item/spear/bonespear,
+/obj/item/twohanded/bonespear,
+/obj/item/twohanded/bonespear,
 /turf/open/indestructible/boss,
 /area/ruin/unpowered/ash_walkers)
 "AH" = (
@@ -1840,7 +1842,7 @@
 /obj/structure/stone_tile/cracked{
 	dir = 8
 	},
-/obj/item/spear/bonespear,
+/obj/item/twohanded/bonespear,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/ruin/unpowered/ash_walkers)
 "AU" = (
@@ -2069,7 +2071,7 @@
 	},
 /obj/structure/table/wood,
 /obj/item/scythe,
-/obj/item/spear/bonespear,
+/obj/item/twohanded/bonespear,
 /turf/open/indestructible/boss,
 /area/ruin/unpowered/ash_walkers)
 "HX" = (
@@ -2198,7 +2200,7 @@
 	},
 /obj/structure/table/wood,
 /obj/item/storage/belt,
-/obj/item/spear/bonespear,
+/obj/item/twohanded/bonespear,
 /turf/open/indestructible/boss,
 /area/ruin/unpowered/ash_walkers)
 "Qk" = (
@@ -2425,7 +2427,7 @@
 /obj/structure/stone_tile/cracked{
 	dir = 1
 	},
-/obj/item/spear/bonespear,
+/obj/item/twohanded/bonespear,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/ruin/unpowered/ash_walkers)
 "WT" = (
