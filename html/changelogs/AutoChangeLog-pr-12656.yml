@@ -1,6 +1,0 @@
-author: "Ghommie"
-delete-after: True
-changes: 
-  - bugfix: "Fixing a few issues with twohanded items."
-  - bugfix: "Unum decks now work correctly."
-  - bugfix: "Abductor walls are once again buildable with alien alloy."
