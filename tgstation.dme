@@ -3502,6 +3502,7 @@
 #include "sandcode\code\game\machinery\pipe\construction.dm"
 #include "sandcode\code\game\mecha\mech_fabricator.dm"
 #include "sandcode\code\game\objects\effects\contraband.dm"
+#include "sandcode\code\game\objects\items\airlock_painter.dm"
 #include "sandcode\code\game\objects\items\BSRPD.dm"
 #include "sandcode\code\game\objects\items\cards_ids.dm"
 #include "sandcode\code\game\objects\items\circuitboards\computer_circuitboards.dm"
