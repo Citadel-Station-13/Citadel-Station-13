@@ -1,0 +1,4 @@
+author: "KasparoVy"
+delete-after: True
+changes: 
+  - tweak: "Fixes misaligned south-facing silver legwraps sprite."
