@@ -447,11 +447,10 @@
 		. = TRUE
 
 /obj/machinery/computer/cloning/proc/finish_scan(mob/living/L, prev_locked)
-	if(!scanner)
+	if(!scanner || !L)
 		return
 	src.add_fingerprint(usr)
 	src.updateUsrDialog()
-	return
 
 	if(use_records)
 		scan_occupant(L)
