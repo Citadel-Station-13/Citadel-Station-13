@@ -18,7 +18,7 @@
 
 	var/secondsElectrified = 0
 	var/shockedby
-	var/visible = TRUE
+	var/visible = TRUE // To explain: Whether the door can block line of sight when closed or not.
 	var/operating = FALSE
 	var/glass = FALSE
 	var/welded = FALSE
@@ -182,7 +182,7 @@
 	return
 
 /obj/machinery/door/attackby(obj/item/I, mob/user, params)
-	if(user.a_intent != INTENT_HARM && (istype(I, /obj/item/crowbar) || istype(I, /obj/item/twohanded/fireaxe)))
+	if(user.a_intent != INTENT_HARM && (istype(I, /obj/item/crowbar) || istype(I, /obj/item/fireaxe)))
 		try_to_crowbar(I, user)
 		return 1
 	else if(istype(I, /obj/item/weldingtool))

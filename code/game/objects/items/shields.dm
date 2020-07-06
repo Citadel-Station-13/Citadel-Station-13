@@ -26,7 +26,7 @@
 /datum/block_parry_data/shield
 	block_damage_multiplier = 0.25
 	block_stamina_efficiency = 2.5
-	block_stamina_cost_per_second = 3.5
+	block_stamina_cost_per_second = 2.5
 	block_slowdown = 0
 	block_lock_attacking = FALSE
 	block_lock_sprinting = TRUE
@@ -386,7 +386,7 @@ obj/item/shield/riot/bullet_proof
 	max_integrity = 100
 	obj_integrity = 100
 	can_shatter = FALSE
-	item_flags = SLOWS_WHILE_IN_HAND
+	item_flags = SLOWS_WHILE_IN_HAND | ITEM_CAN_BLOCK
 	var/recharge_timerid
 	var/recharge_delay = 15 SECONDS
 

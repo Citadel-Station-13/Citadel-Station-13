@@ -101,7 +101,7 @@
 	H.update_hair()
 	H.update_body_parts()
 
-	// Wait here til we deactivate power or go unconscious
+	// Wait here until we deactivate power or go unconscious
 	var/datum/antagonist/bloodsucker/bloodsuckerdatum = owner.mind.has_antag_datum(ANTAG_DATUM_BLOODSUCKER)
 	while (ContinueActive(owner) && istype(bloodsuckerdatum))//active && owner && owner.stat == CONSCIOUS)
 		bloodsuckerdatum.AddBloodVolume(-0.2)

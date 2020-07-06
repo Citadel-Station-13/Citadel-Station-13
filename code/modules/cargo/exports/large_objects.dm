@@ -303,7 +303,7 @@
 	export_types = list(/obj/mecha/combat/durand)
 
 /datum/export/large/mech/phazon
-	cost = 35000 //Little over half do to needing a core
+	cost = 35000 //Little over half due to needing a core
 	unit_name = "working phazon"
 	export_types = list(/obj/mecha/combat/phazon)
 

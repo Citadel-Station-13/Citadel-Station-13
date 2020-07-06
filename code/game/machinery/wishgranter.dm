@@ -108,7 +108,7 @@
 					killwish.health = killwish.maxHealth
 					killwish.vine_grab_distance = 6
 					killwish.melee_damage_upper = 30
-					killwish.loot = list(/obj/item/twohanded/dualsaber/hypereutactic)
+					killwish.loot = list(/obj/item/dualsaber/hypereutactic)
 					charges--
 					insisting = FALSE
 					if(!charges)

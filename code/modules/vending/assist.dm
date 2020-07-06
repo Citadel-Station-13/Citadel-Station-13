@@ -14,8 +14,7 @@
 					/obj/item/stock_parts/cell/upgraded = 2)
 	premium = list(/obj/item/stock_parts/cell/upgraded/plus = 2,
 					/obj/item/flashlight/lantern = 2,
-					/obj/item/beacon = 2,
-					/obj/item/airlock_painter/decal = 5)
+					/obj/item/beacon = 2)
 	product_ads = "Only the finest!;Have some tools.;The most robust equipment.;The finest gear in space!"
 	armor = list("melee" = 100, "bullet" = 100, "laser" = 100, "energy" = 100, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 50)
 	refill_canister = /obj/item/vending_refill/assist

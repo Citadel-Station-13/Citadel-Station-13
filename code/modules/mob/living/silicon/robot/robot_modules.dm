@@ -128,7 +128,7 @@
 			S.source = get_or_create_estorage(/datum/robot_energy_storage/wrapping_paper)
 
 		if(S && S.source)
-			S.custom_materials = null
+			S.set_custom_materials(null)
 			S.is_cyborg = 1
 
 	if(I.loc != src)
@@ -340,7 +340,7 @@
 		/obj/item/organ_storage,
 		/obj/item/borg/lollipop,
 		/obj/item/sensor_device,
-		/obj/item/twohanded/shockpaddles/cyborg)
+		/obj/item/shockpaddles/cyborg)
 	emag_modules = list(/obj/item/reagent_containers/borghypo/hacked)
 	ratvar_modules = list(
 		/obj/item/clockwork/slab/cyborg/medical,
@@ -923,7 +923,7 @@
 		/obj/item/borg/sight/meson,
 		/obj/item/storage/bag/ore/cyborg,
 		/obj/item/pickaxe/drill/cyborg,
-		/obj/item/twohanded/kinetic_crusher/cyborg,
+		/obj/item/kinetic_crusher/cyborg,
 		/obj/item/weldingtool/mini,
 		/obj/item/storage/bag/sheetsnatcher/borg,
 		/obj/item/t_scanner/adv_mining_scanner,
@@ -1043,7 +1043,7 @@
 		/obj/item/extinguisher/mini,
 		/obj/item/crowbar/cyborg,
 		/obj/item/reagent_containers/borghypo/syndicate,
-		/obj/item/twohanded/shockpaddles/syndicate,
+		/obj/item/shockpaddles/syndicate,
 		/obj/item/healthanalyzer/advanced,
 		/obj/item/surgical_drapes/advanced,
 		/obj/item/retractor,

@@ -39,6 +39,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 	var/use_skintones = NO_SKINTONES	// does it use skintones or not? (spoiler alert this is only used by humans)
 	var/exotic_blood = ""	// If your race wants to bleed something other than bog standard blood, change this to reagent id.
 	var/exotic_bloodtype = "" //If your race uses a non standard bloodtype (A+, O-, AB-, etc)
+	var/exotic_blood_color = BLOOD_COLOR_HUMAN //assume human as the default blood colour, override this default by species subtypes
 	var/meat = /obj/item/reagent_containers/food/snacks/meat/slab/human //What the species drops on gibbing
 	var/list/gib_types = list(/obj/effect/gibspawner/human, /obj/effect/gibspawner/human/bodypartless)
 	var/skinned_type
@@ -1065,10 +1066,15 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 	// handles the equipping of species-specific gear
 	return
 
-/datum/species/proc/can_equip(obj/item/I, slot, disable_warning, mob/living/carbon/human/H, bypass_equip_delay_self = FALSE)
+/datum/species/proc/can_equip(obj/item/I, slot, disable_warning, mob/living/carbon/human/H, bypass_equip_delay_self = FALSE, clothing_check = FALSE, list/return_warning)
 	if(slot in no_equip)
 		if(!I.species_exception || !is_type_in_list(src, I.species_exception))
 			return FALSE
+
+	if(clothing_check && (slot in H.check_obscured_slots()))
+		if(return_warning)
+			return_warning[1] = "<span class='warning'>You are unable to equip that with your current garments in the way!</span>"
+		return FALSE
 
 	var/num_arms = H.get_num_arms(FALSE)
 	var/num_legs = H.get_num_legs(FALSE)
@@ -1131,8 +1137,8 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 			if(!CHECK_BITFIELD(I.item_flags, NO_UNIFORM_REQUIRED))
 				var/obj/item/bodypart/O = H.get_bodypart(BODY_ZONE_CHEST)
 				if(!H.w_uniform && !nojumpsuit && (!O || O.status != BODYPART_ROBOTIC))
-					if(!disable_warning)
-						to_chat(H, "<span class='warning'>You need a jumpsuit before you can attach this [I.name]!</span>")
+					if(return_warning)
+						return_warning[1] = "<span class='warning'>You need a jumpsuit before you can attach this [I.name]!</span>"
 					return FALSE
 			if(!(I.slot_flags & ITEM_SLOT_BELT))
 				return
@@ -1173,8 +1179,8 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 			if(!CHECK_BITFIELD(I.item_flags, NO_UNIFORM_REQUIRED))
 				var/obj/item/bodypart/O = H.get_bodypart(BODY_ZONE_CHEST)
 				if(!H.w_uniform && !nojumpsuit && (!O || O.status != BODYPART_ROBOTIC))
-					if(!disable_warning)
-						to_chat(H, "<span class='warning'>You need a jumpsuit before you can attach this [I.name]!</span>")
+					if(return_warning)
+						return_warning[1] = "<span class='warning'>You need a jumpsuit before you can attach this [I.name]!</span>"
 					return FALSE
 			if( !(I.slot_flags & ITEM_SLOT_ID) )
 				return FALSE
@@ -1188,8 +1194,8 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 			var/obj/item/bodypart/O = H.get_bodypart(BODY_ZONE_L_LEG)
 
 			if(!H.w_uniform && !nojumpsuit && (!O || O.status != BODYPART_ROBOTIC))
-				if(!disable_warning)
-					to_chat(H, "<span class='warning'>You need a jumpsuit before you can attach this [I.name]!</span>")
+				if(return_warning)
+					return_warning[1] = "<span class='warning'>You need a jumpsuit before you can attach this [I.name]!</span>"
 				return FALSE
 			if(I.slot_flags & ITEM_SLOT_DENYPOCKET)
 				return FALSE
@@ -1204,8 +1210,8 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 			var/obj/item/bodypart/O = H.get_bodypart(BODY_ZONE_R_LEG)
 
 			if(!H.w_uniform && !nojumpsuit && (!O || O.status != BODYPART_ROBOTIC))
-				if(!disable_warning)
-					to_chat(H, "<span class='warning'>You need a jumpsuit before you can attach this [I.name]!</span>")
+				if(return_warning)
+					return_warning[1] = "<span class='warning'>You need a jumpsuit before you can attach this [I.name]!</span>"
 				return FALSE
 			if(I.slot_flags & ITEM_SLOT_DENYPOCKET)
 				return FALSE
@@ -1218,16 +1224,16 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 			if(H.s_store)
 				return FALSE
 			if(!H.wear_suit)
-				if(!disable_warning)
-					to_chat(H, "<span class='warning'>You need a suit before you can attach this [I.name]!</span>")
+				if(return_warning)
+					return_warning[1] = "<span class='warning'>You need a suit before you can attach this [I.name]!</span>"
 				return FALSE
 			if(!H.wear_suit.allowed)
-				if(!disable_warning)
-					to_chat(H, "You somehow have a suit with no defined allowed items for suit storage, stop that.")
+				if(return_warning)
+					return_warning[1] = "You somehow have a suit with no defined allowed items for suit storage, stop that."
 				return FALSE
 			if(I.w_class > WEIGHT_CLASS_BULKY)
-				if(!disable_warning)
-					to_chat(H, "The [I.name] is too big to attach.") //should be src?
+				if(return_warning)
+					return_warning[1] = "The [I.name] is too big to attach."
 				return FALSE
 			if( istype(I, /obj/item/pda) || istype(I, /obj/item/pen) || is_type_in_list(I, H.wear_suit.allowed) )
 				return TRUE
@@ -1726,7 +1732,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 	var/weakness = H.check_weakness(I, user)
 	apply_damage(totitemdamage * weakness, I.damtype, def_zone, armor_block, H) //CIT CHANGE - replaces I.force with totitemdamage
 
-	H.send_item_attack_message(I, user, hit_area)
+	H.send_item_attack_message(I, user, hit_area, totitemdamage)
 
 	I.do_stagger_action(H, user, totitemdamage)
 

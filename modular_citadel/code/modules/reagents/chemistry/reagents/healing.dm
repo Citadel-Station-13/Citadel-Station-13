@@ -200,10 +200,10 @@
 
 /datum/reagent/fermi/zeolites
 	name = "Artificial Zeolites"
-	description = "Lab made Zeolite, used to clear radiation form people and items alike! Splashing just a small amounts(5u) onto any item can clear away large amouts of contamination."
+	description = "Lab made Zeolite, used to clear radiation from people and items alike! Splashing just a small amount(5u) onto any item can clear away large amounts of contamination."
 	pH = 8
 	color = "#FFDADA"
-	metabolization_rate = 8 * REAGENTS_METABOLISM //Lastes not long in body but heals a lot!
+	metabolization_rate = 8 * REAGENTS_METABOLISM //Metabolizes fast but heals a lot!
 	value = REAGENT_VALUE_COMMON
 
 /datum/reagent/fermi/zeolites/on_mob_life(mob/living/carbon/M)

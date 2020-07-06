@@ -47,16 +47,13 @@
 
 
 /mob/living/carbon/swap_hand(held_index)
+	. = ..()
+	if(!.)
+		var/obj/item/held_item = get_active_held_item()
+		to_chat(usr, "<span class='warning'>Your other hand is too busy holding [held_item].</span>")
+		return
 	if(!held_index)
 		held_index = (active_hand_index % held_items.len)+1
-
-	var/obj/item/item_in_hand = src.get_active_held_item()
-	if(item_in_hand) //this segment checks if the item in your hand is twohanded.
-		var/obj/item/twohanded/TH = item_in_hand
-		if(istype(TH))
-			if(TH.wielded == 1)
-				to_chat(usr, "<span class='warning'>Your other hand is too busy holding [TH]</span>")
-				return
 	var/oindex = active_hand_index
 	active_hand_index = held_index
 	if(hud_used)
@@ -182,7 +179,7 @@
 				to_chat(src, "<span class='notice'>You gently let go of [throwable_mob].</span>")
 				return
 
-			adjustStaminaLossBuffered(25)//CIT CHANGE - throwing an entire person shall be very tiring
+			adjustStaminaLossBuffered(STAM_COST_THROW_MOB * ((throwable_mob.mob_size+1)**2))// throwing an entire person shall be very tiring
 			var/turf/start_T = get_turf(loc) //Get the start and target tile for the descriptors
 			var/turf/end_T = get_turf(target)
 			if(start_T && end_T)
@@ -1160,3 +1157,16 @@
 			dna.features["body_model"] = MALE
 	if(update_icon)
 		update_body()
+
+/mob/living/carbon/check_obscured_slots()
+	if(head)
+		if(head.flags_inv & HIDEMASK)
+			LAZYOR(., SLOT_WEAR_MASK)
+		if(head.flags_inv & HIDEEYES)
+			LAZYOR(., SLOT_GLASSES)
+		if(head.flags_inv & HIDEEARS)
+			LAZYOR(., SLOT_EARS)
+
+	if(wear_mask)
+		if(wear_mask.flags_inv & HIDEEYES)
+			LAZYOR(., SLOT_GLASSES)
