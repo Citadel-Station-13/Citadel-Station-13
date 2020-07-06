@@ -65,16 +65,24 @@
 						if(C)
 							copy_as_paper = 0
 					if(copy_as_paper)
-						var/obj/item/paper/c
+						var/obj/item/paper/c = new /obj/item/paper (loc)
 						if(length(copy.info) > 0)	//Only print and add content if the copied doc has words on it
-							c = copy.copy(loc)
 							if(toner > 10)	//lots of toner, make it dark
-								c.pen_color = "#101010"
+								c.info = "<font color = #101010>"
 							else			//no toner? shitty copies for you!
-								c.pen_color = "#808080"
+								c.info = "<font color = #808080>"
+							var/copied = copy.info
+							copied = replacetext(copied, "<font face=\"[PEN_FONT]\" color=", "<font face=\"[PEN_FONT]\" nocolor=")	//state of the art techniques in action
+							copied = replacetext(copied, "<font face=\"[CRAYON_FONT]\" color=", "<font face=\"[CRAYON_FONT]\" nocolor=")	//This basically just breaks the existing color tag, which we need to do because the innermost tag takes priority.
+							c.info += copied
+							c.info += "</font>"
+							c.name = copy.name
+							c.update_icon()
+							c.stamps = copy.stamps
+							if(copy.stamped)
+								c.stamped = copy.stamped.Copy()
+							c.copy_overlays(copy, TRUE)
 							toner--
-						else
-							c = new(loc)	// shoot out blank sheet of paper
 					busy = TRUE
 					addtimer(CALLBACK(src, .proc/reset_busy), 1.5 SECONDS)
 				else
