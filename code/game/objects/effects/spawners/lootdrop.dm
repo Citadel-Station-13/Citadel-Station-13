@@ -671,7 +671,6 @@
 		/obj/item/weaponcrafting/improvised_parts/trigger_assembly = 12,
 		)
 
-
 /obj/effect/spawner/lootdrop/weapon_parts
 	name = "random weapon parts spawner 20%"
 	lootcount = 1
