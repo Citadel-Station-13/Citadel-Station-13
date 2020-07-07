@@ -13845,7 +13845,6 @@
 /obj/item/lighter,
 /obj/item/clothing/mask/cigarette/cigar/cohiba,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/machinery/suit_storage_unit/ce,
 /turf/open/floor/plasteel,
 /area/crew_quarters/heads/chief)
 "axi" = (
