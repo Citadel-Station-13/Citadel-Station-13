@@ -58,6 +58,4 @@
 		M.adjustToxLoss(-5, TRUE) //heals TOXINLOVERs
 		M.adjustCloneLoss(-5)
 		M.adjustStaminaLoss(-5)
-			return
-	else
 		return
