@@ -259,6 +259,8 @@
 			ADD_TRAIT(occupant, TRAIT_RESISTCOLD, "bluespace_container_cold_resist")
 			ADD_TRAIT(occupant, TRAIT_RESISTHEAT, "bluespace_container_heat_resist")
 			ADD_TRAIT(occupant, TRAIT_NOBREATH, "bluespace_container_no_breath")
+			ADD_TRAIT(occupant, TRAIT_RESISTHIGHPRESSURE, "bluespace_container_resist_high_pressure")
+			ADD_TRAIT(occupant, TRAIT_RESISTLOWPRESSURE, "bluespace_container_resist_low_pressure")
 
 /obj/item/pet_carrier/bluespace/remove_occupant(mob/living/occupant)
 	. = ..()
@@ -266,6 +268,8 @@
 		REMOVE_TRAIT(occupant, TRAIT_RESISTCOLD, "bluespace_container_cold_resist")
 		REMOVE_TRAIT(occupant, TRAIT_RESISTHEAT, "bluespace_container_heat_resist")
 		REMOVE_TRAIT(occupant, TRAIT_NOBREATH, "bluespace_container_no_breath")
+		REMOVE_TRAIT(occupant, TRAIT_RESISTHIGHPRESSURE, "bluespace_container_resist_high_pressure")
+		REMOVE_TRAIT(occupant, TRAIT_RESISTLOWPRESSURE, "bluespace_container_resist_low_pressure")
 
 /obj/item/pet_carrier/bluespace/return_air()
 	if(!occupant_gas_supply)
