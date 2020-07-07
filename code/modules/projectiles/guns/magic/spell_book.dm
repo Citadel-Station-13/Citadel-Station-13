@@ -8,16 +8,10 @@
 	charges = 10 //We start with max pages
 	max_charges = 10
 	variable_charges = FALSE
-	self_attack = FALSE
 
 /obj/item/gun/magic/wand/book/examine(mob/user)
 	. = ..()
 	. += "Has [charges] pages\s remaining."
-
-/obj/item/gun/magic/wand/book/attack(atom/target, mob/living/user)
-	if(target == user)
-		return
-	..()
 
 /obj/item/gun/magic/wand/book/zap_self(mob/living/user)
 	to_chat(user, "The book has [charges] pages\s remaining.</span>")
@@ -53,7 +47,7 @@
 /obj/item/gun/magic/wand/book/page
 	name = "Spell Book of Throw"
 	desc = "A spell book that throws pages at its target!"
-	ammo_type = /obj/item/ammo_casing/magic/book/book
+	ammo_type = /obj/item/ammo_casing/magic/book
 	icon_state = "spellbook_page"
 
 //////////////////////
