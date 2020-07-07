@@ -26,7 +26,7 @@
 	mutant_brain = /obj/item/organ/brain/jelly
 
 /obj/item/organ/brain/jelly
-	name = "slime core"
+	name = "slime nucleus"
 	desc = "A slimey membranous mass from a slime person"
 	icon_state = "brain-slime"
 
