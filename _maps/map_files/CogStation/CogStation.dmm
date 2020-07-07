@@ -22886,13 +22886,6 @@
 "aXr" = (
 /turf/open/floor/plasteel,
 /area/ai_monitored/storage/eva)
-"aXs" = (
-/obj/machinery/camera{
-	c_tag = "Research - Gateway Chamber";
-	network = list("ss13","rd")
-	},
-/turf/open/floor/engine,
-/area/gateway)
 "aXt" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/sign/warning/securearea,
@@ -30341,12 +30334,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/science/mixing)
-"bnl" = (
-/obj/machinery/gateway{
-	dir = 9
-	},
-/turf/open/floor/engine,
-/area/gateway)
 "bnm" = (
 /obj/machinery/atmospherics/pipe/manifold/orange/hidden{
 	dir = 4
@@ -34679,9 +34666,6 @@
 	c_tag = "Research - Gateway Chamber";
 	network = list("ss13","rd")
 	},
-/obj/machinery/gateway{
-	dir = 1
-	},
 /turf/open/floor/engine,
 /area/gateway)
 "bwL" = (
@@ -34691,12 +34675,6 @@
 	},
 /turf/open/floor/plating,
 /area/router)
-"bwM" = (
-/obj/machinery/gateway{
-	dir = 5
-	},
-/turf/open/floor/engine,
-/area/gateway)
 "bwN" = (
 /obj/machinery/atmospherics/pipe/simple/general/visible{
 	dir = 4
@@ -36422,12 +36400,6 @@
 /area/medical/medbay/zone2{
 	name = "Medbay Treatment Center"
 	})
-"bAz" = (
-/obj/machinery/gateway{
-	dir = 8
-	},
-/turf/open/floor/engine,
-/area/gateway)
 "bAA" = (
 /obj/structure/lattice,
 /obj/structure/cable{
@@ -36585,12 +36557,6 @@
 /area/medical/medbay/zone2{
 	name = "Medbay Treatment Center"
 	})
-"bAN" = (
-/obj/machinery/gateway{
-	dir = 4
-	},
-/turf/open/floor/engine,
-/area/gateway)
 "bAO" = (
 /obj/machinery/atmospherics/pipe/simple/supplymain/hidden{
 	dir = 4
@@ -99368,6 +99334,8 @@ aaa
 aaa
 aUk
 bmG
+bmG
+bmG
 cDN
 bmG
 aUk
@@ -99622,8 +99590,10 @@ aaa
 aaa
 aaa
 aUk
+bwK
+bAF
 bmG
-cDM
+cDN
 bmG
 aUk
 bWc
@@ -99877,9 +99847,9 @@ aaa
 aaa
 aaa
 aUk
-bwM
-bAN
-aXs
+bmG
+bmG
+bmG
 cDN
 bmG
 aUk
