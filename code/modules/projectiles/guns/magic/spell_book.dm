@@ -19,19 +19,12 @@
 		return
 	..()
 
-/obj/item/gun/magic/wand/book/afterattack(atom/target, mob/living/user)
-	if(charges == 0)
-		shoot_with_empty_chamber(user)
-		return
-	if(target == user)
-		to_chat(user, "The book has [charges] pages\s remaining.</span>")
-	else
-		. = ..()
-	update_icon()
+/obj/item/gun/magic/wand/book/zap_self(mob/living/user)
+	to_chat(user, "The book has [charges] pages\s remaining.</span>")
 
 /obj/item/gun/magic/wand/book/attackby(obj/item/S, mob/living/user, params)
 	if(!istype(S, /obj/item/paper))
-		return
+		return ..()
 	if(charges < max_charges)
 		charges++
 		recharge_newshot()

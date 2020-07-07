@@ -41,6 +41,7 @@
 
 /obj/item/projectile/magic/spellcard/book/heal
 	damage = 0
+	nodamage  = TRUE
 
 /obj/item/projectile/magic/spellcard/book/heal/on_hit(atom/target, blocked = FALSE)
 	. = ..()
