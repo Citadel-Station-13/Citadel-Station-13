@@ -1,0 +1,8 @@
+author: "EmeraldSundisk"
+delete-after: True
+changes: 
+  - rscadd: "CogStation now has an apothecary"
+  - rscdel: "Removes an outdated note on sleepers"
+  - tweak: "Readjusts CogStation's chemistry lab"
+  - tweak: "Slight area designation adjustments for Robotics"
+  - bugfix: "The arrivals plaque should be readable now"

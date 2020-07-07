@@ -40,7 +40,7 @@
 	. = list()
 	.["playername"] = owner.name
 	.["see_skill_mods"] = see_skill_mods
-	.["admin"] = check_rights(R_DEBUG)
+	.["admin"] = check_rights(R_DEBUG, FALSE)
 
 /datum/skill_holder/ui_act(action, params)
 	. = ..()

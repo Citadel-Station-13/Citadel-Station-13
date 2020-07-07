@@ -227,7 +227,7 @@ mob/visible_message(message, self_message, blind_message, vision_distance = DEFA
 	var/obj/item/W = get_active_held_item()
 
 	if(istype(W))
-		if(equip_to_slot_if_possible(W, slot, FALSE, FALSE, FALSE, TRUE))
+		if(equip_to_slot_if_possible(W, slot, FALSE, FALSE, FALSE, FALSE, TRUE))
 			return TRUE
 
 	if(!W)
