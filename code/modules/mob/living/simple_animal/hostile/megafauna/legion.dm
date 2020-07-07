@@ -139,15 +139,8 @@ Difficulty: Medium
 		if(last_legion)
 			loot = list(/obj/item/staff/storm)
 			elimination = 0
-		else if(prob(20)) //We role magic first
-			loot = list(/obj/structure/closet/crate/necropolis/tendril/magic)
-			return
-		else if(prob(20)) //We role weapons second
-			loot = list(/obj/structure/closet/crate/necropolis/tendril/weapon_armor)
-			return
-		else if(prob(20)) //We role misc third
-			loot = list(/obj/structure/closet/crate/necropolis/tendril/misc)
-			//if you dont role any, your unlucky
+		else if(prob(20))
+			loot = list(/obj/structure/closet/crate/necropolis/tendril/random) //This one spawns a chest that could be any of the three types
 		..()
 
 /obj/item/gps/internal/legion
