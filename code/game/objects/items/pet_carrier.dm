@@ -223,7 +223,7 @@
 	max_occupant_weight = MOB_SIZE_HUMAN //can fit people, like a bluespace bodybag!
 	load_time = 40 //loading things into a jar takes longer than a regular pet carrier
 	entrance_name = "lid"
-	w_class = WEIGHT_CLASS_NORMAL //it can fit in bags, like a bluespace bodybag!
+	w_class = WEIGHT_CLASS_SMALL //it's a jar
 	throw_speed = 3
 	throw_range = 7
 	max_occupants = 1 //far less than a regular carrier or bluespace bodybag, because it can be thrown to release the contents
@@ -231,7 +231,7 @@
 	has_lock_sprites = FALSE //jar doesn't show the regular lock overlay
 	custom_materials = list(/datum/material/glass = 1000, /datum/material/bluespace = 600)
 	escape_time = 10 //half the time of a bluespace bodybag
-	var/datum/gas_mixture/immutable/occupant_gas_supply
+	var/datum/gas_mixture/occupant_gas_supply
 
 /obj/item/pet_carrier/bluespace/update_icon_state()
 	if(open)
@@ -247,27 +247,27 @@
 	playsound(src, "shatter", 70, 1)
 	qdel(src)
 
-/obj/item/pet_carrier/bluespace/add_occupant(mob/living/occupant) //update the gas supply as required
+/obj/item/pet_carrier/bluespace/add_occupant(mob/living/occupant) //update the gas supply as required, this acts like magical internals
 	. = ..()
+	if(!occupant_gas_supply)
+		occupant_gas_supply = new
 	if(isanimal(occupant))
 		var/mob/living/simple_animal/animal = occupant
-		occupant_gas_supply.temperature = animal.minbodytemp
-		occupant_gas_supply.gases[/datum/gas/oxygen] = animal.atmos_requirements["min_oxy"]
-		occupant_gas_supply.gases[/datum/gas/nitrogen] = animal.atmos_requirements["min_n2"]
-		occupant_gas_supply.gases[/datum/gas/plasma] = animal.atmos_requirements["min_tox"]
-		occupant_gas_supply.gases[/datum/gas/carbon_dioxide] = animal.atmos_requirements["min_co2"]
+		occupant_gas_supply.temperature = animal.minbodytemp //simple animals only care about temperature when their turf isnt a location
 	else
-		if(ishuman(occupant))
-			var/mob/living/carbon/human/human = occupant
-			var/obj/item/organ/lungs/lungs = human.getorganslot(ORGAN_SLOT_LUNGS)
-			if(lungs)
-				occupant_gas_supply.temperature = lungs.cold_level_1_threshold
-				occupant_gas_supply.gases[/datum/gas/oxygen] = lungs.safe_oxygen_min
-				occupant_gas_supply.gases[/datum/gas/nitrogen] = lungs.safe_nitro_min
-				occupant_gas_supply.gases[/datum/gas/plasma] = lungs.safe_toxins_min
-				occupant_gas_supply.gases[/datum/gas/carbon_dioxide] = lungs.safe_co2_min
+		if(ishuman(occupant)) //humans require resistance to cold/heat and living in no air while inside, and lose this when outside
+			ADD_TRAIT(occupant, TRAIT_RESISTCOLD, "bluespace_container_cold_resist")
+			ADD_TRAIT(occupant, TRAIT_RESISTHEAT, "bluespace_container_heat_resist")
+			ADD_TRAIT(occupant, TRAIT_NOBREATH, "bluespace_container_no_breath")
 
-/obj/item/pet_carrier/bluespace/handle_internal_lifeform()
+/obj/item/pet_carrier/bluespace/remove_occupant(mob/living/occupant)
+	. = ..()
+	if(ishuman(occupant))
+		REMOVE_TRAIT(occupant, TRAIT_RESISTCOLD, "bluespace_container_cold_resist")
+		REMOVE_TRAIT(occupant, TRAIT_RESISTHEAT, "bluespace_container_heat_resist")
+		REMOVE_TRAIT(occupant, TRAIT_NOBREATH, "bluespace_container_no_breath")
+
+/obj/item/pet_carrier/bluespace/return_air()
 	if(!occupant_gas_supply)
 		occupant_gas_supply = new
 	return occupant_gas_supply
