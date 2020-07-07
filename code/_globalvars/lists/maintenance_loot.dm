@@ -89,8 +89,7 @@ GLOBAL_LIST_INIT(maintenance_loot, list(
 	/obj/effect/spawner/lootdrop/welder_tools = 3,
 	/obj/effect/spawner/lootdrop/low_tools = 5,
 	/obj/item/relic = 3,
-	/obj/effect/spawner/lootdrop/weapon_parts = 2,
-	/obj/effect/spawner/lootdrop/low_weapon_parts = 2,
+	/obj/effect/spawner/lootdrop/weapon_parts = 3,
 	/obj/item/clothing/head/cone = 2,
 	/obj/item/grenade/smokebomb = 2,
 	/obj/item/geiger_counter = 3,
@@ -106,7 +105,7 @@ GLOBAL_LIST_INIT(maintenance_loot, list(
 	/obj/item/storage/secure/briefcase = 3,
 	/obj/item/storage/toolbox/artistic = 2,
 	/obj/item/toy/eightball = 1,
-	/obj/item/reagent_containers/pill/floorpill = 3,
+	/obj/item/reagent_containers/pill/floorpill = 4,
 	/obj/item/reagent_containers/food/snacks/cannedpeaches/maint = 2,
 	/obj/item/storage/daki = 1, //VERY IMPORTANT CIT CHANGE - adds bodypillows to maint
 	/obj/effect/spawner/lootdrop/space_cash = 2,
