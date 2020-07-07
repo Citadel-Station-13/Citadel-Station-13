@@ -231,6 +231,7 @@
 	has_lock_sprites = FALSE //jar doesn't show the regular lock overlay
 	custom_materials = list(/datum/material/glass = 1000, /datum/material/bluespace = 600)
 	escape_time = 10 //half the time of a bluespace bodybag
+	var/datum/gas_mixture/immutable/occupant_gas_supply
 
 /obj/item/pet_carrier/bluespace/update_icon_state()
 	if(open)
@@ -239,18 +240,36 @@
 		icon_state = "bluespace_jar"
 
 /obj/item/pet_carrier/bluespace/throw_impact()
+	. = ..()
 	//delete the item upon impact, releasing the creature inside (this is handled by its deletion)
 	if(occupants.len)
-		src.loc.visible_message("<span class='warning'>The bluespace jar smashes, releasing [occupants[1]]!</span>")
-	qdel(src)
+		loc.visible_message("<span class='warning'>The bluespace jar smashes, releasing [occupants[1]]!</span>")
 	playsound(src, "shatter", 70, 1)
-	..()
+	qdel(src)
+
+/obj/item/pet_carrier/bluespace/add_occupant(mob/living/occupant) //update the gas supply as required
+	. = ..()
+	if(isanimal(occupant))
+		var/mob/living/simple_animal/animal = occupant
+		occupant_gas_supply.temperature = animal.minbodytemp
+		occupant_gas_supply.gases[/datum/gas/oxygen] = animal.atmos_requirements["min_oxy"]
+		occupant_gas_supply.gases[/datum/gas/nitrogen] = animal.atmos_requirements["min_n2"]
+		occupant_gas_supply.gases[/datum/gas/plasma] = animal.atmos_requirements["min_tox"]
+		occupant_gas_supply.gases[/datum/gas/carbon_dioxide] = animal.atmos_requirements["min_co2"]
+	else
+		if(ishuman(occupant))
+			var/mob/living/carbon/human/human = occupant
+			var/obj/item/organ/lungs/lungs = human.getorganslot(ORGAN_SLOT_LUNGS)
+			if(lungs)
+				occupant_gas_supply.temperature = lungs.cold_level_1_threshold
+				occupant_gas_supply.gases[/datum/gas/oxygen] = lungs.safe_oxygen_min
+				occupant_gas_supply.gases[/datum/gas/nitrogen] = lungs.safe_nitro_min
+				occupant_gas_supply.gases[/datum/gas/plasma] = lungs.safe_toxins_min
+				occupant_gas_supply.gases[/datum/gas/carbon_dioxide] = lungs.safe_co2_min
 
 /obj/item/pet_carrier/bluespace/handle_internal_lifeform()
-	var/datum/gas_mixture/GM = new
-	GM.gases[/datum/gas/oxygen] = MOLES_O2STANDARD
-	GM.gases[/datum/gas/nitrogen] = MOLES_N2STANDARD
-	GM.temperature = T20C
-	return GM
+	if(!occupant_gas_supply)
+		occupant_gas_supply = new
+	return occupant_gas_supply
 
 #undef pet_carrier_full
