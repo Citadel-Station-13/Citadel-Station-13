@@ -345,9 +345,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			dat += "<b>Custom job preferences:</b><BR>"
 			dat += "<a href='?_src_=prefs;preference=ai_core_icon;task=input'><b>Preferred AI Core Display:</b> [preferred_ai_core_display]</a><br>"
 			dat += "<a href='?_src_=prefs;preference=sec_dept;task=input'><b>Preferred Security Department:</b> [prefered_security_department]</a><BR></td>"
-			dat += "</tr></table>"
-
-			dat += "<a href='?_src_=prefs;preference=security_records;task=input'><b>Security Records</b></a><br>"
+			dat += "<br>Records</b><br>"
+			dat += "<br><a href='?_src_=prefs;preference=security_records;task=input'><b>Security Records</b></a><br>"
 			if(length_char(security_records) <= 40)
 				if(!length(security_records))
 					dat += "\[...\]"
@@ -356,15 +355,15 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			else
 				dat += "[TextPreview(security_records)]...<BR>"
 
-			dat += "<a href='?_src_=prefs;preference=medical_records;task=input'><b>Medical Records</b></a><br>"
+			dat += "<br><a href='?_src_=prefs;preference=medical_records;task=input'><b>Medical Records</b></a><br>"
 			if(length_char(medical_records) <= 40)
 				if(!length(medical_records))
-					dat += "\[...\]"
+					dat += "\[...\]<br>"
 				else
 					dat += "[medical_records]"
 			else
 				dat += "[TextPreview(medical_records)]...<BR>"
-
+			dat += "</tr></table>"
 
 		//Character Appearance
 		if(2)
