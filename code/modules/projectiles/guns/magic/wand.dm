@@ -8,7 +8,6 @@
 	can_charge = 0
 	max_charges = 100 //100, 50, 50, 34 (max charge distribution by 25%ths)
 	var/variable_charges = 1
-	var/self_attack = TRUE
 
 /obj/item/gun/magic/wand/Initialize()
 	if(prob(75) && variable_charges) //25% chance of listed max charges, 50% chance of 1/2 max charges, 25% chance of 1/3 max charges
@@ -34,7 +33,7 @@
 	if(!charges)
 		shoot_with_empty_chamber(user)
 		return
-	if(target == user && self_attack == TRUE)
+	if(target == user)
 		if(no_den_usage)
 			var/area/A = get_area(user)
 			if(istype(A, /area/wizard_station))
