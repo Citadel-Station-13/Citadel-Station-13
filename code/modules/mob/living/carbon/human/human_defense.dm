@@ -397,22 +397,21 @@
 				informed = TRUE
 			switch(severity)
 				if(1)
-					Stun(200)
 					if(!isrobotic(src))
 						L.receive_damage(0,10)
 						Stun(200)
 					else
-						// robotic species take far less damage and get combat mode lock instead of stuns
+						// robotic species take far less damage and get combat mode lock over longer stuns
 						// this is to stop emps outright killing them, and also because their organs have emp acts
 						L.receive_damage(0,5)
+						Stun(50)
 				if(2)
-					L.receive_damage(0,5)
-					Stun(100)
 					if(!isrobotic(src))
 						L.receive_damage(0,5)
 						Stun(100)
 					else
 						L.receive_damage(0,3)
+						Stun(25) //4x shorter stun because every limb is robotic, and their organs get emp'd, and they get a combat lock
 
 /mob/living/carbon/human/acid_act(acidpwr, acid_volume, bodyzone_hit)
 	var/list/damaged = list()
