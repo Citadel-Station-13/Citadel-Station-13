@@ -1,6 +1,0 @@
-author: "Weblure"
-delete-after: True
-changes: 
-  - bugfix: "Fixed the slowdown formula for small character sprites; you guys don't use custom sprite sizes so just ignore these changes."
-  - bugfix: "Fixed the \"Move it to the threshold\" button; it now does what it says."
-  - tweak: "Reworded some text to be clearer."
