@@ -22,6 +22,7 @@
 	list_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/toxin/carpotoxin = 2, /datum/reagent/consumable/nutriment/vitamin = 2)
 	bitesize = 6
 	filling_color = "#FA8072"
+	cooked_type = /obj/item/reagent_containers/food/snacks/meat/steak/fish
 	tastes = list("fish" = 1)
 	foodtype = MEAT
 
