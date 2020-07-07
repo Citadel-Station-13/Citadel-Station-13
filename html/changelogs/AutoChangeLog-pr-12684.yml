@@ -1,0 +1,9 @@
+author: "Owai-Seek"
+delete-after: True
+changes: 
+  - rscadd: "Margarine, Chili Cheese Fries."
+  - tweak: "Egg Wraps are now categorized under egg foods."
+  - bugfix: "Tuna Sandwich crafting/sprite is now visible."
+  - imageadd: "Icons for chicken, cooked chicken, steak, grilled carp, corndogs"
+  - imageadd: "Icons for chili cheese fries, margarine, BLT sandwich"
+  - imageadd: "(Unused) icons for raw meatballs, and lard"
