@@ -7,6 +7,20 @@
 	icon_state = "necrocrate"
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 
+/obj/structure/closet/crate/necropolis/tendril/random
+	name = "necropolis crate"
+	desc = "A chest for a chest, a head for a head."
+
+/obj/structure/closet/crate/necropolis/tendril/random/PopulateContents()
+	var/loot = rand(1,3)
+	switch(loot)
+		if(1)
+			new /obj/structure/closet/crate/necropolis/tendril/magic(src)
+		if(2)
+			new /obj/structure/closet/crate/necropolis/tendril/weapon_armor(src)
+		if(3)
+			new /obj/structure/closet/crate/necropolis/tendril/misc(src)
+
 /obj/structure/closet/crate/necropolis/tendril
 	desc = "It's watching you suspiciously."
 
