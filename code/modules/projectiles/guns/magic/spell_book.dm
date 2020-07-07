@@ -9,10 +9,6 @@
 	max_charges = 10
 	variable_charges = FALSE
 
-/obj/item/gun/magic/wand/book/examine(mob/user)
-	. = ..()
-	. += "Has [charges] pages\s remaining."
-
 /obj/item/gun/magic/wand/book/zap_self(mob/living/user)
 	to_chat(user, "The book has [charges] pages\s remaining.</span>")
 
@@ -28,7 +24,6 @@
 		process()
 	else
 		to_chat(user, "The [src] has no more room for pages!</span>")
-		return
 
 //////////////////////
 //Spell Book - SPARK//
