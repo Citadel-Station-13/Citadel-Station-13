@@ -89,10 +89,11 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 	var/static/list/one_character_prefix = list(MODE_HEADSET = TRUE, MODE_ROBOT = TRUE, MODE_WHISPER = TRUE)
 
 	var/ic_blocked = FALSE
+	/*
 	if(client && !forced && config.ic_filter_regex && findtext(message, config.ic_filter_regex))
 		//The filter doesn't act on the sanitized message, but the raw message.
 		ic_blocked = TRUE
-
+	*/
 	if(sanitize)
 		message = trim(copytext_char(sanitize(message), 1, MAX_MESSAGE_LEN))
 	if(!message || message == "")

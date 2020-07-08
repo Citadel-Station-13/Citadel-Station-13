@@ -155,14 +155,14 @@ GLOBAL_DATUM_INIT(iconCache, /savefile, new("tmp/iconCache.sav")) //Cache of ico
 /// Used to dynamically add regexes to the browser output. Currently only used by the IC filter.
 /datum/chatOutput/proc/syncRegex()
 	var/list/regexes = list()
-
+	/*
 	if (config.ic_filter_regex)
 		regexes["show_filtered_ic_chat"] = list(
 			config.ic_filter_regex.name,
 			"ig",
 			"<span class='boldwarning'>$1</span>"
 		)
-
+	*/
 	if (regexes.len)
 		ehjax_send(data = list("syncRegex" = regexes))
 
