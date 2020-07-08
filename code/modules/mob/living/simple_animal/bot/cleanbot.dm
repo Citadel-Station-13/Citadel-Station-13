@@ -184,7 +184,7 @@
 		else
 			to_chat(user, "<span class='notice'>The [src] already has this mop!</span>")
 
-	else if(istype(W, /obj/item/twohanded/broom))
+	else if(istype(W, /obj/item/broom))
 		if(bot_core.allowed(user) && open && !CHECK_BITFIELD(upgrades,UPGRADE_CLEANER_BROOM))
 			to_chat(user, "<span class='notice'>You add to \the [src] a broom speeding it up!</span>")
 			upgrades |= UPGRADE_CLEANER_BROOM

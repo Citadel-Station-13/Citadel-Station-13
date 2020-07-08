@@ -89,11 +89,7 @@ GLOBAL_LIST_INIT(dwarf_last, world.file2list("strings/names/dwarf_last.txt")) //
 	//These count in on_life ticks which should be 2 seconds per every increment of 1 in a perfect world.
 	var/dwarf_eth_ticker = 0 //Currently set =< 1, that means this will fire the proc around every 2 seconds
 	var/last_alcohol_spam
-
-/obj/item/organ/dwarfgland/prepare_eat()
-	var/obj/S = ..()
-	S.reagents.add_reagent(/datum/reagent/consumable/ethanol, stored_alcohol/10)
-	return S
+	food_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/consumable/ethanol = 10)
 
 /obj/item/organ/dwarfgland/on_life() //Primary loop to hook into to start delayed loops for other loops..
 	. = ..()

@@ -525,7 +525,7 @@ GLOBAL_LIST_EMPTY(vending_products)
 					if(4) // paralyze this binch
 						// the new paraplegic gets like 4 lines of losing their legs so skip them
 						visible_message("<span class='danger'>[C]'s spinal cord is obliterated with a sickening crunch!</span>", ignored_mobs = list(C))
-						C.gain_trauma(/datum/brain_trauma/severe/paralysis/paraplegic)
+						C.gain_trauma(/datum/brain_trauma/severe/paralysis/spinesnapped)
 					if(5) // skull squish!
 						var/obj/item/bodypart/head/O = C.get_bodypart(BODY_ZONE_HEAD)
 						if(O)
@@ -657,6 +657,10 @@ GLOBAL_LIST_EMPTY(vending_products)
 			untilt(user)
 		return
 	return ..()
+
+/obj/machinery/vending/ui_base_html(html)
+	var/datum/asset/spritesheet/assets = get_asset_datum(/datum/asset/spritesheet/vending)
+	. = replacetext(html, "<!--customheadhtml-->", assets.css_tag())
 
 /obj/machinery/vending/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)

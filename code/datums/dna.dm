@@ -678,7 +678,7 @@
 	holder.update_transform()
 	var/danger = CONFIG_GET(number/threshold_body_size_slowdown)
 	if(features["body_size"] < danger)
-		var/slowdown = 1 + round(danger/features["body_size"], 0.1) * CONFIG_GET(number/body_size_slowdown_multiplier)
+		var/slowdown = (1 - round(features["body_size"] / danger, 0.1)) * CONFIG_GET(number/body_size_slowdown_multiplier)
 		holder.add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/small_stride, TRUE, slowdown)
 	else if(old_size < danger)
 		holder.remove_movespeed_modifier(/datum/movespeed_modifier/small_stride)

@@ -26,6 +26,7 @@
 	var/efficiency
 
 	var/datum/mind/clonemind
+	var/get_clone_mind = CLONEPOD_GET_MIND
 	var/grab_ghost_when = CLONER_MATURE_CLONE
 
 	var/internal_radio = TRUE
@@ -134,43 +135,44 @@
 	return examine(user)
 
 //Start growing a human clone in the pod!
-/obj/machinery/clonepod/proc/growclone(ckey, clonename, ui, mutation_index, mindref, datum/species/mrace, list/features, factions, list/quirks, datum/bank_account/insurance)
+/obj/machinery/clonepod/proc/growclone(ckey, clonename, ui, mutation_index, mindref, blood_type, datum/species/mrace, list/features, factions, list/quirks, datum/bank_account/insurance, list/traumas)
 	if(panel_open)
 		return FALSE
 	if(mess || attempting)
 		return FALSE
-	clonemind = locate(mindref) in SSticker.minds
-	if(!istype(clonemind))	//not a mind
-		return FALSE
-	if(!QDELETED(clonemind.current))
-		if(clonemind.current.stat != DEAD)	//mind is associated with a non-dead body
+	if(get_clone_mind == CLONEPOD_GET_MIND)
+		clonemind = locate(mindref) in SSticker.minds
+		if(!istype(clonemind))	//not a mind
 			return FALSE
-		if(clonemind.current.suiciding) // Mind is associated with a body that is suiciding.
+		if(!QDELETED(clonemind.current))
+			if(clonemind.current.stat != DEAD)	//mind is associated with a non-dead body
+				return FALSE
+			if(clonemind.current.suiciding) // Mind is associated with a body that is suiciding.
+				return FALSE
+			if(AmBloodsucker(clonemind.current)) //If the mind is a bloodsucker
+				return FALSE
+		if(clonemind.active)	//somebody is using that mind
+			if( ckey(clonemind.key)!=ckey )
+				return FALSE
+		else
+			// get_ghost() will fail if they're unable to reenter their body
+			var/mob/dead/observer/G = clonemind.get_ghost()
+			if(!G)
+				return FALSE
+			if(G.suiciding) // The ghost came from a body that is suiciding.
+				return FALSE
+		if(clonemind.damnation_type) //Can't clone the damned.
+			INVOKE_ASYNC(src, .proc/horrifyingsound)
+			mess = TRUE
+			update_icon()
 			return FALSE
-		if(AmBloodsucker(clonemind.current)) //If the mind is a bloodsucker
-			return FALSE
-	if(clonemind.active)	//somebody is using that mind
-		if( ckey(clonemind.key)!=ckey )
-			return FALSE
-	else
-		// get_ghost() will fail if they're unable to reenter their body
-		var/mob/dead/observer/G = clonemind.get_ghost()
-		if(!G)
-			return FALSE
-		if(G.suiciding) // The ghost came from a body that is suiciding.
-			return FALSE
-	if(clonemind.damnation_type) //Can't clone the damned.
-		INVOKE_ASYNC(src, .proc/horrifyingsound)
-		mess = TRUE
-		update_icon()
-		return FALSE
 	current_insurance = insurance
 	attempting = TRUE //One at a time!!
 	countdown.start()
 
 	var/mob/living/carbon/human/H = new /mob/living/carbon/human(src)
 
-	H.hardset_dna(ui, mutation_index, H.real_name, null, mrace, features)
+	H.hardset_dna(ui, mutation_index, H.real_name, blood_type, mrace, features)
 
 	H.easy_randmut(NEGATIVE+MINOR_NEGATIVE) //100% bad mutation. Can be cured with mutadone.
 
@@ -192,7 +194,14 @@
 	ADD_TRAIT(H, TRAIT_NOCRITDAMAGE, CLONING_POD_TRAIT)
 	H.Unconscious(80)
 
-	clonemind.transfer_to(H)
+	if(clonemind)
+		clonemind.transfer_to(H)
+
+	else if(get_clone_mind == CLONEPOD_POLL_MIND)
+		var/list/candidates = pollCandidatesForMob("Do you want to play as [clonename]'s defective clone? (Don't ERP without permission from the original)", null, null, null, 100, H, POLL_IGNORE_CLONE)
+		if(LAZYLEN(candidates))
+			var/mob/C = pick(candidates)
+			H.key = C.key
 
 	if(grab_ghost_when == CLONER_FRESH_CLONE)
 		H.grab_ghost()
@@ -208,6 +217,12 @@
 		for(var/V in quirks)
 			var/datum/quirk/Q = new V(H)
 			Q.on_clone(quirks[V])
+
+		for(var/t in traumas)
+			var/datum/brain_trauma/BT = t
+			var/datum/brain_trauma/cloned_trauma = BT.on_clone()
+			if(cloned_trauma)
+				H.gain_trauma(cloned_trauma, BT.resilience)
 
 		H.set_cloned_appearance()
 		H.give_genitals(TRUE)
@@ -270,9 +285,6 @@
 				else if(isbodypart(I))
 					var/obj/item/bodypart/BP = I
 					BP.attach_limb(mob_occupant)
-
-			//Premature clones may have brain damage.
-			mob_occupant.adjustOrganLoss(ORGAN_SLOT_BRAIN, -((speed_coeff / 2) * dmg_mult))
 
 			use_power(7500) //This might need tweaking.
 
@@ -399,6 +411,8 @@
 		to_chat(occupant, "<span class='notice'><b>There is a bright flash!</b><br><i>You feel like a new being.</i></span>")
 		mob_occupant.flash_act()
 
+	mob_occupant.adjustOrganLoss(ORGAN_SLOT_BRAIN, mob_occupant.getCloneLoss())
+
 	occupant.forceMove(T)
 	update_icon()
 	mob_occupant.domutcheck(1) //Waiting until they're out before possible monkeyizing. The 1 argument forces powers to manifest.
@@ -474,10 +488,9 @@
 		unattached_flesh.Cut()
 
 	H.setCloneLoss(CLONE_INITIAL_DAMAGE)     //Yeah, clones start with very low health, not with random, because why would they start with random health
-	//H.setOrganLoss(ORGAN_SLOT_BRAIN, CLONE_INITIAL_DAMAGE)
-	// In addition to being cellularly damaged and having barely any
-
-	// brain function, they also have no limbs or internal organs.
+	// In addition to being cellularly damaged, they also have no limbs or internal organs.
+	// Applying brainloss is done when the clone leaves the pod, so application of traumas can happen.
+	// based on the level of damage sustained.
 
 	if(!HAS_TRAIT(H, TRAIT_NODISMEMBER))
 		var/static/list/zones = list(BODY_ZONE_R_ARM, BODY_ZONE_L_ARM, BODY_ZONE_R_LEG, BODY_ZONE_L_LEG)
@@ -544,6 +557,17 @@
 		. += occupant_overlay
 		. += "cover-on"
 	. += "panel"
+
+//Experimental cloner; clones a body regardless of the owner's status, letting a ghost control it instead
+/obj/machinery/clonepod/experimental
+	name = "experimental cloning pod"
+	desc = "An ancient cloning pod. It seems to be an early prototype of the experimental cloners used in Nanotrasen Stations."
+	icon = 'icons/obj/machines/cloning.dmi'
+	icon_state = "pod_0"
+	req_access = null
+	circuit = /obj/item/circuitboard/machine/clonepod/experimental
+	internal_radio = FALSE
+	get_clone_mind = CLONEPOD_POLL_MIND
 
 /*
  *	Manual -- A big ol' manual.
