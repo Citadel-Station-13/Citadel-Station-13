@@ -34,7 +34,7 @@
 	QDEL_NULL(wires)
 	return ..()
 
-/obj/machinery/particle_accelerator/control_box/attack_hand(mob/user)
+/obj/machinery/particle_accelerator/control_box/attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	. = ..()
 	if(.)
 		return

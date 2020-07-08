@@ -90,7 +90,7 @@
 /datum/mutation/human/proc/get_visual_indicator()
 	return
 
-/datum/mutation/human/proc/on_attack_hand(atom/target, proximity)
+/datum/mutation/human/proc/on_attack_hand(atom/target, proximity, act_intent, unarmed_attack_flags)
 	return
 
 /datum/mutation/human/proc/on_ranged_attack(atom/target, mouseparams)

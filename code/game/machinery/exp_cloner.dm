@@ -161,7 +161,7 @@
 	else
 		return ..()
 
-/obj/machinery/computer/prototype_cloning/attack_hand(mob/user)
+/obj/machinery/computer/prototype_cloning/attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	if(..())
 		return
 	interact(user)

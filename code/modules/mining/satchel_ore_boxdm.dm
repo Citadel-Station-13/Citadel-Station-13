@@ -35,7 +35,7 @@
 		ui_interact(user)
 	return ..()
 
-/obj/structure/ore_box/attack_hand(mob/user)
+/obj/structure/ore_box/attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	. = ..()
 	if(.)
 		return

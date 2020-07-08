@@ -105,18 +105,13 @@
 
 /mob/living/carbon/human/on_active_parry(mob/living/owner, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return, parry_efficiency, parry_time)
 	var/datum/block_parry_data/D = return_block_parry_datum(block_parry_data)
-	if(parry_efficiency >= D.parry_data["HUMAN_PARRY_MINIMUM_EFFICIENCY"])
-		visible_message("<span class='warning'>[src] strikes back perfectly at [attacker], staggering them!</span>")
-		if(D.parry_data["HUMAN_PARRY_PUNCH"])
-			// snowflake, yay
-			if(ishuman(attacker) && dna?.species)
-				dna.species.harm(src, attacker, mind?.martial_art, TRUE)
-			else
-				var/old = a_intent
-				a_intent = INTENT_HARM
-				UnarmedAttack(attacker)
-				a_intent = old
-		var/mob/living/L = attacker
-		if(istype(L))
-			L.Stagger(D.parry_data["HUMAN_PARRY_STAGGER"])
-	return ..()
+	if(!owner.Adjacent(attacker))
+		return ..()
+	if(parry_efficiency < D.parry_data["HUMAN_PARRY_MINIMUM_EFFICIENCY"])
+		return ..()
+	visible_message("<span class='warning'>[src] strikes back perfectly at [attacker], staggering them!</span>")
+	if(D.parry_data["HUMAN_PARRY_PUNCH"])
+		UnarmedAttack(attacker, TRUE, INTENT_HARM, UNARMED_ATTACK_PARRY)
+	var/mob/living/L = attacker
+	if(istype(L))
+		L.Stagger(D.parry_data["HUMAN_PARRY_STAGGER"])
