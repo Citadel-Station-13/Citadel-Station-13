@@ -1772,6 +1772,9 @@
 /obj/machinery/status_display/ai{
 	pixel_y = 32
 	},
+/obj/machinery/light{
+	dir = 1
+	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/port/aft{
 	name = "Escape Pods"
@@ -2886,6 +2889,14 @@
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
+"eO" = (
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/hallway/primary/port/aft{
+	name = "Escape Pods"
+	})
 "eP" = (
 /obj/machinery/conveyor{
 	dir = 8;
@@ -3790,6 +3801,7 @@
 /obj/machinery/status_display/ai{
 	pixel_y = -32
 	},
+/obj/machinery/light,
 /turf/open/floor/plasteel,
 /area/hallway/primary/port/aft{
 	name = "Escape Pods"
@@ -3801,6 +3813,13 @@
 /obj/structure/lattice,
 /turf/open/space,
 /area/space/nearstation)
+"gz" = (
+/obj/effect/turf_decal/delivery,
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/hallway/secondary/entry)
 "gA" = (
 /obj/effect/turf_decal/tile/purple,
 /obj/effect/turf_decal/tile/purple{
@@ -4054,7 +4073,6 @@
 	req_access_txt = "11";
 	pixel_y = 24
 	},
-/obj/effect/landmark/start/station_engineer,
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "gY" = (
@@ -5902,6 +5920,7 @@
 	},
 /obj/machinery/power/apc/highcap/fifteen_k{
 	areastring = "/area/engine/engineering";
+	dir = 4;
 	name = "Engineering APC";
 	pixel_x = 24;
 	pixel_y = 5
@@ -6363,9 +6382,6 @@
 "kL" = (
 /obj/structure/table,
 /obj/item/storage/firstaid/regular,
-/obj/machinery/light{
-	dir = 8
-	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/port/aft{
 	name = "Escape Pods"
@@ -7019,6 +7035,11 @@
 /area/science/xenobiology{
 	name = "Science Outpost"
 	})
+"lV" = (
+/obj/effect/turf_decal/delivery,
+/obj/machinery/light,
+/turf/open/floor/plasteel,
+/area/hallway/secondary/entry)
 "lW" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable,
@@ -9422,6 +9443,7 @@
 	pixel_x = -29;
 	pixel_y = 25
 	},
+/obj/machinery/vending/wardrobe/atmos_wardrobe,
 /turf/open/floor/plasteel/checker,
 /area/engine/atmos)
 "qk" = (
@@ -9789,6 +9811,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/machinery/light,
 /turf/open/floor/plasteel,
 /area/hallway/primary/port/aft{
 	name = "Escape Pods"
@@ -9875,6 +9898,9 @@
 	dir = 4;
 	name = "Station Intercom (General)";
 	pixel_x = -31
+	},
+/obj/machinery/light{
+	dir = 8
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/port/aft{
@@ -11641,18 +11667,16 @@
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/turret_protected/ai)
 "uf" = (
-/obj/machinery/vending/wardrobe/atmos_wardrobe,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/tile/yellow{
 	dir = 8
 	},
 /obj/effect/turf_decal/tile/yellow{
 	dir = 4
 	},
-/turf/open/floor/plasteel/checker,
+/obj/machinery/modular_computer/console/preset/engineering{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
 /area/engine/engineering)
 "ug" = (
 /obj/machinery/door/firedoor,
@@ -14489,6 +14513,13 @@
 	},
 /turf/open/floor/plasteel/checker,
 /area/engine/atmos)
+"zm" = (
+/obj/effect/turf_decal/delivery,
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/hallway/secondary/exit)
 "zn" = (
 /obj/machinery/air_sensor/atmos/nitrous_tank,
 /turf/open/floor/engine/n2o,
@@ -16888,7 +16919,11 @@
 /obj/item/clothing/gloves/color/yellow,
 /obj/item/clothing/gloves/color/yellow,
 /obj/item/clothing/gloves/color/yellow,
-/obj/item/clothing/gloves/color/yellow,
+/obj/item/storage/belt/utility,
+/obj/item/storage/belt/utility,
+/obj/item/storage/belt/utility,
+/obj/item/storage/belt/utility,
+/obj/item/storage/belt/utility,
 /turf/open/floor/plasteel/dark,
 /area/engine/engineering)
 "Dr" = (
@@ -19177,7 +19212,7 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/yellow,
-/obj/machinery/modular_computer/console/preset/engineering,
+/obj/effect/landmark/start/station_engineer,
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "GY" = (
@@ -19968,6 +20003,11 @@
 /area/science/xenobiology{
 	name = "Science Outpost"
 	})
+"IC" = (
+/obj/effect/turf_decal/delivery,
+/obj/machinery/light,
+/turf/open/floor/plasteel,
+/area/hallway/secondary/exit)
 "ID" = (
 /obj/effect/landmark/blobstart,
 /turf/open/floor/plating,
@@ -22923,6 +22963,7 @@
 /obj/structure/cable{
 	icon_state = "4-8"
 	},
+/obj/machinery/light,
 /turf/open/floor/plasteel,
 /area/hallway/primary/port/aft{
 	name = "Escape Pods"
@@ -24253,6 +24294,9 @@
 /obj/machinery/light{
 	dir = 8
 	},
+/obj/item/storage/belt/utility,
+/obj/item/storage/belt/utility,
+/obj/item/storage/belt/utility,
 /obj/item/storage/belt/utility,
 /obj/item/storage/firstaid/regular,
 /turf/open/floor/plasteel,
@@ -26865,6 +26909,9 @@
 /obj/machinery/status_display/evac{
 	pixel_y = 32
 	},
+/obj/machinery/light{
+	dir = 1
+	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/port/aft{
 	name = "Escape Pods"
@@ -29425,7 +29472,8 @@
 	height = 5;
 	id = "ai_sat";
 	name = "AI Access";
-	width = 7
+	width = 7;
+	dir = 2
 	},
 /turf/open/space/basic,
 /area/space)
@@ -56051,13 +56099,13 @@ uk
 uk
 uk
 Pd
-UO
+gz
 Pd
 uk
 uk
 uk
 Pd
-UO
+lV
 Pd
 uk
 uk
@@ -65895,14 +65943,14 @@ WN
 DN
 eJ
 fm
+eO
 fm
 fm
 fm
 fm
 fm
 fm
-fm
-fm
+eO
 fm
 BB
 eC
@@ -68385,7 +68433,7 @@ uk
 Bg
 Bg
 UM
-Oz
+zm
 UM
 Oz
 wT
@@ -68395,7 +68443,7 @@ Bg
 wT
 Oz
 wT
-Oz
+IC
 wT
 Bg
 Bg
@@ -87628,11 +87676,11 @@ XM
 YT
 jW
 Zi
-uk
-uk
-uk
-uk
 Zt
+uk
+uk
+uk
+uk
 uk
 uk
 uk
