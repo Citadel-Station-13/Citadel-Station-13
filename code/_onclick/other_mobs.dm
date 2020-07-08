@@ -104,7 +104,7 @@
 /*
 	Animals & All Unspecified
 */
-/mob/living/UnarmedAttackUnarmedAttack(atom/A, proximity, intent = a_intent, flags = NONE)
+/mob/living/UnarmedAttack(atom/A, proximity, intent = a_intent, flags = NONE)
 	A.attack_animal(src, intent, flags)
 
 /atom/proc/attack_animal(mob/user)
