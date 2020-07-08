@@ -83,6 +83,7 @@
 /obj/item/reagent_containers/food/snacks/meat/slab/chicken
 	name = "chicken meat"
 	desc = "A slab of raw chicken. Remember to wash your hands!"
+	icon_state = "chickenbreast"
 	cooked_type = /obj/item/reagent_containers/food/snacks/meat/steak/chicken
 	slice_path = /obj/item/reagent_containers/food/snacks/meat/rawcutlet/chicken
 	tastes = list("chicken" = 1)
@@ -341,7 +342,13 @@
 
 /obj/item/reagent_containers/food/snacks/meat/steak/chicken
 	name = "chicken steak" //Can you have chicken steaks? Maybe this should be renamed once it gets new sprites.
+	icon_state = "chickenbreast_cooked"
 	tastes = list("chicken" = 1)
+
+/obj/item/reagent_containers/food/snacks/meat/steak/fish
+	name = "fish fillet"
+	icon_state = "grilled_carp_slice"
+	tastes = list("charred sushi" = 1)
 
 /obj/item/reagent_containers/food/snacks/meat/steak/plain
 	foodtype = MEAT
@@ -361,6 +368,7 @@
 
 /obj/item/reagent_containers/food/snacks/meat/steak/bear
 	name = "bear steak"
+	icon_state = "bearcook"
 	tastes = list("meat" = 1, "salmon" = 1)
 
 /obj/item/reagent_containers/food/snacks/meat/steak/xeno
