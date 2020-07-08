@@ -33839,7 +33839,7 @@
 	dir = 4
 	},
 /turf/open/space/basic,
-/area/space)
+/area/space/nearstation)
 "bAJ" = (
 /obj/structure/transit_tube/horizontal,
 /obj/structure/window/reinforced/fulltile,
@@ -34509,6 +34509,7 @@
 /area/science/xenobiology)
 "bBV" = (
 /obj/structure/transit_tube/curved,
+/obj/structure/lattice/catwalk,
 /turf/open/space,
 /area/space/nearstation)
 "bBW" = (
@@ -39725,13 +39726,19 @@
 	},
 /area/chapel/dock)
 "bMy" = (
-/obj/structure/window/reinforced{
-	dir = 8;
-	layer = 2.9
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
 	},
-/obj/structure/lattice,
-/turf/open/space,
-/area/space/nearstation)
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/turf/open/floor/plasteel/dark,
+/area/chapel/dock)
 "bMA" = (
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/engine,
@@ -44378,19 +44385,10 @@
 /turf/open/floor/plasteel/dark,
 /area/chapel/main/monastery)
 "bWX" = (
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
+/obj/effect/turf_decal/sand,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/turf/open/floor/plasteel/dark,
-/area/chapel/dock)
+/turf/open/floor/plasteel,
+/area/chapel/asteroid/monastery)
 "bWZ" = (
 /turf/open/floor/plating{
 	icon_state = "panelscorched"
@@ -53025,10 +53023,9 @@
 /turf/open/floor/plasteel/dark,
 /area/chapel/office)
 "dpc" = (
-/obj/effect/turf_decal/sand,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/turf/open/floor/plasteel,
-/area/chapel/asteroid/monastery)
+/turf/open/floor/carpet,
+/area/chapel/main/monastery)
 "dps" = (
 /obj/machinery/status_display/ai,
 /turf/closed/wall,
@@ -53392,10 +53389,6 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/department/engine)
-"eit" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/turf/open/floor/carpet,
-/area/chapel/main/monastery)
 "eiV" = (
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple{
 	dir = 4
@@ -56049,10 +56042,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/aft)
-"koE" = (
-/obj/structure/lattice,
-/turf/open/space/basic,
-/area/space)
 "kpK" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 5
@@ -79111,25 +79100,25 @@ bKc
 bOy
 bMt
 bLs
-bWX
+bMy
 bPo
-dpc
-dpc
-dpc
-dpc
-dpc
-dpc
-dpc
-dpc
-dpc
+bWX
+bWX
+bWX
+bWX
+bWX
+bWX
+bWX
+bWX
+bWX
 cek
 cdx
-eit
-eit
-eit
-eit
-eit
-eit
+dpc
+dpc
+dpc
+dpc
+dpc
+dpc
 cbO
 ccF
 cdx
@@ -79621,7 +79610,7 @@ aaa
 bGI
 bHM
 bHM
-bHM
+bNw
 bLq
 bMv
 bNw
@@ -80910,7 +80899,7 @@ bIY
 aht
 aht
 bNB
-bMy
+abI
 abI
 aby
 abI
@@ -81679,7 +81668,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+aht
 amC
 aaa
 aht
@@ -81935,8 +81924,8 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
+aht
+aht
 amB
 aht
 aht
@@ -82185,10 +82174,10 @@ aaa
 aaa
 aaa
 aht
-aht
-aht
-aht
-aht
+aaa
+aaa
+aaa
+aaa
 aht
 aht
 aht
@@ -82435,12 +82424,12 @@ bon
 aZx
 aaa
 aaa
-koE
 aaa
 aaa
 aaa
 aaa
 aaa
+aht
 bBV
 bDf
 bDf
@@ -82696,7 +82685,7 @@ aZx
 aZx
 aZx
 aaa
-aaa
+aht
 bAI
 abI
 abI
