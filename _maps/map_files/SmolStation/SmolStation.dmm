@@ -7657,6 +7657,9 @@
 	lootcount = 2;
 	name = "2maintenance loot spawner"
 	},
+/obj/machinery/light/small{
+	dir = 8
+	},
 /turf/open/floor/plating,
 /area/maintenance/fore)
 "nc" = (
@@ -18410,6 +18413,17 @@
 /obj/structure/window/reinforced,
 /turf/open/space,
 /area/space/nearstation)
+"FH" = (
+/obj/structure/rack,
+/obj/effect/spawner/lootdrop/maintenance{
+	lootcount = 2;
+	name = "2maintenance loot spawner"
+	},
+/obj/machinery/light/small{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/maintenance/starboard/fore)
 "FI" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -66131,7 +66145,7 @@ vX
 nC
 pW
 YM
-hd
+FH
 hd
 II
 II
