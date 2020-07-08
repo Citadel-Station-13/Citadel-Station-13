@@ -2322,14 +2322,16 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					var/min = CONFIG_GET(number/body_size_min)
 					var/max = CONFIG_GET(number/body_size_max)
 					var/danger = CONFIG_GET(number/threshold_body_size_slowdown)
-					var/new_body_size = input(user, "Choose your desired sprite size:\n([min*100]%-[max*100]%), Warning: May make your character look distorted[danger > min ? ", and an exponential slowdown will occur for those smaller than [danger*100]%!" : "!"]", "Character Preference", features["body_size"]*100) as num|null
+					var/new_body_size = input(user, "Choose your desired sprite size: ([min*100]%-[max*100]%)\nWarning: This may make your character look distorted[danger > min ? "! Additionally, a proportional movement speed penalty will be applied to characters smaller than [danger*100]%." : "!"]", "Character Preference", features["body_size"]*100) as num|null
 					if (new_body_size)
 						new_body_size = clamp(new_body_size * 0.01, min, max)
 						var/dorfy
-						if(danger > new_body_size)
-							dorfy = alert(user, "The chosen size appears to be smaller than the threshold of [danger*100]%, which will lead to an added exponential slowdown. Are you sure about that?", "Dwarfism Alert", "Yes", "Move it to the threshold", "No")
-							if(!dorfy || dorfy == "Move it above the threshold")
+						if((new_body_size + 0.01) < danger) // Adding 0.01 as a dumb fix to prevent the warning message from appearing when exactly at threshold... Not sure why that happens in the first place.
+							dorfy = alert(user, "You have chosen a size below the slowdown threshold of [danger*100]%. For balancing purposes, the further you go below this percentage, the slower your character will be. Do you wish to keep this size?", "Speed Penalty Alert", "Yes", "Move it to the threshold", "No")
+							if(dorfy == "Move it to the threshold")
 								new_body_size = danger
+							if(!dorfy) //Aborts if this var is somehow empty
+								return
 						if(dorfy != "No")
 							features["body_size"] = new_body_size
 				if("tongue")

@@ -377,7 +377,7 @@
 	var/turf/ST = null
 	var/falling = 0
 	var/damage = damage_roll(A,D)
-	
+
 	for (var/obj/O in oview(1, A))
 		if (O.density == 1)
 			if (O == A)
@@ -472,12 +472,10 @@
 	var/datum/martial_art/wrestling/style = new
 
 /obj/item/storage/belt/champion/wrestling/equipped(mob/user, slot)
-	if(!ishuman(user))
-		return
-	if(slot == SLOT_BELT)
+	. = ..()
+	if(ishuman(user) && slot == SLOT_BELT)
 		var/mob/living/carbon/human/H = user
 		style.teach(H,1)
-	return
 
 /obj/item/storage/belt/champion/wrestling/dropped(mob/user)
 	. = ..()

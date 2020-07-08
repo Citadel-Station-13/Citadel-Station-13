@@ -33,6 +33,10 @@ GLOBAL_LIST_INIT_TYPED(skill_datums, /datum/skill, init_skill_datums())
 	var/base_multiplier = 1
 	/// Value added to the base multiplier depending on overall competency compared to maximum value/level.
 	var/competency_multiplier = 1
+	/// Experience gain multiplier gained from using items.
+	var/item_skill_gain_multi = 1
+	/// Skill gain quantisation
+	var/skill_gain_quantisation = 0.1
 	/// A list of ways this skill can affect or be affected through actions and skill modifiers.
 	var/list/skill_traits = list(SKILL_SANITY, SKILL_INTELLIGENCE)
 	/// Index of this skill in the UI
@@ -107,6 +111,10 @@ GLOBAL_LIST_INIT_TYPED(skill_datums, /datum/skill, init_skill_datums())
 	var/max_value = 100
 	/// Min value of this skill
 	var/min_value = 0
+
+/datum/skill/numerical/New()
+	..()
+	skill_gain_quantisation = item_skill_gain_multi = item_skill_gain_multi * (max_value - min_value) * STD_NUM_SKILL_ITEM_GAIN_MULTI
 
 /datum/skill/numerical/sanitize_value(new_value)
 	return clamp(new_value, min_value, max_value)

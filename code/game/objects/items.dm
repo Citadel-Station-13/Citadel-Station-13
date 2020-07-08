@@ -68,6 +68,7 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 	var/click_delay = CLICK_CD_MELEE
 
 	var/slot_flags = 0		//This is used to determine on which slots an item can fit.
+	var/current_equipped_slot
 	pass_flags = PASSTABLE
 	pressure_resistance = 4
 	var/obj/item/master = null
@@ -178,6 +179,11 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 			hitsound = 'sound/items/welder.ogg'
 		if(damtype == "brute")
 			hitsound = "swing_hit"
+
+	if(used_skills)
+		for(var/path in used_skills)
+			var/datum/skill/S = GLOB.skill_datums[path]
+			LAZYADD(used_skills[path], S.skill_traits)
 
 /obj/item/Destroy()
 	item_flags &= ~DROPDEL	//prevent reqdels
@@ -315,6 +321,10 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 		return
 	if(anchored)
 		return
+	if(loc == user && current_equipped_slot && current_equipped_slot != SLOT_HANDS)
+		if(current_equipped_slot in user.check_obscured_slots())
+			to_chat(src, "<span class='warning'>You are unable to unequip that while wearing other garments over it!</span>")
+			return FALSE
 
 	if(resistance_flags & ON_FIRE)
 		var/mob/living/carbon/C = user
@@ -336,7 +346,7 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 				C.update_damage_overlays()
 			return
 
-	if(acid_level > 20 && !ismob(loc))// so we can still remove the clothes on us that have acid.
+	if(acid_level > 20 && ismob(loc))// so we can still remove the clothes on us that have acid.
 		var/mob/living/carbon/C = user
 		if(istype(C))
 			if(!C.gloves || (!(C.gloves.resistance_flags & (UNACIDABLE|ACID_PROOF))))
@@ -379,6 +389,11 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 		return
 	if(anchored)
 		return
+	if(loc == user && current_equipped_slot && current_equipped_slot != SLOT_HANDS)
+		if(current_equipped_slot in user.check_obscured_slots())
+			to_chat(src, "<span class='warning'>You are unable to unequip that while wearing other garments over it!</span>")
+			return FALSE
+
 
 	SEND_SIGNAL(loc, COMSIG_TRY_STORAGE_TAKE, src, user.loc, TRUE)
 
@@ -423,6 +438,7 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 
 /obj/item/proc/dropped(mob/user)
 	SHOULD_CALL_PARENT(TRUE)
+	current_equipped_slot = null
 	for(var/X in actions)
 		var/datum/action/A = X
 		A.Remove(user)
@@ -470,7 +486,9 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 // for items that can be placed in multiple slots
 // note this isn't called during the initial dressing of a player
 /obj/item/proc/equipped(mob/user, slot)
+	SHOULD_CALL_PARENT(TRUE)
 	. = SEND_SIGNAL(src, COMSIG_ITEM_EQUIPPED, user, slot)
+	current_equipped_slot = slot
 	if(!(. & COMPONENT_NO_GRANT_ACTIONS))
 		for(var/X in actions)
 			var/datum/action/A = X
@@ -835,7 +853,7 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 
 // Called when a mob tries to use the item as a tool.
 // Handles most checks.
-/obj/item/proc/use_tool(atom/target, mob/living/user, delay, amount=0, volume=0, datum/callback/extra_checks, skill_gain_mult = 1, max_level = INFINITY)
+/obj/item/proc/use_tool(atom/target, mob/living/user, delay, amount=0, volume=0, datum/callback/extra_checks, skill_gain_mult = STD_USE_TOOL_MULT)
 	// No delay means there is no start message, and no reason to call tool_start_check before use_tool.
 	// Run the start check here so we wouldn't have to call it manually.
 	if(!delay && !tool_start_check(user, amount))
@@ -880,7 +898,8 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 		for(var/skill in used_skills)
 			if(!(SKILL_TRAINING_TOOL in used_skills[skill]))
 				continue
-			user.mind.auto_gain_experience(skill, gain*skill_gain_mult, GET_STANDARD_LVL(max_level))
+			var/datum/skill/S = GLOB.skill_datums[skill]
+			user.mind.auto_gain_experience(skill, gain*skill_gain_mult*S.item_skill_gain_multi)
 
 	return TRUE
 
