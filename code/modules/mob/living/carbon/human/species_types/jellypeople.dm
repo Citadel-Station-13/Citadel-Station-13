@@ -24,6 +24,13 @@
 	burnmod = 0.5 // = 1/2x generic burn damage
 	languagewhitelist = list("Slime") //Skyrat change - species language whitelist
 	species_language_holder = /datum/language_holder/jelly
+	mutant_brain = /obj/item/organ/brain/jelly
+
+/obj/item/organ/brain/jelly
+	name = "slime nucleus"
+	desc = "A slimey membranous mass from a slime person"
+	icon_state = "brain-slime"
+
 
 /datum/species/jelly/on_species_loss(mob/living/carbon/C)
 	if(regenerate_limbs)

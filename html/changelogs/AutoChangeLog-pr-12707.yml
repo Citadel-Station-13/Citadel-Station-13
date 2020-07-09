@@ -1,0 +1,5 @@
+author: "Chiirno"
+delete-after: True
+changes: 
+  - code_imp: "Gave jellypeople a unique brain object /obj/item/organ/brain/jelly"
+  - imageadd: "added an icon for jellypeople brains."
