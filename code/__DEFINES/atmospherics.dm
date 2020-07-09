@@ -290,7 +290,7 @@ GLOBAL_VAR(atmos_extools_initialized) // this must be an uninitialized (null) on
 		var/result = call(EXTOOLS,"init_monstermos")();\
 		if(result != "ok") {CRASH(result);}\
 	} else {\
-		CRASH("byond-extools.dll does not exist!");\
+		CRASH("[EXTOOLS] does not exist!");\
 	}\
 }
 
