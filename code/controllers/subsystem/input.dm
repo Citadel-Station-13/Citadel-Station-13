@@ -53,7 +53,7 @@ SUBSYSTEM_DEF(input)
 		classic_ctrl_override_keys += ascii2text(i)
 	// let's play the game of clientside bind overrides!
 	classic_ctrl_override_keys -= list("T", "O", "M", "L")
-	macroset_classic_input["Ctrl+T"] = "say"
+	macroset_classic_input["Ctrl+T"] = "say_indicator"
 	macroset_classic_input["Ctrl+O"] = "ooc"
 	macroset_classic_input["Ctrl+L"] = "looc"
 	// let's play the list iteration game x2
@@ -71,7 +71,7 @@ SUBSYSTEM_DEF(input)
 	//  conflicts occur with something like say indicator vs say), we're going to snowflake this anyways
 	var/list/hard_binds = list(
 		"O" = "ooc",
-		"T" = "say",
+		"T" = "say_indicator",
 		"L" = "looc",
 		"M" = "me"
 		)
