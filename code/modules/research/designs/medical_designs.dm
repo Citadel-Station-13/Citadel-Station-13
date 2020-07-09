@@ -212,6 +212,16 @@
 	category = list("Medical Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
 
+/datum/design/chem_pack
+	name = "Intravenous Medicine Bag"
+	desc = "A plastic pressure bag for IV administration of drugs."
+	id = "chem_pack"
+	build_type = PROTOLATHE
+	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
+	materials = list(/datum/material/plastic = 1500)
+	build_path = /obj/item/reagent_containers/chem_pack
+	category = list("Medical Designs")
+
 /datum/design/cloning_disk
 	name = "Cloning Data Disk"
 	desc = "Produce additional disks for storing genetic data."
@@ -238,7 +248,7 @@
 
 /datum/design/bodybag
 	name = "Body Bag"
-	desc = "A normal body bag used for storge of dead crew."
+	desc = "A normal body bag used for storage of dead crew."
 	id = "bodybag"
 	build_type = PROTOLATHE
 	materials = list(/datum/material/plastic = 4000)

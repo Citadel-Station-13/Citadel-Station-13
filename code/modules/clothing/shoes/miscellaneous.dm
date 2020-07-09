@@ -45,6 +45,7 @@
 	desc = "A pair of rather plain wooden sandals."
 	name = "sandals"
 	icon_state = "wizard"
+	custom_materials = list(/datum/material/wood = MINERAL_MATERIAL_AMOUNT * 0.5)
 	strip_delay = 50
 	equip_delay_other = 50
 	permeability_coefficient = 0.9
@@ -71,7 +72,7 @@
 	equip_delay_other = 50
 	resistance_flags = NONE
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 40, "acid" = 75)
-	custom_price = 600
+	custom_price = PRICE_ABOVE_EXPENSIVE
 
 /obj/item/clothing/shoes/galoshes/dry
 	name = "absorbent galoshes"
@@ -383,7 +384,6 @@
 /obj/item/clothing/shoes/cowboyboots
 	name = "cowboy boots"
 	desc = "A standard pair of brown cowboy boots."
-	custom_price = 60 //remember to replace these lame cosmetics with tg's YEEEEHAW counterparts.
 	icon_state = "cowboyboots"
 
 /obj/item/clothing/shoes/cowboyboots/black

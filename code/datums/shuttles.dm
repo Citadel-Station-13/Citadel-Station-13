@@ -162,6 +162,10 @@
 	port_id = "pirate"
 	can_be_bought = FALSE
 
+/datum/map_template/shuttle/hunter
+	port_id = "hunter"
+	can_be_bought = FALSE
+
 /datum/map_template/shuttle/ruin //For random shuttles in ruins
 	port_id = "ruin"
 	can_be_bought = FALSE
@@ -169,6 +173,11 @@
 /datum/map_template/shuttle/snowdin
 	port_id = "snowdin"
 	can_be_bought = FALSE
+
+/datum/map_template/shuttle/snow_taxi
+	port_id = "snow"
+	can_be_bought = FALSE
+	suffix = "taxi"
 
 // Shuttles start here:
 
@@ -453,6 +462,10 @@
 	suffix = "whiteship_pod"
 	name = "Salvage Pod"
 
+/datum/map_template/shuttle/whiteship/cog
+	suffix = "cog"
+	name = "NT Prisoner Transport"
+
 /datum/map_template/shuttle/cargo/box
 	suffix = "box"
 	name = "supply shuttle (Box)"
@@ -557,6 +570,10 @@
 	suffix = "cog"
 	name = "arrival shuttle (Cog)"
 
+/datum/map_template/shuttle/arrival/snaxi
+	suffix = "snaxi"
+	name = "arrival shuttle (Snaxi)"
+
 /datum/map_template/shuttle/aux_base/default
 	suffix = "default"
 	name = "auxilliary base (Default)"
@@ -604,3 +621,15 @@
 /datum/map_template/shuttle/snowdin/excavation
 	suffix = "excavation"
 	name = "Snowdin Excavation Elevator"
+
+/datum/map_template/shuttle/hunter/space_cop
+	suffix = "space_cop"
+	name = "Police Spacevan"
+
+/datum/map_template/shuttle/hunter/russian
+	suffix = "russian"
+	name = "Russian Cargo Ship"
+
+/datum/map_template/shuttle/hunter/bounty
+	suffix = "bounty"
+	name = "Bounty Hunter Ship"

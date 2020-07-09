@@ -1,10 +1,23 @@
 /mob/living/Moved()
 	. = ..()
 	update_turf_movespeed(loc)
-	if(is_shifted)
-		is_shifted = FALSE
-		pixel_x = get_standard_pixel_x_offset(lying)
-		pixel_y = get_standard_pixel_y_offset(lying)
+	//Hide typing indicator if we move.
+	clear_typing_indicator()
+	update_pixel_shifting(TRUE)
+
+/mob/living/setDir(newdir, ismousemovement)
+	. = ..()
+	if(ismousemovement)
+		update_pixel_shifting()
+
+/mob/living/proc/update_pixel_shifting(moved = FALSE)
+	if(combat_flags & COMBAT_FLAG_ACTIVE_BLOCKING)
+		animate(src, pixel_x = get_standard_pixel_x_offset(), pixel_y = get_standard_pixel_y_offset(), time = 2.5, flags = ANIMATION_END_NOW)
+	else if(moved)
+		if(is_shifted)
+			is_shifted = FALSE
+			pixel_x = get_standard_pixel_x_offset(lying)
+			pixel_y = get_standard_pixel_y_offset(lying)
 
 /mob/living/CanPass(atom/movable/mover, turf/target)
 	if((mover.pass_flags & PASSMOB))

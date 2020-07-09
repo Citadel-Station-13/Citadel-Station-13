@@ -177,7 +177,7 @@
 	if(owner.current.blood_volume < BLOOD_VOLUME_BAD / 2)
 		owner.current.blur_eyes(8 - 8 * (owner.current.blood_volume / BLOOD_VOLUME_BAD))
 	// Nutrition
-	owner.current.set_nutrition(min(owner.current.blood_volume, NUTRITION_LEVEL_FULL)) //The amount of blood is how full we are.
+	owner.current.set_nutrition(min(owner.current.blood_volume, NUTRITION_LEVEL_FED)) //The amount of blood is how full we are.
 	//A bit higher regeneration based on blood volume
 	if(owner.current.blood_volume < 700)
 		additional_regen = 0.4
@@ -216,8 +216,8 @@
 				//	for (var/datum/action/bloodsucker/masquerade/P in powers)
 				//		P.Deactivate()
 		//	TEMP DEATH
-	var/total_brute = owner.current.getBruteLoss()
-	var/total_burn = owner.current.getFireLoss()
+	var/total_brute = owner.current.getBruteLoss_nonProsthetic()
+	var/total_burn = owner.current.getFireLoss_nonProsthetic()
 	var/total_toxloss = owner.current.getToxLoss() //This is neater than just putting it in total_damage
 	var/total_damage = total_brute + total_burn + total_toxloss
 	// Died? Convert to Torpor (fake death)

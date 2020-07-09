@@ -1,6 +1,6 @@
 /datum/skill/level/job/wiring
 	name = "Wiring"
-	desc = "How proficient and knowledged you are at wiring beyond laying cables on the floor."
+	desc = "How proficient and knowledged you are at wiring beyond making post-futuristic wire art."
 	name_color = COLOR_PALE_ORANGE
-	competency_thresholds = list(JOB_SKILL_BASIC, JOB_SKILL_EXPERT, JOB_SKILL_MASTER)
-	skill_flags = SKILL_USE_MOOD|SKILL_TRAIN_MOOD|SKILL_USE_TOOL|SKILL_TRAINING_TOOL
+	skill_traits = list(SKILL_SANITY, SKILL_INTELLIGENCE, SKILL_USE_TOOL, SKILL_TRAINING_TOOL)
+	ui_category = SKILL_UI_CAT_ENG

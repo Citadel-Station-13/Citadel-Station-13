@@ -168,11 +168,13 @@
 
 /datum/config_entry/flag/join_with_mutant_humans	//players can pick mutant bodyparts for humans before joining the game
 
-/datum/config_entry/flag/no_summon_guns	//No
+/datum/config_entry/flag/no_summon_guns		//No
 
 /datum/config_entry/flag/no_summon_magic	//Fun
 
 /datum/config_entry/flag/no_summon_events	//Allowed
+
+/datum/config_entry/flag/no_summon_traumas	//!
 
 /datum/config_entry/flag/no_intercept_report	//Whether or not to send a communications intercept report roundstart. This may be overridden by gamemodes.
 
@@ -435,6 +437,10 @@
 	config_entry_value = 64
 	min_val = 0
 
+/datum/config_entry/number/ratcap
+	config_entry_value = 64
+	min_val = 0
+
 /datum/config_entry/flag/disable_stambuffer
 
 /datum/config_entry/keyed_list/box_random_engine
@@ -507,3 +513,20 @@
 
 //Allows players to set a hexadecimal color of their choice as skin tone, on top of the standard ones.
 /datum/config_entry/flag/allow_custom_skintones
+
+///Initial loadout points
+/datum/config_entry/number/initial_gear_points
+	config_entry_value = 10
+
+/**
+  * Enables the FoV component, which hides objects and mobs behind the parent from their sight, unless they turn around, duh.
+  * Camera mobs, AIs, ghosts and some other are of course exempt from this. This also doesn't influence simplemob AI, for the best.
+  */
+/datum/config_entry/flag/use_field_of_vision
+
+//Shuttle size limiter
+/datum/config_entry/number/max_shuttle_count
+	config_entry_value = 6
+
+/datum/config_entry/number/max_shuttle_size
+	config_entry_value = 250

@@ -32,22 +32,28 @@
 /mob/living/silicon/pai/attack_hand(mob/living/carbon/human/user)
 	switch(user.a_intent)
 		if(INTENT_HELP)
-			visible_message("<span class='notice'>[user] gently pats [src] on the head, eliciting an off-putting buzzing from its holographic field.</span>")
+			visible_message("<span class='notice'>[user] gently pats [src] on the head, eliciting an off-putting buzzing from its holographic field.</span>",
+				"<span class='notice'>[user] gently pats you on the head, eliciting an off-putting buzzing from your holographic field.</span>", target = user,
+				target_message = "<span class='notice'>You gently pat [src] on the head, eliciting an off-putting buzzing from its holographic field.</span>")
 		if(INTENT_DISARM)
-			visible_message("<span class='notice'>[user] boops [src] on the head!</span>")
+			visible_message("<span class='notice'>[user] boops [src] on the head!</span>",
+				"<span class='notice'>[user] boops you on the head!</span>", target = user,
+				target_message = "<span class='notice'>You boop [src] on the head!</span>")
 		if(INTENT_HARM)
 			user.do_attack_animation(src)
 			if (user.name == master)
 				visible_message("<span class='notice'>Responding to its master's touch, [src] disengages its holochassis emitter, rapidly losing coherence.</span>")
-				spawn(10)
-					fold_in()
-					if(user.put_in_hands(card))
-						user.visible_message("<span class='notice'>[user] promptly scoops up [user.p_their()] pAI's card.</span>")
+				fold_in()
+				if(user.put_in_hands(card))
+					user.visible_message("<span class='notice'>[user] promptly scoops up [user.p_their()] pAI's card.</span>",
+						"<span class='notice'>You promptly scoops up your pAI's card.</span>")
 			else
 				if(HAS_TRAIT(user, TRAIT_PACIFISM))
 					to_chat(user, "<span class='notice'>You don't want to hurt [src]!</span>")
 					return
-				visible_message("<span class='danger'>[user] stomps on [src]!.</span>")
+				visible_message("<span class='danger'>[user] stomps on [src]!.</span>",
+					"<span class='userdanger'>[user] stomps on you!.</span>", target = user,
+					target_message = "<span class='danger'>You stomp on [src]!.</span>")
 				take_holo_damage(2)
 		else
 			grabbedby(user)

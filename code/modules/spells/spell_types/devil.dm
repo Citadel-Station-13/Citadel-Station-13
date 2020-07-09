@@ -5,7 +5,7 @@
 	include_user = 1
 	range = -1
 	clothes_req = NONE
-	item_type = /obj/item/twohanded/pitchfork/demonic
+	item_type = /obj/item/pitchfork/demonic
 
 	school = "conjuration"
 	charge_max = 150
@@ -15,10 +15,10 @@
 	action_background_icon_state = "bg_demon"
 
 /obj/effect/proc_holder/spell/targeted/conjure_item/summon_pitchfork/greater
-	item_type = /obj/item/twohanded/pitchfork/demonic/greater
+	item_type = /obj/item/pitchfork/demonic/greater
 
 /obj/effect/proc_holder/spell/targeted/conjure_item/summon_pitchfork/ascended
-	item_type = /obj/item/twohanded/pitchfork/demonic/ascended
+	item_type = /obj/item/pitchfork/demonic/ascended
 
 /obj/effect/proc_holder/spell/targeted/conjure_item/violin
 	item_type = /obj/item/instrument/violin/golden
@@ -118,14 +118,14 @@
 				revert_cast()
 				return ..()
 		else
-			user.notransform = TRUE
+			user.mob_transforming = TRUE
 			user.fakefire()
 			to_chat(src, "<span class='warning'>You begin to phase back into sinful flames.</span>")
 			if(do_mob(user,user,150))
 				user.infernalphaseout()
 			else
 				to_chat(user, "<span class='warning'>You must remain still while exiting.</span>")
-				user.notransform = FALSE
+				user.mob_transforming = FALSE
 				user.fakefireextinguish()
 		start_recharge()
 		return
@@ -149,11 +149,11 @@
 	ExtinguishMob()
 	forceMove(holder)
 	holder = holder
-	notransform = 0
+	mob_transforming = 0
 	fakefireextinguish()
 
 /mob/living/proc/infernalphasein()
-	if(notransform)
+	if(mob_transforming)
 		to_chat(src, "<span class='warning'>You're too busy to jaunt in.</span>")
 		return FALSE
 	fakefire()

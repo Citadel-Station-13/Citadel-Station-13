@@ -23,11 +23,11 @@
 	layer = BELOW_MOB_LAYER//icon draw layer
 	infra_luminosity = 15 //byond implementation is bugged.
 	force = 5
-	flags_1 = HEAR_1
+	flags_1 = HEAR_1|BLOCK_FACE_ATOM_1
 	var/can_move = 0 //time of next allowed movement
-	var/mob/living/carbon/occupant = null
+	var/mob/living/occupant = null
 	var/step_in = 10 //make a step in step_in/10 sec.
-	var/dir_in = 2//What direction will the mech face when entered/powered on? Defaults to South.
+	var/dir_in = SOUTH //What direction will the mech face when entered/powered on? Defaults to South.
 	var/normal_step_energy_drain = 10 //How much energy the mech will consume each time it moves. This variable is a backup for when leg actuators affect the energy drain.
 	var/step_energy_drain = 10
 	var/melee_energy_drain = 15
@@ -494,6 +494,10 @@
 	if (internal_tank.disconnect()) // Something moved us and broke connection
 		occupant_message("<span class='warning'>Air port connection teared off!</span>")
 		mecha_log_message("Lost connection to gas port.")
+
+/obj/mecha/setDir(newdir)
+	. = ..()
+	occupant?.setDir(newdir)
 
 /obj/mecha/Process_Spacemove(var/movement_dir = 0)
 	. = ..()

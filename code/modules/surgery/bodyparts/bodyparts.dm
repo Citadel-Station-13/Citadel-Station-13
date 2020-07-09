@@ -285,7 +285,7 @@
 		if(status == BODYPART_ORGANIC)
 			icon = base_bp_icon || DEFAULT_BODYPART_ICON_ORGANIC
 		else if(status == BODYPART_ROBOTIC)
-			icon = base_bp_icon || DEFAULT_BODYPART_ICON_ROBOTIC
+			icon = DEFAULT_BODYPART_ICON_ROBOTIC
 
 	if(owner)
 		owner.updatehealth()
@@ -651,7 +651,7 @@
 	held_index = 1
 	px_x = -6
 	px_y = 0
-	stam_heal_tick = 4
+	stam_heal_tick = STAM_RECOVERY_LIMB
 
 /obj/item/bodypart/l_arm/is_disabled()
 	if(HAS_TRAIT(owner, TRAIT_PARALYSIS_L_ARM))
@@ -711,7 +711,7 @@
 	held_index = 2
 	px_x = 6
 	px_y = 0
-	stam_heal_tick = 4
+	stam_heal_tick = STAM_RECOVERY_LIMB
 	max_stamina_damage = 50
 
 /obj/item/bodypart/r_arm/is_disabled()
@@ -771,7 +771,7 @@
 	body_damage_coeff = 0.75
 	px_x = -2
 	px_y = 12
-	stam_heal_tick = 4
+	stam_heal_tick = STAM_RECOVERY_LIMB
 	max_stamina_damage = 50
 
 /obj/item/bodypart/l_leg/is_disabled()
@@ -830,7 +830,7 @@
 	px_x = 2
 	px_y = 12
 	max_stamina_damage = 50
-	stam_heal_tick = 4
+	stam_heal_tick = STAM_RECOVERY_LIMB
 
 /obj/item/bodypart/r_leg/is_disabled()
 	if(HAS_TRAIT(owner, TRAIT_PARALYSIS_R_LEG))

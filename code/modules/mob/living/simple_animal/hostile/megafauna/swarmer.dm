@@ -73,14 +73,13 @@ GLOBAL_LIST_INIT(AISwarmerCapsByType, list(/mob/living/simple_animal/hostile/swa
 		step(R, ddir) //Step the swarmers, instead of spawning them there, incase the turf is solid
 
 
-/mob/living/simple_animal/hostile/megafauna/swarmer_swarm_beacon/Life()
-	. = ..()
-	if(.)
-		var/createtype = GetUncappedAISwarmerType()
-		if(createtype && world.time > swarmer_spawn_cooldown && GLOB.AISwarmers.len < (GetTotalAISwarmerCap()*0.5))
-			swarmer_spawn_cooldown = world.time + swarmer_spawn_cooldown_amt
-			new createtype(loc)
-
+/mob/living/simple_animal/hostile/megafauna/swarmer_swarm_beacon/BiologicalLife(seconds, times_fired)
+	if(!(. = ..()))
+		return
+	var/createtype = GetUncappedAISwarmerType()
+	if(createtype && world.time > swarmer_spawn_cooldown && GLOB.AISwarmers.len < (GetTotalAISwarmerCap()*0.5))
+		swarmer_spawn_cooldown = world.time + swarmer_spawn_cooldown_amt
+		new createtype(loc)
 
 /mob/living/simple_animal/hostile/megafauna/swarmer_swarm_beacon/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
 	. = ..()

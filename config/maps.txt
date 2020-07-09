@@ -36,7 +36,7 @@ map deltastation
 	minplayers 50
 endmap
 
-map icebox
+map snaxi
 	minplayers 25
 endmap
 

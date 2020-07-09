@@ -12,6 +12,17 @@
 	tastes = list("cheese" = 1)
 	foodtype = DAIRY
 
+
+
+/obj/item/reagent_containers/food/snacks/royalcheese
+	name = "royal cheese"
+	desc = "Ascend the throne. Consume the wheel. Feel the POWER."
+	icon_state = "royalcheese"
+	list_reagents = list(/datum/reagent/consumable/nutriment = 15, /datum/reagent/consumable/nutriment/vitamin = 5, /datum/reagent/gold = 20, /datum/reagent/toxin/mutagen = 5)
+	w_class = WEIGHT_CLASS_BULKY
+	tastes = list("cheese" = 4, "royalty" = 1)
+	foodtype = DAIRY
+
 /obj/item/reagent_containers/food/snacks/cheesewedge
 	name = "cheese wedge"
 	desc = "A wedge of delicious Cheddar. The cheese wheel it was cut from can't have gone far."
@@ -121,6 +132,17 @@
 	trash = /obj/item/trash/plate
 	bonus_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/nutriment/vitamin = 2)
 	list_reagents = list(/datum/reagent/consumable/nutriment = 6)
+	filling_color = "#FFD700"
+	tastes = list("fries" = 3, "cheese" = 1)
+	foodtype = VEGETABLES | GRAIN
+
+/obj/item/reagent_containers/food/snacks/chilicheesefries
+	name = "chili cheese fries"
+	desc = "Fries smothered in cheese -and- chilli."
+	icon_state = "chilicheesefries"
+	trash = /obj/item/trash/plate
+	bonus_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/nutriment/vitamin = 2)
+	list_reagents = list(/datum/reagent/consumable/nutriment = 7, /datum/reagent/consumable/nutriment/vitamin = 1)
 	filling_color = "#FFD700"
 	tastes = list("fries" = 3, "cheese" = 1)
 	foodtype = VEGETABLES | GRAIN
@@ -525,6 +547,15 @@
 	filling_color = "#FFD700"
 	tastes = list("butter" = 1)
 	foodtype = DAIRY
+
+/obj/item/reagent_containers/food/snacks/butter/margarine
+	name = "stick of margarine"
+	desc = "A stick of lightly salted vegetable oil."
+	icon_state = "marge"
+	list_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/consumable/cornoil = 2, /datum/reagent/consumable/sodiumchloride = 1)
+	filling_color = "#FFD700"
+	tastes = list("butter" = 1)
+	foodtype = JUNKFOOD
 
 /obj/item/reagent_containers/food/snacks/onionrings
 	name = "onion rings"

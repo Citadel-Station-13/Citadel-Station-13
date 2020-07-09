@@ -1,7 +1,3 @@
-#define NOT_ELECTROCHROMATIC		0
-#define ELECTROCHROMATIC_OFF		1
-#define ELECTROCHROMATIC_DIMMED		2
-
 GLOBAL_LIST_EMPTY(electrochromatic_window_lookup)
 
 /proc/do_electrochromatic_toggle(new_status, id)
@@ -42,6 +38,8 @@ GLOBAL_LIST_EMPTY(electrochromatic_window_lookup)
 	var/hitsound = 'sound/effects/Glasshit.ogg'
 	rad_insulation = RAD_VERY_LIGHT_INSULATION
 	rad_flags = RAD_PROTECT_CONTENTS
+	flags_ricochet = RICOCHET_HARD
+	ricochet_chance_mod = 0.4
 
 	/// Electrochromatic status
 	var/electrochromatic_status = NOT_ELECTROCHROMATIC
@@ -74,9 +72,8 @@ GLOBAL_LIST_EMPTY(electrochromatic_window_lookup)
 	if(reinf && anchored)
 		state = WINDOW_SCREWED_TO_FRAME
 
-	if(mapload && electrochromatic_id)
-		if(copytext(electrochromatic_id, 1, 2) == "!")
-			electrochromatic_id = SSmapping.get_obfuscated_id(electrochromatic_id)
+	if(mapload && electrochromatic_id && electrochromatic_id[1] == "!")
+		electrochromatic_id = SSmapping.get_obfuscated_id(electrochromatic_id)
 
 	ini_dir = dir
 	air_update_turf(1)
@@ -274,29 +271,27 @@ GLOBAL_LIST_EMPTY(electrochromatic_window_lookup)
 	air_update_turf(TRUE)
 	update_nearby_icons()
 
-/obj/structure/window/proc/spraycan_paint(paint_color)
-	if(color_hex2num(paint_color) < 255)
-		set_opacity(255)
-	else
-		set_opacity(initial(opacity))
-	add_atom_colour(paint_color, WASHABLE_COLOUR_PRIORITY)
-
 /obj/structure/window/proc/electrochromatic_dim()
 	if(electrochromatic_status == ELECTROCHROMATIC_DIMMED)
 		return
 	electrochromatic_status = ELECTROCHROMATIC_DIMMED
-	animate(src, color = "#222222", time = 2)
-	set_opacity(TRUE)
+	var/current = color
+	add_atom_colour("#222222", FIXED_COLOUR_PRIORITY)
+	var/newcolor = color
+	if(color != current)
+		color = current
+		animate(src, color = newcolor, time = 2)
 
 /obj/structure/window/proc/electrochromatic_off()
 	if(electrochromatic_status == ELECTROCHROMATIC_OFF)
 		return
 	electrochromatic_status = ELECTROCHROMATIC_OFF
 	var/current = color
-	update_atom_colour()
+	remove_atom_colour(FIXED_COLOUR_PRIORITY, "#222222")
 	var/newcolor = color
-	color = current
-	animate(src, color = newcolor, time = 2)
+	if(color != current)
+		color = current
+		animate(src, color = newcolor, time = 2)
 
 /obj/structure/window/proc/remove_electrochromatic()
 	electrochromatic_off()
@@ -351,11 +346,9 @@ GLOBAL_LIST_EMPTY(electrochromatic_window_lookup)
 	GLOB.electrochromatic_window_lookup[electrochromatic_id] |= src
 
 /obj/structure/window/update_atom_colour()
-	if((electrochromatic_status != ELECTROCHROMATIC_OFF) && (electrochromatic_status != ELECTROCHROMATIC_DIMMED))
-		return FALSE
 	. = ..()
-	if(color && (color_hex2num(color) < 255))
-		set_opacity(255)
+	if(electrochromatic_status == ELECTROCHROMATIC_DIMMED || (color && (color_hex2num(color) < 255)))
+		set_opacity(TRUE)
 	else
 		set_opacity(FALSE)
 
@@ -530,6 +523,7 @@ GLOBAL_LIST_EMPTY(electrochromatic_window_lookup)
 	explosion_block = 1
 	glass_type = /obj/item/stack/sheet/rglass
 	rad_insulation = RAD_HEAVY_INSULATION
+	ricochet_chance_mod = 0.8
 
 /obj/structure/window/reinforced/spawner/east
 	dir = EAST
@@ -695,6 +689,7 @@ GLOBAL_LIST_EMPTY(electrochromatic_window_lookup)
 	level = 3
 	glass_type = /obj/item/stack/sheet/titaniumglass
 	glass_amount = 2
+	ricochet_chance_mod = 0.9
 
 /obj/structure/window/shuttle/narsie_act()
 	add_atom_colour("#3C3434", FIXED_COLOUR_PRIORITY)
@@ -885,7 +880,3 @@ GLOBAL_LIST_EMPTY(electrochromatic_window_lookup)
 			return
 	..()
 	update_icon()
-
-#undef NOT_ELECTROCHROMATIC
-#undef ELECTROCHROMATIC_OFF
-#undef ELECTROCHROMATIC_DIMMED

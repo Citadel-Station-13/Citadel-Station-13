@@ -10,6 +10,10 @@
 	var/help_verb
 	var/pacifism_check = TRUE //are the martial arts combos/attacks unable to be used by pacifist.
 	var/allow_temp_override = TRUE //if this martial art can be overridden by temporary martial arts
+	/// Can we be used to unarmed parry?
+	var/can_martial_parry = FALSE
+	/// Set this variable to something not null, this'll be the preferred unarmed parry in most cases if [can_martial_parry] is TRUE. YOU MUST RUN [get_block_parry_data(this)] INSTEAD OF DIRECTLY ACCESSING!
+	var/datum/block_parry_data/block_parry_data
 	var/pugilist = FALSE
 
 /datum/martial_art/proc/disarm_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
@@ -39,11 +43,11 @@
 /datum/martial_art/proc/damage_roll(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	//Here we roll for our damage to be added into the damage var in the various attack procs. This is changed depending on whether we are in combat mode, lying down, or if our target is in combat mode.
 	var/damage = rand(A.dna.species.punchdamagelow, A.dna.species.punchdamagehigh)
-	if(!(D.combat_flags & COMBAT_FLAG_COMBAT_ACTIVE))
+	if(SEND_SIGNAL(D, COMSIG_COMBAT_MODE_CHECK, COMBAT_MODE_INACTIVE))
 		damage *= 1.5
 	if(!CHECK_MOBILITY(A, MOBILITY_STAND))
 		damage *= 0.5
-	if(!(A.combat_flags & COMBAT_FLAG_COMBAT_ACTIVE))
+	if(SEND_SIGNAL(A, COMSIG_COMBAT_MODE_CHECK, COMBAT_MODE_INACTIVE))
 		damage *= 0.25
 	return damage
 
@@ -83,7 +87,7 @@
 		var/datum/martial_art/X = H.mind.default_martial_art
 		X.teach(H)
 	REMOVE_TRAIT(H, TRAIT_PUGILIST, MARTIAL_ARTIST_TRAIT)
-	
+
 /datum/martial_art/proc/on_remove(mob/living/carbon/human/H)
 	if(help_verb)
 		H.verbs -= help_verb

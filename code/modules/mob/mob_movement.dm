@@ -32,7 +32,7 @@
 	if(!n || !direction || !mob?.loc)
 		return FALSE
 	//GET RID OF THIS SOON AS MOBILITY FLAGS IS DONE
-	if(mob.notransform)
+	if(mob.mob_transforming)
 		return FALSE
 
 	if(mob.control_object)
@@ -100,10 +100,11 @@
 		if(mob.throwing)
 			mob.throwing.finalize(FALSE)
 
-	if(L.pulling && !(L.combat_flags & COMBAT_FLAG_COMBAT_ACTIVE))
+	var/atom/movable/AM = L.pulling
+	if(AM && AM.density && !SEND_SIGNAL(L, COMSIG_COMBAT_MODE_CHECK, COMBAT_MODE_ACTIVE) && !ismob(AM))
 		L.setDir(turn(L.dir, 180))
 
-	SEND_SIGNAL(mob, COMSIG_MOB_CLIENT_MOVE, src, direction, n, oldloc)
+	SEND_SIGNAL(mob, COMSIG_MOB_CLIENT_MOVE, src, direction, n, oldloc, add_delay)
 
 /// Process_Grab(): checks for grab, attempts to break if so. Return TRUE to prevent movement.
 /client/proc/Process_Grab()

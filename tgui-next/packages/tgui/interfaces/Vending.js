@@ -47,10 +47,21 @@ export const Vending = props => {
       <Section title="Products" >
         <Table>
           {inventory.map((product => {
-            const suffix = ' cr' + data.cost_text;
+            const free = (
+              !data.onstation
+              || product.price === 0
+            );
+            const to_pay = (!product.premium
+              ? Math.round(product.price * data.cost_mult)
+              : product.price
+            );
+            const pay_text = (!product.premium
+              ? to_pay + ' cr' + data.cost_text
+              : to_pay + ' cr'
+            );
             return (
               <Table.Row key={product.name}>
-                <Table.Cell>
+                <Table.Cell collapsing>
                   {product.base64 ? (
                     <img
                       src={`data:image/jpeg;base64,${product.img}`}
@@ -60,15 +71,20 @@ export const Vending = props => {
                       }} />
                   ) : (
                     <span
-                      className={classes(['vending32x32', product.path])}
+                      className={classes([
+                        'vending32x32',
+                        product.path,
+                      ])}
                       style={{
                         'vertical-align': 'middle',
                         'horizontal-align': 'middle',
                       }} />
                   )}
-                  <b>{product.name}</b>
                 </Table.Cell>
-                <Table.Cell>
+                <Table.Cell bold>
+                  {product.name}
+                </Table.Cell>
+                <Table.Cell collapsing textAlign="center">
                   <Box color={custom
                     ? 'good'
                     : data.stock[product.name] <= 0
@@ -79,29 +95,28 @@ export const Vending = props => {
                     {data.stock[product.name]} in stock
                   </Box>
                 </Table.Cell>
-                <Table.Cell>
+                <Table.Cell collapsing textAlign="center">
                   {custom && (
                     <Button
+                      fluid
                       content={data.access ? 'FREE' : product.price + ' cr'}
                       onClick={() => act(ref, 'dispense', {
                         'item': product.name,
                       })} />
                   ) || (
                     <Button
+                      fluid
                       disabled={(
                         data.stock[product.namename] === 0
-                        || (
-                          data.cost_mult !== 0
-                          && (
-                            !data.user
-                            || product.price > data.user.cash
+                          || (
+                            !free
+                            && (
+                              !data.user
+                              || to_pay > data.user.cash
+                            )
                           )
-                        )
                       )}
-                      content={(data.onstation
-                        && product.price !== 0)
-                        ? Math.round(product.price * data.cost_mult) + suffix
-                        : 'FREE'}
+                      content={!free ? pay_text : 'FREE'}
                       onClick={() => act(ref, 'vend', {
                         'ref': product.ref,
                       })} />

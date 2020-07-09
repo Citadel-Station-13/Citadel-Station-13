@@ -3,6 +3,7 @@
 	anchored = TRUE
 	opacity = 0
 	density = FALSE
+	plane = ABOVE_WALL_PLANE
 	layer = SIGN_LAYER
 	max_integrity = 100
 	armor = list("melee" = 50, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 50)
@@ -35,6 +36,7 @@
 								 "<span class='notice'>You unfasten [src].</span>")
 			var/obj/item/sign_backing/SB = new (get_turf(user))
 			SB.icon_state = icon_state
+			SB.set_custom_materials(custom_materials) //This is here so picture frames and wooden things don't get messed up.
 			SB.sign_path = type
 			SB.setDir(dir)
 			qdel(src)

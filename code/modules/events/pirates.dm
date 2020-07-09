@@ -63,7 +63,7 @@
 
 	if(!SSmapping.empty_space)
 		SSmapping.empty_space = SSmapping.add_new_zlevel("Empty Area For Pirates", list(ZTRAIT_LINKAGE = SELFLOOPING))
-	
+
 	var/datum/map_template/shuttle/pirate/default/ship = new
 	var/x = rand(TRANSITIONEDGE,world.maxx - TRANSITIONEDGE - ship.width)
 	var/y = rand(TRANSITIONEDGE,world.maxy - TRANSITIONEDGE - ship.height)
@@ -80,8 +80,9 @@
 				var/mob/M = candidates[1]
 				spawner.create(M.ckey)
 				candidates -= M
+				announce_to_ghosts(M)
 			else
-				notify_ghosts("Space pirates are waking up!", source = spawner, action=NOTIFY_ATTACK, flashwindow = FALSE, ignore_dnr_observers = TRUE)
+				announce_to_ghosts(spawner)
 
 	priority_announce("A report has been downloaded and printed out at all communications consoles.", "Incoming Classified Message", "commandreport") //CITADEL EDIT also metabreak here too
 
@@ -159,11 +160,12 @@
 	active = FALSE
 	STOP_PROCESSING(SSobj,src)
 
-/obj/machinery/shuttle_scrambler/update_icon_state()
+/obj/machinery/shuttle_scrambler/update_overlays()
+	. = ..()
 	if(active)
-		icon_state = "dominator-blue"
-	else
-		icon_state = "dominator"
+		var/mutable_appearance/M = mutable_appearance(icon, "dominator-overlay")
+		M.color = "#00FFFF"
+		. += M
 
 /obj/machinery/shuttle_scrambler/Destroy()
 	toggle_off()

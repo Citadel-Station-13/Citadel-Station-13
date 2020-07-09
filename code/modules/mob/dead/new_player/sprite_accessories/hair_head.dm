@@ -189,6 +189,26 @@
 	name = "Coffee House"
 	icon_state = "hair_coffeehouse"
 
+/datum/sprite_accessory/hair/cornrows1
+	name = "Cornrows"
+	icon_state = "hair_cornrows"
+
+/datum/sprite_accessory/hair/cornrows2
+	name = "Cornrows 2"
+	icon_state = "hair_cornrows2"
+
+/datum/sprite_accessory/hair/cornrowbun
+	name = "Cornrow Bun"
+	icon_state = "hair_cornrowbun"
+
+/datum/sprite_accessory/hair/cornrowbraid
+	name = "Cornrow Braid"
+	icon_state = "hair_cornrowbraid"
+
+/datum/sprite_accessory/hair/cornrowdualtail
+	name = "Cornrow Tail"
+	icon_state = "hair_cornrowtail"
+
 /datum/sprite_accessory/hair/country
 	name = "Country"
 	icon_state = "hair_country"

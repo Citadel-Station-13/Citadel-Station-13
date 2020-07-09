@@ -42,6 +42,16 @@
 	category = list("Tool Designs")
 	departmental_flags =  DEPARTMENTAL_FLAG_ENGINEERING
 
+/datum/design/shuttlecreator
+	name = "Rapid Shuttle Designator"
+	desc = "An advanced device capable of defining areas for use in the creation of shuttles"
+	id = "shuttle_creator"
+	build_path = /obj/item/shuttle_creator
+	build_type = PROTOLATHE
+	materials = list(/datum/material/iron = 8000, /datum/material/titanium = 5000, /datum/material/bluespace = 5000)
+	category = list("Tool Designs")
+	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE | DEPARTMENTAL_FLAG_ENGINEERING
+
 /datum/design/handdrill
 	name = "Hand Drill"
 	desc = "A small electric hand drill with an interchangeable screwdriver and bolt bit"
@@ -71,6 +81,16 @@
 	build_path = /obj/item/weldingtool/experimental
 	category = list("Tool Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE | DEPARTMENTAL_FLAG_ENGINEERING
+
+/datum/design/rld_mini
+	name = "Mini Rapid Light Device (MRLD)"
+	desc = "A tool that can portable and standing lighting orbs and glowsticks."
+	id = "rld_mini"
+	build_type = PROTOLATHE
+	materials = list(/datum/material/iron = 20000, /datum/material/glass = 10000, /datum/material/plastic = 8000, /datum/material/gold = 2000)
+	build_path = /obj/item/construction/rld/mini
+	category = list("Tool Designs")
+	departmental_flags =  DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_CARGO
 
 /////////////////////////////////////////
 //////////////Alien Tools////////////////

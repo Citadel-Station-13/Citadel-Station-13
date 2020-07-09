@@ -31,7 +31,7 @@
 	var/turf/T = loc
 	if(level == 2 || (istype(T) && !T.intact))
 		showpipe = TRUE
-		plane = GAME_PLANE
+		plane = ABOVE_WALL_PLANE
 	else
 		showpipe = FALSE
 		plane = FLOOR_PLANE
@@ -161,6 +161,9 @@
 	to_chat(user, "<span class='danger'>Access denied.</span>")
 	return UI_CLOSE
 
+/obj/machinery/atmospherics/components/attack_ghost(mob/dead/observer/O)
+	. = ..()
+	atmosanalyzer_scan(airs, O, src, FALSE)
 
 // Tool acts
 
