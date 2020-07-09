@@ -91,10 +91,10 @@
 		CRASH("Invalid set_skill_value call. Use skill typepaths.")	//until a time when we somehow need text ids for dynamic skills, I'm enforcing this.
 	var/datum/skill/S = GLOB.skill_datums[skill]
 	value = S.sanitize_value(value)
-	skill_holder.need_static_data_update = TRUE
 	if(!isnull(value))
 		LAZYINITLIST(skill_holder.skills)
 		S.set_skill_value(skill_holder, value, src, silent)
+		skill_holder.need_static_data_update = TRUE
 		return TRUE
 	return FALSE
 
@@ -120,11 +120,9 @@
 		CRASH("You cannot auto increment a non numerical(experience skill!")
 	var/current = get_skill_value(skill, FALSE)
 	var/affinity = get_skill_affinity(skill)
-	var/target_value = current + (value * affinity)
-	if(maximum)
-		target_value = min(target_value, maximum)
-		if(target_value == maximum) //no more experience to gain, early return.
-			return
+	var/target_value = round(current + (value * affinity), S.skill_gain_quantisation)
+	if(maximum && target_value >= maximum) //no more experience to gain, early return.
+		return
 	boost_skill_value_to(skill, target_value, silent, current)
 
 /**

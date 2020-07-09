@@ -450,8 +450,7 @@
 	sharpness = IS_BLUNT
 
 /obj/item/dualsaber/toy/ComponentInitialize()
-	. = ..()
-	AddComponent(/datum/component/two_handed, wieldsound='sound/weapons/saberon.ogg', unwieldsound='sound/weapons/saberoff.ogg')
+	AddComponent(/datum/component/two_handed, force_unwielded=0, force_wielded=0, wieldsound='sound/weapons/saberon.ogg', unwieldsound='sound/weapons/saberoff.ogg')
 
 /obj/item/dualsaber/toy/run_block(mob/living/owner, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return)
 	return BLOCK_NONE
@@ -469,9 +468,8 @@
 	slowdown_wielded = 0
 	sharpness = IS_BLUNT
 
-/obj/item/dualsaber/toy/ComponentInitialize()
-	. = ..()
-	AddComponent(/datum/component/two_handed, wieldsound='sound/weapons/saberon.ogg', unwieldsound='sound/weapons/saberoff.ogg')
+/obj/item/dualsaber/hypereutactic/toy/ComponentInitialize()
+	AddComponent(/datum/component/two_handed, force_unwielded=0, force_wielded=0, wieldsound='sound/weapons/saberon.ogg', unwieldsound='sound/weapons/saberoff.ogg')
 
 /obj/item/dualsaber/hypereutactic/toy/run_block(mob/living/owner, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return)
 	return BLOCK_NONE
@@ -828,12 +826,11 @@
 	var/obj/item/toy/cards/singlecard/H = new/obj/item/toy/cards/singlecard(user.loc)
 	if(holo)
 		holo.spawned += H // track them leaving the holodeck
-	choice = cards[1]
+	choice = popleft(cards)
 	H.cardname = choice
 	H.parentdeck = src
 	var/O = src
 	H.apply_card_vars(H,O)
-	src.cards -= choice
 	H.pickup(user)
 	user.put_in_hands(H)
 	user.visible_message("[user] draws a card from the deck.", "<span class='notice'>You draw a card from the deck.</span>")

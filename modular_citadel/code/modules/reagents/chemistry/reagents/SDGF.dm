@@ -63,7 +63,7 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 			startHunger = M.nutrition
 			if(pollStarted == FALSE)
 				pollStarted = TRUE
-				candies = pollGhostCandidates("Do you want and agree to play as a clone of [M], respect their character and not engage in ERP without permission from the original?", ignore_category = POLL_IGNORE_CLONE)
+				candies = pollGhostCandidates("Do you want to play as [M]'s defective clone? (Don't ERP without permission from the original)", ignore_category = POLL_IGNORE_CLONE)
 				log_reagent("FERMICHEM: [M] ckey: [M.key] has taken SDGF, and ghosts have been polled.")
 		if(20 to INFINITY)
 			if(LAZYLEN(candies) && playerClone == FALSE) //If there's candidates, clone the person and put them in there!
