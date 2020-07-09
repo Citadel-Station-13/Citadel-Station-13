@@ -329,6 +329,8 @@
 					/obj/item/clothing/under/dress/wedding/red,
 					/obj/item/clothing/under/dress/wedding/red, // two of each
 					/obj/item/reagent_containers/food/drinks/bottle/champagne, //appropriate booze for a wedding
-					/obj/item/reagent_containers/food/snacks/store/cake/vanilla_cake) // we don't have a full wedding cake but this will do
+					/obj/item/reagent_containers/food/snacks/store/cake/vanilla_cake, // we don't have a full wedding cake but this will do
+					/obj/item/storage/fancy/ringbox/silver,
+					/obj/item/storage/fancy/ringbox/silver) //diamond rings cost the same price as this crate via cargo so we're not giving you two for free. Wedding rings are traditionally less valuable anyway.
 	crate_name = "wedding crate"
 	
