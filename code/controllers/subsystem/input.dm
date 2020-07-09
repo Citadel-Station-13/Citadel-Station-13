@@ -56,6 +56,7 @@ SUBSYSTEM_DEF(input)
 	macroset_classic_input["Ctrl+T"] = "say_indicator"
 	macroset_classic_input["Ctrl+O"] = "ooc"
 	macroset_classic_input["Ctrl+L"] = "looc"
+	macroset_classic_input["Ctrl+M"] = "me_indicator"
 	// let's play the list iteration game x2
 	for(var/key in classic_ctrl_override_keys)
 		// make sure to double double quote to ensure things are treated as a key combo instead of addition/semicolon logic.
@@ -73,7 +74,7 @@ SUBSYSTEM_DEF(input)
 		"O" = "ooc",
 		"T" = "say_indicator",
 		"L" = "looc",
-		"M" = "me"
+		"M" = "me_indicator"
 		)
 	var/list/hard_bind_anti_collision = list()
 	var/list/anti_collision_modifiers = list("Ctrl", "Alt", "Shift", "Ctrl+Alt", "Ctrl+Shift", "Alt+Shift", "Ctrl+Alt+Shift")
