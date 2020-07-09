@@ -4748,10 +4748,7 @@
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "hX" = (
-/obj/structure/disposaloutlet{
-	dir = 1
-	},
-/obj/structure/disposalpipe/trunk,
+/obj/structure/disposalpipe/segment,
 /turf/open/floor/plating/airless,
 /area/space)
 "hY" = (
@@ -18413,17 +18410,6 @@
 /obj/structure/window/reinforced,
 /turf/open/space,
 /area/space/nearstation)
-"FH" = (
-/obj/structure/rack,
-/obj/effect/spawner/lootdrop/maintenance{
-	lootcount = 2;
-	name = "2maintenance loot spawner"
-	},
-/obj/machinery/light/small{
-	dir = 8
-	},
-/turf/open/floor/plating,
-/area/maintenance/starboard/fore)
 "FI" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -19415,13 +19401,16 @@
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/heads/hop)
 "Ho" = (
-/obj/effect/spawner/structure/window/reinforced,
-/obj/structure/sign/warning/vacuum,
-/obj/machinery/light{
-	dir = 4
+/obj/structure/rack,
+/obj/effect/spawner/lootdrop/maintenance{
+	lootcount = 2;
+	name = "2maintenance loot spawner"
+	},
+/obj/machinery/light/small{
+	dir = 8
 	},
 /turf/open/floor/plating,
-/area/quartermaster/storage)
+/area/maintenance/starboard/fore)
 "Hp" = (
 /obj/machinery/power/tesla_coil,
 /obj/structure/cable/yellow{
@@ -27503,6 +27492,13 @@
 /area/science/xenobiology{
 	name = "Science Outpost"
 	})
+"VI" = (
+/obj/structure/disposalpipe/trunk,
+/obj/structure/disposaloutlet{
+	dir = 1
+	},
+/turf/open/floor/plating/airless,
+/area/space)
 "VJ" = (
 /obj/structure/cable{
 	icon_state = "1-4"
@@ -66145,7 +66141,7 @@ vX
 nC
 pW
 YM
-FH
+Ho
 hd
 II
 II
@@ -66956,7 +66952,7 @@ Wl
 Wn
 dv
 aL
-Ho
+iO
 uk
 uk
 uk
@@ -79800,8 +79796,8 @@ uk
 uk
 uk
 fI
-uk
-uk
+VI
+hX
 hX
 HR
 xF
