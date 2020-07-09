@@ -109,7 +109,7 @@
 /obj/machinery/clonepod/attack_ai(mob/user)
 	return examine(user)
 
-//Start growing a clone in the pod!
+//Start growing a human clone in the pod!
 /obj/machinery/clonepod/proc/growclone(ckey, clonename, ui, mutation_index, mindref, blood_type, datum/species/mrace, list/features, factions, list/quirks, datum/bank_account/insurance, list/traumas)
 	if(panel_open)
 		return FALSE

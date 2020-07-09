@@ -268,6 +268,7 @@ obj/machinery/portable_atmospherics/canister/welder_act(mob/living/user, obj/ite
 /obj/machinery/portable_atmospherics/canister/obj_break(damage_flag)
 	if((stat & BROKEN) || (flags_1 & NODECONSTRUCT_1))
 		return
+	stat |= BROKEN
 	canister_break()
 
 /obj/machinery/portable_atmospherics/canister/proc/canister_break()
