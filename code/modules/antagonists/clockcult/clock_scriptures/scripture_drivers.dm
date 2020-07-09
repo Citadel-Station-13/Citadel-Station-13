@@ -113,6 +113,40 @@
 	quickbind = TRUE
 	quickbind_desc = "Stuns and mutes a target from a short range."
 
+/*
+//Geis: Grants a short-range binding attack that allows you to mute and drag around a target in a very obvious manner.
+/datum/clockwork_scripture/ranged_ability/geis
+	descname = "Melee Mute & Stun"
+	name = "Geis"
+	desc = "Charges your slab with divine energy, allowing you to bind and pull a struck heretic."
+	invocations = list("Divinity, grant me strength...", "...to bind the heathen!")
+	whispered = TRUE
+	channel_time = 20
+	usage_tip = "You CANNOT TAKE ANY NON-PULL ACTIONS while the target is bound, so Sigils of Submission should be placed before use."
+	tier = SCRIPTURE_DRIVER
+	primary_component = GEIS_CAPACITOR
+	sort_priority = 5
+	quickbind = TRUE
+	quickbind_desc = "Allows you to bind and mute an adjacent target non-Servant.<br><b>Click your slab to disable.</b>"
+	slab_overlay = "geis"
+	ranged_type = /obj/effect/proc_holder/slab/geis
+	ranged_message = "<span class='sevtug_small'><i>You charge the clockwork slab with divine energy.</i>\n\
+	<b>Left-click a target within melee range to bind!\n\
+	Click your slab to cancel.</b></span>"
+	timeout_time = 100
+
+/datum/clockwork_scripture/ranged_ability/geis/run_scripture()
+	var/servants = 0
+	if(!GLOB.ratvar_awakens)
+		for(var/mob/living/M in GLOB.living_mob_list)
+			if(can_recite_scripture(M, TRUE))
+				servants++
+	if(servants > SCRIPT_SERVANT_REQ)
+		whispered = FALSE
+		servants -= SCRIPT_SERVANT_REQ
+		channel_time = min(channel_time + servants*3, 50)
+	return ..()
+*/
 
 //Hateful Manacles: Applies restraints from melee over several seconds. The restraints function like handcuffs and break on removal.
 /datum/clockwork_scripture/ranged_ability/hateful_manacles
@@ -293,3 +327,25 @@
 	sort_priority = 11
 	quickbind = TRUE
 	quickbind_desc = "Creates a pair of Wraith Spectacles, which grant true sight but cause gradual vision loss."
+/*
+//Tinkerer's Cache: Creates a tinkerer's cache, allowing global component storage.
+/datum/clockwork_scripture/create_object/tinkerers_cache
+	descname = "Necessary Structure, Shares Components"
+	name = "Tinkerer's Cache"
+	desc = "Forms a cache that can store an infinite amount of components. All caches are linked and will provide components to slabs. \
+	Striking a cache with a slab will transfer that slab's components to the global cache."
+	invocations = list("Constructing...", "...a cache!")
+	channel_time = 50
+	consumed_components = list(BELLIGERENT_EYE = 0, VANGUARD_COGWHEEL = 0, GEIS_CAPACITOR = 0, REPLICANT_ALLOY = 1, HIEROPHANT_ANSIBLE = 0)
+	object_path = /obj/structure/destructible/clockwork/cache
+	creator_message = "<span class='brass'>You form a tinkerer's cache, which is capable of storing components, which will automatically be used by slabs.</span>"
+	observer_message = "<span class='warning'>A hollow brass spire rises and begins to blaze!</span>"
+	usage_tip = "Slabs will draw components from the global cache after the slab's own repositories, making caches extremely useful."
+	tier = SCRIPTURE_DRIVER
+	one_per_tile = TRUE
+	primary_component = REPLICANT_ALLOY
+	sort_priority = 8
+	quickbind = TRUE
+	quickbind_desc = "Creates a Tinkerer's Cache, which stores components globally for slab access."
+	var/static/prev_cost = 0
+	*/

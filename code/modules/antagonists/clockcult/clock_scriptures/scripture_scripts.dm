@@ -487,3 +487,27 @@
 	invoker.light_range = 0
 	invoker.update_light()
 	return ..()
+
+/*//Belligerent: Channeled for up to fifteen times over thirty seconds. Forces non-servants that can hear the chant to walk, doing minor damage. Nar-Sian cultists are burned.
+/datum/clockwork_scripture/channeled/belligerent
+	descname = "Channeled, Area Slowdown"
+	name = "Belligerent"
+	desc = "Forces all nearby non-servants to walk rather than run, doing minor damage. Chanted every two seconds for up to thirty seconds."
+	chant_invocations = list("Punish their blindness!", "Take time, make slow!")
+	chant_amount = 15
+	chant_interval = 20
+	channel_time = 20
+	power_cost = 300
+	usage_tip = "Useful for crowd control in a populated area and disrupting mass movement."
+	tier = SCRIPTURE_DRIVER
+	primary_component = BELLIGERENT_EYE
+	sort_priority = 1
+	quickbind = TRUE
+	quickbind_desc = "Forces nearby non-Servants to walk, doing minor damage with each chant.<br><b>Maximum 15 chants.</b>"
+
+/datum/clockwork_scripture/channeled/belligerent/chant_effects(chant_number)
+	for(var/mob/living/carbon/C in hearers(7, invoker))
+		C.apply_status_effect(STATUS_EFFECT_BELLIGERENT)
+	new /obj/effect/temp_visual/ratvar/belligerent(get_turf(invoker))
+	return TRUE
+	*/
