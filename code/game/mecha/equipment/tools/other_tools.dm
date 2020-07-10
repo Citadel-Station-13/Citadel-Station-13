@@ -422,13 +422,13 @@
 		return
 	var/datum/gas_mixture/GM = new
 	if(prob(10))
-		GM.gases[/datum/gas/plasma] += 100
-		GM.temperature = 1500+T0C //should be enough to start a fire
+		GM.adjust_moles(/datum/gas/plasma,100)
+		GM.set_temperature(1500+T0C) //should be enough to start a fire
 		T.visible_message("[src] suddenly disgorges a cloud of heated plasma.")
 		qdel(src)
 	else
-		GM.gases[/datum/gas/plasma] += 5
-		GM.temperature = istype(T) ? T.air.return_temperature() : T20C
+		GM.adjust_moles(/datum/gas/plasma,5)
+		GM.set_temperature(istype(T) ? T.air.return_temperature() : T20C)
 		T.visible_message("[src] suddenly disgorges a cloud of plasma.")
 	T.assume_air(GM)
 	return

@@ -253,7 +253,7 @@
 		occupant_gas_supply = new
 	if(isanimal(occupant))
 		var/mob/living/simple_animal/animal = occupant
-		occupant_gas_supply.temperature = animal.minbodytemp //simple animals only care about temperature when their turf isnt a location
+		occupant_gas_supply.set_temperature(animal.minbodytemp) //simple animals only care about temperature when their turf isnt a location
 	else
 		if(ishuman(occupant)) //humans require resistance to cold/heat and living in no air while inside, and lose this when outside
 			ADD_TRAIT(occupant, TRAIT_RESISTCOLD, "bluespace_container_cold_resist")
