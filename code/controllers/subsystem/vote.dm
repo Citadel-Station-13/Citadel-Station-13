@@ -58,7 +58,6 @@ SUBSYSTEM_DEF(vote)
 	if(!statpanel("Status"))		// don't bother if they're not focused on this panel
 		return
 	var/static/list/supported = list(PLURALITY_VOTING, APPROVAL_VOTING)
-	stat(null, null)
 	stat("Vote active!", "There is currently a vote running. Question: [question]")
 	if(!(vote_system in supported))
 		stat("<STATPANEL VOTING DISABLED>", "The current vote system is not supported by statpanel rendering. Please vote manually by opening the vote popup using the action button or chat link.")
@@ -76,6 +75,7 @@ SUBSYSTEM_DEF(vote)
 			if(PLURALITY_VOTING)
 				ivotedforthis = voted[usr.ckey] == i
 		stat(ivotedforthis? "\[X\]" : "\[ \]", choice_statclicks[choice])
+	stat(null, null)
 
 /datum/controller/subsystem/vote/proc/reset()
 	initiator = null
