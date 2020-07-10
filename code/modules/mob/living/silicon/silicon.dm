@@ -18,17 +18,16 @@
 
 	var/datum/ai_laws/laws = null//Now... THEY ALL CAN ALL HAVE LAWS
 	var/last_lawchange_announce = 0
-	var/list/alarms_to_show = list()
-	var/list/alarms_to_clear = list()
 	var/designation = ""
 	var/radiomod = "" //Radio character used before state laws/arrivals announce to allow department transmissions, default, or none at all.
 	var/obj/item/camera/siliconcam/aicamera = null //photography
 	hud_possible = list(ANTAG_HUD, DIAG_STAT_HUD, DIAG_HUD, DIAG_TRACK_HUD)
 
 	var/obj/item/radio/borg/radio = null //AIs dont use this but this is at the silicon level to advoid copypasta in say()
-
-	var/list/alarm_types_show = list("Motion" = 0, "Fire" = 0, "Atmosphere" = 0, "Power" = 0, "Camera" = 0)
-	var/list/alarm_types_clear = list("Motion" = 0, "Fire" = 0, "Atmosphere" = 0, "Power" = 0, "Camera" = 0)
+	
+	var/list/queued_alarm_triggers
+	var/list/queued_alarm_clears
+	var/alarm_show_queued = FALSE
 
 	var/lawcheck[1]
 	var/ioncheck[1]
@@ -78,84 +77,50 @@
 /mob/living/silicon/contents_explosion(severity, target)
 	return
 
-/mob/living/silicon/proc/cancelAlarm()
-	return
+/mob/living/silicon/proc/QueueAlarmTrigger(area/A, list/classes)
+	for(var/class in classes)
+		LAZYOR(queued_alarm_triggers[class], A)
+		if(queued_alarm_clears[class])
+			queued_alarm_clears -= A
+	if(!alarm_show_queued)
+		alarm_show_queued = TRUE
+		addtimer(CALLBACK(src, .proc/announce_alarm_changes), 3 SECONDS)
 
-/mob/living/silicon/proc/triggerAlarm()
-	return
+/mob/living/silicon/proc/QueueAlarmClear(area/A, list/classes)
+	for(var/class in classes)
+		LAZYOR(queued_alarm_clears[class], A)
+		if(queued_alarm_triggers[class])
+			queued_alarm_triggers -= A
+	if(!alarm_show_queued)
+		alarm_show_queued = TRUE
+		addtimer(CALLBACK(src, .proc/announce_alarm_changes), 3 SECONDS)
 
-/mob/living/silicon/proc/queueAlarm(message, type, incoming = 1)
-	var/in_cooldown = (alarms_to_show.len > 0 || alarms_to_clear.len > 0)
-	if(incoming)
-		alarms_to_show += message
-		alarm_types_show[type] += 1
-	else
-		alarms_to_clear += message
-		alarm_types_clear[type] += 1
-
-	if(!in_cooldown)
-		spawn(3 * 10) // 3 seconds
-
-			if(alarms_to_show.len < 5)
-				for(var/msg in alarms_to_show)
-					to_chat(src, msg)
-			else if(alarms_to_show.len)
-
-				var/msg = "--- "
-
-				if(alarm_types_show["Burglar"])
-					msg += "BURGLAR: [alarm_types_show["Burglar"]] alarms detected. - "
-
-				if(alarm_types_show["Motion"])
-					msg += "MOTION: [alarm_types_show["Motion"]] alarms detected. - "
-
-				if(alarm_types_show["Fire"])
-					msg += "FIRE: [alarm_types_show["Fire"]] alarms detected. - "
-
-				if(alarm_types_show["Atmosphere"])
-					msg += "ATMOSPHERE: [alarm_types_show["Atmosphere"]] alarms detected. - "
-
-				if(alarm_types_show["Power"])
-					msg += "POWER: [alarm_types_show["Power"]] alarms detected. - "
-
-				if(alarm_types_show["Camera"])
-					msg += "CAMERA: [alarm_types_show["Camera"]] alarms detected. - "
-
-				msg += "<A href=?src=[REF(src)];showalerts=1'>\[Show Alerts\]</a>"
-				to_chat(src, msg)
-
-			if(alarms_to_clear.len < 3)
-				for(var/msg in alarms_to_clear)
-					to_chat(src, msg)
-
-			else if(alarms_to_clear.len)
-				var/msg = "--- "
-
-				if(alarm_types_clear["Motion"])
-					msg += "MOTION: [alarm_types_clear["Motion"]] alarms cleared. - "
-
-				if(alarm_types_clear["Fire"])
-					msg += "FIRE: [alarm_types_clear["Fire"]] alarms cleared. - "
-
-				if(alarm_types_clear["Atmosphere"])
-					msg += "ATMOSPHERE: [alarm_types_clear["Atmosphere"]] alarms cleared. - "
-
-				if(alarm_types_clear["Power"])
-					msg += "POWER: [alarm_types_clear["Power"]] alarms cleared. - "
-
-				if(alarm_types_show["Camera"])
-					msg += "CAMERA: [alarm_types_clear["Camera"]] alarms cleared. - "
-
-				msg += "<A href=?src=[REF(src)];showalerts=1'>\[Show Alerts\]</a>"
-				to_chat(src, msg)
-
-
-			alarms_to_show = list()
-			alarms_to_clear = list()
-			for(var/key in alarm_types_show)
-				alarm_types_show[key] = 0
-			for(var/key in alarm_types_clear)
-				alarm_types_clear[key] = 0
+/mob/living/silicon/proc/announce_alarm_changes()
+	alarm_show_queued = FALSE
+	if(!length(queued_alarm_clears) && !length(queued_alarm_triggers))
+		return
+	var/msg = list()
+	if(queued_alarm_clears)
+		msg += "---<br>"
+		for(var/class in queued_alarm_clears)
+			if(length(queued_alarm_clears[class]) > 5)
+				msg += "[class]: [length(queued_alarm_clears[class])] alarms cleared.<br>"
+				continue
+		var/list/names = list()
+		for(var/area/A in queued_alarm_clears[class])
+			names += A.name
+		msg += "[class] alarm(s) cleared in: [english_list(names)]<br>"
+	if(queued_alarm_triggers)
+		msg += "---<br>"
+		for(var/class in queued_alarm_triggers)
+			if(length(queued_alarm_clears[class]) > 5)
+				msg += "[class]: [length(queued_alarm_clears[class])] alarms triggered.<br>"
+				continue
+		var/list/names = list()
+		for(var/area/A in queued_alarm_triggers[class])
+			names += A.name
+		msg += "[class] alarm(s) detected in: [english_list(names)]<br>"
+	msg += "---<br>"
 
 /mob/living/silicon/can_inject(mob/user, error_msg, target_zone, penetrate_thick = FALSE, bypass_immunity = FALSE)
 	if(error_msg)

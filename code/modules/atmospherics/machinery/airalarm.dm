@@ -78,6 +78,9 @@
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 100, "bomb" = 0, "bio" = 100, "rad" = 100, "fire" = 90, "acid" = 30)
 	resistance_flags = FIRE_PROOF
 
+	/// The area we're in, set on Initialize.
+	var/area/myarea
+
 	var/danger_level = 0
 	var/mode = AALARM_MODE_SCRUBBING
 
@@ -214,9 +217,15 @@
 	power_change()
 	set_frequency(frequency)
 
+	var/area/A = get_base_area(src)
+	myarea = A
+	myarea.airalarms |= src
+
 /obj/machinery/airalarm/Destroy()
 	SSradio.remove_object(src, frequency)
 	qdel(wires)
+	myarea.airalarms -= src
+	myarea.recheck_atmos_alarms()
 	wires = null
 	return ..()
 
@@ -426,13 +435,13 @@
 			. = TRUE
 		if("alarm")
 			var/area/A = get_base_area(src)
-			if(A.atmosalert(2, src))
-				post_alert(2)
+			if(A.atmosalert(AIR_STATUS_DANGER, src))
+				post_alert(AIR_STATUS_DANGER)
 			. = TRUE
 		if("reset")
 			var/area/A = get_base_area(src)
-			if(A.atmosalert(0, src))
-				post_alert(0)
+			if(A.atmosalert(AIR_STATUS_NORMAL, src))
+				post_alert(AIR_STATUS_NORMAL)
 			. = TRUE
 	update_icon()
 
@@ -653,13 +662,13 @@
 	var/overlay_state = AALARM_OVERLAY_OFF
 	var/area/A = get_base_area(src)
 	switch(max(danger_level, A.atmosalm))
-		if(0)
+		if(AIR_STATUS_NORMAL)
 			overlay_state = AALARM_OVERLAY_GREEN
 			light_color = LIGHT_COLOR_GREEN
-		if(1)
+		if(AIR_STATUS_WARNING)
 			overlay_state = AALARM_OVERLAY_WARN
 			light_color = LIGHT_COLOR_LAVA
-		if(2)
+		if(AIR_STATUS_DANGER)
 			overlay_state = AALARM_OVERLAY_DANGER
 			light_color = LIGHT_COLOR_RED
 

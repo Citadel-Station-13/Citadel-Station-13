@@ -51,6 +51,7 @@
 
 /obj/machinery/firealarm/Destroy()
 	LAZYREMOVE(myarea.firealarms, src)
+	myarea.recheck_fire_alarms()
 	return ..()
 
 /obj/machinery/firealarm/power_change()

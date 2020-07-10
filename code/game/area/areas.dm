@@ -38,6 +38,9 @@
 	var/poweralm = TRUE
 	var/lightswitch = TRUE
 
+	/// Atmospheric Danger Flags - Controls firedoors and emergency lighting color.
+	var/active_environmental_dangers = NONE
+
 	var/totalbeauty = 0 //All beauty in this area combined, only includes indoor area.
 	var/beauty = 0 // Beauty average per open turf in the area
 	var/beauty_threshold = 150 //If a room is too big it doesn't have beauty.
@@ -83,6 +86,8 @@
 	var/list/firedoors
 	var/list/cameras
 	var/list/firealarms
+	/// List of air alarms
+	var/list/obj/machinery/airalarm/air_alarms
 	var/firedoors_last_closed_on = 0
 	var/xenobiology_compatible = FALSE //Can the Xenobio management console transverse this area by default?
 	var/list/canSmoothWithAreas //typecache to limit the areas that atoms in this area can smooth with
@@ -233,6 +238,7 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 				A.power_environ = FALSE
 			INVOKE_ASYNC(A, .proc/power_change)
 	STOP_PROCESSING(SSobj, src)
+	air_alarms = null
 	return ..()
 
 /area/proc/poweralert(state, obj/source)
@@ -268,7 +274,7 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 
 /area/proc/atmosalert(danger_level, obj/source)
 	if(danger_level != atmosalm)
-		if (danger_level==2)
+		if (danger_level == AIR_STATUS_DANGER)
 
 			for (var/item in GLOB.silicon_mobs)
 				var/mob/living/silicon/aiPlayer = item
@@ -283,7 +289,7 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 				var/datum/computer_file/program/alarm_monitor/p = item
 				p.triggerAlarm("Atmosphere", src, cameras, source)
 
-		else if (src.atmosalm == 2)
+		else if (atmosalm == AIR_STATUS_DANGER)
 			for (var/item in GLOB.silicon_mobs)
 				var/mob/living/silicon/aiPlayer = item
 				aiPlayer.cancelAlarm("Atmosphere", src, source)
@@ -330,20 +336,28 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 		set_fire_alarm_effects(TRUE)
 		ModifyFiredoors(FALSE)
 
-	for (var/item in GLOB.alert_consoles)
-		var/obj/machinery/computer/station_alert/a = item
-		a.triggerAlarm("Fire", src, cameras, source)
 	for (var/item in GLOB.silicon_mobs)
 		var/mob/living/silicon/aiPlayer = item
 		aiPlayer.triggerAlarm("Fire", src, cameras, source)
 	for (var/item in GLOB.drones_list)
 		var/mob/living/simple_animal/drone/D = item
 		D.triggerAlarm("Fire", src, cameras, source)
-	for(var/item in GLOB.alarmdisplay)
-		var/datum/computer_file/program/alarm_monitor/p = item
-		p.triggerAlarm("Fire", src, cameras, source)
 
 	START_PROCESSING(SSobj, src)
+
+/**
+  * Rechecks fire alarms and resets our alert if none are detected.
+  */
+/area/proc/recheck_fire_alarms()
+	if(!length(firealarms))
+		set_fire_status(FALSE)
+
+/**
+  * Rechecks air alarms and resets our alert if none are detected.
+  */
+/area/proc/recheck_atmos_alarms()
+	if(!length(air_alarms))
+		set_air_status(AIR_STATUS_NORMAL)
 
 /area/proc/firereset(obj/source)
 	if (fire)
@@ -353,15 +367,9 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 	for (var/item in GLOB.silicon_mobs)
 		var/mob/living/silicon/aiPlayer = item
 		aiPlayer.cancelAlarm("Fire", src, source)
-	for (var/item in GLOB.alert_consoles)
-		var/obj/machinery/computer/station_alert/a = item
-		a.cancelAlarm("Fire", src, source)
 	for (var/item in GLOB.drones_list)
 		var/mob/living/simple_animal/drone/D = item
 		D.cancelAlarm("Fire", src, source)
-	for(var/item in GLOB.alarmdisplay)
-		var/datum/computer_file/program/alarm_monitor/p = item
-		p.cancelAlarm("Fire", src, source)
 
 	STOP_PROCESSING(SSobj, src)
 

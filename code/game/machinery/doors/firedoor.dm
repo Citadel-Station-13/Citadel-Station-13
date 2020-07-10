@@ -5,8 +5,8 @@
 #define CONSTRUCTION_NOCIRCUIT 4 //Circuit board removed, can safely weld apart
 
 /obj/machinery/door/firedoor
-	name = "firelock"
-	desc = "Apply crowbar."
+	name = "atmoslock"
+	desc = "A weak, but heat-shielded airlock less meant for keeping people out than for keeping out the vaccum of space or a raging inferno. Apply crowbar. Authorized personnel are able to open this by hand or ID swipe instead."
 	icon = 'icons/obj/doors/Doorfireglass.dmi'
 	icon_state = "door_open"
 	opacity = FALSE

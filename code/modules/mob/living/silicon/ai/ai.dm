@@ -35,7 +35,6 @@
 	var/aiRestorePowerRoutine = 0
 	var/requires_power = POWER_REQ_ALL
 	var/can_be_carded = TRUE
-	var/alarms = list("Motion"=list(), "Fire"=list(), "Atmosphere"=list(), "Power"=list(), "Camera"=list(), "Burglar"=list())
 	var/viewalerts = 0
 	var/icon/holo_icon//Female is assigned when AI is created.
 	var/obj/mecha/controlled_mech //For controlled_mech a mech, to determine whether to relaymove or use the AI eye.
@@ -232,28 +231,28 @@
 /mob/living/silicon/ai/proc/ai_alerts()
 	var/dat = "<HEAD><TITLE>Current Station Alerts</TITLE><META HTTP-EQUIV='Refresh' CONTENT='10'></HEAD><BODY>\n"
 	dat += "<A HREF='?src=[REF(src)];mach_close=aialerts'>Close</A><BR><BR>"
-	for (var/cat in alarms)
-		dat += text("<B>[]</B><BR>\n", cat)
-		var/list/L = alarms[cat]
+	var/list/valid_alarms = list(
+		"Motion" = MOTION_ALARM,
+		"Fire" = FIRE_ALARM,
+		"Atmospheric" = ATMOS_ALARM,
+		"Camera" = CAMERA_ALARM,
+		"Power" = POWER_ALARM
+	)
+	for(var/name in valid_alarms)
+		dat += text("<B>[name]</B><BR>\n")
+		var/list/L = SSalarms.get_alarm_areas_by_type_and_network(valid_alarms[name], ALARM_NETWORK_STATION)
 		if (L.len)
-			for (var/alarm in L)
-				var/list/alm = L[alarm]
-				var/area/A = alm[1]
-				var/C = alm[2]
-				var/list/sources = alm[3]
+			for(var/i in L)
+				var/area/A = i
 				dat += "<NOBR>"
-				if (C && istype(C, /list))
-					var/dat2 = ""
-					for (var/obj/machinery/camera/I in C)
-						dat2 += text("[]<A HREF=?src=[REF(src)];switchcamera=[REF(I)]>[]</A>", (dat2=="") ? "" : " | ", I.c_tag)
-					dat += text("-- [] ([])", A.name, (dat2!="") ? dat2 : "No Camera")
-				else if (C && istype(C, /obj/machinery/camera))
-					var/obj/machinery/camera/Ctmp = C
-					dat += text("-- [] (<A HREF=?src=[REF(src)];switchcamera=[REF(C)]>[]</A>)", A.name, Ctmp.c_tag)
+				if(length(A.cameras))
+					dat += "-- [A.name] -- "
+					var/camstring = ""
+					for(var/obj/machinery/camera/C in A.cameras)
+						camstring = "[(camstring == "")? "" : " | "]<A HREF=?src=[REF(src)];switchcamera=[REF(I)]>[C.c_tag]</A>"
+						dat += camstring
 				else
-					dat += text("-- [] (No Camera)", A.name)
-				if (sources.len > 1)
-					dat += text("- [] sources", sources.len)
+					dat += "-- [A.name] (No Camera)"
 				dat += "</NOBR><BR>\n"
 		else
 			dat += "-- All Systems Nominal<BR>\n"
@@ -261,6 +260,80 @@
 
 	viewalerts = 1
 	src << browse(dat, "window=aialerts&can_close=0")
+
+/mob/living/silicon/ai/announce_alarm_changes()
+	alarm_show_queued = FALSE
+	if(!length(queued_alarm_clears) && !length(queued_alarm_triggers))
+		return
+	var/msg = list()
+	if(queued_alarm_clears)
+		msg += "---<br>"
+		for(var/class in queued_alarm_clears)
+			if(length(queued_alarm_clears[class]) > 5)
+				msg += "[class]: [length(queued_alarm_clears[class])] alarms cleared.<br>"
+				continue
+		var/list/names = list()
+		for(var/area/A in queued_alarm_clears[class])
+			names += A.name
+		msg += "[class] alarm(s) cleared in: [english_list(names)]<br>"
+	if(queued_alarm_triggers)
+		msg += "---<br>"
+		for(var/class in queued_alarm_triggers)
+			if(length(queued_alarm_clears[class]) > 5)
+				msg += "[class]: [length(queued_alarm_clears[class])] alarms triggered.<br>"
+				continue
+		for(var/area/A in queued_alarm_triggers[class])
+			msg += "[class] alarm triggered in [A.name]"
+			if(!length(A.cameras))
+				msg += " (No camera)<br>"
+			else
+				var/camstring = ""
+				for(var/obj/machinery/camera/C in A.cameras)
+					camstring = "[(camstring == "")? "" : " | "]<A HREF=?src=[REF(src)];switchcamera=[REF(I)]>[C.c_tag]</A>"
+					dat += camstring
+	msg += "---<br>"
+	if(view_alerts)
+		ai_alerts()
+
+/mob/living/silicon/ai/proc/alarm_trigger(area/A, alarm_type, datum/source)
+	if(stat == DEAD)
+		return
+	var/list/classes = list()
+	for(var/i in bitfield2list(alarm_type))
+		switch(i)
+			if(FIRE_ALARM)
+				classes += "Fire"
+			if(ATMOS_ALARM)
+				classes += "Atmospheric"
+			if(MOTION_ALARM)
+				classes += "Motion"
+			if(POWER_ALARM)
+				classes += "Power"
+			if(CAMERA_ALARM)
+				classes += "Camera"
+	if(!classes.len)
+		return
+	QueueAlarmTrigger(A, classes)
+
+/mob/living/silicon/ai/proc/alarm_clear(area/A, alarm_type, datum/source)
+	if(stat == DEAD)
+		return
+	var/list/classes = list()
+	for(var/i in bitfield2list(alarm_type))
+		switch(i)
+			if(FIRE_ALARM)
+				classes += "Fire"
+			if(ATMOS_ALARM)
+				classes += "Atmospheric"
+			if(MOTION_ALARM)
+				classes += "Motion"
+			if(POWER_ALARM)
+				classes += "Power"
+			if(CAMERA_ALARM)
+				classes += "Camera"
+	if(!classes.len)
+		return
+	QueueAlarmClear(A, classes)
 
 /mob/living/silicon/ai/proc/ai_call_shuttle()
 	if(control_disabled)
@@ -486,61 +559,6 @@
 	call_bot_cooldown = world.time + CALL_BOT_COOLDOWN
 	Bot.call_bot(src, waypoint)
 	call_bot_cooldown = 0
-
-
-/mob/living/silicon/ai/triggerAlarm(class, area/A, O, obj/alarmsource)
-	if(alarmsource.z != z)
-		return
-	var/list/L = alarms[class]
-	for (var/I in L)
-		if (I == A.name)
-			var/list/alarm = L[I]
-			var/list/sources = alarm[3]
-			if (!(alarmsource in sources))
-				sources += alarmsource
-			return 1
-	var/obj/machinery/camera/C = null
-	var/list/CL = null
-	if (O && istype(O, /list))
-		CL = O
-		if (CL.len == 1)
-			C = CL[1]
-	else if (O && istype(O, /obj/machinery/camera))
-		C = O
-	L[A.name] = list(A, (C) ? C : O, list(alarmsource))
-	if (O)
-		if (C && C.can_use())
-			queueAlarm("--- [class] alarm detected in [A.name]! (<A HREF=?src=[REF(src)];switchcamera=[REF(C)]>[C.c_tag]</A>)", class)
-		else if (CL && CL.len)
-			var/foo = 0
-			var/dat2 = ""
-			for (var/obj/machinery/camera/I in CL)
-				dat2 += text("[]<A HREF=?src=[REF(src)];switchcamera=[REF(I)]>[]</A>", (!foo) ? "" : " | ", I.c_tag)	//I'm not fixing this shit...
-				foo = 1
-			queueAlarm(text ("--- [] alarm detected in []! ([])", class, A.name, dat2), class)
-		else
-			queueAlarm(text("--- [] alarm detected in []! (No Camera)", class, A.name), class)
-	else
-		queueAlarm(text("--- [] alarm detected in []! (No Camera)", class, A.name), class)
-	if (viewalerts) ai_alerts()
-	return 1
-
-/mob/living/silicon/ai/cancelAlarm(class, area/A, obj/origin)
-	var/list/L = alarms[class]
-	var/cleared = 0
-	for (var/I in L)
-		if (I == A.name)
-			var/list/alarm = L[I]
-			var/list/srcs  = alarm[3]
-			if (origin in srcs)
-				srcs -= origin
-			if (srcs.len == 0)
-				cleared = 1
-				L -= I
-	if (cleared)
-		queueAlarm("--- [class] alarm in [A.name] has been cleared.", class, 0)
-		if (viewalerts) ai_alerts()
-	return !cleared
 
 //Replaces /mob/living/silicon/ai/verb/change_network() in ai.dm & camera.dm
 //Adds in /mob/living/silicon/ai/proc/ai_network_change() instead

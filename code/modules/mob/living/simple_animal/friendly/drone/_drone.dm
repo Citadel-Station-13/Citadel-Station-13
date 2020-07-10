@@ -63,7 +63,6 @@
 	"2. You may not harm any being, regardless of intent or circumstance.\n"+\
 	"3. Your goals are to actively build, maintain, repair, improve, and provide power to the best of your abilities within the facility that housed your activation." //for derelict drones so they don't go to station.
 	var/heavy_emp_damage = 25 //Amount of damage sustained if hit by a heavy EMP pulse
-	var/alarms = list("Atmosphere" = list(), "Fire" = list(), "Power" = list())
 	var/obj/item/internal_storage //Drones can store one item, of any size/type in their body
 	var/obj/item/head
 	var/obj/item/default_storage = /obj/item/storage/backpack/duffelbag/drone //If this exists, it will spawn in internal storage
@@ -101,6 +100,9 @@
 	for(var/datum/atom_hud/data/diagnostic/diag_hud in GLOB.huds)
 		diag_hud.add_to_hud(src)
 
+	RegisterAlarmTrigger(ALARM_NETWORK_STATION, .proc/alarm_trigger)
+	RegisterAlarmClear(ALARM_NETWORK_STATION, .proc/alarm_clear)
+
 /mob/living/simple_animal/drone/ComponentInitialize()
 	. = ..()
 	if(can_be_held)
@@ -126,7 +128,9 @@
 
 /mob/living/simple_animal/drone/Destroy()
 	GLOB.drones_list -= src
-	qdel(access_card) //Otherwise it ends up on the floor!
+	QDEL_NULL(access_card) //Otherwise it ends up on the floor!
+	UnregisterAlarmTrigger(ALARM_NETWORK_STATION, .proc/alarm_trigger)
+	UnregisterAlarmClear(ALARM_NETWORK_STATION, .proc/alarm_clear)
 	return ..()
 
 /mob/living/simple_animal/drone/Login()
@@ -225,37 +229,23 @@
 		to_chat(src, "<span class='userdanger'>HeAV% DA%^MMA+G TO I/O CIR!%UUT!</span>")
 
 
-/mob/living/simple_animal/drone/proc/triggerAlarm(class, area/A, O, obj/alarmsource)
-	if(alarmsource.z != z)
+/mob/living/simple_animal/drone/proc/alarm_trigger(area/A, alarm_type, datum/source)
+	if(stat == DEAD)
 		return
-	if(stat != DEAD)
-		var/list/L = src.alarms[class]
-		for (var/I in L)
-			if (I == A.name)
-				var/list/alarm = L[I]
-				var/list/sources = alarm[2]
-				if (!(alarmsource in sources))
-					sources += alarmsource
-				return
-		L[A.name] = list(A, list(alarmsource))
-		to_chat(src, "--- [class] alarm detected in [A.name]!")
+	if(isatom(source))
+		var/atom/A = source
+		if(A.z != z)
+			return
+	to_chat(src, "--- [class] alarm detected in [A.name]!")
 
-
-/mob/living/simple_animal/drone/proc/cancelAlarm(class, area/A, obj/origin)
-	if(stat != DEAD)
-		var/list/L = alarms[class]
-		var/cleared = 0
-		for (var/I in L)
-			if (I == A.name)
-				var/list/alarm = L[I]
-				var/list/srcs  = alarm[2]
-				if (origin in srcs)
-					srcs -= origin
-				if (srcs.len == 0)
-					cleared = 1
-					L -= I
-		if(cleared)
-			to_chat(src, "--- [class] alarm in [A.name] has been cleared.")
+/mob/living/simple_animal/drone/proc/alarm_clear(area/A, alarm_type, datum/source)
+	if(stat == DEAD)
+		return
+	if(isatom(source))
+		var/atom/A = source
+		if(A.z != z)
+			return
+	to_chat(src, "--- [class] alarm in [A.name] has been cleared.")
 
 /mob/living/simple_animal/drone/handle_temperature_damage()
 	return

@@ -73,6 +73,9 @@
 	verbs += /mob/living/proc/lay_down //CITADEL EDIT gimmie rest verb kthx
 	verbs += /mob/living/silicon/robot/proc/rest_style
 
+	RegisterAlarmTrigger(ALARM_NETWORK_STATION, .proc/alarm_trigger)
+	RegisterAlarmClear(ALARM_NETWORK_STATION, .proc/alarm_clear)
+
 //If there's an MMI in the robot, have it ejected when the mob goes away. --NEO
 /mob/living/silicon/robot/Destroy()
 	var/atom/T = drop_location()//To hopefully prevent run time errors.
@@ -111,6 +114,8 @@
 	module = null
 	eye_lights = null
 	cell = null
+	UnregisterAlarmTrigger(ALARM_NETWORK_STATION, .proc/alarm_trigger)
+	UnregisterAlarmClear(ALARM_NETWORK_STATION, .proc/alarm_clear)
 	return ..()
 
 /mob/living/silicon/robot/proc/pick_module()
@@ -173,15 +178,21 @@
 
 /mob/living/silicon/robot/proc/robot_alerts()
 	var/dat = ""
-	for (var/cat in alarms)
-		dat += text("<B>[cat]</B><BR>\n")
-		var/list/L = alarms[cat]
+	var/list/valid_alarms = list(
+		"Motion" = MOTION_ALARM,
+		"Fire" = FIRE_ALARM,
+		"Atmospheric" = ATMOS_ALARM,
+		"Camera" = CAMERA_ALARM,
+		"Power" = POWER_ALARM
+	)
+	for(var/name in valid_alarms)
+		dat += "<B>[name]</B><BR>\n"
+		var/list/L = SSalarms.get_alarm_areas_by_type_and_network(valid_alarms[name], ALARM_NETWORK_STATION)
 		if (L.len)
-			for (var/alarm in L)
-				var/list/alm = L[alarm]
-				var/area/A = alm[1]
+			for(var/i in L)
+				var/area/A = i
 				dat += "<NOBR>"
-				dat += text("-- [A.name]")
+				dat += "-- [A.name]"
 				dat += "</NOBR><BR>\n"
 		else
 			dat += "-- All Systems Nominal<BR>\n"
@@ -237,46 +248,45 @@
 /mob/living/silicon/robot/restrained(ignore_grab)
 	. = 0
 
-/mob/living/silicon/robot/triggerAlarm(class, area/A, O, obj/alarmsource)
-	if(alarmsource.z != z)
-		return
+/mob/living/silicon/robot/proc/alarm_trigger(area/A, alarm_type, datum/source)
 	if(stat == DEAD)
-		return 1
-	var/list/L = alarms[class]
-	for (var/I in L)
-		if (I == A.name)
-			var/list/alarm = L[I]
-			var/list/sources = alarm[3]
-			if (!(alarmsource in sources))
-				sources += alarmsource
-			return 1
-	var/obj/machinery/camera/C = null
-	var/list/CL = null
-	if (O && istype(O, /list))
-		CL = O
-		if (CL.len == 1)
-			C = CL[1]
-	else if (O && istype(O, /obj/machinery/camera))
-		C = O
-	L[A.name] = list(A, (C) ? C : O, list(alarmsource))
-	queueAlarm(text("--- [class] alarm detected in [A.name]!"), class)
-	return 1
+		return
+	var/list/classes = list()
+	for(var/i in bitfield2list(alarm_type))
+		switch(i)
+			if(FIRE_ALARM)
+				classes += "Fire"
+			if(ATMOS_ALARM)
+				classes += "Atmospheric"
+			if(MOTION_ALARM)
+				classes += "Motion"
+			if(POWER_ALARM)
+				classes += "Power"
+			if(CAMERA_ALARM)
+				classes += "Camera"
+	if(!classes.len)
+		return
+	QueueAlarmTrigger(A, classes)
 
-/mob/living/silicon/robot/cancelAlarm(class, area/A, obj/origin)
-	var/list/L = alarms[class]
-	var/cleared = 0
-	for (var/I in L)
-		if (I == A.name)
-			var/list/alarm = L[I]
-			var/list/srcs  = alarm[3]
-			if (origin in srcs)
-				srcs -= origin
-			if (srcs.len == 0)
-				cleared = 1
-				L -= I
-	if (cleared)
-		queueAlarm("--- [class] alarm in [A.name] has been cleared.", class, 0)
-	return !cleared
+/mob/living/silicon/robot/proc/alarm_clear(area/A, alarm_type, datum/source)
+	if(stat == DEAD)
+		return
+	var/list/classes = list()
+	for(var/i in bitfield2list(alarm_type))
+		switch(i)
+			if(FIRE_ALARM)
+				classes += "Fire"
+			if(ATMOS_ALARM)
+				classes += "Atmospheric"
+			if(MOTION_ALARM)
+				classes += "Motion"
+			if(POWER_ALARM)
+				classes += "Power"
+			if(CAMERA_ALARM)
+				classes += "Camera"
+	if(!classes.len)
+		return
+	QueueAlarmClear(A, classes)
 
 /mob/living/silicon/robot/can_interact_with(atom/A)
 	if (low_power_mode)
