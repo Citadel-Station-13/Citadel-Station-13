@@ -301,4 +301,52 @@
 /datum/gas_mixture/transfer_to(datum/gas_mixture/target, amount)
 	return merge(target.remove(amount))
 
+/datum/gas_mixture/react(datum/holder)
+	. = NO_REACTION
+	if(!total_moles())
+		return
+	var/list/reactions = list()
+	for(var/datum/gas_reaction/G in SSair.gas_reactions)
+		if(get_moles(G.major_gas))
+			reactions += G
+	if(!length(reactions))
+		return
+	reaction_results = new
+	var/temp = return_temperature()
+	var/ener = thermal_energy()
+
+	reaction_loop:
+		for(var/r in reactions)
+			var/datum/gas_reaction/reaction = r
+
+			var/list/min_reqs = reaction.min_requirements
+			if((min_reqs["TEMP"] && temp < min_reqs["TEMP"]) \
+			|| (min_reqs["ENER"] && ener < min_reqs["ENER"]))
+				continue
+
+			for(var/id in min_reqs)
+				if (id == "TEMP" || id == "ENER")
+					continue
+				if(get_moles(id) < min_reqs[id])
+					continue reaction_loop
+			//at this point, all minimum requirements for the reaction are satisfied.
+
+			/*	currently no reactions have maximum requirements, so we can leave the checks commented out for a slight performance boost
+				PLEASE DO NOT REMOVE THIS CODE. the commenting is here only for a performance increase.
+				enabling these checks should be as easy as possible and the fact that they are disabled should be as clear as possible
+			var/list/max_reqs = reaction.max_requirements
+			if((max_reqs["TEMP"] && temp > max_reqs["TEMP"]) \
+			|| (max_reqs["ENER"] && ener > max_reqs["ENER"]))
+				continue
+			for(var/id in max_reqs)
+				if(id == "TEMP" || id == "ENER")
+					continue
+				if(cached_gases[id] && cached_gases[id][MOLES] > max_reqs[id])
+					continue reaction_loop
+			//at this point, all requirements for the reaction are satisfied. we can now react()
+			*/
+			. |= reaction.react(src, holder)
+			if (. & STOP_REACTIONS)
+				break
+
 #endif
