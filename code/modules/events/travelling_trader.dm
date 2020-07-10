@@ -7,7 +7,7 @@
 
 /datum/round_event/travelling_trader
 	startWhen = 0
-	endWhen = 600 //you effectively have 10 minutes to complete the traders request, before they disappear
+	endWhen = 900 //you effectively have 15 minutes to complete the traders request, before they disappear
 	var/mob/living/carbon/human/dummy/travelling_trader/trader
 	var/atom/spawn_location //where the trader appears
 
@@ -27,7 +27,8 @@
 
 /datum/round_event/travelling_trader/start()
 	//spawn a type of trader
-	trader = pick(subtypesof(/mob/living/carbon/human/dummy/travelling_trader))
+	var/trader_type = pick(subtypesof(/mob/living/carbon/human/dummy/travelling_trader))
+	trader = new trader_type(spawn_location)
 	var/datum/effect_system/smoke_spread/smoke = new
 	smoke.set_up(1, spawn_location)
 	smoke.start()
@@ -81,7 +82,7 @@
 			active = FALSE
 			visible_message("<b>[src]</b> [speech_verb] \"[setup_speech(acceptance_speech, I)]\"")
 			qdel(I)
-			sleep(20)
+			sleep(15)
 			give_reward()
 			qdel(src)
 		else
@@ -102,7 +103,8 @@
 	for(var/obj/item/item in src.get_equipped_items())
 		ADD_TRAIT(item, TRAIT_NODROP, "trader_no_drop") //don't let people steal the travellers clothes!
 		item.resistance_flags |= INDESTRUCTIBLE //don't let people burn their clothes off, either.
-	requested_item = pickweight(possible_wanted_items)
+	if(!requested_item) //sometimes we already picked one
+		requested_item = pickweight(possible_wanted_items)
 	..()
 
 /mob/living/carbon/human/dummy/travelling_trader/Destroy()
@@ -113,3 +115,94 @@
 	..()
 
 //travelling trader subtypes (the types that can actually spawn)
+//so far there's: cook / botanist / animal hunter
+
+//cook
+/mob/living/carbon/human/dummy/travelling_trader/cook
+	name = "Otherworldly Chef"
+	trader_outfit = /datum/outfit/job/cook
+	initial_speech = "Mama-mia! I have came to this plane of existence, searching the greatest of foods!"
+	request_speech = "Can you fetch me the delicacy known as requested_item? I would pay you for your service!"
+	acceptance_speech = "Grazie! You have done me a service, my friend."
+	refusal_speech = "A given_item? Surely you must be joking!"
+	possible_rewards = list()
+
+
+/mob/living/carbon/human/dummy/travelling_trader/cook/Initialize()
+	//pick a random crafted food item as the requested item
+	requested_item = pick(subtypesof(/datum/crafting_recipe/food)).result
+	..()
+
+//botanist
+/mob/living/carbon/human/dummy/travelling_trader/gardener
+	name = "Otherworldly Gardener"
+	trader_outfit = /datum/outfit/job/botanist
+	initial_speech = "I have come across this realm in search of rare plants and believe this station may be able to help me.."
+	request_speech = "Are you able to bring me a requested_item? I could see that you get some reward for this task."
+	acceptance_speech = "Amazing! Ill finally be able to make that salad. Goodbye for now!"
+	refusal_speech = "A given_item? Did nobody ever teach you the basics of gardening?"
+	possible_rewards = list()
+
+
+/mob/living/carbon/human/dummy/travelling_trader/gardener/Initialize()
+	requested_item = pick(subtypesof(/obj/item/reagent_containers/food/snacks/grown))
+	..()
+
+//animal hunter
+/mob/living/carbon/human/dummy/travelling_trader/animal_hunter
+	name = "Otherworldly Animal Specialist"
+	trader_outfit = /datum/outfit/synthetic
+	initial_speech = "Greetings, lifeform. I am here to locate a special creature aboard your station."
+	request_speech = "Find me the creature known as  'requested_item' and you shall be rewarded for your efforts."
+	refusal_speech = "Do you think me to be a fool, lifeform? I know a requested_item when I see one."
+	possible_wanted_items = list(/mob/living/simple_animal/pet/dog/corgi/Ian = 1, /mob/living/simple_animal/sloth/paperwork = 1, /mob/living/carbon/monkey/punpun = 1, /mob/living/simple_animal/pet/fox/Renault = 1, /mob/living/simple_animal/hostile/carp/cayenne = 1)
+
+mob/living/carbon/human/dummy/travelling_trader/animal_hunter/Initialize()
+	acceptance_speech = pick(list("This lifeform shall make for a great stew, thank you.", "This lifeform shall be of a true use to our cause, thank you.", "The lifeform is adequate. Goodbye.", "This lifeform shall make a great addition to my collection."))
+	..()
+
+/mob/living/carbon/human/dummy/travelling_trader/animal_hunter/check_item(var/obj/item/supplied_item) //item is likely to be in contents of whats supplied
+	if(supplied_item.contents[requested_item])
+		//delete the contents, item given is correct, but we don't want the contents to spill out when the parent is deleted
+		for(var/atom/thing in supplied_item.contents)
+			qdel(thing)
+		return TRUE
+	return FALSE
+
+//bartender
+/mob/living/carbon/human/dummy/travelling_trader/bartender
+	name = "Otherworldly Bartender"
+	trader_outfit = /datum/outfit/job/bartender
+	initial_speech = "Greetings, station inhabitor. I came to this dimension in the pursuit of a particular drink."
+	request_speech = "Bring me thirty units of the beverage known as 'requested_item'."
+	acceptance_speech = "This is truly the drink I have been seeking. Thank you."
+	refusal_speech = "Do not mess with me, simpleton, I do not wish for that which you are trying to give me."
+
+/mob/living/carbon/human/dummy/travelling_trader/bartender/Initialize() //pick a subtype of ethanol that isn't found in the default set of the booze dispensers reagents
+	requested_item = pick(subtypesof(/datum/reagent/consumable/ethanol) - list(/datum/reagent/consumable/ethanol/beer,
+		/datum/reagent/consumable/ethanol/kahlua,
+		/datum/reagent/consumable/ethanol/whiskey,
+		/datum/reagent/consumable/ethanol/wine,
+		/datum/reagent/consumable/ethanol/vodka,
+		/datum/reagent/consumable/ethanol/gin,
+		/datum/reagent/consumable/ethanol/rum,
+		/datum/reagent/consumable/ethanol/tequila,
+		/datum/reagent/consumable/ethanol/vermouth,
+		/datum/reagent/consumable/ethanol/cognac,
+		/datum/reagent/consumable/ethanol/ale,
+		/datum/reagent/consumable/ethanol/absinthe,
+		/datum/reagent/consumable/ethanol/hcider,
+		/datum/reagent/consumable/ethanol/creme_de_menthe,
+		/datum/reagent/consumable/ethanol/creme_de_cacao,
+		/datum/reagent/consumable/ethanol/creme_de_coconut,
+		/datum/reagent/consumable/ethanol/triple_sec,
+		/datum/reagent/consumable/ethanol/sake,
+		/datum/reagent/consumable/ethanol/applejack))
+	..()
+
+/mob/living/carbon/human/dummy/travelling_trader/bartender/check_item(var/obj/item/supplied_item) //you need to check its reagents
+	var/obj/item/reagent_container/container = supplied_item
+	if(container)
+		if(container.reagents.has_reagent(requested_item, 30))
+			return TRUE
+	return FALSE
