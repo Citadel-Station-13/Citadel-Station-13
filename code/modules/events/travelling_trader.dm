@@ -201,8 +201,8 @@ mob/living/carbon/human/dummy/travelling_trader/animal_hunter/Initialize()
 	..()
 
 /mob/living/carbon/human/dummy/travelling_trader/bartender/check_item(var/obj/item/supplied_item) //you need to check its reagents
-	var/obj/item/reagent_container/container = supplied_item
-	if(container)
-		if(container.reagents.has_reagent(requested_item, 30))
+	var/obj/item/reagent_container/supplied_container = supplied_item
+	if(supplied_container)
+		if(supplied_container.reagents.has_reagent(requested_item, 30))
 			return TRUE
 	return FALSE
