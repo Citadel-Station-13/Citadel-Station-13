@@ -55,14 +55,15 @@ SUBSYSTEM_DEF(vote)
 /datum/controller/subsystem/vote/proc/render_statpanel(mob/M)
 	if(!mode)		// check if vote is running
 		return
-	if(!statpanel("Vote"))		// don't bother if they're not focused on this panel
+	if(!statpanel("Status"))		// don't bother if they're not focused on this panel
 		return
 	var/static/list/supported = list(PLURALITY_VOTING, APPROVAL_VOTING)
+	stat(null, null)
+	stat("Vote active!", "There is currently a vote running. Question: [question]")
 	if(!(vote_system in supported))
-		stat("Vote Manually!", "The current vote system is not supported by statpanel rendering. Please vote manually by opening the vote popup using the action button or chat link.")
+		stat("<STATPANEL VOTING DISABLED>", "The current vote system is not supported by statpanel rendering. Please vote manually by opening the vote popup using the action button or chat link.")
 		return
 	stat("Time Left:", "[round(end_time - world.time)] seconds")
-	stat("Question:", question)
 	stat(null, null)
 	stat("Choices:", null)
 	stat(null, null)
