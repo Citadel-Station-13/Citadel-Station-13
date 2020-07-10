@@ -120,9 +120,9 @@
 	return TRUE
 
 /obj/machinery/firealarm/temperature_expose(datum/gas_mixture/air, temperature, volume)
-	if((temperature > T0C + 200 || temperature < BODYTEMP_COLD_DAMAGE_LIMIT) && (last_alarm+FIREALARM_COOLDOWN < world.time) && !(obj_flags & EMAGGED) && detecting && !stat)
+	if(locate(/obj/effect/hotspot) in loc)
 		alarm()
-	..()
+	. = ..()
 
 /obj/machinery/firealarm/proc/alarm(mob/user)
 	if(!is_operational() || (last_alarm+FIREALARM_COOLDOWN > world.time))
