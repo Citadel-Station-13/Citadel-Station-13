@@ -772,6 +772,9 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 		ip_intel = res.intel
 
 /client/Click(atom/object, atom/location, control, params, ignore_spam = FALSE)
+	if(currently_clicking)
+		return
+	currently_clicking = TRUE
 	var/ab = FALSE
 	var/list/L = params2list(params)
 	if (object && object == middragatom && L["left"])
@@ -801,6 +804,7 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 				log_game("[key_name(src)] Has hit the per-minute click limit of [mcl] clicks in a given game minute")
 				message_admins("[ADMIN_LOOKUPFLW(src)] [ADMIN_KICK(usr)] Has hit the per-minute click limit of [mcl] clicks in a given game minute")
 			to_chat(src, "<span class='danger'>[msg]</span>")
+			currently_clicking = FALSE
 			return
 
 	var/scl = CONFIG_GET(number/second_click_limit)
@@ -814,10 +818,12 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 		clicklimiter[SECOND_COUNT] += 1+(!!ab)
 		if (clicklimiter[SECOND_COUNT] > scl)
 			to_chat(src, "<span class='danger'>Your previous click was ignored because you've done too many in a second</span>")
+			currently_clicking = FALSE
 			return
 
 	if(ab) //Citadel edit, things with stuff.
 		log_click(object, location, control, params, src, "dropped (ab c [ab] s [middragtime])", TRUE)
+		currently_clicking = FALSE
 		return
 
 	if(prefs.log_clicks)
@@ -830,6 +836,7 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 		winset(src, null, "input.background-color=[COLOR_INPUT_DISABLED]")
 
 	..()
+	currently_clicking = FALSE
 
 /client/proc/add_verbs_from_config()
 	if(CONFIG_GET(flag/see_own_notes))

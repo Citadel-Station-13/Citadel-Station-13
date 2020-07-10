@@ -21,6 +21,8 @@
 	var/ircreplyamount = 0
 	/// last time they tried to do an autobunker auth
 	var/autobunker_last_try = 0
+	/// Are we in the middle of a click? Prevent another click if one is still processing.
+	var/currently_clicking = FALSE
 
 		/////////
 		//OTHER//
