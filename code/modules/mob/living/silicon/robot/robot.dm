@@ -114,8 +114,8 @@
 	module = null
 	eye_lights = null
 	cell = null
-	UnregisterAlarmTrigger(ALARM_NETWORK_STATION, .proc/alarm_trigger)
-	UnregisterAlarmClear(ALARM_NETWORK_STATION, .proc/alarm_clear)
+	UnregisterAlarmTrigger(ALARM_NETWORK_STATION)
+	UnregisterAlarmClear(ALARM_NETWORK_STATION)
 	return ..()
 
 /mob/living/silicon/robot/proc/pick_module()

@@ -13,8 +13,8 @@
 	RegisterAlarmClear(ALARM_NETWORK_STATION, .proc/update_alarm_display)
 
 /obj/machinery/computer/station_alert/Destroy()
-	UnregisterAlarmTrigger(ALARM_NETWORK_STATION, .proc/update_alarm_display)
-	UnregisterAlarmClear(ALARM_NETWORK_STATION, .proc/update_alarm_display)
+	UnregisterAlarmTrigger(ALARM_NETWORK_STATION)
+	UnregisterAlarmClear(ALARM_NETWORK_STATION)
 	return ..()
 
 /obj/machinery/computer/station_alert/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \

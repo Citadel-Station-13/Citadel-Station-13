@@ -99,7 +99,7 @@
 	alarm_show_queued = FALSE
 	if(!length(queued_alarm_clears) && !length(queued_alarm_triggers))
 		return
-	var/msg = list()
+	var/list/msg = list()
 	if(queued_alarm_clears)
 		msg += "---<br>"
 		for(var/class in queued_alarm_clears)

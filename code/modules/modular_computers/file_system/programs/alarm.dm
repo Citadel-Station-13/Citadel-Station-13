@@ -47,6 +47,6 @@
 	RegisterAlarmClear(ALARM_NETWORK_STATION, .proc/update_alarm_display)
 
 /datum/computer_file/program/alarm_monitor/kill_program(forced = FALSE)
-	UnregisterAlarmTrigger(ALARM_NETWORK_STATION, .proc/update_alarm_display)
-	UnregisterAlarmClear(ALARM_NETWORK_STATION, .proc/update_alarm_display)
+	UnregisterAlarmTrigger(ALARM_NETWORK_STATION)
+	UnregisterAlarmClear(ALARM_NETWORK_STATION)
 	..()

@@ -272,25 +272,25 @@
 			if(length(queued_alarm_clears[class]) > 5)
 				msg += "[class]: [length(queued_alarm_clears[class])] alarms cleared.<br>"
 				continue
-		var/list/names = list()
-		for(var/area/A in queued_alarm_clears[class])
-			names += A.name
-		msg += "[class] alarm(s) cleared in: [english_list(names)]<br>"
+			var/list/names = list()
+			for(var/area/A in queued_alarm_clears[class])
+				names += A.name
+			msg += "[class] alarm(s) cleared in: [english_list(names)]<br>"
 	if(queued_alarm_triggers)
 		msg += "---<br>"
 		for(var/class in queued_alarm_triggers)
 			if(length(queued_alarm_clears[class]) > 5)
 				msg += "[class]: [length(queued_alarm_clears[class])] alarms triggered.<br>"
 				continue
-		for(var/area/A in queued_alarm_triggers[class])
-			msg += "[class] alarm triggered in [A.name]"
-			if(!length(A.cameras))
-				msg += " (No camera)<br>"
-			else
-				var/camstring = ""
-				for(var/obj/machinery/camera/C in A.cameras)
-					camstring = "[(camstring == "")? "" : " | "]<A HREF=?src=[REF(src)];switchcamera=[REF(I)]>[C.c_tag]</A>"
-					dat += camstring
+			for(var/area/A in queued_alarm_triggers[class])
+				msg += "[class] alarm triggered in [A.name]"
+				if(!length(A.cameras))
+					msg += " (No camera)<br>"
+				else
+					var/camstring = ""
+					for(var/obj/machinery/camera/C in A.cameras)
+						camstring = "[(camstring == "")? "" : " | "]<A HREF=?src=[REF(src)];switchcamera=[REF(I)]>[C.c_tag]</A>"
+						dat += camstring
 	msg += "---<br>"
 	if(view_alerts)
 		ai_alerts()

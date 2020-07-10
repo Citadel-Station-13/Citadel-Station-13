@@ -129,8 +129,8 @@
 /mob/living/simple_animal/drone/Destroy()
 	GLOB.drones_list -= src
 	QDEL_NULL(access_card) //Otherwise it ends up on the floor!
-	UnregisterAlarmTrigger(ALARM_NETWORK_STATION, .proc/alarm_trigger)
-	UnregisterAlarmClear(ALARM_NETWORK_STATION, .proc/alarm_clear)
+	UnregisterAlarmTrigger(ALARM_NETWORK_STATION)
+	UnregisterAlarmClear(ALARM_NETWORK_STATION)
 	return ..()
 
 /mob/living/simple_animal/drone/Login()

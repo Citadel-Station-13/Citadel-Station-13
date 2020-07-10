@@ -18,7 +18,7 @@ SUBSYSTEM_DEF(alarms)
 	active_alarms[network][A] |= missing
 	LAZYINITLIST(alarm_areas_by_type_and_network[network])
 	for(var/bit in bitfield2list(missing))
-		LAZYOR(alarm_areas_by_type_and_network[network][bit])
+		LAZYOR(alarm_areas_by_type_and_network[network][bit], A)
 	SEND_SIGNAL(src, ALARM_TRIGGER_COMSIG(network), A, missing, source)
 
 /**
