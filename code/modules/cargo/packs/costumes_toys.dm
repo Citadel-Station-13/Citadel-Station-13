@@ -304,7 +304,7 @@
 
 /datum/supply_pack/costumes_toys/wedding
 	name = "Wedding Crate"
-	desc = "Tie the knot IN SPACE! Hold your own extravagant wedding with this crate of suits and bridal gowns. Complete with champaigne, cake, and the luxurious cost you would expect for an event to remember."
+	desc = "Tie the knot IN SPACE! Hold your own extravagant wedding with this crate of suits and bridal gowns. Complete with champagne, cake, and the luxurious cost you would expect for an event to remember."
 	cost = 10000 // weddings are absurdly expensive and so is this crate
 	contains = list(/obj/item/clothing/under/suit/black_really, //we don't actually need suits since you can vend them but the crate should feel "complete"
 					/obj/item/clothing/under/suit/black_really,
