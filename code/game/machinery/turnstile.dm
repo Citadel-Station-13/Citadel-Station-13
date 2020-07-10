@@ -59,6 +59,8 @@
 		return FALSE
 
 /obj/machinery/turnstile/CheckExit(atom/movable/AM as mob|obj, target)
+	if(istype(AM, /obj/item/projectile))
+		return TRUE
 	if(isliving(AM))
 		var/mob/living/M = AM
 		var/outdir = dir
