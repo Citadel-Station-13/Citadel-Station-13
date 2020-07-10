@@ -242,66 +242,20 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 	return ..()
 
 /area/proc/poweralert(state, obj/source)
-	if (state != poweralm)
-		poweralm = state
-		if(istype(source))	//Only report power alarms on the z-level where the source is located.
-			for (var/item in GLOB.silicon_mobs)
-				var/mob/living/silicon/aiPlayer = item
-				if (state == 1)
-					aiPlayer.cancelAlarm("Power", src, source)
-				else
-					aiPlayer.triggerAlarm("Power", src, cameras, source)
-
-			for (var/item in GLOB.alert_consoles)
-				var/obj/machinery/computer/station_alert/a = item
-				if(state == 1)
-					a.cancelAlarm("Power", src, source)
-				else
-					a.triggerAlarm("Power", src, cameras, source)
-
-			for (var/item in GLOB.drones_list)
-				var/mob/living/simple_animal/drone/D = item
-				if(state == 1)
-					D.cancelAlarm("Power", src, source)
-				else
-					D.triggerAlarm("Power", src, cameras, source)
-			for(var/item in GLOB.alarmdisplay)
-				var/datum/computer_file/program/alarm_monitor/p = item
-				if(state == 1)
-					p.cancelAlarm("Power", src, source)
-				else
-					p.triggerAlarm("Power", src, cameras, source)
+	if(state == poweralm)
+		return
+	poweralm = state
+	if(state)
+		SSalarms.trigger_alarm(POWER_ALARM, src, source)
+	else
+		SSalarms.clear_alarm(POWER_ALARM, src, source)
 
 /area/proc/atmosalert(danger_level, obj/source)
 	if(danger_level != atmosalm)
 		if (danger_level == AIR_STATUS_DANGER)
-
-			for (var/item in GLOB.silicon_mobs)
-				var/mob/living/silicon/aiPlayer = item
-				aiPlayer.triggerAlarm("Atmosphere", src, cameras, source)
-			for (var/item in GLOB.alert_consoles)
-				var/obj/machinery/computer/station_alert/a = item
-				a.triggerAlarm("Atmosphere", src, cameras, source)
-			for (var/item in GLOB.drones_list)
-				var/mob/living/simple_animal/drone/D = item
-				D.triggerAlarm("Atmosphere", src, cameras, source)
-			for(var/item in GLOB.alarmdisplay)
-				var/datum/computer_file/program/alarm_monitor/p = item
-				p.triggerAlarm("Atmosphere", src, cameras, source)
-
+			SSalarms.trigger_alarm(ATMOS_ALARM, src, source)
 		else if (atmosalm == AIR_STATUS_DANGER)
-			for (var/item in GLOB.silicon_mobs)
-				var/mob/living/silicon/aiPlayer = item
-				aiPlayer.cancelAlarm("Atmosphere", src, source)
-			for (var/item in GLOB.alert_consoles)
-				var/obj/machinery/computer/station_alert/a = item
-				a.cancelAlarm("Atmosphere", src, source)
-			for (var/item in GLOB.drones_list)
-				var/mob/living/simple_animal/drone/D = item
-				D.cancelAlarm("Atmosphere", src, source)
-			for(var/item in GLOB.alarmdisplay)
-				var/datum/computer_file/program/alarm_monitor/p = item
-				p.cancelAlarm("Atmosphere", src, source)
+			SSalarms.clear_alarm(ATMOS_ALARM, src, source)
 
 		atmosalm = danger_level
 		for(var/i in sub_areas)
@@ -336,13 +290,8 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 		set_fire_alarm_effects(TRUE)
 		ModifyFiredoors(FALSE)
 
-	for (var/item in GLOB.silicon_mobs)
-		var/mob/living/silicon/aiPlayer = item
-		aiPlayer.triggerAlarm("Fire", src, cameras, source)
-	for (var/item in GLOB.drones_list)
-		var/mob/living/simple_animal/drone/D = item
-		D.triggerAlarm("Fire", src, cameras, source)
-
+	SSalarms.trigger_alarm(FIRE_ALARM, src)
+	
 	START_PROCESSING(SSobj, src)
 
 /**
@@ -364,13 +313,7 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 		set_fire_alarm_effects(FALSE)
 		ModifyFiredoors(TRUE)
 
-	for (var/item in GLOB.silicon_mobs)
-		var/mob/living/silicon/aiPlayer = item
-		aiPlayer.cancelAlarm("Fire", src, source)
-	for (var/item in GLOB.drones_list)
-		var/mob/living/simple_animal/drone/D = item
-		D.cancelAlarm("Fire", src, source)
-
+	SSalarms.clear_alarm(FIRE_ALARM, src)
 	STOP_PROCESSING(SSobj, src)
 
 /area/process()
@@ -392,12 +335,9 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 	//Lockdown airlocks
 	for(var/obj/machinery/door/DOOR in get_sub_areas_contents(src))
 		close_and_lock_door(DOOR)
-
-	for (var/i in GLOB.silicon_mobs)
-		var/mob/living/silicon/SILICON = i
-		if(SILICON.triggerAlarm("Burglar", src, cameras, trigger))
-			//Cancel silicon alert after 1 minute
-			addtimer(CALLBACK(SILICON, /mob/living/silicon.proc/cancelAlarm,"Burglar",src,trigger), 600)
+	
+	SSalarms.trigger_alarm(BURGLAR_ALARM, src, trigger)
+	addtimer(CALLBACK(SSalarms, /datum/controller/subsystem/alarms.proc/clear_alarm(BURGLAR_ALARM, src, trigger)), 1 MINUTES)
 
 /area/proc/set_fire_alarm_effects(boolean)
 	fire = boolean

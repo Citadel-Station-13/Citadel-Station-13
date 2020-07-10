@@ -342,13 +342,11 @@
 
 /obj/machinery/camera/proc/triggerCameraAlarm()
 	alarm_on = TRUE
-	for(var/mob/living/silicon/S in GLOB.silicon_mobs)
-		S.triggerAlarm("Camera", get_area(src), list(src), src)
+	SSalarms.trigger_alarm(CAMERA_ALARM, get_area(src), src)
 
 /obj/machinery/camera/proc/cancelCameraAlarm()
 	alarm_on = FALSE
-	for(var/mob/living/silicon/S in GLOB.silicon_mobs)
-		S.cancelAlarm("Camera", get_area(src), src)
+	SSalarms.clear_alarm(CAMERA_ALARM, get_area(src), src)
 
 /obj/machinery/camera/proc/can_use()
 	if(!status)
