@@ -863,7 +863,7 @@
 	if (H && !H.stealthmode && H.toggled)
 		abilitiesavail = TRUE
 	var/list/data = list(
-		"locked" = locked && !(integration_cog && is_servant_of_ratvar(user)) && !area.hasSiliconAccessInArea(user, PRIVILEDGES_SILICON|PRIVILEDGES_DRONE),
+		"locked" = locked,
 		"lock_nightshift" = nightshift_requires_auth,
 		"failTime" = failure_timer,
 		"isOperating" = operating,
@@ -981,7 +981,7 @@
 			failure_timer = 0
 			update_icon()
 			update()
-	if (action == "hijack" && can_use(usr, 1)) //don't need auth for hijack button
+	if(action == "hijack" && can_use(usr, 1)) //don't need auth for hijack button
 		hijack(usr)
 		return
 	var/authorized = (!locked || area.hasSiliconAccessInArea(usr, PRIVILEDGES_SILICON|PRIVILEDGES_DRONE) || (integration_cog && (is_servant_of_ratvar(usr))))
