@@ -17,9 +17,9 @@
 #define RegisterAlarmClear(network, proc)			RegisterSignal(SSalarms, ALARM_CLEAR_COMSIG(network), proc)
 
 /// Ditto for these two
-#define UNREGISTER_ALARM_TRIGGER(network)			UnregisterSignal(SSalarms, ALARM_TRIGGER_COMSIG(network))
+#define UnregisterAlarmTrigger(network)			UnregisterSignal(SSalarms, ALARM_TRIGGER_COMSIG(network))
 /// Same
-#define UNREGISTER_ALARM_CLEAR(network)				UnregisterSignal(SSalarms, ALARM_CLEAR_COMSIG(network))
+#define UnregisterAlarmClear(network)				UnregisterSignal(SSalarms, ALARM_CLEAR_COMSIG(network))
 
 /// A wrapper for _AddElement that allows us to pretend we're using normal named arguments
 #define AddElement(arguments...) _AddElement(list(##arguments))

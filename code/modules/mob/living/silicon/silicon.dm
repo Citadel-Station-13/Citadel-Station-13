@@ -106,21 +106,22 @@
 			if(length(queued_alarm_clears[class]) > 5)
 				msg += "[class]: [length(queued_alarm_clears[class])] alarms cleared.<br>"
 				continue
-		var/list/names = list()
-		for(var/area/A in queued_alarm_clears[class])
-			names += A.name
-		msg += "[class] alarm(s) cleared in: [english_list(names)]<br>"
+			var/list/names = list()
+			for(var/area/A in queued_alarm_clears[class])
+				names += A.name
+			msg += "[class] alarm(s) cleared in: [english_list(names)]<br>"
 	if(queued_alarm_triggers)
 		msg += "---<br>"
 		for(var/class in queued_alarm_triggers)
 			if(length(queued_alarm_clears[class]) > 5)
 				msg += "[class]: [length(queued_alarm_clears[class])] alarms triggered.<br>"
 				continue
-		var/list/names = list()
-		for(var/area/A in queued_alarm_triggers[class])
-			names += A.name
-		msg += "[class] alarm(s) detected in: [english_list(names)]<br>"
+			var/list/names = list()
+			for(var/area/A in queued_alarm_triggers[class])
+				names += A.name
+			msg += "[class] alarm(s) detected in: [english_list(names)]<br>"
 	msg += "---<br>"
+	to_chat(src, msg.Join(""))
 
 /mob/living/silicon/can_inject(mob/user, error_msg, target_zone, penetrate_thick = FALSE, bypass_immunity = FALSE)
 	if(error_msg)

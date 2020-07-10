@@ -3,6 +3,8 @@ SUBSYSTEM_DEF(alarms)
 
 	/// Alarm list. network = list(area = alarm types as flag). Almost all accesses should happen through here! Optimizations can be done without changing the layout of this layered list.
 	var/static/list/active_alarms = list()
+	/// list = list(network = list(singular_alarm_type_bit = list(area1, area2, ...)))
+	var/static/list/alarm_areas_by_type_and_network = list()
 
 /**
   * Triggers an alarm in an area. Source is only included for read, never ever cache the source lest you cause GC issues.
