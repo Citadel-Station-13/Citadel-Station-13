@@ -17,7 +17,9 @@ export const ChemMaster = props => {
     pillBottleCurrentAmount,
     pillBottleMaxAmount,
   } = data;
-
+  if (screen === "analyze") {
+    return <AnalysisResults state={state} />;
+  }
   return (
     <Fragment>
       <Section
@@ -356,9 +358,9 @@ class PackagingControls extends Component {
 }
 
 const AnalysisResults = props => {
-  const { state, fermianalyze } = props;
+  const { state } = props;
   const { ref } = state.config;
-  const { analyzeVars } = state.data;
+  const { analyzeVars, fermianalyze } = state.data;
   return (
     <Section
       title="Analysis Results"

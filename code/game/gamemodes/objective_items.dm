@@ -36,7 +36,7 @@
 	targetitem = /obj/item/gun/energy/e_gun/hos
 	difficulty = 10
 	excludefromjob = list("Head Of Security")
-	altitems = list(/obj/item/gun/ballistic/revolver/mws, /obj/item/choice_beacon/hosgun) //We now look for eather the alt verson of the hos gun or the beacon picker.
+	altitems = list(/obj/item/gun/ballistic/revolver/mws, /obj/item/choice_beacon/hosgun) //We now look for either the alt verson of the hos gun or the beacon picker.
 
 /datum/objective_item/steal/handtele
 	name = "a hand teleporter."
@@ -125,7 +125,7 @@
 /datum/objective_item/steal/plasma/check_special_completion(obj/item/tank/T)
 	var/target_amount = text2num(name)
 	var/found_amount = 0
-	found_amount += T.air_contents.gases[/datum/gas/plasma]
+	found_amount += T.air_contents.get_moles(/datum/gas/plasma)
 	return found_amount>=target_amount
 
 

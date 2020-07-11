@@ -94,7 +94,7 @@
 
 	//Calculate necessary moles to transfer using PV=nRT
 
-	var/transfer_ratio = transfer_rate/air1.volume
+	var/transfer_ratio = transfer_rate/air1.return_volume()
 
 	//Actually transfer the gas
 
@@ -111,14 +111,13 @@
 			else
 				filtering = FALSE
 
-		if(filtering && removed.gases[filter_type])
+		if(filtering && removed.get_moles(filter_type))
 			var/datum/gas_mixture/filtered_out = new
 
-			filtered_out.temperature = removed.temperature
-			filtered_out.gases[filter_type] = removed.gases[filter_type]
+			filtered_out.set_temperature(removed.return_temperature())
+			filtered_out.set_moles(filter_type, removed.get_moles(filter_type))
 
-			removed.gases[filter_type] = 0
-			GAS_GARBAGE_COLLECT(removed.gases)
+			removed.set_moles(filter_type, 0)
 
 			var/datum/gas_mixture/target = (air2.return_pressure() < 9000 ? air2 : air1)
 			target.merge(filtered_out)

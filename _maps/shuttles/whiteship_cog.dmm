@@ -32,11 +32,6 @@
 "g" = (
 /turf/closed/wall/mineral/titanium/nodiagonal,
 /area/shuttle/abandoned)
-"h" = (
-/obj/machinery/door/airlock/external,
-/obj/structure/fans/tiny,
-/turf/open/floor/plating,
-/area/shuttle/abandoned)
 "i" = (
 /obj/machinery/suit_storage_unit/security,
 /obj/machinery/light/small{
@@ -64,6 +59,7 @@
 /area/shuttle/abandoned)
 "m" = (
 /obj/structure/bed,
+/obj/item/bedsheet/orange,
 /turf/open/floor/plasteel,
 /area/shuttle/abandoned)
 "n" = (
@@ -130,7 +126,6 @@
 /area/shuttle/abandoned)
 "x" = (
 /obj/machinery/door/firedoor/border_only/closed{
-	icon_state = "door_closed";
 	dir = 4
 	},
 /obj/machinery/door/window/eastright,
@@ -174,12 +169,12 @@
 	dir = 8
 	},
 /obj/structure/closet/crate/secure/weapon,
-/obj/item/gun/energy/laser/carbine,
 /obj/machinery/button/flasher{
 	id = "cogws";
 	pixel_x = -24;
 	pixel_y = 8
 	},
+/obj/item/gun/energy/laser/retro,
 /turf/open/floor/plasteel,
 /area/shuttle/abandoned)
 "D" = (
@@ -191,7 +186,7 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 4
 	},
-/obj/item/gun/energy/e_gun/stun,
+/obj/item/gun/energy/laser/retro,
 /turf/open/floor/plasteel,
 /area/shuttle/abandoned)
 "E" = (
@@ -228,12 +223,14 @@
 "I" = (
 /obj/structure/table/reinforced,
 /obj/item/clothing/glasses/sunglasses,
+/obj/item/gps{
+	gpstag = "NTPRS"
+	},
 /turf/open/floor/plasteel/grimy,
 /area/shuttle/abandoned)
 "J" = (
 /obj/structure/curtain,
 /obj/machinery/shower{
-	name = "shower";
 	pixel_y = 12
 	},
 /obj/item/soap/nanotrasen,
@@ -329,13 +326,13 @@ d
 "}
 (5,1,1) = {"
 d
-h
+g
 n
 n
 B
 H
 n
-h
+g
 d
 "}
 (6,1,1) = {"

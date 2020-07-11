@@ -179,3 +179,14 @@
 	id = /datum/reagent/consumable/bbqsauce
 	results = list(/datum/reagent/consumable/bbqsauce = 5)
 	required_reagents = list(/datum/reagent/ash = 1, /datum/reagent/consumable/tomatojuice = 1, /datum/reagent/medicine/salglu_solution = 3, /datum/reagent/consumable/blackpepper = 1)
+
+/datum/chemical_reaction/margarine
+	name = "Margarine"
+	id = "margarine"
+	required_reagents = list(/datum/reagent/consumable/cornoil = 5, /datum/reagent/consumable/soymilk = 5, /datum/reagent/consumable/sodiumchloride = 1)
+	mix_message = "The ingredients solidify into a stick of margarine."
+
+/datum/chemical_reaction/margarine/on_reaction(datum/reagents/holder, multiplier)
+	var/location = get_turf(holder.my_atom)
+	for(var/i = 1, i <= multiplier, i++)
+		new /obj/item/reagent_containers/food/snacks/butter/margarine(location)

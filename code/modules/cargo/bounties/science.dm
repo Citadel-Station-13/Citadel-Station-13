@@ -119,7 +119,7 @@
 
 /datum/bounty/item/science/noneactive_reactivearmor
 	name = "Reactive Armor Shells"
-	description = "Do to the breakthroughs in anomalies, we can not keep up in making reactive armor shells, can you send us a few?"
+	description = "Due to the breakthroughs in anomalies, we can not keep up in making reactive armor shells, can you send us a few?"
 	reward = 2000
 	required_count = 5
 	wanted_types = list(/obj/item/reactive_armour_shell, /obj/item/clothing/suit/armor/reactive)
@@ -138,14 +138,14 @@
 
 /datum/bounty/item/science/anomaly_neutralizer
 	name = "Anomaly Neutralizers"
-	description = "An idea for a long time was to use an unstable Supermatter Shard to help create  the breeding grounds for an unstable part of space to harvest any anomalies we want. It worked a little too well and now were out of anomaly neutralizers please send us a baker's dozen."
+	description = "An idea for a long time was to use an unstable Supermatter Shard to help create the breeding grounds for an unstable part of space to harvest any anomalies we want. It worked a little too well and now we're out of anomaly neutralizers, please send us a baker's dozen."
 	reward = 2500
 	required_count = 13
 	wanted_types = list(/obj/item/anomaly_neutralizer)
 
 /datum/bounty/item/science/integrated_circuit_printer
 	name = "Integrated Circuit Printer"
-	description = "due to a paperwork error, a newly made integrated circuit manufacturer line is missing three of its printers needed to operate. Until the paper work is corrected we are outsourcing this problem, so please send us three integrated circuit printers."
+	description = "Due to a paperwork error, a newly made integrated circuit manufacturer line is missing three of its printers needed to operate. Until the paper work is corrected we are outsourcing this problem, so please send us three integrated circuit printers."
 	reward = 2000
 	required_count = 3
 	wanted_types = list(/obj/item/integrated_circuit_printer)
@@ -159,7 +159,7 @@
 
 /datum/bounty/item/science/nanite_trash
 	name = "Nanite Based Gear"
-	description = "CC wants to make nanite based gear available to a new wing of devolvement but lacks the hand held tools to get it full up and running. Please send us any you have."
+	description = "CC wants to make nanite based gear available to a new wing of development but lacks the hand held tools to get it fully up and running. Please send us any you have."
 	reward = 2500
 	required_count = 20 //Its just metal
 	wanted_types = list( /obj/item/nanite_remote, /obj/item/nanite_remote/comm, /obj/item/nanite_scanner)

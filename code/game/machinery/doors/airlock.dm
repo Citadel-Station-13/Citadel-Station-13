@@ -93,7 +93,7 @@
 	var/shuttledocked = 0
 	var/delayed_close_requested = FALSE // TRUE means the door will automatically close the next time it's opened.
 
-	var/air_tight = FALSE	//TRUE means density will be set as soon as the door begins to close
+	air_tight = FALSE
 	var/prying_so_hard = FALSE
 
 	rad_flags = RAD_PROTECT_CONTENTS | RAD_NO_CONTAMINATE
@@ -1058,11 +1058,11 @@
 		to_chat(user, "<span class='warning'>The airlock's bolts prevent it from being forced!</span>")
 	else if( !welded && !operating)
 		if(!beingcrowbarred) //being fireaxe'd
-			var/obj/item/twohanded/fireaxe/F = I
-			if(F.wielded)
-				INVOKE_ASYNC(src, (density ? .proc/open : .proc/close), 2)
-			else
-				to_chat(user, "<span class='warning'>You need to be wielding the fire axe to do that!</span>")
+			var/obj/item/fireaxe/axe = I
+			if(!axe.wielded)
+				to_chat(user, "<span class='warning'>You need to be wielding \the [axe] to do that!</span>")
+				return
+			INVOKE_ASYNC(src, (density ? .proc/open : .proc/close), 2)
 		else
 			INVOKE_ASYNC(src, (density ? .proc/open : .proc/close), 2)
 

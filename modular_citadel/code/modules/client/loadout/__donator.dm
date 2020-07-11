@@ -220,7 +220,7 @@
 /datum/gear/torisword
 	name = "Rainbow Zweihander"
 	category = SLOT_IN_BACKPACK
-	path = /obj/item/twohanded/dualsaber/hypereutactic/toy/rainbow
+	path = /obj/item/dualsaber/hypereutactic/toy/rainbow
 	ckeywhitelist = list("annoymous35")
 
 /datum/gear/darksabre

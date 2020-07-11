@@ -50,7 +50,7 @@
 
 /datum/crafting_recipe/bonespear
 	name = "Bone Spear"
-	result = /obj/item/twohanded/bonespear
+	result = /obj/item/spear/bonespear
 	time = 30
 	reqs = list(/obj/item/stack/sheet/bone = 4,
 				 /obj/item/stack/sheet/sinew = 1)
@@ -58,7 +58,7 @@
 
 /datum/crafting_recipe/boneaxe
 	name = "Bone Axe"
-	result = /obj/item/twohanded/fireaxe/boneaxe
+	result = /obj/item/fireaxe/boneaxe
 	time = 50
 	reqs = list(/obj/item/stack/sheet/bone = 6,
 				 /obj/item/stack/sheet/sinew = 3)
@@ -74,20 +74,20 @@
 /datum/crafting_recipe/headpike
 	name = "Spike Head (Glass Spear)"
 	time = 65
-	reqs = list(/obj/item/twohanded/spear = 1,
+	reqs = list(/obj/item/spear = 1,
 				/obj/item/bodypart/head = 1)
 	parts = list(/obj/item/bodypart/head = 1,
-			/obj/item/twohanded/spear = 1)
+			/obj/item/spear = 1)
 	result = /obj/structure/headpike
 	category = CAT_PRIMAL
 
 /datum/crafting_recipe/headpikebone
 	name = "Spike Head (Bone Spear)"
 	time = 65
-	reqs = list(/obj/item/twohanded/bonespear = 1,
+	reqs = list(/obj/item/spear/bonespear = 1,
 				/obj/item/bodypart/head = 1)
 	parts = list(/obj/item/bodypart/head = 1,
-			/obj/item/twohanded/bonespear = 1)
+			/obj/item/spear/bonespear = 1)
 	result = /obj/structure/headpike/bone
 	category = CAT_PRIMAL
 
@@ -103,7 +103,7 @@
 /datum/crafting_recipe/bone_bow
 	name = "Bone Bow"
 	result = /obj/item/gun/ballistic/bow/ashen
-	time = 200
+	time = 120 // 80+120 = 200
 	always_availible = FALSE
 	reqs = list(/obj/item/stack/sheet/bone = 8,
 				 /obj/item/stack/sheet/sinew = 4)
@@ -112,7 +112,7 @@
 /datum/crafting_recipe/bow_tablet
 	name = "Sandstone Bow Making Manual"
 	result = /obj/item/book/granter/crafting_recipe/bone_bow
-	time = 600 //Scribing
+	time = 200 //Scribing // don't care
 	always_availible = FALSE
 	reqs = list(/obj/item/stack/rods = 1,
 				 /obj/item/stack/sheet/mineral/sandstone = 4)

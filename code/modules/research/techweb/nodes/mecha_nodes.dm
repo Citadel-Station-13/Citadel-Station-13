@@ -42,6 +42,14 @@
 	"gygax_peri", "gygax_targ", "gygax_armor")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 
+/datum/techweb_node/medigax
+	id = "mech_medigax"
+	display_name = "EXOSUIT: Medical-Spec Gygax"
+	description = "Medical-Spec Gygax designs"
+	prereq_ids = list("mech_gygax", "mecha_odysseus")
+	design_ids = list("medigax_chassis", "medigax_torso", "medigax_head", "medigax_left_arm", "medigax_right_arm", "medigax_left_leg", "medigax_right_leg", "medigax_armor")
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
+
 /datum/techweb_node/durand
 	id = "mech_durand"
 	display_name = "EXOSUIT: Durand"

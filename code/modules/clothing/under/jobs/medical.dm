@@ -22,7 +22,7 @@
 	icon_state = "cmoturtle"
 	item_state = "w_suit"
 	alt_covers_chest = TRUE
-	mutantrace_variation = USE_TAUR_CLIP_MASK
+	mutantrace_variation = STYLE_DIGITIGRADE|USE_TAUR_CLIP_MASK
 
 /obj/item/clothing/under/rank/medical/geneticist
 	desc = "It's made of a special fiber that gives special protection against biohazards. It has a genetics rank stripe on it."
