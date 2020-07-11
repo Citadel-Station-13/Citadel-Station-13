@@ -275,7 +275,7 @@
 	name = "keg of hearty punch"
 	desc = "A keg that will get you right back on your feet."
 	icon_state = "redkeg"
-	reagent_id = /datum/reagent/consumable/hearty_punch
+	reagent_id = /datum/reagent/consumable/ethanol/hearty_punch
 	tank_volume = 100 //this usually has a 15:1 ratio when being made, so we provide less of it
 
 /obj/structure/reagent_dispensers/keg/neurotoxin

@@ -174,7 +174,7 @@
 		/mob/living/simple_animal/hostile/bear = 1,
 		/mob/living/simple_animal/hostile/retaliate/clown/fleshclown = 1,
 		/mob/living/simple_animal/hostile/tree = 1,
-		/mob/living/simple_animal/hostile/mimic = 1
+		/mob/living/simple_animal/hostile/mimic = 1,
 		/mob/living/simple_animal/hostile/shark/laser = 1
 		)
 
@@ -199,7 +199,7 @@ mob/living/carbon/human/dummy/travelling_trader/animal_hunter/Initialize()
 /mob/living/carbon/human/dummy/travelling_trader/animal_hunter/give_reward(var/mob/giver) //the reward is actually given in a jar, because releasing it onto the station might be a bad idea
 	var/mob/living/animal = pickweight(possible_rewards)
 	if(giver && giver.tag)
-		animal.faction += "/[[giver.tag]/]"
+		animal.faction += "\[[giver.tag]\]"
 	var/obj/item/pet_carrier/bluespace/jar = new(get_turf(src))
 	jar.add_occupant(animal)
 	jar.name = "WARNING: [animal] INSIDE"
@@ -215,7 +215,7 @@ mob/living/carbon/human/dummy/travelling_trader/animal_hunter/Initialize()
 	possible_rewards = list(/obj/structure/reagent_dispensers/keg/neurotoxin = 1, //all kegs have 250u aside from neurotoxin/hearty punch which have 100u
 		/obj/structure/reagent_dispensers/keg/hearty_punch = 3,
 		/obj/structure/reagent_dispensers/keg/red_queen = 3,
-		/obj/structure/reagent_dispensers/keg/narsour = 3
+		/obj/structure/reagent_dispensers/keg/narsour = 3,
 		/obj/structure/reagent_dispensers/keg/quintuple_sec = 3)
 
 
@@ -252,17 +252,17 @@ mob/living/carbon/human/dummy/travelling_trader/animal_hunter/Initialize()
 /mob/living/carbon/human/dummy/travelling_trader/artifact_dealer
 	trader_name = "Otherworldly Artifact Dealer"
 	trader_outfit = /datum/outfit/artifact_dealer //he's cool enough to get his own outfit
-	inital_speech = "I have come here due to sensing the existence of an object of great power and importance."
+	initial_speech = "I have come here due to sensing the existence of an object of great power and importance."
 	request_speech = "Give to me a requested_item and I shall make it worth your while, traveller."
 	acceptance_speech = "This is truly an artifact worthy of my collection, thank you."
 	refusal_speech = "A given_item? Hah! Worthless."
 	possible_wanted_items = list(/obj/item/pen/fountain/captain = 1, //various rare things and high risk but not useful things (i.e. champion belt, bedsheet, pen)
-		 /obj/item/storage/belt/champion = 1
-		 /obj/item/clothing/shoes/wheelys = 1
-		 /obj/item/relic = 1
-		 /obj/item/flashlight/lamp/bananalamp = 1
-		 /obj/item/storage/box/hug = 1
-		 /obj/item/clothing/gloves/color/yellow = 1
+		 /obj/item/storage/belt/champion = 1,
+		 /obj/item/clothing/shoes/wheelys = 1,
+		 /obj/item/relic = 1,
+		 /obj/item/flashlight/lamp/bananalamp = 1,
+		 /obj/item/storage/box/hug = 1,
+		 /obj/item/clothing/gloves/color/yellow = 1,
 		 /obj/item/instrument/saxophone = 1,
 		 /obj/item/bedsheet/captain = 1,
 		 /obj/item/slime_extract/green = 1,
@@ -274,7 +274,7 @@ mob/living/carbon/human/dummy/travelling_trader/animal_hunter/Initialize()
 		/obj/item/clothing/suit/hooded/wintercoat/cosmic = 2)
 
 /mob/living/carbon/human/dummy/travelling_trader/artifact_dealer/Initialize()
-	possible_rewards[pick(subtypesof(/obj/item/clothing/head/collectable)) = 1] //this is slightly lower because it's absolutely useless
+	possible_rewards += list(pick(subtypesof(/obj/item/clothing/head/collectable)) = 1) //this is slightly lower because it's absolutely useless
 	..()
 
 /datum/outfit/artifact_dealer
@@ -291,7 +291,7 @@ mob/living/carbon/human/dummy/travelling_trader/animal_hunter/Initialize()
 	request_speech = "Find me a requested_item. I shall make sure it's worth your efforts."
 	acceptance_speech = "This shall do. Goodbye, meatbag."
 	refusal_speech = "That is not what I wish for. Give me a requested_item, or I shall take one by force."
-	possible_wanted_items = list(/obj/item/bodypart/l_arm = 4, //limbs are the most common, with brain/head being the least so, organs in the middle
+	possible_wanted_items = list(/obj/item/bodypart/l_arm = 4,
 		/obj/item/bodypart/r_arm = 4,
 		/obj/item/bodypart/l_leg = 4,
 		/obj/item/bodypart/r_leg = 4,
@@ -299,9 +299,23 @@ mob/living/carbon/human/dummy/travelling_trader/animal_hunter/Initialize()
 		/obj/item/organ/liver = 2,
 		/obj/item/organ/lungs = 2,
 		/obj/item/organ/heart = 2,
-		/obj/item/bodypart/eyes = 1.
+		/obj/item/organ/eyes = 1,
 		/obj/item/organ/brain = 1,
 		/obj/item/bodypart/head = 1)
+	possible_rewards = list(/obj/item/organ/cyberimp/mouth/breathing_tube = 1,
+		/obj/item/organ/eyes/robotic/thermals = 1,
+		/obj/item/organ/cyberimp/arm/toolset = 1,
+		/obj/item/organ/cyberimp/arm/surgery = 1,
+		/obj/item/organ/cyberimp/arm/janitor = 1,
+		/obj/item/organ/cyberimp/arm/flash = 1,
+		/obj/item/organ/cyberimp/arm/shield = 1,
+		/obj/item/organ/cyberimp/eyes/hud/medical = 1,
+		/obj/item/organ/cyberimp/arm/baton = 1)
+
+/mob/living/carbon/human/dummy/travelling_trader/surgeon/give_reward()
+	var/obj/item/organ/implant = pickweight(possible_rewards)
+	var/obj/item/autosurgeon/reward = new(get_turf(src))
+	reward.insert_organ(implant)
 
 /datum/outfit/otherworldly_surgeon
 	uniform = /obj/item/clothing/under/pants/white

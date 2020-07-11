@@ -106,7 +106,7 @@
 	if(user == target)
 		to_chat(user, "<span class='warning'>Why would you ever do that?</span>")
 		return
-	if(ishostile(target) && (!allows_hostiles || istype(target, /mob/living/simple_animal/hostile/carp/cayenne))) || target.move_resist < MOVE_FORCE_VERY_STRONG) //don't allow goliaths into pet carriers, but let cayenne in!
+	if(ishostile(target) && (!allows_hostiles || istype(target, /mob/living/simple_animal/hostile/carp/cayenne)) || target.move_resist < MOVE_FORCE_VERY_STRONG) //don't allow goliaths into pet carriers, but let cayenne in!
 		to_chat(user, "<span class='warning'>You have a feeling you shouldn't keep this as a pet.</span>")
 	load_occupant(user, target)
 
