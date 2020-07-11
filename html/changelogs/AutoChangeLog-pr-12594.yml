@@ -1,0 +1,4 @@
+author: "silicons"
+delete-after: True
+changes: 
+  - rscadd: "You can now \"audibly emote\" by having ! at the start of a sentence."
