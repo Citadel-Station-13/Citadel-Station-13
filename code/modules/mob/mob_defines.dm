@@ -12,6 +12,16 @@
 
 	vis_flags = VIS_INHERIT_PLANE //when this be added to vis_contents of something it inherit something.plane, important for visualisation of mob in openspace.
 
+
+	// 1 decisecond click delay (above and beyond mob/next_move)
+	//This is mainly modified by click code, to modify click delays elsewhere, use next_move and ApplyClickCooldown()
+	var/next_click	= 0
+
+	// THESE DO NOT EFFECT THE BASE 1 DECISECOND DELAY OF NEXT_CLICK
+	var/next_move_adjust = 0 //Amount to adjust action/click delays by, + or -
+	var/next_move_modifier = 1 //Value to multiply action/click delays by
+
+
 	/// What receives our keyboard input. src by default.
 	var/datum/focus
 
