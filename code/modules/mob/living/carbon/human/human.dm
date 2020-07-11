@@ -296,7 +296,7 @@
 				if (!strip_silence)
 					to_chat(src, "<span class='warning'>You feel your [pocket_side] pocket being fumbled with!</span>")
 
-	if(usr.canUseTopic(src, BE_CLOSE, NO_DEXTERY, null, FALSE)
+	if(usr.canUseTopic(src, BE_CLOSE, NO_DEXTERY, null, FALSE))
 		// separate from first canusetopic
 		var/mob/living/user = usr
 		if(istype(user) && href_list["shoes"] && (user.mobility_flags & MOBILITY_USE)) // we need to be on the ground, so we'll be a bit looser

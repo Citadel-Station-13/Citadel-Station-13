@@ -1276,7 +1276,20 @@ GLOBAL_LIST_EMPTY(custom_outfits) //Admin created outfits
 	if(!check_rights(R_ADMIN) || !check_rights(R_FUN))
 		return
 
-	var/list/punishment_list = list(ADMIN_PUNISHMENT_PIE, ADMIN_PUNISHMENT_CUSTOM_PIE, ADMIN_PUNISHMENT_FIREBALL, ADMIN_PUNISHMENT_LIGHTNING, ADMIN_PUNISHMENT_BRAINDAMAGE, ADMIN_PUNISHMENT_BSA, ADMIN_PUNISHMENT_GIB, ADMIN_PUNISHMENT_SUPPLYPOD_QUICK, ADMIN_PUNISHMENT_SUPPLYPOD, ADMIN_PUNISHMENT_MAZING, ADMIN_PUNISHMENT_ROD)
+	var/list/punishment_list = list(
+		ADMIN_PUNISHMENT_PIE,
+		ADMIN_PUNISHMENT_CUSTOM_PIE,
+		ADMIN_PUNISHMENT_FIREBALL,
+		ADMIN_PUNISHMENT_LIGHTNING,
+		ADMIN_PUNISHMENT_BRAINDAMAGE,
+		ADMIN_PUNISHMENT_BSA,
+		ADMIN_PUNISHMENT_GIB,
+		ADMIN_PUNISHMENT_SUPPLYPOD_QUICK,
+		ADMIN_PUNISHMENT_SUPPLYPOD,
+		ADMIN_PUNISHMENT_MAZING,
+		ADMIN_PUNISHMENT_ROD,
+		ADMIN_PUNISHMENT_SHOES
+	)
 
 	var/punishment = input("Choose a punishment", "DIVINE SMITING") as null|anything in punishment_list
 
@@ -1354,6 +1367,17 @@ GLOBAL_LIST_EMPTY(custom_outfits) //Admin created outfits
 					if(amount)
 						A.reagents.add_reagent(chosen_id, amount)
 						A.splat(target)
+
+		if(ADMIN_PUNISHMENT_SHOES)
+			if(!iscarbon(target))
+				to_chat(usr,"<span class='warning'>This must be used on a carbon mob.</span>", confidential = TRUE)
+				return
+			var/mob/living/carbon/C = target
+			var/obj/item/clothing/shoes/sick_kicks = C.shoes
+			if(!sick_kicks?.can_be_tied)
+				to_chat(usr,"<span class='warning'>[C] does not have knottable shoes!</span>", confidential = TRUE)
+				return
+			sick_kicks.adjust_laces(SHOES_KNOTTED)
 
 	punish_log(target, punishment)
 

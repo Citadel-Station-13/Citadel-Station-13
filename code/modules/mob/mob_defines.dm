@@ -156,3 +156,6 @@
 	var/typing_indicator_timerid
 	/// Current state of our typing indicator. Used for cut overlay, DO NOT RUNTIME ASSIGN OTHER THAN FROM SHOW/CLEAR. Used to absolutely ensure we do not get stuck overlays.
 	var/typing_indicator_current
+
+	///For storing what do_after's someone has, in case we want to restrict them to only one of a certain do_after at a time
+	var/list/do_afters

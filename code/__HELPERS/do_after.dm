@@ -166,6 +166,9 @@
 
 	var/target_loc = target.loc
 
+	LAZYADD(user.do_afters, target)
+	LAZYADD(target.targeted_by, user)
+
 	var/holding = user.get_active_held_item()
 	var/datum/progressbar/progbar
 	if (progress)
@@ -184,6 +187,10 @@
 		if(uninterruptible)
 			continue
 
+		if(!(target in user.do_afters))
+			. = FALSE
+			break
+
 		if(drifting && !user.inertia_dir)
 			drifting = 0
 			user_loc = user.loc
@@ -194,6 +201,9 @@
 	if (progress)
 		qdel(progbar)
 
+	if(!QDELETED(target))
+		LAZYREMOVE(user.do_afters, target)
+		LAZYREMOVE(target.targeted_by, user)
 
 //some additional checks as a callback for for do_afters that want to break on losing health or on the mob taking action
 /mob/proc/break_do_after_checks(list/checked_health, check_clicks)
@@ -215,6 +225,10 @@
 	var/atom/Tloc = null
 	if(target && !isturf(target))
 		Tloc = target.loc
+
+	if(target)
+		LAZYADD(user.do_afters, target)
+		LAZYADD(target.targeted_by, user)
 
 	var/atom/Uloc = user.loc
 
@@ -260,6 +274,10 @@
 				. = 0
 				break
 
+		if(target && !(target in user.do_afters))
+			. = 0
+			break
+
 		if(needhand)
 			//This might seem like an odd check, but you can still need a hand even when it's empty
 			//i.e the hand is used to pull some item/tool out of the construction
@@ -272,6 +290,10 @@
 				break
 	if (progress)
 		qdel(progbar)
+
+	if(!QDELETED(target))
+		LAZYREMOVE(user.do_afters, target)
+		LAZYREMOVE(target.targeted_by, user)
 
 /mob/proc/do_after_coefficent() // This gets added to the delay on a do_after, default 1
 	. = 1
@@ -291,6 +313,8 @@
 	var/list/originalloc = list()
 	for(var/atom/target in targets)
 		originalloc[target] = target.loc
+		LAZYADD(user.do_afters, target)
+		LAZYADD(target.targeted_by, user)
 
 	var/holding = user.get_active_held_item()
 	var/datum/progressbar/progbar
@@ -321,3 +345,9 @@
 					break mainloop
 	if(progbar)
 		qdel(progbar)
+
+	for(var/thing in targets)
+		var/atom/target = thing
+		if(!QDELETED(target))
+			LAZYREMOVE(user.do_afters, target)
+			LAZYREMOVE(target.targeted_by, user)
