@@ -201,9 +201,12 @@ GLOBAL_LIST_EMPTY(objectives)
 	return won || ..()
 
 /datum/objective/assassinate/once/process()
-	won = check_completion()
+	won = check_midround_completion()
 	if(won)
 		STOP_PROCESSING(SSprocessing,src)
+
+/datum/objective/assassinate/once/proc/check_midround_completion()
+	return won || !considered_alive(target) //The target afking / logging off for a bit during the round doesn't complete it, but them being afk at roundend does.
 
 /datum/objective/assassinate/internal
 	var/stolen = 0 		//Have we already eliminated this target?
