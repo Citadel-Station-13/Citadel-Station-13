@@ -17,7 +17,7 @@
 	resistance_flags = NONE
 	permeability_coefficient = 0.05 //Thick soles, and covers the ankle
 	pocket_storage_component_path = /datum/component/storage/concrete/pockets/shoes
-	lace_delay = 12 SECONDS
+	lace_time = 12 SECONDS
 
 /obj/item/clothing/shoes/combat/sneakboots
 	name = "insidious sneakboots"

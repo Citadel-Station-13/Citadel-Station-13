@@ -624,7 +624,7 @@ so as to remain in compliance with the most up-to-date laws."
 
 /obj/screen/alert/shoes/Click()
 	var/mob/living/carbon/C = usr
-	if(!istype(C) || !C.can_resist() || C != owner || !C.shoes)
+	if(!istype(C) || !C.can_resist() || C != mob_viewer || !C.shoes)
 		return
 	C.changeNext_move(CLICK_CD_RESIST)
 	C.shoes.handle_tying(C)
