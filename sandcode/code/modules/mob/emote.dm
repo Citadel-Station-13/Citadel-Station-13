@@ -13,10 +13,6 @@
 	animate(I, alpha = 255, time = 5, easing = BOUNCE_EASING, pixel_y = 10)
 	QDEL_IN_CLIENT_TIME(I, time)
 
-/mob/emote(act, m_type = null, message = null, intentional = FALSE)
-	. = ..()
-	set_typing_indicator(FALSE)
-
 /datum/emote/living/peep
 	key = "peep"
 	key_third_person = "peeps like a bird"

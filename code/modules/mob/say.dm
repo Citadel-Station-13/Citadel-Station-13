@@ -20,13 +20,8 @@
 	if(GLOB.say_disabled)	//This is here to try to identify lag problems
 		to_chat(usr, "<span class='danger'>Speech is currently admin-disabled.</span>")
 		return
-	//SKYRAT EDIT
-	set_typing_indicator(FALSE)
-	//END OF SKYRAT EDIT
-	if(message)
-		say(message)
-	//clear_typing_indicator()		// clear it immediately! //SKYRAT EDIT
-	//say(message)	//SKYRAT EDIT
+	clear_typing_indicator()		// clear it immediately!
+	say(message)
 
 /mob/verb/me_typing_indicator()
 	set name = "me_indicator"
@@ -50,10 +45,7 @@
 		return
 
 	message = trim(copytext_char(sanitize(message), 1, MAX_MESSAGE_LEN))
-	//SKYRAT EDIT
-	set_typing_indicator(FALSE)
-	//END OF SKYRAT EDIT
-	//clear_typing_indicator()		// clear it immediately! //Skyrat edit
+	clear_typing_indicator()		// clear it immediately!
 
 	usr.emote("me",1,message,TRUE)
 
@@ -64,6 +56,12 @@
 		return lowertext(copytext_char(input, 1, customsayverb))
 	else
 		return ..()
+
+/proc/uncostumize_say(input, message_mode)
+	. = input
+	if(message_mode == MODE_CUSTOM_SAY)
+		var/customsayverb = findtext(input, "*")
+		return lowertext(copytext_char(input, 1, customsayverb))
 
 /mob/proc/whisper_keybind()
 	var/message = input(src, "", "whisper") as text|null

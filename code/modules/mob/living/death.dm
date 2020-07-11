@@ -105,6 +105,5 @@
 		S.sharerDies(gibbed)
 
 	set_ssd_indicator(FALSE) //SKYRAT CHANGE - ssd indicator
-	set_typing_indicator(FALSE) //SKYRAT CHANGE
 
 	return TRUE
