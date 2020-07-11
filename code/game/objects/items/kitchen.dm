@@ -54,6 +54,12 @@
 	else
 		return ..()
 
+/obj/item/kitchen/fork/throwing
+	name = "throwing fork"
+	desc = "A fork, sharpened to perfection, making it a great weapon for throwing."
+	throwforce = 15
+	embedding = list("pain_mult" = 2, "embed_chance" = 100, "fall_chance" = 0, "embed_chance_turf_mod" = 100)
+	sharpness = IS_SHARP_ACCURATE
 
 /obj/item/kitchen/knife
 	name = "kitchen knife"
