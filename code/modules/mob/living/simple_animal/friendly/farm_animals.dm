@@ -198,7 +198,7 @@
 	desc = "Known for its wisdom, shares it with all"
 	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab/wisdomcow = 1) //truly the best meat
 	gold_core_spawnable = FALSE
-	speak_chance = 30 //the cow is eager to share its wisdom!
+	speak_chance = 10 //the cow is eager to share its wisdom! //but is wise enough to not lag  the server too bad
 	milk_reagent = /datum/reagent/medicine/liquid_wisdom
 
 /mob/living/simple_animal/cow/wisdom/Initialize()
