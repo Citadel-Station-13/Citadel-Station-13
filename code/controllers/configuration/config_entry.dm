@@ -209,12 +209,20 @@
 				new_value = new_list
 				continue_check_value = new_list.len
 		if(continue_check_value && continue_check_key && ValidateListEntry(new_key, new_value))
+			new_key = preprocess_key(new_key)
+			new_value = preprocess_value(new_value)
 			config_entry_value[new_key] = new_value
 			return TRUE
 	return FALSE
 
 /datum/config_entry/keyed_list/vv_edit_var(var_name, var_value)
 	return var_name != "splitter" && ..()
+
+/datum/config_entry/keyed_list/proc/preprocess_key(key)
+	return key
+
+/datum/config_entry/keyed_list/proc/preprocess_value(value)
+	return value
 
 //snowflake for donator things being on one line smh
 /datum/config_entry/multi_keyed_flag
