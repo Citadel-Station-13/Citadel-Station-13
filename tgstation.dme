@@ -3515,6 +3515,7 @@
 #include "sandcode\code\game\objects\items\storage\bags.dm"
 #include "sandcode\code\modules\atmospherics\machinery\pipes\bluespace.dm"
 #include "sandcode\code\modules\cargo\packs\emergency.dm"
+#include "sandcode\code\modules\clothing\refactor.dm"
 #include "sandcode\code\modules\clothing\masks\miscellaneous.dm"
 #include "sandcode\code\modules\clothing\outfits\standard.dm"
 #include "sandcode\code\modules\crafting\recipes\recipes_misc.dm"

@@ -66,7 +66,7 @@ proc/get_top_level_mob(var/mob/S)
 		if(!M.client || isnewplayer(M))
 			continue
 		var/T = get_turf(src)
-		if(M.stat == DEAD && M.client && (M.client.prefs.chat_toggles & CHAT_GHOSTSIGHT) && !(M in viewers(T, null)))
+		if(M.stat == DEAD && M.client && (M.client.prefs.chat_toggles & CHAT_GHOSTSIGHT) && !(M in viewers(T, null)) && (user.client)) //SKYRAT CHANGE - only user controlled mobs show their emotes to all-seeing ghosts, to reduce chat spam
 			M.show_message(message)
 
 	if(emote_type == EMOTE_AUDIBLE)
