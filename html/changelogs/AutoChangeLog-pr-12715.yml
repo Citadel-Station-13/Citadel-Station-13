@@ -1,0 +1,5 @@
+author: "HeroWithYay"
+delete-after: True
+changes: 
+  - rscadd: "Added Telecrystal Dust"
+  - tweak: "Telecrystals can be sold at cargo"
