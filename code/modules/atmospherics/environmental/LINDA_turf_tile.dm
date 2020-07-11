@@ -198,7 +198,7 @@
 //////////////////////////SPACEWIND/////////////////////////////
 
 /turf/open/proc/consider_pressure_difference(turf/T, difference)
-	SSair.high_pressure_delta |= src
+	SSair.high_pressure_delta[src] = TRUE
 	if(difference > pressure_difference)
 		pressure_direction = get_dir(src, T)
 		pressure_difference = difference
@@ -304,7 +304,8 @@
 	if(!thermal_conductivity)
 		return FALSE
 
-	SSair.active_super_conductivity |= src
+	SSair.active_super_conductivity[src] = TRUE
+
 	return TRUE
 
 /turf/open/consider_superconductivity(starting)
