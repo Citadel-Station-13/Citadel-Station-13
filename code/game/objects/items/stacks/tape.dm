@@ -15,6 +15,7 @@
 	var/list/conferred_embed = EMBED_HARMLESS
 	var/overwrite_existing = FALSE
 
+	var/endless = FALSE
 	var/apply_time = 30
 
 /obj/item/stack/sticky_tape/afterattack(obj/item/I, mob/living/user)
@@ -31,7 +32,7 @@
 		I.embedding = conferred_embed
 		I.updateEmbedding()
 		to_chat(user, "<span class='notice'>You finish wrapping [I] with [src].</span>")
-		if(max_amount > 0)
+		if(!endless)
 			use(1)
 		I.name = "[prefix] [I.name]"
 
@@ -42,7 +43,7 @@
 /obj/item/stack/sticky_tape/infinite //endless tape that applies far faster, for maximum honks
 	name = "endless sticky tape"
 	desc = "This roll of sticky tape somehow has no end."
-	max_amount = 0
+	endless = TRUE
 	apply_time = 10
 
 /obj/item/stack/sticky_tape/super
