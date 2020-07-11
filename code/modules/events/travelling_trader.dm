@@ -313,7 +313,7 @@ mob/living/carbon/human/dummy/travelling_trader/animal_hunter/Initialize()
 		/obj/item/organ/cyberimp/arm/baton = 1)
 
 /mob/living/carbon/human/dummy/travelling_trader/surgeon/give_reward()
-	var/obj/item/organ/implant = pickweight(possible_rewards)
+	var/obj/item/organ/implant = new pickweight(possible_rewards)
 	var/obj/item/autosurgeon/reward = new(get_turf(src))
 	reward.insert_organ(implant)
 
