@@ -1370,12 +1370,12 @@ GLOBAL_LIST_EMPTY(custom_outfits) //Admin created outfits
 
 		if(ADMIN_PUNISHMENT_SHOES)
 			if(!iscarbon(target))
-				to_chat(usr,"<span class='warning'>This must be used on a carbon mob.</span>", confidential = TRUE)
+				to_chat(usr,"<span class='warning'>This must be used on a carbon mob.</span>")
 				return
 			var/mob/living/carbon/C = target
 			var/obj/item/clothing/shoes/sick_kicks = C.shoes
 			if(!sick_kicks?.can_be_tied)
-				to_chat(usr,"<span class='warning'>[C] does not have knottable shoes!</span>", confidential = TRUE)
+				to_chat(usr,"<span class='warning'>[C] does not have knottable shoes!</span>")
 				return
 			sick_kicks.adjust_laces(SHOES_KNOTTED)
 
