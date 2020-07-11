@@ -12,23 +12,13 @@
 	var/atom/spawn_location //where the trader appears
 
 /datum/round_event/travelling_trader/setup()
-	//find position to place trader at, same as how jacq works for poofing
-	var/list/targets = list()
-	for(var/H in GLOB.network_holopads)
-		var/area/A = get_area(H)
-		if(!A || findtextEx(A.name, "AI") || !is_station_level(H))
-			continue
-		targets += H
-
-	if(!targets)
-		targets = GLOB.generic_event_spawns
-
-	spawn_location = pick(targets)
+	spawn_location = pick(GLOB.generic_event_spawns)
 
 /datum/round_event/travelling_trader/start()
 	//spawn a type of trader
 	var/trader_type = pick(subtypesof(/mob/living/carbon/human/dummy/travelling_trader))
-	trader = new trader_type(spawn_location)
+	message_admins("we picked trader [trader_type] at location [spawn_location]")
+	trader = new trader_type(get_turf(spawn_location))
 	var/datum/effect_system/smoke_spread/smoke = new
 	smoke.set_up(1, spawn_location)
 	smoke.start()
@@ -43,7 +33,7 @@
 		qdel(trader)
 
 //the actual trader mob
-/mob/living/carbon/human/dummy/travelling_trader //subtype of dummy because we want to be resource-efficient
+/mob/living/carbon/human/dummy/travelling_trader //similar to a dummy because we want to be resource-efficient
 	real_name = "Debug Travelling Trader"
 	status_flags = GODMODE //avoid scenarios of people trying to kill the trader
 	move_resist = MOVE_FORCE_VERY_STRONG //you can't bluespace bodybag them!
@@ -62,13 +52,15 @@
 
 /mob/living/carbon/human/dummy/travelling_trader/proc/setup_speech(var/input_speech, var/obj/item/given_item)
 	if(requested_item)
-		input_speech = replacetext(input_speech, "requested_item", requested_item.name)
+		var/atom/temp_requested = new requested_item
+		input_speech = replacetext(input_speech, "requested_item", temp_requested.name)
+		qdel(temp_requested)
 	if(given_item)
 		input_speech = replacetext(input_speech, "given_item", given_item.name)
 	return input_speech
 
 /mob/living/carbon/human/dummy/travelling_trader/attack_hand(mob/living/carbon/human/H)
-	if(active && last_speech + 3 SECONDS < world.realtime) //can only talk once per 3 seconds, to avoid spam
+	if(active && last_speech + 3 < world.realtime) //can only talk once per 3 seconds, to avoid spam
 		last_speech = world.realtime
 		if(initial_speech)
 			visible_message("<b>[src]</b> [speech_verb] \"[setup_speech(initial_speech)]\"")
@@ -86,7 +78,7 @@
 			give_reward()
 			qdel(src)
 		else
-			if(last_refusal + 3 SECONDS < world.realtime)
+			if(last_refusal + 3 < world.realtime)
 				last_refusal = world.realtime
 				visible_message("<b>[src]</b> [speech_verb] \"[setup_speech(refusal_speech, I)]\"")
 
@@ -98,14 +90,14 @@
 	new reward(get_turf(src))
 
 /mob/living/carbon/human/dummy/travelling_trader/Initialize()
+	..()
 	ADD_TRAIT(src,TRAIT_PIERCEIMMUNE, "trader_pierce_immune") //don't let people take their blood
-	trader_outfit.equip(src, TRUE)
+	equipOutfit(trader_outfit, TRUE)
 	for(var/obj/item/item in src.get_equipped_items())
 		ADD_TRAIT(item, TRAIT_NODROP, "trader_no_drop") //don't let people steal the travellers clothes!
 		item.resistance_flags |= INDESTRUCTIBLE //don't let people burn their clothes off, either.
 	if(!requested_item) //sometimes we already picked one
 		requested_item = pickweight(possible_wanted_items)
-	..()
 
 /mob/living/carbon/human/dummy/travelling_trader/Destroy()
 	var/datum/effect_system/smoke_spread/smoke = new
@@ -130,7 +122,8 @@
 
 /mob/living/carbon/human/dummy/travelling_trader/cook/Initialize()
 	//pick a random crafted food item as the requested item
-	requested_item = pick(subtypesof(/datum/crafting_recipe/food)).result
+	var/category = pick(list(/obj/item/reagent_containers/food/snacks/burger,/obj/item/reagent_containers/food/snacks/pie,/obj/item/reagent_containers/food/snacks/pizza,/obj/item/reagent_containers/food/snacks/soup,/obj/item/reagent_containers/food/snacks/store/bread))
+	requested_item = pick(subtypesof(category))
 	..()
 
 //botanist
@@ -162,7 +155,7 @@ mob/living/carbon/human/dummy/travelling_trader/animal_hunter/Initialize()
 	..()
 
 /mob/living/carbon/human/dummy/travelling_trader/animal_hunter/check_item(var/obj/item/supplied_item) //item is likely to be in contents of whats supplied
-	if(supplied_item.contents[requested_item])
+	if(requested_item in supplied_item.contents)
 		//delete the contents, item given is correct, but we don't want the contents to spill out when the parent is deleted
 		for(var/atom/thing in supplied_item.contents)
 			qdel(thing)
@@ -201,8 +194,8 @@ mob/living/carbon/human/dummy/travelling_trader/animal_hunter/Initialize()
 	..()
 
 /mob/living/carbon/human/dummy/travelling_trader/bartender/check_item(var/obj/item/supplied_item) //you need to check its reagents
-	var/obj/item/reagent_container/supplied_container = supplied_item
-	if(supplied_container)
+	if(istype(supplied_item, /obj/item/reagent_containers))
+		var/obj/item/reagent_containers/supplied_container = supplied_item
 		if(supplied_container.reagents.has_reagent(requested_item, 30))
 			return TRUE
 	return FALSE
