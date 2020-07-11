@@ -3524,6 +3524,7 @@
 #include "sandcode\code\modules\mob\emote.dm"
 #include "sandcode\code\modules\mob\say.dm"
 #include "sandcode\code\modules\mob\dead\observer\observer.dm"
+#include "sandcode\code\modules\mob\living\combat_indicator.dm"
 #include "sandcode\code\modules\mob\living\emote.dm"
 #include "sandcode\code\modules\mob\living\give.dm"
 #include "sandcode\code\modules\mob\living\say.dm"
