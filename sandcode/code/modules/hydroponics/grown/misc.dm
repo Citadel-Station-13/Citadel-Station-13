@@ -24,8 +24,8 @@
 		return
 
 	var/datum/gas_mixture/oxy = new
-	oxy.gases[/datum/gas/oxygen] = (yield + 6)*7*0.02 // this process is only being called about 2/7 as much as corpses so this is 12-32 times a corpses
-	oxy.temperature = T20C // without this the room would eventually freeze and miasma mining would be easier
+	oxy.adjust_moles(/datum/gas/oxygen, (yield + 6)*7*0.02) // this process is only being called about 2/7 as much as corpses so this is 12-32 times a corpses
+	oxy.return_temperature(T20C) // without this the room would eventually freeze and miasma mining would be easier
 	T.assume_air(oxy)
 	T.air_update_turf()
 
@@ -52,8 +52,8 @@
 		return
 
 	var/datum/gas_mixture/nitro = new
-	nitro.gases[/datum/gas/nitrogen] = (yield + 6)*7*0.02 // this process is only being called about 2/7 as much as corpses so this is 12-32 times a corpses
-	nitro.temperature = T20C // without this the room would eventually freeze and miasma mining would be easier
+	nitro.adjust_moles(/datum/gas/nitrogen, (yield + 6)*7*0.02) // this process is only being called about 2/7 as much as corpses so this is 12-32 times a corpses
+	nitro.return_temperature(T20C) // without this the room would eventually freeze and miasma mining would be easier
 	T.assume_air(nitro)
 	T.air_update_turf()
 
@@ -80,7 +80,9 @@
 		return
 
 	var/datum/gas_mixture/plas = new
-	plas.gases[/datum/gas/plasma] = (yield + 6)*7*0.02 // this process is only being called about 2/7 as much as corpses so this is 12-32 times a corpses
-	plas.temperature = T20C // without this the room would eventually freeze and miasma mining would be easier
+	plas.adjust_moles(/datum/gas/plasma, (yield + 6)*7*0.02) // this process is only being called about 2/7 as much as corpses so this is 12-32 times a corpses
+	plas.return_temperature(T20C) // without this the room would eventually freeze and miasma mining would be easier
 	T.assume_air(plas)
 	T.air_update_turf()
+
+//I actually have no idea no idea why i fixed this for monstermos, but swayde, you owe me one!
