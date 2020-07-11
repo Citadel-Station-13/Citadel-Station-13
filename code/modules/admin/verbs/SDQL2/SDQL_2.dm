@@ -909,10 +909,9 @@ GLOBAL_DATUM_INIT(sdql2_vv_statobj, /obj/effect/statclick/SDQL2_VV_all, new(null
 				assoc = SDQL_expression(object, expressions_list[expression_list])
 			if(assoc != null)
 				// Need to insert the key like this to prevent duplicate keys fucking up.
-				var/list/dummy = list()
-				dummy[result] = assoc
-				result = dummy
-			val += result
+				val[result] = assoc
+			else
+				val += list(result)
 	else
 		val = world.SDQL_var(object, expression, i, object, superuser, src)
 		i = expression.len
