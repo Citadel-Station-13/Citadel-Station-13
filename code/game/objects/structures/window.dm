@@ -157,7 +157,7 @@ GLOBAL_LIST_EMPTY(electrochromatic_window_lookup)
 	return 1
 
 /obj/structure/window/attack_tk(mob/user)
-	user.changeNext_move(CLICK_CD_MELEE)
+	user.ApplyClickCooldown(CLICK_CD_MELEE)
 	user.visible_message("<span class='notice'>Something knocks on [src].</span>")
 	add_fingerprint(user)
 	playsound(src, 'sound/effects/Glassknock.ogg', 50, 1)
@@ -173,7 +173,7 @@ GLOBAL_LIST_EMPTY(electrochromatic_window_lookup)
 		return
 	if(!can_be_reached(user))
 		return
-	user.changeNext_move(CLICK_CD_MELEE)
+	user.ApplyClickCooldown(CLICK_CD_MELEE)
 	user.visible_message("[user] knocks on [src].")
 	add_fingerprint(user)
 	playsound(src, 'sound/effects/Glassknock.ogg', 50, 1)
@@ -842,7 +842,7 @@ GLOBAL_LIST_EMPTY(electrochromatic_window_lookup)
 		return
 	add_fingerprint(user)
 	if(user.a_intent != INTENT_HARM)
-		user.changeNext_move(CLICK_CD_MELEE)
+		user.ApplyClickCooldown(CLICK_CD_MELEE)
 		user.visible_message("[user] knocks on [src].")
 		playsound(src, "pageturn", 50, 1)
 	else

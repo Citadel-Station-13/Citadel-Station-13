@@ -105,7 +105,7 @@
 		return
 
 	var/mob/living/M = loc
-	M.changeNext_move(CLICK_CD_RAPID)
+	M.ApplyClickCooldown(CLICK_CD_RAPID)
 	if(warcry)
 		M.say("[warcry]", ignore_spam = TRUE, forced = TRUE)
 
@@ -135,7 +135,7 @@
 	if(target.stat != CONSCIOUS) //Can't hug people who are dying/dead
 		return FALSE
 	else
-		M.changeNext_move(CLICK_CD_RAPID)
+		M.ApplyClickCooldown(CLICK_CD_RAPID)
 
 	return FALSE
 

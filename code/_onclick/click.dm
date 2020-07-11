@@ -4,7 +4,7 @@
 */
 
 // 1 decisecond click delay (above and beyond mob/next_move)
-//This is mainly modified by click code, to modify click delays elsewhere, use next_move and changeNext_move()
+//This is mainly modified by click code, to modify click delays elsewhere, use next_move and ApplyClickCooldown()
 /mob/var/next_click	= 0
 
 // THESE DO NOT EFFECT THE BASE 1 DECISECOND DELAY OF NEXT_CLICK
@@ -20,10 +20,10 @@
 /mob/proc/timeToNextMove()
 	return max(0, next_move - world.time)
 
-/mob/proc/changeNext_move(num)
+/mob/proc/ApplyClickCooldown(num)
 	next_move = world.time + ((num+next_move_adjust)*next_move_modifier)
 
-/mob/living/changeNext_move(num)
+/mob/living/ApplyClickCooldown(num)
 	last_click_move = next_move
 	var/mod = next_move_modifier
 	var/adj = next_move_adjust
@@ -122,7 +122,7 @@
 		return M.click_action(A,src,params)
 
 	if(restrained())
-		changeNext_move(CLICK_CD_HANDCUFFED)   //Doing shit in cuffs shall be vey slow
+		ApplyClickCooldown(CLICK_CD_HANDCUFFED)   //Doing shit in cuffs shall be vey slow
 		RestrainedClickOn(A)
 		return
 
@@ -144,7 +144,7 @@
 			W.melee_attack_chain(src, A, params)
 		else
 			if(ismob(A))
-				changeNext_move(CLICK_CD_MELEE)
+				ApplyClickCooldown(CLICK_CD_MELEE)
 			UnarmedAttack(A)
 		return
 
@@ -158,7 +158,7 @@
 			W.melee_attack_chain(src, A, params)
 		else
 			if(ismob(A))
-				changeNext_move(CLICK_CD_MELEE)
+				ApplyClickCooldown(CLICK_CD_MELEE)
 			UnarmedAttack(A, 1)
 	else
 		if(W)
@@ -271,7 +271,7 @@
 */
 /mob/proc/UnarmedAttack(atom/A, proximity_flag)
 	if(ismob(A))
-		changeNext_move(CLICK_CD_MELEE)
+		ApplyClickCooldown(CLICK_CD_MELEE)
 	return
 
 /*
@@ -353,7 +353,7 @@
 			return FALSE
 		var/mob/living/carbon/human/H = user
 		H.dna.species.grab(H, src, H.mind.martial_art)
-		H.changeNext_move(CLICK_CD_MELEE)
+		H.ApplyClickCooldown(CLICK_CD_MELEE)
 	else
 		..()
 /*
@@ -414,7 +414,7 @@
 	return
 
 /mob/living/LaserEyes(atom/A, params)
-	changeNext_move(CLICK_CD_RANGE)
+	ApplyClickCooldown(CLICK_CD_RANGE)
 
 	var/obj/item/projectile/beam/LE = new /obj/item/projectile/beam( loc )
 	LE.icon = 'icons/effects/genetics.dmi'

@@ -11,7 +11,7 @@
 	remove_movespeed_modifier(/datum/movespeed_modifier/active_block)
 	var/datum/block_parry_data/data = I.get_block_parry_data()
 	if(timeToNextMove() < data.block_end_click_cd_add)
-		changeNext_move(data.block_end_click_cd_add)
+		ApplyClickCooldown(data.block_end_click_cd_add)
 	return TRUE
 
 /mob/living/proc/ACTIVE_BLOCK_START(obj/item/I)

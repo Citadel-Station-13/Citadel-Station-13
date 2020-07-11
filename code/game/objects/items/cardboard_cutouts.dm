@@ -81,7 +81,7 @@
 	else if(I.hitsound)
 		playsound(loc, I.hitsound, get_clamped_volume(), 1, -1)
 
-	user.changeNext_move(CLICK_CD_MELEE)
+	user.ApplyClickCooldown(CLICK_CD_MELEE)
 	user.do_attack_animation(src)
 
 	if(I.force)

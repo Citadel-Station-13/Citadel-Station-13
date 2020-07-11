@@ -145,7 +145,7 @@
 
 /obj/item/melee/baton/alt_pre_attack(atom/A, mob/living/user, params)
 	. = common_baton_melee(A, user, TRUE)		//return true (attackchain interrupt) if this also returns true. no harm-disarming.
-	user.changeNext_move(CLICK_CD_MELEE)
+	user.ApplyClickCooldown(CLICK_CD_MELEE)
 
 //return TRUE to interrupt attack chain.
 /obj/item/melee/baton/proc/common_baton_melee(mob/M, mob/living/user, disarming = FALSE)

@@ -176,7 +176,7 @@
 	var/stamloss = user.getStaminaLoss()
 	if(stamloss >= STAMINA_NEAR_SOFTCRIT) //The more tired you are, the less damage you do.
 		var/penalty = (stamloss - STAMINA_NEAR_SOFTCRIT)/(STAMINA_NEAR_CRIT - STAMINA_NEAR_SOFTCRIT)*STAM_CRIT_GUN_DELAY
-		user.changeNext_move(CLICK_CD_RANGE+(CLICK_CD_RANGE*penalty))
+		user.ApplyClickCooldown(CLICK_CD_RANGE+(CLICK_CD_RANGE*penalty))
 	if(flag) //It's adjacent, is the user, or is on the user's person
 		if(target in user.contents) //can't shoot stuff inside us.
 			return

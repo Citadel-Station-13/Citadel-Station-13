@@ -159,5 +159,5 @@ God bless America.
 		C.apply_damage(min(30, reagents.total_volume), BURN, BODY_ZONE_HEAD)
 		reagents.remove_any((reagents.total_volume/2))
 		C.DefaultCombatKnockdown(60)
-		user.changeNext_move(CLICK_CD_MELEE)
+		user.ApplyClickCooldown(CLICK_CD_MELEE)
 	return ..()

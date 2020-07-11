@@ -298,7 +298,7 @@
 		if(handcuffed)
 			var/obj/item/restraints/O = src.get_item_by_slot(SLOT_HANDCUFFED)
 			buckle_cd = O.breakouttime
-		changeNext_move(min(CLICK_CD_BREAKOUT, buckle_cd))
+		ApplyClickCooldown(min(CLICK_CD_BREAKOUT, buckle_cd))
 		last_special = world.time + min(CLICK_CD_BREAKOUT, buckle_cd)
 		visible_message("<span class='warning'>[src] attempts to unbuckle [p_them()]self!</span>", \
 					"<span class='notice'>You attempt to unbuckle yourself... (This will take around [round(buckle_cd/600,1)] minute\s, and you need to stay still.)</span>")
@@ -341,10 +341,10 @@
 		type = 2
 	if(I)
 		if(type == 1)
-			changeNext_move(min(CLICK_CD_BREAKOUT, I.breakouttime))
+			ApplyClickCooldown(min(CLICK_CD_BREAKOUT, I.breakouttime))
 			last_special = world.time + CLICK_CD_BREAKOUT
 		if(type == 2)
-			changeNext_move(min(CLICK_CD_RANGE, I.breakouttime))
+			ApplyClickCooldown(min(CLICK_CD_RANGE, I.breakouttime))
 			last_special = world.time + CLICK_CD_RANGE
 		cuff_resist(I)
 
@@ -390,7 +390,7 @@
 			if (W)
 				W.layer = initial(W.layer)
 				W.plane = initial(W.plane)
-		changeNext_move(0)
+		ApplyClickCooldown(0)
 	if (legcuffed)
 		var/obj/item/W = legcuffed
 		legcuffed = null
@@ -403,7 +403,7 @@
 			if (W)
 				W.layer = initial(W.layer)
 				W.plane = initial(W.plane)
-		changeNext_move(0)
+		ApplyClickCooldown(0)
 	update_equipment_speed_mods() // In case cuffs ever change speed
 
 /mob/living/carbon/proc/clear_cuffs(obj/item/I, cuff_break)

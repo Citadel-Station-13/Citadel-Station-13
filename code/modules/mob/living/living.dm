@@ -273,7 +273,7 @@
 			return
 		stop_pulling()
 
-	changeNext_move(CLICK_CD_GRABBING)
+	ApplyClickCooldown(CLICK_CD_GRABBING)
 
 	if(AM.pulledby)
 		if(!supress_message)
@@ -687,7 +687,7 @@
 		return
 
 	if(do_resist())
-		changeNext_move(CLICK_CD_RESIST)
+		ApplyClickCooldown(CLICK_CD_RESIST)
 
 /// The actual proc for resisting. Return TRUE to give clickdelay.
 /mob/living/proc/do_resist()
@@ -730,7 +730,7 @@
 
 	if(CHECK_MOBILITY(src, MOBILITY_USE) && resist_embedded()) //Citadel Change for embedded removal memes - requires being able to use items.
 		// DO NOT GIVE DEFAULT CLICKDELAY - This is a combat action.
-		changeNext_move(CLICK_CD_MELEE)
+		ApplyClickCooldown(CLICK_CD_MELEE)
 		return FALSE
 
 	if(last_special <= world.time)

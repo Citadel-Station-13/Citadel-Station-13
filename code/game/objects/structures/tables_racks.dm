@@ -192,7 +192,7 @@
 
 /obj/structure/table/alt_attack_hand(mob/user)
 	if(user && Adjacent(user) && !user.incapacitated())
-		user.changeNext_move(CLICK_CD_MELEE*0.5)
+		user.ApplyClickCooldown(CLICK_CD_MELEE*0.5)
 		if(istype(user) && user.a_intent == INTENT_HARM)
 			user.visible_message("<span class='warning'>[user] slams [user.p_their()] palms down on [src].</span>", "<span class='warning'>You slam your palms down on [src].</span>")
 			playsound(src, 'sound/weapons/sonic_jackhammer.ogg', 50, 1)
@@ -682,7 +682,7 @@
 		return
 	if(CHECK_MULTIPLE_BITFIELDS(user.mobility_flags, MOBILITY_STAND|MOBILITY_MOVE) || user.get_num_legs() < 2)
 		return
-	user.changeNext_move(CLICK_CD_MELEE)
+	user.ApplyClickCooldown(CLICK_CD_MELEE)
 	user.do_attack_animation(src, ATTACK_EFFECT_KICK)
 	user.visible_message("<span class='danger'>[user] kicks [src].</span>", null, null, COMBAT_MESSAGE_RANGE)
 	take_damage(rand(4,8), BRUTE, "melee", 1)

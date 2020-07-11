@@ -16,7 +16,7 @@
 		return M.click_action(A,src,params)
 
 	if(restrained())
-		changeNext_move(CLICK_CD_HANDCUFFED)   //Doing shit in cuffs shall be vey slow
+		ApplyClickCooldown(CLICK_CD_HANDCUFFED)   //Doing shit in cuffs shall be vey slow
 		RestrainedClickOn(A)
 		return
 
@@ -39,7 +39,7 @@
 			W.rightclick_melee_attack_chain(src, A, params)
 		else
 			if(ismob(A))
-				changeNext_move(CLICK_CD_MELEE)
+				ApplyClickCooldown(CLICK_CD_MELEE)
 			if(!AltUnarmedAttack(A))
 				UnarmedAttack(A)
 		return
@@ -54,7 +54,7 @@
 			W.rightclick_melee_attack_chain(src, A, params)
 		else
 			if(ismob(A))
-				changeNext_move(CLICK_CD_MELEE)
+				ApplyClickCooldown(CLICK_CD_MELEE)
 			if(!AltUnarmedAttack(A,1))
 				UnarmedAttack(A,1)
 	else
@@ -67,7 +67,7 @@
 
 /mob/proc/AltUnarmedAttack(atom/A, proximity_flag)
 	if(ismob(A))
-		changeNext_move(CLICK_CD_MELEE)
+		ApplyClickCooldown(CLICK_CD_MELEE)
 	return FALSE
 
 /mob/proc/AltRangedAttack(atom/A, params)

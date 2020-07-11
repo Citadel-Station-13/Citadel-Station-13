@@ -88,7 +88,7 @@
 		return
 	if(operating || !density)
 		return
-	user.changeNext_move(CLICK_CD_MELEE)
+	user.ApplyClickCooldown(CLICK_CD_MELEE)
 
 	user.visible_message("[user] bangs on \the [src].",
 						 "You bang on \the [src].")

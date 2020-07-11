@@ -145,7 +145,7 @@
 	else
 		apply_focus_overlay()
 		focus.throw_at(target, 10, 1,user)
-	user.changeNext_move(CLICK_CD_MELEE)
+	user.ApplyClickCooldown(CLICK_CD_MELEE)
 	update_icon()
 
 /proc/tkMaxRangeCheck(mob/user, atom/target)

@@ -17,9 +17,9 @@
 		SEND_SIGNAL(src, COMSIG_PELLET_CLOUD_INIT, target, user, fired_from, randomspread, spread, zone_override, params, distro)
 
 	if(click_cooldown_override)
-		user.changeNext_move(click_cooldown_override)
+		user.ApplyClickCooldown(click_cooldown_override)
 	else
-		user.changeNext_move(CLICK_CD_RANGE)
+		user.ApplyClickCooldown(CLICK_CD_RANGE)
 	user.newtonian_move(get_dir(target, user))
 	update_icon()
 	return 1

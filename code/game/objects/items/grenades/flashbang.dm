@@ -118,7 +118,7 @@
 	if(active)
 		user.playsound_local(user, 'sound/misc/box_deploy.ogg', 50, TRUE)
 		rots++
-		user.changeNext_move(CLICK_CD_RAPID)
+		user.ApplyClickCooldown(CLICK_CD_RAPID)
 
 /obj/item/grenade/primer/prime(mob/living/lanced_by)
 	shrapnel_radius = round(rots / rots_per_mag)

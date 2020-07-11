@@ -133,7 +133,7 @@
 		remove_occupant(user)
 		return
 
-	user.changeNext_move(CLICK_CD_BREAKOUT)
+	user.ApplyClickCooldown(CLICK_CD_BREAKOUT)
 	user.last_special = world.time + CLICK_CD_BREAKOUT
 	if(user.mob_size <= MOB_SIZE_SMALL)
 		to_chat(user, "<span class='notice'>You begin to try escaping the [src] and start fumbling for the lock switch... (This will take some time.)</span>")

@@ -155,7 +155,7 @@
 /obj/structure/spider/spiderling/attack_hand(mob/user)
 	. = ..()
 	if(user.a_intent != INTENT_HELP)
-		user.changeNext_move(CLICK_CD_MELEE)
+		user.ApplyClickCooldown(CLICK_CD_MELEE)
 		user.do_attack_animation(src)
 		user.visible_message("<span class='warning'>[user] splats [src].</span>", "<span class='warning'>You splat [src].</span>", "<span class='italics'>You hear a splat...</span>")
 		playsound(loc, 'sound/effects/snap.ogg', 25)
@@ -252,7 +252,7 @@
 
 /obj/structure/spider/cocoon/container_resist(mob/living/user)
 	var/breakout_time = 600
-	user.changeNext_move(CLICK_CD_BREAKOUT)
+	user.ApplyClickCooldown(CLICK_CD_BREAKOUT)
 	user.last_special = world.time + CLICK_CD_BREAKOUT
 	to_chat(user, "<span class='notice'>You struggle against the tight bonds... (This will take about [DisplayTimeText(breakout_time)].)</span>")
 	visible_message("You see something struggling and writhing in \the [src]!")

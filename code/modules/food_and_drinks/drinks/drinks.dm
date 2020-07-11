@@ -38,7 +38,7 @@
 	if(M == user)
 		user.visible_message("<span class='notice'>[user] swallows a gulp of [src].</span>", "<span class='notice'>You swallow a gulp of [src].</span>")
 		if(HAS_TRAIT(M, TRAIT_VORACIOUS))
-			M.changeNext_move(CLICK_CD_MELEE * 0.5) //chug! chug! chug!
+			M.ApplyClickCooldown(CLICK_CD_MELEE * 0.5) //chug! chug! chug!
 
 	else
 		M.visible_message("<span class='danger'>[user] attempts to feed the contents of [src] to [M].</span>", "<span class='userdanger'>[user] attempts to feed the contents of [src] to [M].</span>")

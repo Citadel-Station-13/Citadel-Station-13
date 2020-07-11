@@ -33,7 +33,7 @@
 	if(.)
 		return
 	if(structureclimber && structureclimber != user)
-		user.changeNext_move(CLICK_CD_MELEE)
+		user.ApplyClickCooldown(CLICK_CD_MELEE)
 		user.do_attack_animation(src)
 		structureclimber.DefaultCombatKnockdown(40)
 		structureclimber.visible_message("<span class='warning'>[structureclimber] has been knocked off [src].", "You're knocked off [src]!", "You see [structureclimber] get knocked off [src].</span>")

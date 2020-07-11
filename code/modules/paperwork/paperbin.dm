@@ -64,7 +64,7 @@
 /obj/item/paper_bin/attack_hand(mob/user)
 	if(user.lying)
 		return
-	user.changeNext_move(CLICK_CD_MELEE)
+	user.ApplyClickCooldown(CLICK_CD_MELEE)
 	if(bin_pen)
 		var/obj/item/pen/P = bin_pen
 		P.add_fingerprint(user)

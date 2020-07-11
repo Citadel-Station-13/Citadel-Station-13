@@ -116,7 +116,7 @@
 	if(!hound)
 		go_out(user)
 		return
-	user.changeNext_move(CLICK_CD_BREAKOUT)
+	user.ApplyClickCooldown(CLICK_CD_BREAKOUT)
 	user.last_special = world.time + CLICK_CD_BREAKOUT
 	if(user.a_intent == INTENT_HELP)
 		return

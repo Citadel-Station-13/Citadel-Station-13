@@ -53,12 +53,13 @@
 	return ..() || ((obj_flags & CAN_BE_HIT) && I.attack_obj(src, user))
 
 /mob/living/attackby(obj/item/I, mob/living/user, params, attackchain_flags, damage_multiplier)
-	if(..())
+	. = ..()
+	if(.)
 		return TRUE
 	I.attack_delay_done = FALSE //Should be set TRUE in pre_attacked_by()
 	. = I.attack(src, user, attackchain_flags, damage_multiplier)
 	if(!I.attack_delay_done) //Otherwise, pre_attacked_by() should handle it.
-		user.changeNext_move(I.click_delay)
+		user.ApplyClickCooldown(I.click_delay)
 
 /obj/item/proc/attack(mob/living/M, mob/living/user, attackchain_flags = NONE, damage_multiplier = 1)
 	if(SEND_SIGNAL(src, COMSIG_ITEM_ATTACK, M, user) & COMPONENT_ITEM_NO_ATTACK)
@@ -88,6 +89,16 @@
 	if(weight)
 		user.adjustStaminaLossBuffered(weight)
 
+	if(force >= 15)
+		shake_camera(user, ((force - 10) * 0.01 + 1), ((force - 10) * 0.01))
+		if(M.client)
+			switch (M.client.prefs.damagescreenshake)
+				if (1)
+					shake_camera(M, ((force - 10) * 0.015 + 1), ((force - 10) * 0.015))
+				if (2)
+					if(!CHECK_MOBILITY(M, MOBILITY_MOVE))
+						shake_camera(M, ((force - 10) * 0.015 + 1), ((force - 10) * 0.015))
+
 //the equivalent of the standard version of attack() but for object targets.
 /obj/item/proc/attack_obj(obj/O, mob/living/user)
 	if(SEND_SIGNAL(src, COMSIG_ITEM_ATTACK_OBJ, O, user) & COMPONENT_NO_ATTACK_OBJ)
@@ -96,7 +107,7 @@
 		return
 	user.do_attack_animation(O)
 	if(!O.attacked_by(src, user))
-		user.changeNext_move(click_delay)
+		user.ApplyClickCooldown(click_delay)
 	var/weight = getweight(user, STAM_COST_ATTACK_OBJ_MULT)
 	if(weight)
 		user.adjustStaminaLossBuffered(weight)//CIT CHANGE - makes attacking things cause stamina loss
@@ -114,7 +125,7 @@
 		var/penalty = (stamloss - STAMINA_NEAR_SOFTCRIT)/(STAMINA_NEAR_CRIT - STAMINA_NEAR_SOFTCRIT)*STAM_CRIT_ITEM_ATTACK_PENALTY
 		totitemdamage *= 1 - penalty
 		next_move_mult += penalty*STAM_CRIT_ITEM_ATTACK_DELAY
-	user.changeNext_move(I.click_delay*next_move_mult)
+	user.ApplyClickCooldown(I.click_delay*next_move_mult)
 
 	if(SEND_SIGNAL(user, COMSIG_COMBAT_MODE_CHECK, COMBAT_MODE_INACTIVE))
 		bad_trait = SKILL_COMBAT_MODE //blacklist combat skills.
@@ -156,7 +167,7 @@
 /mob/living/simple_animal/attacked_by(obj/item/I, mob/living/user, attackchain_flags = NONE, damage_multiplier = 1)
 	if(I.force < force_threshold || I.damtype == STAMINA)
 		playsound(loc, 'sound/weapons/tap.ogg', I.get_clamped_volume(), 1, -1)
-		user.changeNext_move(I.click_delay) //pre_attacked_by not called
+		user.ApplyClickCooldown(I.click_delay) //pre_attacked_by not called
 	else
 		return ..()
 
@@ -175,7 +186,7 @@
 	if(stam_mobility_mult > LYING_DAMAGE_PENALTY && !CHECK_MOBILITY(user, MOBILITY_STAND)) //damage penalty for fighting prone, doesn't stack with the above.
 		stam_mobility_mult = LYING_DAMAGE_PENALTY
 	. *= stam_mobility_mult
-	user.changeNext_move(I.click_delay*next_move_mult)
+	user.ApplyClickCooldown(I.click_delay*next_move_mult)
 	I.attack_delay_done = TRUE
 
 	var/bad_trait
