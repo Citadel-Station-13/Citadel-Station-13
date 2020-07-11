@@ -125,6 +125,7 @@
 /obj/item/proc/negates_gravity()
 	return FALSE
 
+/**
   * adjust_laces adjusts whether our shoes (assuming they can_be_tied) and tied, untied, or knotted
   *
   * In addition to setting the state, it will deal with getting rid of alerts if they exist, as well as registering and unregistering the stepping signals
