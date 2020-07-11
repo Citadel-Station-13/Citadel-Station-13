@@ -377,10 +377,16 @@
 	. = ..()
 	if(. && isliving(user))
 		var/mob/living/L = user
+		//Skyrat change start
+		if(L.client?.prefs?.autostand)
+			if(!(L.combat_flags & COMBAT_FLAG_INTENTIONALLY_RESTING))
+				TOGGLE_BITFIELD(L.combat_flags, COMBAT_FLAG_INTENTIONALLY_RESTING)
 		L.DefaultCombatKnockdown(200)
 		L.Stun(20) //Skyrat Change
 		L.set_resting(TRUE) //Skyrat change
 
+		L.disable_combat_mode(FALSE)
+		//Skyrat change stop
 /datum/emote/living/sway
 	key = "sway"
 	key_third_person = "sways"
