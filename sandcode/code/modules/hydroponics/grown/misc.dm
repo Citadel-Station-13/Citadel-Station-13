@@ -29,7 +29,7 @@
 	T.assume_air(oxy)
 	T.air_update_turf()
 
-	/obj/item/seeds/bamboo/nitroboo
+/obj/item/seeds/bamboo/nitroboo
 	name = "pack of Nitroboo seeds"
 	desc = "A species of bamboo that produces elevated levels of nitrogen. The gas stops being produced in difficult atmospheric conditions."
 	plantname = "Nitroboo"
@@ -57,7 +57,7 @@
 	T.assume_air(nitro)
 	T.air_update_turf()
 
-	/obj/item/seeds/bamboo/plasboo
+/obj/item/seeds/bamboo/plasboo
 	name = "pack of Plasboo seeds"
 	desc = "A species of bamboo that produces elevated levels of plasma. The gas stops being produced in difficult atmospheric conditions."
 	plantname = "Plasboo"
