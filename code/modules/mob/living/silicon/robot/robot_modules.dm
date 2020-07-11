@@ -552,7 +552,7 @@
 		if("Drake")
 			cyborg_base_icon = "drakeeng"
 			cyborg_icon_override = 'modular_citadel/icons/mob/widerobot.dmi'
-			sleeper_overlay = "drakeengsleeper"
+			sleeper_overlay = "drakesecsleeper"
 			dogborg = TRUE
 		else
 			return FALSE
@@ -861,7 +861,7 @@
 		"(Janitor) Marina" = image(icon = 'modular_citadel/icons/mob/robots.dmi', icon_state = "marinajan"),
 		"(Janitor) Sleek" = image(icon = 'modular_citadel/icons/mob/robots.dmi', icon_state = "sleekjan"),
 		"(Janitor) Can" = image(icon = 'modular_citadel/icons/mob/robots.dmi', icon_state = "canjan"),
-		"(Janitor) Heavy" = image(icon = 'modular_citadel/icons/mob/robots.dmi', icon_state = "heavyjan"),
+		"(Janitor) Heavy" = image(icon = 'modular_citadel/icons/mob/robots.dmi', icon_state = "heavyres"),
 		"Zoomba" = image(icon = 'icons/mob/robots.dmi', icon_state = "zoomba_jani"),
 		"Drake" = image(icon = 'modular_citadel/icons/mob/widerobot.dmi', icon_state = "drakejanitbox")
 		)
@@ -940,7 +940,7 @@
 		if("Drake")
 			cyborg_base_icon = "drakejanit"
 			cyborg_icon_override = 'modular_citadel/icons/mob/widerobot.dmi'
-			sleeper_overlay = "drakejanitsleeper"
+			sleeper_overlay = "drakesecsleeper"
 			dogborg = TRUE
 		else
 			return FALSE

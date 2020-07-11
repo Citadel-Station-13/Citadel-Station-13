@@ -677,6 +677,14 @@ GLOBAL_LIST_INIT(valid_plushie_paths, valid_plushie_paths())
 	icon_state = "scrubpuppy"
 	item_state = "scrubpuppy"
 
+/obj/item/toy/plush/borgplushie/meddrake
+	icon_state = "meddrake"
+	item_state = "meddrake"
+
+/obj/item/toy/plush/borgplushie/secdrake
+	icon_state = "secdrake"
+	item_state = "secdrake"
+
 /obj/item/toy/plush/aiplush
 	name = "AI plushie"
 	desc = "A little stuffed toy AI core... it appears to be malfunctioning."
