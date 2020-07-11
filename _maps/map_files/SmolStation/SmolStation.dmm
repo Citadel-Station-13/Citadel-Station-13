@@ -254,11 +254,13 @@
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/dorms)
 "ajH" = (
-/obj/structure/disposalpipe/segment{
-	dir = 4
+/obj/effect/turf_decal/tile/purple,
+/obj/effect/turf_decal/tile/purple{
+	dir = 1
 	},
-/turf/open/floor/plating/airless,
-/area/space)
+/mob/living/simple_animal/hostile/shark/kawaii,
+/turf/open/floor/plasteel/white,
+/area/science/lab)
 "amf" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
@@ -1041,6 +1043,7 @@
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
 	},
+/mob/living/carbon/monkey/punpun,
 /turf/open/floor/plasteel,
 /area/maintenance/central)
 "aJy" = (
@@ -3756,8 +3759,9 @@
 	dir = 8;
 	pixel_x = 24
 	},
-/obj/machinery/holopad,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,
+/mob/living/simple_animal/pet/fox/Renault,
+/obj/structure/bed/dogbed/renault,
 /turf/open/floor/plasteel/grimy,
 /area/crew_quarters/heads/captain/private)
 "cCz" = (
@@ -5276,7 +5280,7 @@
 	dir = 4
 	},
 /turf/open/floor/plating/airless,
-/area/space)
+/area/space/nearstation)
 "dKO" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer1{
 	dir = 4
@@ -5462,6 +5466,8 @@
 	dir = 4
 	},
 /obj/structure/disposalpipe/segment,
+/mob/living/simple_animal/pet/cat/Runtime,
+/obj/structure/bed/dogbed/runtime,
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/zone3)
 "dTs" = (
@@ -10206,6 +10212,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
+/mob/living/simple_animal/pet/dog/cheems,
 /turf/open/floor/plasteel/dark,
 /area/bridge)
 "hJe" = (
@@ -12350,6 +12357,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
+/mob/living/simple_animal/mouse/brown/Tom,
 /turf/open/floor/circuit/green,
 /area/ai_monitored/nuke_storage)
 "joC" = (
@@ -14750,6 +14758,7 @@
 /obj/structure/closet/secure_closet/engineering_chief,
 /obj/item/clothing/suit/space/hardsuit/engine/elite,
 /obj/item/clothing/shoes/magboots/advance,
+/mob/living/simple_animal/parrot/Poly,
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "lhi" = (
@@ -15425,7 +15434,9 @@
 /turf/open/floor/plasteel/dark,
 /area/medical/virology)
 "lFf" = (
-/obj/structure/disposalpipe/segment,
+/obj/structure/disposalpipe/segment{
+	dir = 9
+	},
 /turf/closed/wall/r_wall,
 /area/science/xenobiology{
 	name = "Science Outpost"
@@ -15837,9 +15848,11 @@
 /turf/open/floor/plasteel,
 /area/quartermaster/storage)
 "lWJ" = (
-/obj/structure/disposalpipe/segment,
+/obj/structure/disposalpipe/segment{
+	dir = 5
+	},
 /turf/open/floor/plating/airless,
-/area/space)
+/area/space/nearstation)
 "lXu" = (
 /obj/machinery/light{
 	dir = 8
@@ -17005,6 +17018,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1{
 	dir = 6
 	},
+/obj/machinery/holopad,
 /turf/open/floor/plasteel/grimy,
 /area/crew_quarters/heads/captain/private)
 "mRh" = (
@@ -18250,7 +18264,7 @@
 	dir = 1
 	},
 /turf/open/floor/plating/airless,
-/area/space)
+/area/space/nearstation)
 "nJI" = (
 /obj/structure/bed,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
@@ -19853,13 +19867,9 @@
 /turf/open/floor/plasteel,
 /area/janitor)
 "paP" = (
-/obj/structure/disposalpipe/segment{
-	dir = 9
-	},
-/turf/closed/wall/r_wall,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/mob/living/simple_animal/sloth/paperwork,
+/turf/open/floor/plasteel,
+/area/quartermaster/storage)
 "pbv" = (
 /obj/machinery/airalarm{
 	dir = 4;
@@ -24137,13 +24147,15 @@
 /turf/open/floor/plasteel,
 /area/quartermaster/storage)
 "sDZ" = (
-/obj/structure/disposalpipe/segment{
-	dir = 5
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/red{
+	dir = 1
 	},
-/turf/closed/wall/r_wall,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,
+/mob/living/simple_animal/hostile/retaliate/bat/secbat,
+/turf/open/floor/plasteel/dark,
+/area/security/brig)
 "sEa" = (
 /obj/machinery/door/airlock/external{
 	name = "External Docking Port"
@@ -60364,7 +60376,7 @@ kea
 nTL
 eZD
 cvc
-cvc
+sDZ
 hhS
 cvc
 yaO
@@ -65497,7 +65509,7 @@ oBG
 wXO
 iIZ
 gpI
-lbe
+paP
 qVQ
 tgK
 mmq
@@ -65706,7 +65718,7 @@ gEs
 rPL
 kmk
 vOj
-vOj
+ajH
 myB
 nCn
 eeB
@@ -81674,11 +81686,11 @@ aHj
 aHj
 aHj
 aHj
-ajH
+bIS
 nJv
 lWJ
-lWJ
-sDZ
+oqW
+mgE
 cgD
 uAI
 hfF
@@ -81934,8 +81946,8 @@ mgE
 kRm
 kqH
 lFf
-lFf
-paP
+mgE
+mgE
 fuf
 uAI
 mgE
