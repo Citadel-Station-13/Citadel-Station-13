@@ -455,7 +455,7 @@ GLOBAL_LIST_EMPTY(family_heirlooms)
 	
 	/datum/quirk/monophobia
 	name = "Monophobia"
-	desc = "You will become increasingly stressed when not in company of others, triggering panic reactions ranging from sickness to heart attacks.."
+	desc = "You will become increasingly stressed when not in company of others, triggering panic reactions ranging from sickness to heart attacks."
 	value = -3 // Might change it to 4.
 	gain_text = "<span class='danger'>You feel really lonely...</span>"
 	lose_text = "<span class='notice'>You feel like you could be safe on your own.</span>"
