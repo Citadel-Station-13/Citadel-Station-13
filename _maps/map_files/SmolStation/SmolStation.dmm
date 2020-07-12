@@ -253,14 +253,6 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/dorms)
-"ajH" = (
-/obj/effect/turf_decal/tile/purple,
-/obj/effect/turf_decal/tile/purple{
-	dir = 1
-	},
-/mob/living/simple_animal/hostile/shark/kawaii,
-/turf/open/floor/plasteel/white,
-/area/science/lab)
 "amf" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
@@ -18277,6 +18269,19 @@
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plating,
 /area/science/test_area)
+"nKz" = (
+/obj/effect/turf_decal/tile/purple,
+/obj/effect/turf_decal/tile/purple{
+	dir = 1
+	},
+/mob/living/simple_animal/slime/pet{
+	icon_dead = "rainbow adult slime dead";
+	icon_living = "rainbow adult slime";
+	icon_state = "rainbow adult slime";
+	name = "Colorful"
+	},
+/turf/open/floor/plasteel/white,
+/area/science/lab)
 "nKG" = (
 /obj/effect/spawner/structure/window,
 /turf/open/floor/plating,
@@ -65718,7 +65723,7 @@ gEs
 rPL
 kmk
 vOj
-ajH
+vOj
 myB
 nCn
 eeB
@@ -65975,7 +65980,7 @@ dkC
 vxa
 rXa
 vOj
-vOj
+nKz
 iyO
 dUs
 vOj
