@@ -262,6 +262,12 @@
 // /mob/living/silicon signals
 #define COMSIG_ROBOT_UPDATE_ICONS "robot_update_icons"			//from base of robot/update_icons(): ()
 
+// /mob/living/simple_animal signals
+#define COMSIG_SIMPLE_ANIMAL_AI_TICK "simple_animal_ai_tick"		//from base of mob/living/simple_animal/tick_automated_actions(): ()
+	#define COMPONENT_INTERRUPT_AUTOMATED_MOVEMENT			1
+	#define COMPONENT_INTERRUPT_AUTOMATED_ACTION			2
+	#define COMPONENT_INTERRUPT_AUTOMATED_SPEECH			4
+
 // /mob/living/simple_animal/hostile signals
 #define COMSIG_HOSTILE_ATTACKINGTARGET "hostile_attackingtarget"
 	#define COMPONENT_HOSTILE_NO_ATTACK 1

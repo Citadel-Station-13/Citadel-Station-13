@@ -83,3 +83,11 @@
 #define COMBAT_MODE_ACTIVE					(1<<1)
 /// combat mode is not active
 #define COMBAT_MODE_INACTIVE				(1<<2)
+
+// Rhythm activation states
+/// We're inactive
+#define RHYTHM_INACTIVE							1
+/// We're ticked by a beatmap
+#define RHYTHM_BEATMAP							2
+/// We're standalone and ticked by SSdcs
+#define RHYTHM_STANDALONE						3

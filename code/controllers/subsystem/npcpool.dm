@@ -22,13 +22,6 @@ SUBSYSTEM_DEF(npcpool)
 	while(currentrun.len)
 		var/mob/living/simple_animal/SA = currentrun[currentrun.len]
 		--currentrun.len
-
-		if(!SA.ckey && !SA.mob_transforming)
-			if(SA.stat != DEAD)
-				SA.handle_automated_movement()
-			if(SA.stat != DEAD)
-				SA.handle_automated_action()
-			if(SA.stat != DEAD)
-				SA.handle_automated_speech()
+		SA.tick_automated_actions()
 		if (MC_TICK_CHECK)
 			return
