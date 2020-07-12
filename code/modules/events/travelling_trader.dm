@@ -55,9 +55,7 @@
 
 /mob/living/carbon/human/dummy/travelling_trader/proc/setup_speech(var/input_speech, var/obj/item/given_item)
 	if(requested_item)
-		var/atom/temp_requested = new requested_item
-		input_speech = replacetext(input_speech, "requested_item", temp_requested.name)
-		qdel(temp_requested)
+		input_speech = replacetext(input_speech, "requested_item", initial(requested_item.name))
 	if(given_item)
 		input_speech = replacetext(input_speech, "given_item", given_item.name)
 	return input_speech
@@ -128,13 +126,12 @@
 
 /mob/living/carbon/human/dummy/travelling_trader/cook/Initialize()
 	//pick a random crafted food item as the requested item
-	var/recipe = pick(subtypesof(/datum/crafting_recipe/food))
-	var/datum/crafting_recipe/food/new_recipe = new recipe
-	if(istype(new_recipe.result, /obj/item/reagent_containers/food)) //not all food recipes make food objects (like cak/butterbear)
-		requested_item = new_recipe.result
+	var/datum/crafting_recipe/food_recipe = pick(subtypesof(/datum/crafting_recipe/food))
+	var/result = initial(food_recipe.result)
+	if(ispath(result, /obj/item/reagent_containers/food)) //not all food recipes make food objects (like cak/butterbear)
+		requested_item = result
 	else
 		requested_item = /obj/item/reagent_containers/food/snacks/copypasta
-	qdel(new_recipe) //we don't need it anymore
 	..()
 
 //botanist
