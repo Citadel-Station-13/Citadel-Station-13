@@ -58,10 +58,10 @@
 	name = "throwing fork"
 	desc = "A fork, sharpened to perfection, making it a great weapon for throwing."
 	throwforce = 15
-	throw_speed = 3
+	throw_speed = 4
 	throw_range = 6
 	embedding = list("pain_mult" = 2, "embed_chance" = 100, "fall_chance" = 0, "embed_chance_turf_mod" = 15)
-	sharpness = IS_SHARP_ACCURATE
+	sharpness = IS_SHARP
 
 /obj/item/kitchen/knife
 	name = "kitchen knife"
