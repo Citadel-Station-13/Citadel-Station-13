@@ -229,14 +229,22 @@
 		gateway_uses = round(gateway_uses * (2 * efficiency), 1)
 		time_duration = round(time_duration * (2 * efficiency), 1)
 		CO.active = TRUE //you'd be active in a second but you should update immediately
-	invoker.visible_message("<span class='warning'>The air in front of [invoker] ripples before suddenly tearing open!</span>", \
-	"<span class='brass'>With a word, you rip open a [two_way ? "two-way":"one-way"] rift to [input_target_key]. It will last for [DisplayTimeText(time_duration)] and has [gateway_uses] use[gateway_uses > 1 ? "s" : ""].</span>")
-	var/obj/effect/clockwork/spatial_gateway/S1 = new(issrcobelisk ? get_turf(src) : get_step(get_turf(invoker), invoker.dir))
-	var/obj/effect/clockwork/spatial_gateway/S2 = new(istargetobelisk ? get_turf(target) : get_step(get_turf(target), target.dir))
+	if(issrcobelisk && istargetobelisk && src.z != target.z && (is_reebe(src.z) || is_reebe(target.z)))
+		invoker.visible_message("<span class='warning'>The air in front of [invoker] ripples before suddenly tearing open!</span>", \
+		"<span class='brass'>With a word, you rip open a stable two-way rift between reebe and the mortal realm.</span>")
+		var/obj/effect/clockwork/spatial_gateway/stable/stable_S1 = new(get_turf(src))
+		var/obj/effect/clockwork/spatial_gateway/stable/stable_S2 = new(get_turf(target))
+		stable_S1.setup_gateway(stable_S2)
+		stable_S2.visible_message("<span class='warning'>The air in front of [target] ripples before suddenly tearing open!</span>")
+	else
+		invoker.visible_message("<span class='warning'>The air in front of [invoker] ripples before suddenly tearing open!</span>", \
+		"<span class='brass'>With a word, you rip open a [two_way ? "two-way":"one-way"] rift to [input_target_key]. It will last for [DisplayTimeText(time_duration)] and has [gateway_uses] use[gateway_uses > 1 ? "s" : ""].</span>")
+		var/obj/effect/clockwork/spatial_gateway/S1 = new(issrcobelisk ? get_turf(src) : get_step(get_turf(invoker), invoker.dir))
+		var/obj/effect/clockwork/spatial_gateway/S2 = new(istargetobelisk ? get_turf(target) : get_step(get_turf(target), target.dir))
 
-	//Set up the portals now that they've spawned
-	S1.setup_gateway(S2, time_duration, gateway_uses, two_way)
-	S2.visible_message("<span class='warning'>The air in front of [target] ripples before suddenly tearing open!</span>")
+		//Set up the portals now that they've spawned
+		S1.setup_gateway(S2, time_duration, gateway_uses, two_way)
+		S2.visible_message("<span class='warning'>The air in front of [target] ripples before suddenly tearing open!</span>")
 	return TRUE
 
 //Stable Gateway: Used to travel to and from reebe without any further powercost. Needs a clockwork obilisk to keep active, but stays active as long as it is not deactivated via an null rod or a slab, or the obilisk is destroyed
@@ -250,6 +258,9 @@
 		start_shutdown() //Yes, you can chain devastation-level explosions to delay a gateway shutdown, if you somehow manage to do it without breaking the obelisk. Is it worth it? Probably not.
 		return TRUE
 	return FALSE
+
+/obj/effect/clockwork/spatial_gateway/stable/setup_gateway(/obj/effect/clockwork/spatial_gateway/stable/gatewayB, set_duration = 1, set_uses = 1, two_way = TRUE) //Reduced setup call due to some things being irrelevant for stable gateways
+	return ..()
 
 /obj/effect/clockwork/spatial_gateway/stable/attackby(obj/item/I, mob/living/user, params)
 	if(!istype(I, /obj/item/clockwork/slab) || !is_servant_of_ratvar(user) || busy)
@@ -265,6 +276,7 @@
 	linked_gateway.busy = FALSE
 	return TRUE
 	//TODO: Add effect for this, maybe reuse the void blaster one from that PR?
+
 
 /obj/effect/clockwork/spatial_gateway/stable/proc/start_shutdown()
 		deltimer(timerid)
