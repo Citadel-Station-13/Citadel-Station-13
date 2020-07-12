@@ -679,13 +679,13 @@ GLOBAL_LIST_INIT(valid_plushie_paths, valid_plushie_paths())
 
 /obj/item/toy/plush/borgplushie/meddrake
 	name = "MediDrake Plushie"
-	desc = "An adorable stuffed toy of a drake robot."
+	desc = "An adorable stuffed toy of a Medidrake."
 	icon_state = "meddrake"
 	item_state = "meddrake"
-// drakeborg by Navier#1236 | CC BY-NC-SA 3.0 | Commissioned artist: deviantart.com/mizartz
+// Drakeplushie sprites are licenced under Attribution-NonCommercial-ShareAlike 3.0 (CC BY-NC-SA 3.0) licenseing infomation located in \icons\mob\cyborg 
 /obj/item/toy/plush/borgplushie/secdrake
 	name = "SecDrake Plushie"
-	desc = "An adorable stuffed toy of a drake robot."
+	desc = "An adorable stuffed toy of a Secdrake."
 	icon_state = "secdrake"
 	item_state = "secdrake"
 
