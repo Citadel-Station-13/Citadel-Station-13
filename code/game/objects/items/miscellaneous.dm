@@ -184,6 +184,9 @@
 		//snowflake plush
 		var/obj/item/toy/plush/snowflake_plushie = new(get_turf(M))
 		snowflake_plushie.set_snowflake_from_config(choice)
+		M.temporarilyRemoveItemFromInventory(src, TRUE)
+		M.put_in_hands(new choice)
+		qdel(src)
 
 /obj/item/choice_beacon/box/plushie/generate_display_names()
 	var/list/plushie_list = list()
