@@ -1,6 +1,7 @@
 /**
   * Vore components for.. vore.
   * Rewrite counter at 3.
+  * number of hours wasted: 5
   */
 /datum/component/vore
 	/// Vore flags, holds everything from preferences to other information

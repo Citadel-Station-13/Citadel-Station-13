@@ -31,8 +31,6 @@
 	return FALSE
 /obj/item/disk/nuclear/digest_act(...)
 	return FALSE
-/obj/item/perfect_tele_beacon/digest_act(...)
-	return FALSE //Sorta important to not digest your own beacons.
 /obj/item/pda/digest_act(...)
 	return FALSE
 /obj/item/gun/digest_act(...)
@@ -50,7 +48,7 @@
 /obj/item/clothing/accessory/medal/gold/captain/digest_act(...)
 	return FALSE
 /obj/item/clothing/suit/armor/digest_act(...)
-	return FALSE
+	return FALS
 /obj/item/documents/digest_act(...)
 	return FALSE
 /obj/item/nuke_core/digest_act(...)
@@ -87,16 +85,3 @@
 /obj/item/organ/digest_act(var/atom/movable/item_storage = null)
 	if((. = ..()))
 		. += 70 //Organs give a little more
-
-/obj/item/storage/digest_act(var/atom/movable/item_storage = null)
-	for(var/obj/item/I in contents)
-		I.screen_loc = null
-
-	. = ..()
-
-/////////////
-// Some more complicated stuff
-/////////////
-/obj/item/mmi/digital/posibrain/digest_act(var/atom/movable/item_storage = null)
-	//Replace this with a VORE setting so all types of posibrains can/can't be digested on a whim
-	return FALSE

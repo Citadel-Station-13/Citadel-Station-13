@@ -524,17 +524,9 @@
 //Determine where items should fall out of us into.
 //Typically just to the owner's location.
 /obj/belly/drop_location()
-	//Should be the case 99.99% of the time
-	if(owner)
-		return owner.drop_location()
-	//Sketchy fallback for safety, put them somewhere safe.
-	else if(ismob(src))
-		testing("[src] (\ref[src]) doesn't have an owner, and dropped someone at a latespawn point!")
-		SSjob.SendToLateJoin(src)
-		// wew lad. let's see if this never gets used, hopefully
-	else
-		qdel(src) //final option, I guess.
-		testing("[src] (\ref[src]) was QDEL'd for not having a drop_location!")
+	. = owner?.drop_location()
+	if(!isatom(.))
+		CRASH("[src] ([REF(src)]) did not have a valid drop location when drop location was called. Bad things may be happening!")
 
 //Yes, it's ""safe"" to drop items here
 /obj/belly/AllowDrop()
@@ -656,84 +648,3 @@
 			to_chat(R,"<span class='warning'>You make no progress in escaping [owner]'s [lowertext(name)].</span>")
 			to_chat(owner,"<span class='warning'>Your prey appears to be unable to make any progress in escaping your [lowertext(name)].</span>")
 			return
-
-/obj/belly/proc/get_mobs_and_objs_in_belly()
-	var/list/see = list()
-	var/list/belly_mobs = list()
-	see["mobs"] = belly_mobs
-	var/list/belly_objs = list()
-	see["objs"] = belly_objs
-	for(var/mob/living/L in loc.contents)
-		belly_mobs |= L
-	for(var/obj/O in loc.contents)
-		belly_objs |= O
-
-	return see
-
-
-// Belly copies and then returns the copy
-// Needs to be updated for any var changes AND KEPT IN ORDER OF THE VARS ABOVE AS WELL!
-/obj/belly/proc/copy(mob/new_owner)
-	var/obj/belly/dupe = new /obj/belly(new_owner)
-
-	//// Non-object variables
-	dupe.name = name
-	dupe.desc = desc
-	dupe.vore_sound = vore_sound
-	dupe.vore_verb = vore_verb
-	dupe.release_sound = release_sound
-	dupe.human_prey_swallow_time = human_prey_swallow_time
-	dupe.nonhuman_prey_swallow_time = nonhuman_prey_swallow_time
-	dupe.emote_time = emote_time
-	dupe.digest_brute = digest_brute
-	dupe.digest_burn = digest_burn
-	dupe.immutable = immutable
-	dupe.escapable = escapable
-	dupe.escapetime = escapetime
-	dupe.digestchance = digestchance
-	dupe.absorbchance = absorbchance
-	dupe.escapechance = escapechance
-	dupe.can_taste = can_taste
-	dupe.bulge_size = bulge_size
-	dupe.transferlocation = transferlocation
-	dupe.transferchance = transferchance
-	dupe.autotransferchance = autotransferchance
-	dupe.autotransferwait = autotransferwait
-	dupe.swallow_time = swallow_time
-	dupe.vore_capacity = vore_capacity
-	dupe.is_wet = is_wet
-	dupe.wet_loop = wet_loop
-
-	//// Object-holding variables
-	//struggle_messages_outside - strings
-	dupe.struggle_messages_outside.Cut()
-	for(var/I in struggle_messages_outside)
-		dupe.struggle_messages_outside += I
-
-	//struggle_messages_inside - strings
-	dupe.struggle_messages_inside.Cut()
-	for(var/I in struggle_messages_inside)
-		dupe.struggle_messages_inside += I
-
-	//digest_messages_owner - strings
-	dupe.digest_messages_owner.Cut()
-	for(var/I in digest_messages_owner)
-		dupe.digest_messages_owner += I
-
-	//digest_messages_prey - strings
-	dupe.digest_messages_prey.Cut()
-	for(var/I in digest_messages_prey)
-		dupe.digest_messages_prey += I
-
-	//examine_messages - strings
-	dupe.examine_messages.Cut()
-	for(var/I in examine_messages)
-		dupe.examine_messages += I
-
-	//emote_lists - index: digest mode, key: list of strings
-	dupe.emote_lists.Cut()
-	for(var/K in emote_lists)
-		dupe.emote_lists[K] = list()
-		for(var/I in emote_lists[K])
-			dupe.emote_lists[K] += I
-	return dupe
