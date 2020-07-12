@@ -55,8 +55,8 @@
 	var/atom/host = assembly || src
 	var/list/mobs = list()
 	for(var/mob/M in range(0, get_turf(src)))
-		mob += M
-	to_chat(mobs, "<span class='notice'>[icon2html(host.icon, world, O.icon_state)] flashes a message: [stuff_to_display]</span>")
+		mobs += M
+	to_chat(mobs, "<span class='notice'>[icon2html(host.icon, world, host.icon_state)] flashes a message: [stuff_to_display]</span>")
 	host.investigate_log("displayed \"[html_encode(stuff_to_display)]\" as [type].", INVESTIGATE_CIRCUIT)
 
 /obj/item/integrated_circuit/output/screen/extralarge // the subtype is called "extralarge" because tg brought back medium screens and they named the subtype /screen/large
@@ -71,8 +71,8 @@
 	var/atom/host = assembly || src
 	var/list/mobs = list()
 	for(var/mob/M in viewers(7, get_turf(src)))
-		mob += M
-	to_chat(mobs, "<span class='notice'>[icon2html(host.icon, world, O.icon_state)] flashes a message: [stuff_to_display]</span>")
+		mobs += M
+	to_chat(mobs, "<span class='notice'>[icon2html(host.icon, world, host.icon_state)] flashes a message: [stuff_to_display]</span>")
 	host.investigate_log("displayed \"[html_encode(stuff_to_display)]\" as [type].", INVESTIGATE_CIRCUIT)
 
 /obj/item/integrated_circuit/output/light
