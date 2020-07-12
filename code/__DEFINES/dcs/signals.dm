@@ -453,3 +453,8 @@
 #define COMSIG_XENO_TURF_CLICK_SHIFT "xeno_turf_click_shift"				//from turf ShiftClickOn(): (/mob)
 #define COMSIG_XENO_TURF_CLICK_CTRL "xeno_turf_click_alt"					//from turf AltClickOn(): (/mob)
 #define COMSIG_XENO_MONKEY_CLICK_CTRL "xeno_monkey_click_ctrl"				//from monkey CtrlClickOn(): (/mob)
+
+// Fetish Content
+#define COMSIG_VORE_REFRESH_PREYLOOP "vore_refresh_preyloop"				//(forced = FALSE)
+#define COMSIG_VORE_UPDATE_PANEL "vore_update_panel"						//()
+#define COMSIG_VORE_RELEASE_ALL_CONTENTS "vore_release_all_contents"		//(silent = FALSE)

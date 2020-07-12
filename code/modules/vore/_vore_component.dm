@@ -9,6 +9,11 @@
 	var/vore_taste
 	/// Bellies
 	var/list/obj/belly/bellies
+	/// Selected belly
+	var/obj/belly/selected_belly
+	/// Next world.time our preyloop sound should be refreshed.
+	var/next_preyloop = 0
+
 
 	// Static variables
 	/// Preyloop sound
@@ -44,13 +49,21 @@
 			var/obj/belly/B = i
 			B.forceMove(parent)
 	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, .proc/on_examine)
+	RegisterSignal(parent, COMSIG_VORE_RELEASE_ALL_CONTENTS, .proc/signal_release_all_contents)
+	RegisterSignal(parent, COMSIG_VORE_OOC_ESCAPE, .proc/ooc_escape)
+	RegisterSignal(parent, COMSIG_VORE_UPDATE_PANEL, .proc/update_panel)
+	RegisterSignal(parent, COMSIG_VORE_REFRESH_PREYLOOP, .proc/refresh_preyloop)
 
 /datum/component/vore/UnregisterFromParent()
 	if(!isliving(parent))
 		return ..()
 	remove_verbs()
 	UnregisterSignal(parent, list(
-		COMSIG_PARENT_EXAMINE
+		COMSIG_PARENT_EXAMINE,
+		COMSIG_VORE_RELEASE_ALL_CONTENTS,
+		COMSIG_VORE_UPDATE_PANEL,
+		COMSIG_VORE_OOC_ESCAPE,
+		COMSIG_VORE_REFRESH_PREYLOOP
 		))
 
 /datum/component/vore/proc/add_verbs()
@@ -70,20 +83,13 @@
 
 ///////////////////// Mob Living /////////////////////
 /mob/living
-	var/vore_flags = 0
 	var/showvoreprefs = TRUE				// Determines if the mechanical vore preferences button will be displayed on the mob or not.
-	var/obj/belly/vore_selected				// Default to no vore capability.
-	var/list/vore_organs = list()			// List of vore containers inside a mob
-	var/vore_taste = null					// What the character tastes like
-	var/next_preyloop
+
 
 //
 // Hook for generic creation of stuff on new creatures
 //
 /hook/living_new/proc/vore_setup(mob/living/M)
-	M.verbs += /mob/living/proc/preyloop_refresh
-	M.verbs += /mob/living/proc/lick
-	M.verbs += /mob/living/proc/escapeOOC
 
 	if(M.vore_flags & NO_VORE) //If the mob isn't supposed to have a stomach, let's not give it an insidepanel so it can make one for itself, or a stomach.
 		return TRUE
@@ -270,46 +276,6 @@
 
 	return FALSE
 
-/// SRC in this case will be the living mob parent!
-/datum/component/proc/verb_preyloop_refresh()
-	set name = "Internal loop refresh"
-	set category = "Vore"
-	var/mob/living/L = src
-	L.stop_sound_channel(CHANNEL_PREYLOOP)
-	if(isbelly(L.loc))
-		SEND_SOUND(src, static_preyloop)
-	else
-		to_chat(src, "<span class='alert'>You aren't inside anything, you clod.</span>")
-
-/// SRC in this case will be the living mob parent!
-/datum/component/proc/verb_ooc_escape()
-	set name = "OOC Escape"
-	set category = "Vore"
-	var/mob/living/L = src
-	if(isbelly(L.loc))
-		var/obj/belly/B = L.loc
-		var/confirm = alert(src, "You're in a mob. Are you sure you want to immediately eject?", "Confirmation", "Okay", "Cancel")
-		if(!confirm == "Okay" || (L.loc != B))
-			return
-		B.release_specific_contents(L, TRUE) //we might as well take advantage of that specific belly's handling. Else we stay blinded forever.
-		log_consent("[L] used OOC escape to escape from a vorebelly. ([COORD(L)], loc was [B.loc], [key_name(B.parent.parent)])")
-		L.stop_sound_channel(CHANNEL_PREYLOOP)
-		SEND_SIGNAL(L, COMSIG_CLEAR_MOOD_EVENT, "fedprey", /datum/mood_event/fedprey)
-		for(var/mob/living/simple_animal/SA in range(10))
-			SEND_SIGNAL(SA, COMSIG_VORE_PREY_EXCLUSION, L)
-
-		if(isanimal(B.parent.parent))
-			var/mob/living/simple_animal/SA = B.owner
-			SA.update_icons()
-	else if(istype(L.loc, /obj/item/dogborg/sleeper))
-		var/obj/item/dogborg/sleeper/S = L.loc
-		var/confirm = alert(src, "You're in a dogborg sleeper. Are you sure you want to immediately eject from it? (Resisting out works too)", "Confirmation", "Okay", "Cancel")
-		if(!confirm == "Okay" || (L.loc != S))
-			return
-		S.go_out(L)
-		log_consent("[L] used OOC escape from a dogborg sleeper. ([COORD(L)], loc was [S.loc], [key_name(S.loc)])")
-	else
-		to_chat(L, "<span class='alert'>You aren't in anything that can vore you.</span>")
 
 /mob/living/proc/copy_to_prefs_vr()
 	if(!client || !client.prefs)
@@ -444,3 +410,46 @@
 	if(length(vore_taste))
 		return vore_taste
 	return ishuman(parent)? "they haven't bothered to set their flavor text" : "a plain old normal [src]"
+
+/**
+  * Refreshes the wet prey soundloop. The sound is 52 seconds long.
+  */
+/datum/component/vore/proc/refresh_preyloop(datum/source, forced = FALSE)
+	var/mob/living/L = parent
+	if(!L.client)
+		return
+	if(!forced && (world.time < next_preyloop))
+		return
+	if(!(L.client.prefs.cit_toggles & DIGESTION_NOISES))		// pref check
+		return
+	SEND_SOUND(L, sound_preyloop)
+	next_preyloop = world.time + 52 SECONDS
+
+/datum/component/vore/proc/ooc_escape(datum/source)
+	var/mob/living/L = parent
+	if(isbelly(L.loc))
+		var/obj/belly/B = L.loc
+		var/confirm = alert(src, "You're in a mob. Are you sure you want to immediately eject?", "Confirmation", "Okay", "Cancel")
+		if(!confirm == "Okay" || (L.loc != B))
+			return
+		message_admins("[L] used OOC escape to escape from a [B.parent.parent]'s vore belly.")
+		log_consent("[L] used OOC escape to escape from a vorebelly. ([COORD(L)], loc was [B.loc], [key_name(B.parent.parent)])")
+		B.release_specific_contents(L, TRUE) //we might as well take advantage of that specific belly's handling. Else we stay blinded forever.
+		L.stop_sound_channel(CHANNEL_PREYLOOP)
+		SEND_SIGNAL(L, COMSIG_CLEAR_MOOD_EVENT, "fedprey", /datum/mood_event/fedprey)
+		for(var/mob/living/simple_animal/SA in range(10))
+			SEND_SIGNAL(SA, COMSIG_VORE_PREY_EXCLUSION, L)
+
+		if(isanimal(B.parent.parent))
+			var/mob/living/simple_animal/SA = B.owner
+			SA.update_icons()
+	else if(istype(L.loc, /obj/item/dogborg/sleeper))
+		var/obj/item/dogborg/sleeper/S = L.loc
+		var/confirm = alert(src, "You're in a dogborg sleeper. Are you sure you want to immediately eject from it? (Resisting out works too)", "Confirmation", "Okay", "Cancel")
+		if(!confirm == "Okay" || (L.loc != S))
+			return
+		message_admins("[L] used OOC escape to escape from [S.loc]'s dogborg sleeper.")
+		log_consent("[L] used OOC escape from a dogborg sleeper. ([COORD(L)], loc was [S.loc], [key_name(S.loc)])")
+		S.go_out(L)
+	else
+		to_chat(L, "<span class='alert'>You aren't in anything that can vore you.</span>")
