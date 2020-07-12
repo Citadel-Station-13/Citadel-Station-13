@@ -464,7 +464,6 @@ GLOBAL_LIST_EMPTY(family_heirlooms)
 
 /datum/quirk/monophobia/post_add()
 	var/mob/living/carbon/human/H = quirk_holder
-	monophobia = new
 	H.gain_trauma(monophobia, TRAUMA_RESILIENCE_ABSOLUTE)
 
 /datum/quirk/monophobia/remove()
