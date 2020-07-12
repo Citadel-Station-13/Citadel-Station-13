@@ -1,5 +1,0 @@
-author: "silicons"
-delete-after: True
-changes: 
-  - config: "policy configuration added, plus support hooks for assisting enforcement of clone memory disorder.
-logging: added logging of revival by defib, cloning, strangereagent, and revival surgery"
