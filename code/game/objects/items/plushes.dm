@@ -677,6 +677,18 @@ GLOBAL_LIST_INIT(valid_plushie_paths, valid_plushie_paths())
 	icon_state = "scrubpuppy"
 	item_state = "scrubpuppy"
 
+/obj/item/toy/plush/borgplushie/meddrake
+	name = "MediDrake Plushie"
+	desc = "An adorable stuffed toy of a drake robot."
+	icon_state = "meddrake"
+	item_state = "meddrake"
+// drakeborg by Navier#1236 | CC BY-NC-SA 3.0 | Commissioned artist: deviantart.com/mizartz
+/obj/item/toy/plush/borgplushie/secdrake
+	name = "SecDrake Plushie"
+	desc = "An adorable stuffed toy of a drake robot."
+	icon_state = "secdrake"
+	item_state = "secdrake"
+
 /obj/item/toy/plush/aiplush
 	name = "AI plushie"
 	desc = "A little stuffed toy AI core... it appears to be malfunctioning."
