@@ -385,7 +385,7 @@
 		L.Stun(20) //Skyrat Change
 		L.set_resting(TRUE) //Skyrat change
 
-		L.disable_combat_mode(FALSE)
+		//L.disable_combat_mode(FALSE) //doesn't work at all
 		//Skyrat change stop
 /datum/emote/living/sway
 	key = "sway"

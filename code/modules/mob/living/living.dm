@@ -474,6 +474,14 @@
 		if(alert(src, "You sure you want to sleep for a while?", "Sleep", "Yes", "No") == "Yes")
 			SetSleeping(400) //Short nap
 
+//Skyrat change start
+/mob/living/proc/surrender()
+	set name = "Surrender"
+	set category = "IC"
+
+	emote("surrender")
+//Skyrat change stop
+
 /mob/proc/get_contents()
 
 /*CIT CHANGE - comments out lay_down proc to be modified in modular_citadel
