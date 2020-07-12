@@ -259,8 +259,8 @@
 		return TRUE
 	return FALSE
 
-/obj/effect/clockwork/spatial_gateway/stable/setup_gateway(/obj/effect/clockwork/spatial_gateway/stable/gatewayB, set_duration = 1, set_uses = 1, two_way = TRUE) //Reduced setup call due to some things being irrelevant for stable gateways
-	return ..()
+/obj/effect/clockwork/spatial_gateway/stable/setup_gateway(obj/effect/clockwork/spatial_gateway/stable/gatewayB) //Reduced setup call due to some things being irrelevant for stable gateways
+	return ..(gatewayB, 1, 1, TRUE) //Uses and time irrelevant due to is_stable
 
 /obj/effect/clockwork/spatial_gateway/stable/attackby(obj/item/I, mob/living/user, params)
 	if(!istype(I, /obj/item/clockwork/slab) || !is_servant_of_ratvar(user) || busy)
