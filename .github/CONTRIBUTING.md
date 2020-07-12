@@ -22,6 +22,16 @@ There is an open list of approachable issues for [your inspiration here](https:/
 
 You can of course, as always, ask for help at [#coderbus](irc://irc.rizon.net/coderbus) on irc.rizon.net. We're just here to have fun and help out, so please don't expect professional support.
 
+## Citadel - Repository Procedures
+
+### 24 Hour "Rule"
+- **PRs should in general be left open for at least 24 hours for discussion on its contents. This may be revoked for any reason by the maintainer** handling the PR, but they must be able to defend themselves as to why. This is generally also not a problem if the PR is purely refactor/fix, although in that case, it is usually still be optimal to wait so more people can review the code quality of the PR.
+
+### Testmerge Guidelines
+- **Maintainers should seek a "Testmerge Approved" label from another maintainer before testmerging their own PRs.**
+- This is irrelevant if the PR has no balance, feature, gameplay, or otherwise "front end" changes *whatsoever*, e.g. refactors.
+- This is irrelevant if the PR is a fix PR, or otherwise critical for server operation. *We trust that people are able to not do those in bad faith.* This leaves open room for vagueness but will not be applicable to most PRs.
+
 ## Meet the Team
 
 **Design Lead**
