@@ -130,7 +130,10 @@
 	//pick a random crafted food item as the requested item
 	var/recipe = pick(subtypesof(/datum/crafting_recipe/food))
 	var/datum/crafting_recipe/food/new_recipe = new recipe
-	requested_item = new_recipe.result
+	if(istype(new_recipe.result, /obj/item/reagent_containers/food)) //not all food recipes make food objects (like cak/butterbear)
+		requested_item = new_recipe.result
+	else
+		requested_item = /obj/item/reagent_containers/food/snacks/copypasta
 	qdel(new_recipe) //we don't need it anymore
 	..()
 
