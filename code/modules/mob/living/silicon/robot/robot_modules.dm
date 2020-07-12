@@ -428,7 +428,6 @@
 			cyborg_base_icon = "drakemed"
 			cyborg_icon_override = 'modular_citadel/icons/mob/drakemech.dmi'
 			sleeper_overlay = "drakemedsleeper"
-			sleeper_overlay_override = 'modular_citadel/icons/mob/drakemech.dmi'
 			moduleselect_icon = "medihound"
 			moduleselect_alternate_icon = 'modular_citadel/icons/ui/screen_cyborg.dmi'
 			dogborg = TRUE
