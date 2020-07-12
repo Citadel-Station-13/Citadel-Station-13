@@ -210,6 +210,8 @@
 // /client signals
 #define COMSIG_MOB_CLIENT_LOGIN "mob_client_login"					//sent when a mob/login() finishes: (client)
 #define COMSIG_MOB_CLIENT_LOGOUT "mob_client_logout"				//sent when a mob/logout() starts: (client)
+#define COMSIG_MOB_CLIENT_PREMOVE "mob_client_premove"				//sent from near the base of client/Move() after basic checks: (client, n, direction)
+	#define COMPONENT_INTERRUPT_MOVE 1				// block the move
 #define COMSIG_MOB_CLIENT_MOVE "mob_client_move"					//sent when client/Move() finishes with no early returns: (client, direction, n, oldloc)
 #define COMSIG_MOB_CLIENT_CHANGE_VIEW "mob_client_change_view"		//from base of /client/change_view(): (client, old_view, view)
 #define COMSIG_MOB_CLIENT_MOUSEMOVE "mob_client_mousemove"			//from base of /client/MouseMove(): (object, location, control, params)

@@ -111,7 +111,9 @@
 /datum/component/embedded/UnregisterFromParent()
 	UnregisterSignal(parent, list(COMSIG_MOVABLE_MOVED, COMSIG_CARBON_EMBED_RIP, COMSIG_CARBON_EMBED_REMOVAL, COMSIG_PARENT_EXAMINE))
 
-/datum/component/embedded/process()
+/datum/component/embedded/process(wait, times_fired)
+	if(times_fired % 40)		// 2 seconds
+		return
 	if(iscarbon(parent))
 		processCarbon()
 

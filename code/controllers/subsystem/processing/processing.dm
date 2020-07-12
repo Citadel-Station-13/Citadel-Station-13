@@ -24,12 +24,12 @@ SUBSYSTEM_DEF(processing)
 		current_run.len--
 		if(QDELETED(thing))
 			processing -= thing
-		else if(thing.process(wait) == PROCESS_KILL)
+		else if(thing.process(wait, times_fired) == PROCESS_KILL)
 			// fully stop so that a future START_PROCESSING will work
 			STOP_PROCESSING(src, thing)
 		if (MC_TICK_CHECK)
 			return
 
-/datum/proc/process()
+/datum/proc/process(wait, times_fired)
 	set waitfor = 0
 	return PROCESS_KILL

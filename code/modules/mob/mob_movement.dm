@@ -31,6 +31,8 @@
 	move_delay = world.time + world.tick_lag //this is here because Move() can now be called mutiple times per tick
 	if(!n || !direction || !mob?.loc)
 		return FALSE
+	if(SEND_SIGNAL(src, COMSIG_MOB_CLIENT_PREMOVE, n, direction) & COMPONENT_INTERRUPT_MOVE)
+		return FALSE
 	//GET RID OF THIS SOON AS MOBILITY FLAGS IS DONE
 	if(mob.mob_transforming)
 		return FALSE

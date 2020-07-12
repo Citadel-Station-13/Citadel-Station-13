@@ -62,8 +62,10 @@
 			holder.cut_overlay(mutable_appearance('icons/effects/effects.dmi', to_remove), TRUE)
 		holder = null
 
-/datum/component/shielded/process()
+/datum/component/shielded/process(wait, times_fired)
 	if(world.time < last_time_used && !dissipating)
+		return
+	if(times_fired % 40)		// 2 seconds
 		return
 	var/old_charges = charges
 	charges = clamp(charges + recharge_rate, 0, max_charges)

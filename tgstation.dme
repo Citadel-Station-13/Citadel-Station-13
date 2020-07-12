@@ -436,6 +436,7 @@
 #include "code\datums\components\rad_insulation.dm"
 #include "code\datums\components\radioactive.dm"
 #include "code\datums\components\remote_materials.dm"
+#include "code\datums\components\rhythm.dm"
 #include "code\datums\components\riding.dm"
 #include "code\datums\components\rotation.dm"
 #include "code\datums\components\shielded.dm"

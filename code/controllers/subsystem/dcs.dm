@@ -1,6 +1,8 @@
 PROCESSING_SUBSYSTEM_DEF(dcs)
 	name = "Datum Component System"
-	flags = SS_NO_INIT
+	flags = SS_NO_INIT | SS_TICKER
+	wait = 1
+	priority = FIRE_PRIORITY_DCS
 
 	var/list/elements_by_type = list()
 
