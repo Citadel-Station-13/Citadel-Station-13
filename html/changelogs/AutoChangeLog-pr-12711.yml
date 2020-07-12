@@ -1,4 +1,0 @@
-author: "LetterN"
-delete-after: True
-changes: 
-  - bugfix: "bye xss"
