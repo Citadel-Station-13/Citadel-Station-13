@@ -1,5 +1,5 @@
 /////////////
-// SCRIPTS //
+// SCRIPTS // Various miscellanious spells for offense/defense/construction.
 /////////////
 
 
@@ -215,53 +215,6 @@
 	name = "Call Spear"
 	desc = "Calls a Ratvarian spear into your hands to fight your enemies."
 	weapon_type = /obj/item/clockwork/weapon/ratvarian_spear
-
-
-//Spatial Gateway: Allows the invoker to teleport themselves and any nearby allies to a conscious servant or clockwork obelisk.
-/datum/clockwork_scripture/spatial_gateway
-	descname = "Teleport Gate"
-	name = "Spatial Gateway"
-	desc = "Tears open a miniaturized gateway in spacetime to any conscious servant that can transport objects or creatures to its destination. \
-	Each servant assisting in the invocation adds one additional use and four additional seconds to the gateway's uses and duration."
-	invocations = list("Spatial Gateway...", "...activate!")
-	channel_time = 80
-	power_cost = 400
-	multiple_invokers_used = TRUE
-	multiple_invokers_optional = TRUE
-	usage_tip = "This gateway is strictly one-way and will only allow things through the invoker's portal."
-	tier = SCRIPTURE_SCRIPT
-	primary_component = GEIS_CAPACITOR
-	sort_priority = 9
-	quickbind = TRUE
-	quickbind_desc = "Allows you to create a one-way Spatial Gateway to a living Servant or Clockwork Obelisk."
-
-/datum/clockwork_scripture/spatial_gateway/check_special_requirements()
-	if(!isturf(invoker.loc))
-		to_chat(invoker, "<span class='warning'>You must not be inside an object to use this scripture!</span>")
-		return FALSE
-	var/other_servants = 0
-	for(var/mob/living/L in GLOB.alive_mob_list)
-		if(is_servant_of_ratvar(L) && !L.stat && L != invoker)
-			other_servants++
-	for(var/obj/structure/destructible/clockwork/powered/clockwork_obelisk/O in GLOB.all_clockwork_objects)
-		if(O.anchored)
-			other_servants++
-	if(!other_servants)
-		to_chat(invoker, "<span class='warning'>There are no other conscious servants or anchored clockwork obelisks!</span>")
-		return FALSE
-	return TRUE
-
-/datum/clockwork_scripture/spatial_gateway/scripture_effects()
-	var/portal_uses = 0
-	var/duration = 0
-	for(var/mob/living/L in range(1, invoker))
-		if(!L.stat && is_servant_of_ratvar(L))
-			portal_uses++
-			duration += 40 //4 seconds
-	if(GLOB.ratvar_awakens)
-		portal_uses = max(portal_uses, 100) //Very powerful if Ratvar has been summoned
-		duration = max(duration, 100)
-	return slab.procure_gateway(invoker, duration, portal_uses)
 
 
 //Mending Mantra: Channeled for up to ten times over twenty seconds to repair structures and heal allies
@@ -488,12 +441,12 @@
 	invoker.update_light()
 	return ..()
 
-/*//Belligerent: Channeled for up to fifteen times over thirty seconds. Forces non-servants that can hear the chant to walk, doing minor damage. Nar-Sian cultists are burned.
+//Belligerent: Channeled for up to fifteen times over thirty seconds. Forces non-servants that can hear the chant to walk, doing minor damage. Nar-Sian cultists are burned.
 /datum/clockwork_scripture/channeled/belligerent
 	descname = "Channeled, Area Slowdown"
 	name = "Belligerent"
 	desc = "Forces all nearby non-servants to walk rather than run, doing minor damage. Chanted every two seconds for up to thirty seconds."
-	chant_invocations = list("Punish their blindness!", "Take time, make slow!")
+	chant_invocations = list("Punish their blindness!", "Take time, make slow!", "Kneel before The Justiciar!", "Halt their charges!", "Cease the tides!")
 	chant_amount = 15
 	chant_interval = 20
 	channel_time = 20
@@ -510,4 +463,3 @@
 		C.apply_status_effect(STATUS_EFFECT_BELLIGERENT)
 	new /obj/effect/temp_visual/ratvar/belligerent(get_turf(invoker))
 	return TRUE
-	*/

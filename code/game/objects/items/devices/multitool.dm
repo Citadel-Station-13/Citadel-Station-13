@@ -263,3 +263,11 @@
 	icon = 'icons/obj/advancedtools.dmi'
 	icon_state = "multitool"
 	toolspeed = 0.2
+
+/obj/item/multitool/advanced/brass
+	name = "clockwork multitool"
+	desc = "A brass...multitool? With three prongs arcing electricity between them. It vibrates subtly in your hand."
+	icon = 'icons/obj/tools.dmi'
+	icon_state = "clockitool"
+	toolspeed = 0.2
+

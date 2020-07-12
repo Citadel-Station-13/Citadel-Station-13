@@ -217,6 +217,20 @@
 	else if(get_clockwork_power())
 		to_chat(L, "<span class='brass'>You feel a slight, static shock.</span>")
 
+/obj/effect/clockwork/sigil/transmission/process()
+    var/power_drained = 0
+    var/power_mod = 0.005
+    for(var/t in spiral_range_turfs(SIGIL_ACCESS_RANGE, src))
+        var/turf/T = t
+        for(var/M in T)
+            var/atom/movable/A = M
+            power_drained += A.power_drain(TRUE)
+
+        CHECK_TICK
+
+    adjust_clockwork_power(power_drained * power_mod * 15)
+    new /obj/effect/temp_visual/ratvar/sigil/transmission(loc, 1 + (power_drained * 0.0035))
+
 /obj/effect/clockwork/sigil/transmission/proc/charge_cyborg(mob/living/silicon/robot/cyborg)
 	if(!cyborg_checks(cyborg))
 		return

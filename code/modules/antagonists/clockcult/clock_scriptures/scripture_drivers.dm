@@ -1,5 +1,5 @@
 /////////////
-// DRIVERS //
+// DRIVERS // Starter spells
 /////////////
 
 //Stargazer: Creates a stargazer, a cheap power generator that utilizes starlight.
@@ -228,31 +228,29 @@
 
 //Abscond: Used to return to Reebe.
 /datum/clockwork_scripture/abscond
-	descname = "Return to Reebe"
+	descname = "Safety warp, teleports you somewhere random. moderately high power cost to use."
 	name = "Abscond"
-	desc = "Yanks you through space, returning you to home base."
+	desc = "Yanks you through space, putting you in hopefully a safe location."
 	invocations = list("As we bid farewell, and return to the stars...", "...we shall find our way home.")
 	whispered = TRUE
-	channel_time = 50
-	power_cost = 5
-	special_power_text = "POWERCOST to bring pulled creature"
-	special_power_cost = ABSCOND_ABDUCTION_COST
+	channel_time = 3.5
+	power_cost = 10000
 	usage_tip = "This can't be used while on Reebe, for obvious reasons."
 	tier = SCRIPTURE_DRIVER
 	primary_component = GEIS_CAPACITOR
 	sort_priority = 9
 	important = TRUE
 	quickbind = TRUE
-	quickbind_desc = "Returns you to Reebe."
+	quickbind_desc = "Teleports you somewhere random. Use in emergencies."
 	var/client_color
 	requires_full_power = TRUE
 
 /datum/clockwork_scripture/abscond/check_special_requirements()
 	if(is_reebe(invoker.z))
-		to_chat(invoker, "<span class='danger'>You're already at Reebe.</span>")
+		to_chat(invoker, "<span class='danger'>You're at Reebe.</span>")
 		return
 	if(!isturf(invoker.loc))
-		to_chat(invoker, "<span class='danger'>You must be visible to return!</span>")
+		to_chat(invoker, "<span class='danger'>You must be visible to warp!</span>")
 		return
 	return TRUE
 
@@ -262,7 +260,6 @@
 	. = ..()
 
 /datum/clockwork_scripture/abscond/scripture_effects()
-	var/mob/living/pulled_mob = (invoker.pulling && isliving(invoker.pulling) && get_clockwork_power(ABSCOND_ABDUCTION_COST)) ? invoker.pulling : null
 	var/turf/T
 	if(GLOB.ark_of_the_clockwork_justiciar)
 		T = get_step(GLOB.ark_of_the_clockwork_justiciar, SOUTH)
@@ -271,15 +268,12 @@
 	if(!do_teleport(invoker, T, channel = TELEPORT_CHANNEL_CULT, forced = TRUE))
 		return
 	invoker.visible_message("<span class='warning'>[invoker] flickers and phases out of existence!</span>", \
-	"<span class='bold sevtug_small'>You feel a dizzying sense of vertigo as you're yanked back to Reebe!</span>")
+	"<span class='bold sevtug_small'>You feel a dizzying sense of vertigo as you're yanked through the fabric of reality!</span>")
 	T.visible_message("<span class='warning'>[invoker] flickers and phases into existence!</span>")
 	playsound(invoker, 'sound/magic/magic_missile.ogg', 50, TRUE)
 	playsound(T, 'sound/magic/magic_missile.ogg', 50, TRUE)
 	do_sparks(5, TRUE, invoker)
 	do_sparks(5, TRUE, T)
-	if(pulled_mob && do_teleport(pulled_mob, T, channel = TELEPORT_CHANNEL_CULT, forced = TRUE))
-		adjust_clockwork_power(-special_power_cost)
-		invoker.start_pulling(pulled_mob) //forcemove resets pulls, so we need to re-pull
 	if(invoker.client)
 		animate(invoker.client, color = client_color, time = 25)
 
@@ -327,6 +321,53 @@
 	sort_priority = 11
 	quickbind = TRUE
 	quickbind_desc = "Creates a pair of Wraith Spectacles, which grant true sight but cause gradual vision loss."
+
+//Spatial Gateway: Allows the invoker to teleport themselves and any nearby allies to a conscious servant or clockwork obelisk.
+/datum/clockwork_scripture/spatial_gateway
+	descname = "Teleport Gate"
+	name = "Spatial Gateway"
+	desc = "Tears open a miniaturized gateway in spacetime to any conscious servant that can transport objects or creatures to its destination. \
+	Each servant assisting in the invocation adds one additional use and four additional seconds to the gateway's uses and duration."
+	invocations = list("Spatial Gateway...", "...activate!")
+	channel_time = 80
+	power_cost = 400
+	multiple_invokers_used = TRUE
+	multiple_invokers_optional = TRUE
+	usage_tip = "This gateway is strictly one-way and will only allow things through the invoker's portal."
+	tier = SCRIPTURE_DRIVER
+	primary_component = GEIS_CAPACITOR
+	sort_priority = 9
+	quickbind = TRUE
+	quickbind_desc = "Allows you to create a one-way Spatial Gateway to a living Servant or Clockwork Obelisk."
+
+/datum/clockwork_scripture/spatial_gateway/check_special_requirements()
+	if(!isturf(invoker.loc))
+		to_chat(invoker, "<span class='warning'>You must not be inside an object to use this scripture!</span>")
+		return FALSE
+	var/other_servants = 0
+	for(var/mob/living/L in GLOB.alive_mob_list)
+		if(is_servant_of_ratvar(L) && !L.stat && L != invoker)
+			other_servants++
+	for(var/obj/structure/destructible/clockwork/powered/clockwork_obelisk/O in GLOB.all_clockwork_objects)
+		if(O.anchored)
+			other_servants++
+	if(!other_servants)
+		to_chat(invoker, "<span class='warning'>There are no other conscious servants or anchored clockwork obelisks!</span>")
+		return FALSE
+	return TRUE
+
+/datum/clockwork_scripture/spatial_gateway/scripture_effects()
+	var/portal_uses = 0
+	var/duration = 0
+	for(var/mob/living/L in range(1, invoker))
+		if(!L.stat && is_servant_of_ratvar(L))
+			portal_uses++
+			duration += 40 //4 seconds
+	if(GLOB.ratvar_awakens)
+		portal_uses = max(portal_uses, 100) //Very powerful if Ratvar has been summoned
+		duration = max(duration, 100)
+	return slab.procure_gateway(invoker, duration, portal_uses)
+
 /*
 //Tinkerer's Cache: Creates a tinkerer's cache, allowing global component storage.
 /datum/clockwork_scripture/create_object/tinkerers_cache

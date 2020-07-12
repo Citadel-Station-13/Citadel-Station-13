@@ -14,7 +14,7 @@
 	/obj/item/clockwork/alloy_shards/medium = 1, \
 	/obj/item/clockwork/alloy_shards/large = 1, \
 	/obj/item/clockwork/component/vanguard_cogwheel/onyx_prism = 1)
-	var/static/list/component_refund = list(VANGUARD_COGWHEEL = 2, GEIS_CAPACITOR = 1, REPLICANT_ALLOY = 1)
+	var/static/power_refund = 250
 	var/static/delay_cost = 3000
 	var/static/delay_cost_increase = 1250
 	var/static/delay_remaining = 0
@@ -41,7 +41,7 @@
 	if(user.canUseTopic(src, !issilicon(user), NO_DEXTERY) && is_servant_of_ratvar(user))
 		if(SSshuttle.emergency.mode == SHUTTLE_DOCKED || SSshuttle.emergency.mode == SHUTTLE_IGNITING || SSshuttle.emergency.mode == SHUTTLE_STRANDED || SSshuttle.emergency.mode == SHUTTLE_ESCAPE)
 			to_chat(user, "<span class='brass'>You break [src] apart, refunding some of the components used.</span>")
-			for(var/i in component_refund)
+			for(var/i in power_refund)
 				generate_cache_component(i, src)
 			take_damage(max_integrity)
 			return 0

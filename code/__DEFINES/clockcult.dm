@@ -8,13 +8,11 @@
 GLOBAL_VAR_INIT(clockwork_construction_value, 0) //The total value of all structures built by the clockwork cult
 GLOBAL_VAR_INIT(clockwork_vitality, 0) //How much Vitality is stored, total
 GLOBAL_VAR_INIT(clockwork_power, 0) //How many watts of power are globally available to the clockwork cult
+GLOBAL_LIST_EMPTY(active_daemons) //A list of all active tinkerer's daemons
 GLOBAL_VAR_INIT(neovgre_exists, 0) //Does neovgre exist?
 
 GLOBAL_LIST_EMPTY(all_clockwork_objects) //All clockwork items, structures, and effects in existence
 GLOBAL_LIST_EMPTY(all_clockwork_mobs) //All clockwork SERVANTS (not creatures) in existence
-
-GLOBAL_LIST_INIT(clockwork_component_cache, list(BELLIGERENT_EYE = 0, VANGUARD_COGWHEEL = 0, GEIS_CAPACITOR = 0, REPLICANT_ALLOY = 0, HIEROPHANT_ANSIBLE = 0)) //The pool of components that caches draw from
-GLOBAL_LIST_EMPTY(active_daemons) //A list of all active tinkerer's daemons
 
 GLOBAL_VAR_INIT(ratvar_approaches, 0) //The servants can choose to "herald" Ratvar, permanently buffing them but announcing their presence to the crew.
 GLOBAL_VAR_INIT(ratvar_awakens, 0) //If Ratvar has been summoned; not a boolean, for proper handling of multiple Ratvars
@@ -30,28 +28,12 @@ GLOBAL_LIST_EMPTY(all_scripture) //a list containing scripture instances; not us
 #define SCRIPTURE_DRIVER "Driver"
 #define SCRIPTURE_SCRIPT "Script"
 #define SCRIPTURE_APPLICATION "Application"
+#define SCRIPTURE_JUDGEMENT "Judgement"
 
 //Various costs related to power.
 #define MAX_CLOCKWORK_POWER 80000 //The max power in W that the cult can stockpile
 #define SCRIPT_UNLOCK_THRESHOLD 35000 //Scripts will unlock if the total power reaches this amount
-#define APPLICATION_UNLOCK_THRESHOLD 50000 //Applications will unlock if the total powre reaches this amount
-
-#define ABSCOND_ABDUCTION_COST 95
-
-//general component/cooldown things
-#define SLAB_PRODUCTION_TIME 450 //how long(deciseconds) slabs require to produce a single component; defaults to 45 seconds
-
-#define SLAB_SERVANT_SLOWDOWN 150 //how much each servant above 5 slows down slab-based generation; defaults to 15 seconds per sevant
-
-#define SLAB_SLOWDOWN_MAXIMUM 1350 //maximum slowdown from additional servants; defaults to 2 minutes 15 seconds
-
-#define CACHE_PRODUCTION_TIME 300 //how long(deciseconds) caches require to produce a component; defaults to 30 seconds
-
-#define ACTIVE_CACHE_SLOWDOWN 50 //how many additional deciseconds caches take to produce a component for each linked cache; defaults to 5 seconds
-
-#define LOWER_PROB_PER_COMPONENT 10 //how much each component in the cache reduces the weight of getting another of that component type
-
-#define MAX_COMPONENTS_BEFORE_RAND (10*LOWER_PROB_PER_COMPONENT) //the number of each component, times LOWER_PROB_PER_COMPONENT, you need to have before component generation will become random
+#define APPLICATION_UNLOCK_THRESHOLD 50000 //Applications will unlock if the total power reaches this amount
 
 //clockcult power defines
 #define MIN_CLOCKCULT_POWER 25 //the minimum amount of power clockcult machines will handle gracefully
@@ -83,10 +65,6 @@ GLOBAL_LIST_EMPTY(all_scripture) //a list containing scripture instances; not us
 
 #define GATEWAY_RATVAR_ARRIVAL 600 //when progress is at or above this, game over ratvar's here everybody go home
 
-#define ARK_SUMMON_COST 5 //how many of each component an Ark costs to summon
-
-#define ARK_CONSUME_COST 15 //how many of each component an Ark needs to consume to activate
-
 //Objective text define
 #define CLOCKCULT_OBJECTIVE "Construct the Ark of the Clockwork Justicar and free Ratvar."
 
@@ -103,7 +81,7 @@ GLOBAL_LIST_EMPTY(all_scripture) //a list containing scripture instances; not us
 
 #define CLOCKWORK_ARMOR_COOLDOWN 1800 //The cooldown period between summoning suits of clockwork armor
 
-#define RATVARIAN_SPEAR_COOLDOWN 300 //The cooldown period between summoning another Ratvarian spear
+#define RATVARIAN_WEAPON_COOLDOWN 300 //The cooldown period between summoning another Ratvarian spear
 
 #define MARAUDER_SCRIPTURE_SCALING_THRESHOLD 600 //The amount of deciseconds that must pass before marauder scripture will not gain a recital penalty
 
@@ -111,7 +89,7 @@ GLOBAL_LIST_EMPTY(all_scripture) //a list containing scripture instances; not us
 
 #define MARAUDER_SCRIPTURE_SCALING_MAX 300 //The maximum extra time applied to the marauder scripture
 
-#define GUARDIAN_EMERGE_THRESHOLD 65 //marauders cannot emerge unless host is at this% or less health
+#define GUARDIAN_EMERGE_THRESHOLD 65 //guardian cannot emerge unless host is at this% or less health
 
 #define ARK_SCREAM_COOLDOWN 600 //This much time has to pass between instances of the Ark taking damage before it will "scream" again
 

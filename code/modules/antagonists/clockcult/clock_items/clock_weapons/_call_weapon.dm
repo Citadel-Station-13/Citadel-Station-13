@@ -29,7 +29,7 @@
 			owner.visible_message("<span class='danger'>[owner]'s [weapon.name] flickers and disappears!</span>")
 			to_chat(owner, "<span class='brass'>You dismiss [weapon].</span>")
 			QDEL_NULL(weapon)
-			weapon_reset(RATVARIAN_SPEAR_COOLDOWN * 0.5)
+			weapon_reset(RATVARIAN_WEAPON_COOLDOWN * 0.5)
 			return
 		else
 			weapon.visible_message("<span class='warning'>[weapon] suddenly flickers and disappears!</span>")

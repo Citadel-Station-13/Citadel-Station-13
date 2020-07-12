@@ -1,5 +1,5 @@
 //////////////////
-// APPLICATIONS //
+// APPLICATIONS // For various structures and base building, as well as advanced power generation.
 //////////////////
 
 
@@ -30,7 +30,7 @@
 	desc = "Creates a mechanized prism which will delay the arrival of an emergency shuttle by 2 minutes at a massive power cost."
 	invocations = list("May this prism...", "...grant us time to enact his will!")
 	channel_time = 80
-	consumed_components = list(VANGUARD_COGWHEEL = 5, GEIS_CAPACITOR = 2, REPLICANT_ALLOY = 2)
+	power_cost = 300
 	object_path = /obj/structure/destructible/clockwork/powered/prolonging_prism
 	creator_message = "<span class='brass'>You form a prolonging prism, which will delay the arrival of an emergency shuttle at a massive power cost.</span>"
 	observer_message = "<span class='warning'>An onyx prism forms in midair and sprouts tendrils to support itself!</span>"
@@ -41,6 +41,7 @@
 	one_per_tile = TRUE
 	primary_component = VANGUARD_COGWHEEL
 	sort_priority = 7
+	important = TRUE
 	quickbind = TRUE
 	quickbind_desc = "Creates a Prolonging Prism, which will delay the arrival of an emergency shuttle by 2 minutes at a massive power cost."
 
@@ -122,52 +123,73 @@
 	quickbind = TRUE
 	quickbind_desc = "Creates a Clockwork Obelisk, which can send messages or open Spatial Gateways with power."
 
-/*
-//Memory Allocation: Finds a willing ghost and makes them into a clockwork marauders for the invoker.
+/*//Tinkerer's Cache: Creates a tinkerer's cache, allowing global component storage.
+/datum/clockwork_scripture/create_object/tinkerers_cache
+	descname = "Necessary Structure, Shares Components"
+	name = "Tinkerer's Cache"
+	desc = "Forms a cache that can store an infinite amount of components. All caches are linked and will provide components to slabs. \
+	Striking a cache with a slab will transfer that slab's components to the global cache."
+	invocations = list("Constructing...", "...a cache!")
+	channel_time = 50
+	consumed_components = list(BELLIGERENT_EYE = 0, VANGUARD_COGWHEEL = 0, GEIS_CAPACITOR = 0, REPLICANT_ALLOY = 1, HIEROPHANT_ANSIBLE = 0)
+	object_path = /obj/structure/destructible/clockwork/cache
+	creator_message = "<span class='brass'>You form a tinkerer's cache, which is capable of storing components, which will automatically be used by slabs.</span>"
+	observer_message = "<span class='warning'>A hollow brass spire rises and begins to blaze!</span>"
+	usage_tip = "Slabs will draw components from the global cache after the slab's own repositories, making caches extremely useful."
+	tier = SCRIPTURE_DRIVER
+	one_per_tile = TRUE
+	primary_component = REPLICANT_ALLOY
+	sort_priority = 8
+	quickbind = TRUE
+	quickbind_desc = "Creates a Tinkerer's Cache, which stores components globally for slab access."
+	var/static/prev_cost = 0
+ */
+
+/*//Memory Allocation: Finds a willing ghost and makes them into a clockwork guardian for the invoker.
 /datum/clockwork_scripture/memory_allocation
 	descname = "Guardian"
 	name = "Memory Allocation"
-	desc = "Allocates part of your consciousness to a Clockwork Marauder, a vigilant fighter that lives within you, able to be \
+	desc = "Allocates part of your consciousness to a Clockwork Guardian, a variant of Marauder that lives within you, able to be \
 	called forth by Speaking its True Name or if you become exceptionally low on health.<br>\
 	If it remains close to you, you will gradually regain health up to a low amount, but it will die if it goes too far from you."
 	invocations = list("Fright's will...", "...call forth...")
 	channel_time = 100
-	consumed_components = list(BELLIGERENT_EYE = 2, VANGUARD_COGWHEEL = 2, GEIS_CAPACITOR = 4)
-	usage_tip = "Marauders are useful as personal bodyguards and frontline warriors."
+	power_cost = 8000
+	usage_tip = "guardians are useful as personal bodyguards and frontline warriors."
 	tier = SCRIPTURE_APPLICATION
 	primary_component = GEIS_CAPACITOR
 	sort_priority = 3
 
 /datum/clockwork_scripture/memory_allocation/check_special_requirements()
-	for(var/mob/living/simple_animal/hostile/clockwork/marauder/M in GLOB.all_clockwork_mobs)
+	for(var/mob/living/simple_animal/hostile/clockwork/marauder/guardian/M in GLOB.all_clockwork_mobs)
 		if(M.host == invoker)
-			to_chat(invoker, "<span class='warning'>You can only house one marauder at a time!</span>")
+			to_chat(invoker, "<span class='warning'>You can only house one guardian at a time!</span>")
 			return FALSE
 	return TRUE
 
 /datum/clockwork_scripture/memory_allocation/scripture_effects()
-	return create_marauder()
+	return create_guardian()
 
-/datum/clockwork_scripture/memory_allocation/proc/create_marauder()
+/datum/clockwork_scripture/memory_allocation/proc/create_guardian()
 	invoker.visible_message("<span class='warning'>A purple tendril appears from [invoker]'s [slab.name] and impales itself in [invoker.p_their()] forehead!</span>", \
 	"<span class='sevtug'>A tendril flies from [slab] into your forehead. You begin waiting while it painfully rearranges your thought pattern...</span>")
-	invoker.notransform = TRUE //Vulnerable during the process
+	//invoker.notransform = TRUE //Vulnerable during the process
 	slab.busy = "Thought Modification in progress"
 	if(!do_after(invoker, 50, target = invoker))
 		invoker.visible_message("<span class='warning'>The tendril, covered in blood, retracts from [invoker]'s head and back into the [slab.name]!</span>", \
 		"<span class='userdanger'>Total agony overcomes you as the tendril is forced out early!</span>")
-		invoker.notransform = FALSE
+		//invoker.notransform = FALSE
 		invoker.Knockdown(100)
-		invoker.apply_damage(10, BRUTE, "head")
+		invoker.apply_damage(20, BRUTE, "head")//Sevtug leaves a gaping hole in your face if interrupted.
 		slab.busy = null
 		return FALSE
 	clockwork_say(invoker, text2ratvar("...the mind made..."))
-	invoker.notransform = FALSE
-	slab.busy = "Marauder Selection in progress"
+	//invoker.notransform = FALSE
+	slab.busy = "Guardian Selection in progress"
 	if(!check_special_requirements())
 		return FALSE
-	to_chat(invoker, "<span class='warning'>The tendril shivers slightly as it selects a marauder...</span>")
-	var/list/marauder_candidates = pollGhostCandidates("Do you want to play as the clockwork marauder of [invoker.real_name]?", ROLE_SERVANT_OF_RATVAR, null, FALSE, 50, POLL_IGNORE_CLOCKWORK_MARAUDER)
+	to_chat(invoker, "<span class='warning'>The tendril shivers slightly as it selects a guardian...</span>")
+	var/list/marauder_candidates = pollGhostCandidates("Do you want to play as the clockwork guardian of [invoker.real_name]?", ROLE_SERVANT_OF_RATVAR, null, FALSE, 50, POLL_IGNORE_HOLOPARASITE)
 	if(!check_special_requirements())
 		return FALSE
 	if(!marauder_candidates.len)
@@ -176,11 +198,11 @@
 		return FALSE
 	clockwork_say(invoker, text2ratvar("...sword and shield!"))
 	var/mob/dead/observer/theghost = pick(marauder_candidates)
-	var/mob/living/simple_animal/hostile/clockwork/marauder/M = new(invoker)
+	var/mob/living/simple_animal/hostile/clockwork/marauder/guardian/M = new(invoker)
 	M.key = theghost.key
 	M.bind_to_host(invoker)
 	invoker.visible_message("<span class='warning'>The tendril retracts from [invoker]'s head, sealing the entry wound as it does so!</span>", \
-	"<span class='sevtug'>[M.true_name], a clockwork marauder, has taken up residence in your mind. Communicate with it via the \"Linked Minds\" action button.</span>")
+	"<span class='sevtug'>[M.true_name], a clockwork guardian, has taken up residence in your mind. Communicate with it via the \"Linked Minds\" action button.</span>")
 	return TRUE
 */
 //Clockwork Marauder: Creates a construct shell for a clockwork marauder, a well-rounded frontline fighter.
