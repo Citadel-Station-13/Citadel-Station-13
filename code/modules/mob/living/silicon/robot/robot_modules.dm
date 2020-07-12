@@ -428,6 +428,7 @@
 			cyborg_base_icon = "drakemed"
 			cyborg_icon_override = 'modular_citadel/icons/mob/drakemech.dmi'
 			sleeper_overlay = "drakemedsleeper"
+			sleeper_overlay_override = 'modular_citadel/icons/mob/drakemech.dmi'
 			moduleselect_icon = "medihound"
 			moduleselect_alternate_icon = 'modular_citadel/icons/ui/screen_cyborg.dmi'
 			dogborg = TRUE
@@ -552,7 +553,7 @@
 		if("Drake")
 			cyborg_base_icon = "drakeeng"
 			cyborg_icon_override = 'modular_citadel/icons/mob/drakemech.dmi'
-			sleeper_overlay = "drakeengsleeper"
+			sleeper_overlay = "drakesecsleeper"
 			dogborg = TRUE
 		else
 			return FALSE
@@ -940,7 +941,7 @@
 		if("Drake")
 			cyborg_base_icon = "drakejanit"
 			cyborg_icon_override = 'modular_citadel/icons/mob/drakemech.dmi'
-			sleeper_overlay = "drakejanitsleeper"
+			sleeper_overlay = "drakesecsleeper"
 			dogborg = TRUE
 		else
 			return FALSE
