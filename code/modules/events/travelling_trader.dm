@@ -128,7 +128,10 @@
 
 /mob/living/carbon/human/dummy/travelling_trader/cook/Initialize()
 	//pick a random crafted food item as the requested item
-	requested_item = GLOB.crafting_recipes[pick(subtypesof( /datum/crafting_recipe/food))].result
+	var/recipe = pick(subtypesof(/datum/crafting_recipe/food))
+	var/datum/crafting_recipe/food/new_recipe = new recipe
+	requested_item = new_recipe.result
+	qdel(new_recipe) //we don't need it anymore
 	..()
 
 //botanist
@@ -136,7 +139,7 @@
 	trader_name = "Otherworldly Gardener"
 	trader_outfit = /datum/outfit/job/botanist
 	initial_speech = "I have come across this realm in search of rare plants and believe this station may be able to help me.."
-	request_speech = "Are you able to bring me a requested_item? I could see that you get some reward for this task."
+	request_speech = "Are you able to bring me the plant known to you as: 'requested_item'? I could see that you get some reward for this task."
 	acceptance_speech = "Amazing! Ill finally be able to make that salad. Goodbye for now!"
 	refusal_speech = "A given_item? Did nobody ever teach you the basics of gardening?"
 	possible_rewards = list(/obj/item/seeds/cherry/bomb = 1,
@@ -175,8 +178,9 @@
 		/mob/living/simple_animal/hostile/retaliate/clown/fleshclown = 1,
 		/mob/living/simple_animal/hostile/tree = 1,
 		/mob/living/simple_animal/hostile/mimic = 1,
-		/mob/living/simple_animal/hostile/shark/laser = 1
-		)
+		/mob/living/simple_animal/hostile/shark = 1,
+		/mob/living/simple_animal/hostile/netherworld/blankbody = 1,
+		/mob/living/simple_animal/hostile/retaliate/goose = 1)
 
 mob/living/carbon/human/dummy/travelling_trader/animal_hunter/Initialize()
 	acceptance_speech = pick(list("This lifeform shall make for a great stew, thank you.", "This lifeform shall be of a true use to our cause, thank you.", "The lifeform is adequate. Goodbye.", "This lifeform shall make a great addition to my collection."))
@@ -197,12 +201,13 @@ mob/living/carbon/human/dummy/travelling_trader/animal_hunter/Initialize()
 	return FALSE
 
 /mob/living/carbon/human/dummy/travelling_trader/animal_hunter/give_reward(var/mob/giver) //the reward is actually given in a jar, because releasing it onto the station might be a bad idea
-	var/mob/living/animal = pickweight(possible_rewards)
-	if(giver && giver.tag)
-		animal.faction += "\[[giver.tag]\]"
 	var/obj/item/pet_carrier/bluespace/jar = new(get_turf(src))
-	jar.add_occupant(animal)
-	jar.name = "WARNING: [animal] INSIDE"
+	var/chosen_animal = pickweight(possible_rewards)
+	var/mob/living/new_animal = new chosen_animal(jar)
+	if(giver && giver.tag)
+		new_animal.faction += "\[[giver.tag]\]"
+	jar.add_occupant(new_animal)
+	jar.name = "WARNING: [new_animal]"
 
 //bartender
 /mob/living/carbon/human/dummy/travelling_trader/bartender
@@ -217,7 +222,6 @@ mob/living/carbon/human/dummy/travelling_trader/animal_hunter/Initialize()
 		/obj/structure/reagent_dispensers/keg/red_queen = 3,
 		/obj/structure/reagent_dispensers/keg/narsour = 3,
 		/obj/structure/reagent_dispensers/keg/quintuple_sec = 3)
-
 
 /mob/living/carbon/human/dummy/travelling_trader/bartender/Initialize() //pick a subtype of ethanol that isn't found in the default set of the booze dispensers reagents
 	requested_item = pick(subtypesof(/datum/reagent/consumable/ethanol) - list(/datum/reagent/consumable/ethanol/beer,
@@ -253,7 +257,7 @@ mob/living/carbon/human/dummy/travelling_trader/animal_hunter/Initialize()
 	trader_name = "Otherworldly Artifact Dealer"
 	trader_outfit = /datum/outfit/artifact_dealer //he's cool enough to get his own outfit
 	initial_speech = "I have come here due to sensing the existence of an object of great power and importance."
-	request_speech = "Give to me a requested_item and I shall make it worth your while, traveller."
+	request_speech = "Give to me the great object known as: requested_item and I shall make it worth your while, traveller."
 	acceptance_speech = "This is truly an artifact worthy of my collection, thank you."
 	refusal_speech = "A given_item? Hah! Worthless."
 	possible_wanted_items = list(/obj/item/pen/fountain/captain = 1, //various rare things and high risk but not useful things (i.e. champion belt, bedsheet, pen)
@@ -288,7 +292,7 @@ mob/living/carbon/human/dummy/travelling_trader/animal_hunter/Initialize()
 	trader_name = "Otherworldly Surgeon"
 	trader_outfit = /datum/outfit/otherworldly_surgeon
 	initial_speech = "Hello there, meatbag. You can provide me with something I want."
-	request_speech = "Find me a requested_item. I shall make sure it's worth your efforts."
+	request_speech = "Find me the appendage you call 'requested_item'. I shall make sure it's worth your efforts."
 	acceptance_speech = "This shall do. Goodbye, meatbag."
 	refusal_speech = "That is not what I wish for. Give me a requested_item, or I shall take one by force."
 	possible_wanted_items = list(/obj/item/bodypart/l_arm = 4,
@@ -313,9 +317,10 @@ mob/living/carbon/human/dummy/travelling_trader/animal_hunter/Initialize()
 		/obj/item/organ/cyberimp/arm/baton = 1)
 
 /mob/living/carbon/human/dummy/travelling_trader/surgeon/give_reward()
-	var/obj/item/organ/implant = new pickweight(possible_rewards)
+	var/chosen_implant = pickweight(possible_rewards)
+	var/new_implant = new chosen_implant
 	var/obj/item/autosurgeon/reward = new(get_turf(src))
-	reward.insert_organ(implant)
+	reward.insert_organ(new_implant)
 
 /datum/outfit/otherworldly_surgeon
 	uniform = /obj/item/clothing/under/pants/white
