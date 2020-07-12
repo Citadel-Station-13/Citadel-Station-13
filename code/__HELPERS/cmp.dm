@@ -128,8 +128,8 @@ GLOBAL_VAR_INIT(cmp_field, "name")
 
 /proc/cmp_chemical_reactions_default(datum/chemical_reaction/A, datum/chemical_reaction/B)
 	if(A.priority != B.priority)
-		return A.priority - B.priority
+		return B.priority - A.priority
 	else if(A.is_cold_recipe)
-		return B.required_temp - A.required_temp		//return coldest
+		return A.required_temp - B.required_temp		//return coldest
 	else
-		return A.required_temp - B.required_temp		//return hottest
+		return B.required_temp - A.required_temp		//return hottest
