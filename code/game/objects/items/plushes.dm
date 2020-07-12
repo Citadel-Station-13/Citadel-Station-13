@@ -1,3 +1,5 @@
+//Drakeplushies are licensed under the CC BY-NC-SA 3.0 license.
+
 /obj/item/toy/plush
 	name = "plush"
 	desc = "This is the special coder plush, do not steal."
@@ -682,7 +684,7 @@ GLOBAL_LIST_INIT(valid_plushie_paths, valid_plushie_paths())
 	desc = "An adorable stuffed toy of a Medidrake."
 	icon_state = "meddrake"
 	item_state = "meddrake"
-// Drakeplushie sprites are licenced under Attribution-NonCommercial-ShareAlike 3.0 (CC BY-NC-SA 3.0) licenseing infomation located in \icons\mob\cyborg 
+
 /obj/item/toy/plush/borgplushie/secdrake
 	name = "SecDrake Plushie"
 	desc = "An adorable stuffed toy of a Secdrake."

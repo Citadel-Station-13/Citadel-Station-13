@@ -1,5 +1,4 @@
-// Drakeborg sprites are licenced under Attribution-NonCommercial-ShareAlike 3.0 (CC BY-NC-SA 3.0) licenseing infomation located in \icons\mob\cyborg
-// 
+// Drakeborg sprites by Mizartz. drakeborg are licensed under the CC BY-NC-SA 3.0 license. licenseing infomation located in \icons\mob\cyborg
 
 /obj/item/robot_module
 	name = "Default"
