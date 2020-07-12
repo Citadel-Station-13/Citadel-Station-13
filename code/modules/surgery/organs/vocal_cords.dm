@@ -254,7 +254,7 @@
 	var/static/regex/clap_words = regex("clap|applaud")
 	var/static/regex/honk_words = regex("ho+nk") //hooooooonk
 	var/static/regex/multispin_words = regex("like a record baby|right round")
-	// var/static/regex/orgasm_words = regex("cum|orgasm|climax|squirt|heyo") //CITADEL CHANGE //Removed later
+	// var/static/regex/orgasm_words = regex("cum|orgasm|climax|squirt|heyo") //Removed from cit
 	var/static/regex/dab_words = regex("dab|mood") //CITADEL CHANGE
 	var/static/regex/snap_words = regex("snap") //CITADEL CHANGE
 	var/static/regex/bwoink_words = regex("what the fuck are you doing|bwoink|hey you got a moment?") //CITADEL CHANGE
@@ -574,7 +574,7 @@
 
 	//CITADEL CHANGES
 	//ORGASM
-	/*
+	/* Removed later
 	else if((findtext(message, orgasm_words)))
 		cooldown = COOLDOWN_MEME
 		for(var/V in listeners)
@@ -582,8 +582,7 @@
 
 			if(H.client && H.client.prefs && H.client.prefs.cit_toggles & HYPNO) // probably a redundant check but for good measure
 				H.mob_climax(forced_climax=TRUE)
-	*/ //Removed later
-
+	*/
 
 	//DAB
 	else if((findtext(message, dab_words)))
