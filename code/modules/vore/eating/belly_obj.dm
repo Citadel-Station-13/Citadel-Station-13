@@ -14,6 +14,10 @@
 /obj/belly
 	name = "belly"							// Name of this location
 	desc = "It's a belly! You're in it!"	// Flavor text description of inside sight/sound/smells/feels.
+
+	/// The vore component we belong to
+	var/datum/component/vore/parent
+
 	var/vore_sound = "Gulp"					// Sound when ingesting someone
 	var/vore_verb = "ingest"				// Verb for eating with this in messages
 	var/release_sound = "Splatter"			// Sound for letting someone out.

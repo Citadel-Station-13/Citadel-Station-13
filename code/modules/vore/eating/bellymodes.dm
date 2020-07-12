@@ -55,10 +55,6 @@
 			M.Stun(5)
 
 ////////////////////////// Sound vars /////////////////////////////
-	var/sound/prey_digest = sound(get_sfx("digest_prey"))
-	var/sound/prey_death = sound(get_sfx("death_prey"))
-	var/sound/pred_digest = sound(get_sfx("digest_pred"))
-	var/sound/pred_death = sound(get_sfx("death_pred"))
 
 	switch(digest_mode)
 		if(DM_HOLD)

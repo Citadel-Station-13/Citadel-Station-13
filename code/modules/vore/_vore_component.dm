@@ -1,3 +1,73 @@
+/**
+  * Vore components for.. vore.
+  * Rewrite counter at 3.
+  */
+/datum/component/vore
+	/// Vore flags, holds everything from preferences to other information
+	var/vore_flags
+	/// Taste for licking
+	var/vore_taste
+	/// Bellies
+	var/list/obj/belly/bellies
+
+	// Static variables
+	/// Preyloop sound
+	var/static/sound/sound_preyloop = sound('sound/vore/prey/loop.ogg')
+	/// Prey digest sound
+	var/static/sound/sound_prey_digest = sound(get_sfx("digest_prey"))
+	/// Prey death sound
+	var/static/sound/sound_prey_death = sound(get_sfx("death_prey"))
+	/// Prey digest sound for pred
+	var/static/sound/sound_pred_digest = sound(get_sfx("digest_pred"))
+	/// Prey death sound for pred
+	var/static/sound/sound_pred_death = sound(get_sfx("death_pred"))
+
+
+/datum/component/vore/Initialize()
+	. = ..()
+	if(. == COMPONENT_INCOMPATIBLE)
+		return
+	if(!isliving(parent))
+		return COMPONENT_INCOMPATIBLE
+
+/datum/component/vore/Destroy()
+	if(bellies)
+		QDEL_LIST(bellies)
+	return ..()
+
+/datum/component/vore/RegisterWithParent()
+	if(!isliving(parent) || ((. = ..()) == COMPONENT_INCOMPATIBLE))
+		return COMPONENT_INCOMPATIBLE
+	add_verbs()
+	if(bellies)
+		for(var/i in bellies)
+			var/obj/belly/B = i
+			B.forceMove(parent)
+	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, .proc/on_examine)
+
+/datum/component/vore/UnregisterFromParent()
+	if(!isliving(parent))
+		return ..()
+	remove_verbs()
+	UnregisterSignal(parent, list(
+		COMSIG_PARENT_EXAMINE
+		))
+
+/datum/component/vore/proc/add_verbs()
+	ASSERT(isliving(parent))
+	var/mob/living/L = parent
+	L.verbs += /datum/component/vore/proc/verb_ooc_escape
+	L.verbs += /datum/component/vore/proc/verb_refresh_preyloop
+	L.verbs += /datum/component/vore/proc/verb_lick_someone
+	L.verbs
+
+/datum/component/vore/proc/remove_verbs()
+	ASSERT(isliving(parent))
+	var/mob/living/L = parent
+	L.verbs -= /datum/component/vore/proc/verb_ooc_escape
+	L.verbs -= /datum/component/vore/proc/verb_refresh_preyloop
+	L.verbs -= /datum/component/vore/proc/verb_lick_someone
+
 ///////////////////// Mob Living /////////////////////
 /mob/living
 	var/vore_flags = 0
@@ -200,55 +270,46 @@
 
 	return FALSE
 
-// internal slimy button in case the loop stops playing but the player wants to hear it
-/mob/living/proc/preyloop_refresh()
+/// SRC in this case will be the living mob parent!
+/datum/component/proc/verb_preyloop_refresh()
 	set name = "Internal loop refresh"
 	set category = "Vore"
-	src.stop_sound_channel(CHANNEL_PREYLOOP) // sanity just in case
-	if(isbelly(loc))
-		var/sound/preyloop = sound('sound/vore/prey/loop.ogg')
-		SEND_SOUND(src, preyloop)
+	var/mob/living/L = src
+	L.stop_sound_channel(CHANNEL_PREYLOOP)
+	if(isbelly(L.loc))
+		SEND_SOUND(src, static_preyloop)
 	else
 		to_chat(src, "<span class='alert'>You aren't inside anything, you clod.</span>")
 
-// OOC Escape code for pref-breaking or AFK preds
-//
-/mob/living/proc/escapeOOC()
+/// SRC in this case will be the living mob parent!
+/datum/component/proc/verb_ooc_escape()
 	set name = "OOC Escape"
 	set category = "Vore"
-
-	//You're in a belly!
-	if(isbelly(loc))
-		var/obj/belly/B = loc
-		var/confirm = alert(src, "You're in a mob. If you're otherwise unable to escape from a pred AFK for a long time, use this.", "Confirmation", "Okay", "Cancel")
-		if(!confirm == "Okay" || loc != B)
+	var/mob/living/L = src
+	if(isbelly(L.loc))
+		var/obj/belly/B = L.loc
+		var/confirm = alert(src, "You're in a mob. Are you sure you want to immediately eject?", "Confirmation", "Okay", "Cancel")
+		if(!confirm == "Okay" || (L.loc != B))
 			return
-		//Actual escaping
-		B.release_specific_contents(src,TRUE) //we might as well take advantage of that specific belly's handling. Else we stay blinded forever.
-		message_admins("[src] used OOC escape to escape from [B.owner]'s belly.")
-		log_consent("[src] used OOC escape to escape from [B.owner]'s belly.")
-		src.stop_sound_channel(CHANNEL_PREYLOOP)
-		SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "fedprey", /datum/mood_event/fedprey)
+		B.release_specific_contents(L, TRUE) //we might as well take advantage of that specific belly's handling. Else we stay blinded forever.
+		log_consent("[L] used OOC escape to escape from a vorebelly. ([COORD(L)], loc was [B.loc], [key_name(B.parent.parent)])")
+		L.stop_sound_channel(CHANNEL_PREYLOOP)
+		SEND_SIGNAL(L, COMSIG_CLEAR_MOOD_EVENT, "fedprey", /datum/mood_event/fedprey)
 		for(var/mob/living/simple_animal/SA in range(10))
-			SA.prey_excludes[src] = world.time
+			SEND_SIGNAL(SA, COMSIG_VORE_PREY_EXCLUSION, L)
 
-		if(isanimal(B.owner))
+		if(isanimal(B.parent.parent))
 			var/mob/living/simple_animal/SA = B.owner
 			SA.update_icons()
-
-	//You're in a dogborg!
-	else if(istype(loc, /obj/item/dogborg/sleeper))
-		var/obj/item/dogborg/sleeper/belly = loc //The belly!
-
-		var/confirm = alert(src, "You're in a dogborg sleeper. This is for escaping from preference-breaking or if your predator disconnects/AFKs. You can also resist out naturally too.", "Confirmation", "Okay", "Cancel")
-		if(!confirm == "Okay" || loc != belly)
+	else if(istype(L.loc, /obj/item/dogborg/sleeper))
+		var/obj/item/dogborg/sleeper/S = L.loc
+		var/confirm = alert(src, "You're in a dogborg sleeper. Are you sure you want to immediately eject from it? (Resisting out works too)", "Confirmation", "Okay", "Cancel")
+		if(!confirm == "Okay" || (L.loc != S))
 			return
-		//Actual escaping
-		belly.go_out(src) //Just force-ejects from the borg as if they'd clicked the eject button.
-		message_admins("[src] used OOC escape from a dogborg sleeper.")
-		log_consent("[src] used OOC escape from a dogborg sleeper.")
+		S.go_out(L)
+		log_consent("[L] used OOC escape from a dogborg sleeper. ([COORD(L)], loc was [S.loc], [key_name(S.loc)])")
 	else
-		to_chat(src,"<span class='alert'>You aren't inside anyone, though, is the thing.</span>")
+		to_chat(L, "<span class='alert'>You aren't in anything that can vore you.</span>")
 
 /mob/living/proc/copy_to_prefs_vr()
 	if(!client || !client.prefs)
@@ -266,6 +327,18 @@
 	client.prefs.belly_prefs = serialized
 
 	return TRUE
+
+/**
+  * Loads preferences
+  */
+/datum/component/vore/proc/load_from_preferences(datum/preferences/prefs)
+	if(!prefs)
+		return FALSE
+	vore_flags = prefs.vore_flags
+	vore_taste = prefs.vore_taste
+	release_vore_contents(silent = TRUE)
+
+
 
 //
 //	Proc for applying vore preferences, given bellies
@@ -302,41 +375,25 @@
 		var/obj/belly/B = belly
 		B.release_all_contents(include_absorbed, silent)
 
-//
-// Returns examine messages for bellies
-//
-/mob/living/proc/examine_bellies()
-	if(!show_pudge()) //Some clothing or equipment can hide this.
-		return ""
 
-	var/message = ""
-	for (var/belly in vore_organs)
+/datum/component/vore/proc/on_examine(datum/source, mob/user, list/info)
+	if(!should_show_bellies_on_examine())
+		return
+	info += get_belly_examine_message()
+
+/datum/component/vore/proc/get_belly_examine_message()
+	var/list/message = list()
+	for(var/i in bellies)
 		var/obj/belly/B = belly
 		message += B.get_examine_msg()
-
 	return message
 
-//
-// Whether or not people can see our belly messages
-//
-/mob/living/proc/show_pudge()
-	return TRUE //Can override if you want.
+/datum/component/vore/proc/should_show_bellies_on_examine()
+	if(!ishuman(parent))
+		return TRUE
+	var/mob/living/carbon/human/H = parent
+	return !((istype(w_uniform) && w_uniform.hides_bulges) || (istype(wear_suit) && wear_suit.hides_bulges))
 
-/mob/living/carbon/human/show_pudge()
-	//A uniform could hide it.
-	if(istype(w_uniform,/obj/item/clothing))
-		var/obj/item/clothing/under = w_uniform
-		if(under.hides_bulges)
-			return FALSE
-
-	//We return as soon as we find one, no need for 'else' really.
-	if(istype(wear_suit,/obj/item/clothing))
-		var/obj/item/clothing/suit = wear_suit
-		if(suit.hides_bulges)
-			return FALSE
-
-
-	return ..()
 
 //
 // Clearly super important. Obviously.
@@ -371,19 +428,6 @@
 	visible_message("<span class='warning'>[src] licks [tasted]!</span>","<span class='notice'>You lick [tasted]. They taste rather like [tasted.get_taste_message()].</span>","<b>Slurp!</b>")
 
 
-/mob/living/proc/get_taste_message(allow_generic = TRUE, datum/species/mrace)
-	if(!vore_taste && !allow_generic)
-		return FALSE
-
-	var/taste_message = ""
-	if(vore_taste && (vore_taste != ""))
-		taste_message += "[vore_taste]"
-	else
-		if(ishuman(src))
-			taste_message += "they haven't bothered to set their flavor text"
-		else
-			taste_message += "a plain old normal [src]"
-	return taste_message
 //	Check if an object is capable of eating things, based on vore_organs
 //
 /proc/has_vore_belly(var/mob/living/O)
@@ -392,3 +436,11 @@
 			return TRUE
 
 	return FALSE
+
+
+/datum/component/vore/proc/get_taste_message(allow_generic = TRUe, datum/species/mrace)
+	if(!length(vore_taste) && !allowed_generic)
+		return FALSE
+	if(length(vore_taste))
+		return vore_taste
+	return ishuman(parent)? "they haven't bothered to set their flavor text" : "a plain old normal [src]"

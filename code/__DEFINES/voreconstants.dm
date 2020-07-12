@@ -14,15 +14,10 @@
 #define NO_VORE			(1<<4)
 #define OPEN_PANEL		(1<<5)
 #define ABSORBED		(1<<6)
-#define VORE_INIT		(1<<7)
-#define VOREPREF_INIT	(1<<8)
-#define LICKABLE		(1<<9)
-
-#define MAX_VORE_FLAG	(1<<10)-1 // change this whenever you add a vore flag, must be largest vore flag*2-1
+#define LICKABLE		(1<<7)
 
 #define isbelly(A) istype(A, /obj/belly)
 
-#define QDEL_NULL_LIST(x) if(x) { for(var/y in x) { qdel(y) } ; x = null }
 #define VORE_STRUGGLE_EMOTE_CHANCE 40
 
 // Stance for hostile mobs to be in while devouring someone.
