@@ -70,7 +70,7 @@
 	..()
 	var/atom/host = assembly || src
 	var/list/mobs = list()
-	for(var/mob/M in view(7, get_turf(src)))
+	for(var/mob/M in viewers(7, get_turf(src)))
 		mob += M
 	to_chat(mobs, "<span class='notice'>[icon2html(host.icon, world, O.icon_state)] flashes a message: [stuff_to_display]</span>")
 	host.investigate_log("displayed \"[html_encode(stuff_to_display)]\" as [type].", INVESTIGATE_CIRCUIT)
