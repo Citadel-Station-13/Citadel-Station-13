@@ -254,7 +254,6 @@
 	var/static/regex/clap_words = regex("clap|applaud")
 	var/static/regex/honk_words = regex("ho+nk") //hooooooonk
 	var/static/regex/multispin_words = regex("like a record baby|right round")
-	// var/static/regex/orgasm_words = regex("cum|orgasm|climax|squirt|heyo") //Removed from cit later
 	var/static/regex/dab_words = regex("dab|mood") //CITADEL CHANGE
 	var/static/regex/snap_words = regex("snap") //CITADEL CHANGE
 	var/static/regex/bwoink_words = regex("what the fuck are you doing|bwoink|hey you got a moment?") //CITADEL CHANGE
