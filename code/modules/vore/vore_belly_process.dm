@@ -6,6 +6,15 @@
 
 	next_process = times_fired + (6 SECONDS/wait) //Set up our next process time.
 
+	/// Prey digest sound
+	var/sound/sound_prey_digest = sound(get_sfx("digest_prey"))
+	/// Prey death sound
+	var/sound/sound_prey_death = sound(get_sfx("death_prey"))
+	/// Prey digest sound for pred
+	var/sound/sound_pred_digest = sound(get_sfx("digest_pred"))
+	/// Prey death sound for pred
+	var/sound/sound_pred_death = sound(get_sfx("death_pred"))
+
 	var/soundprob = 0
 	switch(digest_mode)
 		if(DM_HOLD)		//early exit
@@ -73,8 +82,8 @@
 				// play sound
 				if(soundprob_met)
 					if(L.client?.prefs.cit_toggles & DIGESTION_NOISES)
-						SEND_SOUND(L, parent.sound_prey_digest)
-						sound_to_play = parent.sound_pred_digest
+						SEND_SOUND(L, sound_prey_digest)
+						sound_to_play = sound_pred_digest
 
 				// pref/absorb check
 				if(!(V.vore_flags & DIGESTABLE) || (V.vore_flags & ABSORBED))
@@ -101,7 +110,7 @@
 					to_chat(L, "<span class='warning'>[digest_alert_prey]</span>")
 					owner.visible_message("<span class='notice'>You watch as [owner]'s form loses its additions.</span>")
 					owner.adjust_nutrition(400) // so eating dead mobs gives you *something*.
-					sound_to_play = parent.sound_pred_death
+					sound_to_play = sound_pred_death
 					if(L.client?.prefs.cit_toggles & DIGESTION_NOISES)
 						SEND_SOUND(L, prey_death)
 					L.stop_sound_channel(CHANNEL_PREYLOOP)
@@ -162,8 +171,8 @@
 					return
 				if(soundprob_met)
 					if(L.client?.prefs.cit_toggles & DIGESTION_NOISES)
-						SEND_SOUND(L, parent.sound_prey_digest)
-					sound_to_play = parent.sound_pred_digest
+						SEND_SOUND(L, sound_prey_digest)
+					sound_to_play = sound_pred_digest
 
 			//No digestion protection for megafauna. // no.
 				if(!(V.vore_flags & DIGESTABLE))

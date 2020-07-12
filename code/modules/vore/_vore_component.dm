@@ -18,15 +18,6 @@
 	// Static variables
 	/// Preyloop sound
 	var/static/sound/sound_preyloop = sound('sound/vore/prey/loop.ogg')
-	/// Prey digest sound
-	var/static/sound/sound_prey_digest = sound(get_sfx("digest_prey"))
-	/// Prey death sound
-	var/static/sound/sound_prey_death = sound(get_sfx("death_prey"))
-	/// Prey digest sound for pred
-	var/static/sound/sound_pred_digest = sound(get_sfx("digest_pred"))
-	/// Prey death sound for pred
-	var/static/sound/sound_pred_death = sound(get_sfx("death_pred"))
-
 
 /datum/component/vore/Initialize()
 	. = ..()
