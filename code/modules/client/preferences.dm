@@ -1670,12 +1670,12 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						age = max(min( round(text2num(new_age)), AGE_MAX),AGE_MIN)
 
 				if("security_records")
-					var/rec = stripped_multiline_input(usr, "Set your security record note section. This should be IC!", "Securitty Records", html_decode(security_records), MAX_FLAVOR_LEN, TRUE)
+					var/rec = stripped_multiline_input(usr, "Set your security record note section. This should be IC!", "Security Records", html_decode(security_records), MAX_FLAVOR_LEN, TRUE)
 					if(!isnull(rec))
 						security_records = rec
 
 				if("medical_records")
-					var/rec = stripped_multiline_input(usr, "Set your medical record note section. This should be IC!", "Securitty Records", html_decode(medical_records), MAX_FLAVOR_LEN, TRUE)
+					var/rec = stripped_multiline_input(usr, "Set your medical record note section. This should be IC!", "Security Records", html_decode(medical_records), MAX_FLAVOR_LEN, TRUE)
 					if(!isnull(rec))
 						medical_records = rec
 
