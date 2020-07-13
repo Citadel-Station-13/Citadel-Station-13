@@ -10,7 +10,7 @@ SUBSYSTEM_DEF(mapping)
 
 	var/datum/map_config/config
 	var/datum/map_config/next_map_config
-	
+
 	/// Roundstart mapvoting vars
 	/// config that won the vote
 	var/datum/map_config/voted_map
@@ -67,7 +67,7 @@ SUBSYSTEM_DEF(mapping)
 		config = load_map_config(FORCE_MAP)
 #else
 		// yeah the roundstart voting is shitcode, sue me.
-		if(!check_next_map_forced())
+		if(check_next_map_forced())
 			config = load_map_config(error_if_missing = FALSE)
 		else
 			unset_next_map_forced()

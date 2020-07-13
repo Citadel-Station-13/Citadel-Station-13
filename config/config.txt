@@ -393,7 +393,7 @@ MAPROTATION
 ## TG - TG style random rotation
 ## ROUNDEND_VOTE - Voted on round end
 ## ROUNDSTART_VOTE - Voted during init using a snowflakey system
-MAPROTATION_TYPE ROUNDEND_VOTE
+MAPROTATION_TYPE ROUNDSTART_VOTE
 
 ## Duration in seconds of roundstart map vote
 ROUNDSTART_MAP_VOTE_DURATION 60
