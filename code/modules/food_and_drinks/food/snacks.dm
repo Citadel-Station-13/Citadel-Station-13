@@ -19,6 +19,7 @@ Food formatting and crafting examples.
 	name = "salted corn chips"													//Name that displays when hovered over.
 	desc = "Manufactured in a far away factory."								//Description on examine.
 	icon_state = "saltychip"													//Refers to an icon, usually in food.dmi
+	bitesize = 3																//How many reagents are consumed in each bite.
 	list_reagents = list(/datum/reagent/consumable/nutriment = 6,				//What's inside the snack, but only if spawned. For example, from a chemical reaction, vendor, or slime core spawn.
 						/datum/reagent/consumable/nutriment/vitamin = 2)		
 	bonus_reagents = list(/datum/reagent/consumable/nutriment = 1,				//What's -added- to the food, in addition to the reagents contained inside the foods used to craft it. Basically, a reward for cooking.
