@@ -411,6 +411,11 @@
 		to_chat(occupant, "<span class='notice'><b>There is a bright flash!</b><br><i>You feel like a new being.</i></span>")
 		mob_occupant.flash_act()
 
+	var/list/policies = CONFIG_GET(keyed_list/policyconfig)
+	var/policy = policies[POLICYCONFIG_ON_CLONE]
+	if(policy)
+		to_chat(occupant, policy)
+	occupant.log_message("revived using cloning.", LOG_GAME)
 	mob_occupant.adjustOrganLoss(ORGAN_SLOT_BRAIN, mob_occupant.getCloneLoss())
 
 	occupant.forceMove(T)
