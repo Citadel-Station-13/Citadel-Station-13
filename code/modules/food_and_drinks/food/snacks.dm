@@ -33,8 +33,8 @@ Crafting Recipe (See files in code/modules/food_and_drinks/recipes/tablecraft/)
 /datum/crafting_recipe/food/nachos
 	name ="Salted Corn Chips"													//Name that displays in the Crafting UI
 	reqs = list(																//The list of ingredients to make the food.
-		/obj/item/reagent_containers/food/snacks/tortilla = 1
-		/datum/reagent/consumable/sodiumchloride = 1,							//As a note, reagents and non-food items don't get added to the food. If you
+		/obj/item/reagent_containers/food/snacks/tortilla = 1,
+		/datum/reagent/consumable/sodiumchloride = 1							//As a note, reagents and non-food items don't get added to the food. If you
 	)																			^^want the reagents, make sure the food item has it listed under bonus_reagents.
 	result = /obj/item/reagent_containers/food/snacks/saltedcornchips			//Resulting object.
 	subcategory = CAT_MISCFOOD													//Subcategory the food falls under in the Food Tab of the crafting menu.
