@@ -62072,7 +62072,6 @@
 	departmentType = 2;
 	name = "Chemistry RC";
 	pixel_x = 30;
-	pixel_y = 0;
 	receive_ore_updates = 1
 	},
 /turf/open/floor/plasteel/white,
