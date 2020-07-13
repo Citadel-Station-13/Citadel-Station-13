@@ -1,4 +1,3 @@
-// Drakeborg sprites by Mizartz. drakeborg are licensed under the CC BY-NC-SA 3.0 license.
 /obj/item/toy/plush
 	name = "plush"
 	desc = "This is the special coder plush, do not steal."

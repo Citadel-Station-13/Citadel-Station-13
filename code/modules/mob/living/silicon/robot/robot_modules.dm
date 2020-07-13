@@ -1,4 +1,3 @@
-// Drakeborg sprites by Mizartz. drakeborg are licensed under the CC BY-NC-SA 3.0 license.
 /obj/item/robot_module
 	name = "Default"
 	icon = 'icons/obj/module.dmi'
