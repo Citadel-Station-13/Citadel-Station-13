@@ -11,7 +11,7 @@
 	var/chosen = /datum/material/iron //which material will be used to make coins
 	var/coinsToProduce = 10
 	speed_process = TRUE
-
+	var/obj/item/storage/bag/money/bag_to_use
 
 /obj/machinery/mineral/mint/Initialize()
 	. = ..()
@@ -118,9 +118,8 @@
 	temp_list[chosen] = 400
 	if(T)
 		var/obj/item/O = new /obj/item/coin(src)
-		var/obj/item/storage/bag/money/B = locate(/obj/item/storage/bag/money, T)
 		O.set_custom_materials(temp_list)
-		if(!B)
-			B = new /obj/item/storage/bag/money(src)
-			unload_mineral(B)
-		O.forceMove(B)
+		if(QDELETED(bag_to_use) || (bag_to_use.loc != T) || !SEND_SIGNAL(bag_to_use, COMSIG_TRY_STORAGE_INSERT, O, null, TRUE)) //important to send the signal so we don't overfill the bag.
+			bag_to_use = new(src) //make a new bag if we can't find or use the old one.
+			unload_mineral(bag_to_use) //just forcemove memes.
+			O.forceMove(bag_to_use) //don't bother sending the signal, the new bag is empty and all that.

@@ -113,6 +113,26 @@
 	. = ..()
 	. += "<span class='notice'>It has <b>[uses ? uses : "no"]</b> charges left.</span>"
 
+/obj/item/card/id/examine_more(mob/user)
+	var/list/msg = list("<span class='notice'><i>You examine [src] closer, and note the following...</i></span>")
+
+	if(mining_points)
+		msg += "There's [mining_points] mining equipment redemption point\s loaded onto this card."
+	if(registered_account)
+		msg += "The account linked to the ID belongs to '[registered_account.account_holder]' and reports a balance of [registered_account.account_balance] cr."
+		if(registered_account.account_job)
+			var/datum/bank_account/D = SSeconomy.get_dep_account(registered_account.account_job.paycheck_department)
+			if(D)
+				msg += "The [D.account_holder] reports a balance of [D.account_balance] cr."
+		msg += "<span class='info'>Alt-Click the ID to pull money from the linked account in the form of holochips.</span>"
+		msg += "<span class='info'>You can insert credits into the linked account by pressing holochips, cash, or coins against the ID.</span>"
+		if(registered_account.account_holder == user.real_name)
+			msg += "<span class='boldnotice'>If you lose this ID card, you can reclaim your account by Alt-Clicking a blank ID card while holding it and entering your account ID number.</span>"
+	else
+		msg += "<span class='info'>There is no registered account linked to this card. Alt-Click to add one.</span>"
+
+	return msg
+
 /obj/item/card/emag/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/emagrecharge))
 		var/obj/item/emagrecharge/ER = W
@@ -230,15 +250,13 @@
 		return ..()
 
 /obj/item/card/id/proc/insert_money(obj/item/I, mob/user, physical_currency)
+	if(!registered_account)
+		to_chat(user, "<span class='warning'>[src] doesn't have a linked account to deposit [I] into!</span>")
+		return
 	var/cash_money = I.get_item_credit_value()
 	if(!cash_money)
 		to_chat(user, "<span class='warning'>[I] doesn't seem to be worth anything!</span>")
 		return
-
-	if(!registered_account)
-		to_chat(user, "<span class='warning'>[src] doesn't have a linked account to deposit [I] into!</span>")
-		return
-
 	registered_account.adjust_money(cash_money)
 	if(physical_currency)
 		to_chat(user, "<span class='notice'>You stuff [I] into [src]. It disappears in a small puff of bluespace smoke, adding [cash_money] credits to the linked account.</span>")
@@ -249,17 +267,20 @@
 	qdel(I)
 
 /obj/item/card/id/proc/mass_insert_money(list/money, mob/user)
+	if(!registered_account)
+		to_chat(user, "<span class='warning'>[src] doesn't have a linked account to deposit into!</span>")
+		return FALSE
+
 	if (!money || !money.len)
 		return FALSE
 
 	var/total = 0
 
 	for (var/obj/item/physical_money in money)
-		var/cash_money = physical_money.get_item_credit_value()
+		total += physical_money.get_item_credit_value()
+		CHECK_TICK
 
-		total += cash_money
-
-		registered_account.adjust_money(cash_money)
+		registered_account.adjust_money(total)
 
 	QDEL_LIST(money)
 
