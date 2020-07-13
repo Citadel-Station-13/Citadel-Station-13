@@ -88,6 +88,7 @@ SUBSYSTEM_DEF(mapping)
 					vote_type = MAJORITY_JUDGEMENT_VOTING
 				else
 					vote_type = PLURALITY_VOTING
+			SSpersistence.LoadRecentMaps()		//do this early
 			SSvote.initiate_vote("map_roundstart", "Server", votesystem = vote_type, vote_time = duration)
 			while((roundstart_mapvote_timeleft > 0) && roundstart_mapvote_ongoing && SSvote.mode)
 				stoplag(1 SECONDS)		//haha infinite loop goes brr whatever i already acknowledged this is shitcode

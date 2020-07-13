@@ -198,6 +198,7 @@ SUBSYSTEM_DEF(persistence)
 		average_dynamic_threat = saved_storytellers[4]
 	saved_storytellers.len = 3
 
+/// also called from init of SSmapping if map vote mode is set to roundstart.
 /datum/controller/subsystem/persistence/proc/LoadRecentMaps()
 	var/json_file = file("data/RecentMaps.json")
 	if(!fexists(json_file))

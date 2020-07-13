@@ -472,7 +472,12 @@ SUBSYSTEM_DEF(vote)
 				choices.Add(config.votable_modes)
 			if("map", "map_roundstart")
 				var/players = GLOB.clients.len
-				var/list/lastmaps = SSpersistence.saved_maps?.len ? list("[SSmapping.config.map_name]") | SSpersistence.saved_maps : list("[SSmapping.config.map_name]")
+				var/list/lastmaps = SSpersistence.saved_maps
+				var/current = SSmapping.config?.map_name
+				if(!lastmaps)
+					lastmaps = list()
+				if(current)
+					lastmaps |= current
 				for(var/M in config.maplist) //This is a typeless loop due to the finnicky nature of keyed lists in this kind of context
 					var/datum/map_config/targetmap = config.maplist[M]
 					if(!istype(targetmap))
