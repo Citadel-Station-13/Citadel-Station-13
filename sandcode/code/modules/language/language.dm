@@ -2,6 +2,7 @@
 
 /datum/language/sandcode
 	icon = 'sandcode/icons/misc/language.dmi'
+	icon_state = null
 
 /datum/language/sandcode/sergal
 	name = LANGUAGE_SERGAL
