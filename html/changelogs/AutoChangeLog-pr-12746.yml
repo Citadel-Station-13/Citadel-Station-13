@@ -1,0 +1,4 @@
+author: "silicons"
+delete-after: True
+changes: 
+  - rscadd: "chemical reactions now are sorted by priority first and temperature second."
