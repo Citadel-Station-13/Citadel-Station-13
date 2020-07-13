@@ -980,7 +980,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			dat += "<b>HUD Button Flashes:</b> <a href='?_src_=prefs;preference=hud_toggle_flash'>[hud_toggle_flash ? "Enabled" : "Disabled"]</a><br>"
 			dat += "<b>HUD Button Flash Color:</b> <span style='border: 1px solid #161616; background-color: [hud_toggle_color];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=hud_toggle_color;task=input'>Change</a><br>"
 
-			if (CONFIG_GET(flag/maprotation) && CONFIG_GET(flag/tgstyle_maprotation))
+			if (CONFIG_GET(flag/maprotation) && (CONFIG_GET(string/maprotation_type) == "TG"))
 				var/p_map = preferred_map
 				if (!p_map)
 					p_map = "Default"

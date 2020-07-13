@@ -474,7 +474,7 @@ SUBSYSTEM_DEF(ticker)
 	maprotatechecked = 1
 
 	//map rotate chance defaults to 75% of the length of the round (in minutes)
-	if (!prob((world.time/600)*CONFIG_GET(number/maprotatechancedelta)) && CONFIG_GET(flag/tgstyle_maprotation))
+	if (!prob((world.time/600)*CONFIG_GET(number/maprotatechancedelta)) && (CONFIG_GET(string/maprotation_type) == "TG"))
 		return
 	switch(CONFIG_GET(string/maprotation_type))
 		if("TG")
