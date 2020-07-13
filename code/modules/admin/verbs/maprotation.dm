@@ -38,6 +38,7 @@
 		return
 	SSticker.maprotatechecked = 1
 	var/datum/map_config/VM = maprotatechoices[chosenmap]
+	SSmapping.mark_next_map_forced()
 	message_admins("[key_name_admin(usr)] is changing the map to [VM.map_name]")
 	log_admin("[key_name(usr)] is changing the map to [VM.map_name]")
 	if (SSmapping.changemap(VM) == 0)

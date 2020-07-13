@@ -194,3 +194,4 @@
 		fdel("data/next_map.json")
 	var/F = file("data/next_map.json")
 	WRITE_FILE(F, json_encode(jsonlist))
+	SSmapping.mark_next_map_forced()

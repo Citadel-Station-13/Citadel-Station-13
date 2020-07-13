@@ -285,7 +285,14 @@
 
 /datum/config_entry/flag/maprotation
 
-/datum/config_entry/flag/tgstyle_maprotation
+// enum - TG, ROUNDEND_VOTE, ROUNDSTART_VOTE
+/datum/config_entry/string/maprotation_type
+	config_entry_value = "ROUNDEND_VOTE"
+
+// in seconds
+/datum/config_entry/number/roundstart_map_vote_duration
+	config_entry_value = 60
+	integer = TRUE
 
 /datum/config_entry/string/map_vote_type
 	config_entry_value = "SCORE"

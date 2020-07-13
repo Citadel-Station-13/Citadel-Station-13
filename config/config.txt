@@ -33,8 +33,8 @@ STATIONNAME Space Station 13
 ## Put on byond hub: Uncomment this to put your server on the byond hub.
 #HUB
 
-## Lobby time: This is the amount of time between rounds that players have to setup their characters and be ready.
-LOBBY_COUNTDOWN 120
+## Lobby time: This is the amount of time in seconds between rounds that players have to setup their characters and be ready.
+LOBBY_COUNTDOWN 60
 
 ## Round End Time: This is the amount of time after the round ends that players have to murder death kill each other.
 ROUND_END_COUNTDOWN 90
@@ -389,10 +389,14 @@ ANNOUNCE_ADMIN_LOGOUT
 ## You should edit maps.txt to match your configuration when you enable this.
 MAPROTATION
 
-## TG-style map rotation
-## By default, Citadel uses a more traditional method of map voting, where at the end of a round, players are given a full upfront vote.
-## This PR will disable that, and will make the server use TG's map rotation instead.
-#TGSTYLE_MAPROTATION
+## Map rotation type
+## TG - TG style random rotation
+## ROUNDEND_VOTE - Voted on round end
+## ROUNDSTART_VOTE - Voted during init using a snowflakey system
+MAPROTATION_TYPE ROUNDEND_VOTE
+
+## Duration in seconds of roundstart map vote
+ROUNDSTART_MAP_VOTE_DURATION 60
 
 ## Map voting
 ## Allows players to vote for their preffered map

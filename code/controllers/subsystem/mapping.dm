@@ -10,6 +10,15 @@ SUBSYSTEM_DEF(mapping)
 
 	var/datum/map_config/config
 	var/datum/map_config/next_map_config
+	
+	/// Roundstart mapvoting vars
+	/// config that won the vote
+	var/datum/map_config/voted_map
+	/// map vote in progress
+	var/roundstart_mapvote_ongoing = FALSE
+	/// map vote duration left
+	var/roundstart_mapvote_timeleft = 0
+	/// END
 
 	var/list/map_templates = list()
 
@@ -57,7 +66,45 @@ SUBSYSTEM_DEF(mapping)
 #ifdef FORCE_MAP
 		config = load_map_config(FORCE_MAP)
 #else
-		config = load_map_config(error_if_missing = FALSE)
+		// yeah the roundstart voting is shitcode, sue me.
+		if(!check_next_map_forced())
+			config = load_map_config(error_if_missing = FALSE)
+		else
+			unset_next_map_forced()
+			// map vote time
+			var/duration = CONFIG_GET(number/roundstart_map_vote_duration)
+			roundstart_mapvote_ongoing = TRUE
+			roundstart_mapvote_timeleft = duration
+			// master controller won't tick during this so we have to manually tick
+			// oof
+			SSvote.reset()
+			var/vote_type = CONFIG_GET(string/map_vote_type)
+			switch(vote_type)
+				if("APPROVAL")
+					vote_type = APPROVAL_VOTING
+				if("IRV")
+					vote_type = INSTANT_RUNOFF_VOTING
+				if("SCORE")
+					vote_type = MAJORITY_JUDGEMENT_VOTING
+				else
+					vote_type = PLURALITY_VOTING
+			SSvote.initiate_vote("map_roundstart", "Server", vote_system = vote_type, vote_time = duration)
+			while((roundstart_mapvote_timeleft > 0) && roundstart_mapvote_ongoing && SSvote.mode)
+				stoplag(1 SECONDS)		//haha infinite loop goes brr whatever i already acknowledged this is shitcode
+				SSvote.update_windows()
+			var/cancelled = FALSE
+			if(!SSvote.mode || !roundstart_mapvote_ongoing)		// an admin cancelled us.
+				cancelled = TRUE
+			else
+				SSvote.result()
+			SSvote.reset()
+			if(cancelled || !voted_map)
+				config = load_map_config(error_if_missing = FALSE)
+			else
+				config = voted_map
+			voted_map = null
+			roundstart_mapvote_ongoing = FALSE
+			roundstart_mapvote_timeleft = null
 #endif
 	stat_map_name = config.map_name
 
@@ -613,3 +660,12 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 	if(random_generated_ids_by_original[key])
 		return random_generated_ids_by_original[key]
 	. = random_generated_ids_by_original[key] = "[obfuscation_secret]%[obfuscation_next_id++]"
+
+/datum/controller/subsystem/mapping/proc/mark_next_map_forced()
+	WRITE_FILE(file("data/NEXT_MAP_FORCED"), "NEXT_MAP_FORCED")
+
+/datum/controller/subsystem/mapping/proc/check_next_map_forced()
+	return fexists(file("data/NEXT_MAP_FORCED"))
+
+/datum/controller/subsystem/mapping/proc/unset_next_map_forced()
+	fdel(file("data/NEXT_MAP_FORCED"))

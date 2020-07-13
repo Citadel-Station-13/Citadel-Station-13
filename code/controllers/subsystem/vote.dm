@@ -39,15 +39,16 @@ SUBSYSTEM_DEF(vote)
 			if(end_time < world.time) // result() can change this
 				reset()
 		else if(next_pop < world.time)
-			var/datum/browser/client_popup
-			for(var/client/C in voting)
-				client_popup = new(C, "vote", "Voting Panel", nwidth=600,nheight=700)
-				client_popup.set_window_options("can_close=0")
-				client_popup.set_content(interface(C))
-				client_popup.open(0)
+			update_windows()
 			next_pop = world.time+VOTE_COOLDOWN
 
-
+/datum/controller/subsystem/vote/proc/update_windows()
+	var/datum/browser/client_popup
+	for(var/client/C in voting)
+		client_popup = new(C, "vote", "Voting Panel", nwidth=600,nheight=700)
+		client_popup.set_window_options("can_close=0")
+		client_popup.set_content(interface(C))
+		client_popup.open(0)
 
 /datum/controller/subsystem/vote/proc/reset()
 	initiator = null
@@ -367,7 +368,15 @@ SUBSYSTEM_DEF(vote)
 				message_admins("The map has been voted for and will change to: [VM.map_name]")
 				log_admin("The map has been voted for and will change to: [VM.map_name]")
 				if(SSmapping.changemap(config.maplist[.]))
+					SSmapping.mark_next_map_forced()
 					to_chat(world, "<span class='boldannounce'>The map vote has chosen [VM.map_name] for next round!</span>")
+			if("map_roundstart")
+				var/datum/map_config/VM = config.maplist[.]
+				if(!VM)
+					to_chat(world, "<span class='userdanger'>Map write failed, contact maintainers immediately.</span>")
+					CRASH("Couldn't set map config due to it being null. Result of vote was [.]")
+				to_chat(world, "<span class='boldannounce'>Map chosen: [VM.map_name]. Writing to mapping subsystem.")
+				SSmapping.voted_map = VM
 			if("transfer") // austation begin -- Crew autotransfer vote
 				if(. == "Initiate Crew Transfer")
 					SSshuttle.autoEnd()
@@ -461,7 +470,7 @@ SUBSYSTEM_DEF(vote)
 				choices.Add("Restart Round","Continue Playing")
 			if("gamemode")
 				choices.Add(config.votable_modes)
-			if("map")
+			if("map", "map_roundstart")
 				var/players = GLOB.clients.len
 				var/list/lastmaps = SSpersistence.saved_maps?.len ? list("[SSmapping.config.map_name]") | SSpersistence.saved_maps : list("[SSmapping.config.map_name]")
 				for(var/M in config.maplist) //This is a typeless loop due to the finnicky nature of keyed lists in this kind of context
