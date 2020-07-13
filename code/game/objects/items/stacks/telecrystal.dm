@@ -4,6 +4,7 @@
 	singular_name = "telecrystal"
 	icon = 'icons/obj/telescience.dmi'
 	icon_state = "telecrystal"
+	grind_results = list(/datum/reagent/telecrystal = 20)
 	w_class = WEIGHT_CLASS_TINY
 	max_amount = 50
 	item_flags = NOBLUDGEON

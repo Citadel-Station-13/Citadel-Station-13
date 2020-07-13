@@ -172,6 +172,7 @@
 
 /datum/asset/spritesheet/goonchat/register()
 	InsertAll("emoji", 'icons/emoji.dmi')
+	InsertAll("emoji", 'icons/emoji_32.dmi')
 
 	// pre-loading all lanugage icons also helps to avoid meta
 	InsertAll("language", 'icons/misc/language.dmi')

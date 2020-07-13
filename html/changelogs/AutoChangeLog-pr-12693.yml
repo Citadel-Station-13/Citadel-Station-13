@@ -1,0 +1,5 @@
+author: "Owai-Seek"
+delete-after: True
+changes: 
+  - tweak: "Trashbags can now hold most shoes, and organs."
+  - balance: "You can no longer nest nuke disks or hold brains in the trash."

@@ -169,6 +169,12 @@
 	. = replacetext(html, "<!--customheadhtml-->", assets.css_tag())
 
 
+/obj/item/paper/examine_more(mob/user)
+	ui_interact(user)
+
+/obj/item/paper/proc/show_content(mob/user)
+	user.examinate(src)
+
 /obj/item/paper/verb/rename()
 	set name = "Rename paper"
 	set category = "Object"

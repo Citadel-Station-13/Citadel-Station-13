@@ -94,7 +94,7 @@
 	alpha = 150
 	resistance_flags = FIRE_PROOF
 
-/obj/structure/holosign/barrier/firelock/blocksTemperature()
+/obj/structure/holosign/barrier/firelock/BlockSuperconductivity()
 	return TRUE
 
 /obj/structure/holosign/barrier/combifan
@@ -110,7 +110,7 @@
 	CanAtmosPass = ATMOS_PASS_NO
 	resistance_flags = FIRE_PROOF
 
-/obj/structure/holosign/barrier/combifan/blocksTemperature()
+/obj/structure/holosign/barrier/combifan/BlockSuperconductivity()
 	return TRUE
 
 /obj/structure/holosign/barrier/combifan/Initialize()
