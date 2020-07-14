@@ -1,4 +1,6 @@
 /mob/living/carbon/BiologicalLife(seconds, times_fired)
+	//Updates the number of stored chemicals for powers
+	handle_changeling()
 	//Reagent processing needs to come before breathing, to prevent edge cases.
 	handle_organs()
 	. = ..()		// if . is false, we are dead.
@@ -25,8 +27,6 @@
 	if(stat != DEAD)
 		handle_liver()
 
-	//Updates the number of stored chemicals for powers
-	handle_changeling()
 
 /mob/living/carbon/PhysicalLife(seconds, times_fired)
 	if(!(. = ..()))
