@@ -1,4 +1,0 @@
-author: "silicons"
-delete-after: True
-changes: 
-  - bugfix: "circuit reagent heaters are now sanitized for temperature from 2.7 to 1000."
