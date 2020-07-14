@@ -460,13 +460,13 @@ GLOBAL_LIST_EMPTY(family_heirlooms)
 	gain_text = "<span class='danger'>You feel really lonely...</span>"
 	lose_text = "<span class='notice'>You feel like you could be safe on your own.</span>"
 	medical_record_text = "Patient feels sick and distressed when not around other people, leading to potentially lethal levels of stress."
-	var/datum/brain_trauma/severe/monophobia
 
 /datum/quirk/monophobia/post_add()
+	. = ..()
 	var/mob/living/carbon/human/H = quirk_holder
-	monophobia = new
-	H.gain_trauma(monophobia, TRAUMA_RESILIENCE_ABSOLUTE)
+	H.gain_trauma(/datum/brain_trauma/severe/monophobia, TRAUMA_RESILIENCE_ABSOLUTE)
 
 /datum/quirk/monophobia/remove()
+	. = ..()
 	var/mob/living/carbon/human/H = quirk_holder
-	H?.cure_trauma_type(monophobia, TRAUMA_RESILIENCE_ABSOLUTE)
+	H?.cure_trauma_type(/datum/brain_trauma/severe/monophobia, TRAUMA_RESILIENCE_ABSOLUTE)
