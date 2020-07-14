@@ -22,6 +22,8 @@
 	var/hitcost = 750
 	var/throw_hit_chance = 35
 	var/preload_cell_type //if not empty the baton starts with this type of cell
+	var/last_hit = 0
+	var/cooldown = 8
 
 /obj/item/melee/baton/examine(mob/user)
 	. = ..()
@@ -170,6 +172,9 @@
 	return disarming || (user.a_intent != INTENT_HARM)
 
 /obj/item/melee/baton/proc/baton_stun(mob/living/L, mob/user, disarming = FALSE)
+	if(last_hit + cooldown > world.time)
+		return
+	last_hit = world.time
 	var/list/return_list = list()
 	if(L.mob_run_block(src, 0, "[user]'s [name]", ATTACK_TYPE_MELEE, 0, user, null, return_list) & BLOCK_SUCCESS) //No message; check_shields() handles that
 		playsound(L, 'sound/weapons/genhit.ogg', 50, 1)
