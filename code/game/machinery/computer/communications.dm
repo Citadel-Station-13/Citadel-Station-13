@@ -71,7 +71,7 @@
 				if(check_access(I))
 					authenticated = 1
 					auth_id = "[I.registered_name] ([I.assignment])"
-					if((20 in I.access))
+					if((ACCESS_CAPTAIN in I.access))
 						authenticated = 2
 					playsound(src, 'sound/machines/terminal_on.ogg', 50, FALSE)
 				if(obj_flags & EMAGGED)
@@ -132,20 +132,15 @@
 
 		if("crossserver")
 			if(authenticated==2)
-				var/dest = href_list["cross_dest"]
 				if(!checkCCcooldown())
 					to_chat(usr, "<span class='warning'>Arrays recycling. Please stand by.</span>")
 					playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, FALSE)
 					return
-				var/warning = dest == "all" ? "Please choose a message to transmit to allied stations." : "Please choose a message to transmit to [dest] sector station."
-				var/input = stripped_multiline_input(usr, "[warning]  Please be aware that this process is very expensive, and abuse will lead to... termination.", "Send a message to an allied station.", "")
+				var/input = stripped_multiline_input(usr, "Please choose a message to transmit to allied stations.  Please be aware that this process is very expensive, and abuse will lead to... termination.", "Send a message to an allied station.", "")
 				if(!input || !(usr in view(1,src)) || !checkCCcooldown())
 					return
 				playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, FALSE)
-				if(dest == "all")
-					send2otherserver("[station_name()]", input,"Comms_Console")
-				else
-					send2otherserver("[station_name()]", input,"Comms_Console", list(dest))
+				send2otherserver("[station_name()]", input,"Comms_Console")
 				minor_announce(input, title = "Outgoing message to allied station")
 				usr.log_talk(input, LOG_SAY, tag="message to the other server")
 				message_admins("[ADMIN_LOOKUPFLW(usr)] has sent a message to the other server.")
@@ -161,12 +156,12 @@
 				var/datum/map_template/shuttle/S = locate(href_list["chosen_shuttle"]) in shuttles
 				if(S && istype(S))
 					if(SSshuttle.emergency.mode != SHUTTLE_RECALL && SSshuttle.emergency.mode != SHUTTLE_IDLE)
-						to_chat(usr, "<span class='alert'>It's a bit late to buy a new shuttle, don't you think?</span>")
+						to_chat(usr, "It's a bit late to buy a new shuttle, don't you think?")
 						return
 					if(SSshuttle.shuttle_purchased)
-						to_chat(usr, "<span class='alert'>A replacement shuttle has already been purchased.</span>")
+						to_chat(usr, "A replacement shuttle has already been purchased.")
 					else if(!S.prerequisites_met())
-						to_chat(usr, "<span class='alert'>You have not met the requirements for purchasing this shuttle.</span>")
+						to_chat(usr, "You have not met the requirements for purchasing this shuttle.")
 					else
 						var/points_to_check
 						var/datum/bank_account/D = SSeconomy.get_dep_account(ACCOUNT_CAR)
@@ -188,7 +183,7 @@
 
 		if("callshuttle")
 			state = STATE_DEFAULT
-			if(authenticated && SSshuttle.canEvac(usr))
+			if(authenticated)
 				state = STATE_CALLSHUTTLE
 		if("callshuttle2")
 			if(authenticated)
@@ -289,12 +284,12 @@
 		if("MessageCentCom")
 			if(authenticated)
 				if(!checkCCcooldown())
-					to_chat(usr, "<span class='warning'>Arrays recycling. Please stand by.</span>")
+					to_chat(usr, "<span class='warning'>Arrays recycling.  Please stand by.</span>")
 					return
 				var/input = stripped_input(usr, "Please choose a message to transmit to CentCom via quantum entanglement.  Please be aware that this process is very expensive, and abuse will lead to... termination.  Transmission does not guarantee a response.", "Send a message to CentCom.", "")
 				if(!input || !(usr in view(1,src)) || !checkCCcooldown())
 					return
-				playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, FALSE)
+				playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, 0)
 				CentCom_announce(input, usr)
 				to_chat(usr, "<span class='notice'>Message transmitted to Central Command.</span>")
 				for(var/client/X in GLOB.admins)
@@ -307,7 +302,7 @@
 
 		// OMG SYNDICATE ...LETTERHEAD
 		if("MessageSyndicate")
-			if((authenticated) && (obj_flags & EMAGGED))
+			if((authenticated==2) && (obj_flags & EMAGGED))
 				if(!checkCCcooldown())
 					to_chat(usr, "<span class='warning'>Arrays recycling. Please stand by.</span>")
 					playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, FALSE)
@@ -450,6 +445,7 @@
 		authenticated = 2
 	to_chat(user, "<span class='danger'>You scramble the communication routing circuits!</span>")
 	playsound(src, 'sound/machines/terminal_alert.ogg', 50, FALSE)
+	return TRUE
 
 /obj/machinery/computer/communications/ui_interact(mob/user)
 	. = ..()
@@ -563,6 +559,7 @@
 			if(GLOB.security_level == SEC_LEVEL_DELTA)
 				dat += "<font color='red'><b>The self-destruct mechanism is active. Find a way to deactivate the mechanism to lower the alert level or evacuate.</b></font>"
 			else
+				dat += "<A HREF='?src=[REF(src)];operation=securitylevel;newalertlevel=[SEC_LEVEL_AMBER]'>Amber</A><BR>"
 				dat += "<A HREF='?src=[REF(src)];operation=securitylevel;newalertlevel=[SEC_LEVEL_BLUE]'>Blue</A><BR>"
 				dat += "<A HREF='?src=[REF(src)];operation=securitylevel;newalertlevel=[SEC_LEVEL_GREEN]'>Green</A>"
 		if(STATE_CONFIRM_LEVEL)
@@ -704,6 +701,7 @@
 			if(GLOB.security_level == SEC_LEVEL_DELTA)
 				dat += "<font color='red'><b>The self-destruct mechanism is active. Find a way to deactivate the mechanism to lower the alert level or evacuate.</b></font>"
 			else
+				dat += "<A HREF='?src=[REF(src)];operation=ai-securitylevel;newalertlevel=[SEC_LEVEL_AMBER]'>Amber</A><BR>"
 				dat += "<A HREF='?src=[REF(src)];operation=ai-securitylevel;newalertlevel=[SEC_LEVEL_BLUE]'>Blue</A><BR>"
 				dat += "<A HREF='?src=[REF(src)];operation=ai-securitylevel;newalertlevel=[SEC_LEVEL_GREEN]'>Green</A>"
 
