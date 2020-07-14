@@ -25,4 +25,5 @@
 				/obj/item/stack/sheet/metal = 1)
 	result = /obj/item/tank/internals/emergency_oxygen/double/empty
 	tools = list(TOOL_WELDER)
+	subcategory = CAT_MISCELLANEOUS
 	category = CAT_MISC
