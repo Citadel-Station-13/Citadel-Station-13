@@ -58,6 +58,14 @@ SUBSYSTEM_DEF(shuttle)
 
 	var/realtimeofstart = 0
 
+	//SKYRAT CHANGE
+	//PROBLEM COMPUTER CHARGES
+	var/problem_computer_max_charges = 5
+	var/problem_computer_charges = 5
+	var/problem_computer_charge_time = 90 SECONDS
+	var/problem_computer_next_charge_time = 0
+	//END SKYRAT CHANGE
+
 /datum/controller/subsystem/shuttle/Initialize(timeofday)
 	ordernum = rand(1, 9000)
 
