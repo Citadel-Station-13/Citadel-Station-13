@@ -17,7 +17,7 @@ SUBSYSTEM_DEF(mapping)
 	/// map vote in progress
 	var/roundstart_mapvote_ongoing = FALSE
 	/// map vote duration left
-	var/roundstart_mapvote_timeleft = 0
+	var/roundstart_mapvote_endtime = 0
 	/// END
 
 	var/list/map_templates = list()
@@ -72,9 +72,9 @@ SUBSYSTEM_DEF(mapping)
 		else
 			unset_next_map_forced()
 			// map vote time
-			var/duration = CONFIG_GET(number/roundstart_map_vote_duration)
+			var/duration = CONFIG_GET(number/roundstart_map_vote_duration) * 10
 			roundstart_mapvote_ongoing = TRUE
-			roundstart_mapvote_timeleft = duration
+			roundstart_mapvote_endtime = duration + world.time
 			// master controller won't tick during this so we have to manually tick
 			// oof
 			SSvote.reset()
@@ -90,8 +90,9 @@ SUBSYSTEM_DEF(mapping)
 					vote_type = PLURALITY_VOTING
 			SSpersistence.LoadRecentMaps()		//do this early
 			SSvote.initiate_vote("map_roundstart", "Server", votesystem = vote_type, vote_time = duration)
-			while((roundstart_mapvote_timeleft > 0) && roundstart_mapvote_ongoing && SSvote.mode)
-				stoplag(1 SECONDS)		//haha infinite loop goes brr whatever i already acknowledged this is shitcode
+			SSvote.end_time = roundstart_mapvote_endtime
+			while((roundstart_mapvote_endtime > world.time) && roundstart_mapvote_ongoing && SSvote.mode)
+				sleep(20)		//haha infinite loop goes brr whatever i already acknowledged this is shitcode
 				SSvote.update_windows()
 			var/cancelled = FALSE
 			if(!SSvote.mode || !roundstart_mapvote_ongoing)		// an admin cancelled us.
@@ -105,7 +106,7 @@ SUBSYSTEM_DEF(mapping)
 				config = voted_map
 			voted_map = null
 			roundstart_mapvote_ongoing = FALSE
-			roundstart_mapvote_timeleft = null
+			roundstart_mapvote_endtime = null
 #endif
 	stat_map_name = config.map_name
 
