@@ -221,11 +221,9 @@
 		animate(D, transform = matrix(180, MATRIX_ROTATE), time = 1, loop = 0)
 	sleep(15)
 	if (D)
-		if(transform_before)
-			sleep(10) //animate calls sleep apparently so this should be fine
+		animate(D, transform = null, time = 1, loop = 0)
+		if(transform_before) //animate calls sleep so this should be fine and stop a bug with transforms
 			D.transform = transform_before
-		else
-			animate(D, transform = null, time = 1, loop = 0)
 
 /datum/martial_art/wrestling/proc/slam(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	if(!D)
@@ -427,11 +425,9 @@
 			animate(A, transform = matrix(90, MATRIX_ROTATE), time = 1, loop = 0)
 		sleep(10)
 		if(A)
+			animate(A, transform = null, time = 1, loop = 0)
 			if(transform_before)
-				sleep(10)
 				A.transform = transform_before
-			else
-				animate(A, transform = null, time = 1, loop = 0)
 
 		A.forceMove(D.loc)
 
