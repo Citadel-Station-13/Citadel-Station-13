@@ -410,7 +410,7 @@ ALLOW_MAP_VOTING 1
 ##   APPROVAL (can vote for as many as you want), I
 ##   IRV (vote by ranked choice, winner determined by instant runoff algorithm)
 ##   SCORE (give individual rankings of each choice, winner determined by majority judgement algorithm)
-MAP_VOTE_TYPE SCORE
+MAP_VOTE_TYPE APPROVAL
 
 ## Map rotate chance delta
 ## This is the chance of map rotation factored to the round length.
