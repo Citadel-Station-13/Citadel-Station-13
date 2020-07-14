@@ -216,13 +216,15 @@
 /datum/martial_art/wrestling/proc/FlipAnimation(mob/living/carbon/human/D)
 	set waitfor = FALSE
 	var/transform_before
+	var/laying_before
 	if (D)
 		transform_before = D.transform
+		laying_before = D.lying
 		animate(D, transform = matrix(180, MATRIX_ROTATE), time = 1, loop = 0)
 	sleep(15)
 	if (D)
 		animate(D, transform = null, time = 1, loop = 0)
-		if(transform_before) //animate calls sleep so this should be fine and stop a bug with transforms
+		if(transform_before && laying_before == D.lying) //animate calls sleep so this should be fine and stop a bug with transforms
 			D.transform = transform_before
 
 /datum/martial_art/wrestling/proc/slam(mob/living/carbon/human/A, mob/living/carbon/human/D)
@@ -420,13 +422,15 @@
 			return FALSE
 
 		var/transform_before
+		var/laying_before
 		if(A)
 			transform_before = A.transform
+			laying_before = A.lying
 			animate(A, transform = matrix(90, MATRIX_ROTATE), time = 1, loop = 0)
 		sleep(10)
 		if(A)
 			animate(A, transform = null, time = 1, loop = 0)
-			if(transform_before)
+			if(transform_before && laying_before == A.lying) //if they suddenly dropped to the floor between this period, don't revert their animation
 				A.transform = transform_before
 
 		A.forceMove(D.loc)
