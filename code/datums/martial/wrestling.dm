@@ -219,7 +219,7 @@
 		animate(D, transform = matrix(180, MATRIX_ROTATE), time = 1, loop = 0)
 	sleep(15)
 	if (D)
-		animate(D, transform = null, time = 1, loop = 0)
+		animate(D, transform = matrix(-180, MATRIX_ROTATE), time = 1, loop = 0)
 
 /datum/martial_art/wrestling/proc/slam(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	if(!D)
@@ -419,7 +419,7 @@
 			animate(A, transform = matrix(90, MATRIX_ROTATE), time = 1, loop = 0)
 		sleep(10)
 		if(A)
-			animate(A, transform = null, time = 1, loop = 0)
+			animate(A, transform = matrix(-90, MATRIX_ROTATE), time = 1, loop = 0)
 
 		A.forceMove(D.loc)
 
