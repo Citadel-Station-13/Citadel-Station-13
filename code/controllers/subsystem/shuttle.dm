@@ -120,6 +120,12 @@ SUBSYSTEM_DEF(shuttle)
 				qdel(T, force=TRUE)
 	CheckAutoEvac()
 
+	// Skyrat change. Handles Problem Computer charges here
+	if(problem_computer_charges < problem_computer_max_charges && world.time >= problem_computer_next_charge_time)
+		problem_computer_next_charge_time = world.time + problem_computer_charge_time
+		problem_computer_charges += 1
+	// End Skyrat change.
+
 	var/esETA = emergency?.getModeStr()
 	emergency_shuttle_stat_text = "[esETA? "[esETA] [emergency.getTimerStr()]" : ""]"
 

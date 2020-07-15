@@ -344,6 +344,10 @@ SUBSYSTEM_DEF(research)
 			bitcoins[i] *= income_time_difference / 10
 		science_tech.add_point_list(bitcoins)
 	last_income = world.time
+	// Skyrat change. Handles Problem Computer charges here
+	if(problem_computer_charges < problem_computer_max_charges && world.time >= problem_computer_next_charge_time)
+		problem_computer_next_charge_time = world.time + problem_computer_charge_time
+		problem_computer_charges += 1
 
 /datum/controller/subsystem/research/proc/calculate_server_coefficient()	//Diminishing returns.
 	var/amt = servers.len
