@@ -177,6 +177,7 @@ Credit where due:
 		log_game("[key_name(servant)] was made an initial servant of Ratvar")
 		var/mob/living/L = servant.current
 		greet_servant(L)
+		equip_servant(L)
 		add_servant_of_ratvar(L, TRUE)
 	return 1
 
