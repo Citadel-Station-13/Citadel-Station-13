@@ -280,7 +280,7 @@
 		total += physical_money.get_item_credit_value()
 		CHECK_TICK
 
-		registered_account.adjust_money(total)
+	registered_account.adjust_money(total)
 
 	QDEL_LIST(money)
 
