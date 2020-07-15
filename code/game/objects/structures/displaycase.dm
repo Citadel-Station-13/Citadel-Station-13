@@ -224,12 +224,12 @@
 	else
 		return ..()
 
-//The captains display case requiring specops ID access is intentional.
+//The captains display case requiring specops ID access is intentional. "that was a joke, totally useless, everyone broke it anyways, atleast the captain can have his OWN THING -- sandstorm edit"
 //The lab cage and captains display case do not spawn with electronics, which is why req_access is needed.
 /obj/structure/displaycase/captain
 	alert = TRUE
 	start_showpiece_type = /obj/item/gun/energy/laser/captain
-	req_access = list(ACCESS_CENT_SPECOPS)
+	req_access = list(ACCESS_CENT_CAPTAIN)
 
 /obj/structure/displaycase/labcage
 	name = "lab cage"
