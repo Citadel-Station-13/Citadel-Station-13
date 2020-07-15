@@ -758,7 +758,7 @@
 		/obj/item/circuitboard,
 		/obj/item/light,
 		/obj/item/electronics,
-		/obj/item/tank/internals,
+		/obj/item/tank,
 		/obj/item/conveyor_switch_construct,
 		/obj/item/stack/conveyor,
 		/obj/item/wallframe,
