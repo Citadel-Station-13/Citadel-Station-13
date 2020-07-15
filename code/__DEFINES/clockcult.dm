@@ -91,6 +91,6 @@ GLOBAL_LIST_EMPTY(all_scripture) //a list containing scripture instances; not us
 
 #define GUARDIAN_EMERGE_THRESHOLD 65 //guardian cannot emerge unless host is at this% or less health
 
-#define ARK_SCREAM_COOLDOWN 600 //This much time has to pass between instances of the Ark taking damage before it will "scream" again
+#define ARK_SCREAM_COOLDOWN 300 //This much time has to pass between instances of the Ark taking damage before it will "scream" again
 
 #define PRISM_DELAY_DURATION 1200 //how long prolonging prisms delay the shuttle for; defaults to 2 minutes
