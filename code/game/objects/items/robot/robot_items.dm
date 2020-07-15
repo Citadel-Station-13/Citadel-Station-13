@@ -746,8 +746,8 @@
 ***********************************************************************/
 
 /obj/item/weapon/gripper
-	name = "circuit gripper"
-	desc = "A simple grasping tool for inserting circuitboards into machinary."
+	name = "engineering gripper"
+	desc = "A simple grasping tool for interacting with various engineering related items, such as circuits, gas tanks and conveyer belts. Alt Click to open held item UI"
 	icon = 'icons/obj/device.dmi'
 	icon_state = "gripper"
 
@@ -755,15 +755,31 @@
 
 	//Has a list of items that it can hold.
 	var/list/can_hold = list(
-		/obj/item/circuitboard
+		/obj/item/circuitboard,
+		/obj/item/light,
+		/obj/item/electronics,
+		/obj/item/tank/internals,
+		/obj/item/conveyor_switch_construct,
+		/obj/item/stack/conveyor,
+		/obj/item/wallframe,
+		/obj/item/vending_refill
 		)
 
 	var/obj/item/wrapped = null // Item currently being held.
 
-/obj/item/weapon/gripper/attack_self()
+/obj/item/weapon/gripper/attack_self(mob/user)
 	if(wrapped)
 		wrapped.forceMove(get_turf(wrapped))
+		to_chat(user, "<span class='notice'>You drop the [wrapped].</span>")
 		wrapped = null
+	return ..()
+
+//Used to interact with UI's of held items, such as gas tanks and airlock electronics.
+/obj/item/weapon/gripper/AltClick(mob/user)
+	if(wrapped)
+		wrapped.loc = user
+		wrapped.ui_interact(user, "main", null, TRUE, null, GLOB.deep_inventory_state)
+		wrapped.loc = src
 	return ..()
 
 /obj/item/weapon/gripper/afterattack(var/atom/target, var/mob/living/user, proximity, params)
@@ -803,7 +819,7 @@
 
 		//We can grab the item, finally.
 		if(grab)
-			to_chat(user, "You collect \the [I].")
+			to_chat(user, "<span class='notice'>You collect \the [I].</span>")
 			I.loc = src
 			wrapped = I
 			return

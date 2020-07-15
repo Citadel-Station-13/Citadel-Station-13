@@ -74,6 +74,9 @@
 		ui = new(user, src, ui_key, "tank_dispenser", name, 275, 103, master_ui, state)
 		ui.open()
 
+/obj/structure/tank_dispenser/attack_robot(mob/user)
+	ui_interact(user)
+
 /obj/structure/tank_dispenser/ui_data(mob/user)
 	var/list/data = list()
 	data["oxygen"] = oxygentanks
