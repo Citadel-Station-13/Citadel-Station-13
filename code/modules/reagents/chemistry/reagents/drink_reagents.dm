@@ -999,3 +999,18 @@
 	glass_name = "glass of bungo juice"
 	glass_desc = "Exotic! You feel like you are on vacation already."
 	value = REAGENT_VALUE_COMMON
+
+/datum/reagent/consumable/aloejuice
+	name = "Aloe Juice"
+	color = "#A3C48B"
+	description = "A healthy and refreshing juice."
+	taste_description = "vegetable"
+	glass_icon_state = "glass_yellow"
+	glass_name = "glass of aloe juice"
+	glass_desc = "A healthy and refreshing juice."
+
+/datum/reagent/consumable/aloejuice/on_mob_life(mob/living/M)
+	if(M.getToxLoss() && prob(30))
+		M.adjustToxLoss(-1, 0)
+	..()
+	. = TRUE
