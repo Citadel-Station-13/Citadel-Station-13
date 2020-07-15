@@ -450,14 +450,14 @@
 
 /proc/fusionpower2text(power) //used when displaying fusion power on analyzers
 	switch(power)
-		if(0 to 5)
-			return "low"
-		if(5 to 20)
-			return "mid"
-		if(20 to 50)
-			return "high"
-		if(50 to INFINITY)
-			return "super"
+		if(-INFINITY to -100000000)
+			return "very endothermic"
+		if(-10000000 to 0)
+			return "endothermic"
+		if(0 to 10000000)
+			return "exothermic"
+		if(100000000 to INFINITY)
+			return "very exothermic"
 
 /proc/color2hex(color)	//web colors
 	if(!color)

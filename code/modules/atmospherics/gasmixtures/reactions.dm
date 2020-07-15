@@ -1,5 +1,21 @@
 //All defines used in reactions are located in ..\__DEFINES\reactions.dm
 
+/*
+	You may ask yourself: should I implement my reaction in C++ or in Byond?
+	There's three considerations here. First: *can* you implement it in C++?
+	If the answer is "no", implementing it in byond is perfectly fine.
+	If the answer is "yes", then you move on to the second consideration:
+	how much does the reaction actually interact with the gas mix?
+	If it's very low, you should absolutely put it in byond regardless. 
+	Third, how much does it interact with not-gas stuff?
+	If it's a large amount, or *exclusively* that, e.g. water vapor,
+	then keep it in byond, unless you *really* want that performance.
+
+	Regardless, is preferred that you write a byond version anyway--
+	then use #ifdef EXTOOLS_BROKE to disable it, unless
+	extools isn't working.
+*/
+
 /proc/init_gas_reactions()
 	. = list()
 
@@ -71,6 +87,7 @@
 		. = REACTING
 
 //tritium combustion: combustion of oxygen and tritium (treated as hydrocarbons). creates hotspots. exothermic
+#ifdef EXTOOLS_BROKE
 /datum/gas_reaction/tritfire
 	priority = -1 //fire should ALWAYS be last, but tritium fires happen before plasma fires
 	name = "Tritium Combustion"
@@ -119,13 +136,12 @@
 		temperature = air.return_temperature()
 		if(temperature > FIRE_MINIMUM_TEMPERATURE_TO_EXIST)
 			location.hotspot_expose(temperature, CELL_VOLUME)
-			for(var/I in location)
-				var/atom/movable/item = I
-				item.temperature_expose(air, temperature, CELL_VOLUME)
 			location.temperature_expose(air, temperature, CELL_VOLUME)
 
 	return cached_results["fire"] ? REACTING : NO_REACTION
+#endif
 
+#ifdef EXTOOLS_BROKE
 //plasma combustion: combustion of oxygen and plasma (treated as hydrocarbons). creates hotspots. exothermic
 /datum/gas_reaction/plasmafire
 	priority = -2 //fire should ALWAYS be last, but plasma fires happen after tritium fires
@@ -191,17 +207,27 @@
 		temperature = air.return_temperature()
 		if(temperature > FIRE_MINIMUM_TEMPERATURE_TO_EXIST)
 			location.hotspot_expose(temperature, CELL_VOLUME)
-			for(var/I in location)
-				var/atom/movable/item = I
-				item.temperature_expose(air, temperature, CELL_VOLUME)
 			location.temperature_expose(air, temperature, CELL_VOLUME)
 
 	return cached_results["fire"] ? REACTING : NO_REACTION
-
+#endif
 //fusion: a terrible idea that was fun but broken. Now reworked to be less broken and more interesting. Again (and again, and again). Again!
 //Fusion Rework Counter: Please increment this if you make a major overhaul to this system again.
 //6 reworks
+/proc/fusion_effects(datum/holder,particle_chance,rad_power)
+	var/turf/open/location
+	if (istype(holder,/datum/pipeline)) //Find the tile the reaction is occuring on, or a random part of the network if it's a pipenet.
+		var/datum/pipeline/fusion_pipenet = holder
+		location = get_turf(pick(fusion_pipenet.members))
+	else
+		location = get_turf(holder)
+	if(location)
+		if(prob(PERCENT(particle_chance)))
+			location.fire_nuclear_particle()
+		radiation_pulse(location,rad_power)
 
+
+#ifdef EXTOOLS_BROKE
 /datum/gas_reaction/fusion
 	exclude = FALSE
 	priority = 2
@@ -281,7 +307,7 @@
 		if(new_heat_capacity > MINIMUM_HEAT_CAPACITY)
 			air.set_temperature(clamp(((air.return_temperature()*old_heat_capacity + reaction_energy)/new_heat_capacity),TCMB,INFINITY))
 		return REACTING
-
+#endif
 /datum/gas_reaction/nitrylformation //The formation of nitryl. Endothermic. Requires N2O as a catalyst.
 	priority = 3
 	name = "Nitryl formation"

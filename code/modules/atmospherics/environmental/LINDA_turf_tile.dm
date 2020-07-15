@@ -84,7 +84,11 @@
 	RETURN_TYPE(/datum/gas_mixture)
 	return air
 
-/turf/temperature_expose()
+/turf/temperature_expose(air,exposed_temperature,volume)
+	if(air)
+		for(var/I in src)
+			var/atom/movable/item = I
+			item.temperature_expose(air, exposed_temperature, CELL_VOLUME)
 	if(temperature > heat_capacity)
 		to_be_destroyed = TRUE
 
