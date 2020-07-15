@@ -513,6 +513,9 @@
 /obj/structure/cable{
 	icon_state = "1-2"
 	},
+/obj/machinery/light/small{
+	dir = 8
+	},
 /turf/open/floor/plating,
 /area/shuttle/mining{
 	requires_power = 1
