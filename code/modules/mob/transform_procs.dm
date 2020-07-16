@@ -591,6 +591,7 @@
 	. = new_mob
 	qdel(src)
 
+
 /* Certain mob types have problems and should not be allowed to be controlled by players.
  *
  * This proc is here to force coders to manually place their mob in this list, hopefully tested.
@@ -631,3 +632,20 @@
 	return 0
 
 #undef TRANSFORMATION_DURATION
+=======
+/mob/living/proc/turn_into_pickle()
+	//if they're already a pickle, turn them back instead
+	if(istype(src, /mob/living/simple_animal/pickle))
+		qdel(src, FALSE) //this means the body inside the pickle will be dropped without killing it
+	else
+		//make a new pickle on the tile and move their mind into it if possible
+		var/mob/living/simple_animal/pickle/new_pickle = new /mob/living/simple_animal/pickle(get_turf(src))
+		new_pickle.original_body = src
+		if(mind)
+			mind.transfer_to(new_pickle)
+		//give them their old access if any
+		var/obj/item/card/id/mob_access_card = get_idcard()
+		if(mob_access_card)
+			new_pickle.access_card = mob_access_card
+		//move old body inside the pickle for safekeeping (when they die, we'll return the corpse because we're nice)
+		src.forceMove(new_pickle)

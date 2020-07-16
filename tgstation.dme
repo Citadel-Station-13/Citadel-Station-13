@@ -2546,6 +2546,7 @@
 #include "code\modules\mob\living\simple_animal\corpse.dm"
 #include "code\modules\mob\living\simple_animal\damage_procs.dm"
 #include "code\modules\mob\living\simple_animal\parrot.dm"
+#include "code\modules\mob\living\simple_animal\pickle.dm"
 #include "code\modules\mob\living\simple_animal\shade.dm"
 #include "code\modules\mob\living\simple_animal\simple_animal.dm"
 #include "code\modules\mob\living\simple_animal\simple_animal_vr.dm"
