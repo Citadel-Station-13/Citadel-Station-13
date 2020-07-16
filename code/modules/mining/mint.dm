@@ -123,3 +123,5 @@
 			bag_to_use = new(src) //make a new bag if we can't find or use the old one.
 			unload_mineral(bag_to_use) //just forcemove memes.
 			O.forceMove(bag_to_use) //don't bother sending the signal, the new bag is empty and all that.
+
+		SSblackbox.record_feedback("amount", "coins_minted", 1)
