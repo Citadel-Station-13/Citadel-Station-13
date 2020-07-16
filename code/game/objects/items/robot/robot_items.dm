@@ -747,7 +747,7 @@
 
 /obj/item/weapon/gripper
 	name = "engineering gripper"
-	desc = "A simple grasping tool for interacting with various engineering related items, such as circuits, gas tanks and conveyer belts. Alt Click to open held item UI"
+	desc = "A simple grasping tool for interacting with various engineering related items, such as circuits, gas tanks and conveyer belts. Alt click to drop instead of use."
 	icon = 'icons/obj/device.dmi'
 	icon_state = "gripper"
 
@@ -762,27 +762,28 @@
 		/obj/item/conveyor_switch_construct,
 		/obj/item/stack/conveyor,
 		/obj/item/wallframe,
-		/obj/item/vending_refill
+		/obj/item/vending_refill,
+		/obj/item/stack/sheet,
+		/obj/item/stack/tile,
+		/obj/item/stack/rods
+		)
+	//Basically a blacklist for any subtypes above we dont want
+	var/list/cannot_hold = list(
+		/obj/item/stack/sheet/mineral/plasma,
+		/obj/item/stack/sheet/plasteel
 		)
 
 	var/obj/item/wrapped = null // Item currently being held.
 
-/obj/item/weapon/gripper/attack_self(mob/user)
+//Used to interact with UI's of held items, such as gas tanks and airlock electronics.
+/obj/item/weapon/gripper/AltClick(mob/user)
 	if(wrapped)
 		wrapped.forceMove(get_turf(wrapped))
 		to_chat(user, "<span class='notice'>You drop the [wrapped].</span>")
 		wrapped = null
 	return ..()
 
-//Used to interact with UI's of held items, such as gas tanks and airlock electronics.
-/obj/item/weapon/gripper/AltClick(mob/user)
-	if(wrapped)
-		wrapped.loc = user
-		wrapped.ui_interact(user, "main", null, TRUE, null, GLOB.deep_inventory_state)
-		wrapped.loc = src
-	return ..()
-
-/obj/item/weapon/gripper/afterattack(var/atom/target, var/mob/living/user, proximity, params)
+/obj/item/weapon/gripper/afterattack(var/atom/target, var/mob/living/silicon/robot/user, proximity, params)
 
 	if(!proximity)
 		return
@@ -808,14 +809,19 @@
 			return
 
 	else if(istype(target,/obj/item))
-
 		var/obj/item/I = target
-
 		var/grab = 0
+
 		for(var/typepath in can_hold)
 			if(istype(I,typepath))
-				grab = 1
-				break
+				for(var/badpath in cannot_hold)
+					if(istype(I,badpath))
+						if(user.emagged)
+							grab = 1
+						break
+					else
+						grab = 1
+						break
 
 		//We can grab the item, finally.
 		if(grab)
@@ -828,18 +834,11 @@
 
 /obj/item/weapon/gripper/mining
 	name = "shelter capsule deployer"
-	desc = "A simple grasping tool for carrying and deploying shelter capsules."
+	desc = "A simple grasping tool for carrying and deploying shelter capsules. Alt click to drop instead of use."
 	icon_state = "gripper_mining"
 	can_hold = list(
 		/obj/item/survivalcapsule
 		)
-
-/obj/item/weapon/gripper/mining/attack_self()
-	if(wrapped)
-		wrapped.forceMove(get_turf(wrapped))
-		wrapped.attack_self()
-		wrapped = null
-	return
 
 /obj/item/gun/energy/plasmacutter/cyborg
 	name = "cyborg plasma cutter"
