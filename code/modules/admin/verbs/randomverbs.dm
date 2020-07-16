@@ -1276,7 +1276,7 @@ GLOBAL_LIST_EMPTY(custom_outfits) //Admin created outfits
 	if(!check_rights(R_ADMIN) || !check_rights(R_FUN))
 		return
 
-	var/list/punishment_list = list(ADMIN_PUNISHMENT_PIE, ADMIN_PUNISHMENT_CUSTOM_PIE, ADMIN_PUNISHMENT_FIREBALL, ADMIN_PUNISHMENT_LIGHTNING, ADMIN_PUNISHMENT_BRAINDAMAGE, ADMIN_PUNISHMENT_BSA, ADMIN_PUNISHMENT_GIB, ADMIN_PUNISHMENT_SUPPLYPOD_QUICK, ADMIN_PUNISHMENT_SUPPLYPOD, ADMIN_PUNISHMENT_MAZING, ADMIN_PUNISHMENT_ROD)
+	var/list/punishment_list = list(ADMIN_PUNISHMENT_PIE, ADMIN_PUNISHMENT_CUSTOM_PIE, ADMIN_PUNISHMENT_FIREBALL, ADMIN_PUNISHMENT_LIGHTNING, ADMIN_PUNISHMENT_BRAINDAMAGE, ADMIN_PUNISHMENT_BSA, ADMIN_PUNISHMENT_GIB, ADMIN_PUNISHMENT_SUPPLYPOD_QUICK, ADMIN_PUNISHMENT_SUPPLYPOD, ADMIN_PUNISHMENT_MAZING, ADMIN_PUNISHMENT_ROD, ADMIN_PUNISHMENT_PICKLE)
 
 	var/punishment = input("Choose a punishment", "DIVINE SMITING") as null|anything in punishment_list
 
@@ -1341,7 +1341,7 @@ GLOBAL_LIST_EMPTY(custom_outfits) //Admin created outfits
 		if(ADMIN_PUNISHMENT_PIE)
 			var/obj/item/reagent_containers/food/snacks/pie/cream/nostun/creamy = new(get_turf(target))
 			creamy.splat(target)
-		if (ADMIN_PUNISHMENT_CUSTOM_PIE)
+		if(ADMIN_PUNISHMENT_CUSTOM_PIE)
 			var/obj/item/reagent_containers/food/snacks/pie/cream/nostun/A = new()
 			if(!A.reagents)
 				var/amount = input(usr, "Specify the reagent size of [A]", "Set Reagent Size", 50) as num|null
@@ -1354,6 +1354,8 @@ GLOBAL_LIST_EMPTY(custom_outfits) //Admin created outfits
 					if(amount)
 						A.reagents.add_reagent(chosen_id, amount)
 						A.splat(target)
+		if(ADMIN_PUNISHMENT_PICKLE)
+			target.turn_into_pickle()
 
 	punish_log(target, punishment)
 
