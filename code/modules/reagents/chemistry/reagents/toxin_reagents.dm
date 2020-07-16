@@ -1036,3 +1036,22 @@
 		to_chat(M, "<span class='notice'>Ah, what was that? You thought you heard something...</span>")
 		M.confused += 5
 	return ..()
+	
+/datum/reagent/toxin/disgustingjuice
+	name = "Disgusting Juice"
+	description = "Ew..."
+	reagent_state = LIQUID
+	color = "#2f6617" //A sickly green color
+	metabolization_rate = REAGENTS_METABOLISM
+	overdose_threshold = 29
+	toxpwr = 0
+	taste_description = "nope"
+	value = REAGENT_VALUE_COMMON
+
+/datum/reagent/toxin/disgustingjuice/on_mob_life(mob/living/carbon/C)
+	.=..()
+	if(current_cycle >=11 && prob(min(50,current_cycle)))
+		C.vomit(10, prob(10), prob(50), rand(0,4), TRUE, prob(30))
+		for(var/datum/reagent/toxin/R in C.reagents.reagent_list)
+			if(R != src)
+				C.reagents.remove_reagent(R.type,1)
