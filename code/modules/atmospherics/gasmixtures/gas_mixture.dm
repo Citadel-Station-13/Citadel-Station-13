@@ -47,6 +47,7 @@ GLOBAL_LIST_INIT(meta_gas_fusions, meta_gas_fusion_list())
 
 /datum/gas_mixture/vv_get_dropdown()
 	. = ..()
+	VV_DROPDOWN_OPTION("", "---")
 	VV_DROPDOWN_OPTION(VV_HK_PARSE_GASSTRING, "Parse Gas String")
 	VV_DROPDOWN_OPTION(VV_HK_EMPTY, "Empty")
 	VV_DROPDOWN_OPTION(VV_HK_SET_MOLES, "Set Moles")
