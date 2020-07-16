@@ -23,7 +23,7 @@
 	quickbind = TRUE
 	quickbind_desc = "Creates a Sigil of Transmission, which can drain and will store power for clockwork structures."
 
-/*//Prolonging Prism: Creates a prism that will delay the shuttle at a power cost
+//Prolonging Prism: Creates a prism that will delay the shuttle at a power cost
 /datum/clockwork_scripture/create_object/prolonging_prism
 	descname = "Powered Structure, Delay Emergency Shuttles"
 	name = "Prolonging Prism"
@@ -55,30 +55,6 @@
 		return FALSE
 	return ..()
 
-
-
-//Tinkerer's Daemon: Creates an efficient machine that rapidly produces components at a power cost.
-/datum/clockwork_scripture/create_object/tinkerers_daemon
-	descname = "Powered Structure, Component Generator"
-	name = "Tinkerer's Daemon"
-	desc = "Creates a tinkerer's daemon which can rapidly collect components. It will only function if it has sufficient power, active daemons are outnumbered by Servants by a ratio of 5:1, \
-	and there is at least one existing cache."
-	invocations = list("May this generator...", "...collect Engine parts that yet hold greatness!")
-	channel_time = 80
-	consumed_components = list(BELLIGERENT_EYE = 2, GEIS_CAPACITOR = 2, REPLICANT_ALLOY = 5)
-	object_path = /obj/structure/destructible/clockwork/powered/tinkerers_daemon
-	creator_message = "<span class='brass'>You form a tinkerer's daemon which can rapidly collect components at a power cost.</span>"
-	invokers_required = 2
-	multiple_invokers_used = TRUE
-	usage_tip = "Vital to your success!"
-	tier = SCRIPTURE_APPLICATION
-	one_per_tile = TRUE
-	primary_component = REPLICANT_ALLOY
-	sort_priority = 9
-	quickbind = TRUE
-	quickbind_desc = "Creates a Tinkerer's Daemon, which can rapidly collect components for power."
-
-*/
 
 //Mania Motor: Creates a malevolent transmitter that will broadcast the whispers of Sevtug into the minds of nearby nonservants, causing a variety of mental effects at a power cost.
 /datum/clockwork_scripture/create_object/mania_motor
