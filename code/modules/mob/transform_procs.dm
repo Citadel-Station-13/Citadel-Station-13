@@ -632,7 +632,7 @@
 	return 0
 
 #undef TRANSFORMATION_DURATION
-=======
+
 /mob/living/proc/turn_into_pickle()
 	//if they're already a pickle, turn them back instead
 	if(istype(src, /mob/living/simple_animal/pickle))
