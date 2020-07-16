@@ -336,6 +336,9 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	icon_state = "bridge"
 	music = "signal"
 
+/area/bridge/aux //SNAXI SPECIFIC.
+	name = "Auxiliary Bridge"
+
 /area/bridge/meeting_room
 	name = "Heads of Staff Meeting Room"
 	icon_state = "meeting"
