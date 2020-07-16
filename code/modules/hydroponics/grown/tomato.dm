@@ -11,7 +11,7 @@
 	icon_grow = "tomato-grow"
 	icon_dead = "tomato-dead"
 	genes = list(/datum/plant_gene/trait/squash, /datum/plant_gene/trait/repeated_harvest)
-	mutatelist = list(/obj/item/seeds/tomato/blue, /obj/item/seeds/tomato/blood, /obj/item/seeds/tomato/killer)
+	mutatelist = list(/obj/item/seeds/tomato/blue, /obj/item/seeds/tomato/blood, /obj/item/seeds/tomato/killer, /obj/item/seeds/tomato/disgusting)
 	reagents_add = list(/datum/reagent/consumable/nutriment/vitamin = 0.04, /datum/reagent/consumable/nutriment = 0.1)
 
 /obj/item/reagent_containers/food/snacks/grown/tomato
@@ -145,3 +145,31 @@
 			K.health = K.maxHealth
 			K.visible_message("<span class='notice'>The Killer Tomato growls as it suddenly awakens.</span>")
 			qdel(src)
+
+// Disgusting Tomato
+/obj/item/seeds/tomato/disgusting
+	name = "pack of disgusting seeds"
+	desc = "Why would you plant these?"
+	icon_state = "seed-tomato"
+	species = "disgustingtomato"
+	plantname = "Disgusting Tomato Plants"
+	product = /obj/item/reagent_containers/food/snacks/grown/tomato/disgusting
+	maturation = 8
+	growing_icon = 'icons/obj/hydroponics/growing_fruits.dmi'
+	icon_grow = "tomato-grow"
+	icon_dead = "tomato-dead"
+	genes = list(/datum/plant_gene/trait/squash, /datum/plant_gene/trait/repeated_harvest)
+	reagents_add = list(/datum/reagent/consumable/nutriment/vitamin = 0.04, /datum/reagent/consumable/nutriment = 0.1, /datum/reagent/toxin/disgustingjuice = 3)
+
+/obj/item/reagent_containers/food/snacks/grown/tomato/disgusting
+	seed = /obj/item/seeds/tomato/disgusting
+	name = "disgusting tomato"
+	desc = "It smells awful."
+	icon_state = "tomato"
+	splat_type = /obj/effect/decal/cleanable/vomit
+	filling_color = "#FF6347"
+	bitesize_mod = 2
+	foodtype = FRUIT, GROSS
+	grind_results = list(/datum/reagent/toxin/disgustingjuice = 0)
+	juice_results = list(/datum/reagent/toxin/disgustingjuice = 0)
+	distill_reagent = /datum/reagent/toxin/disgustingjuice
