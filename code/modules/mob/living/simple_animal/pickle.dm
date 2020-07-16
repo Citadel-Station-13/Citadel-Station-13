@@ -26,3 +26,7 @@
 		original_body.forceMove(get_turf(src))
 		if(mind)
 			mind.transfer_to(original_body)
+
+/mob/living/simple_animal/pickle/wabbajack_act() //restore users name before its used on the new mob
+	if(original_body)
+		real_name = original_body.real_name
