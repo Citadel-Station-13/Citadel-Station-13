@@ -98,6 +98,8 @@
 		process_ore(AM)
 
 /obj/machinery/mineral/processing_unit/proc/process_ore(obj/item/stack/ore/O)
+	if(QDELETED(O))
+		return
 	var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
 	var/material_amount = materials.get_item_material_amount(O)
 	if(!materials.has_space(material_amount))
