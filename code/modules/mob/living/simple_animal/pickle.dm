@@ -9,7 +9,7 @@
 	icon_state = "pickle"
 	del_on_death = TRUE
 	deathmessage = "The pickle implodes into its own existential dread and disappears!"
-	friendly_verb_continous = "tickles"
+	friendly_verb_continuous = "tickles"
 	friendly_verb_simple = "tickle"
 	var/mob/living/original_body
 
