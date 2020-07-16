@@ -224,7 +224,7 @@
 	. = ..()
 	if(.)
 		switch(var_name)
-			if("assignment","registered_name")
+			if(NAMEOF(src, assignment),NAMEOF(src, registered_name)) //,NAMEOF(src, registered_age))
 				update_label()
 
 /obj/item/card/id/attack_self(mob/user)
