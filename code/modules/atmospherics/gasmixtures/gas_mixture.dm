@@ -39,7 +39,7 @@ GLOBAL_LIST_INIT(meta_gas_fusions, meta_gas_fusion_list())
 
 /datum/gas_mixture/vv_get_var(var_name)
 	. = ..()
-	if(var_name == NAMEOF(gas_list_view_only))
+	if(var_name == NAMEOF(src, gas_list_view_only))
 		var/list/dummy = get_gases
 		return debug_variables("gases (READ ONLY)", dummy, 0, src)
 
@@ -68,7 +68,7 @@ GLOBAL_LIST_INIT(meta_gas_fusions, meta_gas_fusion_list())
 		clear()
 	if(href_list[VV_HK_SET_MOLES])
 		var/list/gases = return_gases()
-		var/gastype = input(usr, "What kind of gas?", "Set Gas") as anything|null in subtypesof(/datum/gas)
+		var/gastype = input(usr, "What kind of gas?", "Set Gas") as null|anything in subtypesof(/datum/gas)
 		if(!ispath(gastype, /datum/gas))
 			return
 		var/amount = input(usr, "Input amount", "Set Gas", gases[gastype] || 0) as num|null
