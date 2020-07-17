@@ -23,7 +23,7 @@
 					parsed += "<i style='width:16px !important;height:16px !important;'>[tag]</i>" //evil way of enforcing 16x16
 					pos = search + length(text[pos])
 				else if(ispath(isthisapath, /atom))	//path
-					var/atom/thisianatom = isthisapath
+					var/atom/thisisanatom = isthisapath
 					parsed += "[icon2html(initial(thisisanatom.icon), world, initial(thisisanatom.icon_state))]"
 					pos = search + length(text[pos])
 				else
