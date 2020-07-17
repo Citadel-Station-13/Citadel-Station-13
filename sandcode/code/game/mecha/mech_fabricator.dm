@@ -28,10 +28,12 @@
 								"Firefighter",
 								"Odysseus",
 								"Gygax",
+								"Medical-Spec Gygax",
 								"Durand",
 								"H.O.N.K",
 								"Phazon",
 								"Exosuit Equipment",
+								"Exosuit Ammunition",
 								"Cyborg Upgrade Modules",
 								"Misc"
 								)
