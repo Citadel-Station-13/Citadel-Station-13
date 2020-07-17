@@ -173,9 +173,9 @@ GLOBAL_LIST_EMPTY(family_heirlooms)
 	name = "Light Sensitivity"
 	desc = "Bright lights irritate you. Your eyes start to water, your skin feels itchy against the photon radiation, and your hair gets dry and frizzy. Maybe it's a medical condition. If only Nanotrasen was more considerate of your needs..."
 	value = -1
-	gain_text = "<span class='danger'>The safty of light feels off...</span>"
+	gain_text = "<span class='danger'>The safety of light feels off...</span>"
 	lose_text = "<span class='notice'>Enlightening.</span>"
-	medical_record_text = "Despite my warnings, the patient refuses turn on the lights, only to end up rolling down a full flight of stairs and into the cellar."
+	medical_record_text = "Despite my warnings, the patient refuses to turn on the lights, only to end up rolling down a full flight of stairs and into the cellar."
 
 /datum/quirk/lightless/on_process()
 	var/turf/T = get_turf(quirk_holder)
