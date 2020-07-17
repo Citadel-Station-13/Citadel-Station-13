@@ -2,6 +2,8 @@
 	name = "portable air scrubber"
 	icon_state = "pscrubber:0"
 	density = TRUE
+	ui_x = 320
+	ui_y = 350
 
 	var/on = FALSE
 	var/volume_rate = 1000
@@ -64,7 +66,7 @@
 														datum/tgui/master_ui = null, datum/ui_state/state = GLOB.physical_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
-		ui = new(user, src, ui_key, "portable_scrubber", name, 320, 335, master_ui, state)
+		ui = new(user, src, ui_key, "PortableScrubber", name, ui_x, ui_y, master_ui, state)
 		ui.open()
 
 /obj/machinery/portable_atmospherics/scrubber/ui_data()
