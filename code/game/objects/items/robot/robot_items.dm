@@ -765,7 +765,8 @@
 		/obj/item/vending_refill,
 		/obj/item/stack/sheet,
 		/obj/item/stack/tile,
-		/obj/item/stack/rods
+		/obj/item/stack/rods,
+		/obj/item/stock_parts
 		)
 	//Basically a blacklist for any subtypes above we dont want
 	var/list/cannot_hold = list(
