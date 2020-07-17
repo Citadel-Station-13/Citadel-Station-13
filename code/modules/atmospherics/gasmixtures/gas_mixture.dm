@@ -48,6 +48,7 @@ GLOBAL_LIST_INIT(meta_gas_fusions, meta_gas_fusion_list())
 		dummy["HEAT CAPACITY"] = heat_capacity()
 		dummy["TOTAL MOLES"] = total_moles()
 		dummy["VOLUME"] = return_volume()
+		dummy["THERMAL ENERGY"] = themral_energy()
 		return debug_variable("gases (READ ONLY)", dummy, 0, src)
 
 /datum/gas_mixture/vv_get_dropdown()
