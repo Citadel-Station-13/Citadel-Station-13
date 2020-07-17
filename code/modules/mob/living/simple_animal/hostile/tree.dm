@@ -49,12 +49,12 @@
 		return
 	if(isopenturf(loc))
 		var/turf/open/T = src.loc
-		if(T.air && T.air.gases[/datum/gas/carbon_dioxide])
-			var/co2 = T.air.gases[/datum/gas/carbon_dioxide]
+		if(T.air)
+			var/co2 = T.air.get_moles(/datum/gas/carbon_dioxide)
 			if(co2 > 0)
 				if(prob(25))
 					var/amt = min(co2, 9)
-					T.air.gases[/datum/gas/carbon_dioxide] -= amt
+					T.air.adjust_moles(/datum/gas/carbon_dioxide, -amt)
 					T.atmos_spawn_air("o2=[amt]")
 
 /mob/living/simple_animal/hostile/tree/AttackingTarget()

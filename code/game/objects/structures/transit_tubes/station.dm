@@ -152,8 +152,8 @@
 		pod_moving = 0
 		if(!QDELETED(pod))
 			var/datum/gas_mixture/floor_mixture = loc.return_air()
-			ARCHIVE(floor_mixture)
-			ARCHIVE(pod.air_contents)
+			floor_mixture.archive()
+			pod.air_contents.archive()
 			pod.air_contents.share(floor_mixture, 1) //mix the pod's gas mixture with the tile it's on
 			air_update_turf()
 

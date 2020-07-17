@@ -124,6 +124,8 @@
 	transfer_martial_arts(new_character)
 	if(active || force_key_move)
 		new_character.key = key		//now transfer the key to link the client to our new body
+	if(new_character.client)
+		LAZYCLEARLIST(new_character.client.recent_examines)
 	current.update_atom_languages()
 
 //CIT CHANGE - makes arousal update when transfering bodies

@@ -76,7 +76,7 @@
 					play_sound = pick(pred_digest)
 
 				//Pref protection!
-				if (!M.vore_flags & DIGESTABLE || M.vore_flags & ABSORBED)
+				if (!CHECK_BITFIELD(M.vore_flags, DIGESTABLE) || M.vore_flags & ABSORBED)
 					continue
 
 				//Person just died in guts!
