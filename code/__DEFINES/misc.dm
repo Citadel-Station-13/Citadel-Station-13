@@ -539,3 +539,5 @@ GLOBAL_LIST_INIT(pda_reskins, list(PDA_SKIN_CLASSIC = 'icons/obj/pda.dmi', PDA_S
 #define SHOES_UNTIED 0
 #define SHOES_TIED 1
 #define SHOES_KNOTTED 2
+
+#define WANTED_FILE "wanted_message.json"
