@@ -20,6 +20,7 @@ GLOBAL_LIST_EMPTY(rubber_toolbox_icons)
 	var/has_latches = TRUE
 	var/can_rubberify = TRUE
 	rad_flags = RAD_PROTECT_CONTENTS | RAD_NO_CONTAMINATE //very protecc too
+	wound_bonus = 5
 
 /obj/item/storage/toolbox/greyscale
 	icon_state = "toolbox_default"
