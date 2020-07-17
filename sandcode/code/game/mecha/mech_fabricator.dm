@@ -44,6 +44,11 @@
 	RefreshParts() //Recalculating local material sizes if the fab isn't linked
 	return ..()
 
+/obj/machinery/mecha_part_fabricator_adv/examine(mob/user)
+	. = ..()
+	if(in_range(user, src) || isobserver(user))
+		. += "<span class='notice'>The status display reads: Storing up to <b>[rmat.local_size]</b> material units.<br>Material consumption at <b>[component_coeff*100]%</b>.<br>Build time reduced by <b>[100-time_coeff*100]%</b>.</span>"
+
 /obj/machinery/mecha_part_fabricator_adv/RefreshParts()
 	var/T = 0
 
@@ -63,11 +68,6 @@
 	for(var/obj/item/stock_parts/manipulator/Ml in component_parts)
 		T += Ml.rating
 	time_coeff = round(initial(time_coeff) - (initial(time_coeff)*(T))/5,0.01)
-
-/obj/machinery/mecha_part_fabricator_adv/examine(mob/user)
-	. = ..()
-	if(in_range(user, src) || isobserver(user))
-		. += "<span class='notice'>The status display reads: Storing up to <b>[rmat.local_size]</b> material units.<br>Material consumption at <b>[component_coeff*100]%</b>.<br>Build time reduced by <b>[100-time_coeff*100]%</b>.<span>"
 
 /obj/machinery/mecha_part_fabricator_adv/emag_act()
 	. = ..()
@@ -136,13 +136,14 @@
 		for(var/mat_id in materials.materials)
 			var/datum/material/M = mat_id
 			var/amount = materials.materials[mat_id]
+			var/ref = REF(M)
 			output += "<span class=\"res_name\">[M.name]: </span>[amount] cm&sup3;"
 			if(amount >= MINERAL_MATERIAL_AMOUNT)
-				output += "<span style='font-size:80%;'>- Remove \[<a href='?src=[REF(src)];remove_mat=1;material=[REF(M)]'>1</a>\]"
+				output += "<span style='font-size:80%;'>- Remove \[<a href='?src=[REF(src)];remove_mat=1;material=[ref]'>1</a>\]"
 				if(amount >= (MINERAL_MATERIAL_AMOUNT * 10))
-					output += " | \[<a href='?src=[REF(src)];remove_mat=10;material=[REF(M)]'>10</a>\]"
-				output += " | \[<a href='?src=[REF(src)];remove_mat=50;material=[REF(M)]'>All</a>\]</span>"
-			output += "<br/>"
+					output += " | \[<a href='?src=[REF(src)];remove_mat=10;material=[ref]'>10</a>\]"
+				output += " | \[<a href='?src=[REF(src)];remove_mat=50;material=[ref]'>50</a>\]</span>"
+			output += "<br>"
 	else
 		output += "<font color='red'>No material storage connected, please contact the quartermaster.</font><br>"
 	return output
@@ -427,7 +428,8 @@
 					break
 
 	if(href_list["remove_mat"] && href_list["material"])
-		eject_sheets(href_list["material"], text2num(href_list["remove_mat"]))
+		var/datum/material/Mat = locate(href_list["material"])
+		eject_sheets(Mat, text2num(href_list["remove_mat"]))
 
 	updateUsrDialog()
 	return
