@@ -21,6 +21,9 @@
 	density = TRUE
 	use_power = NO_POWER_USE
 	circuit = /obj/item/circuitboard/machine/smes
+	ui_x = 340
+	ui_y = 350
+
 	var/capacity = 5e6 // maximum charge
 	var/charge = 0 // actual charge
 
@@ -54,7 +57,7 @@
 					break dir_loop
 
 	if(!terminal)
-		stat |= BROKEN
+		obj_break()
 		return
 	terminal.master = src
 	update_icon()
@@ -123,22 +126,22 @@
 			return
 
 		to_chat(user, "<span class='notice'>You start building the power terminal...</span>")
-		playsound(src.loc, 'sound/items/deconstruct.ogg', 50, 1)
+		playsound(src.loc, 'sound/items/deconstruct.ogg', 50, TRUE)
 
 		if(C.use_tool(src, user, 20, 10))
 			var/obj/structure/cable/N = T.get_cable_node() //get the connecting node cable, if there's one
 			if (prob(50) && electrocute_mob(usr, N, N, 1, TRUE)) //animate the electrocution if uncautious and unlucky
 				do_sparks(5, TRUE, src)
 				return
+			if(!terminal)
+				C.use(10)
+				user.visible_message("<span class='notice'>[user.name] builds a power terminal.</span>",\
+					"<span class='notice'>You build the power terminal.</span>")
 
-			user.visible_message(\
-				"[user.name] has built a power terminal.",\
-				"<span class='notice'>You build the power terminal.</span>")
-
-			//build the terminal and link it to the network
-			make_terminal(T)
-			terminal.connect_to_network()
-			connect_to_network()
+				//build the terminal and link it to the network
+				make_terminal(T)
+				terminal.connect_to_network()
+				connect_to_network()
 		return
 
 	//crowbarring it !
@@ -148,13 +151,14 @@
 		log_game("[src] has been deconstructed by [key_name(user)] at [AREACOORD(src)]")
 		investigate_log("SMES deconstructed by [key_name(user)] at [AREACOORD(src)]", INVESTIGATE_SINGULO)
 		return
-	else if(panel_open && istype(I, /obj/item/crowbar))
+	else if(panel_open && I.tool_behaviour == TOOL_CROWBAR)
 		return
 
 	return ..()
 
 /obj/machinery/power/smes/wirecutter_act(mob/living/user, obj/item/I)
 	//disassembling the terminal
+	. = ..()
 	if(terminal && panel_open)
 		terminal.dismantle(user, I)
 		return TRUE
@@ -193,12 +197,15 @@
 	if(terminal)
 		terminal.master = null
 		terminal = null
-		stat |= BROKEN
+		obj_break()
 
 
 /obj/machinery/power/smes/update_overlays()
 	. = ..()
 	if((stat & BROKEN) || panel_open)
+		return
+
+	if(panel_open)
 		return
 
 	if(outputting)
@@ -208,13 +215,13 @@
 
 	if(inputting)
 		. += "smes-oc1"
-	else
-		if(input_attempt)
-			. += "smes-oc0"
+	else if(input_attempt)
+		. += "smes-oc0"
 
 	var/clevel = chargedisplay()
 	if(clevel>0)
 		. += "smes-og[clevel]"
+
 
 /obj/machinery/power/smes/proc/chargedisplay()
 	return clamp(round(5.5*charge/capacity),0,5)
@@ -315,28 +322,26 @@
 										datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
-		ui = new(user, src, ui_key, "smes", name, 340, 440, master_ui, state)
+		ui = new(user, src, ui_key, "Smes", name, ui_x, ui_y, master_ui, state)
 		ui.open()
 
 /obj/machinery/power/smes/ui_data()
 	var/list/data = list(
-		"capacityPercent" = round(100*charge/capacity, 0.1),
 		"capacity" = capacity,
+		"capacityPercent" = round(100*charge/capacity, 0.1),
 		"charge" = charge,
-
 		"inputAttempt" = input_attempt,
 		"inputting" = inputting,
 		"inputLevel" = input_level,
 		"inputLevel_text" = DisplayPower(input_level),
 		"inputLevelMax" = input_level_max,
-		"inputAvailable" = DisplayPower(input_available),
-
+		"inputAvailable" = input_available,
 		"outputAttempt" = output_attempt,
 		"outputting" = outputting,
 		"outputLevel" = output_level,
 		"outputLevel_text" = DisplayPower(output_level),
 		"outputLevelMax" = output_level_max,
-		"outputUsed" = DisplayPower(output_used)
+		"outputUsed" = output_used,
 	)
 	return data
 
@@ -357,11 +362,7 @@
 		if("input")
 			var/target = params["target"]
 			var/adjust = text2num(params["adjust"])
-			if(target == "input")
-				target = input("New input target (0-[input_level_max]):", name, input_level) as num|null
-				if(!isnull(target) && !..())
-					. = TRUE
-			else if(target == "min")
+			if(target == "min")
 				target = 0
 				. = TRUE
 			else if(target == "max")
@@ -379,11 +380,7 @@
 		if("output")
 			var/target = params["target"]
 			var/adjust = text2num(params["adjust"])
-			if(target == "input")
-				target = input("New output target (0-[output_level_max]):", name, output_level) as num|null
-				if(!isnull(target) && !..())
-					. = TRUE
-			else if(target == "min")
+			if(target == "min")
 				target = 0
 				. = TRUE
 			else if(target == "max")

@@ -4294,8 +4294,7 @@
 	department = "Head of Security's Desk";
 	departmentType = 5;
 	name = "Head of Security RC";
-	pixel_x = 30;
-	pixel_y = 0
+	pixel_x = 30
 	},
 /obj/machinery/computer/security/hos{
 	icon_state = "computer";
@@ -7141,8 +7140,7 @@
 	},
 /obj/effect/turf_decal/tile/red,
 /obj/machinery/status_display{
-	pixel_x = 32;
-	pixel_y = 0
+	pixel_x = 32
 	},
 /turf/open/floor/plasteel,
 /area/security/brig)
@@ -13298,7 +13296,6 @@
 	dir = 9
 	},
 /obj/machinery/computer/security/wooden_tv{
-	pixel_x = 0;
 	pixel_y = 4
 	},
 /turf/open/floor/wood,

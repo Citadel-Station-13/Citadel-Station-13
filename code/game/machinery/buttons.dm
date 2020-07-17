@@ -43,7 +43,11 @@
 			board.one_access = 1
 			board.accesses = req_one_access
 
-/obj/machinery/button/update_icon_state()
+	setup_device()
+
+
+/obj/machinery/button/update_icon()
+	cut_overlays()
 	if(panel_open)
 		icon_state = "button-open"
 	else if(stat & (NOPOWER|BROKEN))
@@ -128,6 +132,11 @@
 		var/obj/item/assembly/control/A = device
 		A.id = id
 	initialized_button = 1
+
+/obj/machinery/button/connect_to_shuttle(obj/docking_port/mobile/port, obj/docking_port/stationary/dock, idnum, override=FALSE)
+	if(id && istype(device, /obj/item/assembly/control))
+		var/obj/item/assembly/control/A = device
+		A.id = "[idnum][id]"
 
 /obj/machinery/button/attack_hand(mob/user)
 	. = ..()

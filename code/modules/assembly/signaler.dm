@@ -8,7 +8,8 @@
 	custom_materials = list(/datum/material/iron=400, /datum/material/glass=120)
 	wires = WIRE_RECEIVE | WIRE_PULSE | WIRE_RADIO_PULSE | WIRE_RADIO_RECEIVE
 	attachable = TRUE
-
+	var/ui_x = 280
+	var/ui_y = 132
 	var/code = DEFAULT_SIGNALER_CODE
 	var/frequency = FREQ_SIGNALER
 	var/datum/radio_frequency/radio_connection
@@ -47,14 +48,16 @@
 		holder.update_icon()
 	return
 
-/obj/item/assembly/signaler/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
-	if(!is_secured(user))
-		return
+/obj/item/assembly/signaler/ui_status(mob/user)
+	if(is_secured(user))
+		return ..()
+	return UI_CLOSE
+
+/obj/item/assembly/signaler/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
+									datum/tgui/master_ui = null, datum/ui_state/state = GLOB.hands_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
-		var/ui_width = 280
-		var/ui_height = 132
-		ui = new(user, src, ui_key, "signaler", name, ui_width, ui_height, master_ui, state)
+		ui = new(user, src, ui_key, "Signaler", name, ui_x, ui_y, master_ui, state)
 		ui.open()
 
 /obj/item/assembly/signaler/ui_data(mob/user)

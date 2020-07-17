@@ -92,6 +92,7 @@ interface with the mining shuttle at the landing site if a mobile beacon is also
 			say("<span class='danger'>Launch sequence activated! Prepare for drop!!</span>")
 			playsound(loc, 'sound/machines/warning-buzzer.ogg', 70, 0)
 			launch_warning = FALSE
+			log_shuttle("[key_name(usr)] has launched the auxillary base.")
 		else if(!shuttle_error)
 			say("Shuttle request uploaded. Please stand away from the doors.")
 		else
