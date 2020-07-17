@@ -814,14 +814,12 @@
 
 		for(var/typepath in can_hold)
 			if(istype(I,typepath))
+				grab = 1
 				for(var/badpath in cannot_hold)
 					if(istype(I,badpath))
-						if(user.emagged)
-							grab = 1
-						break
-					else
-						grab = 1
-						break
+						if(!user.emagged)
+							grab = 0
+							continue
 
 		//We can grab the item, finally.
 		if(grab)
