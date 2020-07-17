@@ -66,6 +66,9 @@
 	/// Our skill holder.
 	var/datum/skill_holder/skill_holder
 
+	///What character we spawned in as- either at roundstart or latejoin, so we know for persistent scars if we ended as the same person or not
+	var/mob/original_character
+
 /datum/mind/New(var/key)
 	skill_holder = new(src)
 	src.key = key
@@ -90,6 +93,7 @@
 	return language_holder
 
 /datum/mind/proc/transfer_to(mob/new_character, var/force_key_move = 0)
+	var/original_character = null
 	var/old_character = current
 	var/signals = SEND_SIGNAL(new_character, COMSIG_MOB_PRE_PLAYER_CHANGE, new_character, old_character) | SEND_SIGNAL(src, COMSIG_PRE_MIND_TRANSFER, new_character, old_character)
 	if(signals & COMPONENT_STOP_MIND_TRANSFER)
