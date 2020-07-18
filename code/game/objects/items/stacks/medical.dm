@@ -339,7 +339,7 @@
 	novariants = TRUE
 
 /obj/item/stack/medical/bone_gel/attack(mob/living/M, mob/user)
-	to_chat(user, "<span class='warning'>Bone gel can only be used on fractured limbs!</span>")
+	to_chat(user, "<span class='warning'>Bone gel can only be used on fractured limbs while aggressively holding someone!</span>")
 	return
 
 /obj/item/stack/medical/bone_gel/suicide_act(mob/user)
