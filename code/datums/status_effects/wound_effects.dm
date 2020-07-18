@@ -124,12 +124,13 @@
 	linked_wound = null
 	linked_limb = null
 	UnregisterSignal(owner, COMSIG_CARBON_LOSE_WOUND)
+	return ..()
 
 /datum/status_effect/wound/on_apply()
 	if(!iscarbon(owner))
 		return FALSE
 	RegisterSignal(owner, COMSIG_CARBON_LOSE_WOUND, .proc/check_remove)
-	return TRUE
+	return ..()
 
 /// check if the wound getting removed is the wound we're tied to
 /datum/status_effect/wound/proc/check_remove(mob/living/L, datum/wound/W)
