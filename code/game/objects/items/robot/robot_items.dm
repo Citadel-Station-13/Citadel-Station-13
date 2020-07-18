@@ -784,7 +784,7 @@
 		wrapped = null
 	return ..()
 
-/obj/item/weapon/gripper/afterattack(var/atom/target, var/mob/living/silicon/robot/user, proximity, params)
+/obj/item/weapon/gripper/pre_attack(var/atom/target, var/mob/living/silicon/robot/user, proximity, params)
 
 	if(!proximity)
 		return
