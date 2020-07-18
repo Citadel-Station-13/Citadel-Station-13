@@ -747,7 +747,7 @@
 
 /obj/item/weapon/gripper
 	name = "engineering gripper"
-	desc = "A simple grasping tool for interacting with various engineering related items, such as circuits, gas tanks and conveyer belts. Alt click to drop instead of use."
+	desc = "A simple grasping tool for interacting with various engineering related items, such as circuits, gas tanks, conveyer belts and more. Alt click to drop instead of use."
 	icon = 'icons/obj/device.dmi'
 	icon_state = "gripper"
 
@@ -839,6 +839,19 @@
 		/obj/item/survivalcapsule
 		)
 
+/obj/item/weapon/gripper/medical
+	name = "medical gripper"
+	desc = "A simple grasping tool for interacting with medical equipment, such as beakers, blood bags, chem bags and more. Alt click to drop instead of use."
+	icon_state = "gripper_medical"
+	can_hold = list(
+		/obj/item/storage/bag/bio,
+		/obj/item/storage/bag/chemistry,
+		/obj/item/storage/pill_bottle,
+		/obj/item/reagent_containers/glass,
+		/obj/item/reagent_containers/pill,
+		/obj/item/reagent_containers/blood
+		)
+
 /obj/item/gun/energy/plasmacutter/cyborg
 	name = "cyborg plasma cutter"
 	desc = "A basic variation of the plasma cutter, compressed into a cyborg chassis. Less effective than normal plasma cutters."
@@ -921,6 +934,9 @@
 	icon_state = "data_1"
 
 
+/**********************************************************************
+						Dogborg stuff
+***********************************************************************/
 ///Mere cosmetic dogborg items, remnants of what were once the most annoying cyborg modules.
 /obj/item/dogborg_tongue
 	name = "synthetic tongue"
