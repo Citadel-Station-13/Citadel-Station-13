@@ -1,0 +1,55 @@
+@use 'sass:color';
+@use 'sass:meta';
+
+@use '../colors.scss' with (
+  $primary: #B18B25,
+  $fg-map-keys: (),
+  $bg-map-keys: (),
+);
+@use '../base.scss' with (
+  $color-bg: #c9b12a,
+  $color-bg-grad-spread: 6%,
+  $border-radius: 2px,
+);
+
+.theme-clockcult {
+  // Atomic classes
+  @include meta.load-css('../atomic/color.scss');
+
+  // Components
+  @include meta.load-css('../components/Button.scss', $with: (
+    'color-default': colors.$primary,
+    'color-disabled': #2D1400,
+    'color-selected': #CFBA47,
+    'color-caution': #FFAE42,
+    'color-danger': #f0ff23,
+  ));
+  @include meta.load-css('../components/Input.scss', $with: (
+    'border-color': #8faa2e,
+  ));
+  @include meta.load-css('../components/NoticeBox.scss', $with: (
+    'color-background': #886a09,
+  ));
+  @include meta.load-css('../components/NumberInput.scss', $with: (
+    'border-color': #87ce87,
+  ));
+  @include meta.load-css('../components/ProgressBar.scss', $with: (
+    'color-background': rgba(0, 0, 0, 0.5),
+  ));
+  @include meta.load-css('../components/Section.scss');
+  @include meta.load-css('../components/Tooltip.scss', $with: (
+    'color-background': #2D1400,
+  ));
+
+  // Layouts
+  @include meta.load-css('../layouts/Layout.scss');
+  @include meta.load-css('../layouts/Window.scss');
+  @include meta.load-css('../layouts/TitleBar.scss', $with: (
+    'color-background': #775b0f,
+  ));
+
+  .Layout__content {
+    background-image: none;
+
+  }
+}

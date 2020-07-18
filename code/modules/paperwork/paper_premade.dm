@@ -4,7 +4,49 @@
 
 /obj/item/paper/fluff/sop
 	name = "paper- 'Standard Operating Procedure'"
-	info = "Alert Levels:<BR>\nBlue- Emergency<BR>\n\t1. Caused by fire<BR>\n\t2. Caused by manual interaction<BR>\n\tAction:<BR>\n\t\tClose all fire doors. These can only be opened by resetting the alarm<BR>\nRed- Ejection/Self Destruct<BR>\n\t1. Caused by module operating computer.<BR>\n\tAction:<BR>\n\t\tAfter the specified time the module will eject completely.<BR>\n<BR>\nEngine Maintenance Instructions:<BR>\n\tShut off ignition systems:<BR>\n\tActivate internal power<BR>\n\tActivate orbital balance matrix<BR>\n\tRemove volatile liquids from area<BR>\n\tWear a fire suit<BR>\n<BR>\n\tAfter<BR>\n\t\tDecontaminate<BR>\n\t\tVisit medical examiner<BR>\n<BR>\nToxin Laboratory Procedure:<BR>\n\tWear a gas mask regardless<BR>\n\tGet an oxygen tank.<BR>\n\tActivate internal atmosphere<BR>\n<BR>\n\tAfter<BR>\n\t\tDecontaminate<BR>\n\t\tVisit medical examiner<BR>\n<BR>\nDisaster Procedure:<BR>\n\tFire:<BR>\n\t\tActivate sector fire alarm.<BR>\n\t\tMove to a safe area.<BR>\n\t\tGet a fire suit<BR>\n\t\tAfter:<BR>\n\t\t\tAssess Damage<BR>\n\t\t\tRepair damages<BR>\n\t\t\tIf needed, Evacuate<BR>\n\tMeteor Shower:<BR>\n\t\tActivate fire alarm<BR>\n\t\tMove to the back of ship<BR>\n\t\tAfter<BR>\n\t\t\tRepair damage<BR>\n\t\t\tIf needed, Evacuate<BR>\n\tAccidental Reentry:<BR>\n\t\tActivate fire alarms in front of ship.<BR>\n\t\tMove volatile matter to a fire proof area!<BR>\n\t\tGet a fire suit.<BR>\n\t\tStay secure until an emergency ship arrives.<BR>\n<BR>\n\t\tIf ship does not arrive-<BR>\n\t\t\tEvacuate to a nearby safe area!"
+	info = {"
+Alert Levels:
+* Blue - Emergency
+  * Caused by fire
+  * Caused by manual interaction
+  * Action: Close all fire doors. These can only be opened by resetting the alarm
+* Red- Ejection/Self Destruct
+  * Caused by module operating computer.
+  * Action:  After the specified time the module will eject completely.
+Engine Maintenance Instructions:
+1. Shut off ignition systems:
+2. Activate internal power
+3. Activate orbital balance matrix
+4. Remove volatile liquids from area
+5. Wear a fire suit
+6. After Decontaminate Visit medical examiner
+Toxin Laboratory Procedure:
+1. Wear a gas mask regardless
+2. Get an oxygen tank.
+3. Activate internal atmosphere
+4. After Decontaminate Visit medical examiner
+Disaster Procedure:
+Fire:
+1. Activate sector fire alarm.
+2. Move to a safe area.
+3. Get a fire suit
+* After:
+   1. Assess Damage
+   2. Repair damages
+   3. If needed, Evacuate
+Meteor Shower:
+1. Activate fire alarm
+2. Move to the back of ship
+* After
+	1. Repair damage
+	2. If needed, Evacuate
+Accidental Reentry:
+1. Activate fire alarms in front of ship.
+2. Move volatile matter to a fire proof area!
+3. Get a fire suit.
+4. Stay secure until an emergency ship arrives.
+5. If ship does not arrive-Evacuate to a nearby safe area!
+"};
 
 /obj/item/paper/fluff/shuttles/daniel
 	info = "i love daniel<br>daniel is my best friend<br><br>you are tearing me apart elise"
@@ -150,7 +192,7 @@
 
 /obj/item/paper/fluff/cogstation/mime
 	name = "Au futur Mime"
-	info = "Toutes mes excuses pour toute mauvaise grammaire, je ne suis pas un haut-parleur naturel Français et a dû utiliser NanoTranslate. Bien que vous puissiez être mécontent de l’emplacement de votre bureau, s’il vous plaît comprendre que c’était le seul endroit où nous pourrions le mettre sans problèmes de sécurité et/ou CentClown se plaindre à ce sujet. Nous nous excusons également pour l’absence d’une zone de performance dédiée, mais nous espérons que vous accorder un accès à l’entretien compensera. <BR>\n<BR>\n<I>-C. Donnelly<I> <BR>\n<BR>\nAnalyste Architectural"
+	info = "Toutes mes excuses pour toute mauvaise grammaire, je ne suis pas un haut-parleur naturel Franï¿½ais et a dï¿½ utiliser NanoTranslate. Bien que vous puissiez ï¿½tre mï¿½content de lï¿½emplacement de votre bureau, sï¿½il vous plaï¿½t comprendre que cï¿½ï¿½tait le seul endroit oï¿½ nous pourrions le mettre sans problï¿½mes de sï¿½curitï¿½ et/ou CentClown se plaindre ï¿½ ce sujet. Nous nous excusons ï¿½galement pour lï¿½absence dï¿½une zone de performance dï¿½diï¿½e, mais nous espï¿½rons que vous accorder un accï¿½s ï¿½ lï¿½entretien compensera. <BR>\n<BR>\n<I>-C. Donnelly<I> <BR>\n<BR>\nAnalyste Architectural"
 
 /obj/item/paper/fluff/cogstation/bsrb
 	name = "Message from the NTBSRB"
