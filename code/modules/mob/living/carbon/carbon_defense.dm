@@ -133,8 +133,8 @@
 					return TRUE
 
 			for(var/datum/wound/W in all_wounds)
-			if(W.try_handling(user))
-				return 1
+				if(W.try_handling(user))
+					return 1
 
 /mob/living/carbon/attack_paw(mob/living/carbon/monkey/M)
 

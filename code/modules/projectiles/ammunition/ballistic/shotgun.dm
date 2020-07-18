@@ -12,13 +12,13 @@ obj/item/ammo_casing/shotgun/executioner
 	name = "executioner slug"
 	desc = "A 12 gauge lead slug purpose built to annihilate flesh on impact."
 	icon_state = "stunshell"
-	projectile_type = /obj/projectile/bullet/shotgun_slug/executioner
+	projectile_type = /obj/item/projectile/bullet/shotgun_slug/executioner
 
 /obj/item/ammo_casing/shotgun/pulverizer
 	name = "pulverizer slug"
 	desc = "A 12 gauge lead slug purpose built to annihilate bones on impact."
 	icon_state = "stunshell"
-	projectile_type = /obj/projectile/bullet/shotgun_slug/pulverizer
+	projectile_type = /obj/item/projectile/bullet/shotgun_slug/pulverizer
 
 /obj/item/ammo_casing/shotgun/beanbag
 	name = "beanbag slug"

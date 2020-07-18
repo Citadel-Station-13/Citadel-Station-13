@@ -67,13 +67,13 @@
 	ricochets_max = 6
 	ricochet_chance = 110
 
-/obj/projectile/bullet/pellet/stingball/breaker
+/obj/item/projectile/bullet/pellet/stingball/breaker
 	name = "breakbang pellet"
 	damage = 10
 	wound_bonus = 40
 	sharpness = FALSE
 
-/obj/projectile/bullet/pellet/stingball/shred
+/obj/item/projectile/bullet/pellet/stingball/shred
 	name = "shredbang pellet"
 	damage = 10
 	wound_bonus = 30

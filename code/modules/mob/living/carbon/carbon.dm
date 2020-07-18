@@ -174,7 +174,6 @@
 	if(IS_STAMCRIT(src))
 		to_chat(src, "<span class='warning'>You're too exhausted.</span>")
 		return
-	var/random_turn = a_intent == INTENT_HARM
 	//END OF CIT CHANGES
 
 	var/obj/item/I = get_active_held_item()

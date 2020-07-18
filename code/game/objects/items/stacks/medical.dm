@@ -120,7 +120,7 @@
 	gender = PLURAL
 	singular_name = "medical gauze"
 	icon_state = "gauze"
-	var/heal_brute = 5
+	heal_brute = 5
 	self_delay = 50
 	other_delay = 20
 	amount = 6
@@ -241,7 +241,7 @@
 	heal_burn = 5
 	flesh_regeneration = 2.5
 	sanitization = 0.3
-	grind_results = list(/datum/reagent/medicine/C2/lenturi = 10)
+	grind_results = list(/datum/reagent/medicine/kelotane = 10)
 
 /obj/item/stack/medical/ointment/heal(mob/living/M, mob/user)
 	if(M.stat == DEAD)
@@ -336,7 +336,7 @@
 
 	amount = 4
 	self_delay = 20
-	grind_results = list(/datum/reagent/medicine/C2/libital = 10)
+	grind_results = list(/datum/reagent/medicine/bicaridine = 10)
 	novariants = TRUE
 
 /obj/item/stack/medical/bone_gel/attack(mob/living/M, mob/user)

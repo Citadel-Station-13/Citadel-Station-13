@@ -640,7 +640,7 @@
 							msg = "\t <span class='warning'><b>Your [LB.name] is suffering [W.a_or_from] [lowertext(W.name)]!</b></span>"
 						if(WOUND_SEVERITY_CRITICAL)
 							msg = "\t <span class='warning'><b>Your [LB.name] is suffering [W.a_or_from] [lowertext(W.name)]!!</b></span>"
-				to_chat(src, msg)
+					to_chat(src, msg)
 
 				for(var/obj/item/I in LB.embedded_objects)
 					if(I.isEmbedHarmless())

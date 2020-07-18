@@ -227,8 +227,8 @@
 /obj/item/clothing/examine(mob/user)
 	. = ..()
 	if(damaged_clothes == CLOTHING_SHREDDED)
-	. += "<span class='warning'><b>It is completely shredded and requires mending before it can be worn again!</b></span>"
-	return
+		. += "<span class='warning'><b>It is completely shredded and requires mending before it can be worn again!</b></span>"
+		return
 	for(var/zone in damage_by_parts)
 		var/pct_damage_part = damage_by_parts[zone] / limb_integrity * 100
 		var/zone_name = parse_zone(zone)

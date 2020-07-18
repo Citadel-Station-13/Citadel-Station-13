@@ -655,6 +655,8 @@
 #include "code\datums\wires\vending.dm"
 #include "code\datums\wounds\_scars.dm"
 #include "code\datums\wounds\_wounds.dm"
+#include "code\datums\wounds\bones.dm"
+#include "code\datums\wounds\burns.dm"
 #include "code\datums\wounds\cuts.dm"
 #include "code\game\alternate_appearance.dm"
 #include "code\game\atoms.dm"

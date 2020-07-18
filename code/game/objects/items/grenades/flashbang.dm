@@ -62,11 +62,11 @@
 
 /obj/item/grenade/stingbang/breaker
 	name = "breakbang"
-	shrapnel_type = /obj/projectile/bullet/pellet/stingball/breaker
+	shrapnel_type = /obj/item/projectile/bullet/pellet/stingball/breaker
 
 /obj/item/grenade/stingbang/shred
 	name = "shredbang"
-	shrapnel_type = /obj/projectile/bullet/pellet/stingball/shred
+	shrapnel_type = /obj/item/projectile/bullet/pellet/stingball/shred
 
 /obj/item/grenade/stingbang/prime(mob/living/lanced_by)
 	if(iscarbon(loc))

@@ -541,7 +541,7 @@
 	change_construction_value(-2)
 	return ..()
 
-/obj/structure/table/reinforced/brass/tablepush(mob/living/user, mob/living/pushed_mob)
+/obj/structure/table/reinforced/brass/tablelimbsmash(mob/living/user, mob/living/pushed_mob)
 	.= ..()
 	playsound(src, 'sound/magic/clockwork/fellowship_armory.ogg', 50, TRUE)
 
@@ -565,7 +565,7 @@
 	buildstack = /obj/item/stack/tile/bronze
 	canSmoothWith = list(/obj/structure/table/reinforced/brass, /obj/structure/table/bronze)
 
-/obj/structure/table/bronze/tablepush(mob/living/user, mob/living/pushed_mob)
+/obj/structure/table/bronze/tablelimbsmash(mob/living/user, mob/living/pushed_mob)
 	..()
 	playsound(src, 'sound/magic/clockwork/fellowship_armory.ogg', 50, TRUE)
 
@@ -594,7 +594,7 @@
 			computer.table = src
 			break
 
-/obj/structure/table/optable/tablepush(mob/living/user, mob/living/pushed_mob)
+/obj/structure/table/optable/tablelimbsmash(mob/living/user, mob/living/pushed_mob)
 	pushed_mob.forceMove(loc)
 	pushed_mob.set_resting(TRUE, TRUE)
 	visible_message("<span class='notice'>[user] has laid [pushed_mob] on [src].</span>")
