@@ -26,6 +26,11 @@ RSF
 /obj/item/rsf/cyborg
 	matter = 30
 
+/obj/item/rsf/cyborg/Initialize()
+	if(matter > 30)
+		matter = 30
+	..()
+
 /obj/item/rsf/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/rcd_ammo))
 		if((matter + 10) > 30)
