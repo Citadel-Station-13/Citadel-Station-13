@@ -21,7 +21,7 @@
 	var/recollecting = FALSE //if we're looking at fancy recollection
 	var/recollection_category = "Default"
 
-	var/list/quickbound = list(/datum/clockwork_scripture/abscond, \
+	var/list/quickbound = list(/datum/clockwork_scripture/spatial_gateway, \
 	/datum/clockwork_scripture/ranged_ability/kindle, /datum/clockwork_scripture/ranged_ability/hateful_manacles) //quickbound scripture, accessed by index
 	var/maximum_quickbound = 5 //how many quickbound scriptures we can have
 
@@ -68,28 +68,28 @@
 	actions_types = list()
 
 /obj/item/clockwork/slab/cyborg/engineer //three scriptures, plus a fabricator
-	quickbound = list(/datum/clockwork_scripture/abscond, /datum/clockwork_scripture/create_object/replicant, /datum/clockwork_scripture/create_object/sigil_of_transmission,  /datum/clockwork_scripture/create_object/stargazer)
+	quickbound = list(/datum/clockwork_scripture/spatial_gateway, /datum/clockwork_scripture/create_object/replicant, /datum/clockwork_scripture/create_object/sigil_of_transmission,  /datum/clockwork_scripture/create_object/stargazer)
 
 /obj/item/clockwork/slab/cyborg/medical //five scriptures, plus a spear
-	quickbound = list(/datum/clockwork_scripture/abscond, /datum/clockwork_scripture/ranged_ability/linked_vanguard, /datum/clockwork_scripture/ranged_ability/sentinels_compromise, \
+	quickbound = list(/datum/clockwork_scripture/spatial_gateway, /datum/clockwork_scripture/ranged_ability/linked_vanguard, /datum/clockwork_scripture/ranged_ability/sentinels_compromise, \
 	/datum/clockwork_scripture/create_object/vitality_matrix)
 
 /obj/item/clockwork/slab/cyborg/security //twoscriptures, plus a spear
-	quickbound = list(/datum/clockwork_scripture/abscond,  /datum/clockwork_scripture/ranged_ability/hateful_manacles, /datum/clockwork_scripture/ranged_ability/judicial_marker)
+	quickbound = list(/datum/clockwork_scripture/spatial_gateway,  /datum/clockwork_scripture/ranged_ability/hateful_manacles, /datum/clockwork_scripture/ranged_ability/judicial_marker)
 
 /obj/item/clockwork/slab/cyborg/peacekeeper //two scriptures, plus a spear
-	quickbound = list(/datum/clockwork_scripture/abscond, /datum/clockwork_scripture/ranged_ability/hateful_manacles, /datum/clockwork_scripture/ranged_ability/judicial_marker)
+	quickbound = list(/datum/clockwork_scripture/spatial_gateway, /datum/clockwork_scripture/ranged_ability/hateful_manacles, /datum/clockwork_scripture/ranged_ability/judicial_marker)
 
 /obj/item/clockwork/slab/cyborg/janitor //six scriptures, plus a fabricator
-	quickbound = list(/datum/clockwork_scripture/abscond, /datum/clockwork_scripture/create_object/replicant, /datum/clockwork_scripture/create_object/sigil_of_transgression, \
+	quickbound = list(/datum/clockwork_scripture/spatial_gateway, /datum/clockwork_scripture/create_object/replicant, /datum/clockwork_scripture/create_object/sigil_of_transgression, \
 	/datum/clockwork_scripture/create_object/stargazer, /datum/clockwork_scripture/create_object/ocular_warden, /datum/clockwork_scripture/create_object/mania_motor)
 
 /obj/item/clockwork/slab/cyborg/service //six scriptures, plus xray vision
-	quickbound = list(/datum/clockwork_scripture/abscond, /datum/clockwork_scripture/create_object/replicant,/datum/clockwork_scripture/create_object/stargazer, \
+	quickbound = list(/datum/clockwork_scripture/spatial_gateway, /datum/clockwork_scripture/create_object/replicant,/datum/clockwork_scripture/create_object/stargazer, \
 	/datum/clockwork_scripture/spatial_gateway, /datum/clockwork_scripture/create_object/clockwork_obelisk)
 
 /obj/item/clockwork/slab/cyborg/miner //two scriptures, plus a spear and xray vision
-	quickbound = list(/datum/clockwork_scripture/abscond, /datum/clockwork_scripture/ranged_ability/linked_vanguard, /datum/clockwork_scripture/spatial_gateway)
+	quickbound = list(/datum/clockwork_scripture/spatial_gateway, /datum/clockwork_scripture/ranged_ability/linked_vanguard, /datum/clockwork_scripture/spatial_gateway)
 
 /obj/item/clockwork/slab/cyborg/access_display(mob/living/user)
 	if(!GLOB.ratvar_awakens)
@@ -441,6 +441,12 @@
 				data["tier_info"] = "<font color=#B18B25><b>These scriptures are permanently unlocked.</b></font>"
 			else
 				data["tier_info"] = "<font color=#B18B25><i>Unlock these optional scriptures by converting another servant or if [DisplayPower(APPLICATION_UNLOCK_THRESHOLD)] of power is reached..</i></font>"
+		if(SCRIPTURE_JUDGEMENT)
+			if(SSticker.scripture_states[SCRIPTURE_JUDGEMENT])
+				data["tier_info"] = "<font color=#B18B25><b>These scriptures are permanently unlocked.</b></font>"
+			else
+				data["tier_info"] = "<font color=#B18B25><i>Unlock creation of powerful equipment and structures by gaining five members of the cult..</i></font>"
+
 
 	data["selected"] = selected_scripture
 	data["scripturecolors"] = "<font color=#DAAA18>Scriptures in <b>yellow</b> are related to construction and building.</font><br>\
