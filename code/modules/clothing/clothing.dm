@@ -58,7 +58,6 @@
 	var/limb_integrity = 0
 	// How many zones (body parts, not precise) we have disabled so far, for naming purposes
 	var/zones_disabled
-	.
 
 /obj/item/clothing/Initialize()
 	. = ..()
