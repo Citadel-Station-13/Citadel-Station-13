@@ -68,7 +68,7 @@
 	var/user_refractory_cost
 	var/target_refractory_cost
 
-/datum/interaction/lewd/evaluate_user(mob/living/carbon/human/user, silent = TRUE)
+/datum/interaction/lewd/evaluate_user(mob/living/user, silent = TRUE)
 	if(..(user, silent))
 		if(user_not_tired && user.get_refraction_dif())
 			if(!silent) //bye spam
@@ -284,7 +284,7 @@
 		return FALSE
 	return FALSE
 
-/datum/interaction/lewd/evaluate_target(mob/living/carbon/human/user, mob/living/carbon/human/target, silent = TRUE)
+/datum/interaction/lewd/evaluate_target(mob/living/user, mob/living/target, silent = TRUE)
 	if(..(user, target, silent))
 		if(target_not_tired && target.get_refraction_dif())
 			if(!silent) //same with this
@@ -505,7 +505,7 @@
 		return FALSE
 	return FALSE
 
-/datum/interaction/lewd/post_interaction(mob/living/carbon/human/user, mob/living/carbon/human/target)
+/datum/interaction/lewd/post_interaction(mob/living/user, mob/living/target)
 	if(user_refractory_cost)
 		user.refractory_period = world.time + user_refractory_cost*10
 	if(target_refractory_cost)
@@ -516,7 +516,7 @@
 	user.cleartimer = addtimer(CALLBACK(user, /mob/living/proc/clear_lewd_datum), 300, TIMER_STOPPABLE)
 	return ..()
 
-/datum/interaction/lewd/get_action_link_for(mob/living/carbon/human/user, mob/living/carbon/human/target)
+/datum/interaction/lewd/get_action_link_for(mob/living/user, mob/living/target)
 	if(user.stat == DEAD)
 		to_chat(user, "<span class='warning'>You cannot do that while deceased!</span>")
 		return
@@ -524,7 +524,7 @@
 		return "<font color='#FF0000'><b>EXTREME:</b></font> [..()]"
 	return "<font color='#FF0000'><b>LEWD:</b></font> [..()]"
 
-/mob/living/carbon/human/list_interaction_attributes(var/mob/living/LM)
+/mob/living/list_interaction_attributes(var/mob/living/LM)
 	var/dat = ..()
 	if(get_refraction_dif())
 		dat += "<br>...are sexually exhausted for the time being."
