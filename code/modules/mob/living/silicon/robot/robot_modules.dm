@@ -780,7 +780,7 @@
 		/obj/item/hand_labeler/borg,
 		/obj/item/razor,
 		/obj/item/rsf/cyborg,
-		/obj/item/instrument/synthesizer,
+		/obj/item/instrument/piano_synth,
 		/obj/item/reagent_containers/dropper,
 		/obj/item/lighter,
 		/obj/item/storage/bag/tray,
