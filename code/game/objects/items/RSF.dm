@@ -26,10 +26,6 @@ RSF
 /obj/item/rsf/cyborg
 	matter = 30
 
-/obj/item/rsf/cyborg/Initialize()
-	if(matter > 30)
-		matter = 30
-	..()
 
 /obj/item/rsf/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/rcd_ammo))
@@ -69,15 +65,16 @@ RSF
 		return
 	if (!(istype(A, /obj/structure/table) || isfloorturf(A)))
 		return
-
-	if(matter < 1)
-		to_chat(user, "<span class='warning'>\The [src] doesn't have enough matter left.</span>")
-		return
 	if(iscyborg(user))
+		matter = 30 //borgs dont actually use the matter so this is mostly just so it doesnt fail the next check incase of shennanigans
 		var/mob/living/silicon/robot/R = user
 		if(!R.cell || R.cell.charge < 200)
 			to_chat(user, "<span class='warning'>You do not have enough power to use [src].</span>")
 			return
+	if(matter < 1)
+		to_chat(user, "<span class='warning'>\The [src] doesn't have enough matter left.</span>")
+		return
+
 
 	var/turf/T = get_turf(A)
 	playsound(src.loc, 'sound/machines/click.ogg', 10, 1)
