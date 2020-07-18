@@ -230,10 +230,9 @@
 
 /datum/uplink_item/device_tools/surgerybag_adv
 	name = "Advanced Syndicate Surgery Duffel Bag"
-	desc = "The Syndicate surgery duffel bag is a toolkit containing all advanced surgery tools, surgical drapes, \
-			a Syndicate brand MMI, a straitjacket, a muzzle, and an outdated, yet still useful Combat Medic Kit."
+	desc = "A Syndicate surgery duffel bag, with a set of upgraded surgery tools to boot."
 	item = /obj/item/storage/backpack/duffelbag/syndie/surgery_adv
-	cost = 10
+	cost = 7
 
 /datum/uplink_item/device_tools/brainwash_disk
 	name = "Brainwashing Surgery Program"
