@@ -52,7 +52,7 @@
 	set_light(0)
 	return ..()
 
-/turf/open/floor/light/attack_hand(mob/user)
+/turf/open/floor/light/attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	. = ..()
 	if(.)
 		return

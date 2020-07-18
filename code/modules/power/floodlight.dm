@@ -92,7 +92,7 @@
 	else
 		. = ..()
 
-/obj/machinery/power/floodlight/attack_hand(mob/user)
+/obj/machinery/power/floodlight/attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	. = ..()
 	if(.)
 		return

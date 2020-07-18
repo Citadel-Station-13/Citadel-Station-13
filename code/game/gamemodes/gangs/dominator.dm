@@ -149,7 +149,7 @@
 	add_fingerprint(user)
 	return ..()
 
-/obj/machinery/dominator/attack_hand(mob/user)
+/obj/machinery/dominator/attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	if(operating || (stat & BROKEN))
 		examine(user)
 		return
