@@ -73,7 +73,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 	var/datum/outfit/outfit_important_for_life // A path to an outfit that is important for species life e.g. plasmaman outfit
 
 	// species-only traits. Can be found in DNA.dm
-	var/list/species_traits = list()
+	var/list/species_traits = list(CAN_SCAR) //by default they can scar unless set to something else
 	// generic traits tied to having the species
 	var/list/inherent_traits = list()
 	var/inherent_biotypes = MOB_ORGANIC|MOB_HUMANOID
