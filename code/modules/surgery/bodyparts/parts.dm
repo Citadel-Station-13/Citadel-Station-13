@@ -71,6 +71,7 @@
 	px_x = -6
 	px_y = 0
 	specific_locations = list("outer left forearm", "inner left wrist", "left elbow", "left bicep", "left shoulder")
+	aux_icons = list(BODY_ZONE_PRECISE_L_HAND = HANDS_PART_LAYER, "l_hand_behind" = BODY_BEHIND_LAYER)
 
 /obj/item/bodypart/l_arm/is_disabled()
 	if(HAS_TRAIT(owner, TRAIT_PARALYSIS_L_ARM))
@@ -135,6 +136,7 @@
 	px_y = 0
 	max_stamina_damage = 50
 	specific_locations = list("outer right forearm", "inner right wrist", "right elbow", "right bicep", "right shoulder")
+	aux_icons = list(BODY_ZONE_PRECISE_R_HAND = HANDS_PART_LAYER, "r_hand_behind" = BODY_BEHIND_LAYER)
 
 /obj/item/bodypart/r_arm/is_disabled()
 	if(HAS_TRAIT(owner, TRAIT_PARALYSIS_R_ARM))
