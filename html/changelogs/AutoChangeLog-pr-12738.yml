@@ -1,5 +1,0 @@
-author: "timothyteakettle"
-delete-after: True
-changes: 
-  - rscadd: "travelling traders from another dimension can now visit the station in search of something specific, and reward you for giving it to them"
-  - bugfix: "small error with pet carrier logic fixed and also making sure simple mobs are catered for properly inside bluespace jars"

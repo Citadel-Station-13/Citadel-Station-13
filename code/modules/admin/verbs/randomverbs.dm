@@ -421,7 +421,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		new_character.real_name = record_found.fields["name"]
 		new_character.gender = record_found.fields["gender"]
 		new_character.age = record_found.fields["age"]
-		new_character.hardset_dna(record_found.fields["identity"], record_found.fields["enzymes"], record_found.fields["name"], record_found.fields["blood_type"], new record_found.fields["species"], record_found.fields["features"])
+		new_character.hardset_dna(record_found.fields["identity"], record_found.fields["enzymes"], null, record_found.fields["name"], record_found.fields["blood_type"], new record_found.fields["species"], record_found.fields["features"])
 	else
 		var/datum/preferences/A = new()
 		A.copy_to(new_character)
@@ -1058,13 +1058,6 @@ GLOBAL_LIST_EMPTY(custom_outfits) //Admin created outfits
 	var/datum/atom_hud/A = GLOB.huds[ANTAG_HUD_TRAITOR]
 	return A.hudusers[mob]
 
-/client/proc/open_shuttle_manipulator()
-	set category = "Admin"
-	set name = "Shuttle Manipulator"
-	set desc = "Opens the shuttle manipulator UI."
-
-	for(var/obj/machinery/shuttle_manipulator/M in GLOB.machines)
-		M.ui_interact(usr)
 
 /client/proc/run_weather()
 	set category = "Fun"
@@ -1276,7 +1269,7 @@ GLOBAL_LIST_EMPTY(custom_outfits) //Admin created outfits
 	if(!check_rights(R_ADMIN) || !check_rights(R_FUN))
 		return
 
-	var/list/punishment_list = list(ADMIN_PUNISHMENT_PIE, ADMIN_PUNISHMENT_CUSTOM_PIE, ADMIN_PUNISHMENT_FIREBALL, ADMIN_PUNISHMENT_LIGHTNING, ADMIN_PUNISHMENT_BRAINDAMAGE, ADMIN_PUNISHMENT_BSA, ADMIN_PUNISHMENT_GIB, ADMIN_PUNISHMENT_SUPPLYPOD_QUICK, ADMIN_PUNISHMENT_SUPPLYPOD, ADMIN_PUNISHMENT_MAZING, ADMIN_PUNISHMENT_ROD, ADMIN_PUNISHMENT_CRACK, ADMIN_PUNISHMENT_BLEED, ADMIN_PUNISHMENT_SCARIFY)
+	var/list/punishment_list = list(ADMIN_PUNISHMENT_PIE, ADMIN_PUNISHMENT_CUSTOM_PIE, ADMIN_PUNISHMENT_FIREBALL, ADMIN_PUNISHMENT_LIGHTNING, ADMIN_PUNISHMENT_BRAINDAMAGE, ADMIN_PUNISHMENT_BSA, ADMIN_PUNISHMENT_GIB, ADMIN_PUNISHMENT_SUPPLYPOD_QUICK, ADMIN_PUNISHMENT_SUPPLYPOD, ADMIN_PUNISHMENT_MAZING, ADMIN_PUNISHMENT_ROD, ADMIN_PUNISHMENT_CRACK, ADMIN_PUNISHMENT_BLEED, ADMIN_PUNISHMENT_SCARIFY, ADMIN_PUNISHMENT_PICKLE)
 
 	var/punishment = input("Choose a punishment", "DIVINE SMITING") as null|anything in punishment_list
 
@@ -1381,6 +1374,9 @@ GLOBAL_LIST_EMPTY(custom_outfits) //Admin created outfits
 			var/mob/living/carbon/C = target
 			C.generate_fake_scars(rand(1, 4))
 			to_chat(C, "<span class='warning'>You feel your body grow jaded and torn...</span>")
+		if(ADMIN_PUNISHMENT_PICKLE)
+			target.turn_into_pickle()
+  
 	punish_log(target, punishment)
 
 /client/proc/punish_log(var/whom, var/punishment)

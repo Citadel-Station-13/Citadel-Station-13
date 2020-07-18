@@ -15,6 +15,7 @@
 	var/mob/living/holder
 	var/delete_species = TRUE //Set to FALSE when a body is scanned by a cloner to fix #38875
 	var/mutation_index[DNA_MUTATION_BLOCKS] //List of which mutations this carbon has and its assigned block
+	var/default_mutation_genes[DNA_MUTATION_BLOCKS] //List of the default genes from this mutation to allow DNA Scanner highlighting
 	var/stability = 100
 	var/scrambled = FALSE //Did we take something like mutagen? In that case we cant get our genes scanned to instantly cheese all the powers.
 	var/skin_tone_override //because custom skin tones are not found in the skin_tones global list.
@@ -58,6 +59,7 @@
 		H.give_genitals(TRUE)//This gives the body the genitals of this DNA. Used for any transformations based on DNA
 	if(transfer_SE)
 		destination.dna.mutation_index = mutation_index
+		destination.dna.default_mutation_genes = default_mutation_genes
 
 	destination.dna.update_body_size(old_size)
 
@@ -66,6 +68,7 @@
 /datum/dna/proc/copy_dna(datum/dna/new_dna)
 	new_dna.unique_enzymes = unique_enzymes
 	new_dna.mutation_index = mutation_index
+	new_dna.default_mutation_genes = default_mutation_genes
 	new_dna.uni_identity = uni_identity
 	new_dna.blood_type = blood_type
 	new_dna.skin_tone_override = skin_tone_override
@@ -160,15 +163,18 @@
 	if(!LAZYLEN(mutations_temp))
 		return
 	mutation_index.Cut()
+	default_mutation_genes.Cut()
 	shuffle_inplace(mutations_temp)
 	if(ismonkey(holder))
 		mutations |= new RACEMUT(MUT_NORMAL)
 		mutation_index[RACEMUT] = GET_SEQUENCE(RACEMUT)
 	else
 		mutation_index[RACEMUT] = create_sequence(RACEMUT, FALSE)
+	default_mutation_genes[RACEMUT] = mutation_index[RACEMUT]
 	for(var/i in 2 to DNA_MUTATION_BLOCKS)
 		var/datum/mutation/human/M = mutations_temp[i]
-		mutation_index[M.type] = create_sequence(M.type, FALSE,M.difficulty)
+		mutation_index[M.type] = create_sequence(M.type, FALSE, M.difficulty)
+		default_mutation_genes[M.type] = mutation_index[M.type]
 	shuffle_inplace(mutation_index)
 
 //Used to generate original gene sequences for every mutation
@@ -389,7 +395,7 @@
 	return dna
 
 
-/mob/living/carbon/human/proc/hardset_dna(ui, list/mutation_index, newreal_name, newblood_type, datum/species/mrace, newfeatures)
+/mob/living/carbon/human/proc/hardset_dna(ui, list/mutation_index, newreal_name, newblood_type, datum/species/mrace, newfeatures, list/default_mutation_genes)
 
 	if(newreal_name)
 		real_name = newreal_name
@@ -414,6 +420,10 @@
 
 	if(LAZYLEN(mutation_index))
 		dna.mutation_index = mutation_index.Copy()
+		if(LAZYLEN(default_mutation_genes))
+			dna.default_mutation_genes = default_mutation_genes.Copy()
+		else
+			dna.default_mutation_genes = mutation_index.Copy()
 		domutcheck()
 
 	SEND_SIGNAL(src, COMSIG_HUMAN_HARDSET_DNA, ui, mutation_index, newreal_name, newblood_type, mrace, newfeatures)
@@ -505,8 +515,11 @@
 	. = TRUE
 	if(on)
 		mutation_index[HM.type] = GET_SEQUENCE(HM.type)
+		default_mutation_genes[HM.type] = mutation_index[HM.type]
 	else if(GET_SEQUENCE(HM.type) == mutation_index[HM.type])
 		mutation_index[HM.type] = create_sequence(HM.type, FALSE, HM.difficulty)
+		default_mutation_genes[HM.type] = mutation_index[HM.type]
+
 
 /datum/dna/proc/activate_mutation(mutation) //note that this returns a boolean and not a new mob
 	if(!mutation)

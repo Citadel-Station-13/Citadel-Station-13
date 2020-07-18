@@ -2,7 +2,18 @@
 //as they handle all relevant stuff like adding it to the player's screen and such
 
 //Returns the thing in our active hand (whatever is in our active module-slot, in this case)
+//This proc has been butchered into a proc that overrides borg item holding for the sake of making grippers work.
+//I'd be immensely thankful if anyone can figure out a less obtuse way of making grippers work without breaking functionality.
 /mob/living/silicon/robot/get_active_held_item()
+	var/item = module_active
+	if(istype(item, /obj/item/weapon/gripper))
+		var/obj/item/weapon/gripper/G = item
+		if(G.wrapped)
+			if(G.wrapped.loc != G)
+				G.wrapped = null
+				return module_active
+			item = G.wrapped
+			return item
 	return module_active
 
 
