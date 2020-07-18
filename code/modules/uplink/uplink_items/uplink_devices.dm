@@ -206,10 +206,10 @@
 
 /datum/uplink_item/device_tools/stimpack
 	name = "Stimpack"
-	desc = "Stimpacks, the tool of many great heroes, make you nearly immune to stuns and knockdowns for about \
+	desc = "Stimpacks, the tool of many great heroes. Makes you nearly immune to non-lethal weaponry for about \
 			5 minutes after injection."
 	item = /obj/item/reagent_containers/syringe/stimulants
-	cost = 3
+	cost = 5
 	surplus = 90
 
 /datum/uplink_item/device_tools/medkit
