@@ -308,6 +308,7 @@
 #define GRAB_PIXEL_SHIFT_NECK 16
 
 #define SLEEP_CHECK_DEATH(X) sleep(X); if(QDELETED(src) || stat == DEAD) return;
+#define INTERACTING_WITH(X, Y) (Y in X.do_afters)
 
 /// Field of vision defines.
 #define FOV_90_DEGREES	90
