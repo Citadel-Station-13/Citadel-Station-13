@@ -402,7 +402,7 @@
 	name = "cracker pack"
 	desc = "A pack of delicious crackers. Keep away from parrots!"
 	icon = 'icons/obj/food/containers.dmi'
-	icon_state = "crackerbag"
+	icon_state = "crackerbox"
 	icon_type = "cracker"
 	spawn_type = /obj/item/reagent_containers/food/snacks/cracker
 
