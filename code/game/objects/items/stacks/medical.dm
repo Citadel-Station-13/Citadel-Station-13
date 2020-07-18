@@ -221,7 +221,6 @@
 			return FALSE
 		user.visible_message("<span class='green'>[user] applies \the [src] on [M].</span>", "<span class='green'>You apply \the [src] on [M].</span>")
 		return heal_carbon(M, user, heal_brute, heal_burn)
-		return TRUE
 
 	to_chat(user, "<span class='warning'>You can't heal [M] with \the [src]!</span>")
 
