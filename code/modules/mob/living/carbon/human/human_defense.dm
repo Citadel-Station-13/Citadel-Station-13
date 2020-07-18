@@ -122,13 +122,13 @@
 		apply_damage(15, BRUTE, wound_bonus=10)
 		return 1
 
-/mob/living/carbon/human/attack_hand(mob/user)
+/mob/living/carbon/human/attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	. = ..()
 	if(.) //To allow surgery to return properly.
 		return
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
-		dna.species.spec_attack_hand(H, src)
+		dna.species.spec_attack_hand(H, src, null, act_intent, unarmed_attack_flags)
 
 /mob/living/carbon/human/attack_paw(mob/living/carbon/monkey/M)
 	var/dam_zone = pick(BODY_ZONE_CHEST, BODY_ZONE_PRECISE_L_HAND, BODY_ZONE_PRECISE_R_HAND, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)

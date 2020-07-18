@@ -270,10 +270,10 @@
 		user.set_pull_offsets(src, grab_state)
 		return 1
 
-/mob/living/attack_hand(mob/user)
+/mob/living/attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	..() //Ignoring parent return value here.
 	SEND_SIGNAL(src, COMSIG_MOB_ATTACK_HAND, user)
-	if((user != src) && user.a_intent != INTENT_HELP && (mob_run_block(user, 0, user.name, ATTACK_TYPE_UNARMED | ATTACK_TYPE_MELEE, null, user, check_zone(user.zone_selected), null) & BLOCK_SUCCESS))
+	if((user != src) && act_intent != INTENT_HELP && (mob_run_block(user, 0, user.name, ATTACK_TYPE_UNARMED | ATTACK_TYPE_MELEE | ((unarmed_attack_flags & UNARMED_ATTACK_PARRY)? ATTACK_TYPE_PARRY_COUNTERATTACK : NONE), null, user, check_zone(user.zone_selected), null) & BLOCK_SUCCESS))
 		log_combat(user, src, "attempted to touch")
 		visible_message("<span class='warning'>[user] attempted to touch [src]!</span>",
 			"<span class='warning'>[user] attempted to touch you!</span>", target = user,

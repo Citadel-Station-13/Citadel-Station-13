@@ -61,7 +61,7 @@
 	if(user?.client)
 		user.client.images -= eyeobj.user_image
 
-/obj/machinery/computer/camera_advanced/shuttle_creator/attack_hand(mob/user)
+/obj/machinery/computer/camera_advanced/shuttle_creator/attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	if(!is_operational()) //you cant use broken machine you chumbis
 		return
 	if(current_user)

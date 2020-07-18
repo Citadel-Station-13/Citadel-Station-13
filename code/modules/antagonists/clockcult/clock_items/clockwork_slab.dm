@@ -58,7 +58,7 @@
 	return ..()
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
-/obj/item/clockwork/slab/debug/attack_hand(mob/living/user)
+/obj/item/clockwork/slab/debug/attack_hand(mob/living/user, act_intent = user.a_intent, unarmed_attack_flags)
 	if(!is_servant_of_ratvar(user))
 		add_servant_of_ratvar(user)
 	return ..()
