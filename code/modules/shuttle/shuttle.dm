@@ -216,10 +216,10 @@
 
 		roundstart_template = SSmapping.shuttle_templates[sid]
 		if(!roundstart_template)
-			CRASH("Invalid path ([roundstart_template]) passed to docking port.")
+			CRASH("Invalid path ([sid]/[roundstart_template]) passed to docking port.")
 
 	if(roundstart_template)
-		SSshuttle.manipulator.action_load(roundstart_template, src)
+		SSshuttle.action_load(roundstart_template, src)
 
 //returns first-found touching shuttleport
 /obj/docking_port/stationary/get_docked()

@@ -648,3 +648,9 @@ obj/item/storage/backpack/duffelbag/syndie/shredderbundle
 	new /obj/item/gun/ballistic/automatic/flechette/shredder(src)
 	new /obj/item/storage/belt/military(src)
 	new /obj/item/clothing/suit/space/hardsuit/syndi/elite(src)
+
+/obj/item/storage/backpack/snail
+	name = "snail shell"
+	desc = "Worn by snails as armor and storage compartment."
+	icon_state = "snailshell"
+	item_state = "snailshell"

@@ -22362,6 +22362,9 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 4
 	},
+/obj/machinery/computer/gateway_control{
+	dir = 8
+	},
 /turf/open/floor/plasteel/dark/side{
 	dir = 4
 	},
@@ -22381,12 +22384,6 @@
 /obj/effect/spawner/lootdrop/maintenance,
 /turf/open/floor/plating,
 /area/maintenance/department/eva)
-"aWr" = (
-/obj/machinery/gateway{
-	dir = 10
-	},
-/turf/open/floor/engine,
-/area/gateway)
 "aWs" = (
 /obj/machinery/light{
 	dir = 8;
@@ -22840,10 +22837,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
-"aXm" = (
-/obj/machinery/gateway,
-/turf/open/floor/engine,
-/area/gateway)
 "aXn" = (
 /obj/effect/turf_decal/tile/bar,
 /obj/effect/turf_decal/tile/bar{
@@ -22883,12 +22876,6 @@
 "aXr" = (
 /turf/open/floor/plasteel,
 /area/ai_monitored/storage/eva)
-"aXs" = (
-/obj/machinery/gateway{
-	dir = 6
-	},
-/turf/open/floor/engine,
-/area/gateway)
 "aXt" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/sign/warning/securearea,
@@ -30329,12 +30316,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/science/mixing)
-"bnl" = (
-/obj/machinery/gateway{
-	dir = 9
-	},
-/turf/open/floor/engine,
-/area/gateway)
 "bnm" = (
 /obj/machinery/atmospherics/pipe/manifold/orange/hidden{
 	dir = 4
@@ -34660,9 +34641,6 @@
 	c_tag = "Research - Gateway Chamber";
 	network = list("ss13","rd")
 	},
-/obj/machinery/gateway{
-	dir = 1
-	},
 /turf/open/floor/engine,
 /area/gateway)
 "bwL" = (
@@ -34672,12 +34650,6 @@
 	},
 /turf/open/floor/plating,
 /area/router)
-"bwM" = (
-/obj/machinery/gateway{
-	dir = 5
-	},
-/turf/open/floor/engine,
-/area/gateway)
 "bwN" = (
 /obj/machinery/atmospherics/pipe/simple/general/visible{
 	dir = 4
@@ -36403,12 +36375,6 @@
 /area/medical/medbay/zone2{
 	name = "Medbay Treatment Center"
 	})
-"bAz" = (
-/obj/machinery/gateway{
-	dir = 8
-	},
-/turf/open/floor/engine,
-/area/gateway)
 "bAA" = (
 /obj/structure/lattice,
 /obj/structure/cable{
@@ -36566,12 +36532,6 @@
 /area/medical/medbay/zone2{
 	name = "Medbay Treatment Center"
 	})
-"bAN" = (
-/obj/machinery/gateway{
-	dir = 4
-	},
-/turf/open/floor/engine,
-/area/gateway)
 "bAO" = (
 /obj/machinery/atmospherics/pipe/simple/supplymain/hidden{
 	dir = 4
@@ -62112,7 +62072,6 @@
 	departmentType = 2;
 	name = "Chemistry RC";
 	pixel_x = 30;
-	pixel_y = 0;
 	receive_ore_updates = 1
 	},
 /turf/open/floor/plasteel/white,
@@ -99510,9 +99469,9 @@ aaa
 aaa
 aaa
 aUk
-bnl
-bAz
-aWr
+bmG
+bmG
+bmG
 cDN
 bmG
 aUk
@@ -99769,7 +99728,7 @@ aaa
 aUk
 bwK
 bAF
-aXm
+bmG
 cDN
 bmG
 aUk
@@ -100024,9 +99983,9 @@ aaa
 aaa
 aaa
 aUk
-bwM
-bAN
-aXs
+bmG
+bmG
+bmG
 cDN
 bmG
 aUk
