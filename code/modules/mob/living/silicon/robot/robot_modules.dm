@@ -444,7 +444,7 @@
 		/obj/item/t_scanner,
 		/obj/item/analyzer,
 		/obj/item/storage/part_replacer/cyborg,
-		/obj/item/holosign_creator/atmos,
+		/obj/item/holosign_creator/combifan,
 		/obj/item/weapon/gripper,
 		/obj/item/lightreplacer/cyborg,
 		/obj/item/geiger_counter/cyborg,
