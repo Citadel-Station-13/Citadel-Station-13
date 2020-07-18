@@ -132,9 +132,9 @@
 				if(S.next_step(user, user.a_intent))
 					return TRUE
 
-			for(var/datum/wound/W in all_wounds)
-				if(W.try_handling(user))
-					return 1
+	for(var/datum/wound/W in all_wounds)
+		if(W.try_handling(user))
+			return 1
 
 /mob/living/carbon/attack_paw(mob/living/carbon/monkey/M)
 
