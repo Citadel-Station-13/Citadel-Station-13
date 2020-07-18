@@ -14,6 +14,9 @@
 	force = 21 // Just enough to break airlocks with melee attacks
 	damtype = "brute"
 	total_mass = TOTAL_MASS_HAND_REPLACEMENT
+	sharpness = IS_SHARP
+	wound_bonus = -30
+	bare_wound_bonus = 15
 
 /obj/item/zombie_hand/Initialize()
 	. = ..()
