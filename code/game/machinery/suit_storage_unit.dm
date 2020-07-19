@@ -301,7 +301,6 @@
 		open_machine()
 		dump_contents()
 		return
-	user.last_resist = world.time
 	user.visible_message("<span class='notice'>You see [user] kicking against the doors of [src]!</span>", \
 		"<span class='notice'>You start kicking against the doors... (this will take about [DisplayTimeText(breakout_time)].)</span>", \
 		"<span class='italics'>You hear a thump from [src].</span>")

@@ -61,6 +61,15 @@
 /mob/proc/CheckResistCooldown()
 	return (world.time >= (last_resist + resist_cooldown))
 
+/atom
+	// Standard clickdelay variables
+	/// Amount of time to check for from a mob's last attack to allow an attack_hand().
+	var/clickdelay_attack_hand_preattack_cooldown = CLICK_CD_MELEE
+	/// Should we set last action before or after attack hand passes?
+	var/clickdelay_attack_hand_set_preattack = FALSE
+	/// Should we set last action for attack hand?
+	var/clickdelay_attack_hand_is_action = FALSE
+
 /obj/item
 	// Standard clickdelay variables
 	/// Amount of time to check for from a mob's last attack, checked before an attack happens

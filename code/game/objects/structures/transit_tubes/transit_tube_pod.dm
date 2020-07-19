@@ -69,7 +69,6 @@
 		empty_pod()
 		return
 	if(!moving)
-		user.last_resist = world.time
 		to_chat(user, "<span class='notice'>You start trying to escape from the pod...</span>")
 		if(do_after(user, 600, target = src))
 			to_chat(user, "<span class='notice'>You manage to open the pod.</span>")

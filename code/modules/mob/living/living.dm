@@ -687,10 +687,12 @@
 		return
 
 	if(do_resist())
+		last_resist = world.time
 		changeNext_move(CLICK_CD_RESIST)
 
 /// The actual proc for resisting. Return TRUE to give clickdelay.
 /mob/living/proc/do_resist()
+	set waitfor = FALSE			// some of these sleep.
 	SEND_SIGNAL(src, COMSIG_LIVING_RESIST, src)
 	//resisting grabs (as if it helps anyone...)
 	// only works if you're not cuffed.

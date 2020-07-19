@@ -262,7 +262,6 @@
 		return occupant
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/container_resist(mob/living/user)
-	user.last_resist = world.time
 	user.visible_message("<span class='notice'>You see [user] kicking against the glass of [src]!</span>", \
 		"<span class='notice'>You struggle inside [src], kicking the release with your foot... (this will take about [DisplayTimeText(breakout_time)].)</span>", \
 		"<span class='italics'>You hear a thump from [src].</span>")

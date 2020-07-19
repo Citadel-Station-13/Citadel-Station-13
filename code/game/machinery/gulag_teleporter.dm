@@ -101,7 +101,6 @@ The console is located at computer/gulag_teleporter.dm
 	if(!locked)
 		open_machine()
 		return
-	user.last_resist = world.time
 	user.visible_message("<span class='notice'>You see [user] kicking against the door of [src]!</span>", \
 		"<span class='notice'>You lean on the back of [src] and start pushing the door open... (this will take about [DisplayTimeText(breakout_time)].)</span>", \
 		"<span class='italics'>You hear a metallic creaking from [src].</span>")

@@ -116,7 +116,6 @@
 	if(!hound)
 		go_out(user)
 		return
-	user.last_resist = world.time
 	if(user.a_intent == INTENT_HELP)
 		return
 	var/voracious = TRUE

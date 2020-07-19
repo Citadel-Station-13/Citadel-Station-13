@@ -71,7 +71,6 @@
 	if(user.incapacitated())
 		to_chat(user, "<span class='warning'>You can't get out while you're restrained like this!</span>")
 		return
-	user.last_resist = world.time
 	to_chat(user, "<span class='notice'>You claw at the fabric of [src], trying to tear it open...</span>")
 	to_chat(loc, "<span class='warning'>Someone starts trying to break free of [src]!</span>")
 	if(!do_after(user, 200, target = src))

@@ -26,7 +26,12 @@
 		return
 
 	SEND_SIGNAL(src, COMSIG_HUMAN_MELEE_UNARMED_ATTACK, A)
-	A.attack_hand(src)
+	if(!CheckActionCooldown(A.clickdelay_attack_hand_preattack_cooldown))
+		if(A.clickdelay_attack_hand_is_action && A.clickdelay_attack_hand_set_preattack)
+			DelayNextAction()
+		A.attack_hand(src)
+		if(A.clickdelay_attack_hand_is_action && !A.clickdelay_attack_hand_set_preattack)
+			DelayNextAction()
 
 //Return TRUE to cancel other attack hand effects that respect it.
 /atom/proc/attack_hand(mob/user)

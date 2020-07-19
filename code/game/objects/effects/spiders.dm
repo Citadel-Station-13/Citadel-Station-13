@@ -252,15 +252,12 @@
 
 /obj/structure/spider/cocoon/container_resist(mob/living/user)
 	var/breakout_time = 600
-	user.last_resist = world.time
 	to_chat(user, "<span class='notice'>You struggle against the tight bonds... (This will take about [DisplayTimeText(breakout_time)].)</span>")
 	visible_message("You see something struggling and writhing in \the [src]!")
 	if(do_after(user,(breakout_time), target = src))
 		if(!user || user.stat != CONSCIOUS || user.loc != src)
 			return
 		qdel(src)
-
-
 
 /obj/structure/spider/cocoon/Destroy()
 	var/turf/T = get_turf(src)
