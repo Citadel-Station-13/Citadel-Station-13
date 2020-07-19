@@ -504,6 +504,7 @@
 	new /obj/item/scalpel/advanced(src)
 	new /obj/item/retractor/advanced(src)
 	new /obj/item/surgicaldrill/advanced(src)
+	new /obj/item/bonesetter(src)
 	new /obj/item/surgical_drapes(src)
 	new /obj/item/storage/firstaid/tactical(src)
 	new /obj/item/clothing/suit/straight_jacket(src)
