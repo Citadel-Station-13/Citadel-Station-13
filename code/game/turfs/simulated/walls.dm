@@ -113,12 +113,11 @@
 			return FALSE
 
 /turf/closed/wall/attack_paw(mob/living/user)
-	user.changeNext_move(CLICK_CD_MELEE)
 	return attack_hand(user)
 
-
 /turf/closed/wall/attack_animal(mob/living/simple_animal/M)
-	M.changeNext_move(CLICK_CD_MELEE)
+	if(!M.CheckActionCooldown(CLICK_CD_MELEE))
+		return
 	M.do_attack_animation(src)
 	if((M.environment_smash & ENVIRONMENT_SMASH_WALLS) || (M.environment_smash & ENVIRONMENT_SMASH_RWALLS))
 		playsound(src, 'sound/effects/meteorimpact.ogg', 100, 1)
@@ -141,13 +140,15 @@
 	. = ..()
 	if(.)
 		return
-	user.changeNext_move(CLICK_CD_MELEE)
+	if(!M.CheckActionCooldown(CLICK_CD_MELEE))
+		return
 	to_chat(user, "<span class='notice'>You push the wall but nothing happens!</span>")
 	playsound(src, 'sound/weapons/genhit.ogg', 25, 1)
 	add_fingerprint(user)
 
 /turf/closed/wall/attackby(obj/item/W, mob/user, params)
-	user.changeNext_move(CLICK_CD_MELEE)
+	if(!M.CheckActionCooldown(CLICK_CD_MELEE))
+		return
 	if (!user.IsAdvancedToolUser())
 		to_chat(user, "<span class='warning'>You don't have the dexterity to do this!</span>")
 		return

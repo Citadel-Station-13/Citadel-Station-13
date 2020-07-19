@@ -21,6 +21,7 @@
 		return
 	if(QDELETED(src) || QDELETED(target))
 		return
+	PostattackClickdelaySet(user, target))
 	afterattack(target, user, TRUE, params)
 
 /// Like melee_attack_chain but for ranged.
@@ -41,6 +42,9 @@
 /obj/item/proc/pre_attack(atom/A, mob/living/user, params) //do stuff before attackby!
 	if(SEND_SIGNAL(src, COMSIG_ITEM_PRE_ATTACK, A, user, params) & COMPONENT_NO_ATTACK)
 		return TRUE
+	if(!PreatackClickdelayCheck(user, A))
+		return TRUE
+	PreattackClickdelaySet(user, A)
 	return FALSE //return TRUE to avoid calling attackby after this proc does stuff
 
 // No comment
@@ -55,10 +59,7 @@
 /mob/living/attackby(obj/item/I, mob/living/user, params, attackchain_flags, damage_multiplier)
 	if(..())
 		return TRUE
-	I.attack_delay_done = FALSE //Should be set TRUE in pre_attacked_by()
 	. = I.attack(src, user, attackchain_flags, damage_multiplier)
-	if(!I.attack_delay_done) //Otherwise, pre_attacked_by() should handle it.
-		user.changeNext_move(I.click_delay)
 
 /obj/item/proc/attack(mob/living/M, mob/living/user, attackchain_flags = NONE, damage_multiplier = 1)
 	if(SEND_SIGNAL(src, COMSIG_ITEM_ATTACK, M, user) & COMPONENT_ITEM_NO_ATTACK)

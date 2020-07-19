@@ -76,7 +76,7 @@
 
 	face_atom(A)
 
-	if(next_move > world.time) // in the year 2000...
+	if(!CheckActionCooldown())
 		return
 
 	if(!modifiers["catcher"] && A.IsObscured())
@@ -108,8 +108,9 @@
 		if(W)
 			W.melee_attack_chain(src, A, params)
 		else
-			if(ismob(A))
-				changeNext_move(CLICK_CD_MELEE)
+			if(ismob(A) && !CheckActionCooldown(CLICK_CD_MELEE))
+				return
+			DelayNextAction()
 			UnarmedAttack(A)
 		return
 
@@ -122,8 +123,9 @@
 		if(W)
 			W.melee_attack_chain(src, A, params)
 		else
-			if(ismob(A))
-				changeNext_move(CLICK_CD_MELEE)
+			if(ismob(A) && !CheckActionCooldown(CLICK_CD_MELEE))
+				return
+			DelayNextAction()
 			UnarmedAttack(A, 1)
 	else
 		if(W)

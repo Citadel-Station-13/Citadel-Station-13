@@ -60,3 +60,34 @@
   */
 /mob/proc/CheckResistCooldown()
 	return (world.time >= (last_resist + resist_cooldown))
+
+/obj/item
+	// Standard clickdelay variables
+	/// Amount of time to check for from a mob's last attack, checked before an attack happens
+	var/preattack_cooldown_check = CLICK_CD_MELEE
+	/// Amount of time to delay a mob's next attack, added after an attack happens
+	var/postattack_cooldown_penalty = 0
+	/// This item bypasses any click delay mods
+	var/clickdelay_mod_bypass = FALSE
+	/// This item checks clickdelay from a user's delayed next action variable rather than the last time they attacked.
+	var/clickdelay_from_next_action = FALSE
+	/// This item ignores next action delays.
+	var/clickdelay_ignores_next_action = FALSE
+
+/**
+  * Checks if a user's clickdelay is met for a standard attack
+  */
+/obj/item/proc/PreattackClickdelayCheck(mob/user, atom/target)
+	return user.CheckActionCooldown(action_cooldown_preattack, clickdelay_from_next_action, clickdelay_mod_bypass, clickdelay_ignores_next_action)
+
+/**
+  * Called if check is successful before the attack happens.
+  */
+/obj/item/proc/PreattackClickdelaySet(mob/user, atom/target)
+	user.DelayNextAction(0, FALSe, TRUE)
+
+/**
+  * Called after a successful attack to set a mob's clickdelay.
+  */
+/obj/item/proc/PostattackClickdelaySet(mob/user, atom/target)
+	user.DelayNextAction(postattack_cooldown_penalty, clickdelay_mod_bypass, FALSE)

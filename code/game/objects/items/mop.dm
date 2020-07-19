@@ -58,7 +58,7 @@
 	if(T)
 		user.visible_message("[user] cleans \the [T] with [src].", "<span class='notice'>You clean \the [T] with [src].</span>")
 		clean(T)
-		user.changeNext_move(CLICK_CD_MELEE)
+		user.DelayNextAction(CLICK_CD_MELEE)
 		user.do_attack_animation(T, used_item = src)
 		if(istype(L))
 			L.adjustStaminaLossBuffered(stamusage)
