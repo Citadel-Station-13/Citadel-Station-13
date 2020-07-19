@@ -1,6 +1,0 @@
-author: "EmeraldSundisk"
-delete-after: True
-changes: 
-  - rscadd: "Adds a pool to Delta Station"
-  - rscadd: "Adds light fixtures to specified areas"
-  - tweak: "Relocates objects in impacted areas of Delta's starboard maintenance"
