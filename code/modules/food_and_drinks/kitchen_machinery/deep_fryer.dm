@@ -98,6 +98,8 @@ God bless America.
 		return
 	else if(default_deconstruction_screwdriver(user, "fryer_off", "fryer_off" ,I))	//where's the open maint panel icon?!
 		return
+	else if(I.reagents && !isfood(I))
+		return
 	else
 		if(is_type_in_typecache(I, deepfry_blacklisted_items) || HAS_TRAIT(I, TRAIT_NODROP) || (I.item_flags & (ABSTRACT | DROPDEL)))
 			return ..()

@@ -31,7 +31,7 @@ GLOBAL_LIST_INIT(frying_bad_chems, list(
 ))
 
 /datum/component/fried/proc/examine(datum/source, mob/user, list/examine_list)
-	examine_list += "The [parent] has been [frying_examine_text]"
+	examine_list += "[parent] has been [frying_examine_text]"
 
 /datum/component/fried/proc/setup_fried_item() //sets the name, colour and examine text and edibility up
 	switch(fry_power)
