@@ -38,8 +38,7 @@
 		if(W)
 			W.rightclick_melee_attack_chain(src, A, params)
 		else
-			if(ismob(A))
-				changeNext_move(CLICK_CD_MELEE)
+			DelayNextAction(ismob(A)? 8 : 0)
 			if(!AltUnarmedAttack(A))
 				UnarmedAttack(A)
 		return
@@ -53,8 +52,7 @@
 		if(W)
 			W.rightclick_melee_attack_chain(src, A, params)
 		else
-			if(ismob(A))
-				changeNext_move(CLICK_CD_MELEE)
+			DelayNextAction(ismob(A)? 8 : 0)
 			if(!AltUnarmedAttack(A,1))
 				UnarmedAttack(A,1)
 	else

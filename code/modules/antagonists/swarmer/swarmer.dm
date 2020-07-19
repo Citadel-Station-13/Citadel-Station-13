@@ -158,10 +158,11 @@
 	face_atom(A)
 	if(!isturf(loc))
 		return
-	if(next_move > world.time)
+	if(!CheckActionCooldown())
 		return
 	if(!A.Adjacent(src))
 		return
+	DelayNextAction()
 	A.swarmer_act(src)
 
 /atom/proc/swarmer_act(mob/living/simple_animal/hostile/swarmer/S)

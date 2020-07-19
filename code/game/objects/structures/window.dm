@@ -40,6 +40,8 @@ GLOBAL_LIST_EMPTY(electrochromatic_window_lookup)
 	rad_flags = RAD_PROTECT_CONTENTS
 	flags_ricochet = RICOCHET_HARD
 	ricochet_chance_mod = 0.4
+	clickdelay_attack_hand_is_action = TRUE
+	clickdelay_attack_hand_preattack_cooldown = CLICK_CD_MELEE
 
 	/// Electrochromatic status
 	var/electrochromatic_status = NOT_ELECTROCHROMATIC
@@ -157,7 +159,7 @@ GLOBAL_LIST_EMPTY(electrochromatic_window_lookup)
 	return 1
 
 /obj/structure/window/attack_tk(mob/user)
-	user.changeNext_move(CLICK_CD_MELEE)
+	user.DelayNextAction(CLICK_CD_MELEE)
 	user.visible_message("<span class='notice'>Something knocks on [src].</span>")
 	add_fingerprint(user)
 	playsound(src, 'sound/effects/Glassknock.ogg', 50, 1)
@@ -173,7 +175,6 @@ GLOBAL_LIST_EMPTY(electrochromatic_window_lookup)
 		return
 	if(!can_be_reached(user))
 		return
-	user.changeNext_move(CLICK_CD_MELEE)
 	user.visible_message("[user] knocks on [src].")
 	add_fingerprint(user)
 	playsound(src, 'sound/effects/Glassknock.ogg', 50, 1)
@@ -842,7 +843,6 @@ GLOBAL_LIST_EMPTY(electrochromatic_window_lookup)
 		return
 	add_fingerprint(user)
 	if(user.a_intent != INTENT_HARM)
-		user.changeNext_move(CLICK_CD_MELEE)
 		user.visible_message("[user] knocks on [src].")
 		playsound(src, "pageturn", 50, 1)
 	else

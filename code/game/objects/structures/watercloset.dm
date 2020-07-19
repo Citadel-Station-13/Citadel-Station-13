@@ -13,6 +13,8 @@
 	var/mob/living/swirlie = null	//the mob being given a swirlie
 	var/buildstacktype = /obj/item/stack/sheet/metal //they're metal now, shut up
 	var/buildstackamount = 1
+	clickdelay_attack_hand_is_action = TRUE
+	clickdelay_attack_hand_preattack_cooldown = CLICK_CD_MELEE
 
 /obj/structure/toilet/Initialize()
 	. = ..()
@@ -31,13 +33,11 @@
 	if(.)
 		return
 	if(swirlie)
-		user.changeNext_move(CLICK_CD_MELEE)
 		playsound(src.loc, "swing_hit", 25, 1)
 		swirlie.visible_message("<span class='danger'>[user] slams the toilet seat onto [swirlie]'s head!</span>", "<span class='userdanger'>[user] slams the toilet seat onto your head!</span>", "<span class='italics'>You hear reverberating porcelain.</span>")
 		swirlie.adjustBruteLoss(5)
 
 	else if(user.pulling && user.a_intent == INTENT_GRAB && isliving(user.pulling))
-		user.changeNext_move(CLICK_CD_MELEE)
 		var/mob/living/GM = user.pulling
 		if(user.grab_state >= GRAB_AGGRESSIVE)
 			if(GM.loc != get_turf(src))

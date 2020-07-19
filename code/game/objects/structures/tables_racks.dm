@@ -635,6 +635,8 @@
 	anchored = TRUE
 	pass_flags = LETPASSTHROW //You can throw objects over this, despite it's density.
 	max_integrity = 20
+	clickdelay_attack_hand_is_action = TRUE
+	clickdelay_attack_hand_preattack_cooldown = CLICK_CD_MELEE
 
 /obj/structure/rack/examine(mob/user)
 	. = ..()
@@ -682,7 +684,6 @@
 		return
 	if(CHECK_MULTIPLE_BITFIELDS(user.mobility_flags, MOBILITY_STAND|MOBILITY_MOVE) || user.get_num_legs() < 2)
 		return
-	user.changeNext_move(CLICK_CD_MELEE)
 	user.do_attack_animation(src, ATTACK_EFFECT_KICK)
 	user.visible_message("<span class='danger'>[user] kicks [src].</span>", null, null, COMBAT_MESSAGE_RANGE)
 	take_damage(rand(4,8), BRUTE, "melee", 1)

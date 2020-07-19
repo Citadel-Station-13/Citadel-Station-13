@@ -104,7 +104,6 @@
 		if(W)
 			W.melee_attack_chain(src, A, params)
 		else
-			DelayNextAction(ismob(A)? 8 : 0)
 			UnarmedAttack(A)
 		return
 
@@ -118,12 +117,12 @@
 			W.melee_attack_chain(src, A, params)
 		else
 			DelayNextAction(ismob(A)? 8 : 0)
-			DelayNextAction(ismob(A)? 8 : 0)
 			UnarmedAttack(A, 1)
 	else
 		if(W)
 			W.ranged_attack_chain(src, A, params)
 		else
+			DelayNextAction(ismob(A)? 8 : 0)
 			RangedAttack(A,params)
 
 //Is the atom obscured by a PREVENT_CLICK_UNDER_1 object above it
@@ -230,8 +229,7 @@
 	in human click code to allow glove touches only at melee range.
 */
 /mob/proc/UnarmedAttack(atom/A, proximity_flag)
-	if(ismob(A))
-		changeNext_move(CLICK_CD_MELEE)
+	DelayNextAction(ismob(A)? 8 : 0)
 	return
 
 /*
