@@ -9,7 +9,7 @@
 	px_x = 0
 	px_y = 0
 	stam_damage_coeff = 1
-	max_stamina_damage = 120
+	max_stamina_damage = 200
 	var/obj/item/cavity_item
 	specific_locations = list("upper chest", "lower abdomen", "midsection", "collarbone", "lower back")
 	wound_resistance = 10
