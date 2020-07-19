@@ -763,7 +763,7 @@
 /obj/machinery/door/airlock/attack_paw(mob/user)
 	return attack_hand(user)
 
-/obj/machinery/door/airlock/attack_hand(mob/user)
+/obj/machinery/door/airlock/attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	. = ..()
 	if(.)
 		return

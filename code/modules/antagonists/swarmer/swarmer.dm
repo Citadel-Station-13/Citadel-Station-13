@@ -36,7 +36,7 @@
 	if(A)
 		notify_ghosts("A swarmer shell has been created in [A.name].", 'sound/effects/bin_close.ogg', source = src, action = NOTIFY_ATTACK, flashwindow = FALSE, ignore_dnr_observers = TRUE)
 
-/obj/effect/mob_spawn/swarmer/attack_hand(mob/living/user)
+/obj/effect/mob_spawn/swarmer/attack_hand(mob/living/user, act_intent = user.a_intent, unarmed_attack_flags)
 	. = ..()
 	if(.)
 		return
