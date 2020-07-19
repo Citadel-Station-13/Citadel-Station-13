@@ -240,7 +240,8 @@
 	desc = "A disk containing the procedure to perform a brainwashing surgery, allowing you to implant an objective onto a target. \
 	Insert into an Operating Console to enable the procedure."
 	item = /obj/item/disk/surgery/brainwashing
-	cost = 3
+	restricted_roles = list("Medical Doctor", "Roboticist")
+	cost = 5
 
 /datum/uplink_item/device_tools/encryptionkey
 	name = "Syndicate Encryption Key"
