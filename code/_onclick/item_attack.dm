@@ -21,7 +21,7 @@
 		return
 	if(QDELETED(src) || QDELETED(target))
 		return
-	PostattackClickdelaySet(user, target))
+	PostattackClickdelaySet(user, target)
 	afterattack(target, user, TRUE, params)
 
 /// Like melee_attack_chain but for ranged.

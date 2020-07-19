@@ -73,6 +73,8 @@
 	var/clickdelay_from_next_action = FALSE
 	/// This item ignores next action delays.
 	var/clickdelay_ignores_next_action = FALSE
+	/// This item sets clickdelay in preattack rather than post attack. This means it's set in a melee attack even if the user doesn't bash or bop it against something.
+	var/clickdelay_set_on_pre_attack = FALSE
 
 /**
   * Checks if a user's clickdelay is met for a standard attack
@@ -84,7 +86,8 @@
   * Called if check is successful before the attack happens.
   */
 /obj/item/proc/PreattackClickdelaySet(mob/user, atom/target)
-	user.DelayNextAction(0, FALSe, TRUE)
+	if(clickdelay_set_on_pre_attack)
+		user.DelayNextAction(0, FALSe, TRUE)
 
 /**
   * Called after a successful attack to set a mob's clickdelay.
