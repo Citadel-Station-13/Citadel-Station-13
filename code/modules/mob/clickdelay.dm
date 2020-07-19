@@ -11,7 +11,7 @@
 	/// Last time we clicked. No clicking twice in one tick, please! This should be directly set and checked.
 	var/last_click = 0
 	
-	/// Generic clickdelay variable. Marks down the last world.time we did something that should cause or impact generic clickdelay. This should be directly set. This should only be checked using [CheckActionCooldown()].
+	/// Generic clickdelay variable. Marks down the last world.time we did something that should cause or impact generic clickdelay. This should be directly set or set using [DelayNextAction()]. This should only be checked using [CheckActionCooldown()].
 	var/last_action = 0
 	/// Generic clickdelay variable. Next world.time we should be able to do something that respects generic clickdelay. This should be set using [DelayNextAction()] This should only be checked using [CheckActionCooldown()].
 	var/next_action = 0
@@ -27,7 +27,7 @@
 	/// Special clickdelay variable for resisting. Last time we did a special action like resisting. This should be directly set.  This should only be checked using [CheckResistCooldown()].
 	var/last_resist = 0
 	/// How long we should wait before allowing another resist. This should only be manually modified using multipliers.
-	var/resist_cooldown = 10
+	var/resist_cooldown = CLICK_CD_BREAKOUT
 
 /**
   * Applies a delay to next_action before we can do our next action.
@@ -35,8 +35,11 @@
   * @params
   * * amount - Amount to delay by
   * * ignore_mod - ignores next action adjust and mult
+  * * considered_action - Defaults to TRUE - If TRUE, sets last_action to world.time.
   */
-/mob/proc/DelayNextAction(amount, ignore_mod = FALSE)
+/mob/proc/DelayNextAction(amount = 0, ignore_mod = FALSE, considered_action = TRUE)
+	if(considered_action)
+		last_action = world.time
 	next_action = max(next_action, world.time + (ignore_mod? amount : (amount * next_action_mult + next_action_adjust)))
 
 /**
