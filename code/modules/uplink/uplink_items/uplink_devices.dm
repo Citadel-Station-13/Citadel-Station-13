@@ -232,7 +232,7 @@
 	name = "Advanced Syndicate Surgery Duffel Bag"
 	desc = "A Syndicate surgery duffel bag, with a set of upgraded surgery tools to boot."
 	item = /obj/item/storage/backpack/duffelbag/syndie/surgery_adv
-	cost = 7
+	cost = 6
 
 /datum/uplink_item/device_tools/brainwash_disk
 	name = "Brainwashing Surgery Program"
