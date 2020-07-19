@@ -90,8 +90,7 @@
 	else if(legcuffed)
 		I = legcuffed
 	if(I)
-		changeNext_move(CLICK_CD_BREAKOUT)
-		last_special = world.time + CLICK_CD_BREAKOUT
+		last_resist = world.time
 		cuff_resist(I)
 
 /mob/living/carbon/monkey/proc/should_target(var/mob/living/L)

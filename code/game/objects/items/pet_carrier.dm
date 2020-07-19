@@ -133,8 +133,7 @@
 		remove_occupant(user)
 		return
 
-	user.changeNext_move(CLICK_CD_BREAKOUT)
-	user.last_special = world.time + CLICK_CD_BREAKOUT
+	user.last_resist = world.time
 	if(user.mob_size <= MOB_SIZE_SMALL)
 		to_chat(user, "<span class='notice'>You begin to try escaping the [src] and start fumbling for the lock switch... (This will take some time.)</span>")
 		to_chat(loc, "<span class='warning'>You see [user] attempting to unlock the [src]!</span>")

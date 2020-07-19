@@ -27,7 +27,7 @@
 	/// Special clickdelay variable for resisting. Last time we did a special action like resisting. This should be directly set.  This should only be checked using [CheckResistCooldown()].
 	var/last_resist = 0
 	/// How long we should wait before allowing another resist. This should only be manually modified using multipliers.
-	var/resist_cooldown = CLICK_CD_BREAKOUT
+	var/resist_cooldown = CLICK_CD_RESIST
 
 /**
   * Applies a delay to next_action before we can do our next action.

@@ -733,8 +733,7 @@
 
 /mob/living/carbon/human/resist_restraints()
 	if(wear_suit && wear_suit.breakouttime)
-		changeNext_move(CLICK_CD_BREAKOUT)
-		last_special = world.time + CLICK_CD_BREAKOUT
+		last_resist = world.time
 		cuff_resist(wear_suit)
 	else
 		..()
