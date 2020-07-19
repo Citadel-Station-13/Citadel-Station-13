@@ -1,0 +1,5 @@
+author: "lolman360"
+delete-after: True
+changes: 
+  - tweak: "Service borgs now have synthesizers instead of a violin and guitar."
+  - bugfix: "borg RSF"
