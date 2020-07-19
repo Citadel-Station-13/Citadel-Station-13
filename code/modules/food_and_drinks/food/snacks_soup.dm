@@ -130,7 +130,7 @@
 	desc = "Sensationally seasoned bear meat diced up with some peppers."
 	icon_state = "bearchili"
 	bonus_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/nutriment/vitamin = 2, /datum/reagent/consumable/capsaicin = 1)
-	list_reagents = list(/datum/reagent/consumable/nutriment = 10, /datum/reagent/medicine/morphine = 5, /datum/reagent/consumable/nutriment/vitamin = 2, /datum/reagent/consumable/capsaicin = 1)
+	list_reagents = list(/datum/reagent/consumable/nutriment = 10, /datum/reagent/medicine/morphine = 5, /datum/reagent/consumable/nutriment/vitamin = 2, /datum/reagent/consumable/capsaicin = 5)
 	tastes = list("the outdoors" = 1, "hot peppers" = 1)
 	foodtype = VEGETABLES | MEAT
 

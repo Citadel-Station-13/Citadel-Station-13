@@ -219,7 +219,7 @@
 	name = "Spiral soup"
 	reqs = list(
 		/obj/item/reagent_containers/glass/bowl = 1,
-		/obj/item/seeds/chanterelle/jupitercup = 2,
+		/obj/item/reagent_containers/food/snacks/grown/mushroom/jupitercup = 2,
 		/datum/reagent/cryptobiolin = 15,
 		/datum/reagent/toxin/rotatium = 15,
 		/datum/reagent/consumable/milk = 10

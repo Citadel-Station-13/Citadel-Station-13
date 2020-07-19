@@ -124,10 +124,10 @@
 	subcategory = CAT_MISCFOOD
 
 /datum/crafting_recipe/food/butteredpotato
-	name = "Mashed potato"
+	name = "Buttered mash"
 	reqs = list(
-		/obj/item/reagent_containers/food/snacks/mashedpotato,
-		/obj/item/reagent_containers/food/snacks/butter
+		/obj/item/reagent_containers/food/snacks/mashedpotato = 1,
+		/obj/item/reagent_containers/food/snacks/butter = 1
 	)
 	result = /obj/item/reagent_containers/food/snacks/butteredpotato
 	subcategory = CAT_MISCFOOD
