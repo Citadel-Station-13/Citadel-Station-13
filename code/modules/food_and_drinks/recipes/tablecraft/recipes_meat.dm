@@ -146,6 +146,16 @@
 	result = /obj/item/reagent_containers/food/snacks/sausage
 	subcategory = CAT_MEAT
 
+/datum/crafting_recipe/food/meatloaf
+	name = "Meatloaf"
+	reqs = list(
+		/obj/item/reagent_containers/food/snacks/meat/cutlet = 4,
+		/datum/reagent/consumable/eggyolk = 10,
+		/datum/reagent/consumable/ketchup = 5
+	)
+	result = /obj/item/reagent_containers/food/snacks/meatloaf
+	subcategory = CAT_MEAT
+
 /datum/crafting_recipe/food/pigblanket
 	name = "Pig in a Blanket"
 	reqs = list(

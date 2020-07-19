@@ -126,7 +126,7 @@
 /datum/crafting_recipe/food/butteredpotato
 	name = "Mashed potato"
 	reqs = list(
-		/obj/item/reagent_containers/food/snacks/mashedpotato
+		/obj/item/reagent_containers/food/snacks/mashedpotato,
 		/obj/item/reagent_containers/food/snacks/butter
 	)
 	result = /obj/item/reagent_containers/food/snacks/butteredpotato

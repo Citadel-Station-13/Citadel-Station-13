@@ -557,7 +557,7 @@
 	tastes = list("butter" = 1)
 	foodtype = JUNKFOOD
 
-/obj/item/reagent_containers/food/snacks/butter/mashedpotato
+/obj/item/reagent_containers/food/snacks/mashedpotato
 	name = "mashed potatoes"
 	desc = "A diced and smashed potato, served with sour cream."
 	icon_state = "mashedpotato"
