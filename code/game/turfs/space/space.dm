@@ -133,10 +133,15 @@
 		else
 			to_chat(user, "<span class='warning'>The plating is going to need some support! Place metal rods first.</span>")
 
-/turf/open/space/Entered(atom/movable/A)
+/turf/open/space/Entered(atom/movable/A, atom/OldLoc)
 	..()
 	if ((!(A) || src != A.loc))
 		return
+	
+	var/turf/old = get_turf(OldLoc)
+	if(!isspaceturf(old) && ismob(A))
+		var/mob/M = A
+		M.update_gravity(M.mob_has_gravity())
 
 	if(destination_z && destination_x && destination_y && !(A.pulledby || !A.can_be_z_moved))
 		var/tx = destination_x
