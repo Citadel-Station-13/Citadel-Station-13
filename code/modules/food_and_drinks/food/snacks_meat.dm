@@ -302,6 +302,16 @@
 	desc = "A 'chicken' nugget vaguely shaped like a [shape]."
 	icon_state = "nugget_[shape]"
 
+/obj/item/reagent_containers/food/snacks/nugget
+	name = "sweet and sour chicken"
+	desc = "More sweet than sour, but delicious nonetheless."
+	icon_state = "sweet_and_sour"
+	filling_color = "#B22222"
+	bonus_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/nutriment/vitamin = 1, /datum/reagent/consumable/soysauce = 2)
+	list_reagents = list(/datum/reagent/consumable/nutriment = 6, /datum/reagent/consumable/nutriment/vitamin = 2, /datum/reagent/consumable/soysauce = 2)
+	tastes = list("\"chicken\"" = 1)
+	foodtype = MEAT | PINEAPPLE
+
 /obj/item/reagent_containers/food/snacks/pigblanket
 	name = "pig in a blanket"
 	desc = "A tiny sausage wrapped in a flakey, buttery roll. Free this pig from its blanket prison by eating it."

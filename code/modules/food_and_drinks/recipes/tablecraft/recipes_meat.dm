@@ -84,6 +84,17 @@
 	result = /obj/item/reagent_containers/food/snacks/nugget
 	subcategory = CAT_MEAT
 
+/datum/crafting_recipe/food/sweet_and_sour
+	name = "Sweet and sour \"chicken\""
+	reqs = list(
+		/obj/item/reagent_containers/food/snacks/nugget = 2,
+		/obj/item/reagent_containers/food/snacks/pineappleslice = 1,
+		/datum/reagent/consumable/soysauce = 2,
+		/datum/reagent/consumable/sodiumchloride = 1
+	)
+	result = /obj/item/reagent_containers/food/snacks/sweet_and_sour
+	subcategory = CAT_MEAT
+
 /datum/crafting_recipe/food/corndog
 	name = "Corndog meal"
 	reqs = list(
