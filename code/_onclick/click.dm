@@ -34,10 +34,6 @@
 	* mob/RangedAttack(atom,params) - used only ranged, only used for tk and laser eyes but could be changed
 */
 /mob/proc/ClickOn( atom/A, params )
-	if(world.time <= next_click)
-		return
-	next_click = world.time + world.tick_lag
-
 	if(check_click_intercept(params,A))
 		return
 
@@ -272,7 +268,6 @@
 		var/datum/antagonist/changeling/C = mind.has_antag_datum(/datum/antagonist/changeling)
 		if(C && C.chosen_sting)
 			C.chosen_sting.try_to_sting(src,A)
-			next_click = world.time + 5
 			return
 	swap_hand()
 
@@ -345,7 +340,6 @@
 		var/datum/antagonist/changeling/C = mind.has_antag_datum(/datum/antagonist/changeling)
 		if(C && C.chosen_sting)
 			C.chosen_sting.try_to_sting(src,A)
-			next_click = world.time + 5
 			return
 	..()
 

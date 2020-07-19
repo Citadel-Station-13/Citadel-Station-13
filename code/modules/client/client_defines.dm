@@ -30,6 +30,9 @@
 	var/move_delay = 0
 	var/area			= null
 
+	/// Last time we Click()ed. No clicking twice in one tick!
+	var/last_click = 0
+
 		///////////////
 		//SOUND STUFF//
 		///////////////

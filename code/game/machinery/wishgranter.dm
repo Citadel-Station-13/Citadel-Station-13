@@ -31,7 +31,8 @@
 			user.dna.add_mutation(XRAY)
 			user.dna.add_mutation(SPACEMUT)
 			user.dna.add_mutation(TK)
-			user.next_move_modifier *= 0.5	//half the delay between attacks!
+			user.last_action_mult *= 0.5
+			user.next_action_mult *= 0.5
 			to_chat(user, "Things around you feel slower!")
 			charges--
 			insisting = FALSE
@@ -101,7 +102,8 @@
 						to_chat(user, "[killreward] materializes into your hands!")
 					else
 						to_chat(user, "[killreward] materializes onto the floor.")
-					user.next_move_modifier *= 0.8	//20% less delay between attacks!
+					user.last_action_mult *= 0.8	//20% less delay between attacks!
+					user.next_action_mult *= 0.8
 					to_chat(user, "Things around you feel slightly slower!")
 					var/mob/living/simple_animal/hostile/venus_human_trap/killwish = new /mob/living/simple_animal/hostile/venus_human_trap(loc)
 					killwish.maxHealth = 1500

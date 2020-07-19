@@ -7,10 +7,6 @@
 */
 
 /mob/living/silicon/robot/ClickOn(var/atom/A, var/params)
-	if(world.time <= next_click)
-		return
-	next_click = world.time + 1
-
 	if(check_click_intercept(params,A))
 		return
 
@@ -37,7 +33,7 @@
 		CtrlClickOn(A)
 		return
 
-	if(next_move >= world.time)
+	if(!CheckActionCooldown())
 		return
 
 	face_atom(A) // change direction to face what you clicked on

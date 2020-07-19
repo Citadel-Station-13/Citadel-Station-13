@@ -772,6 +772,9 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 		ip_intel = res.intel
 
 /client/Click(atom/object, atom/location, control, params, ignore_spam = FALSE)
+	if(last_click > world.time - world.tick_lag)
+		return
+	last_click = world.time
 	var/ab = FALSE
 	var/list/L = params2list(params)
 	if (object && object == middragatom && L["left"])

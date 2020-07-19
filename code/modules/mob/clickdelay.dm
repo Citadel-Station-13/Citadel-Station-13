@@ -8,9 +8,6 @@
 
 /mob
 	// CLICKDELAY AND RELATED
-	/// Last time we clicked. No clicking twice in one tick, please! This should be directly set and checked.
-	var/last_click = 0
-	
 	/// Generic clickdelay variable. Marks down the last world.time we did something that should cause or impact generic clickdelay. This should be directly set or set using [DelayNextAction()]. This should only be checked using [CheckActionCooldown()].
 	var/last_action = 0
 	/// Generic clickdelay variable. Next world.time we should be able to do something that respects generic clickdelay. This should be set using [DelayNextAction()] This should only be checked using [CheckActionCooldown()].

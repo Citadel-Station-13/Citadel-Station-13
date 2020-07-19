@@ -19,10 +19,6 @@
 		A.move_camera_by_click()
 
 /mob/living/silicon/ai/ClickOn(var/atom/A, params)
-	if(world.time <= next_click)
-		return
-	next_click = world.time + 1
-
 	if(!can_interact_with(A))
 		return
 
