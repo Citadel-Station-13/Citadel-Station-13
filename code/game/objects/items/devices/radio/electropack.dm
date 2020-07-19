@@ -32,7 +32,7 @@
 	. = ..()
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
-/obj/item/electropack/attack_hand(mob/user)
+/obj/item/electropack/attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	if(iscarbon(user))
 		var/mob/living/carbon/C = user
 		if(src == C.back)
@@ -162,7 +162,7 @@
 	materials = list(/datum/material/iron = 5000, /datum/material/glass =2000)
 	category = list("hacked", "Misc")
 
-/obj/item/electropack/shockcollar/attack_hand(mob/user)
+/obj/item/electropack/shockcollar/attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	if(loc == user && user.get_item_by_slot(SLOT_NECK))
 		to_chat(user, "<span class='warning'>The collar is fastened tight! You'll need help taking this off!</span>")
 		return
