@@ -21,7 +21,7 @@ Food formatting and crafting examples.
 	icon_state = "saltychip"													//Refers to an icon, usually in food.dmi
 	bitesize = 3																//How many reagents are consumed in each bite.
 	list_reagents = list(/datum/reagent/consumable/nutriment = 6,				//What's inside the snack, but only if spawned. For example, from a chemical reaction, vendor, or slime core spawn.
-						/datum/reagent/consumable/nutriment/vitamin = 2)		
+						/datum/reagent/consumable/nutriment/vitamin = 2)
 	bonus_reagents = list(/datum/reagent/consumable/nutriment = 1,				//What's -added- to the food, in addition to the reagents contained inside the foods used to craft it. Basically, a reward for cooking.
 						/datum/reagent/consumable/nutriment/vitamin = 1)		^^For example. Egg+Egg = 2Egg + Bonus Reagents.
 	filling_color = "#F4A460"													//What color it will use if put in a custom food.
@@ -406,3 +406,8 @@ All foods are distributed among various categories. Use common sense.
 		TB.MouseDrop(over)
 	else
 		return ..()
+
+// //////////////////////////////////////////////Frying////////////////////////////////////////
+/atom/proc/fry(cook_time = 30) //you can truly fry anything
+	if(!GetComponent(/datum/component/fried))
+		AddComponent(/datum/component/fried, frying_power = cook_time)
