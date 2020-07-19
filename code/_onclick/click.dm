@@ -33,7 +33,7 @@
 	* item/afterattack(atom,user,adjacent,params) - used both ranged and adjacent
 	* mob/RangedAttack(atom,params) - used only ranged, only used for tk and laser eyes but could be changed
 */
-/mob/proc/ClickOn( atom/A, params )
+/mob/proc/ClickOn( atom/A, params)
 	if(check_click_intercept(params,A))
 		return
 
@@ -83,7 +83,7 @@
 		return M.click_action(A,src,params)
 
 	if(restrained())
-		changeNext_move(CLICK_CD_HANDCUFFED)   //Doing shit in cuffs shall be vey slow
+		DelayNextAction(CLICK_CD_HANDCUFFED)
 		RestrainedClickOn(A)
 		return
 
@@ -104,9 +104,7 @@
 		if(W)
 			W.melee_attack_chain(src, A, params)
 		else
-			if(ismob(A) && !CheckActionCooldown(CLICK_CD_MELEE))
-				return
-			DelayNextAction()
+			DelayNextAction(ismob(A)? 8 : 0)
 			UnarmedAttack(A)
 		return
 
@@ -119,9 +117,8 @@
 		if(W)
 			W.melee_attack_chain(src, A, params)
 		else
-			if(ismob(A) && !CheckActionCooldown(CLICK_CD_MELEE))
-				return
-			DelayNextAction()
+			DelayNextAction(ismob(A)? 8 : 0)
+			DelayNextAction(ismob(A)? 8 : 0)
 			UnarmedAttack(A, 1)
 	else
 		if(W)

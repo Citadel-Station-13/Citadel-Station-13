@@ -47,17 +47,7 @@
 	name = "swap hand"
 
 /obj/screen/swap_hand/Click()
-	// At this point in client Click() code we have passed the 1/10 sec check and little else
-	// We don't even know if it's a middle click
-	if(world.time <= usr.next_move)
-		return 1
-
-	if(usr.incapacitated())
-		return 1
-
-	if(ismob(usr))
-		var/mob/M = usr
-		M.swap_hand()
+	usr.swap_hand()
 	return 1
 
 /obj/screen/craft

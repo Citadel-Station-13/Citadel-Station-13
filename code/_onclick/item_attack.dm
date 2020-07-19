@@ -21,7 +21,6 @@
 		return
 	if(QDELETED(src) || QDELETED(target))
 		return
-	PostattackClickdelaySet(user, target)
 	afterattack(target, user, TRUE, params)
 
 /// Like melee_attack_chain but for ranged.
@@ -81,6 +80,7 @@
 
 	user.do_attack_animation(M)
 	M.attacked_by(src, user, attackchain_flags, damage_multiplier)
+	PostattackClickdelaySet(user, M)
 
 	log_combat(user, M, "attacked", src.name, "(INTENT: [uppertext(user.a_intent)]) (DAMTYPE: [uppertext(damtype)])")
 	add_fingerprint(user)
@@ -96,8 +96,8 @@
 	if(item_flags & NOBLUDGEON)
 		return
 	user.do_attack_animation(O)
-	if(!O.attacked_by(src, user))
-		user.changeNext_move(click_delay)
+	O.attacked_by(src, user)
+	PostattackClickdelaySet(user, O)
 	var/weight = getweight(user, STAM_COST_ATTACK_OBJ_MULT)
 	if(weight)
 		user.adjustStaminaLossBuffered(weight)//CIT CHANGE - makes attacking things cause stamina loss
@@ -110,12 +110,9 @@
 	var/bad_trait
 
 	var/stamloss = user.getStaminaLoss()
-	var/next_move_mult = 1
 	if(stamloss > STAMINA_NEAR_SOFTCRIT) //The more tired you are, the less damage you do.
 		var/penalty = (stamloss - STAMINA_NEAR_SOFTCRIT)/(STAMINA_NEAR_CRIT - STAMINA_NEAR_SOFTCRIT)*STAM_CRIT_ITEM_ATTACK_PENALTY
 		totitemdamage *= 1 - penalty
-		next_move_mult += penalty*STAM_CRIT_ITEM_ATTACK_DELAY
-	user.changeNext_move(I.click_delay*next_move_mult)
 
 	if(SEND_SIGNAL(user, COMSIG_COMBAT_MODE_CHECK, COMBAT_MODE_INACTIVE))
 		bad_trait = SKILL_COMBAT_MODE //blacklist combat skills.

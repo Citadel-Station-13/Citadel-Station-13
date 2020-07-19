@@ -12,14 +12,12 @@
 	var/last_action = 0
 	/// Generic clickdelay variable. Next world.time we should be able to do something that respects generic clickdelay. This should be set using [DelayNextAction()] This should only be checked using [CheckActionCooldown()].
 	var/next_action = 0
-	/// Simple modification variable added to next action on adjust. This should only be manually modified via addition.
-	var/next_action_adjust = 0
-	/// Simple modification variable multiplied to next action modifier on adjust. This should only be manually modified using multipliers.
-	var/next_action_mult = 1
-	/// Simple modification variable added to amount when checking time since last action using [CheckActionCooldown()]. This should only be manually modified via addition.
-	var/last_action_adjust = 0
-	/// Simple modification variable multiplied to amount when checking time since last action using [CheckActionCooldown()]. This should only be manually modified using multipliers.
-	var/last_action_mult = 1
+	/// Simple modification variable multiplied to next action modifier on adjust and on checking time since last action using [CheckActionCooldown()].
+	/// This should only be manually modified using multipliers.
+	var/action_cooldown_mod = 0.5
+	/// Simple modification variable added to amounton adjust and on checking time since last action using [CheckActionCooldown()].
+	/// This should only be manually modified via addition.
+	var/action_cooldown_adjust = 0
 	
 	/// Special clickdelay variable for resisting. Last time we did a special action like resisting. This should be directly set.  This should only be checked using [CheckResistCooldown()].
 	var/last_resist = 0
@@ -37,7 +35,15 @@
 /mob/proc/DelayNextAction(amount = 0, ignore_mod = FALSE, considered_action = TRUE)
 	if(considered_action)
 		last_action = world.time
-	next_action = max(next_action, world.time + (ignore_mod? amount : (amount * next_action_mult + next_action_adjust)))
+	next_action = max(next_action, world.time + (ignore_mod? amount : (amount * action_cooldown_mod + action_cooldown_adjust)))
+
+/**
+  * Sets our next action to. The difference is DelayNextAction cannot reduce next_action under any circumstances while this can.
+  */
+/mob/proc/SetNextAction(amount = 0, ignore_mod = FALSE, considered_action = TRUE)
+	if(considered_action)
+		last_action = world.time
+	next_action = world.time + (ignore_mod? amount : (amount * action_cooldown_mod + action_cooldown_adjust))
 
 /**
   * Checks if we can do another action.
@@ -50,7 +56,7 @@
   * * ignore_next_action - Defaults to FALSE. Ignore next_action and only care about cooldown param and everything else. Generally unused.
   */
 /mob/proc/CheckActionCooldown(cooldown = 0.5, from_next_action = FALSE, ignore_mod = FALSE, ignore_next_action = FALSE)
-	return (ignore_next_action || (world.time >= next_action)) && (world.time >= ((from_next_action? next_action : last_action) + max(0, ignore_mod? cooldown : (cooldown * last_action_mult + last_action_adjust))))
+	return (ignore_next_action || (world.time >= next_action)) && (world.time >= ((from_next_action? next_action : last_action) + max(0, ignore_mod? cooldown : (cooldown * action_cooldown_mod + action_cooldown_adjust))))
 
 /**
   * Checks if we can resist again.
@@ -93,7 +99,7 @@
   */
 /obj/item/proc/PreattackClickdelaySet(mob/user, atom/target)
 	if(clickdelay_set_on_pre_attack)
-		user.DelayNextAction(0, FALSe, TRUE)
+		user.DelayNextAction(0, FALSE, TRUE)
 
 /**
   * Called after a successful attack to set a mob's clickdelay.

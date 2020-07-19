@@ -5,7 +5,7 @@
 
 	face_atom(A)
 
-	if(next_move > world.time) // in the year 2000...
+	if(!CheckActionCooldown())
 		return
 
 	if(!modifiers["catcher"] && A.IsObscured())
@@ -16,7 +16,7 @@
 		return M.click_action(A,src,params)
 
 	if(restrained())
-		changeNext_move(CLICK_CD_HANDCUFFED)   //Doing shit in cuffs shall be vey slow
+		DelayNextAction(CLICK_CD_HANDCUFFED)
 		RestrainedClickOn(A)
 		return
 
