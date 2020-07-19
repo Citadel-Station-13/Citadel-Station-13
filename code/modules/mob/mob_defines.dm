@@ -35,7 +35,6 @@
 	var/list/logging = list()
 	var/atom/machine = null
 
-	var/next_move = null
 	var/create_area_cooldown
 	/// Whether or not the mob is currently being transformed into another mob or into another state of being. This will prevent it from moving or doing realistically anything.
 	/// Don't you DARE use this for a cheap way to ensure someone is stunned in your code.
