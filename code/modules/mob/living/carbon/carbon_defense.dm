@@ -112,7 +112,7 @@
 	return //so we don't call the carbon's attack_hand().
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
-/mob/living/carbon/attack_hand(mob/living/carbon/human/user)
+/mob/living/carbon/attack_hand(mob/living/carbon/human/user, act_intent, unarmed_attack_flags)
 	. = ..()
 	if(.) //was the attack blocked?
 		return
@@ -127,9 +127,9 @@
 			ContactContractDisease(D)
 
 	if(lying && surgeries.len)
-		if(user.a_intent == INTENT_HELP || user.a_intent == INTENT_DISARM)
+		if(act_intent == INTENT_HELP || act_intent == INTENT_DISARM)
 			for(var/datum/surgery/S in surgeries)
-				if(S.next_step(user, user.a_intent))
+				if(S.next_step(user, act_intent))
 					return TRUE
 
 

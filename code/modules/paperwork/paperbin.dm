@@ -63,7 +63,7 @@
 	return attack_hand(user)
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
-/obj/item/paper_bin/attack_hand(mob/user)
+/obj/item/paper_bin/attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	if(user.lying)
 		return
 	if(bin_pen)
@@ -86,9 +86,8 @@
 			P = new papertype(src)
 			if(SSevents.holidays && SSevents.holidays[APRIL_FOOLS])
 				if(prob(30))
-					P.info = "<font face=\"[CRAYON_FONT]\" color=\"red\"><b>HONK HONK HONK HONK HONK HONK HONK<br>HOOOOOOOOOOOOOOOOOOOOOONK<br>APRIL FOOLS</b></font>"
+					P.info = "*HONK HONK HONK HONK HONK HONK HONK<br>HOOOOOOOOOOOOOOOOOOOOOONK*\n*APRIL FOOLS*\n"
 					P.rigged = 1
-					P.updateinfolinks()
 
 		P.add_fingerprint(user)
 		P.forceMove(user.loc)
@@ -150,7 +149,7 @@
 	papertype = /obj/item/paper/natural
 	resistance_flags = FLAMMABLE
 
-/obj/item/paper_bin/bundlenatural/attack_hand(mob/user)
+/obj/item/paper_bin/bundlenatural/attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	..()
 	if(total_paper < 1)
 		qdel(src)

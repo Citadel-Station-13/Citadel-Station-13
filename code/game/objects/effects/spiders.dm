@@ -152,7 +152,7 @@
 	else
 		..()
 
-/obj/structure/spider/spiderling/attack_hand(mob/user)
+/obj/structure/spider/spiderling/attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	. = ..()
 	if(user.a_intent != INTENT_HELP)
 		user.changeNext_move(CLICK_CD_MELEE)
