@@ -152,11 +152,11 @@
 		var/list/po = A.priority_overlays;\
 		if(LAZYLEN(rm)){\
 			A.overlays -= rm;\
-			rm = null;\
+			A.remove_overlays = null;\
 		}\
 		if(LAZYLEN(ad)){\
 			A.overlays |= ad;\
-			ad = null;\
+			A.add_overlays = null;\
 		}\
 		if(LAZYLEN(po)){\
 			A.overlays |= po;\
