@@ -43,8 +43,7 @@
 		"Monkey" = image(icon = src.icon, icon_state = "cutout_monky"),
 	))
 
-//ATTACK HAND IGNORING PARENT RETURN VALUE
-/obj/item/cardboard_cutout/attack_hand(mob/living/user, act_intent = user.a_intent, unarmed_attack_flags)
+/obj/item/cardboard_cutout/on_attack_hand(mob/living/user, act_intent = user.a_intent, unarmed_attack_flags)
 	if(user.a_intent == INTENT_HELP || pushed_over)
 		return ..()
 	user.visible_message("<span class='warning'>[user] pushes over [src]!</span>", "<span class='danger'>You push over [src]!</span>")

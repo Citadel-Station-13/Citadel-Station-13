@@ -120,7 +120,7 @@
 	open = TRUE
 	density = TRUE
 
-/obj/structure/fence/door/attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
+/obj/structure/fence/door/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	if(can_open(user))
 		toggle(user)
 

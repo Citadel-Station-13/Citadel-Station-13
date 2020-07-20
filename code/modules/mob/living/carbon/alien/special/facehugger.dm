@@ -58,8 +58,7 @@
 /obj/item/clothing/mask/facehugger/attack_alien(mob/user) //can be picked up by aliens
 	return attack_hand(user)
 
-//ATTACK HAND IGNORING PARENT RETURN VALUE
-/obj/item/clothing/mask/facehugger/attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
+/obj/item/clothing/mask/facehugger/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	if((stat == CONSCIOUS && !sterile) && !isalien(user))
 		if(Leap(user))
 			return

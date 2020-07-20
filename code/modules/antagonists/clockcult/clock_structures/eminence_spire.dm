@@ -11,7 +11,7 @@
 	var/selection_timer //Timer ID; this is canceled if the vote is canceled
 	var/kingmaking
 
-/obj/structure/destructible/clockwork/eminence_spire/attack_hand(mob/living/user, act_intent = user.a_intent, unarmed_attack_flags)
+/obj/structure/destructible/clockwork/eminence_spire/on_attack_hand(mob/living/user, act_intent = user.a_intent, unarmed_attack_flags)
 	. = ..()
 	if(.)
 		return

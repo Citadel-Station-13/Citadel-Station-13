@@ -10,7 +10,7 @@
 	var/charges = 1
 	var/insisting = 0
 
-/obj/machinery/wish_granter/attack_hand(mob/living/carbon/user)
+/obj/machinery/wish_granter/on_attack_hand(mob/living/carbon/user)
 	if(charges <= 0)
 		to_chat(user, "The Wish Granter lies silent.")
 		return

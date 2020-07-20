@@ -103,8 +103,7 @@
 	. = ..()
 	QDEL_IN(src, 300)
 
-//ATTACK HAND IGNORING PARENT RETURN VALUE
-/obj/effect/hallucination/simple/bluespace_stream/attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
+/obj/effect/hallucination/simple/bluespace_stream/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	if(user != seer || !linked_to)
 		return
 	var/slip_in_message = pick("slides sideways in an odd way, and disappears", "jumps into an unseen dimension",\

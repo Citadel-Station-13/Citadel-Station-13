@@ -604,7 +604,7 @@
 /mob/living/simple_animal/bot/medbot/proc/get_healchem_toxin(mob/M)
 	return HAS_TRAIT(M, TRAIT_TOXINLOVER)? treatment_tox_toxlover : treatment_tox
 
-/mob/living/simple_animal/bot/medbot/attack_hand(mob/living/carbon/human/H)
+/mob/living/simple_animal/bot/medbot/on_attack_hand(mob/living/carbon/human/H)
 	if(H.a_intent == INTENT_DISARM && mode != BOT_TIPPED)
 		H.visible_message("<span class='danger'>[H] begins tipping over [src].</span>", "<span class='warning'>You begin tipping over [src]...</span>")
 

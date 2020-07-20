@@ -91,7 +91,7 @@
 		locked = TRUE
 	return ..()
 
-/obj/structure/closet/secure_closet/genpop/attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
+/obj/structure/closet/secure_closet/genpop/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	if(user.lying && get_dist(src, user) > 0)
 		return
 

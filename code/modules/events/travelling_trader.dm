@@ -60,7 +60,7 @@
 		input_speech = replacetext(input_speech, "given_item", given_item.name)
 	return input_speech
 
-/mob/living/carbon/human/dummy/travelling_trader/attack_hand(mob/living/carbon/human/H)
+/mob/living/carbon/human/dummy/travelling_trader/on_attack_hand(mob/living/carbon/human/H)
 	if(active && last_speech + 3 < world.realtime) //can only talk once per 3 seconds, to avoid spam
 		last_speech = world.realtime
 		if(initial_speech)

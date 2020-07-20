@@ -21,8 +21,7 @@
 			to_chat(user, "<span class=notice>\The [src] already contains a photo.</span>")
 	..()
 
-//ATTACK HAND IGNORING PARENT RETURN VALUE
-/obj/item/wallframe/picture/attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
+/obj/item/wallframe/picture/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	if(user.get_inactive_held_item() != src)
 		..()
 		return
@@ -141,10 +140,7 @@
 
 	..()
 
-/obj/structure/sign/picture_frame/attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
-	. = ..()
-	if(.)
-		return
+/obj/structure/sign/picture_frame/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	if(framed)
 		framed.show(user)
 

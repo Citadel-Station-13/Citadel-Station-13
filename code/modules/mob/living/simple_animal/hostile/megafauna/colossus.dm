@@ -385,10 +385,7 @@ Difficulty: Very Hard
 	if(isliving(speaker))
 		ActivationReaction(speaker, ACTIVATE_SPEECH)
 
-/obj/machinery/anomalous_crystal/attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
-	. = ..()
-	if(.)
-		return
+/obj/machinery/anomalous_crystal/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	ActivationReaction(user, ACTIVATE_TOUCH)
 
 /obj/machinery/anomalous_crystal/attackby(obj/item/I, mob/user, params)

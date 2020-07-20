@@ -110,8 +110,7 @@
 	else
 		walk_link(user)
 
-//ATTACK HAND IGNORING PARENT RETURN VALUE
-/obj/effect/cross_action/spacetime_dist/attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
+/obj/effect/cross_action/spacetime_dist/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	walk_link(user)
 
 /obj/effect/cross_action/spacetime_dist/attack_paw(mob/user)

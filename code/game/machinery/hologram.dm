@@ -78,7 +78,7 @@ GLOBAL_LIST_EMPTY(network_holopads)
 			new_disk.forceMove(src)
 			disk = new_disk
 
-/obj/machinery/holopad/tutorial/attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
+/obj/machinery/holopad/tutorial/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	if(!istype(user))
 		return
 	if(user.incapacitated() || !is_operational())

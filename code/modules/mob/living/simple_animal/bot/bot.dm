@@ -286,7 +286,7 @@
 	return TRUE //Successful completion. Used to prevent child process() continuing if this one is ended early.
 
 
-/mob/living/simple_animal/bot/attack_hand(mob/living/carbon/human/H)
+/mob/living/simple_animal/bot/on_attack_hand(mob/living/carbon/human/H)
 	if(H.a_intent == INTENT_HELP)
 		interact(H)
 	else

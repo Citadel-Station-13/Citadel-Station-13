@@ -86,8 +86,7 @@
 /obj/guardian_bomb/attackby(mob/living/user)
 	detonate(user)
 
-//ATTACK HAND IGNORING PARENT RETURN VALUE
-/obj/guardian_bomb/attack_hand(mob/living/user, act_intent = user.a_intent, unarmed_attack_flags)
+/obj/guardian_bomb/on_attack_hand(mob/living/user, act_intent = user.a_intent, unarmed_attack_flags)
 	detonate(user)
 
 /obj/guardian_bomb/examine(mob/user)

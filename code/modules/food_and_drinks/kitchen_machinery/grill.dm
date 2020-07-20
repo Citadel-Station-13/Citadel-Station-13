@@ -107,7 +107,7 @@
 /obj/machinery/grill/attack_ai(mob/user)
 	return
 
-/obj/machinery/grill/attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
+/obj/machinery/grill/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	if(grilled_item)
 		to_chat(user, "<span class='notice'>You take out [grilled_item] from [src].</span>")
 		grilled_item.forceMove(drop_location())

@@ -88,10 +88,7 @@
 	else
 		stat |= NOPOWER
 
-/obj/machinery/door/firedoor/attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
-	. = ..()
-	if(.)
-		return
+/obj/machinery/door/firedoor/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 
 	if(!welded && !operating && !(stat & NOPOWER) && (!density || allow_hand_open(user)))
 		add_fingerprint(user)

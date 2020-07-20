@@ -47,7 +47,7 @@
 	else
 		clear_alert("temp")
 
-/mob/living/simple_animal/hostile/retaliate/clown/attack_hand(mob/living/carbon/human/M)
+/mob/living/simple_animal/hostile/retaliate/clown/on_attack_hand(mob/living/carbon/human/M)
 	..()
 	playsound(src.loc, 'sound/items/bikehorn.ogg', 50, TRUE)
 

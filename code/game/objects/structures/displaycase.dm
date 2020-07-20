@@ -157,10 +157,7 @@
 /obj/structure/displaycase/attack_paw(mob/user)
 	return attack_hand(user)
 
-/obj/structure/displaycase/attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
-	. = ..()
-	if(.)
-		return
+/obj/structure/displaycase/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	user.changeNext_move(CLICK_CD_MELEE)
 	if (showpiece && (broken || open))
 		to_chat(user, "<span class='notice'>You deactivate the hover field built into the case.</span>")

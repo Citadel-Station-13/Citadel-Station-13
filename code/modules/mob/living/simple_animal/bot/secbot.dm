@@ -173,7 +173,7 @@ Auto Patrol: []"},
 /mob/living/simple_animal/bot/secbot/proc/special_retaliate_after_attack(mob/user) //allows special actions to take place after being attacked.
 	return
 
-/mob/living/simple_animal/bot/secbot/attack_hand(mob/living/carbon/human/H)
+/mob/living/simple_animal/bot/secbot/on_attack_hand(mob/living/carbon/human/H)
 	if((H.a_intent == INTENT_HARM) || (H.a_intent == INTENT_DISARM))
 		retaliate(H)
 		if(special_retaliate_after_attack(H))

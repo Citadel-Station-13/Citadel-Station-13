@@ -271,7 +271,7 @@
  * Attack responces
  */
 //Humans, monkeys, aliens
-/mob/living/simple_animal/parrot/attack_hand(mob/living/carbon/M)
+/mob/living/simple_animal/parrot/on_attack_hand(mob/living/carbon/M)
 	..()
 	if(client)
 		return

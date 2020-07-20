@@ -763,10 +763,7 @@
 /obj/machinery/door/airlock/attack_paw(mob/user)
 	return attack_hand(user)
 
-/obj/machinery/door/airlock/attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
-	. = ..()
-	if(.)
-		return
+/obj/machinery/door/airlock/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	if(!(issilicon(user) || IsAdminGhost(user)))
 		if(src.isElectrified())
 			if(src.shock(user, 100))

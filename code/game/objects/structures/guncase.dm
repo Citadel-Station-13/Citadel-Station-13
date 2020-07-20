@@ -53,10 +53,7 @@
 	else
 		return ..()
 
-/obj/structure/guncase/attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
-	. = ..()
-	if(.)
-		return
+/obj/structure/guncase/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	if(iscyborg(user) || isalien(user))
 		return
 	if(contents.len && open)

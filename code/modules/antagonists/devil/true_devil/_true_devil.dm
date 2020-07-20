@@ -144,7 +144,7 @@
 /mob/living/carbon/true_devil/resist_fire()
 	//They're immune to fire.
 
-/mob/living/carbon/true_devil/attack_hand(mob/living/carbon/human/M)
+/mob/living/carbon/true_devil/on_attack_hand(mob/living/carbon/human/M)
 	. = ..()
 	if(.)
 		switch(M.a_intent)

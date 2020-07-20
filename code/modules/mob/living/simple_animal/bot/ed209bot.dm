@@ -177,7 +177,7 @@ Auto Patrol[]"},
 		target = H
 		mode = BOT_HUNT
 
-/mob/living/simple_animal/bot/ed209/attack_hand(mob/living/carbon/human/H)
+/mob/living/simple_animal/bot/ed209/on_attack_hand(mob/living/carbon/human/H)
 	if(H.a_intent == INTENT_HARM)
 		retaliate(H)
 	return ..()

@@ -21,10 +21,7 @@
 		return
 	close_machine(target)
 
-/obj/machinery/abductor/experiment/attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
-	. = ..()
-	if(.)
-		return
+/obj/machinery/abductor/experiment/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 
 	experimentUI(user)
 

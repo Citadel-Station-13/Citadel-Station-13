@@ -45,7 +45,7 @@ In all, this is a lot like the monkey code. /N
 	return attack_alien(L)
 
 
-/mob/living/carbon/alien/attack_hand(mob/living/carbon/human/M)
+/mob/living/carbon/alien/on_attack_hand(mob/living/carbon/human/M)
 	. = ..()
 	if(.) //To allow surgery to return properly.
 		return

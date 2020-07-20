@@ -31,8 +31,7 @@
 	. = ..()
 	clockwork_desc = initial(clockwork_desc)
 
-//ATTACK HAND IGNORING PARENT RETURN VALUE
-/obj/item/clockwork/construct_chassis/attack_hand(mob/living/user, act_intent = user.a_intent, unarmed_attack_flags)
+/obj/item/clockwork/construct_chassis/on_attack_hand(mob/living/user, act_intent = user.a_intent, unarmed_attack_flags)
 	if(w_class >= WEIGHT_CLASS_HUGE)
 		to_chat(user, "<span class='warning'>[src] is too cumbersome to carry! Drag it around instead!</span>")
 		return

@@ -353,7 +353,7 @@
 		battle_screech()
 		a_intent = INTENT_HARM
 
-/mob/living/carbon/monkey/attack_hand(mob/living/L)
+/mob/living/carbon/monkey/on_attack_hand(mob/living/L)
 	if(L.a_intent == INTENT_HARM && prob(MONKEY_RETALIATE_HARM_PROB))
 		retaliate(L)
 	else if(L.a_intent == INTENT_DISARM && prob(MONKEY_RETALIATE_DISARM_PROB))

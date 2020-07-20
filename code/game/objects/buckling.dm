@@ -9,7 +9,7 @@
 	var/buckle_prevents_pull = FALSE
 
 //Interaction
-/atom/movable/attack_hand(mob/living/user, act_intent = user.a_intent, unarmed_attack_flags)
+/atom/movable/on_attack_hand(mob/living/user, act_intent = user.a_intent, unarmed_attack_flags)
 	. = ..()
 	if(.)
 		return

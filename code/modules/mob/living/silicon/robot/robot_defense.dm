@@ -62,8 +62,7 @@
 
 	return
 
-//ATTACK HAND IGNORING PARENT RETURN VALUE
-/mob/living/silicon/robot/attack_hand(mob/living/carbon/human/user)
+/mob/living/silicon/robot/on_attack_hand(mob/living/carbon/human/user)
 	add_fingerprint(user)
 	if(opened && !wiresexposed && cell && !issilicon(user))
 		cell.update_icon()

@@ -84,8 +84,7 @@
 	playsound(src, 'sound/weapons/handcuffs.ogg', 30, TRUE, -3)
 
 
-//ATTACK HAND IGNORING PARENT RETURN VALUE
-/obj/item/assembly/mousetrap/attack_hand(mob/living/carbon/human/user)
+/obj/item/assembly/mousetrap/on_attack_hand(mob/living/carbon/human/user)
 	if(armed)
 		if((HAS_TRAIT(user, TRAIT_DUMB) || HAS_TRAIT(user, TRAIT_CLUMSY)) && prob(50))
 			var/which_hand = BODY_ZONE_PRECISE_L_HAND

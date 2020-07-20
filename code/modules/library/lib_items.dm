@@ -112,7 +112,7 @@
 			else
 				return ..()
 
-/obj/structure/bookcase/attack_hand(mob/living/user, act_intent = user.a_intent, unarmed_attack_flags)
+/obj/structure/bookcase/on_attack_hand(mob/living/user, act_intent = user.a_intent, unarmed_attack_flags)
 	. = ..()
 	if(. || !istype(user))
 		return

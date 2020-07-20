@@ -21,7 +21,7 @@
 		"<span class='userdanger'>[user] has [hitverb] [src]!</span>", null, COMBAT_MESSAGE_RANGE)
 		return 1
 
-/mob/living/carbon/alien/humanoid/attack_hand(mob/living/carbon/human/M)
+/mob/living/carbon/alien/humanoid/on_attack_hand(mob/living/carbon/human/M)
 	. = ..()
 	if(.) //To allow surgery to return properly.
 		return

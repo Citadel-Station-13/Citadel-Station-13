@@ -108,7 +108,7 @@
 	adjustBruteLoss(15)
 	return 1
 
-/mob/living/carbon/human/attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
+/mob/living/carbon/human/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	. = ..()
 	if(.) //To allow surgery to return properly.
 		return

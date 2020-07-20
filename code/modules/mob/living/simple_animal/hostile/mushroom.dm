@@ -170,7 +170,7 @@
 		Bruise()
 	..()
 
-/mob/living/simple_animal/hostile/mushroom/attack_hand(mob/living/carbon/human/M)
+/mob/living/simple_animal/hostile/mushroom/on_attack_hand(mob/living/carbon/human/M)
 	. = ..()
 	if(.) // the attack was blocked
 		return

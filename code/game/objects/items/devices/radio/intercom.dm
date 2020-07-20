@@ -86,10 +86,7 @@
 /obj/item/radio/intercom/attack_ai(mob/user)
 	interact(user)
 
-/obj/item/radio/intercom/attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
-	. = ..()
-	if(.)
-		return
+/obj/item/radio/intercom/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	interact(user)
 
 /obj/item/radio/intercom/interact(mob/user)

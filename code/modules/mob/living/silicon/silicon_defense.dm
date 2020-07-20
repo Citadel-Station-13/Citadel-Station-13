@@ -70,7 +70,7 @@
 		return TRUE
 	return FALSE
 
-/mob/living/silicon/attack_hand(mob/living/carbon/human/M)
+/mob/living/silicon/on_attack_hand(mob/living/carbon/human/M)
 	. = ..()
 	if(.) //the attack was blocked
 		return

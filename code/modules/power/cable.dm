@@ -564,10 +564,7 @@ By design, d1 is the smallest direction and d2 is the highest
 	icon_state = "[initial(item_state)][amount < 3 ? amount : ""]"
 	name = "cable [amount < 3 ? "piece" : "coil"]"
 
-/obj/item/stack/cable_coil/attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
-	. = ..()
-	if(.)
-		return
+/obj/item/stack/cable_coil/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	var/obj/item/stack/cable_coil/new_cable = ..()
 	if(istype(new_cable))
 		new_cable.color = color

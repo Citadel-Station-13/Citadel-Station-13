@@ -22,10 +22,7 @@
 		gland_colors[i] = random_color()
 		amounts[i] = rand(1,5)
 
-/obj/machinery/abductor/gland_dispenser/attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
-	. = ..()
-	if(.)
-		return
+/obj/machinery/abductor/gland_dispenser/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	if(!isabductor(user))
 		return
 	user.set_machine(src)

@@ -7,7 +7,7 @@
 	density = FALSE
 	can_buckle = 1
 
-/obj/structure/sacrificealtar/attack_hand(mob/living/user, act_intent = user.a_intent, unarmed_attack_flags)
+/obj/structure/sacrificealtar/on_attack_hand(mob/living/user, act_intent = user.a_intent, unarmed_attack_flags)
 	. = ..()
 	if(.)
 		return
@@ -30,7 +30,7 @@
 	var/time_between_uses = 1800
 	var/last_process = 0
 
-/obj/structure/healingfountain/attack_hand(mob/living/user, act_intent = user.a_intent, unarmed_attack_flags)
+/obj/structure/healingfountain/on_attack_hand(mob/living/user, act_intent = user.a_intent, unarmed_attack_flags)
 	. = ..()
 	if(.)
 		return

@@ -73,7 +73,7 @@
 	create_reagents(20)
 	reagents.add_reagent(dispensedreagent, 20)
 
-/obj/structure/sink/oil_well/attack_hand(mob/M)
+/obj/structure/sink/oil_well/on_attack_hand(mob/M)
 	flick("puddle-oil-splash",src)
 	reagents.reaction(M, TOUCH, 20) //Covers target in 20u of oil.
 	to_chat(M, "<span class='notice'>You touch the pool of oil, only to get oil all over yourself. It would be wise to wash this off with water.</span>")

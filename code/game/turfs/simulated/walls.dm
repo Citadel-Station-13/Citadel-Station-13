@@ -136,10 +136,7 @@
 		to_chat(user, text("<span class='notice'>You punch the wall.</span>"))
 	return TRUE
 
-/turf/closed/wall/attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
-	. = ..()
-	if(.)
-		return
+/turf/closed/wall/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	if(!M.CheckActionCooldown(CLICK_CD_MELEE))
 		return
 	to_chat(user, "<span class='notice'>You push the wall but nothing happens!</span>")

@@ -169,10 +169,7 @@ GLOBAL_LIST_EMPTY(electrochromatic_window_lookup)
 		return 1
 	. = ..()
 
-/obj/structure/window/attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
-	. = ..()
-	if(.)
-		return
+/obj/structure/window/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	if(!can_be_reached(user))
 		return
 	user.visible_message("[user] knocks on [src].")
@@ -837,10 +834,7 @@ GLOBAL_LIST_EMPTY(electrochromatic_window_lookup)
 	for (var/i in 1 to rand(1,4))
 		. += new /obj/item/paper/natural(location)
 
-/obj/structure/window/paperframe/attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
-	. = ..()
-	if(.)
-		return
+/obj/structure/window/paperframe/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	add_fingerprint(user)
 	if(user.a_intent != INTENT_HARM)
 		user.visible_message("[user] knocks on [src].")

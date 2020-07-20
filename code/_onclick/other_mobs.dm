@@ -28,13 +28,19 @@
 	SEND_SIGNAL(src, COMSIG_HUMAN_MELEE_UNARMED_ATTACK, A)
 	A.attack_hand(src, intent, flags)
 
-//Return TRUE to cancel other attack hand effects that respect it.
 /atom/proc/attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
-	. = FALSE
 	if(!(interaction_flags_atom & INTERACT_ATOM_NO_FINGERPRINT_ATTACK_HAND))
 		add_fingerprint(user)
 	if(SEND_SIGNAL(src, COMSIG_ATOM_ATTACK_HAND, user) & COMPONENT_NO_ATTACK_HAND)
-		. = TRUE
+		return
+	if(attack_hand_speed)
+		if(!user.CheckActionCooldown(attack_hand_speed))
+			return
+	attack_hand(user, act_intent, unarmed_attack_flags)
+	if(attack_hand_unwieldlyness)
+		user.DelayNextAction(attack_hand_unwieldlyness, considered_action = attack_hand_is_action)
+
+/atom/proc/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	if(interaction_flags_atom & INTERACT_ATOM_ATTACK_HAND)
 		. = _try_interact(user)
 

@@ -79,10 +79,7 @@
 	charging = null
 	update_icon()
 
-/obj/machinery/cell_charger/attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
-	. = ..()
-	if(.)
-		return
+/obj/machinery/cell_charger/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	if(!charging)
 		return
 

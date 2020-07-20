@@ -137,7 +137,7 @@
 			virgin = 0	//tabbing here is correct- it's possible for people to try and use it
 						//before the records have been generated, so we do this inside the loop.
 
-/obj/structure/filingcabinet/security/attack_hand()
+/obj/structure/filingcabinet/security/on_attack_hand()
 	populate()
 	. = ..()
 
@@ -170,8 +170,7 @@
 			virgin = 0	//tabbing here is correct- it's possible for people to try and use it
 						//before the records have been generated, so we do this inside the loop.
 
-//ATTACK HAND IGNORING PARENT RETURN VALUE
-/obj/structure/filingcabinet/medical/attack_hand()
+/obj/structure/filingcabinet/medical/on_attack_hand()
 	populate()
 	. = ..()
 

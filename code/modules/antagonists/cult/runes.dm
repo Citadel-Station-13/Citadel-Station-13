@@ -67,7 +67,7 @@ Runes can either be invoked by one's self or with many different cultists. Each 
 		to_chat(user, "<span class='danger'>You disrupt the magic of [src] with [I].</span>")
 		qdel(src)
 
-/obj/effect/rune/attack_hand(mob/living/user, act_intent = user.a_intent, unarmed_attack_flags)
+/obj/effect/rune/on_attack_hand(mob/living/user, act_intent = user.a_intent, unarmed_attack_flags)
 	. = ..()
 	if(.)
 		return

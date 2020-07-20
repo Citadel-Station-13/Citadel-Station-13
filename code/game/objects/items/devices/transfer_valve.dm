@@ -79,7 +79,7 @@
 	if(attached_device)
 		attached_device.Crossed(AM)
 
-/obj/item/transfer_valve/attack_hand()//Triggers mousetraps
+/obj/item/transfer_valve/on_attack_hand()//Triggers mousetraps
 	. = ..()
 	if(.)
 		return

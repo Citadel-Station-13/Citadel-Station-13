@@ -320,7 +320,7 @@
 		do_sparks(1, TRUE, src)
 		qdel(src)
 
-/obj/item/restraints/legcuffs/beartrap/energy/attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
+/obj/item/restraints/legcuffs/beartrap/energy/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	Crossed(user) //honk
 	. = ..()
 

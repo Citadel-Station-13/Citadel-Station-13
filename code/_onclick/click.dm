@@ -33,7 +33,6 @@
 		FlushCurrentAction()
 	else
 		DiscardCurrentAction()
-	
 
 /*
 	Standard mob ClickOn()

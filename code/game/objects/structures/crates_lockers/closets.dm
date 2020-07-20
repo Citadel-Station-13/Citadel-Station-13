@@ -458,10 +458,7 @@
 		return
 	container_resist(user)
 
-/obj/structure/closet/attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
-	. = ..()
-	if(.)
-		return
+/obj/structure/closet/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	if(user.lying && get_dist(src, user) > 0)
 		return
 

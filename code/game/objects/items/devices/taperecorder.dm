@@ -54,8 +54,7 @@
 	mytape.ruin() //Fires destroy the tape
 	..()
 
-//ATTACK HAND IGNORING PARENT RETURN VALUE
-/obj/item/taperecorder/attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
+/obj/item/taperecorder/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	if(loc == user)
 		if(mytape)
 			if(!user.is_holding(src))

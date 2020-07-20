@@ -28,7 +28,7 @@
 			AM.forceMove(loc)
 	return ..()
 
-/obj/structure/toilet/attack_hand(mob/living/user, act_intent = user.a_intent, unarmed_attack_flags)
+/obj/structure/toilet/on_attack_hand(mob/living/user, act_intent = user.a_intent, unarmed_attack_flags)
 	. = ..()
 	if(.)
 		return
@@ -174,10 +174,7 @@
 	..()
 	hiddenitem = new /obj/item/reagent_containers/food/urinalcake
 
-/obj/structure/urinal/attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
-	. = ..()
-	if(.)
-		return
+/obj/structure/urinal/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	if(user.pulling && user.a_intent == INTENT_GRAB && isliving(user.pulling))
 		var/mob/living/GM = user.pulling
 		if(user.grab_state >= GRAB_AGGRESSIVE)
@@ -492,7 +489,7 @@
 	var/buildstacktype = /obj/item/stack/sheet/metal
 	var/buildstackamount = 1
 
-/obj/structure/sink/attack_hand(mob/living/user, act_intent = user.a_intent, unarmed_attack_flags)
+/obj/structure/sink/on_attack_hand(mob/living/user, act_intent = user.a_intent, unarmed_attack_flags)
 	. = ..()
 	if(.)
 		return
@@ -707,8 +704,7 @@
 	icon_state = "puddle"
 	resistance_flags = UNACIDABLE
 
-//ATTACK HAND IGNORING PARENT RETURN VALUE
-/obj/structure/sink/puddle/attack_hand(mob/M)
+/obj/structure/sink/puddle/on_attack_hand(mob/M)
 	icon_state = "puddle-splash"
 	. = ..()
 	icon_state = "puddle"
@@ -784,10 +780,7 @@
 
 	return TRUE
 
-/obj/structure/curtain/attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
-	. = ..()
-	if(.)
-		return
+/obj/structure/curtain/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	playsound(loc, 'sound/effects/curtain.ogg', 50, 1)
 	toggle()
 
