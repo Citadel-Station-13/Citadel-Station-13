@@ -38,7 +38,7 @@
 
 /obj/structure/spider/stickyweb/CanPass(atom/movable/mover, turf/target)
 	if (genetic)
-		return TRUE
+		return
 	if(istype(mover, /mob/living/simple_animal/hostile/poison/giant_spider))
 		return TRUE
 	else if(isliving(mover))
@@ -69,6 +69,7 @@
 		if(prob(50))
 			to_chat(mover, "<span class='danger'>You get stuck in \the [src] for a moment.</span>")
 			return FALSE
+		return TRUE
 	else if(istype(mover, /obj/item/projectile))
 		return prob(30)
 
