@@ -218,6 +218,9 @@ SUBSYSTEM_DEF(garbage)
 	var/type = D.type
 	var/refID = "\ref[D]"
 
+	if(GLOB.EXTOOLS_REFERENCE_TRACKING)
+		log_runtime("GC FAILURE, REFERENCES LOGGED: [get_reference_logstring(D)]")
+
 	del(D)
 
 	tick = (TICK_USAGE-tick+((world.time-ticktime)/world.tick_lag*100))

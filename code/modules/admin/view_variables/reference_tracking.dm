@@ -1,6 +1,9 @@
+GLOBAL_VAR_INIT(EXTOOLS_REFERENCE_TRACKING, FALSE)
+GLOBAL_PROTECT(EXTOOLS_REFERENCE_TRACKING)
 /world/proc/enable_reference_tracking()
 	if (fexists(EXTOOLS))
 		call(EXTOOLS, "ref_tracking_initialize")()
+		GLOB.EXTOOLS_REFERENCE_TRACKING = TRUE
 
 /proc/get_back_references(datum/D)
 	CRASH("/proc/get_back_references not hooked by extools, reference tracking will not function!")
@@ -42,3 +45,21 @@
 	dat = dat.Join()
 
 	usr << browse(dat, "window=ref_view") //Done this way rather than tgui to facilitate porting to other codebases or even byond games
+
+/// called on gc failure
+/proc/get_reference_logstring(datum/D)
+	. = list("[REF(D)] - [D]: Forward references: \[")
+	for(var/F in get_forward_references(D))
+		. += "[REF(F)] - [F], "
+	. += "\] Back References: \["
+	for(var/B in get_back_references(D))
+		if(islist(B))
+			var/list/owned = get_back_references(D)		// only one recursion level, if it's a multi-layer list it's usually very obvious what's doing it by just knowing that.
+			. += "List owned by \["
+			for(var/O in owned)
+				. += "[REF(O)] - [O]"
+			. += "\]"
+		else
+			. += "[REF(B)] - [B], "
+	. += "\]"
+	return jointext(., "")
