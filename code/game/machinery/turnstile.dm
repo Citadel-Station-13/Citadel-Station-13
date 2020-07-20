@@ -18,9 +18,6 @@
 /obj/machinery/turnstile/CanAtmosPass(turf/T)
 	return TRUE
 
-/obj/machinery/turnstile/bullet_act(obj/item/projectile/P, def_zone)
-	return BULLET_ACT_FORCE_PIERCE //Pass through!
-
 /obj/machinery/turnstile/proc/allowed_access(var/mob/B)
 	if(B.pulledby && ismob(B.pulledby))
 		return allowed(B.pulledby) | allowed(B)
@@ -28,6 +25,8 @@
 		return allowed(B)
 
 /obj/machinery/turnstile/CanPass(atom/movable/AM, turf/T)
+	if(istype(AM, /obj/item/projectile))
+		return TRUE
 	if(ismob(AM))
 		var/mob/B = AM
 		if(isliving(AM))
@@ -60,6 +59,8 @@
 		return FALSE
 
 /obj/machinery/turnstile/CheckExit(atom/movable/AM as mob|obj, target)
+	if(istype(AM, /obj/item/projectile))
+		return TRUE
 	if(isliving(AM))
 		var/mob/living/M = AM
 		var/outdir = dir
