@@ -13,15 +13,15 @@
 		if(!CHECK_MOBILITY(L, MOBILITY_USE) && !(flags & ATTACKCHAIN_PARRY_COUNTERATTACK))
 			to_chat(L, "<span class='warning'>You are unable to swing [src] right now!</span>")
 			return
-	if(tool_behaviour && target.tool_act(user, src, tool_behaviour))
+	if(tool_behaviour && ((. = target.tool_act(user, src, tool_behaviour)) & STOP_ATTACK_PROC_CHAIN))
 		return
-	if(pre_attack(target, user, params))
+	if((. |= pre_attack(target, user, params)) & STOP_ATTACK_PROC_CHAIN)
 		return
-	if(target.attackby(src, user, params, flags, damage_multiplier))
+	if((. |= target.attackby(src, user, params, flags, damage_multiplier)) & STOP_ATTACK_PROC_CHAIN)
 		return
 	if(QDELETED(src) || QDELETED(target))
 		return
-	afterattack(target, user, TRUE, params)
+	. |= afterattack(target, user, TRUE, params)
 
 /// Like melee_attack_chain but for ranged.
 /obj/item/proc/ranged_attack_chain(mob/user, atom/target, params)
@@ -40,25 +40,25 @@
 
 /obj/item/proc/pre_attack(atom/A, mob/living/user, params) //do stuff before attackby!
 	if(SEND_SIGNAL(src, COMSIG_ITEM_PRE_ATTACK, A, user, params) & COMPONENT_NO_ATTACK)
-		return TRUE
-	if(!PreatackClickdelayCheck(user, A))
-		return TRUE
-	PreattackClickdelaySet(user, A)
-	return FALSE //return TRUE to avoid calling attackby after this proc does stuff
+		return STOP_ATTACK_PROC_CHAIN
+	if(!CheckAttackCooldown(user, A))
+		return STOP_ATTACK_PROC_CHAIN
 
 // No comment
 /atom/proc/attackby(obj/item/W, mob/user, params)
 	if(SEND_SIGNAL(src, COMSIG_PARENT_ATTACKBY, W, user, params) & COMPONENT_NO_AFTERATTACK)
-		return TRUE
-	return FALSE
+		return STOP_ATTACK_PROC_CHAIN
 
 /obj/attackby(obj/item/I, mob/living/user, params)
-	return ..() || ((obj_flags & CAN_BE_HIT) && I.attack_obj(src, user))
+	. = ..()
+	if(obj_flags & CAN_BE_HIT)
+		. |= I.attack_obj(src, user)
 
 /mob/living/attackby(obj/item/I, mob/living/user, params, attackchain_flags, damage_multiplier)
-	if(..())
-		return TRUE
-	. = I.attack(src, user, attackchain_flags, damage_multiplier)
+	. = ..()
+	if(. & STOP_ATTACK_PROC_CHAIN)
+		return
+	. |= I.attack(src, user, attackchain_flags, damage_multiplier)
 
 /obj/item/proc/attack(mob/living/M, mob/living/user, attackchain_flags = NONE, damage_multiplier = 1)
 	if(SEND_SIGNAL(src, COMSIG_ITEM_ATTACK, M, user) & COMPONENT_ITEM_NO_ATTACK)
@@ -80,7 +80,7 @@
 
 	user.do_attack_animation(M)
 	M.attacked_by(src, user, attackchain_flags, damage_multiplier)
-	PostattackClickdelaySet(user, M)
+	SetAttackCooldown(user, M)
 
 	log_combat(user, M, "attacked", src.name, "(INTENT: [uppertext(user.a_intent)]) (DAMTYPE: [uppertext(damtype)])")
 	add_fingerprint(user)
@@ -97,7 +97,7 @@
 		return
 	user.do_attack_animation(O)
 	O.attacked_by(src, user)
-	PostattackClickdelaySet(user, O)
+	SetAttackCooldown(user, O)
 	var/weight = getweight(user, STAM_COST_ATTACK_OBJ_MULT)
 	if(weight)
 		user.adjustStaminaLossBuffered(weight)//CIT CHANGE - makes attacking things cause stamina loss

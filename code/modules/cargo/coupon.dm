@@ -8,6 +8,7 @@
 	icon = 'icons/obj/card.dmi'
 	item_flags = NOBLUDGEON
 	w_class = WEIGHT_CLASS_TINY
+	attack_cooldown = CLICK_CD_MELEE
 	var/datum/supply_pack/discounted_pack
 	var/discount_pct_off = 0.05
 	var/obj/machinery/computer/cargo/inserted_console

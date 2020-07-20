@@ -366,8 +366,7 @@
 /obj/item/gun/attack_obj(obj/O, mob/user)
 	if(user.a_intent == INTENT_HARM)
 		if(bayonet)
-			O.attackby(bayonet, user)
-			return TRUE
+			return O.attackby(bayonet, user)
 	return ..()
 
 /obj/item/gun/attackby(obj/item/I, mob/user, params)

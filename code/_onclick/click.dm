@@ -111,7 +111,7 @@
 	//User itself, current loc, and user inventory
 	if(A in DirectAccess())
 		if(W)
-			W.melee_attack_chain(src, A, params)
+			. = !(W.melee_attack_chain(src, A, params) & DISCARD_LAST_ACTION)
 		else
 			UnarmedAttack(A)
 		return
@@ -123,15 +123,13 @@
 	//Standard reach turf to turf or reaching inside storage
 	if(CanReach(A,W))
 		if(W)
-			W.melee_attack_chain(src, A, params)
+			. = !(W.melee_attack_chain(src, A, params) & DISCARD_LAST_ACTION)
 		else
-			DelayNextAction(ismob(A)? 8 : 0)
 			UnarmedAttack(A, 1)
 	else
 		if(W)
 			W.ranged_attack_chain(src, A, params)
 		else
-			DelayNextAction(ismob(A)? 8 : 0)
 			RangedAttack(A,params)
 
 //Is the atom obscured by a PREVENT_CLICK_UNDER_1 object above it
