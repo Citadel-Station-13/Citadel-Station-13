@@ -141,10 +141,9 @@
 /datum/reagent/consumable/cooking_oil/reaction_turf(turf/open/T, reac_volume)
 	if(!istype(T) || isgroundlessturf(T))
 		return
-	if(reac_volume >= 5)
+	if(reac_volume >= 5 && holder && holder.chem_temp >= fry_temperature)
 		T.MakeSlippery(TURF_WET_LUBE, min_wet_time = 10 SECONDS, wet_time_to_add = reac_volume * 1.5 SECONDS)
-		T.name = "deep-fried [initial(T.name)]"
-		T.add_atom_colour(color, TEMPORARY_COLOUR_PRIORITY)
+		T.fry(reac_volume/4)
 
 /datum/reagent/consumable/sugar
 	name = "Sugar"
