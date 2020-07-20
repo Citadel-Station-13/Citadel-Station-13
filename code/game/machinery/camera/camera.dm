@@ -235,7 +235,7 @@
 			itemname = P.name
 			info = P.notehtml
 		to_chat(U, "<span class='notice'>You hold \the [itemname] up to the camera...</span>")
-		U.changeNext_move(CLICK_CD_MELEE)
+		U.DelayNextAction(CLICK_CD_MELEE)
 		for(var/mob/O in GLOB.player_list)
 			if(isAI(O))
 				var/mob/living/silicon/ai/AI = O

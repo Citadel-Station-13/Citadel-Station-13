@@ -103,7 +103,7 @@
 	. = ..()
 	if(.)
 		return
-	if(!M.CheckActionCooldown(CLICK_CD_MELEE))
+	if(!user.CheckActionCooldown(CLICK_CD_MELEE))
 		return
 	user.do_attack_animation(src, ATTACK_EFFECT_KICK)
 	user.visible_message("<span class='warning'>[user] hits [src].</span>", null, null, COMBAT_MESSAGE_RANGE)
@@ -112,7 +112,7 @@
 		take_damage(rand(5,10), BRUTE, "melee", 1)
 
 /obj/structure/grille/attack_alien(mob/living/user)
-	if(!M.CheckActionCooldown(CLICK_CD_MELEE))
+	if(!user.CheckActionCooldown(CLICK_CD_MELEE))
 		return
 	user.do_attack_animation(src)
 	user.visible_message("<span class='warning'>[user] mangles [src].</span>", null, null, COMBAT_MESSAGE_RANGE)

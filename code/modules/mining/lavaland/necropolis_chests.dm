@@ -686,7 +686,7 @@
 	. = ..()
 	if(.)
 		transform_cooldown = world.time + (CLICK_CD_MELEE * 0.5)
-		user.changeNext_move(CLICK_CD_MELEE * 0.25)
+		user.SetNextAction(CLICK_CD_MELEE * 0.25)
 
 /obj/item/melee/transforming/cleaving_saw/transform_messages(mob/living/user, supress_message_text)
 	if(!supress_message_text)
@@ -702,9 +702,10 @@
 		user.take_bodypart_damage(10)
 
 /obj/item/melee/transforming/cleaving_saw/melee_attack_chain(mob/user, atom/target, params)
-	..()
+	. = ..()
 	if(!active)
-		user.changeNext_move(CLICK_CD_MELEE * 0.5) //when closed, it attacks very rapidly
+		user.SetNextAction(CLICK_CD_MELEE * 0.5) //when closed, it attacks very rapidly
+		. |= MANUALLY_HANDLE_LAST_ACTION
 
 /obj/item/melee/transforming/cleaving_saw/nemesis_effects(mob/living/user, mob/living/target)
 	var/datum/status_effect/stacking/saw_bleed/B = target.has_status_effect(STATUS_EFFECT_SAWBLEED)

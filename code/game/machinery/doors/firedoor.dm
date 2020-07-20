@@ -24,6 +24,8 @@
 	armor = list("melee" = 30, "bullet" = 30, "laser" = 20, "energy" = 20, "bomb" = 10, "bio" = 100, "rad" = 100, "fire" = 95, "acid" = 70)
 	interaction_flags_machine = INTERACT_MACHINE_WIRES_IF_OPEN | INTERACT_MACHINE_ALLOW_SILICON | INTERACT_MACHINE_OPEN_SILICON | INTERACT_MACHINE_REQUIRES_SILICON | INTERACT_MACHINE_OPEN
 	air_tight = TRUE
+	attack_hand_is_action = TRUE
+	attack_hand_speed = CLICK_CD_MELEE
 	var/emergency_close_timer = 0
 	var/nextstate = null
 	var/boltslocked = TRUE
@@ -89,7 +91,6 @@
 		stat |= NOPOWER
 
 /obj/machinery/door/firedoor/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
-
 	if(!welded && !operating && !(stat & NOPOWER) && (!density || allow_hand_open(user)))
 		add_fingerprint(user)
 		if(density)
@@ -100,7 +101,6 @@
 		return TRUE
 	if(operating || !density)
 		return
-	user.changeNext_move(CLICK_CD_MELEE)
 
 	user.visible_message("[user] bangs on \the [src].",
 						 "You bang on \the [src].")

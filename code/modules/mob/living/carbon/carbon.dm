@@ -377,7 +377,7 @@
 			if (W)
 				W.layer = initial(W.layer)
 				W.plane = initial(W.plane)
-		changeNext_move(0)
+		SetNextAction(0)
 	if (legcuffed)
 		var/obj/item/W = legcuffed
 		legcuffed = null
@@ -390,7 +390,7 @@
 			if (W)
 				W.layer = initial(W.layer)
 				W.plane = initial(W.plane)
-		changeNext_move(0)
+		SetNextAction(0)
 	update_equipment_speed_mods() // In case cuffs ever change speed
 
 /mob/living/carbon/proc/clear_cuffs(obj/item/I, cuff_break)

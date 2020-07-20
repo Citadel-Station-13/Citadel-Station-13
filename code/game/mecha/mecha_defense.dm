@@ -251,7 +251,7 @@
 		return
 
 	else if(istype(W, /obj/item/weldingtool) && user.a_intent != INTENT_HARM)
-		user.changeNext_move(CLICK_CD_MELEE)
+		user.DelayNextAction(CLICK_CD_MELEE)
 		if(obj_integrity < max_integrity)
 			if(W.use_tool(src, user, 0, volume=50, amount=1))
 				if (internal_damage & MECHA_INT_TANK_BREACH)
