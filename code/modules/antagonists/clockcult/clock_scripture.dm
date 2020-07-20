@@ -3,8 +3,9 @@ Tiers and Requirements
 
 Pieces of scripture require certain follower counts, contruction value, and active caches in order to recite.
 Drivers: Unlocked by default
-Scripts: 5 servants and a cache
-Applications: 8 servants, 3 caches, and 100 CV
+Scripts: 35k power or one convert
+Applications: 50k or three converts
+Judgement 5 converts
 */
 
 /datum/clockwork_scripture

@@ -23,8 +23,8 @@
 	var/active = FALSE
 	var/progress_in_seconds = 0 //Once this reaches GATEWAY_RATVAR_ARRIVAL, it's game over
 	var/grace_period = ARK_GRACE_PERIOD //This exists to allow the crew to gear up and prepare for the invasion
-	var/initial_activation_delay = -1 //How many seconds the Ark will have initially taken to activate
-	var/seconds_until_activation = -1 //How many seconds until the Ark activates; if it should never activate, set this to -1
+	var/initial_activation_delay = 10 //How many seconds the Ark will have initially taken to activate
+	var/seconds_until_activation = 50 //How many seconds until the Ark activates; if it should never activate, set this to -1
 	var/purpose_fulfilled = FALSE
 	var/first_sound_played = FALSE
 	var/second_sound_played = FALSE
@@ -38,6 +38,7 @@
 
 /obj/structure/destructible/clockwork/massive/celestial_gateway/Initialize()
 	. = ..()
+	INVOKE_ASYNC(src, .proc/spawn_animation)
 	glow = new(get_turf(src))
 	if(!GLOB.ark_of_the_clockwork_justiciar)
 		GLOB.ark_of_the_clockwork_justiciar = src
@@ -49,7 +50,7 @@
 		flick("clockwork_gateway_damaged", glow)
 		playsound(src, 'sound/machines/clockcult/ark_damage.ogg', 75, FALSE)
 		if(last_scream < world.time)
-			audible_message("<span class='boldwarning'>An unearthly screaming sound resonates throughout Reebe!</span>")
+			audible_message("<span class='boldwarning'>An unearthly screaming sound resonates throughout the area!</span>")
 			for(var/V in GLOB.player_list)
 				var/mob/M = V
 				var/turf/T = get_turf(M)
@@ -60,9 +61,7 @@
 
 /obj/structure/destructible/clockwork/massive/celestial_gateway/proc/final_countdown(ark_time) //WE'RE LEAVING TOGETHEEEEEEEEER
 	if(!ark_time)
-		ark_time = 30 //minutes
-	initial_activation_delay = ark_time * 60
-	seconds_until_activation = ark_time * 60 //60 seconds in a minute * number of minutes
+		ark_time = 5 //5 minutes
 	for(var/obj/item/clockwork/construct_chassis/cogscarab/C in GLOB.all_clockwork_objects)
 		C.infinite_resources = FALSE
 	GLOB.servants_active = TRUE
@@ -70,7 +69,7 @@
 
 /obj/structure/destructible/clockwork/massive/celestial_gateway/proc/cry_havoc()
 	visible_message("<span class='boldwarning'>[src] shudders and roars to life, its parts beginning to whirr and screech!</span>")
-	hierophant_message("<span class='bold large_brass'>The Ark is activating! You will be transported there soon!</span>")
+	hierophant_message("<span class='bold large_brass'>The Ark is activating!</span>")
 	for(var/mob/M in GLOB.player_list)
 		var/turf/T = get_turf(M)
 		if(is_servant_of_ratvar(M) || isobserver(M) || (T && T.z == z))
@@ -83,8 +82,7 @@
 	active = TRUE
 	priority_announce("Massive [Gibberish("bluespace", 100)] anomaly detected on all frequencies. All crew are directed to \
 	@!$, [text2ratvar("PURGE ALL UNTRUTHS")] <&. the anomalies and destroy their source to prevent further damage to corporate property. This is \
-	not a drill.[grace_period ? " Estimated time of appearance: [grace_period] seconds. Use this time to prepare for an attack on [station_name()]." : ""]", \
-	"Central Command Higher Dimensional Affairs", 'sound/magic/clockwork/ark_activation.ogg')
+	not a drill.", "Central Command Higher Dimensional Affairs", 'sound/magic/clockwork/ark_activation.ogg')
 	set_security_level("delta")
 	for(var/V in SSticker.mode.servants_of_ratvar)
 		var/datum/mind/M = V
@@ -98,8 +96,6 @@
 			continue
 		if(R.title == "wall gear")
 			R.time *= 2 //Building walls becomes slower when the Ark activates
-	mass_recall()
-	recalls_remaining++ //So it doesn't use up a charge
 
 	var/turf/T = get_turf(src)
 	var/list/open_turfs = list()
@@ -114,10 +110,39 @@
 	new/obj/effect/clockwork/city_of_cogs_rift(T)
 
 /obj/structure/destructible/clockwork/massive/celestial_gateway/proc/spawn_animation()
-	hierophant_message("<span class='bold large_brass'>The Ark has activated! [grace_period ? "You have [round(grace_period / 60)] minutes until the crew invades! " : ""]Defend it at all costs!</span>", FALSE, src)
-	sound_to_playing_players(volume = 10, channel = CHANNEL_JUSTICAR_ARK, S = sound('sound/effects/clockcult_gateway_charging.ogg', TRUE))
-	seconds_until_activation = 0
+	var/turf/T = get_turf(src)
+	new/obj/effect/clockwork/general_marker/inathneq(T)
+	hierophant_message("<span class='inathneq'>\"[text2ratvar("Engine, come forth and show your servants your mercy")]!\"</span>")
+	playsound(T, 'sound/magic/clockwork/invoke_general.ogg', 30, 0)
+	sleep(10)
+	new/obj/effect/clockwork/general_marker/sevtug(T)
+	hierophant_message("<span class='sevtug'>\"[text2ratvar("Engine, come forth and show this station your decorating skills")]!\"</span>")
+	playsound(T, 'sound/magic/clockwork/invoke_general.ogg', 45, 0)
+	sleep(10)
+	new/obj/effect/clockwork/general_marker/nezbere(T)
+	hierophant_message("<span class='nezbere'>\"[text2ratvar("Engine, come forth and shine your light across this realm")]!!\"</span>")
+	playsound(T, 'sound/magic/clockwork/invoke_general.ogg', 60, 0)
+	sleep(10)
+	new/obj/effect/clockwork/general_marker/nzcrentr(T)
+	hierophant_message("<span class='nzcrentr'>\"[text2ratvar("Engine, come forth")].\"</span>")
+	playsound(T, 'sound/magic/clockwork/invoke_general.ogg', 75, 0)
+	sleep(10)
+	playsound(T, 'sound/magic/clockwork/invoke_general.ogg', 100, 0)
+	var/list/open_turfs = list()
+	for(var/turf/open/OT in orange(1, T))
+		if(!is_blocked_turf(OT, TRUE))
+			open_turfs |= OT
+	if(open_turfs.len)
+		for(var/mob/living/L in T)
+			L.forceMove(pick(open_turfs))
+
+	glow = new(get_turf(src))
+	countdown = new(src)
+	countdown.start()
+	var/area/gate_area = get_area(src)
+	hierophant_message("<span class='large_brass'><b>An Ark of the Clockwork Justicar has been created in [gate_area.map_name]!</b></span>", FALSE, src)
 	SSshuttle.registerHostileEnvironment(src)
+	START_PROCESSING(SSprocessing, src)
 
 /obj/structure/destructible/clockwork/massive/celestial_gateway/proc/initiate_mass_recall()
 	recalling = TRUE
@@ -229,17 +254,14 @@
 		if(!active)
 			. += "<span class='big'><b>Time until the Ark's activation:</b> [DisplayTimeText(get_arrival_time())]</span>"
 		else
-			if(grace_period)
-				. += "<span class='big'><b>Crew grace period time remaining:</b> [DisplayTimeText(get_arrival_time())]</span>"
-			else
-				. += "<span class='big'><b>Time until Ratvar's arrival:</b> [DisplayTimeText(get_arrival_time())]</span>"
-				switch(progress_in_seconds)
-					if(-INFINITY to GATEWAY_REEBE_FOUND)
-						. += "<span class='heavy_brass'>The Ark is feeding power into the bluespace field.</span>"
-					if(GATEWAY_REEBE_FOUND to GATEWAY_RATVAR_COMING)
-						. += "<span class='heavy_brass'>The field is ripping open a copy of itself in Ratvar's prison.</span>"
-					if(GATEWAY_RATVAR_COMING to INFINITY)
-						. += "<span class='heavy_brass'>With the bluespace field established, Ratvar is preparing to come through!</span>"
+			. += "<span class='big'><b>Time until Ratvar's arrival:</b> [DisplayTimeText(get_arrival_time())]</span>"
+			switch(progress_in_seconds)
+				if(-INFINITY to GATEWAY_REEBE_FOUND)
+					. += "<span class='heavy_brass'>The Ark is feeding power into the bluespace field.</span>"
+				if(GATEWAY_REEBE_FOUND to GATEWAY_RATVAR_COMING)
+					. += "<span class='heavy_brass'>The field is ripping open a copy of itself in Ratvar's prison.</span>"
+				if(GATEWAY_RATVAR_COMING to INFINITY)
+					. += "<span class='heavy_brass'>With the bluespace field established, Ratvar is preparing to come through!</span>"
 	else
 		if(!active)
 			. += "<span class='warning'>Whatever it is, it doesn't seem to be active.</span>"
@@ -261,12 +283,9 @@
 			countdown = new(src)
 			countdown.start()
 		seconds_until_activation--
-		if(!GLOB.script_scripture_unlocked && initial_activation_delay * 0.5 > seconds_until_activation)
-			GLOB.script_scripture_unlocked = TRUE
-			hierophant_message("<span class='large_brass bold'>The Ark is halfway prepared. Script scripture is now available!</span>")
 		if(!seconds_until_activation)
 			cry_havoc()
-			seconds_until_activation = -1 //we'll set this after cry_havoc()
+			seconds_until_activation = 30 //we'll set this after cry_havoc()
 		return
 	if(!first_sound_played || prob(7))
 		for(var/mob/M in GLOB.player_list)

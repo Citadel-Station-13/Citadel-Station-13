@@ -1,3 +1,6 @@
+//this needs heavily updated, but the mode should work without it if its testmerged, the ark stops the shuttle from launching anyway so as long as they summon it things should be fine
+
+
 //Prolonging Prism: A prism that consumes power to delay the shuttle
 /obj/structure/destructible/clockwork/powered/prolonging_prism
 	name = "prolonging prism"

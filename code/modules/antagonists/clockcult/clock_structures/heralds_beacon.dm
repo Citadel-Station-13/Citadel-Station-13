@@ -1,3 +1,5 @@
+
+
 //Used to "declare war" against the station. The servants' equipment will be permanently supercharged, and the Ark given extra time to prepare.
 //This will send an announcement to the station, meaning that they will be warned very early in advance about the impending attack.
 /obj/structure/destructible/clockwork/heralds_beacon
@@ -108,5 +110,4 @@
 			to_chat(H, "<span class='bold alloy'>The beacon's power warps your body into a clockwork form! You are now immune to many hazards, and your body is more robust against damage!</span>")
 			H.set_species(/datum/species/golem/clockwork/no_scrap)
 	var/obj/structure/destructible/clockwork/massive/celestial_gateway/G = GLOB.ark_of_the_clockwork_justiciar
-	G.grace_period = FALSE //no grace period if we've declared war
 	G.recalls_remaining++

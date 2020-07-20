@@ -27,9 +27,6 @@
 	if(C.clock_team.eminence)
 		to_chat(user, "<span class='warning'>There's already an Eminence!</span>")
 		return
-	if(!GLOB.servants_active)
-		to_chat(user, "<span class='warning'>The Ark isn't active!</span>")
-		return
 	if(eminence_nominee) //This could be one large proc, but is split into three for ease of reading
 		if(eminence_nominee == user)
 			cancelation(user)
