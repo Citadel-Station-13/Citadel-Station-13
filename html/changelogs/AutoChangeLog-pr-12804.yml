@@ -1,0 +1,4 @@
+author: "Arturlang"
+delete-after: True
+changes: 
+  - bugfix: "Decal painter ui now works, yay?"
