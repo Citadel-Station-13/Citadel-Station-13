@@ -589,6 +589,8 @@ GLOBAL_VAR_INIT(exploit_warn_spam_prevention, 0)
 /mob/Stat()
 	..()
 
+	SSvote?.render_statpanel(src)
+
 	//This is only called from client/Stat(), let's assume client exists.
 
 	if(statpanel("Status"))
