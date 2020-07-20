@@ -128,11 +128,9 @@
 	target.face_atom(L)
 	target.Stun(power_time)
 	to_chat(L, "<span class='notice'>[target] is fixed in place by your hypnotic gaze.</span>")
-	target.next_move = world.time + power_time // <--- Use direct change instead. We want an unmodified delay to their next move //    target.changeNext_move(power_time) // check click.dm
-	target.mob_transforming = TRUE // <--- Fuck it. We tried using next_move, but they could STILL resist. We're just doing a hard freeze.
+	target.DelayNextAction(power_time)
 	spawn(power_time)
 	if(istype(target) && success)
-		target.mob_transforming = FALSE
 		if(istype(L) && target.stat == CONSCIOUS && (target in L.fov_view(10))) // They Woke Up! (Notice if within view)
 			to_chat(L, "<span class='warning'>[target] has snapped out of their trance.</span>")
 

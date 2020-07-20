@@ -137,14 +137,14 @@
 	return TRUE
 
 /turf/closed/wall/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
-	if(!M.CheckActionCooldown(CLICK_CD_MELEE))
+	if(!user.CheckActionCooldown(CLICK_CD_MELEE))
 		return
 	to_chat(user, "<span class='notice'>You push the wall but nothing happens!</span>")
 	playsound(src, 'sound/weapons/genhit.ogg', 25, 1)
 	add_fingerprint(user)
 
 /turf/closed/wall/attackby(obj/item/W, mob/user, params)
-	if(!M.CheckActionCooldown(CLICK_CD_MELEE))
+	if(!user.CheckActionCooldown(CLICK_CD_MELEE))
 		return
 	if (!user.IsAdvancedToolUser())
 		to_chat(user, "<span class='warning'>You don't have the dexterity to do this!</span>")

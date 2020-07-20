@@ -136,7 +136,7 @@
 	target = A
 	if(!isturf(loc))
 		return
-	if(next_move > world.time)
+	if(!CheckActionCooldown())
 		return
 	if(hopping)
 		return

@@ -81,9 +81,7 @@
 	var/mist_delay = max(5, 20 - level_current * 2.5) // Level up and do this faster.
 
 	// Freeze Me
-	user.next_move = world.time + mist_delay
 	user.Stun(mist_delay, ignore_canstun = TRUE)
-	user.mob_transforming = TRUE
 	user.density = FALSE
 	var/invis_was = user.invisibility
 	user.invisibility = INVISIBILITY_MAXIMUM
@@ -96,7 +94,6 @@
 	// Move & Freeze
 	if(isturf(target_turf))
 		do_teleport(owner, target_turf, no_effects=TRUE, channel = TELEPORT_CHANNEL_QUANTUM) // in teleport.dm?
-	user.next_move = world.time + mist_delay / 2
 	user.Stun(mist_delay / 2, ignore_canstun = TRUE)
 
 	// Wait...
@@ -104,9 +101,7 @@
 
 	// Un-Hide & Freeze
 	user.dir = get_dir(my_turf, target_turf)
-	user.next_move = world.time + mist_delay / 2
 	user.Stun(mist_delay / 2, ignore_canstun = TRUE)
-	user.mob_transforming = FALSE
 	user.density = 1
 	user.invisibility = invis_was
 

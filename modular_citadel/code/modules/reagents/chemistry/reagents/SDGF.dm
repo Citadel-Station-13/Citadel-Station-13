@@ -112,7 +112,7 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 				M.visible_message("[M] suddenly shudders, and splits into two identical twins!")
 				SM.copy_languages(M, LANGUAGE_MIND)
 				playerClone =  TRUE
-				M.next_move_modifier = 1
+				M.action_cooldown_mod = 1
 				M.adjust_nutrition(-500)
 
 				//Damage the clone
@@ -154,7 +154,7 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 							M.adjust_nutrition(M.nutrition/5)
 						if(50)
 							to_chat(M, "<span class='notice'>The synthetic cells begin to merge with your body, it feels like your body is made of a viscous water, making your movements difficult.</span>")
-							M.next_move_modifier += 4//If this makes you fast then please fix it, it should make you slow!!
+							M.action_cooldown_mod += 4//If this makes you fast then please fix it, it should make you slow!!
 							//candidates = pollGhostCandidates("Do you want to play as a clone of [M.name] and do you agree to respect their character and act in a similar manner to them? I swear to god if you diddle them I will be very disapointed in you. ", "FermiClone", null, ROLE_SENTIENCE, 300) // see poll_ignore.dm, should allow admins to ban greifers or bullies
 						if(51 to 79)
 							M.adjust_nutrition(M.nutrition/2)
@@ -164,7 +164,7 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 								M.set_nutrition(20000) //https://www.youtube.com/watch?v=Bj_YLenOlZI
 						if(86)//Upon splitting, you get really hungry and are capable again. Deletes the chem after you're done.
 							M.set_nutrition(15)//YOU BEST BE EATTING AFTER THIS YOU CUTIE
-							M.next_move_modifier -= 4
+							M.action_cooldown_mod -= 4
 							to_chat(M, "<span class='notice'>Your body splits away from the cell clone of yourself, leaving you with a drained and hollow feeling inside.</span>")
 
 							//clone

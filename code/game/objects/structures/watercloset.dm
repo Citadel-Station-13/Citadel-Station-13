@@ -167,6 +167,8 @@
 	icon_state = "urinal"
 	density = FALSE
 	anchored = TRUE
+	attack_hand_speed = CLICK_CD_MELEE
+	attack_hand_is_action = TRUE
 	var/exposed = 0 // can you currently put an item inside
 	var/obj/item/hiddenitem = null // what's in the urinal
 
@@ -181,7 +183,6 @@
 			if(GM.loc != get_turf(src))
 				to_chat(user, "<span class='notice'>[GM.name] needs to be on [src].</span>")
 				return
-			user.changeNext_move(CLICK_CD_MELEE)
 			user.visible_message("<span class='danger'>[user] slams [GM] into [src]!</span>", "<span class='danger'>You slam [GM] into [src]!</span>")
 			GM.adjustBruteLoss(8)
 		else
