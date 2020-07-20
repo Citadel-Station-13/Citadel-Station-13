@@ -1,10 +1,10 @@
-/obj/item/storage/pill_bottle/dice
+/obj/item/storage/box/dice
 	name = "bag of dice"
 	desc = "Contains all the luck you'll ever need."
 	icon = 'icons/obj/dice.dmi'
 	icon_state = "dicebag"
 
-/obj/item/storage/pill_bottle/dice/Initialize()
+/obj/item/storage/box/dice/Initialize()
 	. = ..()
 	var/special_die = pick("1","2","fudge","space","00","8bd20","4dd6","100")
 	if(special_die == "1")
@@ -30,7 +30,7 @@
 	if(special_die == "100")
 		new /obj/item/dice/d100(src)
 
-/obj/item/storage/pill_bottle/dice/suicide_act(mob/user)
+/obj/item/storage/box/dice/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is gambling with death! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	return (OXYLOSS)
 
