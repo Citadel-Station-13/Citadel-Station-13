@@ -20,7 +20,8 @@ GLOBAL_VAR_INIT(ark_of_the_clockwork_justiciar, FALSE) //The Ark on the Reebe z-
 
 GLOBAL_VAR_INIT(clockwork_gateway_activated, FALSE) //if a gateway to the celestial derelict has ever been successfully activated
 GLOBAL_VAR_INIT(script_scripture_unlocked, FALSE) //If script scripture is available, through converting at least one crewmember
-GLOBAL_VAR_INIT(application_scripture_unlocked, FALSE) //If script scripture is available
+GLOBAL_VAR_INIT(application_scripture_unlocked, FALSE) //If application scripture is available
+GLOBAL_VAR_INIT(judgement_scripture_unlocked, FALSE) //If judgement scripture is available
 GLOBAL_LIST_EMPTY(all_scripture) //a list containing scripture instances; not used to track existing scripture
 
 //Scripture tiers and requirements; peripherals should never be used
@@ -34,6 +35,7 @@ GLOBAL_LIST_EMPTY(all_scripture) //a list containing scripture instances; not us
 #define MAX_CLOCKWORK_POWER 80000 //The max power in W that the cult can stockpile
 #define SCRIPT_UNLOCK_THRESHOLD 35000 //Scripts will unlock if the total power reaches this amount
 #define APPLICATION_UNLOCK_THRESHOLD 50000 //Applications will unlock if the total power reaches this amount
+#define JUDGEMENT_UNLOCK_THRESHOLD 80000
 
 //clockcult power defines
 #define MIN_CLOCKCULT_POWER 25 //the minimum amount of power clockcult machines will handle gracefully

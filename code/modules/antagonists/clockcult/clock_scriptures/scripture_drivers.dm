@@ -191,6 +191,7 @@
 	Click your slab to cancel.</b></span>"
 
 
+/*//commenting this out until its reworked to actually do random teleports
 //Abscond: Used to return to Reebe.
 /datum/clockwork_scripture/abscond
 	descname = "Safety warp, teleports you somewhere random. moderately high power cost to use."
@@ -212,7 +213,7 @@
 
 /datum/clockwork_scripture/abscond/check_special_requirements()
 	if(is_reebe(invoker.z))
-		to_chat(invoker, "<span class='danger'>You're at Reebe.</span>")
+		to_chat(invoker, "<span class='danger'>You're at Reebe, attempting to warp in the void could cause you to share your masters fate of banishment!.</span>")
 		return
 	if(!isturf(invoker.loc))
 		to_chat(invoker, "<span class='danger'>You must be visible to warp!</span>")
@@ -236,8 +237,7 @@
 	playsound(invoker, 'sound/magic/magic_missile.ogg', 50, TRUE)
 	playsound(T, 'sound/magic/magic_missile.ogg', 50, TRUE)
 	do_sparks(5, TRUE, invoker)
-	do_sparks(5, TRUE, T)
-	if(invoker.client)
+	do_sparks(5, TRUE, T)*/
 
 
 //Replicant: Creates a new clockwork slab.
@@ -251,7 +251,7 @@
 	whispered = TRUE
 	object_path = /obj/item/clockwork/slab
 	creator_message = "<span class='brass'>You copy a piece of replicant alloy and command it into a new slab.</span>"
-	usage_tip = "This is inefficient as a way to produce components, as the slab produced must be held by someone with no other slabs to produce components."
+	usage_tip = "This is inefficient as a way to produce power, as the slab produced must be held by someone with no other slabs to produce any."
 	tier = SCRIPTURE_DRIVER
 	space_allowed = TRUE
 	primary_component = GEIS_CAPACITOR
@@ -289,6 +289,7 @@
 	invocations = list("Spatial Gateway...", "...activate!")
 	channel_time = 80
 	power_cost = 400
+	whispered = TRUE
 	multiple_invokers_used = TRUE
 	multiple_invokers_optional = TRUE
 	usage_tip = "This gateway is strictly one-way and will only allow things through the invoker's portal."

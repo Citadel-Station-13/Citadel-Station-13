@@ -1,5 +1,5 @@
 ///////////////
-// JUDGEMENT // For the big game changing things. Summonable generals soon, just need sprites for them.
+// JUDGEMENT // For the big game changing things. TODO: Summonable generals, just need mob sprites for them.
 ///////////////
 
 //Ark of the Clockwork Justiciar: Creates a Gateway to the Celestial Derelict, summoning ratvar.
@@ -12,15 +12,15 @@
 	"THE TIME HAS COME FOR OUR MASTER TO BREAK THE CHAINS OF EXILE!!", \
 	"LEND US YOUR AID! ENGINE COMES!!")
 	channel_time = 150
-	power_cost = 75000 //75 KW. It's literally the thing wrenching the god out of another dimension why wouldn't it be costly.
+	power_cost = 70000 //70 KW. It's literally the thing wrenching the god out of another dimension why wouldn't it be costly.
 	invokers_required = 6
 	multiple_invokers_used = TRUE
 	object_path = /obj/structure/destructible/clockwork/massive/celestial_gateway
 	creator_message = "<span class='heavy_brass'>The Ark swirls into existance before you with the help of the Generals. After all this time, he shall, finally, be free</span>"
 	usage_tip = "The gateway is completely vulnerable to attack during its five-minute duration. It will periodically give indication of its general position to everyone on the station \
 	as well as being loud enough to be heard throughout the entire sector. Defend it with your life!"
-	tier = SCRIPTURE_JUDGEMENT
-	sort_priority = 1
+	tier = SCRIPTURE_APPLICATION
+	sort_priority = 6
 
 /datum/clockwork_scripture/create_object/ark_of_the_clockwork_justiciar/check_special_requirements()
 	if(!slab.no_cost)
@@ -33,7 +33,7 @@
 			return FALSE
 		var/area/A = get_area(invoker)
 		var/turf/T = get_turf(invoker)
-		if(!T || !(T.z in GLOB.station_z_levels) || istype(A, /area/shuttle) || !A.blob_allowed)
+		if(!T || !is_station_level(T.z) || istype(A, /area/shuttle) || !A.blob_allowed)
 			to_chat(invoker, "<span class='warning'>You must be on the station to activate the Ark!</span>")
 			return FALSE
 		if(GLOB.clockwork_gateway_activated)
