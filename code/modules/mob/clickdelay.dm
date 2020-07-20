@@ -124,12 +124,13 @@
 
 /atom
 	// Standard clickdelay variables
+	// These 3 are all handled at base of atom/attack_hand so uh.. yeah. Make sure that's called.
 	/// Amount of time to check for from a mob's last attack to allow an attack_hand().
-	var/clickdelay_attack_hand_preattack_cooldown = CLICK_CD_MELEE
-	/// Should we set last action before or after attack hand passes?
-	var/clickdelay_attack_hand_set_preattack = FALSE
+	var/attack_hand_speed = CLICK_CD_MELEE
+	/// Amount of time to hard stagger (no clicking at all) the mob post attack_hand(). Lower = better
+	var/attack_hand_unwieldlyness = 0
 	/// Should we set last action for attack hand?
-	var/clickdelay_attack_hand_is_action = FALSE
+	var/attack_hand_is_action = FALSE
 
 /obj/item
 	// Standard clickdelay variables
@@ -148,10 +149,10 @@
   * Checks if a user's clickdelay is met for a standard attack, this is called before an attack happens.
   */
 /obj/item/proc/CheckAttackCooldown(mob/user, atom/target)
-	return user.CheckActionCooldown(action_cooldown_preattack, clickdelay_from_next_action, clickdelay_mod_bypass, clickdelay_ignores_next_action)
+	return user.CheckActionCooldown(attack_speed, clickdelay_from_next_action, clickdelay_mod_bypass, clickdelay_ignores_next_action)
 
 /**
   * Called after a successful attack to set a mob's clickdelay.
   */
 /obj/item/proc/ApplyAttackCooldown(mob/user, atom/target)
-	user.DelayNextAction(postattack_cooldown_penalty, clickdelay_mod_bypass, FALSE)
+	user.DelayNextAction(attack_unwieldlyness, clickdelay_mod_bypass, FALSE)
