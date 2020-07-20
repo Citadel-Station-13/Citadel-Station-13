@@ -205,7 +205,7 @@
 			return ..()
 
 
-/obj/structure/bonfire/attack_hand(mob/user)
+/obj/structure/bonfire/attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	. = ..()
 	if(.)
 		return
@@ -226,8 +226,8 @@
 	if(isopenturf(loc))
 		var/turf/open/O = loc
 		if(O.air)
-			var/loc_gases = O.air.gases
-			if(loc_gases[/datum/gas/oxygen] > 13)
+			var/datum/gas_mixture/loc_air = O.air
+			if(loc_air.get_moles(/datum/gas/oxygen) > 13)
 				return TRUE
 	return FALSE
 

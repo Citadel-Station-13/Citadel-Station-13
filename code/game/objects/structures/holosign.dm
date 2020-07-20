@@ -25,7 +25,7 @@
 		projector = null
 	return ..()
 
-/obj/structure/holosign/attack_hand(mob/living/user)
+/obj/structure/holosign/attack_hand(mob/living/user, act_intent = user.a_intent, unarmed_attack_flags)
 	. = ..()
 	if(.)
 		return
@@ -94,7 +94,7 @@
 	alpha = 150
 	resistance_flags = FIRE_PROOF
 
-/obj/structure/holosign/barrier/firelock/blocksTemperature()
+/obj/structure/holosign/barrier/firelock/BlockSuperconductivity()
 	return TRUE
 
 /obj/structure/holosign/barrier/combifan
@@ -110,7 +110,7 @@
 	CanAtmosPass = ATMOS_PASS_NO
 	resistance_flags = FIRE_PROOF
 
-/obj/structure/holosign/barrier/combifan/blocksTemperature()
+/obj/structure/holosign/barrier/combifan/BlockSuperconductivity()
 	return TRUE
 
 /obj/structure/holosign/barrier/combifan/Initialize()
@@ -162,7 +162,7 @@
 				return TRUE //nice or benign diseases!
 	return TRUE
 
-/obj/structure/holosign/barrier/medical/attack_hand(mob/living/user)
+/obj/structure/holosign/barrier/medical/attack_hand(mob/living/user, act_intent = user.a_intent, unarmed_attack_flags)
 	if(CanPass(user) && user.a_intent == INTENT_HELP)
 		force_allaccess = !force_allaccess
 		to_chat(user, "<span class='warning'>You [force_allaccess ? "deactivate" : "activate"] the biometric scanners.</span>") //warning spans because you can make the station sick!
@@ -182,7 +182,7 @@
 /obj/structure/holosign/barrier/cyborg/hacked/proc/cooldown()
 	shockcd = FALSE
 
-/obj/structure/holosign/barrier/cyborg/hacked/attack_hand(mob/living/user)
+/obj/structure/holosign/barrier/cyborg/hacked/attack_hand(mob/living/user, act_intent = user.a_intent, unarmed_attack_flags)
 	. = ..()
 	if(.)
 		return

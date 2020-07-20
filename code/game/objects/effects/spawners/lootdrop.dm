@@ -451,7 +451,7 @@
 	lootcount = 1
 	spawn_on_turf = FALSE
 //Note this is out of a 100 - Meaning the number you see is also the percent its going to pick that
-//This is ment for "low" loot that anyone could fine in a toilet, for better gear use high loot toilet
+//This is meant for "low" loot that anyone could find in a toilet, for better gear use high loot toilet
 	loot = list("" = 30,
 		/obj/item/lighter = 2,
 		/obj/item/tape/random = 1,
@@ -476,7 +476,7 @@
 	lootcount = 1
 	spawn_on_turf = FALSE
 //Note this is out of a 100 - Meaning the number you see is also the percent its going to pick that
-//This is ment for "prison" loot that is rather rare and ment for "prisoners if they get a crowbar to fine, or sec.
+//This is meant for "prison" loot that is rather rare and meant for "prisoners if they get a crowbar to fine, or sec.
 	loot = list("" = 10,
 		/obj/item/lighter = 5,
 		/obj/item/poster/random_contraband = 5,
@@ -666,28 +666,18 @@
 	lootcount = 1
 	spawn_on_turf = FALSE
 	loot = list("" = 50,
-		/obj/item/weaponcrafting/improvised_parts/barrel_rifle = 10,
-		/obj/item/weaponcrafting/improvised_parts/barrel_shotgun = 5,
-		/obj/item/weaponcrafting/improvised_parts/barrel_pistol = 5,
-		/obj/item/weaponcrafting/improvised_parts/rifle_receiver = 10,
-		/obj/item/weaponcrafting/improvised_parts/shotgun_receiver = 3,
-		/obj/item/weaponcrafting/improvised_parts/pistol_receiver = 3,
-		/obj/item/weaponcrafting/improvised_parts/laser_receiver = 1,
-		/obj/item/weaponcrafting/improvised_parts/trigger_assembly = 10,
-		/obj/item/weaponcrafting/improvised_parts/makeshift_lens = 3,
+		/obj/item/weaponcrafting/improvised_parts/rifle_receiver = 13,
+		/obj/item/weaponcrafting/improvised_parts/shotgun_receiver = 13,
+		/obj/item/weaponcrafting/improvised_parts/trigger_assembly = 12,
 		)
 
 /obj/effect/spawner/lootdrop/weapon_parts
-	name = "random weapon parts spawner 25%"
+	name = "random weapon parts spawner 20%"
 	lootcount = 1
 	spawn_on_turf = FALSE
-	loot = list("" = 75,
-		/obj/item/weaponcrafting/improvised_parts/barrel_rifle = 5,
-		/obj/item/weaponcrafting/improvised_parts/barrel_pistol = 5,
+	loot = list("" = 80,
 		/obj/item/weaponcrafting/improvised_parts/rifle_receiver = 5,
-		/obj/item/weaponcrafting/improvised_parts/pistol_receiver = 2,
 		/obj/item/weaponcrafting/improvised_parts/trigger_assembly = 5,
-		/obj/item/weaponcrafting/improvised_parts/makeshift_lens = 3,
 		)
 
 /obj/effect/spawner/lootdrop/ammo
@@ -695,8 +685,6 @@
 	lootcount = 1
 	spawn_on_turf = FALSE
 	loot = list("" = 25,
-		/obj/item/ammo_box/c32mm = 15,
-		/obj/item/ammo_box/r32mm = 15,
 		/obj/item/ammo_box/magazine/wt550m9 = 1,
 		/obj/item/ammo_casing/shotgun/buckshot = 7,
 		/obj/item/ammo_casing/shotgun/rubbershot = 7,
@@ -709,8 +697,6 @@
 	lootcount = 1
 	spawn_on_turf = FALSE
 	loot = list("" = 50,
-		/obj/item/ammo_box/c32mm = 7,
-		/obj/item/ammo_box/r32mm = 7,
 		/obj/item/ammo_box/magazine/wt550m9 = 2,
 		/obj/item/ammo_casing/shotgun/buckshot = 10,
 		/obj/item/ammo_casing/shotgun/rubbershot = 10,

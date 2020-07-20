@@ -48,7 +48,8 @@
 	STR.max_w_class = WEIGHT_CLASS_SMALL
 	STR.max_combined_w_class = 30
 	STR.max_items = 30
-	STR.cant_hold = typecacheof(list(/obj/item/disk/nuclear))
+	STR.can_hold_extra = typecacheof(list(/obj/item/organ/lungs, /obj/item/organ/liver, /obj/item/organ/stomach, /obj/item/clothing/shoes)) - typesof(/obj/item/clothing/shoes/magboots, /obj/item/clothing/shoes/clown_shoes, /obj/item/clothing/shoes/jackboots, /obj/item/clothing/shoes/workboots)
+	STR.cant_hold = typecacheof(list(/obj/item/disk/nuclear, /obj/item/storage/wallet, /obj/item/organ/brain))
 	STR.limited_random_access = TRUE
 	STR.limited_random_access_stack_position = 3
 
@@ -326,6 +327,7 @@
 	w_class = WEIGHT_CLASS_BULKY
 	flags_1 = CONDUCT_1
 	custom_materials = list(/datum/material/iron=3000)
+	var/max_items = 7
 
 /obj/item/storage/bag/tray/ComponentInitialize()
 	. = ..()
@@ -333,6 +335,7 @@
 	STR.max_w_class = WEIGHT_CLASS_NORMAL
 	STR.can_hold = typecacheof(list(/obj/item/reagent_containers/food, /obj/item/reagent_containers/glass, /datum/reagent/consumable, /obj/item/kitchen/knife, /obj/item/kitchen/rollingpin, /obj/item/kitchen/fork, /obj/item/storage/box)) //Should cover: Bottles, Beakers, Bowls, Booze, Glasses, Food, Kitchen Tools, and ingredient boxes.
 	STR.insert_preposition = "on"
+	STR.max_items = max_items
 
 /obj/item/storage/bag/tray/attack(mob/living/M, mob/living/user)
 	. = ..()
@@ -372,6 +375,14 @@
 /obj/item/storage/bag/tray/Exited()
 	. = ..()
 	update_icon()
+
+//bluespace tray, holds more items
+/obj/item/storage/bag/tray/bluespace
+	name = "bluespace tray"
+	icon_state = "bluespace_tray"
+	desc = "A tray created using bluespace technology to fit more food on it."
+	max_items = 30 // far more items
+	custom_materials = list(/datum/material/iron = 2000, /datum/material/bluespace = 500)
 
 /*
  *	Chemistry bag
@@ -445,3 +456,21 @@
 	STR.max_items = 3
 	STR.display_numerical_stacking = FALSE
 	STR.can_hold = typecacheof(list(/obj/item/ammo_box/magazine, /obj/item/ammo_casing))
+
+/obj/item/storage/bag/material
+	name = "material pouch"
+	desc = "A pouch for sheets and RCD ammunition that manages to hang where you would normally put things in your pocket."
+	icon = 'icons/obj/items_and_weapons.dmi'
+	icon_state = "materialpouch"
+	slot_flags = ITEM_SLOT_POCKET
+	w_class = WEIGHT_CLASS_BULKY
+	resistance_flags = FLAMMABLE
+
+/obj/item/storage/bag/material/ComponentInitialize()
+	. = ..()
+	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
+	STR.max_w_class = WEIGHT_CLASS_NORMAL
+	STR.max_combined_w_class = INFINITY
+	STR.max_items = 2
+	STR.display_numerical_stacking = TRUE
+	STR.can_hold = typecacheof(list(/obj/item/rcd_ammo, /obj/item/stack/sheet))

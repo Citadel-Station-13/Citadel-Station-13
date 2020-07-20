@@ -104,6 +104,9 @@
 			rack.AddComponent(/datum/component/magnetic_catch)
 
 //Whatever special stuff you want
+/datum/map_template/shuttle/proc/post_load(obj/docking_port/mobile/M)
+	return
+		
 /datum/map_template/shuttle/proc/on_bought()
 	return
 
@@ -461,6 +464,10 @@
 /datum/map_template/shuttle/whiteship/pod
 	suffix = "whiteship_pod"
 	name = "Salvage Pod"
+
+/datum/map_template/shuttle/whiteship/cog
+	suffix = "cog"
+	name = "NT Prisoner Transport"
 
 /datum/map_template/shuttle/cargo/box
 	suffix = "box"

@@ -226,3 +226,5 @@ GLOBAL_LIST_EMPTY(asset_datums)
 /datum/asset/simple/icon_states/multiple_icons/register()
 	for(var/i in icons)
 		..(i)
+
+

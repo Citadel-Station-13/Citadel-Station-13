@@ -23,6 +23,7 @@ GLOBAL_LIST_EMPTY(antagonists)
 	var/show_name_in_check_antagonists = FALSE //Will append antagonist name in admin listings - use for categories that share more than one antag type
 	var/list/blacklisted_quirks = list(/datum/quirk/nonviolent,/datum/quirk/mute) // Quirks that will be removed upon gaining this antag. Pacifist and mute are default.
 	var/threat = 0 // Amount of threat this antag poses, for dynamic mode
+	var/show_to_ghosts = FALSE // Should this antagonist be shown as antag to ghosts? Shouldn't be used for stealthy antagonists like traitors
 
 	var/list/skill_modifiers
 
@@ -94,6 +95,9 @@ GLOBAL_LIST_EMPTY(antagonists)
 	if(skill_modifiers)
 		for(var/A in skill_modifiers)
 			ADD_SINGLETON_SKILL_MODIFIER(owner, A, type)
+			var/datum/skill_modifier/job/M = GLOB.skill_modifiers[GET_SKILL_MOD_ID(A, type)]
+			if(istype(M))
+				M.name = "[name] Training"
 	SEND_SIGNAL(owner.current, COMSIG_MOB_ANTAG_ON_GAIN, src)
 
 /datum/antagonist/proc/is_banned(mob/M)
