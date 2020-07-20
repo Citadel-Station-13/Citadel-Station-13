@@ -161,5 +161,8 @@
 		if(LAZYLEN(po)){\
 			A.overlays |= po;\
 		}\
+		else{\
+			A.priority_overlays = null;\
+		}\
 		A.flags_1 &= ~OVERLAY_QUEUED_1;\
 	}
