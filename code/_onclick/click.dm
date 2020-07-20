@@ -10,7 +10,7 @@
 /atom/Click(location,control,params)
 	if(flags_1 & INITIALIZED_1)
 		SEND_SIGNAL(src, COMSIG_CLICK, location, control, params, usr)
-		usr.ClickOn(src, params)
+		usr.CommonClickOn(src, params)
 
 /atom/DblClick(location,control,params)
 	if(flags_1 & INITIALIZED_1)
@@ -19,6 +19,21 @@
 /atom/MouseWheel(delta_x,delta_y,location,control,params)
 	if(flags_1 & INITIALIZED_1)
 		usr.MouseWheelOn(src, delta_x, delta_y, params)
+
+/**
+  * Common mob click code
+  */
+/mob/proc/CommonClickOn(atom/A, params)
+	set waitfor = FALSE		// oh no you don't
+	if(mob_transforming)
+		return
+	if(SEND_SIGNAL(src, COMSIG_MOB_CLICKON, A, params) & COMSIG_MOB_CANCEL_CLICKON)
+		return
+	if(ClickOn(A, params))
+		FlushLastAction()
+	else
+		DiscardLastAction()
+	
 
 /*
 	Standard mob ClickOn()
@@ -35,12 +50,6 @@
 */
 /mob/proc/ClickOn( atom/A, params)
 	if(check_click_intercept(params,A))
-		return
-
-	if(mob_transforming)
-		return
-
-	if(SEND_SIGNAL(src, COMSIG_MOB_CLICKON, A, params) & COMSIG_MOB_CANCEL_CLICKON)
 		return
 
 	var/list/modifiers = params2list(params)
@@ -72,7 +81,7 @@
 
 	face_atom(A)
 
-	if(!CheckActionCooldown())
+	if(!CheckActionCooldown(immediate = TRUE))
 		return
 
 	if(!modifiers["catcher"] && A.IsObscured())
@@ -85,7 +94,7 @@
 	if(restrained())
 		DelayNextAction(CLICK_CD_HANDCUFFED)
 		RestrainedClickOn(A)
-		return
+		return TRUE
 
 	if(in_throw_mode)
 		throw_item(A)

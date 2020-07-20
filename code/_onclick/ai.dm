@@ -70,7 +70,7 @@
 		CtrlClickOn(A)
 		return
 
-	if(world.time <= next_move)
+	if(!CheckActionCooldown(immediate = TRUE))
 		return
 
 	if(aicamera.in_camera_mode)

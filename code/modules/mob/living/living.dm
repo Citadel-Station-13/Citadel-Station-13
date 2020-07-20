@@ -736,7 +736,7 @@
 		return FALSE
 
 	resist_restraints() //trying to remove cuffs.
-	// DO NOT GIVE CLICKDELAY - last_special handles this.
+	// DO NOT GIVE CLICKDELAY
 	return FALSE
 
 /// Proc to resist a grab. moving_resist is TRUE if this began by someone attempting to move. Return FALSE if still grabbed/failed to break out. Use this instead of resist_grab() directly.

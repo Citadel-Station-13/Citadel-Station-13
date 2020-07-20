@@ -13,8 +13,18 @@
 	// last_action is not a hard cooldown and different items can check for different delays.
 	/// Generic clickdelay variable. Marks down the last world.time we did something that should cause or impact generic clickdelay. This should be directly set or set using [DelayNextAction()]. This should only be checked using [CheckActionCooldown()].
 	var/last_action = 0
+	/**
+	  * The difference between the above and this is this is set immediately before even the pre-attack begins to ensure clickdelay is respected.
+	  * Then, it is flushed or discarded using [FlushLastAttack()] or [DiscardLastAttack()] respectively.
+	  */
+	  
+	var/last_action_immediate = 0
 	/// Generic clickdelay variable. Next world.time we should be able to do something that respects generic clickdelay. This should be set using [DelayNextAction()] This should only be checked using [CheckActionCooldown()].
 	var/next_action = 0
+	/// Ditto
+	var/next_action_immediate = 0
+	/// Default clickdelay for an UnarmedAttack() that successfully passes. Respects action_cooldown_mod.
+	var/unarmed_attack_speed = CLICK_CD_MELEE
 	/// Simple modification variable multiplied to next action modifier on adjust and on checking time since last action using [CheckActionCooldown()].
 	/// This should only be manually modified using multipliers.
 	var/action_cooldown_mod = 1
@@ -24,11 +34,14 @@
 	
 	// Resisting - While resisting will give generic clickdelay, it is also on its own resist delay system. However, resisting does not check generic movedelay.
 	// Resist cooldown should only be set at the start of a resist chain - whether this is clicking an alert button, pressing or hotkeying the resist button, or moving to resist out of a locker.
-	/// Special clickdelay variable for resisting. Last time we did a special action like resisting. This should only be set using [MarkResistTime()].  This should only be checked using [CheckResistCooldown()].
+	/*
+	 * Special clickdelay variable for resisting. Last time we did a special action like resisting. This should only be set using [MarkResistTime()]. 
+	 * Use [CheckResistCooldown()] to check cooldowns, this should only be used for the resist action bar visual.
+	 */
 	var/last_resist = 0
 	/// How long we should wait before allowing another resist. This should only be manually modified using multipliers.
 	var/resist_cooldown = CLICK_CD_RESIST
-	/// Minimum world time for another resist.
+	/// Minimum world time for another resist. This should only be checked using [CheckResistCooldown()].
 	var/next_resist = 0
 
 /**
@@ -38,19 +51,30 @@
   * * amount - Amount to delay by
   * * ignore_mod - ignores next action adjust and mult
   * * considered_action - Defaults to TRUE - If TRUE, sets last_action to world.time.
+  * * immediate - defaults to TRUE - if TRUE, writes to cached/last_attack_immediate instead of last_attack. This ensures it can't collide with any delay checks in the actual attack. 
   */
-/mob/proc/DelayNextAction(amount = 0, ignore_mod = FALSE, considered_action = TRUE)
+/mob/proc/DelayNextAction(amount = 0, ignore_mod = FALSE, considered_action = TRUE, immediate = TRUE)
 	if(considered_action)
-		last_action = world.time
-	next_action = max(next_action, world.time + (ignore_mod? amount : (amount * action_cooldown_mod + action_cooldown_adjust)))
+		(immediate? last_action_immediate : last_action) = world.time
+	(immediate? next_action_immediate : next_action) = max(next_action, world.time + (ignore_mod? amount : (amount * action_cooldown_mod + action_cooldown_adjust)))
+
+/**
+  * Get estimated time of next attack.
+  */
+/mob/proc/EstimatedNextActionTime()
+	var/attack_speed = unarmed_attack_speed
+	var/obj/item/I = get_active_held_item()
+	if(I)
+		attack_speed = I.attack_speed
+	return max(next_action, last_action + attack_speed)
 
 /**
   * Sets our next action to. The difference is DelayNextAction cannot reduce next_action under any circumstances while this can.
   */
-/mob/proc/SetNextAction(amount = 0, ignore_mod = FALSE, considered_action = TRUE)
+/mob/proc/SetNextAction(amount = 0, ignore_mod = FALSE, considered_action = TRUE, immediate = TRUE)
 	if(considered_action)
-		last_action = world.time
-	next_action = world.time + (ignore_mod? amount : (amount * action_cooldown_mod + action_cooldown_adjust))
+		(immediate? last_action_immediate : last_action) = world.time
+	(immediate? next_action_immediate : next_action) = world.time + (ignore_mod? amount : (amount * action_cooldown_mod + action_cooldown_adjust))
 
 /**
   * Checks if we can do another action.
@@ -61,9 +85,25 @@
   * * from_next_action - Defaults to FALSE. Should we check from the tail end of next_action instead of last_action?
   * * ignore_mod - Defaults to FALSE. Ignore all adjusts and multipliers. Do not use this unless you know what you are doing and have a good reason.
   * * ignore_next_action - Defaults to FALSE. Ignore next_action and only care about cooldown param and everything else. Generally unused.
+  * * immediate - Defaults to FALSE. Checks last action using immediate, used on the head end of an attack. This is to prevent colliding attacks in case of sleep. Not that you should sleep() in an attack but.. y'know.
   */
-/mob/proc/CheckActionCooldown(cooldown = 0.5, from_next_action = FALSE, ignore_mod = FALSE, ignore_next_action = FALSE)
-	return (ignore_next_action || (world.time >= next_action)) && (world.time >= ((from_next_action? next_action : last_action) + max(0, ignore_mod? cooldown : (cooldown * action_cooldown_mod + action_cooldown_adjust))))
+/mob/proc/CheckActionCooldown(cooldown = 0.5, from_next_action = FALSE, ignore_mod = FALSE, ignore_next_action = FALSE, immediate = FALSE)
+	return (ignore_next_action || (world.time >= (immediate? next_action_immediate : next_action))) && \
+	(world.time >= ((from_next_action? (immediate? next_action_immediate : next_action) : (immediate? last_action_immediate : last_action)) + max(0, ignore_mod? cooldown : (cooldown * action_cooldown_mod + action_cooldown_adjust))))
+
+/**
+  * Flushes last_action and next_action
+  */
+/mob/proc/FlushCurrentAction()
+	last_action = last_action_immediate
+	next_action = next_action_immediate
+
+/**
+  * Discards last_action and next_action
+  */
+/mob/proc/DiscardCurrentAction()
+	last_action_immediate = last_action
+	next_action_immediate = next_action
 
 /**
   * Checks if we can resist again.

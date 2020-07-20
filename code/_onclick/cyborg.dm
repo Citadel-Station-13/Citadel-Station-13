@@ -33,7 +33,7 @@
 		CtrlClickOn(A)
 		return
 
-	if(!CheckActionCooldown())
+	if(!CheckActionCooldown(immediate = TRUE))
 		return
 
 	face_atom(A) // change direction to face what you clicked on

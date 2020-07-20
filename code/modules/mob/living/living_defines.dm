@@ -53,7 +53,6 @@
 
 	var/hallucination = 0 //Directly affects how long a mob will hallucinate for
 
-	var/last_special = 0 //Used by the resist verb, likely used to prevent players from bypassing next_move by logging in/out.
 	var/timeofdeath = 0
 
 	//Allows mobs to move through dense areas without restriction. For instance, in space or out of holder objects.
