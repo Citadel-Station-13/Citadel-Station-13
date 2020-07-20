@@ -733,7 +733,7 @@
 
 /mob/living/carbon/human/resist_restraints()
 	if(wear_suit && wear_suit.breakouttime)
-		last_resist = world.time
+		MarkResistTime()
 		cuff_resist(wear_suit)
 	else
 		..()

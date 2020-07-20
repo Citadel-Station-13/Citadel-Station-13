@@ -90,7 +90,7 @@
 	else if(legcuffed)
 		I = legcuffed
 	if(I)
-		last_resist = world.time
+		MarkResistTime()
 		cuff_resist(I)
 
 /mob/living/carbon/monkey/proc/should_target(var/mob/living/L)

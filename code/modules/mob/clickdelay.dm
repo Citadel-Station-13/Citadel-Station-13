@@ -8,21 +8,28 @@
 
 /mob
 	// CLICKDELAY AND RELATED
+	// Generic clickdelay - Hybrid time-since-last-attack and time-to-next-attack system.
+	// next_action is a hard cooldown, as Click()s will not pass unless it is passed.
+	// last_action is not a hard cooldown and different items can check for different delays.
 	/// Generic clickdelay variable. Marks down the last world.time we did something that should cause or impact generic clickdelay. This should be directly set or set using [DelayNextAction()]. This should only be checked using [CheckActionCooldown()].
 	var/last_action = 0
 	/// Generic clickdelay variable. Next world.time we should be able to do something that respects generic clickdelay. This should be set using [DelayNextAction()] This should only be checked using [CheckActionCooldown()].
 	var/next_action = 0
 	/// Simple modification variable multiplied to next action modifier on adjust and on checking time since last action using [CheckActionCooldown()].
 	/// This should only be manually modified using multipliers.
-	var/action_cooldown_mod = 0.5
-	/// Simple modification variable added to amounton adjust and on checking time since last action using [CheckActionCooldown()].
+	var/action_cooldown_mod = 1
+	/// Simple modification variable added to amount on adjust and on checking time since last action using [CheckActionCooldown()].
 	/// This should only be manually modified via addition.
 	var/action_cooldown_adjust = 0
 	
-	/// Special clickdelay variable for resisting. Last time we did a special action like resisting. This should be directly set.  This should only be checked using [CheckResistCooldown()].
+	// Resisting - While resisting will give generic clickdelay, it is also on its own resist delay system. However, resisting does not check generic movedelay.
+	// Resist cooldown should only be set at the start of a resist chain - whether this is clicking an alert button, pressing or hotkeying the resist button, or moving to resist out of a locker.
+	/// Special clickdelay variable for resisting. Last time we did a special action like resisting. This should only be set using [MarkResistTime()].  This should only be checked using [CheckResistCooldown()].
 	var/last_resist = 0
 	/// How long we should wait before allowing another resist. This should only be manually modified using multipliers.
 	var/resist_cooldown = CLICK_CD_RESIST
+	/// Minimum world time for another resist.
+	var/next_resist = 0
 
 /**
   * Applies a delay to next_action before we can do our next action.
@@ -62,7 +69,18 @@
   * Checks if we can resist again.
   */
 /mob/proc/CheckResistCooldown()
-	return (world.time >= (last_resist + resist_cooldown))
+	return (world.time >= next_resist)
+
+/**
+  * Mark the last resist as now.
+  *
+  * @params
+  * * extra_cooldown - Extra cooldown to apply to next_resist. Defaults to this mob's resist_cooldown.
+  * * override - Defaults to FALSE - if TRUE, extra_cooldown will replace the old next_resist even if the old is longer.
+  */
+/mob/proc/MarkResistTime(extra_cooldown = resist_cooldown, override = FALSE)
+	last_resist = world.time
+	next_resist = override? (world.time + extra_cooldown) : max(next_resist, world.time + extra_cooldown)
 
 /atom
 	// Standard clickdelay variables

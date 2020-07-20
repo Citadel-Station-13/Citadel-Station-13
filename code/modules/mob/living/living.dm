@@ -687,10 +687,10 @@
 		return
 
 	if(do_resist())
-		last_resist = world.time
+		MarkResistTime()
 		changeNext_move(CLICK_CD_RESIST)
 
-/// The actual proc for resisting. Return TRUE to give clickdelay.
+/// The actual proc for resisting. Return TRUE to give CLICK_CD_RESIST clickdelay.
 /mob/living/proc/do_resist()
 	set waitfor = FALSE			// some of these sleep.
 	SEND_SIGNAL(src, COMSIG_LIVING_RESIST, src)
@@ -703,7 +703,7 @@
 		return old_gs? TRUE : FALSE
 
 	// unbuckling yourself. stops the chain if you try it.
-	if(buckled && last_special <= world.time)
+	if(buckled)
 		log_combat(src, buckled, "resisted buckle")
 		return resist_buckle()
 
@@ -735,10 +735,9 @@
 		changeNext_move(CLICK_CD_MELEE)
 		return FALSE
 
-	if(last_special <= world.time)
-		resist_restraints() //trying to remove cuffs.
-		// DO NOT GIVE CLICKDELAY - last_special handles this.
-		return FALSE
+	resist_restraints() //trying to remove cuffs.
+	// DO NOT GIVE CLICKDELAY - last_special handles this.
+	return FALSE
 
 /// Proc to resist a grab. moving_resist is TRUE if this began by someone attempting to move. Return FALSE if still grabbed/failed to break out. Use this instead of resist_grab() directly.
 /mob/proc/attempt_resist_grab(moving_resist, forced, log = TRUE)

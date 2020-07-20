@@ -292,13 +292,11 @@
 		return
 	if(restrained())
 		// too soon.
-		if(last_special > world.time)
-			return
 		var/buckle_cd = 600
 		if(handcuffed)
 			var/obj/item/restraints/O = src.get_item_by_slot(SLOT_HANDCUFFED)
 			buckle_cd = O.breakouttime
-		last_resist = world.time
+		MarkResistTime()
 		visible_message("<span class='warning'>[src] attempts to unbuckle [p_them()]self!</span>", \
 					"<span class='notice'>You attempt to unbuckle yourself... (This will take around [round(buckle_cd/600,1)] minute\s, and you need to stay still.)</span>")
 		if(do_after(src, buckle_cd, 0, target = src, required_mobility_flags = MOBILITY_RESIST))
@@ -312,14 +310,12 @@
 		buckled.user_unbuckle_mob(src,src)
 
 /mob/living/carbon/resist_fire()
-	if(last_special > world.time)
-		return
 	fire_stacks -= 5
 	DefaultCombatKnockdown(60, TRUE, TRUE)
 	spin(32,2)
 	visible_message("<span class='danger'>[src] rolls on the floor, trying to put [p_them()]self out!</span>", \
 		"<span class='notice'>You stop, drop, and roll!</span>")
-	last_special = world.time + 30
+	MarkResistCooldown(30)
 	sleep(30)
 	if(fire_stacks <= 0)
 		visible_message("<span class='danger'>[src] has successfully extinguished [p_them()]self!</span>", \
@@ -336,7 +332,7 @@
 		I = legcuffed
 		type = 2
 	if(I)
-		last_resist = world.time
+		MarkResistTime()
 		cuff_resist(I)
 
 /mob/living/carbon/proc/cuff_resist(obj/item/I, breakouttime = 600, cuff_break = 0)
