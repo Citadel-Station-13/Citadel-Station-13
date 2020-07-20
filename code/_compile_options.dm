@@ -22,6 +22,10 @@
 
 //#define UNIT_TESTS			//Enables unit tests via TEST_RUN_PARAMETER
 
+#define REFERENCE_TRACKING		//Enables extools-powered reference tracking system, letting you see what is
+									//referencing objects that refuse to hard delete
+									// DO NOT KEEP ENABLED IN LIVE, THIS HAS OVERHEAD!
+
 #ifndef PRELOAD_RSC				//set to:
 #define PRELOAD_RSC	2			//	0 to allow using external resources or on-demand behaviour;
 #endif							//	1 to use the default behaviour;
