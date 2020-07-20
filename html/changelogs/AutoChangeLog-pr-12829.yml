@@ -1,0 +1,5 @@
+author: "timothyteakettle"
+delete-after: True
+changes: 
+  - rscadd: "new fried component used for frying objects"
+  - bugfix: "various frying bugs fixed such as being able to unfry items and frying turfs with cold cooking oil"
