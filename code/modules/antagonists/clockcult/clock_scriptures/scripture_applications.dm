@@ -23,7 +23,7 @@
 	quickbind = TRUE
 	quickbind_desc = "Creates a Sigil of Transmission, which can drain and will store power for clockwork structures."
 
-//Prolonging Prism: Creates a prism that will delay the shuttle at a power cost
+/*//Prolonging Prism: Creates a prism that will delay the shuttle at a power cost
 /datum/clockwork_scripture/create_object/prolonging_prism
 	descname = "Powered Structure, Delay Emergency Shuttles"
 	name = "Prolonging Prism"
@@ -54,7 +54,7 @@
 		to_chat(invoker, "<span class='inathneq'>\"You must be on the station to construct one of these, champion.\"</span>")
 		return FALSE
 	return ..()
-
+*/
 
 //Mania Motor: Creates a malevolent transmitter that will broadcast the whispers of Sevtug into the minds of nearby nonservants, causing a variety of mental effects at a power cost.
 /datum/clockwork_scripture/create_object/mania_motor
@@ -99,31 +99,9 @@
 	quickbind = TRUE
 	quickbind_desc = "Creates a Clockwork Obelisk, which can send messages or open Spatial Gateways with power."
 
-/*//Tinkerer's Cache: Creates a tinkerer's cache, allowing global component storage.
-/datum/clockwork_scripture/create_object/tinkerers_cache
-	descname = "Necessary Structure, Shares Components"
-	name = "Tinkerer's Cache"
-	desc = "Forms a cache that can store an infinite amount of components. All caches are linked and will provide components to slabs. \
-	Striking a cache with a slab will transfer that slab's components to the global cache."
-	invocations = list("Constructing...", "...a cache!")
-	channel_time = 50
-	consumed_components = list(BELLIGERENT_EYE = 0, VANGUARD_COGWHEEL = 0, GEIS_CAPACITOR = 0, REPLICANT_ALLOY = 1, HIEROPHANT_ANSIBLE = 0)
-	object_path = /obj/structure/destructible/clockwork/cache
-	creator_message = "<span class='brass'>You form a tinkerer's cache, which is capable of storing components, which will automatically be used by slabs.</span>"
-	observer_message = "<span class='warning'>A hollow brass spire rises and begins to blaze!</span>"
-	usage_tip = "Slabs will draw components from the global cache after the slab's own repositories, making caches extremely useful."
-	tier = SCRIPTURE_DRIVER
-	one_per_tile = TRUE
-	primary_component = REPLICANT_ALLOY
-	sort_priority = 8
-	quickbind = TRUE
-	quickbind_desc = "Creates a Tinkerer's Cache, which stores components globally for slab access."
-	var/static/prev_cost = 0
- */
-
-/*//Memory Allocation: Finds a willing ghost and makes them into a clockwork guardian for the invoker.
+//Memory Allocation: Finds a willing ghost and makes them into a clockwork guardian for the invoker.
 /datum/clockwork_scripture/memory_allocation
-	descname = "Guardian"
+	descname = "Personal Guardian, A Peice Of Your Mind."
 	name = "Memory Allocation"
 	desc = "Allocates part of your consciousness to a Clockwork Guardian, a variant of Marauder that lives within you, able to be \
 	called forth by Speaking its True Name or if you become exceptionally low on health.<br>\
@@ -154,9 +132,8 @@
 	if(!do_after(invoker, 50, target = invoker))
 		invoker.visible_message("<span class='warning'>The tendril, covered in blood, retracts from [invoker]'s head and back into the [slab.name]!</span>", \
 		"<span class='userdanger'>Total agony overcomes you as the tendril is forced out early!</span>")
-		//invoker.notransform = FALSE
 		invoker.Knockdown(100)
-		invoker.apply_damage(20, BRUTE, "head")//Sevtug leaves a gaping hole in your face if interrupted.
+		invoker.apply_damage(50, BRUTE, "head")//Sevtug leaves a gaping hole in your face if interrupted.
 		slab.busy = null
 		return FALSE
 	clockwork_say(invoker, text2ratvar("...the mind made..."))
@@ -180,7 +157,7 @@
 	invoker.visible_message("<span class='warning'>The tendril retracts from [invoker]'s head, sealing the entry wound as it does so!</span>", \
 	"<span class='sevtug'>[M.true_name], a clockwork guardian, has taken up residence in your mind. Communicate with it via the \"Linked Minds\" action button.</span>")
 	return TRUE
-*/
+
 //Clockwork Marauder: Creates a construct shell for a clockwork marauder, a well-rounded frontline fighter.
 /datum/clockwork_scripture/create_object/construct/clockwork_marauder
 	descname = "Well-Rounded Combat Construct"
@@ -230,14 +207,13 @@
 /datum/clockwork_scripture/create_object/summon_arbiter
 	descname = "Powerful Assault Mech"
 	name = "Summon Neovgre, the Anima Bulwark"
-	desc = "Calls forth the mighty Anima Bulwark, a weapon of unmatched power,\
-			 mech with superior defensive and offensive capabilities. It will \
+	desc = "Calls forth the mighty Anima Bulwark, a mech with superior defensive and offensive capabilities. It will \
 			 steadily regenerate HP and triple its regeneration speed while standing \
 			 on a clockwork tile. It will automatically draw power from nearby sigils of \
 			 transmission should the need arise. Its Arbiter laser cannon can decimate foes \
 			 from a range and is capable of smashing through any barrier presented to it. \
-			 Be warned, choosing to pilot Neovgre is a lifetime commitment, once you are \
-			 in you cannot leave and when it is destroyed it will explode catastrophically with you inside."
+			 Be warned however, choosing to pilot Neovgre is a lifetime commitment, once you are \
+			 in you cannot leave and when it is destroyed it will explode catastrophically, with you inside."
 	invocations = list("By the strength of the alloy...!!", "...call forth the Arbiter!!")
 	channel_time = 200 // This is a strong fucking weapon, 20 seconds channel time is getting off light I tell ya.
 	power_cost = 75000 //75 KW
@@ -247,7 +223,7 @@
 	object_path = /obj/mecha/combat/neovgre
 	tier = SCRIPTURE_APPLICATION
 	primary_component = BELLIGERENT_EYE
-	sort_priority = 2
+	sort_priority = 5
 	creator_message = "<span class='brass'>Neovgre, the Anima Bulwark towers over you... your enemies reckoning has come.</span>"
 
 /datum/clockwork_scripture/create_object/summon_arbiter/check_special_requirements()

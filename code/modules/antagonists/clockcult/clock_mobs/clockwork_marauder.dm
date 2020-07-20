@@ -125,7 +125,7 @@
 #undef MARAUDER_SLOWDOWN_PERCENTAGE
 #undef MARAUDER_SHIELD_REGEN_TIME
 
-/*//Clockwork guardian: Slow but with high damage, resides inside of a servant. Created via the Memory Allocation scripture.
+//Clockwork guardian: Slow but with high damage, resides inside of a servant. Created via the Memory Allocation scripture.
 /mob/living/simple_animal/hostile/clockwork/marauder/guardian
 	name = "clockwork guardian"
 	desc = "A stalwart apparition of a soldier, blazing with crimson flames. It's armed with a gladius and shield and stands ready by its master."
@@ -136,10 +136,12 @@
 	obj_damage = 40
 	melee_damage_lower = 12
 	melee_damage_upper = 12
-	attacktext = "slashes"
+	attack_verb_continuous = "slashes"
+	attack_verb_simple = "slash"
 	attack_sound = 'sound/weapons/bladeslice.ogg'
 	weather_immunities = list("lava")
 	movement_type = FLYING
+	AIStatus = AI_OFF //this has to be manually set so that the guardian doesn't start bashing the host, how annoying -_-
 	loot = list(/obj/item/clockwork/component/geis_capacitor/fallen_armor)
 	var/true_name = "Meme Master 69" //Required to call forth the guardian
 	var/global/list/possible_true_names = list("Servant", "Warden", "Serf", "Page", "Usher", "Knave", "Vassal", "Escort")
@@ -152,7 +154,7 @@
 	light_power = 1.1
 	playstyle_string = "<span class='sevtug'>You are a clockwork guardian</span><b>, a living extension of Sevtug's will. As a guardian, you are somewhat slow, but may block attacks, \
 	and have a chance to also counter blocked melee attacks for extra damage, in addition to being immune to extreme temperatures and pressures. \
-	Your primary goal is to serve the creature that you are now a part of. You can use <span class='sevtug_small'><i>:b</i></span> to communicate silently with your master, \
+	Your primary goal is to serve the creature that you are now a part of, as well as The Clockwork Justiciar, Ratvar. You can use <span class='sevtug_small'><i>The Hierophant Network</i></span> to communicate silently with your master and their allies, \
 	but can only exit if your master calls your true name or if they are exceptionally damaged. \
 	\n\n\
 	Stay near your host to protect and heal them; being too far from your host will rapidly cause you massive damage. Recall to your host if you are too weak and believe you cannot continue \
@@ -162,7 +164,7 @@
 	. = ..()
 	true_name = pick(possible_true_names)
 
-/mob/living/simple_animal/hostile/clockwork/marauder/guardianLife()
+/mob/living/simple_animal/hostile/clockwork/marauder/guardian/BiologicalLife(seconds, times_fired)
 	..()
 	if(is_in_host())
 		if(!is_servant_of_ratvar(host))
@@ -251,9 +253,9 @@
 	if(!new_host)
 		return FALSE
 	host = new_host
-	var/datum/action/innate/summon_marauder/guardian/SM = new()
-	SM.linked_guardian = src
-	SM.Grant(host)
+	var/datum/action/innate/summon_guardian/SG = new()
+	SG.linked_guardian = src
+	SG.Grant(host)
 	var/datum/action/innate/linked_minds/LM = new()
 	LM.linked_guardian = src
 	LM.Grant(host)
@@ -261,8 +263,8 @@
 
 /mob/living/simple_animal/hostile/clockwork/marauder/guardian/proc/unbind_from_host()
 	if(host)
-		for(var/datum/action/innate/summon_marauder/guardian/SM in host.actions)
-			qdel(SM)
+		for(var/datum/action/innate/summon_guardian/SG in host.actions)
+			qdel(SG)
 		for(var/datum/action/innate/linked_minds/LM in host.actions)
 			qdel(LM)
 		host = null
@@ -294,8 +296,8 @@
 
 /mob/living/simple_animal/hostile/clockwork/marauder/guardian/update_health_hud()
 	if(hud_used && hud_used.healths)
-		if(istype(hud_used, /datum/hud/guardian))
-			var/datum/hud/guardian/M = hud_used
+		if(istype(hud_used, /datum/hud/marauder))
+			var/datum/hud/marauder/G = hud_used
 			var/resulthealth
 			if(host)
 				if(iscarbon(host))
@@ -304,7 +306,7 @@
 					resulthealth = "[round((host.health / host.maxHealth) * 100, 0.5)]%"
 			else
 				resulthealth = "NONE"
-			M.hosthealth.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#AF0AAF'>HOST<br>[resulthealth]</font></div>"
+			G.hosthealth.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#AF0AAF'>HOST<br>[resulthealth]</font></div>"
 		hud_used.healths.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#AF0AAF'>[round((health / maxHealth) * 100, 0.5)]%</font>"
 
 /mob/living/simple_animal/hostile/clockwork/marauder/guardian/proc/update_stats()
@@ -312,7 +314,7 @@
 		speed = 0
 		melee_damage_lower = 20
 		melee_damage_upper = 20
-		attacktext = "devastates"
+		attack_verb_continuous = "devastates"
 	else
 		var/healthpercent = (health/maxHealth) * 100
 		switch(healthpercent)
@@ -320,32 +322,32 @@
 				speed = 0
 				melee_damage_lower = 16
 				melee_damage_upper = 16
-				attacktext = "viciously slashes"
+				attack_verb_continuous = "viciously slashes"
 			if(70 to 40)
 				speed = initial(speed)
 				melee_damage_lower = initial(melee_damage_lower)
 				melee_damage_upper = initial(melee_damage_upper)
-				attacktext = initial(attacktext)
+				attack_verb_continuous = initial(attack_verb_continuous)
 			if(40 to 30) //Damage decrease, but not speed
 				speed = initial(speed)
 				melee_damage_lower = 10
 				melee_damage_upper = 10
-				attacktext = "lightly slashes"
+				attack_verb_continuous = "lightly slashes"
 			if(30 to 20) //Speed decrease
 				speed = 2
 				melee_damage_lower = 8
 				melee_damage_upper = 8
-				attacktext = "lightly slashes"
+				attack_verb_continuous = "lightly slashes"
 			if(20 to 10) //Massive speed decrease and weak melee attacks
 				speed = 3
 				melee_damage_lower = 6
 				melee_damage_upper = 6
-				attacktext = "weakly slashes"
+				attack_verb_continuous = "weakly slashes"
 			if(10 to 0) //We are super weak and going to die
 				speed = 4
 				melee_damage_lower = 4
 				melee_damage_upper = 4
-				attacktext = "taps"
+				attack_verb_continuous = "taps"
 
 //ATTACKING, BLOCKING, and COUNTERING
 
@@ -404,10 +406,10 @@
 		if(target && Adjacent(target))
 			if(prob(counterchance))
 				counterchance = initial(counterchance)
-				var/previousattacktext = attacktext
-				attacktext = "counters"
+				var/previousattack_verb_continuous = attack_verb_continuous
+				attack_verb_continuous = "counters"
 				UnarmedAttack(target)
-				attacktext = previousattacktext
+				attack_verb_continuous = previousattack_verb_continuous
 			else
 				counterchance = min(counterchance + initial(counterchance), 100)
 	else
@@ -417,13 +419,13 @@
 		counterchance = 90
 
 //COMMUNICATION and EMERGENCE
-
+/*
 /mob/living/simple_animal/hostile/clockwork/marauder/guardian/handle_inherent_channels(message, message_mode)
 	if(host && (is_in_host() || message_mode == MODE_BINARY))
 		guardian_comms(message)
 		return TRUE
 	return ..()
-
+*/
 /mob/living/simple_animal/hostile/clockwork/marauder/guardian/proc/guardian_comms(message)
 	var/name_part = "<span class='sevtug'>[src] ([true_name])</span>"
 	message = "<span class='sevtug_small'>\"[message]\"</span>" //Processed output
@@ -494,7 +496,7 @@
 //HOST ACTIONS
 
 //Summon guardian action: Calls forth or recalls your guardian
-/datum/action/innate/summon_marauder
+/datum/action/innate/summon_guardian
 	name = "Force Guardian to Emerge/Recall"
 	desc = "Allows you to force your clockwork guardian to emerge or recall as required."
 	button_icon_state = "clockwork_marauder"
@@ -502,10 +504,10 @@
 	check_flags = AB_CHECK_CONSCIOUS
 	buttontooltipstyle = "clockcult"
 	var/mob/living/simple_animal/hostile/clockwork/marauder/guardian/linked_guardian
-	var/static/list/defend_phrases = list("Defend me", "Come forth", "Assist me", "Protect me", "Give aid", "Help me")
-	var/static/list/return_phrases = list("Return", "Return to me", "Your job is done", "You have served", "Come back", "Retreat")
+	var/list/defend_phrases = list("Defend me", "Come forth", "Assist me", "Protect me", "Give aid", "Help me")
+	var/list/return_phrases = list("Return", "Return to me", "Your job is done", "You have served", "Come back", "Retreat")
 
-/datum/action/innate/summon_marauder/IsAvailable()
+/datum/action/innate/summon_guardian/IsAvailable()
 	if(!linked_guardian)
 		return FALSE
 	if(isliving(owner))
@@ -554,4 +556,3 @@
 			var/link = FOLLOW_LINK(M, src)
 			to_chat(M, "[link] [name_part] <span class='sevtug_small'>(to</span> <span class='sevtug'>[linked_guardian] ([linked_guardian.true_name])</span><span class='sevtug_small'>):</span> [message]")
 	return TRUE
-*/
