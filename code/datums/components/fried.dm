@@ -13,6 +13,7 @@
 		return COMPONENT_INCOMPATIBLE
 
 	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, .proc/examine)
+	RegisterSignal(parent, COMSIG_COMPONENT_CLEAN_ACT, .proc/restore) //basically, unfry people who are being cleaned (badmemes fried someone)
 
 	fry_power = frying_power
 	owner = parent
@@ -34,24 +35,7 @@ GLOBAL_LIST_INIT(frying_bad_chems, list(
 	examine_list += "[parent] has been [frying_examine_text]"
 
 /datum/component/fried/proc/setup_fried_item() //sets the name, colour and examine text and edibility up
-	switch(fry_power)
-		if(0 to 15)
-			owner.name = "lightly fried [owner.name]"
-			owner.add_atom_colour(rgb(166,103,54), FIXED_COLOUR_PRIORITY)
-			frying_examine_text = "lightly fried"
-		if(16 to 49)
-			owner.name = "fried [owner.name]"
-			owner.add_atom_colour(rgb(103,63,24), FIXED_COLOUR_PRIORITY)
-			frying_examine_text = "moderately fried"
-		if(50 to 59)
-			owner.name = "deep fried [owner.name]"
-			owner.add_atom_colour(rgb(63,23,4), FIXED_COLOUR_PRIORITY)
-			frying_examine_text = "deeply fried"
-		else
-			owner.name = "the physical manifestation of fried foods"
-			owner.add_atom_colour(rgb(33,19,9), FIXED_COLOUR_PRIORITY)
-			frying_examine_text = "incomprehensibly fried to a crisp"
-
+	//first we do some checks depending on the type of item being fried
 	var/list/fried_tastes = list("crispy")
 	var/fried_foodtypes = FRIED
 	var/fried_junk = FALSE
@@ -65,7 +49,33 @@ GLOBAL_LIST_INIT(frying_bad_chems, list(
 			fried_tastes += food_item.tastes
 			fried_foodtypes |= food_item.foodtype
 
-	owner.AddComponent(/datum/component/edible, foodtypes = fried_tastes, tastes = fried_tastes, eat_time = 0)
+	var/fried_eat_time = 0
+	if(isturf(owner))
+		fried_eat_time = 30 //we want turfs to be eaten slowly
+
+	var/colour_priority = FIXED_COLOUR_PRIORITY
+	if(ismob(owner))
+		colour_priority = WASHABLE_COLOUR_PRIORITY //badmins fried someone and we want to let them wash the fry colour off
+	else
+		owner.AddComponent(/datum/component/edible, foodtypes = fried_tastes, tastes = fried_tastes, eat_time = fried_eat_time) //we don't want mobs to get the edible component
+
+	switch(fry_power)
+		if(0 to 15)
+			owner.name = "lightly fried [owner.name]"
+			owner.add_atom_colour(rgb(166,103,54), colour_priority)
+			frying_examine_text = "lightly fried"
+		if(16 to 49)
+			owner.name = "fried [owner.name]"
+			owner.add_atom_colour(rgb(103,63,24), colour_priority)
+			frying_examine_text = "moderately fried"
+		if(50 to 59)
+			owner.name = "deep fried [owner.name]"
+			owner.add_atom_colour(rgb(63,23,4), colour_priority)
+			frying_examine_text = "deeply fried"
+		else
+			owner.name = "the physical manifestation of fried foods"
+			owner.add_atom_colour(rgb(33,19,9), colour_priority)
+			frying_examine_text = "incomprehensibly fried to a crisp"
 
 	//adding the edible component gives it reagents meaning we can now add the bad frying reagents if it's junk
 	if(fried_junk && owner.reagents) //check again just incase
@@ -87,3 +97,9 @@ GLOBAL_LIST_INIT(frying_bad_chems, list(
 			else
 				if(owner.name == "the physical manifestation of fried foods") //if the name is still this, their name hasn't changed, so we can safely restore their stored name
 					owner.name = stored_name
+
+/datum/component/fried/proc/restore() //restore a fried mob to being not-fried
+	if(ismob(owner))
+		//restore the name, the colour should wash off itself, and then remove the component
+		restore_name()
+		RemoveComponent()
