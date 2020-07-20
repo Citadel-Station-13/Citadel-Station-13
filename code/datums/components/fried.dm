@@ -56,6 +56,8 @@ GLOBAL_LIST_INIT(frying_bad_chems, list(
 	var/colour_priority = FIXED_COLOUR_PRIORITY
 	if(ismob(owner))
 		colour_priority = WASHABLE_COLOUR_PRIORITY //badmins fried someone and we want to let them wash the fry colour off
+		//lets heavily hint at how to undo their frying
+		to_chat(owner, "<span class='warning'>You've been coated in hot cooking oil! You should probably go wash it off at the showers.</span>")
 	else
 		owner.AddComponent(/datum/component/edible, foodtypes = fried_tastes, tastes = fried_tastes, eat_time = fried_eat_time) //we don't want mobs to get the edible component
 
