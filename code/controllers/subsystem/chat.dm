@@ -19,6 +19,7 @@ SUBSYSTEM_DEF(chat)
 
 
 /datum/controller/subsystem/chat/proc/queue(target, message, handle_whitespace = TRUE, trailing_newline = TRUE, confidential = TRUE)
+	PROFILE_SET
 	if(!target || !message)
 		return
 
@@ -28,6 +29,8 @@ SUBSYSTEM_DEF(chat)
 
 	if(target == world)
 		target = GLOB.clients
+	
+	PROFILE_TICK
 
 	//Some macros remain in the string even after parsing and fuck up the eventual output
 	var/original_message = message
@@ -36,22 +39,30 @@ SUBSYSTEM_DEF(chat)
 	if(handle_whitespace)
 		message = replacetext(message, "\n", "<br>")
 		message = replacetext(message, "\t", "[FOURSPACES][FOURSPACES]")
+	PROFILE_TICK
 	if (trailing_newline)
 		message += "<br>"
+	
+	PROFILE_TICK
 
 	//url_encode it TWICE, this way any UTF-8 characters are able to be decoded by the Javascript.
 	//Do the double-encoding here to save nanoseconds
 	var/twiceEncoded = url_encode(url_encode(message))
+	
+	PROFILE_TICK
 
 	if(islist(target))
 		for(var/I in target)
+			PROFILE_TICK
 			var/client/C = CLIENT_FROM_VAR(I) //Grab us a client if possible
 
 			if(!C)
 				continue
 
+			PROFILE_TICK
 			//Send it to the old style output window.
 			SEND_TEXT(C, original_message)
+			PROFILE_TICK
 
 			if(!C?.chatOutput || C.chatOutput.broken) //A player who hasn't updated his skin file.
 				continue
@@ -61,15 +72,19 @@ SUBSYSTEM_DEF(chat)
 				continue
 
 			payload[C] += twiceEncoded
+			PROFILE_TICK
 
 	else
+		PROFILE_TICK
 		var/client/C = CLIENT_FROM_VAR(target) //Grab us a client if possible
 
 		if(!C)
 			return
 
+		PROFILE_TICK
 		//Send it to the old style output window.
 		SEND_TEXT(C, original_message)
+		PROFILE_TICK
 
 		if(!C?.chatOutput || C.chatOutput.broken) //A player who hasn't updated his skin file.
 			return
@@ -79,3 +94,4 @@ SUBSYSTEM_DEF(chat)
 			return
 
 		payload[C] += twiceEncoded
+		PROFILE_TICK
