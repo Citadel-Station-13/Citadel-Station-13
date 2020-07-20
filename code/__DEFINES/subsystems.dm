@@ -152,11 +152,11 @@
 		var/list/po = A.priority_overlays;\
 		if(LAZYLEN(rm)){\
 			A.overlays -= rm;\
-			rm.Cut();\
+			rm = null;\
 		}\
 		if(LAZYLEN(ad)){\
 			A.overlays |= ad;\
-			ad.Cut();\
+			ad = null;\
 		}\
 		if(LAZYLEN(po)){\
 			A.overlays |= po;\
