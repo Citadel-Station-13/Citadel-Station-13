@@ -36,7 +36,10 @@
 	//User itself, current loc, and user inventory
 	if(A in DirectAccess())
 		if(W)
-			W.rightclick_melee_attack_chain(src, A, params)
+			. = W.rightclick_melee_attack_chain(src, A, params)
+			if(ismob(A) && !(. & MANUALLY_HANDLE_LAST_ACTION))
+				DelayNextAction()
+			. = !(. & DISCARD_LAST_ACTION)
 		else
 			if(!AltUnarmedAttack(A))
 				UnarmedAttack(A)
@@ -49,7 +52,10 @@
 	//Standard reach turf to turf or reaching inside storage
 	if(CanReach(A,W))
 		if(W)
-			W.rightclick_melee_attack_chain(src, A, params)
+			. = W.rightclick_melee_attack_chain(src, A, params)
+			if(ismob(A) && !(. & MANUALLY_HANDLE_LAST_ACTION))
+				DelayNextAction()
+			. = !(. & DISCARD_LAST_ACTION)
 		else
 			if(!AltUnarmedAttack(A,1))
 				UnarmedAttack(A,1)

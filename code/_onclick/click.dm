@@ -30,9 +30,9 @@
 	if(SEND_SIGNAL(src, COMSIG_MOB_CLICKON, A, params) & COMSIG_MOB_CANCEL_CLICKON)
 		return
 	if(ClickOn(A, params))
-		FlushLastAction()
+		FlushCurrentAction()
 	else
-		DiscardLastAction()
+		DiscardCurrentAction()
 	
 
 /*
@@ -49,6 +49,7 @@
 	* mob/RangedAttack(atom,params) - used only ranged, only used for tk and laser eyes but could be changed
 */
 /mob/proc/ClickOn( atom/A, params)
+	set waitfor = FALSE
 	if(check_click_intercept(params,A))
 		return
 
@@ -73,8 +74,7 @@
 		return
 
 	if(modifiers["right"]) //CIT CHANGE - allows right clicking to perform actions
-		RightClickOn(A,params) //CIT CHANGE - ditto
-		return //CIT CHANGE - ditto
+		return RightClickOn(A,params) //CIT CHANGE - ditto
 
 	if(incapacitated(ignore_restraints = 1))
 		return
@@ -111,7 +111,10 @@
 	//User itself, current loc, and user inventory
 	if(A in DirectAccess())
 		if(W)
-			. = !(W.melee_attack_chain(src, A, params) & DISCARD_LAST_ACTION)
+			. = W.melee_attack_chain(src, A, params)
+			if(ismob(A) && !(. & MANUALLY_HANDLE_LAST_ACTION))
+				DelayNextAction()
+			. = !(. & DISCARD_LAST_ACTION)
 		else
 			UnarmedAttack(A)
 		return
@@ -123,7 +126,10 @@
 	//Standard reach turf to turf or reaching inside storage
 	if(CanReach(A,W))
 		if(W)
-			. = !(W.melee_attack_chain(src, A, params) & DISCARD_LAST_ACTION)
+			. = W.melee_attack_chain(src, A, params)
+			if(ismob(A) && !(. & MANUALLY_HANDLE_LAST_ACTION))
+				DelayNextAction()
+			. = !(. & DISCARD_LAST_ACTION)
 		else
 			UnarmedAttack(A, 1)
 	else
@@ -236,8 +242,6 @@
 	in human click code to allow glove touches only at melee range.
 */
 /mob/proc/UnarmedAttack(atom/A, proximity, intent = a_intent, flags = NONE)
-	if(ismob(A))
-		changeNext_move(CLICK_CD_MELEE)
 
 /*
 	Ranged unarmed attack:
