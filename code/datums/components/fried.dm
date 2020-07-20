@@ -65,7 +65,7 @@ GLOBAL_LIST_INIT(frying_bad_chems, list(
 			fried_tastes += food_item.tastes
 			fried_foodtypes |= food_item.foodtype
 
-	owner.AddComponent(/datum/component/edible, foodtypes = fried_tastes, tastes = fried_tastes)
+	owner.AddComponent(/datum/component/edible, foodtypes = fried_tastes, tastes = fried_tastes, eat_time = 0)
 
 	//adding the edible component gives it reagents meaning we can now add the bad frying reagents if it's junk
 	if(fried_junk && owner.reagents) //check again just incase
