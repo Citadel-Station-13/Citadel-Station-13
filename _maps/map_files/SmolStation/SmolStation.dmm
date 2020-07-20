@@ -9651,8 +9651,8 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/computer/cryopod{
-	pixel_y = -26;
-	dir = 1
+	dir = 1;
+	pixel_y = -26
 	},
 /obj/machinery/light,
 /obj/machinery/flasher{
@@ -10485,9 +10485,9 @@
 "hRl" = (
 /obj/machinery/door/window/westleft{
 	base_state = "right";
+	dir = 4;
 	icon_state = "right";
-	name = "Unisex Showers";
-	dir = 4
+	name = "Unisex Showers"
 	},
 /turf/open/floor/plasteel/freezer,
 /area/security/prison)
@@ -16046,8 +16046,10 @@
 /obj/machinery/light{
 	dir = 8
 	},
-/obj/machinery/cryopod{
-	dir = 4
+/obj/machinery/cryopod_tele,
+/obj/machinery/computer/cryopod_tele{
+	dir = 1;
+	pixel_y = -23
 	},
 /turf/open/floor/carpet,
 /area/crew_quarters/dorms)
@@ -22192,9 +22194,9 @@
 /obj/item/folder/yellow,
 /obj/item/pen,
 /obj/machinery/door/window/westleft{
+	dir = 4;
 	name = "Cargo Desk";
-	req_access_txt = "50";
-	dir = 4
+	req_access_txt = "50"
 	},
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
@@ -25578,10 +25580,10 @@
 	})
 "tvG" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 8;
 	external_pressure_bound = 140;
 	name = "server vent";
-	pressure_checks = 0;
-	dir = 8
+	pressure_checks = 0
 	},
 /turf/open/floor/circuit/telecomms,
 /area/science/xenobiology{
@@ -31245,9 +31247,9 @@
 /area/teleporter)
 "xCG" = (
 /obj/machinery/door/window/southleft{
+	dir = 4;
 	name = "Mass Driver Door";
-	req_access_txt = "7";
-	dir = 4
+	req_access_txt = "7"
 	},
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/tile/neutral{
@@ -31285,12 +31287,10 @@
 	name = "Docking Bay"
 	})
 "xDR" = (
-/obj/machinery/cryopod{
-	dir = 4
-	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer1{
 	dir = 4
 	},
+/obj/machinery/cryopod_tele,
 /turf/open/floor/carpet,
 /area/crew_quarters/dorms)
 "xEk" = (

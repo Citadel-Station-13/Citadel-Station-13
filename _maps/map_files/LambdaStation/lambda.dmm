@@ -52546,9 +52546,6 @@
 /obj/machinery/light{
 	dir = 4
 	},
-/obj/machinery/cryopod{
-	dir = 8
-	},
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/dorms)
 "bUC" = (
@@ -75549,6 +75546,10 @@
 /obj/effect/turf_decal/loading_area{
 	dir = 4
 	},
+/obj/machinery/computer/cryopod_tele{
+	dir = 1;
+	pixel_y = -27
+	},
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/dorms)
 "cOu" = (
@@ -81247,6 +81248,10 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/turret_protected/aisat/foyer)
+"nJo" = (
+/obj/machinery/cryopod_tele,
+/turf/open/floor/plasteel/dark,
+/area/crew_quarters/dorms)
 "nRc" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -125167,9 +125172,9 @@ eVg
 eVg
 eVg
 bSH
-eVg
-eVg
-eVg
+nJo
+nJo
+nJo
 bWB
 bWY
 bWY
@@ -126196,8 +126201,8 @@ bRx
 bRx
 bTD
 bUB
-bRx
-bRx
+nJo
+nJo
 bWB
 cjI
 bXz

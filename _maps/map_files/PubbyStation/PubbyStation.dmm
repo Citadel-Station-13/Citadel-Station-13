@@ -53769,8 +53769,10 @@
 /turf/open/floor/wood,
 /area/lawoffice)
 "epj" = (
-/obj/machinery/cryopod{
-	dir = 8
+/obj/machinery/cryopod_tele,
+/obj/machinery/computer/cryopod_tele{
+	dir = 8;
+	pixel_x = -24
 	},
 /turf/open/floor/plasteel,
 /area/crew_quarters/dorms)

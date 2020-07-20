@@ -13872,8 +13872,8 @@
 	height = 5;
 	id = "mining_home";
 	name = "mining shuttle bay";
-	roundstart_template = /datum/map_template/shuttle/mining/box;
-	width = 7
+	width = 7;
+	roundstart_template = /datum/map_template/shuttle/mining/box
 	},
 /turf/open/space/basic,
 /area/space)
@@ -81913,10 +81913,10 @@
 /turf/open/floor/plasteel/dark,
 /area/tcommsat/server)
 "maM" = (
-/obj/machinery/cryopod,
 /obj/machinery/light{
 	dir = 4
 	},
+/obj/machinery/cryopod_tele,
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/cryopod)
 "maP" = (
@@ -81973,10 +81973,10 @@
 /turf/open/floor/plasteel/white,
 /area/science/circuit)
 "mAU" = (
-/obj/machinery/cryopod,
 /obj/machinery/camera{
 	c_tag = "Fitness Room - Fore"
 	},
+/obj/machinery/cryopod_tele,
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/cryopod)
 "mEe" = (
@@ -82807,6 +82807,13 @@
 	},
 /turf/open/floor/plasteel,
 /area/crew_quarters/fitness/recreation)
+"vtn" = (
+/obj/machinery/cryopod_tele,
+/obj/machinery/computer/cryopod_tele{
+	pixel_y = 27
+	},
+/turf/open/floor/plasteel/dark,
+/area/crew_quarters/cryopod)
 "vxG" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -119131,7 +119138,7 @@ aaa
 aaa
 aag
 fpY
-ugc
+vtn
 lzG
 oFq
 qLE

@@ -15686,8 +15686,9 @@
 /turf/open/floor/plasteel,
 /area/hallway/primary/port/fore)
 "aIv" = (
-/obj/machinery/cryopod{
-	dir = 8
+/obj/machinery/cryopod_tele,
+/obj/machinery/computer/cryopod_tele{
+	pixel_y = 27
 	},
 /turf/open/floor/circuit/green,
 /area/crew_quarters/cryopod)
@@ -16543,13 +16544,11 @@
 	name = "Research Sector"
 	})
 "aJW" = (
-/obj/machinery/cryopod{
-	dir = 8
-	},
 /obj/machinery/firealarm{
 	dir = 1;
 	pixel_y = -26
 	},
+/obj/machinery/cryopod_tele,
 /turf/open/floor/circuit/green,
 /area/crew_quarters/cryopod)
 "aJX" = (
@@ -21254,6 +21253,9 @@
 /obj/machinery/atmospherics/pipe/simple/orange/hidden{
 	dir = 6
 	},
+/obj/machinery/computer/cryopod{
+	pixel_y = 28
+	},
 /turf/open/floor/circuit/green,
 /area/crew_quarters/cryopod)
 "aTM" = (
@@ -21832,9 +21834,6 @@
 /turf/open/floor/plasteel/white,
 /area/crew_quarters/fitness/cogpool)
 "aVg" = (
-/obj/machinery/computer/cryopod{
-	pixel_y = 28
-	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 8
 	},
@@ -71905,6 +71904,10 @@
 /obj/machinery/atmospherics/pipe/manifold/supplymain/visible,
 /turf/open/floor/plasteel,
 /area/engine/atmos)
+"ePg" = (
+/obj/machinery/cryopod_tele,
+/turf/open/floor/circuit/green,
+/area/crew_quarters/cryopod)
 "eTZ" = (
 /obj/effect/turf_decal/tile/green{
 	dir = 4
@@ -102504,7 +102507,7 @@ aaa
 aaU
 aHY
 aIv
-aIv
+ePg
 aJW
 aHY
 aRQ

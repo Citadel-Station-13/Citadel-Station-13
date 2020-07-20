@@ -1548,9 +1548,6 @@
 /turf/open/floor/plasteel/white,
 /area/science/lab)
 "ayu" = (
-/obj//obj/item/kirbyplants{
-	icon_state = "plant-16"
-	},
 /obj/effect/turf_decal/tile/purple{
 	dir = 1
 	},
@@ -5826,9 +5823,9 @@
 	name = "west facing firelock"
 	},
 /obj/machinery/door/window/southleft{
+	dir = 8;
 	name = "Test Chamber";
-	req_access_txt = "55";
-	dir = 8
+	req_access_txt = "55"
 	},
 /obj/machinery/door/poddoor/preopen{
 	id = "xenobio2";
@@ -5844,9 +5841,9 @@
 	dir = 10
 	},
 /obj/machinery/door/window/southleft{
+	dir = 4;
 	name = "Test Chamber";
-	req_access_txt = "55";
-	dir = 4
+	req_access_txt = "55"
 	},
 /turf/open/floor/plasteel,
 /area/science/xenobiology)
@@ -7757,9 +7754,6 @@
 /obj/structure/cable{
 	icon_state = "4-8"
 	},
-/obj//obj/item/kirbyplants{
-	icon_state = "plant-10"
-	},
 /turf/open/floor/carpet,
 /area/bridge)
 "cng" = (
@@ -9031,9 +9025,6 @@
 /obj/structure/cable{
 	icon_state = "2-8"
 	},
-/obj//obj/item/kirbyplants{
-	icon_state = "plant-10"
-	},
 /turf/open/floor/plasteel/dark,
 /area/security/prison)
 "cXI" = (
@@ -9409,11 +9400,13 @@
 /turf/open/floor/plasteel,
 /area/hallway/primary/fore)
 "dij" = (
-/obj//obj/item/kirbyplants{
-	icon_state = "plant-10"
+/obj/machinery/computer/cryopod_tele{
+	dir = 1;
+	pixel_y = -26
 	},
-/turf/open/floor/carpet,
-/area/bridge)
+/obj/machinery/cryopod_tele,
+/turf/open/floor/plasteel,
+/area/hallway/secondary/exit/departure_lounge)
 "diD" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -11360,18 +11353,6 @@
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plasteel,
 /area/janitor)
-"eue" = (
-/obj//obj/item/kirbyplants{
-	icon_state = "plant-04"
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 1
-	},
-/turf/open/floor/plasteel/white,
-/area/medical/medbay/central)
 "eus" = (
 /obj/machinery/atmospherics/pipe/simple/orange/visible{
 	dir = 4
@@ -17394,9 +17375,6 @@
 /obj/machinery/light{
 	dir = 4
 	},
-/obj//obj/item/kirbyplants{
-	icon_state = "plant-10"
-	},
 /turf/open/floor/wood,
 /area/bridge/meeting_room)
 "hTB" = (
@@ -22641,12 +22619,6 @@
 /obj/machinery/atmospherics/pipe/simple/orange/visible,
 /turf/open/floor/engine,
 /area/engine/engineering)
-"lfs" = (
-/obj//obj/item/kirbyplants{
-	icon_state = "plant-08"
-	},
-/turf/open/floor/plasteel,
-/area/maintenance/aft)
 "lfy" = (
 /obj/structure/cable{
 	icon_state = "1-2"
@@ -27184,8 +27156,8 @@
 /area/engine/engineering)
 "nSX" = (
 /obj/machinery/atmospherics/components/binary/pump/on{
-	name = "Gas to Cooling Loop";
-	dir = 1
+	dir = 1;
+	name = "Gas to Cooling Loop"
 	},
 /turf/open/floor/plating,
 /area/engine/atmospherics_engine)
@@ -27857,12 +27829,6 @@
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/carpet,
 /area/quartermaster/miningoffice)
-"old" = (
-/obj//obj/item/kirbyplants{
-	icon_state = "applebush"
-	},
-/turf/open/floor/wood,
-/area/security/courtroom)
 "oln" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 6
@@ -28531,9 +28497,6 @@
 /turf/open/floor/carpet,
 /area/crew_quarters/heads/hop)
 "oGU" = (
-/obj//obj/item/kirbyplants{
-	icon_state = "plant-10"
-	},
 /turf/open/floor/wood,
 /area/hallway/primary/central)
 "oHl" = (
@@ -29351,8 +29314,8 @@
 /area/quartermaster/storage)
 "pfb" = (
 /obj/machinery/atmospherics/components/binary/pump/on{
-	name = "Gas to Cooling Loop";
-	dir = 1
+	dir = 1;
+	name = "Gas to Cooling Loop"
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
@@ -29601,9 +29564,6 @@
 /obj/machinery/camera{
 	c_tag = "Courtroom East";
 	dir = 8
-	},
-/obj//obj/item/kirbyplants{
-	icon_state = "applebush"
 	},
 /turf/open/floor/wood,
 /area/security/courtroom)
@@ -32152,12 +32112,6 @@
 	},
 /turf/open/floor/carpet,
 /area/crew_quarters/dorms)
-"qHO" = (
-/obj//obj/item/kirbyplants{
-	icon_state = "plant-21"
-	},
-/turf/open/floor/plasteel,
-/area/hallway/secondary/exit/departure_lounge)
 "qIm" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
@@ -32961,7 +32915,6 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/neutral,
-/obj//obj/item/kirbyplants,
 /turf/open/floor/plasteel,
 /area/crew_quarters/fitness)
 "rhX" = (
@@ -34346,9 +34299,6 @@
 /area/engine/engineering)
 "saN" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj//obj/item/kirbyplants{
-	icon_state = "plant-10"
-	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/aft)
 "saP" = (
@@ -34837,9 +34787,6 @@
 	dir = 8
 	},
 /obj/effect/turf_decal/tile/blue,
-/obj//obj/item/kirbyplants{
-	icon_state = "plant-10"
-	},
 /turf/open/floor/plasteel/dark,
 /area/bridge)
 "srq" = (
@@ -36236,9 +36183,6 @@
 	},
 /obj/effect/turf_decal/tile/red{
 	dir = 4
-	},
-/obj//obj/item/kirbyplants{
-	icon_state = "plant-10"
 	},
 /turf/open/floor/plasteel/dark,
 /area/security/main)
@@ -43181,9 +43125,6 @@
 "xkT" = (
 /obj/structure/cable{
 	icon_state = "0-4"
-	},
-/obj//obj/item/kirbyplants{
-	icon_state = "plant-10"
 	},
 /obj/machinery/power/apc{
 	areastring = "/area/chapel/main";
@@ -60474,7 +60415,7 @@ ash
 kMc
 iRy
 nsi
-eue
+eLX
 eLX
 iEa
 hLg
@@ -76982,7 +76923,7 @@ cTD
 buZ
 pmE
 buZ
-old
+buZ
 hXF
 cTD
 oGU
@@ -77491,7 +77432,7 @@ uBa
 uBa
 uBa
 uBa
-qHO
+rqE
 lbp
 vPQ
 hhz
@@ -77537,7 +77478,7 @@ bVu
 ckb
 mXC
 clV
-dij
+vxi
 vxi
 nmN
 cDm
@@ -78262,7 +78203,7 @@ daX
 uBa
 uBa
 uBa
-qHO
+rqE
 lbp
 ceA
 jAb
@@ -81343,7 +81284,7 @@ wcB
 unA
 jPI
 wrh
-jPI
+dij
 bok
 rqE
 rqE
@@ -85490,7 +85431,7 @@ tRe
 avT
 avT
 bPn
-lfs
+cAe
 jbc
 aet
 cjA

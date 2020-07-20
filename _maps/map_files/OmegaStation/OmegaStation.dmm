@@ -40279,6 +40279,25 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/engine/atmos)
+"oFq" = (
+/obj/effect/turf_decal/bot,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/machinery/cryopod_tele,
+/obj/machinery/computer/cryopod_tele{
+	dir = 8;
+	pixel_x = 26
+	},
+/turf/open/floor/plasteel/dark,
+/area/crew_quarters/dorms)
 "oGc" = (
 /obj/machinery/atmospherics/pipe/simple/cyan/visible{
 	dir = 6
@@ -81886,7 +81905,7 @@ atP
 auT
 avY
 awQ
-axG
+oFq
 axG
 bxJ
 aAH
