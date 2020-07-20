@@ -240,9 +240,9 @@
 		SEND_SIGNAL(src, COMSIG_TRY_STORAGE_TAKE, P, user)
 		if(!user.put_in_hands(P))
 			P.forceMove(user.drop_location())	// make sure it's not stuck in the user if the put in hands somehow fails
-			to_chat(user, "<span class='notice'>You take \a [P] out of [src].</span>")
-		else
 			to_chat(user, "<span class='warning'>[P] drops to the floor!</span>")
+		else
+			to_chat(user, "<span class='notice'>You take \a [P] out of [src].</span>")
 	else
 		to_chat(user, "<span class='notice'>There are no pills left in the bottle.</span>")
 	return TRUE
