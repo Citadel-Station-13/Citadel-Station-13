@@ -516,7 +516,7 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 			used_environ += amount
 
 
-/area/Entered(atom/movable/M)
+/area/Entered(atom/movable/M, atom/OldLoc)
 	set waitfor = FALSE
 	SEND_SIGNAL(src, COMSIG_AREA_ENTERED, M)
 	SEND_SIGNAL(M, COMSIG_ENTER_AREA, src) //The atom that enters the area
@@ -524,6 +524,11 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 		return
 
 	var/mob/living/L = M
+	var/turf/oldTurf = get_turf(OldLoc)
+	var/area/A = oldTurf?.loc
+	if(A && (A.has_gravity != has_gravity))
+		L.update_gravity(L.mob_has_gravity())
+
 	if(!L.ckey)
 		return
 
