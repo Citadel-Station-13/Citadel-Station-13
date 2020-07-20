@@ -635,8 +635,8 @@
 	anchored = TRUE
 	pass_flags = LETPASSTHROW //You can throw objects over this, despite it's density.
 	max_integrity = 20
-	clickdelay_attack_hand_is_action = TRUE
-	clickdelay_attack_hand_preattack_cooldown = CLICK_CD_MELEE
+	attack_hand_speed = CLICK_CD_MELEE
+	attack_hand_is_action = TRUE
 
 /obj/structure/rack/examine(mob/user)
 	. = ..()

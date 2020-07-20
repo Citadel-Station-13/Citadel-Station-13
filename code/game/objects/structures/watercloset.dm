@@ -13,8 +13,8 @@
 	var/mob/living/swirlie = null	//the mob being given a swirlie
 	var/buildstacktype = /obj/item/stack/sheet/metal //they're metal now, shut up
 	var/buildstackamount = 1
-	clickdelay_attack_hand_is_action = TRUE
-	clickdelay_attack_hand_preattack_cooldown = CLICK_CD_MELEE
+	attack_hand_speed = CLICK_CD_MELEE
+	attack_hand_is_action = TRUE
 
 /obj/structure/toilet/Initialize()
 	. = ..()

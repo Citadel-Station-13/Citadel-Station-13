@@ -467,7 +467,7 @@
 /datum/reagent/drug/skooma/on_mob_metabolize(mob/living/L)
 	. = ..()
 	L.add_movespeed_modifier(/datum/movespeed_modifier/reagent/skooma)
-	L.next_move_modifier *= 2
+	L.action_cooldown_mod *= 2
 	if(ishuman(L))
 		var/mob/living/carbon/human/H = L
 		if(H.physiology)
@@ -480,7 +480,7 @@
 /datum/reagent/drug/skooma/on_mob_end_metabolize(mob/living/L)
 	. = ..()
 	L.remove_movespeed_modifier(/datum/movespeed_modifier/reagent/skooma)
-	L.next_move_modifier *= 0.5
+	L.action_cooldown_mod *= 0.5
 	if(ishuman(L))
 		var/mob/living/carbon/human/H = L
 		if(H.physiology)
@@ -542,13 +542,13 @@
 /datum/reagent/syndicateadrenals/on_mob_metabolize(mob/living/M)
 	. = ..()
 	if(istype(M))
-		M.next_move_modifier *= 0.5
+		M.action_cooldown_mod *= 0.5
 		to_chat(M, "<span class='notice'>You feel an intense surge of energy rushing through your veins.</span>")
 
 /datum/reagent/syndicateadrenals/on_mob_end_metabolize(mob/living/M)
 	. = ..()
 	if(istype(M))
-		M.next_move_modifier *= 2
+		M.action_cooldown_mod *= 2
 		to_chat(M, "<span class='notice'>You feel as though the world around you is going faster.</span>")
 
 /datum/reagent/syndicateadrenals/overdose_start(mob/living/M)

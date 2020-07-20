@@ -256,6 +256,7 @@
 #include "code\_onclick\hud\screen_objects\sprint.dm"
 #include "code\_onclick\hud\screen_objects\stamina.dm"
 #include "code\_onclick\hud\screen_objects\storage.dm"
+#include "code\_onclick\hud\screen_objects\vore.dm"
 #include "code\controllers\admin.dm"
 #include "code\controllers\configuration_citadel.dm"
 #include "code\controllers\controller.dm"

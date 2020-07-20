@@ -119,6 +119,8 @@
 	var/poison_type = "toxin"
 	var/poison_per_bite = 5
 	var/list/faction = list("spiders")
+	attack_hand_speed = CLICK_CD_MELEE
+	attack_hand_is_action = TRUE
 
 /obj/structure/spider/spiderling/Destroy()
 	new/obj/item/reagent_containers/food/snacks/spiderling(get_turf(src))
@@ -155,7 +157,6 @@
 /obj/structure/spider/spiderling/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	. = ..()
 	if(user.a_intent != INTENT_HELP)
-		user.changeNext_move(CLICK_CD_MELEE)
 		user.do_attack_animation(src)
 		user.visible_message("<span class='warning'>[user] splats [src].</span>", "<span class='warning'>You splat [src].</span>", "<span class='italics'>You hear a splat...</span>")
 		playsound(loc, 'sound/effects/snap.ogg', 25)

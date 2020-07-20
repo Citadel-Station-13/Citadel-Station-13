@@ -107,11 +107,7 @@
 /obj/item/clothing/suit/space/hardsuit/Initialize()
 	if(jetpack && ispath(jetpack))
 		jetpack = new jetpack(src)
-	. = ..()
-
-/obj/item/clothing/suit/space/hardsuit/attack_self(mob/user)
-	user.changeNext_move(CLICK_CD_MELEE)
-	..()
+	return ..()
 
 /obj/item/clothing/suit/space/hardsuit/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/tank/jetpack/suit))

@@ -6,6 +6,8 @@
 	icon_state = "cutout_basic"
 	w_class = WEIGHT_CLASS_BULKY
 	resistance_flags = FLAMMABLE
+	attack_hand_speed = CLICK_CD_MELEE
+	attack_hand_is_action = TRUE
 	/// Possible restyles for the cutout, add an entry in change_appearance() if you add to here
 	var/static/list/possible_appearances
 	/// If the cutout is pushed over and has to be righted
@@ -80,7 +82,6 @@
 	else if(I.hitsound)
 		playsound(loc, I.hitsound, get_clamped_volume(), 1, -1)
 
-	user.changeNext_move(CLICK_CD_MELEE)
 	user.do_attack_animation(src)
 
 	if(I.force)
