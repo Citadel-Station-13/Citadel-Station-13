@@ -1,7 +1,6 @@
 /world/proc/enable_reference_tracking()
-	var/extools = world.GetConfig("env", "EXTOOLS_DLL") || (world.system_type == MS_WINDOWS ? "./byond-extools.dll" : "./libbyond-extools.so")
-	if (fexists(extools))
-		call(extools, "ref_tracking_initialize")()
+	if (fexists(EXTOOLS))
+		call(EXTOOLS, "ref_tracking_initialize")()
 
 /proc/get_back_references(datum/D)
 	CRASH("/proc/get_back_references not hooked by extools, reference tracking will not function!")
