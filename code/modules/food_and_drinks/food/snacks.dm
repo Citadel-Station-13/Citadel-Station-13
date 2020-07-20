@@ -414,5 +414,5 @@ All foods are distributed among various categories. Use common sense.
 		var/obj/item/fried_item = src
 		if(fried_item.resistance_flags & INDESTRUCTIBLE)
 			return
-	if(!GetComponent(/datum/component/fried) && (!reagents || isfood(src)))
+	if(!GetComponent(/datum/component/fried) && (!reagents || isfood(src) || ismob(src)))
 		AddComponent(/datum/component/fried, frying_power = cook_time)
