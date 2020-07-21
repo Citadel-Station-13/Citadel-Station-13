@@ -55,7 +55,7 @@
 		if(M.client && M.client.prefs)
 			if(M.client.prefs.toggles & VERB_CONSENT)
 				if(M.has_mouth())
-					message = (user == M) ? pick("fucks their own mouth with \the [src]", "shoves \the [src] into their mouth", "jams \the [src] into their ass") : pick("fucks [M]'s mouth with \the [src]", "jams \the [src] into [M]'s mouth")
+					message = (user == M) ? pick("fucks their own mouth with \the [src]", "shoves \the [src] into their mouth", "jams \the [src] into their mouth") : pick("fucks [M]'s mouth with \the [src]", "jams \the [src] into [M]'s mouth")
 	if(message)
 		user.visible_message("<font color=purple>[user] [message].</font>")
 		M.handle_post_sex(5, null, user)
