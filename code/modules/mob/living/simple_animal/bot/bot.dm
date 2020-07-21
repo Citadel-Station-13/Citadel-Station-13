@@ -104,6 +104,7 @@
 
 	//emotes/speech stuff
 	var/patrol_emote = "Engaging patrol mode."
+	var/patrol_fail_emote = "Unable to start patrol."
 
 /mob/living/simple_animal/bot/proc/get_mode()
 	if(client) //Player bots do not have modes, thus the override. Also an easy way for PDA users/AI to know when a bot is a player.
@@ -615,7 +616,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 	if(tries >= BOT_STEP_MAX_RETRIES) //Bot is trapped, so stop trying to patrol.
 		auto_patrol = 0
 		tries = 0
-		speak("Unable to start patrol.")
+		speak(patrol_fail_emote)
 
 		return
 

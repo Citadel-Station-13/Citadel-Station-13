@@ -20,6 +20,7 @@
 	var/attack_one //text when attacking criminal
 	var/attack_two //text when attacking criminal, but directly to the criminal
 	var/patrol_emote //engaging patrol text
+	var/patrol_fail_emote //failing to engage patrol text
 	var/list/arrest_texts //first is for not-cuffing, second is for cuffing
 	var/arrest_emote //text stating that you're cuffing some criminal C with a threat of level X in location Y
 
@@ -66,6 +67,9 @@
 	if(patrol_emote)
 		beepers.patrol_emote = patrol_emote
 
+	if(patrol_fail_emote)
+		beepers.patrol_fail_emote = patrol_fail_emote
+
 	if(arrest_texts)
 		beepers.arrest_texts = arrest_texts
 
@@ -88,6 +92,7 @@
 	attack_one = "BOT casts magic missile on CRIMINAL!"
 	attack_two = "BOT casts magic missile on you!"
 	patrol_emote = "Beginning search for magical disturbances."
+	patrol_fail_emote = "Failure to find magical disturbances. Recallibrating."
 	arrest_emote = "ARREST_TYPE level THREAT_LEVEL magical practitioner CRIMINAL in LOCATION."
 	stun_sounds = list('sound/magic/lightningbolt.ogg',
 		'sound/magic/fireball.ogg',
@@ -108,6 +113,7 @@
 	attack_one = "BOT unloads his revolver onto CRIMINAL!"
 	attack_two = "BOT unloads his revolver onto you!"
 	patrol_emote = "Engaging bounty hunting protocols."
+	patrol_fail_emote = "Unable to find any bounties due to error. Rebooting."
 	arrest_emote = "ARREST_TYPE outlaw CRIMINAL with a bounty of THREAT_LEVEL000 in LOCATION."
 	stun_sounds = list('sound/weapons/Gunshot.ogg',
 		'sound/weapons/Gunshot2.ogg',
@@ -124,6 +130,7 @@
 	attack_one = "BOT CQCs CRIMINAL!"
 	attack_two = "BOT CQCs you!"
 	patrol_emote = "Beginning search for the bad prosciutto."
+	patrol_fail_emote = "All prosciutto is stale. Rebooting."
 	arrest_texts = list("Frying", "Grilling") //any good secoff knows the difference
 	arrest_emote = "ARREST_TYPE grade THREAT_LEVEL prosciutto CRIMINAL in LOCATION."
 	stun_sounds = list('sound/weapons/cqchit1.ogg',
@@ -132,7 +139,7 @@
 /datum/beepsky_fashion/cat
 	obj_icon_state = "cat"
 	name = "OwOfficer Bweepskwee"
-	desc = "A beepsky unit with cat ears. Why?"
+	desc = "A beepsky unit with cat ears. Catgirl science has gone too far."
 	death_emote = "Nya!"
 	capture_one = "BOT is tying CRIMINAL up!!"
 	capture_two = "BOT is tying you up!"
@@ -140,7 +147,8 @@
 	taunt = "BOT points at CRIMINAL and nyas!"
 	attack_one = "BOT shoves CRIMINAL onto a table!"
 	attack_two = "BOT shoves you onto a table!"
-	patrol_emote = "Enwgagwing patwol mwode."
+	patrol_emote = "Enwgagwing patwol mwodies.."
+	patrol_fail_emote = "Unawbwle two stwawt patwollies. Nya."
 	arrest_texts = list("Dwetwaining", "Awwesting")
 	arrest_emote = "ARREST_TYPE wevel THREAT_LEVEL scwumbwag CRIMINAL in LOCATION. Nya."
 	ignore_sound = TRUE //we instead make the stunned person fire the nya emote
@@ -149,12 +157,14 @@
 	if(iscatperson(C))
 		C.emote("nya")
 	var/turf/target_turf = get_turf(C)
-	if(target_turf && !(C.lying)) //slams you on a table if you're standing up
-		playsound(src, 'sound/weapons/tap.ogg', 50, 1)
+	if(target_turf) //slams you on a fake table
+		playsound(src, 'sound/weapons/sonic_jackhammer.ogg', 50, 1)
 		var/obj/effect/overlay_holder = new(target_turf)
+		overlay_holder.name = "Catboy Table"
+		overlay_holder.desc = "Where bad catboys go."
 		var/image/table_overlay = image('icons/obj/smooth_structures/table.dmi', "table")
 		overlay_holder.add_overlay(table_overlay)
-		QDEL_IN(1, overlay_holder)
+		QDEL_IN(overlay_holder, 10)
 
 /datum/beepsky_fashion/cake //nothing else. it's just beepsky. with a cake on his head.
 	obj_icon_state = "cake"
@@ -171,6 +181,7 @@
 	attack_one = "BOT beats CRIMINAL with the chain of command!"
 	attack_two = "BOT beats you with the chain of command!"
 	patrol_emote = "Uselessness protocols engaged."
+	patrol_fail_emote = "Unit has been found as useless. Rebooting."
 	arrest_texts = list("Demoting", "Firing")
 	arrest_emote = "ARREST_TYPE level THREAT_LEVEL lesser crewmember CRIMINAL in LOCATION."
 	stun_sounds = list('sound/weapons/chainhit.ogg')
@@ -185,6 +196,7 @@
 	attack_one = "BOT strikes CRIMINAL with his kingly authority!"
 	attack_two = "BOT strikes you with his kingly authority!"
 	patrol_emote = "Searching for peasants to beat up."
+	patrol_fail_emote = "Peasants are using dark magic. Recallibrating."
 	arrest_texts = list("Knighting", "Executing")
 	arrest_emote = "ARREST_TYPE level THREAT_LEVEL peasant CRIMINAL in LOCATION."
 	stun_sounds = list('sound/weapons/punch1.ogg',
@@ -202,6 +214,7 @@
 	attack_one = "BOT strikes CRIMINAL with his cutlass!"
 	attack_two = "BOT strikes you with his cutlass!"
 	patrol_emote = "Searching for enemy vessels to board."
+	patrol_fail_emote = "No way to engage enemy vessels. Rebooting."
 	arrest_texts = list("Boarding", "Sinking")
 	arrest_emote = "ARREST_TYPE level THREAT_LEVEL vessel CRIMINAL in LOCATION."
 	stun_sounds = list('sound/weapons/bladeslice.ogg')
