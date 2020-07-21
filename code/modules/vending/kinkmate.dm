@@ -8,8 +8,8 @@
 	products = list(
 				/obj/item/clothing/head/maid = 5,
 				/obj/item/clothing/under/costume/maid = 5,
-				/obj/item/clothing/gloves/evening = 5,
 				/obj/item/clothing/under/rank/civilian/janitor/maid = 5,
+				/obj/item/clothing/gloves/evening = 5,
 				/obj/item/clothing/neck/petcollar = 5,
 				/obj/item/clothing/neck/petcollar/choker = 5,
 				/obj/item/clothing/neck/petcollar/leather = 5,
