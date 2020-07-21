@@ -19,6 +19,8 @@
 	///Next tick to reset the total message counter
 	var/total_count_reset = 0
 	var/ircreplyamount = 0
+	/// last time they tried to do an autobunker auth
+	var/autobunker_last_try = 0
 
 		/////////
 		//OTHER//
@@ -117,6 +119,8 @@
 
 	/// Messages currently seen by this client
 	var/list/seen_messages
+	///A lazy list of atoms we've examined in the last EXAMINE_MORE_TIME (default 1.5) seconds, so that we will call [atom/proc/examine_more()] instead of [atom/proc/examine()] on them when examining
+	var/list/recent_examines
 	///When was the last time we warned them about not cryoing without an ahelp, set to -5 minutes so that rounstart cryo still warns
 	var/cryo_warned = -5 MINUTES
 
@@ -133,6 +137,14 @@
 	var/parallax_movedir = 0
 	var/parallax_layers_max = 3
 	var/parallax_animate_timer
+
+	// List of all asset filenames sent to this client by the asset cache, along with their assoicated md5s
+	var/list/sent_assets = list()
+	/// List of all completed blocking send jobs awaiting acknowledgement by send_asset
+	var/list/completed_asset_jobs = list()
+	/// Last asset send job id.
+	var/last_asset_job = 0
+	var/last_completed_asset_job = 0
 
 	//world.time of when the crew manifest can be accessed
 	var/crew_manifest_delay

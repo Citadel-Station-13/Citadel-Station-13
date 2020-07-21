@@ -107,9 +107,8 @@
 		mind.add_antag_datum(/datum/antagonist/revenant)
 
 //Life, Stat, Hud Updates, and Say
-/mob/living/simple_animal/revenant/BiologicalLife(seconds, times_fired)
-	if(!(. = ..()))
-		return
+/mob/living/simple_animal/revenant/Life(seconds, times_fired)
+	. = ..()
 	if(stasis)
 		return
 	if(revealed && essence <= 0)

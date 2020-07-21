@@ -46,7 +46,7 @@
 		SG.ex_act(EXPLODE_DEVASTATE)
 	return ..()
 
-/obj/structure/destructible/clockwork/powered/clockwork_obelisk/attack_hand(mob/living/user)
+/obj/structure/destructible/clockwork/powered/clockwork_obelisk/attack_hand(mob/living/user, act_intent = user.a_intent, unarmed_attack_flags)
 	. = ..()
 	if(.)
 		return

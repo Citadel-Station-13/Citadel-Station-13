@@ -19,7 +19,7 @@
 		/obj/item/modular_computer,
 		/obj/item/ammo_casing/mws_batt,
 		/obj/item/ammo_box/magazine/mws_mag,
-		/obj/item/twohanded/electrostaff,
+		/obj/item/electrostaff,
 		/obj/item/gun/ballistic/automatic/magrifle))
 
 /obj/machinery/recharger/RefreshParts()
@@ -108,7 +108,7 @@
 
 	return ..()
 
-/obj/machinery/recharger/attack_hand(mob/user)
+/obj/machinery/recharger/attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	. = ..()
 	if(.)
 		return

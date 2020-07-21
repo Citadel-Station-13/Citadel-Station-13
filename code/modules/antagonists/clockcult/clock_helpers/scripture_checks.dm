@@ -38,10 +38,11 @@
 		set_slab.update_quickbind()
 
 /proc/generate_all_scripture()
-	if(!GLOB.all_scripture.len)
-		for(var/V in sortList(subtypesof(/datum/clockwork_scripture), /proc/cmp_clockscripture_priority))
-			var/datum/clockwork_scripture/S = new V
-			GLOB.all_scripture[S.type] = S
+	if(GLOB.all_scripture.len)
+		return
+	for(var/V in sortList(subtypesof(/datum/clockwork_scripture) - list(/datum/clockwork_scripture/channeled, /datum/clockwork_scripture/create_object, /datum/clockwork_scripture/create_object/construct), /proc/cmp_clockscripture_priority))
+		var/datum/clockwork_scripture/S = new V
+		GLOB.all_scripture[S.type] = S
 
 //changes construction value
 /proc/change_construction_value(amount)

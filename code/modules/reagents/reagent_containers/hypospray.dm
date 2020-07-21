@@ -354,7 +354,7 @@
 	obj_flags |= EMAGGED
 	return TRUE
 
-/obj/item/hypospray/mkii/attack_hand(mob/user)
+/obj/item/hypospray/mkii/attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	. = ..() //Don't bother changing this or removing it from containers will break.
 
 /obj/item/hypospray/mkii/attack(obj/item/I, mob/user, params)

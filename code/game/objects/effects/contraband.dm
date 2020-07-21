@@ -101,7 +101,7 @@
 			to_chat(user, "<span class='notice'>You carefully remove the poster from the wall.</span>")
 			roll_and_drop(user.loc)
 
-/obj/structure/sign/poster/attack_hand(mob/user)
+/obj/structure/sign/poster/attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	. = ..()
 	if(.)
 		return
@@ -211,6 +211,11 @@
 	name = "Lusty Xenomorph"
 	desc = "A heretical poster depicting the titular star of an equally heretical book."
 	icon_state = "poster4"
+
+/obj/structure/sign/poster/contraband/post_ratvar
+	name = "Post This Ratvar"
+	desc = "Oh what in the hell? Those cultists have animated paper technology and they use it for a meme?"
+	icon_state = "postvar"
 
 /obj/structure/sign/poster/contraband/syndicate_recruitment
 	name = "Syndicate Recruitment"

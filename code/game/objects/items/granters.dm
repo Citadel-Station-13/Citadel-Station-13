@@ -510,7 +510,7 @@
 	oneuse = FALSE
 	remarks = list("So that is how icing is made!", "Placing fruit on top? How simple...", "Huh layering cake seems harder then this...", "This book smells like candy", "A clown must have made this page, or they forgot to spell check it before printing...", "Wait, a way to cook slime to be safe?")
 
-/obj/item/book/granter/crafting_recipe/coldcooking //IceCream
+/obj/item/book/granter/crafting_recipe/coldcooking //Icecream
 	name = "Cooking with Ice"
 	desc = "A cook book that teaches you many old icecream treats."
 	crafting_recipe_types = list(/datum/crafting_recipe/food/banana_split, /datum/crafting_recipe/food/root_float, /datum/crafting_recipe/food/bluecharrie_float, /datum/crafting_recipe/food/charrie_float)

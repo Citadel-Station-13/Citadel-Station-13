@@ -42,6 +42,7 @@
 	school = "evocation"
 	charge_max = 600
 	clothes_req = NONE
+	antimagic_allowed = TRUE
 	range = 20
 	base_icon_state = "fireball"
 	action_icon_state = "fireball0"
@@ -122,6 +123,7 @@
 	desc = "A rare genome that attracts odd forces not usually observed. May sometimes pull you in randomly."
 	school = "evocation"
 	clothes_req = NONE
+	antimagic_allowed = TRUE
 	charge_max = 600
 	invocation = "DOOOOOOOOOOOOOOOOOOOOM!!!"
 	invocation_type = "shout"
@@ -155,6 +157,7 @@
 	dropmessage = "You let the electricity from your hand dissipate."
 	hand_path = /obj/item/melee/touch_attack/shock
 	charge_max = 400
+	antimagic_allowed = TRUE
 	clothes_req = NONE
 	action_icon_state = "zap"
 
@@ -212,6 +215,7 @@
 	desc = "Get a scent off of the item you're currently holding to track it. With an empty hand, you'll track the scent you've remembered."
 	charge_max = 100
 	clothes_req = NONE
+	antimagic_allowed = TRUE
 	range = -1
 	include_user = TRUE
 	action_icon_state = "nose"
@@ -222,9 +226,8 @@
 /obj/effect/proc_holder/spell/targeted/olfaction/cast(list/targets, mob/living/user = usr)
 	//can we sniff? is there miasma in the air?
 	var/datum/gas_mixture/air = user.loc.return_air()
-	var/list/cached_gases = air.gases
 
-	if(cached_gases[/datum/gas/miasma])
+	if(air.get_moles(/datum/gas/miasma))
 		user.adjust_disgust(sensitivity * 45)
 		to_chat(user, "<span class='warning'>With your overly sensitive nose, you get a whiff of stench and feel sick! Try moving to a cleaner area!</span>")
 		return
@@ -290,6 +293,7 @@
 	name = "Drop a limb"
 	desc = "Concentrate to make a random limb pop right off your body."
 	clothes_req = NONE
+	antimagic_allowed = TRUE
 	charge_max = 100
 	action_icon_state = "autotomy"
 
@@ -327,6 +331,7 @@
 	name = "Lay Web"
 	desc = "Drops a web. Only you will be able to traverse your web easily, making it pretty good for keeping you safe."
 	clothes_req = NONE
+	antimagic_allowed = TRUE
 	charge_max = 4 SECONDS //the same time to lay a web
 	action_icon = 'icons/mob/actions/actions_genetic.dmi'
 	action_icon_state = "lay_web"
@@ -368,6 +373,7 @@
 	name = "Launch spike"
 	desc = "Shoot your tongue out in the direction you're facing, embedding it and dealing damage until they remove it."
 	clothes_req = NONE
+	antimagic_allowed = TRUE
 	charge_max = 100
 	action_icon = 'icons/mob/actions/actions_genetic.dmi'
 	action_icon_state = "spike"
