@@ -1,0 +1,4 @@
+author: "kappa-sama"
+delete-after: True
+changes: 
+  - tweak: "quartered the weight of the stray cargo pod event from 2x normal to 1/2 normal"

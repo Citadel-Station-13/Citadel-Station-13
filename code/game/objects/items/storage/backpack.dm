@@ -506,7 +506,6 @@
 	new /obj/item/surgicaldrill/advanced(src)
 	new /obj/item/bonesetter(src)
 	new /obj/item/surgical_drapes(src)
-	new /obj/item/storage/firstaid/tactical(src)
 	new /obj/item/clothing/suit/straight_jacket(src)
 	new /obj/item/clothing/mask/muzzle(src)
 	new /obj/item/mmi/syndie(src)

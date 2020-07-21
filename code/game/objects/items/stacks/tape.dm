@@ -14,6 +14,7 @@
 	max_amount = 5
 	resistance_flags = FLAMMABLE
 	splint_factor = 0.8
+	grind_results = list(/datum/reagent/cellulose = 5)
 
 	var/list/conferred_embed = EMBED_HARMLESS
 	var/overwrite_existing = FALSE
