@@ -102,6 +102,9 @@
 	var/can_salute = TRUE
 	var/salute_delay = 60 SECONDS
 
+	//emotes/speech stuff
+	var/patrol_emote = "Engaging patrol mode."
+
 /mob/living/simple_animal/bot/proc/get_mode()
 	if(client) //Player bots do not have modes, thus the override. Also an easy way for PDA users/AI to know when a bot is a player.
 		if(paicard)
@@ -628,7 +631,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 				return
 			mode = BOT_PATROL
 	else					// no patrol target, so need a new one
-		speak("Engaging patrol mode.")
+		speak(patrol_emote)
 		find_patrol_target()
 		tries++
 	return

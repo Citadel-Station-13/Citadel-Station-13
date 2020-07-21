@@ -44,8 +44,8 @@
 	var/taunt = "<b>BOT</b> points at CRIMINAL!"
 	var/attack_one = "BOT has stunned CRIMINAL!"
 	var/attack_two = "BOT has stunned you!"
-
-	var/stun_sound =
+	var/list/arrest_texts = list("Detaining", "Arresting")
+	var/arrest_emote = "ARREST_TYPE level THREAT_LEVEL scumbag CRIMINAL in LOCATION."
 
 /mob/living/simple_animal/bot/secbot/beepsky
 	name = "Officer Beep O'sky"
@@ -63,7 +63,7 @@
 	resize = 0.8
 	update_transform()
 
-/mob/living/simple_animal/bot/secbot/proc/process_emote(var/emote_type, var/atom/criminal, var/threat)
+/mob/living/simple_animal/bot/secbot/proc/process_emote(var/emote_type, var/atom/criminal, var/threat, var/arrest = -1, var/location)
 	var/emote = "The continuity of space itself collapses around [src]. You should probably report that to someone higher up."
 	switch(emote_type)
 		if("DEATH")
@@ -80,16 +80,22 @@
 			emote = attack_one
 		if("ATTACK_TWO")
 			emote = attack_two
+		if("ARREST")
+			emote = arrest_emote
 
 	//now replace pieces of the text with the information we have
-	if(!taunt)
+	if(emote_type != "TAUNT" && emote_type != "ARREST")
 		emote = replacetext(emote, "BOT", name)
 	else
-		emote = replacetext(emote, "BOT", "<b>[name]</b>") //needs to be bold if its a taunt
+		emote = replacetext(emote, "BOT", "<b>[name]</b>") //needs to be bold if its a taunt or an arrest text
 	if(criminal)
 		emote = replacetext(emote, "CRIMINAL", criminal.name)
 	if(threat)
 		emote = replacetext(emote, "THREAT_LEVEL", threat)
+	if(arrest > -1)
+		emote = replacetext(emote, "ARREST_TYPE", arrest_texts[arrest + 1])
+	if(location)
+		emote = replacetext(emote, "LOCATION", location)
 	return emote
 
 /mob/living/simple_animal/bot/secbot/beepsky/explode()
@@ -303,6 +309,9 @@ Auto Patrol: []"},
 			taunt = initial(taunt)
 			attack_one = initial(attack_one)
 			attack_two = initial(attack_two)
+			arrest_texts = initial(arrest_texts)
+			arrest_emote = initial(arrest_emote)
+			patrol_emote = initial(patrol_emote)
 			bot_hat = null
 			qdel(stored_fashion)
 		var/mob/living/carbon/C = A
@@ -348,8 +357,8 @@ Auto Patrol: []"},
 	if(ishuman(C))
 		if(stored_fashion)
 			stored_fashion.stun_attack(C)
-			if(stored_fashion.stun_sound)
-				playsound(src, stored_fashion.stun_sound, 50, TRUE, -1)
+			if(stored_fashion.stun_sounds && !stored_fashion.ignore_sound)
+				playsound(src, pick(stored_fashion.stun_sounds), 50, TRUE, -1)
 			else
 				playsound(src, 'sound/weapons/egloves.ogg', 50, TRUE, -1)
 		C.stuttering = 5
@@ -365,7 +374,7 @@ Auto Patrol: []"},
 	log_combat(src,C,"stunned")
 	if(declare_arrests)
 		var/area/location = get_area(src)
-		speak("[arrest_type ? "Detaining" : "Arresting"] level [threat] scumbag <b>[C]</b> in [location].", radio_channel)
+		speak(process_emote("ARREST", C, threat, arrest_type, location), radio_channel)
 	C.visible_message("<span class='danger'>[process_emote("ATTACK_ONE", C)]</span>",\
 							"<span class='userdanger'>[process_emote("ATTACK_TWO", C)]</span>")
 

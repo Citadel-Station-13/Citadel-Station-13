@@ -20,8 +20,10 @@
 	desc = "It's an amish looking hat."
 	icon_state = "tophat"
 	item_state = "that"
-	dog_fashion = /datum/dog_fashion/head
 	throwforce = 1
+
+	dog_fashion = /datum/dog_fashion/head
+	beepsky_fashion = /datum/beepsky_fashion/tophat
 
 /obj/item/clothing/head/canada
 	name = "striped red tophat"
@@ -126,7 +128,9 @@
 	desc = "Yarr."
 	icon_state = "pirate"
 	item_state = "pirate"
+
 	dog_fashion = /datum/dog_fashion/head/pirate
+	beepsky_fashion = /datum/beepsky_fashion/pirate
 
 /obj/item/clothing/head/pirate/captain
 	name = "pirate captain hat"
@@ -205,6 +209,7 @@
 	item_state = "sombrero"
 	desc = "You can practically taste the fiesta."
 	flags_inv = HIDEHAIR
+
 	dog_fashion = /datum/dog_fashion/head/sombrero
 
 /obj/item/clothing/head/sombrero/green
@@ -213,6 +218,7 @@
 	item_state = "greensombrero"
 	desc = "As elegant as a dancing cactus."
 	flags_inv = HIDEHAIR|HIDEFACE|HIDEEARS
+
 	dog_fashion = null
 
 /obj/item/clothing/head/sombrero/shamebrero
@@ -220,6 +226,7 @@
 	icon_state = "shamebrero"
 	item_state = "shamebrero"
 	desc = "Once it's on, it never comes off."
+
 	dog_fashion = null
 
 /obj/item/clothing/head/sombrero/shamebrero/Initialize()
@@ -248,6 +255,7 @@
 	item_state = "that"
 	cold_protection = HEAD
 	min_cold_protection_temperature = FIRE_HELM_MIN_TEMP_PROTECT
+
 	dog_fashion = /datum/dog_fashion/head/santa
 
 /obj/item/clothing/head/jester
@@ -285,6 +293,8 @@
 	armor = list("melee" = 15, "bullet" = 0, "laser" = 0,"energy" = 15, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 50)
 	resistance_flags = FIRE_PROOF
 	dynamic_hair_suffix = ""
+
+	beepsky_fashion = /datum/beepsky_fashion/king
 
 /obj/item/clothing/head/crown/fancy
 	name = "magnificent crown"
@@ -391,7 +401,9 @@
 	name = "cowboy hat"
 	desc = "A standard brown cowboy hat, yeehaw."
 	icon_state = "cowboyhat"
-	item_state= "cowboyhat"
+	item_state = "cowboyhat"
+
+	beepsky_fashion = /datum/beepsky_fashion/cowboy
 
 /obj/item/clothing/head/cowboyhat/black
 	name = "black cowboy hat"

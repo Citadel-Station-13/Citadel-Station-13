@@ -8,7 +8,8 @@
 	var/obj_alpha
 	var/obj_color
 
-	var/stun_sound //sound that replaces the stun attack when set
+	var/list/stun_sounds //sound that replaces the stun attack when set
+	var/ignore_sound = FALSE //whether to ignore sounds entirely or not
 
 	//emotes
 	var/death_emote
@@ -18,6 +19,9 @@
 	var/taunt
 	var/attack_one
 	var/attack_two
+	var/patrol_emote
+	var/list/arrest_texts //first is for not-cuffing, second is for cuffing
+	var/arrest_emote
 
 /datum/beepsky_fashion/proc/get_overlay(var/dir)
 	if(icon_file && obj_icon_state)
@@ -53,6 +57,15 @@
 	if(attack_two)
 		beepers.attack_two = attack_two
 
+	if(patrol_emote)
+		beepers.patrol_emote = patrol_emote
+
+	if(arrest_texts)
+		beepers.arrest_texts = arrest_texts
+
+	if(arrest_emote)
+		beepers.arrest_emote = arrest_emote
+
 /datum/beepsky_fashion/proc/stun_attack(mob/living/carbon/C) //fired when beepsky does a stun attack with the fashion worn, for sounds/overlays/etc
 	return
 
@@ -67,6 +80,15 @@
 	infraction = "Magical disturbance of magnitude THREAT_LEVEL detected!"
 	attack_one = "BOT casts magic missile on CRIMINAL!"
 	attack_two = "BOT casts magic missile on you!"
+	patrol_emote = "Beginning search for magical disturbances."
+	arrest_emote = "ARREST_TYPE level THREAT_LEVEL magical practitioner CRIMINAL in LOCATION."
+	stun_sounds = list('sound/magic/lightningbolt.ogg',
+		'sound/magic/fireball.ogg',
+		'sound/weapons/zapbang.ogg',
+		'sound/magic/knock.ogg',
+		'sound/magic/fleshtostone.ogg',
+		'sound/effects/magic.ogg',
+		'sound/magic/disintegrate.ogg')
 
 /datum/beepsky_fashion/cowboy
 	obj_icon_state = "cowboy"
@@ -77,6 +99,12 @@
 	infraction = "Outlaws with a bounty of THREAT_LEVEL000 space dollars detected!"
 	attack_one = "BOT unloads his revolver onto CRIMINAL!"
 	attack_two = "BOT unloads his revolver onto you!"
+	patrol_emote = "Engaging bounty hunting protocols."
+	arrest_emote = "ARREST_TYPE outlaw CRIMINAL with a bounty of THREAT_LEVEL000 in LOCATION."
+	stun_sounds = list('sound/weapons/Gunshot.ogg',
+		'sound/weapons/Gunshot2.ogg',
+		'sound/weapons/Gunshot3.ogg',
+		'sound/weapons/Gunshot4.ogg')
 
 /datum/beepsky_fashion/chef
 	obj_icon_state = "chef"
@@ -84,8 +112,13 @@
 	desc = "Cooking up the finest foods the station has ever seen."
 	death_emote = "Mamma-mia!"
 	infraction = "Grade THREAT_LEVEL prosciutto detected!"
-	attack_one = "BOT slices wildly with a cleaver towards CRIMINAL!"
-	attack_two = "BOT slices wildly with a cleaver towards you!"
+	attack_one = "BOT CQCs CRIMINAL!"
+	attack_two = "BOT CQCs you!"
+	patrol_emote = "Beginning search for the bad prosciutto."
+	arrest_texts = list("Frying", "Grilling") //any good secoff knows the difference
+	arrest_emote = "ARREST_TYPE grade THREAT_LEVEL prosciutto CRIMINAL in LOCATION."
+	stun_sounds = list('sound/weapons/cqchit1.ogg',
+		'sound/weapons/cqchit2.ogg')
 
 /datum/beepsky_fashion/cat
 	obj_icon_state = "cat"
@@ -97,9 +130,25 @@
 	infraction = "Wevel THREAT_LEVEL infwactwion awert!!!"
 	attack_one = "BOT shoves CRIMINAL onto a table!"
 	attack_two = "BOT shoves you onto a table!"
+	patrol_emote = "Enwgagwing patwol mwode."
+	arrest_texts = list("Dwetwaining", "Awwesting")
+	arrest_emote = "ARREST_TYPE wevel THREAT_LEVEL scwumbwag CRIMINAL in LOCATION. Nya."
+	ignore_sound = TRUE //we instead make the stunned person fire the nya emote
+
+/datum/beepsky_fashion/cat/stun_attack(var/mob/living/carbon/C) //makes a fake table under you on hit, makes cat people nya when hit
+	if(iscatperson(C))
+		C.emote("nya")
+	var/turf/target_turf = get_turf(C)
+	if(target_turf && !(C.lying)) //slams you on a table if you're standing up
+		playsound(src, 'sound/weapons/tap.ogg', 50, 1)
+		var/obj/effect/overlay_holder = new(target_turf)
+		var/image/table_overlay = image('icons/obj/smooth_structures/table.dmi', "table")
+		overlay_holder.add_overlay(table_overlay)
+		QDEL_IN(1, overlay_holder)
 
 /datum/beepsky_fashion/cake //nothing else. it's just beepsky. with a cake on his head.
 	obj_icon_state = "cake"
+	desc = "It's a secbot, wearing a cake on his head!"
 
 /datum/beepsky_fashion/captain
 	obj_icon_state = "captain"
@@ -110,6 +159,10 @@
 	infraction = "Level THREAT_LEVEL greytider detected."
 	attack_one = "BOT beats CRIMINAL with the chain of command!"
 	attack_two = "BOT beats you with the chain of command!"
+	patrol_emote = "Uselessness protocols engaged."
+	arrest_texts = list("Demoting", "Firing")
+	arrest_emote = "ARREST_TYPE level THREAT_LEVEL lesser crewmember CRIMINAL in LOCATION."
+	stun_sounds = list('sound/weapons/chainhit.ogg')
 
 /datum/beepsky_fashion/king
 	obj_icon_state = "king"
@@ -120,6 +173,13 @@
 	infraction = "Treason of level THREAT_LEVEL detected!"
 	attack_one = "BOT strikes CRIMINAL with his kingly authority!"
 	attack_two = "BOT strikes you with his kingly authority!"
+	patrol_emote = "Searching for peasants to beat up."
+	arrest_texts = list("Knighting", "Executing")
+	arrest_emote = "ARREST_TYPE level THREAT_LEVEL peasant CRIMINAL in LOCATION."
+	stun_sounds = list('sound/weapons/punch1.ogg',
+		'sound/weapons/punch2.ogg',
+		'sound/weapons/punch3.ogg',
+		'sound/weapons/punch4.ogg')
 
 /datum/beepsky_fashion/pirate
 	obj_icon_state = "pirate"
@@ -130,3 +190,23 @@
 	infraction = "Enemy vessel spotted with threat level THREAT_LEVEL!"
 	attack_one = "BOT strikes CRIMINAL with his cutlass!"
 	attack_two = "BOT strikes you with his cutlass!"
+	patrol_emote = "Searching for enemy vessels to board."
+	arrest_texts = list("Boarding" "Sinking")
+	arrest_emote = "ARREST_TYPE level THREAT_LEVEL vessel CRIMINAL in LOCATION."
+	stun_sounds = list('sound/weapons/bladeslice.ogg')
+
+/datum/beepsky_fashion/engineer
+	obj_icon_state = "engineer"
+	desc = "He fixes criminals with a wrench to the face."
+	capture_one = "BOT is tying CRIMINAL up!"
+	capture_two = "BOT is tying you up!"
+	infraction = "Structural integrity issue spotted with threat level THREAT_LEVEL"
+	attack_one = "BOT strikes CRIMINAL with his wrench!"
+	attack_two = "BOT strikes you with his wrench!"
+	arrest_texts = list("Fixing", "Repairing")
+	arrest_emote = "ARREST_TYPE level THREAT_LEVEL structural issue in LOCATION"
+	stun_sounds = list('sound/weapons/genhit.ogg')
+
+/datum/beepsky_fashion/tophat
+	obj_icon_state = "tophat"
+	desc = "It's a secbot, wearing a top hat! How fancy."
