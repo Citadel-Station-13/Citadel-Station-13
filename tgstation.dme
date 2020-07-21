@@ -415,6 +415,7 @@
 #include "code\datums\components\explodable.dm"
 #include "code\datums\components\field_of_vision.dm"
 #include "code\datums\components\footstep.dm"
+#include "code\datums\components\fried.dm"
 #include "code\datums\components\identification.dm"
 #include "code\datums\components\igniter.dm"
 #include "code\datums\components\infective.dm"

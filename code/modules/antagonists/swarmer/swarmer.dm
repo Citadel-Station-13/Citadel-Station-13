@@ -486,7 +486,7 @@
 		var/obj/O = target
 		if(O.resistance_flags & INDESTRUCTIBLE)
 			return FALSE
-	for(var/mob/living/L in GetAllContents())
+	for(var/mob/living/L in target.GetAllContents())
 		if(!ispAI(L) && !isbrain(L))
 			to_chat(src, "<span class='warning'>An organism has been detected inside this object. Aborting.</span>")
 			return FALSE
