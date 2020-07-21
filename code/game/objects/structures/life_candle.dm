@@ -38,7 +38,7 @@
 		linked_minds |= user.mind
 
 	update_icon()
-	float(linked_minds.len)
+	INVOKE_ASYNC(src, /atom/movable.proc/float, linked_minds.len)
 	if(linked_minds.len)
 		START_PROCESSING(SSobj, src)
 		set_light(lit_luminosity)
