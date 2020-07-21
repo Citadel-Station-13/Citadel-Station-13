@@ -22,7 +22,7 @@
 
 //#define UNIT_TESTS			//Enables unit tests via TEST_RUN_PARAMETER
 
-#define REFERENCE_TRACKING		//Enables extools-powered reference tracking system, letting you see what is
+//#define REFERENCE_TRACKING		//Enables extools-powered reference tracking system, letting you see what is
 									//referencing objects that refuse to hard delete
 									// DO NOT KEEP ENABLED IN LIVE, THIS HAS OVERHEAD!
 
