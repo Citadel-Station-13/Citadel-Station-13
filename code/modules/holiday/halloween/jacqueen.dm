@@ -406,14 +406,14 @@
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, GLUED_ITEM_TRAIT)
 
-/obj/item/clothing/suit/ghost_sheet/sticky/attack_hand(mob/user)
+/obj/item/clothing/suit/ghost_sheet/sticky/attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	if(iscarbon(user))
 		to_chat(user, "<span class='spooky'><i>Boooooo~!</i></span>")
 		return
 	else
 		..()
 
-/obj/item/clothing/suit/ghost_sheet/sticky/attack_hand(mob/user)
+/obj/item/clothing/suit/ghost_sheet/sticky/attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	if(iscarbon(user))
 		to_chat(user, "<span class='spooky'><i>Boooooo~!</i></span>")
 		return

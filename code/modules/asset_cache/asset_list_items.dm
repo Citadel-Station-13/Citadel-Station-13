@@ -1,26 +1,9 @@
 //DEFINITIONS FOR ASSET DATUMS START HERE.
-/* uncomment this and delete the tgui def bellow this for the new tgui
+
 /datum/asset/simple/tgui
 	assets = list(
 		"tgui.bundle.js" = 'tgui/packages/tgui/public/tgui.bundle.js',
 		"tgui.bundle.css" = 'tgui/packages/tgui/public/tgui.bundle.css',
-	)
-*/
-/datum/asset/simple/tgui
-	assets = list(
-		// Old TGUI
-		"tgui.css" = 'tgui/assets/tgui.css',
-		"tgui.js" = 'tgui/assets/tgui.js',
-		// tgui-next
-		"tgui-main.html" = 'tgui-next/packages/tgui/public/tgui-main.html',
-		"tgui.bundle.js" = 'tgui-next/packages/tgui/public/tgui.bundle.js',
-		"tgui.bundle.css" = 'tgui-next/packages/tgui/public/tgui.bundle.css',
-		// Old TGUI compatability
-		"tgui-fallback.html" = 'tgui-next/packages/tgui/public/tgui-fallback.html',
-		"shim-html5shiv.js" = 'tgui-next/packages/tgui/public/shim-html5shiv.js',
-		"shim-ie8.js" = 'tgui-next/packages/tgui/public/shim-ie8.js',
-		"shim-dom4.js" = 'tgui-next/packages/tgui/public/shim-dom4.js',
-		"shim-css-om.js" = 'tgui-next/packages/tgui/public/shim-css-om.js',
 	)
 
 /datum/asset/group/tgui
@@ -56,17 +39,17 @@
 		"smmon_3.gif" 				= 'icons/program_icons/smmon_3.gif',
 		"smmon_4.gif" 				= 'icons/program_icons/smmon_4.gif',
 		"smmon_5.gif" 				= 'icons/program_icons/smmon_5.gif',
-		"smmon_6.gif" 				= 'icons/program_icons/smmon_6.gif'
-		//"borg_mon.gif"				= 'icons/program_icons/borg_mon.gif'
+		"smmon_6.gif" 				= 'icons/program_icons/smmon_6.gif',
+		"borg_mon.gif"				= 'icons/program_icons/borg_mon.gif'
 	)
-/* uncomment if you're porting the new ntnet app
+
 /datum/asset/simple/radar_assets
 	assets = list(
 		"ntosradarbackground.png"	= 'icons/UI_Icons/tgui/ntosradar_background.png',
 		"ntosradarpointer.png"		= 'icons/UI_Icons/tgui/ntosradar_pointer.png',
 		"ntosradarpointerS.png"		= 'icons/UI_Icons/tgui/ntosradar_pointer_S.png'
 	)
-*/
+
 /datum/asset/spritesheet/simple/pda
 	name = "pda"
 	assets = list(
@@ -95,7 +78,6 @@
 		"refresh"		= 'icons/pda_icons/pda_refresh.png',
 		"scanner"		= 'icons/pda_icons/pda_scanner.png',
 		"signaler"		= 'icons/pda_icons/pda_signaler.png',
-		//"skills"		= 'icons/pda_icons/pda_skills.png',
 		"status"		= 'icons/pda_icons/pda_status.png',
 		"dronephone"	= 'icons/pda_icons/pda_dronephone.png',
 		"emoji"			= 'icons/pda_icons/pda_emoji.png'
@@ -115,11 +97,8 @@
 		"stamp-cap" = 'icons/stamp_icons/large_stamp-cap.png',
 		"stamp-qm" = 'icons/stamp_icons/large_stamp-qm.png',
 		"stamp-law" = 'icons/stamp_icons/large_stamp-law.png'
-		//"stamp-chap" = 'icons/stamp_icons/large_stamp-chap.png',
-		//"stamp-mime" = 'icons/stamp_icons/large_stamp-mime.png',
-		//"stamp-centcom" = 'icons/stamp_icons/large_stamp-centcom.png',
-		//"stamp-syndicate" = 'icons/stamp_icons/large_stamp-syndicate.png'
 	)
+
 
 /datum/asset/simple/IRV
 	assets = list(
@@ -168,12 +147,13 @@
 		"jquery.min.js"            = 'code/modules/goonchat/browserassets/js/jquery.min.js',
 	)
 
+
 /datum/asset/simple/goonchat
 	assets = list(
 		"json2.min.js"             = 'code/modules/goonchat/browserassets/js/json2.min.js',
 		"browserOutput.js"         = 'code/modules/goonchat/browserassets/js/browserOutput.js',
 		"browserOutput.css"	       = 'code/modules/goonchat/browserassets/css/browserOutput.css',
-		"browserOutput_dark.css"   = 'code/modules/goonchat/browserassets/css/browserOutput_dark.css', //dark theme, cit specific
+		"browserOutput_dark.css"   = 'code/modules/goonchat/browserassets/css/browserOutput_dark.css',
 		"browserOutput_light.css"  = 'code/modules/goonchat/browserassets/css/browserOutput_light.css'
 	)
 
@@ -219,6 +199,16 @@
 		"none_button.png" = 'html/none_button.png',
 	)
 
+/datum/asset/simple/arcade
+	assets = list(
+		"boss1.gif" = 'icons/UI_Icons/Arcade/boss1.gif',
+		"boss2.gif" = 'icons/UI_Icons/Arcade/boss2.gif',
+		"boss3.gif" = 'icons/UI_Icons/Arcade/boss3.gif',
+		"boss4.gif" = 'icons/UI_Icons/Arcade/boss4.gif',
+		"boss5.gif" = 'icons/UI_Icons/Arcade/boss5.gif',
+		"boss6.gif" = 'icons/UI_Icons/Arcade/boss6.gif',
+	)
+
 /datum/asset/spritesheet/simple/minesweeper
 	name = "minesweeper"
 	assets = list(
@@ -237,45 +227,7 @@
 		"minehit" = 'icons/UI_Icons/minesweeper_tiles/minehit.png'
 	)
 
-/* Port the app game thing
-/datum/asset/simple/arcade
-	assets = list(
-		"boss1.gif" = 'icons/UI_Icons/Arcade/boss1.gif',
-		"boss2.gif" = 'icons/UI_Icons/Arcade/boss2.gif',
-		"boss3.gif" = 'icons/UI_Icons/Arcade/boss3.gif',
-		"boss4.gif" = 'icons/UI_Icons/Arcade/boss4.gif',
-		"boss5.gif" = 'icons/UI_Icons/Arcade/boss5.gif',
-		"boss6.gif" = 'icons/UI_Icons/Arcade/boss6.gif',
-		)
-*/
-/*
-/datum/asset/spritesheet/simple/achievements
-	name ="achievements"
-	assets = list(
-		"default" = 'icons/UI_Icons/Achievements/default.png',
-		"basemisc" = 'icons/UI_Icons/Achievements/basemisc.png',
-		"baseboss" = 'icons/UI_Icons/Achievements/baseboss.png',
-		"baseskill" = 'icons/UI_Icons/Achievements/baseskill.png',
-		"bbgum" = 'icons/UI_Icons/Achievements/Boss/bbgum.png',
-		"colossus" = 'icons/UI_Icons/Achievements/Boss/colossus.png',
-		"hierophant" = 'icons/UI_Icons/Achievements/Boss/hierophant.png',
-		"legion" = 'icons/UI_Icons/Achievements/Boss/legion.png',
-		"miner" = 'icons/UI_Icons/Achievements/Boss/miner.png',
-		"swarmer" = 'icons/UI_Icons/Achievements/Boss/swarmer.png',
-		"tendril" = 'icons/UI_Icons/Achievements/Boss/tendril.png',
-		"featofstrength" = 'icons/UI_Icons/Achievements/Misc/featofstrength.png',
-		"helbital" = 'icons/UI_Icons/Achievements/Misc/helbital.png',
-		"jackpot" = 'icons/UI_Icons/Achievements/Misc/jackpot.png',
-		"meteors" = 'icons/UI_Icons/Achievements/Misc/meteors.png',
-		"timewaste" = 'icons/UI_Icons/Achievements/Misc/timewaste.png',
-		"upgrade" = 'icons/UI_Icons/Achievements/Misc/upgrade.png',
-		"clownking" = 'icons/UI_Icons/Achievements/Misc/clownking.png',
-		"clownthanks" = 'icons/UI_Icons/Achievements/Misc/clownthanks.png',
-		"rule8" = 'icons/UI_Icons/Achievements/Misc/rule8.png',
-		"snail" = 'icons/UI_Icons/Achievements/Misc/snail.png',
-		"mining" = 'icons/UI_Icons/Achievements/Skills/mining.png',
-	)
-*/
+
 /datum/asset/spritesheet/simple/pills
 	name ="pills"
 	assets = list(
@@ -313,8 +265,8 @@
 /datum/asset/spritesheet/pipes
 	name = "pipes"
 
-/datum/asset/spritesheet/pipes/register() //we do not have chempipes
-	for (var/each in list('icons/obj/atmospherics/pipes/pipe_item.dmi', 'icons/obj/atmospherics/pipes/disposal.dmi', 'icons/obj/atmospherics/pipes/transit_tube.dmi'))
+/datum/asset/spritesheet/pipes/register()
+	for (var/each in list('icons/obj/atmospherics/pipes/pipe_item.dmi', 'icons/obj/atmospherics/pipes/disposal.dmi'))
 		InsertAll("", each, GLOB.alldirs)
 	..()
 
@@ -323,7 +275,7 @@
 	name = "design"
 
 /datum/asset/spritesheet/research_designs/register()
-	for(var/path in subtypesof(/datum/design))
+	for (var/path in subtypesof(/datum/design))
 		var/datum/design/D = path
 
 		var/icon_file
@@ -381,9 +333,9 @@
 	name = "vending"
 
 /datum/asset/spritesheet/vending/register()
-	for(var/k in GLOB.vending_products)
+	for (var/k in GLOB.vending_products)
 		var/atom/item = k
-		if(!ispath(item, /atom))
+		if (!ispath(item, /atom))
 			continue
 
 		var/icon_file = initial(item.icon)
@@ -394,12 +346,12 @@
 		if(icon_state in icon_states_list)
 			I = icon(icon_file, icon_state, SOUTH)
 			var/c = initial(item.color)
-			if(!isnull(c) && c != "#FFFFFF")
+			if (!isnull(c) && c != "#FFFFFF")
 				I.Blend(c, ICON_MULTIPLY)
 		else
 			var/icon_states_string
-			for(var/an_icon_state in icon_states_list)
-				if(!icon_states_string)
+			for (var/an_icon_state in icon_states_list)
+				if (!icon_states_string)
 					icon_states_string = "[json_encode(an_icon_state)](\ref[an_icon_state])"
 				else
 					icon_states_string += ", [json_encode(an_icon_state)](\ref[an_icon_state])"
@@ -418,7 +370,12 @@
 		"dna_extra.gif" 		= 'html/dna_extra.gif'
 	)
 
-/datum/asset/simple/vv
+/datum/asset/simple/orbit
 	assets = list(
-		"view_variables.css" = 'html/admin/view_variables.css'
+		"ghost.png"	= 'html/ghost.png'
 	)
+
+	assets = list(
+		"ghost.png"	= 'html/ghost.png'
+	)
+

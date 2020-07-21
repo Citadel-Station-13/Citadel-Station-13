@@ -31,7 +31,7 @@
 
 /obj/machinery/photocopier/ui_interact(mob/user)
 	. = ..()
-	var/dat = "Photocopier<BR><BR>"
+	var/list/dat = list("Photocopier<BR><BR>")
 	if(copy || photocopy || doccopy || (ass && (ass.loc == src.loc)))
 		dat += "<a href='byond://?src=[REF(src)];remove=1'>Remove Paper</a><BR>"
 		if(toner)
@@ -48,7 +48,7 @@
 	dat += "Current toner level: [toner]"
 	if(!toner)
 		dat +="<BR>Please insert a new toner cartridge!"
-	user << browse(dat, "window=copier")
+	user << browse(dat.Join(""), "window=copier")
 	onclose(user, "copier")
 
 /obj/machinery/photocopier/Topic(href, href_list)
@@ -77,17 +77,14 @@
 							c.info += copied
 							c.info += "</font>"
 							c.name = copy.name
-							c.fields = copy.fields
 							c.update_icon()
-							c.updateinfolinks()
 							c.stamps = copy.stamps
 							if(copy.stamped)
 								c.stamped = copy.stamped.Copy()
 							c.copy_overlays(copy, TRUE)
 							toner--
 					busy = TRUE
-					sleep(15)
-					busy = FALSE
+					addtimer(CALLBACK(src, .proc/reset_busy), 1.5 SECONDS)
 				else
 					break
 			updateUsrDialog()
@@ -96,8 +93,7 @@
 				if(toner >= 5 && !busy && photocopy)  //Was set to = 0, but if there was say 3 toner left and this ran, you would get -2 which would be weird for ink
 					new /obj/item/photo (loc, photocopy.picture.Copy(greytoggle == "Greyscale"? TRUE : FALSE))
 					busy = TRUE
-					sleep(15)
-					busy = FALSE
+					addtimer(CALLBACK(src, .proc/reset_busy), 1.5 SECONDS)
 				else
 					break
 		else if(doccopy)
@@ -106,40 +102,35 @@
 					new /obj/item/documents/photocopy(loc, doccopy)
 					toner-= 6 // the sprite shows 6 papers, yes I checked
 					busy = TRUE
-					sleep(15)
-					busy = FALSE
+					addtimer(CALLBACK(src, .proc/reset_busy), 1.5 SECONDS)
 				else
 					break
 			updateUsrDialog()
 		else if(ass) //ASS COPY. By Miauw
 			for(var/i = 0, i < copies, i++)
 				var/icon/temp_img
-				if(ishuman(ass) && (ass.get_item_by_slot(SLOT_W_UNIFORM) || ass.get_item_by_slot(SLOT_WEAR_SUIT)))
+				if(ishuman(ass) && (ass.get_item_by_slot(ITEM_SLOT_ICLOTHING) || ass.get_item_by_slot(ITEM_SLOT_OCLOTHING)))
 					to_chat(usr, "<span class='notice'>You feel kind of silly, copying [ass == usr ? "your" : ass][ass == usr ? "" : "\'s"] ass with [ass == usr ? "your" : "[ass.p_their()]"] clothes on.</span>" )
 					break
 				else if(toner >= 5 && !busy && check_ass()) //You have to be sitting on the copier and either be a xeno or a human without clothes on.
 					if(isalienadult(ass) || istype(ass, /mob/living/simple_animal/hostile/alien)) //Xenos have their own asses, thanks to Pybro.
 						temp_img = icon('icons/ass/assalien.png')
 					else if(ishuman(ass)) //Suit checks are in check_ass
-						var/mob/living/carbon/human/H = ass
-						if(H.dna.features["body_model"] == FEMALE)
-							temp_img = icon('icons/ass/assfemale.png')
-						else
-							temp_img = icon('icons/ass/assmale.png')
+						temp_img = icon(ass.gender == FEMALE ? 'icons/ass/assfemale.png' : 'icons/ass/assmale.png')
 					else if(isdrone(ass)) //Drones are hot
 						temp_img = icon('icons/ass/assdrone.png')
 					else
 						break
-					var/obj/item/photo/p = new /obj/item/photo (loc)
-					p.pixel_x = rand(-10, 10)
-					p.pixel_y = rand(-10, 10)
-					p.picture = new(null, "You see [ass]'s ass on the photo.", temp_img)
-					p.picture.psize_x = 128
-					p.picture.psize_y = 128
-					p.update_icon()
-					toner -= 5
 					busy = TRUE
 					sleep(15)
+					var/obj/item/photo/p = new /obj/item/photo (loc)
+					var/datum/picture/toEmbed = new(name = "[ass]'s Ass", desc = "You see [ass]'s ass on the photo.", image = temp_img)
+					p.pixel_x = rand(-10, 10)
+					p.pixel_y = rand(-10, 10)
+					toEmbed.psize_x = 128
+					toEmbed.psize_y = 128
+					p.set_picture(toEmbed, TRUE, TRUE)
+					toner -= 5
 					busy = FALSE
 				else
 					break
@@ -179,8 +170,7 @@
 			photo.pixel_y = rand(-10, 10)
 			toner -= 5	 //AI prints color pictures only, thus they can do it more efficiently
 			busy = TRUE
-			sleep(15)
-			busy = FALSE
+			addtimer(CALLBACK(src, .proc/reset_busy), 1.5 SECONDS)
 		updateUsrDialog()
 	else if(href_list["colortoggle"])
 		if(greytoggle == "Greyscale")
@@ -189,9 +179,13 @@
 			greytoggle = "Greyscale"
 		updateUsrDialog()
 
+/obj/machinery/photocopier/proc/reset_busy()
+	busy = FALSE
+	updateUsrDialog()
+
 /obj/machinery/photocopier/proc/do_insertion(obj/item/O, mob/user)
 	O.forceMove(src)
-	to_chat(user, "<span class ='notice'>You insert [O] into [src].</span>")
+	to_chat(user, "<span class='notice'>You insert [O] into [src].</span>")
 	flick("photocopier1", src)
 	updateUsrDialog()
 
@@ -256,10 +250,10 @@
 		return ..()
 
 /obj/machinery/photocopier/obj_break(damage_flag)
-	if(!(flags_1 & NODECONSTRUCT_1))
-		if(toner > 0)
-			new /obj/effect/decal/cleanable/oil(get_turf(src))
-			toner = 0
+	. = ..()
+	if(. && toner > 0)
+		new /obj/effect/decal/cleanable/oil(get_turf(src))
+		toner = 0
 
 /obj/machinery/photocopier/MouseDrop_T(mob/target, mob/user)
 	check_ass() //Just to make sure that you can re-drag somebody onto it after they moved off.
@@ -267,7 +261,7 @@
 		return
 	src.add_fingerprint(user)
 	if(target == user)
-		user.visible_message("[user] starts climbing onto the photocopier!", "<span class='notice'>You start climbing onto the photocopier...</span>")
+		user.visible_message("<span class='notice'>[user] starts climbing onto the photocopier!</span>", "<span class='notice'>You start climbing onto the photocopier...</span>")
 	else
 		user.visible_message("<span class='warning'>[user] starts putting [target] onto the photocopier!</span>", "<span class='notice'>You start putting [target] onto the photocopier...</span>")
 
@@ -276,7 +270,7 @@
 			return
 
 		if(target == user)
-			user.visible_message("[user] climbs onto the photocopier!", "<span class='notice'>You climb onto the photocopier.</span>")
+			user.visible_message("<span class='notice'>[user] climbs onto the photocopier!</span>", "<span class='notice'>You climb onto the photocopier.</span>")
 		else
 			user.visible_message("<span class='warning'>[user] puts [target] onto the photocopier!</span>", "<span class='notice'>You put [target] onto the photocopier.</span>")
 
@@ -302,7 +296,7 @@
 		updateUsrDialog()
 		return 0
 	else if(ishuman(ass))
-		if(!ass.get_item_by_slot(SLOT_W_UNIFORM) && !ass.get_item_by_slot(SLOT_WEAR_SUIT))
+		if(!ass.get_item_by_slot(ITEM_SLOT_ICLOTHING) && !ass.get_item_by_slot(ITEM_SLOT_OCLOTHING))
 			return 1
 		else
 			return 0

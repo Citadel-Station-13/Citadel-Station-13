@@ -59,7 +59,7 @@
 		last_failed_movement = direct
 		return 0
 
-/obj/singularity/attack_hand(mob/user)
+/obj/singularity/attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	consume(user)
 	return TRUE
 

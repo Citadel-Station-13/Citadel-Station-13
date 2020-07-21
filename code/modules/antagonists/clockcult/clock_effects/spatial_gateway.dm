@@ -64,7 +64,7 @@
 	..()
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
-/obj/effect/clockwork/spatial_gateway/attack_hand(mob/living/user)
+/obj/effect/clockwork/spatial_gateway/attack_hand(mob/living/user, act_intent = user.a_intent, unarmed_attack_flags)
 	if(!uses)
 		return FALSE
 	if(user.pulling && user.a_intent == INTENT_GRAB && isliving(user.pulling))
