@@ -7,16 +7,17 @@
 @use 'sass:meta';
 
 @use '../colors.scss' with (
-  $primary: #910101,
+  $primary: #ad2350,
   $fg-map-keys: (),
   $bg-map-keys: (),
 );
 @use '../base.scss' with (
-  $color-bg: #1b3443,
+  $color-bg: #2a314a,
   $color-bg-grad-spread: 6%,
+  $border-radius: 2px,
 );
 
-.theme-malfunction {
+.theme-abductor {
   // Atomic classes
   @include meta.load-css('../atomic/color.scss');
 
@@ -24,32 +25,32 @@
   @include meta.load-css('../components/Button.scss', $with: (
     'color-default': colors.$primary,
     'color-disabled': #363636,
-    'color-selected': #1e5881,
+    'color-selected': #465899,
     'color-caution': #be6209,
     'color-danger': #9a9d00,
   ));
   @include meta.load-css('../components/Input.scss', $with: (
-    'border-color': #910101,
+    'border-color': #404b6e,
   ));
   @include meta.load-css('../components/NoticeBox.scss', $with: (
-    'color-background': #1a3f57,
+    'color-background': #a82d55,
   ));
   @include meta.load-css('../components/NumberInput.scss', $with: (
-    'border-color': #910101,
+    'border-color': #404b6e,
   ));
   @include meta.load-css('../components/ProgressBar.scss', $with: (
     'color-background': rgba(0, 0, 0, 0.5),
   ));
   @include meta.load-css('../components/Section.scss');
   @include meta.load-css('../components/Tooltip.scss', $with: (
-    'color-background': #235577,
+    'color-background': #a82d55,
   ));
 
   // Layouts
   @include meta.load-css('../layouts/Layout.scss');
   @include meta.load-css('../layouts/Window.scss');
   @include meta.load-css('../layouts/TitleBar.scss', $with: (
-    'color-background': #1a3f57,
+    'color-background': #9e1b46,
   ));
 
   .Layout__content {
