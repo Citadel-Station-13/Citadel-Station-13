@@ -69,7 +69,7 @@
 
 /mob/proc/AltUnarmedAttack(atom/A, proximity_flag)
 	if(ismob(A))
-		changeNext_move(CLICK_CD_MELEE)
+		DelayNextAction(CLICK_CD_MELEE)
 	return FALSE
 
 /mob/proc/AltRangedAttack(atom/A, params)
