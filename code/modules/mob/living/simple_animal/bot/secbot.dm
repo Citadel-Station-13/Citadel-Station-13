@@ -242,6 +242,7 @@ Auto Patrol: []"},
 		bot_hat = H
 		H.forceMove(src)
 		update_beepsky_fluff()
+		regenerate_icons()
 	else
 		to_chat(user, "<span class='warning'>You set [H] on [src]'s head, but it falls off!</span>")
 		H.forceMove(drop_location())
@@ -250,12 +251,17 @@ Auto Patrol: []"},
 	var/datum/beepsky_fashion/BF = new bot_hat.beepsky_fashion
 	if(BF)
 		BF.apply(src)
-		regenerate_icons()
 
 /mob/living/simple_animal/bot/secbot/regenerate_icons()
 	..()
 	if(bot_hat)
 		var/datum/beepsky_fashion/fashion = new bot_hat.beepsky_fashion
+		if(!fashion.obj_icon_state)
+			fashion.obj_icon_state = bot_hat.icon_state
+		if(!fashion.obj_alpha)
+			fashion.obj_alpha = bot_hat.alpha
+		if(!fashion.obj_color)
+			fashion.obj_color = bot_hat.color
 		add_overlay(fashion.get_overlay())
 
 /mob/living/simple_animal/bot/secbot/emag_act(mob/user)

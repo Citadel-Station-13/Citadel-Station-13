@@ -26,8 +26,8 @@
 
 /datum/beepsky_fashion/proc/apply(mob/living/simple_animal/bot/secbot/beepers) //set the emote depending on the fashion datum, if nothing set, turn it back to how it was initially
 	//assume name and description is always set, because otherwise, what would be the point of beepsky fashion?
-	src.name = name
-	src.desc = desc
+	beepers.name = name
+	beepers.desc = desc
 	if(death_emote)
 		beepers.death_emote = death_emote
 	else
@@ -65,6 +65,7 @@
 
 //actual fashions from here on out
 /datum/beepsky_fashion/wizard
+	obj_icon_state = "wizard"
 	name = "Archmage Beepsky"
 	desc = "A secbot stolen from the wizard federation."
 	death_emote = "BOT casts EI NATH on themselves!"
