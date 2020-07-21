@@ -8,6 +8,8 @@
 	var/obj_alpha
 	var/obj_color
 
+	var/stun_sound //sound that replaces the stun attack when set
+
 	//emotes
 	var/death_emote
 	var/capture_one
@@ -63,6 +65,9 @@
 	else
 		beepers.attack_two = initial(beepers.attack_two)
 
+/datum/beepsky_fashion/proc/stun_attack(mob/living/carbon/C) //fired when beepsky does a stun attack with the fashion worn, for sounds/overlays/etc
+	return
+
 //actual fashions from here on out
 /datum/beepsky_fashion/wizard
 	obj_icon_state = "wizard"
@@ -74,3 +79,33 @@
 	infraction = "Magical disturbance of magnitude THREAT_LEVEL detected!"
 	attack_one = "BOT casts magic missile on CRIMINAL!"
 	attack_two = "BOT casts magic missile on you!"
+
+/datum/beepsky_fashion/cowboy
+	obj_icon_state = "cowboy"
+	name = "Sheriff Beepsky"
+	desc = "The sheriff of this here station."
+	capture_one = "BOT is tying CRIMINAL up!"
+	capture_two = "BOT is tying you up!"
+	infraction = "Outlaws with a bounty of THREAT_LEVEL000 space dollars detected!"
+	attack_one = "BOT unloads his revolver onto CRIMINAL!"
+	attack_two = "BOT unloads his revolver onto you!"
+
+/datum/beepsky_fashion/chef
+	obj_icon_state = "chef"
+	name = "Chef Beepsky"
+	desc = "Cooking up the finest foods the station has ever seen."
+	death_emote = "Mamma-mia!"
+	infraction = "Grade THREAT_LEVEL prosciutto detected!"
+	attack_one = "BOT slices wildly with a cleaver towards CRIMINAL!"
+	attack_two = "BOT slices wildly with a cleaver towards you!"
+
+/datum/beepsky_fashion/cat
+	obj_icon_state = "cat"
+	name = "OwOfficer Bweepskwee"
+	desc = "A beepsky unit with cat ears. Why?"
+	death_emote = "Nya!"
+	capture_one = "BOT is tying CRIMINAL up!!"
+	capture_two = "BOT is tying you up!"
+	infraction = "Wevel THREAT_LEVEL infwactwion awert!!!"
+	attack_one = "BOT shoves CRIMINAL onto a table!"
+	attack_two = "BOT shoves you onto a table!"

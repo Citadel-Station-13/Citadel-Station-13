@@ -34,6 +34,7 @@
 	var/arrest_type = FALSE //If true, don't handcuff
 
 	var/obj/item/clothing/head/bot_hat
+	var/datum/beepsky_fashion/stored_fashion
 
 	//emotes (BOT is replaced with bot name, CRIMINAL with criminal name, THREAT_LEVEL with threat level)
 	var/death_emote = "BOT blows apart!"
@@ -73,7 +74,7 @@
 			emote = infraction
 		if("TAUNT")
 			emote = taunt
-		if("ATTACK_PME")
+		if("ATTACK_ONE")
 			emote = attack_one
 		if("ATTACK_TWO")
 			emote = attack_two
@@ -249,20 +250,22 @@ Auto Patrol: []"},
 
 /mob/living/simple_animal/bot/secbot/proc/update_beepsky_fluff()
 	var/datum/beepsky_fashion/BF = new bot_hat.beepsky_fashion
+	stored_fashion = BF
 	if(BF)
 		BF.apply(src)
 
 /mob/living/simple_animal/bot/secbot/regenerate_icons()
 	..()
 	if(bot_hat)
-		var/datum/beepsky_fashion/fashion = new bot_hat.beepsky_fashion
-		if(!fashion.obj_icon_state)
-			fashion.obj_icon_state = bot_hat.icon_state
-		if(!fashion.obj_alpha)
-			fashion.obj_alpha = bot_hat.alpha
-		if(!fashion.obj_color)
-			fashion.obj_color = bot_hat.color
-		add_overlay(fashion.get_overlay())
+		if(!stored_fashion)
+			stored_fashion = new bot_hat.beepsky_fashion
+		if(!stored_fashion.obj_icon_state)
+			stored_fashion.obj_icon_state = bot_hat.icon_state
+		if(!stored_fashion.obj_alpha)
+			stored_fashion.obj_alpha = bot_hat.alpha
+		if(!stored_fashion.obj_color)
+			stored_fashion.obj_color = bot_hat.color
+		add_overlay(stored_fashion.get_overlay())
 
 /mob/living/simple_animal/bot/secbot/emag_act(mob/user)
 	. = ..()
@@ -323,16 +326,22 @@ Auto Patrol: []"},
 
 /mob/living/simple_animal/bot/secbot/proc/stun_attack(mob/living/carbon/C)
 	var/judgement_criteria = judgement_criteria()
-	playsound(src, 'sound/weapons/egloves.ogg', 50, TRUE, -1)
 	icon_state = "secbot-c"
 	addtimer(CALLBACK(src, /atom/.proc/update_icon), 2)
 	var/threat = 5
 	if(ishuman(C))
+		if(stored_fashion)
+			stored_fashion.stun_attack(C)
+			if(stored_fashion.stun_sound)
+				playsound(src, stun_sound, 50, TRUE, -1)
+			else
+				playsound(src, 'sound/weapons/egloves.ogg', 50, TRUE, -1)
 		C.stuttering = 5
 		C.DefaultCombatKnockdown(100)
 		var/mob/living/carbon/human/H = C
 		threat = H.assess_threat(judgement_criteria, weaponcheck=CALLBACK(src, .proc/check_for_weapons))
 	else
+		playsound(src, 'sound/weapons/egloves.ogg', 50, TRUE, -1)
 		C.DefaultCombatKnockdown(100)
 		C.stuttering = 5
 		threat = C.assess_threat(judgement_criteria, weaponcheck=CALLBACK(src, .proc/check_for_weapons))
