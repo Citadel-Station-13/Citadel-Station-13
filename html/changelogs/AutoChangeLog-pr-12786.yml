@@ -1,6 +1,0 @@
-author: "silicons"
-delete-after: True
-changes: 
-  - tweak: "survivalists (from summon guns/magic) are proper objective'd pseudoantagonists again"
-  - tweak: "summon guns/magic can only be used once each"
-  - tweak: "summon guns/magic now only cost one point each"

@@ -1,4 +1,0 @@
-author: "silicons"
-delete-after: True
-changes: 
-  - rscadd: "voting can now be done from the stat panel if the system is plurality and approval"

@@ -1,4 +1,0 @@
-author: "silicons"
-delete-after: True
-changes: 
-  - bugfix: "gravity should update for mobs a fair bit faster"
