@@ -116,6 +116,7 @@ GLOBAL_LIST_INIT(maintenance_loot, list(
 	/obj/item/autosurgeon/testicles = 1,
 	/obj/item/storage/box/marshmallow = 2,
 	/obj/item/clothing/gloves/tackler/offbrand = 1,
+	/obj/item/stack/sticky_tape = 1,
 	"" = 3
 	))
 

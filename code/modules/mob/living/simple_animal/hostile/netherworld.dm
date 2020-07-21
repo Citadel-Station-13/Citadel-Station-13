@@ -46,8 +46,9 @@
 	var/chosen_sound = pick(migo_sounds)
 	playsound(src, chosen_sound, 100, TRUE)
 
-/mob/living/simple_animal/hostile/netherworld/migo/Life()
-	..()
+/mob/living/simple_animal/hostile/netherworld/migo/BiologicalLife(seconds, times_fired)
+	if(!(. = ..()))
+		return
 	if(stat)
 		return
 	if(prob(10))
@@ -85,7 +86,7 @@
 	.=..()
 	START_PROCESSING(SSprocessing, src)
 
-/obj/structure/spawner/nether/attack_hand(mob/user)
+/obj/structure/spawner/nether/attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 		user.visible_message("<span class='warning'>[user] is violently pulled into the link!</span>", \
 						  "<span class='userdanger'>Touching the portal, you are quickly pulled through into a world of unimaginable horror!</span>")
 		contents.Add(user)

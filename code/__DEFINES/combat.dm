@@ -163,9 +163,8 @@ GLOBAL_LIST_INIT(shove_disarming_types, typecacheof(list(
 	/obj/item/gun)))
 
 
-//Combat object defines
-
 //Embedded objects
+
 #define EMBEDDED_PAIN_CHANCE 					15	//Chance for embedded objects to cause pain (damage user)
 #define EMBEDDED_ITEM_FALLOUT 					5	//Chance for embedded object to fall out (causing pain but removing the object)
 #define EMBED_CHANCE							45	//Chance for an object to embed into somebody when thrown (if it's sharp)
@@ -174,7 +173,16 @@ GLOBAL_LIST_INIT(shove_disarming_types, typecacheof(list(
 #define EMBEDDED_IMPACT_PAIN_MULTIPLIER			4	//Coefficient of multiplication for the damage the item does when it first embeds (this*item.w_class)
 #define EMBED_THROWSPEED_THRESHOLD				4	//The minimum value of an item's throw_speed for it to embed (Unless it has embedded_ignore_throwspeed_threshold set to 1)
 #define EMBEDDED_UNSAFE_REMOVAL_PAIN_MULTIPLIER 8	//Coefficient of multiplication for the damage the item does when removed without a surgery (this*item.w_class)
-#define EMBEDDED_UNSAFE_REMOVAL_TIME			150	//A Time in ticks, total removal time = (this/item.w_class)
+#define EMBEDDED_UNSAFE_REMOVAL_TIME			30	//A Time in ticks, total removal time = (this*item.w_class)
+#define EMBEDDED_JOSTLE_CHANCE					5	//Chance for embedded objects to cause pain every time they move (jostle)
+#define EMBEDDED_JOSTLE_PAIN_MULTIPLIER			1	//Coefficient of multiplication for the damage the item does while
+#define EMBEDDED_PAIN_STAM_PCT					0.0	//This percentage of all pain will be dealt as stam damage rather than brute (0-1)
+#define EMBED_CHANCE_TURF_MOD					-15	//You are this many percentage points less likely to embed into a turf (good for things glass shards and spears vs walls)
+
+#define EMBED_HARMLESS list("pain_mult" = 0, "jostle_pain_mult" = 0, "ignore_throwspeed_threshold" = TRUE)
+#define EMBED_HARMLESS_SUPERIOR list("pain_mult" = 0, "jostle_pain_mult" = 0, "ignore_throwspeed_threshold" = TRUE, "embed_chance" = 100, "fall_chance" = 0.1)
+#define EMBED_POINTY list("ignore_throwspeed_threshold" = TRUE)
+#define EMBED_POINTY_SUPERIOR list("embed_chance" = 100, "ignore_throwspeed_threshold" = TRUE)
 
 //Gun weapon weight
 #define WEAPON_LIGHT 1
@@ -188,6 +196,14 @@ GLOBAL_LIST_INIT(shove_disarming_types, typecacheof(list(
 #define EGUN_NO_SELFCHARGE 0
 #define EGUN_SELFCHARGE 1
 #define EGUN_SELFCHARGE_BORG 2
+
+//Gun suppression
+#define SUPPRESSED_NONE 0
+#define SUPPRESSED_QUIET 1 ///standard suppressed
+#define SUPPRESSED_VERY 2 /// no message
+
+//Nice shot bonus
+#define NICE_SHOT_RICOCHET_BONUS	10	//if the shooter has the NICE_SHOT trait and they fire a ricocheting projectile, add this to the ricochet chance and auto aim angle
 
 ///Time to spend without clicking on other things required for your shots to become accurate.
 #define GUN_AIMING_TIME (2 SECONDS)
@@ -253,11 +269,12 @@ GLOBAL_LIST_INIT(shove_disarming_types, typecacheof(list(
 
 //stamina cost defines.
 #define STAM_COST_ATTACK_OBJ_MULT	1.2
-#define STAM_COST_ATTACK_MOB_MULT	0.8
+#define STAM_COST_ATTACK_MOB_MULT	1
 #define STAM_COST_BATON_MOB_MULT	1
 #define STAM_COST_NO_COMBAT_MULT	1.25
 #define STAM_COST_W_CLASS_MULT		1.25
 #define STAM_COST_THROW_MULT		2
+#define STAM_COST_THROW_MOB			2.5 //multiplied by (mob size + 1)^2.
 
 ///Multiplier of the (STAMINA_NEAR_CRIT - user current stamina loss) : (STAMINA_NEAR_CRIT - STAMINA_SOFTCRIT) ratio used in damage penalties when stam soft-critted.
 #define STAM_CRIT_ITEM_ATTACK_PENALTY	0.66
@@ -267,6 +284,12 @@ GLOBAL_LIST_INIT(shove_disarming_types, typecacheof(list(
 #define LYING_DAMAGE_PENALTY			0.5
 /// Added delay when firing guns stam-softcritted. Summed with a hardset CLICK_CD_RANGE delay, similar to STAM_CRIT_DAMAGE_DELAY otherwise.
 #define STAM_CRIT_GUN_DELAY			2.75
+
+//stamina recovery defines. Blocked if combat mode is on.
+#define STAM_RECOVERY_STAM_CRIT		-7.5
+#define STAM_RECOVERY_RESTING		-6
+#define STAM_RECOVERY_NORMAL		-3
+#define STAM_RECOVERY_LIMB			4 //limbs recover stamina separately from handle_status_effects(), and aren't blocked by combat mode.
 
 /**
   * should the current-attack-damage be lower than the item force multiplied by this value,

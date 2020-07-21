@@ -52,11 +52,6 @@
 				return martial_art_result
 	return ..()
 
-/mob/living/carbon/human/can_embed(obj/item/I)
-	if(I.get_sharpness() || is_pointed(I) || is_type_in_typecache(I, GLOB.can_embed_types))
-		return TRUE
-	return FALSE
-
 /mob/living/carbon/human/proc/check_martial_melee_block()
 	if(mind)
 		if(mind.martial_art && prob(mind.martial_art.block_chance) && mind.martial_art.can_use(src) && in_throw_mode && !incapacitated(FALSE, TRUE))
@@ -98,29 +93,28 @@
 	return dna.species.spec_attacked_by(I, user, affecting, a_intent, src, attackchain_flags, damage_multiplier)
 
 /mob/living/carbon/human/attack_hulk(mob/living/carbon/human/user, does_attack_animation = FALSE)
-	if(user.a_intent == INTENT_HARM)
-		. = ..(user, TRUE)
-		if(.)
-			return
-		var/hulk_verb_continous = "smashes"
-		var/hulk_verb_simple = "smash"
-		if(prob(50))
-			hulk_verb_continous = "pummels"
-			hulk_verb_simple = "pummel"
-		playsound(loc, user.dna.species.attack_sound, 25, 1, -1)
-		visible_message("<span class='danger'>[user] [hulk_verb_continous] [src]!</span>", \
-						"<span class='userdanger'>[user] [hulk_verb_continous] you!</span>", null, COMBAT_MESSAGE_RANGE, null, user,
-						"<span class='danger'>You [hulk_verb_simple] [src]!</span>")
-		adjustBruteLoss(15)
-		return 1
+	. = ..(user, TRUE)
+	if(.)
+		return
+	var/hulk_verb_continous = "smashes"
+	var/hulk_verb_simple = "smash"
+	if(prob(50))
+		hulk_verb_continous = "pummels"
+		hulk_verb_simple = "pummel"
+	playsound(loc, user.dna.species.attack_sound, 25, 1, -1)
+	visible_message("<span class='danger'>[user] [hulk_verb_continous] [src]!</span>", \
+					"<span class='userdanger'>[user] [hulk_verb_continous] you!</span>", null, COMBAT_MESSAGE_RANGE, null, user,
+					"<span class='danger'>You [hulk_verb_simple] [src]!</span>")
+	adjustBruteLoss(15)
+	return 1
 
-/mob/living/carbon/human/attack_hand(mob/user)
+/mob/living/carbon/human/attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	. = ..()
 	if(.) //To allow surgery to return properly.
 		return
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
-		dna.species.spec_attack_hand(H, src)
+		dna.species.spec_attack_hand(H, src, null, act_intent, unarmed_attack_flags)
 
 /mob/living/carbon/human/attack_paw(mob/living/carbon/monkey/M)
 	var/dam_zone = pick(BODY_ZONE_CHEST, BODY_ZONE_PRECISE_L_HAND, BODY_ZONE_PRECISE_R_HAND, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
@@ -620,7 +614,10 @@
 				to_send += "\t <span class='[no_damage ? "notice" : "warning"]'>Your [LB.name] [HAS_TRAIT(src, TRAIT_SELF_AWARE) ? "has" : "is"] [status].</span>\n"
 
 				for(var/obj/item/I in LB.embedded_objects)
-					to_send += "\t <a href='?src=[REF(src)];embedded_object=[REF(I)];embedded_limb=[REF(LB)]' class='warning'>There is \a [I] embedded in your [LB.name]!</a>\n"
+					if(I.isEmbedHarmless())
+						to_chat(src, "\t <a href='?src=[REF(src)];embedded_object=[REF(I)];embedded_limb=[REF(LB)]' class='warning'>There is \a [I] stuck to your [LB.name]!</a>")
+					else
+						to_chat(src, "\t <a href='?src=[REF(src)];embedded_object=[REF(I)];embedded_limb=[REF(LB)]' class='warning'>There is \a [I] embedded in your [LB.name]!</a>")
 
 			for(var/t in missing)
 				to_send += "<span class='boldannounce'>Your [parse_zone(t)] is missing!</span>\n"

@@ -9,6 +9,8 @@
 	var/mob/living/structureclimber
 	var/broken = 0 //similar to machinery's stat BROKEN
 	layer = BELOW_OBJ_LAYER
+	flags_ricochet = RICOCHET_HARD
+	ricochet_chance_mod = 0.5
 
 /obj/structure/Initialize()
 	if (!armor)
@@ -26,7 +28,7 @@
 		queue_smooth_neighbors(src)
 	return ..()
 
-/obj/structure/attack_hand(mob/user)
+/obj/structure/attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	. = ..()
 	if(.)
 		return

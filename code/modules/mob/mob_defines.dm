@@ -37,7 +37,9 @@
 
 	var/next_move = null
 	var/create_area_cooldown
-	var/notransform = null	//Carbon
+	/// Whether or not the mob is currently being transformed into another mob or into another state of being. This will prevent it from moving or doing realistically anything.
+	/// Don't you DARE use this for a cheap way to ensure someone is stunned in your code.
+	var/mob_transforming = FALSE
 	var/eye_blind = 0		//Carbon
 	var/eye_blurry = 0		//Carbon
 	var/real_name = null

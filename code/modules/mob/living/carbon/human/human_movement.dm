@@ -36,8 +36,9 @@
 				return FALSE
 	return ..()
 
-/mob/living/carbon/human/experience_pressure_difference()
-	playsound(src, 'sound/effects/space_wind.ogg', 50, 1)
+/mob/living/carbon/human/experience_pressure_difference(pressure_difference, direction, pressure_resistance_prob_delta = 0, throw_target)
+	if(prob(pressure_difference * 2.5))
+		playsound(src, 'sound/effects/space_wind.ogg', 50, 1)
 	if(shoes && istype(shoes, /obj/item/clothing))
 		var/obj/item/clothing/S = shoes
 		if (S.clothing_flags & NOSLIP)
@@ -58,7 +59,7 @@
 	. = ..()
 	for(var/datum/mutation/human/HM in dna.mutations)
 		HM.on_move(NewLoc)
-	if(. && (combat_flags & COMBAT_FLAG_SPRINT_ACTIVE) && !(movement_type & FLYING) && CHECK_ALL_MOBILITY(src, MOBILITY_MOVE|MOBILITY_STAND) && m_intent == MOVE_INTENT_RUN && has_gravity(loc) && !pulledby)
+	if(. && (combat_flags & COMBAT_FLAG_SPRINT_ACTIVE) && !(movement_type & FLYING) && CHECK_ALL_MOBILITY(src, MOBILITY_MOVE|MOBILITY_STAND) && m_intent == MOVE_INTENT_RUN && has_gravity(loc) && (!pulledby || (pulledby.pulledby == src)))
 		if(!HAS_TRAIT(src, TRAIT_FREESPRINT))
 			doSprintLossTiles(1)
 		if((oldpseudoheight - pseudo_z_axis) >= 8)
@@ -77,7 +78,7 @@
 				var/turf/T = get_turf(src)
 				if(S.bloody_shoes && S.bloody_shoes[S.blood_state])
 					var/obj/effect/decal/cleanable/blood/footprints/oldFP = locate(/obj/effect/decal/cleanable/blood/footprints) in T
-					if(oldFP && (oldFP.blood_state == S.blood_state && oldFP.color == bloodtype_to_color(S.last_bloodtype)))
+					if(oldFP && (oldFP.blood_state == S.blood_state && oldFP.color == S.last_blood_color))
 						return
 					S.bloody_shoes[S.blood_state] = max(0, S.bloody_shoes[S.blood_state] - BLOOD_LOSS_PER_STEP)
 					var/obj/effect/decal/cleanable/blood/footprints/FP = new /obj/effect/decal/cleanable/blood/footprints(T)
@@ -85,7 +86,11 @@
 					FP.entered_dirs |= dir
 					FP.bloodiness = S.bloody_shoes[S.blood_state]
 					if(S.last_bloodtype)
-						FP.blood_DNA += list(S.last_blood_DNA = S.last_bloodtype)
+						FP.blood_DNA[S.last_blood_DNA] = S.last_bloodtype
+						if(!FP.blood_DNA["color"])
+							FP.blood_DNA["color"] = S.last_blood_color
+						else
+							FP.blood_DNA["color"] = BlendRGB(FP.blood_DNA["color"], S.last_blood_color)
 					FP.update_icon()
 					update_inv_shoes()
 				//End bloody footprints

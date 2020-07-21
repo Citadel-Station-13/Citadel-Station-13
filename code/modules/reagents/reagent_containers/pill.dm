@@ -11,8 +11,8 @@
 	grind_results = list()
 	var/apply_type = INGEST
 	var/apply_method = "swallow"
-	var/roundstart = 0
-	var/self_delay = 0 //pills are instant, this is because patches inheret their aplication from pills
+	var/roundstart = FALSE
+	var/self_delay = FALSE //pills are instant, this is because patches inheret their aplication from pills
 	var/dissolvable = TRUE
 
 /obj/item/reagent_containers/pill/Initialize()
@@ -83,119 +83,126 @@
 	desc = "Highly toxic."
 	icon_state = "pill5"
 	list_reagents = list(/datum/reagent/toxin = 50)
-	roundstart = 1
+	roundstart = TRUE
 
 /obj/item/reagent_containers/pill/cyanide
 	name = "cyanide pill"
 	desc = "Don't swallow this."
 	icon_state = "pill5"
 	list_reagents = list(/datum/reagent/toxin/cyanide = 50)
-	roundstart = 1
+	roundstart = TRUE
 
 /obj/item/reagent_containers/pill/adminordrazine
 	name = "adminordrazine pill"
 	desc = "It's magic. We don't have to explain it."
 	icon_state = "pill16"
 	list_reagents = list(/datum/reagent/medicine/adminordrazine = 50)
-	roundstart = 1
+	roundstart = TRUE
 
 /obj/item/reagent_containers/pill/morphine
 	name = "morphine pill"
 	desc = "Commonly used to treat insomnia."
 	icon_state = "pill8"
 	list_reagents = list(/datum/reagent/medicine/morphine = 30)
-	roundstart = 1
+	roundstart = TRUE
 
 /obj/item/reagent_containers/pill/stimulant
 	name = "stimulant pill"
 	desc = "Often taken by overworked employees, athletes, and the inebriated. You'll snap to attention immediately!"
 	icon_state = "pill19"
 	list_reagents = list(/datum/reagent/medicine/ephedrine = 10, /datum/reagent/medicine/antihol = 10, /datum/reagent/consumable/coffee = 30)
-	roundstart = 1
+	roundstart = TRUE
 
 /obj/item/reagent_containers/pill/salbutamol
 	name = "salbutamol pill"
 	desc = "Used to treat oxygen deprivation."
 	icon_state = "pill16"
 	list_reagents = list(/datum/reagent/medicine/salbutamol = 30)
-	roundstart = 1
+	roundstart = TRUE
 
 /obj/item/reagent_containers/pill/charcoal
 	name = "charcoal pill"
 	desc = "Neutralizes many common toxins."
 	icon_state = "pill17"
 	list_reagents = list(/datum/reagent/medicine/charcoal = 10)
-	roundstart = 1
+	roundstart = TRUE
 
 /obj/item/reagent_containers/pill/epinephrine
 	name = "epinephrine pill"
 	desc = "Used to stabilize patients."
 	icon_state = "pill5"
 	list_reagents = list(/datum/reagent/medicine/epinephrine = 15)
-	roundstart = 1
+	roundstart = TRUE
 
 /obj/item/reagent_containers/pill/mannitol
 	name = "mannitol pill"
 	desc = "Used to treat brain damage."
 	icon_state = "pill17"
 	list_reagents = list(/datum/reagent/medicine/mannitol = 25)
-	roundstart = 1
+	roundstart = TRUE
 
 /obj/item/reagent_containers/pill/mutadone
 	name = "mutadone pill"
 	desc = "Used to treat genetic damage."
 	icon_state = "pill20"
 	list_reagents = list(/datum/reagent/medicine/mutadone = 25)
-	roundstart = 1
+	roundstart = TRUE
 
 /obj/item/reagent_containers/pill/salicyclic
 	name = "salicylic acid pill"
 	desc = "Used to dull pain."
 	icon_state = "pill9"
 	list_reagents = list(/datum/reagent/medicine/sal_acid = 24)
-	roundstart = 1
+	roundstart = TRUE
 
 /obj/item/reagent_containers/pill/oxandrolone
 	name = "oxandrolone pill"
 	desc = "Used to stimulate burn healing."
 	icon_state = "pill11"
 	list_reagents = list(/datum/reagent/medicine/oxandrolone = 24)
-	roundstart = 1
+	roundstart = TRUE
 
 /obj/item/reagent_containers/pill/insulin
 	name = "insulin pill"
 	desc = "Handles hyperglycaemic coma."
 	icon_state = "pill18"
 	list_reagents = list(/datum/reagent/medicine/insulin = 50)
-	roundstart = 1
+	roundstart = TRUE
 
 /obj/item/reagent_containers/pill/psicodine
 	name = "psicodine pill"
-	desc = "Used to treat mental instability and traumas."
+	desc = "Used to treat mental instability and phobias."
 	list_reagents = list(/datum/reagent/medicine/psicodine = 10)
 	icon_state = "pill22"
-	roundstart = 1
+	roundstart = TRUE
 
 /obj/item/reagent_containers/pill/antirad
 	name = "potassium iodide pill"
 	desc = "Used to treat radition used to counter radiation poisoning."
 	icon_state = "pill18"
 	list_reagents = list(/datum/reagent/medicine/potass_iodide = 50)
-	roundstart = 1
+	roundstart = TRUE
 
 /obj/item/reagent_containers/pill/antirad_plus
 	name = "prussian blue pill"
 	desc = "Used to treat heavy radition poisoning."
 	icon_state = "prussian_blue"
 	list_reagents = list(/datum/reagent/medicine/prussian_blue = 25)
-	roundstart = 1
+	roundstart = TRUE
 
 /obj/item/reagent_containers/pill/mutarad
 	name = "radiation treatment deluxe pill"
 	desc = "Used to treat heavy radition poisoning and genetic defects."
 	icon_state = "anit_rad_fixgene"
 	list_reagents = list(/datum/reagent/medicine/prussian_blue = 10, /datum/reagent/medicine/potass_iodide = 10, /datum/reagent/medicine/mutadone = 5)
-	roundstart = 1
+	roundstart = TRUE
+
+/obj/item/reagent_containers/pill/neurine
+	name = "neurine pill"
+	desc = "Used to treat non-severe mental traumas."
+	list_reagents = list("neurine" = 10)
+	icon_state = "pill22"
+	roundstart = TRUE
 
 ///////////////////////////////////////// this pill is used only in a legion mob drop
 /obj/item/reagent_containers/pill/shadowtoxin

@@ -11,7 +11,7 @@
 	desc = "It's watching you suspiciously."
 
 /obj/structure/closet/crate/necropolis/tendril/PopulateContents()
-	var/loot = rand(1,28)
+	var/loot = rand(1,29)
 	switch(loot)
 		if(1)
 			new /obj/item/shared_storage/red(src)
@@ -77,6 +77,11 @@
 			new /obj/item/bedsheet/cult(src)
 		if(28)
 			new /obj/item/clothing/neck/necklace/memento_mori(src)
+		if(29)
+			if(prob(50))
+				new /obj/item/malf_upgrade
+			else
+				new /obj/item/disk/tech_disk/illegal
 
 //KA modkit design discs
 /obj/item/disk/design_disk/modkit_disc
@@ -487,7 +492,7 @@
 	setDir(user.dir)
 
 	user.forceMove(src)
-	user.notransform = TRUE
+	user.mob_transforming = TRUE
 	user.status_flags |= GODMODE
 
 	can_destroy = FALSE
@@ -496,7 +501,7 @@
 
 /obj/effect/immortality_talisman/proc/unvanish(mob/user)
 	user.status_flags &= ~GODMODE
-	user.notransform = FALSE
+	user.mob_transforming = FALSE
 	user.forceMove(get_turf(src))
 
 	user.visible_message("<span class='danger'>[user] pops back into reality!</span>")
@@ -1099,7 +1104,7 @@
 	var/blast_range = 13 //how long the cardinal blast's walls are
 	var/obj/effect/hierophant/beacon //the associated beacon we teleport to
 	var/teleporting = FALSE //if we ARE teleporting
-	var/friendly_fire_check = FALSE //if the blasts we make will consider our faction against the faction of hit targets
+	var/friendly_fire_check = TRUE //if the blasts we make will consider our faction against the faction of hit targets
 
 /obj/item/hierophant_club/ComponentInitialize()
 	. = ..()

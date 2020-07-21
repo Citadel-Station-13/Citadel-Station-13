@@ -30,7 +30,7 @@
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	force = 6
 	throwforce = 10
-	embedding = list("embed_chance" = 25, "embedded_fall_chance" = 0.5) // UPDATE 2/10/18 embedding_behavior.dm is how this is handled
+	embedding = list("embed_chance" = 25, "fall_chance" = 0.5) // UPDATE 2/10/18 embedding_behavior.dm is how this is handled
 	//embed_chance = 25  // Look up "is_pointed" to see where we set stakes able to do this.
 	//embedded_fall_chance = 0.5 // Chance it will fall out.
 	obj_integrity = 30
@@ -93,7 +93,7 @@
 	embedded()
 	add_mob_blood(target)//Place blood on the stake
 	loc = C // Put INSIDE the character
-	B.receive_damage(w_class * embedding.embedded_impact_pain_multiplier)
+	B.receive_damage(w_class * embedding["pain_mult"])
 	if(C.mind)
 		var/datum/antagonist/bloodsucker/bloodsucker = C.mind.has_antag_datum(ANTAG_DATUM_BLOODSUCKER)
 		if(bloodsucker)
@@ -118,7 +118,7 @@
 	force = 8
 	throwforce = 12
 	armour_penetration = 10
-	embedding = list("embed_chance" = 50, "embedded_fall_chance" = 0) // UPDATE 2/10/18 embedding_behavior.dm is how this is handled
+	embedding = list("embed_chance" = 50, "fall_chance" = 0) // UPDATE 2/10/18 embedding_behavior.dm is how this is handled
 	obj_integrity = 120
 	max_integrity = 120
 

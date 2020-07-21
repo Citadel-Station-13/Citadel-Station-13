@@ -22,7 +22,7 @@
 	return ..()
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
-/obj/machinery/field/containment/attack_hand(mob/user)
+/obj/machinery/field/containment/attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	if(get_dist(src, user) > 1)
 		return FALSE
 	else

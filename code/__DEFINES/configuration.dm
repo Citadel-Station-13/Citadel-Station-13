@@ -8,3 +8,12 @@
 //flags
 #define CONFIG_ENTRY_LOCKED 1	//can't edit
 #define CONFIG_ENTRY_HIDDEN 2	//can't see value
+
+// Policy config keys
+// MAKE SURE THESE ARE UPPERCASE
+/// Displayed to cloned patients
+#define POLICYCONFIG_ON_CLONE "ON_CLONE"
+/// Displayed to defibbed/revival surgery'd patients before the memory loss time threshold
+#define POLICYCONFIG_ON_DEFIB_INTACT "ON_DEFIB_INTACT"
+/// Displayed to defibbed/revival surgery'd patients after the memory loss time threshold
+#define POLICYCONFIG_ON_DEFIB_LATE "ON_DEFIB_LATE"

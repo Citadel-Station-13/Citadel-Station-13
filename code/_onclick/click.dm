@@ -76,7 +76,7 @@
 	if(check_click_intercept(params,A))
 		return
 
-	if(notransform)
+	if(mob_transforming)
 		return
 
 	if(SEND_SIGNAL(src, COMSIG_MOB_CLICKON, A, params) & COMSIG_MOB_CANCEL_CLICKON)
@@ -269,10 +269,9 @@
 	proximity_flag is not currently passed to attack_hand, and is instead used
 	in human click code to allow glove touches only at melee range.
 */
-/mob/proc/UnarmedAttack(atom/A, proximity_flag)
+/mob/proc/UnarmedAttack(atom/A, proximity, intent = a_intent, flags = NONE)
 	if(ismob(A))
 		changeNext_move(CLICK_CD_MELEE)
-	return
 
 /*
 	Ranged unarmed attack:

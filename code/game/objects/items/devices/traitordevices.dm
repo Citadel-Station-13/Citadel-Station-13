@@ -76,6 +76,9 @@ effective or pretty fucking useless.
 	var/used = 0 // is it cooling down?
 	var/stealth = FALSE
 
+	var/ui_x = 320
+	var/ui_y = 335
+
 /obj/item/healthanalyzer/rad_laser/attack(mob/living/M, mob/living/user)
 	if(!stealth || !irradiate)
 		..()
@@ -111,7 +114,12 @@ effective or pretty fucking useless.
 	ui_interact(user)
 
 /obj/item/healthanalyzer/rad_laser/ui_interact(mob/user)
-	. = ..()
+/obj/item/healthanalyzer/rad_laser/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
+									datum/tgui/master_ui = null, datum/ui_state/state = GLOB.hands_state)
+	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+	if(!ui)
+		ui = new(user, src, ui_key, "RadioactiveMicrolaser", "Radioactive Microlaser", ui_x, ui_y, master_ui, state)
+		ui.open()
 
 	var/dat = "Irradiation: <A href='?src=[REF(src)];rad=1'>[irradiate ? "On" : "Off"]</A><br>"
 	dat += "Stealth Mode (NOTE: Deactivates automatically while Irradiation is off): <A href='?src=[REF(src)];stealthy=[TRUE]'>[stealth ? "On" : "Off"]</A><br>"

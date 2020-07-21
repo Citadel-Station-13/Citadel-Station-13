@@ -13,6 +13,7 @@
 	gib_types = list(/obj/effect/gibspawner/slime, /obj/effect/gibspawner/slime/bodypartless)
 	exotic_blood = /datum/reagent/blood/jellyblood
 	exotic_bloodtype = "GEL"
+	exotic_blood_color = "BLOOD_COLOR_SLIME"
 	damage_overlay_type = ""
 	var/datum/action/innate/regenerate_limbs/regenerate_limbs
 	var/datum/action/innate/slime_change/slime_change	//CIT CHANGE
@@ -22,6 +23,13 @@
 	heatmod = 0.5 // = 1/4x heat damage
 	burnmod = 0.5 // = 1/2x generic burn damage
 	species_language_holder = /datum/language_holder/jelly
+	mutant_brain = /obj/item/organ/brain/jelly
+
+/obj/item/organ/brain/jelly
+	name = "slime nucleus"
+	desc = "A slimey membranous mass from a slime person"
+	icon_state = "brain-slime"
+
 
 /datum/species/jelly/on_species_loss(mob/living/carbon/C)
 	if(regenerate_limbs)
@@ -40,6 +48,11 @@
 		slime_change = new	//CIT CHANGE
 		slime_change.Grant(C)	//CIT CHANGE
 	C.faction |= "slime"
+
+/datum/species/jelly/handle_body(mob/living/carbon/human/H)
+	. = ..()
+	//update blood color to body color
+	exotic_blood_color = "#" + H.dna.features["mcolor"]
 
 /datum/species/jelly/spec_life(mob/living/carbon/human/H)
 	if(H.stat == DEAD || HAS_TRAIT(H, TRAIT_NOMARROW)) //can't farm slime jelly from a dead slime/jelly person indefinitely, and no regeneration for blooduskers
@@ -239,7 +252,7 @@
 		"<span class='notice'>You focus intently on moving your body while \
 		standing perfectly still...</span>")
 
-	H.notransform = TRUE
+	H.mob_transforming = TRUE
 
 	if(do_after(owner, delay=60, needhand=FALSE, target=owner, progress=TRUE))
 		if(H.blood_volume >= BLOOD_VOLUME_SLIME_SPLIT)
@@ -249,7 +262,7 @@
 	else
 		to_chat(H, "<span class='warning'>...but fail to stand perfectly still!</span>")
 
-	H.notransform = FALSE
+	H.mob_transforming = FALSE
 
 /datum/action/innate/split_body/proc/make_dupe()
 	var/mob/living/carbon/human/H = owner
@@ -267,7 +280,7 @@
 	spare.Move(get_step(H.loc, pick(NORTH,SOUTH,EAST,WEST)))
 
 	H.blood_volume *= 0.45
-	H.notransform = 0
+	H.mob_transforming = 0
 
 	var/datum/species/jelly/slime/origin_datum = H.dna.species
 	origin_datum.bodies |= spare
@@ -301,7 +314,7 @@
 
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
-		ui = new(user, src, ui_key, "slime_swap_body", name, 400, 400, master_ui, state)
+		ui = new(user, src, ui_key, "SlimeBodySwapper", name, 400, 400, master_ui, state)
 		ui.open()
 
 /datum/action/innate/swap_body/ui_data(mob/user)
@@ -466,8 +479,9 @@
 		if(new_color)
 			var/temp_hsv = RGBtoHSV(new_color)
 			if(ReadHSV(temp_hsv)[3] >= ReadHSV("#7F7F7F")[3]) // mutantcolors must be bright
-				H.dna.features["mcolor"] = sanitize_hexcolor(new_color)
+				H.dna.features["mcolor"] = sanitize_hexcolor(new_color, 6)
 				H.update_body()
+				H.update_hair()
 			else
 				to_chat(H, "<span class='notice'>Invalid color. Your color is not bright enough.</span>")
 	else if(select_alteration == "Hair Style")
@@ -533,7 +547,7 @@
 		H.update_body()
 
 	else if (select_alteration == "Markings")
-		var/list/snowflake_markings_list = list()
+		var/list/snowflake_markings_list = list("None")
 		for(var/path in GLOB.mam_body_markings_list)
 			var/datum/sprite_accessory/mam_body_markings/instance = GLOB.mam_body_markings_list[path]
 			if(istype(instance, /datum/sprite_accessory))
@@ -544,8 +558,6 @@
 		new_mam_body_markings = input(H, "Choose your character's body markings:", "Marking Alteration") as null|anything in snowflake_markings_list
 		if(new_mam_body_markings)
 			H.dna.features["mam_body_markings"] = new_mam_body_markings
-			if(new_mam_body_markings == "None")
-				H.dna.features["mam_body_markings"] = "Plain"
 		for(var/X in H.bodyparts) //propagates the markings changes
 			var/obj/item/bodypart/BP = X
 			BP.update_limb(FALSE, H)

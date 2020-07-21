@@ -184,7 +184,7 @@
 		else
 			to_chat(user, "<span class='notice'>The [src] already has this mop!</span>")
 
-	else if(istype(W, /obj/item/twohanded/broom))
+	else if(istype(W, /obj/item/broom))
 		if(bot_core.allowed(user) && open && !CHECK_BITFIELD(upgrades,UPGRADE_CLEANER_BROOM))
 			to_chat(user, "<span class='notice'>You add to \the [src] a broom speeding it up!</span>")
 			upgrades |= UPGRADE_CLEANER_BROOM
@@ -341,7 +341,7 @@
 
 	target_types = typecacheof(target_types)
 
-/mob/living/simple_animal/bot/cleanbot/UnarmedAttack(atom/A)
+/mob/living/simple_animal/bot/cleanbot/UnarmedAttack(atom/A, proximity, intent = a_intent, flags = NONE)
 	if(istype(A, /obj/effect/decal/cleanable))
 		anchored = TRUE
 		icon_state = "cleanbot-c"

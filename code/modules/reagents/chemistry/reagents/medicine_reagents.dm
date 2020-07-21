@@ -928,10 +928,18 @@
 				M.adjustOxyLoss(-20, 0)
 				M.adjustToxLoss(-20, 0)
 				M.updatehealth()
+				var/tplus = world.time - M.timeofdeath
 				if(M.revive())
 					M.grab_ghost()
 					M.emote("gasp")
 					log_combat(M, M, "revived", src)
+					var/list/policies = CONFIG_GET(keyed_list/policyconfig)
+					var/timelimit = CONFIG_GET(number/defib_cmd_time_limit)
+					var/late = timelimit && (tplus > timelimit)
+					var/policy = late? policies[POLICYCONFIG_ON_DEFIB_LATE] : policies[POLICYCONFIG_ON_DEFIB_INTACT]
+					if(policy)
+						to_chat(M, policy)
+					M.log_message("revived using strange reagent, [tplus] deciseconds from time of death, considered [late? "late" : "memory-intact"] revival under configured policy limits.", LOG_GAME)
 	..()
 
 
@@ -1563,3 +1571,20 @@
 	M.adjustOrganLoss(ORGAN_SLOT_LUNGS, 0.5)
 	..()
 	. = 1
+
+/datum/reagent/medicine/liquid_wisdom
+	name = "liquid wisdom"
+	description = "the physical representation of wisdom, in liquid form"
+	taste_mult = 4
+	can_synth = FALSE
+	overdose_threshold = 30
+	value = REAGENT_VALUE_UNCOMMON // while it's 'rare', it can be milked from the wisdom cow
+
+/datum/reagent/medicine/liquid_wisdom/on_mob_life(mob/living/carbon/C) //slightly stronger mannitol, from the wisdom cow
+	C.adjustOrganLoss(ORGAN_SLOT_BRAIN, -3*REM)
+	if(prob(20))
+		C.cure_trauma_type(resilience = TRAUMA_RESILIENCE_BASIC)
+	if(prob(3))
+		to_chat(C, "[pick(GLOB.wisdoms)]") //give them a random wisdom
+	..()
+

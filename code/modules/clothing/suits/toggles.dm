@@ -76,6 +76,7 @@
 
 /obj/item/clothing/head/hooded
 	var/obj/item/clothing/suit/hooded/suit
+	dynamic_hair_suffix = ""
 
 /obj/item/clothing/head/hooded/Destroy()
 	suit = null
@@ -164,7 +165,7 @@
 		RemoveHelmet()
 	..()
 
-/obj/item/clothing/suit/space/hardsuit/proc/RemoveHelmet()
+/obj/item/clothing/suit/space/hardsuit/proc/RemoveHelmet(message = TRUE)
 	if(!helmet)
 		return
 	suittoggled = FALSE
@@ -174,16 +175,18 @@
 			helmet.attack_self(H)
 		H.transferItemToLoc(helmet, src, TRUE)
 		H.update_inv_wear_suit()
-		to_chat(H, "<span class='notice'>The helmet on the hardsuit disengages.</span>")
+		if(message)
+			to_chat(H, "<span class='notice'>The helmet on the hardsuit disengages.</span>")
 		playsound(src.loc, 'sound/mecha/mechmove03.ogg', 50, 1)
 	else
 		helmet.forceMove(src)
+	return TRUE
 
 /obj/item/clothing/suit/space/hardsuit/dropped(mob/user)
 	..()
 	RemoveHelmet()
 
-/obj/item/clothing/suit/space/hardsuit/proc/ToggleHelmet()
+/obj/item/clothing/suit/space/hardsuit/proc/ToggleHelmet(message = TRUE)
 	var/mob/living/carbon/human/H = loc
 	if(!helmettype)
 		return
@@ -192,15 +195,19 @@
 	if(!suittoggled)
 		if(ishuman(src.loc))
 			if(H.wear_suit != src)
-				to_chat(H, "<span class='warning'>You must be wearing [src] to engage the helmet!</span>")
+				if(message)
+					to_chat(H, "<span class='warning'>You must be wearing [src] to engage the helmet!</span>")
 				return
 			if(H.head)
-				to_chat(H, "<span class='warning'>You're already wearing something on your head!</span>")
+				if(message)
+					to_chat(H, "<span class='warning'>You're already wearing something on your head!</span>")
 				return
 			else if(H.equip_to_slot_if_possible(helmet,SLOT_HEAD,0,0,1))
-				to_chat(H, "<span class='notice'>You engage the helmet on the hardsuit.</span>")
+				if(message)
+					to_chat(H, "<span class='notice'>You engage the helmet on the hardsuit.</span>")
 				suittoggled = TRUE
 				H.update_inv_wear_suit()
 				playsound(src.loc, 'sound/mecha/mechmove03.ogg', 50, 1)
+			return TRUE
 	else
-		RemoveHelmet()
+		return RemoveHelmet(message)

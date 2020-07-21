@@ -4,6 +4,9 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 // if true, everyone item when created will have its name changed to be
 // more... RPG-like.
 
+GLOBAL_VAR_INIT(stickpocalypse, FALSE) // if true, all non-embeddable items will be able to harmlessly stick to people when thrown
+GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to embed in people, takes precedence over stickpocalypse
+
 /obj/item
 	name = "item"
 	icon = 'icons/obj/items_and_weapons.dmi'
@@ -65,6 +68,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	var/click_delay = CLICK_CD_MELEE
 
 	var/slot_flags = 0		//This is used to determine on which slots an item can fit.
+	var/current_equipped_slot
 	pass_flags = PASSTABLE
 	pressure_resistance = 4
 	var/obj/item/master = null
@@ -104,7 +108,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 
 	mouse_drag_pointer = MOUSE_ACTIVE_POINTER //the icon to indicate this object is being dragged
 
-	var/datum/embedding_behavior/embedding
+	var/list/embedding = NONE
 
 	var/flags_cover = 0 //for flags such as GLASSESCOVERSEYES
 	var/heat = 0
@@ -159,16 +163,13 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 
 /obj/item/Initialize()
 
-	if (attack_verb)
+	if(attack_verb)
 		attack_verb = typelist("attack_verb", attack_verb)
 
 	. = ..()
 	for(var/path in actions_types)
 		new path(src)
 	actions_types = null
-
-	if(GLOB.rpg_loot_items)
-		AddComponent(/datum/component/fantasy)
 
 	if(force_string)
 		item_flags |= FORCE_STRING_OVERRIDE
@@ -179,15 +180,10 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 		if(damtype == "brute")
 			hitsound = "swing_hit"
 
-	if (!embedding)
-		embedding = getEmbeddingBehavior()
-	else if (islist(embedding))
-		embedding = getEmbeddingBehavior(arglist(embedding))
-	else if (!istype(embedding, /datum/embedding_behavior))
-		stack_trace("Invalid type [embedding.type] found in .embedding during /obj/item Initialize()")
-
-	if(sharpness) //give sharp objects butchering functionality, for consistency
-		AddComponent(/datum/component/butchering, 80 * toolspeed)
+	if(used_skills)
+		for(var/path in used_skills)
+			var/datum/skill/S = GLOB.skill_datums[path]
+			LAZYADD(used_skills[path], S.skill_traits)
 
 /obj/item/Destroy()
 	item_flags &= ~DROPDEL	//prevent reqdels
@@ -197,6 +193,26 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	for(var/X in actions)
 		qdel(X)
 	return ..()
+
+/obj/item/ComponentInitialize()
+	. = ..()
+
+	// this proc says it's for initializing components, but we're initializing elements too because it's you and me against the world >:)
+	if(!LAZYLEN(embedding))
+		if(GLOB.embedpocalypse)
+			embedding = EMBED_POINTY
+			name = "pointy [name]"
+		else if(GLOB.stickpocalypse)
+			embedding = EMBED_HARMLESS
+			name = "sticky [name]"
+
+	updateEmbedding()
+
+	if(GLOB.rpg_loot_items)
+		AddComponent(/datum/component/fantasy)
+
+	if(sharpness) //give sharp objects butchering functionality, for consistency
+		AddComponent(/datum/component/butchering, 80 * toolspeed)
 
 /obj/item/proc/check_allowed_items(atom/target, not_inside, target_self)
 	if(((src in target) && !target_self) || (!isturf(target.loc) && !isturf(target) && not_inside))
@@ -247,7 +263,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 			. += "[src] is made of cold-resistant materials."
 		if(resistance_flags & FIRE_PROOF)
 			. += "[src] is made of fire-retardant materials."
-	
+
 	if(item_flags & (ITEM_CAN_BLOCK | ITEM_CAN_PARRY))
 		var/datum/block_parry_data/data = return_block_parry_datum(block_parry_data)
 		. += "[src] has the capacity to be used to block and/or parry. <a href='?src=[REF(data)];name=[name];block=[item_flags & ITEM_CAN_BLOCK];parry=[item_flags & ITEM_CAN_PARRY];render=1'>\[Show Stats\]</a>"
@@ -297,7 +313,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	add_fingerprint(usr)
 	return ..()
 
-/obj/item/attack_hand(mob/user)
+/obj/item/attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	. = ..()
 	if(.)
 		return
@@ -305,6 +321,10 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 		return
 	if(anchored)
 		return
+	if(loc == user && current_equipped_slot && current_equipped_slot != SLOT_HANDS)
+		if(current_equipped_slot in user.check_obscured_slots())
+			to_chat(src, "<span class='warning'>You are unable to unequip that while wearing other garments over it!</span>")
+			return FALSE
 
 	if(resistance_flags & ON_FIRE)
 		var/mob/living/carbon/C = user
@@ -326,7 +346,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 				C.update_damage_overlays()
 			return
 
-	if(acid_level > 20 && !ismob(loc))// so we can still remove the clothes on us that have acid.
+	if(acid_level > 20 && ismob(loc))// so we can still remove the clothes on us that have acid.
 		var/mob/living/carbon/C = user
 		if(istype(C))
 			if(!C.gloves || (!(C.gloves.resistance_flags & (UNACIDABLE|ACID_PROOF))))
@@ -369,6 +389,11 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 		return
 	if(anchored)
 		return
+	if(loc == user && current_equipped_slot && current_equipped_slot != SLOT_HANDS)
+		if(current_equipped_slot in user.check_obscured_slots())
+			to_chat(src, "<span class='warning'>You are unable to unequip that while wearing other garments over it!</span>")
+			return FALSE
+
 
 	SEND_SIGNAL(loc, COMSIG_TRY_STORAGE_TAKE, src, user.loc, TRUE)
 
@@ -413,6 +438,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 
 /obj/item/proc/dropped(mob/user)
 	SHOULD_CALL_PARENT(TRUE)
+	current_equipped_slot = null
 	for(var/X in actions)
 		var/datum/action/A = X
 		A.Remove(user)
@@ -460,7 +486,9 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 // for items that can be placed in multiple slots
 // note this isn't called during the initial dressing of a player
 /obj/item/proc/equipped(mob/user, slot)
+	SHOULD_CALL_PARENT(TRUE)
 	. = SEND_SIGNAL(src, COMSIG_ITEM_EQUIPPED, user, slot)
+	current_equipped_slot = slot
 	if(!(. & COMPONENT_NO_GRANT_ACTIONS))
 		for(var/X in actions)
 			var/datum/action/A = X
@@ -486,11 +514,11 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 //if this is being done by a mob other than M, it will include the mob equipper, who is trying to equip the item to mob M. equipper will be null otherwise.
 //If you are making custom procs but would like to retain partial or complete functionality of this one, include a 'return ..()' to where you want this to happen.
 //Set disable_warning to TRUE if you wish it to not give you outputs.
-/obj/item/proc/mob_can_equip(mob/living/M, mob/living/equipper, slot, disable_warning = FALSE, bypass_equip_delay_self = FALSE)
+/obj/item/proc/mob_can_equip(mob/living/M, mob/living/equipper, slot, disable_warning = FALSE, bypass_equip_delay_self = FALSE, clothing_check = FALSE, list/return_warning)
 	if(!M)
 		return FALSE
 
-	return M.can_equip(src, slot, disable_warning, bypass_equip_delay_self)
+	return M.can_equip(src, slot, disable_warning, bypass_equip_delay_self, clothing_check, return_warning)
 
 /obj/item/verb/verb_pickup()
 	set src in oview(1)
@@ -625,6 +653,18 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 		var/itempush = 1
 		if(w_class < 4)
 			itempush = 0 //too light to push anything
+		if(isliving(hit_atom)) //Living mobs handle hit sounds differently.
+			var/volume = get_volume_by_throwforce_and_or_w_class()
+			if (throwforce > 0)
+				if (throwhitsound)
+					playsound(hit_atom, throwhitsound, volume, TRUE, -1)
+				else if(hitsound)
+					playsound(hit_atom, hitsound, volume, TRUE, -1)
+				else
+					playsound(hit_atom, 'sound/weapons/genhit.ogg',volume, TRUE, -1)
+			else
+				playsound(hit_atom, 'sound/weapons/throwtap.ogg', 1, volume, -1)
+
 		return hit_atom.hitby(src, 0, itempush, throwingdatum=throwingdatum)
 
 /obj/item/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0, datum/callback/callback, force, messy_throw = TRUE)
@@ -756,6 +796,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 		..()
 
 /obj/item/proc/microwave_act(obj/machinery/microwave/M)
+	SEND_SIGNAL(src, COMSIG_ITEM_MICROWAVE_ACT, M)
 	if(istype(M) && M.dirty < 100)
 		M.dirty++
 
@@ -812,7 +853,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 
 // Called when a mob tries to use the item as a tool.
 // Handles most checks.
-/obj/item/proc/use_tool(atom/target, mob/living/user, delay, amount=0, volume=0, datum/callback/extra_checks, skill_gain_mult = 1, max_level = INFINITY)
+/obj/item/proc/use_tool(atom/target, mob/living/user, delay, amount=0, volume=0, datum/callback/extra_checks, skill_gain_mult = STD_USE_TOOL_MULT)
 	// No delay means there is no start message, and no reason to call tool_start_check before use_tool.
 	// Run the start check here so we wouldn't have to call it manually.
 	if(!delay && !tool_start_check(user, amount))
@@ -857,7 +898,8 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 		for(var/skill in used_skills)
 			if(!(SKILL_TRAINING_TOOL in used_skills[skill]))
 				continue
-			user.mind.auto_gain_experience(skill, gain*skill_gain_mult, GET_STANDARD_LVL(max_level))
+			var/datum/skill/S = GLOB.skill_datums[skill]
+			user.mind.auto_gain_experience(skill, gain*skill_gain_mult*S.item_skill_gain_multi)
 
 	return TRUE
 
@@ -918,11 +960,13 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	// if w_volume is 0 you fucked up anyways lol
 	return w_volume || AUTO_SCALE_VOLUME(w_class)
 
-/obj/item/proc/embedded(mob/living/carbon/human/embedded_mob)
+/obj/item/proc/embedded(atom/embedded_target)
 	return
 
 /obj/item/proc/unembedded()
-	return
+	if(item_flags & DROPDEL)
+		QDEL_NULL(src)
+		return TRUE
 
 /**
   * Sets our slowdown and updates equipment slowdown of any mob we're equipped on.
@@ -938,3 +982,135 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	. = ..()
 	if(var_name == NAMEOF(src, slowdown))
 		set_slowdown(var_value)			//don't care if it's a duplicate edit as slowdown'll be set, do it anyways to force normal behavior.
+/**
+ * Does the current embedding var meet the criteria for being harmless? Namely, does it explicitly define the pain multiplier and jostle pain mult to be 0? If so, return true.
+ *
+ */
+/obj/item/proc/isEmbedHarmless()
+	if(embedding)
+		return !isnull(embedding["pain_mult"]) && !isnull(embedding["jostle_pain_mult"]) && embedding["pain_mult"] == 0 && embedding["jostle_pain_mult"] == 0
+
+///In case we want to do something special (like self delete) upon failing to embed in something, return true
+/obj/item/proc/failedEmbed()
+	if(item_flags & DROPDEL)
+		QDEL_NULL(src)
+		return TRUE
+
+/**
+
+
+
+  * tryEmbed() is for when you want to try embedding something without dealing with the damage + hit messages of calling hitby() on the item while targetting the target.
+
+
+
+  *
+
+
+
+  * Really, this is used mostly with projectiles with shrapnel payloads, from [/datum/element/embed/proc/checkEmbedProjectile], and called on said shrapnel. Mostly acts as an intermediate between different embed elements.
+
+
+
+  *
+
+
+
+  * Arguments:
+
+
+
+  * * target- Either a body part, a carbon, or a closed turf. What are we hitting?
+
+
+
+  * * forced- Do we want this to go through 100%?
+
+
+
+  */
+
+
+
+/obj/item/proc/tryEmbed(atom/target, forced=FALSE, silent=FALSE)
+
+
+
+	if(!isbodypart(target) && !iscarbon(target) && !isclosedturf(target))
+
+
+
+		return
+
+
+
+	if(!forced && !LAZYLEN(embedding))
+
+
+
+		return
+
+
+
+
+
+
+
+	if(SEND_SIGNAL(src, COMSIG_EMBED_TRY_FORCE, target, forced, silent))
+
+
+
+		return TRUE
+
+
+
+	failedEmbed()
+
+
+
+
+
+
+
+///For when you want to disable an item's embedding capabilities (like transforming weapons and such), this proc will detach any active embed elements from it.
+
+
+
+/obj/item/proc/disableEmbedding()
+
+
+
+	SEND_SIGNAL(src, COMSIG_ITEM_DISABLE_EMBED)
+
+
+
+	return
+
+
+
+
+
+
+
+///For when you want to add/update the embedding on an item. Uses the vars in [/obj/item/embedding], and defaults to config values for values that aren't set. Will automatically detach previous embed elements on this item.
+
+
+
+/obj/item/proc/updateEmbedding()
+	if(!islist(embedding) || !LAZYLEN(embedding))
+		return
+
+	AddElement(/datum/element/embed,\
+		embed_chance = (!isnull(embedding["embed_chance"]) ? embedding["embed_chance"] : EMBED_CHANCE),\
+		fall_chance = (!isnull(embedding["fall_chance"]) ? embedding["fall_chance"] : EMBEDDED_ITEM_FALLOUT),\
+		pain_chance = (!isnull(embedding["pain_chance"]) ? embedding["pain_chance"] : EMBEDDED_PAIN_CHANCE),\
+		pain_mult = (!isnull(embedding["pain_mult"]) ? embedding["pain_mult"] : EMBEDDED_PAIN_MULTIPLIER),\
+		remove_pain_mult = (!isnull(embedding["remove_pain_mult"]) ? embedding["remove_pain_mult"] : EMBEDDED_UNSAFE_REMOVAL_PAIN_MULTIPLIER),\
+		rip_time = (!isnull(embedding["rip_time"]) ? embedding["rip_time"] : EMBEDDED_UNSAFE_REMOVAL_TIME),\
+		ignore_throwspeed_threshold = (!isnull(embedding["ignore_throwspeed_threshold"]) ? embedding["ignore_throwspeed_threshold"] : FALSE),\
+		impact_pain_mult = (!isnull(embedding["impact_pain_mult"]) ? embedding["impact_pain_mult"] : EMBEDDED_IMPACT_PAIN_MULTIPLIER),\
+		jostle_chance = (!isnull(embedding["jostle_chance"]) ? embedding["jostle_chance"] : EMBEDDED_JOSTLE_CHANCE),\
+		jostle_pain_mult = (!isnull(embedding["jostle_pain_mult"]) ? embedding["jostle_pain_mult"] : EMBEDDED_JOSTLE_PAIN_MULTIPLIER),\
+		pain_stam_pct = (!isnull(embedding["pain_stam_pct"]) ? embedding["pain_stam_pct"] : EMBEDDED_PAIN_STAM_PCT),\
+		embed_chance_turf_mod = (!isnull(embedding["embed_chance_turf_mod"]) ? embedding["embed_chance_turf_mod"] : EMBED_CHANCE_TURF_MOD))
+	return TRUE

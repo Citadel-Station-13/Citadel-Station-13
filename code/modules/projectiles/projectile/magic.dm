@@ -121,10 +121,10 @@
 	qdel(src)
 
 /proc/wabbajack(mob/living/M)
-	if(!istype(M) || M.stat == DEAD || M.notransform || (GODMODE & M.status_flags))
+	if(!istype(M) || M.stat == DEAD || M.mob_transforming || (GODMODE & M.status_flags))
 		return
 
-	M.notransform = TRUE
+	M.mob_transforming = TRUE
 	M.Paralyze(INFINITY)
 	M.icon = null
 	M.cut_overlays()
@@ -207,7 +207,8 @@
 							/mob/living/simple_animal/pet/fox,
 							/mob/living/simple_animal/butterfly,
 							/mob/living/simple_animal/pet/cat/cak,
-							/mob/living/simple_animal/chick)
+							/mob/living/simple_animal/chick,
+							/mob/living/simple_animal/pickle)
 			new_mob = new path(M.loc)
 
 		if("humanoid")

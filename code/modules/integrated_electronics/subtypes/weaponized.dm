@@ -81,7 +81,7 @@
 		to_chat(user, "<span class='notice'>There's no weapon to remove from the mechanism.</span>")
 
 /obj/item/integrated_circuit/weaponized/weapon_firing/do_work()
-	if(!assembly || !installed_gun)
+	if(!assembly || !installed_gun || !installed_gun.can_shoot())
 		return
 	if(isliving(assembly.loc))
 		var/mob/living/L = assembly.loc
@@ -246,7 +246,7 @@
 	var/obj/item/A = get_pin_data_as_type(IC_INPUT, 3, /obj/item)
 	var/obj/item/integrated_circuit/atmospherics/AT = get_pin_data_as_type(IC_INPUT, 4, /obj/item/integrated_circuit/atmospherics)
 
-	if(!A || A.anchored || A.throwing || A == assembly || istype(A, /obj/item/twohanded) || istype(A, /obj/item/transfer_valve))
+	if(!A || A.anchored || A.throwing || A == assembly || istype(A, /obj/item/transfer_valve) || A.GetComponent(/datum/component/two_handed))
 		return
 
 	var/obj/item/I = get_object()

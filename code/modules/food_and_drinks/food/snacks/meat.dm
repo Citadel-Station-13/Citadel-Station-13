@@ -1,6 +1,7 @@
 /obj/item/reagent_containers/food/snacks/meat
 	var/subjectname = ""
 	var/subjectjob = null
+	custom_materials = list(/datum/material/meat = MINERAL_MATERIAL_AMOUNT * 4)
 
 /obj/item/reagent_containers/food/snacks/meat/slab
 	name = "meat"
@@ -82,6 +83,7 @@
 /obj/item/reagent_containers/food/snacks/meat/slab/chicken
 	name = "chicken meat"
 	desc = "A slab of raw chicken. Remember to wash your hands!"
+	icon_state = "chickenbreast"
 	cooked_type = /obj/item/reagent_containers/food/snacks/meat/steak/chicken
 	slice_path = /obj/item/reagent_containers/food/snacks/meat/rawcutlet/chicken
 	tastes = list("chicken" = 1)
@@ -315,6 +317,15 @@
 	slice_path = /obj/item/reagent_containers/food/snacks/meat/rawcutlet/gondola
 	foodtype = RAW | MEAT
 
+/obj/item/reagent_containers/food/snacks/meat/slab/wisdomcow
+	name = "wisdom cow meat"
+	desc = "The meat from the legendary creature known as the wisdom cow. You monster."
+	list_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/medicine/liquid_wisdom = 5)
+	tastes = list("meat" = 1, "wisdom" = 5)
+	filling_color = "#18e3ca"
+	cooked_type = /obj/item/reagent_containers/food/snacks/meat/steak/wisdomcow
+	slice_path = /obj/item/reagent_containers/food/snacks/meat/rawcutlet/wisdomcow
+
 ////////////////////////////////////// MEAT STEAKS ///////////////////////////////////////////////////////////
 
 
@@ -331,7 +342,13 @@
 
 /obj/item/reagent_containers/food/snacks/meat/steak/chicken
 	name = "chicken steak" //Can you have chicken steaks? Maybe this should be renamed once it gets new sprites.
+	icon_state = "chickenbreast_cooked"
 	tastes = list("chicken" = 1)
+
+/obj/item/reagent_containers/food/snacks/meat/steak/fish
+	name = "fish fillet"
+	icon_state = "grilled_carp_slice"
+	tastes = list("charred sushi" = 1)
 
 /obj/item/reagent_containers/food/snacks/meat/steak/plain
 	foodtype = MEAT
@@ -351,6 +368,7 @@
 
 /obj/item/reagent_containers/food/snacks/meat/steak/bear
 	name = "bear steak"
+	icon_state = "bearcook"
 	tastes = list("meat" = 1, "salmon" = 1)
 
 /obj/item/reagent_containers/food/snacks/meat/steak/xeno
@@ -373,6 +391,10 @@
 /obj/item/reagent_containers/food/snacks/meat/steak/gondola
 	name = "gondola steak"
 	tastes = list("meat" = 1, "tranquility" = 1)
+
+/obj/item/reagent_containers/food/snacks/meat/steak/wisdomcow
+	name = "wisdom cow steak"
+	tastes = list("meat" = 1, "wisdom" = 5)
 
 //////////////////////////////// MEAT CUTLETS ///////////////////////////////////////////////////////
 
@@ -441,6 +463,11 @@
 	cooked_type = /obj/item/reagent_containers/food/snacks/meat/cutlet/gondola
 	tastes = list("meat" = 1, "tranquility" = 1)
 
+/obj/item/reagent_containers/food/snacks/meat/rawcutlet/wisdomcow
+	name = "raw wisdom cow cutlet"
+	cooked_type = /obj/item/reagent_containers/food/snacks/meat/cutlet/wisdomcow
+	tastes = list("meat" = 1, "wisdom" = 5)
+
 //Cooked cutlets
 
 /obj/item/reagent_containers/food/snacks/meat/cutlet
@@ -488,3 +515,7 @@
 /obj/item/reagent_containers/food/snacks/meat/cutlet/chicken
 	name = "chicken cutlet"
 	tastes = list("chicken" = 1)
+
+/obj/item/reagent_containers/food/snacks/meat/cutlet/wisdomcow
+	name = "wisdom cow cutlet"
+	tastes = list("meat" = 1, "wisdom" = 5)

@@ -8,7 +8,7 @@
 	icon_state = "arcade"
 	circuit = /obj/item/circuitboard/computer/arcade/amputation
 
-/obj/machinery/computer/arcade/amputation/attack_hand(mob/user)
+/obj/machinery/computer/arcade/amputation/attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	if(!iscarbon(user))
 		return
 	var/mob/living/carbon/c_user = user

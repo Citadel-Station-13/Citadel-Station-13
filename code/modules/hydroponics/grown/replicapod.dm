@@ -119,13 +119,13 @@
 			if(!features["mcolor"])
 				features["mcolor"] = "#59CE00"
 			podman.hardset_dna(null,null,podman.real_name,blood_type, new /datum/species/pod,features)//Discard SE's and UI's, podman cloning is inaccurate, and always make them a podman
+      podman.set_cloned_appearance()
 		else
 			// make them themselves, and not a pod
 			podman.hardset_dna(ui, null, podman.real_name, blood_type, old_species, features)
 
 		//deal clone damage because this shouldn't be better than cloning
 		podman.adjustCloneLoss(25 + (50/max(potency,1))) // deal between 25 and 75 clone damage depending on potency
-		podman.set_cloned_appearance()
 
 	else //else, one packet of seeds. maybe two
 		var/seed_count = 1

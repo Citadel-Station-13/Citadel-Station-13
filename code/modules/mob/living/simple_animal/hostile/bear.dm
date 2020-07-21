@@ -125,7 +125,7 @@ mob/living/simple_animal/hostile/bear/butter //The mighty companion to Cak. Seve
 	attack_verb_continuous = "slaps"
 	attack_verb_simple = "slap"
 
-/mob/living/simple_animal/hostile/bear/butter/Life() //Heals butter bear really fast when he takes damage.
+/mob/living/simple_animal/hostile/bear/butter/BiologicalLife(seconds, times_fired) //Heals butter bear really fast when he takes damage.
 	if(stat)
 		return
 	if(health < maxHealth)

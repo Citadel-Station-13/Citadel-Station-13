@@ -168,6 +168,7 @@
 	icon_state = "witchhunterhat"
 	item_state = "witchhunterhat"
 	flags_cover = HEADCOVERSEYES
+	flags_inv = HIDEHAIR
 
 /obj/item/storage/box/holy/follower
 	name = "Followers of the Chaplain Kit"

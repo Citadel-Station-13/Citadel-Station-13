@@ -29,7 +29,7 @@
 	. = ..()
 	GLOB.navigation_computers -= src
 
-/obj/machinery/computer/camera_advanced/shuttle_docker/attack_hand(mob/user)
+/obj/machinery/computer/camera_advanced/shuttle_docker/attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	if(jammed)
 		to_chat(user, "<span class='warning'>The Syndicate is jamming the console!</span>")
 		return
@@ -253,7 +253,7 @@
 		current_user.client.images -= remove_images
 		current_user.client.images += add_images
 
-/obj/machinery/computer/camera_advanced/shuttle_docker/proc/connect_to_shuttle(obj/docking_port/mobile/port, obj/docking_port/stationary/dock, idnum, override=FALSE)
+/obj/machinery/computer/camera_advanced/shuttle_docker/connect_to_shuttle(obj/docking_port/mobile/port, obj/docking_port/stationary/dock, idnum, override=FALSE)
 	if(port && (shuttleId == initial(shuttleId) || override))
 		shuttleId = port.id
 		shuttlePortId = "[port.id]_custom"

@@ -39,6 +39,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 	var/use_skintones = NO_SKINTONES	// does it use skintones or not? (spoiler alert this is only used by humans)
 	var/exotic_blood = ""	// If your race wants to bleed something other than bog standard blood, change this to reagent id.
 	var/exotic_bloodtype = "" //If your race uses a non standard bloodtype (A+, O-, AB-, etc)
+	var/exotic_blood_color = BLOOD_COLOR_HUMAN //assume human as the default blood colour, override this default by species subtypes
 	var/meat = /obj/item/reagent_containers/food/snacks/meat/slab/human //What the species drops on gibbing
 	var/list/gib_types = list(/obj/effect/gibspawner/human, /obj/effect/gibspawner/human/bodypartless)
 	var/skinned_type
@@ -381,7 +382,9 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 		//keep it at the right spot, so we can't have people taking shortcuts
 		var/location = C.dna.mutation_index.Find(inert_mutation)
 		C.dna.mutation_index[location] = new_species.inert_mutation
+		C.dna.default_mutation_genes[location] = C.dna.mutation_index[location]
 		C.dna.mutation_index[new_species.inert_mutation] = create_sequence(new_species.inert_mutation)
+		C.dna.default_mutation_genes[new_species.inert_mutation] = C.dna.mutation_index[new_species.inert_mutation]
 
 	if(!new_species.has_field_of_vision && has_field_of_vision && ishuman(C) && CONFIG_GET(flag/use_field_of_vision))
 		var/datum/component/field_of_vision/F = C.GetComponent(/datum/component/field_of_vision)
@@ -1065,10 +1068,15 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 	// handles the equipping of species-specific gear
 	return
 
-/datum/species/proc/can_equip(obj/item/I, slot, disable_warning, mob/living/carbon/human/H, bypass_equip_delay_self = FALSE)
+/datum/species/proc/can_equip(obj/item/I, slot, disable_warning, mob/living/carbon/human/H, bypass_equip_delay_self = FALSE, clothing_check = FALSE, list/return_warning)
 	if(slot in no_equip)
 		if(!I.species_exception || !is_type_in_list(src, I.species_exception))
 			return FALSE
+
+	if(clothing_check && (slot in H.check_obscured_slots()))
+		if(return_warning)
+			return_warning[1] = "<span class='warning'>You are unable to equip that with your current garments in the way!</span>"
+		return FALSE
 
 	var/num_arms = H.get_num_arms(FALSE)
 	var/num_legs = H.get_num_legs(FALSE)
@@ -1131,8 +1139,8 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 			if(!CHECK_BITFIELD(I.item_flags, NO_UNIFORM_REQUIRED))
 				var/obj/item/bodypart/O = H.get_bodypart(BODY_ZONE_CHEST)
 				if(!H.w_uniform && !nojumpsuit && (!O || O.status != BODYPART_ROBOTIC))
-					if(!disable_warning)
-						to_chat(H, "<span class='warning'>You need a jumpsuit before you can attach this [I.name]!</span>")
+					if(return_warning)
+						return_warning[1] = "<span class='warning'>You need a jumpsuit before you can attach this [I.name]!</span>"
 					return FALSE
 			if(!(I.slot_flags & ITEM_SLOT_BELT))
 				return
@@ -1173,8 +1181,8 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 			if(!CHECK_BITFIELD(I.item_flags, NO_UNIFORM_REQUIRED))
 				var/obj/item/bodypart/O = H.get_bodypart(BODY_ZONE_CHEST)
 				if(!H.w_uniform && !nojumpsuit && (!O || O.status != BODYPART_ROBOTIC))
-					if(!disable_warning)
-						to_chat(H, "<span class='warning'>You need a jumpsuit before you can attach this [I.name]!</span>")
+					if(return_warning)
+						return_warning[1] = "<span class='warning'>You need a jumpsuit before you can attach this [I.name]!</span>"
 					return FALSE
 			if( !(I.slot_flags & ITEM_SLOT_ID) )
 				return FALSE
@@ -1188,8 +1196,8 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 			var/obj/item/bodypart/O = H.get_bodypart(BODY_ZONE_L_LEG)
 
 			if(!H.w_uniform && !nojumpsuit && (!O || O.status != BODYPART_ROBOTIC))
-				if(!disable_warning)
-					to_chat(H, "<span class='warning'>You need a jumpsuit before you can attach this [I.name]!</span>")
+				if(return_warning)
+					return_warning[1] = "<span class='warning'>You need a jumpsuit before you can attach this [I.name]!</span>"
 				return FALSE
 			if(I.slot_flags & ITEM_SLOT_DENYPOCKET)
 				return FALSE
@@ -1204,8 +1212,8 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 			var/obj/item/bodypart/O = H.get_bodypart(BODY_ZONE_R_LEG)
 
 			if(!H.w_uniform && !nojumpsuit && (!O || O.status != BODYPART_ROBOTIC))
-				if(!disable_warning)
-					to_chat(H, "<span class='warning'>You need a jumpsuit before you can attach this [I.name]!</span>")
+				if(return_warning)
+					return_warning[1] = "<span class='warning'>You need a jumpsuit before you can attach this [I.name]!</span>"
 				return FALSE
 			if(I.slot_flags & ITEM_SLOT_DENYPOCKET)
 				return FALSE
@@ -1218,16 +1226,16 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 			if(H.s_store)
 				return FALSE
 			if(!H.wear_suit)
-				if(!disable_warning)
-					to_chat(H, "<span class='warning'>You need a suit before you can attach this [I.name]!</span>")
+				if(return_warning)
+					return_warning[1] = "<span class='warning'>You need a suit before you can attach this [I.name]!</span>"
 				return FALSE
 			if(!H.wear_suit.allowed)
-				if(!disable_warning)
-					to_chat(H, "You somehow have a suit with no defined allowed items for suit storage, stop that.")
+				if(return_warning)
+					return_warning[1] = "You somehow have a suit with no defined allowed items for suit storage, stop that."
 				return FALSE
 			if(I.w_class > WEIGHT_CLASS_BULKY)
-				if(!disable_warning)
-					to_chat(H, "The [I.name] is too big to attach.") //should be src?
+				if(return_warning)
+					return_warning[1] = "The [I.name] is too big to attach."
 				return FALSE
 			if( istype(I, /obj/item/pda) || istype(I, /obj/item/pen) || is_type_in_list(I, H.wear_suit.allowed) )
 				return TRUE
@@ -1438,7 +1446,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 		target.grabbedby(user)
 		return 1
 
-/datum/species/proc/harm(mob/living/carbon/human/user, mob/living/carbon/human/target, datum/martial_art/attacker_style)
+/datum/species/proc/harm(mob/living/carbon/human/user, mob/living/carbon/human/target, datum/martial_art/attacker_style, unarmed_attack_flags = NONE)
 	if(!attacker_style && HAS_TRAIT(user, TRAIT_PACIFISM))
 		to_chat(user, "<span class='warning'>You don't want to harm [target]!</span>")
 		return FALSE
@@ -1450,10 +1458,11 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 			target_message = "<span class='warning'>[target] blocks your attack!</span>")
 		return FALSE
 
-	if(HAS_TRAIT(user, TRAIT_PUGILIST))//CITADEL CHANGE - makes punching cause staminaloss but funny martial artist types get a discount
-		user.adjustStaminaLossBuffered(1.5)
-	else
-		user.adjustStaminaLossBuffered(3.5)
+	if(!(unarmed_attack_flags & UNARMED_ATTACK_PARRY))
+		if(HAS_TRAIT(user, TRAIT_PUGILIST))//CITADEL CHANGE - makes punching cause staminaloss but funny martial artist types get a discount
+			user.adjustStaminaLossBuffered(1.5)
+		else
+			user.adjustStaminaLossBuffered(3.5)
 
 	if(attacker_style && attacker_style.harm_act(user,target))
 		return TRUE
@@ -1491,13 +1500,16 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 		var/obj/item/bodypart/affecting = target.get_bodypart(ran_zone(user.zone_selected))
 
 		var/miss_chance = 100//calculate the odds that a punch misses entirely. considers stamina and brute damage of the puncher. punches miss by default to prevent weird cases
-		if(user.dna.species.punchdamagelow)
-			if(HAS_TRAIT(user, TRAIT_PUGILIST)) //pugilists have a flat 10% miss chance
-				miss_chance = 10
-			if(atk_verb == ATTACK_EFFECT_KICK) //kicks never miss (provided your species deals more than 0 damage)
-				miss_chance = 0
-			else
-				miss_chance = min(10 + ((puncherstam + puncherbrute)*0.5), 100) //probability of miss has a base of 10, and modified based on half brute total. Capped at max 100 to prevent weirdness in prob()
+		if(unarmed_attack_flags & UNARMED_ATTACK_PARRY)
+			miss_chance = 0
+		else
+			if(user.dna.species.punchdamagelow)
+				if(atk_verb == ATTACK_EFFECT_KICK) //kicks never miss (provided your species deals more than 0 damage)
+					miss_chance = 0
+				else if(HAS_TRAIT(user, TRAIT_PUGILIST)) //pugilists have a flat 10% miss chance
+					miss_chance = 10
+				else
+					miss_chance = min(10 + max(puncherstam * 0.5, puncherbrute * 0.5), 100) //probability of miss has a base of 10, and modified based on half brute total. Capped at max 100 to prevent weirdness in prob()
 
 		if(!damage || !affecting || prob(miss_chance))//future-proofing for species that have 0 damage/weird cases where no zone is targeted
 			playsound(target.loc, user.dna.species.miss_sound, 25, TRUE, -1)
@@ -1675,7 +1687,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 /datum/species/proc/spec_hitby(atom/movable/AM, mob/living/carbon/human/H)
 	return
 
-/datum/species/proc/spec_attack_hand(mob/living/carbon/human/M, mob/living/carbon/human/H, datum/martial_art/attacker_style)
+/datum/species/proc/spec_attack_hand(mob/living/carbon/human/M, mob/living/carbon/human/H, datum/martial_art/attacker_style, act_intent, unarmed_attack_flags)
 	if(!istype(M))
 		return
 	CHECK_DNA_AND_SPECIES(M)
@@ -1687,7 +1699,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 		attacker_style = M.mind.martial_art
 		if(attacker_style?.pacifism_check && HAS_TRAIT(M, TRAIT_PACIFISM)) // most martial arts are quite harmful, alas.
 			attacker_style = null
-	switch(M.a_intent)
+	switch(act_intent)
 		if("help")
 			help(M, H, attacker_style)
 
@@ -1695,7 +1707,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 			grab(M, H, attacker_style)
 
 		if("harm")
-			harm(M, H, attacker_style)
+			harm(M, H, attacker_style, unarmed_attack_flags)
 
 		if("disarm")
 			disarm(M, H, attacker_style)
@@ -1726,7 +1738,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 	var/weakness = H.check_weakness(I, user)
 	apply_damage(totitemdamage * weakness, I.damtype, def_zone, armor_block, H) //CIT CHANGE - replaces I.force with totitemdamage
 
-	H.send_item_attack_message(I, user, hit_area)
+	H.send_item_attack_message(I, user, hit_area, totitemdamage)
 
 	I.do_stagger_action(H, user, totitemdamage)
 
@@ -1939,7 +1951,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 				append_message += ", causing them to drop [target_held_item]"
 		log_combat(user, target, "shoved", append_message)
 
-/datum/species/proc/apply_damage(damage, damagetype = BRUTE, def_zone = null, blocked, mob/living/carbon/human/H, forced = FALSE)
+/datum/species/proc/apply_damage(damage, damagetype = BRUTE, def_zone = null, blocked, mob/living/carbon/human/H, forced = FALSE, spread_damage = FALSE)
 	SEND_SIGNAL(src, COMSIG_MOB_APPLY_DAMGE, damage, damagetype, def_zone)
 	var/hit_percent = (100-(blocked+armor))/100
 	hit_percent = (hit_percent * (100-H.physiology.damage_resistance))/100
@@ -1947,20 +1959,20 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 		return 0
 
 	var/obj/item/bodypart/BP = null
-	if(isbodypart(def_zone))
-		if(damagetype == STAMINA && istype(def_zone, /obj/item/bodypart/head))
-			BP = H.get_bodypart(check_zone(BODY_ZONE_CHEST))
+	if(!spread_damage)
+		if(isbodypart(def_zone))
+			if(damagetype == STAMINA && istype(def_zone, /obj/item/bodypart/head))
+				BP = H.get_bodypart(check_zone(BODY_ZONE_CHEST))
+			else
+				BP = def_zone
 		else
-			BP = def_zone
-	else
-		if(!def_zone)
-			def_zone = ran_zone(def_zone)
-		if(damagetype == STAMINA && def_zone == BODY_ZONE_HEAD)
-			def_zone = BODY_ZONE_CHEST
-		BP = H.get_bodypart(check_zone(def_zone))
-
-	if(!BP)
-		BP = H.bodyparts[1]
+			if(!def_zone)
+				def_zone = ran_zone(def_zone)
+			if(damagetype == STAMINA && def_zone == BODY_ZONE_HEAD)
+				def_zone = BODY_ZONE_CHEST
+			BP = H.get_bodypart(check_zone(def_zone))
+		if(!BP)
+			BP = H.bodyparts[1]
 
 	switch(damagetype)
 		if(BRUTE)

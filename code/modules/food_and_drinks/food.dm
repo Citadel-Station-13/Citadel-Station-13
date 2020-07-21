@@ -6,7 +6,6 @@
 /// get_random_food proc.
 ////////////////////////////////////////////////////////////////////////////////
 
-#define STOP_SERVING_BREAKFAST (15 MINUTES)
 
 /obj/item/reagent_containers/food
 	possible_transfer_amounts = list()
@@ -51,5 +50,3 @@
 			if((foodtype & BREAKFAST) && world.time - SSticker.round_start_time < STOP_SERVING_BREAKFAST)
 				SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, "breakfast", /datum/mood_event/breakfast)
 			last_check_time = world.time
-
-#undef STOP_SERVING_BREAKFAST

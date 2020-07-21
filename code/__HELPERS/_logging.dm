@@ -55,7 +55,7 @@
 		WRITE_LOG(GLOB.world_game_log, "ADMIN: DSAY: [text]")
 
 /proc/log_consent(text)
-	WRITE_LOG(GLOB.world_game_log,"CONSENT: [text]")
+	WRITE_LOG(GLOB.world_game_log, "CONSENT: [text]")
 
 /* All other items are public. */
 /proc/log_game(text)
@@ -65,6 +65,9 @@
 /proc/log_virus(text)
 	if (CONFIG_GET(flag/log_virus))
 		WRITE_LOG(GLOB.world_virus_log, "VIRUS: [text]")
+
+/proc/log_asset(text)
+	WRITE_LOG(GLOB.world_asset_log, "ASSET: [text]")
 
 /proc/log_access(text)
 	if (CONFIG_GET(flag/log_access))
@@ -115,6 +118,9 @@
 		//reusing the PDA option because I really don't think news comments are worth a config option
 		WRITE_LOG(GLOB.world_pda_log, "COMMENT: [text]")
 
+/proc/log_paper(text)
+	WRITE_LOG(GLOB.world_paper_log, "PAPER: [text]")
+
 /proc/log_telecomms(text)
 	if (CONFIG_GET(flag/log_telecomms))
 		WRITE_LOG(GLOB.world_telecomms_log, "TCOMMS: [text]")
@@ -127,6 +133,10 @@
 /proc/log_vote(text)
 	if (CONFIG_GET(flag/log_vote))
 		WRITE_LOG(GLOB.world_game_log, "VOTE: [text]")
+
+/proc/log_shuttle(text)
+	if (CONFIG_GET(flag/log_shuttle))
+		WRITE_LOG(GLOB.world_shuttle_log, "SHUTTLE: [text]")
 
 /proc/log_craft(text)
 	if (CONFIG_GET(flag/log_craft))
