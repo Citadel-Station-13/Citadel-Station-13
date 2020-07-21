@@ -10,19 +10,16 @@ const VendingRow = (props, context) => {
     productStock,
     custom,
   } = props;
-  const to_pay = (!product.premium
-    ? Math.round(product.price * data.cost_mult)
-    : product.price
-  );
-  const pay_text = (!product.premium
-    ? to_pay + ' cr' + data.cost_text
-    : to_pay + ' cr'
-  );
   const free = (
     !data.onstation
     || product.price === 0
+    || (
+      !product.premium
+      && data.department
+      && data.user
+      && data.department === data.user.department
+    )
   );
-
   return (
     <Table.Row>
       <Table.Cell collapsing>
@@ -72,16 +69,13 @@ const VendingRow = (props, context) => {
           <Button
             fluid
             disabled={(
-              data.stock[product.namename] === 0
-                || (
-                  !free
-                  && (
-                    !data.user
-                    || to_pay > data.user.cash
-                  )
-                )
+              productStock === 0
+              || !free && (
+                !data.user
+                || product.price > data.user.cash
+              )
             )}
-            content={!free ? pay_text : 'FREE'}
+            content={free ? 'FREE' : product.price + ' cr'}
             onClick={() => act('vend', {
               'ref': product.ref,
             })} />

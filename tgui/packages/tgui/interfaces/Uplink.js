@@ -70,7 +70,6 @@ export const GenericUplink = (props, context) => {
         <Fragment>
           Search
           <Input
-            autoFocus
             value={searchText}
             onInput={(e, value) => setSearchText(value)}
             mx={1} />
