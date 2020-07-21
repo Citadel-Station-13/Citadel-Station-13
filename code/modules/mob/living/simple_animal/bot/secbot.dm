@@ -226,6 +226,23 @@ Auto Patrol: []"},
 		retaliate(H)
 		if(special_retaliate_after_attack(H))
 			return
+	if(H.a_intent == INTENT_HELP && bot_hat)
+		to_chat(A, "<span class='warning'>You knock [bot_hat] off of [src]'s head!</span>")
+		bot_hat.forceMove(get_turf(src))
+		//reset all emotes/sounds
+		death_emote = initial(death_emote)
+		capture_one = initial(capture_one)
+		capture_two = initial(capture_two)
+		infraction = initial(infraction)
+		taunt = initial(taunt)
+		attack_one = initial(attack_one)
+		attack_two = initial(attack_two)
+		arrest_texts = initial(arrest_texts)
+		arrest_emote = initial(arrest_emote)
+		patrol_emote = initial(patrol_emote)
+		bot_hat = null
+		qdel(stored_fashion)
+		return
 
 	return ..()
 
@@ -298,22 +315,6 @@ Auto Patrol: []"},
 	if(!on)
 		return
 	if(iscarbon(A))
-		if(bot_hat)
-			to_chat(A, "<span class='warning'>You knock [bot_hat] off of [src]'s head!</span>")
-			bot_hat.forceMove(get_turf(src))
-			//reset all emotes/sounds
-			death_emote = initial(death_emote)
-			capture_one = initial(capture_one)
-			capture_two = initial(capture_two)
-			infraction = initial(infraction)
-			taunt = initial(taunt)
-			attack_one = initial(attack_one)
-			attack_two = initial(attack_two)
-			arrest_texts = initial(arrest_texts)
-			arrest_emote = initial(arrest_emote)
-			patrol_emote = initial(patrol_emote)
-			bot_hat = null
-			qdel(stored_fashion)
 		var/mob/living/carbon/C = A
 		if(CHECK_MOBILITY(C, MOBILITY_MOVE|MOBILITY_USE|MOBILITY_STAND) || arrest_type) // CIT CHANGE - makes sentient secbots check for canmove rather than !isstun.
 			stun_attack(A)
