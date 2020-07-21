@@ -2,7 +2,7 @@
 	command = "jack"
 	description = "Jerk yourself off."
 	interaction_sound = null
-	require_user_hands = TRUE
+	require_user_hands = REQUIRE_ANY
 	require_user_penis = REQUIRE_EXPOSED
 	user_not_tired = TRUE
 	user_is_target = TRUE
@@ -42,7 +42,6 @@
 	description = "Grope your own breasts."
 	require_user_breasts = REQUIRE_ANY
 	user_is_target = TRUE
-	write_log_user = "groped themself."
 	interaction_sound = null
 	max_distance = 0
 
