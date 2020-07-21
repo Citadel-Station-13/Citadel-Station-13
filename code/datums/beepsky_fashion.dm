@@ -1,6 +1,6 @@
 //similar to dog_fashion, but for beepsky, who has far more refined fashion tastes
 /datum/beepsky_fashion
-	var/name
+	var/name //not setting the name and desc makes them go to the default
 	var/desc
 
 	var/icon_file = 'icons/mob/secbot_head.dmi'
@@ -11,17 +11,23 @@
 	var/list/stun_sounds //sound that replaces the stun attack when set
 	var/ignore_sound = FALSE //whether to ignore sounds entirely or not
 
-	//emotes
-	var/death_emote
-	var/capture_one
-	var/capture_two
-	var/infraction
-	var/taunt
-	var/attack_one
-	var/attack_two
-	var/patrol_emote
+	//emotes (don't set them if you want the default value)
+	var/death_emote //what is said when beepsky dies
+	var/capture_one //what is said when cuffing someone
+	var/capture_two //what is said when cuffing someone, directly to the person being cuffed
+	var/infraction //the level of threat detected
+	var/taunt // beepsky pointing at a criminal
+	var/attack_one //text when attacking criminal
+	var/attack_two //text when attacking criminal, but directly to the criminal
+	var/patrol_emote //engaging patrol text
 	var/list/arrest_texts //first is for not-cuffing, second is for cuffing
-	var/arrest_emote
+	var/arrest_emote //text stating that you're cuffing some criminal C with a threat of level X in location Y
+
+	//for reference, the following words are replaced when processed before speech:
+	//LOCATION = the location passed, if any (this is only used by arrest_emote)
+	//CRIMINAL = the name of the criminal (this is used by everything but patrol_emote and infraction)
+	//BOT = the name of the bot (this can be used on any of the emotes)
+	//THREAT_LEVEL = the level of the threat detected (can be used on arrest_emote and infraction)
 
 /datum/beepsky_fashion/proc/get_overlay(var/dir)
 	if(icon_file && obj_icon_state)
@@ -48,7 +54,7 @@
 	if(infraction)
 		beepers.infraction = infraction
 
-	if(infraction)
+	if(taunt)
 		beepers.taunt = taunt
 
 	if(attack_one)
@@ -78,6 +84,7 @@
 	capture_one = "BOT is casting cable ties on CRIMINAL!"
 	capture_two = "BOT is casting cable ties on you!"
 	infraction = "Magical disturbance of magnitude THREAT_LEVEL detected!"
+	taunt = "BOT points his staff towards CRIMINAL!"
 	attack_one = "BOT casts magic missile on CRIMINAL!"
 	attack_two = "BOT casts magic missile on you!"
 	patrol_emote = "Beginning search for magical disturbances."
@@ -97,6 +104,7 @@
 	capture_one = "BOT is tying CRIMINAL up!"
 	capture_two = "BOT is tying you up!"
 	infraction = "Outlaws with a bounty of THREAT_LEVEL000 space dollars detected!"
+	taunt = "BOT aims his revolver towards CRIMINAL!"
 	attack_one = "BOT unloads his revolver onto CRIMINAL!"
 	attack_two = "BOT unloads his revolver onto you!"
 	patrol_emote = "Engaging bounty hunting protocols."
@@ -112,6 +120,7 @@
 	desc = "Cooking up the finest foods the station has ever seen."
 	death_emote = "Mamma-mia!"
 	infraction = "Grade THREAT_LEVEL prosciutto detected!"
+	taunt = "BOT glares at CRIMINAL."
 	attack_one = "BOT CQCs CRIMINAL!"
 	attack_two = "BOT CQCs you!"
 	patrol_emote = "Beginning search for the bad prosciutto."
@@ -128,6 +137,7 @@
 	capture_one = "BOT is tying CRIMINAL up!!"
 	capture_two = "BOT is tying you up!"
 	infraction = "Wevel THREAT_LEVEL infwactwion awert!!!"
+	taunt = "BOT points at CRIMINAL and nyas!"
 	attack_one = "BOT shoves CRIMINAL onto a table!"
 	attack_two = "BOT shoves you onto a table!"
 	patrol_emote = "Enwgagwing patwol mwode."
@@ -148,6 +158,7 @@
 
 /datum/beepsky_fashion/cake //nothing else. it's just beepsky. with a cake on his head.
 	obj_icon_state = "cake"
+	name = "Cakesky"
 	desc = "It's a secbot, wearing a cake on his head!"
 
 /datum/beepsky_fashion/captain
@@ -191,12 +202,13 @@
 	attack_one = "BOT strikes CRIMINAL with his cutlass!"
 	attack_two = "BOT strikes you with his cutlass!"
 	patrol_emote = "Searching for enemy vessels to board."
-	arrest_texts = list("Boarding" "Sinking")
+	arrest_texts = list("Boarding", "Sinking")
 	arrest_emote = "ARREST_TYPE level THREAT_LEVEL vessel CRIMINAL in LOCATION."
 	stun_sounds = list('sound/weapons/bladeslice.ogg')
 
 /datum/beepsky_fashion/engineer
 	obj_icon_state = "engineer"
+	name = "Chief Engineer Beepsky"
 	desc = "He fixes criminals with a wrench to the face."
 	capture_one = "BOT is tying CRIMINAL up!"
 	capture_two = "BOT is tying you up!"
@@ -209,4 +221,15 @@
 
 /datum/beepsky_fashion/tophat
 	obj_icon_state = "tophat"
+	name = "Fancy Beepsky"
 	desc = "It's a secbot, wearing a top hat! How fancy."
+
+/datum/beepsky_fashion/fedora
+	obj_icon_state = "fedora"
+	name = "Fedorasky"
+	desc = "It's a secbot, wearing a fedora!"
+
+/datum/beepsky_fashion/sombrero
+	obj_icon_state = "sombrero"
+	name = "Sombrerosky"
+	desc = "A secbot wearing a sombrero. Truly, a hombre to all."

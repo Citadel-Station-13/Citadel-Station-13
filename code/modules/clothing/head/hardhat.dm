@@ -15,7 +15,7 @@
 	dynamic_hair_suffix = "+generic"
 
 	dog_fashion = /datum/dog_fashion/head
-	beepsky_fashion = /datum/beepsky_fashion/hardhat
+	beepsky_fashion = /datum/beepsky_fashion/engineer
 
 
 /obj/item/clothing/head/hardhat/ComponentInitialize()

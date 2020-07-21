@@ -193,6 +193,8 @@
 	desc = "A really cool hat if you're a mobster. A really lame hat if you're not."
 	pocket_storage_component_path = /datum/component/storage/concrete/pockets/small
 
+	beepsky_fashion = /datum/beepsky_fashion/fedora
+
 /obj/item/clothing/head/fedora/suicide_act(mob/user)
 	if(user.gender == FEMALE)
 		return 0
@@ -211,6 +213,7 @@
 	flags_inv = HIDEHAIR
 
 	dog_fashion = /datum/dog_fashion/head/sombrero
+	beepsky_fashion = /datum/beepsky_fashion/sombrero
 
 /obj/item/clothing/head/sombrero/green
 	name = "green sombrero"
