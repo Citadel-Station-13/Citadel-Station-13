@@ -370,7 +370,6 @@
 
 	visible_message("<span class='warning'>[src] licks [tasted]!</span>","<span class='notice'>You lick [tasted]. They taste rather like [tasted.get_taste_message()].</span>","<b>Slurp!</b>")
 
-
 /mob/living/proc/get_taste_message(allow_generic = TRUE, datum/species/mrace)
 	if(!vore_taste && !allow_generic)
 		return FALSE

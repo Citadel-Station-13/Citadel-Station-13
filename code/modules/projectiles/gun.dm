@@ -357,11 +357,9 @@
 	if(user.a_intent == INTENT_HARM) //Flogging
 		if(bayonet)
 			M.attackby(bayonet, user)
-			attack_delay_done = TRUE
 			return
 		else
 			return ..()
-	attack_delay_done = TRUE //we are firing the gun, not bashing people with its butt.
 
 /obj/item/gun/attack_obj(obj/O, mob/user)
 	if(user.a_intent == INTENT_HARM)

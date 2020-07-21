@@ -23,6 +23,8 @@
 	climbable = TRUE
 	obj_flags = CAN_BE_HIT|SHOVABLE_ONTO
 	pass_flags = LETPASSTHROW //You can throw objects over this, despite it's density.")
+	attack_hand_speed = CLICK_CD_MELEE
+	attack_hand_is_action = TRUE
 	var/frame = /obj/structure/table_frame
 	var/framestack = /obj/item/stack/rods
 	var/buildstack = /obj/item/stack/sheet/metal
@@ -191,8 +193,10 @@
 	return
 
 /obj/structure/table/alt_attack_hand(mob/user)
+	if(!user.CheckActionCooldown(CLICK_CD_MELEE))
+		return
+	user.DelayNextAction()
 	if(user && Adjacent(user) && !user.incapacitated())
-		user.changeNext_move(CLICK_CD_MELEE*0.5)
 		if(istype(user) && user.a_intent == INTENT_HARM)
 			user.visible_message("<span class='warning'>[user] slams [user.p_their()] palms down on [src].</span>", "<span class='warning'>You slam your palms down on [src].</span>")
 			playsound(src, 'sound/weapons/sonic_jackhammer.ogg', 50, 1)

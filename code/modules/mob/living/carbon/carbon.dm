@@ -315,7 +315,7 @@
 	spin(32,2)
 	visible_message("<span class='danger'>[src] rolls on the floor, trying to put [p_them()]self out!</span>", \
 		"<span class='notice'>You stop, drop, and roll!</span>")
-	MarkResistCooldown(30)
+	MarkResistTime(30)
 	sleep(30)
 	if(fire_stacks <= 0)
 		visible_message("<span class='danger'>[src] has successfully extinguished [p_them()]self!</span>", \
