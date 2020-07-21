@@ -35,7 +35,7 @@
 
 	visible_message(message = "<font color=purple><b>\The [src]</b> [pick("fingers [t_His] pussy deep.",
 		"fingers [t_His] pussy.",
-		"plays with [t_His] pussy",
+		"plays with [t_His] pussy.",
 		"fingers [t_His] own pussy hard.")]</font>") //can't not consent to yourself, if you did it, you wanted it
 	playlewdinteractionsound(loc, 'sandcode/sound/interactions/champ_fingering.ogg', 50, 1, -1)
 	user.handle_post_sex(NORMAL_LUST, CUM_TARGET_HAND, src)
