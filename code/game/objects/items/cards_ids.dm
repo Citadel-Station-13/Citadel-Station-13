@@ -224,7 +224,7 @@
 	. = ..()
 	if(.)
 		switch(var_name)
-			if("assignment","registered_name")
+			if(NAMEOF(src, assignment),NAMEOF(src, registered_name)) //,NAMEOF(src, registered_age))
 				update_label()
 
 /obj/item/card/id/attack_self(mob/user)
@@ -280,7 +280,7 @@
 		total += physical_money.get_item_credit_value()
 		CHECK_TICK
 
-		registered_account.adjust_money(total)
+	registered_account.adjust_money(total)
 
 	QDEL_LIST(money)
 

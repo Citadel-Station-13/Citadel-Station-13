@@ -31,7 +31,7 @@
 			return
 	say("It doesn't seem like that's magical enough!")
 
-/obj/item/barthpot/attack_hand(mob/user)
+/obj/item/barthpot/attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	if(!active)
 		say("Meow!")
 		return
