@@ -249,11 +249,11 @@ Auto Patrol: []"},
 	var/datum/beepsky_fashion/BF = new bot_hat.beepsky_fashion
 	if(BF)
 		BF.apply(src)
+		regenerate_icons()
 
 /mob/living/simple_animal/bot/secbot/regenerate_icons()
 	..()
 	if(bot_hat)
-		update_beepsky_fluff()
 		add_overlay(bot_hat.beepsky_fashion.get_overlay())
 
 /mob/living/simple_animal/bot/secbot/emag_act(mob/user)
