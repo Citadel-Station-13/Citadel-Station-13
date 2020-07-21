@@ -227,7 +227,7 @@ Auto Patrol: []"},
 		if(special_retaliate_after_attack(H))
 			return
 	if(H.a_intent == INTENT_HELP && bot_hat)
-		to_chat(A, "<span class='warning'>You knock [bot_hat] off of [src]'s head!</span>")
+		to_chat(H, "<span class='warning'>You knock [bot_hat] off of [src]'s head!</span>")
 		bot_hat.forceMove(get_turf(src))
 		//reset all emotes/sounds
 		death_emote = initial(death_emote)
