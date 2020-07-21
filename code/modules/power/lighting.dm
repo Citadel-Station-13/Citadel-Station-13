@@ -597,9 +597,7 @@
 
 /obj/machinery/light/on_attack_hand(mob/living/carbon/human/user)
 	. = ..()
-	if(.)
-		return
-	user.changeNext_move(CLICK_CD_MELEE)
+	user.DelayNextAction(CLICK_CD_MELEE)
 	add_fingerprint(user)
 
 	if(status == LIGHT_EMPTY)

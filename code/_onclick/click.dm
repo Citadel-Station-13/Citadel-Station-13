@@ -316,11 +316,11 @@
 
 /mob/living/carbon/human/CtrlClick(mob/user)
 	if(ishuman(user) && Adjacent(user) && !user.incapacitated())
-		if(world.time < user.next_move)
+		if(!user.CheckActionCooldown())
 			return FALSE
 		var/mob/living/carbon/human/H = user
 		H.dna.species.grab(H, src, H.mind.martial_art)
-		H.changeNext_move(CLICK_CD_MELEE)
+		H.DelayNextAction(CLICK_CD_MELEE)
 	else
 		..()
 /*
@@ -380,7 +380,7 @@
 	return
 
 /mob/living/LaserEyes(atom/A, params)
-	changeNext_move(CLICK_CD_RANGE)
+	DelayNextAction(CLICK_CD_RANGE)
 
 	var/obj/item/projectile/beam/LE = new /obj/item/projectile/beam( loc )
 	LE.icon = 'icons/effects/genetics.dmi'

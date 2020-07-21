@@ -176,6 +176,7 @@
 /obj/screen/inventory/hand/Click(location, control, params)
 	if(hud?.mymob && (hud.mymob != usr))
 		return
+	var/mob/user = hud.mymob
 	// just redirect clicks
 
 	if(user.active_hand_index == held_index)
