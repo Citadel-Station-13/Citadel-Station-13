@@ -45,6 +45,8 @@
 	var/attack_one = "BOT has stunned CRIMINAL!"
 	var/attack_two = "BOT has stunned you!"
 
+	var/stun_sound =
+
 /mob/living/simple_animal/bot/secbot/beepsky
 	name = "Officer Beep O'sky"
 	desc = "It's Officer Beep O'sky! Powered by a potato and a shot of whiskey."
@@ -240,6 +242,7 @@ Auto Patrol: []"},
 	if(bot_hat)
 		to_chat("<span class='warning'>\[src] already has a hat, and the laws of physics disallow him from wearing a second!</span>")
 	if(H.beepsky_fashion)
+		to_chat(user, "<span class='warning'>You set [H] on [src]'s head.</span>")
 		bot_hat = H
 		H.forceMove(src)
 		update_beepsky_fluff()
@@ -289,6 +292,19 @@ Auto Patrol: []"},
 	if(!on)
 		return
 	if(iscarbon(A))
+		if(bot_hat)
+			to_chat(A, "<span class='warning'>You knock [bot_hat] off of [src]'s head!</span>")
+			bot_hat.forceMove(get_turf(src))
+			//reset all emotes/sounds
+			death_emote = initial(death_emote)
+			capture_one = initial(capture_one)
+			capture_two = initial(capture_two)
+			infraction = initial(infraction)
+			taunt = initial(taunt)
+			attack_one = initial(attack_one)
+			attack_two = initial(attack_two)
+			bot_hat = null
+			qdel(stored_fashion)
 		var/mob/living/carbon/C = A
 		if(CHECK_MOBILITY(C, MOBILITY_MOVE|MOBILITY_USE|MOBILITY_STAND) || arrest_type) // CIT CHANGE - makes sentient secbots check for canmove rather than !isstun.
 			stun_attack(A)

@@ -30,40 +30,28 @@
 	//assume name and description is always set, because otherwise, what would be the point of beepsky fashion?
 	beepers.name = name
 	beepers.desc = desc
+
+	//set each variable in beepsky if its defined here, otherwise set it to its initial value just in case
 	if(death_emote)
 		beepers.death_emote = death_emote
-	else
-		beepers.death_emote = initial(beepers.death_emote)
 
 	if(capture_one)
 		beepers.capture_one = capture_one
-	else
-		beepers.capture_one = initial(beepers.capture_one)
 
 	if(capture_two)
 		beepers.capture_two = capture_two
-	else
-		beepers.capture_two = initial(beepers.capture_two)
 
 	if(infraction)
 		beepers.infraction = infraction
-	else
-		beepers.infraction = initial(beepers.infraction)
 
 	if(infraction)
 		beepers.taunt = taunt
-	else
-		beepers.taunt = initial(beepers.taunt)
 
 	if(attack_one)
 		beepers.attack_one = attack_one
-	else
-		beepers.attack_one = initial(beepers.attack_one)
 
 	if(attack_two)
 		beepers.attack_two = attack_two
-	else
-		beepers.attack_two = initial(beepers.attack_two)
 
 /datum/beepsky_fashion/proc/stun_attack(mob/living/carbon/C) //fired when beepsky does a stun attack with the fashion worn, for sounds/overlays/etc
 	return
@@ -132,3 +120,13 @@
 	infraction = "Treason of level THREAT_LEVEL detected!"
 	attack_one = "BOT strikes CRIMINAL with his kingly authority!"
 	attack_two = "BOT strikes you with his kingly authority!"
+
+/datum/beepsky_fashion/pirate
+	obj_icon_state = "pirate"
+	name = "Beepsbeard the Pirate"
+	desc = "Sailor of the seven seas, all sea-faring bots fear the one known as Beepsbeard."
+	capture_one = "BOT is making CRIMINAL walk the plank!"
+	capture_two = "BOT is making you walk the plank!"
+	infraction = "Enemy vessel spotted with threat level THREAT_LEVEL!"
+	attack_one = "BOT strikes CRIMINAL with his cutlass!"
+	attack_two = "BOT strikes you with his cutlass!"
