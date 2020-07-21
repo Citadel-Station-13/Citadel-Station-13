@@ -116,6 +116,7 @@
 	icon_state = "wizard"
 
 	dog_fashion = /datum/dog_fashion/head/blue_wizard
+	beepsky_fashion = /datum/beepsky_fashion/wizard
 
 /obj/item/clothing/head/collectable/hardhat
 	name = "collectable hard hat"

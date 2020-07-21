@@ -33,6 +33,17 @@
 	var/check_records = TRUE //Does it check security records?
 	var/arrest_type = FALSE //If true, don't handcuff
 
+	var/obj/item/clothing/head/bot_hat
+
+	//emotes (BOT is replaced with bot name, CRIMINAL with criminal name, THREAT_LEVEL with threat level)
+	var/death_emote = "BOT blows apart!"
+	var/capture_one = "BOT is trying to put zipties on CRIMINAL!"
+	var/capture_two = "BOT is trying to put zipties on you!"
+	var/infraction = "Level THREAT_LEVEL infraction alert!"
+	var/taunt = "<b>BOT</b> points at CRIMINAL!"
+	var/attack_one = "BOT has stunned CRIMINAL!"
+	var/attack_two = "BOT has stunned you!"
+
 /mob/living/simple_animal/bot/secbot/beepsky
 	name = "Officer Beep O'sky"
 	desc = "It's Officer Beep O'sky! Powered by a potato and a shot of whiskey."
@@ -49,6 +60,34 @@
 	resize = 0.8
 	update_transform()
 
+/mob/living/simple_animal/bot/secbot/proc/process_emote(var/emote_type, var/atom/criminal, var/threat)
+	var/emote = "The continuity of space itself collapses around [src]. You should probably report that to someone higher up."
+	switch(emote_type)
+		if("DEATH")
+			emote = death_emote
+		if("CAPTURE_ONE")
+			emote = capture_one
+		if("CAPTURE_TWO")
+			emote = capture_two
+		if("INFRACTION")
+			emote = infraction
+		if("TAUNT")
+			emote = taunt
+		if("ATTACK_PME")
+			emote = attack_one
+		if("ATTACK_TWO")
+			emote = attack_two
+
+	//now replace pieces of the text with the information we have
+	if(!taunt)
+		emote = replacetext(emote, "BOT", name)
+	else
+		emote = replacetext(emote, "BOT", "<b>[name]</b>") //needs to be bold if its a taunt
+	if(criminal)
+		emote = replacetext(emote, "CRIMINAL", criminal.name)
+	if(threat)
+		emote = replacetext(emote, "THREAT_LEVEL", threat)
+	return emote
 
 /mob/living/simple_animal/bot/secbot/beepsky/explode()
 	var/atom/Tsec = drop_location()
@@ -185,10 +224,37 @@ Auto Patrol: []"},
 	..()
 	if(istype(W, /obj/item/weldingtool) && user.a_intent != INTENT_HARM) // Any intent but harm will heal, so we shouldn't get angry.
 		return
+	if(istype(W, /obj/item/clothing/head))
+		attempt_place_on_head(user, W)
+		return
 	if(!istype(W, /obj/item/screwdriver) && (W.force) && (!target) && (W.damtype != STAMINA) ) // Added check for welding tool to fix #2432. Welding tool behavior is handled in superclass.
 		retaliate(user)
 		if(special_retaliate_after_attack(user))
 			return
+
+/mob/living/simple_animal/bot/secbot/proc/attempt_place_on_head(mob/user, obj/item/clothing/head/H)
+	if(user && !user.temporarilyRemoveItemFromInventory(H))
+		to_chat(user, "<span class='warning'>\The [H] is stuck to your hand, you cannot put it on [src]'s head!</span>")
+		return
+	if(bot_hat)
+		to_chat("<span class='warning'>\[src] already has a hat, and the laws of physics disallow him from wearing a second!</span>")
+	if(H.beepsky_fashion)
+		bot_hat = H
+		H.forceMove(src)
+	else
+		to_chat(user, "<span class='warning'>You set [H] on [src]'s head, but it falls off!</span>")
+		H.forceMove(drop_location())
+
+/mob/living/simple_animal/bot/secbot/proc/update_beepsky_fluff()
+	var/datum/beepsky_fashion/BF = new bot_hat.beepsky_fashion
+	if(BF)
+		BF.apply(src)
+
+/mob/living/simple_animal/bot/secbot/regenerate_icons()
+	..()
+	if(bot_hat)
+		update_beepsky_fluff()
+		add_overlay(bot_hat.beepsky_fashion.get_overlay())
 
 /mob/living/simple_animal/bot/secbot/emag_act(mob/user)
 	. = ..()
@@ -233,8 +299,8 @@ Auto Patrol: []"},
 /mob/living/simple_animal/bot/secbot/proc/cuff(mob/living/carbon/C)
 	mode = BOT_ARREST
 	playsound(src, 'sound/weapons/cablecuff.ogg', 30, TRUE, -2)
-	C.visible_message("<span class='danger'>[src] is trying to put zipties on [C]!</span>",\
-						"<span class='userdanger'>[src] is trying to put zipties on you!</span>")
+	C.visible_message("<span class='danger'>[process_emote("CAPTURE_ONE", C)]</span>",\
+						"<span class='userdanger'>[process_emote("CAPTURE_TWO", C)]</span>")
 	if(do_after(src, 60, FALSE, C))
 		attempt_handcuff(C)
 
@@ -267,8 +333,8 @@ Auto Patrol: []"},
 	if(declare_arrests)
 		var/area/location = get_area(src)
 		speak("[arrest_type ? "Detaining" : "Arresting"] level [threat] scumbag <b>[C]</b> in [location].", radio_channel)
-	C.visible_message("<span class='danger'>[src] has stunned [C]!</span>",\
-							"<span class='userdanger'>[src] has stunned you!</span>")
+	C.visible_message("<span class='danger'>[process_emote("ATTACK_ONE", C)]</span>",\
+							"<span class='userdanger'>[process_emote("ATTACK_TWO", C)]</span>")
 
 /mob/living/simple_animal/bot/secbot/handle_automated_action()
 	if(!..())
@@ -391,9 +457,9 @@ Auto Patrol: []"},
 		else if(threatlevel >= 4)
 			target = C
 			oldtarget_name = C.name
-			speak("Level [threatlevel] infraction alert!")
+			speak(process_emote("INFRACTION", target, threatlevel))
 			playsound(loc, pick('sound/voice/beepsky/criminal.ogg', 'sound/voice/beepsky/justice.ogg', 'sound/voice/beepsky/freeze.ogg'), 50, FALSE)
-			visible_message("<b>[src]</b> points at [C.name]!")
+			visible_message(process_emote("TAUNT", target, threatlevel))
 			mode = BOT_HUNT
 			INVOKE_ASYNC(src, .proc/handle_automated_action)
 			break
@@ -408,7 +474,7 @@ Auto Patrol: []"},
 /mob/living/simple_animal/bot/secbot/explode()
 
 	walk_to(src,0)
-	visible_message("<span class='boldannounce'>[src] blows apart!</span>")
+	visible_message("<span class='boldannounce'>[process_emote("DEATH")]</span>")
 	var/atom/Tsec = drop_location()
 
 	var/obj/item/bot_assembly/secbot/Sa = new (Tsec)
