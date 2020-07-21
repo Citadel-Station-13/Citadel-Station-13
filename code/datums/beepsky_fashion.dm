@@ -109,3 +109,26 @@
 	infraction = "Wevel THREAT_LEVEL infwactwion awert!!!"
 	attack_one = "BOT shoves CRIMINAL onto a table!"
 	attack_two = "BOT shoves you onto a table!"
+
+/datum/beepsky_fashion/cake //nothing else. it's just beepsky. with a cake on his head.
+	obj_icon_state = "cake"
+
+/datum/beepsky_fashion/captain
+	obj_icon_state = "captain"
+	name = "Captainsky"
+	desc = "The real captain of this station."
+	capture_one = "BOT is lecturing CRIMINAL on why he is the captain!"
+	capture_two = "BOT is lecturing you on why he is the captain!"
+	infraction = "Level THREAT_LEVEL greytider detected."
+	attack_one = "BOT beats CRIMINAL with the chain of command!"
+	attack_two = "BOT beats you with the chain of command!"
+
+/datum/beepsky_fashion/king
+	obj_icon_state = "king"
+	name = "King Beepsky"
+	desc = "He who has ascended to bare the right of king, sits atop the throne."
+	capture_one = "BOT is calling the guards onto CRIMINAL!"
+	capture_two = "BOT is calling the guards onto you!"
+	infraction = "Treason of level THREAT_LEVEL detected!"
+	attack_one = "BOT strikes CRIMINAL with his kingly authority!"
+	attack_two = "BOT strikes you with his kingly authority!"

@@ -333,7 +333,7 @@ Auto Patrol: []"},
 		if(stored_fashion)
 			stored_fashion.stun_attack(C)
 			if(stored_fashion.stun_sound)
-				playsound(src, stun_sound, 50, TRUE, -1)
+				playsound(src, stored_fashion.stun_sound, 50, TRUE, -1)
 			else
 				playsound(src, 'sound/weapons/egloves.ogg', 50, TRUE, -1)
 		C.stuttering = 5
