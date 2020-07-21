@@ -66,7 +66,7 @@
 	var/full_parry_duration = data.parry_time_windup + data.parry_time_active + data.parry_time_spindown
 	// no system in place to "fallback" if out of the 3 the top priority one can't parry due to constraints but something else can.
 	// can always implement it later, whatever.
-	if((data.parry_respect_clickdelay && (next_move > world.time)) || ((parry_end_time_last + data.parry_cooldown) > world.time))
+	if((data.parry_respect_clickdelay && !CheckActionCooldown()) || ((parry_end_time_last + data.parry_cooldown) > world.time))
 		to_chat(src, "<span class='warning'>You are not ready to parry (again)!</span>")
 		return
 	// Point of no return, make sure everything is set.
@@ -121,7 +121,7 @@
 			Stagger(data.parry_failed_stagger_duration)
 			effect_text += "staggering themselves"
 		if(data.parry_failed_clickcd_duration)
-			changeNext_move(data.parry_failed_clickcd_duration)
+			DelayNextAction(data.parry_failed_clickcd_duration)
 			effect_text += "throwing themselves off balance"
 	handle_parry_ending_effects(data, effect_text)
 	parrying = NOT_PARRYING
