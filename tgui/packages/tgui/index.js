@@ -1,3 +1,9 @@
+/**
+ * @file
+ * @copyright 2020 Aleksej Komarov
+ * @license MIT
+ */
+
 // Polyfills
 import 'core-js/es';
 import 'core-js/web/immediate';
@@ -12,13 +18,16 @@ import './polyfills/inferno';
 
 // Themes
 import './styles/main.scss';
+import './styles/themes/cardtable.scss';
 import './styles/themes/malfunction.scss';
 import './styles/themes/ntos.scss';
 import './styles/themes/hackerman.scss';
 import './styles/themes/retro.scss';
 import './styles/themes/syndicate.scss';
 import './styles/themes/clockcult.scss';
-import './styles/themes/paper.scss';
+ // import './styles/themes/paper.scss'; PAPER
+//  "marked": "^1.1.0", PAPER - package.json
+//  "dompurify": "^2.0.11"
 
 import { loadCSS } from 'fg-loadcss';
 import { render } from 'inferno';
