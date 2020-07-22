@@ -106,7 +106,7 @@
 //Whatever special stuff you want
 /datum/map_template/shuttle/proc/post_load(obj/docking_port/mobile/M)
 	return
-		
+
 /datum/map_template/shuttle/proc/on_bought()
 	return
 
@@ -472,6 +472,10 @@
 /datum/map_template/shuttle/cargo/box
 	suffix = "box"
 	name = "supply shuttle (Box)"
+
+/datum/map_template/shuttle/cargo/cere
+    suffix = "cere"
+    name = "supply shuttle (cere)"
 
 /datum/map_template/shuttle/cargo/kilo
 	suffix = "kilo"

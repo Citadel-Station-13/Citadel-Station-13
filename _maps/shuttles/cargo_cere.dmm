@@ -1,0 +1,47 @@
+"a" = (/turf/closed/wall/mineral/titanium,/area/shuttle/supply)
+"b" = (/obj/effect/decal/cleanable/dirt,/obj/effect/turf_decal/delivery,/turf/open/floor/plasteel,/area/shuttle/supply)
+"f" = (/obj/effect/decal/cleanable/dirt,/obj/effect/turf_decal/stripes/line{dir = 9},/turf/open/floor/plasteel,/area/shuttle/supply)
+"g" = (/obj/effect/decal/cleanable/dirt,/obj/effect/turf_decal/stripes/line{dir = 1},/obj/machinery/light/small{dir = 1},/turf/open/floor/plasteel,/area/shuttle/supply)
+"h" = (/obj/effect/turf_decal/bot,/obj/effect/decal/cleanable/oil,/turf/open/floor/plasteel,/area/shuttle/supply)
+"i" = (/obj/machinery/conveyor{dir = 4; id = "QMLoad"},/obj/machinery/door/poddoor{id = "QMLoaddoor2"; name = "supply dock loading door"},/turf/open/floor/plating,/area/shuttle/supply)
+"m" = (/obj/machinery/door/airlock/shuttle{name = "Supply Shuttle Airlock"; req_access_txt = "31"},/turf/open/floor/plating,/area/shuttle/supply)
+"o" = (/obj/effect/turf_decal/stripes/line,/turf/open/floor/plasteel,/area/shuttle/supply)
+"p" = (/obj/machinery/button/door{dir = 2; id = "cargounload"; name = "Loading Doors"; pixel_x = -24; pixel_y = 8},/obj/machinery/button/door{id = "cargoload"; name = "Loading Doors"; pixel_x = -24; pixel_y = -8},/obj/effect/turf_decal/stripes/line{dir = 8},/obj/machinery/light{dir = 8},/turf/open/floor/plasteel,/area/shuttle/supply)
+"q" = (/obj/effect/turf_decal/stripes/line{dir = 4},/obj/machinery/light{dir = 4},/turf/open/floor/plasteel,/area/shuttle/supply)
+"t" = (/obj/effect/decal/cleanable/dirt,/obj/effect/turf_decal/bot,/turf/open/floor/plasteel,/area/shuttle/supply)
+"u" = (/obj/effect/turf_decal/bot,/turf/open/floor/plasteel,/area/shuttle/supply)
+"v" = (/obj/effect/turf_decal/delivery,/turf/open/floor/plasteel,/area/shuttle/supply)
+"w" = (/obj/effect/decal/cleanable/dirt,/obj/effect/turf_decal/stripes/line{dir = 4},/turf/open/floor/plasteel,/area/shuttle/supply)
+"x" = (/obj/machinery/door/airlock/shuttle{name = "Supply Shuttle Airlock"; req_access_txt = "31"},/obj/docking_port/mobile/supply,/turf/open/floor/plating,/area/shuttle/supply)
+"y" = (/obj/machinery/conveyor{dir = 4; id = "QMLoad"},/obj/machinery/door/poddoor{id = "QMLoaddoor"; name = "supply dock loading door"},/turf/open/floor/plating,/area/shuttle/supply)
+"A" = (/turf/closed/wall/mineral/titanium/interior,/area/shuttle/supply)
+"B" = (/obj/effect/turf_decal/stripes/line{dir = 6},/turf/open/floor/plasteel,/area/shuttle/supply)
+"C" = (/obj/structure/window/reinforced{dir = 1},/obj/structure/shuttle/engine/heater,/turf/open/floor/plating/airless,/area/shuttle/supply)
+"D" = (/turf/template_noop,/area/template_noop)
+"E" = (/obj/effect/decal/cleanable/oil,/obj/effect/turf_decal/bot,/turf/open/floor/plasteel,/area/shuttle/supply)
+"G" = (/obj/effect/turf_decal/stripes/line{dir = 1},/turf/open/floor/plasteel,/area/shuttle/supply)
+"I" = (/obj/effect/decal/cleanable/dirt,/obj/effect/turf_decal/stripes/line,/turf/open/floor/plasteel,/area/shuttle/supply)
+"J" = (/obj/structure/shuttle/engine/propulsion/burst/left,/turf/open/floor/plating/airless,/area/shuttle/supply)
+"K" = (/obj/structure/shuttle/engine/propulsion,/turf/open/floor/plating/airless,/area/shuttle/supply)
+"L" = (/obj/effect/decal/cleanable/dirt,/obj/effect/turf_decal/stripes/line{dir = 1},/turf/open/floor/plasteel,/area/shuttle/supply)
+"N" = (/obj/effect/turf_decal/stripes/line{dir = 4},/turf/open/floor/plasteel,/area/shuttle/supply)
+"P" = (/obj/structure/shuttle/engine/propulsion/burst/right,/turf/open/floor/plating/airless,/area/shuttle/supply)
+"T" = (/obj/effect/turf_decal/stripes/line{dir = 8},/turf/open/floor/plasteel,/area/shuttle/supply)
+"W" = (/obj/effect/decal/cleanable/dirt,/obj/effect/turf_decal/stripes/line{dir = 10},/turf/open/floor/plasteel,/area/shuttle/supply)
+"X" = (/obj/effect/turf_decal/stripes/line{dir = 5},/turf/open/floor/plasteel,/area/shuttle/supply)
+"Z" = (/obj/effect/decal/cleanable/dirt,/obj/effect/turf_decal/stripes/line{dir = 8},/turf/open/floor/plasteel,/area/shuttle/supply)
+
+(1,1,1) = {"
+aaaaaaa
+afGgLXa
+aZuttwa
+iZEtuNm
+mTutuwm
+apuhuqa
+mTutuNx
+yTtuuwm
+aWIooBa
+aAbbvAa
+aaCCCaa
+DJKKKPD
+"}

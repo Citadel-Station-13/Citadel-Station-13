@@ -79,9 +79,9 @@
 			new /obj/item/clothing/neck/necklace/memento_mori(src)
 		if(29)
 			if(prob(50))
-				new /obj/item/malf_upgrade(src)
+				new /obj/item/malf_upgrade
 			else
-				new /obj/item/disk/tech_disk/illegal(src)
+				new /obj/item/disk/tech_disk/illegal
 
 //KA modkit design discs
 /obj/item/disk/design_disk/modkit_disc
