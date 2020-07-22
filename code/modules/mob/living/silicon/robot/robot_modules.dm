@@ -340,7 +340,7 @@
 		/obj/item/organ_storage,
 		/obj/item/borg/lollipop,
 		/obj/item/sensor_device,
-		/obj/item/twohanded/shockpaddles/cyborg)
+		/obj/item/shockpaddles/cyborg)
 	emag_modules = list(/obj/item/reagent_containers/borghypo/hacked)
 	ratvar_modules = list(
 		/obj/item/clockwork/slab/cyborg/medical,
@@ -444,7 +444,7 @@
 		/obj/item/t_scanner,
 		/obj/item/analyzer,
 		/obj/item/storage/part_replacer/cyborg,
-		/obj/item/holosign_creator/atmos,
+		/obj/item/holosign_creator/combifan,
 		/obj/item/weapon/gripper,
 		/obj/item/lightreplacer/cyborg,
 		/obj/item/geiger_counter/cyborg,
@@ -779,9 +779,8 @@
 		/obj/item/toy/crayon/spraycan/borg,
 		/obj/item/hand_labeler/borg,
 		/obj/item/razor,
-		/obj/item/rsf,
-		/obj/item/instrument/violin,
-		/obj/item/instrument/guitar,
+		/obj/item/rsf/cyborg,
+		/obj/item/instrument/piano_synth,
 		/obj/item/reagent_containers/dropper,
 		/obj/item/lighter,
 		/obj/item/storage/bag/tray,
@@ -923,7 +922,7 @@
 		/obj/item/borg/sight/meson,
 		/obj/item/storage/bag/ore/cyborg,
 		/obj/item/pickaxe/drill/cyborg,
-		/obj/item/twohanded/kinetic_crusher/cyborg,
+		/obj/item/kinetic_crusher/cyborg,
 		/obj/item/weldingtool/mini,
 		/obj/item/storage/bag/sheetsnatcher/borg,
 		/obj/item/t_scanner/adv_mining_scanner,
@@ -1043,7 +1042,7 @@
 		/obj/item/extinguisher/mini,
 		/obj/item/crowbar/cyborg,
 		/obj/item/reagent_containers/borghypo/syndicate,
-		/obj/item/twohanded/shockpaddles/syndicate,
+		/obj/item/shockpaddles/syndicate,
 		/obj/item/healthanalyzer/advanced,
 		/obj/item/surgical_drapes/advanced,
 		/obj/item/retractor,

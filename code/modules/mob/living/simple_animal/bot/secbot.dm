@@ -208,7 +208,7 @@ Auto Patrol: []"},
 	return ..()
 
 
-/mob/living/simple_animal/bot/secbot/UnarmedAttack(atom/A)
+/mob/living/simple_animal/bot/secbot/UnarmedAttack(atom/A, proximity, intent = a_intent, flags = NONE)
 	if(!on)
 		return
 	if(iscarbon(A))

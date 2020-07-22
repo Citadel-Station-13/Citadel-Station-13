@@ -595,7 +595,7 @@
 	job_description = "Space Bar Patron"
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
-/obj/effect/mob_spawn/human/alive/space_bar_patron/attack_hand(mob/user)
+/obj/effect/mob_spawn/human/alive/space_bar_patron/attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	var/despawn = alert("Return to cryosleep? (Warning, Your mob will be deleted!)",,"Yes","No")
 	if(despawn == "No" || !loc || !Adjacent(user))
 		return
@@ -661,5 +661,5 @@
 
 /datum/outfit/lavaknight/captain
 	name ="Cydonian Knight Captain"
-	l_pocket = /obj/item/twohanded/dualsaber/hypereutactic
+	l_pocket = /obj/item/dualsaber/hypereutactic
 	id = /obj/item/card/id/knight/captain

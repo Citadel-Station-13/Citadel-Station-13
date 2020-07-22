@@ -430,12 +430,12 @@
 /datum/spellbook_entry/item/mjolnir
 	name = "Mjolnir"
 	desc = "A mighty hammer on loan from Thor, God of Thunder. It crackles with barely contained power."
-	item_path = /obj/item/twohanded/mjollnir
+	item_path = /obj/item/mjollnir
 
 /datum/spellbook_entry/item/singularity_hammer
 	name = "Singularity Hammer"
 	desc = "A hammer that creates an intensely powerful field of gravity where it strikes, pulling everything nearby to the point of impact."
-	item_path = /obj/item/twohanded/singularityhammer
+	item_path = /obj/item/singularityhammer
 
 /datum/spellbook_entry/item/battlemage
 	name = "Battlemage Armour"
@@ -503,6 +503,7 @@
 	name = "Summon Guns"
 	desc = "Nothing could possibly go wrong with arming a crew of lunatics just itching for an excuse to kill you. Just be careful not to stand still too long!"
 	dynamic_requirement = 60
+	limit = 1
 
 /datum/spellbook_entry/summon/guns/IsAvailible()
 	if(!SSticker.mode) // In case spellbook is placed on map
@@ -521,6 +522,7 @@
 	name = "Summon Magic"
 	desc = "Share the wonders of magic with the crew and show them why they aren't to be trusted with it at the same time."
 	dynamic_requirement = 60
+	limit = 1
 
 /datum/spellbook_entry/summon/magic/IsAvailible()
 	if(!SSticker.mode) // In case spellbook is placed on map

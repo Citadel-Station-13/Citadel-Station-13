@@ -101,6 +101,8 @@
 		stack_trace("Warning: [src]([type]) initialized multiple times!")
 	flags_1 |= INITIALIZED_1
 
+	if(loc)
+		SEND_SIGNAL(loc, COMSIG_ATOM_CREATED, src) /// Sends a signal that the new atom `src`, has been created at `loc`
 	//atom color stuff
 	if(color)
 		add_atom_colour(color, FIXED_COLOUR_PRIORITY)
@@ -366,6 +368,20 @@
 
 	SEND_SIGNAL(src, COMSIG_PARENT_EXAMINE, user, .)
 
+/**
+  * Called when a mob examines (shift click or verb) this atom twice (or more) within EXAMINE_MORE_TIME (default 1.5 seconds)
+  *
+  * This is where you can put extra information on something that may be superfluous or not important in critical gameplay
+  * moments, while allowing people to manually double-examine to take a closer look
+  *
+  * Produces a signal [COMSIG_PARENT_EXAMINE_MORE]
+  */
+/atom/proc/examine_more(mob/user)
+	. = list()
+	SEND_SIGNAL(src, COMSIG_PARENT_EXAMINE_MORE, user, .)
+	if(!LAZYLEN(.)) // lol ..length
+		return list("<span class='notice'><i>You examine [src] closer, but find nothing of interest...</i></span>")
+
 /// Updates the icon of the atom
 /atom/proc/update_icon()
 	// I expect we're going to need more return flags and options in this proc
@@ -436,7 +452,7 @@
 	var/blood_id = get_blood_id()
 	if(!(blood_id in GLOB.blood_reagent_types))
 		return
-	return list("color" = list(BLOOD_COLOR_HUMAN), "ANIMAL DNA" = "Y-")
+	return list("color" = BLOOD_COLOR_HUMAN, "ANIMAL DNA" = "Y-")
 
 /mob/living/carbon/get_blood_dna_list()
 	var/blood_id = get_blood_id()
@@ -444,15 +460,15 @@
 		return
 	var/list/blood_dna = list()
 	if(dna)
-		blood_dna["color"] = list(dna.species.exotic_blood_color) //so when combined, the list grows with the number of colors
+		blood_dna["color"] = dna.species.exotic_blood_color //so when combined, the list grows with the number of colors
 		blood_dna[dna.unique_enzymes] = dna.blood_type
 	else
-		blood_dna["color"] = list(BLOOD_COLOR_HUMAN)
+		blood_dna["color"] = BLOOD_COLOR_HUMAN
 		blood_dna["UNKNOWN DNA"] = "X*"
 	return blood_dna
 
 /mob/living/carbon/alien/get_blood_dna_list()
-	return list("color" = list(BLOOD_COLOR_XENO), "UNKNOWN DNA" = "X*")
+	return list("color" = BLOOD_COLOR_XENO, "UNKNOWN DNA" = "X*")
 
 //to add a mob's dna info into an object's blood_DNA list.
 /atom/proc/transfer_mob_blood_dna(mob/living/L)
@@ -461,25 +477,35 @@
 	if(!new_blood_dna)
 		return FALSE
 	LAZYINITLIST(blood_DNA)	//if our list of DNA doesn't exist yet, initialise it.
-	LAZYINITLIST(blood_DNA["color"])
 	var/old_length = blood_DNA.len
 	blood_DNA |= new_blood_dna
-	blood_DNA["color"] += new_blood_dna["color"]
+	var/changed = FALSE
+	if(!blood_DNA["color"])
+		blood_DNA["color"] = new_blood_dna["color"]
+		changed = TRUE
+	else
+		var/old = blood_DNA["color"]
+		blood_DNA["color"] = BlendRGB(blood_DNA["color"], new_blood_dna["color"])
+		changed = old != blood_DNA["color"]
 	if(blood_DNA.len == old_length)
 		return FALSE
-	return TRUE
+	return changed
 
 //to add blood dna info to the object's blood_DNA list
 /atom/proc/transfer_blood_dna(list/blood_dna, list/datum/disease/diseases)
 	LAZYINITLIST(blood_DNA)
-	LAZYINITLIST(blood_dna["color"])
 
 	var/old_length = blood_DNA.len
 	blood_DNA |= blood_dna
 	if(blood_DNA.len > old_length)
-		blood_DNA["color"] += blood_dna["color"]
-		return TRUE
+		. = TRUE
 		//some new blood DNA was added
+		if(!blood_dna["color"])
+			return
+		if(!blood_DNA["color"])
+			blood_DNA["color"] = blood_dna["color"]
+		else
+			blood_DNA["color"] = BlendRGB(blood_DNA["color"], blood_dna["color"])
 
 //to add blood from a mob onto something, and transfer their dna info
 /atom/proc/add_mob_blood(mob/living/M)
@@ -548,27 +574,7 @@
 	return TRUE
 
 /atom/proc/blood_DNA_to_color()
-	var/list/colors = list()//first we make a list of all bloodtypes present
-	for(var/blood_color in blood_DNA["color"])
-		if(colors[blood_color])
-			colors[blood_color]++
-		else
-			colors[blood_color] = 1
-
-	var/final_rgb = BLOOD_COLOR_HUMAN	//a default so we don't have white blood graphics if something messed up
-	if(colors.len)
-		var/sum = 0 //this is all shitcode, but it works; trust me
-		final_rgb = colors[1]
-		sum = colors[colors[1]]
-		if(colors.len > 1)
-			var/i = 2
-			while(i <= colors.len)
-				var/tmp = colors[colors[i]]
-				final_rgb = BlendRGB(final_rgb, colors[i], tmp/(tmp+sum))
-				sum += tmp
-				i++
-
-	return final_rgb
+	return (blood_DNA && blood_DNA["color"]) || BLOOD_COLOR_HUMAN
 
 /atom/proc/clean_blood()
 	. = blood_DNA? TRUE : FALSE
@@ -737,7 +743,7 @@
 		flags_1 |= ADMIN_SPAWNED_1
 	. = ..()
 	switch(var_name)
-		if("color")
+		if(NAMEOF(src, color))
 			add_atom_colour(color, ADMIN_COLOUR_PRIORITY)
 
 /atom/vv_get_dropdown()
@@ -926,6 +932,8 @@
 			log_game(log_text)
 		if(LOG_GAME)
 			log_game(log_text)
+		if(LOG_SHUTTLE)
+			log_shuttle(log_text)
 		else
 			stack_trace("Invalid individual logging type: [message_type]. Defaulting to [LOG_GAME] (LOG_GAME).")
 			log_game(log_text)

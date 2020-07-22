@@ -122,7 +122,7 @@
 	requires_activation = FALSE
 	..()
 
-/turf/attack_hand(mob/user)
+/turf/attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	. = ..()
 	if(.)
 		return
@@ -182,7 +182,7 @@
 	target.zImpact(A, levels, src)
 	return TRUE
 
-/turf/proc/handleRCL(obj/item/twohanded/rcl/C, mob/user)
+/turf/proc/handleRCL(obj/item/rcl/C, mob/user)
 	if(C.loaded)
 		for(var/obj/structure/cable/LC in src)
 			if(!LC.d1 || !LC.d2)
@@ -205,7 +205,7 @@
 		coil.place_turf(src, user)
 		return TRUE
 
-	else if(istype(C, /obj/item/twohanded/rcl))
+	else if(istype(C, /obj/item/rcl))
 		handleRCL(C, user)
 
 	return FALSE
@@ -277,7 +277,7 @@
 /turf/open/Entered(atom/movable/AM)
 	..()
 	//melting
-	if(isobj(AM) && air && air.temperature > T0C)
+	if(isobj(AM) && air && air.return_temperature() > T0C)
 		var/obj/O = AM
 		if(O.obj_flags & FROZEN)
 			O.make_unfrozen()

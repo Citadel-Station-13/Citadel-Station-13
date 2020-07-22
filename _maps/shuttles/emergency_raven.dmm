@@ -1014,7 +1014,7 @@
 /turf/open/floor/plasteel/dark,
 /area/shuttle/escape)
 "bV" = (
-/obj/item/twohanded/required/kirbyplants{
+/obj/item/kirbyplants{
 	icon_state = "plant-22"
 	},
 /obj/effect/turf_decal/tile/green{
@@ -1029,7 +1029,7 @@
 /turf/open/floor/plasteel/dark,
 /area/shuttle/escape)
 "bW" = (
-/obj/item/twohanded/required/kirbyplants{
+/obj/item/kirbyplants{
 	icon_state = "plant-22"
 	},
 /obj/effect/turf_decal/tile/green{
@@ -1094,7 +1094,7 @@
 /turf/open/floor/plasteel/dark,
 /area/shuttle/escape)
 "cd" = (
-/obj/item/twohanded/required/kirbyplants{
+/obj/item/kirbyplants{
 	icon_state = "plant-22"
 	},
 /obj/effect/turf_decal/tile/green{
@@ -1107,7 +1107,7 @@
 /turf/open/floor/plasteel/dark,
 /area/shuttle/escape)
 "ce" = (
-/obj/item/twohanded/required/kirbyplants{
+/obj/item/kirbyplants{
 	icon_state = "plant-22"
 	},
 /obj/effect/turf_decal/tile/green,

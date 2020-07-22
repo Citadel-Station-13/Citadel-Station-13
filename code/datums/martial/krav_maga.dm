@@ -196,9 +196,8 @@
 	var/datum/martial_art/krav_maga/style = new
 
 /obj/item/clothing/gloves/krav_maga/equipped(mob/user, slot)
-	if(!ishuman(user))
-		return
-	if(slot == SLOT_GLOVES)
+	. = ..()
+	if(ishuman(user) && slot == SLOT_GLOVES)
 		var/mob/living/carbon/human/H = user
 		style.teach(H,1)
 

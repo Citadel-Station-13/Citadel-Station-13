@@ -914,7 +914,7 @@
 	floating_need_update = TRUE
 
 /mob/living/proc/get_temperature(datum/gas_mixture/environment)
-	var/loc_temp = environment ? environment.temperature : T0C
+	var/loc_temp = environment ? environment.return_temperature() : T0C
 	if(isobj(loc))
 		var/obj/oloc = loc
 		var/obj_temp = oloc.return_temperature()
@@ -1196,30 +1196,29 @@
 
 /mob/living/vv_edit_var(var_name, var_value)
 	switch(var_name)
-		if ("maxHealth")
+		if (NAMEOF(src, maxHealth))
 			if (!isnum(var_value) || var_value <= 0)
 				return FALSE
-		if("stat")
+		if(NAMEOF(src, stat))
 			if((stat == DEAD) && (var_value < DEAD))//Bringing the dead back to life
 				GLOB.dead_mob_list -= src
 				GLOB.alive_mob_list += src
 			if((stat < DEAD) && (var_value == DEAD))//Kill he
 				GLOB.alive_mob_list -= src
 				GLOB.dead_mob_list += src
+		if(NAMEOF(src, health)) //this doesn't work. gotta use procs instead.
+			return FALSE
 	. = ..()
 	switch(var_name)
-		if("eye_blind")
+		if(NAMEOF(src, eye_blind))
 			set_blindness(var_value)
-		if("eye_damage")
-			var/obj/item/organ/eyes/E = getorganslot(ORGAN_SLOT_EYES)
-			E?.setOrganDamage(var_value)
-		if("eye_blurry")
+		if(NAMEOF(src, eye_blurry))
 			set_blurriness(var_value)
-		if("maxHealth")
+		if(NAMEOF(src, maxHealth))
 			updatehealth()
-		if("resize")
+		if(NAMEOF(src, resize))
 			update_transform()
-		if("lighting_alpha")
+		if(NAMEOF(src, lighting_alpha))
 			sync_lighting_plane_alpha()
 
 /mob/living/proc/do_adrenaline(

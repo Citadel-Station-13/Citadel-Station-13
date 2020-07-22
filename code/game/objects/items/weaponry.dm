@@ -263,7 +263,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 
 /obj/item/wirerod/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/shard))
-		var/obj/item/twohanded/spear/S = new /obj/item/twohanded/spear
+		var/obj/item/spear/S = new /obj/item/spear
 
 		remove_item_from_storage(user)
 		if (!user.transferItemToLoc(I, S))
@@ -475,7 +475,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 
 /obj/item/mounted_chainsaw/Destroy()
 	var/obj/item/bodypart/part
-	new /obj/item/twohanded/required/chainsaw(get_turf(src))
+	new /obj/item/chainsaw(get_turf(src))
 	if(iscarbon(loc))
 		var/mob/living/carbon/holder = loc
 		var/index = holder.get_held_index_of_item(src)
@@ -706,6 +706,92 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	item_flags = DROPDEL | ABSTRACT
 	attack_verb = list("bopped")
 
+/obj/item/circlegame/Initialize()
+	. = ..()
+	var/mob/living/owner = loc
+	if(!istype(owner))
+		return
+	RegisterSignal(owner, COMSIG_PARENT_EXAMINE, .proc/ownerExamined)
+
+/obj/item/circlegame/Destroy()
+	var/mob/owner = loc
+	if(istype(owner))
+		UnregisterSignal(owner, COMSIG_PARENT_EXAMINE)
+	return ..()
+
+/obj/item/circlegame/dropped(mob/user)
+	UnregisterSignal(user, COMSIG_PARENT_EXAMINE)		//loc will have changed by the time this is called, so Destroy() can't catch it
+	// this is a dropdel item.
+	return ..()
+
+/// Stage 1: The mistake is made
+/obj/item/circlegame/proc/ownerExamined(mob/living/owner, mob/living/sucker)
+	if(!istype(sucker) || !in_range(owner, sucker))
+		return
+	addtimer(CALLBACK(src, .proc/waitASecond, owner, sucker), 4)
+
+/// Stage 2: Fear sets in
+/obj/item/circlegame/proc/waitASecond(mob/living/owner, mob/living/sucker)
+	if(QDELETED(sucker) || QDELETED(src) || QDELETED(owner))
+		return
+
+	if(owner == sucker) // big mood
+		to_chat(owner, "<span class='danger'>Wait a second... you just looked at your own [src.name]!</span>")
+		addtimer(CALLBACK(src, .proc/selfGottem, owner), 10)
+	else
+		to_chat(sucker, "<span class='danger'>Wait a second... was that a-</span>")
+		addtimer(CALLBACK(src, .proc/GOTTEM, owner, sucker), 6)
+
+/// Stage 3A: We face our own failures
+/obj/item/circlegame/proc/selfGottem(mob/living/owner)
+	if(QDELETED(src) || QDELETED(owner))
+		return
+
+	playsound(get_turf(owner), 'sound/effects/hit_punch.ogg', 50, TRUE, -1)
+	owner.visible_message("<span class='danger'>[owner] shamefully bops [owner.p_them()]self with [owner.p_their()] [src.name].</span>", "<span class='userdanger'>You shamefully bop yourself with your [src.name].</span>", \
+		"<span class='hear'>You hear a dull thud!</span>")
+	log_combat(owner, owner, "bopped", src.name, "(self)")
+	owner.do_attack_animation(owner)
+	owner.apply_damage(100, STAMINA)
+	owner.Knockdown(10)
+	qdel(src)
+
+/// Stage 3B: We face our reckoning (unless we moved away or they're incapacitated)
+/obj/item/circlegame/proc/GOTTEM(mob/living/owner, mob/living/sucker)
+	if(QDELETED(sucker))
+		return
+
+	if(QDELETED(src) || QDELETED(owner))
+		to_chat(sucker, "<span class='warning'>Nevermind... must've been your imagination...</span>")
+		return
+
+	if(!in_range(owner, sucker) || !(owner.mobility_flags & MOBILITY_USE))
+		to_chat(sucker, "<span class='notice'>Phew... you moved away before [owner] noticed you saw [owner.p_their()] [src.name]...</span>")
+		return
+
+	to_chat(owner, "<span class='warning'>[sucker] looks down at your [src.name] before trying to avert [sucker.p_their()] eyes, but it's too late!</span>")
+	to_chat(sucker, "<span class='danger'><b>[owner] sees the fear in your eyes as you try to look away from [owner.p_their()] [src.name]!</b></span>")
+
+	playsound(get_turf(owner), 'sound/effects/hit_punch.ogg', 50, TRUE, -1)
+	owner.do_attack_animation(sucker)
+
+	if(HAS_TRAIT(owner, TRAIT_HULK))
+		owner.visible_message("<span class='danger'>[owner] bops [sucker] with [owner.p_their()] [src.name] much harder than intended, sending [sucker.p_them()] flying!</span>", \
+			"<span class='danger'>You bop [sucker] with your [src.name] much harder than intended, sending [sucker.p_them()] flying!</span>", "<span class='hear'>You hear a sickening sound of flesh hitting flesh!</span>", ignored_mobs=list(sucker))
+		to_chat(sucker, "<span class='userdanger'>[owner] bops you incredibly hard with [owner.p_their()] [src.name], sending you flying!</span>")
+		sucker.apply_damage(50, STAMINA)
+		sucker.Knockdown(50)
+		log_combat(owner, sucker, "bopped", src.name, "(setup- Hulk)")
+		var/atom/throw_target = get_edge_target_turf(sucker, owner.dir)
+		sucker.throw_at(throw_target, 6, 3, owner)
+	else
+		owner.visible_message("<span class='danger'>[owner] bops [sucker] with [owner.p_their()] [src.name]!</span>", "<span class='danger'>You bop [sucker] with your [src.name]!</span>", \
+			"<span class='hear'>You hear a dull thud!</span>", ignored_mobs=list(sucker))
+		sucker.apply_damage(15, STAMINA)
+		log_combat(owner, sucker, "bopped", src.name, "(setup)")
+		to_chat(sucker, "<span class='userdanger'>[owner] bops you with [owner.p_their()] [src.name]!</span>")
+	qdel(src)
+
 /obj/item/slapper
 	name = "slapper"
 	desc = "This is how real men fight."
@@ -759,3 +845,59 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 		to_chat(user, "<span class='warning'>[M] is too close to use [src] on.</span>")
 		return
 	M.attack_hand(user)
+
+//HF blade
+
+/obj/item/vibro_weapon
+	icon_state = "hfrequency0"
+	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
+	name = "vibro sword"
+	desc = "A potent weapon capable of cutting through nearly anything. Wielding it in two hands will allow you to deflect gunfire."
+	armour_penetration = 100
+	block_chance = 40
+	throwforce = 20
+	throw_speed = 4
+	sharpness = IS_SHARP
+	attack_verb = list("cut", "sliced", "diced")
+	w_class = WEIGHT_CLASS_BULKY
+	slot_flags = ITEM_SLOT_BACK
+	hitsound = 'sound/weapons/bladeslice.ogg'
+	var/wielded = FALSE // track wielded status on item
+
+/obj/item/vibro_weapon/Initialize()
+	. = ..()
+	RegisterSignal(src, COMSIG_TWOHANDED_WIELD, .proc/on_wield)
+	RegisterSignal(src, COMSIG_TWOHANDED_UNWIELD, .proc/on_unwield)
+
+/obj/item/vibro_weapon/ComponentInitialize()
+	. = ..()
+	AddComponent(/datum/component/butchering, 20, 105)
+	AddComponent(/datum/component/two_handed, force_multiplier=2, icon_wielded="hfrequency1")
+	AddElement(/datum/element/sword_point)
+
+/// triggered on wield of two handed item
+/obj/item/vibro_weapon/proc/on_wield(obj/item/source, mob/user)
+	wielded = TRUE
+
+/// triggered on unwield of two handed item
+/obj/item/vibro_weapon/proc/on_unwield(obj/item/source, mob/user)
+	wielded = FALSE
+
+/obj/item/vibro_weapon/update_icon_state()
+	icon_state = "hfrequency0"
+
+/obj/item/vibro_weapon/run_block(mob/living/owner, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return)
+	if(wielded)
+		final_block_chance *= 2
+	if(wielded || !(attack_type & ATTACK_TYPE_PROJECTILE))
+		if(prob(final_block_chance))
+			if(attack_type & ATTACK_TYPE_PROJECTILE)
+				owner.visible_message("<span class='danger'>[owner] deflects [attack_text] with [src]!</span>")
+				playsound(src, pick('sound/weapons/bulletflyby.ogg', 'sound/weapons/bulletflyby2.ogg', 'sound/weapons/bulletflyby3.ogg'), 75, 1)
+				block_return[BLOCK_RETURN_REDIRECT_METHOD] = REDIRECT_METHOD_DEFLECT
+				return BLOCK_SUCCESS | BLOCK_REDIRECTED | BLOCK_SHOULD_REDIRECT | BLOCK_PHYSICAL_EXTERNAL
+			else
+				owner.visible_message("<span class='danger'>[owner] parries [attack_text] with [src]!</span>")
+				return BLOCK_SUCCESS | BLOCK_PHYSICAL_EXTERNAL
+	return NONE

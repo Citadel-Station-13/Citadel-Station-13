@@ -80,6 +80,7 @@ window "mainwindow"
 		anchor2 = none
 		background-color = #272727
 		is-visible = false
+		auto-format = false
 		saved-params = ""
 	elem "tooltip"
 		type = BROWSER

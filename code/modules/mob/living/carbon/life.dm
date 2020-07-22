@@ -1,4 +1,6 @@
 /mob/living/carbon/BiologicalLife(seconds, times_fired)
+	//Updates the number of stored chemicals for powers
+	handle_changeling()
 	//Reagent processing needs to come before breathing, to prevent edge cases.
 	handle_organs()
 	. = ..()		// if . is false, we are dead.
@@ -25,8 +27,6 @@
 	if(stat != DEAD)
 		handle_liver()
 
-	//Updates the number of stored chemicals for powers
-	handle_changeling()
 
 /mob/living/carbon/PhysicalLife(seconds, times_fired)
 	if(!(. = ..()))
@@ -162,12 +162,11 @@
 	var/SA_para_min = 1
 	var/SA_sleep_min = 5
 	var/oxygen_used = 0
-	var/breath_pressure = (breath.total_moles()*R_IDEAL_GAS_EQUATION*breath.temperature)/BREATH_VOLUME
+	var/breath_pressure = (breath.total_moles()*R_IDEAL_GAS_EQUATION*breath.return_temperature())/BREATH_VOLUME
 
-	var/list/breath_gases = breath.gases
-	var/O2_partialpressure = (breath_gases[/datum/gas/oxygen]/breath.total_moles())*breath_pressure
-	var/Toxins_partialpressure = (breath_gases[/datum/gas/plasma]/breath.total_moles())*breath_pressure
-	var/CO2_partialpressure = (breath_gases[/datum/gas/carbon_dioxide]/breath.total_moles())*breath_pressure
+	var/O2_partialpressure = (breath.get_moles(/datum/gas/oxygen)/breath.total_moles())*breath_pressure
+	var/Toxins_partialpressure = (breath.get_moles(/datum/gas/plasma)/breath.total_moles())*breath_pressure
+	var/CO2_partialpressure = (breath.get_moles(/datum/gas/carbon_dioxide)/breath.total_moles())*breath_pressure
 
 
 	//OXYGEN
@@ -191,7 +190,7 @@
 			var/ratio = 1 - O2_partialpressure/safe_oxy_min
 			adjustOxyLoss(min(5*ratio, 3))
 			failed_last_breath = 1
-			oxygen_used = breath_gases[/datum/gas/oxygen]*ratio
+			oxygen_used = breath.get_moles(/datum/gas/oxygen)*ratio
 		else
 			adjustOxyLoss(3)
 			failed_last_breath = 1
@@ -203,12 +202,12 @@
 		o2overloadtime = 0 //reset our counter for this too
 		if(health >= crit_threshold)
 			adjustOxyLoss(-5)
-		oxygen_used = breath_gases[/datum/gas/oxygen]
+		oxygen_used = breath.get_moles(/datum/gas/oxygen)
 		clear_alert("not_enough_oxy")
 		SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "suffocation")
 
-	breath_gases[/datum/gas/oxygen] -= oxygen_used
-	breath_gases[/datum/gas/carbon_dioxide] += oxygen_used
+	breath.adjust_moles(/datum/gas/oxygen, -oxygen_used)
+	breath.adjust_moles(/datum/gas/carbon_dioxide, oxygen_used)
 
 	//CARBON DIOXIDE
 	if(CO2_partialpressure > safe_co2_max)
@@ -227,15 +226,15 @@
 
 	//TOXINS/PLASMA
 	if(Toxins_partialpressure > safe_tox_max)
-		var/ratio = (breath_gases[/datum/gas/plasma]/safe_tox_max) * 10
+		var/ratio = (breath.get_moles(/datum/gas/plasma)/safe_tox_max) * 10
 		adjustToxLoss(clamp(ratio, MIN_TOXIC_GAS_DAMAGE, MAX_TOXIC_GAS_DAMAGE))
 		throw_alert("too_much_tox", /obj/screen/alert/too_much_tox)
 	else
 		clear_alert("too_much_tox")
 
 	//NITROUS OXIDE
-	if(breath_gases[/datum/gas/nitrous_oxide])
-		var/SA_partialpressure = (breath_gases[/datum/gas/nitrous_oxide]/breath.total_moles())*breath_pressure
+	if(breath.get_moles(/datum/gas/nitrous_oxide))
+		var/SA_partialpressure = (breath.get_moles(/datum/gas/nitrous_oxide)/breath.total_moles())*breath_pressure
 		if(SA_partialpressure > SA_para_min)
 			Unconscious(60)
 			if(SA_partialpressure > SA_sleep_min)
@@ -248,26 +247,26 @@
 		SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "chemical_euphoria")
 
 	//BZ (Facepunch port of their Agent B)
-	if(breath_gases[/datum/gas/bz])
-		var/bz_partialpressure = (breath_gases[/datum/gas/bz]/breath.total_moles())*breath_pressure
+	if(breath.get_moles(/datum/gas/bz))
+		var/bz_partialpressure = (breath.get_moles(/datum/gas/bz)/breath.total_moles())*breath_pressure
 		if(bz_partialpressure > 1)
 			hallucination += 10
 		else if(bz_partialpressure > 0.01)
 			hallucination += 5
 
 	//TRITIUM
-	if(breath_gases[/datum/gas/tritium])
-		var/tritium_partialpressure = (breath_gases[/datum/gas/tritium]/breath.total_moles())*breath_pressure
+	if(breath.get_moles(/datum/gas/tritium))
+		var/tritium_partialpressure = (breath.get_moles(/datum/gas/tritium)/breath.total_moles())*breath_pressure
 		radiation += tritium_partialpressure/10
 
 	//NITRYL
-	if(breath_gases[/datum/gas/nitryl])
-		var/nitryl_partialpressure = (breath_gases[/datum/gas/nitryl]/breath.total_moles())*breath_pressure
+	if(breath.get_moles(/datum/gas/nitryl))
+		var/nitryl_partialpressure = (breath.get_moles(/datum/gas/nitryl)/breath.total_moles())*breath_pressure
 		adjustFireLoss(nitryl_partialpressure/4)
 
 	//MIASMA
-	if(breath_gases[/datum/gas/miasma])
-		var/miasma_partialpressure = (breath_gases[/datum/gas/miasma]/breath.total_moles())*breath_pressure
+	if(breath.get_moles(/datum/gas/miasma))
+		var/miasma_partialpressure = (breath.get_moles(/datum/gas/miasma)/breath.total_moles())*breath_pressure
 		if(miasma_partialpressure > MINIMUM_MOLES_DELTA_TO_MOVE)
 
 			if(prob(0.05 * miasma_partialpressure))
@@ -306,11 +305,6 @@
 	//Clear all moods if no miasma at all
 	else
 		SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "smell")
-
-
-
-
-	GAS_GARBAGE_COLLECT(breath.gases)
 
 	//BREATH TEMPERATURE
 	handle_breath_temperature(breath)
@@ -370,9 +364,9 @@
 
 	var/datum/gas_mixture/stank = new
 
-	stank.gases[/datum/gas/miasma] = 0.1
+	stank.set_moles(/datum/gas/miasma,0.1)
 
-	stank.temperature = BODYTEMP_NORMAL
+	stank.set_temperature(BODYTEMP_NORMAL)
 
 	miasma_turf.assume_air(stank)
 
@@ -517,7 +511,7 @@ GLOBAL_LIST_INIT(ballmer_windows_me_msg, list("Yo man, what if, we like, uh, put
 /mob/living/carbon/handle_status_effects()
 	..()
 	if(getStaminaLoss() && !SEND_SIGNAL(src, COMSIG_COMBAT_MODE_CHECK, COMBAT_MODE_ACTIVE))		//CIT CHANGE - prevents stamina regen while combat mode is active
-		adjustStaminaLoss(!CHECK_MOBILITY(src, MOBILITY_STAND) ? ((combat_flags & COMBAT_FLAG_HARD_STAMCRIT) ? -7.5 : -6) : -3)//CIT CHANGE - decreases adjuststaminaloss to stop stamina damage from being such a joke
+		adjustStaminaLoss(!CHECK_MOBILITY(src, MOBILITY_STAND) ? ((combat_flags & COMBAT_FLAG_HARD_STAMCRIT) ? STAM_RECOVERY_STAM_CRIT : STAM_RECOVERY_RESTING) : STAM_RECOVERY_NORMAL)
 
 	if(!(combat_flags & COMBAT_FLAG_HARD_STAMCRIT) && incomingstammult != 1)
 		incomingstammult = max(0.01, incomingstammult)
