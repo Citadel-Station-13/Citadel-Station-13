@@ -36,7 +36,7 @@
 	. = ..()
 	if(!.)
 		return
-	var/datum/antagonist/changeling/changeling = user.mind.has_antag_datum(/datum/antagonist_changeling)
+	var/datum/antagonist/changeling/changeling = user.mind.has_antag_datum(/datum/antagonist/changeling)
 	if(!changeling)
 		return FALSE
 	if(changeling.hostile_absorbed || ((user.stat != DEAD) && !(HAS_TRAIT(user, TRAIT_DEATHCOMA))))
