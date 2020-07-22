@@ -134,22 +134,18 @@ GLOBAL_LIST_EMPTY(uplinks)
 	// an unlocked uplink blocks also opening the PDA or headset menu
 	return COMPONENT_NO_INTERACT
 
-/datum/component/uplink/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
-									datum/tgui/master_ui = null, datum/ui_state/state = GLOB.inventory_state)
+/datum/component/uplink/ui_state(mob/user)
+	return GLOB.inventory_state
+
+/datum/component/uplink/ui_interact(mob/user, datum/tgui/ui)
 	active = TRUE
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, ui_key, "Uplink", name, 620, 580, master_ui, state)
+		ui = new(user, src, "Uplink", name)
 		// This UI is only ever opened by one person,
 		// and never is updated outside of user input.
 		ui.set_autoupdate(FALSE)
 		ui.open()
-
-/datum/component/uplink/ui_host(mob/user)
-	if(istype(parent, /obj/item/implant)) //implants are like organs, not really located inside mobs codewise.
-		var/obj/item/implant/I = parent
-		return I.imp_in
-	return ..()
 
 /datum/component/uplink/ui_data(mob/user)
 	if(!user.mind)
@@ -178,6 +174,14 @@ GLOBAL_LIST_EMPTY(uplinks)
 						is_inaccessible = FALSE
 				if(is_inaccessible)
 					continue
+			if(I.restricted_species) //catpeople specfic gloves.
+				if(ishuman(user))
+					var/is_inaccessible = TRUE
+					var/mob/living/carbon/human/H = user
+					for(var/F in I.restricted_species)
+						if(F == H.dna.species.id || debug)
+							is_inaccessible = FALSE
+							break
 					if(is_inaccessible)
 						continue
 			cat["items"] += list(list(
