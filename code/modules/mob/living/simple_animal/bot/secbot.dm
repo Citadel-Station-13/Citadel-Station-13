@@ -33,7 +33,7 @@
 	var/check_records = TRUE //Does it check security records?
 	var/arrest_type = FALSE //If true, don't handcuff
 
-	var/obj/item/clothing/head/bot_hat
+	var/obj/item/clothing/head/bot_accessory
 	var/datum/beepsky_fashion/stored_fashion
 
 	//emotes (BOT is replaced with bot name, CRIMINAL with criminal name, THREAT_LEVEL with threat level)
@@ -226,9 +226,9 @@ Auto Patrol: []"},
 		retaliate(H)
 		if(special_retaliate_after_attack(H))
 			return
-	if(H.a_intent == INTENT_HELP && bot_hat)
-		to_chat(H, "<span class='warning'>You knock [bot_hat] off of [src]'s head!</span>")
-		bot_hat.forceMove(get_turf(src))
+	if(H.a_intent == INTENT_HELP && bot_accessory)
+		to_chat(H, "<span class='warning'>You knock [bot_accessory] off of [src]'s head!</span>")
+		bot_accessory.forceMove(get_turf(src))
 		//reset all emotes/sounds
 		death_emote = initial(death_emote)
 		capture_one = initial(capture_one)
@@ -240,7 +240,7 @@ Auto Patrol: []"},
 		arrest_texts = initial(arrest_texts)
 		arrest_emote = initial(arrest_emote)
 		patrol_emote = initial(patrol_emote)
-		bot_hat = null
+		bot_accessory = null
 		qdel(stored_fashion)
 		return
 
@@ -250,7 +250,7 @@ Auto Patrol: []"},
 	..()
 	if(istype(W, /obj/item/weldingtool) && user.a_intent != INTENT_HARM) // Any intent but harm will heal, so we shouldn't get angry.
 		return
-	if(istype(W, /obj/item/clothing/head))
+	if(istype(W, /obj/item/clothing/head) || istype(W, /obj/item/clothing/mask))
 		attempt_place_on_head(user, W)
 		return
 	if(!istype(W, /obj/item/screwdriver) && (W.force) && (!target) && (W.damtype != STAMINA) ) // Added check for welding tool to fix #2432. Welding tool behavior is handled in superclass.
@@ -258,39 +258,43 @@ Auto Patrol: []"},
 		if(special_retaliate_after_attack(user))
 			return
 
-/mob/living/simple_animal/bot/secbot/proc/attempt_place_on_head(mob/user, obj/item/clothing/head/H)
+/mob/living/simple_animal/bot/secbot/proc/attempt_place_on_head(mob/user, obj/item/I)
 	if(user && !user.temporarilyRemoveItemFromInventory(H))
 		to_chat(user, "<span class='warning'>\The [H] is stuck to your hand, you cannot put it on [src]'s head!</span>")
 		return
-	if(bot_hat)
-		to_chat("<span class='warning'>\[src] already has a hat, and the laws of physics disallow him from wearing a second!</span>")
-	if(H.beepsky_fashion)
-		to_chat(user, "<span class='warning'>You set [H] on [src]'s head.</span>")
-		bot_hat = H
+	if(bot_accessory)
+		to_chat("<span class='warning'>\[src] already has an accessory, and the laws of physics disallow him from wearing a second!</span>")
+		return
+	if(istype(I, /obj/item/clothing/head)
+		var/obj/item/clothing/head/H = I
+		if(H.beepsky_fashion)
+			stored_fashion = new H.beepsky_fashion
+	else
+		//it must be a mask
+		var/obj/item/clothing/mask/M = I
+			if(M.beepsky_fashion)
+				stored_fashion = new M.beepsky_fashion
+	if(stored_fashion)
+		to_chat(user, "<span class='warning'>You set [I] on [src].</span>")
+		bot_accessory = H
 		H.forceMove(src)
-		update_beepsky_fluff()
+		stored_fashion.apply(src)
 		regenerate_icons()
 	else
 		to_chat(user, "<span class='warning'>You set [H] on [src]'s head, but it falls off!</span>")
 		H.forceMove(drop_location())
 
-/mob/living/simple_animal/bot/secbot/proc/update_beepsky_fluff()
-	var/datum/beepsky_fashion/BF = new bot_hat.beepsky_fashion
-	stored_fashion = BF
-	if(BF)
-		BF.apply(src)
-
 /mob/living/simple_animal/bot/secbot/regenerate_icons()
 	..()
-	if(bot_hat)
+	if(bot_accessory)
 		if(!stored_fashion)
-			stored_fashion = new bot_hat.beepsky_fashion
+			stored_fashion = new bot_accessory.beepsky_fashion
 		if(!stored_fashion.obj_icon_state)
-			stored_fashion.obj_icon_state = bot_hat.icon_state
+			stored_fashion.obj_icon_state = bot_accessory.icon_state
 		if(!stored_fashion.obj_alpha)
-			stored_fashion.obj_alpha = bot_hat.alpha
+			stored_fashion.obj_alpha = bot_accessory.alpha
 		if(!stored_fashion.obj_color)
-			stored_fashion.obj_color = bot_hat.color
+			stored_fashion.obj_color = bot_accessory.color
 		add_overlay(stored_fashion.get_overlay())
 
 /mob/living/simple_animal/bot/secbot/emag_act(mob/user)

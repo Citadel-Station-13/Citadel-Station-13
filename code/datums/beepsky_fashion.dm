@@ -3,7 +3,7 @@
 	var/name //not setting the name and desc makes them go to the default
 	var/desc
 
-	var/icon_file = 'icons/mob/secbot_head.dmi'
+	var/icon_file = 'icons/mob/secbot_accessories.dmi' //we sell secbots and secbot accessories
 	var/obj_icon_state
 	var/obj_alpha
 	var/obj_color
@@ -246,3 +246,15 @@
 	obj_icon_state = "sombrero"
 	name = "Sombrerosky"
 	desc = "A secbot wearing a sombrero. Truly, a hombre to all."
+
+/datum/beepsky_fashion/santa
+	obj_icon_state = "santa"
+	name = "Saint Beepsky"
+	desc = "Have you been a level 7 infraction this holiday season?"
+	capture_one = "BOT is tying CRIMINAL up with fairy lights!"
+	capture_two = "BOT is tying you up with fairy lights!"
+	infraction = "Level THREAT_LEVEL threat to holiday cheer spotted!"
+	attack_one = "BOT crushes CRIMINAL with their holiday spirit!"
+	attack_two = "BOT crushes you with their holiday spirit!"
+	arrest_emote = "ARREST_TYPE level THREAT_LEVEL threat to holiday cheer in LOCATION"
+
