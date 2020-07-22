@@ -260,6 +260,7 @@
 	min_cold_protection_temperature = FIRE_HELM_MIN_TEMP_PROTECT
 
 	dog_fashion = /datum/dog_fashion/head/santa
+	beepsky_fashion = /datum/beepsky_fashion/santa
 
 /obj/item/clothing/head/jester
 	name = "jester hat"
