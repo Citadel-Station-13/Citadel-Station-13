@@ -512,6 +512,10 @@
 		/obj/item/stack/sheet/glass = 1)
 	needs_anchored = FALSE
 
+/obj/item/circuitboard/machine/hydroponics/automagic
+	name = "Automatic Hydroponics Tray (Machine Board)"
+	build_path = /obj/machinery/hydroponics/constructable/automagic
+
 /obj/item/circuitboard/machine/seed_extractor
 	name = "Seed Extractor (Machine Board)"
 	build_path = /obj/machinery/seed_extractor

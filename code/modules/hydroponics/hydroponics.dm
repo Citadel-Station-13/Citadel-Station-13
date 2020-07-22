@@ -30,7 +30,7 @@
 	var/self_sufficiency_req = 20 //Required total dose to make a self-sufficient hydro tray. 1:1 with earthsblood.
 	var/self_sufficiency_progress = 0
 	var/self_sustaining = FALSE //If the tray generates nutrients and water on its own
-
+	var/canirrigate = TRUE //tin
 
 /obj/machinery/hydroponics/constructable
 	name = "hydroponics tray"
@@ -847,12 +847,13 @@
 		if (!anchored)
 			to_chat(user, "<span class='warning'>Anchor the tray first!</span>")
 			return
-		using_irrigation = !using_irrigation
-		O.play_tool_sound(src)
-		user.visible_message("<span class='notice'>[user] [using_irrigation ? "" : "dis"]connects [src]'s irrigation hoses.</span>", \
-		"<span class='notice'>You [using_irrigation ? "" : "dis"]connect [src]'s irrigation hoses.</span>")
-		for(var/obj/machinery/hydroponics/h in range(1,src))
-			h.update_icon()
+		if(canirrigate)
+			using_irrigation = !using_irrigation
+			O.play_tool_sound(src)
+			user.visible_message("<span class='notice'>[user] [using_irrigation ? "" : "dis"]connects [src]'s irrigation hoses.</span>", \
+			"<span class='notice'>You [using_irrigation ? "" : "dis"]connect [src]'s irrigation hoses.</span>")
+			for(var/obj/machinery/hydroponics/h in range(1,src))
+				h.update_icon()
 
 	else if(istype(O, /obj/item/shovel/spade))
 		if(!myseed && !weedlevel)

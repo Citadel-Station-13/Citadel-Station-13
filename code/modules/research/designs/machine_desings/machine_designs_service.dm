@@ -81,6 +81,14 @@
 	category = list ("Hydroponics Machinery")
 	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
 
+/datum/design/board/hydroponics/auto
+	name = "Machine Design (Automatic Hydroponics Tray Board)"
+	desc = "The circuit board for an automatic hydroponics tray. GIVE ME THE PLANT, CAPTAIN."
+	id = "autohydrotray"
+	build_path = /obj/machinery/hydroponics/constructable/automagic
+	category = list ("Hydroponics Machinery")
+	departmental_flags = DEPARTMENTAL_FLAG_SERVICE | DEPARTMENTAL_FLAG_MEDICAL
+
 /datum/design/board/monkey_recycler
 	name = "Machine Design (Monkey Recycler Board)"
 	desc = "The circuit board for a monkey recycler."

@@ -38,7 +38,7 @@
 	display_name = "Advanced Plumbing Technology"
 	description = "Plumbing RCD."
 	prereq_ids = list("plumbing", "adv_engi", "adv_biotech")
-	design_ids = list("plumb_rcd")
+	design_ids = list("plumb_rcd", "autohydrotray")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 10000)
 
 //////////////////////Cybernetics/////////////////////
