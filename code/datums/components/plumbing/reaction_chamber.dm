@@ -32,7 +32,6 @@
 
 	RC.reagent_flags &= ~NO_REACT
 	reagents.handle_reactions()
-	Add when everything works:
 	if(reagents.fermiIsReacting)
 		return
 	RC.emptying = TRUE
