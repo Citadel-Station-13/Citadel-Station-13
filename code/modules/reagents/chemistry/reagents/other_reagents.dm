@@ -263,7 +263,7 @@
 	if(hotspot && !isspaceturf(T))
 		if(T.air)
 			var/datum/gas_mixture/G = T.air
-			G.temperature = max(min(G.temperature-(CT*1000),G.temperature/CT),TCMB)
+			G.set_temperature(max(min(G.return_temperature()-(CT*1000),G.return_temperature()/CT),TCMB))
 			G.react(src)
 			qdel(hotspot)
 	var/obj/effect/acid/A = (locate(/obj/effect/acid) in T)
@@ -1153,6 +1153,13 @@
 
 /mob/living/proc/bluespace_shuffle()
 	do_teleport(src, get_turf(src), 5, asoundin = 'sound/effects/phasein.ogg', channel = TELEPORT_CHANNEL_BLUESPACE)
+
+/datum/reagent/telecrystal
+	name = "Telecrystal Dust"
+	description = "A blood-red dust comprised of something that was much more useful when it was intact."
+	reagent_state = SOLID
+	color = "#660000" // rgb: 102, 0, 0.
+	taste_description = "contraband"
 
 /datum/reagent/aluminium
 	name = "Aluminium"
@@ -2289,3 +2296,9 @@
 	if(data["blood_DNA"])
 		S.add_blood_DNA(list(data["blood_DNA"] = data["blood_type"]))
 
+/datum/reagent/cellulose
+	name = "Cellulose Fibers"
+	description = "A crystaline polydextrose polymer, plants swear by this stuff."
+	reagent_state = SOLID
+	color = "#E6E6DA"
+	taste_mult = 0

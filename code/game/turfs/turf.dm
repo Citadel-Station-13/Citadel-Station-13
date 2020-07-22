@@ -122,7 +122,7 @@
 	requires_activation = FALSE
 	..()
 
-/turf/attack_hand(mob/user)
+/turf/attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	. = ..()
 	if(.)
 		return
@@ -277,7 +277,7 @@
 /turf/open/Entered(atom/movable/AM)
 	..()
 	//melting
-	if(isobj(AM) && air && air.temperature > T0C)
+	if(isobj(AM) && air && air.return_temperature() > T0C)
 		var/obj/O = AM
 		if(O.obj_flags & FROZEN)
 			O.make_unfrozen()

@@ -314,6 +314,13 @@ GLOBAL_LIST_EMPTY(family_heirlooms)
 	medical_record_text = "Patient is usually anxious in social encounters and prefers to avoid them."
 	var/dumb_thing = TRUE
 
+/datum/quirk/social_anxiety/add()
+	RegisterSignal(quirk_holder, COMSIG_MOB_EYECONTACT, .proc/eye_contact)
+	RegisterSignal(quirk_holder, COMSIG_MOB_EXAMINATE, .proc/looks_at_floor)
+
+/datum/quirk/social_anxiety/remove()
+	UnregisterSignal(quirk_holder, list(COMSIG_MOB_EYECONTACT, COMSIG_MOB_EXAMINATE))
+
 /datum/quirk/social_anxiety/on_process()
 	var/nearby_people = 0
 	for(var/mob/living/carbon/human/H in oview(3, quirk_holder))
@@ -330,6 +337,45 @@ GLOBAL_LIST_EMPTY(family_heirlooms)
 		dumb_thing = FALSE //only once per life
 		if(prob(1))
 			new/obj/item/reagent_containers/food/snacks/pastatomato(get_turf(H)) //now that's what I call spaghetti code
+// small chance to make eye contact with inanimate objects/mindless mobs because of nerves
+
+
+
+/datum/quirk/social_anxiety/proc/looks_at_floor(datum/source, atom/A)
+	var/mob/living/mind_check = A
+	if(prob(85) || (istype(mind_check) && mind_check.mind))
+		return
+
+	addtimer(CALLBACK(GLOBAL_PROC, .proc/to_chat, quirk_holder, "<span class='smallnotice'>You make eye contact with [A].</span>"), 3)
+
+/datum/quirk/social_anxiety/proc/eye_contact(datum/source, mob/living/other_mob, triggering_examiner)
+	if(prob(75))
+		return
+	var/msg
+	if(triggering_examiner)
+		msg = "You make eye contact with [other_mob], "
+	else
+		msg = "[other_mob] makes eye contact with you, "
+
+	switch(rand(1,3))
+		if(1)
+			quirk_holder.Jitter(10)
+			msg += "causing you to start fidgeting!"
+		if(2)
+			quirk_holder.stuttering = max(3, quirk_holder.stuttering)
+			msg += "causing you to start stuttering!"
+		if(3)
+			quirk_holder.Stun(2 SECONDS)
+			msg += "causing you to freeze up!"
+
+	SEND_SIGNAL(quirk_holder, COMSIG_ADD_MOOD_EVENT, "anxiety_eyecontact", /datum/mood_event/anxiety_eyecontact)
+	addtimer(CALLBACK(GLOBAL_PROC, .proc/to_chat, quirk_holder, "<span class='userdanger'>[msg]</span>"), 3) // so the examine signal has time to fire and this will print after
+	return COMSIG_BLOCK_EYECONTACT
+
+/datum/mood_event/anxiety_eyecontact
+	description = "<span class='warning'>Sometimes eye contact makes me so nervous...</span>\n"
+	mood_change = -5
+	timeout = 3 MINUTES
 
 /datum/quirk/phobia
 	name = "Phobia"
@@ -406,3 +452,21 @@ GLOBAL_LIST_EMPTY(family_heirlooms)
 	mob_trait = TRAIT_COLDBLOODED
 	gain_text = "<span class='notice'>You feel cold-blooded.</span>"
 	lose_text = "<span class='notice'>You feel more warm-blooded.</span>"
+	
+	/datum/quirk/monophobia
+	name = "Monophobia"
+	desc = "You will become increasingly stressed when not in company of others, triggering panic reactions ranging from sickness to heart attacks."
+	value = -3 // Might change it to 4.
+	gain_text = "<span class='danger'>You feel really lonely...</span>"
+	lose_text = "<span class='notice'>You feel like you could be safe on your own.</span>"
+	medical_record_text = "Patient feels sick and distressed when not around other people, leading to potentially lethal levels of stress."
+
+/datum/quirk/monophobia/post_add()
+	. = ..()
+	var/mob/living/carbon/human/H = quirk_holder
+	H.gain_trauma(/datum/brain_trauma/severe/monophobia, TRAUMA_RESILIENCE_ABSOLUTE)
+
+/datum/quirk/monophobia/remove()
+	. = ..()
+	var/mob/living/carbon/human/H = quirk_holder
+	H?.cure_trauma_type(/datum/brain_trauma/severe/monophobia, TRAUMA_RESILIENCE_ABSOLUTE)

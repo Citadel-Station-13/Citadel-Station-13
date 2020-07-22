@@ -382,7 +382,9 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 		//keep it at the right spot, so we can't have people taking shortcuts
 		var/location = C.dna.mutation_index.Find(inert_mutation)
 		C.dna.mutation_index[location] = new_species.inert_mutation
+		C.dna.default_mutation_genes[location] = C.dna.mutation_index[location]
 		C.dna.mutation_index[new_species.inert_mutation] = create_sequence(new_species.inert_mutation)
+		C.dna.default_mutation_genes[new_species.inert_mutation] = C.dna.mutation_index[new_species.inert_mutation]
 
 	if(!new_species.has_field_of_vision && has_field_of_vision && ishuman(C) && CONFIG_GET(flag/use_field_of_vision))
 		var/datum/component/field_of_vision/F = C.GetComponent(/datum/component/field_of_vision)
@@ -1444,7 +1446,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 		target.grabbedby(user)
 		return 1
 
-/datum/species/proc/harm(mob/living/carbon/human/user, mob/living/carbon/human/target, datum/martial_art/attacker_style)
+/datum/species/proc/harm(mob/living/carbon/human/user, mob/living/carbon/human/target, datum/martial_art/attacker_style, unarmed_attack_flags = NONE)
 	if(!attacker_style && HAS_TRAIT(user, TRAIT_PACIFISM))
 		to_chat(user, "<span class='warning'>You don't want to harm [target]!</span>")
 		return FALSE
@@ -1456,10 +1458,11 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 			target_message = "<span class='warning'>[target] blocks your attack!</span>")
 		return FALSE
 
-	if(HAS_TRAIT(user, TRAIT_PUGILIST))//CITADEL CHANGE - makes punching cause staminaloss but funny martial artist types get a discount
-		user.adjustStaminaLossBuffered(1.5)
-	else
-		user.adjustStaminaLossBuffered(3.5)
+	if(!(unarmed_attack_flags & UNARMED_ATTACK_PARRY))
+		if(HAS_TRAIT(user, TRAIT_PUGILIST))//CITADEL CHANGE - makes punching cause staminaloss but funny martial artist types get a discount
+			user.adjustStaminaLossBuffered(1.5)
+		else
+			user.adjustStaminaLossBuffered(3.5)
 
 	if(attacker_style && attacker_style.harm_act(user,target))
 		return TRUE
@@ -1497,13 +1500,16 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 		var/obj/item/bodypart/affecting = target.get_bodypart(ran_zone(user.zone_selected))
 
 		var/miss_chance = 100//calculate the odds that a punch misses entirely. considers stamina and brute damage of the puncher. punches miss by default to prevent weird cases
-		if(user.dna.species.punchdamagelow)
-			if(atk_verb == ATTACK_EFFECT_KICK) //kicks never miss (provided your species deals more than 0 damage)
-				miss_chance = 0
-			else if(HAS_TRAIT(user, TRAIT_PUGILIST)) //pugilists have a flat 10% miss chance
-				miss_chance = 10
-			else
-				miss_chance = min(10 + max(puncherstam * 0.5, puncherbrute * 0.5), 100) //probability of miss has a base of 10, and modified based on half brute total. Capped at max 100 to prevent weirdness in prob()
+		if(unarmed_attack_flags & UNARMED_ATTACK_PARRY)
+			miss_chance = 0
+		else
+			if(user.dna.species.punchdamagelow)
+				if(atk_verb == ATTACK_EFFECT_KICK) //kicks never miss (provided your species deals more than 0 damage)
+					miss_chance = 0
+				else if(HAS_TRAIT(user, TRAIT_PUGILIST)) //pugilists have a flat 10% miss chance
+					miss_chance = 10
+				else
+					miss_chance = min(10 + max(puncherstam * 0.5, puncherbrute * 0.5), 100) //probability of miss has a base of 10, and modified based on half brute total. Capped at max 100 to prevent weirdness in prob()
 
 		if(!damage || !affecting || prob(miss_chance))//future-proofing for species that have 0 damage/weird cases where no zone is targeted
 			playsound(target.loc, user.dna.species.miss_sound, 25, TRUE, -1)
@@ -1681,7 +1687,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 /datum/species/proc/spec_hitby(atom/movable/AM, mob/living/carbon/human/H)
 	return
 
-/datum/species/proc/spec_attack_hand(mob/living/carbon/human/M, mob/living/carbon/human/H, datum/martial_art/attacker_style)
+/datum/species/proc/spec_attack_hand(mob/living/carbon/human/M, mob/living/carbon/human/H, datum/martial_art/attacker_style, act_intent, unarmed_attack_flags)
 	if(!istype(M))
 		return
 	CHECK_DNA_AND_SPECIES(M)
@@ -1693,7 +1699,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 		attacker_style = M.mind.martial_art
 		if(attacker_style?.pacifism_check && HAS_TRAIT(M, TRAIT_PACIFISM)) // most martial arts are quite harmful, alas.
 			attacker_style = null
-	switch(M.a_intent)
+	switch(act_intent)
 		if("help")
 			help(M, H, attacker_style)
 
@@ -1701,7 +1707,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 			grab(M, H, attacker_style)
 
 		if("harm")
-			harm(M, H, attacker_style)
+			harm(M, H, attacker_style, unarmed_attack_flags)
 
 		if("disarm")
 			disarm(M, H, attacker_style)

@@ -186,9 +186,8 @@
 GLOBAL_LIST_EMPTY(employmentCabinets)
 
 /obj/structure/filingcabinet/employment
-	var/cooldown = 0
 	icon_state = "employmentcabinet"
-	var/virgin = 1
+	var/virgin = TRUE
 
 /obj/structure/filingcabinet/employment/Initialize()
 	. = ..()
@@ -213,13 +212,12 @@ GLOBAL_LIST_EMPTY(employmentCabinets)
 	new /obj/item/paper/contract/employment(src, employee)
 
 /obj/structure/filingcabinet/employment/interact(mob/user)
-	if(!cooldown)
-		if(virgin)
-			fillCurrent()
-			virgin = 0
-		cooldown = 1
-		sleep(100) // prevents the devil from just instantly emptying the cabinet, ensuring an easy win.
-		cooldown = 0
-	else
+	if(TIMER_COOLDOWN_CHECK(src, COOLDOWN_EMPLOYMENT_CABINET))
 		to_chat(user, "<span class='warning'>[src] is jammed, give it a few seconds.</span>")
-	..()
+		return ..()
+
+	TIMER_COOLDOWN_START(src, COOLDOWN_EMPLOYMENT_CABINET, 10 SECONDS) // prevents the devil from just instantly emptying the cabinet, ensuring an easy win.
+	if(virgin)
+		fillCurrent()
+		virgin = FALSE
+	return ..()

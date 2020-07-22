@@ -93,29 +93,28 @@
 	return dna.species.spec_attacked_by(I, user, affecting, a_intent, src, attackchain_flags, damage_multiplier)
 
 /mob/living/carbon/human/attack_hulk(mob/living/carbon/human/user, does_attack_animation = FALSE)
-	if(user.a_intent == INTENT_HARM)
-		. = ..(user, TRUE)
-		if(.)
-			return
-		var/hulk_verb_continous = "smashes"
-		var/hulk_verb_simple = "smash"
-		if(prob(50))
-			hulk_verb_continous = "pummels"
-			hulk_verb_simple = "pummel"
-		playsound(loc, user.dna.species.attack_sound, 25, 1, -1)
-		visible_message("<span class='danger'>[user] [hulk_verb_continous] [src]!</span>", \
-						"<span class='userdanger'>[user] [hulk_verb_continous] you!</span>", null, COMBAT_MESSAGE_RANGE, null, user,
-						"<span class='danger'>You [hulk_verb_simple] [src]!</span>")
-		adjustBruteLoss(15)
-		return 1
+	. = ..(user, TRUE)
+	if(.)
+		return
+	var/hulk_verb_continous = "smashes"
+	var/hulk_verb_simple = "smash"
+	if(prob(50))
+		hulk_verb_continous = "pummels"
+		hulk_verb_simple = "pummel"
+	playsound(loc, user.dna.species.attack_sound, 25, 1, -1)
+	visible_message("<span class='danger'>[user] [hulk_verb_continous] [src]!</span>", \
+					"<span class='userdanger'>[user] [hulk_verb_continous] you!</span>", null, COMBAT_MESSAGE_RANGE, null, user,
+					"<span class='danger'>You [hulk_verb_simple] [src]!</span>")
+	adjustBruteLoss(15)
+	return 1
 
-/mob/living/carbon/human/attack_hand(mob/user)
+/mob/living/carbon/human/attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	. = ..()
 	if(.) //To allow surgery to return properly.
 		return
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
-		dna.species.spec_attack_hand(H, src)
+		dna.species.spec_attack_hand(H, src, null, act_intent, unarmed_attack_flags)
 
 /mob/living/carbon/human/attack_paw(mob/living/carbon/monkey/M)
 	var/dam_zone = pick(BODY_ZONE_CHEST, BODY_ZONE_PRECISE_L_HAND, BODY_ZONE_PRECISE_R_HAND, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)

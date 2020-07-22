@@ -229,6 +229,25 @@
 	STR.click_gather = TRUE
 	STR.can_hold = typecacheof(list(/obj/item/reagent_containers/pill, /obj/item/dice))
 
+/obj/item/storage/pill_bottle/AltClick(mob/living/carbon/user)
+	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
+		return
+	if(!length(user.get_empty_held_indexes()))
+		to_chat(user, "<span class='warning'>Your hands are full!</span>")
+		return
+	var/obj/item/reagent_containers/pill/P = locate() in contents
+	if(P)
+		SEND_SIGNAL(src, COMSIG_TRY_STORAGE_TAKE, P, user)
+		if(!user.put_in_hands(P))
+			P.forceMove(user.drop_location())	// make sure it's not stuck in the user if the put in hands somehow fails
+			to_chat(user, "<span class='warning'>[P] drops to the floor!</span>")
+		else
+			to_chat(user, "<span class='notice'>You take \a [P] out of [src].</span>")
+	else
+		to_chat(user, "<span class='notice'>There are no pills left in the bottle.</span>")
+	return TRUE
+
+
 /obj/item/storage/pill_bottle/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is trying to get the cap off [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	return (TOXLOSS)

@@ -26,6 +26,7 @@
 	var/efficiency
 
 	var/datum/mind/clonemind
+	var/get_clone_mind = CLONEPOD_GET_MIND
 	var/grab_ghost_when = CLONER_MATURE_CLONE
 
 	var/internal_radio = TRUE
@@ -74,31 +75,6 @@
 	speed_coeff = max(1, speed_coeff)
 	heal_level = clamp((efficiency * 10) + 10, MINIMUM_HEAL_LEVEL, 100)
 
-//The return of data disks?? Just for transferring between genetics machine/cloning machine.
-//TO-DO: Make the genetics machine accept them.
-/obj/item/disk/data
-	name = "cloning data disk"
-	icon_state = "datadisk0" //Gosh I hope syndies don't mistake them for the nuke disk.
-	var/list/fields = list()
-	var/list/mutations = list()
-	var/max_mutations = 6
-	var/read_only = 0 //Well,it's still a floppy disk
-
-//Disk stuff.
-/obj/item/disk/data/Initialize()
-	. = ..()
-	icon_state = "datadisk[rand(0,6)]"
-	add_overlay("datadisk_gene")
-
-/obj/item/disk/data/attack_self(mob/user)
-	read_only = !read_only
-	to_chat(user, "<span class='notice'>You flip the write-protect tab to [read_only ? "protected" : "unprotected"].</span>")
-
-/obj/item/disk/data/examine(mob/user)
-	. = ..()
-	. += "The write-protect tab is set to [read_only ? "protected" : "unprotected"]."
-
-
 //Clonepod
 
 /obj/machinery/clonepod/examine(mob/user)
@@ -134,43 +110,44 @@
 	return examine(user)
 
 //Start growing a human clone in the pod!
-/obj/machinery/clonepod/proc/growclone(ckey, clonename, ui, mutation_index, mindref, datum/species/mrace, list/features, factions, list/quirks, datum/bank_account/insurance, list/traumas)
+/obj/machinery/clonepod/proc/growclone(ckey, clonename, ui, mutation_index, mindref, blood_type, datum/species/mrace, list/features, factions, list/quirks, datum/bank_account/insurance, list/traumas)
 	if(panel_open)
 		return FALSE
 	if(mess || attempting)
 		return FALSE
-	clonemind = locate(mindref) in SSticker.minds
-	if(!istype(clonemind))	//not a mind
-		return FALSE
-	if(!QDELETED(clonemind.current))
-		if(clonemind.current.stat != DEAD)	//mind is associated with a non-dead body
+	if(get_clone_mind == CLONEPOD_GET_MIND)
+		clonemind = locate(mindref) in SSticker.minds
+		if(!istype(clonemind))	//not a mind
 			return FALSE
-		if(clonemind.current.suiciding) // Mind is associated with a body that is suiciding.
+		if(!QDELETED(clonemind.current))
+			if(clonemind.current.stat != DEAD)	//mind is associated with a non-dead body
+				return FALSE
+			if(clonemind.current.suiciding) // Mind is associated with a body that is suiciding.
+				return FALSE
+			if(AmBloodsucker(clonemind.current)) //If the mind is a bloodsucker
+				return FALSE
+		if(clonemind.active)	//somebody is using that mind
+			if( ckey(clonemind.key)!=ckey )
+				return FALSE
+		else
+			// get_ghost() will fail if they're unable to reenter their body
+			var/mob/dead/observer/G = clonemind.get_ghost()
+			if(!G)
+				return FALSE
+			if(G.suiciding) // The ghost came from a body that is suiciding.
+				return FALSE
+		if(clonemind.damnation_type) //Can't clone the damned.
+			INVOKE_ASYNC(src, .proc/horrifyingsound)
+			mess = TRUE
+			update_icon()
 			return FALSE
-		if(AmBloodsucker(clonemind.current)) //If the mind is a bloodsucker
-			return FALSE
-	if(clonemind.active)	//somebody is using that mind
-		if( ckey(clonemind.key)!=ckey )
-			return FALSE
-	else
-		// get_ghost() will fail if they're unable to reenter their body
-		var/mob/dead/observer/G = clonemind.get_ghost()
-		if(!G)
-			return FALSE
-		if(G.suiciding) // The ghost came from a body that is suiciding.
-			return FALSE
-	if(clonemind.damnation_type) //Can't clone the damned.
-		INVOKE_ASYNC(src, .proc/horrifyingsound)
-		mess = TRUE
-		update_icon()
-		return FALSE
 	current_insurance = insurance
 	attempting = TRUE //One at a time!!
 	countdown.start()
 
 	var/mob/living/carbon/human/H = new /mob/living/carbon/human(src)
 
-	H.hardset_dna(ui, mutation_index, H.real_name, null, mrace, features)
+	H.hardset_dna(ui, mutation_index, H.real_name, blood_type, mrace, features)
 
 	H.easy_randmut(NEGATIVE+MINOR_NEGATIVE) //100% bad mutation. Can be cured with mutadone.
 
@@ -192,7 +169,14 @@
 	ADD_TRAIT(H, TRAIT_NOCRITDAMAGE, CLONING_POD_TRAIT)
 	H.Unconscious(80)
 
-	clonemind.transfer_to(H)
+	if(clonemind)
+		clonemind.transfer_to(H)
+
+	else if(get_clone_mind == CLONEPOD_POLL_MIND)
+		var/list/candidates = pollCandidatesForMob("Do you want to play as [clonename]'s defective clone? (Don't ERP without permission from the original)", null, null, null, 100, H, POLL_IGNORE_CLONE)
+		if(LAZYLEN(candidates))
+			var/mob/C = pick(candidates)
+			H.key = C.key
 
 	if(grab_ghost_when == CLONER_FRESH_CLONE)
 		H.grab_ghost()
@@ -402,6 +386,11 @@
 		to_chat(occupant, "<span class='notice'><b>There is a bright flash!</b><br><i>You feel like a new being.</i></span>")
 		mob_occupant.flash_act()
 
+	var/list/policies = CONFIG_GET(keyed_list/policyconfig)
+	var/policy = policies[POLICYCONFIG_ON_CLONE]
+	if(policy)
+		to_chat(occupant, policy)
+	occupant.log_message("revived using cloning.", LOG_GAME)
 	mob_occupant.adjustOrganLoss(ORGAN_SLOT_BRAIN, mob_occupant.getCloneLoss())
 
 	occupant.forceMove(T)
@@ -548,6 +537,17 @@
 		. += occupant_overlay
 		. += "cover-on"
 	. += "panel"
+
+//Experimental cloner; clones a body regardless of the owner's status, letting a ghost control it instead
+/obj/machinery/clonepod/experimental
+	name = "experimental cloning pod"
+	desc = "An ancient cloning pod. It seems to be an early prototype of the experimental cloners used in Nanotrasen Stations."
+	icon = 'icons/obj/machines/cloning.dmi'
+	icon_state = "pod_0"
+	req_access = null
+	circuit = /obj/item/circuitboard/machine/clonepod/experimental
+	internal_radio = FALSE
+	get_clone_mind = CLONEPOD_POLL_MIND
 
 /*
  *	Manual -- A big ol' manual.

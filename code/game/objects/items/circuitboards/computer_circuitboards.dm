@@ -116,9 +116,9 @@
 	build_path = /obj/machinery/computer/cloning
 	var/list/records = list()
 
-/obj/item/circuitboard/computer/prototype_cloning
+/obj/item/circuitboard/computer/cloning/prototype
 	name = "Prototype Cloning (Computer Board)"
-	build_path = /obj/machinery/computer/prototype_cloning
+	build_path = /obj/machinery/computer/cloning/prototype
 
 /obj/item/circuitboard/computer/arcade/battle
 	name = "Arcade Battle (Computer Board)"

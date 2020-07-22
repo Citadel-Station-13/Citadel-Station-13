@@ -68,7 +68,7 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 	. = ..()
 
 /obj/machinery/conveyor/vv_edit_var(var_name, var_value)
-	if (var_name == "id")
+	if (var_name == NAMEOF(src, id))
 		// if "id" is varedited, update our list membership
 		LAZYREMOVE(GLOB.conveyors_by_id[id], src)
 		. = ..()
@@ -174,7 +174,7 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 		return ..()
 
 // attack with hand, move pulled object onto conveyor
-/obj/machinery/conveyor/attack_hand(mob/user)
+/obj/machinery/conveyor/attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	. = ..()
 	if(.)
 		return
@@ -243,7 +243,7 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 	. = ..()
 
 /obj/machinery/conveyor_switch/vv_edit_var(var_name, var_value)
-	if (var_name == "id")
+	if (var_name == NAMEOF(src, id))
 		// if "id" is varedited, update our list membership
 		LAZYREMOVE(GLOB.conveyors_by_id[id], src)
 		. = ..()

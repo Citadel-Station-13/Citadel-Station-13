@@ -23,6 +23,13 @@
 	heatmod = 0.5 // = 1/4x heat damage
 	burnmod = 0.5 // = 1/2x generic burn damage
 	species_language_holder = /datum/language_holder/jelly
+	mutant_brain = /obj/item/organ/brain/jelly
+
+/obj/item/organ/brain/jelly
+	name = "slime nucleus"
+	desc = "A slimey membranous mass from a slime person"
+	icon_state = "brain-slime"
+
 
 /datum/species/jelly/on_species_loss(mob/living/carbon/C)
 	if(regenerate_limbs)
@@ -307,7 +314,7 @@
 
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
-		ui = new(user, src, ui_key, "slime_swap_body", name, 400, 400, master_ui, state)
+		ui = new(user, src, ui_key, "SlimeBodySwapper", name, 400, 400, master_ui, state)
 		ui.open()
 
 /datum/action/innate/swap_body/ui_data(mob/user)

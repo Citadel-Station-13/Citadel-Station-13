@@ -28,7 +28,7 @@
 		queue_smooth_neighbors(src)
 	return ..()
 
-/obj/structure/attack_hand(mob/user)
+/obj/structure/attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	. = ..()
 	if(.)
 		return
