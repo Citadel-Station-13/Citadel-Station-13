@@ -41,7 +41,7 @@
 		name = initial(name)
 		desc = initial(desc)
 	if(harvest)
-		myseed.harvest()
+		myseed.harvest_userless()
 		harvest = 0
 		lastproduce = age
 		if(!myseed.get_gene(/datum/plant_gene/trait/repeated_harvest))
