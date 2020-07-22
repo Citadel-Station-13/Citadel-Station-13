@@ -1,7 +1,7 @@
 {
-    "map_name": "Skyrat Cere Station",
+    "map_name": "Cere Station",
     "map_path": "map_files/CereStation",
-    "map_file": "cerestation_skyrat.dmm",
+    "map_file": "cerestation.dmm",
     "shuttles": {
 	    "emergency": "emergency_cere",
 	    "ferry": "ferry_fancy",
