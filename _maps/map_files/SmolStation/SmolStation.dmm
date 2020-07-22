@@ -24144,7 +24144,7 @@
 	},
 /obj/structure/table,
 /obj/effect/turf_decal/delivery,
-/obj/item/storage/pill_bottle/dice,
+/obj/item/storage/box/dice,
 /obj/machinery/light{
 	dir = 4
 	},
