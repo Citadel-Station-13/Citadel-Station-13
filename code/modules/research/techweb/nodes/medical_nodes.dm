@@ -24,6 +24,23 @@
 	design_ids = list("defib_decay", "defib_shock", "defib_heal", "defib_speed")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 
+/datum/techweb_node/plumbing
+	id = "plumbing"
+	display_name = "Reagent Plumbing Technology"
+	description = "Plastic tubes, and machinery used for manipulating things in them."
+	prereq_ids = list("base")
+	design_ids = list("acclimator", "disposer", "plumb_filter", "plumb_synth", "plumb_grinder", "reaction_chamber", "duct_print", "plumb_splitter", "pill_press", "plumb_pump", "plumb_in", "plumb_out", "plumb_tank")
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
+
+
+/datum/techweb_node/advplumbing
+	id = "advplumbing"
+	display_name = "Advanced Plumbing Technology"
+	description = "Plumbing RCD."
+	prereq_ids = list("plumbing", "adv_engi", "adv_biotech")
+	design_ids = list("plumb_rcd")
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 10000)
+
 //////////////////////Cybernetics/////////////////////
 
 /datum/techweb_node/surplus_limbs
