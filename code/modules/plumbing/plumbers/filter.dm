@@ -12,8 +12,8 @@
 	var/list/english_left = list()
 	///whitelist of chems but their name instead of path
 	var/list/english_right = list()
-	var/ui_x = 320
-	var/ui_y = 310
+	ui_x = 320
+	ui_y = 310
 
 
 /obj/machinery/plumbing/filter/Initialize(mapload, bolt)

@@ -17,7 +17,7 @@
 	var/turn_connects = TRUE
 
 /datum/component/plumbing/Initialize(start=TRUE, _turn_connects=TRUE) //turn_connects for wheter or not we spin with the object to change our pipes
-	if(parent && !ismovableatom(parent))
+	if(parent && !istype(parent, /atom/movable))
 		return COMPONENT_INCOMPATIBLE
 	var/atom/movable/AM = parent
 	if(!AM.reagents)
@@ -77,7 +77,7 @@
 	if(reagent) //only asked for one type of reagent
 		for(var/A in reagents.reagent_list)
 			var/datum/reagent/R = A
-			if(R.id == reagent)
+			if(R.type == reagent)
 				return TRUE
 	else if(reagents.total_volume > 0) //take whatever
 		return TRUE

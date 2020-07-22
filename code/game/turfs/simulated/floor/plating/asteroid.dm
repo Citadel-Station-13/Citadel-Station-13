@@ -334,7 +334,18 @@
 			spawned_flora = SpawnFlora(T)
 		if(!spawned_flora) // no rocks beneath mob spawners / mobs.
 			SpawnMonster(T)
+			SpawnTerrain(T)
 	T.ChangeTurf(turf_type, null, CHANGETURF_IGNORE_AIR)
+
+/turf/open/floor/plating/asteroid/airless/cave/proc/SpawnTerrain(turf/T)
+	if(prob(1))
+		if(istype(loc, /area/mine/explored) || istype(loc, /area/lavaland/surface/outdoors/explored))
+			return
+		var/randumb = pickweight(terrain_spawn_list)
+		for(var/obj/structure/geyser/F in range(7, T))
+			if(istype(F, randumb))
+				return
+		new randumb(T)
 
 /// Spawns a random mob or megafauna in the tunnel
 /turf/open/floor/plating/asteroid/airless/cave/proc/SpawnMonster(turf/T)

@@ -1,4 +1,4 @@
-v/datum/component/plumbing/acclimator
+/datum/component/plumbing/acclimator
 	demand_connects = WEST
 	supply_connects = EAST
 	var/obj/machinery/plumbing/acclimator/AC

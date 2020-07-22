@@ -17,17 +17,17 @@
 	var/obj/machinery/plumbing/reaction_chamber/RC = parent
 	if(RC.emptying || !LAZYLEN(RC.required_reagents))
 		return
-	for(var/RTid in RC.required_reagents)
+	for(var/RT in RC.required_reagents)
 		var/has_reagent = FALSE
 		for(var/A in reagents.reagent_list)
 			var/datum/reagent/RD = A
-			if(RTid == RD.id)
+			if(RT == RD)
 				has_reagent = TRUE
-				if(RD.volume < RC.required_reagents[RTid])
-					process_request(min(RC.required_reagents[RTid] - RD.volume, MACHINE_REAGENT_TRANSFER) , RTid, dir)
+				if(RD.volume < RC.required_reagents[RT])
+					process_request(min(RC.required_reagents[RT] - RD.volume, MACHINE_REAGENT_TRANSFER) , RT, dir)
 					return
 		if(!has_reagent)
-			process_request(min(RC.required_reagents[RTid], MACHINE_REAGENT_TRANSFER), RTid, dir)
+			process_request(min(RC.required_reagents[RT], MACHINE_REAGENT_TRANSFER), RT, dir)
 			return
 
 	RC.reagent_flags &= ~NO_REACT

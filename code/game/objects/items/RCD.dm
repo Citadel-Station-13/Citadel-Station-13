@@ -135,6 +135,14 @@ RLD
 			flick("[icon_state]_empty", src)	//somewhat hacky thing to make RCDs with ammo counters actually have a blinking yellow light
 	return .
 
+
+/obj/item/construction/proc/check_menu(mob/living/user)
+	if(!istype(user))
+		return FALSE
+	if(user.incapacitated() || !user.Adjacent(src))
+		return FALSE
+	return TRUE
+
 /obj/item/construction/proc/range_check(atom/A, mob/user)
 	if(!(A in range(custom_range, get_turf(user))))
 		to_chat(user, "<span class='warning'>The \'Out of Range\' light on [src] blinks red.</span>")
@@ -275,13 +283,6 @@ RLD
 		MA.overlays += "fill_closed"
 	//Not scaling these down to button size because they look horrible then, instead just bumping up radius.
 	return MA
-
-/obj/item/construction/rcd/proc/check_menu(mob/living/user)
-	if(!istype(user))
-		return FALSE
-	if(user.incapacitated() || !user.Adjacent(src))
-		return FALSE
-	return TRUE
 
 /obj/item/construction/rcd/proc/change_computer_dir(mob/user)
 	if(!user)
@@ -915,9 +916,9 @@ RLD
 		if(O.density) //let's not built ontop of dense stuff, like big machines and other obstacles, it kills my immershion
 			return FALSE
 
-/obj/item/construction/plumbing/afterattack(atom/A, mob/user, proximity)
+/obj/item/construction/plumbing/afterattack(atom/A, mob/user)
 	. = ..()
-	if(!prox_check(proximity))
+	if(!range_check(A, user))
 		return
 	if(istype(A, /obj/machinery/plumbing))
 		var/obj/machinery/plumbing/P = A

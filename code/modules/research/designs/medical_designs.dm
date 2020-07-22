@@ -1115,4 +1115,4 @@
 	construction_time = 150
 	build_path = /obj/item/construction/plumbing
 	category = list("Misc","Medical Designs")
-	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL | DEPARTMENTAL_FLAG_SCIENCEs
+	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL | DEPARTMENTAL_FLAG_SCIENCE

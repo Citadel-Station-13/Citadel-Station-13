@@ -25,8 +25,8 @@
 	and you get nasty leftovers
 	*/
 	var/emptying = FALSE
-	var/ui_x = 320
-	var/ui_y = 310
+	ui_x = 320
+	ui_y = 310
 
 /obj/machinery/plumbing/acclimator/Initialize(mapload, bolt)
 	. = ..()
