@@ -259,30 +259,30 @@ Auto Patrol: []"},
 			return
 
 /mob/living/simple_animal/bot/secbot/proc/attempt_place_on_head(mob/user, obj/item/I)
-	if(user && !user.temporarilyRemoveItemFromInventory(H))
-		to_chat(user, "<span class='warning'>\The [H] is stuck to your hand, you cannot put it on [src]'s head!</span>")
+	if(user && !user.temporarilyRemoveItemFromInventory(I))
+		to_chat(user, "<span class='warning'>\The [I] is stuck to your hand, you cannot put it on [src]'s head!</span>")
 		return
 	if(bot_accessory)
 		to_chat("<span class='warning'>\[src] already has an accessory, and the laws of physics disallow him from wearing a second!</span>")
 		return
-	if(istype(I, /obj/item/clothing/head)
+	if(istype(I, /obj/item/clothing/head))
 		var/obj/item/clothing/head/H = I
 		if(H.beepsky_fashion)
 			stored_fashion = new H.beepsky_fashion
 	else
 		//it must be a mask
 		var/obj/item/clothing/mask/M = I
-			if(M.beepsky_fashion)
-				stored_fashion = new M.beepsky_fashion
+		if(M.beepsky_fashion)
+			stored_fashion = new M.beepsky_fashion
 	if(stored_fashion)
 		to_chat(user, "<span class='warning'>You set [I] on [src].</span>")
-		bot_accessory = H
-		H.forceMove(src)
+		bot_accessory = I
+		I.forceMove(src)
 		stored_fashion.apply(src)
 		regenerate_icons()
 	else
-		to_chat(user, "<span class='warning'>You set [H] on [src]'s head, but it falls off!</span>")
-		H.forceMove(drop_location())
+		to_chat(user, "<span class='warning'>You set [I] on [src]'s head, but it falls off!</span>")
+		I.forceMove(drop_location())
 
 /mob/living/simple_animal/bot/secbot/regenerate_icons()
 	..()
@@ -467,7 +467,6 @@ Auto Patrol: []"},
 		if(BOT_PATROL)
 			look_for_perp()
 			bot_patrol()
-
 
 	return
 
