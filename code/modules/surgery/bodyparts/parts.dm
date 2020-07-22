@@ -1,4 +1,3 @@
-
 /obj/item/bodypart/chest
 	name = BODY_ZONE_CHEST
 	desc = "It's impolite to stare at a person's chest."
@@ -11,8 +10,6 @@
 	stam_damage_coeff = 1
 	max_stamina_damage = 200
 	var/obj/item/cavity_item
-	specific_locations = list("upper chest", "lower abdomen", "midsection", "collarbone", "lower back")
-	wound_resistance = 10
 
 /obj/item/bodypart/chest/can_dismember(obj/item/I)
 	if(!((owner.stat == DEAD) || owner.InFullCritical()))
@@ -20,12 +17,13 @@
 	return ..()
 
 /obj/item/bodypart/chest/Destroy()
-	QDEL_NULL(cavity_item)
+	if(cavity_item)
+		qdel(cavity_item)
 	return ..()
 
-/obj/item/bodypart/chest/drop_organs(mob/user, violent_removal)
+/obj/item/bodypart/chest/drop_organs(mob/user)
 	if(cavity_item)
-		cavity_item.forceMove(drop_location())
+		cavity_item.forceMove(user.loc)
 		cavity_item = null
 	..()
 
@@ -33,7 +31,6 @@
 	icon = 'icons/mob/animal_parts.dmi'
 	icon_state = "default_monkey_chest"
 	animal_origin = MONKEY_BODYPART
-	wound_resistance = -10
 
 /obj/item/bodypart/chest/alien
 	icon = 'icons/mob/animal_parts.dmi'
@@ -66,12 +63,12 @@
 	max_stamina_damage = 50
 	body_zone = BODY_ZONE_L_ARM
 	body_part = ARM_LEFT
+	aux_icons = list(BODY_ZONE_PRECISE_L_HAND = HANDS_PART_LAYER, "l_hand_behind" = BODY_BEHIND_LAYER)
 	body_damage_coeff = 0.75
 	held_index = 1
 	px_x = -6
 	px_y = 0
-	specific_locations = list("outer left forearm", "inner left wrist", "left elbow", "left bicep", "left shoulder")
-	aux_icons = list(BODY_ZONE_PRECISE_L_HAND = HANDS_PART_LAYER, "l_hand_behind" = BODY_BEHIND_LAYER)
+	stam_heal_tick = STAM_RECOVERY_LIMB
 
 /obj/item/bodypart/l_arm/is_disabled()
 	if(HAS_TRAIT(owner, TRAIT_PARALYSIS_L_ARM))
@@ -82,18 +79,15 @@
 	. = ..()
 	if(!.)
 		return
-	if(disabled == BODYPART_DISABLED_DAMAGE)
-		if(owner.stat < UNCONSCIOUS)
-			owner.emote("scream")
-		if(owner.stat < DEAD)
-			to_chat(owner, "<span class='userdanger'>Your [name] is too damaged to function!</span>")
-		if(held_index)
-			owner.dropItemToGround(owner.get_item_for_held_index(held_index))
-	else if(disabled == BODYPART_DISABLED_PARALYSIS)
-		if(owner.stat < DEAD)
-			to_chat(owner, "<span class='userdanger'>You can't feel your [name]!</span>")
-			if(held_index)
-				owner.dropItemToGround(owner.get_item_for_held_index(held_index))
+	if(owner.stat < UNCONSCIOUS)
+		switch(disabled)
+			if(BODYPART_DISABLED_DAMAGE)
+				owner.emote("scream")
+				to_chat(owner, "<span class='userdanger'>Your [name] is too damaged to function!</span>")
+			if(BODYPART_DISABLED_PARALYSIS)
+				to_chat(owner, "<span class='userdanger'>You can't feel your [name]!</span>")
+	if(held_index)
+		owner.dropItemToGround(owner.get_item_for_held_index(held_index))
 	if(owner.hud_used)
 		var/obj/screen/inventory/hand/L = owner.hud_used.hand_slots["[held_index]"]
 		if(L)
@@ -103,7 +97,6 @@
 	icon = 'icons/mob/animal_parts.dmi'
 	icon_state = "default_monkey_l_arm"
 	animal_origin = MONKEY_BODYPART
-	wound_resistance = -10
 	px_x = -5
 	px_y = -3
 
@@ -130,13 +123,13 @@
 	max_damage = 50
 	body_zone = BODY_ZONE_R_ARM
 	body_part = ARM_RIGHT
+	aux_icons = list(BODY_ZONE_PRECISE_R_HAND = HANDS_PART_LAYER, "r_hand_behind" = BODY_BEHIND_LAYER)
 	body_damage_coeff = 0.75
 	held_index = 2
 	px_x = 6
 	px_y = 0
+	stam_heal_tick = STAM_RECOVERY_LIMB
 	max_stamina_damage = 50
-	specific_locations = list("outer right forearm", "inner right wrist", "right elbow", "right bicep", "right shoulder")
-	aux_icons = list(BODY_ZONE_PRECISE_R_HAND = HANDS_PART_LAYER, "r_hand_behind" = BODY_BEHIND_LAYER)
 
 /obj/item/bodypart/r_arm/is_disabled()
 	if(HAS_TRAIT(owner, TRAIT_PARALYSIS_R_ARM))
@@ -147,28 +140,25 @@
 	. = ..()
 	if(!.)
 		return
-	if(disabled == BODYPART_DISABLED_DAMAGE)
-		if(owner.stat < UNCONSCIOUS)
-			owner.emote("scream")
-		if(owner.stat < DEAD)
-			to_chat(owner, "<span class='userdanger'>Your [name] is too damaged to function!</span>")
-		if(held_index)
-			owner.dropItemToGround(owner.get_item_for_held_index(held_index))
-	else if(disabled == BODYPART_DISABLED_PARALYSIS)
-		if(owner.stat < DEAD)
-			to_chat(owner, "<span class='userdanger'>You can't feel your [name]!</span>")
-			if(held_index)
-				owner.dropItemToGround(owner.get_item_for_held_index(held_index))
+	if(owner.stat < UNCONSCIOUS)
+		switch(disabled)
+			if(BODYPART_DISABLED_DAMAGE)
+				owner.emote("scream")
+				to_chat(owner, "<span class='userdanger'>Your [name] is too damaged to function!</span>")
+			if(BODYPART_DISABLED_PARALYSIS)
+				to_chat(owner, "<span class='userdanger'>You can't feel your [name]!</span>")
+	if(held_index)
+		owner.dropItemToGround(owner.get_item_for_held_index(held_index))
 	if(owner.hud_used)
 		var/obj/screen/inventory/hand/R = owner.hud_used.hand_slots["[held_index]"]
 		if(R)
 			R.update_icon()
 
+
 /obj/item/bodypart/r_arm/monkey
 	icon = 'icons/mob/animal_parts.dmi'
 	icon_state = "default_monkey_r_arm"
 	animal_origin = MONKEY_BODYPART
-	wound_resistance = -10
 	px_x = 5
 	px_y = -3
 
@@ -198,8 +188,8 @@
 	body_damage_coeff = 0.75
 	px_x = -2
 	px_y = 12
+	stam_heal_tick = STAM_RECOVERY_LIMB
 	max_stamina_damage = 50
-	specific_locations = list("inner left thigh", "outer left calf", "outer left hip", " left kneecap", "lower left shin")
 
 /obj/item/bodypart/l_leg/is_disabled()
 	if(HAS_TRAIT(owner, TRAIT_PARALYSIS_L_LEG))
@@ -208,15 +198,13 @@
 
 /obj/item/bodypart/l_leg/set_disabled(new_disabled)
 	. = ..()
-	if(!.)
+	if(!. || owner.stat >= UNCONSCIOUS)
 		return
-	if(disabled == BODYPART_DISABLED_DAMAGE)
-		if(owner.stat < UNCONSCIOUS)
+	switch(disabled)
+		if(BODYPART_DISABLED_DAMAGE)
 			owner.emote("scream")
-		if(owner.stat < DEAD)
 			to_chat(owner, "<span class='userdanger'>Your [name] is too damaged to function!</span>")
-	else if(disabled == BODYPART_DISABLED_PARALYSIS)
-		if(owner.stat < DEAD)
+		if(BODYPART_DISABLED_PARALYSIS)
 			to_chat(owner, "<span class='userdanger'>You can't feel your [name]!</span>")
 
 /obj/item/bodypart/l_leg/digitigrade
@@ -227,7 +215,6 @@
 	icon = 'icons/mob/animal_parts.dmi'
 	icon_state = "default_monkey_l_leg"
 	animal_origin = MONKEY_BODYPART
-	wound_resistance = -10
 	px_y = 4
 
 /obj/item/bodypart/l_leg/alien
@@ -259,7 +246,7 @@
 	px_x = 2
 	px_y = 12
 	max_stamina_damage = 50
-	specific_locations = list("inner right thigh", "outer right calf", "outer right hip", "right kneecap", "lower right shin")
+	stam_heal_tick = STAM_RECOVERY_LIMB
 
 /obj/item/bodypart/r_leg/is_disabled()
 	if(HAS_TRAIT(owner, TRAIT_PARALYSIS_R_LEG))
@@ -268,15 +255,13 @@
 
 /obj/item/bodypart/r_leg/set_disabled(new_disabled)
 	. = ..()
-	if(!.)
+	if(!. || owner.stat >= UNCONSCIOUS)
 		return
-	if(disabled == BODYPART_DISABLED_DAMAGE)
-		if(owner.stat < UNCONSCIOUS)
+	switch(disabled)
+		if(BODYPART_DISABLED_DAMAGE)
 			owner.emote("scream")
-		if(owner.stat < DEAD)
 			to_chat(owner, "<span class='userdanger'>Your [name] is too damaged to function!</span>")
-	else if(disabled == BODYPART_DISABLED_PARALYSIS)
-		if(owner.stat < DEAD)
+		if(BODYPART_DISABLED_PARALYSIS)
 			to_chat(owner, "<span class='userdanger'>You can't feel your [name]!</span>")
 
 /obj/item/bodypart/r_leg/digitigrade
@@ -287,7 +272,6 @@
 	icon = 'icons/mob/animal_parts.dmi'
 	icon_state = "default_monkey_r_leg"
 	animal_origin = MONKEY_BODYPART
-	wound_resistance = -10
 	px_y = 4
 
 /obj/item/bodypart/r_leg/alien
