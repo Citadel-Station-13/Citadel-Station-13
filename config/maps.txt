@@ -31,6 +31,9 @@ endmap
 map pubbystation
 endmap
 
+map cerestation
+endmap
+
 map omegastation
 	maxplayers 35
 endmap

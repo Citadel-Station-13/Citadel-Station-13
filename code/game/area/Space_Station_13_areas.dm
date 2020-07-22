@@ -1594,6 +1594,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	ambientsounds = SPACE
 	blob_allowed = FALSE //While part of the station, what good will it do you?
 
+
 // CERESTATION
 
 //HALLWAYS
