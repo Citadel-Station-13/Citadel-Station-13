@@ -19762,7 +19762,7 @@
 /area/tcommsat/server)
 "oJq" = (
 /obj/structure/table,
-/obj/item/storage/pill_bottle/dice,
+/obj/item/storage/box/dice,
 /obj/machinery/firealarm{
 	dir = 4;
 	pixel_x = -24
