@@ -3020,7 +3020,7 @@
 /area/engine/supermatter)
 "aOP" = (
 /obj/structure/table/wood,
-/obj/item/storage/pill_bottle/dice,
+/obj/item/storage/box/dice,
 /turf/open/floor/plasteel/dark,
 /area/security/prison)
 "aPw" = (
@@ -26858,7 +26858,7 @@
 "nIM" = (
 /obj/structure/table/wood/poker,
 /obj/item/toy/cards/deck,
-/obj/item/storage/pill_bottle/dice{
+/obj/item/storage/box/dice{
 	pixel_x = 8
 	},
 /obj/structure/sign/poster/contraband/random{
@@ -32297,7 +32297,7 @@
 /area/bridge)
 "qMN" = (
 /obj/structure/table,
-/obj/item/storage/pill_bottle/dice,
+/obj/item/storage/box/dice,
 /turf/open/floor/plasteel/grimy,
 /area/crew_quarters/fitness/recreation)
 "qNB" = (

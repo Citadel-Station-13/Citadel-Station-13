@@ -80899,7 +80899,7 @@
 	pixel_x = 4;
 	pixel_y = 4
 	},
-/obj/item/storage/pill_bottle/dice{
+/obj/item/storage/box/dice{
 	pixel_x = -4
 	},
 /obj/item/pen/red{
