@@ -921,7 +921,7 @@
 /datum/chemical_reaction/coldscales
 	name = "Cold Scales"
 	id = /datum/reagent/consumable/ethanol/species_drink/coldscales
-	results = list(/datum/reagent/consumable/species_drink/ethanol/coldscales = 3)
+	results = list(/datum/reagent/consumable/ethanol/species_drink/coldscales = 3)
 	required_reagents = list(/datum/reagent/consumable/tea = 1, /datum/reagent/toxin/slimejelly = 1,  /datum/reagent/consumable/menthol = 1)
 
 /datum/chemical_reaction/oil_drum

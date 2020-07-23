@@ -84,14 +84,6 @@ GLOBAL_LIST_INIT(turfs_without_ground, typecacheof(list(
 #define isxenoperson(A) (is_species(A, /datum/species/xeno))
 #define isstartjelly(A) (is_species(A, /datum/species/jelly/roundstartslime))
 
-// Checks using categories that hold over groups of species, used by species drinks
-#define isundead(A) (isdullahan(A) || iszombie(A) || isskeleton(A) || isvampire(A))
-#define isplant(A) (ismush(A) || ispodperson(A))
-#define isrobotic(A) (isipcperson(A) || ispodperson(A))
-#define ishumanlike(A) (ishumanbasic(A) || isdwarf(A) || isangel(A))
-#define isfurry(A) (ismammal(A) || iscatperson(A))
-
-
 //more carbon mobs
 #define ismonkey(A) (istype(A, /mob/living/carbon/monkey))
 

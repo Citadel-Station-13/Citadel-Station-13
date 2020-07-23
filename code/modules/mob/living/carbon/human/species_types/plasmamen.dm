@@ -22,6 +22,8 @@
 	liked_food = VEGETABLES
 	outfit_important_for_life = /datum/outfit/plasmaman
 
+	species_type = "skeleton"
+
 /datum/species/plasmaman/spec_life(mob/living/carbon/human/H)
 	var/datum/gas_mixture/environment = H.loc.return_air()
 	var/atmos_sealed = FALSE

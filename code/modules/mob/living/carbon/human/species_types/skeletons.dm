@@ -15,6 +15,8 @@
 	brutemod = 1.25
 	burnmod = 1.25
 
+	species_type = "skeleton" //they have their own category that's disassociated from undead, paired with plasmapeople
+
 /datum/species/skeleton/New()
 	if(SSevents.holidays && SSevents.holidays[HALLOWEEN]) //skeletons are stronger during the spooky season!
 		inherent_traits |= list(TRAIT_RESISTHEAT,TRAIT_RESISTCOLD)

@@ -19,6 +19,8 @@
 	var/light_burnheal = -1
 	var/light_bruteheal = -1
 
+	species_type = "plant"
+
 /datum/species/pod/on_species_gain(mob/living/carbon/C, datum/species/old_species)
 	. = ..()
 	C.faction |= "plants"

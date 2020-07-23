@@ -16,6 +16,7 @@
 
 	tail_type = "mam_tail"
 	wagging_type = "mam_waggingtail"
+	species_type = "furry"
 
 /datum/species/mammal/can_wag_tail(mob/living/carbon/human/H)
 	return mutant_bodyparts["mam_tail"] || mutant_bodyparts["mam_waggingtail"]

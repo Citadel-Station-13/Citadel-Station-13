@@ -27,6 +27,7 @@
 
 	tail_type = "mam_tail"
 	wagging_type = "mam_waggingtail"
+	species_type = "jelly"
 
 /obj/item/organ/brain/jelly
 	name = "slime nucleus"

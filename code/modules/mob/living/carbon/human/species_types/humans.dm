@@ -12,6 +12,7 @@
 
 	tail_type = "tail_human"
 	wagging_type = "waggingtail_human"
+	species_type = "human"
 
 /datum/species/human/spec_death(gibbed, mob/living/carbon/human/H)
 	if(H)
