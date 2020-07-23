@@ -215,7 +215,7 @@
 //proc to upgrade a simple pull into a more aggressive grab.
 /mob/living/proc/grippedby(mob/living/carbon/user, instant = FALSE)
 	if(user.grab_state < GRAB_KILL)
-		user.DelayNextAction(CLICK_CD_GRABBING)
+		user.DelayNextAction(CLICK_CD_GRABBING, flush = TRUE)
 		playsound(src, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
 
 		if(user.grab_state) //only the first upgrade is instantaneous

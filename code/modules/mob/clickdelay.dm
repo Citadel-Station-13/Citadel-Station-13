@@ -52,8 +52,9 @@
   * * ignore_mod - ignores next action adjust and mult
   * * considered_action - Defaults to TRUE - If TRUE, sets last_action to world.time.
   * * immediate - defaults to TRUE - if TRUE, writes to cached/last_attack_immediate instead of last_attack. This ensures it can't collide with any delay checks in the actual attack.
+  * * flush - defaults to FALSE - Use this while using this proc outside of clickcode to ensure everything is set properly. This should never be set to TRUE if this is called from clickcode.
   */
-/mob/proc/DelayNextAction(amount = 0, ignore_mod = FALSE, considered_action = TRUE, immediate = TRUE)
+/mob/proc/DelayNextAction(amount = 0, ignore_mod = FALSE, considered_action = TRUE, immediate = TRUE, flush = FALSE)
 	if(immediate)
 		if(considered_action)
 			last_action_immediate = world.time
@@ -62,7 +63,10 @@
 		if(considered_action)
 			last_action = world.time
 		next_action = max(next_action, world.time + (ignore_mod? amount : (amount * GetActionCooldownMod() + GetActionCooldownAdjust())))
-	hud_used?.clickdelay?.mark_dirty()
+	if(flush)
+		FlushCurrentAction()
+	else
+		hud_used?.clickdelay?.mark_dirty()
 
 /**
   * Get estimated time of next attack.
@@ -79,7 +83,7 @@
 /**
   * Sets our next action to. The difference is DelayNextAction cannot reduce next_action under any circumstances while this can.
   */
-/mob/proc/SetNextAction(amount = 0, ignore_mod = FALSE, considered_action = TRUE, immediate = TRUE)
+/mob/proc/SetNextAction(amount = 0, ignore_mod = FALSE, considered_action = TRUE, immediate = TRUE, flush = FALSE)
 	if(immediate)
 		if(considered_action)
 			last_action_immediate = world.time
@@ -88,7 +92,10 @@
 		if(considered_action)
 			last_action = world.time
 		next_action = world.time + (ignore_mod? amount : (amount * GetActionCooldownMod() + GetActionCooldownAdjust()))
-	hud_used?.clickdelay?.mark_dirty()
+	if(flush)
+		FlushCurrentAction()
+	else
+		hud_used?.clickdelay?.mark_dirty()
 
 /**
   * Checks if we can do another action.
