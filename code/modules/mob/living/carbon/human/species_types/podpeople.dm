@@ -71,15 +71,6 @@
 	light_burnheal = -0.2
 	light_toxheal = -0.7
 
-/datum/species/pod/pseudo_weak/spec_death(gibbed, mob/living/carbon/human/H)
-	if(H)
-		stop_wagging_tail(H)
-
-/datum/species/pod/pseudo_weak/spec_stun(mob/living/carbon/human/H,amount)
-	if(H)
-		stop_wagging_tail(H)
-	. = ..()
-
 /datum/species/pod/pseudo_weak/can_wag_tail(mob/living/carbon/human/H)
 	return mutant_bodyparts["mam_tail"] || mutant_bodyparts["mam_waggingtail"]
 

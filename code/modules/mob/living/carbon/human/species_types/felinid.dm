@@ -9,20 +9,6 @@
 	mutantears = /obj/item/organ/ears/cat
 	mutanttail = /obj/item/organ/tail/cat
 
-/datum/species/human/felinid/qualifies_for_rank(rank, list/features)
-	return TRUE
-
-//Curiosity killed the cat's wagging tail.
-/datum/species/human/felinid/spec_death(gibbed, mob/living/carbon/human/H)
-	if(H)
-		stop_wagging_tail(H)
-
-/datum/species/human/felinid/spec_stun(mob/living/carbon/human/H,amount)
-	if(H)
-		stop_wagging_tail(H)
-	. = ..()
-
-
 /datum/species/human/felinid/can_wag_tail(mob/living/carbon/human/H)
 	return mutant_bodyparts["mam_tail"] || mutant_bodyparts["mam_waggingtail"]
 

@@ -38,19 +38,6 @@
 
 	return randname
 
-/datum/species/lizard/qualifies_for_rank(rank, list/features)
-	return TRUE
-
-//I wag in death
-/datum/species/lizard/spec_death(gibbed, mob/living/carbon/human/H)
-	if(H)
-		stop_wagging_tail(H)
-
-/datum/species/lizard/spec_stun(mob/living/carbon/human/H,amount)
-	if(H)
-		stop_wagging_tail(H)
-	. = ..()
-
 /datum/species/lizard/can_wag_tail(mob/living/carbon/human/H)
 	return mutant_bodyparts["tail_lizard"] || mutant_bodyparts["waggingtail_lizard"]
 

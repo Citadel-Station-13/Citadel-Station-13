@@ -1062,7 +1062,8 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 			H.adjustBruteLoss(1)
 
 /datum/species/proc/spec_death(gibbed, mob/living/carbon/human/H)
-	return
+	if(H)
+		stop_wagging_tail(H)
 
 /datum/species/proc/auto_equip(mob/living/carbon/human/H)
 	// handles the equipping of species-specific gear
@@ -2220,12 +2221,14 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 /datum/species/proc/ExtinguishMob(mob/living/carbon/human/H)
 	return
 
-
 ////////////
 //Stun//
 ////////////
 
 /datum/species/proc/spec_stun(mob/living/carbon/human/H,amount)
+	if(H)
+		stop_wagging_tail(H)
+
 	. = stunmod * H.physiology.stun_mod * amount
 
 //////////////
