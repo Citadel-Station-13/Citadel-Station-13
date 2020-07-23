@@ -145,9 +145,9 @@
 				continue
 			if(!S.ckeys_allowed)
 				snowflake_ipc_antenna_list[S.name] = mspath
-	var/color1 = random_short_color()
-	var/color2 = random_short_color()
-	var/color3 = random_short_color()
+	var/color1 = random_color()
+	var/color2 = random_color()
+	var/color3 = random_color()
 
 	var/body_model = MALE
 	switch(intended_gender)
