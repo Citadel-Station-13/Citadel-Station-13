@@ -56,7 +56,7 @@
 #define RGB_FORMAT_LONG 2
 
 /**
-  * Sanitizes a hexadecimal color.
+  * Sanitizes a hexadecimal color. Always outputs lowercase.
   *
   * @params
   * * color - input color, 3 or 6 characters without the #.
@@ -70,6 +70,7 @@
 		CRASH("Default should be a text string of RGB format, with or without the crunch, 3 or 6 characters. Default was instead [default]")
 	if(!istext(default_replacement) || (length(default_replacement) != 1))
 		CRASH("Invalid default_replacement: [default_replacement]")
+	default_replacement = lowertext(default_replacement)
 	switch(text2ascii(default_replacement))
 		if(48 to 57)
 		if(97 to 102)
@@ -116,6 +117,7 @@
 				CRASH("Default was not 3 or 6 RGB hexadecimal characters: [default]")
 
 	var/sanitized = ""
+	var/char = ""
 	// first, sanitize hex
 	for(var/i in 1 to len)
 		char = color[i]
@@ -127,7 +129,7 @@
 			if(65 to 70)			// A to F (capitalized!)
 				sanitized += lowertext(char)
 			else
-				sanitized += lowertext(default_replacement)
+				sanitized += default_replacement
 	// do we need to convert?
 	if(desired_format == current_format)
 		return crunch + sanitized		// no
@@ -145,7 +147,7 @@
 			temp += sanitized[i]
 		sanitized = temp
 	else
-		CRAHS("Invalid desired_format and current_format pair: [desired_format], [current_format]. Could not determine which way to convert.")
+		CRASH("Invalid desired_format and current_format pair: [desired_format], [current_format]. Could not determine which way to convert.")
 	return crunch + sanitized
 
 #undef RGB_FORMAT_INVALID
