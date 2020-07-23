@@ -159,7 +159,7 @@
 	arrest_texts = initial(arrest_texts)
 	arrest_emote = initial(arrest_emote)
 	bot_accessory = null
-	qdel(stored_fashion)
+	stored_fashion = null
 	regenerate_icons()
 
 /mob/living/simple_animal/bot/secbot/beepsky/explode()
