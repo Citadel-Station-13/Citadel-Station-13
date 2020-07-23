@@ -54,23 +54,17 @@
 
 	var/list/modifiers = params2list(params)
 	if(modifiers["shift"] && modifiers["middle"])
-		ShiftMiddleClickOn(A)
-		return
+		return ShiftMiddleClickOn(A)
 	if(modifiers["shift"] && modifiers["ctrl"])
-		CtrlShiftClickOn(A)
-		return
+		return CtrlShiftClickOn(A)
 	if(modifiers["middle"])
-		MiddleClickOn(A)
-		return
+		return MiddleClickOn(A)
 	if(modifiers["shift"] && (client && client.show_popup_menus || modifiers["right"])) //CIT CHANGE - makes shift-click examine use right click instead of left click in combat mode
-		ShiftClickOn(A)
-		return
+		return ShiftClickOn(A)
 	if(modifiers["alt"]) // alt and alt-gr (rightalt)
-		AltClickOn(A)
-		return
+		return AltClickOn(A)
 	if(modifiers["ctrl"])
-		CtrlClickOn(A)
-		return
+		return CtrlClickOn(A)
 
 	if(modifiers["right"]) //CIT CHANGE - allows right clicking to perform actions
 		return RightClickOn(A,params) //CIT CHANGE - ditto

@@ -18,7 +18,7 @@
 	if(restrained())
 		DelayNextAction(CLICK_CD_HANDCUFFED)
 		RestrainedClickOn(A)
-		return
+		return TRUE
 
 	if(in_throw_mode)
 		throw_item(A)//todo: make it plausible to lightly toss items via right-click
