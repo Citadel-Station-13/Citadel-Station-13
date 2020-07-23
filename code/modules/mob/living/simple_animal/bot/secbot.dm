@@ -227,9 +227,12 @@ Auto Patrol: []"},
 		if(special_retaliate_after_attack(H))
 			return
 	if(H.a_intent == INTENT_HELP && bot_accessory)
+
 		to_chat(H, "<span class='warning'>You knock [bot_accessory] off of [src]'s head!</span>")
 		bot_accessory.forceMove(get_turf(src))
-		//reset all emotes/sounds
+		//reset all emotes/sounds and name/desc
+		name = initial(name)
+		desc = initial(desc)
 		death_emote = initial(death_emote)
 		capture_one = initial(capture_one)
 		capture_two = initial(capture_two)
@@ -240,8 +243,11 @@ Auto Patrol: []"},
 		arrest_texts = initial(arrest_texts)
 		arrest_emote = initial(arrest_emote)
 		patrol_emote = initial(patrol_emote)
+		arrest_texts = initial(arrest_texts)
+		arrest_emote = initial(arrest_emote)
 		bot_accessory = null
 		qdel(stored_fashion)
+		regenerate_icons()
 		return
 
 	return ..()
