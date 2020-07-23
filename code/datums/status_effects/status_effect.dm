@@ -90,6 +90,12 @@
 		return
 	duration = world.time + original_duration
 
+/**
+  * Multiplied to clickdelays
+  */
+/datum/status_effect/proc/action_cooldown_mod()
+	return 1
+
 ////////////////
 // ALERT HOOK //
 ////////////////
