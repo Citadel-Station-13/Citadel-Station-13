@@ -266,6 +266,19 @@
 /obj/item/stock_parts/cell/bluespace/empty
 	start_charged = FALSE
 
+/obj/item/stock_parts/cell/vortex
+	name = "vortex power cell"
+	desc = "A rechargeable transdimensional power cell."
+	icon_state = "bscell"
+	maxcharge = 60000
+	custom_materials = list(/datum/material/glass=600)
+	chargerate = 3000 //Recharges slowly.
+	self_recharge = 1
+	rating = 6
+
+/obj/item/stock_parts/cell/vortex/empty
+	start_charged = FALSE
+
 /obj/item/stock_parts/cell/infinite
 	name = "infinite-capacity power cell!"
 	icon_state = "icell"

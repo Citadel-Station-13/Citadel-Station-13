@@ -78,6 +78,10 @@
 		/datum/reagent/toxin
 	)
 
+	var/list/upgrade_reagents4 = list(
+		/datum/reagent/toxin/slimejelly
+	)
+
 	var/list/emagged_reagents = list(
 		/datum/reagent/drug/space_drugs,
 		/datum/reagent/toxin/plasma,
@@ -101,6 +105,8 @@
 		upgrade_reagents2 = sortList(upgrade_reagents2, /proc/cmp_reagents_asc)
 	if(upgrade_reagents3)
 		upgrade_reagents3 = sortList(upgrade_reagents3, /proc/cmp_reagents_asc)
+	if(upgrade_reagents4)
+		upgrade_reagents4 = sortList(upgrade_reagents4, /proc/cmp_reagents_asc)
 	dispensable_reagents = sortList(dispensable_reagents, /proc/cmp_reagents_asc)
 	update_icon()
 
@@ -400,6 +406,8 @@
 			dispensable_reagents |= upgrade_reagents2
 		if(M.rating > 3)
 			dispensable_reagents |= upgrade_reagents3
+		if(M.rating > 4)
+			dispensable_reagents |= upgrade_reagents4
 	powerefficiency = round(newpowereff, 0.01)
 
 /obj/machinery/chem_dispenser/proc/replace_beaker(mob/living/user, obj/item/reagent_containers/new_beaker)
@@ -509,6 +517,11 @@
 		/datum/reagent/consumable/nothing,
 		/datum/reagent/consumable/peachjuice
 	)
+	upgrade_reagents4 = list(
+		/datum/reagent/toxin/teapowder,
+		/datum/reagent/consumable/bungojuice,
+		/datum/reagent/consumable/caramel
+	)
 	emagged_reagents = list(
 		/datum/reagent/toxin/mindbreaker,
 		/datum/reagent/toxin/staminatoxin,
@@ -567,6 +580,7 @@
 	)
 	upgrade_reagents2 = null
 	upgrade_reagents3 = null
+	upgrade_reagents4 = null
 	emagged_reagents = list(
 		/datum/reagent/consumable/ethanol/alexander,
 		/datum/reagent/consumable/clownstears,
@@ -768,7 +782,9 @@
 	upgrade_reagents3 = list(
 		/datum/reagent/medicine/mine_salve
 	)
-
+	upgrade_reagents4 = list(
+		/datum/reagent/blood
+	)
 	emagged_reagents = list(
 		/datum/reagent/drug/space_drugs,
 		/datum/reagent/toxin/carpotoxin,
