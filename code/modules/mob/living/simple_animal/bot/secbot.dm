@@ -159,7 +159,6 @@
 	arrest_texts = initial(arrest_texts)
 	arrest_emote = initial(arrest_emote)
 	bot_accessory = null
-	stored_fashion = null
 	regenerate_icons()
 
 /mob/living/simple_animal/bot/secbot/beepsky/explode()
@@ -339,6 +338,10 @@ Auto Patrol: []"},
 		if(!stored_fashion.obj_color)
 			stored_fashion.obj_color = bot_accessory.color
 		add_overlay(stored_fashion.get_overlay())
+	else
+		if(stored_fashion)
+			cut_overlay(stored_fashion.get_overlay())
+			stored_fashion = null
 
 /mob/living/simple_animal/bot/secbot/emag_act(mob/user)
 	. = ..()
