@@ -453,6 +453,9 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		if(newtype)
 			pref_species = new newtype
 
+
+		scars_index = rand(1,5)
+
 	//Character
 	S["real_name"]				>> real_name
 	S["nameless"]				>> nameless
@@ -497,6 +500,12 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["feature_insect_markings"]		>> features["insect_markings"]
 	S["feature_horns_color"]			>> features["horns_color"]
 	S["feature_wings_color"]			>> features["wings_color"]
+	S["persistent_scars"] 				>> persistent_scars
+	S["scars1"]							>> scars_list["1"]
+	S["scars2"]							>> scars_list["2"]
+	S["scars3"]							>> scars_list["3"]
+	S["scars4"]							>> scars_list["4"]
+	S["scars5"]							>> scars_list["5"]
 
 
 	//Custom names
@@ -709,6 +718,13 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	features["silicon_flavor_text"]			= copytext(features["silicon_flavor_text"], 1, MAX_FLAVOR_LEN)
 	features["ooc_notes"]			= copytext(features["ooc_notes"], 1, MAX_FLAVOR_LEN)
 
+	persistent_scars = sanitize_integer(persistent_scars)
+	scars_list["1"] = sanitize_text(scars_list["1"])
+	scars_list["2"] = sanitize_text(scars_list["2"])
+	scars_list["3"] = sanitize_text(scars_list["3"])
+	scars_list["4"] = sanitize_text(scars_list["4"])
+	scars_list["5"] = sanitize_text(scars_list["5"])
+
 	joblessrole	= sanitize_integer(joblessrole, 1, 3, initial(joblessrole))
 	//Validate job prefs
 	for(var/j in job_preferences)
@@ -839,6 +855,13 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["vore_flags"]			, vore_flags)
 	WRITE_FILE(S["vore_taste"]			, vore_taste)
 	WRITE_FILE(S["belly_prefs"]			, belly_prefs)
+
+	WRITE_FILE(S["persistent_scars"]			, persistent_scars)
+	WRITE_FILE(S["scars1"]						, scars_list["1"])
+	WRITE_FILE(S["scars2"]						, scars_list["2"])
+	WRITE_FILE(S["scars3"]						, scars_list["3"])
+	WRITE_FILE(S["scars4"]						, scars_list["4"])
+	WRITE_FILE(S["scars5"]						, scars_list["5"])
 
 	//gear loadout
 	if(chosen_gear.len)
