@@ -86,6 +86,9 @@
 	if(len && color[1] == "#")
 		if(len >= 2)
 			color = copytext(color, 2)
+		else
+			color = ""
+		len = length(color)
 
 	switch(desired_format)
 		if(3)
