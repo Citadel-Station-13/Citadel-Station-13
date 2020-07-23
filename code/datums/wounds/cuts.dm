@@ -155,7 +155,7 @@
 	if( ismoth(victim) || iscatperson(victim) || ismonkey(victim) ) // Yep you can lick monkeys.
 		user.reagents.add_reagent(/datum/reagent/hairball, 2)
 
-	else if( ishumanbasic(victim) || isflyperson(victim) || islizard(victim) || isdullahan(victim) || ismammal(victim) ||)
+	else if( ishumanbasic(victim) || isflyperson(victim) || islizard(victim) || isdullahan(victim) || ismammal(victim) )
 		user.reagents.add_reagent(/datum/reagent/hairball, 1)
 
 	if(blood_flow > minimum_flow)
