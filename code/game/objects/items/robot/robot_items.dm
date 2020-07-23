@@ -746,8 +746,8 @@
 ***********************************************************************/
 
 /obj/item/weapon/gripper
-	name = "circuit gripper"
-	desc = "A simple grasping tool for inserting circuitboards into machinary."
+	name = "engineering gripper"
+	desc = "A simple grasping tool for interacting with various engineering related items, such as circuits, gas tanks, conveyer belts and more. Alt click to drop instead of use."
 	icon = 'icons/obj/device.dmi'
 	icon_state = "gripper"
 
@@ -755,18 +755,36 @@
 
 	//Has a list of items that it can hold.
 	var/list/can_hold = list(
-		/obj/item/circuitboard
+		/obj/item/circuitboard,
+		/obj/item/light,
+		/obj/item/electronics,
+		/obj/item/tank,
+		/obj/item/conveyor_switch_construct,
+		/obj/item/stack/conveyor,
+		/obj/item/wallframe,
+		/obj/item/vending_refill,
+		/obj/item/stack/sheet,
+		/obj/item/stack/tile,
+		/obj/item/stack/rods,
+		/obj/item/stock_parts
+		)
+	//Basically a blacklist for any subtypes above we dont want
+	var/list/cannot_hold = list(
+		/obj/item/stack/sheet/mineral/plasma,
+		/obj/item/stack/sheet/plasteel
 		)
 
 	var/obj/item/wrapped = null // Item currently being held.
 
-/obj/item/weapon/gripper/attack_self()
+//Used to interact with UI's of held items, such as gas tanks and airlock electronics.
+/obj/item/weapon/gripper/AltClick(mob/user)
 	if(wrapped)
 		wrapped.forceMove(get_turf(wrapped))
+		to_chat(user, "<span class='notice'>You drop the [wrapped].</span>")
 		wrapped = null
 	return ..()
 
-/obj/item/weapon/gripper/afterattack(var/atom/target, var/mob/living/user, proximity, params)
+/obj/item/weapon/gripper/pre_attack(var/atom/target, var/mob/living/silicon/robot/user, proximity, params)
 
 	if(!proximity)
 		return
@@ -792,18 +810,21 @@
 			return
 
 	else if(istype(target,/obj/item))
-
 		var/obj/item/I = target
-
 		var/grab = 0
+
 		for(var/typepath in can_hold)
 			if(istype(I,typepath))
 				grab = 1
-				break
+				for(var/badpath in cannot_hold)
+					if(istype(I,badpath))
+						if(!user.emagged)
+							grab = 0
+							continue
 
 		//We can grab the item, finally.
 		if(grab)
-			to_chat(user, "You collect \the [I].")
+			to_chat(user, "<span class='notice'>You collect \the [I].</span>")
 			I.loc = src
 			wrapped = I
 			return
@@ -812,18 +833,24 @@
 
 /obj/item/weapon/gripper/mining
 	name = "shelter capsule deployer"
-	desc = "A simple grasping tool for carrying and deploying shelter capsules."
+	desc = "A simple grasping tool for carrying and deploying shelter capsules. Alt click to drop instead of use."
 	icon_state = "gripper_mining"
 	can_hold = list(
 		/obj/item/survivalcapsule
 		)
 
-/obj/item/weapon/gripper/mining/attack_self()
-	if(wrapped)
-		wrapped.forceMove(get_turf(wrapped))
-		wrapped.attack_self()
-		wrapped = null
-	return
+/obj/item/weapon/gripper/medical
+	name = "medical gripper"
+	desc = "A simple grasping tool for interacting with medical equipment, such as beakers, blood bags, chem bags and more. Alt click to drop instead of use."
+	icon_state = "gripper_medical"
+	can_hold = list(
+		/obj/item/storage/bag/bio,
+		/obj/item/storage/bag/chemistry,
+		/obj/item/storage/pill_bottle,
+		/obj/item/reagent_containers/glass,
+		/obj/item/reagent_containers/pill,
+		/obj/item/reagent_containers/blood
+		)
 
 /obj/item/gun/energy/plasmacutter/cyborg
 	name = "cyborg plasma cutter"
@@ -907,6 +934,9 @@
 	icon_state = "data_1"
 
 
+/**********************************************************************
+						Dogborg stuff
+***********************************************************************/
 ///Mere cosmetic dogborg items, remnants of what were once the most annoying cyborg modules.
 /obj/item/dogborg_tongue
 	name = "synthetic tongue"

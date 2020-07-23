@@ -69,6 +69,7 @@
 		if(prob(50))
 			to_chat(mover, "<span class='danger'>You get stuck in \the [src] for a moment.</span>")
 			return FALSE
+		return TRUE
 	else if(istype(mover, /obj/item/projectile))
 		return prob(30)
 
@@ -152,7 +153,7 @@
 	else
 		..()
 
-/obj/structure/spider/spiderling/attack_hand(mob/user)
+/obj/structure/spider/spiderling/attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	. = ..()
 	if(user.a_intent != INTENT_HELP)
 		user.changeNext_move(CLICK_CD_MELEE)

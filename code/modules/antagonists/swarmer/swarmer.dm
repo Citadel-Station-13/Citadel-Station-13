@@ -36,7 +36,7 @@
 	if(A)
 		notify_ghosts("A swarmer shell has been created in [A.name].", 'sound/effects/bin_close.ogg', source = src, action = NOTIFY_ATTACK, flashwindow = FALSE, ignore_dnr_observers = TRUE)
 
-/obj/effect/mob_spawn/swarmer/attack_hand(mob/living/user)
+/obj/effect/mob_spawn/swarmer/attack_hand(mob/living/user, act_intent = user.a_intent, unarmed_attack_flags)
 	. = ..()
 	if(.)
 		return
@@ -486,7 +486,7 @@
 		var/obj/O = target
 		if(O.resistance_flags & INDESTRUCTIBLE)
 			return FALSE
-	for(var/mob/living/L in GetAllContents())
+	for(var/mob/living/L in target.GetAllContents())
 		if(!ispAI(L) && !isbrain(L))
 			to_chat(src, "<span class='warning'>An organism has been detected inside this object. Aborting.</span>")
 			return FALSE

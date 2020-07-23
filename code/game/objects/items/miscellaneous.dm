@@ -18,6 +18,8 @@
 	icon = 'icons/obj/device.dmi'
 	icon_state = "gangtool-blue"
 	item_state = "radio"
+	var/list/stored_options
+	var/force_refresh = FALSE //if set to true, the beacon will recalculate its display options whenever opened
 
 /obj/item/choice_beacon/attack_self(mob/user)
 	if(canUseBeacon(user))
@@ -34,14 +36,15 @@
 		return FALSE
 
 /obj/item/choice_beacon/proc/generate_options(mob/living/M)
-	var/list/display_names = generate_display_names()
-	if(!display_names.len)
+	if(!stored_options || force_refresh)
+		stored_options = generate_display_names()
+	if(!stored_options.len)
 		return
-	var/choice = input(M,"Which item would you like to order?","Select an Item") as null|anything in display_names
+	var/choice = input(M,"Which item would you like to order?","Select an Item") as null|anything in stored_options
 	if(!choice || !M.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 		return
 
-	spawn_option(display_names[choice],M)
+	spawn_option(stored_options[choice],M)
 	qdel(src)
 
 /obj/item/choice_beacon/proc/spawn_option(obj/choice,mob/living/M)
@@ -152,6 +155,51 @@
 /obj/item/choice_beacon/augments/spawn_option(obj/choice,mob/living/M)
 	new choice(get_turf(M))
 	to_chat(M, "<span class='hear'>You hear something crackle from the beacon for a moment before a voice speaks. \"Please stand by for a message from S.E.L.F. Message as follows: <b>Item request received. Your package has been transported, use the autosurgeon supplied to apply the upgrade.</b> Message ends.\"</span>")
+
+/obj/item/choice_beacon/box
+	name = "choice box (default)"
+	desc = "Think really hard about what you want, and then rip it open!"
+	icon = 'icons/obj/storage.dmi'
+	icon_state = "deliverypackage3"
+	item_state = "deliverypackage3"
+
+/obj/item/choice_beacon/box/spawn_option(obj/choice,mob/living/M)
+	to_chat(M, "<span class='hear'>The box opens, revealing the [choice]!</span>")
+	playsound(src.loc, 'sound/items/poster_ripped.ogg', 50, 1)
+	M.temporarilyRemoveItemFromInventory(src, TRUE)
+	M.put_in_hands(new choice)
+	qdel(src)
+
+/obj/item/choice_beacon/box/plushie
+	name = "choice box (plushie)"
+	desc = "Using the power of quantum entanglement, this box contains every plush, until the moment it is opened!"
+	icon = 'icons/obj/plushes.dmi'
+	icon_state = "box"
+	item_state = "box"
+
+/obj/item/choice_beacon/box/spawn_option(choice,mob/living/M)
+	if(ispath(choice, /obj/item/toy/plush))
+		..() //regular plush, spawn it naturally
+	else
+		//snowflake plush
+		var/obj/item/toy/plush/snowflake_plushie = new(get_turf(M))
+		snowflake_plushie.set_snowflake_from_config(choice)
+		M.temporarilyRemoveItemFromInventory(src, TRUE)
+		M.put_in_hands(new choice)
+		qdel(src)
+
+/obj/item/choice_beacon/box/plushie/generate_display_names()
+	var/list/plushie_list = list()
+	//plushie set 1: just subtypes of /obj/item/toy/plush
+	var/list/plushies_set_one = subtypesof(/obj/item/toy/plush) - list(/obj/item/toy/plush/narplush, /obj/item/toy/plush/awakenedplushie, /obj/item/toy/plush/random_snowflake, /obj/item/toy/plush/random) //don't allow these special ones (you can still get narplush/hugbox)
+	for(var/V in plushies_set_one)
+		var/atom/A = V
+		plushie_list[initial(A.name)] = A
+	//plushie set 2: snowflake plushies
+	var/list/plushies_set_two = CONFIG_GET(keyed_list/snowflake_plushies)
+	for(var/V in plushies_set_two)
+		plushie_list[V] = V //easiest way to do this which works with how selecting options works, despite being snowflakey to have the key equal the value
+	return plushie_list
 
 /obj/item/skub
 	desc = "It's skub."

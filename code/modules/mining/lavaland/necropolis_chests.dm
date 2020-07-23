@@ -79,9 +79,9 @@
 			new /obj/item/clothing/neck/necklace/memento_mori(src)
 		if(29)
 			if(prob(50))
-				new /obj/item/malf_upgrade
+				new /obj/item/malf_upgrade(src)
 			else
-				new /obj/item/disk/tech_disk/illegal
+				new /obj/item/disk/tech_disk/illegal(src)
 
 //KA modkit design discs
 /obj/item/disk/design_disk/modkit_disc
@@ -1104,7 +1104,7 @@
 	var/blast_range = 13 //how long the cardinal blast's walls are
 	var/obj/effect/hierophant/beacon //the associated beacon we teleport to
 	var/teleporting = FALSE //if we ARE teleporting
-	var/friendly_fire_check = FALSE //if the blasts we make will consider our faction against the faction of hit targets
+	var/friendly_fire_check = TRUE //if the blasts we make will consider our faction against the faction of hit targets
 
 /obj/item/hierophant_club/ComponentInitialize()
 	. = ..()

@@ -186,6 +186,9 @@
 			break
 		if(uninterruptible)
 			continue
+		if(!(target in user.do_afters))
+			. = FALSE
+			break
 
 		if(!(target in user.do_afters))
 			. = FALSE
@@ -198,7 +201,7 @@
 		if((!drifting && user.loc != user_loc) || target.loc != target_loc || (!ignorehelditem && user.get_active_held_item() != holding) || user.incapacitated() || user.lying || (extra_checks && !extra_checks.Invoke()))
 			. = 0
 			break
-	if (progress)
+	if(progress)
 		qdel(progbar)
 
 	if(!QDELETED(target))
@@ -275,7 +278,7 @@
 				break
 
 		if(target && !(target in user.do_afters))
-			. = 0
+			. = FALSE
 			break
 
 		if(needhand)
@@ -288,8 +291,10 @@
 			if(user.get_active_held_item() != holding)
 				. = 0
 				break
-	if (progress)
+	if(progress)
 		qdel(progbar)
+	if(!QDELETED(target))
+		LAZYREMOVE(user.do_afters, target)
 
 	if(!QDELETED(target))
 		LAZYREMOVE(user.do_afters, target)
@@ -345,7 +350,6 @@
 					break mainloop
 	if(progbar)
 		qdel(progbar)
-
 	for(var/thing in targets)
 		var/atom/target = thing
 		if(!QDELETED(target))

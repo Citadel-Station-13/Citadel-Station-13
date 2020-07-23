@@ -174,6 +174,27 @@
 	tastes = list("meat" = 1, "smoke" = 1)
 	foodtype = MEAT
 
+/obj/item/reagent_containers/food/snacks/meatloaf
+	name = "meatloaf"
+	desc = "Meat! In a loaf!"
+	icon_state = "meatloaf"
+	filling_color = "#8f0f0f"
+	list_reagents = list(/datum/reagent/consumable/nutriment = 10)
+	bonus_reagents = list(/datum/reagent/consumable/nutriment = 6, /datum/reagent/consumable/nutriment/vitamin = 2, /datum/reagent/consumable/ketchup = 5)
+	tastes = list("meat" = 1, "ketchup" = 1)
+	slices_num = 5
+	slice_path = /obj/item/reagent_containers/food/snacks/meatloaf_slice
+	foodtype = MEAT
+
+/obj/item/reagent_containers/food/snacks/meatloaf_slice
+	name = "meatloaf slice"
+	filling_color = "#8f0f0f"
+	desc = "Meat! In chunky slices!"
+	icon_state = "meatloaf_slice"
+	list_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/ketchup = 1)
+	tastes = list("meat" = 1, "ketchup" = 1)
+	foodtype = MEAT
+
 /obj/item/reagent_containers/food/snacks/kebab
 	trash = /obj/item/stack/rods
 	icon_state = "kebab"
@@ -301,6 +322,16 @@
 	var/shape = pick("lump", "star", "lizard", "corgi")
 	desc = "A 'chicken' nugget vaguely shaped like a [shape]."
 	icon_state = "nugget_[shape]"
+
+/obj/item/reagent_containers/food/snacks/sweet_and_sour
+	name = "sweet and sour chicken"
+	desc = "More sweet than sour, but delicious nonetheless."
+	icon_state = "sweet_and_sour"
+	filling_color = "#B22222"
+	bonus_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/nutriment/vitamin = 1, /datum/reagent/consumable/soysauce = 2)
+	list_reagents = list(/datum/reagent/consumable/nutriment = 9, /datum/reagent/consumable/nutriment/vitamin = 2, /datum/reagent/consumable/soysauce = 2)
+	tastes = list("\"chicken\"" = 1)
+	foodtype = MEAT | PINEAPPLE
 
 /obj/item/reagent_containers/food/snacks/pigblanket
 	name = "pig in a blanket"

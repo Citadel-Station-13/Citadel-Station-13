@@ -27,7 +27,9 @@
 	icon_state = "chef"
 	item_state = "chef"
 	dynamic_hair_suffix = ""
+
 	dog_fashion = /datum/dog_fashion/head/chef
+	beepsky_fashion = /datum/beepsky_fashion/chef
 
 /obj/item/clothing/head/collectable/paper
 	name = "collectable paper hat"
@@ -42,6 +44,8 @@
 	icon_state = "tophat"
 	item_state = "that"
 
+	beepsky_fashion = /datum/beepsky_fashion/tophat
+
 /obj/item/clothing/head/collectable/captain
 	name = "collectable captain's hat"
 	desc = "A collectable hat that'll make you look just like a real comdom!"
@@ -49,6 +53,7 @@
 	item_state = "caphat"
 
 	dog_fashion = /datum/dog_fashion/head/captain
+	beepsky_fashion = /datum/beepsky_fashion/captain
 
 /obj/item/clothing/head/collectable/police
 	name = "collectable police officer's hat"
@@ -91,6 +96,7 @@
 	item_state = "pirate"
 
 	dog_fashion = /datum/dog_fashion/head/pirate
+	beepsky_fashion = /datum/beepsky_fashion/pirate
 
 /obj/item/clothing/head/collectable/kitty
 	name = "collectable kitty ears"
@@ -100,6 +106,7 @@
 	dynamic_hair_suffix = ""
 
 	dog_fashion = /datum/dog_fashion/head/kitty
+	beepsky_fashion = /datum/beepsky_fashion/cat
 
 /obj/item/clothing/head/collectable/rabbitears
 	name = "collectable rabbit ears"
@@ -116,6 +123,7 @@
 	icon_state = "wizard"
 
 	dog_fashion = /datum/dog_fashion/head/blue_wizard
+	beepsky_fashion = /datum/beepsky_fashion/wizard
 
 /obj/item/clothing/head/collectable/hardhat
 	name = "collectable hard hat"
