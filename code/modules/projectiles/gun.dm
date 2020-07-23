@@ -17,6 +17,7 @@
 	force = 5
 	item_flags = NEEDS_PERMIT
 	attack_verb = list("struck", "hit", "bashed")
+	attack_speed = CLICK_CD_RANGE
 
 	var/fire_sound = "gunshot"
 	var/suppressed = null					//whether or not a message is displayed when fired
@@ -174,9 +175,6 @@
 	if(firing)
 		return
 	var/stamloss = user.getStaminaLoss()
-	if(stamloss >= STAMINA_NEAR_SOFTCRIT) //The more tired you are, the less damage you do.
-		var/penalty = (stamloss - STAMINA_NEAR_SOFTCRIT)/(STAMINA_NEAR_CRIT - STAMINA_NEAR_SOFTCRIT)*STAM_CRIT_GUN_DELAY
-		user.changeNext_move(CLICK_CD_RANGE+(CLICK_CD_RANGE*penalty))
 	if(flag) //It's adjacent, is the user, or is on the user's person
 		if(target in user.contents) //can't shoot stuff inside us.
 			return
@@ -242,6 +240,17 @@
 	if(HAS_TRAIT(user, TRAIT_PACIFISM) && chambered?.harmful) // If the user has the pacifist trait, then they won't be able to fire [src] if the round chambered inside of [src] is lethal.
 		to_chat(user, "<span class='notice'> [src] is lethally chambered! You don't want to risk harming anyone...</span>")
 		return FALSE
+
+/obj/item/gun/CheckAttackCooldown(mob/user, atom/target)
+	if((user.a_intent == INTENT_HARM) && user.Adjacent(target))		//melee
+		return user.CheckActionCooldown(CLICK_CD_MELEE)
+	return user.CheckActionCooldown(get_clickcd())
+
+/obj/item/gun/proc/get_clickcd()
+	return isnull(chambered?.click_cooldown_override)? CLICK_CD_RANGE : chambered.click_cooldown_override
+
+/obj/item/gun/GetEstimatedAttackSpeed()
+	return get_clickcd()
 
 /obj/item/gun/proc/handle_pins(mob/living/user)
 	if(no_pin_required)

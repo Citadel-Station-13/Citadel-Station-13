@@ -65,7 +65,7 @@
 	var/attack_speed = unarmed_attack_speed
 	var/obj/item/I = get_active_held_item()
 	if(I)
-		attack_speed = I.attack_speed
+		attack_speed = I.GetEstimatedAttackSpeed()
 	return max(next_action, last_action + attack_speed)
 
 /**
@@ -156,3 +156,9 @@
   */
 /obj/item/proc/ApplyAttackCooldown(mob/user, atom/target)
 	user.DelayNextAction(attack_unwieldlyness, clickdelay_mod_bypass, FALSE)
+
+/**
+  * Get estimated time that a user has to not attack for to use us
+  */
+/obj/item/proc/GetEstimatedAttackSpeed()
+	return attack_speed
