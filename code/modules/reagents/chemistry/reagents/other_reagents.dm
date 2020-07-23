@@ -2381,7 +2381,7 @@
 			M.Immobilize(30)
 			sleep(30)
 			M.visible_message("<span class='warning'>[M] throws up a hairball! Disgusting!</span>", ignored_mobs=M)
-			new /obj/item/toy/plush/Hairball(get_turf(M))
+			new /obj/item/toy/plush/hairball(get_turf(M))
 			to_chat(M, "<span class='notice'>Aaaah that's better!</span>")
 			SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "cleared_stomach", /datum/mood_event/cleared_stomach, name)
 			M.reagents.del_reagent(/datum/reagent/hairball)
