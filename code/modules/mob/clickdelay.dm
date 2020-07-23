@@ -144,7 +144,7 @@
 	var/attack_hand_speed = CLICK_CD_MELEE
 	/// Amount of time to hard stagger (no clicking at all) the mob post attack_hand(). Lower = better
 	var/attack_hand_unwieldlyness = 0
-	/// Should we set last action for attack hand?
+	/// Should we set last action for attack hand? This implies that attack_hands to this atom should flush to clickdelay buffers instead of discarding.
 	var/attack_hand_is_action = FALSE
 
 /obj/item
@@ -170,7 +170,7 @@
   * Called after a successful attack to set a mob's clickdelay.
   */
 /obj/item/proc/ApplyAttackCooldown(mob/user, atom/target)
-	user.DelayNextAction(attack_unwieldlyness, clickdelay_mod_bypass, FALSE)
+	user.DelayNextAction(attack_unwieldlyness, clickdelay_mod_bypass)
 
 /**
   * Get estimated time that a user has to not attack for to use us

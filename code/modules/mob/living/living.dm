@@ -676,7 +676,7 @@
 		..(pressure_difference, direction, pressure_resistance_prob_delta)
 
 /mob/living/can_resist()
-	return !(CheckResistCooldown() || !CHECK_MOBILITY(src, MOBILITY_RESIST))
+	return !CheckResistCooldown() && CHECK_MOBILITY(src, MOBILITY_RESIST)
 
 /// Resist verb for attempting to get out of whatever is restraining your motion. Gives you resist clickdelay if do_resist() returns true.
 /mob/living/verb/resist()

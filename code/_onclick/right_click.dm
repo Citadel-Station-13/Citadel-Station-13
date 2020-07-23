@@ -36,12 +36,11 @@
 	//User itself, current loc, and user inventory
 	if(A in DirectAccess())
 		if(W)
-			. = W.rightclick_melee_attack_chain(src, A, params)
-			. = !(. & DISCARD_LAST_ACTION)
+			. = W.melee_attack_chain(src, A, params)
+			return !(. & DISCARD_LAST_ACTION)
 		else
 			if(!AltUnarmedAttack(A))
-				. = UnarmedAttack(A, 1)? TRUE : FALSE
-		return
+				return UnarmedAttack(A, 1)? TRUE : FALSE
 
 	//Can't reach anything else in lockers or other weirdness
 	if(!loc.AllowClick())
@@ -50,11 +49,11 @@
 	//Standard reach turf to turf or reaching inside storage
 	if(CanReach(A,W))
 		if(W)
-			. = W.rightclick_melee_attack_chain(src, A, params)
-			. = !(. & DISCARD_LAST_ACTION)
+			. = W.melee_attack_chain(src, A, params)
+			return !(. & DISCARD_LAST_ACTION)
 		else
 			if(!AltUnarmedAttack(A,1))
-				. = UnarmedAttack(A, 1)? TRUE : FALSE
+				return UnarmedAttack(A, 1)? TRUE : FALSE
 	else
 		if(W)
 			if(!W.altafterattack(A, src, FALSE, params))

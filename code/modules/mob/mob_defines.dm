@@ -14,6 +14,7 @@
 	
 	attack_hand_is_action = TRUE
 	attack_hand_unwieldlyness = CLICK_CD_MELEE
+	attack_hand_speed = 0
 
 	/// What receives our keyboard input. src by default.
 	var/datum/focus

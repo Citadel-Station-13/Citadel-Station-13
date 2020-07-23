@@ -111,9 +111,9 @@
 	if(A in DirectAccess())
 		if(W)
 			. = W.melee_attack_chain(src, A, params)
-			. = !(. & DISCARD_LAST_ACTION)
+			return = !(. & DISCARD_LAST_ACTION)
 		else
-			. = UnarmedAttack(A)? TRUE : FALSE
+			return UnarmedAttack(A)? TRUE : FALSE
 
 	//Can't reach anything else in lockers or other weirdness
 	if(!loc.AllowClick())
@@ -123,9 +123,9 @@
 	if(CanReach(A,W))
 		if(W)
 			. = W.melee_attack_chain(src, A, params)
-			. = !(. & DISCARD_LAST_ACTION)
+			return !(. & DISCARD_LAST_ACTION)
 		else
-			. = UnarmedAttack(A, 1)? TRUE : FALSE
+			return UnarmedAttack(A, 1)? TRUE : FALSE
 	else
 		if(W)
 			W.ranged_attack_chain(src, A, params)

@@ -14,7 +14,7 @@
 	// If the gloves do anything, have them return 1 to stop
 	// normal attack_hand() here.
 	var/obj/item/clothing/gloves/G = gloves // not typecast specifically enough in defines
-	if(proximity && istype(G) && G.Touch(A,1))
+	if(proximity && istype(G) && (. = G.Touch(A,1)))
 		return
 
 	var/override = 0
@@ -26,7 +26,7 @@
 		return
 
 	SEND_SIGNAL(src, COMSIG_HUMAN_MELEE_UNARMED_ATTACK, A)
-	A.attack_hand(src, intent, flags)
+	return A.attack_hand(src, intent, flags)
 
 /atom/proc/attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	if(!(interaction_flags_atom & INTERACT_ATOM_NO_FINGERPRINT_ATTACK_HAND))
@@ -39,6 +39,7 @@
 	on_attack_hand(user, act_intent, unarmed_attack_flags)
 	if(attack_hand_unwieldlyness)
 		user.DelayNextAction(attack_hand_unwieldlyness, considered_action = attack_hand_is_action)
+	return attack_hand_is_action
 
 /atom/proc/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	if(interaction_flags_atom & INTERACT_ATOM_ATTACK_HAND)
