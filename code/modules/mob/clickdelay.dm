@@ -135,7 +135,7 @@
 /mob/proc/MarkResistTime(extra_cooldown = resist_cooldown, override = FALSE)
 	last_resist = world.time
 	next_resist = override? (world.time + extra_cooldown) : max(next_resist, world.time + extra_cooldown)
-	hud_used?.clickdelay?.mark_dirty()
+	hud_used?.resistdelay?.mark_dirty()
 
 /atom
 	// Standard clickdelay variables
