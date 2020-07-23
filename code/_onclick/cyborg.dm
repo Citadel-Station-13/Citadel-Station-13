@@ -79,8 +79,6 @@
 		// cyborgs are prohibited from using storage items so we can I think safely remove (A.loc in contents)
 		if(A == loc || (A in loc) || (A in contents))
 			. = W.melee_attack_chain(src, A, params)
-			if(ismob(A) && !(. & MANUALLY_HANDLE_LAST_ACTION))
-				DelayNextAction()
 			. = !(. & DISCARD_LAST_ACTION)
 			return
 
@@ -91,8 +89,6 @@
 		if(isturf(A) || isturf(A.loc))
 			if(A.Adjacent(src)) // see adjacent.dm
 				. = W.melee_attack_chain(src, A, params)
-				if(ismob(A) && !(. & MANUALLY_HANDLE_LAST_ACTION))
-					DelayNextAction()
 				. = !(. & DISCARD_LAST_ACTION)
 				return
 			else

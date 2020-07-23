@@ -11,6 +11,9 @@
 	blocks_emissive = EMISSIVE_BLOCK_GENERIC
 
 	vis_flags = VIS_INHERIT_PLANE //when this be added to vis_contents of something it inherit something.plane, important for visualisation of mob in openspace.
+	
+	attack_hand_is_action = TRUE
+	attack_hand_unwieldlyness = CLICK_CD_MELEE
 
 	/// What receives our keyboard input. src by default.
 	var/datum/focus

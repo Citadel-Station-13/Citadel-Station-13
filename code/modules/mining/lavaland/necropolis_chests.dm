@@ -701,11 +701,10 @@
 		to_chat(user, "<span class='warning'>You accidentally cut yourself with [src], like a doofus!</span>")
 		user.take_bodypart_damage(10)
 
-/obj/item/melee/transforming/cleaving_saw/melee_attack_chain(mob/user, atom/target, params)
+/obj/item/melee/transforming/cleaving_saw/ApplyAttackCooldown(mob/user, atom/target)
 	. = ..()
 	if(!active)
 		user.SetNextAction(CLICK_CD_MELEE * 0.5) //when closed, it attacks very rapidly
-		. |= MANUALLY_HANDLE_LAST_ACTION
 
 /obj/item/melee/transforming/cleaving_saw/nemesis_effects(mob/living/user, mob/living/target)
 	var/datum/status_effect/stacking/saw_bleed/B = target.has_status_effect(STATUS_EFFECT_SAWBLEED)

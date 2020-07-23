@@ -11,6 +11,10 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 	name = "item"
 	icon = 'icons/obj/items_and_weapons.dmi'
 	blocks_emissive = EMISSIVE_BLOCK_GENERIC
+	
+	attack_hand_speed = 0
+	attack_hand_is_action = FALSE
+	attack_hand_unwieldlyness = 0
 
 	///icon state name for inhand overlays
 	var/item_state = null

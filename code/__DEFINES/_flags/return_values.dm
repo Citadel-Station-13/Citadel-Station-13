@@ -7,8 +7,6 @@
 #define STOP_ATTACK_PROC_CHAIN					(1<<0)
 /// This attack should discard last_action instead of flushing (storing) it). You should probably know what you're doing if you use this considering this is how clickdelay is enforced.
 #define DISCARD_LAST_ACTION						(1<<1)
-/// Override automatic last_action set. There's usually a safety net in that attempting to attack a mob will set last_action even if the item itself doesn't specifically set it. If this is present, that doesn't happen.
-#define MANUALLY_HANDLE_LAST_ACTION				(1<<2)
 
 // UnarmedAttack() flags
 /// Attack is from a parry counterattack
