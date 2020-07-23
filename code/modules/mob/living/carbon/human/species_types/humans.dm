@@ -10,6 +10,9 @@
 	disliked_food = GROSS | RAW
 	liked_food = JUNKFOOD | FRIED
 
+	tail_type = "tail_human"
+	wagging_type = "waggingtail_human"
+
 /datum/species/human/spec_death(gibbed, mob/living/carbon/human/H)
 	if(H)
 		stop_wagging_tail(H)
@@ -18,21 +21,3 @@
 	if(H)
 		stop_wagging_tail(H)
 	. = ..()
-
-/datum/species/human/can_wag_tail(mob/living/carbon/human/H)
-	return mutant_bodyparts["tail_human"] || mutant_bodyparts["waggingtail_human"]
-
-/datum/species/human/is_wagging_tail(mob/living/carbon/human/H)
-	return mutant_bodyparts["waggingtail_human"]
-
-/datum/species/human/start_wagging_tail(mob/living/carbon/human/H)
-	if(mutant_bodyparts["tail_human"])
-		mutant_bodyparts["waggingtail_human"] = mutant_bodyparts["tail_human"]
-		mutant_bodyparts -= "tail_human"
-	H.update_body()
-
-/datum/species/human/stop_wagging_tail(mob/living/carbon/human/H)
-	if(mutant_bodyparts["waggingtail_human"])
-		mutant_bodyparts["tail_human"] = mutant_bodyparts["waggingtail_human"]
-		mutant_bodyparts -= "waggingtail_human"
-	H.update_body()

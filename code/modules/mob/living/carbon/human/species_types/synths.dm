@@ -43,7 +43,6 @@
 		return TRUE
 	return ..()
 
-
 /datum/species/synth/proc/assume_disguise(datum/species/S, mob/living/carbon/human/H)
 	if(S && !istype(S, type))
 		name = S.name

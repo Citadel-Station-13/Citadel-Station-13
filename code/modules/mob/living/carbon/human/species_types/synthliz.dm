@@ -20,20 +20,5 @@
 	exotic_bloodtype = "S"
 	exotic_blood_color = BLOOD_COLOR_OIL
 
-/datum/species/synthliz/can_wag_tail(mob/living/carbon/human/H)
-	return mutant_bodyparts["mam_tail"] || mutant_bodyparts["mam_waggingtail"]
-
-/datum/species/synthliz/is_wagging_tail(mob/living/carbon/human/H)
-	return mutant_bodyparts["mam_waggingtail"]
-
-/datum/species/synthliz/start_wagging_tail(mob/living/carbon/human/H)
-	if(mutant_bodyparts["mam_tail"])
-		mutant_bodyparts["mam_waggingtail"] = mutant_bodyparts["mam_tail"]
-		mutant_bodyparts -= "mam_tail"
-	H.update_body()
-
-/datum/species/synthliz/stop_wagging_tail(mob/living/carbon/human/H)
-	if(mutant_bodyparts["mam_waggingtail"])
-		mutant_bodyparts["mam_tail"] = mutant_bodyparts["mam_waggingtail"]
-		mutant_bodyparts -= "mam_waggingtail"
-	H.update_body()
+	tail_type = "mam_tail"
+	wagging_type = "mam_waggingtail"

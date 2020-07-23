@@ -17,20 +17,5 @@
 	exotic_bloodtype = "BUG"
 	exotic_blood_color = BLOOD_COLOR_BUG
 
-/datum/species/insect/can_wag_tail(mob/living/carbon/human/H)
-	return mutant_bodyparts["mam_tail"] || mutant_bodyparts["mam_waggingtail"]
-
-/datum/species/insect/is_wagging_tail(mob/living/carbon/human/H)
-	return mutant_bodyparts["mam_waggingtail"]
-
-/datum/species/insect/start_wagging_tail(mob/living/carbon/human/H)
-	if(mutant_bodyparts["mam_tail"])
-		mutant_bodyparts["mam_waggingtail"] = mutant_bodyparts["mam_tail"]
-		mutant_bodyparts -= "mam_tail"
-	H.update_body()
-
-/datum/species/insect/stop_wagging_tail(mob/living/carbon/human/H)
-	if(mutant_bodyparts["mam_waggingtail"])
-		mutant_bodyparts["mam_tail"] = mutant_bodyparts["mam_waggingtail"]
-		mutant_bodyparts -= "mam_waggingtail"
-	H.update_body()
+	tail_type = "mam_tail"
+	wagging_type = "mam_waggingtail"

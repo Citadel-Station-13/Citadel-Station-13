@@ -9,23 +9,8 @@
 	mutantears = /obj/item/organ/ears/cat
 	mutanttail = /obj/item/organ/tail/cat
 
-/datum/species/human/felinid/can_wag_tail(mob/living/carbon/human/H)
-	return mutant_bodyparts["mam_tail"] || mutant_bodyparts["mam_waggingtail"]
-
-/datum/species/human/felinid/is_wagging_tail(mob/living/carbon/human/H)
-	return mutant_bodyparts["mam_waggingtail"]
-
-/datum/species/human/felinid/start_wagging_tail(mob/living/carbon/human/H)
-	if(mutant_bodyparts["mam_tail"])
-		mutant_bodyparts["mam_waggingtail"] = mutant_bodyparts["mam_tail"]
-		mutant_bodyparts -= "mam_tail"
-	H.update_body()
-
-/datum/species/human/felinid/stop_wagging_tail(mob/living/carbon/human/H)
-	if(mutant_bodyparts["mam_waggingtail"])
-		mutant_bodyparts["mam_tail"] = mutant_bodyparts["mam_waggingtail"]
-		mutant_bodyparts -= "mam_waggingtail"
-	H.update_body()
+	tail_type = "mam_tail"
+	wagging_type = "mam_waggingtail"
 
 /datum/species/human/felinid/on_species_gain(mob/living/carbon/C, datum/species/old_species, pref_load)
 	if(ishuman(C))

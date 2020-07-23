@@ -5,7 +5,7 @@
 	say_mod = "hisses"
 	default_color = "00FF00"
 	icon_limbs = DEFAULT_BODYPART_ICON_CITADEL
-	species_traits = list(MUTCOLORS,EYECOLOR,LIPS,CAN_SCAR)
+	species_traits = list(MUTCOLORS,EYECOLOR,LIPS)
 	mutant_bodyparts = list("xenotail"="Xenomorph Tail","xenohead"="Standard","xenodorsal"="Standard", "mam_body_markings" = "Xeno","mcolor" = "0F0","mcolor2" = "0F0","mcolor3" = "0F0","taur" = "None", "legs" = "Digitigrade")
 	attack_verb = "slash"
 	attack_sound = 'sound/weapons/slash.ogg'
