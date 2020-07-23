@@ -324,13 +324,10 @@
 
 /mob/living/carbon/resist_restraints()
 	var/obj/item/I = null
-	var/type = 0
 	if(handcuffed)
 		I = handcuffed
-		type = 1
 	else if(legcuffed)
 		I = legcuffed
-		type = 2
 	if(I)
 		MarkResistTime()
 		cuff_resist(I)

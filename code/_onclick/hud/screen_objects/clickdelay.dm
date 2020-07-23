@@ -17,7 +17,7 @@
 /obj/screen/action_bar/proc/update_to_mob(mob/living/L)
 	return FALSE
 
-/datum/hud/var/obj/screen/action_bar/clickdelay
+/datum/hud/var/obj/screen/action_bar/clickdelay/clickdelay
 
 /obj/screen/action_bar/clickdelay
 	name = "click delay"
@@ -41,7 +41,7 @@
 	icon = 'icons/effects/progessbar.dmi'
 	icon_state = "prog_bar_100"
 
-/obj/screen/clickdelay/proc/update_to_mob(mob/living/L)
+/obj/screen/action_bar/clickdelay/proc/update_to_mob(mob/living/L)
 	var/diff = L.next_resist - L.last_resist
 	var/left = L.next_resist - world.time
 	if(left < 0 || diff < 0)
