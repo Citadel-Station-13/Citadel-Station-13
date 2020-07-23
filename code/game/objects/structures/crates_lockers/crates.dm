@@ -42,6 +42,7 @@
 		. += "manifest"
 
 /obj/structure/closet/crate/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
+	. = ..()
 	if(manifest)
 		tear_manifest(user)
 
