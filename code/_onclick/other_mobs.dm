@@ -36,7 +36,7 @@
 	if(attack_hand_speed)
 		if(!user.CheckActionCooldown(attack_hand_speed))
 			return
-	attack_hand(user, act_intent, unarmed_attack_flags)
+	on_attack_hand(user, act_intent, unarmed_attack_flags)
 	if(attack_hand_unwieldlyness)
 		user.DelayNextAction(attack_hand_unwieldlyness, considered_action = attack_hand_is_action)
 
