@@ -132,6 +132,9 @@
 	if(!iscatperson(user))
 		return FALSE
 
+	if(!(user.client?.prefs.vore_flags & LICKABLE))
+		return FALSE
+
 	lick_wounds(user)
 	return TRUE
 
