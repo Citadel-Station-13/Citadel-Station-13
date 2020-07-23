@@ -294,8 +294,7 @@
 */
 
 /mob/proc/CtrlClickOn(atom/A)
-	A.CtrlClick(src)
-	return
+	return A.CtrlClick(src)
 
 /atom/proc/CtrlClick(mob/user)
 	SEND_SIGNAL(src, COMSIG_CLICK_CTRL, user)
@@ -335,7 +334,8 @@
 		var/datum/antagonist/changeling/C = mind.has_antag_datum(/datum/antagonist/changeling)
 		if(C && C.chosen_sting)
 			C.chosen_sting.try_to_sting(src,A)
-			return
+			DelayNextAction(CLICK_CD_RANGE)
+			return TRUE
 	..()
 
 /atom/proc/AltClick(mob/user)
