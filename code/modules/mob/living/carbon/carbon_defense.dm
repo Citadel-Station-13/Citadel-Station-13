@@ -150,15 +150,13 @@
 
 	if(M.a_intent == INTENT_HELP)
 		help_shake_act(M)
-		return 0
+		return TRUE
 
 	. = ..()
 	if(.) //successful monkey bite.
 		for(var/thing in M.diseases)
 			var/datum/disease/D = thing
 			ForceContractDisease(D)
-		return 1
-
 
 /mob/living/carbon/attack_slime(mob/living/simple_animal/slime/M)
 	. = ..()

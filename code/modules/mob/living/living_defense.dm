@@ -357,6 +357,7 @@
 		if(mob_run_block(M, 0, "the [M.name]", ATTACK_TYPE_MELEE | ATTACK_TYPE_UNARMED, 0, M, check_zone(M.zone_selected), null) & BLOCK_SUCCESS)
 			return FALSE
 		M.do_attack_animation(src, ATTACK_EFFECT_BITE)
+		M.DelayNextAction()
 		if (prob(75))
 			log_combat(M, src, "attacked")
 			playsound(loc, 'sound/weapons/bite.ogg', 50, 1, -1)
@@ -368,6 +369,7 @@
 			visible_message("<span class='danger'>[M.name] has attempted to bite [src]!</span>", \
 				"<span class='userdanger'>[M.name] has attempted to bite [src]!</span>", null, COMBAT_MESSAGE_RANGE, null,
 				M, "<span class='danger'>You have attempted to bite [src]!</span>")
+			return TRUE
 	return FALSE
 
 /mob/living/attack_larva(mob/living/carbon/alien/larva/L)

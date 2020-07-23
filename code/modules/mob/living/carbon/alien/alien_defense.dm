@@ -74,7 +74,6 @@ In all, this is a lot like the monkey code. /N
 		var/obj/item/bodypart/affecting = get_bodypart(ran_zone(M.zone_selected))
 		apply_damage(rand(1, 3), BRUTE, affecting)
 
-
 /mob/living/carbon/alien/attack_animal(mob/living/simple_animal/M)
 	. = ..()
 	if(.)

@@ -355,6 +355,7 @@
 	for(var/datum/spacevine_mutation/SM in mutations)
 		SM.on_hit(src, user)
 	user_unbuckle_mob(user,user)
+	return ..()
 
 /obj/structure/spacevine/attack_alien(mob/living/user)
 	eat(user)
