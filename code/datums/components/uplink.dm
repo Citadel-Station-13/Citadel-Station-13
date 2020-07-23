@@ -301,7 +301,7 @@ GLOBAL_LIST_EMPTY(uplinks)
 	else if(istype(parent,/obj/item/radio))
 		unlock_note = "<B>Radio Frequency:</B> [format_frequency(unlock_code)] ([P.name])."
 	else if(istype(parent,/obj/item/pen))
-		unlock_note = "<B>Uplink Degrees:</B> [english_list(unlock_code)] ([P.name])."
+		unlock_note = "<B>Uplink Degrees:</B> [unlock_code] ([P.name])."
 
 /datum/component/uplink/proc/generate_code()
 	if(istype(parent,/obj/item/pda))

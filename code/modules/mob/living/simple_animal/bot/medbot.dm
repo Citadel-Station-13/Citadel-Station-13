@@ -625,7 +625,7 @@
 	else
 		..()
 
-/mob/living/simple_animal/bot/medbot/UnarmedAttack(atom/A)
+/mob/living/simple_animal/bot/medbot/UnarmedAttack(atom/A, proximity, intent = a_intent, flags = NONE)
 	if(iscarbon(A))
 		var/mob/living/carbon/C = A
 		patient = C

@@ -398,6 +398,20 @@
 	STR.max_items = 6
 	STR.can_hold = typecacheof(list(/obj/item/reagent_containers/food/snacks/nugget))
 
+/obj/item/storage/fancy/cracker_pack
+	name = "cracker pack"
+	desc = "A pack of delicious crackers. Keep away from parrots!"
+	icon = 'icons/obj/food/containers.dmi'
+	icon_state = "crackerbox"
+	icon_type = "cracker"
+	spawn_type = /obj/item/reagent_containers/food/snacks/cracker
+
+/obj/item/storage/fancy/cracker_pack/ComponentInitialize()
+	. = ..()
+	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
+	STR.max_items = 6
+	STR.can_hold = typecacheof(list(/obj/item/reagent_containers/food/snacks/cracker))
+
 /*
  * Ring Box
  */
