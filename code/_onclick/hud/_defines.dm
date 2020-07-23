@@ -168,7 +168,7 @@
 //UI position overrides for 1:1 screen layout. (default is 7:5)
 #define ui_stamina "EAST-1:28,CENTER:17" // replacing internals button
 #define ui_overridden_resist "EAST-3:24,SOUTH+1:7"
-#define ui_clickdelay "CENTER,SOUTH+1:-28"
+#define ui_clickdelay "CENTER,SOUTH+1:-31"
 #define ui_resistdelay "EAST-3:24,SOUTH+1:4"
 #define ui_combat_toggle "EAST-4:22,SOUTH:5"
 

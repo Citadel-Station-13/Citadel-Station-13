@@ -23,6 +23,13 @@
 	name = "click delay"
 	icon = 'icons/effects/progessbar.dmi'
 	icon_state = "prog_bar_100"
+	layer = 20		// under hand buttons
+
+/obj/screen/action_bar/clickdelay/Initialize()
+	. = ..()
+	var/matrix/M = new
+	M.Scale(2, 1)
+	transform = M
 
 /obj/screen/action_bar/clickdelay/update_to_mob(mob/living/L)
 	var/estimated = L.EstimatedNextActionTime()
