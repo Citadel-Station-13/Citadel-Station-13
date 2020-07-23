@@ -536,3 +536,5 @@ GLOBAL_LIST_INIT(pda_reskins, list(PDA_SKIN_CLASSIC = 'icons/obj/pda.dmi', PDA_S
 #define LOOT_RESTRICTION_CKEY_PILE	4 //Idem
 
 #define WANTED_FILE "wanted_message.json"
+
+#define UTF8HEADER "<meta http-equiv='Content-Type' content='text/html; charset=UTF-8' /><meta http-equiv='X-UA-Compatible' content='IE=edge' />" //I WOULD LOVE TO DEFINE THIS IN SANDCODE BUT FREAKING CODE DOESN'T GET IT THEN
