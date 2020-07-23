@@ -243,7 +243,7 @@
 		var/datum/clockwork_scripture/S = GLOB.all_scripture[s]
 		if(S.tier == SCRIPTURE_PERIPHERAL) //yes, tiers are the tabs.
 			continue
-		
+
 		var/list/data = list()
 		data["name"] = S.name
 		data["descname"] = S.descname
@@ -254,13 +254,13 @@
 		data["quickbind"] = S.quickbind //this is if it cant quickbind
 		data["fontcolor"] = get_component_color_bright(S.primary_component)
 		data["important"] = S.important //italic!
-		
+
 		var/found = quickbound.Find(S.type)
 		if(found)
 			data["bound"] = found //number (pos) on where is it on the list
 		if(S.invokers_required > 1)
 			data["invokers"] = "Invokers: [S.invokers_required]"
-		
+
 		.["rec_binds"] = list()
 		for(var/i in 1 to maximum_quickbound)
 			if(GLOB.ratvar_awakens)
@@ -269,35 +269,34 @@
 				.["rec_binds"] += list(list())
 			else
 				var/datum/clockwork_scripture/quickbind_slot = quickbound[i]
-				dat += "A <b>Quickbind</b> slot, currently set to <b><font color=[get_component_color_bright(initial(quickbind_slot.primary_component))]>[initial(quickbind_slot.name)]</font></b>.<br>"
-	.["power"] = "<b><font color=#B18B25>[DisplayPower(get_clockwork_power())]</b> power is available for scripture and other consumers.</font>"
+				.["rec_binds"] += list(list(
+					"name" = initial(quickbind_slot.name),
+					"color" = get_component_color_bright(initial(quickbind_slot.primary_component))
+				))
 
-	switch(selected_scripture) //display info based on selected scripture tier
-		if(SCRIPTURE_DRIVER)
-			.["tier_info"] = "<font color=#B18B25><b>These scriptures are permanently unlocked.</b></font>"
-		if(SCRIPTURE_SCRIPT)
-			if(SSticker.scripture_states[SCRIPTURE_SCRIPT])
-				.["tier_info"] = "<font color=#B18B25><b>These scriptures are permanently unlocked.</b></font>"
-			else
-				.["tier_info"] = "<font color=#B18B25><i>These scriptures will automatically unlock when the Ark is halfway ready or if [DisplayPower(SCRIPT_UNLOCK_THRESHOLD)] of power is reached.</i></font>"
-		if(SCRIPTURE_APPLICATION)
-			if(SSticker.scripture_states[SCRIPTURE_APPLICATION])
-				.["tier_info"] = "<font color=#B18B25><b>These scriptures are permanently unlocked.</b></font>"
-			else
-				.["tier_info"] = "<font color=#B18B25><i>Unlock these optional scriptures by converting another servant or if [DisplayPower(APPLICATION_UNLOCK_THRESHOLD)] of power is reached..</i></font>"
-		if(SCRIPTURE_JUDGEMENT)
-			if(SSticker.scripture_states[SCRIPTURE_JUDGEMENT])
-				.["tier_info"] = "<font color=#B18B25><b>These scriptures are permanently unlocked.</b></font>"
-			else
-				.["tier_info"] = "<font color=#B18B25><i>Unlock creation of powerful equipment and structures by gaining five members of the cult..</i></font>"
+		.["scripture"][S.tier] += list(data)
 
+/obj/item/clockwork/slab/ui_static_data(mob/user)
+	. = list()
+	.["tier_infos"] = list()
+	.["tier_infos"][SCRIPTURE_DRIVER] = list(
+		"requirement" = "None, this is already unlocked",
+		"ready" = TRUE //to bold it on JS side, and to say "These scriptures are permanently unlocked."
+	)
+	.["tier_infos"][SCRIPTURE_SCRIPT] = list(
+		"requirement" = "These scriptures will automatically unlock when the Ark is halfway ready or if [DisplayPower(SCRIPT_UNLOCK_THRESHOLD)] of power is reached.",
+		"ready" = SSticker.scripture_states[SCRIPTURE_SCRIPT] //huh, on the gamemode ticker? okay...
+	)
+	.["tier_infos"][SCRIPTURE_APPLICATION] = list(
+		"requirement" = "Unlock these optional scriptures by converting another servant or if [DisplayPower(APPLICATION_UNLOCK_THRESHOLD)] of power is reached..",
+		"ready" = SSticker.scripture_states[SCRIPTURE_APPLICATION]
+	)
+	.["tier_infos"][SCRIPTURE_JUDGEMENT] = list(
+		"requirement" = "Unlock powerful equipment and structures by converting five servants or if [DisplayPower(JUDGEMENT_UNLOCK_THRESHOLD)] of power is reached..",
+		"ready" = SSticker.scripture_states[SCRIPTURE_JUDGEMENT]
+	)
 
-	.["selected"] = selected_scripture
-	.["scripturecolors"] = "<font color=#DAAA18>Scriptures in <b>yellow</b> are related to construction and building.</font><br>\
-	<font color=#6E001A>Scriptures in <b>red</b> are related to attacking and offense.</font><br>\
-	<font color=#1E8CE1>Scriptures in <b>blue</b> are related to healing and defense.</font><br>\
-	<font color=#AF0AAF>Scriptures in <b>purple</b> are niche but still important!</font><br>\
-	<font color=#DAAA18><i>Scriptures with italicized names are important to success.</i></font>"
+	// .["selected"] = selected_scripture
 	generate_all_scripture()
 	.["recollection_categories"] = GLOB.ratvar_awakens ? list() : list(
 		list("name" = "Getting Started", "desc" = "First-time servant? Read this first."),
