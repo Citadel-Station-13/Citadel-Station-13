@@ -754,7 +754,7 @@ GLOBAL_LIST_INIT(valid_plushie_paths, valid_plushie_paths())
 	can_random_spawn = FALSE
 	
 	
-/obj/item/toy/plush/Hairball
+/obj/item/toy/plush/hairball
 	name = "Hairball"
 	desc = "A bundle of undigested fibers and scales. Yuck."
 	icon_state = "Hairball"
