@@ -1,0 +1,4 @@
+author: "Sneakyrat6"
+delete-after: True
+changes: 
+  - bugfix: "Fixes Snaxi not loading properly because of typos"
