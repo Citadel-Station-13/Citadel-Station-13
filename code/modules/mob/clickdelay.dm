@@ -54,9 +54,14 @@
   * * immediate - defaults to TRUE - if TRUE, writes to cached/last_attack_immediate instead of last_attack. This ensures it can't collide with any delay checks in the actual attack. 
   */
 /mob/proc/DelayNextAction(amount = 0, ignore_mod = FALSE, considered_action = TRUE, immediate = TRUE)
-	if(considered_action)
-		(immediate? last_action_immediate : last_action) = world.time
-	(immediate? next_action_immediate : next_action) = max(next_action, world.time + (ignore_mod? amount : (amount * action_cooldown_mod + action_cooldown_adjust)))
+	if(immediate)
+		if(considered_action)
+			last_action_immediate = world.time
+		next_action_immediate = max(next_action, world.time + (ignore_mod? amount : (amount * action_cooldown_mod + action_cooldown_adjust)))
+	else
+		if(considered_action)
+			last_action = world.time
+		next_action = max(next_action, world.time + (ignore_mod? amount : (amount * action_cooldown_mod + action_cooldown_adjust)))
 	hud_used?.clickdelay?.mark_dirty()
 
 /**
@@ -73,9 +78,14 @@
   * Sets our next action to. The difference is DelayNextAction cannot reduce next_action under any circumstances while this can.
   */
 /mob/proc/SetNextAction(amount = 0, ignore_mod = FALSE, considered_action = TRUE, immediate = TRUE)
-	if(considered_action)
-		(immediate? last_action_immediate : last_action) = world.time
-	(immediate? next_action_immediate : next_action) = world.time + (ignore_mod? amount : (amount * action_cooldown_mod + action_cooldown_adjust))
+	if(immediate)
+		if(considered_action)
+			last_action_immediate = world.time
+		next_action_immediate = world.time + (ignore_mod? amount : (amount * action_cooldown_mod + action_cooldown_adjust))
+	else
+		if(considered_action)
+			last_action = world.time
+		next_action = world.time + (ignore_mod? amount : (amount * action_cooldown_mod + action_cooldown_adjust))
 	hud_used?.clickdelay?.mark_dirty()
 
 /**
