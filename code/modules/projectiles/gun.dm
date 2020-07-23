@@ -169,6 +169,7 @@
 	. = ..()
 	if(!CheckAttackCooldown(user, target))
 		return
+	user.DelayNextAction()
 	process_afterattack(target, user, flag, params)
 
 /obj/item/gun/proc/process_afterattack(atom/target, mob/living/user, flag, params)

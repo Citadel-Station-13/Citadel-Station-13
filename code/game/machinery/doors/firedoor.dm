@@ -82,7 +82,6 @@
 			return TRUE
 	return FALSE
 
-
 /obj/machinery/door/firedoor/power_change()
 	if(powered(power_channel))
 		stat &= ~NOPOWER
