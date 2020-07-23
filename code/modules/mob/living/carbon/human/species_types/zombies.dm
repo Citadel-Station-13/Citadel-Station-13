@@ -33,14 +33,13 @@
 	limbs_id = "zombie"
 	mutanthands = /obj/item/zombie_hand
 	armor = 20 // 120 damage to KO a zombie, which kills it
-	speedmod = 1.6
+	speedmod = 1.6 // they're very slow
 	mutanteyes = /obj/item/organ/eyes/night_vision/zombie
 	var/heal_rate = 1
 	var/regen_cooldown = 0
 
 /datum/species/zombie/infectious/check_roundstart_eligible()
 	return FALSE
-
 
 /datum/species/zombie/infectious/spec_stun(mob/living/carbon/human/H,amount)
 	. = min(20, amount)
@@ -89,6 +88,11 @@
 		infection = new()
 		infection.Insert(C)
 
+	//make their bodyparts stamina-resistant
+	var/incoming_stam_mult = 0.7
+	for(var/obj/item/bodypart/part in C.bodyparts)
+		part.incoming_stam_mult = incoming_stam_mult
+		//todo: add negative wound resistance to all parts when wounds is merged (zombies are physically weak in terms of limbs)
 
 // Your skin falls off
 /datum/species/krokodil_addict

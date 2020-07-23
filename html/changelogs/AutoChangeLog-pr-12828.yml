@@ -1,0 +1,9 @@
+author: "Owai-Seek"
+delete-after: True
+changes: 
+  - rscadd: "Meatball Sub, Meatloaf + Meatloaf Slices, Bear Chili, Mashed Potatoes"
+  - rscadd: "Buttered Potatoes, Fancy Cracker Pack, Spiral Soup, Sweet and Sour Chicken"
+  - tweak: "Organised the Food DMI a bit."
+  - tweak: "Deleted some stray pixels on some sprites."
+  - tweak: "Nuggie boxes are now centered correctly."
+  - imageadd: "Icons for the the food items in this PR."

@@ -13,6 +13,17 @@
 	result = /obj/item/reagent_containers/food/snacks/soup/amanitajelly
 	subcategory = CAT_SOUP
 
+/datum/crafting_recipe/food/bearchili
+	name = "Bear chili"
+	reqs = list(
+		/datum/reagent/water = 10,
+		/obj/item/reagent_containers/glass/bowl = 1,
+		/obj/item/reagent_containers/food/snacks/meat/steak/bear = 1,
+		/obj/item/reagent_containers/food/snacks/grown/chili = 1,
+	)
+	result = /obj/item/reagent_containers/food/snacks/soup/bearchili
+	subcategory = CAT_SOUP
+
 /datum/crafting_recipe/food/beetsoup
 	name = "Beet soup"
 	reqs = list(
@@ -200,6 +211,18 @@
 		/datum/reagent/consumable/ethanol/vodka = 5,
 		/obj/item/reagent_containers/glass/bowl = 1,
 		/obj/item/reagent_containers/food/snacks/grown/mushroom/libertycap = 3
+	)
+	result = /obj/item/reagent_containers/food/snacks/soup/spacylibertyduff
+	subcategory = CAT_SOUP
+
+/datum/crafting_recipe/food/spiralsoup
+	name = "Spiral soup"
+	reqs = list(
+		/obj/item/reagent_containers/glass/bowl = 1,
+		/obj/item/reagent_containers/food/snacks/grown/mushroom/jupitercup = 2,
+		/datum/reagent/cryptobiolin = 15,
+		/datum/reagent/toxin/rotatium = 15,
+		/datum/reagent/consumable/milk = 10
 	)
 	result = /obj/item/reagent_containers/food/snacks/soup/spacylibertyduff
 	subcategory = CAT_SOUP

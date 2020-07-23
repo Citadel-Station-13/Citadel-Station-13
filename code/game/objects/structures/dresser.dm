@@ -46,7 +46,7 @@
 	switch(choice)
 		if("Underwear")
 			var/new_undies = input(H, "Select your underwear", "Changing") as null|anything in GLOB.underwear_list
-			if(H.underwear)
+			if(new_undies)
 				H.underwear = new_undies
 				H.saved_underwear = new_undies
 				var/datum/sprite_accessory/underwear/bottom/B = GLOB.underwear_list[new_undies]
