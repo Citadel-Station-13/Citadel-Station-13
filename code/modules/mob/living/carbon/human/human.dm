@@ -1058,9 +1058,20 @@
 		remove_movespeed_modifier(/datum/movespeed_modifier/damage_slowdown)
 		remove_movespeed_modifier(/datum/movespeed_modifier/damage_slowdown_flying)
 
+
 /mob/living/carbon/human/do_after_coefficent()
 	. = ..()
 	. *= physiology.do_after_speed
+
+/mob/living/carbon/human/is_bleeding()
+	if(NOBLOOD in dna.species.species_traits || bleedsuppress)
+		return FALSE
+	return ..()
+
+/mob/living/carbon/human/get_total_bleed_rate()
+	if(NOBLOOD in dna.species.species_traits)
+		return FALSE
+	return ..()
 
 /mob/living/carbon/human/species
 	var/race = null

@@ -1,0 +1,5 @@
+author: "timothyteakettle"
+delete-after: True
+changes: 
+  - tweak: "zombie claws are now sharp and do less damage, but can destroy non-lifeforms far faster"
+  - tweak: "zombies now take less stamina damage"

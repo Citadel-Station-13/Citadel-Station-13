@@ -113,6 +113,25 @@
 	result = /obj/item/reagent_containers/food/snacks/loadedbakedpotato
 	subcategory = CAT_MISCFOOD
 
+/datum/crafting_recipe/food/mashedpotato
+	name = "Mashed potato"
+	reqs = list(
+		/obj/item/reagent_containers/food/snacks/grown/potato = 1,
+		/datum/reagent/consumable/cream = 5,
+		/datum/reagent/consumable/sodiumchloride = 1
+	)
+	result = /obj/item/reagent_containers/food/snacks/mashedpotato
+	subcategory = CAT_MISCFOOD
+
+/datum/crafting_recipe/food/butteredpotato
+	name = "Buttered mash"
+	reqs = list(
+		/obj/item/reagent_containers/food/snacks/mashedpotato = 1,
+		/obj/item/reagent_containers/food/snacks/butter = 1
+	)
+	result = /obj/item/reagent_containers/food/snacks/butteredpotato
+	subcategory = CAT_MISCFOOD
+
 /datum/crafting_recipe/food/melonfruitbowl
 	name ="Melon fruit bowl"
 	reqs = list(

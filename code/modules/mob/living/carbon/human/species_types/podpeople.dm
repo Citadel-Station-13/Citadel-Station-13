@@ -3,7 +3,7 @@
 	name = "Anthromorphic Plant"
 	id = "pod"
 	default_color = "59CE00"
-	species_traits = list(MUTCOLORS,EYECOLOR)
+	species_traits = list(MUTCOLORS,EYECOLOR,CAN_SCAR)
 	attack_verb = "slash"
 	attack_sound = 'sound/weapons/slice.ogg'
 	miss_sound = 'sound/weapons/slashmiss.ogg'
@@ -65,7 +65,7 @@
 	name = "Anthromorphic Plant"
 	id = "podweak"
 	species_traits = list(EYECOLOR,HAIR,FACEHAIR,LIPS,MUTCOLORS)
-	mutant_bodyparts = list("mcolor" = "FFF","mcolor2" = "FFF","mcolor3" = "FFF", "mam_snouts" = "Husky", "mam_tail" = "Husky", "mam_ears" = "Husky", "mam_body_markings" = "Husky", "taur" = "None", "legs" = "Normal Legs")
+	mutant_bodyparts = list("mcolor" = "FFFFFF","mcolor2" = "FFFFFF","mcolor3" = "FFFFFF", "mam_snouts" = "Husky", "mam_tail" = "Husky", "mam_ears" = "Husky", "mam_body_markings" = "Husky", "taur" = "None", "legs" = "Normal Legs")
 	limbs_id = "pod"
 	light_nutrition_gain_factor = 3
 	light_bruteheal = -0.2
