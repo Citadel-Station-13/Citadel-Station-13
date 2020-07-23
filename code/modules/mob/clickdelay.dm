@@ -57,21 +57,23 @@
 	if(immediate)
 		if(considered_action)
 			last_action_immediate = world.time
-		next_action_immediate = max(next_action, world.time + (ignore_mod? amount : (amount * action_cooldown_mod + action_cooldown_adjust)))
+		next_action_immediate = max(next_action, world.time + (ignore_mod? amount : (amount * GetActionCooldownMod() + GetActionCooldownAdjust())))
 	else
 		if(considered_action)
 			last_action = world.time
-		next_action = max(next_action, world.time + (ignore_mod? amount : (amount * action_cooldown_mod + action_cooldown_adjust)))
+		next_action = max(next_action, world.time + (ignore_mod? amount : (amount * GetActionCooldownMod() + GetActionCooldownAdjust())))
 	hud_used?.clickdelay?.mark_dirty()
 
 /**
   * Get estimated time of next attack.
   */
 /mob/proc/EstimatedNextActionTime()
-	var/attack_speed = unarmed_attack_speed
+	var/attack_speed = unarmed_attack_speed * GetActionCooldownMod() + GetActionCooldownAdjust()
 	var/obj/item/I = get_active_held_item()
 	if(I)
 		attack_speed = I.GetEstimatedAttackSpeed()
+		if(!I.clickdelay_mod_bypass)
+			attack_speed = attack_speed * GetActionCooldownMod() + GetActionCooldownAdjust()
 	return max(next_action, next_action_immediate, max(last_action, last_action_immediate) + attack_speed)
 
 /**
@@ -81,11 +83,11 @@
 	if(immediate)
 		if(considered_action)
 			last_action_immediate = world.time
-		next_action_immediate = world.time + (ignore_mod? amount : (amount * action_cooldown_mod + action_cooldown_adjust))
+		next_action_immediate = world.time + (ignore_mod? amount : (amount * GetActionCooldownMod() + GetActionCooldownAdjust()))
 	else
 		if(considered_action)
 			last_action = world.time
-		next_action = world.time + (ignore_mod? amount : (amount * action_cooldown_mod + action_cooldown_adjust))
+		next_action = world.time + (ignore_mod? amount : (amount * GetActionCooldownMod() + GetActionCooldownAdjust()))
 	hud_used?.clickdelay?.mark_dirty()
 
 /**
@@ -100,9 +102,20 @@
   * * immediate - Defaults to FALSE. Checks last action using immediate, used on the head end of an attack. This is to prevent colliding attacks in case of sleep. Not that you should sleep() in an attack but.. y'know.
   */
 /mob/proc/CheckActionCooldown(cooldown = 0.5, from_next_action = FALSE, ignore_mod = FALSE, ignore_next_action = FALSE, immediate = FALSE)
-	////// WARNING: IF YOU MODIFY THIS PROC, CHECK living/clickdelay.dm! DUE TO STATUS EFFECTS ONLY BEING ON LIVING, THIS PROC IS COPYPASTED THERE AND MODIFIED.
 	return (ignore_next_action || (world.time >= (immediate? next_action_immediate : next_action))) && \
-	(world.time >= ((from_next_action? (immediate? next_action_immediate : next_action) : (immediate? last_action_immediate : last_action)) + max(0, ignore_mod? cooldown : (cooldown * action_cooldown_mod + action_cooldown_adjust))))
+	(world.time >= ((from_next_action? (immediate? next_action_immediate : next_action) : (immediate? last_action_immediate : last_action)) + max(0, ignore_mod? cooldown : (cooldown * GetActionCooldownMod() + GetActionCooldownAdjust()))))
+
+/**
+  * Gets action_cooldown_mod.
+  */
+/mob/proc/GetActionCooldownMod()
+	return action_cooldown_mod
+
+/**
+  * Gets action_cooldown_adjust
+  */
+/mob/proc/GetActionCooldownAdjust()
+	return action_cooldown_adjust
 
 /**
   * Flushes last_action and next_action
