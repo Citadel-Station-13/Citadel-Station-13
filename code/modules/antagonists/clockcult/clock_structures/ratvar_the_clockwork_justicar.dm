@@ -101,7 +101,7 @@
 		return
 	clashing = TRUE
 	GLOB.cult_narsie.clashing = TRUE
-	to_chat(world, "<span class='bold brass'><font size=5>\"YOU.\"</font></span>")
+	to_chat(world, "<span class='bold brass'><font size=5>\"[pick("YOU.", "BLOOD GOD!!")]\"</font></span>")
 	to_chat(world, "<span class='bold cult'><font size=5>\"Ratvar?!\"</font></span>")
 	clash_of_the_titans(GLOB.cult_narsie) // >:(
 	return TRUE
@@ -137,7 +137,7 @@
 		base_victory_chance *= 2 //The clash has a higher chance of resolving each time both gods attack one another
 	switch(winner)
 		if("Ratvar")
-			send_to_playing_players("<span class='heavy_brass'><font size=5>\"[pick("DIE.", "ROT.")]\"</font></span>\n\
+			send_to_playing_players("<span class='heavy_brass'><font size=5>\"[pick("DIE.", "ROT FOR CENTURIES, AS I HAVE!.","PERISH, HEATHEN.")]\"</font></span>\n\
 			<span class='cult'><font size=5>\"<b>[pick("Nooooo...", "Not die. To y-", "Die. Ratv-", "Sas tyen re-")]\"</b></font></span>") //Nar'Sie get out
 			sound_to_playing_players('sound/magic/clockwork/anima_fragment_attack.ogg')
 			sound_to_playing_players('sound/magic/demon_dies.ogg', 50)

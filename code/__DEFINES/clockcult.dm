@@ -35,7 +35,7 @@ GLOBAL_LIST_EMPTY(all_scripture) //a list containing scripture instances; not us
 #define MAX_CLOCKWORK_POWER 80000 //The max power in W that the cult can stockpile
 #define SCRIPT_UNLOCK_THRESHOLD 35000 //Scripts will unlock if the total power reaches this amount
 #define APPLICATION_UNLOCK_THRESHOLD 50000 //Applications will unlock if the total power reaches this amount
-#define JUDGEMENT_UNLOCK_THRESHOLD 80000
+#define JUDGEMENT_UNLOCK_THRESHOLD 80000 //might as well have this unlock at a power amount like the other scriptures, Judgement unlocks at this amount.
 
 //clockcult power defines
 #define MIN_CLOCKCULT_POWER 25 //the minimum amount of power clockcult machines will handle gracefully
@@ -61,11 +61,11 @@ GLOBAL_LIST_EMPTY(all_scripture) //a list containing scripture instances; not us
 //Ark defines
 #define GATEWAY_SUMMON_RATE 1 //the time amount the Gateway to the Celestial Derelict gets each process tick; defaults to 1 per tick
 
-#define GATEWAY_REEBE_FOUND 240 //when progress is at or above this, the gateway finds reebe and begins drawing power
+#define GATEWAY_REEBE_FOUND 120 //when progress is at or above this, the gateway finds reebe and begins drawing power
 
-#define GATEWAY_RATVAR_COMING 480 //when progress is at or above this, ratvar has entered and is coming through the gateway
+#define GATEWAY_RATVAR_COMING 240 //when progress is at or above this, ratvar has entered and is coming through the gateway
 
-#define GATEWAY_RATVAR_ARRIVAL 600 //when progress is at or above this, game over ratvar's here everybody go home
+#define GATEWAY_RATVAR_ARRIVAL 300 //when progress is at or above this, game over ratvar's here everybody go home
 
 //Objective text define
 #define CLOCKCULT_OBJECTIVE "Construct the Ark of the Clockwork Justicar and free Ratvar."
