@@ -65,7 +65,7 @@
   * * default - default color. must be 3 or 6 characters with or without #.
   * * default_replacement - what we replace broken letters with.
   */
-/proc/sanitize_hexcolor(color, desired_format = 3, include_crunch = 0, default = "ffffff", default_replacement = "f")
+/proc/sanitize_hexcolor(color, desired_format = 3, include_crunch = 0, default = rgb(218, 72, 255), default_replacement = "f")
 	if(!istext(default) || (length(default) < 3))
 		CRASH("Default should be a text string of RGB format, with or without the crunch, 3 or 6 characters. Default was instead [default]")
 	if(!istext(default_replacement) || (length(default_replacement) != 1))

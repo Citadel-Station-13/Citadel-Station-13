@@ -7,7 +7,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 	var/id	// if the game needs to manually check your race to do something not included in a proc here, it will use this
 	var/limbs_id		//this is used if you want to use a different species limb sprites. Mainly used for angels as they look like humans.
 	var/name	// this is the fluff name. these will be left generic (such as 'Lizardperson' for the lizard race) so servers can change them to whatever
-	var/default_color = "#FFF"	// if alien colors are disabled, this is the color that will be used by that race
+	var/default_color = "#FFFFFF"	// if alien colors are disabled, this is the color that will be used by that race
 
 	var/sexes = 1 // whether or not the race has sexual characteristics. at the moment this is only 0 for skeletons and shadows
 	var/has_field_of_vision = TRUE
@@ -854,10 +854,10 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 	var/g = (H.dna.features["body_model"] == FEMALE) ? "f" : "m"
 	var/list/colorlist = list()
 	var/husk = HAS_TRAIT(H, TRAIT_HUSK)
-	colorlist += husk ? ReadRGB("#a3a3a3") :ReadRGB("[H.dna.features["mcolor"]]0")
-	colorlist += husk ? ReadRGB("#a3a3a3") :ReadRGB("[H.dna.features["mcolor2"]]0")
-	colorlist += husk ? ReadRGB("#a3a3a3") : ReadRGB("[H.dna.features["mcolor3"]]0")
-	colorlist += list(0,0,0, hair_alpha)
+	colorlist += husk ? ReadRGB("#a3a3a3") : ReadRGB("[H.dna.features["mcolor"]]00")
+	colorlist += husk ? ReadRGB("#a3a3a3") : ReadRGB("[H.dna.features["mcolor2"]]00")
+	colorlist += husk ? ReadRGB("#a3a3a3") : ReadRGB("[H.dna.features["mcolor3"]]00")
+	colorlist += husk ? list(0, 0, 0) : list(0, 0, 0, hair_alpha)
 	for(var/index in 1 to colorlist.len)
 		colorlist[index] /= 255
 
@@ -1030,7 +1030,6 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 	H.apply_overlay(BODY_ADJ_UPPER_LAYER)
 	H.apply_overlay(BODY_FRONT_LAYER)
 	H.apply_overlay(HORNS_LAYER)
-
 
 /*
  * Equip the outfit required for life. Replaces items currently worn.
