@@ -53,7 +53,7 @@
 			less_space_damage = TRUE
 	if(S)
 		to_chat(src, "<span class='userdanger'>The void of space drains Ratvar's Light from you! You feel yourself rapidly decaying. It would be wise to get back inside!</span>")
-		adjustBruteLoss(less_space_damage? MARAUDER_SPACE_NEAR_DAMAGE : MARAUDER_SPACE_FULL_DAMAGE)
+		adjustBruteLoss(less_space_damage? MARAUDER_SPACE_NEAR_DAMAGE : MARAUDER_SPACE_FULL_DAMAGE, cause = "killed due to moving away from Ratvar's Light")
 	if(!GLOB.ratvar_awakens && health / maxHealth <= MARAUDER_SLOWDOWN_PERCENTAGE)
 		speed = default_speed + 1 //Yes, this slows them down
 	else

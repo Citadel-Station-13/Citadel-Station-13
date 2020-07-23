@@ -350,7 +350,7 @@
 	. = 1
 
 /datum/reagent/medicine/styptic_powder/overdose_process(mob/living/M)
-	M.adjustBruteLoss(2*REM, 0)
+	M.adjustBruteLoss(2*REM, 0, cause = "killed by a styptic powder overdose")
 	var/obj/item/organ/liver/L = M.getorganslot(ORGAN_SLOT_LIVER)
 	if(L)
 		L.applyOrganDamage(1)
@@ -396,7 +396,7 @@
 		holder.add_reagent(/datum/reagent/consumable/sugar, 1)
 		holder.remove_reagent(/datum/reagent/medicine/salglu_solution, 0.5)
 	if(prob(33))
-		M.adjustBruteLoss(0.5*REM, 0)
+		M.adjustBruteLoss(0.5*REM, 0, cause = "killed by a [src] overdose")
 		M.adjustFireLoss(0.5*REM, 0)
 		. = TRUE
 	..()
@@ -517,7 +517,7 @@
 /datum/reagent/medicine/omnizine/overdose_process(mob/living/M)
 	M.adjustToxLoss(1.5*REM, 0)
 	M.adjustOxyLoss(1.5*REM, 0)
-	M.adjustBruteLoss(1.5*REM, 0)
+	M.adjustBruteLoss(1.5*REM, 0, cause = "killed by a [src] overdose")
 	M.adjustFireLoss(1.5*REM, 0)
 	..()
 	. = 1
@@ -617,7 +617,7 @@
 
 /datum/reagent/medicine/sal_acid/overdose_process(mob/living/M)
 	if(M.getBruteLoss()) //It only makes existing bruises worse
-		M.adjustBruteLoss(4.5*REM, 0) // it's going to be healing either 4 or 0.5
+		M.adjustBruteLoss(4.5*REM, 0, cause = "killed by a [src] overdose") // it's going to be healing either 4 or 0.5
 		. = 1
 	..()
 
@@ -944,7 +944,7 @@
 
 
 /datum/reagent/medicine/strange_reagent/on_mob_life(mob/living/carbon/M)
-	M.adjustBruteLoss(0.5*REM, 0)
+	M.adjustBruteLoss(0.5*REM, 0, cause = "killed by drinking strange reagent while alive!")
 	M.adjustFireLoss(0.5*REM, 0)
 	..()
 	. = 1
@@ -1090,7 +1090,7 @@
 	. = 1
 
 /datum/reagent/medicine/bicaridine/overdose_process(mob/living/M)
-	M.adjustBruteLoss(4*REM, FALSE)
+	M.adjustBruteLoss(4*REM, FALSE, cause = "killed by a [src] overdose!")
 	..()
 	. = 1
 
@@ -1183,7 +1183,7 @@
 /datum/reagent/medicine/tricordrazine/overdose_process(mob/living/M)
 	M.adjustToxLoss(2*REM, FALSE)
 	M.adjustOxyLoss(2*REM, FALSE)
-	M.adjustBruteLoss(2*REM, FALSE)
+	M.adjustBruteLoss(2*REM, FALSE, cause = "killed by a [src] overdose!")
 	M.adjustFireLoss(2*REM, FALSE)
 	..()
 	. = 1
@@ -1267,7 +1267,7 @@
 
 /datum/reagent/medicine/neo_jelly/overdose_process(mob/living/M)
 	M.adjustOxyLoss(2.6*REM, FALSE)
-	M.adjustBruteLoss(3.5*REM, FALSE)
+	M.adjustBruteLoss(3.5*REM, FALSE, cause = "killed by a [src] overdose!")
 	M.adjustFireLoss(3.5*REM, FALSE)
 	..()
 	. = 1
@@ -1337,7 +1337,7 @@
 	return TRUE
 
 /datum/reagent/medicine/lavaland_extract/overdose_process(mob/living/M)
-	M.adjustBruteLoss(3*REM, 0)
+	M.adjustBruteLoss(3*REM, 0, cause = "killed by a [src] overdose!")
 	M.adjustFireLoss(3*REM, 0)
 	M.adjustToxLoss(3*REM, 0)
 	..()

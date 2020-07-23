@@ -251,7 +251,7 @@ Difficulty: Medium
 			visible_message("<span class='warning'>[src] slams down on [L], crushing [L.p_them()]!</span>")
 			L.gib()
 		else
-			L.adjustBruteLoss(75)
+			L.adjustBruteLoss(75, cause = "slammed by a [src] causing them to meet their demise.")
 			if(L && !QDELETED(L)) // Some mobs are deleted on death
 				var/throw_dir = get_dir(src, L)
 				if(L.loc == loc)

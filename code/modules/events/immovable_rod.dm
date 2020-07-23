@@ -139,7 +139,7 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 	L.visible_message("<span class='danger'>[L] is penetrated by an immovable rod!</span>" , "<span class='userdanger'>The rod penetrates you!</span>" , "<span class ='danger'>You hear a CLANG!</span>")
 	if(ishuman(L))
 		var/mob/living/carbon/human/H = L
-		H.adjustBruteLoss(160)
+		H.adjustBruteLoss(160, cause = "skewered by an immovable rod")
 	if(L && (L.density || prob(10)))
 		L.ex_act(EXPLODE_HEAVY)
 

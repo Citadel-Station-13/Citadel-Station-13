@@ -57,7 +57,7 @@
 		damage += rand(10, 20)
 	else
 		damage += rand(2, 17)
-	adjustBruteLoss(damage)
+	adjustBruteLoss(damage, cause = "sapped of their lifeforce by a [M]")
 	updatehealth()
 
 	return
@@ -167,7 +167,7 @@
 
 /mob/living/silicon/robot/blob_act(obj/structure/blob/B)
 	if(stat != DEAD)
-		adjustBruteLoss(30)
+		adjustBruteLoss(30, cause = "killed by the [B]")
 	else
 		gib()
 	return TRUE
@@ -179,11 +179,11 @@
 			return
 		if(2)
 			if (stat != DEAD)
-				adjustBruteLoss(60)
-				adjustFireLoss(60)
+				adjustBruteLoss(60, cause = "blown up")
+				adjustFireLoss(60, cause = "blown up")
 		if(3)
 			if (stat != DEAD)
-				adjustBruteLoss(30)
+				adjustBruteLoss(30, cause = "blown up")
 
 /mob/living/silicon/robot/bullet_act(obj/item/projectile/P, def_zone)
 	. = ..()

@@ -418,7 +418,7 @@
 		M.adjustToxLoss(2, FALSE)
 		M.adjustFireLoss(2, FALSE)
 		M.adjustOxyLoss(2, FALSE)
-		M.adjustBruteLoss(2, FALSE)
+		M.adjustBruteLoss(2, FALSE, cause = "killed by drinking [src]!")
 	holder.remove_reagent(type, 1)
 	return TRUE
 
@@ -1273,7 +1273,7 @@
 	value = REAGENT_VALUE_RARE
 
 /datum/reagent/space_cleaner/ez_clean/on_mob_life(mob/living/carbon/M)
-	M.adjustBruteLoss(3.33)
+	M.adjustBruteLoss(3.33, cause = "killed by drinking [src]!")
 	M.adjustFireLoss(3.33)
 	M.adjustToxLoss(3.33)
 	..()
@@ -1281,7 +1281,7 @@
 /datum/reagent/space_cleaner/ez_clean/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
 	..()
 	if((method == TOUCH || method == VAPOR) && !issilicon(M))
-		M.adjustBruteLoss(1)
+		M.adjustBruteLoss(1, cause = "killed after letting some [src] touch their skin!")
 		M.adjustFireLoss(1)
 
 /datum/reagent/cryptobiolin

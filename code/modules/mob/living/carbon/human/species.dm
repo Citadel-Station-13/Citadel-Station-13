@@ -1059,7 +1059,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 
 		var/takes_crit_damage = !HAS_TRAIT(H, TRAIT_NOCRITDAMAGE)
 		if((H.health < H.crit_threshold) && takes_crit_damage)
-			H.adjustBruteLoss(1)
+			H.adjustBruteLoss(1, cause = "killed by their injuries while in critical condition.")
 
 /datum/species/proc/spec_death(gibbed, mob/living/carbon/human/H)
 	return
@@ -1562,8 +1562,8 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 					user.adjustFireLoss(-5)
 					user.adjustStaminaLoss(-20)
 
-					target.adjustCloneLoss(10)
-					target.adjustBruteLoss(10)
+					target.adjustCloneLoss(10, cause = "sapped of their lifeforce by a vampire")
+					target.adjustBruteLoss(10, cause = "sapped of their lifeforce by a vampire")
 
 		else if(!(target.mobility_flags & MOBILITY_STAND))
 			target.forcesay(GLOB.hit_appends)
@@ -2123,7 +2123,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 	switch(adjusted_pressure)
 		if(HAZARD_HIGH_PRESSURE to INFINITY)
 			if(!HAS_TRAIT(H, TRAIT_RESISTHIGHPRESSURE))
-				H.adjustBruteLoss(min(((adjusted_pressure / HAZARD_HIGH_PRESSURE) -1 ) * PRESSURE_DAMAGE_COEFFICIENT, MAX_HIGH_PRESSURE_DAMAGE) * H.physiology.pressure_mod)
+				H.adjustBruteLoss(min(((adjusted_pressure / HAZARD_HIGH_PRESSURE) -1 ) * PRESSURE_DAMAGE_COEFFICIENT, MAX_HIGH_PRESSURE_DAMAGE) * H.physiology.pressure_mod, cause = "killed by high pressures")
 				H.throw_alert("pressure", /obj/screen/alert/highpressure, 2)
 			else
 				H.clear_alert("pressure")

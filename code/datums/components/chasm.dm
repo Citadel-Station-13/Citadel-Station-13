@@ -101,7 +101,7 @@
 		if(isliving(AM))
 			var/mob/living/L = AM
 			L.DefaultCombatKnockdown(100)
-			L.adjustBruteLoss(30)
+			L.adjustBruteLoss(30, cause = "fell down a chasm - and landed, to then promptly die.")
 		falling_atoms -= AM
 
 	else

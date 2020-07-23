@@ -209,7 +209,7 @@
 			continue
 		visible_message("<span class='danger'>[src] grabs hold of [L]!</span>")
 		L.Stun(10)
-		L.adjustBruteLoss(rand(30,35))
+		L.adjustBruteLoss(rand(30,35), cause = "crushed to death by a goliath's tentacle")
 		latched = TRUE
 	if(!latched)
 		retract()

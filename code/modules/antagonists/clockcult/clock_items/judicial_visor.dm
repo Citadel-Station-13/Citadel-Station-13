@@ -208,7 +208,7 @@
 			L.adjustFireLoss(5)
 		targetsjudged++
 		if(!QDELETED(L))
-			L.adjustBruteLoss(20) //does a decent amount of damage
+			L.adjustBruteLoss(20, cause = "killed by a judical blast!") //does a decent amount of damage
 		log_combat(user, L, "struck with a judicial blast")
 	to_chat(user, "<span class='brass'><b>[targetsjudged ? "Successfully judged <span class='neovgre'>[targetsjudged]</span>":"Judged no"] heretic[targetsjudged == 1 ? "":"s"].</b></span>")
 	sleep(3) //so the animation completes properly

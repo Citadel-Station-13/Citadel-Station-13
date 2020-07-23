@@ -358,7 +358,7 @@
 	for(var/mob/living/M in src)
 		if(M==U)
 			continue//Will not harm U. Since null != M, can be excluded to kill everyone.
-		M.adjustBruteLoss(damage)
+		M.adjustBruteLoss(damage, cause = "killed by a ninja")
 		M.Unconscious(damage * 4)
 	for(var/obj/mecha/M in src)
 		M.take_damage(damage*2, BRUTE, "melee", 1)

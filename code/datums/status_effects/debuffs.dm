@@ -200,7 +200,7 @@
 	for(var/obj/item/his_grace/HG in owner.held_items)
 		qdel(src)
 		return
-	owner.adjustBruteLoss(0.1)
+	owner.adjustBruteLoss(0.1, cause = "killed by his grace")
 	owner.adjustFireLoss(0.1)
 	owner.adjustToxLoss(0.2, TRUE, TRUE)
 
@@ -409,7 +409,7 @@
 	new /obj/effect/temp_visual/bleed(get_turf(owner))
 
 /datum/status_effect/stacking/saw_bleed/threshold_cross_effect()
-	owner.adjustBruteLoss(bleed_damage)
+	owner.adjustBruteLoss(bleed_damage, cause = "bled to death")
 	var/turf/T = get_turf(owner)
 	new /obj/effect/temp_visual/bleed/explode(T)
 	for(var/d in GLOB.alldirs)

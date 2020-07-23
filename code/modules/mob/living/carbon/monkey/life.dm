@@ -116,7 +116,7 @@
 	var/adjusted_pressure = calculate_affecting_pressure(pressure) //Returns how much pressure actually affects the mob.
 	switch(adjusted_pressure)
 		if(HAZARD_HIGH_PRESSURE to INFINITY)
-			adjustBruteLoss( min( ( (adjusted_pressure / HAZARD_HIGH_PRESSURE) -1 )*PRESSURE_DAMAGE_COEFFICIENT , MAX_HIGH_PRESSURE_DAMAGE) )
+			adjustBruteLoss( min( ( (adjusted_pressure / HAZARD_HIGH_PRESSURE) -1 )*PRESSURE_DAMAGE_COEFFICIENT , MAX_HIGH_PRESSURE_DAMAGE), cause = "killed due to high pressure")
 			throw_alert("pressure", /obj/screen/alert/highpressure, 2)
 		if(WARNING_HIGH_PRESSURE to HAZARD_HIGH_PRESSURE)
 			throw_alert("pressure", /obj/screen/alert/highpressure, 1)
@@ -125,7 +125,7 @@
 		if(HAZARD_LOW_PRESSURE to WARNING_LOW_PRESSURE)
 			throw_alert("pressure", /obj/screen/alert/lowpressure, 1)
 		else
-			adjustBruteLoss( LOW_PRESSURE_DAMAGE )
+			adjustBruteLoss( LOW_PRESSURE_DAMAGE, cause = "killed due to low pressure")
 			throw_alert("pressure", /obj/screen/alert/lowpressure, 2)
 
 	return

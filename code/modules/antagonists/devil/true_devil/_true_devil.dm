@@ -153,7 +153,7 @@
 				playsound(loc, "punch", 25, 1, -1)
 				visible_message("<span class='danger'>[M] has punched [src]!</span>", \
 						"<span class='userdanger'>[M] has punched [src]!</span>")
-				adjustBruteLoss(damage)
+				adjustBruteLoss(damage, cause = "punched to death")
 				log_combat(M, src, "attacked")
 				updatehealth()
 			if ("disarm")
@@ -192,7 +192,7 @@
 				b_loss = 30
 		if(has_bane(BANE_LIGHT))
 			b_loss *=2
-		adjustBruteLoss(b_loss)
+		adjustBruteLoss(b_loss, cause = "blown up")
 	return ..()
 
 

@@ -430,13 +430,13 @@
 			if(4)
 				if(prob(75))
 					to_chat(M, "You scratch at an itch.")
-					M.adjustBruteLoss(2*REM, 0)
+					M.adjustBruteLoss(2*REM, 0, cause = "killed after scratching at an itch")
 					. = 1
 	..()
 
 /datum/reagent/toxin/histamine/overdose_process(mob/living/M)
 	M.adjustOxyLoss(2*REM, 0)
-	M.adjustBruteLoss(2*REM, 0)
+	M.adjustBruteLoss(2*REM, 0, cause = "killed overdosing on [src]")
 	M.adjustToxLoss(2*REM, 0)
 	..()
 	. = 1
@@ -467,7 +467,7 @@
 
 /datum/reagent/toxin/venom/on_mob_life(mob/living/carbon/M)
 	toxpwr = 0.2*volume
-	M.adjustBruteLoss((0.3*volume)*REM, 0)
+	M.adjustBruteLoss((0.3*volume)*REM, 0, cause = "killed after drinking [src]")
 	. = 1
 	if(prob(15))
 		M.reagents.add_reagent(/datum/reagent/toxin/histamine, pick(5,10))
@@ -535,15 +535,15 @@
 /datum/reagent/toxin/itching_powder/on_mob_life(mob/living/carbon/M)
 	if(prob(15))
 		to_chat(M, "You scratch at your head.")
-		M.adjustBruteLoss(0.2*REM, 0)
+		M.adjustBruteLoss(0.2*REM, 0, cause = "killed scratching at an itch.")
 		. = 1
 	if(prob(15))
 		to_chat(M, "You scratch at your leg.")
-		M.adjustBruteLoss(0.2*REM, 0)
+		M.adjustBruteLoss(0.2*REM, 0, cause = "killed scratching at an itch.")
 		. = 1
 	if(prob(15))
 		to_chat(M, "You scratch at your arm.")
-		M.adjustBruteLoss(0.2*REM, 0)
+		M.adjustBruteLoss(0.2*REM, 0, cause = "killed scratching at an itch")
 		. = 1
 	if(prob(3))
 		M.reagents.add_reagent(/datum/reagent/toxin/histamine,rand(1,3))
@@ -728,7 +728,7 @@
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 		H.bleed_rate = min(H.bleed_rate + 2, 8)
-		H.adjustBruteLoss(1, 0) //Brute damage increases with the amount they're bleeding
+		H.adjustBruteLoss(1, 0, cause = "killed after drinking [src]") //Brute damage increases with the amount they're bleeding
 		. = 1
 	return ..() || .
 
@@ -838,10 +838,10 @@
 		return
 	reac_volume = round(reac_volume,0.1)
 	if(method == INGEST)
-		C.adjustBruteLoss(min(6*toxpwr, reac_volume * toxpwr))
+		C.adjustBruteLoss(min(6*toxpwr, reac_volume * toxpwr), cause = "killed after ingesting [src])
 		return
 	if(method == INJECT)
-		C.adjustBruteLoss(1.5 * min(6*toxpwr, reac_volume * toxpwr))
+		C.adjustBruteLoss(1.5 * min(6*toxpwr, reac_volume * toxpwr), cause = "killed after being injected with [src]")
 		return
 	C.acid_act(acidpwr, reac_volume)
 
@@ -919,7 +919,7 @@
 /datum/reagent/toxin/bonehurtingjuice/on_mob_life(mob/living/carbon/M)
 	M.adjustStaminaLoss(7.5, 0)
 	if(HAS_TRAIT(M, TRAIT_CALCIUM_HEALER))
-		M.adjustBruteLoss(3.5, 0)
+		M.adjustBruteLoss(3.5, 0, cause = "killed after drinking [src]")
 	if(prob(12))
 		switch(rand(1, 3))
 			if(1)

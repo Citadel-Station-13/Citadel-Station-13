@@ -120,9 +120,9 @@
 
 		if(bodytemperature <= (T0C - 50)) // hurt temperature
 			if(bodytemperature <= 50) // sqrting negative numbers is bad
-				adjustBruteLoss(200)
+				adjustBruteLoss(200, cause = "frozen to death")
 			else
-				adjustBruteLoss(round(sqrt(bodytemperature)) * 2)
+				adjustBruteLoss(round(sqrt(bodytemperature)) * 2, cause = "frozen to death")
 
 	else
 		Tempstun = 0
@@ -243,7 +243,7 @@
 		adjust_nutrition(-1 - is_adult)
 
 	if(nutrition <= 0 && prob(75))
-		adjustBruteLoss(rand(0,5))
+		adjustBruteLoss(rand(0,5), cause = "starved to death")
 
 	else if (nutrition >= get_grow_nutrition() && amount_grown < SLIME_EVOLUTION_THRESHOLD)
 		adjust_nutrition(-20)

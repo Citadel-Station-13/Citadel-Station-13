@@ -161,9 +161,9 @@
 		if(1)
 			death()
 		if(2)
-			adjustBruteLoss(60)
+			adjustBruteLoss(60, cause = "blown up")
 		if(3)
-			adjustBruteLoss(30)
+			adjustBruteLoss(30, cause = "blown up")
 
 /mob/living/simple_animal/slaughter/laughter/proc/release_friends()
 	if(!consumed_mobs)

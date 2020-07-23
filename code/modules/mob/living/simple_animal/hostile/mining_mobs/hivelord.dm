@@ -212,8 +212,8 @@
 	else
 		L = new(H.loc)
 	visible_message("<span class='warning'>[L] staggers to [L.p_their()] feet!</span>")
+	H.adjustBruteLoss(1000, cause = "infested by the [src] and promptly died")
 	H.death()
-	H.adjustBruteLoss(1000)
 	L.stored_mob = H
 	H.forceMove(L)
 	qdel(src)

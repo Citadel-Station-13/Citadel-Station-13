@@ -10,7 +10,7 @@
 
 /mob/living/silicon/ai/blob_act(obj/structure/blob/B)
 	if (stat != DEAD)
-		adjustBruteLoss(60)
+		adjustBruteLoss(60, cause = "killed by the [B]")
 		updatehealth()
 		return 1
 	return 0
@@ -33,11 +33,11 @@
 			gib()
 		if(2)
 			if (stat != DEAD)
-				adjustBruteLoss(60)
-				adjustFireLoss(60)
+				adjustBruteLoss(60, cause = "blown up.")
+				adjustFireLoss(60, cause = "blown up.")
 		if(3)
 			if (stat != DEAD)
-				adjustBruteLoss(30)
+				adjustBruteLoss(30, cause = "blown up.")
 
 
 

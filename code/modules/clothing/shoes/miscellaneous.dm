@@ -451,7 +451,7 @@
 		return
 	m.adjustOxyLoss(rand(5,13))
 	if (prob(15))
-		m.adjustBruteLoss(rand(4,7))
+		m.adjustBruteLoss(rand(4,7), cause = "killed trying to walk through a wall")
 		to_chat(m,"<span class='warning'>You feel as if travelling through the solid object left something behind and it hurts!</span>")
 	var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
 	s.set_up(5, 1, oldloc)

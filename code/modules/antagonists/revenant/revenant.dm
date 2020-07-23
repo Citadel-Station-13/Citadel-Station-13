@@ -188,7 +188,7 @@
 	if(istype(W, /obj/item/nullrod))
 		visible_message("<span class='warning'>[src] violently flinches!</span>", \
 						"<span class='revendanger'>As \the [W] passes through you, you feel your essence draining away!</span>")
-		adjustBruteLoss(25) //hella effective
+		adjustBruteLoss(25, cause = "evaporated by the holy power of the null rod") //hella effective
 		inhibited = TRUE
 		update_action_buttons_icon()
 		addtimer(CALLBACK(src, .proc/reset_inhibit), 30)

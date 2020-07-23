@@ -196,7 +196,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 				eyes.forceMove(get_turf(M))
 				to_chat(M, "<span class='userdanger'>You double over in pain as you feel your eyeballs liquify in your head!</span>")
 				M.emote("scream")
-				M.adjustBruteLoss(15)
+				M.adjustBruteLoss(15, cause = "brutally killed after their eyes fell out due to drinking too much thirteen loko")
 		else
 			to_chat(M, "<span class='userdanger'>You scream in terror as you go blind!</span>")
 			eyes?.applyOrganDamage(eyes.maxHealth)
@@ -1694,7 +1694,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	value = REAGENT_VALUE_COMMON
 
 /datum/reagent/consumable/ethanol/crevice_spike/on_mob_metabolize(mob/living/L) //damage only applies when drink first enters system and won't again until drink metabolizes out
-	L.adjustBruteLoss(3 * min(5,volume)) //minimum 3 brute damage on ingestion to limit non-drink means of injury - a full 5 unit gulp of the drink trucks you for the full 15
+	L.adjustBruteLoss(3 * min(5,volume), cause = "killed after drinking some crevice spike") //minimum 3 brute damage on ingestion to limit non-drink means of injury - a full 5 unit gulp of the drink trucks you for the full 15
 
 /datum/reagent/consumable/ethanol/sake
 	name = "Sake"

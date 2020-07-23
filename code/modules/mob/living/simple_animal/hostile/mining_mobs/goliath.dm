@@ -199,7 +199,7 @@
 			L.Stun(115)
 		else
 			L.Stun(75)
-		L.adjustBruteLoss(rand(15,20)) // Less stun more harm
+		L.adjustBruteLoss(rand(15,20), cause = "crushed to death by a goliath's tentacle") // Less stun more harm
 		latched = TRUE
 	if(!latched)
 		retract()

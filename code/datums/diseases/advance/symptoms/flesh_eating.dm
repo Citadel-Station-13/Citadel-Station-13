@@ -58,7 +58,7 @@ Bonus
 
 /datum/symptom/flesh_eating/proc/Flesheat(mob/living/M, datum/disease/advance/A)
 	var/get_damage = rand(15,25) * power
-	M.adjustBruteLoss(get_damage)
+	M.adjustBruteLoss(get_damage, cause = "killed by a flesh eating virus")
 	if(pain)
 		M.adjustStaminaLoss(get_damage)
 	if(bleed)
@@ -128,7 +128,7 @@ Bonus
 
 /datum/symptom/flesh_death/proc/Flesh_death(mob/living/M, datum/disease/advance/A)
 	var/get_damage = rand(6,10)
-	M.adjustBruteLoss(get_damage)
+	M.adjustBruteLoss(get_damage, cause = "killed by a flesh eating virus")
 	if(chems)
 		M.reagents.add_reagent_list(list(/datum/reagent/toxin/heparin = 2, /datum/reagent/toxin/lipolicide = 2))
 	if(zombie)

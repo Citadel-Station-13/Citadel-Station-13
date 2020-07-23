@@ -105,7 +105,7 @@
 	visible_message("<span class='danger'>[user] [hulk_verb_continous] [src]!</span>", \
 					"<span class='userdanger'>[user] [hulk_verb_continous] you!</span>", null, COMBAT_MESSAGE_RANGE, null, user,
 					"<span class='danger'>You [hulk_verb_simple] [src]!</span>")
-	adjustBruteLoss(15)
+	adjustBruteLoss(15, cause = "crushed to death by a hulk!")
 	return 1
 
 /mob/living/carbon/human/attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)

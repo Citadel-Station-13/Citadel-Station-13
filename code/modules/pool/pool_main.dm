@@ -134,7 +134,7 @@
 					if(prob(75))
 						H.visible_message("<span class='danger'>[H] falls in the drained pool!</span>",
 													"<span class='userdanger'>You fall in the drained pool!</span>")
-						H.adjustBruteLoss(7)
+						H.adjustBruteLoss(7, cause = "killed after falling into a drained pool")
 						H.DefaultCombatKnockdown(80)
 						playsound(src, 'sound/effects/woodhit.ogg', 60, TRUE, 1)
 					else

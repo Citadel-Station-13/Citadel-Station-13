@@ -22,7 +22,7 @@
 			if(prob(8))
 				flash_act(affect_silicon = 1)
 			log_combat(M, src, "attacked")
-			adjustBruteLoss(damage)
+			adjustBruteLoss(damage, cause = "killed by an alien")
 			updatehealth()
 		else
 			playsound(loc, 'sound/weapons/slashmiss.ogg', 25, 1, -1)
@@ -42,15 +42,15 @@
 					"<span class='boldwarning'>You are knocked off of [src] by [M]!</span>")
 		switch(M.melee_damage_type)
 			if(BRUTE)
-				adjustBruteLoss(damage)
+				adjustBruteLoss(damage, cause = "killed by being torn up by [M])
 			if(BURN)
-				adjustFireLoss(damage)
+				adjustFireLoss(damage cause = "burnt to a pile of ashes by [M])
 			if(TOX)
-				adjustToxLoss(damage)
+				adjustToxLoss(damage, cause = "poisoned to death by [M])
 			if(OXY)
-				adjustOxyLoss(damage)
+				adjustOxyLoss(damage, cause = "suffocated to death by [M])
 			if(CLONE)
-				adjustCloneLoss(damage)
+				adjustCloneLoss(damage, cause = "died to genetic defects caused by [M])
 			if(STAMINA)
 				adjustStaminaLoss(damage)
 
@@ -62,7 +62,7 @@
 		. = ..(user, TRUE)
 		if(.)
 			return
-		adjustBruteLoss(rand(10, 15))
+		adjustBruteLoss(rand(10, 15), cause = "pummeled by a hulk")
 		playsound(loc, "punch", 25, 1, -1)
 		visible_message("<span class='danger'>[user] has punched [src]!</span>", \
 				"<span class='userdanger'>[user] has punched you!</span>", target = user, \
@@ -133,7 +133,7 @@
 			return BULLET_ACT_BLOCK
 		totaldamage = block_calculate_resultant_damage(totaldamage, returnlist)
 	if((P.damage_type == BRUTE || P.damage_type == BURN))
-		adjustBruteLoss(totaldamage)
+		adjustBruteLoss(totaldamage, cause = "killed after taking a [P] to the knee.")
 	if((P.damage >= 10) || P.stun || P.knockdown || (P.stamina >= 20))
 		for(var/mob/living/M in buckled_mobs)
 			M.visible_message("<span class='boldwarning'>[M] is knocked off of [src] by the [P]!</span>",

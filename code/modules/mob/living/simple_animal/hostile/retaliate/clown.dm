@@ -39,10 +39,10 @@
 
 /mob/living/simple_animal/hostile/retaliate/clown/handle_temperature_damage()
 	if(bodytemperature < minbodytemp)
-		adjustBruteLoss(10)
+		adjustBruteLoss(10, cause = "frozen to death. Honk.")
 		throw_alert("temp", /obj/screen/alert/cold, 2)
 	else if(bodytemperature > maxbodytemp)
-		adjustBruteLoss(15)
+		adjustBruteLoss(15, cause = "burnt to death. Honk.")
 		throw_alert("temp", /obj/screen/alert/hot, 3)
 	else
 		clear_alert("temp")

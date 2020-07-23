@@ -56,9 +56,9 @@
 		if(1)
 			gib()
 		if(2)
-			adjustBruteLoss(140)
+			adjustBruteLoss(140, cause = "blown up")
 		if(3)
-			adjustBruteLoss(110)
+			adjustBruteLoss(110, cause = "blown up")
 
 //Watcher
 /mob/living/simple_animal/hostile/asteroid/basilisk/watcher

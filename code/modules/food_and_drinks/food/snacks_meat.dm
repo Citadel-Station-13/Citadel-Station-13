@@ -63,7 +63,7 @@
 	filling_color = "#ee7676"
 	tastes = list("fish" = 1, "pan seared vegtables" = 1)
 	foodtype = MEAT | VEGETABLES | FRIED
-	
+
 /obj/item/reagent_containers/food/snacks/sushi_basic
 	name = "funa hosomaki"
 	desc = "A small cylindrical kudzu skin, filled with rice and fish."
@@ -368,7 +368,7 @@
 		M.visible_message("[src] bursts out of [M]!</span>")
 		M.emote("scream")
 		M.DefaultCombatKnockdown(40)
-		M.adjustBruteLoss(60)
+		M.adjustBruteLoss(60, "brutally killed by a [src] bursting out of their chest")
 		Expand()
 		return TRUE
 	return ..()

@@ -537,9 +537,9 @@
 
 /mob/living/simple_animal/hostile/poison/giant_spider/handle_temperature_damage()
 	if(bodytemperature < minbodytemp)
-		adjustBruteLoss(20)
+		adjustBruteLoss(20, cause = "frozen to death")
 	else if(bodytemperature > maxbodytemp)
-		adjustBruteLoss(20)
+		adjustBruteLoss(20, cause = "burnt to death")
 
 #undef SPIDER_IDLE
 #undef SPINNING_WEB

@@ -120,7 +120,7 @@
 			var/atom/throw_target = get_edge_target_turf(src, dir)
 			jumper.throw_at(throw_target, 0, 1, callback = CALLBACK(src, .proc/on_finish_jump, jumper))
 			jumper.DefaultCombatKnockdown(100)
-			jumper.adjustBruteLoss(10)
+			jumper.adjustBruteLoss(10, cause = "killed after tripping over")
 
 		if(91 to 100)
 			jumper.visible_message("<span class='notice'>[jumper] is preparing for the legendary dive! Can [jumper.p_they()] make it?</span>", \

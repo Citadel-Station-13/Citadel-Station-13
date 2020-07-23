@@ -412,7 +412,7 @@
 	qdel(src)
 
 /mob/living/simple_animal/slime/proc/apply_water()
-	adjustBruteLoss(rand(15,20))
+	adjustBruteLoss(rand(15,20), cause = "splashed to death by water!")
 	if(!client)
 		if(Target) // Like cats
 			Target = null

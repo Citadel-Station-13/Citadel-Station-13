@@ -28,7 +28,7 @@
 		playsound(loc, "punch", 25, 1, -1)
 		visible_message("<span class='danger'>[user] has pummeled [src]!</span>", \
 		"<span class='userdanger'>[user] has pummeled [src]!</span>", null, COMBAT_MESSAGE_RANGE)
-		adjustBruteLoss(5 + rand(1,9))
+		adjustBruteLoss(5 + rand(1,9), cause = "crushed to death by a hulk!")
 		new /datum/forced_movement(src, get_step_away(user,src, 30), 1)
 		return 1
 

@@ -83,7 +83,7 @@
 				C.bleed(30)
 			else
 				L.add_splatter_floor()
-			L.adjustBruteLoss(30)
+			L.adjustBruteLoss(30, cause = "killed by being placed on a kitchen spike")
 			L.setDir(2)
 			buckle_mob(L, force=1)
 			var/matrix/m180 = matrix(L.transform)
@@ -121,7 +121,7 @@
 			"<span class='warning'>[M] struggles to break free from [src]!</span>",\
 			"<span class='notice'>You struggle to break free from [src], exacerbating your wounds! (Stay still for two minutes.)</span>",\
 			"<span class='italics'>You hear a wet squishing noise..</span>")
-			M.adjustBruteLoss(30)
+			M.adjustBruteLoss(30, cause = "killed by trying to struggle off a kitchen spike")
 			if(!do_after(M, 1200, target = src))
 				if(M && M.buckled)
 					to_chat(M, "<span class='warning'>You fail to free yourself!</span>")
@@ -135,7 +135,7 @@
 	m180.Turn(180)
 	animate(M, transform = m180, time = 3)
 	M.pixel_y = M.get_standard_pixel_y_offset(180)
-	M.adjustBruteLoss(30)
+	M.adjustBruteLoss(30, cause = "killed by being taken off a kitchen spike")
 	src.visible_message(text("<span class='danger'>[M] falls free of [src]!</span>"))
 	unbuckle_mob(M,force=1)
 	M.emote("scream")

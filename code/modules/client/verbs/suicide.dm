@@ -31,23 +31,23 @@
 
 				//Do 200 damage divided by the number of damage types applied.
 				if(damagetype & BRUTELOSS)
-					adjustBruteLoss(200/damage_mod)
+					adjustBruteLoss(200/damage_mod, cause = "committed suicide")
 
 				if(damagetype & FIRELOSS)
-					adjustFireLoss(200/damage_mod)
+					adjustFireLoss(200/damage_mod, cause = "committed suicide")
 
 				if(damagetype & TOXLOSS)
-					adjustToxLoss(200/damage_mod)
+					adjustToxLoss(200/damage_mod. cause = "committed suicide")
 
 				if(damagetype & OXYLOSS)
-					adjustOxyLoss(200/damage_mod)
+					adjustOxyLoss(200/damage_mod, cause = "committed suicide")
 
 				if(damagetype & MANUAL_SUICIDE)	//Assume the object will handle the death.
 					return
 
 				//If something went wrong, just do normal oxyloss
 				if(!(damagetype & (BRUTELOSS | FIRELOSS | TOXLOSS | OXYLOSS) ))
-					adjustOxyLoss(max(200 - getToxLoss() - getFireLoss() - getBruteLoss() - getOxyLoss(), 0))
+					adjustOxyLoss(max(200 - getToxLoss() - getFireLoss() - getBruteLoss() - getOxyLoss(), 0), cause = "committed suicide")
 
 				death(FALSE)
 

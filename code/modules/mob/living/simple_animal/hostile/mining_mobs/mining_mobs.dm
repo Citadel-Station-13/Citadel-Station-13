@@ -66,6 +66,6 @@
 
 /mob/living/simple_animal/hostile/asteroid/handle_temperature_damage()
 	if(bodytemperature < minbodytemp)
-		adjustBruteLoss(2)
+		adjustBruteLoss(2, cause = "frozen to death")
 	else if(bodytemperature > maxbodytemp)
-		adjustBruteLoss(20)
+		adjustBruteLoss(20, cause = "burnt to death")

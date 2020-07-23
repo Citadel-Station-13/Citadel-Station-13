@@ -693,7 +693,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 			to_chat(user, "<span class='warning'>You easily land a critical blow on the [target].</span>")
 			if(istype(target, /mob/living/))
 				var/mob/living/bug = target
-				bug.adjustBruteLoss(35) //What kinda mad man would go into melee with a spider?!
+				bug.adjustBruteLoss(35, cause = "was swatted to death by a fly swatter") //What kinda mad man would go into melee with a spider?!
 			else
 				qdel(target)
 

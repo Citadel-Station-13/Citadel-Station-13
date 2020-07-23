@@ -93,7 +93,7 @@
 				master.remove_status_effect(STATUS_EFFECT_HISGRACE)
 				REMOVE_TRAIT(src, TRAIT_NODROP, HIS_GRACE_TRAIT)
 				master.DefaultCombatKnockdown(60)
-				master.adjustBruteLoss(master.maxHealth)
+				master.adjustBruteLoss(master.maxHealth, cause = "killed by his grace")
 				playsound(master, 'sound/effects/splat.ogg', 100, 0)
 			else
 				master.apply_status_effect(STATUS_EFFECT_HISGRACE)
@@ -117,7 +117,7 @@
 			do_attack_animation(L, null, src)
 			playsound(L, 'sound/weapons/smash.ogg', 50, 1)
 			playsound(L, 'sound/misc/desceration-01.ogg', 50, 1)
-			L.adjustBruteLoss(force)
+			L.adjustBruteLoss(force, cause = "killed by his grace")
 			adjust_bloodthirst(-5) //Don't stop attacking they're right there!
 		else
 			consume(L)
@@ -177,7 +177,7 @@
 		return
 	var/victims = 0
 	meal.visible_message("<span class='warning'>[src] swings open and devours [meal]!</span>", "<span class='his_grace big bold'>[src] consumes you!</span>")
-	meal.adjustBruteLoss(200)
+	meal.adjustBruteLoss(200, cause = "consumed by his grace")
 	playsound(meal, 'sound/misc/desceration-02.ogg', 75, 1)
 	playsound(src, 'sound/items/eatfood.ogg', 100, 1)
 	meal.forceMove(src)

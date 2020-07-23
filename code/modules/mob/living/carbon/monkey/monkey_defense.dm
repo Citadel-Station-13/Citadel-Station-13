@@ -39,7 +39,7 @@
 	var/message = "[user] has [hulk_verb]ed [src]!"
 	visible_message("<span class='danger'>[message]</span>", \
 							"<span class='userdanger'>[message]</span>")
-	adjustBruteLoss(15)
+	adjustBruteLoss(15, cause = "pummeled to death by a hulk.")
 	return TRUE
 
 /mob/living/carbon/monkey/attack_hand(mob/living/carbon/human/M)

@@ -419,7 +419,7 @@
 	to_chat(user, "<span class='warning'>[src] explodes!</span>")
 	playsound(src,'sound/effects/explosion1.ogg',40,1)
 	user.flash_act(1, 1)
-	user.adjustBruteLoss(6)
+	user.adjustBruteLoss(6, cause = "was blown up by a mysterious book!")
 	user.adjustFireLoss(6)
 	qdel(src)
 

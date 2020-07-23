@@ -462,7 +462,7 @@
 				continue
 			if(SSmobs.times_fired%3==1)
 				if(!(M.status_flags & GODMODE))
-					M.adjustBruteLoss(5)
+					M.adjustBruteLoss(5) //no cause given so it's hidden from the first death screen
 				adjust_nutrition(10)
 
 

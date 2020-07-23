@@ -110,7 +110,7 @@
 		owner.death(FALSE) //Just in case some freak occurance occurs where you somehow survive all your organs being removed from you and the 100-300 brute damage.
 	else //When it is removed via surgery at a late stage, rather than forced.
 		new_xeno.visible_message("<span class='danger'>[new_xeno] wriggles out of [owner]!</span>", "<span class='userdanger'>You exit [owner], your previous host.</span>")
-		owner.adjustBruteLoss(40)
+		owner.adjustBruteLoss(40, cause = "had a alien burst out of their chest!")
 	old_owner.cut_overlay(overlay)
 	qdel(src)
 

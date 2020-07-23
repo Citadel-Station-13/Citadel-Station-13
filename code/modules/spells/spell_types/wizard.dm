@@ -289,7 +289,7 @@
 			if(isliving(AM))
 				var/mob/living/M = AM
 				M.DefaultCombatKnockdown(100, override_hardstun = 20)
-				M.adjustBruteLoss(5)
+				M.adjustBruteLoss(5, cause = "slammed into the floor and promptly died")
 				to_chat(M, "<span class='userdanger'>You're slammed into the floor by [user]!</span>")
 		else
 			new sparkle_path(get_turf(AM), get_dir(user, AM)) //created sparkles will disappear on their own

@@ -210,7 +210,7 @@
 		return
 	else
 		show_message("<span class='userdanger'>The blob attacks!</span>")
-		adjustBruteLoss(10)
+		adjustBruteLoss(10, cause = "killed by a [B]")
 
 /mob/living/carbon/emp_act(severity)
 	. = ..()

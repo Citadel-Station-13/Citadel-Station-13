@@ -43,7 +43,7 @@
 	display_results(user, target, "<span class='notice'>You attach the [tool] to [target]'s heart and prepare to pulse.</span>",
 		"[user] attaches the [tool] to [H]'s heart and prepares to pulse.",
 		"")
-	H.adjustBruteLoss(10)
+	H.adjustBruteLoss(10, cause = "killed mid-surgery")
 	var/obj/item/organ/heart = H.getorgan(/obj/item/organ/heart)
 	if(heart.organ_flags & ORGAN_FAILING)
 		H.adjustOrganLoss(ORGAN_SLOT_HEART, -15)

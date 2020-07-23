@@ -46,7 +46,7 @@
 /mob/living/proc/ZImpactDamage(turf/T, levels)
 	visible_message("<span class='danger'>[src] crashes into [T] with a sickening noise!</span>", \
 					"<span class='userdanger'>You crash into [T] with a sickening noise!</span>")
-	adjustBruteLoss((levels * 5) ** 1.5)
+	adjustBruteLoss((levels * 5) ** 1.5, cause = "crushed to death by flying into [T]")
 	DefaultCombatKnockdown(levels * 50)
 
 

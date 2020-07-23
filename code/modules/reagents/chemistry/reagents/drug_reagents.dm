@@ -78,7 +78,7 @@
 /datum/reagent/drug/crank/overdose_process(mob/living/M)
 	M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 2*REM)
 	M.adjustToxLoss(2*REM, 0)
-	M.adjustBruteLoss(2*REM, 0)
+	M.adjustBruteLoss(2*REM, 0, cause = "killed by a crank overdose")
 	..()
 	. = 1
 
@@ -92,14 +92,14 @@
 	. = 1
 
 /datum/reagent/drug/crank/addiction_act_stage3(mob/living/M)
-	M.adjustBruteLoss(5*REM, 0)
+	M.adjustBruteLoss(5*REM, 0, cause = "killed by a crank overdose")
 	..()
 	. = 1
 
 /datum/reagent/drug/crank/addiction_act_stage4(mob/living/M)
 	M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 3*REM)
 	M.adjustToxLoss(5*REM, 0)
-	M.adjustBruteLoss(5*REM, 0)
+	M.adjustBruteLoss(5*REM, 0, cause = "killed by a crank overdose")
 	..()
 	. = 1
 
@@ -140,7 +140,7 @@
 /datum/reagent/drug/krokodil/addiction_act_stage3(mob/living/M)
 	if(prob(25))
 		to_chat(M, "<span class='danger'>Your skin starts to peel away...</span>")
-	M.adjustBruteLoss(3*REM, 0)
+	M.adjustBruteLoss(3*REM, 0, cause = "killed by a krokodil overdose")
 	..()
 	. = 1
 
@@ -148,10 +148,10 @@
 	CHECK_DNA_AND_SPECIES(M)
 	if(!istype(M.dna.species, /datum/species/krokodil_addict))
 		to_chat(M, "<span class='userdanger'>Your skin falls off easily!</span>")
-		M.adjustBruteLoss(50*REM, 0) // holy shit your skin just FELL THE FUCK OFF
+		M.adjustBruteLoss(50*REM, 0, cause = "killed by a krokodil overdose as their skin fell off!") // holy shit your skin just FELL THE FUCK OFF
 		M.set_species(/datum/species/krokodil_addict)
 	else
-		M.adjustBruteLoss(5*REM, 0)
+		M.adjustBruteLoss(5*REM, 0, cause = "killed by a krokodil overdose.")
 	..()
 	. = 1
 

@@ -59,7 +59,7 @@
 		return
 	if(!H.blood_volume)
 		H.blood_volume += 5
-		H.adjustBruteLoss(5)
+		H.adjustBruteLoss(5, cause = "found dead due to having no blood")
 		to_chat(H, "<span class='danger'>You feel empty!</span>")
 
 	if(H.blood_volume < (BLOOD_VOLUME_NORMAL * H.blood_ratio))

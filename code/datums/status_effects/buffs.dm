@@ -38,7 +38,7 @@
 
 /datum/status_effect/void_price/tick()
 	SEND_SOUND(owner, sound('sound/magic/summon_karp.ogg', volume = 25))
-	owner.adjustBruteLoss(3)
+	owner.adjustBruteLoss(3, cause = "killed by mysterious black tendrils.")
 
 
 /datum/status_effect/vanguard_shield

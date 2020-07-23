@@ -9,7 +9,7 @@
 		. = ..(user, TRUE)
 		if(.)
 			return
-		adjustBruteLoss(15)
+		adjustBruteLoss(15, cause = "crushed to death by a hulk!")
 		var/hitverb = "punched"
 		if(mob_size < MOB_SIZE_LARGE)
 			step_away(src,user,15)

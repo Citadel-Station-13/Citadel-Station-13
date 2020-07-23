@@ -881,7 +881,7 @@
 		user.dropItemToGround(src)
 		to_chat(user,"<span class='cultlarge'>\"You are not fit to wear my follower's coat!\"</span>")
 		to_chat(user,"<span class='userdanger'>Sharp spines jab you from within the coat!</span>")
-		user.adjustBruteLoss(rand(10,16))
+		user.adjustBruteLoss(rand(10,16), cause = "died trying to wear a cultist's wintercoat.")
 
 /obj/item/clothing/head/hooded/winterhood/narsie
 	desc = "A black winter hood full of whispering secrets that only She shall ever know."

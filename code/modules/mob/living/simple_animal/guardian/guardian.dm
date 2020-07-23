@@ -252,13 +252,13 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 	if(summoner)
 		if(loc == summoner)
 			return FALSE
-		summoner.adjustBruteLoss(amount)
+		summoner.adjustBruteLoss(amount, cause = "killed due to their guardian taking damage!")
 		if(amount > 0)
 			to_chat(summoner, "<span class='danger'><B>Your [name] is under attack! You take damage!</span></B>")
 			summoner.visible_message("<span class='danger'><B>Blood sprays from [summoner] as [src] takes damage!</B></span>")
 			if(summoner.stat == UNCONSCIOUS)
 				to_chat(summoner, "<span class='danger'><B>Your body can't take the strain of sustaining [src] in this condition, it begins to fall apart!</span></B>")
-				summoner.adjustCloneLoss(amount * 0.5) //dying hosts take 50% bonus damage as cloneloss
+				summoner.adjustCloneLoss(amount * 0.5, cause = "killed after falling to pieces, unable to sustain their guardian.") //dying hosts take 50% bonus damage as cloneloss
 		update_health_hud()
 
 /mob/living/simple_animal/hostile/guardian/ex_act(severity, target)
@@ -267,9 +267,9 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 			gib()
 			return
 		if(2)
-			adjustBruteLoss(60)
+			adjustBruteLoss(60, cause = "blown up")
 		if(3)
-			adjustBruteLoss(30)
+			adjustBruteLoss(30, cause = "blown up")
 
 /mob/living/simple_animal/hostile/guardian/gib()
 	if(summoner)

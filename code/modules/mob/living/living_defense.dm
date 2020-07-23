@@ -475,7 +475,7 @@
 
 	if(is_servant_of_ratvar(src) && !stat)
 		to_chat(src, "<span class='userdanger'>You resist Nar'Sie's influence... but not all of it. <i>Run!</i></span>")
-		adjustBruteLoss(35)
+		adjustBruteLoss(35, cause = "killed after being unable to oppose the false god Nar'Sie whileu nder the influence of Ratvar!")
 		if(src && reagents)
 			reagents.add_reagent(/datum/reagent/toxin/heparin, 5)
 		return FALSE

@@ -53,7 +53,7 @@
 	if(isliving(AM))
 		var/mob/living/L = AM
 		if(!isvineimmune(L))
-			L.adjustBruteLoss(5)
+			L.adjustBruteLoss(5, cause = "cut to shreds by thorny vines")
 			to_chat(L, "<span class='alert'>You cut yourself on the thorny vines.</span>")
 
 /**

@@ -332,10 +332,11 @@
 	switch(hugbox)
 		if(DUEL_HUGBOX_NONE)
 			var/obj/item/bodypart/B = L.get_bodypart(BODY_ZONE_HEAD)
+			L.adjustBruteLoss(1, cause = "had their head shot off in a duel")
 			B.dismember()
 			QDEL_IN(B, 1)
 		if(DUEL_HUGBOX_LETHAL)
-			L.adjustBruteLoss(180)
+			L.adjustBruteLoss(180, cause = "killed after they lost a duel, and so lost their life.")
 			L.death()				//Die, powergamers.
 		if(DUEL_HUGBOX_NONLETHAL)
 			L.adjustStaminaLoss(200, forced = TRUE)		//Die, powergamers x 2

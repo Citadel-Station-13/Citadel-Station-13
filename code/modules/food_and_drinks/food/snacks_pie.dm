@@ -84,7 +84,7 @@
 				M.visible_message("[src] bursts out of [M]!</span>")
 			M.emote("scream")
 			M.DefaultCombatKnockdown(40)
-			M.adjustBruteLoss(60)
+			M.adjustBruteLoss(60, cause = "brutally killed by [src] bursting out of their chest")
 	return ..()
 
 /obj/item/reagent_containers/food/snacks/pie/berryclafoutis

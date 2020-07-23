@@ -49,7 +49,7 @@
 		visible_message("<span class='danger'>[user] punches [src]!</span>", \
 			"<span class='userdanger'>[user] punches you!</span>", null, COMBAT_MESSAGE_RANGE, null, \
 			user, "<span class='danger'>You punch [src]!</span>")
-		adjustBruteLoss(15)
+		adjustBruteLoss(15, cause = "pummeled to death by a hulk")
 		return TRUE
 
 /mob/living/simple_animal/attack_paw(mob/living/carbon/monkey/M)
@@ -139,7 +139,7 @@
 	switch (severity)
 		if (EXPLODE_DEVASTATE)
 			if(prob(bomb_armor))
-				adjustBruteLoss(500)
+				adjustBruteLoss(500, cause = "blown into tiny pieces by the [origin]")
 			else
 				gib()
 				return
@@ -147,16 +147,16 @@
 			var/bloss = 60
 			if(prob(bomb_armor))
 				bloss = bloss / 1.5
-			adjustBruteLoss(bloss)
+			adjustBruteLoss(bloss, cause = "blown into pieces by the [origin]")
 
 		if(EXPLODE_LIGHT)
 			var/bloss = 30
 			if(prob(bomb_armor))
 				bloss = bloss / 1.5
-			adjustBruteLoss(bloss)
+			adjustBruteLoss(bloss, cause = "blown into chunks by the [origin]")
 
 /mob/living/simple_animal/blob_act(obj/structure/blob/B)
-	adjustBruteLoss(20)
+	adjustBruteLoss(20, cause = "killed by the [B]")
 	return
 
 /mob/living/simple_animal/do_attack_animation(atom/A, visual_effect_icon, used_item, no_effect)

@@ -73,7 +73,7 @@
 			var/mob/living/carbon/human/H = user
 			H.apply_damage(rand(force/2, force), BRUTE, pick(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM))
 		else
-			user.adjustBruteLoss(rand(force/2,force))
+			user.adjustBruteLoss(rand(force/2,force), cause = "stabbed by a cultist's blade")
 		return
 	..()
 
@@ -436,7 +436,7 @@
 			to_chat(user, "<span class='cultlarge'>\"Trying to use things you don't own is bad, you know.\"</span>")
 			to_chat(user, "<span class='userdanger'>The armor squeezes at your body!</span>")
 			user.emote("scream")
-			user.adjustBruteLoss(25)
+			user.adjustBruteLoss(25, cause = "killed attempting to wear a cultist's robe")
 			user.dropItemToGround(src, TRUE)
 
 /obj/item/clothing/suit/hooded/cultrobes/cult_shield/check_block(mob/living/owner, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return)
@@ -494,7 +494,7 @@
 			to_chat(user, "<span class='cultlarge'>\"Trying to use things you don't own is bad, you know.\"</span>")
 			to_chat(user, "<span class='userdanger'>The robes squeeze at your body!</span>")
 			user.emote("scream")
-			user.adjustBruteLoss(25)
+			user.adjustBruteLoss(25, cause = "killed attempting to wear a cultist's robe")
 			user.dropItemToGround(src, TRUE)
 
 /obj/item/clothing/glasses/hud/health/night/cultblind
@@ -752,7 +752,7 @@
 					to_chat(L, "<span class='cultlarge'>\"Kneel for me, scum\"</span>")
 					L.confused += clamp(10 - L.confused, 0, 5) //confuses and lightly knockdowns + damages hostile cultists instead of hardstunning like before
 					L.DefaultCombatKnockdown(15)
-					L.adjustBruteLoss(10)
+					L.adjustBruteLoss(10, cause = "pierced by a cultist's spear")
 				else
 					L.DefaultCombatKnockdown(50)
 			break_spear(T)
@@ -955,7 +955,7 @@
 					var/mob/living/L = target
 					if(L.density)
 						L.DefaultCombatKnockdown(20)
-						L.adjustBruteLoss(45)
+						L.adjustBruteLoss(45, cause = "killed after being hit by a blood beam")
 						playsound(L, 'sound/hallucinations/wail.ogg', 50, 1)
 						L.emote("scream")
 		var/datum/beam/current_beam = new(user,temp_target,time=7,beam_icon_state="blood_beam",btype=/obj/effect/ebeam/blood)

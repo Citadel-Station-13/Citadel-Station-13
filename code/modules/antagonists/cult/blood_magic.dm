@@ -464,7 +464,7 @@
 					C.stuttering = max(10, C.stuttering)
 					C.drowsyness = max(10, C.drowsyness)
 					C.confused += clamp(20 - C.confused, 0, 10)
-				L.adjustBruteLoss(15)
+				L.adjustBruteLoss(15, cause = "killed by blood magic")
 			to_chat(user, "<span class='cultitalic'>In an brilliant flash of red, [L] [iscultist(L) ? "writhes in pain" : "falls to the ground!"]</span>")
 		uses--
 	..()

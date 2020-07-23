@@ -344,17 +344,17 @@
 	for(var/mob/living/L in get_turf(src))
 		L.visible_message("<span class='warning'>[src] closes on [L], crushing [L.p_them()]!</span>", "<span class='userdanger'>[src] closes on you and crushes you!</span>")
 		if(isalien(L))  //For xenos
-			L.adjustBruteLoss(DOOR_CRUSH_DAMAGE * 1.5) //Xenos go into crit after aproximately the same amount of crushes as humans.
+			L.adjustBruteLoss(DOOR_CRUSH_DAMAGE * 1.5, cause = "crushed to death by a door") //Xenos go into crit after aproximately the same amount of crushes as humans.
 			L.emote("roar")
 		else if(ishuman(L)) //For humans
-			L.adjustBruteLoss(DOOR_CRUSH_DAMAGE)
+			L.adjustBruteLoss(DOOR_CRUSH_DAMAGE, cause = "crushed to death by a door")
 			L.emote("scream")
 			L.DefaultCombatKnockdown(100)
 		else if(ismonkey(L)) //For monkeys
-			L.adjustBruteLoss(DOOR_CRUSH_DAMAGE)
+			L.adjustBruteLoss(DOOR_CRUSH_DAMAGE, cause = "crushed to death by a door")
 			L.DefaultCombatKnockdown(100)
 		else //for simple_animals & borgs
-			L.adjustBruteLoss(DOOR_CRUSH_DAMAGE)
+			L.adjustBruteLoss(DOOR_CRUSH_DAMAGE, cause = "crushed to death by a door")
 		var/turf/location = get_turf(src)
 		//add_blood_DNA doesn't work for borgs/xenos, but add_blood_floor does.
 		if(iscarbon(L))

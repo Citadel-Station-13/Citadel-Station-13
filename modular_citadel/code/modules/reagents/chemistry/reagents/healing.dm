@@ -188,7 +188,7 @@
 	if(!iscarbon(M))
 		return
 	var/mob/living/carbon/C = M
-	C.adjustBruteLoss(borrowed_health*1.25)
+	C.adjustBruteLoss(borrowed_health*1.25, cause = "killed by their synthetic tissue disappearing")
 	C.adjustToxLoss(borrowed_health*1.25)
 	C.adjustCloneLoss(borrowed_health*1.25)
 	C.adjustAllOrganLoss(borrowed_health*0.25)

@@ -167,10 +167,10 @@
 					sleep(1)
 
 		if (effectGib) //effectGib is on, that means whatever's underneath us better be fucking oof'd on
-			M.adjustBruteLoss(5000) //THATS A LOT OF DAMAGE (called just in case gib() doesnt work on em)
+			M.adjustBruteLoss(5000, cause = "hit by a supply pod") //THATS A LOT OF DAMAGE (called just in case gib() doesnt work on em)
 			M.gib() //After adjusting the fuck outta that brute loss we finish the job with some satisfying gibs
 		else
-			M.adjustBruteLoss(damage)
+			M.adjustBruteLoss(damage, cause = "hit by a supply pod")
 	var/explosion_sum = B[1] + B[2] + B[3] + B[4]
 	if (explosion_sum != 0) //If the explosion list isn't all zeroes, call an explosion
 		explosion(get_turf(src), B[1], B[2], B[3], flame_range = B[4], silent = effectQuiet, ignorecap = istype(src, /obj/structure/closet/supplypod/centcompod)) //less advanced equipment than bluespace pod, so larger explosion when landing

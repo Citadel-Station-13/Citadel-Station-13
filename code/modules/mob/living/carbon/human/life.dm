@@ -304,7 +304,7 @@
 		adjustOxyLoss(8)
 		Unconscious(80)
 	// Tissues die without blood circulation
-	adjustBruteLoss(2)
+	adjustBruteLoss(2, cause = "killed by a heart attack!")
 
 
 

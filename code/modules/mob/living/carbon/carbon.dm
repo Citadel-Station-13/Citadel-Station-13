@@ -530,7 +530,7 @@
 			if(T)
 				add_splatter_floor(T)
 			if(stun)
-				adjustBruteLoss(3)
+				adjustBruteLoss(3, cause = "killed after vomiting themselves to death")
 			else if(src.reagents.has_reagent(/datum/reagent/consumable/ethanol/blazaam))
 				if(T)
 					T.add_vomit_floor(src, VOMIT_PURPLE)

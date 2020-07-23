@@ -143,7 +143,7 @@
 		for(var/mob/living/L in range(5,src))
 			if(L == original || istype(L, type))
 				continue
-			L.adjustBruteLoss(50)
+			L.adjustBruteLoss(50, cause = "killed after trying to attack the wrong paper mimic!")
 		qdel(src)
 	else
 		. = ..()

@@ -24,7 +24,7 @@
 		if(iscarbon(L))
 			L.DefaultCombatKnockdown(100)
 			L.visible_message("<span class='warning'>[L] is maimed as the skewer shatters while still in [L.p_their()] body!</span>")
-			L.adjustBruteLoss(15)
+			L.adjustBruteLoss(15, cause = "killed by a brass skewer shattering inside their body")
 		unbuckle_mob(L)
 	return ..()
 
@@ -32,7 +32,7 @@
 	if(density)
 		if(buckled_mobs && LAZYLEN(buckled_mobs))
 			var/mob/living/spitroast = buckled_mobs[1]
-			spitroast.adjustBruteLoss(0.1)
+			spitroast.adjustBruteLoss(0.1, cause = "pierced by a brass skewer")
 
 /obj/structure/destructible/clockwork/trap/attackby(obj/item/I, mob/living/user, params)
 	if(buckled_mobs && (user in buckled_mobs))
@@ -55,7 +55,7 @@
 			if(!squirrel.stat)
 				squirrel.visible_message("<span class='boldwarning'>A massive brass spike erupts from the ground, rending [squirrel]'s chassis but shattering into pieces!</span>", \
 				"<span class='userdanger'>A massive brass spike rips through your chassis and bursts into shrapnel in your casing!</span>")
-				squirrel.adjustBruteLoss(50)
+				squirrel.adjustBruteLoss(50, cause = "pierced by a brass skewer")
 				squirrel.Stun(20)
 				addtimer(CALLBACK(src, .proc/take_damage, max_integrity), 1)
 		else
