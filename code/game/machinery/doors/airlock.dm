@@ -780,6 +780,8 @@
 				H.apply_damage(10, BRUTE, BODY_ZONE_HEAD)
 			else
 				visible_message("<span class='danger'>[user] headbutts the airlock. Good thing [user.p_theyre()] wearing a helmet.</span>")
+	else
+		return ..()
 
 /obj/machinery/door/airlock/attempt_wire_interaction(mob/user)
 	if(security_level)

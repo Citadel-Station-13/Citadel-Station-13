@@ -167,6 +167,8 @@
 
 /obj/item/gun/afterattack(atom/target, mob/living/user, flag, params)
 	. = ..()
+	if(!CheckAttackCooldown(user, target))
+		return
 	process_afterattack(target, user, flag, params)
 
 /obj/item/gun/proc/process_afterattack(atom/target, mob/living/user, flag, params)
