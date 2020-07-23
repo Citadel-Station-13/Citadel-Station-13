@@ -139,6 +139,8 @@
 	if(stored_fashion.arrest_emote)
 		arrest_emote = stored_fashion.arrest_emote
 
+	regenerate_icons()
+
 /mob/living/simple_animal/bot/secbot/proc/reset_fashion()
 	bot_accessory.forceMove(get_turf(src))
 	//reset all emotes/sounds and name/desc
