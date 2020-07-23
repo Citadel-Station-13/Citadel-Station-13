@@ -140,6 +140,17 @@
 	sprint_buffer.hud = src
 	static_inventory += sprint_buffer
 
+	// clickdelay
+	clickdelay = new
+	clickdelay.hud = src
+	clickdelay.screen_loc = ui_clickdelay
+	static_inventory += clickdelay
+
+	// resistdelay
+	resistdelay = new
+	resistdelay.hud = src
+	resistdelay.screen_loc = ui_resistdelay
+	static_inventory += resistdelay
 
 	using = new /obj/screen/drop()
 	using.icon = ui_style

@@ -57,6 +57,7 @@
 	if(considered_action)
 		(immediate? last_action_immediate : last_action) = world.time
 	(immediate? next_action_immediate : next_action) = max(next_action, world.time + (ignore_mod? amount : (amount * action_cooldown_mod + action_cooldown_adjust)))
+	hud_used?.clickdelay?.mark_dirty()
 
 /**
   * Get estimated time of next attack.
@@ -66,7 +67,7 @@
 	var/obj/item/I = get_active_held_item()
 	if(I)
 		attack_speed = I.GetEstimatedAttackSpeed()
-	return max(next_action, last_action + attack_speed)
+	return max(next_action, next_action_immediate, max(last_action, last_action_immediate) + attack_speed)
 
 /**
   * Sets our next action to. The difference is DelayNextAction cannot reduce next_action under any circumstances while this can.
@@ -75,6 +76,7 @@
 	if(considered_action)
 		(immediate? last_action_immediate : last_action) = world.time
 	(immediate? next_action_immediate : next_action) = world.time + (ignore_mod? amount : (amount * action_cooldown_mod + action_cooldown_adjust))
+	hud_used?.clickdelay?.mark_dirty()
 
 /**
   * Checks if we can do another action.
@@ -97,6 +99,7 @@
 /mob/proc/FlushCurrentAction()
 	last_action = last_action_immediate
 	next_action = next_action_immediate
+	hud_used?.clickdelay?.mark_dirty()
 
 /**
   * Discards last_action and next_action
@@ -104,6 +107,7 @@
 /mob/proc/DiscardCurrentAction()
 	last_action_immediate = last_action
 	next_action_immediate = next_action
+	hud_used?.clickdelay?.mark_dirty()
 
 /**
   * Checks if we can resist again.
@@ -121,6 +125,7 @@
 /mob/proc/MarkResistTime(extra_cooldown = resist_cooldown, override = FALSE)
 	last_resist = world.time
 	next_resist = override? (world.time + extra_cooldown) : max(next_resist, world.time + extra_cooldown)
+	hud_used?.clickdelay?.mark_dirty()
 
 /atom
 	// Standard clickdelay variables
