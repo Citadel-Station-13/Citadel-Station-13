@@ -1,13 +1,13 @@
 /obj/screen/action_bar
 
 /obj/screen/action_bar/Destroy()
-	STOP_PROCESSING(SSfastprocess, src)
+	STOP_PROCESSING(SShuds, src)
 	return ..()
 
 /obj/screen/action_bar/proc/mark_dirty()
 	var/mob/living/L = hud?.mymob
 	if(L?.client && update_to_mob(L))
-		START_PROCESSING(SSfastprocess, src)
+		START_PROCESSING(SShuds, src)
 
 /obj/screen/action_bar/process()
 	var/mob/living/L = hud?.mymob
