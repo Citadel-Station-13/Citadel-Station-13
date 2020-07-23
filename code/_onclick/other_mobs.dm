@@ -118,7 +118,7 @@
 	Animals & All Unspecified
 */
 /mob/living/UnarmedAttack(atom/A, proximity, intent = a_intent, flags = NONE)
-	A.attack_animal(src, intent, flags)
+	return !isnull(A.attack_animal(src, intent, flags))
 
 /atom/proc/attack_animal(mob/user)
 	SEND_SIGNAL(src, COMSIG_ATOM_ATTACK_ANIMAL, user)
@@ -130,7 +130,7 @@
 	Monkeys
 */
 /mob/living/carbon/monkey/UnarmedAttack(atom/A, proximity, intent = a_intent, flags = NONE)
-	A.attack_paw(src, intent, flags)
+	return A.attack_paw(src, intent, flags)
 
 /atom/proc/attack_paw(mob/user)
 	if(SEND_SIGNAL(src, COMSIG_ATOM_ATTACK_PAW, user) & COMPONENT_NO_ATTACK_HAND)
