@@ -2336,3 +2336,54 @@
 	reagent_state = SOLID
 	color = "#E6E6DA"
 	taste_mult = 0
+
+
+/datum/reagent/hairball
+	name = "Hairball"
+	description = "A bundle of keratinous bits and fibers, not easily digestible."
+	reagent_state = SOLID
+	can_synth = FALSE
+	metabolization_rate = 0.05 * REAGENTS_METABOLISM
+	taste_description = "wet hair"
+	var/amount = 0
+	var/knotted = 0
+
+/datum/reagent/hairball/on_mob_life(mob/living/carbon/M)
+	amount = M.reagents.get_reagent_amount(/datum/reagent/hairball)
+
+	if(amount < 10)
+		knotted = 0
+
+		if(prob(10))
+			M.losebreath += 1
+			M.emote("cough")
+			to_chat(M, "<span class='notice'>You clear your throat.</span>")
+
+	if(amount >= 10)
+
+		if(knotted == 0)
+			to_chat(M, "<span class='notice'>You feel a knot in your stomach.</span>")
+			knotted = 1
+
+		if(prob(5 + amount/2)) // don't want this to cause too much damage
+			M.losebreath += 2
+			to_chat(M, "<span class='notice'>You feel a knot in your throat.</span>")
+			M.emote("cough")
+
+		else if(prob(amount - 4))
+			to_chat(M, "<span class='warning'>Your stomach feels awfully bloated.</span>")
+			playsound(M,'sound/voice/catpeople/distressed.ogg', 50, FALSE)
+			M.visible_message("<span class='warning'>[M] seems distressed!.</span>", ignored_mobs=M)
+
+		else if(prob(amount - 8))
+			knotted = 0
+			playsound(M,'sound/voice/catpeople/puking.ogg', 110, FALSE)
+			M.Immobilize(30)
+			sleep(30)
+			M.visible_message("<span class='warning'>[M] throws up a hairball! Disgusting!</span>", ignored_mobs=M)
+			new /obj/item/toy/plush/Hairball(get_turf(M))
+			to_chat(M, "<span class='notice'>Aaaah that's better!</span>")
+			SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "cleared_stomach", /datum/mood_event/cleared_stomach, name)
+			M.reagents.del_reagent(/datum/reagent/hairball)
+	..()
+	
