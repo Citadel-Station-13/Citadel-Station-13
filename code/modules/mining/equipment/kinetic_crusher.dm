@@ -27,12 +27,28 @@
 	var/light_on = FALSE
 	var/brightness_on = 7
 	var/wielded = FALSE // track wielded status on item
+	var/destabilizer_type = /obj/item/projectile/destabilizer
 
 /obj/item/kinetic_crusher/cyborg //probably give this a unique sprite later
 	desc = "An integrated version of the standard kinetic crusher with a grinded down axe head to dissuade mis-use against crewmen. Deals damage equal to the standard crusher against creatures, however."
 	force = 10 //wouldn't want to give a borg a 20 brute melee weapon unemagged now would we
 	detonation_damage = 60
 	wielded = 1
+
+/obj/item/kinetic_crusher/premium
+	icon_state = "crusher_prem"
+	item_state = "crusher_prem0"
+	name = "premium kinetic crusher"
+	desc = "An upgraded version of proto-kinetic crusher, fitted with better destabiliser and a more powerful flashlight. Also, looks like it can be thrown much easier."
+	throwforce = 10
+	throw_speed = 4
+	armour_penetration = 15
+	charge_time = 10
+	detonation_damage = 60
+	backstab_bonus = 40
+	brightness_on = 9
+
+	destabilizer_type = /obj/item/projectile/destabilizer/premium
 
 /obj/item/kinetic_crusher/Initialize()
 	. = ..()
@@ -105,7 +121,7 @@
 		var/turf/proj_turf = user.loc
 		if(!isturf(proj_turf))
 			return
-		var/obj/item/projectile/destabilizer/D = new /obj/item/projectile/destabilizer(proj_turf)
+		var/obj/item/projectile/destabilizer/D = new destabilizer_type(proj_turf)
 		for(var/t in trophies)
 			var/obj/item/crusher_trophy/T = t
 			T.on_projectile_fire(D, user)
@@ -186,6 +202,10 @@
 	range = 6
 	log_override = TRUE
 	var/obj/item/kinetic_crusher/hammer_synced
+
+/obj/item/projectile/destabilizer/premium
+	name = "strengthened destabilizing force"
+	range = 9 //Yep, its a lot, but its premium
 
 /obj/item/projectile/destabilizer/Destroy()
 	hammer_synced = null

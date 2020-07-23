@@ -158,6 +158,19 @@
 	item_state = "seva"
 	resistance_flags = FIRE_PROOF
 
+/obj/item/clothing/suit/hooded/explorer/seva/standard
+	hoodtype = /obj/item/clothing/head/hooded/explorer/seva/standard
+
+/obj/item/clothing/head/hooded/explorer/seva/standard
+
+/obj/item/clothing/suit/hooded/explorer/seva/standard/Initialize()
+	. = ..()
+	AddComponent(/datum/component/armor_plate)
+
+/obj/item/clothing/head/hooded/explorer/seva/standard/Initialize()
+	. = ..()
+	AddComponent(/datum/component/armor_plate)
+
 /****************Exo-Suit and Mask****************/
 
 /obj/item/clothing/suit/hooded/explorer/exo
@@ -185,3 +198,16 @@
 	icon_state = "exo"
 	item_state = "exo"
 	resistance_flags = FIRE_PROOF
+
+/obj/item/clothing/suit/hooded/explorer/exo/standard
+	hoodtype = /obj/item/clothing/head/hooded/explorer/exo/standard
+
+/obj/item/clothing/head/hooded/explorer/exo/standard
+
+/obj/item/clothing/suit/hooded/explorer/exo/standard/Initialize()
+	. = ..()
+	AddComponent(/datum/component/armor_plate)
+
+/obj/item/clothing/head/hooded/explorer/exo/standard/Initialize()
+	. = ..()
+	AddComponent(/datum/component/armor_plate)
