@@ -316,8 +316,9 @@
 		var/mob/living/carbon/human/H = user
 		H.dna.species.grab(H, src, H.mind.martial_art)
 		H.DelayNextAction(CLICK_CD_MELEE)
+		return TRUE
 	else
-		..()
+		return ..()
 /*
 	Alt click
 	Unused except for AI

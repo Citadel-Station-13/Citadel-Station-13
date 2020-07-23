@@ -47,5 +47,5 @@
 	if(left < 0 || diff < 0)
 		icon_state = "prog_bar_100"
 		return FALSE
-	icon_state = "prog_bar[round(clamp(((diff - left)/diff) * 100, 0, 100), 5)]"
+	icon_state = "prog_bar_[round(clamp(((diff - left)/diff) * 100, 0, 100), 5)]"
 	return TRUE
