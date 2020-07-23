@@ -2365,7 +2365,7 @@
 			to_chat(M, "<span class='notice'>You feel a knot in your stomach.</span>")
 			knotted = 1
 
-		if(prob(5 + amount/2)) // don't want this to cause too much damage
+		if(prob(5 + amount * 0.5)) // don't want this to cause too much damage
 			M.losebreath += 2
 			to_chat(M, "<span class='notice'>You feel a knot in your throat.</span>")
 			M.emote("cough")
