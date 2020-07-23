@@ -98,6 +98,68 @@
 		emote = replacetext(emote, "LOCATION", location)
 	return emote
 
+/mob/living/simple_animal/bot/secbot/proc/apply_fashion(var/datum/beepsky_fashion/fashion)
+	stored_fashion = new fashion
+	if(stored_fashion.name)
+		name = stored_fashion.name
+
+	if(stored_fashion.desc)
+		desc = stored_fashion.desc
+
+	if(stored_fashion.death_emote)
+		death_emote = stored_fashion.death_emote
+
+	if(stored_fashion.capture_one)
+		capture_one = stored_fashion.capture_one
+
+	if(stored_fashion.capture_two)
+		capture_two = stored_fashion.capture_two
+
+	if(stored_fashion.infraction)
+		infraction = stored_fashion.infraction
+
+	if(stored_fashion.taunt)
+		taunt = stored_fashion.taunt
+
+	if(stored_fashion.attack_one)
+		attack_one = stored_fashion.attack_one
+
+	if(stored_fashion.attack_two)
+		attack_two = stored_fashion.attack_two
+
+	if(stored_fashion.patrol_emote)
+		patrol_emote = stored_fashion.patrol_emote
+
+	if(stored_fashion.patrol_fail_emote)
+		patrol_fail_emote = stored_fashion.patrol_fail_emote
+
+	if(stored_fashion.arrest_texts)
+		arrest_texts = stored_fashion.arrest_texts
+
+	if(stored_fashion.arrest_emote)
+		arrest_emote = stored_fashion.arrest_emote
+
+/mob/living/simple_animal/bot/secbot/proc/reset_fashion()
+	bot_accessory.forceMove(get_turf(src))
+	//reset all emotes/sounds and name/desc
+	name = initial(name)
+	desc = initial(desc)
+	death_emote = initial(death_emote)
+	capture_one = initial(capture_one)
+	capture_two = initial(capture_two)
+	infraction = initial(infraction)
+	taunt = initial(taunt)
+	attack_one = initial(attack_one)
+	attack_two = initial(attack_two)
+	arrest_texts = initial(arrest_texts)
+	arrest_emote = initial(arrest_emote)
+	patrol_emote = initial(patrol_emote)
+	arrest_texts = initial(arrest_texts)
+	arrest_emote = initial(arrest_emote)
+	bot_accessory = null
+	qdel(stored_fashion)
+	regenerate_icons()
+
 /mob/living/simple_animal/bot/secbot/beepsky/explode()
 	var/atom/Tsec = drop_location()
 	new /obj/item/stock_parts/cell/potato(Tsec)
@@ -229,25 +291,7 @@ Auto Patrol: []"},
 	if(H.a_intent == INTENT_HELP && bot_accessory)
 
 		to_chat(H, "<span class='warning'>You knock [bot_accessory] off of [src]'s head!</span>")
-		bot_accessory.forceMove(get_turf(src))
-		//reset all emotes/sounds and name/desc
-		name = initial(name)
-		desc = initial(desc)
-		death_emote = initial(death_emote)
-		capture_one = initial(capture_one)
-		capture_two = initial(capture_two)
-		infraction = initial(infraction)
-		taunt = initial(taunt)
-		attack_one = initial(attack_one)
-		attack_two = initial(attack_two)
-		arrest_texts = initial(arrest_texts)
-		arrest_emote = initial(arrest_emote)
-		patrol_emote = initial(patrol_emote)
-		arrest_texts = initial(arrest_texts)
-		arrest_emote = initial(arrest_emote)
-		bot_accessory = null
-		qdel(stored_fashion)
-		regenerate_icons()
+		reset_fashion()
 		return
 
 	return ..()
@@ -256,7 +300,7 @@ Auto Patrol: []"},
 	..()
 	if(istype(W, /obj/item/weldingtool) && user.a_intent != INTENT_HARM) // Any intent but harm will heal, so we shouldn't get angry.
 		return
-	if(istype(W, /obj/item/clothing/head) || istype(W, /obj/item/clothing/mask))
+	if(istype(W, /obj/item/clothing/head))
 		attempt_place_on_head(user, W)
 		return
 	if(!istype(W, /obj/item/screwdriver) && (W.force) && (!target) && (W.damtype != STAMINA) ) // Added check for welding tool to fix #2432. Welding tool behavior is handled in superclass.
@@ -264,31 +308,22 @@ Auto Patrol: []"},
 		if(special_retaliate_after_attack(user))
 			return
 
-/mob/living/simple_animal/bot/secbot/proc/attempt_place_on_head(mob/user, obj/item/I)
-	if(user && !user.temporarilyRemoveItemFromInventory(I))
-		to_chat(user, "<span class='warning'>\The [I] is stuck to your hand, you cannot put it on [src]'s head!</span>")
+/mob/living/simple_animal/bot/secbot/proc/attempt_place_on_head(mob/user, obj/item/clothing/head/H)
+	if(user && !user.temporarilyRemoveItemFromInventory(H))
+		to_chat(user, "<span class='warning'>\The [H] is stuck to your hand, you cannot put it on [src]'s head!</span>")
 		return
 	if(bot_accessory)
 		to_chat("<span class='warning'>\[src] already has an accessory, and the laws of physics disallow him from wearing a second!</span>")
 		return
-	if(istype(I, /obj/item/clothing/head))
-		var/obj/item/clothing/head/H = I
-		if(H.beepsky_fashion)
-			stored_fashion = new H.beepsky_fashion
+
+	if(H.beepsky_fashion)
+		to_chat(user, "<span class='warning'>You set [H] on [src].</span>")
+		bot_accessory = H
+		H.forceMove(src)
+		apply_fashion(H.beepsky_fashion)
 	else
-		//it must be a mask
-		var/obj/item/clothing/mask/M = I
-		if(M.beepsky_fashion)
-			stored_fashion = new M.beepsky_fashion
-	if(stored_fashion)
-		to_chat(user, "<span class='warning'>You set [I] on [src].</span>")
-		bot_accessory = I
-		I.forceMove(src)
-		stored_fashion.apply(src)
-		regenerate_icons()
-	else
-		to_chat(user, "<span class='warning'>You set [I] on [src]'s head, but it falls off!</span>")
-		I.forceMove(drop_location())
+		to_chat(user, "<span class='warning'>You set [H] on [src]'s head, but it falls off!</span>")
+		H.forceMove(drop_location())
 
 /mob/living/simple_animal/bot/secbot/regenerate_icons()
 	..()

@@ -37,45 +37,6 @@
 		beepsky_overlay.color = obj_color
 		return beepsky_overlay
 
-/datum/beepsky_fashion/proc/apply(mob/living/simple_animal/bot/secbot/beepers) //set the emote depending on the fashion datum, if nothing set, turn it back to how it was initially
-	//assume name and description is always set, because otherwise, what would be the point of beepsky fashion?
-	beepers.name = name
-	beepers.desc = desc
-
-	//set each variable in beepsky if its defined here, otherwise set it to its initial value just in case
-	if(death_emote)
-		beepers.death_emote = death_emote
-
-	if(capture_one)
-		beepers.capture_one = capture_one
-
-	if(capture_two)
-		beepers.capture_two = capture_two
-
-	if(infraction)
-		beepers.infraction = infraction
-
-	if(taunt)
-		beepers.taunt = taunt
-
-	if(attack_one)
-		beepers.attack_one = attack_one
-
-	if(attack_two)
-		beepers.attack_two = attack_two
-
-	if(patrol_emote)
-		beepers.patrol_emote = patrol_emote
-
-	if(patrol_fail_emote)
-		beepers.patrol_fail_emote = patrol_fail_emote
-
-	if(arrest_texts)
-		beepers.arrest_texts = arrest_texts
-
-	if(arrest_emote)
-		beepers.arrest_emote = arrest_emote
-
 /datum/beepsky_fashion/proc/stun_attack(mob/living/carbon/C) //fired when beepsky does a stun attack with the fashion worn, for sounds/overlays/etc
 	return
 
