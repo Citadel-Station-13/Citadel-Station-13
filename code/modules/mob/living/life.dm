@@ -45,6 +45,8 @@
 /mob/living/proc/BiologicalLife(seconds, times_fired)
 	handle_diseases()// DEAD check is in the proc itself; we want it to spread even if the mob is dead, but to handle its disease-y properties only if you're not.
 
+	handle_wounds()
+
 	// Everything after this shouldn't process while dead (as of the time of writing)
 	if(stat == DEAD)
 		return FALSE
@@ -107,6 +109,9 @@
 	return
 
 /mob/living/proc/handle_diseases()
+	return
+
+/mob/living/proc/handle_wounds()
 	return
 
 /mob/living/proc/handle_diginvis()

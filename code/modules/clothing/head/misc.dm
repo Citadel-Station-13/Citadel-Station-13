@@ -446,3 +446,10 @@
 /obj/item/clothing/head/kepi/old
 	icon_state = "kepi_old"
 	desc = "A flat, white circular cap with a visor, that demands some honor from it's wearer."
+
+/obj/item/clothing/head/maid
+	name = "maid headband"
+	desc = "Maid in China."
+	icon_state = "maid"
+	item_state = "maid"
+	dynamic_hair_suffix = ""

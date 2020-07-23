@@ -154,6 +154,11 @@
 	pH = 12
 	value = REAGENT_VALUE_RARE
 
+/datum/reagent/toxin/carpotoxin/on_mob_life(mob/living/carbon/M)
+	. = ..()
+	for(var/i in M.all_scars)
+		qdel(i)
+
 /datum/reagent/toxin/zombiepowder
 	name = "Zombie Powder"
 	description = "A strong neurotoxin that puts the subject into a death-like state."
@@ -520,25 +525,6 @@
 	taste_description = "bad cooking"
 	value = REAGENT_VALUE_NONE
 
-/datum/reagent/toxin/condensed_cooking_oil
-	name = "Condensed Cooking Oil"
-	description = "Taste the consequences of your mistakes."
-	reagent_state = LIQUID
-	color = "#d6d6d8"
-	metabolization_rate = 0.25 * REAGENTS_METABOLISM
-	toxpwr = 0
-	taste_mult = -2
-	taste_description = "awful cooking"
-	value = REAGENT_VALUE_NONE
-
-/datum/reagent/toxin/condensed_cooking_oil/on_mob_life(mob/living/carbon/M)
-	if(prob(5))
-		M.vomit()
-	else
-		if(prob(40))
-			M.adjustOrganLoss(ORGAN_SLOT_HEART, 0.5) //For reference, bungotoxin does 3
-	..()
-
 /datum/reagent/toxin/itching_powder
 	name = "Itching Powder"
 	description = "A powder that induces itching upon contact with the skin. Causes the victim to scratch at their itches and has a very low chance to decay into Histamine."
@@ -736,21 +722,12 @@
 
 /datum/reagent/toxin/heparin //Based on a real-life anticoagulant. I'm not a doctor, so this won't be realistic.
 	name = "Heparin"
-	description = "A powerful anticoagulant. Victims will bleed uncontrollably and suffer scaling bruising."
+	description = "A powerful anticoagulant. All open cut wounds on the victim will open up and bleed much faster"
 	reagent_state = LIQUID
 	color = "#C8C8C8" //RGB: 200, 200, 200
 	metabolization_rate = 0.2 * REAGENTS_METABOLISM
 	toxpwr = 0
 	value = REAGENT_VALUE_VERY_RARE
-
-/datum/reagent/toxin/heparin/on_mob_life(mob/living/carbon/M)
-	if(ishuman(M))
-		var/mob/living/carbon/human/H = M
-		H.bleed_rate = min(H.bleed_rate + 2, 8)
-		H.adjustBruteLoss(1, 0) //Brute damage increases with the amount they're bleeding
-		. = 1
-	return ..() || .
-
 
 /datum/reagent/toxin/rotatium //Rotatium. Fucks up your rotation and is hilarious
 	name = "Rotatium"

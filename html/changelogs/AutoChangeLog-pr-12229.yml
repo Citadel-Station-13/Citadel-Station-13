@@ -1,4 +1,0 @@
-author: "Arturlang"
-delete-after: True
-changes: 
-  - rscadd: "TGUI 3.0 and enables all the UIs, plus the smart asset cache, and all the things required for them"

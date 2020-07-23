@@ -184,6 +184,11 @@
 			return
 		if(target == user && user.zone_selected != BODY_ZONE_PRECISE_MOUTH) //so we can't shoot ourselves (unless mouth selected)
 			return
+		if(iscarbon(target))
+			var/mob/living/carbon/C = target
+			for(var/datum/wound/W in C.all_wounds)
+				if(W.try_treating(src, user))
+					return // another coward cured!
 
 	if(istype(user))//Check if the user can use the gun, if the user isn't alive(turrets) assume it can.
 		var/mob/living/L = user

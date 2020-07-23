@@ -79,7 +79,7 @@
 	send_item_attack_message(I, user, affecting.name, totitemdamage)
 	I.do_stagger_action(src, user, totitemdamage)
 	if(I.force)
-		apply_damage(totitemdamage, I.damtype, affecting) //CIT CHANGE - replaces I.force with totitemdamage
+		apply_damage(totitemdamage, I.damtype, affecting, wound_bonus = I.wound_bonus, bare_wound_bonus = I.bare_wound_bonus, sharpness = I.get_sharpness()) //CIT CHANGE - replaces I.force with totitemdamage
 		if(I.damtype == BRUTE && affecting.status == BODYPART_ORGANIC)
 			var/basebloodychance = affecting.brute_dam + totitemdamage
 			if(prob(basebloodychance))
@@ -131,6 +131,9 @@
 				if(S.next_step(user, act_intent))
 					return TRUE
 
+	for(var/datum/wound/W in all_wounds)
+		if(W.try_handling(user))
+			return 1
 
 /mob/living/carbon/attack_paw(mob/living/carbon/monkey/M)
 
@@ -466,3 +469,8 @@
 		if (BP.status < 2)
 			amount += BP.burn_dam
 	return amount
+
+/mob/living/carbon/proc/get_interaction_efficiency(zone)
+	var/obj/item/bodypart/limb = get_bodypart(zone)
+	if(!limb)
+		return
