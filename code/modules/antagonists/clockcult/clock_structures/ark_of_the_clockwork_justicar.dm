@@ -303,6 +303,7 @@ obj/structure/destructible/clockwork/massive/celestial_gateway/Destroy()
 				QDEL_IN(src, 3)
 				sleep(3)
 				GLOB.clockwork_gateway_activated = TRUE
+				var/turf/T = SSmapping.get_station_center()
 				new /obj/structure/destructible/clockwork/massive/ratvar(T)
 				var/x0 = T.x
 				var/y0 = T.y
