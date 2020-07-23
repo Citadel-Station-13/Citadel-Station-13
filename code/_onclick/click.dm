@@ -111,7 +111,7 @@
 	if(A in DirectAccess())
 		if(W)
 			. = W.melee_attack_chain(src, A, params)
-			return = !(. & DISCARD_LAST_ACTION)
+			return !(. & DISCARD_LAST_ACTION)
 		else
 			return UnarmedAttack(A)? TRUE : FALSE
 
