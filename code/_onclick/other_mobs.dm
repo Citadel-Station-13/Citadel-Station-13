@@ -130,7 +130,9 @@
 	Monkeys
 */
 /mob/living/carbon/monkey/UnarmedAttack(atom/A, proximity, intent = a_intent, flags = NONE)
-	return A.attack_paw(src, intent, flags)
+	if(!CheckActionCooldown(CLICK_CD_MELEE))
+		return
+	return !isnull(A.attack_paw(src, intent, flags))
 
 /atom/proc/attack_paw(mob/user)
 	if(SEND_SIGNAL(src, COMSIG_ATOM_ATTACK_PAW, user) & COMPONENT_NO_ATTACK_HAND)
@@ -151,6 +153,8 @@
 		return
 	if(is_muzzled())
 		return
+	if(!CheckActionCooldown(CLICK_CD_MELEE))
+		return
 	var/mob/living/carbon/ML = A
 	if(istype(ML))
 		var/dam_zone = pick(BODY_ZONE_CHEST, BODY_ZONE_PRECISE_L_HAND, BODY_ZONE_PRECISE_R_HAND, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
@@ -170,6 +174,7 @@
 				ML.ForceContractDisease(D)
 		else
 			ML.visible_message("<span class='danger'>[src] has attempted to bite [ML]!</span>")
+	DelayNextAction()
 
 /*
 	Aliens
@@ -250,9 +255,9 @@
 /mob/living/simple_animal/hostile/UnarmedAttack(atom/A, proximity, intent = a_intent, flags = NONE)
 	target = A
 	if(dextrous && !ismob(A))
-		..()
+		return ..()
 	else
-		AttackingTarget()
+		return AttackingTarget()
 
 /*
 	New Players:

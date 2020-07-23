@@ -116,6 +116,8 @@
 		playsound(src.loc, 'sound/weapons/slash.ogg', 100, 1)
 
 /obj/attack_animal(mob/living/simple_animal/M)
+	if(!M.CheckActionCooldown(CLICK_CD_MELEE))
+		return
 	if(!M.melee_damage_upper && !M.obj_damage)
 		M.emote("custom", message = "[M.friendly_verb_continuous] [src].")
 		return 0

@@ -177,6 +177,7 @@ GLOBAL_LIST_EMPTY(electrochromatic_window_lookup)
 	playsound(src, 'sound/effects/Glassknock.ogg', 50, 1)
 
 /obj/structure/window/attack_paw(mob/user)
+	user.DelayNextAction()
 	return attack_hand(user)
 
 /obj/structure/window/attack_generic(mob/user, damage_amount = 0, damage_type = BRUTE, damage_flag = 0, sound_effect = 1)	//used by attack_alien, attack_animal, and attack_slime
