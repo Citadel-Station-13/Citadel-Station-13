@@ -3,6 +3,11 @@
 	category = SLOT_IN_BACKPACK
 	path = /obj/item/choice_beacon/box/plushie
 
+/datum/gear/paicard
+	name = "PAI card
+	category = SLOT_IN_BACKPACK
+	path = /obj/item/paicar
+
 /datum/gear/tennis
 	name = "Classic Tennis Ball"
 	category = SLOT_IN_BACKPACK
