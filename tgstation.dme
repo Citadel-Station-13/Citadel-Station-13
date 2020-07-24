@@ -3512,6 +3512,7 @@
 #include "sandcode\code\__DEFINES\language.dm"
 #include "sandcode\code\__DEFINES\runechat_defines.dm"
 #include "sandcode\code\__DEFINES\traits.dm"
+#include "sandcode\code\_onclick\hud\screen_objects.dm"
 #include "sandcode\code\datums\shuttles.dm"
 #include "sandcode\code\datums\traits\_quirk.dm"
 #include "sandcode\code\datums\traits\negative.dm"
