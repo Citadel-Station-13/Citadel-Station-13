@@ -418,10 +418,10 @@
 	var/wall_devastate = 0
 	var/aoe_structure_range = 0
 	var/aoe_structure_damage = 0
-	var/aoe_fire_range = 0
-	var/aoe_fire_chance = 0
-	var/aoe_mob_range = 0
-	var/aoe_mob_damage = 0
+	var/aoe_fire_range = 2
+	var/aoe_fire_chance = 100
+	var/aoe_mob_range = 2
+	var/aoe_mob_damage = 30
 	var/impact_structure_damage = 0
 	var/impact_direct_damage = 0
 	var/turf/cached
