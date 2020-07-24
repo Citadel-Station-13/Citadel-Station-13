@@ -361,7 +361,7 @@
 		return
 	return ..()
 
-/mob/living/simple_animal/hostile/clockwork/marauder/guardian/hitby(atom/movable/AM, skipcatch, hitpush, blocked)
+/mob/living/simple_animal/hostile/clockwork/marauder/guardian/hitby(atom/movable/AM, skipcatch, hitpush, blockedatom/movable/AM, datum/thrownthing/throwingdatum)
 	if(blockOrCounter(null, AM))
 		return
 	return ..()
