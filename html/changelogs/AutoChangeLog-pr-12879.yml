@@ -1,0 +1,4 @@
+author: "timothyteakettle"
+delete-after: True
+changes: 
+  - bugfix: "beepsky replaces the word THREAT_LEVEL with the actual threat level"
