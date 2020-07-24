@@ -4,8 +4,6 @@
 	icon_state = "prox"
 	custom_materials = list(/datum/material/iron=800, /datum/material/glass=200)
 	attachable = TRUE
-	var/ui_x = 250
-	var/ui_y = 185
 	var/scanning = FALSE
 	var/timing = FALSE
 	var/time = 10
@@ -113,11 +111,10 @@
 		return ..()
 	return UI_CLOSE
 
-/obj/item/assembly/prox_sensor/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
-									datum/tgui/master_ui = null, datum/ui_state/state = GLOB.hands_state)
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+/obj/item/assembly/prox_sensor/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, ui_key, "ProximitySensor", name, ui_x, ui_y, master_ui, state)
+		ui = new(user, src, "ProximitySensor", name)
 		ui.open()
 
 /obj/item/assembly/prox_sensor/ui_data(mob/user)
