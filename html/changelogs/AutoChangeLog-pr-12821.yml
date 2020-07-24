@@ -1,4 +1,0 @@
-author: "silicons"
-delete-after: True
-changes: 
-  - balance: "projectiles are by default 17.5 tiles per second instead of 12.5"
