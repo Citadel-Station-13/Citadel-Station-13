@@ -315,6 +315,9 @@
 
 /obj/machinery/power/emitter/proc/integrate(obj/item/gun/energy/E,mob/user)
 	if(istype(E, /obj/item/gun/energy))
+		if(!E.can_emitter)
+			to_chat(user, "<span class='warning'>[E] cannot fit into emitters.</span>")
+			return
 		if(!user.transferItemToLoc(E, src))
 			return
 		gun = E
