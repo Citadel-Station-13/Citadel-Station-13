@@ -4,7 +4,6 @@
 	SStgui.on_logout(src)
 	unset_machine()
 	GLOB.player_list -= src
-	clear_typing_indicator() //(please work) makes sure that if it broke, it fixes when you disconnect - sandstorm change
 
 	..()
 
