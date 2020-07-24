@@ -164,6 +164,11 @@
 	Stay near your host to protect and heal them; being too far from your host will rapidly cause you massive damage. Recall to your host if you are too weak and believe you cannot continue \
 	fighting safely. As a final note, you should probably avoid harming any fellow servants of Ratvar.</span>"
 
+/mob/living/simple_animal/hostile/clockwork/marauder/guardian/hitby(atom/movable/AM, skipcatch = FALSE, hitpush = TRUE, blocked = FALSE, datum/thrownthing/throwingdatum)
+	return
+	..()
+
+
 /mob/living/simple_animal/hostile/clockwork/marauder/guardian/Initialize()
 	. = ..()
 	true_name = pick(possible_true_names)
