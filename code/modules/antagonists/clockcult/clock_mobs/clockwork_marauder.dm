@@ -36,6 +36,10 @@
 	var/shield_health = 3 //Amount of projectiles that can be deflected within
 	var/shield_health_regen = 0 //When world.time equals this, shield health will regenerate
 
+/mob/living/simple_animal/hostile/clockwork/marauder/hitby(atom/movable/AM, skipcatch = FALSE, hitpush = TRUE, blocked = FALSE, datum/thrownthing/throwingdatum)
+	return
+	..()
+
 /mob/living/simple_animal/hostile/clockwork/marauder/examine_info()
 	if(!shield_health)
 		return "<span class='warning'>Its shield has been destroyed!</span>"
