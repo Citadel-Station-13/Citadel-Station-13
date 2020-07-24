@@ -1356,22 +1356,14 @@
 	name = "Changeling Adrenaline"
 	description = "Reduces the duration of unconciousness, knockdown and stuns. Restores stamina, but deals toxin damage when overdosed."
 	color = "#918e53"
-	overdose_threshold = 30
+	overdose_threshold = 5
 	value = REAGENT_VALUE_VERY_RARE
 
-/datum/reagent/medicine/changelingadrenaline/on_mob_metabolize(mob/living/L)
-	..()
-	ADD_TRAIT(L, TRAIT_TASED_RESISTANCE, type)
-
-/datum/reagent/medicine/changelingadrenaline/on_mob_end_metabolize(mob/living/L)
-	REMOVE_TRAIT(L, TRAIT_TASED_RESISTANCE, type)
-	..()
-
 /datum/reagent/medicine/changelingadrenaline/on_mob_life(mob/living/carbon/M as mob)
-	M.AdjustUnconscious(-20, 0)
-	M.AdjustAllImmobility(-20, 0)
-	M.AdjustSleeping(-20, 0)
-	M.adjustStaminaLoss(-30, 0)
+	M.AdjustUnconscious(-15, 0)
+	M.AdjustAllImmobility(-15, 0)
+	M.AdjustSleeping(-15, 0)
+	M.adjustStaminaLoss(-22, 0)
 	..()
 	return TRUE
 
