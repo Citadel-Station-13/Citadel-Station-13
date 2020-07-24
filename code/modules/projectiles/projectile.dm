@@ -156,7 +156,7 @@
 
 	wound_bonus = CANT_WOUND
 	/// For telling whether we want to roll for bone breaking or lacerations if we're bothering with wounds
-	sharpness = FALSE
+	sharpness = SHARP_NONE
 
 /obj/item/projectile/Initialize()
 	. = ..()

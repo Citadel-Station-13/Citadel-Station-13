@@ -2,7 +2,7 @@
 	name = "Anthromorphic Fly"
 	id = "fly"
 	say_mod = "buzzes"
-	species_traits = list(NOEYES,CAN_SCAR)
+	species_traits = list(NOEYES,HAS_FLESH,HAS_BONE)
 	inherent_biotypes = MOB_ORGANIC|MOB_HUMANOID|MOB_BUG
 	mutanttongue = /obj/item/organ/tongue/fly
 	mutantliver = /obj/item/organ/liver/fly

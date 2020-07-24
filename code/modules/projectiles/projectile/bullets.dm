@@ -8,4 +8,4 @@
 	flag = "bullet"
 	hitsound_wall = "ricochet"
 	impact_effect_type = /obj/effect/temp_visual/impact_effect
-	sharpness = TRUE
+	sharpness = SHARP_EDGED

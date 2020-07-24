@@ -210,9 +210,9 @@
 		else
 			return clamp(w_class * 6, 10, 100) // Multiply the item's weight class by 6, then clamp the value between 10 and 100
 
-/mob/living/proc/send_item_attack_message(obj/item/I, mob/living/user, hit_area, current_force)
+/mob/living/proc/send_item_attack_message(obj/item/I, mob/living/user, hit_area, obj/item/bodypart/hit_bodypart)
 	var/message_verb = "attacked"
-	if(I.attack_verb && I.attack_verb.len)
+	if(length(I.attack_verb))
 		message_verb = "[pick(I.attack_verb)]"
 	if(current_force < I.force * FEEBLE_ATTACK_MSG_THRESHOLD)
 		message_verb = "[pick("feebly", "limply", "saplessly")] [message_verb]"

@@ -20,7 +20,7 @@
 	ricochet_auto_aim_angle = 10
 	ricochet_auto_aim_range = 3
 	wound_bonus = -35
-	sharpness = TRUE
+	sharpness = SHARP_EDGED
 
 /obj/item/projectile/bullet/c38/match
 	name = ".38 Match bullet"
