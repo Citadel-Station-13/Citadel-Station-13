@@ -1,9 +1,0 @@
-author: "EmeraldSundisk"
-delete-after: True
-changes: 
-  - rscadd: "Adds a CMO office, along with Virology and Genetics labs to Omega Station"
-  - rscadd: "Adds a second chemistry station to the chemistry lab"
-  - tweak: "Adjusts the locations of some objects in medical to accommodate these new additions"
-  - tweak: "Relocates the morgue"
-  - tweak: "Relocates items in impacted areas of maintenance as well as the library"
-  - bugfix: "Fixes an air line Bartholomew somehow knocked out"
