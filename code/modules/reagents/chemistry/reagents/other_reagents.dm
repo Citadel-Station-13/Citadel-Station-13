@@ -2352,18 +2352,14 @@
 	amount = M.reagents.get_reagent_amount(/datum/reagent/hairball)
 
 	if(amount < 10)
-		knotted = 0
-
 		if(prob(10))
 			M.losebreath += 1
 			M.emote("cough")
 			to_chat(M, "<span class='notice'>You clear your throat.</span>")
-
-	if(amount >= 10)
-
-		if(knotted == 0)
+	else
+		if(!knotted)
 			to_chat(M, "<span class='notice'>You feel a knot in your stomach.</span>")
-			knotted = 1
+			knotted = TRUE
 
 		if(prob(5 + amount * 0.5)) // don't want this to cause too much damage
 			M.losebreath += 2
@@ -2376,10 +2372,12 @@
 			M.visible_message("<span class='warning'>[M] seems distressed!.</span>", ignored_mobs=M)
 
 		else if(prob(amount - 8))
-			knotted = 0
+			knotted = FALSE
 			playsound(M,'sound/voice/catpeople/puking.ogg', 110, FALSE)
 			M.Immobilize(30)
-			do_after(30)
+			sleep(30) //snowflake but it works, don't wanna proc this
+			if(QDELETED(M) || QDELETED(src)) //this handles race conditions about m or src not existing.
+				return
 			M.visible_message("<span class='warning'>[M] throws up a hairball! Disgusting!</span>", ignored_mobs=M)
 			new /obj/item/toy/plush/hairball(get_turf(M))
 			to_chat(M, "<span class='notice'>Aaaah that's better!</span>")
