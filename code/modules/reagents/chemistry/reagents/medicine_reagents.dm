@@ -472,7 +472,7 @@
 		else if(method in list(PATCH, TOUCH))
 			M.adjustBruteLoss(-1 * reac_volume)
 			M.adjustFireLoss(-1 * reac_volume)
-			for(var/i in carbies.all_wounds)
+			for(var/i in C.all_wounds)
 				var/datum/wound/iter_wound = i
 				iter_wound.on_synthflesh(reac_volume)
 			if(show_message)
@@ -1601,8 +1601,7 @@
 	reagent_state = LIQUID
 	color = "#bb2424"
 	metabolization_rate = 0.25 * REAGENTS_METABOLISM
-
-overdose_threshold = 20
+	overdose_threshold = 20
 	/// How much base clotting we do per bleeding wound, multiplied by the below number for each bleeding wound
 	var/clot_rate = 0.25
 	/// If we have multiple bleeding wounds, we count the number of bleeding wounds, then multiply the clot rate by this^(n) before applying it to each cut, so more cuts = less clotting per cut (though still more total clotting)

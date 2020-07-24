@@ -2,7 +2,7 @@
 	The presence of this element allows an item (or a projectile carrying an item) to embed itself in a human or turf when it is thrown into a target (whether by hand, gun, or explosive wave) with either
 	at least 4 throwspeed (EMBED_THROWSPEED_THRESHOLD) or ignore_throwspeed_threshold set to TRUE. Items meant to be used as shrapnel for projectiles should have ignore_throwspeed_threshold set to true.
 
-	Whether we're dealing with a direct /obj/item (throwing a knife at someone) or an /obj/projectile with a shrapnel_type, how we handle things plays out the same, with one extra step separating them.
+	Whether we're dealing with a direct /obj/item (throwing a knife at someone) or an /obj/item/projectile with a shrapnel_type, how we handle things plays out the same, with one extra step separating them.
 	Items simply make their COMSIG_MOVABLE_IMPACT or COMSIG_MOVABLE_IMPACT_ZONE check (against a closed turf or a carbon, respectively), while projectiles check on COMSIG_PROJECTILE_SELF_ON_HIT.
 	Upon a projectile hitting a valid target, it spawns whatever type of payload it has defined, then has that try to embed itself in the target on its own.
 
@@ -169,7 +169,7 @@
   *	it to call tryForceEmbed() on its own embed element (it's out of our hands here, our projectile is done), where it will run through all the checks it needs to.
   */
 /datum/element/embed/proc/checkEmbedProjectile(obj/item/projectile/P, atom/movable/firer, atom/hit, angle, hit_zone)
-	if(!iscarbon(hit) && !isclosedturf(hit))
+	if(!iscarbon(hit))
 		Detach(P)
 		return // we don't care
 
@@ -178,16 +178,10 @@
 		payload.name = P.name
 	payload.embedding = P.embedding
 	payload.updateEmbedding()
-	var/did_embed
-	if(iscarbon(hit))
-		var/mob/living/carbon/C = hit
-		var/obj/item/bodypart/limb
-		limb = C.get_bodypart(hit_zone)
-		if(!limb)
-			limb = C.get_bodypart()
-		did_embed = payload.tryEmbed(limb)
-	else
-		did_embed = payload.tryEmbed(hit)
+	var/mob/living/carbon/C = hit
+	var/obj/item/bodypart/limb = C.get_bodypart(hit_zone)
+	if(!limb)
+		limb = C.get_bodypart()
 
 	payload.tryEmbed(limb)
 	Detach(P)
@@ -213,5 +207,5 @@
 		limb = target
 		hit_zone = limb.body_zone
 		C = limb.owner
-	checkEmbed(I, C, hit_zone, forced=TRUE)
+	checkEmbedMob(I, C, hit_zone, forced=TRUE)
 	return TRUE

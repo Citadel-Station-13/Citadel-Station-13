@@ -196,7 +196,7 @@
 			break
 
 ///One of our pellets hit something, record what it was and check if we're done (terminated == num_pellets)
-/datum/component/pellet_cloud/proc/pellet_hit(obj/projectile/P, atom/movable/firer, atom/target, Angle, hit_zone)
+/datum/component/pellet_cloud/proc/pellet_hit(obj/item/projectile/P, atom/movable/firer, atom/target, Angle, hit_zone)
 	pellets -= P
 	terminated++
 	hits++

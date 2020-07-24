@@ -140,8 +140,8 @@
 								"<span class='userdanger'>You're hit by [I]!</span>")
 				if(!I.throwforce)
 					return
-				var/armor = run_armor_check(zone, "melee", "Your armor has protected your [parse_zone(zone)].", "Your armor has softened hit to your [parse_zone(zone)].",I.armour_penetration)
-				apply_damage(I.throwforce, dtype, zone, armor, sharpness=I.get_sharpness(), wound_bonus=(nosell_hit * CANT_WOUND))
+				var/armor = run_armor_check(impacting_zone, "melee", "Your armor has protected your [parse_zone(impacting_zone)].", "Your armor has softened hit to your [parse_zone(impacting_zone)].",I.armour_penetration)
+				apply_damage(I.throwforce, dtype, impacting_zone, armor, sharpness=I.get_sharpness(), wound_bonus=(nosell_hit * CANT_WOUND))
 		else
 			return 1
 	else

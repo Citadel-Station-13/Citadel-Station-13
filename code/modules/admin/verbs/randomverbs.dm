@@ -1458,8 +1458,8 @@ GLOBAL_LIST_EMPTY(custom_outfits) //Admin created outfits
 /proc/firing_squad(mob/living/carbon/target, turf/source_turf, body_zone, wound_bonus, damage)
 	if(!target.get_bodypart(body_zone))
 		return
-	playsound(target, 'sound/weapons/gun/revolver/shot.ogg', 100)
-	var/obj/projectile/bullet/smite/divine_wrath = new(source_turf)
+	playsound(target, 'sound/weapons/shot.ogg', 100)
+	var/obj/item/projectile/bullet/smite/divine_wrath = new(source_turf)
 	divine_wrath.damage = damage
 	divine_wrath.wound_bonus = wound_bonus
 	divine_wrath.original = target

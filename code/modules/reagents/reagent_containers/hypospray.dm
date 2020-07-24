@@ -140,6 +140,13 @@
 	amount_per_transfer_from_this = 15
 	list_reagents = list(/datum/reagent/medicine/epinephrine = 12, /datum/reagent/medicine/coagulant = 2.5, /datum/reagent/medicine/spaceacillin = 0.5)
 
+/obj/item/reagent_containers/hypospray/medipen/blood_loss
+	name = "hypovolemic-response autoinjector"
+	desc = "A medipen designed to stabilize and rapidly reverse severe bloodloss."
+	volume = 15
+	amount_per_transfer_from_this = 15
+	list_reagents = list(/datum/reagent/medicine/epinephrine = 5, /datum/reagent/medicine/coagulant = 2.5, /datum/reagent/iron = 3.5, /datum/reagent/medicine/salglu_solution = 4)
+
 /obj/item/reagent_containers/hypospray/medipen/stimulants
 	name = "illegal stimpack medipen"
 	desc = "A highly illegal medipen due to its load and small injections, allow for five uses before being drained"

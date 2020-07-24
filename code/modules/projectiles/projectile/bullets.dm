@@ -14,6 +14,6 @@
 	wound_falloff_tile = -5
 	embed_falloff_tile = -5
 
-/obj/projectile/bullet/smite
+/obj/item/projectile/bullet/smite
 	name = "divine retribution"
 	damage = 10
