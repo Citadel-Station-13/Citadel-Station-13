@@ -13,7 +13,9 @@
 	strip_delay = 10
 	equip_delay_other = 10
 	dynamic_hair_suffix = ""
+
 	dog_fashion = /datum/dog_fashion/head/chef
+	beepsky_fashion = /datum/beepsky_fashion/chef
 
 /obj/item/clothing/head/chefhat/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is donning [src]! It looks like [user.p_theyre()] trying to become a chef.</span>")
@@ -33,7 +35,9 @@
 	flags_inv = 0
 	armor = list("melee" = 40, "bullet" = 30, "laser" = 30, "energy" = 10, "bomb" = 25, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 50)
 	strip_delay = 60
+
 	dog_fashion = /datum/dog_fashion/head/captain
+	beepsky_fashion = /datum/beepsky_fashion/captain
 
 //Captain: This is no longer space-worthy
 /obj/item/clothing/head/caphat/parade

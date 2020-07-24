@@ -112,7 +112,7 @@
 	if(stasis)
 		return
 	if(revealed && essence <= 0)
-		death()
+		INVOKE_ASYNC(src, .proc/death)
 	if(unreveal_time && world.time >= unreveal_time)
 		unreveal_time = 0
 		revealed = FALSE
