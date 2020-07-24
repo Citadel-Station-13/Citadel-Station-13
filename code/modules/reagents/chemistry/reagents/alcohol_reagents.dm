@@ -2378,7 +2378,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 /datum/reagent/consumable/ethanol/species_drink/hollow_bone
 	name = "Hollow Bone"
 	color = "#FCF7D4" //(252, 247, 212)
-	description = "Shockingly none-harmful mix of toxins and milk."
+	description = "Shockingly non-harmful mix of toxins and milk."
 	boozepwr = 15
 	taste_description = "Milk and salt"
 	glass_icon_state = "hollow_bone"
