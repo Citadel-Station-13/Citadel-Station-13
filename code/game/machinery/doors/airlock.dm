@@ -298,10 +298,10 @@
 
 /obj/machinery/door/airlock/Destroy()
 	QDEL_NULL(wires)
+	QDEL_NULL(electronics)
 	if(charge)
 		qdel(charge)
 		charge = null
-	QDEL_NULL(electronics)
 	if (cyclelinkedairlock)
 		if (cyclelinkedairlock.cyclelinkedairlock == src)
 			cyclelinkedairlock.cyclelinkedairlock = null
@@ -309,7 +309,7 @@
 	if(id_tag)
 		for(var/obj/machinery/doorButtons/D in GLOB.machines)
 			D.removeMe(src)
-	qdel(note)
+	QDEL_NULL(note)
 	for(var/datum/atom_hud/data/diagnostic/diag_hud in GLOB.huds)
 		diag_hud.remove_from_hud(src)
 	return ..()
@@ -1440,11 +1440,10 @@
 	else if(istype(note, /obj/item/photo))
 		return "photo"
 
-/obj/machinery/door/airlock/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
-													datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
-	SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+/obj/machinery/door/airlock/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, ui_key, "AiAirlock", name, 500, 390, master_ui, state)
+		ui = new(user, src, "AiAirlock", name)
 		ui.open()
 	return TRUE
 
@@ -1452,10 +1451,10 @@
 	var/list/data = list()
 
 	var/list/power = list()
-	power["main"] = src.secondsMainPowerLost ? 0 : 2 // boolean
-	power["main_timeleft"] = src.secondsMainPowerLost
-	power["backup"] = src.secondsBackupPowerLost ? 0 : 2 // boolean
-	power["backup_timeleft"] = src.secondsBackupPowerLost
+	power["main"] = secondsMainPowerLost ? 0 : 2 // boolean
+	power["main_timeleft"] = secondsMainPowerLost
+	power["backup"] = secondsBackupPowerLost ? 0 : 2 // boolean
+	power["backup_timeleft"] = secondsBackupPowerLost
 	data["power"] = power
 
 	data["shock"] = secondsElectrified == 0 ? 2 : 0
@@ -1495,14 +1494,14 @@
 				loseMainPower()
 				update_icon()
 			else
-				to_chat(usr, "Main power is already offline.")
+				to_chat(usr, "<span class='warning'>Main power is already offline.</span>")
 			. = TRUE
 		if("disrupt-backup")
 			if(!secondsBackupPowerLost)
 				loseBackupPower()
 				update_icon()
 			else
-				to_chat(usr, "Backup power is already offline.")
+				to_chat(usr, "<span class='warning'>Backup power is already offline.</span>")
 			. = TRUE
 		if("shock-restore")
 			shock_restore(usr)
@@ -1531,7 +1530,6 @@
 			. = TRUE
 		if("speed-toggle")
 			normalspeed = !normalspeed
-
 			. = TRUE
 		if("open-close")
 			user_toggle_open(usr)

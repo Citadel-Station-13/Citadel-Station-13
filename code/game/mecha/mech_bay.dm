@@ -81,10 +81,10 @@
 	var/obj/machinery/mech_bay_recharge_port/recharge_port
 	light_color = LIGHT_COLOR_PINK
 
-/obj/machinery/computer/mech_bay_power_console/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+/obj/machinery/computer/mech_bay_power_console/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, ui_key, "MechBayPowerConsole", "Mech Bay Power Control Console", 400, 200, master_ui, state)
+		ui = new(user, src, "MechBayPowerConsole", name)
 		ui.open()
 
 /obj/machinery/computer/mech_bay_power_console/ui_act(action, params)
@@ -104,7 +104,6 @@
 			data["recharge_port"]["mech"] = list("health" = recharge_port.recharging_mech.obj_integrity, "maxhealth" = recharge_port.recharging_mech.max_integrity, "cell" = null, "name" = recharge_port.recharging_mech.name,)
 			if(recharge_port.recharging_mech.cell && !QDELETED(recharge_port.recharging_mech.cell))
 				data["recharge_port"]["mech"]["cell"] = list(
-				"critfail" = recharge_port.recharging_mech.cell.crit_fail,
 				"charge" = recharge_port.recharging_mech.cell.charge,
 				"maxcharge" = recharge_port.recharging_mech.cell.maxcharge
 				)
