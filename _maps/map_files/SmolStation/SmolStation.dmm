@@ -2888,6 +2888,27 @@
 	},
 /turf/open/floor/plating,
 /area/aisat)
+"bXs" = (
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer3{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1{
+	dir = 4
+	},
+/turf/open/floor/plasteel/dark,
+/area/science/xenobiology{
+	name = "Science Outpost"
+	})
 "bXD" = (
 /obj/structure/chair{
 	dir = 4
@@ -8054,6 +8075,7 @@
 	id = "xeno2";
 	name = "Creature Cell #2"
 	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,
 /turf/open/floor/plasteel/dark,
 /area/science/xenobiology{
 	name = "Science Outpost"
@@ -8787,6 +8809,14 @@
 	},
 /turf/open/floor/plasteel,
 /area/medical/medbay/zone3)
+"gxk" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer3{
+	dir = 1
+	},
+/turf/open/floor/plasteel/dark,
+/area/science/xenobiology{
+	name = "Science Outpost"
+	})
 "gxn" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/command/glass{
@@ -8858,6 +8888,7 @@
 /obj/machinery/atmospherics/pipe/simple/purple/visible{
 	dir = 5
 	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,
 /turf/open/floor/plasteel/dark,
 /area/science/xenobiology{
 	name = "Science Outpost"
@@ -12372,6 +12403,7 @@
 	pixel_y = -24;
 	req_access_txt = "55"
 	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,
 /turf/open/floor/plasteel/dark,
 /area/science/xenobiology{
 	name = "Science Outpost"
@@ -12424,6 +12456,7 @@
 	id = "xeno3";
 	name = "Creature Cell #3"
 	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,
 /turf/open/floor/plasteel/dark,
 /area/science/xenobiology{
 	name = "Science Outpost"
@@ -12680,6 +12713,7 @@
 	pixel_y = -24;
 	req_access_txt = "55"
 	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,
 /turf/open/floor/plasteel/dark,
 /area/science/xenobiology{
 	name = "Science Outpost"
@@ -17293,6 +17327,9 @@
 /obj/machinery/atmospherics/pipe/simple/purple/visible{
 	dir = 6
 	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
+	dir = 10
+	},
 /turf/open/floor/plasteel/dark,
 /area/science/xenobiology{
 	name = "Science Outpost"
@@ -17306,6 +17343,7 @@
 	id = "xeno1";
 	name = "Creature Cell #1"
 	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,
 /turf/open/floor/plasteel/dark,
 /area/science/xenobiology{
 	name = "Science Outpost"
@@ -17754,8 +17792,8 @@
 	pixel_y = -24;
 	req_access_txt = "55"
 	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
-	dir = 4
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer3{
+	dir = 1
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1{
 	dir = 4
@@ -17827,6 +17865,9 @@
 /area/bridge)
 "nkT" = (
 /mob/living/simple_animal/slime,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer3{
+	dir = 1
+	},
 /turf/open/floor/plasteel/dark,
 /area/science/xenobiology{
 	name = "Science Outpost"
@@ -18065,6 +18106,25 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/gateway)
+"nva" = (
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer3,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1{
+	dir = 9
+	},
+/turf/open/floor/plasteel/dark,
+/area/science/xenobiology{
+	name = "Science Outpost"
+	})
 "nvV" = (
 /turf/closed/wall/r_wall,
 /area/crew_quarters/heads/hop)
@@ -20515,6 +20575,7 @@
 	pixel_y = -24;
 	req_access_txt = "55"
 	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,
 /turf/open/floor/plasteel/dark,
 /area/science/xenobiology{
 	name = "Science Outpost"
@@ -20693,6 +20754,7 @@
 	id = "xeno4";
 	name = "Creature Cell #4"
 	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,
 /turf/open/floor/plasteel/dark,
 /area/science/xenobiology{
 	name = "Science Outpost"
@@ -20862,6 +20924,7 @@
 	id = "xeno7";
 	name = "Creature Cell #7"
 	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,
 /turf/open/floor/plasteel/dark,
 /area/science/xenobiology{
 	name = "Science Outpost"
@@ -25710,6 +25773,7 @@
 	pixel_y = -24;
 	req_access_txt = "55"
 	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,
 /turf/open/floor/plasteel/dark,
 /area/science/xenobiology{
 	name = "Science Outpost"
@@ -25959,6 +26023,7 @@
 	id = "xeno6";
 	name = "Creature Cell #6"
 	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,
 /turf/open/floor/plasteel/dark,
 /area/science/xenobiology{
 	name = "Science Outpost"
@@ -26028,6 +26093,7 @@
 	id = "xeno5";
 	name = "Creature Cell #5"
 	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,
 /turf/open/floor/plasteel/dark,
 /area/science/xenobiology{
 	name = "Science Outpost"
@@ -30676,8 +30742,8 @@
 	pixel_y = -24;
 	req_access_txt = "55"
 	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
-	dir = 4
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer3{
+	dir = 1
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1{
 	dir = 4
@@ -30977,6 +31043,12 @@
 /obj/effect/turf_decal/stripes{
 	dir = 10
 	},
+/turf/open/floor/plasteel/dark,
+/area/science/xenobiology{
+	name = "Science Outpost"
+	})
+"xty" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,
 /turf/open/floor/plasteel/dark,
 /area/science/xenobiology{
 	name = "Science Outpost"
@@ -82976,7 +83048,7 @@ nlY
 vvr
 xkE
 mSE
-lVE
+xty
 nkT
 lVE
 mgE
@@ -83747,7 +83819,7 @@ xzb
 vvr
 njr
 fUc
-lVE
+xty
 nkT
 mVf
 mgE
@@ -84515,11 +84587,11 @@ epG
 bpr
 bpr
 bpr
-daT
+bXs
 prD
 jkZ
-lVE
-lVE
+xty
+gxk
 lVE
 mgE
 vwU
@@ -85286,11 +85358,11 @@ epG
 bpr
 bpr
 bpr
-daT
+bXs
 jsH
 pwh
-lVE
-lVE
+xty
+gxk
 cWw
 mgE
 lTH
@@ -86057,11 +86129,11 @@ wMn
 pBI
 pzW
 tPe
-daT
+bXs
 tAk
 tKz
-lVE
-lVE
+xty
+gxk
 lVE
 mgE
 hBd
@@ -86828,11 +86900,11 @@ mgE
 mgE
 kuH
 sen
-daT
+bXs
 jiD
 tJN
-lVE
-lVE
+xty
+gxk
 mVf
 mgE
 nUW
@@ -87342,7 +87414,7 @@ wSp
 kSx
 eDt
 xpq
-uGT
+nva
 glE
 bjW
 gzV
@@ -87602,8 +87674,8 @@ qLf
 mSl
 gyu
 pAL
-lVE
-lVE
+xty
+gxk
 lVE
 mgE
 mgE
