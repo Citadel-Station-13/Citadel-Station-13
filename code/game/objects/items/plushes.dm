@@ -193,7 +193,9 @@
 	if(istype(I, /obj/item/grenade))
 		if(unstuffable)
 			to_chat(user, "<span class='warning'>No... you should destroy it now!</span>")
-			do_after(10)
+			sleep(10)
+			if(QDELETED(user) || QDELETED(src))
+				return
 			SEND_SOUND(user, 'sound/weapons/armbomb.ogg')
 			return
 		if(stuffed)
