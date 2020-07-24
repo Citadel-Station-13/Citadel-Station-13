@@ -2346,7 +2346,7 @@
 	metabolization_rate = 0.05 * REAGENTS_METABOLISM
 	taste_description = "wet hair"
 	var/amount = 0
-	var/knotted = 0
+	var/knotted = FALSE
 
 /datum/reagent/hairball/on_mob_life(mob/living/carbon/M)
 	amount = M.reagents.get_reagent_amount(/datum/reagent/hairball)
