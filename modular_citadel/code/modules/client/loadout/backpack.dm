@@ -6,7 +6,7 @@
 /datum/gear/paicard
 	name = "PAI card
 	category = SLOT_IN_BACKPACK
-	path = /obj/item/paicar
+	path = /obj/item/paicard
 
 /datum/gear/tennis
 	name = "Classic Tennis Ball"
