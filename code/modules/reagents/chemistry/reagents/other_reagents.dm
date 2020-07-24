@@ -2379,7 +2379,7 @@
 			knotted = 0
 			playsound(M,'sound/voice/catpeople/puking.ogg', 110, FALSE)
 			M.Immobilize(30)
-			sleep(30)
+			do_after(30)
 			M.visible_message("<span class='warning'>[M] throws up a hairball! Disgusting!</span>", ignored_mobs=M)
 			new /obj/item/toy/plush/hairball(get_turf(M))
 			to_chat(M, "<span class='notice'>Aaaah that's better!</span>")
