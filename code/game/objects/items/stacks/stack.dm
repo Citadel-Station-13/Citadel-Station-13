@@ -233,7 +233,7 @@
 				return
 			T.PlaceOnTop(R.result_type, flags = CHANGETURF_INHERIT_AIR)
 		else
-			O = new R.result_type(get_turf(usr.drop_location))
+			O = new R.result_type(get_turf(usr))
 		if(O)
 			O.setDir(usr.dir)
 			log_craft("[O] crafted by [usr] at [loc_name(O.loc)]")
