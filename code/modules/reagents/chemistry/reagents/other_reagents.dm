@@ -2383,5 +2383,6 @@
 			to_chat(M, "<span class='notice'>Aaaah that's better!</span>")
 			SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "cleared_stomach", /datum/mood_event/cleared_stomach, name)
 			M.reagents.del_reagent(/datum/reagent/hairball)
+			return
 	..()
 	
