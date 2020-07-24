@@ -4,7 +4,7 @@
 	path = /obj/item/choice_beacon/box/plushie
 
 /datum/gear/paicard
-	name = "PAI card
+	name = "PAI car
 	category = SLOT_IN_BACKPACK
 	path = /obj/item/paicard
 
