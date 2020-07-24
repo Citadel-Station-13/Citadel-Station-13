@@ -82,6 +82,8 @@
 			emote = attack_two
 		if("ARREST")
 			emote = arrest_emote
+		if("THREAT_LEVEL")
+			emote = threat
 
 	//now replace pieces of the text with the information we have
 	if(emote_type != "TAUNT" && emote_type != "ARREST")
