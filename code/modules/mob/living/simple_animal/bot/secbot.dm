@@ -90,7 +90,7 @@
 		emote = replacetext(emote, "BOT", "<b>[name]</b>") //needs to be bold if its a taunt or an arrest text
 	if(criminal)
 		emote = replacetext(emote, "CRIMINAL", criminal.name)
-	if(threat)
+	if(num2text(threat)) //because a threat of 0 will be false
 		emote = replacetext(emote, "THREAT_LEVEL", threat)
 	if(arrest > -1)
 		emote = replacetext(emote, "ARREST_TYPE", arrest_texts[arrest + 1])
