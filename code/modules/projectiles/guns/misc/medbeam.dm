@@ -47,7 +47,7 @@
 
 	if(current_target)
 		LoseTarget()
-	if(!isliving(target))
+	if(!isliving(target) || (user == target))
 		return
 
 	current_target = target
