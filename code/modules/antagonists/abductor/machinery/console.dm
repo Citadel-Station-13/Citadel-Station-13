@@ -24,7 +24,7 @@
 	var/obj/machinery/computer/camera_advanced/abductor/camera
 	var/list/datum/icon_snapshot/disguises = list()
 
-/obj/machinery/abductor/console/attack_hand(mob/user)
+/obj/machinery/abductor/console/attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	. = ..()
 	if(.)
 		return

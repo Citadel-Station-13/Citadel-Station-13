@@ -15,6 +15,8 @@ SUBSYSTEM_DEF(vote)
 	var/vote_system = PLURALITY_VOTING
 	var/question = null
 	var/list/choices = list()
+	/// List of choice = object for statclick objects for statpanel voting
+	var/list/choice_statclicks = list()
 	var/list/scores = list()
 	var/list/choice_descs = list() // optional descriptions
 	var/list/voted = list()
@@ -47,7 +49,33 @@ SUBSYSTEM_DEF(vote)
 				client_popup.open(0)
 			next_pop = world.time+VOTE_COOLDOWN
 
-
+/**
+  * Renders a statpanel. Directly uses statpanel/stat calls since this is called from base of mob/Stat().
+  */
+/datum/controller/subsystem/vote/proc/render_statpanel(mob/M)
+	if(!mode)		// check if vote is running
+		return
+	if(!statpanel("Status"))		// don't bother if they're not focused on this panel
+		return
+	var/static/list/supported = list(PLURALITY_VOTING, APPROVAL_VOTING)
+	stat("Vote active!", "There is currently a vote running. Question: [question]")
+	if(!(vote_system in supported))
+		stat("<STATPANEL VOTING DISABLED>", "The current vote system is not supported by statpanel rendering. Please vote manually by opening the vote popup using the action button or chat link.")
+		return
+	stat("Time Left:", "[round(end_time - world.time)] seconds")
+	stat(null, null)
+	stat("Choices:", null)
+	stat(null, null)
+	for(var/i in 1 to choice_statclicks.len)
+		var/choice = choice_statclicks[i]
+		var/ivotedforthis = FALSE
+		switch(vote_system)
+			if(APPROVAL_VOTING)
+				ivotedforthis = voted[usr.ckey] && (i in voted[usr.ckey])
+			if(PLURALITY_VOTING)
+				ivotedforthis = voted[usr.ckey] == i
+		stat(ivotedforthis? "\[X\]" : "\[ \]", choice_statclicks[choice])
+	stat(null, null)
 
 /datum/controller/subsystem/vote/proc/reset()
 	initiator = null
@@ -59,8 +87,25 @@ SUBSYSTEM_DEF(vote)
 	voted.Cut()
 	voting.Cut()
 	scores.Cut()
+	cleanup_statclicks()
 	display_votes = initial(display_votes) //CIT CHANGE - obfuscated votes
 	remove_action_buttons()
+
+/datum/controller/subsystem/vote/proc/cleanup_statclicks()
+	for(var/choice in choice_statclicks)
+		qdel(choice_statclicks[choice])
+	choice_statclicks = list()
+
+/obj/effect/statclick/vote
+	name = "ERROR"
+	var/choice
+
+/obj/effect/statclick/vote/Click()
+	SSvote.submit_vote(choice)
+
+/obj/effect/statclick/vote/New(loc, choice, name)
+	src.choice = choice
+	src.name = name
 
 /datum/controller/subsystem/vote/proc/get_result()
 	//get the highest number of votes
@@ -536,6 +581,12 @@ SUBSYSTEM_DEF(vote)
 			vp = CONFIG_GET(number/vote_period)
 		to_chat(world, "\n<font color='purple'><b>[text]</b>\nType <b>vote</b> or click <a href='?src=[REF(src)]'>here</a> to place your votes.\nYou have [DisplayTimeText(vp)] to vote.</font>")
 		end_time = started_time+vp
+		// generate statclick list
+		cleanup_statclicks()
+		for(var/i in 1 to choices.len)
+			var/choice = choices[i]
+			choice_statclicks[choice] = new /obj/effect/statclick/vote(null, i, choice)
+		//
 		for(var/c in GLOB.clients)
 			SEND_SOUND(c, sound('sound/misc/server-ready.ogg'))
 			var/client/C = c

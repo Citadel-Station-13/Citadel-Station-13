@@ -66,6 +66,9 @@
 	/// Our skill holder.
 	var/datum/skill_holder/skill_holder
 
+	///What character we spawned in as- either at roundstart or latejoin, so we know for persistent scars if we ended as the same person or not
+	var/mob/original_character
+
 /datum/mind/New(var/key)
 	skill_holder = new(src)
 	src.key = key
@@ -124,6 +127,8 @@
 	transfer_martial_arts(new_character)
 	if(active || force_key_move)
 		new_character.key = key		//now transfer the key to link the client to our new body
+	if(new_character.client)
+		LAZYCLEARLIST(new_character.client.recent_examines)
 	current.update_atom_languages()
 
 //CIT CHANGE - makes arousal update when transfering bodies

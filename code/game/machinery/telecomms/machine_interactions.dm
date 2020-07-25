@@ -36,7 +36,7 @@
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 
 	if(!ui)
-		ui = new(user, src, ui_key, "teleinteract", "[name] Access", 520, 500, master_ui, state)
+		ui = new(user, src, ui_key, "TelecommsInteraction", "[name] Access", 520, 500, master_ui, state)
 		ui.open()
 
 /obj/machinery/telecomms/ui_data(mob/user)

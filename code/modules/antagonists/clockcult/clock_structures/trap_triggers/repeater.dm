@@ -6,7 +6,7 @@
 	max_integrity = 15 //Fragile!
 	icon_state = "repeater"
 
-/obj/structure/destructible/clockwork/trap/trigger/repeater/attack_hand(mob/living/user)
+/obj/structure/destructible/clockwork/trap/trigger/repeater/attack_hand(mob/living/user, act_intent = user.a_intent, unarmed_attack_flags)
 	. = ..()
 	if(.)
 		return

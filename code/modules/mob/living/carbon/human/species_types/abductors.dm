@@ -3,7 +3,7 @@
 	id = "abductor"
 	say_mod = "gibbers"
 	sexes = FALSE
-	species_traits = list(NOBLOOD,NOEYES,NOGENITALS,NOAROUSAL)
+	species_traits = list(NOBLOOD,NOEYES,NOGENITALS,NOAROUSAL,CAN_SCAR)
 	inherent_traits = list(TRAIT_VIRUSIMMUNE,TRAIT_CHUNKYFINGERS,TRAIT_NOHUNGER,TRAIT_NOBREATH)
 	mutanttongue = /obj/item/organ/tongue/abductor
 

@@ -49,7 +49,7 @@
 	var/pixel_move_interrupted = FALSE
 
 	/// Pixels moved per second.
-	var/pixels_per_second = TILES_TO_PIXELS(12.5)
+	var/pixels_per_second = TILES_TO_PIXELS(17.5)
 	/// The number of pixels we increment by. THIS IS NOT SPEED, DO NOT TOUCH THIS UNLESS YOU KNOW WHAT YOU ARE DOING. In general, lower values means more linetrace accuracy up to a point at cost of performance.
 	var/pixel_increment_amount
 
@@ -153,6 +153,10 @@
 	var/shrapnel_type
 	///If TRUE, hit mobs even if they're on the floor and not our target
 	var/hit_stunned_targets = FALSE
+
+	wound_bonus = CANT_WOUND
+	/// For telling whether we want to roll for bone breaking or lacerations if we're bothering with wounds
+	sharpness = FALSE
 
 /obj/item/projectile/Initialize()
 	. = ..()

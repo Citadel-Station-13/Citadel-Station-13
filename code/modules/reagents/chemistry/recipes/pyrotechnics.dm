@@ -280,6 +280,7 @@
 /datum/chemical_reaction/smoke_powder
 	name = "smoke_powder"
 	id = /datum/reagent/smoke_powder
+	priority = CHEMICAL_REACTION_PRIORITY_SMOKE
 	results = list(/datum/reagent/smoke_powder = 3)
 	required_reagents = list(/datum/reagent/potassium = 1, /datum/reagent/consumable/sugar = 1, /datum/reagent/phosphorus = 1)
 

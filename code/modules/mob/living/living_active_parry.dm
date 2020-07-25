@@ -34,7 +34,7 @@
 		data = mind.martial_art.block_parry_data
 		method = MARTIAL_PARRY
 		tool = mind.martial_art
-	else if(combat_flags & COMBAT_FLAG_UNARMED_PARRY)
+	else if((combat_flags & COMBAT_FLAG_UNARMED_PARRY) && check_unarmed_parry_activation_special())
 		data = block_parry_data
 		method = UNARMED_PARRY
 		tool = src
@@ -92,6 +92,12 @@
 	for(var/obj/item/I in held_items - get_active_held_item())
 		if(I.can_active_parry())
 			return I
+
+/**
+  * Check if we can unarmed parry
+  */
+/mob/living/proc/check_unarmed_parry_activation_special()
+	return TRUE
 
 /**
   * Called via timer when the parry sequence ends.

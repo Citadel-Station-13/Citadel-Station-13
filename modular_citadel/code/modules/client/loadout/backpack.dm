@@ -1,27 +1,7 @@
-/datum/gear/plushcarp
-	name = "Space carp plushie"
+/datum/gear/plushbox
+	name = "Plushie Choice Box"
 	category = SLOT_IN_BACKPACK
-	path = /obj/item/toy/plush/carpplushie
-
-/datum/gear/plushliz
-	name = "Lizard plushie"
-	category = SLOT_IN_BACKPACK
-	path = /obj/item/toy/plush/lizardplushie
-
-/datum/gear/plushsnek
-	name = "Snake plushie"
-	category = SLOT_IN_BACKPACK
-	path = /obj/item/toy/plush/snakeplushie
-
-/datum/gear/plushslime
-	name = "Slime plushie"
-	category = SLOT_IN_BACKPACK
-	path = /obj/item/toy/plush/slimeplushie
-
-/datum/gear/plushlamp
-	name = "Lamp plushie"
-	category = SLOT_IN_BACKPACK
-	path = /obj/item/toy/plush/lampplushie
+	path = /obj/item/choice_beacon/box/plushie
 
 /datum/gear/tennis
 	name = "Classic Tennis Ball"

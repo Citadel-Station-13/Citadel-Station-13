@@ -53,8 +53,8 @@
 		return
 	if(I.use_tool(src, user, 0, volume=40))
 		status = TRUE
-		GLOB.bombers += "[key_name(user)] welded a single tank bomb. Temp: [bombtank.air_contents.temperature-T0C]"
-		message_admins("[ADMIN_LOOKUPFLW(user)] welded a single tank bomb. Temp: [bombtank.air_contents.temperature-T0C]")
+		GLOB.bombers += "[key_name(user)] welded a single tank bomb. Temp: [bombtank.air_contents.return_temperature()-T0C]"
+		message_admins("[ADMIN_LOOKUPFLW(user)] welded a single tank bomb. Temp: [bombtank.air_contents.return_temperature()-T0C]")
 		to_chat(user, "<span class='notice'>A pressure hole has been bored to [bombtank] valve. \The [bombtank] can now be ignited.</span>")
 		add_fingerprint(user)
 		return TRUE
@@ -145,8 +145,7 @@
 	return
 
 /obj/item/tank/proc/ignite()	//This happens when a bomb is told to explode
-	var/fuel_moles = air_contents.gases[/datum/gas/plasma] + air_contents.gases[/datum/gas/oxygen]/6
-	GAS_GARBAGE_COLLECT(air_contents.gases)
+	var/fuel_moles = air_contents.get_moles(/datum/gas/plasma) + air_contents.get_moles(/datum/gas/oxygen)/6
 	var/datum/gas_mixture/bomb_mixture = air_contents.copy()
 	var/strength = 1
 
@@ -156,7 +155,7 @@
 		qdel(master)
 	qdel(src)
 
-	if(bomb_mixture.temperature > (T0C + 400))
+	if(bomb_mixture.return_temperature() > (T0C + 400))
 		strength = (fuel_moles/15)
 
 		if(strength >=1)
@@ -169,7 +168,7 @@
 			ground_zero.assume_air(bomb_mixture)
 			ground_zero.hotspot_expose(1000, 125)
 
-	else if(bomb_mixture.temperature > (T0C + 250))
+	else if(bomb_mixture.return_temperature() > (T0C + 250))
 		strength = (fuel_moles/20)
 
 		if(strength >=1)
@@ -180,7 +179,7 @@
 			ground_zero.assume_air(bomb_mixture)
 			ground_zero.hotspot_expose(1000, 125)
 
-	else if(bomb_mixture.temperature > (T0C + 100))
+	else if(bomb_mixture.return_temperature() > (T0C + 100))
 		strength = (fuel_moles/25)
 
 		if (strength >=1)

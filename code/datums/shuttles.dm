@@ -104,6 +104,9 @@
 			rack.AddComponent(/datum/component/magnetic_catch)
 
 //Whatever special stuff you want
+/datum/map_template/shuttle/proc/post_load(obj/docking_port/mobile/M)
+	return
+		
 /datum/map_template/shuttle/proc/on_bought()
 	return
 

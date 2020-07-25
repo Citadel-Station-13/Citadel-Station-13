@@ -149,7 +149,7 @@
 	if(!.)
 		honk()
 
-/turf/open/floor/mineral/bananium/attack_hand(mob/user)
+/turf/open/floor/mineral/bananium/attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	.=..()
 	if(!.)
 		honk()
@@ -202,7 +202,7 @@
 	if(!.)
 		radiate()
 
-/turf/open/floor/mineral/uranium/attack_hand(mob/user)
+/turf/open/floor/mineral/uranium/attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	.=..()
 	if(!.)
 		radiate()

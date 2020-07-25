@@ -257,7 +257,7 @@
 		return
 	..()
 
-/obj/machinery/computer/camera_advanced/shuttle_docker/custom/attack_hand(mob/user)
+/obj/machinery/computer/camera_advanced/shuttle_docker/custom/attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	if(!shuttleId)
 		to_chat(user, "<span class='warning'>You must link the console to a shuttle first.</span>")
 		return

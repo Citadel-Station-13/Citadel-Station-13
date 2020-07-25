@@ -52,7 +52,7 @@
 /obj/structure/sign/barsign/attack_ai(mob/user)
 	return attack_hand(user)
 
-/obj/structure/sign/barsign/attack_hand(mob/user)
+/obj/structure/sign/barsign/attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	. = ..()
 	if(.)
 		return

@@ -13,15 +13,31 @@ The nutriment reagent and bitesize variable replace the old heal_amt and amount 
 bitesize of 2, then it'll take 3 bites to eat. Unlike the old system, the contained reagents are evenly spread among all
 the bites. No more contained reagents = no more bites.
 
-Here is an example of the new formatting for anyone who wants to add more food items.
+Food formatting and crafting examples.
 ```
-/obj/item/reagent_containers/food/snacks/xenoburger			//Identification path for the object.
-	name = "Xenoburger"													//Name that displays in the UI.
-	desc = "Smells caustic. Tastes like heresy."						//Duh
-	icon_state = "xburger"												//Refers to an icon in food.dmi
-	list_reagents = list(/datum/reagent/xenomicrobes = 10,
-						/datum/reagent/consumable/nutriment = 2) 		//What's inside the snack.
-	bitesize = 3														//This is the amount each bite consumes.
+/obj/item/reagent_containers/food/snacks/saltedcornchips						//Identification path for the object.
+	name = "salted corn chips"													//Name that displays when hovered over.
+	desc = "Manufactured in a far away factory."								//Description on examine.
+	icon_state = "saltychip"													//Refers to an icon, usually in food.dmi
+	bitesize = 3																//How many reagents are consumed in each bite.
+	list_reagents = list(/datum/reagent/consumable/nutriment = 6,				//What's inside the snack, but only if spawned. For example, from a chemical reaction, vendor, or slime core spawn.
+						/datum/reagent/consumable/nutriment/vitamin = 2)
+	bonus_reagents = list(/datum/reagent/consumable/nutriment = 1,				//What's -added- to the food, in addition to the reagents contained inside the foods used to craft it. Basically, a reward for cooking.
+						/datum/reagent/consumable/nutriment/vitamin = 1)		^^For example. Egg+Egg = 2Egg + Bonus Reagents.
+	filling_color = "#F4A460"													//What color it will use if put in a custom food.
+	tastes = list("salt" = 1, "oil" = 1)										//Descriptive flavoring displayed when eaten. IE: "You taste a bit of salt and a bit of oil."
+	foodtype = GRAIN | JUNKFOOD													//Tag for racial or custom food preferences. IE: Most Lizards cannot have GRAIN.
+
+Crafting Recipe (See files in code/modules/food_and_drinks/recipes/tablecraft/)
+
+/datum/crafting_recipe/food/nachos
+	name ="Salted Corn Chips"													//Name that displays in the Crafting UI
+	reqs = list(																//The list of ingredients to make the food.
+		/obj/item/reagent_containers/food/snacks/tortilla = 1,
+		/datum/reagent/consumable/sodiumchloride = 1							//As a note, reagents and non-food items don't get added to the food. If you
+	)																			^^want the reagents, make sure the food item has it listed under bonus_reagents.
+	result = /obj/item/reagent_containers/food/snacks/saltedcornchips			//Resulting object.
+	subcategory = CAT_MISCFOOD													//Subcategory the food falls under in the Food Tab of the crafting menu.
 ```
 
 All foods are distributed among various categories. Use common sense.
@@ -390,3 +406,13 @@ All foods are distributed among various categories. Use common sense.
 		TB.MouseDrop(over)
 	else
 		return ..()
+
+// //////////////////////////////////////////////Frying////////////////////////////////////////
+/atom/proc/fry(cook_time = 30) //you can truly fry anything
+	//don't fry reagent containers that aren't food items, indestructable items, or items that are already fried
+	if(isitem(src))
+		var/obj/item/fried_item = src
+		if(fried_item.resistance_flags & INDESTRUCTIBLE)
+			return
+	if(!GetComponent(/datum/component/fried) && (!reagents || isfood(src) || ismob(src)))
+		AddComponent(/datum/component/fried, frying_power = cook_time)

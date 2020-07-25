@@ -350,8 +350,9 @@ Credit where due:
 	for(var/entry in changelog)
 		changelog_contents += "<li>[entry]</li>"
 	info = replacetext(info, "CLOCKCULTCHANGELOG", changelog_contents)
-
+/*
 /obj/item/paper/servant_primer/oui_getcontent(mob/target)
 	if(!is_servant_of_ratvar(target) && !isobserver(target))
 		return "<HTML><HEAD><meta http-equiv='Content-Type' content='text/html; charset=UTF-8'><TITLE>[name]</TITLE></HEAD><BODY>[stars(info)]<HR>[stamps]</BODY></HTML>"
 	return ..()
+*/

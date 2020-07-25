@@ -36,6 +36,8 @@
 
 #define STATUS_EFFECT_REGENERATIVE_CORE /datum/status_effect/regenerative_core	//removes damage slowdown while giving a slow regenerating effect
 
+#define STATUS_EFFECT_DETERMINED /datum/status_effect/determined //currently in a combat high from being seriously wounded
+
 /////////////
 // DEBUFFS //
 /////////////
@@ -106,6 +108,8 @@
 #define STATUS_EFFECT_MESMERIZE /datum/status_effect/mesmerize //Just reskinned no_combat_mode
 
 #define STATUS_EFFECT_ELECTROSTAFF /datum/status_effect/electrostaff		//slows down victim
+
+#define STATUS_EFFECT_LIMP /datum/status_effect/limp //For when you have a busted leg (or two!) and want additional slowdown when walking on that leg
 
 /////////////
 // NEUTRAL //

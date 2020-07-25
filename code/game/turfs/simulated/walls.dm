@@ -137,7 +137,7 @@
 		to_chat(user, text("<span class='notice'>You punch the wall.</span>"))
 	return TRUE
 
-/turf/closed/wall/attack_hand(mob/user)
+/turf/closed/wall/attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	. = ..()
 	if(.)
 		return

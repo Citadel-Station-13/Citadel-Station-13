@@ -5,6 +5,9 @@
 	var/list/required_reagents = new/list()
 	var/list/required_catalysts = new/list()
 
+	/// Higher is higher priority, determines which order reactions are checked.
+	var/priority = CHEMICAL_REACTION_PRIORITY_DEFAULT
+
 	// Both of these variables are mostly going to be used with slime cores - but if you want to, you can use them for other things
 	var/required_container = null // the exact container path required for the reaction to happen
 	var/required_other = 0 // an integer required for the reaction to happen
