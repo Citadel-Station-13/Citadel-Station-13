@@ -268,7 +268,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	item_flags = ITEM_CAN_PARRY
 	block_parry_data = /datum/block_parry_data/bokken
 	bare_wound_bonus = 15 // having your leg smacked by a wooden stick is probably not great for it if it's naked
-	wound_bonus = -5
+	wound_bonus = 0
 
 /datum/block_parry_data/bokken // fucked up parry data, emphasizing quicker, shorter parries
 	parry_stamina_cost = 9 // be wise about when you parry, though, else you won't be able to fight enough to make it count
@@ -301,7 +301,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 		damtype = BRUTE
 		attack_verb = list("bashed", "smashed", "attacked")
 		bare_wound_bonus = 15
-		wound_bonus = -5
+		wound_bonus = 0
 	else
 		force += 2
 		damtype = STAMINA
