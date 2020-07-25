@@ -249,6 +249,78 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	playsound(src, 'sound/weapons/bladeslice.ogg', 50, 1)
 	return(BRUTELOSS)
 
+/obj/item/melee/bokken // parrying stick
+	name = "bokken"
+	desc = "A space-Japanese training sword made of wood and shaped like a katana. Probably not relevant in D20."
+	icon_state = "bokken"
+	item_state = "bokken"
+	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
+	slot_flags = ITEM_SLOT_BELT | ITEM_SLOT_BACK
+	w_class = WEIGHT_CLASS_BULKY
+	force = 7
+	throwforce = 10
+	attack_verb = list("attacked", "smacked", "bashed", "smashed", "whacked")
+	total_mass = TOTAL_MASS_MEDIEVAL_WEAPON
+	hitsound = 'sound/weapons/grenadelaunch.ogg' // no good wood thunk sounds
+	var/harm = TRUE // TRUE = brute, FALSE = stam
+	var/reinforced = FALSE
+	block_parry_data = /datum/block_parry_data/bokken
+
+/datum/block_parry_data/bokken // iteration 1: esword parry data
+	parry_time_windup = 0
+	parry_time_active = 25
+	parry_time_spindown = 0
+	// we want to signal to players the most dangerous phase, the time when automatic counterattack is a thing.
+	parry_time_windup_visual_override = 1
+	parry_time_active_visual_override = 3
+	parry_time_spindown_visual_override = 12
+	parry_flags = PARRY_DEFAULT_HANDLE_FEEDBACK		// esword users can attack while
+	parry_time_perfect = 2.5		// first ds isn't perfect
+	parry_time_perfect_leeway = 1.5
+	parry_imperfect_falloff_percent = 5
+	parry_efficiency_to_counterattack = 100
+	parry_efficiency_considered_successful = 65		// VERY generous
+	parry_efficiency_perfect = 100
+	parry_failed_stagger_duration = 4 SECONDS
+	parry_cooldown = 0.5 SECONDS
+	parry_data = list(PARRY_COUNTERATTACK_MELEE_ATTACK_CHAIN = 2.5) // 7 * 2.5 = 17.5 or 8 * 2.5 = 20. hopefully balanced by needing a parry and all that.
+
+/obj/item/melee/bokken/Initialize()
+	. = ..()
+	AddElement(/datum/element/sword_point)
+
+/obj/item/melee/bokken/attack_self(mob/user)
+	harm = !harm
+	if(harm)
+		damtype = BRUTE
+	else
+		damtype = STAMINA
+	to_chat(user, "<span class='notice'>[src] is now [harm ? "harmful" : "not quite as harmful"].</span>")
+
+/obj/item/melee/bokken/attackby(obj/item/I, mob/living/user, params)
+	if(istype(I, /obj/item/pen))
+		var/new_name = stripped_input(user, "What do you wish to name [src]?", "New Name", "bokken", 30)
+		if(new_name)
+			name = new_name
+	if(I.tool_behaviour == TOOL_WELDER)
+		var/burned_in = stripped_input(user, "What do you wish to burn into [src]?", "Burnt Inscription","", 140)
+		if(burned_in)
+			desc = initial(desc) + " Burned into the \"blade\" is [burned_in]."
+			icon_state += "_burnt"
+			item_state += "_burnt"
+			update_icon()
+			update_icon_state()
+	if(istype(I, /obj/item/stack/rods))
+		var/obj/item/stack/rods/R = I
+		if(!reinforced)
+			if(R.use(1))
+				force++
+				reinforced = TRUE
+				to_chat(user, "<span class='notice'>You slide a metal rod into [src]\'s hilt. It feels a little heftier in your hands.")
+		else
+			to_chat(user, "<span class='notice'>[src] already has a weight slid into the hilt.")
+
 /obj/item/wirerod
 	name = "wired rod"
 	desc = "A rod with some wire wrapped around the top. It'd be easy to attach something to the top bit."

@@ -19,7 +19,7 @@ GLOBAL_LIST_INIT(marker_beacon_colors, list(
 	singular_name = "marker beacon"
 	desc = "Prism-brand path illumination devices. Used by miners to mark paths and warn of danger."
 	icon = 'icons/obj/lighting.dmi'
-	icon_state = "markerbronze"
+	icon_state = "marker"
 	merge_type = /obj/item/stack/marker_beacon
 	max_amount = 100
 	novariants = TRUE
