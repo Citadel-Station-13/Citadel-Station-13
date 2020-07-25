@@ -29,7 +29,6 @@
 
 */
 
-
 /datum/component/embedded
 	dupe_mode = COMPONENT_DUPE_ALLOWED
 	var/obj/item/bodypart/limb
