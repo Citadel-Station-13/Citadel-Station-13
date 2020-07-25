@@ -96,4 +96,4 @@
 /datum/gear/polycloak
 	name = "Polychromatic Cloak"
 	category = SLOT_NECK
-	path = /obj/item/clothing/neck/cloak/polychromatic
+	path = /obj/item/clothing/neck/cloak/polychromic
