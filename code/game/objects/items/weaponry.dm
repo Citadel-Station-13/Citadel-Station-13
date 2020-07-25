@@ -267,6 +267,8 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	var/reinforced = FALSE
 	item_flags = ITEM_CAN_PARRY
 	block_parry_data = /datum/block_parry_data/bokken
+	bare_wound_bonus = 10
+	wound_bonus = -5
 
 /datum/block_parry_data/bokken // fucked up parry data, emphasizing quicker, shorter parries
 	parry_time_windup = 0
@@ -297,10 +299,14 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 		force -= 2
 		damtype = BRUTE
 		attack_verb = list("bashed", "smashed", "attacked")
+		bare_wound_bonus = 10
+		wound_bonus = -5
 	else
 		force += 2
 		damtype = STAMINA
 		attack_verb = list("whacked", "smacked", "struck")
+		bare_wound_bonus = 0
+		wound_bonus = 0
 	to_chat(user, "<span class='notice'>[src] is now [harm ? "harmful" : "not quite as harmful"].</span>")
 
 /obj/item/melee/bokken/attackby(obj/item/I, mob/living/user, params)
