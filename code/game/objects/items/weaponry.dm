@@ -265,6 +265,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	hitsound = 'sound/weapons/grenadelaunch.ogg' // no good wood thunk sounds
 	var/harm = TRUE // TRUE = brute, FALSE = stam
 	var/reinforced = FALSE
+	item_flags = ITEM_CAN_PARRY
 	block_parry_data = /datum/block_parry_data/bokken
 
 /datum/block_parry_data/bokken // iteration 1: esword parry data
