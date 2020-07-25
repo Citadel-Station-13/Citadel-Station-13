@@ -34,7 +34,7 @@
 		return
 
 	SEND_SIGNAL(src, COMSIG_HUMAN_MELEE_UNARMED_ATTACK, A)
-	return A.attack_hand(src, intent, flags)
+	return . | A.attack_hand(src, intent, flags)
 
 /atom/proc/attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	if(!(interaction_flags_atom & INTERACT_ATOM_NO_FINGERPRINT_ATTACK_HAND))

@@ -29,11 +29,18 @@
 		return
 	if(SEND_SIGNAL(src, COMSIG_MOB_CLICKON, A, params) & COMSIG_MOB_CANCEL_CLICKON)
 		return
+	. = ClickOn(A, params)
+	if(.)
+		FlushCurrentAction()
+	else
+		DiscardCurrentAction()
+	/*
 	if(ClickOn(A, params))
 		FlushCurrentAction()
 	else
 		DiscardCurrentAction()
-
+	*/
+	
 /*
 	Standard mob ClickOn()
 	Handles exceptions: Buildmode, middle click, modified clicks, mech actions
@@ -67,7 +74,7 @@
 		return CtrlClickOn(A)
 
 	if(modifiers["right"]) //CIT CHANGE - allows right clicking to perform actions
-		return RightClickOn(A,params) //CIT CHANGE - ditto
+		return RightClickOn(A, params) //CIT CHANGE - ditto
 
 	if(incapacitated(ignore_restraints = 1))
 		return
@@ -82,7 +89,8 @@
 
 	if(ismecha(loc))
 		var/obj/mecha/M = loc
-		return M.click_action(A,src,params)
+		M.click_action(A,src,params)
+		return TRUE
 
 	if(restrained())
 		DelayNextAction(CLICK_CD_HANDCUFFED)
@@ -91,26 +99,25 @@
 
 	if(in_throw_mode)
 		throw_item(A)
-		return
+		return TRUE
 
 	var/obj/item/W = get_active_held_item()
 
 	if(W == A)
 		W.attack_self(src)
 		update_inv_hands()
-		return
+		return TRUE
 
 	//These are always reachable.
 	//User itself, current loc, and user inventory
 	if(A in DirectAccess())
 		if(W)
-			. = W.melee_attack_chain(src, A, params)
-			return !(. & DISCARD_LAST_ACTION)
+			return !(W.melee_attack_chain(src, A, params) & DISCARD_LAST_ACTION)
 		else
-			. = UnarmedAttack(A)
+			. = UnarmedAttack(A, TRUE, a_intent)
 			if(!(. & NO_AUTO_CLICKDELAY_HANDLING) && ismob(A))
 				DelayNextAction(CLICK_CD_MELEE)
-			return .? TRUE : FALSE
+			return !(. & DISCARD_LAST_ACTION)
 
 	//Can't reach anything else in lockers or other weirdness
 	if(!loc.AllowClick())
@@ -119,18 +126,17 @@
 	//Standard reach turf to turf or reaching inside storage
 	if(CanReach(A,W))
 		if(W)
-			. = W.melee_attack_chain(src, A, params)
-			return !(. & DISCARD_LAST_ACTION)
+			return !(W.melee_attack_chain(src, A, params) & DISCARD_LAST_ACTION)
 		else
-			. = UnarmedAttack(A)
+			. = UnarmedAttack(A, TRUE, a_intent)
 			if(!(. & NO_AUTO_CLICKDELAY_HANDLING) && ismob(A))
 				DelayNextAction(CLICK_CD_MELEE)
-			return .? TRUE : FALSE
+			return !(. & DISCARD_LAST_ACTION)
 	else
 		if(W)
-			return W.ranged_attack_chain(src, A, params)
+			return !(W.ranged_attack_chain(src, A, params) & DISCARD_LAST_ACTION)
 		else
-			RangedAttack(A,params)
+			return !(RangedAttack(A,params) & DISCARD_LAST_ACTION)
 
 //Is the atom obscured by a PREVENT_CLICK_UNDER_1 object above it
 /atom/proc/IsObscured()
@@ -376,9 +382,11 @@
 	return
 
 /mob/living/LaserEyes(atom/A, params)
-	DelayNextAction(CLICK_CD_RANGE, flush = TRUE)
+	if(!CheckActionCooldown(CLICK_CD_RANGE))
+		return
+	DelayNextAction()
 
-	var/obj/item/projectile/beam/LE = new /obj/item/projectile/beam( loc )
+	var/obj/item/projectile/beam/LE = new /obj/item/projectile/beam(loc)
 	LE.icon = 'icons/effects/genetics.dmi'
 	LE.icon_state = "eyelasers"
 	playsound(usr.loc, 'sound/weapons/taser2.ogg', 75, 1)
@@ -387,6 +395,7 @@
 	LE.def_zone = get_organ_target()
 	LE.preparePixelProjectile(A, src, params)
 	LE.fire()
+	return TRUE
 
 // Simple helper to face what you clicked on, in case it should be needed in more than one place
 /mob/proc/face_atom(atom/A, ismousemovement = FALSE)

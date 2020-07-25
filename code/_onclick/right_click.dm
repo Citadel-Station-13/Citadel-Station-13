@@ -36,14 +36,13 @@
 	//User itself, current loc, and user inventory
 	if(A in DirectAccess())
 		if(W)
-			. = W.melee_attack_chain(src, A, params)
-			return !(. & DISCARD_LAST_ACTION)
+			return !(W.rightclick__melee_attack_chain(src, A, params) & DISCARD_LAST_ACTION)
 		else
-			if(!AltUnarmedAttack(A))
-				. = UnarmedAttack(A)
+			if(!AltUnarmedAttack(A, TRUE))
+				. = UnarmedAttack(A, TRUE, a_intent)
 				if(!(. & NO_AUTO_CLICKDELAY_HANDLING) && ismob(A))
 					DelayNextAction(CLICK_CD_MELEE)
-				return .? TRUE : FALSE
+				return (.)? TRUE : FALSE
 			return TRUE
 
 	//Can't reach anything else in lockers or other weirdness
@@ -53,23 +52,21 @@
 	//Standard reach turf to turf or reaching inside storage
 	if(CanReach(A,W))
 		if(W)
-			. = W.melee_attack_chain(src, A, params)
-			return !(. & DISCARD_LAST_ACTION)
+			return !(W.rightclick_melee_attack_chain(src, A, params) & DISCARD_LAST_ACTION)
 		else
-			if(!AltUnarmedAttack(A,1))
-				. = UnarmedAttack(A)
+			if(!AltUnarmedAttack(A, TRUE))
+				. = UnarmedAttack(A, TRUE, a_intent)
 				if(!(. & NO_AUTO_CLICKDELAY_HANDLING) && ismob(A))
 					DelayNextAction(CLICK_CD_MELEE)
-				return .? TRUE : FALSE
+				return (.)? TRUE : FALSE
 			return TRUE
 	else
 		if(W)
 			if(!W.altafterattack(A, src, FALSE, params))
 				W.afterattack(A, src, FALSE, params)
 		else
-			if(!AltRangedAttack(A,params))
-				RangedAttack(A,params)
-				return
+			if(!AltRangedAttack(A, params))
+				return !(RangedAttack(A, params) & DISCARD_LAST_ACTION)
 			return TRUE
 
 /mob/proc/AltUnarmedAttack(atom/A, proximity_flag)

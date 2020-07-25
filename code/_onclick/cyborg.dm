@@ -94,7 +94,7 @@
 					DelayNextAction(CLICK_CD_MELEE)
 				return !(. & DISCARD_LAST_ACTION)
 			else
-				return W.afterattack(A, src, 0, params)
+				return !(W.afterattack(A, src, 0, params) & DISCARD_LAST_ACTION)
 
 //Middle click cycles through selected modules.
 /mob/living/silicon/robot/MiddleClickOn(atom/A)

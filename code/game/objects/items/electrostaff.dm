@@ -15,6 +15,7 @@
 	attack_verb = list("struck", "beaten", "thwacked", "pulped")
 	total_mass = 5		//yeah this is a heavy thing, beating people with it while it's off is not going to do you any favors. (to curb stun-kill rampaging without it being on)
 	block_parry_data = /datum/block_parry_data/electrostaff
+	attack_speed = CLICK_CD_MELEE
 	var/obj/item/stock_parts/cell/cell = /obj/item/stock_parts/cell/high
 	var/on = FALSE
 	var/can_block_projectiles = FALSE		//can't block guns
