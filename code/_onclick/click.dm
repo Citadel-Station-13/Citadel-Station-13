@@ -109,7 +109,7 @@
 		else
 			. = UnarmedAttack(A)
 			if(!(. & NO_AUTO_CLICKDELAY_HANDLING) && ismob(A))
-				DelayNextAction(CLICK_CD_MELEE))
+				DelayNextAction(CLICK_CD_MELEE)
 			return .? TRUE : FALSE
 
 	//Can't reach anything else in lockers or other weirdness
@@ -124,7 +124,7 @@
 		else
 			. = UnarmedAttack(A)
 			if(!(. & NO_AUTO_CLICKDELAY_HANDLING) && ismob(A))
-				DelayNextAction(CLICK_CD_MELEE))
+				DelayNextAction(CLICK_CD_MELEE)
 			return .? TRUE : FALSE
 	else
 		if(W)

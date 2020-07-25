@@ -80,7 +80,7 @@
 		if(A == loc || (A in loc) || (A in contents))
 			. = W.melee_attack_chain(src, A, params)
 			if(!(. & NO_AUTO_CLICKDELAY_HANDLING) && ismob(A))
-				DelayNextAction(CLICK_CD_MELEE))
+				DelayNextAction(CLICK_CD_MELEE)
 			return !(. & DISCARD_LAST_ACTION)
 
 		if(!isturf(loc))
@@ -91,7 +91,7 @@
 			if(A.Adjacent(src)) // see adjacent.dm
 				. = W.melee_attack_chain(src, A, params)
 				if(!(. & NO_AUTO_CLICKDELAY_HANDLING) && ismob(A))
-					DelayNextAction(CLICK_CD_MELEE))
+					DelayNextAction(CLICK_CD_MELEE)
 				return !(. & DISCARD_LAST_ACTION)
 			else
 				return W.afterattack(A, src, 0, params)
