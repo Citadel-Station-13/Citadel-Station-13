@@ -108,6 +108,7 @@
 		return
 	if(ishostile(target) && (!allows_hostiles || istype(target, /mob/living/simple_animal/hostile/carp/cayenne)) || target.move_resist < MOVE_FORCE_VERY_STRONG) //don't allow goliaths into pet carriers, but let cayenne in!
 		to_chat(user, "<span class='warning'>You have a feeling you shouldn't keep this as a pet.</span>")
+		return
 	load_occupant(user, target)
 
 /obj/item/pet_carrier/relaymove(mob/living/user, direction)
@@ -147,7 +148,7 @@
 		update_icon()
 	else
 		loc.visible_message("<span class='warning'>[src] starts rattling as something pushes against the [entrance_name]!</span>", null, null, null, user)
-		to_chat(user, "<span class='notice'>You start pushing out of [src]... (This will take about 20 seconds.)</span>")
+		to_chat(user, "<span class='notice'>You start pushing out of [src]... (This will take about [escape_time/10] seconds.)</span>")
 		if(!do_after(user, escape_time, target = user) || open || !locked || !(user in occupants))
 			return
 		loc.visible_message("<span class='warning'>[user] shoves out of	[src]!</span>", null, null, null, user)
@@ -230,7 +231,7 @@
 	allows_hostiles = TRUE //can fit hostile creatures, with the move resist restrictions in place, this means they still cannot take things like legions/goliaths/etc regardless
 	has_lock_sprites = FALSE //jar doesn't show the regular lock overlay
 	custom_materials = list(/datum/material/glass = 1000, /datum/material/bluespace = 600)
-	escape_time = 10 //half the time of a bluespace bodybag
+	escape_time = 100 //half the time of a bluespace bodybag
 	var/datum/gas_mixture/occupant_gas_supply
 
 /obj/item/pet_carrier/bluespace/update_icon_state()
