@@ -236,7 +236,7 @@
 		to_chat(owner.current, "<span class='userdanger'>By no means reveal that you, or any other NT employees, are undercover agents.</span>")
 	else
 		to_chat(owner.current, "<span class='userdanger'>Your target is suspected of [crime], and you have been tasked with eliminating them by any means necessary to avoid a costly and embarrassing public trial.</span>")
-		to_chat(owner.current, "<B><font size=5 color=red>While you have a license to kill, unneeded property damage or loss of employee life will lead to your contract being terminated.</font></B>")
+		to_chat(owner.current, "<span class='userdanger'>While you have a license to kill, unneeded property damage or loss of employee life will lead to your contract being terminated.</font></B>")
 		to_chat(owner.current, "<span class='userdanger'>For the sake of plausible deniability, you have been equipped with an array of captured Syndicate weaponry available via uplink.</span>")
 		to_chat(owner.current, "<span class='userdanger'>By no means reveal that you, or any other NT employees, are undercover agents.</span>")
 

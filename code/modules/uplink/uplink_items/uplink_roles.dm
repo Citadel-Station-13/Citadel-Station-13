@@ -30,6 +30,7 @@
 	item = /obj/item/gun/blastcannon
 	cost = 14							//High cost because of the potential for extreme damage in the hands of a skilled gas masked scientist.
 	restricted_roles = list("Research Director", "Scientist")
+	exclude_modes = list(/datum/game_mode/traitor/internal_affairs)
 
 /datum/uplink_item/role_restricted/alientech
 	name = "Alien Research Disk"
@@ -92,6 +93,7 @@
 	player_minimum = 20
 	refundable = TRUE
 	restricted_roles = list("Chaplain")
+	exclude_modes = list(/datum/game_mode/traitor/internal_affairs)
 
 /datum/uplink_item/role_restricted/arcane_tome
 	name = "Arcane Tome"
@@ -101,6 +103,7 @@
 	player_minimum = 20
 	refundable = TRUE
 	restricted_roles = list("Chaplain")
+	exclude_modes = list(/datum/game_mode/traitor/internal_affairs)
 
 /datum/uplink_item/role_restricted/explosive_hot_potato
 	name = "Exploding Hot Potato"

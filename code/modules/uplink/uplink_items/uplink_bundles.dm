@@ -50,7 +50,7 @@
 			Combines with all martial arts, but the user will be unable to bring themselves to use guns, nor remove the armbands."
 	item = /obj/item/storage/box/syndie_kit/northstar
 	cost = 20
-	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops)
+	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops, /datum/game_mode/traitor/internal_affairs)
 
 /datum/uplink_item/suits/infiltrator_bundle
 	name = "Insidious Infiltration Gear Case"
@@ -117,7 +117,7 @@
 			you will receive. May contain discontinued and/or exotic items."
 	item = /obj/item/storage/box/syndicate
 	cost = 20
-	exclude_modes = list(/datum/game_mode/nuclear)
+	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/traitor/internal_affairs)
 	cant_discount = TRUE
 
 /datum/uplink_item/bundles_TC/surplus
@@ -127,7 +127,7 @@
 	item = /obj/structure/closet/crate
 	cost = 20
 	player_minimum = 25
-	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops)
+	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops, /datum/game_mode/traitor/internal_affairs)
 	cant_discount = TRUE
 	var/starting_crate_value = 50
 
@@ -184,6 +184,7 @@
 	item = /obj/effect/gibspawner/generic // non-tangible item because techwebs use this path to determine illegal tech
 	cost = 0
 	cant_discount = TRUE
+	exclude_modes = list(/datum/game_mode/traitor/internal_affairs)
 
 /datum/uplink_item/bundles_TC/random/purchase(mob/user, datum/component/uplink/U)
 	var/list/uplink_items = U.uplink_items
