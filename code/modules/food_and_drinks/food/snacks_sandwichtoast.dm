@@ -153,3 +153,13 @@
 	bonus_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/nutriment/vitamin = 3)
 	tastes = list("tuna" = 4, "mayonnaise" = 2, "bread" = 2)
 	foodtype = GRAIN | MEAT
+
+/obj/item/reagent_containers/food/snacks/meatballsub
+	name = "meatball sub"
+	desc = "At some point, you need to be the cheif sub."
+	icon = 'icons/obj/food/food.dmi'
+	icon_state = "meatballsub"
+	list_reagents = list(/datum/reagent/consumable/nutriment = 12, /datum/reagent/consumable/nutriment/vitamin = 4)
+	bonus_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/nutriment/vitamin = 3)
+	tastes = list("meat" = 2, "toasted bread" = 1)
+	foodtype = GRAIN | MEAT

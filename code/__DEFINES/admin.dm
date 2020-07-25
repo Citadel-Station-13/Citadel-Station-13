@@ -74,6 +74,9 @@
 #define ADMIN_PUNISHMENT_MAZING "Puzzle"
 #define ADMIN_PUNISHMENT_PIE "Cream Pie"
 #define ADMIN_PUNISHMENT_CUSTOM_PIE "Custom Cream Pie"
+#define ADMIN_PUNISHMENT_CRACK ":B:oneless"
+#define ADMIN_PUNISHMENT_BLEED ":B:loodless"
+#define ADMIN_PUNISHMENT_SCARIFY "Scarify"
 #define ADMIN_PUNISHMENT_PICKLE "Pickle-ify"
 #define ADMIN_PUNISHMENT_FRY "Fry"
 

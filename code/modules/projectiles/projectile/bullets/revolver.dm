@@ -19,6 +19,8 @@
 	ricochet_chance = 50
 	ricochet_auto_aim_angle = 10
 	ricochet_auto_aim_range = 3
+	wound_bonus = -35
+	sharpness = TRUE
 
 /obj/item/projectile/bullet/c38/match
 	name = ".38 Match bullet"
@@ -29,6 +31,7 @@
 	ricochet_incidence_leeway = 50
 	ricochet_decay_chance = 1
 	ricochet_decay_damage = 1
+	wound_bonus = 0
 
 /obj/item/projectile/bullet/c38/match/bouncy
 	name = ".38 Rubber bullet"
