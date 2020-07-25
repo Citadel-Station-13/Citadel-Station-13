@@ -214,7 +214,6 @@
   * * click_parameters - mouse control parameters, check BYOND ref.
   */
 /obj/item/proc/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
-	SHOULD_CALL_PARENT(TRUE)
 	SEND_SIGNAL(src, COMSIG_ITEM_AFTERATTACK, target, user, proximity_flag, click_parameters)
 	SEND_SIGNAL(user, COMSIG_MOB_ITEM_AFTERATTACK, target, user, proximity_flag, click_parameters)
 
