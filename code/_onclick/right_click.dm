@@ -41,9 +41,10 @@
 		else
 			if(!AltUnarmedAttack(A))
 				. = UnarmedAttack(A)
-				if(!(. & NO_AUTO_CLICKDELAY_HANDLING))
-					DelayNextAction(CLICK_CD_MELEE)
-				return UnarmedAttack(A)? TRUE : FALSE
+				if(!(. & NO_AUTO_CLICKDELAY_HANDLING) && ismob(A))
+					DelayNextAction(CLICK_CD_MELEE))
+				return .? TRUE : FALSE
+			return TRUE
 
 	//Can't reach anything else in lockers or other weirdness
 	if(!loc.AllowClick())
@@ -57,9 +58,10 @@
 		else
 			if(!AltUnarmedAttack(A,1))
 				. = UnarmedAttack(A)
-				if(!(. & NO_AUTO_CLICKDELAY_HANDLING))
-					DelayNextAction(CLICK_CD_MELEE)
-				return UnarmedAttack(A)? TRUE : FALSE
+				if(!(. & NO_AUTO_CLICKDELAY_HANDLING) && ismob(A))
+					DelayNextAction(CLICK_CD_MELEE))
+				return .? TRUE : FALSE
+			return TRUE
 	else
 		if(W)
 			if(!W.altafterattack(A, src, FALSE, params))
@@ -67,6 +69,8 @@
 		else
 			if(!AltRangedAttack(A,params))
 				RangedAttack(A,params)
+				return
+			return TRUE
 
 /mob/proc/AltUnarmedAttack(atom/A, proximity_flag)
 	if(ismob(A))

@@ -523,9 +523,9 @@ mob/living/simple_animal/hostile/proc/DestroySurroundings() // for use with mega
 	if(ranged && ranged_cooldown <= world.time)
 		target = A
 		OpenFire(A)
-	..()
-
-
+		DelayNextAction()
+	. = ..()
+	return TRUE
 
 ////// AI Status ///////
 /mob/living/simple_animal/hostile/proc/AICanContinue(var/list/possible_targets)

@@ -108,9 +108,9 @@
 			return !(. & DISCARD_LAST_ACTION)
 		else
 			. = UnarmedAttack(A)
-			if(!(. & NO_AUTO_CLICKDELAY_HANDLING))
-				DelayNextAction(CLICK_CD_MELEE)
-			return UnarmedAttack(A)? TRUE : FALSE
+			if(!(. & NO_AUTO_CLICKDELAY_HANDLING) && ismob(A))
+				DelayNextAction(CLICK_CD_MELEE))
+			return .? TRUE : FALSE
 
 	//Can't reach anything else in lockers or other weirdness
 	if(!loc.AllowClick())
@@ -123,12 +123,12 @@
 			return !(. & DISCARD_LAST_ACTION)
 		else
 			. = UnarmedAttack(A)
-			if(!(. & NO_AUTO_CLICKDELAY_HANDLING))
-				DelayNextAction(CLICK_CD_MELEE)
-			return UnarmedAttack(A)? TRUE : FALSE
+			if(!(. & NO_AUTO_CLICKDELAY_HANDLING) && ismob(A))
+				DelayNextAction(CLICK_CD_MELEE))
+			return .? TRUE : FALSE
 	else
 		if(W)
-			W.ranged_attack_chain(src, A, params)
+			return W.ranged_attack_chain(src, A, params)
 		else
 			RangedAttack(A,params)
 
@@ -376,7 +376,7 @@
 	return
 
 /mob/living/LaserEyes(atom/A, params)
-	DelayNextAction(CLICK_CD_RANGE)
+	DelayNextAction(CLICK_CD_RANGE, flush = TRUE)
 
 	var/obj/item/projectile/beam/LE = new /obj/item/projectile/beam( loc )
 	LE.icon = 'icons/effects/genetics.dmi'

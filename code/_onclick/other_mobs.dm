@@ -104,13 +104,19 @@
 	. = ..()
 	if(gloves)
 		var/obj/item/clothing/gloves/G = gloves
-		if(istype(G) && G.Touch(A,0)) // for magic gloves
+		. |= G.Touch(A, FALSE)
+		if(. & INTERRUPT_UNARMED_ATTACK)
 			return
-	if (istype(glasses) && glasses.ranged_attack(src,A,mouseparams))
-		return
+	if(istype(glasses))
+		. |= glasses.ranged_attack(src, A, mouseparams)
+		if(. & INTERRUPT_UNARMED_ATTACK)
+			return
 
 	for(var/datum/mutation/human/HM in dna.mutations)
-		HM.on_ranged_attack(A, mouseparams)
+		. |= HM.on_ranged_attack(A, mouseparams)
+
+	if(. & INTERRUPT_UNARMED_ATTACK)
+		return
 
 	if(isturf(A) && get_dist(src,A) <= 1)
 		src.Move_Pulled(A)

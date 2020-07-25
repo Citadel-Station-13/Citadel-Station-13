@@ -532,8 +532,10 @@ Auto Patrol[]"},
 
 /mob/living/simple_animal/bot/ed209/RangedAttack(atom/A)
 	if(!on)
-		return
+		return ..()
 	shootAt(A)
+	DelayNextAction()
+	return TRUE
 
 /mob/living/simple_animal/bot/ed209/proc/stun_attack(mob/living/carbon/C)
 	playsound(src, 'sound/weapons/egloves.ogg', 50, TRUE, -1)

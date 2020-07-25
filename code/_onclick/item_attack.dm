@@ -30,7 +30,7 @@
 		if(!CHECK_MOBILITY(L, MOBILITY_USE))
 			to_chat(L, "<span class='warning'>You are unable to raise [src] right now!</span>")
 			return
-	afterattack(target, user, FALSE, params)
+	return afterattack(target, user, FALSE, params)
 
 // Called when the item is in the active hand, and clicked; alternately, there is an 'activate held object' verb or you can hit pagedown.
 /obj/item/proc/attack_self(mob/user)
