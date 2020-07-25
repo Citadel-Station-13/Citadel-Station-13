@@ -129,7 +129,7 @@
 	gauzed_clot_rate = 0.8
 	internal_bleeding_chance = 30
 	internal_bleeding_coefficient = 1.25
-	threshold_minimum = 30
+	threshold_minimum = 40
 	threshold_penalty = 15
 	status_effect_type = /datum/status_effect/wound/pierce/moderate
 	scar_keyword = "piercemoderate"
@@ -146,7 +146,7 @@
 	gauzed_clot_rate = 0.6
 	internal_bleeding_chance = 60
 	internal_bleeding_coefficient = 1.5
-	threshold_minimum = 50
+	threshold_minimum = 60
 	threshold_penalty = 25
 	status_effect_type = /datum/status_effect/wound/pierce/severe
 	scar_keyword = "piercesevere"
@@ -163,7 +163,7 @@
 	gauzed_clot_rate = 0.4
 	internal_bleeding_chance = 80
 	internal_bleeding_coefficient = 1.75
-	threshold_minimum = 100
+	threshold_minimum = 110
 	threshold_penalty = 40
 	status_effect_type = /datum/status_effect/wound/pierce/critical
 	scar_keyword = "piercecritical"

@@ -194,7 +194,7 @@
 	viable_zones = list(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
 	interaction_efficiency_penalty = 1.5
 	limp_slowdown = 3
-	threshold_minimum = 35
+	threshold_minimum = 45
 	threshold_penalty = 15
 	treatable_tool = TOOL_BONESET
 	wound_flags = (BONE_WOUND)
@@ -295,7 +295,7 @@
 	severity = WOUND_SEVERITY_SEVERE
 	interaction_efficiency_penalty = 2
 	limp_slowdown = 6
-	threshold_minimum = 60
+	threshold_minimum = 70
 	threshold_penalty = 30
 	treatable_by = list(/obj/item/stack/sticky_tape/surgical, /obj/item/stack/medical/bone_gel)
 	status_effect_type = /datum/status_effect/wound/blunt/severe
@@ -316,7 +316,7 @@
 	interaction_efficiency_penalty = 4
 	limp_slowdown = 9
 	sound_effect = 'sound/effects/wounds/crack2.ogg'
-	threshold_minimum = 115
+	threshold_minimum = 125
 	threshold_penalty = 50
 	disabling = TRUE
 	treatable_by = list(/obj/item/stack/sticky_tape/surgical, /obj/item/stack/medical/bone_gel)

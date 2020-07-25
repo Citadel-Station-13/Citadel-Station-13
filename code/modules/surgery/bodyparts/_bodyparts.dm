@@ -355,7 +355,7 @@
 	else
 		damage = min(damage, WOUND_MAX_CONSIDERED_DAMAGE)
 
-	var/base_roll = rand(max(damage/2.5,15), round(damage ** 1.3))
+	var/base_roll = rand(max(damage/1.5,25), round(damage ** WOUND_THRESHOLD_MINIMUM))
 	var/injury_roll = base_roll
 	injury_roll += check_woundings_mods(woundtype, damage, wound_bonus, bare_wound_bonus)
 	var/list/wounds_checking = GLOB.global_wound_types[woundtype]

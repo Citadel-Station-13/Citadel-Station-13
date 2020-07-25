@@ -252,7 +252,7 @@
 	minimum_flow = 0.5
 	max_per_type = 3
 	clot_rate = 0.12
-	threshold_minimum = 20
+	threshold_minimum = 30
 	threshold_penalty = 10
 	status_effect_type = /datum/status_effect/wound/slash/moderate
 	scar_keyword = "slashmoderate"
@@ -269,7 +269,7 @@
 	minimum_flow = 2.75
 	clot_rate = 0.07
 	max_per_type = 4
-	threshold_minimum = 50
+	threshold_minimum = 60
 	threshold_penalty = 25
 	demotes_to = /datum/wound/slash/moderate
 	status_effect_type = /datum/status_effect/wound/slash/severe
@@ -287,7 +287,7 @@
 	minimum_flow = 4
 	clot_rate = -0.05 // critical cuts actively get worse instead of better
 	max_per_type = 5
-	threshold_minimum = 80
+	threshold_minimum = 90
 	threshold_penalty = 40
 	demotes_to = /datum/wound/slash/severe
 	status_effect_type = /datum/status_effect/wound/slash/critical
