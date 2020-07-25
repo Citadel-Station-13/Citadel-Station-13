@@ -293,8 +293,10 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 /obj/item/melee/bokken/attack_self(mob/user)
 	harm = !harm
 	if(harm)
+		force -= 2
 		damtype = BRUTE
 	else
+		force += 2
 		damtype = STAMINA
 	to_chat(user, "<span class='notice'>[src] is now [harm ? "harmful" : "not quite as harmful"].</span>")
 
