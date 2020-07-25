@@ -1,0 +1,5 @@
+author: "Iatots"
+delete-after: True
+changes: 
+  - tweak: "Licking wounds now may cause you to spit out a hairball once in a while!"
+  - rscadd: "You can now craft a catgirl plushie with 3 of a new ingredient occasionally found in medbay!"
