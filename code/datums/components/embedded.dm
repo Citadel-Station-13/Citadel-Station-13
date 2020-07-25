@@ -139,15 +139,14 @@
 	limb.embedded_objects |= weapon // on the inside... on the inside...
 	weapon.forceMove(victim)
 	RegisterSignal(weapon, list(COMSIG_MOVABLE_MOVED, COMSIG_PARENT_QDELETING), .proc/byeItemCarbon)
-
-	var/damage = weapon.throwforce
+	var/damage = 0
 	if(harmful)
 		victim.visible_message("<span class='danger'>[weapon] embeds itself in [victim]'s [limb.name]!</span>",ignored_mobs=victim)
 		to_chat(victim, "<span class='userdanger'>[weapon] embeds itself in your [limb.name]!</span>")
 		victim.throw_alert("embeddedobject", /obj/screen/alert/embeddedobject)
 		playsound(victim,'sound/weapons/bladeslice.ogg', 40)
 		weapon.add_mob_blood(victim)//it embedded itself in you, of course it's bloody!
-		damage += weapon.w_class * impact_pain_mult
+		damage = weapon.w_class * impact_pain_mult
 		SEND_SIGNAL(victim, COMSIG_ADD_MOOD_EVENT, "embedded", /datum/mood_event/embedded)
 	else
 		victim.visible_message("<span class='danger'>[weapon] sticks itself to [victim]'s [limb.name]!</span>",ignored_mobs=victim)
@@ -160,14 +159,19 @@
 /// Called every time a carbon with a harmful embed moves, rolling a chance for the item to cause pain. The chance is halved if the carbon is crawling or walking.
 /datum/component/embedded/proc/jostleCheck()
 	var/mob/living/carbon/victim = parent
-	var/chance = jostle_chance
-	if(victim.m_intent == MOVE_INTENT_WALK || !(victim.mobility_flags & MOBILITY_STAND))
-		chance *= 0.5
 
-	if(harmful && prob(chance))
-		var/damage = weapon.w_class * jostle_pain_mult
+	var/damage = weapon.w_class * pain_mult
+	var/pain_chance_current = jostle_chance
+	if(victim.m_intent == MOVE_INTENT_WALK || !(victim.mobility_flags & MOBILITY_STAND))
+		pain_chance_current *= 0.5
+
+	if(pain_stam_pct && IS_STAMCRIT(victim)) //if it's a less-lethal embed, give them a break if they're already stamcritted
+		pain_chance_current *= 0.2
+		damage *= 0.5
+	if(harmful && prob(pain_chance_current))
 		limb.receive_damage(brute=(1-pain_stam_pct) * damage, stamina=pain_stam_pct * damage, wound_bonus = CANT_WOUND)
 		to_chat(victim, "<span class='userdanger'>[weapon] embedded in your [limb.name] jostles and stings!</span>")
+
 
 /// Called when then item randomly falls out of a carbon. This handles the damage and descriptors, then calls safe_remove()
 /datum/component/embedded/proc/fallOutCarbon()
