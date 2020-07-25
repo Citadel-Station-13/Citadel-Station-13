@@ -68,7 +68,7 @@
 	. = ..()
 	if(owner.health < owner.crit_threshold)
 		ui_action_click()
-
+/*
 /obj/item/organ/regenerative_core/afterattack(atom/target, mob/user, proximity_flag)
 	. = ..()
 	if(proximity_flag)
@@ -97,7 +97,7 @@
 /obj/item/organ/regenerative_core/attack_self(mob/user) //Knouli's first hack! Allows for the use of the core in hand rather than needing to click on the target, yourself, to selfheal. Its a rip of the proc just above - but skips on distance check and only uses 'user' rather than 'target'
 	. = ..()
 	apply_healing_core(user, user)
-
+*/
 
 /obj/item/organ/regenerative_core/Insert(mob/living/carbon/M, special = 0, drop_if_replaced = TRUE)
 	. = ..()

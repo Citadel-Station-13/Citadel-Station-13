@@ -157,7 +157,8 @@
 		else // Skyrat Change
 			. += "[t_His] player has not allowed lewd verbs." // Skyrat Change
 
-	. += "[src]'s Prefs : <br> <b>ERP :</b> [client.prefs.erppref] <b>| Non-Con :</b> [client.prefs.nonconpref] <b>| Vore :</b> [client.prefs.vorepref]<br>"
+	if(client && client.prefs) //what about a runtime for not having clients!
+		. += "[src]'s Prefs : <br> <b>ERP :</b> [client.prefs.erppref] <b>| Non-Con :</b> [client.prefs.nonconpref] <b>| Vore :</b> [client.prefs.vorepref]<br>"
 
 	var/list/missing = list(BODY_ZONE_HEAD, BODY_ZONE_CHEST, BODY_ZONE_L_ARM, BODY_ZONE_R_ARM, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
 	var/list/disabled = list()

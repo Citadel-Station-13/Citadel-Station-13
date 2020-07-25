@@ -132,6 +132,23 @@ TOGGLE_CHECKBOX(/datum/verbs/menu/Settings/Sound, toggletitlemusic)()
 /datum/verbs/menu/Settings/Sound/toggletitlemusic/Get_checked(client/C)
 	return C.prefs.toggles & SOUND_LOBBY
 
+//Sandstorm additions
+TOGGLE_CHECKBOX(/datum/verbs/menu/Settings/Sound, Toggle_BossMusic)()
+	set name = "Hear/Silence Boss Musics"
+	set category = "Preferences"
+	set desc = "Hear Boss Musics"
+	usr.client.prefs.toggles ^= SOUND_BOSS_MUSIC
+	usr.client.prefs.save_preferences()
+	if(usr.client.prefs.toggles & SOUND_BOSS_MUSIC)
+		to_chat(usr, "You will now hear Boss Musics.")
+	else
+		to_chat(usr, "You will no longer hear Boss Musics.")
+		usr.stop_sound_channel(CHANNEL_BOSSMUSIC)
+		usr.stop_sound_channel(CHANNEL_BUZZ)
+	SSblackbox.record_feedback("nested tally", "preferences_verb", 1, list("Toggle Boss Music", "[usr.client.prefs.toggles & SOUND_BOSS_MUSIC ? "Enabled" : "Disabled"]")) //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+/datum/verbs/menu/Settings/Sound/Toggle_Soundscape/Get_checked(client/C)
+	return C.prefs.toggles & SOUND_BOSS_MUSIC
+//End of Sandstorm additions
 
 TOGGLE_CHECKBOX(/datum/verbs/menu/Settings/Sound, togglemidis)()
 	set name = "Hear/Silence Midis"

@@ -335,7 +335,7 @@
 		if(!spawned_flora) // no rocks beneath mob spawners / mobs.
 			SpawnMonster(T)
 	T.ChangeTurf(turf_type, null, CHANGETURF_IGNORE_AIR)
-
+/*
 /// Spawns a random mob or megafauna in the tunnel
 /turf/open/floor/plating/asteroid/airless/cave/proc/SpawnMonster(turf/T)
 	if(!isarea(loc))
@@ -367,7 +367,7 @@
 
 		new randumb(T)
 	return TRUE
-
+*/ //moved to sandcode
 #undef SPAWN_MEGAFAUNA
 #undef SPAWN_BUBBLEGUM
 

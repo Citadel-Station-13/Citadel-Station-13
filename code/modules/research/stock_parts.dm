@@ -306,7 +306,7 @@ If you create T5+ please take a pass at gene_modder.dm [L40]. Max_values MUST fi
 /obj/item/stock_parts/matter_bin/darkmatter
 	name = "dark-matter bin"
 	desc = "A container designed to hold compressed matter awaiting reconstruction."
-	icon_state = "darkmatter_bin"
+	icon_state = "dark_matter_bin"
 	rating = 5
 	custom_materials = list(/datum/material/iron=80)
 

@@ -170,8 +170,8 @@
 	addtimer(CALLBACK(src, .proc/end_of_life), lifespan - CHAT_MESSAGE_EOL_FADE, TIMER_UNIQUE|TIMER_OVERRIDE)
 
 	//dogborg check sandstorm thingy thing.
-	var/mob/living/silicon/robot/R = target
-	if(owner == R) //without this it would check for module on every mob speaking, and you would NOT remove this unless you love runtimes
+	var/mob/living/silicon/robot/R = owner
+	if(iscyborg(R)) //without this it would check for module on every mob speaking, and you would NOT remove this unless you love runtimes
 		if(R.module.dogborg == TRUE)
 			message.pixel_x = 16
 		else
