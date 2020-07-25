@@ -142,7 +142,7 @@
 	if(user.pulling != victim || user.zone_selected != limb.body_zone || user.a_intent == INTENT_GRAB)
 		return FALSE
 
-	if(!isfelinid(user))
+	if(!iscatperson(user))
 		return FALSE
 
 	lick_wounds(user)

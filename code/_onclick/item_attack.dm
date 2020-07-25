@@ -214,21 +214,20 @@
 	var/message_verb = "attacked"
 	if(length(I.attack_verb))
 		message_verb = "[pick(I.attack_verb)]"
-	if(current_force < I.force * FEEBLE_ATTACK_MSG_THRESHOLD)
-		message_verb = "[pick("feebly", "limply", "saplessly")] [message_verb]"
 	else if(!I.force)
 		return
 	var/message_hit_area = ""
 	if(hit_area)
 		message_hit_area = " in the [hit_area]"
-	var/attack_message = "[src] has been [message_verb][message_hit_area] with [I]."
+	var/attack_message = "[src] is [message_verb][message_hit_area] with [I]!"
+	var/attack_message_local = "You're [message_verb][message_hit_area] with [I]!"
 	if(user in viewers(src, null))
-		attack_message = "[user] has [message_verb] [src][message_hit_area] with [I]!"
+		attack_message = "[user] [message_verb] [src][message_hit_area] with [I]!"
+		attack_message_local = "[user] [message_verb] you[message_hit_area] with [I]!"
+	if(user == src)
+		attack_message_local = "You [message_verb] yourself[message_hit_area] with [I]"
 	visible_message("<span class='danger'>[attack_message]</span>",\
-		"<span class='userdanger'>[attack_message]</span>", null, COMBAT_MESSAGE_RANGE)
-	if(hit_area == BODY_ZONE_HEAD)
-		if(prob(2))
-			playsound(src, 'sound/weapons/dink.ogg', 30, 1)
+		"<span class='userdanger'>[attack_message_local]</span>", null, COMBAT_MESSAGE_RANGE)
 	return 1
 
 /// How much stamina this takes to swing this is not for realism purposes hecc off.

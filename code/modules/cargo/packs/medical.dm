@@ -230,6 +230,6 @@
 					/obj/item/reagent_containers/hypospray/medipen/ekit,
 					/obj/item/reagent_containers/hypospray/medipen/blood_loss,
 					/obj/item/reagent_containers/hypospray/medipen/blood_loss,
-					/obj/item/reagent_containers/hypospray/medipen/blood_loss
+					/obj/item/reagent_containers/hypospray/medipen/blood_loss)
 
 	crate_name = "medipen crate"

@@ -149,12 +149,16 @@
 
 	var/temporary_unstoppable_movement = FALSE
 
-	///If defined, on hit we create an item of this type then call hitby() on the hit target with this
+	///If defined, on hit we create an item of this type then call hitby() on the hit target with this, mainly used for embedding items (bullets) in targets
 	var/shrapnel_type
 	///If TRUE, hit mobs even if they're on the floor and not our target
 	var/hit_stunned_targets = FALSE
 
 	wound_bonus = CANT_WOUND
+	///How much we want to drop both wound_bonus and bare_wound_bonus (to a minimum of 0 for the latter) per tile, for falloff purposes
+	var/wound_falloff_tile
+	///How much we want to drop the embed_chance value, if we can embed, per tile, for falloff purposes
+	var/embed_falloff_tile
 	/// For telling whether we want to roll for bone breaking or lacerations if we're bothering with wounds
 	sharpness = SHARP_NONE
 
@@ -162,6 +166,8 @@
 	. = ..()
 	permutated = list()
 	decayedRange = range
+	if(embedding)
+		updateEmbedding()
 
 /**
   * Artificially modified to be called at around every world.icon_size pixels of movement.
@@ -169,6 +175,11 @@
   */
 /obj/item/projectile/proc/Range()
 	range--
+	if(wound_bonus != CANT_WOUND)
+		wound_bonus += wound_falloff_tile
+		bare_wound_bonus = max(0, bare_wound_bonus + wound_falloff_tile)
+	if(embedding)
+		embedding["embed_chance"] += embed_falloff_tile
 	if(range <= 0 && loc)
 		on_range()
 

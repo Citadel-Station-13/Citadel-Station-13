@@ -48,7 +48,7 @@
 	ricochets_max = 6
 	ricochet_chance = 130
 	ricochet_incidence_leeway = 0
-	ricochet_delay_chance = 0.9
+	ricochet_decay_chance = 0.9
 
 /obj/item/projectile/bullet/pellet/stingball
 	name = "stingball pellet"
