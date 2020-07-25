@@ -65,7 +65,7 @@
 				return W.afterattack(A, src, FALSE, params)
 		else
 			if(!AltRangedAttack(A, params))
-				return (RangedAttack(A, params)
+				return RangedAttack(A, params)
 
 /mob/proc/AltUnarmedAttack(atom/A, proximity_flag)
 	if(ismob(A))
