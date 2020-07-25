@@ -228,33 +228,6 @@
 		R.module.basic_modules += TB
 		R.module.add_module(TB, FALSE, TRUE)
 
-/obj/item/borg/upgrade/amop
-	name = "janitor cyborg advanced mop"
-	desc = "An advanced mop replacement for the janiborg's standard mop."
-	icon_state = "cyborg_upgrade3"
-	require_module = 1
-	module_type = list(/obj/item/robot_module/butler)
-
-/obj/item/borg/upgrade/amop/action(mob/living/silicon/robot/R)
-	. = ..()
-	if(.)
-		for(var/obj/item/mop/cyborg/M in R.module.modules)
-			R.module.remove_module(M, TRUE)
-
-	var/obj/item/mop/advanced/cyborg/A = new /obj/item/mop/advanced/cyborg(R.module)
-	R.module.basic_modules += A
-	R.module.add_module(A, FALSE, TRUE)
-
-/obj/item/borg/upgrade/amop/deactivate(mob/living/silicon/robot/R, user = usr)
-	. = ..()
-	if(.)
-		for(var/obj/item/mop/advanced/cyborg/A in R.module.modules)
-			R.module.remove_module(A, TRUE)
-
-		var/obj/item/mop/cyborg/M = new (R.module)
-		R.module.basic_modules += M
-		R.module.add_module(M, FALSE, TRUE)
-
 /obj/item/borg/upgrade/syndicate
 	name = "illegal equipment module"
 	desc = "Unlocks the hidden, deadlier functions of a cyborg."

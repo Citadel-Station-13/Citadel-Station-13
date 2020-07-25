@@ -127,5 +127,3 @@
 		STOP_PROCESSING(SSobj, src)
 	return ..()
 
-/obj/item/mop/advanced/cyborg
-	insertable = FALSE

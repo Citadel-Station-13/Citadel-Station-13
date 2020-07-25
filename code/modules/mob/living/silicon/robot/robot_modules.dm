@@ -793,6 +793,7 @@
 		/obj/item/soap/nanotrasen,
 		/obj/item/storage/bag/trash/cyborg,
 		/obj/item/mop/cyborg,
+		/obj/item/reagent_containers/glass/bucket/cyborg,
 		/obj/item/lightreplacer/cyborg,
 		/obj/item/holosign_creator,
 		/obj/item/reagent_containers/spray/cyborg_drying)

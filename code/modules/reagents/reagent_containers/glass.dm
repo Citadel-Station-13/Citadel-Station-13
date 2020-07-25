@@ -355,6 +355,8 @@
 	slot_flags = NONE
 	item_flags = NO_MAT_REDEMPTION
 
+/obj/item/reagent_containers/glass/bucket/cyborg
+
 /obj/item/reagent_containers/glass/beaker/waterbottle
 	name = "bottle of water"
 	desc = "A bottle of water filled at an old Earth bottling facility."
