@@ -67,6 +67,7 @@
 			to_chat(H, "<span class='notice'>Gained <B>[DisplayEnergy(.)]</B> of energy from [A].</span>")
 		else
 			to_chat(H, "<span class='danger'>\The [A] has run dry of energy, you must find another source!</span>")
+		. = INTERRUPT_UNARMED_ATTACK
 	else
 		. = FALSE	//as to not cancel attack_hand()
 

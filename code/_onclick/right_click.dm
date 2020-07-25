@@ -40,7 +40,10 @@
 			return !(. & DISCARD_LAST_ACTION)
 		else
 			if(!AltUnarmedAttack(A))
-				return UnarmedAttack(A, 1)? TRUE : FALSE
+				. = UnarmedAttack(A)
+				if(!(. & NO_AUTO_CLICKDELAY_HANDLING))
+					DelayNextAction(CLICK_CD_MELEE)
+				return UnarmedAttack(A)? TRUE : FALSE
 
 	//Can't reach anything else in lockers or other weirdness
 	if(!loc.AllowClick())
@@ -53,7 +56,10 @@
 			return !(. & DISCARD_LAST_ACTION)
 		else
 			if(!AltUnarmedAttack(A,1))
-				return UnarmedAttack(A, 1)? TRUE : FALSE
+				. = UnarmedAttack(A)
+				if(!(. & NO_AUTO_CLICKDELAY_HANDLING))
+					DelayNextAction(CLICK_CD_MELEE)
+				return UnarmedAttack(A)? TRUE : FALSE
 	else
 		if(W)
 			if(!W.altafterattack(A, src, FALSE, params))

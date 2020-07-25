@@ -20,15 +20,17 @@
 	// If the gloves do anything, have them return 1 to stop
 	// normal attack_hand() here.
 	var/obj/item/clothing/gloves/G = gloves // not typecast specifically enough in defines
-	if(proximity && istype(G) && (. = G.Touch(A,1)))
-		return
+	if(proximity && istype(G))
+		. |= G.Touch(A, TRUE)
+		if(. & INTERRUPT_UNARMED_ATTACK)
+			return
 
-	var/override = 0
+	. = NONE
 
 	for(var/datum/mutation/human/HM in dna.mutations)
-		override += HM.on_attack_hand(A, proximity, intent, flags)
+		. |= HM.on_attack_hand(A, proximity, intent, flags)
 
-	if(override)
+	if(. & INTERRUPT_UNARMED_ATTACK)
 		return
 
 	SEND_SIGNAL(src, COMSIG_HUMAN_MELEE_UNARMED_ATTACK, A)

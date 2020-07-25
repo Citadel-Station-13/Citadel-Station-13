@@ -107,6 +107,9 @@
 			. = W.melee_attack_chain(src, A, params)
 			return !(. & DISCARD_LAST_ACTION)
 		else
+			. = UnarmedAttack(A)
+			if(!(. & NO_AUTO_CLICKDELAY_HANDLING))
+				DelayNextAction(CLICK_CD_MELEE)
 			return UnarmedAttack(A)? TRUE : FALSE
 
 	//Can't reach anything else in lockers or other weirdness
@@ -119,7 +122,10 @@
 			. = W.melee_attack_chain(src, A, params)
 			return !(. & DISCARD_LAST_ACTION)
 		else
-			return UnarmedAttack(A, 1)? TRUE : FALSE
+			. = UnarmedAttack(A)
+			if(!(. & NO_AUTO_CLICKDELAY_HANDLING))
+				DelayNextAction(CLICK_CD_MELEE)
+			return UnarmedAttack(A)? TRUE : FALSE
 	else
 		if(W)
 			W.ranged_attack_chain(src, A, params)
