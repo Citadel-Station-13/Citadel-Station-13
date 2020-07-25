@@ -17,7 +17,7 @@
 		line = null
 	if(qdel_in)
 		QDEL_IN(PB, qdel_in)
-d
+
 /obj/effect/projectile/tracer
 	name = "beam"
 	icon = 'icons/obj/projectiles_tracer.dmi'
