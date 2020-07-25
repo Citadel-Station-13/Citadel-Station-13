@@ -30,7 +30,7 @@
 	if(SEND_SIGNAL(src, COMSIG_MOB_CLICKON, A, params) & COMSIG_MOB_CANCEL_CLICKON)
 		return
 	. = ClickOn(A, params)
-	if(.)
+	if(!(. & DISCARD_LAST_ACTION))
 		FlushCurrentAction()
 	else
 		DiscardCurrentAction()
@@ -94,30 +94,29 @@
 
 	if(restrained())
 		DelayNextAction(CLICK_CD_HANDCUFFED)
-		RestrainedClickOn(A)
-		return TRUE
+		return RestrainedClickOn(A)
 
 	if(in_throw_mode)
 		throw_item(A)
-		return TRUE
+		return
 
 	var/obj/item/W = get_active_held_item()
 
 	if(W == A)
 		W.attack_self(src)
 		update_inv_hands()
-		return TRUE
+		return
 
 	//These are always reachable.
 	//User itself, current loc, and user inventory
 	if(A in DirectAccess())
 		if(W)
-			return !(W.melee_attack_chain(src, A, params) & DISCARD_LAST_ACTION)
+			return W.melee_attack_chain(src, A, params)
 		else
 			. = UnarmedAttack(A, TRUE, a_intent)
 			if(!(. & NO_AUTO_CLICKDELAY_HANDLING) && ismob(A))
 				DelayNextAction(CLICK_CD_MELEE)
-			return !(. & DISCARD_LAST_ACTION)
+			return
 
 	//Can't reach anything else in lockers or other weirdness
 	if(!loc.AllowClick())
@@ -126,17 +125,17 @@
 	//Standard reach turf to turf or reaching inside storage
 	if(CanReach(A,W))
 		if(W)
-			return !(W.melee_attack_chain(src, A, params) & DISCARD_LAST_ACTION)
+			return W.melee_attack_chain(src, A, params)
 		else
 			. = UnarmedAttack(A, TRUE, a_intent)
 			if(!(. & NO_AUTO_CLICKDELAY_HANDLING) && ismob(A))
 				DelayNextAction(CLICK_CD_MELEE)
-			return !(. & DISCARD_LAST_ACTION)
+			return
 	else
 		if(W)
-			return !(W.ranged_attack_chain(src, A, params) & DISCARD_LAST_ACTION)
+			return W.ranged_attack_chain(src, A, params)
 		else
-			return !(RangedAttack(A,params) & DISCARD_LAST_ACTION)
+			return RangedAttack(A,params)
 
 //Is the atom obscured by a PREVENT_CLICK_UNDER_1 object above it
 /atom/proc/IsObscured()

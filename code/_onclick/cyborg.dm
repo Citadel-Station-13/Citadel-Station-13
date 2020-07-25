@@ -16,23 +16,17 @@
 
 	var/list/modifiers = params2list(params)
 	if(modifiers["shift"] && modifiers["ctrl"])
-		CtrlShiftClickOn(A)
-		return
+		return CtrlShiftClickOn(A)
 	if(modifiers["shift"] && modifiers["middle"])
-		ShiftMiddleClickOn(A)
-		return
+		return ShiftMiddleClickOn(A)
 	if(modifiers["middle"])
-		MiddleClickOn(A)
-		return
+		return MiddleClickOn(A)
 	if(modifiers["shift"])
-		ShiftClickOn(A)
-		return
+		return ShiftClickOn(A)
 	if(modifiers["alt"]) // alt and alt-gr (rightalt)
-		AltClickOn(A)
-		return
+		return AltClickOn(A)
 	if(modifiers["ctrl"])
-		CtrlClickOn(A)
-		return
+		return CtrlClickOn(A)
 
 	if(!CheckActionCooldown(immediate = TRUE))
 		return
@@ -81,7 +75,7 @@
 			. = W.melee_attack_chain(src, A, params)
 			if(!(. & NO_AUTO_CLICKDELAY_HANDLING) && ismob(A))
 				DelayNextAction(CLICK_CD_MELEE)
-			return !(. & DISCARD_LAST_ACTION)
+			return
 
 		if(!isturf(loc))
 			return
@@ -92,9 +86,9 @@
 				. = W.melee_attack_chain(src, A, params)
 				if(!(. & NO_AUTO_CLICKDELAY_HANDLING) && ismob(A))
 					DelayNextAction(CLICK_CD_MELEE)
-				return !(. & DISCARD_LAST_ACTION)
+				return
 			else
-				return !(W.afterattack(A, src, 0, params) & DISCARD_LAST_ACTION)
+				return W.afterattack(A, src, 0, params)
 
 //Middle click cycles through selected modules.
 /mob/living/silicon/robot/MiddleClickOn(atom/A)
