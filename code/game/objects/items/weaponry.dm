@@ -260,7 +260,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	w_class = WEIGHT_CLASS_BULKY
 	force = 7
 	throwforce = 10
-	attack_verb = list("attacked", "smacked", "bashed", "smashed", "whacked")
+	attack_verb = list("bashed", "smashed", "whacked")
 	total_mass = TOTAL_MASS_MEDIEVAL_WEAPON
 	hitsound = 'sound/weapons/grenadelaunch.ogg' // no good wood thunk sounds
 	var/harm = TRUE // TRUE = brute, FALSE = stam
@@ -268,23 +268,23 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	item_flags = ITEM_CAN_PARRY
 	block_parry_data = /datum/block_parry_data/bokken
 
-/datum/block_parry_data/bokken // iteration 1: esword parry data
+/datum/block_parry_data/bokken // fucked up parry data, emphasizing quicker, shorter parries
 	parry_time_windup = 0
-	parry_time_active = 25
+	parry_time_active = 10
 	parry_time_spindown = 0
 	// we want to signal to players the most dangerous phase, the time when automatic counterattack is a thing.
-	parry_time_windup_visual_override = 1
+	/* parry_time_windup_visual_override = 1
 	parry_time_active_visual_override = 3
-	parry_time_spindown_visual_override = 12
-	parry_flags = PARRY_DEFAULT_HANDLE_FEEDBACK		// esword users can attack while
-	parry_time_perfect = 2.5		// first ds isn't perfect
-	parry_time_perfect_leeway = 1.5
+	parry_time_spindown_visual_override = 12 */
+	parry_flags = PARRY_DEFAULT_HANDLE_FEEDBACK		// bokken users can still strike while parrying
+	parry_time_perfect = 1.5		// first ds isn't perfect
+	parry_time_perfect_leeway = 1
 	parry_imperfect_falloff_percent = 5
-	parry_efficiency_to_counterattack = 100
+	parry_efficiency_to_counterattack = 90
 	parry_efficiency_considered_successful = 65		// VERY generous
-	parry_efficiency_perfect = 100
-	parry_failed_stagger_duration = 4 SECONDS
-	parry_cooldown = 0.5 SECONDS
+	parry_efficiency_perfect = 120
+	parry_failed_stagger_duration = 3 SECONDS
+	// parry_cooldown = 0.5 SECONDS // most of this items strength *is* in parrying...
 	parry_data = list(PARRY_COUNTERATTACK_MELEE_ATTACK_CHAIN = 2.5) // 7 * 2.5 = 17.5 or 8 * 2.5 = 20. hopefully balanced by needing a parry and all that.
 
 /obj/item/melee/bokken/Initialize()
@@ -296,9 +296,11 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	if(harm)
 		force -= 2
 		damtype = BRUTE
+		attack_verb = list("bashed", "smashed", "attacked")
 	else
 		force += 2
 		damtype = STAMINA
+		attack_verb = list("whacked", "smacked", "struck")
 	to_chat(user, "<span class='notice'>[src] is now [harm ? "harmful" : "not quite as harmful"].</span>")
 
 /obj/item/melee/bokken/attackby(obj/item/I, mob/living/user, params)
