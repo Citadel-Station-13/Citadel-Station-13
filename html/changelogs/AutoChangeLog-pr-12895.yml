@@ -1,0 +1,5 @@
+author: "Hatterhat"
+delete-after: True
+changes: 
+  - rscadd: "Training bokkens! Make 'em from wood, use 'em in-hand to toggle between harmful and not-so-harmful, practice your parrying with them!"
+  - bugfix: "Marker beacons should have a sprite again."
