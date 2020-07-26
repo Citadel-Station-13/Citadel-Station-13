@@ -26,7 +26,7 @@
 	if(stored)
 		to_chat(user, "<span class='notice'>You start struggling to pry the [stored] from the [src]...</span>")
 		if(!do_after(user, 30 SECONDS, TRUE, src))
-			to_chat(user, "<span class='warning'>Your fingers slip as you fail to pry the [stored] from the [src], clicking it right back int the slot!</span>")
+			to_chat(user, "<span class='warning'>Your fingers slip as you fail to pry the [stored] from the [src], clicking it right back into the slot!</span>")
 			return
 		if(user.put_in_hands(stored))
 			stored.forceMove(user.drop_location())
