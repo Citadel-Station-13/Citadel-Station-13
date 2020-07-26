@@ -251,7 +251,6 @@
 /obj/effect/clockwork/spatial_gateway/stable
 	name = "stable gateway"
 	is_stable = TRUE
-	//TODO: Icon for the gateway that looks a bit different
 
 /obj/effect/clockwork/spatial_gateway/stable/ex_act(severity)
 	if(severity == 1)
@@ -275,7 +274,7 @@
 	busy = FALSE
 	linked_gateway.busy = FALSE
 	return TRUE
-	//TODO: Add effect for this, maybe reuse the void blaster one from that PR?
+	//Not too fancy, but this'll do.. for now.
 
 
 /obj/effect/clockwork/spatial_gateway/stable/proc/start_shutdown()

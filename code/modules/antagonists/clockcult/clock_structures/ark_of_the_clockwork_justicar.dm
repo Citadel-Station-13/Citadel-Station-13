@@ -39,7 +39,18 @@
 	glow = new(get_turf(src))
 	if(!GLOB.ark_of_the_clockwork_justiciar)
 		GLOB.ark_of_the_clockwork_justiciar = src
-	START_PROCESSING(SSprocessing, src)
+
+/obj/structure/destructible/clockwork/massive/celestial_gateway/attack_hand(mob/living/user, act_intent = user.a_intent, unarmed_attack_flags)
+	. = ..()
+	if(.)
+		return
+	if(!active  && is_servant_of_ratvar(user) && user.canUseTopic(src, !issilicon(user), NO_DEXTERY))
+		var/choice = alert(user,"Enabling the ark", "Are you sure you want to activate the ark? Once enabled, there will be no turning back.", "Activate!", "Cancel")
+		switch(choice)
+			if("Activate!")
+				START_PROCESSING(SSprocessing, src)
+			else
+				to_chat(user, "<span class='brass'>You decide against activating the ark.. for now.</span>")
 
 /obj/structure/destructible/clockwork/massive/celestial_gateway/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, attack_dir)
 	. = ..()
