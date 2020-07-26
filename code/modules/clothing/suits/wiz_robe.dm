@@ -9,6 +9,7 @@
 	equip_delay_other = 50
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	dog_fashion = /datum/dog_fashion/head/blue_wizard
+	beepsky_fashion = /datum/beepsky_fashion/wizard
 	var/magic_flags = SPELL_WIZARD_HAT
 
 /obj/item/clothing/head/wizard/ComponentInitialize()

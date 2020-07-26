@@ -50,6 +50,8 @@
 	flags_cover = HEADCOVERSEYES
 	heat = 1000
 
+	beepsky_fashion = /datum/beepsky_fashion/cake
+
 /obj/item/clothing/head/hardhat/cakehat/process()
 	var/turf/location = src.loc
 	if(ishuman(location))
@@ -131,6 +133,7 @@
 	dynamic_hair_suffix = ""
 
 	dog_fashion = /datum/dog_fashion/head/kitty
+	beepsky_fashion = /datum/beepsky_fashion/cat
 
 /obj/item/clothing/head/kitty/equipped(mob/living/carbon/human/user, slot)
 	if(ishuman(user) && slot == SLOT_HEAD)
