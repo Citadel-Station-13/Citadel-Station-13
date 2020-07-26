@@ -34,12 +34,6 @@
 		FlushCurrentAction()
 	else
 		DiscardCurrentAction()
-	/*
-	if(ClickOn(A, params))
-		FlushCurrentAction()
-	else
-		DiscardCurrentAction()
-	*/
 	
 /*
 	Standard mob ClickOn()
