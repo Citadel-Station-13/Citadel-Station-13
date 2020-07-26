@@ -1940,7 +1940,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 		var/obj/item/target_held_item = target.get_active_held_item()
 		if(!is_type_in_typecache(target_held_item, GLOB.shove_disarming_types))
 			target_held_item = null
-		if!target.has_status_effect(STATUS_EFFECT_OFF_BALANCE))
+		if(!target.has_status_effect(STATUS_EFFECT_OFF_BALANCE))
 			if(target_held_item)
 				if(!HAS_TRAIT(target_held_item, TRAIT_NODROP))
 					target.visible_message("<span class='danger'>[target.name]'s grip on \the [target_held_item] loosens!</span>",
