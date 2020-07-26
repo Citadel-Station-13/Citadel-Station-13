@@ -96,7 +96,7 @@
 
 /datum/objective_item/steal/blackbox
 	name = "the black box from the onboard blackbox recording device. Take care to wear the proper safety equipment when extracting the black box as the telecommunications array is likely to be under inhospitable conditions."
-	targetitem = /obj/item/blackbox
+	targetitem = /obj/item/blackbox //steal the forbidden ssblackbox
 	difficulty = 10
 
 /datum/objective_item/steal/nuke_core
