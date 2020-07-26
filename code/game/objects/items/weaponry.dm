@@ -293,7 +293,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	parry_stamina_cost = 6 // still more costly than most parries, but less than a full bokken parry
 	parry_time_active = 5 // REALLY small parry window
 	parry_time_perfect = 2.5 // however...
-	parry_time_perfect_leeway = 1.25 // the entire time, the parry is perfect
+	parry_time_perfect_leeway = 2.5 // the entire time, the parry is perfect
 	parry_failed_stagger_duration = 1 SECONDS
 	parry_failed_clickcd_duration = 1 SECONDS // more forgiving punishments for missed parries
 	// still, don't fucking miss your parries or you're down stamina and staggered to shit
