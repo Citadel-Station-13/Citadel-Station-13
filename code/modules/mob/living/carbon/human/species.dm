@@ -1936,11 +1936,11 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 			target.visible_message("<span class='danger'>[user.name] shoves [target.name]!</span>",
 				"<span class='danger'>[user.name] shoves you!</span>", null, COMBAT_MESSAGE_RANGE, null,
 				user, "<span class='danger'>You shove [target.name]!</span>")
+		target.Stagger(SHOVE_STAGGER_DURATION)
 		var/obj/item/target_held_item = target.get_active_held_item()
 		if(!is_type_in_typecache(target_held_item, GLOB.shove_disarming_types))
 			target_held_item = null
-		if(!target.has_movespeed_modifier(/datum/movespeed_modifier/shove))
-			target.add_movespeed_modifier(/datum/movespeed_modifier/shove)
+		if!target.has_status_effect(STATUS_EFFECT_OFF_BALANCE))
 			if(target_held_item)
 				if(!HAS_TRAIT(target_held_item, TRAIT_NODROP))
 					target.visible_message("<span class='danger'>[target.name]'s grip on \the [target_held_item] loosens!</span>",
@@ -1948,12 +1948,12 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 					append_message += ", loosening their grip on [target_held_item]"
 				else
 					append_message += ", but couldn't loose their grip on [target_held_item]"
-			addtimer(CALLBACK(target, /mob/living/carbon/human/proc/clear_shove_slowdown), SHOVE_SLOWDOWN_LENGTH)
 		else if(target_held_item)
 			if(target.dropItemToGround(target_held_item))
 				target.visible_message("<span class='danger'>[target.name] drops \the [target_held_item]!!</span>",
 					"<span class='danger'>You drop \the [target_held_item]!!</span>", null, COMBAT_MESSAGE_RANGE)
 				append_message += ", causing them to drop [target_held_item]"
+		target.ShoveOffBalance(SHOVE_OFFBALANCE_DURATION)
 		log_combat(user, target, "shoved", append_message)
 
 /datum/species/proc/apply_damage(damage, damagetype = BRUTE, def_zone = null, blocked, mob/living/carbon/human/H, forced = FALSE, spread_damage = FALSE, wound_bonus = 0, bare_wound_bonus = 0, sharpness = FALSE)
