@@ -446,7 +446,7 @@
 
 /obj/item/storage/belt/durathread
 	name = "durathread toolbelt"
-	desc = "A toolbelt made out of durathread, it seems robust enough to hold bigger tools like a RCD or RPD, with enough pouches to hold more gear than a normal belt."
+	desc = "A toolbelt made out of durathread, it seems robust enough to hold bigger tools like RCDs or RPDs, with enough pouches to hold more gear than a normal belt."
 	icon_state = "webbing-durathread"
 	item_state = "webbing-durathread"
 	resistance_flags = FIRE_PROOF
