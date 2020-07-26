@@ -397,6 +397,23 @@
 	icon_state = "katana"
 	item_state = "katana"
 	slot_flags = ITEM_SLOT_BELT | ITEM_SLOT_BACK
+	block_chance = 0
+	item_flags = ITEM_CAN_PARRY
+	block_parry_data = /datum/block_parry_data/hanzo
+
+/datum/block_parry_data/hanzo // basically just a copy of bokken but worse because it has higher base damage
+	parry_stamina_cost = 8
+	parry_time_windup = 0.2
+	parry_time_active = 9
+	parry_time_spindown = 0.8
+	parry_time_perfect = 1.5
+	parry_time_perfect_leeway = 1
+	parry_imperfect_falloff_percent = 7.5
+	parry_efficiency_to_counterattack = 100
+	parry_efficiency_considered_successful = 65
+	parry_efficiency_perfect = 120
+	parry_failed_stagger_duration = 3 SECONDS
+	parry_data = list(PARRY_COUNTERATTACK_MELEE_ATTACK_CHAIN = 1.25) // 18*1.25 = 22.5. lets you crit 1 hit faster overall if you get a single good parry 
 
 /obj/item/nullrod/claymore/multiverse
 	name = "extradimensional blade"
