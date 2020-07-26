@@ -251,44 +251,52 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 
 /obj/item/melee/bokken // parrying stick
 	name = "bokken"
-	desc = "A space-Japanese training sword made of wood and shaped like a katana. Probably not relevant in D20."
+	desc = "A space-Japanese training sword made of wood and shaped like a katana."
 	icon_state = "bokken"
 	item_state = "bokken"
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 	slot_flags = ITEM_SLOT_BELT | ITEM_SLOT_BACK
 	w_class = WEIGHT_CLASS_BULKY
-	force = 7
+	force = 9
 	throwforce = 10
-	attack_verb = list("bashed", "smashed", "whacked")
+	damtype = STAMINA
+	attack_verb = list("whacked", "smacked", "struck")
 	total_mass = TOTAL_MASS_MEDIEVAL_WEAPON
 	hitsound = 'sound/weapons/grenadelaunch.ogg' // no good wood thunk sounds
-	var/harm = TRUE // TRUE = brute, FALSE = stam
+	var/harm = FALSE // TRUE = brute, FALSE = stam
 	var/reinforced = FALSE
+	var/burnt = FALSE
+	var/burned_in // text you burned in (with a welder)
+	var/quick_parry = FALSE // false = default parry, true = really small parry window
 	item_flags = ITEM_CAN_PARRY
 	block_parry_data = /datum/block_parry_data/bokken
-	bare_wound_bonus = 15 // having your leg smacked by a wooden stick is probably not great for it if it's naked
+	bare_wound_bonus = 0
 	wound_bonus = 0
 
 /datum/block_parry_data/bokken // fucked up parry data, emphasizing quicker, shorter parries
-	parry_stamina_cost = 9 // be wise about when you parry, though, else you won't be able to fight enough to make it count
+	parry_stamina_cost = 8 // be wise about when you parry, though, else you won't be able to fight enough to make it count
 	parry_time_windup = 0
-	parry_time_active = 10
+	parry_time_active = 10 // small parry window
 	parry_time_spindown = 0
-	// we want to signal to players the most dangerous phase, the time when automatic counterattack is a thing.
-	/* parry_time_windup_visual_override = 1
-	parry_time_active_visual_override = 3
-	parry_time_spindown_visual_override = 12 */
 	// parry_flags = PARRY_DEFAULT_HANDLE_FEEDBACK		// bokken users can no longer strike while parrying
-	parry_time_perfect = 1.5		// first ds isn't perfect
+	parry_time_perfect = 1.5
 	parry_time_perfect_leeway = 1
 	parry_imperfect_falloff_percent = 7.5
 	parry_efficiency_to_counterattack = 100
 	parry_efficiency_considered_successful = 65		// VERY generous
 	parry_efficiency_perfect = 120
 	parry_failed_stagger_duration = 3 SECONDS
-	// parry_cooldown = 0.5 SECONDS // most of this items strength *is* in parrying...
 	parry_data = list(PARRY_COUNTERATTACK_MELEE_ATTACK_CHAIN = 2.5) // 7*2.5 = 17.5, 8*2.5 = 20, 9*2.5 = 22.5, 10*2.5 = 25
+
+/datum/block_parry_data/bokken/quick_parry // emphasizing REALLY SHORT PARRIES
+	parry_stamina_cost = 6 // still more costly than most parries, but less than a full bokken parry
+	parry_time_active = 5 // REALLY small parry window
+	parry_time_perfect = 2.5 // however...
+	parry_time_perfect_leeway = 1.25 // the entire time, the parry is perfect
+	parry_failed_stagger_duration = 1 SECOND
+	parry_failed_clickcd_duration = 1 SECOND // more forgiving punishments for missed parries
+	// still, don't fucking miss your parries or you're down stamina and staggered to shit
 
 /obj/item/melee/bokken/Initialize()
 	. = ..()
@@ -300,7 +308,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 		force -= 2
 		damtype = BRUTE
 		attack_verb = list("bashed", "smashed", "attacked")
-		bare_wound_bonus = 15
+		bare_wound_bonus = 15 // having your leg smacked by a wooden stick is probably not great for it if it's naked
 		wound_bonus = 0
 	else
 		force += 2
@@ -310,17 +318,28 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 		wound_bonus = 0
 	to_chat(user, "<span class='notice'>[src] is now [harm ? "harmful" : "not quite as harmful"].</span>")
 
+/obj/item/melee/bokken/AltClick(mob/user)
+	. = ..()
+	quick_parry = !quick_parry
+	if(quick_parry)
+		block_parry_data = /datum/block_parry_data/bokken/quick_parry
+	else
+		block_parry_data = /datum/block_parry_data/bokken
+	to_chat(user, "<span class='notice'>[src] is now [quick_parry ? "emphasizing shorter parries, forcing you to riposte or be staggered" : "emphasizing longer parries, with a shorter window to riposte but more forgiving parries"].</span>")
+
 /obj/item/melee/bokken/attackby(obj/item/I, mob/living/user, params)
 	if(istype(I, /obj/item/pen))
 		var/new_name = stripped_input(user, "What do you wish to name [src]?", "New Name", "bokken", 30)
 		if(new_name)
 			name = new_name
 	if(I.tool_behaviour == TOOL_WELDER)
-		var/burned_in = stripped_input(user, "What do you wish to burn into [src]?", "Burnt Inscription","", 140)
-		if(burned_in)
-			desc = initial(desc) + " Burned into the \"blade\" is [burned_in]."
-			icon_state += "_burnt"
-			item_state += "_burnt"
+		var/new_burn = stripped_input(user, "What do you wish to burn into [src]?", "Burnt Inscription","", 140)
+		if(new_burn)
+			burned_in = new_burn
+			if(!burnt)
+				icon_state += "_burnt"
+				item_state += "_burnt"
+				burnt = TRUE
 			update_icon()
 			update_icon_state()
 	if(istype(I, /obj/item/stack/rods))
@@ -332,6 +351,15 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 				to_chat(user, "<span class='notice'>You slide a metal rod into [src]\'s hilt. It feels a little heftier in your hands.")
 		else
 			to_chat(user, "<span class='notice'>[src] already has a weight slid into the hilt.")
+
+/obj/item/melee/bokken/examine(mob/user)
+	. = ..()
+	if(quick_parry)
+		. += " [src] is gripped in a way to emphasize quicker parries."
+	if(reinforced)
+		. += " There's a metal rod shoved into the base."
+	if(burnt)
+		. += " Burned into the \"blade\" is [burned_in]."
 
 /obj/item/wirerod
 	name = "wired rod"
