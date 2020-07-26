@@ -67,12 +67,12 @@ They deal 35 brute (armor is considered).
 	. = ..()
 	internal = new /obj/item/gps/internal/gladiator(src)
 
-/mob/living/simple_animal/hostile/megafauna/gladiator/Life()
+/* /mob/living/simple_animal/hostile/megafauna/gladiator/Life()
 	. = ..()
 	if(!wander)
 		for(var/mob/living/M in view(4, src))
 			if(!(M in introduced) && (stat != DEAD))
-				introduction(M)
+*/ //				introduction(M)
 
 /mob/living/simple_animal/hostile/megafauna/gladiator/apply_damage(damage, damagetype, def_zone, blocked, forced, bare_wound_bonus = FALSE, sharpness = FALSE, wound_bonus=CANT_WOUND)
 	if(speen)
