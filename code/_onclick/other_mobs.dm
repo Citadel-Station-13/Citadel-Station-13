@@ -49,6 +49,8 @@
 	on_attack_hand(user, act_intent, unarmed_attack_flags)
 	if(attack_hand_unwieldlyness)
 		user.DelayNextAction(attack_hand_unwieldlyness, considered_action = attack_hand_is_action)
+	else if(attack_hand_is_action)
+		user.DelayNextAction()
 	return attack_hand_is_action
 
 /atom/proc/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
