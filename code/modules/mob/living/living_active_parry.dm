@@ -121,7 +121,7 @@
 			Stagger(data.parry_failed_stagger_duration)
 			effect_text += "staggering themselves"
 		if(data.parry_failed_clickcd_duration)
-			DelayNextAction(data.parry_failed_clickcd_duration)
+			DelayNextAction(data.parry_failed_clickcd_duration, flush = TRUE)
 			effect_text += "throwing themselves off balance"
 	handle_parry_ending_effects(data, effect_text)
 	parrying = NOT_PARRYING
