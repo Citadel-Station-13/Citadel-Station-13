@@ -130,11 +130,11 @@ Judgement 5 converts
 			SEND_SOUND(invoker, sound('sound/magic/clockwork/invoke_general.ogg'))
 	return TRUE
 
-/datum/clockwork_scripture/proc/check_offstation_penalty()
+/datum/clockwork_scripture/proc/check_offstation_penalty()//don't cast spells away from the station
 	var/turf/T = get_turf(invoker)
 	if(!T || (!is_centcom_level(T.z) && !is_station_level(T.z) && !is_mining_level(T.z) && !is_reebe(T.z)))
-		channel_time *= 2
-		power_cost *= 2
+		channel_time *= 3
+		power_cost *= 3
 		return TRUE
 
 /datum/clockwork_scripture/proc/check_special_requirements() //Special requirements for scriptures, checked multiple times during invocation
