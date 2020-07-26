@@ -64,3 +64,17 @@
 
 	var/drunkenness = 0 //Overall drunkenness - check handle_alcohol() in life.dm for effects
 	var/tackling = FALSE //Whether or not we are tackling, this will prevent the knock into effects for carbons
+
+	/// All of the wounds a carbon has afflicted throughout their limbs
+	var/list/all_wounds
+	/// All of the scars a carbon has afflicted throughout their limbs
+	var/list/all_scars
+
+	/// Protection (insulation) from the heat, Value 0-1 corresponding to the percentage of protection
+	var/heat_protection = 0 // No heat protection
+	/// Protection (insulation) from the cold, Value 0-1 corresponding to the percentage of protection
+	var/cold_protection = 0 // No cold protection
+
+	/// Timer id of any transformation
+	var/transformation_timer
+

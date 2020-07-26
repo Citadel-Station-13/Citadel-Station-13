@@ -110,6 +110,8 @@ GLOBAL_LIST_INIT(freqtospan, list(
 
 /// Quirky citadel proc for our custom sayverbs to strip the verb out. Snowflakey as hell, say rewrite 3.0 when?
 /atom/movable/proc/quoteless_say_quote(input, list/spans = list(speech_span), message_mode)
+	if((input[1] == "!") && (length_char(input) > 1))
+		return ""
 	var/pos = findtext(input, "*")
 	return pos? copytext(input, pos + 1) : input
 
@@ -144,6 +146,8 @@ GLOBAL_LIST_INIT(freqtospan, list(
 	return "[copytext_char("[freq]", 1, 4)].[copytext_char("[freq]", 4, 5)]"
 
 /atom/movable/proc/attach_spans(input, list/spans)
+	if((input[1] == "!") && (length(input) > 2))
+		return
 	var/customsayverb = findtext(input, "*")
 	if(customsayverb)
 		input = capitalize(copytext(input, customsayverb + length(input[customsayverb])))

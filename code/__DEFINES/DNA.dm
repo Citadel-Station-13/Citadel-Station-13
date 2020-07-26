@@ -108,6 +108,8 @@
 #define TR_KEEPSE		(1<<5)	// changelings shouldn't edit the DNA's SE when turning into a monkey
 #define TR_DEFAULTMSG	(1<<6)
 #define TR_KEEPORGANS	(1<<8)
+#define TR_KEEPREAGENTS	(1<<10)
+#define TR_KEEPSTUNS	(1<<9)
 
 
 #define CLONER_FRESH_CLONE "fresh"
@@ -140,6 +142,7 @@
 #define CUSTOM_SKINTONE	24	//adds a "_g" suffix to bodypart overlays icon states if a custom skintone is used.
 #define HORNCOLOR		25
 #define WINGCOLOR		26
+#define CAN_SCAR		27 // If this species can be scarred (fleshy)
 
 //organ slots
 #define ORGAN_SLOT_BRAIN "brain"

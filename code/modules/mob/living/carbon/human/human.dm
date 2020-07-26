@@ -33,6 +33,7 @@
 		enable_intentional_sprint_mode()
 
 	RegisterSignal(src, COMSIG_COMPONENT_CLEAN_ACT, /atom.proc/clean_blood)
+	GLOB.human_list += src
 
 
 /mob/living/carbon/human/ComponentInitialize()
@@ -47,6 +48,7 @@
 /mob/living/carbon/human/Destroy()
 	QDEL_NULL(physiology)
 	QDEL_NULL_LIST(vore_organs) // CITADEL EDIT belly stuff
+	GLOB.human_list -= src
 	return ..()
 
 /mob/living/carbon/human/prepare_data_huds()
@@ -1055,9 +1057,20 @@
 		remove_movespeed_modifier(/datum/movespeed_modifier/damage_slowdown)
 		remove_movespeed_modifier(/datum/movespeed_modifier/damage_slowdown_flying)
 
+
 /mob/living/carbon/human/do_after_coefficent()
 	. = ..()
 	. *= physiology.do_after_speed
+
+/mob/living/carbon/human/is_bleeding()
+	if(NOBLOOD in dna.species.species_traits || bleedsuppress)
+		return FALSE
+	return ..()
+
+/mob/living/carbon/human/get_total_bleed_rate()
+	if(NOBLOOD in dna.species.species_traits)
+		return FALSE
+	return ..()
 
 /mob/living/carbon/human/species
 	var/race = null

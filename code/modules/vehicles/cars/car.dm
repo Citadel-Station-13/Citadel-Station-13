@@ -57,7 +57,7 @@
 		return FALSE
 	return ..()
 
-/obj/vehicle/sealed/car/attack_hand(mob/living/user)
+/obj/vehicle/sealed/car/attack_hand(mob/living/user, act_intent = user.a_intent, unarmed_attack_flags)
 	. = ..()
 	if(!(car_traits & CAN_KIDNAP))
 		return

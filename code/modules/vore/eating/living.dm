@@ -116,7 +116,7 @@
 		testing("[user] attempted to feed [prey] to [pred], via [lowertext(belly.name)] but it went wrong.")
 		return
 
-	if (!prey.vore_flags & DEVOURABLE)
+	if (!CHECK_BITFIELD(prey.vore_flags, DEVOURABLE))
 		to_chat(user, "This can't be eaten!")
 		return FALSE
 

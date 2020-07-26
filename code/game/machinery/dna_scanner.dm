@@ -15,6 +15,7 @@
 	var/precision_coeff
 	var/message_cooldown
 	var/breakout_time = 1200
+	var/obj/machinery/computer/scan_consolenew/linked_console = null
 
 /obj/machinery/dna_scannernew/RefreshParts()
 	scan_level = 0
@@ -22,8 +23,8 @@
 	precision_coeff = 0
 	for(var/obj/item/stock_parts/scanning_module/P in component_parts)
 		scan_level += P.rating
-	for(var/obj/item/stock_parts/matter_bin/P in component_parts)
-		precision_coeff = P.rating
+	for(var/obj/item/stock_parts/matter_bin/M in component_parts)
+		precision_coeff = M.rating
 	for(var/obj/item/stock_parts/micro_laser/P in component_parts)
 		damage_coeff = P.rating
 
@@ -31,11 +32,8 @@
 	. = ..()
 	if(in_range(user, src) || isobserver(user))
 		. += "<span class='notice'>The status display reads: Radiation pulse accuracy increased by factor <b>[precision_coeff**2]</b>.<br>Radiation pulse damage decreased by factor <b>[damage_coeff**2]</b>.</span>"
-		if(scan_level >= 3)
-			. += "<span class='notice'>Scanner has been upgraded to support autoprocessing.<span>"
 
 /obj/machinery/dna_scannernew/update_icon_state()
-
 	//no power or maintenance
 	if(stat & (NOPOWER|BROKEN))
 		icon_state = initial(icon_state)+ (state_open ? "_open" : "") + "_unpowered"
@@ -52,10 +50,6 @@
 
 	//running
 	icon_state = initial(icon_state)+ (state_open ? "_open" : "")
-
-/obj/machinery/dna_scannernew/power_change()
-	..()
-	update_icon()
 
 /obj/machinery/dna_scannernew/proc/toggle_open(mob/user)
 	if(panel_open)
@@ -80,7 +74,7 @@
 	user.last_special = world.time + CLICK_CD_BREAKOUT
 	user.visible_message("<span class='notice'>You see [user] kicking against the door of [src]!</span>", \
 		"<span class='notice'>You lean on the back of [src] and start pushing the door open... (this will take about [DisplayTimeText(breakout_time)].)</span>", \
-		"<span class='italics'>You hear a metallic creaking from [src].</span>")
+		"<span class='hear'>You hear a metallic creaking from [src].</span>")
 	if(do_after(user,(breakout_time), target = src))
 		if(!user || user.stat != CONSCIOUS || user.loc != src || state_open || !locked)
 			return
@@ -96,32 +90,27 @@
 			return C
 	return null
 
-/obj/machinery/dna_scannernew/close_machine(atom/movable/target)
+/obj/machinery/dna_scannernew/close_machine(mob/living/carbon/user)
 	if(!state_open)
 		return FALSE
 
-	..(target)
-
-	// search for ghosts, if the corpse is empty and the scanner is connected to a cloner
-	var/mob/living/mob_occupant = get_mob_or_brainmob(occupant)
-	if(istype(mob_occupant))
-		if(locate_computer(/obj/machinery/computer/cloning))
-			if(!mob_occupant.suiciding && !(HAS_TRAIT(mob_occupant, TRAIT_NOCLONE)) && !mob_occupant.hellbound)
-				mob_occupant.notify_ghost_cloning("Your corpse has been placed into a cloning scanner. Re-enter your corpse if you want to be cloned!", source = src)
+	..(user)
 
 	// DNA manipulators cannot operate on severed heads or brains
-	if(isliving(occupant))
-		var/obj/machinery/computer/scan_consolenew/console = locate_computer(/obj/machinery/computer/scan_consolenew)
-		if(console)
-			console.on_scanner_close()
+	if(iscarbon(occupant))
+		if(linked_console)
+			linked_console.on_scanner_close()
 
 	return TRUE
 
 /obj/machinery/dna_scannernew/open_machine()
-	if(state_open || panel_open)
+	if(state_open)
 		return FALSE
 
 	..()
+
+	if(linked_console)
+		linked_console.on_scanner_open()
 
 	return TRUE
 
@@ -133,51 +122,49 @@
 		return
 	open_machine()
 
-/obj/machinery/dna_scannernew/screwdriver_act(mob/living/user, obj/item/I)
-	. = TRUE
-	if(..())
-		return
-	if(occupant)
-		to_chat(user, "<span class='warning'>[src] is currently occupied!</span>")
-		return
-	if(state_open)
-		to_chat(user, "<span class='warning'>[src] must be closed to [panel_open ? "close" : "open"] its maintenance hatch!</span>")
-		return
-	if(default_deconstruction_screwdriver(user, icon_state, icon_state, I)) //sent icon_state is irrelevant...
-		update_icon() //..since we're updating the icon here, since the scanner can be unpowered when opened/closed
-		return
-	return FALSE
+/obj/machinery/dna_scannernew/attackby(obj/item/I, mob/user, params)
 
-/obj/machinery/dna_scannernew/wrench_act(mob/living/user, obj/item/I)
-	. = ..()
-	if(default_change_direction_wrench(user, I))
-		return TRUE
+	if(!occupant && default_deconstruction_screwdriver(user, icon_state, icon_state, I))//sent icon_state is irrelevant...
+		update_icon()//..since we're updating the icon here, since the scanner can be unpowered when opened/closed
+		return
 
-/obj/machinery/dna_scannernew/crowbar_act(mob/living/user, obj/item/I)
-	. = ..()
 	if(default_pry_open(I))
-		return TRUE
-	if(default_deconstruction_crowbar(I))
-		return TRUE
+		return
 
-/obj/machinery/dna_scannernew/default_pry_open(obj/item/I) //wew
-	. = !(state_open || panel_open || (flags_1 & NODECONSTRUCT_1)) && I.tool_behaviour == TOOL_CROWBAR
-	if(.)
-		I.play_tool_sound(src, 50)
-		visible_message("<span class='notice'>[usr] pries open [src].</span>", "<span class='notice'>You pry open [src].</span>")
-		open_machine()
+	if(default_deconstruction_crowbar(I))
+		return
+
+	return ..()
 
 /obj/machinery/dna_scannernew/interact(mob/user)
 	toggle_open(user)
 
-/obj/machinery/dna_scannernew/AltClick(mob/user)
-	. = ..()
-	if(!user.canUseTopic(src, !hasSiliconAccessInArea(user)))
-		return
-	interact(user)
-	return TRUE
-
 /obj/machinery/dna_scannernew/MouseDrop_T(mob/target, mob/user)
-	if(user.stat || user.lying || !Adjacent(user) || !user.Adjacent(target) || !iscarbon(target) || !user.IsAdvancedToolUser())
+	var/mob/living/L = user
+	if(user.stat || (isliving(user) && (!(L.mobility_flags & MOBILITY_STAND) || !(L.mobility_flags & MOBILITY_UI))) || !Adjacent(user) || !user.Adjacent(target) || !iscarbon(target) || !user.IsAdvancedToolUser())
 		return
 	close_machine(target)
+
+
+//Just for transferring between genetics machines.
+/obj/item/disk/data
+	name = "DNA data disk"
+	icon_state = "datadisk0" //Gosh I hope syndies don't mistake them for the nuke disk.
+	var/list/genetic_makeup_buffer = list()
+	var/list/fields = list()
+	var/list/mutations = list()
+	var/max_mutations = 6
+	var/read_only = FALSE //Well,it's still a floppy disk
+
+/obj/item/disk/data/Initialize()
+	. = ..()
+	icon_state = "datadisk[rand(0,6)]"
+	add_overlay("datadisk_gene")
+
+/obj/item/disk/data/attack_self(mob/user)
+	read_only = !read_only
+	to_chat(user, "<span class='notice'>You flip the write-protect tab to [read_only ? "protected" : "unprotected"].</span>")
+
+/obj/item/disk/data/examine(mob/user)
+	. = ..()
+	. += "The write-protect tab is set to [read_only ? "protected" : "unprotected"]."

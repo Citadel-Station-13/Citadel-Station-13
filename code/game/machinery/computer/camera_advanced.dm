@@ -29,8 +29,16 @@
 		if(lock_override & CAMERA_LOCK_REEBE)
 			z_lock |= SSmapping.levels_by_trait(ZTRAIT_REEBE)
 
+/obj/machinery/computer/camera_advanced/connect_to_shuttle(obj/docking_port/mobile/port, obj/docking_port/stationary/dock, idnum, override=FALSE)
+	for(var/i in networks)
+		networks -= i
+		networks += "[idnum][i]"
+
 /obj/machinery/computer/camera_advanced/syndie
 	icon_keyboard = "syndie_key"
+
+/obj/machinery/computer/camera_advanced/syndie/connect_to_shuttle(obj/docking_port/mobile/port, obj/docking_port/stationary/dock, idnum, override=FALSE)
+	return //For syndie nuke shuttle, to spy for station.
 
 /obj/machinery/computer/camera_advanced/proc/CreateEye()
 	eyeobj = new()
@@ -95,7 +103,7 @@
 		return FALSE
 	return ..()
 
-/obj/machinery/computer/camera_advanced/attack_hand(mob/user)
+/obj/machinery/computer/camera_advanced/attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	. = ..()
 	if(.)
 		return

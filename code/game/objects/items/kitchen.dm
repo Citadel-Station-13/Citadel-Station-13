@@ -54,6 +54,14 @@
 	else
 		return ..()
 
+/obj/item/kitchen/fork/throwing
+	name = "throwing fork"
+	desc = "A fork, sharpened to perfection, making it a great weapon for throwing."
+	throwforce = 15
+	throw_speed = 4
+	throw_range = 6
+	embedding = list("pain_mult" = 2, "embed_chance" = 100, "fall_chance" = 0, "embed_chance_turf_mod" = 15)
+	sharpness = IS_SHARP
 
 /obj/item/kitchen/knife
 	name = "kitchen knife"
@@ -71,6 +79,8 @@
 	sharpness = IS_SHARP_ACCURATE
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 50)
 	var/bayonet = FALSE	//Can this be attached to a gun?
+	wound_bonus = -5
+	bare_wound_bonus = 10
 	custom_price = PRICE_NORMAL
 
 /obj/item/kitchen/knife/Initialize()

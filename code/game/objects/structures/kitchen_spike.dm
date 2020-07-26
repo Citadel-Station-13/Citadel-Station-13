@@ -61,7 +61,7 @@
 	return TRUE
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
-/obj/structure/kitchenspike/attack_hand(mob/user)
+/obj/structure/kitchenspike/attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	if(VIABLE_MOB_CHECK(user.pulling) && user.a_intent == INTENT_GRAB && !has_buckled_mobs())
 		var/mob/living/L = user.pulling
 		if(HAS_TRAIT(user, TRAIT_PACIFISM) && L.stat != DEAD)

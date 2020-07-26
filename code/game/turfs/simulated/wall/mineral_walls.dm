@@ -72,7 +72,7 @@
 			return
 	return
 
-/turf/closed/wall/mineral/uranium/attack_hand(mob/user)
+/turf/closed/wall/mineral/uranium/attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	radiate()
 	. = ..()
 

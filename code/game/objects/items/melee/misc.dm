@@ -19,6 +19,8 @@
 	slot_flags = ITEM_SLOT_BELT
 	force = 14
 	throwforce = 10
+	wound_bonus = 15
+	bare_wound_bonus = 10
 	reach = 2
 	w_class = WEIGHT_CLASS_NORMAL
 	attack_verb = list("flogged", "whipped", "lashed", "disciplined")
@@ -268,6 +270,8 @@
 	var/force_off // Damage when off - not stunning
 	var/weight_class_on // What is the new size class when turned on
 
+	wound_bonus = 15
+
 /obj/item/melee/classic_baton/Initialize()
 	. = ..()
 
@@ -393,6 +397,7 @@
 	force_off = 0
 	weight_class_on = WEIGHT_CLASS_BULKY
 	total_mass = TOTAL_MASS_NORMAL_ITEM
+	bare_wound_bonus = 5
 
 /obj/item/melee/classic_baton/telescopic/suicide_act(mob/user)
 	var/mob/living/carbon/human/H = user
@@ -621,7 +626,7 @@
 			to_chat(user, "<span class='warning'>[target] doesn't seem to want to get on [src]!</span>")
 	update_icon()
 
-/obj/item/melee/roastingstick/attack_hand(mob/user)
+/obj/item/melee/roastingstick/attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	..()
 	if (held_sausage)
 		user.put_in_hands(held_sausage)

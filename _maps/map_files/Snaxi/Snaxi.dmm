@@ -1548,7 +1548,7 @@
 /turf/open/floor/plasteel/white,
 /area/science/lab)
 "ayu" = (
-/obj//obj/item/kirbyplants{
+/obj/item/kirbyplants{
 	icon_state = "plant-16"
 	},
 /obj/effect/turf_decal/tile/purple{
@@ -3545,8 +3545,8 @@
 	name = "supply dock loading door"
 	},
 /obj/machinery/conveyor{
-	id = "QMLoad2";
-	dir = 1
+	dir = 1;
+	id = "QMLoad2"
 	},
 /turf/open/floor/plating,
 /area/quartermaster/storage)
@@ -7757,7 +7757,7 @@
 /obj/structure/cable{
 	icon_state = "4-8"
 	},
-/obj//obj/item/kirbyplants{
+/obj/item/kirbyplants{
 	icon_state = "plant-10"
 	},
 /turf/open/floor/carpet,
@@ -9031,7 +9031,7 @@
 /obj/structure/cable{
 	icon_state = "2-8"
 	},
-/obj//obj/item/kirbyplants{
+/obj/item/kirbyplants{
 	icon_state = "plant-10"
 	},
 /turf/open/floor/plasteel/dark,
@@ -9409,7 +9409,7 @@
 /turf/open/floor/plasteel,
 /area/hallway/primary/fore)
 "dij" = (
-/obj//obj/item/kirbyplants{
+/obj/item/kirbyplants{
 	icon_state = "plant-10"
 	},
 /turf/open/floor/carpet,
@@ -11361,7 +11361,7 @@
 /turf/open/floor/plasteel,
 /area/janitor)
 "eue" = (
-/obj//obj/item/kirbyplants{
+/obj/item/kirbyplants{
 	icon_state = "plant-04"
 	},
 /obj/effect/turf_decal/tile/blue{
@@ -11665,6 +11665,9 @@
 /obj/structure/window/reinforced,
 /obj/structure/disposalpipe/segment{
 	dir = 9
+	},
+/obj/machinery/computer/gateway_control{
+	dir = 8
 	},
 /turf/open/floor/plasteel/dark,
 /area/teleporter)
@@ -12398,8 +12401,8 @@
 /area/bridge/meeting_room)
 "eZU" = (
 /obj/machinery/conveyor{
-	id = "QMLoad2";
-	dir = 1
+	dir = 1;
+	id = "QMLoad2"
 	},
 /turf/open/floor/plating,
 /area/quartermaster/storage)
@@ -17391,7 +17394,7 @@
 /obj/machinery/light{
 	dir = 4
 	},
-/obj//obj/item/kirbyplants{
+/obj/item/kirbyplants{
 	icon_state = "plant-10"
 	},
 /turf/open/floor/wood,
@@ -19924,7 +19927,6 @@
 /obj/structure/cable{
 	icon_state = "0-2"
 	},
-/obj/machinery/gateway,
 /obj/effect/turf_decal/bot_white,
 /turf/open/floor/plasteel/dark,
 /area/teleporter)
@@ -20693,13 +20695,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/hallway/secondary/exit/departure_lounge)
-"jPP" = (
-/obj/machinery/gateway{
-	dir = 8
-	},
-/obj/effect/turf_decal/bot_white,
-/turf/open/floor/plasteel/dark,
-/area/teleporter)
 "jQj" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable{
@@ -21094,8 +21089,8 @@
 "kdM" = (
 /obj/effect/turf_decal/stripes,
 /obj/machinery/conveyor{
-	id = "QMLoad2";
-	dir = 1
+	dir = 1;
+	id = "QMLoad2"
 	},
 /turf/open/floor/plasteel,
 /area/quartermaster/storage)
@@ -22647,7 +22642,7 @@
 /turf/open/floor/engine,
 /area/engine/engineering)
 "lfs" = (
-/obj//obj/item/kirbyplants{
+/obj/item/kirbyplants{
 	icon_state = "plant-08"
 	},
 /turf/open/floor/plasteel,
@@ -27641,9 +27636,6 @@
 /turf/closed/wall,
 /area/quartermaster/sorting)
 "ohf" = (
-/obj/machinery/gateway{
-	dir = 5
-	},
 /obj/effect/turf_decal/bot_white/left,
 /turf/open/floor/plasteel/dark,
 /area/teleporter)
@@ -27866,7 +27858,7 @@
 /turf/open/floor/carpet,
 /area/quartermaster/miningoffice)
 "old" = (
-/obj//obj/item/kirbyplants{
+/obj/item/kirbyplants{
 	icon_state = "applebush"
 	},
 /turf/open/floor/wood,
@@ -28539,7 +28531,7 @@
 /turf/open/floor/carpet,
 /area/crew_quarters/heads/hop)
 "oGU" = (
-/obj//obj/item/kirbyplants{
+/obj/item/kirbyplants{
 	icon_state = "plant-10"
 	},
 /turf/open/floor/wood,
@@ -29610,7 +29602,7 @@
 	c_tag = "Courtroom East";
 	dir = 8
 	},
-/obj//obj/item/kirbyplants{
+/obj/item/kirbyplants{
 	icon_state = "applebush"
 	},
 /turf/open/floor/wood,
@@ -32098,8 +32090,8 @@
 /area/hallway/secondary/exit/departure_lounge)
 "qGt" = (
 /obj/structure/bodycontainer/crematorium{
-	id = "crematoriumChapel";
-	dir = 8
+	dir = 8;
+	id = "crematoriumChapel"
 	},
 /obj/machinery/button/crematorium{
 	id = "crematoriumChapel";
@@ -32161,7 +32153,7 @@
 /turf/open/floor/carpet,
 /area/crew_quarters/dorms)
 "qHO" = (
-/obj//obj/item/kirbyplants{
+/obj/item/kirbyplants{
 	icon_state = "plant-21"
 	},
 /turf/open/floor/plasteel,
@@ -32969,7 +32961,7 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/neutral,
-/obj//obj/item/kirbyplants,
+/obj/item/kirbyplants,
 /turf/open/floor/plasteel,
 /area/crew_quarters/fitness)
 "rhX" = (
@@ -34354,7 +34346,7 @@
 /area/engine/engineering)
 "saN" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj//obj/item/kirbyplants{
+/obj/item/kirbyplants{
 	icon_state = "plant-10"
 	},
 /turf/open/floor/plasteel,
@@ -34845,7 +34837,7 @@
 	dir = 8
 	},
 /obj/effect/turf_decal/tile/blue,
-/obj//obj/item/kirbyplants{
+/obj/item/kirbyplants{
 	icon_state = "plant-10"
 	},
 /turf/open/floor/plasteel/dark,
@@ -35403,9 +35395,6 @@
 /turf/open/floor/plating,
 /area/hallway/secondary/exit/departure_lounge)
 "sLr" = (
-/obj/machinery/gateway{
-	dir = 6
-	},
 /obj/effect/turf_decal/bot_white/right,
 /obj/effect/turf_decal/stripes/corner{
 	dir = 1
@@ -36248,7 +36237,7 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 4
 	},
-/obj//obj/item/kirbyplants{
+/obj/item/kirbyplants{
 	icon_state = "plant-10"
 	},
 /turf/open/floor/plasteel/dark,
@@ -36573,9 +36562,9 @@
 /obj/effect/turf_decal/delivery,
 /obj/structure/table/reinforced,
 /obj/machinery/door/window/eastleft{
+	dir = 8;
 	name = "Hydroponics Desk";
-	req_access_txt = "35";
-	dir = 8
+	req_access_txt = "35"
 	},
 /obj/machinery/door/firedoor/border_only{
 	dir = 8;
@@ -39247,8 +39236,8 @@
 	name = "supply dock loading door"
 	},
 /obj/machinery/conveyor{
-	id = "QMLoad2";
-	dir = 1
+	dir = 1;
+	id = "QMLoad2"
 	},
 /turf/open/floor/plating,
 /area/quartermaster/storage)
@@ -39695,8 +39684,8 @@
 /area/security/checkpoint/supply)
 "vgX" = (
 /obj/machinery/conveyor{
-	id = "QMLoad2";
-	dir = 1
+	dir = 1;
+	id = "QMLoad2"
 	},
 /turf/open/floor/plasteel,
 /area/quartermaster/storage)
@@ -40096,9 +40085,6 @@
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "vse" = (
-/obj/machinery/gateway{
-	dir = 10
-	},
 /obj/machinery/light{
 	dir = 8
 	},
@@ -41638,13 +41624,6 @@
 	},
 /turf/open/floor/engine,
 /area/engine/engineering)
-"wie" = (
-/obj/machinery/gateway{
-	dir = 1
-	},
-/obj/effect/turf_decal/bot_white,
-/turf/open/floor/plasteel/dark,
-/area/teleporter)
 "wje" = (
 /turf/open/floor/plasteel,
 /area/hallway/primary/port)
@@ -42940,9 +42919,6 @@
 /turf/open/floor/plating/snowed/smoothed/icemoon,
 /area/icemoon/surface/outdoors)
 "xcd" = (
-/obj/machinery/gateway{
-	dir = 4
-	},
 /obj/effect/turf_decal/bot_white,
 /turf/open/floor/plasteel/dark,
 /area/teleporter)
@@ -43206,7 +43182,7 @@
 /obj/structure/cable{
 	icon_state = "0-4"
 	},
-/obj//obj/item/kirbyplants{
+/obj/item/kirbyplants{
 	icon_state = "plant-10"
 	},
 /obj/machinery/power/apc{
@@ -43874,9 +43850,6 @@
 /turf/open/floor/plating/snowed/smoothed/icemoon,
 /area/engine/atmos)
 "xHk" = (
-/obj/machinery/gateway{
-	dir = 9
-	},
 /obj/effect/turf_decal/bot_white/right,
 /turf/open/floor/plasteel/dark,
 /area/teleporter)
@@ -56913,7 +56886,7 @@ avT
 avT
 gLH
 xHk
-jPP
+xcd
 vse
 mSs
 qQH
@@ -57169,7 +57142,7 @@ bBh
 avT
 avT
 gLH
-wie
+xcd
 ePa
 jrR
 nTQ

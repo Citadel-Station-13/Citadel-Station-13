@@ -50,7 +50,7 @@
 	harvesting = FALSE
 	warming_up = FALSE
 
-/obj/machinery/harvester/attack_hand(mob/user)
+/obj/machinery/harvester/attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	if(state_open)
 		close_machine()
 	else if(!harvesting)

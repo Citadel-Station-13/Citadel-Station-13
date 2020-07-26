@@ -28,7 +28,7 @@
 	return //you can't tk stomp sigils, but you can hit them with something
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
-/obj/effect/clockwork/sigil/attack_hand(mob/user)
+/obj/effect/clockwork/sigil/attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	if(iscarbon(user) && !user.stat)
 		if(is_servant_of_ratvar(user) && user.a_intent != INTENT_HARM)
 			return ..()

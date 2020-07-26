@@ -4,10 +4,16 @@
 
 	Otherwise pretty standard.
 */
-/mob/living/carbon/human/UnarmedAttack(atom/A, proximity)
+
+/mob/living/carbon/human/UnarmedAttack(atom/A, proximity, intent = a_intent, flags = NONE)
 
 	if(!has_active_hand()) //can't attack without a hand.
 		to_chat(src, "<span class='notice'>You look at your arm and sigh.</span>")
+		return
+
+	var/obj/item/bodypart/check_arm = get_active_hand()
+	if(check_arm && check_arm.is_disabled() == BODYPART_DISABLED_WOUND)
+		to_chat(src, "<span class='warning'>The damage in your [check_arm.name] is preventing you from using it! Get it fixed, or at least splinted!</span>")
 		return
 
 	// Special glove functions:
@@ -20,16 +26,16 @@
 	var/override = 0
 
 	for(var/datum/mutation/human/HM in dna.mutations)
-		override += HM.on_attack_hand(A, proximity)
+		override += HM.on_attack_hand(A, proximity, intent, flags)
 
 	if(override)
 		return
 
 	SEND_SIGNAL(src, COMSIG_HUMAN_MELEE_UNARMED_ATTACK, A)
-	A.attack_hand(src)
+	A.attack_hand(src, intent, flags)
 
 //Return TRUE to cancel other attack hand effects that respect it.
-/atom/proc/attack_hand(mob/user)
+/atom/proc/attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	. = FALSE
 	if(!(interaction_flags_atom & INTERACT_ATOM_NO_FINGERPRINT_ATTACK_HAND))
 		add_fingerprint(user)
@@ -104,8 +110,8 @@
 /*
 	Animals & All Unspecified
 */
-/mob/living/UnarmedAttack(atom/A)
-	A.attack_animal(src)
+/mob/living/UnarmedAttack(atom/A, proximity, intent = a_intent, flags = NONE)
+	A.attack_animal(src, intent, flags)
 
 /atom/proc/attack_animal(mob/user)
 	SEND_SIGNAL(src, COMSIG_ATOM_ATTACK_ANIMAL, user)
@@ -116,8 +122,8 @@
 /*
 	Monkeys
 */
-/mob/living/carbon/monkey/UnarmedAttack(atom/A)
-	A.attack_paw(src)
+/mob/living/carbon/monkey/UnarmedAttack(atom/A, proximity, intent = a_intent, flags = NONE)
+	A.attack_paw(src, intent, flags)
 
 /atom/proc/attack_paw(mob/user)
 	if(SEND_SIGNAL(src, COMSIG_ATOM_ATTACK_PAW, user) & COMPONENT_NO_ATTACK_HAND)
@@ -162,8 +168,8 @@
 	Aliens
 	Defaults to same as monkey in most places
 */
-/mob/living/carbon/alien/UnarmedAttack(atom/A)
-	A.attack_alien(src)
+/mob/living/carbon/alien/UnarmedAttack(atom/A, proximity, intent = a_intent, flags = NONE)
+	A.attack_alien(src, intent, flags)
 
 /atom/proc/attack_alien(mob/living/carbon/alien/user)
 	attack_paw(user)
@@ -173,29 +179,29 @@
 	return
 
 // Babby aliens
-/mob/living/carbon/alien/larva/UnarmedAttack(atom/A)
-	A.attack_larva(src)
+/mob/living/carbon/alien/larva/UnarmedAttack(atom/A, proximity, intent = a_intent, flags = NONE)
+	A.attack_larva(src, intent, flags)
+
 /atom/proc/attack_larva(mob/user)
 	return
-
 
 /*
 	Slimes
 	Nothing happening here
 */
-/mob/living/simple_animal/slime/UnarmedAttack(atom/A)
-	A.attack_slime(src)
+/mob/living/simple_animal/slime/UnarmedAttack(atom/A, proximity, intent = a_intent, flags = NONE)
+	A.attack_slime(src, intent, flags)
+
 /atom/proc/attack_slime(mob/user)
 	return
 /mob/living/simple_animal/slime/RestrainedClickOn(atom/A)
 	return
 
-
 /*
 	Drones
 */
-/mob/living/simple_animal/drone/UnarmedAttack(atom/A)
-	A.attack_drone(src)
+/mob/living/simple_animal/drone/UnarmedAttack(atom/A, proximity, intent = a_intent, flags = NONE)
+	A.attack_drone(src, intent, flags)
 
 /atom/proc/attack_drone(mob/living/simple_animal/drone/user)
 	attack_hand(user) //defaults to attack_hand. Override it when you don't want drones to do same stuff as humans.
@@ -203,54 +209,43 @@
 /mob/living/simple_animal/slime/RestrainedClickOn(atom/A)
 	return
 
-
 /*
 	True Devil
 */
-
-/mob/living/carbon/true_devil/UnarmedAttack(atom/A, proximity)
+/mob/living/carbon/true_devil/UnarmedAttack(atom/A, proximity, intent = a_intent, flags = NONE)
 	A.attack_hand(src)
 
 /*
 	Brain
 */
-
-/mob/living/brain/UnarmedAttack(atom/A)//Stops runtimes due to attack_animal being the default
+/mob/living/brain/UnarmedAttack(atom/A, proximity, intent = a_intent, flags = NONE)
 	return
-
 
 /*
 	pAI
 */
-
-/mob/living/silicon/pai/UnarmedAttack(atom/A)//Stops runtimes due to attack_animal being the default
+/mob/living/silicon/pai/UnarmedAttack(atom/A, proximity, intent = a_intent, flags = NONE)
 	return
-
 
 /*
 	Simple animals
 */
-
-/mob/living/simple_animal/UnarmedAttack(atom/A, proximity)
+/mob/living/simple_animal/UnarmedAttack(atom/A, proximity, intent = a_intent, flags = NONE)
 	if(!dextrous)
 		return ..()
 	if(!ismob(A))
-		A.attack_hand(src)
+		A.attack_hand(src, intent, flags)
 		update_inv_hands()
-
 
 /*
 	Hostile animals
 */
-
-/mob/living/simple_animal/hostile/UnarmedAttack(atom/A)
+/mob/living/simple_animal/hostile/UnarmedAttack(atom/A, proximity, intent = a_intent, flags = NONE)
 	target = A
 	if(dextrous && !ismob(A))
 		..()
 	else
 		AttackingTarget()
-
-
 
 /*
 	New Players:

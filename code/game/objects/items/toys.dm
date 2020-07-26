@@ -574,7 +574,7 @@
 	else
 		. = ..()
 
-/obj/item/toy/prize/attack_hand(mob/user)
+/obj/item/toy/prize/attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	. = ..()
 	if(.)
 		return
@@ -813,7 +813,7 @@
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 //ATTACK HAND NOT CALLING PARENT
-/obj/item/toy/cards/deck/attack_hand(mob/user)
+/obj/item/toy/cards/deck/attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	draw_card(user)
 
 /obj/item/toy/cards/deck/proc/draw_card(mob/user)

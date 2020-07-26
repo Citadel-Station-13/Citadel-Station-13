@@ -58,7 +58,7 @@
 	qdel(R)
 
 
-/obj/structure/transit_tube/station/attack_hand(mob/user)
+/obj/structure/transit_tube/station/attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	. = ..()
 	if(.)
 		return
