@@ -251,7 +251,6 @@
 /obj/effect/clockwork/spatial_gateway/stable
 	name = "stable gateway"
 	is_stable = TRUE
-	//TODO: Icon for the gateway that looks a bit different
 
 /obj/effect/clockwork/spatial_gateway/stable/ex_act(severity)
 	if(severity == 1)
@@ -265,18 +264,18 @@
 /obj/effect/clockwork/spatial_gateway/stable/attackby(obj/item/I, mob/living/user, params)
 	if(!istype(I, /obj/item/clockwork/slab) || !is_servant_of_ratvar(user) || busy)
 		return ..()
-	user.visible_message("<span class='warning'>The rift begins to ripple as [user] points [user.p_their()] slab at it!</span>", "<span class='brass'> You begin to shutdown the stabilised gateway with your slab.</span>")
-	linked_gateway.visible_message("<span class='warning'[linked_gateway] begins to ripple, but nothing comes through...</span>")
 	busy = TRUE
 	linked_gateway.busy = TRUE
+	user.visible_message("<span class='warning'>The rift begins to ripple as [user] points [user.p_their()] slab at it!</span>", "<span class='brass'> You begin to shutdown the stabilised gateway with your slab.</span>")
+	linked_gateway.visible_message("<span class='warning'[linked_gateway] begins to ripple, but nothing comes through...</span>")
+	var/datum/beam/B = user.Beam(src, icon_state = "nzcrentrs_power", maxdistance = 50, time = 80) 	//Not too fancy, but this'll do.. for now.
 	if(do_after(user, 80, target = src)) //Eight seconds to initiate the closing, then another two before is closes.
 		to_chat(user, "<span class='brass'>You successfully set the gateway to shutdown in another two seconds.</span>")
 		start_shutdown()
+	qdel(B)
 	busy = FALSE
 	linked_gateway.busy = FALSE
 	return TRUE
-	//TODO: Add effect for this, maybe reuse the void blaster one from that PR?
-
 
 /obj/effect/clockwork/spatial_gateway/stable/proc/start_shutdown()
 		deltimer(timerid)
