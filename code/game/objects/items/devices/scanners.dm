@@ -709,7 +709,7 @@ GENETICS SCANNER
 		var/total_moles = air_contents.total_moles()
 		var/pressure = air_contents.return_pressure()
 		var/volume = air_contents.return_volume() //could just do mixture.volume... but safety, I guess?
-		var/temperature = air_contents.return_temperature
+		var/temperature = air_contents.return_temperature()
 		var/cached_scan_results = air_contents.analyzer_results
 
 		if(total_moles > 0)
@@ -718,8 +718,8 @@ GENETICS SCANNER
 			to_chat(user, "<span class='notice'>Pressure: [round(pressure,0.01)] kPa</span>")
 
 			for(var/id in air_contents.get_gases())
-            	var/gas_concentration = air_contents.get_moles(id)/total_moles
-            	to_chat(user, "<span class='notice'>[GLOB.meta_gas_names[id]]: [round(gas_concentration*100, 0.01)] % ([round(air_contents.get_moles(id), 0.01)] mol)</span>")
+				var/gas_concentration = air_contents.get_moles(id)/total_moles
+				to_chat(user, "<span class='notice'>[GLOB.meta_gas_names[id]]: [round(gas_concentration*100, 0.01)] % ([round(air_contents.get_moles(id), 0.01)] mol)</span>")
 			to_chat(user, "<span class='notice'>Temperature: [round(temperature - T0C,0.01)] &deg;C ([round(temperature, 0.01)] K)</span>")
 
 		else
@@ -747,12 +747,11 @@ GENETICS SCANNER
 	else
 		to_chat(user, "<span class='alert'>Pressure: [round(pressure, 0.01)] kPa</span>")
 	if(total_moles)
-		var/list/env_gases = environment.gases
 
-		var/o2_concentration = env_gases[/datum/gas/oxygen]/total_moles
-		var/n2_concentration = env_gases[/datum/gas/nitrogen]/total_moles
-		var/co2_concentration = env_gases[/datum/gas/carbon_dioxide]/total_moles
-		var/plasma_concentration = env_gases[/datum/gas/plasma]/total_moles
+		var/o2_concentration = environment.get_moles(/datum/gas/oxygen)/total_moles
+		var/n2_concentration = environment.get_moles(/datum/gas/nitrogen)/total_moles
+		var/co2_concentration = environment.get_moles(/datum/gas/carbon_dioxide)/total_moles
+		var/plasma_concentration = environment.get_moles(/datum/gas/plasma)/total_moles
 
 		if(abs(n2_concentration - N2STANDARD) < 20)
 			to_chat(user, "<span class='info'>Nitrogen: [round(n2_concentration*100, 0.01)] % ([round(env_gases[/datum/gas/nitrogen], 0.01)] mol)</span>")
@@ -774,14 +773,12 @@ GENETICS SCANNER
 		else
 			to_chat(user, "<span class='info'>Plasma: [round(plasma_concentration*100, 0.01)] % ([round(env_gases[/datum/gas/plasma], 0.01)] mol)</span>")
 
-		GAS_GARBAGE_COLLECT(environment.gases)
-
-		for(var/id in env_gases)
+		for(var/id in environment.get_gases())
 			if(id in GLOB.hardcoded_gases)
 				continue
-			var/gas_concentration = env_gases[id]/total_moles
-			to_chat(user, "<span class='alert'>[GLOB.meta_gas_names[id]]: [round(gas_concentration*100, 0.01)] % ([round(env_gases[id], 0.01)] mol)</span>")
-		to_chat(user, "<span class='info'>Temperature: [round(environment.temperature-T0C, 0.01)] &deg;C ([round(environment.temperature, 0.01)] K)</span>")
+			var/gas_concentration = environment.get_moles(id)/total_moles
+			to_chat(user, "<span class='alert'>[GLOB.meta_gas_names[id]]: [round(gas_concentration*100, 0.01)] % ([round(environment.get_moles(id), 0.01)] mol)</span>")
+		to_chat(user, "<span class='info'>Temperature: [round(environment.return_temperature()-T0C, 0.01)] &deg;C ([round(environment.return_temperature(), 0.01)] K)</span>")
 		
 		if(cached_scan_results && cached_scan_results["fusion"]) //notify the user if a fusion reaction was detected
 			var/fusion_power = round(cached_scan_results["fusion"], 0.01)
