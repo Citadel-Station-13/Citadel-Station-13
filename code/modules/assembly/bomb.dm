@@ -62,6 +62,7 @@
 
 /obj/item/onetankbomb/analyzer_act(mob/living/user, obj/item/I)
 	bombtank.analyzer_act(user, I)
+	return TRUE
 
 /obj/item/onetankbomb/attack_self(mob/user) //pressing the bomb accesses its assembly
 	bombassembly.attack_self(user, TRUE)
