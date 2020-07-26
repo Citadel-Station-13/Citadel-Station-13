@@ -1827,6 +1827,9 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 		return TRUE
 	CHECK_DNA_AND_SPECIES(M)
 	CHECK_DNA_AND_SPECIES(H)
+	if(!M.CheckActionCooldown())
+		return
+	M.DelayNextAction(CLICK_CD_MELEE)
 
 	if(!istype(M)) //sanity check for drones.
 		return TRUE
