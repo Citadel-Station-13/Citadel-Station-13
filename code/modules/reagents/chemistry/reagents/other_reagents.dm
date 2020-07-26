@@ -2345,7 +2345,6 @@
 	color = "#E6E6DA"
 	taste_mult = 0
 
-
 /datum/reagent/hairball
 	name = "Hairball"
 	description = "A bundle of keratinous bits and fibers, not easily digestible."
@@ -2393,4 +2392,4 @@
 			M.reagents.del_reagent(/datum/reagent/hairball)
 			return
 	..()
-	
+

@@ -31,7 +31,7 @@
 #define WOUND_DETERMINATION_LOSS		7.5
 
 /// the max amount of determination you can have
-#define WOUND_DETERMINATION_MAX			10c
+#define WOUND_DETERMINATION_MAX			10
 
 /// set wound_bonus on an item or attack to this to disable checking wounding for the attack
 #define CANT_WOUND -100
