@@ -51,6 +51,8 @@
 
 /obj/attackby(obj/item/I, mob/living/user, params)
 	. = ..()
+	if(. & STOP_ATTACK_PROC_CHAIN)
+		return
 	if(obj_flags & CAN_BE_HIT)
 		. |= I.attack_obj(src, user)
 
