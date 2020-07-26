@@ -70,29 +70,32 @@
 	maximum_quickbound = 6 //we usually have one or two unique scriptures, so if ratvar is up let us bind one more
 	actions_types = list()
 
-/obj/item/clockwork/slab/cyborg/engineer //three scriptures, plus a fabricator
-	quickbound = list(/datum/clockwork_scripture/spatial_gateway, /datum/clockwork_scripture/create_object/replicant, /datum/clockwork_scripture/create_object/sigil_of_transmission,  /datum/clockwork_scripture/create_object/stargazer)
+/obj/item/clockwork/slab/cyborg/engineer //six scriptures, plus a fabricator. Might revert this if its too OP, I just thought that engineering borgs should get the all the structures
+	quickbound = list(/datum/clockwork_scripture/spatial_gateway, /datum/clockwork_scripture/create_object/replicant, /datum/clockwork_scripture/create_object/sigil_of_transmission,  /datum/clockwork_scripture/create_object/stargazer, \
+	/datum/clockwork_scripture/create_object/ocular_warden, /datum/clockwork_scripture/create_object/clockwork_obelisk, /datum/clockwork_scripture/create_object/mania_motor)
 
-/obj/item/clockwork/slab/cyborg/medical //five scriptures, plus a spear
+/obj/item/clockwork/slab/cyborg/medical //six scriptures, plus a spear
 	quickbound = list(/datum/clockwork_scripture/spatial_gateway, /datum/clockwork_scripture/ranged_ability/linked_vanguard, /datum/clockwork_scripture/ranged_ability/sentinels_compromise, \
-	/datum/clockwork_scripture/create_object/vitality_matrix)
+	/datum/clockwork_scripture/create_object/vitality_matrix, /datum/clockwork_scripture/channeled/mending_mantra)
 
-/obj/item/clockwork/slab/cyborg/security //twoscriptures, plus a spear
-	quickbound = list(/datum/clockwork_scripture/spatial_gateway,  /datum/clockwork_scripture/ranged_ability/hateful_manacles, /datum/clockwork_scripture/ranged_ability/judicial_marker)
+/obj/item/clockwork/slab/cyborg/security //four scriptures, plus a spear
+	quickbound = list(/datum/clockwork_scripture/spatial_gateway, /datum/clockwork_scripture/channeled/volt_blaster, /datum/clockwork_scripture/ranged_ability/hateful_manacles, \
+	/datum/clockwork_scripture/ranged_ability/judicial_marker, /datum/clockwork_scripture/channeled/belligerent)
 
-/obj/item/clockwork/slab/cyborg/peacekeeper //two scriptures, plus a spear
-	quickbound = list(/datum/clockwork_scripture/spatial_gateway, /datum/clockwork_scripture/ranged_ability/hateful_manacles, /datum/clockwork_scripture/ranged_ability/judicial_marker)
-
+/obj/item/clockwork/slab/cyborg/peacekeeper //four scriptures, plus a spear
+	quickbound = list(/datum/clockwork_scripture/spatial_gateway, /datum/clockwork_scripture/channeled/volt_blaster, /datum/clockwork_scripture/ranged_ability/hateful_manacles, \
+	/datum/clockwork_scripture/ranged_ability/judicial_marker, /datum/clockwork_scripture/channeled/belligerent)
+/*//this module was commented out so why wasn't this?
 /obj/item/clockwork/slab/cyborg/janitor //six scriptures, plus a fabricator
 	quickbound = list(/datum/clockwork_scripture/spatial_gateway, /datum/clockwork_scripture/create_object/replicant, /datum/clockwork_scripture/create_object/sigil_of_transgression, \
 	/datum/clockwork_scripture/create_object/stargazer, /datum/clockwork_scripture/create_object/ocular_warden, /datum/clockwork_scripture/create_object/mania_motor)
-
+*/
 /obj/item/clockwork/slab/cyborg/service //six scriptures, plus xray vision
 	quickbound = list(/datum/clockwork_scripture/spatial_gateway, /datum/clockwork_scripture/create_object/replicant,/datum/clockwork_scripture/create_object/stargazer, \
 	/datum/clockwork_scripture/spatial_gateway, /datum/clockwork_scripture/create_object/clockwork_obelisk)
 
-/obj/item/clockwork/slab/cyborg/miner //two scriptures, plus a spear and xray vision
-	quickbound = list(/datum/clockwork_scripture/spatial_gateway, /datum/clockwork_scripture/ranged_ability/linked_vanguard, /datum/clockwork_scripture/spatial_gateway)
+/obj/item/clockwork/slab/cyborg/miner //three scriptures, plus a spear and xray vision
+	quickbound = list(/datum/clockwork_scripture/spatial_gateway, /datum/clockwork_scripture/ranged_ability/linked_vanguard, /datum/clockwork_scripture/channeled/belligerent, /datum/clockwork_scripture/channeled/volt_blaster)
 
 /obj/item/clockwork/slab/cyborg/access_display(mob/living/user)
 	if(!GLOB.ratvar_awakens)
