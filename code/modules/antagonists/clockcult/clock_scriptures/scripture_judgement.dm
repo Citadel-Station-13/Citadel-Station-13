@@ -25,7 +25,7 @@
 /datum/clockwork_scripture/create_object/ark_of_the_clockwork_justiciar/check_special_requirements()
 	if(!slab.no_cost)
 		if(GLOB.ratvar_awakens)
-			to_chat(invoker, "<span class='big_brass'>\"I am already here, fool.\"</span>")
+			to_chat(invoker, "<span class='big_brass'>\"I am already here, there is no point in that.\"</span>")
 			return FALSE
 		for(var/obj/structure/destructible/clockwork/massive/celestial_gateway/G in GLOB.all_clockwork_objects)
 			var/area/gate_area = get_area(G)

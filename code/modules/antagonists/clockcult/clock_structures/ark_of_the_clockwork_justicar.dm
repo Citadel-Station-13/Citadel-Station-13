@@ -9,7 +9,7 @@
 	name = "\improper Ark of the Clockwork Justicar"
 	desc = "A massive, hulking amalgamation of parts. It seems to be maintaining a very unstable bluespace anomaly."
 	clockwork_desc = "Nezbere's magnum opus: a hulking clockwork machine capable of combining bluespace and steam power to summon Ratvar. Once activated, \
-	its instability will cause one-way bluespace rifts to open across the station to the City of Cogs, so be prepared to defend it at all costs."
+	its instability will alert the entire area, so be prepared to defend it at all costs."
 	max_integrity = 500
 	mouse_opacity = MOUSE_OPACITY_OPAQUE
 	icon = 'icons/effects/clockwork_effects.dmi'
