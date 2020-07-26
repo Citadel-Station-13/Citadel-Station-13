@@ -375,6 +375,7 @@
 			var/wait_desc = get_wait_description()
 			if(wait_desc)
 				to_chat(user, wait_desc)
+			return DISCARD_LAST_ACTION
 
 /obj/item/melee/classic_baton/telescopic
 	name = "telescopic baton"

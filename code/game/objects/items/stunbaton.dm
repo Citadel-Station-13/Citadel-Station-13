@@ -162,6 +162,7 @@
 			return TRUE
 	if(turned_on)
 		if(baton_stun(M, user, disarming))
+			user.DelayNextAction()
 			user.do_attack_animation(M)
 			user.adjustStaminaLossBuffered(getweight(user, STAM_COST_BATON_MOB_MULT))
 	else if(user.a_intent != INTENT_HARM)			//they'll try to bash in the last proc.
