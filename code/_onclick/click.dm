@@ -310,7 +310,7 @@
 	SEND_SIGNAL(src, COMSIG_CLICK_CTRL, user)
 	var/mob/living/ML = user
 	if(istype(ML))
-		INVOKE_ASYNC(ML, /mob/living.proc/pulled, src)
+		INVOKE_ASYNC(ML, /mob/living.verb/pulled, src)
 
 /mob/living/carbon/human/CtrlClick(mob/user)
 	if(ishuman(user) && Adjacent(user) && !user.incapacitated())
