@@ -1,4 +1,4 @@
-w#define TURRET_STUN 0
+#define TURRET_STUN 0
 #define TURRET_LETHAL 1
 
 #define POPUP_ANIM_TIME 5
