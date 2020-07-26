@@ -339,7 +339,6 @@
 			. = "X"
 	return .
 
-
 /obj/item/clothing/obj_break(damage_flag)
 	damaged_clothes = CLOTHING_DAMAGED
 	update_clothes_damaged_state()
