@@ -45,12 +45,11 @@
 	if(.)
 		return
 	if(!active  && is_servant_of_ratvar(user) && user.canUseTopic(src, !issilicon(user), NO_DEXTERY))
-		var/choice = alert(user,"Enabling the ark", "Are you sure you want to activate the ark? Once enabled, there will be no turning back.", "Activate!", "Cancel")
-		switch(choice)
-			if("Activate!")
-				START_PROCESSING(SSprocessing, src)
-			else
-				to_chat(user, "<span class='brass'>You decide against activating the ark.. for now.</span>")
+		if(alert(user, "Are you sure you want to activate the ark? Once enabled, there will be no turning back.", "Enabling the ark", "Activate!", "Cancel") == "Activate!")
+			START_PROCESSING(SSprocessing, src)
+			SSshuttle.registerHostileEnvironment(src)
+		else
+			to_chat(user, "<span class='brass'>You decide against activating the ark.. for now.</span>")
 
 /obj/structure/destructible/clockwork/massive/celestial_gateway/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, attack_dir)
 	. = ..()
@@ -125,12 +124,8 @@
 		for(var/mob/living/L in T)
 			L.forceMove(pick(open_turfs))
 	glow = new(get_turf(src))
-	countdown = new(src)
-	countdown.start()
 	var/area/gate_area = get_area(src)
 	hierophant_message("<span class='large_brass'><b>An Ark of the Clockwork Justicar has been created in [gate_area.map_name]!</b></span>", FALSE, src)
-	SSshuttle.registerHostileEnvironment(src)
-	START_PROCESSING(SSprocessing, src)
 
 /obj/structure/destructible/clockwork/massive/celestial_gateway/proc/initiate_mass_recall()
 	recalling = TRUE
@@ -272,6 +267,9 @@ obj/structure/destructible/clockwork/massive/celestial_gateway/Destroy()
 			if(!step_away(O, src, 2) || get_dist(O, src) < 2)
 				O.take_damage(50, BURN, "bomb")
 			O.update_icon()
+
+	conversion_pulse() //Converts the nearby area into clockcult-style
+
 	for(var/V in GLOB.player_list)
 		var/mob/M = V
 		var/turf/T = get_turf(M)
@@ -329,6 +327,17 @@ obj/structure/destructible/clockwork/massive/celestial_gateway/Destroy()
 						dist = FALSE
 					T.ratvar_act(dist)
 					CHECK_TICK
+
+//Converts nearby turfs into their clockwork equivalent, with ever-increasing range the closer the ark is to summoning Ratvar
+/obj/structure/destructible/clockwork/massive/celestial_gateway/proc/conversion_pulse()
+	var/convert_dist = 1 + (round(FLOOR(progress_in_seconds, 15) * 0.067))
+	for(var/t in RANGE_TURFS(convert_dist, loc))
+		var/turf/T = t
+		if(!T)
+			continue
+		var/dist = cheap_hypotenuse(T.x, T.y, x, y)
+		if(dist < convert_dist)
+			T.ratvar_act(FALSE, TRUE, 3)
 
 //ATTACK GHOST IGNORING PARENT RETURN VALUE
 /obj/structure/destructible/clockwork/massive/celestial_gateway/attack_ghost(mob/user)
