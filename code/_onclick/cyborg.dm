@@ -7,7 +7,6 @@
 */
 
 /mob/living/silicon/robot/ClickOn(var/atom/A, var/params)
-	set waitfor = FALSE
 	if(check_click_intercept(params,A))
 		return
 
@@ -41,7 +40,7 @@
 	*/
 	if(aicamera.in_camera_mode) //Cyborg picture taking
 		aicamera.camera_mode_off()
-		aicamera.captureimage(A, usr)
+		INVOKE_ASYNC(aicamera, /obj/item/camera.proc/captureimage, A, usr)
 		return
 
 	var/obj/item/W = get_active_held_item()
@@ -49,13 +48,8 @@
 	if(!W && A.Adjacent(src) && (isobj(A) || ismob(A)))
 		var/atom/movable/C = A
 		if(C.can_buckle && C.has_buckled_mobs())
-			if(C.buckled_mobs.len > 1)
-				var/unbuckled = input(src, "Who do you wish to unbuckle?","Unbuckle Who?") as null|mob in C.buckled_mobs
-				if(C.user_unbuckle_mob(unbuckled,src))
-					return
-			else
-				if(C.user_unbuckle_mob(C.buckled_mobs[1],src))
-					return
+			INVOKE_ASYNC(C, /atom/movable.proc/precise_user_unbuckle_mob, src)
+			return
 
 	if(!W && (get_dist(src,A) <= interaction_range))
 		A.attack_robot(src)

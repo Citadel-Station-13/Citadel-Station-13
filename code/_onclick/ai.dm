@@ -75,11 +75,11 @@
 
 	if(aicamera.in_camera_mode)
 		aicamera.camera_mode_off()
-		aicamera.captureimage(pixel_turf, usr)
+		INVOKE_ASYNC(aicamera, /obj/item/camera.proc/captureimage, pixel_turf, usr)
 		return
 	if(waypoint_mode)
-		waypoint_mode = 0
-		set_waypoint(A)
+		waypoint_mode = FALSE
+		INVOKE_ASYNC(src, .proc/set_waypoint, A)
 		return
 
 	A.attack_ai(src)

@@ -16,6 +16,8 @@
 		to_chat(src, "<span class='warning'>The damage in your [check_arm.name] is preventing you from using it! Get it fixed, or at least splinted!</span>")
 		return
 
+	. = NONE
+	
 	// Special glove functions:
 	// If the gloves do anything, have them return 1 to stop
 	// normal attack_hand() here.
@@ -24,8 +26,6 @@
 		. |= G.Touch(A, TRUE)
 		if(. & INTERRUPT_UNARMED_ATTACK)
 			return
-
-	. = NONE
 
 	for(var/datum/mutation/human/HM in dna.mutations)
 		. |= HM.on_attack_hand(A, proximity, intent, flags)
@@ -37,6 +37,7 @@
 	return . | A.attack_hand(src, intent, flags)
 
 /atom/proc/attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
+	SHOULD_NOT_SLEEP(TRUE)
 	if(!(interaction_flags_atom & INTERACT_ATOM_NO_FINGERPRINT_ATTACK_HAND))
 		add_fingerprint(user)
 	if(SEND_SIGNAL(src, COMSIG_ATOM_ATTACK_HAND, user) & COMPONENT_NO_ATTACK_HAND)
