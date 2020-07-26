@@ -34,25 +34,25 @@
 		return
 
 	SEND_SIGNAL(src, COMSIG_HUMAN_MELEE_UNARMED_ATTACK, A)
-	return . | A.attack_hand(src, intent, flags)
+	return . | A.attack_hand(src, intent, flags, .)
 
-/atom/proc/attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
+/atom/proc/attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags, clickchain_flags)
 	SHOULD_NOT_SLEEP(TRUE)
 	if(!(interaction_flags_atom & INTERACT_ATOM_NO_FINGERPRINT_ATTACK_HAND))
 		add_fingerprint(user)
 	if(SEND_SIGNAL(src, COMSIG_ATOM_ATTACK_HAND, user) & COMPONENT_NO_ATTACK_HAND)
 		return
-	if(attack_hand_speed)
+	if(attack_hand_speed && !(clickchain_flags & ATTACK_HAND_IGNORE_CLICKDELAY))
 		if(!user.CheckActionCooldown(attack_hand_speed))
 			return
 	if(interaction_flags_atom & INTERACT_ATOM_ATTACK_HAND)
 		. = _try_interact(user)
-	on_attack_hand(user, act_intent, unarmed_attack_flags)
-	if(attack_hand_unwieldlyness)
-		user.DelayNextAction(attack_hand_unwieldlyness, considered_action = attack_hand_is_action)
-	else if(attack_hand_is_action)
-		user.DelayNextAction()
-	return attack_hand_is_action
+	INVOKE_ASYNC(src, .proc/on_attack_hand, user, act_intent, unarmed_attack_flags)
+	if(!(clickchain_flags & ATTACK_HAND_IGNORE_ACTION))
+		if(attack_hand_unwieldlyness)
+			user.DelayNextAction(attack_hand_unwieldlyness, considered_action = attack_hand_is_action)
+		else if(attack_hand_is_action)
+			user.DelayNextAction()
 
 /atom/proc/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 
@@ -62,7 +62,6 @@
 		return interact(user)
 	if(can_interact(user))
 		return interact(user)
-	return FALSE
 
 /atom/proc/can_interact(mob/user)
 	if(!user.can_interact_with(src))
@@ -92,8 +91,7 @@
 	else
 		add_fingerprint(user)
 	if(interaction_flags_atom & INTERACT_ATOM_UI_INTERACT)
-		return ui_interact(user)
-	return FALSE
+		ui_interact(user)
 
 /*
 /mob/living/carbon/human/RestrainedClickOn(var/atom/A) ---carbons will handle this

@@ -12,6 +12,10 @@
 #define NO_AUTO_CLICKDELAY_HANDLING				(1<<2)
 /// Only used with UnarmedAttack(). Interrupts unarmed attack from progressing.
 #define INTERRUPT_UNARMED_ATTACK				(1<<3)
+/// Attack hand should not set next action even if the atom wants it to be an action
+#define ATTACK_HAND_IGNORE_ACTION				(1<<4)
+/// Attack hand should not at all check last_action/attack_hand_speed even if the atom wants to
+#define ATTACK_HAND_IGNORE_CLICKDELAY			(1<<5)
 
 // UnarmedAttack() flags
 /// Attack is from a parry counterattack

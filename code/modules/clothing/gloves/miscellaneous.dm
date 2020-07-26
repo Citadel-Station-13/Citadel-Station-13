@@ -109,7 +109,7 @@
 	if(warcry)
 		M.say("[warcry]", ignore_spam = TRUE, forced = TRUE)
 
-	return NO_AUTO_CLICKDELAY_HANDLING
+	return NO_AUTO_CLICKDELAY_HANDLING | ATTACK_HAND_IGNORE_ACTION
 
 /obj/item/clothing/gloves/fingerless/pugilist/rapid/AltClick(mob/user)
 	var/input = stripped_input(user,"What do you want your battlecry to be? Max length of 6 characters.", ,"", 7)
@@ -137,7 +137,7 @@
 	else
 		M.SetNextAction(CLICK_CD_RAPID)
 
-	return NO_AUTO_CLICKDELAY_HANDLING
+	return NO_AUTO_CLICKDELAY_HANDLING | ATTACK_HAND_IGNORE_ACTION
 
 /obj/item/clothing/gloves/botanic_leather
 	name = "botanist's leather gloves"
