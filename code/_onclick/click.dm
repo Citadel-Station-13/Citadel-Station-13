@@ -24,7 +24,7 @@
   * Common mob click code
   */
 /mob/proc/CommonClickOn(atom/A, params)
-	set waitfor = FALSE		// oh no you don't
+	SHOULD_NOT_SLEEP(TRUE)
 	if(mob_transforming)
 		return
 	if(SEND_SIGNAL(src, COMSIG_MOB_CLICKON, A, params) & COMSIG_MOB_CANCEL_CLICKON)
@@ -55,7 +55,6 @@
 	* mob/RangedAttack(atom,params) - used only ranged, only used for tk and laser eyes but could be changed
 */
 /mob/proc/ClickOn( atom/A, params)
-	set waitfor = FALSE
 	if(check_click_intercept(params,A))
 		return
 
@@ -311,7 +310,7 @@
 	SEND_SIGNAL(src, COMSIG_CLICK_CTRL, user)
 	var/mob/living/ML = user
 	if(istype(ML))
-		ML.pulled(src)
+		INVOKE_ASYNC(ML, /mob/living.proc/pulled, src)
 
 /mob/living/carbon/human/CtrlClick(mob/user)
 	if(ishuman(user) && Adjacent(user) && !user.incapacitated())
