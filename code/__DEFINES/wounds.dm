@@ -1,5 +1,5 @@
 
-#define WOUND_DAMAGE_EXPONENT	1.3
+#define WOUND_DAMAGE_EXPONENT	1.225
 
 /// an attack must do this much damage after armor in order to roll for being a wound (incremental pressure damage need not apply)
 #define WOUND_MINIMUM_DAMAGE		5
@@ -31,7 +31,7 @@
 #define WOUND_DETERMINATION_LOSS		7.5
 
 /// the max amount of determination you can have
-#define WOUND_DETERMINATION_MAX			10
+#define WOUND_DETERMINATION_MAX			10c
 
 /// set wound_bonus on an item or attack to this to disable checking wounding for the attack
 #define CANT_WOUND -100

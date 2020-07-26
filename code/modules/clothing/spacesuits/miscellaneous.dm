@@ -175,7 +175,7 @@ Contains:
 	icon_state = "hardsuit0-ert_commander"
 	item_state = "hardsuit0-ert_commander"
 	hardsuit_type = "ert_commander"
-	armor = list("melee" = 65, "bullet" = 50, "laser" = 50, "energy" = 50, "bomb" = 50, "bio" = 100, "rad" = 100, "fire" = 80, "acid" = 80. "wound" = 30)
+	armor = list("melee" = 65, "bullet" = 50, "laser" = 50, "energy" = 50, "bomb" = 50, "bio" = 100, "rad" = 100, "fire" = 80, "acid" = 80, "wound" = 30)
 	strip_delay = 130
 	brightness_on = 7
 	resistance_flags = ACID_PROOF
@@ -492,7 +492,7 @@ Contains:
 	icon_state = "syndicate-orange"
 	item_state = "syndicate-orange"
 	slowdown = 2
-	armor = list("melee" = 5, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 10, "fire" = 0, "acid" = 0), "wound" = 5
+	armor = list("melee" = 5, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 10, "fire" = 0, "acid" = 0, "wound" = 5)
 	strip_delay = 65
 
 /obj/item/clothing/suit/space/fragile/run_block(mob/living/owner, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return)
