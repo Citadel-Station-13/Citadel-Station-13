@@ -150,7 +150,7 @@
 /obj/item/melee/transforming/energy/sword/on_active_parry(mob/living/owner, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return, parry_efficiency, parry_time)
 	. = ..()
 	if(parry_efficiency == 100)		// perfect parry
-		return_list[BLOCK_RETURN_REDIRECT_METHOD] = REDIRECT_METHOD_RETURN_TO_SENDER
+		block_return[BLOCK_RETURN_REDIRECT_METHOD] = REDIRECT_METHOD_RETURN_TO_SENDER
 		. |= BLOCK_SHOULD_REDIRECT
 
 /obj/item/melee/transforming/energy/sword/cyborg
