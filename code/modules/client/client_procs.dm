@@ -471,6 +471,11 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 //////////////
 
 /client/Del()
+	if(!gc_destroyed)
+		Destroy()
+	return ..()
+
+/client/Destroy()
 	if(credits)
 		QDEL_LIST(credits)
 	log_access("Logout: [key_name(src)]")
@@ -504,9 +509,7 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 		movingmob.client_mobs_in_contents -= mob
 		UNSETEMPTY(movingmob.client_mobs_in_contents)
 	Master.UpdateTickRate()
-	return ..()
-
-/client/Destroy()
+	. = ..()
 	return QDEL_HINT_HARDDEL_NOW
 
 /client/proc/set_client_age_from_db(connectiontopic)
