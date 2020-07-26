@@ -44,14 +44,14 @@
 	if(attack_hand_speed)
 		if(!user.CheckActionCooldown(attack_hand_speed))
 			return
+	if(interaction_flags_atom & INTERACT_ATOM_ATTACK_HAND)
+		. = _try_interact(user)
 	on_attack_hand(user, act_intent, unarmed_attack_flags)
 	if(attack_hand_unwieldlyness)
 		user.DelayNextAction(attack_hand_unwieldlyness, considered_action = attack_hand_is_action)
 	return attack_hand_is_action
 
 /atom/proc/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
-	if(interaction_flags_atom & INTERACT_ATOM_ATTACK_HAND)
-		. = _try_interact(user)
 
 //Return a non FALSE value to cancel whatever called this from propagating, if it respects it.
 /atom/proc/_try_interact(mob/user)

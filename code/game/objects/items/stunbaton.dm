@@ -145,6 +145,8 @@
 		return ..()
 
 /obj/item/melee/baton/alt_pre_attack(atom/A, mob/living/user, params)
+	if(!user.CheckActionCooldown(CLICK_CD_MELEE))
+		return
 	. = common_baton_melee(A, user, TRUE)		//return true (attackchain interrupt) if this also returns true. no harm-disarming.
 
 //return TRUE to interrupt attack chain.
@@ -156,13 +158,13 @@
 	if(IS_STAMCRIT(user))			//CIT CHANGE - makes it impossible to baton in stamina softcrit
 		to_chat(user, "<span class='danger'>You're too exhausted to use [src] properly.</span>")
 		return TRUE
+	user.DelayNextAction()
 	if(ishuman(M))
 		var/mob/living/carbon/human/L = M
 		if(check_martial_counter(L, user))
 			return TRUE
 	if(turned_on)
 		if(baton_stun(M, user, disarming))
-			user.DelayNextAction()
 			user.do_attack_animation(M)
 			user.adjustStaminaLossBuffered(getweight(user, STAM_COST_BATON_MOB_MULT))
 	else if(user.a_intent != INTENT_HARM)			//they'll try to bash in the last proc.

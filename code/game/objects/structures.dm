@@ -29,6 +29,7 @@
 	return ..()
 
 /obj/structure/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
+	. = ..()
 	if(structureclimber && structureclimber != user)
 		user.DelayNextAction(CLICK_CD_MELEE)
 		user.do_attack_animation(src)
