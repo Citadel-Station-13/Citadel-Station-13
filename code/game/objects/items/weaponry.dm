@@ -260,6 +260,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	w_class = WEIGHT_CLASS_NORMAL
 	custom_materials = list(/datum/material/iron=1150, /datum/material/glass=75)
 	attack_verb = list("hit", "bludgeoned", "whacked", "bonked")
+	wound_bonus = -10
 
 /obj/item/wirerod/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/shard))
@@ -591,6 +592,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	obj_flags = UNIQUE_RENAME
 	var/chaplain_spawnable = TRUE
 	total_mass = TOTAL_MASS_MEDIEVAL_WEAPON
+	wound_bonus = -5
 
 /obj/item/melee/baseball_bat/chaplain/Initialize()
 	. = ..()
