@@ -69,7 +69,7 @@
 
 	var/token = generate_account_link_token()
 
-	var/datum/db_query/query_set_token = SSdbcore.NewQuery("INSERT INTO feedback.byond_oauth_tokens (`token`, `key`) VALUES (:token, :key)", list("token" = token, "key" = key))
+	var/datum/db_query/query_set_token = SSdbcore.NewQuery("INSERT INTO phpbb.byond_oauth_tokens (`token`, `key`) VALUES (:token, :key)", list("token" = token, "key" = key))
 	if(!query_set_token.Execute())
 		to_chat(src, {"<span class="danger">Unknown error #3.</span>"})
 		qdel(query_set_token)
