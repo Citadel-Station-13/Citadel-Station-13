@@ -709,7 +709,7 @@ GENETICS SCANNER
 		var/total_moles = air_contents.total_moles()
 		var/pressure = air_contents.return_pressure()
 		var/volume = air_contents.return_volume() //could just do mixture.volume... but safety, I guess?
-		var/temperature = air_contents.temperature
+		var/temperature = air_contents.return_temperature
 		var/cached_scan_results = air_contents.analyzer_results
 
 		if(total_moles > 0)
@@ -717,10 +717,9 @@ GENETICS SCANNER
 			to_chat(user, "<span class='notice'>Volume: [volume] L</span>")
 			to_chat(user, "<span class='notice'>Pressure: [round(pressure,0.01)] kPa</span>")
 
-			var/list/cached_gases = air_contents.gases
-			for(var/id in cached_gases)
-				var/gas_concentration = cached_gases[id]/total_moles
-				to_chat(user, "<span class='notice'>[GLOB.meta_gas_names[id]]: [round(gas_concentration*100, 0.01)] % ([round(cached_gases[id], 0.01)] mol)</span>")
+			for(var/id in air_contents.get_gases())
+            	var/gas_concentration = air_contents.get_moles(id)/total_moles
+            	to_chat(user, "<span class='notice'>[GLOB.meta_gas_names[id]]: [round(gas_concentration*100, 0.01)] % ([round(air_contents.get_moles(id), 0.01)] mol)</span>")
 			to_chat(user, "<span class='notice'>Temperature: [round(temperature - T0C,0.01)] &deg;C ([round(temperature, 0.01)] K)</span>")
 
 		else
