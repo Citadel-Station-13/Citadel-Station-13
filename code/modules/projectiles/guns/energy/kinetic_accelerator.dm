@@ -33,6 +33,7 @@
 	lefthand_file = 'icons/mob/inhands/weapons/guns_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/guns_righthand.dmi'
 	ammo_type = list(/obj/item/ammo_casing/energy/kinetic/premium)
+	max_mod_capacity = 120
 
 /obj/item/ammo_casing/energy/kinetic/premium
 	projectile_type = /obj/item/projectile/kinetic/premium
@@ -635,3 +636,147 @@
 
 /obj/item/borg/upgrade/modkit/tracer/adjustable/attack_self(mob/user)
 	bolt_color = input(user,"","Choose Color",bolt_color) as color|null
+
+//Megafauna modkits
+
+//Blood Drunk
+/obj/item/borg/upgrade/modkit/sharpnel
+	name = "sharpnel shot modification kit"
+	desc = "Your shots will now make targets bleed."
+	denied_type = /obj/item/borg/upgrade/modkit/sharpnel //So it wont stack
+	cost = 35
+	modifier = 1
+
+/obj/item/borg/upgrade/modkit/sharpnel/projectile_prehit(obj/item/projectile/kinetic/K, atom/target, obj/item/gun/energy/kinetic_accelerator/KA)
+	if(isliving(target))
+		var/mob/living/L = target
+		var/datum/status_effect/stacking/saw_bleed/B = L.has_status_effect(STATUS_EFFECT_SAWBLEED)
+		if(!B)
+			L.apply_status_effect(STATUS_EFFECT_SAWBLEED, modifier)
+		else
+			B.add_stacks(modifier)
+
+//Bubblegum
+/obj/item/borg/upgrade/modkit/shotgun
+	name = "shotgun blast modification kit"
+	desc = "Makes you fire 3 kinetic shots instead of one."
+	denied_type = /obj/item/borg/upgrade/modkit/aoe //OP?
+	cost = 40
+	modifier = 3
+
+/obj/item/borg/upgrade/modkit/shotgun/modify_projectile(obj/item/projectile/kinetic/K)
+	..()
+	if(K.kinetic_gun)
+		var/obj/item/gun/energy/kinetic_accelerator/KA = K.kinetic_gun
+		var/obj/item/ammo_casing/energy/kinetic/C = KA.ammo_type[1]
+		C.pellets = src.modifier
+		C.variance = 45
+		if(C.projectile_type == /obj/item/projectile/kinetic/premium)
+			C.projectile_type = /obj/item/projectile/kinetic/premium/shotgun
+		else
+			C.projectile_type = /obj/item/projectile/kinetic/shotgun
+		KA.chambered = C
+
+/obj/item/borg/upgrade/modkit/shotgun/uninstall(obj/item/gun/energy/kinetic_accelerator/KA, mob/user)
+	..()
+	var/obj/item/ammo_casing/energy/kinetic/C = KA.ammo_type[1]
+	C.pellets = initial(C.pellets)
+	C.variance = initial(C.variance)
+	C.projectile_type = initial(C.projectile_type)
+	KA.chambered = C
+
+/obj/item/projectile/kinetic/shotgun
+	damage = 20
+
+/obj/item/projectile/kinetic/premium/shotgun
+	damage = 25
+
+//Ash Drake
+
+/obj/item/borg/upgrade/modkit/knockback
+	name = "knockback modification kit"
+	desc = "Makes your shots deal knockback."
+	cost = 25
+	modifier = 1
+	var/burndam = 5
+
+/obj/item/borg/upgrade/modkit/knockback/projectile_strike(obj/item/projectile/kinetic/K, turf/target_turf, atom/target, obj/item/gun/energy/kinetic_accelerator/KA)
+	..()
+	var/mob/living/simple_animal/T = target
+	if(T.stat != DEAD)
+		playsound(T, 'sound/magic/fireball.ogg', 20, 1)
+		new /obj/effect/temp_visual/fire(T.loc)
+		step(target, get_dir(K, T))
+		T.adjustFireLoss(burndam, forced = TRUE)
+
+//Hierophant
+
+/obj/item/borg/upgrade/modkit/chaser
+	name = "chaser modification kit"
+	desc = "Your shots have a chance to make a weakened chaser."
+	denied_type = /obj/item/borg/upgrade/modkit/chaser //No
+	cost = 30
+
+/obj/item/borg/upgrade/modkit/chaser/projectile_strike(obj/item/projectile/kinetic/K, turf/target_turf, atom/target, obj/item/gun/energy/kinetic_accelerator/KA)
+	..()
+	var/mob/living/T = target
+	if(istype(T) && prob(15))
+		new /obj/effect/temp_visual/hierophant/chaser(loc, src, T, 5, FALSE) //Its slower
+
+//Collosus
+
+/obj/item/borg/upgrade/modkit/bolter
+	name = "death bolt modification kit"
+	desc = "Makes your kinetic accelerator have a <b>20%</b> chance to deal double damage."
+	cost = 50
+
+	denied_type = /obj/item/borg/upgrade/modkit/bolter
+	modifier = 20
+	var/multiplier = 2
+
+/obj/item/borg/upgrade/modkit/bolter/modify_projectile(obj/item/projectile/kinetic/K)
+	..()
+	if(prob(modifier))
+		K.name = "kinetic bolt"
+		K.icon_state = "chronobolt"
+		K.damage *= multiplier
+
+//Corrupted System
+
+/obj/item/borg/upgrade/modkit/plasma
+	name = "plasma modification kit"
+	desc = "Makes your accelerator also shoot a burst of plasma."
+	modifier = 10
+	cost = 35
+
+/obj/item/borg/upgrade/modkit/plasma/projectile_prehit(obj/item/projectile/kinetic/K, atom/target, obj/item/gun/energy/kinetic_accelerator/KA)
+	playsound(KA, 'sound/weapons/laser.ogg', 100, TRUE)
+	var/turf/startloc = K.loc
+	var/obj/item/projectile/P = new /obj/item/projectile/plasma/adv(startloc)
+	P.starting = startloc
+	P.firer = K.firer
+	P.fired_from = KA
+	P.yo = target.y - startloc.y
+	P.xo = target.x - startloc.x
+	P.original = target
+	P.damage = 0 //Nope.
+	P.preparePixelProjectile(target, src)
+	P.fire()
+
+//Legion(the huge one, not the human one)
+
+/obj/item/borg/upgrade/modkit/skull
+	name = "skull launcher modification kit"
+	desc = "Makes your shots create a legion skull on impact."
+	cost = 50
+
+/obj/item/borg/upgrade/modkit/skull/projectile_strike(obj/item/projectile/kinetic/K, turf/target_turf, atom/target, obj/item/gun/energy/kinetic_accelerator/KA)
+	..()
+	if(isliving(target))
+		if(istype(target, /mob/living/simple_animal))
+			var/mob/living/simple_animal/hostile/asteroid/hivelordbrood/legion/A = new(get_step(target, target.dir))
+			A.GiveTarget(target)
+			if(isliving(KA.loc))
+				var/mob/living/L = KA.loc
+				A.friends[L]++
+				A.faction = L.faction.Copy()

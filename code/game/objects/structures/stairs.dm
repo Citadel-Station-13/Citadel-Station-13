@@ -16,6 +16,10 @@
 	var/terminator_mode = STAIR_TERMINATOR_AUTOMATIC
 	var/turf/listeningTo
 
+/obj/structure/stairs/necropolis
+	name = "necropolis stairs"
+	icon_state = "stairs_necro"
+
 /obj/structure/stairs/Initialize(mapload)
 	if(force_open_above)
 		force_open_above()

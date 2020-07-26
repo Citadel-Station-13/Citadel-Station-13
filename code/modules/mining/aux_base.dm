@@ -102,6 +102,8 @@ interface with the mining shuttle at the landing site if a mobile beacon is also
 		usr.changeNext_move(CLICK_CD_RAPID) //Anti-spam
 		var/list/all_mining_turfs = list()
 		for (var/z_level in SSmapping.levels_by_trait(ZTRAIT_MINING))
+			if(z_level in SSmapping.levels_by_trait(ZTRAIT_ABYSS))
+				continue
 			all_mining_turfs += Z_TURFS(z_level)
 		var/turf/LZ = safepick(all_mining_turfs) //Pick a random mining Z-level turf
 		if(!ismineralturf(LZ) && !istype(LZ, /turf/open/floor/plating/asteroid))

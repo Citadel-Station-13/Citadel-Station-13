@@ -42,6 +42,7 @@ Difficulty: Hard
 	armour_penetration = 40
 	melee_damage_lower = 40
 	melee_damage_upper = 40
+	faction = list("mining", "boss", "demon")
 	speed = 1
 	move_to_delay = 10
 	ranged_cooldown_time = 10
@@ -59,6 +60,8 @@ Difficulty: Hard
 
 	footstep_type = FOOTSTEP_MOB_HEAVY
 
+	var/dont_move //so it wont move in jaunt
+
 /obj/item/gps/internal/bubblegum
 	icon_state = null
 	gpstag = "Bloody Signal"
@@ -75,14 +78,11 @@ Difficulty: Hard
 	if(charging)
 		return
 	ranged_cooldown = world.time + ranged_cooldown_time
-
 	blood_warp()
-
+	bloodsmacks()
 	if(prob(25))
 		INVOKE_ASYNC(src, .proc/blood_spray)
-
-	else if(prob(5+anger_modifier/2))
-		slaughterlings()
+		INVOKE_ASYNC(src, .proc/bloodsmacks)
 	else
 		if(health > maxHealth/2 && !client)
 			INVOKE_ASYNC(src, .proc/charge)
@@ -122,6 +122,8 @@ Difficulty: Hard
 	..()
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/Move()
+	if(dont_move)
+		return FALSE
 	if(!stat)
 		playsound(src.loc, 'sound/effects/meteorimpact.ogg', 200, 1, 2, 1)
 	if(charging)
@@ -139,6 +141,7 @@ Difficulty: Hard
 	charge()
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/proc/charge()
+	bloodsmacks()
 	var/turf/T = get_turf(target)
 	if(!T || T == loc)
 		return
@@ -153,6 +156,7 @@ Difficulty: Hard
 	throw_at(T, get_dist(src, T), 1, src, 0)
 	charging = 0
 	Goto(target, move_to_delay, minimum_distance)
+	bloodsmacks()
 
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/Bump(atom/A)
@@ -178,6 +182,84 @@ Difficulty: Hard
 
 	charging = 0
 
+
+/mob/living/simple_animal/hostile/megafauna/bubblegum/proc/bloodsmacks()
+	for(var/obj/effect/decal/cleanable/blood/B in view(7, src))
+		var/turf/T = get_turf(B)
+		var/mobcount = 0
+		for(var/mob/living/L in T.contents)
+			if(L != src)
+				mobcount++
+		if(mobcount)
+			var/hand = rand(0,1)
+			INVOKE_ASYNC(src, .proc/bloodsmack, T, hand)
+
+/mob/living/simple_animal/hostile/megafauna/bubblegum/proc/bloodsmack(turf/T, handedness)
+	if(handedness)
+		new /obj/effect/temp_visual/bubblegum_hands/rightsmack(T)
+	else
+		new /obj/effect/temp_visual/bubblegum_hands/leftsmack(T)
+	sleep(5)
+	for(var/mob/living/L in T)
+		if(!faction_check_mob(L))
+			to_chat(L, "<span class='userdanger'>[src] rends you!</span>")
+			playsound(T, attack_sound, 100, TRUE, -1)
+			var/limb_to_hit = L.get_bodypart(pick(BODY_ZONE_HEAD, BODY_ZONE_CHEST, BODY_ZONE_R_ARM, BODY_ZONE_L_ARM, BODY_ZONE_R_LEG, BODY_ZONE_L_LEG))
+			L.apply_damage(30, BRUTE, limb_to_hit, L.run_armor_check(limb_to_hit, "melee", null, null)) // You really, really, really better not stand in blood!
+	sleep(3)
+
+/mob/living/simple_animal/hostile/megafauna/bubblegum/blood_warp()
+	var/obj/effect/decal/cleanable/blood/found_bloodpool
+	var/list/pools = list()
+	var/can_jaunt = FALSE
+	for(var/obj/effect/decal/cleanable/blood/nearby in view(src,2))
+		if(nearby.bloodiness >= 20)
+			can_jaunt = TRUE
+		break
+	if(!can_jaunt)
+		return
+	for(var/obj/effect/decal/cleanable/blood/nearby in view(get_turf(target),2))
+		if(nearby.bloodiness >= 20)
+			pools += nearby
+	if(pools.len)
+		shuffle_inplace(pools)
+		found_bloodpool = pick(pools)
+	if(found_bloodpool)
+		visible_message("<span class='danger'>[src] sinks into the blood...</span>")
+		playsound(get_turf(src), 'sound/magic/enter_blood.ogg', 100, 1, -1)
+		alpha = 0
+		dont_move = TRUE
+		sleep(rand(2, 4))
+		forceMove(get_turf(found_bloodpool))
+		playsound(get_turf(src), 'sound/magic/exit_blood.ogg', 100, 1, -1)
+		alpha = 100
+		dont_move = FALSE
+		visible_message("<span class='danger'>And springs back out!</span>")
+
+
+/obj/effect/temp_visual/bubblegum_hands
+	icon = 'icons/effects/bubblegum.dmi'
+	duration = 9
+
+/obj/effect/temp_visual/bubblegum_hands/rightthumb
+	icon_state = "rightthumbgrab"
+
+/obj/effect/temp_visual/bubblegum_hands/leftthumb
+	icon_state = "leftthumbgrab"
+
+/obj/effect/temp_visual/bubblegum_hands/rightpaw
+	icon_state = "rightpawgrab"
+	layer = BELOW_MOB_LAYER
+
+/obj/effect/temp_visual/bubblegum_hands/leftpaw
+	icon_state = "leftpawgrab"
+	layer = BELOW_MOB_LAYER
+
+/obj/effect/temp_visual/bubblegum_hands/rightsmack
+	icon_state = "rightsmack"
+
+/obj/effect/temp_visual/bubblegum_hands/leftsmack
+	icon_state = "leftsmack"
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/proc/blood_warp()
 	var/obj/effect/decal/cleanable/blood/found_bloodpool
@@ -218,29 +300,60 @@ Difficulty: Hard
 		previousturf = J
 		sleep(1)
 
-/mob/living/simple_animal/hostile/megafauna/bubblegum/proc/slaughterlings()
-	visible_message("<span class='danger'>[src] summons a shoal of slaughterlings!</span>")
-	for(var/obj/effect/decal/cleanable/blood/H in range(src, 10))
-		if(prob(25))
-			new /mob/living/simple_animal/hostile/asteroid/hivelordbrood/slaughter(H.loc)
+/mob/living/simple_animal/hostile/imp //Probably will use somewhere in here
+	name = "imp"
+	desc = "A large, menacing creature covered in armored black scales."
+	speak_emote = list("cackles")
+	emote_hear = list("cackles","screeches")
+	response_help_continuous = "thinks better of touching"
+	response_help_simple = "think better of touching"
+	response_disarm_continuous = "flails at"
+	response_disarm_simple = "flail at"
+	response_harm_continuous = "punches"
+	response_harm_simple = "punch"
+	icon = 'icons/mob/mob.dmi'
+	icon_state = "imp"
+	icon_living = "imp"
+	mob_biotypes = MOB_ORGANIC|MOB_HUMANOID
+	speed = 1
+	a_intent = INTENT_HARM
+	stop_automated_movement = 1
+	status_flags = CANPUSH
+	attack_sound = 'sound/magic/demon_attack1.ogg'
+	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
+	minbodytemp = 250 //Weak to cold
+	maxbodytemp = INFINITY
+	faction = list("mining", "boss", "demon")
+	attack_verb_continuous = "wildly tears into"
+	attack_verb_simple = "wildly tear into"
+	maxHealth = 50
+	health = 50
+	healable = 0
+	environment_smash = ENVIRONMENT_SMASH_STRUCTURES
+	obj_damage = 40
+	melee_damage_lower = 10
+	melee_damage_upper = 15
+	see_in_dark = 8
+	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
+	var/boost = 0
 
-/mob/living/simple_animal/hostile/asteroid/hivelordbrood/slaughter
-	name = "slaughterling"
-	desc = "Though not yet strong enough to create a true physical form, it's nonetheless determined to murder you."
-	icon_state = "bloodbrood"
-	icon_living = "bloodbrood"
-	icon_aggro = "bloodbrood"
-	attack_verb_continuous = "pierces"
-	attack_verb_simple = "pierce"
-	color = "#C80000"
-	density = FALSE
-	faction = list("mining", "boss")
-	weather_immunities = list("lava","ash")
-	has_field_of_vision = FALSE
+/mob/living/simple_animal/hostile/imp/Initialize()
+	..()
+	boost = world.time + 30
 
-/mob/living/simple_animal/hostile/asteroid/hivelordbrood/slaughter/CanPass(atom/movable/mover, turf/target)
-	if(istype(mover, /mob/living/simple_animal/hostile/megafauna/bubblegum))
-		return 1
-	return 0
+/mob/living/simple_animal/hostile/imp/BiologicalLife(seconds, times_fired)
+	if(!(. = ..()))
+		return
+	if(boost<world.time)
+		speed = 1
+	else
+		speed = 0
+
+/mob/living/simple_animal/hostile/imp/death()
+	..(1)
+	playsound(get_turf(src),'sound/magic/demon_dies.ogg', 200, 1)
+	visible_message("<span class='danger'>[src] screams in agony as it sublimates into a sulfurous smoke.</span>")
+	ghostize()
+	qdel(src)
 
 #undef MEDAL_PREFIX

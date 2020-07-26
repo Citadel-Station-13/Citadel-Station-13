@@ -285,7 +285,7 @@
 	turns_per_move = 3
 	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab/chicken = 2)
 	var/egg_type = /obj/item/reagent_containers/food/snacks/egg
-	var/food_type = /obj/item/reagent_containers/food/snacks/grown/wheat
+	var/egg_food_type = /obj/item/reagent_containers/food/snacks/grown/wheat
 	response_help_continuous  = "pets"
 	response_help_simple = "pet"
 	response_disarm_continuous = "gently pushes aside"
@@ -327,7 +327,7 @@
 	return ..()
 
 /mob/living/simple_animal/chicken/attackby(obj/item/O, mob/user, params)
-	if(istype(O, food_type)) //feedin' dem chickens
+	if(istype(O, egg_food_type)) //feedin' dem chickens
 		if(!stat && eggsleft < 8)
 			var/feedmsg = "[user] feeds [O] to [name]! [pick(feedMessages)]"
 			user.visible_message(feedmsg)
@@ -381,7 +381,7 @@
 	turns_per_move = 3
 	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab = 3)
 	var/egg_type = /obj/item/reagent_containers/food/snacks/egg/kiwiEgg
-	var/food_type = /obj/item/reagent_containers/food/snacks/grown/wheat
+	var/egg_food_type = /obj/item/reagent_containers/food/snacks/grown/wheat
 	response_help_continuous  = "pets"
 	response_help_simple = "pet"
 	response_disarm_continuous = "gently pushes aside"
@@ -437,7 +437,7 @@
 		STOP_PROCESSING(SSobj, src)
 
 /mob/living/simple_animal/kiwi/attackby(obj/item/O, mob/user, params)
-	if(istype(O, food_type)) //feedin' dem kiwis
+	if(istype(O, egg_food_type)) //feedin' dem kiwis
 		if(!stat && eggsleft < 8)
 			var/feedmsg = "[user] feeds [O] to [name]! [pick(feedMessages)]"
 			user.visible_message(feedmsg)

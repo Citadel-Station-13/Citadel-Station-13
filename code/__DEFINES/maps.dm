@@ -32,6 +32,7 @@ require only minor tweaks.
 #define ZTRAIT_CENTCOM "CentCom"
 #define ZTRAIT_STATION "Station"
 #define ZTRAIT_MINING "Mining"
+#define ZTRAIT_ABYSS "Abyss"
 #define ZTRAIT_REEBE "Reebe"
 #define ZTRAIT_RESERVED "Transit/Reserved"
 #define ZTRAIT_AWAY "Away Mission"
@@ -79,7 +80,15 @@ require only minor tweaks.
 	ZTRAIT_ASHSTORM = TRUE, \
     ZTRAIT_LAVA_RUINS = TRUE, \
     ZTRAIT_BOMBCAP_MULTIPLIER = 5, \
-    ZTRAIT_BASETURF = /turf/open/lava/smooth/lava_land_surface)
+    ZTRAIT_BASETURF = /turf/open/lava/smooth/lava_land_surface, \
+    ZTRAIT_DOWN = 1)
+#define ZTRAITS_ABYSS list(\
+    ZTRAIT_MINING = TRUE, \
+    ZTRAIT_ABYSS = TRUE, \
+	ZTRAIT_ASHSTORM = TRUE, \
+    ZTRAIT_BOMBCAP_MULTIPLIER = 3, \
+    ZTRAIT_BASETURF = /turf/open/floor/plating/asteroid/basalt/lavaland_abyss, \
+    ZTRAIT_UPWARDS = 1)
 #define ZTRAITS_REEBE list(ZTRAIT_REEBE = TRUE, ZTRAIT_BOMBCAP_MULTIPLIER = 0.5)
 #define ZTRAITS_VR list(ZTRAIT_VIRTUAL_REALITY = TRUE, ZTRAIT_AWAY = TRUE)
 

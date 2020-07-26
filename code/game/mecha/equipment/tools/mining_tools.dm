@@ -145,6 +145,19 @@
 	force = 15
 	toolspeed = 0.7
 
+//Corrupted system loot. Basically you get it's drill
+
+/obj/item/mecha_parts/mecha_equipment/drill/experimental
+	name = "experimental exosuit drill"
+	desc = "An experimental exosuit drill, equipped with hydraulic system and made in light-green colors."
+	icon = 'icons/obj/lavaland/artefacts.dmi'
+	icon_state = "corrupted_drill"
+	equip_cooldown = 5
+	drill_delay = 4
+	drill_level = DRILL_HARDENED
+	force = 30
+	toolspeed = 0.4
+
 
 /obj/item/mecha_parts/mecha_equipment/mining_scanner
 	name = "exosuit mining scanner"

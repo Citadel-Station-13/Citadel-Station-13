@@ -48,6 +48,12 @@
 	var/list/attack_action_types = list()
 	var/small_sprite_type
 
+	//Cita changes(Abyss)
+
+	var/abyss_born = FALSE //Was it born in abyss and will it enrage from it. And yeah, power cylinders also depends on this
+	var/enraged_type = /mob/living/simple_animal/hostile/megafauna
+	var/enrage_message = "enrages and starts to grow bigger! It feels the power of Abyss!"
+
 /mob/living/simple_animal/hostile/megafauna/Initialize(mapload)
 	. = ..()
 	apply_status_effect(STATUS_EFFECT_CRUSHERDAMAGETRACKING)

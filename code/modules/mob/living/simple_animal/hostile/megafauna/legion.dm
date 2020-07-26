@@ -137,7 +137,8 @@ Difficulty: Medium
 				last_legion = FALSE
 				break
 		if(last_legion)
-			loot = list(/obj/item/staff/storm)
+			loot = list(/obj/item/staff/storm, /obj/item/borg/upgrade/modkit/skull)
+			crusher_loot = list(/obj/item/staff/storm, /obj/item/crusher_trophy/legion_shard)
 			elimination = 0
 		else if(prob(20))
 			loot = list(/obj/structure/closet/crate/necropolis/tendril)

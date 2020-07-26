@@ -203,6 +203,23 @@
 	name = "\improper Death-Ripley wreckage"
 	icon_state = "deathripley-broken"
 
+/obj/structure/mecha_wreckage/clarke
+	name = "\improper Clarke wreckage"
+	icon_state = "clarke-broken"
+
+/obj/structure/mecha_wreckage/clarke/Initialize()
+	. = ..()
+	var/list/parts = list(
+				/obj/item/mecha_parts/part/clarke_torso,
+				/obj/item/mecha_parts/part/clarke_head,
+				/obj/item/mecha_parts/part/clarke_left_arm,
+				/obj/item/mecha_parts/part/clarke_right_arm,
+				/obj/item/stack/conveyor)
+	for(var/i = 0; i < 2; i++)
+		if(parts.len && prob(40))
+			var/part = pick(parts)
+			welder_salvage += part
+			parts -= part
 
 /obj/structure/mecha_wreckage/honker
 	name = "\improper H.O.N.K wreckage"

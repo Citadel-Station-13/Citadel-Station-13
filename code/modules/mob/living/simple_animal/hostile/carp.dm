@@ -37,6 +37,7 @@
 	faction = list("carp")
 	movement_type = FLYING
 	pressure_resistance = 200
+	food_type = list(/obj/item/reagent_containers/food/snacks/meat)
 	gold_core_spawnable = HOSTILE_SPAWN
 	//some carps heal over time
 	var/regen_cooldown = 0 //Used for how long it takes before a healing will take place default in 60 seconds
@@ -63,6 +64,7 @@
 	icon_state = "holocarp"
 	icon_living = "holocarp"
 	maxbodytemp = INFINITY
+	food_type = list()
 	gold_core_spawnable = NO_SPAWN
 	del_on_death = 1
 
@@ -76,6 +78,7 @@
 	icon_gib = "megacarp_gib"
 	threat = 3
 	regen_amount = 6
+	food_type = list()
 
 	maxHealth = 30
 	health = 30
@@ -107,6 +110,7 @@
 	gold_core_spawnable = NO_SPAWN
 	faction = list(ROLE_SYNDICATE, "carp") //They are still a carp
 	AIStatus = AI_OFF
+	food_type = list()
 
 	harm_intent_damage = 12
 	obj_damage = 70

@@ -1,0 +1,27 @@
+"a" = (/turf/template_noop,/area/lavaland/surface/outdoors)
+"b" = (/turf/open/floor/plating/asteroid/basalt/lava_land_surface,/area/lavaland/surface/outdoors)
+"c" = (/obj/structure/stone_tile/surrounding/cracked,/turf/open/floor/plating/asteroid/basalt/lava_land_surface,/area/lavaland/surface/outdoors)
+"d" = (/obj/structure/stone_tile/slab/cracked{icon_state = "cracked_slab1"; dir = 4},/obj/structure/stone_tile/slab/cracked{icon_state = "cracked_slab1"; dir = 8},/turf/open/lava/smooth/lava_land_surface,/area/lavaland/surface/outdoors)
+"e" = (/obj/structure/stone_tile/cracked{dir = 1},/turf/open/floor/plating/asteroid/basalt/lava_land_surface,/area/lavaland/surface/outdoors)
+"f" = (/obj/structure/stone_tile/slab/cracked,/turf/open/lava/smooth/lava_land_surface,/area/lavaland/surface/outdoors)
+"g" = (/obj/structure/lavaland/power_collector,/obj/structure/stone_tile/surrounding/cracked{dir = 6},/turf/open/lava/smooth/lava_land_surface,/area/lavaland/surface/outdoors)
+"h" = (/obj/structure/stone_tile/block/cracked{dir = 1},/obj/structure/stone_tile/cracked,/turf/open/lava/smooth/lava_land_surface,/area/lavaland/surface/outdoors)
+"i" = (/obj/structure/stone_tile/slab/cracked{icon_state = "cracked_slab1"; dir = 1},/turf/open/floor/plating/asteroid/basalt/lava_land_surface,/area/lavaland/surface/outdoors)
+"j" = (/obj/structure/stone_tile/slab/cracked{icon_state = "cracked_slab1"; dir = 5},/obj/structure/stone_tile/slab/cracked{icon_state = "cracked_slab1"; dir = 10},/turf/open/lava/smooth/lava_land_surface,/area/lavaland/surface/outdoors)
+"k" = (/obj/structure/stone_tile/burnt,/turf/open/floor/plating/asteroid/basalt/lava_land_surface,/area/lavaland/surface/outdoors)
+
+(1,1,1) = {"
+aaaaaaaaaaaaa
+aaaaaaaaaaaaa
+aaaaaaaaaaaaa
+aaaaabbbaaaaa
+aaaabbbbbaaaa
+aaabbcdebbaaa
+aaabifghbbaaa
+aaabbijkbbaaa
+aaaabbbbbaaaa
+aaaaabbbaaaaa
+aaaaaaaaaaaaa
+aaaaaaaaaaaaa
+aaaaaaaaaaaaa
+"}

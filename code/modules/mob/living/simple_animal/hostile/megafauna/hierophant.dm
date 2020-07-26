@@ -59,7 +59,7 @@ Difficulty: Normal
 	ranged = 1
 	ranged_cooldown_time = 40
 	aggro_vision_range = 21 //so it can see to one side of the arena to the other
-	loot = list(/obj/item/hierophant_club)
+	loot = list(/obj/item/hierophant_club, /obj/item/borg/upgrade/modkit/chaser)
 	crusher_loot = list(/obj/item/hierophant_club)
 	wander = FALSE
 	medal_type = BOSS_MEDAL_HIEROPHANT

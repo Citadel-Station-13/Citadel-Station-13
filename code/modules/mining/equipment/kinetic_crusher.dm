@@ -38,7 +38,7 @@
 /obj/item/kinetic_crusher/premium
 	icon_state = "crusher_prem"
 	item_state = "crusher_prem0"
-	name = "premium kinetic crusher"
+	name = "kinetic detonator"
 	desc = "An upgraded version of proto-kinetic crusher, fitted with better destabiliser and a more powerful flashlight. Also, looks like it can be thrown much easier."
 	throwforce = 10
 	throw_speed = 4
@@ -290,6 +290,55 @@
 	missing_health *= bonus_value //multiply the remaining amount by bonus_value
 	if(missing_health > 0)
 		target.adjustBruteLoss(missing_health) //and do that much damage
+
+//Legion(The huge one)
+
+/obj/item/crusher_trophy/legion_shard
+	name = "legion shard"
+	desc = "A still moving piece of legion's skull... Looks like it can be attacked to a kinetic crusher."
+	icon_state = "legion_shard"
+	denied_type = /obj/item/crusher_trophy/legion_shard
+	bonus_value = 17
+
+/obj/item/crusher_trophy/legion_shard/effect_desc()
+	return "mark detonation to have a chance of spawning a friendly legion skull"
+
+/obj/item/crusher_trophy/legion_shard/on_mark_detonation(mob/living/target, mob/living/user)
+	if(prob(15))
+		var/mob/living/simple_animal/hostile/asteroid/hivelordbrood/legion/A = new /mob/living/simple_animal/hostile/asteroid/hivelordbrood/legion(user.loc)
+		A.GiveTarget(target)
+		A.friends[user]++
+		A.faction = user.faction.Copy()
+
+//Corrupted System
+
+/obj/item/crusher_trophy/rogue_ai
+	name = "rogue ai"
+	desc = "A potato with an AI incide it. Not surprisingly that it got corrupted. Suitable as a trophy for a kinetic crusher"
+	icon_state = "corrupted_ai"
+	denied_type = /obj/item/crusher_trophy/rogue_ai
+	bonus_value = 12
+
+	var/seeker_shot = FALSE
+	var/mob/living/homing_target
+
+/obj/item/crusher_trophy/rogue_ai/effect_desc()
+	return "mark detonation to make the next destabilizer shot seek the last enemy"
+
+/obj/item/crusher_trophy/rogue_ai/on_projectile_fire(obj/item/projectile/destabilizer/marker, mob/living/user)
+	if(seeker_shot)
+		marker.name = "seeking [marker.name]"
+		marker.homing = TRUE
+		marker.homing_target = homing_target
+		seeker_shot = FALSE
+
+/obj/item/crusher_trophy/rogue_ai/on_mark_detonation(mob/living/target, mob/living/user)
+	seeker_shot = TRUE
+	homing_target = target
+	addtimer(CALLBACK(src, .proc/reset_seeker_shot), 300, TIMER_UNIQUE|TIMER_OVERRIDE)
+
+/obj/item/crusher_trophy/rogue_ai/proc/reset_seeker_shot()
+	seeker_shot = FALSE
 
 //watcher
 /obj/item/crusher_trophy/watcher_wing
