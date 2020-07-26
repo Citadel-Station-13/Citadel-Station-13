@@ -77,10 +77,14 @@
 	description = "<span class='boldwarning'>Pull it out!</span>\n"
 	mood_change = -7
 
-/datum/mood_event/table
-	description = "<span class='warning'>Someone threw me on a table!</span>\n"
-	mood_change = -2
-	timeout = 2 MINUTES
+/datum/mood_event/table_limbsmash
+	description = "<span class='warning'>That fucking table, man that hurts...</span>\n"
+	mood_change = -3
+	timeout = 3 MINUTES
+
+/datum/mood_event/table_limbsmash/add_effects(obj/item/bodypart/banged_limb)
+	if(banged_limb)
+		description = "<span class='warning'>My fucking [banged_limb.name], man that hurts...</span>\n"
 
 /datum/mood_event/table/add_effects()
 	if(ishuman(owner))

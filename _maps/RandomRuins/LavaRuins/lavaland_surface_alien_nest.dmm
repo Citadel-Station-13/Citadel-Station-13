@@ -219,6 +219,7 @@
 /obj/structure/alien/weeds,
 /obj/effect/decal/cleanable/blood/gibs,
 /mob/living/simple_animal/hostile/alien/drone,
+/obj/structure/alien/weeds/node,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/ruin/unpowered/xenonest)
 "aZ" = (
@@ -535,6 +536,11 @@
 /obj/effect/mob_spawn/alien/corpse/humanoid/queen,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/ruin/unpowered/xenonest)
+"wA" = (
+/obj/structure/alien/weeds,
+/obj/structure/alien/weeds/node,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/ruin/unpowered/xenonest)
 "yf" = (
 /obj/structure/alien/weeds/node,
 /mob/living/simple_animal/hostile/alien/sentinel,
@@ -549,6 +555,12 @@
 "JM" = (
 /obj/structure/alien/weeds/node,
 /obj/effect/mob_spawn/alien/corpse/humanoid/drone,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/ruin/unpowered/xenonest)
+"QG" = (
+/obj/structure/alien/weeds,
+/obj/structure/bed/nest,
+/obj/structure/alien/weeds/node,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/ruin/unpowered/xenonest)
 "Uh" = (
@@ -683,7 +695,7 @@ ac
 ac
 aj
 ac
-am
+QG
 ac
 ac
 ac
@@ -800,7 +812,7 @@ ac
 ac
 ac
 ac
-ag
+wA
 ag
 ag
 ar
@@ -884,7 +896,7 @@ aa
 (7,1,1) = {"
 ab
 ac
-ag
+wA
 ag
 ag
 ag
@@ -917,7 +929,7 @@ ac
 ac
 ZT
 ac
-ag
+wA
 ag
 ac
 ab
@@ -1349,7 +1361,7 @@ ar
 lG
 ag
 ag
-ag
+wA
 ad
 ag
 ag
@@ -1555,7 +1567,7 @@ ag
 ac
 aF
 ag
-ag
+ar
 ag
 ag
 ar
@@ -1603,7 +1615,7 @@ ao
 ah
 ac
 ag
-ag
+wA
 ag
 ag
 pE
@@ -1742,7 +1754,7 @@ ag
 ag
 ag
 ag
-ac
+aw
 ar
 ag
 bD
@@ -1791,9 +1803,9 @@ ac
 ac
 ac
 ac
+wA
 ag
-ag
-ac
+aw
 ar
 ag
 bD
@@ -1828,7 +1840,7 @@ ac
 ac
 ag
 Uh
-ag
+wA
 aZ
 be
 bo

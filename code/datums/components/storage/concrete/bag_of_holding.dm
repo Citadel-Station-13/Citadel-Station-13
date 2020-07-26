@@ -34,3 +34,8 @@
 		qdel(A)
 		return
 	. = ..()
+
+/datum/component/storage/concrete/bluespace/bag_of_holding/can_be_inserted(obj/item/I, stop_messages = FALSE, mob/M)
+	if(I.GetComponent(/datum/component/storage/concrete/bluespace/bag_of_holding))
+		return TRUE
+	return ..()

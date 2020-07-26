@@ -514,6 +514,8 @@
 	outputs = list("volume used" = IC_PINTYPE_NUMBER,"self reference" = IC_PINTYPE_SELFREF,"temperature" = IC_PINTYPE_NUMBER)
 	spawn_flags = IC_SPAWN_RESEARCH
 	var/heater_coefficient = 0.1
+	var/max_temp = 1000
+	var/min_temp = 2.7
 
 /obj/item/integrated_circuit/reagent/storage/heater/on_data_written()
 	if(get_pin_data(IC_INPUT, 2))
@@ -531,7 +533,7 @@
 
 /obj/item/integrated_circuit/reagent/storage/heater/process()
 	if(power_draw_idle)
-		var/target_temperature = get_pin_data(IC_INPUT, 1)
+		var/target_temperature = clamp(get_pin_data(IC_INPUT, 1), min_temp, max_temp)
 		if(reagents.chem_temp > target_temperature)
 			reagents.chem_temp += min(-1, (target_temperature - reagents.chem_temp) * heater_coefficient)
 		if(reagents.chem_temp < target_temperature)

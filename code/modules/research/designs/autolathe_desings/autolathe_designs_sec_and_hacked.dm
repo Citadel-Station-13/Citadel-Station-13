@@ -30,14 +30,6 @@
 	build_path = /obj/item/ammo_box/c38
 	category = list("initial", "Security")
 
-/datum/design/r32acp
-	name = "Rubber Pistol Bullet (.32)"
-	id = "r32acp"
-	build_type = AUTOLATHE
-	materials = list(/datum/material/iron = 250)
-	build_path = /obj/item/ammo_casing/r32acp
-	category = list("initial", "Security")
-
 /////////////////
 ///Hacked Gear //
 /////////////////
@@ -206,22 +198,3 @@
 	build_path = /obj/item/clothing/head/foilhat
 	category = list("hacked", "Misc")
 
-/datum/design/c32acp
-	name = "Pistol Bullet (.32)"
-	id = "c32acp"
-	build_type = AUTOLATHE
-	materials = list(/datum/material/iron = 500)
-	build_path = /obj/item/ammo_casing/c32acp
-	category = list("hacked", "Security")
-
-/////////////////
-//  Magazines  //
-/////////////////
-
-/datum/design/m32acp
-	name = "Empty .32 Magazine"
-	id = "m32acp"
-	build_type = AUTOLATHE
-	materials = list(/datum/material/iron = 10000)
-	build_path = /obj/item/ammo_box/magazine/m32acp/empty
-	category = list("hacked", "Security")

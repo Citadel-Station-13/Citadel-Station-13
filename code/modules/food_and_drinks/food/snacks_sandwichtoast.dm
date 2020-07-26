@@ -21,6 +21,17 @@
 	tastes = list("toast" = 1)
 	foodtype = GRAIN
 
+/obj/item/reagent_containers/food/snacks/baconlettucetomato
+	name = "blt sandwich"
+	desc = "The classic bacon, lettuce tomato sandwich."
+	icon = 'icons/obj/food/burgerbread.dmi'
+	icon_state = "blt"
+	trash = /obj/item/trash/plate
+	bonus_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/nutriment/vitamin = 1)
+	list_reagents = list(/datum/reagent/consumable/nutriment = 8, /datum/reagent/consumable/nutriment/vitamin = 2)
+	tastes = list("bacon" = 1, "lettuce" = 1, "tomato" = 1, "mayo" = 1)
+	foodtype = GRAIN | MEAT | VEGETABLES
+
 /obj/item/reagent_containers/food/snacks/grilledcheese
 	name = "grilled cheese sandwich"
 	desc = "Goes great with Tomato soup!"
@@ -136,8 +147,19 @@
 /obj/item/reagent_containers/food/snacks/tuna_sandwich
 	name = "tuna sandwich"
 	desc = "Both a salad and a sandwich in one."
+	icon = 'icons/obj/food/burgerbread.dmi'
 	icon_state = "tunasandwich"
-	trash = /obj/item/trash/plate
+	list_reagents = list(/datum/reagent/consumable/nutriment = 12, /datum/reagent/consumable/nutriment/vitamin = 4)
 	bonus_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/nutriment/vitamin = 3)
 	tastes = list("tuna" = 4, "mayonnaise" = 2, "bread" = 2)
+	foodtype = GRAIN | MEAT
+
+/obj/item/reagent_containers/food/snacks/meatballsub
+	name = "meatball sub"
+	desc = "At some point, you need to be the cheif sub."
+	icon = 'icons/obj/food/food.dmi'
+	icon_state = "meatballsub"
+	list_reagents = list(/datum/reagent/consumable/nutriment = 12, /datum/reagent/consumable/nutriment/vitamin = 4)
+	bonus_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/nutriment/vitamin = 3)
+	tastes = list("meat" = 2, "toasted bread" = 1)
 	foodtype = GRAIN | MEAT

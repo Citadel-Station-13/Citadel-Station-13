@@ -4,6 +4,7 @@ SUBSYSTEM_DEF(chat)
 	wait = 1
 	priority = FIRE_PRIORITY_CHAT
 	init_order = INIT_ORDER_CHAT
+
 	var/list/payload = list()
 
 
@@ -17,7 +18,7 @@ SUBSYSTEM_DEF(chat)
 			return
 
 
-/datum/controller/subsystem/chat/proc/queue(target, message, handle_whitespace = TRUE)
+/datum/controller/subsystem/chat/proc/queue(target, message, handle_whitespace = TRUE, trailing_newline = TRUE, confidential = TRUE)
 	if(!target || !message)
 		return
 
@@ -30,30 +31,35 @@ SUBSYSTEM_DEF(chat)
 
 	//Some macros remain in the string even after parsing and fuck up the eventual output
 	var/original_message = message
-	message = replacetext(message, "\improper", "")
-	message = replacetext(message, "\proper", "")
-	if(handle_whitespace)
-		message = replacetext(message, "\n", "<br>")
-		message = replacetext(message, "\t", "[FOURSPACES][FOURSPACES]")
-	message += "<br>"
-
 
 	//url_encode it TWICE, this way any UTF-8 characters are able to be decoded by the Javascript.
 	//Do the double-encoding here to save nanoseconds
-	var/twiceEncoded = url_encode(url_encode(message))
+	var/twiceEncoded
 
 	if(islist(target))
+		var/sanitized_message = FALSE
 		for(var/I in target)
 			var/client/C = CLIENT_FROM_VAR(I) //Grab us a client if possible
 
 			if(!C)
-				return
+				continue
 
 			//Send it to the old style output window.
 			SEND_TEXT(C, original_message)
 
 			if(!C?.chatOutput || C.chatOutput.broken) //A player who hasn't updated his skin file.
 				continue
+				
+			if(!sanitized_message)
+				message = replacetext(message, "\improper", "")
+				message = replacetext(message, "\proper", "")
+				if(handle_whitespace)
+					message = replacetext(message, "\n", "<br>")
+					message = replacetext(message, "\t", "[FOURSPACES][FOURSPACES]")
+				if (trailing_newline)
+					message += "<br>"
+				twiceEncoded = url_encode(url_encode(message))
+				sanitized_message = TRUE
 
 			if(!C.chatOutput.loaded) //Client still loading, put their messages in a queue
 				C.chatOutput.messageQueue += message
@@ -72,6 +78,15 @@ SUBSYSTEM_DEF(chat)
 
 		if(!C?.chatOutput || C.chatOutput.broken) //A player who hasn't updated his skin file.
 			return
+
+		message = replacetext(message, "\improper", "")
+		message = replacetext(message, "\proper", "")
+		if(handle_whitespace)
+			message = replacetext(message, "\n", "<br>")
+			message = replacetext(message, "\t", "[FOURSPACES][FOURSPACES]")
+		if (trailing_newline)
+			message += "<br>"
+		twiceEncoded = url_encode(url_encode(message))
 
 		if(!C.chatOutput.loaded) //Client still loading, put their messages in a queue
 			C.chatOutput.messageQueue += message

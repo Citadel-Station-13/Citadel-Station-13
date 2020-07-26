@@ -390,7 +390,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 			to_chat(user, "<span class='warning'>There already is a string attached to this coin!</span>")
 			return
 
-		if (W.use_tool(src, user, 0, 1, max_level = JOB_SKILL_BASIC))
+		if (W.use_tool(src, user, 0, 1, skill_gain_mult = BARE_USE_TOOL_MULT))
 			add_overlay("coin_string_overlay")
 			string_attached = 1
 			to_chat(user, "<span class='notice'>You attach a string to the coin.</span>")

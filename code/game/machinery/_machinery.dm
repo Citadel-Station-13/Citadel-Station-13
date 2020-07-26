@@ -121,7 +121,7 @@ Class Procs:
 	var/ui_style // ID of custom TGUI style (optional)
 	var/ui_x
 	var/ui_y
-
+	var/init_process = TRUE //Stop processing from starting on init
 	var/interaction_flags_machine = INTERACT_MACHINE_WIRES_IF_OPEN | INTERACT_MACHINE_ALLOW_SILICON | INTERACT_MACHINE_OPEN_SILICON | INTERACT_MACHINE_SET_MACHINE
 
 	var/fair_market_price = 69
@@ -138,7 +138,7 @@ Class Procs:
 		circuit = new circuit
 		circuit.apply_default_parts(src)
 
-	if(!speed_process)
+	if(!speed_process && init_process)
 		START_PROCESSING(SSmachines, src)
 	else
 		START_PROCESSING(SSfastprocess, src)

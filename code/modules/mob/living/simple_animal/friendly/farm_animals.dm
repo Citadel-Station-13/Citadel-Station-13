@@ -192,13 +192,22 @@
 	else
 		..()
 
+//a cow that produces a random reagent in its udder
+/mob/living/simple_animal/cow/random
+	name = "strange cow"
+	desc = "Something seems off about the milk this cow is producing."
+
+/mob/living/simple_animal/cow/random/Initialize()
+	milk_reagent = get_random_reagent_id() //this has a blacklist so don't worry about romerol cows, etc
+	..()
+
 //Wisdom cow, speaks and bestows great wisdoms
 /mob/living/simple_animal/cow/wisdom
 	name = "wisdom cow"
 	desc = "Known for its wisdom, shares it with all"
 	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab/wisdomcow = 1) //truly the best meat
 	gold_core_spawnable = FALSE
-	speak_chance = 30 //the cow is eager to share its wisdom!
+	speak_chance = 10 //the cow is eager to share its wisdom! //but is wise enough to not lag  the server too bad
 	milk_reagent = /datum/reagent/medicine/liquid_wisdom
 
 /mob/living/simple_animal/cow/wisdom/Initialize()

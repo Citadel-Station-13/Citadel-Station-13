@@ -142,6 +142,10 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 /// The attack is from a parry counterattack.
 #define ATTACKCHAIN_PARRY_COUNTERATTACK			(1<<0)
 
+// UnarmedAttack() flags
+/// Attack is from a parry counterattack
+#define UNARMED_ATTACK_PARRY					(1<<0)
+
 /// If the thing can reflect light (lasers/energy)
 #define RICOCHET_SHINY			(1<<0)
 /// If the thing can reflect matter (bullets/bomb shrapnel)

@@ -103,7 +103,7 @@
 /datum/crafting_recipe/bone_bow
 	name = "Bone Bow"
 	result = /obj/item/gun/ballistic/bow/ashen
-	time = 200
+	time = 120 // 80+120 = 200
 	always_availible = FALSE
 	reqs = list(/obj/item/stack/sheet/bone = 8,
 				 /obj/item/stack/sheet/sinew = 4)
@@ -112,7 +112,7 @@
 /datum/crafting_recipe/bow_tablet
 	name = "Sandstone Bow Making Manual"
 	result = /obj/item/book/granter/crafting_recipe/bone_bow
-	time = 600 //Scribing
+	time = 200 //Scribing // don't care
 	always_availible = FALSE
 	reqs = list(/obj/item/stack/rods = 1,
 				 /obj/item/stack/sheet/mineral/sandstone = 4)

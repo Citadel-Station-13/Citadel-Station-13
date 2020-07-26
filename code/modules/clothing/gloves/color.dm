@@ -23,14 +23,15 @@
 	if(iscarbon(target) && proximity)
 		var/mob/living/carbon/C = target
 		var/mob/living/carbon/U = user
-		var/success = C.equip_to_slot_if_possible(new /obj/item/clothing/gloves/color/yellow/sprayon, ITEM_SLOT_GLOVES, TRUE, TRUE)
+		var/success = C.equip_to_slot_if_possible(new /obj/item/clothing/gloves/color/yellow/sprayon, ITEM_SLOT_GLOVES, TRUE, TRUE, clothing_check = TRUE)
 		if(success)
 			if(C == user)
 				C.visible_message("<span class='notice'>[U] sprays their hands with glittery rubber!</span>")
 			else
 				C.visible_message("<span class='warning'>[U] sprays glittery rubber on the hands of [C]!</span>")
 		else
-			C.visible_message("<span class='warning'>The rubber fails to stick to [C]'s hands!</span>")
+			user.visible_message("<span class='warning'>The rubber fails to stick to [C]'s hands!</span>",
+				"<span class='warning'>The rubber fails to stick to [C]'s [(SLOT_GLOVES in C.check_obscured_slots()) ? "unexposed" : ""] hands!</span>")
 
 		qdel(src)
 

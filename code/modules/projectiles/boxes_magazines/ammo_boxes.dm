@@ -55,18 +55,6 @@
 	desc = "Designed to quickly reload revolvers. These rounds are manufactured within extremely tight tolerances, making them easy to show off trickshots with."
 	ammo_type = /obj/item/ammo_casing/c38/match
 
-/obj/item/ammo_box/c32mm
-	name = "ammo box (.32 acp)"
-	desc = "Lethal .32 acp bullets, there's forty in the box."
-	ammo_type = /obj/item/ammo_casing/c32acp
-	max_ammo = 40
-
-/obj/item/ammo_box/r32mm
-	name = "ammo box (rubber .32 acp)"
-	desc = "Non-lethal .32 acp bullets, there's forty in the box."
-	ammo_type = /obj/item/ammo_casing/r32acp
-	max_ammo = 40
-
 /obj/item/ammo_box/c9mm
 	name = "ammo box (9mm)"
 	icon_state = "9mmbox"

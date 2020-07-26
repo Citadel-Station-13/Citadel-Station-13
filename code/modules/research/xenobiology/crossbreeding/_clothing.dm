@@ -57,7 +57,7 @@ Slimecrossing Armor
 	light_color = newcolor
 	set_light(5)
 
-/obj/structure/light_prism/attack_hand(mob/user)
+/obj/structure/light_prism/attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	to_chat(user, "<span class='notice'>You dispel [src]</span>")
 	qdel(src)
 
@@ -118,7 +118,7 @@ Slimecrossing Armor
 	..()
 	REMOVE_TRAIT(user, TRAIT_PACIFISM, "peaceflower_[REF(src)]")
 
-/obj/item/clothing/head/peaceflower/attack_hand(mob/user)
+/obj/item/clothing/head/peaceflower/attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	if(iscarbon(user))
 		var/mob/living/carbon/C = user
 		if(src == C.head)

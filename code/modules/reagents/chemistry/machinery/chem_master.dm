@@ -32,7 +32,7 @@
 	for (var/x in 1 to PILL_STYLE_COUNT)
 		var/list/SL = list()
 		SL["id"] = x
-		SL["htmltag"] = assets.icon_class_name("pill[x]")
+		SL["className"] = assets.icon_class_name("pill[x]")
 		pillStyles += list(SL)
 
 	. = ..()
@@ -154,19 +154,20 @@
 	bottle?.forceMove(A)
 	return ..()
 
+//Insert our custom spritesheet css link into the html
+/obj/machinery/chem_master/ui_base_html(html)
+	var/datum/asset/spritesheet/assets = get_asset_datum(/datum/asset/spritesheet/simple/pills)
+	. = replacetext(html, "<!--customheadhtml-->", assets.css_tag())
+
 /obj/machinery/chem_master/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
 										datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
 		var/datum/asset/assets = get_asset_datum(/datum/asset/spritesheet/simple/pills)
 		assets.send(user)
-		ui = new(user, src, ui_key, "chem_master", name, 500, 550, master_ui, state)
-		ui.open()
 
-//Insert our custom spritesheet css link into the html
-/obj/machinery/chem_master/ui_base_html(html)
-	var/datum/asset/spritesheet/simple/assets = get_asset_datum(/datum/asset/spritesheet/simple/pills)
-	. = replacetext(html, "<!--customheadhtml-->", assets.css_tag())
+		ui = new(user, src, ui_key, "ChemMaster", name, 520, 550, master_ui, state)
+		ui.open()
 
 /obj/machinery/chem_master/ui_data(mob/user)
 	var/list/data = list()
@@ -258,9 +259,9 @@
 			var/amount = text2num(params["amount"])
 			if(amount == null)
 				amount = text2num(input(usr,
-					"Max 10. Buffer content will be split evenly.",
+					"Max 20. Buffer content will be split evenly.",
 					"How many to make?", 1))
-			amount = clamp(round(amount), 0, 10)
+			amount = clamp(round(amount), 0, 20)
 			if (amount <= 0)
 				return FALSE
 			// Get units per item

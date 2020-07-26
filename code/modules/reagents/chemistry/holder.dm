@@ -463,17 +463,10 @@
 				if(total_matching_reagents == total_required_reagents && total_matching_catalysts == total_required_catalysts && matching_container && matching_other && meets_temp_requirement && can_special_react)
 					possible_reactions  += C
 
+		sortTim(possible_reactions, /proc/cmp_chemical_reactions_default, FALSE)
+
 		if(possible_reactions.len)
 			var/datum/chemical_reaction/selected_reaction = possible_reactions[1]
-			//select the reaction with the most extreme temperature requirements
-			for(var/V in possible_reactions)
-				var/datum/chemical_reaction/competitor = V
-				if(selected_reaction.is_cold_recipe)
-					if(competitor.required_temp <= selected_reaction.required_temp)
-						selected_reaction = competitor
-				else
-					if(competitor.required_temp >= selected_reaction.required_temp) //will return with the hotter reacting first.
-						selected_reaction = competitor
 			var/list/cached_required_reagents = selected_reaction.required_reagents//update reagents list
 			var/list/cached_results = selected_reaction.results//resultant chemical list
 			var/special_react_result = selected_reaction.check_special_react(src)

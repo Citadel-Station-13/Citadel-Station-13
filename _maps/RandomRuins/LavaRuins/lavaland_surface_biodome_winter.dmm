@@ -203,6 +203,12 @@
 /area/ruin/powered/snow_biodome)
 "aR" = (
 /obj/structure/flora/tree/pine/xmas,
+/obj/item/a_gift{
+	pixel_y = -5
+	},
+/obj/item/a_gift{
+	pixel_x = 6
+	},
 /turf/open/floor/plating/asteroid/snow{
 	initial_gas_mix = "o2=22;n2=82;TEMP=180"
 	},
@@ -295,6 +301,12 @@
 	},
 /turf/open/floor/pod/dark,
 /area/ruin/powered/snow_biodome)
+"gy" = (
+/obj/item/toy/snowball,
+/turf/open/floor/plating/asteroid/snow{
+	initial_gas_mix = "o2=22;n2=82;TEMP=180"
+	},
+/area/ruin/powered/snow_biodome)
 "gz" = (
 /obj/structure/chair/stool,
 /turf/open/floor/pod/dark,
@@ -315,6 +327,13 @@
 	dir = 8
 	},
 /turf/open/floor/pod/dark,
+/area/ruin/powered/snow_biodome)
+"rl" = (
+/obj/structure/flora/bush,
+/obj/item/toy/snowball,
+/turf/open/floor/plating/asteroid/snow{
+	initial_gas_mix = "o2=22;n2=82;TEMP=180"
+	},
 /area/ruin/powered/snow_biodome)
 "tb" = (
 /obj/effect/mapping_helpers/no_lava,
@@ -361,6 +380,11 @@
 /obj/structure/closet/secure_closet/freezer/fridge,
 /turf/open/floor/pod/dark,
 /area/ruin/powered/snow_biodome)
+"IQ" = (
+/obj/structure/table/wood,
+/obj/item/reagent_containers/food/drinks/mug,
+/turf/open/floor/wood,
+/area/ruin/powered/snow_biodome)
 "JZ" = (
 /obj/structure/table,
 /obj/machinery/microwave,
@@ -380,6 +404,7 @@
 /area/ruin/powered/snow_biodome)
 "Oj" = (
 /obj/structure/table,
+/obj/item/reagent_containers/food/drinks/mug,
 /turf/open/floor/pod/dark,
 /area/ruin/powered/snow_biodome)
 "PD" = (
@@ -407,6 +432,7 @@
 "QK" = (
 /obj/structure/table,
 /obj/item/storage/fancy/cigarettes/cigpack_carp,
+/obj/item/reagent_containers/food/drinks/mug,
 /turf/open/floor/pod/dark,
 /area/ruin/powered/snow_biodome)
 "QN" = (
@@ -416,6 +442,13 @@
 "Sj" = (
 /obj/effect/decal/cleanable/oil,
 /turf/open/floor/pod/dark,
+/area/ruin/powered/snow_biodome)
+"SL" = (
+/obj/structure/flora/grass/both,
+/obj/item/toy/snowball,
+/turf/open/floor/plating/asteroid/snow{
+	initial_gas_mix = "o2=22;n2=82;TEMP=180"
+	},
 /area/ruin/powered/snow_biodome)
 "Ub" = (
 /obj/structure/filingcabinet,
@@ -577,7 +610,7 @@ aB
 ak
 ak
 ak
-aI
+rl
 by
 ak
 ak
@@ -740,7 +773,7 @@ aI
 az
 ak
 ak
-ak
+gy
 ak
 ak
 aI
@@ -916,7 +949,7 @@ Wg
 ag
 ah
 as
-aw
+IQ
 aA
 aA
 at
@@ -924,7 +957,7 @@ aM
 aP
 ak
 ak
-aQ
+SL
 ak
 ak
 az
@@ -1077,7 +1110,7 @@ Wg
 an
 Wg
 ay
-ak
+gy
 ak
 ak
 ak
@@ -1114,6 +1147,7 @@ aI
 ak
 ap
 ak
+gy
 ak
 ak
 ak
@@ -1121,8 +1155,7 @@ ak
 ak
 ak
 ak
-ak
-ak
+gy
 ak
 aI
 ak
@@ -1240,7 +1273,7 @@ ak
 ak
 az
 ak
-ak
+gy
 ak
 bB
 ak

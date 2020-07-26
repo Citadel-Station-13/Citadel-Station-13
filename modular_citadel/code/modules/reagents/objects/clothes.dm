@@ -9,7 +9,7 @@
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 0)
 	//item_flags = NODROP //Tips their hat!
 
-/obj/item/clothing/head/hattip/attack_hand(mob/user)
+/obj/item/clothing/head/hattip/attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	if(iscarbon(user))
 		var/mob/living/carbon/C = user
 		if(is_ninja(C))

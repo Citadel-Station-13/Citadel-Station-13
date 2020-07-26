@@ -130,7 +130,7 @@
 	var/deltaTemperature = req_power / heat_cap
 	if(deltaTemperature < 0)
 		return
-	env.temperature += deltaTemperature
+	env.set_temperature(env.return_temperature(),deltaTemperature)
 	air_update_turf()
 
 /obj/machinery/shuttle/engine/default_change_direction_wrench(mob/user, obj/item/I)

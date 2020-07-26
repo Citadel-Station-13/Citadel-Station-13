@@ -14,14 +14,14 @@
 		changeNext_move(data.block_end_click_cd_add)
 	return TRUE
 
-/mob/living/proc/start_active_blocking(obj/item/I)
+/mob/living/proc/ACTIVE_BLOCK_START(obj/item/I)
 	if(combat_flags & (COMBAT_FLAG_ACTIVE_BLOCK_STARTING | COMBAT_FLAG_ACTIVE_BLOCKING))
 		return FALSE
 	if(!(I in held_items))
 		return FALSE
 	var/datum/block_parry_data/data = I.get_block_parry_data()
 	if(!istype(data))		//Typecheck because if an admin/coder screws up varediting or something we do not want someone being broken forever, the CRASH logs feedback so we know what happened.
-		CRASH("start_active_blocking called with an item with no valid data: [I] --> [I.block_parry_data]!")
+		CRASH("ACTIVE_BLOCK_START called with an item with no valid data: [I] --> [I.block_parry_data]!")
 	combat_flags |= COMBAT_FLAG_ACTIVE_BLOCKING
 	active_block_item = I
 	if(data.block_lock_attacking)
@@ -83,9 +83,15 @@
 		return FALSE
 	// QOL: Instead of trying to just block with held item, grab first available item.
 	var/obj/item/I = find_active_block_item()
-	if(!I)
-		to_chat(src, "<span class='warning'>You can't block with your bare hands!</span>")
+	var/list/other_items = list()
+	if(SEND_SIGNAL(src, COMSIG_LIVING_ACTIVE_BLOCK_START, I, other_items) & COMPONENT_PREVENT_BLOCK_START)
+		to_chat(src, "<span class='warning'>Something is preventing you from blocking!</span>")
 		return
+	if(!I)
+		if(!length(other_items))
+			to_chat(src, "<span class='warning'>You can't block with your bare hands!</span>")
+			return
+		I = other_items[1]
 	if(!I.can_active_block())
 		to_chat(src, "<span class='warning'>[I] is either not capable of being used to actively block, or is not currently in a state that can! (Try wielding it if it's twohanded, for example.)</span>")
 		return
@@ -104,7 +110,7 @@
 		animate(src, pixel_x = get_standard_pixel_x_offset(), pixel_y = get_standard_pixel_y_offset(), time = 2.5, FALSE, SINE_EASING | EASE_IN, ANIMATION_END_NOW)
 		return
 	combat_flags &= ~(COMBAT_FLAG_ACTIVE_BLOCK_STARTING)
-	start_active_blocking(I)
+	ACTIVE_BLOCK_START(I)
 
 /**
   * Gets the first item we can that can block, but if that fails, default to active held item.COMSIG_ENABLE_COMBAT_MODE
@@ -115,7 +121,8 @@
 		for(var/obj/item/I in held_items - held)
 			if(I.can_active_block())
 				return I
-	return held
+	else
+		return held
 
 /**
   * Proc called by keybindings to stop active blocking.

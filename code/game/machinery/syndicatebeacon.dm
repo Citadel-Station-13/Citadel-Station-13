@@ -68,7 +68,7 @@ GLOBAL_VAR_INIT(singularity_counter, 0)
 /obj/machinery/power/singularity_beacon/attack_ai(mob/user)
 	return
 
-/obj/machinery/power/singularity_beacon/attack_hand(mob/user)
+/obj/machinery/power/singularity_beacon/attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	. = ..()
 	if(.)
 		return

@@ -1,5 +1,5 @@
 //WHAT IF WE TAKE THE ACTIVE TURF PROCESSING AND PUSH IT SOMEWHERE ELSE!!!
-
+/*
 SUBSYSTEM_DEF(air_turfs)
 	name = "Atmospherics - Turfs"
 	init_order = INIT_ORDER_AIR_TURFS
@@ -24,3 +24,4 @@ SUBSYSTEM_DEF(air_turfs)
 			return
 	resumed = 0
 	return
+*/

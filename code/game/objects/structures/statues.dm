@@ -74,7 +74,7 @@
 	radiate()
 	..()
 
-/obj/structure/statue/uranium/attack_hand(mob/user)
+/obj/structure/statue/uranium/attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	radiate()
 	. = ..()
 
@@ -240,7 +240,7 @@
 	honk()
 	return ..()
 
-/obj/structure/statue/bananium/attack_hand(mob/user)
+/obj/structure/statue/bananium/attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	honk()
 	. = ..()
 

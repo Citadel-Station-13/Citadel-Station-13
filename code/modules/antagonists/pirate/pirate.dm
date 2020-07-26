@@ -4,6 +4,7 @@
 	roundend_category = "space pirates"
 	antagpanel_category = "Pirate"
 	threat = 5
+	show_to_ghosts = TRUE
 	var/datum/team/pirate/crew
 
 /datum/antagonist/pirate/greet()

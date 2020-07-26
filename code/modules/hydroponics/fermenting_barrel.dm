@@ -56,7 +56,7 @@
 	else
 		return ..()
 
-/obj/structure/fermenting_barrel/attack_hand(mob/user)
+/obj/structure/fermenting_barrel/attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	open = !open
 	if(open)
 		DISABLE_BITFIELD(reagents.reagents_holder_flags, DRAINABLE)

@@ -122,7 +122,7 @@
 	if(istype(loc, /turf/))//Only concern is adding an organ to a freezer when the area around it is cold.
 		var/turf/T = loc
 		var/datum/gas_mixture/enviro = T.return_air()
-		local_temp = enviro.temperature
+		local_temp = enviro.return_temperature()
 
 	else if(!owner && ismob(loc))
 		var/mob/M = loc
@@ -132,7 +132,7 @@
 			return TRUE
 		var/turf/T = M.loc
 		var/datum/gas_mixture/enviro = T.return_air()
-		local_temp = enviro.temperature
+		local_temp = enviro.return_temperature()
 
 	if(owner)
 		//Don't interfere with bodies frozen by structures.

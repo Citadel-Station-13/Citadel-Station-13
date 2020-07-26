@@ -57,7 +57,7 @@
 		canvas rotting away and contents vanishing.</span>")
 	qdel(src)
 
-/obj/structure/cursed_money/attack_hand(mob/living/user)
+/obj/structure/cursed_money/attack_hand(mob/living/user, act_intent = user.a_intent, unarmed_attack_flags)
 	. = ..()
 	if(.)
 		return
