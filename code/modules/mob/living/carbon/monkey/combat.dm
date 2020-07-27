@@ -148,7 +148,7 @@
 	var/bonus_aggresiveness = (power_level/2)
 	if(battle_monkey)
 		bonus_aggresiveness = 100 - MONKEY_AGGRESSIVE_MVM_PROB //attack monkeys no matter what
-	if(aggressive && (prob(MONKEY_AGGRESSIVE_MVM_PROB + bonus_aggressiveness) || !istype(L, /mob/living/carbon/monkey/)))
+	if(aggressive && (prob(MONKEY_AGGRESSIVE_MVM_PROB + bonus_aggresiveness) || !istype(L, /mob/living/carbon/monkey/)))
 		return TRUE
 
 	return FALSE
@@ -243,7 +243,7 @@
 				back_to_idle()
 				return TRUE
 
-			if(target && (target.stat == CONSCIOUS || (ismonkey(target) && battle_monkey))	// make sure target exists, go for the kill if target is a monkey and you're enraged
+			if(target && (target.stat == CONSCIOUS || (ismonkey(target) && battle_monkey)))	// make sure target exists, go for the kill if target is a monkey and you're enraged
 				if(Adjacent(target) && isturf(target.loc) && !IsDeadOrIncap())	// if right next to perp
 
 					// check if target has a weapon
@@ -366,13 +366,14 @@
 
 	// attack with weapon if we have one
 	if(Weapon)
-		L.attackby(Weapon, src)
+		if(L.attackby(Weapon, src))
+			adjust_power_level(Weapon.force*0.75) //we just assume that it dealt full damage, but scale it down as weapons > hands in terms of damage
 	else
 		L.attack_paw(src)
 
 	if(ismonkey(L) && battle_monkey) //convert attacked monkeys into battle enraged monkeys who also wish for death of the monkey race
 		var/mob/living/carbon/monkey/other_monkey = L
-		L.battle_monkey = TRUE
+		other_monkey.battle_monkey = TRUE
 
 	// no de-aggro
 	if(aggressive)

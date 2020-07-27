@@ -995,7 +995,8 @@
 		M.adjustFireLoss(-1*REM, FALSE)
 		M.adjustOxyLoss(-1*REM, FALSE)
 		//also lets give them a tiny power level boost
-		M.power_level += 0.1
+		var/mob/living/carbon/monkey/power_monkey = M
+		power_monkey.power_level += 0.1
 	..()
 
 /datum/reagent/consumable/monkey_energy/on_mob_metabolize(mob/living/carbon/monkey/M)
