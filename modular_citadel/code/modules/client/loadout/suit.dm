@@ -151,7 +151,7 @@
 	name = "Bar winter coat"
 	category = SLOT_WEAR_SUIT
 	path = /obj/item/clothing/suit/hooded/wintercoat/bar
-	restricted_roles = list("Bartender") //Reserve it to Bartenders and not the Head of Personnel because he doesnt deserve to look as fancy as them
+	restricted_roles = list("Bartender") // Reserve it to Bartenders and not the Head of Personnel because he doesnt deserve to look as fancy as them
 
 /datum/gear/coat/cargo
 	name = "Cargo winter coat"
