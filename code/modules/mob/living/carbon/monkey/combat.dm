@@ -278,8 +278,8 @@
 
 				// flee from anyone who attacked us and we didn't beat down
 				for(var/mob/living/L in around)
-					if( enemies[L] && L.stat == CONSCIOUS )
-					target = L
+					if(enemies[L] && L.stat == CONSCIOUS)
+						target = L
 
 				if(target != null)
 					walk_away(src, target, MONKEY_ENEMY_VISION, 5)
@@ -478,7 +478,7 @@
 	..()
 
 /mob/living/carbon/monkey/proc/monkeyDrop(var/obj/item/A)
-	if(A && !can_active_parry(A)) //refuse to drop stuff if it can parry (we can still be disarmed)
+	if(A && !A.can_active_parry()) //refuse to drop stuff if it can parry (we can still be disarmed)
 		dropItemToGround(A, TRUE)
 		update_icons()
 
