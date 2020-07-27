@@ -1001,8 +1001,8 @@
 
 /datum/reagent/consumable/monkey_energy/on_mob_metabolize(mob/living/carbon/monkey/M)
 	if(istype(M))
-		if(!M.battle_monkey)
-			M.battle_change()
+		M.battle_monkey = TRUE
+		M.aggressive = TRUE
 		M.learning_rate += 1.5 //learning rate goes from 1 to 2.5
 	..()
 

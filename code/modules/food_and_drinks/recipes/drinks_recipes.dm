@@ -992,3 +992,9 @@
 	results = list(/datum/reagent/consumable/ethanol/laval_spit = 20) //Limited use
 	required_reagents = list(/datum/reagent/iron = 5,  /datum/reagent/consumable/ethanol/mauna_loa = 10, /datum/reagent/sulfur = 5)
 	required_temp = 900 // (626.85'C)
+
+/datum/chemical_reaction/monkey_energy
+	name = "Monkey Energy"
+	id = /datum/reagent/consumable/monkey_energy
+	results = list(/datum/reagent/consumable/monkey_energy = 2)
+	required_reagents = list(/datum/reagent/blood = 1, /datum/reagent/consumable/banana = 1)

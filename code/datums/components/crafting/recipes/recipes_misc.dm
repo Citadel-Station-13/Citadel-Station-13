@@ -324,7 +324,7 @@
 	result = /obj/item/toy/sword/cx
 	subcategory = CAT_MISCELLANEOUS
 	category = CAT_MISC
-	
+
 /datum/crafting_recipe/catgirlplushie
 	name = "Catgirl Plushie"
 	reqs = list(/obj/item/toy/plush/hairball = 3)
@@ -347,7 +347,7 @@
 	name = "Paper Frames"
 	result = /obj/item/stack/sheet/paperframes/five
 	time = 10
-	reqs = list(/obj/item/stack/sheet/mineral/wood = 5, /obj/item/paper = 20)
+	reqs = list(/obj/item/stack/sheet/mineral/wood = 2, /obj/item/paper = 5)
 	subcategory = CAT_MISCELLANEOUS
 	category = CAT_MISC
 

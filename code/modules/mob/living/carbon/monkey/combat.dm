@@ -145,7 +145,7 @@
 	var/bonus_aggresiveness = (power_level/2)
 	if(battle_monkey)
 		bonus_aggresiveness = 100 - MONKEY_AGGRESSIVE_MVM_PROB //attack monkeys no matter what
-	if(aggressive && (prob(MONKEY_AGGRESSIVE_MVM_PROB + bonus_aggresiveness) || !istype(L, /mob/living/carbon/monkey/)))
+	if((aggressive && (prob(MONKEY_AGGRESSIVE_MVM_PROB + bonus_aggresiveness)) || (!battle_monkey && !istype(L, /mob/living/carbon/monkey/))))
 		return TRUE
 
 	return FALSE
@@ -198,7 +198,7 @@
 			// pickup any nearby objects
 			if(!pickupTarget)
 				var/obj/item/I = locate(/obj/item/) in oview(2,src)
-				if(I && !blacklistItems[I])
+				if(I && !blacklistItems[I] && !can_active_parry(get_active_held_item()))
 					pickupTarget = I
 				else
 					var/mob/living/carbon/human/H = locate(/mob/living/carbon/human/) in oview(2,src)
@@ -272,20 +272,23 @@
 				back_to_idle()
 
 		if(MONKEY_FLEE)
-			var/list/around = view(src, MONKEY_FLEE_VISION)
-			target = null
+			if(!battle_monkey)
+				var/list/around = view(src, MONKEY_FLEE_VISION)
+				target = null
 
-			// flee from anyone who attacked us and we didn't beat down
-			for(var/mob/living/L in around)
-				if( enemies[L] && L.stat == CONSCIOUS )
+				// flee from anyone who attacked us and we didn't beat down
+				for(var/mob/living/L in around)
+					if( enemies[L] && L.stat == CONSCIOUS )
 					target = L
 
-			if(target != null)
-				walk_away(src, target, MONKEY_ENEMY_VISION, 5)
-			else
-				back_to_idle()
+				if(target != null)
+					walk_away(src, target, MONKEY_ENEMY_VISION, 5)
+				else
+					back_to_idle()
 
-			return TRUE
+				return TRUE
+			else
+				back_to_idle() //a true warrior never flees
 
 		if(MONKEY_DISPOSE)
 
@@ -371,6 +374,7 @@
 	if(ismonkey(L) && battle_monkey) //convert attacked monkeys into battle enraged monkeys who also wish for death of the monkey race
 		var/mob/living/carbon/monkey/other_monkey = L
 		other_monkey.battle_monkey = TRUE
+		other_monkey.aggressive = TRUE
 
 	// no de-aggro
 	if(aggressive)
@@ -388,7 +392,7 @@
 	// if we are not angry at our target, go back to idle
 	if(enemies[L] <= 0)
 		enemies.Remove(L)
-		if( target == L )
+		if(target == L)
 			back_to_idle()
 
 // get angry are a mob
@@ -474,7 +478,7 @@
 	..()
 
 /mob/living/carbon/monkey/proc/monkeyDrop(var/obj/item/A)
-	if(A)
+	if(A && !can_active_parry(A)) //refuse to drop stuff if it can parry (we can still be disarmed)
 		dropItemToGround(A, TRUE)
 		update_icons()
 
