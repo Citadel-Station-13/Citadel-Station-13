@@ -5,7 +5,7 @@
 	Otherwise pretty standard.
 */
 
-/mob/living/carbon/human/UnarmedAttack(atom/A, proximity, intent = a_intent, flags = NONE)
+/mob/living/carbon/human/UnarmedAttack(atom/A, proximity, intent = a_intent, attackchain_flags = NONE)
 
 	if(!has_active_hand()) //can't attack without a hand.
 		to_chat(src, "<span class='notice'>You look at your arm and sigh.</span>")
@@ -16,8 +16,7 @@
 		to_chat(src, "<span class='warning'>The damage in your [check_arm.name] is preventing you from using it! Get it fixed, or at least splinted!</span>")
 		return
 
-	. = flags
-	
+	. = attackchain_flags
 	// Special glove functions:
 	// If the gloves do anything, have them return 1 to stop
 	// normal attack_hand() here.
@@ -36,12 +35,13 @@
 	SEND_SIGNAL(src, COMSIG_HUMAN_MELEE_UNARMED_ATTACK, A)
 	return . | A.attack_hand(src, intent, .)
 
-/atom/proc/attack_hand(mob/user, act_intent = user.a_intent, flags)
+/atom/proc/attack_hand(mob/user, act_intent = user.a_intent, attackchain_flags)
 	SHOULD_NOT_SLEEP(TRUE)
 	if(!(interaction_flags_atom & INTERACT_ATOM_NO_FINGERPRINT_ATTACK_HAND))
 		add_fingerprint(user)
 	if(SEND_SIGNAL(src, COMSIG_ATOM_ATTACK_HAND, user) & COMPONENT_NO_ATTACK_HAND)
 		return
+	. = attackchain_flags
 	if(attack_hand_speed && !(. & ATTACK_IGNORE_CLICKDELAY))
 		if(!user.CheckActionCooldown(attack_hand_speed))
 			return
