@@ -1,0 +1,5 @@
+author: "dapnee"
+delete-after: True
+changes: 
+  - tweak: "added a fan to the listening outpost"
+  - bugfix: "added two missing r-walls near the SM, removed random light and wire node below the engine, and fixed the missing cable in the courtroom on Kilo"
