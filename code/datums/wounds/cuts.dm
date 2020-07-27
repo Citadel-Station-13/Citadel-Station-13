@@ -152,6 +152,11 @@
 	user.visible_message("<span class='notice'>[user] licks the wounds on [victim]'s [limb.name].</span>", "<span class='notice'>You lick some of the wounds on [victim]'s [limb.name]</span>", ignored_mobs=victim)
 	to_chat(victim, "<span class='green'>[user] licks the wounds on your [limb.name]!</span")
 	blood_flow -= 0.5
+	if(isinsect(victim) || iscatperson(victim) || ismammal(victim) || isdwarf(victim) || ismonkey(victim)) // Yep you can lick monkeys.
+		user.reagents.add_reagent(/datum/reagent/hairball, 2)
+
+	else if(ishumanbasic(victim) || isflyperson(victim) || islizard(victim) || isdullahan(victim))
+		user.reagents.add_reagent(/datum/reagent/hairball, 1)
 
 	if(blood_flow > minimum_flow)
 		try_handling(user)
