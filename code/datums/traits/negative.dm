@@ -56,7 +56,7 @@ GLOBAL_LIST_EMPTY(family_heirlooms)
 		if("Medical Doctor")
 			heirloom_type = /obj/item/healthanalyzer/advanced
 		if("Paramedic")
-			heirloom_type = pick(/obj/item/clothing/neck/stethoscope, /obj/item/bodybag)
+			heirloom_type = /obj/item/lighter
 		if("Station Engineer")
 			heirloom_type = /obj/item/wirecutters/brass
 		if("Atmospheric Technician")
