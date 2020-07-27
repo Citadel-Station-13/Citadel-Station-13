@@ -27,20 +27,26 @@
 	var/maximum_power = 100
 	var/learning_rate = 1 //ratio of how fast it gains power (see get_attack_damage)
 
-	var/enraged = FALSE //once fed monkey energy, it becomes enraged and permanently hates other monkeys, and makes other monkeys enraged on hit
+	var/battle_monkey = FALSE //once fed monkey energy, it becomes enraged and permanently hates other monkeys, and makes other monkeys enraged on hit
+
+/mob/living/carbon/monkey/proc/battle_change()
+	battle_monkey = TRUE
 
 /mob/living/carbon/monkey/proc/attempt_parry()
-	if(prob(5 + power_level/1.5)) //70% parry chance in the end
+	if(prob(5 + power_level/1.2)) //5 to 88% chance of parrying an attack depending on the power level, but it's not always perfect
 		initiate_parry_sequence()
 
 /mob/living/carbon/monkey/get_parry_stage()
-	if(!client)
+	if(!client && prob(75 + power_level/4)) //from 75 to 100% chance of it being perfect depending on the power level
 		return PARRY_ACTIVE
 	return ..()
 
 /mob/living/carbon/monkey/proc/adjust_power_level(var/power_increment)
 	if(power_level < maximum_power) //if power is above maximum, it was vv'd and we don't want to mess with it
-		power_level = max(power_level + power_increment, maximum_power) //we cap it at 100
+		if(!battle_monkey)
+			power_level = max(power_level + power_increment, maximum_power/3) //capped at 33 unless made into a BATTLE MONKEY
+		else
+			power_level = max(power_level + power_increment, maximum_power) //we cap it at 100 if its a battle monkey that hates other monkeys
 		combat_damage_lower = initial(combat_damage_lower) + power_level/10 //caps at 11 damage minimum
 		combat_damage_upper = initial(combat_damage_lower) + power_level/8 //caps at 15.5 damage maximum
 		if(((combat_damage_lower + combat_damage_upper)/2) > best_force)
@@ -49,14 +55,13 @@
 				dropItemToGround(monkey_item) //we only care for weak things if they can parry, you fool.
 		best_force = (combat_damage_lower + combat_damage_upper)/2
 		for(var/obj/item/bodypart/part in bodyparts)
-			part.body_damage_coeff = initial(part.body_damage_coeff) - (power_level/200) //caps at 0.5 less
 			part.wound_resistance = initial(part.wound_resistance) + power_level/5 //caps at 20 extra
 		maxStepsTick = initial(maxStepsTick) + (power_level/20) //caps at 5 extra, 11 overall
 
 /mob/living/carbon/monkey/proc/get_attack_damage()
 	//this is ONLY called when we actually deal damage, and so we use it to adjust our power level slightly
 	var/damage = rand(combat_damage_lower, combat_damage_upper)
-	adjust_power_level((damage/8) * learning_rate) //800 damage dealt is required to become the most powerful monkey of all time
+	adjust_power_level((damage/20) * learning_rate) //2000 to reach 100, or 800 if on monkey energy
 	return damage
 
 /mob/living/carbon/monkey/proc/IsStandingStill()
@@ -140,7 +145,10 @@
 		return TRUE
 
 	// target non-monkey mobs when aggressive, with a small probability of monkey v monkey
-	if(aggressive && (prob(MONKEY_AGGRESSIVE_MVM_PROB + (power_level/2)) || !istype(L, /mob/living/carbon/monkey/)))
+	var/bonus_aggresiveness = (power_level/2)
+	if(battle_monkey)
+		bonus_aggresiveness = 100 - MONKEY_AGGRESSIVE_MVM_PROB //attack monkeys no matter what
+	if(aggressive && (prob(MONKEY_AGGRESSIVE_MVM_PROB + bonus_aggressiveness) || !istype(L, /mob/living/carbon/monkey/)))
 		return TRUE
 
 	return FALSE
@@ -201,7 +209,7 @@
 						pickupTarget = pick(H.held_items)
 
 		if(MONKEY_HUNT)		// hunting for attacker
-			if(health < MONKEY_FLEE_HEALTH)
+			if(health < MONKEY_FLEE_HEALTH + power_level/3)
 				mode = MONKEY_FLEE
 				return TRUE
 
@@ -209,7 +217,7 @@
 				INVOKE_ASYNC(src, .proc/walk2derpless, target)
 
 			// pickup any nearby weapon
-			if(!pickupTarget && prob(MONKEY_WEAPON_PROB))
+			if(!pickupTarget && prob(MONKEY_WEAPON_PROB + power_level))
 				var/obj/item/W = locate(/obj/item/) in oview(2,src)
 				if(!locate(/obj/item) in held_items)
 					best_force = (combat_damage_lower + combat_damage_upper)/2
@@ -219,7 +227,7 @@
 			// recruit other monkies
 			var/list/around = view(src, MONKEY_ENEMY_VISION)
 			for(var/mob/living/carbon/monkey/M in around)
-				if(M.mode == MONKEY_IDLE && prob(MONKEY_RECRUIT_PROB))
+				if(M.mode == MONKEY_IDLE && prob(MONKEY_RECRUIT_PROB + power_level/3))
 					M.battle_screech()
 					M.target = target
 					M.mode = MONKEY_HUNT
@@ -231,11 +239,11 @@
 					return TRUE
 
 			// if can't reach target for long enough, go idle
-			if(frustration >= MONKEY_HUNT_FRUSTRATION_LIMIT)
+			if(frustration >= MONKEY_HUNT_FRUSTRATION_LIMIT + power_level/10)
 				back_to_idle()
 				return TRUE
 
-			if(target && target.stat == CONSCIOUS)		// make sure target exists
+			if(target && (target.stat == CONSCIOUS || (ismonkey(target) && battle_monkey))	// make sure target exists, go for the kill if target is a monkey and you're enraged
 				if(Adjacent(target) && isturf(target.loc) && !IsDeadOrIncap())	// if right next to perp
 
 					// check if target has a weapon
@@ -246,7 +254,7 @@
 							break
 
 					// if the target has a weapon, chance to disarm them
-					if(W && prob(MONKEY_ATTACK_DISARM_PROB))
+					if(W && prob(MONKEY_ATTACK_DISARM_PROB + power_level/2))
 						pickupTarget = W
 						a_intent = INTENT_DISARM
 						monkey_attack(target)
@@ -361,6 +369,10 @@
 		L.attackby(Weapon, src)
 	else
 		L.attack_paw(src)
+
+	if(ismonkey(L) && battle_monkey) //convert attacked monkeys into battle enraged monkeys who also wish for death of the monkey race
+		var/mob/living/carbon/monkey/other_monkey = L
+		L.battle_monkey = TRUE
 
 	// no de-aggro
 	if(aggressive)

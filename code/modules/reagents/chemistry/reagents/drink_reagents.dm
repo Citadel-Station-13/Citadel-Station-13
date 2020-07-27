@@ -983,12 +983,31 @@
 	value = REAGENT_VALUE_COMMON
 
 /datum/reagent/consumable/monkey_energy/on_mob_life(mob/living/carbon/M)
-	M.Jitter(20)
-	M.dizziness +=1
-	M.drowsyness = 0
-	M.AdjustSleeping(-40, FALSE)
-	M.adjust_bodytemperature(-5 * TEMPERATURE_DAMAGE_COEFFICIENT, BODYTEMP_NORMAL)
+	if(!ismonkey(M))
+		M.Jitter(20)
+		M.dizziness +=1
+		M.drowsyness = 0
+		M.AdjustSleeping(-40, FALSE)
+		M.adjust_bodytemperature(-5 * TEMPERATURE_DAMAGE_COEFFICIENT, BODYTEMP_NORMAL)
+	else
+		//its monkey time (its like tricord, but for monkeys!)
+		M.adjustBruteLoss(-1*REM, FALSE)
+		M.adjustFireLoss(-1*REM, FALSE)
+		M.adjustOxyLoss(-1*REM, FALSE)
+		//also lets give them a tiny power level boost
+		M.power_level += 0.1
 	..()
+
+/datum/reagent/consumable/monkey_energy/on_mob_metabolize(mob/living/carbon/monkey/M)
+	if(istype(M))
+		if(!M.battle_monkey)
+			M.battle_change()
+		M.learning_rate += 1.5 //learning rate goes from 1 to 2.5
+	..()
+
+/datum/reagent/consumable/monkey_energy/on_mob_end_metabolize(mob/living/carbon/monkey/M)
+	if(istype(M))
+		M.learning_rate -= 1.5
 
 /datum/reagent/consumable/bungojuice
 	name = "Bungo Juice"
