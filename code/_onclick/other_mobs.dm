@@ -127,7 +127,7 @@
 	Animals & All Unspecified
 */
 /mob/living/UnarmedAttack(atom/A, proximity, intent = a_intent, flags = NONE)
-	return !isnull(A.attack_animal(src, intent, flags))
+	A.attack_animal(src, intent, flags)
 
 /atom/proc/attack_animal(mob/user)
 	SEND_SIGNAL(src, COMSIG_ATOM_ATTACK_ANIMAL, user)
@@ -266,7 +266,7 @@
 	if(dextrous && !ismob(A))
 		return ..()
 	else
-		return AttackingTarget()
+		AttackingTarget()
 
 /*
 	New Players:
