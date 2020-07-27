@@ -30,16 +30,16 @@
 	var/battle_monkey = FALSE //once fed monkey energy, it becomes enraged and permanently hates other monkeys, and makes other monkeys enraged on hit
 
 /mob/living/carbon/monkey/proc/attempt_parry()
-	if(prob(5 + power_level/1.2)) //5 to 88% chance of parrying an attack depending on the power level, but it's not always perfect
+	if(prob(5 + power_level/1.33)) //5 to 88% chance of parrying an attack depending on the power level, but it's not always perfect
 		initiate_parry_sequence()
 
 /mob/living/carbon/monkey/get_parry_stage()
-	if(!client && prob(90 + power_level/10)) //from 90 to 100% chance of it being perfect depending on the power level
+	if(!client && prob(50 + power_level/3.3)) //from 50 to 80% chance of it being perfect depending on the power level
 		return PARRY_ACTIVE
 	return ..()
 
 /mob/living/carbon/monkey/proc/adjust_power_level(var/power_increment)
-	if(power_level < maximum_power) //if power is above maximum, it was vv'd and we don't want to mess with it
+	if(!client && power_level < maximum_power) //if power is above maximum, it was vv'd and we don't want to mess with it
 		if(!battle_monkey)
 			power_level = max(power_level + power_increment, maximum_power/3) //capped at 33 unless made into a BATTLE MONKEY
 		else
@@ -56,10 +56,12 @@
 		maxStepsTick = initial(maxStepsTick) + (power_level/20) //caps at 5 extra, 11 overall
 
 /mob/living/carbon/monkey/proc/get_attack_damage()
-	//this is ONLY called when we actually deal damage, and so we use it to adjust our power level slightly
-	var/damage = rand(combat_damage_lower, combat_damage_upper)
-	adjust_power_level((damage/20) * learning_rate) //2000 to reach 100, or 800 if on monkey energy
-	return damage
+	if(!client)
+		//this is ONLY called when we actually deal damage, and so we use it to adjust our power level slightly
+		var/damage = rand(combat_damage_lower, combat_damage_upper)
+		adjust_power_level((damage/20) * learning_rate) //2000 to reach 100, or 800 if on monkey energy
+		return damage
+	return rand(1,3) //old values
 
 /mob/living/carbon/monkey/proc/IsStandingStill()
 	return resisting || pickpocketing || disposing_body
@@ -367,7 +369,7 @@
 	// attack with weapon if we have one
 	if(Weapon)
 		if(L.attackby(Weapon, src))
-			adjust_power_level(Weapon.force*0.75) //we just assume that it dealt full damage, but scale it down as weapons > hands in terms of damage
+			adjust_power_level(Weapon.force * learning_rate/20) //we just assume that it dealt full damage
 	else
 		L.attack_paw(src)
 
