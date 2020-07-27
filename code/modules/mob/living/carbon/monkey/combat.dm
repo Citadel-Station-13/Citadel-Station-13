@@ -29,15 +29,12 @@
 
 	var/battle_monkey = FALSE //once fed monkey energy, it becomes enraged and permanently hates other monkeys, and makes other monkeys enraged on hit
 
-/mob/living/carbon/monkey/proc/battle_change()
-	battle_monkey = TRUE
-
 /mob/living/carbon/monkey/proc/attempt_parry()
 	if(prob(5 + power_level/1.2)) //5 to 88% chance of parrying an attack depending on the power level, but it's not always perfect
 		initiate_parry_sequence()
 
 /mob/living/carbon/monkey/get_parry_stage()
-	if(!client && prob(75 + power_level/4)) //from 75 to 100% chance of it being perfect depending on the power level
+	if(!client && prob(90 + power_level/10)) //from 90 to 100% chance of it being perfect depending on the power level
 		return PARRY_ACTIVE
 	return ..()
 
@@ -209,7 +206,7 @@
 						pickupTarget = pick(H.held_items)
 
 		if(MONKEY_HUNT)		// hunting for attacker
-			if(health < MONKEY_FLEE_HEALTH + power_level/3)
+			if(health < MONKEY_FLEE_HEALTH)
 				mode = MONKEY_FLEE
 				return TRUE
 
