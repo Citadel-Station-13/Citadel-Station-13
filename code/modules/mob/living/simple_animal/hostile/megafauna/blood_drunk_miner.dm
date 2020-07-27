@@ -87,7 +87,7 @@ Difficulty: Medium
 /mob/living/simple_animal/hostile/megafauna/blood_drunk_miner/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
 	var/adjustment_amount = amount * 0.1
 	if(world.time + adjustment_amount > next_action)
-		DelayNextAction(adjustment_amount, flush = TRUE) //attacking it interrupts it attacking, but only briefly
+		DelayNextAction(adjustment_amount, considered_action = FALSE, flush = TRUE) //attacking it interrupts it attacking, but only briefly
 	. = ..()
 
 /mob/living/simple_animal/hostile/megafauna/blood_drunk_miner/death()
@@ -126,7 +126,8 @@ Difficulty: Medium
 			L.gib()
 			return TRUE
 	DelayNextAction(CLICK_CD_MELEE, flush = TRUE)
-	miner_saw.melee_attack_chain(src, target, null, ATTACK_IGNORE_CLICKDELAY)
+	miner_saw.melee_attack_chain(src, target, null, ATTACK_IGNORE_CLICKDELAY | ATTACK_IGNORE_ACTION | NO_AUTO_CLICKDELAY_HANDLING)
+	DiscardCurrentAction()
 	if(guidance)
 		adjustHealth(-2)
 	transform_weapon()

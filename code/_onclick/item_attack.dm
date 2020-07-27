@@ -63,7 +63,7 @@
 		return
 	. |= I.attack(src, user, attackchain_flags, damage_multiplier)
 	if(!(. & NO_AUTO_CLICKDELAY_HANDLING))	// SAFETY NET - unless the proc tells us we should not handle this, give them the basic melee cooldown!
-		I.ApplyAttackCooldown(user, src)
+		I.ApplyAttackCooldown(user, src, attackchain_flags)
 
 /**
   * Called when someone uses us to attack a mob in melee combat.
@@ -138,13 +138,13 @@
 			if(!(SKILL_TRAIN_ATTACK_OBJ in I.used_skills[skill]))
 				continue
 			user.mind.auto_gain_experience(skill, I.skill_gain)
-	I.ApplyAttackCooldown(user, src)
+	if(!(attackchain_flags & NO_AUTO_CLICKDELAY_HANDLING))
+		I.ApplyAttackCooldown(user, src, attackchain_flags)
 	if(totitemdamage)
 		visible_message("<span class='danger'>[user] has hit [src] with [I]!</span>", null, null, COMBAT_MESSAGE_RANGE)
 		//only witnesses close by and the victim see a hit message.
 		log_combat(user, src, "attacked", I)
 	take_damage(totitemdamage, I.damtype, "melee", 1)
-	return TRUE
 
 /mob/living/attacked_by(obj/item/I, mob/living/user, attackchain_flags = NONE, damage_multiplier = 1)
 	var/list/block_return = list()

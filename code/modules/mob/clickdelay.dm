@@ -190,8 +190,8 @@
 /**
   * Called after a successful attack to set a mob's clickdelay.
   */
-/obj/item/proc/ApplyAttackCooldown(mob/user, atom/target)
-	user.DelayNextAction(attack_unwieldlyness, clickdelay_mod_bypass)
+/obj/item/proc/ApplyAttackCooldown(mob/user, atom/target, attackchain_flags)
+	user.DelayNextAction(attack_unwieldlyness, clickdelay_mod_bypass, !(attackchain_flags & ATTACK_IGNORE_ACTION))
 
 /**
   * Get estimated time that a user has to not attack for to use us
