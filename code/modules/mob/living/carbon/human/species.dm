@@ -105,6 +105,10 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 	var/whitelisted = 0 		//Is this species restricted to certain players?
 	var/whitelist = list() 		//List the ckeys that can use this species, if it's whitelisted.: list("John Doe", "poopface666", "SeeALiggerPullTheTrigger") Spaces & capitalization can be included or ignored entirely for each key as it checks for both.
 	var/icon_limbs //Overrides the icon used for the limbs of this species. Mainly for downstream, and also because hardcoded icons disgust me. Implemented and maintained as a favor in return for a downstream's implementation of synths.
+	var/species_type
+
+	var/tail_type //type of tail i.e. mam_tail
+	var/wagging_type //type of wagging i.e. waggingtail_lizard
 
 	/// Our default override for typing indicator state
 	var/typing_indicator_state
@@ -1061,7 +1065,8 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 			H.adjustBruteLoss(1)
 
 /datum/species/proc/spec_death(gibbed, mob/living/carbon/human/H)
-	return
+	if(H)
+		stop_wagging_tail(H)
 
 /datum/species/proc/auto_equip(mob/living/carbon/human/H)
 	// handles the equipping of species-specific gear
@@ -2225,12 +2230,14 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 /datum/species/proc/ExtinguishMob(mob/living/carbon/human/H)
 	return
 
-
 ////////////
 //Stun//
 ////////////
 
 /datum/species/proc/spec_stun(mob/living/carbon/human/H,amount)
+	if(H)
+		stop_wagging_tail(H)
+
 	. = stunmod * H.physiology.stun_mod * amount
 
 //////////////
@@ -2248,11 +2255,29 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 ////////////////
 
 /datum/species/proc/can_wag_tail(mob/living/carbon/human/H)
-	return FALSE
+	if(!tail_type || !wagging_type)
+		return FALSE
+	else
+		return mutant_bodyparts[tail_type] || mutant_bodyparts[wagging_type]
 
 /datum/species/proc/is_wagging_tail(mob/living/carbon/human/H)
-	return FALSE
+	return mutant_bodyparts["waggingtail_lizard"]
 
 /datum/species/proc/start_wagging_tail(mob/living/carbon/human/H)
+	if(tail_type && wagging_type)
+		if(mutant_bodyparts[tail_type])
+			mutant_bodyparts[wagging_type] = mutant_bodyparts[tail_type]
+			mutant_bodyparts -= tail_type
+			if(mutant_bodyparts["spines"] || mutant_bodyparts["waggingspines"]) //special lizard thing
+				mutant_bodyparts["waggingspines"] = mutant_bodyparts["spines"]
+				mutant_bodyparts -= "spines"
+			H.update_body()
 
 /datum/species/proc/stop_wagging_tail(mob/living/carbon/human/H)
+	if(tail_type && wagging_type)
+		mutant_bodyparts[tail_type] = mutant_bodyparts[wagging_type]
+		mutant_bodyparts -= wagging_type
+		if(mutant_bodyparts["spines"] || mutant_bodyparts["waggingspines"]) //special lizard thing
+			mutant_bodyparts["spines"] = mutant_bodyparts["waggingspines"]
+			mutant_bodyparts -= "waggingspines"
+		H.update_body()
