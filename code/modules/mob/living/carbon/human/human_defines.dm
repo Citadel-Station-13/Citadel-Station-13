@@ -102,7 +102,7 @@
 		"HUMAN_PARRY_MININUM_EFFICIENCY" = 0.9
 	)
 
-/mob/living/carbon/human/on_active_parry(mob/living/owner, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return, parry_efficiency, parry_time)
+/mob/living/carbon/human/on_active_parry(mob/living/owner, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, list/block_return, parry_efficiency, parry_time)
 	var/datum/block_parry_data/D = return_block_parry_datum(block_parry_data)
 	if(!owner.Adjacent(attacker))
 		return ..()
