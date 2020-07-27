@@ -200,7 +200,7 @@
 			// pickup any nearby objects
 			if(!pickupTarget)
 				var/obj/item/I = locate(/obj/item/) in oview(2,src)
-				if(I && !blacklistItems[I] && !can_active_parry(get_active_held_item()))
+				if(I && !blacklistItems[I] && !get_active_held_item.can_active_parry())
 					pickupTarget = I
 				else
 					var/mob/living/carbon/human/H = locate(/mob/living/carbon/human/) in oview(2,src)
