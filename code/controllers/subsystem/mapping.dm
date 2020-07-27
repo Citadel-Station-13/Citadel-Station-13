@@ -454,7 +454,7 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 
 	var/choice = alert(src, "What kind of level would you like to load?", "Load Away/VR", AWAY_MISSION_NAME, VIRT_REALITY_NAME, "Cancel")
 
-	var/list/possible_options
+	var/list/possible_options = list("Custom")
 	var/list/ztraits
 	switch(choice)
 		if(VIRT_REALITY_NAME)
@@ -469,7 +469,6 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 		else
 			return
 
-	possible_options = "Custom"
 	var/away_name
 	var/datum/space_level/away_level
 
