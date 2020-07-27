@@ -163,7 +163,7 @@
 
 /datum/uplink_item/bundles_TC/reroll
 	name = "Renegotiate Contract"
-	desc = "Selecting this will inform the syndicate that you wish to change employers. Can only be done once; no take-backs."
+	desc = "Selecting this will inform your employers that you wish for new objectives. Can only be done once; no take-backs."
 	item = /obj/effect/gibspawner/generic
 	cost = 0
 	cant_discount = TRUE
