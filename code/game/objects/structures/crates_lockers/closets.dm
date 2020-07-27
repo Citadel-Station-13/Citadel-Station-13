@@ -37,12 +37,13 @@
 	var/lock_in_use = FALSE //Someone is doing some stuff with the lock here, better not proceed further
 	var/eigen_teleport = FALSE //If the closet leads to Mr Tumnus.
 	var/obj/structure/closet/eigen_target //Where you go to.
-
+	var/should_populate_contents = TRUE
 
 /obj/structure/closet/Initialize(mapload)
 	. = ..()
 	update_icon()
-	PopulateContents()
+	if(should_populate_contents)
+		PopulateContents()
 	if(mapload && !opened)		// if closed, any item at the crate's loc is put in the contents
 		addtimer(CALLBACK(src, .proc/take_contents), 0)
 	if(secure)
