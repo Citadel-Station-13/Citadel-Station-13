@@ -19,12 +19,12 @@
 	path = /obj/item/clothing/suit/hooded/cloak/david
 	cost = 3
 
-/datum/gear/jacketbomber // all of these are reskins of bomber jackets but with the vibe to make you look like a true lumberjack
+/datum/gear/jacketbomber
 	name = "Bomber jacket"
 	category = SLOT_WEAR_SUIT
 	path = /obj/item/clothing/suit/jacket
 
-/datum/gear/jacketflannelblack
+/datum/gear/jacketflannelblack // all of these are reskins of bomber jackets but with the vibe to make you look like a true lumberjack
 	name = "Black flannel jacket"
 	category = SLOT_WEAR_SUIT
 	path = /obj/item/clothing/suit/jacket/flannel
