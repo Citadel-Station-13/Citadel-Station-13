@@ -996,6 +996,11 @@
 	},
 /obj/effect/turf_decal/tile/red,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer1,
+/obj/machinery/flasher{
+	id = "Cell 1";
+	pixel_x = -24;
+	pixel_y = 26
+	},
 /turf/open/floor/plasteel/dark,
 /area/security/brig)
 "aIy" = (
@@ -4062,8 +4067,8 @@
 /obj/structure/cable/yellow{
 	icon_state = "1-4"
 	},
-/obj/structure/extinguisher_cabinet{
-	pixel_x = -26
+/obj/machinery/light{
+	dir = 8
 	},
 /turf/open/floor/plasteel,
 /area/engine/engineering)
@@ -9634,7 +9639,7 @@
 /obj/structure/cable/yellow{
 	icon_state = "0-5"
 	},
-/turf/open/floor/engine,
+/turf/open/floor/engine/airless,
 /area/space/nearstation)
 "hbd" = (
 /obj/machinery/airalarm{
@@ -10462,7 +10467,7 @@
 	icon_state = "0-6"
 	},
 /obj/machinery/power/tesla_coil,
-/turf/open/floor/engine,
+/turf/open/floor/engine/airless,
 /area/space/nearstation)
 "hJA" = (
 /turf/closed/wall,
@@ -12313,7 +12318,7 @@
 /obj/machinery/power/emitter{
 	dir = 1
 	},
-/turf/open/floor/engine,
+/turf/open/floor/engine/airless,
 /area/space/nearstation)
 "jeX" = (
 /obj/effect/turf_decal/tile/red,
@@ -12714,7 +12719,7 @@
 	})
 "jqC" = (
 /obj/machinery/field/generator,
-/turf/open/floor/engine,
+/turf/open/floor/engine/airless,
 /area/space/nearstation)
 "jqD" = (
 /obj/structure/closet/secure_closet/medical1,
@@ -14063,6 +14068,20 @@
 /area/science/xenobiology{
 	name = "Science Outpost"
 	})
+"kwD" = (
+/obj/structure/bed,
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer1,
+/obj/machinery/flasher{
+	id = "Cell 3";
+	pixel_x = -24;
+	pixel_y = 26
+	},
+/turf/open/floor/plasteel/dark,
+/area/security/brig)
 "kwG" = (
 /obj/effect/turf_decal/tile/purple,
 /obj/effect/turf_decal/tile/purple{
@@ -15910,7 +15929,7 @@
 	icon_state = "6-9"
 	},
 /obj/machinery/power/grounding_rod,
-/turf/open/floor/engine,
+/turf/open/floor/engine/airless,
 /area/space/nearstation)
 "lLK" = (
 /obj/effect/turf_decal/tile/blue,
@@ -16825,7 +16844,7 @@
 	icon_state = "0-6"
 	},
 /obj/machinery/power/emitter,
-/turf/open/floor/engine,
+/turf/open/floor/engine/airless,
 /area/space/nearstation)
 "mwj" = (
 /obj/machinery/atmospherics/components/unary/thermomachine/heater{
@@ -18334,7 +18353,7 @@
 	icon_state = "0-5"
 	},
 /obj/machinery/power/tesla_coil,
-/turf/open/floor/engine,
+/turf/open/floor/engine/airless,
 /area/space/nearstation)
 "nCn" = (
 /obj/effect/turf_decal/tile/purple,
@@ -23822,6 +23841,20 @@
 	},
 /turf/open/space/basic,
 /area/space/nearstation)
+"rYd" = (
+/obj/structure/bed,
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer1,
+/obj/machinery/flasher{
+	id = "Cell 2";
+	pixel_x = -24;
+	pixel_y = 26
+	},
+/turf/open/floor/plasteel/dark,
+/area/security/brig)
 "rYx" = (
 /obj/structure/disposalpipe/trunk{
 	dir = 8
@@ -26905,7 +26938,7 @@
 	icon_state = "5-10"
 	},
 /obj/machinery/power/tesla_coil,
-/turf/open/floor/engine,
+/turf/open/floor/engine/airless,
 /area/space/nearstation)
 "ulf" = (
 /obj/structure/chair{
@@ -27428,10 +27461,6 @@
 /obj/structure/cable{
 	icon_state = "2-4"
 	},
-/obj/machinery/airalarm{
-	dir = 4;
-	pixel_x = -23
-	},
 /obj/structure/table/reinforced,
 /obj/item/storage/toolbox/electrical{
 	pixel_x = -3;
@@ -27442,6 +27471,9 @@
 	pixel_y = -1
 	},
 /obj/item/stack/cable_coil,
+/obj/structure/extinguisher_cabinet{
+	pixel_x = -26
+	},
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "uGT" = (
@@ -27690,7 +27722,7 @@
 /obj/machinery/power/emitter{
 	dir = 1
 	},
-/turf/open/floor/engine,
+/turf/open/floor/engine/airless,
 /area/space/nearstation)
 "uPo" = (
 /obj/structure/cable{
@@ -28134,7 +28166,7 @@
 	icon_state = "0-6"
 	},
 /obj/machinery/power/tesla_coil,
-/turf/open/floor/engine,
+/turf/open/floor/engine/airless,
 /area/space/nearstation)
 "vfX" = (
 /obj/effect/turf_decal/delivery,
@@ -29566,6 +29598,17 @@
 	},
 /turf/open/floor/plasteel/checker,
 /area/engine/atmos)
+"wom" = (
+/obj/effect/turf_decal/tile/yellow,
+/obj/effect/turf_decal/tile/yellow{
+	dir = 1
+	},
+/obj/machinery/airalarm{
+	dir = 4;
+	pixel_x = -23
+	},
+/turf/open/floor/plasteel,
+/area/engine/engineering)
 "wpf" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/preopen{
@@ -30392,7 +30435,7 @@
 /obj/structure/cable/yellow{
 	icon_state = "0-5"
 	},
-/turf/open/floor/engine,
+/turf/open/floor/engine/airless,
 /area/space/nearstation)
 "wQk" = (
 /obj/machinery/door/poddoor/incinerator_toxmix,
@@ -31023,7 +31066,7 @@
 	icon_state = "0-10"
 	},
 /obj/machinery/power/emitter,
-/turf/open/floor/engine,
+/turf/open/floor/engine/airless,
 /area/space/nearstation)
 "xpf" = (
 /obj/machinery/door/airlock/research/glass{
@@ -31896,7 +31939,7 @@
 	icon_state = "5-10"
 	},
 /obj/machinery/power/grounding_rod,
-/turf/open/floor/engine,
+/turf/open/floor/engine/airless,
 /area/space/nearstation)
 "xUu" = (
 /obj/structure/lattice/catwalk,
@@ -62130,7 +62173,7 @@ vjV
 ntL
 bZn
 sij
-bZn
+wom
 bZn
 eID
 drO
@@ -63181,7 +63224,7 @@ tDg
 hJA
 wmr
 kea
-aHS
+rYd
 dxb
 gTX
 gqh
@@ -63952,7 +63995,7 @@ icC
 hJA
 wmr
 kea
-aHS
+kwD
 dxb
 aEK
 soV
