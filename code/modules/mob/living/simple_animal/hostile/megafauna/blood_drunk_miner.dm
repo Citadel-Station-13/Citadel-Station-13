@@ -125,9 +125,8 @@ Difficulty: Medium
 					adjustHealth(-(L.maxHealth * 0.5))
 			L.gib()
 			return TRUE
-	DelayNextAction(CLICK_CD_MELEE, flush = TRUE)
-	miner_saw.melee_attack_chain(src, target, null, ATTACK_IGNORE_CLICKDELAY | ATTACK_IGNORE_ACTION | NO_AUTO_CLICKDELAY_HANDLING)
-	DiscardCurrentAction()
+	miner_saw.melee_attack_chain(src, target, null, ATTACK_IGNORE_CLICKDELAY)
+	FlushCurrentAction()
 	if(guidance)
 		adjustHealth(-2)
 	transform_weapon()
