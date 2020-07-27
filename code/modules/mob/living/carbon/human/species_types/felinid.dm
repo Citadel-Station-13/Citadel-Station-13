@@ -9,37 +9,9 @@
 	mutantears = /obj/item/organ/ears/cat
 	mutanttail = /obj/item/organ/tail/cat
 
-/datum/species/human/felinid/qualifies_for_rank(rank, list/features)
-	return TRUE
-
-//Curiosity killed the cat's wagging tail.
-/datum/species/human/felinid/spec_death(gibbed, mob/living/carbon/human/H)
-	if(H)
-		stop_wagging_tail(H)
-
-/datum/species/human/felinid/spec_stun(mob/living/carbon/human/H,amount)
-	if(H)
-		stop_wagging_tail(H)
-	. = ..()
-
-
-/datum/species/human/felinid/can_wag_tail(mob/living/carbon/human/H)
-	return mutant_bodyparts["mam_tail"] || mutant_bodyparts["mam_waggingtail"]
-
-/datum/species/human/felinid/is_wagging_tail(mob/living/carbon/human/H)
-	return mutant_bodyparts["mam_waggingtail"]
-
-/datum/species/human/felinid/start_wagging_tail(mob/living/carbon/human/H)
-	if(mutant_bodyparts["mam_tail"])
-		mutant_bodyparts["mam_waggingtail"] = mutant_bodyparts["mam_tail"]
-		mutant_bodyparts -= "mam_tail"
-	H.update_body()
-
-/datum/species/human/felinid/stop_wagging_tail(mob/living/carbon/human/H)
-	if(mutant_bodyparts["mam_waggingtail"])
-		mutant_bodyparts["mam_tail"] = mutant_bodyparts["mam_waggingtail"]
-		mutant_bodyparts -= "mam_waggingtail"
-	H.update_body()
+	tail_type = "mam_tail"
+	wagging_type = "mam_waggingtail"
+	species_type = "furry"
 
 /datum/species/human/felinid/on_species_gain(mob/living/carbon/C, datum/species/old_species, pref_load)
 	if(ishuman(C))

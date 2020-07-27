@@ -1,0 +1,4 @@
+author: "timothyteakettle"
+delete-after: True
+changes: 
+  - bugfix: "slight tweak to how material crafting works"
