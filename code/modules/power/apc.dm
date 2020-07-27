@@ -1121,6 +1121,10 @@
 	if(malf.malfhacking)
 		to_chat(malf, "You are already hacking an APC.")
 		return
+	var/area/A = get_area(src)
+	if(!A.valid_malf_hack)
+		to_chat(malf, "This APC is not well connected enough to the Exonet to provide any useful processing capabilities.")
+		return
 	to_chat(malf, "Beginning override of APC systems. This takes some time, and you cannot perform other actions during the process.")
 	malf.malfhack = src
 	malf.malfhacking = addtimer(CALLBACK(malf, /mob/living/silicon/ai/.proc/malfhacked, src), 600, TIMER_STOPPABLE)
