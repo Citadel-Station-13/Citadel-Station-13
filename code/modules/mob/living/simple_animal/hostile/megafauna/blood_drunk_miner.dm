@@ -87,7 +87,7 @@ Difficulty: Medium
 /mob/living/simple_animal/hostile/megafauna/blood_drunk_miner/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
 	var/adjustment_amount = amount * 0.1
 	if(world.time + adjustment_amount > next_action)
-		DelayNextAction(adjustment_amount) //attacking it interrupts it attacking, but only briefly
+		DelayNextAction(adjustment_amount, flush = TRUE) //attacking it interrupts it attacking, but only briefly
 	. = ..()
 
 /mob/living/simple_animal/hostile/megafauna/blood_drunk_miner/death()
@@ -125,8 +125,8 @@ Difficulty: Medium
 					adjustHealth(-(L.maxHealth * 0.5))
 			L.gib()
 			return TRUE
-	DelayNextAction(CLICK_CD_MELEE)
-	miner_saw.melee_attack_chain(src, target)
+	DelayNextAction(CLICK_CD_MELEE, flush = TRUE)
+	miner_saw.melee_attack_chain(src, target, null, ATTACK_IGNORE_CLICKDELAY)
 	if(guidance)
 		adjustHealth(-2)
 	transform_weapon()
@@ -161,7 +161,7 @@ Difficulty: Medium
 		face_atom(target)
 		new /obj/effect/temp_visual/dir_setting/firing_effect(loc, dir)
 		Shoot(target)
-		DelayNextAction(CLICK_CD_RANGE)
+		DelayNextAction(CLICK_CD_RANGE, flush = TRUE)
 
 //I'm still of the belief that this entire proc needs to be wiped from existence.
 //  do not take my touching of it to be endorsement of it. ~mso
@@ -173,7 +173,7 @@ Difficulty: Medium
 		return
 	if(dashing || !CheckActionCooldown() || !Adjacent(target))
 		if(dashing && next_action <= world.time)
-			SetNextAction(1, considered_action = FALSE, immediate = FALSE)
+			SetNextAction(1, considered_action = FALSE, immediate = FALSE, flush = TRUE)
 		INVOKE_ASYNC(src, .proc/quick_attack_loop) //lets try that again.
 		return
 	AttackingTarget()

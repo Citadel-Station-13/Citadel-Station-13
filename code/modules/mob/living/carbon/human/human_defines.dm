@@ -110,7 +110,7 @@
 		return ..()
 	visible_message("<span class='warning'>[src] strikes back perfectly at [attacker], staggering them!</span>")
 	if(D.parry_data["HUMAN_PARRY_PUNCH"])
-		UnarmedAttack(attacker, TRUE, INTENT_HARM, UNARMED_ATTACK_PARRY)
+		UnarmedAttack(attacker, TRUE, INTENT_HARM, ATTACK_IS_PARRY_COUNTERATTACK | ATTACK_IGNORE_ACTION | ATTACK_IGNORE_CLICKDELAY | NO_AUTO_CLICKDELAY_HANDLING)
 	var/mob/living/L = attacker
 	if(istype(L))
 		L.Stagger(D.parry_data["HUMAN_PARRY_STAGGER"])

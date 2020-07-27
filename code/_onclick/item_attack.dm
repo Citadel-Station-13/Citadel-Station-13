@@ -7,17 +7,18 @@
   *and lastly
   *afterattack. The return value does not matter.
   */
-/obj/item/proc/melee_attack_chain(mob/user, atom/target, params, flags, damage_multiplier = 1)
+/obj/item/proc/melee_attack_chain(mob/user, atom/target, params, attackchain_flags, damage_multiplier = 1)
 	if(isliving(user))
 		var/mob/living/L = user
-		if(!CHECK_MOBILITY(L, MOBILITY_USE) && !(flags & ATTACKCHAIN_PARRY_COUNTERATTACK))
+		if(!CHECK_MOBILITY(L, MOBILITY_USE) && !(attackchain_flags & ATTACK_IS_PARRY_COUNTERATTACK))
 			to_chat(L, "<span class='warning'>You are unable to swing [src] right now!</span>")
 			return
+	. = attackchain_flags
 	if(tool_behaviour && ((. = target.tool_act(user, src, tool_behaviour)) & STOP_ATTACK_PROC_CHAIN))
 		return
-	if((. |= pre_attack(target, user, params)) & STOP_ATTACK_PROC_CHAIN)
+	if((. |= pre_attack(target, user, params, ., damage_multiplier)) & STOP_ATTACK_PROC_CHAIN)
 		return
-	if((. |= target.attackby(src, user, params, flags, damage_multiplier)) & STOP_ATTACK_PROC_CHAIN)
+	if((. |= target.attackby(src, user, params, ., damage_multiplier)) & STOP_ATTACK_PROC_CHAIN)
 		return
 	if(QDELETED(src) || QDELETED(target))
 		return
@@ -38,10 +39,10 @@
 		return
 	interact(user)
 
-/obj/item/proc/pre_attack(atom/A, mob/living/user, params) //do stuff before attackby!
+/obj/item/proc/pre_attack(atom/A, mob/living/user, params, attackchain_flags, damage_multiplier) //do stuff before attackby!
 	if(SEND_SIGNAL(src, COMSIG_ITEM_PRE_ATTACK, A, user, params) & COMPONENT_NO_ATTACK)
 		return STOP_ATTACK_PROC_CHAIN
-	if(!CheckAttackCooldown(user, A))
+	if(!(attackchain_flags & ATTACK_IGNORE_CLICKDELAY) && !CheckAttackCooldown(user, A))
 		return STOP_ATTACK_PROC_CHAIN
 
 // No comment
@@ -148,7 +149,7 @@
 /mob/living/attacked_by(obj/item/I, mob/living/user, attackchain_flags = NONE, damage_multiplier = 1)
 	var/list/block_return = list()
 	var/totitemdamage = pre_attacked_by(I, user) * damage_multiplier
-	if((user != src) && mob_run_block(I, totitemdamage, "the [I.name]", ((attackchain_flags & ATTACKCHAIN_PARRY_COUNTERATTACK)? ATTACK_TYPE_PARRY_COUNTERATTACK : NONE) | ATTACK_TYPE_MELEE, I.armour_penetration, user, null, block_return) & BLOCK_SUCCESS)
+	if((user != src) && mob_run_block(I, totitemdamage, "the [I.name]", ((attackchain_flags & ATTACK_IS_PARRY_COUNTERATTACK)? ATTACK_IS_PARRY_COUNTERATTACK : NONE) | ATTACK_TYPE_MELEE, I.armour_penetration, user, null, block_return) & BLOCK_SUCCESS)
 		return FALSE
 	totitemdamage = block_calculate_resultant_damage(totitemdamage, block_return)
 	send_item_attack_message(I, user, null, totitemdamage)

@@ -16,7 +16,7 @@
 		to_chat(src, "<span class='warning'>The damage in your [check_arm.name] is preventing you from using it! Get it fixed, or at least splinted!</span>")
 		return
 
-	. = NONE
+	. = flags
 	
 	// Special glove functions:
 	// If the gloves do anything, have them return 1 to stop
@@ -28,27 +28,27 @@
 			return
 
 	for(var/datum/mutation/human/HM in dna.mutations)
-		. |= HM.on_attack_hand(A, proximity, intent, flags)
+		. |= HM.on_attack_hand(A, proximity, intent, .)
 
 	if(. & INTERRUPT_UNARMED_ATTACK)
 		return
 
 	SEND_SIGNAL(src, COMSIG_HUMAN_MELEE_UNARMED_ATTACK, A)
-	return . | A.attack_hand(src, intent, flags, .)
+	return . | A.attack_hand(src, intent, .)
 
-/atom/proc/attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags, clickchain_flags)
+/atom/proc/attack_hand(mob/user, act_intent = user.a_intent, flags)
 	SHOULD_NOT_SLEEP(TRUE)
 	if(!(interaction_flags_atom & INTERACT_ATOM_NO_FINGERPRINT_ATTACK_HAND))
 		add_fingerprint(user)
 	if(SEND_SIGNAL(src, COMSIG_ATOM_ATTACK_HAND, user) & COMPONENT_NO_ATTACK_HAND)
 		return
-	if(attack_hand_speed && !(clickchain_flags & ATTACK_HAND_IGNORE_CLICKDELAY))
+	if(attack_hand_speed && !(. & ATTACK_IGNORE_CLICKDELAY))
 		if(!user.CheckActionCooldown(attack_hand_speed))
 			return
 	if(interaction_flags_atom & INTERACT_ATOM_ATTACK_HAND)
 		. = _try_interact(user)
-	INVOKE_ASYNC(src, .proc/on_attack_hand, user, act_intent, unarmed_attack_flags)
-	if(!(clickchain_flags & ATTACK_HAND_IGNORE_ACTION))
+	INVOKE_ASYNC(src, .proc/on_attack_hand, user, act_intent, .)
+	if(!(. & ATTACK_IGNORE_ACTION))
 		if(attack_hand_unwieldlyness)
 			user.DelayNextAction(attack_hand_unwieldlyness, considered_action = attack_hand_is_action)
 		else if(attack_hand_is_action)

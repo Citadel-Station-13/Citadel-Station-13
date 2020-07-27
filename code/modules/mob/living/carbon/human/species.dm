@@ -1445,7 +1445,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 		target.grabbedby(user)
 		return 1
 
-/datum/species/proc/harm(mob/living/carbon/human/user, mob/living/carbon/human/target, datum/martial_art/attacker_style, unarmed_attack_flags = NONE)
+/datum/species/proc/harm(mob/living/carbon/human/user, mob/living/carbon/human/target, datum/martial_art/attacker_style, attackchain_flags = NONE)
 	if(!attacker_style && HAS_TRAIT(user, TRAIT_PACIFISM))
 		to_chat(user, "<span class='warning'>You don't want to harm [target]!</span>")
 		return FALSE
@@ -1457,7 +1457,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 			target_message = "<span class='warning'>[target] blocks your attack!</span>")
 		return FALSE
 
-	if(!(unarmed_attack_flags & UNARMED_ATTACK_PARRY))
+	if(!(attackchain_flags & ATTACK_IS_PARRY_COUNTERATTACK))
 		if(HAS_TRAIT(user, TRAIT_PUGILIST))//CITADEL CHANGE - makes punching cause staminaloss but funny martial artist types get a discount
 			user.adjustStaminaLossBuffered(1.5)
 		else
@@ -1499,7 +1499,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 		var/obj/item/bodypart/affecting = target.get_bodypart(ran_zone(user.zone_selected))
 
 		var/miss_chance = 100//calculate the odds that a punch misses entirely. considers stamina and brute damage of the puncher. punches miss by default to prevent weird cases
-		if(unarmed_attack_flags & UNARMED_ATTACK_PARRY)
+		if(attackchain_flags & ATTACK_IS_PARRY_COUNTERATTACK)
 			miss_chance = 0
 		else
 			if(user.dna.species.punchdamagelow)
@@ -1686,7 +1686,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 /datum/species/proc/spec_hitby(atom/movable/AM, mob/living/carbon/human/H)
 	return
 
-/datum/species/proc/spec_attack_hand(mob/living/carbon/human/M, mob/living/carbon/human/H, datum/martial_art/attacker_style, act_intent, unarmed_attack_flags)
+/datum/species/proc/spec_attack_hand(mob/living/carbon/human/M, mob/living/carbon/human/H, datum/martial_art/attacker_style, act_intent, attackchain_flags)
 	if(!istype(M))
 		return
 	CHECK_DNA_AND_SPECIES(M)
@@ -1706,7 +1706,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 			grab(M, H, attacker_style)
 
 		if("harm")
-			harm(M, H, attacker_style, unarmed_attack_flags)
+			harm(M, H, attacker_style, attackchain_flags)
 
 		if("disarm")
 			disarm(M, H, attacker_style)
@@ -1716,7 +1716,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 	// Allows you to put in item-specific reactions based on species
 	if(user != H)
 		var/list/block_return = list()
-		if(H.mob_run_block(I, totitemdamage, "the [I.name]", ((attackchain_flags & ATTACKCHAIN_PARRY_COUNTERATTACK)? ATTACK_TYPE_PARRY_COUNTERATTACK : NONE) | ATTACK_TYPE_MELEE, I.armour_penetration, user, affecting.body_zone, block_return) & BLOCK_SUCCESS)
+		if(H.mob_run_block(I, totitemdamage, "the [I.name]", ((attackchain_flags & ATTACK_IS_PARRY_COUNTERATTACK)? ATTACK_TYPE_PARRY_COUNTERATTACK : NONE) | ATTACK_TYPE_MELEE, I.armour_penetration, user, affecting.body_zone, block_return) & BLOCK_SUCCESS)
 			return 0
 		totitemdamage = block_calculate_resultant_damage(totitemdamage, block_return)
 	if(H.check_martial_melee_block())
