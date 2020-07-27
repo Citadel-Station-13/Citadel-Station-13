@@ -55,7 +55,7 @@
 /mob/living/simple_animal/attack_paw(mob/living/carbon/monkey/M)
 	. = ..()
 	if(.) //successful larva bite
-		var/damage = rand(1, 3)
+		var/damage = M.get_attack_damage()
 		attack_threshold_check(damage)
 		return 1
 	if (M.a_intent == INTENT_HELP)

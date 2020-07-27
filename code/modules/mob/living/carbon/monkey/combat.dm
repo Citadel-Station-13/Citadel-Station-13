@@ -19,6 +19,45 @@
 	var/obj/machinery/disposal/bodyDisposal = null
 	var/next_battle_screech = 0
 	var/battle_screech_cooldown = 50
+	//unarmed melee damage values
+	var/combat_damage_lower = 1
+	var/combat_damage_upper = 3
+	//power level values
+	var/power_level = 0 //how strong is this monkey, from 1 up to their potential, which by default, is 100
+	var/maximum_power = 100
+	var/learning_rate = 1 //ratio of how fast it gains power (see get_attack_damage)
+
+	var/enraged = FALSE //once fed monkey energy, it becomes enraged and permanently hates other monkeys, and makes other monkeys enraged on hit
+
+/mob/living/carbon/monkey/proc/attempt_parry()
+	if(prob(5 + power_level/1.5)) //70% parry chance in the end
+		initiate_parry_sequence()
+
+/mob/living/carbon/monkey/get_parry_stage()
+	if(!client)
+		return PARRY_ACTIVE
+	return ..()
+
+/mob/living/carbon/monkey/proc/adjust_power_level(var/power_increment)
+	if(power_level < maximum_power) //if power is above maximum, it was vv'd and we don't want to mess with it
+		power_level = max(power_level + power_increment, maximum_power) //we cap it at 100
+		combat_damage_lower = initial(combat_damage_lower) + power_level/10 //caps at 11 damage minimum
+		combat_damage_upper = initial(combat_damage_lower) + power_level/8 //caps at 15.5 damage maximum
+		if(((combat_damage_lower + combat_damage_upper)/2) > best_force)
+			var/obj/item/monkey_item = get_active_held_item()
+			if(!monkey_item || !monkey_item.can_active_parry(monkey_item))
+				dropItemToGround(monkey_item) //we only care for weak things if they can parry, you fool.
+		best_force = (combat_damage_lower + combat_damage_upper)/2
+		for(var/obj/item/bodypart/part in bodyparts)
+			part.body_damage_coeff = initial(part.body_damage_coeff) - (power_level/200) //caps at 0.5 less
+			part.wound_resistance = initial(part.wound_resistance) + power_level/5 //caps at 20 extra
+		maxStepsTick = initial(maxStepsTick) + (power_level/20) //caps at 5 extra, 11 overall
+
+/mob/living/carbon/monkey/proc/get_attack_damage()
+	//this is ONLY called when we actually deal damage, and so we use it to adjust our power level slightly
+	var/damage = rand(combat_damage_lower, combat_damage_upper)
+	adjust_power_level((damage/8) * learning_rate) //800 damage dealt is required to become the most powerful monkey of all time
+	return damage
 
 /mob/living/carbon/monkey/proc/IsStandingStill()
 	return resisting || pickpocketing || disposing_body
@@ -63,7 +102,6 @@
 			M.next_battle_screech = world.time + battle_screech_cooldown
 
 /mob/living/carbon/monkey/proc/equip_item(var/obj/item/I)
-
 	if(I.loc == src)
 		return TRUE
 
@@ -74,7 +112,7 @@
 	if(I.force >= best_force)
 		best_force = I.force
 	else
-		addtimer(CALLBACK(src, .proc/pickup_and_wear, I), 5)
+		addtimer(CALLBACK(src, .proc/pickup_and_wear, I), max(5 - (power_level/40), 0)) //at power level 100 a monkey can pick stuff up in 2.5 seconds
 
 	return TRUE
 
@@ -102,7 +140,7 @@
 		return TRUE
 
 	// target non-monkey mobs when aggressive, with a small probability of monkey v monkey
-	if(aggressive && (!istype(L, /mob/living/carbon/monkey/) || prob(MONKEY_AGGRESSIVE_MVM_PROB)))
+	if(aggressive && (prob(MONKEY_AGGRESSIVE_MVM_PROB + (power_level/2)) || !istype(L, /mob/living/carbon/monkey/)))
 		return TRUE
 
 	return FALSE
@@ -174,7 +212,7 @@
 			if(!pickupTarget && prob(MONKEY_WEAPON_PROB))
 				var/obj/item/W = locate(/obj/item/) in oview(2,src)
 				if(!locate(/obj/item) in held_items)
-					best_force = 0
+					best_force = (combat_damage_lower + combat_damage_upper)/2
 				if(W && !blacklistItems[W] && W.force > best_force)
 					pickupTarget = W
 
@@ -284,7 +322,7 @@
 	return IsStandingStill()
 
 /mob/living/carbon/monkey/proc/pickpocket(var/mob/M)
-	if(do_mob(src, M, MONKEY_ITEM_SNATCH_DELAY) && pickupTarget)
+	if(do_mob(src, M, max(MONKEY_ITEM_SNATCH_DELAY - (power_level/5), 0)) && pickupTarget) //delay becomes 5 from 25 at power level 100
 		for(var/obj/item/I in M.held_items)
 			if(I == pickupTarget)
 				M.visible_message("<span class='danger'>[src] snatches [pickupTarget] from [M].</span>", "<span class='userdanger'>[src] snatched [pickupTarget]!</span>")
@@ -330,11 +368,11 @@
 
 	// if we arn't enemies, we were likely recruited to attack this target, jobs done if we calm down so go back to idle
 	if(!enemies[L])
-		if( target == L && prob(MONKEY_HATRED_REDUCTION_PROB) )
+		if(target == L && prob(MONKEY_HATRED_REDUCTION_PROB - (power_level/5)))
 			back_to_idle()
 		return // already de-aggroed
 
-	if(prob(MONKEY_HATRED_REDUCTION_PROB))
+	if(prob(MONKEY_HATRED_REDUCTION_PROB - (power_level/5))) //at power level 100 it becomes 5%
 		enemies[L] --
 
 	// if we are not angry at our target, go back to idle
@@ -355,42 +393,52 @@
 		a_intent = INTENT_HARM
 
 /mob/living/carbon/monkey/attack_hand(mob/living/L)
-	if(L.a_intent == INTENT_HARM && prob(MONKEY_RETALIATE_HARM_PROB))
+	if(L.a_intent == INTENT_HARM && prob(MONKEY_RETALIATE_HARM_PROB + (power_level/20))) //this means it can cap at 100 instead of being 95
+		attempt_parry()
 		retaliate(L)
 	else if(L.a_intent == INTENT_DISARM && prob(MONKEY_RETALIATE_DISARM_PROB))
+		attempt_parry()
 		retaliate(L)
 	return ..()
 
 /mob/living/carbon/monkey/attack_alien(mob/living/carbon/alien/humanoid/M)
-	if(M.a_intent == INTENT_HARM && prob(MONKEY_RETALIATE_HARM_PROB))
+	if(M.a_intent == INTENT_HARM && prob(MONKEY_RETALIATE_HARM_PROB + (power_level/20)))
+		attempt_parry()
 		retaliate(M)
 	else if(M.a_intent == INTENT_DISARM && prob(MONKEY_RETALIATE_DISARM_PROB))
+		attempt_parry()
 		retaliate(M)
 	return ..()
 
 /mob/living/carbon/monkey/attack_larva(mob/living/carbon/alien/larva/L)
-	if(L.a_intent == INTENT_HARM && prob(MONKEY_RETALIATE_HARM_PROB))
+	if(L.a_intent == INTENT_HARM && prob(MONKEY_RETALIATE_HARM_PROB + (power_level/20)))
+		attempt_parry()
 		retaliate(L)
 	return ..()
 
 /mob/living/carbon/monkey/attack_hulk(mob/living/carbon/human/user, does_attack_animation = FALSE)
-	if(user.a_intent == INTENT_HARM && prob(MONKEY_RETALIATE_HARM_PROB))
+	if(user.a_intent == INTENT_HARM && prob(MONKEY_RETALIATE_HARM_PROB + (power_level/20)))
+		attempt_parry()
 		retaliate(user)
 	return ..()
 
 /mob/living/carbon/monkey/attack_paw(mob/living/L)
-	if(L.a_intent == INTENT_HARM && prob(MONKEY_RETALIATE_HARM_PROB))
+	if(L.a_intent == INTENT_HARM && prob(MONKEY_RETALIATE_HARM_PROB + (power_level/20)))
+		attempt_parry()
 		retaliate(L)
 	else if(L.a_intent == INTENT_DISARM && prob(MONKEY_RETALIATE_DISARM_PROB))
+		attempt_parry()
 		retaliate(L)
 	return ..()
 
 /mob/living/carbon/monkey/attackby(obj/item/W, mob/user, params)
+	attempt_parry() //you fool, you absolute fool, you underestimate my POWER?
 	..()
 	if((W.force) && (!target) && (W.damtype != STAMINA) )
 		retaliate(user)
 
 /mob/living/carbon/monkey/bullet_act(obj/item/projectile/Proj)
+	attempt_parry()
 	if(istype(Proj , /obj/item/projectile/beam)||istype(Proj, /obj/item/projectile/bullet))
 		if((Proj.damage_type == BURN) || (Proj.damage_type == BRUTE))
 			if(!Proj.nodamage && Proj.damage < src.health && isliving(Proj.firer))
@@ -398,6 +446,7 @@
 	return ..()
 
 /mob/living/carbon/monkey/hitby(atom/movable/AM, skipcatch = FALSE, hitpush = TRUE, blocked = FALSE, datum/thrownthing/throwingdatum)
+	attempt_parry()
 	if(istype(AM, /obj/item))
 		var/obj/item/I = AM
 		if(I.throwforce < src.health && I.thrownby && ishuman(I.thrownby))

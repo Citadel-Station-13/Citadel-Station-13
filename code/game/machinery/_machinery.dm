@@ -309,14 +309,14 @@ Class Procs:
 
 ////////////////////////////////////////////////////////////////////////////////////////////
 
-/obj/machinery/attack_paw(mob/living/user)
-	if(user.a_intent != INTENT_HARM)
-		return attack_hand(user)
+/obj/machinery/attack_paw(mob/living/carbon/monkey/M)
+	if(M.a_intent != INTENT_HARM)
+		return attack_hand(M)
 	else
-		user.changeNext_move(CLICK_CD_MELEE)
-		user.do_attack_animation(src, ATTACK_EFFECT_PUNCH)
-		user.visible_message("<span class='danger'>[user.name] smashes against \the [src.name] with its paws.</span>", null, null, COMBAT_MESSAGE_RANGE)
-		take_damage(4, BRUTE, "melee", 1)
+		M.changeNext_move(CLICK_CD_MELEE)
+		M.do_attack_animation(src, ATTACK_EFFECT_PUNCH)
+		M.visible_message("<span class='danger'>[M.name] smashes against \the [src.name] with its paws.</span>", null, null, COMBAT_MESSAGE_RANGE)
+		take_damage(M.get_attack_damage(), BRUTE, "melee", 1)
 
 /obj/machinery/attack_robot(mob/user)
 	if(!(interaction_flags_machine & INTERACT_MACHINE_ALLOW_SILICON) && !IsAdminGhost(user))

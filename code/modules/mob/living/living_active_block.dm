@@ -97,7 +97,7 @@
 		return
 	// QOL: Attempt to toggle on combat mode if it isn't already
 	SEND_SIGNAL(src, COMSIG_ENABLE_COMBAT_MODE)
-	if(!SEND_SIGNAL(src, COMSIG_COMBAT_MODE_CHECK, COMBAT_MODE_ACTIVE))
+	if(SEND_SIGNAL(src, COMSIG_COMBAT_MODE_CHECK, COMBAT_MODE_INACTIVE))
 		to_chat(src, "<span class='warning'>You must be in combat mode to actively block!</span>")
 		return FALSE
 	var/datum/block_parry_data/data = I.get_block_parry_data()

@@ -138,7 +138,7 @@
 	if(M.a_intent == INTENT_HELP)
 		return ..() //shaking
 
-	if(M.a_intent == INTENT_DISARM) //Always drop item in hand, if no item, get stunned instead.
+	if(M.a_intent == INTENT_DISARM || prob(M.power_level/2)) //Always drop item in hand, if no item, get stunned instead.
 		var/obj/item/I = get_active_held_item()
 		if(I && dropItemToGround(I))
 			playsound(loc, 'sound/weapons/slash.ogg', 25, 1, -1)

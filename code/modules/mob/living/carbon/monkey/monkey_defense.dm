@@ -5,7 +5,7 @@
 	else
 		..()
 
-/mob/living/carbon/monkey/attack_paw(mob/living/M)
+/mob/living/carbon/monkey/attack_paw(mob/living/carbon/monkey/M)
 	. = ..()
 	if(!.) //unsuccessful monkey bite.
 		return
@@ -15,8 +15,7 @@
 		affecting = get_bodypart(BODY_ZONE_CHEST)
 	if(M.limb_destroyer)
 		dismembering_strike(M, affecting.body_zone)
-	var/dmg = rand(1, 5)
-	apply_damage(dmg, BRUTE, affecting)
+	apply_damage(M.get_attack_damage(), BRUTE, affecting)
 
 /mob/living/carbon/monkey/attack_larva(mob/living/carbon/alien/larva/L)
 	. = ..()

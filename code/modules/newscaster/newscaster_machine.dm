@@ -606,12 +606,11 @@ GLOBAL_LIST_EMPTY(allCasters)
 		playsound(loc, 'sound/effects/glassbr3.ogg', 100, 1)
 		update_icon()
 
-
-/obj/machinery/newscaster/attack_paw(mob/user)
-	if(user.a_intent != INTENT_HARM)
-		to_chat(user, "<span class='warning'>The newscaster controls are far too complicated for your tiny brain!</span>")
+/obj/machinery/newscaster/attack_paw(mob/living/carbon/monkey/M)
+	if(M.a_intent != INTENT_HARM)
+		to_chat(M, "<span class='warning'>The newscaster controls are far too complicated for your tiny brain!</span>")
 	else
-		take_damage(5, BRUTE, "melee")
+		take_damage(M.get_attack_damage(), BRUTE, "melee")
 
 /obj/machinery/newscaster/proc/AttachPhoto(mob/user)
 	var/obj/item/photo/photo = user.is_holding_item_of_type(/obj/item/photo)

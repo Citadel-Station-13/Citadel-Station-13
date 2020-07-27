@@ -42,6 +42,8 @@
 	create_dna(src)
 	dna.initialize_dna(random_blood_type())
 
+	best_force = (combat_damage_lower + combat_damage_upper)/2
+
 /mob/living/carbon/monkey/ComponentInitialize()
 	. = ..()
 	AddElement(/datum/element/mob_holder, worn_state = "monkey", inv_slots = ITEM_SLOT_HEAD)
@@ -101,13 +103,11 @@
 				stat("Chemical Storage", "[changeling.chem_charges]/[changeling.chem_storage]")
 				stat("Absorbed DNA", changeling.absorbedcount)
 
-
 /mob/living/carbon/monkey/verb/removeinternal()
 	set name = "Remove Internals"
 	set category = "IC"
 	internal = null
 	return
-
 
 /mob/living/carbon/monkey/IsAdvancedToolUser()//Unless its monkey mode monkeys cant use advanced tools
 	if(mind && is_monkey(mind))
@@ -118,7 +118,9 @@
 	return FALSE
 
 /mob/living/carbon/monkey/canBeHandcuffed()
-	return TRUE
+	if(power_level < 90)
+		return TRUE
+	return FALSE //his power cannot be contained.
 
 /mob/living/carbon/monkey/assess_threat(judgement_criteria, lasercolor = "", datum/callback/weaponcheck=null)
 	if(judgement_criteria & JUDGE_EMAGGED)

@@ -357,7 +357,7 @@
 		if(mob_run_block(M, 0, "the [M.name]", ATTACK_TYPE_MELEE | ATTACK_TYPE_UNARMED, 0, M, check_zone(M.zone_selected), null) & BLOCK_SUCCESS)
 			return FALSE
 		M.do_attack_animation(src, ATTACK_EFFECT_BITE)
-		if (prob(75))
+		if (prob(75) + (M.power_level/4)) //caps at 100% chance to hit
 			log_combat(M, src, "attacked")
 			playsound(loc, 'sound/weapons/bite.ogg', 50, 1, -1)
 			visible_message("<span class='danger'>[M.name] bites [src]!</span>", \
