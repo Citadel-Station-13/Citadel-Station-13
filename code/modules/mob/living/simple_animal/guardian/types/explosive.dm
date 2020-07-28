@@ -37,7 +37,7 @@
 	if(isobj(A) && Adjacent(A))
 		if(bomb_cooldown <= world.time && !stat)
 			var/datum/component/killerqueen/K = A.AddComponent(/datum/component/killerqueen, CALLBACK(src, .proc/on_explode), CALLBACK(src, .proc/on_failure), \
-			examine_message = "<span class='holoparasite'>It glows with a strange <font color=\"[spawner.guardiancolor]\">light</font>!</span>"))
+			examine_message = "<span class='holoparasite'>It glows with a strange <font color=\"[guardiancolor]\">light</font>!</span>")
 			QDEL_IN(K, 1 MINUTES)
 			to_chat(src, "<span class='danger'><B>Success! Bomb armed!</span></B>")
 			bomb_cooldown = world.time + 200
@@ -46,10 +46,10 @@
 
 /mob/living/simple_animal/hostile/guardian/bomb/proc/on_explode(atom/bomb, atom/victim)
 	if((victim == src) || (victim == summoner) || (hasmatchingsummoner(victim)))
-		to_chat(victim, "<span class='holoparasite'>[src] glows with a strange <font color=\"[spawner.guardiancolor]\">light</font>, and you don't touch it.</span>")
+		to_chat(victim, "<span class='holoparasite'>[src] glows with a strange <font color=\"[guardiancolor]\">light</font>, and you don't touch it.</span>")
 		return FALSE
-	to_chat(spawner, "<span class='danger'>One of your explosive traps caught [victim]!</span>")
+	to_chat(src, "<span class='danger'>One of your explosive traps caught [victim]!</span>")
 	to_chat(victim, "<span class='danger'>[bomb] was boobytrapped!</span>")
 
 /mob/living/simple_animal/hostile/guardian/bomb/proc/on_failure(atom/bomb)
-	to_chat(spawner, "<span class='danger'><b>Failure! Your trap didn't catch anyone this time.</span></B>")
+	to_chat(src, "<span class='danger'><b>Failure! Your trap didn't catch anyone this time.</span></B>")
