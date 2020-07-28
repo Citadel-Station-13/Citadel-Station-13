@@ -13,7 +13,7 @@
 /datum/antagonist/bloodsucker/proc/LifeTick()// Should probably run from life.dm, same as handle_changeling, but will be an utter pain to move
 	set waitfor = FALSE // Don't make on_gain() wait for this function to finish. This lets this code run on the side.
 	var/notice_healing
-	while(owner && !AmFinalDeath()) // owner.has_antag_datum(ANTAG_DATUM_BLOODSUCKER) == src
+	while(owner && !AmFinalDeath())
 		if(owner.current.stat == CONSCIOUS && !poweron_feed && !HAS_TRAIT(owner.current, TRAIT_FAKEDEATH)) // Deduct Blood
 			AddBloodVolume(passive_blood_drain) // -.1 currently
 		if(HandleHealing(1)) 		// Heal
@@ -272,13 +272,15 @@
 
 /datum/antagonist/bloodsucker/AmFinalDeath()
  	return owner && owner.AmFinalDeath()
-/datum/antagonist/changeling/AmFinalDeath()
- 	return owner && owner.AmFinalDeath()
 
 /datum/mind/proc/AmFinalDeath()
  	return !current || QDELETED(current) || !isliving(current) || isbrain(current) || !get_turf(current) // NOTE: "isliving()" is not the same as STAT == CONSCIOUS. This is to make sure you're not a BORG (aka silicon)
 
 /datum/antagonist/bloodsucker/proc/FinalDeath()
+		//Dont bother if we are already supposed to be dead
+	if(FinalDeath)
+		return 
+	FinalDeath = TRUE //We are now supposed to die. Lets not spam it.
 	if(!iscarbon(owner.current)) //Check for non carbons.
 		owner.current.gib()
 		return
