@@ -167,10 +167,10 @@
 			return
 	if(last_man_standing)
 		if(syndicate)
-			to_chat(owner.current,"<span class='userdanger'> All the loyalist agents are dead, and no more is required of you. Die a glorious death, agent. </span>")
+			to_chat(owner.current,"<span class='userdanger'>All the suspected agents are dead, and no more is required of you. Die a glorious death, agent.</span>")
+			replace_escape_objective(owner)
 		else
-			to_chat(owner.current,"<span class='userdanger'> All the other agents are dead, and you're the last loose end. Stage a Syndicate terrorist attack to cover up for today's events. You no longer have any limits on collateral damage.</span>")
-		replace_escape_objective(owner)
+			to_chat(owner.current,"<span class='userdanger'>All the other agents are dead. You have done us all a great service and shall be honorably exiled upon returning to base.</span>")
 
 /datum/antagonist/traitor/internal_affairs/proc/iaa_process()
 	if(owner&&owner.current&&owner.current.stat!=DEAD)

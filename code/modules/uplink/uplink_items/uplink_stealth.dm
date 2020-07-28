@@ -71,7 +71,7 @@
 			stealthy takedowns."
 	item = /obj/item/book/granter/martial/krav_maga
 	cost = 16
-	player_minimum = 30
+	player_minimum = 25
 	surplus = 0
 	include_modes = list(/datum/game_mode/traitor/internal_affairs)
 
