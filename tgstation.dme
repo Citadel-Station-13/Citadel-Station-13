@@ -3544,7 +3544,6 @@
 #include "sandcode\code\game\objects\items\circuitboards\computer_circuitboards.dm"
 #include "sandcode\code\game\objects\items\circuitboards\machine_circuitboards.dm"
 #include "sandcode\code\game\objects\items\devices\extra_arm.dm"
-#include "sandcode\code\game\objects\items\devices\floor_painter.dm"
 #include "sandcode\code\game\objects\items\plushes\plushes.dm"
 #include "sandcode\code\game\objects\items\robot\robot_upgrades.dm"
 #include "sandcode\code\game\objects\items\storage\backpack.dm"
