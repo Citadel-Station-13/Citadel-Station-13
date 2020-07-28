@@ -11,7 +11,6 @@
 // Show as dead when...
 
 /datum/antagonist/bloodsucker/proc/LifeTick()// Should probably run from life.dm, same as handle_changeling, but will be an utter pain to move
-	set waitfor = FALSE // Don't make on_gain() wait for this function to finish. This lets this code run on the side.
 	var/notice_healing
 	while(owner && !AmFinalDeath()) // owner.has_antag_datum(ANTAG_DATUM_BLOODSUCKER) == src
 		if(owner.current.stat == CONSCIOUS && !poweron_feed && !HAS_TRAIT(owner.current, TRAIT_FAKEDEATH)) // Deduct Blood
