@@ -465,6 +465,7 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 			usr.UnarmedAttack(src, TRUE)
 			if(usr.get_active_held_item() == src)
 				melee_attack_chain(usr, over)
+			usr.FlushCurrentAction()
 			return TRUE //returning TRUE as a "is this overridden?" flag
 	if(!Adjacent(usr) || !over.Adjacent(usr))
 		return // should stop you from dragging through windows
