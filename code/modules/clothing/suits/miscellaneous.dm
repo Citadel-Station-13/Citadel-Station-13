@@ -402,6 +402,30 @@
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
 	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
 
+/obj/item/clothing/suit/jacket/flannel
+	name = "black flannel jacket"
+	desc = "Comfy and supposedly flammable."
+	icon_state = "flannel"
+	item_state = "flannel"
+
+/obj/item/clothing/suit/jacket/flannel/red
+	name = "red flannel jacket"
+	desc = "Comfy and supposedly flammable."
+	icon_state = "flannel_red"
+	item_state = "flannel_red"
+
+/obj/item/clothing/suit/jacket/flannel/aqua
+	name = "aqua flannel jacket"
+	desc = "Comfy and supposedly flammable."
+	icon_state = "flannel_aqua"
+	item_state = "flannel_aqua"
+
+/obj/item/clothing/suit/jacket/flannel/brown
+	name = "brown flannel jacket"
+	desc = "Comfy and supposedly flammable."
+	icon_state = "flannel_brown"
+	item_state = "flannel_brown"
+
 /obj/item/clothing/suit/jacket/leather
 	name = "leather jacket"
 	desc = "Pompadour not included."
@@ -759,6 +783,17 @@
 /obj/item/clothing/head/hooded/winterhood/hydro
 	desc = "A green winter coat hood."
 	icon_state = "winterhood_hydro"
+
+/obj/item/clothing/suit/hooded/wintercoat/bar
+	name = "bartender winter coat"
+	desc = "A fancy winter coat with a waistcoat and flamboyant bowtie stuck onto it. The zipper tab is actually the bowtie."
+	icon_state = "coatbar"
+	item_state = "coatbar"
+	hoodtype = /obj/item/clothing/head/hooded/winterhood/bar
+
+/obj/item/clothing/head/hooded/winterhood/bar
+	desc = "A fancy winter coat hood."
+	icon_state = "winterhood_bar"
 
 /obj/item/clothing/suit/hooded/wintercoat/cosmic
 	name = "cosmic winter coat"
