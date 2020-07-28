@@ -50,6 +50,7 @@
 		return FALSE
 	to_chat(src, "<span class='danger'>One of your explosive traps caught [victim]!</span>")
 	to_chat(victim, "<span class='danger'>[bomb] was boobytrapped!</span>")
+	return TRUE
 
 /mob/living/simple_animal/hostile/guardian/bomb/proc/on_failure(atom/bomb)
 	to_chat(src, "<span class='danger'><b>Failure! Your trap didn't catch anyone this time.</span></B>")

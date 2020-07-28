@@ -70,7 +70,7 @@
 /datum/component/killerqueen/proc/touch_detonate(datum/source, mob/user)
 	detonate(user)
 
-/datum/component/killerqueen/proc/on_examine(datum/source, list/examine_return)
+/datum/component/killerqueen/proc/on_examine(datum/source, mob/examiner, list/examine_return)
 	if(examine_message)
 		examine_return += examine_message
 
