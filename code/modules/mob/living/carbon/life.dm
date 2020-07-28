@@ -426,8 +426,8 @@
 
 /mob/living/carbon/proc/handle_bloodsucker()
 	if(mind && AmBloodsucker(src))
-		var/datum/antagonist/bloodsucker/B 
-		B.LifeTick
+		var/datum/antagonist/bloodsucker/B = mind.has_antag_datum(ANTAG_DATUM_BLOODSUCKER)
+		B.LifeTick()
 	
 
 /mob/living/carbon/handle_mutations_and_radiation()
