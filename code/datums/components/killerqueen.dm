@@ -65,7 +65,7 @@
 	detonate(user)
 
 /datum/component/killerqueen/proc/bump_detonate(datum/source, atom/A)
-	detonate(user)
+	detonate(A)
 
 /datum/component/killerqueen/proc/touch_detonate(datum/source, mob/user)
 	detonate(user)
