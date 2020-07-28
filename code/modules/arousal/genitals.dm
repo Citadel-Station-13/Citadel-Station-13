@@ -162,7 +162,13 @@
 /obj/item/organ/genital/proc/generate_fluid(datum/reagents/R)
 	var/amount = clamp(fluid_rate * time_since_last_orgasm * fluid_mult,0,fluid_max_volume)
 	R.clear_reagents()
-	R.add_reagent(fluid_id,amount)
+	//skyrat edit - fix coom
+	if(fluid_id)
+		R.add_reagent(fluid_id,amount)
+	else if(linked_organ && linked_organ.fluid_id)
+		amount = clamp(linked_organ.fluid_rate * time_since_last_orgasm * linked_organ.fluid_mult,0,linked_organ.fluid_max_volume)
+		R.add_reagent(linked_organ.fluid_id, amount)
+	//
 	return TRUE
 
 /obj/item/organ/genital/proc/update_link()
@@ -240,7 +246,7 @@
 	if(!. && I && slot && !(slot in GLOB.no_genitals_update_slots)) //the item was successfully equipped, and the chosen slot wasn't merely storage, hands or cuffs.
 		update_genitals()
 
-/mob/living/carbon/human/doUnEquip(obj/item/I, force, newloc, no_move, invdrop = TRUE)
+/mob/living/carbon/human/doUnEquip(obj/item/I, force, newloc, no_move, invdrop = TRUE, ignore_strip_self = TRUE) //skyrat edit
 	var/no_update = FALSE
 	if(!I || I == l_store || I == r_store || I == s_store || I == handcuffed || I == legcuffed || get_held_index_of_item(I)) //stops storages, cuffs and held items from triggering it.
 		no_update = TRUE
