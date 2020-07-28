@@ -46,7 +46,7 @@
 
 /datum/component/killerqueen/Destroy()
 	if(!exploded)
-		failure.Invoke(parent)
+		failure?.Invoke(parent)
 	return ..()
 
 /datum/component/killerqueen/RegisterWithParent()
