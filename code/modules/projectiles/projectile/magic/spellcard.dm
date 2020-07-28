@@ -22,7 +22,6 @@
 	. = ..()
 	var/mob/living/carbon/M = target
 	if(ismob(target))
-		var/mob/M = target
 		if(M.anti_magic_check())
 			M.visible_message("<span class='warning'>[src] vanishes on contact with [target]!</span>")
 			return BULLET_ACT_BLOCK
@@ -49,7 +48,6 @@
 	. = ..()
 	var/mob/living/carbon/M = target
 	if(ismob(target))
-		var/mob/M = target
 		if(M.anti_magic_check())
 			M.visible_message("<span class='warning'>[src] vanishes on contact with [target]!</span>")
 			return BULLET_ACT_BLOCK
