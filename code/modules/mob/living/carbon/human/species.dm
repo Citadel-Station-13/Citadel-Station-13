@@ -119,13 +119,11 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 // PROCS //
 ///////////
 
-
 /datum/species/New()
 
 	if(!limbs_id)	//if we havent set a limbs id to use, just use our own id
 		limbs_id = id
 	..()
-
 
 /proc/generate_selectable_species(clear = FALSE)
 	if(clear)
@@ -1291,9 +1289,9 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 /datum/species/proc/check_weakness(obj/item, mob/living/attacker)
 	return FALSE
 
-////////
-	//LIFE//
-	////////
+/////////////
+////LIFE////
+////////////
 
 /datum/species/proc/handle_digestion(mob/living/carbon/human/H)
 	if(HAS_TRAIT(src, TRAIT_NOHUNGER))
@@ -2263,23 +2261,24 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 		return mutant_bodyparts[tail_type] || mutant_bodyparts[wagging_type]
 
 /datum/species/proc/is_wagging_tail(mob/living/carbon/human/H)
-	return mutant_bodyparts["waggingtail_lizard"]
+	return mutant_bodyparts[wagging_type]
 
 /datum/species/proc/start_wagging_tail(mob/living/carbon/human/H)
 	if(tail_type && wagging_type)
 		if(mutant_bodyparts[tail_type])
 			mutant_bodyparts[wagging_type] = mutant_bodyparts[tail_type]
 			mutant_bodyparts -= tail_type
-			if(mutant_bodyparts["spines"] || mutant_bodyparts["waggingspines"]) //special lizard thing
+			if(tail_type == "tail_lizard") //special lizard thing
 				mutant_bodyparts["waggingspines"] = mutant_bodyparts["spines"]
 				mutant_bodyparts -= "spines"
 			H.update_body()
 
 /datum/species/proc/stop_wagging_tail(mob/living/carbon/human/H)
 	if(tail_type && wagging_type)
-		mutant_bodyparts[tail_type] = mutant_bodyparts[wagging_type]
-		mutant_bodyparts -= wagging_type
-		if(mutant_bodyparts["spines"] || mutant_bodyparts["waggingspines"]) //special lizard thing
-			mutant_bodyparts["spines"] = mutant_bodyparts["waggingspines"]
-			mutant_bodyparts -= "waggingspines"
-		H.update_body()
+		if(mutant_bodyparts[wagging_type])
+			mutant_bodyparts[tail_type] = mutant_bodyparts[wagging_type]
+			mutant_bodyparts -= wagging_type
+			if(tail_type == "tail_lizard") //special lizard thing
+				mutant_bodyparts["spines"] = mutant_bodyparts["waggingspines"]
+				mutant_bodyparts -= "waggingspines"
+			H.update_body()
