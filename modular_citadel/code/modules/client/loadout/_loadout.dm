@@ -26,9 +26,15 @@ GLOBAL_LIST_EMPTY(loadout_whitelist_ids)
 
 /proc/initialize_global_loadout_items()
 	load_loadout_config()
+	LAZYINITLIST(GLOB.loadout_items["NOSUBCATEGORY"]) //items without a subcategory just have one that doesnt show
 	for(var/item in subtypesof(/datum/gear))
 		var/datum/gear/I = new item
-		LAZYSET(GLOB.loadout_items[slot_to_string(I.category)], I.name, I)
+		LAZYINITLIST(GLOB.loadout_items[I.category])
+		if(I.subcategory)
+			LAZYINITLIST(GLOB.loadout_items[I.category][I.subcategory])
+			GLOB.loadout_items[I.category][I.subcategory][I.name] = I
+		else
+			GLOB.loadout_items[I.category]["NOSUBCATEGORY"][I.name] = I
 		if(islist(I.geargroupID))
 			var/list/ggidlist = I.geargroupID
 			I.ckeywhitelist = list()
@@ -42,6 +48,8 @@ GLOBAL_LIST_EMPTY(loadout_whitelist_ids)
 /datum/gear
 	var/name
 	var/category
+	var/subcategory
+	var/slot
 	var/description
 	var/path //item-to-spawn path
 	var/cost = 1 //normally, each loadout costs a single point.

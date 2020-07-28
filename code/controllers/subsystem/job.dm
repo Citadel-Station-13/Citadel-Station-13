@@ -674,7 +674,7 @@ SUBSYSTEM_DEF(job)
 			return
 		for(var/i in the_mob.client.prefs.chosen_gear)
 			var/datum/gear/G = i
-			G = GLOB.loadout_items[slot_to_string(initial(G.category))][initial(G.name)]
+			G = GLOB.loadout_items[G.category][initial(G.name)]
 			if(!G)
 				continue
 			var/permitted = TRUE
