@@ -168,13 +168,19 @@
 		. += "<span class='notice'>There's a coupon on the back of the pack! You can tear it off once it's empty.</span>"
 
 /obj/item/storage/fancy/cigarettes/AltClick(mob/living/carbon/user)
+	. = ..()
 	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
 		return
-	var/obj/item/clothing/mask/cigarette/W = locate(/obj/item/clothing/mask/cigarette) in contents
+	var/obj/item/lighter/L = locate() in contents
+	if(L)
+		SEND_SIGNAL(src, COMSIG_TRY_STORAGE_TAKE, L, user)
+		user.put_in_hands(L)
+		to_chat(user, "<span class='notice'>You take \a [L] out of the pack.</span>")
+		return TRUE
+	var/obj/item/clothing/mask/cigarette/W = locate() in contents
 	if(W && contents.len > 0)
 		SEND_SIGNAL(src, COMSIG_TRY_STORAGE_TAKE, W, user)
 		user.put_in_hands(W)
-		contents -= W
 		to_chat(user, "<span class='notice'>You take \a [W] out of the pack.</span>")
 	else
 		to_chat(user, "<span class='notice'>There are no [icon_type]s left in the pack.</span>")
