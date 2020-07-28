@@ -282,6 +282,7 @@ mob/living/carbon/human/dummy/travelling_trader/animal_hunter/Initialize()
 	..()
 
 /datum/outfit/artifact_dealer
+	name = "Artifact Dealer"
 	uniform = /obj/item/clothing/under/suit/black_really
 	shoes = /obj/item/clothing/shoes/combat
 	head = /obj/item/clothing/head/that
@@ -323,6 +324,7 @@ mob/living/carbon/human/dummy/travelling_trader/animal_hunter/Initialize()
 	reward.insert_organ(new_implant)
 
 /datum/outfit/otherworldly_surgeon
+	name = "Otherworldly Surgeon"
 	uniform = /obj/item/clothing/under/pants/white
 	shoes = /obj/item/clothing/shoes/sneakers/white
 	gloves = /obj/item/clothing/gloves/color/latex
