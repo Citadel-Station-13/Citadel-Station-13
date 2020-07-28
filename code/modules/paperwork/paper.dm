@@ -297,6 +297,7 @@
 		var/datum/ui_state/default/paper_state/state = new
 		state.edit_mode = MODE_STAMPING	// we are read only becausse the sheet is full
 		state.stamp_icon_state = P.icon_state
+		state.stamp_name = P.name
 
 		var/datum/asset/spritesheet/sheet = get_asset_datum(/datum/asset/spritesheet/simple/paper)
 		state.stamp_class = sheet.icon_class_name(P.icon_state)
