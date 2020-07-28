@@ -21716,7 +21716,6 @@
 	pixel_y = 32
 	},
 /obj/structure/sink{
-	dir = 1;
 	pixel_y = 25
 	},
 /obj/machinery/button/door{
@@ -54775,7 +54774,6 @@
 	dir = 8
 	},
 /obj/structure/sink{
-	dir = 1;
 	pixel_y = 25
 	},
 /obj/structure/mirror{
@@ -57198,7 +57196,6 @@
 	dir = 8
 	},
 /obj/structure/sink{
-	dir = 1;
 	pixel_y = 25
 	},
 /obj/structure/mirror{
@@ -60672,7 +60669,6 @@
 	pixel_y = 32
 	},
 /obj/structure/sink{
-	dir = 1;
 	pixel_y = 25
 	},
 /obj/machinery/button/door{
