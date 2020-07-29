@@ -103,11 +103,14 @@ GLOBAL_LIST_EMPTY(uplinks)
 	if(istype(I, /obj/item/stack/telecrystal))
 		LoadTC(user, I)
 	if(active)
-		var/datum/component/uplink/hidden_uplink = I.GetComponent(/datum/component/uplink)
-		var/amt = hidden_uplink.telecrystals
-		hidden_uplink.telecrystals -= amt
-		src.telecrystals += amt
-		to_chat(user, "<span class='notice'>You connect the [I] to your uplink, siphoning [amt] telecrystals before quickly undoing the connection.")
+		if(I.GetComponent(/datum/component/uplink))
+			var/datum/component/uplink/hidden_uplink = I.GetComponent(/datum/component/uplink)
+			var/amt = hidden_uplink.telecrystals
+			hidden_uplink.telecrystals -= amt
+			src.telecrystals += amt
+			to_chat(user, "<span class='notice'>You connect the [I] to your uplink, siphoning [amt] telecrystals before quickly undoing the connection.")
+		else
+			return
 	for(var/category in uplink_items)
 		for(var/item in uplink_items[category])
 			var/datum/uplink_item/UI = uplink_items[category][item]

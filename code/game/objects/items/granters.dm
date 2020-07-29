@@ -488,7 +488,7 @@
 	remarks = list("Sweep the legs...", "Chop the throat...", "Punch the lungs...", "Get the gold...", "Where are my sick gloves..?")
 
 /obj/item/book/granter/martial/krav_maga/onlearned(mob/living/carbon/user)
-	..()
+	. = ..()
 	if(oneuse == TRUE)
 		desc = "It's completely blank."
 		name = "empty scroll"
