@@ -43,7 +43,8 @@
 	for(var/obj/item/organ/genital/G in internal_organs)
 		if(G.genital_flags & GENITAL_CAN_AROUSE && !G.aroused_state && prob(strength*G.sensitivity))
 			G.set_aroused_state(strength > 0)
-			G.update_body(TRUE)
+			G.update_appearance()
+			update_body(TRUE)
 			if(G.aroused_state)
 				genit_list += G
 	return genit_list
