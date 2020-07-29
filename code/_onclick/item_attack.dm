@@ -104,6 +104,17 @@
 	if(weight)
 		user.adjustStaminaLossBuffered(weight)
 
+	// CIT SCREENSHAKE
+	if(force >= 15)
+		shake_camera(user, ((force - 10) * 0.01 + 1), ((force - 10) * 0.01))
+		if(M.client)
+			switch (M.client.prefs.damagescreenshake)
+				if (1)
+					shake_camera(M, ((force - 10) * 0.015 + 1), ((force - 10) * 0.015))
+				if (2)
+					if(!CHECK_MOBILITY(M, MOBILITY_MOVE))
+						shake_camera(M, ((force - 10) * 0.015 + 1), ((force - 10) * 0.015))
+
 //the equivalent of the standard version of attack() but for object targets.
 /obj/item/proc/attack_obj(obj/O, mob/living/user)
 	if(SEND_SIGNAL(src, COMSIG_ITEM_ATTACK_OBJ, O, user) & COMPONENT_NO_ATTACK_OBJ)
