@@ -1,0 +1,4 @@
+author: "SiliconMain"
+delete-after: True
+changes: 
+  - rscadd: "Ported the long range atmos analyzer from sk*rat, credit to NotRanged"
