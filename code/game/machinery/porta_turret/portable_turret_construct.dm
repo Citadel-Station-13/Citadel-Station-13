@@ -168,10 +168,7 @@
 	return ..()
 
 
-/obj/machinery/porta_turret_construct/attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
-	. = ..()
-	if(.)
-		return
+/obj/machinery/porta_turret_construct/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	switch(build_step)
 		if(PTURRET_GUN_EQUIPPED)
 			build_step = PTURRET_INTERNAL_ARMOUR_ON

@@ -55,11 +55,10 @@
 		if(do_after(user, action_speed, target = A))
 			user.visible_message("[user] finishes wiping off [A]!", "<span class='notice'>You finish wiping off [A].</span>")
 			SEND_SIGNAL(A, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_MEDIUM)
-	return
 
 /obj/item/reagent_containers/rag/alt_pre_attack(mob/living/M, mob/living/user, params)
 	if(istype(M) && user.a_intent == INTENT_HELP)
-		user.changeNext_move(CLICK_CD_MELEE)
+		user.DelayNextAction(CLICK_CD_MELEE)
 		if(M.on_fire)
 			user.visible_message("<span class='warning'>\The [user] uses \the [src] to pat out [M == user ? "[user.p_their()]" : "\the [M]'s"] flames!</span>")
 			if(hitsound)

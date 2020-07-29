@@ -268,6 +268,8 @@
 	gender = PLURAL
 	max_integrity = 20
 	CanAtmosPass = ATMOS_PASS_DENSITY
+	attack_hand_speed = CLICK_CD_MELEE
+	attack_hand_is_action = TRUE
 
 /obj/structure/foamedmetal/Initialize()
 	. = ..()
@@ -284,11 +286,7 @@
 /obj/structure/foamedmetal/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	playsound(src.loc, 'sound/weapons/tap.ogg', 100, 1)
 
-/obj/structure/foamedmetal/attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
-	. = ..()
-	if(.)
-		return
-	user.changeNext_move(CLICK_CD_MELEE)
+/obj/structure/foamedmetal/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	user.do_attack_animation(src, ATTACK_EFFECT_PUNCH)
 	to_chat(user, "<span class='warning'>You hit [src] but bounce off it!</span>")
 	playsound(src.loc, 'sound/weapons/tap.ogg', 100, 1)

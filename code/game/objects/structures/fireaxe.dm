@@ -105,10 +105,7 @@
 		fireaxe = null
 	qdel(src)
 
-/obj/structure/fireaxecabinet/attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
-	. = ..()
-	if(.)
-		return
+/obj/structure/fireaxecabinet/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	if(open || broken)
 		if(fireaxe)
 			user.put_in_hands(fireaxe)

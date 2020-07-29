@@ -9,12 +9,9 @@
 /obj/screen/storage/Click(location, control, params)
 	if(!insertion_click)
 		return ..()
-	if(world.time <= usr.next_move)
-		return TRUE
-	if(usr.incapacitated())
-		return TRUE
-	if (ismecha(usr.loc)) // stops inventory actions in a mech
-		return TRUE
+	if(hud?.mymob && (hud.mymob != usr))
+		return
+	// just redirect clicks
 	if(master)
 		var/obj/item/I = usr.get_active_held_item()
 		if(I)

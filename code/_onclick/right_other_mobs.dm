@@ -3,15 +3,14 @@
 		to_chat(src, "<span class='notice'>You look at the state of the universe and sigh.</span>") //lets face it, people rarely ever see this message in its intended condition.
 		return TRUE
 
-	if(!A.alt_attack_hand(src))
-		A.attack_hand(src)
-		return TRUE
-	return TRUE
+	return A.alt_attack_hand(src)
 
 /mob/living/carbon/human/AltRangedAttack(atom/A, params)
 	if(isturf(A) || incapacitated()) // pretty annoying to wave your fist at floors and walls. And useless.
-		return TRUE
-	changeNext_move(CLICK_CD_RANGE)
+		return 
+	if(!CheckActionCooldown(CLICK_CD_RANGE))
+		return
+	DelayNextAction()
 	var/list/target_viewers = fov_viewers(11, A) //doesn't check for blindness.
 	if(!(src in target_viewers)) //click catcher issuing calls for out of view objects.
 		return TRUE
