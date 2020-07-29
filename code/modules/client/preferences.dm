@@ -39,6 +39,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/tmp/old_be_special = 0			//Bitflag version of be_special, used to update old savefiles and nothing more
 										//If it's 0, that's good, if it's anything but 0, the owner of this prefs file's antag choices were,
 										//autocorrected this round, not that you'd need to check that.
+
 	var/UI_style = null
 	var/buttons_locked = FALSE
 	var/hotkeys = FALSE
@@ -50,6 +51,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/list/key_bindings = list()
 	/// List with a key string associated to a list of keybindings. Unlike key_bindings, this one operates on raw key, allowing for binding a key that triggers regardless of if a modifier is depressed as long as the raw key is sent.
 	var/list/modless_key_bindings = list()
+
 
 	var/tgui_fancy = TRUE
 	var/tgui_lock = TRUE
@@ -228,8 +230,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/list/gear_categories
 	var/list/chosen_gear = list()
 	var/gear_tab
-	var/category = 1
-	var/subcategory = 1
 
 	var/screenshake = 100
 	var/damagescreenshake = 2
@@ -1058,47 +1058,32 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			dat += "<br>"
 
 		if(3)
+			if(!gear_tab)
+				gear_tab = GLOB.loadout_items[1]
 			dat += "<table align='center' width='100%'>"
 			dat += "<tr><td colspan=4><center><b><font color='[gear_points == 0 ? "#E62100" : "#CCDDFF"]'>[gear_points]</font> loadout points remaining.</b> \[<a href='?_src_=prefs;preference=gear;clear_loadout=1'>Clear Loadout</a>\]</center></td></tr>"
 			dat += "<tr><td colspan=4><center>You can only choose one item per category, unless it's an item that spawns in your backpack or hands.</center></td></tr>"
 			dat += "<tr><td colspan=4><center><b>"
-			var/category_section = GLOB.loadout_categories[category]
-			var/subcategory_section = GLOB.loadout_categories[category_section][subcategory]
-			var/category_index = 1
-			for(var/i in GLOB.loadout_categories)
-				if(category_index != 1)
+			var/firstcat = TRUE
+			for(var/i in GLOB.loadout_items)
+				if(firstcat)
+					firstcat = FALSE
+				else
 					dat += " |"
-				if(category_index == category)
+				if(i == gear_tab)
 					dat += " <span class='linkOn'>[i]</span> "
 				else
-					dat += " <a href='?_src_=prefs;preference=gear;select_category=[category_index]'>[i]</a> "
-				category_index += 1
+					dat += " <a href='?_src_=prefs;preference=gear;select_category=[i]'>[i]</a> "
 			dat += "</b></center></td></tr>"
 			dat += "<tr><td colspan=4><hr></td></tr>"
 			dat += "<tr><td colspan=4><b><center>[gear_tab]</center></b></td></tr>"
 			dat += "<tr><td colspan=4><hr></td></tr>"
-			dat += "<tr><td colspan=4><center><b>"
-			var/subcategory_index = 1
-			for(var/i in GLOB.loadout_categories[category_section])
-				if(i == "NOSUBCATEGORY")
-					continue
-				if(subcategory_index != 1)
-					dat += " |"
-				if(subcategory_index == subcategory)
-					dat += " <span class='linkOn'>[i]</span> "
-				else
-					dat += " <a href='?_src_=prefs;preference=gear;select_subcategory=[subcategory_index]'>[i]</a> "
-				subcategory_index += 1
-			dat += "</b></center></td></tr>"
-
 			dat += "<tr width=10% style='vertical-align:top;'><td width=15%><b>Name</b></td>"
 			dat += "<td style='vertical-align:top'><b>Cost</b></td>"
 			dat += "<td width=10%><font size=2><b>Restrictions</b></font></td>"
 			dat += "<td width=80%><font size=2><b>Description</b></font></td></tr>"
-			for(var/j in GLOB.loadout_items[category_section][subcategory_section])
-				var/datum/gear/gear = GLOB.loadout_items[category_section][subcategory_section][j]
-				if(!gear.name)
-					continue
+			for(var/j in GLOB.loadout_items[gear_tab])
+				var/datum/gear/gear = GLOB.loadout_items[gear_tab][j]
 				var/donoritem = gear.donoritem
 				if(donoritem && !gear.donator_ckey_check(user.ckey))
 					continue
@@ -2701,14 +2686,11 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			gear_points = CONFIG_GET(number/initial_gear_points)
 			save_preferences()
 		if(href_list["select_category"])
-			category = text2num(href_list["select_category"])
-			subcategory = 1
-		if(href_list["select_subcategory"])
-			subcategory = text2num(href_list["select_subcategory"])
+			for(var/i in GLOB.loadout_items)
+				if(i == href_list["select_category"])
+					gear_tab = i
 		if(href_list["toggle_gear_path"])
-			var/category_section = GLOB.loadout_categories[category]
-			var/subcategory_section = GLOB.loadout_categories[category_section][subcategory]
-			var/datum/gear/G = GLOB.loadout_items[category_section][subcategory_section][html_decode(href_list["toggle_gear_path"])]
+			var/datum/gear/G = GLOB.loadout_items[gear_tab][html_decode(href_list["toggle_gear_path"])]
 			if(!G)
 				return
 			var/toggle = text2num(href_list["toggle_gear"])
@@ -2887,17 +2869,17 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	LAZYINITLIST(L)
 	for(var/i in chosen_gear)
 		var/datum/gear/G = i
-		var/occupied_slots = L[initial(G.category)] ? L[initial(G.category)] + 1 : 1
-		LAZYSET(L, initial(G.category), occupied_slots)
+		var/occupied_slots = L[slot_to_string(initial(G.category))] ? L[slot_to_string(initial(G.category))] + 1 : 1
+		LAZYSET(L, slot_to_string(initial(G.category)), occupied_slots)
 	switch(slot)
 		if(SLOT_IN_BACKPACK)
-			if(L[CATEGORY_BACKPACK] < BACKPACK_SLOT_AMT)
+			if(L[slot_to_string(SLOT_IN_BACKPACK)] < BACKPACK_SLOT_AMT)
 				return TRUE
 		if(SLOT_HANDS)
-			if(L[CATEGORY_HANDS] < HANDS_SLOT_AMT)
+			if(L[slot_to_string(SLOT_HANDS)] < HANDS_SLOT_AMT)
 				return TRUE
 		else
-			if(L[slot] < DEFAULT_SLOT_AMT)
+			if(L[slot_to_string(slot)] < DEFAULT_SLOT_AMT)
 				return TRUE
 
 #undef DEFAULT_SLOT_AMT
