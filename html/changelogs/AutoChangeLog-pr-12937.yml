@@ -1,5 +1,0 @@
-author: "Ghommie"
-delete-after: True
-changes: 
-  - bugfix: "fixed cremator trays, paleness examination strings, chat message for stamping paper, looping sounds, load away missions/VR admin verb, access requirements for using the sechuds."
-  - tweak: "Alt-Clicking a cigarette packet should pull the lighter out first if present, then cigarettes."
