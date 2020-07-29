@@ -50,7 +50,6 @@
 	AssignStarterPowersAndStats()// Give Powers & Stats
 	forge_bloodsucker_objectives()// Objectives & Team
 	update_bloodsucker_icons_added(owner.current, "bloodsucker")	// Add Antag HUD
-	LifeTick()	// Run Life Function
 	. = ..()
 
 
