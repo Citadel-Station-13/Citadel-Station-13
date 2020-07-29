@@ -79,6 +79,9 @@
 		if(PTURRET_INTERNAL_ARMOUR_ON)
 			if(istype(I, /obj/item/gun/energy)) //the gun installation part
 				var/obj/item/gun/energy/E = I
+				if(!E.can_turret)
+					to_chat(user, "<span class='warning'>[src] can't be fit into turrets.</span>")
+					return
 				if(!user.transferItemToLoc(E, src))
 					return
 				installed_gun = E
