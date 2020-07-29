@@ -2702,6 +2702,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			save_preferences()
 		if(href_list["select_category"])
 			category = text2num(href_list["select_category"])
+			subcategory = 1
 			message_admins(category)
 		if(href_list["select_subcategory"])
 			subcategory = text2num(href_list["select_subcategory"])

@@ -172,3 +172,11 @@
 /datum/gear/head/wkepi
 	name = "white kepi"
 	path = /obj/item/clothing/head/kepi
+
+/datum/gear/head/widered
+	name = "Wide red hat"
+	path = /obj/item/clothing/head/widered
+
+/datum/gear/head/kabuto
+	name = "Kabuto helmet"
+	path = /obj/item/clothing/head/kabuto

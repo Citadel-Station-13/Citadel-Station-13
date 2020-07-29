@@ -244,3 +244,7 @@
 	name = "Red and Green Christmas Coat"
 	path = /obj/item/clothing/suit/hooded/wintercoat/christmascoatrg
 	subcategory = SUBCATEGORY_SUIT_COATS
+
+/datum/gear/suit/samurai
+	name = "Samurai outfit"
+	path = /obj/item/clothing/suit/samurai
