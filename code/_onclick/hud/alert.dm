@@ -624,7 +624,7 @@ so as to remain in compliance with the most up-to-date laws."
 	var/mob/living/carbon/C = usr
 	if(!istype(C) || !C.can_resist() || C != mob_viewer || !C.shoes)
 		return
-	C.changeNext_move(CLICK_CD_RESIST)
+	C.MarkResistTime()
 	C.shoes.handle_tying(C)
 
 // PRIVATE = only edit, use, or override these if you're editing the system as a whole
