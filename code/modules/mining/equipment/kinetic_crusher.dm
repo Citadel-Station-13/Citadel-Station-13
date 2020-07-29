@@ -475,6 +475,28 @@
 /obj/item/crusher_trophy/demon_claws/on_mark_detonation(mob/living/target, mob/living/user)
 	user.heal_ordered_damage(bonus_value * 0.4, damage_heal_order)
 
+//Crazy Miner
+
+/obj/item/crusher_trophy/bloody_mask
+	name = "bloody explorer mask"
+	desc = "An explorer mask with a lot of blood on it. You can't manage to wear it on your face, however, it is suitable as a trophy for a kinetic crusher."
+	icon_state = "bloody_mask"
+	denied_type = /obj/item/crusher_trophy/bloody_mask
+	bonus_value = 6
+
+/obj/item/crusher_trophy/bloody_mask/effect_desc()
+	return "backstabs will do <b>[bonus_value]</b> more damage."
+
+/obj/item/crusher_trophy/bloody_mask/add_to(obj/item/kinetic_crusher/H, mob/living/user)
+	. = ..()
+	if(.)
+		H.backstab_bonus += bonus_value
+
+/obj/item/crusher_trophy/bloody_mask/remove_from(obj/item/kinetic_crusher/H, mob/living/user)
+	. = ..()
+	if(.)
+		H.backstab_bonus -= bonus_value
+
 //colossus
 /obj/item/crusher_trophy/blaster_tubes
 	name = "blaster tubes"

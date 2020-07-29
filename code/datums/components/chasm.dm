@@ -101,7 +101,7 @@
 		if(isliving(AM))
 			var/mob/living/L = AM
 			L.DefaultCombatKnockdown(100)
-			L.adjustBruteLoss(45) //Buffed it, was too weak
+			L.adjustBruteLoss(55) //Buffed it, was too weak
 		falling_atoms -= AM
 
 	else

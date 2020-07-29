@@ -11,7 +11,7 @@
 	desc = "It's watching you suspiciously."
 
 /obj/structure/closet/crate/necropolis/tendril/PopulateContents()
-	var/loot = rand(1,30)
+	var/loot = rand(1,32)
 	switch(loot)
 		if(1)
 			new /obj/item/shared_storage/red(src)
@@ -84,6 +84,14 @@
 				new /obj/item/disk/tech_disk/illegal(src)
 		if(30)
 			new /obj/item/clothing/suit/space/hardsuit/lavaknight(src)
+
+		if(31)
+			new /obj/item/clothing/gloves/gauntlets(src)
+		if(32)
+			if(prob(30))
+				new /obj/item/power_tube/filled(src)
+			else
+				new /obj/item/power_tube(src)
 
 //KA modkit design discs
 /obj/item/disk/design_disk/modkit_disc
@@ -201,6 +209,43 @@
 	desc = "A short wooden rod with a mystical snake inseparably gripping itself and the rod to your forearm. It flows with a healing energy that disperses amongst yourself and those around you. "
 	icon_state = "asclepius_active"
 	activated = TRUE
+
+//Concussive Gauntlets
+/obj/item/clothing/gloves/gauntlets
+	name = "concussive gauntlets"
+	desc = "Pickaxes... for your hands!"
+	icon_state = "concussive_gauntlets"
+	toolspeed = 0.1
+	strip_delay = 40
+	equip_delay_other = 20
+	cold_protection = HANDS
+	min_cold_protection_temperature = GLOVES_MIN_TEMP_PROTECT
+	heat_protection = HANDS
+	max_heat_protection_temperature = GLOVES_MAX_TEMP_PROTECT
+	resistance_flags = LAVA_PROOF | FIRE_PROOF //they are from lavaland after all
+	armor = list("melee" = 15, "bullet" = 25, "laser" = 15, "energy" = 15, "bomb" = 100, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 30) //mostly bone bracer armor
+
+/obj/item/clothing/gloves/gauntlets/equipped(mob/user, slot)
+	. = ..()
+	if(slot == ITEM_SLOT_GLOVES)
+		tool_behaviour = TOOL_MINING
+		RegisterSignal(user, COMSIG_MOVABLE_BUMP, .proc/rocksmash)
+	else
+		stopmining(user)
+
+/obj/item/clothing/gloves/gauntlets/dropped(mob/user)
+	. = ..()
+	stopmining(user)
+
+/obj/item/clothing/gloves/gauntlets/proc/stopmining(mob/user)
+	tool_behaviour = initial(tool_behaviour)
+	UnregisterSignal(user, COMSIG_MOVABLE_BUMP)
+
+/obj/item/clothing/gloves/gauntlets/proc/rocksmash(mob/living/carbon/human/H, atom/A, proximity)
+    if(!istype(A, /turf/closed/mineral))
+        return
+    A.attackby(src, H)
+    return COMPONENT_NO_ATTACK_HAND
 
 //Memento Mori
 /obj/item/clothing/neck/necklace/memento_mori
@@ -1129,10 +1174,10 @@
 	icon = 'icons/obj/lavaland/artefacts.dmi'
 	icon_state = "experimental_cutter"
 	force = 17
-	ammo_type = list(/obj/item/ammo_casing/energy/plasma/rouge)
+	ammo_type = list(/obj/item/ammo_casing/energy/plasma/rogue)
 
-/obj/item/ammo_casing/energy/plasma/rouge
-	projectile_type = /obj/item/projectile/plasma/rouge
+/obj/item/ammo_casing/energy/plasma/rogue
+	projectile_type = /obj/item/projectile/plasma/rogue
 	delay = 7
 	e_cost = 7
 

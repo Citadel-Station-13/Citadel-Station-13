@@ -187,6 +187,19 @@
 
 /turf/open/floor/plating/asteroid/airless/cave/volcanic/has_data //subtype for producing a tunnel with given data
 	has_data = TRUE
+    
+/turf/open/floor/plating/asteroid/airless/cave/volcanic_abyss
+	mob_spawn_list = list(/mob/living/simple_animal/hostile/asteroid/fire_wisp = 50, \
+        /mob/living/simple_animal/hostile/asteroid/ash_whelp = 30, \
+        /mob/living/simple_animal/hostile/asteroid/abyss_demon = 30, \
+		SPAWN_MEGAFAUNA = 10, /mob/living/simple_animal/hostile/asteroid/crazy_miner/random = 10)
+
+	data_having_type = /turf/open/floor/plating/asteroid/airless/cave/volcanic_abyss/has_data
+	turf_type = /turf/open/floor/plating/asteroid/basalt/lavaland_abyss
+	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
+
+/turf/open/floor/plating/asteroid/airless/cave/volcanic_abyss/has_data //subtype for producing a tunnel with given data
+	has_data = TRUE
 
 /turf/open/floor/plating/asteroid/airless/cave/snow
 	gender = PLURAL

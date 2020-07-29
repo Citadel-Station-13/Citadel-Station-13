@@ -286,3 +286,7 @@
 			var/part = pick(parts)
 			welder_salvage += part
 			parts -= part
+
+/obj/structure/mecha_wreckage/buzz
+	name = "\improper Buzz wreckage"
+	icon_state = "buzz-broken"

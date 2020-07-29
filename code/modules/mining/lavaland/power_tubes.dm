@@ -16,6 +16,14 @@
 	var/obj/item/power_tube/power_tube = null
 	var/collecting = FALSE //Is animation goin?
 
+/obj/structure/lavaland/power_collector/Initialize()
+	. = ..()
+	if(prob(15)) //A small chance that there will already be a power tube
+		power_tube = new(src)
+		power_tube.filled = TRUE
+		update_icon()
+		power_tube.update_icon()
+
 /obj/structure/lavaland/power_collector/attack_hand(mob/user)
 	if(!power_tube)
 		return
@@ -66,8 +74,8 @@
 		icon_state = "power_collector_off"
 
 /obj/item/power_tube
-	name = "ancient device"
-	desc = "A strange cylinder with a tap on it's back. Looks like it's intended to contain something."
+	name = "ancient cylinder"
+	desc = "A strange cylinder with a tap on it's top. Looks like it's intended to contain something."
 	icon = 'icons/obj/lavaland/artefacts.dmi'
 	icon_state = "energy_cylinder_empty"
 	resistance_flags = FIRE_PROOF | LAVA_PROOF | ACID_PROOF //nope
@@ -79,3 +87,7 @@
 		icon_state = "energy_cylinder_full"
 	else
 		icon_state = "energy_cylinder_empty"
+
+/obj/item/power_tube/filled
+	filled = TRUE
+	icon_state = "energy_cylinder_full"

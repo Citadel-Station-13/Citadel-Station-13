@@ -664,17 +664,12 @@
 	cost = 40
 	modifier = 3
 
-/obj/item/borg/upgrade/modkit/shotgun/modify_projectile(obj/item/projectile/kinetic/K)
-	..()
-	if(K.kinetic_gun)
-		var/obj/item/gun/energy/kinetic_accelerator/KA = K.kinetic_gun
+/obj/item/borg/upgrade/modkit/shotgun/install(obj/item/gun/energy/kinetic_accelerator/KA, mob/user)
+	. = ..()
+	if(.)
 		var/obj/item/ammo_casing/energy/kinetic/C = KA.ammo_type[1]
 		C.pellets = src.modifier
 		C.variance = 45
-		if(C.projectile_type == /obj/item/projectile/kinetic/premium)
-			C.projectile_type = /obj/item/projectile/kinetic/premium/shotgun
-		else
-			C.projectile_type = /obj/item/projectile/kinetic/shotgun
 		KA.chambered = C
 
 /obj/item/borg/upgrade/modkit/shotgun/uninstall(obj/item/gun/energy/kinetic_accelerator/KA, mob/user)
@@ -685,11 +680,8 @@
 	C.projectile_type = initial(C.projectile_type)
 	KA.chambered = C
 
-/obj/item/projectile/kinetic/shotgun
-	damage = 20
-
-/obj/item/projectile/kinetic/premium/shotgun
-	damage = 25
+/obj/item/borg/upgrade/modkit/shotgun/modify_projectile(obj/item/projectile/kinetic/K)
+	K.damage /= 2
 
 //Ash Drake
 

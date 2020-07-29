@@ -62,6 +62,10 @@ Difficulty: Hard
 
 	var/dont_move //so it wont move in jaunt
 
+	abyss_born = TRUE
+	enraged_type = /mob/living/simple_animal/hostile/megafauna/bubblegum/hard
+	enrage_message = "starts growing bigger as it feels the energy of Abyss flowing in his veins!"
+
 /obj/item/gps/internal/bubblegum
 	icon_state = null
 	gpstag = "Bloody Signal"
@@ -75,7 +79,7 @@ Difficulty: Hard
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/OpenFire()
 	anger_modifier = clamp(((maxHealth - health)/50),0,20)
-	if(charging)
+	if(charging || dont_move)
 		return
 	ranged_cooldown = world.time + ranged_cooldown_time
 	blood_warp()
@@ -208,34 +212,6 @@ Difficulty: Hard
 			L.apply_damage(30, BRUTE, limb_to_hit, L.run_armor_check(limb_to_hit, "melee", null, null)) // You really, really, really better not stand in blood!
 	sleep(3)
 
-/mob/living/simple_animal/hostile/megafauna/bubblegum/blood_warp()
-	var/obj/effect/decal/cleanable/blood/found_bloodpool
-	var/list/pools = list()
-	var/can_jaunt = FALSE
-	for(var/obj/effect/decal/cleanable/blood/nearby in view(src,2))
-		if(nearby.bloodiness >= 20)
-			can_jaunt = TRUE
-		break
-	if(!can_jaunt)
-		return
-	for(var/obj/effect/decal/cleanable/blood/nearby in view(get_turf(target),2))
-		if(nearby.bloodiness >= 20)
-			pools += nearby
-	if(pools.len)
-		shuffle_inplace(pools)
-		found_bloodpool = pick(pools)
-	if(found_bloodpool)
-		visible_message("<span class='danger'>[src] sinks into the blood...</span>")
-		playsound(get_turf(src), 'sound/magic/enter_blood.ogg', 100, 1, -1)
-		alpha = 0
-		dont_move = TRUE
-		sleep(rand(2, 4))
-		forceMove(get_turf(found_bloodpool))
-		playsound(get_turf(src), 'sound/magic/exit_blood.ogg', 100, 1, -1)
-		alpha = 100
-		dont_move = FALSE
-		visible_message("<span class='danger'>And springs back out!</span>")
-
 
 /obj/effect/temp_visual/bubblegum_hands
 	icon = 'icons/effects/bubblegum.dmi'
@@ -266,21 +242,30 @@ Difficulty: Hard
 	var/list/pools = list()
 	var/can_jaunt = FALSE
 	for(var/obj/effect/decal/cleanable/blood/nearby in view(src,2))
-		can_jaunt = TRUE
+		if(nearby.bloodiness >= 20)
+			can_jaunt = TRUE
 		break
 	if(!can_jaunt)
 		return
 	for(var/obj/effect/decal/cleanable/blood/nearby in view(get_turf(target),2))
-		pools += nearby
+		if(nearby.bloodiness >= 20)
+			pools += nearby
 	if(pools.len)
 		shuffle_inplace(pools)
 		found_bloodpool = pick(pools)
 	if(found_bloodpool)
 		visible_message("<span class='danger'>[src] sinks into the blood...</span>")
 		playsound(get_turf(src), 'sound/magic/enter_blood.ogg', 100, 1, -1)
+		alpha = 0
+		dont_move = TRUE
+		sleep(rand(2, 4))
 		forceMove(get_turf(found_bloodpool))
 		playsound(get_turf(src), 'sound/magic/exit_blood.ogg', 100, 1, -1)
+		alpha = 100
+		dont_move = FALSE
 		visible_message("<span class='danger'>And springs back out!</span>")
+
+
 
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/proc/blood_spray()
@@ -299,61 +284,5 @@ Difficulty: Hard
 		range--
 		previousturf = J
 		sleep(1)
-
-/mob/living/simple_animal/hostile/imp //Probably will use somewhere in here
-	name = "imp"
-	desc = "A large, menacing creature covered in armored black scales."
-	speak_emote = list("cackles")
-	emote_hear = list("cackles","screeches")
-	response_help_continuous = "thinks better of touching"
-	response_help_simple = "think better of touching"
-	response_disarm_continuous = "flails at"
-	response_disarm_simple = "flail at"
-	response_harm_continuous = "punches"
-	response_harm_simple = "punch"
-	icon = 'icons/mob/mob.dmi'
-	icon_state = "imp"
-	icon_living = "imp"
-	mob_biotypes = MOB_ORGANIC|MOB_HUMANOID
-	speed = 1
-	a_intent = INTENT_HARM
-	stop_automated_movement = 1
-	status_flags = CANPUSH
-	attack_sound = 'sound/magic/demon_attack1.ogg'
-	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
-	minbodytemp = 250 //Weak to cold
-	maxbodytemp = INFINITY
-	faction = list("mining", "boss", "demon")
-	attack_verb_continuous = "wildly tears into"
-	attack_verb_simple = "wildly tear into"
-	maxHealth = 50
-	health = 50
-	healable = 0
-	environment_smash = ENVIRONMENT_SMASH_STRUCTURES
-	obj_damage = 40
-	melee_damage_lower = 10
-	melee_damage_upper = 15
-	see_in_dark = 8
-	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
-	var/boost = 0
-
-/mob/living/simple_animal/hostile/imp/Initialize()
-	..()
-	boost = world.time + 30
-
-/mob/living/simple_animal/hostile/imp/BiologicalLife(seconds, times_fired)
-	if(!(. = ..()))
-		return
-	if(boost<world.time)
-		speed = 1
-	else
-		speed = 0
-
-/mob/living/simple_animal/hostile/imp/death()
-	..(1)
-	playsound(get_turf(src),'sound/magic/demon_dies.ogg', 200, 1)
-	visible_message("<span class='danger'>[src] screams in agony as it sublimates into a sulfurous smoke.</span>")
-	ghostize()
-	qdel(src)
 
 #undef MEDAL_PREFIX

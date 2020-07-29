@@ -4,6 +4,11 @@
 #define SWOOP_DAMAGEABLE 1
 #define SWOOP_INVULNERABLE 2
 
+///used whenever the drake generates a hotspot
+#define DRAKE_FIRE_TEMP 500
+///used whenever the drake generates a hotspot
+#define DRAKE_FIRE_EXPOSURE 50
+
 /*
 
 ASH DRAKE
@@ -67,6 +72,10 @@ Difficulty: Medium
 	var/datum/action/small_sprite/smallsprite = new/datum/action/small_sprite/drake()
 
 	footstep_type = FOOTSTEP_MOB_HEAVY
+
+	abyss_born = TRUE
+	enraged_type = /mob/living/simple_animal/hostile/megafauna/dragon/hard
+	enrage_message = "spreads it's wings and roars as it feels the power of Abyss!"
 
 /mob/living/simple_animal/hostile/megafauna/dragon/Initialize()
 	smallsprite.Grant(src)

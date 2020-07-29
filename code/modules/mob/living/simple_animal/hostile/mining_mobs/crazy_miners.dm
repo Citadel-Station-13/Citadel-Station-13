@@ -29,15 +29,13 @@
 	move_force = MOVE_FORCE_VERY_STRONG
 	move_resist = MOVE_FORCE_VERY_STRONG
 	pull_force = MOVE_FORCE_VERY_STRONG
+	crusher_loot = /obj/item/crusher_trophy/bloody_mask
 	var/medipens = 3
 	var/weapon_type = "" //KA or KC. Empty means fists
 	var/suit_type = ""
 	loot = list()
+	del_on_death = TRUE
 	deathmessage = "falls, decaying into ashes"
-
-/mob/living/simple_animal/hostile/asteroid/crazy_miner/death(gibbed)
-    . = ..()
-    qdel(src)
 
 /mob/living/simple_animal/hostile/asteroid/crazy_miner/AttackingTarget()
 	if(health < maxHealth / 3 && medipens > 0)
