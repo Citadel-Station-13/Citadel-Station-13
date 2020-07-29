@@ -70,6 +70,9 @@
 	/// A luminescence-shifted value of the last color calculated for chatmessage overlays
 	var/chat_color_darkened
 
+	///Mobs that are currently do_after'ing this atom, to be cleared from on Destroy()
+	var/list/targeted_by
+
 /atom/New(loc, ...)
 	//atom creation method that preloads variables at creation
 	if(GLOB.use_preloader && (src.type == GLOB._preloader.target_path))//in case the instanciated atom is creating other atoms in New()
@@ -143,6 +146,11 @@
 
 	LAZYCLEARLIST(overlays)
 	LAZYCLEARLIST(priority_overlays)
+
+	for(var/i in targeted_by)
+		var/mob/M = i
+		LAZYREMOVE(M.do_afters, src)
+	targeted_by = null
 
 	QDEL_NULL(light)
 
@@ -219,7 +227,7 @@
 /atom/proc/attack_hulk(mob/living/carbon/human/user, does_attack_animation = FALSE)
 	SEND_SIGNAL(src, COMSIG_ATOM_HULK_ATTACK, user)
 	if(does_attack_animation)
-		user.changeNext_move(CLICK_CD_MELEE)
+		user.DelayNextAction(CLICK_CD_MELEE)
 		log_combat(user, src, "punched", "hulk powers")
 		user.do_attack_animation(src, ATTACK_EFFECT_SMASH)
 
@@ -985,6 +993,39 @@ Proc for attack log creation, because really why not
 	if(user != target)
 		var/reverse_message = "has been [what_done] by [ssource][postfix]"
 		target.log_message(reverse_message, LOG_ATTACK, color="orange", log_globally=FALSE)
+
+/**
+  * log_wound() is for when someone is *attacked* and suffers a wound. Note that this only captures wounds from damage, so smites/forced wounds aren't logged, as well as demotions like cuts scabbing over
+  *
+  * Note that this has no info on the attack that dealt the wound: information about where damage came from isn't passed to the bodypart's damaged proc. When in doubt, check the attack log for attacks at that same time
+  * TODO later: Add logging for healed wounds, though that will require some rewriting of healing code to prevent admin heals from spamming the logs. Not high priority
+  *
+  * Arguments:
+  * * victim- The guy who got wounded
+  * * suffered_wound- The wound, already applied, that we're logging. It has to already be attached so we can get the limb from it
+  * * dealt_damage- How much damage is associated with the attack that dealt with this wound.
+  * * dealt_wound_bonus- The wound_bonus, if one was specified, of the wounding attack
+  * * dealt_bare_wound_bonus- The bare_wound_bonus, if one was specified *and applied*, of the wounding attack. Not shown if armor was present
+  * * base_roll- Base wounding ability of an attack is a random number from 1 to (dealt_damage ** WOUND_DAMAGE_EXPONENT). This is the number that was rolled in there, before mods
+  */
+/proc/log_wound(atom/victim, datum/wound/suffered_wound, dealt_damage, dealt_wound_bonus, dealt_bare_wound_bonus, base_roll)
+	if(QDELETED(victim) || !suffered_wound)
+		return
+	var/message = "has suffered: [suffered_wound][suffered_wound.limb ? " to [suffered_wound.limb.name]" : null]"// maybe indicate if it's a promote/demote?
+
+	if(dealt_damage)
+		message += " | Damage: [dealt_damage]"
+		// The base roll is useful since it can show how lucky someone got with the given attack. For example, dealing a cut
+		if(base_roll)
+			message += " (rolled [base_roll]/[dealt_damage ** WOUND_DAMAGE_EXPONENT])"
+
+	if(dealt_wound_bonus)
+		message += " | WB: [dealt_wound_bonus]"
+
+	if(dealt_bare_wound_bonus)
+		message += " | BWB: [dealt_bare_wound_bonus]"
+
+	victim.log_message(message, LOG_ATTACK, color="blue")
 
 // Filter stuff
 /atom/proc/add_filter(name,priority,list/params)

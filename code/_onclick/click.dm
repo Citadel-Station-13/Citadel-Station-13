@@ -1,39 +1,4 @@
 /*
-	Click code cleanup
-	~Sayu
-*/
-
-// 1 decisecond click delay (above and beyond mob/next_move)
-//This is mainly modified by click code, to modify click delays elsewhere, use next_move and changeNext_move()
-/mob/var/next_click	= 0
-
-// THESE DO NOT EFFECT THE BASE 1 DECISECOND DELAY OF NEXT_CLICK
-/mob/var/next_move_adjust = 0 //Amount to adjust action/click delays by, + or -
-/mob/var/next_move_modifier = 1 //Value to multiply action/click delays by
-
-
-//Delays the mob's next click/action by num deciseconds
-// eg: 10-3 = 7 deciseconds of delay
-// eg: 10*0.5 = 5 deciseconds of delay
-// DOES NOT EFFECT THE BASE 1 DECISECOND DELAY OF NEXT_CLICK
-
-/mob/proc/timeToNextMove()
-	return max(0, next_move - world.time)
-
-/mob/proc/changeNext_move(num)
-	next_move = world.time + ((num+next_move_adjust)*next_move_modifier)
-
-/mob/living/changeNext_move(num)
-	last_click_move = next_move
-	var/mod = next_move_modifier
-	var/adj = next_move_adjust
-	for(var/i in status_effects)
-		var/datum/status_effect/S = i
-		mod *= S.nextmove_modifier()
-		adj += S.nextmove_adjust()
-	next_move = world.time + ((num + adj)*mod)
-
-/*
 	Before anything else, defer these calls to a per-mobtype handler.  This allows us to
 	remove istype() spaghetti code, but requires the addition of other handler procs to simplify it.
 
@@ -45,7 +10,7 @@
 /atom/Click(location,control,params)
 	if(flags_1 & INITIALIZED_1)
 		SEND_SIGNAL(src, COMSIG_CLICK, location, control, params, usr)
-		usr.ClickOn(src, params)
+		usr.CommonClickOn(src, params)
 
 /atom/DblClick(location,control,params)
 	if(flags_1 & INITIALIZED_1)
@@ -55,6 +20,21 @@
 	if(flags_1 & INITIALIZED_1)
 		usr.MouseWheelOn(src, delta_x, delta_y, params)
 
+/**
+  * Common mob click code
+  */
+/mob/proc/CommonClickOn(atom/A, params)
+	SHOULD_NOT_SLEEP(TRUE)
+	if(mob_transforming)
+		return
+	if(SEND_SIGNAL(src, COMSIG_MOB_CLICKON, A, params) & COMSIG_MOB_CANCEL_CLICKON)
+		return
+	. = ClickOn(A, params)
+	if(!(. & DISCARD_LAST_ACTION))
+		FlushCurrentAction()
+	else
+		DiscardCurrentAction()
+	
 /*
 	Standard mob ClickOn()
 	Handles exceptions: Buildmode, middle click, modified clicks, mech actions
@@ -68,50 +48,34 @@
 	* item/afterattack(atom,user,adjacent,params) - used both ranged and adjacent
 	* mob/RangedAttack(atom,params) - used only ranged, only used for tk and laser eyes but could be changed
 */
-/mob/proc/ClickOn( atom/A, params )
-	if(world.time <= next_click)
-		return
-	next_click = world.time + world.tick_lag
-
+/mob/proc/ClickOn(atom/A, params)
+	SHOULD_NOT_SLEEP(TRUE)
 	if(check_click_intercept(params,A))
-		return
-
-	if(mob_transforming)
-		return
-
-	if(SEND_SIGNAL(src, COMSIG_MOB_CLICKON, A, params) & COMSIG_MOB_CANCEL_CLICKON)
 		return
 
 	var/list/modifiers = params2list(params)
 	if(modifiers["shift"] && modifiers["middle"])
-		ShiftMiddleClickOn(A)
-		return
+		return ShiftMiddleClickOn(A)
 	if(modifiers["shift"] && modifiers["ctrl"])
-		CtrlShiftClickOn(A)
-		return
+		return CtrlShiftClickOn(A)
 	if(modifiers["middle"])
-		MiddleClickOn(A)
-		return
+		return MiddleClickOn(A)
 	if(modifiers["shift"] && (client && client.show_popup_menus || modifiers["right"])) //CIT CHANGE - makes shift-click examine use right click instead of left click in combat mode
-		ShiftClickOn(A)
-		return
+		return ShiftClickOn(A)
 	if(modifiers["alt"]) // alt and alt-gr (rightalt)
-		AltClickOn(A)
-		return
+		return AltClickOn(A)
 	if(modifiers["ctrl"])
-		CtrlClickOn(A)
-		return
+		return CtrlClickOn(A)
 
 	if(modifiers["right"]) //CIT CHANGE - allows right clicking to perform actions
-		RightClickOn(A,params) //CIT CHANGE - ditto
-		return //CIT CHANGE - ditto
+		return RightClickOn(A, params) //CIT CHANGE - ditto
 
 	if(incapacitated(ignore_restraints = 1))
 		return
 
 	face_atom(A)
 
-	if(next_move > world.time) // in the year 2000...
+	if(!CheckActionCooldown(immediate = TRUE))
 		return
 
 	if(!modifiers["catcher"] && A.IsObscured())
@@ -119,12 +83,12 @@
 
 	if(ismecha(loc))
 		var/obj/mecha/M = loc
-		return M.click_action(A,src,params)
+		M.click_action(A,src,params)
+		return TRUE
 
 	if(restrained())
-		changeNext_move(CLICK_CD_HANDCUFFED)   //Doing shit in cuffs shall be vey slow
-		RestrainedClickOn(A)
-		return
+		DelayNextAction(CLICK_CD_HANDCUFFED)
+		return RestrainedClickOn(A)
 
 	if(in_throw_mode)
 		throw_item(A)
@@ -141,12 +105,12 @@
 	//User itself, current loc, and user inventory
 	if(A in DirectAccess())
 		if(W)
-			W.melee_attack_chain(src, A, params)
+			return W.melee_attack_chain(src, A, params)
 		else
-			if(ismob(A))
-				changeNext_move(CLICK_CD_MELEE)
-			UnarmedAttack(A)
-		return
+			. = UnarmedAttack(A, TRUE, a_intent)
+			if(!(. & NO_AUTO_CLICKDELAY_HANDLING) && ismob(A))
+				DelayNextAction(CLICK_CD_MELEE)
+			return
 
 	//Can't reach anything else in lockers or other weirdness
 	if(!loc.AllowClick())
@@ -155,16 +119,17 @@
 	//Standard reach turf to turf or reaching inside storage
 	if(CanReach(A,W))
 		if(W)
-			W.melee_attack_chain(src, A, params)
+			return W.melee_attack_chain(src, A, params)
 		else
-			if(ismob(A))
-				changeNext_move(CLICK_CD_MELEE)
-			UnarmedAttack(A, 1)
+			. = UnarmedAttack(A, TRUE, a_intent)
+			if(!(. & NO_AUTO_CLICKDELAY_HANDLING) && ismob(A))
+				DelayNextAction(CLICK_CD_MELEE)
+			return
 	else
 		if(W)
-			W.ranged_attack_chain(src, A, params)
+			return W.ranged_attack_chain(src, A, params)
 		else
-			RangedAttack(A,params)
+			return RangedAttack(A,params)
 
 //Is the atom obscured by a PREVENT_CLICK_UNDER_1 object above it
 /atom/proc/IsObscured()
@@ -270,8 +235,6 @@
 	in human click code to allow glove touches only at melee range.
 */
 /mob/proc/UnarmedAttack(atom/A, proximity, intent = a_intent, flags = NONE)
-	if(ismob(A))
-		changeNext_move(CLICK_CD_MELEE)
 
 /*
 	Ranged unarmed attack:
@@ -304,7 +267,6 @@
 		var/datum/antagonist/changeling/C = mind.has_antag_datum(/datum/antagonist/changeling)
 		if(C && C.chosen_sting)
 			C.chosen_sting.try_to_sting(src,A)
-			next_click = world.time + 5
 			return
 	swap_hand()
 
@@ -337,24 +299,24 @@
 */
 
 /mob/proc/CtrlClickOn(atom/A)
-	A.CtrlClick(src)
-	return
+	return A.CtrlClick(src)
 
 /atom/proc/CtrlClick(mob/user)
 	SEND_SIGNAL(src, COMSIG_CLICK_CTRL, user)
 	var/mob/living/ML = user
 	if(istype(ML))
-		ML.pulled(src)
+		INVOKE_ASYNC(ML, /mob/living.verb/pulled, src)
 
 /mob/living/carbon/human/CtrlClick(mob/user)
 	if(ishuman(user) && Adjacent(user) && !user.incapacitated())
-		if(world.time < user.next_move)
+		if(!user.CheckActionCooldown())
 			return FALSE
 		var/mob/living/carbon/human/H = user
 		H.dna.species.grab(H, src, H.mind.martial_art)
-		H.changeNext_move(CLICK_CD_MELEE)
+		H.DelayNextAction(CLICK_CD_MELEE)
+		return TRUE
 	else
-		..()
+		return ..()
 /*
 	Alt click
 	Unused except for AI
@@ -377,8 +339,8 @@
 		var/datum/antagonist/changeling/C = mind.has_antag_datum(/datum/antagonist/changeling)
 		if(C && C.chosen_sting)
 			C.chosen_sting.try_to_sting(src,A)
-			next_click = world.time + 5
-			return
+			DelayNextAction(CLICK_CD_RANGE)
+			return TRUE
 	..()
 
 /atom/proc/AltClick(mob/user)
@@ -413,9 +375,11 @@
 	return
 
 /mob/living/LaserEyes(atom/A, params)
-	changeNext_move(CLICK_CD_RANGE)
+	if(!CheckActionCooldown(CLICK_CD_RANGE))
+		return
+	DelayNextAction()
 
-	var/obj/item/projectile/beam/LE = new /obj/item/projectile/beam( loc )
+	var/obj/item/projectile/beam/LE = new /obj/item/projectile/beam(loc)
 	LE.icon = 'icons/effects/genetics.dmi'
 	LE.icon_state = "eyelasers"
 	playsound(usr.loc, 'sound/weapons/taser2.ogg', 75, 1)
@@ -424,6 +388,7 @@
 	LE.def_zone = get_organ_target()
 	LE.preparePixelProjectile(A, src, params)
 	LE.fire()
+	return TRUE
 
 // Simple helper to face what you clicked on, in case it should be needed in more than one place
 /mob/proc/face_atom(atom/A, ismousemovement = FALSE)

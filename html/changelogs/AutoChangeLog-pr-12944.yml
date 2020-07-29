@@ -1,0 +1,4 @@
+author: "timothyteakettle"
+delete-after: True
+changes: 
+  - bugfix: "some crafted crates won't contain items now, and thus have stopped breaking the laws of physics"

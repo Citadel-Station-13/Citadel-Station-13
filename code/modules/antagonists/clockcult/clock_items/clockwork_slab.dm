@@ -57,8 +57,7 @@
 			to_chat(user, "<span class='userdanger'>[src] falls dark. It appears you weren't worthy.</span>")
 	return ..()
 
-//ATTACK HAND IGNORING PARENT RETURN VALUE
-/obj/item/clockwork/slab/debug/attack_hand(mob/living/user, act_intent = user.a_intent, unarmed_attack_flags)
+/obj/item/clockwork/slab/debug/on_attack_hand(mob/living/user, act_intent = user.a_intent, unarmed_attack_flags)
 	if(!is_servant_of_ratvar(user))
 		add_servant_of_ratvar(user)
 	return ..()

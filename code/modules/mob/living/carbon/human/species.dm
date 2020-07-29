@@ -7,7 +7,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 	var/id	// if the game needs to manually check your race to do something not included in a proc here, it will use this
 	var/limbs_id		//this is used if you want to use a different species limb sprites. Mainly used for angels as they look like humans.
 	var/name	// this is the fluff name. these will be left generic (such as 'Lizardperson' for the lizard race) so servers can change them to whatever
-	var/default_color = "#FFF"	// if alien colors are disabled, this is the color that will be used by that race
+	var/default_color = "#FFFFFF"	// if alien colors are disabled, this is the color that will be used by that race
 
 	var/sexes = 1 // whether or not the race has sexual characteristics. at the moment this is only 0 for skeletons and shadows
 	var/has_field_of_vision = TRUE
@@ -73,7 +73,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 	var/datum/outfit/outfit_important_for_life // A path to an outfit that is important for species life e.g. plasmaman outfit
 
 	// species-only traits. Can be found in DNA.dm
-	var/list/species_traits = list()
+	var/list/species_traits = list(CAN_SCAR) //by default they can scar unless set to something else
 	// generic traits tied to having the species
 	var/list/inherent_traits = list()
 	var/inherent_biotypes = MOB_ORGANIC|MOB_HUMANOID
@@ -105,6 +105,10 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 	var/whitelisted = 0 		//Is this species restricted to certain players?
 	var/whitelist = list() 		//List the ckeys that can use this species, if it's whitelisted.: list("John Doe", "poopface666", "SeeALiggerPullTheTrigger") Spaces & capitalization can be included or ignored entirely for each key as it checks for both.
 	var/icon_limbs //Overrides the icon used for the limbs of this species. Mainly for downstream, and also because hardcoded icons disgust me. Implemented and maintained as a favor in return for a downstream's implementation of synths.
+	var/species_type
+
+	var/tail_type //type of tail i.e. mam_tail
+	var/wagging_type //type of wagging i.e. waggingtail_lizard
 
 	/// Our default override for typing indicator state
 	var/typing_indicator_state
@@ -113,13 +117,11 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 // PROCS //
 ///////////
 
-
 /datum/species/New()
 
 	if(!limbs_id)	//if we havent set a limbs id to use, just use our own id
 		limbs_id = id
 	..()
-
 
 /proc/generate_selectable_species(clear = FALSE)
 	if(clear)
@@ -854,10 +856,10 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 	var/g = (H.dna.features["body_model"] == FEMALE) ? "f" : "m"
 	var/list/colorlist = list()
 	var/husk = HAS_TRAIT(H, TRAIT_HUSK)
-	colorlist += husk ? ReadRGB("#a3a3a3") :ReadRGB("[H.dna.features["mcolor"]]0")
-	colorlist += husk ? ReadRGB("#a3a3a3") :ReadRGB("[H.dna.features["mcolor2"]]0")
-	colorlist += husk ? ReadRGB("#a3a3a3") : ReadRGB("[H.dna.features["mcolor3"]]0")
-	colorlist += list(0,0,0, hair_alpha)
+	colorlist += husk ? ReadRGB("#a3a3a3") : ReadRGB("[H.dna.features["mcolor"]]00")
+	colorlist += husk ? ReadRGB("#a3a3a3") : ReadRGB("[H.dna.features["mcolor2"]]00")
+	colorlist += husk ? ReadRGB("#a3a3a3") : ReadRGB("[H.dna.features["mcolor3"]]00")
+	colorlist += husk ? list(0, 0, 0) : list(0, 0, 0, hair_alpha)
 	for(var/index in 1 to colorlist.len)
 		colorlist[index] /= 255
 
@@ -1031,7 +1033,6 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 	H.apply_overlay(BODY_FRONT_LAYER)
 	H.apply_overlay(HORNS_LAYER)
 
-
 /*
  * Equip the outfit required for life. Replaces items currently worn.
  */
@@ -1062,7 +1063,8 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 			H.adjustBruteLoss(1)
 
 /datum/species/proc/spec_death(gibbed, mob/living/carbon/human/H)
-	return
+	if(H)
+		stop_wagging_tail(H)
 
 /datum/species/proc/auto_equip(mob/living/carbon/human/H)
 	// handles the equipping of species-specific gear
@@ -1285,9 +1287,9 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 /datum/species/proc/check_weakness(obj/item, mob/living/attacker)
 	return FALSE
 
-////////
-	//LIFE//
-	////////
+/////////////
+////LIFE////
+////////////
 
 /datum/species/proc/handle_digestion(mob/living/carbon/human/H)
 	if(HAS_TRAIT(src, TRAIT_NOHUNGER))
@@ -1446,7 +1448,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 		target.grabbedby(user)
 		return 1
 
-/datum/species/proc/harm(mob/living/carbon/human/user, mob/living/carbon/human/target, datum/martial_art/attacker_style, unarmed_attack_flags = NONE)
+/datum/species/proc/harm(mob/living/carbon/human/user, mob/living/carbon/human/target, datum/martial_art/attacker_style, attackchain_flags = NONE)
 	if(!attacker_style && HAS_TRAIT(user, TRAIT_PACIFISM))
 		to_chat(user, "<span class='warning'>You don't want to harm [target]!</span>")
 		return FALSE
@@ -1458,7 +1460,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 			target_message = "<span class='warning'>[target] blocks your attack!</span>")
 		return FALSE
 
-	if(!(unarmed_attack_flags & UNARMED_ATTACK_PARRY))
+	if(!(attackchain_flags & ATTACK_IS_PARRY_COUNTERATTACK))
 		if(HAS_TRAIT(user, TRAIT_PUGILIST))//CITADEL CHANGE - makes punching cause staminaloss but funny martial artist types get a discount
 			user.adjustStaminaLossBuffered(1.5)
 		else
@@ -1500,7 +1502,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 		var/obj/item/bodypart/affecting = target.get_bodypart(ran_zone(user.zone_selected))
 
 		var/miss_chance = 100//calculate the odds that a punch misses entirely. considers stamina and brute damage of the puncher. punches miss by default to prevent weird cases
-		if(unarmed_attack_flags & UNARMED_ATTACK_PARRY)
+		if(attackchain_flags & ATTACK_IS_PARRY_COUNTERATTACK)
 			miss_chance = 0
 		else
 			if(user.dna.species.punchdamagelow)
@@ -1687,7 +1689,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 /datum/species/proc/spec_hitby(atom/movable/AM, mob/living/carbon/human/H)
 	return
 
-/datum/species/proc/spec_attack_hand(mob/living/carbon/human/M, mob/living/carbon/human/H, datum/martial_art/attacker_style, act_intent, unarmed_attack_flags)
+/datum/species/proc/spec_attack_hand(mob/living/carbon/human/M, mob/living/carbon/human/H, datum/martial_art/attacker_style, act_intent, attackchain_flags)
 	if(!istype(M))
 		return
 	CHECK_DNA_AND_SPECIES(M)
@@ -1707,7 +1709,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 			grab(M, H, attacker_style)
 
 		if("harm")
-			harm(M, H, attacker_style, unarmed_attack_flags)
+			harm(M, H, attacker_style, attackchain_flags)
 
 		if("disarm")
 			disarm(M, H, attacker_style)
@@ -1717,7 +1719,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 	// Allows you to put in item-specific reactions based on species
 	if(user != H)
 		var/list/block_return = list()
-		if(H.mob_run_block(I, totitemdamage, "the [I.name]", ((attackchain_flags & ATTACKCHAIN_PARRY_COUNTERATTACK)? ATTACK_TYPE_PARRY_COUNTERATTACK : NONE) | ATTACK_TYPE_MELEE, I.armour_penetration, user, affecting.body_zone, block_return) & BLOCK_SUCCESS)
+		if(H.mob_run_block(I, totitemdamage, "the [I.name]", ((attackchain_flags & ATTACK_IS_PARRY_COUNTERATTACK)? ATTACK_TYPE_PARRY_COUNTERATTACK : NONE) | ATTACK_TYPE_MELEE, I.armour_penetration, user, affecting.body_zone, block_return) & BLOCK_SUCCESS)
 			return 0
 		totitemdamage = block_calculate_resultant_damage(totitemdamage, block_return)
 	if(H.check_martial_melee_block())
@@ -1734,9 +1736,15 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 	var/armor_block = H.run_armor_check(affecting, "melee", "<span class='notice'>Your armor has protected your [hit_area].</span>", "<span class='notice'>Your armor has softened a hit to your [hit_area].</span>",I.armour_penetration)
 	armor_block = min(90,armor_block) //cap damage reduction at 90%
 	var/Iforce = I.force //to avoid runtimes on the forcesay checks at the bottom. Some items might delete themselves if you drop them. (stunning yourself, ninja swords)
+	var/Iwound_bonus = I.wound_bonus
+
+	// this way, you can't wound with a surgical tool on help intent if they have a surgery active and are laying down, so a misclick with a circular saw on the wrong limb doesn't bleed them dry (they still get hit tho)
+	if((I.item_flags & SURGICAL_TOOL) && user.a_intent == INTENT_HELP && (H.mobility_flags & ~MOBILITY_STAND) && (LAZYLEN(H.surgeries) > 0))
+		Iwound_bonus = CANT_WOUND
 
 	var/weakness = H.check_weakness(I, user)
-	apply_damage(totitemdamage * weakness, I.damtype, def_zone, armor_block, H) //CIT CHANGE - replaces I.force with totitemdamage
+	apply_damage(totitemdamage * weakness, I.damtype, def_zone, armor_block, H, wound_bonus = Iwound_bonus, bare_wound_bonus = I.bare_wound_bonus, sharpness = I.get_sharpness())
+
 
 	H.send_item_attack_message(I, user, hit_area, totitemdamage)
 
@@ -1822,6 +1830,9 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 		return TRUE
 	CHECK_DNA_AND_SPECIES(M)
 	CHECK_DNA_AND_SPECIES(H)
+	if(!M.CheckActionCooldown())
+		return
+	M.DelayNextAction(CLICK_CD_MELEE)
 
 	if(!istype(M)) //sanity check for drones.
 		return TRUE
@@ -1951,8 +1962,8 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 				append_message += ", causing them to drop [target_held_item]"
 		log_combat(user, target, "shoved", append_message)
 
-/datum/species/proc/apply_damage(damage, damagetype = BRUTE, def_zone = null, blocked, mob/living/carbon/human/H, forced = FALSE, spread_damage = FALSE)
-	SEND_SIGNAL(src, COMSIG_MOB_APPLY_DAMGE, damage, damagetype, def_zone)
+/datum/species/proc/apply_damage(damage, damagetype = BRUTE, def_zone = null, blocked, mob/living/carbon/human/H, forced = FALSE, spread_damage = FALSE, wound_bonus = 0, bare_wound_bonus = 0, sharpness = FALSE)
+	SEND_SIGNAL(H, COMSIG_MOB_APPLY_DAMGE, damage, damagetype, def_zone, wound_bonus, bare_wound_bonus, sharpness) // make sure putting wound_bonus here doesn't screw up other signals or uses for this signal
 	var/hit_percent = (100-(blocked+armor))/100
 	hit_percent = (hit_percent * (100-H.physiology.damage_resistance))/100
 	if(!forced && hit_percent <= 0)
@@ -1979,7 +1990,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 			H.damageoverlaytemp = 20
 			var/damage_amount = forced ? damage : damage * hit_percent * brutemod * H.physiology.brute_mod
 			if(BP)
-				if(damage > 0 ? BP.receive_damage(damage_amount, 0) : BP.heal_damage(abs(damage_amount), 0))
+				if(BP.receive_damage(damage_amount, 0, wound_bonus = wound_bonus, bare_wound_bonus = bare_wound_bonus, sharpness = sharpness))
 					H.update_damage_overlays()
 					if(HAS_TRAIT(H, TRAIT_MASO) && prob(damage_amount))
 						H.mob_climax(forced_climax=TRUE)
@@ -1990,7 +2001,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 			H.damageoverlaytemp = 20
 			var/damage_amount = forced ? damage : damage * hit_percent * burnmod * H.physiology.burn_mod
 			if(BP)
-				if(damage > 0 ? BP.receive_damage(0, damage_amount) : BP.heal_damage(0, abs(damage_amount)))
+				if(BP.receive_damage(0, damage_amount, wound_bonus = wound_bonus, bare_wound_bonus = bare_wound_bonus, sharpness = sharpness))
 					H.update_damage_overlays()
 			else
 				H.adjustFireLoss(damage_amount)
@@ -2220,12 +2231,14 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 /datum/species/proc/ExtinguishMob(mob/living/carbon/human/H)
 	return
 
-
 ////////////
 //Stun//
 ////////////
 
 /datum/species/proc/spec_stun(mob/living/carbon/human/H,amount)
+	if(H)
+		stop_wagging_tail(H)
+
 	. = stunmod * H.physiology.stun_mod * amount
 
 //////////////
@@ -2243,11 +2256,30 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 ////////////////
 
 /datum/species/proc/can_wag_tail(mob/living/carbon/human/H)
-	return FALSE
+	if(!tail_type || !wagging_type)
+		return FALSE
+	else
+		return mutant_bodyparts[tail_type] || mutant_bodyparts[wagging_type]
 
 /datum/species/proc/is_wagging_tail(mob/living/carbon/human/H)
-	return FALSE
+	return mutant_bodyparts[wagging_type]
 
 /datum/species/proc/start_wagging_tail(mob/living/carbon/human/H)
+	if(tail_type && wagging_type)
+		if(mutant_bodyparts[tail_type])
+			mutant_bodyparts[wagging_type] = mutant_bodyparts[tail_type]
+			mutant_bodyparts -= tail_type
+			if(tail_type == "tail_lizard") //special lizard thing
+				mutant_bodyparts["waggingspines"] = mutant_bodyparts["spines"]
+				mutant_bodyparts -= "spines"
+			H.update_body()
 
 /datum/species/proc/stop_wagging_tail(mob/living/carbon/human/H)
+	if(tail_type && wagging_type)
+		if(mutant_bodyparts[wagging_type])
+			mutant_bodyparts[tail_type] = mutant_bodyparts[wagging_type]
+			mutant_bodyparts -= wagging_type
+			if(tail_type == "tail_lizard") //special lizard thing
+				mutant_bodyparts["spines"] = mutant_bodyparts["waggingspines"]
+				mutant_bodyparts -= "waggingspines"
+			H.update_body()

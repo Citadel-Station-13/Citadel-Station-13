@@ -69,7 +69,7 @@
 	var/totitemdamage = pre_attacked_by(I, user) * damage_multiplier
 	var/impacting_zone = (user == src)? check_zone(user.zone_selected) : ran_zone(user.zone_selected)
 	var/list/block_return = list()
-	if((user != src) && (mob_run_block(I, totitemdamage, "the [I]", ((attackchain_flags & ATTACKCHAIN_PARRY_COUNTERATTACK)? ATTACK_TYPE_PARRY_COUNTERATTACK : NONE) | ATTACK_TYPE_MELEE, I.armour_penetration, user, impacting_zone, block_return) & BLOCK_SUCCESS))
+	if((user != src) && (mob_run_block(I, totitemdamage, "the [I]", ((attackchain_flags & ATTACK_IS_PARRY_COUNTERATTACK)? ATTACK_TYPE_PARRY_COUNTERATTACK : NONE) | ATTACK_TYPE_MELEE, I.armour_penetration, user, impacting_zone, block_return) & BLOCK_SUCCESS))
 		return FALSE
 	totitemdamage = block_calculate_resultant_damage(totitemdamage, block_return)
 	var/obj/item/bodypart/affecting = get_bodypart(impacting_zone)
@@ -79,7 +79,7 @@
 	send_item_attack_message(I, user, affecting.name, totitemdamage)
 	I.do_stagger_action(src, user, totitemdamage)
 	if(I.force)
-		apply_damage(totitemdamage, I.damtype, affecting) //CIT CHANGE - replaces I.force with totitemdamage
+		apply_damage(totitemdamage, I.damtype, affecting, wound_bonus = I.wound_bonus, bare_wound_bonus = I.bare_wound_bonus, sharpness = I.get_sharpness()) //CIT CHANGE - replaces I.force with totitemdamage
 		if(I.damtype == BRUTE && affecting.status == BODYPART_ORGANIC)
 			var/basebloodychance = affecting.brute_dam + totitemdamage
 			if(prob(basebloodychance))
@@ -111,8 +111,7 @@
 /mob/living/carbon/attack_drone(mob/living/simple_animal/drone/user)
 	return //so we don't call the carbon's attack_hand().
 
-//ATTACK HAND IGNORING PARENT RETURN VALUE
-/mob/living/carbon/attack_hand(mob/living/carbon/human/user, act_intent, unarmed_attack_flags)
+/mob/living/carbon/on_attack_hand(mob/living/carbon/human/user, act_intent, unarmed_attack_flags)
 	. = ..()
 	if(.) //was the attack blocked?
 		return
@@ -132,6 +131,9 @@
 				if(S.next_step(user, act_intent))
 					return TRUE
 
+	for(var/datum/wound/W in all_wounds)
+		if(W.try_handling(user))
+			return 1
 
 /mob/living/carbon/attack_paw(mob/living/carbon/monkey/M)
 
@@ -148,15 +150,13 @@
 
 	if(M.a_intent == INTENT_HELP)
 		help_shake_act(M)
-		return 0
+		return TRUE
 
 	. = ..()
 	if(.) //successful monkey bite.
 		for(var/thing in M.diseases)
 			var/datum/disease/D = thing
 			ForceContractDisease(D)
-		return 1
-
 
 /mob/living/carbon/attack_slime(mob/living/simple_animal/slime/M)
 	. = ..()
@@ -467,3 +467,8 @@
 		if (BP.status < 2)
 			amount += BP.burn_dam
 	return amount
+
+/mob/living/carbon/proc/get_interaction_efficiency(zone)
+	var/obj/item/bodypart/limb = get_bodypart(zone)
+	if(!limb)
+		return

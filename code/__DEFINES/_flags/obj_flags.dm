@@ -12,4 +12,9 @@
 #define SHOVABLE_ONTO			(1<<9)	//called on turf.shove_act() to consider whether an object should have a niche effect (defined in their own shove_act()) when someone is pushed onto it, or do a sanity CanPass() check.
 #define BLOCK_Z_FALL			(1<<10)
 
+/// Integrity defines for clothing (not flags but close enough)
+#define CLOTHING_PRISTINE	0 // We have no damage on the clothing
+#define CLOTHING_DAMAGED	1 // There's some damage on the clothing but it still has at least one functioning bodypart and can be equipped
+#define CLOTHING_SHREDDED	2 // The clothing is useless and cannot be equipped unless repaired first
+
 // If you add new ones, be sure to add them to /obj/Initialize as well for complete mapping support

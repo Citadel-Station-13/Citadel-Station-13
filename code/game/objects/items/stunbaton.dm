@@ -14,6 +14,7 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	attack_verb = list("beaten")
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 50, "bio" = 0, "rad" = 0, "fire" = 80, "acid" = 80)
+	attack_speed = CLICK_CD_MELEE
 
 	var/stamforce = 35
 	var/turned_on = FALSE
@@ -144,8 +145,9 @@
 		return ..()
 
 /obj/item/melee/baton/alt_pre_attack(atom/A, mob/living/user, params)
+	if(!user.CheckActionCooldown(CLICK_CD_MELEE))
+		return
 	. = common_baton_melee(A, user, TRUE)		//return true (attackchain interrupt) if this also returns true. no harm-disarming.
-	user.changeNext_move(CLICK_CD_MELEE)
 
 //return TRUE to interrupt attack chain.
 /obj/item/melee/baton/proc/common_baton_melee(mob/M, mob/living/user, disarming = FALSE)
@@ -156,6 +158,7 @@
 	if(IS_STAMCRIT(user))			//CIT CHANGE - makes it impossible to baton in stamina softcrit
 		to_chat(user, "<span class='danger'>You're too exhausted to use [src] properly.</span>")
 		return TRUE
+	user.DelayNextAction()
 	if(ishuman(M))
 		var/mob/living/carbon/human/L = M
 		if(check_martial_counter(L, user))
