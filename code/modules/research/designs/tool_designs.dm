@@ -92,7 +92,7 @@
 	category = list("Tool Designs")
 	departmental_flags =  DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_CARGO
 	
-	/datum/design/ranged_analyzer
+/datum/design/ranged_analyzer
 	name = "Long-range Analyzer"
 	desc = "A new advanced atmospheric analyzer design, capable of performing scans at long range."
 	id = "ranged_analyzer"

@@ -21,7 +21,7 @@
 	. = ..()
 	stored = new /obj/item/blackbox(src)
 
-/obj/machinery/blackbox_recorder/attack_hand(mob/living/user)
+/obj/machinery/blackbox_recorder/on_attack_hand(mob/living/user, act_intent, unarmed_attack_flags)
 	. = ..()
 	if(stored)
 		to_chat(user, "<span class='notice'>You start struggling to pry the [stored] from the [src]...</span>")
