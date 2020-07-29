@@ -77,6 +77,7 @@
 		final_percent = returnlist[BLOCK_RETURN_PROJECTILE_BLOCK_PERCENTAGE]
 		if(returned & BLOCK_SHOULD_REDIRECT)
 			handle_projectile_attack_redirection(P, returnlist[BLOCK_RETURN_REDIRECT_METHOD])
+			return BULLET_ACT_FORCE_PIERCE
 		if(returned & BLOCK_REDIRECTED)
 			return BULLET_ACT_FORCE_PIERCE
 		if(returned & BLOCK_SUCCESS)
@@ -215,8 +216,8 @@
 //proc to upgrade a simple pull into a more aggressive grab.
 /mob/living/proc/grippedby(mob/living/carbon/user, instant = FALSE)
 	if(user.grab_state < GRAB_KILL)
-		user.changeNext_move(CLICK_CD_GRABBING)
-		playsound(src.loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
+		user.DelayNextAction(CLICK_CD_GRABBING, flush = TRUE)
+		playsound(src, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
 
 		if(user.grab_state) //only the first upgrade is instantaneous
 			var/old_grab_state = user.grab_state
@@ -270,10 +271,10 @@
 		user.set_pull_offsets(src, grab_state)
 		return 1
 
-/mob/living/attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
+/mob/living/on_attack_hand(mob/user, act_intent = user.a_intent, attackchain_flags)
 	..() //Ignoring parent return value here.
 	SEND_SIGNAL(src, COMSIG_MOB_ATTACK_HAND, user)
-	if((user != src) && act_intent != INTENT_HELP && (mob_run_block(user, 0, user.name, ATTACK_TYPE_UNARMED | ATTACK_TYPE_MELEE | ((unarmed_attack_flags & UNARMED_ATTACK_PARRY)? ATTACK_TYPE_PARRY_COUNTERATTACK : NONE), null, user, check_zone(user.zone_selected), null) & BLOCK_SUCCESS))
+	if((user != src) && act_intent != INTENT_HELP && (mob_run_block(user, 0, user.name, ATTACK_TYPE_UNARMED | ATTACK_TYPE_MELEE | ((attackchain_flags & ATTACK_IS_PARRY_COUNTERATTACK)? ATTACK_TYPE_PARRY_COUNTERATTACK : NONE), null, user, check_zone(user.zone_selected), null) & BLOCK_SUCCESS))
 		log_combat(user, src, "attempted to touch")
 		visible_message("<span class='warning'>[user] attempted to touch [src]!</span>",
 			"<span class='warning'>[user] attempted to touch you!</span>", target = user,
@@ -323,6 +324,9 @@
 
 /mob/living/attack_animal(mob/living/simple_animal/M)
 	M.face_atom(src)
+	if(!M.CheckActionCooldown(CLICK_CD_MELEE))
+		return
+	M.DelayNextAction()
 	if(M.melee_damage_upper == 0)
 		M.visible_message("<span class='notice'>\The [M] [M.friendly_verb_continuous] [src]!</span>",
 			"<span class='notice'>You [M.friendly_verb_simple] [src]!</span>", target = src,
@@ -338,7 +342,7 @@
 			return 0
 		damage = block_calculate_resultant_damage(damage, return_list)
 		if(M.attack_sound)
-			playsound(loc, M.attack_sound, 50, 1, 1)
+			playsound(src, M.attack_sound, 50, 1, 1)
 		M.do_attack_animation(src)
 		visible_message("<span class='danger'>\The [M] [M.attack_verb_continuous] [src]!</span>", \
 						"<span class='userdanger'>\The [M] [M.attack_verb_continuous] you!</span>", null, COMBAT_MESSAGE_RANGE, null,
@@ -347,6 +351,9 @@
 		return damage
 
 /mob/living/attack_paw(mob/living/carbon/monkey/M)
+	if(!M.CheckActionCooldown(CLICK_CD_MELEE))
+		return
+	M.DelayNextAction()
 	if (M.a_intent == INTENT_HARM)
 		if(HAS_TRAIT(M, TRAIT_PACIFISM))
 			to_chat(M, "<span class='notice'>You don't want to hurt anyone!</span>")
@@ -368,6 +375,7 @@
 			visible_message("<span class='danger'>[M.name] has attempted to bite [src]!</span>", \
 				"<span class='userdanger'>[M.name] has attempted to bite [src]!</span>", null, COMBAT_MESSAGE_RANGE, null,
 				M, "<span class='danger'>You have attempted to bite [src]!</span>")
+			return TRUE
 	return FALSE
 
 /mob/living/attack_larva(mob/living/carbon/alien/larva/L)

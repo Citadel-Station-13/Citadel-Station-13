@@ -1280,12 +1280,12 @@ GLOBAL_LIST_EMPTY(custom_outfits) //Admin created outfits
 		ADMIN_PUNISHMENT_SUPPLYPOD,
 		ADMIN_PUNISHMENT_MAZING,
 		ADMIN_PUNISHMENT_ROD,
+		ADMIN_PUNISHMENT_SHOES,
 		ADMIN_PUNISHMENT_PICKLE,
 		ADMIN_PUNISHMENT_FRY,
-    ADMIN_PUNISHMENT_CRACK, 
-    ADMIN_PUNISHMENT_BLEED, 
-    ADMIN_PUNISHMENT_SCARIFY)
-
+		ADMIN_PUNISHMENT_CRACK, 
+		ADMIN_PUNISHMENT_BLEED, 
+		ADMIN_PUNISHMENT_SCARIFY)
 
 	var/punishment = input("Choose a punishment", "DIVINE SMITING") as null|anything in punishment_list
 
@@ -1394,6 +1394,17 @@ GLOBAL_LIST_EMPTY(custom_outfits) //Admin created outfits
 			target.turn_into_pickle()
 		if(ADMIN_PUNISHMENT_FRY)
 			target.fry()
+
+		if(ADMIN_PUNISHMENT_SHOES)
+			if(!iscarbon(target))
+				to_chat(usr,"<span class='warning'>This must be used on a carbon mob.</span>")
+				return
+			var/mob/living/carbon/C = target
+			var/obj/item/clothing/shoes/sick_kicks = C.shoes
+			if(!sick_kicks?.can_be_tied)
+				to_chat(usr,"<span class='warning'>[C] does not have knottable shoes!</span>")
+				return
+			sick_kicks.adjust_laces(SHOES_KNOTTED)
 
 	punish_log(target, punishment)
 

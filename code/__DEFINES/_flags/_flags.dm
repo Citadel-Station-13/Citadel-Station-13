@@ -138,14 +138,6 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define MOBILITY_FLAGS_DEFAULT (MOBILITY_MOVE | MOBILITY_STAND | MOBILITY_PICKUP | MOBILITY_USE | MOBILITY_UI | MOBILITY_STORAGE | MOBILITY_PULL | MOBILITY_RESIST)
 #define MOBILITY_FLAGS_ANY_INTERACTION (MOBILITY_USE | MOBILITY_PICKUP | MOBILITY_UI | MOBILITY_STORAGE)
 
-// melee_attack_chain() attackchain_flags
-/// The attack is from a parry counterattack.
-#define ATTACKCHAIN_PARRY_COUNTERATTACK			(1<<0)
-
-// UnarmedAttack() flags
-/// Attack is from a parry counterattack
-#define UNARMED_ATTACK_PARRY					(1<<0)
-
 /// If the thing can reflect light (lasers/energy)
 #define RICOCHET_SHINY			(1<<0)
 /// If the thing can reflect matter (bullets/bomb shrapnel)

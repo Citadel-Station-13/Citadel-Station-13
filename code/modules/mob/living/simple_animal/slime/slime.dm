@@ -296,7 +296,7 @@
 		discipline_slime(user)
 		return ..()
 
-/mob/living/simple_animal/slime/attack_hand(mob/living/carbon/human/M)
+/mob/living/simple_animal/slime/on_attack_hand(mob/living/carbon/human/M)
 	if(buckled)
 		M.do_attack_animation(src, ATTACK_EFFECT_DISARM)
 		if(buckled == M)
@@ -356,7 +356,7 @@
 		attacked += 10
 		if(prob(25))
 			user.do_attack_animation(src)
-			user.changeNext_move(CLICK_CD_MELEE)
+			W.ApplyAttackCooldown(user, src)
 			to_chat(user, "<span class='danger'>[W] passes right through [src]!</span>")
 			return
 		if(Discipline && prob(50)) // wow, buddy, why am I getting attacked??

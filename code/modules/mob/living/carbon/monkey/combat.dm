@@ -132,8 +132,7 @@
 	else if(legcuffed)
 		I = legcuffed
 	if(I)
-		changeNext_move(CLICK_CD_BREAKOUT)
-		last_special = world.time + CLICK_CD_BREAKOUT
+		MarkResistTime()
 		cuff_resist(I)
 
 /mob/living/carbon/monkey/proc/should_target(var/mob/living/L)
@@ -408,8 +407,8 @@
 	if(a_intent != INTENT_HARM)
 		battle_screech()
 		a_intent = INTENT_HARM
-
-/mob/living/carbon/monkey/attack_hand(mob/living/L)
+   
+/mob/living/carbon/monkey/on_attack_hand(mob/living/L)
 	if(L.a_intent == INTENT_HARM && prob(MONKEY_RETALIATE_HARM_PROB + (power_level/20))) //this means it can cap at 100 instead of being 95
 		attempt_parry()
 		retaliate(L)

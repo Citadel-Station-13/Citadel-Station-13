@@ -144,7 +144,6 @@
 	id = "tased"
 	alert_type = null
 	var/movespeed_mod = /datum/movespeed_modifier/status_effect/tased
-	var/nextmove_modifier = 1
 	var/stamdmg_per_ds = 0		//a 20 duration would do 20 stamdmg, disablers do 24 or something
 	var/last_tick = 0			//fastprocess processing speed is a goddamn sham, don't trust it.
 
@@ -173,13 +172,9 @@
 			C.adjustStaminaLoss(max(0, stamdmg_per_ds * diff)) //if you really want to try to stamcrit someone with a taser alone, you can, but it'll take time and good timing.
 	last_tick = world.time
 
-/datum/status_effect/electrode/nextmove_modifier() //why is this a proc. its no big deal since this doesnt get called often at all but literally w h y
-	return nextmove_modifier
-
 /datum/status_effect/electrode/no_combat_mode
 	id = "tased_strong"
 	movespeed_mod = /datum/movespeed_modifier/status_effect/tased/no_combat_mode
-	nextmove_modifier = 2
 	blocks_combatmode = TRUE
 	stamdmg_per_ds = 1
 

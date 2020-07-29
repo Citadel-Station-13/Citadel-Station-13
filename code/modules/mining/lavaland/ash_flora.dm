@@ -62,10 +62,7 @@
 	else
 		return ..()
 
-/obj/structure/flora/ash/attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
-	. = ..()
-	if(.)
-		return
+/obj/structure/flora/ash/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	if(!harvested && !needs_sharp_harvest)
 		user.visible_message("<span class='notice'>[user] starts to harvest from [src].</span>","<span class='notice'>You begin to harvest from [src].</span>")
 		if(do_after(user, harvest_time, target = src))

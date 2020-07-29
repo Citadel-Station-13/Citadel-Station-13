@@ -21,7 +21,11 @@
 
 /datum/mutation/human/hulk/on_attack_hand(atom/target, proximity, act_intent, unarmed_attack_flags)
 	if(proximity && (act_intent == INTENT_HARM)) //no telekinetic hulk attack
-		return target.attack_hulk(owner)
+		if(!owner.CheckActionCooldown(CLICK_CD_MELEE))
+			return INTERRUPT_UNARMED_ATTACK | NO_AUTO_CLICKDELAY_HANDLING
+		owner.DelayNextAction()
+		target.attack_hulk(owner)
+		return INTERRUPT_UNARMED_ATTACK | NO_AUTO_CLICKDELAY_HANDLING
 
 /datum/mutation/human/hulk/on_life()
 	if(owner.health < 0)
