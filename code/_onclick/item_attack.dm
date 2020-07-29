@@ -7,21 +7,22 @@
   *and lastly
   *afterattack. The return value does not matter.
   */
-/obj/item/proc/melee_attack_chain(mob/user, atom/target, params, flags, damage_multiplier = 1)
+/obj/item/proc/melee_attack_chain(mob/user, atom/target, params, attackchain_flags, damage_multiplier = 1)
 	if(isliving(user))
 		var/mob/living/L = user
-		if(!CHECK_MOBILITY(L, MOBILITY_USE) && !(flags & ATTACKCHAIN_PARRY_COUNTERATTACK))
+		if(!CHECK_MOBILITY(L, MOBILITY_USE) && !(attackchain_flags & ATTACK_IS_PARRY_COUNTERATTACK))
 			to_chat(L, "<span class='warning'>You are unable to swing [src] right now!</span>")
 			return
-	if(tool_behaviour && target.tool_act(user, src, tool_behaviour))
+	. = attackchain_flags
+	if(tool_behaviour && ((. = target.tool_act(user, src, tool_behaviour)) & STOP_ATTACK_PROC_CHAIN))
 		return
-	if(pre_attack(target, user, params))
+	if((. |= pre_attack(target, user, params, ., damage_multiplier)) & STOP_ATTACK_PROC_CHAIN)
 		return
-	if(target.attackby(src, user, params, flags, damage_multiplier))
+	if((. |= target.attackby(src, user, params, ., damage_multiplier)) & STOP_ATTACK_PROC_CHAIN)
 		return
 	if(QDELETED(src) || QDELETED(target))
 		return
-	afterattack(target, user, TRUE, params)
+	. |= afterattack(target, user, TRUE, params)
 
 /// Like melee_attack_chain but for ranged.
 /obj/item/proc/ranged_attack_chain(mob/user, atom/target, params)
@@ -30,7 +31,7 @@
 		if(!CHECK_MOBILITY(L, MOBILITY_USE))
 			to_chat(L, "<span class='warning'>You are unable to raise [src] right now!</span>")
 			return
-	afterattack(target, user, FALSE, params)
+	return afterattack(target, user, FALSE, params)
 
 // Called when the item is in the active hand, and clicked; alternately, there is an 'activate held object' verb or you can hit pagedown.
 /obj/item/proc/attack_self(mob/user)
@@ -38,28 +39,43 @@
 		return
 	interact(user)
 
-/obj/item/proc/pre_attack(atom/A, mob/living/user, params) //do stuff before attackby!
+/obj/item/proc/pre_attack(atom/A, mob/living/user, params, attackchain_flags, damage_multiplier) //do stuff before attackby!
 	if(SEND_SIGNAL(src, COMSIG_ITEM_PRE_ATTACK, A, user, params) & COMPONENT_NO_ATTACK)
-		return TRUE
-	return FALSE //return TRUE to avoid calling attackby after this proc does stuff
+		return STOP_ATTACK_PROC_CHAIN
+	if(!(attackchain_flags & ATTACK_IGNORE_CLICKDELAY) && !CheckAttackCooldown(user, A))
+		return STOP_ATTACK_PROC_CHAIN
 
 // No comment
 /atom/proc/attackby(obj/item/W, mob/user, params)
 	if(SEND_SIGNAL(src, COMSIG_PARENT_ATTACKBY, W, user, params) & COMPONENT_NO_AFTERATTACK)
-		return TRUE
-	return FALSE
+		return STOP_ATTACK_PROC_CHAIN
 
 /obj/attackby(obj/item/I, mob/living/user, params)
-	return ..() || ((obj_flags & CAN_BE_HIT) && I.attack_obj(src, user))
+	. = ..()
+	if(. & STOP_ATTACK_PROC_CHAIN)
+		return
+	if(obj_flags & CAN_BE_HIT)
+		. |= I.attack_obj(src, user)
 
 /mob/living/attackby(obj/item/I, mob/living/user, params, attackchain_flags, damage_multiplier)
-	if(..())
-		return TRUE
-	I.attack_delay_done = FALSE //Should be set TRUE in pre_attacked_by()
-	. = I.attack(src, user, attackchain_flags, damage_multiplier)
-	if(!I.attack_delay_done) //Otherwise, pre_attacked_by() should handle it.
-		user.changeNext_move(I.click_delay)
+	. = ..()
+	if(. & STOP_ATTACK_PROC_CHAIN)
+		return
+	. |= I.attack(src, user, attackchain_flags, damage_multiplier)
+	if(!(. & NO_AUTO_CLICKDELAY_HANDLING))	// SAFETY NET - unless the proc tells us we should not handle this, give them the basic melee cooldown!
+		I.ApplyAttackCooldown(user, src, attackchain_flags)
 
+/**
+  * Called when someone uses us to attack a mob in melee combat.
+  * 
+  * This proc respects CheckAttackCooldown() default clickdelay handling.
+  * 
+  * @params
+  * * mob/living/M - target
+  * * mob/living/user - attacker
+  * * attackchain_Flags - see [code/__DEFINES/_flags/return_values.dm]
+  * * damage_multiplier - what to multiply the damage by
+  */
 /obj/item/proc/attack(mob/living/M, mob/living/user, attackchain_flags = NONE, damage_multiplier = 1)
 	if(SEND_SIGNAL(src, COMSIG_ITEM_ATTACK, M, user) & COMPONENT_ITEM_NO_ATTACK)
 		return
@@ -88,6 +104,17 @@
 	if(weight)
 		user.adjustStaminaLossBuffered(weight)
 
+	// CIT SCREENSHAKE
+	if(force >= 15)
+		shake_camera(user, ((force - 10) * 0.01 + 1), ((force - 10) * 0.01))
+		if(M.client)
+			switch (M.client.prefs.damagescreenshake)
+				if (1)
+					shake_camera(M, ((force - 10) * 0.015 + 1), ((force - 10) * 0.015))
+				if (2)
+					if(!CHECK_MOBILITY(M, MOBILITY_MOVE))
+						shake_camera(M, ((force - 10) * 0.015 + 1), ((force - 10) * 0.015))
+
 //the equivalent of the standard version of attack() but for object targets.
 /obj/item/proc/attack_obj(obj/O, mob/living/user)
 	if(SEND_SIGNAL(src, COMSIG_ITEM_ATTACK_OBJ, O, user) & COMPONENT_NO_ATTACK_OBJ)
@@ -95,8 +122,7 @@
 	if(item_flags & NOBLUDGEON)
 		return
 	user.do_attack_animation(O)
-	if(!O.attacked_by(src, user))
-		user.changeNext_move(click_delay)
+	O.attacked_by(src, user)
 	var/weight = getweight(user, STAM_COST_ATTACK_OBJ_MULT)
 	if(weight)
 		user.adjustStaminaLossBuffered(weight)//CIT CHANGE - makes attacking things cause stamina loss
@@ -109,12 +135,9 @@
 	var/bad_trait
 
 	var/stamloss = user.getStaminaLoss()
-	var/next_move_mult = 1
 	if(stamloss > STAMINA_NEAR_SOFTCRIT) //The more tired you are, the less damage you do.
 		var/penalty = (stamloss - STAMINA_NEAR_SOFTCRIT)/(STAMINA_NEAR_CRIT - STAMINA_NEAR_SOFTCRIT)*STAM_CRIT_ITEM_ATTACK_PENALTY
 		totitemdamage *= 1 - penalty
-		next_move_mult += penalty*STAM_CRIT_ITEM_ATTACK_DELAY
-	user.changeNext_move(I.click_delay*next_move_mult)
 
 	if(SEND_SIGNAL(user, COMSIG_COMBAT_MODE_CHECK, COMBAT_MODE_INACTIVE))
 		bad_trait = SKILL_COMBAT_MODE //blacklist combat skills.
@@ -126,18 +149,18 @@
 			if(!(SKILL_TRAIN_ATTACK_OBJ in I.used_skills[skill]))
 				continue
 			user.mind.auto_gain_experience(skill, I.skill_gain)
-
+	if(!(attackchain_flags & NO_AUTO_CLICKDELAY_HANDLING))
+		I.ApplyAttackCooldown(user, src, attackchain_flags)
 	if(totitemdamage)
 		visible_message("<span class='danger'>[user] has hit [src] with [I]!</span>", null, null, COMBAT_MESSAGE_RANGE)
 		//only witnesses close by and the victim see a hit message.
 		log_combat(user, src, "attacked", I)
 	take_damage(totitemdamage, I.damtype, "melee", 1)
-	return TRUE
 
 /mob/living/attacked_by(obj/item/I, mob/living/user, attackchain_flags = NONE, damage_multiplier = 1)
 	var/list/block_return = list()
 	var/totitemdamage = pre_attacked_by(I, user) * damage_multiplier
-	if((user != src) && mob_run_block(I, totitemdamage, "the [I.name]", ((attackchain_flags & ATTACKCHAIN_PARRY_COUNTERATTACK)? ATTACK_TYPE_PARRY_COUNTERATTACK : NONE) | ATTACK_TYPE_MELEE, I.armour_penetration, user, null, block_return) & BLOCK_SUCCESS)
+	if((user != src) && mob_run_block(I, totitemdamage, "the [I.name]", ((attackchain_flags & ATTACK_IS_PARRY_COUNTERATTACK)? ATTACK_IS_PARRY_COUNTERATTACK : NONE) | ATTACK_TYPE_MELEE, I.armour_penetration, user, null, block_return) & BLOCK_SUCCESS)
 		return FALSE
 	totitemdamage = block_calculate_resultant_damage(totitemdamage, block_return)
 	send_item_attack_message(I, user, null, totitemdamage)
@@ -155,8 +178,7 @@
 
 /mob/living/simple_animal/attacked_by(obj/item/I, mob/living/user, attackchain_flags = NONE, damage_multiplier = 1)
 	if(I.force < force_threshold || I.damtype == STAMINA)
-		playsound(loc, 'sound/weapons/tap.ogg', I.get_clamped_volume(), 1, -1)
-		user.changeNext_move(I.click_delay) //pre_attacked_by not called
+		playsound(src, 'sound/weapons/tap.ogg', I.get_clamped_volume(), 1, -1)
 	else
 		return ..()
 
@@ -167,16 +189,12 @@
 
 	var/stamloss = user.getStaminaLoss()
 	var/stam_mobility_mult = 1
-	var/next_move_mult = 1
 	if(stamloss > STAMINA_NEAR_SOFTCRIT) //The more tired you are, the less damage you do.
 		var/penalty = (stamloss - STAMINA_NEAR_SOFTCRIT)/(STAMINA_NEAR_CRIT - STAMINA_NEAR_SOFTCRIT)*STAM_CRIT_ITEM_ATTACK_PENALTY
 		stam_mobility_mult -= penalty
-		next_move_mult += penalty*STAM_CRIT_ITEM_ATTACK_DELAY
 	if(stam_mobility_mult > LYING_DAMAGE_PENALTY && !CHECK_MOBILITY(user, MOBILITY_STAND)) //damage penalty for fighting prone, doesn't stack with the above.
 		stam_mobility_mult = LYING_DAMAGE_PENALTY
 	. *= stam_mobility_mult
-	user.changeNext_move(I.click_delay*next_move_mult)
-	I.attack_delay_done = TRUE
 
 	var/bad_trait
 	if(!(I.item_flags & NO_COMBAT_MODE_FORCE_MODIFIER))
@@ -197,8 +215,18 @@
 		var/datum/skill/S = GLOB.skill_datums[skill]
 		user.mind.auto_gain_experience(skill, I.skill_gain*S.item_skill_gain_multi)
 
-// Proximity_flag is 1 if this afterattack was called on something adjacent, in your square, or on your person.
-// Click parameters is the params string from byond Click() code, see that documentation.
+/**
+  * Called after attacking something if the melee attack chain isn't interrupted before.
+  * Also called when clicking on something with an item without being in melee range
+  *
+  * WARNING: This does not automatically check clickdelay if not in a melee attack! Be sure to account for this!
+  * 
+  * @params
+  * * target - The thing we clicked
+  * * user - mob of person clicking
+  * * proximity_flag - are we in melee range/doing it in a melee attack
+  * * click_parameters - mouse control parameters, check BYOND ref.
+  */
 /obj/item/proc/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
 	SEND_SIGNAL(src, COMSIG_ITEM_AFTERATTACK, target, user, proximity_flag, click_parameters)
 	SEND_SIGNAL(user, COMSIG_MOB_ITEM_AFTERATTACK, target, user, proximity_flag, click_parameters)

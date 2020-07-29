@@ -833,3 +833,8 @@
 	required_reagents = list(/datum/reagent/medicine/salglu_solution = 1, /datum/reagent/iron = 1, /datum/reagent/stable_plasma = 1)
 	mix_message = "The mixture congeals and gives off a faint copper scent."
 	required_temp = 350
+
+/datum/chemical_reaction/cellulose_carbonization
+	results = list(/datum/reagent/carbon = 1)
+	required_reagents = list(/datum/reagent/cellulose = 1)
+	required_temp = 512

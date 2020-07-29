@@ -13176,6 +13176,9 @@
 	dir = 8
 	},
 /obj/effect/decal/cleanable/blood/old,
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
 /turf/open/floor/plasteel,
 /area/security/courtroom)
 "avX" = (
@@ -43673,10 +43676,6 @@
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
 /area/maintenance/central/secondary)
-"bsm" = (
-/obj/machinery/status_display/evac,
-/turf/open/floor/plasteel,
-/area/engine/supermatter)
 "bsn" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -62889,9 +62888,9 @@
 	pixel_x = 24
 	},
 /obj/machinery/button/electrochromatic{
+	id = "!interrogation_room";
 	pixel_x = 38;
-	pixel_y = -5;
-	id = "!interrogation_room"
+	pixel_y = -5
 	},
 /turf/open/floor/plasteel,
 /area/security/warden)
@@ -84679,9 +84678,6 @@
 	},
 /area/security/vacantoffice)
 "fyr" = (
-/obj/machinery/light{
-	dir = 4
-	},
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /turf/closed/mineral/random/labormineral,
 /area/space/nearstation)
@@ -84938,10 +84934,6 @@
 /obj/structure/sign/warning/electricshock,
 /turf/closed/wall/r_wall/rust,
 /area/ai_monitored/turret_protected/ai_upload)
-"jPE" = (
-/obj/structure/cable,
-/turf/closed/mineral/random/labormineral,
-/area/space/nearstation)
 "jQY" = (
 /obj/structure/table/wood,
 /obj/item/paper_bin,
@@ -119966,7 +119958,7 @@ ckw
 cmw
 xON
 axa
-jPE
+aeu
 aeu
 aeU
 dQe
@@ -121750,7 +121742,7 @@ clM
 axW
 cnk
 coo
-ayn
+axU
 aLH
 aLx
 aLz
@@ -122270,7 +122262,7 @@ aLF
 aag
 aag
 aag
-bsm
+aLF
 cuA
 cuW
 bYI
