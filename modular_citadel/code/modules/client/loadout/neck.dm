@@ -9,7 +9,7 @@
 
 /datum/gear/neck/redtie
 	name = "Red tie"
-	category = SLOT_NECK
+	subcategory = SUBCATEGORY_NECK_TIE
 	path = /obj/item/clothing/neck/tie/red
 
 /datum/gear/neck/blacktie
@@ -80,10 +80,8 @@
 
 /datum/gear/neck/headphones
 	name = "Headphones"
-	category = SLOT_NECK
 	path = /obj/item/clothing/ears/headphones
 
 /datum/gear/neck/polycloak
 	name = "Polychromatic Cloak"
-	category = SLOT_NECK
 	path = /obj/item/clothing/neck/cloak/polychromic

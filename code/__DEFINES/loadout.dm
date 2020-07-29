@@ -12,7 +12,6 @@
 
 //mask
 #define CATEGORY_MASK "Mask"
-#define SUBCATEGORY_MASK_DONATOR 	"Donator"
 
 //hands
 #define CATEGORY_HANDS 				"Hands"

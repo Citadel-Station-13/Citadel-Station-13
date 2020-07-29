@@ -230,7 +230,7 @@
 	path = /obj/item/toy/darksabre
 	ckeywhitelist = list("inferno707")
 
-datum/gear/darksabresheath
+/datum/gear/donator/darksabresheath
 	name = "Dark Sabre Sheath"
 	slot = SLOT_IN_BACKPACK
 	path = /obj/item/storage/belt/sabre/darksabre

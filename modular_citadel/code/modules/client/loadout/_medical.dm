@@ -32,7 +32,6 @@
 
 /datum/gear/head/nursehat
 	name = "Nurse Hat"
-	category = SLOT_HEAD
 	path = /obj/item/clothing/head/nursehat
 	subcategory = SUBCATEGORY_HEAD_JOBS
 	restricted_roles = list("Medical Doctor", "Chief Medical Officer", "Geneticist", "Chemist", "Virologist")
@@ -40,7 +39,6 @@
 
 /datum/gear/uniform/nursesuit
 	name = "Nurse Suit"
-	category = SLOT_W_UNIFORM
 	path = /obj/item/clothing/under/rank/medical/doctor/nurse
 	subcategory = SUBCATEGORY_UNIFORM_JOBS
 	restricted_roles = list("Medical Doctor", "Chief Medical Officer", "Geneticist", "Chemist", "Virologist")

@@ -64,36 +64,36 @@
 	path = /obj/item/storage/crayons
 	subcategory = SUBCATEGORY_BACKPACK_TOYS
 
-/datum/gear/multipen
+/datum/gear/backpack/multipen
 	name = "A multicolored pen"
 	path = /obj/item/pen/fourcolor
 
-/datum/gear/fountainpen
+/datum/gear/backpack/fountainpen
 	name = "A fancy pen"
 	path = /obj/item/pen/fountain
 	cost = 2
 
-/datum/gear/modular_tablet
+/datum/gear/backpack/modular_tablet
 	name = "A modular tablet"
 	path = /obj/item/modular_computer/tablet/preset/cheap/
 	cost = 4
 
-/datum/gear/modular_laptop
+/datum/gear/backpack/modular_laptop
 	name = "A modular laptop"
 	path = /obj/item/modular_computer/laptop/preset/civilian
 	cost = 7
 
-/datum/gear/ringbox_gold
+/datum/gear/backpack/ringbox_gold
 	name = "A gold ring box"
 	path = /obj/item/storage/fancy/ringbox
 	cost = 3
 
-/datum/gear/ringbox_silver
+/datum/gear/backpack/ringbox_silver
 	name = "A silver ring box"
 	path = /obj/item/storage/fancy/ringbox/silver
 	cost = 3
 
-/datum/gear/ringbox_diamond
+/datum/gear/backpack/ringbox_diamond
 	name = "A diamond ring box"
 	path = /obj/item/storage/fancy/ringbox/diamond
 	cost = 5
