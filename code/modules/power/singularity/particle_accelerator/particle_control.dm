@@ -246,7 +246,6 @@
 				did_something = TRUE
 
 	if(did_something)
-		user.changeNext_move(CLICK_CD_MELEE)
 		update_state()
 		update_icon()
 		return

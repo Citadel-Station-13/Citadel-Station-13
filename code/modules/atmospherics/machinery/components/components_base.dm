@@ -170,3 +170,4 @@
 
 /obj/machinery/atmospherics/components/analyzer_act(mob/living/user, obj/item/I)
 	atmosanalyzer_scan(airs, user, src)
+	return TRUE

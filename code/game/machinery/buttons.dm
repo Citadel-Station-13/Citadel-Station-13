@@ -138,7 +138,7 @@
 		var/obj/item/assembly/control/A = device
 		A.id = "[idnum][id]"
 
-/obj/machinery/button/attack_hand(mob/user)
+/obj/machinery/button/on_attack_hand(mob/user)
 	. = ..()
 	if(.)
 		return

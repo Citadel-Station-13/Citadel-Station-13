@@ -45,7 +45,7 @@
 		to_chat(loc, "<span class='userdanger'>*ding*</span>")
 		addtimer(CALLBACK(src, .proc/snap), 2)
 
-/obj/item/reverse_bear_trap/attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
+/obj/item/reverse_bear_trap/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	if(iscarbon(user))
 		var/mob/living/carbon/C = user
 		if(C.get_item_by_slot(SLOT_HEAD) == src)

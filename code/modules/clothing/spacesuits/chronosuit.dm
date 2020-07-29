@@ -80,7 +80,7 @@
 		if(to_turf)
 			user.forceMove(to_turf)
 		user.SetStun(0)
-		user.next_move = 1
+		user.SetNextAction(0, considered_action = FALSE, immediate = FALSE)
 		user.alpha = 255
 		user.update_atom_colour()
 		user.animate_movement = FORWARD_STEPS
@@ -124,8 +124,8 @@
 		for(var/obj/item/I in user.held_items)
 			ADD_TRAIT(I, TRAIT_NODROP, CHRONOSUIT_TRAIT)
 		user.animate_movement = NO_STEPS
-		user.changeNext_move(8 + phase_in_ds)
-		user.mob_transforming = 1
+		user.DelayNextAction(8 + phase_in_ds, considered_action = FALSE, immediate = FALSE)
+		user.mob_transforming = TRUE
 		user.anchored = TRUE
 		user.Stun(INFINITY)
 

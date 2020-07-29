@@ -118,7 +118,7 @@
 	deathmessage = "blows apart!"
 	..()
 
-/mob/living/simple_animal/hostile/mining_drone/attack_hand(mob/living/carbon/human/M)
+/mob/living/simple_animal/hostile/mining_drone/on_attack_hand(mob/living/carbon/human/M)
 	. = ..()
 	if(.)
 		return

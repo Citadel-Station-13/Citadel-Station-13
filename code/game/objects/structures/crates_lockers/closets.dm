@@ -37,12 +37,13 @@
 	var/lock_in_use = FALSE //Someone is doing some stuff with the lock here, better not proceed further
 	var/eigen_teleport = FALSE //If the closet leads to Mr Tumnus.
 	var/obj/structure/closet/eigen_target //Where you go to.
-
+	var/should_populate_contents = TRUE
 
 /obj/structure/closet/Initialize(mapload)
 	. = ..()
 	update_icon()
-	PopulateContents()
+	if(should_populate_contents)
+		PopulateContents()
 	if(mapload && !opened)		// if closed, any item at the crate's loc is put in the contents
 		addtimer(CALLBACK(src, .proc/take_contents), 0)
 	if(secure)
@@ -458,10 +459,7 @@
 		return
 	container_resist(user)
 
-/obj/structure/closet/attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
-	. = ..()
-	if(.)
-		return
+/obj/structure/closet/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	if(user.lying && get_dist(src, user) > 0)
 		return
 
@@ -506,8 +504,6 @@
 	if(opened)
 		return
 	if(ismovable(loc))
-		user.changeNext_move(CLICK_CD_BREAKOUT)
-		user.last_special = world.time + CLICK_CD_BREAKOUT
 		var/atom/movable/AM = loc
 		AM.relay_container_resist(user, src)
 		return
@@ -516,8 +512,6 @@
 		return
 
 	//okay, so the closet is either welded or locked... resist!!!
-	user.changeNext_move(CLICK_CD_BREAKOUT)
-	user.last_special = world.time + CLICK_CD_BREAKOUT
 	user.visible_message("<span class='warning'>[src] begins to shake violently!</span>", \
 		"<span class='notice'>You lean on the back of [src] and start pushing the door open... (this will take about [DisplayTimeText(breakout_time)].)</span>", \
 		"<span class='italics'>You hear banging from [src].</span>")

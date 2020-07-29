@@ -23,7 +23,6 @@
 		gulp_size = max(round(reagents.total_volume / 5), 5)
 
 /obj/item/reagent_containers/food/drinks/attack(mob/living/M, mob/user, def_zone)
-
 	if(!reagents || !reagents.total_volume)
 		to_chat(user, "<span class='warning'>[src] is empty!</span>")
 		return 0
@@ -37,9 +36,6 @@
 
 	if(M == user)
 		user.visible_message("<span class='notice'>[user] swallows a gulp of [src].</span>", "<span class='notice'>You swallow a gulp of [src].</span>")
-		if(HAS_TRAIT(M, TRAIT_VORACIOUS))
-			M.changeNext_move(CLICK_CD_MELEE * 0.5) //chug! chug! chug!
-
 	else
 		M.visible_message("<span class='danger'>[user] attempts to feed the contents of [src] to [M].</span>", "<span class='userdanger'>[user] attempts to feed the contents of [src] to [M].</span>")
 		if(!do_mob(user, M))
@@ -55,6 +51,10 @@
 	reagents.trans_to(M, gulp_size)
 	playsound(M.loc,'sound/items/drink.ogg', rand(10,50), 1)
 	return 1
+
+/obj/item/reagent_containers/food/drinks/CheckAttackCooldown(mob/user, atom/target)
+	var/fast = HAS_TRAIT(user, TRAIT_VORACIOUS) && (user == target)
+	return user.CheckActionCooldown(fast? CLICK_CD_RANGE : CLICK_CD_MELEE)
 
 /obj/item/reagent_containers/food/drinks/afterattack(obj/target, mob/user , proximity)
 	. = ..()

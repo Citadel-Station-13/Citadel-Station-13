@@ -22,7 +22,7 @@
 	if(alerts[category])
 		thealert = alerts[category]
 		if(thealert.override_alerts)
-			return 0
+			return thealert
 		if(new_master && new_master != thealert.master)
 			WARNING("[src] threw alert [category] with new_master [new_master] while already having that alert with master [thealert.master]")
 
@@ -36,7 +36,7 @@
 				clear_alert(category)
 				return .()
 			else //no need to update
-				return 0
+				return thealert
 	else
 		thealert = new type()
 		thealert.override_alerts = override
@@ -272,7 +272,7 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 	var/mob/living/L = usr
 	if(!istype(L) || !L.can_resist())
 		return
-	L.changeNext_move(CLICK_CD_RESIST)
+	L.MarkResistTime()
 	if(CHECK_MOBILITY(L, MOBILITY_MOVE))
 		return L.resist_fire() //I just want to start a flame in your hearrrrrrtttttt.
 
@@ -600,17 +600,32 @@ so as to remain in compliance with the most up-to-date laws."
 	var/mob/living/L = usr
 	if(!istype(L) || !L.can_resist())
 		return
-	L.changeNext_move(CLICK_CD_RESIST)
-	if(CHECK_MOBILITY(L, MOBILITY_MOVE) && (L.last_special <= world.time))
-		return L.resist_restraints()
+	L.MarkResistTime()
+	return L.resist_restraints()
 
 /obj/screen/alert/restrained/buckled/Click()
 	var/mob/living/L = usr
 	if(!istype(L) || !L.can_resist())
 		return
-	L.changeNext_move(CLICK_CD_RESIST)
-	if(L.last_special <= world.time)
-		return L.resist_buckle()
+	L.MarkResistTime()
+	return L.resist_buckle()
+
+/obj/screen/alert/shoes/untied
+	name = "Untied Shoes"
+	desc = "Your shoes are untied! Click the alert or your shoes to tie them."
+	icon_state = "shoealert"
+
+/obj/screen/alert/shoes/knotted
+	name = "Knotted Shoes"
+	desc = "Someone tied your shoelaces together! Click the alert or your shoes to undo the knot."
+	icon_state = "shoealert"
+
+/obj/screen/alert/shoes/Click()
+	var/mob/living/carbon/C = usr
+	if(!istype(C) || !C.can_resist() || C != mob_viewer || !C.shoes)
+		return
+	C.MarkResistTime()
+	C.shoes.handle_tying(C)
 
 // PRIVATE = only edit, use, or override these if you're editing the system as a whole
 

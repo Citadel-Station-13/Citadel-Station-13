@@ -9,6 +9,11 @@
 	container_HP = 2
 
 /obj/item/reagent_containers/glass/attack(mob/M, mob/user, obj/target)
+	// WARNING: This entire section is shitcode and prone to breaking at any time.
+	INVOKE_ASYNC(src, .proc/attempt_feed, M, user, target)		// for example, the arguments in this proc are wrong
+	// but i don't have time to properly fix it right now.
+
+/obj/item/reagent_containers/glass/proc/attempt_feed(mob/M, mob/user, obj/target)
 	if(!canconsume(M, user))
 		return
 

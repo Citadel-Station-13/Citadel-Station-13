@@ -14,11 +14,10 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 40)
 	resistance_flags = FIRE_PROOF
-	click_delay = CLICK_CD_MELEE * 1.5
+	attack_speed = CLICK_CD_MELEE * 1.5
 	var/fisto_setting = 1
 	var/gasperfist = 3
 	var/obj/item/tank/internals/tank = null //Tank used for the gauntlet's piston-ram.
-
 
 /obj/item/melee/powerfist/examine(mob/user)
 	. = ..()

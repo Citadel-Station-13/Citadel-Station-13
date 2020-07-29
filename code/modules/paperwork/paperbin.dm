@@ -11,6 +11,8 @@
 	throw_speed = 3
 	throw_range = 7
 	pressure_resistance = 8
+	attack_hand_speed = CLICK_CD_RAPID
+	attack_hand_is_action = TRUE
 	var/papertype = /obj/item/paper
 	var/total_paper = 30
 	var/list/papers = list()
@@ -60,11 +62,9 @@
 /obj/item/paper_bin/attack_paw(mob/user)
 	return attack_hand(user)
 
-//ATTACK HAND IGNORING PARENT RETURN VALUE
-/obj/item/paper_bin/attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
+/obj/item/paper_bin/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	if(user.lying)
 		return
-	user.changeNext_move(CLICK_CD_MELEE)
 	if(bin_pen)
 		var/obj/item/pen/P = bin_pen
 		P.add_fingerprint(user)
@@ -148,7 +148,7 @@
 	papertype = /obj/item/paper/natural
 	resistance_flags = FLAMMABLE
 
-/obj/item/paper_bin/bundlenatural/attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
+/obj/item/paper_bin/bundlenatural/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	..()
 	if(total_paper < 1)
 		qdel(src)
