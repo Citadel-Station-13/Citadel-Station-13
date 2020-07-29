@@ -22,7 +22,7 @@
 	if(alerts[category])
 		thealert = alerts[category]
 		if(thealert.override_alerts)
-			return 0
+			return thealert
 		if(new_master && new_master != thealert.master)
 			WARNING("[src] threw alert [category] with new_master [new_master] while already having that alert with master [thealert.master]")
 
@@ -36,7 +36,7 @@
 				clear_alert(category)
 				return .()
 			else //no need to update
-				return 0
+				return thealert
 	else
 		thealert = new type()
 		thealert.override_alerts = override
@@ -609,6 +609,23 @@ so as to remain in compliance with the most up-to-date laws."
 		return
 	L.MarkResistTime()
 	return L.resist_buckle()
+
+/obj/screen/alert/shoes/untied
+	name = "Untied Shoes"
+	desc = "Your shoes are untied! Click the alert or your shoes to tie them."
+	icon_state = "shoealert"
+
+/obj/screen/alert/shoes/knotted
+	name = "Knotted Shoes"
+	desc = "Someone tied your shoelaces together! Click the alert or your shoes to undo the knot."
+	icon_state = "shoealert"
+
+/obj/screen/alert/shoes/Click()
+	var/mob/living/carbon/C = usr
+	if(!istype(C) || !C.can_resist() || C != mob_viewer || !C.shoes)
+		return
+	C.changeNext_move(CLICK_CD_RESIST)
+	C.shoes.handle_tying(C)
 
 // PRIVATE = only edit, use, or override these if you're editing the system as a whole
 
