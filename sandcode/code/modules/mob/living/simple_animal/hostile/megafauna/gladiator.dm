@@ -84,8 +84,8 @@ They deal 35 brute (armor is considered).
 	..()
 	update_phase()
 	var/adjustment_amount = min(damage * 0.15, 15)
-	if(world.time + adjustment_amount > next_move)
-		changeNext_move(adjustment_amount)
+	if(world.time + adjustment_amount > next_action)
+		DelayNextAction(adjustment_amount, considered_action = FALSE, flush = TRUE)
 
 /mob/living/simple_animal/hostile/megafauna/gladiator/Retaliate()
 	. = ..()
