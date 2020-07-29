@@ -40,6 +40,8 @@ GLOBAL_LIST_EMPTY(electrochromatic_window_lookup)
 	rad_flags = RAD_PROTECT_CONTENTS
 	flags_ricochet = RICOCHET_HARD
 	ricochet_chance_mod = 0.4
+	attack_hand_speed = CLICK_CD_MELEE
+	attack_hand_is_action = TRUE
 
 	/// Electrochromatic status
 	var/electrochromatic_status = NOT_ELECTROCHROMATIC
@@ -157,7 +159,7 @@ GLOBAL_LIST_EMPTY(electrochromatic_window_lookup)
 	return 1
 
 /obj/structure/window/attack_tk(mob/user)
-	user.changeNext_move(CLICK_CD_MELEE)
+	user.DelayNextAction(CLICK_CD_MELEE)
 	user.visible_message("<span class='notice'>Something knocks on [src].</span>")
 	add_fingerprint(user)
 	playsound(src, 'sound/effects/Glassknock.ogg', 50, 1)
@@ -167,18 +169,15 @@ GLOBAL_LIST_EMPTY(electrochromatic_window_lookup)
 		return 1
 	. = ..()
 
-/obj/structure/window/attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
-	. = ..()
-	if(.)
-		return
+/obj/structure/window/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	if(!can_be_reached(user))
 		return
-	user.changeNext_move(CLICK_CD_MELEE)
 	user.visible_message("[user] knocks on [src].")
 	add_fingerprint(user)
 	playsound(src, 'sound/effects/Glassknock.ogg', 50, 1)
 
 /obj/structure/window/attack_paw(mob/user)
+	user.DelayNextAction()
 	return attack_hand(user)
 
 /obj/structure/window/attack_generic(mob/user, damage_amount = 0, damage_type = BRUTE, damage_flag = 0, sound_effect = 1)	//used by attack_alien, attack_animal, and attack_slime
@@ -836,13 +835,9 @@ GLOBAL_LIST_EMPTY(electrochromatic_window_lookup)
 	for (var/i in 1 to rand(1,4))
 		. += new /obj/item/paper/natural(location)
 
-/obj/structure/window/paperframe/attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
-	. = ..()
-	if(.)
-		return
+/obj/structure/window/paperframe/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	add_fingerprint(user)
 	if(user.a_intent != INTENT_HARM)
-		user.changeNext_move(CLICK_CD_MELEE)
 		user.visible_message("[user] knocks on [src].")
 		playsound(src, "pageturn", 50, 1)
 	else

@@ -1,0 +1,4 @@
+author: "silicons"
+delete-after: True
+changes: 
+  - balance: "any mob can now parry if they have the right item"

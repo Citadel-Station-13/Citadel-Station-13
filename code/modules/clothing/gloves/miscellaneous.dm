@@ -45,8 +45,8 @@
 	REMOVE_TRAIT(user, secondary_trait, GLOVE_TRAIT)
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
-		H.dna.species.punchdamagehigh = initial(H.dna.species.punchdamagehigh)
-		H.dna.species.punchdamagelow = initial(H.dna.species.punchdamagelow)
+		H.dna.species.punchdamagehigh -= enhancement
+		H.dna.species.punchdamagelow -= enhancement
 	return ..()
 
 /obj/item/clothing/gloves/fingerless/pugilist/chaplain
@@ -105,11 +105,11 @@
 		return
 
 	var/mob/living/M = loc
-	M.changeNext_move(CLICK_CD_RAPID)
+	M.SetNextAction(CLICK_CD_RAPID)
 	if(warcry)
 		M.say("[warcry]", ignore_spam = TRUE, forced = TRUE)
 
-	return FALSE
+	return NO_AUTO_CLICKDELAY_HANDLING | ATTACK_IGNORE_ACTION
 
 /obj/item/clothing/gloves/fingerless/pugilist/rapid/AltClick(mob/user)
 	var/input = stripped_input(user,"What do you want your battlecry to be? Max length of 6 characters.", ,"", 7)
@@ -135,9 +135,9 @@
 	if(target.stat != CONSCIOUS) //Can't hug people who are dying/dead
 		return FALSE
 	else
-		M.changeNext_move(CLICK_CD_RAPID)
+		M.SetNextAction(CLICK_CD_RAPID)
 
-	return FALSE
+	return NO_AUTO_CLICKDELAY_HANDLING | ATTACK_IGNORE_ACTION
 
 /obj/item/clothing/gloves/botanic_leather
 	name = "botanist's leather gloves"

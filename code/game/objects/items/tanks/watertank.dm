@@ -72,7 +72,7 @@
 	QDEL_NULL(noz)
 	return ..()
 
-/obj/item/watertank/attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
+/obj/item/watertank/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	if (user.get_item_by_slot(user.getBackSlot()) == src)
 		toggle_mister(user)
 	else

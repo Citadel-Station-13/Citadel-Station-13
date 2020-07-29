@@ -167,6 +167,7 @@
 	var/target_loc = target.loc
 
 	LAZYADD(user.do_afters, target)
+	LAZYADD(target.targeted_by, user)
 
 	var/holding = user.get_active_held_item()
 	var/datum/progressbar/progbar
@@ -189,6 +190,10 @@
 			. = FALSE
 			break
 
+		if(!(target in user.do_afters))
+			. = FALSE
+			break
+
 		if(drifting && !user.inertia_dir)
 			drifting = 0
 			user_loc = user.loc
@@ -198,12 +203,14 @@
 			break
 	if(progress)
 		qdel(progbar)
+
 	if(!QDELETED(target))
 		LAZYREMOVE(user.do_afters, target)
+		LAZYREMOVE(target.targeted_by, user)
 
 //some additional checks as a callback for for do_afters that want to break on losing health or on the mob taking action
 /mob/proc/break_do_after_checks(list/checked_health, check_clicks)
-	if(check_clicks && next_move > world.time)
+	if(check_clicks && !CheckActionCooldown())
 		return FALSE
 	return TRUE
 
@@ -224,6 +231,7 @@
 
 	if(target)
 		LAZYADD(user.do_afters, target)
+		LAZYADD(target.targeted_by, user)
 
 	var/atom/Uloc = user.loc
 
@@ -288,6 +296,10 @@
 	if(!QDELETED(target))
 		LAZYREMOVE(user.do_afters, target)
 
+	if(!QDELETED(target))
+		LAZYREMOVE(user.do_afters, target)
+		LAZYREMOVE(target.targeted_by, user)
+
 /mob/proc/do_after_coefficent() // This gets added to the delay on a do_after, default 1
 	. = 1
 	return
@@ -307,6 +319,7 @@
 	for(var/atom/target in targets)
 		originalloc[target] = target.loc
 		LAZYADD(user.do_afters, target)
+		LAZYADD(target.targeted_by, user)
 
 	var/holding = user.get_active_held_item()
 	var/datum/progressbar/progbar
@@ -341,3 +354,4 @@
 		var/atom/target = thing
 		if(!QDELETED(target))
 			LAZYREMOVE(user.do_afters, target)
+			LAZYREMOVE(target.targeted_by, user)
