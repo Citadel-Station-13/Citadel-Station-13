@@ -40,12 +40,12 @@
 	if(!GLOB.ark_of_the_clockwork_justiciar)
 		GLOB.ark_of_the_clockwork_justiciar = src
 
-/obj/structure/destructible/clockwork/massive/celestial_gateway/attack_hand(mob/living/user, act_intent = user.a_intent, unarmed_attack_flags)
-	. = ..()
-	if(.)
-		return
+/obj/structure/destructible/clockwork/massive/celestial_gateway/on_attack_hand(mob/user, act_intent, unarmed_attack_flags)
 	if(!active  && is_servant_of_ratvar(user) && user.canUseTopic(src, !issilicon(user), NO_DEXTERY))
 		if(alert(user, "Are you sure you want to activate the ark? Once enabled, there will be no turning back.", "Enabling the ark", "Activate!", "Cancel") == "Activate!")
+			if(active)
+				return
+			log_game("[key_name(user)] has activated an Ark of the Clockwork Justicar at [COORD(src)].")
 			START_PROCESSING(SSprocessing, src)
 			SSshuttle.registerHostileEnvironment(src)
 		else

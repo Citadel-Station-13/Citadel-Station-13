@@ -398,7 +398,7 @@
 		. = TRUE
 		if(target)
 			target.do_attack_animation(src)
-			target.changeNext_move(CLICK_CD_MELEE)
+			target.DelayNextAction(CLICK_CD_MELEE)
 		blockchance = initial(blockchance)
 		playsound(src, 'sound/magic/clockwork/fellowship_armory.ogg', 30, 1, 0, 1) //clang
 		visible_message("<span class='boldannounce'>[src] blocks [target && isitem(textobject) ? "[target]'s [textobject.name]":"\the [textobject]"]!</span>", \
