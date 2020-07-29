@@ -150,7 +150,7 @@
 
 	return 1
 
-/datum/status_effect/wound/blunt/nextmove_modifier()
+/datum/status_effect/wound/blunt/action_cooldown_mod()
 	var/mob/living/carbon/C = owner
 
 	if(C.get_active_hand() == linked_limb)

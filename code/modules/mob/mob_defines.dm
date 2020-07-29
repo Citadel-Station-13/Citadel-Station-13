@@ -11,6 +11,10 @@
 	blocks_emissive = EMISSIVE_BLOCK_GENERIC
 
 	vis_flags = VIS_INHERIT_PLANE //when this be added to vis_contents of something it inherit something.plane, important for visualisation of mob in openspace.
+	
+	attack_hand_is_action = TRUE
+	attack_hand_unwieldlyness = CLICK_CD_MELEE
+	attack_hand_speed = 0
 
 	/// What receives our keyboard input. src by default.
 	var/datum/focus
@@ -35,7 +39,6 @@
 	var/list/logging = list()
 	var/atom/machine = null
 
-	var/next_move = null
 	var/create_area_cooldown
 	/// Whether or not the mob is currently being transformed into another mob or into another state of being. This will prevent it from moving or doing realistically anything.
 	/// Don't you DARE use this for a cheap way to ensure someone is stunned in your code.

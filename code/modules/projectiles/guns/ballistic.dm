@@ -97,8 +97,7 @@
 	w_class += S.w_class //so pistols do not fit in pockets when suppressed
 	update_icon()
 
-//ATTACK HAND IGNORING PARENT RETURN VALUE
-/obj/item/gun/ballistic/attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
+/obj/item/gun/ballistic/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	if(loc == user)
 		if(suppressed && can_unsuppress)
 			var/obj/item/suppressor/S = suppressed
@@ -180,13 +179,11 @@
 #undef BRAINS_BLOWN_THROW_SPEED
 #undef BRAINS_BLOWN_THROW_RANGE
 
-
-
 /obj/item/gun/ballistic/proc/sawoff(mob/user)
 	if(sawn_off)
 		to_chat(user, "<span class='warning'>\The [src] is already shortened!</span>")
 		return
-	user.changeNext_move(CLICK_CD_MELEE)
+	user.DelayNextAction(CLICK_CD_MELEE)
 	user.visible_message("[user] begins to shorten \the [src].", "<span class='notice'>You begin to shorten \the [src]...</span>")
 
 	//if there's any live ammo inside the gun, makes it go off

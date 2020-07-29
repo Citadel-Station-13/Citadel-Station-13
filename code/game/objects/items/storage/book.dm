@@ -104,7 +104,7 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "bible",  
 		SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, "blessing", /datum/mood_event/blessing)
 	return 1
 
-/obj/item/storage/book/bible/attack(mob/living/M, mob/living/carbon/human/user, heal_mode = TRUE)
+/obj/item/storage/book/bible/attack(mob/living/M, mob/living/user, attackchain_flags = NONE, damage_multiplier = 1, heal_mode = TRUE)
 
 	if (!user.IsAdvancedToolUser())
 		to_chat(user, "<span class='warning'>You don't have the dexterity to do this!</span>")
@@ -238,11 +238,10 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "bible",  
 		var/ownername = H.real_name
 		desc += "<span class='warning'>The name [ownername] is written in blood inside the cover.</span>"
 
-/obj/item/storage/book/bible/syndicate/attack(mob/living/M, mob/living/carbon/human/user, heal_mode = TRUE)
-	if (user.a_intent == INTENT_HELP)
-		return ..()
-	else
-		return ..(M,user,heal_mode = FALSE)
+/obj/item/storage/book/bible/syndicate/attack(mob/living/M, mob/living/user, attackchain_flags = NONE, damage_multiplier = 1, heal_mode = TRUE)
+	if(user.a_intent != INTENT_HELP)
+		heal_mode = FALSE		//args pass over
+	return ..()		// to ..()
 
 /obj/item/storage/book/bible/syndicate/add_blood_DNA(list/blood_dna)
 	return FALSE

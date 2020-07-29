@@ -70,6 +70,9 @@
 	/// A luminescence-shifted value of the last color calculated for chatmessage overlays
 	var/chat_color_darkened
 
+	///Mobs that are currently do_after'ing this atom, to be cleared from on Destroy()
+	var/list/targeted_by
+
 /atom/New(loc, ...)
 	//atom creation method that preloads variables at creation
 	if(GLOB.use_preloader && (src.type == GLOB._preloader.target_path))//in case the instanciated atom is creating other atoms in New()
@@ -143,6 +146,11 @@
 
 	LAZYCLEARLIST(overlays)
 	LAZYCLEARLIST(priority_overlays)
+
+	for(var/i in targeted_by)
+		var/mob/M = i
+		LAZYREMOVE(M.do_afters, src)
+	targeted_by = null
 
 	QDEL_NULL(light)
 
@@ -219,7 +227,7 @@
 /atom/proc/attack_hulk(mob/living/carbon/human/user, does_attack_animation = FALSE)
 	SEND_SIGNAL(src, COMSIG_ATOM_HULK_ATTACK, user)
 	if(does_attack_animation)
-		user.changeNext_move(CLICK_CD_MELEE)
+		user.DelayNextAction(CLICK_CD_MELEE)
 		log_combat(user, src, "punched", "hulk powers")
 		user.do_attack_animation(src, ATTACK_EFFECT_SMASH)
 

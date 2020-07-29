@@ -9,6 +9,7 @@
 	blacklisted = 1
 	limbs_id = "human"
 	skinned_type = /obj/item/stack/sheet/animalhide/human
+	species_type = "human" //they're a kind of human
 
 	var/datum/action/innate/flight/fly
 

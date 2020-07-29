@@ -27,6 +27,10 @@
 	inert_mutation = FIREBREATH
 	species_language_holder = /datum/language_holder/lizard
 
+	tail_type = "tail_lizard"
+	wagging_type = "waggingtail_lizard"
+	species_type = "lizard"
+
 /datum/species/lizard/random_name(gender,unique,lastname)
 	if(unique)
 		return random_unique_lizard_name(gender)
@@ -37,41 +41,6 @@
 		randname += " [lastname]"
 
 	return randname
-
-/datum/species/lizard/qualifies_for_rank(rank, list/features)
-	return TRUE
-
-//I wag in death
-/datum/species/lizard/spec_death(gibbed, mob/living/carbon/human/H)
-	if(H)
-		stop_wagging_tail(H)
-
-/datum/species/lizard/spec_stun(mob/living/carbon/human/H,amount)
-	if(H)
-		stop_wagging_tail(H)
-	. = ..()
-
-/datum/species/lizard/can_wag_tail(mob/living/carbon/human/H)
-	return mutant_bodyparts["tail_lizard"] || mutant_bodyparts["waggingtail_lizard"]
-
-/datum/species/lizard/is_wagging_tail(mob/living/carbon/human/H)
-	return mutant_bodyparts["waggingtail_lizard"]
-
-/datum/species/lizard/start_wagging_tail(mob/living/carbon/human/H)
-	if(mutant_bodyparts["tail_lizard"])
-		mutant_bodyparts["waggingtail_lizard"] = mutant_bodyparts["tail_lizard"]
-		mutant_bodyparts["waggingspines"] = mutant_bodyparts["spines"]
-		mutant_bodyparts -= "tail_lizard"
-		mutant_bodyparts -= "spines"
-	H.update_body()
-
-/datum/species/lizard/stop_wagging_tail(mob/living/carbon/human/H)
-	if(mutant_bodyparts["waggingtail_lizard"])
-		mutant_bodyparts["tail_lizard"] = mutant_bodyparts["waggingtail_lizard"]
-		mutant_bodyparts["spines"] = mutant_bodyparts["waggingspines"]
-		mutant_bodyparts -= "waggingtail_lizard"
-		mutant_bodyparts -= "waggingspines"
-	H.update_body()
 
 /*
  Lizard subspecies: ASHWALKERS

@@ -37,11 +37,11 @@
 	if(!proximity_flag)
 		return
 	else
-		if(istype(target, /obj/)) //do far more damage to non mobs so we can get through airlocks
+		if(istype(target, /obj)) //do far more damage to non mobs so we can get through airlocks
 			var/obj/target_object = target
 			target_object.take_damage(force * 3, BRUTE, "melee", 0)
-		else
-			if(isliving(target) && ishuman(target))
+		else if(isliving(target))
+			if(ishuman(target))
 				try_to_zombie_infect(target)
 			else
 				check_feast(target, user)

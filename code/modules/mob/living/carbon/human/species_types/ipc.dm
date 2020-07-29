@@ -21,6 +21,7 @@
 
 	exotic_bloodtype = "HF"
 	exotic_blood_color = BLOOD_COLOR_OIL
+	species_type = "robotic"
 
 	var/datum/action/innate/monitor_change/screen
 

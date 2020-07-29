@@ -147,6 +147,12 @@
 		return NONE
 	return ..()
 
+/obj/item/melee/transforming/energy/sword/on_active_parry(mob/living/owner, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, list/block_return, parry_efficiency, parry_time)
+	. = ..()
+	if(parry_efficiency >= 80)		// perfect parry
+		block_return[BLOCK_RETURN_REDIRECT_METHOD] = REDIRECT_METHOD_RETURN_TO_SENDER
+		. |= BLOCK_SHOULD_REDIRECT
+
 /obj/item/melee/transforming/energy/sword/cyborg
 	sword_color = "red"
 	light_color = "#ff0000"

@@ -99,7 +99,6 @@ interface with the mining shuttle at the landing site if a mobile beacon is also
 			say("Shuttle interface failed.")
 
 	if(href_list["random"] && !possible_destinations)
-		usr.changeNext_move(CLICK_CD_RAPID) //Anti-spam
 		var/list/all_mining_turfs = list()
 		for (var/z_level in SSmapping.levels_by_trait(ZTRAIT_MINING))
 			all_mining_turfs += Z_TURFS(z_level)
@@ -275,10 +274,7 @@ interface with the mining shuttle at the landing site if a mobile beacon is also
 	var/anti_spam_cd = 0 //The linking process might be a bit intensive, so this here to prevent over use.
 	var/console_range = 15 //Wifi range of the beacon to find the aux base console
 
-/obj/structure/mining_shuttle_beacon/attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
-	. = ..()
-	if(.)
-		return
+/obj/structure/mining_shuttle_beacon/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	if(anchored)
 		to_chat(user, "<span class='warning'>Landing zone already set.</span>")
 		return
