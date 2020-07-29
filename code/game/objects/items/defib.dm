@@ -77,8 +77,7 @@
 /obj/item/defibrillator/ui_action_click()
 	toggle_paddles()
 
-//ATTACK HAND IGNORING PARENT RETURN VALUE
-/obj/item/defibrillator/attack_hand(mob/user)
+/obj/item/defibrillator/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	if(loc == user)
 		if(slot_flags == ITEM_SLOT_BACK)
 			if(user.get_item_by_slot(SLOT_BACK) == src)
@@ -619,6 +618,13 @@
 					if(req_defib)
 						if(defib.healdisk)
 							H.heal_overall_damage(25, 25)
+					var/list/policies = CONFIG_GET(keyed_list/policyconfig)
+					var/timelimit = CONFIG_GET(number/defib_cmd_time_limit)
+					var/late = timelimit && (tplus > timelimit)
+					var/policy = late? policies[POLICYCONFIG_ON_DEFIB_LATE] : policies[POLICYCONFIG_ON_DEFIB_INTACT]
+					if(policy)
+						to_chat(H, policy)
+					H.log_message("revived using a defibrillator, [tplus] deciseconds from time of death, considered [late? "late" : "memory-intact"] revival under configured policy limits.", LOG_GAME)
 				if(req_defib)
 					defib.deductcharge(revivecost)
 					cooldown = 1

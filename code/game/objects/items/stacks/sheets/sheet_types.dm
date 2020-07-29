@@ -184,13 +184,13 @@ GLOBAL_LIST_INIT(plasteel_recipes, list ( \
 		new /datum/stack_recipe("trash cart", /obj/structure/closet/crate/trashcart, 5, time = 50, one_per_turf = 1, on_floor = 1), \
 		new /datum/stack_recipe("medical crate", /obj/structure/closet/crate/medical, 5, time = 50, one_per_turf = 1, on_floor = 1), \
 		new /datum/stack_recipe("freezer crate", /obj/structure/closet/crate/freezer, 8, time = 50, one_per_turf = 1, on_floor = 1), \
-		new /datum/stack_recipe("blood bag crate", /obj/structure/closet/crate/freezer/blood, 8, time = 50, one_per_turf = 1, on_floor = 1), \
-		new /datum/stack_recipe("surplus limbs crate", /obj/structure/closet/crate/freezer/surplus_limbs, 8, time = 50, one_per_turf = 1, on_floor = 1), \
+		new /datum/stack_recipe("blood bag crate", /obj/structure/closet/crate/freezer/blood/fake, 8, time = 50, one_per_turf = 1, on_floor = 1), \
+		new /datum/stack_recipe("surplus limbs crate", /obj/structure/closet/crate/freezer/surplus_limbs/fake, 8, time = 50, one_per_turf = 1, on_floor = 1), \
 		new /datum/stack_recipe("radiation containment crate", /obj/structure/closet/crate/radiation, 8, time = 50, one_per_turf = 1, on_floor = 1), \
 		new /datum/stack_recipe("hydroponics crate", /obj/structure/closet/crate/hydroponics, 5, time = 50, one_per_turf = 1, on_floor = 1), \
 		new /datum/stack_recipe("engineering crate", /obj/structure/closet/crate/engineering, 5, time = 50, one_per_turf = 1, on_floor = 1), \
 		new /datum/stack_recipe("eletrical crate", /obj/structure/closet/crate/engineering/electrical, 5, time = 50, one_per_turf = 1, on_floor = 1), \
-		new /datum/stack_recipe("RCD storage crate", /obj/structure/closet/crate/rcd, 5, time = 50, one_per_turf = 1, on_floor = 1), \
+		new /datum/stack_recipe("RCD storage crate", /obj/structure/closet/crate/rcd/fake, 5, time = 50, one_per_turf = 1, on_floor = 1), \
 		new /datum/stack_recipe("science crate", /obj/structure/closet/crate/science, 5, time = 50, one_per_turf = 1, on_floor = 1), \
 	)), \
 	new /datum/stack_recipe_list("airlock assemblies", list( \
@@ -244,8 +244,10 @@ GLOBAL_LIST_INIT(wood_recipes, list ( \
 	new/datum/stack_recipe("rifle stock", /obj/item/weaponcrafting/stock, 10, time = 20), \
 	new/datum/stack_recipe("rolling pin", /obj/item/kitchen/rollingpin, 2, time = 30), \
 	new/datum/stack_recipe("wooden bucket", /obj/item/reagent_containers/glass/bucket/wood, 2, time = 30), \
+	new/datum/stack_recipe("painting frame", /obj/item/wallframe/painting, 1, time = 10),\
 	new/datum/stack_recipe("wooden buckler", /obj/item/shield/riot/buckler, 20, time = 40), \
 	new/datum/stack_recipe("baseball bat", /obj/item/melee/baseball_bat, 5, time = 15),\
+	new/datum/stack_recipe("training bokken", /obj/item/melee/bokken, 10, time = 15),\
 	null, \
 	new/datum/stack_recipe("wooden chair", /obj/structure/chair/wood/, 3, time = 10, one_per_turf = TRUE, on_floor = TRUE), \
 	new/datum/stack_recipe("winged wooden chair", /obj/structure/chair/wood/wings, 3, time = 10, one_per_turf = TRUE, on_floor = TRUE), \
@@ -287,7 +289,7 @@ GLOBAL_LIST_INIT(wood_recipes, list ( \
 	merge_type = /obj/item/stack/sheet/mineral/wood
 	novariants = TRUE
 	material_type = /datum/material/wood
-	grind_results = list(/datum/reagent/carbon = 20)
+	grind_results = list(/datum/reagent/cellulose = 20)
 	walltype = /turf/closed/wall/mineral/wood
 
 /obj/item/stack/sheet/mineral/wood/attackby(obj/item/W, mob/user, params) // NOTE: sheet_types.dm is where the WOOD stack lives. Maybe move this over there.
@@ -349,7 +351,7 @@ GLOBAL_LIST_INIT(bamboo_recipes, list ( \
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 0)
 	resistance_flags = FLAMMABLE
 	merge_type = /obj/item/stack/sheet/mineral/bamboo
-	grind_results = list(/datum/reagent/carbon = 5)
+	grind_results = list(/datum/reagent/cellulose = 10)
 	material_type = /datum/material/bamboo
 
 /obj/item/stack/sheet/mineral/bamboo/get_main_recipes()

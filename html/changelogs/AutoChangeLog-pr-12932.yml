@@ -1,0 +1,4 @@
+author: "silicons"
+delete-after: True
+changes: 
+  - rscadd: "energy sword perfect parries now reflect projectiles back at their shooters."

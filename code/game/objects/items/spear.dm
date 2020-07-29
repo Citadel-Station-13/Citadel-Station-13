@@ -22,6 +22,8 @@
 	var/war_cry = "AAAAARGH!!!"
 	var/icon_prefix = "spearglass"
 	var/wielded = FALSE // track wielded status on item
+	wound_bonus = -25
+	bare_wound_bonus = 15
 
 /obj/item/spear/Initialize()
 	. = ..()

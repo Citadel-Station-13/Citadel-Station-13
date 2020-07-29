@@ -56,6 +56,8 @@
 /datum/config_entry/flag/log_adminchat	// log admin chat messages
 	protection = CONFIG_ENTRY_LOCKED
 
+/datum/config_entry/flag/log_shuttle // log shuttle related actions, ie shuttle computers, shuttle manipulator, emergency console
+
 /datum/config_entry/flag/log_pda	// log pda messages
 
 /datum/config_entry/flag/log_telecomms	// log telecomms messages

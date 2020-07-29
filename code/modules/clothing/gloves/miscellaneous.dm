@@ -45,8 +45,8 @@
 	REMOVE_TRAIT(user, secondary_trait, GLOVE_TRAIT)
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
-		H.dna.species.punchdamagehigh = initial(H.dna.species.punchdamagehigh)
-		H.dna.species.punchdamagelow = initial(H.dna.species.punchdamagelow)
+		H.dna.species.punchdamagehigh -= enhancement
+		H.dna.species.punchdamagelow -= enhancement
 	return ..()
 
 /obj/item/clothing/gloves/fingerless/pugilist/chaplain
@@ -105,11 +105,11 @@
 		return
 
 	var/mob/living/M = loc
-	M.changeNext_move(CLICK_CD_RAPID)
+	M.SetNextAction(CLICK_CD_RAPID)
 	if(warcry)
 		M.say("[warcry]", ignore_spam = TRUE, forced = TRUE)
 
-	return FALSE
+	return NO_AUTO_CLICKDELAY_HANDLING | ATTACK_IGNORE_ACTION
 
 /obj/item/clothing/gloves/fingerless/pugilist/rapid/AltClick(mob/user)
 	var/input = stripped_input(user,"What do you want your battlecry to be? Max length of 6 characters.", ,"", 7)
@@ -135,9 +135,9 @@
 	if(target.stat != CONSCIOUS) //Can't hug people who are dying/dead
 		return FALSE
 	else
-		M.changeNext_move(CLICK_CD_RAPID)
+		M.SetNextAction(CLICK_CD_RAPID)
 
-	return FALSE
+	return NO_AUTO_CLICKDELAY_HANDLING | ATTACK_IGNORE_ACTION
 
 /obj/item/clothing/gloves/botanic_leather
 	name = "botanist's leather gloves"
@@ -196,3 +196,15 @@
 	transfer_prints = FALSE
 	strip_mod = 5
 	strip_silence = TRUE
+
+/obj/item/clothing/gloves/evening
+	name = "evening gloves"
+	desc = "Thin, pretty gloves intended for use in regal feminine attire, but knowing Space China these are just for some maid fetish."
+	icon_state = "evening"
+	item_state = "evening"
+	strip_delay = 40
+	equip_delay_other = 20
+	cold_protection = HANDS
+	min_cold_protection_temperature = GLOVES_MIN_TEMP_PROTECT
+	strip_mod = 0.9
+	custom_price = PRICE_ALMOST_CHEAP

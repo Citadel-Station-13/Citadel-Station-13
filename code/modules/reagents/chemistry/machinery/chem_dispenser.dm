@@ -32,7 +32,6 @@
 	var/nopower_state = "dispenser_nopower"
 	var/has_panel_overlay = TRUE
 	var/obj/item/reagent_containers/beaker = null
-	//dispensable_reagents is copypasted in plumbing synthesizers. Please update accordingly. (I didn't make it global because that would limit custom chem dispensers)
 	var/list/dispensable_reagents = list(
 		/datum/reagent/hydrogen,
 		/datum/reagent/lithium,
@@ -182,7 +181,7 @@
 											datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
-		ui = new(user, src, ui_key, "chem_dispenser", name, 565, 550, master_ui, state)
+		ui = new(user, src, ui_key, "ChemDispenser", name, 565, 550, master_ui, state)
 		if(user.hallucinating())
 			ui.set_autoupdate(FALSE) //to not ruin the immersion by constantly changing the fake chemicals
 		ui.open()

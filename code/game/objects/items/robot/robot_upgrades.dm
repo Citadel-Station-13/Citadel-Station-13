@@ -241,9 +241,9 @@
 		for(var/obj/item/mop/cyborg/M in R.module.modules)
 			R.module.remove_module(M, TRUE)
 
-	var/obj/item/mop/advanced/cyborg/A = new /obj/item/mop/advanced/cyborg(R.module)
-	R.module.basic_modules += A
-	R.module.add_module(A, FALSE, TRUE)
+		var/obj/item/mop/advanced/cyborg/A = new /obj/item/mop/advanced/cyborg(R.module)
+		R.module.basic_modules += A
+		R.module.add_module(A, FALSE, TRUE)
 
 /obj/item/borg/upgrade/amop/deactivate(mob/living/silicon/robot/R, user = usr)
 	. = ..()
@@ -566,7 +566,7 @@
 
 /obj/item/borg/upgrade/expand/deactivate(mob/living/silicon/robot/R, user = usr)
 	. = ..()
-	if (.)
+	if (. && R.hasExpanded)
 		R.resize = 0.5
 		R.hasExpanded = FALSE
 		R.update_transform()

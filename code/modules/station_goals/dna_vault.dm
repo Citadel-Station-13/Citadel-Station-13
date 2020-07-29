@@ -178,7 +178,7 @@
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
 		roll_powers(user)
-		ui = new(user, src, ui_key, "dna_vault", name, 350, 400, master_ui, state)
+		ui = new(user, src, ui_key, "DnaVault", name, ui_x, ui_y, master_ui, state)
 		ui.open()
 
 
@@ -279,5 +279,5 @@
 			H.add_movespeed_modifier(/datum/movespeed_modifier/dna_vault_speedup)
 		if(VAULT_QUICK)
 			to_chat(H, "<span class='notice'>Your arms move as fast as lightning.</span>")
-			H.next_move_modifier = 0.5
+			H.action_cooldown_mod = 0.5
 	power_lottery[H] = list()

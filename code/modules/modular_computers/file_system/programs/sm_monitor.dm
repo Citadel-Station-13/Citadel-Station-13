@@ -8,8 +8,7 @@
 	transfer_access = ACCESS_CONSTRUCTION
 	network_destination = "supermatter monitoring system"
 	size = 5
-	tgui_id = "ntos_supermatter_monitor"
-	ui_style = "ntos"
+	tgui_id = "NtosSupermatterMonitor"
 	ui_x = 600
 	ui_y = 350
 	var/last_status = SUPERMATTER_INACTIVE

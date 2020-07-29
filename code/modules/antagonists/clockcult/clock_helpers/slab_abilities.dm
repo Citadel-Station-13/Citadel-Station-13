@@ -113,8 +113,7 @@
 		for(var/i in 1 to healseverity)
 			new /obj/effect/temp_visual/heal(targetturf, "#1E8CE1")
 		if(totaldamage)
-			L.adjustBruteLoss(-brutedamage)
-			L.adjustFireLoss(-burndamage)
+			L.heal_overall_damage(brutedamage, burndamage, only_organic = FALSE) //Maybe a machine god shouldn't murder augmented followers instead of healing them
 			L.adjustOxyLoss(-oxydamage)
 			L.adjustToxLoss(totaldamage * 0.5, TRUE, TRUE)
 			clockwork_say(ranged_ability_user, text2ratvar("[has_holy_water ? "Heal tainted" : "Mend wounded"] flesh!"))

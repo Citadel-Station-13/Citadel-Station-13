@@ -48,6 +48,11 @@
 	category = SLOT_HEAD
 	path = /obj/item/clothing/head/that
 
+/datum/gear/maidband
+	name = "Maid headband"
+	category = SLOT_HEAD
+	path= /obj/item/clothing/head/maid
+
 /datum/gear/flakhelm
 	name = "Flak Helmet"
 	category = SLOT_HEAD

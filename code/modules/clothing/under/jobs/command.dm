@@ -19,6 +19,7 @@
 /obj/item/clothing/under/rank/captain/suit
 	name = "captain's suit"
 	desc = "A green suit and yellow necktie. Exemplifies authority."
+	armor = list("melee" = 0, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 0, "wound" = 15)
 	icon_state = "green_suit"
 	item_state = "dg_suit"
 	can_adjust = FALSE
