@@ -18344,6 +18344,10 @@
 	},
 /turf/open/floor/wood,
 /area/syndicate_mothership)
+"VX" = (
+/obj/effect/landmark/shuttle_import,
+/turf/open/space/basic,
+/area/space)
 "Wb" = (
 /obj/machinery/door/window/westleft,
 /turf/open/indestructible/boss/air,
@@ -41447,7 +41451,7 @@ aa
 aa
 aa
 aa
-aa
+VX
 aa
 aa
 aa
