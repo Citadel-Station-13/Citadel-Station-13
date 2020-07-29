@@ -1,5 +1,6 @@
 /datum/gear/glasses
 	category = CATEGORY_GLASSES
+	slot = SLOT_GLASSES
 
 /datum/gear/glasses/blindfold
 	name = "Blindfold"

@@ -1,36 +1,38 @@
 /datum/gear/uniform
 	category = CATEGORY_UNIFORM
 	subcategory = SUBCATEGORY_UNIFORM_GENERAL
+	slot = SLOT_W_UNIFORM
 
-/datum/gear/uniform/suitblack
+/datum/gear/uniform/suit
 	name = "Black suit"
 	path = /obj/item/clothing/under/suit/black
+	subcategory = SUBCATEGORY_UNIFORM_SUITS
 
-/datum/gear/uniform/suitgreen
+/datum/gear/uniform/suit/green
 	name = "Green suit"
 	path = /obj/item/clothing/under/suit/green
 
-/datum/gear/uniform/suitred
+/datum/gear/uniform/suit/red
 	name = "Red suit"
 	path = /obj/item/clothing/under/suit/red
 
-/datum/gear/uniform/suitcharcoal
+/datum/gear/uniform/suit/charcoal
 	name = "Charcoal suit"
 	path = /obj/item/clothing/under/suit/charcoal
 
-/datum/gear/uniform/suitnavy
+/datum/gear/uniform/suit/navy
 	name = "Navy suit"
 	path = /obj/item/clothing/under/suit/navy
 
-/datum/gear/uniform/suitburgundy
+/datum/gear/uniform/suit/burgundy
 	name = "Burgundy suit"
 	path = /obj/item/clothing/under/suit/burgundy
 
-/datum/gear/uniform/suittan
+/datum/gear/uniform/suit/tan
 	name = "Tan suit"
 	path = /obj/item/clothing/under/suit/tan
 
-/datum/gear/uniform/suitwhite
+/datum/gear/uniform/suit/white
 	name = "White suit"
 	path = /obj/item/clothing/under/suit/white
 
@@ -46,23 +48,24 @@
 	name = "Mailman's jumpsuit"
 	path = /obj/item/clothing/under/misc/mailman
 
-/datum/gear/uniform/skirtblack
+/datum/gear/uniform/skirt
 	name = "Black skirt"
 	path = /obj/item/clothing/under/dress/skirt
+	subcategory = SUBCATEGORY_UNIFORM_SKIRTS
 
-/datum/gear/uniform/skirtblue
+/datum/gear/uniform/skirt/blue
 	name = "Blue skirt"
 	path = /obj/item/clothing/under/dress/skirt/blue
 
-/datum/gear/uniform/skirtred
+/datum/gear/uniform/skirt/red
 	name = "Red skirt"
 	path = /obj/item/clothing/under/dress/skirt/red
 
-/datum/gear/uniform/skirtpurple
+/datum/gear/uniform/skirt/purple
 	name = "Purple skirt"
 	path = /obj/item/clothing/under/dress/skirt/purple
 
-/datum/gear/uniform/skirtplaid
+/datum/gear/uniform/skirt/plaid
 	name = "Plaid skirt"
 	path = /obj/item/clothing/under/dress/skirt/plaid
 
@@ -82,31 +85,32 @@
 	name = "Orange Schoolgirl Uniform"
 	path = /obj/item/clothing/under/costume/schoolgirl/orange
 
-/datum/gear/uniform/stripeddress
+/datum/gear/uniform/dress
 	name = "Striped Dress"
 	path = /obj/item/clothing/under/dress/striped
+	subcategory = SUBCATEGORY_UNIFORM_DRESSES
 
-/datum/gear/uniform/sundresswhite
+/datum/gear/uniform/dress/sun/white
 	name = "White Sundress"
 	path = /obj/item/clothing/under/dress/sundress/white
 
-/datum/gear/uniform/sundress
+/datum/gear/uniform/dress/sun
 	name = "Sundress"
 	path = /obj/item/clothing/under/dress/sundress
 
-/datum/gear/uniform/greendress
+/datum/gear/uniform/dress/green
 	name = "Green Dress"
 	path = /obj/item/clothing/under/dress/green
 
-/datum/gear/uniform/pinkdress
+/datum/gear/uniform/dress/pink
 	name = "Pink Dress"
 	path = /obj/item/clothing/under/dress/pink
 
-/datum/gear/uniform/flowerdress
+/datum/gear/uniform/dress/orange
 	name = "Flower Dress"
 	path = /obj/item/clothing/under/dress/flower
 
-/datum/gear/uniform/sweptskirt
+/datum/gear/uniform/skirt/swept
 	name = "Swept skirt"
 	path = /obj/item/clothing/under/dress/skirt/swept
 
@@ -114,65 +118,63 @@
 	name = "Croptop"
 	path = /obj/item/clothing/under/croptop
 
-/datum/gear/uniform/yoga
+/datum/gear/uniform/pants
 	name = "Yoga Pants"
 	path = /obj/item/clothing/under/pants/yoga
+	subcategory = SUBCATEGORY_UNIFORM_PANTS
 
 /datum/gear/uniform/kilt
 	name = "Kilt"
 	path = /obj/item/clothing/under/costume/kilt
 
-/datum/gear/uniform/camoshorts
+/datum/gear/uniform/pants/camo
 	name = "Camo Pants"
 	path = /obj/item/clothing/under/pants/camo
 
-/datum/gear/uniform/athleticshorts
+/datum/gear/uniform/shorts
 	name = "Athletic Shorts"
 	path = /obj/item/clothing/under/shorts/red
+	subcategory = SUBCATEGORY_UNIFORM_SHORTS
 
-/datum/gear/uniform/bjeans
+/datum/gear/uniform/pants/bjeans
 	name = "Black Jeans"
 	path = /obj/item/clothing/under/pants/blackjeans
 
-/datum/gear/uniform/cjeans
+/datum/gear/uniform/pants/cjeans
 	name = "Classic Jeans"
 	path = /obj/item/clothing/under/pants/classicjeans
 
-/datum/gear/uniform/khaki
+/datum/gear/uniform/pants/khaki
 	name = "Khaki Pants"
 	path = /obj/item/clothing/under/pants/khaki
 
-/datum/gear/uniform/wpants
+/datum/gear/uniform/pants/white
 	name = "White Pants"
 	path = /obj/item/clothing/under/pants/white
 
-/datum/gear/uniform/rpants
+/datum/gear/uniform/pants/red
 	name = "Red Pants"
 	path = /obj/item/clothing/under/pants/red
 
-/datum/gear/uniform/tpants
+/datum/gear/uniform/pants/tan
 	name = "Tan Pants"
 	path = /obj/item/clothing/under/pants/tan
 
-/datum/gear/uniform/trpants
+/datum/gear/uniform/pants/track
 	name = "Track Pants"
 	path = /obj/item/clothing/under/pants/track
 
-/datum/gear/uniform/rippedjeans
+/datum/gear/uniform/pants/ripped
 	name = "Ripped Jeans"
 	path = /obj/item/clothing/under/pants/jeanripped
 
-/datum/gear/uniform/jeanshort
+/datum/gear/uniform/shorts/jean
 	name = "Jean Shorts"
 	path = /obj/item/clothing/under/pants/jeanshort
 
-/datum/gear/uniform/denimskirt
+/datum/gear/uniform/skirt/denim
 	name = "Denim Skirt"
 	path = /obj/item/clothing/under/pants/denimskirt
-
-/datum/gear/uniform/yoga
-	name = "Yoga Pants"
-	path = /obj/item/clothing/under/pants/yoga
 
 // Pantsless Sweaters
 
@@ -180,31 +182,32 @@
 	name = "Tactitool Turtleneck"
 	path = /obj/item/clothing/under/syndicate/cosmetic
 
-/datum/gear/uniform/creamsweater
+/datum/gear/uniform/sweater
 	name = "Cream Commando Sweater"
 	path = /obj/item/clothing/under/sweater
+	subcategory = SUBCATEGORY_UNIFORM_SWEATERS
 
-/datum/gear/uniform/blacksweater
+/datum/gear/uniform/sweater/black
 	name = "Black Commando Sweater"
 	path = /obj/item/clothing/under/sweater/black
 
-/datum/gear/uniform/purpsweater
+/datum/gear/uniform/sweater/purple
 	name = "Purple Commando Sweater"
 	path = /obj/item/clothing/under/sweater/purple
 
-/datum/gear/uniform/greensweater
+/datum/gear/uniform/sweater/green
 	name = "Green Commando Sweater"
 	path = /obj/item/clothing/under/sweater/green
 
-/datum/gear/uniform/redsweater
+/datum/gear/uniform/sweater/red
 	name = "Red Commando Sweater"
 	path = /obj/item/clothing/under/sweater/red
 
-/datum/gear/uniform/bluesweater
+/datum/gear/uniform/sweater/blue
 	name =  "Navy Commando Sweater"
 	path = /obj/item/clothing/under/sweater/blue
 
-/datum/gear/uniform/keyholesweater
+/datum/gear/uniform/sweater/keyhole
 	name =  "Keyhole Sweater"
 	path = /obj/item/clothing/under/misc/keyholesweater
 
@@ -213,17 +216,17 @@
 	path = /obj/item/clothing/under/misc/polyjumpsuit
 	cost = 2
 
-/datum/gear/uniform/polyskirt
+/datum/gear/uniform/skirt/poly
 	name = "Polychromic Jumpskirt"
 	path = /obj/item/clothing/under/dress/skirt/polychromic
 	cost = 2
 
-/datum/gear/uniform/polysuit
+/datum/gear/uniform/suit/poly
 	name = "Polychromic Button-up Shirt"
 	path = /obj/item/clothing/under/misc/poly_shirt
 	cost = 3
 
-/datum/gear/uniform/polypleated
+/datum/gear/uniform/skirt/poly/pleated
 	name = "Polychromic Pleated Sweaterskirt"
 	path = /obj/item/clothing/under/dress/skirt/polychromic/pleated
 	cost = 3
@@ -233,12 +236,12 @@
 	path = /obj/item/clothing/under/costume/kilt/polychromic
 	cost = 3
 
-/datum/gear/uniform/polyshorts
+/datum/gear/uniform/shorts/poly
 	name = "Polychromic Shorts"
 	path = /obj/item/clothing/under/misc/polyshorts
 	cost = 3
 
-/datum/gear/uniform/polyshortpants
+/datum/gear/uniform/shorts/poly/athletic
 	name = "Polychromic Athletic Shorts"
 	path = /obj/item/clothing/under/shorts/polychromic
 	cost = 2
@@ -473,29 +476,35 @@
 /datum/gear/uniform/qipao
 	name = "Qipao, Black"
 	path = /obj/item/clothing/under/costume/qipao
+	subcategory = SUBCATEGORY_UNIFORM_DRESSES
 	cost = 3
 
 /datum/gear/uniform/qipao/white
 	name = "Qipao, White"
 	path = /obj/item/clothing/under/costume/qipao/white
+	subcategory = SUBCATEGORY_UNIFORM_DRESSES
 	cost = 3
 
 /datum/gear/uniform/qipao/red
 	name = "Qipao, Red"
 	path = /obj/item/clothing/under/costume/qipao/red
+	subcategory = SUBCATEGORY_UNIFORM_DRESSES
 	cost = 3
 
 /datum/gear/uniform/cheongsam
 	name = "Cheongsam, Black"
 	path = /obj/item/clothing/under/costume/cheongsam
+	subcategory = SUBCATEGORY_UNIFORM_DRESSES
 	cost = 3
 
 /datum/gear/uniform/cheongsam/white
 	name = "Cheongsam, White"
 	path = /obj/item/clothing/under/costume/cheongsam/white
+	subcategory = SUBCATEGORY_UNIFORM_DRESSES
 	cost = 3
 
 /datum/gear/uniform/cheongsam/red
 	name = "Cheongsam, Red"
 	path = /obj/item/clothing/under/costume/cheongsam/red
+	subcategory = SUBCATEGORY_UNIFORM_DRESSES
 	cost = 3

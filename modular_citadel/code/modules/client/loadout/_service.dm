@@ -14,6 +14,7 @@
 /datum/gear/head/neethelm
 	name = "D.A.B. helmet"
 	path = /obj/item/clothing/head/assu_helmet
+	subcategory = SUBCATEGORY_HEAD_JOBS
 	restricted_roles = list("Assistant")
 	cost = 2
 

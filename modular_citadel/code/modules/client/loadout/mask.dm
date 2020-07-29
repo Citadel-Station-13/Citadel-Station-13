@@ -1,5 +1,6 @@
 /datum/gear/mask
 	category = CATEGORY_MASK
+	slot = SLOT_WEAR_MASK
 
 /datum/gear/mask/balaclava
 	name = "Balaclava"

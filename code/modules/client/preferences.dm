@@ -1067,7 +1067,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			var/category_index = 1
 			for(var/i in GLOB.loadout_categories)
 				if(category_index != 1)
-					dat += "<br>"
+					dat += " |"
 				if(category_index == category)
 					dat += " <span class='linkOn'>[i]</span> "
 				else
@@ -1077,6 +1077,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			dat += "<tr><td colspan=4><hr></td></tr>"
 			dat += "<tr><td colspan=4><b><center>[gear_tab]</center></b></td></tr>"
 			dat += "<tr><td colspan=4><hr></td></tr>"
+			dat += "<tr><td colspan=4><center><b>"
 			var/subcategory_index = 1
 			for(var/i in GLOB.loadout_categories[category_section])
 				if(i == "NOSUBCATEGORY")
@@ -1088,6 +1089,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				else
 					dat += " <a href='?_src_=prefs;preference=gear;select_subcategory=[subcategory_index]'>[i]</a> "
 				subcategory_index += 1
+			dat += "</b></center></td></tr>"
 
 			dat += "<tr width=10% style='vertical-align:top;'><td width=15%><b>Name</b></td>"
 			dat += "<td style='vertical-align:top'><b>Cost</b></td>"
@@ -2885,17 +2887,17 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	LAZYINITLIST(L)
 	for(var/i in chosen_gear)
 		var/datum/gear/G = i
-		var/occupied_slots = L[slot_to_string(initial(G.category))] ? L[slot_to_string(initial(G.category))] + 1 : 1
-		LAZYSET(L, slot_to_string(initial(G.category)), occupied_slots)
+		var/occupied_slots = L[initial(G.category)] ? L[initial(G.category)] + 1 : 1
+		LAZYSET(L, initial(G.category), occupied_slots)
 	switch(slot)
 		if(SLOT_IN_BACKPACK)
-			if(L[slot_to_string(SLOT_IN_BACKPACK)] < BACKPACK_SLOT_AMT)
+			if(L[CATEGORY_BACKPACK] < BACKPACK_SLOT_AMT)
 				return TRUE
 		if(SLOT_HANDS)
-			if(L[slot_to_string(SLOT_HANDS)] < HANDS_SLOT_AMT)
+			if(L[CATEGORY_HANDS] < HANDS_SLOT_AMT)
 				return TRUE
 		else
-			if(L[slot_to_string(slot)] < DEFAULT_SLOT_AMT)
+			if(L[slot] < DEFAULT_SLOT_AMT)
 				return TRUE
 
 #undef DEFAULT_SLOT_AMT

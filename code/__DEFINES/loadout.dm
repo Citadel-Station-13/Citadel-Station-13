@@ -17,9 +17,15 @@
 #define CATEGORY_HANDS 				"Hands"
 
 //uniform
-#define CATEGORY_UNIFORM 			"Uniform"
+#define CATEGORY_UNIFORM 			"Uniform" //there's so many types of uniform it's best to have lots of categories
 #define SUBCATEGORY_UNIFORM_GENERAL "General"
 #define SUBCATEGORY_UNIFORM_JOBS 	"Jobs"
+#define SUBCATEGORY_UNIFORM_SUITS	"Suits"
+#define SUBCATEGORY_UNIFORM_SKIRTS	"Skirts"
+#define SUBCATEGORY_UNIFORM_DRESSES	"Dresses"
+#define SUBCATEGORY_UNIFORM_SWEATERS	"Sweaters"
+#define SUBCATEGORY_UNIFORM_PANTS	"Pants"
+#define SUBCATEGORY_UNIFORM_SHORTS	"Shorts"
 
 //suit
 #define CATEGORY_SUIT 				"Suit"

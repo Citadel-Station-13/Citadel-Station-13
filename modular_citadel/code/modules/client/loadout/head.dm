@@ -1,6 +1,7 @@
 /datum/gear/head
 	category = CATEGORY_HEAD
 	subcategory = SUBCATEGORY_HEAD_GENERAL
+	slot = SLOT_HEAD
 
 /datum/gear/head/baseball
 	name = "Ballcap"
