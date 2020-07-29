@@ -37,7 +37,7 @@
 		toggle()
 		return TRUE
 
-/obj/structure/destructible/clockwork/powered/prolonging_prism/attack_hand(mob/living/user)
+/obj/structure/destructible/clockwork/powered/prolonging_prism/on_attack_hand(mob/living/user)
 	if(user.canUseTopic(src, !issilicon(user), NO_DEXTERY) && is_servant_of_ratvar(user))
 		if(SSshuttle.emergency.mode == SHUTTLE_DOCKED || SSshuttle.emergency.mode == SHUTTLE_IGNITING || SSshuttle.emergency.mode == SHUTTLE_STRANDED || SSshuttle.emergency.mode == SHUTTLE_ESCAPE)
 			to_chat(user, "<span class='brass'>You break [src] apart, refunding some of the power used.</span>")

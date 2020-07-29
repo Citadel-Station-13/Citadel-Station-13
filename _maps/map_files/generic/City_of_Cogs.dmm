@@ -81,7 +81,7 @@
 /turf/open/floor/clockwork/reebe,
 /area/reebe/city_of_cogs)
 "az" = (
-/obj/structure/destructible/clockwork/heralds_beacon,
+/obj/structure/destructible/clockwork/eminence_spire,
 /turf/open/floor/clockwork/reebe,
 /area/reebe/city_of_cogs)
 "aA" = (
@@ -142,10 +142,6 @@
 /obj/item/clockwork/component/geis_capacitor/antennae,
 /turf/open/floor/clockwork/reebe,
 /area/reebe)
-"bj" = (
-/obj/structure/destructible/clockwork/eminence_spire,
-/turf/open/floor/clockwork/reebe,
-/area/reebe/city_of_cogs)
 "bt" = (
 /obj/structure/table/bronze,
 /turf/open/floor/clockwork/reebe,
@@ -174,10 +170,17 @@
 /area/reebe/city_of_cogs)
 "ew" = (
 /obj/structure/table/reinforced/brass,
-/obj/item/clockwork/construct_chassis/cogscarab,
-/obj/item/clockwork/construct_chassis/cogscarab,
-/obj/item/clockwork/construct_chassis/cogscarab,
-/obj/item/clockwork/construct_chassis/cogscarab,
+/obj/item/clockwork/construct_chassis/cogscarab{
+	pixel_y = 20
+	},
+/obj/item/clockwork/construct_chassis/cogscarab{
+	pixel_x = -7;
+	pixel_y = 6
+	},
+/obj/item/clockwork/construct_chassis/cogscarab{
+	pixel_x = 7;
+	pixel_y = 6
+	},
 /turf/open/floor/clockwork/reebe,
 /area/reebe/city_of_cogs)
 "hY" = (
@@ -29439,7 +29442,7 @@ aj
 aj
 aj
 aj
-ab
+aa
 dl
 ab
 aa
@@ -29696,7 +29699,7 @@ aj
 aj
 aj
 aj
-ab
+aa
 dl
 aa
 ab
@@ -29952,10 +29955,10 @@ aj
 aj
 aj
 aj
-ab
+aa
 dl
 dl
-ab
+aa
 aa
 om
 Fd
@@ -30210,8 +30213,8 @@ aj
 aj
 TH
 aa
-ab
-ab
+aa
+aa
 aT
 Wv
 ab
@@ -32010,7 +32013,7 @@ aj
 aj
 aj
 aj
-ab
+aa
 ab
 aa
 ab
@@ -33024,7 +33027,7 @@ ab
 ab
 ae
 ai
-az
+aj
 aj
 aj
 aj
@@ -33281,7 +33284,7 @@ ab
 ab
 ae
 ai
-aj
+az
 vx
 aj
 aj
@@ -33538,7 +33541,7 @@ ab
 ab
 ab
 ai
-bj
+aj
 aj
 aj
 sW
