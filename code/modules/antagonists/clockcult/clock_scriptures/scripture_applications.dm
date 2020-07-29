@@ -23,7 +23,7 @@
 	quickbind = TRUE
 	quickbind_desc = "Creates a Sigil of Transmission, which can drain and will store power for clockwork structures."
 
-/*//Prolonging Prism: Creates a prism that will delay the shuttle at a power cost
+//Prolonging Prism: Creates a prism that will delay the shuttle at a power cost
 /datum/clockwork_scripture/create_object/prolonging_prism
 	descname = "Powered Structure, Delay Emergency Shuttles"
 	name = "Prolonging Prism"
@@ -40,7 +40,7 @@
 	tier = SCRIPTURE_APPLICATION
 	one_per_tile = TRUE
 	primary_component = VANGUARD_COGWHEEL
-	sort_priority = 7
+	sort_priority = 4
 	important = TRUE
 	quickbind = TRUE
 	quickbind_desc = "Creates a Prolonging Prism, which will delay the arrival of an emergency shuttle by 2 minutes at a massive power cost."
@@ -50,11 +50,10 @@
 		to_chat(invoker, "<span class='inathneq'>\"It is too late to construct one of these, champion.\"</span>")
 		return FALSE
 	var/turf/T = get_turf(invoker)
-	if(!T || !(T.z in GLOB.station_z_levels))
+	if(!T || !is_station_level(T.z))
 		to_chat(invoker, "<span class='inathneq'>\"You must be on the station to construct one of these, champion.\"</span>")
 		return FALSE
 	return ..()
-*/
 
 //Mania Motor: Creates a malevolent transmitter that will broadcast the whispers of Sevtug into the minds of nearby nonservants, causing a variety of mental effects at a power cost.
 /datum/clockwork_scripture/create_object/mania_motor
@@ -112,7 +111,7 @@
 	usage_tip = "guardians are useful as personal bodyguards and frontline warriors."
 	tier = SCRIPTURE_APPLICATION
 	primary_component = GEIS_CAPACITOR
-	sort_priority = 3
+	sort_priority = 5
 
 /datum/clockwork_scripture/memory_allocation/check_special_requirements()
 	for(var/mob/living/simple_animal/hostile/clockwork/marauder/guardian/M in GLOB.all_clockwork_mobs)
@@ -171,7 +170,7 @@
 	tier = SCRIPTURE_APPLICATION
 	one_per_tile = TRUE
 	primary_component = BELLIGERENT_EYE
-	sort_priority = 4
+	sort_priority = 6
 	quickbind = TRUE
 	quickbind_desc = "Creates a clockwork marauder, used for frontline combat."
 	object_path = /obj/item/clockwork/construct_chassis/clockwork_marauder
@@ -223,7 +222,7 @@
 	object_path = /obj/mecha/combat/neovgre
 	tier = SCRIPTURE_APPLICATION
 	primary_component = BELLIGERENT_EYE
-	sort_priority = 5
+	sort_priority = 7
 	creator_message = "<span class='brass'>Neovgre, the Anima Bulwark towers over you... your enemies reckoning has come.</span>"
 
 /datum/clockwork_scripture/create_object/summon_arbiter/check_special_requirements()
