@@ -268,7 +268,7 @@
 			our_alert = our_guy.throw_alert("shoealert", /obj/screen/alert/shoes/untied)
 
 
-/obj/item/clothing/shoes/attack_hand(mob/living/user, act_intent, unarmed_attack_flags)
+/obj/item/clothing/shoes/on_attack_hand(mob/living/user, act_intent, unarmed_attack_flags)
 	if(!istype(user))
 		return ..()
 	if(loc == user && tied != SHOES_TIED && (user.mobility_flags & MOBILITY_USE))
