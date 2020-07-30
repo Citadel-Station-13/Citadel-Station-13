@@ -41,7 +41,7 @@
 		affected += try_use_power(MIN_CLOCKCULT_POWER*4)
 	return affected
 
-/obj/structure/destructible/clockwork/powered/clockwork_obelisk/attack_hand(mob/living/user, act_intent = user.a_intent, unarmed_attack_flags)
+/obj/structure/destructible/clockwork/powered/clockwork_obelisk/on_attack_hand(mob/living/user, act_intent = user.a_intent, unarmed_attack_flags)
 	. = ..()
 	if(.)
 		return

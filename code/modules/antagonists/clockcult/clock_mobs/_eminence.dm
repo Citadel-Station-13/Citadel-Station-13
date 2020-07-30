@@ -114,23 +114,26 @@
 		superheat_wall(A)
 		return
 	if(modifiers["middle"] || modifiers["ctrl"])
-		issue_command(A)
+		INVOKE_ASYNC(src, .proc/issue_command, A)
 		return
 	if(GLOB.ark_of_the_clockwork_justiciar == A)
 		var/obj/structure/destructible/clockwork/massive/celestial_gateway/G = GLOB.ark_of_the_clockwork_justiciar
-		if(G.recalling)
-			return
-		if(!G.recalls_remaining)
-			to_chat(src, "<span class='warning'>The Ark can no longer recall!</span>")
-			return
-		if(alert(src, "Initiate mass recall?", "Mass Recall", "Yes", "No") != "Yes" || QDELETED(src) || QDELETED(G) || !G.obj_integrity)
-			return
-		G.initiate_mass_recall() //wHOOPS LOOKS LIKE A HULK GOT THROUGH
+		INVOKE_ASYNC(src, .proc/attempt_recall, G)
 	else if(istype(A, /obj/structure/destructible/clockwork/trap/trigger))
 		var/obj/structure/destructible/clockwork/trap/trigger/T = A
 		T.visible_message("<span class='danger'>[T] clunks as it's activated remotely.</span>")
 		to_chat(src, "<span class='brass'>You activate [T].</span>")
 		T.activate()
+
+/mob/camera/eminence/proc/attempt_recall(obj/structure/destructible/clockwork/massive/celestial_gateway/G)
+	if(G.recalling)
+		return
+	if(!G.recalls_remaining)
+		to_chat(src, "<span class='warning'>The Ark can no longer recall!</span>")
+		return
+	if(alert(src, "Initiate mass recall?", "Mass Recall", "Yes", "No") != "Yes" || QDELETED(src) || QDELETED(G) || !G.obj_integrity)
+		return
+	G.initiate_mass_recall() //wHOOPS LOOKS LIKE A HULK GOT THROUGH
 
 /mob/camera/eminence/ratvar_act()
 	name = "\improper Radiance"

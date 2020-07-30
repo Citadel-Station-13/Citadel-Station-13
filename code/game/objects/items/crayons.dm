@@ -273,7 +273,9 @@
 	. = ..()
 	if(!proximity || !check_allowed_items(target))
 		return
+	draw_on(target, user, proximity, params)
 
+/obj/item/toy/crayon/proc/draw_on(atom/target, mob/user, proximity, params)
 	var/static/list/punctuation = list("!","?",".",",","/","+","-","=","%","#","&")
 
 	var/cost = 1
@@ -568,9 +570,9 @@
 	dye_color = DYE_RAINBOW
 	charges = -1
 
-/obj/item/toy/crayon/rainbow/afterattack(atom/target, mob/user, proximity, params)
+/obj/item/toy/crayon/rainbow/draw_on(atom/target, mob/user, proximity, params)
 	paint_color = rgb(rand(0,255), rand(0,255), rand(0,255))
-	. = ..()
+	return ..()
 
 /*
  * Crayon Box
@@ -693,7 +695,7 @@
 		. += "It is empty."
 	. += "<span class='notice'>Alt-click [src] to [ is_capped ? "take the cap off" : "put the cap on"].</span>"
 
-/obj/item/toy/crayon/spraycan/afterattack(atom/target, mob/user, proximity, params)
+/obj/item/toy/crayon/spraycan/draw_on(atom/target, mob/user, proximity, params)
 	if(!proximity)
 		return
 
@@ -766,7 +768,7 @@
 	desc = "A metallic container containing shiny synthesised paint."
 	charges = -1
 
-/obj/item/toy/crayon/spraycan/borg/afterattack(atom/target,mob/user,proximity, params)
+/obj/item/toy/crayon/spraycan/borg/draw_on(atom/target,mob/user,proximity, params)
 	var/diff = ..()
 	if(!iscyborg(user))
 		to_chat(user, "<span class='notice'>How did you get this?</span>")

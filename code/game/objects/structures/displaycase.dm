@@ -9,6 +9,8 @@
 	armor = list("melee" = 30, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 10, "bio" = 0, "rad" = 0, "fire" = 70, "acid" = 100)
 	max_integrity = 200
 	integrity_failure = 0.25
+	attack_hand_speed = CLICK_CD_MELEE
+	attack_hand_is_action = TRUE
 	var/obj/item/showpiece = null
 	var/alert = TRUE
 	var/open = FALSE
@@ -157,11 +159,7 @@
 /obj/structure/displaycase/attack_paw(mob/user)
 	return attack_hand(user)
 
-/obj/structure/displaycase/attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
-	. = ..()
-	if(.)
-		return
-	user.changeNext_move(CLICK_CD_MELEE)
+/obj/structure/displaycase/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	if (showpiece && (broken || open))
 		to_chat(user, "<span class='notice'>You deactivate the hover field built into the case.</span>")
 		log_combat(user, src, "deactivates the hover field of")

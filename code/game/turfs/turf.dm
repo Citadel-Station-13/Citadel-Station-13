@@ -122,10 +122,7 @@
 	requires_activation = FALSE
 	..()
 
-/turf/attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
-	. = ..()
-	if(.)
-		return
+/turf/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	user.Move_Pulled(src)
 
 /turf/proc/multiz_turf_del(turf/T, dir)

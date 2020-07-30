@@ -463,6 +463,9 @@
 	else if(!always_up)
 		popDown() // no valid targets, close the cover
 
+/obj/machinery/porta_turret/proc/randomize_shot_stagger()
+	shot_stagger = rand(0, min(2 SECONDS, round(shot_delay/3, world.tick_lag)))
+
 /obj/machinery/porta_turret/proc/tryToShootAt(list/atom/movable/targets)
 	while(targets.len > 0)
 		var/atom/movable/M = pick(targets)
@@ -552,11 +555,14 @@
 	if(target)
 		popUp()				//pop the turret up if it's not already up.
 		setDir(get_dir(base, target))//even if you can't shoot, follow the target
-		shootAt(target)
+		INVOKE_ASYNC(src, .proc/shootAt, target)
 		return 1
 	return
 
-/obj/machinery/porta_turret/proc/shootAt(atom/movable/target)
+/obj/machinery/porta_turret/proc/shootAt(atom/movable/target, stagger_enabled = FALSE)
+	if(stagger_enabled)
+		randomize_shot_stagger()
+		sleep(shot_stagger)
 	if(!raised) //the turret has to be raised in order to fire - makes sense, right?
 		return
 

@@ -226,7 +226,9 @@
 				playsound(get_turf(target), 'sound/effects/splat.ogg', 40, 1)
 				if(ishuman(target))
 					var/mob/living/carbon/human/H = target
-					H.bleed_rate += 5
+					var/obj/item/bodypart/head_part = H.get_bodypart(BODY_ZONE_HEAD)
+					if(head_part)
+						head_part.generic_bleedstacks += 5
 				target.add_splatter_floor(get_turf(target))
 				user.add_mob_blood(target) // Put target's blood on us. The donor goes in the ( )
 				target.add_mob_blood(target)

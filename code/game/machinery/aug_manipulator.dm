@@ -100,10 +100,7 @@
 			stat |= BROKEN
 			update_icon()
 
-/obj/machinery/aug_manipulator/attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
-	. = ..()
-	if(.)
-		return
+/obj/machinery/aug_manipulator/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	add_fingerprint(user)
 
 	if(storedpart)

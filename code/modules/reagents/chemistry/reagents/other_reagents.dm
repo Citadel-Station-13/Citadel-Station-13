@@ -2296,9 +2296,93 @@
 	if(data["blood_DNA"])
 		S.add_blood_DNA(list(data["blood_DNA"] = data["blood_type"]))
 
+/datum/reagent/determination
+	name = "Determination"
+	description = "For when you need to push on a little more. Do NOT allow near plants."
+	reagent_state = LIQUID
+	color = "#D2FFFA"
+	metabolization_rate = 0.75 * REAGENTS_METABOLISM // 5u (WOUND_DETERMINATION_CRITICAL) will last for ~17 ticks
+	/// Whether we've had at least WOUND_DETERMINATION_SEVERE (2.5u) of determination at any given time. No damage slowdown immunity or indication we're having a second wind if it's just a single moderate wound
+	var/significant = FALSE
+
+/datum/reagent/determination/on_mob_end_metabolize(mob/living/carbon/M)
+	if(significant)
+		var/stam_crash = 0
+		for(var/thing in M.all_wounds)
+			var/datum/wound/W = thing
+			stam_crash += (W.severity + 1) * 3 // spike of 3 stam damage per wound severity (moderate = 6, severe = 9, critical = 12) when the determination wears off if it was a combat rush
+		M.adjustStaminaLoss(stam_crash)
+	M.remove_status_effect(STATUS_EFFECT_DETERMINED)
+	..()
+
+/datum/reagent/determination/on_mob_life(mob/living/carbon/M)
+	if(!significant && volume >= WOUND_DETERMINATION_SEVERE)
+		significant = TRUE
+		M.apply_status_effect(STATUS_EFFECT_DETERMINED) // in addition to the slight healing, limping cooldowns are divided by 4 during the combat high
+
+	volume = min(volume, WOUND_DETERMINATION_MAX)
+
+	for(var/thing in M.all_wounds)
+		var/datum/wound/W = thing
+		var/obj/item/bodypart/wounded_part = W.limb
+		if(wounded_part)
+			wounded_part.heal_damage(0.25, 0.25)
+		M.adjustStaminaLoss(-0.25*REM) // the more wounds, the more stamina regen
+	..()
+
 /datum/reagent/cellulose
 	name = "Cellulose Fibers"
 	description = "A crystaline polydextrose polymer, plants swear by this stuff."
 	reagent_state = SOLID
 	color = "#E6E6DA"
 	taste_mult = 0
+
+
+/datum/reagent/hairball
+	name = "Hairball"
+	description = "A bundle of keratinous bits and fibers, not easily digestible."
+	reagent_state = SOLID
+	can_synth = FALSE
+	metabolization_rate = 0.05 * REAGENTS_METABOLISM
+	taste_description = "wet hair"
+	var/amount = 0
+	var/knotted = FALSE
+
+/datum/reagent/hairball/on_mob_life(mob/living/carbon/M)
+	amount = M.reagents.get_reagent_amount(/datum/reagent/hairball)
+
+	if(amount < 10)
+		if(prob(10))
+			M.losebreath += 1
+			M.emote("cough")
+			to_chat(M, "<span class='notice'>You clear your throat.</span>")
+	else
+		if(!knotted)
+			to_chat(M, "<span class='notice'>You feel a knot in your stomach.</span>")
+			knotted = TRUE
+
+		if(prob(5 + amount * 0.5)) // don't want this to cause too much damage
+			M.losebreath += 2
+			to_chat(M, "<span class='notice'>You feel a knot in your throat.</span>")
+			M.emote("cough")
+
+		else if(prob(amount - 4))
+			to_chat(M, "<span class='warning'>Your stomach feels awfully bloated.</span>")
+			playsound(M,'sound/voice/catpeople/distressed.ogg', 50, FALSE)
+			M.visible_message("<span class='warning'>[M] seems distressed!.</span>", ignored_mobs=M)
+
+		else if(prob(amount - 8))
+			knotted = FALSE
+			playsound(M,'sound/voice/catpeople/puking.ogg', 110, FALSE)
+			M.Immobilize(30)
+			sleep(30) //snowflake but it works, don't wanna proc this
+			if(QDELETED(M) || QDELETED(src)) //this handles race conditions about m or src not existing.
+				return
+			M.visible_message("<span class='warning'>[M] throws up a hairball! Disgusting!</span>", ignored_mobs=M)
+			new /obj/item/toy/plush/hairball(get_turf(M))
+			to_chat(M, "<span class='notice'>Aaaah that's better!</span>")
+			SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "cleared_stomach", /datum/mood_event/cleared_stomach, name)
+			M.reagents.del_reagent(/datum/reagent/hairball)
+			return
+	..()
+	

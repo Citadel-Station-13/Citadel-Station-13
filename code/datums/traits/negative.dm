@@ -56,7 +56,7 @@ GLOBAL_LIST_EMPTY(family_heirlooms)
 		if("Medical Doctor")
 			heirloom_type = /obj/item/healthanalyzer/advanced
 		if("Paramedic")
-			heirloom_type = pick(/obj/item/clothing/neck/stethoscope, /obj/item/bodybag)
+			heirloom_type = /obj/item/lighter
 		if("Station Engineer")
 			heirloom_type = /obj/item/wirecutters/brass
 		if("Atmospheric Technician")
@@ -452,8 +452,8 @@ GLOBAL_LIST_EMPTY(family_heirlooms)
 	mob_trait = TRAIT_COLDBLOODED
 	gain_text = "<span class='notice'>You feel cold-blooded.</span>"
 	lose_text = "<span class='notice'>You feel more warm-blooded.</span>"
-	
-	/datum/quirk/monophobia
+
+/datum/quirk/monophobia
 	name = "Monophobia"
 	desc = "You will become increasingly stressed when not in company of others, triggering panic reactions ranging from sickness to heart attacks."
 	value = -3 // Might change it to 4.

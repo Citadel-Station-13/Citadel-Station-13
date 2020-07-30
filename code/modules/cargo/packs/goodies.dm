@@ -75,3 +75,9 @@
 	desc = "The simple beach ball is one of Nanotrasen's most popular products. 'Why do we make beach balls? Because we can! (TM)' - Nanotrasen"
 	cost = 200
 	contains = list(/obj/item/toy/beach_ball)
+
+/datum/supply_pack/goody/hell_single
+	name = "Hellgun Single-Pack"
+	desc = "Contains one hellgun, an old pattern of laser gun infamous for its ability to horribly disfigure targets with burns. Technically violates the Space Geneva Convention when used on humanoids."
+	cost = 1500
+	contains = list(/obj/item/gun/energy/laser/hellgun)

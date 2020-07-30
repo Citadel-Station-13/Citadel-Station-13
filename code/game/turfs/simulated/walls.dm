@@ -9,6 +9,8 @@
 
 	thermal_conductivity = WALL_HEAT_TRANSFER_COEFFICIENT
 	heat_capacity = 312500 //a little over 5 cm thick , 312500 for 1 m by 2.5 m by 0.25 m plasteel wall
+	attack_hand_speed = 8
+	attack_hand_is_action = TRUE
 
 	baseturfs = /turf/open/floor/plating
 
@@ -113,12 +115,12 @@
 			return FALSE
 
 /turf/closed/wall/attack_paw(mob/living/user)
-	user.changeNext_move(CLICK_CD_MELEE)
 	return attack_hand(user)
 
-
 /turf/closed/wall/attack_animal(mob/living/simple_animal/M)
-	M.changeNext_move(CLICK_CD_MELEE)
+	if(!M.CheckActionCooldown(CLICK_CD_MELEE))
+		return
+	M.DelayNextAction()
 	M.do_attack_animation(src)
 	if((M.environment_smash & ENVIRONMENT_SMASH_WALLS) || (M.environment_smash & ENVIRONMENT_SMASH_RWALLS))
 		playsound(src, 'sound/effects/meteorimpact.ogg', 100, 1)
@@ -137,17 +139,14 @@
 		to_chat(user, text("<span class='notice'>You punch the wall.</span>"))
 	return TRUE
 
-/turf/closed/wall/attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
-	. = ..()
-	if(.)
-		return
-	user.changeNext_move(CLICK_CD_MELEE)
+/turf/closed/wall/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	to_chat(user, "<span class='notice'>You push the wall but nothing happens!</span>")
 	playsound(src, 'sound/weapons/genhit.ogg', 25, 1)
 	add_fingerprint(user)
 
 /turf/closed/wall/attackby(obj/item/W, mob/user, params)
-	user.changeNext_move(CLICK_CD_MELEE)
+	if(!user.CheckActionCooldown(CLICK_CD_MELEE))
+		return
 	if (!user.IsAdvancedToolUser())
 		to_chat(user, "<span class='warning'>You don't have the dexterity to do this!</span>")
 		return
@@ -156,6 +155,7 @@
 	if(!isturf(user.loc))
 		return	//can't do this stuff whilst inside objects and such
 
+	user.DelayNextAction()
 	add_fingerprint(user)
 
 	var/turf/T = user.loc	//get user's location for delay checks
