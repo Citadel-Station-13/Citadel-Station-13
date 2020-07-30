@@ -307,9 +307,15 @@
 /datum/song/holoparasite
 	var/mob/living/simple_animal/hostile/guardian/stand
 
+/datum/song/holoparasite/New(atom/parent, list/instrument_ids)
+	. = ..()
+	stand = istype(parent, /mob/living/simple_animal/hostile/guardian) && parent
+
 /datum/song/holoparasite/updateDialog()
 	stand.ui_interact(src)
 
 /datum/song/holoparasite/should_stop_playing(mob/user)
 	return FALSE
 
+/datum/song/holoparasite/check_can_use(mob/user)
+	return user == stand)
