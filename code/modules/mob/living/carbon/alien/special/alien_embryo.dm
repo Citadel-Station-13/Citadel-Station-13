@@ -103,13 +103,13 @@
 
 	var/mob/living/carbon/old_owner = owner
 	if(kill_on_sucess) //ITS TOO LATE
-		new_xeno.visible_message("<span class='danger'>[new_xeno] bursts out of [owner]!</span>", "<span class='userdanger'>You exit [owner], your previous host.</span>", "<span class='italics'>You hear organic matter ripping and tearing!</span>")
+		new_xeno.visible_message("<span class='danger'>[new_xeno] bursts out of [owner]!</span>", "<span class='userdanger'>You exit [owner], your previous host. You are loyal to whoever laid the egg that spawned you; queen or otherwise.</span>", "<span class='italics'>You hear organic matter ripping and tearing!</span>")
 		owner.apply_damage(rand(100,300),BRUTE,zone,FALSE) //Random high damage to torso so health sensors don't metagame.
 		var/obj/item/bodypart/B = owner.get_bodypart(zone)
 		B.drop_organs(owner) //Lets still make the death gruesome and impossible to just simply defib someone.
 		owner.death(FALSE) //Just in case some freak occurance occurs where you somehow survive all your organs being removed from you and the 100-300 brute damage.
 	else //When it is removed via surgery at a late stage, rather than forced.
-		new_xeno.visible_message("<span class='danger'>[new_xeno] wriggles out of [owner]!</span>", "<span class='userdanger'>You exit [owner], your previous host.</span>")
+		new_xeno.visible_message("<span class='danger'>[new_xeno] wriggles out of [owner]!</span>", "<span class='userdanger'>You exit [owner], your previous host. You are loyal to whoever laid the egg that spawned you; queen or otherwise.</span>")
 		owner.adjustBruteLoss(40)
 	old_owner.cut_overlay(overlay)
 	qdel(src)
