@@ -44,6 +44,7 @@
 	sort_priority = 2
 	quickbind = TRUE
 	quickbind_desc = "Creates a Mania Motor, which causes minor damage and negative mental effects in non-Servants."
+	var/requires_full_power = TRUE
 
 
 //Clockwork Obelisk: Creates a powerful obelisk that can be used to broadcast messages or open a gateway to any servant or clockwork obelisk at a power cost.
