@@ -17,6 +17,7 @@
 	active_power_usage = 300	//when active, this turret takes up constant 300 Equipment power
 	req_access = list(ACCESS_SEC_DOORS)
 	power_channel = EQUIP	//drains power from the EQUIPMENT channel
+	speed_process = TRUE
 
 	var/base_icon_state = "standard"
 	var/scan_range = 7
@@ -53,7 +54,7 @@
 
 	var/last_fired = 0		//world.time the turret last fired
 	var/shot_delay = 15		//ticks until next shot (1.5 ?)
-
+	var/shot_stagger = 0		// sleep() shots to stagger attacks
 
 	var/check_records = 1	//checks if it can use the security records
 	var/criminals = 1		//checks if it can shoot people on arrest
@@ -436,13 +437,15 @@
 	else if(!always_up)
 		popDown() // no valid targets, close the cover
 
+/obj/machinery/porta_turret/proc/randomize_shot_stagger()
+	shot_stagger = rand(0, min(2 SECONDS, round(shot_delay/3, world.tick_lag)))
+
 /obj/machinery/porta_turret/proc/tryToShootAt(list/atom/movable/targets)
 	while(targets.len > 0)
 		var/atom/movable/M = pick(targets)
 		targets -= M
 		if(target(M))
 			return 1
-
 
 /obj/machinery/porta_turret/proc/popUp()	//pops the turret up
 	if(!anchored)
@@ -525,11 +528,14 @@
 	if(target)
 		popUp()				//pop the turret up if it's not already up.
 		setDir(get_dir(base, target))//even if you can't shoot, follow the target
-		shootAt(target)
+		INVOKE_ASYNC(src, .proc/shootAt, target)
 		return 1
 	return
 
-/obj/machinery/porta_turret/proc/shootAt(atom/movable/target)
+/obj/machinery/porta_turret/proc/shootAt(atom/movable/target, stagger_enabled = FALSE)
+	if(stagger_enabled)
+		randomize_shot_stagger()
+		sleep(shot_stagger)
 	if(!raised) //the turret has to be raised in order to fire - makes sense, right?
 		return
 

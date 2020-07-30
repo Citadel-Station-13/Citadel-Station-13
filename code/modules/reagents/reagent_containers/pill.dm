@@ -28,22 +28,24 @@
 /obj/item/reagent_containers/pill/get_w_volume() // DEFAULT_VOLUME_TINY at 25u, DEFAULT_VOLUME_SMALL at 50u
 	return DEFAULT_VOLUME_TINY/2 + reagents.total_volume / reagents.maximum_volume * DEFAULT_VOLUME_TINY
 
-/obj/item/reagent_containers/pill/attack(mob/M, mob/user, def_zone)
+/obj/item/reagent_containers/pill/attack(mob/living/M, mob/living/user, attackchain_flags = NONE, damage_multiplier = 1)
+	INVOKE_ASYNC(src, .proc/attempt_feed, M, user)
+
+/obj/item/reagent_containers/pill/proc/attempt_feed(mob/living/M, mob/living/user)
 	if(!canconsume(M, user))
-		return 0
+		return FALSE
 
 	if(M == user)
 		M.visible_message("<span class='notice'>[user] attempts to [apply_method] [src].</span>")
 		if(self_delay)
 			if(!do_mob(user, M, self_delay))
-				return 0
+				return FALSE
 		to_chat(M, "<span class='notice'>You [apply_method] [src].</span>")
-
 	else
 		M.visible_message("<span class='danger'>[user] attempts to force [M] to [apply_method] [src].</span>", \
 							"<span class='userdanger'>[user] attempts to force [M] to [apply_method] [src].</span>")
 		if(!do_mob(user, M))
-			return 0
+			return FALSE
 		M.visible_message("<span class='danger'>[user] forces [M] to [apply_method] [src].</span>", \
 							"<span class='userdanger'>[user] forces [M] to [apply_method] [src].</span>")
 
@@ -56,8 +58,7 @@
 		reagents.reaction(M, apply_type)
 		reagents.trans_to(M, reagents.total_volume)
 	qdel(src)
-	return 1
-
+	return TRUE
 
 /obj/item/reagent_containers/pill/afterattack(obj/target, mob/user , proximity)
 	. = ..()
@@ -77,6 +78,7 @@
 						"<span class='notice'>You dissolve [src] in [target].</span>", vision_distance = 2)
 	reagents.trans_to(target, reagents.total_volume)
 	qdel(src)
+	return STOP_ATTACK_PROC_CHAIN
 
 /obj/item/reagent_containers/pill/tox
 	name = "toxins pill"

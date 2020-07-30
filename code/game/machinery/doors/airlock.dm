@@ -763,10 +763,7 @@
 /obj/machinery/door/airlock/attack_paw(mob/user)
 	return attack_hand(user)
 
-/obj/machinery/door/airlock/attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
-	. = ..()
-	if(.)
-		return
+/obj/machinery/door/airlock/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	if(!(issilicon(user) || IsAdminGhost(user)))
 		if(src.isElectrified())
 			if(src.shock(user, 100))
@@ -783,6 +780,8 @@
 				H.apply_damage(10, BRUTE, BODY_ZONE_HEAD)
 			else
 				visible_message("<span class='danger'>[user] headbutts the airlock. Good thing [user.p_theyre()] wearing a helmet.</span>")
+	else
+		return ..()
 
 /obj/machinery/door/airlock/attempt_wire_interaction(mob/user)
 	if(security_level)

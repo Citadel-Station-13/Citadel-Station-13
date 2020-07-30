@@ -24,7 +24,7 @@
 	var/obj/item/head = null
 
 	var/obj/item/gloves = null //only used by humans
-	var/obj/item/shoes = null //only used by humans.
+	var/obj/item/clothing/shoes/shoes = null //only used by humans.
 	var/obj/item/clothing/glasses/glasses = null //only used by humans.
 	var/obj/item/ears = null //only used by humans.
 

@@ -56,9 +56,6 @@
 		if(id && usr.client) //try to (un)remember position
 			usr.client.prefs.action_buttons_screen_locs["[name]_[id]"] = locked ? moved : null
 		return TRUE
-	if(usr.next_click > world.time)
-		return
-	usr.next_click = world.time + 1
 	linked_action.Trigger()
 	return TRUE
 

@@ -286,6 +286,9 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	parry_efficiency_to_counterattack = 100
 	parry_efficiency_considered_successful = 65		// VERY generous
 	parry_efficiency_perfect = 120
+	parry_efficiency_perfect_override = list(
+		TEXT_ATTACK_TYPE_PROJECTILE = 30,
+	)
 	parry_failed_stagger_duration = 3 SECONDS
 	parry_data = list(PARRY_COUNTERATTACK_MELEE_ATTACK_CHAIN = 2.5) // 7*2.5 = 17.5, 8*2.5 = 20, 9*2.5 = 22.5, 10*2.5 = 25
 

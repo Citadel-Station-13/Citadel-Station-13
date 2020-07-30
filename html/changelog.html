@@ -50,6 +50,80 @@
 		-->
 		<div class="commit sansserif">
 
+			<h2 class="date">30 July 2020</h2>
+			<h3 class="author">Adelphon updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="rscadd">Created a Cosmetic version of the camo.</li>
+			</ul>
+			<h3 class="author">Arturlang updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="code_imp">Bloodsucker LifeTick runs from BiologicalLife now</li>
+			</ul>
+			<h3 class="author">Ryll-Ryll ported by silicons updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="rscadd">Shoelaces are now a thing. You can untie them by laying down next to someone.</li>
+				<li class="tweak">shoes now have lace delays and some can't be laced at all</li>
+				<li class="refactor">do after now tracks who's interacting with who, meaning some actions now break when the target moves away.</li>
+			</ul>
+			<h3 class="author">SiliconMain updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="rscadd">Ported the long range atmos analyzer from sk*rat, credit to NotRanged</li>
+			</ul>
+			<h3 class="author">silicons updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="rscadd">energy sword perfect parries now reflect projectiles back at their shooters.</li>
+				<li class="balance">any mob can now parry if they have the right item</li>
+				<li class="rscadd">beam rifles now go into emitters properly</li>
+				<li class="refactor">clickdelay has been refactored into an experimental hybrid system. Check code/modules/mob/clickdelay.dm for more information.</li>
+				<li class="balance">Resisting no longer checks clickdelay, but is standardized to a 2 second per resist system for most forms of resisting. It still sets clickdelay, though.</li>
+				<li class="rscadd">Meters have been added for estimating time until next attack/resist. Won't be that useful due to our clickdelay currently being very short, though. They're visible from your hand and resist HUD elements. experimental: Most attacks and forms of attacking (minus unarmed because it's too much of a pain to refactor how hugs/gloves of the north star works) now check for time-since-last-attack rather than making it so you can't attack for said time. This means you can very quickly switch to a gun from a melee weapon, whereas in the old system a melee weapon would put you on lockout for 0.8 seconds, in the new system all the gun cares about is that you did not attack for at least 0.4 seconds.</li>
+				<li class="code_imp">All clickdelay setting/reading are now procs, so it should be trivial to implement another system where drawing/switching to a weapon requires you to have it out for x seconds before using it. I am not personally doing it at this point in time though because it will likely just annoy everyone with no real gain unless we do something like putting a 0.8 second switch-to cooldown for guns (which I did not, yet)</li>
+				<li class="refactor">attack_hand has been refactored to on_attack_hand remove: sexchems no longer impact click delay</li>
+				<li class="rscadd">turrets now automatically stagger their shots. Happy parrying/blocking.</li>
+				<li class="bugfix">turrets now speed_process, they were shooting slower than they should be</li>
+				<li class="balance">anything can now block with the right items</li>
+			</ul>
+			<h3 class="author">timothyteakettle updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="bugfix">some crafted crates won't contain items now, and thus have stopped breaking the laws of physics</li>
+				<li class="tweak">beepskys hats now follow the laws of gravity and move up/down when he bobs up and down</li>
+			</ul>
+
+			<h2 class="date">29 July 2020</h2>
+			<h3 class="author">DeltaFire15 updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="bugfix">The 'Naked' outfit is no longer broken.</li>
+			</ul>
+			<h3 class="author">Ghommie updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="bugfix">fixed cremator trays, paleness examination strings, chat message for stamping paper, looping sounds, load away missions/VR admin verb, access requirements for using the sechuds.</li>
+				<li class="tweak">Alt-Clicking a cigarette packet should pull the lighter out first if present, then cigarettes.</li>
+			</ul>
+			<h3 class="author">Hatterhat updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="bugfix">Directional windows can now be rotated counterclockwise properly again.</li>
+			</ul>
+			<h3 class="author">NecromancerAnne, Sirich96 updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="rscadd">Stunbaton sprites by Sirich96.</li>
+				<li class="rscadd">New sprites for the stunsword.</li>
+			</ul>
+			<h3 class="author">necromanceranne updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="rscadd">Adds some in-hands for the rapier sheath.</li>
+			</ul>
+			<h3 class="author">timothyteakettle updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="bugfix">tail wagging should work in all cases now</li>
+				<li class="bugfix">bluespace jars work as intended now</li>
+				<li class="bugfix">aliens can remove embeds now</li>
+				<li class="bugfix">bloodsuckers are not affected by bloodloss</li>
+			</ul>
+			<h3 class="author">zeroisthebiggay updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="rscadd">Flannel jackets and bartender winter coat</li>
+			</ul>
+
 			<h2 class="date">28 July 2020</h2>
 			<h3 class="author">Cacogen updated:</h3>
 			<ul class="changes bgimages16">
