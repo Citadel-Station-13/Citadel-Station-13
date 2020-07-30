@@ -17,6 +17,7 @@
 
 //Harvest; activated ly clicking the target, will try to drain their essence.
 /mob/living/simple_animal/revenant/proc/Harvest(mob/living/carbon/human/target)
+	set waitfor = FALSE
 	if(!castcheck(0))
 		return
 	if(draining)

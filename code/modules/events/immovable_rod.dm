@@ -143,7 +143,7 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 	if(L && (L.density || prob(10)))
 		L.ex_act(EXPLODE_HEAVY)
 
-obj/effect/immovablerod/attack_hand(mob/living/user, act_intent = user.a_intent, unarmed_attack_flags)
+obj/effect/immovablerod/on_attack_hand(mob/living/user, act_intent = user.a_intent, unarmed_attack_flags)
 	if(ishuman(user))
 		var/mob/living/carbon/human/U = user
 		if(U.job in list("Research Director"))

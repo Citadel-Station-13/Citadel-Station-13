@@ -11,6 +11,7 @@
 	mutanttongue = /obj/item/organ/tongue/robot
 	species_language_holder = /datum/language_holder/synthetic
 	limbs_id = "synth"
+	species_type = "robotic"
 
 /datum/species/android/on_species_gain(mob/living/carbon/C)
 	. = ..()
