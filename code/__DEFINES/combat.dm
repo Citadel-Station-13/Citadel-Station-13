@@ -281,7 +281,7 @@ GLOBAL_LIST_INIT(shove_disarming_types, typecacheof(list(
 /// changeNext_move penalty multiplier of the above.
 #define STAM_CRIT_ITEM_ATTACK_DELAY		1.75
 /// Damage penalty when fighting prone.
-#define LYING_DAMAGE_PENALTY			0.5
+#define LYING_DAMAGE_PENALTY			0.7
 /// Added delay when firing guns stam-softcritted. Summed with a hardset CLICK_CD_RANGE delay, similar to STAM_CRIT_DAMAGE_DELAY otherwise.
 #define STAM_CRIT_GUN_DELAY			2.75
 
