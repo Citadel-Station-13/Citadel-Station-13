@@ -33,7 +33,7 @@
 
 			to_chat(user, "<span class='notice'>You begin repairing [src]...</span>")
 			if(I.use_tool(src, user, 40, volume=40))
-				obj_integrity = CLAMP(obj_integrity + 20, 0, max_integrity)
+				obj_integrity = clamp(obj_integrity + 20, 0, max_integrity)
 	else
 		return ..()
 
@@ -70,14 +70,13 @@
 		if(W.amount < 5)
 			to_chat(user, "<span class='warning'>You need at least five wooden planks to make a wall!</span>")
 			return
-		else
-			to_chat(user, "<span class='notice'>You start adding [I] to [src]...</span>")
-			if(do_after(user, 50, target=src))
-				W.use(5)
-				var/turf/T = get_turf(src)
-				T.PlaceOnTop(/turf/closed/wall/mineral/wood/nonmetal)
-				qdel(src)
-				return
+		to_chat(user, "<span class='notice'>You start adding [I] to [src]...</span>")
+		if(do_after(user, 50, target=src))
+			W.use(5)
+			var/turf/T = get_turf(src)
+			T.PlaceOnTop(/turf/closed/wall/mineral/wood/nonmetal)
+			qdel(src)
+		return
 	return ..()
 
 
@@ -170,7 +169,8 @@
 
 	to_chat(user, "[src] is now in [mode] mode.")
 
-/obj/item/grenade/barrier/prime()
+/obj/item/grenade/barrier/prime(mob/living/lanced_by)
+	. = ..()
 	new /obj/structure/barricade/security(get_turf(src.loc))
 	switch(mode)
 		if(VERTICAL)

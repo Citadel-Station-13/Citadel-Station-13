@@ -10,6 +10,17 @@
 	tastes = list("crust" = 1, "tomato" = 1, "cheese" = 1)
 	foodtype = GRAIN | DAIRY | VEGETABLES
 
+/obj/item/reagent_containers/food/snacks/pizzaslice/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/kitchen/rollingpin))
+		if(!isturf(loc))
+			to_chat(user, "<span class='warning'>You need to put [src] on a surface to roll it out!</span>")
+			return
+		new /obj/item/stack/sheet/pizza(loc)
+		to_chat(user, "<span class='notice'>You smoosh [src] into a cheesy sheet.</span>")
+		qdel(src)
+		return
+	return ..()
+
 /obj/item/reagent_containers/food/snacks/pizzaslice
 	icon = 'icons/obj/food/pizzaspaghetti.dmi'
 	list_reagents = list(/datum/reagent/consumable/nutriment = 5)

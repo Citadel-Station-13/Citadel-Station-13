@@ -11,15 +11,27 @@
 	var/datum/action/innate/cult/blood_magic/magic = new
 	job_rank = ROLE_CULTIST
 	var/ignore_implant = FALSE
+	var/make_team = TRUE
 	var/give_equipment = FALSE
 	var/datum/team/cult/cult_team
+	var/neutered = FALSE			//can not use round ending, gibbing, converting, or similar things with unmatched round impact
+	var/ignore_eligibility_checks = FALSE
+	var/ignore_holy_water = FALSE
 
+/datum/antagonist/cult/neutered
+	neutered = TRUE
+
+/datum/antagonist/cult/neutered/traitor
+	ignore_eligibility_checks = TRUE
+	ignore_holy_water = TRUE
+	show_in_roundend = FALSE
+	make_team = FALSE
 
 /datum/antagonist/cult/get_team()
 	return cult_team
 
 /datum/antagonist/cult/create_team(datum/team/cult/new_team)
-	if(!new_team)
+	if(!new_team && make_team)
 		//todo remove this and allow admin buttons to create more than one cult
 		for(var/datum/antagonist/cult/H in GLOB.antagonists)
 			if(!H.owner)
@@ -30,12 +42,12 @@
 		cult_team = new /datum/team/cult
 		cult_team.setup_objectives()
 		return
-	if(!istype(new_team))
+	if(make_team && !istype(new_team))
 		stack_trace("Wrong team type passed to [type] initialization.")
 	cult_team = new_team
 
 /datum/antagonist/cult/proc/add_objectives()
-	objectives |= cult_team.objectives
+	objectives |= cult_team?.objectives
 
 /datum/antagonist/cult/Destroy()
 	QDEL_NULL(communion)
@@ -44,7 +56,7 @@
 
 /datum/antagonist/cult/can_be_owned(datum/mind/new_owner)
 	. = ..()
-	if(. && !ignore_implant)
+	if(. && !ignore_implant && !ignore_eligibility_checks)
 		. = is_convertable_to_cult(new_owner.current,cult_team)
 
 /datum/antagonist/cult/greet()
@@ -62,7 +74,7 @@
 	SSticker.mode.update_cult_icons_added(owner)
 	current.log_message("has been converted to the cult of Nar'Sie!", LOG_ATTACK, color="#960000")
 
-	if(cult_team.blood_target && cult_team.blood_target_image && current.client)
+	if(cult_team?.blood_target && cult_team.blood_target_image && current.client)
 		current.client.images += cult_team.blood_target_image
 
 
@@ -104,14 +116,14 @@
 	if(mob_override)
 		current = mob_override
 	current.faction |= "cult"
-	current.grant_language(/datum/language/narsie)
-	if(!cult_team.cult_master)
+	current.grant_language(/datum/language/narsie, TRUE, TRUE, LANGUAGE_CULTIST)
+	if(!cult_team?.cult_master)
 		vote.Grant(current)
 	communion.Grant(current)
 	if(ishuman(current))
 		magic.Grant(current)
 	current.throw_alert("bloodsense", /obj/screen/alert/bloodsense)
-	if(cult_team.cult_risen)
+	if(cult_team?.cult_risen)
 		cult_team.rise(current)
 		if(cult_team.cult_ascendent)
 			cult_team.ascend(current)
@@ -122,7 +134,7 @@
 	if(mob_override)
 		current = mob_override
 	current.faction -= "cult"
-	current.remove_language(/datum/language/narsie)
+	current.remove_language(/datum/language/narsie, TRUE, TRUE, LANGUAGE_CULTIST)
 	vote.Remove(current)
 	communion.Remove(current)
 	magic.Remove(current)
@@ -144,7 +156,7 @@
 		owner.current.visible_message("<span class='deconversion_message'>[owner.current] looks like [owner.current.p_theyve()] just reverted to [owner.current.p_their()] old faith!</span>", null, null, null, owner.current)
 		to_chat(owner.current, "<span class='userdanger'>An unfamiliar white light flashes through your mind, cleansing the taint of the Geometer and all your memories as her servant.</span>")
 		owner.current.log_message("has renounced the cult of Nar'Sie!", LOG_ATTACK, color="#960000")
-	if(cult_team.blood_target && cult_team.blood_target_image && owner.current.client)
+	if(cult_team?.blood_target && cult_team.blood_target_image && owner.current.client)
 		owner.current.client.images -= cult_team.blood_target_image
 	. = ..()
 
@@ -206,7 +218,7 @@
 	throwing.Grant(current)
 	current.update_action_buttons_icon()
 	current.apply_status_effect(/datum/status_effect/cult_master)
-	if(cult_team.cult_risen)
+	if(cult_team?.cult_risen)
 		cult_team.rise(current)
 		if(cult_team.cult_ascendent)
 			cult_team.ascend(current)
@@ -429,7 +441,7 @@
 			if(objective.completable)
 				var/completion = objective.check_completion()
 				if(completion >= 1)
-					parts += "<B>Objective #[count]</B>: [objective.explanation_text] <span class='greentext'><B>Success!</span>"
+					parts += "<B>Objective #[count]</B>: [objective.explanation_text] <span class='greentext'><B>Success!</B></span>"
 				else if(completion <= 0)
 					parts += "<B>Objective #[count]</B>: [objective.explanation_text] <span class='redtext'>Fail.</span>"
 				else

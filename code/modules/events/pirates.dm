@@ -29,7 +29,9 @@
 	if(fake)
 		return
 	threat_message = new
-	payoff = round(SSshuttle.points * 0.80)
+	var/datum/bank_account/D = SSeconomy.get_dep_account(ACCOUNT_CAR)
+	if(D)
+		payoff = round(D.account_balance * 0.80)
 	threat_message.title = "Business proposition"
 	threat_message.content = "This is [ship_name]. Pay up [payoff] credits or you'll walk the plank."
 	threat_message.possible_answers = list("We'll pay.","No way.")
@@ -38,13 +40,14 @@
 
 /datum/round_event/pirates/proc/answered()
 	if(threat_message && threat_message.answered == 1)
-		if(SSshuttle.points >= payoff)
-			SSshuttle.points -= payoff
-			priority_announce("Thanks for the credits, landlubbers.",sender_override = ship_name)
-			paid_off = TRUE
-			return
-		else
-			priority_announce("Trying to cheat us? You'll regret this!",sender_override = ship_name)
+		var/datum/bank_account/D = SSeconomy.get_dep_account(ACCOUNT_CAR)
+		if(D)
+			if(D.adjust_money(-payoff))
+				priority_announce("Thanks for the credits, landlubbers.",sender_override = ship_name)
+				paid_off = TRUE
+				return
+			else
+				priority_announce("Trying to cheat us? You'll regret this!",sender_override = ship_name)
 	if(!shuttle_spawned)
 		spawn_shuttle()
 
@@ -57,6 +60,9 @@
 
 	var/list/candidates = pollGhostCandidates("Do you wish to be considered for pirate crew?", ROLE_TRAITOR)
 	shuffle_inplace(candidates)
+
+	if(!SSmapping.empty_space)
+		SSmapping.empty_space = SSmapping.add_new_zlevel("Empty Area For Pirates", list(ZTRAIT_LINKAGE = SELFLOOPING))
 
 	var/datum/map_template/shuttle/pirate/default/ship = new
 	var/x = rand(TRANSITIONEDGE,world.maxx - TRANSITIONEDGE - ship.width)
@@ -74,8 +80,9 @@
 				var/mob/M = candidates[1]
 				spawner.create(M.ckey)
 				candidates -= M
+				announce_to_ghosts(M)
 			else
-				notify_ghosts("Space pirates are waking up!", source = spawner, action=NOTIFY_ATTACK, flashwindow = FALSE, ignore_dnr_observers = TRUE)
+				announce_to_ghosts(spawner)
 
 	priority_announce("A report has been downloaded and printed out at all communications consoles.", "Incoming Classified Message", "commandreport") //CITADEL EDIT also metabreak here too
 
@@ -101,9 +108,10 @@
 /obj/machinery/shuttle_scrambler/process()
 	if(active)
 		if(is_station_level(z))
-			var/siphoned = min(SSshuttle.points,siphon_per_tick)
-			SSshuttle.points -= siphoned
-			credits_stored += siphoned
+			var/datum/bank_account/D = SSeconomy.get_dep_account(ACCOUNT_CAR)
+			if(D)
+				var/siphoned = min(D.account_balance,siphon_per_tick)
+				D.adjust_money(-siphoned)
 			interrupt_research()
 		else
 			return
@@ -139,12 +147,7 @@
 		new /obj/effect/temp_visual/emp(get_turf(S))
 
 /obj/machinery/shuttle_scrambler/proc/dump_loot(mob/user)
-	if(credits_stored < 200)
-		to_chat(user,"<span class='notice'>Not enough credits to retrieve.</span>")
-		return
-	while(credits_stored >= 200)
-		new /obj/item/stack/spacecash/c200(drop_location())
-		credits_stored -= 200
+	new /obj/item/holochip(drop_location(), credits_stored)
 	to_chat(user,"<span class='notice'>You retrieve the siphoned credits!</span>")
 	credits_stored = 0
 
@@ -157,11 +160,12 @@
 	active = FALSE
 	STOP_PROCESSING(SSobj,src)
 
-/obj/machinery/shuttle_scrambler/update_icon_state()
+/obj/machinery/shuttle_scrambler/update_overlays()
+	. = ..()
 	if(active)
-		icon_state = "dominator-blue"
-	else
-		icon_state = "dominator"
+		var/mutable_appearance/M = mutable_appearance(icon, "dominator-overlay")
+		M.color = "#00FFFF"
+		. += M
 
 /obj/machinery/shuttle_scrambler/Destroy()
 	toggle_off()
@@ -221,7 +225,8 @@
 	suit_type = /obj/item/clothing/suit/space
 	helmet_type = /obj/item/clothing/head/helmet/space
 	mask_type = /obj/item/clothing/mask/breath
-	storage_type = /obj/item/tank/jetpack/void
+	storage_type = /obj/item/tank/internals/oxygen
+
 
 /obj/machinery/loot_locator
 	name = "Booty Locator"
@@ -276,8 +281,9 @@
 
 /obj/machinery/computer/piratepad_control
 	name = "cargo hold control terminal"
-	resistance_flags = INDESTRUCTIBLE
-	var/status_report = "Idle"
+	ui_x = 600
+	ui_y = 230
+	var/status_report = "Ready for delivery."
 	var/obj/machinery/piratepad/pad
 	var/warmup_time = 100
 	var/sending = FALSE
@@ -294,7 +300,6 @@
 	if (istype(I) && istype(I.buffer,/obj/machinery/piratepad))
 		to_chat(user, "<span class='notice'>You link [src] with [I.buffer] in [I] buffer.</span>")
 		pad = I.buffer
-		updateDialog()
 		return TRUE
 
 /obj/machinery/computer/piratepad_control/LateInitialize()
@@ -307,29 +312,43 @@
 	else
 		pad = locate() in range(4,src)
 
-/obj/machinery/computer/piratepad_control/ui_interact(mob/user)
-	. = ..()
-	var/list/t = list()
-	t += "<div class='statusDisplay'>Cargo Hold Control<br>"
-	t += "Current cargo value : [points]"
-	t += "</div>"
-	if(!pad)
-		t += "<div class='statusDisplay'>No pad located.</div><BR>"
-	else
-		t += "<br>[status_report]<br>"
-		if(!sending)
-			t += "<a href='?src=[REF(src)];recalc=1;'>Recalculate Value</a><a href='?src=[REF(src)];send=1'>Send</a>"
-		else
-			t += "<a href='?src=[REF(src)];stop=1'>Stop sending</a>"
+/obj/machinery/computer/piratepad_control/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
+									datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
+	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+	if(!ui)
+		ui = new(user, src, ui_key, "CargoHoldTerminal", name, ui_x, ui_y, master_ui, state)
+		ui.open()
 
-	var/datum/browser/popup = new(user, "piratepad", name, 300, 500)
-	popup.set_content(t.Join())
-	popup.open()
+/obj/machinery/computer/piratepad_control/ui_data(mob/user)
+	var/list/data = list()
+	data["points"] = points
+	data["pad"] = pad ? TRUE : FALSE
+	data["sending"] = sending
+	data["status_report"] = status_report
+	return data
+
+/obj/machinery/computer/piratepad_control/ui_act(action, params)
+	if(..())
+		return
+	if(!pad)
+		return
+
+	switch(action)
+		if("recalc")
+			recalc()
+			. = TRUE
+		if("send")
+			start_sending()
+			. = TRUE
+		if("stop")
+			stop_sending()
+			. = TRUE
 
 /obj/machinery/computer/piratepad_control/proc/recalc()
 	if(sending)
 		return
-	status_report = "Predicted value:<br>"
+	status_report = "Predicted value: "
+	var/value = 0
 	var/datum/export_report/ex = new
 	for(var/atom/movable/AM in get_turf(pad))
 		if(AM == pad)
@@ -337,7 +356,12 @@
 		export_item_and_contents(AM, EXPORT_PIRATE | EXPORT_CARGO | EXPORT_CONTRABAND | EXPORT_EMAG, apply_elastic = FALSE, dry_run = TRUE, external_report = ex)
 
 	for(var/datum/export/E in ex.total_amount)
-		status_report += E.total_printout(ex,notes = FALSE) + "<br>"
+		status_report += E.total_printout(ex,notes = FALSE)
+		status_report += " "
+		value += ex.total_value[E]
+
+	if(!value)
+		status_report += "0"
 
 /obj/machinery/computer/piratepad_control/proc/send()
 	if(!sending)
@@ -350,14 +374,15 @@
 			continue
 		export_item_and_contents(AM, EXPORT_PIRATE | EXPORT_CARGO | EXPORT_CONTRABAND | EXPORT_EMAG, apply_elastic = FALSE, delete_unsold = FALSE, external_report = ex)
 
-	status_report = "Sold:<br>"
+	status_report = "Sold: "
 	var/value = 0
 	for(var/datum/export/E in ex.total_amount)
 		var/export_text = E.total_printout(ex,notes = FALSE) //Don't want nanotrasen messages, makes no sense here.
 		if(!export_text)
 			continue
 
-		status_report += export_text + "<br>"
+		status_report += export_text
+		status_report += " "
 		value += ex.total_value[E]
 
 	if(!total_report)
@@ -370,11 +395,12 @@
 
 	points += value
 
+	if(!value)
+		status_report += "Nothing"
 	pad.visible_message("<span class='notice'>[pad] activates!</span>")
 	flick(pad.sending_state,pad)
 	pad.icon_state = pad.idle_state
 	sending = FALSE
-	updateDialog()
 
 /obj/machinery/computer/piratepad_control/proc/start_sending()
 	if(sending)
@@ -392,20 +418,6 @@
 	status_report = "Idle"
 	pad.icon_state = pad.idle_state
 	deltimer(sending_timer)
-
-/obj/machinery/computer/piratepad_control/Topic(href, href_list)
-	if(..())
-		return
-	if(pad)
-		if(href_list["recalc"])
-			recalc()
-		if(href_list["send"])
-			start_sending()
-		if(href_list["stop"])
-			stop_sending()
-		updateDialog()
-	else
-		updateDialog()
 
 /datum/export/pirate
 	export_category = EXPORT_PIRATE
@@ -430,6 +442,8 @@
 /datum/export/pirate/ransom/get_cost(atom/movable/AM)
 	var/mob/living/carbon/human/H = AM
 	if(H.stat != CONSCIOUS || !H.mind || !H.mind.assigned_role) //mint condition only
+		return 0
+	else if("pirate" in H.faction) //can't ransom your fellow pirates to CentCom!
 		return 0
 	else
 		if(H.mind.assigned_role in GLOB.command_positions)
@@ -456,3 +470,12 @@
 /datum/export/pirate/cash/get_amount(obj/O)
 	var/obj/item/stack/spacecash/C = O
 	return ..() * C.amount * C.value
+
+/datum/export/pirate/holochip
+	cost = 1
+	unit_name = "holochip"
+	export_types = list(/obj/item/holochip)
+
+/datum/export/pirate/holochip/get_cost(atom/movable/AM)
+	var/obj/item/holochip/H = AM
+	return H.credits

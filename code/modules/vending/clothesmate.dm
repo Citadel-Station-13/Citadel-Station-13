@@ -14,6 +14,10 @@
 					/obj/item/clothing/head/beret/blue = 3,
 					/obj/item/clothing/glasses/monocle = 3,
 					/obj/item/clothing/suit/jacket = 4,
+					/obj/item/clothing/suit/jacket/flannel = 4,
+					/obj/item/clothing/suit/jacket/flannel/red = 4,
+					/obj/item/clothing/suit/jacket/flannel/aqua = 4,
+					/obj/item/clothing/suit/jacket/flannel/brown = 4,
 					/obj/item/clothing/suit/jacket/puffer/vest = 4,
 					/obj/item/clothing/suit/jacket/puffer = 4,
 					/obj/item/clothing/suit/hooded/cloak/david = 4,
@@ -150,7 +154,8 @@
 					/obj/item/clothing/under/costume/qipao/red = 3,
 					/obj/item/clothing/under/costume/cheongsam = 3,
 					/obj/item/clothing/under/costume/cheongsam/white = 3,
-					/obj/item/clothing/under/costume/cheongsam/red = 3)
+					/obj/item/clothing/under/costume/cheongsam/red = 3,
+					/obj/item/storage/backpack/snail = 3)
 	contraband = list(/obj/item/clothing/under/syndicate/tacticool = 3,
 					/obj/item/clothing/under/syndicate/tacticool/skirt = 3,
 					/obj/item/clothing/mask/balaclava = 3,
@@ -173,6 +178,12 @@
 					/obj/item/clothing/suit/jacket/letterman_nanotrasen = 5,
 					/obj/item/clothing/suit/hooded/wintercoat/polychromic = 5)
 	refill_canister = /obj/item/vending_refill/clothing
+	default_price = PRICE_CHEAP
+	extra_price = PRICE_BELOW_NORMAL
+	payment_department = NO_FREEBIES
+
+/obj/machinery/vending/clothing/canLoadItem(obj/item/I,mob/user)
+	return (I.type in products)
 
 /obj/item/vending_refill/clothing
 	machine_name = "ClothesMate"

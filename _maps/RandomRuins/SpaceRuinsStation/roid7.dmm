@@ -168,7 +168,7 @@
 /turf/template_noop,
 /area/template_noop)
 "H" = (
-/obj/machinery/vending/boozeomat/all_access,
+/obj/machinery/vending/boozeomat,
 /turf/open/floor/plasteel/airless/cafeteria,
 /area/ruin/space)
 "I" = (

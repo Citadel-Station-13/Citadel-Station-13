@@ -8,6 +8,7 @@
 	var/blockTracking = 0 //For AI tracking
 	var/can_toggle = null
 	dynamic_hair_suffix = "+generic"
+	var/datum/beepsky_fashion/beepsky_fashion //the associated datum for applying this to a secbot
 
 /obj/item/clothing/head/Initialize()
 	. = ..()
@@ -48,15 +49,15 @@
 
 
 
-/obj/item/clothing/head/worn_overlays(isinhands = FALSE, icon_file, style_flags = NONE)
-	. = list()
+/obj/item/clothing/head/worn_overlays(isinhands = FALSE, icon_file, used_state, style_flags = NONE)
+	. = ..()
 	if(!isinhands)
 		if(damaged_clothes)
 			. += mutable_appearance('icons/effects/item_damage.dmi', "damagedhelmet")
 		if(blood_DNA)
 			. += mutable_appearance('icons/effects/blood.dmi', "helmetblood", color = blood_DNA_to_color())
 
-/obj/item/clothing/head/update_clothes_damaged_state(damaging = TRUE)
+/obj/item/clothing/head/update_clothes_damaged_state()
 	..()
 	if(ismob(loc))
 		var/mob/M = loc

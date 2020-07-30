@@ -1,5 +1,5 @@
 #define STORAGE_CAPACITY 30
-#define LIQUID_CAPACIY 200
+#define LIQUID_CAPACITY 200
 #define MIXER_CAPACITY 100
 
 /obj/machinery/food_cart
@@ -19,7 +19,7 @@
 
 /obj/machinery/food_cart/Initialize()
 	. = ..()
-	create_reagents(LIQUID_CAPACIY, OPENCONTAINER | NO_REACT)
+	create_reagents(LIQUID_CAPACITY, OPENCONTAINER | NO_REACT)
 	mixer = new /obj/item/reagent_containers(src, MIXER_CAPACITY)
 	mixer.name = "Mixer"
 
@@ -60,6 +60,9 @@
 	return food_stored >= STORAGE_CAPACITY
 
 /obj/machinery/food_cart/attackby(obj/item/O, mob/user, params)
+	if(O.tool_behaviour == TOOL_WRENCH)
+		default_unfasten_wrench(user, O, 0)
+		return TRUE
 	if(istype(O, /obj/item/reagent_containers/food/drinks/drinkingglass))
 		var/obj/item/reagent_containers/food/drinks/drinkingglass/DG = O
 		if(!DG.reagents.total_volume) //glass is empty
@@ -106,7 +109,7 @@
 		return
 
 	if(href_list["disposeI"])
-		reagents.del_reagent(href_list["disposeI"])
+		reagents.del_reagent(text2path(href_list["disposeI"]))
 
 	if(href_list["dispense"])
 		if(stored_food[href_list["dispense"]]-- <= 0)
@@ -116,9 +119,13 @@
 				if(sanitize(O.name) == href_list["dispense"])
 					O.forceMove(drop_location())
 					break
+				log_combat(usr, src, "dispensed [O] from", null, "with [stored_food[href_list["dispense"]]] remaining")
 
 	if(href_list["portion"])
-		portion = CLAMP(input("How much drink do you want to dispense per glass?") as num, 0, 50)
+		portion = clamp(input("How much drink do you want to dispense per glass?") as num|null, 0, 50)
+
+		if (isnull(portion))
+			return
 
 	if(href_list["pour"] || href_list["m_pour"])
 		if(glasses-- <= 0)
@@ -127,16 +134,16 @@
 		else
 			var/obj/item/reagent_containers/food/drinks/drinkingglass/DG = new(loc)
 			if(href_list["pour"])
-				reagents.trans_id_to(DG, href_list["pour"], portion)
+				reagents.trans_id_to(DG, text2path(href_list["pour"]), portion)
 			if(href_list["m_pour"])
-				mixer.reagents.trans_id_to(DG, href_list["m_pour"], portion)
+				mixer.reagents.trans_id_to(DG, text2path(href_list["m_pour"]), portion)
 
 	if(href_list["mix"])
-		if(reagents.trans_id_to(mixer, href_list["mix"], portion) == 0)
+		if(reagents.trans_id_to(mixer, text2path(href_list["mix"]), portion) == 0)
 			to_chat(usr, "<span class='warning'>[mixer] is full!</span>")
 
 	if(href_list["transfer"])
-		if(mixer.reagents.trans_id_to(src, href_list["transfer"], portion) == 0)
+		if(mixer.reagents.trans_id_to(src, text2path(href_list["transfer"]), portion) == 0)
 			to_chat(usr, "<span class='warning'>[src] is full!</span>")
 
 	updateDialog()
@@ -152,5 +159,5 @@
 	qdel(src)
 
 #undef STORAGE_CAPACITY
-#undef LIQUID_CAPACIY
+#undef LIQUID_CAPACITY
 #undef MIXER_CAPACITY

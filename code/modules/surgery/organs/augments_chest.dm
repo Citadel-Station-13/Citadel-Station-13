@@ -16,13 +16,14 @@
 	slot = ORGAN_SLOT_STOMACH_AID
 
 /obj/item/organ/cyberimp/chest/nutriment/on_life()
-	if(synthesizing)
+	. = ..()
+	if(!. || synthesizing)
 		return
 
 	if(owner.nutrition <= hunger_threshold)
 		synthesizing = TRUE
 		to_chat(owner, "<span class='notice'>You feel less hungry...</span>")
-		owner.nutrition += 50
+		owner.adjust_nutrition(50)
 		addtimer(CALLBACK(src, .proc/synth_cool), 50)
 
 /obj/item/organ/cyberimp/chest/nutriment/proc/synth_cool()
@@ -59,23 +60,25 @@
 	var/convalescence_time = 0
 
 /obj/item/organ/cyberimp/chest/reviver/on_life()
+	. = ..()
 	if(reviving)
-		var/do_heal = world.time < convalescence_time
+		var/do_heal = . && world.time < convalescence_time
 		if(revive_cost >= MAX_HEAL_COOLDOWN)
 			do_heal = FALSE
-		else if(owner.stat && owner.stat != DEAD)
+		else if(owner?.stat && owner.stat != DEAD)
 			do_heal = TRUE
 		else if(!do_heal)
 			convalescence_time = world.time + DEF_CONVALESCENCE_TIME
-		if(do_heal)
+		if(. && (do_heal || world.time < convalescence_time))
 			addtimer(CALLBACK(src, .proc/heal), 3 SECONDS)
 		else
 			cooldown = revive_cost + world.time
 			reviving = FALSE
-			to_chat(owner, "<span class='notice'>Your reviver implant shuts down and starts recharging. It will be ready again in [DisplayTimeText(revive_cost)].</span>")
+			if(owner)
+				to_chat(owner, "<span class='notice'>Your reviver implant shuts down and starts recharging. It will be ready again in [DisplayTimeText(revive_cost)].</span>")
 		return
 
-	if(cooldown > world.time || owner.stat == CONSCIOUS || owner.stat == DEAD || owner.suiciding)
+	if(!. || cooldown > world.time || owner.stat == CONSCIOUS || owner.stat == DEAD || owner.suiciding)
 		return
 
 	revive_cost = 0
@@ -165,14 +168,14 @@
 		if(allow_thrust(0.01))
 			ion_trail.start()
 			RegisterSignal(owner, COMSIG_MOVABLE_MOVED, .proc/move_react)
-			owner.add_movespeed_modifier(MOVESPEED_ID_CYBER_THRUSTER, priority=100, multiplicative_slowdown=-2, movetypes=FLOATING, conflict=MOVE_CONFLICT_JETPACK)
+			owner.add_movespeed_modifier(/datum/movespeed_modifier/jetpack/cybernetic)
 			if(!silent)
 				to_chat(owner, "<span class='notice'>You turn your thrusters set on.</span>")
 	else
 		ion_trail.stop()
 		if(!QDELETED(owner))
 			UnregisterSignal(owner, COMSIG_MOVABLE_MOVED)
-			owner.remove_movespeed_modifier(MOVESPEED_ID_CYBER_THRUSTER)
+			owner.remove_movespeed_modifier(/datum/movespeed_modifier/jetpack/cybernetic)
 			if(!silent)
 				to_chat(owner, "<span class='notice'>You turn your thrusters set off.</span>")
 		on = FALSE

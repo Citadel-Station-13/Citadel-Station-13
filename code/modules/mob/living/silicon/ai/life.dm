@@ -3,48 +3,48 @@
 #define POWER_RESTORATION_SEARCH_APC 2
 #define POWER_RESTORATION_APC_FOUND 3
 
-/mob/living/silicon/ai/Life()
-	if (stat == DEAD)
+/mob/living/silicon/ai/BiologicalLife(seconds, times_fired)
+	if(!(. = ..()))
 		return
-	else //I'm not removing that shitton of tabs, unneeded as they are. -- Urist
+	//I'm not removing that shitton of tabs, unneeded as they are. -- Urist
 		//Being dead doesn't mean your temperature never changes
 
-		update_gravity(mob_has_gravity())
+	update_gravity(mob_has_gravity())
 
-		handle_status_effects()
+	handle_status_effects()
 
-		if(malfhack && malfhack.aidisabled)
-			deltimer(malfhacking)
-			// This proc handles cleanup of screen notifications and
-			// messenging the client
-			malfhacked(malfhack)
+	if(malfhack && malfhack.aidisabled)
+		deltimer(malfhacking)
+		// This proc handles cleanup of screen notifications and
+		// messenging the client
+		malfhacked(malfhack)
 
-		if(isturf(loc) && (QDELETED(eyeobj) || !eyeobj.loc))
-			view_core()
+	if(isturf(loc) && (QDELETED(eyeobj) || !eyeobj.loc))
+		view_core()
 
-		if(machine)
-			machine.check_eye(src)
+	if(machine)
+		machine.check_eye(src)
 
-		// Handle power damage (oxy)
-		if(aiRestorePowerRoutine)
-			// Lost power
-			adjustOxyLoss(1)
-		else
-			// Gain Power
-			if(getOxyLoss())
-				adjustOxyLoss(-1)
+	// Handle power damage (oxy)
+	if(aiRestorePowerRoutine)
+		// Lost power
+		adjustOxyLoss(1)
+	else
+		// Gain Power
+		if(getOxyLoss())
+			adjustOxyLoss(-1)
 
-		if(!lacks_power())
-			var/area/home = get_area(src)
-			if(home.powered(EQUIP))
-				home.use_power(1000, EQUIP)
+	if(!lacks_power())
+		var/area/home = get_area(src)
+		if(home.powered(EQUIP))
+			home.use_power(1000, EQUIP)
 
-			if(aiRestorePowerRoutine >= POWER_RESTORATION_SEARCH_APC)
-				ai_restore_power()
-				return
+		if(aiRestorePowerRoutine >= POWER_RESTORATION_SEARCH_APC)
+			ai_restore_power()
+			return
 
-		else if(!aiRestorePowerRoutine)
-			ai_lose_power()
+	else if(!aiRestorePowerRoutine)
+		ai_lose_power()
 
 /mob/living/silicon/ai/proc/lacks_power()
 	var/turf/T = get_turf(src)

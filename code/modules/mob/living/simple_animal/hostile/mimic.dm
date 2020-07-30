@@ -5,19 +5,24 @@
 	icon_state = "crate"
 	icon_living = "crate"
 
-	response_help = "touches"
-	response_disarm = "pushes"
-	response_harm = "hits"
+	response_help_continuous = "touches"
+	response_help_simple = "touch"
+	response_disarm_continuous = "pushes"
+	response_disarm_simple = "push"
+	response_harm_continuous = "hits"
+	response_harm_simple = "hit"
 	speed = 0
 	maxHealth = 250
 	health = 250
+	blood_volume = 0
 	gender = NEUTER
 	mob_biotypes = NONE
 
 	harm_intent_damage = 5
 	melee_damage_lower = 8
 	melee_damage_upper = 12
-	attacktext = "attacks"
+	attack_verb_continuous = "attacks"
+	attack_verb_simple = "attack"
 	attack_sound = 'sound/weapons/punch1.ogg'
 	emote_taunt = list("growls")
 	speak_emote = list("creaks")
@@ -33,7 +38,8 @@
 
 // Aggro when you try to open them. Will also pickup loot when spawns and drop it when dies.
 /mob/living/simple_animal/hostile/mimic/crate
-	attacktext = "bites"
+	attack_verb_continuous = "bites"
+	attack_verb_simple = "bite"
 	speak_emote = list("clatters")
 	stop_automated_movement = 1
 	wander = 0
@@ -112,8 +118,9 @@ GLOBAL_LIST_INIT(protected_objects, list(/obj/structure/table, /obj/structure/ca
 		overlay_googly_eyes = FALSE
 	CopyObject(copy, creator, destroy_original)
 
-/mob/living/simple_animal/hostile/mimic/copy/Life()
-	..()
+/mob/living/simple_animal/hostile/mimic/copy/BiologicalLife(seconds, times_fired)
+	if(!(. = ..()))
+		return
 	if(idledamage && !target && !ckey) //Objects eventually revert to normal if no one is around to terrorize
 		adjustBruteLoss(1)
 	for(var/mob/living/M in contents) //a fix for animated statues from the flesh to stone spell

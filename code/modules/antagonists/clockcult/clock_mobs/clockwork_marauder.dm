@@ -17,7 +17,8 @@
 	obj_damage = 40
 	melee_damage_lower = 12
 	melee_damage_upper = 12
-	attacktext = "slashes"
+	attack_verb_continuous = "slashes"
+	attack_verb_simple = "slash"
 	attack_sound = 'sound/weapons/bladeslice.ogg'
 	weather_immunities = list("lava")
 	movement_type = FLYING
@@ -39,8 +40,9 @@
 	if(!shield_health)
 		return "<span class='warning'>Its shield has been destroyed!</span>"
 
-/mob/living/simple_animal/hostile/clockwork/marauder/Life()
-	..()
+/mob/living/simple_animal/hostile/clockwork/marauder/BiologicalLife(seconds, times_fired)
+	if(!(. = ..()))
+		return
 	var/turf/T = get_turf(src)
 	var/turf/open/space/S = isspaceturf(T)? T : null
 	var/less_space_damage
@@ -68,14 +70,16 @@
 		maxHealth = 300
 		melee_damage_upper = 25
 		melee_damage_lower = 25
-		attacktext = "devastates"
+		attack_verb_continuous = "devastates"
+		attack_verb_simple = "devastate"
 		speed = -1
 		obj_damage = 100
 		max_shield_health = INFINITY
 	else if(GLOB.ratvar_approaches) //Hefty health bonus and slight attack damage increase
 		melee_damage_upper = 15
 		melee_damage_lower = 15
-		attacktext = "carves"
+		attack_verb_continuous = "carves"
+		attack_verb_simple = "carve"
 		obj_damage = 50
 		max_shield_health = 4
 

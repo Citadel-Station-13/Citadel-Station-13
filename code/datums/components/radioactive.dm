@@ -25,7 +25,6 @@
 			RegisterSignal(parent, COMSIG_ITEM_ATTACK_OBJ, .proc/rad_attack)
 	else
 		CRASH("Something that wasn't an atom was given /datum/component/radioactive")
-		return
 
 	if(strength > RAD_MINIMUM_CONTAMINATION)
 		SSradiation.warn(src)
@@ -70,8 +69,9 @@
 			out += "[out ? " and it " : "[master] "]seems to be glowing a bit."
 		if(RAD_AMOUNT_HIGH to INFINITY) //At this level the object can contaminate other objects
 			out += "[out ? " and it " : "[master] "]hurts to look at."
-		else
-			out += "."
+	if(!LAZYLEN(out))
+		return
+	out += "."
 	examine_list += out.Join()
 
 /datum/component/radioactive/proc/rad_attack(datum/source, atom/movable/target, mob/living/user)

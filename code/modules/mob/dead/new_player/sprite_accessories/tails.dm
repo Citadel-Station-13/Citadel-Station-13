@@ -1,8 +1,12 @@
 /datum/sprite_accessory/tails
 	icon = 'icons/mob/mutant_bodyparts.dmi'
+	mutant_part_string = "tail"
+	relevant_layers = list(BODY_BEHIND_LAYER, BODY_FRONT_LAYER)
 
 /datum/sprite_accessory/tails_animated
 	icon = 'icons/mob/mutant_bodyparts.dmi'
+	mutant_part_string = "tailwag"
+	relevant_layers = list(BODY_BEHIND_LAYER, BODY_FRONT_LAYER)
 
 /******************************************
 ************* Lizard Tails ****************
@@ -43,10 +47,12 @@
 /datum/sprite_accessory/tails/lizard/none
 	name = "None"
 	icon_state = "None"
+	relevant_layers = null
 
 /datum/sprite_accessory/tails_animated/lizard/none
 	name = "None"
 	icon_state = "None"
+	relevant_layers = null
 
 /datum/sprite_accessory/tails/lizard/axolotl
 	name = "Axolotl"
@@ -85,10 +91,12 @@
 /datum/sprite_accessory/tails/human/none
 	name = "None"
 	icon_state = "none"
+	relevant_layers = null
 
 /datum/sprite_accessory/tails_animated/human/none
 	name = "None"
 	icon_state = "none"
+	relevant_layers = null
 
 /datum/sprite_accessory/tails/human/ailurus
 	name = "Red Panda"
@@ -442,6 +450,18 @@
 	color_src = MATRIXED
 	icon = 'modular_citadel/icons/mob/mam_tails.dmi'
 
+/datum/sprite_accessory/tails/human/tamamo_kitsune
+	name = "Tamamo Kitsune Tails" //Tamamo-no-Tiro, let it be known!
+	icon_state = "9sune"
+	color_src = MATRIXED
+	icon = 'modular_citadel/icons/mob/mam_tails.dmi'
+
+/datum/sprite_accessory/tails_animated/human/tamamo_kitsune
+	name = "Tamamo Kitsune Tails"
+	icon_state = "9sune"
+	color_src = MATRIXED
+	icon = 'modular_citadel/icons/mob/mam_tails.dmi'
+
 /datum/sprite_accessory/tails/human/tentacle
 	name = "Tentacle"
 	icon_state = "tentacle"
@@ -502,20 +522,25 @@
 	color_src = MATRIXED
 	icon = 'modular_citadel/icons/mob/mam_tails.dmi'
 	recommended_species = list("mammal", "slimeperson", "podweak", "felinid", "insect")
+	mutant_part_string = "tail"
+	relevant_layers = list(BODY_BEHIND_LAYER, BODY_FRONT_LAYER)
 
 /datum/sprite_accessory/mam_tails/none
 	name = "None"
 	icon_state = "none"
 	recommended_species = null
+	relevant_layers = null
 
 /datum/sprite_accessory/mam_tails_animated
 	color_src = MATRIXED
 	icon = 'modular_citadel/icons/mob/mam_tails.dmi'
+	mutant_part_string = "tailwag"
+	relevant_layers = list(BODY_BEHIND_LAYER, BODY_FRONT_LAYER)
 
 /datum/sprite_accessory/mam_tails_animated/none
 	name = "None"
 	icon_state = "none"
-	color_src = MATRIXED
+	relevant_layers = null
 
 /datum/sprite_accessory/mam_tails/ailurus
 	name = "Red Panda"
@@ -576,7 +601,7 @@
 /datum/sprite_accessory/mam_tails_animated/catbig
 	name = "Cat, Big"
 	icon_state = "catbig"
-	
+
 /datum/sprite_accessory/mam_tails/twocat
 	name = "Cat, Double"
 	icon_state = "twocat"
@@ -802,6 +827,14 @@ datum/sprite_accessory/mam_tails/insect
 /datum/sprite_accessory/mam_tails_animated/squirrel
 	name = "Squirrel"
 	icon_state = "squirrel"
+
+/datum/sprite_accessory/mam_tails/tamamo_kitsune
+	name = "Tamamo Kitsune Tails"
+	icon_state = "9sune"
+
+/datum/sprite_accessory/mam_tails_animated/tamamo_kitsune
+	name = "Tamamo Kitsune Tails"
+	icon_state = "9sune"
 
 /datum/sprite_accessory/mam_tails/tentacle
 	name = "Tentacle"

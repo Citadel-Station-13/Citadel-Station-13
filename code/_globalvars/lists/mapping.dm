@@ -38,8 +38,7 @@ GLOBAL_LIST_EMPTY(servant_spawns) //Servants of Ratvar spawn here
 GLOBAL_LIST_EMPTY(city_of_cogs_spawns) //Anyone entering the City of Cogs spawns here
 GLOBAL_LIST_EMPTY(ruin_landmarks)
 
-	//away missions
-GLOBAL_LIST_EMPTY(awaydestinations)	//a list of landmarks that the warpgate can take you to
+//away missions
 GLOBAL_LIST_EMPTY(vr_spawnpoints)
 
 	//used by jump-to-area etc. Updated by area/updateName()
@@ -50,3 +49,8 @@ GLOBAL_LIST_EMPTY_TYPED(areas_by_type, /area)
 GLOBAL_LIST_EMPTY(all_abstract_markers)
 
 GLOBAL_LIST_EMPTY(stationroom_landmarks) //List of all spawns for stationrooms
+
+///Away missions, VR, random z levels stuff.
+GLOBAL_LIST_EMPTY(random_zlevels_generated)
+GLOBAL_LIST_INIT(potential_away_levels, generateMapList(filename = "[global.config.directory]/awaymissionconfig.txt"))
+GLOBAL_LIST_INIT(potential_vr_levels, generateMapList(filename = "[global.config.directory]/vr_config.txt"))

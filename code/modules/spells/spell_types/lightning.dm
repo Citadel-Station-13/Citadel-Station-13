@@ -15,9 +15,9 @@
 
 	action_icon_state = "lightning"
 
-/obj/effect/proc_holder/spell/targeted/tesla/Click()
-	if(!ready && cast_check())
-		StartChargeup()
+/obj/effect/proc_holder/spell/targeted/tesla/Trigger(mob/user, skip_can_cast = TRUE)
+	if(!ready && cast_check(FALSE, user, skip_can_cast))
+		StartChargeup(user)
 	return 1
 
 /obj/effect/proc_holder/spell/targeted/tesla/proc/StartChargeup(mob/user = usr)

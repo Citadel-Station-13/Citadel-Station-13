@@ -111,7 +111,7 @@
 		var/mob/living/L = M.current
 		if(ishuman(L) && L.stat != DEAD)
 			human_servants++
-	construct_limit = round(CLAMP((human_servants / 4), 1, 3))	//1 per 4 human servants, maximum of 3
+	construct_limit = round(clamp((human_servants / 4), 1, 3))	//1 per 4 human servants, maximum of 3
 
 //Summon Neovgre: Summon a very powerful combat mech that explodes when destroyed for massive damage.
 /datum/clockwork_scripture/create_object/summon_arbiter

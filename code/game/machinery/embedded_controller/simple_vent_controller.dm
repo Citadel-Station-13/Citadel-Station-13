@@ -34,7 +34,7 @@
 /obj/machinery/embedded_controller/radio/simple_vent_controller
 	icon = 'icons/obj/airlock_machines.dmi'
 	icon_state = "airlock_control_standby"
-
+	plane = ABOVE_WALL_PLANE
 	name = "vent controller"
 	density = FALSE
 

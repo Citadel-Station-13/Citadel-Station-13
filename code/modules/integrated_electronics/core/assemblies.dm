@@ -79,7 +79,9 @@
 
 	for(var/I in assembly_components)
 		var/obj/item/integrated_circuit/IC = I
-		. += IC.external_examine(user)
+		var/text = IC.external_examine(user)
+		if(text)
+			. += text
 	if(opened)
 		interact(user)
 
@@ -517,6 +519,7 @@
 
 
 /obj/item/electronic_assembly/attack_self(mob/user)
+	set waitfor = FALSE
 	if(!check_interactivity(user))
 		return
 	if(opened)
@@ -609,7 +612,7 @@
 		return
 	..()
 
-/obj/item/electronic_assembly/attack_hand(mob/user)
+/obj/item/electronic_assembly/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	if(anchored)
 		attack_self(user)
 		return
@@ -871,3 +874,8 @@
 			pixel_x = -31
 		if(WEST)
 			pixel_x = 31
+	plane = ABOVE_WALL_PLANE
+
+/obj/item/electronic_assembly/wallmount/Moved(atom/OldLoc, Dir, Forced = FALSE) //reset the plane if moved off the wall.
+	. = ..()
+	plane = GAME_PLANE

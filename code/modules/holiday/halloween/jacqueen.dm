@@ -38,8 +38,10 @@
 	health = 25
 	density = FALSE
 	speech_span = "spooky"
-	friendly = "pets"
-	response_help  = "chats with"
+	friendly_verb_continuous = "pets"
+	friendly_verb_simple = "pet"
+	response_help_continuous = "chats with"
+	response_help_simple = "chat with"
 	light_range = 3
 	light_color = "#ff9842"
 	var/last_poof
@@ -54,8 +56,9 @@
 	cached_z = z
 	poof()
 
-/mob/living/simple_animal/jacq/Life()
-	..()
+/mob/living/simple_animal/jacq/BiologicalLife(seconds, times_fired)
+	if(!(. = ..()))
+		return
 	if(!ckey)
 		if((last_poof+3 MINUTES) < world.realtime)
 			poof()
@@ -73,7 +76,7 @@
 	health = 25
 	poof()
 
-/mob/living/simple_animal/jacq/attack_hand(mob/living/carbon/human/M)
+/mob/living/simple_animal/jacq/on_attack_hand(mob/living/carbon/human/M)
 	if(!active)
 		say("Hello there [gender_check(M)]!")
 		return ..()
@@ -390,7 +393,7 @@
 	desc = "A jacqueline o' lantern! You can't seem to get rid of it."
 	icon_state = "hardhat0_pumpkin_j"
 	item_state = "hardhat0_pumpkin_j"
-	item_color = "pumpkin_j"
+	hat_type = "pumpkin_j"
 	brightness_on = 4
 
 /obj/item/clothing/head/hardhat/pumpkinhead/jaqc/Initialize()
@@ -403,14 +406,14 @@
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, GLUED_ITEM_TRAIT)
 
-/obj/item/clothing/suit/ghost_sheet/sticky/attack_hand(mob/user)
+/obj/item/clothing/suit/ghost_sheet/sticky/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	if(iscarbon(user))
 		to_chat(user, "<span class='spooky'><i>Boooooo~!</i></span>")
 		return
 	else
 		..()
 
-/obj/item/clothing/suit/ghost_sheet/sticky/attack_hand(mob/user)
+/obj/item/clothing/suit/ghost_sheet/sticky/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	if(iscarbon(user))
 		to_chat(user, "<span class='spooky'><i>Boooooo~!</i></span>")
 		return

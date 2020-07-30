@@ -79,7 +79,7 @@
 	else
 		. += "There are no paper cups left."
 
-/obj/structure/reagent_dispensers/water_cooler/attack_hand(mob/living/user)
+/obj/structure/reagent_dispensers/water_cooler/on_attack_hand(mob/living/user, act_intent = user.a_intent, unarmed_attack_flags)
 	. = ..()
 	if(.)
 		return
@@ -120,9 +120,10 @@
 /obj/structure/reagent_dispensers/fueltank/fire_act(exposed_temperature, exposed_volume)
 	boom()
 
-/obj/structure/reagent_dispensers/fueltank/tesla_act()
+/obj/structure/reagent_dispensers/fueltank/zap_act(power, zap_flags, shocked_objects)
 	..() //extend the zap
-	boom()
+	if(ZAP_OBJ_DAMAGE & zap_flags)
+		boom()
 
 /obj/structure/reagent_dispensers/fueltank/bullet_act(obj/item/projectile/P)
 	. = ..()
@@ -169,6 +170,7 @@
 	name = "pepper spray refiller"
 	desc = "Contains condensed capsaicin for use in law \"enforcement.\""
 	icon_state = "pepper"
+	plane = ABOVE_WALL_PLANE
 	anchored = TRUE
 	density = FALSE
 	reagent_id = /datum/reagent/consumable/condensedcapsaicin
@@ -182,6 +184,7 @@
 	name = "virus food dispenser"
 	desc = "A dispenser of low-potency virus mutagenic."
 	icon_state = "virus_food"
+	plane = ABOVE_WALL_PLANE
 	anchored = TRUE
 	density = FALSE
 	reagent_id = /datum/reagent/consumable/virus_food
@@ -211,7 +214,6 @@
 /obj/structure/reagent_dispensers/keg
 	name = "keg"
 	desc = "A keg."
-	icon = 'modular_citadel/icons/obj/objects.dmi'
 	icon_state = "keg"
 
 /obj/structure/reagent_dispensers/keg/mead
@@ -239,15 +241,48 @@
 	icon_state = "whitekeg"
 	reagent_id = /datum/reagent/consumable/milk
 
-/obj/structure/reagent_dispensers/keg/semen
-	name = "keg of semen"
-	desc = "Dear lord, where did this even come from?"
-	icon_state = "whitekeg"
-	reagent_id = /datum/reagent/consumable/semen
-
 /obj/structure/reagent_dispensers/keg/gargle
 	name = "keg of pan galactic gargleblaster"
 	desc = "A keg of... wow that's a long name."
 	icon_state = "bluekeg"
 	reagent_id = /datum/reagent/consumable/ethanol/gargle_blaster
 	tank_volume = 100
+
+//kegs given by the travelling trader's bartender subtype
+
+/obj/structure/reagent_dispensers/keg/quintuple_sec
+	name = "keg of quintuple sec"
+	desc = "A keg of pure justice."
+	icon_state = "redkeg"
+	reagent_id = /datum/reagent/consumable/ethanol/quintuple_sec
+	tank_volume = 250
+
+/obj/structure/reagent_dispensers/keg/narsour
+	name = "keg of narsour"
+	desc = "A keg of eldritch terrors."
+	icon_state = "redkeg"
+	reagent_id = /datum/reagent/consumable/ethanol/narsour
+	tank_volume = 250
+
+/obj/structure/reagent_dispensers/keg/red_queen
+	name = "keg of red queen"
+	desc = "A strange keg, filled with a kind of tea."
+	icon_state = "redkeg"
+	reagent_id = /datum/reagent/consumable/red_queen
+	tank_volume = 250
+
+/obj/structure/reagent_dispensers/keg/hearty_punch
+	name = "keg of hearty punch"
+	desc = "A keg that will get you right back on your feet."
+	icon_state = "redkeg"
+	reagent_id = /datum/reagent/consumable/ethanol/hearty_punch
+	tank_volume = 100 //this usually has a 15:1 ratio when being made, so we provide less of it
+
+/obj/structure/reagent_dispensers/keg/neurotoxin
+	name = "keg of neurotoxin"
+	desc = "A keg of the sickly substance known as 'neurotoxin'."
+	icon_state = "bluekeg"
+	reagent_id = /datum/reagent/consumable/ethanol/neurotoxin
+	tank_volume = 100 //2.5x less than the other kegs because it's harder to get
+
+

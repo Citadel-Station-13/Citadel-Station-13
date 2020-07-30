@@ -1,4 +1,0 @@
-author: "Ghommie"
-delete-after: True
-changes: 
-  - bugfix: "Infiltrator's boots don't stop slips and \"space wind\" through the power of runtime errors anymore, and properly silence the user's footsteps now."

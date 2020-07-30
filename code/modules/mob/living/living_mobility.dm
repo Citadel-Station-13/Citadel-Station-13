@@ -94,11 +94,19 @@
 
 	if(should_be_lying)
 		mobility_flags &= ~MOBILITY_STAND
+		setMovetype(movement_type | CRAWLING)
 		if(!lying) //force them on the ground
-			lying = pick(90, 270)
+			switch(dir)
+				if(NORTH, SOUTH)
+					lying = pick(90, 270)
+				if(EAST)
+					lying = 90
+				else //West
+					lying = 270
 			if(has_gravity() && !buckled)
 				playsound(src, "bodyfall", 20, 1)
 	else
+		setMovetype(movement_type & ~CRAWLING)
 		mobility_flags |= MOBILITY_STAND
 		lying = 0
 
@@ -161,8 +169,8 @@
 			if(!has_legs && has_arms < 2)
 				limbless_slowdown += 6 - (has_arms * 3)
 		if(limbless_slowdown)
-			add_movespeed_modifier(MOVESPEED_ID_LIVING_LIMBLESS, update=TRUE, priority=100, override=TRUE, multiplicative_slowdown=limbless_slowdown, blacklisted_movetypes = FLYING|FLOATING)
+			add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/limbless, multiplicative_slowdown = limbless_slowdown)
 		else
-			remove_movespeed_modifier(MOVESPEED_ID_LIVING_LIMBLESS, update=TRUE)
+			remove_movespeed_modifier(/datum/movespeed_modifier/limbless)
 
 	return mobility_flags

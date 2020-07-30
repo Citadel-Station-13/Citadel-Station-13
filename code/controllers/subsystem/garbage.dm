@@ -451,3 +451,18 @@ SUBSYSTEM_DEF(garbage)
 #endif
 
 #endif
+
+#ifdef TESTING
+/proc/writeDatumCount()
+	var/list/datums = list()
+	for(var/datum/D in world)
+		datums[D.type] += 1
+	for(var/datum/D)
+		datums[D.type] += 1
+	datums = sortTim(datums, /proc/cmp_numeric_dsc, associative = TRUE)
+	if(fexists("data/DATUMCOUNT.txt"))
+		fdel("data/DATUMCOUNT.txt")
+	var/outfile = file("data/DATUMCOUNT.txt")
+	for(var/path in datums)
+		outfile << "[datums[path]]\t\t\t\t\t[path]"
+#endif

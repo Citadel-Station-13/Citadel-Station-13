@@ -1,5 +1,0 @@
-author: "zeroisthebiggay"
-delete-after: True
-changes: 
-  - rscadd: "You can now choose your name and color as a holoparasite/guardian/holocarp!"
-  - bugfix: "fixes lings being able to get mechanical holoparasites"

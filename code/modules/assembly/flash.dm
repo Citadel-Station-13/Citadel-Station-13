@@ -229,6 +229,7 @@
 	var/flashcd = 20
 	var/overheat = 0
 	var/obj/item/organ/cyberimp/arm/flash/I = null
+	var/active_light_strength = 7
 
 /obj/item/assembly/flash/armimplant/burn_out()
 	if(I && I.owner)
@@ -248,6 +249,12 @@
 	update_icon(1)
 	return TRUE
 
+/obj/item/assembly/flash/armimplant/Moved(oldLoc, dir)
+	. = ..()
+	if(!ismob(loc))
+		set_light(0)
+	else
+		set_light(7)
 
 /obj/item/assembly/flash/armimplant/proc/cooldown()
 	overheat = FALSE

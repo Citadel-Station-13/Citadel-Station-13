@@ -66,7 +66,6 @@
 	toolspeed = 0.5
 	attack_verb = list("attacked", "pinched")
 
-
 /obj/item/cautery
 	name = "cautery"
 	desc = "This stops bleeding."
@@ -90,7 +89,6 @@
 	w_class = WEIGHT_CLASS_TINY
 	toolspeed = 0.5
 	attack_verb = list("burnt")
-
 
 /obj/item/surgicaldrill
 	name = "surgical drill"
@@ -148,7 +146,6 @@
 	toolspeed = 0.5
 	attack_verb = list("drilled")
 
-
 /obj/item/scalpel
 	name = "scalpel"
 	desc = "Cut, cut, and once more cut."
@@ -169,6 +166,7 @@
 	sharpness = IS_SHARP_ACCURATE
 	tool_behaviour = TOOL_SCALPEL
 	toolspeed = 1
+	bare_wound_bonus = 20
 
 /obj/item/scalpel/Initialize()
 	. = ..()
@@ -229,7 +227,6 @@
 	user.visible_message("<span class='suicide'>[user] is slitting [user.p_their()] [pick("wrists", "throat", "stomach")] with [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	return (BRUTELOSS)
 
-
 /obj/item/circular_saw
 	name = "circular saw"
 	desc = "For heavy duty cutting."
@@ -251,6 +248,8 @@
 	sharpness = IS_SHARP
 	tool_behaviour = TOOL_SAW
 	toolspeed = 1
+	wound_bonus = 10
+	bare_wound_bonus = 15
 
 /obj/item/circular_saw/Initialize()
 	. = ..()
@@ -378,3 +377,18 @@
 			advanced_surgeries |= OC.advanced_surgeries
 		return TRUE
 	return
+
+/obj/item/bonesetter
+	name = "bonesetter"
+	desc = "For setting things right."
+	icon = 'icons/obj/surgery.dmi'
+	icon_state = "bone setter"
+	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
+	custom_materials = list(/datum/material/iron=5000, /datum/material/glass=2500)
+	flags_1 = CONDUCT_1
+	item_flags = SURGICAL_TOOL
+	w_class = WEIGHT_CLASS_SMALL
+	attack_verb = list("corrected", "properly set")
+	tool_behaviour = TOOL_BONESET
+	toolspeed = 1

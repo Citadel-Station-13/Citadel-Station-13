@@ -441,6 +441,10 @@
 	owner.adjustBruteLoss(-10, FALSE)
 	owner.adjustFireLoss(-5, FALSE)
 	owner.adjustOxyLoss(-10)
+	if(!iscarbon(owner))
+		return
+	var/mob/living/carbon/C = owner
+	QDEL_LIST(C.all_scars)
 
 /obj/screen/alert/status_effect/fleshmend
 	name = "Fleshmend"
@@ -550,3 +554,30 @@
 			else if(isanimal(L))
 				var/mob/living/simple_animal/SM = L
 				SM.adjustHealth(-3.5, forced = TRUE)
+
+/obj/screen/alert/status_effect/regenerative_core
+	name = "Reinforcing Tendrils"
+	desc = "You can move faster than your broken body could normally handle!"
+	icon_state = "regenerative_core"
+	name = "Regenerative Core Tendrils"
+
+/datum/status_effect/regenerative_core
+	id = "Regenerative Core"
+	duration = 1 MINUTES
+	status_type = STATUS_EFFECT_REPLACE
+	alert_type = /obj/screen/alert/status_effect/regenerative_core
+
+/datum/status_effect/regenerative_core/on_apply()
+	. = ..()
+	ADD_TRAIT(owner, TRAIT_IGNOREDAMAGESLOWDOWN, "regenerative_core")
+	owner.adjustBruteLoss(-25)
+	if(!AmBloodsucker(owner))	//use your coffin you lazy bastard
+		owner.adjustFireLoss(-25)
+	owner.remove_CC()
+	owner.bodytemperature = BODYTEMP_NORMAL
+	return TRUE
+
+/datum/status_effect/regenerative_core/on_remove()
+	. = ..()
+	REMOVE_TRAIT(owner, TRAIT_IGNOREDAMAGESLOWDOWN, "regenerative_core")
+	owner.updatehealth()

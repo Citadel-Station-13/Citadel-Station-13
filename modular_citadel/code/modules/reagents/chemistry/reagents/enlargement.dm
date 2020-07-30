@@ -29,6 +29,7 @@
 	inverse_chem_val 		= 0.35
 	inverse_chem		= /datum/reagent/fermi/BEsmaller //At really impure vols, it just becomes 100% inverse
 	can_synth = FALSE
+	value = REAGENT_VALUE_VERY_RARE
 	var/message_spam = FALSE
 
 /datum/reagent/fermi/breast_enlarger/on_mob_metabolize(mob/living/M)
@@ -54,25 +55,25 @@
 		return..()
 
 	var/mob/living/carbon/human/H = M
-	var/obj/item/organ/genital/breasts/B = M.getorganslot(ORGAN_SLOT_BREASTS)
 	//If they've opted out, then route processing though liver.
 	if(!(H.client?.prefs.cit_toggles & BREAST_ENLARGEMENT))
 		var/obj/item/organ/liver/L = H.getorganslot(ORGAN_SLOT_LIVER)
 		if(L)
-			L.swelling += 0.05
+			L.applyOrganDamage(0.25)
 		else
 			H.adjustToxLoss(1)
 		return..()
+	var/obj/item/organ/genital/breasts/B = M.getorganslot(ORGAN_SLOT_BREASTS)
 	//otherwise proceed as normal
 	if(!B) //If they don't have breasts, give them breasts.
 
 		B = new
 		if(H.dna.species.use_skintones && H.dna.features["genitals_use_skintone"])
-			B.color = skintone2hex(H.skin_tone)
+			B.color = SKINTONE2HEX(H.skin_tone)
 		else if(M.dna.features["breasts_color"])
 			B.color = "#[M.dna.features["breasts_color"]]"
 		else
-			B.color = skintone2hex(H.skin_tone)
+			B.color = SKINTONE2HEX(H.skin_tone)
 		B.size = "flat"
 		B.cached_size = 0
 		B.prev_size = 0
@@ -95,7 +96,8 @@
 /datum/reagent/fermi/breast_enlarger/overdose_process(mob/living/carbon/M) //Turns you into a female if male and ODing, doesn't touch nonbinary and object genders.
 	if(!(M.client?.prefs.cit_toggles & FORCED_FEM))
 		var/obj/item/organ/liver/L = M.getorganslot(ORGAN_SLOT_LIVER)
-		L.swelling+= 0.05
+		if(L)
+			L.applyOrganDamage(0.25)
 		return ..()
 
 	var/obj/item/organ/genital/penis/P = M.getorganslot(ORGAN_SLOT_PENIS)
@@ -125,12 +127,14 @@
 	taste_description = "a milky ice cream like flavour."
 	metabolization_rate = 0.25
 	can_synth = FALSE
+	value = REAGENT_VALUE_RARE
 
 /datum/reagent/fermi/BEsmaller/on_mob_life(mob/living/carbon/M)
 	var/obj/item/organ/genital/breasts/B = M.getorganslot(ORGAN_SLOT_BREASTS)
 	if(!(M.client?.prefs.cit_toggles & BREAST_ENLARGEMENT) || !B)
 		var/obj/item/organ/liver/L = M.getorganslot(ORGAN_SLOT_LIVER)
-		L.swelling-= 0.05
+		if(L)
+			L.applyOrganDamage(-0.25)
 		return ..()
 	B.modify_size(-0.05)
 	return ..()
@@ -184,6 +188,7 @@
 	inverse_chem_val 		= 0.35
 	inverse_chem		= /datum/reagent/fermi/PEsmaller //At really impure vols, it just becomes 100% inverse and shrinks instead.
 	can_synth = FALSE
+	value = REAGENT_VALUE_VERY_RARE
 	var/message_spam = FALSE
 
 /datum/reagent/fermi/penis_enlarger/on_mob_metabolize(mob/living/M)
@@ -208,14 +213,14 @@
 	if(!ishuman(M))
 		return ..()
 	var/mob/living/carbon/human/H = M
-	var/obj/item/organ/genital/penis/P = H.getorganslot(ORGAN_SLOT_PENIS)
 	if(!(H.client?.prefs.cit_toggles & PENIS_ENLARGEMENT))
 		var/obj/item/organ/liver/L = H.getorganslot(ORGAN_SLOT_LIVER)
 		if(L)
-			L.swelling += 0.05
+			L.applyOrganDamage(0.25)
 		else
 			H.adjustToxLoss(1)
 		return ..()
+	var/obj/item/organ/genital/penis/P = H.getorganslot(ORGAN_SLOT_PENIS)
 	//otherwise proceed as normal
 	if(!P)//They do have a preponderance for escapism, or so I've heard.
 
@@ -241,7 +246,8 @@
 		return ..()
 	if(!(M.client?.prefs.cit_toggles & FORCED_MASC))
 		var/obj/item/organ/liver/L = M.getorganslot(ORGAN_SLOT_LIVER)
-		L.swelling+= 0.05
+		if(L)
+			L.applyOrganDamage(0.25)
 		return..()
 
 	var/obj/item/organ/genital/breasts/B = M.getorganslot(ORGAN_SLOT_BREASTS)
@@ -270,6 +276,7 @@
 	taste_description = "chinese dragon powder"
 	metabolization_rate = 0.5
 	can_synth = FALSE
+	value = REAGENT_VALUE_RARE
 
 /datum/reagent/fermi/PEsmaller/on_mob_life(mob/living/carbon/M)
 	if(!ishuman(M))
@@ -278,7 +285,8 @@
 	var/obj/item/organ/genital/penis/P = H.getorganslot(ORGAN_SLOT_PENIS)
 	if(!(H.client?.prefs.cit_toggles & PENIS_ENLARGEMENT) || !P)
 		var/obj/item/organ/liver/L = M.getorganslot(ORGAN_SLOT_LIVER)
-		L.swelling-= 0.05
+		if(L)
+			L.applyOrganDamage(-0.25)
 		return..()
 
 	P.modify_size(-0.1)

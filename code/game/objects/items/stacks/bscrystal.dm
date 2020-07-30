@@ -5,6 +5,7 @@
 	icon = 'icons/obj/telescience.dmi'
 	icon_state = "bluespace_crystal"
 	singular_name = "bluespace crystal"
+	dye_color = DYE_COSMIC
 	w_class = WEIGHT_CLASS_TINY
 	custom_materials = list(/datum/material/bluespace=MINERAL_MATERIAL_AMOUNT)
 	points = 50
@@ -73,8 +74,7 @@
 /obj/item/stack/sheet/bluespace_crystal/attack_self(mob/user)// to prevent the construction menu from ever happening
 	to_chat(user, "<span class='warning'>You cannot crush the polycrystal in-hand, try breaking one off.</span>")
 
-//ATTACK HAND IGNORING PARENT RETURN VALUE
-/obj/item/stack/sheet/bluespace_crystal/attack_hand(mob/user)
+/obj/item/stack/sheet/bluespace_crystal/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	if(user.get_inactive_held_item() == src)
 		if(zero_amount())
 			return

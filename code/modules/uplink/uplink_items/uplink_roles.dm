@@ -39,6 +39,14 @@
 	cost = 12
 	restricted_roles = list("Research Director", "Scientist", "Roboticist")
 
+/datum/uplink_item/device_tools/brainwash_disk
+	name = "Brainwashing Surgery Program"
+	desc = "A disk containing the procedure to perform a brainwashing surgery, allowing you to implant an objective onto a target. \
+	Insert into an Operating Console to enable the procedure."
+	item = /obj/item/disk/surgery/brainwashing
+	restricted_roles = list("Medical Doctor", "Roboticist")
+	cost = 5
+
 /datum/uplink_item/role_restricted/clown_bomb
 	name = "Clown Bomb"
 	desc = "The Clown bomb is a hilarious device capable of massive pranks. It has an adjustable timer, \
@@ -64,14 +72,6 @@
 	restricted_roles = list("Clown")
 */
 
-/datum/uplink_item/role_restricted/clumsyDNA
-	name = "Clumsy Clown DNA"
-	desc = "A DNA injector that has been loaded with the clown gene that makes people clumsy.. \
-	Making someone clumsy will allow them to use clown firing pins as well as Reverse Revolvers. For a laugh try using this on the HOS to see how many times they shoot themselves in the foot!"
-	cost = 1
-	item = /obj/item/dnainjector/clumsymut
-	restricted_roles = list("Clown")
-
 /datum/uplink_item/role_restricted/haunted_magic_eightball
 	name = "Haunted Magic Eightball"
 	desc = "Most magic eightballs are toys with dice inside. Although identical in appearance to the harmless toys, this occult device reaches into the spirit world to find its answers. \
@@ -92,6 +92,24 @@
 	restricted_roles = list("Chaplain")
 	surplus = 5 //Very low chance to get it in a surplus crate even without being the chaplain
 
+/datum/uplink_item/role_restricted/clockwork_slab
+	name = "Clockwork Slab"
+	desc = "A reverse engineered clockwork slab. Is this really a good idea?."
+	item = /obj/item/clockwork/slab/traitor
+	cost = 20
+	player_minimum = 20
+	refundable = TRUE
+	restricted_roles = list("Chaplain")
+
+/datum/uplink_item/role_restricted/arcane_tome
+	name = "Arcane Tome"
+	desc = "A replica of a Nar'sian tome. This is probably a bad idea.."
+	item = /obj/item/tome/traitor
+	cost = 20
+	player_minimum = 20
+	refundable = TRUE
+	restricted_roles = list("Chaplain")
+
 /datum/uplink_item/role_restricted/explosive_hot_potato
 	name = "Exploding Hot Potato"
 	desc = "A potato rigged with explosives. On activation, a special mechanism is activated that prevents it from being dropped. \
@@ -100,19 +118,11 @@
 	cost = 4
 	restricted_roles = list("Cook", "Botanist", "Clown", "Mime")
 
-/datum/uplink_item/role_restricted/strange_seeds
-	name = "Pack of strange seeds"
-	desc = "Mysterious seeds as strange as their name implies. Spooky."
-	item = /obj/item/seeds/random
-	cost = 2
-	restricted_roles = list("Botanist")
-	illegal_tech = FALSE
-
 /datum/uplink_item/role_restricted/strange_seeds_10pack
-	name = "Pack of strange seeds x10"
+	name = "Pack of strange seeds"
 	desc = "Mysterious seeds as strange as their name implies. Spooky. These come in bulk"
 	item = /obj/item/storage/box/strange_seeds_10pack
-	cost = 20
+	cost = 10
 	restricted_roles = list("Botanist")
 
 /datum/uplink_item/role_restricted/ez_clean_bundle

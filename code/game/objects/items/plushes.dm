@@ -8,6 +8,7 @@
 	resistance_flags = FLAMMABLE
 	var/list/squeak_override //Weighted list; If you want your plush to have different squeak sounds use this
 	var/stuffed = TRUE //If the plushie has stuffing in it
+	var/unstuffable = FALSE //for plushies that can't be stuffed
 	var/obj/item/grenade/grenade //You can remove the stuffing from a plushie and add a grenade to it for *nefarious uses*
 	//--love ~<3--
 	gender = NEUTER
@@ -140,7 +141,8 @@
 	if(jsonlist["icon_state"])
 		icon_state = jsonlist["icon_state"]
 		item_state = jsonlist["item_state"]
-		icon = 'config/plushies/sprites.dmi'
+		var/static/config_sprites = file("config/plushies/sprites.dmi")
+		icon = config_sprites
 	if(jsonlist["attack_verb"])
 		attack_verb = jsonlist["attack_verb"]
 	if(jsonlist["squeak_override"])
@@ -173,6 +175,9 @@
 /obj/item/toy/plush/attackby(obj/item/I, mob/living/user, params)
 	if(I.get_sharpness())
 		if(!grenade)
+			if(unstuffable)
+				to_chat(user, "<span class='notice'>Nothing to do here.</span>")
+				return
 			if(!stuffed)
 				to_chat(user, "<span class='warning'>You already murdered it!</span>")
 				return
@@ -186,6 +191,13 @@
 			grenade = null
 		return
 	if(istype(I, /obj/item/grenade))
+		if(unstuffable)
+			to_chat(user, "<span class='warning'>No... you should destroy it now!</span>")
+			sleep(10)
+			if(QDELETED(user) || QDELETED(src))
+				return
+			SEND_SOUND(user, 'sound/weapons/armbomb.ogg')
+			return
 		if(stuffed)
 			to_chat(user, "<span class='warning'>You need to remove some stuffing first!</span>")
 			return
@@ -434,7 +446,15 @@ GLOBAL_LIST_INIT(valid_plushie_paths, valid_plushie_paths())
 	can_random_spawn = FALSE
 
 /obj/item/toy/plush/random/Initialize()
-	var/newtype = prob(CONFIG_GET(number/snowflake_plushie_prob))? /obj/item/toy/plush/random_snowflake : pick(GLOB.valid_plushie_paths)
+	var/newtype
+	var/list/snowflake_list = CONFIG_GET(keyed_list/snowflake_plushies)
+
+	/// If there are no snowflake plushies we'll default to base plush, so we grab from the valid list
+	if (snowflake_list.len)
+		newtype = prob(CONFIG_GET(number/snowflake_plushie_prob)) ? /obj/item/toy/plush/random_snowflake : pick(GLOB.valid_plushie_paths)
+	else
+		newtype = pick(GLOB.valid_plushie_paths)
+
 	new newtype(loc)
 	return INITIALIZE_HINT_QDEL
 
@@ -733,4 +753,15 @@ GLOBAL_LIST_INIT(valid_plushie_paths, valid_plushie_paths())
 	desc = "An adorable stuffed toy that resembles a feline."
 	attack_verb = list("headbutt", "scritched", "bit")
 	squeak_override = list('modular_citadel/sound/voice/nya.ogg' = 1)
+	can_random_spawn = FALSE
+	
+	
+/obj/item/toy/plush/hairball
+	name = "Hairball"
+	desc = "A bundle of undigested fibers and scales. Yuck."
+	icon_state = "Hairball"
+	unstuffable = TRUE
+	young = TRUE // Your own mouth-baby.
+	squeak_override = list('sound/misc/splort.ogg'=1)
+	attack_verb = list("sploshed", "splorted", "slushed")
 	can_random_spawn = FALSE

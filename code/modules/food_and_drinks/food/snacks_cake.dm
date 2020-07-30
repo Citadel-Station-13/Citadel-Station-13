@@ -312,7 +312,7 @@ obj/item/reagent_containers/food/snacks/store/cake/pound_cake
 	name = "pound cake"
 	desc = "A condensed cake made for filling people up quickly."
 	icon_state = "pound_cake"
-	slices_num = 7 //Its ment to feed the party
+	slices_num = 7 //Its meant to feed the party
 	slice_path = /obj/item/reagent_containers/food/snacks/cakeslice/pound_cake_slice
 	bonus_reagents = list(/datum/reagent/consumable/nutriment = 60)
 	tastes = list("cake" = 5, "sweetness" = 1, "batter" = 1)

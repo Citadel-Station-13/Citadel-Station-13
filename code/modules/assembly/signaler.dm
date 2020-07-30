@@ -8,7 +8,8 @@
 	custom_materials = list(/datum/material/iron=400, /datum/material/glass=120)
 	wires = WIRE_RECEIVE | WIRE_PULSE | WIRE_RADIO_PULSE | WIRE_RADIO_RECEIVE
 	attachable = TRUE
-
+	var/ui_x = 280
+	var/ui_y = 132
 	var/code = DEFAULT_SIGNALER_CODE
 	var/frequency = FREQ_SIGNALER
 	var/datum/radio_frequency/radio_connection
@@ -47,14 +48,16 @@
 		holder.update_icon()
 	return
 
-/obj/item/assembly/signaler/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
-	if(!is_secured(user))
-		return
+/obj/item/assembly/signaler/ui_status(mob/user)
+	if(is_secured(user))
+		return ..()
+	return UI_CLOSE
+
+/obj/item/assembly/signaler/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
+									datum/tgui/master_ui = null, datum/ui_state/state = GLOB.hands_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
-		var/ui_width = 280
-		var/ui_height = 132
-		ui = new(user, src, ui_key, "signaler", name, ui_width, ui_height, master_ui, state)
+		ui = new(user, src, ui_key, "Signaler", name, ui_x, ui_y, master_ui, state)
 		ui.open()
 
 /obj/item/assembly/signaler/ui_data(mob/user)
@@ -90,7 +93,7 @@
 			. = TRUE
 
 	update_icon()
-	
+
 /obj/item/assembly/signaler/attackby(obj/item/W, mob/user, params)
 	if(issignaler(W))
 		var/obj/item/assembly/signaler/signaler2 = W
@@ -162,7 +165,6 @@
 		return
 	return ..(signal)
 
-
 // Embedded signaller used in anomalies.
 /obj/item/assembly/signaler/anomaly
 	name = "anomaly core"
@@ -179,12 +181,53 @@
 		return FALSE
 	if(signal.data["code"] != code)
 		return FALSE
+	if(suicider)
+		manual_suicide(suicider)
 	for(var/obj/effect/anomaly/A in get_turf(src))
 		A.anomalyNeutralize()
 	return TRUE
 
-/obj/item/assembly/signaler/anomaly/attack_self()
-	return
+/obj/item/assembly/signaler/anomaly/manual_suicide(mob/living/carbon/user)
+	user.visible_message("<span class='suicide'>[user]'s [src] is reacting to the radio signal, warping [user.p_their()] body!</span>")
+	user.suiciding = TRUE
+	user.suicide_log()
+	user.gib()
+
+/obj/item/assembly/signaler/anomaly/attackby(obj/item/I, mob/user, params)
+	if(I.tool_behaviour == TOOL_ANALYZER)
+		to_chat(user, "<span class='notice'>Analyzing... [src]'s stabilized field is fluctuating along frequency [format_frequency(frequency)], code [code].</span>")
+	..()
+
+//Anomaly cores
+/obj/item/assembly/signaler/anomaly/pyro
+	name = "\improper pyroclastic anomaly core"
+	desc = "The neutralized core of a pyroclastic anomaly. It feels warm to the touch. It'd probably be valuable for research."
+	icon_state = "pyro core"
+	anomaly_type = /obj/effect/anomaly/pyro
+
+/obj/item/assembly/signaler/anomaly/grav
+	name = "\improper gravitational anomaly core"
+	desc = "The neutralized core of a gravitational anomaly. It feels much heavier than it looks. It'd probably be valuable for research."
+	icon_state = "grav core"
+	anomaly_type = /obj/effect/anomaly/grav
+
+/obj/item/assembly/signaler/anomaly/flux
+	name = "\improper flux anomaly core"
+	desc = "The neutralized core of a flux anomaly. Touching it makes your skin tingle. It'd probably be valuable for research."
+	icon_state = "flux core"
+	anomaly_type = /obj/effect/anomaly/flux
+
+/obj/item/assembly/signaler/anomaly/bluespace
+	name = "\improper bluespace anomaly core"
+	desc = "The neutralized core of a bluespace anomaly. It keeps phasing in and out of view. It'd probably be valuable for research."
+	icon_state = "anomaly core"
+	anomaly_type = /obj/effect/anomaly/bluespace
+
+/obj/item/assembly/signaler/anomaly/vortex
+	name = "\improper vortex anomaly core"
+	desc = "The neutralized core of a vortex anomaly. It won't sit still, as if some invisible force is acting on it. It'd probably be valuable for research."
+	icon_state = "vortex core"
+	anomaly_type = /obj/effect/anomaly/bhole
 
 /obj/item/assembly/signaler/cyborg
 

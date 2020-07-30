@@ -38,11 +38,17 @@ PROCESSING_SUBSYSTEM_DEF(dcs)
 		if(istext(key))
 			value = arguments[key]
 		if(!(istext(key) || isnum(key)))
-			key = REF(key)
+			if(islist(key)) // CITADEL EDIT
+				key = deep_list2params(key)
+			else
+				key = REF(key)
 		key = "[key]" // Key is stringified so numbers dont break things
 		if(!isnull(value))
 			if(!(istext(value) || isnum(value)))
-				value = REF(value)
+				if(islist(value)) // CITADEL EDIT
+					value = deep_list2params(value)
+				else
+					value = REF(value)
 			named_arguments["[key]"] = value
 		else
 			fullid += "[key]"

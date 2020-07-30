@@ -327,8 +327,7 @@
 		. = ..()
 		update_icon()
 
-//ATTACK HAND IGNORING PARENT RETURN VALUE
-/obj/item/gun/ballistic/automatic/l6_saw/attack_hand(mob/user)
+/obj/item/gun/ballistic/automatic/l6_saw/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	if(loc != user)
 		..()
 		return	//let them pick it up
@@ -365,7 +364,7 @@
 	can_unsuppress = TRUE
 	can_suppress = TRUE
 	w_class = WEIGHT_CLASS_NORMAL
-	inaccuracy_modifier = 0
+	inaccuracy_modifier = 0.5
 	zoomable = TRUE
 	zoom_amt = 10 //Long range, enough to see in front of you, but no tiles behind you.
 	zoom_out_amt = 13

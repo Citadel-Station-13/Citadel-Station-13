@@ -81,7 +81,7 @@
 /mob/living/carbon/monkey/proc/pickup_and_wear(obj/item/I)
 	if(QDELETED(I) || I.loc != src)
 		return
-	equip_to_appropriate_slot(I)
+	equip_to_appropriate_slot(I, TRUE)
 
 /mob/living/carbon/monkey/resist_restraints()
 	var/obj/item/I = null
@@ -90,8 +90,7 @@
 	else if(legcuffed)
 		I = legcuffed
 	if(I)
-		changeNext_move(CLICK_CD_BREAKOUT)
-		last_special = world.time + CLICK_CD_BREAKOUT
+		MarkResistTime()
 		cuff_resist(I)
 
 /mob/living/carbon/monkey/proc/should_target(var/mob/living/L)
@@ -111,7 +110,7 @@
 	if(pickupTarget)
 		if(restrained() || blacklistItems[pickupTarget] || HAS_TRAIT(pickupTarget, TRAIT_NODROP))
 			pickupTarget = null
-		else
+		else if(!isobj(loc) || istype(loc, /obj/item/clothing/head/mob_holder))
 			pickupTimer++
 			if(pickupTimer >= 4)
 				blacklistItems[pickupTarget] ++
@@ -126,10 +125,8 @@
 						pickupTarget = null
 						pickupTimer = 0
 					else if(ismob(pickupTarget.loc)) // in someones hand
-						if(istype(pickupTarget, /obj/item/clothing/head/mob_holder/))
-							var/obj/item/clothing/head/mob_holder/h = pickupTarget
-							if(h && h.held_mob==src)
-								return//dont let them pickpocket themselves
+						if(istype(pickupTarget, /obj/item/clothing/head/mob_holder))
+							return//dont let them pickpocket themselves or hold other monkys.
 						var/mob/M = pickupTarget.loc
 						if(!pickpocketing)
 							pickpocketing = TRUE
@@ -356,7 +353,7 @@
 		battle_screech()
 		a_intent = INTENT_HARM
 
-/mob/living/carbon/monkey/attack_hand(mob/living/L)
+/mob/living/carbon/monkey/on_attack_hand(mob/living/L)
 	if(L.a_intent == INTENT_HARM && prob(MONKEY_RETALIATE_HARM_PROB))
 		retaliate(L)
 	else if(L.a_intent == INTENT_DISARM && prob(MONKEY_RETALIATE_DISARM_PROB))

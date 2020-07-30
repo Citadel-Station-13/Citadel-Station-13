@@ -4,13 +4,13 @@
 	desc = "Plain black gloves without fingertips for the hard working."
 	icon_state = "fingerless"
 	item_state = "fingerless"
-	item_color = null	//So they don't wash.
 	transfer_prints = TRUE
 	strip_delay = 40
 	equip_delay_other = 20
 	cold_protection = HANDS
 	min_cold_protection_temperature = GLOVES_MIN_TEMP_PROTECT
 	strip_mod = 0.9
+	custom_price = PRICE_ALMOST_CHEAP
 
 /obj/item/clothing/gloves/fingerless/pugilist
 	name = "armwraps"
@@ -45,15 +45,15 @@
 	REMOVE_TRAIT(user, secondary_trait, GLOVE_TRAIT)
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
-		H.dna.species.punchdamagehigh = initial(H.dna.species.punchdamagehigh)
-		H.dna.species.punchdamagelow = initial(H.dna.species.punchdamagelow)
+		H.dna.species.punchdamagehigh -= enhancement
+		H.dna.species.punchdamagelow -= enhancement
 	return ..()
 
 /obj/item/clothing/gloves/fingerless/pugilist/chaplain
 	name = "armwraps of unyielding resolve"
 	desc = "A series of armwraps, soaked in holy water. Makes you pretty keen to smite evil magic users."
 	resistance_flags = FIRE_PROOF | ACID_PROOF
-	enhancement = 1 //It is not magic that makes you punch harder, but force of will. Trust me.
+	enhancement = 2 //It is not magic that makes you punch harder, but force of will. Trust me.
 	secondary_trait = TRAIT_ANTIMAGIC
 	var/chaplain_spawnable = TRUE
 
@@ -105,25 +105,26 @@
 		return
 
 	var/mob/living/M = loc
-	M.changeNext_move(CLICK_CD_RAPID)
+	M.SetNextAction(CLICK_CD_RAPID)
 	if(warcry)
 		M.say("[warcry]", ignore_spam = TRUE, forced = TRUE)
 
-	return FALSE
+	return NO_AUTO_CLICKDELAY_HANDLING | ATTACK_IGNORE_ACTION
 
 /obj/item/clothing/gloves/fingerless/pugilist/rapid/AltClick(mob/user)
 	var/input = stripped_input(user,"What do you want your battlecry to be? Max length of 6 characters.", ,"", 7)
 	if(input)
 		warcry = input
 
-/obj/item/clothing/gloves/fingerless/pugilist/rapid/hug
+/obj/item/clothing/gloves/fingerless/pugilist/hug
 	name = "Hugs of the North Star"
 	desc = "The armbands of a humble friend. Makes you pretty keen to go let everyone know how much you appreciate them!"
-	warcry = "owo" //Shouldn't ever come into play
+	icon_state = "rapid"
+	item_state = "rapid"
 	enhancement = 0
 	secondary_trait = TRAIT_PACIFISM //You are only here to hug and be friends!
 
-/obj/item/clothing/gloves/fingerless/pugilist/rapid/hug/Touch(mob/target, proximity = TRUE)
+/obj/item/clothing/gloves/fingerless/pugilist/hug/Touch(mob/target, proximity = TRUE)
 	if(!isliving(target))
 		return
 
@@ -134,12 +135,9 @@
 	if(target.stat != CONSCIOUS) //Can't hug people who are dying/dead
 		return FALSE
 	else
-		M.changeNext_move(CLICK_CD_RAPID)
+		M.SetNextAction(CLICK_CD_RAPID)
 
-	return FALSE
-
-/obj/item/clothing/gloves/fingerless/pugilist/rapid/hug/AltClick(mob/user)
-	return FALSE
+	return NO_AUTO_CLICKDELAY_HANDLING | ATTACK_IGNORE_ACTION
 
 /obj/item/clothing/gloves/botanic_leather
 	name = "botanist's leather gloves"
@@ -177,7 +175,6 @@
 	desc = "For when you're expecting to get slapped on the wrist. Offers modest protection to your arms."
 	icon_state = "bracers"
 	item_state = "bracers"
-	item_color = null	//So they don't wash.
 	transfer_prints = TRUE
 	strip_delay = 40
 	equip_delay_other = 20
@@ -199,3 +196,15 @@
 	transfer_prints = FALSE
 	strip_mod = 5
 	strip_silence = TRUE
+
+/obj/item/clothing/gloves/evening
+	name = "evening gloves"
+	desc = "Thin, pretty gloves intended for use in regal feminine attire, but knowing Space China these are just for some maid fetish."
+	icon_state = "evening"
+	item_state = "evening"
+	strip_delay = 40
+	equip_delay_other = 20
+	cold_protection = HANDS
+	min_cold_protection_temperature = GLOVES_MIN_TEMP_PROTECT
+	strip_mod = 0.9
+	custom_price = PRICE_ALMOST_CHEAP

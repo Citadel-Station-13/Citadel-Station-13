@@ -8,9 +8,6 @@
 /mob/living/carbon/alien/hitby(atom/movable/AM, skipcatch, hitpush, blocked, datum/thrownthing/throwingdatum)
 	return ..(AM, skipcatch = TRUE, hitpush = FALSE)
 
-/mob/living/carbon/alien/can_embed(obj/item/I)
-	return FALSE
-
 /*Code for aliens attacking aliens. Because aliens act on a hivemind, I don't see them as very aggressive with each other.
 As such, they can either help or harm other aliens. Help works like the human help command while harm is a simple nibble.
 In all, this is a lot like the monkey code. /N
@@ -27,13 +24,16 @@ In all, this is a lot like the monkey code. /N
 			AdjustUnconscious(-60, FALSE)
 			AdjustSleeping(-100, FALSE)
 			update_mobility()
-			visible_message("<span class='notice'>[M.name] nuzzles [src] trying to wake [p_them()] up!</span>")
+			visible_message("<span class='notice'>[M.name] nuzzles [src] trying to wake [p_them()] up!</span>",
+				"<span class='notice'>[M.name] nuzzles you trying to wake you up!</span>", target = M,
+				target_message = "<span class='notice'>You nuzzle [src] trying to wake [p_them()] up!</span>")
 		if(INTENT_DISARM, INTENT_HARM)
 			if(health > 0)
 				M.do_attack_animation(src, ATTACK_EFFECT_BITE)
 				playsound(loc, 'sound/weapons/bite.ogg', 50, 1, -1)
 				visible_message("<span class='danger'>[M.name] bites [src]!</span>", \
-						"<span class='userdanger'>[M.name] bites [src]!</span>", null, COMBAT_MESSAGE_RANGE)
+						"<span class='userdanger'>[M.name] bites [src]!</span>", null, COMBAT_MESSAGE_RANGE, null, M,
+						"<span class='danger'>You bite [src]!</span>")
 				adjustBruteLoss(1)
 				log_combat(M, src, "attacked")
 				updatehealth()
@@ -45,12 +45,14 @@ In all, this is a lot like the monkey code. /N
 	return attack_alien(L)
 
 
-/mob/living/carbon/alien/attack_hand(mob/living/carbon/human/M)
+/mob/living/carbon/alien/on_attack_hand(mob/living/carbon/human/M)
 	. = ..()
 	if(.) //To allow surgery to return properly.
 		return
 	switch(M.a_intent)
 		if(INTENT_HELP)
+			if(M == src && check_self_for_injuries())
+				return
 			help_shake_act(M)
 		if(INTENT_GRAB)
 			grabbedby(M)
@@ -71,7 +73,6 @@ In all, this is a lot like the monkey code. /N
 	if(.) //successful monkey bite.
 		var/obj/item/bodypart/affecting = get_bodypart(ran_zone(M.zone_selected))
 		apply_damage(rand(1, 3), BRUTE, affecting)
-
 
 /mob/living/carbon/alien/attack_animal(mob/living/simple_animal/M)
 	. = ..()

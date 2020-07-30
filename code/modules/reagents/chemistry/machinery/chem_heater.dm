@@ -103,7 +103,7 @@
 										datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
-		ui = new(user, src, ui_key, "chem_heater", name, 275, 400, master_ui, state)
+		ui = new(user, src, ui_key, "ChemHeater", name, 300, 400, master_ui, state)
 		ui.open()
 
 /obj/machinery/chem_heater/ui_data()
@@ -151,7 +151,7 @@
 				target = text2num(target)
 				. = TRUE
 			if(.)
-				target_temperature = CLAMP(target, 0, 1000)
+				target_temperature = clamp(target, 0, 1000)
 		if("eject")
 			on = FALSE
 			replace_beaker(usr)

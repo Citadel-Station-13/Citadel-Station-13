@@ -11,6 +11,10 @@
 	pressure_resistance = 200 //Because big, stompy xenos should not be blown around like paper.
 	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab/xeno = 20, /obj/item/stack/sheet/animalhide/xeno = 3)
 
+	meleeKnockdownPower = 125
+	meleeSlashHumanPower = 30
+	meleeSlashSAPower = 60
+
 	var/alt_inhands_file = 'icons/mob/alienqueen.dmi'
 
 /mob/living/carbon/alien/humanoid/royal/can_inject(mob/user, error_msg, target_zone, penetrate_thick = FALSE, bypass_immunity = FALSE)

@@ -24,10 +24,10 @@
 	var/list/tiers = list()										//Assoc list, id = number, 1 is available, 2 is all reqs are 1, so on
 
 /datum/techweb/New()
+	hidden_nodes = SSresearch.techweb_nodes_hidden.Copy()
 	for(var/i in SSresearch.techweb_nodes_starting)
 		var/datum/techweb_node/DN = SSresearch.techweb_node_by_id(i)
 		research_node(DN, TRUE, FALSE)
-	hidden_nodes = SSresearch.techweb_nodes_hidden.Copy()
 	return ..()
 
 /datum/techweb/admin
@@ -62,6 +62,19 @@
 /datum/techweb/science	//Global science techweb for RND consoles.
 	id = "SCIENCE"
 	organization = "Nanotrasen"
+
+/datum/techweb/bepis	//Should contain only 1 BEPIS tech selected at random.
+	id = "EXPERIMENTAL"
+	organization = "Nanotrasen R&D"
+
+/datum/techweb/bepis/New()
+	. = ..()
+	var/bepis_id = pick(SSresearch.techweb_nodes_experimental)	//To add a new tech to the BEPIS, add the ID to this pick list.
+	var/datum/techweb_node/BN = (SSresearch.techweb_node_by_id(bepis_id))
+	hidden_nodes -= BN.id				//Has to be removed from hidden nodes
+	research_node(BN, TRUE, FALSE, FALSE)
+	update_node_status(BN)
+	SSresearch.techweb_nodes_experimental -= bepis_id
 
 /datum/techweb/Destroy()
 	researched_nodes = null
@@ -126,17 +139,17 @@
 	modify_point_list(l)
 
 /datum/techweb/proc/copy_research_to(datum/techweb/receiver, unlock_hidden = TRUE)				//Adds any missing research to theirs.
+	if(unlock_hidden)
+		for(var/i in receiver.hidden_nodes)
+			CHECK_TICK
+			if(!hidden_nodes[i])
+				receiver.hidden_nodes -= i		//We can see it so let them see it too.
 	for(var/i in researched_nodes)
 		CHECK_TICK
 		receiver.research_node_id(i, TRUE, FALSE)
 	for(var/i in researched_designs)
 		CHECK_TICK
 		receiver.add_design_by_id(i)
-	if(unlock_hidden)
-		for(var/i in receiver.hidden_nodes)
-			CHECK_TICK
-			if(!hidden_nodes[i])
-				receiver.hidden_nodes -= i		//We can see it so let them see it too.
 	receiver.recalculate_nodes()
 
 /datum/techweb/proc/copy()
@@ -199,6 +212,10 @@
 	researched_designs -= design.id
 	return TRUE
 
+/datum/techweb/proc/get_point_total(list/pointlist)
+	for(var/i in pointlist)
+		. += pointlist[i]
+
 /datum/techweb/proc/can_afford(list/pointlist)
 	for(var/i in pointlist)
 		if(research_points[i] < pointlist[i])
@@ -227,6 +244,10 @@
 	for(var/id in node.design_ids)
 		add_design_by_id(id)
 	update_node_status(node)
+	if(!istype(src, /datum/techweb/admin))
+		var/datum/bank_account/D = SSeconomy.get_dep_account(ACCOUNT_SCI)
+		if(D)
+			D.adjust_money(SSeconomy.techweb_bounty)
 	return TRUE
 
 /datum/techweb/proc/unresearch_node_id(id)
@@ -344,6 +365,7 @@
 
 /datum/techweb/specialized/autounlocking
 	var/design_autounlock_buildtypes = NONE
+	var/design_autounlock_skip_types = NONE
 	var/design_autounlock_categories = list("initial")		//if a design has a buildtype that matches the abovea and either has a category in this or this is null, unlock it.
 	var/node_autounlock_ids = list()				//autounlock nodes of this type.
 
@@ -356,7 +378,7 @@
 		research_node_id(id, TRUE, FALSE)
 	for(var/id in SSresearch.techweb_designs)
 		var/datum/design/D = SSresearch.techweb_design_by_id(id)
-		if(D.build_type & design_autounlock_buildtypes)
+		if(D.build_type & (design_autounlock_buildtypes & allowed_buildtypes) && !(D.build_type & design_autounlock_skip_types))
 			for(var/i in D.category)
 				if(i in design_autounlock_categories)
 					add_design_by_id(D.id)
@@ -364,7 +386,16 @@
 
 /datum/techweb/specialized/autounlocking/autolathe
 	design_autounlock_buildtypes = AUTOLATHE
-	allowed_buildtypes = AUTOLATHE
+	allowed_buildtypes = AUTOLATHE|TOYLATHE
+
+/datum/techweb/specialized/autounlocking/autolathe/public
+	design_autounlock_skip_types = NO_PUBLIC_LATHE
+
+/datum/techweb/specialized/autounlocking/autolathe/toy
+	design_autounlock_buildtypes = TOYLATHE
+
+/datum/techweb/specialized/autounlocking/autolathe/toy/public
+	design_autounlock_skip_types = NO_PUBLIC_LATHE
 
 /datum/techweb/specialized/autounlocking/limbgrower
 	design_autounlock_buildtypes = LIMBGROWER
@@ -380,10 +411,6 @@
 
 /datum/techweb/specialized/autounlocking/exofab
 	allowed_buildtypes = MECHFAB
-
-/datum/techweb/specialized/autounlocking/autoylathe
-	design_autounlock_buildtypes = AUTOYLATHE
-	allowed_buildtypes = AUTOYLATHE
 
 /datum/techweb/specialized/autounlocking/autobottler
 	design_autounlock_buildtypes = AUTOBOTTLER

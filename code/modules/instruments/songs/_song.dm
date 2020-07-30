@@ -213,7 +213,7 @@
 
 /datum/song/proc/sanitize_tempo(new_tempo)
 	new_tempo = abs(new_tempo)
-	return CLAMP(round(new_tempo, world.tick_lag), world.tick_lag, 5 SECONDS)
+	return clamp(round(new_tempo, world.tick_lag), world.tick_lag, 5 SECONDS)
 
 /datum/song/proc/get_bpm()
 	return 600 / tempo
@@ -222,7 +222,7 @@
 	tempo = sanitize_tempo(600 / bpm)
 
 /// Updates the window for our user. Override in subtypes.
-/datum/song/proc/updateDialog(mob/user)
+/datum/song/proc/updateDialog(mob/user = usr)
 	ui_interact(user)
 
 /datum/song/process(wait)
@@ -242,22 +242,22 @@
 	cached_linear_dropoff = volume_decrease_per_decisecond
 
 /datum/song/proc/set_volume(volume)
-	src.volume = CLAMP(volume, max(0, min_volume), min(100, max_volume))
+	src.volume = clamp(volume, max(0, min_volume), min(100, max_volume))
 	update_sustain()
 	updateDialog()
 
 /datum/song/proc/set_dropoff_volume(volume)
-	sustain_dropoff_volume = CLAMP(volume, INSTRUMENT_MIN_SUSTAIN_DROPOFF, 100)
+	sustain_dropoff_volume = clamp(volume, INSTRUMENT_MIN_SUSTAIN_DROPOFF, 100)
 	update_sustain()
 	updateDialog()
 
 /datum/song/proc/set_exponential_drop_rate(drop)
-	sustain_exponential_dropoff = CLAMP(drop, INSTRUMENT_EXP_FALLOFF_MIN, INSTRUMENT_EXP_FALLOFF_MAX)
+	sustain_exponential_dropoff = clamp(drop, INSTRUMENT_EXP_FALLOFF_MIN, INSTRUMENT_EXP_FALLOFF_MAX)
 	update_sustain()
 	updateDialog()
 
 /datum/song/proc/set_linear_falloff_duration(duration)
-	sustain_linear_duration = CLAMP(duration, 0.1, INSTRUMENT_MAX_TOTAL_SUSTAIN)
+	sustain_linear_duration = clamp(duration, 0.1, INSTRUMENT_MAX_TOTAL_SUSTAIN)
 	update_sustain()
 	updateDialog()
 
@@ -277,8 +277,10 @@
 // subtype for handheld instruments, like violin
 /datum/song/handheld
 
-/datum/song/handheld/updateDialog(mob/user)
-	parent.ui_interact(user || usr)
+/datum/song/handheld/updateDialog(mob/user = usr)
+	if(user.machine != src)
+		return
+	parent.ui_interact(user)
 
 /datum/song/handheld/should_stop_playing(mob/user)
 	. = ..()
@@ -290,8 +292,10 @@
 // subtype for stationary structures, like pianos
 /datum/song/stationary
 
-/datum/song/stationary/updateDialog(mob/user)
-	parent.ui_interact(user || usr)
+/datum/song/stationary/updateDialog(mob/user = usr)
+	if(user.machine != src)
+		return
+	parent.ui_interact(user)
 
 /datum/song/stationary/should_stop_playing(mob/user)
 	. = ..()

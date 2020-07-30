@@ -17,7 +17,9 @@
 		/obj/item/melee/baton,
 		/obj/item/ammo_box/magazine/recharge,
 		/obj/item/modular_computer,
-		/obj/item/twohanded/electrostaff,
+		/obj/item/ammo_casing/mws_batt,
+		/obj/item/ammo_box/magazine/mws_mag,
+		/obj/item/electrostaff,
 		/obj/item/gun/ballistic/automatic/magrifle))
 
 /obj/machinery/recharger/RefreshParts()
@@ -52,6 +54,11 @@
 		use_power = IDLE_POWER_USE
 		using_power = FALSE
 		update_icon()
+
+/obj/machinery/recharger/Exited(atom/movable/M, atom/newloc)
+	. = ..()
+	if(charging == M)
+		setCharging()
 
 /obj/machinery/recharger/attackby(obj/item/G, mob/user, params)
 	if(istype(G, /obj/item/wrench))
@@ -101,23 +108,17 @@
 
 	return ..()
 
-/obj/machinery/recharger/attack_hand(mob/user)
-	. = ..()
-	if(.)
-		return
+/obj/machinery/recharger/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 
 	add_fingerprint(user)
 	if(charging)
 		charging.update_icon()
-		charging.forceMove(drop_location())
 		user.put_in_hands(charging)
-		setCharging(null)
 
 /obj/machinery/recharger/attack_tk(mob/user)
 	if(charging)
 		charging.update_icon()
 		charging.forceMove(drop_location())
-		setCharging(null)
 
 /obj/machinery/recharger/process()
 	if(stat & (NOPOWER|BROKEN) || !anchored)
@@ -141,6 +142,29 @@
 				using_power = TRUE
 			update_icon()
 			return
+
+		if(istype(charging, /obj/item/ammo_casing/mws_batt))
+			var/obj/item/ammo_casing/mws_batt/R = charging
+			if(R.cell.charge < R.cell.maxcharge)
+				R.cell.give(R.cell.chargerate * recharge_coeff)
+				use_power(250 * recharge_coeff)
+				using_power = 1
+			if(R.BB == null)
+				R.chargeshot()
+			update_icon(using_power)
+
+		if(istype(charging, /obj/item/ammo_box/magazine/mws_mag))
+			var/obj/item/ammo_box/magazine/mws_mag/R = charging
+			for(var/B in R.stored_ammo)
+				var/obj/item/ammo_casing/mws_batt/batt = B
+				if(batt.cell.charge < batt.cell.maxcharge)
+					batt.cell.give(batt.cell.chargerate * recharge_coeff)
+					use_power(250 * recharge_coeff)
+					using_power = 1
+				if(batt.BB == null)
+					batt.chargeshot()
+			update_icon(using_power)
+
 	else
 		return PROCESS_KILL
 

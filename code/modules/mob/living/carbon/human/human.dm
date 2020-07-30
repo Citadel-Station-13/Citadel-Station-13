@@ -26,24 +26,29 @@
 	physiology = new()
 
 	AddComponent(/datum/component/personal_crafting)
+	AddComponent(/datum/component/footstep, FOOTSTEP_MOB_HUMAN, 1, 2)
 	. = ..()
 
 	if(CONFIG_GET(flag/disable_stambuffer))
 		enable_intentional_sprint_mode()
 
 	RegisterSignal(src, COMSIG_COMPONENT_CLEAN_ACT, /atom.proc/clean_blood)
+	GLOB.human_list += src
 
 
 /mob/living/carbon/human/ComponentInitialize()
 	. = ..()
 	if(!CONFIG_GET(flag/disable_human_mood))
 		AddComponent(/datum/component/mood)
-	AddElement(/datum/element/flavor_text/carbon)
+	AddComponent(/datum/component/combat_mode)
+	AddElement(/datum/element/flavor_text/carbon, _name = "Flavor Text", _save_key = "flavor_text")
 	AddElement(/datum/element/flavor_text, "", "Temporary Flavor Text", "This should be used only for things pertaining to the current round!")
+	AddElement(/datum/element/flavor_text, _name = "OOC Notes", _addendum = "Put information on ERP/vore/lewd-related preferences here. THIS SHOULD NOT CONTAIN REGULAR FLAVORTEXT!!", _always_show = TRUE, _save_key = "ooc_notes", _examine_no_preview = TRUE)
 
 /mob/living/carbon/human/Destroy()
 	QDEL_NULL(physiology)
 	QDEL_NULL_LIST(vore_organs) // CITADEL EDIT belly stuff
+	GLOB.human_list -= src
 	return ..()
 
 /mob/living/carbon/human/prepare_data_huds()
@@ -149,8 +154,12 @@
 
 	dat += "<tr><td>&nbsp;</td></tr>"
 
-	dat += "<tr><td><B>Exosuit:</B></td><td><A href='?src=[REF(src)];item=[SLOT_WEAR_SUIT]'>[(wear_suit && !(wear_suit.item_flags & ABSTRACT)) ? wear_suit : "<font color=grey>Empty</font>"]</A></td></tr>"
+	dat += "<tr><td><B>Exosuit:</B></td><td><A href='?src=[REF(src)];item=[SLOT_WEAR_SUIT]'>[(wear_suit && !(wear_suit.item_flags & ABSTRACT)) ? wear_suit : "<font color=grey>Empty</font>"]</A>"
 	if(wear_suit)
+		if(istype(wear_suit, /obj/item/clothing/suit/space/hardsuit))
+			var/hardsuit_head = head && istype(head, /obj/item/clothing/head/helmet/space/hardsuit)
+			dat += "&nbsp;<A href='?src=[REF(src)];toggle_helmet=[SLOT_WEAR_SUIT]'>[hardsuit_head ? "Retract Helmet" : "Extend Helmet"]</A>"
+		dat += "</td></tr>"
 		dat += "<tr><td>&nbsp;&#8627;<B>Suit Storage:</B></td><td><A href='?src=[REF(src)];item=[SLOT_S_STORE]'>[(s_store && !(s_store.item_flags & ABSTRACT)) ? s_store : "<font color=grey>Empty</font>"]</A>"
 		if(has_breathable_mask && istype(s_store, /obj/item/tank))
 			dat += "&nbsp;<A href='?src=[REF(src)];internal=[SLOT_S_STORE]'>[internal ? "Disable Internals" : "Set Internals"]</A>"
@@ -161,7 +170,11 @@
 	if(SLOT_SHOES in obscured)
 		dat += "<tr><td><font color=grey><B>Shoes:</B></font></td><td><font color=grey>Obscured</font></td></tr>"
 	else
-		dat += "<tr><td><B>Shoes:</B></td><td><A href='?src=[REF(src)];item=[SLOT_SHOES]'>[(shoes && !(shoes.item_flags & ABSTRACT))		? shoes		: "<font color=grey>Empty</font>"]</A></td></tr>"
+		dat += "<tr><td><B>Shoes:</B></td><td><A href='?src=[REF(src)];item=[SLOT_SHOES]'>[(shoes && !(shoes.item_flags & ABSTRACT))		? shoes		: "<font color=grey>Empty</font>"]</A>"
+		if(shoes && shoes.can_be_tied && shoes.tied != SHOES_KNOTTED)
+			dat += "&nbsp;<A href='?src=[REF(src)];shoes=[SLOT_SHOES]'>[shoes.tied ? "Untie shoes" : "Knot shoes"]</A>"
+
+		dat += "</td></tr>"
 
 	if(SLOT_GLOVES in obscured)
 		dat += "<tr><td><font color=grey><B>Gloves:</B></font></td><td><font color=grey>Obscured</font></td></tr>"
@@ -217,30 +230,30 @@
 			var/obj/item/I = locate(href_list["embedded_object"]) in L.embedded_objects
 			if(!I || I.loc != src) //no item, no limb, or item is not in limb or in the person anymore
 				return
-			var/time_taken = I.embedding.embedded_unsafe_removal_time/I.w_class //Citadel Change from * to /
-			usr.visible_message("<span class='warning'>[usr] attempts to remove [I] from [usr.p_their()] [L.name].</span>","<span class='notice'>You attempt to remove [I] from your [L.name]... (It will take [DisplayTimeText(time_taken)].)</span>")
-			if(do_after(usr, time_taken, needhand = 1, target = src))
-				remove_embedded_unsafe(L, I, usr)
-				/* CITADEL EDIT: remove_embedded_unsafe replaces this code
-				if(!I || !L || I.loc != src || !(I in L.embedded_objects))
-					return
-				L.embedded_objects -= I
-				L.receive_damage(I.embedding.embedded_unsafe_removal_pain_multiplier*I.w_class)//It hurts to rip it out, get surgery you dingus.
-				I.forceMove(get_turf(src))
-				usr.put_in_hands(I)
-				usr.emote("scream")
-				usr.visible_message("[usr] successfully rips [I] out of [usr.p_their()] [L.name]!","<span class='notice'>You successfully remove [I] from your [L.name].</span>")
-				if(!has_embedded_objects())
-					clear_alert("embeddedobject")
-					SEND_SIGNAL(usr, COMSIG_CLEAR_MOOD_EVENT, "embedded") */
+			SEND_SIGNAL(src, COMSIG_CARBON_EMBED_RIP, I, L)
 			return
-
+		if(href_list["toggle_helmet"])
+			if(!istype(head, /obj/item/clothing/head/helmet/space/hardsuit))
+				return
+			var/obj/item/clothing/head/helmet/space/hardsuit/hardsuit_head = head
+			visible_message("<span class='danger'>[usr] tries to [hardsuit_head ? "retract" : "extend"] [src]'s helmet.</span>", \
+								"<span class='userdanger'>[usr] tries to [hardsuit_head ? "retract" : "extend"] [src]'s helmet.</span>", \
+								target = usr, target_message = "<span class='danger'>You try to [hardsuit_head ? "retract" : "extend"] [src]'s helmet.</span>")
+			if(!do_mob(usr, src, hardsuit_head ? head.strip_delay : POCKET_STRIP_DELAY))
+				return
+			if(!istype(wear_suit, /obj/item/clothing/suit/space/hardsuit) || (hardsuit_head ? (!head || head != hardsuit_head) : head))
+				return
+			var/obj/item/clothing/suit/space/hardsuit/hardsuit = wear_suit //This should be an hardsuit given all our checks
+			if(hardsuit.ToggleHelmet(FALSE))
+				visible_message("<span class='danger'>[usr] [hardsuit_head ? "retract" : "extend"] [src]'s helmet</span>", \
+										"<span class='userdanger'>[usr] [hardsuit_head ? "retract" : "extend"] [src]'s helmet</span>", \
+										target = usr, target_message = "<span class='danger'>You [hardsuit_head ? "retract" : "extend"] [src]'s helmet.</span>")
+			return
 		if(href_list["item"])
 			var/slot = text2num(href_list["item"])
 			if(slot in check_obscured_slots())
 				to_chat(usr, "<span class='warning'>You can't reach that! Something is covering it.</span>")
 				return
-
 		if(href_list["pockets"])
 			var/strip_mod = 1
 			var/strip_silence = FALSE
@@ -284,6 +297,12 @@
 				// Display a warning if the user mocks up
 				if (!strip_silence)
 					to_chat(src, "<span class='warning'>You feel your [pocket_side] pocket being fumbled with!</span>")
+
+	if(usr.canUseTopic(src, BE_CLOSE, NO_DEXTERY, null, FALSE))
+		// separate from first canusetopic
+		var/mob/living/user = usr
+		if(istype(user) && href_list["shoes"] && (user.mobility_flags & MOBILITY_USE)) // we need to be on the ground, so we'll be a bit looser
+			shoes.handle_tying(usr)
 
 	..()	//CITADEL CHANGE - removes a tab from behind this ..() so that flavortext can actually be examined
 
@@ -381,7 +400,7 @@
 						// Checks the user has security clearence before allowing them to change arrest status via hud, comment out to enable all access
 						var/allowed_access = null
 						var/obj/item/clothing/glasses/G = H.glasses
-						if (!(G.obj_flags |= EMAGGED))
+						if (!(G.obj_flags & EMAGGED))
 							if(H.wear_id)
 								var/list/access = H.wear_id.GetAccess()
 								if(ACCESS_SEC_DOORS in access)
@@ -523,33 +542,15 @@
 		// Might need re-wording.
 		to_chat(user, "<span class='alert'>There is no exposed flesh or thin material [above_neck(target_zone) ? "on [p_their()] head" : "on [p_their()] body"].</span>")
 
-/mob/living/carbon/human/proc/check_obscured_slots()
-	var/list/obscured = list()
-
+/mob/living/carbon/human/check_obscured_slots()
+	. = ..()
 	if(wear_suit)
 		if(wear_suit.flags_inv & HIDEGLOVES)
-			obscured |= SLOT_GLOVES
+			LAZYOR(., SLOT_GLOVES)
 		if(wear_suit.flags_inv & HIDEJUMPSUIT)
-			obscured |= SLOT_W_UNIFORM
+			LAZYOR(., SLOT_W_UNIFORM)
 		if(wear_suit.flags_inv & HIDESHOES)
-			obscured |= SLOT_SHOES
-
-	if(head)
-		if(head.flags_inv & HIDEMASK)
-			obscured |= SLOT_WEAR_MASK
-		if(head.flags_inv & HIDEEYES)
-			obscured |= SLOT_GLASSES
-		if(head.flags_inv & HIDEEARS)
-			obscured |= SLOT_EARS
-
-	if(wear_mask)
-		if(wear_mask.flags_inv & HIDEEYES)
-			obscured |= SLOT_GLASSES
-
-	if(obscured.len)
-		return obscured
-	else
-		return null
+			LAZYOR(., SLOT_SHOES)
 
 /mob/living/carbon/human/assess_threat(judgement_criteria, lasercolor = "", datum/callback/weaponcheck=null)
 	if(judgement_criteria & JUDGE_EMAGGED)
@@ -744,8 +745,7 @@
 
 /mob/living/carbon/human/resist_restraints()
 	if(wear_suit && wear_suit.breakouttime)
-		changeNext_move(CLICK_CD_BREAKOUT)
-		last_special = world.time + CLICK_CD_BREAKOUT
+		MarkResistTime()
 		cuff_resist(wear_suit)
 	else
 		..()
@@ -768,7 +768,7 @@
 		return
 	else
 		if(hud_used.healths)
-			var/health_amount = min(health, maxHealth - CLAMP(getStaminaLoss()-50, 0, 80))//CIT CHANGE - makes staminaloss have less of an impact on the health hud
+			var/health_amount = min(health, maxHealth - clamp(getStaminaLoss()-50, 0, 80))//CIT CHANGE - makes staminaloss have less of an impact on the health hud
 			if(..(health_amount)) //not dead
 				switch(hal_screwyhud)
 					if(SCREWYHUD_CRIT)
@@ -994,7 +994,7 @@
 				if(target.incapacitated(FALSE, TRUE) || incapacitated(FALSE, TRUE))
 					target.visible_message("<span class='warning'>[target] can't hang onto [src]!</span>")
 					return
-				buckle_mob(target, TRUE, TRUE, FALSE, 0, 2, FALSE)
+				buckle_mob(target, TRUE, TRUE, FALSE, 1, 2, FALSE)
 		else
 			visible_message("<span class='warning'>[target] fails to climb onto [src]!</span>")
 	else
@@ -1041,7 +1041,7 @@
 	return FALSE
 
 /mob/living/carbon/human/proc/clear_shove_slowdown()
-	remove_movespeed_modifier(MOVESPEED_ID_SHOVE)
+	remove_movespeed_modifier(/datum/movespeed_modifier/shove)
 	var/active_item = get_active_held_item()
 	if(is_type_in_typecache(active_item, GLOB.shove_disarming_types))
 		visible_message("<span class='warning'>[src.name] regains their grip on \the [active_item]!</span>", "<span class='warning'>You regain your grip on \the [active_item]</span>", null, COMBAT_MESSAGE_RANGE)
@@ -1049,22 +1049,37 @@
 /mob/living/carbon/human/updatehealth()
 	. = ..()
 
-	if(HAS_TRAIT(src, TRAIT_IGNORESLOWDOWN))
-		remove_movespeed_modifier(MOVESPEED_ID_DAMAGE_SLOWDOWN)
-		remove_movespeed_modifier(MOVESPEED_ID_DAMAGE_SLOWDOWN_FLYING)
+	if(HAS_TRAIT(src, TRAIT_IGNORESLOWDOWN))	//if we want to ignore slowdown from damage and equipment
+		remove_movespeed_modifier(/datum/movespeed_modifier/damage_slowdown)
+		remove_movespeed_modifier(/datum/movespeed_modifier/damage_slowdown_flying)
 		return
 	var/stambufferinfluence = (bufferedstam*(100/stambuffer))*0.2 //CIT CHANGE - makes stamina buffer influence movedelay
-	var/health_deficiency = ((100 + stambufferinfluence) - health + (getStaminaLoss()*0.75))//CIT CHANGE - reduces the impact of staminaloss and makes stamina buffer influence it
-	if(health_deficiency >= 40)
-		add_movespeed_modifier(MOVESPEED_ID_DAMAGE_SLOWDOWN, override = TRUE, multiplicative_slowdown = ((health_deficiency-39) / 75), blacklisted_movetypes = FLOATING|FLYING)
-		add_movespeed_modifier(MOVESPEED_ID_DAMAGE_SLOWDOWN_FLYING, override = TRUE, multiplicative_slowdown = ((health_deficiency-39) / 25), movetypes = FLYING, blacklisted_movetypes = FLOATING)
+	if(!HAS_TRAIT(src, TRAIT_IGNOREDAMAGESLOWDOWN))	//if we want to ignore slowdown from damage, but not from equipment
+		var/health_deficiency = ((maxHealth + stambufferinfluence) - health + (getStaminaLoss()*0.75))//CIT CHANGE - reduces the impact of staminaloss and makes stamina buffer influence it
+		if(health_deficiency >= 40)
+			add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/damage_slowdown, TRUE, (health_deficiency-39) / 75)
+			add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/damage_slowdown_flying, TRUE, (health_deficiency-39) / 25)
+		else
+			remove_movespeed_modifier(/datum/movespeed_modifier/damage_slowdown)
+			remove_movespeed_modifier(/datum/movespeed_modifier/damage_slowdown_flying)
 	else
-		remove_movespeed_modifier(MOVESPEED_ID_DAMAGE_SLOWDOWN)
-		remove_movespeed_modifier(MOVESPEED_ID_DAMAGE_SLOWDOWN_FLYING)
+		remove_movespeed_modifier(/datum/movespeed_modifier/damage_slowdown)
+		remove_movespeed_modifier(/datum/movespeed_modifier/damage_slowdown_flying)
+
 
 /mob/living/carbon/human/do_after_coefficent()
 	. = ..()
 	. *= physiology.do_after_speed
+
+/mob/living/carbon/human/is_bleeding()
+	if(NOBLOOD in dna.species.species_traits || bleedsuppress)
+		return FALSE
+	return ..()
+
+/mob/living/carbon/human/get_total_bleed_rate()
+	if(NOBLOOD in dna.species.species_traits)
+		return FALSE
+	return ..()
 
 /mob/living/carbon/human/species
 	var/race = null

@@ -18,6 +18,7 @@
 #define INVESTIGATE_CIRCUIT			"circuit"
 #define INVESTIGATE_FERMICHEM       "fermichem"
 #define INVESTIGATE_RCD				"rcd"
+#define INVESTIGATE_CRYOGENICS		"cryogenics"
 
 // Logging types for log_message()
 #define LOG_ATTACK		(1 << 0)
@@ -37,6 +38,7 @@
 #define LOG_ADMIN_PRIVATE (1 << 14)
 #define LOG_ASAY		(1 << 15)
 #define LOG_VIRUS		(1 << 16)
+#define LOG_SHUTTLE		(1 << 18)
 
 //Individual logging panel pages
 #define INDIVIDUAL_ATTACK_LOG		(LOG_ATTACK)

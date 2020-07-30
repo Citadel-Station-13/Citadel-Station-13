@@ -16,9 +16,6 @@
 	fire_sound = 'sound/weapons/gunshot.ogg'
 	e_cost = 100
 
-/obj/item/ammo_casing/energy/electrode/hos
-	projectile_type = /obj/item/projectile/energy/electrode/security/hos
-	e_cost = 200
 
 /obj/item/ammo_casing/energy/electrode/old
 	e_cost = 1000

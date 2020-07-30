@@ -71,6 +71,11 @@
 #define MUT_EXTRA 2
 #define MUT_OTHER 3
 
+//species use_skintones defines
+#define NO_SKINTONES 0
+#define USE_SKINTONES 1
+#define USE_SKINTONES_GRAYSCALE_CUSTOM 2 //adds a "_g" suffix to limb overlays icon states if the skin_tone is a custom one.
+
 //DNA - Because fuck you and your magic numbers being all over the codebase.
 #define DNA_BLOCK_SIZE				3
 
@@ -103,6 +108,8 @@
 #define TR_KEEPSE		(1<<5)	// changelings shouldn't edit the DNA's SE when turning into a monkey
 #define TR_DEFAULTMSG	(1<<6)
 #define TR_KEEPORGANS	(1<<8)
+#define TR_KEEPREAGENTS	(1<<10)
+#define TR_KEEPSTUNS	(1<<9)
 
 
 #define CLONER_FRESH_CLONE "fresh"
@@ -132,8 +139,10 @@
 #define NOGENITALS		21	//Cannot create, use, or otherwise have genitals
 #define MATRIXED		22	//if icon is color matrix'd
 #define SKINTONE		23	//uses skin tones
-#define HORNCOLOR		24
-#define WINGCOLOR		25
+#define CUSTOM_SKINTONE	24	//adds a "_g" suffix to bodypart overlays icon states if a custom skintone is used.
+#define HORNCOLOR		25
+#define WINGCOLOR		26
+#define CAN_SCAR		27 // If this species can be scarred (fleshy)
 
 //organ slots
 #define ORGAN_SLOT_BRAIN "brain"

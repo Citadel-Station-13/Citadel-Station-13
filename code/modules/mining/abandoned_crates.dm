@@ -75,8 +75,7 @@
 				new /obj/item/clothing/neck/petcollar(src)
 		if(63 to 64)
 			for(var/i in 1 to rand(4, 7))
-				var/newcoin = pick(/obj/item/coin/silver, /obj/item/coin/silver, /obj/item/coin/silver, /obj/item/coin/iron, /obj/item/coin/iron, /obj/item/coin/iron, /obj/item/coin/gold, /obj/item/coin/diamond, /obj/item/coin/plasma, /obj/item/coin/uranium)
-				new newcoin(src)
+				new /obj/effect/spawner/lootdrop/coin(src)
 		if(65 to 66)
 			new /obj/item/clothing/suit/ianshirt(src)
 			new /obj/item/clothing/suit/hooded/ian_costume(src)
@@ -150,8 +149,7 @@
 		if(100)
 			new /obj/item/clothing/head/bearpelt(src)
 
-//ATTACK HAND IGNORING PARENT RETURN VALUE
-/obj/structure/closet/crate/secure/loot/attack_hand(mob/user)
+/obj/structure/closet/crate/secure/loot/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	if(locked)
 		to_chat(user, "<span class='notice'>The crate is locked with a Deca-code lock.</span>")
 		var/input = input(usr, "Enter [codelen] digits. All digits must be unique.", "Deca-Code Lock", "") as text

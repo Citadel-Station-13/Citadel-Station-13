@@ -14,9 +14,8 @@
 		return FALSE
 	if(HAS_TRAIT(C, TRAIT_NODISMEMBER))
 		return FALSE
-
 	var/obj/item/bodypart/affecting = C.get_bodypart(BODY_ZONE_CHEST)
-	affecting.receive_damage(CLAMP(brute_dam/2 * affecting.body_damage_coeff, 15, 50), CLAMP(burn_dam/2 * affecting.body_damage_coeff, 0, 50)) //Damage the chest based on limb's existing damage
+	affecting.receive_damage(clamp(brute_dam/2 * affecting.body_damage_coeff, 15, 50), clamp(burn_dam/2 * affecting.body_damage_coeff, 0, 50), wound_bonus=CANT_WOUND) //Damage the chest based on limb's existing damage
 	C.visible_message("<span class='danger'><B>[C]'s [src.name] has been violently dismembered!</B></span>")
 	C.emote("scream")
 	SEND_SIGNAL(C, COMSIG_ADD_MOOD_EVENT, "dismembered", /datum/mood_event/dismembered)
@@ -44,6 +43,10 @@
 	throw_at(target_turf, throw_range, throw_speed)
 	return TRUE
 
+/obj/item/bodypart/head/dismember()
+	if(HAS_TRAIT(owner, TRAIT_NODECAP))
+		return FALSE
+	..()
 
 /obj/item/bodypart/chest/dismember()
 	if(!owner)
@@ -53,6 +56,8 @@
 		return FALSE
 	if(HAS_TRAIT(C, TRAIT_NODISMEMBER))
 		return FALSE
+	if(HAS_TRAIT(C, TRAIT_NOGUT)) //Just for not allowing gutting
+		return FALSE
 	. = list()
 	var/organ_spilled = 0
 	var/turf/T = get_turf(C)
@@ -60,8 +65,7 @@
 	playsound(get_turf(C), 'sound/misc/splort.ogg', 80, 1)
 	for(var/X in C.internal_organs)
 		var/obj/item/organ/O = X
-		var/org_zone = check_zone(O.zone)
-		if(org_zone != BODY_ZONE_CHEST)
+		if(O.organ_flags & ORGAN_NO_DISMEMBERMENT || check_zone(O.zone) != BODY_ZONE_CHEST)
 			continue
 		O.Remove()
 		O.forceMove(T)
@@ -79,17 +83,27 @@
 
 
 //limb removal. The "special" argument is used for swapping a limb with a new one without the effects of losing a limb kicking in.
-/obj/item/bodypart/proc/drop_limb(special)
+/obj/item/bodypart/proc/drop_limb(special, dismembered)
 	if(!owner)
 		return
 	var/atom/Tsec = owner.drop_location()
 	var/mob/living/carbon/C = owner
+	SEND_SIGNAL(C, COMSIG_CARBON_REMOVE_LIMB, src, dismembered)
 	update_limb(1)
 	C.bodyparts -= src
 
 	if(held_index)
 		C.dropItemToGround(owner.get_item_for_held_index(held_index), 1)
 		C.hand_bodyparts[held_index] = null
+
+	for(var/thing in scars)
+		var/datum/scar/S = thing
+		S.victim = null
+		LAZYREMOVE(owner.all_scars, S)
+
+	for(var/thing in wounds)
+		var/datum/wound/W = thing
+		W.remove_wound(TRUE)
 
 	owner = null
 
@@ -294,14 +308,23 @@
 	for(var/obj/item/organ/O in contents)
 		O.Insert(C)
 
+	for(var/thing in scars)
+		var/datum/scar/S = thing
+		S.victim = C
+		LAZYADD(C.all_scars, thing)
+
+	for(var/i in wounds)
+		var/datum/wound/W = i
+		W.apply_wound(src, TRUE)
+
 	update_bodypart_damage_state()
+	update_disabled()
 
 	C.updatehealth()
 	C.update_body()
 	C.update_hair()
 	C.update_damage_overlays()
 	C.update_mobility()
-
 
 /obj/item/bodypart/head/attach_limb(mob/living/carbon/C, special)
 	//Transfer some head appearance vars over

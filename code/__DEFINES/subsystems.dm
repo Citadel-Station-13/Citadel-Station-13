@@ -62,9 +62,11 @@
 #define INIT_ORDER_JOBS				65
 #define INIT_ORDER_QUIRKS			60
 #define INIT_ORDER_TICKER			55
-#define INIT_ORDER_INSTRUMENTS			53
+#define INIT_ORDER_INSTRUMENTS		53
 #define INIT_ORDER_MAPPING			50
-#define INIT_ORDER_NETWORKS			45
+#define INIT_ORDER_ECONOMY			45
+#define INIT_ORDER_NETWORKS			40
+#define INIT_ORDER_HOLODECK			35
 #define INIT_ORDER_ATOMS			30
 #define INIT_ORDER_LANGUAGE			25
 #define INIT_ORDER_MACHINES			20
@@ -90,12 +92,12 @@
 // Subsystem fire priority, from lowest to highest priority
 // If the subsystem isn't listed here it's either DEFAULT or PROCESS (if it's a processing subsystem child)
 
+#define FIRE_PRIORITY_VORE			5
 #define FIRE_PRIORITY_PING			10
 #define FIRE_PRIORITY_IDLE_NPC		10
 #define FIRE_PRIORITY_SERVER_MAINT	10
 #define FIRE_PRIORITY_RESEARCH		10
 #define FIRE_PRIORITY_VIS			10
-#define FIRE_PRIORITY_VORE			10
 #define FIRE_PRIORITY_GARBAGE		15
 #define FIRE_PRIORITY_WET_FLOORS	20
 #define FIRE_PRIORITY_AIR			20
@@ -105,6 +107,7 @@
 #define FIRE_PRIORITY_INSTRUMENTS	30
 #define FIRE_PRIORITY_FIELDS		30
 #define FIRE_PRIOTITY_SMOOTHING		35
+#define FIRE_PRIORITY_HUDS			40
 #define FIRE_PRIORITY_NETWORKS		40
 #define FIRE_PRIORITY_OBJ			40
 #define FIRE_PRIORITY_ACID			40
@@ -115,6 +118,7 @@
 #define FIRE_PRIORITY_NPC			80
 #define FIRE_PRIORITY_MOBS			100
 #define FIRE_PRIORITY_TGUI			110
+#define FIRE_PRIORITY_PROJECTILES	200
 #define FIRE_PRIORITY_TICKER		200
 #define FIRE_PRIORITY_ATMOS_ADJACENCY	300
 #define FIRE_PRIORITY_CHAT			400
@@ -131,8 +135,16 @@
 
 #define RUNLEVELS_DEFAULT (RUNLEVEL_SETUP | RUNLEVEL_GAME | RUNLEVEL_POSTGAME)
 
-
-
+// SSair run section
+#define SSAIR_PIPENETS 1
+#define SSAIR_ATMOSMACHINERY 2
+#define SSAIR_EXCITEDGROUPS 3
+#define SSAIR_HIGHPRESSURE 4
+#define SSAIR_HOTSPOTS 5
+#define SSAIR_SUPERCONDUCTIVITY 6
+#define SSAIR_REBUILD_PIPENETS 7
+#define SSAIR_EQUALIZE 8
+#define SSAIR_ACTIVETURFS 9
 
 #define COMPILE_OVERLAYS(A)\
 	if (TRUE) {\
@@ -141,14 +153,17 @@
 		var/list/po = A.priority_overlays;\
 		if(LAZYLEN(rm)){\
 			A.overlays -= rm;\
-			rm.Cut();\
+			A.remove_overlays = null;\
 		}\
 		if(LAZYLEN(ad)){\
 			A.overlays |= ad;\
-			ad.Cut();\
+			A.add_overlays = null;\
 		}\
 		if(LAZYLEN(po)){\
 			A.overlays |= po;\
+		}\
+		else{\
+			A.priority_overlays = null;\
 		}\
 		A.flags_1 &= ~OVERLAY_QUEUED_1;\
 	}

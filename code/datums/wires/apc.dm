@@ -1,6 +1,7 @@
 /datum/wires/apc
 	holder_type = /obj/machinery/power/apc
 	proper_name = "APC"
+	req_knowledge = JOB_SKILL_MASTER
 
 /datum/wires/apc/New(atom/holder)
 	wires = list(
@@ -29,6 +30,7 @@
 		if(WIRE_POWER1, WIRE_POWER2) // Short for a long while.
 			if(!A.shorted)
 				A.shorted = TRUE
+				A.update()
 				addtimer(CALLBACK(A, /obj/machinery/power/apc.proc/reset, wire), 1200)
 		if(WIRE_IDSCAN) // Unlock for a little while.
 			A.locked = FALSE
@@ -48,6 +50,7 @@
 			else
 				A.shorted = TRUE
 				A.shock(usr, 50)
+			A.update()
 		if(WIRE_AI) // Disable AI control.
 			if(mend)
 				A.aidisabled = FALSE

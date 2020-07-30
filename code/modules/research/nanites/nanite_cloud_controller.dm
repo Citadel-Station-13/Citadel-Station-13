@@ -56,7 +56,7 @@
 /obj/machinery/computer/nanite_cloud_controller/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
-		ui = new(user, src, ui_key, "nanite_cloud_control", name, ui_x, ui_y, master_ui, state)
+		ui = new(user, src, ui_key, "NaniteCloudControl", name, ui_x, ui_y, master_ui, state)
 		ui.open()
 
 /obj/machinery/computer/nanite_cloud_controller/ui_data()
@@ -174,7 +174,7 @@
 			var/cloud_id = new_backup_id
 			if(!isnull(cloud_id))
 				playsound(src, 'sound/machines/terminal_prompt.ogg', 50, FALSE)
-				cloud_id = CLAMP(round(cloud_id, 1),1,100)
+				cloud_id = clamp(round(cloud_id, 1),1,100)
 				generate_backup(cloud_id, usr)
 			. = TRUE
 		if("delete_backup")

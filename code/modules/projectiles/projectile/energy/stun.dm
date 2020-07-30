@@ -10,7 +10,7 @@
 	jitter = 20
 	hitsound = 'sound/weapons/taserhit.ogg'
 	range = 14
-	speed = 0.6
+	pixels_per_second = TILES_TO_PIXELS(16.667)
 	tracer_type = /obj/effect/projectile/tracer/stun
 	muzzle_type = /obj/effect/projectile/muzzle/stun
 	impact_type = /obj/effect/projectile/impact/stun

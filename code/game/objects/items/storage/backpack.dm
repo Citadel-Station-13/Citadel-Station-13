@@ -24,9 +24,9 @@
 /obj/item/storage/backpack/ComponentInitialize()
 	. = ..()
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.max_combined_w_class = 21
-	STR.max_w_class = WEIGHT_CLASS_NORMAL
-	STR.max_items = 21
+	STR.storage_flags = STORAGE_FLAGS_VOLUME_DEFAULT
+	STR.max_volume = STORAGE_VOLUME_BACKPACK
+	STR.max_w_class = MAX_WEIGHT_CLASS_BACKPACK
 
 /*
  * Backpack Types
@@ -64,9 +64,9 @@
 /obj/item/storage/backpack/holding/ComponentInitialize()
 	. = ..()
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.allow_big_nesting = TRUE
-	STR.max_w_class = WEIGHT_CLASS_BULKY
-	STR.max_combined_w_class = 35
+	STR.max_w_class = MAX_WEIGHT_CLASS_BAG_OF_HOLDING
+	STR.storage_flags = STORAGE_FLAGS_VOLUME_DEFAULT
+	STR.max_volume = STORAGE_VOLUME_BAG_OF_HOLDING
 
 /obj/item/storage/backpack/holding/suicide_act(mob/living/user)
 	user.visible_message("<span class='suicide'>[user] is jumping into [src]! It looks like [user.p_theyre()] trying to commit suicide.</span>")
@@ -344,7 +344,7 @@
 /obj/item/storage/backpack/duffelbag/ComponentInitialize()
 	. = ..()
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.max_combined_w_class = 30
+	STR.max_volume = STORAGE_VOLUME_DUFFLEBAG
 
 /obj/item/storage/backpack/duffelbag/captain
 	name = "captain's duffel bag"
@@ -369,6 +369,7 @@
 	new /obj/item/circular_saw(src)
 	new /obj/item/surgicaldrill(src)
 	new /obj/item/cautery(src)
+	new /obj/item/bonesetter(src)
 	new /obj/item/surgical_drapes(src)
 	new /obj/item/clothing/mask/surgical(src)
 	new /obj/item/reagent_containers/medspray/sterilizine(src)
@@ -391,6 +392,7 @@
 	new /obj/item/circular_saw(src)
 	new /obj/item/surgicaldrill(src)
 	new /obj/item/cautery(src)
+	new /obj/item/bonesetter(src)
 	new /obj/item/surgical_drapes(src)
 	new /obj/item/clothing/mask/surgical(src)
 	new /obj/item/reagent_containers/medspray/sterilizine(src)
@@ -485,6 +487,7 @@
 	new /obj/item/circular_saw(src)
 	new /obj/item/surgicaldrill(src)
 	new /obj/item/cautery(src)
+	new /obj/item/bonesetter(src)
 	new /obj/item/surgical_drapes(src)
 	new /obj/item/clothing/suit/straight_jacket(src)
 	new /obj/item/clothing/mask/muzzle(src)
@@ -501,8 +504,8 @@
 	new /obj/item/scalpel/advanced(src)
 	new /obj/item/retractor/advanced(src)
 	new /obj/item/surgicaldrill/advanced(src)
+	new /obj/item/bonesetter(src)
 	new /obj/item/surgical_drapes(src)
-	new /obj/item/storage/firstaid/tactical(src)
 	new /obj/item/clothing/suit/straight_jacket(src)
 	new /obj/item/clothing/mask/muzzle(src)
 	new /obj/item/mmi/syndie(src)
@@ -648,3 +651,9 @@ obj/item/storage/backpack/duffelbag/syndie/shredderbundle
 	new /obj/item/gun/ballistic/automatic/flechette/shredder(src)
 	new /obj/item/storage/belt/military(src)
 	new /obj/item/clothing/suit/space/hardsuit/syndi/elite(src)
+
+/obj/item/storage/backpack/snail
+	name = "snail shell"
+	desc = "Worn by snails as armor and storage compartment."
+	icon_state = "snailshell"
+	item_state = "snailshell"

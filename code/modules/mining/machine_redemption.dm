@@ -37,16 +37,19 @@
 /obj/machinery/mineral/ore_redemption/RefreshParts()
 	var/ore_pickup_rate_temp = 15
 	var/point_upgrade_temp = 1
-	var/ore_multiplier_temp = 1
+	var/avg_bin_level = 0
+	var/bins = 0
 	for(var/obj/item/stock_parts/matter_bin/B in component_parts)
-		ore_multiplier_temp = 0.65 + (0.35 * B.rating)
+		avg_bin_level = B.rating
+		bins++
 	for(var/obj/item/stock_parts/manipulator/M in component_parts)
 		ore_pickup_rate_temp = 15 * M.rating
 	for(var/obj/item/stock_parts/micro_laser/L in component_parts)
 		point_upgrade_temp = 0.65 + (0.35 * L.rating)
+	avg_bin_level /= bins? bins : 1
+	ore_multiplier = STANDARD_PART_LEVEL_ORE_COEFFICIENT(avg_bin_level)
 	ore_pickup_rate = ore_pickup_rate_temp
 	point_upgrade = point_upgrade_temp
-	ore_multiplier = round(ore_multiplier_temp, 0.01)
 
 /obj/machinery/mineral/ore_redemption/examine(mob/user)
 	. = ..()
@@ -54,6 +57,8 @@
 		. += "<span class='notice'>The status display reads: Smelting <b>[ore_multiplier]</b> sheet(s) per piece of ore.<br>Reward point generation at <b>[point_upgrade*100]%</b>.<br>Ore pickup speed at <b>[ore_pickup_rate]</b>.</span>"
 
 /obj/machinery/mineral/ore_redemption/proc/smelt_ore(obj/item/stack/ore/O)
+	if(QDELETED(O))
+		return
 	var/datum/component/material_container/mat_container = materials.mat_container
 	if (!mat_container)
 		return
@@ -193,7 +198,7 @@
 /obj/machinery/mineral/ore_redemption/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
-		ui = new(user, src, ui_key, "ore_redemption_machine", "Ore Redemption Machine", 440, 550, master_ui, state)
+		ui = new(user, src, ui_key, "OreRedemptionMachine", "Ore Redemption Machine", 440, 550, master_ui, state)
 		ui.open()
 
 /obj/machinery/mineral/ore_redemption/ui_data(mob/user)

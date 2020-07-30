@@ -120,12 +120,6 @@
 	message = "of cloth"
 	export_types = list(/obj/item/stack/sheet/cloth)
 
-/datum/export/stack/silk
-	cost = 200 //The new plasma
-	unit_name = "sheets"
-	message = "of silk"
-	export_types = list(/obj/item/stack/sheet/silk)
-
 /datum/export/stack/duracloth
 	cost = 40
 	unit_name = "sheets"
@@ -161,3 +155,10 @@
 	cost = 30
 	message = "of paperframes"
 	export_types = list(/obj/item/stack/sheet/paperframes)
+
+/datum/export/stack/telecrystal
+	unit_name = "raw"
+	cost = 1000
+	message = "telecrystals"
+	export_types = list(/obj/item/stack/telecrystal)
+

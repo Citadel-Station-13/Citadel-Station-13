@@ -267,7 +267,7 @@
 /datum/export/weapon/duelsaber
 	cost = 360 //Get it?
 	unit_name = "energy saber"
-	export_types = list(/obj/item/twohanded/dualsaber)
+	export_types = list(/obj/item/dualsaber)
 
 /datum/export/weapon/esword
 	cost = 130

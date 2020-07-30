@@ -275,6 +275,16 @@
 	for(var/i in 1 to 7)
 		new /obj/item/grenade/flashbang(src)
 
+obj/item/storage/box/stingbangs
+	name = "box of stingbangs (WARNING)"
+	desc = "<B>WARNING: These devices are extremely dangerous and can cause severe injuries or death in repeated use.</B>"
+	icon_state = "secbox"
+	illustration = "flashbang"
+
+/obj/item/storage/box/stingbangs/PopulateContents()
+	for(var/i in 1 to 5)
+		new /obj/item/grenade/stingbang(src)
+
 /obj/item/storage/box/flashes
 	name = "box of flashbulbs"
 	desc = "<B>WARNING: Flashes can cause serious eye damage, protective eyewear is required.</B>"
@@ -434,6 +444,7 @@
 	desc = "<B>Instructions:</B> <I>Heat in microwave. Product will cool if not eaten within seven minutes.</I>"
 	icon_state = "donkpocketbox"
 	illustration=null
+	custom_premium_price = PRICE_ABOVE_NORMAL // git gud
 
 /obj/item/storage/box/donkpockets/ComponentInitialize()
 	. = ..()
@@ -454,11 +465,11 @@
 	. = ..()
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.max_items = 7
-	STR.can_hold = typecacheof(list(/obj/item/reagent_containers/food/snacks/monkeycube))
+	STR.can_hold = typecacheof(list(/obj/item/reagent_containers/food/snacks/cube/monkey))
 
 /obj/item/storage/box/monkeycubes/PopulateContents()
 	for(var/i in 1 to 5)
-		new /obj/item/reagent_containers/food/snacks/monkeycube(src)
+		new /obj/item/reagent_containers/food/snacks/cube/monkey(src)
 
 /obj/item/storage/box/ids
 	name = "box of spare IDs"
@@ -622,6 +633,7 @@
 	item_state = "zippo"
 	w_class = WEIGHT_CLASS_TINY
 	slot_flags = ITEM_SLOT_BELT
+	custom_price = PRICE_REALLY_CHEAP
 
 /obj/item/storage/box/matches/ComponentInitialize()
 	. = ..()
@@ -714,9 +726,9 @@
 	return (BRUTELOSS)
 
 /obj/item/storage/box/hug/attack_self(mob/user)
-	..()
-	user.changeNext_move(CLICK_CD_MELEE)
-	playsound(loc, "rustle", 50, 1, -5)
+	. = ..()
+	user.DelayNextAction(CLICK_CD_MELEE)
+	playsound(src, "rustle", 50, 1, -5)
 	user.visible_message("<span class='notice'>[user] hugs \the [src].</span>","<span class='notice'>You hug \the [src].</span>")
 	SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT,"hugbox", /datum/mood_event/hugbox)
 
@@ -743,8 +755,8 @@
 
 //////
 /obj/item/storage/box/hug/medical/PopulateContents()
-	new /obj/item/stack/medical/bruise_pack(src)
-	new /obj/item/stack/medical/ointment(src)
+	new /obj/item/stack/medical/suture(src)
+	new /obj/item/stack/medical/mesh(src)
 	new /obj/item/reagent_containers/hypospray/medipen(src)
 
 // Clown survival box
@@ -850,12 +862,6 @@
 
 
 
-#define NODESIGN "None"
-#define NANOTRASEN "NanotrasenStandard"
-#define SYNDI "SyndiSnacks"
-#define HEART "Heart"
-#define SMILEY "SmileyFace"
-
 /obj/item/storage/box/papersack
 	name = "paper sack"
 	desc = "A sack neatly crafted out of paper."
@@ -863,7 +869,18 @@
 	item_state = "paperbag_None"
 	resistance_flags = FLAMMABLE
 	foldable = null
-	var/design = NODESIGN
+	/// A list of all available papersack reskins
+	var/list/papersack_designs = list()
+
+/obj/item/storage/box/papersack/Initialize(mapload)
+	. = ..()
+	papersack_designs = sortList(list(
+		"None" = image(icon = src.icon, icon_state = "paperbag_None"),
+		"NanotrasenStandard" = image(icon = src.icon, icon_state = "paperbag_NanotrasenStandard"),
+		"SyndiSnacks" = image(icon = src.icon, icon_state = "paperbag_SyndiSnacks"),
+		"Heart" = image(icon = src.icon, icon_state = "paperbag_Heart"),
+		"SmileyFace" = image(icon = src.icon, icon_state = "paperbag_SmileyFace")
+		))
 
 /obj/item/storage/box/papersack/update_icon_state()
 	if(contents.len == 0)
@@ -871,55 +888,64 @@
 	else
 		icon_state = "[item_state]_closed"
 
+
 /obj/item/storage/box/papersack/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/pen))
-		//if a pen is used on the sack, dialogue to change its design appears
-		if(contents.len)
-			to_chat(user, "<span class='warning'>You can't modify [src] with items still inside!</span>")
-			return
-		var/list/designs = list(NODESIGN, NANOTRASEN, SYNDI, HEART, SMILEY, "Cancel")
-		var/switchDesign = input("Select a Design:", "Paper Sack Design", designs[1]) in designs
-		if(get_dist(usr, src) > 1)
-			to_chat(usr, "<span class='warning'>You have moved too far away!</span>")
-			return
-		var/choice = designs.Find(switchDesign)
-		if(design == designs[choice] || designs[choice] == "Cancel")
-			return 0
-		to_chat(usr, "<span class='notice'>You make some modifications to [src] using your pen.</span>")
-		design = designs[choice]
-		icon_state = "paperbag_[design]"
-		item_state = "paperbag_[design]"
-		switch(designs[choice])
-			if(NODESIGN)
+		var/choice = show_radial_menu(user, src , papersack_designs, custom_check = CALLBACK(src, .proc/check_menu, user, W), radius = 36, require_near = TRUE)
+		if(!choice)
+			return FALSE
+		if(icon_state == "paperbag_[choice]")
+			return FALSE
+		switch(choice)
+			if("None")
 				desc = "A sack neatly crafted out of paper."
-			if(NANOTRASEN)
+			if("NanotrasenStandard")
 				desc = "A standard Nanotrasen paper lunch sack for loyal employees on the go."
-			if(SYNDI)
+			if("SyndiSnacks")
 				desc = "The design on this paper sack is a remnant of the notorious 'SyndieSnacks' program."
-			if(HEART)
+			if("Heart")
 				desc = "A paper sack with a heart etched onto the side."
-			if(SMILEY)
+			if("SmileyFace")
 				desc = "A paper sack with a crude smile etched onto the side."
-		return 0
+			else
+				return FALSE
+		to_chat(user, "<span class='notice'>You make some modifications to [src] using your pen.</span>")
+		icon_state = "paperbag_[choice]"
+		item_state = "paperbag_[choice]"
+		return FALSE
 	else if(W.get_sharpness())
 		if(!contents.len)
 			if(item_state == "paperbag_None")
 				user.show_message("<span class='notice'>You cut eyeholes into [src].</span>", MSG_VISUAL)
 				new /obj/item/clothing/head/papersack(user.loc)
 				qdel(src)
-				return 0
+				return FALSE
 			else if(item_state == "paperbag_SmileyFace")
 				user.show_message("<span class='notice'>You cut eyeholes into [src] and modify the design.</span>", MSG_VISUAL)
 				new /obj/item/clothing/head/papersack/smiley(user.loc)
 				qdel(src)
-				return 0
+				return FALSE
 	return ..()
 
-#undef NODESIGN
-#undef NANOTRASEN
-#undef SYNDI
-#undef HEART
-#undef SMILEY
+/**
+  * check_menu: Checks if we are allowed to interact with a radial menu
+  *
+  * Arguments:
+  * * user The mob interacting with a menu
+  * * P The pen used to interact with a menu
+  */
+/obj/item/storage/box/papersack/proc/check_menu(mob/user, obj/item/pen/P)
+	if(!istype(user))
+		return FALSE
+	if(user.incapacitated())
+		return FALSE
+	if(contents.len)
+		to_chat(user, "<span class='warning'>You can't modify [src] with items still inside!</span>")
+		return FALSE
+	if(!P || !user.is_holding(P))
+		to_chat(user, "<span class='warning'>You need a pen to modify [src]!</span>")
+		return FALSE
+	return TRUE
 
 /obj/item/storage/box/ingredients //This box is for the randomly chosen version the chef spawns with, it shouldn't actually exist.
 	name = "ingredients box"
@@ -953,7 +979,7 @@
 							  /obj/item/reagent_containers/food/snacks/grown/corn,
 							  /obj/item/reagent_containers/food/snacks/grown/mushroom/plumphelmet,
 							  /obj/item/reagent_containers/food/snacks/grown/mushroom/chanterelle,
-							  /obj/item/reagent_containers/food/snacks/faggot,
+							  /obj/item/reagent_containers/food/snacks/meatball,
 							  /obj/item/reagent_containers/food/snacks/grown/citrus/orange,
 							  /obj/item/reagent_containers/food/snacks/grown/citrus/lemon,
 							  /obj/item/reagent_containers/food/snacks/grown/citrus/lime,
@@ -1005,7 +1031,7 @@
 /obj/item/storage/box/ingredients/italian/PopulateContents()
 	for(var/i in 1 to 3)
 		new /obj/item/reagent_containers/food/snacks/grown/tomato(src)
-		new /obj/item/reagent_containers/food/snacks/faggot(src)
+		new /obj/item/reagent_containers/food/snacks/meatball(src)
 	new /obj/item/reagent_containers/food/drinks/bottle/wine(src)
 
 /obj/item/storage/box/ingredients/vegetarian
@@ -1028,7 +1054,7 @@
 		new /obj/item/reagent_containers/food/snacks/grown/potato(src)
 		new /obj/item/reagent_containers/food/snacks/grown/tomato(src)
 		new /obj/item/reagent_containers/food/snacks/grown/corn(src)
-	new /obj/item/reagent_containers/food/snacks/faggot(src)
+	new /obj/item/reagent_containers/food/snacks/meatball(src)
 
 /obj/item/storage/box/ingredients/fruity
 	theme_name = "fruity"
@@ -1084,7 +1110,7 @@
 	new /obj/item/reagent_containers/food/snacks/carpmeat(src)
 	new /obj/item/reagent_containers/food/snacks/meat/slab/xeno(src)
 	new /obj/item/reagent_containers/food/snacks/meat/slab/corgi(src)
-	new /obj/item/reagent_containers/food/snacks/faggot(src)
+	new /obj/item/reagent_containers/food/snacks/meatball(src)
 
 /obj/item/storage/box/ingredients/exotic
 	theme_name = "exotic"
@@ -1117,9 +1143,9 @@
 	desc = "A box containing a gift for worthy golems."
 
 /obj/item/storage/box/rndboards/PopulateContents()
-	new /obj/item/circuitboard/machine/protolathe(src)
+	new /obj/item/circuitboard/machine/protolathe/offstation(src)
 	new /obj/item/circuitboard/machine/destructive_analyzer(src)
-	new /obj/item/circuitboard/machine/circuit_imprinter(src)
+	new /obj/item/circuitboard/machine/circuit_imprinter/offstation(src)
 	new /obj/item/circuitboard/computer/rdconsole(src)
 
 /obj/item/storage/box/silver_sulf
@@ -1328,6 +1354,7 @@
 	name = "box of marshmallows"
 	desc = "A box of marshmallows."
 	illustration = "marshmallow"
+	custom_premium_price = PRICE_BELOW_NORMAL
 
 /obj/item/storage/box/marshmallow/PopulateContents()
 	for (var/i in 1 to 5)
@@ -1391,3 +1418,9 @@
 	new /obj/item/reagent_containers/glass/beaker/meta(src)
 	new /obj/item/reagent_containers/glass/beaker/noreact(src)
 	new /obj/item/reagent_containers/glass/beaker/bluespace(src)
+
+/obj/item/storage/box/strange_seeds_5pack
+
+/obj/item/storage/box/strange_seeds_5pack/PopulateContents()
+	for(var/i in 1 to 5)
+		new /obj/item/seeds/random(src)

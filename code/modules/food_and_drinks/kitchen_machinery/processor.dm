@@ -14,10 +14,13 @@
 	var/processing = FALSE
 	var/rating_speed = 1
 	var/rating_amount = 1
+	var/quality_increase = 5
 
 /obj/machinery/processor/RefreshParts()
+	quality_increase = 0
 	for(var/obj/item/stock_parts/matter_bin/B in component_parts)
 		rating_amount = B.rating
+		quality_increase += B.rating * 5
 	for(var/obj/item/stock_parts/manipulator/M in component_parts)
 		rating_speed = M.rating
 
@@ -28,8 +31,10 @@
 
 /obj/machinery/processor/proc/process_food(datum/food_processor_process/recipe, atom/movable/what)
 	if (recipe.output && loc && !QDELETED(src))
+		var/obj/item/reagent_containers/food/food_input = what
 		for(var/i = 0, i < rating_amount, i++)
-			new recipe.output(drop_location())
+			var/obj/item/reagent_containers/food/food_output = new recipe.output(drop_location())
+			food_output.adjust_food_quality(food_input.food_quality + quality_increase)
 	if (ismob(what))
 		var/mob/themob = what
 		themob.gib(TRUE,TRUE,TRUE)

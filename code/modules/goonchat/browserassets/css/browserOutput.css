@@ -313,6 +313,8 @@ h1.alert, h2.alert		{color: #000000;}
 .rose					{color: #ff5050;}
 .info					{color: #0000CC;}
 .notice					{color: #000099;}
+.tinynotice				{color: #6685f5; font-style: italic;	font-size: 85%;}
+.smallnotice			{color: #6685f5; font-style: italic;	font-size: 90%;}
 .boldnotice				{color: #000099;	font-weight: bold;}
 .adminnotice			{color: #0000ff;}
 .adminhelp              {color: #ff0000;    font-weight: bold;}
@@ -403,6 +405,12 @@ h1.alert, h2.alert		{color: #000000;}
 .his_grace				{color: #15D512;	font-family: "Courier New", cursive, sans-serif; font-style: italic;}
 .spooky					{color: #FF6100;}
 .velvet					{color: #660015; 	font-weight: bold; animation: velvet 5000ms infinite;}
+
+.lethal					{color: #bf3d3d;	font-weight: bold;}
+.stun					{color: #0f81bc;	font-weight: bold;}
+.ion					{color: #d084d6;	font-weight: bold;}
+.xray					{color: #32c025;	font-weight: bold;}
+
 @keyframes velvet {
 	0% { color: #400020; }
 	40% { color: #FF0000; }

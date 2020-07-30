@@ -19,7 +19,7 @@
 	flags_1 = CONDUCT_1
 	icon_state = "borg_l_arm"
 	status = BODYPART_ROBOTIC
-	
+
 	brute_reduction = 2
 	burn_reduction = 1
 
@@ -40,7 +40,7 @@
 	flags_1 = CONDUCT_1
 	icon_state = "borg_r_arm"
 	status = BODYPART_ROBOTIC
-	
+
 	brute_reduction = 2
 	burn_reduction = 1
 
@@ -61,7 +61,7 @@
 	flags_1 = CONDUCT_1
 	icon_state = "borg_l_leg"
 	status = BODYPART_ROBOTIC
-	
+
 	brute_reduction = 2
 	burn_reduction = 1
 
@@ -82,7 +82,7 @@
 	flags_1 = CONDUCT_1
 	icon_state = "borg_r_leg"
 	status = BODYPART_ROBOTIC
-	
+
 	brute_reduction = 2
 	burn_reduction = 1
 
@@ -102,7 +102,7 @@
 	flags_1 = CONDUCT_1
 	icon_state = "borg_chest"
 	status = BODYPART_ROBOTIC
-	
+
 	brute_reduction = 2
 	burn_reduction = 1
 
@@ -131,8 +131,7 @@
 		if(src.wired)
 			to_chat(user, "<span class='warning'>You have already inserted wire!</span>")
 			return
-		var/obj/item/stack/cable_coil/coil = W
-		if (coil.use(1))
+		if (W.use_tool(src, user, 0, 1))
 			src.wired = 1
 			to_chat(user, "<span class='notice'>You insert the wire.</span>")
 		else
@@ -164,7 +163,7 @@
 	flags_1 = CONDUCT_1
 	icon_state = "borg_head"
 	status = BODYPART_ROBOTIC
-	
+
 	brute_reduction = 5
 	burn_reduction = 4
 

@@ -53,7 +53,7 @@
 
 /mob/living/carbon/alien/humanoid/update_transform() //The old method of updating lying/standing was update_icons(). Aliens still expect that.
 	if(lying > 0)
-		lying = 90 //Anything else looks retarded
+		lying = 90 //Anything else looks silly
 	..()
 	update_icons()
 

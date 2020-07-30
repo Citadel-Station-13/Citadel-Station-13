@@ -9,7 +9,7 @@
 	var/buckle_prevents_pull = FALSE
 
 //Interaction
-/atom/movable/attack_hand(mob/living/user)
+/atom/movable/on_attack_hand(mob/living/user, act_intent = user.a_intent, unarmed_attack_flags)
 	. = ..()
 	if(.)
 		return
@@ -55,8 +55,12 @@
 		M.buckling = null
 		return FALSE
 
-	if(M.pulledby && buckle_prevents_pull)
-		M.pulledby.stop_pulling()
+	if(M.pulledby)
+		if(buckle_prevents_pull)
+			M.pulledby.stop_pulling()
+		else if(isliving(M.pulledby))
+			var/mob/living/L = M.pulledby
+			L.reset_pull_offsets(M, TRUE)
 
 	if(!check_loc && M.loc != loc)
 		M.forceMove(loc)
@@ -137,4 +141,17 @@
 				"<span class='notice'>You unbuckle yourself from [src].</span>",\
 				"<span class='italics'>You hear metal clanking.</span>")
 		add_fingerprint(user)
+	if(isliving(M.pulledby))
+		var/mob/living/L = M.pulledby
+		L.set_pull_offsets(M, L.grab_state)
 	return M
+
+/atom/movable/proc/precise_user_unbuckle_mob(mob/user)
+	if(!buckled_mobs)
+		return
+	else if(length(buckled_mobs) == 1)
+		return user_unbuckle_mob(buckled_mobs[1], user)
+	else
+		var/unbuckled = input(user, "Who do you wish to unbuckle?","Unbuckle Who?") as null|mob in buckled_mobs
+		return user_unbuckle_mob(unbuckled, user)
+

@@ -4,6 +4,11 @@
 	see_in_dark = 2
 	hud_possible = list(HEALTH_HUD,STATUS_HUD,ANTAG_HUD,NANITE_HUD,DIAG_NANITE_FULL_HUD,RAD_HUD)
 	pressure_resistance = 10
+	has_field_of_vision = TRUE
+
+	typing_indicator_enabled = TRUE
+
+	var/last_click_move = 0 // Stores the previous next_move value.
 
 	var/resize = 1 //Badminnery resize
 	var/lastattacker = null
@@ -24,11 +29,30 @@
 
 	var/mobility_flags = MOBILITY_FLAGS_DEFAULT
 
+	// Combat - Blocking/Parrying system
+	/// Our block_parry_data for unarmed blocks/parries. Currently only used for parrying, as unarmed block isn't implemented yet. YOU MUST RUN [get_block_parry_data(this)] INSTEAD OF DIRECTLY ACCESSING!
+	var/datum/block_parry_data/block_parry_data = /datum/block_parry_data		// defaults to *something* because [combat_flags] dictates whether or not we can unarmed block/parry.
+	// Blocking
+	/// The item the user is actively blocking with if any.
+	var/obj/item/active_block_item
+	// Parrying
+	/// Whether or not the user is in the middle of an active parry. Set to [UNARMED_PARRY], [ITEM_PARRY], [MARTIAL_PARRY] if parrying.
+	var/parrying = FALSE
+	/// The itme the user is currently parrying with, if any.
+	var/obj/item/active_parry_item
+	/// world.time of parry action start
+	var/parry_start_time = 0
+	/// Current parry effect.
+	var/obj/effect/abstract/parry/parry_visual_effect
+	/// world.time of last parry end
+	var/parry_end_time_last = 0
+	/// Successful parries within the current parry cycle. It's a list of efficiency percentages.
+	var/list/successful_parries
+
 	var/confused = 0	//Makes the mob move in random directions.
 
 	var/hallucination = 0 //Directly affects how long a mob will hallucinate for
 
-	var/last_special = 0 //Used by the resist verb, likely used to prevent players from bypassing next_move by logging in/out.
 	var/timeofdeath = 0
 
 	//Allows mobs to move through dense areas without restriction. For instance, in space or out of holder objects.
@@ -98,8 +122,6 @@
 
 	var/datum/riding/riding_datum
 
-	var/datum/language/selected_default_language
-
 	var/last_words	//used for database logging
 
 	var/list/obj/effect/proc_holder/abilities = list()
@@ -121,7 +143,7 @@
 
 	//// CITADEL STATION COMBAT ////
 	/// See __DEFINES/combat.dm
-	var/combat_flags = COMBAT_FLAGS_STAMSYSTEM_EXEMPT
+	var/combat_flags = COMBAT_FLAGS_SPRINT_EXEMPT
 	/// Next world.time when we will show a visible message on entering combat mode voluntarily again.
 	var/combatmessagecooldown = 0
 

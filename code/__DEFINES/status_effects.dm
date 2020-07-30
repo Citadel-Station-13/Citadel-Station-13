@@ -34,6 +34,10 @@
 
 #define STATUS_EFFECT_HIPPOCRATIC_OATH /datum/status_effect/hippocraticOath //Gives you an aura of healing as well as regrowing the Rod of Asclepius if lost
 
+#define STATUS_EFFECT_REGENERATIVE_CORE /datum/status_effect/regenerative_core	//removes damage slowdown while giving a slow regenerating effect
+
+#define STATUS_EFFECT_DETERMINED /datum/status_effect/determined //currently in a combat high from being seriously wounded
+
 /////////////
 // DEBUFFS //
 /////////////
@@ -78,7 +82,7 @@
 
 #define STATUS_EFFECT_CRUSHERMARK /datum/status_effect/crusher_mark //if struck with a proto-kinetic crusher, takes a ton of damage
 
-#define STATUS_EFFECT_SAWBLEED /datum/status_effect/saw_bleed //if the bleed builds up enough, takes a ton of damage
+#define STATUS_EFFECT_SAWBLEED /datum/status_effect/stacking/saw_bleed //if the bleed builds up enough, takes a ton of damage
 
 #define STATUS_EFFECT_NECKSLICE /datum/status_effect/neck_slice //Creates the flavor messages for the neck-slice
 
@@ -94,6 +98,8 @@
 
 #define STATUS_EFFECT_SPASMS /datum/status_effect/spasms //causes random muscle spasms
 
+#define STATUS_EFFECT_FAKE_VIRUS /datum/status_effect/fake_virus //gives you fluff messages for cough, sneeze, headache, etc but without an actual virus
+
 #define STATUS_EFFECT_BREASTS_ENLARGEMENT /datum/status_effect/chem/breast_enlarger //Applied slowdown due to the ominous bulk.
 
 #define STATUS_EFFECT_PENIS_ENLARGEMENT /datum/status_effect/chem/penis_enlarger //More applied slowdown, just like the above.
@@ -102,6 +108,8 @@
 #define STATUS_EFFECT_MESMERIZE /datum/status_effect/mesmerize //Just reskinned no_combat_mode
 
 #define STATUS_EFFECT_ELECTROSTAFF /datum/status_effect/electrostaff		//slows down victim
+
+#define STATUS_EFFECT_LIMP /datum/status_effect/limp //For when you have a busted leg (or two!) and want additional slowdown when walking on that leg
 
 /////////////
 // NEUTRAL //

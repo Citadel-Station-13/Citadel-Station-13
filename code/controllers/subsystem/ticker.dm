@@ -387,6 +387,9 @@ SUBSYSTEM_DEF(ticker)
 	for(var/mob/dead/new_player/N in GLOB.player_list)
 		var/mob/living/carbon/human/player = N.new_character
 		if(istype(player) && player.mind && player.mind.assigned_role)
+			var/datum/job/J = SSjob.GetJob(player.mind.assigned_role)
+			if(J)
+				J.standard_assign_skills(player.mind)
 			if(player.mind.assigned_role == "Captain")
 				captainless=0
 			if(player.mind.assigned_role != player.mind.special_role)
@@ -406,7 +409,7 @@ SUBSYSTEM_DEF(ticker)
 		var/mob/living = player.transfer_character()
 		if(living)
 			qdel(player)
-			living.notransform = TRUE
+			living.mob_transforming = TRUE
 			if(living.client)
 				if (living.client.prefs && living.client.prefs.auto_ooc)
 					if (living.client.prefs.chat_toggles & CHAT_OOC)
@@ -420,7 +423,7 @@ SUBSYSTEM_DEF(ticker)
 /datum/controller/subsystem/ticker/proc/release_characters(list/livings)
 	for(var/I in livings)
 		var/mob/living/L = I
-		L.notransform = FALSE
+		L.mob_transforming = FALSE
 
 /datum/controller/subsystem/ticker/proc/send_tip_of_the_round()
 	var/m

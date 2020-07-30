@@ -45,15 +45,15 @@
 		// (FINAL LIL WARNING)
 		while(time_til_cycle > 5)
 			sleep(10)
-			if (cancel_me)
+			if(cancel_me)
 				return
 		//sleep(TIME_BLOODSUCKER_DAY_FINAL_WARN - 50)
 		warn_daylight(3,"<span class = 'userdanger'>Seek cover, for Sol rises!</span>")
 
 		// Part 3: Night Ending
-		while (time_til_cycle > 0)
+		while(time_til_cycle > 0)
 			sleep(10)
-			if (cancel_me)
+			if(cancel_me)
 				return
 		//sleep(50)
 		warn_daylight(4,"<span class = 'userdanger'>Solar flares bombard the station with deadly UV light!</span><br><span class = ''>Stay in cover for the next [TIME_BLOODSUCKER_DAY / 60] minutes or risk Final Death!</span>",\
@@ -69,11 +69,11 @@
 		while(time_til_cycle > 0)
 			punish_vamps()
 			sleep(TIME_BLOODSUCKER_BURN_INTERVAL)
-			if (cancel_me)
+			if(cancel_me)
 				return
 			//daylight_time -= TIME_BLOODSUCKER_BURN_INTERVAL
 			// Issue Level Up!
-			if(!issued_XP && time_til_cycle <= 15)
+			if(!issued_XP && time_til_cycle <= 5)
 				issued_XP = TRUE
 				vamps_rank_up()
 
@@ -141,23 +141,23 @@
 				if(!bloodsuckerdatum.warn_sun_locker)
 					to_chat(M, "<span class='warning'>Your skin sizzles. The [M.current.loc] doesn't protect well against UV bombardment.</span>")
 					bloodsuckerdatum.warn_sun_locker = TRUE
-				M.current.adjustFireLoss(0.5 + bloodsuckerdatum.vamplevel / 2) // M.current.fireloss += 0.5 + bloodsuckerdatum.vamplevel / 2  //  Do DIRECT damage. Being spaced was causing this to not occur. setFireLoss(bloodsuckerdatum.vamplevel)
+				M.current.adjustFireLoss(0.5 + bloodsuckerdatum.bloodsucker_level / 2) // M.current.fireloss += 0.5 + bloodsuckerdatum.bloodsucker_level / 2  //  Do DIRECT damage. Being spaced was causing this to not occur. setFireLoss(bloodsuckerdatum.bloodsucker_level)
 				M.current.updatehealth()
 				SEND_SIGNAL(M.current, COMSIG_ADD_MOOD_EVENT, "vampsleep", /datum/mood_event/daylight_1)
 		// Out in the Open? Buh Bye
 		else
 			if(!bloodsuckerdatum.warn_sun_burn)
-				if(bloodsuckerdatum.vamplevel > 0)
+				if(bloodsuckerdatum.bloodsucker_level > 0)
 					to_chat(M, "<span class='userdanger'>The solar flare sets your skin ablaze!</span>")
 				else
 					to_chat(M, "<span class='userdanger'>The solar flare scalds your neophyte skin!</span>")
 				bloodsuckerdatum.warn_sun_burn = TRUE
 			if(M.current.fire_stacks <= 0)
 				M.current.fire_stacks = 0
-			if(bloodsuckerdatum.vamplevel > 0)
-				M.current.adjust_fire_stacks(0.2 + bloodsuckerdatum.vamplevel / 10)
+			if(bloodsuckerdatum.bloodsucker_level > 0)
+				M.current.adjust_fire_stacks(0.2 + bloodsuckerdatum.bloodsucker_level / 10)
 				M.current.IgniteMob()
-			M.current.adjustFireLoss(2 + bloodsuckerdatum.vamplevel) // M.current.fireloss += 2 + bloodsuckerdatum.vamplevel   //  Do DIRECT damage. Being spaced was causing this to not occur.  //setFireLoss(2 + bloodsuckerdatum.vamplevel)
+			M.current.adjustFireLoss(2 + bloodsuckerdatum.bloodsucker_level) // M.current.fireloss += 2 + bloodsuckerdatum.bloodsucker_level   //  Do DIRECT damage. Being spaced was causing this to not occur.  //setFireLoss(2 + bloodsuckerdatum.bloodsucker_level)
 			M.current.updatehealth()
 			SEND_SIGNAL(M.current, COMSIG_ADD_MOOD_EVENT, "vampsleep", /datum/mood_event/daylight_2)
 

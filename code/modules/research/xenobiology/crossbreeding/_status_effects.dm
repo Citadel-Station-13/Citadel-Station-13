@@ -191,7 +191,7 @@
 	alert_type = /obj/screen/alert/status_effect/bloodchill
 
 /datum/status_effect/bloodchill/on_apply()
-	owner.add_movespeed_modifier("bloodchilled", TRUE, 100, NONE, override = TRUE, multiplicative_slowdown = 3)
+	owner.add_movespeed_modifier(/datum/movespeed_modifier/status_effect/bloodchill)
 	return ..()
 
 /datum/status_effect/bloodchill/tick()
@@ -199,7 +199,7 @@
 		owner.adjustFireLoss(2)
 
 /datum/status_effect/bloodchill/on_remove()
-	owner.remove_movespeed_modifier("bloodchilled")
+	owner.remove_movespeed_modifier(/datum/movespeed_modifier/status_effect/bloodchill)
 	return ..()
 
 /obj/screen/alert/status_effect/bloodchill
@@ -213,7 +213,7 @@
 	alert_type = /obj/screen/alert/status_effect/bonechill
 
 /datum/status_effect/bonechill/on_apply()
-	owner.add_movespeed_modifier("bonechilled", TRUE, 100, NONE, override = TRUE, multiplicative_slowdown = 3)
+	owner.add_movespeed_modifier(/datum/movespeed_modifier/status_effect/bonechill)
 	return ..()
 
 /datum/status_effect/bonechill/tick()
@@ -223,7 +223,7 @@
 		owner.adjust_bodytemperature(-10)
 
 /datum/status_effect/bonechill/on_remove()
-	owner.remove_movespeed_modifier("bonechilled")
+	owner.remove_movespeed_modifier(/datum/movespeed_modifier/status_effect/bonechill)
 	return ..()
 
 /obj/screen/alert/status_effect/bonechill
@@ -385,11 +385,11 @@ datum/status_effect/rebreathing/tick()
 	duration = 30
 
 /datum/status_effect/tarfoot/on_apply()
-	owner.add_movespeed_modifier(MOVESPEED_ID_TARFOOT, update=TRUE, priority=100, multiplicative_slowdown=0.5, blacklisted_movetypes=(FLYING|FLOATING))
+	owner.add_movespeed_modifier(/datum/movespeed_modifier/status_effect/tarfoot)
 	return ..()
 
 /datum/status_effect/tarfoot/on_remove()
-	owner.remove_movespeed_modifier(MOVESPEED_ID_TARFOOT)
+	owner.remove_movespeed_modifier(/datum/movespeed_modifier/status_effect/tarfoot)
 	return ..()
 
 /datum/status_effect/spookcookie
@@ -624,9 +624,9 @@ datum/status_effect/stabilized/blue/on_remove()
 		O.extinguish() //All shamelessly copied from water's reaction_obj, since I didn't seem to be able to get it here for some reason.
 		O.acid_level = 0
 	// Monkey cube
-	if(istype(O, /obj/item/reagent_containers/food/snacks/monkeycube))
+	if(istype(O, /obj/item/reagent_containers/food/snacks/cube))
 		to_chat(owner, "<span class='warning'>[linked_extract] kept your hands wet! It makes [O] expand!</span>")
-		var/obj/item/reagent_containers/food/snacks/monkeycube/cube = O
+		var/obj/item/reagent_containers/food/snacks/cube/cube = O
 		cube.Expand()
 
 	// Dehydrated carp
@@ -707,15 +707,15 @@ datum/status_effect/stabilized/blue/on_remove()
 /datum/status_effect/stabilized/sepia/tick()
 	if(prob(50) && mod > -1)
 		mod--
-		owner.add_movespeed_modifier(MOVESPEED_ID_SEPIA, update=TRUE, priority=100, multiplicative_slowdown=-1, blacklisted_movetypes=(FLYING|FLOATING))
+		owner.add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/status_effect/sepia, multiplicative_slowdown = 1)
 	else if(mod < 1)
 		mod++
 		// yeah a value of 0 does nothing but replacing the trait in place is cheaper than removing and adding repeatedly
-		owner.add_movespeed_modifier(MOVESPEED_ID_SEPIA, update=TRUE, priority=100, multiplicative_slowdown=0, blacklisted_movetypes=(FLYING|FLOATING))
+		owner.add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/status_effect/sepia, multiplicative_slowdown = 0)
 	return ..()
 
 /datum/status_effect/stabilized/sepia/on_remove()
-	owner.remove_movespeed_modifier(MOVESPEED_ID_SEPIA)
+	owner.remove_movespeed_modifier(/datum/movespeed_modifier/status_effect/sepia)
 	return ..()
 
 /datum/status_effect/stabilized/cerulean
@@ -777,11 +777,11 @@ datum/status_effect/stabilized/blue/on_remove()
 	colour = "red"
 
 /datum/status_effect/stabilized/red/on_apply()
-	owner.ignore_slowdown("slimestatus")
-	return ..()
+	. = ..()
+	owner.add_movespeed_mod_immunities(type, /datum/movespeed_modifier/equipment_speedmod)
 
 /datum/status_effect/stabilized/red/on_remove()
-	owner.unignore_slowdown("slimestatus")
+	owner.remove_movespeed_mod_immunities(type, /datum/movespeed_modifier/equipment_speedmod)
 	return ..()
 
 /datum/status_effect/stabilized/green
@@ -917,7 +917,7 @@ datum/status_effect/stabilized/blue/on_remove()
 			healing_types += CLONE
 		if(length(healing_types))
 			owner.apply_damage_type(-heal_amount, damagetype=pick(healing_types))
-		owner.nutrition += 3
+		owner.adjust_nutrition(3)
 		M.adjustCloneLoss(heal_amount * 1.2) //This way, two people can't just convert each other's damage away.
 	else
 		messagedelivered = FALSE
@@ -959,9 +959,10 @@ datum/status_effect/stabilized/blue/on_remove()
 		familiar = new linked.mob_type(get_turf(owner.loc))
 		familiar.name = linked.mob_name
 		familiar.del_on_death = TRUE
-		familiar.copy_known_languages_from(owner, FALSE)
+		familiar.copy_languages(owner, LANGUAGE_MASTER)
 		if(linked.saved_mind)
 			linked.saved_mind.transfer_to(familiar)
+			familiar.update_atom_languages()
 			familiar.ckey = linked.saved_mind.key
 	else
 		if(familiar.mind)

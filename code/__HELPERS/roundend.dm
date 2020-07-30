@@ -174,7 +174,7 @@
 
 	to_chat(world, "<BR><BR><BR><span class='big bold'>The round has ended.</span>")
 	if(LAZYLEN(GLOB.round_end_notifiees))
-		send2irc("Notice", "[GLOB.round_end_notifiees.Join(", ")] the round has ended.")
+		world.TgsTargetedChatBroadcast("[GLOB.round_end_notifiees.Join(", ")] the round has ended.", FALSE)
 
 	for(var/I in round_end_events)
 		var/datum/callback/cb = I
@@ -233,6 +233,7 @@
 	for(var/antag_name in total_antagonists)
 		var/list/L = total_antagonists[antag_name]
 		log_game("[antag_name]s :[L.Join(", ")].")
+	set_observer_default_invisibility(0, "<span class='warning'>The round is over! You are now visible to the living.</span>")
 
 	CHECK_TICK
 	SSdbcore.SetRoundEnd()
@@ -513,7 +514,7 @@
 	if(owner && GLOB.common_report && SSticker.current_state == GAME_STATE_FINISHED)
 		SSticker.show_roundend_report(owner.client, FALSE)
 
-/datum/action/report/IsAvailable()
+/datum/action/report/IsAvailable(silent = FALSE)
 	return 1
 
 /datum/action/report/Topic(href,href_list)
@@ -563,7 +564,7 @@
 		if(objective.completable)
 			var/completion = objective.check_completion()
 			if(completion >= 1)
-				objective_parts += "<B>Objective #[count]</B>: [objective.explanation_text] <span class='greentext'><B>Success!</span>"
+				objective_parts += "<B>Objective #[count]</B>: [objective.explanation_text] <span class='greentext'><B>Success!</B></span>"
 			else if(completion <= 0)
 				objective_parts += "<B>Objective #[count]</B>: [objective.explanation_text] <span class='redtext'>Fail.</span>"
 			else

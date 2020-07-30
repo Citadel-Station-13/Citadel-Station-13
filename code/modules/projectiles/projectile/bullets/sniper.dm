@@ -2,7 +2,7 @@
 
 /obj/item/projectile/bullet/p50
 	name =".50 bullet"
-	speed = 0.4
+	pixels_per_second = TILES_TO_PIXELS(25)
 	damage = 70
 	knockdown = 100
 	dismemberment = 50
@@ -43,5 +43,5 @@
 /obj/item/projectile/bullet/p50/penetrator/shuttle //Nukeop Shuttle Variety
 	icon_state = "gaussstrong"
 	damage = 25
-	speed = 0.3
+	pixels_per_second = TILES_TO_PIXELS(33.33)
 	range = 16

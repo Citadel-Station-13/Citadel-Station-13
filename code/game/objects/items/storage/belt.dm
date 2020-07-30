@@ -22,7 +22,7 @@
 		for(var/obj/item/I in contents)
 			. += I.get_belt_overlay()
 
-/obj/item/storage/belt/worn_overlays(isinhands, icon_file, style_flags = NONE)
+/obj/item/storage/belt/worn_overlays(isinhands, icon_file, used_state, style_flags = NONE)
 	. = ..()
 	if(!isinhands && onmob_overlays)
 		for(var/obj/item/I in contents)
@@ -43,6 +43,7 @@
 	icon_state = "utilitybelt"
 	item_state = "utility"
 	content_overlays = TRUE
+	custom_premium_price = 300
 	rad_flags = RAD_PROTECT_CONTENTS | RAD_NO_CONTAMINATE //because this is easier than trying to have showers wash all contents.
 
 /obj/item/storage/belt/utility/ComponentInitialize()
@@ -82,7 +83,7 @@
 	new /obj/item/multitool(src)
 	new /obj/item/stack/cable_coil(src,30,pick("red","yellow","orange"))
 	new /obj/item/extinguisher/mini(src)
-	new /obj/item/analyzer(src)
+	new /obj/item/analyzer/ranged(src)
 	//much roomier now that we've managed to remove two tools
 
 /obj/item/storage/belt/utility/full/PopulateContents()
@@ -161,6 +162,7 @@
 		/obj/item/surgical_drapes, //for true paramedics
 		/obj/item/scalpel,
 		/obj/item/circular_saw,
+		/obj/item/bonesetter,
 		/obj/item/surgicaldrill,
 		/obj/item/retractor,
 		/obj/item/cautery,
@@ -179,7 +181,9 @@
 		/obj/item/implantcase,
 		/obj/item/implant,
 		/obj/item/implanter,
-		/obj/item/pinpointer/crew
+		/obj/item/pinpointer/crew,
+		/obj/item/reagent_containers/chem_pack,
+		/obj/item/stack/sticky_tape //surgical tape
 		))
 
 /obj/item/storage/belt/medical/surgery_belt_adv
@@ -442,10 +446,11 @@
 
 /obj/item/storage/belt/durathread
 	name = "durathread toolbelt"
-	desc = "A toolbelt made out of durathread, it seems resistant enough to hold even big tools like an RCD, it also has higher capacity."
+	desc = "A toolbelt made out of durathread, it seems robust enough to hold bigger tools like RCDs or RPDs, with enough pouches to hold more gear than a normal belt."
 	icon_state = "webbing-durathread"
 	item_state = "webbing-durathread"
 	resistance_flags = FIRE_PROOF
+	rad_flags = RAD_PROTECT_CONTENTS | RAD_NO_CONTAMINATE //If normal belts get this, the upgraded version should too
 
 /obj/item/storage/belt/durathread/ComponentInitialize()
 	. = ..()
@@ -465,7 +470,7 @@
 		/obj/item/t_scanner,
 		/obj/item/analyzer,
 		/obj/item/geiger_counter,
-		/obj/item/extinguisher/mini,
+		/obj/item/extinguisher,
 		/obj/item/radio,
 		/obj/item/clothing/gloves,
 		/obj/item/holosign_creator,
@@ -486,7 +491,8 @@
 	desc = "A belt for holding grenades."
 	icon_state = "grenadebeltnew"
 	item_state = "security"
-
+	rad_flags = RAD_PROTECT_CONTENTS | RAD_NO_CONTAMINATE
+	
 /obj/item/storage/belt/grenade/ComponentInitialize()
 	. = ..()
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
@@ -511,16 +517,16 @@
 	new /obj/item/grenade/smokebomb(src)
 	new /obj/item/grenade/empgrenade(src)
 	new /obj/item/grenade/empgrenade(src)
-	new /obj/item/grenade/syndieminibomb/concussion/frag(src)
-	new /obj/item/grenade/syndieminibomb/concussion/frag(src)
-	new /obj/item/grenade/syndieminibomb/concussion/frag(src)
-	new /obj/item/grenade/syndieminibomb/concussion/frag(src)
-	new /obj/item/grenade/syndieminibomb/concussion/frag(src)
-	new /obj/item/grenade/syndieminibomb/concussion/frag(src)
-	new /obj/item/grenade/syndieminibomb/concussion/frag(src)
-	new /obj/item/grenade/syndieminibomb/concussion/frag(src)
-	new /obj/item/grenade/syndieminibomb/concussion/frag(src)
-	new /obj/item/grenade/syndieminibomb/concussion/frag(src)
+	new /obj/item/grenade/frag(src)
+	new /obj/item/grenade/frag(src)
+	new /obj/item/grenade/frag(src)
+	new /obj/item/grenade/frag(src)
+	new /obj/item/grenade/frag(src)
+	new /obj/item/grenade/frag(src)
+	new /obj/item/grenade/frag(src)
+	new /obj/item/grenade/frag(src)
+	new /obj/item/grenade/frag(src)
+	new /obj/item/grenade/frag(src)
 	new /obj/item/grenade/gluon(src)
 	new /obj/item/grenade/gluon(src)
 	new /obj/item/grenade/gluon(src)
@@ -584,7 +590,7 @@
 		/obj/item/key/janitor,
 		/obj/item/clothing/gloves,
 		/obj/item/melee/flyswatter,
-		/obj/item/twohanded/broom,
+		/obj/item/broom,
 		/obj/item/paint/paint_remover,
 		/obj/item/assembly/mousetrap,
 		/obj/item/screwdriver,
@@ -695,7 +701,10 @@
 		/obj/item/gun/ballistic/revolver,
 		/obj/item/ammo_box,
 		/obj/item/toy/gun,
-		/obj/item/gun/energy/e_gun/mini
+		/obj/item/gun/energy/e_gun/mini,
+		/obj/item/gun/ballistic/automatic/magrifle/pistol,
+		/obj/item/gun/energy/disabler,
+		/obj/item/gun/energy/taser
 		))
 
 /obj/item/storage/belt/holster/full/PopulateContents()
@@ -708,6 +717,8 @@
 	desc = "A dorky fannypack for keeping small items in."
 	icon_state = "fannypack_leather"
 	item_state = "fannypack_leather"
+	dying_key = DYE_REGISTRY_FANNYPACK
+	custom_price = PRICE_ALMOST_CHEAP
 
 /obj/item/storage/belt/fannypack/ComponentInitialize()
 	. = ..()
@@ -804,4 +815,3 @@
 	attack_verb = list("bashed", "slashes", "prods", "pokes")
 	fitting_swords = list(/obj/item/melee/rapier)
 	starting_sword = /obj/item/melee/rapier
-

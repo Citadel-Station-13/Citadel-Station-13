@@ -105,7 +105,7 @@
 				if (M.mind && M.mind.assigned_role && (M.mind.assigned_role in enemy_roles) && (!(M in candidates) || (M.mind.assigned_role in restricted_roles)))
 					job_check++ // Checking for "enemies" (such as sec officers). To be counters, they must either not be candidates to that rule, or have a job that restricts them from it
 
-		var/threat = CLAMP(round(mode.threat_level/10),1,10)
+		var/threat = clamp(round(mode.threat_level/10),1,10)
 		if (job_check < required_enemies[threat])
 			SSblackbox.record_feedback("tally","dynamic",1,"Times rulesets rejected due to not enough enemy roles")
 			return FALSE
@@ -642,6 +642,9 @@
 		for(var/obj/effect/landmark/carpspawn/L in GLOB.landmarks_list)
 			if(isturf(L.loc))
 				spawn_locs += L.loc
+		for(var/obj/effect/landmark/loneopspawn/L in GLOB.landmarks_list)
+			if(isturf(L.loc))
+				spawn_locs += L.loc
 		if(!spawn_locs.len)
 			return FALSE
 		spawn_loc = pick(spawn_locs)
@@ -671,7 +674,7 @@
 	message_admins("[ADMIN_LOOKUPFLW(Ninja)] has been made into a ninja by dynamic.")
 	log_game("[key_name(Ninja)] was spawned as a ninja by dynamic.")
 	return Ninja
-	
+
 /datum/dynamic_ruleset/midround/from_ghosts/ninja/finish_setup(mob/new_character, index)
 	return
 

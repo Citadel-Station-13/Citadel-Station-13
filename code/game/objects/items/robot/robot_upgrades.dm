@@ -241,9 +241,9 @@
 		for(var/obj/item/mop/cyborg/M in R.module.modules)
 			R.module.remove_module(M, TRUE)
 
-	var/obj/item/mop/advanced/cyborg/A = new /obj/item/mop/advanced/cyborg(R.module)
-	R.module.basic_modules += A
-	R.module.add_module(A, FALSE, TRUE)
+		var/obj/item/mop/advanced/cyborg/A = new /obj/item/mop/advanced/cyborg(R.module)
+		R.module.basic_modules += A
+		R.module.add_module(A, FALSE, TRUE)
 
 /obj/item/borg/upgrade/amop/deactivate(mob/living/silicon/robot/R, user = usr)
 	. = ..()
@@ -459,7 +459,7 @@
 /obj/item/borg/upgrade/defib/deactivate(mob/living/silicon/robot/R, user = usr)
 	. = ..()
 	if (.)
-		var/obj/item/twohanded/shockpaddles/cyborg/S = locate() in R.module
+		var/obj/item/shockpaddles/cyborg/S = locate() in R.module
 		R.module.remove_module(S, TRUE)
 
 /obj/item/borg/upgrade/processor
@@ -545,7 +545,7 @@
 			to_chat(usr, "<span class='notice'>This unit already has an expand module installed!</span>")
 			return FALSE
 
-		R.notransform = TRUE
+		R.mob_transforming = TRUE
 		var/prev_locked_down = R.locked_down
 		R.SetLockdown(1)
 		R.anchored = TRUE
@@ -559,14 +559,14 @@
 		if(!prev_locked_down)
 			R.SetLockdown(0)
 		R.anchored = FALSE
-		R.notransform = FALSE
+		R.mob_transforming = FALSE
 		R.resize = 2
 		R.hasExpanded = TRUE
 		R.update_transform()
 
 /obj/item/borg/upgrade/expand/deactivate(mob/living/silicon/robot/R, user = usr)
 	. = ..()
-	if (.)
+	if (. && R.hasExpanded)
 		R.resize = 0.5
 		R.hasExpanded = FALSE
 		R.update_transform()
@@ -663,21 +663,19 @@
 	var/maxReduction = 1
 
 
-/obj/effect/proc_holder/silicon/cyborg/vtecControl/Click(mob/living/silicon/robot/user)
-	var/mob/living/silicon/robot/self = usr
-
+/obj/effect/proc_holder/silicon/cyborg/vtecControl/Trigger(mob/living/silicon/robot/user)
 	currentState = (currentState + 1) % 3
 
-	if(istype(self))
+	if(istype(user))
 		switch(currentState)
 			if (0)
-				self.speed = initial(self.speed)
+				user.speed = initial(user.speed)
 			if (1)
-				self.speed = initial(self.speed) - maxReduction * 0.5
+				user.speed = initial(user.speed) - maxReduction * 0.5
 			if (2)
-				self.speed = initial(self.speed) - maxReduction * 1
+				user.speed = initial(user.speed) - maxReduction * 1
 
 	action.button_icon_state = "Chevron_State_[currentState]"
 	action.UpdateButtonIcon()
 
-	return
+	return TRUE

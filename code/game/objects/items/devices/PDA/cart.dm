@@ -692,14 +692,14 @@ Code:
 				return
 			GLOB.news_network.SubmitArticle(message,host_pda.owner,current_channel)
 			host_pda.Topic(null,list("choice"=num2text(host_pda.mode)))
-			return
 			playsound(src, 'sound/machines/terminal_select.ogg', 50, 1)
+			return
 
 		if("Newscaster Switch Channel")
 			current_channel = host_pda.msg_input()
 			host_pda.Topic(null,list("choice"=num2text(host_pda.mode)))
-			return
 			playsound(src, 'sound/machines/terminal_select.ogg', 50, 1)
+			return
 
 	//emoji previews
 	if(href_list["emoji"])

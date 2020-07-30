@@ -428,6 +428,8 @@ SUBSYSTEM_DEF(job)
 	if(!joined_late)
 		var/obj/S = null
 		for(var/obj/effect/landmark/start/sloc in GLOB.start_landmarks_list)
+			if(!sloc.job_spawnpoint)
+				continue
 			if(sloc.name != rank)
 				S = sloc //so we can revert to spawning them on top of eachother if something goes wrong
 				continue
@@ -477,6 +479,10 @@ SUBSYSTEM_DEF(job)
 			to_chat(M, "<b>[job.custom_spawn_text]</b>")
 		if(CONFIG_GET(number/minimal_access_threshold))
 			to_chat(M, "<span class='notice'><B>As this station was initially staffed with a [CONFIG_GET(flag/jobs_have_minimal_access) ? "full crew, only your job's necessities" : "skeleton crew, additional access may"] have been added to your ID card.</B></span>")
+	if(ishuman(H))
+		var/mob/living/carbon/human/wageslave = H
+		to_chat(M, "<b><span class = 'big'>Your account ID is [wageslave.account_id].</span></b>")
+		H.add_memory("Your account ID is [wageslave.account_id].")
 	if(job && H)
 		if(job.dresscodecompliant)// CIT CHANGE - dress code compliance
 			equip_loadout(N, H) // CIT CHANGE - allows players to spawn with loadout items

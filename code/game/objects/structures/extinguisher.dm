@@ -3,6 +3,7 @@
 	desc = "A small wall mounted cabinet designed to hold a fire extinguisher."
 	icon = 'icons/obj/wallmounts.dmi'
 	icon_state = "extinguisher_closed"
+	plane = ABOVE_WALL_PLANE
 	anchored = TRUE
 	density = FALSE
 	max_integrity = 200
@@ -68,10 +69,7 @@
 		return ..()
 
 
-/obj/structure/extinguisher_cabinet/attack_hand(mob/user)
-	. = ..()
-	if(.)
-		return
+/obj/structure/extinguisher_cabinet/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	if(iscyborg(user) || isalien(user))
 		return
 	if(stored_extinguisher)

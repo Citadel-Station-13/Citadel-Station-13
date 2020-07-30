@@ -20,6 +20,12 @@
 	item = /obj/item/emagrecharge
 	cost = 2
 
+/datum/uplink_item/device_tools/bluespacerecharge
+	name = "Bluespace Crystal Recharging Device"
+	desc = "A small device intended for recharging Wall Walking boots. Using it will add six charges to them. Use ten bluespace crystals on this recharger to add three more charges to it. "
+	item = /obj/item/bluespacerecharge
+	cost = 2
+
 /datum/uplink_item/device_tools/phantomthief
 	name = "Syndicate Mask"
 	desc = "A cheap plastic mask fitted with an adrenaline autoinjector, which can be used by simply tensing your muscles"
@@ -93,6 +99,12 @@
 	item = /obj/item/storage/belt/military
 	cost = 1
 	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops)
+
+/datum/uplink_item/device_tools/ammo_pouch
+	name = "Ammo Pouch"
+	desc = "A small yet large enough pouch that can fit in your pocket, and has room for three magazines."
+	item = /obj/item/storage/bag/ammo
+	cost = 1
 
 /datum/uplink_item/device_tools/fakenucleardisk
 	name = "Decoy Nuclear Authentication Disk"
@@ -182,12 +194,21 @@
 	item = /obj/item/healthanalyzer/rad_laser
 	cost = 3
 
+/datum/uplink_item/device_tools/riflery_primer
+	name = "Riflery Primer"
+	desc = "An old book with blood and vodka stains on it. Freshly pulled from a dusty crate in some old warehouse, \
+			this primer of questionable worth and value is rumored to increase your rifle-bolt-working and/or shotgun \
+			racking fivefold. Then again, the techniques here only work on bolt-actions and pump-actions..."
+	item = /obj/item/book/granter/trait/rifleman
+	cost = 3
+	restricted_roles = list("Operative") // i want it to be surplusable but i also want it to be mostly nukie only, please advise
+	surplus = 90
+
 /datum/uplink_item/device_tools/stimpack
 	name = "Stimpack"
-	desc = "Stimpacks, the tool of many great heroes, make you nearly immune to stuns and knockdowns for about \
-			5 minutes after fully injecting yourself. Can inject yourself, or others, 5 times and through hardsuits. \
-			Each injection will gives around a minute of stimulants."
-	item = /obj/item/reagent_containers/hypospray/medipen/stimulants
+	desc = "Stimpacks, the tool of many great heroes. Makes you nearly immune to non-lethal weaponry for about \
+			5 minutes after injection."
+	item = /obj/item/reagent_containers/syringe/stimulants
 	cost = 5
 	surplus = 90
 
@@ -209,17 +230,9 @@
 
 /datum/uplink_item/device_tools/surgerybag_adv
 	name = "Advanced Syndicate Surgery Duffel Bag"
-	desc = "The Syndicate surgery duffel bag is a toolkit containing all advanced surgery tools, surgical drapes, \
-			a Syndicate brand MMI, a straitjacket, a muzzle, and an outdated, yet still useful Combat Medic Kit."
+	desc = "A Syndicate surgery duffel bag, with a set of upgraded surgery tools to boot."
 	item = /obj/item/storage/backpack/duffelbag/syndie/surgery_adv
-	cost = 10
-
-/datum/uplink_item/device_tools/brainwash_disk
-	name = "Brainwashing Surgery Program"
-	desc = "A disk containing the procedure to perform a brainwashing surgery, allowing you to implant an objective onto a target. \
-	Insert into an Operating Console to enable the procedure."
-	item = /obj/item/disk/surgery/brainwashing
-	cost = 3
+	cost = 6
 
 /datum/uplink_item/device_tools/encryptionkey
 	name = "Syndicate Encryption Key"
@@ -256,3 +269,15 @@
 	cost = 2
 	include_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops)
 	restricted = TRUE
+
+/* for now
+/datum/uplink_item/device_tools/suspiciousphone
+	name = "Protocol CRAB-17 Phone"
+	desc = "The Protocol CRAB-17 Phone, a phone borrowed from an unknown third party, it can be used to crash the space market, funneling the losses of the crew to your bank account.\
+	The crew can move their funds to a new banking site though, unless they HODL, in which case they deserve it."
+	item = /obj/item/suspiciousphone
+	cost = 7
+	restricted = TRUE
+	limited_stock = 1
+*/
+

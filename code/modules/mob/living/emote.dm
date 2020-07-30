@@ -226,7 +226,7 @@
 			'sound/voice/catpeople/nyahehe.ogg'),
 			50, 1)
 			return
-		else if(ismoth(C))
+		else if(isinsect(C))
 			playsound(C, 'sound/voice/moth/mothlaugh.ogg', 50, 1)
 		else if(ishumanbasic(C))
 			if(user.gender == FEMALE)
@@ -244,7 +244,7 @@
 	. = ..()
 	if(. && iscarbon(user)) //Citadel Edit because this is hilarious
 		var/mob/living/carbon/C = user
-		if(ismoth(C))
+		if(isinsect(C))
 			playsound(C, 'sound/voice/moth/mothchitter.ogg', 50, 1)
 
 /datum/emote/living/look
@@ -457,6 +457,7 @@
 		message = params
 		if(type_override)
 			emote_type = type_override
+	message = user.say_emphasis(message)
 	. = ..()
 	message = null
 	emote_type = EMOTE_VISIBLE

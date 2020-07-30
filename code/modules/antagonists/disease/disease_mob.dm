@@ -128,6 +128,9 @@ the new instance inside the host to be updated to the template's stats.
 		link = FOLLOW_LINK(src, to_follow)
 	else
 		link = ""
+	// Create map text prior to modifying message for goonchat
+	if (client?.prefs.chat_on_map && (client.prefs.see_chat_non_mob || ismob(speaker)))
+		create_chat_message(speaker, message_language, raw_message, spans, message_mode)
 	// Recompose the message, because it's scrambled by default
 	message = compose_message(speaker, message_language, raw_message, radio_freq, spans, message_mode, FALSE, source)
 	to_chat(src, "[link] [message]")
@@ -288,15 +291,18 @@ the new instance inside the host to be updated to the template's stats.
 
 /mob/camera/disease/ClickOn(var/atom/A, params)
 	if(freemove && ishuman(A))
-		var/mob/living/carbon/human/H = A
-		if(alert(src, "Select [H.name] as your initial host?", "Select Host", "Yes", "No") != "Yes")
-			return
-		if(!freemove)
-			return
-		if(QDELETED(H) || !force_infect(H))
-			to_chat(src, "<span class='warning'>[H ? H.name : "Host"] cannot be infected.</span>")
+		confirm_initial_infection(A)
 	else
 		..()
+
+/mob/camera/disease/proc/confirm_initial_infection(mob/living/carbon/human/H)
+	set waitfor = FALSE
+	if(alert(src, "Select [H.name] as your initial host?", "Select Host", "Yes", "No") != "Yes")
+		return
+	if(!freemove)
+		return
+	if(QDELETED(H) || !force_infect(H))
+		to_chat(src, "<span class='warning'>[H ? H.name : "Host"] cannot be infected.</span>")
 
 /mob/camera/disease/proc/adapt_cooldown()
 	to_chat(src, "<span class='notice'>You have altered your genetic structure. You will be unable to adapt again for [DisplayTimeText(adaptation_cooldown)].</span>")

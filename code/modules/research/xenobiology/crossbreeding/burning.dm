@@ -35,7 +35,7 @@ Burning extracts:
 	S.visible_message("<span class='danger'>A baby slime emerges from [src], and it nuzzles [user] before burbling hungrily!</span>")
 	S.Friends[user] = 20 //Gas, gas, gas
 	S.bodytemperature = T0C + 400 //We gonna step on the gas.
-	S.nutrition = S.get_hunger_nutrition() //Tonight, we fight!
+	S.set_nutrition(S.get_hunger_nutrition()) //Tonight, we fight!
 	..()
 
 /obj/item/slimecross/burning/orange
@@ -276,7 +276,7 @@ Burning extracts:
 
 /obj/item/slimecross/burning/adamantine/do_effect(mob/user)
 	user.visible_message("<span class='notice'>[src] crystallizes into a large shield!</span>")
-	new /obj/item/twohanded/required/adamantineshield(get_turf(user))
+	new /obj/item/shield/adamantineshield(get_turf(user))
 	..()
 
 /obj/item/slimecross/burning/rainbow
@@ -440,7 +440,7 @@ Burning extracts:
 			attack_verb = list("irradiated","mutated","maligned")
 	return ..()
 
-/obj/item/twohanded/required/adamantineshield
+/obj/item/shield/adamantineshield
 	name = "adamantine shield"
 	desc = "A gigantic shield made of solid adamantium."
 	icon = 'icons/obj/slimecrossing.dmi'
@@ -450,12 +450,15 @@ Burning extracts:
 	armor = list("melee" = 50, "bullet" = 50, "laser" = 50, "energy" = 0, "bomb" = 30, "bio" = 0, "rad" = 0, "fire" = 80, "acid" = 70)
 	slot_flags = ITEM_SLOT_BACK
 	block_chance = 75
+	force = 0
 	throw_range = 1 //How far do you think you're gonna throw a solid crystalline shield...?
 	throw_speed = 2
-	force = 15 //Heavy, but hard to wield.
 	attack_verb = list("bashed","pounded","slammed")
 	item_flags = SLOWS_WHILE_IN_HAND
 
+/obj/item/shield/adamantineshield/ComponentInitialize()
+	. = ..()
+	AddComponent(/datum/component/two_handed, require_twohands=TRUE, force_wielded=15)
 
 /obj/effect/proc_holder/spell/targeted/shapeshift/slimeform
 	name = "Slime Transformation"

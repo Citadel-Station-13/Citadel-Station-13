@@ -10,7 +10,6 @@ GLOBAL_LIST_EMPTY(loadout_whitelist_ids)
 /proc/load_loadout_config(loadout_config)
 	if(!loadout_config)
 		loadout_config = "config/loadout_config.txt"
-	LAZYINITLIST(GLOB.loadout_whitelist_ids)
 	var/list/file_lines = world.file2list(loadout_config)
 	for(var/line in file_lines)
 		if(!line || line[1] == "#")
@@ -26,12 +25,9 @@ GLOBAL_LIST_EMPTY(loadout_whitelist_ids)
 					GLOB.loadout_whitelist_ids["[lineID]"] = sublinecontent
 
 /proc/initialize_global_loadout_items()
-	LAZYINITLIST(GLOB.loadout_items)
 	load_loadout_config()
 	for(var/item in subtypesof(/datum/gear))
 		var/datum/gear/I = new item
-		if(!GLOB.loadout_items[slot_to_string(I.category)])
-			LAZYINITLIST(GLOB.loadout_items[slot_to_string(I.category)])
 		LAZYSET(GLOB.loadout_items[slot_to_string(I.category)], I.name, I)
 		if(islist(I.geargroupID))
 			var/list/ggidlist = I.geargroupID

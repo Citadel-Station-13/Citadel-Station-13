@@ -68,6 +68,7 @@
 	junkiness = 25
 	filling_color = "#FFD700"
 	foodtype = JUNKFOOD | GRAIN | SUGAR
+	custom_price = PRICE_CHEAP_AS_FREE
 
 /obj/item/reagent_containers/food/snacks/cheesiehonkers
 	name = "cheesie honkers"
@@ -89,3 +90,4 @@
 	filling_color = "#F5F5DC"
 	tastes = list("sweetness" = 3, "cake" = 1)
 	foodtype = GRAIN | FRUIT | VEGETABLES
+	custom_price = PRICE_CHEAP

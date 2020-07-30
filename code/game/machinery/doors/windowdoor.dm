@@ -54,6 +54,15 @@
 	else
 		icon_state = "[src.base_state]open"
 
+/obj/machinery/door/window/update_atom_colour()
+	if((color && (color_hex2num(color) < 255)))
+		visible = TRUE
+		if(density)
+			set_opacity(TRUE)
+	else
+		visible = FALSE
+	set_opacity(density && visible)
+
 /obj/machinery/door/window/proc/open_and_close()
 	open()
 	if(src.check_access(null))
@@ -143,16 +152,18 @@
 	do_animate("opening")
 	playsound(src.loc, 'sound/machines/windowdoor.ogg', 100, 1)
 	src.icon_state ="[src.base_state]open"
-	sleep(10)
+	addtimer(CALLBACK(src, .proc/finish_opening), 10)
+	return TRUE
 
+/obj/machinery/door/window/proc/finish_opening()
+	operating = FALSE
 	density = FALSE
-//	src.sd_set_opacity(0)	//TODO: why is this here? Opaque windoors? ~Carn
+	if(visible)
+		set_opacity(FALSE)
 	air_update_turf(1)
 	update_freelook_sight()
-
 	if(operating == 1) //emag again
 		operating = FALSE
-	return 1
 
 /obj/machinery/door/window/close(forced=0)
 	if (src.operating)
@@ -171,10 +182,13 @@
 	density = TRUE
 	air_update_turf(1)
 	update_freelook_sight()
-	sleep(10)
+	addtimer(CALLBACK(src, .proc/finish_closing), 10)
+	return TRUE
 
+/obj/machinery/door/window/proc/finish_closing()
+	if(visible)
+		set_opacity(TRUE)
 	operating = FALSE
-	return 1
 
 /obj/machinery/door/window/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	switch(damage_type)

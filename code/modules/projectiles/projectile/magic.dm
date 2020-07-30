@@ -121,10 +121,10 @@
 	qdel(src)
 
 /proc/wabbajack(mob/living/M)
-	if(!istype(M) || M.stat == DEAD || M.notransform || (GODMODE & M.status_flags))
+	if(!istype(M) || M.stat == DEAD || M.mob_transforming || (GODMODE & M.status_flags))
 		return
 
-	M.notransform = TRUE
+	M.mob_transforming = TRUE
 	M.Paralyze(INFINITY)
 	M.icon = null
 	M.cut_overlays()
@@ -182,18 +182,14 @@
 			var/path = pick(/mob/living/simple_animal/hostile/carp,
 							/mob/living/simple_animal/hostile/bear,
 							/mob/living/simple_animal/hostile/mushroom,
-							/mob/living/simple_animal/hostile/statue,
 							/mob/living/simple_animal/hostile/retaliate/bat,
 							/mob/living/simple_animal/hostile/retaliate/goat,
 							/mob/living/simple_animal/hostile/killertomato,
 							/mob/living/simple_animal/hostile/poison/giant_spider,
 							/mob/living/simple_animal/hostile/poison/giant_spider/hunter,
 							/mob/living/simple_animal/hostile/blob/blobbernaut/independent,
-							/mob/living/simple_animal/hostile/carp/ranged,
-							/mob/living/simple_animal/hostile/carp/ranged/chaos,
 							/mob/living/simple_animal/hostile/asteroid/basilisk/watcher,
 							/mob/living/simple_animal/hostile/asteroid/goliath/beast,
-							/mob/living/simple_animal/hostile/headcrab,
 							/mob/living/simple_animal/hostile/morph,
 							/mob/living/simple_animal/hostile/stickman,
 							/mob/living/simple_animal/hostile/stickman/dog,
@@ -211,7 +207,8 @@
 							/mob/living/simple_animal/pet/fox,
 							/mob/living/simple_animal/butterfly,
 							/mob/living/simple_animal/pet/cat/cak,
-							/mob/living/simple_animal/chick)
+							/mob/living/simple_animal/chick,
+							/mob/living/simple_animal/pickle)
 			new_mob = new path(M.loc)
 
 		if("humanoid")
@@ -232,7 +229,6 @@
 
 	if(!new_mob)
 		return
-	new_mob.grant_language(/datum/language/common)
 
 	// Some forms can still wear some items
 	for(var/obj/item/W in contents)
@@ -284,7 +280,7 @@
 				if(L.mind)
 					L.mind.transfer_to(S)
 					if(owner)
-						to_chat(S, "<span class='userdanger'>You are an animate statue. You cannot move when monitored, but are nearly invincible and deadly when unobserved! Do not harm [owner], your creator.</span>")
+						to_chat(S, "<span class='userdanger'>You are an animated statue. You cannot move when monitored, but are nearly invincible and deadly when unobserved! Do not harm [owner], your creator.</span>")
 				P.forceMove(S)
 				return
 		else
@@ -439,12 +435,12 @@
 	damage = 15
 	damage_type = BURN
 	nodamage = 0
-	speed = 0.3
+	pixels_per_second = TILES_TO_PIXELS(33.33)
 	flag = "magic"
 
-	var/tesla_power = 20000
-	var/tesla_range = 15
-	var/tesla_flags = TESLA_MOB_DAMAGE | TESLA_MOB_STUN | TESLA_OBJ_DAMAGE
+	var/zap_power = 20000
+	var/zap_range = 15
+	var/zap_flags = ZAP_MOB_DAMAGE | ZAP_MOB_STUN | ZAP_OBJ_DAMAGE
 	var/chain
 	var/mob/living/caster
 
@@ -461,7 +457,7 @@
 			visible_message("<span class='warning'>[src] fizzles on contact with [target]!</span>")
 			qdel(src)
 			return BULLET_ACT_BLOCK
-	tesla_zap(src, tesla_range, tesla_power, tesla_flags)
+	tesla_zap(src, zap_range, zap_power, zap_flags)
 	qdel(src)
 
 /obj/item/projectile/magic/aoe/lightning/Destroy()

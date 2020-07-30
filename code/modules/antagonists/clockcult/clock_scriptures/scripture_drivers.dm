@@ -88,7 +88,7 @@
 	sort_priority = 4
 	quickbind = TRUE
 	quickbind_desc = "Creates a Sigil of Submission, which will convert non-Servants that remain on it."
-
+	requires_full_power = TRUE
 
 //Kindle: Charges the slab with blazing energy. It can be released to stun and silence a target.
 /datum/clockwork_scripture/ranged_ability/kindle
@@ -211,6 +211,7 @@
 	quickbind = TRUE
 	quickbind_desc = "Returns you to Reebe."
 	var/client_color
+	requires_full_power = TRUE
 
 /datum/clockwork_scripture/abscond/check_special_requirements()
 	if(is_reebe(invoker.z))

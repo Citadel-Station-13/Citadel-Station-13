@@ -389,8 +389,8 @@
 		activate_pin(3)
 		return
 	var/turf/T = get_turf(assembly)
-	var/target_x = CLAMP(get_pin_data(IC_INPUT, 1), 0, world.maxx)
-	var/target_y = CLAMP(get_pin_data(IC_INPUT, 2), 0, world.maxy)
+	var/target_x = clamp(get_pin_data(IC_INPUT, 1), 0, world.maxx)
+	var/target_y = clamp(get_pin_data(IC_INPUT, 2), 0, world.maxy)
 	var/turf/A = locate(target_x, target_y, T.z)
 	set_pin_data(IC_OUTPUT, 1, null)
 	if(!A || !(A in view(T)))
@@ -532,7 +532,7 @@
 	var/rad = get_pin_data(IC_INPUT, 2)
 
 	if(isnum(rad))
-		rad = CLAMP(rad, 0, 8)
+		rad = clamp(rad, 0, 8)
 		radius = rad
 
 /obj/item/integrated_circuit/input/advanced_locator_list/do_work()
@@ -594,7 +594,7 @@
 /obj/item/integrated_circuit/input/advanced_locator/on_data_written()
 	var/rad = get_pin_data(IC_INPUT, 2)
 	if(isnum(rad))
-		rad = CLAMP(rad, 0, 8)
+		rad = clamp(rad, 0, 8)
 		radius = rad
 
 /obj/item/integrated_circuit/input/advanced_locator/do_work()
@@ -865,7 +865,7 @@
 	var/translated = FALSE
 	if(speaker && message)
 		if(raw_message)
-			if(message_langs != get_default_language())
+			if(message_langs != get_selected_language())
 				translated = TRUE
 		set_pin_data(IC_OUTPUT, 1, speaker.GetVoice())
 		set_pin_data(IC_OUTPUT, 2, raw_message)
@@ -1162,12 +1162,11 @@
 		activate_pin(3)
 		return
 
-	var/list/gases = air_contents.gases
 	var/list/gas_names = list()
 	var/list/gas_amounts = list()
-	for(var/id in gases)
+	for(var/id in air_contents.get_gases())
 		var/name = GLOB.meta_gas_names[id]
-		var/amt = round(gases[id], 0.001)
+		var/amt = round(air_contents.get_moles(id), 0.001)
 		gas_names.Add(name)
 		gas_amounts.Add(amt)
 
@@ -1175,7 +1174,7 @@
 	set_pin_data(IC_OUTPUT, 2, gas_amounts)
 	set_pin_data(IC_OUTPUT, 3, round(air_contents.total_moles(), 0.001))
 	set_pin_data(IC_OUTPUT, 4, round(air_contents.return_pressure(), 0.001))
-	set_pin_data(IC_OUTPUT, 5, round(air_contents.temperature, 0.001))
+	set_pin_data(IC_OUTPUT, 5, round(air_contents.return_temperature(), 0.001))
 	set_pin_data(IC_OUTPUT, 6, round(air_contents.return_volume(), 0.001))
 	push_data()
 	activate_pin(2)

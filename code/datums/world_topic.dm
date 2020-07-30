@@ -74,6 +74,25 @@
 	for(var/client/C in GLOB.clients)
 		C.AnnouncePR(final_composed)
 
+/datum/world_topic/auto_bunker_passthrough
+	keyword = "auto_bunker_override"
+	require_comms_key = TRUE
+
+/datum/world_topic/auto_bunker_passthrough/Run(list/input)
+	if(!CONFIG_GET(flag/allow_cross_server_bunker_override))
+		return "Function Disabled"
+	var/ckeytobypass = input["ckey"]
+	var/is_new_ckey = !(ckey(ckeytobypass) in GLOB.bunker_passthrough)
+	var/sender = input["source"] || "UNKNOWN"
+	GLOB.bunker_passthrough |= ckey(ckeytobypass)
+	GLOB.bunker_passthrough[ckey(ckeytobypass)] = world.realtime
+	SSpersistence.SavePanicBunker() //we can do this every time, it's okay
+	if(!is_new_ckey)
+		log_admin("AUTO BUNKER: [ckeytobypass] given access (incoming comms from [sender]).")
+		message_admins("AUTO BUNKER: [ckeytobypass] given access (incoming comms from [sender]).")
+		send2irc("Panic Bunker", "AUTO BUNKER: [ckeytobypass] given access (incoming comms from [sender]).")
+	return "Success"
+
 /datum/world_topic/ahelp_relay
 	keyword = "Ahelp"
 	require_comms_key = TRUE
@@ -169,7 +188,7 @@
 			.["real_mode"] = SSticker.mode.name
 			// Key-authed callers may know the truth behind the "secret"
 
-	.["security_level"] = get_security_level()
+	.["security_level"] = NUM2SECLEVEL(GLOB.security_level)
 	.["round_duration"] = SSticker ? round((world.time-SSticker.round_start_time)/10) : 0
 	// Amount of world's ticks in seconds, useful for calculating round duration
 

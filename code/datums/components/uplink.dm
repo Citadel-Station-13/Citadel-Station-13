@@ -24,15 +24,16 @@ GLOBAL_LIST_EMPTY(uplinks)
 	var/unlock_note
 	var/unlock_code
 	var/failsafe_code
-	var/datum/ui_state/checkstate
 	var/compact_mode = FALSE
 	var/debug = FALSE
 	var/saved_player_population = 0
 	var/list/filters = list()
 
+	
 /datum/component/uplink/Initialize(_owner, _lockable = TRUE, _enabled = FALSE, datum/game_mode/_gamemode, starting_tc = 20, datum/ui_state/_checkstate, datum/traitor_class/traitor_class)
 	if(!isitem(parent))
 		return COMPONENT_INCOMPATIBLE
+
 
 	RegisterSignal(parent, COMSIG_PARENT_ATTACKBY, .proc/OnAttackBy)
 	RegisterSignal(parent, COMSIG_ITEM_ATTACK_SELF, .proc/interact)
@@ -65,7 +66,6 @@ GLOBAL_LIST_EMPTY(uplinks)
 	active = _enabled
 	gamemode = _gamemode
 	telecrystals = starting_tc
-	checkstate = _checkstate
 	if(!lockable)
 		active = TRUE
 		locked = FALSE
@@ -136,13 +136,13 @@ GLOBAL_LIST_EMPTY(uplinks)
 
 /datum/component/uplink/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
 									datum/tgui/master_ui = null, datum/ui_state/state = GLOB.inventory_state)
-	state = checkstate ? checkstate : state
 	active = TRUE
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
-		ui = new(user, src, ui_key, "uplink", name, 620, 580, master_ui, state)
-		ui.set_autoupdate(FALSE) // This UI is only ever opened by one person, and never is updated outside of user input.
-		ui.set_style("syndicate")
+		ui = new(user, src, ui_key, "Uplink", name, 620, 580, master_ui, state)
+		// This UI is only ever opened by one person,
+		// and never is updated outside of user input.
+		ui.set_autoupdate(FALSE)
 		ui.open()
 
 /datum/component/uplink/ui_host(mob/user)
@@ -157,8 +157,7 @@ GLOBAL_LIST_EMPTY(uplinks)
 	var/list/data = list()
 	data["telecrystals"] = telecrystals
 	data["lockable"] = lockable
-	data["compact_mode"] = compact_mode
-
+	data["compactMode"] = compact_mode
 	return data
 
 /datum/component/uplink/ui_static_data(mob/user)
@@ -192,21 +191,16 @@ GLOBAL_LIST_EMPTY(uplinks)
 /datum/component/uplink/ui_act(action, params)
 	if(!active)
 		return
-
 	switch(action)
 		if("buy")
-			var/item = params["item"]
-
+			var/item_name = params["name"]
 			var/list/buyable_items = list()
 			for(var/category in uplink_items)
 				buyable_items += uplink_items[category]
-
-			if(item in buyable_items)
-				var/datum/uplink_item/I = buyable_items[item]
-				//check to make sure people cannot buy items when the player pop is below the requirement
-				if(GLOB.joined_player_list.len >= I.player_minimum)
-					MakePurchase(usr, I)
-				. = TRUE
+			if(item_name in buyable_items)
+				var/datum/uplink_item/I = buyable_items[item_name]
+				MakePurchase(usr, I)
+				return TRUE
 		if("lock")
 			active = FALSE
 			locked = TRUE
@@ -215,9 +209,10 @@ GLOBAL_LIST_EMPTY(uplinks)
 			SStgui.close_uis(src)
 		if("select")
 			selected_cat = params["category"]
+			return TRUE
 		if("compact_toggle")
 			compact_mode = !compact_mode
-	return TRUE
+			return TRUE
 
 /datum/component/uplink/proc/MakePurchase(mob/user, datum/uplink_item/U)
 	if(!istype(U))
@@ -262,12 +257,12 @@ GLOBAL_LIST_EMPTY(uplinks)
 	var/obj/item/pda/master = parent
 	if(trim(lowertext(new_ring_text)) != trim(lowertext(unlock_code)))
 		if(trim(lowertext(new_ring_text)) == trim(lowertext(failsafe_code)))
-			failsafe()
+			failsafe(user)
 			return COMPONENT_STOP_RINGTONE_CHANGE
 		return
 	locked = FALSE
 	interact(null, user)
-	to_chat(user, "The PDA softly beeps.")
+	to_chat(user, "<span class='hear'>The PDA softly beeps.</span>")
 	user << browse(null, "window=pda")
 	master.mode = 0
 	return COMPONENT_STOP_RINGTONE_CHANGE
@@ -279,7 +274,7 @@ GLOBAL_LIST_EMPTY(uplinks)
 	var/frequency = arguments[1]
 	if(frequency != unlock_code)
 		if(frequency == failsafe_code)
-			failsafe()
+			failsafe(master.loc)
 		return
 	locked = FALSE
 	if(ismob(master.loc))
@@ -316,11 +311,13 @@ GLOBAL_LIST_EMPTY(uplinks)
 	else if(istype(parent,/obj/item/pen))
 		return rand(1, 360)
 
-/datum/component/uplink/proc/failsafe()
+/datum/component/uplink/proc/failsafe(mob/living/carbon/user)
 	if(!parent)
 		return
 	var/turf/T = get_turf(parent)
 	if(!T)
 		return
+	message_admins("[ADMIN_LOOKUPFLW(user)] has triggered an uplink failsafe explosion at [AREACOORD(T)] The owner of the uplink was [ADMIN_LOOKUPFLW(owner)].")
+	log_game("[key_name(user)] triggered an uplink failsafe explosion. The owner of the uplink was [key_name(owner)].")
 	explosion(T,1,2,3)
 	qdel(parent) //Alternatively could brick the uplink.

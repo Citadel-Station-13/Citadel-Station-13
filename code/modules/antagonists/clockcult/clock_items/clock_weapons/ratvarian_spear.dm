@@ -59,7 +59,7 @@
 				if(issilicon(L))
 					L.DefaultCombatKnockdown(100)
 				else if(iscultist(L))
-					L.confused += CLAMP(10 - L.confused, 0, 5) // Spearthrow now confuses enemy cultists + just deals extra damage / sets on fire instead of hardstunning + damage
+					L.confused += clamp(10 - L.confused, 0, 5) // Spearthrow now confuses enemy cultists + just deals extra damage / sets on fire instead of hardstunning + damage
 					to_chat(L, "<span class ='userdanger'>[src] crashes into you with burning force, sending you reeling!</span>")
 					L.adjust_fire_stacks(2)
 					L.DefaultCombatKnockdown(1)

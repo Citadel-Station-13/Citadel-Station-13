@@ -49,10 +49,10 @@
 	else if(!opened && our_pressure >= open_pressure)
 		opened = TRUE
 		update_icon_nopipes()
-	if(opened && air_contents.temperature > 0)
+	if(opened && air_contents.return_temperature() > 0)
 		var/datum/gas_mixture/environment = loc.return_air()
 		var/pressure_delta = our_pressure - environment.return_pressure()
-		var/transfer_moles = pressure_delta*200/(air_contents.temperature * R_IDEAL_GAS_EQUATION)
+		var/transfer_moles = pressure_delta*200/(air_contents.return_temperature() * R_IDEAL_GAS_EQUATION)
 		if(transfer_moles > 0)
 			var/datum/gas_mixture/removed = air_contents.remove(transfer_moles)
 
@@ -92,7 +92,7 @@
 				pressure = text2num(pressure)
 				. = TRUE
 			if(.)
-				open_pressure = CLAMP(pressure, close_pressure, 50*ONE_ATMOSPHERE)
+				open_pressure = clamp(pressure, close_pressure, 50*ONE_ATMOSPHERE)
 				investigate_log("open pressure was set to [open_pressure] kPa by [key_name(usr)]", INVESTIGATE_ATMOS)
 		if("close_pressure")
 			var/pressure = params["close_pressure"]
@@ -107,6 +107,6 @@
 				pressure = text2num(pressure)
 				. = TRUE
 			if(.)
-				close_pressure = CLAMP(pressure, 0, open_pressure)
+				close_pressure = clamp(pressure, 0, open_pressure)
 				investigate_log("close pressure was set to [close_pressure] kPa by [key_name(usr)]", INVESTIGATE_ATMOS)
 	update_icon()

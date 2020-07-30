@@ -21,6 +21,7 @@
 	layer = LARGE_MOB_LAYER
 	sentience_type = SENTIENCE_BOSS
 	hud_type = /datum/hud/lavaland_elite
+	has_field_of_vision = FALSE //You are a frikkin mini-boss
 	var/chosen_attack = 1
 	var/list/attack_action_types = list()
 	var/can_talk = FALSE
@@ -147,7 +148,7 @@ While using this makes the system rely on OnFire, it still gives options for tim
 	desc = "You're not quite sure how a signal can be menacing."
 	invisibility = 100
 
-/obj/structure/elite_tumor/attack_hand(mob/user)
+/obj/structure/elite_tumor/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	. = ..()
 	if(ishuman(user))
 		switch(activity)

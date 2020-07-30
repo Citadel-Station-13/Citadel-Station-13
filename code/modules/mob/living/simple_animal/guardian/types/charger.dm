@@ -11,8 +11,9 @@
 	var/charging = 0
 	var/obj/screen/alert/chargealert
 
-/mob/living/simple_animal/hostile/guardian/charger/Life()
-	. = ..()
+/mob/living/simple_animal/hostile/guardian/charger/BiologicalLife(seconds, times_fired)
+	if(!(. = ..()))
+		return
 	if(ranged_cooldown <= world.time)
 		if(!chargealert)
 			chargealert = throw_alert("charge", /obj/screen/alert/cancharge)
@@ -54,7 +55,7 @@
 			var/blocked = FALSE
 			if(hasmatchingsummoner(hit_atom)) //if the summoner matches don't hurt them
 				blocked = TRUE
-			if(L.run_block(src, 90, "[name]", ATTACK_TYPE_TACKLE, 0, src) & BLOCK_SUCCESS)
+			if(L.mob_run_block(src, 90, "[name]", ATTACK_TYPE_TACKLE, 0, src, null, null) & BLOCK_SUCCESS)
 				blocked = TRUE
 			if(!blocked)
 				L.drop_all_held_items()

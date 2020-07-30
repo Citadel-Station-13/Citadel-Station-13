@@ -69,7 +69,9 @@
 	priority_announce(thanks_msg, "Cargo shuttle commandeered by CentCom.")
 
 	dispatched = 1
-	SSshuttle.points += bonus_points
+	var/datum/bank_account/D = SSeconomy.get_dep_account(ACCOUNT_CAR)
+	if(D)
+		D.adjust_money(bonus_points)
 	endWhen = activeFor + 1
 
 	SSshuttle.supply.mode = SHUTTLE_CALL

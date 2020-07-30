@@ -1,9 +1,12 @@
 //Penguins
 
 /mob/living/simple_animal/pet/penguin
-	response_help  = "pets"
-	response_disarm = "bops"
-	response_harm   = "kicks"
+	response_help_continuous = "pets"
+	response_help_simple = "pet"
+	response_disarm_continuous = "bops"
+	response_disarm_simple = "bop"
+	response_harm_continuous = "kicks"
+	response_harm_simple = "kick"
 	speak = list("Gah Gah!", "NOOT NOOT!", "NOOT!", "Noot", "noot", "Prah!", "Grah!")
 	speak_emote = list("squawks", "gakkers")
 	emote_hear = list("squawk!", "gakkers!", "noots.","NOOTS!")
@@ -15,7 +18,7 @@
 	turns_per_move = 10
 	icon = 'icons/mob/penguins.dmi'
 
-	do_footstep = TRUE
+	footstep_type = FOOTSTEP_MOB_BAREFOOT
 
 /mob/living/simple_animal/pet/penguin/emperor
 	name = "Emperor penguin"

@@ -421,7 +421,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		new_character.real_name = record_found.fields["name"]
 		new_character.gender = record_found.fields["gender"]
 		new_character.age = record_found.fields["age"]
-		new_character.hardset_dna(record_found.fields["identity"], record_found.fields["enzymes"], record_found.fields["name"], record_found.fields["blood_type"], new record_found.fields["species"], record_found.fields["features"])
+		new_character.hardset_dna(record_found.fields["identity"], record_found.fields["enzymes"], null, record_found.fields["name"], record_found.fields["blood_type"], new record_found.fields["species"], record_found.fields["features"])
 	else
 		var/datum/preferences/A = new()
 		A.copy_to(new_character)
@@ -1058,13 +1058,6 @@ GLOBAL_LIST_EMPTY(custom_outfits) //Admin created outfits
 	var/datum/atom_hud/A = GLOB.huds[ANTAG_HUD_TRAITOR]
 	return A.hudusers[mob]
 
-/client/proc/open_shuttle_manipulator()
-	set category = "Admin"
-	set name = "Shuttle Manipulator"
-	set desc = "Opens the shuttle manipulator UI."
-
-	for(var/obj/machinery/shuttle_manipulator/M in GLOB.machines)
-		M.ui_interact(usr)
 
 /client/proc/run_weather()
 	set category = "Fun"
@@ -1218,13 +1211,81 @@ GLOBAL_LIST_EMPTY(custom_outfits) //Admin created outfits
 
 	SSblackbox.record_feedback("nested tally", "admin_toggle", 1, list("Toggled Hub Visibility", "[GLOB.hub_visibility ? "Enabled" : "Disabled"]")) //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
+/client/proc/cmd_admin_toggle_fov()
+	set category = "Fun"
+	set name = "Enable/Disable Field of Vision"
+
+	var/static/busy_toggling_fov = FALSE
+	if(!check_rights(R_ADMIN) || !check_rights(R_FUN))
+		return
+
+	var/on_off = CONFIG_GET(flag/use_field_of_vision)
+
+	if(busy_toggling_fov)
+		to_chat(usr, "<span class='warning'>A previous call of this function is still busy toggling FoV [on_off ? "on" : "off"]. Have some patiece</span>.")
+		return
+	busy_toggling_fov = TRUE
+
+	log_admin("[key_name(usr)] has [on_off ? "disabled" : "enabled"] the Field of Vision configuration.")
+	CONFIG_SET(flag/use_field_of_vision, !on_off)
+
+	SSblackbox.record_feedback("nested tally", "admin_toggle", 1, list("Toggled Field of Vision", "[on_off ? "Enabled" : "Disabled"]"))
+
+	if(on_off)
+		for(var/k in GLOB.mob_list)
+			if(!k)
+				continue
+			var/mob/M = k
+			if(ishuman(M))
+				var/mob/living/carbon/human/H = M
+				if(!(H.dna?.species.has_field_of_vision))
+					continue
+			else if(!M.has_field_of_vision)
+				continue
+			var/datum/component/field_of_vision/FoV = M.GetComponent(/datum/component/field_of_vision)
+			if(FoV)
+				qdel(FoV)
+			CHECK_TICK
+	else
+		for(var/k in GLOB.clients)
+			if(!k)
+				continue
+			var/client/C = k
+			var/mob/M = C.mob
+			if(ishuman(M))
+				var/mob/living/carbon/human/H = M
+				if(!(H.dna?.species.has_field_of_vision))
+					continue
+			else if(!M.has_field_of_vision)
+				continue
+			M.LoadComponent(/datum/component/field_of_vision, M.field_of_vision_type)
+			CHECK_TICK
+
+	busy_toggling_fov = FALSE
+
 /client/proc/smite(mob/living/carbon/human/target as mob)
 	set name = "Smite"
 	set category = "Fun"
 	if(!check_rights(R_ADMIN) || !check_rights(R_FUN))
 		return
 
-	var/list/punishment_list = list(ADMIN_PUNISHMENT_PIE, ADMIN_PUNISHMENT_CUSTOM_PIE, ADMIN_PUNISHMENT_FIREBALL, ADMIN_PUNISHMENT_LIGHTNING, ADMIN_PUNISHMENT_BRAINDAMAGE, ADMIN_PUNISHMENT_BSA, ADMIN_PUNISHMENT_GIB, ADMIN_PUNISHMENT_SUPPLYPOD_QUICK, ADMIN_PUNISHMENT_SUPPLYPOD, ADMIN_PUNISHMENT_MAZING, ADMIN_PUNISHMENT_ROD)
+	var/list/punishment_list = list(ADMIN_PUNISHMENT_PIE,
+		ADMIN_PUNISHMENT_CUSTOM_PIE,
+		ADMIN_PUNISHMENT_FIREBALL,
+		ADMIN_PUNISHMENT_LIGHTNING,
+		ADMIN_PUNISHMENT_BRAINDAMAGE,
+		ADMIN_PUNISHMENT_BSA,
+		ADMIN_PUNISHMENT_GIB,
+		ADMIN_PUNISHMENT_SUPPLYPOD_QUICK,
+		ADMIN_PUNISHMENT_SUPPLYPOD,
+		ADMIN_PUNISHMENT_MAZING,
+		ADMIN_PUNISHMENT_ROD,
+		ADMIN_PUNISHMENT_SHOES,
+		ADMIN_PUNISHMENT_PICKLE,
+		ADMIN_PUNISHMENT_FRY,
+		ADMIN_PUNISHMENT_CRACK, 
+		ADMIN_PUNISHMENT_BLEED, 
+		ADMIN_PUNISHMENT_SCARIFY)
 
 	var/punishment = input("Choose a punishment", "DIVINE SMITING") as null|anything in punishment_list
 
@@ -1289,7 +1350,7 @@ GLOBAL_LIST_EMPTY(custom_outfits) //Admin created outfits
 		if(ADMIN_PUNISHMENT_PIE)
 			var/obj/item/reagent_containers/food/snacks/pie/cream/nostun/creamy = new(get_turf(target))
 			creamy.splat(target)
-		if (ADMIN_PUNISHMENT_CUSTOM_PIE)
+		if(ADMIN_PUNISHMENT_CUSTOM_PIE)
 			var/obj/item/reagent_containers/food/snacks/pie/cream/nostun/A = new()
 			if(!A.reagents)
 				var/amount = input(usr, "Specify the reagent size of [A]", "Set Reagent Size", 50) as num|null
@@ -1302,6 +1363,48 @@ GLOBAL_LIST_EMPTY(custom_outfits) //Admin created outfits
 					if(amount)
 						A.reagents.add_reagent(chosen_id, amount)
 						A.splat(target)
+		if(ADMIN_PUNISHMENT_CRACK)
+			if(!iscarbon(target))
+				to_chat(usr,"<span class='warning'>This must be used on a carbon mob.</span>", confidential = TRUE)
+				return
+			var/mob/living/carbon/C = target
+			for(var/obj/item/bodypart/squish_part in C.bodyparts)
+				var/type_wound = pick(list(/datum/wound/brute/bone/critical, /datum/wound/brute/bone/severe, /datum/wound/brute/bone/critical, /datum/wound/brute/bone/severe, /datum/wound/brute/bone/moderate))
+				squish_part.force_wound_upwards(type_wound, smited=TRUE)
+		if(ADMIN_PUNISHMENT_BLEED)
+			if(!iscarbon(target))
+				to_chat(usr,"<span class='warning'>This must be used on a carbon mob.</span>", confidential = TRUE)
+				return
+			var/mob/living/carbon/C = target
+			for(var/obj/item/bodypart/slice_part in C.bodyparts)
+				var/type_wound = pick(list(/datum/wound/brute/cut/severe, /datum/wound/brute/cut/moderate))
+				slice_part.force_wound_upwards(type_wound, smited=TRUE)
+				type_wound = pick(list(/datum/wound/brute/cut/critical, /datum/wound/brute/cut/severe, /datum/wound/brute/cut/moderate))
+				slice_part.force_wound_upwards(type_wound, smited=TRUE)
+				type_wound = pick(list(/datum/wound/brute/cut/critical, /datum/wound/brute/cut/severe))
+				slice_part.force_wound_upwards(type_wound, smited=TRUE)
+		if(ADMIN_PUNISHMENT_SCARIFY)
+			if(!iscarbon(target))
+				to_chat(usr,"<span class='warning'>This must be used on a carbon mob.</span>", confidential = TRUE)
+				return
+			var/mob/living/carbon/C = target
+			C.generate_fake_scars(rand(1, 4))
+			to_chat(C, "<span class='warning'>You feel your body grow jaded and torn...</span>")
+		if(ADMIN_PUNISHMENT_PICKLE)
+			target.turn_into_pickle()
+		if(ADMIN_PUNISHMENT_FRY)
+			target.fry()
+
+		if(ADMIN_PUNISHMENT_SHOES)
+			if(!iscarbon(target))
+				to_chat(usr,"<span class='warning'>This must be used on a carbon mob.</span>")
+				return
+			var/mob/living/carbon/C = target
+			var/obj/item/clothing/shoes/sick_kicks = C.shoes
+			if(!sick_kicks?.can_be_tied)
+				to_chat(usr,"<span class='warning'>[C] does not have knottable shoes!</span>")
+				return
+			sick_kicks.adjust_laces(SHOES_KNOTTED)
 
 	punish_log(target, punishment)
 
@@ -1379,3 +1482,47 @@ GLOBAL_LIST_EMPTY(custom_outfits) //Admin created outfits
 	else
 		message_admins("[key_name_admin(usr)] has [newstate ? "activated" : "deactivated"] job exp exempt status on [key_name_admin(C)]")
 		log_admin("[key_name(usr)] has [newstate ? "activated" : "deactivated"] job exp exempt status on [key_name(C)]")
+
+/// Allow admin to add or remove traits of datum
+/datum/admins/proc/modify_traits(datum/D)
+	if(!D)
+		return
+
+	var/add_or_remove = input("Remove/Add?", "Trait Remove/Add") as null|anything in list("Add","Remove")
+	if(!add_or_remove)
+		return
+	var/list/availible_traits = list()
+
+	switch(add_or_remove)
+		if("Add")
+			for(var/key in GLOB.traits_by_type)
+				if(istype(D,key))
+					availible_traits += GLOB.traits_by_type[key]
+		if("Remove")
+			if(!GLOB.trait_name_map)
+				GLOB.trait_name_map = generate_trait_name_map()
+			for(var/trait in D.status_traits)
+				var/name = GLOB.trait_name_map[trait] || trait
+				availible_traits[name] = trait
+
+	var/chosen_trait = input("Select trait to modify", "Trait") as null|anything in sortList(availible_traits)
+	if(!chosen_trait)
+		return
+	chosen_trait = availible_traits[chosen_trait]
+
+	var/source = "adminabuse"
+	switch(add_or_remove)
+		if("Add") //Not doing source choosing here intentionally to make this bit faster to use, you can always vv it.
+			ADD_TRAIT(D,chosen_trait,source)
+		if("Remove")
+			var/specific = input("All or specific source ?", "Trait Remove/Add") as null|anything in list("All","Specific")
+			if(!specific)
+				return
+			switch(specific)
+				if("All")
+					source = null
+				if("Specific")
+					source = input("Source to be removed","Trait Remove/Add") as null|anything in sortList(D.status_traits[chosen_trait])
+					if(!source)
+						return
+			REMOVE_TRAIT(D,chosen_trait,source)

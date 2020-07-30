@@ -1,7 +1,13 @@
 //MEDBOT
 //MEDBOT PATHFINDING
 //MEDBOT ASSEMBLY
-
+#define MEDBOT_PANIC_NONE	0
+#define MEDBOT_PANIC_LOW	15
+#define MEDBOT_PANIC_MED	35
+#define MEDBOT_PANIC_HIGH	55
+#define MEDBOT_PANIC_FUCK	70
+#define MEDBOT_PANIC_ENDING	90
+#define MEDBOT_PANIC_END	100
 
 /mob/living/simple_animal/bot/medbot
 	name = "\improper Medibot"
@@ -42,6 +48,7 @@
 	var/declare_crit = 1 //If active, the bot will transmit a critical patient alert to MedHUD users.
 	var/declare_cooldown = 0 //Prevents spam of critical patient alerts.
 	var/stationary_mode = 0 //If enabled, the Medibot will not move automatically.
+	var/injection_time = 30 //How long we take to inject someone
 	//Setting which reagents to use to treat what by default. By id.
 	var/treatment_brute_avoid = /datum/reagent/medicine/tricordrazine
 	var/treatment_brute = /datum/reagent/medicine/bicaridine
@@ -51,19 +58,32 @@
 	var/treatment_fire = /datum/reagent/medicine/kelotane
 	var/treatment_tox_avoid = /datum/reagent/medicine/tricordrazine
 	var/treatment_tox = /datum/reagent/medicine/charcoal
-	var/treatment_tox_toxlover = /datum/reagent/toxin
+	var/treatment_tox_toxlover = /datum/reagent/toxin //Injects toxins into people that heal via toxins
 	var/treatment_virus_avoid = null
 	var/treatment_virus = /datum/reagent/medicine/spaceacillin
 	var/treat_virus = 1 //If on, the bot will attempt to treat viral infections, curing them if possible.
 	var/shut_up = 0 //self explanatory :)
 
+	var/upgrades = 0
+	var/upgraded_dispenser_1 //Do we have the nicer chemicals? - replaces dex with salbutamol
+	var/upgraded_dispenser_2 //Do we have the nicer chemicals? - replaces kep with oxandrolone
+	var/upgraded_dispenser_3 //Do we have the nicer chemicals? - replaces bic with sal acid
+	var/upgraded_dispenser_4 //Do we have the nicer chemicals? - replaces charcoal/toxin with pentetic acid / pentetic jelly
+
+	//How panicked we are about being tipped over (why would you do this?)
+	var/tipped_status = MEDBOT_PANIC_NONE
+	//The name we got when we were tipped
+	var/tipper_name
+	//The last time we were tipped/righted and said a voice line, to avoid spam
+	var/last_tipping_action_voice = 0
+
 /mob/living/simple_animal/bot/medbot/mysterious
 	name = "\improper Mysterious Medibot"
 	desc = "International Medibot of mystery."
 	skin = "bezerk"
-	treatment_brute = /datum/reagent/medicine/tricordrazine
-	treatment_fire = /datum/reagent/medicine/tricordrazine
-	treatment_tox = /datum/reagent/medicine/tricordrazine
+	treatment_brute = /datum/reagent/medicine/regen_jelly
+	treatment_fire = /datum/reagent/medicine/regen_jelly
+	treatment_tox = /datum/reagent/medicine/regen_jelly
 
 /mob/living/simple_animal/bot/medbot/derelict
 	name = "\improper Old Medibot"
@@ -220,7 +240,6 @@
 
 /mob/living/simple_animal/bot/medbot/attackby(obj/item/W as obj, mob/user as mob, params)
 	if(istype(W, /obj/item/reagent_containers/glass))
-		. = 1 //no afterattack
 		if(locked)
 			to_chat(user, "<span class='warning'>You cannot insert a beaker because the panel is locked!</span>")
 			return
@@ -233,6 +252,97 @@
 		reagent_glass = W
 		to_chat(user, "<span class='notice'>You insert [W].</span>")
 		show_controls(user)
+
+	else if(istype(W, /obj/item/reagent_containers/syringe/piercing))
+		if(bot_core.allowed(user) && open && !CHECK_BITFIELD(upgrades,UPGRADE_MEDICAL_PIERERCING))
+			to_chat(user, "<span class='notice'>You replace \the [src] syringe with a diamond-tipped one!</span>")
+			upgrades |= UPGRADE_MEDICAL_PIERERCING
+			qdel(W)
+		if(!open)
+			to_chat(user, "<span class='notice'>The [src] access pannel is not open!</span>")
+			return
+		if(!bot_core.allowed(user))
+			to_chat(user, "<span class='notice'>The [src] access pannel locked off to you!</span>")
+			return
+		else
+			to_chat(user, "<span class='notice'>The [src] already has a diamond-tipped syringe!</span>")
+
+	else if(istype(W, /obj/item/hypospray/mkii))
+		if(bot_core.allowed(user) && open && !CHECK_BITFIELD(upgrades,UPGRADE_MEDICAL_HYPOSPRAY))
+			to_chat(user, "<span class='notice'>You replace \the [src] syringe base with a DeForest Medical MK.II Hypospray!</span>")
+			upgrades |= UPGRADE_MEDICAL_HYPOSPRAY
+			injection_time = 15 //Half the time half the death!
+			window_name = "Automatic Medical Unit v2.4 ALPHA"
+			qdel(W)
+		if(!open)
+			to_chat(user, "<span class='notice'>The [src] access pannel is not open!</span>")
+			return
+		if(!bot_core.allowed(user))
+			to_chat(user, "<span class='notice'>The [src] access pannel locked off to you!</span>")
+			return
+		else
+			to_chat(user, "<span class='notice'>The [src] already has a DeForest Medical Hypospray base!</span>")
+
+	else if(istype(W, /obj/item/circuitboard/machine/chem_dispenser))
+		if(bot_core.allowed(user) && open && !CHECK_BITFIELD(upgrades,UPGRADE_MEDICAL_CHEM_BOARD))
+			to_chat(user, "<span class='notice'>You add in the board upgrading \the [src] reagent banks!</span>")
+			upgrades |= UPGRADE_MEDICAL_CHEM_BOARD
+			treatment_oxy = /datum/reagent/medicine/salbutamol //Replaces Dex with salbutamol "better" healing of o2
+			qdel(W)
+		if(!open)
+			to_chat(user, "<span class='notice'>The [src] access pannel is not open!</span>")
+			return
+		if(!bot_core.allowed(user))
+			to_chat(user, "<span class='notice'>The [src] access pannel locked off to you!</span>")
+			return
+		else
+			to_chat(user, "<span class='notice'>The [src] already has this upgrade!</span>")
+
+	else if(istype(W, /obj/item/circuitboard/machine/cryo_tube))
+		if(bot_core.allowed(user) && open && !CHECK_BITFIELD(upgrades,UPGRADE_MEDICAL_CRYO_BOARD))
+			to_chat(user, "<span class='notice'>You add in the board upgrading \the [src] reagent banks!</span>")
+			upgrades |= UPGRADE_MEDICAL_CRYO_BOARD
+			treatment_fire = /datum/reagent/medicine/oxandrolone //Replaces Kep with oxandrolone "better" healing of burns
+			qdel(W)
+		if(!open)
+			to_chat(user, "<span class='notice'>The [src] access pannel is not open!</span>")
+			return
+		if(!bot_core.allowed(user))
+			to_chat(user, "<span class='notice'>The [src] access pannel locked off to you!</span>")
+			return
+		else
+			to_chat(user, "<span class='notice'>The [src] already has this upgrade!</span>")
+
+	else if(istype(W, /obj/item/circuitboard/machine/chem_master))
+		if(bot_core.allowed(user) && open && !CHECK_BITFIELD(upgrades,UPGRADE_MEDICAL_CHEM_MASTER))
+			to_chat(user, "<span class='notice'>You add in the board upgrading \the [src] reagent banks!</span>")
+			upgrades |= UPGRADE_MEDICAL_CHEM_MASTER
+			treatment_brute = /datum/reagent/medicine/sal_acid //Replaces Bic with Sal Acid "better" healing of brute
+			qdel(W)
+		if(!open)
+			to_chat(user, "<span class='notice'>the [src] access pannel is not open!</span>")
+			return
+		if(!bot_core.allowed(user))
+			to_chat(user, "<span class='notice'>the [src] access pannel locked off to you!</span>")
+			return
+		else
+			to_chat(user, "<span class='notice'>the [src] already has this upgrade!</span>")
+
+	else if(istype(W, /obj/item/circuitboard/machine/sleeper))
+		if(bot_core.allowed(user) && open && !CHECK_BITFIELD(upgrades,UPGRADE_MEDICAL_SLEEP_BOARD))
+			to_chat(user, "<span class='notice'>You add in the board upgrading \the [src] reagent banks!</span>")
+			upgrades |= UPGRADE_MEDICAL_SLEEP_BOARD
+			treatment_tox = /datum/reagent/medicine/pen_acid //replaces charcoal with pen acid a "better" healing of toxins
+			treatment_tox_toxlover = /datum/reagent/medicine/pen_acid/pen_jelly //Injects pen jelly into people that heal via toxins
+			qdel(W)
+		if(!open)
+			to_chat(user, "<span class='notice'>The [src] access pannle is not open!</span>")
+			return
+		if(!bot_core.allowed(user))
+			to_chat(user, "<span class='notice'>The [src] access pannel locked off to you!</span>")
+			return
+		else
+			to_chat(user, "<span class='notice'>The [src] already has this upgrade!</span>")
 
 	else
 		var/current_health = health
@@ -249,6 +359,8 @@
 		audible_message("<span class='danger'>[src] buzzes oddly!</span>")
 		flick("medibot_spark", src)
 		playsound(src, "sparks", 75, 1)
+		if(!CHECK_BITFIELD(upgrades,UPGRADE_MEDICAL_PIERERCING))
+			upgrades |= UPGRADE_MEDICAL_PIERERCING //Jabs even harder through the clothing!
 		if(user)
 			oldpatient = user
 
@@ -264,6 +376,9 @@
 		if((last_newpatient_speak + 300) < world.time) //Don't spam these messages!
 			var/list/messagevoice = list("Hey, [H.name]! Hold on, I'm coming." = 'sound/voice/medbot/coming.ogg',"Wait [H.name]! I want to help!" = 'sound/voice/medbot/help.ogg',"[H.name], you appear to be injured!" = 'sound/voice/medbot/injured.ogg')
 			var/message = pick(messagevoice)
+			if(prob(1) && ISINRANGE_EX(H.getFireLoss(), 0, 20))
+				message = "Notices your minor burns*OwO what's this?"
+				messagevoice[message] = 'sound/voice/medbot/owo.ogg'
 			speak(message)
 			playsound(loc, messagevoice[message], 50, 0)
 			last_newpatient_speak = world.time
@@ -271,8 +386,89 @@
 	else
 		return
 
+/mob/living/simple_animal/bot/medbot/proc/tip_over(mob/user)
+	mobility_flags &= ~MOBILITY_MOVE
+	playsound(src, 'sound/machines/warning-buzzer.ogg', 50)
+	user.visible_message("<span class='danger'>[user] tips over [src]!</span>", "<span class='danger'>You tip [src] over!</span>")
+	mode = BOT_TIPPED
+	var/matrix/mat = transform
+	transform = mat.Turn(180)
+
+/mob/living/simple_animal/bot/medbot/proc/set_right(mob/user)
+	mobility_flags &= MOBILITY_MOVE
+	var/list/messagevoice
+	if(user)
+		user.visible_message("<span class='notice'>[user] sets [src] right-side up!</span>", "<span class='green'>You set [src] right-side up!</span>")
+		if(user.name == tipper_name)
+			messagevoice = list("I forgive you." = 'sound/voice/medbot/forgive.ogg')
+		else
+			messagevoice = list("Thank you!" = 'sound/voice/medbot/thank_you.ogg', "You are a good person." = 'sound/voice/medbot/youre_good.ogg')
+	else
+		visible_message("<span class='notice'>[src] manages to writhe wiggle enough to right itself.</span>")
+		messagevoice = list("Fuck you." = 'sound/voice/medbot/fuck_you.ogg', "Your behavior has been reported, have a nice day." = 'sound/voice/medbot/reported.ogg')
+
+	tipper_name = null
+	if(world.time > last_tipping_action_voice + 15 SECONDS)
+		last_tipping_action_voice = world.time
+		var/message = pick(messagevoice)
+		speak(message)
+		playsound(src, messagevoice[message], 70)
+	tipped_status = MEDBOT_PANIC_NONE
+	mode = BOT_IDLE
+	transform = matrix()
+
+// if someone tipped us over, check whether we should ask for help or just right ourselves eventually
+/mob/living/simple_animal/bot/medbot/proc/handle_panic()
+	tipped_status++
+	var/list/messagevoice
+	switch(tipped_status)
+		if(MEDBOT_PANIC_LOW)
+			messagevoice = list("I require assistance." = 'sound/voice/medbot/i_require_asst.ogg')
+		if(MEDBOT_PANIC_MED)
+			messagevoice = list("Please put me back." = 'sound/voice/medbot/please_put_me_back.ogg')
+		if(MEDBOT_PANIC_HIGH)
+			messagevoice = list("Please, I am scared!" = 'sound/voice/medbot/please_im_scared.ogg')
+		if(MEDBOT_PANIC_FUCK)
+			messagevoice = list("I don't like this, I need help!" = 'sound/voice/medbot/dont_like.ogg', "This hurts, my pain is real!" = 'sound/voice/medbot/pain_is_real.ogg')
+		if(MEDBOT_PANIC_ENDING)
+			messagevoice = list("Is this the end?" = 'sound/voice/medbot/is_this_the_end.ogg', "Nooo!" = 'sound/voice/medbot/nooo.ogg')
+		if(MEDBOT_PANIC_END)
+			speak("PSYCH ALERT: Crewmember [tipper_name] recorded displaying antisocial tendencies torturing bots in [get_area(src)]. Please schedule psych evaluation.", radio_channel)
+			set_right() // strong independent medbot
+
+	if(prob(tipped_status))
+		do_jitter_animation(tipped_status * 0.1)
+
+	if(messagevoice)
+		var/message = pick(messagevoice)
+		speak(message)
+		playsound(src, messagevoice[message], 70)
+	else if(prob(tipped_status * 0.2))
+		playsound(src, 'sound/machines/warning-buzzer.ogg', 30, extrarange=-2)
+
+/mob/living/simple_animal/bot/medbot/examine(mob/user)
+	. = ..()
+	if(tipped_status == MEDBOT_PANIC_NONE)
+		return
+
+	switch(tipped_status)
+		if(MEDBOT_PANIC_NONE to MEDBOT_PANIC_LOW)
+			. += "It appears to be tipped over, and is quietly waiting for someone to set it right."
+		if(MEDBOT_PANIC_LOW to MEDBOT_PANIC_MED)
+			. += "It is tipped over and requesting help."
+		if(MEDBOT_PANIC_MED to MEDBOT_PANIC_HIGH)
+			. += "They are tipped over and appear visibly distressed." // now we humanize the medbot as a they, not an it
+		if(MEDBOT_PANIC_HIGH to MEDBOT_PANIC_FUCK)
+			. += "<span class='warning'>They are tipped over and visibly panicking!</span>"
+		if(MEDBOT_PANIC_FUCK to INFINITY)
+			. += "<span class='warning'><b>They are freaking out from being tipped over!</b></span>"
+
 /mob/living/simple_animal/bot/medbot/handle_automated_action()
 	if(!..())
+		return
+
+	if(mode == BOT_TIPPED)
+		handle_panic()
 		return
 
 	if(mode == BOT_HEALING)
@@ -290,10 +486,14 @@
 
 	if(QDELETED(patient))
 		if(!shut_up && prob(1))
-			var/list/messagevoice = list("Radar, put a mask on!" = 'sound/voice/medbot/radar.ogg',"There's always a catch, and I'm the best there is." = 'sound/voice/medbot/catch.ogg',"I knew it, I should've been a plastic surgeon." = 'sound/voice/medbot/surgeon.ogg',"What kind of medbay is this? Everyone's dropping like flies." = 'sound/voice/medbot/flies.ogg',"Delicious!" = 'sound/voice/medbot/delicious.ogg')
-			var/message = pick(messagevoice)
-			speak(message)
-			playsound(loc, messagevoice[message], 50, 0)
+			if(emagged && prob(30))
+				var/list/i_need_scissors = list('sound/voice/medbot/fuck_you.ogg', 'sound/voice/medbot/turn_off.ogg', 'sound/voice/medbot/im_different.ogg', 'sound/voice/medbot/close.ogg', 'sound/voice/medbot/shindemashou.ogg')
+				playsound(src, pick(i_need_scissors), 70)
+			else
+				var/list/messagevoice = list("Radar, put a mask on!" = 'sound/voice/medbot/radar.ogg',"There's always a catch, and I'm the best there is." = 'sound/voice/medbot/catch.ogg',"I knew it, I should've been a plastic surgeon." = 'sound/voice/medbot/surgeon.ogg',"What kind of medbay is this? Everyone's dropping like flies." = 'sound/voice/medbot/flies.ogg',"Delicious!" = 'sound/voice/medbot/delicious.ogg', "Why are we still here? Just to suffer?" = 'sound/voice/medbot/why.ogg')
+				var/message = pick(messagevoice)
+				speak(message)
+				playsound(src, messagevoice[message], 50)
 		var/scan_range = (stationary_mode ? 1 : DEFAULT_SCAN_RANGE) //If in stationary mode, scan range is limited to adjacent patients.
 		patient = scan(/mob/living/carbon/human, oldpatient, scan_range)
 		oldpatient = patient
@@ -358,7 +558,7 @@
 
 	if(ishuman(C))
 		var/mob/living/carbon/human/H = C
-		if (H.wear_suit && H.head && istype(H.wear_suit, /obj/item/clothing) && istype(H.head, /obj/item/clothing))
+		if (H.wear_suit && H.head && istype(H.wear_suit, /obj/item/clothing) && istype(H.head, /obj/item/clothing) && !CHECK_BITFIELD(upgrades,UPGRADE_MEDICAL_PIERERCING))
 			var/obj/item/clothing/CS = H.wear_suit
 			var/obj/item/clothing/CH = H.head
 			if (CS.clothing_flags & CH.clothing_flags & THICKMATERIAL)
@@ -404,7 +604,28 @@
 /mob/living/simple_animal/bot/medbot/proc/get_healchem_toxin(mob/M)
 	return HAS_TRAIT(M, TRAIT_TOXINLOVER)? treatment_tox_toxlover : treatment_tox
 
-/mob/living/simple_animal/bot/medbot/UnarmedAttack(atom/A)
+/mob/living/simple_animal/bot/medbot/on_attack_hand(mob/living/carbon/human/H)
+	if(H.a_intent == INTENT_DISARM && mode != BOT_TIPPED)
+		H.visible_message("<span class='danger'>[H] begins tipping over [src].</span>", "<span class='warning'>You begin tipping over [src]...</span>")
+
+		if(world.time > last_tipping_action_voice + 15 SECONDS)
+			last_tipping_action_voice = world.time // message for tipping happens when we start interacting, message for righting comes after finishing
+			var/list/messagevoice = list("Hey, wait..." = 'sound/voice/medbot/hey_wait.ogg',"Please don't..." = 'sound/voice/medbot/please_dont.ogg',"I trusted you..." = 'sound/voice/medbot/i_trusted_you.ogg', "Nooo..." = 'sound/voice/medbot/nooo.ogg', "Oh fuck-" = 'sound/voice/medbot/oh_fuck.ogg')
+			var/message = pick(messagevoice)
+			speak(message)
+			playsound(src, messagevoice[message], 70, FALSE)
+
+		if(do_after(H, 3 SECONDS, target=src))
+			tip_over(H)
+
+	else if(H.a_intent == INTENT_HELP && mode == BOT_TIPPED)
+		H.visible_message("<span class='notice'>[H] begins righting [src].</span>", "<span class='notice'>You begin righting [src]...</span>")
+		if(do_after(H, 3 SECONDS, target=src))
+			set_right(H)
+	else
+		..()
+
+/mob/living/simple_animal/bot/medbot/UnarmedAttack(atom/A, proximity, intent = a_intent, flags = NONE)
 	if(iscarbon(A))
 		var/mob/living/carbon/C = A
 		patient = C
@@ -415,7 +636,7 @@
 	else
 		..()
 
-/mob/living/simple_animal/bot/medbot/examinate(atom/A as mob|obj|turf in view())
+/mob/living/simple_animal/bot/medbot/examinate(atom/A as mob|obj|turf in fov_view())
 	..()
 	if(!is_blind(src))
 		chemscan(src, A)
@@ -501,7 +722,7 @@
 			"<span class='userdanger'>[src] is trying to inject you!</span>")
 
 		var/failed = FALSE
-		if(do_mob(src, patient, 30))	//Is C == patient? This is so confusing
+		if(do_mob(src, patient, injection_time))	//Is C == patient? This is so confusing
 			if((get_dist(src, patient) <= 1) && (on) && assess_patient(patient))
 				if(reagent_id == "internal_beaker")
 					if(use_beaker && reagent_glass && reagent_glass.reagents.total_volume)
@@ -522,9 +743,6 @@
 		update_icon()
 		soft_reset()
 		return
-
-	reagent_id = null
-	return
 
 /mob/living/simple_animal/bot/medbot/proc/check_overdose(mob/living/carbon/patient,reagent_id,injection_amount)
 	var/datum/reagent/R  = GLOB.chemical_reagents_list[reagent_id]
@@ -565,3 +783,11 @@
 
 /obj/machinery/bot_core/medbot
 	req_one_access = list(ACCESS_MEDICAL, ACCESS_ROBOTICS)
+
+#undef MEDBOT_PANIC_NONE
+#undef MEDBOT_PANIC_LOW
+#undef MEDBOT_PANIC_MED
+#undef MEDBOT_PANIC_HIGH
+#undef MEDBOT_PANIC_FUCK
+#undef MEDBOT_PANIC_ENDING
+#undef MEDBOT_PANIC_END

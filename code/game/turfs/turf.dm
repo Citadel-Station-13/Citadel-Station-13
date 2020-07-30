@@ -1,6 +1,8 @@
 /turf
 	icon = 'icons/turf/floors.dmi'
 	level = 1
+	vis_flags = VIS_INHERIT_PLANE|VIS_INHERIT_ID	//when this be added to vis_contents of something it inherit something.plane and be associatet with something on clicking,
+													//important for visualisation of turf in openspace and interraction with openspace that show you turf.
 
 	var/intact = 1
 
@@ -83,6 +85,9 @@
 	if (opacity)
 		has_opaque_atom = TRUE
 
+	// apply materials properly from the default custom_materials value
+	set_custom_materials(custom_materials)
+
 	ComponentInitialize()
 
 	return INITIALIZE_HINT_NORMAL
@@ -117,10 +122,7 @@
 	requires_activation = FALSE
 	..()
 
-/turf/attack_hand(mob/user)
-	. = ..()
-	if(.)
-		return
+/turf/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	user.Move_Pulled(src)
 
 /turf/proc/multiz_turf_del(turf/T, dir)
@@ -177,7 +179,7 @@
 	target.zImpact(A, levels, src)
 	return TRUE
 
-/turf/proc/handleRCL(obj/item/twohanded/rcl/C, mob/user)
+/turf/proc/handleRCL(obj/item/rcl/C, mob/user)
 	if(C.loaded)
 		for(var/obj/structure/cable/LC in src)
 			if(!LC.d1 || !LC.d2)
@@ -200,7 +202,7 @@
 		coil.place_turf(src, user)
 		return TRUE
 
-	else if(istype(C, /obj/item/twohanded/rcl))
+	else if(istype(C, /obj/item/rcl))
 		handleRCL(C, user)
 
 	return FALSE
@@ -272,7 +274,7 @@
 /turf/open/Entered(atom/movable/AM)
 	..()
 	//melting
-	if(isobj(AM) && air && air.temperature > T0C)
+	if(isobj(AM) && air && air.return_temperature() > T0C)
 		var/obj/O = AM
 		if(O.obj_flags & FROZEN)
 			O.make_unfrozen()
@@ -441,7 +443,7 @@
 	for(var/V in contents)
 		var/atom/A = V
 		if(!QDELETED(A) && A.level >= affecting_level)
-			if(ismovableatom(A))
+			if(ismovable(A))
 				var/atom/movable/AM = A
 				if(!AM.ex_check(explosion_id))
 					continue

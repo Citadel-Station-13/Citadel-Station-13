@@ -57,6 +57,7 @@
 		switch(SSshuttle.moveShuttle(shuttleId, href_list["move"], 1))
 			if(0)
 				say("Shuttle departing. Please stand away from the doors.")
+				log_shuttle("[key_name(usr)] has sent shuttle \"[M]\" towards \"[href_list["move"]]\", using [src].")
 			if(1)
 				to_chat(usr, "<span class='warning'>Invalid shuttle requested.</span>")
 			else
@@ -71,6 +72,6 @@
 	to_chat(user, "<span class='notice'>You fried the consoles ID checking system.</span>")
 	return TRUE
 
-/obj/machinery/computer/shuttle/proc/connect_to_shuttle(obj/docking_port/mobile/port, obj/docking_port/stationary/dock, idnum, override=FALSE)
+/obj/machinery/computer/shuttle/connect_to_shuttle(obj/docking_port/mobile/port, obj/docking_port/stationary/dock, idnum, override=FALSE)
 	if(port && (shuttleId == initial(shuttleId) || override))
 		shuttleId = port.id

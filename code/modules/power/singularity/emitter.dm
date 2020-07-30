@@ -75,7 +75,7 @@
 
 /obj/machinery/power/emitter/ComponentInitialize()
 	. = ..()
-	AddComponent(/datum/component/empprotection, EMP_PROTECT_SELF | EMP_PROTECT_WIRES)
+	AddElement(/datum/element/empprotection, EMP_PROTECT_SELF | EMP_PROTECT_WIRES)
 
 /obj/machinery/power/emitter/RefreshParts()
 	var/max_firedelay = 120
@@ -315,6 +315,9 @@
 
 /obj/machinery/power/emitter/proc/integrate(obj/item/gun/energy/E,mob/user)
 	if(istype(E, /obj/item/gun/energy))
+		if(!E.can_emitter)
+			to_chat(user, "<span class='warning'>[E] cannot fit into emitters.</span>")
+			return
 		if(!user.transferItemToLoc(E, src))
 			return
 		gun = E

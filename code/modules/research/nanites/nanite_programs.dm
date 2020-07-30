@@ -290,7 +290,7 @@
 		qdel(src)
 
 ///A nanite program containing a behaviour protocol. Only one protocol of each class can be active at once.
-//Currently unused due to us lacking the B.E.P.I.S
+//Moved to being 'normally' researched due to lack of B.E.P.I.S.
 /datum/nanite_program/protocol
 	name = "Nanite Protocol"
 	var/protocol_class = NONE

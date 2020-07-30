@@ -57,6 +57,35 @@
 			on_reading_finished(user)
 		reading = FALSE
 	return TRUE
+///TRAITS///
+
+/obj/item/book/granter/trait
+	var/granted_trait
+	var/traitname = "being cool"
+
+/obj/item/book/granter/trait/already_known(mob/user)
+	if(!granted_trait)
+		return TRUE
+	if(HAS_TRAIT(user, granted_trait))
+		to_chat(user, "<span class ='notice'>You already have all the insight you need about [traitname].")
+		return TRUE
+	return FALSE
+
+/obj/item/book/granter/trait/on_reading_start(mob/user)
+	to_chat(user, "<span class='notice'>You start reading about [traitname]...</span>")
+
+/obj/item/book/granter/trait/on_reading_finished(mob/user)
+	to_chat(user, "<span class='notice'>You feel like you've got a good handle on [traitname]!</span>")
+	ADD_TRAIT(user, granted_trait, BOOK_TRAIT)
+
+/obj/item/book/granter/trait/rifleman
+	name = "\proper the Neo-Russian Rifleman\'s Primer"
+	desc = "A book with stains of vodka and...blood? The back is hard to read, but says something about bolt-actions. Or pump-actions. Both, maybe."
+	oneuse = FALSE
+	granted_trait = TRAIT_FAST_PUMP
+	traitname = "riflery"
+	icon_state = "book1"
+	remarks = list("One smooth motion...", "Palm the bolt...", "Push up, rotate back, push forward, down...", "Don't slap yourself with the bolt...", "Wait, what's this about pumping?", "Who just scribbled \"Z\" and \"LMB\" on this page?")
 
 ///ACTION BUTTONS///
 
@@ -220,10 +249,8 @@
 /obj/item/book/granter/spell/smoke/recoil(mob/user)
 	..()
 	to_chat(user,"<span class='caution'>Your stomach rumbles...</span>")
-	if(user.nutrition)
-		user.nutrition = 200
-		if(user.nutrition <= 0)
-			user.nutrition = 0
+	if(user.nutrition > NUTRITION_LEVEL_STARVING + 50)
+		user.set_nutrition(NUTRITION_LEVEL_STARVING + 50)
 
 /obj/item/book/granter/spell/blind
 	spell = /obj/effect/proc_holder/spell/targeted/trigger/blind
@@ -483,7 +510,7 @@
 	oneuse = FALSE
 	remarks = list("So that is how icing is made!", "Placing fruit on top? How simple...", "Huh layering cake seems harder then this...", "This book smells like candy", "A clown must have made this page, or they forgot to spell check it before printing...", "Wait, a way to cook slime to be safe?")
 
-/obj/item/book/granter/crafting_recipe/coldcooking //IceCream
+/obj/item/book/granter/crafting_recipe/coldcooking //Icecream
 	name = "Cooking with Ice"
 	desc = "A cook book that teaches you many old icecream treats."
 	crafting_recipe_types = list(/datum/crafting_recipe/food/banana_split, /datum/crafting_recipe/food/root_float, /datum/crafting_recipe/food/bluecharrie_float, /datum/crafting_recipe/food/charrie_float)

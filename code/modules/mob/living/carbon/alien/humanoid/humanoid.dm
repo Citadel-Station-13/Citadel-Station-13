@@ -25,6 +25,7 @@
 /mob/living/carbon/alien/humanoid/Initialize()
 	AddAbility(new/obj/effect/proc_holder/alien/regurgitate(null))
 	. = ..()
+	AddComponent(/datum/component/footstep, FOOTSTEP_MOB_CLAW, 0.5, -3)
 
 /mob/living/carbon/alien/humanoid/restrained(ignore_grab)
 	return handcuffed
@@ -56,8 +57,17 @@
 
 /mob/living/carbon/alien/humanoid/Topic(href, href_list)
 	..()
-	//strip panel
+	//strip panel & embeds
 	if(usr.canUseTopic(src, BE_CLOSE, NO_DEXTERY))
+		if(href_list["embedded_object"])
+			var/obj/item/bodypart/L = locate(href_list["embedded_limb"]) in bodyparts
+			if(!L)
+				return
+			var/obj/item/I = locate(href_list["embedded_object"]) in L.embedded_objects
+			if(!I || I.loc != src) //no item, no limb, or item is not in limb or in the alien anymore
+				return
+			SEND_SIGNAL(src, COMSIG_CARBON_EMBED_RIP, I, L)
+			return
 		if(href_list["pouches"])
 			visible_message("<span class='danger'>[usr] tries to empty [src]'s pouches.</span>", \
 							"<span class='userdanger'>[usr] tries to empty [src]'s pouches.</span>")
@@ -76,20 +86,18 @@
 	return TRUE
 
 /mob/living/carbon/alien/humanoid/get_standard_pixel_y_offset(lying = 0)
+	. = ..()
 	if(leaping)
-		return -32
-	else if(custom_pixel_y_offset)
-		return custom_pixel_y_offset
-	else
-		return initial(pixel_y)
+		. -= 32
+	if(custom_pixel_y_offset)
+		. += custom_pixel_y_offset
 
 /mob/living/carbon/alien/humanoid/get_standard_pixel_x_offset(lying = 0)
+	. = ..()
 	if(leaping)
-		return -32
-	else if(custom_pixel_x_offset)
-		return custom_pixel_x_offset
-	else
-		return initial(pixel_x)
+		. -= 32
+	if(custom_pixel_x_offset)
+		. += custom_pixel_x_offset
 
 /mob/living/carbon/alien/humanoid/get_permeability_protection(list/target_zones)
 	return 0.8
@@ -111,7 +119,6 @@
 			continue
 		return A
 	return FALSE
-
 
 /mob/living/carbon/alien/humanoid/check_breath(datum/gas_mixture/breath)
 	if(breath && breath.total_moles() > 0 && !sneaking)
