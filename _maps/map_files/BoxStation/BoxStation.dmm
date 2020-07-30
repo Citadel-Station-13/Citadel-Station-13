@@ -57907,7 +57907,6 @@
 	pixel_y = 32
 	},
 /obj/structure/sink{
-	dir = 1;
 	pixel_y = 25
 	},
 /obj/machinery/light/small{
