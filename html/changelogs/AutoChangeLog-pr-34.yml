@@ -1,0 +1,8 @@
+author: "SandPoot"
+delete-after: True
+changes: 
+  - rscadd: "Added nanite signaler. (Another-era)"
+  - tweak: "Nanites can check your stamina level. (Another-era)"
+  - balance: "Construction bags can be made just like the others! Though they cannot be researched anymore."
+  - balance: "Pentetic acid is more useful against walking chernobyl. (Another-era)"
+  - bugfix: "Used Nanite fixes from another-era."
