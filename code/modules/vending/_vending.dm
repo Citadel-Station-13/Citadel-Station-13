@@ -658,21 +658,21 @@ GLOBAL_LIST_EMPTY(vending_products)
 		return
 	return ..()
 
-/obj/machinery/vending/ui_base_html(html)
-	var/datum/asset/spritesheet/assets = get_asset_datum(/datum/asset/spritesheet/vending)
-	. = replacetext(html, "<!--customheadhtml-->", assets.css_tag())
+/obj/machinery/vending/ui_assets(mob/user)
+	return list(
+		get_asset_datum(/datum/asset/spritesheet/vending),
+	)
 
-/obj/machinery/vending/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+/obj/machinery/vending/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		var/datum/asset/assets = get_asset_datum(/datum/asset/spritesheet/vending)
-		assets.send(user)
-		ui = new(user, src, ui_key, "Vending", ui_key, 450, 600, master_ui, state)
+		ui = new(user, src, "Vending")
 		ui.open()
 
 /obj/machinery/vending/ui_static_data(mob/user)
 	. = list()
 	.["onstation"] = onstation
+	.["department"] = payment_department
 	.["product_records"] = list()
 	for (var/datum/data/vending_product/R in product_records)
 		var/list/data = list(
@@ -699,7 +699,7 @@ GLOBAL_LIST_EMPTY(vending_products)
 		var/list/data = list(
 			path = replacetext(replacetext("[R.product_path]", "/obj/item/", ""), "/", "-"),
 			name = R.name,
-			price = R.custom_price || default_price,
+			price = R.custom_premium_price || extra_price, //may cause breakage. please note
 			max_amount = R.max_amount,
 			ref = REF(R),
 			premium = TRUE
@@ -708,28 +708,24 @@ GLOBAL_LIST_EMPTY(vending_products)
 
 /obj/machinery/vending/ui_data(mob/user)
 	. = list()
-	var/obj/item/card/id/C = user.get_idcard(TRUE)
-	.["cost_mult"] = 1
-	.["cost_text"] = ""
-	if(C && C.registered_account)
-		.["user"] = list()
-		.["user"]["name"] = C.registered_account.account_holder
-		.["user"]["cash"] = C.registered_account.account_balance
-		if(C.registered_account.account_job)
-			.["user"]["job"] = C.registered_account.account_job.title
-		else
-			.["user"]["job"] = "No Job"
-		var/cost_mult = get_best_discount(C)
-		if(cost_mult != 1)
-			.["cost_mult"] = cost_mult
-			if(cost_mult < 1)
-				.["cost_text"] = " ([(1 - cost_mult) * 100]% OFF)"
+	var/mob/living/carbon/human/H
+	var/obj/item/card/id/C
+	if(ishuman(user))
+		H = user
+		C = H.get_idcard(TRUE)
+		if(C?.registered_account)
+			.["user"] = list()
+			.["user"]["name"] = C.registered_account.account_holder
+			.["user"]["cash"] = C.registered_account.account_balance
+			if(C.registered_account.account_job)
+				.["user"]["job"] = C.registered_account.account_job.title
+				.["user"]["department"] = C.registered_account.account_job.paycheck_department
 			else
-				.["cost_text"] = " ([(cost_mult - 1) * 100]% EXTRA)"
+				.["user"]["job"] = "No Job"
+				.["user"]["department"] = "No Department"
 	.["stock"] = list()
 	for (var/datum/data/vending_product/R in product_records + coin_records + hidden_records)
 		.["stock"][R.name] = R.amount
-		.
 	.["extended_inventory"] = extended_inventory
 
 /obj/machinery/vending/ui_act(action, params)
@@ -752,7 +748,9 @@ GLOBAL_LIST_EMPTY(vending_products)
 			if(!R || !istype(R) || !R.product_path)
 				vend_ready = TRUE
 				return
-			var/price_to_use = R.custom_price || default_price
+			var/price_to_use = default_price
+			if(R.custom_price)
+				price_to_use = R.custom_price
 			if(R in hidden_records)
 				if(!extended_inventory)
 					vend_ready = TRUE
@@ -766,8 +764,10 @@ GLOBAL_LIST_EMPTY(vending_products)
 				flick(icon_deny,src)
 				vend_ready = TRUE
 				return
-			if(onstation && price_to_use >= 0)
-				var/obj/item/card/id/C = usr.get_idcard(TRUE)
+			if(onstation && ishuman(usr))
+				var/mob/living/carbon/human/H = usr
+				var/obj/item/card/id/C = H.get_idcard(TRUE)
+
 				if(!C)
 					say("No card found.")
 					flick(icon_deny,src)
@@ -778,11 +778,20 @@ GLOBAL_LIST_EMPTY(vending_products)
 					flick(icon_deny,src)
 					vend_ready = TRUE
 					return
+				// else if(age_restrictions && R.age_restricted && (!C.registered_age || C.registered_age < AGE_MINOR))
+				// 	say("You are not of legal age to purchase [R.name].")
+				// 	if(!(usr in GLOB.narcd_underages))
+				// 		Radio.set_frequency(FREQ_SECURITY)
+				// 		Radio.talk_into(src, "SECURITY ALERT: Underaged crewmember [H] recorded attempting to purchase [R.name] in [get_area(src)]. Please watch for substance abuse.", FREQ_SECURITY)
+				// 		GLOB.narcd_underages += H
+				// 	flick(icon_deny,src)
+				// 	vend_ready = TRUE
+				// 	return
 				var/datum/bank_account/account = C.registered_account
-				if(coin_records.Find(R))
-					price_to_use = R.custom_premium_price || extra_price
-				else if(!hidden_records.Find(R))
-					price_to_use = round(price_to_use * get_best_discount(C))
+				if(account.account_job && account.account_job.paycheck_department == payment_department)
+					price_to_use = 0
+				if(coin_records.Find(R) || hidden_records.Find(R))
+					price_to_use = R.custom_premium_price ? R.custom_premium_price : extra_price
 				if(price_to_use && !account.adjust_money(-price_to_use))
 					say("You do not possess the funds to purchase [R.name].")
 					flick(icon_deny,src)
@@ -791,6 +800,8 @@ GLOBAL_LIST_EMPTY(vending_products)
 				var/datum/bank_account/D = SSeconomy.get_dep_account(payment_department)
 				if(D)
 					D.adjust_money(price_to_use)
+					SSblackbox.record_feedback("amount", "vending_spent", price_to_use)
+					log_econ("[price_to_use] credits were inserted into [src] by [D.account_holder] to buy [R].")
 			if(last_shopper != usr || purchase_message_cooldown < world.time)
 				say("Thank you for shopping with [src]!")
 				purchase_message_cooldown = world.time + 5 SECONDS
@@ -799,12 +810,8 @@ GLOBAL_LIST_EMPTY(vending_products)
 			if(icon_vend) //Show the vending animation if needed
 				flick(icon_vend,src)
 			playsound(src, 'sound/machines/machine_vend.ogg', 50, TRUE, extrarange = -3)
-			var/obj/item/vended = new R.product_path(get_turf(src))
+			new R.product_path(get_turf(src))
 			R.amount--
-			if(usr.CanReach(src) && usr.put_in_hands(vended))
-				to_chat(usr, "<span class='notice'>You take [R.name] out of the slot.</span>")
-			else
-				to_chat(usr, "<span class='warning'>[capitalize(R.name)] falls onto the floor!</span>")
 			SSblackbox.record_feedback("nested tally", "vending_machine_usage", 1, list("[type]", "[R.product_path]"))
 			vend_ready = TRUE
 

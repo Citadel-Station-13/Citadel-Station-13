@@ -35,20 +35,24 @@ GLOBAL_DATUM_INIT(keycard_events, /datum/events, new)
 	QDEL_NULL(ev)
 	return ..()
 
-/obj/machinery/keycard_auth/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
-					datum/tgui/master_ui = null, datum/ui_state/state = GLOB.physical_state)
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+/obj/machinery/keycard_auth/ui_state(mob/user)
+	return GLOB.physical_state
+
+/obj/machinery/keycard_auth/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, ui_key, "KeycardAuth", name, ui_x, ui_y, master_ui, state)
+		ui = new(user, src, "KeycardAuth", name)
 		ui.open()
 
 /obj/machinery/keycard_auth/ui_data()
 	var/list/data = list()
 	data["waiting"] = waiting
 	data["auth_required"] = event_source ? event_source.event : 0
-	data["red_alert"] = (SECLEVEL2NUM(NUM2SECLEVEL(GLOB.security_level)) >= SEC_LEVEL_RED) ? 1 : 0
+	data["red_alert"] = (seclevel2num(get_security_level()) >= SEC_LEVEL_RED) ? 1 : 0
 	data["emergency_maint"] = GLOB.emergency_access
 	data["bsa_unlock"] = GLOB.bsa_unlock
+	return data
+= GLOB.bsa_unlock
 	return data
 
 /obj/machinery/keycard_auth/ui_status(mob/user)
