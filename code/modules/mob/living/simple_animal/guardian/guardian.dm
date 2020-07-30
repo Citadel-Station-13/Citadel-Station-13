@@ -60,11 +60,13 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 	var/magic_fluff_string = "<span class='holoparasite'>You draw the Coder, symbolizing bugs and errors. This shouldn't happen! Submit a bug report!</span>"
 	var/tech_fluff_string = "<span class='holoparasite'>BOOT SEQUENCE COMPLETE. ERROR MODULE LOADED. THIS SHOULDN'T HAPPEN. Submit a bug report!</span>"
 	var/carp_fluff_string = "<span class='holoparasite'>CARP CARP CARP SOME SORT OF HORRIFIC BUG BLAME THE CODERS CARP CARP CARP</span>"
+	/// sigh, fine.
+	var/datum/song/holoparasite/music_datum
 
 /mob/living/simple_animal/hostile/guardian/Initialize(mapload, theme)
 	GLOB.parasites += src
 	updatetheme(theme)
-
+	music_datum = new(src, get_allowed_instrument_ids())
 	. = ..()
 
 /mob/living/simple_animal/hostile/guardian/med_hud_set_health()
@@ -84,7 +86,15 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 
 /mob/living/simple_animal/hostile/guardian/Destroy()
 	GLOB.parasites -= src
+	QDEL_NULL(music_datum)
 	return ..()
+
+/mob/living/simple_animal/hostile/guardian/verb/music_interact()
+	set name = "Access Internal Synthesizer"
+	set desc = "ACcess your internal musical synthesizer"
+	set category = "IC"
+
+	music_datum.ui_interact(src)
 
 /mob/living/simple_animal/hostile/guardian/proc/updatetheme(theme) //update the guardian's theme
 	if(!theme)
