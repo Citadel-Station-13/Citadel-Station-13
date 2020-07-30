@@ -3645,6 +3645,7 @@
 #include "sandcode\code\modules\research\designs\tool_designs.dm"
 #include "sandcode\code\modules\research\designs\weapon_designs.dm"
 #include "sandcode\code\modules\research\designs\machine_designs\machine_designs_all_misc.dm"
+#include "sandcode\code\modules\research\nanites\nanite_programs\utility.dm"
 #include "sandcode\code\modules\research\techweb\all_nodes.dm"
 #include "sandcode\code\modules\research\techweb\bluespace_nodes.dm"
 #include "sandcode\code\modules\research\techweb\nodes\computer_hud_nodes.dm"
