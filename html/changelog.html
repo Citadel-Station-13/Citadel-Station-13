@@ -71,6 +71,9 @@
 			</ul>
 			<h3 class="author">silicons updated:</h3>
 			<ul class="changes bgimages16">
+				<li class="rscadd">energy sword perfect parries now reflect projectiles back at their shooters.</li>
+				<li class="balance">any mob can now parry if they have the right item</li>
+				<li class="rscadd">beam rifles now go into emitters properly</li>
 				<li class="refactor">clickdelay has been refactored into an experimental hybrid system. Check code/modules/mob/clickdelay.dm for more information.</li>
 				<li class="balance">Resisting no longer checks clickdelay, but is standardized to a 2 second per resist system for most forms of resisting. It still sets clickdelay, though.</li>
 				<li class="rscadd">Meters have been added for estimating time until next attack/resist. Won't be that useful due to our clickdelay currently being very short, though. They're visible from your hand and resist HUD elements. experimental: Most attacks and forms of attacking (minus unarmed because it's too much of a pain to refactor how hugs/gloves of the north star works) now check for time-since-last-attack rather than making it so you can't attack for said time. This means you can very quickly switch to a gun from a melee weapon, whereas in the old system a melee weapon would put you on lockout for 0.8 seconds, in the new system all the gun cares about is that you did not attack for at least 0.4 seconds.</li>
@@ -87,6 +90,14 @@
 			<ul class="changes bgimages16">
 				<li class="tweak">beepskys hats now follow the laws of gravity and move up/down when he bobs up and down</li>
 				<li class="bugfix">some crafted crates won't contain items now, and thus have stopped breaking the laws of physics</li>
+				<li class="rscadd">turrets now automatically stagger their shots. Happy parrying/blocking.</li>
+				<li class="bugfix">turrets now speed_process, they were shooting slower than they should be</li>
+				<li class="balance">anything can now block with the right items</li>
+			</ul>
+			<h3 class="author">timothyteakettle updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="bugfix">some crafted crates won't contain items now, and thus have stopped breaking the laws of physics</li>
+				<li class="tweak">beepskys hats now follow the laws of gravity and move up/down when he bobs up and down</li>
 			</ul>
 
 			<h2 class="date">29 July 2020</h2>
