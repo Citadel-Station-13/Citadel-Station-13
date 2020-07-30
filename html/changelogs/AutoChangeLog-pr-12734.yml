@@ -1,6 +1,0 @@
-author: "Ryll-Ryll ported by silicons"
-delete-after: True
-changes: 
-  - rscadd: "Shoelaces are now a thing. You can untie them by laying down next to someone."
-  - tweak: "shoes now have lace delays and some can't be laced at all"
-  - refactor: "do after now tracks who's interacting with who, meaning some actions now break when the target moves away."
