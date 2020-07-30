@@ -21,8 +21,6 @@
 	density = TRUE
 	use_power = NO_POWER_USE
 	circuit = /obj/item/circuitboard/machine/smes
-	ui_x = 340
-	ui_y = 350
 
 	var/capacity = 5e6 // maximum charge
 	var/charge = 0 // actual charge
@@ -76,6 +74,9 @@
 	capacity = MC / (15000) * 1e6
 	if(!initial(charge) && !charge)
 		charge = C / 15000 * 1e6
+
+/obj/machinery/power/smes/should_have_node() //remove if runtimed.
+	return TRUE
 
 /obj/machinery/power/smes/attackby(obj/item/I, mob/user, params)
 	//opening using screwdriver
@@ -202,7 +203,7 @@
 
 /obj/machinery/power/smes/update_overlays()
 	. = ..()
-	if((stat & BROKEN) || panel_open)
+	if(stat & BROKEN)
 		return
 
 	if(panel_open)
@@ -318,11 +319,10 @@
 	return
 
 
-/obj/machinery/power/smes/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
-										datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+/obj/machinery/power/smes/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, ui_key, "Smes", name, ui_x, ui_y, master_ui, state)
+		ui = new(user, src, "Smes", name)
 		ui.open()
 
 /obj/machinery/power/smes/ui_data()
