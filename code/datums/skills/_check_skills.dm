@@ -22,9 +22,9 @@
 	if(!ui)
 		ui = new(user, src, "SkillPanel")
 		ui.open()
-	else if(need_static_data_update)
-		update_static_data(user)
-		need_static_data_update = FALSE
+	//else if(need_static_data_update)
+	//	update_static_data(user)
+	//	need_static_data_update = FALSE
 
 /datum/skill_holder/ui_static_data(mob/user)
 	. = list()

@@ -1,13 +1,13 @@
-
+//TODO: someone please get rid of this shit
 /datum/datacore
-	var/medical[] = list()
+	var/list/medical = list()
 	var/medicalPrintCount = 0
-	var/general[] = list()
-	var/security[] = list()
+	var/list/general = list()
+	var/list/security = list()
 	var/securityPrintCount = 0
 	var/securityCrimeCounter = 0
-	//This list tracks characters spawned in the world and cannot be modified in-game. Currently referenced by respawn_character().
-	var/locked[] = list()
+	///This list tracks characters spawned in the world and cannot be modified in-game. Currently referenced by respawn_character().
+	var/list/locked = list()
 
 /datum/data
 	var/name = "data"

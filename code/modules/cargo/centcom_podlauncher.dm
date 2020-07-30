@@ -50,7 +50,7 @@
 		var/mob/M = H
 		holder = M.client //if its a mob, assign the mob's client to holder
 	bay =  locate(/area/centcom/supplypod/loading/one) in GLOB.sortedAreas //Locate the default bay (one) from the centcom map
-	temp_pod = new(locate(/area/centcom/supplypod/pod_storage) in GLOB.sortedAreas) //Create a new temp_pod in the podStorage area on centcom (so users are free to look at it and change other variables if needed)
+	temp_pod = new(locate(/area/centcom/supplypod/podStorage) in GLOB.sortedAreas) //Create a new temp_pod in the podStorage area on centcom (so users are free to look at it and change other variables if needed)
 	orderedArea = createOrderedArea(bay) //Order all the turfs in the selected bay (top left to bottom right) to a single list. Used for the "ordered" mode (launchChoice = 1)
 
 /datum/centcom_podlauncher/ui_state(mob/user)
@@ -64,7 +64,7 @@
 
 /datum/centcom_podlauncher/ui_data(mob/user) //Sends info about the pod to the UI.
 	var/list/data = list() //*****NOTE*****: Many of these comments are similarly described in supplypod.dm. If you change them here, please consider doing so in the supplypod code as well!
-	var/B = (istype(bay, /area/centcom/supplypod/loading/one)) ? 1 : (istype(bay, /area/centcom/supplypod/loading/two)) ? 2 : (istype(bay, /area/centcom/supplypod/loading/three)) ? 3 : (istype(bay, /area/centcom/supplypod/loading/four)) ? 4 : (istype(bay, /area/centcom/supplypod/loading/ert)) ? 5 : 0 //top ten THICCEST FUCKING TERNARY CONDITIONALS OF 2036
+	var/B = (istype(bay, /area/centcom/supplypod/loading/one)) ? 1 : (istype(bay, /area/centcom/supplypod/loading/two)) ? 2 : (istype(bay, /area/centcom/supplypod/loading/three)) ? 3 : (istype(bay, /area/centcom/supplypod/loading/four)) ? 4 : 0 //(istype(bay, /area/centcom/supplypod/loading/ert)) ? 5 : 0 //top ten THICCEST FUCKING TERNARY CONDITIONALS OF 2036
 	data["bay"] = bay //Holds the current bay the user is launching objects from. Bays are specific rooms on the centcom map.
 	data["bayNumber"] = B //Holds the bay as a number. Useful for comparisons in centcom_podlauncher.ract
 	data["oldArea"] = (oldTurf ? get_area(oldTurf) : null) //Holds the name of the area that the user was in before using the teleportCentcom action
@@ -80,7 +80,7 @@
 	data["openingDelay"] = temp_pod.openingDelay //How long the pod takes to open after landing
 	data["departureDelay"] = temp_pod.departureDelay //How long the pod takes to leave after opening (if bluespace=true, it deletes. if reversing=true, it flies back to centcom)
 	data["styleChoice"] = temp_pod.style //Style is a variable that keeps track of what the pod is supposed to look like. It acts as an index to the POD_STYLES list in cargo.dm defines to get the proper icon/name/desc for the pod.
-	data["effectShrapnel"] = temp_pod.effectShrapnel //If true, creates a cloud of shrapnel of a decided type and magnitude on landing
+	data["effectShrapnel"] = FALSE //temp_pod.effectShrapnel //If true, creates a cloud of shrapnel of a decided type and magnitude on landing
 	data["effectStun"] = temp_pod.effectStun //If true, stuns anyone under the pod when it launches until it lands, forcing them to get hit by the pod. Devilish!
 	data["effectLimb"] = temp_pod.effectLimb //If true, pops off a limb (if applicable) from anyone caught under the pod when it lands
 	data["effectOrgans"] = temp_pod.effectOrgans //If true, yeets the organs out of any bodies caught under the pod when it lands
@@ -257,11 +257,12 @@
 			temp_pod.desc = descInput
 			temp_pod.adminNamed = TRUE //This variable is checked in the supplypod/setStyle() proc
 			. = TRUE
+		/*
 		if("effectShrapnel") //Creates a cloud of shrapnel on landing
 			if (temp_pod.effectShrapnel == TRUE) //If already doing custom damage, set back to default (no shrapnel)
 				temp_pod.effectShrapnel = FALSE
 				return
-			var/shrapnelInput = input("Please enter the type of pellet cloud you'd like to create on landing (Can be any projectile!)", "Projectile Typepath",  0) in sortList(subtypesof(/obj/projectile), /proc/cmp_typepaths_asc)
+			var/shrapnelInput = input("Please enter the type of pellet cloud you'd like to create on landing (Can be any projectile!)", "Projectile Typepath",  0) in sortList(subtypesof(/obj/item/projectile), /proc/cmp_typepaths_asc)
 			if (isnull(shrapnelInput))
 				return
 			var/shrapnelMagnitude = input("Enter the magnitude of the pellet cloud. This is usually a value around 1-5. Please note that Ryll-Ryll has asked me to tell you that if you go too crazy with the projectiles you might crash the server. So uh, be gentle!", "Shrapnel Magnitude", 0) as null|num
@@ -274,6 +275,7 @@
 			temp_pod.shrapnel_magnitude = shrapnelMagnitude
 			temp_pod.effectShrapnel = TRUE
 			. = TRUE
+		*/
 		if("effectStun") //Toggle: Any mob under the pod is stunned (cant move) until the pod lands, hitting them!
 			temp_pod.effectStun = !temp_pod.effectStun
 			. = TRUE
@@ -485,11 +487,11 @@
 		return
 	if (launching || turf_picking) //If the launching param is true, we give the user new mouse icons.
 		if(launching)
-			holder.mouse_up_icon = 'icons/effects/mouse_pointers/supplypod_target.dmi' //Icon for when mouse is released
-			holder.mouse_down_icon = 'icons/effects/mouse_pointers/supplypod_down_target.dmi' //Icon for when mouse is pressed
+			holder.mouse_up_icon = 'icons/effects/supplypod_target.dmi' //Icon for when mouse is released
+			holder.mouse_down_icon = 'icons/effects/supplypod_down_target.dmi' //Icon for when mouse is pressed
 		if(turf_picking)
-			holder.mouse_up_icon = 'icons/effects/mouse_pointers/supplypod_pickturf.dmi' //Icon for when mouse is released
-			holder.mouse_down_icon = 'icons/effects/mouse_pointers/supplypod_pickturf_down.dmi' //Icon for when mouse is pressed
+			holder.mouse_up_icon = 'icons/effects/supplypod_pickturf.dmi' //Icon for when mouse is released
+			holder.mouse_down_icon = 'icons/effects/supplypod_pickturf_down.dmi' //Icon for when mouse is pressed
 		holder.mouse_pointer_icon = holder.mouse_up_icon //Icon for idle mouse (same as icon for when released)
 		holder.click_intercept = src //Create a click_intercept so we know where the user is clicking
 	else
@@ -519,7 +521,7 @@
 			else
 				return //if target is null and we don't have a specific target, cancel
 			if (effectAnnounce)
-				deadchat_broadcast("A special package is being launched at the station!", turf_target = target, message_type=DEADCHAT_ANNOUNCEMENT)
+				deadchat_broadcast("A special package is being launched at the station!", turf_target = target) //, message_type=DEADCHAT_ANNOUNCEMENT)
 			var/list/bouttaDie = list()
 			for (var/mob/living/M in target)
 				bouttaDie.Add(M)
@@ -603,10 +605,12 @@
 	if (isnull(A))
 		return
 	var/obj/structure/closet/supplypod/centcompod/toLaunch = DuplicateObject(temp_pod) //Duplicate the temp_pod (which we have been varediting or configuring with the UI) and store the result
+	/*
 	if(dropoff_turf)
 		toLaunch.reverse_dropoff_turf = dropoff_turf
 	else
 		toLaunch.reverse_dropoff_turf = bay //Bay is currently a nonstatic expression, so it cant go into toLaunch using DuplicateObject
+	*/
 	toLaunch.update_icon()//we update_icon() here so that the door doesnt "flicker on" right after it lands
 	var/shippingLane = GLOB.areas_by_type[/area/centcom/supplypod/fly_me_to_the_moon]
 	toLaunch.forceMove(shippingLane)
@@ -624,7 +628,7 @@
 		else
 			for (var/atom/movable/O in launchList) //If we aren't cloning the objects, just go through the launchList
 				O.forceMove(toLaunch) //and forceMove any atom/moveable into the supplypod
-	new /obj/effect/pod_landingzone(A, toLaunch) //Then, create the DPTarget effect, which will eventually forceMove the temp_pod to it's location
+	new /obj/effect/abstract/DPtarget(A, toLaunch) //Then, create the DPTarget effect, which will eventually forceMove the temp_pod to it's location
 	if (launchClone)
 		launchCounter++ //We only need to increment launchCounter if we are cloning objects.
 		//If we aren't cloning objects, taking and removing the first item each time from the acceptableTurfs list will inherently iterate through the list in order

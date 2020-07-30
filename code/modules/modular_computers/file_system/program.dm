@@ -70,17 +70,17 @@
 	if(!(hardware_flag & usage_flags))
 		if(loud && computer && user)
 			to_chat(user, "<span class='danger'>\The [computer] flashes a \"Hardware Error - Incompatible software\" warning.</span>")
-		return FALSE
-	return TRUE
+		return 0
+	return 1
 
 /datum/computer_file/program/proc/get_signal(specific_action = 0)
 	if(computer)
 		return computer.get_ntnet_status(specific_action)
-	return FALSE
+	return 0
 
 // Called by Process() on device that runs us, once every tick.
 /datum/computer_file/program/proc/process_tick()
-	return TRUE
+	return 1
 
 // Check if the user can run program. Only humans can operate computer. Automatically called in run_program()
 // User has to wear their ID for ID Scan to work.
@@ -126,7 +126,7 @@
 				return TRUE
 		if(loud)
 			to_chat(user, "<span class='danger'>\The [computer] flashes an \"Access Denied\" warning.</span>")
-	return FALSE
+	return 0
 
 // This attempts to retrieve header data for UIs. If implementing completely new device of different type than existing ones
 // always include the device here in this proc. This proc basically relays the request to whatever is running the program.
@@ -142,8 +142,8 @@
 		if(requires_ntnet && network_destination)
 			generate_network_log("Connection opened to [network_destination].")
 		program_state = PROGRAM_STATE_ACTIVE
-		return TRUE
-	return FALSE
+		return 1
+	return 0
 
 /**
   *
@@ -164,7 +164,7 @@
 	program_state = PROGRAM_STATE_KILLED
 	if(network_destination)
 		generate_network_log("Connection to [network_destination] closed.")
-	return TRUE
+	return 1
 
 /datum/computer_file/program/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -180,17 +180,17 @@
 // ALWAYS INCLUDE PARENT CALL ..() OR DIE IN FIRE.
 /datum/computer_file/program/ui_act(action,list/params,datum/tgui/ui)
 	if(..())
-		return TRUE
+		return 1
 	if(computer)
 		switch(action)
 			if("PC_exit")
 				computer.kill_program()
 				ui.close()
-				return TRUE
+				return 1
 			if("PC_shutdown")
 				computer.shutdown_computer()
 				ui.close()
-				return TRUE
+				return 1
 			if("PC_minimize")
 				var/mob/user = usr
 				if(!computer.active_program || !computer.all_components[MC_CPU])
