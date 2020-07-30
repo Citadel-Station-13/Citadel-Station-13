@@ -8,16 +8,6 @@
 	category = list("Misc", "Medical Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL | DEPARTMENTAL_FLAG_SCIENCE | DEPARTMENTAL_FLAG_SERVICE
 
-/datum/design/construction_bag
-	name = "Construction Bag"
-	desc = "A bag for storing small construction components."
-	id = "engbag"
-	build_type = PROTOLATHE
-	build_path = /obj/item/storage/bag/construction
-	materials = list(/datum/material/iron = 250, /datum/material/glass = 250)
-	category = list("Misc")
-	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
-
 /datum/design/cyberimp_toolset_advanced
 	name = "Advanced Toolset Arm Implant"
 	desc = "A very advanced version of the regular toolset implant, has alien stuff!"

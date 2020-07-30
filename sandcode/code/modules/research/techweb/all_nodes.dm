@@ -15,14 +15,6 @@
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 	hidden = FALSE
 
-/datum/techweb_node/engineering/bag
-	id = "engineering_bag"
-	display_name = "Construction Bag"
-	description = "A bag for storing small construction components."
-	prereq_ids = list("engineering")
-	design_ids = list("engbag")
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 1250)
-
 /datum/techweb_node/adv_bluetravel
 	id = "advanced_bluetravel"
 	display_name = "Advanced Bluespace Travel"
