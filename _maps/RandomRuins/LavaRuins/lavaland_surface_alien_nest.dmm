@@ -340,7 +340,7 @@
 /area/ruin/unpowered/xenonest)
 "bm" = (
 /obj/structure/stone_tile/slab/cracked,
-/turf/open/indestructible/boss/air,
+/turf/open/indestructible/boss,
 /area/ruin/unpowered/xenonest)
 "bn" = (
 /obj/structure/stone_tile/block{
