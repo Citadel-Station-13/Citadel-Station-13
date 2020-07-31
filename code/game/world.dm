@@ -277,6 +277,8 @@ GLOBAL_LIST(topic_status_cache)
 	shutdown_logging() // Past this point, no logging procs can be used, at risk of data loss.
 	..()
 
+/proc/destroy_extools_atmos_thread()
+
 /world/Del()
 	// memory leaks bad
 	var/num_deleted = 0
@@ -284,6 +286,7 @@ GLOBAL_LIST(topic_status_cache)
 		GM.__gasmixture_unregister()
 		num_deleted++
 	log_world("Deallocated [num_deleted] gas mixtures")
+	destroy_extools_atmos_thread()
 	..()
 
 /world/proc/update_status()

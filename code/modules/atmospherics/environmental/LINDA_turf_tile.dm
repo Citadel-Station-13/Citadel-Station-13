@@ -198,7 +198,8 @@
 		remove_tile()
 
 /turf/open/process_cell(fire_count)
-
+	return
+	
 //////////////////////////SPACEWIND/////////////////////////////
 
 /turf/open/proc/consider_pressure_difference(turf/T, difference)
