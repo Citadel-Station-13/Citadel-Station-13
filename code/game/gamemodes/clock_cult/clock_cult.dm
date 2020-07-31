@@ -133,7 +133,7 @@ Credit where due:
 	config_tag = "clockwork_cult"
 	antag_flag = ROLE_SERVANT_OF_RATVAR
 	false_report_weight = 10
-	required_players = 35
+	required_players = 24 //Fixing this directly for now since apparently config machine for forcing modes broke.
 	required_enemies = 3
 	recommended_enemies = 5
 	enemy_minimum_age = 7
@@ -143,13 +143,12 @@ Credit where due:
 	announce_text = "Servants of Ratvar are trying to summon the Justiciar!\n\
 	<span class='brass'>Servants</span>: Construct defenses to protect the Ark. Sabotage the station!\n\
 	<span class='notice'>Crew</span>: Stop the servants before they can summon the Clockwork Justiciar."
-	var/servants_to_serve = list()
+	var/list/servants_to_serve = list() //Yes this list is made out of list
 	var/roundstart_player_count
-	var/ark_time //In minutes, how long the Ark waits before activation; this is equal to 30 + (number of players / 5) (max 40 mins.)
 
 	var/datum/team/clockcult/main_clockcult
 
-/datum/game_mode/clockwork_cult/pre_setup()
+/datum/game_mode/clockwork_cult/pre_setup() //Gamemode and job code is pain. Have fun codediving all of that stuff, whoever works on this next - Delta
 	var/list/errorList = list()
 	var/list/reebes = SSmapping.LoadGroup(errorList, "Reebe", "map_files/generic", "City_of_Cogs.dmm", default_traits = ZTRAITS_REEBE, silent = TRUE)
 	if(errorList.len)	// reebe failed to load
@@ -162,22 +161,27 @@ Credit where due:
 		restricted_jobs += protected_jobs
 	if(CONFIG_GET(flag/protect_assistant_from_antagonist))
 		restricted_jobs += "Assistant"
-	var/starter_servants = 4 //Guaranteed four servants
+	var/starter_servants = 4 //Try to go for at least four
 	var/number_players = num_players()
 	roundstart_player_count = number_players
 	if(number_players > 30) //plus one servant for every additional 10 players above 30
 		number_players -= 30
 		starter_servants += round(number_players / 10)
-	starter_servants = min(starter_servants, 8) //max 8 servants (that sould only happen with a ton of players)
-	GLOB.clockwork_vitality += 50 * starter_servants //some starter Vitality to help recover from initial fuck ups
+		starter_servants = min(starter_servants, 8) //max 8 servants (that sould only happen with a ton of players)
 	while(starter_servants)
+		if(!antag_candidates.len)
+			break //Skip setup, DO NOT RUNTIME
 		var/datum/mind/servant = antag_pick(antag_candidates)
 		servants_to_serve += servant
 		antag_candidates -= servant
-		servant.assigned_role = ROLE_SERVANT_OF_RATVAR
 		servant.special_role = ROLE_SERVANT_OF_RATVAR
+		servant.restricted_roles = restricted_jobs
 		starter_servants--
-	return 1
+	if(!servants_to_serve.len) //Uh oh, something went wrong
+		setup_error = "There are no clockcult candidates! (Or something went very wrong)"
+		return FALSE
+	GLOB.clockwork_vitality += 50 * servants_to_serve.len //some starter Vitality to help recover from initial fuck ups
+	return TRUE //Haha yes it works time to not touch it any more than that.
 
 /datum/game_mode/clockwork_cult/post_setup()
 	for(var/S in servants_to_serve)
@@ -187,6 +191,7 @@ Credit where due:
 		greet_servant(L)
 		equip_servant(L)
 		add_servant_of_ratvar(L, TRUE)
+	..()
 	return 1
 
 /datum/game_mode/clockwork_cult/proc/greet_servant(mob/M) //Description of their role
