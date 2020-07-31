@@ -78,7 +78,7 @@
 		if(28)
 			new /obj/item/clothing/neck/necklace/memento_mori(src)
 		if(29)
-				new /mob/living/simple_animal/hostile/megafauna/blood_drunk_miner/doom(loc)
+			new /mob/living/simple_animal/hostile/megafauna/blood_drunk_miner/doom(loc)
 
 //KA modkit design discs
 /obj/item/disk/design_disk/modkit_disc
