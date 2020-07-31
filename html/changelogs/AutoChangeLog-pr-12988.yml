@@ -1,0 +1,4 @@
+author: "silicons"
+delete-after: True
+changes: 
+  - bugfix: "being on fire works again."
