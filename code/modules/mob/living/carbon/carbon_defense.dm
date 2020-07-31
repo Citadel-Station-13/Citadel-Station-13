@@ -244,7 +244,7 @@
 	//Stun
 	var/should_stun = (!(flags & SHOCK_TESLA) || siemens_coeff > 0.5) && !(flags & SHOCK_NOSTUN)
 	if(should_stun)
-		Stun(40)
+		DefaultCombatKnockdown(100) //Same as a hunters trap
 	//Jitter and other fluff.
 	jitteriness += 1000
 	do_jitter_animation(jitteriness)
