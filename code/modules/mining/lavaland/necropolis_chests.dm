@@ -78,10 +78,7 @@
 		if(28)
 			new /obj/item/clothing/neck/necklace/memento_mori(src)
 		if(29)
-			if(prob(50))
 				new /mob/living/simple_animal/hostile/megafauna/blood_drunk_miner/doom(loc)
-			else
-				new /mob/living/simple_animal/hostile/retaliate/clown/clownhulk(loc)
 
 //KA modkit design discs
 /obj/item/disk/design_disk/modkit_disc
