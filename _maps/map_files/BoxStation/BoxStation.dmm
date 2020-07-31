@@ -58111,7 +58111,7 @@
 	dir = 5
 	},
 /obj/machinery/camera{
-	c_tag = "Bar Backroom"
+	c_tag = "Gravity Generator - Fore"
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 4
