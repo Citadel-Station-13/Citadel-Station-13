@@ -91,7 +91,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 
 /mob/living/simple_animal/hostile/guardian/verb/music_interact()
 	set name = "Access Internal Synthesizer"
-	set desc = "ACcess your internal musical synthesizer"
+	set desc = "Access your internal musical synthesizer"
 	set category = "IC"
 
 	music_datum.ui_interact(src)
