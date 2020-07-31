@@ -34,14 +34,10 @@
 	..(gibbed)
 
 /mob/living/simple_animal/hostile/asteroid/AltClick(mob/living/carbon/slayer)
+	if(!slayer.canUseTopic(src, TRUE))
+		return
 	if(glorykill)
-		if(ranged)
-			if(ranged_cooldown >= world.time)
-				ranged_cooldown += 10
-			else
-				ranged_cooldown = 10 + world.time
-	if(glorykill)
-		if(do_after(slayer, 10, needhand = TRUE, target = src, progress = FALSE) && (stat != DEAD))
+		if(do_mob(slayer, src, 10) && (stat != DEAD))
 			var/message
 			if(!slayer.get_active_held_item() || (!istype(slayer.get_active_held_item(), /obj/item/kinetic_crusher) && !istype(slayer.get_active_held_item(), /obj/item/gun/energy/kinetic_accelerator)))
 				message = pick(glorymessageshand)
