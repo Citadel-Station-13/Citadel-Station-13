@@ -318,4 +318,4 @@
 	return FALSE
 
 /datum/song/holoparasite/check_can_use(mob/user)
-	return user == stand)
+	return (user == stand)
