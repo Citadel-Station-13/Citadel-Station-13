@@ -50,6 +50,16 @@
 		-->
 		<div class="commit sansserif">
 
+			<h2 class="date">31 July 2020</h2>
+			<h3 class="author">SandPoot updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="rscadd">Added nanite signaler. (Another-era)</li>
+				<li class="tweak">Nanites can check your stamina level. (Another-era)</li>
+				<li class="balance">Construction bags can be made just like the others! Though they cannot be researched anymore.</li>
+				<li class="balance">Pentetic acid is more useful against walking chernobyl. (Another-era)</li>
+				<li class="bugfix">Used Nanite fixes from another-era.</li>
+			</ul>
+
 			<h2 class="date">30 July 2020</h2>
 			<h3 class="author">Adelphon updated:</h3>
 			<ul class="changes bgimages16">
@@ -79,17 +89,6 @@
 				<li class="rscadd">Meters have been added for estimating time until next attack/resist. Won't be that useful due to our clickdelay currently being very short, though. They're visible from your hand and resist HUD elements. experimental: Most attacks and forms of attacking (minus unarmed because it's too much of a pain to refactor how hugs/gloves of the north star works) now check for time-since-last-attack rather than making it so you can't attack for said time. This means you can very quickly switch to a gun from a melee weapon, whereas in the old system a melee weapon would put you on lockout for 0.8 seconds, in the new system all the gun cares about is that you did not attack for at least 0.4 seconds.</li>
 				<li class="code_imp">All clickdelay setting/reading are now procs, so it should be trivial to implement another system where drawing/switching to a weapon requires you to have it out for x seconds before using it. I am not personally doing it at this point in time though because it will likely just annoy everyone with no real gain unless we do something like putting a 0.8 second switch-to cooldown for guns (which I did not, yet)</li>
 				<li class="refactor">attack_hand has been refactored to on_attack_hand remove: sexchems no longer impact click delay</li>
-				<li class="rscadd">beam rifles now go into emitters properly</li>
-				<li class="balance">any mob can now parry if they have the right item</li>
-				<li class="balance">anything can now block with the right items</li>
-				<li class="rscadd">energy sword perfect parries now reflect projectiles back at their shooters.</li>
-				<li class="rscadd">turrets now automatically stagger their shots. Happy parrying/blocking.</li>
-				<li class="bugfix">turrets now speed_process, they were shooting slower than they should be</li>
-			</ul>
-			<h3 class="author">timothyteakettle updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="tweak">beepskys hats now follow the laws of gravity and move up/down when he bobs up and down</li>
-				<li class="bugfix">some crafted crates won't contain items now, and thus have stopped breaking the laws of physics</li>
 				<li class="rscadd">turrets now automatically stagger their shots. Happy parrying/blocking.</li>
 				<li class="bugfix">turrets now speed_process, they were shooting slower than they should be</li>
 				<li class="balance">anything can now block with the right items</li>
