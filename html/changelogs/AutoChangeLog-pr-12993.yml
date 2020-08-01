@@ -1,0 +1,4 @@
+author: "KeRSedChaplain"
+delete-after: True
+changes: 
+  - tweak: "changes 'Dread_Ipad.dmi' to 'clockwork_slab.dmi'"
