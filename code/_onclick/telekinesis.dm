@@ -123,7 +123,7 @@
 	. = ..()
 	if(!target || !user)
 		return
-	if(!user.CheckActionCooldown())
+	if(!user.CheckActionCooldown(CLICK_CD_MELEE))
 		return
 	if(!focus)
 		focus_object(target)
@@ -146,7 +146,7 @@
 	else
 		apply_focus_overlay()
 		focus.throw_at(target, 10, 1,user)
-	user.DelayNextAction(immediate = FALSE)
+	user.DelayNextAction(considered_action = TRUE, flush = TRUE)
 	update_icon()
 
 /proc/tkMaxRangeCheck(mob/user, atom/target)
