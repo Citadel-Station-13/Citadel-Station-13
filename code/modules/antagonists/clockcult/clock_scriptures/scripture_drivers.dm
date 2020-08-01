@@ -97,7 +97,7 @@
 	desc = "Charges your slab with divine energy, allowing you to overwhelm a target with Ratvar's light."
 	invocations = list("Divinity, show them your light!")
 	whispered = TRUE
-	channel_time = 20 // I think making kindle channel a third of the time less is a good make up for the fact that it silences people for such a little amount of time.
+	channel_time = 10 // I think making kindle channel a third of the time less is a good make up for the fact that it silences people for such a little amount of time.
 	power_cost = 125
 	usage_tip = "The light can be used from up to two tiles away. Damage taken will GREATLY REDUCE the stun's duration."
 	tier = SCRIPTURE_DRIVER
@@ -287,7 +287,7 @@
 	desc = "Tears open a miniaturized gateway in spacetime to any conscious servant that can transport objects or creatures to its destination. \
 	Each servant assisting in the invocation adds one additional use and four additional seconds to the gateway's uses and duration."
 	invocations = list("Spatial Gateway...", "...activate!")
-	channel_time = 80
+	channel_time = 30
 	power_cost = 400
 	whispered = TRUE
 	multiple_invokers_used = TRUE

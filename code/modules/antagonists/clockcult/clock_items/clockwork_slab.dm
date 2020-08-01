@@ -4,7 +4,7 @@
 	clockwork_desc = "A link between you and the Celestial Derelict. It contains information, recites scripture, and is your most vital tool as a Servant.\
 	It can be used to link traps and triggers by attacking them with the slab. Keep in mind that traps linked with one another will activate in tandem!"
 
-	icon_state = "dread_ipad"
+	icon_state = "clockwork_slab"
 	lefthand_file = 'icons/mob/inhands/antag/clockwork_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/antag/clockwork_righthand.dmi'
 	var/inhand_overlay //If applicable, this overlay will be applied to the slab's inhand
