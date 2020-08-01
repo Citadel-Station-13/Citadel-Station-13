@@ -13347,7 +13347,6 @@
 	pixel_y = 32
 	},
 /obj/structure/sink{
-	dir = 1;
 	pixel_y = 25
 	},
 /obj/machinery/button/door{
@@ -14233,7 +14232,6 @@
 	pixel_y = 32
 	},
 /obj/structure/sink{
-	dir = 1;
 	pixel_y = 25
 	},
 /obj/machinery/button/door{
@@ -21718,7 +21716,6 @@
 	pixel_y = 32
 	},
 /obj/structure/sink{
-	dir = 1;
 	pixel_y = 25
 	},
 /obj/machinery/button/door{
@@ -53437,6 +53434,7 @@
 "dfh" = (
 /obj/machinery/power/apc{
 	areastring = "/area/science/circuit";
+	dir = 4;
 	name = "Circuitry Lab APC";
 	pixel_x = 30
 	},
@@ -54387,6 +54385,7 @@
 /obj/structure/chair/office/dark{
 	dir = 1
 	},
+/obj/effect/landmark/start/atmospheric_technician,
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "fMp" = (
@@ -54776,7 +54775,6 @@
 	dir = 8
 	},
 /obj/structure/sink{
-	dir = 1;
 	pixel_y = 25
 	},
 /obj/structure/mirror{
@@ -57075,6 +57073,7 @@
 	dir = 4;
 	pixel_y = 5
 	},
+/obj/item/clothing/head/hardhat/cakehat,
 /turf/open/floor/wood,
 /area/crew_quarters/bar)
 "oby" = (
@@ -57198,7 +57197,6 @@
 	dir = 8
 	},
 /obj/structure/sink{
-	dir = 1;
 	pixel_y = 25
 	},
 /obj/structure/mirror{
@@ -57847,7 +57845,6 @@
 	pixel_y = 32
 	},
 /obj/structure/sink{
-	dir = 1;
 	pixel_y = 25
 	},
 /turf/open/floor/mineral/titanium/blue,
@@ -57910,7 +57907,6 @@
 	pixel_y = 32
 	},
 /obj/structure/sink{
-	dir = 1;
 	pixel_y = 25
 	},
 /obj/machinery/light/small{
@@ -60673,7 +60669,6 @@
 	pixel_y = 32
 	},
 /obj/structure/sink{
-	dir = 1;
 	pixel_y = 25
 	},
 /obj/machinery/button/door{
