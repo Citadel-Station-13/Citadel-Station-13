@@ -147,6 +147,6 @@
 			send_to_playing_players("<span class='cult'><font size=5>\"<b>[pick("Ha.", "Ra'sha fonn dest.", "You fool. To come here.")]</b>\"</font></span>\n\
 			<span class='heavy_brass'><font size=5>\"[pick("NO, YOUR SHADOWS SHALL NO-", "ZNL GUR FGERNZF BS GVZR PNEEL ZL RKVFG-", "MY LIGHT CANNO-")]\"</font></span>")
 			sound_to_playing_players('sound/magic/demon_attack1.ogg', 50)
-			sound_to_playing_players('sound/machines/clockcult/ark_scream.ogg', 80)
+			sound_to_playing_players('sound/machines/clockcult/ratvar_scream.ogg', 80)
 			narsie.clashing = FALSE
 			qdel(src)
