@@ -26,5 +26,5 @@
 /obj/item/organ/cyberimp/arm/clockwork/claw
 	name = "brass claw implant"
 	desc = "Yikes, the claw attached to this looks pretty darn sharp."
-	clockwork_desc = "This implant, when added to a servant's arm, allows them to extend and retract a claw at will. It will refuse to work for any non-servants."
+	clockwork_desc = "This implant, when added to a servant's arm, allows them to extend and retract a claw at will, though this is mildly painful to do. It will refuse to work for any non-servants."
 	contents = newlist(/obj/item/clockwork/brass_claw)

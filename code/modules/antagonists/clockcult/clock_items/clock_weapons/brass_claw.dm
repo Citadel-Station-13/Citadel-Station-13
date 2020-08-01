@@ -21,3 +21,7 @@
 	wound_bonus = 5
 	bare_wound_bonus = 15
 	total_mass = TOTAL_MASS_HAND_REPLACEMENT
+
+/obj/item/clockwork/brass_claw/Initialize()
+	. = ..()
+	AddComponent(/datum/component/butchering, 60, 80)
