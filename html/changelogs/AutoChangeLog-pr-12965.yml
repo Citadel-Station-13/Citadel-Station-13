@@ -1,0 +1,5 @@
+author: "timothyteakettle"
+delete-after: True
+changes: 
+  - tweak: "combat mode now has weaker buffs in terms of damage dealt and took for being or not being in the mode"
+  - tweak: "damage debuff for laying down has been decreased from 0.5x to 0.7x"
