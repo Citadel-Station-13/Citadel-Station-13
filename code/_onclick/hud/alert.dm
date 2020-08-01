@@ -447,8 +447,6 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 			var/time_name
 			if(G.seconds_until_activation)
 				time_name = "until the Ark activates"
-			else if(G.grace_period)
-				time_name = "of grace period remaining"
 			else if(G.progress_in_seconds)
 				time_name = "until the Ark finishes summoning"
 			if(time_info)

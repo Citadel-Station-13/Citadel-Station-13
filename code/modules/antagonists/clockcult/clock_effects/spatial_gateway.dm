@@ -14,6 +14,8 @@
 	var/uses = 1 //How many objects or mobs can go through the portal
 	var/obj/effect/clockwork/spatial_gateway/linked_gateway //The gateway linked to this one
 	var/timerid
+	var/is_stable = FALSE
+	var/busy = FALSE //If someone is already working on closing the gateway, only needed for stable gateways but in the parent to not need typecasting
 
 /obj/effect/clockwork/spatial_gateway/Initialize()
 	. = ..()
@@ -31,11 +33,16 @@
 		clockwork_desc = "A gateway in reality. It can both send and receive objects."
 	else
 		clockwork_desc = "A gateway in reality. It can only [sender ? "send" : "receive"] objects."
-	timerid = QDEL_IN(src, lifetime)
+	if(is_stable)
+		return
+	timerid = QDEL_IN(src, lifetime) //We only need this if the gateway is not stable
 
 //set up a gateway with another gateway
 /obj/effect/clockwork/spatial_gateway/proc/setup_gateway(obj/effect/clockwork/spatial_gateway/gatewayB, set_duration, set_uses, two_way)
-	if(!gatewayB || !set_duration || !uses)
+	if(!gatewayB)
+		return FALSE
+
+	if((!set_duration || !uses) && !is_stable)
 		return FALSE
 	linked_gateway = gatewayB
 	gatewayB.linked_gateway = src
@@ -55,7 +62,7 @@
 /obj/effect/clockwork/spatial_gateway/examine(mob/user)
 	. = ..()
 	if(is_servant_of_ratvar(user) || isobserver(user))
-		. += "<span class='brass'>It has [uses] use\s remaining.</span>"
+		. += "<span class='brass'> [is_stable ? "It is stabilised and can be used as much as is neccessary." : "It has [uses] use\s remaining."]</span>"
 
 //ATTACK GHOST IGNORING PARENT RETURN VALUE
 /obj/effect/clockwork/spatial_gateway/attack_ghost(mob/user)
@@ -121,9 +128,9 @@
 /obj/effect/clockwork/spatial_gateway/Bumped(atom/movable/AM)
 	..()
 	if(!QDELETED(AM))
-		pass_through_gateway(AM, FALSE)
+		pass_through_gateway(AM)
 
-/obj/effect/clockwork/spatial_gateway/proc/pass_through_gateway(atom/movable/A, no_cost)
+/obj/effect/clockwork/spatial_gateway/proc/pass_through_gateway(atom/movable/A, no_cost = FALSE)
 	if(!linked_gateway)
 		qdel(src)
 		return FALSE
@@ -197,6 +204,10 @@
 			return procure_gateway(invoker, time_duration, gateway_uses, two_way)
 	var/istargetobelisk = istype(target, /obj/structure/destructible/clockwork/powered/clockwork_obelisk)
 	var/issrcobelisk = istype(src, /obj/structure/destructible/clockwork/powered/clockwork_obelisk)
+	if(!issrcobelisk && target.z != invoker.z && (is_reebe(invoker.z) || is_reebe(target.z)) && !GLOB.ratvar_awakens) //You need obilisks to get from and to reebe. Costs alot of power, unless you use stable gateways.
+		to_chat(invoker, "<span class='heavy brass'>The distance between reebe and the mortal realm is far too vast to bridge with a gateway your slab can create, my child. \
+		Use an obilisk instead!</span>")
+		return procure_gateway(invoker, time_duration, gateway_uses, two_way)
 	if(issrcobelisk)
 		if(!anchored)
 			to_chat(invoker, "<span class='warning'>[src] is no longer secured!</span>")
@@ -217,12 +228,63 @@
 		gateway_uses = round(gateway_uses * (2 * efficiency), 1)
 		time_duration = round(time_duration * (2 * efficiency), 1)
 		CO.active = TRUE //you'd be active in a second but you should update immediately
-	invoker.visible_message("<span class='warning'>The air in front of [invoker] ripples before suddenly tearing open!</span>", \
-	"<span class='brass'>With a word, you rip open a [two_way ? "two-way":"one-way"] rift to [input_target_key]. It will last for [DisplayTimeText(time_duration)] and has [gateway_uses] use[gateway_uses > 1 ? "s" : ""].</span>")
-	var/obj/effect/clockwork/spatial_gateway/S1 = new(issrcobelisk ? get_turf(src) : get_step(get_turf(invoker), invoker.dir))
-	var/obj/effect/clockwork/spatial_gateway/S2 = new(istargetobelisk ? get_turf(target) : get_step(get_turf(target), target.dir))
+	if(issrcobelisk && istargetobelisk && src.z != target.z && (is_reebe(src.z) || is_reebe(target.z)))
+		invoker.visible_message("<span class='warning'>The air in front of [invoker] ripples before suddenly tearing open!</span>", \
+		"<span class='brass'>With a word, you rip open a stable two-way rift between reebe and the mortal realm.</span>")
+		var/obj/effect/clockwork/spatial_gateway/stable/stable_S1 = new(get_turf(src))
+		var/obj/effect/clockwork/spatial_gateway/stable/stable_S2 = new(get_turf(target))
+		stable_S1.setup_gateway(stable_S2)
+		stable_S2.visible_message("<span class='warning'>The air in front of [target] ripples before suddenly tearing open!</span>")
+	else
+		invoker.visible_message("<span class='warning'>The air in front of [invoker] ripples before suddenly tearing open!</span>", \
+		"<span class='brass'>With a word, you rip open a [two_way ? "two-way":"one-way"] rift to [input_target_key]. It will last for [DisplayTimeText(time_duration)] and has [gateway_uses] use[gateway_uses > 1 ? "s" : ""].</span>")
+		var/obj/effect/clockwork/spatial_gateway/S1 = new(issrcobelisk ? get_turf(src) : get_step(get_turf(invoker), invoker.dir))
+		var/obj/effect/clockwork/spatial_gateway/S2 = new(istargetobelisk ? get_turf(target) : get_step(get_turf(target), target.dir))
 
-	//Set up the portals now that they've spawned
-	S1.setup_gateway(S2, time_duration, gateway_uses, two_way)
-	S2.visible_message("<span class='warning'>The air in front of [target] ripples before suddenly tearing open!</span>")
+		//Set up the portals now that they've spawned
+		S1.setup_gateway(S2, time_duration, gateway_uses, two_way)
+		S2.visible_message("<span class='warning'>The air in front of [target] ripples before suddenly tearing open!</span>")
 	return TRUE
+
+//Stable Gateway: Used to travel to and from reebe without any further powercost. Needs a clockwork obilisk to keep active, but stays active as long as it is not deactivated via an null rod or a slab, or the obilisk is destroyed
+/obj/effect/clockwork/spatial_gateway/stable
+	name = "stable gateway"
+	is_stable = TRUE
+
+/obj/effect/clockwork/spatial_gateway/stable/ex_act(severity)
+	if(severity == 1)
+		start_shutdown() //Yes, you can chain devastation-level explosions to delay a gateway shutdown, if you somehow manage to do it without breaking the obelisk. Is it worth it? Probably not.
+		return TRUE
+	return FALSE
+
+/obj/effect/clockwork/spatial_gateway/stable/setup_gateway(obj/effect/clockwork/spatial_gateway/stable/gatewayB) //Reduced setup call due to some things being irrelevant for stable gateways
+	return ..(gatewayB, 1, 1, TRUE) //Uses and time irrelevant due to is_stable
+
+/obj/effect/clockwork/spatial_gateway/stable/attackby(obj/item/I, mob/living/user, params)
+	if(!istype(I, /obj/item/clockwork/slab) || !is_servant_of_ratvar(user) || busy)
+		return ..()
+	busy = TRUE
+	linked_gateway.busy = TRUE
+	user.visible_message("<span class='warning'>The rift begins to ripple as [user] points [user.p_their()] slab at it!</span>", "<span class='brass'> You begin to shutdown the stabilised gateway with your slab.</span>")
+	linked_gateway.visible_message("<span class='warning'[linked_gateway] begins to ripple, but nothing comes through...</span>")
+	var/datum/beam/B = user.Beam(src, icon_state = "nzcrentrs_power", maxdistance = 50, time = 80) 	//Not too fancy, but this'll do.. for now.
+	if(do_after(user, 80, target = src)) //Eight seconds to initiate the closing, then another two before is closes.
+		to_chat(user, "<span class='brass'>You successfully set the gateway to shutdown in another two seconds.</span>")
+		start_shutdown()
+	qdel(B)
+	busy = FALSE
+	linked_gateway.busy = FALSE
+	return TRUE
+
+/obj/effect/clockwork/spatial_gateway/stable/proc/start_shutdown()
+		deltimer(timerid)
+		deltimer(linked_gateway.timerid)
+		timerid = QDEL_IN(src, 20)
+		linked_gateway.timerid = QDEL_IN(linked_gateway, 20)
+		animate(src, alpha = 0, transform = matrix()*2, time = 20, flags = ANIMATION_END_NOW)
+		animate(linked_gateway, alpha = 0, transform = matrix()*2, time = 20, flags = ANIMATION_END_NOW)
+		src.visible_message("<span class='warning'>[src] begins to destabilise!</span>")
+		linked_gateway.visible_message("<span class='warning'>[linked_gateway] begins to destabilise!</span>")
+
+/obj/effect/clockwork/spatial_gateway/stable/pass_through_gateway(atom/movable/A, no_cost = TRUE)
+	return ..()
