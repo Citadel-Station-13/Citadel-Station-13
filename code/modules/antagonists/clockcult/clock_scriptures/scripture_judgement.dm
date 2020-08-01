@@ -21,6 +21,7 @@
 	as well as being loud enough to be heard throughout the entire sector. Defend it with your life!"
 	tier = SCRIPTURE_APPLICATION
 	sort_priority = 8
+	requires_full_power = TRUE
 
 /datum/clockwork_scripture/create_object/ark_of_the_clockwork_justiciar/check_special_requirements()
 	if(!slab.no_cost)
