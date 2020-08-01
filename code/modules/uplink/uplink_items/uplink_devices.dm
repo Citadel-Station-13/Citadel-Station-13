@@ -200,9 +200,7 @@
 			this primer of questionable worth and value is rumored to increase your rifle-bolt-working and/or shotgun \
 			racking fivefold. Then again, the techniques here only work on bolt-actions and pump-actions..."
 	item = /obj/item/book/granter/trait/rifleman
-	cost = 3
-	restricted_roles = list("Operative") // i want it to be surplusable but i also want it to be mostly nukie only, please advise
-	surplus = 90
+	cost = 1 // fuck it available for everyone
 
 /datum/uplink_item/device_tools/stimpack
 	name = "Stimpack"
