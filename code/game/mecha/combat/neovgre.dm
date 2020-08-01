@@ -15,8 +15,8 @@
 	internals_req_access = list()
 	add_req_access = 0
 	wreckage = /obj/structure/mecha_wreckage/durand/neovgre
-	stepsound = 'sound/mecha/powerloader_step.ogg'
-	turnsound = 'sound/mecha/mechturn.ogg'
+	stepsound = 'sound/mecha/neostep2.ogg'
+	turnsound = 'sound/mecha/powerloader_step.ogg'
 
 /obj/mecha/combat/neovgre/GrantActions(mob/living/user, human_occupant = 0) //No Eject action for you sonny jim, your life for Ratvar!
 	internals_action.Grant(user, src)
