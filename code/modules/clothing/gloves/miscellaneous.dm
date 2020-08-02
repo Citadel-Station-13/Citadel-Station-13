@@ -199,7 +199,7 @@
 
 /obj/item/clothing/gloves/evening
 	name = "evening gloves"
-	desc = "Thin, pretty gloves intended for use in regal feminine attire, but knowing Space China these are just for some maid fetish."
+	desc = "Thin, pretty gloves intended for use in regal feminine attire."
 	icon_state = "evening"
 	item_state = "evening"
 	strip_delay = 40
