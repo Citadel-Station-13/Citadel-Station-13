@@ -198,8 +198,8 @@ GLOBAL_LIST_EMPTY(explosions)
 
 		if((T == epicenter) && !QDELETED(explosion_source) && (get_turf(explosion_source) == T)) // Ensures explosives detonating from bags trigger other explosives in that bag
 			var/list/atoms = list()
-			var/turf/T = get_turf(explosion_source)		// yeah this is two get turfs but this should only happen once
-			for(var/atom/A in T)
+			var/turf/the_source_turf = get_turf(explosion_source)		// yeah this is two get turfs but this should only happen once
+			for(var/atom/A in the_source_turf)
 				atoms += A
 			for(var/i in atoms)
 				var/atom/A = i
