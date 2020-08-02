@@ -27,6 +27,8 @@
 
 /obj/item/reagent_containers/spray/afterattack(atom/A, mob/user)
 	. = ..()
+	if(!user.CheckActionCooldown(CLICK_CD_MELEE))
+		return
 	if(istype(A, /obj/structure/sink) || istype(A, /obj/structure/janitorialcart) || istype(A, /obj/machinery/hydroponics))
 		return
 
@@ -50,7 +52,7 @@
 	spray(A)
 
 	playsound(src.loc, 'sound/effects/spray2.ogg', 50, 1, -6)
-	user.changeNext_move(CLICK_CD_RANGE*2)
+	user.last_action = world.time
 	user.newtonian_move(get_dir(A, user))
 	var/turf/T = get_turf(src)
 	if(reagents.has_reagent(/datum/reagent/toxin/acid))

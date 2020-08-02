@@ -139,7 +139,7 @@
 		ExtinguishMob()
 		return
 	var/datum/gas_mixture/G = loc.return_air() // Check if we're standing in an oxygenless environment
-	if(G.get_moles(/datum/gas/oxygen, 1))
+	if(!G.get_moles(/datum/gas/oxygen, 1))
 		ExtinguishMob() //If there's no oxygen in the tile we're on, put out the fire
 		return
 	var/turf/location = get_turf(src)

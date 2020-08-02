@@ -6,6 +6,8 @@
 	icon_state = "cutout_basic"
 	w_class = WEIGHT_CLASS_BULKY
 	resistance_flags = FLAMMABLE
+	attack_hand_speed = CLICK_CD_MELEE
+	attack_hand_is_action = TRUE
 	/// Possible restyles for the cutout, add an entry in change_appearance() if you add to here
 	var/static/list/possible_appearances
 	/// If the cutout is pushed over and has to be righted
@@ -43,8 +45,7 @@
 		"Monkey" = image(icon = src.icon, icon_state = "cutout_monky"),
 	))
 
-//ATTACK HAND IGNORING PARENT RETURN VALUE
-/obj/item/cardboard_cutout/attack_hand(mob/living/user, act_intent = user.a_intent, unarmed_attack_flags)
+/obj/item/cardboard_cutout/on_attack_hand(mob/living/user, act_intent = user.a_intent, unarmed_attack_flags)
 	if(user.a_intent == INTENT_HELP || pushed_over)
 		return ..()
 	user.visible_message("<span class='warning'>[user] pushes over [src]!</span>", "<span class='danger'>You push over [src]!</span>")
@@ -81,7 +82,6 @@
 	else if(I.hitsound)
 		playsound(loc, I.hitsound, get_clamped_volume(), 1, -1)
 
-	user.changeNext_move(CLICK_CD_MELEE)
 	user.do_attack_animation(src)
 
 	if(I.force)

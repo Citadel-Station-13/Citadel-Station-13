@@ -40,4 +40,3 @@
 			user.visible_message("<span class='warning'>[user] waves around \the \"[label]\" sign.</span>")
 		else
 			user.visible_message("<span class='warning'>[user] waves around blank sign.</span>")
-		user.changeNext_move(CLICK_CD_MELEE)

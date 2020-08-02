@@ -535,4 +535,9 @@ GLOBAL_LIST_INIT(pda_reskins, list(PDA_SKIN_CLASSIC = 'icons/obj/pda.dmi', PDA_S
 #define LOOT_RESTRICTION_MIND_PILE	3 //limited to the current pile.
 #define LOOT_RESTRICTION_CKEY_PILE	4 //Idem
 
+//stages of shoe tying-ness
+#define SHOES_UNTIED 0
+#define SHOES_TIED 1
+#define SHOES_KNOTTED 2
+
 #define WANTED_FILE "wanted_message.json"

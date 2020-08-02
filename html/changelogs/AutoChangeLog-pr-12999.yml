@@ -1,0 +1,4 @@
+author: "KeRSedChaplain"
+delete-after: True
+changes: 
+  - bugfix: "fixed clockwork guardians being able to reflect ranged weapons"
