@@ -52,6 +52,9 @@
 /obj/item/reagent_containers/syringe/attackby(obj/item/I, mob/user, params)
 	return
 
+/obj/item/reagent_containers/syringe/attack()
+	return			// no bludgeoning.
+
 /obj/item/reagent_containers/syringe/afterattack(atom/target, mob/user, proximity)
 	. = ..()
 	INVOKE_ASYNC(src, .proc/attempt_inject, target, user, proximity)

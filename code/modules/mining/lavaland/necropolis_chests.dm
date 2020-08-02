@@ -930,6 +930,9 @@
 
 /obj/item/lava_staff/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
 	. = ..()
+	INVOKE_ASYNC(src, .proc/attempt_lava, target, user, proximity_flags, click_parameters)
+
+/obj/item/lava_staff/proc/attempt_lava(atom/target, mob/user, proximity_flags, click_parameters)
 	if(timer > world.time)
 		return
 
