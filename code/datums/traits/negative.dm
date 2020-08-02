@@ -56,7 +56,7 @@ GLOBAL_LIST_EMPTY(family_heirlooms)
 		if("Medical Doctor")
 			heirloom_type = /obj/item/healthanalyzer/advanced
 		if("Paramedic")
-			heirloom_type = pick(/obj/item/clothing/neck/stethoscope, /obj/item/bodybag)
+			heirloom_type = /obj/item/lighter
 		if("Station Engineer")
 			heirloom_type = /obj/item/wirecutters/brass
 		if("Atmospheric Technician")
@@ -452,3 +452,21 @@ GLOBAL_LIST_EMPTY(family_heirlooms)
 	mob_trait = TRAIT_COLDBLOODED
 	gain_text = "<span class='notice'>You feel cold-blooded.</span>"
 	lose_text = "<span class='notice'>You feel more warm-blooded.</span>"
+
+/datum/quirk/monophobia
+	name = "Monophobia"
+	desc = "You will become increasingly stressed when not in company of others, triggering panic reactions ranging from sickness to heart attacks."
+	value = -3 // Might change it to 4.
+	gain_text = "<span class='danger'>You feel really lonely...</span>"
+	lose_text = "<span class='notice'>You feel like you could be safe on your own.</span>"
+	medical_record_text = "Patient feels sick and distressed when not around other people, leading to potentially lethal levels of stress."
+
+/datum/quirk/monophobia/post_add()
+	. = ..()
+	var/mob/living/carbon/human/H = quirk_holder
+	H.gain_trauma(/datum/brain_trauma/severe/monophobia, TRAUMA_RESILIENCE_ABSOLUTE)
+
+/datum/quirk/monophobia/remove()
+	. = ..()
+	var/mob/living/carbon/human/H = quirk_holder
+	H?.cure_trauma_type(/datum/brain_trauma/severe/monophobia, TRAUMA_RESILIENCE_ABSOLUTE)

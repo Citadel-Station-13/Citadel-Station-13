@@ -11,6 +11,7 @@
 	w_class = WEIGHT_CLASS_TINY
 	full_w_class = WEIGHT_CLASS_TINY
 	resistance_flags = FLAMMABLE
+	grind_results = list(/datum/reagent/cellulose = 10)
 	var/value = 0
 
 /obj/item/stack/spacecash/Initialize()

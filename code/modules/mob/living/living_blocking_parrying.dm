@@ -126,6 +126,8 @@ GLOBAL_LIST_EMPTY(block_parry_data)
 	var/list/parry_imperfect_falloff_percent_override
 	/// Efficiency in percent on perfect parry.
 	var/parry_efficiency_perfect = 120
+	/// Override for attack types, list("[ATTACK_TYPE_DEFINE]" = perecntage) for perfect efficiency.
+	var/parry_efficiency_perfect_override
 	/// Parry effect data.
 	var/list/parry_data = list(
 		PARRY_COUNTERATTACK_MELEE_ATTACK_CHAIN = 1
@@ -180,7 +182,11 @@ GLOBAL_LIST_EMPTY(block_parry_data)
 	if(isnull(leeway))
 		leeway = parry_time_perfect_leeway
 	difference -= leeway
-	. = parry_efficiency_perfect
+	var/perfect = attack_type_list_scan(parry_efficiency_perfect_override, attack_type)
+	if(isnull(perfect))
+		. = parry_efficiency_perfect
+	else
+		. = perfect
 	if(difference <= 0)
 		return
 	var/falloff = attack_type_list_scan(parry_imperfect_falloff_percent_override, attack_type)
@@ -276,6 +282,7 @@ GLOBAL_LIST_EMPTY(block_parry_data)
 		RENDER_VARIABLE_SIMPLE(parry_imperfect_falloff_percent, "Linear falloff in percent per decisecond for attacks parried outside of perfect window.")
 		RENDER_OVERRIDE_LIST(parry_imperfect_falloff_percent_override, "Override for the above for each attack type")
 		RENDER_VARIABLE_SIMPLE(parry_efficiency_perfect, "Efficiency in percentage a parry in the perfect window is considered.")
+		RENDER_OVERRIDE_LIST(parry_efficiency_perfect_override, "Override for the above for each attack type")
 		// parry_data
 		dat += ""
 		RENDER_VARIABLE_SIMPLE(parry_efficiency_considered_successful, "Minimum parry efficiency to be considered a successful parry.")

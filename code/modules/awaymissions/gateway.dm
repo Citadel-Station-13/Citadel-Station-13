@@ -188,7 +188,8 @@ GLOBAL_LIST_EMPTY(gateway_destinations)
 	target = null
 	dest.deactivate(src)
 	QDEL_NULL(portal)
-	use_power = IDLE_POWER_USE
+	if(use_power == ACTIVE_POWER_USE)
+		use_power = IDLE_POWER_USE
 	update_icon()
 
 /obj/machinery/gateway/process()
@@ -216,7 +217,8 @@ GLOBAL_LIST_EMPTY(gateway_destinations)
 	target = D
 	target.activate(destination)
 	generate_bumper()
-	use_power = ACTIVE_POWER_USE
+	if(use_power == IDLE_POWER_USE)
+		use_power = ACTIVE_POWER_USE
 	update_icon()
 
 /obj/machinery/gateway/proc/Transfer(atom/movable/AM)

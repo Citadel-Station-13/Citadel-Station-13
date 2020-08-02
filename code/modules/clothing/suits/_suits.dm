@@ -10,6 +10,7 @@
 	var/blood_overlay_type = "suit"
 	var/togglename = null
 	var/suittoggled = FALSE
+	limb_integrity = 0 // disabled for most exo-suits
 	mutantrace_variation = STYLE_DIGITIGRADE
 
 /obj/item/clothing/suit/worn_overlays(isinhands = FALSE, icon_file, used_state, style_flags = NONE)
@@ -28,7 +29,7 @@
 				if(A.above_suit)
 					. += U.accessory_overlay
 
-/obj/item/clothing/suit/update_clothes_damaged_state(damaging = TRUE)
+/obj/item/clothing/suit/update_clothes_damaged_state()
 	..()
 	if(ismob(loc))
 		var/mob/M = loc

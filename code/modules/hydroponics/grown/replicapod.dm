@@ -29,6 +29,28 @@
 
 	create_reagents(volume, INJECTABLE | DRAWABLE)
 
+/obj/item/seeds/replicapod/pre_attack(obj/machinery/hydroponics/I)
+	if(istype(I, /obj/machinery/hydroponics))
+		if(!I.myseed)
+			START_PROCESSING(SSobj, src)
+	return ..()
+
+/obj/item/seeds/replicapod/proc/check_mind_orbiting(atom/A)
+	for(var/mob/M in A.orbiters?.orbiters)
+		if(mind && M.mind && ckey(M.mind.key) == ckey(mind.key) && M.ckey && M.client && M.stat == DEAD && !M.suiciding && isobserver(M))
+			return TRUE
+	return FALSE
+
+/obj/item/seeds/replicapod/process()
+	var/obj/machinery/hydroponics/parent = loc
+	if(parent.harvest != 1)
+		return
+	if (check_mind_orbiting(parent))
+		icon_harvest = "replicapod-orbit"
+	else
+		icon_harvest = "replicapod-harvest"
+	parent.update_icon_plant()
+
 /obj/item/seeds/replicapod/on_reagent_change(changetype)
 	if(changetype == ADD_REAGENT)
 		var/datum/reagent/blood/B = reagents.has_reagent(/datum/reagent/blood)
@@ -59,8 +81,11 @@
 
 /obj/item/seeds/replicapod/get_analyzer_text()
 	var/text = ..()
+	var/obj/machinery/hydroponics/parent = loc
 	if(contains_sample)
 		text += "\n It contains a blood sample!"
+	if (parent && istype(parent) && check_mind_orbiting(parent))
+		text += "\n The soul is ready to enter the body."
 	return text
 
 
@@ -115,7 +140,7 @@
 			features["mcolor"] = "#59CE00"
 		for(var/V in quirks)
 			new V(podman)
-		podman.hardset_dna(null,null,null,podman.real_name,blood_type, new /datum/species/pod,features)//Discard SE's and UI's, podman cloning is inaccurate, and always make them a podman
+		podman.hardset_dna(null,null,podman.real_name,blood_type, new /datum/species/pod,features)//Discard SE's and UI's, podman cloning is inaccurate, and always make them a podman
 		podman.set_cloned_appearance()
 
 	else //else, one packet of seeds. maybe two

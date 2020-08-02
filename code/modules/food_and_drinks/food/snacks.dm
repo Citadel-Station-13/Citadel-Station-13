@@ -21,7 +21,7 @@ Food formatting and crafting examples.
 	icon_state = "saltychip"													//Refers to an icon, usually in food.dmi
 	bitesize = 3																//How many reagents are consumed in each bite.
 	list_reagents = list(/datum/reagent/consumable/nutriment = 6,				//What's inside the snack, but only if spawned. For example, from a chemical reaction, vendor, or slime core spawn.
-						/datum/reagent/consumable/nutriment/vitamin = 2)		
+						/datum/reagent/consumable/nutriment/vitamin = 2)
 	bonus_reagents = list(/datum/reagent/consumable/nutriment = 1,				//What's -added- to the food, in addition to the reagents contained inside the foods used to craft it. Basically, a reward for cooking.
 						/datum/reagent/consumable/nutriment/vitamin = 1)		^^For example. Egg+Egg = 2Egg + Bonus Reagents.
 	filling_color = "#F4A460"													//What color it will use if put in a custom food.
@@ -129,8 +129,6 @@ All foods are distributed among various categories. Use common sense.
 			else if(fullness > (600 * (1 + M.overeatduration / 2000)))	// The more you eat - the more you can eat
 				user.visible_message("<span class='warning'>[user] cannot force any more of \the [src] to go down [user.p_their()] throat!</span>", "<span class='danger'>You cannot force any more of \the [src] to go down your throat!</span>")
 				return 0
-			if(HAS_TRAIT(M, TRAIT_VORACIOUS))
-				M.changeNext_move(CLICK_CD_MELEE * 0.5) //nom nom nom
 		else
 			if(!isbrain(M))		//If you're feeding it to someone else.
 				if(fullness <= (600 * (1 + M.overeatduration / 1000)))
@@ -166,6 +164,10 @@ All foods are distributed among various categories. Use common sense.
 				return 1
 
 	return 0
+
+/obj/item/reagent_containers/food/snacks/CheckAttackCooldown(mob/user, atom/target)
+	var/fast = HAS_TRAIT(user, TRAIT_VORACIOUS) && (user == target)
+	return user.CheckActionCooldown(fast? CLICK_CD_RANGE : CLICK_CD_MELEE)
 
 /obj/item/reagent_containers/food/snacks/examine(mob/user)
 	. = ..()
@@ -406,3 +408,13 @@ All foods are distributed among various categories. Use common sense.
 		TB.MouseDrop(over)
 	else
 		return ..()
+
+// //////////////////////////////////////////////Frying////////////////////////////////////////
+/atom/proc/fry(cook_time = 30) //you can truly fry anything
+	//don't fry reagent containers that aren't food items, indestructable items, or items that are already fried
+	if(isitem(src))
+		var/obj/item/fried_item = src
+		if(fried_item.resistance_flags & INDESTRUCTIBLE)
+			return
+	if(!GetComponent(/datum/component/fried) && (!reagents || isfood(src) || ismob(src)))
+		AddComponent(/datum/component/fried, frying_power = cook_time)

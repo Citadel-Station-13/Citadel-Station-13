@@ -477,6 +477,23 @@
 		name = "empty scroll"
 		icon_state = "blankscroll"
 
+/obj/item/book/granter/martial/krav_maga
+	martial = /datum/martial_art/krav_maga
+	name = "parchment scroll"
+	martialname = "krav maga"
+	desc = "A worn parchment scrap written in an ancient language. Somehow you can still understand the lessons!"
+	greet = "<span class='sciradio'>You have learned the ancient martial art of Krav Maga. You have special attacks with which to take down your foes.</span>"
+	icon = 'icons/obj/wizard.dmi'
+	icon_state ="scroll2"
+	remarks = list("Sweep the legs...", "Chop the throat...", "Punch the lungs...", "Get the gold...", "Where are my sick gloves..?")
+
+/obj/item/book/granter/martial/krav_maga/onlearned(mob/living/carbon/user)
+	. = ..()
+	if(oneuse == TRUE)
+		desc = "It's completely blank."
+		name = "empty scroll"
+		icon_state = "blankscroll"
+
 // I did not include mushpunch's grant, it is not a book and the item does it just fine.
 
 

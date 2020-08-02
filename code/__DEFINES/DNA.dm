@@ -142,6 +142,7 @@
 #define CUSTOM_SKINTONE	24	//adds a "_g" suffix to bodypart overlays icon states if a custom skintone is used.
 #define HORNCOLOR		25
 #define WINGCOLOR		26
+#define CAN_SCAR		27 // If this species can be scarred (fleshy)
 
 //organ slots
 #define ORGAN_SLOT_BRAIN "brain"
