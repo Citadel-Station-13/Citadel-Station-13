@@ -288,6 +288,15 @@
 	dir = 4
 	},
 /obj/item/toy/poolnoodle/red,
+/obj/machinery/power/apc{
+	areastring = "/area/crew_quarters/fitness/pool";
+	dir = 1;
+	name = "Pool APC";
+	pixel_y = 24
+	},
+/obj/structure/cable/white{
+	icon_state = "0-4"
+	},
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/fitness/pool)
 "aaH" = (
@@ -492,8 +501,8 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/yellowsiding/corner{
-	icon_state = "yellowcornersiding";
-	dir = 8
+	dir = 8;
+	icon_state = "yellowcornersiding"
 	},
 /area/crew_quarters/fitness/pool)
 "aba" = (
@@ -510,8 +519,8 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/yellowsiding{
-	icon_state = "yellowsiding";
-	dir = 4
+	dir = 4;
+	icon_state = "yellowsiding"
 	},
 /area/crew_quarters/fitness/pool)
 "abb" = (
@@ -604,8 +613,8 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/yellowsiding{
-	icon_state = "yellowsiding";
-	dir = 8
+	dir = 8;
+	icon_state = "yellowsiding"
 	},
 /area/crew_quarters/fitness/pool)
 "abn" = (
@@ -619,8 +628,8 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/yellowsiding{
-	icon_state = "yellowsiding";
-	dir = 4
+	dir = 4;
+	icon_state = "yellowsiding"
 	},
 /area/crew_quarters/fitness/pool)
 "abo" = (
@@ -704,8 +713,8 @@
 	name = "pool camera"
 	},
 /turf/open/floor/plasteel/yellowsiding{
-	icon_state = "yellowsiding";
-	dir = 4
+	dir = 4;
+	icon_state = "yellowsiding"
 	},
 /area/crew_quarters/fitness/pool)
 "abv" = (
@@ -724,8 +733,8 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/yellowsiding{
-	icon_state = "yellowsiding";
-	dir = 8
+	dir = 8;
+	icon_state = "yellowsiding"
 	},
 /area/crew_quarters/fitness/pool)
 "aby" = (
@@ -765,8 +774,8 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/yellowsiding{
-	icon_state = "yellowsiding";
-	dir = 4
+	dir = 4;
+	icon_state = "yellowsiding"
 	},
 /area/crew_quarters/fitness/pool)
 "abC" = (
@@ -904,8 +913,8 @@
 	pixel_x = -23
 	},
 /turf/open/floor/plasteel/yellowsiding{
-	icon_state = "yellowsiding";
-	dir = 4
+	dir = 4;
+	icon_state = "yellowsiding"
 	},
 /area/crew_quarters/fitness/pool)
 "abP" = (
@@ -972,8 +981,8 @@
 	pixel_x = -26
 	},
 /turf/open/floor/plasteel/yellowsiding/corner{
-	icon_state = "yellowcornersiding";
-	dir = 4
+	dir = 4;
+	icon_state = "yellowcornersiding"
 	},
 /area/crew_quarters/fitness/pool)
 "abW" = (
@@ -982,8 +991,8 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/yellowsiding{
-	icon_state = "yellowsiding";
-	dir = 1
+	dir = 1;
+	icon_state = "yellowsiding"
 	},
 /area/crew_quarters/fitness/pool)
 "abX" = (
@@ -995,8 +1004,8 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/yellowsiding/corner{
-	icon_state = "yellowcornersiding";
-	dir = 1
+	dir = 1;
+	icon_state = "yellowcornersiding"
 	},
 /area/crew_quarters/fitness/pool)
 "abY" = (
@@ -31107,6 +31116,11 @@
 /obj/effect/turf_decal/tile/blue,
 /obj/effect/turf_decal/tile/green{
 	dir = 8
+	},
+/obj/machinery/power/apc{
+	areastring = "/area/hydroponics";
+	name = "Hydroponics APC";
+	pixel_y = -24
 	},
 /turf/open/floor/plasteel,
 /area/hydroponics)
@@ -64485,8 +64499,8 @@
 /area/library)
 "cel" = (
 /obj/structure/chair/sofa/right{
-	icon_state = "sofaend_right";
-	dir = 8
+	dir = 8;
+	icon_state = "sofaend_right"
 	},
 /obj/structure/sign/painting/library{
 	pixel_x = 32
@@ -92830,6 +92844,9 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/obj/structure/cable/white{
+	icon_state = "1-2"
+	},
 /turf/open/floor/plasteel,
 /area/crew_quarters/fitness/recreation)
 "dad" = (
@@ -101793,6 +101810,13 @@
 /obj/effect/turf_decal/tile/purple,
 /obj/effect/turf_decal/tile/purple{
 	dir = 4
+	},
+/obj/structure/cable/white,
+/obj/machinery/power/apc{
+	areastring = "/area/science/misc_lab";
+	dir = 4;
+	name = "Science Lounge APC";
+	pixel_x = 26
 	},
 /turf/open/floor/plasteel/white,
 /area/science/misc_lab)
@@ -113343,6 +113367,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/obj/machinery/light/small,
 /turf/open/floor/plasteel/dark/telecomms,
 /area/science/server)
 "dKg" = (
@@ -125579,6 +125604,20 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/science/mixing)
+"ePP" = (
+/obj/machinery/door/firedoor,
+/obj/effect/turf_decal/stripes/line,
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/machinery/door/airlock/public/glass{
+	name = "Pool"
+	},
+/obj/structure/cable/white{
+	icon_state = "1-2"
+	},
+/turf/open/floor/plasteel,
+/area/crew_quarters/fitness/pool)
 "eTv" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -127072,6 +127111,25 @@
 	},
 /turf/open/floor/plasteel,
 /area/science/research/abandoned)
+"pQQ" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/structure/cable/white{
+	icon_state = "1-8"
+	},
+/turf/open/floor/plasteel/dark,
+/area/crew_quarters/fitness/pool)
 "pWb" = (
 /obj/structure/table/wood/fancy,
 /obj/structure/window/reinforced{
@@ -127298,6 +127356,24 @@
 	},
 /turf/open/floor/plasteel,
 /area/science/circuit)
+"tqP" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/structure/cable/white{
+	icon_state = "1-2"
+	},
+/turf/open/floor/plasteel{
+	heat_capacity = 1e+006
+	},
+/area/crew_quarters/fitness/recreation)
 "twt" = (
 /obj/machinery/vr_sleeper,
 /obj/effect/turf_decal/tile/neutral{
@@ -127768,8 +127844,8 @@
 /area/science/mixing)
 "xER" = (
 /obj/structure/chair/sofa/left{
-	icon_state = "sofaend_left";
-	dir = 8
+	dir = 8;
+	icon_state = "sofaend_left"
 	},
 /turf/open/floor/wood,
 /area/library)
@@ -127849,6 +127925,22 @@
 /obj/structure/fans/tiny/invisible,
 /turf/open/space/basic,
 /area/space)
+"yfK" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/structure/cable/white{
+	icon_state = "1-2"
+	},
+/turf/open/floor/plasteel,
+/area/crew_quarters/fitness/recreation)
 "yiv" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/neutral{
@@ -181500,10 +181592,10 @@ cCl
 cWD
 cAz
 dac
-cxy
-aav
-aaz
-aaH
+yfK
+tqP
+ePP
+pQQ
 aaV
 aaN
 aaN

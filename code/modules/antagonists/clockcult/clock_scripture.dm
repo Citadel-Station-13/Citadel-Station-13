@@ -3,8 +3,9 @@ Tiers and Requirements
 
 Pieces of scripture require certain follower counts, contruction value, and active caches in order to recite.
 Drivers: Unlocked by default
-Scripts: 5 servants and a cache
-Applications: 8 servants, 3 caches, and 100 CV
+Scripts: 35k power or one convert
+Applications: 50k or three converts
+Judgement 5 converts
 */
 
 /datum/clockwork_scripture
@@ -129,11 +130,11 @@ Applications: 8 servants, 3 caches, and 100 CV
 			SEND_SOUND(invoker, sound('sound/magic/clockwork/invoke_general.ogg'))
 	return TRUE
 
-/datum/clockwork_scripture/proc/check_offstation_penalty()
+/datum/clockwork_scripture/proc/check_offstation_penalty()//don't cast spells away from the station
 	var/turf/T = get_turf(invoker)
 	if(!T || (!is_centcom_level(T.z) && !is_station_level(T.z) && !is_mining_level(T.z) && !is_reebe(T.z)))
-		channel_time *= 2
-		power_cost *= 2
+		channel_time *= 3
+		power_cost *= 3
 		return TRUE
 
 /datum/clockwork_scripture/proc/check_special_requirements() //Special requirements for scriptures, checked multiple times during invocation
