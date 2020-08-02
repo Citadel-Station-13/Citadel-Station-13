@@ -1064,6 +1064,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			dat += "<tr><td colspan=4><center><b><font color='[gear_points == 0 ? "#E62100" : "#CCDDFF"]'>[gear_points]</font> loadout points remaining.</b> \[<a href='?_src_=prefs;preference=gear;clear_loadout=1'>Clear Loadout</a>\]</center></td></tr>"
 			dat += "<tr><td colspan=4><center>You can only choose one item per category, unless it's an item that spawns in your backpack or hands.</center></td></tr>"
 			dat += "<tr><td colspan=4><center><b>"
+
 			var/firstcat = TRUE
 			for(var/i in GLOB.loadout_items)
 				if(firstcat)
@@ -1074,6 +1075,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					dat += " <span class='linkOn'>[i]</span> "
 				else
 					dat += " <a href='?_src_=prefs;preference=gear;select_category=[i]'>[i]</a> "
+
 			dat += "</b></center></td></tr>"
 			dat += "<tr><td colspan=4><hr></td></tr>"
 			dat += "<tr><td colspan=4><b><center>[gear_tab]</center></b></td></tr>"
