@@ -196,7 +196,7 @@ GLOBAL_LIST_EMPTY(explosions)
 
 		//------- EX_ACT AND TURF FIRES -------
 
-		if((T == epicenter) && !QDELETED(explosion_source) && (explosion_source.loc == T)) // Ensures explosives detonating from bags trigger other explosives in that bag
+		if((T == epicenter) && !QDELETED(explosion_source) && (get_turf(explosion_source) == T)) // Ensures explosives detonating from bags trigger other explosives in that bag
 			var/list/atoms = list()
 			for(var/atom/A in explosion_source.loc)
 				atoms += A
