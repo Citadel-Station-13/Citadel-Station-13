@@ -73,6 +73,9 @@
 	item_state = "g_suit"
 	can_adjust = FALSE
 
+/obj/item/clothing/under/syndicate/camo/cosmetic
+	armor = list("melee" = 0, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 0)
+
 /obj/item/clothing/under/syndicate/soviet
 	name = "Ratnik 5 tracksuit"
 	desc = "Badly translated labels tell you to clean this in Vodka. Great for squatting in."
