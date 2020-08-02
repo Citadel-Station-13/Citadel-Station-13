@@ -37,6 +37,7 @@
 	var/had_toxlover
 	var/level_bloodcost
 	var/passive_blood_drain = -0.1        //The amount of blood we loose each bloodsucker life() tick
+	var/notice_healing                    //Var to see if you are healing for preventing spam of the chat message inform the user of such
 	// LISTS
 	var/static/list/defaultTraits = list (TRAIT_STABLEHEART, TRAIT_NOBREATH, TRAIT_SLEEPIMMUNE, TRAIT_NOCRITDAMAGE, TRAIT_RESISTCOLD, TRAIT_RADIMMUNE, TRAIT_NIGHT_VISION, \
 										  TRAIT_NOSOFTCRIT, TRAIT_NOHARDCRIT, TRAIT_AGEUSIA, TRAIT_COLDBLOODED, TRAIT_NONATURALHEAL, TRAIT_NOMARROW, TRAIT_NOPULSE, TRAIT_VIRUSIMMUNE, TRAIT_NODECAP, TRAIT_NOGUT)
@@ -50,7 +51,6 @@
 	AssignStarterPowersAndStats()// Give Powers & Stats
 	forge_bloodsucker_objectives()// Objectives & Team
 	update_bloodsucker_icons_added(owner.current, "bloodsucker")	// Add Antag HUD
-	LifeTick()	// Run Life Function
 	. = ..()
 
 

@@ -24,6 +24,8 @@
 	infra_luminosity = 15 //byond implementation is bugged.
 	force = 5
 	flags_1 = HEAR_1|BLOCK_FACE_ATOM_1
+	attack_hand_speed = CLICK_CD_MELEE
+	attack_hand_is_action = TRUE
 	var/can_move = 0 //time of next allowed movement
 	var/mob/living/occupant = null
 	var/step_in = 10 //make a step in step_in/10 sec.

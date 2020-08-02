@@ -273,7 +273,7 @@
 			return
 		stop_pulling()
 
-	changeNext_move(CLICK_CD_GRABBING)
+	DelayNextAction(CLICK_CD_GRABBING)
 
 	if(AM.pulledby)
 		if(!supress_message)
@@ -676,7 +676,7 @@
 		..(pressure_difference, direction, pressure_resistance_prob_delta)
 
 /mob/living/can_resist()
-	return !((next_move > world.time) || !CHECK_MOBILITY(src, MOBILITY_RESIST))
+	return CheckResistCooldown() && CHECK_MOBILITY(src, MOBILITY_RESIST)
 
 /// Resist verb for attempting to get out of whatever is restraining your motion. Gives you resist clickdelay if do_resist() returns true.
 /mob/living/verb/resist()
@@ -687,10 +687,12 @@
 		return
 
 	if(do_resist())
-		changeNext_move(CLICK_CD_RESIST)
+		MarkResistTime()
+		DelayNextAction(CLICK_CD_RESIST)
 
-/// The actual proc for resisting. Return TRUE to give clickdelay.
+/// The actual proc for resisting. Return TRUE to give CLICK_CD_RESIST clickdelay.
 /mob/living/proc/do_resist()
+	set waitfor = FALSE			// some of these sleep.
 	SEND_SIGNAL(src, COMSIG_LIVING_RESIST, src)
 	//resisting grabs (as if it helps anyone...)
 	// only works if you're not cuffed.
@@ -701,7 +703,7 @@
 		return old_gs? TRUE : FALSE
 
 	// unbuckling yourself. stops the chain if you try it.
-	if(buckled && last_special <= world.time)
+	if(buckled)
 		log_combat(src, buckled, "resisted buckle")
 		return resist_buckle()
 
@@ -730,13 +732,12 @@
 
 	if(CHECK_MOBILITY(src, MOBILITY_USE) && resist_embedded()) //Citadel Change for embedded removal memes - requires being able to use items.
 		// DO NOT GIVE DEFAULT CLICKDELAY - This is a combat action.
-		changeNext_move(CLICK_CD_MELEE)
+		DelayNextAction(CLICK_CD_MELEE)
 		return FALSE
 
-	if(last_special <= world.time)
-		resist_restraints() //trying to remove cuffs.
-		// DO NOT GIVE CLICKDELAY - last_special handles this.
-		return FALSE
+	resist_restraints() //trying to remove cuffs.
+	// DO NOT GIVE CLICKDELAY
+	return FALSE
 
 /// Proc to resist a grab. moving_resist is TRUE if this began by someone attempting to move. Return FALSE if still grabbed/failed to break out. Use this instead of resist_grab() directly.
 /mob/proc/attempt_resist_grab(moving_resist, forced, log = TRUE)

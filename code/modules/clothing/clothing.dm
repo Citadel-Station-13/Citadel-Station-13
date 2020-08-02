@@ -58,6 +58,10 @@
 	var/limb_integrity = 0
 	// How many zones (body parts, not precise) we have disabled so far, for naming purposes
 	var/zones_disabled
+	///These are armor values that protect the wearer, taken from the clothing's armor datum. List updates on examine because it's currently only used to print armor ratings to chat in Topic().
+	var/list/armor_list = list()
+	///These are armor values that protect the clothing, taken from its armor datum. List updates on examine because it's currently only used to print armor ratings to chat in Topic().
+	var/list/durability_list = list()
 
 /obj/item/clothing/Initialize()
 	. = ..()
@@ -85,7 +89,7 @@
 	tastes = list("dust" = 1, "lint" = 1)
 
 /obj/item/clothing/attack(mob/M, mob/user, def_zone)
-	if(user.a_intent != INTENT_HARM && ismoth(M))
+	if(user.a_intent != INTENT_HARM && isinsect(M))
 		var/obj/item/reagent_containers/food/snacks/clothing/clothing_as_food = new
 		clothing_as_food.name = name
 		if(clothing_as_food.attack(M, user, def_zone))
@@ -115,7 +119,7 @@
 // Set the clothing's integrity back to 100%, remove all damage to bodyparts, and generally fix it up
 /obj/item/clothing/proc/repair(mob/user, params)
 	damaged_clothes = CLOTHING_PRISTINE
-	update_clothes_damaged_state()
+	update_clothes_damaged_state(FALSE)
 	obj_integrity = max_integrity
 	name = initial(name) // remove "tattered" or "shredded" if there's a prefix
 	body_parts_covered = initial(body_parts_covered)
@@ -253,6 +257,87 @@
 			how_cool_are_your_threads += "Adding or removing items from [src] makes no noise.\n"
 		how_cool_are_your_threads += "</span>"
 		. += how_cool_are_your_threads.Join()
+	
+	if(LAZYLEN(armor_list))
+		armor_list.Cut()
+	if(armor.bio)
+		armor_list += list("TOXIN" = armor.bio)
+	if(armor.bomb)
+		armor_list += list("EXPLOSIVE" = armor.bomb)
+	if(armor.bullet)
+		armor_list += list("BULLET" = armor.bullet)
+	if(armor.energy)
+		armor_list += list("ENERGY" = armor.energy)
+	if(armor.laser)
+		armor_list += list("LASER" = armor.laser)
+	if(armor.magic)
+		armor_list += list("MAGIC" = armor.magic)
+	if(armor.melee)
+		armor_list += list("MELEE" = armor.melee)
+	if(armor.rad)
+		armor_list += list("RADIATION" = armor.rad)
+
+	if(LAZYLEN(durability_list))
+		durability_list.Cut()
+	if(armor.fire)
+		durability_list += list("FIRE" = armor.fire)
+	if(armor.acid)
+		durability_list += list("ACID" = armor.acid)
+
+	if(LAZYLEN(armor_list) || LAZYLEN(durability_list))
+		. += "<span class='notice'>It has a <a href='?src=[REF(src)];list_armor=1'>tag</a> listing its protection classes.</span>"
+
+/obj/item/clothing/Topic(href, href_list)
+	. = ..()
+
+	if(href_list["list_armor"])
+		var/list/readout = list("<span class='notice'><u><b>PROTECTION CLASSES (I-X)</u></b>")
+		if(LAZYLEN(armor_list))
+			readout += "\n<b>ARMOR</b>"
+			for(var/dam_type in armor_list)
+				var/armor_amount = armor_list[dam_type]
+				readout += "\n[dam_type] [armor_to_protection_class(armor_amount)]" //e.g. BOMB IV
+		if(LAZYLEN(durability_list))
+			readout += "\n<b>DURABILITY</b>"
+			for(var/dam_type in durability_list)
+				var/durability_amount = durability_list[dam_type]
+				readout += "\n[dam_type] [armor_to_protection_class(durability_amount)]" //e.g. FIRE II
+		readout += "</span>"
+
+		to_chat(usr, "[readout.Join()]")
+
+/**
+  * Rounds armor_value to nearest 10, divides it by 10 and then expresses it in roman numerals up to 10
+  *
+  * Rounds armor_value to nearest 10, divides it by 10
+  * and then expresses it in roman numerals up to 10
+  * Arguments:
+  * * armor_value - Number we're converting
+  */
+/obj/item/clothing/proc/armor_to_protection_class(armor_value)
+	armor_value = round(armor_value,10) / 10
+	switch (armor_value)
+		if (1)
+			. = "I"
+		if (2)
+			. = "II"
+		if (3)
+			. = "III"
+		if (4)
+			. = "IV"
+		if (5)
+			. = "V"
+		if (6)
+			. = "VI"
+		if (7)
+			. = "VII"
+		if (8)
+			. = "VIII"
+		if (9)
+			. = "IX"
+		if (10 to INFINITY)
+			. = "X"
+	return .
 
 /obj/item/clothing/obj_break(damage_flag)
 	damaged_clothes = CLOTHING_DAMAGED
@@ -265,7 +350,6 @@
 	var/index = "[REF(initial(icon))]-[initial(icon_state)]"
 	var/static/list/damaged_clothes_icons = list()
 	if(damaging)
-		damaged_clothes = 1
 		var/icon/damaged_clothes_icon = damaged_clothes_icons[index]
 		if(!damaged_clothes_icon)
 			damaged_clothes_icon = icon(initial(icon), initial(icon_state), , 1)	//we only want to apply damaged effect to the initial icon_state for each object
@@ -273,11 +357,9 @@
 			damaged_clothes_icon.Blend(icon('icons/effects/item_damage.dmi', "itemdamaged"), ICON_MULTIPLY) //adds damage effect and the remaining white areas become transparant
 			damaged_clothes_icon = fcopy_rsc(damaged_clothes_icon)
 			damaged_clothes_icons[index] = damaged_clothes_icon
-		add_overlay(damaged_clothes_icon, 1)
+		add_overlay(damaged_clothes_icon, TRUE)
 	else
-		damaged_clothes = 0
 		cut_overlay(damaged_clothes_icons[index], TRUE)
-
 
 /*
 SEE_SELF  // can see self, no matter what

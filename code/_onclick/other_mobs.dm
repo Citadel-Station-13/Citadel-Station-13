@@ -5,7 +5,7 @@
 	Otherwise pretty standard.
 */
 
-/mob/living/carbon/human/UnarmedAttack(atom/A, proximity, intent = a_intent, flags = NONE)
+/mob/living/carbon/human/UnarmedAttack(atom/A, proximity, intent = a_intent, attackchain_flags = NONE)
 
 	if(!has_active_hand()) //can't attack without a hand.
 		to_chat(src, "<span class='notice'>You look at your arm and sigh.</span>")
@@ -16,33 +16,45 @@
 		to_chat(src, "<span class='warning'>The damage in your [check_arm.name] is preventing you from using it! Get it fixed, or at least splinted!</span>")
 		return
 
+	. = attackchain_flags
 	// Special glove functions:
 	// If the gloves do anything, have them return 1 to stop
 	// normal attack_hand() here.
 	var/obj/item/clothing/gloves/G = gloves // not typecast specifically enough in defines
-	if(proximity && istype(G) && G.Touch(A,1))
-		return
-
-	var/override = 0
+	if(proximity && istype(G))
+		. |= G.Touch(A, TRUE)
+		if(. & INTERRUPT_UNARMED_ATTACK)
+			return
 
 	for(var/datum/mutation/human/HM in dna.mutations)
-		override += HM.on_attack_hand(A, proximity, intent, flags)
+		. |= HM.on_attack_hand(A, proximity, intent, .)
 
-	if(override)
+	if(. & INTERRUPT_UNARMED_ATTACK)
 		return
 
 	SEND_SIGNAL(src, COMSIG_HUMAN_MELEE_UNARMED_ATTACK, A)
-	A.attack_hand(src, intent, flags)
+	return . | A.attack_hand(src, intent, .)
 
-//Return TRUE to cancel other attack hand effects that respect it.
-/atom/proc/attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
-	. = FALSE
+/atom/proc/attack_hand(mob/user, act_intent = user.a_intent, attackchain_flags)
+	SHOULD_NOT_SLEEP(TRUE)
 	if(!(interaction_flags_atom & INTERACT_ATOM_NO_FINGERPRINT_ATTACK_HAND))
 		add_fingerprint(user)
 	if(SEND_SIGNAL(src, COMSIG_ATOM_ATTACK_HAND, user) & COMPONENT_NO_ATTACK_HAND)
-		. = TRUE
+		return
+	. = attackchain_flags
+	if(attack_hand_speed && !(. & ATTACK_IGNORE_CLICKDELAY))
+		if(!user.CheckActionCooldown(attack_hand_speed))
+			return
 	if(interaction_flags_atom & INTERACT_ATOM_ATTACK_HAND)
 		. = _try_interact(user)
+	INVOKE_ASYNC(src, .proc/on_attack_hand, user, act_intent, .)
+	if(!(. & ATTACK_IGNORE_ACTION))
+		if(attack_hand_unwieldlyness)
+			user.DelayNextAction(attack_hand_unwieldlyness, considered_action = attack_hand_is_action)
+		else if(attack_hand_is_action)
+			user.DelayNextAction()
+
+/atom/proc/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 
 //Return a non FALSE value to cancel whatever called this from propagating, if it respects it.
 /atom/proc/_try_interact(mob/user)
@@ -50,7 +62,6 @@
 		return interact(user)
 	if(can_interact(user))
 		return interact(user)
-	return FALSE
 
 /atom/proc/can_interact(mob/user)
 	if(!user.can_interact_with(src))
@@ -80,8 +91,7 @@
 	else
 		add_fingerprint(user)
 	if(interaction_flags_atom & INTERACT_ATOM_UI_INTERACT)
-		return ui_interact(user)
-	return FALSE
+		ui_interact(user)
 
 /*
 /mob/living/carbon/human/RestrainedClickOn(var/atom/A) ---carbons will handle this
@@ -95,13 +105,19 @@
 	. = ..()
 	if(gloves)
 		var/obj/item/clothing/gloves/G = gloves
-		if(istype(G) && G.Touch(A,0)) // for magic gloves
+		. |= G.Touch(A, FALSE)
+		if(. & INTERRUPT_UNARMED_ATTACK)
 			return
-	if (istype(glasses) && glasses.ranged_attack(src,A,mouseparams))
-		return
+	if(istype(glasses))
+		. |= glasses.ranged_attack(src, A, mouseparams)
+		if(. & INTERRUPT_UNARMED_ATTACK)
+			return
 
 	for(var/datum/mutation/human/HM in dna.mutations)
-		HM.on_ranged_attack(A, mouseparams)
+		. |= HM.on_ranged_attack(A, mouseparams)
+
+	if(. & INTERRUPT_UNARMED_ATTACK)
+		return
 
 	if(isturf(A) && get_dist(src,A) <= 1)
 		src.Move_Pulled(A)
@@ -123,7 +139,9 @@
 	Monkeys
 */
 /mob/living/carbon/monkey/UnarmedAttack(atom/A, proximity, intent = a_intent, flags = NONE)
-	A.attack_paw(src, intent, flags)
+	if(!CheckActionCooldown(CLICK_CD_MELEE))
+		return
+	return !isnull(A.attack_paw(src, intent, flags))
 
 /atom/proc/attack_paw(mob/user)
 	if(SEND_SIGNAL(src, COMSIG_ATOM_ATTACK_PAW, user) & COMPONENT_NO_ATTACK_HAND)
@@ -144,6 +162,8 @@
 		return
 	if(is_muzzled())
 		return
+	if(!CheckActionCooldown(CLICK_CD_MELEE))
+		return
 	var/mob/living/carbon/ML = A
 	if(istype(ML))
 		var/dam_zone = pick(BODY_ZONE_CHEST, BODY_ZONE_PRECISE_L_HAND, BODY_ZONE_PRECISE_R_HAND, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
@@ -163,6 +183,7 @@
 				ML.ForceContractDisease(D)
 		else
 			ML.visible_message("<span class='danger'>[src] has attempted to bite [ML]!</span>")
+	DelayNextAction()
 
 /*
 	Aliens
@@ -243,7 +264,7 @@
 /mob/living/simple_animal/hostile/UnarmedAttack(atom/A, proximity, intent = a_intent, flags = NONE)
 	target = A
 	if(dextrous && !ismob(A))
-		..()
+		return ..()
 	else
 		AttackingTarget()
 

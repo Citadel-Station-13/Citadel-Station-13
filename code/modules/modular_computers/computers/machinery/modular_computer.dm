@@ -100,7 +100,6 @@
 	if(cpu)
 		return cpu.AltClick(user)
 
-//ATTACK HAND IGNORING PARENT RETURN VALUE
 // On-click handling. Turns on the computer if it's off and opens the GUI.
 /obj/machinery/modular_computer/interact(mob/user)
 	if(cpu)

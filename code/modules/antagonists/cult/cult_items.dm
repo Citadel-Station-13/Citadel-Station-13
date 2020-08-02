@@ -258,7 +258,7 @@
 
 /datum/action/innate/cult/spin2win/Activate()
 	cooldown = world.time + sword.spin_cooldown
-	holder.changeNext_move(50)
+	holder.DelayNextAction(50)
 	holder.apply_status_effect(/datum/status_effect/sword_spin)
 	sword.spinning = TRUE
 	sword.block_chance = 100

@@ -42,7 +42,7 @@
 	adjustBruteLoss(15)
 	return TRUE
 
-/mob/living/carbon/monkey/attack_hand(mob/living/carbon/human/M)
+/mob/living/carbon/monkey/on_attack_hand(mob/living/carbon/human/M)
 	. = ..()
 	if(.) //To allow surgery to return properly.
 		return

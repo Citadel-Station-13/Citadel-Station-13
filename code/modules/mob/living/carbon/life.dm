@@ -1,6 +1,8 @@
 /mob/living/carbon/BiologicalLife(seconds, times_fired)
 	//Updates the number of stored chemicals for powers
 	handle_changeling()
+	//Handles the unique mentabolism of bloodsuckers, look at /datum/antagonist/bloodsucker/proc/LifeTick()
+	handle_bloodsucker()
 	//Reagent processing needs to come before breathing, to prevent edge cases.
 	handle_organs()
 	. = ..()		// if . is false, we are dead.
@@ -421,6 +423,12 @@
 		else
 			hud_used.lingchemdisplay.invisibility = INVISIBILITY_ABSTRACT
 
+
+/mob/living/carbon/proc/handle_bloodsucker()
+	if(mind && AmBloodsucker(src))
+		var/datum/antagonist/bloodsucker/B = mind.has_antag_datum(ANTAG_DATUM_BLOODSUCKER)
+		B.LifeTick()
+	
 
 /mob/living/carbon/handle_mutations_and_radiation()
 	if(dna && dna.temporary_mutations.len)
