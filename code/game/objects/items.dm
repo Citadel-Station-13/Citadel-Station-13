@@ -11,6 +11,10 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 	name = "item"
 	icon = 'icons/obj/items_and_weapons.dmi'
 	blocks_emissive = EMISSIVE_BLOCK_GENERIC
+	
+	attack_hand_speed = 0
+	attack_hand_is_action = FALSE
+	attack_hand_unwieldlyness = 0
 
 	///icon state name for inhand overlays
 	var/item_state = null
@@ -57,15 +61,6 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 	var/total_mass //Total mass in arbitrary pound-like values. If there's no balance reasons for an item to have otherwise, this var should be the item's weight in pounds.
 	/// How long, in deciseconds, this staggers for, if null it will autocalculate from w_class and force. Unlike total mass this supports 0 and negatives.
 	var/stagger_force
-
-	/**
-	  * Set FALSE and then checked at the end of on mob/living/attackby(), set TRUE on living/pre_attacked_by().
-	  * Should it be FALSE by the end of the item/attack(), that means the item overrode the standard attack behaviour
-	  * and the user still needs the delay applied. We can't be using return values since that'll stop afterattack() from being triggered.
-	  */
-	var/attack_delay_done = FALSE
-	///next_move click/attack delay of this item.
-	var/click_delay = CLICK_CD_MELEE
 
 	var/slot_flags = 0		//This is used to determine on which slots an item can fit.
 	var/current_equipped_slot
@@ -313,10 +308,7 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 	add_fingerprint(usr)
 	return ..()
 
-/obj/item/attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
-	. = ..()
-	if(.)
-		return
+/obj/item/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	if(!user)
 		return
 	if(anchored)
@@ -473,6 +465,7 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 			usr.UnarmedAttack(src, TRUE)
 			if(usr.get_active_held_item() == src)
 				melee_attack_chain(usr, over)
+			usr.FlushCurrentAction()
 			return TRUE //returning TRUE as a "is this overridden?" flag
 	if(!Adjacent(usr) || !over.Adjacent(usr))
 		return // should stop you from dragging through windows

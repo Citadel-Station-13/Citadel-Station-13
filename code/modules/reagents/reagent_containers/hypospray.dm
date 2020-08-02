@@ -361,13 +361,17 @@
 	obj_flags |= EMAGGED
 	return TRUE
 
-/obj/item/hypospray/mkii/attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
+/obj/item/hypospray/mkii/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	. = ..() //Don't bother changing this or removing it from containers will break.
 
 /obj/item/hypospray/mkii/attack(obj/item/I, mob/user, params)
 	return
 
 /obj/item/hypospray/mkii/afterattack(atom/target, mob/user, proximity)
+	. = ..()
+	INVOKE_ASYNC(src, .proc/attempt_inject, target, user, proximity)
+
+/obj/item/hypospray/mkii/proc/attempt_inject(atom/target, mob/user, proximity)
 	if(!vial || !proximity || !isliving(target))
 		return
 	var/mob/living/L = target

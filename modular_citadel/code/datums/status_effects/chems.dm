@@ -53,7 +53,6 @@
 
 	if(last_checked_size != B.cached_size)
 		H.add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/status_effect/breast_hypertrophy, multiplicative_slowdown = moveCalc)
-		sizeMoveMod(moveCalc)
 
 	if (B.size == "huge")
 		if(prob(1))
@@ -70,15 +69,7 @@
 	log_reagent("FERMICHEM: [owner]'s breasts has reduced to an acceptable size. ID: [owner.key]")
 	to_chat(owner, "<span class='notice'>Your expansive chest has become a more managable size, liberating your movements.</b></span>")
 	owner.remove_movespeed_modifier(/datum/movespeed_modifier/status_effect/breast_hypertrophy)
-	sizeMoveMod(1)
 	return ..()
-
-/datum/status_effect/chem/breast_enlarger/proc/sizeMoveMod(var/value)
-	if(cachedmoveCalc == value)
-		return
-	owner.next_move_modifier /= cachedmoveCalc
-	owner.next_move_modifier *= value
-	cachedmoveCalc = value
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
