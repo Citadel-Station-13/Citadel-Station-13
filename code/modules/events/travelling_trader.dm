@@ -1,8 +1,8 @@
 /datum/round_event_control/travelling_trader
 	name = "Travelling Trader"
 	typepath = /datum/round_event/travelling_trader
-	weight = 10
-	max_occurrences = 3
+	weight = 8
+	max_occurrences = 2
 	earliest_start = 0 MINUTES
 
 /datum/round_event/travelling_trader
@@ -52,6 +52,14 @@
 	var/acceptance_speech = "This is exactly what I wanted! I shall be on my way now, thank you.!"
 	var/refusal_speech = "A given_item? I wanted a requested_item!" //what they say when refusing an item
 	var/active = TRUE
+	var/examine_text = list("<span class='warning'>You attempt to look directly at the being's face, but it's just a blur!")
+	move_resist = MOVE_FORCE_VERY_STRONG
+	mob_size = MOB_SIZE_LARGE
+	alpha = 200
+
+/mob/living/carbon/human/dummy/travelling_trader/examine(mob/user)
+	SEND_SIGNAL(src, COMSIG_PARENT_EXAMINE, user, examine_text)
+	return examine_text
 
 /mob/living/carbon/human/dummy/travelling_trader/proc/setup_speech(var/input_speech, var/obj/item/given_item)
 	if(requested_item)
@@ -92,6 +100,8 @@
 
 /mob/living/carbon/human/dummy/travelling_trader/Initialize()
 	..()
+	add_atom_colour("#570d6b", FIXED_COLOUR_PRIORITY) //make them purple (otherworldly!)
+	set_light(1, -0.7, "#AAD84B")
 	ADD_TRAIT(src,TRAIT_PIERCEIMMUNE, "trader_pierce_immune") //don't let people take their blood
 	equipOutfit(trader_outfit, TRUE)
 	for(var/obj/item/item in src.get_equipped_items())
@@ -159,15 +169,11 @@
 	trader_name = "Otherworldly Animal Specialist"
 	trader_outfit = /datum/outfit/job/doctor
 	initial_speech = "Greetings, lifeform. I am here to locate a special creature aboard your station."
-	request_speech = "Find me the creature known as 'requested_item' and you shall be rewarded for your efforts."
+	request_speech = "Find me the creature known as 'requested_item' and hand it to me, preferably in a suitable container."
 	refusal_speech = "Do you think me to be a fool, lifeform? I know a requested_item when I see one."
-	possible_wanted_items = list(/mob/living/simple_animal/pet/dog/corgi/Ian = 1,
-		/mob/living/simple_animal/sloth/paperwork = 1,
-		/mob/living/carbon/monkey/punpun = 1,
-		/mob/living/simple_animal/pet/fox/Renault = 1,
-		/mob/living/simple_animal/hostile/carp/cayenne = 1,
-		/mob/living/simple_animal/pet/bumbles = 1,
-		/mob/living/simple_animal/parrot/Poly = 1)
+	possible_wanted_items = list(/mob/living/simple_animal/pet/dog/corgi = 4,
+	/mob/living/carbon/monkey = 1,
+	/mob/living/simple_animal/mouse = 2)
 	possible_rewards = list(/mob/living/simple_animal/pet/dog/corgi/exoticcorgi = 1, //rewards are animals, friendly to only the person who handed the reward in!
 		/mob/living/simple_animal/cockroach = 1,
 		/mob/living/simple_animal/hostile/skeleton = 1,
@@ -184,13 +190,6 @@
 
 mob/living/carbon/human/dummy/travelling_trader/animal_hunter/Initialize()
 	acceptance_speech = pick(list("This lifeform shall make for a great stew, thank you.", "This lifeform shall be of a true use to our cause, thank you.", "The lifeform is adequate. Goodbye.", "This lifeform shall make a great addition to my collection."))
-	//make sure they only ask for animals that are still alive
-	for(var/mob/living/animal in possible_wanted_items)
-		if(!(animal in GLOB.mob_living_list))
-			possible_wanted_items -= animal
-	if(!possible_wanted_items)
-		//all the pets are dead, so ask for a monkey, or sometimes a corgi (corgis are more annoying to get a hold of)
-		possible_wanted_items = list(/mob/living/simple_animal/pet/dog/corgi = 1, /mob/living/carbon/monkey = 3)
 	..()
 
 /mob/living/carbon/human/dummy/travelling_trader/animal_hunter/check_item(var/obj/item/supplied_item) //item is likely to be in contents of whats supplied
