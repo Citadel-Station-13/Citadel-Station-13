@@ -299,8 +299,8 @@
 				var/static/list/many_tails = list("tail_human", "tail_lizard", "mam_tail")
 				for(var/T in many_tails)
 					if(S.mutant_bodyparts[T] && dna.features[T] != "None")
-						emote("wag")
-						break
+						if(!(M?.client?.prefs?.cit_toggles & NO_AUTO_WAG))
+							emote("wag")
 
 		else if(check_zone(M.zone_selected) == BODY_ZONE_R_ARM || check_zone(M.zone_selected) == BODY_ZONE_L_ARM)
 			M.visible_message( \
