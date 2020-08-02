@@ -433,6 +433,7 @@
 #include "code\datums\components\igniter.dm"
 #include "code\datums\components\infective.dm"
 #include "code\datums\components\jousting.dm"
+#include "code\datums\components\killerqueen.dm"
 #include "code\datums\components\knockback.dm"
 #include "code\datums\components\knockoff.dm"
 #include "code\datums\components\lifesteal.dm"
