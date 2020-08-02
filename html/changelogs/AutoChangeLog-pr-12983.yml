@@ -1,0 +1,4 @@
+author: "silicons"
+delete-after: True
+changes: 
+  - tweak: "war operatives now actually time 20 minutes since roundstart to depart instead of 15."
