@@ -1,7 +1,0 @@
-author: "KeRSedChaplain"
-delete-after: True
-changes: 
-  - rscadd: "The belligerent scripture and a brass multitool, and a new marauder variant which act similar to holoparasites/guardian spirits."
-  - rscdel: "Removed the abductor teleport consoles they get, removes abscond for the time being as I've not seen much use for it other than just spamming it and hoping you end up in the armory."
-  - tweak: "moved around scriptures to make the cult work better as being based around the station, makes the Ark scream more often and work as a summonable object, clockwork armor now has a flat 0 defense up to 10 instead of negatives against laser damage. Makes the Ark work better in a station based setting, as well as the Heralds beacon in case It works for the mode."
-  - soundadd: "added powerloaderstep.ogg for Neovgre"
