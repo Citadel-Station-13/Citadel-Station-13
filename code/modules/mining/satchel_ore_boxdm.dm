@@ -38,10 +38,7 @@
 		ui_interact(user)
 	. = ..()
 
-/obj/structure/ore_box/attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
-	. = ..()
-	if(.)
-		return
+/obj/structure/ore_box/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	if(Adjacent(user))
 		ui_interact(user)
 

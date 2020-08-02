@@ -107,7 +107,7 @@
 	if(user == target)
 		to_chat(user, "<span class='warning'>Why would you ever do that?</span>")
 		return
-	if(ishostile(target) && (!allows_hostiles || istype(target, /mob/living/simple_animal/hostile/carp/cayenne)) || target.move_resist < MOVE_FORCE_VERY_STRONG) //don't allow goliaths into pet carriers, but let cayenne in!
+	if((ishostile(target) && (!allows_hostiles || !istype(target, /mob/living/simple_animal/hostile/carp/cayenne))) || target.move_resist >= MOVE_FORCE_VERY_STRONG) //don't allow goliaths into pet carriers, but let cayenne in!
 		to_chat(user, "<span class='warning'>You have a feeling you shouldn't keep this as a pet.</span>")
 		return
 	load_occupant(user, target)
@@ -142,8 +142,6 @@
 			remove_occupant(user)
 			return
 
-	user.changeNext_move(CLICK_CD_BREAKOUT)
-	user.last_special = world.time + CLICK_CD_BREAKOUT
 	if(user.mob_size <= MOB_SIZE_SMALL)
 		to_chat(user, "<span class='notice'>You begin to try escaping the [src] and start fumbling for the lock switch... (This will take some time.)</span>")
 		to_chat(loc, "<span class='warning'>You see [user] attempting to unlock the [src]!</span>")

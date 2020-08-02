@@ -10,26 +10,24 @@
 //
 // Show as dead when...
 
-/datum/antagonist/bloodsucker/proc/LifeTick()// Should probably run from life.dm, same as handle_changeling, but will be an utter pain to move
-	set waitfor = FALSE // Don't make on_gain() wait for this function to finish. This lets this code run on the side.
-	var/notice_healing
-	while(owner && !AmFinalDeath()) // owner.has_antag_datum(ANTAG_DATUM_BLOODSUCKER) == src
-		if(owner.current.stat == CONSCIOUS && !poweron_feed && !HAS_TRAIT(owner.current, TRAIT_FAKEDEATH)) // Deduct Blood
-			AddBloodVolume(passive_blood_drain) // -.1 currently
-		if(HandleHealing(1)) 		// Heal
-			if(!notice_healing && owner.current.blood_volume > 0)
-				to_chat(owner, "<span class='notice'>The power of your blood begins knitting your wounds...</span>")
-				notice_healing = TRUE
-		else if(notice_healing == TRUE)
-			notice_healing = FALSE 	// Apply Low Blood Effects
-		HandleStarving()  // Death
-		HandleDeath() // Standard Update
-		update_hud()// Daytime Sleep in Coffin
-		if(SSticker.mode.is_daylight() && !HAS_TRAIT_FROM(owner.current, TRAIT_FAKEDEATH, "bloodsucker"))
-			if(istype(owner.current.loc, /obj/structure/closet/crate/coffin))
-				Torpor_Begin()
-					// Wait before next pass
-		sleep(10)
+/datum/antagonist/bloodsucker/proc/LifeTick()  //Runs from BiologicalLife, handles all the bloodsucker constant proccesses
+	if(!owner || AmFinalDeath())
+		return
+	if(owner.current.stat == CONSCIOUS && !poweron_feed && !HAS_TRAIT(owner.current, TRAIT_FAKEDEATH)) // Deduct Blood
+		AddBloodVolume(passive_blood_drain) // -.1 currently
+	if(HandleHealing(1)) 		// Heal
+		if(!notice_healing && owner.current.blood_volume > 0)
+			to_chat(owner, "<span class='notice'>The power of your blood begins knitting your wounds...</span>")
+			notice_healing = TRUE
+	else if(notice_healing)
+		notice_healing = FALSE 	// Apply Low Blood Effects
+	HandleStarving()  // Death
+	HandleDeath() // Standard Update
+	update_hud()// Daytime Sleep in Coffin
+	if(SSticker.mode.is_daylight() && !HAS_TRAIT_FROM(owner.current, TRAIT_FAKEDEATH, "bloodsucker"))
+		if(istype(owner.current.loc, /obj/structure/closet/crate/coffin))
+			Torpor_Begin()
+				// Wait before next pass
 	FreeAllVassals() 	// Free my Vassals! (if I haven't yet)
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

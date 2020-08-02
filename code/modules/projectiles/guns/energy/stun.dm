@@ -24,7 +24,7 @@
 	ammo_x_offset = 2
 	// Not enough guns have altfire systems like this yet for this to be a universal framework.
 	var/last_altfire = 0
-	var/altfire_delay = 15
+	var/altfire_delay = CLICK_CD_RANGE
 
 /obj/item/gun/energy/e_gun/advtaser/altafterattack(atom/target, mob/user, proximity_flag, params)
 	. = TRUE

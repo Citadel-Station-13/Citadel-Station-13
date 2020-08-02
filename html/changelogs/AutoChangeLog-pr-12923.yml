@@ -1,9 +1,0 @@
-author: "EmeraldSundisk"
-delete-after: True
-changes: 
-  - rscadd: "Renovates Snow Taxi's northeast bathroom to have multiple non-urinal toilets and showers"
-  - rscadd: "Adds signage/labeling to improve map readability"
-  - rscadd: "Adds a bathroom to the northwest station"
-  - rscadd: "Adds a filing cabinet to the cargo department"
-  - tweak: "Area designation adjustments to account for the above changes"
-  - bugfix: "Adds a missing airlock cyclelink near medical"

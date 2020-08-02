@@ -15,6 +15,8 @@
 	internals_req_access = list()
 	add_req_access = 0
 	wreckage = /obj/structure/mecha_wreckage/durand/neovgre
+	stepsound = 'sound/mecha/neostep2.ogg'
+	turnsound = 'sound/mecha/powerloader_step.ogg'
 
 /obj/mecha/combat/neovgre/GrantActions(mob/living/user, human_occupant = 0) //No Eject action for you sonny jim, your life for Ratvar!
 	internals_action.Grant(user, src)
@@ -32,7 +34,7 @@
 
 /obj/mecha/combat/neovgre/MouseDrop_T(mob/M, mob/user)
 	if(!is_servant_of_ratvar(user))
-		to_chat(user, "<span class='brass'>BEGONE HERETIC!</span>")
+		to_chat(user, "<span class='neovgre'>BEGONE HEATHEN!</span>")
 		return
 	else
 		..()
@@ -91,7 +93,7 @@
 /obj/item/mecha_parts/mecha_equipment/weapon/energy/laser/heavy/neovgre
 	equip_cooldown = 8 //Rapid fire heavy laser cannon, simple yet elegant
 	energy_drain = 30
-	name = "Aribter Laser Cannon"
+	name = "Arbiter Laser Cannon"
 	desc = "Please re-attach this to neovgre and stop asking questions about why it looks like a normal Nanotrasen issue Solaris laser cannon - Nezbere"
 	fire_sound = 'sound/weapons/neovgre_laser.ogg'
 

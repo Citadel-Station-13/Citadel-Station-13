@@ -30475,6 +30475,7 @@
 /obj/machinery/light{
 	dir = 1
 	},
+/obj/machinery/airalarm/directional/north,
 /turf/open/floor/plasteel/dark,
 /area/science/research)
 "aXx" = (
@@ -57345,9 +57346,7 @@
 	name = "landing marker";
 	picked_color = "Burgundy"
 	},
-/turf/open/floor/plating/airless{
-	initial_gas_mix = "o2=14;n2=23;TEMP=300"
-	},
+/turf/open/floor/plating/airless,
 /area/hallway/secondary/entry)
 "bOe" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer1{
@@ -58565,9 +58564,7 @@
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plating/airless{
-	initial_gas_mix = "o2=14;n2=23;TEMP=300"
-	},
+/turf/open/floor/plating/airless,
 /area/hallway/secondary/entry)
 "bQb" = (
 /obj/structure/flora/rock,
@@ -58930,7 +58927,7 @@
 	dir = 8
 	},
 /obj/machinery/power/apc{
-	areastring = "/area/janitor";
+	areastring = "/area/vacant_room/commissary";
 	dir = 4;
 	name = "Vacant Commissary APC";
 	pixel_x = 27;
@@ -61285,9 +61282,7 @@
 	name = "landing marker";
 	picked_color = "Burgundy"
 	},
-/turf/open/floor/plating/airless{
-	initial_gas_mix = "o2=14;n2=23;TEMP=300"
-	},
+/turf/open/floor/plating/airless,
 /area/hallway/secondary/entry)
 "bUk" = (
 /obj/effect/turf_decal/tile/red,
@@ -61567,9 +61562,7 @@
 /turf/closed/wall,
 /area/engine/atmos)
 "bUN" = (
-/turf/open/floor/plating/airless{
-	initial_gas_mix = "o2=14;n2=23;TEMP=300"
-	},
+/turf/open/floor/plating/airless,
 /area/hallway/secondary/entry)
 "bUP" = (
 /obj/machinery/door/airlock/external{
@@ -67994,9 +67987,7 @@
 	name = "landing marker";
 	picked_color = "Burgundy"
 	},
-/turf/open/floor/plating/airless{
-	initial_gas_mix = "o2=14;n2=23;TEMP=300"
-	},
+/turf/open/floor/plating/airless,
 /area/hallway/secondary/entry)
 "ceV" = (
 /obj/effect/turf_decal/tile/yellow{
@@ -68021,18 +68012,14 @@
 	dir = 1
 	},
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plating/airless{
-	initial_gas_mix = "o2=14;n2=23;TEMP=300"
-	},
+/turf/open/floor/plating/airless,
 /area/hallway/secondary/entry)
 "ceX" = (
 /obj/machinery/light{
 	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plating/airless{
-	initial_gas_mix = "o2=14;n2=23;TEMP=300"
-	},
+/turf/open/floor/plating/airless,
 /area/hallway/secondary/entry)
 "ceY" = (
 /obj/machinery/airalarm{
@@ -68880,9 +68867,7 @@
 /area/engine/engineering)
 "cgI" = (
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plating/airless{
-	initial_gas_mix = "o2=14;n2=23;TEMP=300"
-	},
+/turf/open/floor/plating/airless,
 /area/hallway/secondary/entry)
 "cgJ" = (
 /obj/machinery/door/poddoor/preopen,
@@ -80506,9 +80491,7 @@
 /area/maintenance/fore)
 "cDp" = (
 /obj/structure/lattice/catwalk,
-/turf/open/floor/plating/airless{
-	initial_gas_mix = "o2=14;n2=23;TEMP=300"
-	},
+/turf/open/floor/plating/airless,
 /area/hallway/secondary/entry)
 "cDq" = (
 /obj/machinery/door/airlock/maintenance{
@@ -80895,9 +80878,6 @@
 /obj/item/folder{
 	pixel_x = 4;
 	pixel_y = 4
-	},
-/obj/item/storage/pill_bottle/dice{
-	pixel_x = -4
 	},
 /obj/item/pen/red{
 	pixel_x = 4;
@@ -84920,9 +84900,7 @@
 "jAT" = (
 /obj/structure/lattice/catwalk,
 /obj/machinery/light,
-/turf/open/floor/plating/airless{
-	initial_gas_mix = "o2=14;n2=23;TEMP=300"
-	},
+/turf/open/floor/plating/airless,
 /area/hallway/secondary/entry)
 "jHJ" = (
 /obj/machinery/atmospherics/pipe/simple/general/visible{
@@ -85370,9 +85348,7 @@
 "rNm" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/lattice/catwalk,
-/turf/open/floor/plating/airless{
-	initial_gas_mix = "o2=14;n2=23;TEMP=300"
-	},
+/turf/open/floor/plating/airless,
 /area/hallway/secondary/entry)
 "swG" = (
 /obj/item/reagent_containers/food/drinks/drinkingglass{
