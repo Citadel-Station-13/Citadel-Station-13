@@ -175,6 +175,17 @@
 	if(light_on)
 		. += "[icon_state]_lit"
 
+/obj/item/kinetic_crusher/glaive
+	name = "proto-kinetic glaive"
+	desc = "A modified design of a proto-kinetic crusher, it is still little more of a combination of various mining tools cobbled together \
+	and kit-bashed into a high-tech cleaver on a stick - with a handguard and a goliath hide grip. While it is still of little use to any \
+	but the most skilled and/or suicidal miners against local fauna, it's an elegant weapon for a more civilized hunter."
+	icon_state = "crusher-glaive"
+	item_state = "crusher0-glaive"
+
+/obj/item/kinetic_crusher/glaive/update_icon_state()
+	item_state = "crusher[wielded]-glaive" // this is not icon_state and not supported by 2hcomponent
+
 //destablizing force
 /obj/item/projectile/destabilizer
 	name = "destabilizing force"
