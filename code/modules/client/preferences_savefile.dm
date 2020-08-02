@@ -205,7 +205,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		var/list/converted_paths = list()
 		for(var/datum/gear/i in saved_loadout_paths)
 			var/itemtype = copytext(i,13)
-			if(len(initial(i.ckeywhitelist)))
+			if(length(initial(i.ckeywhitelist)))
 				converted_paths += "/datum/gear/donator/[itemtype]"
 			else
 				switch(initial(i.slot))
@@ -229,7 +229,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 						converted_paths += "/datum/gear/glasses/[itemtype]"
 					if(CATEGORY_BACKPACK)
 						converted_paths += "/datum/gear/backpack/[itemtype]"
-		S["loadout"] = converted_paths.join("|")
+		S["loadout"] = converted_paths.Join("|")
 
 
 /datum/preferences/proc/load_path(ckey,filename="preferences.sav")
