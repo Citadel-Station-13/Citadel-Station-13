@@ -1519,6 +1519,7 @@
 #include "code\modules\antagonists\clockcult\clock_effects\servant_blocker.dm"
 #include "code\modules\antagonists\clockcult\clock_effects\spatial_gateway.dm"
 #include "code\modules\antagonists\clockcult\clock_helpers\clock_powerdrain.dm"
+#include "code\modules\antagonists\clockcult\clock_helpers\clock_rites.dm"
 #include "code\modules\antagonists\clockcult\clock_helpers\component_helpers.dm"
 #include "code\modules\antagonists\clockcult\clock_helpers\fabrication_helpers.dm"
 #include "code\modules\antagonists\clockcult\clock_helpers\hierophant_network.dm"

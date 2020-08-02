@@ -405,3 +405,28 @@
 		animation_number = initial(animation_number)
 		sigil_active = FALSE
 	animate(src, alpha = initial(alpha), time = 10, flags = ANIMATION_END_NOW)
+
+/obj/effect/clockwork/sigil/rite
+	name = "radiant sigil"
+	desc = "A glowing sigil glowing with barely-contained power."
+	clockwork_desc = "A sigil that will allow you to perform certain rites on it, provided you have access to sufficient power and materials."
+	icon_state = "sigiltransmission" //TODO
+	sigil_name = "Sigil of Rites"
+	alpha = 255
+	var/performing_rite = FALSE
+	color = "#ffe63a"
+
+/obj/effect/clockwork/sigil/rite/on_attack_hand(mob/living/user, act_intent = user.a_intent, unarmed_attack_flags)
+	. = ..()
+	if(.)
+		return
+	if(!is_servant_of_ratvar(user))
+		return
+	var/list/possible_rites = list()
+	for(var/datum/clockwork_rite/R in GLOB.clock_rites)
+		possible_rites[R] = R
+	var/input_key = input(user, "Choose a rite to cast", "Casting a rite") as null|anything in possible_rites
+	if(!input_key)
+		return
+	var/datum/clockwork_rite/CR = possible_rites[input_key]
+	CR.try_cast(src, user)

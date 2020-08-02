@@ -45,7 +45,7 @@
 		else if(iscultist(target) || isconstruct(target))
 			to_chat(target, "<span class='userdanger'>Your body flares with agony at [src]'s presence!</span>")
 			bonus_damage *= 3 //total 30 damage on cultists, 50 with ratvar
-		GLOB.clockwork_vitality += target.adjustFireLoss(bonus_damage) //adds the damage done to existing vitality
+		GLOB.clockwork_vitality += max(0, target.adjustFireLoss(bonus_damage)) //adds the damage done to existing vitality
 
 /obj/item/clockwork/weapon/ratvarian_spear/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	var/turf/T = get_turf(hit_atom)
