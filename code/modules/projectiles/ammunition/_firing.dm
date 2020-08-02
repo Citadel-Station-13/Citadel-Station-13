@@ -36,6 +36,11 @@
 	if(isgun(fired_from))
 		var/obj/item/gun/G = fired_from
 		BB.damage *= G.projectile_damage_multiplier
+		if(HAS_TRAIT(user, TRAIT_INSANE_AIM))
+			BB.ricochets_max = max(BB.ricochets_max, 20) //bouncy!
+			BB.ricochet_chance = max(BB.ricochet_chance, 200) //it decays
+			BB.ricochet_auto_aim_range = max(BB.ricochet_auto_aim_range, 3)
+			BB.ricochet_incidence_leeway = 0
 
 	if(reagents && BB.reagents)
 		reagents.trans_to(BB, reagents.total_volume) //For chemical darts/bullets
