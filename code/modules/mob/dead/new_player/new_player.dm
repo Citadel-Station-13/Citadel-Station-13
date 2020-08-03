@@ -567,7 +567,6 @@
 
 		client.prefs.scars_list["[cur_scar_index]"] = valid_scars
 		client.prefs.save_character()
-
 	client.prefs.copy_to(H)
 	H.dna.update_dna_identity()
 	if(mind)
