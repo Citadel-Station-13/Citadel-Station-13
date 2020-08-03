@@ -638,6 +638,13 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 /obj/item/guardiancreator/tech/choose/dextrous
 	possible_guardians = list("Assassin", "Chaos", "Charger", "Dextrous", "Explosive", "Lightning", "Protector", "Ranged", "Standard", "Support")
 
+/obj/item/guardiancreator/tech/choose/nukie
+	possible_guardians = list("Assassin", "Chaos", "Charger", "Dextrous", "Explosive", "Lightning", "Ranged", "Standard")
+
+/obj/item/guardiancreator/tech/choose/nukie/check_uplink_validity()
+	return !used
+
+
 /obj/item/paper/guides/antag/guardian
 	name = "Holoparasite Guide"
 	icon_state = "paper_words"
@@ -677,13 +684,36 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
  <br>
  <b>Charger</b>: Moves extremely fast, does medium damage on attack, and can charge at targets, damaging the first target hit and forcing them to drop any items they are holding.<br>
  <br>
- <b>Dexterous</b>: Does low damage on attack, but is capable of holding items and storing a single item within it. It will drop items held in its hands when it recalls, but it will retain the stored item.<br>
+ <b>Dextrous</b>: Does low damage on attack, but is capable of holding items and storing a single item within it. It will drop items held in its hands when it recalls, but it will retain the stored item.<br>
  <br>
  <b>Explosive</b>: High damage resist and medium power attack that may explosively teleport targets. Can turn any object, including objects too large to pick up, into a bomb, dealing explosive damage to the next person to touch it. The object will return to normal after the trap is triggered or after a delay.<br>
  <br>
  <b>Lightning</b>: Attacks apply lightning chains to targets. Has a lightning chain to the user. Lightning chains shock everything near them, doing constant damage.<br>
  <br>
  <b>Protector</b>: Causes you to teleport to it when out of range, unlike other parasites. Has two modes; Combat, where it does and takes medium damage, and Protection, where it does and takes almost no damage but moves slightly slower.<br>
+ <br>
+ <b>Ranged</b>: Has two modes. Ranged; which fires a constant stream of weak, armor-ignoring projectiles. Scout; Cannot attack, but can move through walls and is quite hard to see. Can lay surveillance snares, which alert it when crossed, in either mode.<br>
+ <br>
+ <b>Standard</b>: Devastating close combat attacks and high damage resist. Can smash through weak walls.<br>
+ <br>
+"}
+
+/obj/item/paper/guides/antag/guardian/nukie
+	name = "Guardian Guide"
+	info = {"<b>A list of Guardian Types</b><br>
+
+ <br>
+ <b>Assassin</b>: Does medium damage and takes full damage, but can enter stealth, causing its next attack to do massive damage and ignore armor. However, it becomes briefly unable to recall after attacking from stealth.<br>
+ <br>
+ <b>Chaos</b>: Ignites enemies on touch and causes them to hallucinate all nearby people as the guardian. Automatically extinguishes the user if they catch on fire.<br>
+ <br>
+ <b>Charger</b>: Moves extremely fast, does medium damage on attack, and can charge at targets, damaging the first target hit and forcing them to drop any items they are holding.<br>
+ <br>
+ <b>Dextrous</b>: Does low damage on attack, but is capable of holding items and storing a single item within it. It will drop items held in its hands when it recalls, but it will retain the stored item.<br>
+ <br>
+ <b>Explosive</b>: High damage resist and medium power attack that may explosively teleport targets. Can turn any object, including objects too large to pick up, into a bomb, dealing explosive damage to the next person to touch it. The object will return to normal after the trap is triggered or after a delay.<br>
+ <br>
+ <b>Lightning</b>: Attacks apply lightning chains to targets. Has a lightning chain to the user. Lightning chains shock everything near them, doing constant damage.<br>
  <br>
  <b>Ranged</b>: Has two modes. Ranged; which fires a constant stream of weak, armor-ignoring projectiles. Scout; Cannot attack, but can move through walls and is quite hard to see. Can lay surveillance snares, which alert it when crossed, in either mode.<br>
  <br>
@@ -698,6 +728,13 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 /obj/item/storage/box/syndie_kit/guardian/PopulateContents()
 	new /obj/item/guardiancreator/tech/choose/traitor(src)
 	new /obj/item/paper/guides/antag/guardian(src)
+
+/obj/item/storage/box/syndie_kit/nukieguardian
+	name = "holoparasite injector kit"
+
+/obj/item/storage/box/syndie_kit/nukieguardian/PopulateContents()
+	new /obj/item/guardiancreator/tech/choose/nukie(src)
+	new /obj/item/paper/guides/antag/guardian/nukie(src)
 
 /obj/item/guardiancreator/carp
 	name = "holocarp fishsticks"
