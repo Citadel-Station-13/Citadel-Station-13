@@ -196,10 +196,9 @@ GLOBAL_LIST_EMPTY(explosions)
 
 		//------- EX_ACT AND TURF FIRES -------
 
-		if((T == epicenter) && !QDELETED(explosion_source) && (get_turf(explosion_source) == T)) // Ensures explosives detonating from bags trigger other explosives in that bag
+		if((T == epicenter) && !QDELETED(explosion_source) && ismovable(explosion_source) && (get_turf(explosion_source) == T)) // Ensures explosives detonating from bags trigger other explosives in that bag
 			var/list/atoms = list()
-			var/turf/the_source_turf = get_turf(explosion_source)		// yeah this is two get turfs but this should only happen once
-			for(var/atom/A in the_source_turf)
+			for(var/atom/A in explosion_source.loc)		// the ismovableatom check 2 lines above makes sure we don't nuke an /area
 				atoms += A
 			for(var/i in atoms)
 				var/atom/A = i
