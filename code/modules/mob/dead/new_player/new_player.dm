@@ -557,7 +557,6 @@
 	if(frn)
 		client.prefs.random_character()
 		client.prefs.real_name = client.prefs.pref_species.random_name(gender,1)
-	client.prefs.copy_to(H)
 	var/cur_scar_index = client.prefs.scars_index
 	if(client.prefs.persistent_scars && client.prefs.scars_list["[cur_scar_index]"])
 		var/scar_string = client.prefs.scars_list["[cur_scar_index]"]
