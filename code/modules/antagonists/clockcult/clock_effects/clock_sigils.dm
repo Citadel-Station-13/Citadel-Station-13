@@ -422,11 +422,28 @@
 		return
 	if(!is_servant_of_ratvar(user))
 		return
+	generate_all_rites()
 	var/list/possible_rites = list()
-	for(var/datum/clockwork_rite/R in GLOB.clock_rites)
+	for(var/datum/clockwork_rite/R in GLOB.all_clockwork_rites)
 		possible_rites[R] = R
-	var/input_key = input(user, "Choose a rite to cast", "Casting a rite") as null|anything in possible_rites
+		message_admins("[R]")
+	var/input_key = input(user, "Choose a rite", "Choosing a rite") as null|anything in possible_rites
 	if(!input_key)
 		return
 	var/datum/clockwork_rite/CR = possible_rites[input_key]
-	CR.try_cast(src, user)
+	if(!CR)
+		return
+	var/choice = alert(user, "What to do with this rite?", "What to do?", "Cast", "Show Info", "Cancel")
+	switch(choice)
+		if("Cast")
+			CR.try_cast(src, user)
+		if("Show Info")
+			var/infotext = CR.build_info()
+			to_chat(user, infotext)
+
+/obj/effect/clockwork/sigil/rite/proc/generate_all_rites() //The first time someone uses a sigil of rites, all the rites are actually generated. No need to have a bunch of random datums laying around all the time.
+	if(GLOB.all_clockwork_rites.len) //we already generated the list
+		return
+	for(var/V in subtypesof(/datum/clockwork_rite))
+		var/datum/clockwork_rite/R = new V
+		GLOB.all_clockwork_rites += R

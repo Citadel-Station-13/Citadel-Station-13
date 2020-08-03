@@ -1,16 +1,19 @@
 //This file is for clock rites, mainly used by the Sigil of Rites in clock_sigils.dm
 //The rites themselves are in this file to prevent bloating the other file too much, aswell as for easier access
 
+#define INFINITE -1
+
 //The base clockwork rite. This should never be visible
 /datum/clockwork_rite
 	var/name = "Some random clockwork rite that you should not be able to see" //The name of the rite
+	var/desc = "Someone forgot to set the description of this rite.. you shouldn't see this." //What does this rite do? Shown to cultists if they choose 'Show Info' after selecting the rite.
 	var/list/required_ingredients = list() //What does this rite require?
 	var/power_cost = 0 //How much power does this rite cost.. or does it even add power?
 	var/requires_human = FALSE	//Does the rite require a ../carbon/human on the rune?
 	var/must_be_servant = TRUE //If the above is true, does the human need to be a servant?
 	var/target_can_be_invoker = TRUE //Does this rite work if the invoker is also the target?
 	var/cast_time = 0 //How long does the rite take to cast?
-	var/limit = -1 //How often can this rite be used per round? Set this to -1 for unlimited, 0 for disallowed, anything above 0 for a limit
+	var/limit = INFINITE //How often can this rite be used per round? Set this to INFINITE for unlimited, 0 for disallowed, anything above 0 for a limit
 	var/times_used = 0 //How often has the rite already been used this shift?
 	var/rite_cast_sound = 'sound/items/bikehorn.ogg' //The sound played when successfully casting the rite. If it honks, the one adding the rite forgot to set one (or was just lazy).
 
@@ -20,11 +23,12 @@
 	if(!R || !R.loc)
 		return FALSE
 	var/turf/T = R.loc
+	message_admins("Turf: [T]")
 	if(!T) //Uh oh something is fucky
 		return FALSE
 
-	if(limit != -1 && times_used >= limit) //Is the limit on casts exceeded?
-		to_chat(invoker, "<span_class='brass'>There are no more uses left for this rite!</span>")
+	if(limit != INFINITE && times_used >= limit) //Is the limit on casts exceeded?
+		to_chat(invoker, "<span class='brass'>There are no more uses left for this rite!</span>")
 		return FALSE
 
 	var/mob/living/carbon/human/H //This is only used if requires_human is TRUE
@@ -39,12 +43,14 @@
 
 	if(required_ingredients.len) //In case this requires materials
 		var/is_missing_materials = FALSE
-		for(var/obj/item/I in required_ingredients)
+		for(var/I in required_ingredients)
 			var/obj/item/Material = locate(I) in T
 			if(!Material)
 				is_missing_materials = TRUE
+				message_admins("Failed at: [I]")
 				break
-		if(!is_missing_materials)
+			message_admins("Found [Material] when searching for [I] - Success!")
+		if(is_missing_materials)
 			var/still_required_string = ""
 			for(var/i = 1 to required_ingredients.len)
 				var/obj/O = required_ingredients[i]
@@ -60,7 +66,7 @@
 			return FALSE
 	R.performing_rite = TRUE
 	if(!do_after(invoker, cast_time, target = R))
-		to_chat(invoker, "span class='warning'>Your rite is disrupted.</span>")
+		to_chat(invoker, "<span class='warning'>Your rite is disrupted.</span>")
 		R.performing_rite = FALSE
 		return FALSE
 	. = cast(invoker, T, H)
@@ -73,24 +79,27 @@
 	R.performing_rite = FALSE
 	return
 
-/datum/clockwork_rite/proc/cast(/mob/living/invoker, var/turf/T, var/mob/living/carbon/human/target) //Casts the rite and uses up ingredients. Doublechecks some things to prevent bypassing some restrictions via funky timing or badminnery.
+/datum/clockwork_rite/proc/cast(var/mob/living/invoker, var/turf/T, var/mob/living/carbon/human/target) //Casts the rite and uses up ingredients. Doublechecks some things to prevent bypassing some restrictions via funky timing or badminnery.
+	if(!T || !invoker)
+		return FALSE
 	if(requires_human && !target)
 		return FALSE
 	if(power_cost && !get_clockwork_power(power_cost))
 		return FALSE
 	adjust_clockwork_power(-power_cost)
-	if(limit != -1 && times_used >= limit)
+	if(limit != INFINITE && times_used >= limit)
 		return FALSE
 	if(required_ingredients.len)
 		var/is_missing_materials = FALSE
-		for(var/obj/item/I in required_ingredients)
+		for(var/I in required_ingredients)
 			var/obj/item/Material = locate(I) in T
 			if(!Material)
 				is_missing_materials = TRUE
+				message_admins("Failed at: [I]")
 				break
-			else
-				qdel(Material)
-		if(!is_missing_materials)
+			qdel(Material)
+			message_admins("Found [Material] when searching for [I] - Success!")
+		if(is_missing_materials)
 			return FALSE
 	playsound(T, rite_cast_sound, 50, 2)
 	return TRUE
@@ -99,3 +108,52 @@
 	if(cast_succeeded)
 		times_used++
 	return TRUE
+
+/datum/clockwork_rite/proc/build_info() //Constructs the info text of a given rite, based on the vars of the rite
+	. = ""
+	. += "<span class='brass'>This is the <b>[name]</b>.</span>\n"
+	. += "<span class='brass'>[desc]</span>\n"
+	. += "<span class='brass'>It requires: </span>"
+	if(required_ingredients.len)
+		var/material_string = ""
+		for(var/i = 1 to required_ingredients.len)
+			var/obj/O = required_ingredients[i]
+			if(i != 1)
+				material_string += ", "
+			material_string += "a [initial(O.name)]"
+		. += "<span class='brass'>[material_string].</span>\n"
+	else
+		. += "</span><span class='inathneq_small'><b>no<b></span><span class='brass'> materials.</span>\n"
+	. += "<span class='brass'>It [power_cost >= 0 ? "costs" : "generates"]</span><span class='inathneq_small'><b> [power_cost ? "[power_cost]" : "no"] </span></b><span class='brass'>power.</span>\n"
+	. += "<span class='brass'>It requires </span><span class='inathneq_small'><b>[requires_human ? " a human" : " no"]</b></span><span class='brass'> target.</span>\n"
+	if(requires_human)
+		. += "<span class='brass'>The target </span><span class='inathneq_small'><b>[must_be_servant ? "cannot be" : "can be"] </span></b><span class='brass'> a nonservant.</span>\n"
+		. += "<span class='brass'>The target </span><span class='inathneq_small'><b>[target_can_be_invoker ? "can be" : "cannot be"]</span></b><span class='brass'> the invoker.</span>\n"
+	. += "<span class='brass'>It requires </span><span class='inathneq_small'><b>[cast_time/10]</span></b><span class='brass'> seconds to cast.</span>\n"
+	. += "<span class='brass'>It has been used </span><span class='inathneq_small'><b>[times_used]</span></b><span class='brass'> times, out of </span><span class='inathneq_small'><b>[limit != INFINITE ? ", [limit]" : "infinite"]</span></b><span class='brass'> available uses.</span>"
+
+/datum/clockwork_rite/advancement
+	name = "Rite of Advancement"
+	desc = "This rite is used to augment a servant with organs or cybernetic implants. The organ of choice, aswell as the servant and the required ingredients must be placed on the sigil for this rite to take place."
+	required_ingredients = list(/obj/item/assembly/prox_sensor, /obj/item/stock_parts/cell)
+	power_cost = 500
+	requires_human = TRUE
+	cast_time = 40
+
+/datum/clockwork_rite/advancement/cast(var/mob/living/invoker, var/turf/T, var/mob/living/carbon/human/target)
+	message_admins("Turf: [T]")
+	var/obj/item/organ/O = locate(/obj/item/organ) in T
+	if(!O)
+		message_admins("No organ found!")
+		return FALSE
+	if(istype(O, /obj/item/organ/brain)) //NOPE
+		return FALSE
+	message_admins("Organ to implant: [O]")
+	. = ..()
+	if(!.)
+		message_admins("Parent Rite cast failed - aborting")
+		return FALSE
+	O.Insert(target)
+	new /obj/effect/temp_visual/ratvar/sigil/transgression(T)
+
+#undef INFINITE
