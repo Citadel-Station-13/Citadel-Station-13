@@ -201,11 +201,11 @@
 	return data
 
 /mob/living/simple_animal/bot/mulebot/ui_act(action, params)
-	if(..() || (locked && hasSiliconAccessInArea(user)))
+	if(..() || (locked && hasSiliconAccessInArea(usr)))
 		return
 	switch(action)
 		if("lock")
-			if(hasSiliconAccessInArea(user))
+			if(hasSiliconAccessInArea(usr))
 				locked = !locked
 				. = TRUE
 		if("power")
