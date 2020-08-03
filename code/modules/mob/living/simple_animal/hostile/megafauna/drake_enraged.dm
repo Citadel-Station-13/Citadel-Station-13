@@ -11,6 +11,7 @@
 	crusher_loot = list(/obj/structure/closet/crate/necropolis/dragon/hard/crusher)
 	loot = list(/obj/structure/closet/crate/necropolis/dragon/hard)
 	abyss_born = FALSE
+	ranged_cooldown_time = 15
 
 /mob/living/simple_animal/hostile/megafauna/dragon/hard/OpenFire()
 	if(swooping)

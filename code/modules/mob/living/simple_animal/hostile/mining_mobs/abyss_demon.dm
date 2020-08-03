@@ -18,8 +18,8 @@
 	ranged_cooldown_time = 30
 	minimum_distance = 3
 	retreat_distance = 3
-	maxHealth = 560
-	health = 560
+	maxHealth = 550
+	health = 550
 	obj_damage = 40
 	melee_damage_lower = 15
 	melee_damage_upper = 15
@@ -38,6 +38,7 @@
 	stat_attack = UNCONSCIOUS
 	movement_type = FLYING
 	robust_searching = TRUE
+	crusher_loot = /obj/item/crusher_trophy/abyssal_crystal
 
 	var/teleport_distance = 3
 
@@ -47,14 +48,14 @@
 	damage = 10
 	damage_type = BURN
 	nodamage = FALSE
-	temperature = 60 //Heats up just a bit
+	temperature = 600 //Heats up just a bit
 
 /obj/item/projectile/temp/basilisk/firebolt/on_hit(atom/target, blocked = FALSE)
 	. = ..()
 	if(. && isliving(target))
 		var/mob/living/L = target
 		if (istype(L))
-			L.adjust_fire_stacks(1)
+			L.adjust_fire_stacks(3)
 			L.IgniteMob()
 
 /mob/living/simple_animal/hostile/asteroid/abyss_demon/OpenFire()
@@ -70,13 +71,6 @@
 		do_teleport(src, end, 0,  channel=TELEPORT_CHANNEL_BLUESPACE, forced = TRUE)
 	SLEEP_CHECK_DEATH(8)
 	return ..()
-
-/mob/living/simple_animal/hostile/asteroid/abyss_demon/BiologicalLife(seconds, times_fired)
-	if(!(. = ..()))
-		return
-	if(target)
-		return
-	adjustHealth(maxHealth*0.05) //A small passive heal while fighting
 
 /mob/living/simple_animal/hostile/asteroid/abyss_demon/death(gibbed)
 	var/turf/T = get_turf(src)

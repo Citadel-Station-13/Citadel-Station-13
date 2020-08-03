@@ -19,7 +19,6 @@
 	id = "biodome-winter"
 	description = "For those getaways where you want to get back to nature, but you don't want to leave the fortified military compound where you spend your days. \
 	Includes a unique(*) laser pistol display case, and the recently introduced I.C.E(tm)."
-	suffix = "lavaland_surface_biodome_winter.dmm"
 
 /datum/map_template/ruin/lavaland/biodome/clown
 	name = "Biodome Clown Planet"
@@ -124,12 +123,27 @@
 	cost = 0
 	allow_duplicates = FALSE
 
+/datum/map_template/ruin/lavaland/power_collector
+	name = "Power Collector"
+	id = "power_collector"
+	description = "An ancient device intended for collecting Abyssal Power."
+	suffix = "lavaland_surface_power_collector.dmm"
+	cost = 5
+	allow_duplicates = TRUE
+
 /datum/map_template/ruin/lavaland/hierophant
 	name = "Hierophant's Arena"
 	id = "hierophant"
 	description = "A strange, square chunk of metal of massive size. Inside awaits only death and many, many squares."
 	suffix = "lavaland_surface_hierophant.dmm"
 	always_place = TRUE
+	allow_duplicates = FALSE
+
+/datum/map_template/ruin/lavaland/corrupted_system
+	name = "Hierophant's Arena"
+	id = "hierophant"
+	description = "A strange, square chunk of metal of massive size. Inside awaits only death and many, many squares."
+	suffix = "lavaland_surface_corrupted_system.dmm"
 	allow_duplicates = FALSE
 
 /datum/map_template/ruin/lavaland/blood_drunk_miner

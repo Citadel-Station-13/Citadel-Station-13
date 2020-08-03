@@ -33,6 +33,8 @@
 	movement_type = FLYING
 	robust_searching = TRUE
 
+	crusher_loot = /obj/item/crusher_trophy/tail_spike/firestone
+
 /mob/living/simple_animal/hostile/asteroid/fire_wisp/death(gibbed)
 	var/turf/T = get_turf(src)
 	explosion(T, -1, 0, 1, 2, 0, flame_range = 3)
@@ -46,7 +48,6 @@
 		var/mob/living/carbon/C = A
 		C.adjust_fire_stacks(2)
 		C.IgniteMob()
-	death()
 	. = ..()
 
 /mob/living/simple_animal/hostile/asteroid/fire_wisp/Bumped(atom/movable/A)
@@ -54,7 +55,6 @@
 		var/mob/living/carbon/C = A
 		C.adjust_fire_stacks(2)
 		C.IgniteMob()
-	death()
 	. = ..()
 
 /mob/living/simple_animal/hostile/asteroid/fire_wisp/attack_hand(mob/living/carbon/human/M)

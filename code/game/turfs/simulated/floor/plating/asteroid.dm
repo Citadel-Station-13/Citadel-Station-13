@@ -192,10 +192,10 @@
 	has_data = TRUE
 
 /turf/open/floor/plating/asteroid/airless/cave/volcanic_abyss
-	mob_spawn_list = list(/mob/living/simple_animal/hostile/asteroid/fire_wisp = 50, \
-        /mob/living/simple_animal/hostile/asteroid/ash_whelp = 30, \
-        /mob/living/simple_animal/hostile/asteroid/abyss_demon = 30, \
-		SPAWN_MEGAFAUNA_ABYSS = 5, /mob/living/simple_animal/hostile/asteroid/crazy_miner/random = 5)
+	mob_spawn_list = list(/mob/living/simple_animal/hostile/asteroid/fire_wisp = 30, \
+        /mob/living/simple_animal/hostile/asteroid/ash_whelp = 50, \
+        /mob/living/simple_animal/hostile/asteroid/abyss_demon = 50, \
+		SPAWN_MEGAFAUNA_ABYSS = 3, /mob/living/simple_animal/hostile/asteroid/crazy_miner/random = 5)
 
 	data_having_type = /turf/open/floor/plating/asteroid/airless/cave/volcanic_abyss/has_data
 	turf_type = /turf/open/floor/plating/asteroid/basalt/lavaland_abyss

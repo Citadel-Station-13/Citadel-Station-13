@@ -1,0 +1,31 @@
+"a" = (/turf/template_noop,/area/template_noop)
+"b" = (/turf/closed/mineral/volcanic/lava_land_surface,/area/lavaland/surface/outdoors)
+"c" = (/turf/open/floor/plating/asteroid/basalt/lava_land_surface,/area/lavaland/surface/outdoors)
+"d" = (/turf/closed/wall/rust,/area/lavaland/surface/outdoors)
+"e" = (/turf/open/floor/plating,/area/lavaland/surface/outdoors)
+"f" = (/turf/closed/wall,/area/lavaland/surface/outdoors)
+"g" = (/turf/open/floor/plasteel,/area/lavaland/surface/outdoors)
+"h" = (/mob/living/simple_animal/hostile/megafauna/corrupted_system,/turf/open/floor/plasteel,/area/lavaland/surface/outdoors)
+"i" = (/obj/structure/fluff/broken_flooring,/turf/open/floor/plating,/area/lavaland/surface/outdoors)
+"j" = (/obj/structure/door_assembly/door_assembly_highsecurity,/turf/open/floor/plating,/area/lavaland/surface/outdoors)
+"k" = (/obj/structure/girder,/turf/open/floor/plating,/area/lavaland/surface/outdoors)
+"l" = (/obj/structure/girder/displaced,/turf/open/floor/plating,/area/lavaland/surface/outdoors)
+"m" = (/obj/effect/decal/cleanable/oil,/turf/open/floor/plasteel,/area/lavaland/surface/outdoors)
+"n" = (/obj/effect/decal/cleanable/dirt,/turf/open/floor/plating/asteroid/basalt/lava_land_surface,/area/lavaland/surface/outdoors)
+
+(1,1,1) = {"
+aabbbbbbbbbaa
+aabbcccccbbba
+abbcccccccbbb
+bbcccefkccccb
+bcccdggeecccb
+bcccfihgkcccb
+bbcclggmkccbb
+bbbccejdccbba
+bbbccnnncbbba
+abbccnnncbbba
+abbbcnnnccbba
+abbbccnccbbaa
+aabbbcccbbbaa
+aaabbbbbbbaaa
+"}

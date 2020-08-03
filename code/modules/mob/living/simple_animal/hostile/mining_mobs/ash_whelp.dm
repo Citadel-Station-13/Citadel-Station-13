@@ -30,7 +30,7 @@
 	pull_force = MOVE_FORCE_VERY_STRONG
 	butcher_results = list(/obj/item/stack/sheet/sinew = 2, /obj/item/stack/sheet/bone = 10, /obj/item/stack/sheet/animalhide/ashdrake = 1)
 	loot = list()
-	crusher_loot = /obj/item/crusher_trophy/tail_spike
+	crusher_loot = /obj/item/crusher_trophy/legion_skull/ash_whelp_wing
 	deathmessage = "collapses on it's side."
 	deathsound = 'sound/magic/demon_dies.ogg'
 	stat_attack = UNCONSCIOUS

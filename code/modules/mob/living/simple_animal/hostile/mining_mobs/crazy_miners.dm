@@ -73,41 +73,58 @@
 		if("KC")
 			melee_damage_lower = 20
 			melee_damage_upper = 20 //Its KC and you are the prey
-			loot += /obj/item/kinetic_crusher
-
-	update_icon()
+			if(prob(15))
+				loot += /obj/item/kinetic_crusher/premium
+			else
+				loot += /obj/item/kinetic_crusher
 
 /mob/living/simple_animal/hostile/asteroid/crazy_miner/seva
 	suit_type = "SEVA"
 	icon_state = "miner_seva"
+	icon_living = "miner_seva"
+	icon_dead = "miner_seva"
 
 /mob/living/simple_animal/hostile/asteroid/crazy_miner/exo
 	suit_type = "EXO"
 	icon_state = "miner_exo"
+	icon_living = "miner_exo"
+	icon_dead = "miner_exo"
 
 /mob/living/simple_animal/hostile/asteroid/crazy_miner/ka
 	weapon_type = "KA"
 	icon_state = "miner_ka"
+	icon_living = "miner_ka"
+	icon_dead = "miner_ka"
 
 /mob/living/simple_animal/hostile/asteroid/crazy_miner/kc
 	weapon_type = "KC"
 	icon_state = "miner_kc"
+	icon_living = "miner_kc"
+	icon_dead = "miner_kc"
 
 /mob/living/simple_animal/hostile/asteroid/crazy_miner/seva/ka
 	weapon_type = "KA"
 	icon_state = "miner_seva_ka"
+	icon_living = "miner_seva_ka"
+	icon_dead = "miner_seva_ka"
 
 /mob/living/simple_animal/hostile/asteroid/crazy_miner/seva/kc
 	weapon_type = "KC"
 	icon_state = "miner_seva_kc"
+	icon_living = "miner_seva_kc"
+	icon_dead = "miner_seva_kc"
 
 /mob/living/simple_animal/hostile/asteroid/crazy_miner/exo/ka
 	weapon_type = "KA"
-	icon_state = "miner_ka"
+	icon_state = "miner_exo_ka"
+	icon_living = "miner_exo_ka"
+	icon_dead = "miner_exo_ka"
 
 /mob/living/simple_animal/hostile/asteroid/crazy_miner/exo/kc
 	weapon_type = "KC"
-	icon_state = "miner_kc"
+	icon_state = "miner_exo_kc"
+	icon_living = "miner_exo_kc"
+	icon_dead = "miner_exo_kc"
 
 /mob/living/simple_animal/hostile/asteroid/crazy_miner/random/Initialize()
 	. = ..()

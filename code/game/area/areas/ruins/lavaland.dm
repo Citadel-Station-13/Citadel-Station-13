@@ -26,6 +26,10 @@
 	name = "Hierophant's Arena"
 	icon_state = "dk_yellow"
 
+/area/ruin/unpowered/necropolis
+	name = "The Necropolis"
+	icon_state = "dk_yellow"
+
 /area/ruin/powered/pride
 	icon_state = "dk_yellow"
 

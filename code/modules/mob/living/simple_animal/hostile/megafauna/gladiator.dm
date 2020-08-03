@@ -258,8 +258,8 @@
 	if(!L)
 		return
 	visible_message(
-		"<span class='danger'>[src] cuts the [L]'s head off!</span>",
-		"<span class='userdanger'>You cut the [L]'s head off, restoring your health!</span>")
+		"<span class='danger'>[src] butchers the [L]!</span>",
+		"<span class='userdanger'>You butcher the [L], restoring your health!</span>")
 	if(!is_station_level(z) || client)
 		adjustBruteLoss(-L.maxHealth/2)
 	if(iscarbon(L))

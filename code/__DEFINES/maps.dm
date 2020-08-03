@@ -88,7 +88,7 @@ require only minor tweaks.
 	ZTRAIT_ASHSTORM = TRUE, \
     ZTRAIT_BOMBCAP_MULTIPLIER = 3, \
     ZTRAIT_BASETURF = /turf/open/floor/plating/asteroid/basalt/lavaland_abyss, \
-    ZTRAIT_UPWARDS = 1)
+    ZTRAIT_UP = 1)
 #define ZTRAITS_REEBE list(ZTRAIT_REEBE = TRUE, ZTRAIT_BOMBCAP_MULTIPLIER = 0.5)
 #define ZTRAITS_VR list(ZTRAIT_VIRTUAL_REALITY = TRUE, ZTRAIT_AWAY = TRUE)
 
