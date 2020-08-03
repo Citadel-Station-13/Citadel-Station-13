@@ -155,14 +155,12 @@
 	icon_state = "syndicatepatch"
 	item_state = "syndicatepatch"
 
-/obj/item/clothing/glasses/eyepatch/syndicate/Initialize()
-	. = ..()
-	ADD_TRAIT(src, TRAIT_NODROP, "SYNDICATE_EYEPATCH_NODROP")
-
 /obj/item/clothing/glasses/eyepatch/syndicate/equipped(mob/living/carbon/human/user, slot)
 	. = ..()
-	user.visible_message("<span class='notice'>The cybernetic eyepatch beeps as you place it over your eye. You shall never miss again.")
-	ADD_TRAIT(user, TRAIT_INSANE_AIM, "SYNDICATE_EYEPATCH_AIM")
+	if(slot == SLOT_GLASSES)
+		user.visible_message("<span class='notice'>The cybernetic eyepatch beeps as you connect it to your eye, its circuitry embedding into your eye.")
+		ADD_TRAIT(user, TRAIT_INSANE_AIM, "SYNDICATE_EYEPATCH_AIM")
+		ADD_TRAIT(src, TRAIT_NODROP, "SYNDICATE_EYEPATCH_NODROP")
 
 /obj/item/clothing/glasses/eyepatch/syndicate/dropped(mob/living/carbon/human/user)
 	REMOVE_TRAIT(user, TRAIT_INSANE_AIM, "SYNDICATE_EYEPATCH_AIM")
