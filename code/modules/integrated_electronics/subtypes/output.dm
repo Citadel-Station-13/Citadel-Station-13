@@ -35,7 +35,7 @@
 		stuff_to_display = replacetext("[I.data]", eol , "<br>")
 
 /obj/item/integrated_circuit/output/screen/large
-	name = "large screen"
+	name = "medium screen"
 	desc = "Takes any data type as an input and displays it to anybody near the device when pulsed. \
 	It can also be examined to see the last thing it displayed."
 	icon_state = "screen_medium"
@@ -51,15 +51,29 @@
 	else
 		if(!isturf(assembly.loc))
 			return
+	
+	var/atom/host = assembly || src
+	var/list/mobs = list()
+	for(var/mob/M in range(0, get_turf(src)))
+		mobs += M
+	to_chat(mobs, "<span class='notice'>[icon2html(host.icon, world, host.icon_state)] flashes a message: [stuff_to_display]</span>")
+	host.investigate_log("displayed \"[html_encode(stuff_to_display)]\" as [type].", INVESTIGATE_CIRCUIT)
 
-	var/list/nearby_things = range(0, get_turf(src))
-	for(var/mob/M in nearby_things)
-		var/obj/O = assembly ? assembly : src
-		to_chat(M, "<span class='notice'>[icon2html(O.icon, world, O.icon_state)] [stuff_to_display]</span>")
-	if(assembly)
-		assembly.investigate_log("displayed \"[html_encode(stuff_to_display)]\" with [type].", INVESTIGATE_CIRCUIT)
-	else
-		investigate_log("displayed \"[html_encode(stuff_to_display)]\" as [type].", INVESTIGATE_CIRCUIT)
+/obj/item/integrated_circuit/output/screen/extralarge // the subtype is called "extralarge" because tg brought back medium screens and they named the subtype /screen/large
+	name = "large screen"
+	desc = "Takes any data type as an input and displays it to the user upon examining, and to all nearby beings when pulsed."
+	icon_state = "screen_large"
+	power_draw_per_use = 40
+	cooldown_per_use = 10
+
+/obj/item/integrated_circuit/output/screen/extralarge/do_work()
+	..()
+	var/atom/host = assembly || src
+	var/list/mobs = list()
+	for(var/mob/M in viewers(7, get_turf(src)))
+		mobs += M
+	to_chat(mobs, "<span class='notice'>[icon2html(host.icon, world, host.icon_state)] flashes a message: [stuff_to_display]</span>")
+	host.investigate_log("displayed \"[html_encode(stuff_to_display)]\" as [type].", INVESTIGATE_CIRCUIT)
 
 /obj/item/integrated_circuit/output/light
 	name = "light"
@@ -389,25 +403,4 @@
 
 //Hippie Ported Code--------------------------------------------------------------------------------------------------------
 
-
-
 /obj/item/radio/headset/integrated
-
-/obj/item/integrated_circuit/output/screen/large
-	name = "medium screen"
-
-/obj/item/integrated_circuit/output/screen/extralarge // the subtype is called "extralarge" because tg brought back medium screens and they named the subtype /screen/large
-	name = "large screen"
-	desc = "Takes any data type as an input and displays it to the user upon examining, and to all nearby beings when pulsed."
-	icon_state = "screen_large"
-	power_draw_per_use = 40
-	cooldown_per_use = 10
-
-/obj/item/integrated_circuit/output/screen/extralarge/do_work()
-	..()
-	var/obj/O = assembly ? get_turf(assembly) : loc
-	O.visible_message("<span class='notice'>[icon2html(O.icon, world, O.icon_state)]  [stuff_to_display]</span>")
-	if(assembly)
-		assembly.investigate_log("displayed \"[html_encode(stuff_to_display)]\" with [type].", INVESTIGATE_CIRCUIT)
-	else
-		investigate_log("displayed \"[html_encode(stuff_to_display)]\" as [type].", INVESTIGATE_CIRCUIT)

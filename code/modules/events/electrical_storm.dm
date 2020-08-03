@@ -4,7 +4,7 @@
 	earliest_start = 10 MINUTES
 	min_players = 5
 	weight = 40
-	alertadmins = 0
+	alert_observers = FALSE
 	gamemode_blacklist = list("dynamic")
 
 /datum/round_event/electrical_storm

@@ -145,9 +145,9 @@
 				continue
 			if(!S.ckeys_allowed)
 				snowflake_ipc_antenna_list[S.name] = mspath
-	var/color1 = random_short_color()
-	var/color2 = random_short_color()
-	var/color3 = random_short_color()
+	var/color1 = random_color()
+	var/color2 = random_color()
+	var/color3 = random_color()
 
 	var/body_model = MALE
 	switch(intended_gender)
@@ -374,6 +374,8 @@ GLOBAL_LIST_EMPTY(species_list)
 		if(M.client && M.client.holder && (prefs.chat_toggles & CHAT_DEAD))
 			override = TRUE
 		if(HAS_TRAIT(M, TRAIT_SIXTHSENSE))
+			override = TRUE
+		if(SSticker.current_state == GAME_STATE_FINISHED)
 			override = TRUE
 		if(isnewplayer(M) && !override)
 			continue

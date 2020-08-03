@@ -48,8 +48,9 @@
 	..()
 	boost = world.time + 30
 
-/mob/living/simple_animal/imp/Life()
-	..()
+/mob/living/simple_animal/imp/BiologicalLife(seconds, times_fired)
+	if(!(. = ..()))
+		return
 	if(boost<world.time)
 		speed = 1
 	else

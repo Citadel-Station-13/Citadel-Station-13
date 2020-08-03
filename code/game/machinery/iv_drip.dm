@@ -13,7 +13,8 @@
 	var/obj/item/reagent_containers/beaker
 	var/static/list/drip_containers = typecacheof(list(/obj/item/reagent_containers/blood,
 									/obj/item/reagent_containers/food,
-									/obj/item/reagent_containers/glass))
+									/obj/item/reagent_containers/glass,
+									/obj/item/reagent_containers/chem_pack))
 
 /obj/machinery/iv_drip/Initialize(mapload)
 	. = ..()
@@ -157,12 +158,7 @@
 			attached.transfer_blood_to(beaker, amount)
 			update_icon()
 
-/obj/machinery/iv_drip/attack_hand(mob/user)
-	. = ..()
-	if(.)
-		return
-	if(!ishuman(user))
-		return
+/obj/machinery/iv_drip/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	if(attached)
 		visible_message("[attached] is detached from [src]")
 		attached = null
@@ -173,7 +169,11 @@
 	else
 		toggle_mode()
 
-/obj/machinery/iv_drip/verb/eject_beaker()
+/obj/machinery/iv_drip/attack_robot(mob/user)
+	if(Adjacent(user))
+		attack_hand(user)
+
+/obj/machinery/iv_drip/verb/eject_beaker(mob/user)
 	set category = "Object"
 	set name = "Remove IV Container"
 	set src in view(1)
@@ -188,6 +188,8 @@
 		if(usr && Adjacent(usr) && usr.can_hold_items())
 			if(!usr.put_in_hands(beaker))
 				beaker.forceMove(drop_location())
+		if(iscyborg(user))
+			beaker.forceMove(drop_location())
 		beaker = null
 		update_icon()
 

@@ -36,7 +36,7 @@
 	if(A)
 		notify_ghosts("A swarmer shell has been created in [A.name].", 'sound/effects/bin_close.ogg', source = src, action = NOTIFY_ATTACK, flashwindow = FALSE, ignore_dnr_observers = TRUE)
 
-/obj/effect/mob_spawn/swarmer/attack_hand(mob/living/user)
+/obj/effect/mob_spawn/swarmer/on_attack_hand(mob/living/user, act_intent = user.a_intent, unarmed_attack_flags)
 	. = ..()
 	if(.)
 		return
@@ -158,10 +158,11 @@
 	face_atom(A)
 	if(!isturf(loc))
 		return
-	if(next_move > world.time)
+	if(!CheckActionCooldown())
 		return
 	if(!A.Adjacent(src))
 		return
+	DelayNextAction()
 	A.swarmer_act(src)
 
 /atom/proc/swarmer_act(mob/living/simple_animal/hostile/swarmer/S)
@@ -399,13 +400,13 @@
 	return FALSE
 
 /obj/structure/lattice/catwalk/swarmer_act(mob/living/simple_animal/hostile/swarmer/S)
-	. = ..()
 	var/turf/here = get_turf(src)
 	for(var/A in here.contents)
 		var/obj/structure/cable/C = A
 		if(istype(C))
 			to_chat(S, "<span class='warning'>Disrupting the power grid would bring no benefit to us. Aborting.</span>")
 			return FALSE
+	return ..()
 
 /obj/item/deactivated_swarmer/IntegrateAmount()
 	return 50
@@ -486,7 +487,7 @@
 		var/obj/O = target
 		if(O.resistance_flags & INDESTRUCTIBLE)
 			return FALSE
-	for(var/mob/living/L in GetAllContents())
+	for(var/mob/living/L in target.GetAllContents())
 		if(!ispAI(L) && !isbrain(L))
 			to_chat(src, "<span class='warning'>An organism has been detected inside this object. Aborting.</span>")
 			return FALSE
@@ -497,7 +498,7 @@
 	if(resource_gain)
 		resources += resource_gain
 		do_attack_animation(target)
-		changeNext_move(CLICK_CD_MELEE)
+		DelayNextAction(CLICK_CD_MELEE)
 		var/obj/effect/temp_visual/swarmer/integrate/I = new /obj/effect/temp_visual/swarmer/integrate(get_turf(target))
 		I.pixel_x = target.pixel_x
 		I.pixel_y = target.pixel_y
@@ -517,9 +518,8 @@
 /mob/living/simple_animal/hostile/swarmer/proc/DisIntegrate(atom/movable/target)
 	new /obj/effect/temp_visual/swarmer/disintegration(get_turf(target))
 	do_attack_animation(target)
-	changeNext_move(CLICK_CD_MELEE)
+	DelayNextAction(CLICK_CD_MELEE)
 	target.ex_act(EXPLODE_LIGHT)
-
 
 /mob/living/simple_animal/hostile/swarmer/proc/DisperseTarget(mob/living/target)
 	if(target == src)

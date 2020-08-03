@@ -151,7 +151,7 @@
 /turf/open/floor/engine,
 /area/ruin/powered)
 "J" = (
-/obj/item/twohanded/dualsaber/toy,
+/obj/item/dualsaber/toy,
 /turf/open/floor/light/colour_cycle/dancefloor_b,
 /area/ruin/powered)
 "K" = (

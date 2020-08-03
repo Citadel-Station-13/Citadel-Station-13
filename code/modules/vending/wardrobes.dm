@@ -248,6 +248,7 @@
 	vend_reply = "Thank you for using the BarDrobe!"
 	products = list(/obj/item/clothing/head/that = 3,
 					/obj/item/radio/headset/headset_srv = 3,
+					/obj/item/clothing/suit/hooded/wintercoat/bar = 3,
 					/obj/item/clothing/under/suit/sl = 3,
 					/obj/item/clothing/under/rank/civilian/bartender = 3,
 					/obj/item/clothing/under/rank/civilian/bartender/skirt = 2,
@@ -309,7 +310,7 @@
 					/obj/item/cartridge/janitor = 3,
 					/obj/item/clothing/gloves/color/black = 2,
 					/obj/item/clothing/head/soft/purple = 2,
-					/obj/item/twohanded/broom = 2,
+					/obj/item/broom = 2,
 					/obj/item/paint/paint_remover = 2,
 					/obj/item/melee/flyswatter = 2,
 					/obj/item/flashlight = 2,

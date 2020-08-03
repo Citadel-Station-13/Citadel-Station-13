@@ -100,12 +100,12 @@
 	if(stored.mind)
 		stored.mind.transfer_to(shape)
 	stored.forceMove(src)
-	stored.notransform = TRUE
+	stored.mob_transforming = TRUE
 	if(source.convert_damage)
 		var/damage_percent = (stored.maxHealth - stored.health)/stored.maxHealth;
 		var/damapply = damage_percent * shape.maxHealth;
 
-		shape.apply_damage(damapply, source.convert_damage_type, forced = TRUE);
+		shape.apply_damage(damapply, source.convert_damage_type, forced = TRUE, wound_bonus=CANT_WOUND);
 	slink = soullink(/datum/soullink/shapeshift, stored , shape)
 	slink.source = src
 
@@ -148,7 +148,7 @@
 	restoring = TRUE
 	qdel(slink)
 	stored.forceMove(get_turf(src))
-	stored.notransform = FALSE
+	stored.mob_transforming = FALSE
 	if(shape.mind)
 		shape.mind.transfer_to(stored)
 	if(death)
@@ -158,7 +158,7 @@
 		var/damage_percent = (shape.maxHealth - shape.health)/shape.maxHealth;
 		var/damapply = stored.maxHealth * damage_percent
 
-		stored.apply_damage(damapply, source.convert_damage_type, forced = TRUE)
+		stored.apply_damage(damapply, source.convert_damage_type, forced = TRUE, wound_bonus=CANT_WOUND)
 	qdel(shape)
 	qdel(src)
 

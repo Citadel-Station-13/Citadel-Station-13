@@ -37,7 +37,7 @@
 /obj/machinery/hypnochair/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.notcontained_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
-		ui = new(user, src, ui_key, "hypnochair", name, ui_x, ui_y, master_ui, state)
+		ui = new(user, src, ui_key, "HypnoChair", name, ui_x, ui_y, master_ui, state)
 		ui.open()
 
 /obj/machinery/hypnochair/ui_data()
@@ -178,8 +178,6 @@
 			icon_state += "_occupied"
 
 /obj/machinery/hypnochair/container_resist(mob/living/user)
-	user.changeNext_move(CLICK_CD_BREAKOUT)
-	user.last_special = world.time + CLICK_CD_BREAKOUT
 	user.visible_message("<span class='notice'>You see [user] kicking against the door of [src]!</span>", \
 		"<span class='notice'>You lean on the back of [src] and start pushing the door open... (this will take about [DisplayTimeText(600)].)</span>", \
 		"<span class='hear'>You hear a metallic creaking from [src].</span>")

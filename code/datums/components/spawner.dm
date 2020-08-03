@@ -8,6 +8,8 @@
 	var/list/faction = list("mining")
 
 /datum/component/spawner/Initialize(_mob_types, _spawn_time, _faction, _spawn_text, _max_mobs)
+	if(!isatom(parent))
+		return COMPONENT_INCOMPATIBLE
 	if(_spawn_time)
 		spawn_time=_spawn_time
 	if(_mob_types)
@@ -19,19 +21,24 @@
 	if(_max_mobs)
 		max_mobs=_max_mobs
 
-	RegisterSignal(parent, list(COMSIG_PARENT_QDELETING), .proc/stop_spawning)
+	RegisterSignal(parent, COMSIG_PARENT_QDELETING, .proc/stop_spawning)
+	RegisterSignal(parent, COMSIG_OBJ_ATTACK_GENERIC, .proc/on_attack_generic)
 	START_PROCESSING(SSprocessing, src)
 
 /datum/component/spawner/process()
 	try_spawn_mob()
 
-
-/datum/component/spawner/proc/stop_spawning(force, hint)
+/datum/component/spawner/proc/stop_spawning(datum/source, force, hint)
 	STOP_PROCESSING(SSprocessing, src)
 	for(var/mob/living/simple_animal/L in spawned_mobs)
 		if(L.nest == src)
 			L.nest = null
 	spawned_mobs = null
+
+// Stopping clientless simple mobs' from indiscriminately bashing their own spawners due DestroySurroundings() et similars.
+/datum/component/spawner/proc/on_attack_generic(datum/source, mob/user, damage_amount, damage_type, damage_flag, sound_effect, armor_penetration)
+	if(!user.client && ((user.faction & faction) || (user in spawned_mobs)))
+		return COMPONENT_STOP_GENERIC_ATTACK
 
 /datum/component/spawner/proc/try_spawn_mob()
 	var/atom/P = parent

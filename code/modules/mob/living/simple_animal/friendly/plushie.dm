@@ -72,8 +72,8 @@
 		qdel(src)
 
 //low regen over time
-/mob/living/simple_animal/pet/plushie/Life()
-	if(stat)
+/mob/living/simple_animal/pet/plushie/BiologicalLife(seconds, times_fired)
+	if(!(. = ..()))
 		return
 	if(health < maxHealth)
 		heal_overall_damage(5) //Decent life regen, they're not able to hurt anyone so this shouldn't be an issue (butterbear for reference has 10 regen)

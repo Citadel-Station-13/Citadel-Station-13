@@ -42,8 +42,7 @@
 	mode = !mode
 	update_icon()
 
-//ATTACK HAND IGNORING PARENT RETURN VALUE
-/obj/item/reagent_containers/syringe/attack_hand()
+/obj/item/reagent_containers/syringe/on_attack_hand()
 	. = ..()
 	update_icon()
 
@@ -53,8 +52,11 @@
 /obj/item/reagent_containers/syringe/attackby(obj/item/I, mob/user, params)
 	return
 
-/obj/item/reagent_containers/syringe/afterattack(atom/target, mob/user , proximity)
+/obj/item/reagent_containers/syringe/afterattack(atom/target, mob/user, proximity)
 	. = ..()
+	INVOKE_ASYNC(src, .proc/attempt_inject, target, user, proximity)
+
+/obj/item/reagent_containers/syringe/proc/attempt_inject(atom/target, mob/user, proximity)
 	if(busy)
 		return
 	if(!proximity)

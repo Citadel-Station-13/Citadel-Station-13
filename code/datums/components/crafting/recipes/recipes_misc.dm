@@ -92,7 +92,7 @@
 	time = 150
 	subcategory = CAT_MISCELLANEOUS
 	category = CAT_MISC
-	always_availible = FALSE	// Disabled til learned
+	always_availible = FALSE	// Disabled until learned
 
 
 /datum/crafting_recipe/bloodsucker/candelabrum
@@ -244,7 +244,7 @@
 
 /datum/crafting_recipe/rcl
 	name = "Makeshift Rapid Cable Layer"
-	result = /obj/item/twohanded/rcl/ghetto
+	result = /obj/item/rcl/ghetto
 	time = 40
 	tools = list(TOOL_WELDER, TOOL_SCREWDRIVER, TOOL_WRENCH)
 	reqs = list(/obj/item/stack/sheet/metal = 15)
@@ -322,6 +322,13 @@
 	name = "Non-Euplastic Blade"
 	reqs = list(/obj/item/light/tube = 1, /obj/item/stack/cable_coil = 1, /obj/item/stack/sheet/plastic = 4)
 	result = /obj/item/toy/sword/cx
+	subcategory = CAT_MISCELLANEOUS
+	category = CAT_MISC
+	
+/datum/crafting_recipe/catgirlplushie
+	name = "Catgirl Plushie"
+	reqs = list(/obj/item/toy/plush/hairball = 3)
+	result = /obj/item/toy/plush/catgirl
 	subcategory = CAT_MISCELLANEOUS
 	category = CAT_MISC
 

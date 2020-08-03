@@ -125,6 +125,15 @@
 	tastes = list("tomato" = 1, "mint" = 1)
 	foodtype = VEGETABLES
 
+/obj/item/reagent_containers/food/snacks/soup/bearchili
+	name = "bear chili"
+	desc = "Sensationally seasoned bear meat diced up with some peppers."
+	icon_state = "bearchili"
+	bonus_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/nutriment/vitamin = 2, /datum/reagent/consumable/capsaicin = 1)
+	list_reagents = list(/datum/reagent/consumable/nutriment = 10, /datum/reagent/medicine/morphine = 5, /datum/reagent/consumable/nutriment/vitamin = 2, /datum/reagent/consumable/capsaicin = 5)
+	tastes = list("the outdoors" = 1, "hot peppers" = 1)
+	foodtype = VEGETABLES | MEAT
+
 /obj/item/reagent_containers/food/snacks/soup/monkeysdelight
 	name = "monkey's delight"
 	desc = "A delicious soup with dumplings and hunks of monkey meat simmered to perfection, in a broth that tastes faintly of bananas."
@@ -252,6 +261,16 @@
 	tastes = list("mushroom" = 1, "electrons" = 4, "shockingly good" = 1)
 	filling_color = "#CC2B52"
 	foodtype = VEGETABLES | TOXIC
+
+/obj/item/reagent_containers/food/snacks/soup/spiral_soup
+	name = "spiral soup"
+	desc = "The swirling of this soup is both frightening, and enticing."
+	icon_state = "spiral_soup"
+	list_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/liquidelectricity = 5, /datum/reagent/cryptobiolin = 10, /datum/reagent/toxin/rotatium = 10)
+	bonus_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/nutriment/vitamin = 1, /datum/reagent/cryptobiolin = 15, /datum/reagent/toxin/rotatium = 15, /datum/reagent/consumable/liquidelectricity = 2)
+	tastes = list("the floor" = 1, "the ceiling" = 1, "regret" = 2)
+	filling_color = "#4476e2"
+	foodtype = GROSS | TOXIC | VEGETABLES
 
 /obj/item/reagent_containers/food/snacks/soup/bungocurry
 	name = "bungo curry"

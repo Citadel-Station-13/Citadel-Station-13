@@ -146,10 +146,11 @@
 	if(possible_chassis[chassis])
 		AddElement(/datum/element/mob_holder, chassis, 'icons/mob/pai_item_head.dmi', 'icons/mob/pai_item_rh.dmi', 'icons/mob/pai_item_lh.dmi', ITEM_SLOT_HEAD)
 
-/mob/living/silicon/pai/Life()
+/mob/living/silicon/pai/BiologicalLife(seconds, times_fired)
+	if(!(. = ..()))
+		return
 	if(hacking)
 		process_hack()
-	return ..()
 
 /mob/living/silicon/pai/proc/process_hack()
 
@@ -282,17 +283,19 @@
 	. = ..()
 	. += "A personal AI in holochassis mode. Its master ID string seems to be [master]."
 
-/mob/living/silicon/pai/Life()
-	if(stat == DEAD)
-		return
+/mob/living/silicon/pai/PhysicalLife()
+	. = ..()
 	if(cable)
 		if(get_dist(src, cable) > 1)
 			var/turf/T = get_turf(src.loc)
 			T.visible_message("<span class='warning'>[src.cable] rapidly retracts back into its spool.</span>", "<span class='italics'>You hear a click and the sound of wire spooling rapidly.</span>")
 			qdel(src.cable)
 			cable = null
+
+/mob/living/silicon/pai/BiologicalLife()
+	if(!(. = ..()))
+		return
 	silent = max(silent - 1, 0)
-	. = ..()
 
 /mob/living/silicon/pai/updatehealth()
 	if(status_flags & GODMODE)

@@ -118,7 +118,7 @@
 				return
 
 			if(istype(W, /obj/item/stack/cable_coil))
-				if(W.use_tool(src, user, 0, 1, max_level = JOB_SKILL_TRAINED))
+				if(W.use_tool(src, user, 0, 1, skill_gain_mult = TRIVIAL_USE_TOOL_MULT))
 					icon_state = "[fixture_type]-construct-stage2"
 					stage = 2
 					user.visible_message("[user.name] adds wires to [src].", \
@@ -595,11 +595,9 @@
 // attack with hand - remove tube/bulb
 // if hands aren't protected and the light is on, burn the player
 
-/obj/machinery/light/attack_hand(mob/living/carbon/human/user)
+/obj/machinery/light/on_attack_hand(mob/living/carbon/human/user)
 	. = ..()
-	if(.)
-		return
-	user.changeNext_move(CLICK_CD_MELEE)
+	user.DelayNextAction(CLICK_CD_MELEE)
 	add_fingerprint(user)
 
 	if(status == LIGHT_EMPTY)
@@ -812,11 +810,11 @@
 	return
 
 /obj/item/light/attack(mob/living/M, mob/living/user, def_zone)
-	..()
+	. = ..()
 	shatter()
 
 /obj/item/light/attack_obj(obj/O, mob/living/user)
-	..()
+	. = ..()
 	shatter()
 
 /obj/item/light/proc/shatter()

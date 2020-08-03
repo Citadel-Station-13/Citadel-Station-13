@@ -92,6 +92,8 @@ Class Procs:
 	pressure_resistance = 15
 	max_integrity = 200
 	layer = BELOW_OBJ_LAYER //keeps shit coming out of the machine from ending up underneath it.
+	flags_ricochet = RICOCHET_HARD
+	ricochet_chance_mod = 0.3
 
 	anchored = TRUE
 	interaction_flags_atom = INTERACT_ATOM_ATTACK_HAND | INTERACT_ATOM_UI_INTERACT
@@ -119,7 +121,7 @@ Class Procs:
 	var/ui_style // ID of custom TGUI style (optional)
 	var/ui_x
 	var/ui_y
-
+	var/init_process = TRUE //Stop processing from starting on init
 	var/interaction_flags_machine = INTERACT_MACHINE_WIRES_IF_OPEN | INTERACT_MACHINE_ALLOW_SILICON | INTERACT_MACHINE_OPEN_SILICON | INTERACT_MACHINE_SET_MACHINE
 
 	var/fair_market_price = 69
@@ -136,7 +138,7 @@ Class Procs:
 		circuit = new circuit
 		circuit.apply_default_parts(src)
 
-	if(!speed_process)
+	if(!speed_process && init_process)
 		START_PROCESSING(SSmachines, src)
 	else
 		START_PROCESSING(SSfastprocess, src)
@@ -311,7 +313,7 @@ Class Procs:
 	if(user.a_intent != INTENT_HARM)
 		return attack_hand(user)
 	else
-		user.changeNext_move(CLICK_CD_MELEE)
+		user.DelayNextAction(CLICK_CD_MELEE)
 		user.do_attack_animation(src, ATTACK_EFFECT_PUNCH)
 		user.visible_message("<span class='danger'>[user.name] smashes against \the [src.name] with its paws.</span>", null, null, COMBAT_MESSAGE_RANGE)
 		take_damage(4, BRUTE, "melee", 1)

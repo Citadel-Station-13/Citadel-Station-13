@@ -62,6 +62,7 @@
 ///Store the thrownthing datum for later use
 /datum/component/tackler/proc/registerTackle(mob/living/carbon/user, datum/thrownthing/TT)
 	tackle = TT
+	tackle.thrower = user
 
 ///See if we can tackle or not. If we can, leap!
 /datum/component/tackler/proc/checkTackle(mob/living/carbon/user, atom/A, params)
@@ -206,7 +207,7 @@
 			user.set_resting(FALSE, TRUE, FALSE)
 			user.forceMove(get_turf(target))
 			target.adjustStaminaLoss(65)
-			target.Paralyze(10) 
+			target.Paralyze(10)
 			target.DefaultCombatKnockdown(20)
 			if(ishuman(target) && iscarbon(user))
 				target.grabbedby(user)
@@ -415,10 +416,10 @@
 		for(var/i = 0, i < speed, i++)
 			var/obj/item/shard/shard = new /obj/item/shard(get_turf(user))
 			//shard.embedding = list(embed_chance = 100, ignore_throwspeed_threshold = TRUE, impact_pain_mult=3, pain_chance=5)
-			//shard.AddElement(/datum/element/embed, shard.embedding)
+			shard.updateEmbedding()
 			user.hitby(shard, skipcatch = TRUE, hitpush = FALSE)
-			//shard.embedding = list()
-			//shard.AddElement(/datum/element/embed, shard.embedding)
+			shard.embedding = list()
+			shard.updateEmbedding()
 		W.obj_destruction()
 		user.adjustStaminaLoss(10 * speed)
 		user.DefaultCombatKnockdown(40)

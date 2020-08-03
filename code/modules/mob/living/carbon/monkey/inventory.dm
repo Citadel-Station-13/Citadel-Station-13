@@ -1,4 +1,9 @@
-/mob/living/carbon/monkey/can_equip(obj/item/I, slot, disable_warning = FALSE, bypass_equip_delay_self = FALSE)
+/mob/living/carbon/monkey/can_equip(obj/item/I, slot, disable_warning = FALSE, bypass_equip_delay_self = FALSE, clothing_check = FALSE, list/return_warning)
+	if(clothing_check && (slot in check_obscured_slots()))
+		if(return_warning)
+			return_warning[1] = "<span class='warning'>You are unable to equip that with your current garments in the way!</span>"
+		return FALSE
+
 	switch(slot)
 		if(SLOT_HANDS)
 			if(get_empty_held_indexes())

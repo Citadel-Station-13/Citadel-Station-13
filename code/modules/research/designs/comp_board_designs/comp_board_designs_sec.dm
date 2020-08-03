@@ -10,6 +10,14 @@
 	category = list("Computer Boards")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
 
+/datum/design/board/shuttleseccamera
+	name = "Computer Design (Shuttle-Linked Security Camera)"
+	desc = "Same as a regular security camera console, but when linked to a shuttle, will specifically access cameras on that shuttle."
+	id = "shuttleseccamera"
+	build_path = /obj/item/circuitboard/computer/security/shuttle
+	category = list("Computer Boards")
+	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
+
 /datum/design/board/secdata
 	name = "Computer Design (Security Records Console)"
 	desc = "Allows for the construction of circuit boards used to build a security records console."

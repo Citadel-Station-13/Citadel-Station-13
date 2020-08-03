@@ -273,8 +273,8 @@
 	icon_state = "tac"
 /obj/structure/closet/secure_closet/lethalshots/PopulateContents()
 	..()
-	new /obj/item/twohanded/electrostaff(src)
-	new /obj/item/twohanded/electrostaff(src)
+	new /obj/item/electrostaff(src)
+	new /obj/item/electrostaff(src)
 	for(var/i in 1 to 3)
 		new /obj/item/storage/box/lethalshot(src)
 

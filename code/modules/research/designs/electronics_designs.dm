@@ -166,5 +166,3 @@
 	desc = "This disk will add the ability to remotely feed slimes potions via the Xenobiology console, and lift the restrictions on the number of slimes that can be stored inside the Xenobiology console. This includes the contents of the basic slime upgrade disk."
 	id = "xenobio_slimeadv"
 	build_path = /obj/item/disk/xenobio_console_upgrade/slimeadv
-
-

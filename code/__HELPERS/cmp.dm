@@ -120,3 +120,16 @@ GLOBAL_VAR_INIT(cmp_field, "name")
 
 /proc/cmp_item_block_priority_asc(obj/item/A, obj/item/B)
 	return A.block_priority - B.block_priority
+
+/proc/cmp_skill_categories(datum/skill/A, datum/skill/B)
+	if(A.ui_category == B.ui_category)
+		return sorttext(A.name, B.name)
+	return sorttext(A.ui_category, B.ui_category)
+
+/proc/cmp_chemical_reactions_default(datum/chemical_reaction/A, datum/chemical_reaction/B)
+	if(A.priority != B.priority)
+		return B.priority - A.priority
+	else if(A.is_cold_recipe)
+		return A.required_temp - B.required_temp		//return coldest
+	else
+		return B.required_temp - A.required_temp		//return hottest

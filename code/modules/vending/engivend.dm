@@ -15,7 +15,6 @@
 					/obj/item/electronics/airalarm = 10,
 					/obj/item/electronics/firealarm = 10,
 					/obj/item/electronics/firelock = 10,
-					/obj/item/airlock_painter/decal = 5,
 					/obj/item/rcd_ammo = 3
 					)
 	contraband = list(/obj/item/stock_parts/cell/potato = 3,
@@ -25,7 +24,8 @@
 					)
 	premium = list(/obj/item/storage/belt/utility = 3,
 					/obj/item/storage/box/smart_metal_foam = 3,
-					/obj/item/rcd_ammo/large = 5
+					/obj/item/rcd_ammo/large = 5,
+					/obj/item/storage/bag/material = 3
 					)
 	armor = list("melee" = 100, "bullet" = 100, "laser" = 100, "energy" = 100, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 50)
 	refill_canister = /obj/item/vending_refill/engivend

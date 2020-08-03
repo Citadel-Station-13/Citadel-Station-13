@@ -22,11 +22,20 @@
 	var/merge_type = null // This path and its children should merge with this stack, defaults to src.type
 	var/full_w_class = WEIGHT_CLASS_NORMAL //The weight class the stack should have at amount > 2/3rds max_amount
 	var/novariants = TRUE //Determines whether the item should update it's sprites based on amount.
-	var/mats_per_stack = 0
+	var/list/mats_per_unit //list that tells you how much is in a single unit.
 	///Datum material type that this stack is made of
 	var/material_type
+	max_integrity = 100
 	//NOTE: When adding grind_results, the amounts should be for an INDIVIDUAL ITEM - these amounts will be multiplied by the stack size in on_grind()
 	var/obj/structure/table/tableVariant // we tables now (stores table variant to be built from this stack)
+
+		// The following are all for medical treatment, they're here instead of /stack/medical because sticky tape can be used as a makeshift bandage or splint
+	/// If set and this used as a splint for a broken bone wound, this is used as a multiplier for applicable slowdowns (lower = better) (also for speeding up burn recoveries)
+	var/splint_factor
+	/// How much blood flow this stack can absorb if used as a bandage on a cut wound, note that absorption is how much we lower the flow rate, not the raw amount of blood we suck up
+	var/absorption_capacity
+	/// How quickly we lower the blood flow on a cut wound we're bandaging. Expected lifetime of this bandage in ticks is thus absorption_capacity/absorption_rate, or until the cut heals, whichever comes first
+	var/absorption_rate
 
 /obj/item/stack/on_grind()
 	for(var/i in 1 to grind_results.len) //This should only call if it's ground, so no need to check if grind_results exists
@@ -47,8 +56,11 @@
 	if(!merge_type)
 		merge_type = type
 	if(custom_materials && custom_materials.len)
+		mats_per_unit = list()
+		var/in_process_mat_list = custom_materials.Copy()
 		for(var/i in custom_materials)
-			custom_materials[SSmaterials.GetMaterialRef(i)] = mats_per_stack * amount
+			mats_per_unit[SSmaterials.GetMaterialRef(i)] = in_process_mat_list[i]
+			custom_materials[i] *= amount
 	. = ..()
 	if(merge)
 		for(var/obj/item/stack/S in loc)
@@ -60,7 +72,7 @@
 		var/datum/material/M = SSmaterials.GetMaterialRef(material_type) //First/main material
 		for(var/i in M.categories)
 			switch(i)
-				if(MAT_CATEGORY_RIGID)
+				if(MAT_CATEGORY_BASE_RECIPES)
 					var/list/temp = SSmaterials.rigid_stack_recipes.Copy()
 					recipes += temp
 	update_weight()
@@ -221,7 +233,7 @@
 				return
 			T.PlaceOnTop(R.result_type, flags = CHANGETURF_INHERIT_AIR)
 		else
-			O = new R.result_type(usr.drop_location())
+			O = new R.result_type(get_turf(usr))
 		if(O)
 			O.setDir(usr.dir)
 			log_craft("[O] crafted by [usr] at [loc_name(O.loc)]")
@@ -315,10 +327,13 @@
 	if (amount < used)
 		return FALSE
 	amount -= used
-	if(check)
-		zero_amount()
-	for(var/i in custom_materials)
-		custom_materials[i] = amount * mats_per_stack
+	if(check && zero_amount())
+		return TRUE
+	if(length(mats_per_unit))
+		var/temp_materials = custom_materials.Copy()
+		for(var/i in mats_per_unit)
+			temp_materials[i] = mats_per_unit[i] * src.amount
+		set_custom_materials(temp_materials)
 	update_icon()
 	update_weight()
 	return TRUE
@@ -350,10 +365,11 @@
 		source.add_charge(amount * cost)
 	else
 		src.amount += amount
-	if(custom_materials && custom_materials.len)
-		for(var/i in custom_materials)
-			custom_materials[SSmaterials.GetMaterialRef(i)] = MINERAL_MATERIAL_AMOUNT * src.amount
-		set_custom_materials() //Refresh
+	if(length(mats_per_unit))
+		var/temp_materials = custom_materials.Copy()
+		for(var/i in mats_per_unit)
+			temp_materials[i] = mats_per_unit[i] * src.amount
+		set_custom_materials(temp_materials)
 	update_icon()
 	update_weight()
 
@@ -382,8 +398,7 @@
 		merge(AM)
 	. = ..()
 
-//ATTACK HAND IGNORING PARENT RETURN VALUE
-/obj/item/stack/attack_hand(mob/user)
+/obj/item/stack/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	if(user.get_inactive_held_item() == src)
 		if(zero_amount())
 			return

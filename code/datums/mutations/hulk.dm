@@ -19,9 +19,13 @@
 	SEND_SIGNAL(owner, COMSIG_ADD_MOOD_EVENT, "hulk", /datum/mood_event/hulk)
 	RegisterSignal(owner, COMSIG_MOB_SAY, .proc/handle_speech)
 
-/datum/mutation/human/hulk/on_attack_hand(atom/target, proximity)
-	if(proximity) //no telekinetic hulk attack
-		return target.attack_hulk(owner)
+/datum/mutation/human/hulk/on_attack_hand(atom/target, proximity, act_intent, unarmed_attack_flags)
+	if(proximity && (act_intent == INTENT_HARM)) //no telekinetic hulk attack
+		if(!owner.CheckActionCooldown(CLICK_CD_MELEE))
+			return INTERRUPT_UNARMED_ATTACK | NO_AUTO_CLICKDELAY_HANDLING
+		owner.DelayNextAction()
+		target.attack_hulk(owner)
+		return INTERRUPT_UNARMED_ATTACK | NO_AUTO_CLICKDELAY_HANDLING
 
 /datum/mutation/human/hulk/on_life()
 	if(owner.health < 0)

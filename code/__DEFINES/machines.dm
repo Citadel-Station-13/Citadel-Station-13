@@ -115,3 +115,7 @@
 //these flags are used to tell the DNA modifier if a plant gene cannot be extracted or modified.
 #define PLANT_GENE_REMOVABLE	(1<<0)
 #define PLANT_GENE_EXTRACTABLE	(1<<1)
+
+#define CLONEPOD_GET_MIND		1
+#define CLONEPOD_POLL_MIND		2
+#define CLONEPOD_NO_MIND		3

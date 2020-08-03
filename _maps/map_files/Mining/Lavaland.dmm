@@ -192,14 +192,14 @@
 /area/ruin/unpowered/ash_walkers)
 "ft" = (
 /obj/structure/stone_tile/block,
-/obj/item/twohanded/bonespear,
+/obj/item/spear/bonespear,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/ruin/unpowered/ash_walkers)
 "fN" = (
 /obj/structure/stone_tile{
 	dir = 4
 	},
-/obj/item/twohanded/bonespear,
+/obj/item/spear/bonespear,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "fQ" = (
@@ -529,7 +529,7 @@
 	},
 /obj/structure/table/wood,
 /obj/item/clothing/head/helmet/roman/legionnaire,
-/obj/item/twohanded/bonespear,
+/obj/item/spear/bonespear,
 /turf/open/indestructible/boss,
 /area/ruin/unpowered/ash_walkers)
 "iK" = (
@@ -1829,8 +1829,8 @@
 "An" = (
 /obj/structure/stone_tile/slab,
 /obj/structure/table/wood,
-/obj/item/twohanded/bonespear,
-/obj/item/twohanded/bonespear,
+/obj/item/spear/bonespear,
+/obj/item/spear/bonespear,
 /turf/open/indestructible/boss,
 /area/ruin/unpowered/ash_walkers)
 "AH" = (
@@ -1840,7 +1840,7 @@
 /obj/structure/stone_tile/cracked{
 	dir = 8
 	},
-/obj/item/twohanded/bonespear,
+/obj/item/spear/bonespear,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/ruin/unpowered/ash_walkers)
 "AU" = (
@@ -2069,7 +2069,7 @@
 	},
 /obj/structure/table/wood,
 /obj/item/scythe,
-/obj/item/twohanded/bonespear,
+/obj/item/spear/bonespear,
 /turf/open/indestructible/boss,
 /area/ruin/unpowered/ash_walkers)
 "HX" = (
@@ -2198,7 +2198,7 @@
 	},
 /obj/structure/table/wood,
 /obj/item/storage/belt,
-/obj/item/twohanded/bonespear,
+/obj/item/spear/bonespear,
 /turf/open/indestructible/boss,
 /area/ruin/unpowered/ash_walkers)
 "Qk" = (
@@ -2425,7 +2425,7 @@
 /obj/structure/stone_tile/cracked{
 	dir = 1
 	},
-/obj/item/twohanded/bonespear,
+/obj/item/spear/bonespear,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/ruin/unpowered/ash_walkers)
 "WT" = (

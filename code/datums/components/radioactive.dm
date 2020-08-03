@@ -69,8 +69,9 @@
 			out += "[out ? " and it " : "[master] "]seems to be glowing a bit."
 		if(RAD_AMOUNT_HIGH to INFINITY) //At this level the object can contaminate other objects
 			out += "[out ? " and it " : "[master] "]hurts to look at."
-		else
-			out += "."
+	if(!LAZYLEN(out))
+		return
+	out += "."
 	examine_list += out.Join()
 
 /datum/component/radioactive/proc/rad_attack(datum/source, atom/movable/target, mob/living/user)

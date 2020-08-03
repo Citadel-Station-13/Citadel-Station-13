@@ -7,19 +7,17 @@
 	var/SStun = 0 // stun variable
 
 
-/mob/living/simple_animal/slime/Life()
-	set invisibility = 0
-	if (notransform)
+/mob/living/simple_animal/slime/BiologicalLife(seconds, times_fired)
+	if(!(. = ..()))
 		return
-	if(..())
-		if(buckled)
-			handle_feeding()
-		if(!stat) // Slimes in stasis don't lose nutrition, don't change mood and don't respond to speech
-			handle_nutrition()
-			handle_targets()
-			if (!ckey)
-				handle_mood()
-				handle_speech()
+	if(buckled)
+		handle_feeding()
+	if(!stat) // Slimes in stasis don't lose nutrition, don't change mood and don't respond to speech
+		handle_nutrition()
+		handle_targets()
+		if (!ckey)
+			handle_mood()
+			handle_speech()
 
 // Unlike most of the simple animals, slimes support UNCONSCIOUS
 /mob/living/simple_animal/slime/update_stat()
@@ -130,9 +128,7 @@
 		Tempstun = 0
 
 	if(stat != DEAD)
-		var/bz_percentage =0
-		if(environment.gases[/datum/gas/bz])
-			bz_percentage = environment.gases[/datum/gas/bz] / environment.total_moles()
+		var/bz_percentage = environment.total_moles() ? (environment.get_moles(/datum/gas/bz) / environment.total_moles()) : 0
 		var/stasis = (bz_percentage >= 0.05 && bodytemperature < (T0C + 100)) || force_stasis
 
 		if(stat == CONSCIOUS && stasis)
