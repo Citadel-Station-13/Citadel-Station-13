@@ -429,7 +429,6 @@
 	var/list/possible_rites = list()
 	for(var/datum/clockwork_rite/R in GLOB.all_clockwork_rites)
 		possible_rites[R] = R
-		message_admins("[R]")
 	var/input_key = input(user, "Choose a rite", "Choosing a rite") as null|anything in possible_rites
 	if(!input_key)
 		return
