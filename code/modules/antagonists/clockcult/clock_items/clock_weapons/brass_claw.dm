@@ -24,6 +24,7 @@
 	var/mob/living/last_attacked
 	var/combo = 0
 	var/damage_per_combo = 2
+	var/maximum_combo_damage = 18 //33 damage on max stacks. Usually the target will already be dead by then but if they somehow aren't, better to have this capped
 
 /obj/item/clockwork/brass_claw/Initialize()
 	. = ..()
@@ -31,7 +32,7 @@
 
 /obj/item/clockwork/brass_claw/examine(mob/user)
 	if(is_servant_of_ratvar(user))
-		clockwork_desc += "\n<span class='brass'>It has </span><span class='inathneq_small'><b>[combo]</span></b><span class='brass'> combo stacks built up against the current target, causing </span><span class='inathneq_small'><b>[combo * damage_per_combo]</span></b><span class='brass'> bonus damage.</span>"
+		clockwork_desc += "\n<span class='brass'>It has </span><span class='inathneq_small'><b>[combo]</span></b><span class='brass'> combo stacks built up against the current target, causing </span><span class='inathneq_small'><b>[min(maximum_combo_damage, combo * damage_per_combo)]</span></b><span class='brass'> bonus damage.</span>"
 	. = ..()
 	clockwork_desc = initial(clockwork_desc)
 
@@ -47,4 +48,4 @@
 			combo++
 		else
 			combo += 3
-		target.adjustBruteLoss(combo * damage_per_combo)
+		target.adjustBruteLoss(min(maximum_combo_damage, combo * damage_per_combo))
