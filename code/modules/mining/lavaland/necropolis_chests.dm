@@ -134,7 +134,7 @@
 			else
 				new /obj/item/disk/design_disk/modkit_disc/rapid_repeater(src)
 
-/obj/structure/closet/crate/necropolis/tendril/all
+/obj/structure/closet/crate/necropolis/tendril/all/PopulateContents()
 	var/loot = rand(1,31)
 	switch(loot)
 		if(1)
