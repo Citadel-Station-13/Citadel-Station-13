@@ -154,6 +154,7 @@
 	desc = "An eyepatch used to enhance one's aim with guns."
 	icon_state = "syndicatepatch"
 	item_state = "syndicatepatch"
+	resistance_flags = ACID_PROOF
 
 /obj/item/clothing/glasses/eyepatch/syndicate/equipped(mob/living/carbon/human/user, slot)
 	. = ..()
