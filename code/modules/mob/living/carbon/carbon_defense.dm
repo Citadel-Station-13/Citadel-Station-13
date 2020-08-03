@@ -295,12 +295,12 @@
 						target_message = "<span class='notice'>[M] gives you a pat on the head to make you feel better!</span>")
 			SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "headpat", /datum/mood_event/headpat)
 			friendly_check = TRUE
-			if(S?.can_wag_tail(src) && !dna.species.is_wagging_tail())
-				var/static/list/many_tails = list("tail_human", "tail_lizard", "mam_tail")
-				for(var/T in many_tails)
-					if(S.mutant_bodyparts[T] && dna.features[T] != "None")
-						emote("wag")
-						break
+			if(!(client?.prefs.cit_toggles & NO_AUTO_WAG))
+				if(S?.can_wag_tail(src) && !dna.species.is_wagging_tail())
+					var/static/list/many_tails = list("tail_human", "tail_lizard", "mam_tail")
+					for(var/T in many_tails)
+						if(S.mutant_bodyparts[T] && dna.features[T] != "None")
+							emote("wag")
 
 		else if(check_zone(M.zone_selected) == BODY_ZONE_R_ARM || check_zone(M.zone_selected) == BODY_ZONE_L_ARM)
 			M.visible_message( \
