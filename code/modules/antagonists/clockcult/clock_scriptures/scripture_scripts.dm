@@ -81,6 +81,23 @@
 		return /obj/effect/clockwork/sigil/vitality/neutered
 	return ..()
 
+//Sigil of Rites: Creates a sigil that allows to perform certain rites on it. More information on these can be found in clock_rites.dm, they usually require power, materials and sometimes a target.
+/datum/clockwork_scripture/create_object/sigil_of_rites
+	descname = "Sigil, Access to rites"
+	name = "Sigil of Rites"
+	desc = "Places a sigil that, when itneracted with, will allow for a variety of rites to be performed on the sigil. These usually require power cells, clockwork power, and some other components."
+	invocations = list("Engine, allow us..", ".. to be blessed with rites.")
+	channel_time = 80
+	power_cost = 1400
+	whispered = TRUE
+	object_path = /obj/effect/clockwork/sigil/rite
+	creator_message = "<span class='brass'>A sigil of Rites appears beneath you. It will allow you to perform certain rites, given sufficient materials and power.</span>"
+	usage_tip = "It may be useful to coordinate to acquire needed materials quickly."
+	tier = SCRIPTURE_SCRIPT
+	one_per_tile = TRUE
+	primary_component = HIEROPHANT_ANSIBLE
+	sort_priority = 4
+
 //Judicial Visor: Creates a judicial visor, which can smite an area.
 /datum/clockwork_scripture/create_object/judicial_visor
 	descname = "Delayed Area Knockdown Glasses"
@@ -96,7 +113,7 @@
 	tier = SCRIPTURE_SCRIPT
 	space_allowed = TRUE
 	primary_component = BELLIGERENT_EYE
-	sort_priority = 4
+	sort_priority = 5
 	quickbind = TRUE
 	quickbind_desc = "Creates a Judicial Visor, which can smite an area, applying Belligerent and briefly stunning."
 
@@ -115,7 +132,7 @@
 	tier = SCRIPTURE_SCRIPT
 	space_allowed = TRUE
 	primary_component = VANGUARD_COGWHEEL
-	sort_priority = 6
+	sort_priority = 7
 	quickbind = TRUE
 	quickbind_desc = "Creates a Ratvarian shield, which can absorb energy from attacks for use in powerful bashes."
 
@@ -131,7 +148,7 @@
 	usage_tip = "Throwing the spear at a mob will do massive damage and knock them down, but break the spear. You will need to wait for 30 seconds before resummoning it."
 	tier = SCRIPTURE_SCRIPT
 	primary_component = VANGUARD_COGWHEEL
-	sort_priority = 7
+	sort_priority = 8
 	important = TRUE
 	quickbind = TRUE
 	quickbind_desc = "Permanently binds clockwork armor and a Ratvarian spear to you."
@@ -229,7 +246,7 @@
 	usage_tip = "This is a very effective way to rapidly reinforce a base after an attack."
 	tier = SCRIPTURE_SCRIPT
 	primary_component = VANGUARD_COGWHEEL
-	sort_priority = 8
+	sort_priority = 9
 	quickbind = TRUE
 	quickbind_desc = "Repairs nearby structures and constructs. Servants wearing clockwork armor will also be healed.<br><b>Maximum 10 chants.</b>"
 	var/heal_attempts = 4
@@ -342,7 +359,7 @@
 	usage_tip = "Though it requires you to stand still, this scripture can do massive damage."
 	tier = SCRIPTURE_SCRIPT
 	primary_component = BELLIGERENT_EYE
-	sort_priority = 5
+	sort_priority = 6
 	quickbind = TRUE
 	quickbind_desc = "Allows you to fire energy rays at target locations.<br><b>Maximum 5 chants.</b>"
 	var/static/list/nzcrentr_insults = list("You're not very good at aiming.", "You hunt badly.", "What a waste of energy.", "Almost funny to watch.",
@@ -391,7 +408,7 @@
 	usage_tip = "It may be useful to end channelling early if the burning becomes too much to handle.."
 	tier = SCRIPTURE_SCRIPT
 	primary_component = GEIS_CAPACITOR
-	sort_priority = 10
+	sort_priority = 11
 	quickbind = TRUE
 	quickbind_desc = "Quickly drains power in an area around the invoker, causing burns proportional to the amount of energy drained.<br><b>Maximum of 20 chants.</b>"
 

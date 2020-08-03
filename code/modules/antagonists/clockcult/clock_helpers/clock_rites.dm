@@ -156,4 +156,43 @@
 	O.Insert(target)
 	new /obj/effect/temp_visual/ratvar/sigil/transgression(T)
 
+/datum/clockwork_rite/treat_wounds
+	name = "Rite of Woundmending"
+	desc = "This rite is used to heal wounds of the servant on the rune. It causes toxins damage proportional to the amount of wounds healed. This can be lethal if performed on an critically injured target."
+	required_ingredients = list(/obj/item/stock_parts/cell, /obj/item/healthanalyzer, /obj/item/reagent_containers/food/drinks/bottle/holyoil)
+	power_cost = 300
+	requires_human = TRUE
+	must_be_servant = FALSE
+	target_can_be_invoker = FALSE
+	cast_time = 80
+
+/datum/clockwork_rite/treat_wounds/cast(var/mob/living/invoker, var/turf/T, var/mob/living/carbon/human/target)
+	if(!target)
+		return FALSE
+	if(!target.all_wounds.len)
+		to_chat(invoker, "<span class='inathneq_small'>This one does not require mending.</span>")
+		return FALSE
+	.= ..()
+	if(!.)
+		return FALSE
+	target.adjustToxLoss(10 * target.all_wounds.len)
+	QDEL_LIST(target.all_wounds)
+	to_chat(target, "<span class='warning'>You feel your wounds heal, but are overcome with deep nausea.</span>")
+	new /obj/effect/temp_visual/ratvar/sigil/vitality(T)
+
+/datum/clockwork_rite/summon_claw
+	name = "Rite of the Claw"
+	desc = "Summons a special arm implant that, when added to a cultist's limb, will allow them to extend and retract a claw at will. Don't leave any implants you want to keep on this rune when casting the rite."
+	required_ingredients = list(/obj/item/stock_parts/cell, /obj/item/organ/cyberimp, /obj/item/assembly/flash)
+	power_cost = 1000
+	cast_time = 60
+	limit = 4
+
+/datum/clockwork_rite/summon_claw/cast(var/mob/living/invoker, var/turf/T, var/mob/living/carbon/human/target)
+	. = ..()
+	if(!.)
+		return FALSE
+	var/obj/item/organ/cyberimp/arm/clockwork/claw/CL = new /obj/item/organ/cyberimp/arm/clockwork/claw(T)
+	CL.visible_message("<span class='warning'>[CL] materialises out of thin air!")
+
 #undef INFINITE
