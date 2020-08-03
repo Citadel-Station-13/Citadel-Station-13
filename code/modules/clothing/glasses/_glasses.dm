@@ -159,6 +159,8 @@
 	. = ..()
 	if(slot == SLOT_GLASSES)
 		user.visible_message("<span class='warning'>Circuitry from the eyepatch links itself to your brain as you put on the eyepatch.")
+		if(HAS_TRAIT(user, TRAIT_POOR_AIM))
+			user.visible_message("<span class='warning'>You hear a fizzing noise from the circuit. That can't be good.")
 		ADD_TRAIT(user, TRAIT_INSANE_AIM, "SYNDICATE_EYEPATCH_AIM")
 		ADD_TRAIT(src, TRAIT_NODROP, "SYNDICATE_EYEPATCH_NODROP")
 

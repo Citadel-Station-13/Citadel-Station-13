@@ -309,8 +309,6 @@
 		randomized_gun_spread = rand(0, spread)
 	else if(burst_size > 1 && burst_spread)
 		randomized_gun_spread = rand(0, burst_spread)
-	if(HAS_TRAIT(user, TRAIT_POOR_AIM)) //nice shootin' tex
-		bonus_spread += 25
 	var/randomized_bonus_spread = rand(0, bonus_spread)
 
 	if(burst_size > 1)
@@ -606,6 +604,12 @@
 		base_inaccuracy /= 1.5
 	if(stamloss > STAMINA_NEAR_SOFTCRIT) //This can null out the above bonus.
 		base_inaccuracy *= 1 + (stamloss - STAMINA_NEAR_SOFTCRIT)/(STAMINA_NEAR_CRIT - STAMINA_NEAR_SOFTCRIT)*0.5
+	if(HAS_TRAIT(user, TRAIT_POOR_AIM)) //nice shootin' tex
+		if(!HAS_TRAIT(user, TRAIT_INSANE_AIM))
+			bonus_spread += 25
+		else
+			//you have both poor aim and insane aim, why?
+			bonus_spread += rand(0,50)
 	var/mult = max((GUN_AIMING_TIME + aiming_delay + user.last_click_move - world.time)/GUN_AIMING_TIME, -0.5) //Yes, there is a bonus for taking time aiming.
 	if(mult < 0) //accurate weapons should provide a proper bonus with negative inaccuracy. the opposite is true too.
 		mult *= 1/inaccuracy_modifier
