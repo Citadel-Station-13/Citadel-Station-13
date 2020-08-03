@@ -288,6 +288,7 @@
 
 /mob/living/simple_animal/hostile/megafauna/gladiator/death(gibbed)
 	LoseTarget()
+	discharge(0)
 
 	if(!last_attacker)
 		return
@@ -325,7 +326,7 @@
 	ranged_cooldown = world.time + ranged_cooldown_time
 	if(prob(15 + anger_modifier))
 		INVOKE_ASYNC(src, .proc/teleport, target)
-	else
+	else if(prob(25))
 		INVOKE_ASYNC(src, .proc/boneappletea, target)
 
 	if(prob(10+anger_modifier))

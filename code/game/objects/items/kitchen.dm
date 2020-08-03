@@ -180,11 +180,6 @@
 	force = 5
 	throwforce = 15
 
-/obj/item/kitchen/knife/combat/bone/throwing/throw_impact()
-	. = ..()
-	visible_message("<span class = 'warning'>[src] shatters and breaks!</span>")
-	qdel(src)
-
 /obj/item/kitchen/knife/combat/bone/plastic
 	name = "plastic knife"
 	desc = "A plastic knife. Rather harmless to anything."

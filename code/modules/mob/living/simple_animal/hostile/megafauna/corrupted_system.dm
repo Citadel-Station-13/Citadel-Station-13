@@ -47,6 +47,7 @@
 	damage = 25
 	pixels_per_second = TILES_TO_PIXELS(10)
 	range = 9
+	impact_effect_type = /obj/effect/temp_visual/impact_effect/blue_laser
 	color = "#0091ff"
 
 /mob/living/simple_animal/hostile/megafauna/corrupted_system/devour(mob/living/L)
