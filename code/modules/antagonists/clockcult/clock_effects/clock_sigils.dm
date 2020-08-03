@@ -410,13 +410,14 @@
 	name = "radiant sigil"
 	desc = "A glowing sigil glowing with barely-contained power."
 	clockwork_desc = "A sigil that will allow you to perform certain rites on it, provided you have access to sufficient power and materials."
-	icon_state = "sigiltransmission" //TODO
+	icon_state = "sigiltransmission" //am big lazy - recolored transmission sigil
 	sigil_name = "Sigil of Rites"
 	alpha = 255
 	var/performing_rite = FALSE
 	color = "#ffe63a"
+	light_color = "#ffe63a"
 	light_range = 1
-	light_power = 3
+	light_power = 2
 
 /obj/effect/clockwork/sigil/rite/on_attack_hand(mob/living/user, act_intent = user.a_intent, unarmed_attack_flags)
 	. = ..()

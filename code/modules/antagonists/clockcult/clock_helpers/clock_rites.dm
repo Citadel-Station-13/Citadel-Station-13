@@ -140,7 +140,7 @@
 	power_cost = 500
 	requires_human = TRUE
 	cast_time = 40
-	rite_cast_sound = 'sound/magic/Blind.ogg'
+	rite_cast_sound = 'sound/magic/blind.ogg'
 
 /datum/clockwork_rite/advancement/cast(var/mob/living/invoker, var/turf/T, var/mob/living/carbon/human/target)
 	message_admins("Turf: [T]")
