@@ -153,8 +153,8 @@
 		shake_camera(user, recoil + 1, recoil)
 
 	if(stam_cost) //CIT CHANGE - makes gun recoil cause staminaloss
-		var/safe_cost = clamp(stam_cost, 0, STAMINA_NEAR_CRIT - user.getStaminaLoss())*(firing && burst_size >= 2 ? 1/burst_size : 1)
-		user.adjustStaminaLossBuffered(safe_cost) //CIT CHANGE - ditto
+		var/safe_cost = clamp(stam_cost, 0, user.stamina_buffer)*(firing && burst_size >= 2 ? 1/burst_size : 1)
+		user.UseStaminaBuffer(safe_cost)
 
 	if(suppressed)
 		playsound(user, fire_sound, 10, 1)

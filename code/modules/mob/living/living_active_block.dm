@@ -186,7 +186,7 @@
 		var/held_index = C.get_held_index_of_item(src)
 		var/obj/item/bodypart/BP = C.hand_bodyparts[held_index]
 		if(!BP?.body_zone)
-			return C.adjustStaminaLossBuffered(stamina_amount)		//nah
+			return C.adjustStaminaLoss(stamina_amount)		//nah
 		var/zone = BP.body_zone
 		var/stamina_to_zone = data.block_stamina_limb_ratio * stamina_amount
 		var/stamina_to_chest = stamina_amount - stamina_to_zone
@@ -194,9 +194,9 @@
 		stamina_to_chest -= stamina_buffered
 		C.apply_damage(stamina_to_zone, STAMINA, zone)
 		C.apply_damage(stamina_to_chest, STAMINA, BODY_ZONE_CHEST)
-		C.adjustStaminaLossBuffered(stamina_buffered)
+		C.adjustStaminaLoss(stamina_buffered)
 	else
-		owner.adjustStaminaLossBuffered(stamina_amount)
+		owner.adjustStaminaLoss(stamina_amount)
 
 /obj/item/proc/on_active_block(mob/living/owner, atom/object, damage, damage_blocked, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return, override_direction)
 	return

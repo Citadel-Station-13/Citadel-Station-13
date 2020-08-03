@@ -53,6 +53,7 @@
 
 	var/hallucination = 0 //Directly affects how long a mob will hallucinate for
 
+	var/last_special = 0 //Used by the resist verb, likely used to prevent players from bypassing next_move by logging in/out.
 	var/timeofdeath = 0
 
 	//Allows mobs to move through dense areas without restriction. For instance, in space or out of holder objects.
@@ -148,9 +149,6 @@
 	var/combatmessagecooldown = 0
 
 	var/incomingstammult = 1
-	var/bufferedstam = 0
-	var/stambuffer = 20
-	var/stambufferregentime
 
 	//Sprint buffer---
 	var/sprint_buffer = 42					//Tiles
@@ -159,3 +157,17 @@
 	var/sprint_buffer_regen_last = 0		//last world.time this was regen'd for math.
 	var/sprint_stamina_cost = 0.70			//stamina loss per tile while insufficient sprint buffer.
 	//---End
+
+	// Stamina Buffer---
+	/// Our maximum stamina buffer
+	var/stamina_buffer_max = STAMINA_BUFFER_CAPACITY
+	/// Our stamina buffer
+	var/stamina_buffer = STAMINA_BUFFER_CAPACITY
+	/// Stamina buffer regen modifier
+	var/stamina_buffer_regen_mod = 1
+	/// Standard stamina buffer regen per second
+	var/stamina_buffer_regen = STAMINA_BUFFER_REGEN_PER_SECOND
+	/// Standard stamina buffer regen per second with combat mode
+	var/stamina_buffer_regen_combat = STAMINA_BUFFER_REGEN_PER_SECOND_COMBAT
+	/// Last time stamina buffer regen was done
+	var/stamina_buffer_regen_last = 0

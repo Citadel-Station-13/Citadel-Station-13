@@ -47,8 +47,8 @@
 #define COMBAT_FLAG_RESISTING_REST			(1<<4)
 /// Intentionally resting
 #define COMBAT_FLAG_INTENTIONALLY_RESTING	(1<<5)
-/// Currently stamcritted but not as violently
-#define COMBAT_FLAG_SOFT_STAMCRIT			(1<<6)
+/// This mob requires stamina buffer to do things that require stamina buffer. Not having this exempts the mob from stamina combat.
+#define COMBAT_FLAG_STAMINA_BUFFER			(1<<6)
 /// Force sprint mode on at all times, overrides everything including sprint disable traits.
 #define COMBAT_FLAG_SPRINT_FORCED			(1<<7)
 /// This mob is capable of using the active parrying system.
@@ -64,26 +64,15 @@
 
 // Helpers for getting someone's stamcrit state. Cast to living.
 #define NOT_STAMCRIT 0
-#define SOFT_STAMCRIT 1
-#define HARD_STAMCRIT 2
+#define HARD_STAMCRIT 1
 
 // Stamcrit check helpers
 #define IS_STAMCRIT(mob)					(CHECK_STAMCRIT(mob) != NOT_STAMCRIT)
-#define CHECK_STAMCRIT(mob)					((mob.combat_flags & COMBAT_FLAG_HARD_STAMCRIT)? HARD_STAMCRIT : ((mob.combat_flags & COMBAT_FLAG_SOFT_STAMCRIT)? SOFT_STAMCRIT : NOT_STAMCRIT))
+#define CHECK_STAMCRIT(mob)					(mob.combat_flags & COMBAT_FLAG_HARD_STAMCRIT)
 
 //stamina stuff
-///Threshold over which attacks start being hindered.
-#define STAMINA_NEAR_SOFTCRIT				90
-///softcrit for stamina damage. prevents standing up, some actions that cost stamina, etc, but doesn't force a rest or stop movement
-#define STAMINA_SOFTCRIT					100
-///sanity cap to prevent stamina actions (that are still performable) from sending you into crit.
-#define STAMINA_NEAR_CRIT					130
 ///crit for stamina damage. forces a rest, and stops movement until stamina goes back to stamina softcrit
 #define STAMINA_CRIT						140
-///same as STAMINA_SOFTCRIT except for the more traditional health calculations
-#define STAMINA_SOFTCRIT_TRADITIONAL		0
-///ditto, but for STAMINA_CRIT
-#define STAMINA_CRIT_TRADITIONAL			-40
 
 #define CRAWLUNDER_DELAY							30 //Delay for crawling under a standing mob
 
