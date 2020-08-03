@@ -40,3 +40,22 @@
 
 /mob/living/simple_animal/hostile/asteroid/fire_wisp/AttackingTarget() //SUICIDE
 	death()
+
+/mob/living/simple_animal/hostile/asteroid/fire_wisp/Bump(atom/A)
+	if(iscarbon(A))
+		var/mob/living/carbon/C = A
+		C.adjust_fire_stacks(2)
+		C.IgniteMob()
+	. = ..()
+
+/mob/living/simple_animal/hostile/asteroid/fire_wisp/Bumped(atom/movable/A)
+	if(iscarbon(A))
+		var/mob/living/carbon/C = A
+		C.adjust_fire_stacks(2)
+		C.IgniteMob()
+	. = ..()
+
+/mob/living/simple_animal/hostile/asteroid/fire_wisp/attack_hand(mob/living/carbon/human/M)
+	M.adjust_fire_stacks(2)
+	M.IgniteMob()
+	. = ..()

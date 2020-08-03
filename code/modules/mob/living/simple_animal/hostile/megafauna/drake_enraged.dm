@@ -8,6 +8,9 @@
 	melee_damage_lower = 45
 	melee_damage_upper = 45
 	speed = 0.5 //Faster
+	crusher_loot = list(/obj/structure/closet/crate/necropolis/dragon/hard/crusher)
+	loot = list(/obj/structure/closet/crate/necropolis/dragon/hard)
+	abyss_born = FALSE
 
 /mob/living/simple_animal/hostile/megafauna/dragon/hard/OpenFire()
 	if(swooping)

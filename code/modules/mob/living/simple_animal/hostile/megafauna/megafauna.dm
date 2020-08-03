@@ -188,3 +188,26 @@
 /datum/action/innate/megafauna_attack/Activate()
 	M.chosen_attack = chosen_attack_num
 	to_chat(M, chosen_message)
+
+/mob/living/simple_animal/hostile/megafauna/attacked_by(obj/item/I, mob/living/user, attackchain_flags = NONE, damage_multiplier = 1)
+	if(istype(I, /obj/item/power_tube))
+		var/obj/item/power_tube/tube = I
+		if(tube.filled)
+			tube.filled = FALSE
+			tube.update_icon()
+			user.visible_message("<span class = 'warning'>[user] splashes the [src] with [tube]!</span>")
+			if(abyss_born)
+				abyss_act()
+			return
+	. = ..()
+
+/mob/living/simple_animal/hostile/megafauna/BiologicalLife(seconds, times_fired)
+	if(!(. = ..()))
+		return
+	if(abyss_born && is_abyss_level(z))
+		abyss_act()
+
+/mob/living/simple_animal/hostile/megafauna/proc/abyss_act()
+	visible_message("<span class='danger'>[src] [enrage_message]</span>")
+	new enraged_type(loc)
+	qdel(src)

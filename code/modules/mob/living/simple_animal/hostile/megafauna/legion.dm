@@ -63,8 +63,10 @@ Difficulty: Medium
 		wander = TRUE
 
 /mob/living/simple_animal/hostile/megafauna/legion/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
-	if(GLOB.necropolis_gate)
-		GLOB.necropolis_gate.toggle_the_gate(null, TRUE) //very clever.
+	if(GLOB.necropolis_gates && !GLOB.necropolis_gate_open)
+		for(var/obj/structure/necropolis_gate/gate in GLOB.necropolis_gates)
+			gate.toggle_the_gate(null, TRUE) //very clever.
+		GLOB.necropolis_gate_open = TRUE
 	return ..()
 
 /mob/living/simple_animal/hostile/megafauna/legion/AttackingTarget()

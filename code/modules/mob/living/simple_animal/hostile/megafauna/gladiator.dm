@@ -1,7 +1,7 @@
-//An immortal(!) boss with a very complicated AI. Basically, he will attack plasmemes and dwarfes on sight, won't attack ashwalkers until they do, will attack everybody if they try to pass though.
+//An immortal(!) boss with a very complicated AI. Basically, he will attack plasmemes on sight, won't attack ashwalkers until they do, will attack everybody if they try to pass though.
 
 /mob/living/simple_animal/hostile/megafauna/gladiator
-	name = "gladiator"
+	name = "The Gladiator"
 	desc = "An immortal ash walker, whose powers have been granted by the necropolis itself."
 	icon = 'icons/mob/lavaland/gladiator.dmi'
 	icon_state = "gladiator_equip"
@@ -18,8 +18,8 @@
 	ranged = 1
 	ranged_cooldown_time = 30
 	minimum_distance = 1
-	health = 1500
-	maxHealth = 1500
+	health = 2500
+	maxHealth = 2500
 	movement_type = GROUND
 	move_force = MOVE_FORCE_VERY_STRONG
 	move_resist = MOVE_FORCE_VERY_STRONG
@@ -200,7 +200,7 @@
 			if(charging)
 				chargetiles++
 				validloc = get_step(get_turf(src), dir)
-			if(chargetiles >= chargerange)
+				if(chargetiles >= chargerange)
 					discharge()
 			return ..(validloc)
 		return FALSE
@@ -209,7 +209,7 @@
 			chargetiles++
 			if(chargetiles >= chargerange)
 				discharge()
-			validloc = get_step(get_turf(src), dir)
+			var/turf/validloc = get_step(get_turf(src), dir)
 			return ..(validloc)
 	..()
 
@@ -247,15 +247,42 @@
 			discharge(1.33)
 
 /mob/living/simple_animal/hostile/megafauna/gladiator/attacked_by(obj/item/I, mob/living/user, attackchain_flags = NONE, damage_multiplier = 1)
+	if(user in champions)
+		visible_message("<span class='warning'>[src] blocks [I] with his sword!</span>")
+		say(message = "I don't want to fight with you, champion")
+		return FALSE
 	if(iscarbon(user))
 		last_attacker = user
 	. = ..()
 
+/mob/living/simple_animal/hostile/megafauna/gladiator/devour(mob/living/L)
+	if(!L)
+		return
+	visible_message(
+		"<span class='danger'>[src] cuts the [L]'s head off!</span>",
+		"<span class='userdanger'>You cut the [L]'s head off, restoring your health!</span>")
+	if(!is_station_level(z) || client)
+		adjustBruteLoss(-L.maxHealth/2)
+	if(iscarbon(L))
+		var/mob/living/carbon/C = L
+		var/obj/item/bodypart/head/head = C.get_bodypart(BODY_ZONE_HEAD)
+		if(head)
+			head.drop_limb()
+			qdel(head)
+			return
+	L.gib()
+
 /mob/living/simple_animal/hostile/megafauna/gladiator/bullet_act(obj/item/projectile/P)
-	if(P.damtype == BRUTE || P.damtype == BURN)
-		if(prob(75))
+	if(P.firer && P.firer in champions)
+		visible_message("<span class='warning'>[src] reflects the [P] with his sword!</span>")
+		say(message = "I don't want to fight with you, champion")
+		return BULLET_ACT_BLOCK
+
+	if(P.firer && (P.damtype == BRUTE || P.damtype == BURN))
+		if(prob(clamp(get_dist(P.firer, src) * 20, 0, 100))) //He wants a FAIR fight
 			visible_message("<span class='danger'>[src] reflects the [P] with his sword!</span>")
 			return BULLET_ACT_BLOCK
+
 	if(P.firer && get_dist(src, P.firer) <= aggro_vision_range && iscarbon(P.firer))
 		last_attacker = P.firer
 	. = ..()
@@ -275,13 +302,17 @@
 		var/mob/living/carbon/human/H = last_attacker
 		var/datum/species/Hspecies = H.dna.species
 		if(Hspecies.id == "plasmaman")
-			say(message = "You proved your power and can pass, [last_attacker]. For now..."
+			say(message = "You proved your power and can pass, [last_attacker]. For now...")
+			var/obj/item/throwing_belt/belt = new(get_turf(src))
+			say(message = "Take thisss [belt] as sign of my ressspect for you...")
 			return
 	say(message = "It wasss a great fight, [last_attacker]. You proved that you are worthy of the Necropolisss.")
+	var/obj/item/throwing_belt/belt = new(get_turf(src))
+	say(message = "Take thisss [belt] as sign of my ressspect for you...")
 
 /mob/living/simple_animal/hostile/megafauna/gladiator/proc/boneappletea(mob/living/victim)
 	for(var/i = 1 to 3)
-		var/obj/item/kitchen/knife/combat/bone/boned = new /obj/item/kitchen/knife/combat/bone(get_turf(src))
+		var/obj/item/kitchen/knife/combat/bone/boned = new /obj/item/kitchen/knife/combat/bone(get_turf(src)) //Not projectile since we need it to be able to embed
 		playsound(src, 'sound/weapons/fwoosh.wav', 60, 0)
 		boned.throw_at(victim, 7, 3, src)
 		QDEL_IN(boned, 30)

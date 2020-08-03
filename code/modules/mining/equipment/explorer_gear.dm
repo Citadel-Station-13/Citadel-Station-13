@@ -211,3 +211,35 @@
 /obj/item/clothing/head/hooded/explorer/exo/standard/Initialize()
 	. = ..()
 	AddComponent(/datum/component/armor_plate)
+    
+
+/obj/item/clothing/suit/space/heavy_miner
+	name = "H.M.S. suit"
+	desc = "Heavy Mining Space Suit is a very armored suit intended for mining and space exploration."
+	icon_state = "mining_heavy"
+	item_state = "mining_heavy"
+	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
+	resistance_flags = FIRE_PROOF | LAVA_PROOF | ACID_PROOF | GOLIATH_RESISTANCE
+	mutantrace_variation = STYLE_DIGITIGRADE
+	slowdown = 1.5
+	armor = list("melee" = 70, "bullet" = 40, "laser" = 30, "energy" = 30, "bomb" = 50, "bio" = 100, "rad" = 100, "fire" = 100, "acid" = 100)
+	allowed = list(/obj/item/flashlight, /obj/item/tank/internals, /obj/item/resonator, /obj/item/mining_scanner, /obj/item/t_scanner/adv_mining_scanner, /obj/item/gun/energy/kinetic_accelerator, /obj/item/pickaxe)
+
+/obj/item/clothing/suit/space/heavy_miner/process()
+	var/mob/living/carbon/C = loc
+	if(istype(C) && prob(2)) //cursed by bubblegum
+		if(prob(15))
+			new /datum/hallucination/oh_yeah(C)
+			to_chat(C, "<span class='colossus'><b>[pick("I AM IMMORTAL.","I SHALL TAKE BACK WHAT'S MINE.","I SEE YOU.","YOU CANNOT ESCAPE ME FOREVER.","DEATH CANNOT HOLD ME.")]</b></span>")
+		else
+			to_chat(C, "<span class='warning'>[pick("You hear faint whispers.","You smell ash.","You feel hot.","You hear a roar in the distance.")]</span>")
+
+/obj/item/clothing/head/helmet/space/heavy_miner
+	name = "H.M.S. helmet"
+	desc = "Heavy Mining Space Helmet is a pretty heavy suit reinforced with plasteel sheets."
+	icon_state = "mining_heavy"
+	item_state = "mining_heavy"
+	w_class = WEIGHT_CLASS_NORMAL
+	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
+	armor = list("melee" = 70, "bullet" = 40, "laser" = 30, "energy" = 30, "bomb" = 50, "bio" = 100, "rad" = 100, "fire" = 100, "acid" = 100)
+	resistance_flags = FIRE_PROOF | LAVA_PROOF

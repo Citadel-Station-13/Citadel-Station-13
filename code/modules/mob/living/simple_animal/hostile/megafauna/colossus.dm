@@ -21,6 +21,7 @@ Difficulty: Very Hard
 
 */
 
+
 /mob/living/simple_animal/hostile/megafauna/colossus
 	name = "colossus"
 	desc = "A monstrous creature protected by heavy shielding."
@@ -52,6 +53,10 @@ Difficulty: Very Hard
 	butcher_results = list(/obj/item/stack/ore/diamond = 5, /obj/item/stack/sheet/sinew = 5, /obj/item/stack/sheet/animalhide/ashdrake = 10, /obj/item/stack/sheet/bone = 30)
 	deathmessage = "disintegrates, leaving a glowing core in its wake."
 	death_sound = 'sound/magic/demon_dies.ogg'
+
+	abyss_born = TRUE
+	enraged_type = /mob/living/simple_animal/hostile/megafauna/colossus/hard
+	enrage_message = "raises it's arms and lets out a terrifying screech as it feels the power of Abyss!"
 
 /mob/living/simple_animal/hostile/megafauna/colossus/devour(mob/living/L)
 	visible_message("<span class='colossus'>[src] disintegrates [L]!</span>")
@@ -218,6 +223,8 @@ Difficulty: Very Hard
 	pass_flags = PASSTABLE
 
 /obj/item/projectile/colossus/on_hit(atom/target, blocked = FALSE)
+	if(istype(target, /mob/living/simple_animal/hostile/megafauna/colossus))
+		return
 	. = ..()
 	if(isturf(target) || isobj(target))
 		target.ex_act(EXPLODE_HEAVY)

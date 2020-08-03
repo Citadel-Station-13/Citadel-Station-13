@@ -310,6 +310,50 @@
 		A.friends[user]++
 		A.faction = user.faction.Copy()
 
+//Abyss Demon
+
+/obj/item/crusher_trophy/abyssal_crystal
+	name = "abyssal crystal"
+	desc = "A red, glowing crystal that was sliced off the Abyssal Demon. Suitable as a trophy for a kinetic crusher"
+	icon_state = "crystal_shard"
+	denied_type = /obj/item/crusher_trophy/abyssal_crystal
+	bonus_value = 5
+
+/obj/item/crusher_trophy/abyssal_crystal/effect_desc()
+	return "mark detonation to pierce target with crystal shards and stun him for [bonus_value * 0.1] seconds"
+
+/obj/effect/temp_visual/abyss_shards
+	name = "abyssal shards"
+	icon = 'icons/effects/effects.dmi'
+	icon_state = "bloody_trap"
+	duration = 10
+	smooth = SMOOTH_TRUE
+	layer = BELOW_MOB_LAYER
+
+/obj/item/crusher_trophy/abyssal_crystal/on_mark_detonation(mob/living/target, mob/living/user)
+	new /obj/effect/temp_visual/abyss_shards(get_turf(target))
+	target.Stun(bonus_value * 0.1)
+	target.adjustBruteLoss(rand(5,10))
+
+//Fire Wisp
+
+/obj/item/crusher_trophy/tail_spike/firestone
+	name = "firestone"
+	desc = "A stone, literraly made out of fire. Suitable as a trophy for a kinetic crusher"
+	icon_state = "crystal_shard"
+	bonus_value = 0
+
+/obj/item/crusher_trophy/tail_spike/firestone/pushback(mob/living/target, mob/living/user)
+	if(!QDELETED(target) && !QDELETED(user) && !target.anchored) //no megafauna pushbacks here
+		step(target, get_dir(user, target))
+
+//Ash Whelp
+/obj/item/crusher_trophy/legion_skull/ash_whelp_wing
+	name = "ash whelp's wing"
+	desc = "An ash whelp's wing, carefully sliced off. Suitable as a trophy for a kinetic crusher"
+	icon_state = "crystal_shard"
+	bonus_value = 5
+
 //Corrupted System
 
 /obj/item/crusher_trophy/rogue_ai
@@ -482,10 +526,10 @@
 	desc = "An explorer mask with a lot of blood on it. You can't manage to wear it on your face, however, it is suitable as a trophy for a kinetic crusher."
 	icon_state = "bloody_mask"
 	denied_type = /obj/item/crusher_trophy/bloody_mask
-	bonus_value = 6
+	bonus_value = 10
 
 /obj/item/crusher_trophy/bloody_mask/effect_desc()
-	return "backstabs will do <b>[bonus_value]</b> more damage."
+	return "backstabs to do <b>[bonus_value]</b> more damage."
 
 /obj/item/crusher_trophy/bloody_mask/add_to(obj/item/kinetic_crusher/H, mob/living/user)
 	. = ..()

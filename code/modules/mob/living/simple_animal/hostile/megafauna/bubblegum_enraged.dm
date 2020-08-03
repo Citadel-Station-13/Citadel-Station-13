@@ -9,10 +9,11 @@
 	melee_damage_upper = 45
 	speed = 0.5 //A bit faster
 	ranged_cooldown_time = 8 //Less cooldown
-	crusher_loot = list(/obj/structure/closet/crate/necropolis/bubblegum/crusher)
-	loot = list(/obj/structure/closet/crate/necropolis/bubblegum)
+	crusher_loot = list(/obj/structure/closet/crate/necropolis/bubblegum/hard/crusher)
+	loot = list(/obj/structure/closet/crate/necropolis/bubblegum/hard)
 
 	var/imps = 0
+	abyss_born = FALSE
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/hard/proc/summon_imps()
 	if(imps)
@@ -53,7 +54,7 @@
 			INVOKE_ASYNC(src, .proc/triple_charge)
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/hard/blood_spray()
-	visible_message("<span class='danger'>[src] sprays a stream of gore around himself!</span>")
+	visible_message("<span class='danger'>[src] sprays a shower of gore around himself!</span>")
 	for(var/turf/open/J in view(5, src)) //Hehe
 		new /obj/effect/temp_visual/dir_setting/bloodsplatter(J, get_dir(src, J))
 		playsound(J,'sound/effects/splat.ogg', 100, 1, -1)

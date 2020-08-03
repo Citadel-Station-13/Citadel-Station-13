@@ -142,6 +142,7 @@
 
 
 #define SPAWN_MEGAFAUNA "bluh bluh huge boss"
+#define SPAWN_MEGAFAUNA_ABYSS "bluh bluh huge abyss boss"
 #define SPAWN_BUBBLEGUM 6
 
 /turf/open/floor/plating/asteroid/airless/cave
@@ -151,6 +152,8 @@
 	var/list/mob_spawn_list
 	/// Megafauna that can spawn in the tunnel, weighted list
 	var/list/megafauna_spawn_list
+	//Abyss megafauna that can spawn
+	var/list/megafauna_abyss_spawn_list
 	/// Flora that can spawn in the tunnel, weighted list
 	var/list/flora_spawn_list
 	/// Turf type to choose when spawning in tunnel at 1% chance, weighted list
@@ -187,12 +190,12 @@
 
 /turf/open/floor/plating/asteroid/airless/cave/volcanic/has_data //subtype for producing a tunnel with given data
 	has_data = TRUE
-    
+
 /turf/open/floor/plating/asteroid/airless/cave/volcanic_abyss
 	mob_spawn_list = list(/mob/living/simple_animal/hostile/asteroid/fire_wisp = 50, \
         /mob/living/simple_animal/hostile/asteroid/ash_whelp = 30, \
         /mob/living/simple_animal/hostile/asteroid/abyss_demon = 30, \
-		SPAWN_MEGAFAUNA = 10, /mob/living/simple_animal/hostile/asteroid/crazy_miner/random = 10)
+		SPAWN_MEGAFAUNA_ABYSS = 10, /mob/living/simple_animal/hostile/asteroid/crazy_miner/random = 5)
 
 	data_having_type = /turf/open/floor/plating/asteroid/airless/cave/volcanic_abyss/has_data
 	turf_type = /turf/open/floor/plating/asteroid/basalt/lavaland_abyss
@@ -246,6 +249,8 @@
 		mob_spawn_list = list(/mob/living/simple_animal/hostile/asteroid/goldgrub = 1, /mob/living/simple_animal/hostile/asteroid/goliath = 5, /mob/living/simple_animal/hostile/asteroid/basilisk = 4, /mob/living/simple_animal/hostile/asteroid/hivelord = 3)
 	if (!megafauna_spawn_list)
 		megafauna_spawn_list = list(/mob/living/simple_animal/hostile/megafauna/dragon = 4, /mob/living/simple_animal/hostile/megafauna/colossus = 2, /mob/living/simple_animal/hostile/megafauna/bubblegum = SPAWN_BUBBLEGUM)
+	if (!megafauna_abyss_spawn_list)
+		megafauna_abyss_spawn_list = list(/mob/living/simple_animal/hostile/megafauna/dragon/hard = 4, /mob/living/simple_animal/hostile/megafauna/colossus/hard = 2, /mob/living/simple_animal/hostile/megafauna/bubblegum/hard = SPAWN_BUBBLEGUM)
 	if (!flora_spawn_list)
 		flora_spawn_list = list(/obj/structure/flora/ash/leaf_shroom = 2 , /obj/structure/flora/ash/cap_shroom = 2 , /obj/structure/flora/ash/stem_shroom = 2 , /obj/structure/flora/ash/cacti = 1, /obj/structure/flora/ash/tall_shroom = 2)
 
@@ -371,6 +376,16 @@
 				if(megafauna_spawn_list[maybe_boss])
 					randumb = maybe_boss
 					if(ispath(maybe_boss, /mob/living/simple_animal/hostile/megafauna/bubblegum)) //there can be only one bubblegum, so don't waste spawns on it
+						megafauna_spawn_list[maybe_boss] = 0
+			else //this is not danger, don't spawn a boss, spawn something else
+				randumb = pickweight(mob_spawn_list)
+
+		while(randumb == SPAWN_MEGAFAUNA_ABYSS)
+			if(A.megafauna_spawn_allowed && megafauna_abyss_spawn_list && megafauna_abyss_spawn_list.len) //this is danger. it's boss time.
+				var/maybe_boss = pickweight(megafauna_abyss_spawn_list)
+				if(megafauna_abyss_spawn_list[maybe_boss])
+					randumb = maybe_boss
+					if(ispath(maybe_boss, /mob/living/simple_animal/hostile/megafauna/bubblegum/hard)) //there can be only one bubblegum, so don't waste spawns on it
 						megafauna_spawn_list[maybe_boss] = 0
 			else //this is not danger, don't spawn a boss, spawn something else
 				randumb = pickweight(mob_spawn_list)
