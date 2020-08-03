@@ -1,4 +1,0 @@
-author: "dapnee"
-delete-after: True
-changes: 
-  - bugfix: "active turfs on box and xenohive, maintenance bar APC not being stringed correctly, turned a monitor to face a direction that makes sense, changed tag of camera in gravgen being misnamed"

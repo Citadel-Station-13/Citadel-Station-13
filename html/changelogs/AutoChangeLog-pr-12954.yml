@@ -1,5 +1,0 @@
-author: "silicons"
-delete-after: True
-changes: 
-  - balance: "explosive stand bombs can now be examined from any distance"
-  - code_imp: "explosive stand bombs are now a component."
