@@ -18,8 +18,8 @@
 	ranged_cooldown_time = 30
 	minimum_distance = 3
 	retreat_distance = 3
-	maxHealth = 150
-	health = 150
+	maxHealth = 560
+	health = 560
 	obj_damage = 40
 	melee_damage_lower = 15
 	melee_damage_upper = 15

@@ -261,7 +261,7 @@ Difficulty: Hard
 		sleep(rand(2, 4))
 		forceMove(get_turf(found_bloodpool))
 		playsound(get_turf(src), 'sound/magic/exit_blood.ogg', 100, 1, -1)
-		alpha = 100
+		alpha = 255 //Cita fix
 		dont_move = FALSE
 		visible_message("<span class='danger'>And springs back out!</span>")
 

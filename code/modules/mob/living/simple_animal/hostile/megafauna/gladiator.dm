@@ -8,8 +8,8 @@
 
 	melee_damage_lower = 35
 	melee_damage_upper = 35
-	speed = 1
-	move_to_delay = 2.25
+	speed = 1.5
+	move_to_delay = 2
 
 	rapid_melee = 1
 	melee_queue_distance = 2
@@ -89,7 +89,7 @@
 			friendly_lizards -= new_target
 	target = new_target
 	LosePatience()
-	if(!target in introduced)
+	if(!(target in introduced))
 		introduction(target)
 		return
 
@@ -99,45 +99,44 @@
 		return 1
 
 /mob/living/simple_animal/hostile/megafauna/gladiator/proc/introduction(mob/living/victim)
-	if(src == victim)
-		introduced += src
-		return
 	if(victim in introduced)
 		return
 
 	if(ishuman(victim))
 		var/mob/living/carbon/human/H = victim
 		var/datum/species/Hspecies = H.dna.species
+		var/datum/language/language = /datum/language/common
 		face_atom(H)
+		var/list/messages = list("You are not welcome into the Necropolisss.")
 		if(Hspecies.id == "ashlizard")
-			var/list/messages = list("I am sorry, tribesssmate. I cannot let you through.",\
+			messages = list("I am sorry, tribesssmate. I cannot let you through.",\
 									"Pleassse leave, walker. I don't want to hurt you.",\
 									"The Necropolisss must be protected even from it'ss servants. Pleassse retreat.")
-			say(message = pick(messages), language = /datum/language/draconic)
+			language = /datum/language/draconic
 			friendly_lizards |= H
-			introduced |= H
+
 		else if(Hspecies.id == "lizard")
-			var/list/messages = list("Thisss isss not the time nor place to be. Leave.",\
+			messages = list("Thisss isss not the time nor place to be. Leave.",\
 									"Go back where you came from. I am sssafeguarding thisss sssacred place.",\
 									"You ssshould not be here. Turn.",\
 									"I can sssee an outlander from a mile away. You're not one of us."\
 									)
-			say(message = pick(messages), language = /datum/language/draconic)
-			introduced |= H
+			language = /datum/language/draconic
+
 		else if(Hspecies.id == "plasmaman") //Don't you even try to come nearby him. He is fucking immortal and he will kill you. He WILL.
-			var/list/messages = list("I will finisssh what little of your race remainsss, starting with you!",\
+			messages = list("I will finisssh what little of your race remainsss, starting with you!",\
 									"Lavaland belongsss to the lizzzards!",\
 									"Thisss sacred land wasn't your property before, it won't be now!")
-			say(message = pick(messages))
-			introduced |= H
 			GiveTarget(H)
+
 		else
-			var/list/messages = list("Get out of my sssight, outlander.",\
+			messages = list("Get out of my sssight, outlander.",\
 									"You will not run your dirty handsss through what little sssacred land we have left. Out.",\
 									"My urge to end your life isss immeasssurable, but I am willing to ssspare you. Leave.",\
 									"You're not invited. Get out.")
-			say(message = pick(messages))
-			introduced |= H
+
+		say(message = pick(messages), language = language)
+		introduced |= H
 
 	else
 		say("You are not welcome into the Necropolisss.")
@@ -288,35 +287,36 @@
 	. = ..()
 
 /mob/living/simple_animal/hostile/megafauna/gladiator/death(gibbed)
-	health = maxHealth //Immortal guy
 	LoseTarget()
 
 	if(!last_attacker)
+		return
+
+	if(last_attacker in champions)
 		return
 
 	var/turf/T = locate(starter_x, starter_y, starter_z)
 	Goto(T, speed, 0)
 	champions |= last_attacker
 
+	health = maxHealth //Immortal guy
+
 	if(ishuman(last_attacker))
 		var/mob/living/carbon/human/H = last_attacker
 		var/datum/species/Hspecies = H.dna.species
 		if(Hspecies.id == "plasmaman")
 			say(message = "You proved your power and can pass, [last_attacker]. For now...")
-			var/obj/item/throwing_belt/belt = new(get_turf(src))
-			say(message = "Take thisss [belt] as sign of my ressspect for you...")
 			return
 	say(message = "It wasss a great fight, [last_attacker]. You proved that you are worthy of the Necropolisss.")
-	var/obj/item/throwing_belt/belt = new(get_turf(src))
-	say(message = "Take thisss [belt] as sign of my ressspect for you...")
+
 
 /mob/living/simple_animal/hostile/megafauna/gladiator/proc/boneappletea(mob/living/victim)
 	for(var/i = 1 to 3)
-		var/obj/item/kitchen/knife/combat/bone/boned = new /obj/item/kitchen/knife/combat/bone(get_turf(src)) //Not projectile since we need it to be able to embed
+		var/obj/item/kitchen/knife/combat/bone/throwing/boned = new /obj/item/kitchen/knife/combat/bone/throwing(get_turf(src)) //Not projectile since we need it to be able to embed
 		playsound(src, 'sound/weapons/fwoosh.wav', 60, 0)
 		boned.throw_at(victim, 7, 3, src)
 		QDEL_IN(boned, 30)
-		sleep(1)
+		sleep(3)
 
 /mob/living/simple_animal/hostile/megafauna/gladiator/OpenFire()
 	if(stunned)

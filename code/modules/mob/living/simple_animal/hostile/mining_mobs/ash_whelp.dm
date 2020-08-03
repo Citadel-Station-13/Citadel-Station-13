@@ -14,8 +14,8 @@
 	move_to_delay = 15
 	ranged = TRUE
 	ranged_cooldown_time = 40
-	maxHealth = 350
-	health = 350
+	maxHealth = 750
+	health = 750
 	obj_damage = 40
 	armour_penetration = 20
 	melee_damage_lower = 20

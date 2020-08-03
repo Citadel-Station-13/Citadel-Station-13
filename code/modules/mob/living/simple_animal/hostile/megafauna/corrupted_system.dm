@@ -16,7 +16,7 @@
 	mob_biotypes = MOB_ROBOTIC
 	melee_damage_lower = 30
 	melee_damage_upper = 30
-	speed = 1
+	speed = 2
 	move_to_delay = 10
 	ranged_cooldown_time = 80
 	ranged = 1

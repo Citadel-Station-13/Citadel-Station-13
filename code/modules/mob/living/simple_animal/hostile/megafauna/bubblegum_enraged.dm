@@ -21,7 +21,7 @@
 
 	imps = 0
 	for(var/obj/effect/decal/cleanable/blood/H in range(src, 7))
-		if(prob(15))
+		if(prob(8))
 			var/mob/living/simple_animal/hostile/imp/imp = new(H.loc)
 			imp.origin = src
 			imps += 1

@@ -27,7 +27,7 @@
 	move_resist = MOVE_FORCE_VERY_STRONG
 	pull_force = MOVE_FORCE_VERY_STRONG
 	del_on_death = TRUE
-	deathmessage = "explodes in a ball of fire!"
+	deathmessage = "<span class = 'danger'>explodes in a ball of fire!</span>"
 
 	stat_attack = UNCONSCIOUS
 	movement_type = FLYING
@@ -35,7 +35,7 @@
 
 /mob/living/simple_animal/hostile/asteroid/fire_wisp/death(gibbed)
 	var/turf/T = get_turf(src)
-	explosion(T, -1, 0, 2, 3, 0, flame_range = 2)
+	explosion(T, -1, 0, 1, 2, 0, flame_range = 3)
 	. = ..()
 
 /mob/living/simple_animal/hostile/asteroid/fire_wisp/AttackingTarget() //SUICIDE
@@ -46,6 +46,7 @@
 		var/mob/living/carbon/C = A
 		C.adjust_fire_stacks(2)
 		C.IgniteMob()
+	death()
 	. = ..()
 
 /mob/living/simple_animal/hostile/asteroid/fire_wisp/Bumped(atom/movable/A)
@@ -53,6 +54,7 @@
 		var/mob/living/carbon/C = A
 		C.adjust_fire_stacks(2)
 		C.IgniteMob()
+	death()
 	. = ..()
 
 /mob/living/simple_animal/hostile/asteroid/fire_wisp/attack_hand(mob/living/carbon/human/M)

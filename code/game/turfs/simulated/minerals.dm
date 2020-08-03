@@ -672,9 +672,9 @@
 	baseturfs = /turf/open/floor/plating/asteroid/basalt/lavaland_abyss
 
 	mineralSpawnChanceList = list(
-		/turf/closed/mineral/uranium/volcanic = 5, /turf/closed/mineral/diamond/volcanic = 1, /turf/closed/mineral/gold/volcanic = 10, /turf/closed/mineral/titanium/volcanic = 11,
-		/turf/closed/mineral/silver/volcanic = 12, /turf/closed/mineral/plasma/volcanic = 20, /turf/closed/mineral/iron/volcanic = 40,
-		/turf/closed/mineral/gibtonite/volcanic = 4, /turf/open/floor/plating/asteroid/airless/cave/volcanic_abyss = 10, /turf/closed/mineral/bscrystal/volcanic = 1)
+		/turf/closed/mineral/uranium/volcanic = 3, /turf/closed/mineral/diamond/volcanic = 1, /turf/closed/mineral/gold/volcanic = 5, /turf/closed/mineral/titanium/volcanic = 5,
+		/turf/closed/mineral/silver/volcanic = 8, /turf/closed/mineral/plasma/volcanic = 12, /turf/closed/mineral/iron/volcanic = 15,
+		/turf/closed/mineral/gibtonite/volcanic = 1, /turf/open/floor/plating/asteroid/airless/cave/volcanic_abyss = 3, /turf/closed/mineral/bscrystal/volcanic = 1)
 
 /turf/closed/mineral/earth_like
 	icon_state = "rock_oxy"
