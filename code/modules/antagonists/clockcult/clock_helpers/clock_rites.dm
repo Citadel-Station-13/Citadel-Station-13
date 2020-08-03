@@ -130,7 +130,7 @@
 		. += "<span class='brass'>The target </span><span class='inathneq_small'><b>[must_be_servant ? "cannot be" : "can be"] </span></b><span class='brass'> a nonservant.</span>\n"
 		. += "<span class='brass'>The target </span><span class='inathneq_small'><b>[target_can_be_invoker ? "can be" : "cannot be"]</span></b><span class='brass'> the invoker.</span>\n"
 	. += "<span class='brass'>It requires </span><span class='inathneq_small'><b>[cast_time/10]</span></b><span class='brass'> seconds to cast.</span>\n"
-	. += "<span class='brass'>It has been used </span><span class='inathneq_small'><b>[times_used]</span></b><span class='brass'> times, out of </span><span class='inathneq_small'><b>[limit != INFINITE ? ", [limit]" : "infinite"]</span></b><span class='brass'> available uses.</span>"
+	. += "<span class='brass'>It has been used </span><span class='inathneq_small'><b>[times_used]</span></b><span class='brass'> time[times_used != 1 ? "s" : ""], out of </span><span class='inathneq_small'><b>[limit != INFINITE ? ", [limit]" : "infinite"]</span></b><span class='brass'> available uses.</span>"
 
 /datum/clockwork_rite/advancement
 	name = "Rite of Advancement"

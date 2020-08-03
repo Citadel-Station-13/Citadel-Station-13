@@ -3,8 +3,8 @@
 
 /obj/item/clockwork/brass_claw
 	name = "brass claw"
-	desc = "A highly sharp claw made out of brass."
-	clockwork_desc = "A incredibly sharp claw made out of brass. It is quite effective at crippling enemies, though incredibly obvious aswell. </n> Gains combo on consecutive attacks against a target, causing bonus damage."
+	desc = "A very sharp claw made out of brass."
+	clockwork_desc = "A incredibly sharp claw made out of brass. It is quite effective at crippling enemies, though very obvious when extended.\nGains combo on consecutive attacks against a target, causing bonus damage."
 	icon_state = "brass_claw" //Codersprite moment
 	item_state = "brass_claw"
 	lefthand_file = 'icons/mob/inhands/antag/clockwork_lefthand.dmi'
@@ -23,10 +23,17 @@
 	total_mass = TOTAL_MASS_HAND_REPLACEMENT
 	var/mob/living/last_attacked
 	var/combo = 0
+	var/damage_per_combo = 2
 
 /obj/item/clockwork/brass_claw/Initialize()
 	. = ..()
 	AddComponent(/datum/component/butchering, 60, 80)
+
+/obj/item/clockwork/brass_claw/examine(mob/user)
+	if(is_servant_of_ratvar(user))
+		clockwork_desc += "\n<span class='brass'>It has </span><span class='inathneq_small'><b>[combo]</span></b><span class='brass'> combo stacks built up against the current target, causing </span><span class='inathneq_small'><b>[combo * damage_per_combo]</span></b><span class='brass'> bonus damage.</span>"
+	. = ..()
+	clockwork_desc = initial(desc)
 
 /obj/item/clockwork/brass_claw/attack(mob/living/target, mob/living/carbon/human/user)
 	. = ..()
@@ -40,4 +47,4 @@
 			combo++
 		else
 			combo += 3
-		target.adjustBruteLoss(combo * 2)
+		target.adjustBruteLoss(combo * damage_per_combo)
