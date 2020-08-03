@@ -29,7 +29,7 @@
 	trigger_guard = TRIGGER_GUARD_NORMAL	//trigger guard on the weapon, hulks can't fire them with their big meaty fingers
 	var/sawn_desc = null				//description change if weapon is sawn-off
 	var/sawn_off = FALSE
-	
+
 	/// can we be put into a turret
 	var/can_turret = TRUE
 	/// can we be put in a circuit
@@ -602,7 +602,7 @@
 		var/penalty = (last_fire + GUN_AIMING_TIME + fire_delay) - world.time
 		if(penalty > 0) //Yet we only penalize users firing it multiple times in a haste. fire_delay isn't necessarily cumbersomeness.
 			aiming_delay = penalty
-	if(SEND_SIGNAL(user, COMSIG_COMBAT_MODE_CHECK, COMBAT_MODE_ACTIVE)) //To be removed in favor of something less tactless later.
+	if(SEND_SIGNAL(user, COMSIG_COMBAT_MODE_CHECK, COMBAT_MODE_ACTIVE) || HAS_TRAIT(user, TRAIT_INSANE_AIM) //To be removed in favor of something less tactless later.
 		base_inaccuracy /= 1.5
 	if(stamloss > STAMINA_NEAR_SOFTCRIT) //This can null out the above bonus.
 		base_inaccuracy *= 1 + (stamloss - STAMINA_NEAR_SOFTCRIT)/(STAMINA_NEAR_CRIT - STAMINA_NEAR_SOFTCRIT)*0.5
