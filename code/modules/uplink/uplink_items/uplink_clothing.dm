@@ -102,4 +102,4 @@
 	name = "Mechanical Eyepatch"
 	desc = "An eyepatch that connects itself to your eye socket, enhancing your shooting to an impossible degree, allowing your bullets to ricochet far more often than usual."
 	item = /obj/item/clothing/glasses/eyepatch/syndicate
-	cost = 12
+	cost = 8
