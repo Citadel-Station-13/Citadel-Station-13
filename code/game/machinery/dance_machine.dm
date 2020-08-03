@@ -9,6 +9,7 @@
 	var/active = FALSE
 	var/list/rangers = list()
 	var/stop = 0
+	var/volume = 70
 	var/datum/track/selection = null
 
 /obj/machinery/jukebox/disco

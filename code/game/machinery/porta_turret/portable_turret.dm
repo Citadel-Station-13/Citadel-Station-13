@@ -25,7 +25,7 @@
 	idle_power_usage = 50		//when inactive, this turret takes up constant 50 Equipment power
 	active_power_usage = 300	//when active, this turret takes up constant 300 Equipment power
 	req_access = list(ACCESS_SECURITY) /// Only people with Security access
-	power_channel = AREA_USAGE_EQUIP	//drains power from the EQUIPMENT channel
+	power_channel = EQUIP	//drains power from the EQUIPMENT channel
 	max_integrity = 160		//the turret's health
 	integrity_failure = 0.5
 	armor = list("melee" = 50, "bullet" = 30, "laser" = 30, "energy" = 30, "bomb" = 30, "bio" = 0, "rad" = 0, "fire" = 90, "acid" = 90)
@@ -91,6 +91,8 @@
 	var/datum/action/turret_toggle/toggle_action
 	/// Mob that is remotely controlling the turret
 	var/mob/remote_controller
+	/// MISSING:
+	var/shot_stagger = 0
 
 /obj/machinery/porta_turret/Initialize()
 	. = ..()
@@ -126,10 +128,12 @@
 /obj/machinery/porta_turret/proc/check_should_process()
 	if (datum_flags & DF_ISPROCESSING)
 		if (!on || !anchored || (stat & BROKEN) || !powered())
-			end_processing()
+			//end_processing()
+			STOP_PROCESSING(SSmachines, src)
 	else
 		if (on && anchored && !(stat & BROKEN) && powered())
-			begin_processing()
+			START_PROCESSING(SSmachines, src)
+			//begin_processing()
 
 /obj/machinery/porta_turret/update_icon_state()
 	if(!anchored)
@@ -934,7 +938,7 @@
 	locked = FALSE
 
 /obj/machinery/turretid/attack_ai(mob/user)
-	if(!ailock || isAdminGhostAI(user))
+	if(!ailock || IsAdminGhost(user))
 		return attack_hand(user)
 	else
 		to_chat(user, "<span class='warning'>There seems to be a firewall preventing you from accessing this device!</span>")
@@ -948,7 +952,7 @@
 /obj/machinery/turretid/ui_data(mob/user)
 	var/list/data = list()
 	data["locked"] = locked
-	data["siliconUser"] = user.has_unlimited_silicon_privilege
+	data["siliconUser"] = hasSiliconAccessInArea(user) || IsAdminGhost(user)
 	data["enabled"] = enabled
 	data["lethal"] = lethal
 	data["shootCyborgs"] = shoot_cyborgs
@@ -961,7 +965,7 @@
 
 	switch(action)
 		if("lock")
-			if(!usr.has_unlimited_silicon_privilege)
+			if(!hasSiliconAccessInArea(usr) || IsAdminGhost(usr))
 				return
 			if((obj_flags & EMAGGED) || (stat & BROKEN))
 				to_chat(usr, "<span class='warning'>The turret control is unresponsive!</span>")
@@ -1122,7 +1126,7 @@
 	installation = /obj/item/gun/energy/laser/bluetag
 	team_color = "blue"
 
-/obj/machinery/porta_turret/lasertag/bullet_act(obj/projectile/P)
+/obj/machinery/porta_turret/lasertag/bullet_act(obj/item/projectile/P)
 	. = ..()
 	if(on)
 		if(team_color == "blue")

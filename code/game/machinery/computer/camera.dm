@@ -72,7 +72,7 @@
 			use_power(active_power_usage)
 		// Register map objects
 		user.client.register_map_obj(cam_screen)
-		for(var/plane in cam_plane_masters)
+		for(var/plane in cam_plane_master)
 			user.client.register_map_obj(plane)
 		user.client.register_map_obj(cam_background)
 		// Open UI

@@ -345,7 +345,7 @@
 	name = initial(I.name)
 	icon = initial(I.icon)
 	icon_state = initial(I.icon_state)
-
+/* Selling people in jars is currently disabled.
 /obj/structure/displaycase/forsale
 	name = "vend-a-tray"
 	icon = 'icons/obj/stationobjs.dmi'
@@ -553,3 +553,4 @@
 /obj/structure/displaycase/forsale/kitchen
 	desc = "A display case with an ID-card swiper. Use your ID to purchase the contents. Meant for the bartender and chef."
 	req_one_access = list(ACCESS_KITCHEN, ACCESS_BAR)
+*/

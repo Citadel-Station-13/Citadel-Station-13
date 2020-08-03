@@ -45,8 +45,6 @@
 	var/height = 11
 	var/list/grid
 	var/canvas_color = "#ffffff" //empty canvas color
-	var/ui_x = 400
-	var/ui_y = 400
 	var/used = FALSE
 	var/painting_name //Painting name, this is set after framing.
 	var/finalized = FALSE //Blocks edits
@@ -194,8 +192,6 @@
 	icon_state = "19x19"
 	width = 19
 	height = 19
-	ui_x = 600
-	ui_y = 600
 	pixel_x = 6
 	pixel_y = 9
 	framed_offset_x = 8
@@ -205,8 +201,6 @@
 	icon_state = "23x19"
 	width = 23
 	height = 19
-	ui_x = 800
-	ui_y = 600
 	pixel_x = 4
 	pixel_y = 10
 	framed_offset_x = 6
@@ -216,8 +210,6 @@
 	icon_state = "23x23"
 	width = 23
 	height = 23
-	ui_x = 800
-	ui_y = 800
 	pixel_x = 5
 	pixel_y = 9
 	framed_offset_x = 5
@@ -266,7 +258,7 @@
 /obj/structure/sign/painting/examine(mob/user)
 	. = ..()
 	if(C)
-		C.ui_interact(user,state = GLOB.physical_obscured_state)
+		C.ui_interact(user)
 
 /obj/structure/sign/painting/wirecutter_act(mob/living/user, obj/item/I)
 	. = ..()

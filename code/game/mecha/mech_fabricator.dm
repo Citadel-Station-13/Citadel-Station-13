@@ -9,9 +9,9 @@
 	active_power_usage = 5000
 	req_access = list(ACCESS_ROBOTICS)
 	circuit = /obj/item/circuitboard/machine/mechfab
-	processing_flags = START_PROCESSING_MANUALLY
+	// processing_flags = START_PROCESSING_MANUALLY
 
-	subsystem_type = /datum/controller/subsystem/processing/fastprocess
+	// subsystem_type = /datum/controller/subsystem/processing/fastprocess
 
 	/// Current items in the build queue.
 	var/list/queue = list()
@@ -66,7 +66,7 @@
 /obj/machinery/mecha_part_fabricator/Initialize(mapload)
 	stored_research = new
 	rmat = AddComponent(/datum/component/remote_materials, "mechfab", mapload && link_on_init)
-	
+
 	RefreshParts() //Recalculating local material sizes if the fab isn't linked
 	return ..()
 
@@ -152,10 +152,14 @@
 				category_override = list()
 				if(mech_types & EXOSUIT_MODULE_RIPLEY)
 					category_override += "Ripley"
+				if(mech_types & EXOSUIT_MODULE_FIREFIGHTER)
+					category_override += "Firefighter"
 				if(mech_types & EXOSUIT_MODULE_ODYSSEUS)
 					category_override += "Odysseus"
 				// if(mech_types & EXOSUIT_MODULE_CLARKE)
 				// 	category_override += "Clarke"
+				if(mech_types & EXOSUIT_MODULE_GYGAX_MED)
+					category_override += "Medical-Spec Gygax"
 				if(mech_types & EXOSUIT_MODULE_GYGAX)
 					category_override += "Gygax"
 				if(mech_types & EXOSUIT_MODULE_DURAND)
@@ -330,7 +334,8 @@
 		// If we're not processing the queue anymore or there's nothing to build, end processing.
 		if(!process_queue || !build_next_in_queue())
 			on_finish_printing()
-			end_processing()
+			STOP_PROCESSING(SSfastprocess, src)
+			//end_processing()
 			return TRUE
 		on_start_printing()
 
@@ -572,7 +577,8 @@
 			process_queue = TRUE
 
 			if(!being_built)
-				begin_processing()
+				START_PROCESSING(SSfastprocess, src)
+				//begin_processing()
 			return
 		if("stop_queue")
 			// Pause queue building. Also known as stop.
@@ -591,7 +597,8 @@
 
 			if(build_part(D))
 				on_start_printing()
-				begin_processing()
+				START_PROCESSING(SSfastprocess, src)
+				//begin_processing() teege has this as a helper proc. please port it!
 
 			return
 		if("move_queue_part")

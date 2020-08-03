@@ -125,9 +125,11 @@
 			refreshBay()
 			. = TRUE
 		if("bay5")
-			bay =  locate(/area/centcom/supplypod/loading/ert) in GLOB.sortedAreas
-			refreshBay()
-			. = TRUE
+			to_chat(usr, "LetterN is lazy and didin't bother porting this new cc area!")
+			return
+		//	bay =  locate(/area/centcom/supplypod/loading/ert) in GLOB.sortedAreas
+		//	refreshBay()
+		//	. = TRUE
 		if("pickDropoffTurf") //Enters a mode that lets you pick the dropoff location for reverse pods
 			if (picking_dropoff_turf)
 				picking_dropoff_turf = FALSE
@@ -487,11 +489,11 @@
 		return
 	if (launching || turf_picking) //If the launching param is true, we give the user new mouse icons.
 		if(launching)
-			holder.mouse_up_icon = 'icons/effects/supplypod_target.dmi' //Icon for when mouse is released
-			holder.mouse_down_icon = 'icons/effects/supplypod_down_target.dmi' //Icon for when mouse is pressed
+			holder.mouse_up_icon = 'icons/effects/mouse_pointers/supplypod_target.dmi' //Icon for when mouse is released
+			holder.mouse_down_icon = 'icons/effects/mouse_pointers/supplypod_down_target.dmi' //Icon for when mouse is pressed
 		if(turf_picking)
-			holder.mouse_up_icon = 'icons/effects/supplypod_pickturf.dmi' //Icon for when mouse is released
-			holder.mouse_down_icon = 'icons/effects/supplypod_pickturf_down.dmi' //Icon for when mouse is pressed
+			holder.mouse_up_icon = 'icons/effects/mouse_pointers/supplypod_pickturf.dmi' //Icon for when mouse is released
+			holder.mouse_down_icon = 'icons/effects/mouse_pointers/supplypod_pickturf_down.dmi' //Icon for when mouse is pressed
 		holder.mouse_pointer_icon = holder.mouse_up_icon //Icon for idle mouse (same as icon for when released)
 		holder.click_intercept = src //Create a click_intercept so we know where the user is clicking
 	else
@@ -612,8 +614,8 @@
 		toLaunch.reverse_dropoff_turf = bay //Bay is currently a nonstatic expression, so it cant go into toLaunch using DuplicateObject
 	*/
 	toLaunch.update_icon()//we update_icon() here so that the door doesnt "flicker on" right after it lands
-	var/shippingLane = GLOB.areas_by_type[/area/centcom/supplypod/fly_me_to_the_moon]
-	toLaunch.forceMove(shippingLane)
+	// var/shippingLane = GLOB.areas_by_type[/area/centcom/supplypod/fly_me_to_the_moon]
+	// toLaunch.forceMove(shippingLane) The shipping lane is temporarily closed due to ratvarian blockades
 	if (launchClone) //We arent launching the actual items from the bay, rather we are creating clones and launching those
 		if(launchRandomItem)
 			var/atom/movable/O = pick_n_take(launchList)

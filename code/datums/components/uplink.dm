@@ -174,6 +174,7 @@ GLOBAL_LIST_EMPTY(uplinks)
 						is_inaccessible = FALSE
 				if(is_inaccessible)
 					continue
+			/*
 			if(I.restricted_species) //catpeople specfic gloves.
 				if(ishuman(user))
 					var/is_inaccessible = TRUE
@@ -184,6 +185,7 @@ GLOBAL_LIST_EMPTY(uplinks)
 							break
 					if(is_inaccessible)
 						continue
+			*/
 			cat["items"] += list(list(
 				"name" = I.name,
 				"cost" = I.cost,

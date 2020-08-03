@@ -178,7 +178,7 @@
 			. = world.time < (call_start_time + HOLOPAD_MAX_DIAL_TIME)
 			if(!.)
 				calling_holopad.say("No answer received.")
-				calling_holopad.temp = ""
+				// calling_holopad.temp = ""
 
 	if(!.)
 		testing("Holocall Check fail")

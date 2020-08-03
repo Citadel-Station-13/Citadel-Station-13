@@ -372,7 +372,7 @@ GLOBAL_LIST_EMPTY(network_holopads)
 			if(force_answer_call && world.time > (HC.call_start_time + (HOLOPAD_MAX_DIAL_TIME / 2)))
 				HC.Answer(src)
 				break
-			if(HC.head_call && !secure)
+			if(!secure) //HC.head_call && 
 				HC.Answer(src)
 				break
 			if(outgoing_call)

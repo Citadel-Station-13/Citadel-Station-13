@@ -816,7 +816,7 @@ GLOBAL_LIST_EMPTY(vending_products)
 				if(D)
 					D.adjust_money(price_to_use)
 					SSblackbox.record_feedback("amount", "vending_spent", price_to_use)
-					log_econ("[price_to_use] credits were inserted into [src] by [D.account_holder] to buy [R].")
+					//log_econ("[price_to_use] credits were inserted into [src] by [D.account_holder] to buy [R].")
 			if(last_shopper != usr || purchase_message_cooldown < world.time)
 				say("Thank you for shopping with [src]!")
 				purchase_message_cooldown = world.time + 5 SECONDS
