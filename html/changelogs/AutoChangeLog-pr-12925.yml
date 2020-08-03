@@ -1,5 +1,0 @@
-author: "silicons"
-delete-after: True
-changes: 
-  - rscadd: "shoves have been buffed to apply a status effect rather than a 0.85 movespeed modifier, meaning repeatedly shoving someone now renews the debuff"
-  - balance: "shoves now stagger for 3.5 seconds."
