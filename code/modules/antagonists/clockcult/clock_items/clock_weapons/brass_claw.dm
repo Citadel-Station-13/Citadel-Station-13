@@ -33,7 +33,7 @@
 	if(is_servant_of_ratvar(user))
 		clockwork_desc += "\n<span class='brass'>It has </span><span class='inathneq_small'><b>[combo]</span></b><span class='brass'> combo stacks built up against the current target, causing </span><span class='inathneq_small'><b>[combo * damage_per_combo]</span></b><span class='brass'> bonus damage.</span>"
 	. = ..()
-	clockwork_desc = initial(desc)
+	clockwork_desc = initial(clockwork_desc)
 
 /obj/item/clockwork/brass_claw/attack(mob/living/target, mob/living/carbon/human/user)
 	. = ..()
