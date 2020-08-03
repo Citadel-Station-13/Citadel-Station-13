@@ -86,9 +86,11 @@
 	descname = "Sigil, Access to rites"
 	name = "Sigil of Rites"
 	desc = "Places a sigil that, when interacted with, will allow for a variety of rites to be performed on the sigil. These usually require power cells, clockwork power, and some other components."
-	invocations = list("Engine, allow us..", ".. to be blessed with rites.")
+	invocations = list("Engine, allow us..", ".. to be blessed with your rites.")
 	channel_time = 80
 	power_cost = 1400
+	invokers_required = 2
+	multiple_invokers_used = TRUE
 	whispered = TRUE
 	object_path = /obj/effect/clockwork/sigil/rite
 	creator_message = "<span class='brass'>A sigil of Rites appears beneath you. It will allow you to perform certain rites, given sufficient materials and power.</span>"
