@@ -659,7 +659,8 @@
 	if(!ignore_source_check && firer)
 		var/mob/M = firer
 		if((target == firer) || ((target == firer.loc) && ismecha(firer.loc)) || (target in firer.buckled_mobs) || (istype(M) && (M.buckled == target)))
-			return FALSE
+			if(!ricochets) //if it has ricocheted, it can hit the firer.
+				return FALSE
 	if(!ignore_loc && (loc != target.loc))
 		return FALSE
 	if(target in passthrough)

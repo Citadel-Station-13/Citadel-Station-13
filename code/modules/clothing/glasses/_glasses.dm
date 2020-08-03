@@ -158,12 +158,15 @@
 /obj/item/clothing/glasses/eyepatch/syndicate/equipped(mob/living/carbon/human/user, slot)
 	. = ..()
 	if(slot == SLOT_GLASSES)
-		user.visible_message("<span class='notice'>The cybernetic eyepatch beeps as you connect it to your eye, its circuitry embedding into your eye.")
+		user.visible_message("<span class='notice'>The cybernetic eyepatch's circuitry begins connecting to your eye as you put it on, making it immremovable.")
 		ADD_TRAIT(user, TRAIT_INSANE_AIM, "SYNDICATE_EYEPATCH_AIM")
 		ADD_TRAIT(src, TRAIT_NODROP, "SYNDICATE_EYEPATCH_NODROP")
-
 /obj/item/clothing/glasses/eyepatch/syndicate/dropped(mob/living/carbon/human/user)
 	REMOVE_TRAIT(user, TRAIT_INSANE_AIM, "SYNDICATE_EYEPATCH_AIM")
+	var/obj/item/organ/eyes/eyes = user.getorganslot(ORGAN_SLOT_EYES)
+	if(eyes)
+		eyes.applyOrganDamage(30)
+		user.visible_message("<span class='warning'>Your eye stings as the circuitry is removed from your eye!")
 
 /obj/item/clothing/glasses/monocle
 	name = "monocle"
