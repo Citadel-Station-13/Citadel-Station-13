@@ -10,7 +10,7 @@
 	max_mobs = 3
 	max_integrity = 250
 	mob_types = list(/mob/living/simple_animal/hostile/asteroid/basilisk/watcher/tendril)
-	var/loot_type = /obj/structure/closet/crate/necropolis/tendril/magic
+	var/loot_type = /obj/structure/closet/crate/necropolis/tendril/all
 
 	move_resist=INFINITY // just killing it tears a massive hole in the ground, let's not move it
 	anchored = TRUE
@@ -22,11 +22,9 @@
 
 /obj/structure/spawner/lavaland/goliath
 	mob_types = list(/mob/living/simple_animal/hostile/asteroid/goliath/beast/tendril)
-	loot_type = /obj/structure/closet/crate/necropolis/tendril/weapon_armor
 
 /obj/structure/spawner/lavaland/legion
 	mob_types = list(/mob/living/simple_animal/hostile/asteroid/hivelord/legion/tendril)
-	loot_type = /obj/structure/closet/crate/necropolis/tendril/misc
 
 /obj/structure/spawner/lavaland/icewatcher
 	mob_types = list(/mob/living/simple_animal/hostile/asteroid/basilisk/watcher/icewing)
