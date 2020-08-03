@@ -147,7 +147,7 @@
 	item = /obj/item/aiModule/syndicate
 	cost = 9
 
-/datum/uplink_item/device_tools/hacked_module
+/datum/uplink_item/device_tools/damaged_module
 	name = "Damaged AI Law Upload Module"
 	desc = "This AI law upload module has been laying around our warehouse for god knows how long. We do not know why you would ever use this."
 	item = /obj/item/aiModule/core/full/damaged
