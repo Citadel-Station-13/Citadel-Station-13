@@ -158,7 +158,7 @@
 /obj/item/clothing/glasses/eyepatch/syndicate/equipped(mob/living/carbon/human/user, slot)
 	. = ..()
 	if(slot == SLOT_GLASSES)
-		user.visible_message("<span class='notice'>The cybernetic eyepatch's circuitry begins connecting to your eye as you put it on, making it immremovable.")
+		user.visible_message("<span class='warning'>Circuitry from the eyepatch links itself to your brain as you put on the eyepatch.")
 		ADD_TRAIT(user, TRAIT_INSANE_AIM, "SYNDICATE_EYEPATCH_AIM")
 		ADD_TRAIT(src, TRAIT_NODROP, "SYNDICATE_EYEPATCH_NODROP")
 
