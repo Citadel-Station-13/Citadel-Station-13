@@ -644,7 +644,6 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 /obj/item/guardiancreator/tech/choose/nukie/check_uplink_validity()
 	return !used
 
-
 /obj/item/paper/guides/antag/guardian
 	name = "Holoparasite Guide"
 	icon_state = "paper_words"
