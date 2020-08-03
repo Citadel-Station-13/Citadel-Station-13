@@ -638,7 +638,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 /obj/item/guardiancreator/tech/choose/dextrous
 	possible_guardians = list("Assassin", "Chaos", "Charger", "Dextrous", "Explosive", "Lightning", "Protector", "Ranged", "Standard", "Support")
 
-/obj/item/guardiancreator/tech/choose/nukie
+/obj/item/guardiancreator/tech/choose/nukie // lacks support and protector as encouraging nukies to play turtle isnt fun and dextrous is epic
 	possible_guardians = list("Assassin", "Chaos", "Charger", "Dextrous", "Explosive", "Lightning", "Ranged", "Standard")
 
 /obj/item/guardiancreator/tech/choose/nukie/check_uplink_validity()
