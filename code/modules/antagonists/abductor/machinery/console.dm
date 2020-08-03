@@ -23,6 +23,12 @@
 	var/obj/machinery/abductor/pad/pad
 	var/obj/machinery/computer/camera_advanced/abductor/camera
 	var/list/datum/icon_snapshot/disguises = list()
+	/// Currently selected gear category
+	var/selected_cat
+	/// Dictates if the compact mode of the interface is on or off
+	var/compact_mode = FALSE
+	/// Possible gear to be dispensed
+	var/list/possible_gear
 
 /obj/machinery/abductor/console/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	if(!HAS_TRAIT(user, TRAIT_ABDUCTOR_TRAINING) && !HAS_TRAIT(user.mind, TRAIT_ABDUCTOR_TRAINING))

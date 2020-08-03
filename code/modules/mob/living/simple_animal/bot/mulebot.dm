@@ -177,7 +177,7 @@
 	var/list/data = list()
 	data["on"] = on
 	data["locked"] = locked
-	data["siliconUser"] = user.has_unlimited_silicon_privilege
+	data["siliconUser"] = hasSiliconAccessInArea(user)
 	data["mode"] = mode ? mode_name[mode] : "Ready"
 	data["modeStatus"] = ""
 	switch(mode)
@@ -201,11 +201,11 @@
 	return data
 
 /mob/living/simple_animal/bot/mulebot/ui_act(action, params)
-	if(..() || (locked && !usr.has_unlimited_silicon_privilege))
+	if(..() || (locked && hasSiliconAccessInArea(user)))
 		return
 	switch(action)
 		if("lock")
-			if(usr.has_unlimited_silicon_privilege)
+			if(hasSiliconAccessInArea(user))
 				locked = !locked
 				. = TRUE
 		if("power")
