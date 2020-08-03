@@ -316,16 +316,18 @@
 	if(!trajectory)
 		return
 	var/turf/T = get_turf(A)
-	if(check_ricochet(A) && A.handle_ricochet(src)) //if you can ricochet, attempt to ricochet off the object
-		on_ricochet(A) //if allowed, use autoaim to ricochet into someone, otherwise default to ricocheting off the object from above
-		var/datum/point/pcache = trajectory.copy_to()
-		if(hitscan)
-			store_hitscan_collision(pcache)
-		decayedRange = max(0, decayedRange - reflect_range_decrease)
-		ricochet_chance *= ricochet_decay_chance
-		damage *= ricochet_decay_damage
-		range = decayedRange
-		return TRUE
+	if(check_ricochet(A) && check_ricochet_flag(A)) //if you can ricochet, attempt to ricochet off the object
+		ricochets++
+		if(A.handle_ricochet(src))
+			on_ricochet(A) //if allowed, use autoaim to ricochet into someone, otherwise default to ricocheting off the object from above
+			var/datum/point/pcache = trajectory.copy_to()
+			if(hitscan)
+				store_hitscan_collision(pcache)
+			decayedRange = max(0, decayedRange - reflect_range_decrease)
+			ricochet_chance *= ricochet_decay_chance
+			damage *= ricochet_decay_damage
+			range = decayedRange
+			return TRUE
 
 	var/distance = get_dist(T, starting) // Get the distance between the turf shot from and the mob we hit and use that for the calculations.
 	if(def_zone && check_zone(def_zone) != BODY_ZONE_CHEST)
@@ -401,24 +403,12 @@
 	//Returns null if nothing at all was found.
 
 /obj/item/projectile/proc/check_ricochet(atom/A)
-	if(ricochets > ricochets_max)		//safety thing, we don't care about what the other thing says about this.
-		return FALSE
-	var/them = A.check_projectile_ricochet(src)
-	switch(them)
-		if(PROJECTILE_RICOCHET_PREVENT)
-			return FALSE
-		if(PROJECTILE_RICOCHET_FORCE)
-			return TRUE
-		if(PROJECTILE_RICOCHET_NO)
-			return FALSE
-		if(PROJECTILE_RICOCHET_YES)
-			var/chance = ricochet_chance * A.ricochet_chance_mod
-			if(firer && HAS_TRAIT(firer, TRAIT_NICE_SHOT))
-				chance += NICE_SHOT_RICOCHET_BONUS
-			if(prob(chance))
-				return TRUE
-		else
-			CRASH("Invalid return value for projectile ricochet check from [A].")
+	var/chance = ricochet_chance * A.ricochet_chance_mod
+	if(firer && HAS_TRAIT(firer, TRAIT_NICE_SHOT))
+		chance += NICE_SHOT_RICOCHET_BONUS
+	if(prob(chance))
+		return TRUE
+	return FALSE
 
 /obj/item/projectile/proc/check_ricochet_flag(atom/A)
 	if((flag in list("energy", "laser")) && (A.flags_ricochet & RICOCHET_SHINY))
