@@ -161,7 +161,9 @@
 		user.visible_message("<span class='notice'>The cybernetic eyepatch's circuitry begins connecting to your eye as you put it on, making it immremovable.")
 		ADD_TRAIT(user, TRAIT_INSANE_AIM, "SYNDICATE_EYEPATCH_AIM")
 		ADD_TRAIT(src, TRAIT_NODROP, "SYNDICATE_EYEPATCH_NODROP")
+
 /obj/item/clothing/glasses/eyepatch/syndicate/dropped(mob/living/carbon/human/user)
+	. = ..()
 	REMOVE_TRAIT(user, TRAIT_INSANE_AIM, "SYNDICATE_EYEPATCH_AIM")
 	var/obj/item/organ/eyes/eyes = user.getorganslot(ORGAN_SLOT_EYES)
 	if(eyes)
