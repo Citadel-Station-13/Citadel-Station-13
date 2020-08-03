@@ -208,6 +208,7 @@
 		abyss_act()
 
 /mob/living/simple_animal/hostile/megafauna/proc/abyss_act()
-	visible_message("<span class='danger'>[src] [enrage_message]</span>")
-	new enraged_type(loc)
-	qdel(src)
+    if(abyss_born)
+	   visible_message("<span class='danger'>[src] [enrage_message]</span>")
+	   new enraged_type(get_turf(src))
+	   qdel(src)
