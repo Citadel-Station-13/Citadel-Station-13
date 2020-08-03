@@ -56,7 +56,7 @@
 				var/obj/O = required_ingredients[i]
 				if(i != 1)
 					still_required_string += ", "
-				still_required_string += initial(O.name)
+				still_required_string += "a [initial(O.name)]"
 			to_chat(invoker, "<span class='brass'>There are still materials missing for this rite. You require [still_required_string].</span>")
 			return FALSE
 
@@ -111,9 +111,9 @@
 
 /datum/clockwork_rite/proc/build_info() //Constructs the info text of a given rite, based on the vars of the rite
 	. = ""
-	. += "<span class='brass'>This is the <b>[name]</b>.</span>\n"
-	. += "<span class='brass'>[desc]</span>\n"
-	. += "<span class='brass'>It requires: </span>"
+	. += "<span class='brass'>This is the <b>[name]</b>.\n"
+	. += "[desc]\n"
+	. += "It requires: "
 	if(required_ingredients.len)
 		var/material_string = ""
 		for(var/i = 1 to required_ingredients.len)
@@ -121,17 +121,18 @@
 			if(i != 1)
 				material_string += ", "
 			material_string += "a [initial(O.name)]"
-		. += "<span class='brass'>[material_string].</span>\n"
+		. += "[material_string].\n"
 	else
-		. += "</span><span class='inathneq_small'><b>no<b></span><span class='brass'> materials.</span>\n"
-	. += "<span class='brass'>It [power_cost >= 0 ? "costs" : "generates"]</span><span class='inathneq_small'><b> [power_cost ? "[power_cost]" : "no"] </span></b><span class='brass'>power.</span>\n"
-	. += "<span class='brass'>It requires </span><span class='inathneq_small'><b>[requires_human ? " a human" : " no"]</b></span><span class='brass'> target.</span>\n"
+		. += "</span><span class='inathneq_small'><b>no</b><span class='brass'> materials.\n"
+	. += "It [power_cost >= 0 ? "costs" : "generates"]<span class='inathneq_small'><b> [power_cost ? "[power_cost]" : "no"] </b><span class='brass'>power.\n"
+	. += "It requires <span class='inathneq_small'><b>[requires_human ? " a human" : " no"]</b><span class='brass'> target.\n"
 	if(requires_human)
-		. += "<span class='brass'>The target </span><span class='inathneq_small'><b>[must_be_servant ? "cannot be" : "can be"] </span></b><span class='brass'> a nonservant.</span>\n"
-		. += "<span class='brass'>The target </span><span class='inathneq_small'><b>[target_can_be_invoker ? "can be" : "cannot be"]</span></b><span class='brass'> the invoker.</span>\n"
-	. += "<span class='brass'>It requires </span><span class='inathneq_small'><b>[cast_time/10]</span></b><span class='brass'> seconds to cast.</span>\n"
-	. += "<span class='brass'>It has been used </span><span class='inathneq_small'><b>[times_used]</span></b><span class='brass'> time[times_used != 1 ? "s" : ""], out of </span><span class='inathneq_small'><b>[limit != INFINITE ? ", [limit]" : "infinite"]</span></b><span class='brass'> available uses.</span>"
+		. += "The target <span class='inathneq_small'><b>[must_be_servant ? "cannot be" : "can be"] </b><span class='brass'> a nonservant.\n"
+		. += "The target <span class='inathneq_small'><b>[target_can_be_invoker ? "can be" : "cannot be"]</b><span class='brass'> the invoker.\n"
+	. += "It requires <span class='inathneq_small'><b>[cast_time/10]</b><span class='brass'> seconds to cast.\n"
+	. += "It has been used <span class='inathneq_small'><b>[times_used]</b><span class='brass'> time[times_used != 1 ? "s" : ""], out of <span class='inathneq_small'><b>[limit != INFINITE ? "[limit]" : "infinite"]</b><span class='brass'> available uses.</span>"
 
+//Adds a organ or cybernetic implant to a servant without the need for surgery. Cannot be used with brains for.. reasons.
 /datum/clockwork_rite/advancement
 	name = "Rite of Advancement"
 	desc = "This rite is used to augment a servant with organs or cybernetic implants. The organ of choice, aswell as the servant and the required ingredients must be placed on the sigil for this rite to take place."
@@ -139,6 +140,7 @@
 	power_cost = 500
 	requires_human = TRUE
 	cast_time = 40
+	rite_cast_sound = 'sound/magic/Blind.ogg'
 
 /datum/clockwork_rite/advancement/cast(var/mob/living/invoker, var/turf/T, var/mob/living/carbon/human/target)
 	message_admins("Turf: [T]")
@@ -156,6 +158,7 @@
 	O.Insert(target)
 	new /obj/effect/temp_visual/ratvar/sigil/transgression(T)
 
+//Heals all wounds (not damage) on the target, causing toxloss proportional to amount of wounds healed. 10 damage per wound.
 /datum/clockwork_rite/treat_wounds
 	name = "Rite of Woundmending"
 	desc = "This rite is used to heal wounds of the servant on the rune. It causes toxins damage proportional to the amount of wounds healed. This can be lethal if performed on an critically injured target."
@@ -165,6 +168,7 @@
 	must_be_servant = FALSE
 	target_can_be_invoker = FALSE
 	cast_time = 80
+	rite_cast_sound = 'sound/magic/staff_healing.ogg'
 
 /datum/clockwork_rite/treat_wounds/cast(var/mob/living/invoker, var/turf/T, var/mob/living/carbon/human/target)
 	if(!target)
@@ -180,13 +184,15 @@
 	to_chat(target, "<span class='warning'>You feel your wounds heal, but are overcome with deep nausea.</span>")
 	new /obj/effect/temp_visual/ratvar/sigil/vitality(T)
 
+//Summons a brass claw implant on the sigil, which can extend a claw that benefits from repeatedly attacking a single target. Can only be cast a limited amount of times.
 /datum/clockwork_rite/summon_claw
 	name = "Rite of the Claw"
-	desc = "Summons a special arm implant that, when added to a cultist's limb, will allow them to extend and retract a claw at will. Don't leave any implants you want to keep on this rune when casting the rite."
+	desc = "Summons a special arm implant that, when added to a servant's limb, will allow them to extend and retract a claw at will. Don't leave any implants you want to keep on this rune when casting the rite."
 	required_ingredients = list(/obj/item/stock_parts/cell, /obj/item/organ/cyberimp, /obj/item/assembly/flash)
 	power_cost = 1000
 	cast_time = 60
 	limit = 4
+	rite_cast_sound = 'sound/magic/clockwork/fellowship_armory.ogg'
 
 /datum/clockwork_rite/summon_claw/cast(var/mob/living/invoker, var/turf/T, var/mob/living/carbon/human/target)
 	. = ..()
@@ -194,5 +200,6 @@
 		return FALSE
 	var/obj/item/organ/cyberimp/arm/clockwork/claw/CL = new /obj/item/organ/cyberimp/arm/clockwork/claw(T)
 	CL.visible_message("<span class='warning'>[CL] materialises out of thin air!")
+	new /obj/effect/temp_visual/ratvar/sigil/transmission(T,2)
 
 #undef INFINITE

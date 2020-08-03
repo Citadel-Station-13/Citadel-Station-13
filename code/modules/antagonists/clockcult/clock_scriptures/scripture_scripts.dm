@@ -85,7 +85,7 @@
 /datum/clockwork_scripture/create_object/sigil_of_rites
 	descname = "Sigil, Access to rites"
 	name = "Sigil of Rites"
-	desc = "Places a sigil that, when itneracted with, will allow for a variety of rites to be performed on the sigil. These usually require power cells, clockwork power, and some other components."
+	desc = "Places a sigil that, when interacted with, will allow for a variety of rites to be performed on the sigil. These usually require power cells, clockwork power, and some other components."
 	invocations = list("Engine, allow us..", ".. to be blessed with rites.")
 	channel_time = 80
 	power_cost = 1400
