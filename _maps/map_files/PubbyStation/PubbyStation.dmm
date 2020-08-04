@@ -334,8 +334,8 @@
 /area/crew_quarters/fitness/pool)
 "aaM" = (
 /turf/open/floor/plasteel/yellowsiding/corner{
-	icon_state = "yellowcornersiding";
-	dir = 8
+	dir = 8;
+	icon_state = "yellowcornersiding"
 	},
 /area/crew_quarters/fitness/pool)
 "aaN" = (
@@ -354,8 +354,8 @@
 /area/crew_quarters/fitness/pool)
 "aaP" = (
 /turf/open/floor/plasteel/yellowsiding{
-	icon_state = "yellowsiding";
-	dir = 8
+	dir = 8;
+	icon_state = "yellowsiding"
 	},
 /area/crew_quarters/fitness/pool)
 "aaQ" = (
@@ -433,8 +433,8 @@
 /area/crew_quarters/fitness/pool)
 "aaW" = (
 /turf/open/floor/plasteel/yellowsiding{
-	icon_state = "yellowsiding";
-	dir = 1
+	dir = 1;
+	icon_state = "yellowsiding"
 	},
 /area/crew_quarters/fitness/pool)
 "aaX" = (
@@ -550,8 +550,8 @@
 "abm" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel/yellowsiding{
-	icon_state = "yellowsiding";
-	dir = 4
+	dir = 4;
+	icon_state = "yellowsiding"
 	},
 /area/crew_quarters/fitness/pool)
 "abn" = (
@@ -580,8 +580,8 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel/yellowsiding{
-	icon_state = "yellowsiding";
-	dir = 4
+	dir = 4;
+	icon_state = "yellowsiding"
 	},
 /area/crew_quarters/fitness/pool)
 "abr" = (
@@ -595,8 +595,8 @@
 "abt" = (
 /obj/structure/pool/Rboard,
 /turf/open/floor/plasteel/yellowsiding{
-	icon_state = "yellowsiding";
-	dir = 8
+	dir = 8;
+	icon_state = "yellowsiding"
 	},
 /area/crew_quarters/fitness/pool)
 "abu" = (
@@ -659,8 +659,8 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel/yellowsiding/corner{
-	icon_state = "yellowcornersiding";
-	dir = 4
+	dir = 4;
+	icon_state = "yellowcornersiding"
 	},
 /area/crew_quarters/fitness/pool)
 "abB" = (
@@ -670,21 +670,21 @@
 	pixel_y = -27
 	},
 /turf/open/floor/plasteel/yellowsiding{
-	icon_state = "yellowsiding";
-	dir = 1
+	dir = 1;
+	icon_state = "yellowsiding"
 	},
 /area/crew_quarters/fitness/pool)
 "abC" = (
 /obj/machinery/light,
 /turf/open/floor/plasteel/yellowsiding{
-	icon_state = "yellowsiding";
-	dir = 1
+	dir = 1;
+	icon_state = "yellowsiding"
 	},
 /area/crew_quarters/fitness/pool)
 "abD" = (
 /turf/open/floor/plasteel/yellowsiding/corner{
-	icon_state = "yellowcornersiding";
-	dir = 1
+	dir = 1;
+	icon_state = "yellowcornersiding"
 	},
 /area/crew_quarters/fitness/pool)
 "abE" = (
@@ -47273,7 +47273,7 @@
 "ceT" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/structure/closet/emcloset,
-/turf/open/floor/plating/airless,
+/turf/open/floor/plating,
 /area/engine/engineering)
 "ceU" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
@@ -55663,12 +55663,6 @@
 	},
 /turf/open/floor/plating,
 /area/crew_quarters/dorms)
-"izF" = (
-/turf/open/floor/plating{
-	initial_gas_mix = "o2=0.01;n2=0.01";
-	luminosity = 2
-	},
-/area/maintenance/department/science)
 "iAx" = (
 /obj/structure/cable{
 	icon_state = "4-8"
@@ -57738,10 +57732,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 6
 	},
-/turf/open/floor/plating{
-	initial_gas_mix = "o2=0.01;n2=0.01";
-	luminosity = 2
-	},
+/turf/open/floor/plating,
 /area/maintenance/department/science)
 "nAs" = (
 /obj/machinery/door/airlock/engineering/glass{
@@ -57904,7 +57895,7 @@
 /obj/structure/disposalpipe/trunk{
 	dir = 8
 	},
-/turf/open/floor/plating,
+/turf/open/floor/plating/airless,
 /area/space/nearstation)
 "nOY" = (
 /obj/effect/turf_decal/stripes/line{
@@ -58008,7 +57999,6 @@
 /obj/item/paper_bin,
 /obj/item/pen,
 /turf/open/floor/plating{
-	initial_gas_mix = "o2=0.01;n2=0.01";
 	luminosity = 2
 	},
 /area/maintenance/department/science)
@@ -59531,15 +59521,6 @@
 /obj/structure/cable,
 /turf/open/floor/plating/airless,
 /area/space/nearstation)
-"ros" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/turf/open/floor/plating{
-	initial_gas_mix = "o2=0.01;n2=0.01";
-	luminosity = 2
-	},
-/area/maintenance/department/science)
 "rrb" = (
 /obj/structure/cable{
 	icon_state = "1-2"
@@ -60667,10 +60648,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 9
 	},
-/turf/open/floor/plating{
-	initial_gas_mix = "o2=0.01;n2=0.01";
-	luminosity = 2
-	},
+/turf/open/floor/plating,
 /area/maintenance/department/science)
 "uos" = (
 /obj/machinery/computer/camera_advanced/base_construction,
@@ -61099,13 +61077,6 @@
 /obj/structure/lattice,
 /turf/open/space/basic,
 /area/space/nearstation)
-"vpz" = (
-/obj/structure/girder,
-/turf/open/floor/plating{
-	initial_gas_mix = "o2=0.01;n2=0.01";
-	luminosity = 2
-	},
-/area/maintenance/department/science)
 "vsk" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -62038,10 +62009,7 @@
 /area/maintenance/department/science)
 "xsO" = (
 /obj/item/ectoplasm,
-/turf/open/floor/plating{
-	initial_gas_mix = "o2=0.01;n2=0.01";
-	luminosity = 2
-	},
+/turf/open/floor/plating,
 /area/maintenance/department/science)
 "xuv" = (
 /obj/item/broken_bottle,
@@ -107723,7 +107691,7 @@ aht
 bwm
 ikB
 iVJ
-izF
+lWy
 typ
 bwm
 aht
@@ -108233,7 +108201,7 @@ bwm
 svN
 bIQ
 uek
-izF
+lWy
 bwm
 qnT
 lJr
@@ -108488,9 +108456,9 @@ dMO
 lWy
 rxQ
 lWy
-ros
-izF
-izF
+bIQ
+lWy
+lWy
 mES
 lWy
 lWy
@@ -108747,7 +108715,7 @@ bwm
 nzD
 uoj
 bwm
-izF
+lWy
 bwm
 dMI
 lWy
@@ -109001,7 +108969,7 @@ bkF
 bwm
 bwm
 bwm
-ros
+bIQ
 bwm
 bwm
 bwm
@@ -109258,8 +109226,8 @@ bkF
 qIO
 jXA
 bwm
-ros
-vpz
+bIQ
+hXt
 bwm
 aht
 bwm
