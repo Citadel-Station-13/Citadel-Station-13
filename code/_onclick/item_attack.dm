@@ -67,9 +67,9 @@
 
 /**
   * Called when someone uses us to attack a mob in melee combat.
-  * 
+  *
   * This proc respects CheckAttackCooldown() default clickdelay handling.
-  * 
+  *
   * @params
   * * mob/living/M - target
   * * mob/living/user - attacker
@@ -201,9 +201,9 @@
 		if(SEND_SIGNAL(user, COMSIG_COMBAT_MODE_CHECK, COMBAT_MODE_INACTIVE))
 			bad_trait = SKILL_COMBAT_MODE //blacklist combat skills.
 			if(SEND_SIGNAL(src, COMSIG_COMBAT_MODE_CHECK, COMBAT_MODE_ACTIVE))
-				. *= 0.5
+				. *= 0.8
 		else if(SEND_SIGNAL(src, COMSIG_COMBAT_MODE_CHECK, COMBAT_MODE_INACTIVE))
-			. *= 1.5
+			. *= 1.2
 
 	if(!user.mind || !I.used_skills)
 		return
@@ -220,7 +220,7 @@
   * Also called when clicking on something with an item without being in melee range
   *
   * WARNING: This does not automatically check clickdelay if not in a melee attack! Be sure to account for this!
-  * 
+  *
   * @params
   * * target - The thing we clicked
   * * user - mob of person clicking

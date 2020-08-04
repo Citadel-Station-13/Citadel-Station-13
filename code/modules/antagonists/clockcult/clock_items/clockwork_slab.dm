@@ -4,7 +4,7 @@
 	clockwork_desc = "A link between you and the Celestial Derelict. It contains information, recites scripture, and is your most vital tool as a Servant.\
 	It can be used to link traps and triggers by attacking them with the slab. Keep in mind that traps linked with one another will activate in tandem!"
 
-	icon_state = "dread_ipad"
+	icon_state = "clockwork_slab"
 	lefthand_file = 'icons/mob/inhands/antag/clockwork_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/antag/clockwork_righthand.dmi'
 	var/inhand_overlay //If applicable, this overlay will be applied to the slab's inhand
@@ -21,7 +21,7 @@
 	var/recollecting = TRUE //if we're looking at fancy recollection. tutorial enabled by default
 	var/recollection_category = "Default"
 
-	var/list/quickbound = list(/datum/clockwork_scripture/abscond, \
+	var/list/quickbound = list(/datum/clockwork_scripture/spatial_gateway, \
 	/datum/clockwork_scripture/ranged_ability/kindle, /datum/clockwork_scripture/ranged_ability/hateful_manacles) //quickbound scripture, accessed by index
 	var/maximum_quickbound = 5 //how many quickbound scriptures we can have
 
@@ -69,29 +69,32 @@
 	maximum_quickbound = 6 //we usually have one or two unique scriptures, so if ratvar is up let us bind one more
 	actions_types = list()
 
-/obj/item/clockwork/slab/cyborg/engineer //three scriptures, plus a fabricator
-	quickbound = list(/datum/clockwork_scripture/abscond, /datum/clockwork_scripture/create_object/replicant, /datum/clockwork_scripture/create_object/sigil_of_transmission,  /datum/clockwork_scripture/create_object/stargazer)
+/obj/item/clockwork/slab/cyborg/engineer //six scriptures, plus a fabricator. Might revert this if its too OP, I just thought that engineering borgs should get the all the structures
+	quickbound = list(/datum/clockwork_scripture/spatial_gateway, /datum/clockwork_scripture/create_object/replicant, /datum/clockwork_scripture/create_object/sigil_of_transmission,  /datum/clockwork_scripture/create_object/stargazer, \
+	/datum/clockwork_scripture/create_object/ocular_warden, /datum/clockwork_scripture/create_object/clockwork_obelisk, /datum/clockwork_scripture/create_object/mania_motor)
 
-/obj/item/clockwork/slab/cyborg/medical //five scriptures, plus a spear
-	quickbound = list(/datum/clockwork_scripture/abscond, /datum/clockwork_scripture/ranged_ability/linked_vanguard, /datum/clockwork_scripture/ranged_ability/sentinels_compromise, \
-	/datum/clockwork_scripture/create_object/vitality_matrix)
+/obj/item/clockwork/slab/cyborg/medical //six scriptures, plus a spear
+	quickbound = list(/datum/clockwork_scripture/spatial_gateway, /datum/clockwork_scripture/ranged_ability/linked_vanguard, /datum/clockwork_scripture/ranged_ability/sentinels_compromise, \
+	/datum/clockwork_scripture/create_object/vitality_matrix, /datum/clockwork_scripture/channeled/mending_mantra)
 
-/obj/item/clockwork/slab/cyborg/security //twoscriptures, plus a spear
-	quickbound = list(/datum/clockwork_scripture/abscond, /datum/clockwork_scripture/ranged_ability/hateful_manacles, /datum/clockwork_scripture/ranged_ability/judicial_marker)
+/obj/item/clockwork/slab/cyborg/security //four scriptures, plus a spear
+	quickbound = list(/datum/clockwork_scripture/spatial_gateway, /datum/clockwork_scripture/channeled/volt_blaster, /datum/clockwork_scripture/ranged_ability/hateful_manacles, \
+	/datum/clockwork_scripture/ranged_ability/judicial_marker, /datum/clockwork_scripture/channeled/belligerent)
 
-/obj/item/clockwork/slab/cyborg/peacekeeper //two scriptures, plus a spear
-	quickbound = list(/datum/clockwork_scripture/abscond, /datum/clockwork_scripture/ranged_ability/hateful_manacles, /datum/clockwork_scripture/ranged_ability/judicial_marker)
-
+/obj/item/clockwork/slab/cyborg/peacekeeper //four scriptures, plus a spear
+	quickbound = list(/datum/clockwork_scripture/spatial_gateway, /datum/clockwork_scripture/channeled/volt_blaster, /datum/clockwork_scripture/ranged_ability/hateful_manacles, \
+	/datum/clockwork_scripture/ranged_ability/judicial_marker, /datum/clockwork_scripture/channeled/belligerent)
+/*//this module was commented out so why wasn't this?
 /obj/item/clockwork/slab/cyborg/janitor //six scriptures, plus a fabricator
-	quickbound = list(/datum/clockwork_scripture/abscond, /datum/clockwork_scripture/create_object/replicant, /datum/clockwork_scripture/create_object/sigil_of_transgression, \
+	quickbound = list(/datum/clockwork_scripture/spatial_gateway, /datum/clockwork_scripture/create_object/replicant, /datum/clockwork_scripture/create_object/sigil_of_transgression, \
 	/datum/clockwork_scripture/create_object/stargazer, /datum/clockwork_scripture/create_object/ocular_warden, /datum/clockwork_scripture/create_object/mania_motor)
-
+*/
 /obj/item/clockwork/slab/cyborg/service //six scriptures, plus xray vision
-	quickbound = list(/datum/clockwork_scripture/abscond, /datum/clockwork_scripture/create_object/replicant,/datum/clockwork_scripture/create_object/stargazer, \
+	quickbound = list(/datum/clockwork_scripture/spatial_gateway, /datum/clockwork_scripture/create_object/replicant,/datum/clockwork_scripture/create_object/stargazer, \
 	/datum/clockwork_scripture/spatial_gateway, /datum/clockwork_scripture/create_object/clockwork_obelisk)
 
-/obj/item/clockwork/slab/cyborg/miner //two scriptures, plus a spear and xray vision
-	quickbound = list(/datum/clockwork_scripture/abscond, /datum/clockwork_scripture/ranged_ability/linked_vanguard, /datum/clockwork_scripture/spatial_gateway)
+/obj/item/clockwork/slab/cyborg/miner //three scriptures, plus a spear and xray vision
+	quickbound = list(/datum/clockwork_scripture/spatial_gateway, /datum/clockwork_scripture/ranged_ability/linked_vanguard, /datum/clockwork_scripture/channeled/belligerent, /datum/clockwork_scripture/channeled/volt_blaster)
 
 /obj/item/clockwork/slab/cyborg/access_display(mob/living/user)
 	if(!GLOB.ratvar_awakens)
@@ -242,7 +245,7 @@
 		var/datum/clockwork_scripture/S = GLOB.all_scripture[s]
 		if(S.tier == SCRIPTURE_PERIPHERAL) //yes, tiers are the tabs.
 			continue
-		
+
 		var/list/data = list()
 		data["name"] = S.name
 		data["descname"] = S.descname
@@ -253,13 +256,13 @@
 		data["quickbind"] = S.quickbind //this is if it cant quickbind
 		data["fontcolor"] = get_component_color_bright(S.primary_component)
 		data["important"] = S.important //italic!
-		
+
 		var/found = quickbound.Find(S.type)
 		if(found)
 			data["bound"] = found //number (pos) on where is it on the list
 		if(S.invokers_required > 1)
 			data["invokers"] = "Invokers: [S.invokers_required]"
-		
+
 		.["rec_binds"] = list()
 		for(var/i in 1 to maximum_quickbound)
 			if(GLOB.ratvar_awakens)
@@ -269,10 +272,10 @@
 			else
 				var/datum/clockwork_scripture/quickbind_slot = quickbound[i]
 				.["rec_binds"] += list(list(
-					"name" = initial(quickbind_slot.name), 
+					"name" = initial(quickbind_slot.name),
 					"color" = get_component_color_bright(initial(quickbind_slot.primary_component))
 				))
-		
+
 		.["scripture"][S.tier] += list(data)
 
 /obj/item/clockwork/slab/ui_static_data(mob/user)
@@ -289,6 +292,10 @@
 	.["tier_infos"][SCRIPTURE_APPLICATION] = list(
 		"requirement" = "Unlock these optional scriptures by converting another servant or if [DisplayPower(APPLICATION_UNLOCK_THRESHOLD)] of power is reached..",
 		"ready" = SSticker.scripture_states[SCRIPTURE_APPLICATION]
+	)
+	.["tier_infos"][SCRIPTURE_JUDGEMENT] = list(
+		"requirement" = "Unlock powerful equipment and structures by converting five servants or if [DisplayPower(JUDGEMENT_UNLOCK_THRESHOLD)] of power is reached..",
+		"ready" = SSticker.scripture_states[SCRIPTURE_JUDGEMENT]
 	)
 
 	// .["selected"] = selected_scripture

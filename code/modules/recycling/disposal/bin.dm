@@ -377,7 +377,6 @@
 	log_combat(user, target, "shoved", "into [src] (disposal bin)")
 	return TRUE
 
-
 /obj/machinery/disposal/bin/flush()
 	..()
 	full_pressure = FALSE
