@@ -4,7 +4,7 @@
 	weight = 3
 	chaos = 5
 	threat = 3
-	min_players = 25
+	min_players = 0
 	uplink_filters = list(/datum/uplink_item/stealthy_weapons/romerol_kit)
 
 /datum/traitor_class/human/hijack/forge_objectives(datum/antagonist/traitor/T)
