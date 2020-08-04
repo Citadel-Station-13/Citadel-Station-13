@@ -245,7 +245,7 @@
 	embedding = list("embedded_pain_multiplier" = 3, "embed_chance" = 90, "embedded_fall_chance" = 50)
 	armour_penetration = 50
 	block_chance = 25
-	sharpness = IS_SHARP
+	sharpness = SHARP_EDGED
 	hitsound = 'sound/weapons/slash.ogg'
 
 /obj/item/melee/diamondaxe/Initialize()

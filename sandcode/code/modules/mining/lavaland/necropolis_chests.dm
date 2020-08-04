@@ -106,7 +106,7 @@
 	lefthand_file = 'sandcode/icons/mob/inhands/weapons/guns_lefthand.dmi'
 	righthand_file = 'sandcode/icons/mob/inhands/weapons/guns_righthand.dmi'
 	item_state = "heckgun"
-	sharpness = IS_SHARP
+	sharpness = SHARP_EDGED
 	force = 15
 	var/recharge_rate = 4
 	var/charge_tick = 0
@@ -303,7 +303,7 @@
 
 /obj/item/crucible/proc/wield(mob/living/carbon/M)
 	wielded = TRUE
-	sharpness = IS_SHARP
+	sharpness = SHARP_EDGED
 	w_class = w_class_on
 	total_mass = total_mass_on
 	hitsound = hitsound_on
@@ -442,9 +442,9 @@
 	force = clamp((ghost_counter * 2.5), 15, 25)
 	throwforce = clamp((ghost_counter * 2), 5, 18)
 	armour_penetration = clamp((ghost_counter * 3), 0, 35)
-	sharpness = IS_BLUNT
+	sharpness = SHARP_NONE
 	if(ghost_counter >= 4)
-		sharpness = IS_SHARP_ACCURATE
+		sharpness = SHARP_POINTY
 	user.visible_message("<span class='danger'>[user] strikes with the force of [ghost_counter] vengeful spirits!</span>")
 
 /obj/item/melee/ghost_sword/run_block(mob/living/owner, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return)
@@ -932,7 +932,7 @@
 	armour_penetration = 200 //the armor penetration is really what makes this unique and actually worth it so boomp it
 	hitsound = 'sandcode/sound/sif/sif_slash.ogg'
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut", "gutted", "gored")
-	sharpness = IS_SHARP
+	sharpness = SHARP_EDGED
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 
 //Enables the sword to butcher bodies
@@ -1066,7 +1066,7 @@
 /obj/item/rogue
 	name = "\proper Rogue's Drill"
 	desc = "A drill coupled with an internal mechanism that produces shockwaves on demand. Serves as a very robust melee."
-	sharpness = IS_SHARP
+	sharpness = SHARP_EDGED
 	icon = 'sandcode/icons/obj/mining.dmi'
 	icon_state = "roguedrill"
 	lefthand_file = 'sandcode/icons/mob/inhands/equipment/mining_lefthand.dmi'

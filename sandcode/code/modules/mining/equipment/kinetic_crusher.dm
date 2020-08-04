@@ -311,7 +311,7 @@
 	custom_materials = list(/datum/material/titanium=3150, /datum/material/glass=2075, /datum/material/gold=3000, /datum/material/diamond=5000)
 	hitsound = 'sandcode/sound/weapons/zweihanderslice.ogg'
 	attack_verb = list("smashed", "crushed", "cleaved", "chopped", "pulped")
-	sharpness = IS_SHARP
+	sharpness = SHARP_EDGED
 	var/list/trophies = list()
 	var/charged = TRUE
 	var/charge_time = 12

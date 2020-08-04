@@ -434,6 +434,9 @@ GLOBAL_LIST_INIT(pda_reskins, list(PDA_SKIN_CLASSIC = 'icons/obj/pda.dmi', PDA_S
 #define ION_FILE "ion_laws.json"
 #define REDPILL_FILE "redpill.json"
 #define PIRATE_NAMES_FILE "pirates.json"
+#define FLESH_SCAR_FILE "wounds/flesh_scar_desc.json"
+#define BONE_SCAR_FILE "wounds/bone_scar_desc.json"
+#define SCAR_LOC_FILE "wounds/scar_loc.json"
 
 
 //Fullscreen overlay resolution in tiles.

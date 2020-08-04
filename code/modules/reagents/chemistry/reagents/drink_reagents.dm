@@ -217,6 +217,9 @@
 /datum/reagent/consumable/milk/on_mob_life(mob/living/carbon/M)
 	if(HAS_TRAIT(M, TRAIT_CALCIUM_HEALER))
 		M.heal_bodypart_damage(1.5,0, 0)
+		for(var/i in M.all_wounds)
+			var/datum/wound/iter_wound = i
+			iter_wound.on_xadone(2)
 		. = 1
 	else
 		if(M.getBruteLoss() && prob(20))
@@ -1014,3 +1017,22 @@
 		M.adjustToxLoss(-1, 0)
 	..()
 	. = TRUE
+
+// i googled "natural coagulant" and a couple of results came up for banana peels, so after precisely 30 more seconds of research, i now dub grinding banana peels good for your blood
+/datum/reagent/consumable/banana_peel
+	name = "Pulped Banana Peel"
+	description = "Okay, so you put a banana peel in a grinder... Why, exactly?"
+	color = "#863333" // rgb: 175, 175, 0
+	reagent_state = SOLID
+	taste_description = "stringy, bitter pulp"
+	glass_name = "glass of banana peel pulp"
+	glass_desc = "Okay, so you put a banana peel in a grinder... Why, exactly?"
+
+/datum/reagent/consumable/baked_banana_peel
+	name = "Baked Banana Peel Powder"
+	description = "You took a banana peel... pulped it... baked it... Where are you going with this?"
+	color = "#863333" // rgb: 175, 175, 0
+	reagent_state = SOLID
+	taste_description = "bitter powder"
+	glass_name = "glass of banana peel powder"
+	description = "You took a banana peel... pulped it... baked it... Where are you going with this?"
