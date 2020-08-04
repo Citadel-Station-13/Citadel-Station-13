@@ -302,25 +302,25 @@
 /obj/item/reagent_containers/food/drinks/mug/tea/red
 	name = "Dutchess Red tea"
 	icon_state = "tea"
-	desc = "Dutchess Red personal blend of red tea leaves and hot water. Grate addtion for any meal."
+	desc = "Duchess Red's personal blend of red tea leaves and hot water. Great addition to any meal."
 	list_reagents = list(/datum/reagent/consumable/tea/red = 30)
 
 /obj/item/reagent_containers/food/drinks/mug/tea/green
 	name = "Prince Green tea"
 	icon_state = "tea"
-	desc = "Prince Green's brew of tea. Well the blend may be different from time to time, Prince Green swares by it!"
+	desc = "Prince Green's brew of tea. The blend may be different from time to time, but Prince Green swears by it!"
 	list_reagents = list(/datum/reagent/consumable/tea/green = 30)
 
 /obj/item/reagent_containers/food/drinks/mug/tea/forest
 	name = "Royal Forest tea"
 	icon_state = "tea"
-	desc = "Tea fit for anyone with a sweet thooth like Royal Forest."
+	desc = "Tea fit for anyone with a sweet tooth like Royal Forest."
 	list_reagents = list(/datum/reagent/consumable/tea/forest = 30)
 
 /obj/item/reagent_containers/food/drinks/mug/tea/mush
 	name = "Rebel Mush tea"
 	icon_state = "tea"
-	desc = "Rebel Mush, hallucinogenic tea to help people fine their inner self."
+	desc = "Rebel Mush, a hallucinogenic tea to help people find their inner self."
 	list_reagents = list(/datum/reagent/consumable/tea/mush = 30)
 
 

@@ -325,13 +325,13 @@
 
 /datum/reagent/consumable/tea/red
 	name = "Red Tea"
-	description = "Tasty red tea, it has digestive properties. Drink in moderation!"
+	description = "Tasty red tea, helps the body digest food. Drink in moderation!"
 	color = "#101000" // rgb: 16, 16, 0
 	nutriment_factor = 0
 	taste_description = "sweet red tea"
 	glass_icon_state = "teaglass"
 	glass_name = "glass of red tea"
-	glass_desc = "A piping hot tea that helps with digestion of food."
+	glass_desc = "A piping hot tea that helps with the digestion of food."
 
 /datum/reagent/consumable/tea/red/on_mob_life(mob/living/carbon/M)
 	if(M.nutrition > NUTRITION_LEVEL_HUNGRY)
@@ -344,7 +344,7 @@
 
 /datum/reagent/consumable/tea/green
 	name = "Green Tea"
-	description = "Tasty green tea, known to heal liver it's good for you!"
+	description = "Tasty green tea, known to heal livers, it's good for you!"
 	color = "#101000" // rgb: 16, 16, 0
 	nutriment_factor = 0
 	taste_description = "tart green tea"
@@ -362,7 +362,7 @@
 
 /datum/reagent/consumable/tea/forest
 	name = "Forest Tea"
-	description = "Tea mixed with honey, has antitoxins and sweetness in one!"
+	description = "Tea mixed with honey, has both antitoxins and sweetness in one!"
 	color = "#101000" // rgb: 16, 16, 0
 	nutriment_factor = 0
 	quality = DRINK_NICE
@@ -382,7 +382,7 @@
 
 /datum/reagent/consumable/tea/mush
 	name = "Mush Tea"
-	description = "Tea mixed with mushroom hallucinogen, used for fun rides or self reflect."
+	description = "Tea mixed with mushroom hallucinogen, used for fun rides or self reflection."
 	color = "#101000" // rgb: 16, 16, 0
 	nutriment_factor = 0
 	quality = DRINK_NICE
