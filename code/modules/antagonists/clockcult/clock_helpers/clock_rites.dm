@@ -5,9 +5,9 @@
 
 //The base clockwork rite. This should never be visible
 /datum/clockwork_rite
-	var/name = "Some random clockwork rite that you should not be able to see" //The name of the rite
-	var/desc = "Someone forgot to set the description of this rite.. you shouldn't see this." //What does this rite do? Shown to cultists if they choose 'Show Info' after selecting the rite.
-	var/list/required_ingredients = list() //What does this rite require?
+	var/name = "Rite of THE frog" //The name of the rite
+	var/desc = "This rite is used to summon the legendary frog whose-name-shall-not-be-spoken, ender of many worlds." //What does this rite do? Shown to cultists if they choose 'Show Info' after selecting the rite.
+	var/list/required_ingredients = list(/obj/item/clockwork) //What does this rite require?
 	var/power_cost = 0 //How much power does this rite cost.. or does it even add power?
 	var/requires_human = FALSE	//Does the rite require a ../carbon/human on the rune?
 	var/must_be_servant = TRUE //If the above is true, does the human need to be a servant?

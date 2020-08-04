@@ -427,6 +427,9 @@
 		return
 	if(!GLOB.all_clockwork_rites.len) //Did we already generate the list?
 		generate_all_rites()
+	if(performing_rite)
+		to_chat(user, "<span class='warning'>Someone is already performing a rite here!")
+		return
 	var/list/possible_rites = list()
 	for(var/datum/clockwork_rite/R in GLOB.all_clockwork_rites)
 		possible_rites[R] = R
