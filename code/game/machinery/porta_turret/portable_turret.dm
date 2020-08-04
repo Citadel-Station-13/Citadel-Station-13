@@ -533,16 +533,16 @@
 	return
 
 /obj/machinery/porta_turret/proc/shootAt(atom/movable/target, stagger_enabled = FALSE)
-	if(stagger_enabled)
-		randomize_shot_stagger()
-		sleep(shot_stagger)
 	if(!raised) //the turret has to be raised in order to fire - makes sense, right?
 		return
 
-	if(!(obj_flags & EMAGGED))	//if it hasn't been emagged, cooldown before shooting again
-		if(last_fired + shot_delay > world.time)
-			return
-		last_fired = world.time
+	if(last_fired + shot_delay > world.time)
+		return
+	last_fired = world.time
+
+	if(stagger_enabled)
+		randomize_shot_stagger()
+		sleep(shot_stagger)
 
 	var/turf/T = get_turf(src)
 	var/turf/U = get_turf(target)
