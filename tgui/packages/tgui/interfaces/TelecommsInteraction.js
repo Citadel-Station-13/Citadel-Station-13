@@ -25,7 +25,10 @@ export const TelecommsInteraction = (props, context) => {
     isbus = false,
   } = machine;
   return (
-    <Window resizable>
+    <Window
+      resizable
+      width={520}
+      height={500}>
       <Window.Content scrollable>
         <Fragment>
           {!!notice && (

@@ -19,12 +19,13 @@ export const TelecommsMonitor = (props, context) => {
     setTab,
   ] = useSharedState(context, 'tab', 'network-entity');
   const operational = (selected && selected.status);
-  // if (!selected) { // some sanity checks.
-  //   setTab("network-entity");
-  // }
 
   return (
-    <Window theme="ntos" resizable>
+    <Window
+      theme="ntos"
+      resizable
+      width={575}
+      height={400}>
       <Window.Content scrollable>
         <Fragment>
           {!!notice && (

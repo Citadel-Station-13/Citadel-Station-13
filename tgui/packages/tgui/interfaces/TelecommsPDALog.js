@@ -22,12 +22,13 @@ export const TelecommsPDALog = (props, context) => {
     setTab,
   ] = useSharedState(context, 'tab', 'pdalog-servers');
   const valid = (selected && selected.status && authenticated);
-  // if (!valid || data.hacking) { // a sanity check.
-  //   setTab('pdalog-servers');
-  // }
   if (hack_status) {
     return ( // should have used en -> jp unicode -> other encoding method->utf8
-      <Window theme="ntos" resizable>
+      <Window
+        theme="ntos"
+        resizable
+        width={727}
+        height={510}>
         <Window.Content scrollable>
           <NoticeBox>
             <b>

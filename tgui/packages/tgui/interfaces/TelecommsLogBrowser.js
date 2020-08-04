@@ -17,11 +17,11 @@ export const TelecommsLogBrowser = (props, context) => {
     setTab,
   ] = useSharedState(context, 'tab', 'servers');
   const operational = (selected && selected.status);
-  // if (!operational) { // some sanity checks.
-  //   setTab("servers");
-  // }
   return (
-    <Window theme="ntos">
+    <Window
+      theme="ntos"
+      width={575}
+      height={400}>
       <Window.Content scrollable>
         <Fragment>
           {!!notice && (
@@ -163,24 +163,22 @@ export const TelecommsLogBrowser = (props, context) => {
             <Section>
               {(servers && servers.length) ? (
                 <LabeledList>
-                  {servers.map(server => {
-                    return (
-                      <LabeledList.Item
-                        key={server.name}
-                        label={`${server.ref}`}
-                        buttons={(
-                          <Button
-                            content="Connect"
-                            selected={data.selected
-                            && (server.ref === data.selected.ref)}
-                            onClick={() => act('viewmachine', {
-                              'value': server.id,
-                            })} />
-                        )}>
-                        {`${server.name} (${server.id})`}
-                      </LabeledList.Item>
-                    );
-                  })}
+                  {servers.map(server => (
+                    <LabeledList.Item
+                      key={server.name}
+                      label={`${server.ref}`}
+                      buttons={(
+                        <Button
+                          content="Connect"
+                          selected={data.selected
+                          && (server.ref === data.selected.ref)}
+                          onClick={() => act('viewmachine', {
+                            'value': server.id,
+                          })} />
+                      )}>
+                      {`${server.name} (${server.id})`}
+                    </LabeledList.Item>
+                  ))}
                 </LabeledList>
               ) : (
                 '404 Servers not found. Have you tried scanning the network?'
