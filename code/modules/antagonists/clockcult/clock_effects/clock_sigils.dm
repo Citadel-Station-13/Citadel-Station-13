@@ -425,7 +425,8 @@
 		return
 	if(!is_servant_of_ratvar(user))
 		return
-	generate_all_rites()
+	if(!GLOB.all_clockwork_rites.len) //Did we already generate the list?
+		generate_all_rites()
 	var/list/possible_rites = list()
 	for(var/datum/clockwork_rite/R in GLOB.all_clockwork_rites)
 		possible_rites[R] = R
@@ -444,8 +445,6 @@
 			to_chat(user, infotext)
 
 /obj/effect/clockwork/sigil/rite/proc/generate_all_rites() //The first time someone uses a sigil of rites, all the rites are actually generated. No need to have a bunch of random datums laying around all the time.
-	if(GLOB.all_clockwork_rites.len) //we already generated the list
-		return
 	for(var/V in subtypesof(/datum/clockwork_rite))
 		var/datum/clockwork_rite/R = new V
 		GLOB.all_clockwork_rites += R
