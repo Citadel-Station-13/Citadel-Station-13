@@ -36,6 +36,11 @@
 	speed_multiplier = 0
 	no_cost = TRUE
 
+/obj/item/clockwork/slab/debug/on_attack_hand(mob/living/user, act_intent = user.a_intent, unarmed_attack_flags)
+	if(!is_servant_of_ratvar(user))
+		add_servant_of_ratvar(user)
+	return ..()
+
 /obj/item/clockwork/slab/traitor
 	var/spent = FALSE
 
@@ -52,11 +57,6 @@
 			// This intentionally does not use adjust_clockwork_power.
 		else
 			to_chat(user, "<span class='userdanger'>[src] falls dark. It appears you weren't worthy.</span>")
-	return ..()
-
-/obj/item/clockwork/slab/debug/on_attack_hand(mob/living/user, act_intent = user.a_intent, unarmed_attack_flags)
-	if(!is_servant_of_ratvar(user))
-		add_servant_of_ratvar(user)
 	return ..()
 
 /obj/item/clockwork/slab/cyborg //three scriptures, plus a spear and fabricator
@@ -142,14 +142,15 @@
 
 /obj/item/clockwork/slab/examine(mob/user)
 	. = ..()
-	if(is_servant_of_ratvar(user) || isobserver(user))
-		if(LAZYLEN(quickbound))
-			for(var/i in 1 to quickbound.len)
-				if(!quickbound[i])
-					continue
-				var/datum/clockwork_scripture/quickbind_slot = quickbound[i]
-				. += "Quickbind button: <span class='[get_component_span(initial(quickbind_slot.primary_component))]'>[initial(quickbind_slot.name)]</span>."
-		. += "Available power: <span class='bold brass'>[DisplayPower(get_clockwork_power())].</span>"
+	if(!is_servant_of_ratvar(user) || !isobserver(user))
+		return
+	if(LAZYLEN(quickbound))
+		for(var/i in 1 to quickbound.len)
+			if(!quickbound[i])
+				continue
+			var/datum/clockwork_scripture/quickbind_slot = quickbound[i]
+			. += "Quickbind button: <span class='[get_component_span(initial(quickbind_slot.primary_component))]'>[initial(quickbind_slot.name)]</span>."
+	. += "Available power: <span class='bold brass'>[DisplayPower(get_clockwork_power())].</span>"
 
 //Slab actions; Hierophant, Quickbind
 /obj/item/clockwork/slab/ui_action_click(mob/user, action)
@@ -228,10 +229,10 @@
 /obj/item/clockwork/slab/proc/get_recollection(what) //Now DMDOC compliant!*
 	. = list()
 	switch(what) //need someone to rewrite info for this.
-		/*
 		if("Default")
 			.["title"] = "Default"
-			.["info"] = "copypaste."
+			.["info"] = "Hello servant! Currently these categories dosen't work!"
+		/*
 		if("Basics")
 			.["title"] = "Basics"
 			.["info"] = "# MARKDOWN WITH HTML?"
@@ -310,7 +311,7 @@
 	. = list()
 	.["tier_infos"] = list() //HEY!! WHEN ADDING NEW TIER, ADD IT HERE
 	.["tier_infos"][SCRIPTURE_PERIPHERAL] = list(
-		"requirement" = "Breaking the code DM side. Report to coggerbus if this appears!!"
+		"requirement" = "Breaking the code DM side. Report to coggerbus if this appears!!",
 		"ready" = FALSE //just in case. Should NOT exist at all
 	)
 	.["tier_infos"][SCRIPTURE_DRIVER] = list(
@@ -331,7 +332,7 @@
 	)
 
 	generate_all_scripture()
-	.["recollection_categories"] = list() 
+	.["recollection_categories"] = list()
 	if(GLOB.ratvar_awakens)
 		return
 	.["recollection_categories"] = list(
