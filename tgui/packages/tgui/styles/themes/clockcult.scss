@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2020 Artur
+ * Copyright (c) 2020 Arturlang
  * SPDX-License-Identifier: MIT
  */
 
@@ -31,7 +31,6 @@
     'color-selected': #CFBA47,
     'color-caution': #FFAE42, //yellow-orange
     'color-danger': #f0ff23, //yellow
-    'border-color': #170800,
   ));
   @include meta.load-css('../components/Input.scss', $with: (
     'border-color': #CFBA47,
@@ -60,7 +59,6 @@
   ));
 
   .Layout__content {
-    background-image: none;
-
+    background-image: none; // fa-gear with a color of #CFBA47
   }
 }

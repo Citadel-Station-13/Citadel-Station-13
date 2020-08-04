@@ -1,3 +1,8 @@
+/**
+ * @file
+ * @copyright 2020 LetterN (https://github.com/LetterN)
+ * @license MIT
+ */
 import { Fragment } from 'inferno';
 import { Window } from '../layouts';
 import { useBackend } from '../backend';

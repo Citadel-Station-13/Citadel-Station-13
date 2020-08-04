@@ -1,5 +1,5 @@
 import { useBackend } from '../backend';
-import { Box, Section, LabeledList, Button, ProgressBar } from '../components';
+import { AnimatedNumber, Box, Section, LabeledList, Button, ProgressBar } from '../components';
 import { Fragment } from 'inferno';
 import { Window } from '../layouts';
 

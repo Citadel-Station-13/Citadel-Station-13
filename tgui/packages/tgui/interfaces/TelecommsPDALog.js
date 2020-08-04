@@ -1,7 +1,11 @@
+/**
+ * @file
+ * @copyright 2020 LetterN (https://github.com/LetterN)
+ * @license MIT
+ */
 import { Fragment } from 'inferno';
 import { Window } from '../layouts';
 import { useBackend, useSharedState } from '../backend';
-import { callByond } from '../byond';
 import { Button, LabeledList, NoticeBox, Section, Tabs, Input } from '../components';
 
 // This is the entrypoint, don't mind the others
@@ -307,7 +311,7 @@ export const TeleLogs = (props, context) => {
                       <Button // Had to use _act for this.
                         content="Image"
                         icon="image"
-                        onClick={() => callByond('', {
+                        onClick={() => Byond.topic({
                           'src': message.ref,
                           'photo': 1,
                         })}

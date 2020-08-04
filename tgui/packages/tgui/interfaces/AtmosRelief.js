@@ -31,8 +31,8 @@ export const AtmosRelief = (props, context) => { // rebranded AtmoPump
                 onClick={() => act('open_pressure', {
                   pressure: 'max',
                 })} />
-              </LabeledList.Item>
-              <LabeledList.Item label="Close Pressure">
+            </LabeledList.Item>
+            <LabeledList.Item label="Close Pressure">
               <NumberInput
                 animated
                 value={parseFloat(data.close_pressure)}
@@ -52,7 +52,7 @@ export const AtmosRelief = (props, context) => { // rebranded AtmoPump
                 onClick={() => act('close_pressure', {
                   pressure: 'max',
                 })} />
-              </LabeledList.Item>
+            </LabeledList.Item>
           </LabeledList>
         </Section>
       </Window.Content>
