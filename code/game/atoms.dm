@@ -156,6 +156,13 @@
 
 	return ..()
 
+/**
+  * Checks if a projectile should ricochet off of us. Projectiles get final say.
+  * [__DEFINES/projectiles.dm] for return values.
+  */
+/atom/proc/check_projectile_ricochet(obj/item/projectile/P)
+	return (flags_1 & DEFAULT_RICOCHET_1)? PROJECTILE_RICOCHET_YES : PROJECTILE_RICOCHET_NO
+
 /atom/proc/handle_ricochet(obj/item/projectile/P)
 	var/turf/p_turf = get_turf(P)
 	var/face_direction = get_dir(src, p_turf)

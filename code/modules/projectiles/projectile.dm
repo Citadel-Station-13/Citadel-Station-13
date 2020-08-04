@@ -316,7 +316,7 @@
 	if(!trajectory)
 		return
 	var/turf/T = get_turf(A)
-	if(check_ricochet(A) && check_ricochet_flag(A)) //if you can ricochet, attempt to ricochet off the object
+	if(A.check_projectile_ricochet(src) && check_ricochet_flag(A) && check_ricochet(A)) //if you can ricochet, attempt to ricochet off the object
 		ricochets++
 		if(A.handle_ricochet(src))
 			on_ricochet(A) //if allowed, use autoaim to ricochet into someone, otherwise default to ricocheting off the object from above
