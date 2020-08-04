@@ -67042,7 +67042,7 @@
 /turf/closed/wall/mineral/plastitanium,
 /area/hallway/secondary/entry)
 "cyJ" = (
-/obj/machinery/rnd/production/protolathe/department/cargo,
+/obj/machinery/rnd/production/techfab/department/cargo,
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 4
 	},
@@ -72675,7 +72675,7 @@
 /turf/open/floor/plasteel,
 /area/janitor)
 "cIZ" = (
-/obj/machinery/rnd/production/protolathe/department/service,
+/obj/machinery/rnd/production/techfab/department/service,
 /obj/effect/turf_decal/stripes/box,
 /turf/open/floor/plasteel,
 /area/hallway/secondary/service)
