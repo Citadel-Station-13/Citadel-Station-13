@@ -371,9 +371,10 @@
 	glass_name = "glass of forest tea"
 	glass_desc = "A lovely glass of tea and honey."
 
-/datum/reagent/consumable/tea/green/on_mob_life(mob/living/carbon/M)
+/datum/reagent/consumable/tea/forest/on_mob_life(mob/living/carbon/M)
 	if(M.getToxLoss() && prob(40))//Two anti-toxins working here
 		M.adjustToxLoss(-1, 0, TRUE) //heals TOXINLOVERs
+		//Reminder that honey heals toxin lovers
 	M.dizziness = max(0,M.dizziness-2)
 	M.drowsyness = max(0,M.drowsyness-1)
 	M.jitteriness = max(0,M.jitteriness-3)
@@ -398,7 +399,6 @@
 	if(prob(10))
 		M.disgust = 0
 	. = 1
-
 
 /datum/reagent/consumable/lemonade
 	name = "Lemonade"
