@@ -316,7 +316,7 @@
 	if(!trajectory)
 		return
 	var/turf/T = get_turf(A)
-	if(A.check_projectile_ricochet(src) && check_ricochet_flag(A) && check_ricochet(A)) //if you can ricochet, attempt to ricochet off the object
+	if(check_ricochet_flag(A) && check_ricochet(A)) //if you can ricochet, attempt to ricochet off the object
 		ricochets++
 		if(A.handle_ricochet(src))
 			on_ricochet(A) //if allowed, use autoaim to ricochet into someone, otherwise default to ricocheting off the object from above
@@ -403,12 +403,24 @@
 	//Returns null if nothing at all was found.
 
 /obj/item/projectile/proc/check_ricochet(atom/A)
-	var/chance = ricochet_chance * A.ricochet_chance_mod
-	if(firer && HAS_TRAIT(firer, TRAIT_NICE_SHOT))
-		chance += NICE_SHOT_RICOCHET_BONUS
-	if(prob(chance))
-		return TRUE
-	return FALSE
+	if(ricochets > ricochets_max)		//safety thing, we don't care about what the other thing says about this.
+		return FALSE
+	var/them = A.check_projectile_ricochet(src)
+	switch(them)
+		if(PROJECTILE_RICOCHET_PREVENT)
+			return FALSE
+		if(PROJECTILE_RICOCHET_FORCE)
+			return TRUE
+		if(PROJECTILE_RICOCHET_NO)
+			return FALSE
+		if(PROJECTILE_RICOCHET_YES)
+			var/chance = ricochet_chance * A.ricochet_chance_mod
+			if(firer && HAS_TRAIT(firer, TRAIT_NICE_SHOT))
+				chance += NICE_SHOT_RICOCHET_BONUS
+			if(prob(chance))
+				return TRUE
+		else
+			CRASH("Invalid return value for projectile ricochet check from [A].")
 
 /obj/item/projectile/proc/check_ricochet_flag(atom/A)
 	if((flag in list("energy", "laser")) && (A.flags_ricochet & RICOCHET_SHINY))
