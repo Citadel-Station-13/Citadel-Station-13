@@ -79,7 +79,7 @@
 	melee_damage_upper = 15
 	wound_bonus = -10
 	bare_wound_bonus = 20
-	sharpness = TRUE
+	sharpness = SHARP_EDGED
 	icon_state = "syndicate_knife"
 	icon_living = "syndicate_knife"
 	loot = list(/obj/effect/gibspawner/human)
