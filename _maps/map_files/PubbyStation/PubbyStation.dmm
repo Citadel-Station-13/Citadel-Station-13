@@ -38965,7 +38965,6 @@
 /area/chapel/dock)
 "bKe" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
-/obj/structure/closet/emcloset,
 /turf/open/floor/plasteel/white{
 	heat_capacity = 1e+006
 	},
@@ -39999,12 +39998,6 @@
 /obj/effect/turf_decal/stripes/line,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 8
-	},
-/obj/machinery/light/small{
-	dir = 4
-	},
-/obj/structure/chair{
-	dir = 1
 	},
 /turf/open/floor/plasteel/white{
 	heat_capacity = 1e+006
@@ -50326,6 +50319,12 @@
 	},
 /turf/open/floor/plasteel,
 /area/crew_quarters/heads/chief)
+"cqW" = (
+/obj/structure/chair,
+/turf/open/floor/plasteel/white{
+	heat_capacity = 1e+006
+	},
+/area/chapel/dock)
 "cqX" = (
 /obj/structure/disposalpipe/segment,
 /obj/structure/lattice,
@@ -55582,6 +55581,12 @@
 	},
 /turf/open/floor/plating,
 /area/crew_quarters/dorms)
+"izF" = (
+/obj/structure/closet/emcloset,
+/turf/open/floor/plasteel/white{
+	heat_capacity = 1e+006
+	},
+/area/chapel/dock)
 "iAx" = (
 /obj/structure/cable{
 	icon_state = "4-8"
@@ -59438,6 +59443,14 @@
 /obj/structure/cable,
 /turf/open/floor/plating/airless,
 /area/space/nearstation)
+"ros" = (
+/obj/machinery/light/small{
+	dir = 4
+	},
+/turf/open/floor/plasteel/white{
+	heat_capacity = 1e+006
+	},
+/area/chapel/dock)
 "rrb" = (
 /obj/structure/cable{
 	icon_state = "1-2"
@@ -61508,12 +61521,6 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/department/crew_quarters/bar)
-"wDe" = (
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/plasteel/white{
-	heat_capacity = 1e+006
-	},
-/area/chapel/dock)
 "wDl" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/effect/turf_decal/stripes/corner,
@@ -80362,7 +80369,7 @@ aaa
 aht
 aqG
 bGE
-bKf
+cqW
 bKf
 bMw
 bNy
@@ -80619,8 +80626,8 @@ aht
 aht
 aqG
 bGE
-bKf
-bKf
+izF
+ros
 bMx
 bNz
 bHM
@@ -80876,7 +80883,7 @@ aaa
 aaa
 aqG
 bGE
-wDe
+bGE
 bHM
 bHM
 bNA
