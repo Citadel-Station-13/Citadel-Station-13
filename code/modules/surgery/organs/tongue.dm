@@ -31,7 +31,6 @@
 		/datum/language/sandcode/neokanji, //Skyrat change - generally asian language
 		/datum/language/sandcode/shadowtongue, //Skyrat change - shadowpeople language
 		/datum/language/sandcode/solcommon, //Skyrat change - sol common blah blah
-		/datum/language/sandcode/sylvan, //Skyrat change - plantpeople langauge
 		/datum/language/sandcode/technorussian, //Skyrat change - russian stereotype language
 		/datum/language/sandcode/sergal,
 	))
