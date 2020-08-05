@@ -82,8 +82,8 @@
 
 /obj/item/reagent_containers/food/snacks/grown/ghost_chili/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	. = ..()
-	held_mob = loc
-	if(istype(held_mob))
+	if(ishuman(loc))
+		held_mob = loc
 		START_PROCESSING(SSobj, src)
 
 /obj/item/reagent_containers/food/snacks/grown/ghost_chili/process()
