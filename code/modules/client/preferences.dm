@@ -2800,6 +2800,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	if(custom_tongue != "default")
 		var/new_tongue = GLOB.roundstart_tongues[custom_tongue]
 		if(new_tongue)
+			character.dna.species.mutanttongue = new_tongue //this means we get our tongue when we clone
 			var/obj/item/organ/tongue/T = character.getorganslot(ORGAN_SLOT_TONGUE)
 			if(T)
 				qdel(T)
