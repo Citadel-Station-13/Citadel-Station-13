@@ -1,7 +1,7 @@
 /datum/traitor_class/human/subterfuge
 	name = "MI13 Operative"
 	employer = "MI13"
-	weight = 40
+	weight = 3
 	chaos = -5
 
 /datum/traitor_class/human/subterfuge/forge_single_objective(datum/antagonist/traitor/T)
