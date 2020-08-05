@@ -45,8 +45,8 @@
 		return
 	
 	if(length(message) > MAX_MESSAGE_LEN)
-		to_chat(user, message)
-		to_chat(user, "<span class='danger'>^^^----- The preceeding message has been DISCARDED for being over the maximum length of [max_length*2] bytes. It has NOT been sent! -----^^^</span>")
+		to_chat(usr, message)
+		to_chat(usr, "<span class='danger'>^^^----- The preceeding message has been DISCARDED for being over the maximum length of [MAX_MESSAGE_LEN]. It has NOT been sent! -----^^^</span>")
 		return
 
 	message = trim(copytext_char(sanitize(message), 1, MAX_MESSAGE_LEN))
