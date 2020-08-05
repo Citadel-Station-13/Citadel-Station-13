@@ -508,11 +508,10 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				mutant_category = 0
 
 			for(var/mutant_part in GLOB.all_mutant_parts)
-				var/part_name = pref_species.mutant_bodyparts[mutant_part]
-				if(part_name || GLOB.unlocked_mutant_parts[mutant_part]) //either its in the species, or it's unlocked and it doesn't matter (unlocked meaning any species can have it)
+				if(pref_species.mutant_bodyparts[mutant_part] || GLOB.unlocked_mutant_parts[mutant_part]) //either its in the species, or it's unlocked and it doesn't matter (unlocked meaning any species can have it)
 					if(!mutant_category)
 						dat += APPEARANCE_CATEGORY_COLUMN
-					dat += "<h3>[part_name]</h3>"
+					dat += "<h3>[GLOB.all_mutant_parts[mutant_part]]</h3>"
 					dat += "<a style='display:block;width:100px' href='?_src_=prefs;preference=[mutant_part];task=input'>[features[mutant_part]]</a>"
 					var/color_type = GLOB.colored_mutant_parts[mutant_part] //if it can be coloured, show the appropriate button
 					if(color_type)
