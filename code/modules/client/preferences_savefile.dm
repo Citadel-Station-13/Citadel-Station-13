@@ -203,32 +203,37 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	if(current_version < 34) //convert to new loadout paths
 		var/list/saved_loadout_paths = splittext(S["loadout"], "|")
 		var/list/converted_paths = list()
-		for(var/datum/gear/i in saved_loadout_paths)
+		for(var/i in saved_loadout_paths)
+			var/datum/gear/loadout_item = text2path(i)
 			var/itemtype = copytext(i,13)
-			if(length(initial(i.ckeywhitelist)))
-				converted_paths += "/datum/gear/donator/[itemtype]"
+			var/new_path
+			if(length(initial(loadout_item.ckeywhitelist)))
+				new_path = "/datum/gear/donator/[itemtype]"
 			else
 				switch(initial(i.slot))
 					if(SLOT_W_UNIFORM)
-						converted_paths += "/datum/gear/uniform/[itemtype]"
+						new_path = "/datum/gear/uniform/[itemtype]"
 					if(SLOT_WEAR_SUIT)
-						converted_paths += "/datum/gear/suit/[itemtype]"
+						new_path = "/datum/gear/suit/[itemtype]"
 					if(SLOT_SHOES)
-						converted_paths += "/datum/gear/shoes/[itemtype]"
+						new_path = "/datum/gear/shoes/[itemtype]"
 					if(SLOT_NECK)
-						converted_paths += "/datum/gear/neck/[itemtype]"
+						new_path = "/datum/gear/neck/[itemtype]"
 					if(SLOT_WEAR_MASK)
-						converted_paths += "/datum/gear/mask/[itemtype]"
+						new_path = "/datum/gear/mask/[itemtype]"
 					if(SLOT_HEAD)
-						converted_paths += "/datum/gear/head/[itemtype]"
+						new_path = "/datum/gear/head/[itemtype]"
 					if(SLOT_HANDS)
-						converted_paths += "/datum/gear/hands/[itemtype]"
+						new_path = "/datum/gear/hands/[itemtype]"
 					if(SLOT_GLOVES)
-						converted_paths += "/datum/gear/gloves/[itemtype]"
+						new_path = "/datum/gear/gloves/[itemtype]"
 					if(SLOT_GLASSES)
-						converted_paths += "/datum/gear/glasses/[itemtype]"
+						new_path = "/datum/gear/glasses/[itemtype]"
 					if(CATEGORY_BACKPACK)
-						converted_paths += "/datum/gear/backpack/[itemtype]"
+						new_path = "/datum/gear/backpack/[itemtype]"
+			if(new_path) //make sure it exists
+				if(text2path(new_path)) //make sure its a real path
+					converted_paths += new_path
 		S["loadout"] = converted_paths.Join("|")
 
 
