@@ -1,4 +1,4 @@
-w//used for holding information about unique properties of maps
+//used for holding information about unique properties of maps
 //feed it json files that match the datum layout
 //defaults to box
 //  -Cyberboss
