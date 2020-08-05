@@ -1,0 +1,4 @@
+author: "Ludox235"
+delete-after: True
+changes: 
+  - rscadd: "You can now buy damaged AI upload modules in the traitor's uplink."
