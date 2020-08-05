@@ -1,0 +1,4 @@
+author: "timothyteakettle"
+delete-after: True
+changes: 
+  - tweak: "several changes to travelling traders so they look better and spawn slightly less often"
