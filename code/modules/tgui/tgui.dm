@@ -199,13 +199,13 @@
 			"key" = window_key,
 			"size" = window_size,
 			"fancy" = user.client.prefs.tgui_fancy,
-			"locked" = user.client.prefs.tgui_lock,
+			"locked" = user.client.prefs.tgui_lock
 		),
 		"user" = list(
 			"name" = "[user]",
 			"ckey" = "[user.ckey]",
-			"observer" = isobserver(user),
-		),
+			"observer" = isobserver(user)
+		)
 	)
 	var/data = custom_data || with_data && src_object.ui_data(user)
 	if(data)

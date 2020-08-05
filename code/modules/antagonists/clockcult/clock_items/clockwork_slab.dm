@@ -255,10 +255,8 @@
 		else
 			return null //error text handled tgui side. should not cause BSOD
 
-/obj/item/clockwork/slab/ui_state(mob/user)
-	return GLOB.hands_state
-
 /obj/item/clockwork/slab/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
 		ui = new(user, src, "ClockworkSlab", name)
 		ui.open()
@@ -330,8 +328,6 @@
 		"requirement" = "Unlock powerful equipment and structures by converting five servants or if [DisplayPower(JUDGEMENT_UNLOCK_THRESHOLD)] of power is reached..",
 		"ready" = SSticker.scripture_states[SCRIPTURE_JUDGEMENT]
 	)
-
-	generate_all_scripture()
 	.["recollection_categories"] = list()
 	if(GLOB.ratvar_awakens)
 		return
@@ -345,6 +341,8 @@
 		list("name" = "Conversion", "desc" = "Converting the crew, cyborgs, and very walls to your cause.")
 	)
 	.["rec_section"] = get_recollection(recollection_category)
+	generate_all_scripture()
+	//needs a new place to live, preferably when clockcult unlocks/downgrades a tier. Smart enough to earlyreturn.
 
 /obj/item/clockwork/slab/ui_act(action, params)
 	switch(action)
