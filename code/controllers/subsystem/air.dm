@@ -280,14 +280,9 @@ SUBSYSTEM_DEF(air)
 
 /datum/controller/subsystem/air/proc/remove_from_active(turf/open/T)
 	remove_from_active_extools(T)
-	if(currentpart == SSAIR_ACTIVETURFS)
-		currentrun -= T
 	#ifdef VISUALIZE_ACTIVE_TURFS
 	T.remove_atom_colour(TEMPORARY_COLOUR_PRIORITY, "#00ff00")
 	#endif
-	if(istype(T))
-		T.set_excited(FALSE)
-		T.eg_garbage_collect()
 
 /datum/controller/subsystem/air/proc/add_to_active_extools()
 
@@ -296,7 +291,6 @@ SUBSYSTEM_DEF(air)
 		#ifdef VISUALIZE_ACTIVE_TURFS
 		T.add_atom_colour("#00ff00", TEMPORARY_COLOUR_PRIORITY)
 		#endif
-		T.set_excited(TRUE)
 		add_to_active_extools(T)
 		if(blockchanges)
 			T.eg_garbage_collect()

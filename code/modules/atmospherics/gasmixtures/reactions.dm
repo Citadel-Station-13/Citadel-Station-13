@@ -223,7 +223,7 @@
 			location.fire_nuclear_particle()
 		radiation_pulse(location,rad_power)
 
-
+/*
 /datum/gas_reaction/fusion
 	exclude = FALSE
 	priority = 2
@@ -303,7 +303,7 @@
 		if(new_heat_capacity > MINIMUM_HEAT_CAPACITY)
 			air.set_temperature(clamp(((air.return_temperature()*old_heat_capacity + reaction_energy)/new_heat_capacity),TCMB,INFINITY))
 		return REACTING
-
+*/
 /datum/gas_reaction/nitrylformation //The formation of nitryl. Endothermic. Requires N2O as a catalyst.
 	priority = 3
 	name = "Nitryl formation"
