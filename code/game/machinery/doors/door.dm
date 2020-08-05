@@ -11,7 +11,7 @@
 	max_integrity = 350
 	armor = list("melee" = 30, "bullet" = 30, "laser" = 20, "energy" = 20, "bomb" = 10, "bio" = 100, "rad" = 100, "fire" = 80, "acid" = 70)
 	CanAtmosPass = ATMOS_PASS_DENSITY
-	flags_1 = PREVENT_CLICK_UNDER_1
+	flags_1 = PREVENT_CLICK_UNDER_1|DEFAULT_RICOCHET_1
 	ricochet_chance_mod = 0.8
 
 	interaction_flags_atom = INTERACT_ATOM_UI_INTERACT
