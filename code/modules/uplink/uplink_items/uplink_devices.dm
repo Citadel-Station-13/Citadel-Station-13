@@ -200,7 +200,7 @@
 			this primer of questionable worth and value is rumored to increase your rifle-bolt-working and/or shotgun \
 			racking fivefold. Then again, the techniques here only work on bolt-actions and pump-actions..."
 	item = /obj/item/book/granter/trait/rifleman
-	cost = 1 // fuck it available for everyone
+	cost = 3 // fuck it available for everyone
 
 /datum/uplink_item/device_tools/stimpack
 	name = "Stimpack"
