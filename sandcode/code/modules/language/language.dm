@@ -165,26 +165,6 @@
 	icon_state = "solcommon"
 	restricted = FALSE
 
-/datum/language/sandcode/sylvan
-	name = "Sylvan"
-	desc = "A complicated, ancient language spoken by sentient plants."
-	speech_verb = "expresses"
-	ask_verb = "inquires"
-	exclaim_verb = "declares"
-	key = "h"
-	flags = TONGUELESS_SPEECH
-	space_chance = 20
-	syllables = list(
-		"fii", "sii", "rii", "rel", "maa", "ala", "san", "tol", "tok", "dia", "eres",
-    	"fal", "tis", "bis", "qel", "aras", "losk", "rasa", "eob", "hil", "tanl", "aere",
-    	"fer", "bal", "pii", "dala", "ban", "foe", "doa", "cii", "uis", "mel", "wex",
-    	"incas", "int", "elc", "ent", "aws", "qip", "nas", "vil", "jens", "dila", "fa",
-    	"la", "re", "do", "ji", "ae", "so", "qe", "ce", "na", "mo", "ha", "yu"
-	)
-	icon_state = "sylvan"
-	default_priority = 97
-	restricted = TRUE
-
 /datum/language/sandcode/technorussian
 	name = "Technorussian"
 	desc = "Ancient language of Russian colonists, rusted with time and bastardized with technical terms in everyday use."

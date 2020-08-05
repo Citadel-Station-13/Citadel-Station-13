@@ -311,11 +311,17 @@ Key procs
 
 
 /datum/language_holder/synthetic
-	understood_languages = list(// SKYRAT EDIT - additional languages
-								/datum/language/sandcode/solcommon = list(LANGUAGE_ATOM),
-								/datum/language/sandcode/technorussian = list(LANGUAGE_ATOM),
-								/datum/language/sandcode/neokanji = list(LANGUAGE_ATOM),
-								/datum/language/sandcode/dunmeri = list(LANGUAGE_ATOM))
+	understood_languages = list(/datum/language/common = list(LANGUAGE_ATOM),
+							/datum/language/machine = list(LANGUAGE_ATOM),
+							/datum/language/draconic = list(LANGUAGE_ATOM),
+							// SKYRAT EDIT - additional languages
+							/datum/language/sandcode/solcommon = list(LANGUAGE_ATOM),
+							/datum/language/sandcode/technorussian = list(LANGUAGE_ATOM),
+							/datum/language/sandcode/neokanji = list(LANGUAGE_ATOM),
+							/datum/language/sandcode/dunmeri = list(LANGUAGE_ATOM),
+							/datum/language/sandcode/sergal = list(LANGUAGE_ATOM),
+							/datum/language/slime = list(LANGUAGE_ATOM),
+							/datum/language/dwarf = list(LANGUAGE_ATOM))
 	spoken_languages = list(/datum/language/common = list(LANGUAGE_ATOM),
 							/datum/language/machine = list(LANGUAGE_ATOM),
 							/datum/language/draconic = list(LANGUAGE_ATOM),
@@ -324,6 +330,7 @@ Key procs
 							/datum/language/sandcode/technorussian = list(LANGUAGE_ATOM),
 							/datum/language/sandcode/neokanji = list(LANGUAGE_ATOM),
 							/datum/language/sandcode/dunmeri = list(LANGUAGE_ATOM),
+							/datum/language/sandcode/sergal = list(LANGUAGE_ATOM),
 							/datum/language/slime = list(LANGUAGE_ATOM),
 							/datum/language/dwarf = list(LANGUAGE_ATOM))
 
