@@ -37,7 +37,7 @@
 	return L
 
 /proc/SQLDatetimeListDecrementYears(list/L, years)
-	L[1] = CLAMP(L[1] - years, 1000, 9999)
+	L[1] = clamp(L[1] - years, 1000, 9999)
 	return L
 
 /proc/SQLListToDatetime(list/L)
@@ -56,12 +56,12 @@
 		minute = text2num(minute)
 	if(!isnum(second))
 		second = text2num(second)
-	hour = CLAMP(hour, 0, 24)
-	minute = CLAMP(minute, 0, 60)
-	second = CLAMP(second, 0, 60)
-	year = CLAMP(year, 1000, 9999)
-	month = CLAMP(month, 1, 12)
-	day = CLAMP(day, 1, 31)
+	hour = clamp(hour, 0, 24)
+	minute = clamp(minute, 0, 60)
+	second = clamp(second, 0, 60)
+	year = clamp(year, 1000, 9999)
+	month = clamp(month, 1, 12)
+	day = clamp(day, 1, 31)
 	//Reee special treatment!
 	month = "[month]"
 	day = "[day]"
