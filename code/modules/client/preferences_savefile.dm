@@ -210,7 +210,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 			if(length(initial(loadout_item.ckeywhitelist)))
 				new_path = "/datum/gear/donator/[itemtype]"
 			else
-				switch(initial(i.slot))
+				switch(initial(loadout_item.slot))
 					if(SLOT_W_UNIFORM)
 						new_path = "/datum/gear/uniform/[itemtype]"
 					if(SLOT_WEAR_SUIT)
