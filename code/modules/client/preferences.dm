@@ -508,7 +508,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				mutant_category = 0
 
 			for(var/mutant_part in GLOB.all_mutant_parts)
-				if(pref_species.mutant_bodyparts[mutant_part] || GLOB.unlocked_mutant_parts[mutant_part]) //either its in the species, or it's unlocked and it doesn't matter (unlocked meaning any species can have it)
+				if(pref_species.mutant_bodyparts[mutant_part] || mutant_part in GLOB.unlocked_mutant_parts) //either its in the species, or it's unlocked and it doesn't matter (unlocked meaning any species can have it)
 					if(!mutant_category)
 						dat += APPEARANCE_CATEGORY_COLUMN
 					dat += "<h3>[GLOB.all_mutant_parts[mutant_part]]</h3>"
