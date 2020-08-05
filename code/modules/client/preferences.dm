@@ -2488,10 +2488,10 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	character.dna.nameless = character.nameless
 	character.dna.custom_species = character.custom_species
 
-	if(parent.can_have_part("meat_type"))
+	if((parent && parent.can_have_part("meat_type")) || pref_species.mutant_bodyparts["meat_type"])
 		character.type_of_meat = GLOB.meat_types[features["meat_type"]]
 
-	if(parent.can_have_part("legs") && (character.dna.features["legs"] == "Digitigrade" || character.dna.features["legs"] == "Avian"))
+	if(((parent && parent.can_have_part("legs")) || pref_species.mutant_bodyparts["legs"])  && (character.dna.features["legs"] == "Digitigrade" || character.dna.features["legs"] == "Avian"))
 		pref_species.species_traits |= DIGITIGRADE
 	else
 		pref_species.species_traits -= DIGITIGRADE

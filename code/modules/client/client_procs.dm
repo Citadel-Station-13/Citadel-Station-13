@@ -990,4 +990,4 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 	char_render_holders = null
 
 /client/proc/can_have_part(part_name)
-	return prefs.pref_species.mutant_bodyparts[part_name] || part_name in GLOB.unlocked_mutant_parts //either they have it, or its unlocked
+	return prefs.pref_species.mutant_bodyparts[part_name] || (part_name in GLOB.unlocked_mutant_parts)
