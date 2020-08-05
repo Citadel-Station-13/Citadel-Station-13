@@ -531,12 +531,6 @@ GLOBAL_LIST_INIT(ballmer_windows_me_msg, list("Yo man, what if, we like, uh, put
 		incomingstammult = max(0.01, incomingstammult)
 		incomingstammult = min(1, incomingstammult*2)
 
-	//CIT CHANGES START HERE. STAMINA BUFFER STUFF
-	if(bufferedstam && world.time > stambufferregentime)
-		var/drainrate = max((bufferedstam*(bufferedstam/(5)))*0.1,1)
-		bufferedstam = max(bufferedstam - drainrate, 0)
-	//END OF CIT CHANGES
-
 	var/restingpwr = 1 + 4 * !CHECK_MOBILITY(src, MOBILITY_STAND)
 
 	//Dizziness

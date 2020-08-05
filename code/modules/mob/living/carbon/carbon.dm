@@ -623,7 +623,7 @@
 		filters -= CIT_FILTER_STAMINACRIT
 		update_mobility()
 	update_health_hud()
-
+	
 /mob/living/carbon/update_sight()
 	if(!client)
 		return

@@ -594,6 +594,9 @@
 		update_icon()
 
 /obj/item/gun/proc/getinaccuracy(mob/living/user, bonus_spread, stamloss)
+	return 0		// Replacement TBD: Exponential curved aim instability system.
+
+/*
 	if(inaccuracy_modifier == 0)
 		return bonus_spread
 	var/base_inaccuracy = weapon_weight * 25 * inaccuracy_modifier
@@ -610,6 +613,7 @@
 	if(mult < 0) //accurate weapons should provide a proper bonus with negative inaccuracy. the opposite is true too.
 		mult *= 1/inaccuracy_modifier
 	return max(bonus_spread + (base_inaccuracy * mult), 0) //no negative spread.
+*/
 
 /obj/item/gun/proc/getstamcost(mob/living/carbon/user)
 	. = recoil
