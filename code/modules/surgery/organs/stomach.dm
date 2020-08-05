@@ -8,12 +8,33 @@
 	desc = "Onaka ga suite imasu."
 	var/disgust_metabolism = 1
 
-/obj/item/organ/stomach/on_life()
-	var/mob/living/carbon/human/H = owner
+	healing_factor = STANDARD_ORGAN_HEALING
+	decay_factor = STANDARD_ORGAN_DECAY
 
-	if(istype(H))
-		H.dna.species.handle_digestion(H)
+	low_threshold_passed = "<span class='info'>Your stomach flashes with pain before subsiding. Food doesn't seem like a good idea right now.</span>"
+	high_threshold_passed = "<span class='warning'>Your stomach flares up with constant pain- you can hardly stomach the idea of food right now!</span>"
+	high_threshold_cleared = "<span class='info'>The pain in your stomach dies down for now, but food still seems unappealing.</span>"
+	low_threshold_cleared = "<span class='info'>The last bouts of pain in your stomach have died out.</span>"
+
+/obj/item/organ/stomach/on_life()
+	. = ..()
+	if(!owner)
+		return
+	if(ishuman(owner))
+		var/mob/living/carbon/human/H = owner
+		if(.)
+			H.dna.species.handle_digestion(H)
 		handle_disgust(H)
+
+	if(!damage)
+		return
+	var/datum/reagent/consumable/nutriment/Nutri = locate(/datum/reagent/consumable/nutriment) in owner.reagents.reagent_list
+	if(!Nutri)
+		return
+	var/prob_divisor = damage > high_threshold ? 10 : 40
+	if(prob((damage/prob_divisor) * (Nutri.volume**2)))
+		owner.vomit(damage)
+		to_chat(owner, "<span class='warning'>Your stomach reels in pain as you're incapable of holding down all that food!</span>")
 
 /obj/item/organ/stomach/proc/handle_disgust(mob/living/carbon/human/H)
 	if(H.disgust)
@@ -50,9 +71,9 @@
 			H.throw_alert("disgust", /obj/screen/alert/disgusted)
 			SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, "disgust", /datum/mood_event/disgusted)
 
-/obj/item/organ/stomach/Remove(mob/living/carbon/M, special = 0)
+/obj/item/organ/stomach/Remove(special = FALSE)
 	var/mob/living/carbon/human/H = owner
-	if(istype(H))
+	if(H && istype(H))
 		H.clear_alert("disgust")
 		SEND_SIGNAL(H, COMSIG_CLEAR_MOOD_EVENT, "disgust")
 	..()
@@ -66,3 +87,7 @@
 	name = "digestive crystal"
 	icon_state = "stomach-p"
 	desc = "A strange crystal that is responsible for metabolizing the unseen energy force that feeds plasmamen."
+
+/obj/item/organ/stomach/ipc
+	name = "ipc stomach"
+	icon_state = "stomach-ipc"

@@ -22,7 +22,7 @@ Contents:
 	armor = list("melee" = 60, "bullet" = 50, "laser" = 30,"energy" = 15, "bomb" = 30, "bio" = 30, "rad" = 30, "fire" = 100, "acid" = 100)
 	strip_delay = 12
 
-	actions_types = list(/datum/action/item_action/initialize_ninja_suit, /datum/action/item_action/ninjasmoke, /datum/action/item_action/ninjaboost, /datum/action/item_action/ninjapulse, /datum/action/item_action/ninjastar, /datum/action/item_action/ninjanet, /datum/action/item_action/ninja_sword_recall, /datum/action/item_action/ninja_stealth, /datum/action/item_action/toggle_glove)
+	actions_types = list(/datum/action/item_action/initialize_ninja_suit, /datum/action/item_action/ninjasmoke, /datum/action/item_action/ninjaboost, /datum/action/item_action/ninjapulse, /datum/action/item_action/ninjastar, /datum/action/item_action/ninja_sword_recall, /datum/action/item_action/ninja_stealth, /datum/action/item_action/toggle_glove)
 
 		//Important parts of the suit.
 	var/mob/living/carbon/human/affecting = null
@@ -49,6 +49,7 @@ Contents:
 
 		//Support function variables.
 	var/stealth = FALSE//Stealth off.
+	var/stealth_cooldown = 0
 	var/s_busy = FALSE//Is the suit busy with a process? Like AI hacking. Used for safety functions.
 
 		//Ability function variables.
@@ -111,19 +112,19 @@ Contents:
 		to_chat(H, "<span class='userdanger'>ERROR</span>: 110223 UNABLE TO LOCATE HAND GEAR\nABORTING...")
 		return FALSE
 	affecting = H
-	item_flags |= NODROP //colons make me go all |=
+	ADD_TRAIT(src, TRAIT_NODROP, NINJA_SUIT_TRAIT) //colons make me go all |=
 	slowdown = 0
 	n_hood = H.head
-	n_hood.item_flags |= NODROP
+	ADD_TRAIT(n_hood, TRAIT_NODROP, NINJA_SUIT_TRAIT)
 	n_shoes = H.shoes
-	n_shoes.item_flags |= NODROP
+	ADD_TRAIT(n_shoes, TRAIT_NODROP, NINJA_SUIT_TRAIT)
 	n_shoes.slowdown--
 	n_gloves = H.gloves
-	n_gloves.item_flags |= NODROP
+	ADD_TRAIT(n_gloves, TRAIT_NODROP, NINJA_SUIT_TRAIT)
 	return TRUE
 
 /obj/item/clothing/suit/space/space_ninja/proc/lockIcons(mob/living/carbon/human/H)
-	icon_state = H.gender==FEMALE ? "s-ninjanf" : "s-ninjan"
+	icon_state = H.dna.features["body_model"] == FEMALE ? "s-ninjanf" : "s-ninjan"
 	H.gloves.icon_state = "s-ninjan"
 	H.gloves.item_state = "s-ninjan"
 
@@ -131,30 +132,29 @@ Contents:
 //This proc allows the suit to be taken off.
 /obj/item/clothing/suit/space/space_ninja/proc/unlock_suit()
 	affecting = null
-	item_flags &= ~NODROP
+	REMOVE_TRAIT(src, TRAIT_NODROP, NINJA_SUIT_TRAIT)
 	slowdown = 1
 	icon_state = "s-ninja"
 	if(n_hood)//Should be attached, might not be attached.
-		n_hood.item_flags &= ~NODROP
+		REMOVE_TRAIT(n_hood, TRAIT_NODROP, NINJA_SUIT_TRAIT)
 	if(n_shoes)
-		n_shoes.item_flags &= ~NODROP
+		REMOVE_TRAIT(n_shoes, TRAIT_NODROP, NINJA_SUIT_TRAIT)
 		n_shoes.slowdown++
 	if(n_gloves)
 		n_gloves.icon_state = "s-ninja"
 		n_gloves.item_state = "s-ninja"
-		n_gloves.item_flags &= ~NODROP
+		REMOVE_TRAIT(n_gloves, TRAIT_NODROP, NINJA_SUIT_TRAIT)
 		n_gloves.candrain=0
 		n_gloves.draining=0
 
 
 /obj/item/clothing/suit/space/space_ninja/examine(mob/user)
-	..()
-	if(s_initialized)
-		if(user == affecting)
-			to_chat(user, "All systems operational. Current energy capacity: <B>[DisplayEnergy(cell.charge)]</B>.")
-			to_chat(user, "The CLOAK-tech device is <B>[stealth?"active":"inactive"]</B>.")
-			to_chat(user, "There are <B>[s_bombs]</B> smoke bomb\s remaining.")
-			to_chat(user, "There are <B>[a_boost]</B> adrenaline booster\s remaining.")
+	. = ..()
+	if(s_initialized && user == affecting)
+		. += "All systems operational. Current energy capacity: <B>[DisplayEnergy(cell.charge)]</B>.\n\
+						The CLOAK-tech device is <B>[stealth?"active":"inactive"]</B>.\n\
+						There are <B>[s_bombs]</B> smoke bomb\s remaining.\n\
+						There are <B>[a_boost]</B> adrenaline booster\s remaining."
 
 /obj/item/clothing/suit/space/space_ninja/ui_action_click(mob/user, action)
 	if(istype(action, /datum/action/item_action/initialize_ninja_suit))
@@ -174,9 +174,6 @@ Contents:
 		return TRUE
 	if(istype(action, /datum/action/item_action/ninjastar))
 		ninjastar()
-		return TRUE
-	if(istype(action, /datum/action/item_action/ninjanet))
-		ninjanet()
 		return TRUE
 	if(istype(action, /datum/action/item_action/ninja_sword_recall))
 		ninja_sword_recall()

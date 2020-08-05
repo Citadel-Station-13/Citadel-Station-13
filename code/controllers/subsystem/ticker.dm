@@ -68,6 +68,8 @@ SUBSYSTEM_DEF(ticker)
 
 	var/modevoted = FALSE					//Have we sent a vote for the gamemode?
 
+	var/station_integrity = 100				// stored at roundend for use in some antag goals
+
 /datum/controller/subsystem/ticker/Initialize(timeofday)
 	load_mode()
 
@@ -126,9 +128,20 @@ SUBSYSTEM_DEF(ticker)
 
 
 	if(!GLOB.syndicate_code_phrase)
-		GLOB.syndicate_code_phrase	= generate_code_phrase()
+		GLOB.syndicate_code_phrase	= generate_code_phrase(return_list=TRUE)
+
+		var/codewords = jointext(GLOB.syndicate_code_phrase, "|")
+		var/regex/codeword_match = new("([codewords])", "ig")
+
+		GLOB.syndicate_code_phrase_regex = codeword_match
+
 	if(!GLOB.syndicate_code_response)
-		GLOB.syndicate_code_response = generate_code_phrase()
+		GLOB.syndicate_code_response = generate_code_phrase(return_list=TRUE)
+
+		var/codewords = jointext(GLOB.syndicate_code_response, "|")
+		var/regex/codeword_match = new("([codewords])", "ig")
+
+		GLOB.syndicate_code_response_regex = codeword_match
 
 	start_at = world.time + (CONFIG_GET(number/lobby_countdown) * 10)
 	if(CONFIG_GET(flag/randomize_shift_time))
@@ -145,8 +158,7 @@ SUBSYSTEM_DEF(ticker)
 			for(var/client/C in GLOB.clients)
 				window_flash(C, ignorepref = TRUE) //let them know lobby has opened up.
 			to_chat(world, "<span class='boldnotice'>Welcome to [station_name()]!</span>")
-			if(CONFIG_GET(flag/irc_announce_new_game))
-				world.TgsTargetedChatBroadcast("New round starting on [SSmapping.config.map_name]!", FALSE)
+			send2chat("New round starting on [SSmapping.config.map_name]!", CONFIG_GET(string/chat_announce_new_game))
 			current_state = GAME_STATE_PREGAME
 			//Everyone who wants to be an observer is now spawned
 			create_observers()
@@ -177,6 +189,12 @@ SUBSYSTEM_DEF(ticker)
 				tipped = TRUE
 
 			if(timeLeft <= 0)
+				if(SSvote.mode && (SSvote.mode == "roundtype" || SSvote.mode == "dynamic" || SSvote.mode == "mode tiers"))
+					SSvote.result()
+					SSpersistence.SaveSavedVotes()
+					for(var/client/C in SSvote.voting)
+						C << browse(null, "window=vote;can_close=0")
+					SSvote.reset()
 				current_state = GAME_STATE_SETTING_UP
 				Master.SetRunLevel(RUNLEVEL_SETUP)
 				if(start_immediately)
@@ -195,7 +213,7 @@ SUBSYSTEM_DEF(ticker)
 			check_queue()
 			check_maprotate()
 			scripture_states = scripture_unlock_alert(scripture_states)
-			SSshuttle.autoEnd()
+			//SSshuttle.autoEnd()
 
 			if(!roundend_check_paused && mode.check_finished(force_ending) || force_ending)
 				current_state = GAME_STATE_FINISHED
@@ -218,7 +236,7 @@ SUBSYSTEM_DEF(ticker)
 			if(GLOB.secret_force_mode != "secret")
 				var/datum/game_mode/smode = config.pick_mode(GLOB.secret_force_mode)
 				if(!smode.can_start())
-					message_admins("\blue Unable to force secret [GLOB.secret_force_mode]. [smode.required_players] players and [smode.required_enemies] eligible antagonists needed.")
+					message_admins("<span class='notice'>Unable to force secret [GLOB.secret_force_mode]. [smode.required_players] players and [smode.required_enemies] eligible antagonists needed.</span>")
 				else
 					mode = smode
 
@@ -244,7 +262,7 @@ SUBSYSTEM_DEF(ticker)
 	var/can_continue = 0
 	can_continue = src.mode.pre_setup()		//Choose antagonists
 	CHECK_TICK
-	SSjob.DivideOccupations() 				//Distribute jobs
+	can_continue = can_continue && SSjob.DivideOccupations(mode.required_jobs) 				//Distribute jobs
 	CHECK_TICK
 
 	if(!GLOB.Debug2)
@@ -291,19 +309,20 @@ SUBSYSTEM_DEF(ticker)
 	round_start_time = world.time
 	SSdbcore.SetRoundStart()
 
-	to_chat(world, "<FONT color='blue'><B>Welcome to [station_name()], enjoy your stay!</B></FONT>")
-	SEND_SOUND(world, sound('sound/ai/welcome.ogg'))
+	to_chat(world, "<span class='notice'><B>Welcome to [station_name()], enjoy your stay!</B></span>")
+	SEND_SOUND(world, sound(get_announcer_sound("welcome")))
 
 	current_state = GAME_STATE_PLAYING
 	Master.SetRunLevel(RUNLEVEL_GAME)
 
 	if(SSevents.holidays)
-		to_chat(world, "<font color='blue'>and...</font>")
+		to_chat(world, "<span class='notice'>and...</span>")
 		for(var/holidayname in SSevents.holidays)
 			var/datum/holiday/holiday = SSevents.holidays[holidayname]
 			to_chat(world, "<h4>[holiday.greet()]</h4>")
 
 	PostSetup()
+	SSshuttle.realtimeofstart = world.realtime
 
 	return TRUE
 
@@ -345,7 +364,7 @@ SUBSYSTEM_DEF(ticker)
 		var/turf/epi = bomb.loc
 		qdel(bomb)
 		if(epi)
-			explosion(epi, 0, 256, 512, 0, TRUE, TRUE, 0, TRUE)
+			explosion(epi, 512, 0, 0, 0, TRUE, TRUE, 0, TRUE)
 
 /datum/controller/subsystem/ticker/proc/create_characters()
 	for(var/mob/dead/new_player/player in GLOB.player_list)
@@ -368,12 +387,15 @@ SUBSYSTEM_DEF(ticker)
 	for(var/mob/dead/new_player/N in GLOB.player_list)
 		var/mob/living/carbon/human/player = N.new_character
 		if(istype(player) && player.mind && player.mind.assigned_role)
+			var/datum/job/J = SSjob.GetJob(player.mind.assigned_role)
+			if(J)
+				J.standard_assign_skills(player.mind)
 			if(player.mind.assigned_role == "Captain")
 				captainless=0
 			if(player.mind.assigned_role != player.mind.special_role)
 				SSjob.EquipRank(N, player.mind.assigned_role, 0)
-			if(CONFIG_GET(flag/roundstart_traits) && ishuman(N.new_character))
-				SSquirks.AssignQuirks(N.new_character, N.client, TRUE)
+				if(CONFIG_GET(flag/roundstart_traits) && ishuman(N.new_character))
+					SSquirks.AssignQuirks(N.new_character, N.client, TRUE, TRUE, SSjob.GetJob(player.mind.assigned_role), FALSE, N)
 		CHECK_TICK
 	if(captainless)
 		for(var/mob/dead/new_player/N in GLOB.player_list)
@@ -387,8 +409,11 @@ SUBSYSTEM_DEF(ticker)
 		var/mob/living = player.transfer_character()
 		if(living)
 			qdel(player)
-			living.notransform = TRUE
+			living.mob_transforming = TRUE
 			if(living.client)
+				if (living.client.prefs && living.client.prefs.auto_ooc)
+					if (living.client.prefs.chat_toggles & CHAT_OOC)
+						living.client.prefs.chat_toggles ^= CHAT_OOC
 				var/obj/screen/splash/S = new(living.client, TRUE)
 				S.Fade(TRUE)
 			livings += living
@@ -398,7 +423,7 @@ SUBSYSTEM_DEF(ticker)
 /datum/controller/subsystem/ticker/proc/release_characters(list/livings)
 	for(var/I in livings)
 		var/mob/living/L = I
-		L.notransform = FALSE
+		L.mob_transforming = FALSE
 
 /datum/controller/subsystem/ticker/proc/send_tip_of_the_round()
 	var/m
@@ -413,7 +438,7 @@ SUBSYSTEM_DEF(ticker)
 			m = pick(memetips)
 
 	if(m)
-		to_chat(world, "<font color='purple'><b>Tip of the round: </b>[html_encode(m)]</font>")
+		to_chat(world, "<span class='purple'><b>Tip of the round: </b>[html_encode(m)]</span>")
 
 /datum/controller/subsystem/ticker/proc/check_queue()
 	var/hpc = CONFIG_GET(number/hard_popcap)
@@ -454,7 +479,19 @@ SUBSYSTEM_DEF(ticker)
 	if(CONFIG_GET(flag/tgstyle_maprotation))
 		INVOKE_ASYNC(SSmapping, /datum/controller/subsystem/mapping/.proc/maprotate)
 	else
-		SSvote.initiate_vote("map","server",TRUE)
+		var/vote_type = CONFIG_GET(string/map_vote_type)
+		switch(vote_type)
+			if("PLURALITY")
+				SSvote.initiate_vote("map","server", display = SHOW_RESULTS)
+			if("APPROVAL")
+				SSvote.initiate_vote("map","server", display = SHOW_RESULTS, votesystem = APPROVAL_VOTING)
+			if("IRV")
+				SSvote.initiate_vote("map","server", display = SHOW_RESULTS, votesystem = INSTANT_RUNOFF_VOTING)
+			if("SCORE")
+				SSvote.initiate_vote("map","server", display = SHOW_RESULTS, votesystem = MAJORITY_JUDGEMENT_VOTING)
+			else
+				SSvote.initiate_vote("map","server", display = SHOW_RESULTS)
+		// fallback
 
 /datum/controller/subsystem/ticker/proc/HasRoundStarted()
 	return current_state >= GAME_STATE_PLAYING
@@ -467,7 +504,12 @@ SUBSYSTEM_DEF(ticker)
 		if(SSticker.timeLeft < 900)
 			SSticker.timeLeft = 900
 		SSticker.modevoted = TRUE
-		SSvote.initiate_vote("roundtype","server",TRUE)
+		var/dynamic = CONFIG_GET(flag/dynamic_voting)
+		if(dynamic)
+			SSvote.initiate_vote("dynamic", "server", display = NONE, votesystem = SCORE_VOTING, forced = TRUE,vote_time = 20 MINUTES)
+		else
+			SSvote.initiate_vote("roundtype", "server", display = NONE, votesystem = PLURALITY_VOTING, forced=TRUE, \
+			vote_time = (CONFIG_GET(flag/modetier_voting) ? 1 MINUTES : 20 MINUTES))
 
 /datum/controller/subsystem/ticker/Recover()
 	current_state = SSticker.current_state
@@ -560,9 +602,21 @@ SUBSYSTEM_DEF(ticker)
 			news_message = "The burst of energy released near [station_name()] has been confirmed as merely a test of a new weapon. However, due to an unexpected mechanical error, their communications system has been knocked offline."
 		if(SHUTTLE_HIJACK)
 			news_message = "During routine evacuation procedures, the emergency shuttle of [station_name()] had its navigation protocols corrupted and went off course, but was recovered shortly after."
+		if(GANG_VICTORY)
+			news_message = "Company officials reaffirmed that sudden deployments of special forces are not in any way connected to rumors of [station_name()] being covered in graffiti."
+
+	if(SSblackbox.first_death)
+		var/list/ded = SSblackbox.first_death
+		if(ded.len)
+			news_message += " NT Sanctioned Psykers picked up faint traces of someone near the station, allegedly having had died. Their name was: [ded["name"]], [ded["role"]], at [ded["area"]].[ded["last_words"] ? " Their last words were: \"[ded["last_words"]]\"" : ""]"
+		else
+			news_message += " NT Sanctioned Psykers proudly confirm reports that nobody died this shift!"
 
 	if(news_message)
 		send2otherserver(news_source, news_message,"News_Report")
+		return news_message
+	else
+		return "We regret to inform you that shit be whack, yo. None of our reporters have any idea of what may or may not have gone on."
 
 /datum/controller/subsystem/ticker/proc/GetTimeLeft()
 	if(isnull(SSticker.timeLeft))
@@ -650,12 +704,14 @@ SUBSYSTEM_DEF(ticker)
 		round_end_sound = pick(\
 		'sound/roundend/newroundsexy.ogg',
 		'sound/roundend/apcdestroyed.ogg',
+		'sound/roundend/seeyoulaterokay.ogg',
 		'sound/roundend/bangindonk.ogg',
 		'sound/roundend/leavingtg.ogg',
 		'sound/roundend/its_only_game.ogg',
 		'sound/roundend/yeehaw.ogg',
 		'sound/roundend/disappointed.ogg',
-		'sound/roundend/gondolabridge.ogg'\
+		'sound/roundend/gondolabridge.ogg',
+		'sound/roundend/haveabeautifultime.ogg'\
 		)
 
 	SEND_SOUND(world, sound(round_end_sound))

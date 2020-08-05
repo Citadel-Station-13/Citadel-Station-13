@@ -23,7 +23,7 @@
 									datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
-		ui = new(user, src, ui_key, "atmos_alert", name, 350, 300, master_ui, state)
+		ui = new(user, src, ui_key, "AtmosAlertConsole", name, 350, 300, master_ui, state)
 		ui.open()
 
 /obj/machinery/computer/atmos_alert/ui_data(mob/user)
@@ -78,11 +78,20 @@
 	update_icon()
 	return
 
-/obj/machinery/computer/atmos_alert/update_icon()
-	..()
+/obj/machinery/computer/atmos_alert/update_overlays()
+	. = ..()
+	SSvis_overlays.remove_vis_overlay(src, managed_vis_overlays)
+	var/overlay_state = icon_screen
 	if(stat & (NOPOWER|BROKEN))
+		. |= "[icon_keyboard]_off"
 		return
+	. |= icon_keyboard
 	if(priority_alarms.len)
-		add_overlay("alert:2")
+		overlay_state = "alert:2"
 	else if(minor_alarms.len)
-		add_overlay("alert:1")
+		overlay_state = "alert:1"
+	else
+		overlay_state = "alert:0"
+	. |= overlay_state
+	SSvis_overlays.add_vis_overlay(src, icon, overlay_state, layer, plane, dir)
+	SSvis_overlays.add_vis_overlay(src, icon, overlay_state, EMISSIVE_LAYER, EMISSIVE_PLANE, dir, alpha=128)

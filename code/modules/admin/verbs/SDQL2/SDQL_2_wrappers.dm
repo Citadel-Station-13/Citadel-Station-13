@@ -184,6 +184,9 @@
 /proc/_list_swap(list/L, Index1, Index2)
 	L.Swap(Index1, Index2)
 
+/proc/_list_get(list/L, index)
+	return L[index]
+
 /proc/_walk(ref, dir, lag)
 	walk(ref, dir, lag)
 
@@ -214,3 +217,24 @@
 /proc/_step_away(ref, trg, max)
 	step_away(ref, trg, max)
 
+/proc/_instantiate_at(thing, location)
+	new thing(location)
+
+/// Locating turfs
+/proc/_turf_in_offset(s = usr, x = 0, y = 0, z = 0)
+	var/turf/T = get_turf(s)
+	return locate(clamp(T.x + x, 1, world.maxx), clamp(T.y + y, 1, world.maxy), clamp(T.z + z, 1, world.maxz))
+
+/proc/_random_turf_in_range(s = usr, r = 7)
+	return _turf_in_offset(s, rand(-r, r), rand(-r, r))
+
+/proc/_random_turf_in_view(s = usr, r = 7)
+	var/list/v = view(s, r)
+	. = list()
+	for(var/turf/T in v)
+		. += T
+	return pick(.)
+
+/proc/__nan()
+	var/list/L = json_decode("{\"value\":NaN}")
+	return L["value"]

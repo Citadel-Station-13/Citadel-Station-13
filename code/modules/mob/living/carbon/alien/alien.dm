@@ -12,15 +12,22 @@
 	bubble_icon = "alien"
 	type_of_meat = /obj/item/reagent_containers/food/snacks/meat/slab/xeno
 
+	/// How much brute damage without armor piercing they do against mobs in melee
+	var/meleeSlashHumanPower = 20
+	/// How much power they have for DefaultCombatKnockdown when attacking humans
+	var/meleeKnockdownPower = 100
+	/// How much brute damage they do to simple animals
+	var/meleeSlashSAPower = 35
+
 	var/obj/item/card/id/wear_id = null // Fix for station bounced radios -- Skie
 	var/has_fine_manipulation = 0
 	var/move_delay_add = 0 // movement delay to add
 
 	status_flags = CANUNCONSCIOUS|CANPUSH
 
-	var/heat_protection = 0.5
+	heat_protection = 0.5
 	var/leaping = 0
-	gib_type = /obj/effect/decal/cleanable/xenoblood/xgibs
+	gib_type = /obj/effect/decal/cleanable/blood/gibs/xeno
 	unique_name = 1
 
 	var/static/regex/alien_name_regex = new("alien (larva|sentinel|drone|hunter|praetorian|queen)( \\(\\d+\\))?")
@@ -105,7 +112,7 @@ Des: Gives the client of the alien an image on each infected mob.
 	if (client)
 		for (var/i in GLOB.mob_living_list)
 			var/mob/living/L = i
-			if(L.has_trait(TRAIT_XENO_HOST))
+			if(HAS_TRAIT(L, TRAIT_XENO_HOST))
 				var/obj/item/organ/body_egg/alien_embryo/A = L.getorgan(/obj/item/organ/body_egg/alien_embryo)
 				if(A)
 					var/I = image('icons/mob/alien.dmi', loc = L, icon_state = "infected[A.stage]")
@@ -120,7 +127,8 @@ Des: Removes all infected images from the alien.
 /mob/living/carbon/alien/proc/RemoveInfectionImages()
 	if (client)
 		for(var/image/I in client.images)
-			if(dd_hasprefix_case(I.icon_state, "infected"))
+			var/searchfor = "infected"
+			if(findtext(I.icon_state, searchfor, 1, length(searchfor) + 1))
 				qdel(I)
 	return
 
@@ -132,7 +140,8 @@ Des: Removes all infected images from the alien.
 
 /mob/living/carbon/alien/proc/alien_evolve(mob/living/carbon/alien/new_xeno)
 	to_chat(src, "<span class='noticealien'>You begin to evolve!</span>")
-	visible_message("<span class='alertalien'>[src] begins to twist and contort!</span>")
+	visible_message("<span class='alertalien'>[src] begins to twist and contort!</span>",
+		"<span class='alertalien'>You begin to twist and contort!</span>")
 	new_xeno.setDir(dir)
 	if(!alien_name_regex.Find(name))
 		new_xeno.name = name

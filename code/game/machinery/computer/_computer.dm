@@ -7,12 +7,13 @@
 	idle_power_usage = 300
 	active_power_usage = 300
 	max_integrity = 200
-	integrity_failure = 100
+	integrity_failure = 0.5
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 40, "acid" = 20)
 	var/brightness_on = 1
 	var/icon_keyboard = "generic_key"
 	var/icon_screen = "generic"
 	var/clockwork = FALSE
+	var/authenticated = FALSE
 
 /obj/machinery/computer/Initialize(mapload, obj/item/circuitboard/C)
 	. = ..()
@@ -34,9 +35,9 @@
 /obj/machinery/computer/ratvar_act()
 	if(!clockwork)
 		clockwork = TRUE
-		icon_screen = "ratvar[rand(1, 4)]"
-		icon_keyboard = "ratvar_key[rand(1, 6)]"
-		icon_state = "ratvarcomputer[rand(1, 4)]"
+		icon_screen = "ratvar[rand(1, 3)]"
+		icon_keyboard = "ratvar_key[rand(1, 2)]"
+		icon_state = "ratvarcomputer"
 		update_icon()
 
 /obj/machinery/computer/narsie_act()
@@ -47,13 +48,13 @@
 		icon_state = initial(icon_state)
 		update_icon()
 
-/obj/machinery/computer/update_icon()
-	cut_overlays()
+/obj/machinery/computer/update_overlays()
+	. = ..()
 	SSvis_overlays.remove_vis_overlay(src, managed_vis_overlays)
 	if(stat & NOPOWER)
-		add_overlay("[icon_keyboard]_off")
+		. += "[icon_keyboard]_off"
 		return
-	add_overlay(icon_keyboard)
+	. += icon_keyboard
 
 	// This whole block lets screens ignore lighting and be visible even in the darkest room
 	// We can't do this for many things that emit light unfortunately because it layers over things that would be on top of it
@@ -61,7 +62,7 @@
 	if(stat & BROKEN)
 		overlay_state = "[icon_state]_broken"
 	SSvis_overlays.add_vis_overlay(src, icon, overlay_state, layer, plane, dir)
-	SSvis_overlays.add_vis_overlay(src, icon, overlay_state, ABOVE_LIGHTING_LAYER, ABOVE_LIGHTING_PLANE, dir, alpha=128)
+	SSvis_overlays.add_vis_overlay(src, icon, overlay_state, EMISSIVE_LAYER, EMISSIVE_PLANE, dir, alpha=128)
 
 /obj/machinery/computer/power_change()
 	..()

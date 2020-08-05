@@ -6,7 +6,6 @@
 	icon_keyboard = "tech_key"
 	req_access = list(ACCESS_HEADS)
 	circuit = /obj/item/circuitboard/computer/communications
-	var/authenticated = 0
 	var/auth_id = "Unknown" //Who is currently logged in?
 	var/list/datum/comm_message/messages = list()
 	var/datum/comm_message/currmsg
@@ -16,6 +15,7 @@
 	var/message_cooldown = 0
 	var/ai_message_cooldown = 0
 	var/tmp_alertlevel = 0
+	var/static/security_level_cd // used to stop mass spam.
 	var/const/STATE_DEFAULT = 1
 	var/const/STATE_CALLSHUTTLE = 2
 	var/const/STATE_CANCELSHUTTLE = 3
@@ -43,12 +43,6 @@
 	. = ..()
 	GLOB.shuttle_caller_list += src
 
-/obj/machinery/computer/communications/process()
-	if(..())
-		var/ai_autoupdate = aistate != STATE_STATUSDISPLAY && aistate != STATE_CALLSHUTTLE && aistate != STATE_PURCHASE && aistate != STATE_VIEWMESSAGE
-		var/machine_user_autoupdate = state != STATE_STATUSDISPLAY && state != STATE_CALLSHUTTLE && state != STATE_PURCHASE && state != STATE_VIEWMESSAGE
-		updateDialog(machine_user_autoupdate,ai_autoupdate)
-
 /obj/machinery/computer/communications/Topic(href, href_list)
 	if(..())
 		return
@@ -67,33 +61,31 @@
 		// main interface
 		if("main")
 			state = STATE_DEFAULT
-			playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, 0)
+			playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, FALSE)
 		if("login")
 			var/mob/M = usr
 
-			var/obj/item/card/id/I = M.get_active_held_item()
-			if(!istype(I))
-				I = M.get_idcard()
+			var/obj/item/card/id/I = M.get_idcard(TRUE)
 
 			if(I && istype(I))
 				if(check_access(I))
 					authenticated = 1
 					auth_id = "[I.registered_name] ([I.assignment])"
-					if((20 in I.access))
+					if((ACCESS_CAPTAIN in I.access))
 						authenticated = 2
-					playsound(src, 'sound/machines/terminal_on.ogg', 50, 0)
+					playsound(src, 'sound/machines/terminal_on.ogg', 50, FALSE)
 				if(obj_flags & EMAGGED)
 					authenticated = 2
 					auth_id = "Unknown"
 					to_chat(M, "<span class='warning'>[src] lets out a quiet alarm as its login is overridden.</span>")
-					playsound(src, 'sound/machines/terminal_on.ogg', 50, 0)
-					playsound(src, 'sound/machines/terminal_alert.ogg', 25, 0)
+					playsound(src, 'sound/machines/terminal_on.ogg', 50, FALSE)
+					playsound(src, 'sound/machines/terminal_alert.ogg', 25, FALSE)
 					if(prob(25))
 						for(var/mob/living/silicon/ai/AI in active_ais())
 							SEND_SOUND(AI, sound('sound/machines/terminal_alert.ogg', volume = 10)) //Very quiet for balance reasons
 		if("logout")
 			authenticated = 0
-			playsound(src, 'sound/machines/terminal_off.ogg', 50, 0)
+			playsound(src, 'sound/machines/terminal_off.ogg', 50, FALSE)
 
 		if("swipeidseclevel")
 			var/mob/M = usr
@@ -103,49 +95,51 @@
 				I = pda.id
 			if (I && istype(I))
 				if(ACCESS_CAPTAIN in I.access)
+					if(security_level_cd > world.time)
+						to_chat(usr, "<span class='warning'>Security level protocols are currently on cooldown. Please stand by.</span>")
+						return
 					var/old_level = GLOB.security_level
 					if(!tmp_alertlevel)
 						tmp_alertlevel = SEC_LEVEL_GREEN
 					if(tmp_alertlevel < SEC_LEVEL_GREEN)
 						tmp_alertlevel = SEC_LEVEL_GREEN
-					if(tmp_alertlevel == SEC_LEVEL_BLUE)
-						tmp_alertlevel = SEC_LEVEL_BLUE
 					if(tmp_alertlevel > SEC_LEVEL_AMBER)
 						tmp_alertlevel = SEC_LEVEL_AMBER //Cannot engage delta with this
 					set_security_level(tmp_alertlevel)
+					security_level_cd = world.time + 15 SECONDS
 					if(GLOB.security_level != old_level)
 						to_chat(usr, "<span class='notice'>Authorization confirmed. Modifying security level.</span>")
-						playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, 0)
+						playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, FALSE)
 						//Only notify people if an actual change happened
-						var/security_level = get_security_level()
+						var/security_level = NUM2SECLEVEL(GLOB.security_level)
 						log_game("[key_name(usr)] has changed the security level to [security_level] with [src] at [AREACOORD(usr)].")
 						message_admins("[ADMIN_LOOKUPFLW(usr)] has changed the security level to [security_level] with [src] at [AREACOORD(usr)].")
 						deadchat_broadcast("<span class='deadsay'><span class='name'>[usr.real_name]</span> has changed the security level to [security_level] with [src] at <span class='name'>[get_area_name(usr, TRUE)]</span>.</span>", usr)
 					tmp_alertlevel = 0
 				else
 					to_chat(usr, "<span class='warning'>You are not authorized to do this!</span>")
-					playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, 0)
+					playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, FALSE)
 					tmp_alertlevel = 0
 				state = STATE_DEFAULT
 			else
 				to_chat(usr, "<span class='warning'>You need to swipe your ID!</span>")
-				playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, 0)
+				playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, FALSE)
 
 		if("announce")
 			if(authenticated==2)
-				playsound(src, 'sound/machines/terminal_prompt.ogg', 50, 0)
+				playsound(src, 'sound/machines/terminal_prompt.ogg', 50, FALSE)
 				make_announcement(usr)
 
 		if("crossserver")
 			if(authenticated==2)
 				if(!checkCCcooldown())
-					to_chat(usr, "<span class='warning'>Arrays recycling.  Please stand by.</span>")
-					playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, 0)
+					to_chat(usr, "<span class='warning'>Arrays recycling. Please stand by.</span>")
+					playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, FALSE)
 					return
 				var/input = stripped_multiline_input(usr, "Please choose a message to transmit to allied stations.  Please be aware that this process is very expensive, and abuse will lead to... termination.", "Send a message to an allied station.", "")
 				if(!input || !(usr in view(1,src)) || !checkCCcooldown())
 					return
-				playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, 0)
+				playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, FALSE)
 				send2otherserver("[station_name()]", input,"Comms_Console")
 				minor_announce(input, title = "Outgoing message to allied station")
 				usr.log_talk(input, LOG_SAY, tag="message to the other server")
@@ -169,22 +163,23 @@
 					else if(!S.prerequisites_met())
 						to_chat(usr, "You have not met the requirements for purchasing this shuttle.")
 					else
-						if(SSshuttle.points >= S.credit_cost)
-							var/obj/machinery/shuttle_manipulator/M = locate() in GLOB.machines
-							if(M)
-								SSshuttle.shuttle_purchased = TRUE
-								M.unload_preview()
-								M.load_template(S)
-								M.existing_shuttle = SSshuttle.emergency
-								M.action_load(S)
-								SSshuttle.points -= S.credit_cost
-								minor_announce("[usr.real_name] has purchased [S.name] for [S.credit_cost] credits." , "Shuttle Purchase")
-								message_admins("[ADMIN_LOOKUPFLW(usr)] purchased [S.name].")
-								SSblackbox.record_feedback("text", "shuttle_purchase", 1, "[S.name]")
-							else
-								to_chat(usr, "Something went wrong! The shuttle exchange system seems to be down.")
+						var/points_to_check
+						var/datum/bank_account/D = SSeconomy.get_dep_account(ACCOUNT_CAR)
+						if(D)
+							points_to_check = D.account_balance
+						if(points_to_check >= S.credit_cost)
+							SSshuttle.shuttle_purchased = TRUE
+							SSshuttle.unload_preview()
+							SSshuttle.load_template(S)
+							SSshuttle.existing_shuttle = SSshuttle.emergency
+							SSshuttle.action_load(S)
+							D.adjust_money(-S.credit_cost)
+							minor_announce("[usr.real_name] has purchased [S.name] for [S.credit_cost] credits." , "Shuttle Purchase")
+							message_admins("[ADMIN_LOOKUPFLW(usr)] purchased [S.name].")
+							log_shuttle("[key_name(usr)] has purchased [S.name].")
+							SSblackbox.record_feedback("text", "shuttle_purchase", 1, "[S.name]")
 						else
-							to_chat(usr, "Not enough credits.")
+							to_chat(usr, "<span class='alert'>Insufficient credits.</span>")
 
 		if("callshuttle")
 			state = STATE_DEFAULT
@@ -202,7 +197,7 @@
 				state = STATE_CANCELSHUTTLE
 		if("cancelshuttle2")
 			if(authenticated)
-				if(world.time > SSshuttle.auto_call) //Citadel Edit Removing auto_call caused recall.
+				if(SSshuttle.endvote_passed) //Citadel Edit - endvote passing = no recalls
 					say("Warning: Emergency shuttle recalls have been blocked by Central Command due to ongoing crew transfer procedures.")
 				else
 					SSshuttle.cancelEvac(usr)
@@ -269,7 +264,7 @@
 
 		// Status display stuff
 		if("setstat")
-			playsound(src, "terminal_type", 50, 0)
+			playsound(src, "terminal_type", 50, FALSE)
 			switch(href_list["statdisp"])
 				if("message")
 					post_status("message", stat_msg1, stat_msg2)
@@ -287,7 +282,7 @@
 
 		// OMG CENTCOM LETTERHEAD
 		if("MessageCentCom")
-			if(authenticated==2)
+			if(authenticated)
 				if(!checkCCcooldown())
 					to_chat(usr, "<span class='warning'>Arrays recycling.  Please stand by.</span>")
 					return
@@ -297,6 +292,10 @@
 				playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, 0)
 				CentCom_announce(input, usr)
 				to_chat(usr, "<span class='notice'>Message transmitted to Central Command.</span>")
+				for(var/client/X in GLOB.admins)
+					if(X.prefs.toggles & SOUND_ADMINHELP)
+						SEND_SOUND(X, sound('sound/effects/printer.ogg'))
+					window_flash(X, ignorepref = FALSE)
 				usr.log_talk(input, LOG_SAY, tag="CentCom announcement")
 				deadchat_broadcast("<span class='deadsay'><span class='name'>[usr.real_name]</span> has messaged CentCom, \"[input]\" at <span class='name'>[get_area_name(usr, TRUE)]</span>.</span>", usr)
 				CM.lastTimeUsed = world.time
@@ -305,22 +304,26 @@
 		if("MessageSyndicate")
 			if((authenticated==2) && (obj_flags & EMAGGED))
 				if(!checkCCcooldown())
-					to_chat(usr, "<span class='warning'>Arrays recycling.  Please stand by.</span>")
-					playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, 0)
+					to_chat(usr, "<span class='warning'>Arrays recycling. Please stand by.</span>")
+					playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, FALSE)
 					return
 				var/input = stripped_input(usr, "Please choose a message to transmit to \[ABNORMAL ROUTING COORDINATES\] via quantum entanglement.  Please be aware that this process is very expensive, and abuse will lead to... termination. Transmission does not guarantee a response.", "Send a message to /??????/.", "")
 				if(!input || !(usr in view(1,src)) || !checkCCcooldown())
 					return
-				playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, 0)
+				playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, FALSE)
 				Syndicate_announce(input, usr)
 				to_chat(usr, "<span class='danger'>SYSERR @l(19833)of(transmit.dm): !@$ MESSAGE TRANSMITTED TO SYNDICATE COMMAND.</span>")
+				for(var/client/X in GLOB.admins)
+					if(X.prefs.toggles & SOUND_ADMINHELP)
+						SEND_SOUND(X, sound('sound/effects/printer.ogg'))
+					window_flash(X, ignorepref = FALSE)
 				usr.log_talk(input, LOG_SAY, tag="Syndicate announcement")
 				deadchat_broadcast("<span class='deadsay'><span class='name'>[usr.real_name]</span> has messaged the Syndicate, \"[input]\" at <span class='name'>[get_area_name(usr, TRUE)]</span>.</span>", usr)
 				CM.lastTimeUsed = world.time
 
 		if("RestoreBackup")
 			to_chat(usr, "<span class='notice'>Backup routing data restored!</span>")
-			playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, 0)
+			playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, FALSE)
 			obj_flags &= ~EMAGGED
 			updateDialog()
 
@@ -334,8 +337,8 @@
 					return
 				Nuke_request(input, usr)
 				to_chat(usr, "<span class='notice'>Request sent.</span>")
-				usr.log_message("has requested the nuclear codes from CentCom", LOG_SAY)
-				priority_announce("The codes for the on-station nuclear self-destruct have been requested by [usr]. Confirmation or denial of this request will be sent shortly.", "Nuclear Self Destruct Codes Requested",'sound/ai/commandreport.ogg')
+				usr.log_message("has requested the nuclear codes from CentCom with reason \"[input]\"", LOG_SAY)
+				priority_announce("The codes for the on-station nuclear self-destruct have been requested by [usr]. Confirmation or denial of this request will be sent shortly.", "Nuclear Self Destruct Codes Requested","commandreport")
 				CM.lastTimeUsed = world.time
 
 
@@ -384,22 +387,24 @@
 		if("ai-announce")
 			make_announcement(usr, 1)
 		if("ai-securitylevel")
+			if(security_level_cd > world.time)
+				to_chat(usr, "<span class='warning'>Security level protocols are currently on cooldown. Please stand by.</span>")
+				return
 			tmp_alertlevel = text2num( href_list["newalertlevel"] )
 			if(!tmp_alertlevel)
-				tmp_alertlevel = 0
+				tmp_alertlevel = SEC_LEVEL_GREEN
 			var/old_level = GLOB.security_level
 			if(!tmp_alertlevel)
 				tmp_alertlevel = SEC_LEVEL_GREEN
 			if(tmp_alertlevel < SEC_LEVEL_GREEN)
 				tmp_alertlevel = SEC_LEVEL_GREEN
-			if(tmp_alertlevel == SEC_LEVEL_BLUE)
-				tmp_alertlevel = SEC_LEVEL_BLUE
 			if(tmp_alertlevel > SEC_LEVEL_AMBER)
 				tmp_alertlevel = SEC_LEVEL_AMBER //Cannot engage delta with this
 			set_security_level(tmp_alertlevel)
+			security_level_cd = world.time + 15 SECONDS
 			if(GLOB.security_level != old_level)
 				//Only notify people if an actual change happened
-				var/security_level = get_security_level()
+				var/security_level = NUM2SECLEVEL(GLOB.security_level)
 				log_game("[key_name(usr)] has changed the security level to [security_level] from [src] at [AREACOORD(usr)].")
 				message_admins("[ADMIN_LOOKUPFLW(usr)] has changed the security level to [security_level] from [src] at [AREACOORD(usr)].")
 				deadchat_broadcast("<span class='deadsay'><span class='name'>[usr.real_name]</span> has changed the security level to [security_level] from [src] at [get_area_name(usr, TRUE)].</span>", usr)
@@ -431,6 +436,7 @@
 		return ..()
 
 /obj/machinery/computer/communications/emag_act(mob/user)
+	. = ..()
 	if(obj_flags & EMAGGED)
 		return
 	obj_flags |= EMAGGED
@@ -438,7 +444,8 @@
 	if(authenticated == 1)
 		authenticated = 2
 	to_chat(user, "<span class='danger'>You scramble the communication routing circuits!</span>")
-	playsound(src, 'sound/machines/terminal_alert.ogg', 50, 0)
+	playsound(src, 'sound/machines/terminal_alert.ogg', 50, FALSE)
+	return TRUE
 
 /obj/machinery/computer/communications/ui_interact(mob/user)
 	. = ..()
@@ -449,13 +456,13 @@
 	var/dat = ""
 	if(SSshuttle.emergency.mode == SHUTTLE_CALL)
 		var/timeleft = SSshuttle.emergency.timeLeft()
-		dat += "<B>Emergency shuttle</B>\n<BR>\nETA: [timeleft / 60 % 60]:[add_zero(num2text(timeleft % 60), 2)]"
+		dat += "<B>Emergency shuttle</B>\n<BR>\nETA: [timeleft / 60 % 60]:[add_leading(num2text(timeleft % 60), 2, "0")]"
 
 
 	var/datum/browser/popup = new(user, "communications", "Communications Console", 400, 500)
 	popup.set_title_image(user.browse_rsc_icon(icon, icon_state))
 
-	if(issilicon(user))
+	if(issilicon(user) || (hasSiliconAccessInArea(user) && !in_range(user,src)))
 		var/dat2 = interact_ai(user) // give the AI a different interact proc to limit its access
 		if(dat2)
 			dat +=  dat2
@@ -503,16 +510,16 @@
 				dat += "<BR>\[ <A HREF='?src=[REF(src)];operation=login'>Log In</A> \]"
 		if(STATE_CALLSHUTTLE)
 			dat += get_call_shuttle_form()
-			playsound(src, 'sound/machines/terminal_prompt.ogg', 50, 0)
+			playsound(src, 'sound/machines/terminal_prompt.ogg', 50, FALSE)
 		if(STATE_CANCELSHUTTLE)
 			dat += get_cancel_shuttle_form()
-			playsound(src, 'sound/machines/terminal_prompt.ogg', 50, 0)
+			playsound(src, 'sound/machines/terminal_prompt.ogg', 50, FALSE)
 		if(STATE_MESSAGELIST)
 			dat += "Messages:"
 			for(var/i in 1 to messages.len)
 				var/datum/comm_message/M = messages[i]
 				dat += "<BR><A HREF='?src=[REF(src)];operation=viewmessage;message-num=[i]'>[M.title]</A>"
-			playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, 0)
+			playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, FALSE)
 		if(STATE_VIEWMESSAGE)
 			if (currmsg)
 				dat += "<B>[currmsg.title]</B><BR><BR>[currmsg.content]"
@@ -546,9 +553,9 @@
 			dat += " <A HREF='?src=[REF(src)];operation=setstat;statdisp=alert;alert=redalert'>Red Alert</A> |"
 			dat += " <A HREF='?src=[REF(src)];operation=setstat;statdisp=alert;alert=lockdown'>Lockdown</A> |"
 			dat += " <A HREF='?src=[REF(src)];operation=setstat;statdisp=alert;alert=biohazard'>Biohazard</A> \]<BR><HR>"
-			playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, 0)
+			playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, FALSE)
 		if(STATE_ALERT_LEVEL)
-			dat += "Current alert level: [get_security_level()]<BR>"
+			dat += "Current alert level: [NUM2SECLEVEL(GLOB.security_level)]<BR>"
 			if(GLOB.security_level == SEC_LEVEL_DELTA)
 				dat += "<font color='red'><b>The self-destruct mechanism is active. Find a way to deactivate the mechanism to lower the alert level or evacuate.</b></font>"
 			else
@@ -556,11 +563,11 @@
 				dat += "<A HREF='?src=[REF(src)];operation=securitylevel;newalertlevel=[SEC_LEVEL_BLUE]'>Blue</A><BR>"
 				dat += "<A HREF='?src=[REF(src)];operation=securitylevel;newalertlevel=[SEC_LEVEL_GREEN]'>Green</A>"
 		if(STATE_CONFIRM_LEVEL)
-			dat += "Current alert level: [get_security_level()]<BR>"
-			dat += "Confirm the change to: [num2seclevel(tmp_alertlevel)]<BR>"
+			dat += "Current alert level: [NUM2SECLEVEL(GLOB.security_level)]<BR>"
+			dat += "Confirm the change to: [NUM2SECLEVEL(tmp_alertlevel)]<BR>"
 			dat += "<A HREF='?src=[REF(src)];operation=swipeidseclevel'>Swipe ID</A> to confirm change.<BR>"
 		if(STATE_TOGGLE_EMERGENCY)
-			playsound(src, 'sound/machines/terminal_prompt.ogg', 50, 0)
+			playsound(src, 'sound/machines/terminal_prompt.ogg', 50, FALSE)
 			if(GLOB.emergency_access == 1)
 				dat += "<b>Emergency Maintenance Access is currently <font color='red'>ENABLED</font></b>"
 				dat += "<BR>Restore maintenance access restrictions? <BR>\[ <A HREF='?src=[REF(src)];operation=disableemergency'>OK</A> | <A HREF='?src=[REF(src)];operation=viewmessage'>Cancel</A> \]"
@@ -569,7 +576,8 @@
 				dat += "<BR>Lift access restrictions on maintenance and external airlocks? <BR>\[ <A HREF='?src=[REF(src)];operation=enableemergency'>OK</A> | <A HREF='?src=[REF(src)];operation=viewmessage'>Cancel</A> \]"
 
 		if(STATE_PURCHASE)
-			dat += "Budget: [SSshuttle.points] Credits.<BR>"
+			var/datum/bank_account/D = SSeconomy.get_dep_account(ACCOUNT_CAR)
+			dat += "Budget: [D.account_balance] Credits.<BR>"
 			dat += "<BR>"
 			dat += "<b>Caution: Purchasing dangerous shuttles may lead to mutiny and/or death.</b><br>"
 			dat += "<BR>"
@@ -584,8 +592,6 @@
 
 	dat += "<BR><BR>\[ [(state != STATE_DEFAULT) ? "<A HREF='?src=[REF(src)];operation=main'>Main Menu</A> | " : ""]<A HREF='?src=[REF(user)];mach_close=communications'>Close</A> \]"
 
-	popup.set_content(dat)
-	popup.open()
 	popup.set_content(dat)
 	popup.open()
 
@@ -691,7 +697,7 @@
 			dat += " <A HREF='?src=[REF(src)];operation=setstat;statdisp=alert;alert=biohazard'>Biohazard</A> \]<BR><HR>"
 
 		if(STATE_ALERT_LEVEL)
-			dat += "Current alert level: [get_security_level()]<BR>"
+			dat += "Current alert level: [NUM2SECLEVEL(GLOB.security_level)]<BR>"
 			if(GLOB.security_level == SEC_LEVEL_DELTA)
 				dat += "<font color='red'><b>The self-destruct mechanism is active. Find a way to deactivate the mechanism to lower the alert level or evacuate.</b></font>"
 			else
@@ -712,7 +718,7 @@
 
 /obj/machinery/computer/communications/proc/make_announcement(mob/living/user, is_silicon)
 	if(!SScommunications.can_announce(user, is_silicon))
-		to_chat(user, "Intercomms recharging. Please stand by.")
+		to_chat(user, "<span class='alert'>Intercomms recharging. Please stand by.</span>")
 		return
 	var/input = stripped_input(user, "Please choose a message to announce to the station crew.", "What?")
 	if(!input || !user.canUseTopic(src))

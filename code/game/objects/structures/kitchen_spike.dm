@@ -60,10 +60,12 @@
 		deconstruct(TRUE)
 	return TRUE
 
-//ATTACK HAND IGNORING PARENT RETURN VALUE
-/obj/structure/kitchenspike/attack_hand(mob/user)
+/obj/structure/kitchenspike/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	if(VIABLE_MOB_CHECK(user.pulling) && user.a_intent == INTENT_GRAB && !has_buckled_mobs())
 		var/mob/living/L = user.pulling
+		if(HAS_TRAIT(user, TRAIT_PACIFISM) && L.stat != DEAD)
+			to_chat(user, "<span class='warning'>You don't want to hurt a living creature!</span>")
+			return
 		if(do_mob(user, src, 120))
 			if(has_buckled_mobs()) //to prevent spam/queing up attacks
 				return
@@ -75,7 +77,11 @@
 			L.visible_message("<span class='danger'>[user] slams [L] onto the meat spike!</span>", "<span class='userdanger'>[user] slams you onto the meat spike!</span>", "<span class='italics'>You hear a squishy wet noise.</span>")
 			L.forceMove(drop_location())
 			L.emote("scream")
-			L.add_splatter_floor()
+			if(iscarbon(L))
+				var/mob/living/carbon/C = L
+				C.bleed(30)
+			else
+				L.add_splatter_floor()
 			L.adjustBruteLoss(30)
 			L.setDir(2)
 			buckle_mob(L, force=1)
@@ -132,7 +138,7 @@
 	src.visible_message(text("<span class='danger'>[M] falls free of [src]!</span>"))
 	unbuckle_mob(M,force=1)
 	M.emote("scream")
-	M.AdjustKnockdown(20)
+	M.DefaultCombatKnockdown(20)
 
 /obj/structure/kitchenspike/Destroy()
 	if(has_buckled_mobs())

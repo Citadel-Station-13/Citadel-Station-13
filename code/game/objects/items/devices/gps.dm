@@ -14,8 +14,10 @@ GLOBAL_LIST_EMPTY(GPS_list)
 	var/global_mode = TRUE //If disabled, only GPS signals of the same Z level are shown
 
 /obj/item/gps/examine(mob/user)
-	..()
-	to_chat(user, "<span class='notice'>Alt-click to switch it [tracking ? "off":"on"].</span>")
+	. = ..()
+	var/turf/curr = get_turf(src)
+	. += "The screen says: [get_area_name(curr, TRUE)] ([curr.x], [curr.y], [curr.z])"
+	. += "<span class='notice'>Alt-click to switch it [tracking ? "off":"on"].</span>"
 
 /obj/item/gps/Initialize()
 	. = ..()
@@ -43,9 +45,11 @@ GLOBAL_LIST_EMPTY(GPS_list)
 	add_overlay("working")
 
 /obj/item/gps/AltClick(mob/user)
+	. = ..()
 	if(!user.canUseTopic(src, BE_CLOSE))
 		return
 	toggletracking(user)
+	return TRUE
 
 /obj/item/gps/proc/toggletracking(mob/user)
 	if(!user.canUseTopic(src, BE_CLOSE))
@@ -69,8 +73,10 @@ GLOBAL_LIST_EMPTY(GPS_list)
 		return
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
-		var/gps_window_height = 300 + GLOB.GPS_list.len * 20 // Variable window height, depending on how many GPS units there are to show
-		ui = new(user, src, ui_key, "gps", "Global Positioning System", 600, gps_window_height, master_ui, state) //width, height
+		// Variable window height, depending on how many GPS units there are
+		// to show, clamped to relatively safe range.
+		var/gps_window_height = clamp(325 + GLOB.GPS_list.len * 14, 325, 700)
+		ui = new(user, src, ui_key, "Gps", "Global Positioning System", 470, gps_window_height, master_ui, state) //width, height
 		ui.open()
 
 	ui.set_autoupdate(state = updating)
@@ -87,6 +93,8 @@ GLOBAL_LIST_EMPTY(GPS_list)
 
 	var/turf/curr = get_turf(src)
 	data["current"] = "[get_area_name(curr, TRUE)] ([curr.x], [curr.y], [curr.z])"
+	data["currentArea"] = "[get_area_name(curr, TRUE)]"
+	data["currentCoords"] = "[curr.x], [curr.y], [curr.z]"
 
 	var/list/signals = list()
 	data["signals"] = list()
@@ -100,16 +108,10 @@ GLOBAL_LIST_EMPTY(GPS_list)
 			continue
 		var/list/signal = list()
 		signal["entrytag"] = G.gpstag //Name or 'tag' of the GPS
-		signal["area"] = get_area_name(G, TRUE)
-		signal["coord"] = "[pos.x], [pos.y], [pos.z]"
+		signal["coords"] = "[pos.x], [pos.y], [pos.z]"
 		if(pos.z == curr.z) //Distance/Direction calculations for same z-level only
 			signal["dist"] = max(get_dist(curr, pos), 0) //Distance between the src and remote GPS turfs
 			signal["degrees"] = round(Get_Angle(curr, pos)) //0-360 degree directional bearing, for more precision.
-			var/direction = uppertext(dir2text(get_dir(curr, pos))) //Direction text (East, etc). Not as precise, but still helpful.
-			if(!direction)
-				direction = "CENTER"
-				signal["degrees"] = "N/A"
-			signal["direction"] = direction
 
 		signals += list(signal) //Add this signal to the list of signals
 	data["signals"] = signals
@@ -156,7 +158,10 @@ GLOBAL_LIST_EMPTY(GPS_list)
 	icon_state = "gps-b"
 	gpstag = "BORG0"
 	desc = "A mining cyborg internal positioning system. Used as a recovery beacon for damaged cyborg assets, or a collaboration tool for mining teams."
-	item_flags = NODROP
+
+/obj/item/gps/cyborg/Initialize()
+	. = ..()
+	ADD_TRAIT(src, TRAIT_NODROP, CYBORG_ITEM_TRAIT)
 
 /obj/item/gps/internal
 	icon_state = null
@@ -164,8 +169,19 @@ GLOBAL_LIST_EMPTY(GPS_list)
 	gpstag = "Eerie Signal"
 	desc = "Report to a coder immediately."
 	invisibility = INVISIBILITY_MAXIMUM
+	var/obj/item/implant/gps/implant
 
-/obj/item/gps/mining/internal
+/obj/item/gps/internal/Initialize(mapload, obj/item/implant/gps/_implant)
+	. = ..()
+	implant = _implant
+
+/obj/item/gps/internal/Destroy()
+	if(implant?.imp_in)
+		qdel(implant)
+	else
+		return ..()
+
+/obj/item/gps/internal/mining
 	icon_state = "gps-m"
 	gpstag = "MINER"
 	desc = "A positioning system helpful for rescuing trapped or injured miners, keeping one on you at all times while mining might just save your life."

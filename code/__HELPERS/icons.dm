@@ -712,7 +712,19 @@ world
 	var/static/icon/flat_template = icon('icons/effects/effects.dmi', "nothing")
 
 	#define BLANK icon(flat_template)
-	#define SET_SELF(SETVAR) var/icon/SELF_ICON=icon(icon(curicon, curstate, base_icon_dir),"",SOUTH,no_anim?1:null);if(A.alpha<255)SELF_ICON.Blend(rgb(255,255,255,A.alpha),ICON_MULTIPLY);if(A.color)SELF_ICON.Blend(A.color,ICON_MULTIPLY);;##SETVAR=SELF_ICON;
+	#define SET_SELF(SETVAR) do { \
+		var/icon/SELF_ICON=icon(icon(curicon, curstate, base_icon_dir),"",SOUTH,no_anim?1:null); \
+		if(A.alpha<255) { \
+			SELF_ICON.Blend(rgb(255,255,255,A.alpha),ICON_MULTIPLY);\
+		} \
+		if(A.color) { \
+			if(islist(A.color)){ \
+				SELF_ICON.MapColors(arglist(A.color))} \
+			else{ \
+				SELF_ICON.Blend(A.color,ICON_MULTIPLY)} \
+		} \
+		##SETVAR=SELF_ICON;\
+		} while (0)
 
 	#define INDEX_X_LOW 1
 	#define INDEX_X_HIGH 2
@@ -860,7 +872,11 @@ world
 			flat.Blend(add, blendMode2iconMode(curblend), I.pixel_x + 2 - flatX1, I.pixel_y + 2 - flatY1)
 
 		if(A.color)
-			flat.Blend(A.color, ICON_MULTIPLY)
+			if(islist(A.color))
+				flat.MapColors(arglist(A.color))
+			else
+				flat.Blend(A.color, ICON_MULTIPLY)
+
 		if(A.alpha < 255)
 			flat.Blend(rgb(255, 255, 255, A.alpha), ICON_MULTIPLY)
 
@@ -923,11 +939,19 @@ world
 				I.pixel_y++
 		add_overlay(I)//And finally add the overlay.
 
-/proc/getHologramIcon(icon/A, safety=1)//If safety is on, a new icon is not created.
+/proc/getHologramIcon(icon/A, safety = TRUE)//If safety is on, a new icon is not created.
 	var/icon/flat_icon = safety ? A : new(A)//Has to be a new icon to not constantly change the same icon.
 	flat_icon.ColorTone(rgb(125,180,225))//Let's make it bluish.
 	flat_icon.ChangeOpacity(0.5)//Make it half transparent.
 	var/icon/alpha_mask = new('icons/effects/effects.dmi', "scanline")//Scanline effect.
+	flat_icon.AddAlphaMask(alpha_mask)//Finally, let's mix in a distortion effect.
+	return flat_icon
+
+/proc/getPAIHologramIcon(icon/A, safety = TRUE)
+	var/icon/flat_icon = safety? A : new(A)
+	flat_icon.SetIntensity(0.75, 1, 0.75)
+	flat_icon.ChangeOpacity(0.7)
+	var/icon/alpha_mask = new('icons/effects/effects.dmi', "scanlineslow")//Scanline effect.
 	flat_icon.AddAlphaMask(alpha_mask)//Finally, let's mix in a distortion effect.
 	return flat_icon
 
@@ -961,7 +985,7 @@ world
 	var/icon/atom_icon = new(A.icon, A.icon_state)
 
 	if(!letter)
-		letter = copytext(A.name, 1, 2)
+		letter = A.name[1]
 		if(uppercase == 1)
 			letter = uppertext(letter)
 		else if(uppercase == -1)
@@ -1089,7 +1113,7 @@ GLOBAL_LIST_INIT(freon_color_matrix, list("#2E5E69", "#60A2A8", "#A1AFB1", rgb(0
 	WRITE_FILE(GLOB.iconCache[iconKey], icon)
 	var/iconData = GLOB.iconCache.ExportText(iconKey)
 	var/list/partial = splittext(iconData, "{")
-	return replacetext(copytext(partial[2], 3, -5), "\n", "")
+	return replacetext(copytext_char(partial[2], 3, -5), "\n", "")
 
 /proc/icon2html(thing, target, icon_state, dir, frame = 1, moving = FALSE)
 	if (!thing)
@@ -1112,9 +1136,10 @@ GLOBAL_LIST_INIT(freon_color_matrix, list("#2E5E69", "#60A2A8", "#A1AFB1", rgb(0
 	if (!isicon(I))
 		if (isfile(thing)) //special snowflake
 			var/name = sanitize_filename("[generate_asset_name(thing)].png")
-			register_asset(name, thing)
+			if(!SSassets.cache[name])
+				register_asset(name, thing)
 			for (var/thing2 in targets)
-				send_asset(thing2, key, FALSE)
+				send_asset(thing2, key)
 			return "<img class='icon icon-misc' src=\"[url_encode(name)]\">"
 		var/atom/A = thing
 		if (isnull(dir))
@@ -1136,9 +1161,10 @@ GLOBAL_LIST_INIT(freon_color_matrix, list("#2E5E69", "#60A2A8", "#A1AFB1", rgb(0
 	I = icon(I, icon_state, dir, frame, moving)
 
 	key = "[generate_asset_name(I)].png"
-	register_asset(key, I)
+	if(!SSassets.cache[key])
+		register_asset(key, I)
 	for (var/thing2 in targets)
-		send_asset(thing2, key, FALSE)
+		send_asset(thing2, key)
 
 	return "<img class='icon icon-[icon_state]' src=\"[url_encode(key)]\">"
 

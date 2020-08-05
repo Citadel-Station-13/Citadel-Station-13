@@ -30,7 +30,7 @@
 	var/locked = FALSE
 	var/allow_switch_interact = TRUE
 
-	var/projectile_type = /obj/item/projectile/beam/emitter
+	var/projectile_type = /obj/item/projectile/beam/emitter/hitscan
 	var/projectile_sound = 'sound/weapons/emitter.ogg'
 	var/datum/effect_system/spark_spread/sparks
 
@@ -66,11 +66,16 @@
 
 	sparks = new
 	sparks.attach(src)
-	sparks.set_up(5, TRUE, src)
+	sparks.set_up(1, TRUE, src)
+
+/obj/machinery/power/emitter/examine(mob/user)
+	. = ..()
+	if(in_range(user, src) || isobserver(user))
+		. += "<span class='notice'>The status display reads: Emitting one beam each <b>[fire_delay*0.1]</b> seconds.<br>Power consumption at <b>[active_power_usage]W</b>.</span>"
 
 /obj/machinery/power/emitter/ComponentInitialize()
 	. = ..()
-	AddComponent(/datum/component/empprotection, EMP_PROTECT_SELF | EMP_PROTECT_WIRES)
+	AddElement(/datum/element/empprotection, EMP_PROTECT_SELF | EMP_PROTECT_WIRES)
 
 /obj/machinery/power/emitter/RefreshParts()
 	var/max_firedelay = 120
@@ -90,7 +95,7 @@
 
 /obj/machinery/power/emitter/ComponentInitialize()
 	. = ..()
-	AddComponent(/datum/component/simple_rotation,ROTATION_ALTCLICK | ROTATION_FLIP ,null,CALLBACK(src, .proc/can_be_rotated))
+	AddComponent(/datum/component/simple_rotation, ROTATION_ALTCLICK | ROTATION_CLOCKWISE | ROTATION_COUNTERCLOCKWISE | ROTATION_VERBS, null, CALLBACK(src, .proc/can_be_rotated))
 
 /obj/machinery/power/emitter/proc/can_be_rotated(mob/user,rotation_type)
 	if (anchored)
@@ -107,7 +112,7 @@
 	QDEL_NULL(sparks)
 	return ..()
 
-/obj/machinery/power/emitter/update_icon()
+/obj/machinery/power/emitter/update_icon_state()
 	if (active && powernet && avail(active_power_usage))
 		icon_state = icon_state_on
 	else
@@ -199,6 +204,7 @@
 	if(prob(35))
 		sparks.start()
 	P.firer = user ? user : src
+	P.fired_from = src
 	if(last_projectile_params)
 		P.p_x = last_projectile_params[2]
 		P.p_y = last_projectile_params[3]
@@ -309,6 +315,9 @@
 
 /obj/machinery/power/emitter/proc/integrate(obj/item/gun/energy/E,mob/user)
 	if(istype(E, /obj/item/gun/energy))
+		if(!E.can_emitter)
+			to_chat(user, "<span class='warning'>[E] cannot fit into emitters.</span>")
+			return
 		if(!user.transferItemToLoc(E, src))
 			return
 		gun = E
@@ -339,12 +348,13 @@
 	projectile_sound = initial(projectile_sound)
 
 /obj/machinery/power/emitter/emag_act(mob/user)
+	. = ..()
 	if(obj_flags & EMAGGED)
 		return
 	locked = FALSE
 	obj_flags |= EMAGGED
-	if(user)
-		user.visible_message("[user.name] emags [src].","<span class='notice'>You short out the lock.</span>")
+	user?.visible_message("[user.name] emags [src].","<span class='notice'>You short out the lock.</span>")
+	return TRUE
 
 
 /obj/machinery/power/emitter/prototype
@@ -440,9 +450,13 @@
 	name = "turret controls"
 	icon_state = "offhand"
 	w_class = WEIGHT_CLASS_HUGE
-	item_flags = ABSTRACT | NODROP | NOBLUDGEON
+	item_flags = ABSTRACT | NOBLUDGEON
 	resistance_flags = FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	var/delay = 0
+
+/obj/item/turret_control/Initialize()
+	. = ..()
+	ADD_TRAIT(src, TRAIT_NODROP, ABSTRACT_ITEM_TRAIT)
 
 /obj/item/turret_control/afterattack(atom/targeted_atom, mob/user, proxflag, clickparams)
 	. = ..()

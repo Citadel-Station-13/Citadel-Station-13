@@ -8,6 +8,9 @@
 	chemical_cost = 10
 	dna_cost = 0
 	req_stat = UNCONSCIOUS
+	action_icon = 'icons/mob/actions/actions_changeling.dmi'
+	action_icon_state = "ling_regenerate"
+	action_background_icon_state = "bg_ling"
 
 /obj/effect/proc_holder/changeling/regenerate/sting_action(mob/living/user)
 	to_chat(user, "<span class='notice'>You feel an itching, both inside and \
@@ -26,13 +29,16 @@
 			C.emote("scream")
 			C.regenerate_limbs(1)
 		C.regenerate_organs()
+		for(var/i in C.all_wounds)
+			var/datum/wound/iter_wound = i
+			iter_wound.remove_wound()
 		if(!user.getorganslot(ORGAN_SLOT_BRAIN))
 			var/obj/item/organ/brain/B
 			if(C.has_dna() && C.dna.species.mutant_brain)
 				B = new C.dna.species.mutant_brain()
 			else
 				B = new()
-			B.vital = FALSE
+			B.organ_flags &= ~ORGAN_VITAL
 			B.decoy_override = TRUE
 			B.Insert(C)
 	if(ishuman(user))

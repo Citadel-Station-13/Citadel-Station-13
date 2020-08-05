@@ -41,13 +41,13 @@
 		on_beam_release(current_target)
 	current_target = null
 
-/obj/item/gun/medbeam/process_fire(atom/target, mob/living/user, message = TRUE, params = null, zone_override = "", bonus_spread = 0)
+/obj/item/gun/medbeam/process_fire(atom/target, mob/living/user, message = TRUE, params = null, zone_override = "", bonus_spread = 0, stam_cost = 0)
 	if(isliving(user))
 		add_fingerprint(user)
 
 	if(current_target)
 		LoseTarget()
-	if(!isliving(target))
+	if(!isliving(target) || (user == target))
 		return
 
 	current_target = target
@@ -116,7 +116,7 @@
 		new /obj/effect/temp_visual/heal(get_turf(target), "#80F5FF")
 	target.adjustBruteLoss(-4)
 	target.adjustFireLoss(-4)
-	target.adjustToxLoss(-1)
+	target.adjustToxLoss(-1, forced = TRUE)
 	target.adjustOxyLoss(-1)
 	return
 

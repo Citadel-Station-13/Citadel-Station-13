@@ -6,20 +6,19 @@
 		return
 	if(sound_effect)
 		play_attack_sound(damage_amount, damage_type, damage_flag)
-	if(!(resistance_flags & INDESTRUCTIBLE) && obj_integrity > 0)
-		damage_amount = run_obj_armor(damage_amount, damage_type, damage_flag, attack_dir, armour_penetration)
-		if(damage_amount >= DAMAGE_PRECISION)
-			. = damage_amount
-			var/old_integ = obj_integrity
-			obj_integrity = max(old_integ - damage_amount, 0)
-			if(obj_integrity <= 0)
-				var/int_fail = integrity_failure
-				if(int_fail && old_integ > int_fail)
-					obj_break(damage_flag)
-				obj_destruction(damage_flag)
-			else if(integrity_failure)
-				if(obj_integrity <= integrity_failure)
-					obj_break(damage_flag)
+	if((resistance_flags & INDESTRUCTIBLE) || obj_integrity <= 0)
+		return
+	damage_amount = run_obj_armor(damage_amount, damage_type, damage_flag, attack_dir, armour_penetration)
+	if(damage_amount < DAMAGE_PRECISION)
+		return
+	. = damage_amount
+	obj_integrity = max(obj_integrity - damage_amount, 0)
+	//BREAKING FIRST
+	if(integrity_failure && obj_integrity <= integrity_failure * max_integrity)
+		obj_break(damage_flag)
+	//DESTROYING SECOND
+	if(obj_integrity <= 0)
+		obj_destruction(damage_flag)
 
 //returns the damage value of the attack after processing the obj's various armor protections
 /obj/proc/run_obj_armor(damage_amount, damage_type, damage_flag = 0, attack_dir, armour_penetration = 0)
@@ -32,7 +31,7 @@
 	if(damage_flag)
 		armor_protection = armor.getRating(damage_flag)
 	if(armor_protection)		//Only apply weak-against-armor/hollowpoint effects if there actually IS armor.
-		armor_protection = CLAMP(armor_protection - armour_penetration, 0, 100)
+		armor_protection = clamp(armor_protection - armour_penetration, 0, 100)
 	return round(damage_amount * (100 - armor_protection)*0.01, DAMAGE_PRECISION)
 
 //the sound played when the obj is damaged.
@@ -46,9 +45,14 @@
 		if(BURN)
 			playsound(src.loc, 'sound/items/welder.ogg', 100, 1)
 
-/obj/hitby(atom/movable/AM)
+/obj/hitby(atom/movable/AM, skipcatch, hitpush, blocked, datum/thrownthing/throwingdatum)
 	..()
-	take_damage(AM.throwforce, BRUTE, "melee", 1, get_dir(src, AM))
+	var/throwdamage = AM.throwforce
+	if(isobj(AM))
+		var/obj/O = AM
+		if(O.damtype == STAMINA)
+			throwdamage = 0
+	take_damage(throwdamage, BRUTE, "melee", 1, get_dir(src, AM))
 
 /obj/ex_act(severity, target)
 	if(resistance_flags & INDESTRUCTIBLE)
@@ -70,7 +74,8 @@
 /obj/bullet_act(obj/item/projectile/P)
 	. = ..()
 	playsound(src, P.hitsound, 50, 1)
-	visible_message("<span class='danger'>[src] is hit by \a [P]!</span>", null, null, COMBAT_MESSAGE_RANGE)
+	if(P.suppressed != SUPPRESSED_VERY)
+		visible_message("<span class='danger'>[src] is hit by \a [P]!</span>", null, null, COMBAT_MESSAGE_RANGE)
 	if(!QDELETED(src)) //Bullet on_hit effect might have already destroyed this object
 		take_damage(P.damage, P.damage_type, P.flag, 0, turn(P.dir, 180), P.armour_penetration)
 
@@ -98,17 +103,23 @@
 	take_damage(400, BRUTE, "melee", 0, get_dir(src, B))
 
 /obj/proc/attack_generic(mob/user, damage_amount = 0, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, armor_penetration = 0) //used by attack_alien, attack_animal, and attack_slime
+	if(SEND_SIGNAL(src, COMSIG_OBJ_ATTACK_GENERIC, user, damage_amount, damage_type, damage_flag, sound_effect, armor_penetration) & COMPONENT_STOP_GENERIC_ATTACK)
+		return FALSE
+	if(!user.CheckActionCooldown(CLICK_CD_MELEE))
+		return
 	user.do_attack_animation(src)
-	user.changeNext_move(CLICK_CD_MELEE)
-	return take_damage(damage_amount, damage_type, damage_flag, sound_effect, get_dir(src, user), armor_penetration)
+	. = take_damage(damage_amount, damage_type, damage_flag, sound_effect, get_dir(src, user), armor_penetration)
+	user.DelayNextAction()
 
 /obj/attack_alien(mob/living/carbon/alien/humanoid/user)
 	if(attack_generic(user, 60, BRUTE, "melee", 0))
 		playsound(src.loc, 'sound/weapons/slash.ogg', 100, 1)
 
 /obj/attack_animal(mob/living/simple_animal/M)
+	if(!M.CheckActionCooldown(CLICK_CD_MELEE))
+		return
 	if(!M.melee_damage_upper && !M.obj_damage)
-		M.emote("custom", message = "[M.friendly] [src].")
+		M.emote("custom", message = "[M.friendly_verb_continuous] [src].")
 		return 0
 	else
 		var/play_soundeffect = 1
@@ -120,6 +131,17 @@
 			. = attack_generic(M, rand(M.melee_damage_lower,M.melee_damage_upper), M.melee_damage_type, "melee", play_soundeffect, M.armour_penetration)
 		if(. && !play_soundeffect)
 			playsound(src, 'sound/effects/meteorimpact.ogg', 100, 1)
+
+/obj/force_pushed(atom/movable/pusher, force = MOVE_FORCE_DEFAULT, direction)
+	return TRUE
+
+/obj/move_crushed(atom/movable/pusher, force = MOVE_FORCE_DEFAULT, direction)
+	collision_damage(pusher, force, direction)
+	return TRUE
+
+/obj/proc/collision_damage(atom/movable/pusher, force = MOVE_FORCE_DEFAULT, direction)
+	var/amt = max(0, ((force - (move_resist * MOVE_FORCE_CRUSH_RATIO)) / (move_resist * MOVE_FORCE_CRUSH_RATIO)) * 10)
+	take_damage(amt, BRUTE)
 
 /obj/attack_slime(mob/living/simple_animal/slime/user)
 	if(!user.is_adult)
@@ -198,7 +220,7 @@ GLOBAL_DATUM_INIT(acid_overlay, /mutable_appearance, mutable_appearance('icons/e
 		if(T.intact && level == 1) //fire can't damage things hidden below the floor.
 			return
 	if(exposed_temperature && !(resistance_flags & FIRE_PROOF))
-		take_damage(CLAMP(0.02 * exposed_temperature, 0, 20), BURN, "fire", 0)
+		take_damage(clamp(0.02 * exposed_temperature, 0, 20), BURN, "fire", 0)
 	if(!(resistance_flags & ON_FIRE) && (resistance_flags & FLAMMABLE))
 		resistance_flags |= ON_FIRE
 		SSfire_burning.processing[src] = src
@@ -217,19 +239,20 @@ GLOBAL_DATUM_INIT(acid_overlay, /mutable_appearance, mutable_appearance('icons/e
 		cut_overlay(GLOB.fire_overlay, TRUE)
 		SSfire_burning.processing -= src
 
-/obj/proc/tesla_act(power, tesla_flags, shocked_targets)
+/obj/zap_act(power, zap_flags, shocked_targets)
+	if(QDELETED(src))
+		return 0
 	obj_flags |= BEING_SHOCKED
-	var/power_bounced = power / 2
-	tesla_zap(src, 3, power_bounced, tesla_flags, shocked_targets)
 	addtimer(CALLBACK(src, .proc/reset_shocked), 10)
+	return power / 2
 
 //The surgeon general warns that being buckled to certain objects receiving powerful shocks is greatly hazardous to your health
-//Only tesla coils and grounding rods currently call this because mobs are already targeted over all other objects, but this might be useful for more things later.
-/obj/proc/tesla_buckle_check(var/strength)
+//Only tesla coils, vehicles, and grounding rods currently call this because mobs are already targeted over all other objects, but this might be useful for more things later.
+/obj/proc/zap_buckle_check(var/strength)
 	if(has_buckled_mobs())
 		for(var/m in buckled_mobs)
 			var/mob/living/buckled_mob = m
-			buckled_mob.electrocute_act((CLAMP(round(strength/400), 10, 90) + rand(-5, 5)), src, tesla_shock = 1)
+			buckled_mob.electrocute_act((clamp(round(strength/400), 10, 90) + rand(-5, 5)), src, flags = SHOCK_TESLA)
 
 /obj/proc/reset_shocked()
 	obj_flags &= ~BEING_SHOCKED
@@ -241,6 +264,7 @@ GLOBAL_DATUM_INIT(acid_overlay, /mutable_appearance, mutable_appearance('icons/e
 
 //what happens when the obj's health is below integrity_failure level.
 /obj/proc/obj_break(damage_flag)
+	SEND_SIGNAL(src, COMSIG_OBJ_BREAK, damage_flag)
 	return
 
 //what happens when the obj's integrity reaches zero.
@@ -254,7 +278,7 @@ GLOBAL_DATUM_INIT(acid_overlay, /mutable_appearance, mutable_appearance('icons/e
 
 //changes max_integrity while retaining current health percentage
 //returns TRUE if the obj broke, FALSE otherwise
-/obj/proc/modify_max_integrity(new_max, can_break = TRUE, damage_type = BRUTE, new_failure_integrity = null)
+/obj/proc/modify_max_integrity(new_max, can_break = TRUE, damage_type = BRUTE)
 	var/current_integrity = obj_integrity
 	var/current_max = max_integrity
 
@@ -265,10 +289,7 @@ GLOBAL_DATUM_INIT(acid_overlay, /mutable_appearance, mutable_appearance('icons/e
 
 	max_integrity = new_max
 
-	if(new_failure_integrity != null)
-		integrity_failure = new_failure_integrity
-
-	if(can_break && integrity_failure && current_integrity <= integrity_failure)
+	if(can_break && integrity_failure && current_integrity <= integrity_failure * max_integrity)
 		obj_break(damage_type)
 		return TRUE
 	return FALSE

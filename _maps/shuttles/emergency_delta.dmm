@@ -147,7 +147,6 @@
 /area/shuttle/escape)
 "al" = (
 /obj/structure/table/optable,
-/obj/item/surgical_drapes,
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
@@ -157,18 +156,7 @@
 /turf/open/floor/plasteel/white,
 /area/shuttle/escape)
 "am" = (
-/obj/item/scalpel{
-	pixel_y = 12
-	},
-/obj/item/circular_saw,
-/obj/item/retractor{
-	pixel_x = 4
-	},
-/obj/item/hemostat{
-	pixel_x = -4
-	},
-/obj/item/clothing/gloves/color/latex,
-/obj/item/clothing/mask/surgical,
+/obj/item/storage/backpack/duffelbag/med/surgery,
 /obj/structure/table/reinforced,
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
@@ -176,12 +164,10 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
-/obj/item/surgicaldrill,
-/obj/item/cautery,
 /turf/open/floor/plasteel/white,
 /area/shuttle/escape)
 "an" = (
-/obj/item/twohanded/required/kirbyplants{
+/obj/item/kirbyplants{
 	icon_state = "plant-21";
 	pixel_x = -3;
 	pixel_y = 3
@@ -210,7 +196,7 @@
 /turf/open/floor/plasteel,
 /area/shuttle/escape)
 "ap" = (
-/obj/item/twohanded/required/kirbyplants{
+/obj/item/kirbyplants{
 	icon_state = "plant-21";
 	pixel_x = -3;
 	pixel_y = 3
@@ -490,6 +476,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
+/obj/structure/fans/tiny,
 /turf/open/floor/plasteel/white,
 /area/shuttle/escape)
 "aP" = (
@@ -562,6 +549,7 @@
 	preferred_direction = 2;
 	port_direction = 4
 	},
+/obj/structure/fans/tiny,
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "aX" = (
@@ -796,6 +784,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
+/obj/structure/fans/tiny,
 /turf/open/floor/plasteel/white,
 /area/shuttle/escape)
 "bw" = (
@@ -811,7 +800,7 @@
 /turf/open/floor/mineral/plastitanium/red/brig,
 /area/shuttle/escape)
 "bz" = (
-/obj/item/twohanded/required/kirbyplants{
+/obj/item/kirbyplants{
 	icon_state = "plant-21"
 	},
 /obj/machinery/button/flasher{
@@ -825,7 +814,7 @@
 /turf/open/floor/plasteel,
 /area/shuttle/escape)
 "bA" = (
-/obj/item/twohanded/required/kirbyplants{
+/obj/item/kirbyplants{
 	icon_state = "plant-21"
 	},
 /obj/effect/turf_decal/tile/neutral{
@@ -908,6 +897,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
+/obj/structure/fans/tiny,
 /turf/open/floor/plasteel,
 /area/shuttle/escape)
 "bM" = (
@@ -1028,7 +1018,7 @@
 /turf/open/floor/plasteel/dark,
 /area/shuttle/escape)
 "cb" = (
-/obj/item/twohanded/required/kirbyplants{
+/obj/item/kirbyplants{
 	icon_state = "plant-21";
 	pixel_x = -3;
 	pixel_y = 3
@@ -1348,7 +1338,7 @@
 /turf/open/floor/plasteel,
 /area/shuttle/escape)
 "cA" = (
-/obj/item/twohanded/required/kirbyplants{
+/obj/item/kirbyplants{
 	icon_state = "plant-21";
 	pixel_x = -3;
 	pixel_y = 3

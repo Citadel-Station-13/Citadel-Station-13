@@ -2,7 +2,12 @@
 /mob/living/carbon/human/dummy
 	real_name = "Test Dummy"
 	status_flags = GODMODE|CANPUSH
+	mouse_drag_pointer = MOUSE_INACTIVE_POINTER
 	var/in_use = FALSE
+	vore_flags = NO_VORE
+
+/mob/living/carbon/human/vore
+	vore_flags = DEVOURABLE | DIGESTABLE | FEEDING
 
 INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 
@@ -15,6 +20,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 
 /mob/living/carbon/human/dummy/proc/wipe_state()
 	delete_equipment()
+	icon_render_key = null
 	cut_overlays(TRUE)
 
 //Inefficient pooling/caching way.

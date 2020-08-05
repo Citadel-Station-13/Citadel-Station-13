@@ -161,7 +161,7 @@
 /turf/open/floor/plasteel/white,
 /area/ruin/powered/animal_hospital)
 "av" = (
-/obj/item/reagent_containers/glass/rag,
+/obj/item/reagent_containers/rag,
 /obj/item/reagent_containers/spray/cleaner,
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
@@ -517,7 +517,7 @@
 /turf/open/floor/plasteel,
 /area/ruin/powered/animal_hospital)
 "bt" = (
-/obj/item/twohanded/required/kirbyplants,
+/obj/item/kirbyplants,
 /turf/open/floor/plasteel,
 /area/ruin/powered/animal_hospital)
 "bu" = (

@@ -20,7 +20,7 @@ Consuming extracts:
 		if(last_produced + cooldown > world.time)
 			to_chat(user, "<span class='warning'>[src] is still digesting after its last meal!<span>")
 			return
-		var/datum/reagent/N = O.reagents.has_reagent("nutriment")
+		var/datum/reagent/N = O.reagents.has_reagent(/datum/reagent/consumable/nutriment)
 		if(N)
 			nutriment_eaten += N.volume
 			to_chat(user, "<span class='notice'>[src] opens up and swallows [O] whole!</span>")
@@ -73,7 +73,7 @@ Consuming extracts:
 		to_chat(M, "Tastes like [taste].")
 		playsound(get_turf(M), 'sound/items/eatfood.ogg', 20, 1)
 		if(nutrition)
-			M.reagents.add_reagent("nutriment",nutrition)
+			M.reagents.add_reagent(/datum/reagent/consumable/nutriment,nutrition)
 		do_effect(M, user)
 		qdel(src)
 		return
@@ -119,7 +119,7 @@ Consuming extracts:
 	M.adjustToxLoss(-5, forced=1) //To heal slimepeople.
 	M.adjustOxyLoss(-5)
 	M.adjustCloneLoss(-5)
-	M.adjustBrainLoss(-5)
+	M.adjustOrganLoss(ORGAN_SLOT_BRAIN, -5)
 
 /obj/item/slimecross/consuming/blue
 	colour = "blue"
@@ -199,7 +199,7 @@ Consuming extracts:
 	nutrition = 0 //We don't want normal nutriment
 
 /obj/item/slime_cookie/silver/do_effect(mob/living/M, mob/user)
-	M.reagents.add_reagent("stabilizednutriment",10)
+	M.reagents.add_reagent(/datum/reagent/consumable/nutriment/stabilized, 10)
 
 /obj/item/slimecross/consuming/bluespace
 	colour = "bluespace"
@@ -212,7 +212,7 @@ Consuming extracts:
 	taste = "sugar and starlight"
 
 /obj/item/slime_cookie/bluespace/do_effect(mob/living/M, mob/user)
-	var/list/L = get_area_turfs(get_area(get_turf(M)))
+	var/list/L = get_sub_areas_turfs(get_area(M))
 	var/turf/target
 	while (L.len && !target)
 		var/I = rand(1, L.len)
@@ -232,7 +232,7 @@ Consuming extracts:
 			L.Cut(I,I+1)
 
 	if(target)
-		do_teleport(M, target, 0, asoundin = 'sound/effects/phasein.ogg')
+		do_teleport(M, target, 0, asoundin = 'sound/effects/phasein.ogg', channel = TELEPORT_CHANNEL_BLUESPACE)
 		new /obj/effect/particle_effect/sparks(get_turf(M))
 		playsound(get_turf(M), "sparks", 50, 1)
 

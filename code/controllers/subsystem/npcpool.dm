@@ -1,6 +1,6 @@
 SUBSYSTEM_DEF(npcpool)
 	name = "NPC Pool"
-	flags = SS_POST_FIRE_TIMING|SS_NO_INIT|SS_BACKGROUND
+	flags = SS_KEEP_TIMING | SS_NO_INIT
 	priority = FIRE_PRIORITY_NPC
 	runlevels = RUNLEVEL_GAME | RUNLEVEL_POSTGAME
 
@@ -23,7 +23,7 @@ SUBSYSTEM_DEF(npcpool)
 		var/mob/living/simple_animal/SA = currentrun[currentrun.len]
 		--currentrun.len
 
-		if(!SA.ckey && !SA.notransform)
+		if(!SA.ckey && !SA.mob_transforming)
 			if(SA.stat != DEAD)
 				SA.handle_automated_movement()
 			if(SA.stat != DEAD)

@@ -12,9 +12,10 @@
 	config_tag = "revolution"
 	antag_flag = ROLE_REV
 	false_report_weight = 10
-	restricted_jobs = list("Security Officer", "Warden", "Detective", "AI", "Cyborg","Captain", "Head of Personnel", "Head of Security", "Chief Engineer", "Research Director", "Chief Medical Officer")
-	required_players = 30
-	required_enemies = 2
+	restricted_jobs = list("AI", "Cyborg")
+	protected_jobs = list("Security Officer", "Warden", "Detective", "Head of Security", "Captain", "Head of Personnel", "Chief Engineer", "Chief Medical Officer", "Research Director", "Quartermaster")
+	required_players = 20
+	required_enemies = 1
 	recommended_enemies = 3
 	enemy_minimum_age = 14
 
@@ -69,7 +70,7 @@
 /datum/game_mode/revolution/post_setup()
 	var/list/heads = SSjob.get_living_heads()
 	var/list/sec = SSjob.get_living_sec()
-	var/weighted_score = CLAMP(round(heads.len - ((3 - sec.len) / 3)), 1, max_headrevs)
+	var/weighted_score = clamp(round(heads.len - ((3 - sec.len) / 3)), 1, max_headrevs)
 
 	for(var/datum/mind/rev_mind in headrev_candidates)	//People with return to lobby may still be in the lobby. Let's pick someone else in that case.
 		if(isnewplayer(rev_mind.current))

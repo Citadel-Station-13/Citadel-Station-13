@@ -19,6 +19,12 @@
 			mentor_follow(M)
 		return TRUE
 
+	if(href_list["mentor_unfollow"])
+		var/mob/living/M = locate(href_list["mentor_follow"])
+		if(M && mentor_datum.following == M)
+			mentor_unfollow()
+		return TRUE
+
 /client/proc/mentor_datum_set(admin)
 	mentor_datum = GLOB.mentor_datums[ckey]
 	if(!mentor_datum && check_rights_for(src, R_ADMIN,0)) // admin with no mentor datum?let's fix that

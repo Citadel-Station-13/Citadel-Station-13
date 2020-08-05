@@ -1,14 +1,23 @@
 
-//Harvest; activated ly clicking the target, will try to drain their essence.
 /mob/living/simple_animal/revenant/ClickOn(atom/A, params) //revenants can't interact with the world directly.
-	A.examine(src)
+	var/list/modifiers = params2list(params)
+	if(modifiers["shift"])
+		ShiftClickOn(A)
+		return
+	if(modifiers["alt"])
+		altclick_listed_turf(A)
+		return
+
 	if(ishuman(A))
 		if(A in drained_mobs)
 			to_chat(src, "<span class='revenwarning'>[A]'s soul is dead and empty.</span>" )
 		else if(in_range(src, A))
 			Harvest(A)
 
+
+//Harvest; activated ly clicking the target, will try to drain their essence.
 /mob/living/simple_animal/revenant/proc/Harvest(mob/living/carbon/human/target)
+	set waitfor = FALSE
 	if(!castcheck(0))
 		return
 	if(draining)
@@ -19,6 +28,7 @@
 		if(prob(10))
 			to_chat(target, "You feel as if you are being watched.")
 		return
+	face_atom(target)
 	draining = TRUE
 	essence_drained += rand(15, 20)
 	to_chat(src, "<span class='revennotice'>You search for the soul of [target].</span>")
@@ -57,7 +67,7 @@
 				if(target.anti_magic_check(FALSE, TRUE))
 					to_chat(src, "<span class='revenminor'>Something's wrong! [target] seems to be resisting the siphoning, leaving you vulnerable!</span>")
 					target.visible_message("<span class='warning'>[target] slumps onto the ground.</span>", \
-											   "<span class='revenwarning'>Violets lights, dancing in your vision, receding--</span>")
+											   "<span class='revenwarning'>Violet lights, dancing in your vision, receding--</span>")
 					draining = FALSE
 					return
 				var/datum/beam/B = Beam(target,icon_state="drain_life",time=INFINITY)
@@ -96,39 +106,19 @@
 	action_background_icon_state = "bg_revenant"
 
 //Transmit: the revemant's only direct way to communicate. Sends a single message silently to a single mob
-/obj/effect/proc_holder/spell/targeted/revenant_transmit
-	name = "Transmit"
-	desc = "Telepathically transmits a message to the target."
+/obj/effect/proc_holder/spell/targeted/telepathy/revenant
+	name = "Revenant Transmit"
 	panel = "Revenant Abilities"
-	charge_max = 0
-	clothes_req = 0
-	range = 7
-	include_user = 0
 	action_icon = 'icons/mob/actions/actions_revenant.dmi'
 	action_icon_state = "r_transmit"
 	action_background_icon_state = "bg_revenant"
-
-/obj/effect/proc_holder/spell/targeted/revenant_transmit/cast(list/targets, mob/living/simple_animal/revenant/user = usr)
-	for(var/mob/living/M in targets)
-		var/msg = stripped_input(usr, "What do you wish to tell [M]?", null, "")
-		if(!msg)
-			charge_counter = charge_max
-			return
-		log_directed_talk(user, M, msg, LOG_SAY, "revenant whisper")
-		to_chat(user, "<span class='revenboldnotice'>You transmit to [M]:</span> <span class='revennotice'>[msg]</span>")
-		if(!M.anti_magic_check(FALSE, TRUE)) //hear no evil
-			to_chat(M, "<span class='revenboldnotice'>You hear something behind you talking...</span> <span class='revennotice'>[msg]</span>")
-		for(var/ded in GLOB.dead_mob_list)
-			if(!isobserver(ded))
-				continue
-			var/follow_rev = FOLLOW_LINK(ded, user)
-			var/follow_whispee = FOLLOW_LINK(ded, M)
-			to_chat(ded, "[follow_rev] <span class='revenboldnotice'>[user] Revenant Transmit:</span> <span class='revennotice'>\"[msg]\" to</span> [follow_whispee] <span class='name'>[M]</span>")
-
-
+	notice = "revennotice"
+	boldnotice = "revenboldnotice"
+	holy_check = TRUE
+	tinfoil_check = FALSE
 
 /obj/effect/proc_holder/spell/aoe_turf/revenant
-	clothes_req = 0
+	clothes_req = NONE
 	action_icon = 'icons/mob/actions/actions_revenant.dmi'
 	action_background_icon_state = "bg_revenant"
 	panel = "Revenant Abilities (Locked)"
@@ -146,7 +136,7 @@
 	else
 		name = "[initial(name)] ([cast_amount]E)"
 
-/obj/effect/proc_holder/spell/aoe_turf/revenant/can_cast(mob/living/simple_animal/revenant/user = usr)
+/obj/effect/proc_holder/spell/aoe_turf/revenant/can_cast(mob/living/simple_animal/revenant/user = usr, skipcharge = FALSE, silent = FALSE)
 	if(charge_counter < charge_max)
 		return FALSE
 	if(!istype(user)) //Badmins, no. Badmins, don't do it.
@@ -224,7 +214,7 @@
 			continue
 		L.Beam(M,icon_state="purple_lightning",time=5)
 		if(!M.anti_magic_check(FALSE, TRUE))
-			M.electrocute_act(shock_damage, L, safety=TRUE)
+			M.electrocute_act(shock_damage, L, flags = SHOCK_NOGLOVES)
 		do_sparks(4, FALSE, M)
 		playsound(M, 'sound/machines/defib_zap.ogg', 50, 1, -1)
 
@@ -364,7 +354,7 @@
 					to_chat(H, "<span class='revenminor'>You feel [pick("suddenly sick", "a surge of nausea", "like your skin is <i>wrong</i>")].</span>")
 			else
 				if(mob.reagents)
-					mob.reagents.add_reagent("plasma", 5)
+					mob.reagents.add_reagent(/datum/reagent/toxin/plasma, 5)
 		else
 			mob.adjustToxLoss(5)
 	for(var/obj/structure/spacevine/vine in T) //Fucking with botanists, the ability.

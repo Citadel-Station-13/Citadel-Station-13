@@ -11,7 +11,7 @@
 	desc = "It's watching you suspiciously."
 
 /obj/structure/closet/crate/necropolis/tendril/PopulateContents()
-	var/loot = rand(1,28)
+	var/loot = rand(1,29)
 	switch(loot)
 		if(1)
 			new /obj/item/shared_storage/red(src)
@@ -39,7 +39,7 @@
 		if(11)
 			new /obj/item/ship_in_a_bottle(src)
 		if(12)
-			new /obj/item/clothing/suit/space/hardsuit/ert/paranormal/beserker(src)
+			new /obj/item/clothing/suit/space/hardsuit/ert/paranormal/beserker/old(src)
 		if(13)
 			new /obj/item/jacobs_ladder(src)
 		if(14)
@@ -67,7 +67,7 @@
 			new /obj/item/grenade/clusterbuster/inferno(src)
 		if(24)
 			new /obj/item/reagent_containers/food/drinks/bottle/holywater/hell(src)
-			new /obj/item/clothing/suit/space/hardsuit/ert/paranormal/inquisitor(src)
+			new /obj/item/clothing/suit/space/hardsuit/ert/paranormal/inquisitor/old(src)
 		if(25)
 			new /obj/item/book/granter/spell/summonitem(src)
 		if(26)
@@ -77,6 +77,11 @@
 			new /obj/item/bedsheet/cult(src)
 		if(28)
 			new /obj/item/clothing/neck/necklace/memento_mori(src)
+		if(29)
+			if(prob(50))
+				new /obj/item/malf_upgrade(src)
+			else
+				new /obj/item/disk/tech_disk/illegal(src)
 
 //KA modkit design discs
 /obj/item/disk/design_disk/modkit_disc
@@ -114,36 +119,36 @@
 	name = "Kinetic Accelerator Offensive Mining Explosion Mod"
 	desc = "A device which causes kinetic accelerators to fire AoE blasts that destroy rock and damage creatures."
 	id = "hyperaoemod"
-	materials = list(MAT_METAL = 7000, MAT_GLASS = 3000, MAT_SILVER = 3000, MAT_GOLD = 3000, MAT_DIAMOND = 4000)
+	materials = list(/datum/material/iron = 7000, /datum/material/glass = 3000, /datum/material/silver = 3000, /datum/material/gold = 3000, /datum/material/diamond = 4000)
 	build_path = /obj/item/borg/upgrade/modkit/aoe/turfs/andmobs
 
 /datum/design/unique_modkit/rapid_repeater
 	name = "Kinetic Accelerator Rapid Repeater Mod"
 	desc = "A device which greatly reduces a kinetic accelerator's cooldown on striking a living target or rock, but greatly increases its base cooldown."
 	id = "repeatermod"
-	materials = list(MAT_METAL = 5000, MAT_GLASS = 5000, MAT_URANIUM = 8000, MAT_BLUESPACE = 2000)
+	materials = list(/datum/material/iron = 5000, /datum/material/glass = 5000, /datum/material/uranium = 8000, /datum/material/bluespace = 2000)
 	build_path = /obj/item/borg/upgrade/modkit/cooldown/repeater
 
 /datum/design/unique_modkit/resonator_blast
 	name = "Kinetic Accelerator Resonator Blast Mod"
 	desc = "A device which causes kinetic accelerators to fire shots that leave and detonate resonator blasts."
 	id = "resonatormod"
-	materials = list(MAT_METAL = 5000, MAT_GLASS = 5000, MAT_SILVER = 5000, MAT_URANIUM = 5000)
+	materials = list(/datum/material/iron = 5000, /datum/material/glass = 5000, /datum/material/silver = 5000, /datum/material/uranium = 5000)
 	build_path = /obj/item/borg/upgrade/modkit/resonator_blasts
 
 /datum/design/unique_modkit/bounty
 	name = "Kinetic Accelerator Death Syphon Mod"
 	desc = "A device which causes kinetic accelerators to permanently gain damage against creature types killed with it."
 	id = "bountymod"
-	materials = list(MAT_METAL = 4000, MAT_SILVER = 4000, MAT_GOLD = 4000, MAT_BLUESPACE = 4000)
-	reagents_list = list("blood" = 40)
+	materials = list(/datum/material/iron = 4000, /datum/material/silver = 4000, /datum/material/gold = 4000, /datum/material/bluespace = 4000)
+	reagents_list = list(/datum/reagent/blood = 40)
 	build_path = /obj/item/borg/upgrade/modkit/bounty
 
 //Spooky special loot
 
 //Rod of Asclepius
 /obj/item/rod_of_asclepius
-	name = "Rod of Asclepius"
+	name = "\improper Rod of Asclepius"
 	desc = "A wooden rod about the size of your forearm with a snake carved around it, winding it's way up the sides of the rod. Something about it seems to inspire in you the responsibilty and duty to help others."
 	icon = 'icons/obj/lavaland/artefacts.dmi'
 	icon_state = "asclepius_dormant"
@@ -189,7 +194,8 @@
 	activated()
 
 /obj/item/rod_of_asclepius/proc/activated()
-	item_flags = NODROP | DROPDEL
+	item_flags = DROPDEL
+	ADD_TRAIT(src, TRAIT_NODROP, CURSED_ITEM_TRAIT)
 	desc = "A short wooden rod with a mystical snake inseparably gripping itself and the rod to your forearm. It flows with a healing energy that disperses amongst yourself and those around you. "
 	icon_state = "asclepius_active"
 	activated = TRUE
@@ -204,7 +210,7 @@
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	var/mob/living/carbon/human/active_owner
 
-/obj/item/clothing/neck/necklace/memento_mori/item_action_slot_check(slot)
+/obj/item/clothing/neck/necklace/memento_mori/item_action_slot_check(slot, mob/user, datum/action/A)
 	return slot == SLOT_NECK
 
 /obj/item/clothing/neck/necklace/memento_mori/dropped(mob/user)
@@ -222,9 +228,9 @@
 	to_chat(user, "<span class='warning'>You feel your life being drained by the pendant...</span>")
 	if(do_after(user, 40, target = user))
 		to_chat(user, "<span class='notice'>Your lifeforce is now linked to the pendant! You feel like removing it would kill you, and yet you instinctively know that until then, you won't die.</span>")
-		user.add_trait(TRAIT_NODEATH, "memento_mori")
-		user.add_trait(TRAIT_NOHARDCRIT, "memento_mori")
-		user.add_trait(TRAIT_NOCRITDAMAGE, "memento_mori")
+		ADD_TRAIT(user, TRAIT_NODEATH, "memento_mori")
+		ADD_TRAIT(user, TRAIT_NOHARDCRIT, "memento_mori")
+		ADD_TRAIT(user, TRAIT_NOCRITDAMAGE, "memento_mori")
 		icon_state = "memento_mori_active"
 		active_owner = user
 
@@ -273,23 +279,12 @@
 		to_chat(user, "<span class='notice'>You release the wisp. It begins to bob around your head.</span>")
 		icon_state = "lantern"
 		wisp.orbit(user, 20)
-		user.update_sight()
 		SSblackbox.record_feedback("tally", "wisp_lantern", 1, "Freed")
 
 	else
 		to_chat(user, "<span class='notice'>You return the wisp to the lantern.</span>")
-
-		var/mob/target
-		if(wisp.orbiting)
-			target = wisp.orbiting.orbiting
-		wisp.stop_orbit()
-		wisp.forceMove(src)
-
-		if (istype(target))
-			target.update_sight()
-			to_chat(target, "<span class='notice'>Your vision returns to normal.</span>")
-
 		icon_state = "lantern-blue"
+		wisp.forceMove(src)
 		SSblackbox.record_feedback("tally", "wisp_lantern", 1, "Returned")
 
 /obj/item/wisp_lantern/Initialize()
@@ -302,7 +297,7 @@
 			qdel(wisp)
 		else
 			wisp.visible_message("<span class='notice'>[wisp] has a sad feeling for a moment, then it passes.</span>")
-	..()
+	return ..()
 
 /obj/effect/wisp
 	name = "friendly wisp"
@@ -313,6 +308,25 @@
 	layer = ABOVE_ALL_MOB_LAYER
 	var/sight_flags = SEE_MOBS
 	var/lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
+
+/obj/effect/wisp/orbit(atom/thing, radius, clockwise, rotation_speed, rotation_segments, pre_rotation, lockinorbit)
+	. = ..()
+	if(ismob(thing))
+		RegisterSignal(thing, COMSIG_MOB_UPDATE_SIGHT, .proc/update_user_sight)
+		var/mob/being = thing
+		being.update_sight()
+		to_chat(thing, "<span class='notice'>The wisp enhances your vision.</span>")
+
+/obj/effect/wisp/stop_orbit(datum/component/orbiter/orbits)
+	. = ..()
+	if(ismob(orbits.parent))
+		UnregisterSignal(orbits.parent, COMSIG_MOB_UPDATE_SIGHT)
+		to_chat(orbits.parent, "<span class='notice'>Your vision returns to normal.</span>")
+
+/obj/effect/wisp/proc/update_user_sight(mob/user)
+	user.sight |= sight_flags
+	if(!isnull(lighting_alpha))
+		user.lighting_alpha = min(user.lighting_alpha, lighting_alpha)
 
 //Red/Blue Cubes
 /obj/item/warp_cube
@@ -389,6 +403,7 @@
 	fire_sound = 'sound/weapons/batonextend.ogg'
 	max_charges = 1
 	item_flags = NEEDS_PERMIT | NOBLUDGEON
+	w_class = WEIGHT_CLASS_BULKY
 	force = 18
 
 /obj/item/ammo_casing/magic/hook
@@ -418,7 +433,7 @@
 
 /obj/item/projectile/hook/on_hit(atom/target)
 	. = ..()
-	if(ismovableatom(target))
+	if(ismovable(target))
 		var/atom/movable/A = target
 		if(A.anchored)
 			return
@@ -444,7 +459,7 @@
 
 /obj/item/immortality_talisman/Initialize()
 	. = ..()
-	AddComponent(/datum/component/anti_magic, TRUE, TRUE)
+	AddComponent(/datum/component/anti_magic, TRUE, TRUE, TRUE)
 
 /datum/action/item_action/immortality
 	name = "Immortality"
@@ -453,30 +468,45 @@
 	if(cooldown < world.time)
 		SSblackbox.record_feedback("amount", "immortality_talisman_uses", 1)
 		cooldown = world.time + 600
-		user.visible_message("<span class='danger'>[user] vanishes from reality, leaving a hole in [user.p_their()] place!</span>")
-		var/obj/effect/immortality_talisman/Z = new(get_turf(src.loc))
-		Z.name = "hole in reality"
-		Z.desc = "It's shaped an awful lot like [user.name]."
-		Z.setDir(user.dir)
-		user.forceMove(Z)
-		user.notransform = 1
-		user.status_flags |= GODMODE
-		addtimer(CALLBACK(src, .proc/return_to_reality, user, Z), 100)
+		new /obj/effect/immortality_talisman(get_turf(user), user)
 	else
 		to_chat(user, "<span class='warning'>[src] is not ready yet!</span>")
 
-/obj/item/immortality_talisman/proc/return_to_reality(mob/user, obj/effect/immortality_talisman/Z)
-	user.status_flags &= ~GODMODE
-	user.notransform = 0
-	user.forceMove(get_turf(Z))
-	user.visible_message("<span class='danger'>[user] pops back into reality!</span>")
-	Z.can_destroy = TRUE
-	qdel(Z)
-
 /obj/effect/immortality_talisman
+	name = "hole in reality"
+	desc = "It's shaped an awful lot like a person."
 	icon_state = "blank"
 	icon = 'icons/effects/effects.dmi'
-	var/can_destroy = FALSE
+	var/vanish_description = "vanishes from reality"
+	var/can_destroy = TRUE
+
+/obj/effect/immortality_talisman/Initialize(mapload, mob/new_user)
+	. = ..()
+	if(new_user)
+		vanish(new_user)
+
+/obj/effect/immortality_talisman/proc/vanish(mob/user)
+	user.visible_message("<span class='danger'>[user] [vanish_description], leaving a hole in [user.p_their()] place!</span>")
+
+	desc = "It's shaped an awful lot like [user.name]."
+	setDir(user.dir)
+
+	user.forceMove(src)
+	user.mob_transforming = TRUE
+	user.status_flags |= GODMODE
+
+	can_destroy = FALSE
+
+	addtimer(CALLBACK(src, .proc/unvanish, user), 10 SECONDS)
+
+/obj/effect/immortality_talisman/proc/unvanish(mob/user)
+	user.status_flags &= ~GODMODE
+	user.mob_transforming = FALSE
+	user.forceMove(get_turf(src))
+
+	user.visible_message("<span class='danger'>[user] pops back into reality!</span>")
+	can_destroy = TRUE
+	qdel(src)
 
 /obj/effect/immortality_talisman/attackby()
 	return
@@ -492,6 +522,9 @@
 		return QDEL_HINT_LETMELIVE
 	else
 		. = ..()
+
+/obj/effect/immortality_talisman/void
+	vanish_description = "is dragged into the void"
 
 
 //Shared Bag
@@ -536,7 +569,7 @@
 
 /obj/item/book_of_babel/attack_self(mob/user)
 	to_chat(user, "You flip through the pages of the book, quickly and conveniently learning every language in existence. Somewhat less conveniently, the aging book crumbles to dust in the process. Whoops.")
-	user.grant_all_languages(omnitongue=TRUE)
+	user.grant_all_languages()
 	new /obj/effect/decal/cleanable/ash(get_turf(user))
 	qdel(src)
 
@@ -549,9 +582,9 @@
 /obj/item/reagent_containers/glass/bottle/potion/flight
 	name = "strange elixir"
 	desc = "A flask with an almost-holy aura emitting from it. The label on the bottle says: 'erqo'hyy tvi'rf lbh jv'atf'."
-	list_reagents = list("flightpotion" = 5)
+	list_reagents = list(/datum/reagent/flightpotion = 5)
 
-/obj/item/reagent_containers/glass/bottle/potion/update_icon()
+/obj/item/reagent_containers/glass/bottle/potion/update_icon_state()
 	if(reagents.total_volume)
 		icon_state = "potionflask"
 	else
@@ -559,7 +592,6 @@
 
 /datum/reagent/flightpotion
 	name = "Flight Potion"
-	id = "flightpotion"
 	description = "Strange mutagenic compound of unknown origins."
 	reagent_state = LIQUID
 	color = "#FFEBEB"
@@ -627,17 +659,22 @@
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	hitsound_on = 'sound/weapons/bladeslice.ogg'
 	w_class = WEIGHT_CLASS_BULKY
-	sharpness = IS_SHARP
+	sharpness = SHARP_EDGED
 	faction_bonus_force = 30
 	nemesis_factions = list("mining", "boss")
 	var/transform_cooldown
 	var/swiping = FALSE
+	var/bleed_stacks_per_hit = 3
+	total_mass = 2.75
+	total_mass_on = 5
+	attack_speed = 0
+	attack_unwieldlyness = CLICK_CD_MELEE * 0.5
 
 /obj/item/melee/transforming/cleaving_saw/examine(mob/user)
-	..()
-	to_chat(user, "<span class='notice'>It is [active ? "open, and will cleave enemies in a wide arc":"closed, and can be used for rapid consecutive attacks that cause beastly enemies to bleed"].<br>\
+	. = ..()
+	. += "<span class='notice'>It is [active ? "open, and will cleave enemies in a wide arc":"closed, and can be used for rapid consecutive attacks that cause beastly enemies to bleed"].<br>\
 	Both modes will build up existing bleed effects, doing a burst of high damage if the bleed is built up high enough.<br>\
-	Transforming it immediately after an attack causes the next attack to come out faster.</span>")
+	Transforming it immediately after an attack causes the next attack to come out faster.</span>"
 
 /obj/item/melee/transforming/cleaving_saw/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is [active ? "closing [src] on [user.p_their()] neck" : "opening [src] into [user.p_their()] chest"]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
@@ -650,8 +687,12 @@
 		return FALSE
 	. = ..()
 	if(.)
+		if(active)
+			attack_unwieldlyness = CLICK_CD_MELEE
+		else
+			attack_unwieldlyness = CLICK_CD_MELEE * 0.5
 		transform_cooldown = world.time + (CLICK_CD_MELEE * 0.5)
-		user.changeNext_move(CLICK_CD_MELEE * 0.25)
+		user.SetNextAction(CLICK_CD_MELEE * 0.25, considered_action = FALSE, flush = TRUE)
 
 /obj/item/melee/transforming/cleaving_saw/transform_messages(mob/living/user, supress_message_text)
 	if(!supress_message_text)
@@ -662,22 +703,16 @@
 	playsound(user, 'sound/magic/clockwork/fellowship_armory.ogg', 35, TRUE, frequency = 90000 - (active * 30000))
 
 /obj/item/melee/transforming/cleaving_saw/clumsy_transform_effect(mob/living/user)
-	if(user.has_trait(TRAIT_CLUMSY) && prob(50))
+	if(HAS_TRAIT(user, TRAIT_CLUMSY) && prob(50))
 		to_chat(user, "<span class='warning'>You accidentally cut yourself with [src], like a doofus!</span>")
 		user.take_bodypart_damage(10)
 
-/obj/item/melee/transforming/cleaving_saw/melee_attack_chain(mob/user, atom/target, params)
-	..()
-	if(!active)
-		user.changeNext_move(CLICK_CD_MELEE * 0.5) //when closed, it attacks very rapidly
-
 /obj/item/melee/transforming/cleaving_saw/nemesis_effects(mob/living/user, mob/living/target)
-	var/datum/status_effect/saw_bleed/B = target.has_status_effect(STATUS_EFFECT_SAWBLEED)
+	var/datum/status_effect/stacking/saw_bleed/B = target.has_status_effect(STATUS_EFFECT_SAWBLEED)
 	if(!B)
-		if(!active) //This isn't in the above if-check so that the else doesn't care about active
-			target.apply_status_effect(STATUS_EFFECT_SAWBLEED)
+		target.apply_status_effect(STATUS_EFFECT_SAWBLEED,bleed_stacks_per_hit)
 	else
-		B.add_bleed(B.bleed_buildup)
+		B.add_stacks(bleed_stacks_per_hit)
 
 /obj/item/melee/transforming/cleaving_saw/attack(mob/living/target, mob/living/carbon/human/user)
 	if(!active || swiping || !target.density || get_turf(target) == get_turf(user))
@@ -731,7 +766,7 @@
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 	flags_1 = CONDUCT_1
-	sharpness = IS_SHARP
+	sharpness = SHARP_EDGED
 	w_class = WEIGHT_CLASS_BULKY
 	force = 1
 	throwforce = 1
@@ -776,43 +811,41 @@
 /obj/item/melee/ghost_sword/process()
 	ghost_check()
 
+/obj/item/melee/ghost_sword/proc/recursive_orbit_collect(atom/A, list/L)
+	for(var/i in A.orbiters?.orbiters)
+		if(!isobserver(i) || (i in L))
+			continue
+		L |= i
+		recursive_orbit_collect(i, L)
+
 /obj/item/melee/ghost_sword/proc/ghost_check()
-	var/ghost_counter = 0
-	var/turf/T = get_turf(src)
-	var/list/contents = T.GetAllContents()
-	var/mob/dead/observer/current_spirits = list()
-	var/list/orbiters = list()
-	for(var/thing in contents)
-		var/atom/A = thing
-		if (A.orbiters)
-			orbiters += A.orbiters
+	var/list/mob/dead/observer/current_spirits = list()
 
-	for(var/thing in orbiters)
-		var/datum/orbit/O = thing
-		if (isobserver(O.orbiter))
-			var/mob/dead/observer/G = O.orbiter
-			ghost_counter++
-			G.invisibility = 0
-			current_spirits |= G
+	recursive_orbit_collect(src, current_spirits)
+	recursive_orbit_collect(loc, current_spirits)		//anything holding us
 
-	for(var/mob/dead/observer/G in spirits - current_spirits)
+	for(var/i in spirits - current_spirits)
+		var/mob/dead/observer/G = i
 		G.invisibility = GLOB.observer_default_invisibility
 
-	spirits = current_spirits
+	for(var/i in current_spirits)
+		var/mob/dead/observer/G = i
+		G.invisibility = 0
 
-	return ghost_counter
+	spirits = current_spirits
+	return length(spirits)
 
 /obj/item/melee/ghost_sword/attack(mob/living/target, mob/living/carbon/human/user)
 	force = 0
 	var/ghost_counter = ghost_check()
 
-	force = CLAMP((ghost_counter * 4), 0, 75)
+	force = clamp((ghost_counter * 4), 0, 75)
 	user.visible_message("<span class='danger'>[user] strikes with the force of [ghost_counter] vengeful spirits!</span>")
-	..()
+	return ..()
 
-/obj/item/melee/ghost_sword/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
+/obj/item/melee/ghost_sword/run_block(mob/living/owner, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return)
 	var/ghost_counter = ghost_check()
-	final_block_chance += CLAMP((ghost_counter * 5), 0, 75)
+	final_block_chance += clamp((ghost_counter * 5), 0, 75)
 	owner.visible_message("<span class='danger'>[owner] is protected by a ring of [ghost_counter] ghosts!</span>")
 	return ..()
 
@@ -834,7 +867,7 @@
 	switch(random)
 		if(1)
 			to_chat(user, "<span class='danger'>Your appearance morphs to that of a very small humanoid ash dragon! You get to look like a freak without the cool abilities.</span>")
-			H.dna.features = list("mcolor" = "A02720", "tail_lizard" = "Dark Tiger", "tail_human" = "None", "snout" = "Sharp", "horns" = "Curled", "ears" = "None", "wings" = "None", "frills" = "None", "spines" = "Long", "body_markings" = "Dark Tiger Body", "legs" = "Digitigrade Legs")
+			H.dna.features = list("mcolor" = "A02720", "tail_lizard" = "Dark Tiger", "tail_human" = "None", "snout" = "Sharp", "horns" = "Curled", "ears" = "None", "wings" = "None", "frills" = "None", "spines" = "Long", "body_markings" = "Dark Tiger Body", "legs" = "Digitigrade")
 			H.eye_color = "fee5a3"
 			H.set_species(/datum/species/lizard)
 		if(2)
@@ -916,7 +949,7 @@
 			timer = world.time + create_delay + 1
 			if(do_after(user, create_delay, target = T))
 				var/old_name = T.name
-				if(T.TerraformTurf(turf_type))
+				if(T.TerraformTurf(turf_type, flags = CHANGETURF_INHERIT_AIR))
 					user.visible_message("<span class='danger'>[user] turns \the [old_name] into [transform_string]!</span>")
 					message_admins("[ADMIN_LOOKUPFLW(user)] fired the lava staff at [ADMIN_VERBOSEJMP(T)]")
 					log_game("[key_name(user)] fired the lava staff at [AREACOORD(T)].")
@@ -927,7 +960,7 @@
 			qdel(L)
 		else
 			var/old_name = T.name
-			if(T.TerraformTurf(reset_turf_type))
+			if(T.TerraformTurf(reset_turf_type, flags = CHANGETURF_INHERIT_AIR))
 				user.visible_message("<span class='danger'>[user] turns \the [old_name] into [reset_string]!</span>")
 				timer = world.time + reset_cooldown
 				playsound(T,'sound/magic/fireball.ogg', 200, 1)
@@ -948,7 +981,7 @@
 		if(1)
 			new /obj/item/mayhem(src)
 		if(2)
-			new /obj/item/blood_contract(src)
+			new /obj/item/gun/ballistic/revolver/doublebarrel/super(src)
 		if(3)
 			new /obj/item/gun/magic/staff/spellblade(src)
 
@@ -1013,22 +1046,22 @@
 
 	message_admins("<span class='adminnotice'>[ADMIN_LOOKUPFLW(L)] has been marked for death by [ADMIN_LOOKUPFLW(user)]!</span>")
 
-	var/datum/objective/survive/survive = new
-	survive.owner = L.mind
-	L.mind.objectives += survive
+	var/datum/antagonist/blood_contract/A = new
+	L.mind.add_antag_datum(A)
+
 	log_combat(user, L, "took out a blood contract on", src)
-	to_chat(L, "<span class='userdanger'>You've been marked for death! Don't let the demons get you! KILL THEM ALL!</span>")
-	L.add_atom_colour("#FF0000", ADMIN_COLOUR_PRIORITY)
-	var/obj/effect/mine/pickup/bloodbath/B = new(L)
-	INVOKE_ASYNC(B, /obj/effect/mine/pickup/bloodbath/.proc/mineEffect, L)
-
-	for(var/mob/living/carbon/human/H in GLOB.player_list)
-		if(H == L)
-			continue
-		to_chat(H, "<span class='userdanger'>You have an overwhelming desire to kill [L]. [L.p_theyve(TRUE)] been marked red! Whoever [L.p_they()] [L.p_were()], friend or foe, go kill [L.p_them()]!</span>")
-		H.put_in_hands(new /obj/item/kitchen/knife/butcher(H), TRUE)
-
 	qdel(src)
+
+/obj/item/gun/ballistic/revolver/doublebarrel/super
+	name = "super combat shotgun"
+	desc = "From the belly of the beast - or rather, demon. Twice as lethal as a less-than-super shotgun, but a tad bulkier."
+	icon_state = "heckgun"
+	slot_flags = null
+	mag_type = /obj/item/ammo_box/magazine/internal/shot/dual/heck
+	burst_size = 2
+	burst_shot_delay = 0
+	unique_reskin = null
+	sawn_off = TRUE
 
 //Colossus
 /obj/structure/closet/crate/necropolis/colossus
@@ -1072,11 +1105,15 @@
 	var/blast_range = 13 //how long the cardinal blast's walls are
 	var/obj/effect/hierophant/beacon //the associated beacon we teleport to
 	var/teleporting = FALSE //if we ARE teleporting
-	var/friendly_fire_check = FALSE //if the blasts we make will consider our faction against the faction of hit targets
+	var/friendly_fire_check = TRUE //if the blasts we make will consider our faction against the faction of hit targets
+
+/obj/item/hierophant_club/ComponentInitialize()
+	. = ..()
+	AddElement(/datum/element/update_icon_updates_onmob)
 
 /obj/item/hierophant_club/examine(mob/user)
-	..()
-	to_chat(user, "<span class='hierophant_warning'>The[beacon ? " beacon is not currently":"re is a beacon"] attached.</span>")
+	. = ..()
+	. += "<span class='hierophant_warning'>The[beacon ? " beacon is not currently":"re is a beacon"] attached.</span>"
 
 /obj/item/hierophant_club/suicide_act(mob/living/user)
 	say("Xverwpsgexmrk...", forced = "hierophant club suicide")
@@ -1136,13 +1173,8 @@
 		chaser_speed = max(chaser_speed + health_percent, 0.5) //one tenth of a second faster for each missing 10% of health
 		blast_range -= round(health_percent * 10) //one additional range for each missing 10% of health
 
-/obj/item/hierophant_club/update_icon()
-	icon_state = "hierophant_club[timer <= world.time ? "_ready":""][(beacon && !QDELETED(beacon)) ? "":"_beacon"]"
-	item_state = icon_state
-	if(ismob(loc))
-		var/mob/M = loc
-		M.update_inv_hands()
-		M.update_inv_back()
+/obj/item/hierophant_club/update_icon_state()
+	icon_state = item_state = "hierophant_club[timer <= world.time ? "_ready":""][(beacon && !QDELETED(beacon)) ? "":"_beacon"]"
 
 /obj/item/hierophant_club/proc/prepare_icon_update()
 	update_icon()

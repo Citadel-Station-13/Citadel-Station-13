@@ -22,6 +22,8 @@
 	var/static/mutable_appearance/dais_overlay
 	var/obj/structure/opacity_blocker/sight_blocker
 	var/sight_blocker_distance = 1
+	var/uses
+	var/ashwalker_only = FALSE
 
 /obj/structure/necropolis_gate/Initialize()
 	. = ..()
@@ -85,11 +87,14 @@
 	else
 		return QDEL_HINT_LETMELIVE
 
-//ATTACK HAND IGNORING PARENT RETURN VALUE
-/obj/structure/necropolis_gate/attack_hand(mob/user)
-	if(locked)
+/obj/structure/necropolis_gate/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
+	if(locked || uses == 0)
 		to_chat(user, "<span class='boldannounce'>It's [open ? "stuck open":"locked"].</span>")
 		return
+	if(ashwalker_only)
+		if(!(user.mind.assigned_role == "Ash Walker"))
+			to_chat(user, "<span class='boldannounce'>The gate screeches in an incoherant language!</span>")
+			return
 	toggle_the_gate(user)
 	return ..()
 
@@ -131,11 +136,17 @@
 		density = FALSE
 		sleep(5)
 		open = TRUE
+	if(uses && uses > 0)
+		uses -= 1
 	changing_openness = FALSE
 	return TRUE
 
 /obj/structure/necropolis_gate/locked
 	locked = TRUE
+
+/obj/structure/necropolis_gate/ashwalker
+	uses = 1
+	ashwalker_only = TRUE
 
 GLOBAL_DATUM(necropolis_gate, /obj/structure/necropolis_gate/legion_gate)
 /obj/structure/necropolis_gate/legion_gate
@@ -154,8 +165,7 @@ GLOBAL_DATUM(necropolis_gate, /obj/structure/necropolis_gate/legion_gate)
 	else
 		return QDEL_HINT_LETMELIVE
 
-//ATTACK HAND IGNORING PARENT RETURN VALUE
-/obj/structure/necropolis_gate/legion_gate/attack_hand(mob/user)
+/obj/structure/necropolis_gate/legion_gate/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	if(!open && !changing_openness)
 		var/safety = alert(user, "You think this might be a bad idea...", "Knock on the door?", "Proceed", "Abort")
 		if(safety == "Abort" || !in_range(src, user) || !src || open || changing_openness || user.incapacitated())

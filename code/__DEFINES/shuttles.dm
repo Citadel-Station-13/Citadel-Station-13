@@ -7,6 +7,8 @@
 #define SHUTTLE_STRANDED	"stranded"
 #define SHUTTLE_ESCAPE		"escape"
 #define SHUTTLE_ENDGAME		"endgame: game over"
+#define SHUTTLE_RECHARGING		"recharging"
+#define SHUTTLE_PREARRIVAL		"landing"
 
 #define EMERGENCY_IDLE_OR_RECALLED (SSshuttle.emergency && ((SSshuttle.emergency.mode == SHUTTLE_IDLE) || (SSshuttle.emergency.mode == SHUTTLE_RECALL)))
 #define EMERGENCY_ESCAPED_OR_ENDGAMED (SSshuttle.emergency && ((SSshuttle.emergency.mode == SHUTTLE_ESCAPE) || (SSshuttle.emergency.mode == SHUTTLE_ENDGAME)))
@@ -35,7 +37,7 @@
 #define TRANSIT_REQUEST 1
 #define TRANSIT_READY 2
 
-#define SHUTTLE_TRANSIT_BORDER 8
+#define SHUTTLE_TRANSIT_BORDER 10
 
 #define PARALLAX_LOOP_TIME 25
 #define HYPERSPACE_END_TIME 5

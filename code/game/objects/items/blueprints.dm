@@ -13,7 +13,8 @@
 
 /obj/item/areaeditor/attack_self(mob/user)
 	add_fingerprint(user)
-	. = "<BODY><HTML><head><title>[src]</title></head> \
+	. = "<BODY><HTML><head><meta http-equiv='Content-Type' content='text/html; charset=UTF-8'>\
+				<title>[src]</title></head> \
 				<h2>[station_name()] [src.name]</h2> \
 				<small>[fluffnotice]</small><hr>"
 	switch(get_area_type())
@@ -59,7 +60,7 @@
 /obj/item/areaeditor/blueprints/attack_self(mob/user)
 	. = ..()
 	if(!legend)
-		var/area/A = get_area()
+		var/area/A = get_area(user)
 		if(get_area_type() == AREA_STATION)
 			. += "<p>According to \the [src], you are now in <b>\"[html_encode(A.name)]\"</b>.</p>"
 			. += "<p><a href='?src=[REF(src)];edit_area=1'>Change area name</a></p>"
@@ -140,12 +141,10 @@
 	legend = FALSE
 
 
-/obj/item/areaeditor/proc/get_area()
-	var/turf/T = get_turf(usr)
-	var/area/A = T.loc
-	return A
 
-/obj/item/areaeditor/proc/get_area_type(area/A = get_area())
+/obj/item/areaeditor/proc/get_area_type(area/A)
+	if(!A)
+		A = get_area(usr)
 	if(A.outdoors)
 		return AREA_SPACE
 	var/list/SPECIALS = list(
@@ -155,7 +154,9 @@
 		/area/centcom,
 		/area/asteroid,
 		/area/tdome,
-		/area/wizard_station
+		/area/wizard_station,
+		/area/hilbertshotel,
+		/area/hilbertshotelstorage
 	)
 	for (var/type in SPECIALS)
 		if ( istype(A,type) )
@@ -183,7 +184,7 @@
 	return ""
 
 /obj/item/areaeditor/proc/edit_area()
-	var/area/A = get_area()
+	var/area/A = get_area(usr)
 	var/prevname = "[A.name]"
 	var/str = stripped_input(usr,"New area name:", "Area Creation", "", MAX_NAME_LEN)
 	if(!str || !length(str) || str==prevname) //cancel

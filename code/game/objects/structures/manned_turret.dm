@@ -180,12 +180,13 @@
 	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "offhand"
 	w_class = WEIGHT_CLASS_HUGE
-	item_flags = ABSTRACT | NODROP | NOBLUDGEON | DROPDEL
+	item_flags = ABSTRACT | NOBLUDGEON | DROPDEL
 	resistance_flags = FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	var/obj/machinery/manned_turret/turret
 
 /obj/item/gun_control/Initialize()
 	. = ..()
+	ADD_TRAIT(src, TRAIT_NODROP, ABSTRACT_ITEM_TRAIT)
 	turret = loc
 	if(!istype(turret))
 		return INITIALIZE_HINT_QDEL
@@ -196,10 +197,6 @@
 
 /obj/item/gun_control/CanItemAutoclick()
 	return TRUE
-
-/obj/item/gun_control/attack_obj(obj/O, mob/living/user)
-	user.changeNext_move(CLICK_CD_MELEE)
-	O.attacked_by(src, user)
 
 /obj/item/gun_control/attack(mob/living/M, mob/living/user)
 	M.lastattacker = user.real_name

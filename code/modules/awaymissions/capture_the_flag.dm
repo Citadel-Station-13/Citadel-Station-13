@@ -7,9 +7,7 @@
 #define AMMO_DROP_LIFETIME 300
 #define CTF_REQUIRED_PLAYERS 4
 
-
-
-/obj/item/twohanded/ctf
+/obj/item/ctf
 	name = "banner"
 	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "banner"
@@ -18,29 +16,33 @@
 	righthand_file = 'icons/mob/inhands/equipment/banners_righthand.dmi'
 	desc = "A banner with Nanotrasen's logo on it."
 	slowdown = 2
+	item_flags = SLOWS_WHILE_IN_HAND
 	throw_speed = 0
 	throw_range = 1
 	force = 200
 	armour_penetration = 1000
 	resistance_flags = INDESTRUCTIBLE
 	anchored = TRUE
-	item_flags = SLOWS_WHILE_IN_HAND
 	var/team = WHITE_TEAM
 	var/reset_cooldown = 0
 	var/anyonecanpickup = TRUE
 	var/obj/effect/ctf/flag_reset/reset
 	var/reset_path = /obj/effect/ctf/flag_reset
 
-/obj/item/twohanded/ctf/Destroy()
+/obj/item/ctf/Destroy()
 	QDEL_NULL(reset)
 	return ..()
 
-/obj/item/twohanded/ctf/Initialize()
+/obj/item/ctf/Initialize()
 	. = ..()
 	if(!reset)
 		reset = new reset_path(get_turf(src))
 
-/obj/item/twohanded/ctf/process()
+/obj/item/ctf/ComponentInitialize()
+	. = ..()
+	AddComponent(/datum/component/two_handed)
+
+/obj/item/ctf/process()
 	if(is_ctf_target(loc)) //don't reset from someone's hands.
 		return PROCESS_KILL
 	if(world.time > reset_cooldown)
@@ -51,8 +53,7 @@
 				to_chat(M, "<span class='userdanger'>\The [src] has been returned to base!</span>")
 		STOP_PROCESSING(SSobj, src)
 
-//ATTACK HAND IGNORING PARENT RETURN VALUE
-/obj/item/twohanded/ctf/attack_hand(mob/living/user)
+/obj/item/ctf/on_attack_hand(mob/living/user, act_intent = user.a_intent, unarmed_attack_flags)
 	if(!is_ctf_target(user) && !anyonecanpickup)
 		to_chat(user, "Non players shouldn't be moving the flag!")
 		return
@@ -76,7 +77,7 @@
 	STOP_PROCESSING(SSobj, src)
 	..()
 
-/obj/item/twohanded/ctf/dropped(mob/user)
+/obj/item/ctf/dropped(mob/user)
 	..()
 	user.anchored = FALSE
 	user.status_flags |= CANPUSH
@@ -89,7 +90,7 @@
 	anchored = TRUE
 
 
-/obj/item/twohanded/ctf/red
+/obj/item/ctf/red
 	name = "red flag"
 	icon_state = "banner-red"
 	item_state = "banner-red"
@@ -98,7 +99,7 @@
 	reset_path = /obj/effect/ctf/flag_reset/red
 
 
-/obj/item/twohanded/ctf/blue
+/obj/item/ctf/blue
 	name = "blue flag"
 	icon_state = "banner-blue"
 	item_state = "banner-blue"
@@ -211,7 +212,6 @@
 				toggle_all_ctf(user)
 			return
 
-
 		people_who_want_to_play |= user.ckey
 		var/num = people_who_want_to_play.len
 		var/remaining = CTF_REQUIRED_PLAYERS - num
@@ -268,6 +268,9 @@
 	M.key = new_team_member.key
 	M.faction += team
 	M.equipOutfit(ctf_gear)
+	M.dna.species.punchdamagehigh = 25
+	M.dna.species.punchdamagelow = 25
+	M.AddElement(/datum/element/ghost_role_eligibility)
 	spawned_mobs += M
 
 /obj/machinery/capture_the_flag/Topic(href, href_list)
@@ -277,8 +280,8 @@
 			attack_ghost(ghost)
 
 /obj/machinery/capture_the_flag/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/twohanded/ctf))
-		var/obj/item/twohanded/ctf/flag = I
+	if(istype(I, /obj/item/ctf))
+		var/obj/item/ctf/flag = I
 		if(flag.team != src.team)
 			user.transferItemToLoc(flag, get_turf(flag.reset), TRUE)
 			points++
@@ -295,7 +298,7 @@
 		if(istype(mob_area, /area/ctf))
 			to_chat(M, "<span class='narsie [team_span]'>[team] team wins!</span>")
 			to_chat(M, "<span class='userdanger'>Teams have been cleared. Click on the machines to vote to begin another round.</span>")
-			for(var/obj/item/twohanded/ctf/W in M)
+			for(var/obj/item/ctf/W in M)
 				M.dropItemToGround(W)
 			M.dust()
 	for(var/obj/machinery/control_point/control in GLOB.machines)
@@ -336,7 +339,7 @@
 	var/list/ctf_object_typecache = typecacheof(list(
 				/obj/machinery,
 				/obj/effect/ctf,
-				/obj/item/twohanded/ctf
+				/obj/item/ctf
 			))
 	for(var/atm in A)
 		if (isturf(A) || ismob(A) || isarea(A))
@@ -372,18 +375,18 @@
 			CTF.ctf_gear = initial(ctf_gear)
 			CTF.respawn_cooldown = DEFAULT_RESPAWN
 
+/proc/ctf_floor_vanish(atom/target)
+	if(isturf(target.loc))
+		qdel(target)
+
 /obj/item/gun/ballistic/automatic/pistol/deagle/ctf
 	desc = "This looks like it could really hurt in melee."
 	force = 75
 	mag_type = /obj/item/ammo_box/magazine/m50/ctf
 
-/obj/item/gun/ballistic/automatic/pistol/deagle/ctf/dropped()
+/obj/item/gun/ballistic/automatic/pistol/deagle/ctf/dropped(mob/user)
 	. = ..()
-	addtimer(CALLBACK(src, .proc/floor_vanish), 1)
-
-/obj/item/gun/ballistic/automatic/pistol/deagle/ctf/proc/floor_vanish()
-	if(isturf(loc))
-		qdel(src)
+	addtimer(CALLBACK(GLOBAL_PROC, /proc/ctf_floor_vanish, src), 1)
 
 /obj/item/ammo_box/magazine/m50/ctf
 	ammo_type = /obj/item/ammo_casing/a50/ctf
@@ -404,24 +407,16 @@
 	desc = "This looks like it could really hurt in melee."
 	force = 50
 
-/obj/item/gun/ballistic/automatic/laser/ctf/dropped()
+/obj/item/gun/ballistic/automatic/laser/ctf/dropped(mob/user)
 	. = ..()
-	addtimer(CALLBACK(src, .proc/floor_vanish), 1)
-
-/obj/item/gun/ballistic/automatic/laser/ctf/proc/floor_vanish()
-	if(isturf(loc))
-		qdel(src)
+	addtimer(CALLBACK(GLOBAL_PROC, /proc/ctf_floor_vanish, src), 1)
 
 /obj/item/ammo_box/magazine/recharge/ctf
 	ammo_type = /obj/item/ammo_casing/caseless/laser/ctf
 
-/obj/item/ammo_box/magazine/recharge/ctf/dropped()
+/obj/item/ammo_box/magazine/recharge/ctf/dropped(mob/user)
 	. = ..()
-	addtimer(CALLBACK(src, .proc/floor_vanish), 1)
-
-/obj/item/ammo_box/magazine/recharge/ctf/proc/floor_vanish()
-	if(isturf(loc))
-		qdel(src)
+	addtimer(CALLBACK(GLOBAL_PROC, /proc/ctf_floor_vanish, src), 1)
 
 /obj/item/ammo_casing/caseless/laser/ctf
 	projectile_type = /obj/item/projectile/beam/ctf
@@ -439,9 +434,9 @@
 	. = FALSE
 	if(istype(target, /obj/structure/barricade/security/ctf))
 		. = TRUE
-	if(ishuman(target))
-		var/mob/living/carbon/human/H = target
-		if(istype(H.wear_suit, /obj/item/clothing/suit/space/hardsuit/shielded/ctf))
+	if(isliving(target))
+		var/mob/living/H = target
+		if((RED_TEAM in H.faction) || (BLUE_TEAM in H.faction))
 			. = TRUE
 
 // RED TEAM GUNS
@@ -474,6 +469,21 @@
 	icon_state = "bluelaser"
 	impact_effect_type = /obj/effect/temp_visual/impact_effect/blue_laser
 
+// MELEE GANG
+/obj/item/claymore/ctf
+	slot_flags = ITEM_SLOT_BACK
+	armour_penetration = 100
+	total_mass = 1
+
+/obj/item/claymore/ctf/pre_attack(atom/target, mob/user, params)
+	if(!is_ctf_target(target))
+		return TRUE
+	return ..()
+
+/obj/item/claymore/ctf/dropped(mob/user)
+	. = ..()
+	addtimer(CALLBACK(GLOBAL_PROC, /proc/ctf_floor_vanish, src), 1)
+
 /datum/outfit/ctf
 	name = "CTF"
 	ears = /obj/item/radio/headset
@@ -481,14 +491,14 @@
 	suit = /obj/item/clothing/suit/space/hardsuit/shielded/ctf
 	toggle_helmet = FALSE // see the whites of their eyes
 	shoes = /obj/item/clothing/shoes/combat
-	gloves = /obj/item/clothing/gloves/combat
-	id = /obj/item/card/id/syndicate
+	gloves = /obj/item/clothing/gloves/tackler/combat
 	belt = /obj/item/gun/ballistic/automatic/pistol/deagle/ctf
 	l_pocket = /obj/item/ammo_box/magazine/recharge/ctf
 	r_pocket = /obj/item/ammo_box/magazine/recharge/ctf
 	r_hand = /obj/item/gun/ballistic/automatic/laser/ctf
+	back = /obj/item/claymore/ctf
 
-/datum/outfit/ctf/post_equip(mob/living/carbon/human/H, visualsOnly=FALSE)
+/datum/outfit/ctf/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE, client/preference_source)
 	if(visualsOnly)
 		return
 	var/list/no_drops = list()
@@ -497,14 +507,14 @@
 	W.registered_name = H.real_name
 	W.update_label(W.registered_name, W.assignment)
 
-	// The shielded hardsuit is already NODROP
+	// The shielded hardsuit is already TRAIT_NODROP
 	no_drops += H.get_item_by_slot(SLOT_GLOVES)
 	no_drops += H.get_item_by_slot(SLOT_SHOES)
 	no_drops += H.get_item_by_slot(SLOT_W_UNIFORM)
 	no_drops += H.get_item_by_slot(SLOT_EARS)
 	for(var/i in no_drops)
 		var/obj/item/I = i
-		I.item_flags |= NODROP
+		ADD_TRAIT(I, TRAIT_NODROP, CAPTURE_THE_FLAG_TRAIT)
 
 /datum/outfit/ctf/instagib
 	r_hand = /obj/item/gun/energy/laser/instakill
@@ -530,7 +540,7 @@
 	r_hand = /obj/item/gun/energy/laser/instakill/blue
 	shoes = /obj/item/clothing/shoes/jackboots/fast
 
-/datum/outfit/ctf/red/post_equip(mob/living/carbon/human/H)
+/datum/outfit/ctf/red/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE, client/preference_source)
 	..()
 	var/obj/item/radio/R = H.ears
 	R.set_frequency(FREQ_CTF_RED)
@@ -538,7 +548,7 @@
 	R.independent = TRUE
 	H.dna.species.stunmod = 0
 
-/datum/outfit/ctf/blue/post_equip(mob/living/carbon/human/H)
+/datum/outfit/ctf/blue/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE, client/preference_source)
 	..()
 	var/obj/item/radio/R = H.ears
 	R.set_frequency(FREQ_CTF_BLUE)
@@ -668,10 +678,7 @@
 /obj/machinery/control_point/attackby(mob/user, params)
 	capture(user)
 
-/obj/machinery/control_point/attack_hand(mob/user)
-	. = ..()
-	if(.)
-		return
+/obj/machinery/control_point/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	capture(user)
 
 /obj/machinery/control_point/proc/capture(mob/user)

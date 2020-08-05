@@ -23,7 +23,7 @@
 		I.name = I.dna.real_name
 		I.updateappearance(mutcolor_update=1)
 		I.domutcheck()
-		I.key = C.key
+		C.transfer_ckey(I, FALSE)
 		var/datum/antagonist/wizard/master = M.has_antag_datum(/datum/antagonist/wizard)
 		if(!master.wiz_team)
 			master.create_wiz_team()

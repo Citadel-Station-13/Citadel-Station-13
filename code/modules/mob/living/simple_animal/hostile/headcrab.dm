@@ -6,12 +6,14 @@
 	icon_state = "headcrab"
 	icon_living = "headcrab"
 	icon_dead = "headcrab_dead"
+	threat = 1
 	gender = NEUTER
 	health = 50
 	maxHealth = 50
 	melee_damage_lower = 5
 	melee_damage_upper = 5
-	attacktext = "chomps"
+	attack_verb_continuous = "chomps"
+	attack_verb_simple = "chomp"
 	attack_sound = 'sound/weapons/bite.ogg'
 	faction = list("creature")
 	robust_searching = 1
@@ -43,7 +45,7 @@
 		// Changeling egg can survive in aliens!
 		var/mob/living/carbon/C = target
 		if(C.stat == DEAD)
-			if(C.has_trait(TRAIT_XENO_HOST))
+			if(HAS_TRAIT(C, TRAIT_XENO_HOST))
 				to_chat(src, "<span class='userdanger'>A foreign presence repels us from this body. Perhaps we should try to infest another?</span>")
 				return
 			Infect(target)
@@ -61,7 +63,7 @@
 	time++
 	if(time >= EGG_INCUBATION_TIME)
 		Pop()
-		Remove(owner)
+		Remove()
 		qdel(src)
 
 /obj/item/organ/body_egg/changeling_egg/proc/Pop()

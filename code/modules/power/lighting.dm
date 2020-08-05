@@ -23,7 +23,7 @@
 	name = "small light fixture frame"
 	icon_state = "bulb-construct-item"
 	result_path = /obj/structure/light_construct/small
-	materials = list(MAT_METAL=MINERAL_MATERIAL_AMOUNT)
+	custom_materials = list(/datum/material/iron=MINERAL_MATERIAL_AMOUNT)
 
 /obj/item/wallframe/light_fixture/try_build(turf/on_wall, user)
 	if(!..())
@@ -66,22 +66,21 @@
 	return cell
 
 /obj/structure/light_construct/examine(mob/user)
-	..()
+	. = ..()
 	switch(src.stage)
 		if(1)
-			to_chat(user, "It's an empty frame.")
+			. += "It's an empty frame."
 		if(2)
-			to_chat(user, "It's wired.")
+			. += "It's wired."
 		if(3)
-			to_chat(user, "The casing is closed.")
+			. += "The casing is closed."
 	if(cell_connectors)
 		if(cell)
-			to_chat(user, "You see [cell] inside the casing.")
+			. += "You see [cell] inside the casing."
 		else
-			to_chat(user, "The casing has no power cell for backup power.")
+			. += "The casing has no power cell for backup power."
 	else
-		to_chat(user, "<span class='danger'>This casing doesn't support power cells for backup power.</span>")
-		return
+		. += "<span class='danger'>This casing doesn't support power cells for backup power.</span>"
 
 /obj/structure/light_construct/attackby(obj/item/W, mob/user, params)
 	add_fingerprint(user)
@@ -89,7 +88,7 @@
 		if(!cell_connectors)
 			to_chat(user, "<span class='warning'>This [name] can't support a power cell!</span>")
 			return
-		if(W.item_flags & NODROP)
+		if(HAS_TRAIT(W, TRAIT_NODROP))
 			to_chat(user, "<span class='warning'>[W] is stuck to your hand!</span>")
 			return
 		user.dropItemToGround(W)
@@ -119,8 +118,7 @@
 				return
 
 			if(istype(W, /obj/item/stack/cable_coil))
-				var/obj/item/stack/cable_coil/coil = W
-				if(coil.use(1))
+				if(W.use_tool(src, user, 0, 1, skill_gain_mult = TRIVIAL_USE_TOOL_MULT))
 					icon_state = "[fixture_type]-construct-stage2"
 					stage = 2
 					user.visible_message("[user.name] adds wires to [src].", \
@@ -177,8 +175,6 @@
 	fixture_type = "bulb"
 	sheets_refunded = 1
 
-
-
 // the standard tube light fixture
 /obj/machinery/light
 	name = "light fixture"
@@ -196,9 +192,9 @@
 	var/on = FALSE					// 1 if on, 0 if off
 	var/on_gs = FALSE
 	var/static_power_used = 0
-	var/brightness = 8			// luminosity when on, also used in power calculation
-	var/bulb_power = 1			// basically the alpha of the emitted light source
-	var/bulb_colour = "#FFFFFF"	// befault colour of the light.
+	var/brightness = 9			// luminosity when on, also used in power calculation
+	var/bulb_power = 0.75			// basically the alpha of the emitted light source
+	var/bulb_colour = "#FFF6ED"	// befault colour of the light.
 	var/status = LIGHT_OK		// LIGHT_OK, _EMPTY, _BURNED or _BROKEN
 	var/flickering = FALSE
 	var/light_type = /obj/item/light/tube		// the type of light item
@@ -223,6 +219,7 @@
 	var/bulb_emergency_colour = "#FF3232"	// determines the colour of the light while it's in emergency mode
 	var/bulb_emergency_pow_mul = 0.75	// the multiplier for determining the light's power in emergency mode
 	var/bulb_emergency_pow_min = 0.5	// the minimum value for the light's power in emergency mode
+	var/hijacked = FALSE	// if true, the light is in a hijacked area
 
 /obj/machinery/light/broken
 	status = LIGHT_BROKEN
@@ -234,7 +231,9 @@
 	icon_state = "bulb"
 	base_state = "bulb"
 	fitting = "bulb"
-	brightness = 4
+	brightness = 5
+	nightshift_brightness = 4
+	bulb_colour = "#FFDDBB"
 	desc = "A small lighting fixture."
 	light_type = /obj/item/light/bulb
 
@@ -258,6 +257,7 @@
 
 /obj/machinery/light/small/built
 	icon_state = "bulb-empty"
+	start_with_cell = FALSE
 
 /obj/machinery/light/small/built/Initialize()
 	. = ..()
@@ -274,11 +274,11 @@
 	spawn(2)
 		switch(fitting)
 			if("tube")
-				brightness = 8
+				brightness = 9
 				if(prob(2))
 					break_light_tube(1)
 			if("bulb")
-				brightness = 4
+				brightness = 5
 				if(prob(5))
 					break_light_tube(1)
 		spawn(1)
@@ -292,26 +292,33 @@
 	QDEL_NULL(cell)
 	return ..()
 
-/obj/machinery/light/update_icon()
-	cut_overlays()
+/obj/machinery/light/update_icon_state()
 	switch(status)		// set icon_states
 		if(LIGHT_OK)
-			var/area/A = get_area(src)
+			var/area/A = get_base_area(src)
 			if(emergency_mode || (A && A.fire))
 				icon_state = "[base_state]_emergency"
 			else
-				icon_state = "[base_state]"
-				if(on)
-					var/mutable_appearance/glowybit = mutable_appearance(overlayicon, base_state, ABOVE_LIGHTING_LAYER, ABOVE_LIGHTING_PLANE)
-					glowybit.alpha = CLAMP(light_power*250, 30, 200)
-					add_overlay(glowybit)
+				if (hijacked)
+					icon_state = "[base_state]_hijacked"
+				else
+					icon_state = "[base_state]"
 		if(LIGHT_EMPTY)
 			icon_state = "[base_state]-empty"
 		if(LIGHT_BURNED)
 			icon_state = "[base_state]-burned"
 		if(LIGHT_BROKEN)
 			icon_state = "[base_state]-broken"
-	return
+
+/obj/machinery/light/update_overlays()
+	. = ..()
+	SSvis_overlays.remove_vis_overlay(src, managed_vis_overlays)
+	if(on && status == LIGHT_OK)
+		var/overlay_alpha = clamp(light_power*250, 30, 200)
+		SSvis_overlays.add_vis_overlay(src, overlayicon, base_state, EMISSIVE_UNBLOCKABLE_LAYER, EMISSIVE_UNBLOCKABLE_PLANE, dir, overlay_alpha)
+		var/mutable_appearance/M = mutable_appearance(overlayicon, base_state)
+		M.alpha = overlay_alpha
+		. += M
 
 // update the icon_state and luminosity of the light depending on its state
 /obj/machinery/light/proc/update(trigger = TRUE)
@@ -323,9 +330,15 @@
 		var/BR = brightness
 		var/PO = bulb_power
 		var/CO = bulb_colour
-		var/area/A = get_area(src)
+		if(color)
+			CO = color
+		var/area/A = get_base_area(src)
 		if (A && A.fire)
 			CO = bulb_emergency_colour
+		else if (hijacked)
+			BR = BR * 1.5
+			PO = PO * 1.5
+			CO = color ? color : LIGHT_COLOR_YELLOW
 		else if (nightshift_enabled)
 			BR = nightshift_brightness
 			PO = nightshift_light_power
@@ -355,11 +368,14 @@
 	if(on != on_gs)
 		on_gs = on
 		if(on)
-			static_power_used = brightness * 20 //20W per unit luminosity
+			static_power_used = brightness * 20 * (hijacked ? 2 : 1) //20W per unit luminosity
 			addStaticPower(static_power_used, STATIC_LIGHT)
 		else
 			removeStaticPower(static_power_used, STATIC_LIGHT)
 
+/obj/machinery/light/update_atom_colour()
+	. = ..()
+	update()
 
 /obj/machinery/light/process()
 	if (!cell)
@@ -389,18 +405,18 @@
 
 // examine verb
 /obj/machinery/light/examine(mob/user)
-	..()
+	. = ..()
 	switch(status)
 		if(LIGHT_OK)
-			to_chat(user, "It is turned [on? "on" : "off"].")
+			. += "It is turned [on? "on" : "off"]."
 		if(LIGHT_EMPTY)
-			to_chat(user, "The [fitting] has been removed.")
+			. += "The [fitting] has been removed."
 		if(LIGHT_BURNED)
-			to_chat(user, "The [fitting] is burnt out.")
+			. += "The [fitting] is burnt out."
 		if(LIGHT_BROKEN)
-			to_chat(user, "The [fitting] has been smashed.")
+			. += "The [fitting] has been smashed."
 	if(cell)
-		to_chat(user, "Its backup power charge meter reads [round((cell.charge / cell.maxcharge) * 100, 0.1)]%.")
+		. += "Its backup power charge meter reads [round((cell.charge / cell.maxcharge) * 100, 0.1)]%."
 
 
 
@@ -490,7 +506,7 @@
 			cell = null
 	qdel(src)
 
-/obj/machinery/light/attacked_by(obj/item/I, mob/living/user)
+/obj/machinery/light/attacked_by(obj/item/I, mob/living/user, attackchain_flags = NONE, damage_multiplier = 1)
 	..()
 	if(status == LIGHT_BROKEN || status == LIGHT_EMPTY)
 		if(on && (I.flags_1 & CONDUCT_1))
@@ -579,11 +595,9 @@
 // attack with hand - remove tube/bulb
 // if hands aren't protected and the light is on, burn the player
 
-/obj/machinery/light/attack_hand(mob/living/carbon/human/user)
+/obj/machinery/light/on_attack_hand(mob/living/carbon/human/user)
 	. = ..()
-	if(.)
-		return
-	user.changeNext_move(CLICK_CD_MELEE)
+	user.DelayNextAction(CLICK_CD_MELEE)
 	add_fingerprint(user)
 
 	if(status == LIGHT_EMPTY)
@@ -604,7 +618,7 @@
 		else
 			prot = 1
 
-		if(prot > 0 || user.has_trait(TRAIT_RESISTHEAT) || user.has_trait(TRAIT_RESISTHEATHANDS))
+		if(prot > 0 || HAS_TRAIT(user, TRAIT_RESISTHEAT) || HAS_TRAIT(user, TRAIT_RESISTHEATHANDS))
 			to_chat(user, "<span class='notice'>You remove the light [fitting].</span>")
 		else if(istype(user) && user.dna.check_mutation(TK))
 			to_chat(user, "<span class='notice'>You telekinetically remove the light [fitting].</span>")
@@ -674,9 +688,9 @@
 	on = TRUE
 	update()
 
-/obj/machinery/light/tesla_act(power, tesla_flags)
-	if(tesla_flags & TESLA_MACHINE_EXPLOSIVE)
-		explosion(src,0,0,0,flame_range = 5, adminlog = 0)
+/obj/machinery/light/zap_act(power, zap_flags)
+	if(zap_flags & ZAP_MACHINE_EXPLOSIVE)
+		explosion(src,0,0,0,flame_range = 5, adminlog = FALSE)
 		qdel(src)
 	else
 		return ..()
@@ -715,8 +729,8 @@
 	var/status = LIGHT_OK		// LIGHT_OK, LIGHT_BURNED or LIGHT_BROKEN
 	var/base_state
 	var/switchcount = 0	// number of times switched
-	materials = list(MAT_GLASS=100)
-	grind_results = list("silicon" = 5, "nitrogen" = 10) //Nitrogen is used as a cheaper alternative to argon in incandescent lighbulbs
+	custom_materials = list(/datum/material/glass=100)
+	grind_results = list(/datum/reagent/silicon = 5, /datum/reagent/nitrogen = 10) //Nitrogen is used as a cheaper alternative to argon in incandescent lighbulbs
 	var/rigged = 0		// true if rigged to explode
 	var/brightness = 2 //how much light it gives off
 
@@ -735,7 +749,7 @@
 	icon_state = "ltube"
 	base_state = "ltube"
 	item_state = "c_tube"
-	brightness = 8
+	brightness = 9
 
 /obj/item/light/tube/broken
 	status = LIGHT_BROKEN
@@ -748,12 +762,12 @@
 	item_state = "contvapour"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
-	brightness = 4
+	brightness = 5
 
 /obj/item/light/bulb/broken
 	status = LIGHT_BROKEN
 
-/obj/item/light/throw_impact(atom/hit_atom)
+/obj/item/light/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	if(!..()) //not caught by a mob
 		shatter()
 
@@ -786,7 +800,7 @@
 
 		to_chat(user, "<span class='notice'>You inject the solution into \the [src].</span>")
 
-		if(S.reagents.has_reagent("plasma", 5))
+		if(S.reagents.has_reagent(/datum/reagent/toxin/plasma, 5))
 
 			rigged = 1
 
@@ -796,11 +810,11 @@
 	return
 
 /obj/item/light/attack(mob/living/M, mob/living/user, def_zone)
-	..()
+	. = ..()
 	shatter()
 
 /obj/item/light/attack_obj(obj/O, mob/living/user)
-	..()
+	. = ..()
 	shatter()
 
 /obj/item/light/proc/shatter()
@@ -817,7 +831,8 @@
 	icon = 'icons/obj/lighting.dmi'
 	base_state = "floor"		// base description and icon_state
 	icon_state = "floor"
-	brightness = 4
+	brightness = 5
+	nightshift_brightness = 4
 	layer = 2.5
 	light_type = /obj/item/light/bulb
 	fitting = "bulb"

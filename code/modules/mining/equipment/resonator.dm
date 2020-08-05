@@ -8,10 +8,10 @@
 	righthand_file = 'icons/mob/inhands/equipment/mining_righthand.dmi'
 	desc = "A handheld device that creates small fields of energy that resonate until they detonate, crushing rock. It does increased damage in low pressure."
 	w_class = WEIGHT_CLASS_NORMAL
-	force = 15
+	force = 18
 	throwforce = 10
 	var/burst_time = 30
-	var/fieldlimit = 4
+	var/fieldlimit = 6
 	var/list/fields = list()
 	var/quick_burst_mod = 0.8
 
@@ -20,7 +20,8 @@
 	desc = "An upgraded version of the resonator that can produce more fields at once, as well as having no damage penalty for bursting a resonance field early."
 	icon_state = "resonator_u"
 	item_state = "resonator_u"
-	fieldlimit = 6
+	force = 20
+	fieldlimit = 8
 	quick_burst_mod = 1
 
 /obj/item/resonator/attack_self(mob/user)
@@ -40,12 +41,12 @@
 		return
 	if(LAZYLEN(fields) < fieldlimit)
 		new /obj/effect/temp_visual/resonance(T, user, src, burst_time)
-		user.changeNext_move(CLICK_CD_MELEE)
+		user.DelayNextAction(CLICK_CD_MELEE)
 
 /obj/item/resonator/pre_attack(atom/target, mob/user, params)
 	if(check_allowed_items(target, 1))
 		CreateResonance(target, user)
-	return TRUE
+	return ..()
 
 //resonance field, crushes rock, damages mobs
 /obj/effect/temp_visual/resonance

@@ -1,5 +1,0 @@
-author: "deathride58"
-delete-after: True
-changes: 
-  - balance: "The detective revolver's .38 bullets are now non-lethal again, but now require 3 shots to hard stamcrit"
-  - rscadd: "The current lethal variant of the .38 bullets can still be printed at sec protolathes."

@@ -1,5 +1,5 @@
 /////////////////
-// CYBORG ONLY //
+// CYBORG ONLY // Cyborgs only, fleshed ones.
 /////////////////
 
 //Linked Vanguard: grants Vanguard to the invoker and a target

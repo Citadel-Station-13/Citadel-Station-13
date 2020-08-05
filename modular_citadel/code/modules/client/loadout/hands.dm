@@ -11,7 +11,7 @@
 /datum/gear/dice
 	name = "Dice bag"
 	category = SLOT_HANDS
-	path = /obj/item/storage/pill_bottle/dice
+	path = /obj/item/storage/box/dice
 
 /datum/gear/eightball
 	name = "Magic eightball"

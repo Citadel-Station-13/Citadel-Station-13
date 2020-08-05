@@ -13,7 +13,7 @@
 	throwforce = 5
 	throw_speed = 3
 	throw_range = 5
-	materials = list(MAT_METAL=75)
+	custom_materials = list(/datum/material/iron=75)
 	attack_verb = list("stabbed")
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	usesound = list('sound/items/screwdriver.ogg', 'sound/items/screwdriver2.ogg')
@@ -31,6 +31,9 @@
 		"yellow" = rgb(255, 165, 0)
 	)
 
+	wound_bonus = -10
+	bare_wound_bonus = 5
+
 /obj/item/screwdriver/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is stabbing [src] into [user.p_their()] [pick("temple", "heart")]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	return(BRUTELOSS)
@@ -45,16 +48,16 @@
 	if(prob(75))
 		pixel_y = rand(0, 16)
 
-/obj/item/screwdriver/update_icon()
+/obj/item/screwdriver/update_overlays()
+	. = ..()
 	if(!random_color) //icon override
 		return
-	cut_overlays()
 	var/mutable_appearance/base_overlay = mutable_appearance(icon, "screwdriver_screwybits")
 	base_overlay.appearance_flags = RESET_COLOR
-	add_overlay(base_overlay)
+	. += base_overlay
 
-/obj/item/screwdriver/worn_overlays(isinhands = FALSE, icon_file)
-	. = list()
+/obj/item/screwdriver/worn_overlays(isinhands = FALSE, icon_file, used_state, style_flags = NONE)
+	. = ..()
 	if(isinhands && random_color)
 		var/mutable_appearance/M = mutable_appearance(icon_file, "screwdriver_head")
 		M.appearance_flags = RESET_COLOR
@@ -75,20 +78,23 @@
 		return ..()
 	if(user.zone_selected != BODY_ZONE_PRECISE_EYES && user.zone_selected != BODY_ZONE_HEAD)
 		return ..()
-	if(user.has_trait(TRAIT_PACIFISM))
-		to_chat(user, "<span class='warning'>You don't want to harm [M]!</span>")
-		return
-	if(user.has_trait(TRAIT_CLUMSY) && prob(50))
-		M = user
 	return eyestab(M,user)
 
 /obj/item/screwdriver/brass
 	name = "brass screwdriver"
 	desc = "A screwdriver made of brass. The handle feels freezing cold."
 	resistance_flags = FIRE_PROOF | ACID_PROOF
-	icon_state = "screwdriver_brass"
+	icon_state = "screwdriver_clock"
 	item_state = "screwdriver_brass"
 	toolspeed = 0.5
+	random_color = FALSE
+
+/obj/item/screwdriver/bronze
+	name = "bronze screwdriver"
+	desc = "A screwdriver plated with bronze."
+	icon_state = "screwdriver_brass"
+	item_state = "screwdriver_brass"
+	toolspeed = 0.95
 	random_color = FALSE
 
 /obj/item/screwdriver/abductor
@@ -103,7 +109,7 @@
 
 /obj/item/screwdriver/abductor/get_belt_overlay()
 	return mutable_appearance('icons/obj/clothing/belt_overlays.dmi', "screwdriver_nuke")
-	
+
 /obj/item/screwdriver/power
 	name = "hand drill"
 	desc = "A simple powered hand drill. It's fitted with a screw bit."
@@ -111,7 +117,7 @@
 	item_state = "drill"
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
-	materials = list(MAT_METAL=150,MAT_SILVER=50,MAT_TITANIUM=25) //done for balance reasons, making them high value for research, but harder to get
+	custom_materials = list(/datum/material/iron=150,/datum/material/silver=50,/datum/material/titanium=25) //done for balance reasons, making them high value for research, but harder to get
 	force = 8 //might or might not be too high, subject to change
 	w_class = WEIGHT_CLASS_SMALL
 	throwforce = 8
@@ -135,7 +141,21 @@
 	user.put_in_active_hand(b_drill)
 
 /obj/item/screwdriver/cyborg
-	name = "powered screwdriver"
+	name = "automated screwdriver"
 	desc = "An electrical screwdriver, designed to be both precise and quick."
+	icon = 'icons/obj/items_cyborg.dmi'
+	icon_state = "screwdriver_cyborg"
+	hitsound = 'sound/items/drill_hit.ogg'
 	usesound = 'sound/items/drill_use.ogg'
 	toolspeed = 0.5
+	random_color = FALSE
+
+/obj/item/screwdriver/advanced
+	name = "advanced screwdriver"
+	desc = "A classy silver screwdriver with an alien alloy tip, it works almost as well as the real thing."
+	icon = 'icons/obj/advancedtools.dmi'
+	icon_state = "screwdriver_a"
+	item_state = "screwdriver_nuke"
+	usesound = 'sound/items/pshoom.ogg'
+	toolspeed = 0.2
+	random_color = FALSE

@@ -20,10 +20,23 @@
 	else
 		return TRUE
 
-/obj/screen/movable/action_button/MouseDrop()
-	if (!can_use(usr))
+/obj/screen/movable/action_button/MouseDrop(over_object)
+	if(!can_use(usr))
 		return
-	return ..()
+	if((istype(over_object, /obj/screen/movable/action_button) && !istype(over_object, /obj/screen/movable/action_button/hide_toggle)))
+		if(locked)
+			to_chat(usr, "<span class='warning'>Action button \"[name]\" is locked, unlock it first.</span>")
+			return
+		var/obj/screen/movable/action_button/B = over_object
+		var/list/actions = usr.actions
+		actions.Swap(actions.Find(src.linked_action), actions.Find(B.linked_action))
+		moved = FALSE
+		ordered = TRUE
+		B.moved = FALSE
+		B.ordered = TRUE
+		usr.update_action_buttons()
+	else
+		return ..()
 
 /obj/screen/movable/action_button/Click(location,control,params)
 	if (!can_use(usr))
@@ -43,9 +56,6 @@
 		if(id && usr.client) //try to (un)remember position
 			usr.client.prefs.action_buttons_screen_locs["[name]_[id]"] = locked ? moved : null
 		return TRUE
-	if(usr.next_click > world.time)
-		return
-	usr.next_click = world.time + 1
 	linked_action.Trigger()
 	return TRUE
 
@@ -59,6 +69,22 @@
 	var/hide_icon = 'icons/mob/actions.dmi'
 	var/hide_state = "hide"
 	var/show_state = "show"
+	var/mutable_appearance/hide_appearance
+	var/mutable_appearance/show_appearance
+
+/obj/screen/movable/action_button/hide_toggle/Initialize()
+	. = ..()
+	var/static/list/icon_cache = list()
+
+	var/cache_key = "[hide_icon][hide_state]"
+	hide_appearance = icon_cache[cache_key]
+	if(!hide_appearance)
+		hide_appearance = icon_cache[cache_key] = mutable_appearance(hide_icon, hide_state)
+
+	cache_key = "[hide_icon][show_state]"
+	show_appearance = icon_cache[cache_key]
+	if(!show_appearance)
+		show_appearance = icon_cache[cache_key] = mutable_appearance(hide_icon, show_state)
 
 /obj/screen/movable/action_button/hide_toggle/Click(location,control,params)
 	if (!can_use(usr))
@@ -100,7 +126,7 @@
 		name = "Show Buttons"
 	else
 		name = "Hide Buttons"
-	UpdateIcon()
+	update_icon()
 	usr.update_action_buttons()
 
 /obj/screen/movable/action_button/hide_toggle/AltClick(mob/user)
@@ -112,6 +138,7 @@
 		moved = FALSE
 	user.update_action_buttons(TRUE)
 	to_chat(user, "<span class='notice'>Action button positions have been reset.</span>")
+	return TRUE
 
 
 /obj/screen/movable/action_button/hide_toggle/proc/InitialiseIcon(datum/hud/owner_hud)
@@ -121,11 +148,14 @@
 	hide_icon = settings["toggle_icon"]
 	hide_state = settings["toggle_hide"]
 	show_state = settings["toggle_show"]
-	UpdateIcon()
+	update_icon()
 
-/obj/screen/movable/action_button/hide_toggle/proc/UpdateIcon()
-	cut_overlays()
-	add_overlay(mutable_appearance(hide_icon, hidden ? show_state : hide_state))
+/obj/screen/movable/action_button/hide_toggle/update_overlays()
+	. = ..()
+	if(hidden)
+		. += show_appearance
+	else
+		. += hide_appearance
 
 
 /obj/screen/movable/action_button/MouseEntered(location,control,params)
@@ -162,6 +192,8 @@
 		return
 
 	var/button_number = 0
+	var/list/cview = getviewsize(client.view)
+	var/supportedcolumns = cview[1]-2
 
 	if(hud_used.action_buttons_hidden)
 		for(var/datum/action/A in actions)
@@ -177,7 +209,7 @@
 			if(B.moved)
 				B.screen_loc = B.moved
 			else
-				B.screen_loc = hud_used.ButtonNumberToScreenCoords(button_number)
+				B.screen_loc = hud_used.ButtonNumberToScreenCoords(button_number, supportedcolumns)
 			if(reload_screen)
 				client.screen += B
 
@@ -186,30 +218,26 @@
 			return
 
 	if(!hud_used.hide_actions_toggle.moved)
-		hud_used.hide_actions_toggle.screen_loc = hud_used.ButtonNumberToScreenCoords(button_number+1)
+		hud_used.hide_actions_toggle.screen_loc = hud_used.ButtonNumberToScreenCoords(button_number+1, supportedcolumns)
 	else
 		hud_used.hide_actions_toggle.screen_loc = hud_used.hide_actions_toggle.moved
 	if(reload_screen)
 		client.screen += hud_used.hide_actions_toggle
 
-
-
-#define AB_MAX_COLUMNS 10
-
-/datum/hud/proc/ButtonNumberToScreenCoords(number) // TODO : Make this zero-indexed for readabilty
-	var/row = round((number - 1)/AB_MAX_COLUMNS)
-	var/col = ((number - 1)%(AB_MAX_COLUMNS)) + 1
+/datum/hud/proc/ButtonNumberToScreenCoords(number, supportedcolumns) // TODO : Make this zero-indexed for readabilty
+	var/row = round((number - 1)/supportedcolumns)
+	var/col = ((number - 1)%(supportedcolumns)) + 1
 
 	var/coord_col = "+[col-1]"
-	var/coord_col_offset = 4 + 2 * col
+	var/coord_col_offset = 2 + 2 * col
 
 	var/coord_row = "[row ? -row : "+0"]"
 
 	return "WEST[coord_col]:[coord_col_offset],NORTH[coord_row]:-6"
 
-/datum/hud/proc/SetButtonCoords(obj/screen/button,number)
-	var/row = round((number-1)/AB_MAX_COLUMNS)
-	var/col = ((number - 1)%(AB_MAX_COLUMNS)) + 1
+/datum/hud/proc/SetButtonCoords(obj/screen/button,number, supportedcolumns)
+	var/row = round((number-1)/supportedcolumns)
+	var/col = ((number - 1)%(supportedcolumns)) + 1
 	var/x_offset = 32*(col-1) + 4 + 2*col
 	var/y_offset = -32*(row+1) + 26
 

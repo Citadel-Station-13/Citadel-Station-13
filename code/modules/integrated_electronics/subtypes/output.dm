@@ -23,7 +23,7 @@
 	if(displayed_name && displayed_name != name)
 		shown_label = " labeled '[displayed_name]'"
 
-	to_chat(user, "There is \a [src][shown_label], which displays [!isnull(stuff_to_display) ? "'[stuff_to_display]'" : "nothing"].")
+	return "There is \a [src][shown_label], which displays [!isnull(stuff_to_display) ? "'[stuff_to_display]'" : "nothing"]."
 
 /obj/item/integrated_circuit/output/screen/do_work()
 	var/datum/integrated_io/I = inputs[1]
@@ -35,7 +35,7 @@
 		stuff_to_display = replacetext("[I.data]", eol , "<br>")
 
 /obj/item/integrated_circuit/output/screen/large
-	name = "large screen"
+	name = "medium screen"
 	desc = "Takes any data type as an input and displays it to anybody near the device when pulsed. \
 	It can also be examined to see the last thing it displayed."
 	icon_state = "screen_medium"
@@ -51,15 +51,29 @@
 	else
 		if(!isturf(assembly.loc))
 			return
+	
+	var/atom/host = assembly || src
+	var/list/mobs = list()
+	for(var/mob/M in range(0, get_turf(src)))
+		mobs += M
+	to_chat(mobs, "<span class='notice'>[icon2html(host.icon, world, host.icon_state)] flashes a message: [stuff_to_display]</span>")
+	host.investigate_log("displayed \"[html_encode(stuff_to_display)]\" as [type].", INVESTIGATE_CIRCUIT)
 
-	var/list/nearby_things = range(0, get_turf(src))
-	for(var/mob/M in nearby_things)
-		var/obj/O = assembly ? assembly : src
-		to_chat(M, "<span class='notice'>[icon2html(O.icon, world, O.icon_state)] [stuff_to_display]</span>")
-	if(assembly)
-		assembly.investigate_log("displayed \"[html_encode(stuff_to_display)]\" with [type].", INVESTIGATE_CIRCUIT)
-	else
-		investigate_log("displayed \"[html_encode(stuff_to_display)]\" as [type].", INVESTIGATE_CIRCUIT)
+/obj/item/integrated_circuit/output/screen/extralarge // the subtype is called "extralarge" because tg brought back medium screens and they named the subtype /screen/large
+	name = "large screen"
+	desc = "Takes any data type as an input and displays it to the user upon examining, and to all nearby beings when pulsed."
+	icon_state = "screen_large"
+	power_draw_per_use = 40
+	cooldown_per_use = 10
+
+/obj/item/integrated_circuit/output/screen/extralarge/do_work()
+	..()
+	var/atom/host = assembly || src
+	var/list/mobs = list()
+	for(var/mob/M in viewers(7, get_turf(src)))
+		mobs += M
+	to_chat(mobs, "<span class='notice'>[icon2html(host.icon, world, host.icon_state)] flashes a message: [stuff_to_display]</span>")
+	host.investigate_log("displayed \"[html_encode(stuff_to_display)]\" as [type].", INVESTIGATE_CIRCUIT)
 
 /obj/item/integrated_circuit/output/light
 	name = "light"
@@ -112,7 +126,7 @@
 	var/brightness = get_pin_data(IC_INPUT, 2)
 
 	if(new_color && isnum(brightness))
-		brightness = CLAMP(brightness, 0, 4)
+		brightness = clamp(brightness, 0, 10)
 		light_rgb = new_color
 		light_brightness = brightness
 
@@ -151,7 +165,7 @@
 		var/selected_sound = sounds[ID]
 		if(!selected_sound)
 			return
-		vol = CLAMP(vol ,0 , 100)
+		vol = clamp(vol ,0 , 100)
 		playsound(get_turf(src), selected_sound, vol, freq, -1)
 		var/atom/A = get_object()
 		A.investigate_log("played a sound ([selected_sound]) as [type].", INVESTIGATE_CIRCUIT)
@@ -345,14 +359,13 @@
 	set_pin_data(IC_INPUT, 1, FALSE)
 
 /obj/item/integrated_circuit/output/led/external_examine(mob/user)
-	var/text_output = "There is "
+	. = "There is "
 
 	if(name == displayed_name)
-		text_output += "\an [name]"
+		. += "\an [name]"
 	else
-		text_output += "\an ["\improper[name]"] labeled '[displayed_name]'"
-	text_output += " which is currently [get_pin_data(IC_INPUT, 1) ? "lit <font color=[led_color]>*</font>" : "unlit"]."
-	to_chat(user, text_output)
+		. += "\an ["\improper[name]"] labeled '[displayed_name]'"
+	. += " which is currently [get_pin_data(IC_INPUT, 1) ? "lit <font color=[led_color]>*</font>" : "unlit"]."
 
 /obj/item/integrated_circuit/output/diagnostic_hud
 	name = "AR interface"
@@ -386,3 +399,8 @@
 			assembly.prefered_hud_icon = "hudstat"
 		//update the diagnostic hud
 		assembly.diag_hud_set_circuitstat()
+
+
+//Hippie Ported Code--------------------------------------------------------------------------------------------------------
+
+/obj/item/radio/headset/integrated

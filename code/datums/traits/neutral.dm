@@ -10,12 +10,22 @@
 	lose_text = "<span class='notice'>You can taste again!</span>"
 	medical_record_text = "Patient suffers from ageusia and is incapable of tasting food or reagents."
 
+/datum/quirk/snob
+	name = "Snob"
+	desc = "You care about the finer things, if a room doesn't look nice its just not really worth it, is it?"
+	value = 0
+	gain_text = "<span class='notice'>You feel like you understand what things should look like.</span>"
+	lose_text = "<span class='notice'>Well who cares about deco anyways?</span>"
+	medical_record_text = "Patient seems to be rather stuck up."
+	mob_trait = TRAIT_SNOB
+
 /datum/quirk/pineapple_liker
 	name = "Ananas Affinity"
 	desc = "You find yourself greatly enjoying fruits of the ananas genus. You can't seem to ever get enough of their sweet goodness!"
 	value = 0
 	gain_text = "<span class='notice'>You feel an intense craving for pineapple.</span>"
 	lose_text = "<span class='notice'>Your feelings towards pineapples seem to return to a lukewarm state.</span>"
+	medical_record_text = "Patient demonstrates a pathological love of pineapple."
 
 /datum/quirk/pineapple_liker/add()
 	var/mob/living/carbon/human/H = quirk_holder
@@ -34,6 +44,7 @@
 	value = 0
 	gain_text = "<span class='notice'>You find yourself pondering what kind of idiot actually enjoys pineapples...</span>"
 	lose_text = "<span class='notice'>Your feelings towards pineapples seem to return to a lukewarm state.</span>"
+	medical_record_text = "Patient is correct to think that pineapple is disgusting."
 
 /datum/quirk/pineapple_hater/add()
 	var/mob/living/carbon/human/H = quirk_holder
@@ -52,6 +63,7 @@
 	value = 0
 	gain_text = "<span class='notice'>You start craving something that tastes strange.</span>"
 	lose_text = "<span class='notice'>You feel like eating normal food again.</span>"
+	medical_record_text = "Patient demonstrates irregular nutrition preferences."
 
 /datum/quirk/deviant_tastes/add()
 	var/mob/living/carbon/human/H = quirk_holder
@@ -84,3 +96,45 @@
 /datum/quirk/monochromatic/remove()
 	if(quirk_holder)
 		quirk_holder.remove_client_colour(/datum/client_colour/monochrome)
+
+/datum/quirk/maso
+	name = "Masochism"
+	desc = "You are aroused by pain."
+	value = 0
+	mob_trait = TRAIT_MASO
+	gain_text = "<span class='notice'>You desire to be hurt.</span>"
+	lose_text = "<span class='notice'>Pain has become less exciting for you.</span>"
+
+/datum/quirk/alcohol_intolerance
+	name = "Alcohol Intolerance"
+	desc = "You take toxin damage from alcohol rather than getting drunk."
+	value = 0
+	mob_trait = TRAIT_NO_ALCOHOL
+	medical_record_text = "Patient's body does not react properly to ethyl alcohol."
+
+/datum/quirk/alcohol_intolerance/add()
+	var/mob/living/carbon/human/H = quirk_holder
+	var/datum/species/species = H.dna.species
+	species.disliked_food |= ALCOHOL
+
+/datum/quirk/alcohol_intolerance/remove()
+	var/mob/living/carbon/human/H = quirk_holder
+	if(H)
+		var/datum/species/species = H.dna.species
+		species.disliked_food &= ~ALCOHOL
+
+/datum/quirk/longtimer
+	name = "Longtimer"
+	desc = "You've been around for a long time and seen more than your fair share of action, suffering some pretty nasty scars along the way. For whatever reason, you've declined to get them removed or augmented."
+	value = 0
+	gain_text = "<span class='notice'>Your body has seen better days.</span>"
+	lose_text = "<span class='notice'>Your sins may wash away, but those scars are here to stay...</span>"
+	medical_record_text = "Patient has withstood significant physical trauma and declined plastic surgery procedures to heal scarring."
+	/// the minimum amount of scars we can generate
+	var/min_scars = 3
+	/// the maximum amount of scars we can generate
+	var/max_scars = 7
+
+/datum/quirk/longtimer/on_spawn()
+	var/mob/living/carbon/C = quirk_holder
+	C.generate_fake_scars(rand(min_scars, max_scars))

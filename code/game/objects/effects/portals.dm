@@ -20,6 +20,7 @@
 	var/mech_sized = FALSE
 	var/obj/effect/portal/linked
 	var/hardlinked = TRUE			//Requires a linked portal at all times. Destroy if there's no linked portal, if there is destroy it when this one is deleted.
+	var/teleport_channel = TELEPORT_CHANNEL_BLUESPACE
 	var/creator
 	var/turf/hard_target			//For when a portal needs a hard target and isn't to be linked.
 	var/atmos_link = FALSE			//Link source/destination atmos.
@@ -28,12 +29,14 @@
 	var/allow_anchored = FALSE
 	var/innate_accuracy_penalty = 0
 	var/last_effect = 0
+	var/force_teleport = FALSE
 
 /obj/effect/portal/anom
 	name = "wormhole"
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "anom"
 	mech_sized = TRUE
+	teleport_channel = TELEPORT_CHANNEL_WORMHOLE
 
 /obj/effect/portal/Move(newloc)
 	for(var/T in newloc)
@@ -57,10 +60,7 @@
 /obj/effect/portal/attack_tk(mob/user)
 	return
 
-/obj/effect/portal/attack_hand(mob/user)
-	. = ..()
-	if(.)
-		return
+/obj/effect/portal/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	if(get_turf(user) == get_turf(src))
 		teleport(user)
 	if(Adjacent(user))
@@ -160,7 +160,7 @@
 		no_effect = TRUE
 	else
 		last_effect = world.time
-	if(do_teleport(M, real_target, innate_accuracy_penalty, no_effects = no_effect))
+	if(do_teleport(M, real_target, innate_accuracy_penalty, no_effects = no_effect, channel = teleport_channel, forced = force_teleport))
 		if(istype(M, /obj/item/projectile))
 			var/obj/item/projectile/P = M
 			P.ignore_source_check = TRUE
@@ -181,3 +181,47 @@
 	else
 		real_target = get_turf(linked)
 	return real_target
+
+/obj/effect/portal/permanent
+	name = "permanent portal"
+	desc = "An unwavering portal that will never fade."
+	hardlinked = FALSE // dont qdel my portal nerd
+	force_teleport = TRUE // force teleports because they're a mapmaker tool
+	var/id // var edit or set id in map editor
+
+/obj/effect/portal/permanent/proc/set_linked()
+	if(!id)
+		return
+	for(var/obj/effect/portal/permanent/P in GLOB.portals - src)
+		if(P.id == id)
+			P.linked = src
+			linked = P
+			break
+
+/obj/effect/portal/permanent/teleport(atom/movable/M, force = FALSE)
+	set_linked() // update portal links
+	. = ..()
+
+/obj/effect/portal/permanent/one_way // doesn't have a return portal, can have multiple exits, /obj/effect/landmark/portal_exit to mark them
+	name = "one-way portal"
+	desc = "You get the feeling that this might not be the safest thing you've ever done."
+
+/obj/effect/portal/permanent/one_way/set_linked()
+	if(!id)
+		return
+	var/list/possible_turfs = list()
+	for(var/obj/effect/landmark/portal_exit/PE in GLOB.landmarks_list)
+		if(PE.id == id)
+			var/turf/T = get_turf(PE)
+			if(T)
+				possible_turfs |= T
+	if(possible_turfs.len)
+		hard_target = pick(possible_turfs)
+
+/obj/effect/portal/permanent/one_way/one_use
+	name = "one-use portal"
+	desc = "This is probably the worst decision you'll ever make in your life."
+
+/obj/effect/portal/permanent/one_way/one_use/teleport(atom/movable/M, force = FALSE)
+	. = ..()
+	qdel(src)

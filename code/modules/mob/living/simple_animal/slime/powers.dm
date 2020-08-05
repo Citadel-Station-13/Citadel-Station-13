@@ -11,7 +11,7 @@
 	background_icon_state = "bg_alien"
 	var/needs_growth = NO_GROWTH_NEEDED
 
-/datum/action/innate/slime/IsAvailable()
+/datum/action/innate/slime/IsAvailable(silent = FALSE)
 	if(..())
 		var/mob/living/simple_animal/slime/S = owner
 		if(needs_growth == GROWTH_NEEDED)
@@ -28,7 +28,7 @@
 		return 0
 
 	var/list/choices = list()
-	for(var/mob/living/C in view(1,src))
+	for(var/mob/living/C in fov_view(1,src))
 		if(C!=src && Adjacent(C))
 			choices += C
 
@@ -48,34 +48,58 @@
 	var/mob/living/simple_animal/slime/S = owner
 	S.Feed()
 
-/mob/living/simple_animal/slime/proc/CanFeedon(mob/living/M)
+/mob/living/simple_animal/slime/proc/CanFeedon(mob/living/M, silent = FALSE)
 	if(!Adjacent(M))
-		return 0
+		return FALSE
 
 	if(buckled)
 		Feedstop()
-		return 0
+		return FALSE
+
+	if(issilicon(M))
+		return FALSE
+
+	if(isanimal(M))
+		var/mob/living/simple_animal/S = M
+		if(S.damage_coeff[TOX] <= 0 && S.damage_coeff[CLONE] <= 0) //The creature wouldn't take any damage, it must be too weird even for us.
+			if(silent)
+				return FALSE
+			to_chat(src, "<span class='warning'>[pick("This subject is incompatible", \
+			"This subject does not have life energy", "This subject is empty", \
+			"I am not satisified", "I can not feed from this subject", \
+			"I do not feel nourished", "This subject is not food")]!</span>")
+			return FALSE
 
 	if(isslime(M))
+		if(silent)
+			return FALSE
 		to_chat(src, "<span class='warning'><i>I can't latch onto another slime...</i></span>")
-		return 0
+		return FALSE
 
 	if(docile)
+		if(silent)
+			return FALSE
 		to_chat(src, "<span class='notice'><i>I'm not hungry anymore...</i></span>")
-		return 0
+		return FALSE
 
 	if(stat)
+		if(silent)
+			return FALSE
 		to_chat(src, "<span class='warning'><i>I must be conscious to do this...</i></span>")
-		return 0
+		return FALSE
 
 	if(M.stat == DEAD)
+		if(silent)
+			return FALSE
 		to_chat(src, "<span class='warning'><i>This subject does not have a strong enough life energy...</i></span>")
-		return 0
+		return FALSE
 
 	if(locate(/mob/living/simple_animal/slime) in M.buckled_mobs)
+		if(silent)
+			return FALSE
 		to_chat(src, "<span class='warning'><i>Another slime is already feeding on this subject...</i></span>")
-		return 0
-	return 1
+		return FALSE
+	return TRUE
 
 /mob/living/simple_animal/slime/proc/Feedon(mob/living/M)
 	M.unbuckle_all_mobs(force=1) //Slimes rip other mobs (eg: shoulder parrots) off (Slimes Vs Slimes is already handled in CanFeedon())
@@ -160,13 +184,13 @@
 				var/mob/living/simple_animal/slime/M
 				M = new(loc, child_colour)
 				if(ckey)
-					M.nutrition = new_nutrition //Player slimes are more robust at spliting. Once an oversight of poor copypasta, now a feature!
+					M.set_nutrition(new_nutrition) //Player slimes are more robust at spliting. Once an oversight of poor copypasta, now a feature!
 				M.powerlevel = new_powerlevel
 				if(i != 1)
 					step_away(M,src)
 				M.Friends = Friends.Copy()
 				babies += M
-				M.mutation_chance = CLAMP(mutation_chance+(rand(5,-5)),0,100)
+				M.mutation_chance = clamp(mutation_chance+(rand(5,-5)),0,100)
 				SSblackbox.record_feedback("tally", "slime_babies_born", 1, M.colour)
 
 			var/mob/living/simple_animal/slime/new_slime = pick(babies)
@@ -174,7 +198,7 @@
 			if(src.mind)
 				src.mind.transfer_to(new_slime)
 			else
-				new_slime.key = src.key
+				transfer_ckey(new_slime)
 			qdel(src)
 		else
 			to_chat(src, "<i>I am not ready to reproduce yet...</i>")

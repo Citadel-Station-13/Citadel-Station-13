@@ -11,7 +11,7 @@
 	var/selection_timer //Timer ID; this is canceled if the vote is canceled
 	var/kingmaking
 
-/obj/structure/destructible/clockwork/eminence_spire/attack_hand(mob/living/user)
+/obj/structure/destructible/clockwork/eminence_spire/on_attack_hand(mob/living/user, act_intent = user.a_intent, unarmed_attack_flags)
 	. = ..()
 	if(.)
 		return
@@ -26,9 +26,6 @@
 		return
 	if(C.clock_team.eminence)
 		to_chat(user, "<span class='warning'>There's already an Eminence!</span>")
-		return
-	if(!GLOB.servants_active)
-		to_chat(user, "<span class='warning'>The Ark isn't active!</span>")
 		return
 	if(eminence_nominee) //This could be one large proc, but is split into three for ease of reading
 		if(eminence_nominee == user)
@@ -64,7 +61,7 @@
 	message_admins("<span class='danger'>Admin [key_name_admin(user)] directly became the Eminence of the cult!</span>")
 	log_admin("Admin [key_name(user)] made themselves the Eminence.")
 	var/mob/camera/eminence/eminence = new(get_turf(src))
-	eminence.key = user.key
+	user.transfer_ckey(eminence, FALSE)
 	hierophant_message("<span class='bold large_brass'>Ratvar has directly assigned the Eminence!</span>")
 	for(var/mob/M in servants_and_ghosts())
 		M.playsound_local(M, 'sound/machines/clockcult/eminence_selected.ogg', 50, FALSE)
@@ -138,7 +135,7 @@
 		playsound(src, 'sound/machines/clockcult/ark_damage.ogg', 50, FALSE)
 		var/mob/camera/eminence/eminence = new(get_turf(src))
 		eminence_nominee = pick(candidates)
-		eminence.key = eminence_nominee.key
+		eminence_nominee.transfer_ckey(eminence)
 		hierophant_message("<span class='bold large_brass'>A ghost has ascended into the Eminence!</span>")
 	for(var/mob/M in servants_and_ghosts())
 		M.playsound_local(M, 'sound/machines/clockcult/eminence_selected.ogg', 50, FALSE)

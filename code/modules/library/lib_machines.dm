@@ -267,7 +267,7 @@ GLOBAL_LIST(cachedbooks) // List of our cached book datums
 				dat += "<A href='?src=[REF(src)];orderbyid=1'>(Order book by SS<sup>13</sup>BN)</A><BR><BR>"
 				dat += "<table>"
 				dat += "<tr><td>AUTHOR</td><td>TITLE</td><td>CATEGORY</td><td></td></tr>"
-				dat += libcomp_menu[CLAMP(page,1,libcomp_menu.len)]
+				dat += libcomp_menu[clamp(page,1,libcomp_menu.len)]
 				dat += "<tr><td><A href='?src=[REF(src)];page=[(max(1,page-1))]'>&lt;&lt;&lt;&lt;</A></td> <td></td> <td></td> <td><span style='text-align:right'><A href='?src=[REF(src)];page=[(min(libcomp_menu.len,page+1))]'>&gt;&gt;&gt;&gt;</A></span></td></tr>"
 				dat += "</table>"
 			dat += "<BR><A href='?src=[REF(src)];switchscreen=0'>(Return to main menu)</A><BR>"
@@ -343,8 +343,11 @@ GLOBAL_LIST(cachedbooks) // List of our cached book datums
 		return ..()
 
 /obj/machinery/computer/libraryconsole/bookmanagement/emag_act(mob/user)
-	if(density && !(obj_flags & EMAGGED))
-		obj_flags |= EMAGGED
+	. = ..()
+	if(!density || obj_flags & EMAGGED)
+		return
+	obj_flags |= EMAGGED
+	return TRUE
 
 /obj/machinery/computer/libraryconsole/bookmanagement/Topic(href, href_list)
 	if(..())
@@ -384,9 +387,9 @@ GLOBAL_LIST(cachedbooks) // List of our cached book datums
 		if(checkoutperiod < 1)
 			checkoutperiod = 1
 	if(href_list["editbook"])
-		buffer_book = copytext(sanitize(input("Enter the book's title:") as text|null),1,MAX_MESSAGE_LEN)
+		buffer_book = stripped_input(usr, "Enter the book's title:")
 	if(href_list["editmob"])
-		buffer_mob = copytext(sanitize(input("Enter the recipient's name:") as text|null),1,MAX_NAME_LEN)
+		buffer_mob = stripped_input(usr, "Enter the recipient's name:", max_length = MAX_NAME_LEN)
 	if(href_list["checkout"])
 		var/datum/borrowbook/b = new /datum/borrowbook
 		b.bookname = sanitize(buffer_book)
@@ -403,7 +406,7 @@ GLOBAL_LIST(cachedbooks) // List of our cached book datums
 		if(b && istype(b))
 			inventory.Remove(b)
 	if(href_list["setauthor"])
-		var/newauthor = copytext(sanitize(input("Enter the author's name: ") as text|null),1,MAX_MESSAGE_LEN)
+		var/newauthor = stripped_input(usr, "Enter the author's name: ")
 		if(newauthor)
 			scanner.cache.author = newauthor
 	if(href_list["setcategory"])
@@ -438,7 +441,7 @@ GLOBAL_LIST(cachedbooks) // List of our cached book datums
 		if(!GLOB.news_network)
 			alert("No news network found on station. Aborting.")
 		var/channelexists = 0
-		for(var/datum/newscaster/feed_channel/FC in GLOB.news_network.network_channels)
+		for(var/datum/news/feed_channel/FC in GLOB.news_network.network_channels)
 			if(FC.channel_name == "Nanotrasen Book Club")
 				channelexists = 1
 				break
@@ -485,11 +488,11 @@ GLOBAL_LIST(cachedbooks) // List of our cached book datums
 	if(href_list["printbible"])
 		if(cooldown < world.time)
 			var/obj/item/storage/book/bible/B = new /obj/item/storage/book/bible(src.loc)
-			if(SSreligion.bible_icon_state && SSreligion.bible_item_state)
-				B.icon_state = SSreligion.bible_icon_state
-				B.item_state = SSreligion.bible_item_state
-				B.name = SSreligion.bible_name
-				B.deity_name = SSreligion.deity
+			if(GLOB.bible_icon_state && GLOB.bible_item_state)
+				B.icon_state = GLOB.bible_icon_state
+				B.item_state = GLOB.bible_item_state
+				B.name = GLOB.bible_name
+				B.deity_name = GLOB.deity
 			cooldown = world.time + PRINTER_COOLDOWN
 		else
 			say("Printer currently unavailable, please wait a moment.")
@@ -520,10 +523,7 @@ GLOBAL_LIST(cachedbooks) // List of our cached book datums
 	else
 		return ..()
 
-/obj/machinery/libraryscanner/attack_hand(mob/user)
-	. = ..()
-	if(.)
-		return
+/obj/machinery/libraryscanner/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	usr.set_machine(src)
 	var/dat = "" // <META HTTP-EQUIV='Refresh' CONTENT='10'>
 	if(cache)

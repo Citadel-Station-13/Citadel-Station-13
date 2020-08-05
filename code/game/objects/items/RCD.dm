@@ -22,7 +22,7 @@ RLD
 	throw_speed = 3
 	throw_range = 5
 	w_class = WEIGHT_CLASS_NORMAL
-	materials = list(MAT_METAL=100000)
+	custom_materials = list(/datum/material/iron=100000)
 	req_access_txt = "11"
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 50)
 	resistance_flags = FIRE_PROOF
@@ -37,6 +37,7 @@ RLD
 	var/has_ammobar = FALSE	//controls whether or not does update_icon apply ammo indicator overlays
 	var/ammo_sections = 10	//amount of divisions in the ammo indicator overlay/number of ammo indicator states
 	var/custom_range = 7
+	var/upgrade = FALSE
 
 /obj/item/construction/Initialize()
 	. = ..()
@@ -45,8 +46,12 @@ RLD
 	spark_system.attach(src)
 
 /obj/item/construction/examine(mob/user)
-	..()
-	to_chat(user, "\A [src]. It currently holds [matter]/[max_matter] matter-units." )
+	. = ..()
+	. += "It currently holds [matter]/[max_matter] matter-units."
+	if(upgrade & RCD_UPGRADE_FRAMES)
+		. += "It contains the design for machine frames, computer frames and deconstruction."
+	if(upgrade & RCD_UPGRADE_SIMPLE_CIRCUITS)
+		. += "It contains the design for firelock, air alarm, fire alarm, apc circuits and crap power cells."
 
 /obj/item/construction/Destroy()
 	QDEL_NULL(spark_system)
@@ -82,6 +87,13 @@ RLD
 		loaded = loadwithsheets(W, sheetmultiplier * 0.25, user) // 1 matter for 1 floortile, as 4 tiles are produced from 1 metal
 	if(loaded)
 		to_chat(user, "<span class='notice'>[src] now holds [matter]/[max_matter] matter-units.</span>")
+	else if(istype(W, /obj/item/rcd_upgrade))
+		to_chat(user, "<span class='notice'>You upgrade the RCD with the [W]!</span>")
+		var/obj/item/rcd_upgrade/rcd_up = W
+		if(!(upgrade & rcd_up.upgrade))
+			upgrade |= rcd_up.upgrade
+			playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
+			qdel(W)
 	else
 		return ..()
 	update_icon()	//ensures that ammo counters (if present) get updated
@@ -110,10 +122,10 @@ RLD
 	if(matter < amount)
 		if(user)
 			to_chat(user, no_ammo_message)
-		return 0
+		return FALSE
 	matter -= amount
 	update_icon()
-	return 1
+	return TRUE
 
 /obj/item/construction/proc/checkResource(amount, mob/user)
 	. = matter >= amount
@@ -127,15 +139,14 @@ RLD
 	if(!(A in range(custom_range, get_turf(user))))
 		to_chat(user, "<span class='warning'>The \'Out of Range\' light on [src] blinks red.</span>")
 		return FALSE
-	else
-		return TRUE
-
-/obj/item/construction/proc/prox_check(proximity)
-	if(proximity)
-		return TRUE
-	else
+	var/view_range = user.client ? user.client.view : world.view
+	//if user can't be seen from A (only checks surroundings' opaqueness) and can't see A.
+	//jarring, but it should stop people from targetting atoms they can't see...
+	//excluding darkness, to allow RLD to be used to light pitch black dark areas.
+	if(!((user in view(view_range, A)) || (user in fov_viewers(view_range, A))))
+		to_chat(user, "<span class='warning'>You focus, pointing \the [src] at whatever outside your field of vision in that direction... to no avail.</span>")
 		return FALSE
-
+	return TRUE
 
 /obj/item/construction/rcd
 	name = "rapid-construction-device (RCD)"
@@ -143,11 +154,14 @@ RLD
 	icon_state = "rcd"
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
+	custom_price = PRICE_ABOVE_EXPENSIVE
+	custom_premium_price = PRICE_ALMOST_ONE_GRAND
 	max_matter = 160
 	item_flags = NO_MAT_REDEMPTION | NOBLUDGEON
 	has_ammobar = TRUE
 	var/mode = 1
 	var/ranged = FALSE
+	var/computer_dir = 1
 	var/airlock_type = /obj/machinery/door/airlock
 	var/airlock_glass = FALSE // So the floor's rcd_act knows how much ammo to use
 	var/window_type = /obj/structure/window/fulltile
@@ -161,13 +175,18 @@ RLD
 	user.visible_message("<span class='suicide'>[user] sets the RCD to 'Wall' and points it down [user.p_their()] throat! It looks like [user.p_theyre()] trying to commit suicide..</span>")
 	return (BRUTELOSS)
 
-/obj/item/construction/rcd/verb/toggle_window_type()
-	set name = "Toggle Window Type"
+/obj/item/construction/rcd/verb/toggle_window_type_verb()
+	set name = "RCD : Toggle Window Type"
 	set category = "Object"
-	set src in usr // What does this do?
+	set src in view(1)
 
+	if(!usr.canUseTopic(src, BE_CLOSE))
+		return
+
+	toggle_window_type(usr)
+
+/obj/item/construction/rcd/proc/toggle_window_type(mob/user)
 	var/window_type_name
-
 	if (window_type == /obj/structure/window/fulltile)
 		window_type = /obj/structure/window/reinforced/fulltile
 		window_type_name = "reinforced glass"
@@ -175,17 +194,14 @@ RLD
 		window_type = /obj/structure/window/fulltile
 		window_type_name = "glass"
 
-	to_chat(usr, "<span class='notice'>You change \the [src]'s window mode to [window_type_name].</span>")
+	to_chat(user, "<span class='notice'>You change \the [src]'s window mode to [window_type_name].</span>")
 
-/obj/item/construction/rcd/verb/change_airlock_access()
-	set name = "Change Airlock Access"
-	set category = "Object"
-	set src in usr
+/obj/item/construction/rcd/verb/change_airlock_access(mob/user)
 
-	if (!ishuman(usr) && !usr.has_unlimited_silicon_privilege)
-		return ..(usr)
+	if (!ishuman(user) && !user.silicon_privileges)
+		return
 
-	var/t1 = text("")
+	var/t1 = ""
 
 
 	if(use_one_access)
@@ -216,24 +232,22 @@ RLD
 
 	t1 += "<p><a href='?src=[REF(src)];close=1'>Close</a></p>\n"
 
-	var/datum/browser/popup = new(usr, "airlock_electronics", "Access Control", 900, 500)
+	var/datum/browser/popup = new(user, "rcd_access", "Access Control", 900, 500, src)
 	popup.set_content(t1)
-	popup.set_title_image(usr.browse_rsc_icon(src.icon, src.icon_state))
+	popup.set_title_image(user.browse_rsc_icon(icon, icon_state))
 	popup.open()
-	onclose(usr, "airlock")
 
 /obj/item/construction/rcd/Topic(href, href_list)
 	..()
 	if (usr.stat || usr.restrained())
 		return
 	if (href_list["close"])
-		usr << browse(null, "window=airlock")
+		usr << browse(null, "window=rcd_access")
 		return
 
 	if (href_list["access"])
 		toggle_access(href_list["access"])
-
-	change_airlock_access()
+		change_airlock_access(usr)
 
 /obj/item/construction/rcd/proc/toggle_access(acc)
 	if (acc == "all")
@@ -253,16 +267,99 @@ RLD
 			if (!conf_access.len)
 				conf_access = null
 
-/obj/item/construction/rcd/verb/change_airlock_setting()
-	set name = "Change Airlock Setting"
-	set category = "Object"
-	set src in usr
+/obj/item/construction/rcd/proc/get_airlock_image(airlock_type)
+	var/obj/machinery/door/airlock/proto = airlock_type
+	var/ic = initial(proto.icon)
+	var/mutable_appearance/MA = mutable_appearance(ic, "closed")
+	if(!initial(proto.glass))
+		MA.overlays += "fill_closed"
+	//Not scaling these down to button size because they look horrible then, instead just bumping up radius.
+	return MA
 
-	var/airlockcat = input(usr, "Select whether the airlock is solid or glass.") in list("Solid", "Glass")
+/obj/item/construction/rcd/proc/check_menu(mob/living/user)
+	if(!istype(user))
+		return FALSE
+	if(user.incapacitated() || !user.Adjacent(src))
+		return FALSE
+	return TRUE
+
+/obj/item/construction/rcd/proc/change_computer_dir(mob/user)
+	if(!user)
+		return
+	var/list/computer_dirs = list(
+		"NORTH" = image(icon = 'icons/mob/radial.dmi', icon_state = "cnorth"),
+		"EAST" = image(icon = 'icons/mob/radial.dmi', icon_state = "ceast"),
+		"SOUTH" = image(icon = 'icons/mob/radial.dmi', icon_state = "csouth"),
+		"WEST" = image(icon = 'icons/mob/radial.dmi', icon_state = "cwest")
+		)
+	var/computerdirs = show_radial_menu(user, src, computer_dirs, custom_check = CALLBACK(src, .proc/check_menu, user), require_near = TRUE, tooltips = TRUE)
+	if(!check_menu(user))
+		return
+	switch(computerdirs)
+		if("NORTH")
+			computer_dir = 1
+		if("EAST")
+			computer_dir = 4
+		if("SOUTH")
+			computer_dir = 2
+		if("WEST")
+			computer_dir = 8
+
+/obj/item/construction/rcd/proc/change_airlock_setting(mob/user)
+	if(!user)
+		return
+
+	var/list/solid_or_glass_choices = list(
+		"Solid" = get_airlock_image(/obj/machinery/door/airlock),
+		"Glass" = get_airlock_image(/obj/machinery/door/airlock/glass)
+	)
+
+	var/list/solid_choices = list(
+		"Standard" = get_airlock_image(/obj/machinery/door/airlock),
+		"Public" = get_airlock_image(/obj/machinery/door/airlock/public),
+		"Engineering" = get_airlock_image(/obj/machinery/door/airlock/engineering),
+		"Atmospherics" = get_airlock_image(/obj/machinery/door/airlock/atmos),
+		"Security" = get_airlock_image(/obj/machinery/door/airlock/security),
+		"Command" = get_airlock_image(/obj/machinery/door/airlock/command),
+		"Medical" = get_airlock_image(/obj/machinery/door/airlock/medical),
+		"Research" = get_airlock_image(/obj/machinery/door/airlock/research),
+		"Freezer" = get_airlock_image(/obj/machinery/door/airlock/freezer),
+		"Science" = get_airlock_image(/obj/machinery/door/airlock/science),
+		"Virology" = get_airlock_image(/obj/machinery/door/airlock/virology),
+		"Mining" = get_airlock_image(/obj/machinery/door/airlock/mining),
+		"Maintenance" = get_airlock_image(/obj/machinery/door/airlock/maintenance),
+		"External" = get_airlock_image(/obj/machinery/door/airlock/external),
+		"External Maintenance" = get_airlock_image(/obj/machinery/door/airlock/maintenance/external),
+		"Airtight Hatch" = get_airlock_image(/obj/machinery/door/airlock/hatch),
+		"Maintenance Hatch" = get_airlock_image(/obj/machinery/door/airlock/maintenance_hatch)
+	)
+
+	var/list/glass_choices = list(
+		"Standard" = get_airlock_image(/obj/machinery/door/airlock/glass),
+		"Public" = get_airlock_image(/obj/machinery/door/airlock/public/glass),
+		"Engineering" = get_airlock_image(/obj/machinery/door/airlock/engineering/glass),
+		"Atmospherics" = get_airlock_image(/obj/machinery/door/airlock/atmos/glass),
+		"Security" = get_airlock_image(/obj/machinery/door/airlock/security/glass),
+		"Command" = get_airlock_image(/obj/machinery/door/airlock/command/glass),
+		"Medical" = get_airlock_image(/obj/machinery/door/airlock/medical/glass),
+		"Research" = get_airlock_image(/obj/machinery/door/airlock/research/glass),
+		"Science" = get_airlock_image(/obj/machinery/door/airlock/science/glass),
+		"Virology" = get_airlock_image(/obj/machinery/door/airlock/virology/glass),
+		"Mining" = get_airlock_image(/obj/machinery/door/airlock/mining/glass),
+		"Maintenance" = get_airlock_image(/obj/machinery/door/airlock/maintenance/glass),
+		"External" = get_airlock_image(/obj/machinery/door/airlock/external/glass),
+		"External Maintenance" = get_airlock_image(/obj/machinery/door/airlock/maintenance/external/glass)
+	)
+
+	var/airlockcat = show_radial_menu(user, src, solid_or_glass_choices, custom_check = CALLBACK(src, .proc/check_menu, user), require_near = TRUE)
+	if(!check_menu(user))
+		return
 	switch(airlockcat)
 		if("Solid")
 			if(advanced_airlock_setting == 1)
-				var/airlockpaint = input(usr, "Select the type of the airlock.") in list("Standard", "Public", "Engineering", "Atmospherics", "Security", "Command", "Medical", "Research", "Freezer", "Science", "Virology", "Mining", "Maintenance", "External", "External Maintenance", "Airtight Hatch", "Maintenance Hatch")
+				var/airlockpaint = show_radial_menu(user, src, solid_choices, radius = 42, custom_check = CALLBACK(src, .proc/check_menu, user), require_near = TRUE)
+				if(!check_menu(user))
+					return
 				switch(airlockpaint)
 					if("Standard")
 						airlock_type = /obj/machinery/door/airlock
@@ -305,7 +402,9 @@ RLD
 
 		if("Glass")
 			if(advanced_airlock_setting == 1)
-				var/airlockpaint = input(usr, "Select the type of the airlock.") in list("Standard", "Public", "Engineering", "Atmospherics", "Security", "Command", "Medical", "Research", "Science", "Virology", "Mining", "Maintenance", "External", "External Maintenance")
+				var/airlockpaint = show_radial_menu(user, src , glass_choices, radius = 42, custom_check = CALLBACK(src, .proc/check_menu, user), require_near = TRUE)
+				if(!check_menu(user))
+					return
 				switch(airlockpaint)
 					if("Standard")
 						airlock_type = /obj/machinery/door/airlock/glass
@@ -348,16 +447,25 @@ RLD
 	var/list/rcd_results = A.rcd_vals(user, src)
 	if(!rcd_results)
 		return FALSE
-	if(do_after(user, rcd_results["delay"] * delay_mod, target = A))
+	var/delay = rcd_results["delay"] * delay_mod
+	var/obj/effect/constructing_effect/rcd_effect = new(get_turf(A), delay, src.mode)
+	var/turf/the_turf = get_turf(A)
+	var/turf_coords = "[COORD(the_turf)]"
+	investigate_log("[user] is attempting to use [src] on [A] (loc [turf_coords] at [the_turf]) with cost [rcd_results["cost"]], delay [rcd_results["delay"]], mode [rcd_results["mode"]].", INVESTIGATE_RCD)
+	if(do_after(user, delay, target = A))
 		if(checkResource(rcd_results["cost"], user))
+			var/atom/cached = A
 			if(A.rcd_act(user, src, rcd_results["mode"]))
+				rcd_effect.end_animation()
 				useResource(rcd_results["cost"], user)
 				activate()
-				playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
+				investigate_log("[user] used [src] on [cached] (loc [turf_coords] at [the_turf]) with cost [rcd_results["cost"]], delay [rcd_results["delay"]], mode [rcd_results["mode"]].", INVESTIGATE_RCD)
+				playsound(src, 'sound/machines/click.ogg', 50, 1)
 				return TRUE
+	qdel(rcd_effect)
 
-/obj/item/construction/rcd/New()
-	..()
+/obj/item/construction/rcd/Initialize()
+	. = ..()
 	GLOB.rcd_list += src
 
 /obj/item/construction/rcd/Destroy()
@@ -366,19 +474,57 @@ RLD
 
 /obj/item/construction/rcd/attack_self(mob/user)
 	..()
-	switch(mode)
-		if(1)
-			mode = 2
-			to_chat(user, "<span class='notice'>You change RCD's mode to 'Airlock'.</span>")
-		if(2)
-			mode = 3
-			to_chat(user, "<span class='notice'>You change RCD's mode to 'Deconstruct'.</span>")
-		if(3)
-			mode = 4
-			to_chat(user, "<span class='notice'>You change RCD's mode to 'Grilles & Windows'.</span>")
-		if(4)
-			mode = 1
-			to_chat(user, "<span class='notice'>You change RCD's mode to 'Floor & Walls'.</span>")
+	var/list/choices = list(
+		"Airlock" = image(icon = 'icons/mob/radial.dmi', icon_state = "airlock"),
+		"Grilles & Windows" = image(icon = 'icons/mob/radial.dmi', icon_state = "grillewindow"),
+		"Floors & Walls" = image(icon = 'icons/mob/radial.dmi', icon_state = "wallfloor")
+	)
+	if(upgrade & RCD_UPGRADE_FRAMES)
+		choices += list(
+		"Deconstruct" = image(icon= 'icons/mob/radial.dmi', icon_state = "delete"),
+		"Machine Frames" = image(icon = 'icons/mob/radial.dmi', icon_state = "machine"),
+		"Computer Frames" = image(icon = 'icons/mob/radial.dmi', icon_state = "computer_dir"),
+		)
+	if(mode == RCD_AIRLOCK)
+		choices += list(
+		"Change Access" = image(icon = 'icons/mob/radial.dmi', icon_state = "access"),
+		"Change Airlock Type" = image(icon = 'icons/mob/radial.dmi', icon_state = "airlocktype")
+		)
+	else if(mode == RCD_WINDOWGRILLE)
+		choices += list(
+			"Change Window Type" = image(icon = 'icons/mob/radial.dmi', icon_state = "windowtype")
+		)
+	var/choice = show_radial_menu(user,src,choices, custom_check = CALLBACK(src,.proc/check_menu,user))
+	if(!check_menu(user))
+		return
+	switch(choice)
+		if("Floors & Walls")
+			mode = RCD_FLOORWALL
+		if("Airlock")
+			mode = RCD_AIRLOCK
+		if("Deconstruct")
+			mode = RCD_DECONSTRUCT
+		if("Grilles & Windows")
+			mode = RCD_WINDOWGRILLE
+		if("Machine Frames")
+			mode = RCD_MACHINE
+		if("Computer Frames")
+			mode = RCD_COMPUTER
+			change_computer_dir(user)
+			return
+		if("Change Access")
+			change_airlock_access(user)
+			return
+		if("Change Airlock Type")
+			change_airlock_setting(user)
+			return
+		if("Change Window Type")
+			toggle_window_type(user)
+			return
+		else
+			return
+	playsound(src, 'sound/effects/pop.ogg', 50, 0)
+	to_chat(user, "<span class='notice'>You change RCD's mode to '[choice]'.</span>")
 
 /obj/item/construction/rcd/proc/target_check(atom/A, mob/user) // only returns true for stuff the device can actually work with
 	if((isturf(A) && A.density && mode==RCD_DECONSTRUCT) || (isturf(A) && !A.density) || (istype(A, /obj/machinery/door/airlock) && mode==RCD_DECONSTRUCT) || istype(A, /obj/structure/grille) || (istype(A, /obj/structure/window) && mode==RCD_DECONSTRUCT) || istype(A, /obj/structure/girder))
@@ -388,7 +534,12 @@ RLD
 
 /obj/item/construction/rcd/afterattack(atom/A, mob/user, proximity)
 	. = ..()
-	if(!prox_check(proximity))
+	if(!proximity)
+		if(!ranged || !range_check(A,user)) //early return not-in-range sanity.
+			return
+		if(target_check(A,user))
+			user.Beam(A,icon_state="rped_upgrade",time=30)
+		rcd_create(A,user)
 		return
 	rcd_create(A, user)
 
@@ -403,8 +554,8 @@ RLD
 	explosion(src, 0, 0, 3, 1, flame_range = 1)
 	qdel(src)
 
-/obj/item/construction/rcd/update_icon()
-	..()
+/obj/item/construction/rcd/update_overlays()
+	. = ..()
 	if(has_ammobar)
 		var/ratio = CEILING((matter / max_matter) * ammo_sections, 1)
 		cut_overlays()	//To prevent infinite stacking of overlays
@@ -418,6 +569,8 @@ RLD
 	no_ammo_message = "<span class='warning'>Insufficient charge.</span>"
 	desc = "A device used to rapidly build walls and floors."
 	canRturf = TRUE
+	upgrade = TRUE
+	var/energyfactor = 72
 
 
 /obj/item/construction/rcd/borg/useResource(amount, mob/user)
@@ -428,7 +581,7 @@ RLD
 		if(user)
 			to_chat(user, no_ammo_message)
 		return 0
-	. = borgy.cell.use(amount * 72) //borgs get 1.3x the use of their RCDs
+	. = borgy.cell.use(amount * energyfactor) //borgs get 1.3x the use of their RCDs
 	if(!. && user)
 		to_chat(user, no_ammo_message)
 	return .
@@ -441,13 +594,22 @@ RLD
 		if(user)
 			to_chat(user, no_ammo_message)
 		return 0
-	. = borgy.cell.charge >= (amount * 72)
+	. = borgy.cell.charge >= (amount * energyfactor)
 	if(!. && user)
 		to_chat(user, no_ammo_message)
 	return .
 
+/obj/item/construction/rcd/borg/syndicate
+	icon_state = "ircd"
+	item_state = "ircd"
+	energyfactor = 66
+
 /obj/item/construction/rcd/loaded
+	custom_materials = list(/datum/material/iron = 48000, /datum/material/glass = 32000)
 	matter = 160
+
+/obj/item/construction/rcd/loaded/upgraded
+	upgrade = TRUE
 
 /obj/item/construction/rcd/combat
 	name = "Combat RCD"
@@ -475,13 +637,13 @@ RLD
 	item_state = "rcdammo"
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
-	materials = list(MAT_METAL=12000, MAT_GLASS=8000)
+	custom_materials = list(/datum/material/iron=12000, /datum/material/glass=8000)
 	var/ammoamt = 40
 
 /obj/item/rcd_ammo/large
 	name = "large compressed matter cartridge"
 	desc = "Highly compressed matter for the RCD. Has four times the matter packed into the same space as a normal cartridge."
-	materials = list(MAT_METAL=48000, MAT_GLASS=32000)
+	custom_materials = list(/datum/material/iron=48000, /datum/material/glass=32000)
 	ammoamt = 160
 
 
@@ -489,7 +651,8 @@ RLD
 	name = "admin RCD"
 	max_matter = INFINITY
 	matter = INFINITY
-
+	upgrade = TRUE
+	ranged = TRUE
 
 // Ranged RCD
 
@@ -505,37 +668,29 @@ RLD
 	item_state = "oldrcd"
 	has_ammobar = FALSE
 
-/obj/item/construction/rcd/arcd/afterattack(atom/A, mob/user)
-	. = ..()
-	if(!range_check(A,user))
-		return
-	if(target_check(A,user))
-		user.Beam(A,icon_state="rped_upgrade",time=30)
-	rcd_create(A,user)
-
-
 
 // RAPID LIGHTING DEVICE
-
 
 
 /obj/item/construction/rld
 	name = "rapid-light-device (RLD)"
 	desc = "A device used to rapidly provide lighting sources to an area. Reload with metal, plasteel, glass or compressed matter cartridges."
 	icon = 'icons/obj/tools.dmi'
-	icon_state = "rld-5"
+	icon_state = "rld"
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
-	matter = 500
-	max_matter = 500
-	sheetmultiplier = 16
+	matter = 200
+	max_matter = 200
+	sheetmultiplier = 5
 	var/mode = LIGHT_MODE
 	actions_types = list(/datum/action/item_action/pick_color)
+	ammo_sections = 5
+	has_ammobar = TRUE
 
-	var/wallcost = 10
-	var/floorcost = 15
-	var/launchcost = 5
-	var/deconcost = 10
+	var/wallcost = 20
+	var/floorcost = 25
+	var/launchcost = 10
+	var/deconcost = 20
 
 	var/walldelay = 10
 	var/floordelay = 10
@@ -544,16 +699,20 @@ RLD
 	var/color_choice = null
 
 
+/obj/item/construction/rld/Initialize()
+	. = ..()
+	update_icon()
+
 /obj/item/construction/rld/ui_action_click(mob/user, var/datum/action/A)
 	if(istype(A, /datum/action/item_action/pick_color))
 		color_choice = input(user,"","Choose Color",color_choice) as color
 	else
 		..()
 
-/obj/item/construction/rld/update_icon()
-	icon_state = "rld-[round(matter/35)]"
-	..()
-
+/obj/item/construction/rld/update_overlays()
+	. = ..()
+	var/ratio = CEILING((matter / max_matter) * ammo_sections, 1)
+	. += "rld_light[ratio]"
 
 /obj/item/construction/rld/attack_self(mob/user)
 	..()
@@ -587,7 +746,7 @@ RLD
 			if(istype(A, /obj/machinery/light/))
 				if(checkResource(deconcost, user))
 					to_chat(user, "<span class='notice'>You start deconstructing [A]...</span>")
-					user.Beam(A,icon_state="nzcrentrs_power",time=15)
+					user.Beam(A,icon_state="light_beam",time=15)
 					playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
 					if(do_after(user, decondelay, target = A))
 						if(!useResource(deconcost, user))
@@ -601,7 +760,7 @@ RLD
 				var/turf/closed/wall/W = A
 				if(checkResource(floorcost, user))
 					to_chat(user, "<span class='notice'>You start building a wall light...</span>")
-					user.Beam(A,icon_state="nzcrentrs_power",time=15)
+					user.Beam(A,icon_state="light_beam",time=15)
 					playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
 					playsound(src.loc, 'sound/effects/light_flicker.ogg', 50, 0)
 					if(do_after(user, floordelay, target = A))
@@ -647,7 +806,7 @@ RLD
 				var/turf/open/floor/F = A
 				if(checkResource(floorcost, user))
 					to_chat(user, "<span class='notice'>You start building a floor light...</span>")
-					user.Beam(A,icon_state="nzcrentrs_power",time=15)
+					user.Beam(A,icon_state="light_beam",time=15)
 					playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
 					playsound(src.loc, 'sound/effects/light_flicker.ogg', 50, 1)
 					if(do_after(user, floordelay, target = A))
@@ -675,6 +834,27 @@ RLD
 				G.update_brightness()
 				return TRUE
 			return FALSE
+
+/obj/item/construction/rld/mini
+	name = "mini-rapid-light-device (MRLD)"
+	desc = "A device used to rapidly provide lighting sources to an area. Reload with metal, plasteel, glass or compressed matter cartridges."
+	matter = 100
+	max_matter = 100
+
+/obj/item/rcd_upgrade
+	name = "RCD advanced design disk"
+	desc = "It seems to be empty."
+	icon = 'icons/obj/module.dmi'
+	icon_state = "datadisk3"
+	var/upgrade
+
+/obj/item/rcd_upgrade/frames
+	desc = "It contains the design for machine frames, computer frames and deconstruction."
+	upgrade = RCD_UPGRADE_FRAMES
+
+/obj/item/rcd_upgrade/simple_circuits
+	desc = "It contains the design for firelock, air alarm, fire alarm, apc circuits and crap power cells."
+	upgrade = RCD_UPGRADE_SIMPLE_CIRCUITS
 
 #undef GLOW_MODE
 #undef LIGHT_MODE

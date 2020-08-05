@@ -1,5 +1,0 @@
-author: "deathride58"
-delete-after: True
-changes: 
-  - rscadd: "Stamina damage now has diminishing returns on people who are in hard staminacrit with the addition of a new multiplier. When you take staminaloss while in hard staminacrit, you'll be under the effects of the new multiplier, which reduces the amount of staminaloss you take from all sources of staminaloss. The diminishing returns multiplier will steadily return to 1 once you're out of staminacrit."
-  - rscadd: "You can now scramble while resting. You can do this by dragging your spaceman onto an adjacent turf. This works even if you're in staminacrit, but the timer depends entirely on your staminaloss."

@@ -38,16 +38,22 @@
 		tagged = 0
 		update_icon()
 
-/obj/structure/closet/body_bag/update_icon()
-	..()
+/obj/structure/closet/body_bag/update_overlays()
+	. = ..()
 	if (tagged)
-		add_overlay("bodybag_label")
+		. += "bodybag_label"
 
 /obj/structure/closet/body_bag/close()
 	if(..())
 		density = FALSE
 		return 1
 	return 0
+
+/obj/structure/closet/body_bag/handle_lock_addition()
+	return
+
+/obj/structure/closet/body_bag/handle_lock_removal()
+	return
 
 /obj/structure/closet/body_bag/MouseDrop(over_object, src_location, over_location)
 	. = ..()
@@ -94,3 +100,12 @@
 			if(isliving(A))
 				to_chat(A, "<span class='userdanger'>You're suddenly forced into a tiny, compressed space!</span>")
 		qdel(src)
+
+/obj/structure/closet/body_bag/containment
+	name = "containment body bag"
+	desc = "A folded heavy body bag designed for the storage and transportation of cadavers with heavy radiation."
+	icon = 'icons/obj/bodybag.dmi'
+	icon_state = "radbodybag"
+	mob_storage_capacity = 1
+	foldedbag_path = /obj/item/bodybag/containment
+	rad_flags = RAD_PROTECT_CONTENTS | RAD_NO_CONTAMINATE

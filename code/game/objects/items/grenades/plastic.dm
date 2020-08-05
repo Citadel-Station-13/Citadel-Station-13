@@ -26,7 +26,7 @@
 
 /obj/item/grenade/plastic/ComponentInitialize()
 	. = ..()
-	AddComponent(/datum/component/empprotection, EMP_PROTECT_WIRES)
+	AddElement(/datum/element/empprotection, EMP_PROTECT_WIRES)
 
 /obj/item/grenade/plastic/Destroy()
 	qdel(nadeassembly)
@@ -62,7 +62,7 @@
 			location = get_turf(target)
 			target.cut_overlay(plastic_overlay, TRUE)
 			if(!ismob(target) || full_damage_on_mobs)
-				target.ex_act(2, target)
+				target.ex_act(EXPLODE_HEAVY, target)
 	else
 		location = get_turf(src)
 	if(location)
@@ -94,7 +94,7 @@
 		return
 	var/newtime = input(usr, "Please set the timer.", "Timer", 10) as num
 	if(user.get_active_held_item() == src)
-		newtime = CLAMP(newtime, 10, 60000)
+		newtime = clamp(newtime, 10, 60000)
 		det_time = newtime
 		to_chat(user, "Timer set for [det_time] seconds.")
 
@@ -122,7 +122,9 @@
 			var/obj/item/I = AM
 			I.throw_speed = max(1, (I.throw_speed - 3))
 			I.throw_range = max(1, (I.throw_range - 3))
-			I.embedding = I.embedding.setRating(embed_chance = 0)
+			if(I.embedding)
+				I.embedding["embed_chance"] = 0
+				I.updateEmbedding()
 
 		target.add_overlay(plastic_overlay, TRUE)
 		if(!nadeassembly)
@@ -158,7 +160,7 @@
 	user.gib(1, 1)
 	qdel(src)
 
-/obj/item/grenade/plastic/update_icon()
+/obj/item/grenade/plastic/update_icon_state()
 	if(nadeassembly)
 		icon_state = "[item_state]1"
 	else
@@ -174,6 +176,7 @@
 	gender = PLURAL
 	var/open_panel = 0
 	can_attach_mob = TRUE
+	full_damage_on_mobs = TRUE
 
 /obj/item/grenade/plastic/c4/New()
 	wires = new /datum/wires/explosive/c4(src)
@@ -204,9 +207,10 @@
 	else
 		return ..()
 
-/obj/item/grenade/plastic/c4/prime()
+/obj/item/grenade/plastic/c4/prime(mob/living/lanced_by)
 	if(QDELETED(src))
 		return
+	. = ..()
 	var/turf/location
 	if(target)
 		if(!QDELETED(target))

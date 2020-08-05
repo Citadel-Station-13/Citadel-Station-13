@@ -29,7 +29,7 @@
 /mob/living/carbon/true_devil/Initialize()
 	create_bodyparts() //initialize bodyparts
 	create_internal_organs()
-	grant_all_languages(omnitongue=TRUE)
+	grant_all_languages()
 	..()
 
 /mob/living/carbon/true_devil/create_internal_organs()
@@ -64,26 +64,25 @@
 
 
 /mob/living/carbon/true_devil/examine(mob/user)
-	var/msg = "<span class='info'>*---------*\nThis is [icon2html(src, user)] <b>[src]</b>!\n"
+	. = list("<span class='info'>*---------*\nThis is [icon2html(src, user)] <b>[src]</b>!")
 
 	//Left hand items
 	for(var/obj/item/I in held_items)
 		if(!(I.item_flags & ABSTRACT))
-			msg += "It is holding [I.get_examine_string(user)] in its [get_held_index_name(get_held_index_of_item(I))].\n"
+			. += "It is holding [I.get_examine_string(user)] in its [get_held_index_name(get_held_index_of_item(I))]."
 
 	//Braindead
 	if(!client && stat != DEAD)
-		msg += "The devil seems to be in deep contemplation.\n"
+		. += "The devil seems to be in deep contemplation."
 
 	//Damaged
 	if(stat == DEAD)
-		msg += "<span class='deadsay'>The hellfire seems to have been extinguished, for now at least.</span>\n"
+		. += "<span class='deadsay'>The hellfire seems to have been extinguished, for now at least.</span>"
 	else if(health < (maxHealth/10))
-		msg += "<span class='warning'>You can see hellfire inside its gaping wounds.</span>\n"
+		. += "<span class='warning'>You can see hellfire inside its gaping wounds.</span>"
 	else if(health < (maxHealth/2))
-		msg += "<span class='warning'>You can see hellfire inside its wounds.</span>\n"
-	msg += "*---------*</span>"
-	to_chat(user, msg)
+		. += "<span class='warning'>You can see hellfire inside its wounds.</span>"
+	. += "*---------*</span>"
 
 /mob/living/carbon/true_devil/IsAdvancedToolUser()
 	return 1
@@ -94,7 +93,7 @@
 		visible_message("<span class='warning'>[src] easily breaks out of [p_their()] handcuffs!</span>", \
 					"<span class='notice'>With just a thought your handcuffs fall off.</span>")
 
-/mob/living/carbon/true_devil/canUseTopic(atom/movable/M, be_close=FALSE, no_dextery=FALSE)
+/mob/living/carbon/true_devil/canUseTopic(atom/movable/M, be_close=FALSE, no_dextery=FALSE, no_tk=FALSE)
 	if(incapacitated())
 		to_chat(src, "<span class='warning'>You can't do that right now!</span>")
 		return FALSE
@@ -106,7 +105,7 @@
 /mob/living/carbon/true_devil/assess_threat(judgement_criteria, lasercolor = "", datum/callback/weaponcheck=null)
 	return 666
 
-/mob/living/carbon/true_devil/flash_act(intensity = 1, override_blindness_check = 0, affect_silicon = 0)
+/mob/living/carbon/true_devil/flash_act(intensity = 1, override_blindness_check = 0, affect_silicon = 0, visual = 0)
 	if(mind && has_bane(BANE_LIGHT))
 		mind.disrupt_spells(-500)
 		return ..() //flashes don't stop devils UNLESS it's their bane.
@@ -117,24 +116,11 @@
 /mob/living/carbon/true_devil/get_ear_protection()
 	return 2
 
-
-/mob/living/carbon/true_devil/attacked_by(obj/item/I, mob/living/user, def_zone)
-	var/weakness = check_weakness(I, user)
-	apply_damage(I.force * weakness, I.damtype, def_zone)
-	var/message_verb = ""
-	if(I.attack_verb && I.attack_verb.len)
-		message_verb = "[pick(I.attack_verb)]"
-	else if(I.force)
-		message_verb = "attacked"
-
-	var/attack_message = "[src] has been [message_verb] with [I]."
-	if(user)
-		user.do_attack_animation(src)
-		if(user in viewers(src, null))
-			attack_message = "[user] has [message_verb] [src] with [I]!"
-	if(message_verb)
-		visible_message("<span class='danger'>[attack_message]</span>",
-		"<span class='userdanger'>[attack_message]</span>", null, COMBAT_MESSAGE_RANGE)
+/mob/living/carbon/true_devil/attacked_by(obj/item/I, mob/living/user, def_zone, attackchain_flags = NONE, damage_multiplier = 1)
+	var/totitemdamage = pre_attacked_by(I, user)
+	totitemdamage *= check_weakness(I, user)
+	apply_damage(totitemdamage, I.damtype, def_zone)
+	send_item_attack_message(I, user, null, totitemdamage)
 	return TRUE
 
 /mob/living/carbon/true_devil/singularity_act()
@@ -146,14 +132,9 @@
 /mob/living/carbon/true_devil/attack_ghost(mob/dead/observer/user as mob)
 	if(ascended || user.mind.soulOwner == src.mind)
 		var/mob/living/simple_animal/imp/S = new(get_turf(loc))
-		S.key = user.key
-		S.mind.assigned_role = "Imp"
-		S.mind.special_role = "Imp"
-		var/datum/objective/newobjective = new
-		newobjective.explanation_text = "Try to get a promotion to a higher devilic rank."
-		S.mind.objectives += newobjective
-		to_chat(S, S.playstyle_string)
-		to_chat(S, "<B>Objective #[1]</B>: [newobjective.explanation_text]")
+		user.transfer_ckey(S, FALSE)
+		var/datum/antagonist/imp/A = new()
+		S.mind.add_antag_datum(A)
 	else
 		return ..()
 
@@ -163,7 +144,7 @@
 /mob/living/carbon/true_devil/resist_fire()
 	//They're immune to fire.
 
-/mob/living/carbon/true_devil/attack_hand(mob/living/carbon/human/M)
+/mob/living/carbon/true_devil/on_attack_hand(mob/living/carbon/human/M)
 	. = ..()
 	if(.)
 		switch(M.a_intent)
@@ -203,11 +184,11 @@
 	if(!ascended)
 		var/b_loss
 		switch (severity)
-			if (1)
+			if (EXPLODE_DEVASTATE)
 				b_loss = 500
-			if (2)
+			if (EXPLODE_HEAVY)
 				b_loss = 150
-			if(3)
+			if(EXPLODE_LIGHT)
 				b_loss = 30
 		if(has_bane(BANE_LIGHT))
 			b_loss *=2

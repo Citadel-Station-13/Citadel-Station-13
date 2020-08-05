@@ -5,12 +5,9 @@
 	icon_state = "taser"
 	item_state = "armcannonstun4"
 	force = 5
-	selfcharge = 1
+	selfcharge = EGUN_SELFCHARGE
 	can_flashlight = 0
 	trigger_guard = TRIGGER_GUARD_ALLOW_ALL // Has no trigger at all, uses neural signals instead
-
-/obj/item/gun/energy/e_gun/advtaser/mounted/dropped()//if somebody manages to drop this somehow...
-	..()
 
 /obj/item/gun/energy/laser/mounted
 	name = "mounted laser"
@@ -19,8 +16,5 @@
 	icon_state = "laser"
 	item_state = "armcannonlase"
 	force = 5
-	selfcharge = 1
+	selfcharge = EGUN_SELFCHARGE
 	trigger_guard = TRIGGER_GUARD_ALLOW_ALL
-
-/obj/item/gun/energy/laser/mounted/dropped()
-	..()

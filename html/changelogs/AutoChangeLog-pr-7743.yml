@@ -1,5 +1,0 @@
-author: "deathride58"
-delete-after: True
-changes: 
-  - rscadd: "When the shuttle leaves for centcom, a vote will be started to select the next map instead of the map being randomly chosen via biased voting methods"
-  - server: "If a server operator wishes to re-enable the biased TG preference voting system, you can do so by toggling the TGSTYLE_MAPROTATION config flag on in the config.txt. Keep in mind that doing so will bring you great misfortune."

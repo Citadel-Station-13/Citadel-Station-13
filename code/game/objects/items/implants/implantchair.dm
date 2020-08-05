@@ -96,16 +96,17 @@
 		visible_message("<span class='warning'>[M] has been implanted by [src].</span>")
 		return TRUE
 
-/obj/machinery/implantchair/update_icon()
+/obj/machinery/implantchair/update_icon_state()
 	icon_state = initial(icon_state)
 	if(state_open)
 		icon_state += "_open"
 	if(occupant)
 		icon_state += "_occupied"
+
+/obj/machinery/implantchair/update_overlays()
+	. = ..()
 	if(ready)
-		add_overlay("ready")
-	else
-		cut_overlays()
+		. += "ready"
 
 /obj/machinery/implantchair/proc/replenish()
 	if(ready_implants < max_implants)
@@ -120,8 +121,6 @@
 	update_icon()
 
 /obj/machinery/implantchair/container_resist(mob/living/user)
-	user.changeNext_move(CLICK_CD_BREAKOUT)
-	user.last_special = world.time + CLICK_CD_BREAKOUT
 	user.visible_message("<span class='notice'>You see [user] kicking against the door of [src]!</span>", \
 		"<span class='notice'>You lean on the back of [src] and start pushing the door open... (this will take about [DisplayTimeText(breakout_time)].)</span>", \
 		"<span class='italics'>You hear a metallic creaking from [src].</span>")
@@ -185,7 +184,7 @@
 		objective = stripped_input(usr,"What order do you want to imprint on [C]?","Enter the order","",120)
 		message_admins("[ADMIN_LOOKUPFLW(user)] set brainwash machine objective to '[objective]'.")
 		log_game("[key_name(user)] set brainwash machine objective to '[objective]'.")
-	if(C.has_trait(TRAIT_MINDSHIELD))
+	if(HAS_TRAIT(C, TRAIT_MINDSHIELD))
 		return FALSE
 	brainwash(C, objective)
 	message_admins("[ADMIN_LOOKUPFLW(user)] brainwashed [key_name_admin(C)] with objective '[objective]'.")

@@ -8,7 +8,7 @@
 	righthand_file = 'icons/mob/inhands/equipment/hydroponics_righthand.dmi'
 	item_flags = NOBLUDGEON
 	obj_flags = UNIQUE_RENAME
-	container_type = OPENCONTAINER
+	reagent_flags = OPENCONTAINER
 	slot_flags = ITEM_SLOT_BELT
 	throwforce = 0
 	w_class = WEIGHT_CLASS_SMALL
@@ -19,8 +19,8 @@
 	var/can_fill_from_container = TRUE
 	var/apply_type = PATCH
 	var/apply_method = "spray"
-	var/self_delay = 30
-	var/squirt_mode = 0
+	var/self_delay = 3 SECONDS
+	var/squirt_mode = FALSE
 	var/squirt_amount = 5
 
 /obj/item/reagent_containers/medspray/attack_self(mob/user)
@@ -31,61 +31,77 @@
 		amount_per_transfer_from_this = initial(amount_per_transfer_from_this)
 	to_chat(user, "<span class='notice'>You will now apply the medspray's contents in [squirt_mode ? "short bursts":"extended sprays"]. You'll now use [amount_per_transfer_from_this] units per use.</span>")
 
-/obj/item/reagent_containers/medspray/attack(mob/M, mob/user, def_zone)
+/obj/item/reagent_containers/medspray/attack(mob/living/L, mob/user, def_zone)
 	if(!reagents || !reagents.total_volume)
 		to_chat(user, "<span class='warning'>[src] is empty!</span>")
 		return
 
-	if(M == user)
-		M.visible_message("<span class='notice'>[user] attempts to [apply_method] [src] on [user.p_them()]self.</span>")
+	if(ishuman(L))
+		var/obj/item/bodypart/affecting = L.get_bodypart(check_zone(user.zone_selected))
+		if(!affecting)
+			to_chat(user, "<span class='warning'>The limb is missing!</span>")
+			return
+		if(!L.can_inject(user, TRUE, user.zone_selected, FALSE, TRUE)) //stopped by clothing, like patches
+			return
+		if(affecting.status != BODYPART_ORGANIC)
+			to_chat(user, "<span class='notice'>Medicine won't work on a robotic limb!</span>")
+			return
+
+	if(L == user)
+		L.visible_message("<span class='notice'>[user] attempts to [apply_method] [src] on [user.p_them()]self.</span>")
 		if(self_delay)
-			if(!do_mob(user, M, self_delay))
+			if(!do_mob(user, L, self_delay))
 				return
 			if(!reagents || !reagents.total_volume)
 				return
-		to_chat(M, "<span class='notice'>You [apply_method] yourself with [src].</span>")
+		to_chat(L, "<span class='notice'>You [apply_method] yourself with [src].</span>")
 
 	else
-		log_combat(user, M, "attempted to apply", src, reagents.log_list())
-		M.visible_message("<span class='danger'>[user] attempts to [apply_method] [src] on [M].</span>", \
-							"<span class='userdanger'>[user] attempts to [apply_method] [src] on [M].</span>")
-		if(!do_mob(user, M))
+		log_combat(user, L, "attempted to apply", src, reagents.log_list())
+		L.visible_message("<span class='danger'>[user] attempts to [apply_method] [src] on [L].</span>", \
+							"<span class='userdanger'>[user] attempts to [apply_method] [src] on [L].</span>")
+		if(!do_mob(user, L))
 			return
 		if(!reagents || !reagents.total_volume)
 			return
-		M.visible_message("<span class='danger'>[user] [apply_method]s [M] down with [src].</span>", \
-							"<span class='userdanger'>[user] [apply_method]s [M] down with [src].</span>")
+		L.visible_message("<span class='danger'>[user] [apply_method]s [L] down with [src].</span>", \
+							"<span class='userdanger'>[user] [apply_method]s [L] down with [src].</span>")
 
 	if(!reagents || !reagents.total_volume)
 		return
 
 	else
-		log_combat(user, M, "applied", src, reagents.log_list())
+		log_combat(user, L, "applied", src, reagents.log_list())
 		playsound(src, 'sound/effects/spray2.ogg', 50, 1, -6)
 		var/fraction = min(amount_per_transfer_from_this/reagents.total_volume, 1)
-		reagents.reaction(M, apply_type, fraction)
-		reagents.trans_to(M, amount_per_transfer_from_this)
+		reagents.reaction(L, apply_type, fraction)
+		reagents.trans_to(L, amount_per_transfer_from_this)
 	return
 
 /obj/item/reagent_containers/medspray/styptic
 	name = "medical spray (styptic powder)"
 	desc = "A medical spray bottle, designed for precision application, with an unscrewable cap. This one contains styptic powder, for treating cuts and bruises."
 	icon_state = "brutespray"
-	list_reagents = list("styptic_powder" = 60)
+	list_reagents = list(/datum/reagent/medicine/styptic_powder = 60)
 
 /obj/item/reagent_containers/medspray/silver_sulf
 	name = "medical spray (silver sulfadiazine)"
 	desc = "A medical spray bottle, designed for precision application, with an unscrewable cap. This one contains silver sulfadiazine, useful for treating burns."
 	icon_state = "burnspray"
-	list_reagents = list("silver_sulfadiazine" = 60)
+	list_reagents = list(/datum/reagent/medicine/silver_sulfadiazine = 60)
 
 /obj/item/reagent_containers/medspray/synthflesh
 	name = "medical spray (synthflesh)"
 	desc = "A medical spray bottle, designed for precision application, with an unscrewable cap. This one contains synthflesh, an apex brute and burn healing agent."
 	icon_state = "synthspray"
-	list_reagents = list("synthflesh" = 60)
+	list_reagents = list(/datum/reagent/medicine/synthflesh = 60)
 
 /obj/item/reagent_containers/medspray/sterilizine
 	name = "sterilizer spray"
 	desc = "Spray bottle loaded with non-toxic sterilizer. Useful in preparation for surgery."
-	list_reagents = list("sterilizine" = 60)
+	list_reagents = list(/datum/reagent/space_cleaner/sterilizine = 60)
+
+/obj/item/reagent_containers/medspray/synthtissue
+	name = "Synthtissue young culture spray"
+	desc = "Spray bottle loaded with synthtissue. Useful in synthtissue grafting surgeries."
+	list_reagents = list(/datum/reagent/synthtissue = 60)

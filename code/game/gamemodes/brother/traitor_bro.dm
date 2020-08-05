@@ -5,7 +5,9 @@
 /datum/game_mode/traitor/bros
 	name = "traitor+brothers"
 	config_tag = "traitorbro"
+	required_players = 25
 	restricted_jobs = list("AI", "Cyborg")
+	protected_jobs = list("Security Officer", "Warden", "Detective", "Head of Security", "Captain", "Head of Personnel", "Chief Engineer", "Chief Medical Officer", "Research Director", "Quartermaster")
 
 	announce_span = "danger"
 	announce_text = "There are Syndicate agents and Blood Brothers on the station!\n\

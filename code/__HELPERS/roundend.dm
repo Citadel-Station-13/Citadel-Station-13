@@ -3,6 +3,9 @@
 #define POPCOUNT_SHUTTLE_ESCAPEES "shuttle_escapees" 	//Emergency shuttle only.
 
 /datum/controller/subsystem/ticker/proc/gather_roundend_feedback()
+	var/datum/station_state/end_state = new /datum/station_state()
+	end_state.count()
+	station_integrity = min(PERCENT(GLOB.start_state.score(end_state)), 100)
 	gather_antag_data()
 	record_nuke_disk_location()
 	var/json_file = file("[GLOB.log_directory]/round_end_data.json")
@@ -19,6 +22,9 @@
 		var/list/mob_data = list()
 		if(isnewplayer(m))
 			continue
+		if (m.client && m.client.prefs && m.client.prefs.auto_ooc)
+			if (!(m.client.prefs.chat_toggles & CHAT_OOC))
+				m.client.prefs.chat_toggles ^= CHAT_OOC
 		if(m.mind)
 			if(m.stat != DEAD && !isbrain(m) && !iscameramob(m))
 				num_survivors++
@@ -68,9 +74,6 @@
 					mob_data += list("name" = m.name, "typepath" = m.type)
 				var/pos = length(file_data["[escaped]"]["[category]"]) + 1
 				file_data["[escaped]"]["[category]"]["[pos]"] = mob_data
-	var/datum/station_state/end_state = new /datum/station_state()
-	end_state.count()
-	var/station_integrity = min(PERCENT(GLOB.start_state.score(end_state)), 100)
 	file_data["additional data"]["station integrity"] = station_integrity
 	WRITE_FILE(json_file, json_encode(file_data))
 	SSblackbox.record_feedback("nested tally", "round_end_stats", num_survivors, list("survivors", "total"))
@@ -108,7 +111,14 @@
 
 		if(A.objectives.len)
 			for(var/datum/objective/O in A.objectives)
-				var/result = O.check_completion() ? "SUCCESS" : "FAIL"
+				var/result = "UNKNOWN"
+				var/actual_result = O.check_completion()
+				if(actual_result >= 1)
+					result = "SUCCESS"
+				else if(actual_result <= 0)
+					result = "FAIL"
+				else
+					result = "[actual_result*100]%"
 				antag_info["objectives"] += list(list("objective_type"=O.type,"text"=O.explanation_text,"result"=result))
 		SSblackbox.record_feedback("associative", "antagonists", 1, antag_info)
 
@@ -136,19 +146,19 @@
 	var/list/file_data = list()
 	var/pos = 1
 	for(var/V in GLOB.news_network.network_channels)
-		var/datum/newscaster/feed_channel/channel = V
+		var/datum/news/feed_channel/channel = V
 		if(!istype(channel))
 			stack_trace("Non-channel in newscaster channel list")
 			continue
 		file_data["[pos]"] = list("channel name" = "[channel.channel_name]", "author" = "[channel.author]", "censored" = channel.censored ? 1 : 0, "author censored" = channel.authorCensor ? 1 : 0, "messages" = list())
 		for(var/M in channel.messages)
-			var/datum/newscaster/feed_message/message = M
+			var/datum/news/feed_message/message = M
 			if(!istype(message))
 				stack_trace("Non-message in newscaster channel messages list")
 				continue
 			var/list/comment_data = list()
 			for(var/C in message.comments)
-				var/datum/newscaster/feed_comment/comment = C
+				var/datum/news/feed_comment/comment = C
 				if(!istype(comment))
 					stack_trace("Non-message in newscaster message comments list")
 					continue
@@ -164,7 +174,7 @@
 
 	to_chat(world, "<BR><BR><BR><span class='big bold'>The round has ended.</span>")
 	if(LAZYLEN(GLOB.round_end_notifiees))
-		send2irc("Notice", "[GLOB.round_end_notifiees.Join(", ")] the round has ended.")
+		world.TgsTargetedChatBroadcast("[GLOB.round_end_notifiees.Join(", ")] the round has ended.", FALSE)
 
 	for(var/I in round_end_events)
 		var/datum/callback/cb = I
@@ -175,7 +185,7 @@
 		if(!C.credits)
 			C.RollCredits()
 		C.playtitlemusic(40)
-
+	CONFIG_SET(flag/suicide_allowed,TRUE) // EORG suicides allowed
 	var/popcount = gather_roundend_feedback()
 	display_report(popcount)
 
@@ -192,10 +202,16 @@
 	//Set news report and mode result
 	mode.set_round_result()
 
-	send2irc("Server", "Round just ended.")
+	var/survival_rate = GLOB.joined_player_list.len ? "[PERCENT(popcount[POPCOUNT_SURVIVORS]/GLOB.joined_player_list.len)]%" : "there's literally no player"
+
+	send2irc("Server", "A round of [mode.name] just ended[mode_result == "undefined" ? "." : " with a [mode_result]."] Survival rate: [survival_rate]")
 
 	if(length(CONFIG_GET(keyed_list/cross_server)))
 		send_news_report()
+
+	//tell the nice people on discord what went on before the salt cannon happens.
+	world.TgsTargetedChatBroadcast("The current round has ended. Please standby for your shift interlude Nanotrasen News Network's report!", FALSE)
+	world.TgsTargetedChatBroadcast(send_news_report(),FALSE)
 
 	CHECK_TICK
 
@@ -217,6 +233,7 @@
 	for(var/antag_name in total_antagonists)
 		var/list/L = total_antagonists[antag_name]
 		log_game("[antag_name]s :[L.Join(", ")].")
+	set_observer_default_invisibility(0, "<span class='warning'>The round is over! You are now visible to the living.</span>")
 
 	CHECK_TICK
 	SSdbcore.SetRoundEnd()
@@ -274,23 +291,50 @@
 	if(GLOB.round_id)
 		var/statspage = CONFIG_GET(string/roundstatsurl)
 		var/info = statspage ? "<a href='?action=openLink&link=[url_encode(statspage)][GLOB.round_id]'>[GLOB.round_id]</a>" : GLOB.round_id
-		parts += "[GLOB.TAB]Round ID: <b>[info]</b>"
-	parts += "[GLOB.TAB]Shift Duration: <B>[DisplayTimeText(world.time - SSticker.round_start_time)]</B>"
-	parts += "[GLOB.TAB]Station Integrity: <B>[mode.station_was_nuked ? "<span class='redtext'>Destroyed</span>" : "[popcount["station_integrity"]]%"]</B>"
+		parts += "[FOURSPACES]Round ID: <b>[info]</b>"
+
+	var/list/voting_results = SSvote.stored_gamemode_votes
+
+	if(length(voting_results))
+		parts += "[FOURSPACES]Voting: "
+		var/total_score = 0
+		for(var/choice in voting_results)
+			var/score = voting_results[choice]
+			total_score += score
+			parts += "[FOURSPACES][FOURSPACES][choice]: [score]"
+
+	parts += "[FOURSPACES]Shift Duration: <B>[DisplayTimeText(world.time - SSticker.round_start_time)]</B>"
+	parts += "[FOURSPACES]Station Integrity: <B>[mode.station_was_nuked ? "<span class='redtext'>Destroyed</span>" : "[popcount["station_integrity"]]%"]</B>"
 	var/total_players = GLOB.joined_player_list.len
 	if(total_players)
-		parts+= "[GLOB.TAB]Total Population: <B>[total_players]</B>"
+		parts+= "[FOURSPACES]Total Population: <B>[total_players]</B>"
 		if(station_evacuated)
-			parts += "<BR>[GLOB.TAB]Evacuation Rate: <B>[popcount[POPCOUNT_ESCAPEES]] ([PERCENT(popcount[POPCOUNT_ESCAPEES]/total_players)]%)</B>"
-			parts += "[GLOB.TAB](on emergency shuttle): <B>[popcount[POPCOUNT_SHUTTLE_ESCAPEES]] ([PERCENT(popcount[POPCOUNT_SHUTTLE_ESCAPEES]/total_players)]%)</B>"
-		parts += "[GLOB.TAB]Survival Rate: <B>[popcount[POPCOUNT_SURVIVORS]] ([PERCENT(popcount[POPCOUNT_SURVIVORS]/total_players)]%)</B>"
+			parts += "<BR>[FOURSPACES]Evacuation Rate: <B>[popcount[POPCOUNT_ESCAPEES]] ([PERCENT(popcount[POPCOUNT_ESCAPEES]/total_players)]%)</B>"
+			parts += "[FOURSPACES](on emergency shuttle): <B>[popcount[POPCOUNT_SHUTTLE_ESCAPEES]] ([PERCENT(popcount[POPCOUNT_SHUTTLE_ESCAPEES]/total_players)]%)</B>"
+		parts += "[FOURSPACES]Survival Rate: <B>[popcount[POPCOUNT_SURVIVORS]] ([PERCENT(popcount[POPCOUNT_SURVIVORS]/total_players)]%)</B>"
 		if(SSblackbox.first_death)
 			var/list/ded = SSblackbox.first_death
 			if(ded.len)
-				parts += "[GLOB.TAB]First Death: <b>[ded["name"]], [ded["role"]], at [ded["area"]]. Damage taken: [ded["damage"]].[ded["last_words"] ? " Their last words were: \"[ded["last_words"]]\"" : ""]</b>"
+				parts += "[FOURSPACES]First Death: <b>[ded["name"]], [ded["role"]], at [ded["area"]]. Damage taken: [ded["damage"]].[ded["last_words"] ? " Their last words were: \"[ded["last_words"]]\"" : ""]</b>"
 			//ignore this comment, it fixes the broken sytax parsing caused by the " above
 			else
-				parts += "[GLOB.TAB]<i>Nobody died this shift!</i>"
+				parts += "[FOURSPACES]<i>Nobody died this shift!</i>"
+	if(istype(SSticker.mode, /datum/game_mode/dynamic))
+		var/datum/game_mode/dynamic/mode = SSticker.mode
+		mode.update_playercounts()
+		parts += "[FOURSPACES]Final threat level: [mode.threat_level]"
+		parts += "[FOURSPACES]Final threat: [mode.threat]"
+		parts += "[FOURSPACES]Average threat: [mode.threat_average]"
+		parts += "[FOURSPACES]Executed rules:"
+		for(var/datum/dynamic_ruleset/rule in mode.executed_rules)
+			parts += "[FOURSPACES][FOURSPACES][rule.ruletype] - <b>[rule.name]</b>: -[rule.cost + rule.scaled_times * rule.scaling_cost] threat"
+		parts += "[FOURSPACES]Other threat changes:"
+		for(var/str in mode.threat_log)
+			parts += "[FOURSPACES][FOURSPACES][str]"
+		for(var/entry in mode.threat_tallies)
+			parts += "[FOURSPACES][FOURSPACES][entry] added [mode.threat_tallies[entry]]"
+		SSblackbox.record_feedback("tally","dynamic_threat",mode.threat_level,"Final threat level")
+		SSblackbox.record_feedback("tally","dynamic_threat",mode.threat,"Final Threat")
 	return parts.Join("<br>")
 
 /client/proc/roundend_report_file()
@@ -313,6 +357,7 @@
 	roundend_report.set_content(content)
 	roundend_report.stylesheets = list()
 	roundend_report.add_stylesheet("roundend", 'html/browser/roundend.css')
+	roundend_report.add_stylesheet("font-awesome", 'html/font-awesome/css/all.min.css')
 	roundend_report.open(0)
 
 /datum/controller/subsystem/ticker/proc/personal_report(client/C, popcount)
@@ -469,7 +514,7 @@
 	if(owner && GLOB.common_report && SSticker.current_state == GAME_STATE_FINISHED)
 		SSticker.show_roundend_report(owner.client, FALSE)
 
-/datum/action/report/IsAvailable()
+/datum/action/report/IsAvailable(silent = FALSE)
 	return 1
 
 /datum/action/report/Topic(href,href_list)
@@ -510,14 +555,22 @@
 	return parts.Join()
 
 
-/proc/printobjectives(datum/mind/ply)
+/proc/printobjectives(list/objectives)
+	if(!objectives || !objectives.len)
+		return
 	var/list/objective_parts = list()
 	var/count = 1
-	for(var/datum/objective/objective in ply.objectives)
-		if(objective.check_completion())
-			objective_parts += "<b>Objective #[count]</b>: [objective.explanation_text] <span class='greentext'>Success!</span>"
+	for(var/datum/objective/objective in objectives)
+		if(objective.completable)
+			var/completion = objective.check_completion()
+			if(completion >= 1)
+				objective_parts += "<B>Objective #[count]</B>: [objective.explanation_text] <span class='greentext'><B>Success!</B></span>"
+			else if(completion <= 0)
+				objective_parts += "<B>Objective #[count]</B>: [objective.explanation_text] <span class='redtext'>Fail.</span>"
+			else
+				objective_parts += "<B>Objective #[count]</B>: [objective.explanation_text] <span class='yellowtext'>[completion*100]%</span>"
 		else
-			objective_parts += "<b>Objective #[count]</b>: [objective.explanation_text] <span class='redtext'>Fail.</span>"
+			objective_parts += "<B>Objective #[count]</B>: [objective.explanation_text]"
 		count++
 	return objective_parts.Join("<br>")
 

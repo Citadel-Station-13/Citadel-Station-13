@@ -7,7 +7,7 @@
 	ammo_type = list(/obj/item/ammo_casing/energy/megabuster)
 	clumsy_check = FALSE
 	item_flags = NEEDS_PERMIT
-	selfcharge = TRUE
+	selfcharge = EGUN_SELFCHARGE
 	cell_type = "/obj/item/stock_parts/cell/pulse"
 	icon = 'modular_citadel/icons/obj/guns/VGguns.dmi'
 

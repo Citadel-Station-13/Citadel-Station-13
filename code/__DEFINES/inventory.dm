@@ -1,13 +1,5 @@
 /*ALL DEFINES RELATED TO INVENTORY OBJECTS, MANAGEMENT, ETC, GO HERE*/
 
-//ITEM INVENTORY WEIGHT, FOR w_class
-#define WEIGHT_CLASS_TINY     1 //Usually items smaller then a human hand, ex: Playing Cards, Lighter, Scalpel, Coins/Money
-#define WEIGHT_CLASS_SMALL    2 //Pockets can hold small and tiny items, ex: Flashlight, Multitool, Grenades, GPS Device
-#define WEIGHT_CLASS_NORMAL   3 //Standard backpacks can carry tiny, small & normal items, ex: Fire extinguisher, Stunbaton, Gas Mask, Metal Sheets
-#define WEIGHT_CLASS_BULKY    4 //Items that can be weilded or equipped but not stored in an inventory, ex: Defibrillator, Backpack, Space Suits
-#define WEIGHT_CLASS_HUGE     5 //Usually represents objects that require two hands to operate, ex: Shotgun, Two Handed Melee Weapons
-#define WEIGHT_CLASS_GIGANTIC 6 //Essentially means it cannot be picked up or placed in an inventory, ex: Mech Parts, Safe
-
 //Inventory depth: limits how many nested storage items you can access directly.
 //1: stuff in mob, 2: stuff in backpack, 3: stuff in box in backpack, etc
 #define INVENTORY_DEPTH		3
@@ -28,6 +20,9 @@
 #define ITEM_SLOT_POCKET		(1<<11) // this is to allow items with a w_class of WEIGHT_CLASS_NORMAL or WEIGHT_CLASS_BULKY to fit in pockets.
 #define ITEM_SLOT_DENYPOCKET	(1<<12) // this is to deny items with a w_class of WEIGHT_CLASS_SMALL or WEIGHT_CLASS_TINY to fit in pockets.
 #define ITEM_SLOT_NECK			(1<<13)
+#define ITEM_SLOT_HANDS			(1<<14)
+#define ITEM_SLOT_BACKPACK		(1<<15)
+#define ITEM_SLOT_SUITSTORE		(1<<16)
 
 //SLOTS
 #define SLOT_BACK			1
@@ -51,6 +46,7 @@
 #define SLOT_IN_BACKPACK	18
 #define SLOT_LEGCUFFED		19
 #define SLOT_GENERC_DEXTROUS_STORAGE	20
+
 
 #define SLOTS_AMT			20 // Keep this up to date!
 
@@ -84,6 +80,12 @@
 			. = ITEM_SLOT_ICLOTHING
 		if(SLOT_L_STORE, SLOT_R_STORE)
 			. = ITEM_SLOT_POCKET
+		if(SLOT_HANDS)
+			. = ITEM_SLOT_HANDS
+		if(SLOT_IN_BACKPACK)
+			. = ITEM_SLOT_BACKPACK
+		if(SLOT_S_STORE)
+			. = ITEM_SLOT_SUITSTORE
 
 
 //Bit flags for the flags_inv variable, which determine when a piece of clothing hides another. IE a helmet hiding glasses.
@@ -99,6 +101,8 @@
 #define HIDEFACIALHAIR	(1<<9)
 #define HIDENECK		(1<<10)
 #define HIDETAUR		(1<<11) //gotta hide that snowflake
+#define HIDESNOUT		(1<<12) //or do we actually hide our snoots
+#define HIDEACCESSORY	(1<<13) //hides the jumpsuit accessory.
 
 //bitflags for clothing coverage - also used for limbs
 #define HEAD		(1<<0)
@@ -119,34 +123,35 @@
 #define NECK		(1<<11)
 #define FULL_BODY	(~0)
 
+//flags for alternate styles: These are hard sprited so don't set this if you didn't put the effort in
+#define NORMAL_STYLE		0
+#define ALT_STYLE			1
+
 //flags for female outfits: How much the game can safely "take off" the uniform without it looking weird
 #define NO_FEMALE_UNIFORM			0
 #define FEMALE_UNIFORM_FULL			1
 #define FEMALE_UNIFORM_TOP			2
 
-//flags for alternate styles: These are hard sprited so don't set this if you didn't put the effort in
-#define NORMAL_STYLE		0
-#define ALT_STYLE			1
+//flags for outfits that have mutant race variants: Most of these require additional sprites to work.
+#define STYLE_DIGITIGRADE		(1<<0) //jumpsuits, suits and shoes
+#define STYLE_MUZZLE			(1<<1) //hats or masks
+#define STYLE_SNEK_TAURIC		(1<<2) //taur-friendly suits
+#define STYLE_PAW_TAURIC		(1<<3)
+#define STYLE_HOOF_TAURIC		(1<<4)
+#define STYLE_ALL_TAURIC		(STYLE_SNEK_TAURIC|STYLE_PAW_TAURIC|STYLE_HOOF_TAURIC)
+#define STYLE_NO_ANTHRO_ICON	(1<<5) //When digis fit the default sprite fine and need no copypasted states. This is the case of skirts and winter coats, for example.
+#define USE_SNEK_CLIP_MASK		(1<<6)
+#define USE_QUADRUPED_CLIP_MASK	(1<<7)
+#define USE_TAUR_CLIP_MASK		(USE_SNEK_CLIP_MASK|USE_QUADRUPED_CLIP_MASK)
 
-#define NORMAL_SUIT_STYLE		0
-#define DIGITIGRADE_SUIT_STYLE 	1
-
-#define NOT_TAURIC			0
-#define SNEK_TAURIC			1
-#define PAW_TAURIC			2
-#define HOOF_TAURIC			3
-
-//flags for outfits that have mutantrace variants (try not to use this): Currently only needed if you're trying to add tight fitting bootyshorts
-#define NO_MUTANTRACE_VARIATION		0
-#define MUTANTRACE_VARIATION		1
-
+//digitigrade legs settings.
 #define NOT_DIGITIGRADE				0
 #define FULL_DIGITIGRADE			1
 #define SQUISHED_DIGITIGRADE		2
 
 //flags for covering body parts
 #define GLASSESCOVERSEYES	(1<<0)
-#define MASKCOVERSEYES		(1<<1)		// get rid of some of the other retardation in these flags
+#define MASKCOVERSEYES		(1<<1)		// get rid of some of the other stupidity in these flags
 #define HEADCOVERSEYES		(1<<2)		// feel free to realloc these numbers for other purposes
 #define MASKCOVERSMOUTH		(1<<3)		// on other items, these are just for mask/head
 #define HEADCOVERSMOUTH		(1<<4)
@@ -223,3 +228,9 @@ GLOBAL_LIST_INIT(security_wintercoat_allowed, typecacheof(list(
 	/obj/item/tank/internals/emergency_oxygen,
 	/obj/item/tank/internals/plasmaman,
 	/obj/item/toy)))
+
+//Internals checker
+#define GET_INTERNAL_SLOTS(C) list(C.head, C.wear_mask)
+
+//Slots that won't trigger humans' update_genitals() on equip().
+GLOBAL_LIST_INIT(no_genitals_update_slots, list(SLOT_L_STORE, SLOT_R_STORE, SLOT_S_STORE, SLOT_IN_BACKPACK, SLOT_LEGCUFFED, SLOT_HANDCUFFED, SLOT_HANDS, SLOT_GENERC_DEXTROUS_STORAGE))

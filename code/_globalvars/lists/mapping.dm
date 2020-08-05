@@ -1,6 +1,16 @@
 GLOBAL_LIST_INIT(cardinals, list(NORTH, SOUTH, EAST, WEST))
-GLOBAL_LIST_INIT(alldirs, list(NORTH, SOUTH, EAST, WEST, NORTHEAST, NORTHWEST, SOUTHEAST, SOUTHWEST))
+GLOBAL_LIST_INIT(cardinals_multiz, list(NORTH, SOUTH, EAST, WEST, UP, DOWN))
 GLOBAL_LIST_INIT(diagonals, list(NORTHEAST, NORTHWEST, SOUTHEAST, SOUTHWEST))
+GLOBAL_LIST_INIT(corners_multiz, list(UP|NORTHEAST, UP|NORTHWEST, UP|SOUTHEAST, UP|SOUTHWEST, DOWN|NORTHEAST, DOWN|NORTHWEST, DOWN|SOUTHEAST, DOWN|SOUTHWEST))
+GLOBAL_LIST_INIT(diagonals_multiz, list(
+	NORTHEAST, NORTHWEST, SOUTHEAST, SOUTHWEST,
+	UP|NORTH, UP|SOUTH, UP|EAST, UP|WEST, UP|NORTHEAST, UP|NORTHWEST, UP|SOUTHEAST, UP|SOUTHWEST,
+	DOWN|NORTH, DOWN|SOUTH, DOWN|EAST, DOWN|WEST, DOWN|NORTHEAST, DOWN|NORTHWEST, DOWN|SOUTHEAST, DOWN|SOUTHWEST))
+GLOBAL_LIST_INIT(alldirs_multiz, list(
+	NORTH, SOUTH, EAST, WEST, NORTHEAST, NORTHWEST, SOUTHEAST, SOUTHWEST,
+	UP, UP|NORTH, UP|SOUTH, UP|EAST, UP|WEST, UP|NORTHEAST, UP|NORTHWEST, UP|SOUTHEAST, UP|SOUTHWEST,
+	DOWN, DOWN|NORTH, DOWN|SOUTH, DOWN|EAST, DOWN|WEST, DOWN|NORTHEAST, DOWN|NORTHWEST, DOWN|SOUTHEAST, DOWN|SOUTHWEST))
+GLOBAL_LIST_INIT(alldirs, list(NORTH, SOUTH, EAST, WEST, NORTHEAST, NORTHWEST, SOUTHEAST, SOUTHWEST))
 
 GLOBAL_LIST_EMPTY(landmarks_list)				//list of all landmarks created
 GLOBAL_LIST_EMPTY(start_landmarks_list)			//list of all spawn points created
@@ -28,13 +38,19 @@ GLOBAL_LIST_EMPTY(servant_spawns) //Servants of Ratvar spawn here
 GLOBAL_LIST_EMPTY(city_of_cogs_spawns) //Anyone entering the City of Cogs spawns here
 GLOBAL_LIST_EMPTY(ruin_landmarks)
 
-	//away missions
-GLOBAL_LIST_EMPTY(awaydestinations)	//a list of landmarks that the warpgate can take you to
+//away missions
 GLOBAL_LIST_EMPTY(vr_spawnpoints)
 
 	//used by jump-to-area etc. Updated by area/updateName()
 GLOBAL_LIST_EMPTY(sortedAreas)
 /// An association from typepath to area instance. Only includes areas with `unique` set.
-GLOBAL_LIST_EMPTY(areas_by_type)
+GLOBAL_LIST_EMPTY_TYPED(areas_by_type, /area)
 
 GLOBAL_LIST_EMPTY(all_abstract_markers)
+
+GLOBAL_LIST_EMPTY(stationroom_landmarks) //List of all spawns for stationrooms
+
+///Away missions, VR, random z levels stuff.
+GLOBAL_LIST_EMPTY(random_zlevels_generated)
+GLOBAL_LIST_INIT(potential_away_levels, generateMapList(filename = "[global.config.directory]/awaymissionconfig.txt"))
+GLOBAL_LIST_INIT(potential_vr_levels, generateMapList(filename = "[global.config.directory]/vr_config.txt"))

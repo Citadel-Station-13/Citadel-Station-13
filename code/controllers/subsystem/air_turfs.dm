@@ -1,17 +1,16 @@
 //WHAT IF WE TAKE THE ACTIVE TURF PROCESSING AND PUSH IT SOMEWHERE ELSE!!!
-
+/*
 SUBSYSTEM_DEF(air_turfs)
 	name = "Atmospherics - Turfs"
 	init_order = INIT_ORDER_AIR_TURFS
 	priority = FIRE_PRIORITY_AIR_TURFS
-	wait = 1
+	wait = 2
 	flags = SS_BACKGROUND
 	runlevels = RUNLEVEL_GAME | RUNLEVEL_POSTGAME
 	var/list/currentrun = list()
 
 /datum/controller/subsystem/air_turfs/fire(resumed = 0)
 	var/fire_count = times_fired
-	//cache for sanic speed
 	if (!resumed)
 		src.currentrun = SSair.active_turfs.Copy()
 	//cache for sanic speed (lists are references anyways)
@@ -25,3 +24,4 @@ SUBSYSTEM_DEF(air_turfs)
 			return
 	resumed = 0
 	return
+*/

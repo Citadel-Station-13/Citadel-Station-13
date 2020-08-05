@@ -15,30 +15,32 @@
 	. = ..()
 	var/area/A = get_area(src)
 	if(A && construct_type)
-		notify_ghosts("A [construct_name] chassis has been created in [A.name]!", 'sound/magic/clockwork/fellowship_armory.ogg', source = src, action = NOTIFY_ATTACK, flashwindow = FALSE, ignore_key = POLL_IGNORE_CONSTRUCT)
+		notify_ghosts("A [construct_name] chassis has been created in [A.name]!", 'sound/magic/clockwork/fellowship_armory.ogg', source = src, action = NOTIFY_ATTACK, flashwindow = FALSE, ignore_key = POLL_IGNORE_CONSTRUCT, ignore_dnr_observers = TRUE)
 	GLOB.poi_list += src
 	LAZYADD(GLOB.mob_spawners[name], src)
 
 /obj/item/clockwork/construct_chassis/Destroy()
 	GLOB.poi_list -= src
-	var/list/spawners = GLOB.mob_spawners[name]
-	LAZYREMOVE(spawners, src)
+	LAZYREMOVE(GLOB.mob_spawners[name], src)
+	if(!LAZYLEN(GLOB.mob_spawners[name]))
+		GLOB.mob_spawners -= name
 	. = ..()
 
 /obj/item/clockwork/construct_chassis/examine(mob/user)
 	clockwork_desc = "[clockwork_desc]<br>[construct_desc]"
-	..()
+	. = ..()
 	clockwork_desc = initial(clockwork_desc)
 
-//ATTACK HAND IGNORING PARENT RETURN VALUE
-/obj/item/clockwork/construct_chassis/attack_hand(mob/living/user)
+/obj/item/clockwork/construct_chassis/on_attack_hand(mob/living/user, act_intent = user.a_intent, unarmed_attack_flags)
 	if(w_class >= WEIGHT_CLASS_HUGE)
 		to_chat(user, "<span class='warning'>[src] is too cumbersome to carry! Drag it around instead!</span>")
 		return
 	. = ..()
 
 //ATTACK GHOST IGNORING PARENT RETURN VALUE
-/obj/item/clockwork/construct_chassis/attack_ghost(mob/user)
+/obj/item/clockwork/construct_chassis/attack_ghost(mob/dead/observer/user)
+	if(!user.can_reenter_round())
+		return FALSE
 	if(!SSticker.mode)
 		to_chat(user, "<span class='danger'>You cannot use that before the game has started.</span>")
 		return
@@ -54,7 +56,7 @@
 	pre_spawn()
 	visible_message(creation_message)
 	var/mob/living/construct = new construct_type(get_turf(src))
-	construct.key = user.key
+	user.transfer_ckey(construct, FALSE)
 	post_spawn(construct)
 	qdel(user)
 	qdel(src)

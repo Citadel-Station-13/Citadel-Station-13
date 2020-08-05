@@ -4,6 +4,7 @@
 	name = "alien embryo"
 	icon = 'icons/mob/alien.dmi'
 	icon_state = "larva0_dead"
+	food_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/toxin/acid = 10)
 	var/stage = 0
 	var/bursting = FALSE
 
@@ -16,12 +17,10 @@
 		if(prob(10))
 			AttemptGrow(0)
 
-/obj/item/organ/body_egg/alien_embryo/prepare_eat()
-	var/obj/S = ..()
-	S.reagents.add_reagent("sacid", 10)
-	return S
-
 /obj/item/organ/body_egg/alien_embryo/on_life()
+	. = ..()
+	if(!owner)
+		return
 	switch(stage)
 		if(2, 3)
 			if(prob(2))
@@ -63,7 +62,7 @@
 
 
 
-/obj/item/organ/body_egg/alien_embryo/proc/AttemptGrow(gib_on_success=TRUE)
+/obj/item/organ/body_egg/alien_embryo/proc/AttemptGrow(var/kill_on_sucess=TRUE)
 	if(!owner || bursting)
 		return
 
@@ -86,10 +85,10 @@
 
 	var/atom/xeno_loc = get_turf(owner)
 	var/mob/living/carbon/alien/larva/new_xeno = new(xeno_loc)
-	new_xeno.key = ghost.key
+	ghost.transfer_ckey(new_xeno, FALSE)
 	SEND_SOUND(new_xeno, sound('sound/voice/hiss5.ogg',0,0,0,100))	//To get the player's attention
-	new_xeno.canmove = 0 //so we don't move during the bursting animation
-	new_xeno.notransform = 1
+	new_xeno.Paralyze(6)
+	new_xeno.mob_transforming = TRUE
 	new_xeno.invisibility = INVISIBILITY_MAXIMUM
 
 	sleep(6)
@@ -98,17 +97,21 @@
 		return
 
 	if(new_xeno)
-		new_xeno.canmove = 1
-		new_xeno.notransform = 0
+		new_xeno.SetParalyzed(0)
+		new_xeno.mob_transforming = FALSE
 		new_xeno.invisibility = 0
 
-	if(gib_on_success)
-		new_xeno.visible_message("<span class='danger'>[new_xeno] bursts out of [owner] in a shower of gore!</span>", "<span class='userdanger'>You exit [owner], your previous host.</span>", "<span class='italics'>You hear organic matter ripping and tearing!</span>")
-		owner.gib(TRUE)
-	else
+	var/mob/living/carbon/old_owner = owner
+	if(kill_on_sucess) //ITS TOO LATE
+		new_xeno.visible_message("<span class='danger'>[new_xeno] bursts out of [owner]!</span>", "<span class='userdanger'>You exit [owner], your previous host.</span>", "<span class='italics'>You hear organic matter ripping and tearing!</span>")
+		owner.apply_damage(rand(100,300),BRUTE,zone,FALSE) //Random high damage to torso so health sensors don't metagame.
+		var/obj/item/bodypart/B = owner.get_bodypart(zone)
+		B.drop_organs(owner) //Lets still make the death gruesome and impossible to just simply defib someone.
+		owner.death(FALSE) //Just in case some freak occurance occurs where you somehow survive all your organs being removed from you and the 100-300 brute damage.
+	else //When it is removed via surgery at a late stage, rather than forced.
 		new_xeno.visible_message("<span class='danger'>[new_xeno] wriggles out of [owner]!</span>", "<span class='userdanger'>You exit [owner], your previous host.</span>")
 		owner.adjustBruteLoss(40)
-		owner.cut_overlay(overlay)
+	old_owner.cut_overlay(overlay)
 	qdel(src)
 
 
@@ -116,19 +119,20 @@
 Proc: AddInfectionImages(C)
 Des: Adds the infection image to all aliens for this embryo
 ----------------------------------------*/
-/obj/item/organ/body_egg/alien_embryo/AddInfectionImages()
+/obj/item/organ/body_egg/alien_embryo/AddInfectionImages(mob/living/carbon/C)
 	for(var/mob/living/carbon/alien/alien in GLOB.player_list)
 		if(alien.client)
-			var/I = image('icons/mob/alien.dmi', loc = owner, icon_state = "infected[stage]")
+			var/I = image('icons/mob/alien.dmi', loc = C, icon_state = "infected[stage]")
 			alien.client.images += I
 
 /*----------------------------------------
 Proc: RemoveInfectionImage(C)
 Des: Removes all images from the mob infected by this embryo
 ----------------------------------------*/
-/obj/item/organ/body_egg/alien_embryo/RemoveInfectionImages()
+/obj/item/organ/body_egg/alien_embryo/RemoveInfectionImages(mob/living/carbon/C)
 	for(var/mob/living/carbon/alien/alien in GLOB.player_list)
 		if(alien.client)
 			for(var/image/I in alien.client.images)
-				if(dd_hasprefix_case(I.icon_state, "infected") && I.loc == owner)
+				var/searchfor = "infected"
+				if(I.loc == owner && findtext(I.icon_state, searchfor, 1, length(searchfor) + 1))
 					qdel(I)

@@ -88,6 +88,26 @@
 	var/mob/living/silicon/robot/R = usr
 	R.toggle_ionpulse()
 
+/obj/screen/robot/sensors
+	name = "Sensor Augmentation"
+	icon_state = "cyborg_sensor"
+
+/obj/screen/robot/sensors/Click()
+	if(..())
+		return
+	var/mob/living/silicon/S = usr
+	S.toggle_sensors()
+
+/obj/screen/robot/language_menu
+	name = "silicon language selection"
+	icon_state = "talk_wheel"
+
+/obj/screen/robot/language_menu/Click()
+	if(..())
+		return
+	var/mob/living/silicon/S = usr
+	S.open_language_menu(usr)
+
 /datum/hud/robot
 	ui_style = 'icons/mob/screen_cyborg.dmi'
 
@@ -96,28 +116,33 @@
 	var/mob/living/silicon/robot/mymobR = mymob
 	var/obj/screen/using
 
-	using = new/obj/screen/language_menu
+	using = new/obj/screen/robot/language_menu
 	using.screen_loc = ui_borg_language_menu
+	using.hud = src
 	static_inventory += using
 
 //Radio
 	using = new /obj/screen/robot/radio()
 	using.screen_loc = ui_borg_radio
+	using.hud = src
 	static_inventory += using
 
 //Module select
 	using = new /obj/screen/robot/module1()
 	using.screen_loc = ui_inv1
+	using.hud = src
 	static_inventory += using
 	mymobR.inv1 = using
 
 	using = new /obj/screen/robot/module2()
 	using.screen_loc = ui_inv2
+	using.hud = src
 	static_inventory += using
 	mymobR.inv2 = using
 
 	using = new /obj/screen/robot/module3()
 	using.screen_loc = ui_inv3
+	using.hud = src
 	static_inventory += using
 	mymobR.inv3 = using
 
@@ -126,36 +151,43 @@
 //Photography stuff
 	using = new /obj/screen/ai/image_take()
 	using.screen_loc = ui_borg_camera
+	using.hud = src
 	static_inventory += using
 
 	using = new /obj/screen/ai/image_view()
 	using.screen_loc = ui_borg_album
+	using.hud = src
 	static_inventory += using
 
 //Sec/Med HUDs
-	using = new /obj/screen/ai/sensors()
+	using = new /obj/screen/robot/sensors()
 	using.screen_loc = ui_borg_sensor
+	using.hud = src
 	static_inventory += using
 
 //Headlamp control
 	using = new /obj/screen/robot/lamp()
 	using.screen_loc = ui_borg_lamp
+	using.hud = src
 	static_inventory += using
 	mymobR.lamp_button = using
 
 //Thrusters
 	using = new /obj/screen/robot/thrusters()
 	using.screen_loc = ui_borg_thrusters
+	using.hud = src
 	static_inventory += using
 	mymobR.thruster_button = using
 
 //Intent
 	action_intent = new /obj/screen/act_intent/robot()
 	action_intent.icon_state = mymob.a_intent
+	action_intent.hud = src
 	static_inventory += action_intent
 
 //Health
 	healths = new /obj/screen/healths/robot()
+	healths.hud = src
 	infodisplay += healths
 
 //Installed Module
@@ -165,17 +197,20 @@
 
 //Store
 	module_store_icon = new /obj/screen/robot/store()
+	module_store_icon.hud = src
 	module_store_icon.screen_loc = ui_borg_store
 
 	pull_icon = new /obj/screen/pull()
 	pull_icon.icon = 'icons/mob/screen_cyborg.dmi'
-	pull_icon.update_icon(mymob)
+	pull_icon.hud = src
+	pull_icon.update_icon()
 	pull_icon.screen_loc = ui_borg_pull
 	hotkeybuttons += pull_icon
 
 
 	zone_select = new /obj/screen/zone_sel/robot()
-	zone_select.update_icon(mymob)
+	zone_select.hud = src
+	zone_select.update_icon()
 	static_inventory += zone_select
 
 

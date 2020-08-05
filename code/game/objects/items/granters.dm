@@ -1,4 +1,3 @@
-
 ///books that teach things (intrinsic actions like bar flinging, spells like fireball or smoke, or martial arts)///
 
 /obj/item/book/granter
@@ -12,21 +11,81 @@
 
 /obj/item/book/granter/proc/turn_page(mob/user)
 	playsound(user, pick('sound/effects/pageturn1.ogg','sound/effects/pageturn2.ogg','sound/effects/pageturn3.ogg'), 30, 1)
-	if(do_after(user,50, user))
-		to_chat(user, "<span class='notice'>[pick(remarks)]</span>")
+	if(do_after(user,50, TRUE, user))
+		if(remarks.len)
+			to_chat(user, "<span class='notice'>[pick(remarks)]</span>")
+		else
+			to_chat(user, "<span class='notice'>You keep reading...</span>")
 		return TRUE
 	return FALSE
 
 /obj/item/book/granter/proc/recoil(mob/user) //nothing so some books can just return
 
+/obj/item/book/granter/proc/already_known(mob/user)
+	return FALSE
+
+/obj/item/book/granter/proc/on_reading_start(mob/user)
+	to_chat(user, "<span class='notice'>You start reading [name]...</span>")
+
+/obj/item/book/granter/proc/on_reading_stopped(mob/user)
+	to_chat(user, "<span class='notice'>You stop reading...</span>")
+
+/obj/item/book/granter/proc/on_reading_finished(mob/user)
+	to_chat(user, "<span class='notice'>You finish reading [name]!</span>")
+
 /obj/item/book/granter/proc/onlearned(mob/user)
 	used = TRUE
 
+
 /obj/item/book/granter/attack_self(mob/user)
-	if(reading == TRUE)
+	if(reading)
 		to_chat(user, "<span class='warning'>You're already reading this!</span>")
 		return FALSE
+	if(already_known(user))
+		return FALSE
+	if(used && oneuse)
+		recoil(user)
+	else
+		on_reading_start(user)
+		reading = TRUE
+		for(var/i=1, i<=pages_to_mastery, i++)
+			if(!turn_page(user))
+				on_reading_stopped()
+				reading = FALSE
+				return
+		if(do_after(user,50, TRUE, user))
+			on_reading_finished(user)
+		reading = FALSE
 	return TRUE
+///TRAITS///
+
+/obj/item/book/granter/trait
+	var/granted_trait
+	var/traitname = "being cool"
+
+/obj/item/book/granter/trait/already_known(mob/user)
+	if(!granted_trait)
+		return TRUE
+	if(HAS_TRAIT(user, granted_trait))
+		to_chat(user, "<span class ='notice'>You already have all the insight you need about [traitname].")
+		return TRUE
+	return FALSE
+
+/obj/item/book/granter/trait/on_reading_start(mob/user)
+	to_chat(user, "<span class='notice'>You start reading about [traitname]...</span>")
+
+/obj/item/book/granter/trait/on_reading_finished(mob/user)
+	to_chat(user, "<span class='notice'>You feel like you've got a good handle on [traitname]!</span>")
+	ADD_TRAIT(user, granted_trait, BOOK_TRAIT)
+
+/obj/item/book/granter/trait/rifleman
+	name = "\proper the Neo-Russian Rifleman\'s Primer"
+	desc = "A book with stains of vodka and...blood? The back is hard to read, but says something about bolt-actions. Or pump-actions. Both, maybe."
+	oneuse = FALSE
+	granted_trait = TRAIT_FAST_PUMP
+	traitname = "riflery"
+	icon_state = "book1"
+	remarks = list("One smooth motion...", "Palm the bolt...", "Push up, rotate back, push forward, down...", "Don't slap yourself with the bolt...", "Wait, what's this about pumping?", "Who just scribbled \"Z\" and \"LMB\" on this page?")
 
 ///ACTION BUTTONS///
 
@@ -34,33 +93,23 @@
 	var/granted_action
 	var/actionname = "catching bugs" //might not seem needed but this makes it so you can safely name action buttons toggle this or that without it fucking up the granter, also caps
 
-/obj/item/book/granter/action/attack_self(mob/user)
-	. = ..()
-	if(!.)
-		return
+/obj/item/book/granter/action/already_known(mob/user)
 	if(!granted_action)
-		return
-	var/datum/action/G = new granted_action
+		return TRUE
 	for(var/datum/action/A in user.actions)
-		if(A.type == G.type)
+		if(A.type == granted_action)
 			to_chat(user, "<span class='notice'>You already know all about [actionname].</span>")
-			qdel(G)
-			return
-	if(used == TRUE && oneuse == TRUE)
-		recoil(user)
-	else
-		to_chat(user, "<span class='notice'>You start reading about [actionname]...</span>")
-		reading = TRUE
-		for(var/i=1, i<=pages_to_mastery, i++)
-			if(!turn_page(user))
-				to_chat(user, "<span class='notice'>You stop reading...</span>")
-				reading = FALSE
-				qdel(G)
-				return
-		if(do_after(user,50, user))
-			to_chat(user, "<span class='notice'>You feel like you've got a good handle on [actionname]!</span>")
-			G.Grant(user)
-		reading = FALSE
+			return TRUE
+	return FALSE
+
+/obj/item/book/granter/action/on_reading_start(mob/user)
+	to_chat(user, "<span class='notice'>You start reading about [actionname]...</span>")
+
+/obj/item/book/granter/action/on_reading_finished(mob/user)
+	to_chat(user, "<span class='notice'>You feel like you've got a good handle on [actionname]!</span>")
+	var/datum/action/G = new granted_action
+	G.Grant(user)
+	onlearned(user)
 
 /obj/item/book/granter/action/drink_fling
 	granted_action = /datum/action/innate/drink_fling
@@ -87,44 +136,61 @@
 	active = FALSE
 	UpdateButtonIcon()
 
+/obj/item/book/granter/action/origami
+	granted_action = /datum/action/innate/origami
+	name = "The Art of Origami"
+	desc = "A meticulously in-depth manual explaining the art of paper folding."
+	icon_state = "origamibook"
+	actionname = "origami"
+	oneuse = TRUE
+	remarks = list("Dead-stick stability...", "Symmetry seems to play a rather large factor...", "Accounting for crosswinds... really?", "Drag coefficients of various paper types...", "Thrust to weight ratios?", "Positive dihedral angle?", "Center of gravity forward of the center of lift...")
+
+/datum/action/innate/origami
+	name = "Origami Folding"
+	desc = "Toggles your ability to fold and catch robust paper airplanes."
+	button_icon_state = "origami_off"
+	check_flags = NONE
+
+/datum/action/innate/origami/Activate()
+	to_chat(owner, "<span class='notice'>You will now fold origami planes.</span>")
+	button_icon_state = "origami_on"
+	active = TRUE
+	UpdateButtonIcon()
+
+/datum/action/innate/origami/Deactivate()
+	to_chat(owner, "<span class='notice'>You will no longer fold origami planes.</span>")
+	button_icon_state = "origami_off"
+	active = FALSE
+	UpdateButtonIcon()
+
 ///SPELLS///
 
 /obj/item/book/granter/spell
 	var/spell
 	var/spellname = "conjure bugs"
 
-/obj/item/book/granter/spell/attack_self(mob/user)
-	. = ..()
-	if(!.)
-		return
+/obj/item/book/granter/spell/already_known(mob/user)
 	if(!spell)
-		return
-	var/obj/effect/proc_holder/spell/S = new spell
+		return TRUE
 	for(var/obj/effect/proc_holder/spell/knownspell in user.mind.spell_list)
-		if(knownspell.type == S.type)
+		if(knownspell.type == spell)
 			if(user.mind)
 				if(iswizard(user))
-					to_chat(user,"<span class='notice'>You're already far more versed in this spell than this flimsy howto book can provide.</span>")
+					to_chat(user,"<span class='notice'>You're already far more versed in this spell than this flimsy how-to book can provide.</span>")
 				else
 					to_chat(user,"<span class='notice'>You've already read this one.</span>")
-			return
-	if(used == TRUE && oneuse == TRUE)
-		recoil(user)
-	else
-		to_chat(user, "<span class='notice'>You start reading about casting [spellname]...</span>")
-		reading = TRUE
-		for(var/i=1, i<=pages_to_mastery, i++)
-			if(!turn_page(user))
-				to_chat(user, "<span class='notice'>You stop reading...</span>")
-				reading = FALSE
-				qdel(S)
-				return
-		if(do_after(user,50, user))
-			to_chat(user, "<span class='notice'>You feel like you've experienced enough to cast [spellname]!</span>")
-			user.mind.AddSpell(S)
-			user.log_message("learned the spell [spellname] ([S])", LOG_ATTACK, color="orange")
-			onlearned(user)
-		reading = FALSE
+			return TRUE
+	return FALSE
+
+/obj/item/book/granter/spell/on_reading_start(mob/user)
+	to_chat(user, "<span class='notice'>You start reading about casting [spellname]...</span>")
+
+/obj/item/book/granter/spell/on_reading_finished(mob/user)
+	to_chat(user, "<span class='notice'>You feel like you've experienced enough to cast [spellname]!</span>")
+	var/obj/effect/proc_holder/spell/S = new spell
+	user.mind.AddSpell(S)
+	user.log_message("learned the spell [spellname] ([S])", LOG_ATTACK, color="orange")
+	onlearned(user)
 
 /obj/item/book/granter/spell/recoil(mob/user)
 	user.visible_message("<span class='warning'>[src] glows in a black light!</span>")
@@ -146,6 +212,23 @@
 	explosion(user.loc, 1, 0, 2, 3, FALSE, FALSE, 2)
 	qdel(src)
 
+/obj/item/book/granter/spell/nuclearfist
+	spell = /obj/effect/proc_holder/spell/targeted/touch/nuclear_fist
+	spellname = "nuclear fist"
+	icon_state ="booknuclearfist"
+	desc = "This book radiates confidence."
+	remarks = list("Line them up....", ".. knock em' down...", "Dress in yellow for maximum effect... why?", "The energy comes from spinach... huh", "Work out for three years? No way!", "Oh I'll cast you a spell allright...", "What ho mighty wizard... ho ho ho...")
+
+/obj/item/book/granter/spell/nuclearfist/recoil(mob/living/carbon/user)
+	..()
+	to_chat(user, "<span class='danger'>Your arm spontaneously detonates!</span>")
+	explosion(user.loc, -1, 0, 2, -1, FALSE, FALSE, 2)
+	var/obj/item/bodypart/part = user.get_holding_bodypart_of_item(src)
+	if(part)
+		part.dismember()
+		qdel(part)
+
+
 /obj/item/book/granter/spell/sacredflame
 	spell = /obj/effect/proc_holder/spell/targeted/sacred_flame
 	spellname = "sacred flame"
@@ -166,10 +249,8 @@
 /obj/item/book/granter/spell/smoke/recoil(mob/user)
 	..()
 	to_chat(user,"<span class='caution'>Your stomach rumbles...</span>")
-	if(user.nutrition)
-		user.nutrition = 200
-		if(user.nutrition <= 0)
-			user.nutrition = 0
+	if(user.nutrition > NUTRITION_LEVEL_STARVING + 50)
+		user.set_nutrition(NUTRITION_LEVEL_STARVING + 50)
 
 /obj/item/book/granter/spell/blind
 	spell = /obj/effect/proc_holder/spell/targeted/trigger/blind
@@ -240,7 +321,7 @@
 /obj/item/book/granter/spell/knock/recoil(mob/living/user)
 	..()
 	to_chat(user,"<span class='warning'>You're knocked down!</span>")
-	user.Knockdown(40)
+	user.DefaultCombatKnockdown(40)
 
 /obj/item/book/granter/spell/barnyard
 	spell = /obj/effect/proc_holder/spell/targeted/barnyardcurse
@@ -252,10 +333,7 @@
 /obj/item/book/granter/spell/barnyard/recoil(mob/living/carbon/user)
 	if(ishuman(user))
 		to_chat(user,"<font size='15' color='red'><b>HORSIE HAS RISEN</b></font>")
-		var/obj/item/clothing/mask/horsehead/magichead = new /obj/item/clothing/mask/horsehead
-		magichead.item_flags |= NODROP		//curses!
-		magichead.flags_inv &= ~HIDEFACE //so you can still see their face
-		magichead.voicechange = TRUE	//NEEEEIIGHH
+		var/obj/item/clothing/magichead = new /obj/item/clothing/mask/horsehead/cursed(user.drop_location())
 		if(!user.dropItemToGround(user.wear_mask))
 			qdel(user.wear_mask)
 		user.equip_to_slot_if_possible(magichead, SLOT_WEAR_MASK, TRUE, TRUE)
@@ -268,7 +346,7 @@
 	spellname = "charge"
 	icon_state ="bookcharge"
 	desc = "This book is made of 100% postconsumer wizard."
-	remarks = list("I feel ALIVE!", "I CAN TASTE THE MANA!", "What a RUSH!", "I'm FLYING through these pages!", "THIS GENIUS IS MAKING IT!", "This book is ACTION PAcKED!", "HE'S DONE IT", "LETS GOOOOOOOOOOOO")
+	remarks = list("I feel ALIVE!", "I CAN TASTE THE MANA!", "What a RUSH!", "I'm FLYING through these pages!", "THIS GENIUS IS MAKING IT!", "This book is ACTION PAcKED!", "HE'S DONE IT", "LETS GOOOOOOOOOOOO", "Just wait faster is all...")
 
 /obj/item/book/granter/spell/charge/recoil(mob/user)
 	..()
@@ -304,35 +382,24 @@
 	var/martialname = "bug jitsu"
 	var/greet = "You feel like you have mastered the art in breaking code. Nice work, jackass."
 
-/obj/item/book/granter/martial/attack_self(mob/user)
-	. = ..()
-	if(!.)
-		return
+/obj/item/book/granter/martial/already_known(mob/user)
 	if(!martial)
-		return
+		return TRUE
+	var/datum/martial_art/MA = martial
+	if(user.mind.has_martialart(initial(MA.id)))
+		to_chat(user,"<span class='warning'>You already know [martialname]!</span>")
+		return TRUE
+	return FALSE
+
+/obj/item/book/granter/martial/on_reading_start(mob/user)
+	to_chat(user, "<span class='notice'>You start reading about [martialname]...</span>")
+
+/obj/item/book/granter/martial/on_reading_finished(mob/user)
+	to_chat(user, "[greet]")
 	var/datum/martial_art/MA = new martial
-	if(user.mind.martial_art)
-		for(var/datum/martial_art/knownmartial in user.mind.martial_art)
-			if(knownmartial.type == MA.type)
-				to_chat(user,"<span class='warning'>You already know [martialname]!</span>")
-				return
-	if(used == TRUE && oneuse == TRUE)
-		recoil(user)
-	else
-		to_chat(user, "<span class='notice'>You start reading about [martialname]...</span>")
-		reading = TRUE
-		for(var/i=1, i<=pages_to_mastery, i++)
-			if(!turn_page(user))
-				to_chat(user, "<span class='notice'>You stop reading...</span>")
-				reading = FALSE
-				qdel(MA)
-				return
-		if(do_after(user,50, user))
-			to_chat(user, "[greet]")
-			MA.teach(user)
-			user.log_message("learned the martial art [martialname] ([MA])", LOG_ATTACK, color="orange")
-			onlearned(user)
-		reading = FALSE
+	MA.teach(user)
+	user.log_message("learned the martial art [martialname] ([MA])", LOG_ATTACK, color="orange")
+	onlearned(user)
 
 /obj/item/book/granter/martial/cqc
 	martial = /datum/martial_art/cqc
@@ -362,12 +429,30 @@
 	martialname = "sleeping carp"
 	desc = "A scroll filled with strange markings. It seems to be drawings of some sort of martial art."
 	greet = "<span class='sciradio'>You have learned the ancient martial art of the Sleeping Carp! Your hand-to-hand combat has become much more effective, and you are now able to deflect any projectiles \
-	directed toward you. However, you are also unable to use any ranged weaponry. You can learn more about your newfound art by using the Recall Teachings verb in the Sleeping Carp tab.</span>"
+	directed toward you while in Throw Mode. Your body is also honed to protect you from damage and punctures, and even briefly survive space. \
+	However, you are also unable to use any ranged weaponry, and some medical supplies will prove useless to you. You can learn more about your newfound art by using the Recall Teachings verb in the Sleeping Carp tab.</span>"
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "scroll2"
-	remarks = list("I must prove myself worthy to the masters of the sleeping carp...", "Stance means everything...", "Focus... And you'll be able to incapacitate any foe in seconds...", "I must pierce armor for maximum damage...", "I don't think this would combine with other martial arts...", "Grab them first so they don't retaliate...", "I must prove myself worthy of this power...")
+	remarks = list("Wait, a high protein diet is really all it takes to become bulletproof...?", "Overwhelming force, immovable object...", "Focus... And you'll be able to incapacitate any foe in seconds...", "I must pierce armor for maximum damage...", "I don't think this would combine with other martial arts...", "Become one with the carp...", "Glub...")
 
 /obj/item/book/granter/martial/carp/onlearned(mob/living/carbon/user)
+	..()
+	if(oneuse == TRUE)
+		desc = "It's completely blank."
+		name = "empty scroll"
+		icon_state = "blankscroll"
+
+/obj/item/book/granter/martial/bass
+	martial = /datum/martial_art/the_rising_bass
+	name = "shifting scroll"
+	martialname = "rising bass"
+	desc = "A paper scroll that seems to move even as you read it, the letters never seem to stay still."
+	greet = "<span class='sciradio'>You have learned the ancient martial art of the Rising Bass. Your skill at running away has increased quite a bit. Use the combos to get away from opponents quickly. Along with this, you now dodge all projectiles and catch anything thrown at you.</span>"
+	icon = 'icons/obj/wizard.dmi'
+	icon_state = "scroll2"
+	remarks = list("The trick is to disarm them...","Running away helps in many situations...","Never stay still...","Fighting won't help unless you're forced to...", "Crush their limbs to incapacitate them...", "Stay as far away as possible...")
+
+/obj/item/book/granter/martial/bass/onlearned(mob/living/carbon/user)
 	..()
 	if(oneuse == TRUE)
 		desc = "It's completely blank."
@@ -392,4 +477,76 @@
 		name = "empty scroll"
 		icon_state = "blankscroll"
 
+/obj/item/book/granter/martial/krav_maga
+	martial = /datum/martial_art/krav_maga
+	name = "parchment scroll"
+	martialname = "krav maga"
+	desc = "A worn parchment scrap written in an ancient language. Somehow you can still understand the lessons!"
+	greet = "<span class='sciradio'>You have learned the ancient martial art of Krav Maga. You have special attacks with which to take down your foes.</span>"
+	icon = 'icons/obj/wizard.dmi'
+	icon_state ="scroll2"
+	remarks = list("Sweep the legs...", "Chop the throat...", "Punch the lungs...", "Get the gold...", "Where are my sick gloves..?")
+
+/obj/item/book/granter/martial/krav_maga/onlearned(mob/living/carbon/user)
+	. = ..()
+	if(oneuse == TRUE)
+		desc = "It's completely blank."
+		name = "empty scroll"
+		icon_state = "blankscroll"
+
 // I did not include mushpunch's grant, it is not a book and the item does it just fine.
+
+
+//Crafting Recipe books
+
+/obj/item/book/granter/crafting_recipe
+	var/list/crafting_recipe_types = list() //Use full /datum/crafting_recipe/what_you_craft
+
+/obj/item/book/granter/crafting_recipe/on_reading_finished(mob/user)
+	. = ..()
+	if(!user.mind)
+		return
+	for(var/crafting_recipe_type in crafting_recipe_types)
+		var/datum/crafting_recipe/R = crafting_recipe_type
+		user.mind.teach_crafting_recipe(crafting_recipe_type)
+		to_chat(user,"<span class='notice'>You learned how to make [initial(R.name)].</span>")
+
+/obj/item/book/granter/crafting_recipe/threads //Durathread crafting book
+	name = "Credible Threads"
+	desc = "A simple book about sewing and usefull clothing crafting with cloth and durathreads."
+	crafting_recipe_types = list(/datum/crafting_recipe/durathread_duffelbag, /datum/crafting_recipe/durathread_toolbelt, /datum/crafting_recipe/durathread_bandolier, /datum/crafting_recipe/durathread_helmet, /datum/crafting_recipe/durathread_vest)
+	icon_state = "tailers_art1"
+	oneuse = FALSE
+	remarks = list("Durathread is cloth thats also fire-resistant?", "Strong threads that can be used with leather for some light weight storage!", "The cloth can withstand a beating it said but not that much...")
+
+/obj/item/book/granter/crafting_recipe/cooking_sweets_101 //We start at 101 for 103 and 105
+	name = "Cooking Desserts 101"
+	desc = "A cook book that teaches you some more of the newest desserts. AI approved, and a best seller on Honkplanet."
+	crafting_recipe_types = list(/datum/crafting_recipe/food/mimetart, /datum/crafting_recipe/food/berrytart, /datum/crafting_recipe/food/cocolavatart, /datum/crafting_recipe/food/clowncake, /datum/crafting_recipe/food/vanillacake)
+	icon_state = "cooking_learing_sweets"
+	oneuse = FALSE
+	remarks = list("So that is how icing is made!", "Placing fruit on top? How simple...", "Huh layering cake seems harder then this...", "This book smells like candy", "A clown must have made this page, or they forgot to spell check it before printing...", "Wait, a way to cook slime to be safe?")
+
+/obj/item/book/granter/crafting_recipe/coldcooking //Icecream
+	name = "Cooking with Ice"
+	desc = "A cook book that teaches you many old icecream treats."
+	crafting_recipe_types = list(/datum/crafting_recipe/food/banana_split, /datum/crafting_recipe/food/root_float, /datum/crafting_recipe/food/bluecharrie_float, /datum/crafting_recipe/food/charrie_float)
+	icon_state = "cooking_learing_ice"
+	oneuse = FALSE
+	remarks = list("Looks like these would sell much better in a plasma fire...", "Using glass bowls rather then cones?", "Mixing soda and ice-cream?", "Tall glasses with of liquids and solids...", "Just add a bit of icecream and cherry on top?")
+
+/obj/item/book/granter/crafting_recipe/bone_bow //Bow crafting for non-ashwalkers
+	name = "bowyery sandstone slab" // this is an actual word
+	desc = "A sandstone slab with inscriptions describing the Ash Walkers of Lavaland's bowyery."
+	crafting_recipe_types = list(/datum/crafting_recipe/bone_arrow, /datum/crafting_recipe/bone_bow, /datum/crafting_recipe/ashen_arrow, /datum/crafting_recipe/quiver, /datum/crafting_recipe/bow_tablet)
+	icon_state = "stone_tablet"
+	oneuse = FALSE
+	remarks = list("Sticking burning arrows into the sand makes them stronger...", "Breaking the bone apart to get shards, not sharpening the bone...", "Sinew is just like rope...")
+
+/obj/item/book/granter/crafting_recipe/under_the_oven //Illegal cook book
+	name = "Under The Oven"
+	desc = "A cook book that teaches you many illegal and fun candys. MALF AI approved, and a best seller on the blackmarket."
+	crafting_recipe_types = list()
+	icon_state = "cooking_learing_illegal"
+	oneuse = FALSE
+	remarks = list()

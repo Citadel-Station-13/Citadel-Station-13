@@ -7,6 +7,7 @@
 	icon_state = "singularity_s1"
 	anchored = TRUE
 	density = TRUE
+	move_resist = INFINITY
 	layer = MASSIVE_OBJ_LAYER
 	light_range = 6
 	appearance_flags = 0
@@ -58,7 +59,7 @@
 		last_failed_movement = direct
 		return 0
 
-/obj/singularity/attack_hand(mob/user)
+/obj/singularity/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	consume(user)
 	return TRUE
 
@@ -84,16 +85,17 @@
 /obj/singularity/attack_tk(mob/user)
 	if(iscarbon(user))
 		var/mob/living/carbon/C = user
+		log_game("[key_name(C)] has been disintegrated by attempting to telekenetically grab a singularity.</span>")
 		C.visible_message("<span class='danger'>[C]'s head begins to collapse in on itself!</span>", "<span class='userdanger'>Your head feels like it's collapsing in on itself! This was really not a good idea!</span>", "<span class='italics'>You hear something crack and explode in gore.</span>")
-		var/turf/T = get_turf(C)
 		for(var/i in 1 to 3)
 			C.apply_damage(30, BRUTE, BODY_ZONE_HEAD)
-			new /obj/effect/gibspawner/generic(T)
+			C.spawn_gibs()
 			sleep(1)
-		C.ghostize()
 		var/obj/item/bodypart/head/rip_u = C.get_bodypart(BODY_ZONE_HEAD)
 		rip_u.dismember(BURN) //nice try jedi
 		qdel(rip_u)
+		return
+	return ..()
 
 /obj/singularity/ex_act(severity, target)
 	switch(severity)
@@ -112,17 +114,17 @@
 
 
 /obj/singularity/bullet_act(obj/item/projectile/P)
-	return 0 //Will there be an impact? Who knows.  Will we see it? No.
+	qdel(P)
+	return BULLET_ACT_HIT //Will there be an impact? Who knows.  Will we see it? No.
 
 
 /obj/singularity/Bump(atom/A)
+	set waitfor = FALSE
 	consume(A)
-	return
-
 
 /obj/singularity/Bumped(atom/movable/AM)
+	set waitfor = FALSE
 	consume(AM)
-
 
 /obj/singularity/process()
 	if(current_size >= STAGE_TWO)
@@ -265,6 +267,7 @@
 
 
 /obj/singularity/proc/eat()
+	set waitfor = FALSE
 	for(var/tile in spiral_range_turfs(grav_pull, src))
 		var/turf/T = tile
 		if(!T || !isturf(loc))
@@ -281,8 +284,6 @@
 				else
 					consume(X)
 			CHECK_TICK
-	return
-
 
 /obj/singularity/proc/consume(atom/A)
 	var/gain = A.singularity_act(current_size, src)
@@ -292,8 +293,6 @@
 		name = "supermatter-charged [initial(name)]"
 		consumedSupermatter = 1
 		set_light(10)
-	return
-
 
 /obj/singularity/proc/move(force_move = 0)
 	if(!move_self)

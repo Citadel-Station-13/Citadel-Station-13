@@ -21,10 +21,19 @@ GLOBAL_LIST_EMPTY(uplinks)
 	var/datum/uplink_purchase_log/purchase_log
 	var/list/uplink_items
 	var/hidden_crystals = 0
+	var/unlock_note
+	var/unlock_code
+	var/failsafe_code
+	var/compact_mode = FALSE
+	var/debug = FALSE
+	var/saved_player_population = 0
+	var/list/filters = list()
 
-/datum/component/uplink/Initialize(_owner, _lockable = TRUE, _enabled = FALSE, datum/game_mode/_gamemode, starting_tc = 20)
+	
+/datum/component/uplink/Initialize(_owner, _lockable = TRUE, _enabled = FALSE, datum/game_mode/_gamemode, starting_tc = 20, datum/ui_state/_checkstate, datum/traitor_class/traitor_class)
 	if(!isitem(parent))
 		return COMPONENT_INCOMPATIBLE
+
 
 	RegisterSignal(parent, COMSIG_PARENT_ATTACKBY, .proc/OnAttackBy)
 	RegisterSignal(parent, COMSIG_ITEM_ATTACK_SELF, .proc/interact)
@@ -41,7 +50,10 @@ GLOBAL_LIST_EMPTY(uplinks)
 		RegisterSignal(parent, COMSIG_PEN_ROTATED, .proc/pen_rotation)
 
 	GLOB.uplinks += src
-	uplink_items = get_uplink_items(gamemode, TRUE, allow_restricted)
+	if(istype(traitor_class))
+		filters = traitor_class.uplink_filters
+		starting_tc = traitor_class.TC
+	uplink_items = get_uplink_items(gamemode, TRUE, allow_restricted, filters)
 
 	if(_owner)
 		owner = _owner
@@ -57,6 +69,7 @@ GLOBAL_LIST_EMPTY(uplinks)
 	if(!lockable)
 		active = TRUE
 		locked = FALSE
+	saved_player_population = GLOB.joined_player_list.len
 
 /datum/component/uplink/InheritComponent(datum/component/uplink/U)
 	lockable |= U.lockable
@@ -89,6 +102,15 @@ GLOBAL_LIST_EMPTY(uplinks)
 		return	//no hitting everyone/everything just to try to slot tcs in!
 	if(istype(I, /obj/item/stack/telecrystal))
 		LoadTC(user, I)
+	if(active)
+		if(I.GetComponent(/datum/component/uplink))
+			var/datum/component/uplink/hidden_uplink = I.GetComponent(/datum/component/uplink)
+			var/amt = hidden_uplink.telecrystals
+			hidden_uplink.telecrystals -= amt
+			src.telecrystals += amt
+			to_chat(user, "<span class='notice'>You connect the [I] to your uplink, siphoning [amt] telecrystals before quickly undoing the connection.")
+		else
+			return
 	for(var/category in uplink_items)
 		for(var/item in uplink_items[category])
 			var/datum/uplink_item/UI = uplink_items[category][item]
@@ -106,7 +128,18 @@ GLOBAL_LIST_EMPTY(uplinks)
 		return
 	active = TRUE
 	if(user)
+		//update the saved population
+		var/previous_player_population = saved_player_population
+		saved_player_population = GLOB.joined_player_list.len
+		//if population has changed, update uplink items
+		if(saved_player_population != previous_player_population)
+			//make sure discounts are not rerolled
+			var/old_discounts = uplink_items["Discounted Gear"]
+			uplink_items = get_uplink_items(gamemode, FALSE, allow_restricted, filters)
+			if(old_discounts)
+				uplink_items["Discounted Gear"] = old_discounts
 		ui_interact(user)
+
 	// an unlocked uplink blocks also opening the PDA or headset menu
 	return COMPONENT_NO_INTERACT
 
@@ -115,10 +148,17 @@ GLOBAL_LIST_EMPTY(uplinks)
 	active = TRUE
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
-		ui = new(user, src, ui_key, "uplink", name, 450, 750, master_ui, state)
-		ui.set_autoupdate(FALSE) // This UI is only ever opened by one person, and never is updated outside of user input.
-		ui.set_style("syndicate")
+		ui = new(user, src, ui_key, "Uplink", name, 620, 580, master_ui, state)
+		// This UI is only ever opened by one person,
+		// and never is updated outside of user input.
+		ui.set_autoupdate(FALSE)
 		ui.open()
+
+/datum/component/uplink/ui_host(mob/user)
+	if(istype(parent, /obj/item/implant)) //implants are like organs, not really located inside mobs codewise.
+		var/obj/item/implant/I = parent
+		return I.imp_in
+	return ..()
 
 /datum/component/uplink/ui_data(mob/user)
 	if(!user.mind)
@@ -126,48 +166,50 @@ GLOBAL_LIST_EMPTY(uplinks)
 	var/list/data = list()
 	data["telecrystals"] = telecrystals
 	data["lockable"] = lockable
+	data["compactMode"] = compact_mode
+	return data
 
+/datum/component/uplink/ui_static_data(mob/user)
+	var/list/data = list()
 	data["categories"] = list()
 	for(var/category in uplink_items)
 		var/list/cat = list(
 			"name" = category,
 			"items" = (category == selected_cat ? list() : null))
-		if(category == selected_cat)
-			for(var/item in uplink_items[category])
-				var/datum/uplink_item/I = uplink_items[category][item]
-				if(I.limited_stock == 0)
+		for(var/item in uplink_items[category])
+			var/datum/uplink_item/I = uplink_items[category][item]
+			if(I.limited_stock == 0)
+				continue
+			if(I.restricted_roles.len)
+				var/is_inaccessible = TRUE
+				for(var/R in I.restricted_roles)
+					if(R == user.mind.assigned_role || debug)
+						is_inaccessible = FALSE
+				if(is_inaccessible)
 					continue
-				if(I.restricted_roles.len)
-					var/is_inaccessible = 1
-					for(var/R in I.restricted_roles)
-						if(R == user.mind.assigned_role)
-							is_inaccessible = 0
 					if(is_inaccessible)
 						continue
-				cat["items"] += list(list(
-					"name" = I.name,
-					"cost" = I.cost,
-					"desc" = I.desc,
-				))
+			cat["items"] += list(list(
+				"name" = I.name,
+				"cost" = I.cost,
+				"desc" = I.desc,
+			))
 		data["categories"] += list(cat)
 	return data
 
 /datum/component/uplink/ui_act(action, params)
 	if(!active)
 		return
-
 	switch(action)
 		if("buy")
-			var/item = params["item"]
-
+			var/item_name = params["name"]
 			var/list/buyable_items = list()
 			for(var/category in uplink_items)
 				buyable_items += uplink_items[category]
-
-			if(item in buyable_items)
-				var/datum/uplink_item/I = buyable_items[item]
+			if(item_name in buyable_items)
+				var/datum/uplink_item/I = buyable_items[item_name]
 				MakePurchase(usr, I)
-				. = TRUE
+				return TRUE
 		if("lock")
 			active = FALSE
 			locked = TRUE
@@ -176,7 +218,10 @@ GLOBAL_LIST_EMPTY(uplinks)
 			SStgui.close_uis(src)
 		if("select")
 			selected_cat = params["category"]
-	return TRUE
+			return TRUE
+		if("compact_toggle")
+			compact_mode = !compact_mode
+			return TRUE
 
 /datum/component/uplink/proc/MakePurchase(mob/user, datum/uplink_item/U)
 	if(!istype(U))
@@ -219,11 +264,14 @@ GLOBAL_LIST_EMPTY(uplinks)
 
 /datum/component/uplink/proc/new_ringtone(datum/source, mob/living/user, new_ring_text)
 	var/obj/item/pda/master = parent
-	if(trim(lowertext(new_ring_text)) != trim(lowertext(master.lock_code))) //why is the lock code stored on the pda?
+	if(trim(lowertext(new_ring_text)) != trim(lowertext(unlock_code)))
+		if(trim(lowertext(new_ring_text)) == trim(lowertext(failsafe_code)))
+			failsafe(user)
+			return COMPONENT_STOP_RINGTONE_CHANGE
 		return
 	locked = FALSE
 	interact(null, user)
-	to_chat(user, "The PDA softly beeps.")
+	to_chat(user, "<span class='hear'>The PDA softly beeps.</span>")
 	user << browse(null, "window=pda")
 	master.mode = 0
 	return COMPONENT_STOP_RINGTONE_CHANGE
@@ -233,7 +281,9 @@ GLOBAL_LIST_EMPTY(uplinks)
 /datum/component/uplink/proc/new_frequency(datum/source, list/arguments)
 	var/obj/item/radio/master = parent
 	var/frequency = arguments[1]
-	if(frequency != master.traitor_frequency)
+	if(frequency != unlock_code)
+		if(frequency == failsafe_code)
+			failsafe(master.loc)
 		return
 	locked = FALSE
 	if(ismob(master.loc))
@@ -243,9 +293,40 @@ GLOBAL_LIST_EMPTY(uplinks)
 
 /datum/component/uplink/proc/pen_rotation(datum/source, degrees, mob/living/carbon/user)
 	var/obj/item/pen/master = parent
-	if(degrees != master.traitor_unlock_degrees)
+	if(degrees != unlock_code)
+		if(degrees == failsafe_code) //Getting failsafes on pens is risky business
+			failsafe()
 		return
 	locked = FALSE
 	master.degrees = 0
 	interact(null, user)
 	to_chat(user, "<span class='warning'>Your pen makes a clicking noise, before quickly rotating back to 0 degrees!</span>")
+
+/datum/component/uplink/proc/setup_unlock_code()
+	unlock_code = generate_code()
+	var/obj/item/P = parent
+	if(istype(parent,/obj/item/pda))
+		unlock_note = "<B>Uplink Passcode:</B> [unlock_code] ([P.name])."
+	else if(istype(parent,/obj/item/radio))
+		unlock_note = "<B>Radio Frequency:</B> [format_frequency(unlock_code)] ([P.name])."
+	else if(istype(parent,/obj/item/pen))
+		unlock_note = "<B>Uplink Degrees:</B> [unlock_code] ([P.name])."
+
+/datum/component/uplink/proc/generate_code()
+	if(istype(parent,/obj/item/pda))
+		return "[rand(100,999)] [pick(GLOB.phonetic_alphabet)]"
+	else if(istype(parent,/obj/item/radio))
+		return sanitize_frequency(rand(MIN_FREQ, MAX_FREQ))
+	else if(istype(parent,/obj/item/pen))
+		return rand(1, 360)
+
+/datum/component/uplink/proc/failsafe(mob/living/carbon/user)
+	if(!parent)
+		return
+	var/turf/T = get_turf(parent)
+	if(!T)
+		return
+	message_admins("[ADMIN_LOOKUPFLW(user)] has triggered an uplink failsafe explosion at [AREACOORD(T)] The owner of the uplink was [ADMIN_LOOKUPFLW(owner)].")
+	log_game("[key_name(user)] triggered an uplink failsafe explosion. The owner of the uplink was [key_name(owner)].")
+	explosion(T,1,2,3)
+	qdel(parent) //Alternatively could brick the uplink.

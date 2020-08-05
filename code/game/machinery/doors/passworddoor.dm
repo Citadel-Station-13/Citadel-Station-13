@@ -22,7 +22,7 @@
 	if(voice_activated)
 		flags_1 |= HEAR_1
 
-/obj/machinery/door/password/Hear(message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, message_mode)
+/obj/machinery/door/password/Hear(message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, message_mode, atom/movable/source)
 	. = ..()
 	if(!density || !voice_activated || radio_freq)
 		return
@@ -42,7 +42,7 @@
 		else
 			do_animate("deny")
 
-/obj/machinery/door/password/update_icon()
+/obj/machinery/door/password/update_icon_state()
 	if(density)
 		icon_state = "closed"
 	else

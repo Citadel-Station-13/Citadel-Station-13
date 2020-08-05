@@ -27,8 +27,10 @@ Bonus
 	severity = 1
 	symptom_delay_min = 5
 	symptom_delay_max = 35
-	threshold_desc = "<b>Transmission 9:</b> Increases sneezing range, spreading the virus over a larger area.<br>\
-					  <b>Stealth 4:</b> The symptom remains hidden until active."
+	threshold_desc = list(
+		"Transmission 9" = "Increases sneezing range, spreading the virus over 6 meter cone instead of over a 4 meter cone.",
+		"Stealth 4" = "The symptom remains hidden until active.",
+	)
 
 /datum/symptom/sneeze/Start(datum/disease/advance/A)
 	if(!..())
@@ -39,7 +41,7 @@ Bonus
 		suppress_warning = TRUE
 
 /datum/symptom/sneeze/Activate(datum/disease/advance/A)
-	if(!..())
+	if(!..() || HAS_TRAIT(A.affected_mob,TRAIT_NOBREATH))
 		return
 	var/mob/living/M = A.affected_mob
 	switch(A.stage)
@@ -48,4 +50,5 @@ Bonus
 				M.emote("sniff")
 		else
 			M.emote("sneeze")
-			A.spread(4 + power)
+			if(M.CanSpreadAirborneDisease()) //don't spread germs if they covered their mouth
+				A.spread(4 + power)

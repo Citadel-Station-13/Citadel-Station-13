@@ -38,7 +38,7 @@
 
 #define R_DEFAULT R_AUTOLOGIN
 
-#define R_EVERYTHING (1<<15)-1 //the sum of all other rank permissions, used for +EVERYTHING
+#define R_EVERYTHING ALL //the sum of all other rank permissions, used for +EVERYTHING
 
 #define ADMIN_QUE(user) "(<a href='?_src_=holder;[HrefToken(TRUE)];adminmoreinfo=[REF(user)]'>?</a>)"
 #define ADMIN_FLW(user) "(<a href='?_src_=holder;[HrefToken(TRUE)];adminplayerobservefollow=[REF(user)]'>FLW</a>)"
@@ -69,8 +69,18 @@
 #define ADMIN_PUNISHMENT_BSA "Bluespace Artillery Device"
 #define ADMIN_PUNISHMENT_FIREBALL "Fireball"
 #define ADMIN_PUNISHMENT_ROD "Immovable Rod"
+#define ADMIN_PUNISHMENT_SUPPLYPOD_QUICK "Supply Pod (Quick)"
 #define ADMIN_PUNISHMENT_SUPPLYPOD "Supply Pod"
 #define ADMIN_PUNISHMENT_MAZING "Puzzle"
+#define ADMIN_PUNISHMENT_PIE "Cream Pie"
+#define ADMIN_PUNISHMENT_CUSTOM_PIE "Custom Cream Pie"
+#define ADMIN_PUNISHMENT_SHOES "Knot Shoes"
+#define ADMIN_PUNISHMENT_CRACK ":B:oneless"
+#define ADMIN_PUNISHMENT_BLEED ":B:loodless"
+#define ADMIN_PUNISHMENT_SCARIFY "Scarify"
+#define ADMIN_PUNISHMENT_PICKLE "Pickle-ify"
+#define ADMIN_PUNISHMENT_FRY "Fry"
+#define ADMIN_PUNISHMENT_PERFORATE ":B:erforate"
 
 #define AHELP_ACTIVE 1
 #define AHELP_CLOSED 2

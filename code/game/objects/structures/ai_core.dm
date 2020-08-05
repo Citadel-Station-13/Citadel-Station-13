@@ -39,7 +39,7 @@
 
 /obj/structure/AIcore/latejoin_inactive/examine(mob/user)
 	. = ..()
-	to_chat(user, "Its transmitter seems to be [active? "on" : "off"].")
+	. += "Its transmitter seems to be [active? "on" : "off"]."
 
 /obj/structure/AIcore/latejoin_inactive/proc/is_available()			//If people still manage to use this feature to spawn-kill AI latejoins ahelp them.
 	if(!available)
@@ -52,7 +52,7 @@
 	var/area/A = get_area(src)
 	if(!A.blob_allowed)
 		return FALSE
-	if(!A.power_equip)
+	if(!A.powered(EQUIP))
 		return FALSE
 	if(!SSmapping.level_trait(T.z,ZTRAIT_STATION))
 		return FALSE
@@ -131,7 +131,7 @@
 					if(C.get_amount() >= 5)
 						playsound(loc, 'sound/items/deconstruct.ogg', 50, 1)
 						to_chat(user, "<span class='notice'>You start to add cables to the frame...</span>")
-						if(do_after(user, 20, target = src) && state == SCREWED_CORE && C.use(5))
+						if(do_after(user, 20, target = src) && state == SCREWED_CORE && C.use_tool(src, user, 0, 5))
 							to_chat(user, "<span class='notice'>You add cables to the frame.</span>")
 							state = CABLED_CORE
 							update_icon()
@@ -255,7 +255,7 @@
 					return
 	return ..()
 
-/obj/structure/AIcore/update_icon()
+/obj/structure/AIcore/update_icon_state()
 	switch(state)
 		if(EMPTY_CORE)
 			icon_state = "0"

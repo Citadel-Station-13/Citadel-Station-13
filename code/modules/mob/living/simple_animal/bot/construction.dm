@@ -101,7 +101,7 @@
 
 		if(ASSEMBLY_FOURTH_STEP)
 			if(istype(W, /obj/item/weldingtool))
-				if(W.use_tool(src, user, 0, volume=40))
+				if(W.use_tool(src, user, 0, volume=40) && build_step == ASSEMBLY_FOURTH_STEP)
 					name = "shielded frame assembly"
 					to_chat(user, "<span class='notice'>You weld the vest to [src].</span>")
 					build_step++
@@ -147,9 +147,8 @@
 					to_chat(user, "<span class='warning'>You need one length of cable to wire the ED-209!</span>")
 					return
 				to_chat(user, "<span class='notice'>You start to wire [src]...</span>")
-				if(do_after(user, 40, target = src))
-					if(coil.get_amount() >= 1 && build_step == 6)
-						coil.use(1)
+				if(coil.use_tool(src, user, 40, 1))
+					if(build_step == 6)
 						to_chat(user, "<span class='notice'>You wire [src].</span>")
 						name = "wired ED-209 assembly"
 						build_step++
@@ -183,7 +182,7 @@
 		if(8)
 			if(istype(W, /obj/item/screwdriver))
 				to_chat(user, "<span class='notice'>You start attaching the gun to the frame...</span>")
-				if(W.use_tool(src, user, 40, volume=100))
+				if(W.use_tool(src, user, 40, volume=100) && build_step == 8)
 					name = "armed [name]"
 					to_chat(user, "<span class='notice'>Taser gun attached.</span>")
 					build_step++
@@ -478,18 +477,19 @@
 					to_chat(user, "<span class='notice'>The superglue binding [src]'s toy swords to its chassis snaps!</span>")
 					for(var/IS in 1 to toyswordamt)
 						new /obj/item/toy/sword(Tsec)
+						toyswordamt--
 
 		if(ASSEMBLY_FIFTH_STEP)
 			if(istype(I, /obj/item/melee/transforming/energy/sword/saber))
 				if(swordamt < 3)
 					if(!user.temporarilyRemoveItemFromInventory(I))
 						return
-						created_name = "General Beepsky"
-						name = "helmet/signaler/prox sensor/robot arm/energy sword assembly"
-						icon_state = "grievous_assembly"
-						to_chat(user, "<span class='notice'>You bolt [I] onto one of [src]'s arm slots.</span>")
-						qdel(I)
-						swordamt ++
+					created_name = "General Beepsky"
+					name = "helmet/signaler/prox sensor/robot arm/energy sword assembly"
+					icon_state = "grievous_assembly"
+					to_chat(user, "<span class='notice'>You bolt [I] onto one of [src]'s arm slots.</span>")
+					qdel(I)
+					swordamt ++
 				else
 					if(!can_finish_build(I, user))
 						return
@@ -505,3 +505,34 @@
 				to_chat(user, "<span class='notice'>You unbolt [src]'s energy swords</span>")
 				for(var/IS in 1 to swordamt)
 					new /obj/item/melee/transforming/energy/sword/saber(Tsec)
+					swordamt--
+
+//Firebot Assembly
+/obj/item/bot_assembly/firebot
+	name = "incomplete firebot assembly"
+	desc = "A fire extinguisher with an arm attached to it."
+	icon_state = "firebot_arm"
+	created_name = "Firebot"
+
+/obj/item/bot_assembly/firebot/attackby(obj/item/I, mob/user, params)
+	..()
+	switch(build_step)
+		if(ASSEMBLY_FIRST_STEP)
+			if(istype(I, /obj/item/clothing/head/hardhat/red))
+				if(!user.temporarilyRemoveItemFromInventory(I))
+					return
+				to_chat(user,"<span class='notice'>You add the [I] to [src]!</span>")
+				icon_state = "firebot_helmet"
+				desc = "An incomplete firebot assembly with a fire helmet."
+				qdel(I)
+				build_step++
+
+		if(ASSEMBLY_SECOND_STEP)
+			if(isprox(I))
+				if(!can_finish_build(I, user))
+					return
+				to_chat(user, "<span class='notice'>You add the [I] to [src]! Beep Boop!</span>")
+				var/mob/living/simple_animal/bot/firebot/F = new(drop_location())
+				F.name = created_name
+				qdel(I)
+				qdel(src)

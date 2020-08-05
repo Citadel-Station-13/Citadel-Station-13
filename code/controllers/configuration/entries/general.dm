@@ -1,3 +1,5 @@
+/datum/config_entry/flag/auto_profile // Automatically start profiler on server start
+
 /datum/config_entry/flag/autoadmin  // if autoadmin is enabled
 	protection = CONFIG_ENTRY_LOCKED
 
@@ -39,7 +41,11 @@
 
 /datum/config_entry/flag/log_game	// log game events
 
+/datum/config_entry/flag/log_virus	// log virology data
+
 /datum/config_entry/flag/log_vote	// log voting
+
+/datum/config_entry/flag/log_craft	// log crafting
 
 /datum/config_entry/flag/log_whisper	// log client whisper
 
@@ -49,6 +55,8 @@
 
 /datum/config_entry/flag/log_adminchat	// log admin chat messages
 	protection = CONFIG_ENTRY_LOCKED
+
+/datum/config_entry/flag/log_shuttle // log shuttle related actions, ie shuttle computers, shuttle manipulator, emergency console
 
 /datum/config_entry/flag/log_pda	// log pda messages
 
@@ -75,6 +83,24 @@
 /datum/config_entry/number/vote_period  // length of voting period (deciseconds, default 1 minute)
 	config_entry_value = 600
 	min_val = 0
+
+/// Length of time before the first autotransfer vote is called (deciseconds, default 2 hours)
+/// Set to 0 to disable the subsystem altogether.
+/datum/config_entry/number/vote_autotransfer_initial
+	config_entry_value = 72000
+	min_val = 0
+
+///length of time to wait before subsequent autotransfer votes (deciseconds, default 30 minutes)
+/datum/config_entry/number/vote_autotransfer_interval
+	config_entry_value = 18000
+	min_val = 0
+
+/// maximum extensions until the round autoends.
+/// Set to 0 to force automatic crew transfer after the 'vote_autotransfer_initial' elapsed.
+/// Set to -1 to disable the maximum extensions cap.
+/datum/config_entry/number/vote_autotransfer_maximum
+	config_entry_value = 4
+	min_val = -1
 
 /datum/config_entry/flag/default_no_vote	// vote does not default to nochange/norestart
 
@@ -139,6 +165,11 @@
 /datum/config_entry/flag/load_legacy_ranks_only	//Loads admin ranks only from legacy admin_ranks.txt, while enabled ranks are mirrored to the database
 	protection = CONFIG_ENTRY_LOCKED
 
+/datum/config_entry/flag/mentors_mobname_only
+
+/datum/config_entry/flag/mentor_legacy_system	//Defines whether the server uses the legacy mentor system with mentors.txt or the SQL system
+	protection = CONFIG_ENTRY_LOCKED
+
 /datum/config_entry/string/hostedby
 
 /datum/config_entry/flag/norespawn
@@ -173,6 +204,9 @@
 /datum/config_entry/string/banappeals
 
 /datum/config_entry/string/wikiurl
+	config_entry_value = "https://katlin.dog/citadel-wiki"
+
+/datum/config_entry/string/wikiurltg
 	config_entry_value = "http://www.tgstation13.org/wiki"
 
 /datum/config_entry/string/forumurl
@@ -254,6 +288,9 @@
 /datum/config_entry/flag/maprotation
 
 /datum/config_entry/flag/tgstyle_maprotation
+
+/datum/config_entry/string/map_vote_type
+	config_entry_value = "SCORE"
 
 /datum/config_entry/number/maprotatechancedelta
 	config_entry_value = 0.75
@@ -377,6 +414,13 @@
 	config_entry_value = 50
 
 /datum/config_entry/flag/irc_announce_new_game
+	deprecated_by = /datum/config_entry/string/chat_announce_new_game
+
+/datum/config_entry/flag/irc_announce_new_game/DeprecationUpdate(value)
+	return ""	//default broadcast
+
+/datum/config_entry/string/chat_announce_new_game
+	config_entry_value = null
 
 /datum/config_entry/flag/debug_admin_hrefs
 
@@ -419,3 +463,12 @@
 /datum/config_entry/flag/log_pictures
 
 /datum/config_entry/flag/picture_logging_camera
+
+/datum/config_entry/number/max_bunker_days
+	config_entry_value = 7
+	min_val = 1
+
+/datum/config_entry/flag/minimaps_enabled
+	config_entry_value = TRUE
+
+/datum/config_entry/string/centcom_ban_db	// URL for the CentCom Galactic Ban DB API

@@ -11,7 +11,7 @@
 
 /obj/item/storage/book/ComponentInitialize()
 	. = ..()
-	GET_COMPONENT(STR, /datum/component/storage)
+	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.max_items = 1
 
 /obj/item/storage/book/attack_self(mob/user)
@@ -51,8 +51,8 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "bible",  
 	if(!istype(H))
 		return
 	// If H is the Chaplain, we can set the icon_state of the bible (but only once!)
-	if(!SSreligion.bible_icon_state && H.job == "Chaplain")
-		var/dat = "<html><head><title>Pick Bible Style</title></head><body><center><h2>Pick a bible style</h2></center><table>"
+	if(!GLOB.bible_icon_state && H.job == "Chaplain")
+		var/dat = "<html><head><meta http-equiv='Content-Type' content='text/html; charset=UTF-8'><title>Pick Bible Style</title></head><body><center><h2>Pick a bible style</h2></center><table>"
 		for(var/i in 1 to GLOB.biblestates.len)
 			var/icon/bibleicon = icon('icons/obj/storage.dmi', GLOB.biblestates[i])
 			var/nicename = GLOB.biblenames[i]
@@ -64,7 +64,7 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "bible",  
 /obj/item/storage/book/bible/Topic(href, href_list)
 	if(!usr.canUseTopic(src))
 		return
-	if(href_list["seticon"] && SSreligion && !SSreligion.bible_icon_state)
+	if(href_list["seticon"] && GLOB && !GLOB.bible_icon_state)
 		var/iconi = text2num(href_list["seticon"])
 		var/biblename = GLOB.biblenames[iconi]
 		var/obj/item/storage/book/bible/B = locate(href_list["src"])
@@ -74,10 +74,11 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "bible",  
 		if(B.icon_state == "honk1" || B.icon_state == "honk2")
 			var/mob/living/carbon/human/H = usr
 			H.dna.add_mutation(CLOWNMUT)
+			H.dna.add_mutation(SMILE)
 			H.equip_to_slot_or_del(new /obj/item/clothing/mask/gas/clown_hat(H), SLOT_WEAR_MASK)
 
-		SSreligion.bible_icon_state = B.icon_state
-		SSreligion.bible_item_state = B.item_state
+		GLOB.bible_icon_state = B.icon_state
+		GLOB.bible_item_state = B.item_state
 
 		SSblackbox.record_feedback("text", "religion_book", 1, "[biblename]")
 		usr << browse(null, "window=editicon")
@@ -89,7 +90,7 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "bible",  
 			to_chat(user, "<span class='warning'>[src.deity_name] refuses to heal this metallic taint!</span>")
 			return 0
 
-	var/heal_amt = 10
+	var/heal_amt = 5
 	var/list/hurt_limbs = H.get_damaged_bodyparts(1, 1)
 
 	if(hurt_limbs.len)
@@ -103,13 +104,13 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "bible",  
 		SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, "blessing", /datum/mood_event/blessing)
 	return 1
 
-/obj/item/storage/book/bible/attack(mob/living/M, mob/living/carbon/human/user, heal_mode = TRUE)
+/obj/item/storage/book/bible/attack(mob/living/M, mob/living/user, attackchain_flags = NONE, damage_multiplier = 1, heal_mode = TRUE)
 
 	if (!user.IsAdvancedToolUser())
 		to_chat(user, "<span class='warning'>You don't have the dexterity to do this!</span>")
 		return
 
-	if (user.has_trait(TRAIT_CLUMSY) && prob(50))
+	if (HAS_TRAIT(user, TRAIT_CLUMSY) && prob(50))
 		to_chat(user, "<span class='danger'>[src] slips out of your hand and hits your head.</span>")
 		user.take_bodypart_damage(10)
 		user.Unconscious(400)
@@ -138,8 +139,8 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "bible",  
 			smack = 0
 		else if(iscarbon(M))
 			var/mob/living/carbon/C = M
-			if(!istype(C.head, /obj/item/clothing/head/helmet))
-				C.adjustBrainLoss(5, 60)
+			if(!istype(C.head, /obj/item/clothing/head))
+				C.adjustOrganLoss(ORGAN_SLOT_BRAIN, 10, 80)
 				to_chat(C, "<span class='danger'>You feel dumber.</span>")
 
 		if(smack)
@@ -162,33 +163,35 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "bible",  
 			for(var/obj/effect/rune/R in orange(2,user))
 				R.invisibility = 0
 	if(user.mind && (user.mind.isholy))
-		if(A.reagents && A.reagents.has_reagent("water")) // blesses all the water in the holder
+		if(A.reagents && A.reagents.has_reagent(/datum/reagent/water)) // blesses all the water in the holder
 			to_chat(user, "<span class='notice'>You bless [A].</span>")
-			var/water2holy = A.reagents.get_reagent_amount("water")
-			A.reagents.del_reagent("water")
-			A.reagents.add_reagent("holywater",water2holy)
-		if(A.reagents && A.reagents.has_reagent("unholywater")) // yeah yeah, copy pasted code - sue me
+			var/water2holy = A.reagents.get_reagent_amount(/datum/reagent/water)
+			A.reagents.del_reagent(/datum/reagent/water)
+			A.reagents.add_reagent(/datum/reagent/water/holywater,water2holy)
+		if(A.reagents && A.reagents.has_reagent(/datum/reagent/fuel/unholywater)) // yeah yeah, copy pasted code - sue me
 			to_chat(user, "<span class='notice'>You purify [A].</span>")
-			var/unholy2clean = A.reagents.get_reagent_amount("unholywater")
-			A.reagents.del_reagent("unholywater")
-			A.reagents.add_reagent("holywater",unholy2clean)
-	if(istype(A, /obj/item/twohanded/required/cult_bastard) && !iscultist(user))
-		var/obj/item/twohanded/required/cult_bastard/sword = A
-		to_chat(user, "<span class='notice'>You begin to exorcise [sword].</span>")
+			var/unholy2clean = A.reagents.get_reagent_amount(/datum/reagent/fuel/unholywater)
+			A.reagents.del_reagent(/datum/reagent/fuel/unholywater)
+			A.reagents.add_reagent(/datum/reagent/water/holywater,unholy2clean)
+	if(istype(A, /obj/item/cult_bastard) || istype(A, /obj/item/melee/cultblade) && !iscultist(user))
+		to_chat(user, "<span class='notice'>You begin to exorcise [A].</span>")
 		playsound(src,'sound/hallucinations/veryfar_noise.ogg',40,1)
-		if(do_after(user, 40, target = sword))
+		if(do_after(user, 40, target = A))
 			playsound(src,'sound/effects/pray_chaplain.ogg',60,1)
-			for(var/obj/item/soulstone/SS in sword.contents)
-				SS.usability = TRUE
-				for(var/mob/living/simple_animal/shade/EX in SS)
-					SSticker.mode.remove_cultist(EX.mind, 1, 0)
-					EX.icon_state = "ghost1"
-					EX.name = "Purified [EX.name]"
-				SS.release_shades(user)
-				qdel(SS)
-			new /obj/item/nullrod/claymore(get_turf(sword))
-			user.visible_message("<span class='notice'>[user] has purified the [sword]!</span>")
-			qdel(sword)
+			if(istype(A, /obj/item/cult_bastard))
+				for(var/obj/item/soulstone/SS in A.contents)
+					SS.usability = TRUE
+					for(var/mob/living/simple_animal/shade/EX in SS)
+						SSticker.mode.remove_cultist(EX.mind, 1, 0)
+						EX.icon_state = "ghost1"
+						EX.name = "Purified [EX.name]"
+					SS.release_shades(user)
+					qdel(SS)
+				new /obj/item/nullrod/claymore(get_turf(A))
+			else
+				new /obj/item/claymore/purified(get_turf(A))
+			user.visible_message("<span class='notice'>[user] has purified [A]!</span>")
+			qdel(A)
 
 	else if(istype(A, /obj/item/soulstone) && !iscultist(user))
 		var/obj/item/soulstone/SS = A
@@ -235,11 +238,13 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "bible",  
 		var/ownername = H.real_name
 		desc += "<span class='warning'>The name [ownername] is written in blood inside the cover.</span>"
 
-/obj/item/storage/book/bible/syndicate/attack(mob/living/M, mob/living/carbon/human/user, heal_mode = TRUE)
-	if (user.a_intent == INTENT_HELP)
-		return ..()
-	else
-		return ..(M,user,heal_mode = FALSE)
+/obj/item/storage/book/bible/syndicate/attack(mob/living/M, mob/living/user, attackchain_flags = NONE, damage_multiplier = 1, heal_mode = TRUE)
+	if(user.a_intent != INTENT_HELP)
+		heal_mode = FALSE		//args pass over
+	return ..()		// to ..()
 
 /obj/item/storage/book/bible/syndicate/add_blood_DNA(list/blood_dna)
 	return FALSE
+
+/obj/item/storage/book/bible/syndicate/empty
+	uses = 0

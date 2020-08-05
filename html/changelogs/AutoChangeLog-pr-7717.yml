@@ -1,6 +1,0 @@
-author: "Tupinambis"
-delete-after: True
-changes: 
-  - rscadd: "The tesla engine has been replaced with a supermatter engine, and pubby engineering has been redesigned to accommodate this change."
-  - rscdel: "The tesla engine has been completely removed along with any related components"
-  - bugfix: "RD and R&D vents are now actually connected to the air distribution."

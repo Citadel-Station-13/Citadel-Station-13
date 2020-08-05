@@ -9,9 +9,11 @@
 	var/top_right_coords[3]
 	var/wipe_reservation_on_release = TRUE
 	var/turf_type = /turf/open/space
+	var/borderturf
 
 /datum/turf_reservation/transit
 	turf_type = /turf/open/space/transit
+	borderturf = /turf/open/space/transit/border
 
 /datum/turf_reservation/proc/Release()
 	var/v = reserved_turfs.Copy()
@@ -19,6 +21,12 @@
 		reserved_turfs -= i
 		SSmapping.used_turfs -= i
 	SSmapping.reserve_turfs(v)
+
+/datum/turf_reservation/transit/Release()
+	for(var/turf/open/space/transit/T in reserved_turfs)
+		for(var/atom/movable/AM in T)
+			T.throw_atom(AM)
+	. = ..()
 
 /datum/turf_reservation/proc/Reserve(width, height, zlevel)
 	if(width > world.maxx || height > world.maxy || width < 1 || height < 1)
@@ -60,7 +68,10 @@
 		T.flags_1 &= ~UNUSED_RESERVATION_TURF_1
 		SSmapping.unused_turfs["[T.z]"] -= T
 		SSmapping.used_turfs[T] = src
-		T.ChangeTurf(turf_type, turf_type)
+		if(borderturf && (T.x == BL.x || T.x == TR.x || T.y == BL.y || T.y == TR.y))
+			T.ChangeTurf(borderturf, borderturf)
+		else
+			T.ChangeTurf(turf_type, turf_type)
 	src.width = width
 	src.height = height
 	return TRUE

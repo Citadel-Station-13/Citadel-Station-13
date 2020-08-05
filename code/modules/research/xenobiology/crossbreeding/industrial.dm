@@ -5,7 +5,6 @@ Industrial extracts:
 /obj/item/slimecross/industrial
 	name = "industrial extract"
 	desc = "A gel-like, sturdy extract, fond of plasma and industry."
-	container_type = INJECTABLE | DRAWABLE
 	effect = "industrial"
 	icon_state = "industrial_still"
 	var/plasmarequired = 2 //Units of plasma required to be consumed to produce item.
@@ -14,15 +13,15 @@ Industrial extracts:
 	var/itemamount = 1 //How many items to spawn
 
 /obj/item/slimecross/industrial/examine(mob/user)
-	..()
-	to_chat(user, "It currently has [plasmaabsorbed] units of plasma floating inside the outer shell, out of [plasmarequired] units.")
+	. = ..()
+	. += "It currently has [plasmaabsorbed] units of plasma floating inside the outer shell, out of [plasmarequired] units."
 
 /obj/item/slimecross/industrial/proc/do_after_spawn(obj/item/spawned)
 	return
 
 /obj/item/slimecross/industrial/Initialize()
 	. = ..()
-	create_reagents(100)
+	create_reagents(100, INJECTABLE | DRAWABLE)
 	START_PROCESSING(SSobj,src)
 
 /obj/item/slimecross/industrial/Destroy()
@@ -31,13 +30,13 @@ Industrial extracts:
 
 /obj/item/slimecross/industrial/process()
 	var/IsWorking = FALSE
-	if(reagents.has_reagent("plasma",amount = 2) && plasmarequired > 1) //Can absorb as much as 2
+	if(reagents.has_reagent(/datum/reagent/toxin/plasma,amount = 2) && plasmarequired > 1) //Can absorb as much as 2
 		IsWorking = TRUE
-		reagents.remove_reagent("plasma",2)
+		reagents.remove_reagent(/datum/reagent/toxin/plasma,2)
 		plasmaabsorbed += 2
-	else if(reagents.has_reagent("plasma",amount = 1)) //Can absorb as little as 1
+	else if(reagents.has_reagent(/datum/reagent/toxin/plasma,amount = 1)) //Can absorb as little as 1
 		IsWorking = TRUE
-		reagents.remove_reagent("plasma",1)
+		reagents.remove_reagent(/datum/reagent/toxin/plasma,1)
 		plasmaabsorbed += 1
 
 	if(plasmaabsorbed >= plasmarequired)
@@ -54,7 +53,7 @@ Industrial extracts:
 
 /obj/item/slimecross/industrial/grey
 	colour = "grey"
-	itempath = /obj/item/reagent_containers/food/snacks/monkeycube
+	itempath = /obj/item/reagent_containers/food/snacks/cube/monkey
 	itemamount = 5
 
 /obj/item/slimecross/industrial/orange

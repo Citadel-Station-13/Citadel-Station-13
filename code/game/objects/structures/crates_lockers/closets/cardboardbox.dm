@@ -18,11 +18,14 @@
 	var/egged = 0
 	var/use_mob_movespeed = FALSE //Citadel adds snowflake box handling
 
-/obj/structure/closet/cardboard/relaymove(mob/user, direction)
-	if(opened || move_delay || user.stat || user.IsStun() || user.IsKnockdown() || user.IsUnconscious() || !isturf(loc) || !has_gravity(loc))
+/obj/structure/closet/cardboard/relaymove(mob/living/user, direction)
+	if(opened || move_delay || !CHECK_MOBILITY(user, MOBILITY_MOVE) || !isturf(loc) || !has_gravity(loc))
 		return
 	move_delay = TRUE
-	if(step(src, direction))
+	var/oldloc = loc
+	step(src, direction)
+	user.setDir(direction)
+	if(oldloc != loc)
 		addtimer(CALLBACK(src, .proc/ResetMoveDelay), (use_mob_movespeed ? user.movement_delay() : CONFIG_GET(number/movedelay/walk_delay)) * move_speed_multiplier)
 	else
 		ResetMoveDelay()
@@ -40,7 +43,7 @@
 			Snake = L
 			break
 		if(Snake)
-			alerted = viewers(7,src)
+			alerted = fov_viewers(world.view,src)
 	..()
 	if(LAZYLEN(alerted))
 		egged = world.time + SNAKE_SPAM_TICKS
@@ -57,6 +60,11 @@
 	I.alpha = 0
 	animate(I, pixel_z = 32, alpha = 255, time = 5, easing = ELASTIC_EASING)
 
+/obj/structure/closet/cardboard/handle_lock_addition() //Whoever heard of a lockable cardboard box anyway
+	return
+
+/obj/structure/closet/cardboard/handle_lock_removal()
+	return
 
 /obj/structure/closet/cardboard/metal
 	name = "large metal box"

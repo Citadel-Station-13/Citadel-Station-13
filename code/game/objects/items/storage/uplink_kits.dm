@@ -1,8 +1,8 @@
 /obj/item/storage/box/syndicate
 
 /obj/item/storage/box/syndicate/PopulateContents()
-	switch (pickweight(list("bloodyspai" = 3, "stealth" = 2, "bond" = 2, "screwed" = 2, "sabotage" = 3, "guns" = 2, "murder" = 2, "implant" = 1, "hacker" = 3, "darklord" = 1, "sniper" = 1, "metaops" = 1, "ninja" = 1)))
-		if("bloodyspai") // 27 tc now this is more right
+	switch (pickweight(list("bloodyspai" = 3, "stealth" = 2, "bond" = 2, "screwed" = 2, "sabotage" = 3, "guns" = 2, "murder" = 2, "baseball" = 1, "implant" = 1, "hacker" = 3, "darklord" = 1, "sniper" = 1, "metaops" = 1, "ninja" = 1)))
+		if("bloodyspai") // 30 tc now this is more right
 			new /obj/item/clothing/under/chameleon(src) // 2 tc since it's not the full set
 			new /obj/item/clothing/mask/chameleon(src) // Goes with above
 			new /obj/item/card/id/syndicate(src) // 2 tc
@@ -11,7 +11,7 @@
 			new /obj/item/multitool/ai_detect(src) // 1 tc
 			new /obj/item/encryptionkey/syndicate(src) // 2 tc
 			new /obj/item/reagent_containers/syringe/mulligan(src) // 4 tc
-			new /obj/item/switchblade(src) //I'll count this as 2 tc
+			new /obj/item/switchblade(src) //I'll count this as 5 tc
 			new /obj/item/storage/fancy/cigarettes/cigpack_syndicate (src) // 2 tc this shit heals
 			new /obj/item/flashlight/emp(src) // 2 tc
 			new /obj/item/chameleon(src) // 7 tc
@@ -25,13 +25,13 @@
 			new /obj/item/clothing/glasses/thermal/syndi(src)
 
 		if("bond") // 29 tc
-			new /obj/item/gun/ballistic/automatic/pistol(src)
-			new /obj/item/suppressor(src)
+			new /obj/item/gun/ballistic/automatic/pistol/suppressed(src)
 			new /obj/item/ammo_box/magazine/m10mm(src)
 			new /obj/item/ammo_box/magazine/m10mm(src)
 			new /obj/item/clothing/under/chameleon(src)
 			new /obj/item/card/id/syndicate(src)
 			new /obj/item/reagent_containers/syringe/stimulants(src)
+			new /obj/item/clothing/neck/tie/red(src)
 
 		if("screwed") // 29 tc
 			new /obj/item/sbeacondrop/bomb(src)
@@ -41,7 +41,7 @@
 			new /obj/item/clothing/head/helmet/space/syndicate/black/red(src)
 			new /obj/item/encryptionkey/syndicate(src)
 
-		if("guns") // 28 tc now
+		if("guns") // 30 tc now
 			new /obj/item/gun/ballistic/revolver(src)
 			new /obj/item/ammo_box/a357(src)
 			new /obj/item/ammo_box/a357(src)
@@ -49,40 +49,65 @@
 			new /obj/item/grenade/plastic/c4(src)
 			new /obj/item/clothing/gloves/color/latex/nitrile(src)
 			new /obj/item/clothing/mask/gas/clown_hat(src)
-			new /obj/item/clothing/under/suit_jacket/really_black(src)
+			new /obj/item/clothing/under/suit/black_really(src)
+			new /obj/item/screwdriver/power(src) //2 tc item
 
-		if("murder") // 28 tc now
+		if("murder") // 35 tc
 			new /obj/item/melee/transforming/energy/sword/saber(src)
 			new /obj/item/clothing/glasses/thermal/syndi(src)
 			new /obj/item/card/emag(src)
 			new /obj/item/clothing/shoes/chameleon/noslip(src)
 			new /obj/item/encryptionkey/syndicate(src)
 			new /obj/item/grenade/syndieminibomb(src)
+			new /obj/item/clothing/glasses/phantomthief/syndicate(src)
+			new /obj/item/reagent_containers/syringe/stimulants(src)
 
-		if("implant") // 55+ tc holy shit what the fuck this is a lottery disguised as fun boxes isn't it?
+		if("baseball") // 42~ tc
+			new /obj/item/melee/baseball_bat/ablative/syndi(src) //Lets say 12 tc, lesser sleeping carp
+			new /obj/item/clothing/glasses/sunglasses/garb(src) //Lets say 2 tc
+			new /obj/item/card/emag(src) //6 tc
+			new /obj/item/clothing/shoes/sneakers/noslip(src) //2tc
+			new /obj/item/encryptionkey/syndicate(src) //1tc
+			new /obj/item/autosurgeon/anti_drop(src) //Lets just say 7~
+			new /obj/item/clothing/under/syndicate/baseball(src) //3tc
+			new /obj/item/clothing/head/soft/baseball(src) //Lets say 4 tc
+			new /obj/item/reagent_containers/hypospray/medipen/stimulants/baseball(src) //lets say 5tc
+
+		if("implant") // 67+ tc holy shit what the fuck this is a lottery disguised as fun boxes isn't it?
 			new /obj/item/implanter/freedom(src)
 			new /obj/item/implanter/uplink/precharged(src)
 			new /obj/item/implanter/emp(src)
 			new /obj/item/implanter/adrenalin(src)
 			new /obj/item/implanter/explosive(src)
 			new /obj/item/implanter/storage(src)
+			new /obj/item/implanter/radio/syndicate(src)
+			new /obj/item/implanter/stealth(src)
 
-		if("hacker") // 26 tc
+		if("hacker") // 30 tc
 			new /obj/item/aiModule/syndicate(src)
 			new /obj/item/card/emag(src)
 			new /obj/item/encryptionkey/binary(src)
 			new /obj/item/aiModule/toyAI(src)
 			new /obj/item/multitool/ai_detect(src)
+			new /obj/item/flashlight/emp(src)
+			new /obj/item/emagrecharge(src)
 
-		if("lordsingulo") // 24 tc
-			new /obj/item/sbeacondrop(src)
-			new /obj/item/clothing/suit/space/syndicate/black/red(src)
-			new /obj/item/clothing/head/helmet/space/syndicate/black/red(src)
-			new /obj/item/card/emag(src)
+		if("lordsingulo") // "36" tc aka 23 tc
+			new /obj/item/sbeacondrop(src) // 14 kinda useless
+			new /obj/item/clothing/suit/space/syndicate/black/red(src) //2
+			new /obj/item/clothing/head/helmet/space/syndicate/black/red(src) //2
+			new /obj/item/card/emag(src) //6
+			new /obj/item/emagrecharge(src) //2
+			new /obj/item/storage/toolbox/syndicate(src) //1
+			new /obj/item/card/id/syndicate(src) //2
+			new /obj/item/flashlight/emp(src) //2
+			new /obj/item/jammer(src) //5
 
-		if("sabotage") // 26 tc now
+		if("sabotage") // ~28 tc now
 			new /obj/item/grenade/plastic/c4 (src)
 			new /obj/item/grenade/plastic/c4 (src)
+			new /obj/item/grenade/plastic/x4 (src)
+			new /obj/item/grenade/plastic/x4 (src)
 			new /obj/item/doorCharge(src)
 			new /obj/item/doorCharge(src)
 			new /obj/item/camera_bug(src)
@@ -92,7 +117,7 @@
 			new /obj/item/pizzabox/bomb
 
 		if("darklord") //20 tc + tk + summon item close enough for now
-			new /obj/item/twohanded/dualsaber(src)
+			new /obj/item/dualsaber(src)
 			new /obj/item/dnainjector/telemut/darkbundle(src)
 			new /obj/item/clothing/suit/hooded/chaplain_hoodie(src)
 			new /obj/item/card/id/syndicate(src)
@@ -105,7 +130,7 @@
 			new /obj/item/clothing/glasses/thermal/syndi(src)
 			new /obj/item/clothing/gloves/color/latex/nitrile(src)
 			new /obj/item/clothing/mask/gas/clown_hat(src)
-			new /obj/item/clothing/under/suit_jacket/really_black(src)
+			new /obj/item/clothing/under/suit/black_really(src)
 
 		if("metaops") // 30 tc
 			new /obj/item/clothing/suit/space/hardsuit/syndi(src) // 8 tc
@@ -117,15 +142,15 @@
 			new /obj/item/grenade/plastic/c4 (src) // 1 tc
 			new /obj/item/card/emag(src) // 6 tc
 
-		if("ninja") // 33 tc worth
-			new /obj/item/katana(src) // Unique , hard to tell how much tc this is worth. 8 tc?
+		if("ninja") // 40~ tc worth
+			new /obj/item/katana(src) // Unique , basicly a better esword. 10 tc?
 			new /obj/item/implanter/adrenalin(src) // 8 tc
 			new /obj/item/throwing_star(src) // ~5 tc for all 6
 			new /obj/item/throwing_star(src)
 			new /obj/item/throwing_star(src)
-			new /obj/item/throwing_star(src)
-			new /obj/item/throwing_star(src)
-			new /obj/item/throwing_star(src)
+			new /obj/item/implanter/emp(src)
+			new /obj/item/grenade/smokebomb(src)
+			new /obj/item/grenade/smokebomb(src)
 			new /obj/item/storage/belt/chameleon(src) // Unique but worth at least 2 tc
 			new /obj/item/card/id/syndicate(src) // 2 tc
 			new /obj/item/chameleon(src) // 7 tc
@@ -195,7 +220,7 @@
 
 /obj/item/storage/box/syndie_kit/space/ComponentInitialize()
 	. = ..()
-	GET_COMPONENT(STR, /datum/component/storage)
+	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.max_w_class = WEIGHT_CLASS_NORMAL
 	STR.can_hold = typecacheof(list(/obj/item/clothing/suit/space/syndicate, /obj/item/clothing/head/helmet/space/syndicate))
 
@@ -219,7 +244,7 @@
 
 /obj/item/storage/box/syndie_kit/chemical/ComponentInitialize()
 	. = ..()
-	GET_COMPONENT(STR, /datum/component/storage)
+	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.max_items = 14
 
 /obj/item/storage/box/syndie_kit/chemical/PopulateContents()
@@ -269,17 +294,18 @@
 	name = "chameleon kit"
 
 /obj/item/storage/box/syndie_kit/chameleon/PopulateContents()
-	new /obj/item/clothing/under/chameleon(src)
-	new /obj/item/clothing/suit/chameleon(src)
-	new /obj/item/clothing/gloves/chameleon(src)
-	new /obj/item/clothing/shoes/chameleon(src)
-	new /obj/item/clothing/glasses/chameleon(src)
-	new /obj/item/clothing/head/chameleon(src)
-	new /obj/item/clothing/mask/chameleon(src)
-	new /obj/item/storage/backpack/chameleon(src)
-	new /obj/item/radio/headset/chameleon(src)
-	new /obj/item/stamp/chameleon(src)
-	new /obj/item/pda/chameleon(src)
+	new /obj/item/clothing/under/chameleon/syndicate(src)
+	new /obj/item/clothing/suit/chameleon/syndicate(src)
+	new /obj/item/clothing/gloves/chameleon/insulated/syndicate(src)
+	new /obj/item/clothing/shoes/chameleon/syndicate(src)
+	new /obj/item/clothing/glasses/chameleon/syndicate(src)
+	new /obj/item/clothing/head/chameleon/syndicate(src)
+	new /obj/item/clothing/mask/chameleon/syndicate(src)
+	new /obj/item/storage/backpack/chameleon/syndicate(src)
+	new /obj/item/radio/headset/chameleon/syndicate(src)
+	new /obj/item/stamp/chameleon/syndicate(src)
+	new /obj/item/pda/chameleon/syndicate(src)
+	new /obj/item/clothing/neck/cloak/chameleon/syndicate(src)
 
 //5*(2*4) = 5*8 = 45, 45 damage if you hit one person with all 5 stars.
 //Not counting the damage it will do while embedded (2*4 = 8, at 15% chance)
@@ -317,7 +343,7 @@
 	new /obj/item/implanter/radio/syndicate(src)
 
 /obj/item/storage/box/syndie_kit/centcom_costume/PopulateContents()
-	new /obj/item/clothing/under/rank/centcom_officer(src)
+	new /obj/item/clothing/under/rank/centcom/officer/syndicate(src)
 	new /obj/item/clothing/shoes/sneakers/black(src)
 	new /obj/item/clothing/gloves/color/black(src)
 	new /obj/item/radio/headset/headset_cent/empty(src)
@@ -348,6 +374,12 @@
 	for(var/i in 1 to 3)
 		new /obj/item/grenade/spawnergrenade/buzzkill(src)
 
+/obj/item/storage/box/syndie_kit/sleepytime/PopulateContents()
+	new /obj/item/clothing/under/syndicate/bloodred/sleepytime(src)
+	new /obj/item/reagent_containers/food/drinks/mug/coco(src)
+	new /obj/item/toy/plush/carpplushie(src)
+	new /obj/item/bedsheet/syndie(src)
+
 /obj/item/storage/box/syndie_kit/kitchen_gun
 	name = "Kitchen Gun (TM) package"
 
@@ -355,3 +387,127 @@
 	new /obj/item/gun/ballistic/automatic/pistol/m1911/kitchengun(src)
 	new /obj/item/ammo_box/magazine/m45/kitchengun(src)
 	new /obj/item/ammo_box/magazine/m45/kitchengun(src)
+
+
+/obj/item/storage/box/strange_seeds_10pack
+
+/obj/item/storage/box/strange_seeds_10pack/PopulateContents()
+	for(var/i in 1 to 10)
+		new /obj/item/seeds/random(src)
+
+	if(prob(50))
+		new /obj/item/seeds/random(src) //oops, an additional packet might have slipped its way into the box
+
+/obj/item/storage/box/syndie_kit/revolver
+
+/obj/item/storage/box/syndie_kit/revolver/PopulateContents()
+	new /obj/item/gun/ballistic/revolver(src)
+	new /obj/item/ammo_box/a357(src)
+
+/obj/item/storage/box/syndie_kit/pistol
+
+/obj/item/storage/box/syndie_kit/pistol/PopulateContents()
+	new /obj/item/gun/ballistic/automatic/pistol(src)
+	new /obj/item/ammo_box/magazine/m10mm(src)
+
+/obj/item/storage/box/syndie_kit/contract_kit
+	name = "contractor kit"
+	desc = "Supplied to Syndicate contractors in active mission areas."
+
+/obj/item/storage/box/syndicate/contractor_loadout
+	name = "standard loadout"
+	desc = "Supplied to Syndicate contractors, providing their specialised space suit and chameleon uniform."
+	icon_state = "syndiebox"
+	illustration = "writing_syndie"
+
+/obj/item/paper/contractor_guide
+	name = "Contractor Guide"
+
+/obj/item/paper/contractor_guide/Initialize()
+	info = {"<p>Welcome agent, congratulations on your new position as contractor. On top of your already assigned objectives,
+			this kit will provide you contracts to take on for TC payments.</p>
+			<p>Provided within, we give your specialist contractor space suit. It's even more compact, being able to fit into a pocket, and faster than the
+			Syndicate space suit available to you on the uplink. We also provide your chameleon jumpsuit and mask, both of which can be changed
+			to any form you need for the moment. The cigarettes are a special blend - it'll heal your injuries slowly overtime.</p>
+			<p>The three additional items, apart from the tablet and loadout box, have been randomly selected from what we had available. We hope
+			they're useful to you for you mission.</p>
+			<p>The contractor hub, available at the top right of the uplink, will provide you unique items and abilities. These are bought using Contractor Rep,
+			with two Rep being provided each time you complete a contract.</p>
+			<h3>Using the tablet</h3>
+			<ol>
+				<li>Open the Syndicate Contract Uplink program.</li>
+				<li>Assign yourself.</li>
+				<li>Here, you can accept a contract, and redeem your TC payments from completed contracts.</li>
+				<li>The payment number shown in brackets is the bonus you'll recieve when bringing your target <b>alive</b>. You recieve the
+				other number regardless of if they were alive or dead.</li>
+				<li>Contracts are completed by bringing the target to designated dropoff, calling for extraction, and putting them
+				inside the pod.</li>
+			</ol>
+			<p>Be careful when accepting a contract. While you'll be able to see the location of the dropoff point, cancelling will make it
+			unavailable to take on again.</p>
+			<p>The tablet can also be recharged at any cell charger.</p>
+			<h3>Extracting</h3>
+			<ol>
+				<li>Make sure both yourself and your target are at the dropoff.</li>
+				<li>Call the extraction, and stand back from the drop point</li>
+				<li>If it fails, make sure your target is inside, and there's a free space for the pod to land.</li>
+				<li>Grab your target, and drag them into the pod.</li>
+			</ol>
+			<h3>Ransoms</h3>
+			<p>We need your target for our own reasons, but we ransom them back to your mission area once their use is served. They will return back
+			from where you sent them off from in several minutes time. You will be paid in TC for your services.</p>
+
+			<p>Good luck agent. You can burn this document with the supplied lighter.</p>"}
+
+	return ..()
+
+/obj/item/storage/box/syndicate/contractor_loadout/PopulateContents()
+	new /obj/item/clothing/head/helmet/space/syndicate/contract(src)
+	new /obj/item/clothing/suit/space/syndicate/contract(src)
+	new /obj/item/clothing/under/chameleon(src)
+	new /obj/item/clothing/mask/chameleon(src)
+	new /obj/item/card/id/syndicate(src)
+	new /obj/item/storage/fancy/cigarettes/cigpack_syndicate(src)
+	new /obj/item/lighter(src)
+
+/obj/item/storage/box/syndie_kit/contract_kit/PopulateContents()
+	new /obj/item/modular_computer/tablet/syndicate_contract_uplink/preset/uplink(src)
+	new /obj/item/storage/box/syndicate/contractor_loadout(src)
+	new /obj/item/melee/classic_baton/telescopic/contractor_baton(src)
+	var/list/item_list = list(	// All 4 TC or less - some nukeops only items, but fit nicely to the theme.
+		/obj/item/storage/backpack/duffelbag/syndie/x4,
+		/obj/item/storage/box/syndie_kit/throwing_weapons,
+		/obj/item/gun/syringe/syndicate,
+		/obj/item/pen/edagger,
+		/obj/item/pen/sleepy,
+		/obj/item/flashlight/emp,
+		/obj/item/reagent_containers/syringe/mulligan,
+		/obj/item/clothing/shoes/chameleon/noslip,
+		/obj/item/storage/firstaid/tactical,
+		/obj/item/storage/backpack/duffelbag/syndie/surgery,
+		/obj/item/encryptionkey/syndicate,
+		/obj/item/clothing/glasses/thermal/syndi,
+		/obj/item/storage/box/syndie_kit/imp_uplink,
+		/obj/item/clothing/gloves/krav_maga/combatglovesplus,
+		/obj/item/gun/ballistic/automatic/c20r/toy/unrestricted/riot,
+		/obj/item/reagent_containers/syringe/stimulants,
+		/obj/item/storage/box/syndie_kit/imp_freedom,
+		/obj/item/storage/toolbox/infiltrator
+	)
+	var/obj/item1 = pick_n_take(item_list)
+	var/obj/item2 = pick_n_take(item_list)
+	var/obj/item3 = pick_n_take(item_list)
+	new item1(src)	// Create three, non repeat items from the list.
+	new item2(src)
+	new item3(src)
+	new /obj/item/paper/contractor_guide(src)	//Paper guide
+
+/obj/item/storage/box/syndie_kit/northstar
+
+/obj/item/storage/box/syndie_kit/northstar/PopulateContents()
+	new /obj/item/clothing/gloves/fingerless/pugilist/rapid(src)
+	new /obj/item/clothing/accessory/padding(src)
+	new /obj/item/clothing/under/chameleon(src)
+	new /obj/item/storage/fancy/cigarettes/cigpack_syndicate(src)
+	new /obj/item/lighter(src)
+

@@ -1,4 +1,0 @@
-author: "Tupinambis"
-delete-after: True
-changes: 
-  - bugfix: "Omegastation should no longer have any turf with missing textures, as those spots have been replaced with playing covered in a sandy turf decal."

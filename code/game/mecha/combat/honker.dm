@@ -10,6 +10,7 @@
 	max_temperature = 25000
 	infra_luminosity = 5
 	operation_req_access = list(ACCESS_THEATRE)
+	internals_req_access = list(ACCESS_THEATRE, ACCESS_ROBOTICS)
 	wreckage = /obj/structure/mecha_wreckage/honker
 	add_req_access = 0
 	max_equip = 3
@@ -20,7 +21,7 @@
 	var/cell_charge = get_charge()
 	var/datum/gas_mixture/int_tank_air = internal_tank.return_air()
 	var/tank_pressure = internal_tank ? round(int_tank_air.return_pressure(),0.01) : "None"
-	var/tank_temperature = internal_tank ? int_tank_air.temperature : "Unknown"
+	var/tank_temperature = internal_tank ? int_tank_air.return_temperature() : "Unknown"
 	var/cabin_pressure = round(return_pressure(),0.01)
 	var/output = {"[report_internal_damage()]
 						[integrity<30?"<font color='red'><b>DAMAGE LEVEL CRITICAL</b></font><br>":null]
@@ -41,7 +42,9 @@
 
 /obj/mecha/combat/honker/get_stats_html()
 	var/output = {"<html>
-						<head><title>[src.name] data</title>
+						<head>
+						<meta http-equiv='Content-Type' content='text/html; charset=UTF-8'>
+						<title>[src.name] data</title>
 						<style>
 						body {color: #00ff00; background: #32CD32; font-family:"Courier",monospace; font-size: 12px;}
 						hr {border: 1px solid #0f0; color: #fff; background-color: #000;}
@@ -57,19 +60,19 @@
 						[js_byjax]
 						[js_dropdowns]
 						function SSticker() {
-						    setInterval(function(){
-						        window.location='byond://?src=[REF(src)]&update_content=1';
-						        document.body.style.color = get_rand_color_string();
-						      document.body.style.background = get_rand_color_string();
-						    }, 1000);
+							setInterval(function(){
+								window.location='byond://?src=[REF(src)]&update_content=1';
+								document.body.style.color = get_rand_color_string();
+								document.body.style.background = get_rand_color_string();
+							}, 1000);
 						}
 
 						function get_rand_color_string() {
-						    var color = new Array;
-						    for(var i=0;i<3;i++){
-						        color.push(Math.floor(Math.random()*255));
-						    }
-						    return "rgb("+color.toString()+")";
+							var color = new Array;
+							for(var i=0;i<3;i++){
+								color.push(Math.floor(Math.random()*255));
+							}
+							return "rgb("+color.toString()+")";
 						}
 
 						window.onload = function() {
@@ -153,5 +156,3 @@
 	for (var/i=0;i<6;i++)
 		color = color+pick(colors)
 	return color
-
-

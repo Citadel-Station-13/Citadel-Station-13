@@ -5,16 +5,18 @@
 	var/list/testmerge = list()
 
 /datum/getrev/New()
+	commit = rustg_git_revparse("HEAD")
+	if(commit)
+		date = rustg_git_commit_date(commit)
+	originmastercommit = rustg_git_revparse("origin/master")
+
+/datum/getrev/proc/load_tgs_info()
 	testmerge = world.TgsTestMerges()
 	var/datum/tgs_revision_information/revinfo = world.TgsRevision()
 	if(revinfo)
 		commit = revinfo.commit
 		originmastercommit = revinfo.origin_commit
-	else
-		commit = rustg_git_revparse("HEAD")
-		if(commit)
-			date = rustg_git_commit_date(commit)
-		originmastercommit = rustg_git_revparse("origin/master")
+		date = rustg_git_commit_date(commit)
 
 	// goes to DD log and config_error.txt
 	log_world(get_log_message())
@@ -27,7 +29,8 @@
 
 	for(var/line in testmerge)
 		var/datum/tgs_revision_information/test_merge/tm = line
-		msg += "Test merge active of PR #[tm.number] commit [tm.commit]"
+		msg += "Test merge active of PR #[tm.number] commit [tm.pull_request_commit]"
+		SSblackbox.record_feedback("associative", "testmerged_prs", 1, list("number" = "[tm.number]", "commit" = "[tm.pull_request_commit]", "title" = "[tm.title]", "author" = "[tm.author]"))
 
 	if(commit && commit != originmastercommit)
 		msg += "HEAD: [commit]"
@@ -43,7 +46,7 @@
 	for(var/line in testmerge)
 		var/datum/tgs_revision_information/test_merge/tm = line
 		var/cm = tm.pull_request_commit
-		var/details = ": '" + html_encode(tm.title) + "' by " + html_encode(tm.author) + " at commit " + html_encode(copytext(cm, 1, min(length(cm), 11)))
+		var/details = ": '" + html_encode(tm.title) + "' by " + html_encode(tm.author) + " at commit " + html_encode(copytext_char(cm, 1, 11))
 		if(details && findtext(details, "\[s\]") && (!usr || !usr.client.holder))
 			continue
 		. += "<a href=\"[CONFIG_GET(string/githuburl)]/pull/[tm.number]\">#[tm.number][details]</a><br>"
@@ -57,11 +60,11 @@
 	// Round ID
 	if(GLOB.round_id)
 		msg += "<b>Round ID:</b> [GLOB.round_id]"
-	
+
 	msg += "<b>BYOND Version:</b> [world.byond_version].[world.byond_build]"
 	if(DM_VERSION != world.byond_version || DM_BUILD != world.byond_build)
 		msg += "<b>Compiled with BYOND Version:</b> [DM_VERSION].[DM_BUILD]"
-		
+
 	// Revision information
 	var/datum/getrev/revdata = GLOB.revdata
 	msg += "<b>Server revision compiled on:</b> [revdata.date]"
@@ -75,7 +78,10 @@
 	else if(!pc)
 		msg += "No commit information"
 	if(world.TgsAvailable())
-		msg += "Server tools version: [world.TgsVersion()]"
+		var/datum/tgs_version/version = world.TgsVersion()
+		msg += "TGS version: [version.raw_parameter]"
+		var/datum/tgs_version/api_version = world.TgsApiVersion()
+		msg += "DMAPI version: [api_version.raw_parameter]"
 
 	// Game mode odds
 	msg += "<br><b>Current Informational Settings:</b>"

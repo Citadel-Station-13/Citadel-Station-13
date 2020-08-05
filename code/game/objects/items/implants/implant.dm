@@ -5,7 +5,7 @@
 	actions_types = list(/datum/action/item_action/hands_free/activate)
 	var/activated = TRUE //1 for implant types that can be activated, 0 for ones that are "always on" like mindshield implants
 	var/mob/living/imp_in = null
-	item_color = "b"
+	var/implant_color = "b"
 	var/allow_multiple = FALSE
 	var/uses = -1
 	item_flags = DROPDEL
@@ -72,7 +72,7 @@
 				else
 					return FALSE
 
-	forceMove(target)
+	moveToNullspace()
 	imp_in = target
 	target.implants += src
 	if(activated)
@@ -89,12 +89,12 @@
 	return TRUE
 
 /obj/item/implant/proc/removed(mob/living/source, silent = FALSE, special = 0)
-	moveToNullspace()
+	SEND_SIGNAL(src, COMSIG_IMPLANT_REMOVING, args)
 	imp_in = null
 	source.implants -= src
 	for(var/X in actions)
 		var/datum/action/A = X
-		A.Grant(source)
+		A.Remove(source)
 	if(ishuman(source))
 		var/mob/living/carbon/human/H = source
 		H.sec_hud_set_implants()
@@ -107,7 +107,7 @@
 	return ..()
 
 /obj/item/implant/proc/get_data()
-	return "No information available"
+	return "No information available about this implant."
 
 /obj/item/implant/dropped(mob/user)
 	. = 1

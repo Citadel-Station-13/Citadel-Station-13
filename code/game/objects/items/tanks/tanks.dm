@@ -11,7 +11,7 @@
 	throwforce = 10
 	throw_speed = 1
 	throw_range = 4
-	materials = list(MAT_METAL = 500)
+	custom_materials = list(/datum/material/iron = 500)
 	actions_types = list(/datum/action/item_action/set_internals)
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 10, "bio" = 0, "rad" = 0, "fire" = 80, "acid" = 30)
 	var/datum/gas_mixture/air_contents = null
@@ -23,7 +23,7 @@
 	toggle_internals(user)
 
 /obj/item/tank/proc/toggle_internals(mob/user)
-	var/mob/living/carbon/human/H = user
+	var/mob/living/carbon/H = user
 	if(!istype(H))
 		return
 
@@ -33,13 +33,22 @@
 		H.update_internals_hud_icon(0)
 	else
 		if(!H.getorganslot(ORGAN_SLOT_BREATHING_TUBE))
-			if(!H.wear_mask)
-				to_chat(H, "<span class='warning'>You need a mask!</span>")
+			if(HAS_TRAIT(H, TRAIT_NO_INTERNALS))
+				to_chat(H, "<span class='warning'>Due to cumbersome equipment or anatomy, you are currently unable to use internals!</span>")
 				return
-			if(H.wear_mask.mask_adjusted)
-				H.wear_mask.adjustmask(H)
-			if(!(H.wear_mask.clothing_flags & MASKINTERNALS))
-				to_chat(H, "<span class='warning'>[H.wear_mask] can't use [src]!</span>")
+			var/obj/item/clothing/check
+			var/internals = FALSE
+
+			for(check in GET_INTERNAL_SLOTS(H))
+				if(istype(check, /obj/item/clothing/mask))
+					var/obj/item/clothing/mask/M = check
+					if(M.mask_adjusted)
+						M.adjustmask(H)
+				if(CHECK_BITFIELD(check.clothing_flags, ALLOWINTERNALS))
+					internals = TRUE
+
+			if(!internals)
+				to_chat(H, "<span class='warning'>You are not wearing an internals mask!</span>")
 				return
 
 		if(H.internal)
@@ -51,13 +60,18 @@
 	H.update_action_buttons_icon()
 
 
-/obj/item/tank/New()
-	..()
+/obj/item/tank/Initialize()
+	. = ..()
 
 	air_contents = new(volume) //liters
-	air_contents.temperature = T20C
+	air_contents.set_temperature(T20C)
+
+	populate_gas()
 
 	START_PROCESSING(SSobj, src)
+
+/obj/item/tank/proc/populate_gas()
+	return
 
 /obj/item/tank/Destroy()
 	if(air_contents)
@@ -68,17 +82,17 @@
 
 /obj/item/tank/examine(mob/user)
 	var/obj/icon = src
-	..()
-	if (istype(src.loc, /obj/item/assembly))
+	. = ..()
+	if(istype(src.loc, /obj/item/assembly))
 		icon = src.loc
-	if(!in_range(src, user))
+	if(!in_range(src, user) && !isobserver(user))
 		if (icon == src)
-			to_chat(user, "<span class='notice'>If you want any more information you'll need to get closer.</span>")
+			. += "<span class='notice'>If you want any more information you'll need to get closer.</span>"
 		return
 
-	to_chat(user, "<span class='notice'>The pressure gauge reads [round(src.air_contents.return_pressure(),0.01)] kPa.</span>")
+	. += "<span class='notice'>The pressure gauge reads [round(src.air_contents.return_pressure(),0.01)] kPa.</span>"
 
-	var/celsius_temperature = src.air_contents.temperature-T0C
+	var/celsius_temperature = src.air_contents.return_temperature()-T0C
 	var/descriptive
 
 	if (celsius_temperature < 20)
@@ -94,7 +108,7 @@
 	else
 		descriptive = "furiously hot"
 
-	to_chat(user, "<span class='notice'>It feels [descriptive].</span>")
+	. += "<span class='notice'>It feels [descriptive].</span>"
 
 /obj/item/tank/blob_act(obj/structure/blob/B)
 	if(B && B.loc == loc)
@@ -109,6 +123,7 @@
 
 /obj/item/tank/analyzer_act(mob/living/user, obj/item/I)
 	atmosanalyzer_scan(air_contents, user, src)
+	return TRUE
 
 /obj/item/tank/deconstruct(disassembled = TRUE)
 	if(!disassembled)
@@ -128,8 +143,7 @@
 			H.dropItemToGround(W)
 			if(prob(50))
 				step(W, pick(GLOB.alldirs))
-		H.add_trait(TRAIT_DISFIGURED, TRAIT_GENERIC)
-		H.bleed_rate = 5
+		ADD_TRAIT(H, TRAIT_DISFIGURED, TRAIT_GENERIC)
 		H.gib_animation()
 		sleep(3)
 		H.adjustBruteLoss(1000) //to make the body super-bloody
@@ -138,6 +152,10 @@
 		H.spread_bodyparts()
 
 	return (BRUTELOSS)
+
+/obj/item/tank/attack_ghost(mob/dead/observer/O)
+	. = ..()
+	atmosanalyzer_scan(air_contents, O, src, FALSE)
 
 /obj/item/tank/attackby(obj/item/W, mob/user, params)
 	add_fingerprint(user)
@@ -150,7 +168,7 @@
 									datum/tgui/master_ui = null, datum/ui_state/state = GLOB.hands_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
-		ui = new(user, src, ui_key, "tanks", name, 420, 200, master_ui, state)
+		ui = new(user, src, ui_key, "Tank", name, 400, 120, master_ui, state)
 		ui.open()
 
 /obj/item/tank/ui_data(mob/user)
@@ -195,7 +213,7 @@
 				pressure = text2num(pressure)
 				. = TRUE
 			if(.)
-				distribute_pressure = CLAMP(round(pressure), TANK_MIN_RELEASE_PRESSURE, TANK_MAX_RELEASE_PRESSURE)
+				distribute_pressure = clamp(round(pressure), TANK_MIN_RELEASE_PRESSURE, TANK_MAX_RELEASE_PRESSURE)
 
 /obj/item/tank/remove_air(amount)
 	return air_contents.remove(amount)
@@ -217,7 +235,7 @@
 	if(tank_pressure < distribute_pressure)
 		distribute_pressure = tank_pressure
 
-	var/moles_needed = distribute_pressure*volume_to_return/(R_IDEAL_GAS_EQUATION*air_contents.temperature)
+	var/moles_needed = distribute_pressure*volume_to_return/(R_IDEAL_GAS_EQUATION*air_contents.return_temperature())
 
 	return remove_air(moles_needed)
 

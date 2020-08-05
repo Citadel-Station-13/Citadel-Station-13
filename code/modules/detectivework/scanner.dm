@@ -14,10 +14,11 @@
 	flags_1 = CONDUCT_1
 	item_flags = NOBLUDGEON
 	slot_flags = ITEM_SLOT_BELT
-	var/scanning = 0
+	var/scanning = FALSE
 	var/list/log = list()
 	var/range = 8
 	var/view_check = TRUE
+	var/forensicPrintCount = 0
 	actions_types = list(/datum/action/item_action/displayDetectiveScanResults)
 
 /datum/action/item_action/displayDetectiveScanResults
@@ -30,7 +31,7 @@
 
 /obj/item/detective_scanner/attack_self(mob/user)
 	if(log.len && !scanning)
-		scanning = 1
+		scanning = TRUE
 		to_chat(user, "<span class='notice'>Printing report, please wait...</span>")
 		addtimer(CALLBACK(src, .proc/PrintReport), 100)
 	else
@@ -42,12 +43,15 @@
 /obj/item/detective_scanner/proc/PrintReport()
 	// Create our paper
 	var/obj/item/paper/P = new(get_turf(src))
-	P.name = "paper- 'Scanner Report'"
-	P.info = "<center><font size='6'><B>Scanner Report</B></font></center><HR><BR>"
+
+	//This could be a global count like sec and med record printouts. See GLOB.data_core.medicalPrintCount AKA datacore.dm
+	var frNum = ++forensicPrintCount
+
+	P.name = text("FR-[] 'Forensic Record'", frNum)
+	P.info = text("<center><B>Forensic Record - (FR-[])</B></center><HR><BR>", frNum)
 	P.info += jointext(log, "<BR>")
 	P.info += "<HR><B>Notes:</B><BR>"
-	P.info_links = P.info
-	P.updateinfolinks()
+	P.update_icon()
 
 	if(ismob(loc))
 		var/mob/M = loc
@@ -56,7 +60,7 @@
 
 	// Clear the logs
 	log = list()
-	scanning = 0
+	scanning = FALSE
 
 /obj/item/detective_scanner/afterattack(atom/A, mob/user, params)
 	. = ..()
@@ -70,7 +74,7 @@
 		if((get_dist(A, user) > range) || (!(A in view(range, user)) && view_check) || (loc != user))
 			return
 
-		scanning = 1
+		scanning = TRUE
 
 		user.visible_message("\The [user] points the [src.name] at \the [A] and performs a forensic scan.")
 		to_chat(user, "<span class='notice'>You scan \the [A]. The scanner is now analysing the results...</span>")
@@ -80,13 +84,19 @@
 
 		//Make our lists
 		var/list/fingerprints = list()
-		var/list/blood = A.return_blood_DNA()
-		var/list/fibers = A.return_fibers()
+		var/list/blood = list()
+		var/list/fibers = list()
 		var/list/reagents = list()
 
 		var/target_name = A.name
 
 		// Start gathering
+
+		if(A.blood_DNA && A.blood_DNA.len)
+			blood = A.blood_DNA.Copy()
+
+		if(A.suit_fibers && A.suit_fibers.len)
+			fibers = A.suit_fibers.Copy()
 
 		if(ishuman(A))
 
@@ -96,7 +106,8 @@
 
 		else if(!ismob(A))
 
-			fingerprints = A.return_fingerprints()
+			if(A.fingerprints && A.fingerprints.len)
+				fingerprints = A.fingerprints.Copy()
 
 			// Only get reagents from non-mobs.
 			if(A.reagents && A.reagents.reagent_list.len)
@@ -115,40 +126,42 @@
 
 		// We gathered everything. Create a fork and slowly display the results to the holder of the scanner.
 
-		var/found_something = 0
-		add_log("<B>[station_time_timestamp()][get_timestamp()] - [target_name]</B>", 0)
+		var/found_something = FALSE
+		add_log("<B>[STATION_TIME_TIMESTAMP("hh:mm:ss", world.time)][get_timestamp()] - [target_name]</B>", 0)
 
 		// Fingerprints
 		if(length(fingerprints))
-			sleep(30)
+			sleep(3 SECONDS)
 			add_log("<span class='info'><B>Prints:</B></span>")
 			for(var/finger in fingerprints)
 				add_log("[finger]")
-			found_something = 1
+			found_something = TRUE
 
 		// Blood
 		if (length(blood))
-			sleep(30)
+			sleep(3 SECONDS)
 			add_log("<span class='info'><B>Blood:</B></span>")
-			found_something = 1
+			found_something = TRUE
 			for(var/B in blood)
+				if(B == "color")
+					continue
 				add_log("Type: <font color='red'>[blood[B]]</font> DNA: <font color='red'>[B]</font>")
 
 		//Fibers
 		if(length(fibers))
-			sleep(30)
+			sleep(3 SECONDS)
 			add_log("<span class='info'><B>Fibers:</B></span>")
 			for(var/fiber in fibers)
 				add_log("[fiber]")
-			found_something = 1
+			found_something = TRUE
 
 		//Reagents
 		if(length(reagents))
-			sleep(30)
+			sleep(3 SECONDS)
 			add_log("<span class='info'><B>Reagents:</B></span>")
 			for(var/R in reagents)
 				add_log("Reagent: <font color='red'>[R]</font> Volume: <font color='red'>[reagents[R]]</font>")
-			found_something = 1
+			found_something = TRUE
 
 		// Get a new user
 		var/mob/holder = null
@@ -164,10 +177,10 @@
 				to_chat(holder, "<span class='notice'>You finish scanning \the [target_name].</span>")
 
 		add_log("---------------------------------------------------------", 0)
-		scanning = 0
+		scanning = FALSE
 		return
 
-/obj/item/detective_scanner/proc/add_log(msg, broadcast = 1)
+/obj/item/detective_scanner/proc/add_log(msg, broadcast = TRUE)
 	if(scanning)
 		if(broadcast && ismob(loc))
 			var/mob/M = loc
@@ -180,9 +193,11 @@
 	return time2text(world.time + 432000, ":ss")
 
 /obj/item/detective_scanner/AltClick(mob/living/user)
+	. = ..()
 	// Best way for checking if a player can use while not incapacitated, etc
 	if(!user.canUseTopic(src, be_close=TRUE))
 		return
+	. = TRUE
 	if(!LAZYLEN(log))
 		to_chat(user, "<span class='notice'>Cannot clear logs, the scanner has no logs.</span>")
 		return
@@ -193,9 +208,9 @@
 	log = list()
 
 /obj/item/detective_scanner/examine(mob/user)
-	..()
+	. = ..()
 	if(LAZYLEN(log) && !scanning)
-		to_chat(user, "<span class='notice'>Alt-click to clear scanner logs.</span>")
+		. += "<span class='notice'>Alt-click to clear scanner logs.</span>"
 
 /obj/item/detective_scanner/proc/displayDetectiveScanResults(mob/living/user)
 	// No need for can-use checks since the action button should do proper checks

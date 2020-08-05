@@ -7,37 +7,27 @@
 */
 
 /mob/living/silicon/robot/ClickOn(var/atom/A, var/params)
-	if(world.time <= next_click)
-		return
-	next_click = world.time + 1
-
 	if(check_click_intercept(params,A))
 		return
 
-	if(stat || lockcharge || IsKnockdown() || IsStun() || IsUnconscious())
+	if(stat || locked_down || IsParalyzed() || IsStun() || IsUnconscious())
 		return
 
 	var/list/modifiers = params2list(params)
 	if(modifiers["shift"] && modifiers["ctrl"])
-		CtrlShiftClickOn(A)
-		return
+		return CtrlShiftClickOn(A)
 	if(modifiers["shift"] && modifiers["middle"])
-		ShiftMiddleClickOn(A)
-		return
+		return ShiftMiddleClickOn(A)
 	if(modifiers["middle"])
-		MiddleClickOn(A)
-		return
+		return MiddleClickOn(A)
 	if(modifiers["shift"])
-		ShiftClickOn(A)
-		return
+		return ShiftClickOn(A)
 	if(modifiers["alt"]) // alt and alt-gr (rightalt)
-		AltClickOn(A)
-		return
+		return AltClickOn(A)
 	if(modifiers["ctrl"])
-		CtrlClickOn(A)
-		return
+		return CtrlClickOn(A)
 
-	if(next_move >= world.time)
+	if(!CheckActionCooldown(immediate = TRUE))
 		return
 
 	face_atom(A) // change direction to face what you clicked on
@@ -50,12 +40,18 @@
 	*/
 	if(aicamera.in_camera_mode) //Cyborg picture taking
 		aicamera.camera_mode_off()
-		aicamera.captureimage(A, usr)
+		INVOKE_ASYNC(aicamera, /obj/item/camera.proc/captureimage, A, usr)
 		return
 
 	var/obj/item/W = get_active_held_item()
 
-	if(!W && get_dist(src,A) <= interaction_range)
+	if(!W && A.Adjacent(src) && (isobj(A) || ismob(A)))
+		var/atom/movable/C = A
+		if(C.can_buckle && C.has_buckled_mobs())
+			INVOKE_ASYNC(C, /atom/movable.proc/precise_user_unbuckle_mob, src)
+			return
+
+	if(!W && (get_dist(src,A) <= interaction_range))
 		A.attack_robot(src)
 		return
 
@@ -70,7 +66,9 @@
 
 		// cyborgs are prohibited from using storage items so we can I think safely remove (A.loc in contents)
 		if(A == loc || (A in loc) || (A in contents))
-			W.melee_attack_chain(src, A, params)
+			. = W.melee_attack_chain(src, A, params)
+			if(!(. & NO_AUTO_CLICKDELAY_HANDLING) && ismob(A))
+				DelayNextAction(CLICK_CD_MELEE)
 			return
 
 		if(!isturf(loc))
@@ -79,11 +77,12 @@
 		// cyborgs are prohibited from using storage items so we can I think safely remove (A.loc && isturf(A.loc.loc))
 		if(isturf(A) || isturf(A.loc))
 			if(A.Adjacent(src)) // see adjacent.dm
-				W.melee_attack_chain(src, A, params)
+				. = W.melee_attack_chain(src, A, params)
+				if(!(. & NO_AUTO_CLICKDELAY_HANDLING) && ismob(A))
+					DelayNextAction(CLICK_CD_MELEE)
 				return
 			else
-				W.afterattack(A, src, 0, params)
-				return
+				return W.afterattack(A, src, 0, params)
 
 //Middle click cycles through selected modules.
 /mob/living/silicon/robot/MiddleClickOn(atom/A)
@@ -99,7 +98,8 @@
 /mob/living/silicon/robot/CtrlClickOn(atom/A)
 	A.BorgCtrlClick(src)
 /mob/living/silicon/robot/AltClickOn(atom/A)
-	A.BorgAltClick(src)
+	if(!A.BorgAltClick(src))
+		altclick_listed_turf(A)
 
 /atom/proc/BorgCtrlShiftClick(mob/living/silicon/robot/user) //forward to human click if not overridden
 	CtrlShiftClick(user)
@@ -143,20 +143,17 @@
 		..()
 
 /atom/proc/BorgAltClick(mob/living/silicon/robot/user)
-	AltClick(user)
-	return
+	return AltClick(user)
 
 /obj/machinery/door/airlock/BorgAltClick(mob/living/silicon/robot/user) // Eletrifies doors. Forwards to AI code.
 	if(get_dist(src,user) <= user.interaction_range)
-		AIAltClick()
-	else
-		..()
+		return AIAltClick()
+	return ..()
 
 /obj/machinery/turretid/BorgAltClick(mob/living/silicon/robot/user) //turret lethal on/off. Forwards to AI code.
 	if(get_dist(src,user) <= user.interaction_range)
-		AIAltClick()
-	else
-		..()
+		return AIAltClick()
+	return ..()
 
 /*
 	As with AI, these are not used in click code,
@@ -166,8 +163,9 @@
 	clicks, you can do so here, but you will have to
 	change attack_robot() above to the proper function
 */
-/mob/living/silicon/robot/UnarmedAttack(atom/A)
+/mob/living/silicon/robot/UnarmedAttack(atom/A, proximity, intent = a_intent, flags = NONE)
 	A.attack_robot(src)
+
 /mob/living/silicon/robot/RangedAttack(atom/A)
 	A.attack_robot(src)
 

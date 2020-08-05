@@ -4,17 +4,24 @@
 		humans, butchering all other living things to \
 		sustain the zombie, smashing open airlock doors and opening \
 		child-safe caps on bottles."
-	item_flags = NODROP | ABSTRACT | DROPDEL
+	item_flags = ABSTRACT | DROPDEL
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	icon = 'icons/effects/blood.dmi'
 	icon_state = "bloodhand_left"
 	var/icon_left = "bloodhand_left"
 	var/icon_right = "bloodhand_right"
 	hitsound = 'sound/hallucinations/growl1.ogg'
-	force = 21 // Just enough to break airlocks with melee attacks
+	force = 18
+	sharpness = SHARP_POINTY //it's a claw, they're sharp.
 	damtype = "brute"
+	total_mass = TOTAL_MASS_HAND_REPLACEMENT
+	sharpness = SHARP_EDGED
+	wound_bonus = -30
+	bare_wound_bonus = 15
 
-	var/removing_airlock = FALSE
+/obj/item/zombie_hand/Initialize()
+	. = ..()
+	ADD_TRAIT(src, TRAIT_NODROP, HAND_REPLACEMENT_TRAIT)
 
 /obj/item/zombie_hand/equipped(mob/user, slot)
 	. = ..()
@@ -29,11 +36,15 @@
 	. = ..()
 	if(!proximity_flag)
 		return
-	else if(isliving(target))
-		if(ishuman(target))
-			try_to_zombie_infect(target)
-		else
-			check_feast(target, user)
+	else
+		if(istype(target, /obj)) //do far more damage to non mobs so we can get through airlocks
+			var/obj/target_object = target
+			target_object.take_damage(force * 3, BRUTE, "melee", 0)
+		else if(isliving(target))
+			if(ishuman(target))
+				try_to_zombie_infect(target)
+			else
+				check_feast(target, user)
 
 /proc/try_to_zombie_infect(mob/living/carbon/human/target)
 	CHECK_DNA_AND_SPECIES(target)
@@ -48,8 +59,6 @@
 	if(!infection)
 		infection = new()
 		infection.Insert(target)
-
-
 
 /obj/item/zombie_hand/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is ripping [user.p_their()] brains out! It looks like [user.p_theyre()] trying to commit suicide!</span>")
@@ -70,5 +79,5 @@
 		user.adjustFireLoss(-hp_gained, 0)
 		user.adjustCloneLoss(-hp_gained, 0)
 		user.updatehealth()
-		user.adjustBrainLoss(-hp_gained) // Zom Bee gibbers "BRAAAAISNSs!1!"
-		user.nutrition = min(user.nutrition + hp_gained, NUTRITION_LEVEL_FULL)
+		user.adjustOrganLoss(ORGAN_SLOT_BRAIN, -hp_gained) // Zom Bee gibbers "BRAAAAISNSs!1!"
+		user.adjust_nutrition(hp_gained, NUTRITION_LEVEL_FULL)

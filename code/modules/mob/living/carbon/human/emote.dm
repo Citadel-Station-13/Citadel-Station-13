@@ -39,6 +39,19 @@
 	restraint_check = TRUE
 	emote_type = EMOTE_AUDIBLE
 
+/datum/emote/living/carbon/human/mawp
+	key = "mawp"
+	key_third_person = "mawps"
+	message = "mawps annoyingly."
+	emote_type = EMOTE_AUDIBLE
+
+/datum/emote/living/carbon/human/mawp/run_emote(mob/living/user, params)
+	. = ..()
+	if(.)
+		if(ishuman(user))
+			if(prob(10))
+				user.adjustEarDamage(-5, -5)
+
 /datum/emote/living/carbon/human/mumble
 	key = "mumble"
 	key_third_person = "mumbles"
@@ -115,7 +128,7 @@
 /datum/emote/living/carbon/human/wing/select_message_type(mob/user)
 	. = ..()
 	var/mob/living/carbon/human/H = user
-	if("wings" in H.dna.species.mutant_bodyparts)
+	if(H.dna.species.mutant_bodyparts["wings"])
 		. = "opens " + message
 	else
 		. = "closes " + message
@@ -130,20 +143,47 @@
 /mob/living/carbon/human/proc/OpenWings()
 	if(!dna || !dna.species)
 		return
-	if("wings" in dna.species.mutant_bodyparts)
+	if(dna.species.mutant_bodyparts["wings"])
+		dna.species.mutant_bodyparts["wingsopen"] = dna.species.mutant_bodyparts["wings"]
 		dna.species.mutant_bodyparts -= "wings"
-		dna.species.mutant_bodyparts |= "wingsopen"
 	update_body()
 
 /mob/living/carbon/human/proc/CloseWings()
 	if(!dna || !dna.species)
 		return
-	if("wingsopen" in dna.species.mutant_bodyparts)
+	if(dna.species.mutant_bodyparts["wingsopen"])
+		dna.species.mutant_bodyparts["wings"] = dna.species.mutant_bodyparts["wingsopen"]
 		dna.species.mutant_bodyparts -= "wingsopen"
-		dna.species.mutant_bodyparts |= "wings"
 	update_body()
 	if(isturf(loc))
 		var/turf/T = loc
 		T.Entered(src)
 
-//Ayy lmao
+/datum/emote/sound/human
+	mob_type_allowed_typecache = list(/mob/living/carbon/human)
+	emote_type = EMOTE_AUDIBLE
+
+/datum/emote/sound/human/buzz
+	key = "buzz"
+	key_third_person = "buzzes"
+	message = "buzzes."
+	message_param = "buzzes at %t."
+	sound = 'sound/machines/buzz-sigh.ogg'
+
+/datum/emote/sound/human/buzz2
+	key = "buzz2"
+	message = "buzzes twice."
+	sound = 'sound/machines/buzz-two.ogg'
+
+/datum/emote/sound/human/ping
+	key = "ping"
+	key_third_person = "pings"
+	message = "pings."
+	message_param = "pings at %t."
+	sound = 'sound/machines/ping.ogg'
+
+/datum/emote/sound/human/chime
+	key = "chime"
+	key_third_person = "chimes"
+	message = "chimes."
+	sound = 'sound/machines/chime.ogg'

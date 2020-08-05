@@ -15,10 +15,11 @@
 	req_access = list(ACCESS_ENGINE_EQUIP)
 //	use_power = NO_POWER_USE
 	max_integrity = 350
-	integrity_failure = 80
+	integrity_failure = 0.2
 	circuit = /obj/item/circuitboard/machine/rad_collector
 	var/obj/item/tank/internals/plasma/loaded_tank = null
 	var/stored_power = 0
+	var/last_push
 	var/active = 0
 	var/locked = FALSE
 	var/drainratio = 1
@@ -27,45 +28,55 @@
 	var/bitcoinproduction_drain = 0.15
 	var/bitcoinmining = FALSE
 	rad_insulation = RAD_EXTREME_INSULATION
+	var/obj/item/radio/Radio
 
 /obj/machinery/power/rad_collector/anchored
 	anchored = TRUE
 
+/obj/machinery/power/rad_collector/Initialize()
+	. = ..()
+	Radio = new /obj/item/radio(src)
+	Radio.listening = 0
+	Radio.set_frequency(FREQ_ENGINEERING)
+
 /obj/machinery/power/rad_collector/Destroy()
+	QDEL_NULL(Radio)
 	return ..()
 
 /obj/machinery/power/rad_collector/process()
 	if(!loaded_tank)
 		return
 	if(!bitcoinmining)
-		if(!loaded_tank.air_contents.gases[/datum/gas/plasma])
+		if(loaded_tank.air_contents.get_moles(/datum/gas/plasma) < 0.0001)
 			investigate_log("<font color='red'>out of fuel</font>.", INVESTIGATE_SINGULO)
 			playsound(src, 'sound/machines/ding.ogg', 50, 1)
+			Radio.talk_into(src, "Insufficient plasma in [get_area(src)] [src], ejecting \the [loaded_tank].", FREQ_ENGINEERING)
 			eject()
 		else
-			var/gasdrained = min(powerproduction_drain*drainratio,loaded_tank.air_contents.gases[/datum/gas/plasma][MOLES])
-			loaded_tank.air_contents.gases[/datum/gas/plasma][MOLES] -= gasdrained
-			loaded_tank.air_contents.assert_gas(/datum/gas/tritium)
-			loaded_tank.air_contents.gases[/datum/gas/tritium][MOLES] += gasdrained
-			loaded_tank.air_contents.garbage_collect()
+			var/gasdrained = min(powerproduction_drain*drainratio,loaded_tank.air_contents.get_moles(/datum/gas/plasma))
+			loaded_tank.air_contents.adjust_moles(/datum/gas/plasma, -gasdrained)
+			loaded_tank.air_contents.adjust_moles(/datum/gas/tritium, gasdrained)
 
 			var/power_produced = RAD_COLLECTOR_OUTPUT
 			add_avail(power_produced)
 			stored_power-=power_produced
 	else if(is_station_level(z) && SSresearch.science_tech)
-		if(!loaded_tank.air_contents.gases[/datum/gas/tritium] || !loaded_tank.air_contents.gases[/datum/gas/oxygen])
+		if(!loaded_tank.air_contents.get_moles(/datum/gas/tritium) || !loaded_tank.air_contents.get_moles(/datum/gas/oxygen))
 			playsound(src, 'sound/machines/ding.ogg', 50, 1)
+			Radio.talk_into(src, "Insufficient oxygen and tritium in [get_area(src)] [src] to produce research points, ejecting \the [loaded_tank].", FREQ_ENGINEERING)
 			eject()
 		else
 			var/gasdrained = bitcoinproduction_drain*drainratio
-			loaded_tank.air_contents.gases[/datum/gas/tritium][MOLES] -= gasdrained
-			loaded_tank.air_contents.gases[/datum/gas/oxygen][MOLES] -= gasdrained
-			loaded_tank.air_contents.assert_gas(/datum/gas/carbon_dioxide)
-			loaded_tank.air_contents.gases[/datum/gas/carbon_dioxide][MOLES] += gasdrained*2
-			loaded_tank.air_contents.garbage_collect()
-			var/bitcoins_mined = RAD_COLLECTOR_OUTPUT
-			SSresearch.science_tech.add_point_type(TECHWEB_POINT_TYPE_DEFAULT, bitcoins_mined*RAD_COLLECTOR_MINING_CONVERSION_RATE)
-			stored_power-=bitcoins_mined
+			loaded_tank.air_contents.adjust_moles(/datum/gas/tritium, -gasdrained)
+			loaded_tank.air_contents.adjust_moles(/datum/gas/oxygen, -gasdrained)
+			loaded_tank.air_contents.adjust_moles(/datum/gas/carbon_dioxide, gasdrained*2)
+			var/bitcoins_mined = stored_power*RAD_COLLECTOR_MINING_CONVERSION_RATE
+			var/datum/bank_account/D = SSeconomy.get_dep_account(ACCOUNT_ENG)
+			if(D)
+				D.adjust_money(bitcoins_mined)
+			SSresearch.science_tech.add_point_type(TECHWEB_POINT_TYPE_DEFAULT, bitcoins_mined)
+			last_push = stored_power
+			stored_power = 0
 
 /obj/machinery/power/rad_collector/interact(mob/user)
 	if(anchored)
@@ -73,10 +84,7 @@
 			toggle_power()
 			user.visible_message("[user.name] turns the [src.name] [active? "on":"off"].", \
 			"<span class='notice'>You turn the [src.name] [active? "on":"off"].</span>")
-			var/fuel
-			if(loaded_tank)
-				fuel = loaded_tank.air_contents.gases[/datum/gas/plasma]
-			fuel = fuel ? fuel[MOLES] : 0
+			var/fuel = loaded_tank.air_contents.get_moles(/datum/gas/plasma)
 			investigate_log("turned [active?"<font color='green'>on</font>":"<font color='red'>off</font>"] by [key_name(user)]. [loaded_tank?"Fuel: [round(fuel/0.29)]%":"<font color='red'>It is empty</font>"].", INVESTIGATE_SINGULO)
 			return
 		else
@@ -112,7 +120,7 @@
 		if(!user.transferItemToLoc(W, src))
 			return
 		loaded_tank = W
-		update_icons()
+		update_icon()
 	else if(W.GetID())
 		if(allowed(user))
 			if(active)
@@ -168,19 +176,20 @@
 /obj/machinery/power/rad_collector/analyzer_act(mob/living/user, obj/item/I)
 	if(loaded_tank)
 		loaded_tank.analyzer_act(user, I)
+	return TRUE
 
 /obj/machinery/power/rad_collector/examine(mob/user)
 	. = ..()
 	if(active)
 		if(!bitcoinmining)
-			to_chat(user, "<span class='notice'>[src]'s display states that it has stored <b>[DisplayPower(stored_power)]</b>, and processing <b>[DisplayPower(RAD_COLLECTOR_OUTPUT)]</b>.</span>")
+			. += "<span class='notice'>[src]'s display states that it has stored <b>[DisplayPower(stored_power)]</b>, and is processing <b>[DisplayPower((RAD_COLLECTOR_OUTPUT)*((60 SECONDS)/SSmachines.wait))]</b> per minute. <br>The <b>plasma</b> within it's tank is being irradiated into <b>tritium</b>.</span>"
 		else
-			to_chat(user, "<span class='notice'>[src]'s display states that it has stored a total of <b>[stored_power*RAD_COLLECTOR_MINING_CONVERSION_RATE]</b>, and producing [RAD_COLLECTOR_OUTPUT*RAD_COLLECTOR_MINING_CONVERSION_RATE] research points per minute.</span>")
+			. += "<span class='notice'>[src]'s display states that it's producing a total of <b>[(last_push*RAD_COLLECTOR_MINING_CONVERSION_RATE)*((60 SECONDS)/SSmachines.wait)]</b> research points per minute. <br>The <b>tritium</b> and <b>oxygen</b> within it's tank is being combusted into <b>carbon dioxide</b>.</span>"
 	else
 		if(!bitcoinmining)
-			to_chat(user,"<span class='notice'><b>[src]'s display displays the words:</b> \"Power production mode. Please insert <b>Plasma</b>. Use a multitool to change production modes.\"</span>")
+			. += "<span class='notice'><b>[src]'s display displays the words:</b> \"Power production mode. Please insert <b>Plasma</b>. Use a multitool to change production modes.\"</span>"
 		else
-			to_chat(user,"<span class='notice'><b>[src]'s display displays the words:</b> \"Research point production mode. Please insert <b>Tritium</b> and <b>Oxygen</b>. Use a multitool to change production modes.\"</span>")
+			. += "<span class='notice'><b>[src]'s display displays the words:</b> \"Research point production mode. Please insert <b>Tritium</b> and <b>Oxygen</b>. Use a multitool to change production modes.\"</span>"
 
 /obj/machinery/power/rad_collector/obj_break(damage_flag)
 	if(!(stat & BROKEN) && !(flags_1 & NODECONSTRUCT_1))
@@ -199,21 +208,21 @@
 	if(active)
 		toggle_power()
 	else
-		update_icons()
+		update_icon()
 
 /obj/machinery/power/rad_collector/rad_act(pulse_strength)
 	. = ..()
 	if(loaded_tank && active && pulse_strength > RAD_COLLECTOR_EFFICIENCY)
 		stored_power += (pulse_strength-RAD_COLLECTOR_EFFICIENCY)*RAD_COLLECTOR_COEFFICIENT
 
-/obj/machinery/power/rad_collector/proc/update_icons()
-	cut_overlays()
+/obj/machinery/power/rad_collector/update_overlays()
+	. = ..()
 	if(loaded_tank)
-		add_overlay("ptank")
+		. += "ptank"
 	if(stat & (NOPOWER|BROKEN))
 		return
 	if(active)
-		add_overlay("on")
+		. += "on"
 
 
 /obj/machinery/power/rad_collector/proc/toggle_power()
@@ -224,7 +233,7 @@
 	else
 		icon_state = "ca"
 		flick("ca_deactive", src)
-	update_icons()
+	update_icon()
 	return
 
 #undef RAD_COLLECTOR_EFFICIENCY

@@ -31,18 +31,17 @@
 	decksize = 50
 	card_text_file = "strings/cas_black.txt"
 
-/obj/item/toy/cards/deck/cas/Initialize()
-	. = ..()
+/obj/item/toy/cards/deck/cas/populate_deck()
 	var/static/list/cards_against_space = list("cas_white" = world.file2list("strings/cas_white.txt"),"cas_black" = world.file2list("strings/cas_black.txt"))
 	allcards = cards_against_space[card_face]
 	var/list/possiblecards = allcards.Copy()
 	if(possiblecards.len < decksize) // sanity check
 		decksize = (possiblecards.len - 1)
 	var/list/randomcards = list()
-	while (randomcards.len < decksize)
+	for(var/x in 1 to decksize)
 		randomcards += pick_n_take(possiblecards)
-	for(var/i=1 to randomcards.len)
-		var/cardtext = randomcards[i]
+	for(var/x in 1 to randomcards.len)
+		var/cardtext = randomcards[x]
 		var/datum/playingcard/P
 		P = new()
 		P.name = "[cardtext]"
@@ -50,7 +49,7 @@
 		cards += P
 	if(!blanks)
 		return
-	for(var/x=1 to blanks)
+	for(var/x in 1 to blanks)
 		var/datum/playingcard/P
 		P = new()
 		P.name = "Blank Card"
@@ -58,10 +57,7 @@
 		cards += P
 	shuffle_inplace(cards) // distribute blank cards throughout deck
 
-/obj/item/toy/cards/deck/cas/attack_hand(mob/user)
-	. = ..()
-	if(.)
-		return
+/obj/item/toy/cards/deck/cas/draw_card(mob/user)
 	if(user.lying)
 		return
 	if(cards.len == 0)
@@ -97,7 +93,7 @@
 		qdel(SC)
 	update_icon()
 
-/obj/item/toy/cards/deck/cas/update_icon()
+/obj/item/toy/cards/deck/cas/update_icon_state()
 	if(cards.len < 26)
 		icon_state = "deck_[deckstyle]_low"
 
@@ -111,14 +107,14 @@
 	var/buffertext = "A funny bit of text."
 
 /obj/item/toy/cards/singlecard/cas/examine(mob/user)
-	..()
+	. = ..()
 	if (flipped)
-		to_chat(user, "<span class='notice'>The card is face down.</span>")
+		. += "<span class='notice'>The card is face down.</span>"
 	else if (blank)
-		to_chat(user, "<span class='notice'>The card is blank. Write on it with a pen.</span>")
+		. += "<span class='notice'>The card is blank. Write on it with a pen.</span>"
 	else
-		to_chat(user, "<span class='notice'>The card reads: [name]</span>")
-	to_chat(user, "<span class='notice'>Alt-click to flip it.</span>")
+		. += "<span class='notice'>The card reads: [name]</span>"
+	. += "<span class='notice'>Alt-click to flip it.</span>"
 
 /obj/item/toy/cards/singlecard/cas/Flip()
 	set name = "Flip Card"
@@ -134,11 +130,13 @@
 	update_icon()
 
 /obj/item/toy/cards/singlecard/cas/AltClick(mob/living/user)
+	. = ..()
 	if(!ishuman(user) || !user.canUseTopic(src, BE_CLOSE))
 		return
 	Flip()
+	return TRUE
 
-/obj/item/toy/cards/singlecard/cas/update_icon()
+/obj/item/toy/cards/singlecard/cas/update_icon_state()
 	if(flipped)
 		icon_state = "[card_face]_flipped"
 	else

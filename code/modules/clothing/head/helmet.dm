@@ -3,7 +3,7 @@
 	desc = "Standard Security gear. Protects the head from impacts."
 	icon_state = "helmet"
 	item_state = "helmet"
-	armor = list("melee" = 35, "bullet" = 30, "laser" = 30,"energy" = 10, "bomb" = 25, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 50)
+	armor = list("melee" = 40, "bullet" = 30, "laser" = 30,"energy" = 10, "bomb" = 25, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 50)
 	flags_inv = HIDEEARS
 	cold_protection = HEAD
 	min_cold_protection_temperature = HELMET_MIN_TEMP_PROTECT
@@ -54,8 +54,11 @@
 	tint = 2
 
 /obj/item/clothing/head/helmet/blueshirt
+	name = "blue helmet"
+	desc = "A reliable, blue tinted helmet reminding you that you <i>still</i> owe that engineer a beer."
 	icon_state = "blueshift"
 	item_state = "blueshift"
+	custom_premium_price = PRICE_ABOVE_EXPENSIVE
 
 /obj/item/clothing/head/helmet/riot
 	name = "riot helmet"
@@ -74,6 +77,7 @@
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
 	visor_flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
 	dog_fashion = null
+	mutantrace_variation = STYLE_MUZZLE
 
 /obj/item/clothing/head/helmet/attack_self(mob/user)
 	if(can_toggle && !user.incapacitated())
@@ -210,10 +214,11 @@
 	icon_state = "knight_green"
 	item_state = "knight_green"
 	armor = list("melee" = 41, "bullet" = 15, "laser" = 5,"energy" = 5, "bomb" = 5, "bio" = 2, "rad" = 0, "fire" = 0, "acid" = 50)
-	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR
+	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDESNOUT
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
 	strip_delay = 80
 	dog_fashion = null
+	mutantrace_variation = STYLE_MUZZLE
 
 
 /obj/item/clothing/head/helmet/knight/Initialize(mapload)
@@ -233,6 +238,14 @@
 	icon_state = "knight_red"
 	item_state = "knight_red"
 
+/obj/item/clothing/head/helmet/knight/greyscale
+	name = "knight helmet"
+	desc = "A classic medieval helmet, if you hold it upside down you could see that it's actually a bucket."
+	icon_state = "knight_greyscale"
+	item_state = "knight_greyscale"
+	armor = list("melee" = 35, "bullet" = 10, "laser" = 10, "energy" = 10, "bomb" = 10, "bio" = 10, "rad" = 10, "fire" = 40, "acid" = 40)
+	material_flags = MATERIAL_ADD_PREFIX | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS //Can change color and add prefix
+
 /obj/item/clothing/head/helmet/skull
 	name = "skull helmet"
 	desc = "An intimidating tribal helmet, it doesn't look very comfortable."
@@ -242,10 +255,30 @@
 	icon_state = "skull"
 	item_state = "skull"
 	strip_delay = 100
+	mutantrace_variation = STYLE_MUZZLE
+
+/obj/item/clothing/head/helmet/infiltrator
+	name = "insidious helmet"
+	desc = "An insidious armored combat helmet signed with Syndicate insignia. The visor is coated with a resistant paste guaranteed to withstand bright flashes perfectly."
+	icon_state = "infiltrator"
+	item_state = "infiltrator"
+	armor = list("melee" = 40, "bullet" = 40, "laser" = 30, "energy" = 40, "bomb" = 70, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 50)
+	resistance_flags = FIRE_PROOF | ACID_PROOF
+	flash_protect = 2
+	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
+	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
+	dynamic_hair_suffix = ""
+	dynamic_fhair_suffix = ""
+	strip_delay = 80
+	mutantrace_variation = STYLE_MUZZLE
 
 //LightToggle
 
-/obj/item/clothing/head/helmet/update_icon()
+/obj/item/clothing/head/helmet/ComponentInitialize()
+	. = ..()
+	AddElement(/datum/element/update_icon_updates_onmob)
+
+/obj/item/clothing/head/helmet/update_icon_state()
 	var/state = "[initial(icon_state)]"
 	if(F)
 		if(F.on)
@@ -254,10 +287,6 @@
 			state += "-flight" //etc.
 
 	icon_state = state
-
-	if(ishuman(loc))
-		var/mob/living/carbon/human/H = loc
-		H.update_inv_head()
 
 /obj/item/clothing/head/helmet/ui_action_click(mob/user, action)
 	if(istype(action, /datum/action/item_action/toggle_helmet_flashlight))
@@ -331,3 +360,35 @@
 	for(var/X in actions)
 		var/datum/action/A = X
 		A.UpdateButtonIcon()
+
+/obj/item/clothing/head/helmet/durathread
+	name = "makeshift helmet"
+	desc = "A hardhat with strips of leather and durathread for additional blunt protection."
+	icon_state = "durathread"
+	item_state = "durathread"
+	armor = list("melee" = 25, "bullet" = 10, "laser" = 20,"energy" = 10, "bomb" = 30, "bio" = 15, "rad" = 20, "fire" = 100, "acid" = 50)
+
+/obj/item/clothing/head/helmet/rus_helmet
+	name = "russian helmet"
+	desc = "It can hold a bottle of vodka."
+	icon_state = "rus_helmet"
+	item_state = "rus_helmet"
+	armor = list("melee" = 30, "bullet" = 25, "laser" = 20,"energy" = 10, "bomb" = 25, "bio" = 0, "rad" = 20, "fire" = 30, "acid" = 50)
+	pocket_storage_component_path = /datum/component/storage/concrete/pockets/small/rushelmet
+
+/obj/item/clothing/head/helmet/rus_ushanka
+	name = "battle ushanka"
+	desc = "100% bear."
+	icon_state = "rus_ushanka"
+	item_state = "rus_ushanka"
+	clothing_flags = THICKMATERIAL
+	body_parts_covered = HEAD
+	cold_protection = HEAD
+	min_cold_protection_temperature = SPACE_SUIT_MIN_TEMP_PROTECT
+	armor = list("melee" = 10, "bullet" = 5, "laser" = 5,"energy" = 5, "bomb" = 5, "bio" = 50, "rad" = 20, "fire" = -10, "acid" = 0)
+
+/obj/item/clothing/head/helmet/police
+	name = "police officer's hat"
+	desc = "A police officer's Hat. This hat emphasizes that you are THE LAW."
+	icon_state = "policehelm"
+	dynamic_hair_suffix = ""

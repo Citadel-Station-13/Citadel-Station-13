@@ -11,28 +11,28 @@
 	var/static/list/style_list_icons = list("standard" = 'icons/mob/augmentation/augments.dmi', "engineer" = 'icons/mob/augmentation/augments_engineer.dmi', "security" = 'icons/mob/augmentation/augments_security.dmi', "mining" = 'icons/mob/augmentation/augments_mining.dmi')
 
 /obj/machinery/aug_manipulator/examine(mob/user)
-	..()
+	. = ..()
 	if(storedpart)
-		to_chat(user, "<span class='notice'>Alt-click to eject the limb.</span>")
+		. += "<span class='notice'>Alt-click to eject the limb.</span>"
 
 /obj/machinery/aug_manipulator/Initialize()
-    initial_icon_state = initial(icon_state)
-    return ..()
+	initial_icon_state = initial(icon_state)
+	return ..()
 
-/obj/machinery/aug_manipulator/update_icon()
-	cut_overlays()
-
+/obj/machinery/aug_manipulator/update_icon_state()
 	if(stat & BROKEN)
 		icon_state = "[initial_icon_state]-broken"
 		return
-
-	if(storedpart)
-		add_overlay("[initial_icon_state]-closed")
 
 	if(powered())
 		icon_state = initial_icon_state
 	else
 		icon_state = "[initial_icon_state]-off"
+
+/obj/machinery/aug_manipulator/update_overlays()
+	. = ..()
+	if(storedpart)
+		. += "[initial_icon_state]-closed"
 
 /obj/machinery/aug_manipulator/Destroy()
 	QDEL_NULL(storedpart)
@@ -100,10 +100,7 @@
 			stat |= BROKEN
 			update_icon()
 
-/obj/machinery/aug_manipulator/attack_hand(mob/user)
-	. = ..()
-	if(.)
-		return
+/obj/machinery/aug_manipulator/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	add_fingerprint(user)
 
 	if(storedpart)
@@ -132,8 +129,8 @@
 	..()
 	if(!user.canUseTopic(src))
 		return
-	else
-		eject_part(user)
+	eject_part(user)
+	return TRUE
 
 /obj/machinery/aug_manipulator/power_change()
 	..()

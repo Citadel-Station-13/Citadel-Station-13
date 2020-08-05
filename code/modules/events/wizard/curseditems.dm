@@ -4,6 +4,7 @@
 	typepath = /datum/round_event/wizard/cursed_items
 	max_occurrences = 3
 	earliest_start = 0 MINUTES
+	can_be_midround_wizard = FALSE
 
 //Note about adding items to this: Because of how NODROP_1 works if an item spawned to the hands can also be equiped to a slot
 //it will be able to be put into that slot from the hand, but then get stuck there. To avoid this make a new subtype of any
@@ -50,7 +51,8 @@
 				var/obj/item/I = new J //dumb but required because of byond throwing a fit anytime new gets too close to a list
 				H.dropItemToGround(H.get_item_by_slot(i), TRUE)
 				H.equip_to_slot_or_del(I, i)
-				I.item_flags |= NODROP | DROPDEL
+				ADD_TRAIT(I, TRAIT_NODROP, CURSED_ITEM_TRAIT)
+				I.item_flags |= DROPDEL
 				I.name = "cursed " + I.name
 
 	for(var/mob/living/carbon/human/H in GLOB.alive_mob_list)

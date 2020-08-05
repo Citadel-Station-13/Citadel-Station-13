@@ -1,4 +1,5 @@
 #define FILE_ANTAG_REP "data/AntagReputation.json"
+#define MAX_RECENT_MAP_RECORD 10
 
 SUBSYSTEM_DEF(persistence)
 	name = "Persistence"
@@ -11,13 +12,20 @@ SUBSYSTEM_DEF(persistence)
 	var/list/obj/structure/chisel_message/chisel_messages = list()
 	var/list/saved_messages = list()
 	var/list/saved_modes = list(1,2,3)
+	var/list/saved_dynamic_rules = list(list(),list(),list())
+	var/list/saved_storytellers = list("foo","bar","baz")
+	var/list/average_dynamic_threat = 50
+	var/list/saved_maps
 	var/list/saved_trophies = list()
 	var/list/spawned_objects = list()
 	var/list/antag_rep = list()
 	var/list/antag_rep_change = list()
 	var/list/picture_logging_information = list()
+	var/list/saved_votes = list()
 	var/list/obj/structure/sign/picture_frame/photo_frames
 	var/list/obj/item/storage/photo_album/photo_albums
+	var/list/obj/structure/sign/painting/painting_frames = list()
+	var/list/paintings = list()
 
 /datum/controller/subsystem/persistence/Initialize()
 	LoadSatchels()
@@ -25,9 +33,16 @@ SUBSYSTEM_DEF(persistence)
 	LoadChiselMessages()
 	LoadTrophies()
 	LoadRecentModes()
+	LoadRecentStorytellers()
+	LoadRecentRulesets()
+	LoadRecentMaps()
 	LoadPhotoPersistence()
+	for(var/client/C in GLOB.clients)
+		LoadSavedVote(C.ckey)
 	if(CONFIG_GET(flag/use_antag_rep))
 		LoadAntagReputation()
+	LoadRandomizedRecipes()
+	LoadPanicBunker()
 	return ..()
 
 /datum/controller/subsystem/persistence/proc/LoadSatchels()
@@ -162,6 +177,36 @@ SUBSYSTEM_DEF(persistence)
 		return
 	saved_modes = json["data"]
 
+/datum/controller/subsystem/persistence/proc/LoadRecentRulesets()
+	var/json_file = file("data/RecentRulesets.json")
+	if(!fexists(json_file))
+		return
+	var/list/json = json_decode(file2text(json_file))
+	if(!json)
+		return
+	saved_dynamic_rules = json["data"]
+
+/datum/controller/subsystem/persistence/proc/LoadRecentStorytellers()
+	var/json_file = file("data/RecentStorytellers.json")
+	if(!fexists(json_file))
+		return
+	var/list/json = json_decode(file2text(json_file))
+	if(!json)
+		return
+	saved_storytellers = json["data"]
+	if(saved_storytellers.len > 3)
+		average_dynamic_threat = saved_storytellers[4]
+	saved_storytellers.len = 3
+
+/datum/controller/subsystem/persistence/proc/LoadRecentMaps()
+	var/json_file = file("data/RecentMaps.json")
+	if(!fexists(json_file))
+		return
+	var/list/json = json_decode(file2text(json_file))
+	if(!json)
+		return
+	saved_maps = json["maps"]
+
 /datum/controller/subsystem/persistence/proc/LoadAntagReputation()
 	var/json = file2text(FILE_ANTAG_REP)
 	if(!json)
@@ -171,6 +216,15 @@ SUBSYSTEM_DEF(persistence)
 			return
 		return
 	antag_rep = json_decode(json)
+
+/datum/controller/subsystem/persistence/proc/LoadSavedVote(var/ckey)
+	var/json_file = file("data/player_saves/[copytext(ckey,1,2)]/[ckey]/SavedVotes.json")
+	if(!fexists(json_file))
+		return
+	var/list/json = json_decode(file2text(json_file))
+	if(!json)
+		return
+	saved_votes[ckey] = json["data"]
 
 /datum/controller/subsystem/persistence/proc/SetUpTrophies(list/trophy_items)
 	for(var/A in GLOB.trophy_cases)
@@ -203,9 +257,27 @@ SUBSYSTEM_DEF(persistence)
 	CollectSecretSatchels()
 	CollectTrophies()
 	CollectRoundtype()
+	if(istype(SSticker.mode, /datum/game_mode/dynamic))
+		var/datum/game_mode/dynamic/mode = SSticker.mode
+		CollectStoryteller(mode)
+		CollectRulesets(mode)
+	RecordMaps()
 	SavePhotoPersistence()						//THIS IS PERSISTENCE, NOT THE LOGGING PORTION.
 	if(CONFIG_GET(flag/use_antag_rep))
 		CollectAntagReputation()
+	SaveRandomizedRecipes()
+	SavePanicBunker()
+	SavePaintings()
+	SaveScars()
+
+/datum/controller/subsystem/persistence/proc/LoadPanicBunker()
+	var/bunker_path = file("data/bunker_passthrough.json")
+	if(fexists(bunker_path))
+		var/list/json = json_decode(file2text(bunker_path))
+		GLOB.bunker_passthrough = json["data"]
+		for(var/ckey in GLOB.bunker_passthrough)
+			if(daysSince(GLOB.bunker_passthrough[ckey]) >= CONFIG_GET(number/max_bunker_days))
+				GLOB.bunker_passthrough -= ckey
 
 /datum/controller/subsystem/persistence/proc/GetPhotoAlbums()
 	var/album_path = file("data/photo_albums.json")
@@ -328,6 +400,13 @@ SUBSYSTEM_DEF(persistence)
 	fdel(json_file)
 	WRITE_FILE(json_file, json_encode(file_data))
 
+/datum/controller/subsystem/persistence/proc/SavePanicBunker()
+	var/json_file = file("data/bunker_passthrough.json")
+	var/list/file_data = list()
+	file_data["data"] = GLOB.bunker_passthrough
+	fdel(json_file)
+	WRITE_FILE(json_file,json_encode(file_data))
+
 /datum/controller/subsystem/persistence/proc/remove_duplicate_trophies(list/trophies)
 	var/list/ukeys = list()
 	. = list()
@@ -357,6 +436,40 @@ SUBSYSTEM_DEF(persistence)
 	fdel(json_file)
 	WRITE_FILE(json_file, json_encode(file_data))
 
+/datum/controller/subsystem/persistence/proc/CollectStoryteller(var/datum/game_mode/dynamic/mode)
+	saved_storytellers.len = 3
+	saved_storytellers[3] = saved_storytellers[2]
+	saved_storytellers[2] = saved_storytellers[1]
+	saved_storytellers[1] = mode.storyteller.name
+	average_dynamic_threat = (mode.threat_average + average_dynamic_threat) / 2
+	var/json_file = file("data/RecentStorytellers.json")
+	var/list/file_data = list()
+	file_data["data"] = saved_storytellers + average_dynamic_threat
+	fdel(json_file)
+	WRITE_FILE(json_file, json_encode(file_data))
+
+/datum/controller/subsystem/persistence/proc/CollectRulesets(var/datum/game_mode/dynamic/mode)
+	saved_dynamic_rules[3] = saved_dynamic_rules[2]
+	saved_dynamic_rules[2] = saved_dynamic_rules[1]
+	saved_dynamic_rules[1] = list()
+	for(var/r in mode.executed_rules)
+		var/datum/dynamic_ruleset/rule = r
+		saved_dynamic_rules[1] += rule.config_tag
+	var/json_file = file("data/RecentRulesets.json")
+	var/list/file_data = list()
+	file_data["data"] = saved_dynamic_rules
+	fdel(json_file)
+	WRITE_FILE(json_file, json_encode(file_data))
+
+/datum/controller/subsystem/persistence/proc/RecordMaps()
+	saved_maps = saved_maps?.len ? list("[SSmapping.config.map_name]") | saved_maps : list("[SSmapping.config.map_name]")
+	var/json_file = file("data/RecentMaps.json")
+	var/list/file_data = list()
+	file_data["maps"] = saved_maps
+	fdel(json_file)
+	WRITE_FILE(json_file, json_encode(file_data))
+
+
 /datum/controller/subsystem/persistence/proc/CollectAntagReputation()
 	var/ANTAG_REP_MAXIMUM = CONFIG_GET(number/antag_rep_maximum)
 
@@ -371,3 +484,88 @@ SUBSYSTEM_DEF(persistence)
 	fdel(FILE_ANTAG_REP)
 	text2file(json_encode(antag_rep), FILE_ANTAG_REP)
 
+/datum/controller/subsystem/persistence/proc/LoadRandomizedRecipes()
+	var/json_file = file("data/RandomizedChemRecipes.json")
+	var/json
+	if(fexists(json_file))
+		json = json_decode(file2text(json_file))
+
+	for(var/randomized_type in subtypesof(/datum/chemical_reaction/randomized))
+		var/datum/chemical_reaction/randomized/R = new randomized_type
+		var/loaded = FALSE
+		if(R.persistent && json)
+			var/list/recipe_data = json[R.id]
+			if(recipe_data && R.LoadOldRecipe(recipe_data) && (daysSince(R.created) <= R.persistence_period))
+				loaded = TRUE
+		if(!loaded) //We do not have information for whatever reason, just generate new one
+			R.GenerateRecipe()
+
+		if(!R.HasConflicts()) //Might want to try again if conflicts happened in the future.
+			add_chemical_reaction(R)
+
+/datum/controller/subsystem/persistence/proc/SaveRandomizedRecipes()
+	var/json_file = file("data/RandomizedChemRecipes.json")
+	var/list/file_data = list()
+
+	//asert globchems done
+	for(var/randomized_type in subtypesof(/datum/chemical_reaction/randomized))
+		var/datum/chemical_reaction/randomized/R = randomized_type
+		R = get_chemical_reaction(initial(R.id)) //ew, would be nice to add some simple tracking
+		if(R && R.persistent && R.id)
+			var/recipe_data = list()
+			recipe_data["timestamp"] = R.created
+			recipe_data["required_reagents"] = R.required_reagents
+			recipe_data["required_catalysts"] = R.required_catalysts
+			recipe_data["required_temp"] = R.required_temp
+			recipe_data["is_cold_recipe"] = R.is_cold_recipe
+			recipe_data["results"] = R.results
+			recipe_data["required_container"] = "[R.required_container]"
+			file_data["[R.id]"] = recipe_data
+
+	fdel(json_file)
+	WRITE_FILE(json_file, json_encode(file_data))
+
+/datum/controller/subsystem/persistence/proc/SaveSavedVotes()
+	for(var/ckey in saved_votes)
+		var/json_file = file("data/player_saves/[copytext(ckey,1,2)]/[ckey]/SavedVotes.json")
+		var/list/file_data = list()
+		file_data["data"] = saved_votes[ckey]
+		fdel(json_file)
+		WRITE_FILE(json_file, json_encode(file_data))
+
+/datum/controller/subsystem/persistence/proc/LoadPaintings()
+	var/json_file = file("data/paintings.json")
+	if(fexists(json_file))
+		paintings = json_decode(file2text(json_file))
+
+	for(var/obj/structure/sign/painting/P in painting_frames)
+		P.load_persistent()
+
+/datum/controller/subsystem/persistence/proc/SavePaintings()
+	for(var/obj/structure/sign/painting/P in painting_frames)
+		P.save_persistent()
+
+	var/json_file = file("data/paintings.json")
+	fdel(json_file)
+	WRITE_FILE(json_file, json_encode(paintings))
+
+/datum/controller/subsystem/persistence/proc/SaveScars()
+	for(var/i in GLOB.joined_player_list)
+		var/mob/living/carbon/human/ending_human = get_mob_by_ckey(i)
+		if(!istype(ending_human) || !ending_human.mind || !ending_human.client || !ending_human.client.prefs || !ending_human.client.prefs.persistent_scars)
+			continue
+
+		var/mob/living/carbon/human/original_human = ending_human.mind.original_character
+		if(!original_human || original_human.stat == DEAD || !original_human.all_scars || !(original_human == ending_human))
+			if(ending_human.client) // i was told if i don't check this every step of the way byond might decide a client ceases to exist mid proc so here we go
+				ending_human.client.prefs.scars_list["[ending_human.client.prefs.scars_index]"] = ""
+		else
+			for(var/k in ending_human.all_wounds)
+				var/datum/wound/iter_wound = k
+				iter_wound.remove_wound() // so we can get the scars for open wounds
+			if(!ending_human.client)
+				return
+			ending_human.client.prefs.scars_list["[ending_human.client.prefs.scars_index]"] = ending_human.format_scars()
+		if(!ending_human.client)
+			return
+		ending_human.client.prefs.save_character()

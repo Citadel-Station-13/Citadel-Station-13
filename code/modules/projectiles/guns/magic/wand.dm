@@ -18,10 +18,10 @@
 	return ..()
 
 /obj/item/gun/magic/wand/examine(mob/user)
-	..()
-	to_chat(user, "Has [charges] charge\s remaining.")
+	. = ..()
+	. += "Has [charges] charge\s remaining."
 
-/obj/item/gun/magic/wand/update_icon()
+/obj/item/gun/magic/wand/update_icon_state()
 	icon_state = "[initial(icon_state)][charges ? "" : "-drained"]"
 
 /obj/item/gun/magic/wand/attack(atom/target, mob/living/user)
@@ -73,6 +73,12 @@
 	user.adjustOxyLoss(500)
 	charges--
 
+/obj/item/gun/magic/wand/death/debug
+	desc = "In some obscure circles, this is known as the 'cloning tester's friend'."
+	max_charges = 500
+	variable_charges = FALSE
+	can_charge = TRUE
+	recharge_rate = 1
 
 /////////////////////////////////////
 //WAND OF HEALING
@@ -87,14 +93,17 @@
 	max_charges = 10 //10, 5, 5, 4
 
 /obj/item/gun/magic/wand/resurrection/zap_self(mob/living/user)
+	..()
+	charges--
+	if(user.anti_magic_check())
+		user.visible_message("<span class='warning'>[src] has no effect on [user]!</span>")
+		return
 	user.revive(full_heal = 1)
 	if(iscarbon(user))
 		var/mob/living/carbon/C = user
 		C.regenerate_limbs()
 		C.regenerate_organs()
 	to_chat(user, "<span class='notice'>You feel great!</span>")
-	charges--
-	..()
 
 /obj/item/gun/magic/wand/resurrection/debug //for testing
 	name = "debug wand of healing"
@@ -131,7 +140,7 @@
 	no_den_usage = 1
 
 /obj/item/gun/magic/wand/teleport/zap_self(mob/living/user)
-	if(do_teleport(user, user, 10))
+	if(do_teleport(user, user, 10, channel = TELEPORT_CHANNEL_MAGIC))
 		var/datum/effect_system/smoke_spread/smoke = new
 		smoke.set_up(3, user.loc)
 		smoke.start()
@@ -172,3 +181,21 @@
 	..()
 	explosion(user.loc, -1, 0, 2, 3, 0, flame_range = 2)
 	charges--
+
+/////////////////////////////////////
+//WAND OF ARCANE MISSILE
+/////////////////////////////////////
+
+/obj/item/gun/magic/wand/arcane
+	name = "wand of arcane missile"
+	desc = "This wand fires off small bolts of concentrated magic energy, searing any victim."
+	ammo_type = /obj/item/ammo_casing/magic/arcane_barrage
+	fire_sound = 'sound/weapons/mmlbuster.ogg'
+	icon_state = "arcanewand"
+	max_charges = 20 //20, 10, 10, 7
+
+/obj/item/gun/magic/wand/arcane/zap_self(mob/living/user)
+	..()
+	charges--
+	user.take_overall_damage(0,30)
+	to_chat(user, "<span class='warning'>You zap yourself. Why?</span>")

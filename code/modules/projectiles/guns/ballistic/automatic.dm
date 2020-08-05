@@ -2,9 +2,10 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	var/alarmed = 0
 	var/select = 1
+	var/automatic_burst_overlay = TRUE
 	can_suppress = TRUE
 	burst_size = 3
-	fire_delay = 2
+	burst_shot_delay = 2
 	actions_types = list(/datum/action/item_action/toggle_firemode)
 
 /obj/item/gun/ballistic/automatic/proto
@@ -19,10 +20,11 @@
 
 /obj/item/gun/ballistic/automatic/update_icon()
 	..()
-	if(!select)
-		add_overlay("[initial(icon_state)]semi")
-	if(select == 1)
-		add_overlay("[initial(icon_state)]burst")
+	if(automatic_burst_overlay)
+		if(!select)
+			add_overlay("[initial(icon_state)]semi")
+		if(select == 1)
+			add_overlay("[initial(icon_state)]burst")
 	icon_state = "[initial(icon_state)][magazine ? "-[magazine.max_ammo]" : ""][chambered ? "" : "-e"][suppressed ? "-suppressed" : ""]"
 
 /obj/item/gun/ballistic/automatic/attackby(obj/item/A, mob/user, params)
@@ -37,7 +39,6 @@
 				magazine = AM
 				if(oldmag)
 					to_chat(user, "<span class='notice'>You perform a tactical reload on \the [src], replacing the magazine.</span>")
-					oldmag.dropped()
 					oldmag.forceMove(get_turf(src.loc))
 					oldmag.update_icon()
 				else
@@ -51,19 +52,20 @@
 			else
 				to_chat(user, "<span class='warning'>You cannot seem to get \the [src] out of your hands!</span>")
 
-/obj/item/gun/ballistic/automatic/ui_action_click()
-	burst_select()
+/obj/item/gun/ballistic/automatic/ui_action_click(mob/user, action)
+	if(istype(action, /datum/action/item_action/toggle_firemode))
+		burst_select()
+	else
+		return ..()
 
 /obj/item/gun/ballistic/automatic/proc/burst_select()
 	var/mob/living/carbon/human/user = usr
 	select = !select
 	if(!select)
-		burst_size = 1
-		fire_delay = 0
+		disable_burst()
 		to_chat(user, "<span class='notice'>You switch to semi-automatic.</span>")
 	else
-		burst_size = initial(burst_size)
-		fire_delay = initial(fire_delay)
+		enable_burst()
 		to_chat(user, "<span class='notice'>You switch to [burst_size]-rnd burst.</span>")
 
 	playsound(user, 'sound/weapons/empty.ogg', 100, 1)
@@ -71,6 +73,12 @@
 	for(var/X in actions)
 		var/datum/action/A = X
 		A.UpdateButtonIcon()
+
+/obj/item/gun/ballistic/automatic/proc/enable_burst()
+	burst_size = initial(burst_size)
+
+/obj/item/gun/ballistic/automatic/proc/disable_burst()
+	burst_size = 1
 
 /obj/item/gun/ballistic/automatic/can_shoot()
 	return get_ammo()
@@ -89,7 +97,7 @@
 	item_state = "c20r"
 	mag_type = /obj/item/ammo_box/magazine/smgm45
 	fire_sound = 'sound/weapons/gunshot_smg.ogg'
-	fire_delay = 2
+	burst_shot_delay = 2
 	burst_size = 2
 	pin = /obj/item/firing_pin/implant/pindicate
 	can_bayonet = TRUE
@@ -106,29 +114,36 @@
 /obj/item/gun/ballistic/automatic/c20r/afterattack()
 	. = ..()
 	empty_alarm()
-	return
 
 /obj/item/gun/ballistic/automatic/c20r/update_icon()
 	..()
 	icon_state = "c20r[magazine ? "-[CEILING(get_ammo(0)/4, 1)*4]" : ""][chambered ? "" : "-e"][suppressed ? "-suppressed" : ""]"
 
 /obj/item/gun/ballistic/automatic/wt550
-	name = "security auto rifle"
-	desc = "An outdated personal defence weapon. Uses 4.6x30mm rounds and is designated the WT-550 Automatic Rifle."
+	name = "security semi-auto smg"
+	desc = "An outdated personal defence weapon. Uses 4.6x30mm rounds and is designated the WT-550 Semi-Automatic SMG."
 	icon_state = "wt550"
 	item_state = "arg"
 	mag_type = /obj/item/ammo_box/magazine/wt550m9
-	fire_delay = 2
 	can_suppress = FALSE
-	burst_size = 0
-	actions_types = list()
+	burst_size = 2
+	burst_shot_delay = 1
 	can_bayonet = TRUE
 	knife_x_offset = 25
 	knife_y_offset = 12
+	automatic_burst_overlay = FALSE
+
+/obj/item/gun/ballistic/automatic/wt550/enable_burst()
+	. = ..()
+	spread = 15
+
+/obj/item/gun/ballistic/automatic/wt550/disable_burst()
+	. = ..()
+	spread = 0
 
 /obj/item/gun/ballistic/automatic/wt550/update_icon()
 	..()
-	icon_state = "wt550[magazine ? "-[CEILING(get_ammo(0)/4, 1)*4]" : ""]"
+	icon_state = "wt550[magazine ? "-[CEILING((	(get_ammo(FALSE) / magazine.max_ammo) * 20) /4, 1)*4]" : "-0"]"	//Sprites only support up to 20.
 
 /obj/item/gun/ballistic/automatic/mini_uzi
 	name = "\improper Type U3 Uzi"
@@ -147,7 +162,7 @@
 	can_suppress = FALSE
 	var/obj/item/gun/ballistic/revolver/grenadelauncher/underbarrel
 	burst_size = 3
-	fire_delay = 2
+	burst_shot_delay = 2
 	pin = /obj/item/firing_pin/implant/pindicate
 
 /obj/item/gun/ballistic/automatic/m90/Initialize()
@@ -194,7 +209,6 @@
 		if(0)
 			select = 1
 			burst_size = initial(burst_size)
-			fire_delay = initial(fire_delay)
 			to_chat(user, "<span class='notice'>You switch to [burst_size]-rnd burst.</span>")
 		if(1)
 			select = 2
@@ -202,7 +216,6 @@
 		if(2)
 			select = 0
 			burst_size = 1
-			fire_delay = 0
 			to_chat(user, "<span class='notice'>You switch to semi-auto.</span>")
 	playsound(user, 'sound/weapons/empty.ogg', 100, 1)
 	update_icon()
@@ -219,7 +232,7 @@
 	fire_sound = 'sound/weapons/gunshot_smg.ogg'
 	can_suppress = FALSE
 	burst_size = 4
-	fire_delay = 1
+	burst_shot_delay = 1
 
 /obj/item/gun/ballistic/automatic/ar
 	name = "\improper NT-ARG 'Boarder'"
@@ -231,7 +244,7 @@
 	fire_sound = 'sound/weapons/gunshot_smg.ogg'
 	can_suppress = FALSE
 	burst_size = 3
-	fire_delay = 1
+	burst_shot_delay = 1
 
 // Bulldog shotgun //
 
@@ -246,7 +259,6 @@
 	fire_sound = 'sound/weapons/gunshot.ogg'
 	can_suppress = FALSE
 	burst_size = 1
-	fire_delay = 0
 	pin = /obj/item/firing_pin/implant/pindicate
 	actions_types = list()
 
@@ -268,8 +280,6 @@
 	empty_alarm()
 	return
 
-
-
 // L6 SAW //
 
 /obj/item/gun/ballistic/automatic/l6_saw
@@ -285,19 +295,17 @@
 	var/cover_open = FALSE
 	can_suppress = FALSE
 	burst_size = 3
-	fire_delay = 1
+	burst_shot_delay = 1
 	spread = 7
 	pin = /obj/item/firing_pin/implant/pindicate
 
 /obj/item/gun/ballistic/automatic/l6_saw/unrestricted
 	pin = /obj/item/firing_pin
 
-
 /obj/item/gun/ballistic/automatic/l6_saw/examine(mob/user)
-	..()
+	. = ..()
 	if(cover_open && magazine)
-		to_chat(user, "<span class='notice'>It seems like you could use an <b>empty hand</b> to remove the magazine.</span>")
-
+		. += "<span class='notice'>It seems like you could use an <b>empty hand</b> to remove the magazine.</span>"
 
 /obj/item/gun/ballistic/automatic/l6_saw/attack_self(mob/user)
 	cover_open = !cover_open
@@ -308,11 +316,9 @@
 		playsound(user, 'sound/weapons/sawclose.ogg', 60, 1)
 	update_icon()
 
-
 /obj/item/gun/ballistic/automatic/l6_saw/update_icon()
 	icon_state = "l6[cover_open ? "open" : "closed"][magazine ? CEILING(get_ammo(0)/12.5, 1)*25 : "-empty"][suppressed ? "-suppressed" : ""]"
 	item_state = "l6[cover_open ? "openmag" : "closedmag"]"
-
 
 /obj/item/gun/ballistic/automatic/l6_saw/afterattack(atom/target as mob|obj|turf, mob/living/user as mob|obj, flag, params) //what I tried to do here is just add a check to see if the cover is open or not and add an icon_state change because I can't figure out how c-20rs do it with overlays
 	if(cover_open)
@@ -321,8 +327,7 @@
 		. = ..()
 		update_icon()
 
-//ATTACK HAND IGNORING PARENT RETURN VALUE
-/obj/item/gun/ballistic/automatic/l6_saw/attack_hand(mob/user)
+/obj/item/gun/ballistic/automatic/l6_saw/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	if(loc != user)
 		..()
 		return	//let them pick it up
@@ -344,8 +349,6 @@
 		return
 	..()
 
-
-
 // SNIPER //
 
 /obj/item/gun/ballistic/automatic/sniper_rifle
@@ -361,19 +364,18 @@
 	can_unsuppress = TRUE
 	can_suppress = TRUE
 	w_class = WEIGHT_CLASS_NORMAL
+	inaccuracy_modifier = 0.5
 	zoomable = TRUE
 	zoom_amt = 10 //Long range, enough to see in front of you, but no tiles behind you.
 	zoom_out_amt = 13
 	slot_flags = ITEM_SLOT_BACK
 	actions_types = list()
 
-
 /obj/item/gun/ballistic/automatic/sniper_rifle/update_icon()
 	if(magazine)
 		icon_state = "sniper-mag"
 	else
 		icon_state = "sniper"
-
 
 /obj/item/gun/ballistic/automatic/sniper_rifle/syndicate
 	name = "syndicate sniper rifle"
@@ -403,7 +405,6 @@
 	else
 		icon_state = "surplus-e"
 
-
 // Laser rifle (rechargeable magazine) //
 
 /obj/item/gun/ballistic/automatic/laser
@@ -414,7 +415,7 @@
 	mag_type = /obj/item/ammo_box/magazine/recharge
 	fire_delay = 2
 	can_suppress = FALSE
-	burst_size = 0
+	burst_size = 1
 	actions_types = list()
 	fire_sound = 'sound/weapons/laser.ogg'
 	casing_ejector = FALSE

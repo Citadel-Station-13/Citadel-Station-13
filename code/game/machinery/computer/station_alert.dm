@@ -20,17 +20,18 @@
 									datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
-		ui = new(user, src, ui_key, "station_alert", name, 300, 500, master_ui, state)
+		ui = new(user, src, ui_key, "StationAlertConsole", name, 325, 500, master_ui, state)
 		ui.open()
 
 /obj/machinery/computer/station_alert/ui_data(mob/user)
-	. = list()
+	var/list/data = list()
 
-	.["alarms"] = list()
+	data["alarms"] = list()
 	for(var/class in alarms)
-		.["alarms"][class] = list()
+		data["alarms"][class] = list()
 		for(var/area in alarms[class])
-			.["alarms"][class] += area
+			data["alarms"][class] += area
+	return data
 
 /obj/machinery/computer/station_alert/proc/triggerAlarm(class, area/A, O, obj/source)
 	if(source.z != z)
@@ -74,14 +75,23 @@
 				L -= I
 	return !cleared
 
-/obj/machinery/computer/station_alert/update_icon()
-	..()
+/obj/machinery/computer/station_alert/update_overlays()
+	. = ..()
+	SSvis_overlays.remove_vis_overlay(src, managed_vis_overlays)
+	var/overlay_state = icon_screen
 	if(stat & (NOPOWER|BROKEN))
+		. |= "[icon_keyboard]_off"
 		return
+	. |= icon_keyboard
 	var/active_alarms = FALSE
 	for(var/cat in alarms)
-		var/list/L = alarms[cat]
-		if(L.len)
+		if(length(alarms[cat]))
 			active_alarms = TRUE
+			break
 	if(active_alarms)
-		add_overlay("alert:2")
+		overlay_state = "alert:2"
+	else
+		overlay_state = "alert:0"
+	. |= overlay_state
+	SSvis_overlays.add_vis_overlay(src, icon, overlay_state, layer, plane, dir)
+	SSvis_overlays.add_vis_overlay(src, icon, overlay_state, EMISSIVE_LAYER, EMISSIVE_PLANE, dir, alpha=128)

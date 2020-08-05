@@ -51,7 +51,7 @@ Regenerative extracts:
 	colour = "purple"
 
 /obj/item/slimecross/regenerative/purple/core_effect(mob/living/target, mob/user)
-	target.reagents.add_reagent("regen_jelly",10)
+	target.reagents.add_reagent(/datum/reagent/medicine/regen_jelly,10)
 
 /obj/item/slimecross/regenerative/blue
 	colour = "blue"
@@ -128,7 +128,7 @@ Regenerative extracts:
 	colour = "silver"
 
 /obj/item/slimecross/regenerative/silver/core_effect(mob/living/target, mob/user)
-	target.nutrition = NUTRITION_LEVEL_FULL - 1
+	target.set_nutrition(NUTRITION_LEVEL_FULL - 1)
 	to_chat(target, "<span class='notice'>You feel satiated.</span>")
 
 /obj/item/slimecross/regenerative/bluespace
@@ -148,8 +148,9 @@ Regenerative extracts:
 /obj/item/slimecross/regenerative/sepia
 	colour = "sepia"
 
-/obj/item/slimecross/regenerative/sepia/core_effect(mob/living/target, mob/user)
-	new /obj/effect/timestop(get_turf(target), 2, 50, list(user,target))
+/obj/item/slimecross/regenerative/sepia/core_effect_before(mob/living/target, mob/user)
+	to_chat(target, "<span class=notice>You try to forget how you feel.</span>")
+	target.AddComponent(/datum/component/dejavu)
 
 /obj/item/slimecross/regenerative/cerulean
 	colour = "cerulean"
@@ -174,7 +175,7 @@ Regenerative extracts:
 
 /obj/item/slimecross/regenerative/red/core_effect(mob/living/target, mob/user)
 	to_chat(target, "<span class='notice'>You feel... <i>faster.</i></span>")
-	target.reagents.add_reagent("ephedrine",3)
+	target.reagents.add_reagent(/datum/reagent/medicine/ephedrine,3)
 
 /obj/item/slimecross/regenerative/green
 	colour = "green"
@@ -185,7 +186,7 @@ Regenerative extracts:
 		var/mob/living/simple_animal/slime/S = target
 		S.random_colour()
 	if(isjellyperson(target))
-		target.reagents.add_reagent("slime_toxin",5)
+		target.reagents.add_reagent(/datum/reagent/slime_toxin,5)
 
 
 /obj/item/slimecross/regenerative/pink
@@ -193,14 +194,13 @@ Regenerative extracts:
 
 /obj/item/slimecross/regenerative/pink/core_effect(mob/living/target, mob/user)
 	to_chat(target, "<span class='notice'>You feel more calm.</span>")
-	target.reagents.add_reagent("krokodil",4)
+	target.reagents.add_reagent(/datum/reagent/drug/krokodil,4)
 
 /obj/item/slimecross/regenerative/gold
 	colour = "gold"
 
 /obj/item/slimecross/regenerative/gold/core_effect(mob/living/target, mob/user)
-	var/newcoin = pick(/obj/item/coin/silver, /obj/item/coin/iron, /obj/item/coin/gold, /obj/item/coin/diamond, /obj/item/coin/plasma, /obj/item/coin/uranium)
-	var/obj/item/coin/C = new newcoin(target.loc)
+	var/obj/item/coin/C = new /obj/effect/spawner/lootdrop/coin(target.loc)
 	playsound(C, 'sound/items/coinflip.ogg', 50, 1)
 	target.put_in_hand(C)
 

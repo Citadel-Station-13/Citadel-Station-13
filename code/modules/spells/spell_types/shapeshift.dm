@@ -1,8 +1,7 @@
 /obj/effect/proc_holder/spell/targeted/shapeshift
 	name = "Shapechange"
 	desc = "Take on the shape of another for a time to use their natural abilities. Once you've made your choice it cannot be changed."
-	clothes_req = 0
-	human_req = 0
+	clothes_req = NONE
 	charge_max = 200
 	cooldown_min = 50
 	range = -1
@@ -13,9 +12,8 @@
 
 	var/revert_on_death = TRUE
 	var/die_with_shapeshifted_form = TRUE
-	var/convert_damage = FALSE //If you want to convert the caster's health to the shift, and vice versa.
+	var/convert_damage = TRUE //If you want to convert the caster's health to the shift, and vice versa.
 	var/convert_damage_type = BRUTE //Since simplemobs don't have advanced damagetypes, what to convert damage back into.
-
 	var/shapeshift_type
 	var/list/possible_shapes = list(/mob/living/simple_animal/mouse,\
 		/mob/living/simple_animal/pet/dog/corgi,\
@@ -60,8 +58,9 @@
 	var/mob/living/shape = new shapeshift_type(caster.loc)
 	H = new(shape,src,caster)
 
-	clothes_req = 0
-	human_req = 0
+	clothes_req = NONE
+	mobs_whitelist = null
+	mobs_blacklist = null
 
 /obj/effect/proc_holder/spell/targeted/shapeshift/proc/Restore(mob/living/shape)
 	var/obj/shapeshift_holder/H = locate() in shape
@@ -71,7 +70,8 @@
 	H.restore()
 
 	clothes_req = initial(clothes_req)
-	human_req = initial(human_req)
+	mobs_whitelist = typecacheof(initial(mobs_whitelist))
+	mobs_blacklist = typecacheof(initial(mobs_blacklist))
 
 /obj/effect/proc_holder/spell/targeted/shapeshift/dragon
 	name = "Dragon Form"
@@ -100,10 +100,12 @@
 	if(stored.mind)
 		stored.mind.transfer_to(shape)
 	stored.forceMove(src)
-	stored.notransform = TRUE
+	stored.mob_transforming = TRUE
 	if(source.convert_damage)
-		var/damapply = (stored.maxHealth - (stored.health + stored.maxHealth)/2) //Carbons go from -100 to 100 naturally, while simplemobs only go from 0 to 100. Can't do a direct conversion.
-		shape.apply_damage(damapply, source.convert_damage_type)
+		var/damage_percent = (stored.maxHealth - stored.health)/stored.maxHealth;
+		var/damapply = damage_percent * shape.maxHealth;
+
+		shape.apply_damage(damapply, source.convert_damage_type, forced = TRUE, wound_bonus=CANT_WOUND);
 	slink = soullink(/datum/soullink/shapeshift, stored , shape)
 	slink.source = src
 
@@ -146,15 +148,17 @@
 	restoring = TRUE
 	qdel(slink)
 	stored.forceMove(get_turf(src))
-	stored.notransform = FALSE
+	stored.mob_transforming = FALSE
 	if(shape.mind)
 		shape.mind.transfer_to(stored)
 	if(death)
 		stored.death()
 	else if(source.convert_damage)
 		stored.revive(full_heal = TRUE)
-		var/damapply = (shape.maxHealth - 2*shape.health) //Since we halved incoming damage, double outgoing.
-		stored.apply_damage(damapply, source.convert_damage_type)
+		var/damage_percent = (shape.maxHealth - shape.health)/shape.maxHealth;
+		var/damapply = stored.maxHealth * damage_percent
+
+		stored.apply_damage(damapply, source.convert_damage_type, forced = TRUE, wound_bonus=CANT_WOUND)
 	qdel(shape)
 	qdel(src)
 

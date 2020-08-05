@@ -1,5 +1,0 @@
-author: "Tupinambis"
-delete-after: True
-changes: 
-  - tweak: "Changes large parts of the nuclear operative base, including the addition of a new barracks where the ops spawn, a personal bedroom for the leader, the rearrangement of numerous rooms, some added fluff, a slightly more roomy bar, a larger hanger, a kitchen, and various other small changes to make the base feel just a bit more alive. This was achieved by completely redoing the base from scratch so there was room to work with, as a result potential bugs could crop, please do report them."
-  - bugfix: "The drop pod chamber was airless. This seems like an oversight, and has been filled with air."

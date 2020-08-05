@@ -57,7 +57,7 @@
 /datum/gear/geisha
 	name = "Geisha suit"
 	category = SLOT_W_UNIFORM
-	path = /obj/item/clothing/under/geisha
+	path = /obj/item/clothing/under/costume/geisha
 	ckeywhitelist = list("atiefling")
 
 /datum/gear/specialscarf
@@ -123,7 +123,7 @@
 /datum/gear/mankini
 	name = "Mankini"
 	category = SLOT_W_UNIFORM
-	path = /obj/item/clothing/under/mankini
+	path = /obj/item/clothing/under/misc/stripper/mankini
 	ckeywhitelist = list("zigfie")
 
 /datum/gear/pinkshoes
@@ -160,7 +160,7 @@
 /datum/gear/performersoutfit
 	name = "Bluish performer's outfit"
 	category = SLOT_W_UNIFORM
-	path = /obj/item/clothing/under/singery/custom
+	path = /obj/item/clothing/under/costume/singer/yellow/custom
 	ckeywhitelist = list("killer402402")
 
 /datum/gear/vermillion
@@ -184,7 +184,7 @@
 /datum/gear/naomisweater
 	name = "worn black sweater"
 	category = SLOT_W_UNIFORM
-	path = /obj/item/clothing/under/bb_sweater/black/naomi
+	path = /obj/item/clothing/under/sweater/black/naomi
 	ckeywhitelist = list("technicalmagi")
 
 /datum/gear/naomicollar
@@ -194,39 +194,39 @@
 	ckeywhitelist = list("technicalmagi")
 
 /datum/gear/gladiator
-    name = "Gladiator Armor"
-    category = SLOT_WEAR_SUIT
-    path = /obj/item/clothing/under/gladiator
-    ckeywhitelist = list("aroche")
+	name = "Gladiator Armor"
+	category = SLOT_WEAR_SUIT
+	path = /obj/item/clothing/under/costume/gladiator
+	ckeywhitelist = list("aroche")
 
 /datum/gear/bloodredtie
-    name = "Blood Red Tie"
-    category = SLOT_NECK
-    path = /obj/item/clothing/neck/tie/bloodred
-    ckeywhitelist = list("kyutness")
+	name = "Blood Red Tie"
+	category = SLOT_NECK
+	path = /obj/item/clothing/neck/tie/bloodred
+	ckeywhitelist = list("kyutness")
 
 /datum/gear/puffydress
-    name = "Puffy Dress"
-    category = SLOT_WEAR_SUIT
-    path = /obj/item/clothing/suit/puffydress
-    ckeywhitelist = list("stallingratt")
+	name = "Puffy Dress"
+	category = SLOT_WEAR_SUIT
+	path = /obj/item/clothing/suit/puffydress
+	ckeywhitelist = list("stallingratt")
 
 /datum/gear/labredblack
-    name = "Black and Red Coat"
-    category = SLOT_WEAR_SUIT
-    path = /obj/item/clothing/suit/toggle/labcoat/labredblack
-    ckeywhitelist = list("blakeryan", "durandalphor")
+	name = "Black and Red Coat"
+	category = SLOT_WEAR_SUIT
+	path = /obj/item/clothing/suit/toggle/labcoat/labredblack
+	ckeywhitelist = list("blakeryan", "durandalphor")
 
 /datum/gear/torisword
 	name = "Rainbow Zweihander"
 	category = SLOT_IN_BACKPACK
-	path = /obj/item/twohanded/hypereutactic/toy/rainbow
+	path = /obj/item/dualsaber/hypereutactic/toy/rainbow
 	ckeywhitelist = list("annoymous35")
 
 /datum/gear/darksabre
 	name = "Dark Sabre"
 	category = SLOT_IN_BACKPACK
-	path = /obj/item/toy/sword/darksabre
+	path = /obj/item/toy/darksabre
 	ckeywhitelist = list("inferno707")
 
 datum/gear/darksabresheath
@@ -305,7 +305,7 @@ datum/gear/darksabresheath
 /datum/gear/flagcape
 	name = "US Flag Cape"
 	category = SLOT_IN_BACKPACK
-	path = /obj/item/bedsheet/custom/flagcape
+	path = /obj/item/clothing/neck/flagcape
 	ckeywhitelist = list("darnchacha")
 
 /datum/gear/luckyjack
@@ -330,7 +330,7 @@ datum/gear/darksabresheath
 /datum/gear/Divine_robes
 	name = "Divine robes"
 	category = SLOT_W_UNIFORM
-	path = /obj/item/clothing/under/lunasune
+	path = /obj/item/clothing/under/custom/lunasune
 	ckeywhitelist = list("invader4352")
 
 /datum/gear/gothcoat
@@ -348,7 +348,7 @@ datum/gear/darksabresheath
 /datum/gear/sharkcloth
 	name = "Leon's Skimpy Outfit"
 	category = SLOT_WEAR_SUIT
-	path = /obj/item/clothing/under/leoskimpy
+	path = /obj/item/clothing/under/custom/leoskimpy
 	ckeywhitelist = list("spectrosis")
 
 /datum/gear/mimemask
@@ -360,7 +360,7 @@ datum/gear/darksabresheath
 /datum/gear/mimeoveralls
 	name = "Mime's Overalls"
 	category = SLOT_WEAR_SUIT
-	path = /obj/item/clothing/under/mimeoveralls
+	path = /obj/item/clothing/under/custom/mimeoveralls
 	ckeywhitelist = list("pireamaineach")
 
 /datum/gear/soulneck
@@ -368,3 +368,129 @@ datum/gear/darksabresheath
 	category = SLOT_NECK
 	path = /obj/item/clothing/neck/undertale
 	ckeywhitelist = list("twilightic")
+
+/datum/gear/frenchberet
+	name = "French Beret"
+	category = SLOT_HEAD
+	path = /obj/item/clothing/head/frenchberet
+	ckeywhitelist = list("notazoltan")
+
+/datum/gear/zuliecloak
+	name = "Project: Zul-E"
+	category = SLOT_WEAR_SUIT
+	path = /obj/item/clothing/suit/hooded/cloak/zuliecloak
+	ckeywhitelist = list("asky")
+
+/datum/gear/blackredgold
+	name = "Black, Red, and Gold Coat"
+	category = SLOT_WEAR_SUIT
+	path = /obj/item/clothing/suit/blackredgold
+	ckeywhitelist = list("ttbnc")
+
+/datum/gear/fritzplush
+	name = "Fritz Plushie"
+	category = SLOT_IN_BACKPACK
+	path = /obj/item/toy/plush/mammal/dog/fritz
+	ckeywhitelist = list("analwerewolf")
+
+/datum/gear/kimono
+	name = "Kimono"
+	category = SLOT_WEAR_SUIT
+	path = /obj/item/clothing/suit/kimono
+	ckeywhitelist = list("sfox63")
+
+/datum/gear/commjacket
+	name = "Dusty Commisar's Cloak"
+	category = SLOT_WEAR_SUIT
+	path = /obj/item/clothing/suit/commjacket
+	ckeywhitelist = list("sadisticbatter")
+
+/datum/gear/mw2_russian_para
+	name = "Russian Paratrooper Jumper"
+	category = SLOT_W_UNIFORM
+	path = /obj/item/clothing/under/custom/mw2_russian_para
+	ckeywhitelist = list("investigator77")
+
+/datum/gear/longblackgloves
+	name = "Luna's Gauntlets"
+	category = SLOT_GLOVES
+	path = /obj/item/clothing/gloves/longblackgloves
+	ckeywhitelist = list("bigmanclancy")
+
+/datum/gear/trendy_fit
+	name = "Trendy Fit"
+	category = SLOT_W_UNIFORM
+	path = /obj/item/clothing/under/custom/trendy_fit
+	ckeywhitelist = list("midgetdragon")
+
+/datum/gear/singery
+	name = "Yellow Performer Outfit"
+	category = SLOT_W_UNIFORM
+	path = /obj/item/clothing/under/costume/singer/yellow
+	ckeywhitelist = list("maxlynchy")
+
+/datum/gear/csheet
+	name = "NT Bedsheet"
+	category = SLOT_NECK
+	path = /obj/item/bedsheet/captain
+	ckeywhitelist = list("tikibomb")
+
+/datum/gear/borgplush
+	name = "Robot Plush"
+	category = SLOT_IN_BACKPACK
+	path = /obj/item/toy/plush/borgplushie
+	ckeywhitelist = list("nicholaiavenicci")
+
+/datum/gear/donorberet
+	name = "Atmos Beret"
+	category = SLOT_HEAD
+	path = /obj/item/clothing/head/blueberet
+	ckeywhitelist = list("foxystalin")
+
+/datum/gear/donorgoggles
+	name = "Flight Goggles"
+	category = SLOT_HEAD
+	path = /obj/item/clothing/head/flight
+	ckeywhitelist = list("maxlynchy")
+
+/datum/gear/onionneck
+	name = "Onion Necklace"
+	category = SLOT_NECK
+	path = /obj/item/clothing/neck/necklace/onion
+	ckeywhitelist = list("cdrcross")
+
+/datum/gear/mikubikini
+	name = "starlight singer bikini"
+	category = SLOT_W_UNIFORM
+	path = /obj/item/clothing/under/custom/mikubikini
+	ckeywhitelist = list("grandvegeta")
+
+/datum/gear/mikujacket
+	name = "starlight singer jacket"
+	category = SLOT_WEAR_SUIT
+	path = /obj/item/clothing/suit/mikujacket
+	ckeywhitelist = list("grandvegeta")
+
+/datum/gear/mikuhair
+	name = "starlight singer hair"
+	category = SLOT_W_UNIFORM
+	path = /obj/item/clothing/head/mikuhair
+	ckeywhitelist = list("grandvegeta")
+
+/datum/gear/mikugloves
+	name = "starlight singer gloves"
+	category = SLOT_GLOVES
+	path = /obj/item/clothing/gloves/mikugloves
+	ckeywhitelist = list("grandvegeta")
+
+/datum/gear/mikuleggings
+	name = "starlight singer leggings"
+	category = SLOT_SHOES
+	path = /obj/item/clothing/shoes/sneakers/mikuleggings
+	ckeywhitelist = list("grandvegeta")
+
+/datum/gear/cosmos
+	name = "cosmic space bedsheet"
+	category = SLOT_IN_BACKPACK
+	path = /obj/item/bedsheet/cosmos
+	ckeywhitelist = list("grunnyyy")

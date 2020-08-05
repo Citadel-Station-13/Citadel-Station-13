@@ -18,24 +18,16 @@
 		var/mob/living/carbon/human/H = host_mob
 		H.physiology.stun_mod *= 2
 
-/datum/nanite_program/triggered/adrenaline
+/datum/nanite_program/adrenaline
 	name = "Adrenaline Burst"
 	desc = "The nanites cause a burst of adrenaline when triggered, waking the host from stuns and temporarily increasing their speed."
+	can_trigger = TRUE
 	trigger_cost = 25
 	trigger_cooldown = 1200
 	rogue_types = list(/datum/nanite_program/toxic, /datum/nanite_program/nerve_decay)
 
-/datum/nanite_program/triggered/adrenaline/trigger()
-	if(!..())
-		return
-	to_chat(host_mob, "<span class='notice'>You feel a sudden surge of energy!</span>")
-	host_mob.SetStun(0)
-	host_mob.SetKnockdown(0)
-	host_mob.SetUnconscious(0)
-	host_mob.adjustStaminaLoss(-10) //stimulants give stamina heal now
-	host_mob.lying = 0
-	host_mob.update_canmove()
-	host_mob.reagents.add_reagent("stimulants", 1.5)
+/datum/nanite_program/adrenaline/on_trigger()
+	host_mob.do_adrenaline(50, TRUE, TRUE, FALSE, TRUE, list(), "<span class='notice'>You feel a sudden surge of energy!</span>", 25)
 
 /datum/nanite_program/hardening
 	name = "Dermal Hardening"
@@ -49,14 +41,14 @@
 	. = ..()
 	if(ishuman(host_mob))
 		var/mob/living/carbon/human/H = host_mob
-		H.physiology.armor.melee += 50
+		H.physiology.armor.melee += 35
 		H.physiology.armor.bullet += 35
 
 /datum/nanite_program/hardening/disable_passive_effect()
 	. = ..()
 	if(ishuman(host_mob))
 		var/mob/living/carbon/human/H = host_mob
-		H.physiology.armor.melee -= 50
+		H.physiology.armor.melee -= 35
 		H.physiology.armor.bullet -= 35
 
 /datum/nanite_program/refractive
@@ -69,14 +61,14 @@
 	. = ..()
 	if(ishuman(host_mob))
 		var/mob/living/carbon/human/H = host_mob
-		H.physiology.armor.laser += 50
+		H.physiology.armor.laser += 35
 		H.physiology.armor.energy += 35
 
 /datum/nanite_program/refractive/disable_passive_effect()
 	. = ..()
 	if(ishuman(host_mob))
 		var/mob/living/carbon/human/H = host_mob
-		H.physiology.armor.laser -= 50
+		H.physiology.armor.laser -= 35
 		H.physiology.armor.energy -= 35
 
 /datum/nanite_program/coagulating
@@ -106,11 +98,11 @@
 
 /datum/nanite_program/conductive/enable_passive_effect()
 	. = ..()
-	host_mob.add_trait(TRAIT_SHOCKIMMUNE, "nanites")
+	ADD_TRAIT(host_mob, TRAIT_SHOCKIMMUNE, "nanites")
 
 /datum/nanite_program/conductive/disable_passive_effect()
 	. = ..()
-	host_mob.remove_trait(TRAIT_SHOCKIMMUNE, "nanites")
+	REMOVE_TRAIT(host_mob, TRAIT_SHOCKIMMUNE, "nanites")
 
 /datum/nanite_program/mindshield
 	name = "Mental Barrier"
@@ -120,11 +112,11 @@
 
 /datum/nanite_program/mindshield/enable_passive_effect()
 	. = ..()
-	if(!host_mob.mind.has_antag_datum(/datum/antagonist/rev)) //won't work if on a rev, to avoid having implanted revs
-		host_mob.add_trait(TRAIT_MINDSHIELD, "nanites")
+	if(!host_mob.mind.has_antag_datum(/datum/antagonist/rev, TRUE)) //won't work if on a rev, to avoid having implanted revs.
+		ADD_TRAIT(host_mob, TRAIT_MINDSHIELD, "nanites")
 		host_mob.sec_hud_set_implants()
 
 /datum/nanite_program/mindshield/disable_passive_effect()
 	. = ..()
-	host_mob.remove_trait(TRAIT_MINDSHIELD, "nanites")
+	REMOVE_TRAIT(host_mob, TRAIT_MINDSHIELD, "nanites")
 	host_mob.sec_hud_set_implants()

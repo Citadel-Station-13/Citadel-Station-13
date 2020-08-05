@@ -29,27 +29,10 @@
 
 
 /proc/ran_zone(zone, probability = 80)
-
-	zone = check_zone(zone)
-
 	if(prob(probability))
-		return zone
-
-	var/t = rand(1, 18) // randomly pick a different zone, or maybe the same one
-	switch(t)
-		if(1)
-			return BODY_ZONE_HEAD
-		if(2)
-			return BODY_ZONE_CHEST
-		if(3 to 6)
-			return BODY_ZONE_L_ARM
-		if(7 to 10)
-			return BODY_ZONE_R_ARM
-		if(11 to 14)
-			return BODY_ZONE_L_LEG
-		if(15 to 18)
-			return BODY_ZONE_R_LEG
-
+		zone = check_zone(zone)
+	else
+		zone = pickweight(list(BODY_ZONE_HEAD = 6, BODY_ZONE_CHEST = 6, BODY_ZONE_L_ARM = 22, BODY_ZONE_R_ARM = 22, BODY_ZONE_L_LEG = 22, BODY_ZONE_R_LEG = 22))
 	return zone
 
 /proc/above_neck(zone)
@@ -59,127 +42,135 @@
 	else
 		return 0
 
-/proc/stars(n, pr)
-	n = html_encode(n)
-	if (pr == null)
-		pr = 25
-	if (pr <= 0)
-		return null
-	else
-		if (pr >= 100)
-			return n
-	var/te = n
-	var/t = ""
-	n = length(n)
-	var/p = null
-	p = 1
-	while(p <= n)
-		if ((copytext(te, p, p + 1) == " " || prob(pr)))
-			t = text("[][]", t, copytext(te, p, p + 1))
+/**
+  * Convert random parts of a passed in message to stars
+  *
+  * * phrase - the string to convert
+  * * probability - probability any character gets changed
+  *
+  * This proc is dangerously laggy, avoid it or die
+  */
+/proc/stars(phrase, probability = 25)
+	if(probability <= 0)
+		return phrase
+	phrase = html_decode(phrase)
+	var/leng = length(phrase)
+	. = ""
+	var/char = ""
+	for(var/i = 1, i <= leng, i += length(char))
+		char = phrase[i]
+		if(char == " " || !prob(probability))
+			. += char
 		else
-			t = text("[]*", t)
-		p++
-	return sanitize(t)
+			. += "*"
+	return sanitize(.)
 
-/proc/slur(n)
-	var/phrase = html_decode(n)
-	var/leng = lentext(phrase)
-	var/counter=lentext(phrase)
-	var/newphrase=""
-	var/newletter=""
-	while(counter>=1)
-		newletter=copytext(phrase,(leng-counter)+1,(leng-counter)+2)
-		if(rand(1,3)==3)
-			if(lowertext(newletter)=="o")
-				newletter="u"
-			if(lowertext(newletter)=="s")
-				newletter="ch"
-			if(lowertext(newletter)=="a")
-				newletter="ah"
-			if(lowertext(newletter)=="u")
-				newletter="oo"
-			if(lowertext(newletter)=="c")
-				newletter="k"
-		if(rand(1,20)==20)
-			if(newletter==" ")
-				newletter="...huuuhhh..."
-			if(newletter==".")
-				newletter=" *BURP*."
-		switch(rand(1,20))
+/**
+  * Makes you speak like you're drunk
+  */
+/proc/slur(phrase, strength = 50)
+	strength = min(50, strength)
+	phrase = html_decode(phrase)
+	var/leng = length(phrase)
+	. = ""
+	var/newletter = ""
+	var/rawchar = ""
+	for(var/i = 1, i <= leng, i += length(rawchar))
+		rawchar = newletter = phrase[i]
+		if(rand(1,100)<=strength * 0.5)
+			var/lowerletter = lowertext(newletter)
+			if(lowerletter == "o")
+				newletter = "u"
+			else if(lowerletter == "s")
+				newletter = "ch"
+			else if(lowerletter == "a")
+				newletter = "ah"
+			else if(lowerletter == "u")
+				newletter = "oo"
+			else if(lowerletter == "c")
+				newletter = "k"
+		if(rand(1,100) <= strength * 0.25)
+			if(newletter == " ")
+				newletter = "...huuuhhh..."
+			else if(newletter == ".")
+				newletter = " *BURP*."
+		switch(rand(1,100) <= strength * 0.5)
 			if(1)
-				newletter+="'"
+				newletter += "'"
 			if(10)
-				newletter+="[newletter]"
+				newletter += "[newletter]"
 			if(20)
-				newletter+="[newletter][newletter]"
-		newphrase+="[newletter]";counter-=1
-	return newphrase
+				newletter += "[newletter][newletter]"
+		. += "[newletter]"
+	return sanitize(.)
 
+/// Makes you talk like you got cult stunned, which is slurring but with some dark messages
+/proc/cultslur(phrase) // Inflicted on victims of a stun talisman
+	phrase = html_decode(phrase)
+	var/leng = length(phrase)
+	. = ""
+	var/newletter = ""
+	var/rawchar = ""
+	for(var/i = 1, i <= leng, i += length(rawchar))
+		rawchar = newletter = phrase[i]
+		if(rand(1, 2) == 2)
+			var/lowerletter = lowertext(newletter)
+			if(lowerletter == "o")
+				newletter = "u"
+			else if(lowerletter == "t")
+				newletter = "ch"
+			else if(lowerletter == "a")
+				newletter = "ah"
+			else if(lowerletter == "u")
+				newletter = "oo"
+			else if(lowerletter == "c")
+				newletter = " NAR "
+			else if(lowerletter == "s")
+				newletter = " SIE "
+		if(rand(1, 4) == 4)
+			if(newletter == " ")
+				newletter = " no hope... "
+			else if(newletter == "H")
+				newletter = " IT COMES... "
 
-/proc/cultslur(n) // Inflicted on victims of a stun talisman
-	var/phrase = html_decode(n)
-	var/leng = lentext(phrase)
-	var/counter=lentext(phrase)
-	var/newphrase=""
-	var/newletter=""
-	while(counter>=1)
-		newletter=copytext(phrase,(leng-counter)+1,(leng-counter)+2)
-		if(rand(1,2)==2)
-			if(lowertext(newletter)=="o")
-				newletter="u"
-			if(lowertext(newletter)=="t")
-				newletter="ch"
-			if(lowertext(newletter)=="a")
-				newletter="ah"
-			if(lowertext(newletter)=="u")
-				newletter="oo"
-			if(lowertext(newletter)=="c")
-				newletter=" NAR "
-			if(lowertext(newletter)=="s")
-				newletter=" SIE "
-		if(rand(1,4)==4)
-			if(newletter==" ")
-				newletter=" no hope... "
-			if(newletter=="H")
-				newletter=" IT COMES... "
-
-		switch(rand(1,15))
+		switch(rand(1, 15))
 			if(1)
-				newletter="'"
+				newletter = "'"
 			if(2)
-				newletter+="agn"
+				newletter += "agn"
 			if(3)
-				newletter="fth"
+				newletter = "fth"
 			if(4)
-				newletter="nglu"
+				newletter = "nglu"
 			if(5)
-				newletter="glor"
-		newphrase+="[newletter]";counter-=1
-	return newphrase
+				newletter = "glor"
+		. += newletter
+	return sanitize(.)
 
+//Ratvarian Slurring!
 
-/proc/stutter(n)
-	var/te = html_decode(n)
-	var/t = ""//placed before the message. Not really sure what it's for.
-	n = length(n)//length of the entire word
-	var/p = null
-	p = 1//1 is the start of any word
-	while(p <= n)//while P, which starts at 1 is less or equal to N which is the length.
-		var/n_letter = copytext(te, p, p + 1)//copies text from a certain distance. In this case, only one letter at a time.
-		if (prob(80) && (ckey(n_letter) in list("b","c","d","f","g","h","j","k","l","m","n","p","q","r","s","t","v","w","x","y","z")))
-			if (prob(10))
-				n_letter = text("[n_letter]-[n_letter]-[n_letter]-[n_letter]")//replaces the current letter with this instead.
+#define CLOCK_CULT_SLUR(phrase) sanitize(text2ratvar(phrase))
+
+///Adds stuttering to the message passed in
+/proc/stutter(phrase)
+	phrase = html_decode(phrase)
+	var/leng = length(phrase)
+	. = ""
+	var/newletter = ""
+	var/rawchar
+	for(var/i = 1, i <= leng, i += length(rawchar))
+		rawchar = newletter = phrase[i]
+		if(prob(80) && !(lowertext(newletter) in list("a", "e", "i", "o", "u", " ")))
+			if(prob(10))
+				newletter = "[newletter]-[newletter]-[newletter]-[newletter]"
+			else if(prob(20))
+				newletter = "[newletter]-[newletter]-[newletter]"
+			else if (prob(5))
+				newletter = ""
 			else
-				if (prob(20))
-					n_letter = text("[n_letter]-[n_letter]-[n_letter]")
-				else
-					if (prob(5))
-						n_letter = null
-					else
-						n_letter = text("[n_letter]-[n_letter]")
-		t = text("[t][n_letter]")//since the above is ran through for each letter, the text just adds up back to the original word.
-		p++//for each letter p is increased to find where the next letter will be.
-	return copytext(sanitize(t),1,MAX_MESSAGE_LEN)
+				newletter = "[newletter]-[newletter]"
+		. += newletter
+	return sanitize(.)
 
 /proc/derpspeech(message, stuttering)
 	message = replacetext(message, " am ", " ")
@@ -199,52 +190,42 @@
 	return message
 
 
-/proc/Gibberish(t, p)//t is the inputted message, and any value higher than 70 for p will cause letters to be replaced instead of added
-	/* Turn text into complete gibberish! */
-	var/returntext = ""
-	for(var/i = 1, i <= length(t), i++)
-
-		var/letter = copytext(t, i, i+1)
-		if(prob(50))
-			if(p >= 70)
+/proc/Gibberish(text, replace_characters = FALSE, chance = 50)
+	text = html_decode(text)
+	. = ""
+	var/rawchar = ""
+	var/letter = ""
+	var/lentext = length(text)
+	for(var/i = 1, i <= lentext, i += length(rawchar))
+		rawchar = letter = text[i]
+		if(prob(chance))
+			if(replace_characters)
 				letter = ""
+			for(var/j in 1 to rand(0, 2))
+				letter += pick("#", "@", "*", "&", "%", "$", "/", "<", ">", ";", "*", "*", "*", "*", "*", "*", "*")
+		. += letter
+	return sanitize(.)
 
-			for(var/j = 1, j <= rand(0, 2), j++)
-				letter += pick("#","@","*","&","%","$","/", "<", ">", ";","*","*","*","*","*","*","*")
-
-		returntext += letter
-
-	return returntext
-
-
-/proc/ninjaspeak(n) //NINJACODE
 /*
 The difference with stutter is that this proc can stutter more than 1 letter
 The issue here is that anything that does not have a space is treated as one word (in many instances). For instance, "LOOKING," is a word, including the comma.
 It's fairly easy to fix if dealing with single letters but not so much with compounds of letters./N
 */
-	var/te = html_decode(n)
-	var/t = ""
-	n = length(n)
-	var/p = 1
-	while(p <= n)
-		var/n_letter
-		var/n_mod = rand(1,4)
-		if(p+n_mod>n+1)
-			n_letter = copytext(te, p, n+1)
-		else
-			n_letter = copytext(te, p, p+n_mod)
+/proc/ninjaspeak(phrase) //NINJACODE
+	. = ""
+	var/lentext = length_char(phrase)
+	var/rawchars = ""
+	var/letter = ""
+	for(var/i = 1, i <= lentext, i += length_char(rawchars))
+		var/end = i + rand(1,4)
+		letter = rawchars = copytext_char(phrase, i, end > lentext ? 0 : end)
 		if (prob(50))
 			if (prob(30))
-				n_letter = text("[n_letter]-[n_letter]-[n_letter]")
+				letter = "[letter]-[letter]-[letter]"
 			else
-				n_letter = text("[n_letter]-[n_letter]")
-		else
-			n_letter = text("[n_letter]")
-		t = text("[t][n_letter]")
-		p=p+n_mod
-	return copytext(sanitize(t),1,MAX_MESSAGE_LEN)
-
+				letter = "[letter]-[letter]"
+		. += letter
+	return copytext_char(sanitize(.),1,MAX_MESSAGE_LEN)
 
 /proc/shake_camera(mob/M, duration, strength=1)
 	if(!M || !M.client || duration < 1)
@@ -368,12 +349,12 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 /mob/proc/reagent_check(datum/reagent/R) // utilized in the species code
 	return 1
 
-/proc/notify_ghosts(var/message, var/ghost_sound = null, var/enter_link = null, var/atom/source = null, var/mutable_appearance/alert_overlay = null, var/action = NOTIFY_JUMP, flashwindow = TRUE, ignore_mapload = TRUE, ignore_key) //Easy notification of ghosts.
+/proc/notify_ghosts(message, ghost_sound, enter_link, atom/source, mutable_appearance/alert_overlay, action = NOTIFY_JUMP, flashwindow = TRUE, ignore_mapload = TRUE, ignore_key, ignore_dnr_observers = FALSE, header) //Easy notification of ghosts.
 	if(ignore_mapload && SSatoms.initialized != INITIALIZATION_INNEW_REGULAR)	//don't notify for objects created during a map load
 		return
 	for(var/mob/dead/observer/O in GLOB.player_list)
 		if(O.client)
-			if (ignore_key && O.ckey in GLOB.poll_ignore[ignore_key])
+			if ((ignore_key && (O.ckey in GLOB.poll_ignore[ignore_key])) || (ignore_dnr_observers && !O.can_reenter_round(TRUE)))
 				continue
 			to_chat(O, "<span class='ghostalert'>[message][(enter_link) ? " [enter_link]" : ""]</span>")
 			if(ghost_sound)
@@ -385,6 +366,8 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 				if(A)
 					if(O.client.prefs && O.client.prefs.UI_style)
 						A.icon = ui_style2icon(O.client.prefs.UI_style)
+					if (header)
+						A.name = header
 					A.desc = message
 					A.action = action
 					A.target = source
@@ -425,6 +408,29 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 		return
 	return TRUE
 
+/atom/proc/hasSiliconAccessInArea(mob/user, flags = PRIVILEDGES_SILICON)
+	return user.silicon_privileges & (flags) || (user.siliconaccesstoggle && (get_area(src) in user.siliconaccessareas))
+
+/mob/proc/toggleSiliconAccessArea(area/area)
+	if (area in siliconaccessareas)
+		siliconaccessareas -= area
+		to_chat(src,"<span class='warning'>You lost control of [area]!</span>")
+		return FALSE
+	else
+		if (LAZYLEN(siliconaccessareas) < HIJACK_APC_MAX_AMOUNT)
+			siliconaccessareas += area
+			to_chat(src,"<span class='notice'>You successfully took control of [area].</span>")
+		else
+			to_chat(src,"<span class='warning'>You are connected to too many APCs! Too many more will fry your brain.</span>")
+			return FALSE
+		return TRUE
+
+/mob/proc/getImplant(type)
+	return
+
+/mob/living/getImplant(type)
+	return locate(type) in implants
+
 /proc/offer_control(mob/M)
 	to_chat(M, "Control of your mob has been offered to dead players.")
 	if(usr)
@@ -439,14 +445,14 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 		var/datum/antagonist/A = M.mind.has_antag_datum(/datum/antagonist/)
 		if(A)
 			poll_message = "[poll_message] Status:[A.name]."
-	var/list/mob/dead/observer/candidates = pollCandidatesForMob(poll_message, ROLE_PAI, null, FALSE, 100, M)
+	var/list/mob/candidates = pollCandidatesForMob(poll_message, ROLE_PAI, null, FALSE, 100, M)
 
 	if(LAZYLEN(candidates))
-		var/mob/dead/observer/C = pick(candidates)
+		var/mob/C = pick(candidates)
 		to_chat(M, "Your mob has been taken over by a ghost!")
 		message_admins("[key_name_admin(C)] has taken control of ([key_name_admin(M)])")
-		M.ghostize(0)
-		M.key = C.key
+		M.ghostize(FALSE, TRUE)
+		C.transfer_ckey(M, FALSE)
 		return TRUE
 	else
 		to_chat(M, "There were no ghosts willing to take control.")
@@ -491,7 +497,7 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 		else
 			colored_message = "<font color='[color]'>[message]</font>"
 
-	var/list/timestamped_message = list("[LAZYLEN(logging[smessage_type]) + 1]\[[time_stamp()]\] [key_name(src)] [loc_name(src)]" = colored_message)
+	var/list/timestamped_message = list("[LAZYLEN(logging[smessage_type]) + 1]\[[TIME_STAMP("hh:mm:ss", FALSE)]\] [key_name(src)] [loc_name(src)]" = colored_message)
 
 	logging[smessage_type] += timestamped_message
 
@@ -502,3 +508,67 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 
 /mob/proc/can_hear()
 	. = TRUE
+
+/proc/bloodtype_to_color(var/type)
+	. = BLOOD_COLOR_HUMAN
+	switch(type)
+		if("U")//Universal blood; a bit orange
+			. = BLOOD_COLOR_UNIVERSAL
+		if("SY")//Synthetics blood; blue
+			. = BLOOD_COLOR_SYNTHETIC
+		if("L")//lizard, a bit pink/purple
+			. = BLOOD_COLOR_LIZARD
+		if("X*")//xeno blood; greenish yellow
+			. = BLOOD_COLOR_XENO
+		if("HF")// Oil/Hydraulic blood. something something why not. reee
+			. = BLOOD_COLOR_OIL
+		if("GEL")// slimepeople blood, rgb 0, 255, 144
+			. = BLOOD_COLOR_SLIME
+		if("BUG")// yellowish, like, y'know bug guts I guess.
+			. = BLOOD_COLOR_BUG
+		//add more stuff to the switch if you have more blood colors for different types
+		// the defines are in _DEFINES/misc.dm
+
+//Examine text for traits shared by multiple types. I wish examine was less copypasted.
+/mob/proc/common_trait_examine()
+	if(HAS_TRAIT(src, TRAIT_DISSECTED))
+		var/dissectionmsg = ""
+		if(HAS_TRAIT_FROM(src, TRAIT_DISSECTED,"Extraterrestrial Dissection"))
+			dissectionmsg = " via Extraterrestrial Dissection. It is no longer worth experimenting on"
+		else if(HAS_TRAIT_FROM(src, TRAIT_DISSECTED,"Experimental Dissection"))
+			dissectionmsg = " via Experimental Dissection"
+		else if(HAS_TRAIT_FROM(src, TRAIT_DISSECTED,"Thorough Dissection"))
+			dissectionmsg = " via Thorough Dissection"
+		. += "<span class='notice'>This body has been dissected and analyzed[dissectionmsg].</span><br>"
+
+//gets ID card object from special clothes slot or null.
+/mob/proc/get_idcard(hand_first = TRUE)
+	var/obj/item/held_item = get_active_held_item()
+	. = held_item ? held_item.GetID() : null
+	if(!.) //If so, then check the inactive hand
+		held_item = get_inactive_held_item()
+		. = held_item ? held_item.GetID() : null
+
+/mob/proc/get_id_in_hand()
+	var/obj/item/held_item = get_active_held_item()
+	if(!held_item)
+		return
+	return held_item.GetID()
+
+//Can the mob see reagents inside of containers?
+/mob/proc/can_see_reagents()
+	return stat == DEAD || silicon_privileges //Dead guys and silicons can always see reagents
+
+/mob/proc/is_blind()
+	SHOULD_BE_PURE(TRUE)
+	return eye_blind ? TRUE : HAS_TRAIT(src, TRAIT_BLIND)
+
+/mob/proc/can_read(obj/O)
+	if(is_blind())
+		to_chat(src, "<span class='warning'>As you are trying to read [O], you suddenly feel very stupid!</span>")
+		return
+	if(!is_literate())
+		to_chat(src, "<span class='notice'>You try to read [O], but can't comprehend any of it.</span>")
+		return
+	return TRUE
+

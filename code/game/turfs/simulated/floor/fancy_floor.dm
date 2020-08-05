@@ -11,13 +11,17 @@
 	desc = "Stylish dark wood."
 	icon_state = "wood"
 	floor_tile = /obj/item/stack/tile/wood
+	custom_materials = list(/datum/material/wood = MINERAL_MATERIAL_AMOUNT * 0.25)
 	broken_states = list("wood-broken", "wood-broken2", "wood-broken3", "wood-broken4", "wood-broken5", "wood-broken6", "wood-broken7")
 	footstep = FOOTSTEP_WOOD
+	barefootstep = FOOTSTEP_WOOD_BAREFOOT
+	clawfootstep = FOOTSTEP_WOOD_CLAW
+	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
 	tiled_dirt = FALSE
 
 /turf/open/floor/wood/examine(mob/user)
-	..()
-	to_chat(user, "<span class='notice'>There's a few <b>screws</b> and a <b>small crack</b> visible.</span>")
+	. = ..()
+	. += "<span class='notice'>There's a few <b>screws</b> and a <b>small crack</b> visible.</span>"
 
 /turf/open/floor/wood/screwdriver_act(mob/living/user, obj/item/I)
 	if(..())
@@ -41,7 +45,7 @@
 	C.play_tool_sound(src, 80)
 	return remove_tile(user, silent, (C.tool_behaviour == TOOL_SCREWDRIVER))
 
-/turf/open/floor/wood/remove_tile(mob/user, silent = FALSE, make_tile = TRUE)
+/turf/open/floor/wood/remove_tile(mob/user, silent = FALSE, make_tile = TRUE, forced = FALSE)
 	if(broken || burnt)
 		broken = 0
 		burnt = 0
@@ -62,7 +66,7 @@
 	temperature = 255.37
 
 /turf/open/floor/wood/airless
-	initial_gas_mix = "TEMP=2.7"
+	initial_gas_mix = AIRLESS_ATMOS
 
 /turf/open/floor/grass
 	name = "grass patch"
@@ -73,6 +77,9 @@
 	flags_1 = NONE
 	bullet_bounce_sound = null
 	footstep = FOOTSTEP_GRASS
+	barefootstep = FOOTSTEP_GRASS
+	clawfootstep = FOOTSTEP_GRASS
+	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
 	var/ore_type = /obj/item/stack/ore/glass
 	var/turfverb = "uproot"
 	tiled_dirt = FALSE
@@ -90,6 +97,56 @@
 	if(..())
 		return
 
+/turf/open/floor/grass/fairy //like grass but fae-er
+	name = "fairygrass patch"
+	desc = "Something about this grass makes you want to frolic. Or get high."
+	icon_state = "fairygrass"
+	floor_tile = /obj/item/stack/tile/fairygrass
+	light_range = 2
+	light_power = 0.80
+	light_color = "#33CCFF"
+	color = "#33CCFF"
+
+/turf/open/floor/grass/fairy/white
+	name = "white fairygrass patch"
+	light_color = "#FFFFFF"
+	color = "#FFFFFF"
+	floor_tile = /obj/item/stack/tile/fairygrass/white
+
+/turf/open/floor/grass/fairy/red
+	name = "red fairygrass patch"
+	light_color = "#FF3333"
+	color = "#FF3333"
+	floor_tile = /obj/item/stack/tile/fairygrass/red
+
+/turf/open/floor/grass/fairy/yellow
+	name = "yellow fairygrass patch"
+	light_color = "#FFFF66"
+	color = "#FFFF66"
+	floor_tile = /obj/item/stack/tile/fairygrass/yellow
+
+/turf/open/floor/grass/fairy/green
+	name = "green fairygrass patch"
+	light_color = "#99FF99"
+	color = "#99FF99"
+	floor_tile = /obj/item/stack/tile/fairygrass/green
+
+/turf/open/floor/grass/fairy/blue
+	name = "blue fairygrass patch"
+	floor_tile = /obj/item/stack/tile/fairygrass/blue
+
+/turf/open/floor/grass/fairy/purple
+	name = "purple fairygrass patch"
+	light_color = "#D966FF"
+	color = "#D966FF"
+	floor_tile = /obj/item/stack/tile/fairygrass/purple
+
+/turf/open/floor/grass/fairy/pink
+	name = "pink fairygrass patch"
+	light_color = "#FFB3DA"
+	color = "#FFB3DA"
+	floor_tile = /obj/item/stack/tile/fairygrass/pink
+
 /turf/open/floor/grass/snow
 	gender = PLURAL
 	name = "snow"
@@ -99,10 +156,13 @@
 	ore_type = /obj/item/stack/sheet/mineral/snow
 	planetary_atmos = TRUE
 	floor_tile = null
-	initial_gas_mix = "o2=22;n2=82;TEMP=180"
-	slowdown = 2
+	initial_gas_mix = FROZEN_ATMOS
+	slowdown = 1.5 //So digging it out paths are useful.
 	bullet_sizzle = TRUE
 	footstep = FOOTSTEP_SAND
+	barefootstep = FOOTSTEP_SAND
+	clawfootstep = FOOTSTEP_SAND
+	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
 
 /turf/open/floor/grass/snow/try_replace_tile(obj/item/stack/tile/T, mob/user, params)
 	return
@@ -136,6 +196,9 @@
 	turfverb = "dig up"
 	slowdown = 0
 	footstep = FOOTSTEP_SAND
+	barefootstep = FOOTSTEP_SAND
+	clawfootstep = FOOTSTEP_SAND
+	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
 
 /turf/open/floor/grass/fakebasalt/Initialize()
 	. = ..()
@@ -152,15 +215,18 @@
 	floor_tile = /obj/item/stack/tile/carpet
 	broken_states = list("damaged")
 	smooth = SMOOTH_TRUE
-	canSmoothWith = list(/turf/open/floor/carpet)
+	canSmoothWith = list(/turf/open/floor/carpet, /turf/open/floor/carpet/airless)
 	flags_1 = NONE
 	bullet_bounce_sound = null
 	footstep = FOOTSTEP_CARPET
+	barefootstep = FOOTSTEP_CARPET_BAREFOOT
+	clawfootstep = FOOTSTEP_CARPET_BAREFOOT
+	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
 	tiled_dirt = FALSE
 
 /turf/open/floor/carpet/examine(mob/user)
-	..()
-	to_chat(user, "<span class='notice'>There's a <b>small crack</b> on the edge of it.</span>")
+	. = ..()
+	. += "<span class='notice'>There's a <b>small crack</b> on the edge of it.</span>"
 
 /turf/open/floor/carpet/Initialize()
 	. = ..()
@@ -180,19 +246,99 @@
 /turf/open/floor/carpet/black
 	icon = 'icons/turf/floors/carpet_black.dmi'
 	floor_tile = /obj/item/stack/tile/carpet/black
-	canSmoothWith = list(/turf/open/floor/carpet/black,	/turf/open/floor/carpet/blackred,	/turf/open/floor/carpet/monochrome)
+	smooth = SMOOTH_MORE
+	canSmoothWith = list(/turf/open/floor/carpet/black, /turf/open/floor/carpet/blackred, /turf/open/floor/carpet/monochrome)
 
 /turf/open/floor/carpet/blackred
 	icon = 'icons/turf/floors/carpet_blackred.dmi'
 	floor_tile = /obj/item/stack/tile/carpet/blackred
 	icon_state = "tile-carpet-blackred"
-	canSmoothWith = list(/turf/open/floor/carpet/black,	/turf/open/floor/carpet/blackred,	/turf/open/floor/carpet/monochrome)
+	smooth = SMOOTH_MORE
+	canSmoothWith = list(/turf/open/floor/carpet/black, /turf/open/floor/carpet/blackred, /turf/open/floor/carpet/monochrome)
 
 /turf/open/floor/carpet/monochrome
 	icon = 'icons/turf/floors/carpet_monochrome.dmi'
 	floor_tile = /obj/item/stack/tile/carpet/monochrome
 	icon_state = "tile-carpet-monochrome"
-	canSmoothWith = list(/turf/open/floor/carpet/black,	/turf/open/floor/carpet/blackred,	/turf/open/floor/carpet/monochrome)
+	smooth = SMOOTH_MORE
+	canSmoothWith = list(/turf/open/floor/carpet/black, /turf/open/floor/carpet/blackred, /turf/open/floor/carpet/monochrome)
+
+/turf/open/floor/carpet/blue
+	icon = 'icons/turf/floors/carpet_blue.dmi'
+	floor_tile = /obj/item/stack/tile/carpet/blue
+	canSmoothWith = list(/turf/open/floor/carpet/blue, /turf/open/floor/carpet/blue/airless)
+
+/turf/open/floor/carpet/cyan
+	icon = 'icons/turf/floors/carpet_cyan.dmi'
+	floor_tile = /obj/item/stack/tile/carpet/cyan
+	canSmoothWith = list(/turf/open/floor/carpet/cyan, /turf/open/floor/carpet/cyan/airless)
+
+/turf/open/floor/carpet/green
+	icon = 'icons/turf/floors/carpet_green.dmi'
+	floor_tile = /obj/item/stack/tile/carpet/green
+	canSmoothWith = list(/turf/open/floor/carpet/green, /turf/open/floor/carpet/green/airless)
+
+/turf/open/floor/carpet/orange
+	icon = 'icons/turf/floors/carpet_orange.dmi'
+	floor_tile = /obj/item/stack/tile/carpet/orange
+	canSmoothWith = list(/turf/open/floor/carpet/orange, /turf/open/floor/carpet/orange/airless)
+
+/turf/open/floor/carpet/purple
+	icon = 'icons/turf/floors/carpet_purple.dmi'
+	floor_tile = /obj/item/stack/tile/carpet/purple
+	canSmoothWith = list(/turf/open/floor/carpet/purple, /turf/open/floor/carpet/purple/airless)
+
+/turf/open/floor/carpet/red
+	icon = 'icons/turf/floors/carpet_red.dmi'
+	floor_tile = /obj/item/stack/tile/carpet/red
+	canSmoothWith = list(/turf/open/floor/carpet/red, /turf/open/floor/carpet/red/airless)
+
+/turf/open/floor/carpet/royalblack
+	icon = 'icons/turf/floors/carpet_royalblack.dmi'
+	floor_tile = /obj/item/stack/tile/carpet/royalblack
+	canSmoothWith = list(/turf/open/floor/carpet/royalblack, /turf/open/floor/carpet/royalblack/airless)
+
+/turf/open/floor/carpet/royalblue
+	icon = 'icons/turf/floors/carpet_royalblue.dmi'
+	floor_tile = /obj/item/stack/tile/carpet/royalblue
+	canSmoothWith = list(/turf/open/floor/carpet/royalblue, /turf/open/floor/carpet/royalblue/airless)
+
+//*****Airless versions of all of the above.*****
+/turf/open/floor/carpet/airless
+	initial_gas_mix = AIRLESS_ATMOS
+
+/turf/open/floor/carpet/black/airless
+	initial_gas_mix = AIRLESS_ATMOS
+
+/turf/open/floor/carpet/blackred/airless
+	initial_gas_mix = AIRLESS_ATMOS
+
+/turf/open/floor/carpet/monochrome/airless
+	initial_gas_mix = AIRLESS_ATMOS
+
+/turf/open/floor/carpet/blue/airless
+	initial_gas_mix = AIRLESS_ATMOS
+
+/turf/open/floor/carpet/cyan/airless
+	initial_gas_mix = AIRLESS_ATMOS
+
+/turf/open/floor/carpet/green/airless
+	initial_gas_mix = AIRLESS_ATMOS
+
+/turf/open/floor/carpet/orange/airless
+	initial_gas_mix = AIRLESS_ATMOS
+
+/turf/open/floor/carpet/purple/airless
+	initial_gas_mix = AIRLESS_ATMOS
+
+/turf/open/floor/carpet/red/airless
+	initial_gas_mix = AIRLESS_ATMOS
+
+/turf/open/floor/carpet/royalblack/airless
+	initial_gas_mix = AIRLESS_ATMOS
+
+/turf/open/floor/carpet/royalblue/airless
+	initial_gas_mix = AIRLESS_ATMOS
 
 /turf/open/floor/carpet/narsie_act(force, ignore_mobs, probability = 20)
 	. = (prob(probability) || force)

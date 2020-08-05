@@ -21,10 +21,7 @@
 		return
 	close_machine(target)
 
-/obj/machinery/abductor/experiment/attack_hand(mob/user)
-	. = ..()
-	if(.)
-		return
+/obj/machinery/abductor/experiment/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 
 	experimentUI(user)
 
@@ -47,8 +44,6 @@
 		to_chat(user, "<span class='warning'>[src]'s door won't budge!</span>")
 
 /obj/machinery/abductor/experiment/container_resist(mob/living/user)
-	user.changeNext_move(CLICK_CD_BREAKOUT)
-	user.last_special = world.time + CLICK_CD_BREAKOUT
 	user.visible_message("<span class='notice'>You see [user] kicking against the door of [src]!</span>", \
 		"<span class='notice'>You lean on the back of [src] and start pushing the door open... (this will take about [DisplayTimeText(breakout_time)].)</span>", \
 		"<span class='italics'>You hear a metallic creaking from [src].</span>")
@@ -61,7 +56,7 @@
 
 /obj/machinery/abductor/experiment/proc/dissection_icon(mob/living/carbon/human/H)
 	var/icon/photo = null
-	var/g = (H.gender == FEMALE) ? "f" : "m"
+	var/g = (H.dna.features["body_model"] == FEMALE) ? "f" : "m"
 	if(H.dna.species.use_skintones)
 		photo = icon("icon" = 'icons/mob/human.dmi', "icon_state" = "[H.skin_tone]_[g]")
 	else
@@ -174,7 +169,7 @@
 	if(!GlandTest)
 		say("Experimental dissection not detected!")
 		return "<span class='bad'>No glands detected!</span>"
-	if(H.mind != null && H.ckey != null)
+	if(H.mind != null && (H.voluntary_ghosted || (H.ckey != null)))
 		LAZYINITLIST(abductee_minds)
 		LAZYADD(history, H)
 		LAZYADD(abductee_minds, H.mind)
@@ -209,7 +204,6 @@
 		open_machine()
 		SendBack(H)
 		return "<span class='bad'>Specimen braindead - disposed.</span>"
-	return "<span class='bad'>ERROR</span>"
 
 
 /obj/machinery/abductor/experiment/proc/SendBack(mob/living/carbon/human/H)
@@ -223,7 +217,7 @@
 	return
 
 
-/obj/machinery/abductor/experiment/update_icon()
+/obj/machinery/abductor/experiment/update_icon_state()
 	if(state_open)
 		icon_state = "experiment-open"
 	else

@@ -76,7 +76,7 @@
 	desc = "A seemingly enigmatic device which connects to nearby APCs wirelessly and draws power from them, now in industrial size!"
 	w_class = WEIGHT_CLASS_BULKY
 	extended_desc = "The siphon drains 2 kW of power from an APC in the same room as it as long as it has charge remaining. It will always drain \
- 	from the 'equipment' power channel."
+	from the 'equipment' power channel."
 	icon_state = "power_relay"
 	complexity = 15
 	spawn_flags = IC_SPAWN_RESEARCH
@@ -89,23 +89,21 @@
 	desc = "Produces electricity from chemicals."
 	icon_state = "chemical_cell"
 	extended_desc = "This is effectively an internal beaker. It will consume and produce power from plasma, slime jelly, welding fuel, carbon,\
-	 ethanol, nutriment, and blood in order of decreasing efficiency. It will consume fuel only if the battery can take more energy."
-	container_type = OPENCONTAINER
+	 ethanol, nutriment, and blood in order of decreasing efficiency. It will consume fuel only if the battery can take more energy. But no fuel can be compared with blood of living human."
 	complexity = 4
 	inputs = list()
 	outputs = list("volume used" = IC_PINTYPE_NUMBER, "self reference" = IC_PINTYPE_SELFREF)
 	activators = list("push ref" = IC_PINTYPE_PULSE_IN)
 	spawn_flags = IC_SPAWN_DEFAULT|IC_SPAWN_RESEARCH
 	var/volume = 60
-	var/list/fuel = list("plasma" = 50000, "welding_fuel" = 15000, "carbon" = 10000, "ethanol" = 10000, "nutriment" = 8000)
+	var/list/fuel = list(/datum/reagent/toxin/plasma = 50000, /datum/reagent/fuel = 15000, /datum/reagent/carbon = 10000,
+						/datum/reagent/consumable/ethanol = 10000, /datum/reagent/consumable/nutriment = 8000)
 	var/multi = 1
 	var/lfwb =TRUE
 
-/obj/item/integrated_circuit/passive/power/chemical_cell/New()
-	..()
-	create_reagents(volume)
-	extended_desc +="But no fuel can be compared with blood of living human."
-
+/obj/item/integrated_circuit/passive/power/chemical_cell/Initialize()
+	. = ..()
+	create_reagents(volume, OPENCONTAINER)
 
 /obj/item/integrated_circuit/passive/power/chemical_cell/interact(mob/user)
 	set_pin_data(IC_OUTPUT, 2, WEAKREF(src))
@@ -120,7 +118,7 @@
 	if(assembly)
 		if(assembly.battery)
 			var/bp = 5000
-			if(reagents.get_reagent_amount("blood")) //only blood is powerful enough to power the station(c)
+			if(reagents.get_reagent_amount(/datum/reagent/blood)) //only blood is powerful enough to power the station(c)
 				var/datum/reagent/blood/B = locate() in reagents.reagent_list
 				if(lfwb)
 					if(B && B.data["cloneable"])
@@ -128,7 +126,7 @@
 						if(M && (M.stat != DEAD) && (M.client))
 							bp = 500000
 				if((assembly.battery.maxcharge-assembly.battery.charge) / GLOB.CELLRATE > bp)
-					if(reagents.remove_reagent("blood", 1))
+					if(reagents.remove_reagent(/datum/reagent/blood, 1))
 						assembly.give_power(bp)
 			for(var/I in fuel)
 				if((assembly.battery.maxcharge-assembly.battery.charge) / GLOB.CELLRATE > fuel[I])

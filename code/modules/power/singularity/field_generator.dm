@@ -44,14 +44,14 @@ field_generator power level display
 	var/list/obj/machinery/field/generator/connected_gens
 	var/clean_up = 0
 
-/obj/machinery/field/generator/update_icon()
-	cut_overlays()
+/obj/machinery/field/generator/update_overlays()
+	. = ..()
 	if(warming_up)
-		add_overlay("+a[warming_up]")
+		. += "+a[warming_up]"
 	if(fields.len)
-		add_overlay("+on")
+		. += "+on"
 	if(power_level)
-		add_overlay("+p[power_level]")
+		. += "+p[power_level]"
 
 
 /obj/machinery/field/generator/Initialize()
@@ -61,7 +61,7 @@ field_generator power level display
 
 /obj/machinery/field/generator/ComponentInitialize()
 	. = ..()
-	AddComponent(/datum/component/empprotection, EMP_PROTECT_SELF | EMP_PROTECT_WIRES)
+	AddElement(/datum/element/empprotection, EMP_PROTECT_SELF | EMP_PROTECT_WIRES)
 
 /obj/machinery/field/generator/process()
 	if(active == FG_ONLINE)
@@ -245,6 +245,7 @@ field_generator power level display
 	if(state != FG_WELDED || !anchored)
 		turn_off()
 		return
+	move_resist = INFINITY
 	spawn(1)
 		setup_field(1)
 	spawn(2)
@@ -335,6 +336,7 @@ field_generator power level display
 					message_admins("A singulo exists and a containment field has failed at [ADMIN_VERBOSEJMP(T)].")
 					investigate_log("has <font color='red'>failed</font> whilst a singulo exists at [AREACOORD(T)].", INVESTIGATE_SINGULO)
 			O.last_warning = world.time
+	move_resist = initial(move_resist)
 
 /obj/machinery/field/generator/shock(mob/living/user)
 	if(fields.len)

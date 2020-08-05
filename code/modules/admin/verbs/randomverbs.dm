@@ -65,7 +65,7 @@
 		return
 
 	if (!sender)
-		sender = input("Who is the message from?", "Sender") as null|anything in list("CentCom","Syndicate")
+		sender = input("Who is the message from?", "Sender") as null|anything in list(RADIO_CHANNEL_CENTCOM,RADIO_CHANNEL_SYNDICATE)
 		if(!sender)
 			return
 
@@ -75,7 +75,7 @@
 		message_admins("[key_name_admin(src)] decided not to answer [key_name_admin(H)]'s [sender] request.")
 		return
 
-	log_directed_talk(src, H, input, LOG_ADMIN, "reply")
+	log_directed_talk(mob, H, input, LOG_ADMIN, "reply")
 	message_admins("[key_name_admin(src)] replied to [key_name_admin(H)]'s [sender] message with: \"[input]\"")
 	to_chat(H, "You hear something crackle in your ears for a moment before a voice speaks.  \"Please stand by for a message from [sender == "Syndicate" ? "your benefactor" : "Central Command"].  Message as follows[sender == "Syndicate" ? ", agent." : ":"] <span class='bold'>[input].</span> Message ends.\"")
 
@@ -298,7 +298,7 @@
 		if(candidates.len)
 			ckey = input("Pick the player you want to respawn as a xeno.", "Suitable Candidates") as null|anything in candidates
 		else
-			to_chat(usr, "<font color='red'>Error: create_xeno(): no suitable candidates.</font>")
+			to_chat(usr, "<span class='danger'>Error: create_xeno(): no suitable candidates.</span>")
 	if(!istext(ckey))
 		return 0
 
@@ -384,7 +384,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 
 				//Now to give them their mind back.
 				G_found.mind.transfer_to(new_xeno)	//be careful when doing stuff like this! I've already checked the mind isn't in use
-				new_xeno.key = G_found.key
+				G_found.transfer_ckey(new_xeno, FALSE)
 				to_chat(new_xeno, "You have been fully respawned. Enjoy the game.")
 				var/msg = "<span class='adminnotice'>[key_name_admin(usr)] has respawned [new_xeno.key] as a filthy xeno.</span>"
 				message_admins(msg)
@@ -397,7 +397,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 				var/mob/living/carbon/monkey/new_monkey = new
 				SSjob.SendToLateJoin(new_monkey)
 				G_found.mind.transfer_to(new_monkey)	//be careful when doing stuff like this! I've already checked the mind isn't in use
-				new_monkey.key = G_found.key
+				G_found.transfer_ckey(new_monkey, FALSE)
 				to_chat(new_monkey, "You have been fully respawned. Enjoy the game.")
 				var/msg = "<span class='adminnotice'>[key_name_admin(usr)] has respawned [new_monkey.key] as a filthy xeno.</span>"
 				message_admins(msg)
@@ -419,9 +419,9 @@ Traitors and the like can also be revived with the previous role mostly intact.
 
 	if(record_found)//If they have a record we can determine a few things.
 		new_character.real_name = record_found.fields["name"]
-		new_character.gender = record_found.fields["sex"]
+		new_character.gender = record_found.fields["gender"]
 		new_character.age = record_found.fields["age"]
-		new_character.hardset_dna(record_found.fields["identity"], record_found.fields["enzymes"], record_found.fields["name"], record_found.fields["blood_type"], new record_found.fields["species"], record_found.fields["features"])
+		new_character.hardset_dna(record_found.fields["identity"], record_found.fields["enzymes"], null, record_found.fields["name"], record_found.fields["blood_type"], new record_found.fields["species"], record_found.fields["features"])
 	else
 		var/datum/preferences/A = new()
 		A.copy_to(new_character)
@@ -437,7 +437,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	if(!new_character.mind.assigned_role)
 		new_character.mind.assigned_role = "Assistant"//If they somehow got a null assigned role.
 
-	new_character.key = G_found.key
+	G_found.transfer_ckey(new_character, FALSE)
 
 	/*
 	The code below functions with the assumption that the mob is already a traitor if they have a special role.
@@ -560,7 +560,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	var/announce_command_report = TRUE
 	switch(confirm)
 		if("Yes")
-			priority_announce(input, null, 'sound/ai/commandreport.ogg')
+			priority_announce(input, null, "commandreport")
 			announce_command_report = FALSE
 		if("Cancel")
 			return
@@ -593,31 +593,6 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		return
 
 	admin_delete(A)
-
-/client/proc/admin_delete(datum/D)
-	var/atom/A = D
-	var/coords = ""
-	var/jmp_coords = ""
-	if(istype(A))
-		var/turf/T = get_turf(A)
-		if(T)
-			coords = "at [COORD(T)]"
-			jmp_coords = "at [ADMIN_COORDJMP(T)]"
-		else
-			jmp_coords = coords = "in nullspace"
-
-	if (alert(src, "Are you sure you want to delete:\n[D]\n[coords]?", "Confirmation", "Yes", "No") == "Yes")
-		log_admin("[key_name(usr)] deleted [D] [coords]")
-		message_admins("[key_name_admin(usr)] deleted [D] [jmp_coords]")
-		SSblackbox.record_feedback("tally", "admin_verb", 1, "Delete") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-		if(isturf(D))
-			var/turf/T = D
-			T.ScrapeAway()
-		else
-			vv_update_display(D, "deleted", VV_MSG_DELETED)
-			qdel(D)
-			if(!QDELETED(D))
-				vv_update_display(D, "deleted", "")
 
 /client/proc/cmd_admin_list_open_jobs()
 	set category = "Admin"
@@ -934,7 +909,7 @@ GLOBAL_LIST_EMPTY(custom_outfits) //Admin created outfits
 	id_select += "</select>"
 
 	var/dat = {"
-	<html><head><title>Create Outfit</title></head><body>
+	<html><head><meta http-equiv='Content-Type' content='text/html; charset=UTF-8'><title>Create Outfit</title></head><body>
 	<form name="outfit" action="byond://?src=[REF(src)];[HrefToken()]" method="get">
 	<input type="hidden" name="src" value="[REF(src)]">
 	[HrefTokenFormField()]
@@ -949,7 +924,7 @@ GLOBAL_LIST_EMPTY(custom_outfits) //Admin created outfits
 		<tr>
 			<th>Uniform:</th>
 			<td>
-			   [uniform_select]
+				[uniform_select]
 			</td>
 		</tr>
 		<tr>
@@ -1083,13 +1058,6 @@ GLOBAL_LIST_EMPTY(custom_outfits) //Admin created outfits
 	var/datum/atom_hud/A = GLOB.huds[ANTAG_HUD_TRAITOR]
 	return A.hudusers[mob]
 
-/client/proc/open_shuttle_manipulator()
-	set category = "Admin"
-	set name = "Shuttle Manipulator"
-	set desc = "Opens the shuttle manipulator UI."
-
-	for(var/obj/machinery/shuttle_manipulator/M in GLOB.machines)
-		M.ui_interact(usr)
 
 /client/proc/run_weather()
 	set category = "Fun"
@@ -1243,13 +1211,81 @@ GLOBAL_LIST_EMPTY(custom_outfits) //Admin created outfits
 
 	SSblackbox.record_feedback("nested tally", "admin_toggle", 1, list("Toggled Hub Visibility", "[GLOB.hub_visibility ? "Enabled" : "Disabled"]")) //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
+/client/proc/cmd_admin_toggle_fov()
+	set category = "Fun"
+	set name = "Enable/Disable Field of Vision"
+
+	var/static/busy_toggling_fov = FALSE
+	if(!check_rights(R_ADMIN) || !check_rights(R_FUN))
+		return
+
+	var/on_off = CONFIG_GET(flag/use_field_of_vision)
+
+	if(busy_toggling_fov)
+		to_chat(usr, "<span class='warning'>A previous call of this function is still busy toggling FoV [on_off ? "on" : "off"]. Have some patiece</span>.")
+		return
+	busy_toggling_fov = TRUE
+
+	log_admin("[key_name(usr)] has [on_off ? "disabled" : "enabled"] the Field of Vision configuration.")
+	CONFIG_SET(flag/use_field_of_vision, !on_off)
+
+	SSblackbox.record_feedback("nested tally", "admin_toggle", 1, list("Toggled Field of Vision", "[on_off ? "Enabled" : "Disabled"]"))
+
+	if(on_off)
+		for(var/k in GLOB.mob_list)
+			if(!k)
+				continue
+			var/mob/M = k
+			if(ishuman(M))
+				var/mob/living/carbon/human/H = M
+				if(!(H.dna?.species.has_field_of_vision))
+					continue
+			else if(!M.has_field_of_vision)
+				continue
+			var/datum/component/field_of_vision/FoV = M.GetComponent(/datum/component/field_of_vision)
+			if(FoV)
+				qdel(FoV)
+			CHECK_TICK
+	else
+		for(var/k in GLOB.clients)
+			if(!k)
+				continue
+			var/client/C = k
+			var/mob/M = C.mob
+			if(ishuman(M))
+				var/mob/living/carbon/human/H = M
+				if(!(H.dna?.species.has_field_of_vision))
+					continue
+			else if(!M.has_field_of_vision)
+				continue
+			M.LoadComponent(/datum/component/field_of_vision, M.field_of_vision_type)
+			CHECK_TICK
+
+	busy_toggling_fov = FALSE
+
 /client/proc/smite(mob/living/carbon/human/target as mob)
 	set name = "Smite"
 	set category = "Fun"
 	if(!check_rights(R_ADMIN) || !check_rights(R_FUN))
 		return
 
-	var/list/punishment_list = list(ADMIN_PUNISHMENT_LIGHTNING, ADMIN_PUNISHMENT_BRAINDAMAGE, ADMIN_PUNISHMENT_GIB, ADMIN_PUNISHMENT_BSA, ADMIN_PUNISHMENT_FIREBALL, ADMIN_PUNISHMENT_ROD, ADMIN_PUNISHMENT_SUPPLYPOD, ADMIN_PUNISHMENT_MAZING)
+	var/list/punishment_list = list(ADMIN_PUNISHMENT_PIE,
+		ADMIN_PUNISHMENT_CUSTOM_PIE,
+		ADMIN_PUNISHMENT_FIREBALL,
+		ADMIN_PUNISHMENT_LIGHTNING,
+		ADMIN_PUNISHMENT_BRAINDAMAGE,
+		ADMIN_PUNISHMENT_BSA,
+		ADMIN_PUNISHMENT_GIB,
+		ADMIN_PUNISHMENT_SUPPLYPOD_QUICK,
+		ADMIN_PUNISHMENT_SUPPLYPOD,
+		ADMIN_PUNISHMENT_MAZING,
+		ADMIN_PUNISHMENT_ROD,
+		ADMIN_PUNISHMENT_SHOES,
+		ADMIN_PUNISHMENT_PICKLE,
+		ADMIN_PUNISHMENT_FRY,
+    ADMIN_PUNISHMENT_CRACK,
+    ADMIN_PUNISHMENT_BLEED,
+    ADMIN_PUNISHMENT_SCARIFY)
 
 	var/punishment = input("Choose a punishment", "DIVINE SMITING") as null|anything in punishment_list
 
@@ -1264,7 +1300,7 @@ GLOBAL_LIST_EMPTY(custom_outfits) //Admin created outfits
 			target.electrocution_animation(40)
 			to_chat(target, "<span class='userdanger'>The gods have punished you for your sins!</span>")
 		if(ADMIN_PUNISHMENT_BRAINDAMAGE)
-			target.adjustBrainLoss(199, 199)
+			target.adjustOrganLoss(ORGAN_SLOT_BRAIN, 199, 199)
 		if(ADMIN_PUNISHMENT_GIB)
 			target.gib(FALSE)
 		if(ADMIN_PUNISHMENT_BSA)
@@ -1277,6 +1313,22 @@ GLOBAL_LIST_EMPTY(custom_outfits) //Admin created outfits
 			var/turf/startT = spaceDebrisStartLoc(startside, T.z)
 			var/turf/endT = spaceDebrisFinishLoc(startside, T.z)
 			new /obj/effect/immovablerod(startT, endT,target)
+		if(ADMIN_PUNISHMENT_SUPPLYPOD_QUICK)
+			var/target_path = input(usr,"Enter typepath of an atom you'd like to send with the pod (type \"empty\" to send an empty pod):" ,"Typepath","/obj/item/reagent_containers/food/snacks/grown/harebell") as null|text
+			var/obj/structure/closet/supplypod/centcompod/pod = new()
+			pod.damage = 40
+			pod.explosionSize = list(0,0,0,2)
+			pod.effectStun = TRUE
+			if (isnull(target_path)) //The user pressed "Cancel"
+				return
+			if (target_path != "empty")//if you didn't type empty, we want to load the pod with a delivery
+				var/delivery = text2path(target_path)
+				if(!ispath(delivery))
+					delivery = pick_closest_path(target_path)
+					if(!delivery)
+						alert("ERROR: Incorrect / improper path given.")
+				new delivery(pod)
+			new /obj/effect/abstract/DPtarget(get_turf(target), pod)
 		if(ADMIN_PUNISHMENT_SUPPLYPOD)
 			var/datum/centcom_podlauncher/plaunch  = new(usr)
 			if(!holder)
@@ -1289,17 +1341,149 @@ GLOBAL_LIST_EMPTY(custom_outfits) //Admin created outfits
 			plaunch.temp_pod.explosionSize = list(0,0,0,2)
 			plaunch.temp_pod.effectStun = TRUE
 			plaunch.ui_interact(usr)
+			return //We return here because punish_log() is handled by the centcom_podlauncher datum
 
 		if(ADMIN_PUNISHMENT_MAZING)
 			if(!puzzle_imprison(target))
 				to_chat(usr,"<span class='warning'>Imprisonment failed!</span>")
 				return
+		if(ADMIN_PUNISHMENT_PIE)
+			var/obj/item/reagent_containers/food/snacks/pie/cream/nostun/creamy = new(get_turf(target))
+			creamy.splat(target)
+		if(ADMIN_PUNISHMENT_CUSTOM_PIE)
+			var/obj/item/reagent_containers/food/snacks/pie/cream/nostun/A = new()
+			if(!A.reagents)
+				var/amount = input(usr, "Specify the reagent size of [A]", "Set Reagent Size", 50) as num|null
+				if(amount)
+					A.create_reagents(amount)
+			if(A.reagents)
+				var/chosen_id = choose_reagent_id(usr)
+				if(chosen_id)
+					var/amount = input(usr, "Choose the amount to add.", "Choose the amount.", A.reagents.maximum_volume) as num|null
+					if(amount)
+						A.reagents.add_reagent(chosen_id, amount)
+						A.splat(target)
+		if(ADMIN_PUNISHMENT_CRACK)
+			if(!iscarbon(target))
+				to_chat(usr,"<span class='warning'>This must be used on a carbon mob.</span>", confidential = TRUE)
+				return
+			var/mob/living/carbon/C = target
+			for(var/i in C.bodyparts)
+				var/obj/item/bodypart/squish_part = i
+				var/type_wound = pick(list(/datum/wound/blunt/critical, /datum/wound/blunt/severe, /datum/wound/blunt/critical, /datum/wound/blunt/severe, /datum/wound/blunt/moderate))
+				squish_part.force_wound_upwards(type_wound, smited=TRUE)
+		if(ADMIN_PUNISHMENT_BLEED)
+			if(!iscarbon(target))
+				to_chat(usr,"<span class='warning'>This must be used on a carbon mob.</span>", confidential = TRUE)
+				return
+			var/mob/living/carbon/C = target
+			for(var/i in C.bodyparts)
+				var/obj/item/bodypart/slice_part = i
+				var/type_wound = pick(list(/datum/wound/slash/severe, /datum/wound/slash/moderate))
+				slice_part.force_wound_upwards(type_wound, smited=TRUE)
+				type_wound = pick(list(/datum/wound/slash/critical, /datum/wound/slash/severe, /datum/wound/slash/moderate))
+				slice_part.force_wound_upwards(type_wound, smited=TRUE)
+				type_wound = pick(list(/datum/wound/slash/critical, /datum/wound/slash/severe))
+				slice_part.force_wound_upwards(type_wound, smited=TRUE)
+		if(ADMIN_PUNISHMENT_SCARIFY)
+			if(!iscarbon(target))
+				to_chat(usr,"<span class='warning'>This must be used on a carbon mob.</span>", confidential = TRUE)
+				return
+			var/mob/living/carbon/dude = target
+			dude.generate_fake_scars(rand(1, 4))
+			to_chat(dude, "<span class='warning'>You feel your body grow jaded and torn...</span>")
+		if(ADMIN_PUNISHMENT_PERFORATE)
+			if(!iscarbon(target))
+				to_chat(usr,"<span class='warning'>This must be used on a carbon mob.</span>", confidential = TRUE)
+				return
 
-	var/msg = "[key_name_admin(usr)] punished [key_name_admin(target)] with [punishment]."
+			var/list/how_fucked_is_this_dude = list("A little", "A lot", "So fucking much", "FUCK THIS DUDE")
+			var/hatred = input("How much do you hate this guy?") in how_fucked_is_this_dude
+			var/repetitions
+			var/shots_per_limb_per_rep = 2
+			var/damage
+			switch(hatred)
+				if("A little")
+					repetitions = 1
+					damage = 5
+				if("A lot")
+					repetitions = 2
+
+					damage = 8
+				if("So fucking much")
+					repetitions = 3
+					damage = 10
+				if("FUCK THIS DUDE")
+					repetitions = 4
+					damage = 10
+
+			var/mob/living/carbon/dude = target
+			var/list/open_adj_turfs = get_adjacent_open_turfs(dude)
+			var/list/wound_bonuses = list(15, 70, 110, 250)
+
+			var/delay_per_shot = 1
+			var/delay_counter = 1
+
+			dude.Immobilize(5 SECONDS)
+			for(var/wound_bonus_rep in 1 to repetitions)
+				for(var/i in dude.bodyparts)
+					var/obj/item/bodypart/slice_part = i
+					var/shots_this_limb = 0
+					for(var/t in shuffle(open_adj_turfs))
+						var/turf/iter_turf = t
+						addtimer(CALLBACK(GLOBAL_PROC, .proc/firing_squad, dude, iter_turf, slice_part.body_zone, wound_bonuses[wound_bonus_rep], damage), delay_counter)
+						delay_counter += delay_per_shot
+						shots_this_limb++
+						if(shots_this_limb > shots_per_limb_per_rep)
+							break
+		if(ADMIN_PUNISHMENT_PICKLE)
+			target.turn_into_pickle()
+		if(ADMIN_PUNISHMENT_FRY)
+			target.fry()
+
+		if(ADMIN_PUNISHMENT_SHOES)
+			if(!iscarbon(target))
+				to_chat(usr,"<span class='warning'>This must be used on a carbon mob.</span>")
+				return
+			var/mob/living/carbon/C = target
+			var/obj/item/clothing/shoes/sick_kicks = C.shoes
+			if(!sick_kicks?.can_be_tied)
+				to_chat(usr,"<span class='warning'>[C] does not have knottable shoes!</span>")
+				return
+			sick_kicks.adjust_laces(SHOES_KNOTTED)
+
+	punish_log(target, punishment)
+
+/**
+  * firing_squad is a proc for the :B:erforate smite to shoot each individual bullet at them, so that we can add actual delays without sleep() nonsense
+  *
+  * Hilariously, if you drag someone away mid smite, the bullets will still chase after them from the original spot, possibly hitting other people. Too funny to fix imo
+  *
+  * Arguments:
+  * * target- guy we're shooting obviously
+  * * source_turf- where the bullet begins, preferably on a turf next to the target
+  * * body_zone- which bodypart we're aiming for, if there is one there
+  * * wound_bonus- the wounding power we're assigning to the bullet, since we don't care about the base one
+  * * damage- the damage we're assigning to the bullet, since we don't care about the base one
+  */
+/proc/firing_squad(mob/living/carbon/target, turf/source_turf, body_zone, wound_bonus, damage)
+	if(!target.get_bodypart(body_zone))
+		return
+	playsound(target, 'sound/weapons/shot.ogg', 100)
+	var/obj/item/projectile/bullet/smite/divine_wrath = new(source_turf)
+	divine_wrath.damage = damage
+	divine_wrath.wound_bonus = wound_bonus
+	divine_wrath.original = target
+	divine_wrath.def_zone = body_zone
+	divine_wrath.spread = 0
+	divine_wrath.preparePixelProjectile(target, source_turf)
+	divine_wrath.fire()
+
+/client/proc/punish_log(var/whom, var/punishment)
+	var/msg = "[key_name_admin(usr)] punished [key_name_admin(whom)] with [punishment]."
 	message_admins(msg)
-	admin_ticket_log(target, msg)
-	log_admin("[key_name(usr)] punished [key_name(target)] with [punishment].")
-
+	admin_ticket_log(whom, msg)
+	log_admin("[key_name(usr)] punished [key_name(whom)] with [punishment].")
 
 /client/proc/trigger_centcom_recall()
 	if(!check_rights(R_ADMIN))
@@ -1325,7 +1509,7 @@ GLOBAL_LIST_EMPTY(custom_outfits) //Admin created outfits
 		return
 
 	var/list/msg = list()
-	msg += "<html><head><title>Playtime Report</title></head><body>Playtime:<BR><UL>"
+	msg += "<html><head><meta http-equiv='Content-Type' content='text/html; charset=UTF-8'><title>Playtime Report</title></head><body>Playtime:<BR><UL>"
 	for(var/client/C in GLOB.clients)
 		msg += "<LI> - [key_name_admin(C)]: <A href='?_src_=holder;[HrefToken()];getplaytimewindow=[REF(C.mob)]'>" + C.get_exp_living() + "</a></LI>"
 	msg += "</UL></BODY></HTML>"
@@ -1342,7 +1526,7 @@ GLOBAL_LIST_EMPTY(custom_outfits) //Admin created outfits
 		return
 
 	var/list/body = list()
-	body += "<html><head><title>Playtime for [C.key]</title></head><BODY><BR>Playtime:"
+	body += "<html><head><meta http-equiv='Content-Type' content='text/html; charset=UTF-8'><title>Playtime for [C.key]</title></head><BODY><BR>Playtime:"
 	body += C.get_exp_report()
 	body += "<A href='?_src_=holder;[HrefToken()];toggleexempt=[REF(C)]'>Toggle Exempt status</a>"
 	body += "</BODY></HTML>"
@@ -1369,3 +1553,47 @@ GLOBAL_LIST_EMPTY(custom_outfits) //Admin created outfits
 	else
 		message_admins("[key_name_admin(usr)] has [newstate ? "activated" : "deactivated"] job exp exempt status on [key_name_admin(C)]")
 		log_admin("[key_name(usr)] has [newstate ? "activated" : "deactivated"] job exp exempt status on [key_name(C)]")
+
+/// Allow admin to add or remove traits of datum
+/datum/admins/proc/modify_traits(datum/D)
+	if(!D)
+		return
+
+	var/add_or_remove = input("Remove/Add?", "Trait Remove/Add") as null|anything in list("Add","Remove")
+	if(!add_or_remove)
+		return
+	var/list/availible_traits = list()
+
+	switch(add_or_remove)
+		if("Add")
+			for(var/key in GLOB.traits_by_type)
+				if(istype(D,key))
+					availible_traits += GLOB.traits_by_type[key]
+		if("Remove")
+			if(!GLOB.trait_name_map)
+				GLOB.trait_name_map = generate_trait_name_map()
+			for(var/trait in D.status_traits)
+				var/name = GLOB.trait_name_map[trait] || trait
+				availible_traits[name] = trait
+
+	var/chosen_trait = input("Select trait to modify", "Trait") as null|anything in sortList(availible_traits)
+	if(!chosen_trait)
+		return
+	chosen_trait = availible_traits[chosen_trait]
+
+	var/source = "adminabuse"
+	switch(add_or_remove)
+		if("Add") //Not doing source choosing here intentionally to make this bit faster to use, you can always vv it.
+			ADD_TRAIT(D,chosen_trait,source)
+		if("Remove")
+			var/specific = input("All or specific source ?", "Trait Remove/Add") as null|anything in list("All","Specific")
+			if(!specific)
+				return
+			switch(specific)
+				if("All")
+					source = null
+				if("Specific")
+					source = input("Source to be removed","Trait Remove/Add") as null|anything in sortList(D.status_traits[chosen_trait])
+					if(!source)
+						return
+			REMOVE_TRAIT(D,chosen_trait,source)

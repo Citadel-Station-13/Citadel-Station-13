@@ -45,7 +45,7 @@
 		var/knockdown_chance = (target_buckled? mounted_knockdown_chance_per_tile : unmounted_knockdown_chance_per_tile) * current
 		var/knockdown_time = (target_buckled? mounted_knockdown_time : unmounted_knockdown_time)
 		var/damage = (target_buckled? mounted_damage_boost_per_tile : unmounted_damage_boost_per_tile) * current
-		var/sharp = I.is_sharp()
+		var/sharp = I.get_sharpness()
 		var/msg
 		if(damage)
 			msg += "[user] [sharp? "impales" : "slams into"] [target] [sharp? "on" : "with"] their [parent]"
@@ -54,7 +54,7 @@
 			msg += " and knocks [target] [target_buckled? "off of [target.buckled]" : "down"]"
 			if(target_buckled)
 				target.buckled.unbuckle_mob(target)
-			target.Knockdown(knockdown_time)
+			target.DefaultCombatKnockdown(knockdown_time)
 		if(length(msg))
 			user.visible_message("<span class='danger'>[msg]!</span>")
 

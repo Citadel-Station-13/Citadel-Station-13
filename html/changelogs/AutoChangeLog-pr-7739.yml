@@ -1,4 +1,0 @@
-author: "Tupinambis"
-delete-after: True
-changes: 
-  - bugfix: "the air injectors for the SM engine waste and for toxins waste should now receive power"

@@ -8,14 +8,15 @@
 			index = findtext(t, char)
 	return t
 
-proc/TextPreview(var/string,var/len=40)
-	if(lentext(string) <= len)
-		if(!lentext(string))
+/proc/TextPreview(string, len = 40)
+	var/char_len = length_char(string)
+	if(char_len <= len)
+		if(char_len)
 			return "\[...\]"
 		else
 			return string
 	else
-		return "[copytext(string, 1, 37)]..."
+		return "[copytext_char(string, 1, 37)]..."
 
 GLOBAL_LIST_EMPTY(mentorlog)
 GLOBAL_PROTECT(mentorlog)
@@ -24,8 +25,8 @@ GLOBAL_LIST_EMPTY(whitelisted_species_list)
 
 /proc/log_mentor(text)
 	GLOB.mentorlog.Add(text)
-	WRITE_FILE(GLOB.world_game_log, "\[[time_stamp()]]MENTOR: [text]")
+	WRITE_FILE(GLOB.world_game_log, "\[[TIME_STAMP("hh:mm:ss", FALSE)]]MENTOR: [text]")
 
 /proc/log_looc(text)
 	if (CONFIG_GET(flag/log_ooc))
-		WRITE_FILE(GLOB.world_game_log, "\[[time_stamp()]]LOOC: [text]")
+		WRITE_FILE(GLOB.world_game_log, "\[[TIME_STAMP("hh:mm:ss", FALSE)]]LOOC: [text]")

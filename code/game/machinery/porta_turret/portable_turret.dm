@@ -17,6 +17,7 @@
 	active_power_usage = 300	//when active, this turret takes up constant 300 Equipment power
 	req_access = list(ACCESS_SEC_DOORS)
 	power_channel = EQUIP	//drains power from the EQUIPMENT channel
+	speed_process = TRUE
 
 	var/base_icon_state = "standard"
 	var/scan_range = 7
@@ -26,7 +27,7 @@
 	var/raising= 0			//if the turret is currently opening or closing its cover
 
 	max_integrity = 160		//the turret's health
-	integrity_failure = 80
+	integrity_failure = 0.5
 	armor = list("melee" = 50, "bullet" = 30, "laser" = 30, "energy" = 30, "bomb" = 30, "bio" = 0, "rad" = 0, "fire" = 90, "acid" = 90)
 
 	var/locked = TRUE			//if the turret's behaviour control access is locked
@@ -40,6 +41,8 @@
 
 	var/stun_projectile = null		//stun mode projectile type
 	var/stun_projectile_sound
+	var/nonlethal_projectile		//projectile to use in stun mode when the target is resting, if any
+	var/nonlethal_projectile_sound
 	var/lethal_projectile = null	//lethal mode projectile type
 	var/lethal_projectile_sound
 
@@ -51,7 +54,7 @@
 
 	var/last_fired = 0		//world.time the turret last fired
 	var/shot_delay = 15		//ticks until next shot (1.5 ?)
-
+	var/shot_stagger = 0		// sleep() shots to stagger attacks
 
 	var/check_records = 1	//checks if it can use the security records
 	var/criminals = 1		//checks if it can shoot people on arrest
@@ -97,8 +100,7 @@
 	if(!has_cover)
 		INVOKE_ASYNC(src, .proc/popUp)
 
-/obj/machinery/porta_turret/update_icon()
-	cut_overlays()
+/obj/machinery/porta_turret/update_icon_state()
 	if(!anchored)
 		icon_state = "turretCover"
 		return
@@ -246,6 +248,7 @@
 				if(prob(70))
 					if(stored_gun)
 						stored_gun.forceMove(loc)
+						stored_gun = null
 					to_chat(user, "<span class='notice'>You remove the turret and salvage some components.</span>")
 					if(prob(50))
 						new /obj/item/stack/sheet/metal(loc, rand(1,4))
@@ -290,6 +293,7 @@
 		return ..()
 
 /obj/machinery/porta_turret/emag_act(mob/user)
+	. = ..()
 	if(obj_flags & EMAGGED)
 		return
 	to_chat(user, "<span class='warning'>You short out [src]'s threat assessment circuits.</span>")
@@ -300,6 +304,7 @@
 	update_icon()
 	sleep(60) //6 seconds for the traitor to gtfo of the area before the turret decides to ruin his shit
 	on = TRUE //turns it back on. The cover popUp() popDown() are automatically called in process(), no need to define it here
+	return TRUE
 
 
 /obj/machinery/porta_turret/emp_act(severity)
@@ -344,6 +349,26 @@
 		spark_system.start()	//creates some sparks because they look cool
 		qdel(cover)	//deletes the cover - no need on keeping it there!
 
+//turret healing
+/obj/machinery/porta_turret/examine(mob/user)
+	. = ..()
+	if(obj_integrity < max_integrity)
+		. += "<span class='notice'>Use a welder to fix it.</span>"
+
+/obj/machinery/porta_turret/welder_act(mob/living/user, obj/item/I)
+	. = TRUE
+	if(obj_integrity < max_integrity)
+		if(!I.tool_start_check(user, amount=0))
+			return
+		user.visible_message("[user] is welding the turret.", \
+						"<span class='notice'>You begin repairing the turret...</span>", \
+						"<span class='italics'>You hear welding.</span>")
+		if(I.use_tool(src, user, 40, volume=50))
+			obj_integrity = max_integrity
+			user.visible_message("[user.name] has repaired [src].", \
+								"<span class='notice'>You finish repairing the turret.</span>")
+	else
+		to_chat(user, "<span class='notice'>The turret doesn't need repairing.</span>")
 
 
 /obj/machinery/porta_turret/process()
@@ -385,7 +410,7 @@
 		if(iscarbon(A))
 			var/mob/living/carbon/C = A
 			//If not emagged, only target non downed carbons
-			if(mode != TURRET_LETHAL && (C.stat || C.handcuffed || C.recoveringstam))//CIT CHANGE - replaces check for lying with check for recoveringstam
+			if(mode != TURRET_LETHAL && (C.stat || C.handcuffed || (C.combat_flags & COMBAT_FLAG_HARD_STAMCRIT)))//CIT CHANGE - replaces check for lying with check for recoveringstam
 				continue
 
 			//If emagged, target all but dead carbons
@@ -412,13 +437,15 @@
 	else if(!always_up)
 		popDown() // no valid targets, close the cover
 
+/obj/machinery/porta_turret/proc/randomize_shot_stagger()
+	shot_stagger = rand(0, min(2 SECONDS, round(shot_delay/3, world.tick_lag)))
+
 /obj/machinery/porta_turret/proc/tryToShootAt(list/atom/movable/targets)
 	while(targets.len > 0)
 		var/atom/movable/M = pick(targets)
 		targets -= M
 		if(target(M))
 			return 1
-
 
 /obj/machinery/porta_turret/proc/popUp()	//pops the turret up
 	if(!anchored)
@@ -485,7 +512,7 @@
 			threatcount += 4
 
 	if(shoot_unloyal)
-		if (!perp.has_trait(TRAIT_MINDSHIELD))
+		if (!HAS_TRAIT(perp, TRAIT_MINDSHIELD))
 			threatcount += 4
 
 	return threatcount
@@ -501,18 +528,21 @@
 	if(target)
 		popUp()				//pop the turret up if it's not already up.
 		setDir(get_dir(base, target))//even if you can't shoot, follow the target
-		shootAt(target)
+		INVOKE_ASYNC(src, .proc/shootAt, target)
 		return 1
 	return
 
-/obj/machinery/porta_turret/proc/shootAt(atom/movable/target)
+/obj/machinery/porta_turret/proc/shootAt(atom/movable/target, stagger_enabled = FALSE)
 	if(!raised) //the turret has to be raised in order to fire - makes sense, right?
 		return
 
-	if(!(obj_flags & EMAGGED))	//if it hasn't been emagged, cooldown before shooting again
-		if(last_fired + shot_delay > world.time)
-			return
-		last_fired = world.time
+	if(last_fired + shot_delay > world.time)
+		return
+	last_fired = world.time
+
+	if(stagger_enabled)
+		randomize_shot_stagger()
+		sleep(shot_stagger)
 
 	var/turf/T = get_turf(src)
 	var/turf/U = get_turf(target)
@@ -533,13 +563,22 @@
 					T = closer
 					break
 
+	var/mob/living/carbon/C
+	if(iscarbon(target))
+		C = target
+
 	update_icon()
 	var/obj/item/projectile/A
 	//any emagged turrets drains 2x power and uses a different projectile?
 	if(mode == TURRET_STUN)
-		use_power(reqpower)
-		A = new stun_projectile(T)
-		playsound(loc, stun_projectile_sound, 75, 1)
+		if(nonlethal_projectile && C && C.resting)
+			use_power(reqpower*0.5)
+			A = new nonlethal_projectile(T)
+			playsound(loc, nonlethal_projectile_sound, 75, 1)
+		else
+			use_power(reqpower)
+			A = new stun_projectile(T)
+			playsound(loc, stun_projectile_sound, 75, 1)
 	else
 		use_power(reqpower * 2)
 		A = new lethal_projectile(T)
@@ -549,6 +588,7 @@
 	//Shooting Code:
 	A.preparePixelProjectile(target, T)
 	A.firer = src
+	A.fired_from = src
 	A.fire()
 	return A
 
@@ -633,6 +673,7 @@
 	has_cover = 0
 	scan_range = 9
 	req_access = list(ACCESS_SYNDICATE)
+	mode = TURRET_LETHAL
 	stun_projectile = /obj/item/projectile/bullet
 	lethal_projectile = /obj/item/projectile/bullet
 	lethal_projectile_sound = 'sound/weapons/gunshot.ogg'
@@ -644,25 +685,35 @@
 
 /obj/machinery/porta_turret/syndicate/ComponentInitialize()
 	. = ..()
-	AddComponent(/datum/component/empprotection, EMP_PROTECT_SELF | EMP_PROTECT_WIRES)
+	AddElement(/datum/element/empprotection, EMP_PROTECT_SELF | EMP_PROTECT_WIRES)
 
 /obj/machinery/porta_turret/syndicate/energy
 	icon_state = "standard_stun"
 	base_icon_state = "standard"
 	stun_projectile = /obj/item/projectile/energy/electrode
 	stun_projectile_sound = 'sound/weapons/taser.ogg'
+	nonlethal_projectile = /obj/item/projectile/beam/disabler
+	nonlethal_projectile_sound = 'sound/weapons/taser2.ogg'
 	lethal_projectile = /obj/item/projectile/beam/laser
 	lethal_projectile_sound = 'sound/weapons/laser.ogg'
 	desc = "An energy blaster auto-turret."
+
 
 /obj/machinery/porta_turret/syndicate/energy/heavy
 	icon_state = "standard_stun"
 	base_icon_state = "standard"
 	stun_projectile = /obj/item/projectile/energy/electrode
 	stun_projectile_sound = 'sound/weapons/taser.ogg'
+	nonlethal_projectile = /obj/item/projectile/beam/disabler
+	nonlethal_projectile_sound = 'sound/weapons/taser2.ogg'
 	lethal_projectile = /obj/item/projectile/beam/laser/heavylaser
 	lethal_projectile_sound = 'sound/weapons/lasercannonfire.ogg'
 	desc = "An energy blaster auto-turret."
+
+/obj/machinery/porta_turret/syndicate/energy/pirate
+	max_integrity = 260
+	integrity_failure = 0.08
+	armor = list("melee" = 50, "bullet" = 30, "laser" = 30, "energy" = 30, "bomb" = 50, "bio" = 0, "rad" = 0, "fire" = 90, "acid" = 90)
 
 
 /obj/machinery/porta_turret/syndicate/setup()
@@ -672,13 +723,32 @@
 	return 10 //Syndicate turrets shoot everything not in their faction
 
 /obj/machinery/porta_turret/syndicate/pod
-	integrity_failure = 20
 	max_integrity = 40
 	stun_projectile = /obj/item/projectile/bullet/syndicate_turret
 	lethal_projectile = /obj/item/projectile/bullet/syndicate_turret
 
+/obj/machinery/porta_turret/syndicate/shuttle
+	scan_range = 9
+	shot_delay = 3
+	stun_projectile = /obj/item/projectile/bullet/p50/penetrator/shuttle
+	lethal_projectile = /obj/item/projectile/bullet/p50/penetrator/shuttle
+	lethal_projectile_sound = 'sound/weapons/gunshot_smg.ogg'
+	stun_projectile_sound = 'sound/weapons/gunshot_smg.ogg'
+	armor = list("melee" = 50, "bullet" = 30, "laser" = 30, "energy" = 30, "bomb" = 80, "bio" = 0, "rad" = 0, "fire" = 90, "acid" = 90)
+
+/obj/machinery/porta_turret/syndicate/shuttle/target(atom/movable/target)
+	if(target)
+		setDir(get_dir(base, target))//even if you can't shoot, follow the target
+		shootAt(target)
+		addtimer(CALLBACK(src, .proc/shootAt, target), 5)
+		addtimer(CALLBACK(src, .proc/shootAt, target), 10)
+		addtimer(CALLBACK(src, .proc/shootAt, target), 15)
+		return TRUE
+
 /obj/machinery/porta_turret/ai
 	faction = list("silicon")
+	nonlethal_projectile = /obj/item/projectile/beam/disabler
+	nonlethal_projectile_sound = 'sound/weapons/taser2.ogg'
 
 /obj/machinery/porta_turret/ai/assess_perp(mob/living/carbon/human/perp)
 	return 10 //AI turrets shoot at everything not in their faction
@@ -724,7 +794,7 @@
 
 /obj/machinery/porta_turret/centcom_shuttle/ComponentInitialize()
 	. = ..()
-	AddComponent(/datum/component/empprotection, EMP_PROTECT_SELF | EMP_PROTECT_WIRES)
+	AddElement(/datum/element/empprotection, EMP_PROTECT_SELF | EMP_PROTECT_WIRES)
 
 /obj/machinery/porta_turret/centcom_shuttle/assess_perp(mob/living/carbon/human/perp)
 	return 0
@@ -734,7 +804,6 @@
 
 /obj/machinery/porta_turret/centcom_shuttle/weak
 	max_integrity = 120
-	integrity_failure = 60
 	name = "Old Laser Turret"
 	desc = "A turret built with substandard parts and run down further with age. Still capable of delivering lethal lasers to the odd space carp, but not much else."
 	stun_projectile = /obj/item/projectile/beam/weak/penetrator
@@ -799,10 +868,10 @@
 		T.cp = src
 
 /obj/machinery/turretid/examine(mob/user)
-	..()
-	if(issilicon(user) && (!stat & BROKEN))
-		to_chat(user, "<span class='notice'>Ctrl-click [src] to [ enabled ? "disable" : "enable"] turrets.</span>")
-		to_chat(user, "<span class='notice'>Alt-click [src] to set turrets to [ lethal ? "stun" : "kill"].</span>")
+	. = ..()
+	if(hasSiliconAccessInArea(user) && (!stat & BROKEN))
+		. += "<span class='notice'>Ctrl-click [src] to [ enabled ? "disable" : "enable"] turrets.</span>"
+		. += "<span class='notice'>Alt-click [src] to set turrets to [ lethal ? "stun" : "kill"].</span>"
 
 /obj/machinery/turretid/attackby(obj/item/I, mob/user, params)
 	if(stat & BROKEN)
@@ -815,7 +884,7 @@
 			to_chat(user, "You link \the [M.buffer] with \the [src]")
 			return
 
-	if (issilicon(user))
+	if (hasSiliconAccessInArea(user))
 		return attack_hand(user)
 
 	if ( get_dist(src, user) == 0 )		// trying to unlock the interface
@@ -837,6 +906,7 @@
 			to_chat(user, "<span class='warning'>Access denied.</span>")
 
 /obj/machinery/turretid/emag_act(mob/user)
+	. = ..()
 	if(obj_flags & EMAGGED)
 		return
 	to_chat(user, "<span class='danger'>You short out the turret controls' access analysis module.</span>")
@@ -844,6 +914,7 @@
 	locked = FALSE
 	if(user && user.machine == src)
 		attack_hand(user)
+	return TRUE
 
 /obj/machinery/turretid/attack_ai(mob/user)
 	if(!ailock || IsAdminGhost(user))
@@ -854,7 +925,7 @@
 /obj/machinery/turretid/ui_interact(mob/user)
 	. = ..()
 	if ( get_dist(src, user) > 0 )
-		if ( !(issilicon(user) || IsAdminGhost(user)) )
+		if ( !(hasSiliconAccessInArea(user) || IsAdminGhost(user)) )
 			to_chat(user, "<span class='notice'>You are too far away.</span>")
 			user.unset_machine()
 			user << browse(null, "window=turretid")
@@ -862,10 +933,10 @@
 
 	var/t = ""
 
-	if(locked && !(issilicon(user) || IsAdminGhost(user)))
+	if(locked && !(hasSiliconAccessInArea(user) || IsAdminGhost(user)))
 		t += "<div class='notice icon'>Swipe ID card to unlock interface</div>"
 	else
-		if(!issilicon(user) && !IsAdminGhost(user))
+		if(!hasSiliconAccessInArea(user) && !IsAdminGhost(user))
 			t += "<div class='notice icon'>Swipe ID card to lock interface</div>"
 		t += "Turrets [enabled?"activated":"deactivated"] - <A href='?src=[REF(src)];toggleOn=1'>[enabled?"Disable":"Enable"]?</a><br>"
 		t += "Currently set for [lethal?"lethal":"stun repeatedly"] - <A href='?src=[REF(src)];toggleLethal=1'>Change to [lethal?"Stun repeatedly":"Lethal"]?</a><br>"
@@ -879,7 +950,7 @@
 	if(..())
 		return
 	if (locked)
-		if(!(issilicon(usr) || IsAdminGhost(usr)))
+		if(!(hasSiliconAccessInArea(usr) || IsAdminGhost(usr)))
 			to_chat(usr, "Control panel is locked!")
 			return
 	if (href_list["toggleOn"])
@@ -905,8 +976,7 @@
 	..()
 	update_icon()
 
-/obj/machinery/turretid/update_icon()
-	..()
+/obj/machinery/turretid/update_icon_state()
 	if(stat & NOPOWER)
 		icon_state = "control_off"
 	else if (enabled)
@@ -922,7 +992,7 @@
 	desc = "Used for building turret control panels."
 	icon_state = "apc"
 	result_path = /obj/machinery/turretid
-	materials = list(MAT_METAL=MINERAL_MATERIAL_AMOUNT)
+	custom_materials = list(/datum/material/iron=MINERAL_MATERIAL_AMOUNT)
 
 /obj/item/gun/proc/get_turret_properties()
 	. = list()

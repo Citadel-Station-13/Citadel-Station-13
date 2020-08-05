@@ -5,13 +5,19 @@
 	dna_cost = 0
 	req_dna = 1
 	req_human = 1
+	action_icon = 'icons/mob/actions/actions_changeling.dmi'
+	action_icon_state = "ling_transform"
+	action_background_icon_state = "bg_ling"
 
 /obj/item/clothing/glasses/changeling
 	name = "flesh"
-	item_flags = NODROP
 
-//ATTACK HAND IGNORING PARENT RETURN VALUE
-/obj/item/clothing/glasses/changeling/attack_hand(mob/user)
+/obj/item/clothing/glasses/changeling/Initialize()
+	. = ..()
+	ADD_TRAIT(src, TRAIT_NODROP, CHANGELING_TRAIT)
+
+
+/obj/item/clothing/glasses/changeling/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	if(loc == user && user.mind && user.mind.has_antag_datum(/datum/antagonist/changeling))
 		to_chat(user, "<span class='notice'>You reabsorb [src] into your body.</span>")
 		qdel(src)
@@ -20,10 +26,13 @@
 
 /obj/item/clothing/under/changeling
 	name = "flesh"
-	item_flags = NODROP
 
-//ATTACK HAND IGNORING PARENT RETURN VALUE
-/obj/item/clothing/under/changeling/attack_hand(mob/user)
+/obj/item/clothing/under/changeling/Initialize()
+	. = ..()
+	ADD_TRAIT(src, TRAIT_NODROP, CHANGELING_TRAIT)
+
+
+/obj/item/clothing/under/changeling/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	if(loc == user && user.mind && user.mind.has_antag_datum(/datum/antagonist/changeling))
 		to_chat(user, "<span class='notice'>You reabsorb [src] into your body.</span>")
 		qdel(src)
@@ -32,11 +41,14 @@
 
 /obj/item/clothing/suit/changeling
 	name = "flesh"
-	item_flags = NODROP
 	allowed = list(/obj/item/changeling)
 
-//ATTACK HAND IGNORING PARENT RETURN VALUE
-/obj/item/clothing/suit/changeling/attack_hand(mob/user)
+/obj/item/clothing/suit/changeling/Initialize()
+	. = ..()
+	ADD_TRAIT(src, TRAIT_NODROP, CHANGELING_TRAIT)
+
+
+/obj/item/clothing/suit/changeling/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	if(loc == user && user.mind && user.mind.has_antag_datum(/datum/antagonist/changeling))
 		to_chat(user, "<span class='notice'>You reabsorb [src] into your body.</span>")
 		qdel(src)
@@ -45,10 +57,12 @@
 
 /obj/item/clothing/head/changeling
 	name = "flesh"
-	item_flags = NODROP
 
-//ATTACK HAND IGNORING PARENT RETURN VALUE
-/obj/item/clothing/head/changeling/attack_hand(mob/user)
+/obj/item/clothing/head/changeling/Initialize()
+	. = ..()
+	ADD_TRAIT(src, TRAIT_NODROP, CHANGELING_TRAIT)
+
+/obj/item/clothing/head/changeling/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	if(loc == user && user.mind && user.mind.has_antag_datum(/datum/antagonist/changeling))
 		to_chat(user, "<span class='notice'>You reabsorb [src] into your body.</span>")
 		qdel(src)
@@ -57,10 +71,13 @@
 
 /obj/item/clothing/shoes/changeling
 	name = "flesh"
-	item_flags = NODROP
 
-//ATTACK HAND IGNORING PARENT RETURN VALUE
-/obj/item/clothing/shoes/changeling/attack_hand(mob/user)
+/obj/item/clothing/shoes/changeling/Initialize()
+	. = ..()
+	ADD_TRAIT(src, TRAIT_NODROP, CHANGELING_TRAIT)
+
+
+/obj/item/clothing/shoes/changeling/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	if(loc == user && user.mind && user.mind.has_antag_datum(/datum/antagonist/changeling))
 		to_chat(user, "<span class='notice'>You reabsorb [src] into your body.</span>")
 		qdel(src)
@@ -69,10 +86,13 @@
 
 /obj/item/clothing/gloves/changeling
 	name = "flesh"
-	item_flags = NODROP
 
-//ATTACK HAND IGNORING PARENT RETURN VALUE
-/obj/item/clothing/gloves/changeling/attack_hand(mob/user)
+/obj/item/clothing/gloves/changeling/Initialize()
+	. = ..()
+	ADD_TRAIT(src, TRAIT_NODROP, CHANGELING_TRAIT)
+
+
+/obj/item/clothing/gloves/changeling/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	if(loc == user && user.mind && user.mind.has_antag_datum(/datum/antagonist/changeling))
 		to_chat(user, "<span class='notice'>You reabsorb [src] into your body.</span>")
 		qdel(src)
@@ -81,10 +101,13 @@
 
 /obj/item/clothing/mask/changeling
 	name = "flesh"
-	item_flags = NODROP
 
-//ATTACK HAND IGNORING PARENT RETURN VALUE
-/obj/item/clothing/mask/changeling/attack_hand(mob/user)
+/obj/item/clothing/mask/changeling/Initialize()
+	. = ..()
+	ADD_TRAIT(src, TRAIT_NODROP, CHANGELING_TRAIT)
+
+
+/obj/item/clothing/mask/changeling/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	if(loc == user && user.mind && user.mind.has_antag_datum(/datum/antagonist/changeling))
 		to_chat(user, "<span class='notice'>You reabsorb [src] into your body.</span>")
 		qdel(src)
@@ -93,12 +116,15 @@
 
 /obj/item/changeling
 	name = "flesh"
-	item_flags = NODROP
 	slot_flags = ALL
 	allowed = list(/obj/item/changeling)
 
-//ATTACK HAND IGNORING PARENT RETURN VALUE
-/obj/item/changeling/attack_hand(mob/user)
+/obj/item/changeling/Initialize()
+	. = ..()
+	ADD_TRAIT(src, TRAIT_NODROP, CHANGELING_TRAIT)
+
+
+/obj/item/changeling/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	if(loc == user && user.mind && user.mind.has_antag_datum(/datum/antagonist/changeling))
 		to_chat(user, "<span class='notice'>You reabsorb [src] into your body.</span>")
 		qdel(src)

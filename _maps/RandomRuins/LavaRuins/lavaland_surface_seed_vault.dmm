@@ -188,10 +188,10 @@
 /area/ruin/powered/seedvault)
 "G" = (
 /obj/structure/closet/crate/hydroponics,
-/obj/item/clothing/under/rank/hydroponics,
-/obj/item/clothing/under/rank/hydroponics,
-/obj/item/clothing/under/rank/hydroponics,
-/obj/item/clothing/under/rank/hydroponics,
+/obj/item/clothing/under/rank/civilian/hydroponics,
+/obj/item/clothing/under/rank/civilian/hydroponics,
+/obj/item/clothing/under/rank/civilian/hydroponics,
+/obj/item/clothing/under/rank/civilian/hydroponics,
 /turf/open/floor/plasteel/freezer,
 /area/ruin/powered/seedvault)
 "H" = (
@@ -270,6 +270,13 @@
 "X" = (
 /obj/machinery/hydroponics/constructable,
 /obj/machinery/light,
+/turf/open/floor/plasteel/freezer,
+/area/ruin/powered/seedvault)
+"Z" = (
+/obj/item/disk/design_disk/plant_disk,
+/obj/machinery/autolathe/hacked{
+	desc = "This autolathe seems to have its safety light off."
+	},
 /turf/open/floor/plasteel/freezer,
 /area/ruin/powered/seedvault)
 
@@ -375,7 +382,7 @@ h
 h
 u
 R
-u
+Z
 Q
 a
 a

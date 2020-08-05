@@ -36,10 +36,10 @@ Nothing else in the console has ID requirements.
 	var/locked = FALSE
 	var/tdisk_uple = FALSE
 	var/ddisk_uple = FALSE
-	var/datum/techweb_node/selected_node
-	var/datum/design/selected_design
+	var/datum/selected_node_id
+	var/datum/selected_design_id
 	var/selected_category
-	var/list/datum/design/matching_designs
+	var/list/matching_design_ids
 	var/disk_slot_selected
 	var/searchstring = ""
 	var/searchtype = ""
@@ -47,19 +47,22 @@ Nothing else in the console has ID requirements.
 
 	var/research_control = TRUE
 
+	/// Long action cooldown to prevent spam
+	var/last_long_action = 0
+
 /obj/machinery/computer/rdconsole/production
 	circuit = /obj/item/circuitboard/computer/rdconsole/production
 	research_control = FALSE
 
 /proc/CallMaterialName(ID)
-	if (copytext(ID, 1, 2) == "$" && GLOB.materials_list[ID])
-		var/datum/material/material = GLOB.materials_list[ID]
+	if (istype(ID, /datum/material))
+		var/datum/material/material = ID
 		return material.name
 
 	else if(GLOB.chemical_reagents_list[ID])
 		var/datum/reagent/reagent = GLOB.chemical_reagents_list[ID]
 		return reagent.name
-	return "ERROR: Report This"
+	return ID
 
 /obj/machinery/computer/rdconsole/proc/SyncRDevices() //Makes sure it is properly sync'ed up with the devices attached to it (if any).
 	for(var/obj/machinery/rnd/D in oview(3,src))
@@ -88,7 +91,7 @@ Nothing else in the console has ID requirements.
 	. = ..()
 	stored_research = SSresearch.science_tech
 	stored_research.consoles_accessing[src] = TRUE
-	matching_designs = list()
+	matching_design_ids = list()
 	SyncRDevices()
 
 /obj/machinery/computer/rdconsole/Destroy()
@@ -109,9 +112,7 @@ Nothing else in the console has ID requirements.
 	if(d_disk)
 		d_disk.forceMove(get_turf(src))
 		d_disk = null
-	matching_designs = null
-	selected_node = null
-	selected_design = null
+	matching_design_ids = null
 	return ..()
 
 /obj/machinery/computer/rdconsole/attackby(obj/item/D, mob/user, params)
@@ -144,7 +145,7 @@ Nothing else in the console has ID requirements.
 	if(!stored_research.available_nodes[id] || stored_research.researched_nodes[id])
 		say("Node unlock failed: Either already researched or not available!")
 		return FALSE
-	var/datum/techweb_node/TN = SSresearch.techweb_nodes[id]
+	var/datum/techweb_node/TN = SSresearch.techweb_node_by_id(id)
 	if(!istype(TN))
 		say("Node unlock failed: Unknown error.")
 		return FALSE
@@ -153,7 +154,7 @@ Nothing else in the console has ID requirements.
 		investigate_log("[key_name(user)] researched [id]([json_encode(price)]) on techweb id [stored_research.id].", INVESTIGATE_RESEARCH)
 		if(stored_research == SSresearch.science_tech)
 			SSblackbox.record_feedback("associative", "science_techweb_unlock", 1, list("id" = "[id]", "name" = TN.display_name, "price" = "[json_encode(price)]", "time" = SQLtime()))
-		if(stored_research.research_node(SSresearch.techweb_nodes[id]))
+		if(stored_research.research_node_id(id))
 			say("Successfully researched [TN.display_name].")
 			var/logname = "Unknown"
 			if(isAI(user))
@@ -184,12 +185,14 @@ Nothing else in the console has ID requirements.
 	..()
 
 /obj/machinery/computer/rdconsole/emag_act(mob/user)
-	if(!(obj_flags & EMAGGED))
-		to_chat(user, "<span class='notice'>You disable the security protocols[locked? " and unlock the console":""].</span>")
-		playsound(src, "sparks", 75, 1)
-		obj_flags |= EMAGGED
-		locked = FALSE
-	return ..()
+	. = ..()
+	if(obj_flags & EMAGGED)
+		return
+	to_chat(user, "<span class='notice'>You disable the security protocols[locked? " and unlock the console":""].</span>")
+	playsound(src, "sparks", 75, 1)
+	obj_flags |= EMAGGED
+	locked = FALSE
+	return TRUE
 
 /obj/machinery/computer/rdconsole/multitool_act(mob/user, obj/item/multitool/I)
 	var/lathe = linked_lathe && linked_lathe.multitool_act(user, I)
@@ -280,14 +283,14 @@ Nothing else in the console has ID requirements.
 	l += ui_protolathe_header()
 	l += "<div class='statusDisplay'><h3>Browsing [selected_category]:</h3>"
 	for(var/v in stored_research.researched_designs)
-		var/datum/design/D = stored_research.researched_designs[v]
+		var/datum/design/D = SSresearch.techweb_design_by_id(v)
 		if(!(selected_category in D.category)|| !(D.build_type & PROTOLATHE))
 			continue
 		if(!(isnull(linked_lathe.allowed_department_flags) || (D.departmental_flags & linked_lathe.allowed_department_flags)))
 			continue
 		var/temp_material
 		var/c = 50
-		var/coeff = linked_lathe.efficiency_coeff
+		var/coeff = linked_lathe.print_cost_coeff
 		if(!linked_lathe.efficient_with(D.build_path))
 			coeff = 1
 
@@ -296,20 +299,31 @@ Nothing else in the console has ID requirements.
 			var/t = linked_lathe.check_mat(D, M)
 			temp_material += " | "
 			if (t < 1)
-				temp_material += "<span class='bad'>[all_materials[M]/coeff] [CallMaterialName(M)]</span>"
+				temp_material += "<span class='bad'>[all_materials[M] * coeff] [CallMaterialName(M)]</span>"
 			else
-				temp_material += " [all_materials[M]/coeff] [CallMaterialName(M)]"
+				temp_material += " [all_materials[M] * coeff] [CallMaterialName(M)]"
 			c = min(c,t)
 
-		if (c >= 1)
+		var/clearance = !(linked_lathe.obj_flags & EMAGGED) && (linked_lathe.offstation_security_levels || is_station_level(linked_lathe.z))
+		var/sec_text = ""
+		if(clearance && (D.min_security_level > SEC_LEVEL_GREEN || D.max_security_level < SEC_LEVEL_DELTA))
+			sec_text = " (Allowed security levels: "
+			for(var/n in D.min_security_level to D.max_security_level)
+				sec_text += NUM2SECLEVEL(n)
+				if(n + 1 <= D.max_security_level)
+					sec_text += ", "
+			sec_text += ")"
+
+		clearance = !clearance || ISINRANGE(GLOB.security_level, D.min_security_level, D.max_security_level)
+		if (c >= 1 && clearance)
 			l += "<A href='?src=[REF(src)];build=[D.id];amount=1'>[D.name]</A>[RDSCREEN_NOBREAK]"
 			if(c >= 5)
 				l += "<A href='?src=[REF(src)];build=[D.id];amount=5'>x5</A>[RDSCREEN_NOBREAK]"
 			if(c >= 10)
 				l += "<A href='?src=[REF(src)];build=[D.id];amount=10'>x10</A>[RDSCREEN_NOBREAK]"
-			l += "[temp_material][RDSCREEN_NOBREAK]"
+			l += "[temp_material][sec_text][RDSCREEN_NOBREAK]"
 		else
-			l += "<span class='linkOff'>[D.name]</span>[temp_material][RDSCREEN_NOBREAK]"
+			l += "<span class='linkOff'>[D.name]</span>[temp_material][sec_text][RDSCREEN_NOBREAK]"
 		l += ""
 	l += "</div>"
 	return l
@@ -335,22 +349,23 @@ Nothing else in the console has ID requirements.
 	RDSCREEN_UI_LATHE_CHECK
 	var/list/l = list()
 	l += ui_protolathe_header()
-	for(var/datum/design/D in matching_designs)
+	for(var/id in matching_design_ids)
+		var/datum/design/D = SSresearch.techweb_design_by_id(id)
 		if(!(isnull(linked_lathe.allowed_department_flags) || (D.departmental_flags & linked_lathe.allowed_department_flags)))
 			continue
 		var/temp_material
 		var/c = 50
 		var/all_materials = D.materials + D.reagents_list
-		var/coeff = linked_lathe.efficiency_coeff
+		var/coeff = linked_lathe.print_cost_coeff
 		if(!linked_lathe.efficient_with(D.build_path))
 			coeff = 1
 		for(var/M in all_materials)
 			var/t = linked_lathe.check_mat(D, M)
 			temp_material += " | "
 			if (t < 1)
-				temp_material += "<span class='bad'>[all_materials[M]/coeff] [CallMaterialName(M)]</span>"
+				temp_material += "<span class='bad'>[all_materials[M] * coeff] [CallMaterialName(M)]</span>"
 			else
-				temp_material += " [all_materials[M]/coeff] [CallMaterialName(M)]"
+				temp_material += " [all_materials[M] * coeff] [CallMaterialName(M)]"
 			c = min(c,t)
 
 		if (c >= 1)
@@ -376,11 +391,13 @@ Nothing else in the console has ID requirements.
 	l += ui_protolathe_header()
 	l += "<div class='statusDisplay'><h3>Material Storage:</h3>"
 	for(var/mat_id in mat_container.materials)
-		var/datum/material/M = mat_container.materials[mat_id]
-		l += "* [M.amount] of [M.name]: "
-		if(M.amount >= MINERAL_MATERIAL_AMOUNT) l += "<A href='?src=[REF(src)];ejectsheet=[M.id];eject_amt=1'>Eject</A> [RDSCREEN_NOBREAK]"
-		if(M.amount >= MINERAL_MATERIAL_AMOUNT*5) l += "<A href='?src=[REF(src)];ejectsheet=[M.id];eject_amt=5'>5x</A> [RDSCREEN_NOBREAK]"
-		if(M.amount >= MINERAL_MATERIAL_AMOUNT) l += "<A href='?src=[REF(src)];ejectsheet=[M.id];eject_amt=50'>All</A>[RDSCREEN_NOBREAK]"
+		var/datum/material/M = mat_id
+		var/amount = mat_container.materials[mat_id]
+		var/ref = REF(M)
+		l += "* [amount] of [M.name]: "
+		if(amount >= MINERAL_MATERIAL_AMOUNT) l += "<A href='?src=[REF(src)];ejectsheet=[ref];eject_amt=1'>Eject</A> [RDSCREEN_NOBREAK]"
+		if(amount >= MINERAL_MATERIAL_AMOUNT*5) l += "<A href='?src=[REF(src)];ejectsheet=[ref];eject_amt=5'>5x</A> [RDSCREEN_NOBREAK]"
+		if(amount >= MINERAL_MATERIAL_AMOUNT) l += "<A href='?src=[REF(src)];ejectsheet=[ref];eject_amt=50'>All</A>[RDSCREEN_NOBREAK]"
 		l += ""
 	l += "</div>[RDSCREEN_NOBREAK]"
 	return l
@@ -393,7 +410,7 @@ Nothing else in the console has ID requirements.
 	l += "<h3>Chemical Storage:</h3>"
 	for(var/datum/reagent/R in linked_lathe.reagents.reagent_list)
 		l += "[R.name]: [R.volume]"
-		l += "<A href='?src=[REF(src)];disposeP=[R.id]'>Purge</A>"
+		l += "<A href='?src=[REF(src)];disposeP=[R]'>Purge</A>"
 	l += "</div>"
 	return l
 
@@ -431,7 +448,7 @@ Nothing else in the console has ID requirements.
 	l += "<div class='statusDisplay'><h3>Browsing [selected_category]:</h3>"
 
 	for(var/v in stored_research.researched_designs)
-		var/datum/design/D = stored_research.researched_designs[v]
+		var/datum/design/D = SSresearch.techweb_design_by_id(v)
 		if(!(selected_category in D.category) || !(D.build_type & IMPRINTER))
 			continue
 		if(!(isnull(linked_imprinter.allowed_department_flags) || (D.departmental_flags & linked_imprinter.allowed_department_flags)))
@@ -440,7 +457,7 @@ Nothing else in the console has ID requirements.
 		var/check_materials = TRUE
 
 		var/all_materials = D.materials + D.reagents_list
-		var/coeff = linked_imprinter.efficiency_coeff
+		var/coeff = linked_imprinter.print_cost_coeff
 		if(!linked_imprinter.efficient_with(D.build_path))
 			coeff = 1
 
@@ -448,9 +465,9 @@ Nothing else in the console has ID requirements.
 			temp_materials += " | "
 			if (!linked_imprinter.check_mat(D, M))
 				check_materials = FALSE
-				temp_materials += " <span class='bad'>[all_materials[M]/coeff] [CallMaterialName(M)]</span>"
+				temp_materials += " <span class='bad'>[all_materials[M] * coeff] [CallMaterialName(M)]</span>"
 			else
-				temp_materials += " [all_materials[M]/coeff] [CallMaterialName(M)]"
+				temp_materials += " [all_materials[M] * coeff] [CallMaterialName(M)]"
 		if (check_materials)
 			l += "<A href='?src=[REF(src)];imprint=[D.id]'>[D.name]</A>[temp_materials]"
 		else
@@ -464,22 +481,23 @@ Nothing else in the console has ID requirements.
 	l += ui_circuit_header()
 	l += "<div class='statusDisplay'><h3>Search results:</h3>"
 
-	for(var/datum/design/D in matching_designs)
+	for(var/id in matching_design_ids)
+		var/datum/design/D = SSresearch.techweb_design_by_id(id)
 		if(!(isnull(linked_imprinter.allowed_department_flags) || (D.departmental_flags & linked_imprinter.allowed_department_flags)))
 			continue
 		var/temp_materials
 		var/check_materials = TRUE
 		var/all_materials = D.materials + D.reagents_list
-		var/coeff = linked_imprinter.efficiency_coeff
+		var/coeff = linked_imprinter.print_cost_coeff
 		if(!linked_imprinter.efficient_with(D.build_path))
 			coeff = 1
 		for(var/M in all_materials)
 			temp_materials += " | "
 			if (!linked_imprinter.check_mat(D, M))
 				check_materials = FALSE
-				temp_materials += " <span class='bad'>[all_materials[M]/coeff] [CallMaterialName(M)]</span>"
+				temp_materials += " <span class='bad'>[all_materials[M] * coeff] [CallMaterialName(M)]</span>"
 			else
-				temp_materials += " [all_materials[M]/coeff] [CallMaterialName(M)]"
+				temp_materials += " [all_materials[M] * coeff] [CallMaterialName(M)]"
 		if (check_materials)
 			l += "<A href='?src=[REF(src)];imprint=[D.id]'>[D.name]</A>[temp_materials]"
 		else
@@ -495,7 +513,7 @@ Nothing else in the console has ID requirements.
 	l += "<h3>Chemical Storage:</h3>"
 	for(var/datum/reagent/R in linked_imprinter.reagents.reagent_list)
 		l += "[R.name]: [R.volume]"
-		l += "<A href='?src=[REF(src)];disposeI=[R.id]'>Purge</A>"
+		l += "<A href='?src=[REF(src)];disposeI=[R]'>Purge</A>"
 	return l
 
 /obj/machinery/computer/rdconsole/proc/ui_circuit_materials()	//Legacy code!
@@ -508,11 +526,13 @@ Nothing else in the console has ID requirements.
 	l += ui_circuit_header()
 	l += "<h3><div class='statusDisplay'>Material Storage:</h3>"
 	for(var/mat_id in mat_container.materials)
-		var/datum/material/M = mat_container.materials[mat_id]
-		l += "* [M.amount] of [M.name]: "
-		if(M.amount >= MINERAL_MATERIAL_AMOUNT) l += "<A href='?src=[REF(src)];imprinter_ejectsheet=[M.id];eject_amt=1'>Eject</A> [RDSCREEN_NOBREAK]"
-		if(M.amount >= MINERAL_MATERIAL_AMOUNT*5) l += "<A href='?src=[REF(src)];imprinter_ejectsheet=[M.id];eject_amt=5'>5x</A> [RDSCREEN_NOBREAK]"
-		if(M.amount >= MINERAL_MATERIAL_AMOUNT) l += "<A href='?src=[REF(src)];imprinter_ejectsheet=[M.id];eject_amt=50'>All</A>[RDSCREEN_NOBREAK]</div>"
+		var/datum/material/M = mat_id
+		var/amount = mat_container.materials[mat_id]
+		var/ref = REF(M)
+		l += "* [amount] of [M.name]: "
+		if(amount >= MINERAL_MATERIAL_AMOUNT) l += "<A href='?src=[REF(src)];imprinter_ejectsheet=[ref];eject_amt=1'>Eject</A> [RDSCREEN_NOBREAK]"
+		if(amount >= MINERAL_MATERIAL_AMOUNT*5) l += "<A href='?src=[REF(src)];imprinter_ejectsheet=[ref];eject_amt=5'>5x</A> [RDSCREEN_NOBREAK]"
+		if(amount >= MINERAL_MATERIAL_AMOUNT) l += "<A href='?src=[REF(src)];imprinter_ejectsheet=[ref];eject_amt=50'>All</A>[RDSCREEN_NOBREAK]</div>"
 	return l
 
 /obj/machinery/computer/rdconsole/proc/ui_techdisk()		//Legacy code
@@ -524,7 +544,7 @@ Nothing else in the console has ID requirements.
 	l += "<A href='?src=[REF(src)];copy_tech=1'>Load Technology to Disk</A></div>"
 	l += "<div class='statusDisplay'><h3>Stored Technology Nodes:</h3>"
 	for(var/i in t_disk.stored_research.researched_nodes)
-		var/datum/techweb_node/N = t_disk.stored_research.researched_nodes[i]
+		var/datum/techweb_node/N = SSresearch.techweb_node_by_id(i)
 		l += "<A href='?src=[REF(src)];view_node=[i];back_screen=[screen]'>[N.display_name]</A>"
 	l += "</div>"
 	return l
@@ -550,7 +570,7 @@ Nothing else in the console has ID requirements.
 	l += "<A href='?src=[REF(src)];switch_screen=[RDSCREEN_DESIGNDISK];back_screen=[screen]'>Return to Disk Operations</A><div class='statusDisplay'>"
 	l += "<h3>Load Design to Disk:</h3>"
 	for(var/v in stored_research.researched_designs)
-		var/datum/design/D = stored_research.researched_designs[v]
+		var/datum/design/D = SSresearch.techweb_design_by_id(v)
 		l += "[D.name] "
 		l += "<A href='?src=[REF(src)];copy_design=[disk_slot_selected];copy_design_ID=[D.id]'>Copy to Disk</A>"
 	l += "</div>"
@@ -566,12 +586,10 @@ Nothing else in the console has ID requirements.
 		l += "<table><tr><td>[icon2html(linked_destroy.loaded_item, usr)]</td><td><b>[linked_destroy.loaded_item.name]</b> <A href='?src=[REF(src)];eject_item=1'>Eject</A></td></tr></table>[RDSCREEN_NOBREAK]"
 		l += "Select a node to boost by deconstructing this item. This item can boost:"
 
-		var/anything = FALSE
 		var/list/boostable_nodes = techweb_item_boost_check(linked_destroy.loaded_item)
 		for(var/id in boostable_nodes)
-			anything = TRUE
 			var/list/worth = boostable_nodes[id]
-			var/datum/techweb_node/N = get_techweb_node_by_id(id)
+			var/datum/techweb_node/N = SSresearch.techweb_node_by_id(id)
 
 			l += "<div class='statusDisplay'>[RDSCREEN_NOBREAK]"
 			if (stored_research.researched_nodes[N.id])  // already researched
@@ -603,7 +621,6 @@ Nothing else in the console has ID requirements.
 		// point deconstruction and material reclamation use the same ID to prevent accidentally missing the points
 		var/list/point_values = techweb_item_point_check(linked_destroy.loaded_item)
 		if(point_values)
-			anything = TRUE
 			l += "<div class='statusDisplay'>[RDSCREEN_NOBREAK]"
 			if (stored_research.deconstructed_items[linked_destroy.loaded_item.type])
 				l += "<span class='linkOff'>Point Deconstruction</span>"
@@ -614,15 +631,13 @@ Nothing else in the console has ID requirements.
 			l += "</div>[RDSCREEN_NOBREAK]"
 
 		if(!(linked_destroy.loaded_item.resistance_flags & INDESTRUCTIBLE))
-			var/list/materials = linked_destroy.loaded_item.materials
-			l += "<div class='statusDisplay'><A href='?src=[REF(src)];deconstruct=[RESEARCH_MATERIAL_RECLAMATION_ID]'>[materials.len? "Material Reclamation" : "Destroy Item"]</A>"
+			var/list/materials = linked_destroy.loaded_item.custom_materials
+			l += "<div class='statusDisplay'><A href='?src=[REF(src)];deconstruct=[RESEARCH_MATERIAL_RECLAMATION_ID]'>[LAZYLEN(materials)? "Material Reclamation" : "Destroy Item"]</A>"
 			for (var/M in materials)
 				l += "* [CallMaterialName(M)] x [materials[M]]"
 			l += "</div>[RDSCREEN_NOBREAK]"
-			anything = TRUE
 
-		if (!anything)
-			l += "Nothing!"
+		l += "<div class='statusDisplay'><A href='?src=[REF(src)];deconstruct=[RESEARCH_DEEP_SCAN_ID]'>Nondestructive Deep Scan</A></div>"
 
 		l += "</div>"
 	return l
@@ -635,32 +650,33 @@ Nothing else in the console has ID requirements.
 		var/list/columns = list()
 		var/max_tier = 0
 		for (var/node_ in stored_research.tiers)
-			var/datum/techweb_node/node = node_
-			var/tier = stored_research.tiers[node]
+			var/datum/techweb_node/node = SSresearch.techweb_node_by_id(node_)
+			var/tier = stored_research.tiers[node.id]
 			LAZYINITLIST(columns["[tier]"])  // String hackery to make the numbers associative
 			columns["[tier]"] += ui_techweb_single_node(node, minimal=(tier != 1))
 			max_tier = max(max_tier, tier)
 
 		l += "<table><tr><th align='left'>Researched</th><th align='left'>Available</th><th align='left'>Future</th></tr><tr>[RDSCREEN_NOBREAK]"
-		for(var/tier in 0 to max_tier)
-			l += "<td valign='top'>[RDSCREEN_NOBREAK]"
-			l += columns["[tier]"]
-			l += "</td>[RDSCREEN_NOBREAK]"
+		if(max_tier)
+			for(var/tier in 0 to max_tier)
+				l += "<td valign='top'>[RDSCREEN_NOBREAK]"
+				l += columns["[tier]"]
+				l += "</td>[RDSCREEN_NOBREAK]"
 		l += "</tr></table>[RDSCREEN_NOBREAK]"
 	else
 		var/list/avail = list()			//This could probably be optimized a bit later.
 		var/list/unavail = list()
 		var/list/res = list()
 		for(var/v in stored_research.researched_nodes)
-			res += stored_research.researched_nodes[v]
+			res += SSresearch.techweb_node_by_id(v)
 		for(var/v in stored_research.available_nodes)
 			if(stored_research.researched_nodes[v])
 				continue
-			avail += stored_research.available_nodes[v]
+			avail += SSresearch.techweb_node_by_id(v)
 		for(var/v in stored_research.visible_nodes)
 			if(stored_research.available_nodes[v])
 				continue
-			unavail += stored_research.visible_nodes[v]
+			unavail += SSresearch.techweb_node_by_id(v)
 		l += "<h2>Technology Nodes:</h2>[RDSCREEN_NOBREAK]"
 		l += "<div><h3>Available for Research:</h3>"
 		for(var/datum/techweb_node/N in avail)
@@ -702,13 +718,14 @@ Nothing else in the console has ID requirements.
 			l += "<BR><span class='linkOff bad'>[node.price_display(stored_research)]</span>"  // red - missing prereqs
 		if(ui_mode == RDCONSOLE_UI_MODE_NORMAL)
 			l += "[node.description]"
-			for(var/i in node.designs)
-				var/datum/design/D = node.designs[i]
+			for(var/i in node.design_ids)
+				var/datum/design/D = SSresearch.techweb_design_by_id(i)
 				l += "<span data-tooltip='[D.name]' onclick='location=\"?src=[REF(src)];view_design=[i];back_screen=[screen]\"'>[D.icon_html(usr)]</span>[RDSCREEN_NOBREAK]"
 	l += "</div>[RDSCREEN_NOBREAK]"
 	return l
 
 /obj/machinery/computer/rdconsole/proc/ui_techweb_nodeview()
+	var/datum/techweb_node/selected_node = SSresearch.techweb_node_by_id(selected_node_id)
 	RDSCREEN_UI_SNODE_CHECK
 	var/list/l = list()
 	if(stored_research.hidden_nodes[selected_node.id])
@@ -716,65 +733,65 @@ Nothing else in the console has ID requirements.
 		return
 
 	l += "<table><tr>[RDSCREEN_NOBREAK]"
-	if (length(selected_node.prerequisites))
+	if (length(selected_node.prereq_ids))
 		l += "<th align='left'>Requires</th>[RDSCREEN_NOBREAK]"
 	l += "<th align='left'>Current Node</th>[RDSCREEN_NOBREAK]"
-	if (length(selected_node.unlocks))
+	if (length(selected_node.unlock_ids))
 		l += "<th align='left'>Unlocks</th>[RDSCREEN_NOBREAK]"
 
 	l += "</tr><tr>[RDSCREEN_NOBREAK]"
-	if (length(selected_node.prerequisites))
+	if (length(selected_node.prereq_ids))
 		l += "<td valign='top'>[RDSCREEN_NOBREAK]"
-		for (var/i in selected_node.prerequisites)
-			l += ui_techweb_single_node(selected_node.prerequisites[i])
+		for (var/i in selected_node.prereq_ids)
+			l += ui_techweb_single_node(SSresearch.techweb_node_by_id(i))
 		l += "</td>[RDSCREEN_NOBREAK]"
 	l += "<td valign='top'>[RDSCREEN_NOBREAK]"
 	l += ui_techweb_single_node(selected_node, selflink=FALSE)
 	l += "</td>[RDSCREEN_NOBREAK]"
-	if (length(selected_node.unlocks))
+	if (length(selected_node.unlock_ids))
 		l += "<td valign='top'>[RDSCREEN_NOBREAK]"
-		for (var/i in selected_node.unlocks)
-			l += ui_techweb_single_node(selected_node.unlocks[i])
+		for (var/i in selected_node.unlock_ids)
+			l += ui_techweb_single_node(SSresearch.techweb_node_by_id(i))
 		l += "</td>[RDSCREEN_NOBREAK]"
 
 	l += "</tr></table>[RDSCREEN_NOBREAK]"
 	return l
 
 /obj/machinery/computer/rdconsole/proc/ui_techweb_designview()		//Legacy code
+	var/datum/design/selected_design = SSresearch.techweb_design_by_id(selected_design_id)
 	RDSCREEN_UI_SDESIGN_CHECK
 	var/list/l = list()
-	var/datum/design/D = selected_design
-	l += "<div><table><tr><td>[D.icon_html(usr)]</td><td><b>[D.name]</b></td></tr></table>[RDSCREEN_NOBREAK]"
-	if(D.build_type)
+	l += "<div><table><tr><td>[selected_design.icon_html(usr)]</td><td><b>[selected_design.name]</b></td></tr></table>[RDSCREEN_NOBREAK]"
+	if(selected_design.build_type)
 		var/lathes = list()
-		if(D.build_type & IMPRINTER)
+		if(selected_design.build_type & IMPRINTER)
 			lathes += "<span data-tooltip='Circuit Imprinter'>[machine_icon(/obj/machinery/rnd/production/circuit_imprinter)]</span>[RDSCREEN_NOBREAK]"
-			if (linked_imprinter && D.id in stored_research.researched_designs)
-				l += "<A href='?src=[REF(src)];search=1;type=imprint;to_search=[D.name]'>Imprint</A>"
-		if(D.build_type & PROTOLATHE)
+			if (linked_imprinter && stored_research.researched_designs[selected_design.id])
+				l += "<A href='?src=[REF(src)];search=1;type=imprint;to_search=[selected_design.name]'>Imprint</A>"
+		if(selected_design.build_type & PROTOLATHE)
 			lathes += "<span data-tooltip='Protolathe'>[machine_icon(/obj/machinery/rnd/production/protolathe)]</span>[RDSCREEN_NOBREAK]"
-			if (linked_lathe && D.id in stored_research.researched_designs)
-				l += "<A href='?src=[REF(src)];search=1;type=proto;to_search=[D.name]'>Construct</A>"
-		if(D.build_type & AUTOLATHE)
+			if (linked_lathe && stored_research.researched_designs[selected_design.id])
+				l += "<A href='?src=[REF(src)];search=1;type=proto;to_search=[selected_design.name]'>Construct</A>"
+		if(selected_design.build_type & AUTOLATHE)
 			lathes += "<span data-tooltip='Autolathe'>[machine_icon(/obj/machinery/autolathe)]</span>[RDSCREEN_NOBREAK]"
-		if(D.build_type & MECHFAB)
+		if(selected_design.build_type & MECHFAB)
 			lathes += "<span data-tooltip='Exosuit Fabricator'>[machine_icon(/obj/machinery/mecha_part_fabricator)]</span>[RDSCREEN_NOBREAK]"
-		if(D.build_type & BIOGENERATOR)
+		if(selected_design.build_type & BIOGENERATOR)
 			lathes += "<span data-tooltip='Biogenerator'>[machine_icon(/obj/machinery/biogenerator)]</span>[RDSCREEN_NOBREAK]"
-		if(D.build_type & LIMBGROWER)
+		if(selected_design.build_type & LIMBGROWER)
 			lathes += "<span data-tooltip='Limbgrower'>[machine_icon(/obj/machinery/limbgrower)]</span>[RDSCREEN_NOBREAK]"
-		if(D.build_type & SMELTER)
+		if(selected_design.build_type & SMELTER)
 			lathes += "<span data-tooltip='Smelter'>[machine_icon(/obj/machinery/mineral/processing_unit)]</span>[RDSCREEN_NOBREAK]"
 		l += "Construction types:"
 		l += lathes
 		l += ""
 	l += "Required materials:"
-	var/all_mats = D.materials + D.reagents_list
+	var/all_mats = selected_design.materials + selected_design.reagents_list
 	for(var/M in all_mats)
 		l += "* [CallMaterialName(M)] x [all_mats[M]]"
 	l += "Unlocked by:"
-	for (var/node in D.unlocked_by)
-		l += ui_techweb_single_node(node)
+	for (var/i in selected_design.unlocked_by)
+		l += ui_techweb_single_node(SSresearch.techweb_node_by_id(i))
 	l += "[RDSCREEN_NOBREAK]</div>"
 	return l
 
@@ -829,8 +846,8 @@ Nothing else in the console has ID requirements.
 	for(var/i in 1 to length(ui))
 		if(!findtextEx(ui[i], RDSCREEN_NOBREAK))
 			ui[i] += "<br>"
-		ui[i] = replacetextEx(ui[i], RDSCREEN_NOBREAK, "")
-	return ui.Join("")
+	. = ui.Join("")
+	return replacetextEx(., RDSCREEN_NOBREAK, "")
 
 /obj/machinery/computer/rdconsole/Topic(raw, ls)
 	if(..())
@@ -907,6 +924,9 @@ Nothing else in the console has ID requirements.
 		screen = RDSCREEN_MENU
 		say("Ejecting Technology Disk")
 	if(ls["deconstruct"])
+		if((last_long_action + 1 SECONDS) > world.time)
+			return
+		last_long_action = world.time
 		if(QDELETED(linked_destroy))
 			say("No Destructive Analyzer Linked!")
 			return
@@ -930,7 +950,8 @@ Nothing else in the console has ID requirements.
 		if(!linked_lathe.materials.mat_container)
 			say("No material storage linked to protolathe!")
 			return
-		linked_lathe.eject_sheets(ls["ejectsheet"], ls["eject_amt"])
+		var/datum/material/M = locate(ls["ejectsheet"]) in linked_lathe.materials.mat_container.materials
+		linked_lathe.eject_sheets(M, ls["eject_amt"])
 	//Circuit Imprinter Materials
 	if(ls["disposeI"])  //Causes the circuit imprinter to dispose of a single reagent (all of it)
 		if(QDELETED(linked_imprinter))
@@ -949,7 +970,8 @@ Nothing else in the console has ID requirements.
 		if(!linked_imprinter.materials.mat_container)
 			say("No material storage linked to circuit imprinter!")
 			return
-		linked_imprinter.eject_sheets(ls["imprinter_ejectsheet"], ls["eject_amt"])
+		var/datum/material/M = locate(ls["imprinter_ejectsheet"]) in linked_imprinter.materials.mat_container.materials
+		linked_imprinter.eject_sheets(M, ls["eject_amt"])
 	if(ls["disk_slot"])
 		disk_slot_selected = text2num(ls["disk_slot"])
 	if(ls["research_node"])
@@ -965,7 +987,7 @@ Nothing else in the console has ID requirements.
 		qdel(t_disk.stored_research)
 		t_disk.stored_research = new
 		say("Wiping technology disk.")
-	if(ls["copy_tech"]) //Copy some technology la from the research holder to the disk.
+	if(ls["copy_tech"]) //Copy some technology from the research holder to the disk.
 		if(QDELETED(t_disk))
 			say("No Technology Disk Inserted!")
 			return
@@ -999,12 +1021,12 @@ Nothing else in the console has ID requirements.
 			return
 		say("Uploading technology disk.")
 		t_disk.stored_research.copy_research_to(stored_research)
-	if(ls["copy_design"]) //Copy design la from the research holder to the design disk.
+	if(ls["copy_design"]) //Copy design from the research holder to the design disk.
 		if(QDELETED(d_disk))
 			say("No Design Disk Inserted!")
 			return
 		var/slot = text2num(ls["copy_design"])
-		var/datum/design/D = stored_research.researched_designs[ls["copy_design_ID"]]
+		var/datum/design/D = SSresearch.techweb_design_by_id(ls["copy_design_ID"])
 		if(D)
 			var/autolathe_friendly = TRUE
 			if(D.reagents_list.len)
@@ -1012,11 +1034,11 @@ Nothing else in the console has ID requirements.
 				D.category -= "Imported"
 			else
 				for(var/x in D.materials)
-					if( !(x in list(MAT_METAL, MAT_GLASS)))
+					if( !(x in list(/datum/material/iron, /datum/material/glass)))
 						autolathe_friendly = FALSE
 						D.category -= "Imported"
 
-			if(D.build_type & (AUTOLATHE|PROTOLATHE|CRAFTLATHE)) // Specifically excludes circuit imprinter and mechfab
+			if(D.build_type & (AUTOLATHE|PROTOLATHE|TOYLATHE)) // Specifically excludes circuit imprinter and mechfab
 				D.build_type = autolathe_friendly ? (D.build_type | AUTOLATHE) : D.build_type
 				D.category |= "Imported"
 			d_disk.blueprints[slot] = D
@@ -1031,12 +1053,12 @@ Nothing else in the console has ID requirements.
 			linked_destroy.unload_item()
 			screen = RDSCREEN_MENU
 	if(ls["view_node"])
-		selected_node = SSresearch.techweb_nodes[ls["view_node"]]
+		selected_node_id = ls["view_node"]
 		screen = RDSCREEN_TECHWEB_NODEVIEW
 	if(ls["view_design"])
-		selected_design = SSresearch.techweb_designs[ls["view_design"]]
+		selected_design_id = ls["view_design"]
 		screen = RDSCREEN_TECHWEB_DESIGNVIEW
-	if(ls["updt_design"]) //Uples the research holder with design la from the design disk.
+	if(ls["updt_design"]) //Uploads a design from disk to the techweb.
 		if(QDELETED(d_disk))
 			say("No design disk found.")
 			return
@@ -1044,15 +1066,18 @@ Nothing else in the console has ID requirements.
 		if(!n)
 			for(var/D in d_disk.blueprints)
 				if(D)
-					stored_research.add_design(D)
+					stored_research.add_design(D, TRUE)
 		else
-			stored_research.add_design(d_disk.blueprints[n])
+			stored_research.add_design(d_disk.blueprints[n], TRUE)
 
 	updateUsrDialog()
 
 /obj/machinery/computer/rdconsole/ui_interact(mob/user)
 	. = ..()
 	var/datum/browser/popup = new(user, "rndconsole", name, 900, 600)
+	var/datum/asset/spritesheet/assets = get_asset_datum(/datum/asset/spritesheet/research_designs)
+
+	popup.add_head_content("<link rel='stylesheet' type='text/css' href='[assets.css_tag()]'>")
 	popup.add_stylesheet("techwebs", 'html/browser/techwebs.css')
 	popup.set_content(generate_ui())
 	popup.open()
@@ -1075,17 +1100,17 @@ Nothing else in the console has ID requirements.
 
 /obj/machinery/computer/rdconsole/proc/rescan_views()
 	var/compare
-	matching_designs.Cut()
+	matching_design_ids.Cut()
 	if(searchtype == "proto")
 		compare = PROTOLATHE
 	else if(searchtype == "imprint")
 		compare = IMPRINTER
 	for(var/v in stored_research.researched_designs)
-		var/datum/design/D = stored_research.researched_designs[v]
+		var/datum/design/D = SSresearch.techweb_design_by_id(v)
 		if(!(D.build_type & compare))
 			continue
 		if(findtext(D.name,searchstring))
-			matching_designs.Add(D)
+			matching_design_ids.Add(D.id)
 
 /obj/machinery/computer/rdconsole/proc/check_canprint(datum/design/D, buildtype)
 	var/amount = 50

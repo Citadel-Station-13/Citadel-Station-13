@@ -14,6 +14,8 @@
 	var/list/modes			// allowed modes
 	var/list/gamemode_cache
 	var/list/votable_modes		// votable modes
+	// var/list/ic_filter_regex
+	var/list/storyteller_cache
 	var/list/mode_names
 	var/list/mode_reports
 	var/list/mode_false_report_weight
@@ -34,9 +36,10 @@
 	if(_directory)
 		directory = _directory
 	if(entries)
-		CRASH("[THIS_PROC_TYPE_WEIRD] called more than once!")
+		CRASH("/datum/controller/configuration/Load() called more than once!")
 	InitEntries()
 	LoadModes()
+	storyteller_cache = typecacheof(/datum/dynamic_storyteller, TRUE)
 	if(fexists("[directory]/config.txt") && LoadEntries("config.txt") <= 1)
 		var/list/legacy_configs = list("game_options.txt", "dbconfig.txt", "comms.txt")
 		for(var/I in legacy_configs)
@@ -101,18 +104,21 @@
 	log_config("Loading config file [filename]...")
 	var/list/lines = world.file2list("[directory]/[filename]")
 	var/list/_entries = entries
+	var/list/postload_required = list()
+	var/linenumber = 0
 	for(var/L in lines)
+		linenumber++
 		L = trim(L)
 		if(!L)
 			continue
 
-		var/firstchar = copytext(L, 1, 2)
+		var/firstchar = L[1]
 		if(firstchar == "#")
 			continue
 
 		var/lockthis = firstchar == "@"
 		if(lockthis)
-			L = copytext(L, 2)
+			L = copytext(L, length(firstchar) + 1)
 
 		var/pos = findtext(L, " ")
 		var/entry = null
@@ -120,7 +126,7 @@
 
 		if(pos)
 			entry = lowertext(copytext(L, 1, pos))
-			value = copytext(L, pos + 1)
+			value = copytext(L, pos + length(L[pos]))
 		else
 			entry = lowertext(L)
 
@@ -129,7 +135,7 @@
 
 		if(entry == "$include")
 			if(!value)
-				log_config("Warning: Invalid $include directive: [value]")
+				log_config("LINE [linenumber]: Invalid $include directive: [value]")
 			else
 				LoadEntries(value, stack)
 				++.
@@ -137,7 +143,7 @@
 
 		var/datum/config_entry/E = _entries[entry]
 		if(!E)
-			log_config("Unknown setting in configuration: '[entry]'")
+			log_config("LINE [linenumber]: Unknown setting: '[entry]'")
 			continue
 
 		if(lockthis)
@@ -147,7 +153,7 @@
 			var/datum/config_entry/new_ver = entries_by_type[E.deprecated_by]
 			var/new_value = E.DeprecationUpdate(value)
 			var/good_update = istext(new_value)
-			log_config("Entry [entry] is deprecated and will be removed soon. Migrate to [new_ver.name]![good_update ? " Suggested new value is: [new_value]" : ""]")
+			log_config("LINE [linenumber]: [entry] is deprecated and will be removed soon. Migrate to [new_ver.name]![good_update ? " Suggested new value is: [new_value]" : ""]")
 			if(!warned_deprecated_configs)
 				addtimer(CALLBACK(GLOBAL_PROC, /proc/message_admins, "This server is using deprecated configuration settings. Please check the logs and update accordingly."), 0)
 				warned_deprecated_configs = TRUE
@@ -157,17 +163,23 @@
 			else
 				warning("[new_ver.type] is deprecated but gave no proper return for DeprecationUpdate()")
 
-		var/validated = E.ValidateAndSet(value)
+		var/validated = E.ValidateAndSet(value, TRUE)
 		if(!validated)
-			log_config("Failed to validate setting \"[value]\" for [entry]")
+			log_config("LINE [linenumber]: Failed to validate setting \"[value]\" for [entry]")
 		else
 			if(E.modified && !E.dupes_allowed)
-				log_config("Duplicate setting for [entry] ([value], [E.resident_file]) detected! Using latest.")
+				log_config("LINE [linenumber]: Duplicate setting for [entry] ([value], [E.resident_file]) detected! Using latest.")
+		if(E.postload_required)
+			postload_required[E] = TRUE
 
 		E.resident_file = filename
 
 		if(validated)
 			E.modified = TRUE
+
+	for(var/i in postload_required)
+		var/datum/config_entry/E = i
+		E.OnPostload()
 
 	++.
 
@@ -184,6 +196,13 @@
 	stat("[name]:", statclick)
 
 /datum/controller/configuration/proc/Get(entry_type)
+	var/datum/config_entry/E = GetEntryDatum(entry_type)
+	if((E.protection & CONFIG_ENTRY_HIDDEN) && IsAdminAdvancedProcCall() && GLOB.LastAdminCalledProc == "Get" && GLOB.LastAdminCalledTargetRef == "[REF(src)]")
+		log_admin_private("Config access of [entry_type] attempted by [key_name(usr)]")
+		return
+	return E.config_entry_value
+
+/datum/controller/configuration/proc/GetEntryDatum(entry_type)
 	var/datum/config_entry/E = entry_type
 	var/entry_is_abstract = initial(E.abstract_type) == entry_type
 	if(entry_is_abstract)
@@ -191,10 +210,7 @@
 	E = entries_by_type[entry_type]
 	if(!E)
 		CRASH("Missing config entry for [entry_type]!")
-	if((E.protection & CONFIG_ENTRY_HIDDEN) && IsAdminAdvancedProcCall() && GLOB.LastAdminCalledProc == "Get" && GLOB.LastAdminCalledTargetRef == "[REF(src)]")
-		log_admin_private("Config access of [entry_type] attempted by [key_name(usr)]")
-		return
-	return E.config_entry_value
+	return E
 
 /datum/controller/configuration/proc/Set(entry_type, new_val)
 	var/datum/config_entry/E = entry_type
@@ -220,13 +236,13 @@
 	for(var/T in gamemode_cache)
 		// I wish I didn't have to instance the game modes in order to look up
 		// their information, but it is the only way (at least that I know of).
+		// for future reference: just use initial() lol
 		var/datum/game_mode/M = new T()
 
 		if(M.config_tag)
 			if(!(M.config_tag in modes))		// ensure each mode is added only once
 				modes += M.config_tag
 				mode_names[M.config_tag] = M.name
-				probabilities[M.config_tag] = M.probability
 				mode_reports[M.config_tag] = M.generate_report()
 				if(probabilities[M.config_tag]>0)
 					mode_false_report_weight[M.config_tag] = M.false_report_weight
@@ -256,7 +272,7 @@
 		t = trim(t)
 		if(length(t) == 0)
 			continue
-		else if(copytext(t, 1, 2) == "#")
+		else if(t[1] == "#")
 			continue
 
 		var/pos = findtext(t, " ")
@@ -265,7 +281,7 @@
 
 		if(pos)
 			command = lowertext(copytext(t, 1, pos))
-			data = copytext(t, pos + 1)
+			data = copytext(t, pos + length(t[pos]))
 		else
 			command = lowertext(t)
 
@@ -310,6 +326,14 @@
 			return new T
 	return new /datum/game_mode/extended()
 
+/datum/controller/configuration/proc/pick_storyteller(storyteller_name)
+	for(var/T in storyteller_cache)
+		var/datum/dynamic_storyteller/S = T
+		var/name = initial(S.name)
+		if(name && name == storyteller_name)
+			return T
+	return /datum/dynamic_storyteller/classic
+
 /datum/controller/configuration/proc/get_runnable_modes()
 	var/list/datum/game_mode/runnable_modes = new
 	var/list/probabilities = Get(/datum/config_entry/keyed_list/probability)
@@ -322,6 +346,9 @@
 			qdel(M)
 			continue
 		if(probabilities[M.config_tag]<=0)
+			qdel(M)
+			continue
+		if(CONFIG_GET(flag/modetier_voting) && !(M.config_tag in SSvote.stored_modetier_results))
 			qdel(M)
 			continue
 		if(min_pop[M.config_tag])
@@ -339,6 +366,32 @@
 				final_weight *= ((100-adjustment)/100)
 			runnable_modes[M] = final_weight
 	return runnable_modes
+
+/datum/controller/configuration/proc/get_runnable_storytellers()
+	var/list/datum/dynamic_storyteller/runnable_storytellers = new
+	var/list/probabilities = Get(/datum/config_entry/keyed_list/storyteller_weight)
+	var/list/repeated_mode_adjust = Get(/datum/config_entry/number_list/repeated_mode_adjust)
+	var/list/min_player_counts = Get(/datum/config_entry/keyed_list/storyteller_min_players)
+	for(var/T in storyteller_cache)
+		var/datum/dynamic_storyteller/S = T
+		var/config_tag = initial(S.config_tag)
+		var/probability = (config_tag in probabilities) ? probabilities[config_tag] : initial(S.weight)
+		var/min_players = (config_tag in min_player_counts) ? min_player_counts[config_tag] : initial(S.min_players)
+		if(probability <= 0)
+			continue
+		if(length(GLOB.player_list) < min_players)
+			continue
+		if(SSpersistence.saved_storytellers.len == repeated_mode_adjust.len)
+			var/name = initial(S.name)
+			var/recent_round = min(SSpersistence.saved_storytellers.Find(name),3)
+			var/adjustment = 0
+			while(recent_round)
+				adjustment += repeated_mode_adjust[recent_round]
+				recent_round = SSpersistence.saved_modes.Find(name,recent_round+1,0)
+			probability *= ((100-adjustment)/100)
+		runnable_storytellers[S] = probability
+	return runnable_storytellers
+
 
 /datum/controller/configuration/proc/get_runnable_midround_modes(crew)
 	var/list/datum/game_mode/runnable_modes = new
@@ -362,3 +415,21 @@
 				continue
 			runnable_modes[M] = probabilities[M.config_tag]
 	return runnable_modes
+/*
+/datum/controller/configuration/proc/LoadChatFilter()
+	var/list/in_character_filter = list()
+
+	if(!fexists("[directory]/in_character_filter.txt"))
+		return
+	log_config("Loading config file in_character_filter.txt...")
+	for(var/line in world.file2list("[directory]/in_character_filter.txt"))
+		if(!line)
+			continue
+		if(findtextEx(line,"#",1,2))
+			continue
+		in_character_filter += REGEX_QUOTE(line)
+
+	ic_filter_regex = in_character_filter.len ? regex("\\b([jointext(in_character_filter, "|")])\\b", "i") : null
+
+	syncChatRegexes()
+*/

@@ -16,8 +16,9 @@
 	end_duration = 300
 	end_overlay = "light_ash"
 
-	area_type = /area/lavaland/surface/outdoors
-	target_trait = ZTRAIT_MINING
+	area_type = /area
+	protect_indoors = TRUE
+	target_trait = ZTRAIT_ASHSTORM
 
 	immunity_type = "ash"
 
@@ -80,7 +81,7 @@
 			return TRUE
 		if(ishuman(L)) //Are you immune?
 			var/mob/living/carbon/human/H = L
-			var/thermal_protection = H.get_thermal_protection()
+			var/thermal_protection = H.easy_thermal_protection()
 			if(thermal_protection >= FIRE_IMMUNITY_MAX_TEMP_PROTECT)
 				return TRUE
 		if(isliving(L))// if we're a non immune mob inside an immune mob we have to reconsider if that mob is immune to protect ourselves
@@ -94,7 +95,7 @@
 	if(is_ash_immune(L))
 		return
 	if(is_species(L, /datum/species/lizard/ashwalker))
-		if(L.getStaminaLoss() <= STAMINA_SOFTCRIT)
+		if(!IS_STAMCRIT(L))
 			L.adjustStaminaLossBuffered(4)
 		return
 	L.adjustFireLoss(4)

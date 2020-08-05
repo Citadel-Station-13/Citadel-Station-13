@@ -2,18 +2,19 @@
 	name = "Vampire"
 	id = "vampire"
 	default_color = "FFFFFF"
-	species_traits = list(EYECOLOR,HAIR,FACEHAIR,LIPS,DRINKSBLOOD)
+	species_traits = list(EYECOLOR,HAIR,FACEHAIR,LIPS,DRINKSBLOOD,HAS_FLESH,HAS_BONE)
 	inherent_traits = list(TRAIT_NOHUNGER,TRAIT_NOBREATH)
-	inherent_biotypes = list(MOB_UNDEAD, MOB_HUMANOID)
-	default_features = list("mcolor" = "FFF", "tail_human" = "None", "ears" = "None", "wings" = "None")
+	inherent_biotypes = MOB_UNDEAD|MOB_HUMANOID
+	mutant_bodyparts = list("mcolor" = "FFFFFF", "tail_human" = "None", "ears" = "None", "deco_wings" = "None")
 	exotic_bloodtype = "U"
-	use_skintones = TRUE
+	use_skintones = USE_SKINTONES_GRAYSCALE_CUSTOM
 	mutant_heart = /obj/item/organ/heart/vampire
 	mutanttongue = /obj/item/organ/tongue/vampire
 	blacklisted = TRUE
 	limbs_id = "human"
 	skinned_type = /obj/item/stack/sheet/animalhide/human
 	var/info_text = "You are a <span class='danger'>Vampire</span>. You will slowly but constantly lose blood if outside of a coffin. If inside a coffin, you will slowly heal. You may gain more blood by grabbing a live victim and using your drain ability."
+	species_type = "undead"
 
 /datum/species/vampire/check_roundstart_eligible()
 	if(SSevents.holidays && SSevents.holidays[HALLOWEEN])
@@ -23,7 +24,8 @@
 /datum/species/vampire/on_species_gain(mob/living/carbon/human/C, datum/species/old_species)
 	. = ..()
 	to_chat(C, "[info_text]")
-	C.skin_tone = "albino"
+	if(!C.dna.skin_tone_override)
+		C.skin_tone = "albino"
 	C.update_body(0)
 	var/obj/effect/proc_holder/spell/targeted/shapeshift/bat/B = new
 	C.AddSpell(B)
@@ -45,14 +47,14 @@
 		C.adjustOxyLoss(-4)
 		C.adjustCloneLoss(-4)
 		return
-	C.blood_volume -= 0.75
-	if(C.blood_volume <= BLOOD_VOLUME_SURVIVE)
+	C.blood_volume -= 0.75 //Will take roughly 19.5 minutes to die from standard blood volume, roughly 83 minutes to die from max blood volume.
+	if(C.blood_volume <= (BLOOD_VOLUME_SURVIVE*C.blood_ratio))
 		to_chat(C, "<span class='danger'>You ran out of blood!</span>")
 		C.dust()
 	var/area/A = get_area(C)
 	if(istype(A, /area/chapel))
 		to_chat(C, "<span class='danger'>You don't belong here!</span>")
-		C.adjustFireLoss(20)
+		C.adjustFireLoss(5)
 		C.adjust_fire_stacks(6)
 		C.IgniteMob()
 
@@ -81,6 +83,9 @@
 			if(H.blood_volume >= BLOOD_VOLUME_MAXIMUM)
 				to_chat(H, "<span class='notice'>You're already full!</span>")
 				return
+			//This checks whether or not they are wearing a garlic clove on their neck
+			if(!blood_sucking_checks(victim, TRUE, FALSE))
+				return
 			if(victim.stat == DEAD)
 				to_chat(H, "<span class='notice'>You need a living victim!</span>")
 				return
@@ -88,9 +93,12 @@
 				to_chat(H, "<span class='notice'>[victim] doesn't have blood!</span>")
 				return
 			V.drain_cooldown = world.time + 30
-			if(victim.anti_magic_check(FALSE, TRUE))
+			if(victim.anti_magic_check(FALSE, TRUE, FALSE, 0))
 				to_chat(victim, "<span class='warning'>[H] tries to bite you, but stops before touching you!</span>")
 				to_chat(H, "<span class='warning'>[victim] is blessed! You stop just in time to avoid catching fire.</span>")
+				return
+			//Here we check now for both the garlic cloves on the neck and for blood in the victims bloodstream.
+			if(!blood_sucking_checks(victim, TRUE, TRUE))
 				return
 			if(!do_after(H, 30, target = victim))
 				return
@@ -99,8 +107,8 @@
 			to_chat(victim, "<span class='danger'>[H] is draining your blood!</span>")
 			to_chat(H, "<span class='notice'>You drain some blood!</span>")
 			playsound(H, 'sound/items/drink.ogg', 30, 1, -2)
-			victim.blood_volume = CLAMP(victim.blood_volume - drained_blood, 0, BLOOD_VOLUME_MAXIMUM)
-			H.blood_volume = CLAMP(H.blood_volume + drained_blood, 0, BLOOD_VOLUME_MAXIMUM)
+			victim.blood_volume = clamp(victim.blood_volume - drained_blood, 0, BLOOD_VOLUME_MAXIMUM)
+			H.blood_volume = clamp(H.blood_volume + drained_blood, 0, BLOOD_VOLUME_MAXIMUM)
 			if(!victim.blood_volume)
 				to_chat(H, "<span class='warning'>You finish off [victim]'s blood supply!</span>")
 
@@ -141,10 +149,12 @@
 	H = new(shape,src,caster)
 	if(istype(H, /mob/living/simple_animal))
 		var/mob/living/simple_animal/SA = H
-		if(ventcrawl_nude_only && length(caster.get_equipped_items(include_pockets = TRUE)))
+		if((caster.blood_volume >= (BLOOD_VOLUME_BAD*caster.blood_ratio)) || (ventcrawl_nude_only && length(caster.get_equipped_items(include_pockets = TRUE))))
 			SA.ventcrawler = FALSE
 	if(transfer_name)
 		H.name = caster.name
 
-	clothes_req = 0
-	human_req = 0
+
+	clothes_req = NONE
+	mobs_whitelist = null
+	mobs_blacklist = null

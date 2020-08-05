@@ -2,8 +2,9 @@
 	name = "Blob"
 	roundend_category = "blobs"
 	antagpanel_category = "Blob"
+	show_to_ghosts = TRUE
 	job_rank = ROLE_BLOB
-
+	threat = 20
 	var/datum/action/innate/blobpop/pop_action
 	var/starting_points_human_blob = 60
 	var/point_rate_human_blob = 2
@@ -30,7 +31,6 @@
 	var/datum/objective/blob_takeover/main = new
 	main.owner = owner
 	objectives += main
-	owner.objectives |= objectives
 
 /datum/antagonist/blob/apply_innate_effects(mob/living/mob_override)
 	if(!isovermind(owner.current))

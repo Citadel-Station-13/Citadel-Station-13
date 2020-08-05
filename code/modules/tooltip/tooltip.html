@@ -122,8 +122,8 @@
 				//Get the real icon size according to the client view
 				var mapWidth 		= map['view-size'].x,
 					mapHeight 		= map['view-size'].y,
-					tilesShown 		= tooltip.client_view_w
-					realIconSize 	= mapWidth / tilesShown,
+					tilesShown 		= tooltip.client_view_h
+					realIconSize 	= mapHeight / tilesShown,
 					resizeRatio		= realIconSize / tooltip.tileSize,
 					//Calculate letterboxing offsets	
 					leftOffset 		= (map.size.x - mapWidth) / 2,

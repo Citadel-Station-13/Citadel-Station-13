@@ -59,3 +59,20 @@
 		S.forceMove(D)
 		D.injector = S
 	..()
+
+/obj/item/ammo_casing/syringegun/dart
+	name = "used air canister"
+	desc = "A small canister of compressed gas."
+	projectile_type = /obj/item/projectile/bullet/dart/syringe/dart
+	firing_effect_type = null
+	harmful = FALSE
+
+/obj/item/ammo_casing/syringegun/dart/ready_proj(atom/target, mob/living/user, quiet, zone_override = "")
+	..()
+	var/obj/item/gun/syringe/SG = loc
+	if(!SG.syringes.len)
+		return
+	var/obj/item/reagent_containers/syringe/dart/S = SG.syringes[1]
+	if(S.emptrig == TRUE)
+		var/obj/item/projectile/bullet/dart/syringe/dart/D = BB
+		D.emptrig = TRUE

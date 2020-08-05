@@ -1,12 +1,10 @@
 //Healer
 /mob/living/simple_animal/hostile/guardian/healer
 	a_intent = INTENT_HARM
-	friendly = "heals"
-	speed = 0
+	friendly_verb_continuous = "heals"
+	friendly_verb_simple = "heal"
 	damage_coeff = list(BRUTE = 0.7, BURN = 0.7, TOX = 0.7, CLONE = 0.7, STAMINA = 0, OXY = 0.7)
-	melee_damage_lower = 15
-	melee_damage_upper = 15
-	playstyle_string = "<span class='holoparasite'>As a <b>support</b> type, you may toggle your basic attacks to a healing mode. In addition, Alt-Clicking on an adjacent object or mob will warp them to your bluespace beacon after a short delay.</span>"
+	playstyle_string = "<span class='holoparasite'>As a <b>support</b> type, you have 30% damage reduction and may toggle your basic attacks to a healing mode. In addition, Alt-Clicking on an adjacent object or mob will warp them to your bluespace beacon after a short delay.</span>"
 	magic_fluff_string = "<span class='holoparasite'>..And draw the CMO, a potent force of life... and death.</span>"
 	carp_fluff_string = "<span class='holoparasite'>CARP CARP CARP! You caught a support carp. It's a kleptocarp!</span>"
 	tech_fluff_string = "<span class='holoparasite'>Boot sequence complete. Support modules active. Holoparasite swarm online.</span>"
@@ -33,10 +31,10 @@
 		C.adjustBruteLoss(-5)
 		C.adjustFireLoss(-5)
 		C.adjustOxyLoss(-5)
-		C.adjustToxLoss(-5)
+		C.adjustToxLoss(-5, forced = TRUE)
 		var/obj/effect/temp_visual/heal/H = new /obj/effect/temp_visual/heal(get_turf(C))
-		if(namedatum)
-			H.color = namedatum.colour
+		if(guardiancolor)
+			H.color = guardiancolor
 		if(C == summoner)
 			update_health_hud()
 			med_hud_set_health()
@@ -99,8 +97,8 @@
 
 /obj/structure/receiving_pad/New(loc, mob/living/simple_animal/hostile/guardian/healer/G)
 	. = ..()
-	if(G.namedatum)
-		add_atom_colour(G.namedatum.colour, FIXED_COLOUR_PRIORITY)
+	if(G.guardiancolor)
+		add_atom_colour(G.guardiancolor, FIXED_COLOUR_PRIORITY)
 
 /obj/structure/receiving_pad/proc/disappear()
 	visible_message("[src] vanishes!")
@@ -108,8 +106,9 @@
 
 /mob/living/simple_animal/hostile/guardian/healer/AltClickOn(atom/movable/A)
 	if(!istype(A))
+		altclick_listed_turf(A)
 		return
-	if(src.loc == summoner)
+	if(loc == summoner)
 		to_chat(src, "<span class='danger'><B>You must be manifested to warp a target!</span></B>")
 		return
 	if(!beacon)
@@ -142,5 +141,5 @@
 		L.flash_act()
 	A.visible_message("<span class='danger'>[A] disappears in a flash of light!</span>", \
 	"<span class='userdanger'>Your vision is obscured by a flash of light!</span>")
-	do_teleport(A, beacon, 0)
+	do_teleport(A, beacon, 0, channel = TELEPORT_CHANNEL_BLUESPACE)
 	new /obj/effect/temp_visual/guardian/phase(get_turf(A))

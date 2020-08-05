@@ -12,6 +12,7 @@
 	body_parts_covered = CHEST|GROIN
 	allowed = list(/obj/item/reagent_containers/spray/plantbgone, /obj/item/plant_analyzer, /obj/item/seeds, /obj/item/reagent_containers/glass/bottle, /obj/item/reagent_containers/glass/beaker, /obj/item/cultivator, /obj/item/reagent_containers/spray/pestspray, /obj/item/hatchet, /obj/item/storage/bag/plants)
 
+
 //Captain
 /obj/item/clothing/suit/captunic
 	name = "captain's parade tunic"
@@ -23,30 +24,52 @@
 	allowed = list(/obj/item/disk, /obj/item/stamp, /obj/item/reagent_containers/food/drinks/flask, /obj/item/melee, /obj/item/storage/lockbox/medal, /obj/item/assembly/flash/handheld, /obj/item/storage/box/matches, /obj/item/lighter, /obj/item/clothing/mask/cigarette, /obj/item/storage/fancy/cigarettes, /obj/item/tank/internals/emergency_oxygen, /obj/item/tank/internals/plasmaman)
 
 //Chaplain
-/obj/item/clothing/suit/nun
+/obj/item/clothing/suit/chaplain
+	name = "chaplain suit"
+	desc = "A piece of clothing adorned by the gods of Coding. Should never exist in this mortal realm."
+	allowed = list(/obj/item/storage/book/bible, HOLY_WEAPONS, /obj/item/reagent_containers/food/drinks/bottle/holywater, /obj/item/storage/fancy/candle_box, /obj/item/candle, /obj/item/tank/internals/emergency_oxygen, /obj/item/tank/internals/plasmaman)
+
+/obj/item/clothing/suit/chaplain/nun
 	name = "nun robe"
 	desc = "Maximum piety in this star system."
 	icon_state = "nun"
 	item_state = "nun"
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS|HANDS
 	flags_inv = HIDESHOES|HIDEJUMPSUIT
-	allowed = list(/obj/item/storage/book/bible, /obj/item/nullrod, /obj/item/reagent_containers/food/drinks/bottle/holywater, /obj/item/storage/fancy/candle_box, /obj/item/candle, /obj/item/tank/internals/emergency_oxygen, /obj/item/tank/internals/plasmaman)
+	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
 
-/obj/item/clothing/suit/studentuni
+/obj/item/clothing/suit/chaplain/studentuni
 	name = "student robe"
 	desc = "The uniform of a bygone institute of learning."
 	icon_state = "studentuni"
 	item_state = "studentuni"
 	body_parts_covered = ARMS|CHEST
-	allowed = list(/obj/item/storage/book/bible, /obj/item/nullrod, /obj/item/reagent_containers/food/drinks/bottle/holywater, /obj/item/storage/fancy/candle_box, /obj/item/candle, /obj/item/tank/internals/emergency_oxygen, /obj/item/tank/internals/plasmaman)
 
-/obj/item/clothing/suit/witchhunter
+/obj/item/clothing/suit/chaplain/witchhunter
 	name = "witchunter garb"
 	desc = "This worn outfit saw much use back in the day."
 	icon_state = "witchhunter"
 	item_state = "witchhunter"
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
-	allowed = list(/obj/item/storage/book/bible, /obj/item/nullrod, /obj/item/reagent_containers/food/drinks/bottle/holywater, /obj/item/storage/fancy/candle_box, /obj/item/candle, /obj/item/tank/internals/emergency_oxygen, /obj/item/tank/internals/plasmaman)
+	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
+
+/obj/item/clothing/suit/chaplain/pharaoh
+	name = "pharaoh tunic"
+	desc = "Lavish space tomb not included."
+	icon_state = "pharaoh"
+	icon_state = "pharaoh"
+	body_parts_covered = CHEST|GROIN
+	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
+
+/obj/item/clothing/suit/chaplain/holidaypriest
+	name = "holiday priest"
+	desc = "This is a nice holiday, my son."
+	icon_state = "holidaypriest"
+	item_state = "w_suit"
+	body_parts_covered = CHEST|GROIN|LEGS|ARMS
+	flags_inv = HIDEJUMPSUIT
+	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
+
 
 //Chef
 /obj/item/clothing/suit/toggle/chef
@@ -59,6 +82,7 @@
 	body_parts_covered = CHEST|GROIN|ARMS
 	allowed = list(/obj/item/kitchen)
 	togglename = "sleeves"
+	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
 
 //Cook
 /obj/item/clothing/suit/apron/chef
@@ -81,6 +105,7 @@
 	armor = list("melee" = 25, "bullet" = 10, "laser" = 25, "energy" = 10, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 45)
 	cold_protection = CHEST|GROIN|LEGS|ARMS
 	heat_protection = CHEST|GROIN|LEGS|ARMS
+	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
 
 /obj/item/clothing/suit/det_suit/Initialize()
 	. = ..()
@@ -101,6 +126,7 @@
 	blood_overlay_type = "armor"
 	allowed = list(/obj/item/flashlight, /obj/item/tank/internals/emergency_oxygen, /obj/item/tank/internals/plasmaman, /obj/item/t_scanner, /obj/item/radio)
 	resistance_flags = NONE
+	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
 
 //Lawyer
 /obj/item/clothing/suit/toggle/lawyer
@@ -111,6 +137,7 @@
 	blood_overlay_type = "coat"
 	body_parts_covered = CHEST|ARMS
 	togglename = "buttons"
+	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
 
 /obj/item/clothing/suit/toggle/lawyer/purple
 	name = "purple suit jacket"
@@ -124,6 +151,9 @@
 	icon_state = "suitjacket_black"
 	item_state = "ro_suit"
 
+/obj/item/clothing/suit/toggle/lawyer/black/syndie
+	desc = "A snappy dress jacket. Suspiciously has no tags or branding."
+	armor = list("melee" = 10, "bullet" = 10, "laser" = 10, "energy" = 10, "bomb" = 10, "bio" = 10, "rad" = 10, "fire" = 40, "acid" = 40)
 
 //Mime
 /obj/item/clothing/suit/suspenders
@@ -132,28 +162,8 @@
 	icon = 'icons/obj/clothing/belts.dmi'
 	icon_state = "suspenders"
 	blood_overlay_type = "armor" //it's the less thing that I can put here
-
-//Security
-/obj/item/clothing/suit/security/officer
-	name = "security officer's jacket"
-	desc = "This jacket is for those special occasions when a security officer isn't required to wear their armor."
-	icon_state = "officerbluejacket"
-	item_state = "officerbluejacket"
-	body_parts_covered = CHEST|ARMS
-
-/obj/item/clothing/suit/security/warden
-	name = "warden's jacket"
-	desc = "Perfectly suited for the warden that wants to leave an impression of style on those who visit the brig."
-	icon_state = "wardenbluejacket"
-	item_state = "wardenbluejacket"
-	body_parts_covered = CHEST|ARMS
-
-/obj/item/clothing/suit/security/hos
-	name = "head of security's jacket"
-	desc = "This piece of clothing was specifically designed for asserting superior authority."
-	icon_state = "hosbluejacket"
-	item_state = "hosbluejacket"
-	body_parts_covered = CHEST|ARMS
+	body_parts_covered = NONE
+	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
 
 //Surgeon
 /obj/item/clothing/suit/apron/surgical
@@ -174,3 +184,42 @@
 	armor = list("melee" = 25, "bullet" = 10, "laser" = 25, "energy" = 10, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 45)
 	cold_protection = CHEST|ARMS
 	heat_protection = CHEST|ARMS
+	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
+
+
+//Robotocist
+
+/obj/item/clothing/suit/hooded/techpriest
+	name = "techpriest robes"
+	desc = "For those who REALLY love their toasters."
+	icon_state = "techpriest"
+	item_state = "techpriest"
+	body_parts_covered = CHEST|GROIN|LEGS|ARMS
+	hoodtype = /obj/item/clothing/head/hooded/techpriest
+	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
+
+/obj/item/clothing/head/hooded/techpriest
+	name = "techpriest's hood"
+	desc = "A hood for those who REALLY love their toasters."
+	icon_state = "techpriesthood"
+	item_state = "techpriesthood"
+	body_parts_covered = HEAD
+	flags_inv = HIDEHAIR|HIDEEARS
+	mutantrace_variation = STYLE_MUZZLE
+
+
+//Paramedic
+
+/obj/item/clothing/suit/toggle/labcoat/paramedic
+	name = "paramedic vest"
+	desc = "A dark blue vest with reflective strips for emergency medical technicians."
+	icon_state = "paramedic-vest"
+	item_state = "paramedic-vest"
+	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
+
+/obj/item/clothing/suit/toggle/labcoat/emt
+	name = "emt vest"
+	desc = "A dark blue vest with reflective strips for emergency medical technicians."
+	icon_state = "labcoat_emt"
+	item_state = "labcoat_emt"
+	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON

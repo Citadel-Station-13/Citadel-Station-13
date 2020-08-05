@@ -45,7 +45,7 @@
 /obj/machinery/computer/sat_control/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
-		ui = new(user, src, ui_key, "sat_control", name, 400, 305, master_ui, state)
+		ui = new(user, src, ui_key, "SatelliteControl", name, ui_x, ui_y, master_ui, state)
 		ui.open()
 
 /obj/machinery/computer/sat_control/ui_act(action, params)
@@ -118,7 +118,7 @@
 		anchored = FALSE
 	update_icon()
 
-/obj/machinery/satellite/update_icon()
+/obj/machinery/satellite/update_icon_state()
 	icon_state = active ? "sat_active" : "sat_inactive"
 
 /obj/machinery/satellite/attackby(obj/item/I, mob/user, params)
@@ -133,6 +133,32 @@
 	mode = "M-SHIELD"
 	speed_process = TRUE
 	var/kill_range = 14
+	density = 0
+
+/obj/machinery/satellite/meteor_shield/sci
+	name = "\improper Meteor Shield Satellite"
+	desc = "A station made meteor point-defense satellite."
+	mode = "M-SHIELD"
+
+/obj/item/disk/meteor
+	name = "Meteor Shield Upgrade Disk"
+	desc = "A floppy disk that allows meteor shields to fire at longer ranges and lowers meteor drawing from gravitational fields.."
+
+/obj/machinery/satellite/meteor_shield/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/disk/meteor))
+		to_chat(user, "<span class='notice'>The disk uploads better tracking and rang modification software.</span>")
+		kill_range = 17
+	else
+		return ..()
+
+/obj/machinery/satellite/meteor_shield/sci/toggle(user)
+	if(!..(user))
+		return FALSE
+	if(obj_flags & EMAGGED)
+		if(active)
+			change_meteor_chance(8)
+		else
+			change_meteor_chance(0.125)
 
 /obj/machinery/satellite/meteor_shield/proc/space_los(meteor)
 	for(var/turf/T in getline(src,meteor))
@@ -172,9 +198,11 @@
 		change_meteor_chance(0.5)
 
 /obj/machinery/satellite/meteor_shield/emag_act(mob/user)
+	. = ..()
 	if(obj_flags & EMAGGED)
 		return
 	obj_flags |= EMAGGED
 	to_chat(user, "<span class='notice'>You access the satellite's debug mode, increasing the chance of meteor strikes.</span>")
 	if(active)
-		change_meteor_chance(2)
+		change_meteor_chance(4)
+	return TRUE

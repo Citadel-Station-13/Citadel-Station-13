@@ -9,15 +9,11 @@
 	var/list/colorlist = list()
 
 
-/obj/machinery/pdapainter/update_icon()
-	cut_overlays()
+/obj/machinery/pdapainter/update_icon_state()
 
 	if(stat & BROKEN)
 		icon_state = "[initial(icon_state)]-broken"
 		return
-
-	if(storedpda)
-		add_overlay("[initial(icon_state)]-closed")
 
 	if(powered())
 		icon_state = initial(icon_state)
@@ -25,6 +21,15 @@
 		icon_state = "[initial(icon_state)]-off"
 
 	return
+
+/obj/machinery/pdapainter/update_overlays()
+	. = ..()
+
+	if(stat & BROKEN)
+		return
+
+	if(storedpda)
+		. += "[initial(icon_state)]-closed"
 
 /obj/machinery/pdapainter/Initialize()
 	. = ..()
@@ -35,15 +40,14 @@
 		/obj/item/pda/clear,
 		/obj/item/pda/syndicate,
 		/obj/item/pda/chameleon,
-		/obj/item/pda/chameleon/broken)
+		/obj/item/pda/chameleon/broken,
+		/obj/item/pda/lieutenant)
 
-	for(var/P in typesof(/obj/item/pda) - blocked)
-		var/obj/item/pda/D = new P
-
-		//D.name = "PDA Style [colorlist.len+1]" //Gotta set the name, otherwise it all comes up as "PDA"
-		D.name = D.icon_state //PDAs don't have unique names, but using the sprite names works.
-
-		src.colorlist += D
+	for(var/A in typesof(/obj/item/pda) - blocked)
+		var/obj/item/pda/P = A
+		var/PDA_name = initial(P.name)
+		colorlist += PDA_name
+		colorlist[PDA_name] = list(initial(P.icon_state), initial(P.desc), initial(P.overlays_offsets), initial(P.overlays_icons))
 
 /obj/machinery/pdapainter/Destroy()
 	QDEL_NULL(storedpda)
@@ -103,27 +107,22 @@
 			stat |= BROKEN
 			update_icon()
 
-/obj/machinery/pdapainter/attack_hand(mob/user)
-	. = ..()
-	if(.)
-		return
+/obj/machinery/pdapainter/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 
-	if(storedpda)
-		var/obj/item/pda/P
-		P = input(user, "Select your color!", "PDA Painting") as null|anything in colorlist
-		if(!P)
-			return
-		if(!in_range(src, user))
-			return
-		if(!storedpda)//is the pda still there?
-			return
-		storedpda.icon_state = P.icon_state
-		storedpda.desc = P.desc
-		ejectpda()
-
-	else
+	if(!storedpda)
 		to_chat(user, "<span class='notice'>[src] is empty.</span>")
-
+		return
+	var/choice = input(user, "Select the new skin!", "PDA Painting") as null|anything in colorlist
+	if(!choice || !storedpda || !in_range(src, user))
+		return
+	var/list/P = colorlist[choice]
+	storedpda.icon_state = P[1]
+	storedpda.desc = P[2]
+	storedpda.overlays_offsets = P[3]
+	storedpda.overlays_icons = P[4]
+	storedpda.set_new_overlays()
+	storedpda.update_icon()
+	ejectpda()
 
 /obj/machinery/pdapainter/verb/ejectpda()
 	set name = "Eject PDA"

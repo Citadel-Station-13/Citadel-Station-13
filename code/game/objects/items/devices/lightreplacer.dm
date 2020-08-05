@@ -73,8 +73,8 @@
 	..()
 
 /obj/item/lightreplacer/examine(mob/user)
-	..()
-	to_chat(user, status_string())
+	. = ..()
+	. += status_string()
 
 /obj/item/lightreplacer/attackby(obj/item/W, mob/user, params)
 
@@ -149,14 +149,16 @@
 		to_chat(user, "<span class='notice'>You fill \the [src] with lights from \the [S]. " + status_string() + "</span>")
 
 /obj/item/lightreplacer/emag_act()
+	. = ..()
 	if(obj_flags & EMAGGED)
 		return
 	Emag()
+	return TRUE
 
 /obj/item/lightreplacer/attack_self(mob/user)
 	to_chat(user, status_string())
 
-/obj/item/lightreplacer/update_icon()
+/obj/item/lightreplacer/update_icon_state()
 	icon_state = "lightreplacer[(obj_flags & EMAGGED ? 1 : 0)]"
 
 /obj/item/lightreplacer/proc/status_string()
@@ -169,7 +171,7 @@
 
 // Negative numbers will subtract
 /obj/item/lightreplacer/proc/AddUses(amount = 1)
-	uses = CLAMP(uses + amount, 0, max_uses)
+	uses = clamp(uses + amount, 0, max_uses)
 
 /obj/item/lightreplacer/proc/AddShards(amount = 1, user)
 	bulb_shards += amount

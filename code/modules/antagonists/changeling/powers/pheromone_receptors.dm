@@ -10,6 +10,9 @@
 	chemical_cost = 0 //Reduces regain rate while active.
 	dna_cost = 2
 	var/receptors_active = FALSE
+	action_icon = 'icons/mob/actions/actions_changeling.dmi'
+	action_icon_state = "ling_pheromone"
+	action_background_icon_state = "bg_ling"
 
 /obj/effect/proc_holder/changeling/pheromone_receptors/sting_action(mob/living/carbon/user)
 	var/datum/antagonist/changeling/changeling = user.mind.has_antag_datum(/datum/antagonist/changeling)

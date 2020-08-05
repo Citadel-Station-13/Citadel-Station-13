@@ -2,6 +2,13 @@
 "aa" = (
 /turf/template_noop,
 /area/template_noop)
+"ab" = (
+/obj/machinery/door/airlock/titanium{
+	name = "Emergency Shuttle Airlock"
+	},
+/obj/structure/fans/tiny,
+/turf/open/floor/plating,
+/area/shuttle/escape)
 "ac" = (
 /obj/structure/sign/warning/radiation,
 /turf/closed/wall/mineral/titanium,
@@ -12,6 +19,16 @@
 /area/shuttle/escape)
 "ae" = (
 /turf/closed/wall/mineral/titanium,
+/area/shuttle/escape)
+"af" = (
+/obj/machinery/door/airlock/titanium{
+	name = "Emergency Shuttle Airlock"
+	},
+/obj/docking_port/mobile/emergency{
+	name = "Hyperfractal Gigashuttle"
+	},
+/obj/structure/fans/tiny,
+/turf/open/floor/plating,
 /area/shuttle/escape)
 "ag" = (
 /obj/structure/closet/radiation{
@@ -32,6 +49,14 @@
 	dir = 1
 	},
 /turf/open/floor/mineral/titanium/yellow,
+/area/shuttle/escape)
+"ak" = (
+/obj/machinery/door/airlock/external{
+	name = "Emergency Launch Catwalk";
+	req_access_txt = "10;13"
+	},
+/obj/structure/fans/tiny,
+/turf/open/floor/plating,
 /area/shuttle/escape)
 "al" = (
 /obj/machinery/shower{
@@ -101,12 +126,6 @@
 "ax" = (
 /turf/closed/wall/mineral/titanium/interior,
 /area/shuttle/escape)
-"aA" = (
-/obj/machinery/door/airlock/titanium{
-	name = "Emergency Shuttle Airlock"
-	},
-/turf/open/floor/plating,
-/area/shuttle/escape)
 "aB" = (
 /obj/machinery/power/supermatter_crystal/shard/hugbox/fakecrystal,
 /turf/open/floor/plating,
@@ -125,25 +144,9 @@
 /obj/structure/reagent_dispensers/fueltank,
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/escape)
-"aF" = (
-/obj/machinery/door/airlock/titanium{
-	name = "Emergency Shuttle Airlock"
-	},
-/obj/docking_port/mobile/emergency{
-	name = "Hyperfractal Gigashuttle"
-	},
-/turf/open/floor/plating,
-/area/shuttle/escape)
 "aI" = (
 /obj/structure/sign/warning/radiation,
 /turf/closed/wall/mineral/titanium/nodiagonal,
-/area/shuttle/escape)
-"aL" = (
-/obj/machinery/door/airlock/external{
-	name = "Emergency Launch Catwalk";
-	req_access_txt = "10;13"
-	},
-/turf/open/floor/plating,
 /area/shuttle/escape)
 "aM" = (
 /turf/open/floor/plating/airless,
@@ -348,9 +351,9 @@ aa
 aa
 aa
 aw
-aA
+ab
 ac
-aF
+af
 aw
 aa
 aa
@@ -472,7 +475,7 @@ aB
 bf
 at
 at
-aL
+ak
 aM
 aM
 hD
@@ -588,9 +591,9 @@ aa
 aa
 aa
 aw
-aA
+ab
 ac
-aA
+ab
 aw
 aa
 aa

@@ -6,7 +6,7 @@
 #define PIZZA_DELIVERY 6
 #define ITS_HIP_TO 7
 #define MY_GOD_JC 8
-
+#define DELTA_CRATES 9
 
 /datum/round_event_control/shuttle_loan
 	name = "Shuttle Loan"
@@ -27,103 +27,51 @@
 
 /datum/round_event/shuttle_loan/announce(fake)
 	SSshuttle.shuttle_loan = src
+	var/message = "Cargo: I just wanna tell you techs good luck, we are all counting on you."
+	var/title = "CentCom Free Real Estate"
 	switch(dispatch_type)
 		if(HIJACK_SYNDIE)
-			if(prob(50))
-				priority_announce("Cargo: The syndicate are trying to infiltrate your station. If you let them hijack your cargo shuttle, you'll save us a headache.","CentCom Counter Intelligence")
-			else
-				priority_announce("A report has been downloaded and printed out at all communications consoles.", "Incoming Classified Message", 'sound/ai/commandreport.ogg') // CITADEL EDIT metabreak
-				for(var/obj/machinery/computer/communications/C in GLOB.machines)
-					if(!(C.stat & (BROKEN|NOPOWER)) && is_station_level(C.z))
-						var/obj/item/paper/P = new(C.loc)
-						P.name = "Cargo Report"
-						P.info = "Cargo: The syndicate are trying to infiltrate your station. If you let them hijack your cargo shuttle, you'll save us a headache."
-						P.update_icon()
+			message = "Cargo: The syndicate are trying to infiltrate your station. If you let them hijack your cargo shuttle, you'll save us a headache."
+			title = "CentCom Counter Intelligence"
 		if(RUSKY_PARTY)
-			if(prob(50))
-				priority_announce("Cargo: A group of angry Russians want to have a party. Can you send them your cargo shuttle then make them disappear?","CentCom Russian Outreach Program")
-			else
-				priority_announce("A report has been downloaded and printed out at all communications consoles.", "Incoming Classified Message", 'sound/ai/commandreport.ogg') // CITADEL EDIT metabreak
-				for(var/obj/machinery/computer/communications/C in GLOB.machines)
-					if(!(C.stat & (BROKEN|NOPOWER)) && is_station_level(C.z))
-						var/obj/item/paper/P = new(C.loc)
-						P.name = "Cargo Report"
-						P.info = "Cargo: The syndicate are trying to infiltrate your station. If you let them hijack your cargo shuttle, you'll save us a headache."
-						P.update_icon()
+			message = "Cargo: A group of angry Russians want to have a party. Can you send them your cargo shuttle then make them disappear?"
+			title = "CentCom Russian Outreach Program"
 		if(SPIDER_GIFT)
-			if(prob(50))
-				priority_announce("Cargo: The Spider Clan has sent us a mysterious gift. Can we ship it to you to see what's inside?","CentCom Diplomatic Corps")
-			else
-				priority_announce("A report has been downloaded and printed out at all communications consoles.", "Incoming Classified Message", 'sound/ai/commandreport.ogg') // CITADEL EDIT metabreak
-				for(var/obj/machinery/computer/communications/C in GLOB.machines)
-					if(!(C.stat & (BROKEN|NOPOWER)) && is_station_level(C.z))
-						var/obj/item/paper/P = new(C.loc)
-						P.name = "Cargo Report"
-						P.info = "Cargo: The Spider Clan has sent us a mysterious gift. Can we ship it to you to see what's inside?"
-						P.update_icon()
+			message = "Cargo: The Spider Clan has sent us a mysterious gift. Can we ship it to you to see what's inside?"
+			title = "CentCom Diplomatic Corps"
 		if(DEPARTMENT_RESUPPLY)
-			if(prob(50))
-				priority_announce("Cargo: Seems we've ordered doubles of our department resupply packages this month. Can we send them to you?","CentCom Supply Department")
-			else
-				priority_announce("A report has been downloaded and printed out at all communications consoles.", "Incoming Classified Message", 'sound/ai/commandreport.ogg') // CITADEL EDIT metabreak
-				for(var/obj/machinery/computer/communications/C in GLOB.machines)
-					if(!(C.stat & (BROKEN|NOPOWER)) && is_station_level(C.z))
-						var/obj/item/paper/P = new(C.loc)
-						P.name = "Cargo Report"
-						P.info = "Cargo: Seems we've ordered doubles of our department resupply packages this month. Can we send them to you?"
-						P.update_icon()
+			message = "Cargo: Seems we've ordered doubles of our department resupply packages this month. Can we send them to you?"
+			title = "CentCom Supply Department"
 		if(ANTIDOTE_NEEDED)
-			if(prob(50))
-				priority_announce("Cargo: Your station has been chosen for an epidemiological research project. Send us your cargo shuttle to receive your research samples.", "CentCom Research Initiatives")
-			else
-				priority_announce("A report has been downloaded and printed out at all communications consoles.", "Incoming Classified Message", 'sound/ai/commandreport.ogg') // CITADEL EDIT metabreak
-				for(var/obj/machinery/computer/communications/C in GLOB.machines)
-					if(!(C.stat & (BROKEN|NOPOWER)) && is_station_level(C.z))
-						var/obj/item/paper/P = new(C.loc)
-						P.name = "Cargo Report"
-						P.info = "Cargo: Your station has been chosen for an epidemiological research project. Send us your cargo shuttle to receive your research samples."
-						P.update_icon()
+			message = "Cargo: Your station has been chosen for an epidemiological research project. Send us your cargo shuttle to receive your research samples."
+			title = "CentCom Research Initiatives"
 		if (PIZZA_DELIVERY)
-			if(prob(50))
-				priority_announce("Cargo: It looks like a neighbouring station accidentally delivered their pizza to you instead.", "CentCom Spacepizza Division")
-			else
-				priority_announce("A report has been downloaded and printed out at all communications consoles.", "Incoming Classified Message", 'sound/ai/commandreport.ogg') // CITADEL EDIT metabreak
-				for(var/obj/machinery/computer/communications/C in GLOB.machines)
-					if(!(C.stat & (BROKEN|NOPOWER)) && is_station_level(C.z))
-						var/obj/item/paper/P = new(C.loc)
-						P.name = "Cargo Report"
-						P.info = "Cargo: It looks like a neighbouring station accidentally delivered their pizza to you instead."
-						P.update_icon()
+			message = "Cargo: It looks like a neighbouring station accidentally delivered their pizza to you instead."
+			title = "CentCom Spacepizza Division"
 		if(ITS_HIP_TO)
-			if(prob(50))
-				priority_announce("Cargo: One of our freighters carrying a bee shipment has been attacked by eco-terrorists. Can you clean up the mess for us?", "CentCom Janitorial Division")
-			else
-				priority_announce("A report has been downloaded and printed out at all communications consoles.", "Incoming Classified Message", 'sound/ai/commandreport.ogg') // CITADEL EDIT metabreak
-				for(var/obj/machinery/computer/communications/C in GLOB.machines)
-					if(!(C.stat & (BROKEN|NOPOWER)) && is_station_level(C.z))
-						var/obj/item/paper/P = new(C.loc)
-						P.name = "Cargo Report"
-						P.info = "Cargo: One of our freighters carrying a bee shipment has been attacked by eco-terrorists. Can you clean up the mess for us?."
-						P.update_icon()
+			message = "Cargo: One of our freighters carrying a bee shipment has been attacked by eco-terrorists. Can you clean up the mess for us?"
+			title = "CentCom Janitorial Division"
 			bonus_points = 20000 //Toxin bees can be unbeelievably lethal
 		if(MY_GOD_JC)
-			if(prob(50))
-				priority_announce("Cargo: We have discovered an active Syndicate bomb near our VIP shuttle's fuel lines. If you feel up to the task, we will pay you for defusing it.", "CentCom Security Division")
-			else
-				priority_announce("A report has been downloaded and printed out at all communications consoles.", "Incoming Classified Message", 'sound/ai/commandreport.ogg') // CITADEL EDIT metabreak
-				for(var/obj/machinery/computer/communications/C in GLOB.machines)
-					if(!(C.stat & (BROKEN|NOPOWER)) && is_station_level(C.z))
-						var/obj/item/paper/P = new(C.loc)
-						P.name = "Cargo Report"
-						P.info = "Cargo: We have discovered an active Syndicate bomb near our VIP shuttle's fuel lines. If you feel up to the task, we will pay you for defusing it."
-						P.update_icon()
+			message = "Cargo: We have discovered an active Syndicate bomb near our VIP shuttle's fuel lines. If you feel up to the task, we will pay you for defusing it."
+			title = "CentCom Security Division"
 			bonus_points = 45000 //If you mess up, people die and the shuttle gets turned into swiss cheese
+		if(DELTA_CRATES)
+			message = "Cargo: We have discovered a warehouse of DELTA locked crates, we cant store any more of them at CC can you take them for us?."
+			title = "CentCom Security Division"
+			bonus_points = 25000 //If you mess up, people die and the shuttle gets turned into swiss cheese
+	if(prob(50))
+		priority_announce(message, title)
+	else
+		print_command_report(message, "Cargo report")
 
 /datum/round_event/shuttle_loan/proc/loan_shuttle()
 	priority_announce(thanks_msg, "Cargo shuttle commandeered by CentCom.")
 
 	dispatched = 1
-	SSshuttle.points += bonus_points
+	var/datum/bank_account/D = SSeconomy.get_dep_account(ACCOUNT_CAR)
+	if(D)
+		D.adjust_money(bonus_points)
 	endWhen = activeFor + 1
 
 	SSshuttle.supply.mode = SHUTTLE_CALL
@@ -147,6 +95,8 @@
 			SSshuttle.centcom_message += "Biohazard cleanup incoming."
 		if(MY_GOD_JC)
 			SSshuttle.centcom_message += "Live explosive ordnance incoming. Exercise extreme caution."
+		if(DELTA_CRATES)
+			SSshuttle.centcom_message += "DELTA Locked crates incoming. Exercise extreme caution."
 
 /datum/round_event/shuttle_loan/tick()
 	if(dispatched)
@@ -185,7 +135,7 @@
 					shuttle_spawns.Add(/mob/living/simple_animal/hostile/syndicate/ranged/infiltrator)
 
 			if(RUSKY_PARTY)
-				var/datum/supply_pack/pack = SSshuttle.supply_packs[/datum/supply_pack/service/party]
+				var/datum/supply_pack/pack = SSshuttle.supply_packs[/datum/supply_pack/organic/party]
 				pack.generate(pick_n_take(empty_shuttle_turfs))
 
 				shuttle_spawns.Add(/mob/living/simple_animal/hostile/russian)
@@ -291,6 +241,15 @@
 				else
 					shuttle_spawns.Add(/obj/item/paper/fluff/cargo/bomb/allyourbase)
 
+			if(DELTA_CRATES) //Delta crates can stack on eacher, and are basicly a 1/3/5 bombs
+				for(var/i in 1 to 7) //7 seems fair
+					shuttle_spawns.Add(/obj/structure/closet/crate/secure/loot)
+
+				for(var/i in 1 to 5)
+					var/turf/T = pick_n_take(empty_shuttle_turfs)
+					new /obj/structure/spider/stickyweb(T)
+					new /obj/effect/decal/cleanable/ash(T)
+
 		var/false_positive = 0
 		while(shuttle_spawns.len && empty_shuttle_turfs.len)
 			var/turf/T = pick_n_take(empty_shuttle_turfs)
@@ -334,3 +293,4 @@
 #undef PIZZA_DELIVERY
 #undef ITS_HIP_TO
 #undef MY_GOD_JC
+#undef DELTA_CRATES

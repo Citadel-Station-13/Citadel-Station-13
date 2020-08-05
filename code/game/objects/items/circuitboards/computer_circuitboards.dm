@@ -14,6 +14,10 @@
 	name = "Security Cameras (Computer Board)"
 	build_path = /obj/machinery/computer/security
 
+/obj/item/circuitboard/computer/security/shuttle
+	name = "Shuttlelinking Security Cameras (Computer Board)"
+	build_path = /obj/machinery/computer/security/shuttle
+
 /obj/item/circuitboard/computer/xenobiology
 	name = "circuit board (Xenobiology Console)"
 	build_path = /obj/machinery/computer/camera_advanced/xenobio
@@ -59,7 +63,7 @@
 	name = "Department Management Console (Computer Board)"
 	build_path = /obj/machinery/computer/card/minor
 	var/target_dept = 1
-	var/list/dept_list = list("General","Security","Medical","Science","Engineering")
+	var/list/dept_list = list("Civilian","Security","Medical","Science","Engineering","Cargo")
 
 /obj/item/circuitboard/computer/card/minor/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/screwdriver))
@@ -69,8 +73,8 @@
 		return ..()
 
 /obj/item/circuitboard/computer/card/minor/examine(user)
-	..()
-	to_chat(user, "Currently set to \"[dept_list[target_dept]]\".")
+	. = ..()
+	. += "Currently set to \"[dept_list[target_dept]]\"."
 
 //obj/item/circuitboard/computer/shield
 //	name = "Shield Control (Computer Board)"
@@ -110,10 +114,11 @@
 /obj/item/circuitboard/computer/cloning
 	name = "Cloning (Computer Board)"
 	build_path = /obj/machinery/computer/cloning
+	var/list/records = list()
 
-/obj/item/circuitboard/computer/prototype_cloning
+/obj/item/circuitboard/computer/cloning/prototype
 	name = "Prototype Cloning (Computer Board)"
-	build_path = /obj/machinery/computer/prototype_cloning
+	build_path = /obj/machinery/computer/cloning/prototype
 
 /obj/item/circuitboard/computer/arcade/battle
 	name = "Arcade Battle (Computer Board)"
@@ -122,6 +127,14 @@
 /obj/item/circuitboard/computer/arcade/orion_trail
 	name = "Orion Trail (Computer Board)"
 	build_path = /obj/machinery/computer/arcade/orion_trail
+
+/obj/item/circuitboard/computer/arcade/minesweeper
+	name = "Minesweeper (Computer Board)"
+	build_path = /obj/machinery/computer/arcade/minesweeper
+
+/obj/item/circuitboard/computer/arcade/amputation
+	name = "Mediborg's Amputation Adventure (Computer Board)"
+	build_path = /obj/machinery/computer/arcade/amputation
 
 /obj/item/circuitboard/computer/turbine_control
 	name = "Turbine control (Computer Board)"
@@ -153,10 +166,11 @@
 
 /obj/item/circuitboard/computer/prisoner
 	name = "Prisoner Management Console (Computer Board)"
-	build_path = /obj/machinery/computer/prisoner
+	build_path = /obj/machinery/computer/prisoner/management
+
 /obj/item/circuitboard/computer/gulag_teleporter_console
 	name = "Labor Camp teleporter console (Computer Board)"
-	build_path = /obj/machinery/computer/gulag_teleporter_computer
+	build_path = /obj/machinery/computer/prisoner/gulag_teleporter_computer
 
 /obj/item/circuitboard/computer/rdconsole/production
 	name = "R&D Console Production Only (Computer Board)"
@@ -208,10 +222,13 @@
 		to_chat(user, "<span class='notice'>The spectrum chip is unresponsive.</span>")
 
 /obj/item/circuitboard/computer/cargo/emag_act(mob/living/user)
-	if(!(obj_flags & EMAGGED))
-		contraband = TRUE
-		obj_flags |= EMAGGED
-		to_chat(user, "<span class='notice'>You adjust [src]'s routing and receiver spectrum, unlocking special supplies and contraband.</span>")
+	. = ..()
+	if(obj_flags & EMAGGED)
+		return
+	contraband = TRUE
+	obj_flags |= EMAGGED
+	to_chat(user, "<span class='notice'>You adjust [src]'s routing and receiver spectrum, unlocking special supplies and contraband.</span>")
+	return TRUE
 
 /obj/item/circuitboard/computer/cargo/express
 	name = "Express Supply Console (Computer Board)"
@@ -225,8 +242,12 @@
 		obj_flags &= ~EMAGGED
 
 /obj/item/circuitboard/computer/cargo/express/emag_act(mob/living/user)
-		to_chat(user, "<span class='notice'>You change the routing protocols, allowing the Drop Pod to land anywhere on the station.</span>")
-		obj_flags |= EMAGGED
+	. = SEND_SIGNAL(src, COMSIG_ATOM_EMAG_ACT)
+	if(obj_flags & EMAGGED)
+		return
+	to_chat(user, "<span class='notice'>You change the routing protocols, allowing the Drop Pod to land anywhere on the station.</span>")
+	obj_flags |= EMAGGED
+	return TRUE
 
 /obj/item/circuitboard/computer/cargo/request
 	name = "Supply Request Console (Computer Board)"
@@ -275,6 +296,10 @@
 /obj/item/circuitboard/computer/mining_shuttle
 	name = "Mining Shuttle (Computer Board)"
 	build_path = /obj/machinery/computer/shuttle/mining
+
+/obj/item/circuitboard/computer/snow_taxi
+	name = "Snow Taxi (Computer Board)"
+	build_path = /obj/machinery/computer/shuttle/snow_taxi
 
 /obj/item/circuitboard/computer/white_ship
 	name = "White Ship (Computer Board)"
@@ -358,3 +383,11 @@
 /obj/item/circuitboard/computer/nanite_cloud_controller
 	name = "Nanite Cloud Control (Computer Board)"
 	build_path = /obj/machinery/computer/nanite_cloud_controller
+
+/obj/item/circuitboard/computer/shuttle/flight_control
+	name = "Shuttle Flight Control (Computer Board)"
+	build_path = /obj/machinery/computer/custom_shuttle
+
+/obj/item/circuitboard/computer/shuttle/docker
+	name = "Shuttle Navigation Computer (Computer Board)"
+	build_path = /obj/machinery/computer/camera_advanced/shuttle_docker/custom

@@ -26,10 +26,6 @@
 
 #define TIMER_ID_NULL -1
 
-//For servers that can't do with any additional lag, set this to none in flightpacks.dm in subsystem/processing.
-#define FLIGHTSUIT_PROCESSING_NONE 0
-#define FLIGHTSUIT_PROCESSING_FULL 1
-
 #define INITIALIZATION_INSSATOMS 0	//New should not call Initialize
 #define INITIALIZATION_INNEW_MAPLOAD 2	//New should call Initialize(TRUE)
 #define INITIALIZATION_INNEW_REGULAR 1	//New should call Initialize(FALSE)
@@ -40,35 +36,41 @@
 
 //type and all subtypes should always call Initialize in New()
 #define INITIALIZE_IMMEDIATE(X) ##X/New(loc, ...){\
-    ..();\
-    if(!(flags_1 & INITIALIZED_1)) {\
-        args[1] = TRUE;\
-        SSatoms.InitAtom(src, args);\
-    }\
+	..();\
+	if(!(flags_1 & INITIALIZED_1)) {\
+		args[1] = TRUE;\
+		SSatoms.InitAtom(src, args);\
+	}\
 }
 
 // Subsystem init_order, from highest priority to lowest priority
 // Subsystems shutdown in the reverse of the order they initialize in
 // The numbers just define the ordering, they are meaningless otherwise.
 
-#define INIT_ORDER_TITLE			20
-#define INIT_ORDER_GARBAGE			19
-#define INIT_ORDER_DBCORE			18
-#define INIT_ORDER_BLACKBOX			17
-#define INIT_ORDER_SERVER_MAINT		16
-#define INIT_ORDER_INPUT			15
-#define INIT_ORDER_VIS				14
-#define INIT_ORDER_RESEARCH			13
-#define INIT_ORDER_EVENTS			12
-#define INIT_ORDER_JOBS				11
-#define INIT_ORDER_QUIRKS			10
-#define INIT_ORDER_TICKER			9
-#define INIT_ORDER_MAPPING			8
-#define INIT_ORDER_NETWORKS			7
-#define INIT_ORDER_ATOMS			6
-#define INIT_ORDER_LANGUAGE			5
-#define INIT_ORDER_MACHINES			4
-#define INIT_ORDER_CIRCUIT			3
+#define INIT_ORDER_PROFILER			100
+#define INIT_ORDER_FAIL2TOPIC		99
+#define INIT_ORDER_TITLE			98
+#define INIT_ORDER_GARBAGE			95
+#define INIT_ORDER_DBCORE			93
+#define INIT_ORDER_BLACKBOX			92
+#define INIT_ORDER_SERVER_MAINT		91
+#define INIT_ORDER_INPUT			90
+#define INIT_ORDER_SOUNDS			85
+#define INIT_ORDER_VIS				80
+#define INIT_ORDER_RESEARCH			75
+#define INIT_ORDER_EVENTS			70
+#define INIT_ORDER_JOBS				65
+#define INIT_ORDER_QUIRKS			60
+#define INIT_ORDER_TICKER			55
+#define INIT_ORDER_INSTRUMENTS		53
+#define INIT_ORDER_MAPPING			50
+#define INIT_ORDER_ECONOMY			45
+#define INIT_ORDER_NETWORKS			40
+#define INIT_ORDER_HOLODECK			35
+#define INIT_ORDER_ATOMS			30
+#define INIT_ORDER_LANGUAGE			25
+#define INIT_ORDER_MACHINES			20
+#define INIT_ORDER_CIRCUIT			15
 #define INIT_ORDER_TIMER			1
 #define INIT_ORDER_DEFAULT			0
 #define INIT_ORDER_AIR				-1
@@ -81,13 +83,16 @@
 #define INIT_ORDER_STICKY_BAN		-10
 #define INIT_ORDER_LIGHTING			-20
 #define INIT_ORDER_SHUTTLE			-21
-#define INIT_ORDER_SQUEAK			-40
+#define INIT_ORDER_MINOR_MAPPING	-40
 #define INIT_ORDER_PATH				-50
-#define INIT_ORDER_PERSISTENCE		-100
+#define INIT_ORDER_PERSISTENCE		-95
+#define INIT_ORDER_CHAT				-100 //Should be last to ensure chat remains smooth during init.
+
 
 // Subsystem fire priority, from lowest to highest priority
 // If the subsystem isn't listed here it's either DEFAULT or PROCESS (if it's a processing subsystem child)
 
+#define FIRE_PRIORITY_VORE			5
 #define FIRE_PRIORITY_PING			10
 #define FIRE_PRIORITY_IDLE_NPC		10
 #define FIRE_PRIORITY_SERVER_MAINT	10
@@ -96,13 +101,13 @@
 #define FIRE_PRIORITY_GARBAGE		15
 #define FIRE_PRIORITY_WET_FLOORS	20
 #define FIRE_PRIORITY_AIR			20
-#define FIRE_PRIORITY_NPC			20
 #define FIRE_PRIORITY_PROCESS		25
 #define FIRE_PRIORITY_THROWING		25
 #define FIRE_PRIORITY_SPACEDRIFT	30
+#define FIRE_PRIORITY_INSTRUMENTS	30
 #define FIRE_PRIORITY_FIELDS		30
 #define FIRE_PRIOTITY_SMOOTHING		35
-#define FIRE_PRIORITY_ORBIT			35
+#define FIRE_PRIORITY_HUDS			40
 #define FIRE_PRIORITY_NETWORKS		40
 #define FIRE_PRIORITY_OBJ			40
 #define FIRE_PRIORITY_ACID			40
@@ -110,10 +115,13 @@
 #define FIRE_PRIORITY_AIR_TURFS		40
 #define FIRE_PRIORITY_DEFAULT		50
 #define FIRE_PRIORITY_PARALLAX		65
-#define FIRE_PRIORITY_FLIGHTPACKS	80
+#define FIRE_PRIORITY_NPC			80
 #define FIRE_PRIORITY_MOBS			100
 #define FIRE_PRIORITY_TGUI			110
+#define FIRE_PRIORITY_PROJECTILES	200
 #define FIRE_PRIORITY_TICKER		200
+#define FIRE_PRIORITY_ATMOS_ADJACENCY	300
+#define FIRE_PRIORITY_CHAT			400
 #define FIRE_PRIORITY_OVERLAYS		500
 #define FIRE_PRIORITY_INPUT			1000 // This must always always be the max highest priority. Player input must never be lost.
 
@@ -127,8 +135,16 @@
 
 #define RUNLEVELS_DEFAULT (RUNLEVEL_SETUP | RUNLEVEL_GAME | RUNLEVEL_POSTGAME)
 
-
-
+// SSair run section
+#define SSAIR_PIPENETS 1
+#define SSAIR_ATMOSMACHINERY 2
+#define SSAIR_EXCITEDGROUPS 3
+#define SSAIR_HIGHPRESSURE 4
+#define SSAIR_HOTSPOTS 5
+#define SSAIR_SUPERCONDUCTIVITY 6
+#define SSAIR_REBUILD_PIPENETS 7
+#define SSAIR_EQUALIZE 8
+#define SSAIR_ACTIVETURFS 9
 
 #define COMPILE_OVERLAYS(A)\
 	if (TRUE) {\
@@ -137,14 +153,17 @@
 		var/list/po = A.priority_overlays;\
 		if(LAZYLEN(rm)){\
 			A.overlays -= rm;\
-			rm.Cut();\
+			A.remove_overlays = null;\
 		}\
 		if(LAZYLEN(ad)){\
 			A.overlays |= ad;\
-			ad.Cut();\
+			A.add_overlays = null;\
 		}\
 		if(LAZYLEN(po)){\
 			A.overlays |= po;\
+		}\
+		else{\
+			A.priority_overlays = null;\
 		}\
 		A.flags_1 &= ~OVERLAY_QUEUED_1;\
 	}

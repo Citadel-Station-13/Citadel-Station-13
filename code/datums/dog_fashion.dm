@@ -38,7 +38,6 @@
 		corgI.color = obj_color
 		return corgI
 
-
 /datum/dog_fashion/head
 	icon_file = 'icons/mob/corgi_head.dmi'
 
@@ -52,7 +51,6 @@
 /datum/dog_fashion/head/chef
 	name = "Sous chef REAL_NAME"
 	desc = "Your food will be taste-tested.  All of it."
-
 
 /datum/dog_fashion/head/captain
 	name = "Captain REAL_NAME"
@@ -174,3 +172,8 @@
 /datum/dog_fashion/back/deathsquad
 	name = "Trooper REAL_NAME"
 	desc = "That's not red paint. That's real corgi blood."
+
+/datum/dog_fashion/head/telegram
+	name = "Messenger REAL_NAME"
+	desc = "Dont shoot the messenger..."
+	emote_see = list("licks an envelope.","looks ready to set off to send a letter...","works on barking!")

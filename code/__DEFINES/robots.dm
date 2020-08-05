@@ -27,6 +27,7 @@
 #define BOT_NAV				15	// computing navigation
 #define BOT_WAIT_FOR_NAV	16	// waiting for nav computation
 #define BOT_NO_ROUTE		17	// no destination beacon found (or no route)
+#define BOT_TIPPED			18  // someone tipped a medibot over ;_;
 
 //Bot types
 #define SEC_BOT				(1<<0)	// Secutritrons (Beepsky) and ED-209s
@@ -35,6 +36,7 @@
 #define CLEAN_BOT			(1<<3)	// Cleanbots
 #define MED_BOT				(1<<4)	// Medibots
 #define HONK_BOT			(1<<5)	// Honkbots & ED-Honks
+#define FIRE_BOT			(1<<6)  // Firebots
 
 //AI notification defines
 #define		NEW_BORG     1
@@ -49,3 +51,26 @@
 #define ASSEMBLY_THIRD_STEP     2
 #define ASSEMBLY_FOURTH_STEP    3
 #define ASSEMBLY_FIFTH_STEP     4
+
+//Bot Upgrade defines
+#define UPGRADE_CLEANER_ADVANCED_MOP 	      (1<<0)
+#define UPGRADE_CLEANER_BROOM            	  (1<<1)
+
+#define UPGRADE_MEDICAL_HYPOSPRAY       (1<<0)
+#define UPGRADE_MEDICAL_CHEM_BOARD      (1<<1)
+#define UPGRADE_MEDICAL_CRYO_BOARD      (1<<2)
+#define UPGRADE_MEDICAL_CHEM_MASTER     (1<<3)
+#define UPGRADE_MEDICAL_SLEEP_BOARD     (1<<4)
+#define UPGRADE_MEDICAL_PIERERCING      (1<<5)
+
+#define UPGRADE_FLOOR_ARTBOX 	     (1<<0)
+#define UPGRADE_FLOOR_SYNDIBOX     	 (1<<1)
+
+//Checks to determine borg availability depending on the server's config. These are defines in the interest of reducing copypasta
+#define BORG_SEC_AVAILABLE (!CONFIG_GET(flag/disable_secborg) && GLOB.security_level >= CONFIG_GET(number/minimum_secborg_alert))
+
+//silicon_priviledges flags
+#define PRIVILEDGES_SILICON	(1<<0)
+#define PRIVILEDGES_PAI		(1<<1)
+#define PRIVILEDGES_BOT		(1<<2)
+#define PRIVILEDGES_DRONE	(1<<3)

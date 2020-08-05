@@ -29,7 +29,7 @@
 	if(!wearer)
 		return //idfk
 	new/obj/effect/temp_visual/souldeath(wearer.loc, wearer)
-	playsound(wearer, 'modular_citadel/sound/misc/souldeath.ogg', 100, FALSE)
+	playsound(wearer, 'sound/misc/souldeath.ogg', 100, FALSE)
 
 /datum/component/souldeath/neck
 	equip_slot = SLOT_NECK

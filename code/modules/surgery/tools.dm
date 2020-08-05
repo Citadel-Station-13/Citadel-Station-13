@@ -3,26 +3,41 @@
 	desc = "Retracts stuff."
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "retractor"
-	materials = list(MAT_METAL=6000, MAT_GLASS=3000)
+	custom_materials = list(/datum/material/iron=6000, /datum/material/glass=3000)
+	item_flags = SURGICAL_TOOL
 	flags_1 = CONDUCT_1
 	w_class = WEIGHT_CLASS_TINY
+	tool_behaviour = TOOL_RETRACTOR
+	toolspeed = 1
 
-/obj/item/retractor/adv
-	name = "Advanced Retractor"
-	desc = "A high-class, premium retractor, featuring precision crafted, silver-plated hook-ends and an electrum handle."
+/obj/item/retractor/advanced
+	name = "mechanical pinches"
+	desc = "An agglomerate of rods and gears."
 	icon = 'icons/obj/surgery.dmi'
-	icon_state = "retractor"
-	materials = list(MAT_METAL=6000, MAT_GLASS=3000)
-	flags_1 = CONDUCT_1
-	w_class = WEIGHT_CLASS_TINY
-	toolspeed = 0.65
+	icon_state = "retractor_a"
+	toolspeed = 0.7
+
+/obj/item/retractor/advanced/attack_self(mob/user)
+	playsound(get_turf(user), 'sound/items/change_drill.ogg', 50, TRUE)
+	if(tool_behaviour == TOOL_RETRACTOR)
+		tool_behaviour = TOOL_HEMOSTAT
+		to_chat(user, "<span class='notice'>You configure the gears of [src], they are now in hemostat mode.</span>")
+		icon_state = "hemostat_a"
+	else
+		tool_behaviour = TOOL_RETRACTOR
+		to_chat(user, "<span class='notice'>You configure the gears of [src], they are now in retractor mode.</span>")
+		icon_state = "retractor_a"
+
+/obj/item/retractor/advanced/examine(mob/living/user)
+	. = ..()
+	. += "<span class = 'notice> It resembles a [tool_behaviour == TOOL_RETRACTOR ? "retractor" : "hemostat"]. </span>"
 
 /obj/item/retractor/augment
 	name = "retractor"
 	desc = "Micro-mechanical manipulator for retracting stuff."
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "retractor"
-	materials = list(MAT_METAL=6000, MAT_GLASS=3000)
+	custom_materials = list(/datum/material/iron=6000, /datum/material/glass=3000)
 	flags_1 = CONDUCT_1
 	w_class = WEIGHT_CLASS_TINY
 	toolspeed = 0.5
@@ -32,66 +47,48 @@
 	desc = "You think you have seen this before."
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "hemostat"
-	materials = list(MAT_METAL=5000, MAT_GLASS=2500)
+	custom_materials = list(/datum/material/iron=5000, /datum/material/glass=2500)
+	item_flags = SURGICAL_TOOL
 	flags_1 = CONDUCT_1
 	w_class = WEIGHT_CLASS_TINY
 	attack_verb = list("attacked", "pinched")
-
-/obj/item/hemostat/adv
-	name = "Advanced Hemostat"
-	desc = "An exceptionally fine pair of arterial forceps. These appear to be plated in electrum and feel soft to the touch."
-	icon = 'icons/obj/surgery.dmi'
-	icon_state = "hemostat"
-	materials = list(MAT_METAL=5000, MAT_GLASS=2500)
-	flags_1 = CONDUCT_1
-	w_class = WEIGHT_CLASS_TINY
-	toolspeed = 0.65
-	attack_verb = list("attacked", "pinched")
+	tool_behaviour = TOOL_HEMOSTAT
+	toolspeed = 1
 
 /obj/item/hemostat/augment
 	name = "hemostat"
 	desc = "Tiny servos power a pair of pincers to stop bleeding."
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "hemostat"
-	materials = list(MAT_METAL=5000, MAT_GLASS=2500)
+	custom_materials = list(/datum/material/iron=5000, /datum/material/glass=2500)
 	flags_1 = CONDUCT_1
 	w_class = WEIGHT_CLASS_TINY
 	toolspeed = 0.5
 	attack_verb = list("attacked", "pinched")
-
 
 /obj/item/cautery
 	name = "cautery"
 	desc = "This stops bleeding."
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "cautery"
-	materials = list(MAT_METAL=2500, MAT_GLASS=750)
+	custom_materials = list(/datum/material/iron=2500, /datum/material/glass=750)
+	item_flags = SURGICAL_TOOL
 	flags_1 = CONDUCT_1
 	w_class = WEIGHT_CLASS_TINY
 	attack_verb = list("burnt")
-
-/obj/item/cautery/adv
-	name = "Electrocautery"
-	desc = "A high-tech unipolar Electrocauter. This tiny device contains an extremely powerful microbattery that uses arcs of electricity to painlessly sear wounds shut. It seems to recharge with the user's body-heat. Wow!"
-	icon = 'icons/obj/surgery.dmi'
-	icon_state = "cautery"
-	materials = list(MAT_METAL=2500, MAT_GLASS=750)
-	flags_1 = CONDUCT_1
-	w_class = WEIGHT_CLASS_TINY
-	toolspeed = 0.5
-	attack_verb = list("burnt")
+	tool_behaviour = TOOL_CAUTERY
+	toolspeed = 1
 
 /obj/item/cautery/augment
 	name = "cautery"
 	desc = "A heated element that cauterizes wounds."
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "cautery"
-	materials = list(MAT_METAL=2500, MAT_GLASS=750)
+	custom_materials = list(/datum/material/iron=2500, /datum/material/glass=750)
 	flags_1 = CONDUCT_1
 	w_class = WEIGHT_CLASS_TINY
 	toolspeed = 0.5
 	attack_verb = list("burnt")
-
 
 /obj/item/surgicaldrill
 	name = "surgical drill"
@@ -101,27 +98,40 @@
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
 	hitsound = 'sound/weapons/circsawhit.ogg'
-	materials = list(MAT_METAL=10000, MAT_GLASS=6000)
+	custom_materials = list(/datum/material/iron=10000, /datum/material/glass=6000)
+	item_flags = SURGICAL_TOOL
 	flags_1 = CONDUCT_1
 	force = 15
 	w_class = WEIGHT_CLASS_NORMAL
 	attack_verb = list("drilled")
+	tool_behaviour = TOOL_DRILL
+	toolspeed = 1
 
-/obj/item/surgicaldrill/adv
-	name = "Surgical Autodrill"
-	desc = "With a diamond tip and built-in depth and safety sensors, this drill alerts the user before overpenetrating a patient's skull or tooth. There also appears to be a disable switch."
+/obj/item/surgicaldrill/advanced
+	name = "searing tool"
+	desc = "It projects a high power laser used for medical application."
 	icon = 'icons/obj/surgery.dmi'
-	icon_state = "drill"
-	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
-	hitsound = 'sound/weapons/circsawhit.ogg'
-	materials = list(MAT_METAL=10000, MAT_GLASS=6000)
-	flags_1 = CONDUCT_1
-	force = 13 //Damions are not ment for flesh cutting!
-	w_class = WEIGHT_CLASS_NORMAL
-	toolspeed = 0.65
-	attack_verb = list("drilled")
-	sharpness = IS_SHARP_ACCURATE // Were making them use a damion for this...
+	icon_state = "surgicaldrill_a"
+	hitsound = 'sound/items/welder.ogg'
+
+/obj/item/surgicaldrill/advanced/Initialize()
+	. = ..()
+	set_light(1)
+
+/obj/item/surgicaldrill/advanced/attack_self(mob/user)
+	playsound(get_turf(user), 'sound/weapons/tap.ogg', 50, TRUE)
+	if(tool_behaviour == TOOL_DRILL)
+		tool_behaviour = TOOL_CAUTERY
+		to_chat(user, "<span class='notice'>You focus the lenses of [src], it is now in mending mode.</span>")
+		icon_state = "cautery_a"
+	else
+		tool_behaviour = TOOL_DRILL
+		to_chat(user, "<span class='notice'>You dilate the lenses of [src], it is now in drilling mode.</span>")
+		icon_state = "surgicaldrill_a"
+
+/obj/item/surgicaldrill/advanced/examine(mob/living/user)
+	. = ..()
+	. += "<span class = 'notice> It's set to [tool_behaviour == TOOL_DRILL ? "drilling" : "mending"] mode.</span>"
 
 /obj/item/surgicaldrill/augment
 	name = "surgical drill"
@@ -129,13 +139,12 @@
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "drill"
 	hitsound = 'sound/weapons/circsawhit.ogg'
-	materials = list(MAT_METAL=10000, MAT_GLASS=6000)
+	custom_materials = list(/datum/material/iron=10000, /datum/material/glass=6000)
 	flags_1 = CONDUCT_1
 	force = 10
 	w_class = WEIGHT_CLASS_SMALL
 	toolspeed = 0.5
 	attack_verb = list("drilled")
-
 
 /obj/item/scalpel
 	name = "scalpel"
@@ -150,33 +159,52 @@
 	throwforce = 5
 	throw_speed = 3
 	throw_range = 5
-	materials = list(MAT_METAL=4000, MAT_GLASS=1000)
+	custom_materials = list(/datum/material/iron=4000, /datum/material/glass=1000)
+	item_flags = SURGICAL_TOOL
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 	hitsound = 'sound/weapons/bladeslice.ogg'
-	sharpness = IS_SHARP_ACCURATE
+	sharpness = SHARP_POINTY
+	tool_behaviour = TOOL_SCALPEL
+	toolspeed = 1
+	bare_wound_bonus = 20
 
 /obj/item/scalpel/Initialize()
 	. = ..()
 	AddComponent(/datum/component/butchering, 80 * toolspeed, 100, 0)
 
-/obj/item/scalpel/adv
-	name = "Precision Scalpel"
-	desc = "A perfectly balanced electrum scalpel with a silicon-coated edge to eliminate wear and tear."
+/obj/item/scalpel/advanced
+	name = "laser scalpel"
+	desc = "An advanced scalpel which uses laser technology to cut."
 	icon = 'icons/obj/surgery.dmi'
-	icon_state = "scalpel"
-	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
-	flags_1 = CONDUCT_1
-	force = 8
-	w_class = WEIGHT_CLASS_TINY
-	throwforce = 7
-	throw_speed = 3
-	throw_range = 6
-	materials = list(MAT_METAL=4000, MAT_GLASS=1000)
-	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
-	toolspeed = 0.65
-	hitsound = 'sound/weapons/bladeslice.ogg'
-	sharpness = IS_SHARP_ACCURATE
+	icon_state = "scalpel_a"
+	hitsound = 'sound/weapons/blade1.ogg'
+	force = 16
+	toolspeed = 0.7
+	light_color = LIGHT_COLOR_GREEN
+	sharpness = SHARP_POINTY
+
+/obj/item/scalpel/advanced/Initialize()
+	. = ..()
+	set_light(1)
+
+/obj/item/scalpel/advanced/attack_self(mob/user)
+	playsound(get_turf(user), 'sound/machines/click.ogg', 50, TRUE)
+	if(tool_behaviour == TOOL_SCALPEL)
+		tool_behaviour = TOOL_SAW
+		to_chat(user, "<span class='notice'>You increase the power of [src], now it can cut bones.</span>")
+		set_light(2)
+		force += 1 //we don't want to ruin sharpened stuff
+		icon_state = "saw_a"
+	else
+		tool_behaviour = TOOL_SCALPEL
+		to_chat(user, "<span class='notice'>You lower the power of [src], it can no longer cut bones.</span>")
+		set_light(1)
+		force -= 1
+		icon_state = "scalpel_a"
+
+/obj/item/scalpel/advanced/examine(mob/living/user)
+	. = ..()
+	. += "<span class = 'notice> It's set to [tool_behaviour == TOOL_SCALPEL ? "scalpel" : "saw"] mode. </span>"
 
 /obj/item/scalpel/augment
 	name = "scalpel"
@@ -189,16 +217,15 @@
 	throwforce = 5
 	throw_speed = 3
 	throw_range = 5
-	materials = list(MAT_METAL=4000, MAT_GLASS=1000)
+	custom_materials = list(/datum/material/iron=4000, /datum/material/glass=1000)
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 	toolspeed = 0.5
 	hitsound = 'sound/weapons/bladeslice.ogg'
-	sharpness = IS_SHARP_ACCURATE
+	sharpness = SHARP_POINTY
 
 /obj/item/scalpel/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is slitting [user.p_their()] [pick("wrists", "throat", "stomach")] with [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	return (BRUTELOSS)
-
 
 /obj/item/circular_saw
 	name = "circular saw"
@@ -209,39 +236,25 @@
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	hitsound = 'sound/weapons/circsawhit.ogg'
 	throwhitsound =  'sound/weapons/pierce.ogg'
+	item_flags = SURGICAL_TOOL
 	flags_1 = CONDUCT_1
 	force = 15
 	w_class = WEIGHT_CLASS_NORMAL
 	throwforce = 9
 	throw_speed = 2
 	throw_range = 5
-	materials = list(MAT_METAL=10000, MAT_GLASS=6000)
+	custom_materials = list(/datum/material/iron=10000, /datum/material/glass=6000)
 	attack_verb = list("attacked", "slashed", "sawed", "cut")
-	sharpness = IS_SHARP
+	sharpness = SHARP_EDGED
+	tool_behaviour = TOOL_SAW
+	toolspeed = 1
+	wound_bonus = 5
+	bare_wound_bonus = 10
 
 /obj/item/circular_saw/Initialize()
 	. = ..()
 	AddComponent(/datum/component/butchering, 40 * toolspeed, 100, 5, 'sound/weapons/circsawhit.ogg') //saws are very accurate and fast at butchering
 
-/obj/item/circular_saw/adv
-	name = "Diamond-Grit Circular Saw"
-	desc = "For those Assistants with REALLY thick skulls."
-	icon = 'icons/obj/surgery.dmi'
-	icon_state = "saw"
-	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
-	hitsound = 'sound/weapons/circsawhit.ogg'
-	throwhitsound =  'sound/weapons/pierce.ogg'
-	flags_1 = CONDUCT_1
-	force = 13
-	w_class = WEIGHT_CLASS_NORMAL
-	throwforce = 6
-	throw_speed = 1
-	throw_range = 3
-	materials = list(MAT_METAL=10000, MAT_GLASS=6000)
-	attack_verb = list("attacked", "slashed", "sawed", "cut")
-	toolspeed = 0.65
-	sharpness = IS_SHARP
 
 /obj/item/circular_saw/augment
 	name = "circular saw"
@@ -256,10 +269,10 @@
 	throwforce = 9
 	throw_speed = 2
 	throw_range = 5
-	materials = list(MAT_METAL=10000, MAT_GLASS=6000)
+	custom_materials = list(/datum/material/iron=10000, /datum/material/glass=6000)
 	toolspeed = 0.5
 	attack_verb = list("attacked", "slashed", "sawed", "cut")
-	sharpness = IS_SHARP
+	sharpness = SHARP_EDGED
 
 /obj/item/surgical_drapes
 	name = "surgical drapes"
@@ -273,11 +286,32 @@
 	if(!attempt_initiate_surgery(src, M, user))
 		..()
 
+/obj/item/surgical_drapes/advanced
+	name = "smart surgical drapes"
+	desc = "A smart set of drapes with wireless synchronization to the station's research networks, with an integrated display allowing users to execute advanced surgeries without the aid of an operating computer."
+	var/datum/techweb/linked_techweb
+
+/obj/item/surgical_drapes/advanced/Initialize(mapload)
+	. = ..()
+	linked_techweb = SSresearch.science_tech
+
+/obj/item/surgical_drapes/advanced/proc/get_advanced_surgeries()
+	. = list()
+	if(!linked_techweb)
+		return
+	for(var/subtype in subtypesof(/datum/design/surgery))
+		var/datum/design/surgery/prototype = subtype
+		var/id = initial(prototype.id)
+		if(id in linked_techweb.researched_designs)
+			prototype = SSresearch.techweb_design_by_id(id)
+			. |= prototype.surgery
+
 /obj/item/organ_storage //allows medical cyborgs to manipulate organs without hands
 	name = "organ storage bag"
 	desc = "A container for holding body parts."
 	icon = 'icons/obj/storage.dmi'
 	icon_state = "evidenceobj"
+	item_flags = SURGICAL_TOOL
 
 /obj/item/organ_storage/afterattack(obj/item/I, mob/user, proximity)
 	. = ..()
@@ -325,7 +359,7 @@
 	icon_state = "spectrometer"
 	item_flags = NOBLUDGEON
 	var/list/advanced_surgeries = list()
-	
+
 /obj/item/surgical_processor/afterattack(obj/item/O, mob/user, proximity)
 	. = ..()
 	if(!proximity)
@@ -343,3 +377,18 @@
 			advanced_surgeries |= OC.advanced_surgeries
 		return TRUE
 	return
+
+/obj/item/bonesetter
+	name = "bonesetter"
+	desc = "For setting things right."
+	icon = 'icons/obj/surgery.dmi'
+	icon_state = "bone setter"
+	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
+	custom_materials = list(/datum/material/iron=5000, /datum/material/glass=2500)
+	flags_1 = CONDUCT_1
+	item_flags = SURGICAL_TOOL
+	w_class = WEIGHT_CLASS_SMALL
+	attack_verb = list("corrected", "properly set")
+	tool_behaviour = TOOL_BONESET
+	toolspeed = 1

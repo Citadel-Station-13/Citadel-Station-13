@@ -19,9 +19,9 @@
 	flags_1 = CONDUCT_1
 	icon_state = "borg_l_arm"
 	status = BODYPART_ROBOTIC
-	
-	brute_reduction = 5
-	burn_reduction = 4
+
+	brute_reduction = 2
+	burn_reduction = 1
 
 	light_brute_msg = ROBOTIC_LIGHT_BRUTE_MSG
 	medium_brute_msg = ROBOTIC_MEDIUM_BRUTE_MSG
@@ -40,9 +40,9 @@
 	flags_1 = CONDUCT_1
 	icon_state = "borg_r_arm"
 	status = BODYPART_ROBOTIC
-	
-	brute_reduction = 5
-	burn_reduction = 4
+
+	brute_reduction = 2
+	burn_reduction = 1
 
 	light_brute_msg = ROBOTIC_LIGHT_BRUTE_MSG
 	medium_brute_msg = ROBOTIC_MEDIUM_BRUTE_MSG
@@ -61,9 +61,9 @@
 	flags_1 = CONDUCT_1
 	icon_state = "borg_l_leg"
 	status = BODYPART_ROBOTIC
-	
-	brute_reduction = 5
-	burn_reduction = 4
+
+	brute_reduction = 2
+	burn_reduction = 1
 
 	light_brute_msg = ROBOTIC_LIGHT_BRUTE_MSG
 	medium_brute_msg = ROBOTIC_MEDIUM_BRUTE_MSG
@@ -82,9 +82,9 @@
 	flags_1 = CONDUCT_1
 	icon_state = "borg_r_leg"
 	status = BODYPART_ROBOTIC
-	
-	brute_reduction = 5
-	burn_reduction = 4
+
+	brute_reduction = 2
+	burn_reduction = 1
 
 	light_brute_msg = ROBOTIC_LIGHT_BRUTE_MSG
 	medium_brute_msg = ROBOTIC_MEDIUM_BRUTE_MSG
@@ -102,9 +102,9 @@
 	flags_1 = CONDUCT_1
 	icon_state = "borg_chest"
 	status = BODYPART_ROBOTIC
-	
-	brute_reduction = 5
-	burn_reduction = 4
+
+	brute_reduction = 2
+	burn_reduction = 1
 
 	light_brute_msg = ROBOTIC_LIGHT_BRUTE_MSG
 	medium_brute_msg = ROBOTIC_MEDIUM_BRUTE_MSG
@@ -131,8 +131,7 @@
 		if(src.wired)
 			to_chat(user, "<span class='warning'>You have already inserted wire!</span>")
 			return
-		var/obj/item/stack/cable_coil/coil = W
-		if (coil.use(1))
+		if (W.use_tool(src, user, 0, 1))
 			src.wired = 1
 			to_chat(user, "<span class='notice'>You insert the wire.</span>")
 		else
@@ -164,7 +163,7 @@
 	flags_1 = CONDUCT_1
 	icon_state = "borg_head"
 	status = BODYPART_ROBOTIC
-	
+
 	brute_reduction = 5
 	burn_reduction = 4
 
@@ -268,38 +267,38 @@
 	burn_reduction = 0
 	max_damage = 20
 
-// Upgraded Surplus lims
+// Upgraded Surplus lims - Better then robotic lims
 /obj/item/bodypart/l_arm/robot/surplus_upgraded
 	name = "reinforced surplus prosthetic left arm"
-	desc = "A skeletal, robotic limb. This one is reinforced to provide better protection."
+	desc = "A skeletal, robotic limb. This one is reinforced to provide better protection, and is made of stronger parts."
 	icon = 'icons/mob/augmentation/surplus_augments.dmi'
-	brute_reduction = 1
-	burn_reduction = 1
-	max_damage = 30
+	brute_reduction = 3
+	burn_reduction = 2
+	max_damage = 55
 
 /obj/item/bodypart/r_arm/robot/surplus_upgraded
 	name = "reinforced surplus prosthetic right arm"
-	desc = "A skeletal, robotic limb. This one is reinforced to provide better protection."
+	desc = "A skeletal, robotic limb. This one is reinforced to provide better protection, and is made of stronger parts."
 	icon = 'icons/mob/augmentation/surplus_augments.dmi'
-	brute_reduction = 1
-	burn_reduction = 1
-	max_damage = 30
+	brute_reduction = 3
+	burn_reduction = 2
+	max_damage = 55
 
 /obj/item/bodypart/l_leg/robot/surplus_upgraded
 	name = "reinforced surplus prosthetic left leg"
-	desc = "A skeletal, robotic limb. This one is reinforced to provide better protection."
+	desc = "A skeletal, robotic limb. This one is reinforced to provide better protection, and is made of stronger parts."
 	icon = 'icons/mob/augmentation/surplus_augments.dmi'
-	brute_reduction = 1
-	burn_reduction = 1
-	max_damage = 30
+	brute_reduction = 3
+	burn_reduction = 2
+	max_damage = 55
 
 /obj/item/bodypart/r_leg/robot/surplus_upgraded
 	name = "reinforced surplus prosthetic right leg"
-	desc = "A skeletal, robotic limb. This one is reinforced to provide better protection."
+	desc = "A skeletal, robotic limb. This one is reinforced to provide better protection, and is made of stronger parts."
 	icon = 'icons/mob/augmentation/surplus_augments.dmi'
-	brute_reduction = 1
-	burn_reduction = 1
-	max_damage = 30
+	brute_reduction = 3
+	burn_reduction = 2
+	max_damage = 55
 
 #undef ROBOTIC_LIGHT_BRUTE_MSG
 #undef ROBOTIC_MEDIUM_BRUTE_MSG

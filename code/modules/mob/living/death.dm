@@ -8,8 +8,14 @@
 
 	spill_organs(no_brain, no_organs, no_bodyparts)
 
+	release_vore_contents(silent = TRUE) // return of the bomb safe internals.
+
 	if(!no_bodyparts)
 		spread_bodyparts(no_brain, no_organs)
+
+	for(var/X in implants)
+		var/obj/item/implant/I = X
+		qdel(I)
 
 	spawn_gibs(no_bodyparts)
 	qdel(src)
@@ -17,8 +23,12 @@
 /mob/living/proc/gib_animation()
 	return
 
-/mob/living/proc/spawn_gibs()
-	new /obj/effect/gibspawner/generic(drop_location(), null, get_static_viruses())
+/mob/living/proc/spawn_gibs(with_bodyparts, atom/loc_override)
+	var/location = loc_override ? loc_override.drop_location() : drop_location()
+	if(mob_biotypes & MOB_ROBOTIC)
+		new /obj/effect/gibspawner/robot(location, src, get_static_viruses())
+	else
+		new /obj/effect/gibspawner/generic(location, src, get_static_viruses())
 
 /mob/living/proc/spill_organs()
 	return
@@ -36,6 +46,7 @@
 		buckled.unbuckle_mob(src, force = TRUE)
 
 	dust_animation()
+	release_vore_contents(silent = TRUE) //technically grief protection, I guess? if they're SM'd it doesn't matter seconds after anyway.
 	spawn_dust(just_ash)
 	QDEL_IN(src,5) // since this is sometimes called in the middle of movement, allow half a second for movement to finish, ghosting to happen and animation to play. Looks much nicer and doesn't cause multiple runtimes.
 
@@ -50,13 +61,9 @@
 	stat = DEAD
 	unset_machine()
 	timeofdeath = world.time
-	tod = station_time_timestamp()
-	var/turf/T = get_turf(src)
+	tod = STATION_TIME_TIMESTAMP("hh:mm:ss", world.time)
 	for(var/obj/item/I in contents)
 		I.on_mob_death(src, gibbed)
-	if(mind && mind.name && mind.active && !istype(T.loc, /area/ctf))
-		var/rendered = "<span class='deadsay'><b>[mind.name]</b> has died at <b>[get_area_name(T)]</b>.</span>"
-		deadchat_broadcast(rendered, follow_target = src, turf_target = T, message_type=DEADCHAT_DEATHRATTLE)
 	if(mind)
 		mind.store_memory("Time of death: [tod]", 0)
 	GLOB.alive_mob_list -= src
@@ -71,15 +78,22 @@
 	update_action_buttons_icon()
 	update_damage_hud()
 	update_health_hud()
-	update_canmove()
+	update_mobility()
 	med_hud_set_health()
 	med_hud_set_status()
 	if(!gibbed && !QDELETED(src))
 		addtimer(CALLBACK(src, .proc/med_hud_set_status), (DEFIB_TIME_LIMIT * 10) + 1)
 	stop_pulling()
 
-	SEND_SIGNAL(src, COMSIG_MOB_DEATH, gibbed)
+	var/signal = SEND_SIGNAL(src, COMSIG_MOB_DEATH, gibbed)
 
+	var/turf/T = get_turf(src)
+	if(mind && mind.name && mind.active && !istype(T.loc, /area/ctf) && !(signal & COMPONENT_BLOCK_DEATH_BROADCAST))
+		var/rendered = "<span class='deadsay'><b>[mind.name]</b> has died at <b>[get_area_name(T)]</b>.</span>"
+		deadchat_broadcast(rendered, follow_target = src, turf_target = T, message_type=DEADCHAT_DEATHRATTLE)
+	if (client && client.prefs && client.prefs.auto_ooc)
+		if (!(client.prefs.chat_toggles & CHAT_OOC))
+			client.prefs.chat_toggles ^= CHAT_OOC
 	if (client)
 		client.move_delay = initial(client.move_delay)
 

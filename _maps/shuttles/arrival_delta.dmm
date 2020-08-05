@@ -165,6 +165,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
+/obj/structure/fans/tiny,
 /turf/open/floor/plasteel/white,
 /area/shuttle/arrival)
 "o" = (
@@ -202,7 +203,7 @@
 /obj/machinery/status_display/evac{
 	pixel_x = -32
 	},
-/obj/item/twohanded/required/kirbyplants{
+/obj/item/kirbyplants{
 	icon_state = "plant-21"
 	},
 /obj/effect/turf_decal/tile/neutral{
@@ -225,7 +226,7 @@
 /obj/machinery/status_display/ai{
 	pixel_x = 32
 	},
-/obj/item/twohanded/required/kirbyplants{
+/obj/item/kirbyplants{
 	icon_state = "plant-21"
 	},
 /obj/effect/turf_decal/tile/neutral,
@@ -276,7 +277,7 @@
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/arrival)
 "A" = (
-/obj/item/twohanded/required/kirbyplants{
+/obj/item/kirbyplants{
 	icon_state = "plant-21"
 	},
 /obj/effect/turf_decal/tile/neutral{
@@ -306,12 +307,12 @@
 "D" = (
 /obj/structure/table/reinforced,
 /obj/item/folder,
-/obj/item/storage/pill_bottle/dice,
+/obj/item/storage/box/dice,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
 /area/shuttle/arrival)
 "E" = (
-/obj/item/twohanded/required/kirbyplants{
+/obj/item/kirbyplants{
 	icon_state = "plant-21"
 	},
 /obj/effect/turf_decal/tile/neutral,
@@ -449,6 +450,10 @@
 	},
 /turf/open/floor/plasteel,
 /area/shuttle/arrival)
+"T" = (
+/obj/machinery/porta_turret/centcom_shuttle,
+/turf/closed/wall/mineral/plastitanium,
+/area/shuttle/arrival)
 "U" = (
 /obj/machinery/computer{
 	dir = 1;
@@ -480,7 +485,7 @@
 
 (1,1,1) = {"
 a
-d
+T
 f
 g
 n
@@ -632,7 +637,7 @@ a
 "}
 (9,1,1) = {"
 a
-d
+T
 f
 g
 n

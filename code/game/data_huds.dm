@@ -18,7 +18,7 @@
 /datum/atom_hud/data
 
 /datum/atom_hud/data/human/medical
-	hud_icons = list(STATUS_HUD, HEALTH_HUD, NANITE_HUD)
+	hud_icons = list(STATUS_HUD, HEALTH_HUD, NANITE_HUD, RAD_HUD)
 
 /datum/atom_hud/data/human/medical/basic
 
@@ -100,7 +100,7 @@
 
 //helper for getting the appropriate health status
 /proc/RoundHealth(mob/living/M)
-	if(M.stat == DEAD || (M.has_trait(TRAIT_FAKEDEATH)))
+	if(M.stat == DEAD || (HAS_TRAIT(M, TRAIT_FAKEDEATH)))
 		return "health-100" //what's our health? it doesn't matter, we're dead, or faking
 	var/maxi_health = M.maxHealth
 	if(iscarbon(M) && M.health < 0)
@@ -147,7 +147,6 @@
 			return "health-85"
 		else
 			return "health-100"
-	return "0"
 
 //HOOKS
 
@@ -162,6 +161,7 @@
 	holder.icon_state = "hud[RoundHealth(src)]"
 	var/icon/I = icon(icon, icon_state, dir)
 	holder.pixel_y = I.Height() - world.icon_size
+	med_hud_set_radstatus()
 
 //for carbon suit sensors
 /mob/living/carbon/med_hud_set_health()
@@ -172,7 +172,7 @@
 	var/image/holder = hud_list[STATUS_HUD]
 	var/icon/I = icon(icon, icon_state, dir)
 	holder.pixel_y = I.Height() - world.icon_size
-	if(stat == DEAD || (has_trait(TRAIT_FAKEDEATH)))
+	if(stat == DEAD || (HAS_TRAIT(src, TRAIT_FAKEDEATH)))
 		holder.icon_state = "huddead"
 	else
 		holder.icon_state = "hudhealthy"
@@ -182,13 +182,19 @@
 	var/icon/I = icon(icon, icon_state, dir)
 	var/virus_threat = check_virus()
 	holder.pixel_y = I.Height() - world.icon_size
-	if(has_trait(TRAIT_XENO_HOST))
+	if(HAS_TRAIT(src, TRAIT_XENO_HOST))
 		holder.icon_state = "hudxeno"
-	else if(stat == DEAD || (has_trait(TRAIT_FAKEDEATH)))
+	else if(stat == DEAD || (HAS_TRAIT(src, TRAIT_FAKEDEATH)))
 		if(tod)
 			var/tdelta = round(world.time - timeofdeath)
 			if(tdelta < (DEFIB_TIME_LIMIT * 10))
-				holder.icon_state = "huddefib"
+				var/obj/item/organ/heart/He = getorgan(/obj/item/organ/heart)
+				if(He)
+					holder.icon_state = "huddefib"
+					if(He.organ_flags & ORGAN_FAILING)
+						holder.icon_state = "huddefibheart"
+				else
+					holder.icon_state = "huddefibheart"
 				return
 		holder.icon_state = "huddead"
 	else
@@ -210,6 +216,22 @@
 			if(null)
 				holder.icon_state = "hudhealthy"
 
+
+/mob/living/proc/med_hud_set_radstatus()
+	var/image/radholder = hud_list[RAD_HUD]
+	var/icon/I = icon(icon, icon_state, dir)
+	radholder.pixel_y = I.Height() - world.icon_size
+	var/mob/living/M = src
+	var/rads = M.radiation
+	switch(rads)
+		if(-INFINITY to RAD_MOB_SAFE)
+			radholder.icon_state = "hudradsafe"
+		if((RAD_MOB_SAFE+1) to RAD_MOB_MUTATE)
+			radholder.icon_state = "hudraddanger"
+		if((RAD_MOB_MUTATE+1) to RAD_MOB_VOMIT)
+			radholder.icon_state = "hudradlethal"
+		if((RAD_MOB_VOMIT+1) to INFINITY)
+			radholder.icon_state = "hudradnuke"
 
 /***********************************************
  Security HUDs! Basic mode shows only the job.
@@ -242,7 +264,7 @@
 			var/icon/IC = icon(icon, icon_state, dir)
 			holder.pixel_y = IC.Height() - world.icon_size
 			holder.icon_state = "hud_imp_chem"
-	if(has_trait(TRAIT_MINDSHIELD))
+	if(HAS_TRAIT(src, TRAIT_MINDSHIELD))
 		holder = hud_list[IMPLOYAL_HUD]
 		var/icon/IC = icon(icon, icon_state, dir)
 		holder.pixel_y = IC.Height() - world.icon_size
@@ -300,7 +322,6 @@
 			return "crit"
 		else
 			return "dead"
-	return "dead"
 
 //Sillycone hooks
 /mob/living/silicon/proc/diag_hud_set_health()

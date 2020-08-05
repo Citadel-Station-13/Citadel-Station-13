@@ -1,6 +1,0 @@
-author: "CydiaButt13"
-delete-after: True
-changes: 
-  - rscadd: "Lamp Plushie to loadout"
-  - imageadd: "added plushie_lamp to plush icons"
-  - code_imp: "added Lamp Plush to loadout and icons and items"

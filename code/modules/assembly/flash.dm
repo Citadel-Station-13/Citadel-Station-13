@@ -8,10 +8,11 @@
 	righthand_file = 'icons/mob/inhands/equipment/security_righthand.dmi'
 	throwforce = 0
 	w_class = WEIGHT_CLASS_TINY
-	materials = list(MAT_METAL = 300, MAT_GLASS = 300)
+	custom_materials = list(/datum/material/iron = 300, /datum/material/glass = 300)
 	crit_fail = FALSE     //Is the flash burnt out?
 	light_color = LIGHT_COLOR_WHITE
 	light_power = FLASH_LIGHT_POWER
+	var/flashing_overlay = "flash-f"
 	var/times_used = 0 //Number of times it's been used.
 	var/burnout_resistance = 0
 	var/last_used = 0 //last world.time it was used.
@@ -36,14 +37,14 @@
 		add_overlay("flashburnt")
 		attached_overlays += "flashburnt"
 	if(flash)
-		add_overlay("flash-f")
-		attached_overlays += "flash-f"
-		addtimer(CALLBACK(src, .proc/update_icon), 5)
+		add_overlay(flashing_overlay)
+		attached_overlays += flashing_overlay
+		addtimer(CALLBACK(src, /atom/.proc/update_icon), 5)
 	if(holder)
 		holder.update_icon()
 
 /obj/item/assembly/flash/proc/clown_check(mob/living/carbon/human/user)
-	if(user.has_trait(TRAIT_CLUMSY) && prob(50))
+	if(HAS_TRAIT(user, TRAIT_CLUMSY) && prob(50))
 		flash_carbon(user, user, 15, 0)
 		return FALSE
 	return TRUE
@@ -149,7 +150,7 @@
 		var/mob/living/silicon/robot/R = M
 		log_combat(user, R, "flashed", src)
 		update_icon(1)
-		R.Knockdown(rand(80,120))
+		R.DefaultCombatKnockdown(rand(80,120))
 		var/diff = 5 * CONFUSION_STACK_MAX_MULTIPLIER - M.confused
 		R.confused += min(5, diff)
 		R.flash_act(affect_silicon = 1)
@@ -196,12 +197,13 @@
 			else
 				to_chat(user, "<span class='warning'>This mind seems resistant to the flash!</span>")
 
-
 /obj/item/assembly/flash/cyborg
 
 /obj/item/assembly/flash/cyborg/attack(mob/living/M, mob/user)
-	..()
+	. = ..()
 	new /obj/effect/temp_visual/borgflash(get_turf(src))
+	if(. && !CONFIG_GET(flag/disable_borg_flash_knockdown) && iscarbon(M) && CHECK_MOBILITY(M, MOBILITY_STAND) && !M.get_eye_protection())
+		M.DefaultCombatKnockdown(80)
 
 /obj/item/assembly/flash/cyborg/attack_self(mob/user)
 	..()
@@ -227,6 +229,7 @@
 	var/flashcd = 20
 	var/overheat = 0
 	var/obj/item/organ/cyberimp/arm/flash/I = null
+	var/active_light_strength = 7
 
 /obj/item/assembly/flash/armimplant/burn_out()
 	if(I && I.owner)
@@ -246,6 +249,12 @@
 	update_icon(1)
 	return TRUE
 
+/obj/item/assembly/flash/armimplant/Moved(oldLoc, dir)
+	. = ..()
+	if(!ismob(loc))
+		set_light(0)
+	else
+		set_light(7)
 
 /obj/item/assembly/flash/armimplant/proc/cooldown()
 	overheat = FALSE
@@ -264,7 +273,7 @@
 	throw_speed = 2
 	throw_range = 3
 	w_class = WEIGHT_CLASS_BULKY
-	materials = list(MAT_GLASS=7500, MAT_METAL=1000)
+	custom_materials = list(/datum/material/glass=7500, /datum/material/iron=1000)
 	attack_verb = list("shoved", "bashed")
 	block_chance = 50
 	armor = list("melee" = 50, "bullet" = 50, "laser" = 50, "energy" = 0, "bomb" = 30, "bio" = 0, "rad" = 0, "fire" = 80, "acid" = 70)
@@ -305,11 +314,58 @@
 	else if(flash)
 		icon_state = "flashshield_flash"
 		item_state = "flashshield_flash"
-		addtimer(CALLBACK(src, .proc/update_icon), 5)
+		addtimer(CALLBACK(src, /atom/.proc/update_icon), 5)
 
 	if(holder)
 		holder.update_icon()
 
-/obj/item/assembly/flash/shield/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
+/obj/item/assembly/flash/shield/run_block(mob/living/owner, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return)
 	activate()
 	return ..()
+
+//ported from tg - check to make sure it can't appear where it's not supposed to.
+/obj/item/assembly/flash/hypnotic
+	desc = "A modified flash device, programmed to emit a sequence of subliminal flashes that can send a vulnerable target into a hypnotic trance."
+	flashing_overlay = "flash-hypno" //I cannot find this icon no matter how hard I look in tg, so I might just make my own.
+	light_color = LIGHT_COLOR_PINK
+	cooldown = 20
+
+/obj/item/assembly/flash/hypnotic/burn_out()
+	return
+
+/obj/item/assembly/flash/hypnotic/flash_carbon(mob/living/carbon/M, mob/user, power = 15, targeted = TRUE, generic_message = FALSE)
+	if(!istype(M))
+		return
+	if(user)
+		log_combat(user, M, "[targeted? "hypno-flashed(targeted)" : "hypno-flashed(AOE)"]", src)
+	else //caused by emp/remote signal
+		M.log_message("was [targeted? "hypno-flashed(targeted)" : "hypno-flashed(AOE)"]",LOG_ATTACK)
+	if(generic_message && M != user)
+		to_chat(M, "<span class='disarm'>[src] emits a soothing light...</span>")
+	if(targeted)
+		if(M.flash_act(1, 1))
+			var/hypnosis = FALSE
+			if(M.hypnosis_vulnerable())
+				hypnosis = TRUE
+			if(user)
+				user.visible_message("<span class='disarm'>[user] blinds [M] with the flash!</span>", "<span class='danger'>You hypno-flash [M]!</span>")
+
+			if(!hypnosis)
+				to_chat(M, "<span class='notice'>The light makes you feel oddly relaxed...</span>")
+				M.confused += min(M.confused + 10, 20)
+				M.dizziness += min(M.dizziness + 10, 20)
+				M.drowsyness += min(M.drowsyness + 10, 20)
+				M.apply_status_effect(STATUS_EFFECT_PACIFY, 100)
+			else
+				M.apply_status_effect(/datum/status_effect/trance, 200, TRUE)
+
+		else if(user)
+			user.visible_message("<span class='disarm'>[user] fails to blind [M] with the flash!</span>", "<span class='warning'>You fail to hypno-flash [M]!</span>")
+		else
+			to_chat(M, "<span class='danger'>[src] fails to blind you!</span>")
+
+	else if(M.flash_act())
+		to_chat(M, "<span class='notice'>Such a pretty light...</span>")
+		M.confused += min(M.confused + 4, 20)
+		M.dizziness += min(M.dizziness + 4, 20)
+		M.drowsyness += min(M.drowsyness + 4, 20)

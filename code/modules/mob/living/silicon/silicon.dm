@@ -1,6 +1,6 @@
 /mob/living/silicon
 	gender = NEUTER
-	has_unlimited_silicon_privilege = 1
+	silicon_privileges = PRIVILEDGES_SILICON
 	verb_say = "states"
 	verb_ask = "queries"
 	verb_exclaim = "declares"
@@ -10,8 +10,11 @@
 	bubble_icon = "machine"
 	weather_immunities = list("ash")
 	possible_a_intents = list(INTENT_HELP, INTENT_HARM)
-	mob_biotypes = list(MOB_ROBOTIC)
+	mob_biotypes = MOB_ROBOTIC
 	rad_flags = RAD_PROTECT_CONTENTS | RAD_NO_CONTAMINATE
+	speech_span = SPAN_ROBOT
+	flags_1 = PREVENT_CONTENTS_EXPLOSION_1 | HEAR_1
+	vore_flags = NO_VORE
 
 	var/datum/ai_laws/laws = null//Now... THEY ALL CAN ALL HAVE LAWS
 	var/last_lawchange_announce = 0
@@ -52,6 +55,12 @@
 		diag_hud.add_to_hud(src)
 	diag_hud_set_status()
 	diag_hud_set_health()
+
+/mob/living/silicon/ComponentInitialize()
+	. = ..()
+	AddElement(/datum/element/flavor_text, _name = "Silicon Flavor Text", _save_key = "silicon_flavor_text")
+	AddElement(/datum/element/flavor_text, "", "Temporary Flavor Text", "This should be used only for things pertaining to the current round!")
+	AddElement(/datum/element/flavor_text, _name = "OOC Notes", _addendum = "Put information on ERP/vore/lewd-related preferences here. THIS SHOULD NOT CONTAIN REGULAR FLAVORTEXT!!", _always_show = TRUE, _save_key = "ooc_notes", _examine_no_preview = TRUE)
 
 /mob/living/silicon/med_hud_set_health()
 	return //we use a different hud
@@ -148,7 +157,7 @@
 			for(var/key in alarm_types_clear)
 				alarm_types_clear[key] = 0
 
-/mob/living/silicon/can_inject(mob/user, error_msg)
+/mob/living/silicon/can_inject(mob/user, error_msg, target_zone, penetrate_thick = FALSE, bypass_immunity = FALSE)
 	if(error_msg)
 		to_chat(user, "<span class='alert'>[p_their(TRUE)] outer shell is too tough.</span>")
 	return FALSE
@@ -385,6 +394,21 @@
 /mob/living/silicon/proc/GetPhoto(mob/user)
 	if (aicamera)
 		return aicamera.selectpicture(user)
+
+/mob/living/silicon/proc/ai_roster()
+	if(!client)
+		return
+	if(world.time < client.crew_manifest_delay)
+		return
+	client.crew_manifest_delay = world.time + (1 SECONDS)
+
+	var/dat = "<html><head><meta http-equiv='Content-Type' content='text/html; charset=UTF-8'><title>Crew Roster</title></head><body><b>Crew Roster:</b><br><br>"
+
+	dat += GLOB.data_core.get_manifest()
+	dat += "</body></html>"
+
+	src << browse(dat, "window=airoster")
+	onclose(src, "airoster")
 
 /mob/living/silicon/update_transform()
 	var/matrix/ntransform = matrix(transform) //aka transform.Copy()

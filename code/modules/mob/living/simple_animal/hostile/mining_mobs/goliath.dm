@@ -8,12 +8,14 @@
 	icon_aggro = "Goliath_alert"
 	icon_dead = "Goliath_dead"
 	icon_gib = "syndicate_gib"
-	mob_biotypes = list(MOB_ORGANIC, MOB_BEAST)
+	mob_biotypes = MOB_ORGANIC|MOB_BEAST
 	mouse_opacity = MOUSE_OPACITY_OPAQUE
+	threat = 2
 	move_to_delay = 10
 	ranged = 1
 	ranged_cooldown_time = 60
-	friendly = "wails at"
+	friendly_verb_continuous = "wails at"
+	friendly_verb_simple = "wail at"
 	speak_emote = list("bellows")
 	speed = 3
 	maxHealth = 300
@@ -22,20 +24,24 @@
 	obj_damage = 100
 	melee_damage_lower = 18
 	melee_damage_upper = 18
-	attacktext = "pulverizes"
+	attack_verb_continuous = "pulverizes"
+	attack_verb_simple = "pulverize"
 	attack_sound = 'sound/weapons/punch1.ogg'
 	throw_message = "does nothing to the rocky hide of the"
 	vision_range = 4
 	aggro_vision_range = 7
-	anchored = TRUE //Stays anchored until death as to be unpullable
+	move_force = MOVE_FORCE_VERY_STRONG
+	move_resist = MOVE_FORCE_VERY_STRONG
+	pull_force = MOVE_FORCE_VERY_STRONG
 	var/pre_attack = 0
 	var/pre_attack_icon = "Goliath_preattack"
 	loot = list(/obj/item/stack/sheet/animalhide/goliath_hide)
 
-	do_footstep = TRUE
+	footstep_type = FOOTSTEP_MOB_HEAVY
 
-/mob/living/simple_animal/hostile/asteroid/goliath/Life()
-	. = ..()
+/mob/living/simple_animal/hostile/asteroid/goliath/BiologicalLife(seconds, times_fired)
+	if(!(. = ..()))
+		return
 	handle_preattack()
 
 /mob/living/simple_animal/hostile/asteroid/goliath/proc/handle_preattack()
@@ -51,7 +57,9 @@
 		. = 1
 
 /mob/living/simple_animal/hostile/asteroid/goliath/death(gibbed)
-	anchored = FALSE
+	move_force = MOVE_FORCE_DEFAULT
+	move_resist = MOVE_RESIST_DEFAULT
+	pull_force = PULL_FORCE_DEFAULT
 	..(gibbed)
 
 /mob/living/simple_animal/hostile/asteroid/goliath/OpenFire()
@@ -122,9 +130,8 @@
 	var/turf/last_location
 	var/tentacle_recheck_cooldown = 100
 
-/mob/living/simple_animal/hostile/asteroid/goliath/beast/ancient/Life()
-	. = ..()
-	if(!.) // dead
+/mob/living/simple_animal/hostile/asteroid/goliath/beast/ancient/BiologicalLife(seconds, times_fired)
+	if(!(. = ..()))
 		return
 	if(isturf(loc))
 		if(!LAZYLEN(cached_tentacle_turfs) || loc != last_location || tentacle_recheck_cooldown <= world.time)
@@ -187,12 +194,12 @@
 		var/mob/living/carbon/C = L
 		var/obj/item/clothing/S = C.get_item_by_slot(SLOT_WEAR_SUIT)
 		if(S && S.resistance_flags & GOLIATH_RESISTANCE)
-			L.Stun(75)
+			L.Stun(25)
 		else if(S && S.resistance_flags & GOLIATH_WEAKNESS)
-			L.Stun(125)
+			L.Stun(115)
 		else
-			L.Stun(100)
-		L.adjustBruteLoss(rand(10,15))
+			L.Stun(75)
+		L.adjustBruteLoss(rand(15,20)) // Less stun more harm
 		latched = TRUE
 	if(!latched)
 		retract()

@@ -24,6 +24,7 @@
 	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 	w_class = WEIGHT_CLASS_TINY
+	rad_flags = RAD_PROTECT_CONTENTS //So the cartridges dont annoyingly get irradiated, and the signallers inside being radded as well
 
 	var/obj/item/integrated_signaler/radio = null
 
@@ -31,7 +32,7 @@
 
 	var/remote_door_id = ""
 
-	var/bot_access_flags = 0 //Bit flags. Selection: SEC_BOT | MULE_BOT | FLOOR_BOT | CLEAN_BOT | MED_BOT
+	var/bot_access_flags = 0 //Bit flags. Selection: SEC_BOT | MULE_BOT | FLOOR_BOT | CLEAN_BOT | MED_BOT | FIRE_BOT
 	var/spam_enabled = 0 //Enables "Send to All" Option
 
 	var/obj/item/pda/host_pda = null
@@ -65,7 +66,7 @@
 	name = "\improper BreatheDeep cartridge"
 	icon_state = "cart-a"
 	access = CART_ATMOS | CART_DRONEPHONE
-	bot_access_flags = FLOOR_BOT
+	bot_access_flags = FLOOR_BOT | FIRE_BOT
 
 /obj/item/cartridge/medical
 	name = "\improper Med-U cartridge"
@@ -87,7 +88,7 @@
 
 /obj/item/cartridge/detective
 	name = "\improper D.E.T.E.C.T. cartridge"
-	icon_state = "cart-s"
+	icon_state = "cart-eye"
 	access = CART_SECURITY | CART_MEDICAL | CART_MANIFEST
 	bot_access_flags = SEC_BOT
 
@@ -99,24 +100,27 @@
 	bot_access_flags = CLEAN_BOT
 
 /obj/item/cartridge/lawyer
-	name = "\improper P.R.O.V.E. cartridge"
-	icon_state = "cart-s"
+	name = "\improper S.P.A.M. cartridge"
+	desc = "Introducing the Station Public Announcement Messenger cartridge, featuring the unique ability to broadcast-mark messages, designed for lawyers across Nanotrasen to advertise their useful and important services."
+	icon_state = "cart-law"
 	access = CART_SECURITY
 	spam_enabled = 1
 
 /obj/item/cartridge/curator
 	name = "\improper Lib-Tweet cartridge"
-	icon_state = "cart-s"
+	icon_state = "cart-lib"
 	access = CART_NEWSCASTER
 
 /obj/item/cartridge/roboticist
 	name = "\improper B.O.O.P. Remote Control cartridge"
 	desc = "Packed with heavy duty triple-bot interlink!"
-	bot_access_flags = FLOOR_BOT | CLEAN_BOT | MED_BOT
+	icon_state = "cart-robo"
+	bot_access_flags = FLOOR_BOT | CLEAN_BOT | MED_BOT | FIRE_BOT
 	access = CART_DRONEPHONE
 
 /obj/item/cartridge/signal
 	name = "generic signaler cartridge"
+	icon_state = "cart-sig"
 	desc = "A data cartridge with an integrated radio signaler module."
 
 /obj/item/cartridge/signal/toxins
@@ -160,7 +164,7 @@
 	name = "\improper Power-On DELUXE cartridge"
 	icon_state = "cart-ce"
 	access = CART_MANIFEST | CART_STATUS_DISPLAY | CART_ENGINE | CART_ATMOS | CART_DRONEPHONE
-	bot_access_flags = FLOOR_BOT
+	bot_access_flags = FLOOR_BOT | FIRE_BOT
 
 /obj/item/cartridge/cmo
 	name = "\improper Med-U DELUXE cartridge"
@@ -172,7 +176,7 @@
 	name = "\improper Signal Ace DELUXE cartridge"
 	icon_state = "cart-rd"
 	access = CART_MANIFEST | CART_STATUS_DISPLAY | CART_REAGENT_SCANNER | CART_ATMOS | CART_DRONEPHONE
-	bot_access_flags = FLOOR_BOT | CLEAN_BOT | MED_BOT
+	bot_access_flags = FLOOR_BOT | CLEAN_BOT | MED_BOT | FIRE_BOT
 
 /obj/item/cartridge/rd/Initialize()
 	. = ..()
@@ -183,7 +187,7 @@
 	desc = "Now with 350% more value!" //Give the Captain...EVERYTHING! (Except Mime, Clown, and Syndie)
 	icon_state = "cart-c"
 	access = ~(CART_CLOWN | CART_MIME | CART_REMOTE_DOOR)
-	bot_access_flags = SEC_BOT | MULE_BOT | FLOOR_BOT | CLEAN_BOT | MED_BOT
+	bot_access_flags = SEC_BOT | MULE_BOT | FLOOR_BOT | CLEAN_BOT | MED_BOT | FIRE_BOT
 	spam_enabled = 1
 
 /obj/item/cartridge/captain/New()
@@ -306,9 +310,14 @@ Code:
 					var/list/S = list(" Off","AOff","  On", " AOn")
 					var/list/chg = list("N","C","F")
 
+//Neither copytext nor copytext_char is appropriate here; neither 30 UTF-8 code units nor 30 code points equates to 30 columns of output.
+//Some glyphs are very tall or very wide while others are small or even take up no space at all.
+//Emojis can take modifiers which are many characters but render as only one glyph.
+//A proper solution here (as far as Unicode goes, maybe not ideal as far as markup goes, a table would be better)
+//would be to use <span style="width: NNNpx; overflow: none;">[A.area.name]</span>
 					for(var/obj/machinery/power/apc/A in L)
-						menu += copytext(add_tspace(A.area.name, 30), 1, 30)
-						menu += " [S[A.equipment+1]] [S[A.lighting+1]] [S[A.environ+1]] [add_lspace(DisplayPower(A.lastused_total), 6)]  [A.cell ? "[add_lspace(round(A.cell.percent()), 3)]% [chg[A.charging+1]]" : "  N/C"]<BR>"
+						menu += copytext_char(add_trailing(A.area.name, 30, " "), 1, 30)
+						menu += " [S[A.equipment+1]] [S[A.lighting+1]] [S[A.environ+1]] [add_leading(DisplayPower(A.lastused_total), 6, " ")]  [A.cell ? "[add_leading(round(A.cell.percent()), 3, " ")]% [chg[A.charging+1]]" : "  N/C"]<BR>"
 
 				menu += "</FONT></PRE>"
 
@@ -323,7 +332,7 @@ Code:
 
 			if(active1 in GLOB.data_core.general)
 				menu += "Name: [active1.fields["name"]] ID: [active1.fields["id"]]<br>"
-				menu += "Sex: [active1.fields["sex"]]<br>"
+				menu += "Sex: [active1.fields["gender"]]<br>"
 				menu += "Age: [active1.fields["age"]]<br>"
 				menu += "Rank: [active1.fields["rank"]]<br>"
 				menu += "Fingerprint: [active1.fields["fingerprint"]]<br>"
@@ -367,7 +376,7 @@ Code:
 
 			if(active1 in GLOB.data_core.general)
 				menu += "Name: [active1.fields["name"]] ID: [active1.fields["id"]]<br>"
-				menu += "Sex: [active1.fields["sex"]]<br>"
+				menu += "Sex: [active1.fields["gender"]]<br>"
 				menu += "Age: [active1.fields["age"]]<br>"
 				menu += "Rank: [active1.fields["rank"]]<br>"
 				menu += "Fingerprint: [active1.fields["fingerprint"]]<br>"
@@ -496,6 +505,23 @@ Code:
 				else
 					menu += "[ldat]"
 
+				menu += "<h4>Pimpin' Ride:</h4>"
+
+				ldat = null
+				for (var/obj/vehicle/ridden/janicart/M in world)
+					var/turf/ml = get_turf(M)
+
+					if(ml)
+						if (ml.z != cl.z)
+							continue
+						var/direction = get_dir(src, M)
+						ldat += "Ride - <b>\[[ml.x],[ml.y] ([uppertext(dir2text(direction))])\]</b><br>"
+
+				if (!ldat)
+					menu += "None"
+				else
+					menu += "[ldat]"
+
 				menu += "<h4>Located Janitorial Cart:</h4>"
 
 				ldat = null
@@ -537,28 +563,44 @@ Code:
 		if (53) // Newscaster
 			menu = "<h4>[PDAIMG(notes)] Newscaster Access</h4>"
 			menu += "<br> Current Newsfeed: <A href='byond://?src=[REF(src)];choice=Newscaster Switch Channel'>[current_channel ? current_channel : "None"]</a> <br>"
-			var/datum/newscaster/feed_channel/current
-			for(var/datum/newscaster/feed_channel/chan in GLOB.news_network.network_channels)
+			var/datum/news/feed_channel/current
+			for(var/datum/news/feed_channel/chan in GLOB.news_network.network_channels)
 				if (chan.channel_name == current_channel)
 					current = chan
 			if(!current)
 				menu += "<h5> ERROR : NO CHANNEL FOUND </h5>"
 				return
 			var/i = 1
-			for(var/datum/newscaster/feed_message/msg in current.messages)
+			for(var/datum/news/feed_message/msg in current.messages)
 				menu +="-[msg.returnBody(-1)] <BR><FONT SIZE=1>\[Story by <FONT COLOR='maroon'>[msg.returnAuthor(-1)]</FONT>\]</FONT><BR>"
 				menu +="<b><font size=1>[msg.comments.len] comment[msg.comments.len > 1 ? "s" : ""]</font></b><br>"
 				if(msg.img)
 					user << browse_rsc(msg.img, "tmp_photo[i].png")
 					menu +="<img src='tmp_photo[i].png' width = '180'><BR>"
 				i++
-				for(var/datum/newscaster/feed_comment/comment in msg.comments)
+				for(var/datum/news/feed_comment/comment in msg.comments)
 					menu +="<font size=1><small>[comment.body]</font><br><font size=1><small><small><small>[comment.author] [comment.time_stamp]</small></small></small></small></font><br>"
 			menu += "<br> <A href='byond://?src=[REF(src)];choice=Newscaster Message'>Post Message</a>"
 
 		if (54) // Beepsky, Medibot, Floorbot, and Cleanbot access
 			menu = "<h4>[PDAIMG(medbot)] Bots Interlink</h4>"
 			bot_control()
+		if (55) // Emoji Guidebook for mimes
+			menu = "<h4>[PDAIMG(emoji)] Emoji Guidebook</h4>"
+			var/static/list/emoji_icon_states
+			var/static/emoji_table
+			if(!emoji_table)
+				var/datum/asset/spritesheet/sheet = get_asset_datum(/datum/asset/spritesheet/goonchat)
+				var/list/collate = list("<br><table>")
+				for(var/emoji in sortList(icon_states(icon('icons/emoji.dmi'))))
+					var/tag = sheet.icon_tag("emoji-[emoji]")
+					collate += "<tr><td>[emoji]</td><td>[tag]</td></tr>"
+				collate += "</table><br>"
+				emoji_table = collate.Join()
+
+			menu += "<br> To use an emoji in a pda message, refer to the guide and add \":\" around the emoji. Your PDA supports the following emoji:<br>"
+			menu += emoji_table
+
 		if (99) //Newscaster message permission error
 			menu = "<h5> ERROR : NOT AUTHORIZED [host_pda.id ? "" : "- ID SLOT EMPTY"] </h5>"
 
@@ -567,7 +609,7 @@ Code:
 /obj/item/cartridge/Topic(href, href_list)
 	..()
 
-	if(!usr.canUseTopic(src, !issilicon(usr)))
+	if(!usr.canUseTopic(src, !hasSiliconAccessInArea(usr)))
 		usr.unset_machine()
 		usr << browse(null, "window=pda")
 		return
@@ -580,6 +622,7 @@ Code:
 			host_pda.mode = 441
 			if(!active2)
 				active1 = null
+			playsound(src, 'sound/machines/terminal_select.ogg', 50, 1)
 
 		if("Security Records")
 			active1 = find_record("id", href_list["target"], GLOB.data_core.general)
@@ -588,19 +631,23 @@ Code:
 			host_pda.mode = 451
 			if(!active3)
 				active1 = null
+			playsound(src, 'sound/machines/terminal_select.ogg', 50, 1)
 
 		if("Send Signal")
 			INVOKE_ASYNC(radio, /obj/item/integrated_signaler.proc/send_activation)
+			playsound(src, 'sound/machines/terminal_select.ogg', 50, 1)
 
 		if("Signal Frequency")
 			var/new_frequency = sanitize_frequency(radio.frequency + text2num(href_list["sfreq"]))
 			radio.set_frequency(new_frequency)
+			playsound(src, 'sound/machines/terminal_select.ogg', 50, 1)
 
 		if("Signal Code")
 			radio.code += text2num(href_list["scode"])
 			radio.code = round(radio.code)
 			radio.code = min(100, radio.code)
 			radio.code = max(1, radio.code)
+			playsound(src, 'sound/machines/terminal_select.ogg', 50, 1)
 
 		if("Status")
 			switch(href_list["statdisp"])
@@ -616,22 +663,27 @@ Code:
 					updateSelfDialog()
 				else
 					post_status(href_list["statdisp"])
+			playsound(src, 'sound/machines/terminal_select.ogg', 50, 1)
+
 		if("Power Select")
 			var/pnum = text2num(href_list["target"])
 			powmonitor = powermonitors[pnum]
 			host_pda.mode = 433
+			playsound(src, 'sound/machines/terminal_select.ogg', 50, 1)
 
 		if("Supply Orders")
 			host_pda.mode =47
+			playsound(src, 'sound/machines/terminal_select.ogg', 50, 1)
 
 		if("Newscaster Access")
 			host_pda.mode = 53
+			playsound(src, 'sound/machines/terminal_select.ogg', 50, 1)
 
 		if("Newscaster Message")
 			var/host_pda_owner_name = host_pda.id ? "[host_pda.id.registered_name] ([host_pda.id.assignment])" : "Unknown"
 			var/message = host_pda.msg_input()
-			var/datum/newscaster/feed_channel/current
-			for(var/datum/newscaster/feed_channel/chan in GLOB.news_network.network_channels)
+			var/datum/news/feed_channel/current
+			for(var/datum/news/feed_channel/chan in GLOB.news_network.network_channels)
 				if (chan.channel_name == current_channel)
 					current = chan
 			if(current.locked && current.author != host_pda_owner_name)
@@ -640,12 +692,19 @@ Code:
 				return
 			GLOB.news_network.SubmitArticle(message,host_pda.owner,current_channel)
 			host_pda.Topic(null,list("choice"=num2text(host_pda.mode)))
+			playsound(src, 'sound/machines/terminal_select.ogg', 50, 1)
 			return
 
 		if("Newscaster Switch Channel")
 			current_channel = host_pda.msg_input()
 			host_pda.Topic(null,list("choice"=num2text(host_pda.mode)))
+			playsound(src, 'sound/machines/terminal_select.ogg', 50, 1)
 			return
+
+	//emoji previews
+	if(href_list["emoji"])
+		var/parse = emoji_parse(":[href_list["emoji"]]:")
+		to_chat(usr, parse)
 
 	//Bot control section! Viciously ripped from radios for being laggy and terrible.
 	if(href_list["op"])
@@ -656,14 +715,18 @@ Code:
 
 			if("botlist")
 				active_bot = null
+
 			if("summon") //Args are in the correct order, they are stated here just as an easy reminder.
-				active_bot.bot_control(command= "summon", user_turf= get_turf(usr), user_access= host_pda.GetAccess())
+				active_bot.bot_control("summon", usr, host_pda.GetAccess())
+
 			else //Forward all other bot commands to the bot itself!
-				active_bot.bot_control(command= href_list["op"], user= usr)
+				active_bot.bot_control(href_list["op"], usr)
+		playsound(src, 'sound/machines/terminal_select.ogg', 50, 1)
 
 	if(href_list["mule"]) //MULEbots are special snowflakes, and need different args due to how they work.
-
-		active_bot.bot_control(command= href_list["mule"], user= usr, pda= 1)
+		var/mob/living/simple_animal/bot/mulebot/mule = active_bot
+		if (istype(mule))
+			active_bot.bot_control(href_list["mule"], usr, TRUE)
 
 	if(!host_pda)
 		return
@@ -738,4 +801,4 @@ Code:
 	return ""
 
 //This is called for special abilities of cartridges
-/obj/item/cartridge/proc/special(mov/living/user, list/params)
+/obj/item/cartridge/proc/special(mob/living/user, list/params)

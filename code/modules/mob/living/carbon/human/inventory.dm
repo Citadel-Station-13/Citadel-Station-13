@@ -1,5 +1,32 @@
-/mob/living/carbon/human/can_equip(obj/item/I, slot, disable_warning = FALSE, bypass_equip_delay_self = FALSE)
-	return dna.species.can_equip(I, slot, disable_warning, src, bypass_equip_delay_self)
+/mob/living/carbon/human/can_equip(obj/item/I, slot, disable_warning = FALSE, bypass_equip_delay_self = FALSE, clothing_check = FALSE, list/return_warning)
+	return dna.species.can_equip(I, slot, disable_warning, src, bypass_equip_delay_self, clothing_check, return_warning)
+
+/mob/living/carbon/human/get_equipped_items(include_pockets = FALSE)
+	var/list/items = ..()
+	if(belt)
+		items += belt
+	if(ears)
+		items += ears
+	if(glasses)
+		items += glasses
+	if(gloves)
+		items += gloves
+	if(shoes)
+		items += shoes
+	if(wear_id)
+		items += wear_id
+	if(wear_suit)
+		items += wear_suit
+	if(w_uniform)
+		items += w_uniform
+	if(include_pockets)
+		if(l_store)
+			items += l_store
+		if(r_store)
+			items += r_store
+		if(s_store)
+			items += s_store
+	return items
 
 // Return the item currently in the slot ID
 /mob/living/carbon/human/get_item_by_slot(slot_id)
@@ -79,7 +106,8 @@
 
 //This is an UNSAFE proc. Use mob_can_equip() before calling this one! Or rather use equip_to_slot_if_possible() or advanced_equip_to_slot_if_possible()
 /mob/living/carbon/human/equip_to_slot(obj/item/I, slot)
-	if(!..()) //a check failed or the item has already found its slot
+	. = ..()
+	if(!.) //a check failed or the item has already found its slot
 		return
 
 	var/not_handled = FALSE //Added in case we make this type path deeper one day
@@ -136,12 +164,19 @@
 			update_inv_s_store()
 		else
 			to_chat(src, "<span class='danger'>You are trying to equip this item to an unsupported inventory slot. Report this to a coder!</span>")
+			not_handled = TRUE
 
 	//Item is handled and in slot, valid to call callback, for this proc should always be true
 	if(!not_handled)
 		I.equipped(src, slot)
 
 	return not_handled //For future deeper overrides
+
+/mob/living/carbon/human/equipped_speed_mods()
+	. = ..()
+	for(var/sloties in get_all_slots() - list(l_store, r_store, s_store))
+		var/obj/item/thing = sloties
+		. += thing?.slowdown
 
 /mob/living/carbon/human/doUnEquip(obj/item/I, force, newloc, no_move, invdrop = TRUE)
 	var/index = get_held_index_of_item(I)
@@ -167,9 +202,9 @@
 				dropItemToGround(r_store, TRUE) //Again, makes sense for pockets to drop.
 			if(l_store)
 				dropItemToGround(l_store, TRUE)
-			if(wear_id)
+			if(wear_id && !CHECK_BITFIELD(wear_id.item_flags, NO_UNIFORM_REQUIRED))
 				dropItemToGround(wear_id)
-			if(belt)
+			if(belt && !CHECK_BITFIELD(belt.item_flags, NO_UNIFORM_REQUIRED))
 				dropItemToGround(belt)
 		w_uniform = null
 		update_suit_sensors()
@@ -187,9 +222,8 @@
 		if(G.tint)
 			update_tint()
 		if(G.vision_correction)
-			if(has_trait(TRAIT_NEARSIGHT))
+			if(HAS_TRAIT(src, TRAIT_NEARSIGHT))
 				overlay_fullscreen("nearsighted", /obj/screen/fullscreen/impaired, 1)
-			adjust_eye_damage(0)
 		if(G.vision_flags || G.darkness_view || G.invis_override || G.invis_view || !isnull(G.lighting_alpha))
 			update_sight()
 		if(!QDELETED(src))
@@ -249,7 +283,7 @@
 	sec_hud_set_security_status()
 	..()
 
-/mob/living/carbon/human/proc/equipOutfit(outfit, visualsOnly = FALSE)
+/mob/living/carbon/human/proc/equipOutfit(outfit, visualsOnly = FALSE, client/preference_source)
 	var/datum/outfit/O = null
 
 	if(ispath(outfit))
@@ -261,7 +295,7 @@
 	if(!O)
 		return 0
 
-	return O.equip(src, visualsOnly)
+	return O.equip(src, visualsOnly, preference_source)
 
 
 //delete all equipment without dropping anything
@@ -270,3 +304,65 @@
 		qdel(slot)
 	for(var/obj/item/I in held_items)
 		qdel(I)
+
+/mob/living/carbon/human/proc/smart_equipbag() // take most recent item out of bag or place held item in bag
+	if(incapacitated())
+		return
+	var/obj/item/thing = get_active_held_item()
+	var/obj/item/equipped_back = get_item_by_slot(SLOT_BACK)
+	if(!equipped_back) // We also let you equip a backpack like this
+		if(!thing)
+			to_chat(src, "<span class='warning'>You have no backpack to take something out of!</span>")
+			return
+		if(equip_to_slot_if_possible(thing, ITEM_SLOT_BACK))
+			update_inv_hands()
+		return
+	if(!SEND_SIGNAL(equipped_back, COMSIG_CONTAINS_STORAGE)) // not a storage item
+		if(!thing)
+			equipped_back.attack_hand(src)
+		else
+			to_chat(src, "<span class='warning'>You can't fit anything in!</span>")
+		return
+	if(thing) // put thing in backpack
+		if(!SEND_SIGNAL(equipped_back, COMSIG_TRY_STORAGE_INSERT, thing, src))
+			to_chat(src, "<span class='warning'>You can't fit anything in!</span>")
+		return
+	if(!equipped_back.contents.len) // nothing to take out
+		to_chat(src, "<span class='warning'>There's nothing in your backpack to take out!</span>")
+		return
+	var/obj/item/stored = equipped_back.contents[equipped_back.contents.len]
+	if(!stored || stored.on_found(src))
+		return
+	stored.attack_hand(src) // take out thing from backpack
+	return
+
+/mob/living/carbon/human/proc/smart_equipbelt() // put held thing in belt or take most recent item out of belt
+	if(incapacitated())
+		return
+	var/obj/item/thing = get_active_held_item()
+	var/obj/item/equipped_belt = get_item_by_slot(SLOT_BELT)
+	if(!equipped_belt) // We also let you equip a belt like this
+		if(!thing)
+			to_chat(src, "<span class='warning'>You have no belt to take something out of!</span>")
+			return
+		if(equip_to_slot_if_possible(thing, ITEM_SLOT_BELT))
+			update_inv_hands()
+		return
+	if(!SEND_SIGNAL(equipped_belt, COMSIG_CONTAINS_STORAGE)) // not a storage item
+		if(!thing)
+			equipped_belt.attack_hand(src)
+		else
+			to_chat(src, "<span class='warning'>You can't fit anything in!</span>")
+		return
+	if(thing) // put thing in belt
+		if(!SEND_SIGNAL(equipped_belt, COMSIG_TRY_STORAGE_INSERT, thing, src))
+			to_chat(src, "<span class='warning'>You can't fit anything in!</span>")
+		return
+	if(!equipped_belt.contents.len) // nothing to take out
+		to_chat(src, "<span class='warning'>There's nothing in your belt to take out!</span>")
+		return
+	var/obj/item/stored = equipped_belt.contents[equipped_belt.contents.len]
+	if(!stored || stored.on_found(src))
+		return
+	stored.attack_hand(src) // take out thing from belt
+	return

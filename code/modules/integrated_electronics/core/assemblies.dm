@@ -9,7 +9,7 @@
 	icon = 'icons/obj/assemblies/electronic_setups.dmi'
 	icon_state = "setup_small"
 	item_flags = NOBLUDGEON
-	materials = list()		// To be filled later
+	custom_materials = null		// To be filled later
 	datum_flags = DF_USE_TAG
 	var/list/assembly_components = list()
 	var/list/ckeys_allowed_to_scan = list() // Players who built the circuit can scan it as a ghost.
@@ -65,21 +65,23 @@
 	src.max_complexity = round(max_complexity)
 
 /obj/item/electronic_assembly/GenerateTag()
-    tag = "assembly_[next_assembly_id++]"
+	tag = "assembly_[next_assembly_id++]"
 
 /obj/item/electronic_assembly/examine(mob/user)
 	. = ..()
 	if(can_anchor)
-		to_chat(user, "<span class='notice'>The anchoring bolts [anchored ? "are" : "can be"] <b>wrenched</b> in place and the maintenance panel [opened ? "can be" : "is"] <b>screwed</b> in place.</span>")
+		. += "<span class='notice'>The anchoring bolts [anchored ? "are" : "can be"] <b>wrenched</b> in place and the maintenance panel [opened ? "can be" : "is"] <b>screwed</b> in place.</span>"
 	else
-		to_chat(user, "<span class='notice'>The maintenance panel [opened ? "can be" : "is"] <b>screwed</b> in place.</span>")
+		. += "<span class='notice'>The maintenance panel [opened ? "can be" : "is"] <b>screwed</b> in place.</span>"
 
 	if((isobserver(user) && ckeys_allowed_to_scan[user.ckey]) || IsAdminGhost(user))
-		to_chat(user, "You can <a href='?src=[REF(src)];ghostscan=1'>scan</a> this circuit.")
+		. += "You can <a href='?src=[REF(src)];ghostscan=1'>scan</a> this circuit."
 
 	for(var/I in assembly_components)
 		var/obj/item/integrated_circuit/IC = I
-		IC.external_examine(user)
+		var/text = IC.external_examine(user)
+		if(text)
+			. += text
 	if(opened)
 		interact(user)
 
@@ -95,9 +97,9 @@
 			D.open()
 
 /obj/item/electronic_assembly/Initialize()
+	LAZYSET(custom_materials, /datum/material/iron, round((max_complexity + max_components) * 0.25) * SScircuit.cost_multiplier)
 	.=..()
 	START_PROCESSING(SScircuit, src)
-	materials[MAT_METAL] = round((max_complexity + max_components) / 4) * SScircuit.cost_multiplier
 
 	//sets up diagnostic hud view
 	prepare_huds()
@@ -149,7 +151,7 @@
 	var/total_complexity = return_total_complexity()
 	var/HTML = ""
 
-	HTML += "<html><head><title>[name]</title></head><body>"
+	HTML += "<html><head><meta http-equiv='Content-Type' content='text/html; charset=UTF-8'><title>[name]</title></head><body>"
 
 	HTML += "<a href='?src=[REF(src)]'>\[Refresh\]</a>  |  <a href='?src=[REF(src)];rename=1'>\[Rename\]</a><br>"
 	HTML += "[total_part_size]/[max_components] ([round((total_part_size / max_components) * 100, 0.1)]%) space taken up in the assembly.<br>"
@@ -305,17 +307,17 @@
 /obj/item/electronic_assembly/proc/can_move()
 	return FALSE
 
-/obj/item/electronic_assembly/update_icon()
+/obj/item/electronic_assembly/update_icon_state()
 	if(opened)
 		icon_state = initial(icon_state) + "-open"
 	else
 		icon_state = initial(icon_state)
-	cut_overlays()
+
+/obj/item/electronic_assembly/update_overlays()
+	. = ..()
 	if(detail_color == COLOR_ASSEMBLY_BLACK) //Black colored overlay looks almost but not exactly like the base sprite, so just cut the overlay and avoid it looking kinda off.
 		return
-	var/mutable_appearance/detail_overlay = mutable_appearance('icons/obj/assemblies/electronic_setups.dmi', "[icon_state]-color")
-	detail_overlay.color = detail_color
-	add_overlay(detail_overlay)
+	. += mutable_appearance('icons/obj/assemblies/electronic_setups.dmi', "[icon_state]-color", color = detail_color)
 
 /obj/item/electronic_assembly/proc/return_total_complexity()
 	. = 0
@@ -517,6 +519,7 @@
 
 
 /obj/item/electronic_assembly/attack_self(mob/user)
+	set waitfor = FALSE
 	if(!check_interactivity(user))
 		return
 	if(opened)
@@ -609,14 +612,19 @@
 		return
 	..()
 
-/obj/item/electronic_assembly/attack_hand(mob/user)
+/obj/item/electronic_assembly/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	if(anchored)
 		attack_self(user)
 		return
 	..()
 
+/obj/item/electronic_assembly/can_trigger_gun(mob/living/user) //sanity checks against pocket death weapon circuits
+	if(!can_fire_equipped || !user.is_holding(src))
+		return FALSE
+	return ..()
+
 /obj/item/electronic_assembly/default //The /default electronic_assemblys are to allow the introduction of the new naming scheme without breaking old saves.
-  name = "type-a electronic assembly"
+	name = "type-a electronic assembly"
 
 /obj/item/electronic_assembly/calc
 	name = "type-b electronic assembly"
@@ -642,6 +650,11 @@
 	name = "type-f electronic assembly"
 	icon_state = "setup_small_pda"
 	desc = "It's a case, for building small electronics with. This one resembles a PDA."
+
+/obj/item/electronic_assembly/dildo
+	name = "type-g electronic assembly"
+	icon_state = "setup_dildo_medium"
+	desc = "It's a case, for building small electronics with. This one has a phallic design."
 
 /obj/item/electronic_assembly/small
 	name = "electronic device"
@@ -673,6 +686,11 @@
 	name = "type-e electronic device"
 	icon_state = "setup_device_box"
 	desc = "It's a case, for building tiny-sized electronics with. This one has a boxy design."
+
+/obj/item/electronic_assembly/small/dildo
+	name = "type-f electronic device"
+	icon_state = "setup_dildo_small"
+	desc = "It's a case, for building tiny-sized electronics with. This one has a phallic design."
 
 /obj/item/electronic_assembly/medium
 	name = "electronic mechanism"
@@ -713,6 +731,12 @@
 	name = "type-f electronic mechanism"
 	icon_state = "setup_medium_radio"
 	desc = "It's a case, for building medium-sized electronics with. This one resembles an old radio."
+
+/obj/item/electronic_assembly/medium/dildo
+	name = "type-g electronic mechanism"
+	icon_state = "setup_dildo_large"
+	desc = "It's a case, for building medium-sized electronics with. This one has a phallic design."
+
 
 /obj/item/electronic_assembly/large
 	name = "electronic machine"
@@ -850,3 +874,8 @@
 			pixel_x = -31
 		if(WEST)
 			pixel_x = 31
+	plane = ABOVE_WALL_PLANE
+
+/obj/item/electronic_assembly/wallmount/Moved(atom/OldLoc, Dir, Forced = FALSE) //reset the plane if moved off the wall.
+	. = ..()
+	plane = GAME_PLANE

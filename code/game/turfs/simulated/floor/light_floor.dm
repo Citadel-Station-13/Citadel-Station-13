@@ -14,8 +14,8 @@
 
 
 /turf/open/floor/light/examine(mob/user)
-	..()
-	to_chat(user, "<span class='notice'>There's a <b>small crack</b> on the edge of it.</span>")
+	. = ..()
+	. += "<span class='notice'>There's a <b>small crack</b> on the edge of it.</span>"
 
 /turf/open/floor/light/Initialize()
 	. = ..()
@@ -52,10 +52,7 @@
 	set_light(0)
 	return ..()
 
-/turf/open/floor/light/attack_hand(mob/user)
-	. = ..()
-	if(.)
-		return
+/turf/open/floor/light/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	if(!can_modify_colour)
 		return
 	if(!on)

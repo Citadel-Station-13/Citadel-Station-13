@@ -14,7 +14,7 @@
 /obj/effect/dummy/phased_mob/slaughter/ex_act()
 	return
 /obj/effect/dummy/phased_mob/slaughter/bullet_act()
-	return
+	return BULLET_ACT_FORCE_PIERCE
 
 /obj/effect/dummy/phased_mob/slaughter/singularity_act()
 	return
@@ -37,10 +37,10 @@
 		C.put_in_hands(B1)
 		C.put_in_hands(B2)
 		C.regenerate_icons()
-	src.notransform = TRUE
+	src.mob_transforming = TRUE
 	spawn(0)
 		bloodpool_sink(B)
-		src.notransform = FALSE
+		src.mob_transforming = FALSE
 	return 1
 
 /mob/living/proc/bloodpool_sink(obj/effect/decal/cleanable/B)
@@ -73,7 +73,7 @@
 
 	if(victim.stat == CONSCIOUS)
 		src.visible_message("<span class='warning'>[victim] kicks free of the blood pool just before entering it!</span>", null, "<span class='notice'>You hear splashing and struggling.</span>")
-	else if(victim.reagents && victim.reagents.has_reagent("demonsblood"))
+	else if(victim.reagents?.has_reagent(/datum/reagent/consumable/ethanol/demonsblood))
 		visible_message("<span class='warning'>Something prevents [victim] from entering the pool!</span>", "<span class='warning'>A strange force is blocking [victim] from entering!</span>", "<span class='notice'>You hear a splash and a thud.</span>")
 	else
 		victim.forceMove(src)
@@ -104,7 +104,7 @@
 	if(!victim)
 		return FALSE
 
-	if(victim.reagents && victim.reagents.has_reagent("devilskiss"))
+	if(victim.reagents?.has_reagent(/datum/reagent/consumable/ethanol/devilskiss))
 		to_chat(src, "<span class='warning'><b>AAH! THEIR FLESH! IT BURNS!</b></span>")
 		adjustBruteLoss(25) //I can't use adjustHealth() here because bloodcrawl affects /mob/living and adjustHealth() only affects simple mobs
 		var/found_bloodpool = FALSE
@@ -138,21 +138,24 @@
 	name = "blood crawl"
 	desc = "You are unable to hold anything while in this form."
 	icon = 'icons/effects/blood.dmi'
-	item_flags = NODROP | ABSTRACT
+	item_flags = ABSTRACT
+
+/obj/item/bloodcrawl/Initialize()
+	. = ..()
+	ADD_TRAIT(src, TRAIT_NODROP, ABSTRACT_ITEM_TRAIT)
 
 /mob/living/proc/exit_blood_effect(obj/effect/decal/cleanable/B)
 	playsound(get_turf(src), 'sound/magic/exit_blood.ogg', 100, 1, -1)
 	//Makes the mob have the color of the blood pool it came out of
-	var/newcolor = rgb(149, 10, 10)
-	if(istype(B, /obj/effect/decal/cleanable/xenoblood))
-		newcolor = rgb(43, 186, 0)
+	var/newcolor = BLOOD_COLOR_HUMAN
+	if(istype(B, /obj/effect/decal/cleanable/blood/xeno))
+		newcolor = BLOOD_COLOR_XENO
 	add_atom_colour(newcolor, TEMPORARY_COLOUR_PRIORITY)
 	// but only for a few seconds
-	spawn(30)
-		remove_atom_colour(TEMPORARY_COLOUR_PRIORITY, newcolor)
+	addtimer(CALLBACK(src, /atom/.proc/remove_atom_colour, TEMPORARY_COLOUR_PRIORITY, newcolor), 6 SECONDS)
 
 /mob/living/proc/phasein(obj/effect/decal/cleanable/B)
-	if(src.notransform)
+	if(src.mob_transforming)
 		to_chat(src, "<span class='warning'>Finish eating first!</span>")
 		return 0
 	B.visible_message("<span class='warning'>[B] starts to bubble...</span>")
@@ -161,7 +164,7 @@
 	if(!B)
 		return
 	forceMove(B.loc)
-	src.client.eye = src
+	reset_perspective(src)
 	src.visible_message("<span class='warning'><B>[src] rises out of the pool of blood!</B></span>")
 	exit_blood_effect(B)
 	if(iscarbon(src))

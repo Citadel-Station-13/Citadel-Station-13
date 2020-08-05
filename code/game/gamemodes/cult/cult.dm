@@ -3,8 +3,11 @@
 /datum/game_mode
 	var/list/datum/mind/cult = list()
 
-/proc/iscultist(mob/living/M)
-	return istype(M) && M.mind && M.mind.has_antag_datum(/datum/antagonist/cult)
+/proc/iscultist(mob/living/M, require_full_power = FALSE, holy_water_check = FALSE)
+	if(!istype(M))
+		return FALSE
+	var/datum/antagonist/cult/D = M?.mind?.has_antag_datum(/datum/antagonist/cult)
+	return D && (!require_full_power || !D.neutered) && (!holy_water_check || !D.ignore_holy_water)
 
 /datum/team/cult/proc/is_sacrifice_target(datum/mind/mind)
 	for(var/datum/objective/sacrifice/sac_objective in objectives)
@@ -16,7 +19,7 @@
 	if(!istype(M))
 		return FALSE
 	if(M.mind)
-		if(ishuman(M) && (M.mind.assigned_role in list("Captain", "Chaplain")))
+		if(M.mind.assigned_role in list("Captain", "Chaplain"))
 			return FALSE
 		if(specific_cult && specific_cult.is_sacrifice_target(M.mind))
 			return FALSE
@@ -26,7 +29,7 @@
 			return FALSE
 	else
 		return FALSE
-	if(M.has_trait(TRAIT_MINDSHIELD) || issilicon(M) || isbot(M) || isdrone(M) || is_servant_of_ratvar(M) || !M.client)
+	if(HAS_TRAIT(M, TRAIT_MINDSHIELD) || issilicon(M) || isbot(M) || isdrone(M) || is_servant_of_ratvar(M) || !M.client)
 		return FALSE //can't convert machines, shielded, braindead, or ratvar's dogs
 	return TRUE
 
@@ -35,12 +38,12 @@
 	config_tag = "cult"
 	antag_flag = ROLE_CULTIST
 	false_report_weight = 10
-	restricted_jobs = list("Chaplain","AI", "Cyborg", "Security Officer", "Warden", "Detective", "Head of Security", "Captain", "Head of Personnel")
-	protected_jobs = list()
-	required_players = 24
-	required_enemies = 4
-	recommended_enemies = 4
-	enemy_minimum_age = 14
+	restricted_jobs = list("AI", "Cyborg")
+	protected_jobs = list("Security Officer", "Warden", "Detective", "Head of Security", "Captain", "Head of Personnel", "Chief Engineer", "Chief Medical Officer", "Research Director", "Quartermaster")
+	required_players = 30
+	required_enemies = 3
+	recommended_enemies = 5
+	enemy_minimum_age = 7
 
 	announce_span = "cult"
 	announce_text = "Some crew members are trying to start a cult to Nar'Sie!\n\
@@ -93,7 +96,7 @@
 		add_cultist(cult_mind, 0, equip=TRUE)
 		if(!main_cult)
 			var/datum/antagonist/cult/C = cult_mind.has_antag_datum(/datum/antagonist/cult,TRUE)
-			if(C && C.cult_team)
+			if(C?.cult_team)
 				main_cult = C.cult_team
 	..()
 

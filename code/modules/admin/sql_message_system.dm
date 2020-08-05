@@ -393,7 +393,7 @@
 			var/nsd = CONFIG_GET(number/note_stale_days)
 			var/nfd = CONFIG_GET(number/note_fresh_days)
 			if (agegate && type == "note" && isnum(nsd) && isnum(nfd) && nsd > nfd)
-				var/alpha = CLAMP(100 - (age - nfd) * (85 / (nsd - nfd)), 15, 100)
+				var/alpha = clamp(100 - (age - nfd) * (85 / (nsd - nfd)), 15, 100)
 				if (alpha < 100)
 					if (alpha <= 15)
 						if (skipped)
@@ -504,7 +504,7 @@
 		output += ruler
 	var/datum/browser/browser = new(usr, "Note panel", "Manage player notes", 1000, 500)
 	var/datum/asset/notes_assets = get_asset_datum(/datum/asset/simple/notes)
-	notes_assets.send(src)
+	notes_assets.send(usr.client)
 	browser.set_content(jointext(output, ""))
 	browser.open()
 
@@ -556,7 +556,7 @@
 /proc/convert_notes_sql(ckey)
 	if(!fexists(NOTESFILE))
 		return
-		
+
 	var/savefile/notesfile = new(NOTESFILE)
 	if(!notesfile)
 		log_game("Error: Cannot access [NOTESFILE]")

@@ -8,6 +8,8 @@
 	job_rank = ROLE_MONKEY
 	roundend_category = "monkeys"
 	antagpanel_category = "Monkey"
+	threat = 3
+	show_to_ghosts = TRUE
 	var/datum/team/monkey/monkey_team
 	var/monkey_only = TRUE
 
@@ -63,7 +65,6 @@
 
 /datum/antagonist/monkey/proc/forge_objectives()
 	objectives |= monkey_team.objectives
-	owner.objectives |= objectives
 
 /datum/antagonist/monkey/admin_remove(mob/admin)
 	var/mob/living/carbon/monkey/M = owner.current
@@ -82,6 +83,7 @@
 
 /datum/antagonist/monkey/leader
 	name = "Monkey Leader"
+	threat = 5
 	monkey_only = FALSE
 
 /datum/antagonist/monkey/leader/admin_add(datum/mind/new_owner,mob/admin)

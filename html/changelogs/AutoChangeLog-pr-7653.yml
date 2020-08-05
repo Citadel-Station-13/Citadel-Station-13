@@ -1,4 +1,0 @@
-author: "deathride58"
-delete-after: True
-changes: 
-  - bugfix: "You can no longer abuse an href exploit to return from the labor camp before obtaining enough points to satisfy your point goal."

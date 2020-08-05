@@ -1,10 +1,9 @@
+/// Checks if something is a BYOND object datatype rather than a primitive, or whatever's closest to one.
+#define is_object_datatype(object)		(object && !ispath(object) && !istext(object) && !isnum(object))
+
 // simple is_type and similar inline helpers
 
-#define islist(L) (istype(L, /list))
-
 #define in_range(source, user) (get_dist(source, user) <= 1 && (get_step(source, 0)?:z) == (get_step(user, 0)?:z))
-
-#define ismovableatom(A) (istype(A, /atom/movable))
 
 #define isatom(A) (isloc(A))
 
@@ -12,6 +11,16 @@
 
 //Turfs
 //#define isturf(A) (istype(A, /turf)) This is actually a byond built-in. Added here for completeness sake.
+
+GLOBAL_LIST_INIT(turfs_without_ground, typecacheof(list(
+	/turf/open/space,
+	/turf/open/chasm,
+	/turf/open/lava,
+	/turf/open/water,
+	/turf/open/openspace
+	)))
+
+#define isgroundlessturf(A) (is_type_in_typecache(A, GLOB.turfs_without_ground))
 
 #define isopenturf(A) (istype(A, /turf/open))
 
@@ -50,15 +59,29 @@
 #define isgolem(A) (is_species(A, /datum/species/golem))
 #define islizard(A) (is_species(A, /datum/species/lizard))
 #define isplasmaman(A) (is_species(A, /datum/species/plasmaman))
-#define ispodperson(A) (is_species(A, /datum/species/podperson))
+#define ispodperson(A) (is_species(A, /datum/species/pod))
 #define isflyperson(A) (is_species(A, /datum/species/fly))
 #define isjellyperson(A) (is_species(A, /datum/species/jelly))
 #define isslimeperson(A) (is_species(A, /datum/species/jelly/slime))
 #define isluminescent(A) (is_species(A, /datum/species/jelly/luminescent))
 #define iszombie(A) (is_species(A, /datum/species/zombie))
-#define ismoth(A) (is_species(A, /datum/species/moth))
 #define ishumanbasic(A) (is_species(A, /datum/species/human))
-#define iscatperson(A) (ishumanbasic(A) && istype(A.dna.species, /datum/species/human/felinid) )
+#define iscatperson(A) (ishumanbasic(A) && istype(A.dna.species, /datum/species/human/felinid))
+#define isdwarf(A) (is_species(A, /datum/species/dwarf))
+#define isdullahan(A) (is_species(A, /datum/species/dullahan))
+#define isangel(A) (is_species(A, /datum/species/angel))
+#define isvampire(A) (is_species(A, /datum/species/vampire))
+#define ismush(A) (is_species(A, /datum/species/mush))
+#define isshadow(A) (is_species(A, /datum/species/shadow))
+#define isskeleton(A) (is_species(A, /datum/species/skeleton))
+
+// Citadel specific species
+#define isipcperson(A) (is_species(A, /datum/species/ipc))
+#define issynthliz(A) (is_species(A, /datum/species/synthliz))
+#define ismammal(A) (is_species(A, /datum/species/mammal))
+#define isinsect(A) (is_species(A, /datum/species/insect))
+#define isxenoperson(A) (is_species(A, /datum/species/xeno))
+#define isstartjelly(A) (is_species(A, /datum/species/jelly/roundstartslime))
 
 //more carbon mobs
 #define ismonkey(A) (istype(A, /mob/living/carbon/monkey))
@@ -67,7 +90,7 @@
 
 #define islarva(A) (istype(A, /mob/living/carbon/alien/larva))
 
-#define isalienadult(A) (istype(A, /mob/living/carbon/alien/humanoid))
+#define isalienadult(A) (istype(A, /mob/living/carbon/alien/humanoid) || istype(A, /mob/living/simple_animal/hostile/alien))
 
 #define isalienhunter(A) (istype(A, /mob/living/carbon/alien/humanoid/hunter))
 
@@ -101,11 +124,15 @@
 
 #define ismouse(A) (istype(A, /mob/living/simple_animal/mouse))
 
+#define iscow(A) (istype(A, /mob/living/simple_animal/cow))
+
 #define isslime(A) (istype(A, /mob/living/simple_animal/slime))
 
 #define isdrone(A) (istype(A, /mob/living/simple_animal/drone))
 
 #define iscat(A) (istype(A, /mob/living/simple_animal/pet/cat))
+
+#define isdog(A) (istype(A, /mob/living/simple_animal/pet/dog))
 
 #define iscorgi(A) (istype(A, /mob/living/simple_animal/pet/dog/corgi))
 
@@ -134,12 +161,31 @@
 
 #define iscameramob(A) (istype(A, /mob/camera))
 
+#define isaicamera(A) (istype(A, /mob/camera/aiEye))
+
 #define iseminence(A) (istype(A, /mob/camera/eminence))
+
+//Footstep helpers
+#define isshoefoot(A) (is_type_in_typecache(A, GLOB.shoefootmob))
+
+#define isclawfoot(A) (is_type_in_typecache(A, GLOB.clawfootmob))
+
+#define isbarefoot(A) (is_type_in_typecache(A, GLOB.barefootmob))
+
+#define isheavyfoot(A) (is_type_in_typecache(A, GLOB.heavyfootmob))
 
 //Objects
 #define isobj(A) istype(A, /obj) //override the byond proc because it returns true on children of /atom/movable that aren't objs
 
 #define isitem(A) (istype(A, /obj/item))
+
+#define isgrenade(A) (istype(A, /obj/item/grenade))
+
+#define islandmine(A) (istype(A, /obj/effect/mine))
+
+#define isammocasing(A) (istype(A, /obj/item/ammo_casing))
+
+#define isidcard(I) (istype(I, /obj/item/card/id))
 
 #define isstructure(A) (istype(A, /obj/structure))
 
@@ -151,15 +197,15 @@
 
 #define isorgan(A) (istype(A, /obj/item/organ))
 
-GLOBAL_LIST_INIT(pointed_types, typecacheof(list(
-	/obj/item/pen,
-	/obj/item/screwdriver,
-	/obj/item/reagent_containers/syringe,
-	/obj/item/kitchen/fork)))
-
-#define is_pointed(W) (is_type_in_typecache(W, GLOB.pointed_types))
+#define isclothing(A) (istype(A, /obj/item/clothing))
 
 #define isbodypart(A) (istype(A, /obj/item/bodypart))
+
+#define isprojectile(A) (istype(A, /obj/item/projectile))
+
+#define isgun(A) (istype(A, /obj/item/gun))
+
+#define isfood(A) (istype(A, /obj/item/reagent_containers/food/snacks))
 
 //Assemblies
 #define isassembly(O) (istype(O, /obj/item/assembly))

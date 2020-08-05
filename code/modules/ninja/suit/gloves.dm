@@ -37,6 +37,7 @@
 	var/mindrain = 200
 	var/maxdrain = 400
 
+	var/stunforce = 100
 
 /obj/item/clothing/gloves/space_ninja/Touch(atom/A,proximity)
 	if(!candrain || draining)
@@ -66,9 +67,13 @@
 			to_chat(H, "<span class='notice'>Gained <B>[DisplayEnergy(.)]</B> of energy from [A].</span>")
 		else
 			to_chat(H, "<span class='danger'>\The [A] has run dry of energy, you must find another source!</span>")
+		. = INTERRUPT_UNARMED_ATTACK
 	else
 		. = FALSE	//as to not cancel attack_hand()
 
+/obj/item/clothing/gloves/space_ninja/dropped(mob/user)
+	. = ..()
+	REMOVE_TRAIT(src, TRAIT_NODROP, NINJA_SUIT_TRAIT)
 
 /obj/item/clothing/gloves/space_ninja/proc/toggledrain()
 	var/mob/living/carbon/human/U = loc
@@ -76,6 +81,6 @@
 	candrain=!candrain
 
 /obj/item/clothing/gloves/space_ninja/examine(mob/user)
-	..()
-	if(item_flags & NODROP)
-		to_chat(user, "The energy drain mechanism is <B>[candrain?"active":"inactive"]</B>.")
+	. = ..()
+	if(HAS_TRAIT_FROM(src, TRAIT_NODROP, NINJA_SUIT_TRAIT))
+		. += "The energy drain mechanism is <B>[candrain?"active":"inactive"]</B>."

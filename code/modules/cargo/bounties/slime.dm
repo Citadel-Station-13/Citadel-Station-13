@@ -1,10 +1,10 @@
 /datum/bounty/item/slime
-	reward = 3000
+	reward = 1950
 
 /datum/bounty/item/slime/New()
 	..()
 	description = "Nanotrasen's science lead is hunting for the rare and exotic [name]. A bounty has been offered for finding it."
-	reward += rand(0, 4) * 500
+	reward += rand(0, 4) * 250
 
 /datum/bounty/item/slime/green
 	name = "Green Slime Extract"

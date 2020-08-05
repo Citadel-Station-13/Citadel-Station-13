@@ -56,19 +56,6 @@ GLOBAL_VAR(changeling_team_objective_type) //If this is not null, we hand our th
 		return 0
 
 /datum/game_mode/changeling/post_setup()
-	//Decide if it's ok for the lings to have a team objective
-	//And then set it up to be handed out in forge_changeling_objectives
-	var/list/team_objectives = subtypesof(/datum/objective/changeling_team_objective)
-	var/list/possible_team_objectives = list()
-	for(var/T in team_objectives)
-		var/datum/objective/changeling_team_objective/CTO = T
-
-		if(changelings.len >= initial(CTO.min_lings))
-			possible_team_objectives += T
-
-	if(possible_team_objectives.len && prob(20*changelings.len))
-		GLOB.changeling_team_objective_type = pick(possible_team_objectives)
-
 	for(var/datum/mind/changeling in changelings)
 		log_game("[key_name(changeling)] has been selected as a changeling")
 		var/datum/antagonist/changeling/new_antag = new()
@@ -99,12 +86,15 @@ GLOBAL_VAR(changeling_team_objective_type) //If this is not null, we hand our th
 	var/datum/dna/chosen_dna = chosen_prof.dna
 	user.real_name = chosen_prof.name
 	user.underwear = chosen_prof.underwear
+	user.undie_color = chosen_prof.undie_color
 	user.undershirt = chosen_prof.undershirt
+	user.shirt_color = chosen_prof.shirt_color
 	user.socks = chosen_prof.socks
+	user.socks_color =chosen_prof.socks_color
 
 	chosen_dna.transfer_identity(user, 1)
 	user.updateappearance(mutcolor_update=1)
-	user.update_body()
+	user.update_body(TRUE)
 	user.domutcheck()
 
 	//vars hackery. not pretty, but better than the alternative.
@@ -129,7 +119,6 @@ GLOBAL_VAR(changeling_team_objective_type) //If this is not null, we hand our th
 		C.appearance = chosen_prof.appearance_list[slot]
 		C.name = chosen_prof.name_list[slot]
 		C.flags_cover = chosen_prof.flags_cover_list[slot]
-		C.item_color = chosen_prof.item_color_list[slot]
 		C.item_state = chosen_prof.item_state_list[slot]
 		if(equip)
 			user.equip_to_slot_or_del(C, GLOB.slot2slot[slot])

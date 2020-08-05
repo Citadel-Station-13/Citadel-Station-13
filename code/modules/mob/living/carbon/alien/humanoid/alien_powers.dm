@@ -21,14 +21,13 @@ Doesn't work on other aliens/AI.*/
 	. = ..()
 	action = new(src)
 
-/obj/effect/proc_holder/alien/Click()
-	if(!iscarbon(usr))
-		return 1
-	var/mob/living/carbon/user = usr
-	if(cost_check(check_turf,user))
+/obj/effect/proc_holder/alien/Trigger(mob/living/carbon/user, skip_cost_check = FALSE)
+	if(!istype(user))
+		return TRUE
+	if(skip_cost_check || cost_check(check_turf,user))
 		if(fire(user) && user) // Second check to prevent runtimes when evolving
 			user.adjustPlasma(-plasma_cost)
-	return 1
+	return TRUE
 
 /obj/effect/proc_holder/alien/on_gain(mob/living/carbon/user)
 	return
@@ -95,8 +94,14 @@ Doesn't work on other aliens/AI.*/
 	var/mob/living/M = input("Select who to whisper to:","Whisper to?",null) as null|mob in options
 	if(!M)
 		return 0
+	if(M.anti_magic_check(FALSE, FALSE, TRUE, 0))
+		to_chat(user, "<span class='noticealien'>As you try to communicate with [M], you're suddenly stopped by a vision of a massive tinfoil wall that streches beyond visible range. It seems you've been foiled.</span>")
+		return FALSE
 	var/msg = sanitize(input("Message:", "Alien Whisper") as text|null)
 	if(msg)
+		if(M.anti_magic_check(FALSE, FALSE, TRUE, 0))
+			to_chat(user, "<span class='notice'>As you try to communicate with [M], you're suddenly stopped by a vision of a massive tinfoil wall that streches beyond visible range. It seems you've been foiled.</span>")
+			return
 		log_directed_talk(user, M, msg, LOG_SAY, tag="alien whisper")
 		to_chat(M, "<span class='noticealien'>You hear a strange, alien voice in your head...</span>[msg]")
 		to_chat(user, "<span class='noticealien'>You said: \"[msg]\" to [M]</span>")

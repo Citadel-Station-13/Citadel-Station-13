@@ -10,3 +10,7 @@
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	blockTracking = 1//Roughly the only unique thing about this helmet.
 	flags_inv = HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
+
+/obj/item/clothing/head/helmet/space/space_ninja/dropped(mob/user)
+	. = ..()
+	REMOVE_TRAIT(src, TRAIT_NODROP, NINJA_SUIT_TRAIT)

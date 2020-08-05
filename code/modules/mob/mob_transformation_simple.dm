@@ -47,13 +47,13 @@
 		D.updateappearance(mutcolor_update=1, mutations_overlay_update=1)
 	else if(ishuman(M))
 		var/mob/living/carbon/human/H = M
-		client.prefs.copy_to(H)
+		client?.prefs.copy_to(H)
 		H.dna.update_dna_identity()
 
 	if(mind && isliving(M))
 		mind.transfer_to(M, 1) // second argument to force key move to new mob
 	else
-		M.key = key
+		transfer_ckey(M)
 
 	if(delete_old_mob)
 		QDEL_IN(src, 1)

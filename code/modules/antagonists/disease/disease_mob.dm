@@ -9,7 +9,7 @@ the new instance inside the host to be updated to the template's stats.
 	name = "Sentient Disease"
 	real_name = "Sentient Disease"
 	desc = ""
-	icon = 'icons/mob/blob.dmi'
+	icon = 'icons/mob/cameramob.dmi'
 	icon_state = "marker"
 	mouse_opacity = MOUSE_OPACITY_ICON
 	move_on_shuttle = FALSE
@@ -18,7 +18,7 @@ the new instance inside the host to be updated to the template's stats.
 	layer = BELOW_MOB_LAYER
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
 	sight = SEE_SELF|SEE_THRU
-	initial_language_holder = /datum/language_holder/empty
+	initial_language_holder = /datum/language_holder/universal
 
 	var/freemove = TRUE
 	var/freemove_end = 0
@@ -31,7 +31,6 @@ the new instance inside the host to be updated to the template's stats.
 	var/browser_open = FALSE
 
 	var/mob/living/following_host
-	var/datum/component/redirect/move_listener
 	var/list/disease_instances
 	var/list/hosts //this list is associative, affected_mob -> disease_instance
 	var/datum/disease/advance/sentient_disease/disease_template
@@ -43,7 +42,7 @@ the new instance inside the host to be updated to the template's stats.
 	var/move_delay = 1
 
 	var/next_adaptation_time = 0
-	var/adaptation_cooldown = 1200
+	var/adaptation_cooldown = 600
 
 	var/list/purchased_abilities
 	var/list/unpurchased_abilities
@@ -98,14 +97,14 @@ the new instance inside the host to be updated to the template's stats.
 
 
 /mob/camera/disease/examine(mob/user)
-	..()
+	. = ..()
 	if(isobserver(user))
-		to_chat(user, "<span class='notice'>[src] has [points]/[total_points] adaptation points.</span>")
-		to_chat(user, "<span class='notice'>[src] has the following unlocked:</span>")
+		. += "<span class='notice'>[src] has [points]/[total_points] adaptation points.</span>"
+		. += "<span class='notice'>[src] has the following unlocked:</span>"
 		for(var/A in purchased_abilities)
 			var/datum/disease_ability/B = A
 			if(istype(B))
-				to_chat(user, "<span class='notice'>[B.name]</span>")
+				. += "<span class='notice'>[B.name]</span>"
 
 /mob/camera/disease/say(message, bubble_type, var/list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null)
 	return
@@ -118,10 +117,31 @@ the new instance inside the host to be updated to the template's stats.
 			follow_next(Dir & NORTHWEST)
 			last_move_tick = world.time
 
+/mob/camera/disease/Hear(message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, message_mode, atom/movable/source)
+	. = ..()
+	var/atom/movable/to_follow = speaker
+	if(radio_freq)
+		var/atom/movable/virtualspeaker/V = speaker
+		to_follow = V.source
+	var/link
+	if(to_follow in hosts)
+		link = FOLLOW_LINK(src, to_follow)
+	else
+		link = ""
+	// Create map text prior to modifying message for goonchat
+	if (client?.prefs.chat_on_map && (client.prefs.see_chat_non_mob || ismob(speaker)))
+		create_chat_message(speaker, message_language, raw_message, spans, message_mode)
+	// Recompose the message, because it's scrambled by default
+	message = compose_message(speaker, message_language, raw_message, radio_freq, spans, message_mode, FALSE, source)
+	to_chat(src, "[link] [message]")
+
+
 /mob/camera/disease/mind_initialize()
 	. = ..()
 	if(!mind.has_antag_datum(/datum/antagonist/disease))
 		mind.add_antag_datum(/datum/antagonist/disease)
+	var/datum/atom_hud/medsensor = GLOB.huds[DATA_HUD_MEDICAL_ADVANCED]
+	medsensor.add_hud_to(src)
 
 /mob/camera/disease/proc/pick_name()
 	var/static/list/taken_names
@@ -243,13 +263,10 @@ the new instance inside the host to be updated to the template's stats.
 		refresh_adaptation_menu()
 
 /mob/camera/disease/proc/set_following(mob/living/L)
+	if(following_host)
+		UnregisterSignal(following_host, COMSIG_MOVABLE_MOVED)
+	RegisterSignal(L, COMSIG_MOVABLE_MOVED, .proc/follow_mob)
 	following_host = L
-	if(!move_listener)
-		move_listener = L.AddComponent(/datum/component/redirect, list(COMSIG_MOVABLE_MOVED = CALLBACK(src, .proc/follow_mob)))
-	else
-		L.TakeComponent(move_listener)
-		if(QDELING(move_listener))
-			move_listener = null
 	follow_mob()
 
 /mob/camera/disease/proc/follow_next(reverse = FALSE)
@@ -274,15 +291,18 @@ the new instance inside the host to be updated to the template's stats.
 
 /mob/camera/disease/ClickOn(var/atom/A, params)
 	if(freemove && ishuman(A))
-		var/mob/living/carbon/human/H = A
-		if(alert(src, "Select [H.name] as your initial host?", "Select Host", "Yes", "No") != "Yes")
-			return
-		if(!freemove)
-			return
-		if(QDELETED(H) || !force_infect(H))
-			to_chat(src, "<span class='warning'>[H ? H.name : "Host"] cannot be infected.</span>")
+		confirm_initial_infection(A)
 	else
 		..()
+
+/mob/camera/disease/proc/confirm_initial_infection(mob/living/carbon/human/H)
+	set waitfor = FALSE
+	if(alert(src, "Select [H.name] as your initial host?", "Select Host", "Yes", "No") != "Yes")
+		return
+	if(!freemove)
+		return
+	if(QDELETED(H) || !force_infect(H))
+		to_chat(src, "<span class='warning'>[H ? H.name : "Host"] cannot be infected.</span>")
 
 /mob/camera/disease/proc/adapt_cooldown()
 	to_chat(src, "<span class='notice'>You have altered your genetic structure. You will be unable to adapt again for [DisplayTimeText(adaptation_cooldown)].</span>")
@@ -304,7 +324,11 @@ the new instance inside the host to be updated to the template's stats.
 	var/list/dat = list()
 
 	if(examining_ability)
-		dat += "<a href='byond://?src=[REF(src)];main_menu=1'>Back</a><br><h1>[examining_ability.name]</h1>[examining_ability.stat_block][examining_ability.long_desc][examining_ability.threshold_block]"
+		dat += "<a href='byond://?src=[REF(src)];main_menu=1'>Back</a><br>"
+		dat += "<h1>[examining_ability.name]</h1>"
+		dat += "[examining_ability.stat_block][examining_ability.long_desc][examining_ability.threshold_block]"
+		for(var/entry in examining_ability.threshold_block)
+			dat += "<b>[entry]</b>: [examining_ability.threshold_block[entry]]<br>"
 	else
 		dat += "<h1>Disease Statistics</h1><br>\
 			Resistance: [DT.totalResistance()]<br>\

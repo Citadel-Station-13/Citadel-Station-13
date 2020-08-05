@@ -1,37 +1,51 @@
+#define ECSTATIC_SANITY_PEN -1
+#define SLIGHT_INSANITY_PEN 1
 #define MINOR_INSANITY_PEN 5
 #define MAJOR_INSANITY_PEN 10
+#define MOOD_INSANITY_MALUS 0.13 // 13% debuff per sanity_level above the default of 4 (higher is worser), overall a 39% debuff to skills at rock bottom depression.
 
 /datum/component/mood
 	var/mood //Real happiness
 	var/sanity = 100 //Current sanity
 	var/shown_mood //Shown happiness, this is what others can see when they try to examine you, prevents antag checking by noticing traitors are always very happy.
 	var/mood_level = 5 //To track what stage of moodies they're on
+	var/sanity_level = 3 //To track what stage of sanity they're on
 	var/mood_modifier = 1 //Modifier to allow certain mobs to be less affected by moodlets
-	var/datum/mood_event/list/mood_events = list()
+	var/list/datum/mood_event/mood_events = list()
 	var/insanity_effect = 0 //is the owner being punished for low mood? If so, how much?
-	var/holdmyinsanityeffect = 0 //before we edit our sanity lets take a look
 	var/obj/screen/mood/screen_obj
+	var/datum/skill_modifier/bad_mood/malus
+	var/datum/skill_modifier/great_mood/bonus
+	var/static/malus_id = 0
+	var/static/list/free_maluses = list()
 
 /datum/component/mood/Initialize()
 	if(!isliving(parent))
 		return COMPONENT_INCOMPATIBLE
-	
-	START_PROCESSING(SSmood, src)
+
+	var/mob/living/owner = parent
+	if(owner.stat != DEAD)
+		START_PROCESSING(SSobj, src)
 
 	RegisterSignal(parent, COMSIG_ADD_MOOD_EVENT, .proc/add_event)
 	RegisterSignal(parent, COMSIG_CLEAR_MOOD_EVENT, .proc/clear_event)
-
+	RegisterSignal(parent, COMSIG_MODIFY_SANITY, .proc/modify_sanity)
+	RegisterSignal(parent, COMSIG_LIVING_REVIVE, .proc/on_revive)
 	RegisterSignal(parent, COMSIG_MOB_HUD_CREATED, .proc/modify_hud)
-	var/mob/living/owner = parent
+	RegisterSignal(parent, COMSIG_MOB_DEATH, .proc/stop_processing)
+
 	if(owner.hud_used)
 		modify_hud()
 		var/datum/hud/hud = owner.hud_used
 		hud.show_hud(hud.hud_version)
 
 /datum/component/mood/Destroy()
-	STOP_PROCESSING(SSmood, src)
+	STOP_PROCESSING(SSobj, src)
 	unmodify_hud()
 	return ..()
+
+/datum/component/mood/proc/stop_processing()
+	STOP_PROCESSING(SSobj, src)
 
 /datum/component/mood/proc/print_mood(mob/user)
 	var/msg = "<span class='info'>*---------*\n<EM>Your current mood</EM>\n"
@@ -80,7 +94,8 @@
 		msg += "<span class='nicegreen'>I don't have much of a reaction to anything right now.<span>\n"
 	to_chat(user || parent, msg)
 
-/datum/component/mood/proc/update_mood() //Called whenever a mood event is added or removed
+///Called after moodevent/s have been added/removed.
+/datum/component/mood/proc/update_mood()
 	mood = 0
 	shown_mood = 0
 	for(var/i in mood_events)
@@ -118,72 +133,121 @@
 	if(owner.client && owner.hud_used)
 		if(sanity < 25)
 			screen_obj.icon_state = "mood_insane"
+		else if (owner.has_status_effect(/datum/status_effect/chem/enthrall))//Fermichem enthral chem, maybe change?
+			screen_obj.icon_state = "mood_entrance"
 		else
 			screen_obj.icon_state = "mood[mood_level]"
 
-/datum/component/mood/process() //Called on SSmood process
+/datum/component/mood/process() //Called on SSobj process
+	if(QDELETED(parent)) // workaround to an obnoxious sneaky periodical runtime.
+		qdel(src)
+		return
 	var/mob/living/owner = parent
 
 	switch(mood_level)
 		if(1)
-			DecreaseSanity(0.2)
+			setSanity(sanity-0.2)
 		if(2)
-			DecreaseSanity(0.125, SANITY_CRAZY)
+			setSanity(sanity-0.125, minimum=SANITY_CRAZY)
 		if(3)
-			DecreaseSanity(0.075, SANITY_UNSTABLE)
+			setSanity(sanity-0.075, minimum=SANITY_UNSTABLE)
 		if(4)
-			DecreaseSanity(0.025, SANITY_DISTURBED)
+			setSanity(sanity-0.025, minimum=SANITY_DISTURBED)
 		if(5)
-			IncreaseSanity(0.1)
+			setSanity(sanity+0.1)
 		if(6)
-			IncreaseSanity(0.15)
+			setSanity(sanity+0.15)
 		if(7)
-			IncreaseSanity(0.20)
+			setSanity(sanity+0.20)
 		if(8)
-			IncreaseSanity(0.25, SANITY_GREAT)
+			setSanity(sanity+0.25, maximum=SANITY_GREAT)
 		if(9)
-			IncreaseSanity(0.4, SANITY_GREAT)
+			setSanity(sanity+0.4, maximum=SANITY_AMAZING)
 
-	if(insanity_effect != holdmyinsanityeffect)
-		if(insanity_effect > holdmyinsanityeffect)
-			owner.crit_threshold += (insanity_effect - holdmyinsanityeffect)
-		else
-			owner.crit_threshold -= (holdmyinsanityeffect - insanity_effect)
-
-	if(owner.has_trait(TRAIT_DEPRESSION))
-		if(prob(0.05))
-			add_event(null, "depression", /datum/mood_event/depression)
-			clear_event(null, "jolly")
-	if(owner.has_trait(TRAIT_JOLLY))
-		if(prob(0.05))
-			add_event(null, "jolly", /datum/mood_event/jolly)
-			clear_event(null, "depression")
-
-	holdmyinsanityeffect = insanity_effect
-	
 	HandleNutrition(owner)
 
-/datum/component/mood/proc/DecreaseSanity(amount, minimum = SANITY_INSANE)
-	if(sanity < minimum) //This might make KevinZ stop fucking pinging me.
-		IncreaseSanity(0.5)
-	else
-		sanity = max(minimum, sanity - amount)
-		if(sanity < SANITY_UNSTABLE)
-			if(sanity < SANITY_CRAZY)
-				insanity_effect = (MAJOR_INSANITY_PEN)
-			else
-				insanity_effect = (MINOR_INSANITY_PEN)
+/datum/component/mood/proc/setSanity(amount, minimum=SANITY_INSANE, maximum=SANITY_NEUTRAL)//I'm sure bunging this in here will have no negative repercussions.
+	var/mob/living/master = parent
 
-/datum/component/mood/proc/IncreaseSanity(amount, maximum = SANITY_NEUTRAL)
-	if(sanity > maximum)
-		DecreaseSanity(0.5) //Removes some sanity to go back to our current limit.
+	if(amount == sanity)
+		return
+	// If we're out of the acceptable minimum-maximum range move back towards it in steps of 0.5
+	// If the new amount would move towards the acceptable range faster then use it instead
+	if(sanity < minimum && amount < sanity + 0.5)
+		amount = sanity + 0.5
+	else if(sanity > maximum && amount > sanity - 0.5)
+		amount = sanity - 0.5
+
+	// Disturbed stops you from getting any more sane
+	if(HAS_TRAIT(master, TRAIT_UNSTABLE))
+		sanity = min(amount,sanity)
 	else
-		sanity = min(maximum, sanity + amount)
-		if(sanity > SANITY_CRAZY)
-			if(sanity > SANITY_UNSTABLE)
-				insanity_effect = 0
+		sanity = amount
+
+	var/old_sanity_level = sanity_level
+	switch(sanity)
+		if(-INFINITY to SANITY_CRAZY)
+			setInsanityEffect(MAJOR_INSANITY_PEN)
+			master.add_movespeed_modifier(/datum/movespeed_modifier/sanity/insane)
+			sanity_level = 6
+		if(SANITY_CRAZY to SANITY_UNSTABLE)
+			setInsanityEffect(MINOR_INSANITY_PEN)
+			master.add_movespeed_modifier(/datum/movespeed_modifier/sanity/crazy)
+			sanity_level = 5
+		if(SANITY_UNSTABLE to SANITY_DISTURBED)
+			setInsanityEffect(SLIGHT_INSANITY_PEN)
+			master.add_movespeed_modifier(/datum/movespeed_modifier/sanity/disturbed)
+			sanity_level = 4
+		if(SANITY_DISTURBED to SANITY_NEUTRAL)
+			setInsanityEffect(0)
+			master.remove_movespeed_modifier(MOVESPEED_ID_SANITY)
+			sanity_level = 3
+		if(SANITY_NEUTRAL+1 to SANITY_GREAT+1) //shitty hack but +1 to prevent it from responding to super small differences
+			setInsanityEffect(0)
+			master.remove_movespeed_modifier(MOVESPEED_ID_SANITY)
+			sanity_level = 2
+		if(SANITY_GREAT+1 to INFINITY)
+			setInsanityEffect(ECSTATIC_SANITY_PEN) //It's not a penalty but w/e
+			master.remove_movespeed_modifier(MOVESPEED_ID_SANITY)
+			sanity_level = 1
+
+	if(sanity_level != old_sanity_level)
+		if(sanity_level >= 4)
+			if(!malus)
+				if(!length(free_maluses))
+					ADD_SKILL_MODIFIER_BODY(/datum/skill_modifier/bad_mood, malus_id++, master, malus)
+				else
+					malus = pick_n_take(free_maluses)
+					if(master.mind)
+						master.mind.add_skill_modifier(malus.identifier)
+					else
+						malus.RegisterSignal(master, COMSIG_MOB_ON_NEW_MIND, /datum/skill_modifier.proc/on_mob_new_mind, TRUE)
+			malus.value_mod = malus.level_mod = 1 - (sanity_level - 3) * MOOD_INSANITY_MALUS
+		else if(malus)
+			if(master.mind)
+				master.mind.remove_skill_modifier(malus.identifier)
 			else
-				insanity_effect = MINOR_INSANITY_PEN
+				malus.UnregisterSignal(master, COMSIG_MOB_ON_NEW_MIND)
+			free_maluses += malus
+			malus = null
+
+	//update_mood_icon()
+
+/datum/component/mood/proc/setInsanityEffect(newval)//More code so that the previous proc works
+	if(newval == insanity_effect)
+		return
+
+	var/mob/living/L = parent
+	if(newval == ECSTATIC_SANITY_PEN && !bonus)
+		ADD_SKILL_MODIFIER_BODY(/datum/skill_modifier/great_mood, null, L, bonus)
+	else if(bonus)
+		REMOVE_SKILL_MODIFIER_BODY(/datum/skill_modifier/great_mood, null, L)
+		bonus = null
+
+	insanity_effect = newval
+
+/datum/component/mood/proc/modify_sanity(datum/source, amount, minimum = SANITY_INSANE, maximum = SANITY_AMAZING)
+	setSanity(sanity + amount, minimum, maximum)
 
 /datum/component/mood/proc/add_event(datum/source, category, type, param) //Category will override any events in the same category, should be unique unless the event is based on the same thing like hunger.
 	var/datum/mood_event/the_event
@@ -195,7 +259,7 @@
 			if(the_event.timeout)
 				addtimer(CALLBACK(src, .proc/clear_event, null, category), the_event.timeout, TIMER_UNIQUE|TIMER_OVERRIDE)
 			return 0 //Don't have to update the event.
-	the_event = new type(src, param)
+	the_event = new type(src, param)//This causes a runtime for some reason, was this me? No - there's an event floating around missing a definition.
 
 	mood_events[category] = the_event
 	update_mood()
@@ -212,16 +276,25 @@
 	qdel(event)
 	update_mood()
 
+/datum/component/mood/proc/remove_temp_moods() //Removes all temp moodsfor(var/i in mood_events)
+	for(var/i in mood_events)
+		var/datum/mood_event/moodlet = mood_events[i]
+		if(!moodlet || !moodlet.timeout)
+			continue
+		mood_events -= i
+		qdel(moodlet)
+	update_mood()
+
 /datum/component/mood/proc/modify_hud(datum/source)
 	var/mob/living/owner = parent
 	var/datum/hud/hud = owner.hud_used
 	screen_obj = new
 	hud.infodisplay += screen_obj
-	RegisterSignal(hud, COMSIG_PARENT_QDELETED, .proc/unmodify_hud)
+	RegisterSignal(hud, COMSIG_PARENT_QDELETING, .proc/unmodify_hud)
 	RegisterSignal(screen_obj, COMSIG_CLICK, .proc/hud_click)
 
 /datum/component/mood/proc/unmodify_hud(datum/source)
-	if(!screen_obj)
+	if(!screen_obj || !parent)
 		return
 	var/mob/living/owner = parent
 	var/datum/hud/hud = owner.hud_used
@@ -248,5 +321,38 @@
 		if(0 to NUTRITION_LEVEL_STARVING)
 			add_event(null, "nutrition", /datum/mood_event/starving)
 
+/datum/component/mood/proc/update_beauty(area/A)
+	if(A.outdoors) //if we're outside, we don't care.
+		clear_event(null, "area_beauty")
+		return FALSE
+	if(HAS_TRAIT(parent, TRAIT_SNOB))
+		switch(A.beauty)
+			if(-INFINITY to BEAUTY_LEVEL_HORRID)
+				add_event(null, "area_beauty", /datum/mood_event/horridroom)
+				return
+			if(BEAUTY_LEVEL_HORRID to BEAUTY_LEVEL_BAD)
+				add_event(null, "area_beauty", /datum/mood_event/badroom)
+				return
+	switch(A.beauty)
+		if(-INFINITY to BEAUTY_LEVEL_DECENT)
+			clear_event(null, "area_beauty")
+		if(BEAUTY_LEVEL_DECENT to BEAUTY_LEVEL_GOOD)
+			add_event(null, "area_beauty", /datum/mood_event/decentroom)
+		if(BEAUTY_LEVEL_GOOD to BEAUTY_LEVEL_GREAT)
+			add_event(null, "area_beauty", /datum/mood_event/goodroom)
+		if(BEAUTY_LEVEL_GREAT to INFINITY)
+			add_event(null, "area_beauty", /datum/mood_event/greatroom)
+
+///Called when parent is revived.
+/datum/component/mood/proc/on_revive(datum/source, full_heal)
+	START_PROCESSING(SSobj, src)
+	if(!full_heal)
+		return
+	remove_temp_moods()
+	setSanity(initial(sanity))
+
+#undef ECSTATIC_SANITY_PEN
+#undef SLIGHT_INSANITY_PEN
 #undef MINOR_INSANITY_PEN
 #undef MAJOR_INSANITY_PEN
+#undef MOOD_INSANITY_MALUS

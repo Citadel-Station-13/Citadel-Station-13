@@ -11,7 +11,7 @@
 "d" = (
 /turf/closed/wall/rust,
 /area/ruin/unpowered)
-"e" = (
+"f" = (
 /obj/structure/mirror{
 	desc = "This mirror has been shattered. It looks like the bad luck energies spilling from it are taking immediate effect on your surroundings!";
 	icon_state = "mirror_broke";
@@ -21,17 +21,6 @@
 /obj/item/clothing/suit/hooded/bloated_human,
 /obj/effect/decal/cleanable/blood,
 /turf/open/floor/plating,
-/area/ruin/unpowered)
-"f" = (
-/obj/structure/mirror{
-	desc = "This mirror has been shattered. It looks like the bad luck energies spilling from it are taking immediate effect on your surroundings!";
-	icon_state = "mirror_broke";
-	pixel_x = 28;
-	broken = 1
-	},
-/turf/open/floor/plating{
-	icon_state = "panelscorched"
-	},
 /area/ruin/unpowered)
 "g" = (
 /obj/effect/decal/cleanable/blood/tracks,
@@ -58,11 +47,12 @@
 /obj/structure/mirror{
 	desc = "This mirror has been shattered. It looks like the bad luck energies spilling from it are taking immediate effect on your surroundings!";
 	icon_state = "mirror_broke";
-	pixel_y = 28;
+	pixel_x = 28;
 	broken = 1
 	},
-/obj/item/kitchen/knife/envy,
-/turf/open/floor/plating,
+/turf/open/floor/plating{
+	icon_state = "panelscorched"
+	},
 /area/ruin/unpowered)
 "l" = (
 /obj/structure/mirror{
@@ -106,6 +96,16 @@
 /obj/effect/mapping_helpers/no_lava,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
+"T" = (
+/obj/structure/mirror{
+	desc = "This mirror has been shattered. It looks like the bad luck energies spilling from it are taking immediate effect on your surroundings!";
+	icon_state = "mirror_broke";
+	pixel_y = 28;
+	broken = 1
+	},
+/obj/item/kitchen/knife/envy,
+/turf/open/floor/plating,
+/area/ruin/unpowered)
 
 (1,1,1) = {"
 a
@@ -125,14 +125,8 @@ a
 a
 a
 a
-a
-a
-a
 "}
 (2,1,1) = {"
-a
-a
-c
 c
 c
 c
@@ -167,9 +161,6 @@ d
 d
 d
 d
-d
-d
-d
 c
 a
 "}
@@ -178,13 +169,10 @@ c
 c
 d
 d
-d
-e
+f
 g
 g
 g
-m
-m
 m
 m
 m
@@ -201,11 +189,8 @@ d
 d
 d
 d
-d
 h
 h
-i
-i
 i
 i
 i
@@ -224,10 +209,7 @@ d
 d
 d
 d
-d
-k
-i
-i
+T
 i
 i
 i
@@ -245,11 +227,8 @@ d
 d
 d
 d
-d
 i
 i
-i
-j
 i
 n
 i
@@ -266,11 +245,8 @@ c
 c
 d
 d
-d
-f
+k
 j
-l
-l
 l
 l
 l
@@ -299,18 +275,12 @@ d
 d
 d
 d
-d
-d
-d
 c
 a
 "}
 (10,1,1) = {"
 b
 b
-c
-c
-c
 c
 c
 c

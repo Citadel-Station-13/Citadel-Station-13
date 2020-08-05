@@ -1,8 +1,5 @@
 //LISTMOS
 //indices of values in gas lists.
-#define MOLES			1
-#define ARCHIVE			2
-#define GAS_META		3
 #define META_GAS_SPECIFIC_HEAT	1
 #define META_GAS_NAME			2
 #define META_GAS_MOLES_VISIBLE	3
@@ -139,18 +136,38 @@
 #define TANK_FRAGMENT_SCALE	    			(6.*ONE_ATMOSPHERE)		//+1 for each SCALE kPa aboe threshold
 #define TANK_MAX_RELEASE_PRESSURE 			(ONE_ATMOSPHERE*3)
 #define TANK_MIN_RELEASE_PRESSURE 			0
-#define TANK_DEFAULT_RELEASE_PRESSURE 		16
+#define TANK_DEFAULT_RELEASE_PRESSURE 		17
 
 //CANATMOSPASS
 #define ATMOS_PASS_YES 1
 #define ATMOS_PASS_NO 0
 #define ATMOS_PASS_PROC -1 //ask CanAtmosPass()
 #define ATMOS_PASS_DENSITY -2 //just check density
+
 #define CANATMOSPASS(A, O) ( A.CanAtmosPass == ATMOS_PASS_PROC ? A.CanAtmosPass(O) : ( A.CanAtmosPass == ATMOS_PASS_DENSITY ? !A.density : A.CanAtmosPass ) )
+#define CANVERTICALATMOSPASS(A, O) ( A.CanAtmosPassVertical == ATMOS_PASS_PROC ? A.CanAtmosPass(O, TRUE) : ( A.CanAtmosPassVertical == ATMOS_PASS_DENSITY ? !A.density : A.CanAtmosPassVertical ) )
+
+//OPEN TURF ATMOS
+#define OPENTURF_DEFAULT_ATMOS		"o2=22;n2=82;TEMP=293.15" //the default air mix that open turfs spawn
+#define TCOMMS_ATMOS				"n2=100;TEMP=80" //-193,15degC telecommunications. also used for xenobiology slime killrooms
+#define AIRLESS_ATMOS				"TEMP=2.7" //space
+#define FROZEN_ATMOS				"o2=22;n2=82;TEMP=180" //-93.15degC snow and ice turfs
+#define BURNMIX_ATMOS				"o2=2500;plasma=5000;TEMP=370" //used in the holodeck burn test program
+
+//ATMOSPHERICS DEPARTMENT GAS TANK TURFS
+#define ATMOS_TANK_N2O				"n2o=6000;TEMP=293.15"
+#define ATMOS_TANK_CO2				"co2=50000;TEMP=293.15"
+#define ATMOS_TANK_PLASMA			"plasma=70000;TEMP=293.15"
+#define ATMOS_TANK_O2				"o2=100000;TEMP=293.15"
+#define ATMOS_TANK_N2				"n2=100000;TEMP=293.15"
+#define ATMOS_TANK_AIRMIX			"o2=2644;n2=10580;TEMP=293.15"
 
 //LAVALAND
 #define LAVALAND_EQUIPMENT_EFFECT_PRESSURE 50 //what pressure you have to be under to increase the effect of equipment meant for lavaland
 #define LAVALAND_DEFAULT_ATMOS "o2=14;n2=23;TEMP=300"
+
+//SNOSTATION
+#define ICEMOON_DEFAULT_ATMOS "o2=17;n2=63;TEMP=180"
 
 //ATMOSIA GAS MONITOR TAGS
 #define ATMOS_GAS_MONITOR_INPUT_O2 "o2_in"
@@ -241,21 +258,49 @@
 #define PIPING_CARDINAL_AUTONORMALIZE	(1<<3)	//north/south east/west doesn't matter, auto normalize on build.
 
 //HELPERS
-#define THERMAL_ENERGY(gas) (gas.temperature * gas.heat_capacity())
-
-#define ADD_GAS(gas_id, out_list)\
-	var/list/tmp_gaslist = GLOB.gaslist_cache[gas_id]; out_list[gas_id] = tmp_gaslist.Copy();
-
-#define ASSERT_GAS(gas_id, gas_mixture) if (!gas_mixture.gases[gas_id]) { ADD_GAS(gas_id, gas_mixture.gases) };
-
-
-//prefer this to gas_mixture/total_moles in performance critical areas
-#define TOTAL_MOLES(cached_gases, out_var)\
-	out_var = 0;\
-	for(var/total_moles_id in cached_gases){\
-		out_var += cached_gases[total_moles_id][MOLES];\
+#define PIPING_LAYER_SHIFT(T, PipingLayer) \
+	if(T.dir & (NORTH|SOUTH)) {									\
+		T.pixel_x = (PipingLayer - PIPING_LAYER_DEFAULT) * PIPING_LAYER_P_X;\
+	}																		\
+	if(T.dir & (WEST|EAST)) {										\
+		T.pixel_y = (PipingLayer - PIPING_LAYER_DEFAULT) * PIPING_LAYER_P_Y;\
 	}
 
+#define PIPING_LAYER_DOUBLE_SHIFT(T, PipingLayer) \
+	T.pixel_x = (PipingLayer - PIPING_LAYER_DEFAULT) * PIPING_LAYER_P_X;\
+	T.pixel_y = (PipingLayer - PIPING_LAYER_DEFAULT) * PIPING_LAYER_P_Y;
+
+#define QUANTIZE(variable)		(round(variable,0.0000001))/*I feel the need to document what happens here. Basically this is used to catch most rounding errors, however it's previous value made it so that
+															once gases got hot enough, most procedures wouldnt occur due to the fact that the mole counts would get rounded away. Thus, we lowered it a few orders of magnititude */
+
+
+#ifdef TESTING
+GLOBAL_LIST_INIT(atmos_adjacent_savings, list(0,0))
+#define CALCULATE_ADJACENT_TURFS(T) if (SSadjacent_air.queue[T]) { GLOB.atmos_adjacent_savings[1] += 1 } else { GLOB.atmos_adjacent_savings[2] += 1; SSadjacent_air.queue[T] = 1 }
+#else
+#define CALCULATE_ADJACENT_TURFS(T) SSadjacent_air.queue[T] = 1
+#endif
+
+#define EXTOOLS (world.system_type == MS_WINDOWS ? "byond-extools.dll" : "libbyond-extools.so")
+
+GLOBAL_VAR(atmos_extools_initialized) // this must be an uninitialized (null) one or init_monstermos will be called twice because reasons
+#define ATMOS_EXTOOLS_CHECK if(!GLOB.atmos_extools_initialized){\
+	GLOB.atmos_extools_initialized=TRUE;\
+	if(fexists(EXTOOLS)){\
+		var/result = call(EXTOOLS,"init_monstermos")();\
+		if(result != "ok") {CRASH(result);}\
+	} else {\
+		CRASH("[EXTOOLS] does not exist!");\
+	}\
+}
+
+//Unomos - So for whatever reason, garbage collection actually drastically decreases the cost of atmos later in the round. Turning this into a define yields massively improved performance.
+#define GAS_GARBAGE_COLLECT(GASGASGAS)\
+	var/list/CACHE_GAS = GASGASGAS;\
+	for(var/id in CACHE_GAS){\
+		if(QUANTIZE(CACHE_GAS[id]) <= 0)\
+			CACHE_GAS -= id;\
+	}
 
 GLOBAL_LIST_INIT(pipe_paint_colors, list(
 		"amethyst" = rgb(130,43,255), //supplymain

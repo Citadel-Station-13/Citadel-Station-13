@@ -1,9 +1,35 @@
 /datum/wires/airlock
 	holder_type = /obj/machinery/door/airlock
-	proper_name = "Airlock"
+	proper_name = "Generic Airlock"
+	req_skill = JOB_SKILL_UNTRAINED //Training wheel, as per request.
+	var/wiretype
 
 /datum/wires/airlock/secure
 	randomize = TRUE
+
+/datum/wires/airlock/command
+	proper_name = "Command Airlock"
+	wiretype = "commandairlock"
+
+/datum/wires/airlock/security
+	proper_name = "Security Airlock"
+	wiretype = "securityairlock"
+
+/datum/wires/airlock/engineering
+	proper_name = "Engineering Airlock"
+	wiretype = "engineeringairlock"
+
+/datum/wires/airlock/science
+	proper_name = "Science Airlock"
+	wiretype = "scienceairlock"
+
+/datum/wires/airlock/medical
+	proper_name = "Medical Airlock"
+	wiretype = "medicalairlock"
+
+/datum/wires/airlock/cargo
+	proper_name = "Cargo Airlock"
+	wiretype = "cargoairlock"
 
 /datum/wires/airlock/New(atom/holder)
 	wires = list(
@@ -14,14 +40,24 @@
 		WIRE_ZAP1, WIRE_ZAP2
 	)
 	add_duds(2)
-	..()
+	. = ..()
+	if(randomize || !wiretype)
+		return
+	if(!GLOB.wire_color_directory[wiretype])
+		colors = list()
+		randomize()
+		GLOB.wire_color_directory[wiretype] = colors
+		GLOB.wire_name_directory[wiretype] = proper_name
+	else
+		colors = GLOB.wire_color_directory[wiretype]
 
 /datum/wires/airlock/interactable(mob/user)
 	var/obj/machinery/door/airlock/A = holder
-	if(!issilicon(user) && A.isElectrified() && A.shock(user, 100))
+	if(!A.panel_open)
 		return FALSE
-	if(A.panel_open)
-		return TRUE
+	if(!A.hasSiliconAccessInArea(user) && A.isElectrified() && A.shock(user, 100))
+		return FALSE
+	return TRUE
 
 /datum/wires/airlock/get_status()
 	var/obj/machinery/door/airlock/A = holder
@@ -51,6 +87,8 @@
 					INVOKE_ASYNC(A, /obj/machinery/door/airlock.proc/open)
 				else
 					INVOKE_ASYNC(A, /obj/machinery/door/airlock.proc/close)
+			else
+				holder.visible_message("<span class='notice'>You hear a a grinding noise coming from the airlock.</span>")
 		if(WIRE_BOLTS) // Pulse to toggle bolts (but only raise if power is on).
 			if(!A.locked)
 				A.bolt()
@@ -79,7 +117,7 @@
 			if(!A.secondsElectrified)
 				A.set_electrified(30)
 				if(usr)
-					LAZYADD(A.shockedby, text("\[[time_stamp()]\] [key_name(usr)]"))
+					LAZYADD(A.shockedby, text("\[[TIME_STAMP("hh:mm:ss", FALSE)]\] [key_name(usr)]"))
 					log_combat(usr, A, "electrified")
 		if(WIRE_SAFETY)
 			A.safe = !A.safe
@@ -134,7 +172,7 @@
 				if(A.secondsElectrified != -1)
 					A.set_electrified(-1)
 					if(usr)
-						LAZYADD(A.shockedby, text("\[[time_stamp()]\] [key_name(usr)]"))
+						LAZYADD(A.shockedby, text("\[[TIME_STAMP("hh:mm:ss", FALSE)]\] [key_name(usr)]"))
 						log_combat(usr, A, "electrified")
 		if(WIRE_SAFETY) // Cut to disable safeties, mend to re-enable.
 			A.safe = mend

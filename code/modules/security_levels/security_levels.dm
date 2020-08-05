@@ -5,20 +5,17 @@ GLOBAL_VAR_INIT(security_level, SEC_LEVEL_GREEN)
 //SEC_LEVEL_RED = code red
 //SEC_LEVEL_DELTA = code delta
 
+ /*
+  * All security levels, per ascending alert. Nothing too fancy, really.
+  * Their positions should also match their numerical values.
+  */
+GLOBAL_LIST_INIT(all_security_levels, list("green", "blue", "amber", "red", "delta"))
+
 //config.alert_desc_blue_downto
 
 /proc/set_security_level(level)
-	switch(level)
-		if("green")
-			level = SEC_LEVEL_GREEN
-		if("blue")
-			level = SEC_LEVEL_BLUE
-		if("amber")
-			level = SEC_LEVEL_AMBER
-		if("red")
-			level = SEC_LEVEL_RED
-		if("delta")
-			level = SEC_LEVEL_DELTA
+	if(!isnum(level))
+		level = GLOB.all_security_levels.Find(level)
 
 	//Will not be announced if you try to set to the same level as it already is
 	if(level >= SEC_LEVEL_GREEN && level <= SEC_LEVEL_DELTA && level != GLOB.security_level)
@@ -49,7 +46,7 @@ GLOBAL_VAR_INIT(security_level, SEC_LEVEL_GREEN)
 						else
 							SSshuttle.emergency.modTimer(1.5)
 				GLOB.security_level = SEC_LEVEL_BLUE
-				sound_to_playing_players('sound/misc/voybluealert.ogg') // Citadel change - Makes alerts play a sound
+				sound_to_playing_players('sound/misc/voybluealert.ogg', volume = 50) // Citadel change - Makes alerts play a sound
 				for(var/obj/machinery/firealarm/FA in GLOB.machines)
 					if(is_station_level(FA.z))
 						FA.update_icon()
@@ -66,7 +63,7 @@ GLOBAL_VAR_INIT(security_level, SEC_LEVEL_GREEN)
 					if(SSshuttle.emergency.mode == SHUTTLE_CALL || SSshuttle.emergency.mode == SHUTTLE_RECALL)
 						SSshuttle.emergency.modTimer(1.6)
 				GLOB.security_level = SEC_LEVEL_AMBER
-				sound_to_playing_players('sound/effects/alert.ogg') // Citadel change - Makes alerts play a sound
+				sound_to_playing_players('sound/effects/alert.ogg', volume = 50) // Citadel change - Makes alerts play a sound
 				for(var/obj/machinery/firealarm/FA in GLOB.machines)
 					if(is_station_level(FA.z))
 						FA.update_icon()
@@ -83,7 +80,7 @@ GLOBAL_VAR_INIT(security_level, SEC_LEVEL_GREEN)
 				else
 					minor_announce(CONFIG_GET(string/alert_red_downto), "Attention! Code red!")
 				GLOB.security_level = SEC_LEVEL_RED
-				sound_to_playing_players('sound/misc/voyalert.ogg') // Citadel change - Makes alerts play a sound
+				sound_to_playing_players('sound/misc/voyalert.ogg', volume = 50) // Citadel change - Makes alerts play a sound
 
 				for(var/obj/machinery/firealarm/FA in GLOB.machines)
 					if(is_station_level(FA.z))
@@ -111,46 +108,7 @@ GLOBAL_VAR_INIT(security_level, SEC_LEVEL_GREEN)
 				if(D.red_alert_access)
 					D.visible_message("<span class='notice'>[D] whirrs as it automatically lifts access requirements!</span>")
 					playsound(D, 'sound/machines/boltsup.ogg', 50, TRUE)
-		SSblackbox.record_feedback("tally", "security_level_changes", 1, get_security_level())
+		SSblackbox.record_feedback("tally", "security_level_changes", 1, NUM2SECLEVEL(GLOB.security_level))
 		SSnightshift.check_nightshift()
 	else
 		return
-
-/proc/get_security_level()
-	switch(GLOB.security_level)
-		if(SEC_LEVEL_GREEN)
-			return "green"
-		if(SEC_LEVEL_BLUE)
-			return "blue"
-		if(SEC_LEVEL_AMBER)
-			return "amber"
-		if(SEC_LEVEL_RED)
-			return "red"
-		if(SEC_LEVEL_DELTA)
-			return "delta"
-
-/proc/num2seclevel(num)
-	switch(num)
-		if(SEC_LEVEL_GREEN)
-			return "green"
-		if(SEC_LEVEL_BLUE)
-			return "blue"
-		if(SEC_LEVEL_AMBER)
-			return "amber"
-		if(SEC_LEVEL_RED)
-			return "red"
-		if(SEC_LEVEL_DELTA)
-			return "delta"
-
-/proc/seclevel2num(seclevel)
-	switch( lowertext(seclevel) )
-		if("green")
-			return SEC_LEVEL_GREEN
-		if("blue")
-			return SEC_LEVEL_BLUE
-		if("amber")
-			return SEC_LEVEL_AMBER
-		if("red")
-			return SEC_LEVEL_RED
-		if("delta")
-			return SEC_LEVEL_DELTA

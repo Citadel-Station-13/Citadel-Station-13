@@ -18,14 +18,10 @@
 /obj/item/chrono_eraser/proc/pass_mind(datum/mind/M)
 	erased_minds += M
 
-/obj/item/chrono_eraser/dropped()
+/obj/item/chrono_eraser/dropped(mob/user)
 	..()
 	if(PA)
 		qdel(PA)
-
-/obj/item/chrono_eraser/Destroy()
-	dropped()
-	return ..()
 
 /obj/item/chrono_eraser/ui_action_click(mob/user)
 	if(iscarbon(user))
@@ -37,7 +33,7 @@
 				PA = new(src)
 				user.put_in_hands(PA)
 
-/obj/item/chrono_eraser/item_action_slot_check(slot, mob/user)
+/obj/item/chrono_eraser/item_action_slot_check(slot, mob/user, datum/action/A)
 	if(slot == SLOT_BACK)
 		return 1
 
@@ -48,7 +44,7 @@
 	icon_state = "chronogun"
 	item_state = "chronogun"
 	w_class = WEIGHT_CLASS_NORMAL
-	item_flags = NODROP | DROPDEL
+	item_flags = DROPDEL
 	ammo_type = list(/obj/item/ammo_casing/energy/chrono_beam)
 	can_charge = 0
 	fire_delay = 50
@@ -58,16 +54,18 @@
 
 /obj/item/gun/energy/chrono_gun/Initialize()
 	. = ..()
+	ADD_TRAIT(src, TRAIT_NODROP, CHRONO_GUN_TRAIT)
 	if(istype(loc, /obj/item/chrono_eraser))
 		TED = loc
 	else //admin must have spawned it
 		TED = new(src.loc)
 		return INITIALIZE_HINT_QDEL
 
-/obj/item/gun/energy/chrono_gun/update_icon()
-	return
+/obj/item/gun/energy/chrono_gun/ComponentInitialize()
+	. = ..()
+	AddElement(/datum/element/update_icon_blocker)
 
-/obj/item/gun/energy/chrono_gun/process_fire(atom/target, mob/living/user, message = TRUE, params = null, zone_override = "", bonus_spread = 0)
+/obj/item/gun/energy/chrono_gun/process_fire(atom/target, mob/living/user, message = TRUE, params = null, zone_override = "", bonus_spread = 0, stam_cost = 0)
 	if(field)
 		field_disconnect(field)
 	..()
@@ -150,8 +148,8 @@
 		gun = loc
 	. = ..()
 
-	
-	
+
+
 
 
 /obj/effect/chrono_field
@@ -195,7 +193,7 @@
 
 /obj/effect/chrono_field/update_icon()
 	var/ttk_frame = 1 - (tickstokill / initial(tickstokill))
-	ttk_frame = CLAMP(CEILING(ttk_frame * CHRONO_FRAME_COUNT, 1), 1, CHRONO_FRAME_COUNT)
+	ttk_frame = clamp(CEILING(ttk_frame * CHRONO_FRAME_COUNT, 1), 1, CHRONO_FRAME_COUNT)
 	if(ttk_frame != RPpos)
 		RPpos = ttk_frame
 		mob_underlay.icon_state = "frame[RPpos]"
@@ -241,17 +239,16 @@
 		if(Pgun && istype(Pgun))
 			Pgun.field_connect(src)
 	else
-		return 0
+		return BULLET_ACT_HIT
 
 /obj/effect/chrono_field/assume_air()
 	return 0
 
 /obj/effect/chrono_field/return_air() //we always have nominal air and temperature
 	var/datum/gas_mixture/GM = new
-	GM.add_gases(/datum/gas/oxygen, /datum/gas/nitrogen)
-	GM.gases[/datum/gas/oxygen][MOLES] = MOLES_O2STANDARD
-	GM.gases[/datum/gas/nitrogen][MOLES] = MOLES_N2STANDARD
-	GM.temperature = T20C
+	GM.set_moles(/datum/gas/oxygen, MOLES_O2STANDARD)
+	GM.set_moles(/datum/gas/nitrogen, MOLES_N2STANDARD)
+	GM.set_temperature(T20C)
 	return GM
 
 /obj/effect/chrono_field/Move()

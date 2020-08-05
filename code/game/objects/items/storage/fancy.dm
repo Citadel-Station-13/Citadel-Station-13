@@ -12,6 +12,7 @@
  *		Cigarette Box
  *		Cigar Case
  *		Heart Shaped Box w/ Chocolates
+ *		Ring Box
  */
 
 /obj/item/storage/fancy
@@ -25,23 +26,23 @@
 	var/fancy_open = FALSE
 
 /obj/item/storage/fancy/PopulateContents()
-	GET_COMPONENT(STR, /datum/component/storage)
+	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	for(var/i = 1 to STR.max_items)
 		new spawn_type(src)
 
-/obj/item/storage/fancy/update_icon()
+/obj/item/storage/fancy/update_icon_state()
 	if(fancy_open)
 		icon_state = "[icon_type]box[contents.len]"
 	else
 		icon_state = "[icon_type]box"
 
 /obj/item/storage/fancy/examine(mob/user)
-	..()
+	. = ..()
 	if(fancy_open)
 		if(length(contents) == 1)
-			to_chat(user, "There is one [icon_type] left.")
+			. += "There is one [icon_type] left."
 		else
-			to_chat(user, "There are [contents.len <= 0 ? "no" : "[contents.len]"] [icon_type]s left.")
+			. += "There are [contents.len <= 0 ? "no" : "[contents.len]"] [icon_type]s left."
 
 /obj/item/storage/fancy/attack_self(mob/user)
 	fancy_open = !fancy_open
@@ -69,10 +70,11 @@
 	name = "donut box"
 	spawn_type = /obj/item/reagent_containers/food/snacks/donut
 	fancy_open = TRUE
+	custom_price = PRICE_NORMAL
 
 /obj/item/storage/fancy/donut_box/ComponentInitialize()
 	. = ..()
-	GET_COMPONENT(STR, /datum/component/storage)
+	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.max_items = 6
 	STR.can_hold = typecacheof(list(/obj/item/reagent_containers/food/snacks/donut))
 
@@ -93,7 +95,7 @@
 
 /obj/item/storage/fancy/egg_box/ComponentInitialize()
 	. = ..()
-	GET_COMPONENT(STR, /datum/component/storage)
+	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.max_items = 12
 	STR.can_hold = typecacheof(list(/obj/item/reagent_containers/food/snacks/egg))
 
@@ -115,7 +117,7 @@
 
 /obj/item/storage/fancy/candle_box/ComponentInitialize()
 	. = ..()
-	GET_COMPONENT(STR, /datum/component/storage)
+	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.max_items = 5
 
 /obj/item/storage/fancy/candle_box/attack_self(mob_user)
@@ -135,67 +137,94 @@
 	slot_flags = ITEM_SLOT_BELT
 	icon_type = "cigarette"
 	spawn_type = /obj/item/clothing/mask/cigarette/space_cigarette
+	custom_price = PRICE_ALMOST_CHEAP
+	var/spawn_coupon = TRUE
+
+/obj/item/storage/fancy/cigarettes/attack_self(mob/user)
+	if(contents.len == 0 && spawn_coupon)
+		to_chat(user, "<span class='notice'>You rip the back off \the [src] and get a coupon!</span>")
+		var/obj/item/coupon/attached_coupon = new
+		user.put_in_hands(attached_coupon)
+		attached_coupon.generate()
+		attached_coupon = null
+		spawn_coupon = FALSE
+		name = "discarded cigarette packet"
+		desc = "An old cigarette packet with the back torn off, worth less than nothing now."
+		var/datum/component/storage/STR = GetComponent(/datum/component/storage)
+		STR.max_items = 0
+		return
+	return ..()
 
 /obj/item/storage/fancy/cigarettes/ComponentInitialize()
 	. = ..()
-	GET_COMPONENT(STR, /datum/component/storage)
+	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.max_items = 6
 	STR.can_hold = typecacheof(list(/obj/item/clothing/mask/cigarette, /obj/item/lighter))
 
 /obj/item/storage/fancy/cigarettes/examine(mob/user)
-	..()
-	to_chat(user, "<span class='notice'>Alt-click to extract contents.</span>")
+	. = ..()
+	. += "<span class='notice'>Alt-click to extract contents.</span>"
+	if(spawn_coupon)
+		. += "<span class='notice'>There's a coupon on the back of the pack! You can tear it off once it's empty.</span>"
 
 /obj/item/storage/fancy/cigarettes/AltClick(mob/living/carbon/user)
+	. = ..()
 	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
 		return
-	var/obj/item/clothing/mask/cigarette/W = locate(/obj/item/clothing/mask/cigarette) in contents
+	var/obj/item/lighter/L = locate() in contents
+	if(L)
+		SEND_SIGNAL(src, COMSIG_TRY_STORAGE_TAKE, L, user)
+		user.put_in_hands(L)
+		to_chat(user, "<span class='notice'>You take \a [L] out of the pack.</span>")
+		return TRUE
+	var/obj/item/clothing/mask/cigarette/W = locate() in contents
 	if(W && contents.len > 0)
 		SEND_SIGNAL(src, COMSIG_TRY_STORAGE_TAKE, W, user)
 		user.put_in_hands(W)
-		contents -= W
 		to_chat(user, "<span class='notice'>You take \a [W] out of the pack.</span>")
 	else
 		to_chat(user, "<span class='notice'>There are no [icon_type]s left in the pack.</span>")
+	return TRUE
 
-/obj/item/storage/fancy/cigarettes/update_icon()
-	if(fancy_open || !contents.len)
-		cut_overlays()
-		if(!contents.len)
-			icon_state = "[initial(icon_state)]_empty"
+/obj/item/storage/fancy/cigarettes/update_icon_state()
+	if(!contents.len)
+		icon_state = "[initial(icon_state)]_empty"
+	else if(fancy_open)
+		icon_state = initial(icon_state)
+
+/obj/item/storage/fancy/cigarettes/update_overlays()
+	. = ..()
+	if(!fancy_open || !contents.len)
+		return
+	. += "[icon_state]_open"
+	var/cig_position = 1
+	for(var/C in contents)
+		var/mutable_appearance/inserted_overlay = mutable_appearance(icon)
+
+		if(istype(C, /obj/item/lighter/greyscale))
+			inserted_overlay.icon_state = "lighter_in"
+		else if(istype(C, /obj/item/lighter))
+			inserted_overlay.icon_state = "zippo_in"
 		else
-			icon_state = initial(icon_state)
-			add_overlay("[icon_state]_open")
-			var/cig_position = 1
-			for(var/C in contents)
-				var/mutable_appearance/inserted_overlay = mutable_appearance(icon)
+			inserted_overlay.icon_state = "cigarette"
 
-				if(istype(C, /obj/item/lighter/greyscale))
-					inserted_overlay.icon_state = "lighter_in"
-				else if(istype(C, /obj/item/lighter))
-					inserted_overlay.icon_state = "zippo_in"
-				else
-					inserted_overlay.icon_state = "cigarette"
-
-				inserted_overlay.icon_state = "[inserted_overlay.icon_state]_[cig_position]"
-				add_overlay(inserted_overlay)
-				cig_position++
-	else
-		cut_overlays()
+		inserted_overlay.icon_state = "[inserted_overlay.icon_state]_[cig_position]"
+		. += inserted_overlay
+		cig_position++
 
 /obj/item/storage/fancy/cigarettes/attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
-	if(!ismob(M))
-		return
+	if(M != user || !istype(M))
+		return ..()
 	var/obj/item/clothing/mask/cigarette/cig = locate(/obj/item/clothing/mask/cigarette) in contents
 	if(cig)
-		if(M == user && contents.len > 0 && !user.wear_mask)
+		if(!user.wear_mask && !(SLOT_WEAR_MASK in M.check_obscured_slots()))
 			var/obj/item/clothing/mask/cigarette/W = cig
 			SEND_SIGNAL(src, COMSIG_TRY_STORAGE_TAKE, W, M)
 			M.equip_to_slot_if_possible(W, SLOT_WEAR_MASK)
 			contents -= W
 			to_chat(user, "<span class='notice'>You take \a [W] out of the pack.</span>")
 		else
-			..()
+			return ..()
 	else
 		to_chat(user, "<span class='notice'>There are no [icon_type]s left in the pack.</span>")
 
@@ -271,19 +300,25 @@
 	w_class = WEIGHT_CLASS_TINY
 	icon = 'icons/obj/cigarettes.dmi'
 	icon_state = "cig_paper_pack"
+///The value in here has NOTHING to do with icons. It needs to be this for the proper examine.
 	icon_type = "rolling paper"
 	spawn_type = /obj/item/rollingpaper
+	custom_price = PRICE_REALLY_CHEAP
 
 /obj/item/storage/fancy/rollingpapers/ComponentInitialize()
 	. = ..()
-	GET_COMPONENT(STR, /datum/component/storage)
+	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.max_items = 10
 	STR.can_hold = typecacheof(list(/obj/item/rollingpaper))
 
-/obj/item/storage/fancy/rollingpapers/update_icon()
-	cut_overlays()
+///Overrides to do nothing because fancy boxes are fucking insane.
+/obj/item/storage/fancy/rollingpapers/update_icon_state()
+	return
+
+/obj/item/storage/fancy/rollingpapers/update_overlays()
+	. = ..()
 	if(!contents.len)
-		add_overlay("[icon_state]_empty")
+		. += "[icon_state]_empty"
 
 /////////////
 //CIGAR BOX//
@@ -297,26 +332,30 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	icon_type = "premium cigar"
 	spawn_type = /obj/item/clothing/mask/cigarette/cigar
+	spawn_coupon = FALSE
 
 /obj/item/storage/fancy/cigarettes/cigars/ComponentInitialize()
 	. = ..()
-	GET_COMPONENT(STR, /datum/component/storage)
+	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.max_items = 5
 	STR.can_hold = typecacheof(list(/obj/item/clothing/mask/cigarette/cigar))
 
-/obj/item/storage/fancy/cigarettes/cigars/update_icon()
-	cut_overlays()
+/obj/item/storage/fancy/cigarettes/cigars/update_icon_state()
 	if(fancy_open)
 		icon_state = "[initial(icon_state)]_open"
-
-		var/cigar_position = 1 //generate sprites for cigars in the box
-		for(var/obj/item/clothing/mask/cigarette/cigar/smokes in contents)
-			var/mutable_appearance/cigar_overlay = mutable_appearance(icon, "[smokes.icon_off]_[cigar_position]")
-			add_overlay(cigar_overlay)
-			cigar_position++
-
 	else
 		icon_state = "[initial(icon_state)]"
+
+/obj/item/storage/fancy/cigarettes/cigars/update_overlays()
+	. = ..()
+	if(!fancy_open)
+		return
+	var/cigar_position = 0 //to keep track of the pixel_x offset of each new overlay.
+	for(var/obj/item/clothing/mask/cigarette/cigar/smokes in contents)
+		var/mutable_appearance/cigar_overlay = mutable_appearance(icon, "[smokes.icon_off]")
+		cigar_overlay.pixel_x = 3 * cigar_position
+		. += cigar_overlay
+		cigar_position++
 
 /obj/item/storage/fancy/cigarettes/cigars/cohiba
 	name = "\improper Cohiba Robusto cigar case"
@@ -347,6 +386,64 @@
 
 /obj/item/storage/fancy/heart_box/ComponentInitialize()
 	. = ..()
-	GET_COMPONENT(STR, /datum/component/storage)
+	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.max_items = 8
 	STR.can_hold = typecacheof(list(/obj/item/reagent_containers/food/snacks/tinychocolate))
+
+/obj/item/storage/fancy/nugget_box
+	name = "nugget box"
+	desc = "A cardboard box used for holding chicken nuggies."
+	icon = 'icons/obj/food/containers.dmi'
+	icon_state = "nuggetbox"
+	icon_type = "nugget"
+	spawn_type = /obj/item/reagent_containers/food/snacks/nugget
+
+/obj/item/storage/fancy/nugget_box/ComponentInitialize()
+	. = ..()
+	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
+	STR.max_items = 6
+	STR.can_hold = typecacheof(list(/obj/item/reagent_containers/food/snacks/nugget))
+
+/obj/item/storage/fancy/cracker_pack
+	name = "cracker pack"
+	desc = "A pack of delicious crackers. Keep away from parrots!"
+	icon = 'icons/obj/food/containers.dmi'
+	icon_state = "crackerbox"
+	icon_type = "cracker"
+	spawn_type = /obj/item/reagent_containers/food/snacks/cracker
+
+/obj/item/storage/fancy/cracker_pack/ComponentInitialize()
+	. = ..()
+	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
+	STR.max_items = 6
+	STR.can_hold = typecacheof(list(/obj/item/reagent_containers/food/snacks/cracker))
+
+/*
+ * Ring Box
+ */
+
+/obj/item/storage/fancy/ringbox
+	name = "ring box"
+	desc = "A tiny box covered in soft red felt made for holding rings."
+	icon = 'icons/obj/ring.dmi'
+	icon_state = "gold ringbox"
+	icon_type = "gold ring"
+	w_class = WEIGHT_CLASS_TINY
+	spawn_type = /obj/item/clothing/gloves/ring
+
+/obj/item/storage/fancy/ringbox/ComponentInitialize()
+	. = ..()
+	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
+	STR.max_items = 1
+	STR.can_hold = typecacheof(list(/obj/item/clothing/gloves/ring))
+
+/obj/item/storage/fancy/ringbox/diamond
+	icon_state = "diamond ringbox"
+	icon_type = "diamond ring"
+	spawn_type = /obj/item/clothing/gloves/ring/diamond
+
+/obj/item/storage/fancy/ringbox/silver
+	icon_state = "silver ringbox"
+	icon_type = "silver ring"
+	spawn_type = /obj/item/clothing/gloves/ring/silver
+

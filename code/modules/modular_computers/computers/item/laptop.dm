@@ -18,13 +18,13 @@
 	screen_on = 0 		// Starts closed
 	var/start_open = TRUE	// unless this var is set to 1
 	var/icon_state_closed = "laptop-closed"
+	display_overlays = FALSE
 	var/w_class_open = WEIGHT_CLASS_BULKY
-	var/slowdown_open = TRUE
 
 /obj/item/modular_computer/laptop/examine(mob/user)
-	..()
+	. = ..()
 	if(screen_on)
-		to_chat(user, "<span class='notice'>Alt-click to close it.</span>")
+		. += "<span class='notice'>Alt-click to close it.</span>"
 
 /obj/item/modular_computer/laptop/Initialize()
 	. = ..()
@@ -32,12 +32,11 @@
 	if(start_open && !screen_on)
 		toggle_open()
 
-/obj/item/modular_computer/laptop/update_icon()
-	if(screen_on)
-		..()
-	else
-		cut_overlays()
+/obj/item/modular_computer/laptop/update_icon_state()
+	if(!screen_on)
 		icon_state = icon_state_closed
+	else
+		. = ..()
 
 /obj/item/modular_computer/laptop/attack_self(mob/user)
 	if(!screen_on)
@@ -65,10 +64,7 @@
 				return
 			M.put_in_hand(src, H.held_index)
 
-/obj/item/modular_computer/laptop/attack_hand(mob/user)
-	. = ..()
-	if(.)
-		return
+/obj/item/modular_computer/laptop/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	if(screen_on && isturf(loc))
 		return attack_self(user)
 
@@ -86,20 +82,19 @@
 /obj/item/modular_computer/laptop/AltClick(mob/user)
 	if(screen_on) // Close it.
 		try_toggle_open(user)
-	else
-		return ..()
+		return TRUE
+	return ..()
 
 /obj/item/modular_computer/laptop/proc/toggle_open(mob/living/user=null)
 	if(screen_on)
 		to_chat(user, "<span class='notice'>You close \the [src].</span>")
-		slowdown = initial(slowdown)
 		w_class = initial(w_class)
 	else
 		to_chat(user, "<span class='notice'>You open \the [src].</span>")
-		slowdown = slowdown_open
 		w_class = w_class_open
 
 	screen_on = !screen_on
+	display_overlays = screen_on
 	update_icon()
 
 

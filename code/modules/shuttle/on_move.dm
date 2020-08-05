@@ -131,7 +131,7 @@ All ShuttleMove procs go here
 	var/range = throw_force * 10
 	range = CEILING(rand(range-(range*0.1), range+(range*0.1)), 10)/10
 	var/speed = range/5
-	throw_at(target, range, speed)
+	safe_throw_at(target, range, speed)
 
 /////////////////////////////////////////////////////////////////////////////////////
 
@@ -179,7 +179,7 @@ All ShuttleMove procs go here
 	for(var/obj/machinery/door/airlock/A in range(1, src))  // includes src
 		A.shuttledocked = FALSE
 		A.air_tight = TRUE
-		INVOKE_ASYNC(A, /obj/machinery/door/.proc/close)
+		addtimer(CALLBACK(A, /obj/machinery/door/.proc/close), 0)
 
 /obj/machinery/door/airlock/afterShuttleMove(turf/oldT, list/movement_force, shuttle_dir, shuttle_preferred_direction, move_dir, rotation)
 	. = ..()
@@ -249,7 +249,7 @@ All ShuttleMove procs go here
 			A.atmosinit()
 			if(A.returnPipenet())
 				A.addMember(src)
-		build_network()
+		SSair.add_to_rebuild_queue(src)
 	else
 		// atmosinit() calls update_icon(), so we don't need to call it
 		update_icon()
@@ -290,7 +290,8 @@ All ShuttleMove procs go here
 	// ignores the movement of the shuttle from the staging area on CentCom to
 	// the station as it is loaded in.
 	if (oldT && !is_centcom_level(oldT.z))
-		unlocked = TRUE
+		var/datum/component/storage/concrete/emergency/STR = GetComponent(/datum/component/storage/concrete/emergency)
+		STR?.unlock_me()
 
 /************************************Mob move procs************************************/
 
@@ -317,7 +318,7 @@ All ShuttleMove procs go here
 
 	var/knockdown = movement_force["KNOCKDOWN"]
 	if(knockdown)
-		Knockdown(knockdown)
+		DefaultCombatKnockdown(knockdown)
 
 
 /mob/living/simple_animal/hostile/megafauna/onShuttleMove(turf/newT, turf/oldT, list/movement_force, move_dir, obj/docking_port/stationary/old_dock, obj/docking_port/mobile/moving_dock)

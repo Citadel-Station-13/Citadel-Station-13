@@ -26,7 +26,7 @@
 	if (prob(40))
 		new /obj/item/storage/toolbox/emergency(src)
 
-	switch (pickweight(list("small" = 40, "aid" = 25, "tank" = 20, "both" = 10, "nothing" = 4, "delete" = 1)))
+	switch (pickweight(list("small" = 35, "aid" = 25, "tank" = 20, "both" = 10, "nothing" = 5, "rng" = 5)))
 		if ("small")
 			new /obj/item/tank/internals/emergency_oxygen(src)
 			new /obj/item/tank/internals/emergency_oxygen(src)
@@ -49,9 +49,13 @@
 		if ("nothing")
 			// doot
 
-		// teehee
-		if ("delete")
-			qdel(src)
+		if ("rng")
+			new /obj/effect/spawner/lootdrop/breathing_tanks/no_turf(src)
+			new /obj/effect/spawner/lootdrop/breathing_tanks/no_turf(src)
+			new /obj/effect/spawner/lootdrop/breathing_masks/no_turf(src)
+			new /obj/effect/spawner/lootdrop/breathing_masks/no_turf(src)
+
+			return
 
 /*
  * Fire Closet
@@ -102,13 +106,15 @@
 	if(prob(70))
 		new /obj/item/wrench(src)
 	if(prob(70))
-		new /obj/item/weldingtool(src)
+		new /obj/effect/spawner/lootdrop/welder_tools/no_turf(src)
 	if(prob(70))
 		new /obj/item/crowbar(src)
 	if(prob(70))
 		new /obj/item/wirecutters(src)
 	if(prob(70))
 		new /obj/item/t_scanner(src)
+	if(prob(70))
+		new /obj/effect/spawner/lootdrop/low_tools/no_turf(src) //Spare random basic tool
 	if(prob(20))
 		new /obj/item/storage/belt/utility(src)
 	if(prob(30))
@@ -172,7 +178,7 @@
 	if(prob(90))
 		new /obj/item/wirecutters(src)
 	new /obj/item/clothing/suit/bomb_suit/security(src)
-	new /obj/item/clothing/under/rank/security(src)
+	new /obj/item/clothing/under/rank/security/officer(src)
 	new /obj/item/clothing/shoes/jackboots(src)
 	new /obj/item/clothing/head/bomb_hood/security(src)
 

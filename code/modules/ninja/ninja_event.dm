@@ -14,6 +14,7 @@ Contents:
 	typepath = /datum/round_event/ghost_role/ninja
 	max_occurrences = 1
 	earliest_start = 40 MINUTES
+	gamemode_blacklist = list("dynamic")
 	min_players = 15
 
 /datum/round_event/ghost_role/ninja
@@ -38,6 +39,9 @@ Contents:
 	if(!spawn_loc)
 		var/list/spawn_locs = list()
 		for(var/obj/effect/landmark/carpspawn/L in GLOB.landmarks_list)
+			if(isturf(L.loc))
+				spawn_locs += L.loc
+		for(var/obj/effect/landmark/loneopspawn/L in GLOB.landmarks_list)
 			if(isturf(L.loc))
 				spawn_locs += L.loc
 		if(!spawn_locs.len)
@@ -68,7 +72,7 @@ Contents:
 	Mind.add_antag_datum(ninjadatum)
 
 	if(Ninja.mind != Mind)			//something has gone wrong!
-		throw EXCEPTION("Ninja created with incorrect mind")
+		stack_trace("Ninja created with incorrect mind")
 
 	spawned_mobs += Ninja
 	message_admins("[ADMIN_LOOKUPFLW(Ninja)] has been made into a ninja by an event.")

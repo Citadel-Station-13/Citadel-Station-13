@@ -16,17 +16,19 @@
 	var/req_stat = CONSCIOUS // CONSCIOUS, UNCONSCIOUS or DEAD
 	var/always_keep = 0 // important for abilities like revive that screw you if you lose them.
 	var/ignores_fakedeath = FALSE // usable with the FAKEDEATH flag
+	var/loudness = 0 //Determines how much having this ability will affect changeling blood tests. At 4, the blood will react violently and turn to ash, creating a unique message in the process. At 10, the blood will explode when heated.
 
 
 /obj/effect/proc_holder/changeling/proc/on_purchase(mob/user, is_respec)
+	action.Grant(user)
 	if(!is_respec)
 		SSblackbox.record_feedback("tally", "changeling_power_purchase", 1, name)
 
 /obj/effect/proc_holder/changeling/proc/on_refund(mob/user)
+	action.Remove(user)
 	return
 
-/obj/effect/proc_holder/changeling/Click()
-	var/mob/user = usr
+/obj/effect/proc_holder/changeling/Trigger(mob/user)
 	if(!user || !user.mind || !user.mind.has_antag_datum(/datum/antagonist/changeling))
 		return
 	try_to_sting(user)
@@ -65,7 +67,7 @@
 	if(req_stat < user.stat)
 		to_chat(user, "<span class='warning'>We are incapacitated.</span>")
 		return 0
-	if((user.has_trait(TRAIT_DEATHCOMA)) && (!ignores_fakedeath))
+	if((HAS_TRAIT(user, TRAIT_DEATHCOMA)) && (!ignores_fakedeath))
 		to_chat(user, "<span class='warning'>We are incapacitated.</span>")
 		return 0
 	return 1

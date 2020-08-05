@@ -21,7 +21,7 @@
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 30)
 	resistance_flags = FIRE_PROOF
 
-	materials = list(MAT_METAL=70, MAT_GLASS=30)
+	custom_materials = list(/datum/material/iron=70, /datum/material/glass=30)
 	var/welding = 0 	//Whether or not the welding tool is off(0), on(1) or currently welding(2)
 	var/status = TRUE 		//Whether the welder is secured or unsecured (able to attach rods to it to make a flamethrower)
 	var/max_fuel = 20 	//The max amount of fuel the welder can hold
@@ -33,31 +33,33 @@
 	heat = 3800
 	tool_behaviour = TOOL_WELDER
 	toolspeed = 1
+	wound_bonus = 0
+	bare_wound_bonus = 5
 
 /obj/item/weldingtool/Initialize()
 	. = ..()
 	create_reagents(max_fuel)
-	reagents.add_reagent("welding_fuel", max_fuel)
+	reagents.add_reagent(/datum/reagent/fuel, max_fuel)
 	update_icon()
 
+/obj/item/weldingtool/ComponentInitialize()
+	. = ..()
+	AddElement(/datum/element/update_icon_updates_onmob)
 
-/obj/item/weldingtool/proc/update_torch()
+/obj/item/weldingtool/update_icon_state()
 	if(welding)
-		add_overlay("[initial(icon_state)]-on")
 		item_state = "[initial(item_state)]1"
 	else
 		item_state = "[initial(item_state)]"
 
-
-/obj/item/weldingtool/update_icon()
-	cut_overlays()
+/obj/item/weldingtool/update_overlays()
+	. = ..()
 	if(change_icons)
 		var/ratio = get_fuel() / max_fuel
 		ratio = CEILING(ratio*4, 1) * 25
-		add_overlay("[initial(icon_state)][ratio]")
-	update_torch()
-	return
-
+		. += "[initial(icon_state)][ratio]"
+	if(welding)
+		. += "[initial(icon_state)]-on"
 
 /obj/item/weldingtool/process()
 	switch(welding)
@@ -97,7 +99,7 @@
 
 /obj/item/weldingtool/proc/explode()
 	var/turf/T = get_turf(loc)
-	var/plasmaAmount = reagents.get_reagent_amount("plasma")
+	var/plasmaAmount = reagents.get_reagent_amount(/datum/reagent/toxin/plasma)
 	dyn_explosion(T, plasmaAmount/5)//20 plasma in a standard welder has a 4 power explosion. no breaches, but enough to kill/dismember holder
 	qdel(src)
 
@@ -142,7 +144,7 @@
 
 
 /obj/item/weldingtool/attack_self(mob/user)
-	if(src.reagents.has_reagent("plasma"))
+	if(src.reagents.has_reagent(/datum/reagent/toxin/plasma))
 		message_admins("[ADMIN_LOOKUPFLW(user)] activated a rigged welder at [AREACOORD(user)].")
 		explode()
 	switched_on(user)
@@ -154,7 +156,7 @@
 
 // Returns the amount of fuel in the welder
 /obj/item/weldingtool/proc/get_fuel()
-	return reagents.get_reagent_amount("welding_fuel")
+	return reagents.get_reagent_amount(/datum/reagent/fuel)
 
 
 // Uses fuel from the welding tool.
@@ -165,7 +167,7 @@
 	if(used)
 		burned_fuel_for = 0
 	if(get_fuel() >= used)
-		reagents.remove_reagent("welding_fuel", used)
+		reagents.remove_reagent(/datum/reagent/fuel, used)
 		check_fuel()
 		return TRUE
 	else
@@ -177,11 +179,6 @@
 	if(get_fuel() <= 0 && welding)
 		switched_on(user)
 		update_icon()
-		//mob icon update
-		if(ismob(loc))
-			var/mob/M = loc
-			M.update_inv_hands(0)
-
 		return 0
 	return 1
 
@@ -220,10 +217,10 @@
 
 
 /obj/item/weldingtool/examine(mob/user)
-	..()
-	to_chat(user, "It contains [get_fuel()] unit\s of fuel out of [max_fuel].")
+	. = ..()
+	. += "It contains [get_fuel()] unit\s of fuel out of [max_fuel]."
 
-/obj/item/weldingtool/is_hot()
+/obj/item/weldingtool/get_temperature()
 	return welding * heat
 
 //Returns whether or not the welding tool is currently on.
@@ -266,10 +263,10 @@
 	status = !status
 	if(status)
 		to_chat(user, "<span class='notice'>You resecure [src] and close the fuel tank.</span>")
-		container_type = NONE
+		DISABLE_BITFIELD(reagents.reagents_holder_flags, OPENCONTAINER)
 	else
 		to_chat(user, "<span class='notice'>[src] can now be attached, modified, and refuelled.</span>")
-		container_type = OPENCONTAINER
+		ENABLE_BITFIELD(reagents.reagents_holder_flags, OPENCONTAINER)
 	add_fingerprint(user)
 
 /obj/item/weldingtool/proc/flamethrower_rods(obj/item/I, mob/user)
@@ -297,11 +294,13 @@
 	desc = "A slightly larger welder with a larger tank."
 	icon_state = "indwelder"
 	max_fuel = 40
-	materials = list(MAT_GLASS=60)
+	custom_materials = list(/datum/material/glass=60)
 
 /obj/item/weldingtool/largetank/cyborg
 	name = "integrated welding tool"
 	desc = "An advanced welder designed to be used in robotic systems."
+	icon = 'icons/obj/items_cyborg.dmi'
+	icon_state = "indwelder_cyborg"
 	toolspeed = 0.5
 
 /obj/item/weldingtool/largetank/flamethrower_screwdriver()
@@ -314,7 +313,7 @@
 	icon_state = "miniwelder"
 	max_fuel = 10
 	w_class = WEIGHT_CLASS_TINY
-	materials = list(MAT_METAL=30, MAT_GLASS=10)
+	custom_materials = list(/datum/material/iron=30, /datum/material/glass=10)
 	change_icons = 0
 
 /obj/item/weldingtool/mini/flamethrower_screwdriver()
@@ -331,7 +330,7 @@
 
 /obj/item/weldingtool/abductor/process()
 	if(get_fuel() <= max_fuel)
-		reagents.add_reagent("welding_fuel", 1)
+		reagents.add_reagent(/datum/reagent/fuel, 1)
 	..()
 
 /obj/item/weldingtool/hugetank
@@ -340,7 +339,7 @@
 	icon_state = "upindwelder"
 	item_state = "upindwelder"
 	max_fuel = 80
-	materials = list(MAT_METAL=70, MAT_GLASS=120)
+	custom_materials = list(/datum/material/iron=70, /datum/material/glass=120)
 
 /obj/item/weldingtool/experimental
 	name = "experimental welding tool"
@@ -348,7 +347,7 @@
 	icon_state = "exwelder"
 	item_state = "exwelder"
 	max_fuel = 40
-	materials = list(MAT_METAL=70, MAT_GLASS=120)
+	custom_materials = list(/datum/material/iron=70, /datum/material/glass=120)
 	var/last_gen = 0
 	change_icons = 0
 	can_off_process = 1
@@ -360,14 +359,35 @@
 	name = "brass welding tool"
 	desc = "A brass welder that seems to constantly refuel itself. It is faintly warm to the touch."
 	resistance_flags = FIRE_PROOF | ACID_PROOF
-	icon_state = "brasswelder"
+	icon_state = "clockwelder"
 	item_state = "brasswelder"
 
+/obj/item/weldingtool/bronze
+	name = "bronze plated welding tool"
+	desc = "A bronze plated welder."
+	max_fuel = 21
+	toolspeed = 0.95
+	icon_state = "brasswelder"
+	item_state = "brasswelder"
 
 /obj/item/weldingtool/experimental/process()
 	..()
 	if(get_fuel() < max_fuel && nextrefueltick < world.time)
 		nextrefueltick = world.time + 10
-		reagents.add_reagent("welding_fuel", 1)
+		reagents.add_reagent(/datum/reagent/fuel, 1)
+
+/obj/item/weldingtool/advanced
+	name = "advanced welding tool"
+	desc = "A modern welding tool combined with an alien welding tool, it never runs out of fuel and works almost as fast."
+	icon = 'icons/obj/advancedtools.dmi'
+	icon_state = "welder"
+	toolspeed = 0.2
+	light_intensity = 0
+	change_icons = 0
+
+/obj/item/weldingtool/advanced/process()
+	if(get_fuel() <= max_fuel)
+		reagents.add_reagent(/datum/reagent/fuel, 1)
+	..()
 
 #undef WELDER_FUEL_BURN_INTERVAL

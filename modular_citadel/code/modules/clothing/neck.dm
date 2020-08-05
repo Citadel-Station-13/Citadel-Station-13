@@ -7,7 +7,7 @@
 	icon = 'modular_citadel/icons/obj/clothing/cit_neck.dmi'
 	item_state = "undertale"
 	icon_state = "undertale"
-	alternate_worn_icon = 'modular_citadel/icons/mob/clothing/necks.dmi'
+	mob_overlay_icon = 'modular_citadel/icons/mob/clothing/necks.dmi'
 	resistance_flags = FIRE_PROOF
 	actions_types = list(/datum/action/item_action/zanderlocket)
 	var/toggled = FALSE
@@ -15,7 +15,7 @@
 
 /datum/action/item_action/zanderlocket/Trigger()
 	new/obj/effect/temp_visual/souldeath(owner.loc, owner)
-	playsound(owner, 'modular_citadel/sound/misc/souldeath.ogg', 100, FALSE)
+	playsound(owner, 'sound/misc/souldeath.ogg', 100, FALSE)
 
 
 /obj/item/clothing/neck/undertale/Initialize()

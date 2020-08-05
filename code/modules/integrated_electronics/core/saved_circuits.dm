@@ -124,7 +124,7 @@
 	// Save modified name
 	if(initial(name) != name)
 		assembly_params["name"] = name
-	
+
 	// Save modified description
 	if(initial(desc) != desc)
 		assembly_params["desc"] = desc
@@ -144,7 +144,7 @@
 		return "Bad assembly name."
 	if(assembly_params["desc"] && !reject_bad_text(assembly_params["desc"]))
 		return "Bad assembly description."
-	if(assembly_params["detail_color"] && !(assembly_params["detail_color"] in color_whitelist))
+	if(assembly_params["detail_color"] && !reject_bad_text(assembly_params["detail_color"], 7))
 		return "Bad assembly color."
 
 // Loads assembly parameters from a list
@@ -153,7 +153,7 @@
 	// Load modified name, if any.
 	if(assembly_params["name"])
 		name = assembly_params["name"]
-		
+
 	// Load modified description, if any.
 	if(assembly_params["desc"])
 		desc = assembly_params["desc"]
@@ -260,7 +260,7 @@
 	blocks["max_space"] = assembly.max_components
 
 	// Start keeping track of total metal cost
-	blocks["metal_cost"] = assembly.materials[MAT_METAL]
+	blocks["metal_cost"] = assembly.custom_materials[SSmaterials.GetMaterialRef(/datum/material/iron)]
 
 
 	// Block 2. Components.
@@ -291,7 +291,7 @@
 		// Update estimated assembly complexity, taken space and material cost
 		blocks["complexity"] += component.complexity
 		blocks["used_space"] += component.size
-		blocks["metal_cost"] += component.materials[MAT_METAL]
+		blocks["metal_cost"] += component.custom_materials[SSmaterials.GetMaterialRef(/datum/material/iron)]
 
 		// Check if the assembly requires printer upgrades
 		if(!(component.spawn_flags & IC_SPAWN_DEFAULT))

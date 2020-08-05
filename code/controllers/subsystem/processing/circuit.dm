@@ -50,17 +50,20 @@ PROCESSING_SUBSYSTEM_DEF(circuit)
 		/obj/item/electronic_assembly/simple,
 		/obj/item/electronic_assembly/hook,
 		/obj/item/electronic_assembly/pda,
+		/obj/item/electronic_assembly/dildo,
 		/obj/item/electronic_assembly/small/default,
 		/obj/item/electronic_assembly/small/cylinder,
 		/obj/item/electronic_assembly/small/scanner,
 		/obj/item/electronic_assembly/small/hook,
 		/obj/item/electronic_assembly/small/box,
+		/obj/item/electronic_assembly/small/dildo,
 		/obj/item/electronic_assembly/medium/default,
 		/obj/item/electronic_assembly/medium/box,
 		/obj/item/electronic_assembly/medium/clam,
 		/obj/item/electronic_assembly/medium/medical,
 		/obj/item/electronic_assembly/medium/gun,
 		/obj/item/electronic_assembly/medium/radio,
+		/obj/item/electronic_assembly/medium/dildo,
 		/obj/item/electronic_assembly/large/default,
 		/obj/item/electronic_assembly/large/scope,
 		/obj/item/electronic_assembly/large/terminal,
@@ -89,4 +92,4 @@ PROCESSING_SUBSYSTEM_DEF(circuit)
 		/obj/item/card/data/full_color,
 		/obj/item/card/data/disk
 		)
-		
+

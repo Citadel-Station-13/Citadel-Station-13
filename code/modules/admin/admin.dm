@@ -25,7 +25,7 @@
 		to_chat(usr, "You seem to be selecting a mob that doesn't exist anymore.")
 		return
 
-	var/body = "<html><head><title>Options for [M.key]</title></head>"
+	var/body = "<html><head><meta http-equiv='Content-Type' content='text/html; charset=UTF-8'><title>Options for [M.key]</title></head>"
 	body += "<body>Options panel for <b>[M]</b>"
 	if(M.client)
 		body += " played by <b>[M.client]</b> "
@@ -40,6 +40,11 @@
 
 	if(M.client)
 		body += "<br>\[<b>First Seen:</b> [M.client.player_join_date]\]\[<b>Byond account registered on:</b> [M.client.account_join_date]\]"
+		body += "<br><br><b>CentCom Galactic Ban DB: </b> "
+		if(CONFIG_GET(string/centcom_ban_db))
+			body += "<a href='?_src_=holder;[HrefToken()];centcomlookup=[M.client.ckey]'>Search</a>"
+		else
+			body += "<i>Disabled</i>"
 		body += "<br><br><b>Show related accounts by:</b> "
 		body += "\[ <a href='?_src_=holder;[HrefToken()];showrelatedacc=cid;client=[REF(M.client)]'>CID</a> | "
 		body += "<a href='?_src_=holder;[HrefToken()];showrelatedacc=ip;client=[REF(M.client)]'>IP</a> \]"
@@ -185,7 +190,6 @@
 			body += "<A href='?_src_=holder;[HrefToken()];simplemake=shade;mob=[REF(M)]'>Shade</A>"
 			body += "<br>"
 
-	if (M.client)
 		body += "<br><br>"
 		body += "<b>Other actions:</b>"
 		body += "<br>"
@@ -194,9 +198,9 @@
 		body += "<A href='?_src_=holder;[HrefToken()];tdome2=[REF(M)]'>Thunderdome 2</A> | "
 		body += "<A href='?_src_=holder;[HrefToken()];tdomeadmin=[REF(M)]'>Thunderdome Admin</A> | "
 		body += "<A href='?_src_=holder;[HrefToken()];tdomeobserve=[REF(M)]'>Thunderdome Observer</A> | "
-
-	body += usr.client.citaPPoptions(M) // CITADEL
-
+		body += "<A href='?_src_=holder;[HrefToken()];makementor=[M.ckey]'>Make mentor</A> | "
+		body += "<A href='?_src_=holder;[HrefToken()];removementor=[M.ckey]'>Remove mentor</A> | "
+		body += "<A href='?_src_=holder;[HrefToken()];makeeligible=[REF(M)]'>Allow reentering round</A>"
 	body += "<br>"
 	body += "</body></html>"
 
@@ -241,7 +245,7 @@
 			if( isemptylist(GLOB.news_network.network_channels) )
 				dat+="<I>No active channels found...</I>"
 			else
-				for(var/datum/newscaster/feed_channel/CHANNEL in GLOB.news_network.network_channels)
+				for(var/datum/news/feed_channel/CHANNEL in GLOB.news_network.network_channels)
 					if(CHANNEL.is_admin_channel)
 						dat+="<B><FONT style='BACKGROUND-COLOR: LightGreen'><A href='?src=[REF(src)];ac_show_channel=[REF(CHANNEL)]'>[CHANNEL.channel_name]</A></FONT></B><BR>"
 					else
@@ -278,7 +282,7 @@
 			if(src.admincaster_feed_channel.channel_name =="" || src.admincaster_feed_channel.channel_name == "\[REDACTED\]")
 				dat+="<FONT COLOR='maroon'>Invalid channel name.</FONT><BR>"
 			var/check = 0
-			for(var/datum/newscaster/feed_channel/FC in GLOB.news_network.network_channels)
+			for(var/datum/news/feed_channel/FC in GLOB.news_network.network_channels)
 				if(FC.channel_name == src.admincaster_feed_channel.channel_name)
 					check = 1
 					break
@@ -295,7 +299,7 @@
 					dat+="<I>No feed messages found in channel...</I><BR>"
 				else
 					var/i = 0
-					for(var/datum/newscaster/feed_message/MESSAGE in src.admincaster_feed_channel.messages)
+					for(var/datum/news/feed_message/MESSAGE in src.admincaster_feed_channel.messages)
 						i++
 						dat+="-[MESSAGE.returnBody(-1)] <BR>"
 						if(MESSAGE.img)
@@ -303,7 +307,7 @@
 							dat+="<img src='tmp_photo[i].png' width = '180'><BR><BR>"
 						dat+="<FONT SIZE=1>\[Story by <FONT COLOR='maroon'>[MESSAGE.returnAuthor(-1)]</FONT>\]</FONT><BR>"
 						dat+="[MESSAGE.comments.len] comment[MESSAGE.comments.len > 1 ? "s" : ""]:<br>"
-						for(var/datum/newscaster/feed_comment/comment in MESSAGE.comments)
+						for(var/datum/news/feed_comment/comment in MESSAGE.comments)
 							dat+="[comment.body]<br><font size=1>[comment.author] [comment.time_stamp]</font><br>"
 						dat+="<br>"
 			dat+="<BR><HR><A href='?src=[REF(src)];[HrefToken()];ac_refresh=1'>Refresh</A>"
@@ -316,7 +320,7 @@
 			if(isemptylist(GLOB.news_network.network_channels))
 				dat+="<I>No feed channels found active...</I><BR>"
 			else
-				for(var/datum/newscaster/feed_channel/CHANNEL in GLOB.news_network.network_channels)
+				for(var/datum/news/feed_channel/CHANNEL in GLOB.news_network.network_channels)
 					dat+="<A href='?src=[REF(src)];[HrefToken()];ac_pick_censor_channel=[REF(CHANNEL)]'>[CHANNEL.channel_name]</A> [(CHANNEL.censored) ? ("<FONT COLOR='red'>***</FONT>") : ""]<BR>"
 			dat+="<BR><A href='?src=[REF(src)];[HrefToken()];ac_setScreen=[0]'>Cancel</A>"
 		if(11)
@@ -327,7 +331,7 @@
 			if(isemptylist(GLOB.news_network.network_channels))
 				dat+="<I>No feed channels found active...</I><BR>"
 			else
-				for(var/datum/newscaster/feed_channel/CHANNEL in GLOB.news_network.network_channels)
+				for(var/datum/news/feed_channel/CHANNEL in GLOB.news_network.network_channels)
 					dat+="<A href='?src=[REF(src)];[HrefToken()];ac_pick_d_notice=[REF(CHANNEL)]'>[CHANNEL.channel_name]</A> [(CHANNEL.censored) ? ("<FONT COLOR='red'>***</FONT>") : ""]<BR>"
 
 			dat+="<BR><A href='?src=[REF(src)];[HrefToken()];ac_setScreen=[0]'>Back</A>"
@@ -338,11 +342,11 @@
 			if( isemptylist(src.admincaster_feed_channel.messages) )
 				dat+="<I>No feed messages found in channel...</I><BR>"
 			else
-				for(var/datum/newscaster/feed_message/MESSAGE in src.admincaster_feed_channel.messages)
+				for(var/datum/news/feed_message/MESSAGE in src.admincaster_feed_channel.messages)
 					dat+="-[MESSAGE.returnBody(-1)] <BR><FONT SIZE=1>\[Story by <FONT COLOR='maroon'>[MESSAGE.returnAuthor(-1)]</FONT>\]</FONT><BR>"
 					dat+="<FONT SIZE=2><A href='?src=[REF(src)];[HrefToken()];ac_censor_channel_story_body=[REF(MESSAGE)]'>[(MESSAGE.bodyCensor) ? ("Undo story censorship") : ("Censor story")]</A>  -  <A href='?src=[REF(src)];[HrefToken()];ac_censor_channel_story_author=[REF(MESSAGE)]'>[(MESSAGE.authorCensor) ? ("Undo Author Censorship") : ("Censor message Author")]</A></FONT><BR>"
 					dat+="[MESSAGE.comments.len] comment[MESSAGE.comments.len > 1 ? "s" : ""]: <a href='?src=[REF(src)];[HrefToken()];ac_lock_comment=[REF(MESSAGE)]'>[MESSAGE.locked ? "Unlock" : "Lock"]</a><br>"
-					for(var/datum/newscaster/feed_comment/comment in MESSAGE.comments)
+					for(var/datum/news/feed_comment/comment in MESSAGE.comments)
 						dat+="[comment.body] <a href='?src=[REF(src)];[HrefToken()];ac_del_comment=[REF(comment)];ac_del_comment_msg=[REF(MESSAGE)]'>X</a><br><font size=1>[comment.author] [comment.time_stamp]</font><br>"
 			dat+="<BR><A href='?src=[REF(src)];[HrefToken()];ac_setScreen=[10]'>Back</A>"
 		if(13)
@@ -355,7 +359,7 @@
 				if( isemptylist(src.admincaster_feed_channel.messages) )
 					dat+="<I>No feed messages found in channel...</I><BR>"
 				else
-					for(var/datum/newscaster/feed_message/MESSAGE in src.admincaster_feed_channel.messages)
+					for(var/datum/news/feed_message/MESSAGE in src.admincaster_feed_channel.messages)
 						dat+="-[MESSAGE.returnBody(-1)] <BR><FONT SIZE=1>\[Story by <FONT COLOR='maroon'>[MESSAGE.returnAuthor(-1)]</FONT>\]</FONT><BR>"
 			dat+="<BR><A href='?src=[REF(src)];[HrefToken()];ac_setScreen=[11]'>Back</A>"
 		if(14)
@@ -422,6 +426,29 @@
 		"}
 	if(GLOB.master_mode == "secret")
 		dat += "<A href='?src=[REF(src)];[HrefToken()];f_secret=1'>(Force Secret Mode)</A><br>"
+
+	if(GLOB.master_mode == "dynamic")
+		if(SSticker.current_state <= GAME_STATE_PREGAME)
+			dat += "<A href='?src=[REF(src)];[HrefToken()];f_dynamic_roundstart=1'>(Force Roundstart Rulesets)</A><br>"
+			if (GLOB.dynamic_forced_roundstart_ruleset.len > 0)
+				for(var/datum/dynamic_ruleset/roundstart/rule in GLOB.dynamic_forced_roundstart_ruleset)
+					dat += {"<A href='?src=[REF(src)];[HrefToken()];f_dynamic_roundstart_remove=\ref[rule]'>-> [rule.name] <-</A><br>"}
+				dat += "<A href='?src=[REF(src)];[HrefToken()];f_dynamic_roundstart_clear=1'>(Clear Rulesets)</A><br>"
+			dat += "<A href='?src=[REF(src)];[HrefToken()];f_dynamic_storyteller=1'>(Force Storyteller)</A><br>"
+			if (GLOB.dynamic_forced_storyteller)
+				var/datum/dynamic_storyteller/S = GLOB.dynamic_forced_storyteller
+				dat += "<A href='?src=[REF(src)];[HrefToken()];f_dynamic_storyteller_clear=1'>-> [initial(S.name)] <-</A><br>"
+			dat += "<A href='?src=[REF(src)];[HrefToken()];f_dynamic_options=1'>(Dynamic mode options)</A><br>"
+		else if (SSticker.IsRoundInProgress())
+			dat += "<A href='?src=[REF(src)];[HrefToken()];f_dynamic_latejoin=1'>(Force Next Latejoin Ruleset)</A><br>"
+			if (SSticker && SSticker.mode && istype(SSticker.mode,/datum/game_mode/dynamic))
+				var/datum/game_mode/dynamic/mode = SSticker.mode
+				if (mode.forced_latejoin_rule)
+					dat += {"<A href='?src=[REF(src)];[HrefToken()];f_dynamic_latejoin_clear=1'>-> [mode.forced_latejoin_rule.name] <-</A><br>"}
+			dat += "<A href='?src=[REF(src)];[HrefToken()];f_dynamic_midround=1'>(Execute Midround Ruleset!)</A><br>"
+		dat += "<hr/>"
+	if(SSticker.IsRoundInProgress())
+		dat += "<a href='?src=[REF(src)];[HrefToken()];gamemode_panel=1'>(Game Mode Panel)</a><BR>"
 
 	dat += {"
 		<BR>
@@ -538,13 +565,22 @@
 	message_admins("[key_name_admin(usr)] toggled OOC.")
 	SSblackbox.record_feedback("nested tally", "admin_toggle", 1, list("Toggle OOC", "[GLOB.ooc_allowed ? "Enabled" : "Disabled"]")) //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
+/datum/admins/proc/toggleooclocal()
+	set category = "Server"
+	set desc="Toggle dat bitch"
+	set name="Toggle Local OOC"
+	toggle_looc()
+	log_admin("[key_name(usr)] toggled LOOC.")
+	message_admins("[key_name_admin(usr)] toggled LOOC.")
+	SSblackbox.record_feedback("nested tally", "admin_toggle", 1, list("Toggle Local OOC", "[GLOB.ooc_allowed ? "Enabled" : "Disabled"]")) //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+
 /datum/admins/proc/toggleoocdead()
 	set category = "Server"
 	set desc="Toggle dis bitch"
 	set name="Toggle Dead OOC"
 	toggle_dooc()
 
-	log_admin("[key_name(usr)] toggled OOC.")
+	log_admin("[key_name(usr)] toggled Dead OOC.")
 	message_admins("[key_name_admin(usr)] toggled Dead OOC.")
 	SSblackbox.record_feedback("nested tally", "admin_toggle", 1, list("Toggle Dead OOC", "[GLOB.dooc_allowed ? "Enabled" : "Disabled"]")) //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
@@ -605,6 +641,22 @@
 	world.update_status()
 	SSblackbox.record_feedback("nested tally", "admin_toggle", 1, list("Toggle AI", "[!alai ? "Disabled" : "Enabled"]")) //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
+/datum/admins/proc/toggleMulticam()
+	set category = "Server"
+	set desc="Turns mutlicam on and off."
+	set name="Toggle Multicam"
+	var/almcam = CONFIG_GET(flag/allow_ai_multicam)
+	CONFIG_SET(flag/allow_ai_multicam, !almcam)
+	if (almcam)
+		for(var/i in GLOB.ai_list)
+			var/mob/living/silicon/ai/aiPlayer = i
+			if(aiPlayer.multicam_on)
+				aiPlayer.end_multicam()
+	log_admin("[key_name(usr)] toggled AI multicam.")
+	world.update_status()
+	to_chat(GLOB.ai_list | GLOB.admins, "<B>The AI [almcam ? "no longer" : "now"] has multicam.</B>")
+	SSblackbox.record_feedback("nested tally", "admin_toggle", 1, list("Toggle Multicam", "[!almcam ? "Disabled" : "Enabled"]")) //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+
 /datum/admins/proc/toggleaban()
 	set category = "Server"
 	set desc="Respawn basically"
@@ -636,9 +688,23 @@
 			log_admin("[key_name(usr)] delayed the round start.")
 		else
 			to_chat(world, "<b>The game will start in [DisplayTimeText(newtime)].</b>")
-			SEND_SOUND(world, sound('sound/ai/attention.ogg'))
+			SEND_SOUND(world, sound(get_announcer_sound("attention")))
 			log_admin("[key_name(usr)] set the pre-game delay to [DisplayTimeText(newtime)].")
 		SSblackbox.record_feedback("tally", "admin_verb", 1, "Delay Game Start") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+
+/datum/admins/proc/toggledynamicvote()
+	set category = "Server"
+	set desc="Switches between secret/extended and dynamic voting"
+	set name="Toggle Dynamic Vote"
+	var/prev_dynamic_voting = CONFIG_GET(flag/dynamic_voting)
+	CONFIG_SET(flag/dynamic_voting,!prev_dynamic_voting)
+	if (!prev_dynamic_voting)
+		to_chat(world, "<B>Vote is now between dynamic storytellers.</B>")
+	else
+		to_chat(world, "<B>Vote is now between extended and secret.</B>")
+	log_admin("[key_name(usr)] [prev_dynamic_voting ? "disabled" : "enabled"] dynamic voting.")
+	message_admins("<span class='adminnotice'>[key_name_admin(usr)] toggled dynamic voting.</span>")
+	SSblackbox.record_feedback("nested tally", "admin_toggle", 1, list("Toggle Dynamic Voting", "[prev_dynamic_voting ? "Disabled" : "Enabled"]")) //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /datum/admins/proc/unprison(mob/M in GLOB.mob_list)
 	set category = "Admin"
@@ -660,19 +726,43 @@
 
 	if(!check_rights(R_SPAWN))
 		return
+	var/turf/T = get_turf(usr)
 
 	var/chosen = pick_closest_path(object)
 	if(!chosen)
 		return
 	if(ispath(chosen, /turf))
-		var/turf/T = get_turf(usr.loc)
 		T.ChangeTurf(chosen)
 	else
-		var/atom/A = new chosen(usr.loc)
+		var/atom/A = new chosen(T)
 		A.flags_1 |= ADMIN_SPAWNED_1
 
 	log_admin("[key_name(usr)] spawned [chosen] at [AREACOORD(usr)]")
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Spawn Atom") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+
+/datum/admins/proc/podspawn_atom(object as text)
+	set category = "Debug"
+	set desc = "(atom path) Spawn an atom via supply drop"
+	set name = "Podspawn"
+
+	if(!check_rights(R_SPAWN))
+		return
+
+	var/chosen = pick_closest_path(object)
+	if(!chosen)
+		return
+	var/turf/T = get_turf(usr)
+
+	if(ispath(chosen, /turf))
+		T.ChangeTurf(chosen)
+	else
+		var/obj/structure/closet/supplypod/centcompod/pod = new()
+		var/atom/A = new chosen(pod)
+		A.flags_1 |= ADMIN_SPAWNED_1
+		new /obj/effect/abstract/DPtarget(T, pod)
+
+	log_admin("[key_name(usr)] pod-spawned [chosen] at [AREACOORD(usr)]")
+	SSblackbox.record_feedback("tally", "admin_verb", 1, "Podspawn Atom") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /datum/admins/proc/spawn_cargo(object as text)
 	set category = "Debug"
@@ -812,6 +902,44 @@
 	browser.set_content(dat.Join())
 	browser.open()
 
+/datum/admins/proc/dynamic_mode_options(mob/user)
+	var/dat = {"
+		<center><B><h2>Dynamic Mode Options</h2></B></center><hr>
+		<br/>
+		<h3>Common options</h3>
+		<i>All these options can be changed midround.</i> <br/>
+		<br/>
+		<b>Force extended:</b> - Option is <a href='?src=[REF(src)];[HrefToken()];f_dynamic_force_extended=1'> <b>[GLOB.dynamic_forced_extended ? "ON" : "OFF"]</a></b>.
+		<br/>This will force the round to be extended. No rulesets will be drafted. <br/>
+		<br/>
+		<b>No stacking:</b> - Option is <a href='?src=[REF(src)];[HrefToken()];f_dynamic_no_stacking=1'> <b>[GLOB.dynamic_no_stacking ? "ON" : "OFF"]</b></a>.
+		<br/>Unless the threat goes above [GLOB.dynamic_stacking_limit], only one "round-ender" ruleset will be drafted. <br/>
+		<br/>
+		<b>Classic secret mode:</b> - Option is <a href='?src=[REF(src)];[HrefToken()];f_dynamic_classic_secret=1'> <b>[GLOB.dynamic_classic_secret ? "ON" : "OFF"]</b></a>.
+		<br/>Only one roundstart ruleset will be drafted. Only traitors and minor roles will latespawn. <br/>
+		<br/>
+		<br/>
+		<b>Forced threat level:</b> Current value : <a href='?src=[REF(src)];[HrefToken()];f_dynamic_forced_threat=1'><b>[GLOB.dynamic_forced_threat_level]</b></a>.
+		<br/>The value threat is set to if it is higher than -1.<br/>
+		<br/>
+		<b>High population limit:</b> Current value : <a href='?src=[REF(src)];[HrefToken()];f_dynamic_high_pop_limit=1'><b>[GLOB.dynamic_high_pop_limit]</b></a>.
+		<br/>The threshold at which "high population override" will be in effect. <br/>
+		<br/>
+		<b>Stacking threeshold:</b> Current value : <a href='?src=[REF(src)];[HrefToken()];f_dynamic_stacking_limit=1'><b>[GLOB.dynamic_stacking_limit]</b></a>.
+		<br/>The threshold at which "round-ender" rulesets will stack. A value higher than 100 ensure this never happens. <br/>
+		<h3>Advanced parameters</h3>
+		Curve centre: <A href='?src=[REF(src)];[HrefToken()];f_dynamic_roundstart_centre=1'>-> [GLOB.dynamic_curve_centre] <-</A><br>
+		Curve width: <A href='?src=[REF(src)];[HrefToken()];f_dynamic_roundstart_width=1'>-> [GLOB.dynamic_curve_width] <-</A><br>
+		Latejoin injection delay:<br>
+		Minimum: <A href='?src=[REF(src)];[HrefToken()];f_dynamic_roundstart_latejoin_min=1'>-> [GLOB.dynamic_latejoin_delay_min / 60 / 10] <-</A> Minutes<br>
+		Maximum: <A href='?src=[REF(src)];[HrefToken()];f_dynamic_roundstart_latejoin_max=1'>-> [GLOB.dynamic_latejoin_delay_max / 60 / 10] <-</A> Minutes<br>
+		Midround injection delay:<br>
+		Minimum: <A href='?src=[REF(src)];[HrefToken()];f_dynamic_roundstart_midround_min=1'>-> [GLOB.dynamic_midround_delay_min / 60 / 10] <-</A> Minutes<br>
+		Maximum: <A href='?src=[REF(src)];[HrefToken()];f_dynamic_roundstart_midround_max=1'>-> [GLOB.dynamic_midround_delay_max / 60 / 10] <-</A> Minutes<br>
+		"}
+
+	user << browse(dat, "window=dyn_mode_options;size=900x650")
+
 /datum/admins/proc/create_or_modify_area()
 	set category = "Debug"
 	set name = "Create or modify area"
@@ -887,3 +1015,36 @@
 				"Admin login: [key_name(src)]")
 		if(string)
 			message_admins("[string]")
+
+/client/proc/cmd_admin_man_up(mob/M in GLOB.mob_list)
+	set category = "Special Verbs"
+	set name = "Man Up"
+
+	if(!M)
+		return
+	if(!check_rights(R_ADMIN))
+		return
+
+	to_chat(M, "<span class='warning bold reallybig'>Man up, and deal with it.</span><br><span class='warning big'>Move on.</span>")
+	M.playsound_local(M, 'sound/voice/manup.ogg', 50, FALSE, pressure_affected = FALSE)
+
+	log_admin("Man up: [key_name(usr)] told [key_name(M)] to man up")
+	var/message = "<span class='adminnotice'>[key_name_admin(usr)] told [key_name_admin(M)] to man up.</span>"
+	message_admins(message)
+	admin_ticket_log(M, message)
+	SSblackbox.record_feedback("tally", "admin_verb", 1, "Man Up")
+
+/client/proc/cmd_admin_man_up_global()
+	set category = "Special Verbs"
+	set name = "Man Up Global"
+
+	if(!check_rights(R_ADMIN))
+		return
+
+	to_chat(world, "<span class='warning bold reallybig'>Man up, and deal with it.</span><br><span class='warning big'>Move on.</span>")
+	for(var/mob/M in GLOB.player_list)
+		M.playsound_local(M, 'sound/voice/manup.ogg', 50, FALSE, pressure_affected = FALSE)
+
+	log_admin("Man up global: [key_name(usr)] told everybody to man up")
+	message_admins("<span class='adminnotice'>[key_name_admin(usr)] told everybody to man up.</span>")
+	SSblackbox.record_feedback("tally", "admin_verb", 1, "Man Up Global")

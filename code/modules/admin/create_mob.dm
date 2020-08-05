@@ -15,6 +15,10 @@
 	H.real_name = random_unique_name(H.gender)
 	H.name = H.real_name
 	H.underwear = random_underwear(H.gender)
+	H.undie_color = random_short_color()
+	H.undershirt = random_undershirt(H.gender)
+	H.shirt_color = random_short_color()
+	H.dna.skin_tone_override = null
 	H.skin_tone = random_skin_tone()
 	H.hair_style = random_hair_style(H.gender)
 	H.facial_hair_style = random_facial_hair_style(H.gender)
@@ -22,17 +26,26 @@
 	H.facial_hair_color = H.hair_color
 	H.eye_color = random_eye_color()
 	H.dna.blood_type = random_blood_type()
+	H.saved_underwear = H.underwear
+	H.saved_undershirt = H.undershirt
+	H.saved_socks = H.socks
 
 	// Mutant randomizing, doesn't affect the mob appearance unless it's the specific mutant.
 	H.dna.features["mcolor"] = random_short_color()
 	H.dna.features["tail_lizard"] = pick(GLOB.tails_list_lizard)
-	H.dna.features["snout"] = pick(GLOB.snouts_list) 
-	H.dna.features["horns"] = pick(GLOB.horns_list) 
+	H.dna.features["snout"] = pick(GLOB.snouts_list)
+	H.dna.features["horns"] = pick(GLOB.horns_list)
 	H.dna.features["frills"] = pick(GLOB.frills_list)
 	H.dna.features["spines"] = pick(GLOB.spines_list)
 	H.dna.features["body_markings"] = pick(GLOB.body_markings_list)
-	H.dna.features["moth_wings"] = pick(GLOB.moth_wings_list)
+	H.dna.features["insect_wings"] = pick(GLOB.insect_wings_list)
+	H.dna.features["deco_wings"] = pick(GLOB.deco_wings_list)
+	H.dna.features["insect_fluff"] = pick(GLOB.insect_fluffs_list)
+	H.dna.features["flavor_text"] = "" //Oh no.
+	H.dna.features["body_model"] = H.gender
 
-	H.update_body()
+	SEND_SIGNAL(H, COMSIG_HUMAN_ON_RANDOMIZE)
+
+	H.update_body(TRUE)
 	H.update_hair()
 	H.update_body_parts()

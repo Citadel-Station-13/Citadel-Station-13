@@ -24,7 +24,7 @@
 	throwforce = 0
 	throw_range = 7
 	throw_speed = 3
-	materials = list(MAT_METAL=50, MAT_GLASS=20)
+	custom_materials = list(/datum/material/iron=50, /datum/material/glass=20)
 	var/obj/machinery/buffer // simple machine buffer for device linkage
 	toolspeed = 1
 	tool_behaviour = TOOL_MULTITOOL
@@ -32,12 +32,30 @@
 	var/datum/integrated_io/selected_io = null  //functional for integrated circuits.
 	var/mode = 0
 
+/obj/item/multitool/chaplain
+	name = "\improper hypertool"
+	desc = "Used for pulsing wires to test which to cut. Also emits microwaves to fry some brains!"
+	damtype = BRAIN
+	force = 18
+	armour_penetration = 35
+	hitsound = 'sound/effects/sparks4.ogg'
+	var/chaplain_spawnable = TRUE
+	total_mass = TOTAL_MASS_MEDIEVAL_WEAPON
+	throw_speed = 3
+	throw_range = 4
+	throwforce = 10
+	obj_flags = UNIQUE_RENAME
+
+/obj/item/multitool/chaplain/Initialize()
+	. = ..()
+	AddComponent(/datum/component/anti_magic, TRUE, TRUE, FALSE, null, null, FALSE)
+
 /obj/item/multitool/examine(mob/user)
-	..()
+	. = ..()
 	if(selected_io)
-		to_chat(user, "<span class='notice'>Activate [src] to detach the data wire.</span>")
+		. += "<span class='notice'>Activate [src] to detach the data wire.</span>"
 	if(buffer)
-		to_chat(user, "<span class='notice'>Its buffer contains [buffer].</span>")
+		. += "<span class='notice'>Its buffer contains [buffer].</span>"
 
 /obj/item/multitool/suicide_act(mob/living/carbon/user)
 	user.visible_message("<span class='suicide'>[user] puts the [src] to [user.p_their()] chest. It looks like [user.p_theyre()] trying to pulse [user.p_their()] heart off!</span>")
@@ -49,11 +67,10 @@
 		to_chat(user, "<span class='notice'>You clear the wired connection from the multitool.</span>")
 	update_icon()
 
-/obj/item/multitool/update_icon()
+/obj/item/multitool/update_icon_state()
+	icon_state = initial(icon_state)
 	if(selected_io)
-		icon_state = "multitool_red"
-	else
-		icon_state = "multitool"
+		icon_state += "_red"
 
 /obj/item/multitool/proc/wire(var/datum/integrated_io/io, mob/user)
 	if(!io.holder.assembly)
@@ -131,7 +148,7 @@
 /obj/item/multitool/ai_detect/ui_action_click()
 	return
 
-/obj/item/multitool/ai_detect/update_icon()
+/obj/item/multitool/ai_detect/update_icon_state()
 	if(selected_io)
 		icon_state = "multitool_red"
 	else
@@ -229,6 +246,8 @@
 /obj/item/multitool/cyborg
 	name = "multitool"
 	desc = "Optimised and stripped-down version of a regular multitool."
+	icon = 'icons/obj/items_cyborg.dmi'
+	icon_state = "multitool_cyborg"
 	toolspeed = 0.5
 
 /obj/item/multitool/abductor
@@ -237,3 +256,18 @@
 	icon = 'icons/obj/abductor.dmi'
 	icon_state = "multitool"
 	toolspeed = 0.1
+
+/obj/item/multitool/advanced
+	name = "advanced multitool"
+	desc = "The reproduction of an abductor's multitool, this multitool is a classy silver."
+	icon = 'icons/obj/advancedtools.dmi'
+	icon_state = "multitool"
+	toolspeed = 0.2
+
+/obj/item/multitool/advanced/brass
+	name = "clockwork multitool"
+	desc = "A brass...multitool? With three prongs arcing electricity between them. It vibrates subtly in your hand."
+	icon = 'icons/obj/tools.dmi'
+	icon_state = "clockitool"
+	toolspeed = 0.2
+

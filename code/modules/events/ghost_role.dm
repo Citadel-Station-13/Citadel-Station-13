@@ -37,7 +37,10 @@
 			signing up.")
 	else if(status == SUCCESSFUL_SPAWN)
 		message_admins("[role_name] spawned successfully.")
-		if(!spawned_mobs.len)
+		if(spawned_mobs.len)
+			for(var/mob/M in spawned_mobs)
+				announce_to_ghosts(M)
+		else
 			message_admins("No mobs found in the `spawned_mobs` list, this is \
 				a bug.")
 	else

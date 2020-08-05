@@ -4,7 +4,7 @@
 	name = "picture frame"
 	desc = "The perfect showcase for your favorite deathtrap memories."
 	icon = 'icons/obj/decals.dmi'
-	materials = list()
+	custom_materials = list(/datum/material/wood = 2000)
 	flags_1 = 0
 	icon_state = "frame-empty"
 	result_path = /obj/structure/sign/picture_frame
@@ -21,8 +21,7 @@
 			to_chat(user, "<span class=notice>\The [src] already contains a photo.</span>")
 	..()
 
-//ATTACK HAND IGNORING PARENT RETURN VALUE
-/obj/item/wallframe/picture/attack_hand(mob/user)
+/obj/item/wallframe/picture/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	if(user.get_inactive_held_item() != src)
 		..()
 		return
@@ -40,13 +39,14 @@
 /obj/item/wallframe/picture/examine(mob/user)
 	if(user.is_holding(src) && displayed)
 		displayed.show(user)
-	else
-		..()
+		SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "artok", /datum/mood_event/artok)
+		return list()
+	return ..()
 
-/obj/item/wallframe/picture/update_icon()
-	cut_overlays()
+/obj/item/wallframe/picture/update_overlays()
+	. = ..()
 	if(displayed)
-		add_overlay(getFlatIcon(displayed))
+		. += image(displayed)
 
 /obj/item/wallframe/picture/after_attach(obj/O)
 	..()
@@ -63,6 +63,7 @@
 	desc = "Every time you look it makes you laugh."
 	icon = 'icons/obj/decals.dmi'
 	icon_state = "frame-empty"
+	custom_materials = list(/datum/material/wood = 2000)
 	var/obj/item/photo/framed
 	var/persistence_id
 	var/can_decon = TRUE
@@ -109,8 +110,9 @@
 /obj/structure/sign/picture_frame/examine(mob/user)
 	if(in_range(src, user) && framed)
 		framed.show(user)
-	else
-		..()
+		SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "artok", /datum/mood_event/artok)
+		return list()
+	return ..()
 
 /obj/structure/sign/picture_frame/attackby(obj/item/I, mob/user, params)
 	if(can_decon && (istype(I, /obj/item/screwdriver) || istype(I, /obj/item/wrench)))
@@ -138,17 +140,14 @@
 
 	..()
 
-/obj/structure/sign/picture_frame/attack_hand(mob/user)
-	. = ..()
-	if(.)
-		return
+/obj/structure/sign/picture_frame/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	if(framed)
 		framed.show(user)
 
-/obj/structure/sign/picture_frame/update_icon()
-	cut_overlays()
+/obj/structure/sign/picture_frame/update_overlays()
+	. = ..()
 	if(framed)
-		add_overlay(getFlatIcon(framed))
+		. += image(framed)
 
 /obj/structure/sign/picture_frame/deconstruct(disassembled = TRUE)
 	if(!(flags_1 & NODECONSTRUCT_1))

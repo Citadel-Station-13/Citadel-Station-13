@@ -13,9 +13,14 @@
 	var/mob/living/split_personality/owner_backseat
 
 /datum/brain_trauma/severe/split_personality/on_gain()
+	var/mob/living/M = owner
+	if(M.stat == DEAD)	//No use assigning people to a corpse
+		qdel(src)
+		return
 	..()
 	make_backseats()
 	get_ghost()
+	RegisterSignal(M, COMSIG_MOB_DEATH, .proc/revert_to_normal)
 
 /datum/brain_trauma/severe/split_personality/proc/make_backseats()
 	stranger_backseat = new(owner, src)
@@ -23,33 +28,33 @@
 
 /datum/brain_trauma/severe/split_personality/proc/get_ghost()
 	set waitfor = FALSE
-	var/list/mob/dead/observer/candidates = pollCandidatesForMob("Do you want to play as [owner]'s split personality?", ROLE_PAI, null, null, 75, stranger_backseat)
+	var/list/mob/candidates = pollCandidatesForMob("Do you want to play as [owner]'s split personality?", ROLE_PAI, null, null, 75, stranger_backseat, POLL_IGNORE_SPLITPERSONALITY)
 	if(LAZYLEN(candidates))
-		var/mob/dead/observer/C = pick(candidates)
-		stranger_backseat.key = C.key
+		var/mob/C = pick(candidates)
+		C.transfer_ckey(stranger_backseat, FALSE)
 		log_game("[key_name(stranger_backseat)] became [key_name(owner)]'s split personality.")
 		message_admins("[ADMIN_LOOKUPFLW(stranger_backseat)] became [ADMIN_LOOKUPFLW(owner)]'s split personality.")
 	else
 		qdel(src)
 
 /datum/brain_trauma/severe/split_personality/on_life()
-	if(owner.stat == DEAD)
-		if(current_controller != OWNER)
-			switch_personalities()
-		qdel(src)
-	else if(prob(3))
+	if(prob(3))
 		switch_personalities()
 	..()
 
 /datum/brain_trauma/severe/split_personality/on_lose()
 	if(current_controller != OWNER) //it would be funny to cure a guy only to be left with the other personality, but it seems too cruel
-		switch_personalities()
+		switch_personalities(TRUE)
 	QDEL_NULL(stranger_backseat)
 	QDEL_NULL(owner_backseat)
+	UnregisterSignal(owner, COMSIG_MOB_DEATH)
 	..()
 
-/datum/brain_trauma/severe/split_personality/proc/switch_personalities()
-	if(QDELETED(owner) || owner.stat == DEAD || QDELETED(stranger_backseat) || QDELETED(owner_backseat))
+/datum/brain_trauma/severe/split_personality/proc/revert_to_normal()
+	qdel(src)
+
+/datum/brain_trauma/severe/split_personality/proc/switch_personalities(forced = FALSE)
+	if(QDELETED(owner) || (owner.stat == DEAD && !forced) || QDELETED(stranger_backseat) || QDELETED(owner_backseat))
 		return
 
 	var/mob/living/split_personality/current_backseat
@@ -118,20 +123,16 @@
 		trauma = _trauma
 	return ..()
 
-/mob/living/split_personality/Life()
+/mob/living/split_personality/BiologicalLife(seconds, times_fired)
+	if(!(. = ..()))
+		return
 	if(QDELETED(body))
 		qdel(src) //in case trauma deletion doesn't already do it
-
-	if((body.stat == DEAD && trauma.owner_backseat == src))
-		trauma.switch_personalities()
-		qdel(trauma)
 
 	//if one of the two ghosts, the other one stays permanently
 	if(!body.client && trauma.initialized)
 		trauma.switch_personalities()
 		qdel(trauma)
-
-	..()
 
 /mob/living/split_personality/Login()
 	..()
@@ -184,25 +185,24 @@
 	var/list/mob/dead/observer/candidates = pollCandidatesForMob("Do you want to play as [owner]'s brainwashed mind?", null, null, null, 75, stranger_backseat)
 	if(LAZYLEN(candidates))
 		var/mob/dead/observer/C = pick(candidates)
-		stranger_backseat.key = C.key
+		C.transfer_ckey(stranger_backseat, FALSE)
 	else
 		qdel(src)
 
 /datum/brain_trauma/severe/split_personality/brainwashing/on_life()
 	return //no random switching
 
-/datum/brain_trauma/severe/split_personality/brainwashing/on_hear(message, speaker, message_language, raw_message, radio_freq)
-	if(owner.has_trait(TRAIT_DEAF) || owner == speaker)
-		return message
+/datum/brain_trauma/severe/split_personality/brainwashing/handle_hearing(datum/source, list/hearing_args)
+	if(HAS_TRAIT(owner, TRAIT_DEAF) || owner == hearing_args[HEARING_SPEAKER])
+		return
+	var/message = hearing_args[HEARING_RAW_MESSAGE]
 	if(findtext(message, codeword))
-		message = replacetext(message, codeword, "<span class='warning'>[codeword]</span>")
+		hearing_args[HEARING_RAW_MESSAGE] = replacetext(message, codeword, "<span class='warning'>[codeword]</span>")
 		addtimer(CALLBACK(src, /datum/brain_trauma/severe/split_personality.proc/switch_personalities), 10)
-	return message
 
-/datum/brain_trauma/severe/split_personality/brainwashing/on_say(message)
-	if(findtext(message, codeword))
-		return "" //oh hey did you want to tell people about the secret word to bring you back?
-	return message
+/datum/brain_trauma/severe/split_personality/brainwashing/handle_speech(datum/source, list/speech_args)
+	if(findtext(speech_args[SPEECH_MESSAGE], codeword))
+		speech_args[SPEECH_MESSAGE] = "" //oh hey did you want to tell people about the secret word to bring you back?
 
 /mob/living/split_personality/traitor
 	name = "split personality"

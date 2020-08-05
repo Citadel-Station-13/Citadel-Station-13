@@ -2,16 +2,13 @@
 //returns TRUE if this mob has sufficient access to use this object
 /obj/proc/allowed(mob/M)
 	//check if it doesn't require any access at all
-	if(src.check_access(null))
+	if(check_access(null))
 		return TRUE
-	if(issilicon(M))
-		if(ispAI(M))
-			return FALSE
-		return TRUE	//AI can do whatever it wants
-	if(IsAdminGhost(M))
-		//Access can't stop the abuse
-		return TRUE
-	else if(istype(M) && SEND_SIGNAL(M, COMSIG_MOB_ALLOWED, src))
+	if(!M)
+		return FALSE
+	if(hasSiliconAccessInArea(M))
+		return TRUE	//AI, robots and adminghosts can do whatever they want
+	else if(SEND_SIGNAL(M, COMSIG_MOB_ALLOWED, src))
 		return TRUE
 	else if(ishuman(M))
 		var/mob/living/carbon/human/H = M
@@ -34,6 +31,12 @@
 
 /obj/item/proc/GetID()
 	return null
+
+/obj/item/proc/RemoveID()
+	return null
+
+/obj/item/proc/InsertID()
+	return FALSE
 
 /obj/proc/text2access(access_text)
 	. = list()
@@ -121,17 +124,17 @@
 			return list(ACCESS_CENT_GENERAL, ACCESS_CENT_LIVING, ACCESS_CENT_BAR)
 
 /proc/get_all_accesses()
-	return list(ACCESS_SECURITY, ACCESS_SEC_DOORS, ACCESS_BRIG, ACCESS_ARMORY, ACCESS_FORENSICS_LOCKERS, ACCESS_COURT,
-	            ACCESS_MEDICAL, ACCESS_GENETICS, ACCESS_MORGUE, ACCESS_RD,
-	            ACCESS_TOX, ACCESS_TOX_STORAGE, ACCESS_CHEMISTRY, ACCESS_ENGINE, ACCESS_ENGINE_EQUIP, ACCESS_MAINT_TUNNELS,
-	            ACCESS_EXTERNAL_AIRLOCKS, ACCESS_CHANGE_IDS, ACCESS_AI_UPLOAD,
-	            ACCESS_TELEPORTER, ACCESS_EVA, ACCESS_HEADS, ACCESS_CAPTAIN, ACCESS_ALL_PERSONAL_LOCKERS,
-	            ACCESS_TECH_STORAGE, ACCESS_CHAPEL_OFFICE, ACCESS_ATMOSPHERICS, ACCESS_KITCHEN,
-	            ACCESS_BAR, ACCESS_JANITOR, ACCESS_CREMATORIUM, ACCESS_ROBOTICS, ACCESS_CARGO, ACCESS_CONSTRUCTION,
-	            ACCESS_HYDROPONICS, ACCESS_LIBRARY, ACCESS_LAWYER, ACCESS_VIROLOGY, ACCESS_CMO, ACCESS_QM, ACCESS_SURGERY,
-	            ACCESS_THEATRE, ACCESS_RESEARCH, ACCESS_MINING, ACCESS_MAILSORTING, ACCESS_WEAPONS,
-	            ACCESS_VAULT, ACCESS_MINING_STATION, ACCESS_XENOBIOLOGY, ACCESS_CE, ACCESS_HOP, ACCESS_HOS, ACCESS_RC_ANNOUNCE,
-	            ACCESS_KEYCARD_AUTH, ACCESS_TCOMSAT, ACCESS_GATEWAY, ACCESS_MINERAL_STOREROOM, ACCESS_MINISAT, ACCESS_NETWORK, ACCESS_CLONING)
+	return list(ACCESS_SECURITY, ACCESS_SEC_DOORS, ACCESS_BRIG, ACCESS_ARMORY, ACCESS_FORENSICS_LOCKERS, ACCESS_COURT, ACCESS_ENTER_GENPOP, ACCESS_LEAVE_GENPOP,
+				ACCESS_MEDICAL, ACCESS_GENETICS, ACCESS_MORGUE, ACCESS_RD,
+				ACCESS_TOX, ACCESS_TOX_STORAGE, ACCESS_CHEMISTRY, ACCESS_ENGINE, ACCESS_ENGINE_EQUIP, ACCESS_MAINT_TUNNELS,
+				ACCESS_EXTERNAL_AIRLOCKS, ACCESS_CHANGE_IDS, ACCESS_AI_UPLOAD,
+				ACCESS_TELEPORTER, ACCESS_EVA, ACCESS_HEADS, ACCESS_CAPTAIN, ACCESS_ALL_PERSONAL_LOCKERS,
+				ACCESS_TECH_STORAGE, ACCESS_CHAPEL_OFFICE, ACCESS_ATMOSPHERICS, ACCESS_KITCHEN,
+				ACCESS_BAR, ACCESS_JANITOR, ACCESS_CREMATORIUM, ACCESS_ROBOTICS, ACCESS_CARGO, ACCESS_CONSTRUCTION,
+				ACCESS_HYDROPONICS, ACCESS_LIBRARY, ACCESS_LAWYER, ACCESS_VIROLOGY, ACCESS_CMO, ACCESS_QM, ACCESS_SURGERY,
+				ACCESS_THEATRE, ACCESS_RESEARCH, ACCESS_MINING, ACCESS_MAILSORTING, ACCESS_WEAPONS,
+				ACCESS_VAULT, ACCESS_MINING_STATION, ACCESS_XENOBIOLOGY, ACCESS_CE, ACCESS_HOP, ACCESS_HOS, ACCESS_RC_ANNOUNCE,
+				ACCESS_KEYCARD_AUTH, ACCESS_TCOMSAT, ACCESS_GATEWAY, ACCESS_MINERAL_STOREROOM, ACCESS_MINISAT, ACCESS_NETWORK, ACCESS_CLONING)
 
 /proc/get_all_centcom_access()
 	return list(ACCESS_CENT_GENERAL, ACCESS_CENT_THUNDER, ACCESS_CENT_SPECOPS, ACCESS_CENT_MEDICAL, ACCESS_CENT_LIVING, ACCESS_CENT_STORAGE, ACCESS_CENT_TELEPORTER, ACCESS_CENT_CAPTAIN)
@@ -157,7 +160,7 @@
 		if(1) //station general
 			return list(ACCESS_KITCHEN,ACCESS_BAR, ACCESS_HYDROPONICS, ACCESS_JANITOR, ACCESS_CHAPEL_OFFICE, ACCESS_CREMATORIUM, ACCESS_LIBRARY, ACCESS_THEATRE, ACCESS_LAWYER)
 		if(2) //security
-			return list(ACCESS_SEC_DOORS, ACCESS_WEAPONS, ACCESS_SECURITY, ACCESS_BRIG, ACCESS_ARMORY, ACCESS_FORENSICS_LOCKERS, ACCESS_COURT, ACCESS_HOS)
+			return list(ACCESS_SEC_DOORS, ACCESS_WEAPONS, ACCESS_SECURITY, ACCESS_BRIG, ACCESS_ARMORY, ACCESS_FORENSICS_LOCKERS, ACCESS_COURT, ACCESS_HOS, ACCESS_ENTER_GENPOP, ACCESS_LEAVE_GENPOP,)
 		if(3) //medbay
 			return list(ACCESS_MEDICAL, ACCESS_GENETICS, ACCESS_CLONING, ACCESS_MORGUE, ACCESS_CHEMISTRY, ACCESS_VIROLOGY, ACCESS_SURGERY, ACCESS_CMO)
 		if(4) //research
@@ -195,13 +198,13 @@
 		if(ACCESS_CARGO_BOT)
 			return "Delivery Chutes"
 		if(ACCESS_SECURITY)
-			return "Security"
+			return "Security Equipment"
 		if(ACCESS_BRIG)
-			return "Holding Cells"
+			return "Holding Cells and Prisoner Management"
 		if(ACCESS_COURT)
 			return "Courtroom"
 		if(ACCESS_FORENSICS_LOCKERS)
-			return "Forensics"
+			return "Forensics Lockers"
 		if(ACCESS_MEDICAL)
 			return "Medical"
 		if(ACCESS_GENETICS)
@@ -239,7 +242,7 @@
 		if(ACCESS_EVA)
 			return "EVA"
 		if(ACCESS_HEADS)
-			return "Bridge"
+			return "Bridge and Command Equipment"
 		if(ACCESS_CAPTAIN)
 			return "Captain"
 		if(ACCESS_ALL_PERSONAL_LOCKERS)
@@ -311,7 +314,11 @@
 		if(ACCESS_GATEWAY)
 			return "Gateway"
 		if(ACCESS_SEC_DOORS)
-			return "Brig"
+			return "Security SubDepartment Doors"
+		if(ACCESS_ENTER_GENPOP)
+			return "Prison Turnstile Entrance"
+		if(ACCESS_LEAVE_GENPOP)
+			return "Prison Turnstile Exit"
 		if(ACCESS_MINERAL_STOREROOM)
 			return "Mineral Storage"
 		if(ACCESS_MINISAT)
@@ -347,7 +354,7 @@
 /proc/get_all_jobs()
 	return list("Assistant", "Captain", "Head of Personnel", "Bartender", "Cook", "Botanist", "Quartermaster", "Cargo Technician",
 				"Shaft Miner", "Clown", "Mime", "Janitor", "Curator", "Lawyer", "Chaplain", "Chief Engineer", "Station Engineer",
-				"Atmospheric Technician", "Chief Medical Officer", "Medical Doctor", "Chemist", "Geneticist", "Virologist",
+				"Atmospheric Technician", "Chief Medical Officer", "Medical Doctor", "Chemist", "Geneticist", "Virologist", "Paramedic",
 				"Research Director", "Scientist", "Roboticist", "Head of Security", "Warden", "Detective", "Security Officer")
 
 /proc/get_all_job_icons() //For all existing HUD icons

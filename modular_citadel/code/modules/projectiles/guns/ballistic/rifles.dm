@@ -16,6 +16,29 @@
 	spread = 30	//should be 40 for XCOM memes, but since its adminspawn only, might as well make it useable
 	recoil = 1
 
+///toy memes///
+
+/obj/item/ammo_box/magazine/toy/x9
+	name = "foam force X9 magazine"
+	icon = 'modular_citadel/icons/obj/guns/cit_guns.dmi'
+	icon_state = "toy9magazine"
+	max_ammo = 30
+	multiple_sprites = 2
+	custom_materials = list(/datum/material/iron = 200)
+
+/obj/item/gun/ballistic/automatic/x9/toy
+	name = "\improper Foam Force X9"
+	desc = "An old but reliable assault rifle made for combat against unknown enemies. Appears to be hastily converted. Ages 8 and up."
+	icon = 'modular_citadel/icons/obj/guns/cit_guns.dmi'
+	icon_state = "toy9"
+	can_suppress = 0
+	obj_flags = 0
+	mag_type = /obj/item/ammo_box/magazine/toy/x9
+	casing_ejector = 0
+	spread = 90		//MAXIMUM XCOM MEMES (actually that'd be 180 spread)
+	w_class = WEIGHT_CLASS_BULKY
+	weapon_weight = WEAPON_HEAVY
+
 ///////security rifles special ammo///////
 
 /obj/item/ammo_casing/c46x30mm/rubber
@@ -42,7 +65,7 @@
 	icon_state = "toy9magazine"
 	max_ammo = 30
 	multiple_sprites = 2
-	materials = list(MAT_METAL = 200)
+	custom_materials = list(/datum/material/iron = 200)
 
 /obj/item/gun/ballistic/automatic/x9/toy
 	name = "\improper Foam Force X9"
@@ -123,8 +146,8 @@
 	item_state = "gun"
 	w_class = WEIGHT_CLASS_NORMAL
 	slot_flags = 0
-	/obj/item/firing_pin/implant/pindicate
-	mag_type = /obj/item/ammo_box/magazine/flechette/
+	pin = /obj/item/firing_pin/implant/pindicate
+	mag_type = /obj/item/ammo_box/magazine/flechette
 	fire_sound = 'sound/weapons/gunshot_smg.ogg'
 	can_suppress = 0
 	burst_size = 5
@@ -134,12 +157,9 @@
 	recoil = 0.05
 
 /obj/item/gun/ballistic/automatic/flechette/update_icon()
-	..()
+	cut_overlays()
 	if(magazine)
-		cut_overlays()
 		add_overlay("flechettegun-magazine")
-	else
-		cut_overlays()
 	icon_state = "[initial(icon_state)][chambered ? "" : "-e"]"
 
 ///unique variant///
@@ -163,17 +183,13 @@
 	name = "\improper CX Shredder"
 	desc = "A flechette launching machine pistol made of ultra-light CFRP optimized for firing serrated monofillament flechettes."
 	w_class = WEIGHT_CLASS_SMALL
-	mag_type = /obj/item/ammo_box/magazine/flechette/shredder
 	spread = 15
 	recoil = 0.1
 
 /obj/item/gun/ballistic/automatic/flechette/shredder/update_icon()
-	..()
+	cut_overlays()
 	if(magazine)
-		cut_overlays()
 		add_overlay("shreddergun-magazine")
-	else
-		cut_overlays()
 	icon_state = "[initial(icon_state)][chambered ? "" : "-e"]"
 
 /*/////////////////////////////////////////////////////////////
@@ -185,7 +201,7 @@
 	icon_state = "AM4MAG-60"
 	max_ammo = 60
 	multiple_sprites = 0
-	materials = list(MAT_METAL = 200)
+	custom_materials = list(/datum/material/iron = 200)
 
 /obj/item/gun/ballistic/automatic/AM4B
 	name = "AM4-B"
@@ -214,8 +230,10 @@
 		var/mob/M = loc
 		M.update_inv_hands()
 /obj/item/gun/ballistic/automatic/AM4B/AltClick(mob/living/user)
+	. = ..()
 	if(!in_range(src, user))	//Basic checks to prevent abuse
 		return
+	. = TRUE
 	if(user.incapacitated() || !istype(user))
 		to_chat(user, "<span class='warning'>You can't do that right now!</span>")
 		return
@@ -224,9 +242,10 @@
 		if(body_color_input)
 			body_color = sanitize_hexcolor(body_color_input, desired_format=6, include_crunch=1)
 		update_icon()
+
 /obj/item/gun/ballistic/automatic/AM4B/examine(mob/user)
-	..()
-	to_chat(user, "<span class='notice'>Alt-click to recolor it.</span>")
+	. = ..()
+	. += "<span class='notice'>Alt-click to recolor it.</span>"
 
 /obj/item/ammo_box/magazine/toy/AM4C
 	name = "foam force AM4-C magazine"
@@ -234,7 +253,7 @@
 	icon_state = "AM4MAG-32"
 	max_ammo = 32
 	multiple_sprites = 0
-	materials = list(MAT_METAL = 200)
+	custom_materials = list(/datum/material/iron = 200)
 
 /obj/item/gun/ballistic/automatic/AM4C
 	name = "AM4-C"

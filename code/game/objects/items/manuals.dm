@@ -14,6 +14,7 @@
 	//book contents below
 	dat = {"<html>
 				<head>
+				<meta http-equiv='Content-Type' content='text/html; charset=UTF-8'>
 				<style>
 				h1 {font-size: 18px; margin: 15px 0px 5px;}
 				h2 {font-size: 15px; margin: 15px 0px 5px;}
@@ -37,7 +38,7 @@
 				</ol>
 				<p>
 				It really is that easy! Good luck!
-	
+
 				</body>
 				</html>
 				"}
@@ -49,6 +50,7 @@
 	title = "APLU \"Ripley\" Construction and Operation Manual"
 	dat = {"<html>
 				<head>
+				<meta http-equiv='Content-Type' content='text/html; charset=UTF-8'>
 				<style>
 				h1 {font-size: 18px; margin: 15px 0px 5px;}
 				h2 {font-size: 15px; margin: 15px 0px 5px;}
@@ -122,6 +124,7 @@
 	title = "Chef Recipes"
 	dat = {"<html>
 				<head>
+				<meta http-equiv='Content-Type' content='text/html; charset=UTF-8'>
 				<style>
 				h1 {font-size: 18px; margin: 15px 0px 5px;}
 				h2 {font-size: 15px; margin: 15px 0px 5px;}
@@ -169,7 +172,7 @@
 				It can cook multiple items at once.
 
 				<h2>Processor:</h2>
-				Use it to process certain ingredients (meat into faggot, doughslice into spaghetti, potato into fries,etc...)
+				Use it to process certain ingredients (meat into meatball, doughslice into spaghetti, potato into fries,etc...)
 
 				<h2>Gibber:</h2>
 				Stuff an animal in it to grind it into meat.
@@ -202,6 +205,10 @@
 	author = "Syndicate"
 	title = "Fission Mailed: Nuclear Sabotage 101"
 	dat = {"<html>
+			<head>
+			<meta http-equiv='Content-Type' content='text/html; charset=UTF-8'>
+			</head>
+			<body>
 			Nuclear Explosives 101:<br>
 			Hello and thank you for choosing the Syndicate for your nuclear information needs.<br>
 			Today's crash course will deal with the operation of a Fusion Class Nanotrasen made Nuclear Device.<br>
@@ -229,6 +236,7 @@
 			<b>Disk, Code, Safety, Timer, Disk, RUN!</b><br>
 			Intelligence Analysts believe that normal Nanotrasen procedure is for the Captain to secure the nuclear authorisation disk.<br>
 			Good luck!
+			</body>
 			</html>"}
 
 // Wiki books that are linked to the configured wiki link.
@@ -244,11 +252,12 @@
 	..()
 
 /obj/item/book/manual/wiki/proc/initialize_wikibook()
-	var/wikiurl = CONFIG_GET(string/wikiurl)
+	var/wikiurl = CONFIG_GET(string/wikiurltg)
 	if(wikiurl)
 		dat = {"
 
 			<html><head>
+			<meta http-equiv='Content-Type' content='text/html; charset=UTF-8'>
 			<style>
 				iframe {
 					display: none;
@@ -260,7 +269,7 @@
 				function pageloaded(myframe) {
 					document.getElementById("loading").style.display = "none";
 					myframe.style.display = "inline";
-    			}
+				}
 			</script>
 			<p id='loading'>You start skimming through the manual...</p>
 			<iframe width='100%' height='97%' onload="pageloaded(this)" src="[wikiurl]/[page_link]?printable=yes&remove_links=1" frameborder="0" id="main_frame"></iframe>
@@ -270,12 +279,67 @@
 
 			"}
 
-/obj/item/book/manual/wiki/chemistry
+/obj/item/book/manual/wiki/cit
+	name = "Citadel infobook"
+	icon_state ="book8"
+	author = "Nanotrasen"
+	title = "Citadel infobook"
+	page_link = ""
+	window_size = "1500x800" //Too squashed otherwise
+
+/obj/item/book/manual/wiki/cit/initialize_wikibook()
+	var/wikiurl = CONFIG_GET(string/wikiurl)
+	if(wikiurl)
+		dat = {"
+
+			<html><head>
+			<meta http-equiv='Content-Type' content='text/html; charset=UTF-8'>
+			<style>
+				iframe {
+					display: none;
+				}
+			</style>
+			</head>
+			<body>
+			<script type="text/javascript">
+				function pageloaded(myframe) {
+					document.getElementById("loading").style.display = "none";
+					myframe.style.display = "block";
+				}
+			</script>
+			<p id='loading'>You start skimming through the manual...</p>
+			<iframe width='100%' height='97%' onload="pageloaded(this)" src="[wikiurl]/[page_link]" frameborder="0" id="main_frame"></iframe>
+			</body>
+
+			</html>
+
+			"}
+
+/obj/item/book/manual/wiki/cit/chemistry
 	name = "Chemistry Textbook"
 	icon_state ="chemistrybook"
 	author = "Nanotrasen"
 	title = "Chemistry Textbook"
+	page_link = "main/guides/guide_chemistry"
+
+/obj/item/book/manual/wiki/cit/chem_recipies
+	name = "Chemistry Recipies"
+	icon_state ="chemrecibook"
+	author = "Chemcat"
+	title = "Chemistry Recipies"
+	page_link = "main/guides/chem_recipies"
+
+/obj/item/book/manual/wiki/chemistry
+	name = "Outdated Chemistry Textbook"
+	icon_state ="chemistrybook_old"
+	author = "Nanotrasen"
+	title = "Outdated Chemistry Textbook"
 	page_link = "Guide_to_chemistry"
+
+/obj/item/book/manual/wiki/chemistry/Initialize()
+	..()
+	new /obj/item/book/manual/wiki/cit/chemistry(loc)
+	new /obj/item/book/manual/wiki/cit/chem_recipies(loc)
 
 /obj/item/book/manual/wiki/engineering_construction
 	name = "Station Repairs and Construction"
@@ -344,14 +408,14 @@
 	author = "Sir John Rose"
 	title = "Barman Recipes: Mixing Drinks and Changing Lives"
 	page_link = "Guide_to_food_and_drinks"
-	
+
 /obj/item/book/manual/wiki/robotics_cyborgs
 	name = "Robotics for Dummies"
 	icon_state = "borgbook"
 	author = "XISC"
 	title = "Robotics for Dummies"
 	page_link = "Guide_to_robotics"
-	
+
 /obj/item/book/manual/wiki/research_and_development
 	name = "Research and Development 101"
 	icon_state = "rdbook"
@@ -401,7 +465,7 @@
 	author = "the City-state of Atmosia"
 	title = "Lexica Atmosia"
 	page_link = "Guide_to_Atmospherics"
-	
+
 /obj/item/book/manual/wiki/medicine
 	name = "Medical Space Compendium, Volume 638"
 	icon_state = "book8"
@@ -441,8 +505,10 @@
 			H.dropItemToGround(W)
 			if(prob(50))
 				step(W, pick(GLOB.alldirs))
-		H.add_trait(TRAIT_DISFIGURED, TRAIT_GENERIC)
-		H.bleed_rate = 5
+		ADD_TRAIT(H, TRAIT_DISFIGURED, TRAIT_GENERIC)
+		for(var/i in H.bodyparts)
+			var/obj/item/bodypart/BP = i
+			BP.generic_bleedstacks += 5
 		H.gib_animation()
 		sleep(3)
 		H.adjustBruteLoss(1000) //to make the body super-bloody

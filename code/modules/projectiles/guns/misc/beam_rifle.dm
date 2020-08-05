@@ -19,7 +19,7 @@
 	fire_sound = 'sound/weapons/beam_sniper.ogg'
 	slot_flags = ITEM_SLOT_BACK
 	force = 15
-	materials = list()
+	custom_materials = null
 	recoil = 4
 	ammo_x_offset = 3
 	ammo_y_offset = 3
@@ -29,6 +29,8 @@
 	ammo_type = list(/obj/item/ammo_casing/energy/beam_rifle/hitscan)
 	cell_type = /obj/item/stock_parts/cell/beam_rifle
 	canMouseDown = TRUE
+	can_turret = FALSE
+	can_circuit = FALSE
 	//Cit changes: beam rifle stats.
 	slowdown = 1
 	item_flags = NO_MAT_REDEMPTION | SLOWS_WHILE_IN_HAND | NEEDS_PERMIT
@@ -43,10 +45,11 @@
 
 	var/lastangle = 0
 	var/aiming_lastangle = 0
+	var/last_aimbeam = 0
 	var/mob/current_user = null
 	var/list/obj/effect/projectile/tracer/current_tracers
-	
-	var/structure_piercing = 1
+
+	var/structure_piercing = 0
 	var/structure_bleed_coeff = 0.7
 	var/wall_pierce_amount = 0
 	var/wall_devastate = 0
@@ -59,7 +62,7 @@
 	var/impact_structure_damage = 75
 	var/projectile_damage = 40
 	var/projectile_stun = 0
-	var/projectile_setting_pierce = TRUE
+	var/projectile_setting_pierce = FALSE
 	var/delay = 30
 	var/lastfire = 0
 
@@ -76,7 +79,6 @@
 	var/static/image/drained_overlay = image(icon = 'icons/obj/guns/energy.dmi', icon_state = "esniper_empty")
 
 	var/datum/action/item_action/zoom_lock_action/zoom_lock_action
-	var/datum/component/mobhook
 
 /obj/item/gun/energy/beam_rifle/debug
 	delay = 0
@@ -111,7 +113,9 @@
 				to_chat(owner, "<span class='boldnotice'>You switch [src]'s zooming processor to center mode.</span>")
 			if(ZOOM_LOCK_OFF)
 				to_chat(owner, "<span class='boldnotice'>You disable [src]'s zooming system.</span>")
-	reset_zooming()
+		reset_zooming()
+	else
+		return ..()
 
 /obj/item/gun/energy/beam_rifle/proc/set_autozoom_pixel_offsets_immediate(current_angle)
 	if(zoom_lock == ZOOM_LOCK_CENTER_VIEW || zoom_lock == ZOOM_LOCK_OFF)
@@ -157,6 +161,9 @@
 		add_overlay(drained_overlay)
 
 /obj/item/gun/energy/beam_rifle/attack_self(mob/user)
+	if(!structure_piercing)
+		projectile_setting_pierce = FALSE
+		return
 	projectile_setting_pierce = !projectile_setting_pierce
 	to_chat(user, "<span class='boldnotice'>You set \the [src] to [projectile_setting_pierce? "pierce":"impact"] mode.</span>")
 	aiming_beam()
@@ -172,20 +179,13 @@
 	STOP_PROCESSING(SSfastprocess, src)
 	set_user(null)
 	QDEL_LIST(current_tracers)
-	QDEL_NULL(mobhook)
 	return ..()
-
-/obj/item/gun/energy/beam_rifle/emp_act(severity)
-	. = ..()
-	if(. & EMP_PROTECT_SELF)
-		return
-	chambered = null
-	recharge_newshot()
 
 /obj/item/gun/energy/beam_rifle/proc/aiming_beam(force_update = FALSE)
 	var/diff = abs(aiming_lastangle - lastangle)
-	check_user()
-	if(diff < AIMING_BEAM_ANGLE_CHANGE_THRESHOLD && !force_update)
+	if(!check_user())
+		return
+	if(((diff < AIMING_BEAM_ANGLE_CHANGE_THRESHOLD) || ((last_aimbeam + 1) > world.time)) && !force_update)
 		return
 	aiming_lastangle = lastangle
 	var/obj/item/projectile/beam/beam_rifle/hitscan/aiming_beam/P = new
@@ -206,6 +206,7 @@
 		targloc = get_turf_in_angle(lastangle, curloc, 10)
 	P.preparePixelProjectile(targloc, current_user, current_user.client.mouseParams, 0)
 	P.fire(lastangle)
+	last_aimbeam = world.time
 
 /obj/item/gun/energy/beam_rifle/process()
 	if(!aiming)
@@ -259,14 +260,12 @@
 	if(user == current_user)
 		return
 	stop_aiming(current_user)
-	QDEL_NULL(mobhook)
-	if(istype(current_user))
-		LAZYREMOVE(current_user.mousemove_intercept_objects, src)
+	if(current_user)
+		UnregisterSignal(current_user, COMSIG_MOVABLE_MOVED)
 		current_user = null
 	if(istype(user))
 		current_user = user
-		LAZYOR(current_user.mousemove_intercept_objects, src)
-		mobhook = user.AddComponent(/datum/component/redirect, list(COMSIG_MOVABLE_MOVED = CALLBACK(src, .proc/on_mob_move)))
+		RegisterSignal(user, COMSIG_MOVABLE_MOVED, .proc/on_mob_move)
 
 /obj/item/gun/energy/beam_rifle/onMouseDrag(src_object, over_object, src_location, over_location, params, mob)
 	if(aiming)
@@ -291,35 +290,30 @@
 	if(istype(object, /obj/screen) && !istype(object, /obj/screen/click_catcher))
 		return
 	process_aim()
-	if(aiming_time_left <= aiming_time_fire_threshold && check_user())
+	if(fire_check() && can_trigger_gun(M))
 		sync_ammo()
-		afterattack(M.client.mouseObject, M, FALSE, M.client.mouseParams, passthrough = TRUE)
+		do_fire(M.client.mouseObject, M, FALSE, M.client.mouseParams, M.zone_selected)
 	stop_aiming()
 	QDEL_LIST(current_tracers)
 	return ..()
 
-/obj/item/gun/energy/beam_rifle/afterattack(atom/target, mob/living/user, flag, params, passthrough = FALSE)
-	if(flag) //It's adjacent, is the user, or is on the user's person
-		if(target in user.contents) //can't shoot stuff inside us.
-			return
-		if(!ismob(target) || user.a_intent == INTENT_HARM) //melee attack
-			return
-		if(target == user && user.zone_selected != BODY_ZONE_PRECISE_MOUTH) //so we can't shoot ourselves (unless mouth selected)
-			return
-	if(!passthrough && (aiming_time > aiming_time_fire_threshold))
+/obj/item/gun/energy/beam_rifle/do_fire(atom/target, mob/living/user, message = TRUE, params, zone_override = "", bonus_spread = 0)
+	if(!fire_check())
 		return
-	if(lastfire > world.time + delay)
-		return
-	lastfire = world.time
 	. = ..()
+	if(.)
+		lastfire = world.time
 	stop_aiming()
+
+/obj/item/gun/energy/beam_rifle/proc/fire_check()
+	return (aiming_time_left <= aiming_time_fire_threshold) && check_user() && ((lastfire + delay) <= world.time)
 
 /obj/item/gun/energy/beam_rifle/proc/sync_ammo()
 	for(var/obj/item/ammo_casing/energy/beam_rifle/AC in contents)
 		AC.sync_stats()
 
 /obj/item/gun/energy/beam_rifle/proc/delay_penalty(amount)
-	aiming_time_left = CLAMP(aiming_time_left + amount, 0, aiming_time)
+	aiming_time_left = clamp(aiming_time_left + amount, 0, aiming_time)
 
 /obj/item/ammo_casing/energy/beam_rifle
 	name = "particle acceleration lens"
@@ -370,11 +364,11 @@
 	HS_BB.stun = projectile_stun
 	HS_BB.impact_structure_damage = impact_structure_damage
 	HS_BB.aoe_mob_damage = aoe_mob_damage
-	HS_BB.aoe_mob_range = CLAMP(aoe_mob_range, 0, 15)				//Badmin safety lock
+	HS_BB.aoe_mob_range = clamp(aoe_mob_range, 0, 15)				//Badmin safety lock
 	HS_BB.aoe_fire_chance = aoe_fire_chance
 	HS_BB.aoe_fire_range = aoe_fire_range
 	HS_BB.aoe_structure_damage = aoe_structure_damage
-	HS_BB.aoe_structure_range = CLAMP(aoe_structure_range, 0, 15)	//Badmin safety lock
+	HS_BB.aoe_structure_range = clamp(aoe_structure_range, 0, 15)	//Badmin safety lock
 	HS_BB.wall_devastate = wall_devastate
 	HS_BB.wall_pierce_amount = wall_pierce_amount
 	HS_BB.structure_pierce_amount = structure_piercing
@@ -404,7 +398,7 @@
 /obj/item/ammo_casing/energy/beam_rifle/hitscan
 	projectile_type = /obj/item/projectile/beam/beam_rifle/hitscan
 	select_name = "beam"
-	e_cost = 5000
+	e_cost = 10000
 	fire_sound = 'sound/weapons/beam_sniper.ogg'
 
 /obj/item/projectile/beam/beam_rifle
@@ -426,10 +420,10 @@
 	var/wall_devastate = 0
 	var/aoe_structure_range = 0
 	var/aoe_structure_damage = 0
-	var/aoe_fire_range = 0
-	var/aoe_fire_chance = 0
-	var/aoe_mob_range = 0
-	var/aoe_mob_damage = 0
+	var/aoe_fire_range = 2
+	var/aoe_fire_chance = 100
+	var/aoe_mob_range = 2
+	var/aoe_mob_damage = 30
 	var/impact_structure_damage = 0
 	var/impact_direct_damage = 0
 	var/turf/cached
@@ -466,7 +460,7 @@
 				else
 					target.ex_act(EXPLODE_HEAVY)
 			return TRUE
-	if(ismovableatom(target))
+	if(ismovable(target))
 		var/atom/movable/AM = target
 		if(AM.density && !AM.CanPass(src, get_turf(target)) && !ismob(AM))
 			if(structure_pierce < structure_pierce_amount)
@@ -530,21 +524,15 @@
 	tracer_type = /obj/effect/projectile/tracer/tracer/beam_rifle
 	var/constant_tracer = FALSE
 
-/obj/item/projectile/beam/beam_rifle/hitscan/generate_hitscan_tracers(cleanup = TRUE, duration = 5, impacting = TRUE, highlander)
-	set waitfor = FALSE
-	if(isnull(highlander))
-		highlander = constant_tracer
-	if(highlander && istype(gun))
-		QDEL_LIST(gun.current_tracers)
-		for(var/datum/point/p in beam_segments)
-			gun.current_tracers += generate_tracer_between_points(p, beam_segments[p], tracer_type, color, 0, hitscan_light_range, hitscan_light_color_override, hitscan_light_intensity)
+/obj/item/projectile/beam/beam_rifle/hitscan/generate_hitscan_tracers(cleanup = TRUE, duration = 5, impacting = TRUE, generation, highlander = constant_tracer)
+	if(!highlander)
+		return ..()
 	else
-		for(var/datum/point/p in beam_segments)
-			generate_tracer_between_points(p, beam_segments[p], tracer_type, color, duration, hitscan_light_range, hitscan_light_color_override, hitscan_light_intensity)
-	if(cleanup)
-		QDEL_LIST(beam_segments)
-		beam_segments = null
-		QDEL_NULL(beam_index)
+		duration = 0
+		. = ..()
+		if(!generation)			//first one
+			QDEL_LIST(gun.current_tracers)
+		gun.current_tracers += .
 
 /obj/item/projectile/beam/beam_rifle/hitscan/aiming_beam
 	tracer_type = /obj/effect/projectile/tracer/tracer/aiming
@@ -559,9 +547,5 @@
 	hitscan_light_color_override = "#99ff99"
 
 /obj/item/projectile/beam/beam_rifle/hitscan/aiming_beam/prehit(atom/target)
-	qdel(src)
-	return FALSE
-
-/obj/item/projectile/beam/beam_rifle/hitscan/aiming_beam/on_hit()
 	qdel(src)
 	return FALSE

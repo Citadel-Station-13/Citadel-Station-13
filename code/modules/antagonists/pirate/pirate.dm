@@ -3,6 +3,8 @@
 	job_rank = ROLE_TRAITOR
 	roundend_category = "space pirates"
 	antagpanel_category = "Pirate"
+	threat = 5
+	show_to_ghosts = TRUE
 	var/datum/team/pirate/crew
 
 /datum/antagonist/pirate/greet()
@@ -31,12 +33,7 @@
 
 /datum/antagonist/pirate/on_gain()
 	if(crew)
-		owner.objectives |= crew.objectives
-	. = ..()
-
-/datum/antagonist/pirate/on_removal()
-	if(crew)
-		owner.objectives -= crew.objectives
+		objectives |= crew.objectives
 	. = ..()
 
 /datum/team/pirate
@@ -53,7 +50,9 @@
 	getbooty.update_explanation_text()
 	objectives += getbooty
 	for(var/datum/mind/M in members)
-		M.objectives |= objectives
+		var/datum/antagonist/pirate/P = M.has_antag_datum(/datum/antagonist/pirate)
+		if(P)
+			P.objectives |= objectives
 
 
 /datum/objective/loot

@@ -10,7 +10,7 @@
 
 /obj/item/pda/clown/Initialize()
 	. = ..()
-	AddComponent(/datum/component/slippery, 120, NO_SLIP_WHEN_WALKING, CALLBACK(src, .proc/AfterSlip))
+	AddComponent(/datum/component/slippery, 120, NO_SLIP_WHEN_WALKING|SLIP_WHEN_JOGGING, CALLBACK(src, .proc/AfterSlip))
 
 /obj/item/pda/clown/proc/AfterSlip(mob/living/carbon/human/M)
 	if (istype(M) && (M.real_name != owner))
@@ -18,6 +18,26 @@
 		var/obj/item/cartridge/virus/clown/cart = cartridge
 		if(istype(cart) && cart.charges < 5)
 			cart.charges++
+
+//Mime PDA sends "silent" messages.
+/obj/item/pda/mime
+	name = "mime PDA"
+	default_cartridge = /obj/item/cartridge/virus/mime
+	inserted_item = /obj/item/toy/crayon/mime
+	icon_state = "pda-mime"
+	desc = "A portable microcomputer by Thinktronic Systems, LTD. The hardware has been modified for compliance with the vows of silence."
+	silent = TRUE
+	ttone = "silence"
+
+/obj/item/pda/mime/msg_input(mob/living/U = usr)
+	if(emped || toff)
+		return
+	var/emojis = emoji_sanitize(stripped_input(U, "Please enter emojis", name))
+	if(!emojis)
+		return
+	if(!U.canUseTopic(src, BE_CLOSE))
+		return
+	return emojis
 
 // Special AI/pAI PDAs that cannot explode.
 /obj/item/pda/ai
@@ -79,14 +99,6 @@
 	icon_state = "pda-science"
 	ttone = "boom"
 
-/obj/item/pda/mime
-	name = "mime PDA"
-	default_cartridge = /obj/item/cartridge/virus/mime
-	inserted_item = /obj/item/toy/crayon/mime
-	icon_state = "pda-mime"
-	silent = TRUE
-	ttone = "silence"
-
 /obj/item/pda/heads
 	default_cartridge = /obj/item/cartridge/head
 	icon_state = "pda-hop"
@@ -114,7 +126,7 @@
 /obj/item/pda/heads/rd
 	name = "research director PDA"
 	default_cartridge = /obj/item/cartridge/rd
-	inserted_item = /obj/item/pen/fountain
+	inserted_item = /obj/item/pen/fourcolor
 	icon_state = "pda-rd"
 
 /obj/item/pda/captain
@@ -123,6 +135,16 @@
 	inserted_item = /obj/item/pen/fountain/captain
 	icon_state = "pda-captain"
 	detonatable = FALSE
+
+/obj/item/pda/lieutenant
+	name = "lieutenant PDA"
+	default_cartridge = /obj/item/cartridge/captain
+	inserted_item = /obj/item/pen/fountain/captain
+	icon_state = "pda-lieutenant"
+	ttone = "bwoink"
+	detonatable = FALSE
+	hidden = TRUE
+	note = "Congratulations, you have chosen the Thinktronic 5230-2 Personal Data Assistant Prestige Edition! To help with navigation, we have provided the following definitions. North: Fore. South: Aft. West: Port. East: Starboard. Quarter is either side of aft."
 
 /obj/item/pda/cargo
 	name = "cargo technician PDA"
@@ -171,19 +193,27 @@
 /obj/item/pda/curator
 	name = "curator PDA"
 	icon_state = "pda-library"
-	icon_alert = "pda-r-library"
+	current_overlays = list("pda-r-library","blank","id_overlay","insert_overlay", "light_overlay", "pai_overlay")
 	default_cartridge = /obj/item/cartridge/curator
 	inserted_item = /obj/item/pen/fountain
 	desc = "A portable microcomputer by Thinktronic Systems, LTD. This model is a WGW-11 series e-reader."
-	note = "Congratulations, your station has chosen the Thinktronic 5290 WGW-11 Series E-reader and Personal Data Assistant!"
+	note = "Congratulations, your station has chosen the Thinktronic 5290 WGW-11 Series E-reader and Personal Data Assistant! To help with navigation, we have provided the following definitions. North: Fore. South: Aft. West: Port. East: Starboard. Quarter is either side of aft."
 	silent = TRUE //Quiet in the library!
+	overlays_offsets = list('icons/obj/pda.dmi' = list(-3,0))
 	overlays_x_offset = -3
 
 /obj/item/pda/clear
 	name = "clear PDA"
 	icon_state = "pda-clear"
 	desc = "A portable microcomputer by Thinktronic Systems, LTD. This model is a special edition with a transparent case."
-	note = "Congratulations, you have chosen the Thinktronic 5230 Personal Data Assistant Deluxe Special Max Turbo Limited Edition!"
+	note = "Congratulations, you have chosen the Thinktronic 5230 Personal Data Assistant Deluxe Special Max Turbo Limited Edition! To help with navigation, we have provided the following definitions. North: Fore. South: Aft. West: Port. East: Starboard. Quarter is either side of aft."
+
+/obj/item/pda/neko
+	name = "neko PDA"
+	icon_state = "pda-neko"
+	overlays_icons = list('icons/obj/pda_alt.dmi' = list("pda-r", "screen_neko", "id_overlay", "insert_overlay", "light_overlay", "pai_overlay"))
+	desc = "A portable microcomputer by Thinktronic Systems, LTD. This model is a special feline edition."
+	note = "Congratulations, you have chosen the Thinktronic 5230 Personal Data Assistant Deluxe Special Mew Turbo Limited Edition NYA~! To help with navigation, we have provided the following definitions. North: Fore. South: Aft. West: Port. East: Starboard. Quarter is either side of aft."
 
 /obj/item/pda/cook
 	name = "cook PDA"

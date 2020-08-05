@@ -6,6 +6,7 @@
 	density = TRUE
 	anchored = TRUE
 	opacity = TRUE
+	layer = CLOSED_DOOR_LAYER
 
 	icon = 'icons/obj/doors/mineral_doors.dmi'
 	icon_state = "metal"
@@ -49,10 +50,7 @@
 /obj/structure/mineral_door/attack_paw(mob/user)
 	return attack_hand(user)
 
-/obj/structure/mineral_door/attack_hand(mob/user)
-	. = ..()
-	if(.)
-		return
+/obj/structure/mineral_door/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	return TryToSwitchState(user)
 
 /obj/structure/mineral_door/CanPass(atom/movable/mover, turf/target)
@@ -90,6 +88,7 @@
 	flick("[initial_state]opening",src)
 	sleep(10)
 	density = FALSE
+	layer = OPEN_DOOR_LAYER
 	state = 1
 	air_update_turf(1)
 	update_icon()
@@ -111,11 +110,12 @@
 	density = TRUE
 	set_opacity(TRUE)
 	state = 0
+	layer = initial(layer)
 	air_update_turf(1)
 	update_icon()
 	isSwitchingStates = 0
 
-/obj/structure/mineral_door/update_icon()
+/obj/structure/mineral_door/update_icon_state()
 	if(state)
 		icon_state = "[initial_state]open"
 	else
@@ -190,7 +190,7 @@
 	return
 
 /obj/structure/mineral_door/transparent/plasma/attackby(obj/item/W, mob/user, params)
-	if(W.is_hot())
+	if(W.get_temperature())
 		var/turf/T = get_turf(src)
 		message_admins("Plasma mineral door ignited by [ADMIN_LOOKUPFLW(user)] in [ADMIN_VERBOSEJMP(T)]")
 		log_game("Plasma mineral door ignited by [key_name(user)] in [AREACOORD(T)]")

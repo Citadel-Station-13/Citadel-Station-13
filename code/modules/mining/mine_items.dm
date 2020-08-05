@@ -28,15 +28,18 @@
 	new /obj/item/storage/backpack/duffelbag(src)
 	new /obj/item/storage/backpack/explorer(src)
 	new /obj/item/storage/backpack/satchel/explorer(src)
-	new /obj/item/clothing/under/rank/miner/lavaland(src)
-	new /obj/item/clothing/under/rank/miner/lavaland(src)
-	new /obj/item/clothing/under/rank/miner/lavaland(src)
+	new /obj/item/clothing/under/rank/cargo/miner/lavaland(src)
+	new /obj/item/clothing/under/rank/cargo/miner/lavaland(src)
+	new /obj/item/clothing/under/rank/cargo/miner/lavaland(src)
 	new /obj/item/clothing/shoes/workboots/mining(src)
 	new /obj/item/clothing/shoes/workboots/mining(src)
 	new /obj/item/clothing/shoes/workboots/mining(src)
 	new /obj/item/clothing/gloves/color/black(src)
 	new /obj/item/clothing/gloves/color/black(src)
 	new /obj/item/clothing/gloves/color/black(src)
+	new /obj/item/clothing/suit/hooded/wintercoat/miner(src) //yes, even both mining locker types
+	new /obj/item/clothing/suit/hooded/wintercoat/miner(src)
+	new /obj/item/clothing/suit/hooded/wintercoat/miner(src)
 
 /obj/structure/closet/secure_closet/miner
 	name = "miner's equipment"
@@ -61,6 +64,7 @@
 	new /obj/item/clothing/glasses/meson(src)
 	new /obj/item/survivalcapsule(src)
 	new /obj/item/assault_pod/mining(src)
+	new /obj/item/clothing/suit/hooded/wintercoat/miner(src) //because you know you want it
 
 
 /**********************Shuttle Computer**************************/
@@ -68,14 +72,14 @@
 /obj/machinery/computer/shuttle/mining
 	name = "mining shuttle console"
 	desc = "Used to call and send the mining shuttle."
+	req_access = list(ACCESS_MINING)
 	circuit = /obj/item/circuitboard/computer/mining_shuttle
 	shuttleId = "mining"
 	possible_destinations = "mining_home;mining_away;landing_zone_dock;mining_public"
 	no_destination_swap = 1
-	var/global/list/dumb_rev_heads = list()
+	var/static/list/dumb_rev_heads = list()
 
-//ATTACK HAND IGNORING PARENT RETURN VALUE
-/obj/machinery/computer/shuttle/mining/attack_hand(mob/user)
+/obj/machinery/computer/shuttle/mining/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	if(is_station_level(user.z) && user.mind && is_head_revolutionary(user) && !(user.mind in dumb_rev_heads))
 		to_chat(user, "<span class='warning'>You get a feeling that leaving the station might be a REALLY dumb idea...</span>")
 		dumb_rev_heads += user.mind

@@ -7,7 +7,7 @@
 	action_background_icon_state = "bg_demon"
 
 /obj/effect/proc_holder/spell/aoe_turf/conjure/construct/lesser/cult
-	cult_req = 1
+	clothes_req = SPELL_CULT_GARB
 	charge_max = 2500
 
 
@@ -17,7 +17,7 @@
 
 	school = "transmutation"
 	charge_max = 50
-	clothes_req = 0
+	clothes_req = NONE
 	invocation = "none"
 	invocation_type = "none"
 	range = 2
@@ -37,7 +37,7 @@
 
 	school = "conjuration"
 	charge_max = 20
-	clothes_req = 0
+	clothes_req = NONE
 	invocation = "none"
 	invocation_type = "none"
 	range = 0
@@ -53,7 +53,7 @@
 
 	school = "conjuration"
 	charge_max = 100
-	clothes_req = 0
+	clothes_req = NONE
 	invocation = "none"
 	invocation_type = "none"
 	range = 0
@@ -70,7 +70,7 @@
 
 	school = "conjuration"
 	charge_max = 300
-	clothes_req = 0
+	clothes_req = NONE
 	invocation = "none"
 	invocation_type = "none"
 	range = 0
@@ -83,7 +83,7 @@
 
 	school = "conjuration"
 	charge_max = 2400
-	clothes_req = 0
+	clothes_req = NONE
 	invocation = "none"
 	invocation_type = "none"
 	range = 0
@@ -94,7 +94,7 @@
 	summon_type = list(/obj/item/soulstone)
 
 /obj/effect/proc_holder/spell/aoe_turf/conjure/soulstone/cult
-	cult_req = 1
+	clothes_req = SPELL_CULT_GARB
 	charge_max = 3600
 
 /obj/effect/proc_holder/spell/aoe_turf/conjure/soulstone/noncult
@@ -105,7 +105,7 @@
 	desc = "This spell creates a temporary forcefield to shield yourself and allies from incoming fire."
 	school = "transmutation"
 	charge_max = 400
-	clothes_req = FALSE
+	clothes_req = NONE
 	invocation = "none"
 	invocation_type = "none"
 	wall_type = /obj/effect/forcefield/cult
@@ -121,7 +121,7 @@
 
 	school = "transmutation"
 	charge_max = 250
-	clothes_req = 0
+	clothes_req = NONE
 	invocation = "none"
 	invocation_type = "none"
 	range = -1
@@ -143,14 +143,17 @@
 
 	school = "evocation"
 	charge_max = 400
-	clothes_req = 0
+	clothes_req = NONE
 	invocation = "none"
 	invocation_type = "none"
+	proj_type = "/obj/effect/proc_holder/spell/targeted/inflict_handler/magic_missile/lesser"
 	proj_lifespan = 10
 	max_targets = 6
 	action_icon_state = "magicm"
 	action_background_icon_state = "bg_demon"
 
+/obj/effect/proc_holder/spell/targeted/inflict_handler/magic_missile/lesser
+	amt_knockdown = 84
 
 /obj/effect/proc_holder/spell/targeted/smoke/disable
 	name = "Paralysing Smoke"
@@ -158,7 +161,7 @@
 
 	school = "conjuration"
 	charge_max = 200
-	clothes_req = 0
+	clothes_req = NONE
 	invocation = "none"
 	invocation_type = "none"
 	range = -1
@@ -182,7 +185,7 @@
 	stat_allowed = FALSE
 
 	school = "evocation"
-	clothes_req = FALSE
+	clothes_req = NONE
 	invocation = "none"
 	invocation_type = "none"
 	action_icon = 'icons/mob/actions/actions_cult.dmi'
@@ -229,7 +232,7 @@
 	stat_allowed = FALSE
 
 	school = "evocation"
-	clothes_req = FALSE
+	clothes_req = NONE
 	invocation = "none"
 	invocation_type = "none"
 	action_icon = 'icons/mob/actions/actions_cult.dmi'
@@ -291,7 +294,7 @@
 	proj_lifespan = 15
 	proj_step_delay = 7
 	charge_max = 350
-	clothes_req = FALSE
+	clothes_req = NONE
 	action_icon = 'icons/mob/actions/actions_cult.dmi'
 	action_icon_state = "cultfist"
 	action_background_icon_state = "bg_demon"
@@ -304,7 +307,8 @@
 	name = "Gauntlet Echo"
 	alpha = 180
 	amt_dam_brute = 30
-	amt_knockdown = 50
+	amt_knockdown = 84
+	amt_dam_stam = 30
 	sound = 'sound/weapons/punch3.ogg'
 
 /obj/effect/proc_holder/spell/targeted/inflict_handler/juggernaut/cast(list/targets,mob/user = usr)

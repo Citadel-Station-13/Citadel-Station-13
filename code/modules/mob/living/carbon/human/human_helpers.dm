@@ -11,8 +11,8 @@
 
 //gets assignment from ID or ID inside PDA or PDA itself
 //Useful when player do something with computers
-/mob/living/carbon/human/proc/get_assignment(if_no_id = "No id", if_no_job = "No job")
-	var/obj/item/card/id/id = get_idcard()
+/mob/living/carbon/human/proc/get_assignment(if_no_id = "No id", if_no_job = "No job", hand_first = TRUE)
+	var/obj/item/card/id/id = get_idcard(hand_first)
 	if(id)
 		. = id.assignment
 	else
@@ -27,7 +27,7 @@
 //gets name from ID or ID inside PDA or PDA itself
 //Useful when player do something with computers
 /mob/living/carbon/human/proc/get_authentification_name(if_no_id = "Unknown")
-	var/obj/item/card/id/id = get_idcard()
+	var/obj/item/card/id/id = get_idcard(FALSE)
 	if(id)
 		return id.registered_name
 	var/obj/item/pda/pda = wear_id
@@ -56,7 +56,7 @@
 	if( head && (head.flags_inv&HIDEFACE) )
 		return if_no_face		//Likewise for hats
 	var/obj/item/bodypart/O = get_bodypart(BODY_ZONE_HEAD)
-	if( !O || (has_trait(TRAIT_DISFIGURED)) || (O.brutestate+O.burnstate)>2 || cloneloss>50 || !real_name )	//disfigured. use id-name if possible
+	if( !O || (HAS_TRAIT(src, TRAIT_DISFIGURED)) || (O.brutestate+O.burnstate)>2 || cloneloss>50 || !real_name || nameless)	//disfigured. use id-name if possible
 		return if_no_face
 	return real_name
 
@@ -86,20 +86,24 @@
 	return
 
 //gets ID card object from special clothes slot or null.
-/mob/living/carbon/human/get_idcard()
-	if(wear_id)
-		return wear_id.GetID()
-
+/mob/living/carbon/human/get_idcard(hand_first = TRUE)
+	. = ..()
+	if(. && hand_first)
+		return
+	//Check inventory slots
+	var/obj/item/card/id/id_card = wear_id?.GetID()
+	if(!id_card)
+		id_card = belt?.GetID()
+	return id_card || .
 
 /mob/living/carbon/human/IsAdvancedToolUser()
-	if(has_trait(TRAIT_MONKEYLIKE))
+	if(HAS_TRAIT(src, TRAIT_MONKEYLIKE))
 		return FALSE
 	return TRUE//Humans can use guns and such
 
 /mob/living/carbon/human/reagent_check(datum/reagent/R)
 	return dna.species.handle_chemicals(R,src)
 	// if it returns 0, it will run the usual on_mob_life for that reagent. otherwise, it will stop after running handle_chemicals for the species.
-
 
 /mob/living/carbon/human/can_track(mob/living/user)
 	if(wear_id && istype(wear_id.GetID(), /obj/item/card/id/syndicate))
@@ -111,39 +115,68 @@
 
 	return ..()
 
-/mob/living/carbon/human/get_permeability_protection()
-	var/list/prot = list("hands"=0, "chest"=0, "groin"=0, "legs"=0, "feet"=0, "arms"=0, "head"=0)
-	for(var/obj/item/I in get_equipped_items())
-		if(I.body_parts_covered & HANDS)
-			prot["hands"] = max(1 - I.permeability_coefficient, prot["hands"])
-		if(I.body_parts_covered & CHEST)
-			prot["chest"] = max(1 - I.permeability_coefficient, prot["chest"])
-		if(I.body_parts_covered & GROIN)
-			prot["groin"] = max(1 - I.permeability_coefficient, prot["groin"])
-		if(I.body_parts_covered & LEGS)
-			prot["legs"] = max(1 - I.permeability_coefficient, prot["legs"])
-		if(I.body_parts_covered & FEET)
-			prot["feet"] = max(1 - I.permeability_coefficient, prot["feet"])
-		if(I.body_parts_covered & ARMS)
-			prot["arms"] = max(1 - I.permeability_coefficient, prot["arms"])
-		if(I.body_parts_covered & HEAD)
-			prot["head"] = max(1 - I.permeability_coefficient, prot["head"])
-	var/protection = (prot["head"] + prot["arms"] + prot["feet"] + prot["legs"] + prot["groin"] + prot["chest"] + prot["hands"])/7
-	return protection
-
 /mob/living/carbon/human/can_use_guns(obj/item/G)
 	. = ..()
-
+	if(!.)
+		return
 	if(G.trigger_guard == TRIGGER_GUARD_NORMAL)
-		if(src.dna.check_mutation(HULK))
+		if(HAS_TRAIT(src, TRAIT_CHUNKYFINGERS))
 			to_chat(src, "<span class='warning'>Your meaty finger is much too large for the trigger guard!</span>")
 			return FALSE
-		if(has_trait(TRAIT_NOGUNS))
+		if(HAS_TRAIT(src, TRAIT_NOGUNS))
 			to_chat(src, "<span class='warning'>Your fingers don't fit in the trigger guard!</span>")
 			return FALSE
-	if(mind)
-		if(mind.martial_art && mind.martial_art.no_guns) //great dishonor to famiry
-			to_chat(src, "<span class='warning'>Use of ranged weaponry would bring dishonor to the clan.</span>")
-			return FALSE
 
-	return .
+/mob/living/carbon/human/proc/get_bank_account()
+	RETURN_TYPE(/datum/bank_account)
+	var/datum/bank_account/account
+	var/obj/item/card/id/I = get_idcard()
+
+	if(I && I.registered_account)
+		account = I.registered_account
+		return account
+
+	return FALSE
+
+/mob/living/carbon/human/can_see_reagents()
+	. = ..()
+	if(.) //No need to run through all of this if it's already true.
+		return
+	if(isclothing(glasses) && (glasses.clothing_flags & SCAN_REAGENTS))
+		return TRUE
+
+/*
+/mob/living/carbon/human/transfer_blood_dna(list/blood_dna)
+	..()
+	if(blood_dna.len)
+		last_bloodtype = blood_dna[blood_dna[blood_dna.len]]//trust me this works
+		last_blood_DNA = blood_dna[blood_dna.len]*/
+
+/// For use formatting all of the scars this human has for saving for persistent scarring
+/mob/living/carbon/human/proc/format_scars()
+	var/list/missing_bodyparts = get_missing_limbs()
+	if(!all_scars && !length(missing_bodyparts))
+		return
+	var/scars = ""
+	for(var/i in missing_bodyparts)
+		var/datum/scar/scaries = new
+		scars += "[scaries.format_amputated(i)]"
+	for(var/i in all_scars)
+		var/datum/scar/scaries = i
+		scars += "[scaries.format()];"
+	return scars
+
+/// Takes a single scar from the persistent scar loader and recreates it from the saved data
+/mob/living/carbon/human/proc/load_scar(scar_line)
+	var/list/scar_data = splittext(scar_line, "|")
+	if(LAZYLEN(scar_data) != SCAR_SAVE_LENGTH)
+		return // invalid, should delete
+	var/version = text2num(scar_data[SCAR_SAVE_VERS])
+	if(!version || version < SCAR_CURRENT_VERSION) // get rid of old scars
+		return
+	var/obj/item/bodypart/the_part = get_bodypart("[scar_data[SCAR_SAVE_ZONE]]")
+	var/datum/scar/scaries = new
+	return scaries.load(the_part, scar_data[SCAR_SAVE_VERS], scar_data[SCAR_SAVE_DESC], scar_data[SCAR_SAVE_PRECISE_LOCATION], text2num(scar_data[SCAR_SAVE_SEVERITY]))
+
+/mob/living/carbon/human/get_biological_state()
+	return dna.species.get_biological_state()

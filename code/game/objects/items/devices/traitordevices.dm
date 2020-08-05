@@ -44,7 +44,7 @@ effective or pretty fucking useless.
 	for(var/mob/living/carbon/human/M in urange(10, user, 1))
 		if(prob(50))
 
-			M.Knockdown(rand(200,400))
+			M.DefaultCombatKnockdown(rand(200,400))
 			to_chat(M, "<span class='userdanger'>You feel a tremendous, paralyzing wave flood your mind.</span>")
 
 		else
@@ -69,12 +69,15 @@ effective or pretty fucking useless.
 */
 
 /obj/item/healthanalyzer/rad_laser
-	materials = list(MAT_METAL=400)
+	custom_materials = list(/datum/material/iron=400)
 	var/irradiate = 1
 	var/intensity = 10 // how much damage the radiation does
 	var/wavelength = 10 // time it takes for the radiation to kick in, in seconds
 	var/used = 0 // is it cooling down?
 	var/stealth = FALSE
+
+	var/ui_x = 320
+	var/ui_y = 335
 
 /obj/item/healthanalyzer/rad_laser/attack(mob/living/M, mob/living/user)
 	if(!stealth || !irradiate)
@@ -111,7 +114,12 @@ effective or pretty fucking useless.
 	ui_interact(user)
 
 /obj/item/healthanalyzer/rad_laser/ui_interact(mob/user)
-	. = ..()
+/obj/item/healthanalyzer/rad_laser/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
+									datum/tgui/master_ui = null, datum/ui_state/state = GLOB.hands_state)
+	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+	if(!ui)
+		ui = new(user, src, ui_key, "RadioactiveMicrolaser", "Radioactive Microlaser", ui_x, ui_y, master_ui, state)
+		ui.open()
 
 	var/dat = "Irradiation: <A href='?src=[REF(src)];rad=1'>[irradiate ? "On" : "Off"]</A><br>"
 	dat += "Stealth Mode (NOTE: Deactivates automatically while Irradiation is off): <A href='?src=[REF(src)];stealthy=[TRUE]'>[stealth ? "On" : "Off"]</A><br>"
@@ -195,7 +203,7 @@ effective or pretty fucking useless.
 			Deactivate()
 	return
 
-/obj/item/shadowcloak/item_action_slot_check(slot, mob/user)
+/obj/item/shadowcloak/item_action_slot_check(slot, mob/user, datum/action/A)
 	if(slot == SLOT_BELT)
 		return 1
 
@@ -232,7 +240,7 @@ effective or pretty fucking useless.
 			charge = max(0,charge - 25)//Quick decrease in light
 		else
 			charge = min(max_charge,charge + 50) //Charge in the dark
-		animate(user,alpha = CLAMP(255 - charge,0,255),time = 10)
+		animate(user,alpha = clamp(255 - charge,0,255),time = 10)
 
 
 /obj/item/jammer
@@ -251,3 +259,9 @@ effective or pretty fucking useless.
 	else
 		GLOB.active_jammers -= src
 	update_icon()
+
+/obj/item/headsetupgrader
+	name = "headset upgrader"
+	desc = "A tool that can be used to upgrade a normal headset to be able to protect from flashbangs."
+	icon = 'icons/obj/device.dmi'
+	icon_state = "headset_upgrade"

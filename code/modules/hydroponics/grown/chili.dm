@@ -16,7 +16,7 @@
 	icon_dead = "chili-dead" // Same for the dead icon
 	genes = list(/datum/plant_gene/trait/repeated_harvest)
 	mutatelist = list(/obj/item/seeds/chili/ice, /obj/item/seeds/chili/ghost)
-	reagents_add = list("capsaicin" = 0.25, "vitamin" = 0.04, "nutriment" = 0.04)
+	reagents_add = list(/datum/reagent/consumable/capsaicin = 0.25, /datum/reagent/consumable/nutriment/vitamin = 0.04, /datum/reagent/consumable/nutriment = 0.04)
 
 /obj/item/reagent_containers/food/snacks/grown/chili
 	seed = /obj/item/seeds/chili
@@ -41,7 +41,7 @@
 	production = 4
 	rarity = 20
 	mutatelist = list()
-	reagents_add = list("frostoil" = 0.25, "vitamin" = 0.02, "nutriment" = 0.02)
+	reagents_add = list(/datum/reagent/consumable/frostoil = 0.25, /datum/reagent/consumable/nutriment/vitamin = 0.02, /datum/reagent/consumable/nutriment = 0.02)
 
 /obj/item/reagent_containers/food/snacks/grown/icepepper
 	seed = /obj/item/seeds/chili/ice
@@ -67,7 +67,7 @@
 	yield = 3
 	rarity = 20
 	mutatelist = list()
-	reagents_add = list("condensedcapsaicin" = 0.3, "capsaicin" = 0.55, "nutriment" = 0.04)
+	reagents_add = list(/datum/reagent/consumable/condensedcapsaicin = 0.3, /datum/reagent/consumable/capsaicin = 0.55, /datum/reagent/consumable/nutriment = 0.04)
 
 /obj/item/reagent_containers/food/snacks/grown/ghost_chili
 	seed = /obj/item/seeds/chili/ghost
@@ -80,10 +80,7 @@
 	foodtype = FRUIT
 	wine_power = 50
 
-/obj/item/reagent_containers/food/snacks/grown/ghost_chili/attack_hand(mob/user)
-	. = ..()
-	if(.)
-		return
+/obj/item/reagent_containers/food/snacks/grown/ghost_chili/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	if( ismob(loc) )
 		held_mob = loc
 		START_PROCESSING(SSobj, src)

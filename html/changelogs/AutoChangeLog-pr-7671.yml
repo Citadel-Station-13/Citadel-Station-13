@@ -1,4 +1,0 @@
-author: "deathride58"
-delete-after: True
-changes: 
-  - bugfix: "Human tails and human ears now save again. Humans now use mam_tail and mam_ears for their snowflake bits instead of tg's equivalent, just as they did prior to human tail and ear saving breaking"

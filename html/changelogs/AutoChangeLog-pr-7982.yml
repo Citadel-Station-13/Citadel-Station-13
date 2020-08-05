@@ -1,9 +1,0 @@
-author: "Coolgat3 / Avunia"
-delete-after: True
-changes: 
-  - rscadd: "Made kindle put the target into stamcrit, which makes it an actually working, useful stun."
-  - rscadd: "Added a stamina loss modifier to the vanguard spell which makes the user's stamina drain at a way slower rate. This doesn't make them immune to tasers, but it takes a few hits to actually get them to fall down."
-  - tweak: "Made it so that clock culties don't start with a chameleon suit. Instead they start with an engineer suit which is pretty much the same sprite and looks. If this is not perfect, then I am willing to make a slightly more brass-colored version of the engineer suit sprite and call it a ratvarian engineer jumpsuit."
-  - balance: "Increased the cost of vanguard, as it is now a spell that works somewhat like adrenals, minus the move speed, making your stamina drain really slow and making you unable to get knocked onto the ground by just a single taser shot."
-  - balance: "Lowered the charge time of kindle, reason being that you can usually have only one active spell on you, or two at max if you decide to run two slabs, but the fact that kindle silences people for such a small amount of time makes up for it, in my opinion."
-  - server: "Figured out that the consoles and their warp function actually work with the current code. The thing that makes them not work is when the gamemode is ran on debug mode, without the required players to actually support it. It also breaks the ark timer which is stuck on -1 seconds until activation. Whenever the gamemode starts properly, like any other gamemode, with player checks and all, everything seems to work just fine."

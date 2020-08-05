@@ -8,12 +8,16 @@
 	chemical_cost = 0
 	dna_cost = 2 //Would be 1 without thermal vision
 	active = FALSE
+	action_icon = 'icons/mob/actions/actions_changeling.dmi'
+	action_icon_state = "ling_augmented_eyesight"
+	action_background_icon_state = "bg_ling"
 
 /obj/effect/proc_holder/changeling/augmented_eyesight/on_purchase(mob/user) //The ability starts inactive, so we should be protected from flashes.
 	var/obj/item/organ/eyes/E = user.getorganslot(ORGAN_SLOT_EYES)
 	if (E)
 		E.flash_protect = 2 //Adjust the user's eyes' flash protection
 		to_chat(user, "We adjust our eyes to protect them from bright lights.")
+		action.Grant(user)
 	else
 		to_chat(user, "We can't adjust our eyes if we don't have any!")
 
@@ -23,12 +27,12 @@
 	var/obj/item/organ/eyes/E = user.getorganslot(ORGAN_SLOT_EYES)
 	if(E)
 		if(!active)
-			E.sight_flags |= SEE_MOBS | SEE_OBJS | SEE_TURFS //Add sight flags to the user's eyes
+			ADD_TRAIT(user, TRAIT_THERMAL_VISION, CHANGELING_TRAIT)
 			E.flash_protect = -1 //Adjust the user's eyes' flash protection
 			to_chat(user, "We adjust our eyes to sense prey through walls.")
 			active = TRUE //Defined in code/modules/spells/spell.dm
 		else
-			E.sight_flags ^= SEE_MOBS | SEE_OBJS | SEE_TURFS //Remove sight flags from the user's eyes
+			REMOVE_TRAIT(user, TRAIT_THERMAL_VISION, CHANGELING_TRAIT)
 			E.flash_protect = 2 //Adjust the user's eyes' flash protection
 			to_chat(user, "We adjust our eyes to protect them from bright lights.")
 			active = FALSE
@@ -42,10 +46,9 @@
 
 
 /obj/effect/proc_holder/changeling/augmented_eyesight/on_refund(mob/user) //Get rid of X-ray vision and flash protection when the user refunds this ability
+	action.Remove(user)
+	REMOVE_TRAIT(user, TRAIT_THERMAL_VISION, CHANGELING_TRAIT)
 	var/obj/item/organ/eyes/E = user.getorganslot(ORGAN_SLOT_EYES)
 	if(E)
-		if (active)
-			E.sight_flags ^= SEE_MOBS | SEE_OBJS | SEE_TURFS
-		else
-			E.flash_protect = 0
-		user.update_sight()
+		E.flash_protect = initial(E.flash_protect)
+	user.update_sight()

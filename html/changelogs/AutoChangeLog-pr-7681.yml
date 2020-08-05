@@ -1,4 +1,0 @@
-author: "deathride58"
-delete-after: True
-changes: 
-  - bugfix: "Disarm pushes no longer deal staminaloss to resting targets"

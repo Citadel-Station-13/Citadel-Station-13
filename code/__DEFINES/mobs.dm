@@ -12,6 +12,8 @@
 #define MOVE_INTENT_RUN  "run"
 
 //Blood levels
+#define BLOOD_VOLUME_MAX_LETHAL		2150
+#define BLOOD_VOLUME_EXCESS			2100
 #define BLOOD_VOLUME_MAXIMUM		2000
 #define BLOOD_VOLUME_SLIME_SPLIT	1120
 #define BLOOD_VOLUME_NORMAL			560
@@ -35,17 +37,17 @@
 #define BLOODCRAWL 1
 #define BLOODCRAWL_EAT 2
 
-//Mob bio-types
-#define MOB_ORGANIC 	"organic"
-#define MOB_INORGANIC 	"inorganic"
-#define MOB_ROBOTIC 	"robotic"
-#define MOB_UNDEAD		"undead"
-#define MOB_HUMANOID 	"humanoid"
-#define MOB_BUG 		"bug"
-#define MOB_BEAST		"beast"
-#define MOB_EPIC		"epic" //megafauna
-#define MOB_REPTILE		"reptile"
-#define MOB_SPIRIT		"spirit"
+//Mob bio-types flags
+#define MOB_ORGANIC 	(1 << 0)
+#define MOB_MINERAL		(1 << 1)
+#define MOB_ROBOTIC 	(1 << 2)
+#define MOB_UNDEAD		(1 << 3)
+#define MOB_HUMANOID 	(1 << 4)
+#define MOB_BUG 		(1 << 5)
+#define MOB_BEAST		(1 << 6)
+#define MOB_EPIC		(1 << 7) //megafauna
+#define MOB_REPTILE		(1 << 8)
+#define MOB_SPIRIT		(1 << 9)
 
 //Organ defines for carbon mobs
 #define ORGAN_ORGANIC   1
@@ -54,8 +56,15 @@
 #define BODYPART_ORGANIC   1
 #define BODYPART_ROBOTIC   2
 
+#define BODYPART_NOT_DISABLED 0
+#define BODYPART_DISABLED_DAMAGE 1
+#define BODYPART_DISABLED_PARALYSIS 2
+#define BODYPART_DISABLED_WOUND 3
+
+#define DEFAULT_BODYPART_ICON 'icons/mob/human_parts.dmi'
 #define DEFAULT_BODYPART_ICON_ORGANIC 'icons/mob/human_parts_greyscale.dmi'
 #define DEFAULT_BODYPART_ICON_ROBOTIC 'icons/mob/augmentation/augments.dmi'
+#define DEFAULT_BODYPART_ICON_CITADEL 'modular_citadel/icons/mob/mutant_bodyparts.dmi'
 
 #define MONKEY_BODYPART "monkey"
 #define ALIEN_BODYPART "alien"
@@ -92,16 +101,19 @@
 #define BRAIN_TRAUMA_MILD /datum/brain_trauma/mild
 #define BRAIN_TRAUMA_SEVERE /datum/brain_trauma/severe
 #define BRAIN_TRAUMA_SPECIAL /datum/brain_trauma/special
+#define BRAIN_TRAUMA_MAGIC /datum/brain_trauma/magic
 
 #define TRAUMA_RESILIENCE_BASIC 1      //Curable with chems
 #define TRAUMA_RESILIENCE_SURGERY 2    //Curable with brain surgery
 #define TRAUMA_RESILIENCE_LOBOTOMY 3   //Curable with lobotomy
-#define TRAUMA_RESILIENCE_MAGIC 4      //Curable only with magic
-#define TRAUMA_RESILIENCE_ABSOLUTE 5   //This is here to stay
+#define TRAUMA_RESILIENCE_WOUND 4    //Curable by healing the head wound
+#define TRAUMA_RESILIENCE_MAGIC 5      //Curable only with magic
+#define TRAUMA_RESILIENCE_ABSOLUTE 6   //This is here to stay
 
 //Limit of traumas for each resilience tier
 #define TRAUMA_LIMIT_BASIC 3
 #define TRAUMA_LIMIT_SURGERY 2
+#define TRAUMA_LIMIT_WOUND 2
 #define TRAUMA_LIMIT_LOBOTOMY 3
 #define TRAUMA_LIMIT_MAGIC 3
 #define TRAUMA_LIMIT_ABSOLUTE INFINITY
@@ -112,12 +124,20 @@
 #define BIOWARE_GENERIC "generic"
 #define BIOWARE_NERVES "nerves"
 #define BIOWARE_CIRCULATION "circulation"
+#define BIOWARE_LIGAMENTS "ligaments"
 
 //Health hud screws for carbon mobs
 #define SCREWYHUD_NONE 0
 #define SCREWYHUD_CRIT 1
 #define SCREWYHUD_DEAD 2
 #define SCREWYHUD_HEALTHY 3
+
+//Threshold levels for beauty for humans
+#define BEAUTY_LEVEL_HORRID -66
+#define BEAUTY_LEVEL_BAD -33
+#define BEAUTY_LEVEL_DECENT 33
+#define BEAUTY_LEVEL_GOOD 66
+#define BEAUTY_LEVEL_GREAT 100
 
 //Moods levels for humans
 #define MOOD_LEVEL_HAPPY4 15
@@ -131,6 +151,7 @@
 #define MOOD_LEVEL_SAD4 -25
 
 //Sanity levels for humans
+#define SANITY_AMAZING 150
 #define SANITY_GREAT 125
 #define SANITY_NEUTRAL 100
 #define SANITY_DISTURBED 75
@@ -195,11 +216,24 @@
 #define NO_SLIP_WHEN_WALKING	(1<<0)
 #define SLIDE					(1<<1)
 #define GALOSHES_DONT_HELP		(1<<2)
-#define SLIDE_ICE				(1<<3)
+#define FLYING_DOESNT_HELP		(1<<3)
+#define SLIDE_ICE				(1<<4)
+#define SLIP_WHEN_CRAWLING		(1<<5) //clown planet ruin amongst others
+#define SLIP_WHEN_JOGGING		(1<<6) //slips prevented by walking are also dodged if the mob is nor sprinting or fatigued... unless this flag is on.
+
 
 #define MAX_CHICKENS 50
 
-#define UNHEALING_EAR_DAMAGE 100
+///Flags used by the flags parameter of electrocute act.
+
+///Makes it so that the shock doesn't take gloves into account.
+#define SHOCK_NOGLOVES (1 << 0)
+///Used when the shock is from a tesla bolt.
+#define SHOCK_TESLA (1 << 1)
+///Used when an illusion shocks something. Makes the shock deal stamina damage and not trigger certain secondary effects.
+#define SHOCK_ILLUSION (1 << 2)
+///The shock doesn't stun.
+#define SHOCK_NOSTUN (1 << 3)
 
 
 #define INCORPOREAL_MOVE_BASIC 1
@@ -229,11 +263,15 @@
 #define OFFSET_S_STORE "s_store"
 #define OFFSET_FACEMASK "mask"
 #define OFFSET_HEAD "head"
-#define OFFSET_FACE "face"
+#define OFFSET_EYES "eyes"
+#define OFFSET_LIPS "lips"
 #define OFFSET_BELT "belt"
 #define OFFSET_BACK "back"
 #define OFFSET_SUIT "suit"
 #define OFFSET_NECK "neck"
+#define OFFSET_HAIR "hair"
+#define OFFSET_FHAIR "fhair"
+#define OFFSET_MUTPARTS "mutantparts"
 
 //MINOR TWEAKS/MISC
 #define AGE_MIN				18	//youngest a character can be //CITADEL EDIT - 17 --> 18
@@ -241,6 +279,7 @@
 #define WIZARD_AGE_MIN		30	//youngest a wizard can be
 #define APPRENTICE_AGE_MIN	29	//youngest an apprentice can be
 #define SHOES_SLOWDOWN		0	//How much shoes slow you down by default. Negative values speed you up
+#define SHOES_SPEED_SLIGHT  SHOES_SLOWDOWN - 1 // slightest speed boost to movement
 #define POCKET_STRIP_DELAY			40	//time taken (in deciseconds) to search somebody's pockets
 #define DOOR_CRUSH_DAMAGE	15	//the amount of damage that airlocks deal when they crush you
 
@@ -252,6 +291,9 @@
 
 #define MAX_QUIRKS 6 //The maximum amount of quirks one character can have at roundstart
 
+#define MAX_REVIVE_FIRE_DAMAGE 180
+#define MAX_REVIVE_BRUTE_DAMAGE 180
+
 // AI Toggles
 #define AI_CAMERA_LUMINOSITY	5
 #define AI_VOX // Comment out if you don't want VOX to be enabled and have players download the voice sounds.
@@ -260,3 +302,23 @@
 #define BODYPART_LIFE_UPDATE_HEALTH (1<<0)
 
 #define HUMAN_FIRE_STACK_ICON_NUM	3
+
+#define TYPING_INDICATOR_TIMEOUT 5 MINUTES
+
+#define GRAB_PIXEL_SHIFT_PASSIVE 6
+#define GRAB_PIXEL_SHIFT_AGGRESSIVE 12
+#define GRAB_PIXEL_SHIFT_NECK 16
+
+#define SLEEP_CHECK_DEATH(X) sleep(X); if(QDELETED(src) || stat == DEAD) return;
+#define INTERACTING_WITH(X, Y) (Y in X.do_afters)
+
+/// Field of vision defines.
+#define FOV_90_DEGREES	90
+#define FOV_180_DEGREES	180
+#define FOV_270_DEGREES	270
+
+/// How far away you can be to make eye contact with someone while examining
+#define EYE_CONTACT_RANGE	5
+
+/// If you examine the same atom twice in this timeframe, we call examine_more() instead of examine()
+#define EXAMINE_MORE_TIME	1 SECONDS

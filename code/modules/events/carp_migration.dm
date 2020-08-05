@@ -5,10 +5,12 @@
 	min_players = 2
 	earliest_start = 10 MINUTES
 	max_occurrences = 6
+	gamemode_blacklist = list("dynamic")
 
 /datum/round_event/carp_migration
 	announceWhen	= 3
 	startWhen = 50
+	var/hasAnnounced = FALSE
 
 /datum/round_event/carp_migration/setup()
 	startWhen = rand(40, 60)
@@ -17,20 +19,20 @@
 	if(prob(50))
 		priority_announce("Unknown biological entities have been detected near [station_name()], please stand-by.", "Lifesign Alert")
 	else
-		priority_announce("A report has been downloaded and printed out at all communications consoles.", "Incoming Classified Message", 'sound/ai/commandreport.ogg') // CITADEL EDIT metabreak
-		for(var/obj/machinery/computer/communications/C in GLOB.machines)
-			if(!(C.stat & (BROKEN|NOPOWER)) && is_station_level(C.z))
-				var/obj/item/paper/P = new(C.loc)
-				P.name = "Biological entities"
-				P.info = "Unknown biological entities have been detected near [station_name()], you may wish to break out arms."
-				P.update_icon()
+		print_command_report("Unknown biological entities have been detected near [station_name()], you may wish to break out arms.", "Biological entities")
 
 
 /datum/round_event/carp_migration/start()
+	var/mob/living/simple_animal/hostile/carp/fish
 	for(var/obj/effect/landmark/carpspawn/C in GLOB.landmarks_list)
 		if(prob(95))
-			new /mob/living/simple_animal/hostile/carp(C.loc)
+			fish = new (C.loc)
 		else
-			new /mob/living/simple_animal/hostile/carp/megacarp(C.loc)
+			fish = new /mob/living/simple_animal/hostile/carp/megacarp(C.loc)
+			fishannounce(fish) //Prefer to announce the megacarps over the regular fishies
+	fishannounce(fish)
 
-
+/datum/round_event/carp_migration/proc/fishannounce(atom/fish)
+	if (!hasAnnounced)
+		announce_to_ghosts(fish) //Only anounce the first fish
+		hasAnnounced = TRUE

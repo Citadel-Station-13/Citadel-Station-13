@@ -1,5 +1,5 @@
 /datum/surgery/organ_extraction
-	name = "experimental dissection"
+	name = "experimental organ replacement"
 	steps = list(/datum/surgery_step/incise, /datum/surgery_step/clamp_bleeders, /datum/surgery_step/retract_skin, /datum/surgery_step/incise, /datum/surgery_step/extract_organ, /datum/surgery_step/gland_insert)
 	possible_locs = list(BODY_ZONE_CHEST)
 	ignore_clothes = 1
@@ -33,7 +33,7 @@
 	if(IC)
 		user.visible_message("[user] pulls [IC] out of [target]'s [target_zone]!", "<span class='notice'>You pull [IC] out of [target]'s [target_zone].</span>")
 		user.put_in_hands(IC)
-		IC.Remove(target)
+		IC.Remove()
 		return 1
 	else
 		to_chat(user, "<span class='warning'>You don't find anything in [target]'s [target_zone]!</span>")

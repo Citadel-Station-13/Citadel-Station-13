@@ -10,9 +10,10 @@
 	var/datum/outfit/outfit = /datum/outfit/ert/security
 	var/role = "Security Officer"
 	var/list/name_source
+	threat = -5
 	show_in_antagpanel = FALSE
+	show_to_ghosts = TRUE
 	antag_moodlet = /datum/mood_event/focused
-	can_hijack = HIJACK_PREVENT
 
 /datum/antagonist/ert/on_gain()
 	update_name()
@@ -34,31 +35,51 @@
 	. = ..()
 	name_source = GLOB.commando_names
 
+/datum/antagonist/ert/deathsquad/apply_innate_effects(mob/living/mob_override)
+	ADD_TRAIT(owner, TRAIT_DISK_VERIFIER, DEATHSQUAD_TRAIT)
+
+/datum/antagonist/ert/deathsquad/remove_innate_effects(mob/living/mob_override)
+	REMOVE_TRAIT(owner, TRAIT_DISK_VERIFIER, DEATHSQUAD_TRAIT)
+
 /datum/antagonist/ert/security // kinda handled by the base template but here for completion
 
-/datum/antagonist/ert/security/red
+/datum/antagonist/ert/security/amber
 	outfit = /datum/outfit/ert/security/alert
+
+/datum/antagonist/ert/security/red
+	outfit = /datum/outfit/ert/security/alert/red
 
 /datum/antagonist/ert/engineer
 	role = "Engineer"
 	outfit = /datum/outfit/ert/engineer
+	skill_modifiers = list(/datum/skill_modifier/job/level/wiring)
+
+/datum/antagonist/ert/engineer/amber
+	outfit = /datum/outfit/ert/engineer/alert
 
 /datum/antagonist/ert/engineer/red
-	outfit = /datum/outfit/ert/engineer/alert
+	outfit = /datum/outfit/ert/engineer/alert/red
 
 /datum/antagonist/ert/medic
 	role = "Medical Officer"
 	outfit = /datum/outfit/ert/medic
+	skill_modifiers = list(/datum/skill_modifier/job/affinity/surgery)
+
+/datum/antagonist/ert/medic/amber
+	outfit = /datum/outfit/ert/medic/alert
 
 /datum/antagonist/ert/medic/red
-	outfit = /datum/outfit/ert/medic/alert
+	outfit = /datum/outfit/ert/medic/alert/red
 
 /datum/antagonist/ert/commander
 	role = "Commander"
 	outfit = /datum/outfit/ert/commander
 
-/datum/antagonist/ert/commander/red
+/datum/antagonist/ert/commander/amber
 	outfit = /datum/outfit/ert/commander/alert
+
+/datum/antagonist/ert/commander/red
+	outfit = /datum/outfit/ert/commander/alert/red
 
 /datum/antagonist/ert/deathsquad
 	name = "Deathsquad Trooper"
@@ -101,7 +122,6 @@
 /datum/antagonist/ert/proc/forge_objectives()
 	if(ert_team)
 		objectives |= ert_team.objectives
-	owner.objectives |= objectives
 
 /datum/antagonist/ert/proc/equipERT()
 	var/mob/living/carbon/human/H = owner.current

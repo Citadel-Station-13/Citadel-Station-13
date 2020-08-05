@@ -349,10 +349,11 @@
 		set_pin_data(IC_OUTPUT, 2, H.desc)
 
 		if(istype(H, /mob/living))
-			var/mob/living/M = H
-			var/msg = M.examine()
+			var/mob/living/carbon/human/D = generate_or_wait_for_human_dummy(DUMMY_HUMAN_SLOT_EXAMINER)
+			var/msg = H.examine(D)
 			if(msg)
 				set_pin_data(IC_OUTPUT, 2, msg)
+			unset_busy_human_dummy(DUMMY_HUMAN_SLOT_EXAMINER)
 
 		set_pin_data(IC_OUTPUT, 3, H.x-T.x)
 		set_pin_data(IC_OUTPUT, 4, H.y-T.y)
@@ -388,8 +389,8 @@
 		activate_pin(3)
 		return
 	var/turf/T = get_turf(assembly)
-	var/target_x = CLAMP(get_pin_data(IC_INPUT, 1), 0, world.maxx)
-	var/target_y = CLAMP(get_pin_data(IC_INPUT, 2), 0, world.maxy)
+	var/target_x = clamp(get_pin_data(IC_INPUT, 1), 0, world.maxx)
+	var/target_y = clamp(get_pin_data(IC_INPUT, 2), 0, world.maxy)
 	var/turf/A = locate(target_x, target_y, T.z)
 	set_pin_data(IC_OUTPUT, 1, null)
 	if(!A || !(A in view(T)))
@@ -531,7 +532,7 @@
 	var/rad = get_pin_data(IC_INPUT, 2)
 
 	if(isnum(rad))
-		rad = CLAMP(rad, 0, 8)
+		rad = clamp(rad, 0, 8)
 		radius = rad
 
 /obj/item/integrated_circuit/input/advanced_locator_list/do_work()
@@ -593,7 +594,7 @@
 /obj/item/integrated_circuit/input/advanced_locator/on_data_written()
 	var/rad = get_pin_data(IC_INPUT, 2)
 	if(isnum(rad))
-		rad = CLAMP(rad, 0, 8)
+		rad = clamp(rad, 0, 8)
 		radius = rad
 
 /obj/item/integrated_circuit/input/advanced_locator/do_work()
@@ -859,12 +860,12 @@
 	spawn_flags = IC_SPAWN_DEFAULT|IC_SPAWN_RESEARCH
 	power_draw_per_use = 5
 
-/obj/item/integrated_circuit/input/microphone/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq, spans, message_mode)
+/obj/item/integrated_circuit/input/microphone/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq, spans, message_mode, atom/movable/source)
 	. = ..()
 	var/translated = FALSE
 	if(speaker && message)
 		if(raw_message)
-			if(message_langs != get_default_language())
+			if(message_langs != get_selected_language())
 				translated = TRUE
 		set_pin_data(IC_OUTPUT, 1, speaker.GetVoice())
 		set_pin_data(IC_OUTPUT, 2, raw_message)
@@ -893,7 +894,7 @@
 		return FALSE
 	var/ignore_bags = get_pin_data(IC_INPUT, 1)
 	if(ignore_bags)
-		GET_COMPONENT_FROM(STR, /datum/component/storage, A)
+		var/datum/component/storage/STR = A.GetComponent(/datum/component/storage)
 		if(STR)
 			return FALSE
 	set_pin_data(IC_OUTPUT, 1, WEAKREF(A))
@@ -1090,6 +1091,7 @@
 		"Titanium"		= IC_PINTYPE_NUMBER,
 		"Bluespace Mesh"		= IC_PINTYPE_NUMBER,
 		"Biomass"				= IC_PINTYPE_NUMBER,
+		"Plastic"				= IC_PINTYPE_NUMBER
 		)
 	activators = list(
 		"scan" = IC_PINTYPE_PULSE_IN,
@@ -1098,20 +1100,19 @@
 		)
 	spawn_flags = IC_SPAWN_RESEARCH
 	power_draw_per_use = 40
-	var/list/mtypes = list(MAT_METAL, MAT_GLASS, MAT_SILVER, MAT_GOLD, MAT_DIAMOND, MAT_PLASMA, MAT_URANIUM, MAT_BANANIUM, MAT_TITANIUM, MAT_BLUESPACE, MAT_BIOMASS)
+	var/list/mtypes = list(/datum/material/iron, /datum/material/glass, /datum/material/silver, /datum/material/gold, /datum/material/diamond, /datum/material/plasma, /datum/material/uranium, /datum/material/bananium, /datum/material/titanium, /datum/material/bluespace, /datum/material/biomass, /datum/material/plastic)
 
 
 /obj/item/integrated_circuit/input/matscan/do_work()
 	var/atom/movable/H = get_pin_data_as_type(IC_INPUT, 1, /atom/movable)
 	var/turf/T = get_turf(src)
-	GET_COMPONENT_FROM(mt, /datum/component/material_container, H)
+	var/datum/component/material_container/mt = H.GetComponent(/datum/component/material_container)
 	if(!mt) //Invalid input
 		return
 	if(H in view(T)) // This is a camera. It can't examine thngs,that it can't see.
-		for(var/I in 1 to mtypes.len)
-			var/datum/material/M = mt.materials[mtypes[I]]
-			if(M)
-				set_pin_data(IC_OUTPUT, I, M.amount)
+		for(var/I in mtypes)
+			if(I in mt.materials)
+				set_pin_data(IC_OUTPUT, I, mt.materials[I])
 			else
 				set_pin_data(IC_OUTPUT, I, null)
 		push_data()
@@ -1161,12 +1162,11 @@
 		activate_pin(3)
 		return
 
-	var/list/gases = air_contents.gases
 	var/list/gas_names = list()
 	var/list/gas_amounts = list()
-	for(var/id in gases)
-		var/name = gases[id][GAS_META][META_GAS_NAME]
-		var/amt = round(gases[id][MOLES], 0.001)
+	for(var/id in air_contents.get_gases())
+		var/name = GLOB.meta_gas_names[id]
+		var/amt = round(air_contents.get_moles(id), 0.001)
 		gas_names.Add(name)
 		gas_amounts.Add(amt)
 
@@ -1174,7 +1174,7 @@
 	set_pin_data(IC_OUTPUT, 2, gas_amounts)
 	set_pin_data(IC_OUTPUT, 3, round(air_contents.total_moles(), 0.001))
 	set_pin_data(IC_OUTPUT, 4, round(air_contents.return_pressure(), 0.001))
-	set_pin_data(IC_OUTPUT, 5, round(air_contents.temperature, 0.001))
+	set_pin_data(IC_OUTPUT, 5, round(air_contents.return_temperature(), 0.001))
 	set_pin_data(IC_OUTPUT, 6, round(air_contents.return_volume(), 0.001))
 	push_data()
 	activate_pin(2)
@@ -1219,3 +1219,94 @@
 	else
 		return FALSE
 	return TRUE
+
+
+//Hippie Ported Code--------------------------------------------------------------------------------------------------------
+
+
+	//Adding some color to cards aswell, because why not
+/obj/item/card/data/attackby(obj/item/I, mob/living/user)
+	if(istype(I, /obj/item/integrated_electronics/detailer))
+		var/obj/item/integrated_electronics/detailer/D = I
+		detail_color = D.detail_color
+		update_icon()
+	return ..()
+
+
+
+// -Inputlist- //
+/obj/item/integrated_circuit/input/selection
+	name = "selection circuit"
+	desc = "This circuit lets you choose between different strings from a selection."
+	extended_desc = "This circuit lets you choose between up to 4 different values from selection of up to 8 strings that you can set. Null values are ignored and the chosen value is put out in selected."
+	icon_state = "addition"
+	can_be_asked_input = 1
+	spawn_flags = IC_SPAWN_DEFAULT|IC_SPAWN_RESEARCH
+	inputs = list(
+		"A" = IC_PINTYPE_STRING,
+		"B" = IC_PINTYPE_STRING,
+		"C" = IC_PINTYPE_STRING,
+		"D" = IC_PINTYPE_STRING,
+		"E" = IC_PINTYPE_STRING,
+		"F" = IC_PINTYPE_STRING,
+		"G" = IC_PINTYPE_STRING,
+		"H" = IC_PINTYPE_STRING
+	)
+	activators = list(
+		"on selected" = IC_PINTYPE_PULSE_OUT
+	)
+	outputs = list(
+		"selected" = IC_PINTYPE_STRING
+	)
+
+/obj/item/integrated_circuit/input/selection/ask_for_input(mob/user)
+	var/list/selection = list()
+	for(var/k in 1 to inputs.len)
+		var/I = get_pin_data(IC_INPUT, k)
+		if(istext(I))
+			selection.Add(I)
+	var/selected = input(user,"Choose input.","Selection") in selection
+	if(!selected)
+		return
+	set_pin_data(IC_OUTPUT, 1, selected)
+	push_data()
+	activate_pin(1)
+
+
+// -storage examiner- // **works**
+/obj/item/integrated_circuit/input/storage_examiner
+	name = "storage examiner circuit"
+	desc = "This circuit lets you scan a storage's content. (backpacks, toolboxes etc.)"
+	extended_desc = "The items are put out as reference, which makes it possible to interact with them. Additionally also gives the amount of items."
+	icon_state = "grabber"
+	can_be_asked_input = 1
+	complexity = 6
+	spawn_flags = IC_SPAWN_DEFAULT|IC_SPAWN_RESEARCH
+	inputs = list(
+		"storage" = IC_PINTYPE_REF
+	)
+	activators = list(
+		"examine" = IC_PINTYPE_PULSE_IN,
+		"on examined" = IC_PINTYPE_PULSE_OUT
+	)
+	outputs = list(
+		"item amount" = IC_PINTYPE_NUMBER,
+		"item list" = IC_PINTYPE_LIST
+	)
+	power_draw_per_use = 85
+
+/obj/item/integrated_circuit/input/storage_examiner/do_work()
+	var/obj/item/storage = get_pin_data_as_type(IC_INPUT, 1, /obj/item)
+	if(!istype(storage,/obj/item/storage))
+		return
+
+	set_pin_data(IC_OUTPUT, 1, storage.contents.len)
+
+	var/list/regurgitated_contents = list()
+	for(var/obj/o in storage.contents)
+		regurgitated_contents.Add(WEAKREF(o))
+
+
+	set_pin_data(IC_OUTPUT, 2, regurgitated_contents)
+	push_data()
+	activate_pin(2)

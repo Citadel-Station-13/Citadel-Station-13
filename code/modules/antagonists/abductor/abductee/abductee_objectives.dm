@@ -18,7 +18,7 @@
 
 /datum/objective/abductee/paint/New()
 	var/color = pick(list("red", "blue", "green", "yellow", "orange", "purple", "black", "in rainbows", "in blood"))
-	explanation_text+= " [color]!"
+	explanation_text = " [color]!"
 
 /datum/objective/abductee/speech
 	explanation_text = "Your brain is broken... you can only communicate in"

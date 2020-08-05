@@ -5,20 +5,33 @@
 	roundend_category = "cultists"
 	antagpanel_category = "Cult"
 	antag_moodlet = /datum/mood_event/cult
+	threat = 3
 	var/datum/action/innate/cult/comm/communion = new
 	var/datum/action/innate/cult/mastervote/vote = new
 	var/datum/action/innate/cult/blood_magic/magic = new
 	job_rank = ROLE_CULTIST
 	var/ignore_implant = FALSE
+	var/make_team = TRUE
 	var/give_equipment = FALSE
 	var/datum/team/cult/cult_team
+	var/neutered = FALSE			//can not use round ending, gibbing, converting, or similar things with unmatched round impact
+	var/ignore_eligibility_checks = FALSE
+	var/ignore_holy_water = FALSE
 
-	
+/datum/antagonist/cult/neutered
+	neutered = TRUE
+
+/datum/antagonist/cult/neutered/traitor
+	ignore_eligibility_checks = TRUE
+	ignore_holy_water = TRUE
+	show_in_roundend = FALSE
+	make_team = FALSE
+
 /datum/antagonist/cult/get_team()
 	return cult_team
 
 /datum/antagonist/cult/create_team(datum/team/cult/new_team)
-	if(!new_team)
+	if(!new_team && make_team)
 		//todo remove this and allow admin buttons to create more than one cult
 		for(var/datum/antagonist/cult/H in GLOB.antagonists)
 			if(!H.owner)
@@ -29,13 +42,12 @@
 		cult_team = new /datum/team/cult
 		cult_team.setup_objectives()
 		return
-	if(!istype(new_team))
+	if(make_team && !istype(new_team))
 		stack_trace("Wrong team type passed to [type] initialization.")
 	cult_team = new_team
 
 /datum/antagonist/cult/proc/add_objectives()
-	objectives |= cult_team.objectives
-	owner.objectives |= objectives
+	objectives |= cult_team?.objectives
 
 /datum/antagonist/cult/Destroy()
 	QDEL_NULL(communion)
@@ -44,7 +56,7 @@
 
 /datum/antagonist/cult/can_be_owned(datum/mind/new_owner)
 	. = ..()
-	if(. && !ignore_implant)
+	if(. && !ignore_implant && !ignore_eligibility_checks)
 		. = is_convertable_to_cult(new_owner.current,cult_team)
 
 /datum/antagonist/cult/greet()
@@ -62,7 +74,7 @@
 	SSticker.mode.update_cult_icons_added(owner)
 	current.log_message("has been converted to the cult of Nar'Sie!", LOG_ATTACK, color="#960000")
 
-	if(cult_team.blood_target && cult_team.blood_target_image && current.client)
+	if(cult_team?.blood_target && cult_team.blood_target_image && current.client)
 		current.client.images += cult_team.blood_target_image
 
 
@@ -104,34 +116,35 @@
 	if(mob_override)
 		current = mob_override
 	current.faction |= "cult"
-	current.grant_language(/datum/language/narsie)
-	if(!cult_team.cult_master)
+	current.grant_language(/datum/language/narsie, TRUE, TRUE, LANGUAGE_CULTIST)
+	if(!cult_team?.cult_master)
 		vote.Grant(current)
 	communion.Grant(current)
 	if(ishuman(current))
 		magic.Grant(current)
 	current.throw_alert("bloodsense", /obj/screen/alert/bloodsense)
-	if(cult_team.cult_risen)
+	if(cult_team?.cult_risen)
 		cult_team.rise(current)
 		if(cult_team.cult_ascendent)
 			cult_team.ascend(current)
-			
+
 /datum/antagonist/cult/remove_innate_effects(mob/living/mob_override)
 	. = ..()
 	var/mob/living/current = owner.current
 	if(mob_override)
 		current = mob_override
 	current.faction -= "cult"
-	current.remove_language(/datum/language/narsie)
+	current.remove_language(/datum/language/narsie, TRUE, TRUE, LANGUAGE_CULTIST)
 	vote.Remove(current)
 	communion.Remove(current)
 	magic.Remove(current)
 	current.clear_alert("bloodsense")
 	if(ishuman(current))
 		var/mob/living/carbon/human/H = current
-		H.eye_color = initial(H.eye_color)
+		var/obj/item/organ/eyes/eyes = H.getorganslot(ORGAN_SLOT_EYES)
+		H.eye_color = eyes?.eye_color || initial(H.eye_color)
 		H.dna.update_ui_block(DNA_EYE_COLOR_BLOCK)
-		H.remove_trait(CULT_EYES)
+		REMOVE_TRAIT(H, TRAIT_CULT_EYES, "valid_cultist")
 		H.update_body()
 		H.cut_overlays()
 		H.regenerate_icons()
@@ -143,7 +156,7 @@
 		owner.current.visible_message("<span class='deconversion_message'>[owner.current] looks like [owner.current.p_theyve()] just reverted to [owner.current.p_their()] old faith!</span>", null, null, null, owner.current)
 		to_chat(owner.current, "<span class='userdanger'>An unfamiliar white light flashes through your mind, cleansing the taint of the Geometer and all your memories as her servant.</span>")
 		owner.current.log_message("has renounced the cult of Nar'Sie!", LOG_ATTACK, color="#960000")
-	if(cult_team.blood_target && cult_team.blood_target_image && owner.current.client)
+	if(cult_team?.blood_target && cult_team.blood_target_image && owner.current.client)
 		owner.current.client.images -= cult_team.blood_target_image
 	. = ..()
 
@@ -205,7 +218,7 @@
 	throwing.Grant(current)
 	current.update_action_buttons_icon()
 	current.apply_status_effect(/datum/status_effect/cult_master)
-	if(cult_team.cult_risen)
+	if(cult_team?.cult_risen)
 		cult_team.rise(current)
 		if(cult_team.cult_ascendent)
 			cult_team.ascend(current)
@@ -220,12 +233,12 @@
 	throwing.Remove(current)
 	current.update_action_buttons_icon()
 	current.remove_status_effect(/datum/status_effect/cult_master)
-	
+
 	if(ishuman(current))
 		var/mob/living/carbon/human/H = current
 		H.eye_color = initial(H.eye_color)
 		H.dna.update_ui_block(DNA_EYE_COLOR_BLOCK)
-		H.remove_trait(CULT_EYES)
+		REMOVE_TRAIT(H, TRAIT_CULT_EYES, "valid_cultist")
 		H.cut_overlays()
 		H.regenerate_icons()
 
@@ -241,7 +254,31 @@
 	var/reckoning_complete = FALSE
 	var/cult_risen = FALSE
 	var/cult_ascendent = FALSE
-	
+
+/datum/team/cult/New()
+	. = ..()
+	START_PROCESSING(SSprocessing, src)
+
+/datum/team/cult/Destroy()
+	STOP_PROCESSING(SSprocessing, src)
+	return ..()
+
+/datum/team/cult/process()
+	if(SSticker.current_state == GAME_STATE_FINISHED)
+		return
+	var/datum/objective/sacrifice/sac_objective = locate() in objectives
+	if(!sac_objective || sac_objective.check_completion())
+		return
+	var/datum/mind/sacrificial = sac_objective.get_target()
+	var/mob/living/sac_current = sacrificial.current
+	if(!sacrificial || !sac_current) //target is gone for good but not sacrified.
+		sort_sacrifice(TRUE)
+		return
+	if(QDELETED(sac_objective.target_current) || sac_objective.target_current != sac_current) //target is now a different mob (monkey, simple mob)
+		sac_objective.sac_image = sac_current.get_sac_image()
+		sac_objective.target_current = sac_current
+		sac_objective.update_explanation_text()
+
 /datum/team/cult/proc/check_size()
 	if(cult_ascendent)
 		return
@@ -262,7 +299,7 @@
 				to_chat(B.current, "<span class='cultlarge'>The veil weakens as your cult grows, your eyes begin to glow...")
 				addtimer(CALLBACK(src, .proc/rise, B.current), 200)
 		cult_risen = TRUE
-		
+
 	if(ratio > CULT_ASCENDENT && !cult_ascendent)
 		for(var/datum/mind/B in members)
 			if(B.current)
@@ -270,16 +307,16 @@
 				to_chat(B.current, "<span class='cultlarge'>Your cult is ascendent and the red harvest approaches - you cannot hide your true nature for much longer!!")
 				addtimer(CALLBACK(src, .proc/ascend, B.current), 200)
 		cult_ascendent = TRUE
-		
-		
+
+
 /datum/team/cult/proc/rise(cultist)
 	if(ishuman(cultist))
 		var/mob/living/carbon/human/H = cultist
 		H.eye_color = "f00"
-		H.dna.update_ui_block(DNA_EYE_COLOR_BLOCK)
-		H.add_trait(CULT_EYES)
+		H.dna?.update_ui_block(DNA_EYE_COLOR_BLOCK)
+		ADD_TRAIT(H, TRAIT_CULT_EYES, "valid_cultist")
 		H.update_body()
-		
+
 /datum/team/cult/proc/ascend(cultist)
 	if(ishuman(cultist))
 		var/mob/living/carbon/human/H = cultist
@@ -289,48 +326,70 @@
 
 /datum/team/cult/proc/setup_objectives()
 	//SAC OBJECTIVE , todo: move this to objective internals
+	sort_sacrifice()
+	//SUMMON OBJECTIVE
+	var/datum/objective/eldergod/summon_objective = new()
+	summon_objective.team = src
+	objectives += summon_objective
+
+/datum/team/cult/proc/sort_sacrifice(replacement = FALSE)
+
 	var/list/target_candidates = list()
-	var/datum/objective/sacrifice/sac_objective = new
-	sac_objective.team = src
+
+	var/datum/objective/sacrifice/sac_objective = locate() in GLOB.objectives
+	if(!sac_objective)
+		sac_objective = new
+		sac_objective.team = src
 
 	for(var/mob/living/carbon/human/player in GLOB.player_list)
 		if(player.mind && !player.mind.has_antag_datum(/datum/antagonist/cult) && !is_convertable_to_cult(player) && player.stat != DEAD)
 			target_candidates += player.mind
 
-	if(target_candidates.len == 0)
+	if(!length(target_candidates))
 		message_admins("Cult Sacrifice: Could not find unconvertible target, checking for convertible target.")
 		for(var/mob/living/carbon/human/player in GLOB.player_list)
 			if(player.mind && !player.mind.has_antag_datum(/datum/antagonist/cult) && player.stat != DEAD)
 				target_candidates += player.mind
+
 	listclearnulls(target_candidates)
-	if(LAZYLEN(target_candidates))
-		sac_objective.target = pick(target_candidates)
-		sac_objective.update_explanation_text()
+	if(!LAZYLEN(target_candidates))
+		message_admins("Cult Sacrifice: Could not find unconvertible or convertible target. Proceeding to next stage!")
+		sac_objective.sacced = TRUE
+		return
+	var/datum/mind/new_target = pick(target_candidates)
+	if(replacement)
+		for(var/datum/mind/H in members)
+			if(H.current)
+				to_chat(H.current, "<span class='danger'>Nar'Sie</span> murmurs, <span class='cultlarge'>[sac_objective.target] is beyond your reach. Sacrifice [new_target] instead...</span></span>")
+	sac_objective.target = new_target
+	sac_objective.target_current = new_target.current
+	sac_objective.update_explanation_text()
 
-		var/datum/job/sacjob = SSjob.GetJob(sac_objective.target.assigned_role)
-		var/datum/preferences/sacface = sac_objective.target.current.client.prefs
-		var/icon/reshape = get_flat_human_icon(null, sacjob, sacface, list(SOUTH))
-		reshape.Shift(SOUTH, 4)
-		reshape.Shift(EAST, 1)
-		reshape.Crop(7,4,26,31)
-		reshape.Crop(-5,-3,26,30)
-		sac_objective.sac_image = reshape
+	sac_objective.sac_image = sac_objective.target_current.get_sac_image()
+	objectives += sac_objective
 
-		objectives += sac_objective
-	else
-		message_admins("Cult Sacrifice: Could not find unconvertible or convertible target. WELP!")
+/mob/proc/get_sac_image()
+	var/icon/reshape = icon(icon, icon_state, SOUTH)
+	reshape.Shift(SOUTH, 4)
+	reshape.Shift(EAST, 1)
+	reshape.Crop(7,4,26,31)
+	reshape.Crop(-5,-3,26,30)
+	return reshape
 
+/mob/living/carbon/human/get_sac_image()
+	var/datum/job/sacjob = SSjob.GetJob(mind.assigned_role)
+	var/datum/preferences/sacface = client.prefs
+	var/icon/reshape = get_flat_human_icon(null, sacjob, sacface, list(SOUTH))
+	reshape.Shift(SOUTH, 4)
+	reshape.Shift(EAST, 1)
+	reshape.Crop(7,4,26,31)
+	reshape.Crop(-5,-3,26,30)
+	return reshape
 
-	//SUMMON OBJECTIVE
-
-	var/datum/objective/eldergod/summon_objective = new()
-	summon_objective.team = src
-	objectives += summon_objective
-
-	
 /datum/objective/sacrifice
 	var/sacced = FALSE
 	var/sac_image
+	var/mob/living/target_current
 
 /datum/objective/sacrifice/check_completion()
 	return sacced || completed
@@ -379,10 +438,16 @@
 		parts += "<b>The cultists' objectives were:</b>"
 		var/count = 1
 		for(var/datum/objective/objective in objectives)
-			if(objective.check_completion())
-				parts += "<b>Objective #[count]</b>: [objective.explanation_text] <span class='greentext'>Success!</span>"
+			if(objective.completable)
+				var/completion = objective.check_completion()
+				if(completion >= 1)
+					parts += "<B>Objective #[count]</B>: [objective.explanation_text] <span class='greentext'><B>Success!</B></span>"
+				else if(completion <= 0)
+					parts += "<B>Objective #[count]</B>: [objective.explanation_text] <span class='redtext'>Fail.</span>"
+				else
+					parts += "<B>Objective #[count]</B>: [objective.explanation_text] <span class='yellowtext'>[completion*100]%</span>"
 			else
-				parts += "<b>Objective #[count]</b>: [objective.explanation_text] <span class='redtext'>Fail.</span>"
+				parts += "<B>Objective #[count]</B>: [objective.explanation_text]"
 			count++
 
 	if(members.len)

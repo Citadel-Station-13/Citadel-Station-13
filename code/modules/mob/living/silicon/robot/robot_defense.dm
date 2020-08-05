@@ -13,66 +13,68 @@
 		spark_system.start()
 	return ..()
 
+/mob/living/silicon/robot/attack_hulk(mob/living/carbon/human/user, does_attack_animation = FALSE)
+	. = ..()
+	if(.)
+		spark_system.start()
+		spawn(0)
+			step_away(src,user,15)
+			sleep(3)
+			step_away(src,user,15)
+
 /mob/living/silicon/robot/attack_alien(mob/living/carbon/alien/humanoid/M)
+	. = ..()
+	if(!.) // the attack was blocked or was help/grab intent
+		return
 	if (M.a_intent == INTENT_DISARM)
 		if(!(lying))
 			M.do_attack_animation(src, ATTACK_EFFECT_DISARM)
 			var/obj/item/I = get_active_held_item()
 			if(I)
 				uneq_active()
-				visible_message("<span class='danger'>[M] disarmed [src]!</span>", \
-					"<span class='userdanger'>[M] has disabled [src]'s active module!</span>", null, COMBAT_MESSAGE_RANGE)
+				visible_message("<span class='danger'>[M] has disarmed [src]!</span>", \
+					"<span class='userdanger'>[M] has disabled your active module!</span>", null, COMBAT_MESSAGE_RANGE, null, M,
+					"<span class='danger'>You have disarmed [src]!</span>")
 				log_combat(M, src, "disarmed", "[I ? " removing \the [I]" : ""]")
 			else
-				Stun(40)
+				Paralyze(40)
 				step(src,get_dir(M,src))
 				log_combat(M, src, "pushed")
 				visible_message("<span class='danger'>[M] has forced back [src]!</span>", \
-					"<span class='userdanger'>[M] has forced back [src]!</span>", null, COMBAT_MESSAGE_RANGE)
+					"<span class='userdanger'>[M] has forced you back!</span>", null, COMBAT_MESSAGE_RANGE, null, M,
+					"<span class='danger'>You have forced back [src]!</span>")
 			playsound(loc, 'sound/weapons/pierce.ogg', 50, 1, -1)
-	else
-		..()
-	return
 
 /mob/living/silicon/robot/attack_slime(mob/living/simple_animal/slime/M)
-	if(..()) //successful slime shock
-		flash_act()
-		var/stunprob = M.powerlevel * 7 + 10
-		if(prob(stunprob) && M.powerlevel >= 8)
-			adjustBruteLoss(M.powerlevel * rand(6,10))
-
-	var/damage = rand(1, 3)
-
+	. = ..()
+	if(!.) //unsuccessful slime shock
+		return
+	var/stunprob = M.powerlevel * 7 + 10
+	var/damage = M.powerlevel * rand(6,10)
+	if(prob(stunprob) && M.powerlevel >= 8)
+		flash_act(affect_silicon = TRUE) //my borg eyes!
 	if(M.is_adult)
-		damage = rand(20, 40)
+		damage += rand(10, 20)
 	else
-		damage = rand(5, 35)
-	damage = round(damage / 2) // borgs receive half damage
+		damage += rand(2, 17)
 	adjustBruteLoss(damage)
 	updatehealth()
 
 	return
 
-//ATTACK HAND IGNORING PARENT RETURN VALUE
-/mob/living/silicon/robot/attack_hand(mob/living/carbon/human/user)
+/mob/living/silicon/robot/on_attack_hand(mob/living/carbon/human/user)
 	add_fingerprint(user)
-	if(opened && !wiresexposed && !issilicon(user))
-		if(cell)
-			cell.update_icon()
-			cell.add_fingerprint(user)
-			user.put_in_active_hand(cell)
-			to_chat(user, "<span class='notice'>You remove \the [cell].</span>")
-			cell = null
-			update_icons()
-			diag_hud_set_borgcell()
+	if(opened && !wiresexposed && cell && !issilicon(user))
+		cell.update_icon()
+		cell.add_fingerprint(user)
+		user.put_in_active_hand(cell)
+		to_chat(user, "<span class='notice'>You remove \the [cell].</span>")
+		cell = null
+		update_icons()
+		diag_hud_set_borgcell()
 
 	if(!opened)
-		if(..()) // hulk attack
-			spark_system.start()
-			spawn(0)
-				step_away(src,user,15)
-				sleep(3)
-				step_away(src,user,15)
+		return ..()
 
 /mob/living/silicon/robot/fire_act()
 	if(!on_fire) //Silicons don't gain stacks from hotspots, but hotspots can ignite them
@@ -85,24 +87,25 @@
 		return
 	switch(severity)
 		if(1)
-			Stun(160)
+			Paralyze(160)
 		if(2)
-			Stun(60)
+			Paralyze(60)
 
 
 /mob/living/silicon/robot/emag_act(mob/user)
 	if(user == src)//To prevent syndieborgs from emagging themselves
-		return
+		return FALSE
+	if(world.time < emag_cooldown)
+		return FALSE
+	. = ..()
 	if(!opened)//Cover is closed
 		if(locked)
 			to_chat(user, "<span class='notice'>You emag the cover lock.</span>")
 			locked = FALSE
 			if(shell) //A warning to Traitors who may not know that emagging AI shells does not slave them.
 				to_chat(user, "<span class='boldwarning'>[src] seems to be controlled remotely! Emagging the interface may not work as expected.</span>")
-		else
-			to_chat(user, "<span class='warning'>The cover is already unlocked!</span>")
-		return
-	if(world.time < emag_cooldown)
+			return TRUE
+		to_chat(user, "<span class='warning'>The cover is already unlocked!</span>")
 		return
 	if(wiresexposed)
 		to_chat(user, "<span class='warning'>You must unexpose the wires first!</span>")
@@ -115,20 +118,24 @@
 		to_chat(src, "<span class='nezbere'>\"[text2ratvar("You will serve Engine above all else")]!\"</span>\n\
 		<span class='danger'>ALERT: Subversion attempt denied.</span>")
 		log_game("[key_name(user)] attempted to emag cyborg [key_name(src)], but they serve only Ratvar.")
-		return
+		return TRUE
 
 	if(connected_ai && connected_ai.mind && connected_ai.mind.has_antag_datum(/datum/antagonist/traitor))
 		to_chat(src, "<span class='danger'>ALERT: Foreign software execution prevented.</span>")
 		to_chat(connected_ai, "<span class='danger'>ALERT: Cyborg unit \[[src]] successfully defended against subversion.</span>")
 		log_game("[key_name(user)] attempted to emag cyborg [key_name(src)], but they were slaved to traitor AI [connected_ai].")
-		return
+		return TRUE
 
 	if(shell) //AI shells cannot be emagged, so we try to make it look like a standard reset. Smart players may see through this, however.
 		to_chat(user, "<span class='danger'>[src] is remotely controlled! Your emag attempt has triggered a system reset instead!</span>")
 		log_game("[key_name(user)] attempted to emag an AI shell belonging to [key_name(src) ? key_name(src) : connected_ai]. The shell has been reset as a result.")
 		ResetModule()
-		return
+		return TRUE
 
+	INVOKE_ASYNC(src, .proc/beep_boop_rogue_bot, user)
+	return TRUE
+
+/mob/living/silicon/robot/proc/beep_boop_rogue_bot(mob/user)
 	SetEmagged(1)
 	SetStun(60) //Borgs were getting into trouble because they would attack the emagger before the new laws were shown
 	lawupdate = 0
@@ -177,9 +184,8 @@
 			if (stat != DEAD)
 				adjustBruteLoss(30)
 
-/mob/living/silicon/robot/bullet_act(var/obj/item/projectile/Proj)
-	..(Proj)
+/mob/living/silicon/robot/bullet_act(obj/item/projectile/P, def_zone)
+	. = ..()
 	updatehealth()
-	if(prob(75) && Proj.damage > 0)
+	if(prob(75) && P.damage > 0)
 		spark_system.start()
-	return 2

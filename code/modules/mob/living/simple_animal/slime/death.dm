@@ -24,7 +24,7 @@
 	stat = DEAD
 	cut_overlays()
 
-	update_canmove()
+	update_mobility()
 
 	if(SSticker.mode)
 		SSticker.mode.check_win()

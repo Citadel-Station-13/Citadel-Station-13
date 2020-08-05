@@ -4,12 +4,18 @@
 	var/emp_damage = 0//Handles a type of MMI damage
 	var/datum/dna/stored/stored_dna // dna var for brain. Used to store dna, brain dna is not considered like actual dna, brain.has_dna() returns FALSE.
 	stat = DEAD //we start dead by default
+	has_field_of_vision = FALSE //Not really worth it.
 	see_invisible = SEE_INVISIBLE_LIVING
+	possible_a_intents = list(INTENT_HELP, INTENT_HARM) //for mechas
+	speech_span = SPAN_ROBOT
 
 /mob/living/brain/Initialize()
 	. = ..()
 	create_dna(src)
-	stored_dna.initialize_dna(random_blood_type())
+	if(stored_dna.blood_type)
+		stored_dna.initialize_dna(stored_dna.blood_type)
+	else
+		stored_dna.initialize_dna(random_blood_type())
 	if(isturf(loc)) //not spawned in an MMI or brain organ (most likely adminspawned)
 		var/obj/item/organ/brain/OB = new(loc) //we create a new brain organ for it.
 		OB.brainmob = src
@@ -20,6 +26,8 @@
 	if(!stored_dna.species)
 		var/rando_race = pick(GLOB.roundstart_races)
 		stored_dna.species = new rando_race()
+		if(stored_dna.species.exotic_bloodtype)
+			stored_dna.blood_type = stored_dna.species.exotic_bloodtype
 
 /mob/living/brain/Destroy()
 	if(key)				//If there is a mob connected to this thing. Have to check key twice to avoid false death reporting.
@@ -32,12 +40,8 @@
 	container = null
 	return ..()
 
-/mob/living/brain/update_canmove()
-	if(in_contents_of(/obj/mecha))
-		canmove = 1
-	else
-		canmove = 0
-	return canmove
+/mob/living/brain/update_mobility()
+	return ((mobility_flags = (container?.in_contents_of(/obj/mecha)? MOBILITY_FLAGS_DEFAULT : NONE)))
 
 /mob/living/brain/ex_act() //you cant blow up brainmobs because it makes transfer_to() freak out when borgs blow up.
 	return
@@ -66,10 +70,9 @@
 
 /mob/living/brain/ClickOn(atom/A, params)
 	..()
-	if(istype(loc, /obj/item/mmi))
-		var/obj/item/mmi/MMI = loc
-		var/obj/mecha/M = MMI.mecha
-		if((src == MMI.brainmob) && istype(M))
+	if(container)
+		var/obj/mecha/M = container.mecha
+		if(istype(M))
 			return M.click_action(A,src,params)
 
 /mob/living/brain/forceMove(atom/destination)
@@ -84,3 +87,22 @@
 		doMove(destination)
 	else
 		CRASH("Brainmob without a container [src] attempted to move to [destination].")
+
+/mob/living/brain/update_mouse_pointer()
+	if (!client)
+		return
+	client.mouse_pointer_icon = initial(client.mouse_pointer_icon)
+	if(!container)
+		return
+	if (container.mecha)
+		var/obj/mecha/M = container.mecha
+		if(M.mouse_pointer)
+			client.mouse_pointer_icon = M.mouse_pointer
+	if (client && ranged_ability && ranged_ability.ranged_mousepointer)
+		client.mouse_pointer_icon = ranged_ability.ranged_mousepointer
+
+/mob/living/brain/proc/get_traumas()
+	. = list()
+	if(istype(loc, /obj/item/organ/brain))
+		var/obj/item/organ/brain/B = loc
+		. = B.traumas

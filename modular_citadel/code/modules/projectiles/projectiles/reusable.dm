@@ -1,6 +1,6 @@
 /obj/item/projectile/bullet/reusable/foam_dart/tag
-  name = "lastag foam dart"
-  var/suit_types = list(/obj/item/clothing/suit/redtag, /obj/item/clothing/suit/bluetag)
+	  name = "lastag foam dart"
+	  var/suit_types = list(/obj/item/clothing/suit/redtag, /obj/item/clothing/suit/bluetag)
 
 /obj/item/projectile/bullet/reusable/foam_dart/tag/on_hit(atom/target, blocked = FALSE)
 	. = ..()

@@ -7,7 +7,6 @@
 	species = "replicapod"
 	plantname = "Replica Pod"
 	product = /mob/living/carbon/human //verrry special -- Urist
-	container_type = INJECTABLE|DRAWABLE
 	lifespan = 50
 	endurance = 8
 	maturation = 10
@@ -28,11 +27,33 @@
 /obj/item/seeds/replicapod/Initialize()
 	. = ..()
 
-	create_reagents(volume)
+	create_reagents(volume, INJECTABLE | DRAWABLE)
+
+/obj/item/seeds/replicapod/pre_attack(obj/machinery/hydroponics/I)
+	if(istype(I, /obj/machinery/hydroponics))
+		if(!I.myseed)
+			START_PROCESSING(SSobj, src)
+	return ..()
+
+/obj/item/seeds/replicapod/proc/check_mind_orbiting(atom/A)
+	for(var/mob/M in A.orbiters?.orbiters)
+		if(mind && M.mind && ckey(M.mind.key) == ckey(mind.key) && M.ckey && M.client && M.stat == DEAD && !M.suiciding && isobserver(M))
+			return TRUE
+	return FALSE
+
+/obj/item/seeds/replicapod/process()
+	var/obj/machinery/hydroponics/parent = loc
+	if(parent.harvest != 1)
+		return
+	if (check_mind_orbiting(parent))
+		icon_harvest = "replicapod-orbit"
+	else
+		icon_harvest = "replicapod-harvest"
+	parent.update_icon_plant()
 
 /obj/item/seeds/replicapod/on_reagent_change(changetype)
 	if(changetype == ADD_REAGENT)
-		var/datum/reagent/blood/B = reagents.has_reagent("blood")
+		var/datum/reagent/blood/B = reagents.has_reagent(/datum/reagent/blood)
 		if(B)
 			if(B.data["mind"] && B.data["cloneable"])
 				mind = B.data["mind"]
@@ -42,13 +63,13 @@
 				blood_type = B.data["blood_type"]
 				features = B.data["features"]
 				factions = B.data["factions"]
-				factions = B.data["quirks"]
+				quirks = B.data["quirks"]
 				contains_sample = TRUE
 				visible_message("<span class='notice'>The [src] is injected with a fresh blood sample.</span>")
 			else
 				visible_message("<span class='warning'>The [src] rejects the sample!</span>")
 
-	if(!reagents.has_reagent("blood"))
+	if(!reagents.has_reagent(/datum/reagent/blood))
 		mind = null
 		ckey = null
 		realName = null
@@ -60,8 +81,11 @@
 
 /obj/item/seeds/replicapod/get_analyzer_text()
 	var/text = ..()
+	var/obj/machinery/hydroponics/parent = loc
 	if(contains_sample)
 		text += "\n It contains a blood sample!"
+	if (parent && istype(parent) && check_mind_orbiting(parent))
+		text += "\n The soul is ready to enter the body."
 	return text
 
 
@@ -79,7 +103,7 @@
 						make_podman = 1
 						break
 				else
-					if(M.ckey == ckey && M.stat == DEAD && !M.suiciding)
+					if(M.ckey == ckey && M.stat == DEAD && !M.suiciding && AmBloodsucker(M))
 						make_podman = 1
 						if(isliving(M))
 							var/mob/living/L = M

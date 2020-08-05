@@ -1,22 +1,38 @@
-//HIVEMIND COMMUNICATION (:g)
+//HIVEMIND COMMUNICATION //MODE_TOKEN_CHANGELING / :g
 /obj/effect/proc_holder/changeling/hivemind_comms
 	name = "Hivemind Communication"
 	desc = "We tune our senses to the airwaves to allow us to discreetly communicate and exchange DNA with other changelings."
-	helptext = "We will be able to talk with other changelings with :g. Exchanged DNA do not count towards absorb objectives."
-	dna_cost = 0
+	helptext = "We will be able to talk with other changelings with :g. Exchanged DNA do not count towards absorb objectives." //MODE_TOKEN_CHANGELING needs to be manually updated here.
+	dna_cost = 1
 	chemical_cost = -1
+	action_icon = 'icons/mob/actions/actions_xeno.dmi'
+	action_icon_state = "alien_whisper"
+	action_background_icon_state = "bg_ling"
+
+/obj/effect/proc_holder/changeling/hivemind_comms/sting_action(var/mob/living/user)
+	if (HAS_TRAIT(user, CHANGELING_HIVEMIND_MUTE))
+		to_chat(user, "<span class='warning'>The poison in the air hinders our ability to interact with the hivemind.</span>")
+		return
+	var/input = html_decode(stripped_input(usr, "Please choose a message to transmit.", "Changeling Hivemind", ""))
+	user.say(".g[input]")
 
 /obj/effect/proc_holder/changeling/hivemind_comms/on_purchase(mob/user, is_respec)
 	..()
 	var/datum/antagonist/changeling/changeling = user.mind.has_antag_datum(/datum/antagonist/changeling)
 	changeling.changeling_speak = 1
-	to_chat(user, "<i><font color=#800080>Use say \":g message\" to communicate with the other changelings.</font></i>")
+	to_chat(user, "<i><font color=#800080>Use say \"[MODE_TOKEN_CHANGELING] message\" to communicate with the other changelings.</font></i>")
 	var/obj/effect/proc_holder/changeling/hivemind_upload/S1 = new
 	if(!changeling.has_sting(S1))
 		changeling.purchasedpowers+=S1
+		S1.action.Grant(user)
 	var/obj/effect/proc_holder/changeling/hivemind_download/S2 = new
 	if(!changeling.has_sting(S2))
 		changeling.purchasedpowers+=S2
+		S2.action.Grant(user)
+	var/obj/effect/proc_holder/changeling/linglink/S3 = new
+	if(!changeling.has_sting(S3))
+		changeling.purchasedpowers+=S3
+		S3.action.Grant(user)
 
 // HIVE MIND UPLOAD/DOWNLOAD DNA
 GLOBAL_LIST_EMPTY(hivemind_bank)
@@ -26,9 +42,12 @@ GLOBAL_LIST_EMPTY(hivemind_bank)
 	desc = "Allows us to channel DNA in the airwaves to allow other changelings to absorb it."
 	chemical_cost = 10
 	dna_cost = -1
+	action_icon = 'icons/mob/actions/actions_changeling.dmi'
+	action_icon_state = "ling_upload"
+	action_background_icon_state = "bg_ling"
 
 /obj/effect/proc_holder/changeling/hivemind_upload/sting_action(var/mob/living/user)
-	if (user.has_trait(CHANGELING_HIVEMIND_MUTE))
+	if (HAS_TRAIT(user, CHANGELING_HIVEMIND_MUTE))
 		to_chat(user, "<span class='warning'>The poison in the air hinders our ability to interact with the hivemind.</span>")
 		return
 	var/datum/antagonist/changeling/changeling = user.mind.has_antag_datum(/datum/antagonist/changeling)
@@ -60,11 +79,14 @@ GLOBAL_LIST_EMPTY(hivemind_bank)
 	desc = "Allows us to absorb DNA that has been channeled to the airwaves. Does not count towards absorb objectives."
 	chemical_cost = 10
 	dna_cost = -1
+	action_icon = 'icons/mob/actions/actions_changeling.dmi'
+	action_icon_state = "ling_download"
+	action_background_icon_state = "bg_ling"
 
 /obj/effect/proc_holder/changeling/hivemind_download/can_sting(mob/living/carbon/user)
 	if(!..())
 		return
-	if (user.has_trait(CHANGELING_HIVEMIND_MUTE))
+	if (HAS_TRAIT(user, CHANGELING_HIVEMIND_MUTE))
 		to_chat(user, "<span class='warning'>The poison in the air hinders our ability to interact with the hivemind.</span>")
 		return
 	var/datum/antagonist/changeling/changeling = user.mind.has_antag_datum(/datum/antagonist/changeling)

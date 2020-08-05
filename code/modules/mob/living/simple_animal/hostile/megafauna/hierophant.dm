@@ -30,28 +30,32 @@ Cross Blasts and the AoE burst gain additional range as Hierophant loses health,
 When Hierophant dies, it stops trying to murder you and shrinks into a small form, which, while much weaker, is still quite effective.
 - The smaller club can place a teleport beacon, allowing the user to teleport themself and their allies to the beacon.
 
-Difficulty: Hard
+Difficulty: Normal
 
 */
 
 /mob/living/simple_animal/hostile/megafauna/hierophant
 	name = "hierophant"
 	desc = "A massive metal club that hangs in the air as though waiting. It'll make you dance to its beat."
+	threat = 30
 	health = 2500
 	maxHealth = 2500
-	attacktext = "clubs"
+	attack_verb_continuous = "clubs"
+	attack_verb_simple = "club"
 	attack_sound = 'sound/weapons/sonic_jackhammer.ogg'
 	icon_state = "hierophant"
 	icon_living = "hierophant"
-	friendly = "stares down"
+	friendly_verb_continuous = "stares down"
+	friendly_verb_simple = "stare down"
 	icon = 'icons/mob/lavaland/hierophant_new.dmi'
 	faction = list("boss") //asteroid mobs? get that shit out of my beautiful square house
 	speak_emote = list("preaches")
-	armour_penetration = 50
+	armour_penetration = 75
 	melee_damage_lower = 15
-	melee_damage_upper = 15
+	melee_damage_upper = 20
+	blood_volume = 0
 	speed = 1
-	move_to_delay = 10
+	move_to_delay = 11
 	ranged = 1
 	ranged_cooldown_time = 40
 	aggro_vision_range = 21 //so it can see to one side of the arena to the other
@@ -84,9 +88,10 @@ Difficulty: Hard
 /mob/living/simple_animal/hostile/megafauna/hierophant/spawn_crusher_loot()
 	new /obj/item/crusher_trophy/vortex_talisman(get_turf(spawned_beacon))
 
-/mob/living/simple_animal/hostile/megafauna/hierophant/Life()
-	. = ..()
-	if(. && spawned_beacon && !QDELETED(spawned_beacon) && !client)
+/mob/living/simple_animal/hostile/megafauna/hierophant/BiologicalLife(seconds, times_fired)
+	if(!(. = ..()))
+		return
+	if(spawned_beacon && !QDELETED(spawned_beacon) && !client)
 		if(target || loc == spawned_beacon.loc)
 			timeout_time = initial(timeout_time)
 		else
@@ -158,6 +163,8 @@ Difficulty: Hard
 				else
 					burst_range = 3
 					INVOKE_ASYNC(src, .proc/burst, get_turf(src), 0.25) //melee attacks on living mobs cause it to release a fast burst if on cooldown
+				if(L.stat == CONSCIOUS && L.health >= 30)
+					OpenFire()
 			else
 				devour(L)
 		else
@@ -187,7 +194,7 @@ Difficulty: Hard
 
 /mob/living/simple_animal/hostile/megafauna/hierophant/proc/calculate_rage() //how angry we are overall
 	did_reset = FALSE //oh hey we're doing SOMETHING, clearly we might need to heal if we recall
-	anger_modifier = CLAMP(((maxHealth - health) / 42),0,50)
+	anger_modifier = clamp(((maxHealth - health) / 42),0,50)
 	burst_range = initial(burst_range) + round(anger_modifier * 0.08)
 	beam_range = initial(beam_range) + round(anger_modifier * 0.12)
 
@@ -426,6 +433,7 @@ Difficulty: Hard
 /mob/living/simple_animal/hostile/megafauna/hierophant/proc/burst(turf/original, spread_speed = 0.5) //release a wave of blasts
 	playsound(original,'sound/machines/airlockopen.ogg', 200, 1)
 	var/last_dist = 0
+	var/list/hit_mobs = list()		//don't hit people multiple times.
 	for(var/t in spiral_range_turfs(burst_range, original))
 		var/turf/T = t
 		if(!T)
@@ -434,11 +442,11 @@ Difficulty: Hard
 		if(dist > last_dist)
 			last_dist = dist
 			sleep(1 + min(burst_range - last_dist, 12) * spread_speed) //gets faster as it gets further out
-		new /obj/effect/temp_visual/hierophant/blast(T, src, FALSE)
+		new /obj/effect/temp_visual/hierophant/blast(T, src, FALSE, hit_mobs)
 
 /mob/living/simple_animal/hostile/megafauna/hierophant/AltClickOn(atom/A) //player control handler(don't give this to a player holy fuck)
 	if(!istype(A) || get_dist(A, src) <= 2)
-		return
+		return altclick_listed_turf(A)
 	blink(A)
 
 //Hierophant overlays
@@ -590,10 +598,15 @@ Difficulty: Hard
 	var/list/hit_things = list() //we hit these already, ignore them
 	var/friendly_fire_check = FALSE
 	var/bursting = FALSE //if we're bursting and need to hit anyone crossing us
+	var/list/nohurt
 
-/obj/effect/temp_visual/hierophant/blast/Initialize(mapload, new_caster, friendly_fire)
+/obj/effect/temp_visual/hierophant/blast/Initialize(mapload, new_caster, friendly_fire, list/only_hit_once, list/donthurt = null)
 	. = ..()
+	if(only_hit_once)
+		hit_things = only_hit_once
 	friendly_fire_check = friendly_fire
+	if(donthurt)
+		hit_things += donthurt
 	if(new_caster)
 		hit_things += new_caster
 	if(ismineralturf(loc)) //drill mineral turfs
@@ -630,7 +643,7 @@ Difficulty: Hard
 		to_chat(L, "<span class='userdanger'>You're struck by a [name]!</span>")
 		var/limb_to_hit = L.get_bodypart(pick(BODY_ZONE_HEAD, BODY_ZONE_CHEST, BODY_ZONE_R_ARM, BODY_ZONE_L_ARM, BODY_ZONE_R_LEG, BODY_ZONE_L_LEG))
 		var/armor = L.run_armor_check(limb_to_hit, "melee", "Your armor absorbs [src]!", "Your armor blocks part of [src]!", 50, "Your armor was penetrated by [src]!")
-		L.apply_damage(damage, BURN, limb_to_hit, armor)
+		L.apply_damage(damage, BURN, limb_to_hit, armor, wound_bonus=CANT_WOUND)
 		if(ishostile(L))
 			var/mob/living/simple_animal/hostile/H = L //mobs find and damage you...
 			if(H.stat == CONSCIOUS && !H.target && H.AIStatus != AI_OFF && !H.client)

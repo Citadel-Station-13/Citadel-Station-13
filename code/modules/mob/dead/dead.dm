@@ -4,6 +4,7 @@ INITIALIZE_IMMEDIATE(/mob/dead)
 
 /mob/dead
 	sight = SEE_TURFS | SEE_MOBS | SEE_OBJS | SEE_SELF
+	move_resist = INFINITY
 	throwforce = 0
 
 /mob/dead/Initialize()
@@ -20,6 +21,9 @@ INITIALIZE_IMMEDIATE(/mob/dead)
 	set_focus(src)
 	return INITIALIZE_HINT_NORMAL
 
+/mob/dead/canUseStorage()
+	return FALSE
+
 /mob/dead/dust(just_ash, drop_items, force)	//ghosts can't be vaporised.
 	return
 
@@ -34,7 +38,9 @@ INITIALIZE_IMMEDIATE(/mob/dead)
 	var/turf/new_turf = get_turf(destination)
 	if (old_turf?.z != new_turf?.z)
 		onTransitZ(old_turf?.z, new_turf?.z)
+	var/oldloc = loc
 	loc = destination
+	Moved(oldloc, NONE, TRUE)
 
 /mob/dead/Stat()
 	..()
@@ -62,7 +68,7 @@ INITIALIZE_IMMEDIATE(/mob/dead)
 	set category = "OOC"
 	set name = "Server Hop!"
 	set desc= "Jump to the other server"
-	if(notransform)
+	if(mob_transforming)
 		return
 	var/list/csa = CONFIG_GET(keyed_list/cross_server)
 	var/pick
@@ -87,9 +93,9 @@ INITIALIZE_IMMEDIATE(/mob/dead)
 	to_chat(C, "<span class='notice'>Sending you to [pick].</span>")
 	new /obj/screen/splash(C)
 
-	notransform = TRUE
+	mob_transforming = TRUE
 	sleep(29)	//let the animation play
-	notransform = FALSE
+	mob_transforming = FALSE
 
 	if(!C)
 		return
