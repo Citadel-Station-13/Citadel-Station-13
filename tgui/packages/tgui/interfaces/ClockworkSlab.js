@@ -92,20 +92,18 @@ export const ClockworkSlab = (props, context) => {
                 </Fragment>
               )}
             </Box>
-            {recollection_categories?.map(cat => {
-              return (
-                <Fragment key={cat.name} >
-                  <br />
-                  <Button
-                    content={cat.name}
-                    tooltip={cat.desc}
-                    tooltipPosition={'right'}
-                    onClick={() => act('rec_category', {
-                      "category": cat.name,
-                    })} />
-                </Fragment>
-              );
-            })}
+            {recollection_categories?.map(cat => (
+              <Fragment key={cat.name}>
+                <br />
+                <Button
+                  content={cat.name}
+                  tooltip={cat.desc}
+                  tooltipPosition={'right'}
+                  onClick={() => act('rec_category', {
+                    "category": cat.name,
+                  })} />
+              </Fragment>
+            ))}
             <Divider />
             <Box>
               <Box
@@ -115,7 +113,7 @@ export const ClockworkSlab = (props, context) => {
                 {rec_section?.title ? (
                   rec_section.title
                 ) : (
-                  '500 Server Internal archives not found.'
+                  '500 Slab Internal archives not found.'
                 )}
               </Box>
               <br /><br />

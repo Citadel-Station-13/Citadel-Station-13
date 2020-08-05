@@ -208,24 +208,22 @@ export const TelecommsPDALog = (props, context) => {
             <Section>
               {(servers && servers.length) ? (
                 <LabeledList>
-                  {servers.map(server => {
-                    return (
-                      <LabeledList.Item
-                        key={server.name}
-                        label={`${server.ref}`}
-                        buttons={(
-                          <Button
-                            content="Connect"
-                            selected={data.selected
-                              && (server.ref === data.selected.ref)}
-                            onClick={() => act('viewmachine', {
-                              'value': server.id,
-                            })} />
-                        )}>
-                        {`${server.name} (${server.id})`}
-                      </LabeledList.Item>
-                    );
-                  })}
+                  {servers.map(server => (
+                    <LabeledList.Item
+                      key={server.name}
+                      label={`${server.ref}`}
+                      buttons={(
+                        <Button
+                          content="Connect"
+                          selected={data.selected
+                            && (server.ref === data.selected.ref)}
+                          onClick={() => act('viewmachine', {
+                            'value': server.id,
+                          })} />
+                      )}>
+                      {`${server.name} (${server.id})`}
+                    </LabeledList.Item>
+                  ))}
                 </LabeledList>
               ) : (
                 '404 Servers not found. Have you tried scanning the network?'
@@ -233,13 +231,13 @@ export const TelecommsPDALog = (props, context) => {
             </Section>
           ) : (
             <Fragment>
-              {tab === "pdalog-message" && (
+              {(tab === "pdalog-message" && authenticated) && (
                 <TeleLogs />
               )}
-              {tab === "pdalog-reqmsg" && (
+              {(tab === "pdalog-reqmsg" && authenticated) && (
                 <TeleLogs msgs_log />
               )}
-              {tab === "pdalog-custommsg" && (
+              {(tab === "pdalog-custommsg" && authenticated) && (
                 <CustomMsg />
               )}
             </Fragment>
@@ -253,7 +251,7 @@ export const TelecommsPDALog = (props, context) => {
 // They're the same, so merged it into this. Idea stolen from cargonia
 export const TeleLogs = (props, context) => {
   const {
-    msgs_log = false, // <tlog msgs_log/>
+    msgs_log = false, // <TeleLogs msgs_log/>
   } = props;
   const { act, data } = useBackend(context);
   const {
@@ -284,83 +282,81 @@ export const TeleLogs = (props, context) => {
       <Section
         title="Messages"
         level={2}>
-        {log_to_use?.map(message => {
-          return (
-            <Section key={message.ref}>
-              <LabeledList>
-                <LabeledList.Item
-                  label={msgs_log ? "Sending Dep." : "Sender"}
-                  buttons={(
-                    <Button
-                      content="Delete"
-                      onClick={() => act('del_log', {
-                        'ref': message.ref,
+        {log_to_use?.map(message => (
+          <Section key={message.ref}>
+            <LabeledList>
+              <LabeledList.Item
+                label={msgs_log ? "Sending Dep." : "Sender"}
+                buttons={(
+                  <Button
+                    content="Delete"
+                    onClick={() => act('del_log', {
+                      'ref': message.ref,
+                    })}
+                  />
+                )}>
+                {message.sender}
+              </LabeledList.Item>
+              <LabeledList.Item
+                label={msgs_log ? "Receiving Dep." : "Recipient"}>
+                {message.recipient}
+              </LabeledList.Item>
+              <LabeledList.Item
+                label="Message"
+                buttons={(
+                  !!message.picture && ( // don't send img over req
+                    <Button // Had to use _act for this.
+                      content="Image"
+                      icon="image"
+                      onClick={() => Byond.topic({
+                        'src': message.ref,
+                        'photo': 1,
                       })}
                     />
-                  )}>
-                  {message.sender}
-                </LabeledList.Item>
-                <LabeledList.Item
-                  label={msgs_log ? "Receiving Dep." : "Recipient"}>
-                  {message.recipient}
-                </LabeledList.Item>
-                <LabeledList.Item
-                  label="Message"
-                  buttons={(
-                    !!message.picture && ( // don't send img over req
-                      <Button // Had to use _act for this.
-                        content="Image"
-                        icon="image"
-                        onClick={() => Byond.topic({
-                          'src': message.ref,
-                          'photo': 1,
-                        })}
-                      />
-                    )
-                  )}>
-                  {message.message}
-                </LabeledList.Item>
-                {!!msgs_log && (
-                  <Fragment>
-                    <LabeledList.Item
-                      label="Stamp"
-                      color={message.stamp !== "Unstamped" ? (
-                        'label'
-                      ) : (
-                        'bad'
-                      )}
-                      bold={message.stamp !== 'Unstamped'}>
-                      {message.stamp}
-                    </LabeledList.Item>
-                    <LabeledList.Item
-                      label="ID Authentication"
-                      color={message.auth !== "Unauthenticated" ? (
-                        'good'
-                      ) : (
-                        'bad'
-                      )}>
-                      {message.auth}
-                    </LabeledList.Item>
-                    <LabeledList.Item
-                      label="Priority"
-                      color={(message.priority in prioritycolorMap) ? (
-                        prioritycolorMap[message.priority]
-                      ) : (
-                        'good'
-                      )}
-                      bold={message.priority === 'Extreme'}>
-                      {message.priority === 'Extreme' ? (
-                        `!!${message.priority}!!`
-                      ) : (
-                        message.priority
-                      )}
-                    </LabeledList.Item>
-                  </Fragment>
-                )}
-              </LabeledList>
-            </Section>
-          );
-        })}
+                  )
+                )}>
+                {message.message}
+              </LabeledList.Item>
+              {!!msgs_log && (
+                <Fragment>
+                  <LabeledList.Item
+                    label="Stamp"
+                    color={message.stamp !== "Unstamped" ? (
+                      'label'
+                    ) : (
+                      'bad'
+                    )}
+                    bold={message.stamp !== 'Unstamped'}>
+                    {message.stamp}
+                  </LabeledList.Item>
+                  <LabeledList.Item
+                    label="ID Authentication"
+                    color={message.auth !== "Unauthenticated" ? (
+                      'good'
+                    ) : (
+                      'bad'
+                    )}>
+                    {message.auth}
+                  </LabeledList.Item>
+                  <LabeledList.Item
+                    label="Priority"
+                    color={(message.priority in prioritycolorMap) ? (
+                      prioritycolorMap[message.priority]
+                    ) : (
+                      'good'
+                    )}
+                    bold={message.priority === 'Extreme'}>
+                    {message.priority === 'Extreme' ? (
+                      `!!${message.priority}!!`
+                    ) : (
+                      message.priority
+                    )}
+                  </LabeledList.Item>
+                </Fragment>
+              )}
+            </LabeledList>
+          </Section>
+        ))}
       </Section>
     </Section>
   );
