@@ -1,12 +1,14 @@
+// Stamina Buffer
 /// Stamina buffer amount
-#define STAMINA_BUFFER_CAPACITY 50
-
-
-
-
-
-
-
+#define STAMINA_BUFFER_CAPACITY 35
+/// Stamina buffer regen per decisecond
+#define STAMINA_BUFFER_REGEN_DS 0.1
+/// Stamina buffer regen multiplier while in combat mode
+#define STAMINA_BUFFER_REGEN_COMBAT_MULT 3
+/// Linear scaling minimum for stamina buffer regen in percentage at stamcrit
+#define STAMINA_BUFFER_STAMCRIT_PENALTY_REGEN 0.75
+/// Linear scaling minimum for stamina buffer capacity in percentage at stamcrit
+#define STAMINA_BUFFER_STAMCRIT_PENALTY_CAPACITY 0.5
 
 // Standard amounts for stamina usage
 
@@ -39,11 +41,5 @@
 #define STAM_COST_THROW_MULT		2
 #define STAM_COST_THROW_MOB			2.5 //multiplied by (mob size + 1)^2.
 
-///Multiplier of the (STAMINA_NEAR_CRIT - user current stamina loss) : (STAMINA_NEAR_CRIT - STAMINA_SOFTCRIT) ratio used in damage penalties when stam soft-critted.
-#define STAM_CRIT_ITEM_ATTACK_PENALTY	0.66
-/// changeNext_move penalty multiplier of the above.
-#define STAM_CRIT_ITEM_ATTACK_DELAY		1.75
 /// Damage penalty when fighting prone.
 #define LYING_DAMAGE_PENALTY			0.7
-/// Added delay when firing guns stam-softcritted. Summed with a hardset CLICK_CD_RANGE delay, similar to STAM_CRIT_DAMAGE_DELAY otherwise.
-#define STAM_CRIT_GUN_DELAY			2.75

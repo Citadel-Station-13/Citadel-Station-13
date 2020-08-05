@@ -131,11 +131,6 @@
 /obj/attacked_by(obj/item/I, mob/living/user, attackchain_flags = NONE, damage_multiplier = 1)
 	var/totitemdamage = I.force * damage_multiplier
 
-	var/stamloss = user.getStaminaLoss()
-	if(stamloss > STAMINA_NEAR_SOFTCRIT) //The more tired you are, the less damage you do.
-		var/penalty = (stamloss - STAMINA_NEAR_SOFTCRIT)/(STAMINA_NEAR_CRIT - STAMINA_NEAR_SOFTCRIT)*STAM_CRIT_ITEM_ATTACK_PENALTY
-		totitemdamage *= 1 - penalty
-
 	if(I.used_skills && user.mind)
 		if(totitemdamage)
 			totitemdamage = user.mind.item_action_skills_mod(I, totitemdamage, I.skill_difficulty, SKILL_ATTACK_OBJ, bad_trait)
@@ -181,11 +176,7 @@
 	if(!.)
 		return
 
-	var/stamloss = user.getStaminaLoss()
 	var/stam_mobility_mult = 1
-	if(stamloss > STAMINA_NEAR_SOFTCRIT) //The more tired you are, the less damage you do.
-		var/penalty = (stamloss - STAMINA_NEAR_SOFTCRIT)/(STAMINA_NEAR_CRIT - STAMINA_NEAR_SOFTCRIT)*STAM_CRIT_ITEM_ATTACK_PENALTY
-		stam_mobility_mult -= penalty
 	if(stam_mobility_mult > LYING_DAMAGE_PENALTY && !CHECK_MOBILITY(user, MOBILITY_STAND)) //damage penalty for fighting prone, doesn't stack with the above.
 		stam_mobility_mult = LYING_DAMAGE_PENALTY
 	. *= stam_mobility_mult

@@ -565,7 +565,7 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 		to_chat(user, "<span class='danger'>You cannot locate any organic eyes on this brain!</span>")
 		return
 
-	if(IS_STAMCRIT(user) || !user.UseStaminaBuffer(STAMINA_COST_ITEM_EYESTAB, warn = TRUR))//CIT CHANGE - makes eyestabbing impossible if you're in stamina softcrit
+	if(IS_STAMCRIT(user) || !user.UseStaminaBuffer(STAMINA_COST_ITEM_EYESTAB, warn = TRUE))//CIT CHANGE - makes eyestabbing impossible if you're in stamina softcrit
 		to_chat(user, "<span class='danger'>You're too exhausted for that.</span>")//CIT CHANGE - ditto
 		return //CIT CHANGE - ditto
 
