@@ -889,6 +889,7 @@ GLOBAL_LIST_EMPTY(electrochromatic_window_lookup)
 /obj/structure/window/bronze/fulltile
 	icon_state = "clockwork_window"
 	canSmoothWith = null
+	smooth = SMOOTH_TRUE
 	fulltile = TRUE
 	flags_1 = PREVENT_CLICK_UNDER_1
 	dir = FULLTILE_WINDOW_DIR
