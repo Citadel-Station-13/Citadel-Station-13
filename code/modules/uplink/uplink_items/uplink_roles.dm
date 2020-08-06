@@ -46,7 +46,7 @@
 	Insert into an Operating Console to enable the procedure."
 	item = /obj/item/disk/surgery/brainwashing
 	restricted_roles = list("Medical Doctor", "Roboticist")
-	cost = 5
+	cost = 8
 
 /datum/uplink_item/role_restricted/clown_bomb
 	name = "Clown Bomb"
