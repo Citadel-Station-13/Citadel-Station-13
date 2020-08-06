@@ -337,7 +337,6 @@
 	T.ChangeTurf(turf_type, null, CHANGETURF_IGNORE_AIR)
 
 /// Spawns a random mob or megafauna in the tunnel
-
 /turf/open/floor/plating/asteroid/airless/cave/proc/SpawnMonster(turf/T)
 	if(!isarea(loc))
 		return
