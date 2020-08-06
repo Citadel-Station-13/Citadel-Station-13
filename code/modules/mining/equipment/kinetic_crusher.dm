@@ -17,7 +17,7 @@
 	custom_materials = list(/datum/material/iron=1150, /datum/material/glass=2075)
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	attack_verb = list("smashed", "crushed", "cleaved", "chopped", "pulped")
-	sharpness = IS_SHARP
+	sharpness = SHARP_EDGED
 	actions_types = list(/datum/action/item_action/toggle_light)
 	var/list/trophies = list()
 	var/charged = TRUE
@@ -174,6 +174,20 @@
 		. += "[icon_state]_uncharged"
 	if(light_on)
 		. += "[icon_state]_lit"
+
+/obj/item/kinetic_crusher/glaive
+	name = "proto-kinetic glaive"
+	desc = "A modified design of a proto-kinetic crusher, it is still little more of a combination of various mining tools cobbled together \
+	and kit-bashed into a high-tech cleaver on a stick - with a handguard and a goliath hide grip. While it is still of little use to any \
+	but the most skilled and/or suicidal miners against local fauna, it's an elegant weapon for a more civilized hunter."
+	attack_verb = list("stabbed", "diced", "sliced", "cleaved", "chopped", "lacerated", "cut", "jabbed", "punctured")
+	icon_state = "crusher-glaive"
+	item_state = "crusher0-glaive"
+	//ideas: altclick that lets you pummel people with the handguard/handle?
+	//parrying functionality?
+
+/obj/item/kinetic_crusher/glaive/update_icon_state()
+	item_state = "crusher[wielded]-glaive" // this is not icon_state and not supported by 2hcomponent
 
 //destablizing force
 /obj/item/projectile/destabilizer

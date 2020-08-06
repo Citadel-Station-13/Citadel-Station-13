@@ -81,3 +81,9 @@
 	desc = "Contains one hellgun, an old pattern of laser gun infamous for its ability to horribly disfigure targets with burns. Technically violates the Space Geneva Convention when used on humanoids."
 	cost = 1500
 	contains = list(/obj/item/gun/energy/laser/hellgun)
+
+/datum/supply_pack/goody/medipen_twopak
+	name = "Medipen Two-Pak"
+	desc = "Contains one standard epinephrine medipen and one standard emergency first-aid kit medipen. For when you want to prepare for the worst."
+	cost = 500
+	contains = list(/obj/item/reagent_containers/hypospray/medipen, /obj/item/reagent_containers/hypospray/medipen/ekit)

@@ -185,6 +185,17 @@
 	restricted = TRUE
 	refund_path = /obj/item/guardiancreator/tech/choose/traitor
 
+/datum/uplink_item/dangerous/nukieguardian // just like the normal holoparasites but without the support or deffensive stands because nukies shouldnt turtle
+	name = "Holoparasites"
+	desc = "Though capable of near sorcerous feats via use of hardlight holograms and nanomachines, they require an \
+			organic host as a home base and source of fuel. Holoparasites come in various types and share damage with their host."
+	item = /obj/item/storage/box/syndie_kit/nukieguardian
+	cost = 15
+	refundable = TRUE
+	surplus = 50
+	refund_path = /obj/item/guardiancreator/tech/choose/nukie
+	include_modes = list(/datum/game_mode/nuclear)
+
 /datum/uplink_item/dangerous/machinegun
 	name = "L6 Squad Automatic Weapon"
 	desc = "A fully-loaded Aussec Armoury belt-fed machine gun. \
