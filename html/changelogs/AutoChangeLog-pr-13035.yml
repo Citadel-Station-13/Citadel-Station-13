@@ -1,0 +1,4 @@
+author: "lolman360"
+delete-after: True
+changes: 
+  - bugfix: "vendors are now unanchored when tipped. it just fell over it's not bolted to the ground anymore."
