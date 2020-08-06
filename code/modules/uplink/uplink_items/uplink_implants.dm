@@ -29,6 +29,13 @@
 	item = /obj/item/storage/box/syndie_kit/imp_freedom
 	cost = 5
 
+/datum/uplink_item/implants/warp
+	name = "Warp Implant"
+	desc = "An implant injected into the body and later activated at the user's will. It will inject eigenstasium which saves the user's location and teleports them there after five seconds. Lasts only fifteen times."
+	item = /obj/item/storage/box/syndie_kit/imp_warp
+	cost = 6
+	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops)
+
 /datum/uplink_item/implants/hijack
 	name = "Hijack Implant"
 	desc = "An implant that will let you hack into the APCs on station, allowing you to control them at will and the machinery within those rooms."

@@ -169,6 +169,14 @@
 	O.imp = new /obj/item/implant/freedom(O)
 	O.update_icon()
 
+/obj/item/storage/box/syndie_kit/imp_warp
+	name = "boxed warp implant (with injector)"
+
+/obj/item/storage/box/syndie_kit/imp_warp/PopulateContents()
+	var/obj/item/implanter/O = new(src)
+	O.imp = new /obj/item/implant/warp(O)
+	O.update_icon()
+
 /obj/item/storage/box/syndie_kit/imp_microbomb
 	name = "Microbomb Implant (with injector)"
 
