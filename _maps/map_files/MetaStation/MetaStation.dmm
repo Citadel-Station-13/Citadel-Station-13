@@ -32681,6 +32681,10 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/obj/machinery/light{
+	dir = 1;
+	light_color = "#cee5d2"
+	},
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/turret_protected/aisat/foyer)
 "blC" = (
@@ -36118,12 +36122,8 @@
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/turret_protected/aisat_interior)
 "bsf" = (
-/obj/machinery/light,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 8
 	},
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/turret_protected/aisat/foyer)
@@ -37682,16 +37682,10 @@
 /turf/closed/wall,
 /area/aisat)
 "bvu" = (
-/obj/structure/table/wood,
 /obj/machinery/light/small{
 	dir = 8
 	},
-/obj/item/radio/off{
-	pixel_y = 4
-	},
-/obj/item/screwdriver{
-	pixel_y = 10
-	},
+/obj/machinery/announcement_system,
 /turf/open/floor/plasteel/grimy,
 /area/tcommsat/computer)
 "bvv" = (
@@ -40188,12 +40182,15 @@
 /area/tcommsat/computer)
 "bAW" = (
 /obj/structure/table/wood,
-/obj/item/folder/blue,
 /obj/machinery/status_display/evac{
 	pixel_y = 31
 	},
-/obj/item/folder/blue,
-/obj/item/pen,
+/obj/item/radio/off{
+	pixel_y = 4
+	},
+/obj/item/screwdriver{
+	pixel_y = 10
+	},
 /turf/open/floor/plasteel/grimy,
 /area/tcommsat/computer)
 "bAX" = (
@@ -42716,9 +42713,12 @@
 /turf/open/floor/carpet,
 /area/crew_quarters/theatre)
 "bGh" = (
-/obj/machinery/announcement_system,
-/turf/open/floor/plasteel/grimy,
-/area/tcommsat/computer)
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/turf/open/floor/plasteel/dark,
+/area/ai_monitored/turret_protected/aisat/foyer)
 "bGj" = (
 /obj/machinery/vending/cola/random,
 /obj/machinery/newscaster{
@@ -81595,6 +81595,10 @@
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/port)
+"jQK" = (
+/obj/structure/lattice,
+/turf/closed/wall/r_wall,
+/area/aisat)
 "jRo" = (
 /obj/structure/table/wood,
 /obj/machinery/newscaster{
@@ -81912,6 +81916,16 @@
 /obj/machinery/door/firedoor,
 /turf/open/floor/plasteel,
 /area/hallway/primary/port)
+"nix" = (
+/obj/machinery/light/small{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/turf/open/floor/plasteel/dark,
+/area/ai_monitored/turret_protected/aisat/foyer)
 "njd" = (
 /obj/machinery/atmospherics/components/binary/pump{
 	dir = 8;
@@ -82580,6 +82594,13 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/starboard)
+"txh" = (
+/obj/machinery/door/airlock/hatch{
+	name = "Telecomms Control Room";
+	req_one_access_txt = "19; 61"
+	},
+/turf/open/floor/plasteel/dark,
+/area/tcommsat/computer)
 "txj" = (
 /obj/structure/chair/office/light{
 	dir = 1
@@ -136361,9 +136382,9 @@ bnw
 bpJ
 brW
 aRy
-bvt
-aaa
-aTU
+aRy
+aRy
+jQK
 aaa
 aaa
 aaa
@@ -136617,9 +136638,9 @@ blC
 bnx
 bpK
 bsf
-aRy
-aRy
-aRy
+bGh
+nix
+bGh
 aRy
 aRy
 aRy
@@ -136876,7 +136897,7 @@ bpL
 brY
 btL
 btL
-btL
+txh
 btL
 btL
 bCD
@@ -137133,7 +137154,7 @@ bpM
 brZ
 btL
 bvu
-bGh
+bxq
 bzn
 bAU
 bCD

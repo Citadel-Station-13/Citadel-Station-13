@@ -2,8 +2,8 @@
 	name = "Dullahan"
 	id = "dullahan"
 	default_color = "FFFFFF"
-	species_traits = list(EYECOLOR,HAIR,FACEHAIR,LIPS)
-	inherent_traits = list(TRAIT_NOHUNGER,TRAIT_NOBREATH,CAN_SCAR)
+	species_traits = list(EYECOLOR,HAIR,FACEHAIR,LIPS,HAS_FLESH,HAS_BONE)
+	inherent_traits = list(TRAIT_NOHUNGER,TRAIT_NOBREATH)
 	mutant_bodyparts = list("tail_human" = "None", "ears" = "None", "deco_wings" = "None")
 	use_skintones = USE_SKINTONES_GRAYSCALE_CUSTOM
 	mutant_brain = /obj/item/organ/brain/dullahan

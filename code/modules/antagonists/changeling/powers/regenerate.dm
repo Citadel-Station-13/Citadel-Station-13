@@ -30,8 +30,8 @@
 			C.regenerate_limbs(1)
 		C.regenerate_organs()
 		for(var/i in C.all_wounds)
-			var/datum/wound/W = i
-			W.remove_wound()
+			var/datum/wound/iter_wound = i
+			iter_wound.remove_wound()
 		if(!user.getorganslot(ORGAN_SLOT_BRAIN))
 			var/obj/item/organ/brain/B
 			if(C.has_dna() && C.dna.species.mutant_brain)
