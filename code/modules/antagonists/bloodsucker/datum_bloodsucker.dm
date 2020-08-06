@@ -38,6 +38,7 @@
 	var/level_bloodcost
 	var/passive_blood_drain = -0.1        //The amount of blood we loose each bloodsucker life() tick
 	var/notice_healing                    //Var to see if you are healing for preventing spam of the chat message inform the user of such
+	var/FinalDeath                  //Have we reached final death? Used to prevent spam.
 	// LISTS
 	var/static/list/defaultTraits = list (TRAIT_STABLEHEART, TRAIT_NOBREATH, TRAIT_SLEEPIMMUNE, TRAIT_NOCRITDAMAGE, TRAIT_RESISTCOLD, TRAIT_RADIMMUNE, TRAIT_NIGHT_VISION, \
 										  TRAIT_NOSOFTCRIT, TRAIT_NOHARDCRIT, TRAIT_AGEUSIA, TRAIT_COLDBLOODED, TRAIT_NONATURALHEAL, TRAIT_NOMARROW, TRAIT_NOPULSE, TRAIT_VIRUSIMMUNE, TRAIT_NODECAP, TRAIT_NOGUT)
@@ -683,6 +684,8 @@
 	owner.current.hud_used.sunlight_display.invisibility = INVISIBILITY_ABSTRACT
 
 /datum/antagonist/bloodsucker/proc/update_hud(updateRank=FALSE)
+	if(FinalDeath)
+		return
 	// No Hud? Get out.
 	if(!owner.current.hud_used)
 		return
