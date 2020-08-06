@@ -3531,6 +3531,7 @@
 #include "sandcode\code\_onclick\hud\screen_objects.dm"
 #include "sandcode\code\datums\action.dm"
 #include "sandcode\code\datums\shuttles.dm"
+#include "sandcode\code\datums\mutations\combined.dm"
 #include "sandcode\code\datums\ruins\lavaland.dm"
 #include "sandcode\code\datums\status_effects\buffs.dm"
 #include "sandcode\code\datums\status_effects\debuffs.dm"
