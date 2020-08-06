@@ -188,7 +188,7 @@
 	result = /obj/item/screwdriver/bronze
 	reqs = list(/obj/item/screwdriver = 1,
 				/obj/item/stack/cable_coil = 10,
-				/obj/item/stack/tile/bronze = 1,
+				/obj/item/stack/sheet/bronze = 1,
 				/datum/reagent/water  = 15)
 	time = 40
 	subcategory = CAT_TOOL
@@ -200,7 +200,7 @@
 	result = /obj/item/weldingtool/bronze
 	reqs = list(/obj/item/weldingtool = 1,
 				/obj/item/stack/cable_coil = 10,
-				/obj/item/stack/tile/bronze = 1,
+				/obj/item/stack/sheet/bronze = 1,
 				/datum/reagent/water  = 15)
 	time = 40
 	subcategory = CAT_TOOL
@@ -212,7 +212,7 @@
 	result = /obj/item/wirecutters/bronze
 	reqs = list(/obj/item/wirecutters = 1,
 				/obj/item/stack/cable_coil = 10,
-				/obj/item/stack/tile/bronze = 1,
+				/obj/item/stack/sheet/bronze = 1,
 				/datum/reagent/water  = 15)
 	time = 40
 	subcategory = CAT_TOOL
@@ -224,7 +224,7 @@
 	result = /obj/item/crowbar/bronze
 	reqs = list(/obj/item/crowbar = 1,
 				/obj/item/stack/cable_coil = 10,
-				/obj/item/stack/tile/bronze = 1,
+				/obj/item/stack/sheet/bronze = 1,
 				/datum/reagent/water  = 15)
 	time = 40
 	subcategory = CAT_TOOL
@@ -236,7 +236,7 @@
 	result = /obj/item/wrench/bronze
 	reqs = list(/obj/item/wrench = 1,
 				/obj/item/stack/cable_coil = 10,
-				/obj/item/stack/tile/bronze = 1,
+				/obj/item/stack/sheet/bronze = 1,
 				/datum/reagent/water  = 15)
 	time = 40
 	subcategory = CAT_TOOL
