@@ -1,4 +1,0 @@
-author: "timothyteakettle"
-delete-after: True
-changes: 
-  - tweak: "the custom tongue preference now passes through cloning so you spawn with your selected tongue"
