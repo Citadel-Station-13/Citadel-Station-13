@@ -79,7 +79,7 @@
 		return
 	switch(action)
 		if("open_pressure")
-			var/pressure = params["open_pressure"]
+			var/pressure = params["pressure"]
 			if(pressure == "max")
 				pressure = 50*ONE_ATMOSPHERE
 				. = TRUE
@@ -94,7 +94,7 @@
 				open_pressure = clamp(pressure, close_pressure, 50*ONE_ATMOSPHERE)
 				investigate_log("open pressure was set to [open_pressure] kPa by [key_name(usr)]", INVESTIGATE_ATMOS)
 		if("close_pressure")
-			var/pressure = params["close_pressure"]
+			var/pressure = params["pressure"]
 			if(pressure == "max")
 				pressure = open_pressure
 				. = TRUE
