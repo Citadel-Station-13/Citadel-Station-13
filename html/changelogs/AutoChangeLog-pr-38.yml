@@ -1,0 +1,4 @@
+author: "SandPoot"
+delete-after: True
+changes: 
+  - tweak: "Re-adds genetics recipe (Thermal + Radioactive = X-ray)"
