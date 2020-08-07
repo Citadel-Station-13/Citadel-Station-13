@@ -188,7 +188,7 @@
 	//ideas: altclick that lets you pummel people with the handguard/handle?
 	//parrying functionality?
 
-/datum/block_parry_data/crusherglaive
+/datum/block_parry_data/crusherglaive // it's like quickparry, without the damage multiplier
 	parry_time_windup = 0
 	parry_time_active = 5
 	parry_time_spindown = 0
