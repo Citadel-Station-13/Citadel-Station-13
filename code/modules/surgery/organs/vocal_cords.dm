@@ -684,7 +684,7 @@
 			power_multiplier *= 1.2
 		//Command staff has authority
 		if(user.mind.assigned_role in GLOB.command_positions)
-			power_multiplier *= 1.1
+			power_multiplier *= 1.3
 		//Why are you speaking
 		if(user.mind.assigned_role == "Mime")
 			power_multiplier *= 0.5
@@ -695,7 +695,7 @@
 	else if (is_servant_of_ratvar(user))
 		power_multiplier *= 1.2
 	else if (is_devil(user))//The devil is supposed to be seductive, right?
-		power_multiplier *= 1.2
+		power_multiplier *= 1.5
 
 	//range = 0.5 - 1.4~
 	//most cases = 1
@@ -741,8 +741,8 @@
 
 	//Mixables
 	var/static/regex/enthral_words = regex("relax|obey|love|serve|so easy|ara ara")
-	var/static/regex/reward_words = regex("good boy|good girl|good pet|good job|splendid|jolly good|bloody brilliant")
-	var/static/regex/punish_words = regex("bad boy|bad girl|bad pet|bad job|spot of bother|gone and done it now|blast it|buggered it up")
+	var/static/regex/reward_words = regex("good boy|good girl|good pet|good toy|good drone|good job|splendid|jolly good|bloody brilliant")
+	var/static/regex/punish_words = regex("bad boy|bad girl|bad pet|bad toy|bad drone|bad job|spot of bother|gone and done it now|blast it|buggered it up")
 	//phase 0
 	var/static/regex/saymyname_words = regex("say my name|who am i|whoami")
 	var/static/regex/wakeup_words = regex("revert|awaken|snap|attention")
@@ -750,7 +750,7 @@
 	var/static/regex/petstatus_words = regex("how are you|what is your status|are you okay")
 	var/static/regex/silence_words = regex("shut up|silence|be silent|ssh|quiet|hush")
 	var/static/regex/speak_words = regex("talk to me|speak")
-	var/static/regex/antiresist_words = regex("unable to resist|give in|stop being difficult")//useful if you think your target is resisting a lot
+	var/static/regex/antiresist_words = regex("unable to resist|submit|give in|stop being difficult")//useful if you think your target is resisting a lot
 	var/static/regex/resist_words = regex("resist|snap out of it|fight")//useful if two enthrallers are fighting
 	var/static/regex/forget_words = regex("forget|muddled|awake and forget")
 	var/static/regex/attract_words = regex("come here|come to me|get over here|attract")
@@ -759,16 +759,16 @@
 	var/static/regex/nya_words = regex("nya|meow|mewl")
 	var/static/regex/sleep_words = regex("sleep|slumber|rest")
 	var/static/regex/strip_words = regex("strip|derobe|nude|at ease|suit off")
-	var/static/regex/walk_words = regex("slow down|walk")
-	var/static/regex/run_words = regex("run|speed up")
+	var/static/regex/walk_words = regex("slow down|walk|take your time")
+	var/static/regex/run_words = regex("run|speed up|hurry up")
 	var/static/regex/liedown_words = regex("lie down")
 	var/static/regex/knockdown_words = regex("drop|fall|trip|knockdown|kneel|army crawl")
 	//phase 3
-	var/static/regex/statecustom_words = regex("state triggers|state your triggers")
+	var/static/regex/statecustom_words = regex("state triggers|state your triggers|what are your triggers|tell me your triggers")
 	var/static/regex/custom_words = regex("new trigger|listen to me")
 	var/static/regex/custom_words_words = regex("speak|echo|shock|cum|kneel|strip|trance")//What a descriptive name!
 	var/static/regex/custom_echo = regex("obsess|fills your mind|loop")
-	var/static/regex/instill_words = regex("feel|entice|overwhel")
+	var/static/regex/instill_words = regex("feel|entice|overwhelm")
 	var/static/regex/recognise_words = regex("recognise me|did you miss me?")
 	var/static/regex/objective_words = regex("new objective|obey this command|unable to resist|compulsed|word from hq")
 	var/static/regex/heal_words = regex("live|heal|survive|mend|life|pets never die|heroes never die")
