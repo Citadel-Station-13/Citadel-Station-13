@@ -23,6 +23,12 @@
 /obj/machinery/computer/camera_advanced/shuttle_docker/Initialize()
 	. = ..()
 	GLOB.navigation_computers += src
+	for(var/V in SSshuttle.stationary)
+		if(!V)
+			continue
+		var/obj/docking_port/stationary/S = V
+		if(jumpto_ports[S.id])
+			z_lock |= S.z
 	whitelist_turfs = typecacheof(whitelist_turfs)
 
 /obj/machinery/computer/camera_advanced/shuttle_docker/Destroy()
@@ -129,6 +135,13 @@
 				to_chat(current_user, "<span class='warning'>Unknown object detected in landing zone. Please designate another location.</span>")
 		return
 
+	///Make one use port that deleted after fly off, to don't lose info that need on to properly fly off.
+	if(my_port && my_port.get_docked())
+		my_port.delete_after = TRUE
+		my_port.id = null
+		my_port.name = "Old [my_port.name]"
+		my_port = null
+
 	if(!my_port)
 		my_port = new()
 		my_port.name = shuttlePortName
@@ -140,6 +153,7 @@
 		my_port.hidden = shuttle_port.hidden
 	my_port.setDir(the_eye.dir)
 	my_port.forceMove(locate(eyeobj.x - x_offset, eyeobj.y - y_offset, eyeobj.z))
+
 	if(current_user.client)
 		current_user.client.images -= the_eye.placed_images
 
@@ -157,7 +171,7 @@
 	if(current_user.client)
 		current_user.client.images += the_eye.placed_images
 		to_chat(current_user, "<span class='notice'>Transit location designated</span>")
-	return
+	return TRUE
 
 /obj/machinery/computer/camera_advanced/shuttle_docker/proc/canDesignateTarget()
 	if(!designating_target_loc || !current_user || (eyeobj.loc != designating_target_loc) || (stat & (NOPOWER|BROKEN)) )
@@ -323,14 +337,25 @@
 	var/list/L = list()
 	for(var/V in SSshuttle.stationary)
 		if(!V)
+			stack_trace("SSshuttle.stationary have null entry!")
 			continue
 		var/obj/docking_port/stationary/S = V
 		if(console.z_lock.len && !(S.z in console.z_lock))
 			continue
 		if(console.jumpto_ports[S.id])
-			L[S.name] = S
+			L["([L.len])[S.name]"] = S
 
-	playsound(console, 'sound/machines/terminal_prompt.ogg', 25, 0)
+	for(var/V in SSshuttle.beacons)
+		if(!V)
+			stack_trace("SSshuttle.beacons have null entry!")
+			continue
+		var/obj/machinery/spaceship_navigation_beacon/nav_beacon = V
+		if(!nav_beacon.locked || console.z_lock.len && !(nav_beacon.z in console.z_lock))
+			L["([L.len]) [nav_beacon.name] located: [nav_beacon.x] [nav_beacon.y] [nav_beacon.z]"] = nav_beacon
+		else
+			L["([L.len]) [nav_beacon.name] locked"] = null
+
+	playsound(console, 'sound/machines/terminal_prompt.ogg', 25, FALSE)
 	var/selected = input("Choose location to jump to", "Locations", null) as null|anything in L
 	if(QDELETED(src) || QDELETED(target) || !isliving(target))
 		return

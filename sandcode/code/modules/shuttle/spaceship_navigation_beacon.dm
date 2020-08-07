@@ -1,8 +1,11 @@
 /obj/item/circuitboard/machine/spaceship_navigation_beacon
 	name = "Bluespace Navigation Gigabeacon (Machine Board)"
 	build_path = /obj/machinery/spaceship_navigation_beacon
-	req_components = list()
-
+	req_components = list(
+		/obj/item/stock_parts/subspace/transmitter = 1,
+		/obj/item/stock_parts/subspace/treatment = 1,
+		/obj/item/stock_parts/subspace/amplifier = 1,
+		/obj/item/stack/ore/bluespace_crystal/refined = 1)
 
 /obj/machinery/spaceship_navigation_beacon
 	name = "Bluespace Navigation Gigabeacon"
@@ -14,9 +17,7 @@
 	density = TRUE
 	circuit = /obj/item/circuitboard/machine/spaceship_navigation_beacon
 	light_power = 2
-
 	var/locked = FALSE //Locked beacons don't allow to jump to it.
-
 
 /obj/machinery/spaceship_navigation_beacon/Initialize()
 	. = ..()
