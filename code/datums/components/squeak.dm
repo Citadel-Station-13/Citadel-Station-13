@@ -14,7 +14,7 @@
 	
 	// squeak cooldowns
 	var/last_squeak = 0
-	var/squeak_delay = 10
+	var/squeak_delay = 5
 	
 	/// chance we'll be stopped from squeaking by cooldown when something crossing us squeaks
 	var/cross_squeak_delay_chance = 33		// about 3 things can squeak at a time
@@ -47,9 +47,13 @@
 		use_delay = use_delay_override
 
 /datum/component/squeak/proc/play_squeak()
-	if(last_squeak + squeak_delay < world.time)
-		return
-	last_squeak = world.time
+	do_play_squeak()
+
+/datum/component/squeak/proc/do_play_squeak(bypass_cooldown = FALSE)
+	if(!bypass_cooldown)
+		last_squeak + squeak_delay < world.time)
+			return
+		last_squeak = world.time
 	if(prob(squeak_chance))
 		if(!override_squeak_sounds)
 			playsound(parent, pickweight(default_squeak_sounds), volume, 1, -1)
@@ -58,7 +62,7 @@
 
 /datum/component/squeak/proc/step_squeak()
 	if(steps > step_delay)
-		play_squeak()
+		do_play_squeak(TRUE)
 		steps = 0
 	else
 		steps++
