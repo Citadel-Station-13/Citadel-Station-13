@@ -1112,7 +1112,6 @@
 		detonated = 1
 		charge = null
 		for(var/mob/living/carbon/human/H in orange(2,src))
-			H.Unconscious(160)
 			H.adjust_fire_stacks(20)
 			H.IgniteMob() //Guaranteed knockout and ignition for nearby people
 			H.apply_damage(40, BRUTE, BODY_ZONE_CHEST)

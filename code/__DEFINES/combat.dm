@@ -154,9 +154,10 @@
 #define SHOVE_KNOCKDOWN_HUMAN 30
 #define SHOVE_KNOCKDOWN_TABLE 30
 #define SHOVE_KNOCKDOWN_COLLATERAL 10
-//for the shove slowdown, see __DEFINES/movespeed_modification.dm
-#define SHOVE_SLOWDOWN_LENGTH 30
-#define SHOVE_SLOWDOWN_STRENGTH 0.85 //multiplier
+/// how long they're staggered for
+#define SHOVE_STAGGER_DURATION 35
+/// how long they're off balance for
+#define SHOVE_OFFBALANCE_DURATION 30
 //Shove disarming item list
 GLOBAL_LIST_INIT(shove_disarming_types, typecacheof(list(
 	/obj/item/gun)))
@@ -208,9 +209,9 @@ GLOBAL_LIST_INIT(shove_disarming_types, typecacheof(list(
 #define GUN_AIMING_TIME (2 SECONDS)
 
 //Object/Item sharpness
-#define IS_BLUNT			0
-#define IS_SHARP			1
-#define IS_SHARP_ACCURATE	2
+#define SHARP_NONE			0
+#define SHARP_EDGED			1
+#define SHARP_POINTY		2
 
 //His Grace.
 #define HIS_GRACE_SATIATED 0 //He hungers not. If bloodthirst is set to this, His Grace is asleep.

@@ -143,6 +143,8 @@
 	movement_type = FLYING
 	AIStatus = AI_OFF //this has to be manually set so that the guardian doesn't start bashing the host, how annoying -_-
 	loot = list(/obj/item/clockwork/component/geis_capacitor/fallen_armor)
+	max_shield_health = 0
+	shield_health = 0
 	var/true_name = "Meme Master 69" //Required to call forth the guardian
 	var/global/list/possible_true_names = list("Servant", "Warden", "Serf", "Page", "Usher", "Knave", "Vassal", "Escort")
 	var/mob/living/host //The mob that the guardian is living inside of

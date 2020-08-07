@@ -12,10 +12,10 @@
 	var/icon_right = "bloodhand_right"
 	hitsound = 'sound/hallucinations/growl1.ogg'
 	force = 18
-	sharpness = IS_SHARP_ACCURATE //it's a claw, they're sharp.
+	sharpness = SHARP_POINTY //it's a claw, they're sharp.
 	damtype = "brute"
 	total_mass = TOTAL_MASS_HAND_REPLACEMENT
-	sharpness = IS_SHARP
+	sharpness = SHARP_EDGED
 	wound_bonus = -30
 	bare_wound_bonus = 15
 
