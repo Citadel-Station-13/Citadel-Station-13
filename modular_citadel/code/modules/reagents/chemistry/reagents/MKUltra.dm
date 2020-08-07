@@ -136,9 +136,9 @@ Creating a chem with a low purity will make you permanently fall in love with so
 	taste_description = "synthetic chocolate, a base tone of alcohol, and high notes of roses"
 	overdose_threshold = 100 //If this is too easy to get 100u of this, then double it please.
 	metabolization_rate = 0.1//It has to be slow, so there's time for the effect.
-	data = list("creatorID" = null, "creatorGender" = null, "creatorName" = null)
+	data = list("creatorID" = null, "creatorTitle" = null, "creatorName" = null)
 	var/creatorID  //ckey
-	var/creatorGender
+	var/creatorTitle
 	var/creatorName
 	var/mob/living/creator
 	pH = 10
@@ -148,7 +148,7 @@ Creating a chem with a low purity will make you permanently fall in love with so
 
 /datum/reagent/fermi/enthrall/on_new(list/data)
 	creatorID = data["creatorID"]
-	creatorGender = data["creatorGender"]
+	creatorTitle = data["creatorTitle"]
 	creatorName = data["creatorName"]
 	creator = get_mob_by_key(creatorID)
 
@@ -168,7 +168,7 @@ Creating a chem with a low purity will make you permanently fall in love with so
 	if(E)
 		if(E.enthrallID == M.ckey && creatorID != M.ckey)//If you're enthralled to yourself (from OD) and someone else tries to enthrall you, you become thralled to them instantly.
 			E.enthrallID = creatorID
-			E.enthrallGender = creatorGender
+			E.enthrallTitle = creatorTitle
 			E.master = get_mob_by_key(creatorID)
 			to_chat(M, "<span class='big love'><i>Your addled, plastic, mind bends under the chemical influence of a new [(E.lewd?"master":"leader")]. Your highest priority is now to stay by [creatorName]'s side, following and aiding them at all costs.</i></span>") //THIS SHOULD ONLY EVER APPEAR IF YOU MINDBREAK YOURSELF AND THEN GET INJECTED FROM SOMEONE ELSE.
 			log_reagent("FERMICHEM: Narcissist [M] ckey: [M.key] been rebound to [creatorName], ID: [creatorID]")
@@ -243,7 +243,7 @@ Creating a chem with a low purity will make you permanently fall in love with so
 		M.apply_status_effect(/datum/status_effect/chem/enthrall)
 		E = M.has_status_effect(/datum/status_effect/chem/enthrall)
 		E.enthrallID = creatorID
-		E.enthrallGender = creatorGender
+		E.enthrallTitle = creatorTitle
 		E.master = creator
 	else
 		E = M.has_status_effect(/datum/status_effect/chem/enthrall)
