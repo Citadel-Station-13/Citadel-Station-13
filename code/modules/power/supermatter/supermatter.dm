@@ -159,8 +159,8 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		/datum/gas/pluoxium,
 		/datum/gas/tritium,
 		/datum/gas/bz,
-		/datum/gas/freon,
-		/datum/gas/hydrogen,
+//		/datum/gas/freon,
+//		/datum/gas/hydrogen,
 	)
 	///The list of gases mapped against their current comp. We use this to calculate different values the supermatter uses, like power or heat resistance. It doesn't perfectly match the air around the sm, instead moving up at a rate determined by gas_change_rate per call. Ranges from 0 to 1
 	var/list/gas_comp = list(
@@ -173,8 +173,8 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		/datum/gas/pluoxium = 0,
 		/datum/gas/tritium = 0,
 		/datum/gas/bz = 0,
-		/datum/gas/freon = 0,
-		/datum/gas/hydrogen = 0,
+//		/datum/gas/freon = 0,
+//		/datum/gas/hydrogen = 0,
 	)
 	///The list of gases mapped against their transmit values. We use it to determine the effect different gases have on radiation
 	var/list/gas_trans = list(
@@ -184,7 +184,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		/datum/gas/pluoxium = PLUOXIUM_TRANSMIT_MODIFIER,
 		/datum/gas/tritium = TRITIUM_TRANSMIT_MODIFIER,
 		/datum/gas/bz = BZ_TRANSMIT_MODIFIER,
-		/datum/gas/hydrogen = HYDROGEN_TRANSMIT_MODIFIER,
+//		/datum/gas/hydrogen = HYDROGEN_TRANSMIT_MODIFIER,
 	)
 	///The list of gases mapped against their heat penaltys. We use it to determin molar and heat output
 	var/list/gas_heat = list(
@@ -196,14 +196,14 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		/datum/gas/pluoxium = PLUOXIUM_HEAT_PENALTY,
 		/datum/gas/tritium = TRITIUM_HEAT_PENALTY,
 		/datum/gas/bz = BZ_HEAT_PENALTY,
-		/datum/gas/freon = FREON_HEAT_PENALTY,
-		/datum/gas/hydrogen = HYDROGEN_HEAT_PENALTY,
+//		/datum/gas/freon = FREON_HEAT_PENALTY,
+//		/datum/gas/hydrogen = HYDROGEN_HEAT_PENALTY,
 	)
 	///The list of gases mapped against their heat resistance. We use it to moderate heat damage.
 	var/list/gas_resist = list(
 		/datum/gas/nitrous_oxide = N2O_HEAT_RESISTANCE,
 		/datum/gas/pluoxium = PLUOXIUM_HEAT_RESISTANCE,
-		/datum/gas/hydrogen = HYDROGEN_HEAT_RESISTANCE,
+//		/datum/gas/hydrogen = HYDROGEN_HEAT_RESISTANCE,
 	)
 	///The list of gases mapped against their powermix ratio
 	var/list/gas_powermix = list(
@@ -215,8 +215,8 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		/datum/gas/pluoxium = -1,
 		/datum/gas/tritium = 1,
 		/datum/gas/bz = 1,
-		/datum/gas/freon = -1,
-		/datum/gas/hydrogen = 1,
+//		/datum/gas/freon = -1,
+//		/datum/gas/hydrogen = 1,
 	)
 	///The last air sample's total molar count, will always be above or equal to 0
 	var/combined_gas = 0
@@ -555,7 +555,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		//We're concerned about pluoxium being too easy to abuse at low percents, so we make sure there's a substantial amount.
 		var/pluoxiumbonus = (gas_comp[/datum/gas/pluoxium] >= 0.15) //makes pluoxium only work at 15%+
 		var/h2obonus = 1 - (gas_comp[/datum/gas/water_vapor] * 0.25)//At max this value should be 0.75
-		var/freonbonus = (gas_comp[/datum/gas/freon] <= 0.03) //Let's just yeet power output if this shit is high
+//		var/freonbonus = (gas_comp[/datum/gas/freon] <= 0.03) //Let's just yeet power output if this shit is high
 
 		heat_mod[/datum/gas/pluoxium] = pluoxiumbonus
 		transit_mod[/datum/gas/pluoxium] = pluoxiumbonus
@@ -626,7 +626,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 
 		if(prob(50))
 			//(1 + (tritRad + pluoxDampen * bzDampen * o2Rad * plasmaRad / (10 - bzrads))) * freonbonus
-			radiation_pulse(src, power * max(0, (1 + (power_transmission_bonus/(10-(gas_comp[/datum/gas/bz] * BZ_RADIOACTIVITY_MODIFIER)))) * freonbonus))// RadModBZ(500%)
+			radiation_pulse(src, power * max(0, (1 + (power_transmission_bonus/(10-(gas_comp[/datum/gas/bz] * BZ_RADIOACTIVITY_MODIFIER)))) * 1))//freonbonus))// RadModBZ(500%)
 		if(gas_comp[/datum/gas/bz] >= 0.4 && prob(30 * gas_comp[/datum/gas/bz]))
 			src.fire_nuclear_particle()        // Start to emit radballs at a maximum of 30% chance per tick
 
