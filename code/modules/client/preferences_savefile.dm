@@ -5,7 +5,7 @@
 //	You do not need to raise this if you are adding new values that have sane defaults.
 //	Only raise this value when changing the meaning/format/name/layout of an existing value
 //	where you would want the updater procs below to run
-#define SAVEFILE_VERSION_MAX	34
+#define SAVEFILE_VERSION_MAX	33
 
 /*
 SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Carn
@@ -199,43 +199,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		features["flavor_text"] = html_encode(features["flavor_text"])
 		features["silicon_flavor_text"] = html_encode(features["silicon_flavor_text"])
 		features["ooc_notes"] = html_encode(features["ooc_notes"])
-
-	if(current_version < 34) //convert to new loadout paths
-		var/list/saved_loadout_paths = splittext(S["loadout"], "|")
-		var/list/converted_paths = list()
-		for(var/i in saved_loadout_paths)
-			var/datum/gear/loadout_item = text2path(i)
-			var/itemtype = copytext(i,13)
-			var/new_path
-			if(length(initial(loadout_item.ckeywhitelist)))
-				new_path = "/datum/gear/donator/[itemtype]"
-			else
-				switch(initial(loadout_item.slot))
-					if(SLOT_W_UNIFORM)
-						new_path = "/datum/gear/uniform/[itemtype]"
-					if(SLOT_WEAR_SUIT)
-						new_path = "/datum/gear/suit/[itemtype]"
-					if(SLOT_SHOES)
-						new_path = "/datum/gear/shoes/[itemtype]"
-					if(SLOT_NECK)
-						new_path = "/datum/gear/neck/[itemtype]"
-					if(SLOT_WEAR_MASK)
-						new_path = "/datum/gear/mask/[itemtype]"
-					if(SLOT_HEAD)
-						new_path = "/datum/gear/head/[itemtype]"
-					if(SLOT_HANDS)
-						new_path = "/datum/gear/hands/[itemtype]"
-					if(SLOT_GLOVES)
-						new_path = "/datum/gear/gloves/[itemtype]"
-					if(SLOT_GLASSES)
-						new_path = "/datum/gear/glasses/[itemtype]"
-					if(CATEGORY_BACKPACK)
-						new_path = "/datum/gear/backpack/[itemtype]"
-			if(new_path) //make sure it exists
-				if(text2path(new_path)) //make sure its a real path
-					converted_paths += new_path
-		S["loadout"] = converted_paths.Join("|")
-
 
 /datum/preferences/proc/load_path(ckey,filename="preferences.sav")
 	if(!ckey)
