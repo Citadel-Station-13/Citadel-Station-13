@@ -50,7 +50,7 @@
 	do_play_squeak()
 
 /datum/component/squeak/proc/do_play_squeak(bypass_cooldown = FALSE)
-	if(!bypass_cooldown && ((last_squeak + squeak_delay) < world.time))
+	if(!bypass_cooldown && ((last_squeak + squeak_delay) >= world.time))
 		return FALSE
 	if(prob(squeak_chance))
 		if(!override_squeak_sounds)
