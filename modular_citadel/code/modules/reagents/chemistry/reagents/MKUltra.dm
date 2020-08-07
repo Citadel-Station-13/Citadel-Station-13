@@ -140,7 +140,6 @@ Creating a chem with a low purity will make you permanently fall in love with so
 	var/creatorID  //ckey
 	var/creatorTitle
 	var/creatorName
-	var/enthrallTitle //fuck, maybe this'll work??
 	var/mob/living/creator
 	pH = 10
 	chemical_flags = REAGENT_ONMOBMERGE | REAGENT_DONOTSPLIT //Procs on_mob_add when merging into a human
