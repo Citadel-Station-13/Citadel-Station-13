@@ -249,6 +249,16 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	playsound(src, 'sound/weapons/bladeslice.ogg', 50, 1)
 	return(BRUTELOSS)
 
+/obj/item/katana/timestop
+	item_flags = ITEM_CAN_PARRY
+	block_parry_data = /datum/block_parry_data/bokken/quick_parry/proj
+
+/obj/item/katana/timestop/on_active_parry(mob/living/owner, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, list/block_return, parry_efficiency, parry_time)
+	if(ishuman(owner))
+		var/mob/living/carbon/human/flynn = owner
+		flynn.emote("me",1,"smirks.",FALSE)
+	new /obj/effect/timestop(get_turf(owner), 2, 50, list(owner))
+
 /obj/item/melee/bokken // parrying stick
 	name = "bokken"
 	desc = "A space-Japanese training sword made of wood and shaped like a katana."
@@ -300,6 +310,9 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	parry_failed_stagger_duration = 1 SECONDS
 	parry_failed_clickcd_duration = 1 SECONDS // more forgiving punishments for missed parries
 	// still, don't fucking miss your parries or you're down stamina and staggered to shit
+
+/datum/block_parry_data/bokken/quick_parry/proj
+	parry_efficiency_perfect_override = list()
 
 /obj/item/melee/bokken/Initialize()
 	. = ..()
