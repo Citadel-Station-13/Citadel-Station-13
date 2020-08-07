@@ -229,8 +229,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/gear_points = 10
 	var/list/gear_categories
 	var/list/chosen_gear = list()
-	var/gear_category = 1
-	var/gear_subcategory = 1
+	var/gear_category
+	var/gear_subcategory
 
 	var/screenshake = 100
 	var/damagescreenshake = 2
@@ -1067,20 +1067,18 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			if(!length(GLOB.loadout_items))
 				dat += "<center>ERROR: No loadout categories - something is horribly wrong!"
 			else
-				gear_category = clamp(gear_category, 1, length(GLOB.loadout_items))		// no runtimes
-				var/firstcat
-				var/chosen_category
-				for(var/i in 1 to length(GLOB.loadout_items))
-					var/category = GLOB.loadout_items[i]
+				if(!GLOB.loadout_categories[gear_category])
+					gear_category = GLOB.loadout_categories[1]
+				var/firstcat = TRUE
+				for(var/category in GLOB.loadout_categories)
 					if(firstcat)
 						firstcat = FALSE
 					else
 						dat += " |"
-					if(i == gear_category)
+					if(category == gear_category)
 						dat += " <span class='linkOn'>[category]</span> "
-						chosen_category = category
 					else
-						dat += " <a href='?_src_=prefs;preference=gear;select_category=[i]'>[category]</a> "
+						dat += " <a href='?_src_=prefs;preference=gear;select_category=[html_encode(category)]'>[category]</a> "
 
 				dat += "</b></center></td></tr>"
 				dat += "<tr><td colspan=4><hr></td></tr>"
@@ -1090,29 +1088,28 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				if(!length(GLOB.loadout_categories[gear_category]))
 					dat += "No subcategories detected. Something is horribly wrong!"
 				else
-					gear_subcategory = clamp(gear_subcategory, 1, length(GLOB.loadout_categories[gear_category]))
+					var/list/subcategories = GLOB.loadout_categories[gear_category]
+					if(!subcategories.Find(gear_subcategory))
+						gear_subcategory = subcategories[1]
 
 					var/firstsubcat = FALSE
-					var/chosen_subcategory
-					for(var/i in 1 to length(GLOB.loadout_categories[chosen_category]))
-						if(!firstsubcat)
-							dat += " |"
-						else
+					for(var/subcategory in subcategories)
+						if(firstsubcat)
 							firstsubcat = FALSE
-						var/subcategory = GLOB.loadout_categories[chosen_category][i]
-						if(gear_subcategory == i)
-							dat += " <span class='linkOn'>[subcategory]</span> "
-							chosen_subcategory = subcategory
 						else
-							dat += " <a href='?_src_=prefs;preference=gear;select_subcategory=[i]'>[subcategory]</a> "
+							dat += " |"
+						if(gear_subcategory == subcategory)
+							dat += " <span class='linkOn'>[subcategory]</span> "
+						else
+							dat += " <a href='?_src_=prefs;preference=gear;select_subcategory=[html_encode(subcategory)]'>[subcategory]</a> "
 					dat += "</b></center></td></tr>"
 
 					dat += "<tr width=10% style='vertical-align:top;'><td width=15%><b>Name</b></td>"
 					dat += "<td style='vertical-align:top'><b>Cost</b></td>"
 					dat += "<td width=10%><font size=2><b>Restrictions</b></font></td>"
 					dat += "<td width=80%><font size=2><b>Description</b></font></td></tr>"
-					for(var/name in GLOB.loadout_items[chosen_category][chosen_subcategory])
-						var/datum/gear/gear = GLOB.loadout_items[chosen_category][chosen_subcategory][name]
+					for(var/name in GLOB.loadout_items[gear_category][gear_subcategory])
+						var/datum/gear/gear = GLOB.loadout_items[gear_category][gear_subcategory][name]
 						var/donoritem = gear.donoritem
 						if(donoritem && !gear.donator_ckey_check(user.ckey))
 							continue
@@ -2719,14 +2716,13 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			gear_points = CONFIG_GET(number/initial_gear_points)
 			save_preferences()
 		if(href_list["select_category"])
-			gear_category = text2num(href_list["select_category"])
-			gear_subcategory = 1
+			gear_category = html_decode(href_list["select_category"])
+			gear_subcategory = GLOB.loadout_categories[gear_category][1]
 		if(href_list["select_subcategory"])
-			gear_subcategory = text2num(href_list["select_subcategory"])
+			gear_subcategory = html_decode(href_list["select_subcategory"])
 		if(href_list["toggle_gear_path"])
-			var/category = GLOB.loadout_items[gear_category]
-			var/subcategory = GLOB.loadout_items[category][gear_subcategory]
-			var/datum/gear/G = GLOB.loadout_items[category][subcategory][html_decode(href_list["toggle_gear_path"])]
+			var/name = html_decode(href_list["toggle_gear_path"])
+			var/datum/gear/G = GLOB.loadout_items[gear_category][gear_subcategory][name]
 			if(!G)
 				return
 			var/toggle = text2num(href_list["toggle_gear"])
