@@ -280,13 +280,13 @@
 	name = "MKUltra"
 	id = /datum/reagent/fermi/enthrall
 	results = list(/datum/reagent/fermi/enthrall = 5)
-	required_reagents = list(/datum/reagent/water =1)
+	required_reagents = list(/datum/reagent/consumable/coco = 1, /datum/reagent/bluespace = 1, /datum/reagent/toxin/mindbreaker = 1, /datum/reagent/medicine/psicodine = 1, /datum/reagent/drug/happiness = 1)
 	required_catalysts = list(/datum/reagent/blood = 1)
 	mix_message = "the reaction gives off a burgundy plume of smoke!"
 	//FermiChem vars:
 	OptimalTempMin 			= 780
 	OptimalTempMax			= 820
-	ExplodeTemp 			= 8400
+	ExplodeTemp 			= 840
 	OptimalpHMin 			= 12
 	OptimalpHMax 			= 13
 	ReactpHLim 				= 2
