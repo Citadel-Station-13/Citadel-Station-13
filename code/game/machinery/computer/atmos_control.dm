@@ -91,8 +91,6 @@ GLOBAL_LIST_EMPTY(atmos_air_controllers)
 	icon_screen = "tank"
 	icon_keyboard = "atmos_key"
 	circuit = /obj/item/circuitboard/computer/atmos_control
-	ui_x = 400
-	ui_y = 925
 
 	var/frequency = FREQ_ATMOS_STORAGE
 	var/list/sensors = list(
@@ -263,23 +261,6 @@ GLOBAL_LIST_EMPTY(atmos_air_controllers)
 		U.broadcast_status()
 	for(var/obj/machinery/atmospherics/components/unary/vent_pump/U in devices)
 		U.broadcast_status()
-
-/obj/machinery/computer/atmos_control/tank/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
-									datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
-	if(!ui)
-		ui = new(user, src, ui_key, "AtmosControlConsole", name, ui_x, ui_y, master_ui, state)
-		ui.open()
-
-/obj/machinery/computer/atmos_control/tank/ui_data(mob/user)
-	var/list/data = ..()
-	data["tank"] = TRUE
-	data["inputting"] = input_info ? input_info["power"] : FALSE
-	data["inputRate"] = input_info ? input_info["volume_rate"] : 0
-	data["outputting"] = output_info ? output_info["power"] : FALSE
-	data["outputPressure"] = output_info ? output_info["internal"] : 0
-
-	return data
 
 /obj/machinery/computer/atmos_control/tank/ui_act(action, params)
 	if(..() || !radio_connection)
