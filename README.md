@@ -1,13 +1,13 @@
-## Citadel Station 13
-Based and maintained from /tg/station.
+## HYPNOSPESS
+Forked and maintained from Citadel Station
 
-[![Build Status](https://api.travis-ci.org/Citadel-Station-13/Citadel-Station-13.png)](https://travis-ci.org/Citadel-Station-13/Citadel-Station-13) 
-[![Percentage of issues still open](http://isitmaintained.com/badge/open/Citadel-Station-13/Citadel-Station-13.svg)](http://isitmaintained.com/project/Citadel-Station-13/Citadel-Station-13 "Percentage of issues still open")  
-[![Average time to resolve an issue](http://isitmaintained.com/badge/resolution/Citadel-Station-13/Citadel-Station-13.svg)](http://isitmaintained.com/project/Citadel-Station-13/Citadel-Station-13 "Average time to resolve an issue")
+Hypnospess: The SS13 fork designed to hypnotize YOU, the player!
 
-[![forthebadge](http://forthebadge.com/images/badges/60-percent-of-the-time-works-every-time.svg)](https://forthebadge.com) [![forthebadge](http://forthebadge.com/images/badges/pretty-risque.svg)](https://forthebadge.com) [![forthebadge](http://forthebadge.com/images/badges/you-didnt-ask-for-this.svg)](http://forthebadge.com) [![forinfinityandbyond](https://user-images.githubusercontent.com/5211576/29499758-4efff304-85e6-11e7-8267-62919c3688a9.gif)](https://www.reddit.com/r/SS13/comments/5oplxp/what_is_the_main_problem_with_byond_as_an_engine/dclbu1a)
+**This codebase is not intended to be used on a public server at all. It's intended for use only in private playsessions with people that you know and trust. As such, things in this codebase may be hilariously unbalanced if ported to any other server, and may contain other large issues if ported as-is to a public server. This repo is public primarily for the interest of others who are interested in hypnokink and want an environment they can easily self-host for their own private groups.**
 
-**Upstream Information**  
+[![forinfinityandbyond](https://user-images.githubusercontent.com/5211576/29499758-4efff304-85e6-11e7-8267-62919c3688a9.gif)](https://www.reddit.com/r/SS13/comments/5oplxp/what_is_the_main_problem_with_byond_as_an_engine/dclbu1a) [![forthebadge](https://forthebadge.com/images/badges/built-by-hipsters.svg)](https://forthebadge.com) [![forthebadge](https://forthebadge.com/images/badges/designed-in-ms-paint.svg)](https://forthebadge.com) [![forthebadge](https://forthebadge.com/images/badges/contains-technical-debt.svg)](https://forthebadge.com) [![forthebadge](https://forthebadge.com/images/badges/for-you.svg)](https://forthebadge.com) [![shields.io](https://img.shields.io/badge/kinda-lewd-cc33ff?style=for-the-badge)](https://shields.io)
+
+**Upstream's upstream Information**  
 * **Website:** <https://www.tgstation13.org>
 * **Code:** <https://github.com/tgstation/tgstation>
 * **Wiki:** <https://tgstation13.org/wiki/Main_Page>
@@ -16,14 +16,18 @@ Based and maintained from /tg/station.
 * **Coderbus Discord:** <https://discord.gg/Vh8TJp9>
 * ~~**IRC:** <irc://irc.rizon.net/coderbus>~~ (dead)  
 
-**Citadel Station Information**  
+**Upstream Information**  
 * **Website:** <http://citadel-station.net>
 * **Code:** <https://github.com/Citadel-Station-13/Citadel-Station-13>
 * **Wiki:** <https://citadel-station.net/wiki/index.php?title=Main_Page>
 * **Forums:** <http://citadel-station.net/forum>
 * **Ban Appeals:** <http://citadel-station.net/forum/forumdisplay.php?fid=8>
 * **Discord:**  <https://discord.gg/E6SQuhz>
-  
+
+**Hypnospess Information**
+* **Contact:** bhijn#6295 on Discord, or garbagebhijn on Telegram.
+* **Alt. Contact 1:** dinosaurPolitician#2709 on Discord, or dinosaurpolitician on Telegram.
+
 ## DOWNLOADING
 
 There are a number of ways to download the source code. Some are described here, an alternative all-inclusive guide is also located at http://www.tgstation13.org/wiki/Downloading_the_source_code
