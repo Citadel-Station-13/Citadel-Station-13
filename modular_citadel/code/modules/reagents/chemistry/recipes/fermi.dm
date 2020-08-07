@@ -318,7 +318,7 @@
 		E.creatorGender = "Master"
 	*/
 	M = get_mob_by_key(B.data["ckey"])
-	E.data["creatorTitle"] = M.prefs.custom_names["owner"]
+	E.data["creatorTitle"] = M.client.prefs?.custom_names["owner"]
 	E.data["creatorName"] = B.data["real_name"]
 	E.creatorName = B.data["real_name"]
 	E.data["creatorID"] = B.data["ckey"]
@@ -347,7 +347,7 @@
 		E.creatorGender = "Master"
 	*/
 	M = get_mob_by_key(B.data["ckey"])
-	E.data["creatorTitle"] = M.prefs?.custom_names["owner"]
+	E.data["creatorTitle"] = M.client.prefs?.custom_names["owner"]
 	E.data["creatorName"] = B.data["real_name"]
 	E.creatorName = B.data["real_name"]
 	E.data["creatorID"] = B.data["ckey"]
