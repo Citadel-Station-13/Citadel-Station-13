@@ -250,6 +250,8 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	return(BRUTELOSS)
 
 /obj/item/katana/timestop
+	name = "temporal katana"
+	desc = "Delicately balanced, this finely-crafted blade hums with barely-restrained potential."
 	item_flags = ITEM_CAN_PARRY
 	block_parry_data = /datum/block_parry_data/bokken/quick_parry/proj
 
