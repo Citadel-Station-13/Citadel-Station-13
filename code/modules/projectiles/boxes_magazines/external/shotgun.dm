@@ -1,5 +1,5 @@
 /obj/item/ammo_box/magazine/m12g
-	name = "shotgun magazine (12g buckshot slugs)"
+	name = "shotgun magazine (12g buckshot)"
 	desc = "A drum magazine."
 	icon_state = "m12gb"
 	ammo_type = /obj/item/ammo_casing/shotgun/buckshot
@@ -17,7 +17,7 @@
 
 /obj/item/ammo_box/magazine/m12g/slug
 	name = "shotgun magazine (12g slugs)"
-	icon_state = "m12gb"    //this may need an unique sprite
+	icon_state = "m12gsl"
 	ammo_type = /obj/item/ammo_casing/shotgun
 
 /obj/item/ammo_box/magazine/m12g/dragon
