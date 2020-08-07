@@ -258,7 +258,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 /obj/item/katana/timestop/on_active_parry(mob/living/owner, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, list/block_return, parry_efficiency, parry_time)
 	if(ishuman(owner))
 		var/mob/living/carbon/human/flynn = owner
-		flynn.emote("me",1,"smirks.",FALSE)
+		flynn.emote("smirk")
 	new /obj/effect/timestop(get_turf(owner), 2, 50, list(owner))
 
 /obj/item/melee/bokken // parrying stick
