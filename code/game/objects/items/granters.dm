@@ -79,7 +79,7 @@
 	ADD_TRAIT(user, granted_trait, BOOK_TRAIT)
 
 /obj/item/book/granter/trait/rifleman
-	name = "\proper the Neo-Russian Rifleman\'s Primer"
+	name = "The Neo-Russian Rifleman\'s Primer"
 	desc = "A book with stains of vodka and...blood? The back is hard to read, but says something about bolt-actions. Or pump-actions. Both, maybe."
 	oneuse = FALSE
 	granted_trait = TRAIT_FAST_PUMP
