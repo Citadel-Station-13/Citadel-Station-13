@@ -269,12 +269,6 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 
 	///cooldown tracker for accent sounds
 	var/last_accent_sound = 0
-	///Var that increases from 0 to 1 when a psycologist is nearby, and decreases in the same way
-	var/psyCoeff = 0
-	///Should we check the psy overlay?
-	var/psy_overlay = FALSE
-	///A pinkish overlay used to denote the presance of a psycologist. We fade in and out of this depending on the amount of time they've spent near the crystal
-	var/obj/overlay/psy/psyOverlay = /obj/overlay/psy
 
 	//For making hugbox supermatters
 	///Disables all methods of taking damage
@@ -493,14 +487,6 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	else
 		// Pass all the gas related code an empty gas container
 		removed = new()
-	overlays -= psyOverlay
-	if(psy_overlay)
-		overlays -= psyOverlay
-		if(psyCoeff > 0)
-			psyOverlay.alpha = psyCoeff * 255
-			overlays += psyOverlay
-		else
-			psy_overlay = FALSE
 	damage_archived = damage
 	if(!removed || !removed.total_moles() || isspaceturf(T)) //we're in space or there is no gas to process
 		if(takes_damage)
@@ -523,7 +509,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 			//healing damage
 			if(combined_gas < MOLE_PENALTY_THRESHOLD)
 				//Only has a net positive effect when the temp is below 313.15, heals up to 2 damage. Psycologists increase this temp min by up to 45
-				damage = max(damage + (min(removed.return_temperature() - ((T0C + HEAT_PENALTY_THRESHOLD) + (45 * psyCoeff)), 0) / 150 ), 0)
+				damage = max(damage + (min(removed.return_temperature() - ((T0C + HEAT_PENALTY_THRESHOLD), 0) / 150 ), 0)
 
 			//caps damage rate
 
@@ -628,7 +614,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 			src.fire_nuclear_particle()        // Start to emit radballs at a maximum of 30% chance per tick
 
 		//Power * 0.55 * a value between 1 and 0.8
-		var/device_energy = power * REACTION_POWER_MODIFIER * (1 - (psyCoeff * 0.2))
+		var/device_energy = power * REACTION_POWER_MODIFIER
 
 		//To figure out how much temperature to add each tick, consider that at one atmosphere's worth
 		//of pure oxygen, with all four lasers firing at standard energy and no N2 present, at room temperature
@@ -638,11 +624,9 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		//Also keep in mind we are only adding this temperature to (efficiency)% of the one tile the rock
 		//is on. An increase of 4*C @ 25% efficiency here results in an increase of 1*C / (#tilesincore) overall.
 		//Power * 0.55 * (some value between 1.5 and 23) / 5
-		// so this is added ((device_energy * dynamic_heat_modifier) / THERMAL_RELEASE_MODIFIER)
-		// oh and  
+		removed.set_temperature(removed.return_temperature() + ((device_energy * dynamic_heat_modifier) / THERMAL_RELEASE_MODIFIER))
 		//We can only emit so much heat, that being 57500
-		// so max() it all.
-		removed.set_temperature(max(0, min(removed.return_temperature() + ((device_energy * dynamic_heat_modifier) / THERMAL_RELEASE_MODIFIER), 2500 * dynamic_heat_modifier)))
+		removed.set_temperature(max(0, min(removed.return_temperature(), 2500 * dynamic_heat_modifier)))
 
 		//Calculate how much gas to release
 		//Varies based on power and gas content
@@ -655,16 +639,11 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 			air_update_turf()
 
 	//Makes em go mad and accumulate rads.
-	var/toAdd = -0.05
 	for(var/mob/living/carbon/human/l in view(src, HALLUCINATION_RANGE(power))) // If they can see it without mesons on.  Bad on them.
-		if(l.mind?.assigned_role == "Psychologist")
-			toAdd = 0.05
-			psy_overlay = TRUE
-		else if(!istype(l.glasses, /obj/item/clothing/glasses/meson))
+		if(!istype(l.glasses, /obj/item/clothing/glasses/meson))
 			var/D = sqrt(1 / max(1, get_dist(l, src)))
 			l.hallucination += power * hallucination_power * D
 			l.hallucination = clamp(l.hallucination, 0, 200)
-	psyCoeff = clamp(psyCoeff + toAdd, 0, 1)
 	for(var/mob/living/l in range(src, round((power / 100) ** 0.25)))
 		var/rads = (power / 10) * sqrt( 1 / max(get_dist(l, src),1) )
 		l.rad_act(rads)
@@ -672,7 +651,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	//Transitions between one function and another, one we use for the fast inital startup, the other is used to prevent errors with fusion temperatures.
 	//Use of the second function improves the power gain imparted by using co2
 	if(power_changes)
-		power = max(power - min(((power/500)**3) * powerloss_inhibitor, power * 0.83 * powerloss_inhibitor) * (1 - (0.2 * psyCoeff)),0)
+		power = max(power - min(((power/500)**3) * powerloss_inhibitor, power * 0.83 * powerloss_inhibitor),0)
 	//After this point power is lowered
 	//This wraps around to the begining of the function
 	//Handle high power zaps/anomaly generation
