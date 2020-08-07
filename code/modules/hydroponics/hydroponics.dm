@@ -888,10 +888,7 @@
 
 	return ..()
 
-/obj/machinery/hydroponics/attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
-	. = ..()
-	if(.)
-		return
+/obj/machinery/hydroponics/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	if(issilicon(user)) //How does AI know what plant is?
 		return
 	if(harvest)

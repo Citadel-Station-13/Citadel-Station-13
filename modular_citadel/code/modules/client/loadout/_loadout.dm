@@ -28,7 +28,9 @@ GLOBAL_LIST_EMPTY(loadout_whitelist_ids)
 	load_loadout_config()
 	for(var/item in subtypesof(/datum/gear))
 		var/datum/gear/I = new item
-		LAZYSET(GLOB.loadout_items[slot_to_string(I.category)], I.name, I)
+		LAZYINITLIST(GLOB.loadout_items[I.category])
+		LAZYINITLIST(GLOB.loadout_items[I.category][I.subcategory])
+		GLOB.loadout_items[I.category][I.subcategory][I.name] = I
 		if(islist(I.geargroupID))
 			var/list/ggidlist = I.geargroupID
 			I.ckeywhitelist = list()
@@ -41,7 +43,9 @@ GLOBAL_LIST_EMPTY(loadout_whitelist_ids)
 
 /datum/gear
 	var/name
-	var/category
+	var/category = "NOCATEGORY"
+	var/subcategory = "NOSUBCATEGORY"
+	var/slot
 	var/description
 	var/path //item-to-spawn path
 	var/cost = 1 //normally, each loadout costs a single point.

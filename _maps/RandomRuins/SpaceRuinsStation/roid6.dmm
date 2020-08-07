@@ -80,7 +80,7 @@
 /obj/item/shard{
 	icon_state = "medium"
 	},
-/turf/open/floor/plating/airless{
+/turf/open/floor/plating{
 	icon_state = "platingdmg2"
 	},
 /area/ruin/space/has_grav)

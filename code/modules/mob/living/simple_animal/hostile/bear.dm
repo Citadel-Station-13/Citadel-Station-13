@@ -33,7 +33,7 @@
 	melee_damage_upper = 15
 	wound_bonus = -5
 	bare_wound_bonus = 10 // BEAR wound bonus am i right
-	sharpness = TRUE
+	sharpness = SHARP_EDGED
 	attack_verb_continuous = "claws"
 	attack_verb_simple = "claw"
 	attack_sound = 'sound/weapons/bladeslice.ogg'
@@ -136,7 +136,7 @@ mob/living/simple_animal/hostile/bear/butter //The mighty companion to Cak. Seve
 	if(health < maxHealth)
 		heal_overall_damage(10) //Fast life regen, makes it hard for you to get eaten to death.
 
-/mob/living/simple_animal/hostile/bear/butter/attack_hand(mob/living/L) //Borrowed code from Cak, feeds people if they hit you. More nutriment but less vitamin to represent BUTTER.
+/mob/living/simple_animal/hostile/bear/butter/on_attack_hand(mob/living/L) //Borrowed code from Cak, feeds people if they hit you. More nutriment but less vitamin to represent BUTTER.
 	..()
 	if(L.a_intent == INTENT_HARM && L.reagents && !stat)
 		L.reagents.add_reagent(/datum/reagent/consumable/nutriment, 1)

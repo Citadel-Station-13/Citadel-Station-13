@@ -38,7 +38,7 @@
 	melee_damage_upper = 22.5
 	wound_bonus = -10
 	bare_wound_bonus = 0
-	sharpness = TRUE
+	sharpness = SHARP_EDGED
 	see_in_dark = 8
 	blood_volume = 0 //No bleeding on getting shot, for skeddadles
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE

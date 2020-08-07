@@ -16,8 +16,6 @@
 			return item
 	return module_active
 
-
-
 /mob/living/silicon/robot/proc/uneq_module(obj/item/O)
 	if(!O)
 		return 0

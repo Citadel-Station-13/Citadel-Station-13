@@ -12,10 +12,10 @@
 	var/icon_right = "bloodhand_right"
 	hitsound = 'sound/hallucinations/growl1.ogg'
 	force = 18
-	sharpness = IS_SHARP_ACCURATE //it's a claw, they're sharp.
+	sharpness = SHARP_POINTY //it's a claw, they're sharp.
 	damtype = "brute"
 	total_mass = TOTAL_MASS_HAND_REPLACEMENT
-	sharpness = IS_SHARP
+	sharpness = SHARP_EDGED
 	wound_bonus = -30
 	bare_wound_bonus = 15
 
@@ -37,11 +37,11 @@
 	if(!proximity_flag)
 		return
 	else
-		if(istype(target, /obj/)) //do far more damage to non mobs so we can get through airlocks
+		if(istype(target, /obj)) //do far more damage to non mobs so we can get through airlocks
 			var/obj/target_object = target
 			target_object.take_damage(force * 3, BRUTE, "melee", 0)
-		else
-			if(isliving(target) && ishuman(target))
+		else if(isliving(target))
+			if(ishuman(target))
 				try_to_zombie_infect(target)
 			else
 				check_feast(target, user)

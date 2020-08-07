@@ -274,3 +274,13 @@
 	description = "<span class='warning'>I've produced better art than that from my ass.</span>\n"
 	mood_change = -2
 	timeout = 1200
+
+/datum/mood_event/tripped
+	description = "<span class='boldwarning'>I can't believe I fell for the oldest trick in the book!</span>\n"
+	mood_change = -6
+	timeout = 2 MINUTES
+
+/datum/mood_event/untied
+	description = "<span class='boldwarning'>I hate when my shoes come untied!</span>\n"
+	mood_change = -3
+	timeout = 1 MINUTES
