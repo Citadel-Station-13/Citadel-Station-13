@@ -43,8 +43,8 @@ GLOBAL_LIST_EMPTY(loadout_whitelist_ids)
 
 /datum/gear
 	var/name
-	var/category = "LOADOUT_CATEGORY_NONE"
-	var/subcategory = "LOADOUT_SUBCATEGORY_NONE"
+	var/category = LOADOUT_CATEGORY_NONE
+	var/subcategory = LOADOUT_SUBCATEGORY_NONE
 	var/slot
 	var/description
 	var/path //item-to-spawn path

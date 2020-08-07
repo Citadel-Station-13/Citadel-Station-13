@@ -1,8 +1,7 @@
 //defines for loadout categories
 //no category defines
-#define LOADOUT_CATEGORY_NONE list("Miscellaneous")
-#define LOADOUT_SUBCATEGORY_NONE list("Miscellaneous")
-
+#define LOADOUT_CATEGORY_NONE			"ERROR"
+#define LOADOUT_SUBCATEGORIES_NONE		list("Miscellaneous")
 
 //backpack
 #define LOADOUT_CATEGORY_BACKPACK 				"In backpack"

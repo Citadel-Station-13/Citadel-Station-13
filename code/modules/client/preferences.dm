@@ -1069,6 +1069,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			else
 				gear_category = clamp(gear_category, 1, length(GLOB.loadout_items))		// no runtimes
 				var/firstcat
+				var/chosen_category
 				for(var/i in 1 to length(GLOB.loadout_items))
 					var/category = GLOB.loadout_items[i]
 					if(firstcat)
@@ -1077,13 +1078,13 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						dat += " |"
 					if(i == gear_category)
 						dat += " <span class='linkOn'>[category]</span> "
+						chosen_category = category
 					else
 						dat += " <a href='?_src_=prefs;preference=gear;select_category=[i]'>[category]</a> "
 
 				dat += "</b></center></td></tr>"
 				dat += "<tr><td colspan=4><hr></td></tr>"
-				dat += "<tr><td colspan=4><hr></td></tr>"
-
+				
 				dat += "<tr><td colspan=4><center><b>"
 				
 				if(!length(GLOB.loadout_categories[gear_category]))
@@ -1091,15 +1092,17 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				else
 					gear_subcategory = clamp(gear_subcategory, 1, length(GLOB.loadout_categories[gear_category]))
 
-					var/firstsubcat
-					for(var/i in 1 to length(GLOB.loadout_categories[gear_category]))
+					var/firstsubcat = FALSE
+					var/chosen_subcategory
+					for(var/i in 1 to length(GLOB.loadout_categories[chosen_category]))
 						if(!firstsubcat)
 							dat += " |"
 						else
 							firstsubcat = FALSE
-						var/subcategory = GLOB.loadout_categories[gear_category][i]
+						var/subcategory = GLOB.loadout_categories[chosen_subcategory][i]
 						if(gear_subcategory == i)
 							dat += " <span class='linkOn'>[subcategory]</span> "
+							chosen_subcategory = subcategory
 						else
 							dat += " <a href='?_src_=prefs;preference=gear;select_subcategory=[i]'>[subcategory]</a> "
 					dat += "</b></center></td></tr>"
@@ -1108,7 +1111,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					dat += "<td style='vertical-align:top'><b>Cost</b></td>"
 					dat += "<td width=10%><font size=2><b>Restrictions</b></font></td>"
 					dat += "<td width=80%><font size=2><b>Description</b></font></td></tr>"
-					for(var/i in GLOB.loadout_items[gear_category][gear_subcategory])
+					for(var/i in GLOB.loadout_items[chosen_category][chosen_subcategory])
 						var/datum/gear/gear = GLOB.loadout_items[gear_category][gear_subcategory][i]
 						if(!gear.name)
 							continue
