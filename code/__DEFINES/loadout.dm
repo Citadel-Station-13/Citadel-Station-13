@@ -1,8 +1,4 @@
 //defines for loadout categories
-//no category defines
-#define NOCATEGORY list("NOCATEGORY")
-#define NOSUBCATEGORY list("NOSUBCATEGORY")
-
 
 //backpack
 #define CATEGORY_BACKPACK 				"In backpack"
