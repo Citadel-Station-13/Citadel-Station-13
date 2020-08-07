@@ -268,7 +268,7 @@
 	.["power_unformatted"] = get_clockwork_power()
 	.["HONOR_RATVAR"] = GLOB.ratvar_awakens
 	.["scripture"] = list()
-	for(var/s in GLOB.all_scripture)
+	for(var/s in GLOB.all_scripture) //don't block this, even when ratvar spawns for roundend griff.
 		var/datum/clockwork_scripture/S = GLOB.all_scripture[s]
 		if(S.tier == SCRIPTURE_PERIPHERAL) // This tier is skiped because this contains basetype stuff
 			continue
@@ -292,8 +292,6 @@
 
 		.["rec_binds"] = list()
 		for(var/i in 1 to maximum_quickbound)
-			if(GLOB.ratvar_awakens)
-				return
 			if(LAZYLEN(quickbound) < i || !quickbound[i])
 				.["rec_binds"] += list(list()) //a blank json.
 			else
