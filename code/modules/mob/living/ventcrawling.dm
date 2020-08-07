@@ -19,8 +19,11 @@ GLOBAL_LIST_INIT(ventcrawl_machinery, typecacheof(list(
 		to_chat(src, "You can't vent crawl while you're restrained!")
 		return
 	if(has_buckled_mobs())
-		to_chat(src, "You can't vent crawl with other creatures on you!")
-		return
+		// attempt once
+		unbuckle_all_mobs()
+		if(has_buckled_mobs())
+			to_chat(src, "You can't vent crawl with other creatures on you!")
+			return
 	if(buckled)
 		to_chat(src, "You can't vent crawl while buckled!")
 		return
