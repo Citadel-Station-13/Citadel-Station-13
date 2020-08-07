@@ -1,4 +1,0 @@
-author: "silicons"
-delete-after: True
-changes: 
-  - tweak: "volumetric storage is now minimum 16 pixels per item because 8 was ridiculous"
