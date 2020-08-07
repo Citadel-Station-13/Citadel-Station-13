@@ -708,18 +708,18 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	icon_state = "darkmatter"
 
 /obj/machinery/power/supermatter_crystal/proc/supermatter_pull(turf/center, pull_range = 10)
-	playsound(src.loc, 'sound/weapons/marauder.ogg', 100, 1, extrarange = 7)
-	for(var/atom/P in orange(pull_range,center))
-		if(ismovable(P))
-			var/atom/movable/pulled_object = P
-			if(ishuman(P))
-				var/mob/living/carbon/human/H = P
-				H.apply_effect(40, EFFECT_KNOCKDOWN, 0)
-			if(pulled_object && !pulled_object.anchored && !ishuman(P))
-				step_towards(pulled_object,center)
-				step_towards(pulled_object,center)
-				step_towards(pulled_object,center)
-				step_towards(pulled_object,center)
+	playsound(src, 'sound/weapons/marauder.ogg', 100, 1, extrarange = 7)
+	for(var/atom/movable/pulled_object in orange(pull_range,center))
+		if(isobserver(pulled_object))
+			continue
+		else if(ishuman(pulled_object))
+			var/mob/living/carbon/human/H = pulled_object
+			H.apply_effect(40, EFFECT_KNOCKDOWN, 0)
+		else if(pulled_object && !pulled_object.anchored)
+			step_towards(pulled_object,center)
+			step_towards(pulled_object,center)
+			step_towards(pulled_object,center)
+			step_towards(pulled_object,center)
 
 /obj/machinery/power/supermatter_crystal/proc/supermatter_anomaly_gen(turf/anomalycenter, type = FLUX_ANOMALY, anomalyrange = 5)
 	var/turf/L = pick(orange(anomalyrange, anomalycenter))
