@@ -2724,7 +2724,9 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		if(href_list["select_subcategory"])
 			gear_subcategory = text2num(href_list["select_subcategory"])
 		if(href_list["toggle_gear_path"])
-			var/datum/gear/G = GLOB.loadout_items[gear_category][gear_subcategory][html_decode(href_list["toggle_gear_path"])]
+			var/category = GLOB.loadout_items[gear_category]
+			var/subcategory = GLOB.loadout_items[category][gear_subcategory]
+			var/datum/gear/G = GLOB.loadout_items[category][subcategory][html_decode(href_list["toggle_gear_path"])]
 			if(!G)
 				return
 			var/toggle = text2num(href_list["toggle_gear"])
