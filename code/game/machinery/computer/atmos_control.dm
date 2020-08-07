@@ -262,6 +262,16 @@ GLOBAL_LIST_EMPTY(atmos_air_controllers)
 	for(var/obj/machinery/atmospherics/components/unary/vent_pump/U in devices)
 		U.broadcast_status()
 
+/obj/machinery/computer/atmos_control/tank/ui_data(mob/user)
+	var/list/data = ..()
+	data["tank"] = TRUE
+	data["inputting"] = input_info ? input_info["power"] : FALSE
+	data["inputRate"] = input_info ? input_info["volume_rate"] : 0
+	data["outputting"] = output_info ? output_info["power"] : FALSE
+	data["outputPressure"] = output_info ? output_info["internal"] : 0
+
+	return data
+
 /obj/machinery/computer/atmos_control/tank/ui_act(action, params)
 	if(..() || !radio_connection)
 		return
