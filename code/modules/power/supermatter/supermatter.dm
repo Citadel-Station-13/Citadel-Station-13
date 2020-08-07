@@ -742,7 +742,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 				message_admins("[src] has been powered for the first time [ADMIN_JMP(src)].")
 				has_been_powered = TRUE
 	else if(takes_damage)
-		damage += Proj.damage * bullet_energy
+		matter_power += Proj.damage * bullet_energy
 	return BULLET_ACT_HIT
 
 /obj/machinery/power/supermatter_crystal/singularity_act()
@@ -773,7 +773,9 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 /obj/machinery/power/supermatter_crystal/attack_tk(mob/user)
 	if(iscarbon(user))
 		var/mob/living/carbon/C = user
+		log_game("[key_name(C)] has been disintegrated by a telekenetic grab on a supermatter crystal.</span>")
 		to_chat(C, "<span class='userdanger'>That was a really dense idea.</span>")
+		C.visible_message("<span class='userdanger'>A bright flare of radiation is seen from [C]'s head, shortly before you hear a sickening sizzling!</span>")
 		C.ghostize()
 		var/obj/item/organ/brain/rip_u = locate(/obj/item/organ/brain) in C.internal_organs
 		rip_u.Remove(C)
@@ -803,10 +805,8 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 /obj/machinery/power/supermatter_crystal/attack_ai(mob/user)
 	return
 
-/obj/machinery/power/supermatter_crystal/attack_hand(mob/living/user)
+/obj/machinery/power/supermatter_crystal/on_attack_hand(mob/living/user)
 	. = ..()
-	if(.)
-		return
 	dust_mob(user, cause = "hand")
 
 /obj/machinery/power/supermatter_crystal/proc/dust_mob(mob/living/nom, vis_msg, mob_msg, cause)
@@ -936,7 +936,8 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	radiation_pulse(src, 3000, 2, TRUE)
 	for(var/mob/living/L in range(10))
 		investigate_log("has irradiated [key_name(L)] after consuming [AM].", INVESTIGATE_SUPERMATTER)
-		if(L in view())
+		var/list/viewers = fov_viewers(world.view, src)
+		if(L in viewers)
 			L.show_message("<span class='danger'>As \the [src] slowly stops resonating, you find your skin covered in new radiation burns.</span>", MSG_VISUAL,\
 				"<span class='danger'>The unearthly ringing subsides and you notice you have new radiation burns.</span>", MSG_AUDIBLE)
 		else
@@ -969,7 +970,6 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	explosion_power = 12
 	layer = ABOVE_MOB_LAYER
 	moveable = TRUE
-	psyOverlay = /obj/overlay/psy/shard
 
 /obj/machinery/power/supermatter_crystal/shard/engine
 	name = "anchored supermatter shard"
@@ -1162,13 +1162,6 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 				targets_hit = targets_hit.Copy() //Pass by ref begone
 			supermatter_zap(target, new_range, zap_str, zap_flags, targets_hit)
 
-/obj/overlay/psy
-	icon = 'icons/obj/supermatter.dmi'
-	icon_state = "psy"
-	layer = FLOAT_LAYER - 1
-
-/obj/overlay/psy/shard
-	icon_state = "psy_shard"
 #undef HALLUCINATION_RANGE
 #undef GRAVITATIONAL_ANOMALY
 #undef FLUX_ANOMALY
