@@ -83,6 +83,8 @@
 #define COMSIG_ATOM_RAD_ACT "atom_rad_act"
 ///from base of atom/narsie_act(): ()
 #define COMSIG_ATOM_NARSIE_ACT "atom_narsie_act"
+///from base of atom/ratvar_act(): ()
+#define COMSIG_ATOM_RATVAR_ACT "atom_ratvar_act"
 ///from base of atom/rcd_act(): (/mob, /obj/item/construction/rcd, passed_mode)
 #define COMSIG_ATOM_RCD_ACT "atom_rcd_act"
 ///from base of atom/singularity_pull(): (S, current_size)
@@ -109,7 +111,7 @@
   #define COMPONENT_RAD_WAVE_HANDLED (1<<0)
 ///from internal loop in atom/movable/proc/CanReach(): (list/next)
 #define COMSIG_ATOM_CANREACH "atom_can_reach"
-	#define COMPONENT_ALLOW_REACH (1<<0)
+	#define COMPONENT_BLOCK_REACH (1<<0)
 
 #define COMSIG_ATOM_SCREWDRIVER_ACT "atom_screwdriver_act"		//from base of atom/screwdriver_act(): (mob/living/user, obj/item/I)
 #define COMSIG_ATOM_INTERCEPT_TELEPORT "intercept_teleport"		//called when teleporting into a protected turf: (channel, turf/origin, turf/destination)
