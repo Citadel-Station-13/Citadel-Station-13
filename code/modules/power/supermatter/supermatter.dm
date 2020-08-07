@@ -299,11 +299,6 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	RegisterSignal(src, COMSIG_ATOM_BSA_BEAM, .proc/call_explode)
 
 	soundloop = new(list(src), TRUE)
-	if(ispath(psyOverlay))
-		psyOverlay = new psyOverlay()
-	else
-		stack_trace("Supermatter created with non-path psyOverlay variable. This can break things, please fix.")
-		psyOverlay = new()
 
 /obj/machinery/power/supermatter_crystal/Destroy()
 	investigate_log("has been destroyed.", INVESTIGATE_SUPERMATTER)
@@ -313,9 +308,6 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	QDEL_NULL(countdown)
 	if(is_main_engine && GLOB.main_supermatter_engine == src)
 		GLOB.main_supermatter_engine = null
-	QDEL_NULL(soundloop)
-	if(psyOverlay)
-		QDEL_NULL(psyOverlay)
 	return ..()
 
 /obj/machinery/power/supermatter_crystal/examine(mob/user)
