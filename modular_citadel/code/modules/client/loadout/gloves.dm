@@ -1,5 +1,5 @@
 /datum/gear/gloves
-	category = CATEGORY_GLOVES
+	category = LOADOUT_CATEGORY_GLOVES
 	slot = SLOT_GLOVES
 
 /datum/gear/gloves/fingerless

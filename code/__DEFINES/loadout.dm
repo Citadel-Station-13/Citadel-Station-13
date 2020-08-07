@@ -1,56 +1,56 @@
 //defines for loadout categories
 //no category defines
-#define NOCATEGORY list("NOCATEGORY")
-#define NOSUBCATEGORY list("NOSUBCATEGORY")
+#define LOADOUT_CATEGORY_NONE list("Miscellaneous")
+#define LOADOUT_SUBCATEGORY_NONE list("Miscellaneous")
 
 
 //backpack
-#define CATEGORY_BACKPACK 				"In backpack"
-#define SUBCATEGORY_BACKPACK_GENERAL 	"General" //basically anything that there's not enough of to have its own subcategory
-#define SUBCATEGORY_BACKPACK_TOYS 		"Toys"
+#define LOADOUT_CATEGORY_BACKPACK 				"In backpack"
+#define LOADOUT_SUBCATEGORY_BACKPACK_GENERAL 	"General" //basically anything that there's not enough of to have its own subcategory
+#define LOADOUT_SUBCATEGORY_BACKPACK_TOYS 		"Toys"
 //neck
-#define CATEGORY_NECK "Neck"
-#define SUBCATEGORY_NECK_GENERAL 	"General"
-#define SUBCATEGORY_NECK_TIE 		"Ties"
-#define SUBCATEGORY_NECK_SCARVES 	"Scarves"
+#define LOADOUT_CATEGORY_NECK "Neck"
+#define LOADOUT_SUBCATEGORY_NECK_GENERAL 	"General"
+#define LOADOUT_SUBCATEGORY_NECK_TIE 		"Ties"
+#define LOADOUT_SUBCATEGORY_NECK_SCARVES 	"Scarves"
 
 //mask
-#define CATEGORY_MASK "Mask"
+#define LOADOUT_CATEGORY_MASK "Mask"
 
 //hands
-#define CATEGORY_HANDS 				"Hands"
+#define LOADOUT_CATEGORY_HANDS 				"Hands"
 
 //uniform
-#define CATEGORY_UNIFORM 			"Uniform" //there's so many types of uniform it's best to have lots of categories
-#define SUBCATEGORY_UNIFORM_GENERAL "General"
-#define SUBCATEGORY_UNIFORM_JOBS 	"Jobs"
-#define SUBCATEGORY_UNIFORM_SUITS	"Suits"
-#define SUBCATEGORY_UNIFORM_SKIRTS	"Skirts"
-#define SUBCATEGORY_UNIFORM_DRESSES	"Dresses"
-#define SUBCATEGORY_UNIFORM_SWEATERS	"Sweaters"
-#define SUBCATEGORY_UNIFORM_PANTS	"Pants"
-#define SUBCATEGORY_UNIFORM_SHORTS	"Shorts"
+#define LOADOUT_CATEGORY_UNIFORM 			"Uniform" //there's so many types of uniform it's best to have lots of categories
+#define LOADOUT_SUBCATEGORY_UNIFORM_GENERAL "General"
+#define LOADOUT_SUBCATEGORY_UNIFORM_JOBS 	"Jobs"
+#define LOADOUT_SUBCATEGORY_UNIFORM_SUITS	"Suits"
+#define LOADOUT_SUBCATEGORY_UNIFORM_SKIRTS	"Skirts"
+#define LOADOUT_SUBCATEGORY_UNIFORM_DRESSES	"Dresses"
+#define LOADOUT_SUBCATEGORY_UNIFORM_SWEATERS	"Sweaters"
+#define LOADOUT_SUBCATEGORY_UNIFORM_PANTS	"Pants"
+#define LOADOUT_SUBCATEGORY_UNIFORM_SHORTS	"Shorts"
 
 //suit
-#define CATEGORY_SUIT 				"Suit"
-#define SUBCATEGORY_SUIT_GENERAL 	"General"
-#define SUBCATEGORY_SUIT_COATS 		"Coats"
-#define SUBCATEGORY_SUIT_JACKETS 	"Jackets"
-#define SUBCATEGORY_SUIT_JOBS 		"Jobs"
+#define LOADOUT_CATEGORY_SUIT 				"Suit"
+#define LOADOUT_SUBCATEGORY_SUIT_GENERAL 	"General"
+#define LOADOUT_SUBCATEGORY_SUIT_COATS 		"Coats"
+#define LOADOUT_SUBCATEGORY_SUIT_JACKETS 	"Jackets"
+#define LOADOUT_SUBCATEGORY_SUIT_JOBS 		"Jobs"
 
 //head
-#define CATEGORY_HEAD 				"Head"
-#define SUBCATEGORY_HEAD_GENERAL 	"General"
-#define SUBCATEGORY_HEAD_JOBS 		"Jobs"
+#define LOADOUT_CATEGORY_HEAD 				"Head"
+#define LOADOUT_SUBCATEGORY_HEAD_GENERAL 	"General"
+#define LOADOUT_SUBCATEGORY_HEAD_JOBS 		"Jobs"
 
 //shoes
-#define CATEGORY_SHOES 		"Shoes"
+#define LOADOUT_CATEGORY_SHOES 		"Shoes"
 
 //gloves
-#define CATEGORY_GLOVES		"Gloves"
+#define LOADOUT_CATEGORY_GLOVES		"Gloves"
 
 //glasses
-#define CATEGORY_GLASSES	"Glasses"
+#define LOADOUT_CATEGORY_GLASSES	"Glasses"
 
 //donator items
-#define CATEGORY_DONATOR	"Donator"
+#define LOADOUT_CATEGORY_DONATOR	"Donator"
