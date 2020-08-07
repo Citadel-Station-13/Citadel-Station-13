@@ -229,7 +229,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/gear_points = 10
 	var/list/gear_categories
 	var/list/chosen_gear = list()
-	var/gear_tab
+	var/gear_category
+	var/gear_subcategory
 
 	var/screenshake = 100
 	var/damagescreenshake = 2
@@ -1058,60 +1059,83 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			dat += "<br>"
 
 		if(3)
-			if(!gear_tab)
-				gear_tab = GLOB.loadout_items[1]
 			dat += "<table align='center' width='100%'>"
 			dat += "<tr><td colspan=4><center><b><font color='[gear_points == 0 ? "#E62100" : "#CCDDFF"]'>[gear_points]</font> loadout points remaining.</b> \[<a href='?_src_=prefs;preference=gear;clear_loadout=1'>Clear Loadout</a>\]</center></td></tr>"
 			dat += "<tr><td colspan=4><center>You can only choose one item per category, unless it's an item that spawns in your backpack or hands.</center></td></tr>"
 			dat += "<tr><td colspan=4><center><b>"
 
-			var/firstcat = TRUE
-			for(var/i in GLOB.loadout_items)
-				if(firstcat)
-					firstcat = FALSE
-				else
-					dat += " |"
-				if(i == gear_tab)
-					dat += " <span class='linkOn'>[i]</span> "
-				else
-					dat += " <a href='?_src_=prefs;preference=gear;select_category=[i]'>[i]</a> "
+			if(!length(GLOB.loadout_items))
+				dat += "<center>ERROR: No loadout categories - something is horribly wrong!"
+			else
+				if(!GLOB.loadout_categories[gear_category])
+					gear_category = GLOB.loadout_categories[1]
+				var/firstcat = TRUE
+				for(var/category in GLOB.loadout_categories)
+					if(firstcat)
+						firstcat = FALSE
+					else
+						dat += " |"
+					if(category == gear_category)
+						dat += " <span class='linkOn'>[category]</span> "
+					else
+						dat += " <a href='?_src_=prefs;preference=gear;select_category=[html_encode(category)]'>[category]</a> "
 
-			dat += "</b></center></td></tr>"
-			dat += "<tr><td colspan=4><hr></td></tr>"
-			dat += "<tr><td colspan=4><b><center>[gear_tab]</center></b></td></tr>"
-			dat += "<tr><td colspan=4><hr></td></tr>"
-			dat += "<tr width=10% style='vertical-align:top;'><td width=15%><b>Name</b></td>"
-			dat += "<td style='vertical-align:top'><b>Cost</b></td>"
-			dat += "<td width=10%><font size=2><b>Restrictions</b></font></td>"
-			dat += "<td width=80%><font size=2><b>Description</b></font></td></tr>"
-			for(var/j in GLOB.loadout_items[gear_tab])
-				var/datum/gear/gear = GLOB.loadout_items[gear_tab][j]
-				var/donoritem = gear.donoritem
-				if(donoritem && !gear.donator_ckey_check(user.ckey))
-					continue
-				var/class_link = ""
-				if(gear.type in chosen_gear)
-					class_link = "style='white-space:normal;' class='linkOn' href='?_src_=prefs;preference=gear;toggle_gear_path=[html_encode(j)];toggle_gear=0'"
-				else if(gear_points <= 0)
-					class_link = "style='white-space:normal;' class='linkOff'"
-				else if(donoritem)
-					class_link = "style='white-space:normal;background:#ebc42e;' href='?_src_=prefs;preference=gear;toggle_gear_path=[html_encode(j)];toggle_gear=1'"
+				dat += "</b></center></td></tr>"
+				dat += "<tr><td colspan=4><hr></td></tr>"
+				
+				dat += "<tr><td colspan=4><center><b>"
+				
+				if(!length(GLOB.loadout_categories[gear_category]))
+					dat += "No subcategories detected. Something is horribly wrong!"
 				else
-					class_link = "style='white-space:normal;' href='?_src_=prefs;preference=gear;toggle_gear_path=[html_encode(j)];toggle_gear=1'"
-				dat += "<tr style='vertical-align:top;'><td width=15%><a [class_link]>[j]</a></td>"
-				dat += "<td width = 5% style='vertical-align:top'>[gear.cost]</td><td>"
-				if(islist(gear.restricted_roles))
-					if(gear.restricted_roles.len)
-						if(gear.restricted_desc)
-							dat += "<font size=2>"
-							dat += gear.restricted_desc
-							dat += "</font>"
+					var/list/subcategories = GLOB.loadout_categories[gear_category]
+					if(!subcategories.Find(gear_subcategory))
+						gear_subcategory = subcategories[1]
+
+					var/firstsubcat = FALSE
+					for(var/subcategory in subcategories)
+						if(firstsubcat)
+							firstsubcat = FALSE
 						else
-							dat += "<font size=2>"
-							dat += gear.restricted_roles.Join(";")
-							dat += "</font>"
-				dat += "</td><td><font size=2><i>[gear.description]</i></font></td></tr>"
-			dat += "</table>"
+							dat += " |"
+						if(gear_subcategory == subcategory)
+							dat += " <span class='linkOn'>[subcategory]</span> "
+						else
+							dat += " <a href='?_src_=prefs;preference=gear;select_subcategory=[html_encode(subcategory)]'>[subcategory]</a> "
+					dat += "</b></center></td></tr>"
+
+					dat += "<tr width=10% style='vertical-align:top;'><td width=15%><b>Name</b></td>"
+					dat += "<td style='vertical-align:top'><b>Cost</b></td>"
+					dat += "<td width=10%><font size=2><b>Restrictions</b></font></td>"
+					dat += "<td width=80%><font size=2><b>Description</b></font></td></tr>"
+					for(var/name in GLOB.loadout_items[gear_category][gear_subcategory])
+						var/datum/gear/gear = GLOB.loadout_items[gear_category][gear_subcategory][name]
+						var/donoritem = gear.donoritem
+						if(donoritem && !gear.donator_ckey_check(user.ckey))
+							continue
+						var/class_link = ""
+						if(gear.type in chosen_gear)
+							class_link = "style='white-space:normal;' class='linkOn' href='?_src_=prefs;preference=gear;toggle_gear_path=[html_encode(name)];toggle_gear=0'"
+						else if(gear_points <= 0)
+							class_link = "style='white-space:normal;' class='linkOff'"
+						else if(donoritem)
+							class_link = "style='white-space:normal;background:#ebc42e;' href='?_src_=prefs;preference=gear;toggle_gear_path=[html_encode(name)];toggle_gear=1'"
+						else
+							class_link = "style='white-space:normal;' href='?_src_=prefs;preference=gear;toggle_gear_path=[html_encode(name)];toggle_gear=1'"
+						dat += "<tr style='vertical-align:top;'><td width=15%><a [class_link]>[name]</a></td>"
+						dat += "<td width = 5% style='vertical-align:top'>[gear.cost]</td><td>"
+						if(islist(gear.restricted_roles))
+							if(gear.restricted_roles.len)
+								if(gear.restricted_desc)
+									dat += "<font size=2>"
+									dat += gear.restricted_desc
+									dat += "</font>"
+								else
+									dat += "<font size=2>"
+									dat += gear.restricted_roles.Join(";")
+									dat += "</font>"
+						dat += "</td><td><font size=2><i>[gear.description]</i></font></td></tr>"
+					dat += "</table>"
 		if(4) // Content preferences
 			dat += "<table><tr><td width='340px' height='300px' valign='top'>"
 			dat += "<h2>Fetish content prefs</h2>"
@@ -2692,11 +2716,13 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			gear_points = CONFIG_GET(number/initial_gear_points)
 			save_preferences()
 		if(href_list["select_category"])
-			for(var/i in GLOB.loadout_items)
-				if(i == href_list["select_category"])
-					gear_tab = i
+			gear_category = html_decode(href_list["select_category"])
+			gear_subcategory = GLOB.loadout_categories[gear_category][1]
+		if(href_list["select_subcategory"])
+			gear_subcategory = html_decode(href_list["select_subcategory"])
 		if(href_list["toggle_gear_path"])
-			var/datum/gear/G = GLOB.loadout_items[gear_tab][html_decode(href_list["toggle_gear_path"])]
+			var/name = html_decode(href_list["toggle_gear_path"])
+			var/datum/gear/G = GLOB.loadout_items[gear_category][gear_subcategory][name]
 			if(!G)
 				return
 			var/toggle = text2num(href_list["toggle_gear"])
@@ -2876,17 +2902,17 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	LAZYINITLIST(L)
 	for(var/i in chosen_gear)
 		var/datum/gear/G = i
-		var/occupied_slots = L[slot_to_string(initial(G.category))] ? L[slot_to_string(initial(G.category))] + 1 : 1
-		LAZYSET(L, slot_to_string(initial(G.category)), occupied_slots)
+		var/occupied_slots = L[initial(G.category)] ? L[initial(G.category)] + 1 : 1
+		LAZYSET(L, initial(G.category), occupied_slots)
 	switch(slot)
 		if(SLOT_IN_BACKPACK)
-			if(L[slot_to_string(SLOT_IN_BACKPACK)] < BACKPACK_SLOT_AMT)
+			if(L[LOADOUT_CATEGORY_BACKPACK] < BACKPACK_SLOT_AMT)
 				return TRUE
 		if(SLOT_HANDS)
-			if(L[slot_to_string(SLOT_HANDS)] < HANDS_SLOT_AMT)
+			if(L[LOADOUT_CATEGORY_HANDS] < HANDS_SLOT_AMT)
 				return TRUE
 		else
-			if(L[slot_to_string(slot)] < DEFAULT_SLOT_AMT)
+			if(L[slot] < DEFAULT_SLOT_AMT)
 				return TRUE
 
 #undef DEFAULT_SLOT_AMT

@@ -27,7 +27,10 @@ GLOBAL_LIST_EMPTY(loadout_whitelist_ids)
 /proc/initialize_global_loadout_items()
 	load_loadout_config()
 	for(var/item in subtypesof(/datum/gear))
-		var/datum/gear/I = new item
+		var/datum/gear/I = item
+		if(!initial(I.name))
+			continue
+		I = new item
 		LAZYINITLIST(GLOB.loadout_items[I.category])
 		LAZYINITLIST(GLOB.loadout_items[I.category][I.subcategory])
 		GLOB.loadout_items[I.category][I.subcategory][I.name] = I
@@ -43,8 +46,8 @@ GLOBAL_LIST_EMPTY(loadout_whitelist_ids)
 
 /datum/gear
 	var/name
-	var/category = "NOCATEGORY"
-	var/subcategory = "NOSUBCATEGORY"
+	var/category = LOADOUT_CATEGORY_NONE
+	var/subcategory = LOADOUT_SUBCATEGORY_NONE
 	var/slot
 	var/description
 	var/path //item-to-spawn path
