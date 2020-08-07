@@ -1,4 +1,0 @@
-author: "silicons"
-delete-after: True
-changes: 
-  - rscadd: "attempting to send too long of an emote will now reflect it back to you instead of cutting it off and discarding the overflow."
