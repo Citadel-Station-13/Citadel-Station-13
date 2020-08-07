@@ -11,6 +11,13 @@
 	// This is to stop squeak spam from inhand usage
 	var/last_use = 0
 	var/use_delay = 20
+	
+	// squeak cooldowns
+	var/last_squeak = 0
+	var/squeak_delay = 10
+	
+	/// chance we'll be stopped from squeaking by cooldown when something crossing us squeaks
+	var/cross_squeak_delay_chance = 33		// about 3 things can squeak at a time
 
 /datum/component/squeak/Initialize(custom_sounds, volume_override, chance_override, step_delay_override, use_delay_override)
 	if(!isatom(parent))
@@ -19,6 +26,7 @@
 	if(ismovable(parent))
 		RegisterSignal(parent, list(COMSIG_MOVABLE_BUMP, COMSIG_MOVABLE_IMPACT), .proc/play_squeak)
 		RegisterSignal(parent, list(COMSIG_MOVABLE_CROSSED, COMSIG_ITEM_WEARERCROSSED), .proc/play_squeak_crossed)
+		RegisterSignal(parent, COMSIG_CROSS_SQUEAKED, .proc/delay_squeak)
 		RegisterSignal(parent, COMSIG_MOVABLE_DISPOSING, .proc/disposing_react)
 		if(isitem(parent))
 			RegisterSignal(parent, list(COMSIG_ITEM_ATTACK, COMSIG_ITEM_ATTACK_OBJ, COMSIG_ITEM_HIT_REACT), .proc/play_squeak)
@@ -39,6 +47,9 @@
 		use_delay = use_delay_override
 
 /datum/component/squeak/proc/play_squeak()
+	if(last_squeak + squeak_delay < world.time)
+		return
+	last_squeak = world.time
 	if(prob(squeak_chance))
 		if(!override_squeak_sounds)
 			playsound(parent, pickweight(default_squeak_sounds), volume, 1, -1)
@@ -52,7 +63,7 @@
 	else
 		steps++
 
-/datum/component/squeak/proc/play_squeak_crossed(atom/movable/AM)
+/datum/component/squeak/proc/play_squeak_crossed(datum/source, atom/movable/AM)
 	if(isitem(AM))
 		var/obj/item/I = AM
 		if(I.item_flags & ABSTRACT)
@@ -64,11 +75,16 @@
 	var/atom/current_parent = parent
 	if(isturf(current_parent.loc))
 		play_squeak()
+		SEND_SIGNAL(AM, COMSIG_CROSS_SQUEAKED)
 
 /datum/component/squeak/proc/use_squeak()
 	if(last_use + use_delay < world.time)
 		last_use = world.time
 		play_squeak()
+
+/datum/component/squeak/proc/delay_squeak()
+	if(prob(cross_squeak_delay_chance))
+		last_squeak = world.time
 
 /datum/component/squeak/proc/on_equip(datum/source, mob/equipper, slot)
 	RegisterSignal(equipper, COMSIG_MOVABLE_DISPOSING, .proc/disposing_react, TRUE)
