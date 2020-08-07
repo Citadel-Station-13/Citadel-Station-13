@@ -303,17 +303,22 @@
 /datum/chemical_reaction/fermi/enthrall/FermiFinish(datum/reagents/holder, var/atom/my_atom)
 	var/datum/reagent/blood/B = locate(/datum/reagent/blood) in my_atom.reagents.reagent_list
 	var/datum/reagent/fermi/enthrall/E = locate(/datum/reagent/fermi/enthrall) in my_atom.reagents.reagent_list
+	var/mob/living/M //temporary pointer to the person who's blood this is.
 	if(!B || !E)
 		return
 	if(!B.data)
 		my_atom.visible_message("<span class='warning'>The reaction splutters and fails to react properly.</span>") //Just in case
 		E.purity = 0
-	if (B.data["gender"] == "female")
+	//We're not using gender for enthrallGender or creatorGender anymore! Actually fuck it, renaming to creatorTitle and enthrallTitle
+	/* if (B.data["gender"] == "female")
 		E.data["creatorGender"] = "Mistress"
 		E.creatorGender = "Mistress"
 	else
 		E.data["creatorGender"] = "Master"
 		E.creatorGender = "Master"
+	*/
+	M = get_mob_by_key(B.data["ckey"])
+	E.data["creatorTitle"] = M.prefs?.custom_names["owner"]
 	E.data["creatorName"] = B.data["real_name"]
 	E.creatorName = B.data["real_name"]
 	E.data["creatorID"] = B.data["ckey"]
@@ -325,19 +330,24 @@
 	required_catalysts = list(/datum/reagent/blood/jellyblood = 1)
 
 /datum/chemical_reaction/fermi/enthrall/slime/FermiFinish(datum/reagents/holder, var/atom/my_atom)
-	var/datum/reagent/blood/jellyblood/B = locate(/datum/reagent/blood/jellyblood) in my_atom.reagents.reagent_list//The one line change.
+	var/datum/reagent/blood/B = locate(/datum/reagent/blood/jellyblood) in my_atom.reagents.reagent_list //the one line change
 	var/datum/reagent/fermi/enthrall/E = locate(/datum/reagent/fermi/enthrall) in my_atom.reagents.reagent_list
+	var/mob/living/M //temporary pointer to the person who's blood this is.
 	if(!B || !E)
 		return
 	if(!B.data)
 		my_atom.visible_message("<span class='warning'>The reaction splutters and fails to react properly.</span>") //Just in case
 		E.purity = 0
-	if (B.data["gender"] == "female")
+	//We're not using gender for enthrallGender or creatorGender anymore! Actually fuck it, renaming to creatorTitle and enthrallTitle
+	/* if (B.data["gender"] == "female")
 		E.data["creatorGender"] = "Mistress"
 		E.creatorGender = "Mistress"
 	else
 		E.data["creatorGender"] = "Master"
 		E.creatorGender = "Master"
+	*/
+	M = get_mob_by_key(B.data["ckey"])
+	E.data["creatorTitle"] = M.prefs?.custom_names["owner"]
 	E.data["creatorName"] = B.data["real_name"]
 	E.creatorName = B.data["real_name"]
 	E.data["creatorID"] = B.data["ckey"]
