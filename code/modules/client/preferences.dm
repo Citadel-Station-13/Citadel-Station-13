@@ -1099,7 +1099,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 							dat += " |"
 						else
 							firstsubcat = FALSE
-						var/subcategory = GLOB.loadout_categories[chosen_subcategory][i]
+						var/subcategory = GLOB.loadout_categories[chosen_category][i]
 						if(gear_subcategory == i)
 							dat += " <span class='linkOn'>[subcategory]</span> "
 							chosen_subcategory = subcategory
@@ -1111,10 +1111,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					dat += "<td style='vertical-align:top'><b>Cost</b></td>"
 					dat += "<td width=10%><font size=2><b>Restrictions</b></font></td>"
 					dat += "<td width=80%><font size=2><b>Description</b></font></td></tr>"
-					for(var/i in GLOB.loadout_items[chosen_category][chosen_subcategory])
-						var/datum/gear/gear = GLOB.loadout_items[gear_category][gear_subcategory][i]
-						if(!gear.name)
-							continue
+					for(var/name in GLOB.loadout_items[chosen_category][chosen_subcategory])
+						var/datum/gear/gear = GLOB.loadout_items[chosen_category][chosen_subcategory][name]
 						var/donoritem = gear.donoritem
 						if(donoritem && !gear.donator_ckey_check(user.ckey))
 							continue
