@@ -50,15 +50,16 @@
 	do_play_squeak()
 
 /datum/component/squeak/proc/do_play_squeak(bypass_cooldown = FALSE)
-	if(!bypass_cooldown)
-		last_squeak + squeak_delay < world.time)
-			return
-		last_squeak = world.time
+	if(!bypass_cooldown && ((last_squeak + squeak_delay) < world.time))
+		return FALSE
 	if(prob(squeak_chance))
 		if(!override_squeak_sounds)
 			playsound(parent, pickweight(default_squeak_sounds), volume, 1, -1)
 		else
 			playsound(parent, pickweight(override_squeak_sounds), volume, 1, -1)
+		last_squeak = world.time
+		return TRUE
+	return FALSE
 
 /datum/component/squeak/proc/step_squeak()
 	if(steps > step_delay)
@@ -78,8 +79,8 @@
 				return
 	var/atom/current_parent = parent
 	if(isturf(current_parent.loc))
-		play_squeak()
-		SEND_SIGNAL(AM, COMSIG_CROSS_SQUEAKED)
+		if(do_play_squeak())
+			SEND_SIGNAL(AM, COMSIG_CROSS_SQUEAKED)
 
 /datum/component/squeak/proc/use_squeak()
 	if(last_use + use_delay < world.time)
