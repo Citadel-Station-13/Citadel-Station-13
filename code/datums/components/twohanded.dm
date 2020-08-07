@@ -105,6 +105,8 @@
 
 /// Triggered on attack self of the item containing the component
 /datum/component/two_handed/proc/on_attack_self(datum/source, mob/user)
+	if(!user.is_holding(src))
+		return			//give no quarter to telekinesis powergaemrs
 	if(wielded)
 		unwield(user)
 	else
