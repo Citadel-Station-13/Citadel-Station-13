@@ -212,7 +212,7 @@
 	lewd = (owner.client?.prefs.cit_toggles & HYPNO) && (master.client?.prefs.cit_toggles & HYPNO)
 	var/message = "[(lewd ? "I am a good pet for [enthrallGender]." : "[master] is a really inspirational person!")]"
 	SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "enthrall", /datum/mood_event/enthrall, message)
-	to_chat(owner, "<span class='[(lewd ?"big velvet":"big warning")]'><b>You feel inexplicably drawn towards [master], their words having a demonstrable effect on you. It seems the closer you are to them, the stronger the effect is. However you aren't fully swayed yet and can resist their effects by repeatedly resisting as much as you can!</b></span>")
+	to_chat(owner, "<span class='[(lewd ?"big velvet":"big warning")]'><b>You feel inexplicably drawn towards [master], their words having a demonstrable effect on you. It seems the closer you are to them, the stronger the effect is. However you aren't fully swayed yet and can fight against their effects by repeatedly resisting as much as you can!</b></span>")
 	log_reagent("FERMICHEM: MKULTRA: Status applied on [owner] ckey: [owner.key] with a master of [master] ckey: [enthrallID].")
 	SSblackbox.record_feedback("tally", "fermi_chem", 1, "Enthrall attempts")
 	return ..()
@@ -285,7 +285,7 @@
 				else
 					to_chat(owner, "<span class='big nicegreen'><i>You are unable to put up a resistance any longer, and now are under the influence of [master]. However you find that in your intoxicated state you are unable to resort to violence. Equally you are unable to commit suicide, even if ordered to, as you cannot follow [master] in death. </i></span>")
 				to_chat(master, "<span class='notice'><i>Your [(lewd?"pet":"follower")] [owner] appears to have fully fallen under your sway.</i></span>")
-				log_reagent("FERMICHEM: MKULTRA: Status on [owner] ckey: [owner.key] has been fully entrhalled (state 3) with a master of [master] ckey: [enthrallID].")
+				log_reagent("FERMICHEM: MKULTRA: Status on [owner] ckey: [owner.key] has been fully enthralled (state 3) with a master of [master] ckey: [enthrallID].")
 				SSblackbox.record_feedback("tally", "fermi_chem", 1, "thralls fully enthralled.")
 			else if (resistanceTally > 200)
 				enthrallTally *= 0.5
@@ -329,7 +329,7 @@
 				if(get_dist(master, owner) > 10)
 					if(prob(10))
 						to_chat(owner, "<span class='velvet'><i>You feel [(lewd ?"a deep NEED to return to your [enthrallGender]":"like you have to return to [master]")].</i></span>")
-						M.throw_at(get_step_towards(master,owner), 5, 1)
+						//M.throw_at(get_step_towards(master,owner), 5, 1) This is a pain in the ass so I'm commenting it out
 				return//If you break the mind of someone, you can't use status effects on them.
 
 
@@ -412,7 +412,7 @@
 					M.hallucination += 10
 			if(101)
 				SEND_SIGNAL(M, COMSIG_CLEAR_MOOD_EVENT, "EnthMissing3")
-				var/message = "[(lewd?"I'm all alone, It's so hard to continute without [enthrallGender]...":"I really need to find [master]!!!")]"
+				var/message = "[(lewd?"I'm all alone, It's so hard to continute without [enthrallGender]...":"I really need to find [master]!!")]"
 				SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "EnthMissing4", /datum/mood_event/enthrallmissing4, message)
 				to_chat(owner, "<span class='warning'><i>You can hardly find the strength to continue without [(lewd?"your [enthrallGender]":"[master]")].</i></span>")
 				M.gain_trauma_type(BRAIN_TRAUMA_SEVERE)
@@ -421,7 +421,7 @@
 					owner.Stun(50)
 					owner.emote("cry")//does this exist?
 					if(lewd)
-						to_chat(owner, "<span class='warning'><i>You're unable to hold back your tears, suddenly sobbing as the desire to see your [enthrallGender] oncemore overwhelms you.</i></span>")
+						to_chat(owner, "<span class='warning'><i>You're unable to hold back your tears, suddenly sobbing as the desire to see your [enthrallGender] once more overwhelms you.</i></span>")
 					else
 						to_chat(owner, "<span class='warning'><i>You are overwheled with withdrawl from [master].</i></span>")
 					owner.adjustOrganLoss(ORGAN_SLOT_BRAIN, 1)
@@ -459,7 +459,7 @@
 		if(status == "Antiresist")
 			if (statusStrength < 0)
 				status = null
-				to_chat(owner, "<span class='notice'><i>Your mind feels able to resist oncemore.</i></span>")
+				to_chat(owner, "<span class='notice'><i>Your mind feels able to resist once more.</i></span>")
 			else
 				statusStrength -= 1
 
