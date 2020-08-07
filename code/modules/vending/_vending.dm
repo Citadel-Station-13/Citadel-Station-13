@@ -501,10 +501,10 @@ GLOBAL_LIST_EMPTY(vending_products)
 						C.bleed(150)
 						var/obj/item/bodypart/l_leg/l = C.get_bodypart(BODY_ZONE_L_LEG)
 						if(l)
-							l.receive_damage(brute=200)
+							l.receive_damage(brute=200, updating_health=TRUE)
 						var/obj/item/bodypart/r_leg/r = C.get_bodypart(BODY_ZONE_R_LEG)
 						if(r)
-							r.receive_damage(brute=200)
+							r.receive_damage(brute=200, updating_health=TRUE)
 						if(l || r)
 							C.visible_message("<span class='danger'>[C]'s legs shatter with a sickening crunch!</span>", \
 								"<span class='userdanger'>Your legs shatter with a sickening crunch!</span>")
@@ -824,8 +824,12 @@ GLOBAL_LIST_EMPTY(vending_products)
 			if(icon_vend) //Show the vending animation if needed
 				flick(icon_vend,src)
 			playsound(src, 'sound/machines/machine_vend.ogg', 50, TRUE, extrarange = -3)
-			new R.product_path(get_turf(src))
+			var/obj/item/vended = new R.product_path(get_turf(src))
 			R.amount--
+			if(usr.CanReach(src) && usr.put_in_hands(vended))
+				to_chat(usr, "<span class='notice'>You take [R.name] out of the slot.</span>")
+			else
+				to_chat(usr, "<span class='warning'>[capitalize(R.name)] falls onto the floor!</span>")
 			SSblackbox.record_feedback("nested tally", "vending_machine_usage", 1, list("[type]", "[R.product_path]"))
 			vend_ready = TRUE
 
