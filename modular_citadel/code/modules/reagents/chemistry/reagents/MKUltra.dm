@@ -134,7 +134,7 @@ Creating a chem with a low purity will make you permanently fall in love with so
 	description = "A forbidden deep red mixture that increases a person's succeptability to another's words. When taken by the creator, it will enhance the draw of their voice to those affected by it."
 	color = "#660015" // rgb: , 0, 255
 	taste_description = "synthetic chocolate, a base tone of alcohol, and high notes of roses"
-	overdose_threshold = 100 //If this is too easy to get 100u of this, then double it please.
+	overdose_threshold = 200 //If this is too easy to get 100u of this, then double it please.
 	metabolization_rate = 0.1//It has to be slow, so there's time for the effect.
 	data = list("creatorID" = null, "creatorGender" = null, "creatorName" = null)
 	var/creatorID  //ckey
@@ -181,7 +181,7 @@ Creating a chem with a low purity will make you permanently fall in love with so
 			Vc.Remove()
 		nVc.Insert(M)
 		qdel(Vc)
-		to_chat(M, "<span class='notice'><i>You feel your vocal chords tingle you speak in a more charasmatic and sultry tone.</i></span>")
+		to_chat(M, "<span class='notice'><i>You feel your vocal chords tingle as you speak in a more charasmatic and enthralling tone.</i></span>")
 	else
 		log_reagent("FERMICHEM: MKUltra: [creatorName], [creatorID], is enthralling [M.name], [M.ckey]")
 		M.apply_status_effect(/datum/status_effect/chem/enthrall)
