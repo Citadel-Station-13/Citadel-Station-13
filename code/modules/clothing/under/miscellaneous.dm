@@ -308,3 +308,21 @@
 	icon_state = "polyfemtankpantsu"
 	poly_states = 2
 	poly_colors = list("#808080", "#FF3535")
+
+/obj/item/clothing/under/misc/black_dress
+	name = "little black dress"
+	desc = "A small black dress"
+	icon_state = "littleblackdress_s"
+	item_state = "littleblackdress_s"
+
+/obj/item/clothing/under/misc/pinktutu
+	name = "pink tutu"
+	desc = "A pink tutu"
+	icon_state = "pinktutu_s"
+	item_state = "pinktutu_s"
+
+/obj/item/clothing/under/misc/bathrobe
+	name = "bathrobe"
+	desc = "A blue bathrobe."
+	icon_state = "bathrobe"
+	item_state = "bathrobe"
