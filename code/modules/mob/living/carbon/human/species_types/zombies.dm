@@ -32,6 +32,7 @@
 	name = "Infectious Zombie"
 	id = "memezombies"
 	limbs_id = "zombie"
+	inherent_traits = list(TRAIT_RESISTCOLD,TRAIT_RESISTHIGHPRESSURE,TRAIT_RESISTLOWPRESSURE,TRAIT_RADIMMUNE,TRAIT_EASYDISMEMBER,TRAIT_LIMBATTACHMENT,TRAIT_NOBREATH,TRAIT_NODEATH,TRAIT_NOSOFTCRIT, TRAIT_FAKEDEATH)
 	mutanthands = /obj/item/zombie_hand
 	armor = 20 // 120 damage to KO a zombie, which kills it
 	speedmod = 1.6 // they're very slow
@@ -89,8 +90,8 @@
 		infection = new()
 		infection.Insert(C)
 
-	//make their bodyparts stamina-resistant
-	var/incoming_stam_mult = 0.7
+	//make their bodyparts stamina-immune, its a corpse.
+	var/incoming_stam_mult = 0
 	for(var/obj/item/bodypart/part in C.bodyparts)
 		part.incoming_stam_mult = incoming_stam_mult
 		//todo: add negative wound resistance to all parts when wounds is merged (zombies are physically weak in terms of limbs)
