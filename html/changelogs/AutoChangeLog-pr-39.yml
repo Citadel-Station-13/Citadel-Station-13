@@ -1,5 +1,0 @@
-author: "SandPoot"
-delete-after: True
-changes: 
-  - rscadd: "Spaceship beacon to the shuttle techweb."
-  - bugfix: "Spaceship beacon now works!"
