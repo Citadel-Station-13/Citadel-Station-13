@@ -11,6 +11,7 @@
 
 /client/proc/setup_statbrowser()
 	stat_tgui = new(mob, src, "STATBROWSER", "ClientStatBrowser")
+	stat_tgui.window_id = "statbrowser"
 	stat_tgui.open()
 
 /client/proc/refresh_statbrowser()
@@ -21,7 +22,7 @@
 /client/ui_data()
 	. = list()
 
-/client/proc/ui_static_data()
+/client/ui_static_data()
 	. = list()
 
 /datum/tgui/statbrowser

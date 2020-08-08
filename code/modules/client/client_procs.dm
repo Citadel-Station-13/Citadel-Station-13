@@ -996,6 +996,6 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 
 	switch(tab)
 		if("statbrowser")
-			statbrowser_focus = TRUE
+			statbrowser_focused = TRUE
 		if("statpanel")
-			statbrowser_focus = FALSE
+			statbrowser_focused = FALSE
