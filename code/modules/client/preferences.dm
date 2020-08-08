@@ -2831,6 +2831,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			return pick(GLOB.mime_names)
 		if("owner")
 			return pick(GLOB.owner_names)
+		if("subject")
+			return pick(GLOB.subject_names)
 	return random_unique_name()
 
 /datum/preferences/proc/ask_for_custom_name(mob/user,name_id)
