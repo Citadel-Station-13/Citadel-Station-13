@@ -1083,6 +1083,21 @@
 			addtimer(CALLBACK(GLOBAL_PROC, .proc/to_chat, L, "<span class='notice'>You are drawn towards [user]!</b></span>"), 5)
 			to_chat(user, "<span class='notice'><i>You draw [L] towards you!</i></span>")
 
+	//Subterm
+	else if((findtext(message, subterm_words)))
+		for(var/V in listeners)
+			var/mob/living/carbon/human/H = V
+			var/datum/status_effect/chem/enthrall/E = H.has_status_effect(/datum/status_effect/chem/enthrall)
+			switch(E.phase)
+				if(1 to INFINITY)
+					if(!E.lewd)
+						to_chat(user, "<span class='warning'>[H] doesn't assign themself a special term.</b></span>")
+						continue
+					else
+						var/newTerm = stripped_input(user, "Enter the new sub term", MAX_MESSAGE_LEN)
+						E.subjectTerm = newTerm
+						to_chat(user, "<span class='notice'><i>You successfully teach [H] their proper place.</i></span>")
+
 	//awoo
 	else if((findtext(message, awoo_words)))
 		for(var/V in listeners)
