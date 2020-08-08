@@ -309,14 +309,6 @@
 	if(!B.data)
 		my_atom.visible_message("<span class='warning'>The reaction splutters and fails to react properly.</span>") //Just in case
 		E.purity = 0
-	//We're not using gender for enthrallGender or creatorGender anymore! Actually fuck it, renaming to creatorTitle and enthrallTitle
-	/* if (B.data["gender"] == "female")
-		E.data["creatorGender"] = "Mistress"
-		E.creatorGender = "Mistress"
-	else
-		E.data["creatorGender"] = "Master"
-		E.creatorGender = "Master"
-	*/
 	M = get_mob_by_key(B.data["ckey"])
 	E.data["creatorTitle"] = M.client.prefs?.custom_names["owner"]
 	E.data["creatorName"] = B.data["real_name"]
@@ -338,14 +330,6 @@
 	if(!B.data)
 		my_atom.visible_message("<span class='warning'>The reaction splutters and fails to react properly.</span>") //Just in case
 		E.purity = 0
-	//We're not using gender for enthrallGender or creatorGender anymore! Actually fuck it, renaming to creatorTitle and enthrallTitle
-	/* if (B.data["gender"] == "female")
-		E.data["creatorGender"] = "Mistress"
-		E.creatorGender = "Mistress"
-	else
-		E.data["creatorGender"] = "Master"
-		E.creatorGender = "Master"
-	*/
 	M = get_mob_by_key(B.data["ckey"])
 	E.data["creatorTitle"] = M.client.prefs?.custom_names["owner"]
 	E.data["creatorName"] = B.data["real_name"]
