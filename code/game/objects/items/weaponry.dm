@@ -290,7 +290,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 		TEXT_ATTACK_TYPE_PROJECTILE = 30,
 	)
 	parry_failed_stagger_duration = 2 SECONDS
-	parry_cooldown = 1 SECONDS // make your parries count
+	parry_cooldown = 1.5 SECONDS // make your parries count
 	parry_data = list(PARRY_COUNTERATTACK_MELEE_ATTACK_CHAIN = 2.5) // 7*2.5 = 17.5, 8*2.5 = 20, 9*2.5 = 22.5, 10*2.5 = 25
 
 /datum/block_parry_data/bokken/quick_parry // emphasizing REALLY SHORT PARRIES
