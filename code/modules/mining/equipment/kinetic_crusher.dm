@@ -190,14 +190,14 @@
 
 /datum/block_parry_data/crusherglaive // it's like quickparry, without the damage multiplier
 	parry_time_windup = 0
-	parry_time_active = 5
+	parry_time_active = 8
 	parry_time_spindown = 0
-	parry_time_perfect = 1.5
-	parry_time_perfect_leeway = 0.5
-	parry_imperfect_falloff_percent = 30
-	parry_efficiency_perfect = 100
-	parry_failed_stagger_duration = 1 SECONDS
-	parry_failed_clickcd_duration = 1 SECONDS
+	parry_time_perfect = 0
+	parry_time_perfect_leeway = 3
+	parry_imperfect_falloff_percent = 20
+	parry_efficiency_to_counterattack = 120 // perfect parry or you're cringe
+	parry_failed_stagger_duration = 1.5 SECONDS // a good time to reconsider your actions...
+	parry_failed_clickcd_duration = 2 SECONDS // or your failures
 
 /obj/item/kinetic_crusher/glaive/on_active_parry(mob/living/owner, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, list/block_return, parry_efficiency, parry_time) // if you're dumb enough to go for a parry...
 	var/turf/proj_turf = owner.loc // destabilizer bolt, ignoring cooldown
