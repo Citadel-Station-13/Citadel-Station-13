@@ -1,0 +1,4 @@
+author: "MrJWhit"
+delete-after: True
+changes: 
+  - rscadd: "Adds a second shutter on the top of the hop line"
