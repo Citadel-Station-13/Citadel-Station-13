@@ -21,8 +21,8 @@
 		if (user.transferItemToLoc(N, src))
 			to_chat(user, "<span class='notice'>You insert [N] into [src].</span>")
 			playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, FALSE)
-			if(disk)
-				eject(user)
+			// if(disk)
+			// 	eject(user)
 			disk = N
 	else
 		..()
