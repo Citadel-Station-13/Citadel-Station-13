@@ -65,7 +65,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	w_class = WEIGHT_CLASS_NORMAL
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 	block_chance = 50
-	sharpness = IS_SHARP
+	sharpness = SHARP_EDGED
 	max_integrity = 200
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 50)
 	resistance_flags = FIRE_PROOF
@@ -231,7 +231,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 	block_chance = 50
-	sharpness = IS_SHARP
+	sharpness = SHARP_EDGED
 	max_integrity = 200
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 50)
 	resistance_flags = FIRE_PROOF
@@ -249,6 +249,121 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	playsound(src, 'sound/weapons/bladeslice.ogg', 50, 1)
 	return(BRUTELOSS)
 
+/obj/item/melee/bokken // parrying stick
+	name = "bokken"
+	desc = "A space-Japanese training sword made of wood and shaped like a katana."
+	icon_state = "bokken"
+	item_state = "bokken"
+	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
+	slot_flags = ITEM_SLOT_BELT | ITEM_SLOT_BACK
+	w_class = WEIGHT_CLASS_BULKY
+	force = 9
+	throwforce = 10
+	damtype = STAMINA
+	attack_verb = list("whacked", "smacked", "struck")
+	total_mass = TOTAL_MASS_MEDIEVAL_WEAPON
+	hitsound = 'sound/weapons/grenadelaunch.ogg' // no good wood thunk sounds
+	var/harm = FALSE // TRUE = brute, FALSE = stam
+	var/reinforced = FALSE
+	var/burnt = FALSE
+	var/burned_in // text you burned in (with a welder)
+	var/quick_parry = FALSE // false = default parry, true = really small parry window
+	item_flags = ITEM_CAN_PARRY
+	block_parry_data = /datum/block_parry_data/bokken
+	bare_wound_bonus = 0
+	wound_bonus = 0
+
+/datum/block_parry_data/bokken // fucked up parry data, emphasizing quicker, shorter parries
+	parry_stamina_cost = 8 // be wise about when you parry, though, else you won't be able to fight enough to make it count
+	parry_time_windup = 0
+	parry_time_active = 10 // small parry window
+	parry_time_spindown = 0
+	// parry_flags = PARRY_DEFAULT_HANDLE_FEEDBACK		// bokken users can no longer strike while parrying
+	parry_time_perfect = 1.5
+	parry_time_perfect_leeway = 1
+	parry_imperfect_falloff_percent = 7.5
+	parry_efficiency_to_counterattack = 100
+	parry_efficiency_considered_successful = 65		// VERY generous
+	parry_efficiency_perfect = 120
+	parry_efficiency_perfect_override = list(
+		TEXT_ATTACK_TYPE_PROJECTILE = 30,
+	)
+	parry_failed_stagger_duration = 3 SECONDS
+	parry_data = list(PARRY_COUNTERATTACK_MELEE_ATTACK_CHAIN = 2.5) // 7*2.5 = 17.5, 8*2.5 = 20, 9*2.5 = 22.5, 10*2.5 = 25
+
+/datum/block_parry_data/bokken/quick_parry // emphasizing REALLY SHORT PARRIES
+	parry_stamina_cost = 6 // still more costly than most parries, but less than a full bokken parry
+	parry_time_active = 5 // REALLY small parry window
+	parry_time_perfect = 2.5 // however...
+	parry_time_perfect_leeway = 2.5 // the entire time, the parry is perfect
+	parry_failed_stagger_duration = 1 SECONDS
+	parry_failed_clickcd_duration = 1 SECONDS // more forgiving punishments for missed parries
+	// still, don't fucking miss your parries or you're down stamina and staggered to shit
+
+/obj/item/melee/bokken/Initialize()
+	. = ..()
+	AddElement(/datum/element/sword_point)
+
+/obj/item/melee/bokken/attack_self(mob/user)
+	harm = !harm
+	if(harm)
+		force -= 2
+		damtype = BRUTE
+		attack_verb = list("bashed", "smashed", "attacked")
+		bare_wound_bonus = 15 // having your leg smacked by a wooden stick is probably not great for it if it's naked
+		wound_bonus = 0
+	else
+		force += 2
+		damtype = STAMINA
+		attack_verb = list("whacked", "smacked", "struck")
+		bare_wound_bonus = 0
+		wound_bonus = 0
+	to_chat(user, "<span class='notice'>[src] is now [harm ? "harmful" : "not quite as harmful"].</span>")
+
+/obj/item/melee/bokken/AltClick(mob/user)
+	. = ..()
+	quick_parry = !quick_parry
+	if(quick_parry)
+		block_parry_data = /datum/block_parry_data/bokken/quick_parry
+	else
+		block_parry_data = /datum/block_parry_data/bokken
+	to_chat(user, "<span class='notice'>[src] is now [quick_parry ? "emphasizing shorter parries, forcing you to riposte or be staggered" : "emphasizing longer parries, with a shorter window to riposte but more forgiving parries"].</span>")
+
+/obj/item/melee/bokken/attackby(obj/item/I, mob/living/user, params)
+	if(istype(I, /obj/item/pen))
+		var/new_name = stripped_input(user, "What do you wish to name [src]?", "New Name", "bokken", 30)
+		if(new_name)
+			name = new_name
+	if(I.tool_behaviour == TOOL_WELDER)
+		var/new_burn = stripped_input(user, "What do you wish to burn into [src]?", "Burnt Inscription","", 140)
+		if(new_burn)
+			burned_in = new_burn
+			if(!burnt)
+				icon_state += "_burnt"
+				item_state += "_burnt"
+				burnt = TRUE
+			update_icon()
+			update_icon_state()
+	if(istype(I, /obj/item/stack/rods))
+		var/obj/item/stack/rods/R = I
+		if(!reinforced)
+			if(R.use(1))
+				force++
+				reinforced = TRUE
+				to_chat(user, "<span class='notice'>You slide a metal rod into [src]\'s hilt. It feels a little heftier in your hands.")
+		else
+			to_chat(user, "<span class='notice'>[src] already has a weight slid into the hilt.")
+
+/obj/item/melee/bokken/examine(mob/user)
+	. = ..()
+	if(quick_parry)
+		. += " [src] is gripped in a way to emphasize quicker parries."
+	if(reinforced)
+		. += " There's a metal rod shoved into the base."
+	if(burnt)
+		. += " Burned into the \"blade\" is [burned_in]."
+
 /obj/item/wirerod
 	name = "wired rod"
 	desc = "A rod with some wire wrapped around the top. It'd be easy to attach something to the top bit."
@@ -260,6 +375,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	w_class = WEIGHT_CLASS_NORMAL
 	custom_materials = list(/datum/material/iron=1150, /datum/material/glass=75)
 	attack_verb = list("hit", "bludgeoned", "whacked", "bonked")
+	wound_bonus = -10
 
 /obj/item/wirerod/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/shard))
@@ -297,13 +413,13 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	lefthand_file = 'icons/mob/inhands/equipment/shields_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/shields_righthand.dmi'
 	force = 2
-	throwforce = 20 //This is never used on mobs since this has a 100% embed chance.
+	throwforce = 10 //This is never used on mobs since this has a 100% embed chance.
 	throw_speed = 4
 	embedding = list("pain_mult" = 4, "embed_chance" = 100, "fall_chance" = 0, "embed_chance_turf_mod" = 15)
 	armour_penetration = 40
 
 	w_class = WEIGHT_CLASS_SMALL
-	sharpness = IS_SHARP
+	sharpness = SHARP_EDGED
 	custom_materials = list(/datum/material/iron=500, /datum/material/glass=500)
 	resistance_flags = FIRE_PROOF
 
@@ -316,7 +432,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 /obj/item/throwing_star/toy
 	name = "toy throwing star"
 	desc = "An aerodynamic disc strapped with adhesive for sticking to people, good for playing pranks and getting yourself killed by security."
-	sharpness = IS_BLUNT
+	sharpness = SHARP_NONE
 	force = 0
 	throwforce = 0
 	embedding = list("pain_mult" = 0, "jostle_pain_mult" = 0, "embed_chance" = 100, "fall_chance" = 0)
@@ -353,7 +469,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 		icon_state = extended_icon_state
 		attack_verb = list("slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 		hitsound = 'sound/weapons/bladeslice.ogg'
-		sharpness = IS_SHARP
+		sharpness = SHARP_EDGED
 	else
 		force = initial(force)
 		w_class = WEIGHT_CLASS_SMALL
@@ -361,7 +477,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 		icon_state = retracted_icon_state
 		attack_verb = list("stubbed", "poked")
 		hitsound = 'sound/weapons/genhit.ogg'
-		sharpness = IS_BLUNT
+		sharpness = SHARP_NONE
 
 /obj/item/switchblade/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is slitting [user.p_their()] own throat with [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
@@ -462,7 +578,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	throwforce = 0
 	throw_range = 0
 	throw_speed = 0
-	sharpness = IS_SHARP
+	sharpness = SHARP_EDGED
 	attack_verb = list("sawed", "torn", "cut", "chopped", "diced")
 	hitsound = 'sound/weapons/chainsawhit.ogg'
 	total_mass = TOTAL_MASS_HAND_REPLACEMENT
@@ -574,6 +690,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
 	force = 10
+	wound_bonus = -10
 	throwforce = 12
 	attack_verb = list("beat", "smacked")
 	custom_materials = list(/datum/material/wood = MINERAL_MATERIAL_AMOUNT * 3.5)
@@ -590,6 +707,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	obj_flags = UNIQUE_RENAME
 	var/chaplain_spawnable = TRUE
 	total_mass = TOTAL_MASS_MEDIEVAL_WEAPON
+	wound_bonus = -5
 
 /obj/item/melee/baseball_bat/chaplain/Initialize()
 	. = ..()
@@ -626,7 +744,8 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 		homerun_ready = 0
 		return
 	else if(!target.anchored)
-		target.throw_at(throw_target, rand(1,2), 7, user)
+		var/whack_speed = (prob(60) ? 1 : 4)
+		target.throw_at(throw_target, rand(1, 2), whack_speed, user) // sorry friends, 7 speed batting caused wounds to absolutely delete whoever you knocked your target into (and said target)
 
 /obj/item/melee/baseball_bat/ablative
 	name = "metal baseball bat"
@@ -706,6 +825,92 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	item_flags = DROPDEL | ABSTRACT
 	attack_verb = list("bopped")
 
+/obj/item/circlegame/Initialize()
+	. = ..()
+	var/mob/living/owner = loc
+	if(!istype(owner))
+		return
+	RegisterSignal(owner, COMSIG_PARENT_EXAMINE, .proc/ownerExamined)
+
+/obj/item/circlegame/Destroy()
+	var/mob/owner = loc
+	if(istype(owner))
+		UnregisterSignal(owner, COMSIG_PARENT_EXAMINE)
+	return ..()
+
+/obj/item/circlegame/dropped(mob/user)
+	UnregisterSignal(user, COMSIG_PARENT_EXAMINE)		//loc will have changed by the time this is called, so Destroy() can't catch it
+	// this is a dropdel item.
+	return ..()
+
+/// Stage 1: The mistake is made
+/obj/item/circlegame/proc/ownerExamined(mob/living/owner, mob/living/sucker)
+	if(!istype(sucker) || !in_range(owner, sucker))
+		return
+	addtimer(CALLBACK(src, .proc/waitASecond, owner, sucker), 4)
+
+/// Stage 2: Fear sets in
+/obj/item/circlegame/proc/waitASecond(mob/living/owner, mob/living/sucker)
+	if(QDELETED(sucker) || QDELETED(src) || QDELETED(owner))
+		return
+
+	if(owner == sucker) // big mood
+		to_chat(owner, "<span class='danger'>Wait a second... you just looked at your own [src.name]!</span>")
+		addtimer(CALLBACK(src, .proc/selfGottem, owner), 10)
+	else
+		to_chat(sucker, "<span class='danger'>Wait a second... was that a-</span>")
+		addtimer(CALLBACK(src, .proc/GOTTEM, owner, sucker), 6)
+
+/// Stage 3A: We face our own failures
+/obj/item/circlegame/proc/selfGottem(mob/living/owner)
+	if(QDELETED(src) || QDELETED(owner))
+		return
+
+	playsound(get_turf(owner), 'sound/effects/hit_punch.ogg', 50, TRUE, -1)
+	owner.visible_message("<span class='danger'>[owner] shamefully bops [owner.p_them()]self with [owner.p_their()] [src.name].</span>", "<span class='userdanger'>You shamefully bop yourself with your [src.name].</span>", \
+		"<span class='hear'>You hear a dull thud!</span>")
+	log_combat(owner, owner, "bopped", src.name, "(self)")
+	owner.do_attack_animation(owner)
+	owner.apply_damage(100, STAMINA)
+	owner.Knockdown(10)
+	qdel(src)
+
+/// Stage 3B: We face our reckoning (unless we moved away or they're incapacitated)
+/obj/item/circlegame/proc/GOTTEM(mob/living/owner, mob/living/sucker)
+	if(QDELETED(sucker))
+		return
+
+	if(QDELETED(src) || QDELETED(owner))
+		to_chat(sucker, "<span class='warning'>Nevermind... must've been your imagination...</span>")
+		return
+
+	if(!in_range(owner, sucker) || !(owner.mobility_flags & MOBILITY_USE))
+		to_chat(sucker, "<span class='notice'>Phew... you moved away before [owner] noticed you saw [owner.p_their()] [src.name]...</span>")
+		return
+
+	to_chat(owner, "<span class='warning'>[sucker] looks down at your [src.name] before trying to avert [sucker.p_their()] eyes, but it's too late!</span>")
+	to_chat(sucker, "<span class='danger'><b>[owner] sees the fear in your eyes as you try to look away from [owner.p_their()] [src.name]!</b></span>")
+
+	playsound(get_turf(owner), 'sound/effects/hit_punch.ogg', 50, TRUE, -1)
+	owner.do_attack_animation(sucker)
+
+	if(HAS_TRAIT(owner, TRAIT_HULK))
+		owner.visible_message("<span class='danger'>[owner] bops [sucker] with [owner.p_their()] [src.name] much harder than intended, sending [sucker.p_them()] flying!</span>", \
+			"<span class='danger'>You bop [sucker] with your [src.name] much harder than intended, sending [sucker.p_them()] flying!</span>", "<span class='hear'>You hear a sickening sound of flesh hitting flesh!</span>", ignored_mobs=list(sucker))
+		to_chat(sucker, "<span class='userdanger'>[owner] bops you incredibly hard with [owner.p_their()] [src.name], sending you flying!</span>")
+		sucker.apply_damage(50, STAMINA)
+		sucker.Knockdown(50)
+		log_combat(owner, sucker, "bopped", src.name, "(setup- Hulk)")
+		var/atom/throw_target = get_edge_target_turf(sucker, owner.dir)
+		sucker.throw_at(throw_target, 6, 3, owner)
+	else
+		owner.visible_message("<span class='danger'>[owner] bops [sucker] with [owner.p_their()] [src.name]!</span>", "<span class='danger'>You bop [sucker] with your [src.name]!</span>", \
+			"<span class='hear'>You hear a dull thud!</span>", ignored_mobs=list(sucker))
+		sucker.apply_damage(15, STAMINA)
+		log_combat(owner, sucker, "bopped", src.name, "(setup)")
+		to_chat(sucker, "<span class='userdanger'>[owner] bops you with [owner.p_their()] [src.name]!</span>")
+	qdel(src)
+
 /obj/item/slapper
 	name = "slapper"
 	desc = "This is how real men fight."
@@ -772,7 +977,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	block_chance = 40
 	throwforce = 20
 	throw_speed = 4
-	sharpness = IS_SHARP
+	sharpness = SHARP_EDGED
 	attack_verb = list("cut", "sliced", "diced")
 	w_class = WEIGHT_CLASS_BULKY
 	slot_flags = ITEM_SLOT_BACK

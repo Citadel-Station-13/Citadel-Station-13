@@ -155,3 +155,10 @@
 	cost = 30
 	message = "of paperframes"
 	export_types = list(/obj/item/stack/sheet/paperframes)
+
+/datum/export/stack/telecrystal
+	unit_name = "raw"
+	cost = 1000
+	message = "telecrystals"
+	export_types = list(/obj/item/stack/telecrystal)
+

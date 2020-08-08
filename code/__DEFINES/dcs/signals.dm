@@ -32,17 +32,21 @@
 #define COMSIG_ELEMENT_DETACH "element_detach"
 
 // /atom signals
+//from base of atom/proc/Initialize(): sent any time a new atom is created
+#define COMSIG_ATOM_CREATED "atom_created"
 #define COMSIG_PARENT_ATTACKBY "atom_attackby"			        //from base of atom/attackby(): (/obj/item, /mob/living, params)
 	#define COMPONENT_NO_AFTERATTACK 1								//Return this in response if you don't want afterattack to be called
 #define COMSIG_ATOM_HULK_ATTACK "hulk_attack"					//from base of atom/attack_hulk(): (/mob/living/carbon/human)
 #define COMSIG_ATOM_ATTACK_ANIMAL "attack_animal"				//from base of atom/animal_attack(): (/mob/user)
 #define COMSIG_PARENT_EXAMINE "atom_examine"                    //from base of atom/examine(): (/mob, list/examine_return_text)
-#define COMSIG_ATOM_GET_EXAMINE_NAME "atom_examine_name"		//from base of atom/get_examine_name(): (/mob, list/overrides)
+///from base of atom/get_examine_name(): (/mob, list/overrides)
+#define COMSIG_ATOM_GET_EXAMINE_NAME "atom_examine_name"
+#define COMSIG_PARENT_EXAMINE_MORE "atom_examine_more"                    ///from base of atom/examine_more(): (/mob)
 	//Positions for overrides list
-	#define EXAMINE_POSITION_ARTICLE 1
-	#define EXAMINE_POSITION_BEFORE 2
+	#define EXAMINE_POSITION_ARTICLE (1<<0)
+	#define EXAMINE_POSITION_BEFORE (1<<1)
 	//End positions
-	#define COMPONENT_EXNAME_CHANGED 1
+	#define COMPONENT_EXNAME_CHANGED (1<<0)
 #define COMSIG_ATOM_UPDATE_ICON "atom_update_icon"				//from base of atom/update_icon(): ()
 	#define COMSIG_ATOM_NO_UPDATE_ICON_STATE 1
 	#define COMSIG_ATOM_NO_UPDATE_OVERLAYS		2
@@ -179,6 +183,10 @@
 #define COMSIG_MOB_THROW "mob_throw"							//from base of /mob/throw_item(): (atom/target)
 #define COMSIG_MOB_KEY_CHANGE "mob_key_change"					//from base of /mob/transfer_ckey(): (new_character, old_character)
 #define COMSIG_MOB_PRE_PLAYER_CHANGE "mob_pre_player_change"	//sent to the target mob from base of /mob/transfer_ckey() and /mind/transfer_to(): (our_character, their_character)
+///from /mob/living/handle_eye_contact(): (mob/living/other_mob)
+#define COMSIG_MOB_EYECONTACT "mob_eyecontact"
+	/// return this if you want to block printing this message to this person, if you want to print your own (does not affect the other person's message)
+	#define COMSIG_BLOCK_EYECONTACT (1<<0)
 //	#define COMPONENT_STOP_MIND_TRANSFER 1
 #define COMSIG_MOB_UPDATE_SIGHT "mob_update_sight"				//from base of /mob/update_sight(): ()
 #define COMSIG_MOB_ON_NEW_MIND "mob_on_new_mind"			//called when a new mind is assigned to a mob: ()
@@ -244,7 +252,14 @@
 	#define COMPONENT_INTERRUPT_LIFE_BIOLOGICAL 1		// interrupt biological processes
 	#define COMPONENT_INTERRUPT_LIFE_PHYSICAL 2			// interrupt physical handling
 
-// /mob/living/carbon signals
+// /mob/living/carbon physiology signals
+#define COMSIG_CARBON_GAIN_WOUND "carbon_gain_wound"				//from /datum/wound/proc/apply_wound() (/mob/living/carbon/C, /datum/wound/W, /obj/item/bodypart/L)
+#define COMSIG_CARBON_LOSE_WOUND "carbon_lose_wound"				//from /datum/wound/proc/remove_wound() (/mob/living/carbon/C, /datum/wound/W, /obj/item/bodypart/L)
+///from base of /obj/item/bodypart/proc/attach_limb(): (new_limb, special) allows you to fail limb attachment
+#define COMSIG_CARBON_ATTACH_LIMB "carbon_attach_limb"
+	#define COMPONENT_NO_ATTACH (1<<0)
+#define COMSIG_CARBON_REMOVE_LIMB "carbon_remove_limb"			//from base of /obj/item/bodypart/proc/drop_limb(special, dismembered)
+
 #define COMSIG_CARBON_SOUNDBANG "carbon_soundbang"					//from base of mob/living/carbon/soundbang_act(): (list(intensity))
 #define COMSIG_CARBON_IDENTITY_TRANSFERRED_TO "carbon_id_transferred_to" //from datum/dna/transfer_identity(): (datum/dna, transfer_SE)
 #define COMSIG_CARBON_TACKLED "carbon_tackled"						//sends from tackle.dm on tackle completion
@@ -341,10 +356,10 @@
 #define COMSIG_PEN_ROTATED "pen_rotated"						//called after rotation in /obj/item/pen/attack_self(): (rotation, mob/living/carbon/user)
 
 // /obj/item/projectile signals (sent to the firer)
-#define COMSIG_PROJECTILE_SELF_ON_HIT "projectile_self_on_hit"			// from base of /obj/item/projectile/proc/on_hit(): (atom/movable/firer, atom/target, Angle)
-#define COMSIG_PROJECTILE_ON_HIT "projectile_on_hit"			// from base of /obj/item/projectile/proc/on_hit(): (atom/movable/firer, atom/target, Angle)
+#define COMSIG_PROJECTILE_SELF_ON_HIT "projectile_self_on_hit"			///from base of /obj/item/projectile/proc/on_hit(): (atom/movable/firer, atom/target, Angle, hit_limb)
+#define COMSIG_PROJECTILE_ON_HIT "projectile_on_hit"			///from base of /obj/item/projectile/proc/on_hit(): (atom/movable/firer, atom/target, Angle, hit_limb)
 #define COMSIG_PROJECTILE_BEFORE_FIRE "projectile_before_fire" 			// from base of /obj/item/projectile/proc/fire(): (obj/item/projectile, atom/original_target)
-#define COMSIG_PROJECTILE_FIRE "projectile_fire"				///from the base of /obj/projectile/proc/fire(): ()
+#define COMSIG_PROJECTILE_FIRE "projectile_fire"				///from the base of /obj/item/projectile/proc/fire(): ()
 #define COMSIG_PROJECTILE_RANGE_OUT "projectile_range_out"				// sent to targets during the process_hit proc of projectiles
 #define COMSIG_EMBED_TRY_FORCE "item_try_embed"					// sent when trying to force an embed (mainly for projectiles, only used in the embed element)
 #define COMSIG_PROJECTILE_PREHIT "com_proj_prehit"				///sent to targets during the process_hit proc of projectiles
@@ -354,6 +369,7 @@
 // /mob/living/carbon/human signals
 #define COMSIG_HUMAN_MELEE_UNARMED_ATTACK "human_melee_unarmed_attack"			//from mob/living/carbon/human/UnarmedAttack(): (atom/target)
 #define COMSIG_HUMAN_MELEE_UNARMED_ATTACKBY "human_melee_unarmed_attackby"		//from mob/living/carbon/human/UnarmedAttack(): (mob/living/carbon/human/attacker)
+#define COMSIG_HUMAN_EARLY_UNARMED_ATTACK "human_early_unarmed_attack"
 #define COMSIG_HUMAN_DISARM_HIT	"human_disarm_hit"	//Hit by successful disarm attack (mob/living/carbon/human/attacker,zone_targeted)
 #define COMSIG_HUMAN_PREFS_COPIED_TO "human_prefs_copied_to"					//from datum/preferences/copy_to(): (datum/preferences, icon_updates, roundstart_checks)
 #define COMSIG_HUMAN_HARDSET_DNA "human_hardset_dna"							//from mob/living/carbon/human/hardset_dna(): (ui, list/mutation_index, newreal_name, newblood_type, datum/species, newfeatures)

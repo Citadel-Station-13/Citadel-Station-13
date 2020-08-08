@@ -4,10 +4,10 @@
 	id = "jelly"
 	default_color = "00FF90"
 	say_mod = "chirps"
-	species_traits = list(MUTCOLORS,EYECOLOR,HAIR,FACEHAIR,WINGCOLOR)
+	species_traits = list(MUTCOLORS,EYECOLOR,HAIR,FACEHAIR,WINGCOLOR,HAS_FLESH)
 	mutantlungs = /obj/item/organ/lungs/slime
 	mutant_heart = /obj/item/organ/heart/slime
-	mutant_bodyparts = list("mcolor" = "FFF", "mam_tail" = "None", "mam_ears" = "None", "mam_snouts" = "None", "taur" = "None", "deco_wings" = "None")
+	mutant_bodyparts = list("mcolor" = "FFFFFF", "mam_tail" = "None", "mam_ears" = "None", "mam_snouts" = "None", "taur" = "None", "deco_wings" = "None")
 	inherent_traits = list(TRAIT_TOXINLOVER)
 	meat = /obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/slime
 	gib_types = list(/obj/effect/gibspawner/slime, /obj/effect/gibspawner/slime/bodypartless)
@@ -23,6 +23,17 @@
 	heatmod = 0.5 // = 1/4x heat damage
 	burnmod = 0.5 // = 1/2x generic burn damage
 	species_language_holder = /datum/language_holder/jelly
+	mutant_brain = /obj/item/organ/brain/jelly
+
+	tail_type = "mam_tail"
+	wagging_type = "mam_waggingtail"
+	species_type = "jelly"
+
+/obj/item/organ/brain/jelly
+	name = "slime nucleus"
+	desc = "A slimey membranous mass from a slime person"
+	icon_state = "brain-slime"
+
 
 /datum/species/jelly/on_species_loss(mob/living/carbon/C)
 	if(regenerate_limbs)
@@ -120,33 +131,6 @@
 		to_chat(H, "<span class='warning'>...but there is not enough of you to fix everything! You must attain more mass to heal completely!</span>")
 		return
 	to_chat(H, "<span class='warning'>...but there is not enough of you to go around! You must attain more mass to heal!</span>")
-
-/datum/species/jelly/spec_death(gibbed, mob/living/carbon/human/H)
-	if(H)
-		stop_wagging_tail(H)
-
-/datum/species/jelly/spec_stun(mob/living/carbon/human/H,amount)
-	if(H)
-		stop_wagging_tail(H)
-	. = ..()
-
-/datum/species/jelly/can_wag_tail(mob/living/carbon/human/H)
-	return mutant_bodyparts["mam_tail"] || mutant_bodyparts["mam_waggingtail"]
-
-/datum/species/jelly/is_wagging_tail(mob/living/carbon/human/H)
-	return mutant_bodyparts["mam_waggingtail"]
-
-/datum/species/jelly/start_wagging_tail(mob/living/carbon/human/H)
-	if(mutant_bodyparts["mam_tail"])
-		mutant_bodyparts["mam_waggingtail"] = mutant_bodyparts["mam_tail"]
-		mutant_bodyparts -= "mam_tail"
-	H.update_body()
-
-/datum/species/jelly/stop_wagging_tail(mob/living/carbon/human/H)
-	if(mutant_bodyparts["mam_waggingtail"])
-		mutant_bodyparts["mam_tail"] = mutant_bodyparts["mam_waggingtail"]
-		mutant_bodyparts -= "mam_waggingtail"
-	H.update_body()
 
 
 ////////////////////////////////////////////////////////SLIMEPEOPLE///////////////////////////////////////////////////////////////////
@@ -307,7 +291,7 @@
 
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
-		ui = new(user, src, ui_key, "slime_swap_body", name, 400, 400, master_ui, state)
+		ui = new(user, src, ui_key, "SlimeBodySwapper", name, 400, 400, master_ui, state)
 		ui.open()
 
 /datum/action/innate/swap_body/ui_data(mob/user)
@@ -436,7 +420,7 @@
 	default_color = "00FFFF"
 	species_traits = list(MUTCOLORS,EYECOLOR,HAIR,FACEHAIR)
 	inherent_traits = list(TRAIT_TOXINLOVER)
-	mutant_bodyparts = list("mcolor" = "FFF", "mcolor2" = "FFF","mcolor3" = "FFF", "mam_tail" = "None", "mam_ears" = "None", "mam_body_markings" = "Plain", "mam_snouts" = "None", "taur" = "None")
+	mutant_bodyparts = list("mcolor" = "FFFFFF", "mcolor2" = "FFFFFF","mcolor3" = "FFFFFF", "mam_tail" = "None", "mam_ears" = "None", "mam_body_markings" = "Plain", "mam_snouts" = "None", "taur" = "None")
 	say_mod = "says"
 	hair_color = "mutcolor"
 	hair_alpha = 160 //a notch brighter so it blends better.

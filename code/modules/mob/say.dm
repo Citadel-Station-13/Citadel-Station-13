@@ -43,6 +43,11 @@
 	if(GLOB.say_disabled)	//This is here to try to identify lag problems
 		to_chat(usr, "<span class='danger'>Speech is currently admin-disabled.</span>")
 		return
+	
+	if(length(message) > MAX_MESSAGE_LEN)
+		to_chat(usr, message)
+		to_chat(usr, "<span class='danger'>^^^----- The preceeding message has been DISCARDED for being over the maximum length of [MAX_MESSAGE_LEN]. It has NOT been sent! -----^^^</span>")
+		return
 
 	message = trim(copytext_char(sanitize(message), 1, MAX_MESSAGE_LEN))
 	clear_typing_indicator()		// clear it immediately!
@@ -50,12 +55,16 @@
 	usr.emote("me",1,message,TRUE)
 
 /mob/say_mod(input, message_mode)
+	if(message_mode == MODE_WHISPER_CRIT)
+		return ..()
+	if((input[1] == "!") && (length_char(input) > 1))
+		message_mode = MODE_CUSTOM_SAY
+		return copytext_char(input, 2)
 	var/customsayverb = findtext(input, "*")
-	if(customsayverb && message_mode != MODE_WHISPER_CRIT)
+	if(customsayverb)
 		message_mode = MODE_CUSTOM_SAY
 		return lowertext(copytext_char(input, 1, customsayverb))
-	else
-		return ..()
+	return ..()
 
 /proc/uncostumize_say(input, message_mode)
 	. = input

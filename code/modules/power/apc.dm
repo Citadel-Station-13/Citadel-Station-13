@@ -38,6 +38,8 @@
 #define APC_CHARGING 1
 #define APC_FULLY_CHARGED 2
 
+#define MAXIMUM_COG_REGAIN 100 //How much charge drained by an integration cog can be priority-recharged in one processing-tick
+
 // the Area Power Controller (APC), formerly Power Distribution Unit (PDU)
 // one per area, needs wire connection to power network through a terminal
 
@@ -94,6 +96,7 @@
 	var/mob/living/silicon/ai/occupier = null
 	var/transfer_in_progress = FALSE //Is there an AI being transferred out of us?
 	var/obj/item/clockwork/integration_cog/integration_cog //Is there a cog siphoning power?
+	var/cog_drained = 0 //How much of the cell's charge was drained by an integration cog, recovering this amount takes priority over the normal APC cell recharge calculations, but comes after powering Essentials.
 	var/longtermpower = 10
 	var/auto_name = 0
 	var/failure_timer = 0
@@ -499,6 +502,7 @@
 			cell.forceMove(T)
 			cell.update_icon()
 			cell = null
+			cog_drained = 0 //No more cell means no more averting celldrain
 			charging = APC_NOT_CHARGING
 			update_icon()
 			return
@@ -701,7 +705,7 @@
 			START_PROCESSING(SSfastprocess, W)
 			playsound(src, 'sound/machines/clockcult/steam_whoosh.ogg', 50, FALSE)
 			opened = APC_COVER_CLOSED
-			locked = FALSE
+			locked = TRUE //Clockies get full APC access on cogged APCs, but they can't lock or unlock em unless they steal some ID to give all of them APC access, soo this is pretty much just QoL for them and makes cogs a tiny bit more stealthy
 			update_icon()
 		return
 	else if(panel_open && !opened && is_wire_tool(W))
@@ -833,10 +837,7 @@
 
 // attack with hand - remove cell (if cover open) or interact with the APC
 
-/obj/machinery/power/apc/attack_hand(mob/user)
-	. = ..()
-	if(.)
-		return
+/obj/machinery/power/apc/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	if(opened && (!issilicon(user)))
 		if(cell)
 			user.visible_message("[user] removes \the [cell] from [src]!","<span class='notice'>You remove \the [cell].</span>")
@@ -849,17 +850,12 @@
 	if((stat & MAINT) && !opened) //no board; no interface
 		return
 
-/obj/machinery/power/apc/oui_canview(mob/user)
-	if(area.hasSiliconAccessInArea(user)) //some APCs are mapped outside their assigned area, so this is required.
-		return TRUE
-	return ..()
-
 /obj/machinery/power/apc/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
 										datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 
 	if(!ui)
-		ui = new(user, src, ui_key, "apc", name, 450, 460, master_ui, state)
+		ui = new(user, src, ui_key, "Apc", name, 480, 460, master_ui, state)
 		ui.open()
 
 /obj/machinery/power/apc/ui_data(mob/user)
@@ -868,7 +864,7 @@
 	if (H && !H.stealthmode && H.toggled)
 		abilitiesavail = TRUE
 	var/list/data = list(
-		"locked" = locked && !(integration_cog && is_servant_of_ratvar(user)) && !area.hasSiliconAccessInArea(user, PRIVILEDGES_SILICON|PRIVILEDGES_DRONE),
+		"locked" = locked,
 		"lock_nightshift" = nightshift_requires_auth,
 		"failTime" = failure_timer,
 		"isOperating" = operating,
@@ -940,6 +936,9 @@
 	return "[area.name] : [equipment]/[lighting]/[environ] ([lastused_equip+lastused_light+lastused_environ]) : [cell? cell.percent() : "N/C"] ([charging])"
 
 /obj/machinery/power/apc/proc/update()
+	var/old_light = area.power_light
+	var/old_equip = area.power_equip
+	var/old_environ = area.power_environ
 	if(operating && !shorted && !failure_timer)
 		area.power_light = (lighting > 1)
 		area.power_equip = (equipment > 1)
@@ -948,7 +947,8 @@
 		area.power_light = FALSE
 		area.power_equip = FALSE
 		area.power_environ = FALSE
-	area.power_change()
+	if(old_light != area.power_light || old_equip != area.power_equip || old_environ != area.power_environ)
+		area.power_change()
 
 /obj/machinery/power/apc/proc/can_use(mob/user, loud = 0) //used by attack_hand() and Topic()
 	if(IsAdminGhost(user))
@@ -986,7 +986,7 @@
 			failure_timer = 0
 			update_icon()
 			update()
-	if (action == "hijack" && can_use(usr, 1)) //don't need auth for hijack button
+	if(action == "hijack" && can_use(usr, 1)) //don't need auth for hijack button
 		hijack(usr)
 		return
 	var/authorized = (!locked || area.hasSiliconAccessInArea(usr, PRIVILEDGES_SILICON|PRIVILEDGES_DRONE) || (integration_cog && (is_servant_of_ratvar(usr))))
@@ -1315,6 +1315,11 @@
 		cur_used -= lastused_light
 		lighting_satisfied = TRUE
 
+	//If drained by an integration cog: Forcefully avert as much of the powerdrain as possible, though a maximum of MAXIMUM_COG_REGAIN
+	if(cur_excess && cog_drained && cell)
+		var/cog_regain = cell.give(min(min(cog_drained, cur_excess), MAXIMUM_COG_REGAIN))
+		cur_excess -= cog_regain
+		cog_drained = max(0, cog_drained - cog_regain)
 
 	// next: take from or charge to the cell, depending on how much is left
 	if(cell && !shorted)
@@ -1576,6 +1581,8 @@
 #undef APC_UPOVERLAY_ENVIRON2
 #undef APC_UPOVERLAY_LOCKED
 #undef APC_UPOVERLAY_OPERATING
+
+#undef MAXIMUM_COG_REGAIN
 
 /*Power module, used for APC construction*/
 /obj/item/electronics/apc

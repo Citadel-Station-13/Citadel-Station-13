@@ -203,21 +203,24 @@
 	var/pda_slot = SLOT_BELT
 
 /datum/outfit/job/pre_equip(mob/living/carbon/human/H, visualsOnly = FALSE, client/preference_source)
-	switch(preference_source?.prefs.backbag)
-		if(GBACKPACK)
-			back = /obj/item/storage/backpack //Grey backpack
-		if(GSATCHEL)
-			back = /obj/item/storage/backpack/satchel //Grey satchel
-		if(GDUFFELBAG)
-			back = /obj/item/storage/backpack/duffelbag //Grey Duffel bag
-		if(LSATCHEL)
-			back = /obj/item/storage/backpack/satchel/leather //Leather Satchel
-		if(DSATCHEL)
-			back = satchel //Department satchel
-		if(DDUFFELBAG)
-			back = duffelbag //Department duffel bag
-		else
-			back = backpack //Department backpack
+	var/preference_backpack = preference_source?.prefs.backbag
+
+	if(preference_backpack)
+		switch(preference_backpack)
+			if(DBACKPACK)
+				back = backpack //Department backpack
+			if(DSATCHEL)
+				back = satchel //Department satchel
+			if(DDUFFELBAG)
+				back = duffelbag //Department duffel bag
+			else
+				var/find_preference_backpack = GLOB.backbaglist[preference_backpack] //attempt to find non-department backpack
+				if(find_preference_backpack)
+					back = find_preference_backpack
+				else //tried loading in a backpack that we don't allow as a loadout one
+					back = backpack
+	else //somehow doesn't have a preference set, should never reach this point but just-in-case
+		back = backpack
 
 	//converts the uniform string into the path we'll wear, whether it's the skirt or regular variant
 	var/holder

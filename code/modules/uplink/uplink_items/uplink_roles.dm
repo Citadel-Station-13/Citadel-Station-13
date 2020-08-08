@@ -30,6 +30,7 @@
 	item = /obj/item/gun/blastcannon
 	cost = 14							//High cost because of the potential for extreme damage in the hands of a skilled gas masked scientist.
 	restricted_roles = list("Research Director", "Scientist")
+	exclude_modes = list(/datum/game_mode/traitor/internal_affairs)
 
 /datum/uplink_item/role_restricted/alientech
 	name = "Alien Research Disk"
@@ -38,6 +39,14 @@
 	item = /obj/item/disk/tech_disk/abductor
 	cost = 12
 	restricted_roles = list("Research Director", "Scientist", "Roboticist")
+
+/datum/uplink_item/device_tools/brainwash_disk
+	name = "Brainwashing Surgery Program"
+	desc = "A disk containing the procedure to perform a brainwashing surgery, allowing you to implant an objective onto a target. \
+	Insert into an Operating Console to enable the procedure."
+	item = /obj/item/disk/surgery/brainwashing
+	restricted_roles = list("Medical Doctor", "Roboticist")
+	cost = 5
 
 /datum/uplink_item/role_restricted/clown_bomb
 	name = "Clown Bomb"
@@ -92,6 +101,7 @@
 	player_minimum = 20
 	refundable = TRUE
 	restricted_roles = list("Chaplain")
+	exclude_modes = list(/datum/game_mode/traitor/internal_affairs)
 
 /datum/uplink_item/role_restricted/arcane_tome
 	name = "Arcane Tome"
@@ -101,6 +111,7 @@
 	player_minimum = 20
 	refundable = TRUE
 	restricted_roles = list("Chaplain")
+	exclude_modes = list(/datum/game_mode/traitor/internal_affairs)
 
 /datum/uplink_item/role_restricted/explosive_hot_potato
 	name = "Exploding Hot Potato"

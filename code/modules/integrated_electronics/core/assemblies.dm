@@ -519,6 +519,7 @@
 
 
 /obj/item/electronic_assembly/attack_self(mob/user)
+	set waitfor = FALSE
 	if(!check_interactivity(user))
 		return
 	if(opened)
@@ -611,7 +612,7 @@
 		return
 	..()
 
-/obj/item/electronic_assembly/attack_hand(mob/user)
+/obj/item/electronic_assembly/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	if(anchored)
 		attack_self(user)
 		return
@@ -650,11 +651,6 @@
 	icon_state = "setup_small_pda"
 	desc = "It's a case, for building small electronics with. This one resembles a PDA."
 
-/obj/item/electronic_assembly/dildo
-	name = "type-g electronic assembly"
-	icon_state = "setup_dildo_medium"
-	desc = "It's a case, for building small electronics with. This one has a phallic design."
-
 /obj/item/electronic_assembly/small
 	name = "electronic device"
 	icon_state = "setup_device"
@@ -685,11 +681,6 @@
 	name = "type-e electronic device"
 	icon_state = "setup_device_box"
 	desc = "It's a case, for building tiny-sized electronics with. This one has a boxy design."
-
-/obj/item/electronic_assembly/small/dildo
-	name = "type-f electronic device"
-	icon_state = "setup_dildo_small"
-	desc = "It's a case, for building tiny-sized electronics with. This one has a phallic design."
 
 /obj/item/electronic_assembly/medium
 	name = "electronic mechanism"
@@ -730,12 +721,6 @@
 	name = "type-f electronic mechanism"
 	icon_state = "setup_medium_radio"
 	desc = "It's a case, for building medium-sized electronics with. This one resembles an old radio."
-
-/obj/item/electronic_assembly/medium/dildo
-	name = "type-g electronic mechanism"
-	icon_state = "setup_dildo_large"
-	desc = "It's a case, for building medium-sized electronics with. This one has a phallic design."
-
 
 /obj/item/electronic_assembly/large
 	name = "electronic machine"

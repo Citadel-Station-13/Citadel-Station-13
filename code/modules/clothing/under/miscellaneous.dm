@@ -66,7 +66,7 @@
 	gas_transfer_coefficient = 0.01
 	permeability_coefficient = 0.01
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
-	armor = list("melee" = 100, "bullet" = 100, "laser" = 100,"energy" = 100, "bomb" = 100, "bio" = 100, "rad" = 100, "fire" = 100, "acid" = 100)
+	armor = list("melee" = 100, "bullet" = 100, "laser" = 100,"energy" = 100, "bomb" = 100, "bio" = 100, "rad" = 100, "fire" = 100, "acid" = 100, "wound" = 1000) //wound defense at 100 wont stop wounds
 	cold_protection = CHEST | GROIN | LEGS | FEET | ARMS | HANDS
 	min_cold_protection_temperature = SPACE_SUIT_MIN_TEMP_PROTECT
 	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
@@ -308,3 +308,21 @@
 	icon_state = "polyfemtankpantsu"
 	poly_states = 2
 	poly_colors = list("#808080", "#FF3535")
+
+/obj/item/clothing/under/misc/black_dress
+	name = "little black dress"
+	desc = "A small black dress"
+	icon_state = "littleblackdress_s"
+	item_state = "littleblackdress_s"
+
+/obj/item/clothing/under/misc/pinktutu
+	name = "pink tutu"
+	desc = "A pink tutu"
+	icon_state = "pinktutu_s"
+	item_state = "pinktutu_s"
+
+/obj/item/clothing/under/misc/bathrobe
+	name = "bathrobe"
+	desc = "A blue bathrobe."
+	icon_state = "bathrobe"
+	item_state = "bathrobe"

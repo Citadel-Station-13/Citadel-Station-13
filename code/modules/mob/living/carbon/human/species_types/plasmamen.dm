@@ -4,7 +4,7 @@
 	say_mod = "rattles"
 	sexes = 0
 	meat = /obj/item/stack/sheet/mineral/plasma
-	species_traits = list(NOBLOOD,NOTRANSSTING,NOGENITALS)
+	species_traits = list(NOBLOOD,NOTRANSSTING,NOGENITALS,HAS_BONE)
 	inherent_traits = list(TRAIT_RESISTCOLD,TRAIT_RADIMMUNE,TRAIT_NOHUNGER,TRAIT_CALCIUM_HEALER)
 	inherent_biotypes = MOB_HUMANOID|MOB_MINERAL
 	mutantlungs = /obj/item/organ/lungs/plasmaman
@@ -22,6 +22,8 @@
 	liked_food = VEGETABLES
 	outfit_important_for_life = /datum/outfit/plasmaman
 
+	species_type = "skeleton"
+
 /datum/species/plasmaman/spec_life(mob/living/carbon/human/H)
 	var/datum/gas_mixture/environment = H.loc.return_air()
 	var/atmos_sealed = FALSE
@@ -33,7 +35,7 @@
 	if((!istype(H.w_uniform, /obj/item/clothing/under/plasmaman) || !istype(H.head, /obj/item/clothing/head/helmet/space/plasmaman)) && !atmos_sealed)
 		if(environment)
 			if(environment.total_moles())
-				if(environment.gases[/datum/gas/oxygen] && (environment.gases[/datum/gas/oxygen]) >= 1) //Same threshhold that extinguishes fire
+				if(environment.get_moles(/datum/gas/oxygen) >= 1) //Same threshhold that extinguishes fire
 					H.adjust_fire_stacks(0.5)
 					if(!H.on_fire && H.fire_stacks > 0)
 						H.visible_message("<span class='danger'>[H]'s body reacts with the atmosphere and bursts into flames!</span>","<span class='userdanger'>Your body reacts with the atmosphere and bursts into flame!</span>")

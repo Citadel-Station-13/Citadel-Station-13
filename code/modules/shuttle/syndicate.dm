@@ -1,4 +1,4 @@
-#define SYNDICATE_CHALLENGE_TIMER 12000 //20 minutes
+#define SYNDICATE_CHALLENGE_TIMER 9000		// 15 minutes
 
 /obj/machinery/computer/shuttle/syndicate
 	name = "syndicate shuttle terminal"
@@ -21,8 +21,8 @@
 /obj/machinery/computer/shuttle/syndicate/Topic(href, href_list)
 	if(href_list["move"])
 		var/obj/item/circuitboard/computer/syndicate_shuttle/board = circuit
-		if(board.challenge && world.time < SYNDICATE_CHALLENGE_TIMER)
-			to_chat(usr, "<span class='warning'>You've issued a combat challenge to the station! You've got to give them at least [DisplayTimeText(SYNDICATE_CHALLENGE_TIMER - world.time)] more to allow them to prepare.</span>")
+		if(board.challenge && ((world.time - SSticker.round_start_time) < SYNDICATE_CHALLENGE_TIMER))
+			to_chat(usr, "<span class='warning'>You've issued a combat challenge to the station! You've got to give them at least [DisplayTimeText(SYNDICATE_CHALLENGE_TIMER - (world.time - SSticker.round_start_time))] more to allow them to prepare.</span>")
 			return 0
 		board.moved = TRUE
 	..()

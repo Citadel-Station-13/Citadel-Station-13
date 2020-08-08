@@ -114,7 +114,9 @@
 					/obj/item/storage/box/medsprays,
 					/obj/item/storage/box/syringes,
 					/obj/item/storage/box/bodybags,
-					/obj/item/storage/pill_bottle/stimulant)
+					/obj/item/storage/pill_bottle/stimulant,
+					/obj/item/stack/medical/bone_gel,
+					/obj/item/stack/medical/bone_gel)
 	crate_name = "medical supplies crate"
 
 /datum/supply_pack/medical/adv_surgery_tools
@@ -216,3 +218,18 @@
 					/obj/item/storage/box/beakers)
 	crate_name = "virus containment unit crate"
 	crate_type = /obj/structure/closet/crate/secure/plasma
+
+/datum/supply_pack/medical/medipen_variety
+	name = "Medipen Variety-Pak"
+	desc = "Contains eight different medipens in three different varieties, to assist in quickly treating seriously injured patients."
+	cost = 2000
+	contains = list(/obj/item/reagent_containers/hypospray/medipen/,
+					/obj/item/reagent_containers/hypospray/medipen/,
+					/obj/item/reagent_containers/hypospray/medipen/ekit,
+					/obj/item/reagent_containers/hypospray/medipen/ekit,
+					/obj/item/reagent_containers/hypospray/medipen/ekit,
+					/obj/item/reagent_containers/hypospray/medipen/blood_loss,
+					/obj/item/reagent_containers/hypospray/medipen/blood_loss,
+					/obj/item/reagent_containers/hypospray/medipen/blood_loss)
+
+	crate_name = "medipen crate"

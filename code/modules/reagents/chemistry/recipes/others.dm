@@ -704,6 +704,14 @@
 	required_reagents  = list(/datum/reagent/liquid_dark_matter = 5, /datum/reagent/medicine/synaptizine = 10, /datum/reagent/medicine/oculine = 10, /datum/reagent/mutationtoxin = 1)
 	required_temp = 600
 
+/datum/chemical_reaction/slime_extractification
+	required_reagents = list(/datum/reagent/toxin/slimejelly = 30, /datum/reagent/consumable/frostoil = 5, /datum/reagent/toxin/plasma = 5)
+	mix_message = "The mixture condenses into a ball."
+
+/datum/chemical_reaction/slime_extractification/on_reaction(datum/reagents/holder, created_volume)
+	var/location = get_turf(holder.my_atom)
+	new /obj/item/slime_extract/grey(location)
+	
 // Liquid Carpets
 
 /datum/chemical_reaction/carpet
@@ -825,3 +833,8 @@
 	required_reagents = list(/datum/reagent/medicine/salglu_solution = 1, /datum/reagent/iron = 1, /datum/reagent/stable_plasma = 1)
 	mix_message = "The mixture congeals and gives off a faint copper scent."
 	required_temp = 350
+
+/datum/chemical_reaction/cellulose_carbonization
+	results = list(/datum/reagent/carbon = 1)
+	required_reagents = list(/datum/reagent/cellulose = 1)
+	required_temp = 512

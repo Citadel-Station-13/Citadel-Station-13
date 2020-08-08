@@ -140,6 +140,13 @@
 	///What kind of footstep this mob should have. Null if it shouldn't have any.
 	var/footstep_type
 
+	//How much wounding power it has
+	var/wound_bonus = CANT_WOUND
+	//How much bare wounding power it has
+	var/bare_wound_bonus = 0
+	//If the attacks from this are sharp
+	var/sharpness = SHARP_NONE
+
 /mob/living/simple_animal/Initialize()
 	. = ..()
 	GLOB.simple_animals[AIStatus] += src
@@ -252,14 +259,11 @@
 	if(isturf(src.loc) && isopenturf(src.loc))
 		var/turf/open/ST = src.loc
 		if(ST.air)
-			var/ST_gases = ST.air.gases
 
-			var/tox = ST_gases[/datum/gas/plasma]
-			var/oxy = ST_gases[/datum/gas/oxygen]
-			var/n2  = ST_gases[/datum/gas/nitrogen]
-			var/co2 = ST_gases[/datum/gas/carbon_dioxide]
-
-			GAS_GARBAGE_COLLECT(ST.air.gases)
+			var/tox = ST.air.get_moles(/datum/gas/plasma)
+			var/oxy = ST.air.get_moles(/datum/gas/oxygen)
+			var/n2  = ST.air.get_moles(/datum/gas/nitrogen)
+			var/co2 = ST.air.get_moles(/datum/gas/carbon_dioxide)
 
 			if(atmos_requirements["min_oxy"] && oxy < atmos_requirements["min_oxy"])
 				. = FALSE

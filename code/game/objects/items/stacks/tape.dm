@@ -7,13 +7,20 @@
 	icon = 'icons/obj/tapes.dmi'
 	icon_state = "tape_w"
 	var/prefix = "sticky"
+	w_class = WEIGHT_CLASS_TINY
+	full_w_class = WEIGHT_CLASS_TINY
 	item_flags = NOBLUDGEON
 	amount = 5
 	max_amount = 5
 	resistance_flags = FLAMMABLE
+	splint_factor = 0.8
+	grind_results = list(/datum/reagent/cellulose = 5)
 
 	var/list/conferred_embed = EMBED_HARMLESS
 	var/overwrite_existing = FALSE
+
+	var/endless = FALSE
+	var/apply_time = 30
 
 /obj/item/stack/sticky_tape/afterattack(obj/item/I, mob/living/user)
 	if(!istype(I))
@@ -25,16 +32,23 @@
 
 	user.visible_message("<span class='notice'>[user] begins wrapping [I] with [src].</span>", "<span class='notice'>You begin wrapping [I] with [src].</span>")
 
-	if(do_after(user, 30, target=I))
+	if(do_after(user, apply_time, target=I))
 		I.embedding = conferred_embed
 		I.updateEmbedding()
 		to_chat(user, "<span class='notice'>You finish wrapping [I] with [src].</span>")
-		use(1)
+		if(!endless)
+			use(1)
 		I.name = "[prefix] [I.name]"
 
 		if(istype(I, /obj/item/grenade))
 			var/obj/item/grenade/sticky_bomb = I
 			sticky_bomb.sticky = TRUE
+
+/obj/item/stack/sticky_tape/infinite //endless tape that applies far faster, for maximum honks
+	name = "endless sticky tape"
+	desc = "This roll of sticky tape somehow has no end."
+	endless = TRUE
+	apply_time = 10
 
 /obj/item/stack/sticky_tape/super
 	name = "super sticky tape"
@@ -43,6 +57,7 @@
 	icon_state = "tape_y"
 	prefix = "super sticky"
 	conferred_embed = EMBED_HARMLESS_SUPERIOR
+	splint_factor = 0.6
 
 /obj/item/stack/sticky_tape/pointy
 	name = "pointy tape"
@@ -59,3 +74,13 @@
 	icon_state = "tape_spikes"
 	prefix = "super pointy"
 	conferred_embed = EMBED_POINTY_SUPERIOR
+
+/obj/item/stack/sticky_tape/surgical
+	name = "surgical tape"
+	singular_name = "surgical tape"
+	desc = "Made for patching broken bones back together alongside bone gel, not for playing pranks."
+	//icon_state = "tape_spikes"
+	prefix = "surgical"
+	conferred_embed = list("embed_chance" = 30, "pain_mult" = 0, "jostle_pain_mult" = 0, "ignore_throwspeed_threshold" = TRUE)
+	splint_factor = 0.4
+	custom_price = 500

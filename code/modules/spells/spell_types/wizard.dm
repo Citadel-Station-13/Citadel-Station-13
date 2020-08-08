@@ -371,7 +371,7 @@
 		if(isliving(hit_atom))
 			var/mob/living/M = hit_atom
 			if(!M.anti_magic_check())
-				M.electrocute_act(80, src, SHOCK_ILLUSION)
+				M.electrocute_act(80, src, null, SHOCK_ILLUSION)
 		qdel(src)
 
 /obj/item/spellpacket/lightningbolt/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0, datum/callback/callback)

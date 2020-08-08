@@ -165,7 +165,8 @@
 	if(!ui)
 		var/datum/asset/assets = get_asset_datum(/datum/asset/spritesheet/simple/pills)
 		assets.send(user)
-		ui = new(user, src, ui_key, "chem_master", name, 500, 550, master_ui, state)
+
+		ui = new(user, src, ui_key, "ChemMaster", name, 520, 550, master_ui, state)
 		ui.open()
 
 /obj/machinery/chem_master/ui_data(mob/user)
@@ -258,9 +259,9 @@
 			var/amount = text2num(params["amount"])
 			if(amount == null)
 				amount = text2num(input(usr,
-					"Max 10. Buffer content will be split evenly.",
+					"Max 20. Buffer content will be split evenly.",
 					"How many to make?", 1))
-			amount = clamp(round(amount), 0, 10)
+			amount = clamp(round(amount), 0, 20)
 			if (amount <= 0)
 				return FALSE
 			// Get units per item

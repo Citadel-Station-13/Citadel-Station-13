@@ -14,6 +14,7 @@
 	var/list/modes			// allowed modes
 	var/list/gamemode_cache
 	var/list/votable_modes		// votable modes
+	// var/list/ic_filter_regex
 	var/list/storyteller_cache
 	var/list/mode_names
 	var/list/mode_reports
@@ -414,3 +415,21 @@
 				continue
 			runnable_modes[M] = probabilities[M.config_tag]
 	return runnable_modes
+/*
+/datum/controller/configuration/proc/LoadChatFilter()
+	var/list/in_character_filter = list()
+
+	if(!fexists("[directory]/in_character_filter.txt"))
+		return
+	log_config("Loading config file in_character_filter.txt...")
+	for(var/line in world.file2list("[directory]/in_character_filter.txt"))
+		if(!line)
+			continue
+		if(findtextEx(line,"#",1,2))
+			continue
+		in_character_filter += REGEX_QUOTE(line)
+
+	ic_filter_regex = in_character_filter.len ? regex("\\b([jointext(in_character_filter, "|")])\\b", "i") : null
+
+	syncChatRegexes()
+*/

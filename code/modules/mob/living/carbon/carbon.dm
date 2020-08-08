@@ -88,11 +88,23 @@
 			for(var/datum/surgery/S in surgeries)
 				if(S.next_step(user,user.a_intent))
 					return 1
+
+	if(!all_wounds || !(user.a_intent == INTENT_HELP || user == src))
+		return ..()
+
+	for(var/i in shuffle(all_wounds))
+		var/datum/wound/W = i
+		if(W.try_treating(I, user))
+			return 1
+
 	return ..()
 
 /mob/living/carbon/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	. = ..()
 	var/hurt = TRUE
+	var/extra_speed = 0
+	if(throwingdatum.thrower != src)
+		extra_speed = min(max(0, throwingdatum.speed - initial(throw_speed)), 3)
 	if(GetComponent(/datum/component/tackler))
 		return
 	if(throwingdatum?.thrower && iscyborg(throwingdatum.thrower))
@@ -102,18 +114,18 @@
 	if(hit_atom.density && isturf(hit_atom))
 		if(hurt)
 			DefaultCombatKnockdown(20)
-			take_bodypart_damage(10)
+			take_bodypart_damage(10 + 5 * extra_speed, check_armor = TRUE, wound_bonus = extra_speed * 5)
 	if(iscarbon(hit_atom) && hit_atom != src)
 		var/mob/living/carbon/victim = hit_atom
 		if(victim.movement_type & FLYING)
 			return
 		if(hurt)
-			victim.take_bodypart_damage(10)
-			take_bodypart_damage(10)
+			victim.take_bodypart_damage(10 + 5 * extra_speed, check_armor = TRUE, wound_bonus = extra_speed * 5)
+			take_bodypart_damage(10 + 5 * extra_speed, check_armor = TRUE, wound_bonus = extra_speed * 5)
 			victim.DefaultCombatKnockdown(20)
 			DefaultCombatKnockdown(20)
-			visible_message("<span class='danger'>[src] crashes into [victim], knocking them both over!</span>",\
-				"<span class='userdanger'>You violently crash into [victim]!</span>")
+			visible_message("<span class='danger'>[src] crashes into [victim] [extra_speed ? "really hard" : ""], knocking them both over!</span>",\
+				"<span class='userdanger'>You violently crash into [victim] [extra_speed ? "extra hard" : ""]!</span>")
 		playsound(src,'sound/weapons/punch1.ogg',50,1)
 
 
@@ -153,6 +165,7 @@
 	if(IS_STAMCRIT(src))
 		to_chat(src, "<span class='warning'>You're too exhausted.</span>")
 		return
+
 	var/random_turn = a_intent == INTENT_HARM
 	//END OF CIT CHANGES
 
@@ -196,12 +209,18 @@
 		adjustStaminaLossBuffered(I.getweight(src, STAM_COST_THROW_MULT, SKILL_THROW_STAM_COST))
 
 	if(thrown_thing)
-		visible_message("<span class='danger'>[src] has thrown [thrown_thing].</span>")
-		log_message("has thrown [thrown_thing]", LOG_ATTACK)
+		var/power_throw = 0
+		if(HAS_TRAIT(src, TRAIT_HULK))
+			power_throw++
+		if(pulling && grab_state >= GRAB_NECK)
+			power_throw++
+		visible_message("<span class='danger'>[src] throws [thrown_thing][power_throw ? " really hard!" : "."]</span>", \
+						"<span class='danger'>You throw [thrown_thing][power_throw ? " really hard!" : "."]</span>")
+		log_message("has thrown [thrown_thing] [power_throw ? "really hard" : ""]", LOG_ATTACK)
 		do_attack_animation(target, no_effect = 1)
 		playsound(loc, 'sound/weapons/punchmiss.ogg', 50, 1, -1)
 		newtonian_move(get_dir(target, src))
-		thrown_thing.safe_throw_at(target, thrown_thing.throw_range, thrown_thing.throw_speed, src, null, null, null, move_force, random_turn)
+		thrown_thing.safe_throw_at(target, thrown_thing.throw_range, thrown_thing.throw_speed + power_throw, src, null, null, null, move_force, random_turn)
 
 /mob/living/carbon/restrained(ignore_grab)
 	. = (handcuffed || (!ignore_grab && pulledby && pulledby.grab_state >= GRAB_AGGRESSIVE))
@@ -292,14 +311,11 @@
 		return
 	if(restrained())
 		// too soon.
-		if(last_special > world.time)
-			return
 		var/buckle_cd = 600
 		if(handcuffed)
 			var/obj/item/restraints/O = src.get_item_by_slot(SLOT_HANDCUFFED)
 			buckle_cd = O.breakouttime
-		changeNext_move(min(CLICK_CD_BREAKOUT, buckle_cd))
-		last_special = world.time + min(CLICK_CD_BREAKOUT, buckle_cd)
+		MarkResistTime()
 		visible_message("<span class='warning'>[src] attempts to unbuckle [p_them()]self!</span>", \
 					"<span class='notice'>You attempt to unbuckle yourself... (This will take around [round(buckle_cd/600,1)] minute\s, and you need to stay still.)</span>")
 		if(do_after(src, buckle_cd, 0, target = src, required_mobility_flags = MOBILITY_RESIST))
@@ -313,39 +329,26 @@
 		buckled.user_unbuckle_mob(src,src)
 
 /mob/living/carbon/resist_fire()
-	if(last_special > world.time)
-		return
 	fire_stacks -= 5
 	DefaultCombatKnockdown(60, TRUE, TRUE)
 	spin(32,2)
 	visible_message("<span class='danger'>[src] rolls on the floor, trying to put [p_them()]self out!</span>", \
 		"<span class='notice'>You stop, drop, and roll!</span>")
-	last_special = world.time + 30
+	MarkResistTime(30)
 	sleep(30)
 	if(fire_stacks <= 0)
 		visible_message("<span class='danger'>[src] has successfully extinguished [p_them()]self!</span>", \
 			"<span class='notice'>You extinguish yourself.</span>")
 		ExtinguishMob()
 
-/mob/living/carbon/resist_restraints(ignore_delay = FALSE)
+/mob/living/carbon/resist_restraints()
 	var/obj/item/I = null
-	var/type = 0
-	if(!ignore_delay && (last_special > world.time))
-		to_chat(src, "<span class='warning'>You don't have the energy to resist your restraints that fast!</span>")
-		return
 	if(handcuffed)
 		I = handcuffed
-		type = 1
 	else if(legcuffed)
 		I = legcuffed
-		type = 2
 	if(I)
-		if(type == 1)
-			changeNext_move(min(CLICK_CD_BREAKOUT, I.breakouttime))
-			last_special = world.time + CLICK_CD_BREAKOUT
-		if(type == 2)
-			changeNext_move(min(CLICK_CD_RANGE, I.breakouttime))
-			last_special = world.time + CLICK_CD_RANGE
+		MarkResistTime()
 		cuff_resist(I)
 
 /mob/living/carbon/proc/cuff_resist(obj/item/I, breakouttime = 600, cuff_break = 0)
@@ -390,7 +393,7 @@
 			if (W)
 				W.layer = initial(W.layer)
 				W.plane = initial(W.plane)
-		changeNext_move(0)
+		SetNextAction(0)
 	if (legcuffed)
 		var/obj/item/W = legcuffed
 		legcuffed = null
@@ -403,7 +406,7 @@
 			if (W)
 				W.layer = initial(W.layer)
 				W.plane = initial(W.plane)
-		changeNext_move(0)
+		SetNextAction(0)
 	update_equipment_speed_mods() // In case cuffs ever change speed
 
 /mob/living/carbon/proc/clear_cuffs(obj/item/I, cuff_break)
@@ -892,6 +895,9 @@
 		var/datum/disease/D = thing
 		if(D.severity != DISEASE_SEVERITY_POSITIVE)
 			D.cure(FALSE)
+	for(var/thing in all_wounds)
+		var/datum/wound/W = thing
+		W.remove_wound()
 	if(admin_revive)
 		regenerate_limbs()
 		regenerate_organs()
@@ -981,6 +987,10 @@
 				. *= 1.25
 			if(SANITY_NEUTRAL to SANITY_GREAT)
 				. *= 0.90
+
+	for(var/i in status_effects)
+		var/datum/status_effect/S = i
+		. *= S.interact_speed_modifier()
 
 
 /mob/living/carbon/proc/create_internal_organs()
@@ -1170,3 +1180,55 @@
 	if(wear_mask)
 		if(wear_mask.flags_inv & HIDEEYES)
 			LAZYOR(., SLOT_GLASSES)
+
+// if any of our bodyparts are bleeding
+/mob/living/carbon/proc/is_bleeding()
+	for(var/i in bodyparts)
+		var/obj/item/bodypart/BP = i
+		if(BP.get_bleed_rate())
+			return TRUE
+
+// get our total bleedrate
+/mob/living/carbon/proc/get_total_bleed_rate()
+	var/total_bleed_rate = 0
+	for(var/i in bodyparts)
+		var/obj/item/bodypart/BP = i
+		total_bleed_rate += BP.get_bleed_rate()
+
+	return total_bleed_rate
+
+/**
+  * generate_fake_scars()- for when you want to scar someone, but you don't want to hurt them first. These scars don't count for temporal scarring (hence, fake)
+  *
+  * If you want a specific wound scar, pass that wound type as the second arg, otherwise you can pass a list like WOUND_LIST_SLASH to generate a random cut scar.
+  *
+  * Arguments:
+  * * num_scars- A number for how many scars you want to add
+  * * forced_type- Which wound or category of wounds you want to choose from, WOUND_LIST_BLUNT, WOUND_LIST_SLASH, or WOUND_LIST_BURN (or some combination). If passed a list, picks randomly from the listed wounds. Defaults to all 3 types
+  */
+/mob/living/carbon/proc/generate_fake_scars(num_scars, forced_type)
+	for(var/i in 1 to num_scars)
+		var/datum/scar/scaries = new
+		var/obj/item/bodypart/scar_part = pick(bodyparts)
+
+		var/wound_type
+		if(forced_type)
+			if(islist(forced_type))
+				wound_type = pick(forced_type)
+			else
+				wound_type = forced_type
+		else
+			wound_type = pick(GLOB.global_all_wound_types)
+
+		var/datum/wound/phantom_wound = new wound_type
+		scaries.generate(scar_part, phantom_wound)
+		scaries.fake = TRUE
+		QDEL_NULL(phantom_wound)
+
+/**
+  * get_biological_state is a helper used to see what kind of wounds we roll for. By default we just assume carbons (read:monkeys) are flesh and bone, but humans rely on their species datums
+  *
+  * go look at the species def for more info [/datum/species/proc/get_biological_state]
+  */
+/mob/living/carbon/proc/get_biological_state()
+	return BIO_FLESH_BONE

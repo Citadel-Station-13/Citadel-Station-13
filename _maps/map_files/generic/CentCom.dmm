@@ -8409,7 +8409,7 @@
 /area/centcom/ferry)
 "tx" = (
 /obj/structure/table/wood,
-/obj/item/storage/pill_bottle/dice,
+/obj/item/storage/box/dice,
 /turf/open/floor/plasteel/grimy,
 /area/centcom/ferry)
 "ty" = (
@@ -10197,7 +10197,7 @@
 /area/wizard_station)
 "xy" = (
 /obj/structure/table/wood/fancy,
-/obj/item/storage/pill_bottle/dice{
+/obj/item/storage/box/dice{
 	icon_state = "magicdicebag"
 	},
 /turf/open/floor/carpet,

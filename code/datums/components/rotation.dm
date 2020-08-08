@@ -98,16 +98,16 @@
 
 /datum/component/simple_rotation/proc/HandRot(datum/source, mob/user, rotation = default_rotation_direction)
 	if(can_be_rotated)
-		if(!can_be_rotated.Invoke(user, default_rotation_direction))
+		if(!can_be_rotated.Invoke(user, rotation))
 			return
 	else
-		if(!default_can_be_rotated(user, default_rotation_direction))
+		if(!default_can_be_rotated(user, rotation))
 			return
 	if(can_user_rotate)
-		if(!can_user_rotate.Invoke(user, default_rotation_direction))
+		if(!can_user_rotate.Invoke(user, rotation))
 			return
 	else
-		if(!default_can_user_rotate(user, default_rotation_direction))
+		if(!default_can_user_rotate(user, rotation))
 			return
 	BaseRot(user, rotation)
 	return TRUE

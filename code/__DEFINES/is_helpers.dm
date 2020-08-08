@@ -65,9 +65,8 @@ GLOBAL_LIST_INIT(turfs_without_ground, typecacheof(list(
 #define isslimeperson(A) (is_species(A, /datum/species/jelly/slime))
 #define isluminescent(A) (is_species(A, /datum/species/jelly/luminescent))
 #define iszombie(A) (is_species(A, /datum/species/zombie))
-#define ismoth(A) (is_species(A, /datum/species/insect))
 #define ishumanbasic(A) (is_species(A, /datum/species/human))
-#define iscatperson(A) (ishumanbasic(A) && istype(A.dna.species, /datum/species/human/felinid) )
+#define iscatperson(A) (ishumanbasic(A) && istype(A.dna.species, /datum/species/human/felinid))
 #define isdwarf(A) (is_species(A, /datum/species/dwarf))
 #define isdullahan(A) (is_species(A, /datum/species/dullahan))
 #define isangel(A) (is_species(A, /datum/species/angel))
@@ -80,8 +79,6 @@ GLOBAL_LIST_INIT(turfs_without_ground, typecacheof(list(
 #define isipcperson(A) (is_species(A, /datum/species/ipc))
 #define issynthliz(A) (is_species(A, /datum/species/synthliz))
 #define ismammal(A) (is_species(A, /datum/species/mammal))
-#define isavian(A) (is_species(A, /datum/species/avian))
-#define isaquatic(A) (is_species(A, /datum/species/aquatic))
 #define isinsect(A) (is_species(A, /datum/species/insect))
 #define isxenoperson(A) (is_species(A, /datum/species/xeno))
 #define isstartjelly(A) (is_species(A, /datum/species/jelly/roundstartslime))
@@ -202,21 +199,13 @@ GLOBAL_LIST_INIT(turfs_without_ground, typecacheof(list(
 
 #define isclothing(A) (istype(A, /obj/item/clothing))
 
-GLOBAL_LIST_INIT(pointed_types, typecacheof(list(
-	/obj/item/pen,
-	/obj/item/screwdriver,
-	/obj/item/reagent_containers/syringe,
-	/obj/item/kitchen/fork)))
-
-#define is_pointed(W) (is_type_in_typecache(W, GLOB.pointed_types))
-
 #define isbodypart(A) (istype(A, /obj/item/bodypart))
 
 #define isprojectile(A) (istype(A, /obj/item/projectile))
 
 #define isgun(A) (istype(A, /obj/item/gun))
 
-#define isfood(A) (istype(A, /obj/item/reagent_containers/food))
+#define isfood(A) (istype(A, /obj/item/reagent_containers/food/snacks))
 
 //Assemblies
 #define isassembly(O) (istype(O, /obj/item/assembly))

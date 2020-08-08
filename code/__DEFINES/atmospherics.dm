@@ -136,7 +136,7 @@
 #define TANK_FRAGMENT_SCALE	    			(6.*ONE_ATMOSPHERE)		//+1 for each SCALE kPa aboe threshold
 #define TANK_MAX_RELEASE_PRESSURE 			(ONE_ATMOSPHERE*3)
 #define TANK_MIN_RELEASE_PRESSURE 			0
-#define TANK_DEFAULT_RELEASE_PRESSURE 		16
+#define TANK_DEFAULT_RELEASE_PRESSURE 		17
 
 //CANATMOSPASS
 #define ATMOS_PASS_YES 1
@@ -270,16 +270,9 @@
 	T.pixel_x = (PipingLayer - PIPING_LAYER_DEFAULT) * PIPING_LAYER_P_X;\
 	T.pixel_y = (PipingLayer - PIPING_LAYER_DEFAULT) * PIPING_LAYER_P_Y;
 
-#define THERMAL_ENERGY(gas) (gas.temperature * gas.heat_capacity())
 #define QUANTIZE(variable)		(round(variable,0.0000001))/*I feel the need to document what happens here. Basically this is used to catch most rounding errors, however it's previous value made it so that
 															once gases got hot enough, most procedures wouldnt occur due to the fact that the mole counts would get rounded away. Thus, we lowered it a few orders of magnititude */
 
-//prefer this to gas_mixture/total_moles in performance critical areas
-#define TOTAL_MOLES(cached_gases, out_var)\
-	out_var = 0;\
-	for(var/total_moles_id in cached_gases){\
-		out_var += cached_gases[total_moles_id];\
-	}
 
 #ifdef TESTING
 GLOBAL_LIST_INIT(atmos_adjacent_savings, list(0,0))
@@ -288,6 +281,19 @@ GLOBAL_LIST_INIT(atmos_adjacent_savings, list(0,0))
 #define CALCULATE_ADJACENT_TURFS(T) SSadjacent_air.queue[T] = 1
 #endif
 
+#define EXTOOLS (world.system_type == MS_WINDOWS ? "byond-extools.dll" : "libbyond-extools.so")
+
+GLOBAL_VAR(atmos_extools_initialized) // this must be an uninitialized (null) one or init_monstermos will be called twice because reasons
+#define ATMOS_EXTOOLS_CHECK if(!GLOB.atmos_extools_initialized){\
+	GLOB.atmos_extools_initialized=TRUE;\
+	if(fexists(EXTOOLS)){\
+		var/result = call(EXTOOLS,"init_monstermos")();\
+		if(result != "ok") {CRASH(result);}\
+	} else {\
+		CRASH("[EXTOOLS] does not exist!");\
+	}\
+}
+
 //Unomos - So for whatever reason, garbage collection actually drastically decreases the cost of atmos later in the round. Turning this into a define yields massively improved performance.
 #define GAS_GARBAGE_COLLECT(GASGASGAS)\
 	var/list/CACHE_GAS = GASGASGAS;\
@@ -295,10 +301,6 @@ GLOBAL_LIST_INIT(atmos_adjacent_savings, list(0,0))
 		if(QUANTIZE(CACHE_GAS[id]) <= 0)\
 			CACHE_GAS -= id;\
 	}
-
-#define ARCHIVE_TEMPERATURE(gas) gas.temperature_archived = gas.temperature
-
-#define ARCHIVE(gas) gas.temperature_archived = gas.temperature; gas.gas_archive = gas.gases.Copy();
 
 GLOBAL_LIST_INIT(pipe_paint_colors, list(
 		"amethyst" = rgb(130,43,255), //supplymain
