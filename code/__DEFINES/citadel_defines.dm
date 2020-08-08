@@ -98,6 +98,7 @@
 #define NO_APHRO			(1<<9)
 #define NO_ASS_SLAP			(1<<10)
 #define BIMBOFICATION		(1<<11)
+#define NO_AUTO_WAG			(1<<12)
 
 #define TOGGLES_CITADEL 0
 

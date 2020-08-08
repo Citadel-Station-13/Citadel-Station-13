@@ -112,7 +112,7 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 				M.visible_message("[M] suddenly shudders, and splits into two identical twins!")
 				SM.copy_languages(M, LANGUAGE_MIND)
 				playerClone =  TRUE
-				M.next_move_modifier = 1
+				M.action_cooldown_mod = 1
 				M.adjust_nutrition(-500)
 
 				//Damage the clone
@@ -154,7 +154,7 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 							M.adjust_nutrition(M.nutrition/5)
 						if(50)
 							to_chat(M, "<span class='notice'>The synthetic cells begin to merge with your body, it feels like your body is made of a viscous water, making your movements difficult.</span>")
-							M.next_move_modifier += 4//If this makes you fast then please fix it, it should make you slow!!
+							M.action_cooldown_mod += 4//If this makes you fast then please fix it, it should make you slow!!
 							//candidates = pollGhostCandidates("Do you want to play as a clone of [M.name] and do you agree to respect their character and act in a similar manner to them? I swear to god if you diddle them I will be very disapointed in you. ", "FermiClone", null, ROLE_SENTIENCE, 300) // see poll_ignore.dm, should allow admins to ban greifers or bullies
 						if(51 to 79)
 							M.adjust_nutrition(M.nutrition/2)
@@ -164,7 +164,7 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 								M.set_nutrition(20000) //https://www.youtube.com/watch?v=Bj_YLenOlZI
 						if(86)//Upon splitting, you get really hungry and are capable again. Deletes the chem after you're done.
 							M.set_nutrition(15)//YOU BEST BE EATTING AFTER THIS YOU CUTIE
-							M.next_move_modifier -= 4
+							M.action_cooldown_mod -= 4
 							to_chat(M, "<span class='notice'>Your body splits away from the cell clone of yourself, leaving you with a drained and hollow feeling inside.</span>")
 
 							//clone
@@ -195,14 +195,14 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 	if (playerClone == TRUE)//If the player made a clone with it, then thats all they get.
 		playerClone = FALSE
 		return
-	if (M.next_move_modifier == 4 && !M.has_status_effect(/datum/status_effect/chem/SGDF))//checks if they're ingested over 20u of the stuff, but fell short of the required 30u to make a clone.
+	if (M.action_cooldown_mod == 4 && !M.has_status_effect(/datum/status_effect/chem/SGDF))//checks if they're ingested over 20u of the stuff, but fell short of the required 30u to make a clone.
 		to_chat(M, "<span class='notice'>You feel the cells begin to merge with your body, unable to reach nucleation, they instead merge with your body, healing any wounds.</span>")
 		M.adjustCloneLoss(-10, 0) //I don't want to make Rezadone obsolete.
 		M.adjustBruteLoss(-25, 0)// Note that this takes a long time to apply and makes you fat and useless when it's in you, I don't think this small burst of healing will be useful considering how long it takes to get there.
 		M.adjustFireLoss(-25, 0)
 		M.blood_volume += 250
 		M.heal_bodypart_damage(1,1)
-		M.next_move_modifier = 1
+		M.action_cooldown_mod = 1
 		if (M.nutrition < 1500)
 			M.adjust_nutrition(250)
 	else if (unitCheck == TRUE && !M.has_status_effect(/datum/status_effect/chem/SGDF))// If they're ingested a little bit (10u minimum), then give them a little healing.
@@ -211,7 +211,7 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 		M.adjustBruteLoss(-10, 0)
 		M.adjustFireLoss(-10, 0)
 		M.blood_volume += 100
-		M.next_move_modifier = 1
+		M.action_cooldown_mod = 1
 		if (M.nutrition < 1500)
 			M.adjust_nutrition(500)
 
@@ -325,7 +325,7 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 			M.adjust_nutrition(M.nutrition/5)
 		if(50)
 			to_chat(M, "<span class='notice'>The synethic cells begin to merge with your body, it feels like your body is made of a viscous water, making your movements difficult.</span>")
-			M.next_move_modifier = 4//If this makes you fast then please fix it, it should make you slow!!
+			M.action_cooldown_mod = 4//If this makes you fast then please fix it, it should make you slow!!
 		if(51 to 73)
 			M.adjust_nutrition(M.nutrition/2)
 		if(74)
@@ -339,7 +339,7 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 			if (!M.reagents.has_reagent(/datum/reagent/medicine/pen_acid))//Counterplay is pent.)
 				message_admins("(non-infectious) SDZF: Zombie spawned at [M] [COORD(M)]!")
 				M.set_nutrition(startHunger - 500) //YOU BEST BE RUNNING AWAY AFTER THIS YOU BADDIE
-				M.next_move_modifier = 1
+				M.action_cooldown_mod = 1
 				to_chat(M, "<span class='warning'>Your body splits away from the cell clone of yourself, your attempted clone birthing itself violently from you as it begins to shamble around, a terrifying abomination of science.</span>")
 				M.visible_message("[M] suddenly shudders, and splits into a funky smelling copy of themselves!")
 				M.emote("scream")

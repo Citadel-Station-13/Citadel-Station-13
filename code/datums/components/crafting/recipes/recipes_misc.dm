@@ -324,6 +324,13 @@
 	result = /obj/item/toy/sword/cx
 	subcategory = CAT_MISCELLANEOUS
 	category = CAT_MISC
+	
+/datum/crafting_recipe/catgirlplushie
+	name = "Catgirl Plushie"
+	reqs = list(/obj/item/toy/plush/hairball = 3)
+	result = /obj/item/toy/plush/catgirl
+	subcategory = CAT_MISCELLANEOUS
+	category = CAT_MISC
 
 ////////////
 //Unsorted//

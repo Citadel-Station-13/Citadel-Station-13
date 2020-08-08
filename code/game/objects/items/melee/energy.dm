@@ -102,7 +102,7 @@
 	attack_verb_off = list("tapped", "poked")
 	throw_speed = 3
 	throw_range = 5
-	sharpness = IS_SHARP
+	sharpness = SHARP_EDGED
 	embedding = list("embed_chance" = 75, "impact_pain_mult" = 10)
 	armour_penetration = 35
 	item_flags = NEEDS_PERMIT | ITEM_CAN_PARRY
@@ -147,6 +147,12 @@
 		return NONE
 	return ..()
 
+/obj/item/melee/transforming/energy/sword/on_active_parry(mob/living/owner, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, list/block_return, parry_efficiency, parry_time)
+	. = ..()
+	if(parry_efficiency >= 80)		// perfect parry
+		block_return[BLOCK_RETURN_REDIRECT_METHOD] = REDIRECT_METHOD_RETURN_TO_SENDER
+		. |= BLOCK_SHOULD_REDIRECT
+
 /obj/item/melee/transforming/energy/sword/cyborg
 	sword_color = "red"
 	light_color = "#ff0000"
@@ -174,7 +180,7 @@
 	sword_color = null //stops icon from breaking when turned on.
 	hitcost = 75 //Costs more than a standard cyborg esword
 	w_class = WEIGHT_CLASS_NORMAL
-	sharpness = IS_SHARP
+	sharpness = SHARP_EDGED
 	light_color = "#40ceff"
 	tool_behaviour = TOOL_SAW
 	toolspeed = 0.7
@@ -249,7 +255,7 @@
 	throw_range = 1
 	w_class = WEIGHT_CLASS_BULKY//So you can't hide it in your pocket or some such.
 	var/datum/effect_system/spark_spread/spark_system
-	sharpness = IS_SHARP
+	sharpness = SHARP_EDGED
 
 //Most of the other special functions are handled in their own files. aka special snowflake code so kewl
 /obj/item/melee/transforming/energy/blade/Initialize()
@@ -285,7 +291,7 @@
 	attack_verb_off = list("tapped", "poked")
 	throw_speed = 3
 	throw_range = 5
-	sharpness = IS_SHARP
+	sharpness = SHARP_EDGED
 	embedding = list("embedded_pain_multiplier" = 6, "embed_chance" = 20, "embedded_fall_chance" = 60)
 	armour_penetration = 10
 	block_chance = 35

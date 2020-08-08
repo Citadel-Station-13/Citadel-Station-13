@@ -7,10 +7,6 @@
 */
 
 /mob/living/silicon/robot/ClickOn(var/atom/A, var/params)
-	if(world.time <= next_click)
-		return
-	next_click = world.time + 1
-
 	if(check_click_intercept(params,A))
 		return
 
@@ -19,25 +15,19 @@
 
 	var/list/modifiers = params2list(params)
 	if(modifiers["shift"] && modifiers["ctrl"])
-		CtrlShiftClickOn(A)
-		return
+		return CtrlShiftClickOn(A)
 	if(modifiers["shift"] && modifiers["middle"])
-		ShiftMiddleClickOn(A)
-		return
+		return ShiftMiddleClickOn(A)
 	if(modifiers["middle"])
-		MiddleClickOn(A)
-		return
+		return MiddleClickOn(A)
 	if(modifiers["shift"])
-		ShiftClickOn(A)
-		return
+		return ShiftClickOn(A)
 	if(modifiers["alt"]) // alt and alt-gr (rightalt)
-		AltClickOn(A)
-		return
+		return AltClickOn(A)
 	if(modifiers["ctrl"])
-		CtrlClickOn(A)
-		return
+		return CtrlClickOn(A)
 
-	if(next_move >= world.time)
+	if(!CheckActionCooldown(immediate = TRUE))
 		return
 
 	face_atom(A) // change direction to face what you clicked on
@@ -50,7 +40,7 @@
 	*/
 	if(aicamera.in_camera_mode) //Cyborg picture taking
 		aicamera.camera_mode_off()
-		aicamera.captureimage(A, usr)
+		INVOKE_ASYNC(aicamera, /obj/item/camera.proc/captureimage, A, usr)
 		return
 
 	var/obj/item/W = get_active_held_item()
@@ -58,13 +48,8 @@
 	if(!W && A.Adjacent(src) && (isobj(A) || ismob(A)))
 		var/atom/movable/C = A
 		if(C.can_buckle && C.has_buckled_mobs())
-			if(C.buckled_mobs.len > 1)
-				var/unbuckled = input(src, "Who do you wish to unbuckle?","Unbuckle Who?") as null|mob in C.buckled_mobs
-				if(C.user_unbuckle_mob(unbuckled,src))
-					return
-			else
-				if(C.user_unbuckle_mob(C.buckled_mobs[1],src))
-					return
+			INVOKE_ASYNC(C, /atom/movable.proc/precise_user_unbuckle_mob, src)
+			return
 
 	if(!W && (get_dist(src,A) <= interaction_range))
 		A.attack_robot(src)
@@ -81,7 +66,9 @@
 
 		// cyborgs are prohibited from using storage items so we can I think safely remove (A.loc in contents)
 		if(A == loc || (A in loc) || (A in contents))
-			W.melee_attack_chain(src, A, params)
+			. = W.melee_attack_chain(src, A, params)
+			if(!(. & NO_AUTO_CLICKDELAY_HANDLING) && ismob(A))
+				DelayNextAction(CLICK_CD_MELEE)
 			return
 
 		if(!isturf(loc))
@@ -90,11 +77,12 @@
 		// cyborgs are prohibited from using storage items so we can I think safely remove (A.loc && isturf(A.loc.loc))
 		if(isturf(A) || isturf(A.loc))
 			if(A.Adjacent(src)) // see adjacent.dm
-				W.melee_attack_chain(src, A, params)
+				. = W.melee_attack_chain(src, A, params)
+				if(!(. & NO_AUTO_CLICKDELAY_HANDLING) && ismob(A))
+					DelayNextAction(CLICK_CD_MELEE)
 				return
 			else
-				W.afterattack(A, src, 0, params)
-				return
+				return W.afterattack(A, src, 0, params)
 
 //Middle click cycles through selected modules.
 /mob/living/silicon/robot/MiddleClickOn(atom/A)

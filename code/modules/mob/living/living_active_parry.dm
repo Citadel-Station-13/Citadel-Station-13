@@ -59,14 +59,14 @@
 		return FALSE
 	//QOL: Try to enable combat mode if it isn't already
 	SEND_SIGNAL(src, COMSIG_ENABLE_COMBAT_MODE)
-	if(!SEND_SIGNAL(src, COMSIG_COMBAT_MODE_CHECK, COMBAT_MODE_ACTIVE))
+	if(SEND_SIGNAL(src, COMSIG_COMBAT_MODE_CHECK, COMBAT_MODE_INACTIVE))
 		to_chat(src, "<span class='warning'>You must be in combat mode to parry!</span>")
 		return FALSE
 	data = return_block_parry_datum(data)
 	var/full_parry_duration = data.parry_time_windup + data.parry_time_active + data.parry_time_spindown
 	// no system in place to "fallback" if out of the 3 the top priority one can't parry due to constraints but something else can.
 	// can always implement it later, whatever.
-	if((data.parry_respect_clickdelay && (next_move > world.time)) || ((parry_end_time_last + data.parry_cooldown) > world.time))
+	if((data.parry_respect_clickdelay && !CheckActionCooldown()) || ((parry_end_time_last + data.parry_cooldown) > world.time))
 		to_chat(src, "<span class='warning'>You are not ready to parry (again)!</span>")
 		return
 	// Point of no return, make sure everything is set.
@@ -121,7 +121,7 @@
 			Stagger(data.parry_failed_stagger_duration)
 			effect_text += "staggering themselves"
 		if(data.parry_failed_clickcd_duration)
-			changeNext_move(data.parry_failed_clickcd_duration)
+			DelayNextAction(data.parry_failed_clickcd_duration, flush = TRUE)
 			effect_text += "throwing themselves off balance"
 	handle_parry_ending_effects(data, effect_text)
 	parrying = NOT_PARRYING
@@ -160,17 +160,17 @@
 /**
   * Called when an attack is parried using this, whether or not the parry was successful.
   */
-/obj/item/proc/on_active_parry(mob/living/owner, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return, parry_efficiency, parry_time)
+/obj/item/proc/on_active_parry(mob/living/owner, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, list/block_return, parry_efficiency, parry_time)
 
 /**
   * Called when an attack is parried innately, whether or not the parry was successful.
   */
-/mob/living/proc/on_active_parry(mob/living/owner, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return, parry_efficiency, parry_time)
+/mob/living/proc/on_active_parry(mob/living/owner, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, list/block_return, parry_efficiency, parry_time)
 
 /**
   * Called when an attack is parried using this, whether or not the parry was successful.
   */
-/datum/martial_art/proc/on_active_parry(mob/living/owner, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return, parry_efficiency, parry_time)
+/datum/martial_art/proc/on_active_parry(mob/living/owner, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, list/block_return, parry_efficiency, parry_time)
 
 /**
   * Called when an attack is parried and block_parra_data indicates to use a proc to handle counterattack.
@@ -256,7 +256,7 @@
 	var/datum/block_parry_data/data = get_parry_data()
 	if(data.parry_sounds)
 		playsound(src, pick(data.parry_sounds), 75)
-	visible_message("<span class='danger'>[src] parries \the [attack_text][length(effect_text)? ", [english_list(effect_text)] [attacker]" : ""]!</span>")
+	visible_message("<span class='danger'>[src] parries [attack_text][length(effect_text)? ", [english_list(effect_text)] [attacker]" : ""]!</span>")
 
 /// Run counterattack if any
 /mob/living/proc/run_parry_countereffects(atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, list/return_list = list(), parry_efficiency)
@@ -277,7 +277,7 @@
 		if(data.parry_data[PARRY_COUNTERATTACK_MELEE_ATTACK_CHAIN])
 			switch(parrying)
 				if(ITEM_PARRY)
-					active_parry_item.melee_attack_chain(src, attacker, null, ATTACKCHAIN_PARRY_COUNTERATTACK, data.parry_data[PARRY_COUNTERATTACK_MELEE_ATTACK_CHAIN])
+					active_parry_item.melee_attack_chain(src, attacker, null, ATTACK_IS_PARRY_COUNTERATTACK | ATTACK_IGNORE_CLICKDELAY | ATTACK_IGNORE_ACTION | NO_AUTO_CLICKDELAY_HANDLING, data.parry_data[PARRY_COUNTERATTACK_MELEE_ATTACK_CHAIN])
 					effect_text += "reflexively counterattacking with [active_parry_item]"
 				if(UNARMED_PARRY)		// WARNING: If you are using these two, the attackchain parry counterattack flags and damage multipliers are unimplemented. Be careful with how you handle this.
 					UnarmedAttack(attacker)

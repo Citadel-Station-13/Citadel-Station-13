@@ -169,6 +169,14 @@
 	O.imp = new /obj/item/implant/freedom(O)
 	O.update_icon()
 
+/obj/item/storage/box/syndie_kit/imp_warp
+	name = "boxed warp implant (with injector)"
+
+/obj/item/storage/box/syndie_kit/imp_warp/PopulateContents()
+	var/obj/item/implanter/O = new(src)
+	O.imp = new /obj/item/implant/warp(O)
+	O.update_icon()
+
 /obj/item/storage/box/syndie_kit/imp_microbomb
 	name = "Microbomb Implant (with injector)"
 
@@ -401,7 +409,7 @@
 /obj/item/storage/box/syndie_kit/revolver
 
 /obj/item/storage/box/syndie_kit/revolver/PopulateContents()
-	new /obj/item/gun/ballistic/revolver(src)
+	new /obj/item/gun/ballistic/revolver/syndicate(src)
 	new /obj/item/ammo_box/a357(src)
 
 /obj/item/storage/box/syndie_kit/pistol

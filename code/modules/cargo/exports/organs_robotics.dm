@@ -144,7 +144,7 @@
 /datum/export/robotics/surgery_gear_basic
 	cost = 10
 	unit_name = "surgery tool"
-	export_types = list(/obj/item/retractor, /obj/item/hemostat, /obj/item/cautery, /obj/item/surgicaldrill, /obj/item/scalpel, /obj/item/circular_saw, /obj/item/surgical_drapes)
+	export_types = list(/obj/item/retractor, /obj/item/hemostat, /obj/item/cautery, /obj/item/surgicaldrill, /obj/item/scalpel, /obj/item/circular_saw, /obj/item/bonesetter, /obj/item/surgical_drapes)
 
 /datum/export/robotics/mech_weapon_laser
 	cost = 300 //Sadly just metal and glass

@@ -4,7 +4,7 @@
 	name = "chief engineer's jumpsuit"
 	icon_state = "chiefengineer"
 	item_state = "gy_suit"
-	armor = list("melee" = 0, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 10, "fire" = 80, "acid" = 40)
+	armor = list("melee" = 0, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 10, "fire" = 80, "acid" = 40, "wound" = 5)
 	resistance_flags = NONE
 
 /obj/item/clothing/under/rank/engineering/chief_engineer/skirt
@@ -39,7 +39,7 @@
 	name = "engineer's jumpsuit"
 	icon_state = "engine"
 	item_state = "engi_suit"
-	armor = list("melee" = 0, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 10, "fire" = 60, "acid" = 20)
+	armor = list("melee" = 0, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 10, "fire" = 60, "acid" = 20, "wound" = 5)
 	resistance_flags = NONE
 
 /obj/item/clothing/under/rank/engineering/engineer/hazard
