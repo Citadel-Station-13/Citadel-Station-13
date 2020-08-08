@@ -4879,6 +4879,10 @@
 	dir = 4
 	},
 /obj/machinery/holopad,
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "hopqueue";
+	name = "HoP Queue Shutters"
+	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "aiW" = (
