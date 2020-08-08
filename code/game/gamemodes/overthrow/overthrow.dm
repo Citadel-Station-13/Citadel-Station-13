@@ -5,9 +5,12 @@
 	antag_flag = ROLE_OVERTHROW
 	restricted_jobs = list("AI", "Cyborg")
 	protected_jobs = list("Security Officer", "Warden", "Detective", "Head of Security", "Captain", "Head of Personnel", "Chief Engineer", "Chief Medical Officer", "Research Director", "Quartermaster")
-	required_players = 20 // the core idea is of a swift, bloodless coup, so it shouldn't be as chaotic as revs.
-	required_enemies = 2 // minimum two teams, otherwise it's just nerfed revs.
-	recommended_enemies = 4
+	
+	// Configuration defaults
+	config_min_pop = 20
+	config_required_antagonists = 2
+	// For overthrow, this is ontop of required, rather than including required.
+	config_primary_scaling = 20
 
 	announce_span = "danger"
 	announce_text = "There are sleeping Syndicate agents on the station who are trying to stage a coup!\n\
@@ -23,7 +26,7 @@
 	if(CONFIG_GET(flag/protect_assistant_from_antagonist))
 		restricted_jobs += "Assistant"
 
-	var/sleeping_agents = required_enemies + round(num_players()*0.05) // At 100 players, it'd be 2 + 5 = 7 teams existing.
+	var/sleeping_agents = required_enemies + round(num_players()*config_primary_scaling, 1) // At 100 players, it'd be 2 + 5 = 7 teams existing.
 
 	for (var/i in 1 to sleeping_agents)
 		if (!antag_candidates.len)

@@ -8,10 +8,11 @@ GLOBAL_LIST_EMPTY(gangs)
 	antag_flag = ROLE_GANG
 	restricted_jobs = list("AI", "Cyborg")
 	protected_jobs = list("Security Officer", "Warden", "Detective", "Head of Security", "Captain", "Head of Personnel", "Chief Engineer", "Chief Medical Officer", "Research Director", "Quartermaster")
-	required_players = 15
-	required_enemies = 0
-	recommended_enemies = 2
-	enemy_minimum_age = 14
+	
+	config_min_pop = 15
+	config_required_antagonists = 1
+	config_maximum_antagonists = 4
+	config_minimum_antagonist_player_age = 14
 
 	announce_span = "danger"
 	announce_text = "A violent turf war has erupted on the station!\n\
@@ -35,9 +36,9 @@ GLOBAL_LIST_EMPTY(gangs)
 
 	//Spawn more bosses depending on server population
 	var/gangs_to_create = 2
-	if(prob(num_players()) && num_players() > 1.5*required_players)
+	if(prob(num_players()) && num_players() > 1.5*config_min_pop)
 		gangs_to_create++
-	if(prob(num_players()) && num_players() > 2*required_players)
+	if(prob(num_players()) && num_players() > 2*config_min_pop)
 		gangs_to_create++
 	gangs_to_create = min(gangs_to_create, GLOB.possible_gangs.len)
 

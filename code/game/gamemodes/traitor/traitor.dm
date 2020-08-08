@@ -12,11 +12,14 @@
 	false_report_weight = 20 //Reports of traitors are pretty common.
 	restricted_jobs = list("Cyborg")//They are part of the AI if he is traitor so are they, they use to get double chances
 	protected_jobs = list("Security Officer", "Warden", "Detective", "Head of Security", "Captain", "Head of Personnel", "Chief Engineer", "Chief Medical Officer", "Research Director", "Quartermaster")	//citadel change - adds HoP, CE, CMO, and RD to ling role blacklist
-	required_players = 0
-	required_enemies = 1
-	recommended_enemies = 4
+	
+	// Configuration defaults
+	config_required_antagonists = 1
+	config_min_pop = 0
+	config_primary_scaling = 8
+	config_minimum_antagonist_player_age = 0
+
 	reroll_friendly = 1
-	enemy_minimum_age = 0
 
 	announce_span = "danger"
 	announce_text = "There are Syndicate agents on the station!\n\
@@ -24,27 +27,17 @@
 	<span class='notice'>Crew</span>: Do not let the traitors succeed!"
 
 	var/list/datum/mind/pre_traitors = list()
-	var/traitors_possible = 4 //hard limit on traitors if scaling is turned off
-	var/num_modifier = 0 // Used for gamemodes, that are a child of traitor, that need more than the usual.
 	var/antag_datum = /datum/antagonist/traitor //what type of antag to create
 	var/traitors_required = TRUE //Will allow no traitors
 
-
 /datum/game_mode/traitor/pre_setup()
-
 	if(CONFIG_GET(flag/protect_roles_from_antagonist))
 		restricted_jobs += protected_jobs
 
 	if(CONFIG_GET(flag/protect_assistant_from_antagonist))
 		restricted_jobs += "Assistant"
 
-	var/num_traitors = 1
-
-	var/tsc = CONFIG_GET(number/traitor_scaling_coeff)
-	if(tsc)
-		num_traitors = max(1, min(round(num_players() / (tsc * 2)) + 2 + num_modifier, round(num_players() / tsc) + num_modifier))
-	else
-		num_traitors = max(1, min(num_players(), traitors_possible))
+	var/num_traitors = clamp(round(num_players() / config_primary_scaling, 1), config_required_antagonists, config_maximum_antagonists)
 
 	for(var/j = 0, j < num_traitors, j++)
 		if (!antag_candidates.len)

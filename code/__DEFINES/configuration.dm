@@ -17,3 +17,5 @@
 #define POLICYCONFIG_ON_DEFIB_INTACT "ON_DEFIB_INTACT"
 /// Displayed to defibbed/revival surgery'd patients after the memory loss time threshold
 #define POLICYCONFIG_ON_DEFIB_LATE "ON_DEFIB_LATE"
+/// Displayed to people on polymorph
+#define POLICYCONFIG_ON_POLYMORPH "POLYMORPH"

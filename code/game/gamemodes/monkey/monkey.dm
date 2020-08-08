@@ -8,9 +8,9 @@
 	antag_flag = ROLE_MONKEY
 	false_report_weight = 1
 
-	required_players = 20
-	required_enemies = 1
-	recommended_enemies = 1
+	config_min_pop = 20
+	config_required_antagonists = 1
+	config_primary_scaling = 30
 
 	restricted_jobs = list("Cyborg", "AI")
 
@@ -20,14 +20,11 @@
 	var/monkeys_to_win = 1
 	var/escaped_monkeys = 0
 
-	var/players_per_carrier = 30
 
 	var/datum/team/monkey/monkey_team
 
-
-
 /datum/game_mode/monkey/pre_setup()
-	carriers_to_make = max(round(num_players()/players_per_carrier, 1), 1)
+	carriers_to_make = clamp(round(num_players()/config_primary_scaling, 1), 1, config_maximum_antagonists)
 
 	for(var/j = 0, j < carriers_to_make, j++)
 		if (!antag_candidates.len)

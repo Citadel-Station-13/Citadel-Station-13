@@ -2,18 +2,21 @@
 	name = "nuclear emergency"
 	config_tag = "nuclear"
 	false_report_weight = 10
-	required_players = 28 // 30 players - 3 players to be the nuke ops = 25 players remaining
-	required_enemies = 2
-	recommended_enemies = 5
+
+	// Configuration defaults
+	config_required_antagonists = 2
+	config_maximum_antagonists = 5
+	config_min_pop = 28
+	config_minimum_antagonist_player_age = 7
+	config_primary_scaling = 10
+
 	antag_flag = ROLE_OPERATIVE
-	enemy_minimum_age = 7
 
 	announce_span = "danger"
 	announce_text = "Syndicate forces are approaching the station in an attempt to destroy it!\n\
 	<span class='danger'>Operatives</span>: Secure the nuclear authentication disk and use your nuke to destroy the station.\n\
 	<span class='notice'>Crew</span>: Defend the nuclear authentication disk and ensure that it leaves with you on the emergency shuttle."
 
-	var/const/agents_possible = 5 //If we ever need more syndicate agents.
 	var/nukes_left = 1 // Call 3714-PRAY right now and order more nukes! Limited offer!
 	var/list/pre_nukeops = list()
 
@@ -23,18 +26,26 @@
 	var/leader_antag_datum_type = /datum/antagonist/nukeop/leader
 
 /datum/game_mode/nuclear/pre_setup()
-	var/n_agents = min(round(num_players() / 10), antag_candidates.len, agents_possible)
-	if(n_agents >= required_enemies)
+	var/n_agents = clamp(round(num_players() / config_primary_scaling), config_required_antagonists, config_maximum_antagonists)
+	if(n_agents >= config_required_antagonists)
 		for(var/i = 0, i < n_agents, ++i)
 			var/datum/mind/new_op = pick_n_take(antag_candidates)
+			if(!new_op)
+				break
 			pre_nukeops += new_op
 			new_op.assigned_role = "Nuclear Operative"
 			new_op.special_role = "Nuclear Operative"
 			log_game("[key_name(new_op)] has been selected as a nuclear operative")
+		if(pre_nukeops.len < config_required_antagonists)
+			setup_error = "Not enough nuke op candidates"
+			return FALSE
 		return TRUE
+	else if(n_agents)
+		setup_error = "Number of agents attempted was less than minimum. Gamemode is not properly configured."
 	else
-		setup_error = "Not enough nuke op candidates"
-		return FALSE
+		setup_error = "No agents picked - Gamemode is not properly configured"
+	return FALSE
+
 ////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////
 

@@ -7,10 +7,12 @@
 	config_tag = "wizard"
 	antag_flag = ROLE_WIZARD
 	false_report_weight = 10
-	required_players = 20
-	required_enemies = 1
-	recommended_enemies = 1
-	enemy_minimum_age = 7
+
+	config_min_pop = 20
+	config_required_antagonists = 1
+	config_maximum_antagonists = 1
+	config_minimum_antagonist_player_age = 7
+
 	round_ends_with_antag_death = 1
 	announce_span = "danger"
 	announce_text = "There is a space wizard attacking the station!\n\

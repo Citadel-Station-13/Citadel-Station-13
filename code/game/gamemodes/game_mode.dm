@@ -16,7 +16,6 @@
 	var/name = "invalid"
 	var/config_tag = null
 	var/votable = 1
-	var/probability = 0
 	var/false_report_weight = 0 //How often will this show up incorrectly in a centcom report?
 	var/station_was_nuked = 0 //see nuclearbomb.dm and malfunction.dm
 	var/nuke_off_station = 0 //Used for tracking where the nuke hit
@@ -25,10 +24,6 @@
 	var/list/restricted_jobs = list()	// Jobs it doesn't make sense to be.  I.E chaplain or AI cultist
 	var/list/protected_jobs = list()	// Jobs that can't be traitors because
 	var/list/required_jobs = list()		// alternative required job groups eg list(list(cap=1),list(hos=1,sec=2)) translates to one captain OR one hos and two secmans
-	var/required_players = 0
-	var/maximum_players = -1 // -1 is no maximum, positive numbers limit the selection of a mode on overstaffed stations
-	var/required_enemies = 0
-	var/recommended_enemies = 0
 	var/antag_flag = null //preferences flag such as BE_WIZARD that need to be turned on for players to be antag
 	var/mob/living/living_antag_player = null
 	var/datum/game_mode/replacementmode = null
@@ -51,10 +46,64 @@
 	var/setup_error		//What stopepd setting up the mode.
 	var/flipseclevel = FALSE //CIT CHANGE - adds a 10% chance for the alert level to be the opposite of what the gamemode is supposed to have
 
+	// Configuration-loaded values
+	// WARNING: These are just here so it's easier to access. While new gamemodes are required to conform for this, not every gamemode will use all of these values.
+	// It's important for someone setting the configuration to take a skim at how a specific gamemode selects their antagonists
+	// so they know what values to tweak.
+
+	// Defaults for configured values. Set on SetupConfiguration(), read by most things concerned with these values. These should default to a sane value.
+	/// Minimum players
+	var/config_min_pop = 0
+	/// Maximum players
+	var/config_max_pop = INFINITY
+	/// Minimum number of antagonists
+	var/config_required_antagonists = 0
+	/// Maximum number of antagonists
+	var/config_maximum_antagonists = INFINITY
+	/// Minimum player age for antagonists
+	var/config_minimum_antagonist_player_age
+	/// Probability
+	var/config_probability = 0
+	// Config scaling - These mean different things depending on gamemode. These should default to a sane value.
+	/// Primary scaling
+	var/config_primary_scaling = 8
+	/// Secondary scaling
+	var/config_secondary_scaling = 12
+	/// Tertiary scaling
+	var/config_tertiary_scaling = 20
+	// These should default to OFF - they're only set by configuration.
+	/// Keep the round going after all antags die?
+	var/config_continuous = FALSE
+	/// Use the midround antagonist system?
+	var/config_midround = FALSE
+	/// Are we considered a high action gamemode?
+	var/config_high_action = FALSE
+
 /datum/game_mode/proc/announce() //Shows the gamemode's name and a fast description.
 	to_chat(world, "<b>The gamemode is: <span class='[announce_span]'>[name]</span>!</b>")
 	to_chat(world, "<b>[announce_text]</b>")
 
+#define READ_CONFIGURATION(typepath, variable) temp=CONFIG_GET(keyed_list/gamemodes/typepath);if(!isnull(temp[config_tag])){variable=temp[config_tag];}
+#define READ_CONFIGURATION_FLAG(typepath, variable) temp=CONFIG_GET(keyed_list/gamemodes/typepath);if(temp[config_tag]){variable=TRUE;}
+
+/datum/game_mode/proc/SetupConfiguration()
+	var/list/temp
+	READ_CONFIGURATION(probability, config_probability)
+	READ_CONFIGURATION(max_pop, config_max_pop)
+	READ_CONFIGURATION(min_pop, config_min_pop)
+	READ_CONFIGURATION(primary_scaling, config_primary_scaling)
+	READ_CONFIGURATION(secondary_scaling, config_secondary_scaling)
+	READ_CONFIGURATION(tertiary_scaling, config_tertiary_scaling)
+	READ_CONFIGURATION_FLAG(continuous, config_continuous)
+	READ_CONFIGURATION_FLAG(midround_antag, config_midround)
+	READ_CONFIGURATION_FLAG(high_action_gamemodes, config_high_action)
+	READ_CONFIGURATION_FLAG(force_antag_count, config_force_antag_count)
+	READ_CONFIGURATION(required_antagonists, config_required_antagonists)
+	READ_CONFIGURATION(maximum_antagonists, config_maximum_antagonists)
+	READ_CONFIGURATION(minimum_antagonist_age, config_minimum_antagonist_player_age)
+
+#undef READ_CONFIGURATION
+#undef READ_CONFIGURATION_FLAG
 
 ///Checks to see if the game can be setup and ran with the current number of players or whatnot.
 /datum/game_mode/proc/can_start()
@@ -63,17 +112,16 @@
 		if((player.client)&&(player.ready == PLAYER_READY_TO_PLAY))
 			playerC++
 	if(!GLOB.Debug2)
-		if(playerC < required_players || (maximum_players >= 0 && playerC > maximum_players))
+		if(playerC < config_min_pop || (config_max_pop >= 0 && playerC > maximum_players))
 			return 0
 	antag_candidates = get_players_for_role(antag_flag)
 	if(!GLOB.Debug2)
-		if(antag_candidates.len < required_enemies)
+		if(antag_candidates.len < config_required_antagonists)
 			return 0
 		return 1
 	else
 		message_admins("<span class='notice'>DEBUG: GAME STARTING WITHOUT PLAYER NUMBER CHECKS, THIS WILL PROBABLY BREAK SHIT.</span>")
 		return 1
-
 
 ///Attempts to select players for special roles the mode might have.
 /datum/game_mode/proc/pre_setup()
@@ -111,8 +159,6 @@
 /datum/game_mode/proc/make_antag_chance(mob/living/carbon/human/character)
 	if(replacementmode && round_converted == 2)
 		replacementmode.make_antag_chance(character)
-	return
-
 
 ///Allows rounds to basically be "rerolled" should the initial premise fall through. Also known as mulligan antags.
 /datum/game_mode/proc/convert_roundtype()

@@ -1,5 +1,3 @@
-#define CULT_SCALING_COEFFICIENT 9.3 //Roughly one new cultist at roundstart per this many players
-
 /datum/game_mode
 	var/list/datum/mind/cult = list()
 
@@ -40,10 +38,11 @@
 	false_report_weight = 10
 	restricted_jobs = list("AI", "Cyborg")
 	protected_jobs = list("Security Officer", "Warden", "Detective", "Head of Security", "Captain", "Head of Personnel", "Chief Engineer", "Chief Medical Officer", "Research Director", "Quartermaster")
-	required_players = 30
-	required_enemies = 3
-	recommended_enemies = 5
-	enemy_minimum_age = 7
+
+	config_min_pop = 30
+	config_required_antagonists = 3
+	config_primary_scaling = 9.3
+	config_minimum_antagonist_player_age = 7
 
 	announce_span = "cult"
 	announce_text = "Some crew members are trying to start a cult to Nar'Sie!\n\
@@ -68,13 +67,9 @@
 		restricted_jobs += "Assistant"
 
 	//cult scaling goes here
-	recommended_enemies = 1 + round(num_players()/CULT_SCALING_COEFFICIENT)
-	var/remaining = (num_players() % CULT_SCALING_COEFFICIENT) * 10 //Basically the % of how close the population is toward adding another cultis
-	if(prob(remaining))
-		recommended_enemies++
+	var/wanted = 1 + round(num_players(), config_primary_scaling) + (prob((num_players() % config_primary_scaling) * 10)? 1 : 0)
 
-
-	for(var/cultists_number = 1 to recommended_enemies)
+	for(var/cultists_number in 1 to wanted)
 		if(!antag_candidates.len)
 			break
 		var/datum/mind/cultist = antag_pick(antag_candidates)
@@ -84,12 +79,11 @@
 		cultist.restricted_roles = restricted_jobs
 		log_game("[key_name(cultist)] has been selected as a cultist")
 
-	if(cultists_to_cult.len>=required_enemies)
+	if(cultists_to_cult.len >= config_required_antagonists)
 		return TRUE
 	else
-		setup_error = "Not enough cultist candidates"
+		setup_error = "Not enough cultist candidates or not enough players to pick enough candidates ([cultists_to_cult.len] candidates picked, [wanted] wanted)"
 		return FALSE
-
 
 /datum/game_mode/cult/post_setup()
 	for(var/datum/mind/cult_mind in cultists_to_cult)
@@ -164,5 +158,3 @@
 			the cult of Nar'Sie. If evidence of this cult is discovered aboard your station, extreme caution and extreme vigilance must be taken going forward, and all resources should be \
 			devoted to stopping this cult. Note that holy water seems to weaken and eventually return the minds of cultists that ingest it, and mindshield implants will prevent conversion \
 			altogether."
-
-#undef CULT_SCALING_COEFFICIENT

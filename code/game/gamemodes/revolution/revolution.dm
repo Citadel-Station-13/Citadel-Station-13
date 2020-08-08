@@ -14,10 +14,12 @@
 	false_report_weight = 10
 	restricted_jobs = list("AI", "Cyborg")
 	protected_jobs = list("Security Officer", "Warden", "Detective", "Head of Security", "Captain", "Head of Personnel", "Chief Engineer", "Chief Medical Officer", "Research Director", "Quartermaster")
-	required_players = 20
-	required_enemies = 1
-	recommended_enemies = 3
-	enemy_minimum_age = 14
+	
+	// Configuration defaults
+	config_min_pop = 20
+	config_required_antagonists = 1
+	config_maximum_antagonists = 3
+	config_minimum_antagonist_player_age = 14
 
 	announce_span = "danger"
 	announce_text = "Some crewmembers are attempting a coup!\n\
@@ -39,7 +41,6 @@
 	to_chat(world, "<B>The current game mode is - Revolution!</B>")
 	to_chat(world, "<B>Some crewmembers are attempting to start a revolution!<BR>\nRevolutionaries - Kill the Captain, HoP, HoS, CE, RD, QM and CMO. Convert other crewmembers (excluding the heads of staff, and security officers) to your cause by flashing them. Protect your leaders.<BR>\nPersonnel - Protect the heads of staff. Kill the leaders of the revolution, and brainwash the other revolutionaries (by beating them in the head).</B>")
 
-
 ///////////////////////////////////////////////////////////////////////////////
 //Gets the round setup, cancelling if there's not enough players at the start//
 ///////////////////////////////////////////////////////////////////////////////
@@ -51,7 +52,7 @@
 	if(CONFIG_GET(flag/protect_assistant_from_antagonist))
 		restricted_jobs += "Assistant"
 
-	for (var/i=1 to max_headrevs)
+	for (var/i in 1 to config_maximum_antagonists)
 		if (antag_candidates.len==0)
 			break
 		var/datum/mind/lenin = antag_pick(antag_candidates)
@@ -59,7 +60,7 @@
 		headrev_candidates += lenin
 		lenin.restricted_roles = restricted_jobs
 
-	if(headrev_candidates.len < required_enemies)
+	if(headrev_candidates.len < config_required_antagonists)
 		setup_error = "Not enough headrev candidates"
 		return FALSE
 

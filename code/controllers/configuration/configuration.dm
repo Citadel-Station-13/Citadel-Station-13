@@ -334,27 +334,27 @@
 			return T
 	return /datum/dynamic_storyteller/classic
 
+/**
+  * Returns a list of modes keyed to their probability/weight that can be ran.
+  */
 /datum/controller/configuration/proc/get_runnable_modes()
-	var/list/datum/game_mode/runnable_modes = new
-	var/list/probabilities = Get(/datum/config_entry/keyed_list/probability)
-	var/list/min_pop = Get(/datum/config_entry/keyed_list/min_pop)
-	var/list/max_pop = Get(/datum/config_entry/keyed_list/max_pop)
+	var/list/datum/game_mode/runnable_modes = list()
+	var/list/probabilities = Get(/datum/config_entry/keyed_list/gamemodes/probability)
+	var/list/min_pop = Get(/datum/config_entry/keyed_list/gamemodes/min_pop)
+	var/list/max_pop = Get(/datum/config_entry/keyed_list/gamemodes/max_pop)
 	var/list/repeated_mode_adjust = Get(/datum/config_entry/number_list/repeated_mode_adjust)
 	for(var/T in gamemode_cache)
 		var/datum/game_mode/M = new T()
 		if(!(M.config_tag in modes))
 			qdel(M)
 			continue
-		if(probabilities[M.config_tag]<=0)
+		if(probabilities[M.config_tag] <= 0)
 			qdel(M)
 			continue
 		if(CONFIG_GET(flag/modetier_voting) && !(M.config_tag in SSvote.stored_modetier_results))
 			qdel(M)
 			continue
-		if(min_pop[M.config_tag])
-			M.required_players = min_pop[M.config_tag]
-		if(max_pop[M.config_tag])
-			M.maximum_players = max_pop[M.config_tag]
+		M.SetupConfiguration()
 		if(M.can_start())
 			var/final_weight = probabilities[M.config_tag]
 			if(SSpersistence.saved_modes.len == 3 && repeated_mode_adjust.len == 3)
