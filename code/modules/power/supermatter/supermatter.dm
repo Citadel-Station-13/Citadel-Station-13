@@ -999,7 +999,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		if((P.anchored || P.move_resist >= MOVE_FORCE_EXTREMELY_STRONG)) //move resist memes.
 			if(istype(P, /obj/structure/closet))
 				var/obj/structure/closet/toggle = P
-				toggle.open(force = TRUE)
+				toggle.open()
 			continue
 		if(ismob(P))
 			var/mob/M = P
