@@ -172,7 +172,8 @@
 
 	var/mob/living/master //Enchanter's person
 	var/enthrallID //Enchanter's ckey
-	var/enthrallTitle //Use master or mistress
+	var/enthrallTitle //Enchanter's title
+	var/subjectTerm //Subject's term
 
 	var/mental_capacity //Higher it is, lower the cooldown on commands, capacity reduces with resistance.
 
@@ -204,6 +205,7 @@
 	enthrallID = E.creatorID
 	enthrallTitle = E.creatorTitle
 	master = get_mob_by_key(enthrallID)
+	subjectTerm = M.client?.prefs.custom_names["subject"]
 	//if(M.ckey == enthrallID)
 	//	owner.remove_status_effect(src)//At the moment, a user can enthrall themselves, toggle this back in if that should be removed.
 	RegisterSignal(owner, COMSIG_LIVING_RESIST, .proc/owner_resist) //Do resistance calc if resist is pressed#

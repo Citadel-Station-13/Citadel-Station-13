@@ -34,6 +34,7 @@ resist_words
 forget_words
 attract_words
 orgasm_words
+subterm_words
 2
 awoo_words
 nya_words

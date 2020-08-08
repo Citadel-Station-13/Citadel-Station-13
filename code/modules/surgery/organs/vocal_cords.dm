@@ -754,6 +754,8 @@
 	var/static/regex/resist_words = regex("resist|snap out of it|fight")//useful if two enthrallers are fighting
 	var/static/regex/forget_words = regex("forget|muddled|awake and forget")
 	var/static/regex/attract_words = regex("come here|come to me|get over here|attract")
+	//orgasm_words would be here, but they seem to have been removed.
+	var/static/regex/subterm_words = regex("you are a|you are an|become")//not sure if these are good words
 	//phase 2
 	var/static/regex/awoo_words = regex("howl|awoo|bark")
 	var/static/regex/nya_words = regex("nya|meow|mewl")
