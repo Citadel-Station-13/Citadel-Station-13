@@ -208,7 +208,7 @@ window "infowindow"
 window "outputwindow"
 	elem "outputwindow"
 		type = MAIN
-		pos = 0,0
+		pos = 418,0
 		size = 640x480
 		anchor1 = none
 		anchor2 = none
@@ -220,6 +220,7 @@ window "outputwindow"
 		can-minimize = false
 		can-resize = false
 		is-pane = true
+		outer-size = 660x500
 	elem "input"
 		type = INPUT
 		pos = 2,460
@@ -264,6 +265,53 @@ window "outputwindow"
 		is-default = true
 		saved-params = ""
 
+window "statbrowser_window"
+	elem "statbrowser_window"
+		type = MAIN
+		pos = 418,0
+		size = 640x480
+		anchor1 = none
+		anchor2 = none
+		background-color = none
+		saved-params = "pos;size;is-minimized;is-maximized"
+		outer-size = 662x561
+		inner-size = 640x505
+	elem "statbrowser"
+		type = BROWSER
+		pos = 0,0
+		size = 640x480
+		anchor1 = 0,0
+		anchor2 = 100,100
+		background-color = #272727
+		saved-params = ""
+
+window "statoutput_window"
+	elem "statoutput_window"
+		type = MAIN
+		pos = 418,0
+		size = 640x480
+		anchor1 = none
+		anchor2 = none
+		background-color = none
+		saved-params = "pos;size;is-minimized;is-maximized"
+		outer-size = 662x561
+		inner-size = 640x505
+	elem "statpanel"
+		type = INFO
+		pos = 0,0
+		size = 640x480
+		anchor1 = 0,0
+		anchor2 = 100,100
+		text-color = #e0e0e0
+		background-color = #272727
+		is-default = true
+		right-click = true
+		saved-params = ""
+		tab-text-color = #e0e0e0
+		tab-background-color = #242424
+		prefix-color = #eaeaea
+		suffix-color = #eaeaea
+
 window "statwindow"
 	elem "statwindow"
 		type = MAIN
@@ -276,41 +324,18 @@ window "statwindow"
 		is-pane = true
 		outer-size = 662x561
 		inner-size = 640x505
-	elem "statbrowser"
-		type = BROWSER
-		pos = 0,0
-		size = 640x480
-		anchor1 = 0,0
-		anchor2 = 100,100
-		background-color = none
-		saved-params = ""
-		on-show = ".statbrowser_active"
-		on-hide = ".statbrowser_inactive"
 	elem "statsplitter"
 		type = TAB
 		pos = 0,0
 		size = 640x480
 		anchor1 = 0,0
 		anchor2 = 100,100
-		background-color = none
+		text-color = #eaeaea
+		background-color = #333333
 		saved-params = ""
-		tabs = "statbrowser,statpanel"
-		current-tab = "statbrowser"
+		tabs = "statbrowser_window,statpanel_window"
+		current-tab = "statbrowser_window"
 		on-tab = ".stattab [[*]]"
-	elem "statpanel"
-		type = INFO
-		pos = 0,0
-		size = 640x480
-		anchor1 = 0,0
-		anchor2 = 100,100
-		text-color = #e0e0e0
-		background-color = #272727
-		is-default = true
-		saved-params = ""
-		tab-text-color = #e0e0e0
-		tab-background-color = #242424
-		prefix-color = #e0e0e0
-		suffix-color = #e0e0e0
 
 window "preferences_window"
 	elem "preferences_window"

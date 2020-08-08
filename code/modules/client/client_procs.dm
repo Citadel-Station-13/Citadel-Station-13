@@ -332,7 +332,6 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 				return
 
 	chatOutput.start() // Starts the chat
-	setup_statbrowser()
 
 	if(alert_mob_dupe_login)
 		spawn()
@@ -995,7 +994,7 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 	set hidden = TRUE
 
 	switch(tab)
-		if("statbrowser")
+		if("statbrowser_window")
 			statbrowser_focused = TRUE
-		if("statpanel")
+		if("statpanel_window")
 			statbrowser_focused = FALSE
