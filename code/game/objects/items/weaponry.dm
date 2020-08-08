@@ -289,7 +289,8 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	parry_efficiency_perfect_override = list(
 		TEXT_ATTACK_TYPE_PROJECTILE = 30,
 	)
-	parry_failed_stagger_duration = 3 SECONDS
+	parry_failed_stagger_duration = 2 SECONDS
+	parry_cooldown = 1 SECONDS // make your parries count
 	parry_data = list(PARRY_COUNTERATTACK_MELEE_ATTACK_CHAIN = 2.5) // 7*2.5 = 17.5, 8*2.5 = 20, 9*2.5 = 22.5, 10*2.5 = 25
 
 /datum/block_parry_data/bokken/quick_parry // emphasizing REALLY SHORT PARRIES
@@ -299,7 +300,6 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	parry_time_perfect_leeway = 2 // the entire time, the parry is perfect
 	parry_failed_stagger_duration = 1 SECONDS
 	parry_failed_clickcd_duration = 1 SECONDS // more forgiving punishments for missed parries
-	parry_cooldown = 1 SECONDS // make your parries count
 	// still, don't fucking miss your parries or you're down stamina and staggered to shit
 
 /obj/item/melee/bokken/Initialize()
