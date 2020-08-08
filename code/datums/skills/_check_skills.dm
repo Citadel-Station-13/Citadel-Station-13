@@ -14,17 +14,18 @@
 
 	mind.skill_holder.ui_interact(src)
 
-/datum/skill_panel/ui_state(mob/user)
+/datum/skill_holder/ui_state(mob/user)
 	return GLOB.always_state
 
-/datum/skill_panel/ui_interact(mob/user, datum/tgui/ui)
+/datum/skill_holder/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, "SkillPanel")
+		ui = new(user, src, "SkillPanel", "[owner.name]'s Skills")
+		ui.set_autoupdate(FALSE) 
 		ui.open()
-	//else if(need_static_data_update)
-	//	update_static_data(user)
-	//	need_static_data_update = FALSE
+	else if(need_static_data_update)
+		update_static_data(user)
+		need_static_data_update = FALSE
 
 /datum/skill_holder/ui_static_data(mob/user)
 	. = list()

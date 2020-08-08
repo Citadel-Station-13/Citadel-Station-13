@@ -1,6 +1,7 @@
 import { useBackend } from '../backend';
 import { Box, Button, LabeledList, ProgressBar, Section } from '../components';
 import { Window } from '../layouts';
+import { Fragment } from 'inferno';
 
 const skillgreen = {
   color: 'lightgreen',
@@ -54,23 +55,27 @@ export const SkillPanel = (props, context) => {
                   value={skill.exp_percent}
                   color="good" />
                 <br />
-                <Button
-                  content="Adjust Exp"
-                  onClick={() => act('adj_exp', {
-                    skill: skill.path,
-                  })} />
-                <Button
-                  content="Set Exp"
-                  onClick={() => act('set_exp', {
-                    skill: skill.path,
-                  })} />
-                <Button
-                  content="Set Level"
-                  onClick={() => act('set_lvl', {
-                    skill: skill.path,
-                  })} />
-                <br />
-                <br />
+                {!!data.admin && (
+                  <Fragment>
+                    <Button
+                      content="Adjust Exp"
+                      onClick={() => act('adj_exp', {
+                        skill: skill.path,
+                      })} />
+                    <Button
+                      content="Set Exp"
+                      onClick={() => act('set_exp', {
+                        skill: skill.path,
+                      })} />
+                    <Button
+                      content="Set Level"
+                      onClick={() => act('set_lvl', {
+                        skill: skill.path,
+                      })} />
+                    <br />
+                    <br />
+                  </Fragment>
+                )}
               </LabeledList.Item>
             ))}
           </LabeledList>
@@ -96,5 +101,21 @@ const Level = props => {
       </Box>
       ]
     </Box>
+  );
+};
+const XPToNextLevel = props => {
+  const {
+    xp_req,
+    xp_prog,
+  } = props;
+  if (xp_req === 0) {
+    return (
+      <span style={skillgreen}>
+        to next level: MAXXED
+      </span>
+    );
+  }
+  return (
+    <span>XP to next level: [{xp_prog} / {xp_req}]</span>
   );
 };

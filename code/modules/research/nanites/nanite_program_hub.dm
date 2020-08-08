@@ -32,8 +32,8 @@
 		if(user.transferItemToLoc(N, src))
 			to_chat(user, "<span class='notice'>You insert [N] into [src].</span>")
 			playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, FALSE)
-			// if(disk)
-			// 	eject(user)
+			if(disk)
+				eject(user)
 			disk = N
 	else
 		..()
@@ -53,7 +53,7 @@
 /obj/machinery/nanite_program_hub/proc/eject(mob/living/user)
 	if(!disk)
 		return
-	if(!istype(user) || !Adjacent(user) || !user.put_in_active_hand(disk))
+	if(!istype(user) || !Adjacent(user))// || !user.put_in_active_hand(disk))
 		disk.forceMove(drop_location())
 	disk = null
 
