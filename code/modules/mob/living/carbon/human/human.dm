@@ -301,7 +301,7 @@
 	if(usr.canUseTopic(src, BE_CLOSE, NO_DEXTERY, null, FALSE))
 		// separate from first canusetopic
 		var/mob/living/user = usr
-		if(istype(user) && href_list["shoes"] && (user.mobility_flags & MOBILITY_USE)) // we need to be on the ground, so we'll be a bit looser
+		if(istype(user) && !ispAI(user) && href_list["shoes"] && (user.mobility_flags & MOBILITY_USE)) // we need to be on the ground, so we'll be a bit looser
 			shoes.handle_tying(usr)
 
 	..()	//CITADEL CHANGE - removes a tab from behind this ..() so that flavortext can actually be examined
