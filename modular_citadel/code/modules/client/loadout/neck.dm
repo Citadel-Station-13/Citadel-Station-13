@@ -1,99 +1,88 @@
-/datum/gear/bluetie
+/datum/gear/neck
+	category = LOADOUT_CATEGORY_NECK
+	subcategory = LOADOUT_SUBCATEGORY_NECK_GENERAL
+	slot = SLOT_NECK
+
+/datum/gear/neck/bluetie
 	name = "Blue tie"
-	category = SLOT_NECK
+	subcategory = LOADOUT_SUBCATEGORY_NECK_TIE
 	path = /obj/item/clothing/neck/tie/blue
 
-/datum/gear/redtie
+/datum/gear/neck/redtie
 	name = "Red tie"
-	category = SLOT_NECK
+	subcategory = LOADOUT_SUBCATEGORY_NECK_TIE
 	path = /obj/item/clothing/neck/tie/red
 
-/datum/gear/blacktie
+/datum/gear/neck/blacktie
 	name = "Black tie"
-	category = SLOT_NECK
+	subcategory = LOADOUT_SUBCATEGORY_NECK_TIE
 	path = /obj/item/clothing/neck/tie/black
 
-/datum/gear/collar
+/datum/gear/neck/collar
 	name = "Collar"
-	category = SLOT_NECK
 	path = /obj/item/clothing/neck/petcollar
 
-/datum/gear/leathercollar
+/datum/gear/neck/leathercollar
 	name = "Leather collar"
-	category = SLOT_NECK
 	path = /obj/item/clothing/neck/petcollar/leather
 
-/datum/gear/choker
+/datum/gear/neck/choker
 	name = "Choker"
-	category = SLOT_NECK
 	path = /obj/item/clothing/neck/petcollar/choker
 
-/datum/gear/scarf
+/datum/gear/neck/scarf
 	name = "White scarf"
-	category = SLOT_NECK
+	subcategory = LOADOUT_SUBCATEGORY_NECK_SCARVES
 	path = /obj/item/clothing/neck/scarf
 
-/datum/gear/blackscarf
+/datum/gear/neck/scarf/black
 	name = "Black scarf"
-	category = SLOT_NECK
 	path = /obj/item/clothing/neck/scarf/black
 
-/datum/gear/redscarf
+/datum/gear/neck/scarf/red
 	name = "Red scarf"
-	category = SLOT_NECK
 	path = /obj/item/clothing/neck/scarf/red
 
-/datum/gear/greenscarf
+/datum/gear/neck/scarf/green
 	name = "Green scarf"
-	category = SLOT_NECK
 	path = /obj/item/clothing/neck/scarf/green
 
-/datum/gear/darkbluescarf
+/datum/gear/neck/scarf/darkblue
 	name = "Dark blue scarf"
-	category = SLOT_NECK
 	path = /obj/item/clothing/neck/scarf/darkblue
 
-/datum/gear/purplescarf
+/datum/gear/neck/scarf/purple
 	name = "Purple scarf"
-	category = SLOT_NECK
 	path = /obj/item/clothing/neck/scarf/purple
 
-/datum/gear/yellowscarf
+/datum/gear/neck/scarf/yellow
 	name = "Yellow scarf"
-	category = SLOT_NECK
 	path = /obj/item/clothing/neck/scarf/yellow
 
-/datum/gear/orangescarf
+/datum/gear/neck/scarf/orange
 	name = "Orange scarf"
-	category = SLOT_NECK
 	path = /obj/item/clothing/neck/scarf/orange
 
-/datum/gear/cyanscarf
+/datum/gear/neck/scarf/cyan
 	name = "Cyan scarf"
-	category = SLOT_NECK
 	path = /obj/item/clothing/neck/scarf/cyan
 
-/datum/gear/stripedredscarf
+/datum/gear/neck/scarf/stripedred
 	name = "Striped red scarf"
-	category = SLOT_NECK
 	path = /obj/item/clothing/neck/stripedredscarf
 
-/datum/gear/stripedbluescarf
+/datum/gear/neck/scarf/stripedblue
 	name = "Striped blue scarf"
-	category = SLOT_NECK
 	path = /obj/item/clothing/neck/stripedbluescarf
 
-/datum/gear/stripedgreenscarf
+/datum/gear/neck/scarf/stripedgreen
 	name = "Striped green scarf"
-	category = SLOT_NECK
 	path = /obj/item/clothing/neck/stripedgreenscarf
 
-/datum/gear/headphones
+/datum/gear/neck/headphones
 	name = "Headphones"
-	category = SLOT_NECK
 	path = /obj/item/clothing/ears/headphones
 
-/datum/gear/polycloak
+/datum/gear/neck/polycloak
 	name = "Polychromatic Cloak"
-	category = SLOT_NECK
 	path = /obj/item/clothing/neck/cloak/polychromic

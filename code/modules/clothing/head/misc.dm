@@ -469,3 +469,16 @@
 	icon_state = "maid"
 	item_state = "maid"
 	dynamic_hair_suffix = ""
+
+/obj/item/clothing/head/widered
+	name = "Wide red hat"
+	desc = "It is both wide, and red. Stylish!"
+	icon_state = "widehat_red"
+	item_state = "widehat_red"
+
+/obj/item/clothing/head/kabuto
+	name = "Kabuto helmet"
+	desc = "A traditional kabuto helmet."
+	icon_state = "kabuto"
+	item_state = "kabuto"
+	flags_inv = HIDEHAIR|HIDEEARS
