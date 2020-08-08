@@ -80,7 +80,6 @@ window "mainwindow"
 		anchor2 = none
 		background-color = #272727
 		is-visible = false
-		auto-format = false
 		saved-params = ""
 	elem "tooltip"
 		type = BROWSER
@@ -99,12 +98,9 @@ window "mapwindow"
 		size = 1024x1024
 		anchor1 = none
 		anchor2 = none
-		background-color = none
 		saved-params = "pos;size;is-minimized;is-maximized"
 		statusbar = false
 		is-pane = true
-		outer-size = 684x617
-		inner-size = 662x561
 	elem "map"
 		type = MAP
 		pos = 0,0
@@ -121,13 +117,15 @@ window "mapwindow"
 window "infowindow"
 	elem "infowindow"
 		type = MAIN
-		pos = 0,0
+		pos = 418,0
 		size = 640x480
 		anchor1 = none
 		anchor2 = none
 		background-color = #242424
 		saved-params = "pos;size;is-minimized;is-maximized"
 		is-pane = true
+		outer-size = 662x561
+		inner-size = 640x505
 	elem "info"
 		type = CHILD
 		pos = 0,30
@@ -255,7 +253,6 @@ window "outputwindow"
 		is-visible = false
 		is-disabled = true
 		saved-params = ""
-		auto-format = false
 	elem "output"
 		type = OUTPUT
 		pos = 0,0
@@ -270,14 +267,37 @@ window "outputwindow"
 window "statwindow"
 	elem "statwindow"
 		type = MAIN
-		pos = 281,0
+		pos = 418,0
 		size = 640x480
 		anchor1 = none
 		anchor2 = none
 		background-color = #242424
 		saved-params = "pos;size;is-minimized;is-maximized"
 		is-pane = true
-	elem "stat"
+		outer-size = 662x561
+		inner-size = 640x505
+	elem "statbrowser"
+		type = BROWSER
+		pos = 0,0
+		size = 640x480
+		anchor1 = 0,0
+		anchor2 = 100,100
+		background-color = none
+		saved-params = ""
+		on-show = ".statbrowser_active"
+		on-hide = ".statbrowser_inactive"
+	elem "statsplitter"
+		type = TAB
+		pos = 0,0
+		size = 640x480
+		anchor1 = 0,0
+		anchor2 = 100,100
+		background-color = none
+		saved-params = ""
+		tabs = "statbrowser,statpanel"
+		current-tab = "statbrowser"
+		on-tab = ".stattab [[*]]"
+	elem "statpanel"
 		type = INFO
 		pos = 0,0
 		size = 640x480

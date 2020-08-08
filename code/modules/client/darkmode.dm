@@ -30,7 +30,7 @@ Thanks to spacemaniac and mcdonald for help with the JS side of this.
 	//Status and verb tabs
 	winset(src, "output", "background-color = [COLOR_WHITEMODE_BACKGROUND];text-color = [COLOR_WHITEMODE_TEXT]")
 	winset(src, "statwindow", "background-color = [COLOR_WHITEMODE_DARKBACKGROUND];text-color = [COLOR_WHITEMODE_TEXT]")
-	winset(src, "stat", "background-color = [COLOR_WHITEMODE_BACKGROUND];tab-background-color = [COLOR_WHITEMODE_DARKBACKGROUND];\
+	winset(src, "statpanel", "background-color = [COLOR_WHITEMODE_BACKGROUND];tab-background-color = [COLOR_WHITEMODE_DARKBACKGROUND];\
 				text-color = [COLOR_WHITEMODE_TEXT];tab-text-color = [COLOR_WHITEMODE_TEXT];\
 				prefix-color = [COLOR_WHITEMODE_TEXT];suffix-color = [COLOR_WHITEMODE_TEXT]")
 	//Etc.
@@ -56,7 +56,7 @@ Thanks to spacemaniac and mcdonald for help with the JS side of this.
 	//Status and verb tabs
 	winset(src, "output", "background-color = [COLOR_DARKMODE_BACKGROUND];text-color = [COLOR_DARKMODE_TEXT]")
 	winset(src, "statwindow", "background-color = [COLOR_DARKMODE_DARKBACKGROUND];text-color = [COLOR_DARKMODE_TEXT]")
-	winset(src, "stat", "background-color = [COLOR_DARKMODE_DARKBACKGROUND];tab-background-color = [COLOR_DARKMODE_BACKGROUND];\
+	winset(src, "statpanel", "background-color = [COLOR_DARKMODE_DARKBACKGROUND];tab-background-color = [COLOR_DARKMODE_BACKGROUND];\
 				text-color = [COLOR_DARKMODE_TEXT];tab-text-color = [COLOR_DARKMODE_TEXT];\
 				prefix-color = [COLOR_DARKMODE_TEXT];suffix-color = [COLOR_DARKMODE_TEXT]")
 	//Etc.

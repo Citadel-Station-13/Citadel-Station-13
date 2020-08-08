@@ -332,6 +332,7 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 				return
 
 	chatOutput.start() // Starts the chat
+	setup_statbrowser()
 
 	if(alert_mob_dupe_login)
 		spawn()
@@ -988,3 +989,13 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 		screen -= S
 		qdel(S)
 	char_render_holders = null
+
+/client/verb/stattab(tab as text)
+	set name = ".stattab"
+	set hidden = TRUE
+
+	switch(tab)
+		if("statbrowser")
+			statbrowser_focus = TRUE
+		if("statpanel")
+			statbrowser_focus = FALSE

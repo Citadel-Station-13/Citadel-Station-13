@@ -1838,6 +1838,7 @@
 #include "code\modules\client\preferences_savefile.dm"
 #include "code\modules\client\preferences_toggles.dm"
 #include "code\modules\client\preferences_vr.dm"
+#include "code\modules\client\statbrowser.dm"
 #include "code\modules\client\verbs\aooc.dm"
 #include "code\modules\client\verbs\autobunker.dm"
 #include "code\modules\client\verbs\etips.dm"

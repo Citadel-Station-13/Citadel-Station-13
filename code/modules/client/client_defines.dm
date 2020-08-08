@@ -151,3 +151,6 @@
 
 	//world.time of when the crew manifest can be accessed
 	var/crew_manifest_delay
+
+	/// Are we focused on our stat browser TGUI window?
+	var/statbrowser_focused = FALSE
