@@ -2815,7 +2815,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 	//let's be sure the character updates
 	if(icon_updates)
-		character.update_body()
+		character.update_body(update_genitals = TRUE)
 		character.update_hair()
 
 /datum/preferences/proc/get_default_name(name_id)
