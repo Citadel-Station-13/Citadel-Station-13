@@ -144,7 +144,7 @@
 	desc = "Raw mushy meat. Better cook this!"
 	icon_state = "rawmeatball"
 	cooked_type = /obj/item/reagent_containers/food/snacks/meatball
-	list_reagents = list(/datum/reagent/consumable/nutriment = 2)
+	list_reagents = list(/datum/reagent/consumable/nutriment = 3)
 	filling_color = "#bd2020"
 	tastes = list("meat" = 1, "slime" = 1)
 	foodtype = MEAT | RAW
@@ -154,7 +154,7 @@
 	desc = "MAMA MIA DAS A SPICY"
 	icon_state = "meatball"
 	list_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/consumable/nutriment/vitamin = 1)
-	bonus_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/nutriment/vitamin = 1)
+	bonus_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/nutriment/vitamin = 1)
 	filling_color = "#800000"
 	tastes = list("meat" = 1)
 	foodtype = MEAT
