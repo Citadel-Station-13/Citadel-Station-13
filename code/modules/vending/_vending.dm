@@ -576,7 +576,7 @@ GLOBAL_LIST_EMPTY(vending_products)
 		"<span class='notice'>You right [src].")
 
 	unbuckle_all_mobs(TRUE)
-
+	anchored = FALSE //so you can push it back into position
 	tilted = FALSE
 	layer = initial(layer)
 

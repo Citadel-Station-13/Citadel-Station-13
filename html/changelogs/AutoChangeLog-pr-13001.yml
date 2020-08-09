@@ -1,4 +1,0 @@
-author: "silicons"
-delete-after: True
-changes: 
-  - balance: "explosions only recurse one level into storage before dropping 1 level per storage layer."

@@ -1,146 +1,136 @@
-/datum/gear/baseball
+/datum/gear/head
+	category = LOADOUT_CATEGORY_HEAD
+	subcategory = LOADOUT_SUBCATEGORY_HEAD_GENERAL
+	slot = SLOT_HEAD
+
+/datum/gear/head/baseball
 	name = "Ballcap"
-	category = SLOT_HEAD
 	path = /obj/item/clothing/head/soft/mime
 
-/datum/gear/beanie
+/datum/gear/head/beanie
 	name = "Beanie"
-	category = SLOT_HEAD
 	path = /obj/item/clothing/head/beanie
 
-/datum/gear/beret
+/datum/gear/head/beret
 	name = "Black beret"
-	category = SLOT_HEAD
 	path = /obj/item/clothing/head/beret/black
 
-/datum/gear/flatcap
+/datum/gear/head/flatcap
 	name = "Flat cap"
-	category = SLOT_HEAD
 	path = /obj/item/clothing/head/flatcap
 
-/datum/gear/pirate
+/datum/gear/head/pirate
 	name = "Pirate hat"
-	category = SLOT_HEAD
 	path = /obj/item/clothing/head/pirate
 
-/datum/gear/rice_hat
+/datum/gear/head/rice_hat
 	name = "Rice hat"
-	category = SLOT_HEAD
 	path = /obj/item/clothing/head/rice_hat
 
-/datum/gear/ushanka
-	name = "Ushanka"
-	category = SLOT_HEAD
+/datum/gear/head/ushanka
 	path = /obj/item/clothing/head/ushanka
 
-/datum/gear/slime
+/datum/gear/head/slime
 	name = "Slime hat"
-	category = SLOT_HEAD
 	path = /obj/item/clothing/head/collectable/slime
 
-/datum/gear/fedora
+/datum/gear/head/fedora
 	name = "Fedora"
-	category = SLOT_HEAD
 	path = /obj/item/clothing/head/fedora
 
-/datum/gear/that
+/datum/gear/head/that
 	name = "Top Hat"
-	category = SLOT_HEAD
 	path = /obj/item/clothing/head/that
 
-/datum/gear/maidband
+/datum/gear/head/maidband
 	name = "Maid headband"
-	category = SLOT_HEAD
 	path= /obj/item/clothing/head/maid
 
-/datum/gear/flakhelm
+/datum/gear/head/flakhelm
 	name = "Flak Helmet"
-	category = SLOT_HEAD
 	path = /obj/item/clothing/head/flakhelm
 	cost = 2
 
-/datum/gear/bunnyears
+/datum/gear/head/bunnyears
 	name = "Bunny Ears"
-	category = SLOT_HEAD
 	path = /obj/item/clothing/head/rabbitears
 
-/datum/gear/mailmanhat
+/datum/gear/head/mailmanhat
 	name = "Mailman's Hat"
-	category = SLOT_HEAD
 	path = /obj/item/clothing/head/mailman
 
 //trek fancy Hats!
-/datum/gear/trekcap
+/datum/gear/head/trekcap
 	name = "Federation Officer's Cap (White)"
-	category = SLOT_HEAD
 	path = /obj/item/clothing/head/caphat/formal/fedcover
+	subcategory = LOADOUT_SUBCATEGORY_HEAD_JOBS
 	restricted_roles = list("Captain","Head of Personnel")
 
-/datum/gear/trekcapcap
+/datum/gear/head/trekcapcap
 	name = "Federation Officer's Cap (Black)"
-	category = SLOT_HEAD
 	path = /obj/item/clothing/head/caphat/formal/fedcover/black
+	subcategory = LOADOUT_SUBCATEGORY_HEAD_JOBS
 	restricted_roles = list("Captain","Head of Personnel")
 
-/datum/gear/trekcapmedisci
+/datum/gear/head/trekcapmedisci
 	name = "Federation Officer's Cap (Blue)"
-	category = SLOT_HEAD
 	path = /obj/item/clothing/head/caphat/formal/fedcover/medsci
+	subcategory = LOADOUT_SUBCATEGORY_HEAD_JOBS
 	restricted_desc = "Medical and Science"
 	restricted_roles = list("Chief Medical Officer","Medical Doctor","Chemist","Virologist","Paramedic","Geneticist","Research Director","Scientist", "Roboticist")
 
-/datum/gear/trekcapeng
+/datum/gear/head/trekcapeng
 	name = "Federation Officer's Cap (Yellow)"
-	category = SLOT_HEAD
 	path = /obj/item/clothing/head/caphat/formal/fedcover/eng
+	subcategory = LOADOUT_SUBCATEGORY_HEAD_JOBS
 	restricted_desc = "Engineering, Security, and Cargo"
 	restricted_roles = list("Chief Engineer","Atmospheric Technician","Station Engineer","Warden","Detective","Security Officer","Head of Security","Cargo Technician", "Shaft Miner", "Quartermaster")
 
-/datum/gear/trekcapsec
+/datum/gear/head/trekcapsec
 	name = "Federation Officer's Cap (Red)"
-	category = SLOT_HEAD
 	path = /obj/item/clothing/head/caphat/formal/fedcover/sec
+	subcategory = LOADOUT_SUBCATEGORY_HEAD_JOBS
 	restricted_desc = "Engineering, Security, and Cargo"
 	restricted_roles = list("Chief Engineer","Atmospheric Technician","Station Engineer","Warden","Detective","Security Officer","Head of Security","Cargo Technician", "Shaft Miner", "Quartermaster")
 
 // orvilike "original" kepi
-/datum/gear/orvkepicom
+/datum/gear/head/orvkepicom
 	name = "Federation Kepi, command"
 	description = "A visored cap. Intended to be used with ORV uniform."
-	category = SLOT_HEAD
 	path = /obj/item/clothing/head/kepi/orvi/command
+	subcategory = LOADOUT_SUBCATEGORY_HEAD_JOBS
 	restricted_desc = "Heads of Staff"
 	restricted_roles = list("Head of Security", "Captain", "Head of Personnel", "Chief Engineer", "Research Director", "Chief Medical Officer", "Quartermaster")
 
-/datum/gear/orvkepiops
+/datum/gear/head/orvkepiops
 	name = "Federation Kepi, ops/sec"
 	description = "A visored cap. Intended to be used with ORV uniform."
-	category = SLOT_HEAD
 	path = /obj/item/clothing/head/kepi/orvi/engsec
+	subcategory = LOADOUT_SUBCATEGORY_HEAD_JOBS
 	restricted_desc = "Engineering, Security and Cargo"
 	restricted_roles = list("Chief Engineer", "Atmospheric Technician", "Station Engineer", "Warden", "Detective", "Security Officer", "Head of Security", "Cargo Technician", "Shaft Miner", "Quartermaster")
 
-/datum/gear/orvkepimedsci
+/datum/gear/head/orvkepimedsci
 	name = "Federation Kepi, medsci"
 	description = "A visored cap. Intended to be used with ORV uniform."
-	category = SLOT_HEAD
 	path = /obj/item/clothing/head/kepi/orvi/medsci
+	subcategory = LOADOUT_SUBCATEGORY_HEAD_JOBS
 	restricted_desc = "Medical and Science"
 	restricted_roles = list("Chief Medical Officer", "Medical Doctor", "Chemist", "Virologist", "Paramedic", "Geneticist", "Research Director", "Scientist", "Roboticist")
 
-/datum/gear/orvkepisrv
+/datum/gear/head/orvkepisrv
 	name = "Federation Kepi, service"
 	description = "A visored cap. Intended to be used with ORV uniform."
-	category = SLOT_HEAD
 	path = /obj/item/clothing/head/kepi/orvi/service
+	subcategory = LOADOUT_SUBCATEGORY_HEAD_JOBS
 	restricted_desc = "Service and Civilian, barring Clown, Mime and Lawyer"
 	restricted_roles = list("Assistant", "Bartender", "Botanist", "Cook", "Curator", "Janitor", "Chaplain")
 
-/datum/gear/orvkepiass
+/datum/gear/head/orvkepiass
 	name = "Federation Kepi, assistant"
 	description = "A visored cap. Intended to be used with ORV uniform."
-	category = SLOT_HEAD
 	path = /obj/item/clothing/head/kepi/orvi
+	subcategory = LOADOUT_SUBCATEGORY_HEAD_JOBS
 	restricted_roles = list("Assistant")
 
 /*Commenting out Until next Christmas or made automatic
@@ -156,35 +146,37 @@
 */
 
 //Cowboy Stuff
-/datum/gear/cowboyhat
+/datum/gear/head/cowboyhat
 	name = "Cowboy Hat, Brown"
-	category = SLOT_HEAD
 	path = /obj/item/clothing/head/cowboyhat
 
-/datum/gear/cowboyhat/black
+/datum/gear/head/cowboyhat/black
 	name = "Cowboy Hat, Black"
-	category = SLOT_HEAD
 	path = /obj/item/clothing/head/cowboyhat/black
 
-/datum/gear/cowboyhat/white
+/datum/gear/head/cowboyhat/white
 	name = "Cowboy Hat, White"
-	category = SLOT_HEAD
 	path = /obj/item/clothing/head/cowboyhat/white
 
-/datum/gear/cowboyhat/pink
+/datum/gear/head/cowboyhat/pink
 	name = "Cowboy Hat, Pink"
-	category = SLOT_HEAD
 	path = /obj/item/clothing/head/cowboyhat/pink
 
-/datum/gear/cowboyhat/sec
+/datum/gear/head/cowboyhat/sec
 	name = "Cowboy Hat, Security"
-	category = SLOT_HEAD
 	path = /obj/item/clothing/head/cowboyhat/sec
+	subcategory = LOADOUT_SUBCATEGORY_HEAD_JOBS
 	restricted_desc = "Security"
 	restricted_roles = list("Warden","Detective","Security Officer","Head of Security")
 
-// Misc
-/datum/gear/wkepi
+/datum/gear/head/wkepi
 	name = "white kepi"
-	category = SLOT_HEAD
 	path = /obj/item/clothing/head/kepi
+
+/datum/gear/head/widered
+	name = "Wide red hat"
+	path = /obj/item/clothing/head/widered
+
+/datum/gear/head/kabuto
+	name = "Kabuto helmet"
+	path = /obj/item/clothing/head/kabuto
