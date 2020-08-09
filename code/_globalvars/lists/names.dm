@@ -27,7 +27,7 @@ GLOBAL_LIST_INIT(subject_names, world.file2list("strings/names/subject.txt"))
 GLOBAL_LIST_INIT(verbs, world.file2list("strings/names/verbs.txt"))
 GLOBAL_LIST_INIT(ing_verbs, world.file2list("strings/names/ing_verbs.txt"))
 GLOBAL_LIST_INIT(adverbs, world.file2list("strings/names/adverbs.txt"))
-GLOBAL_LIST_INIT(adjectives, world.file2list("strings/names/adjectives.txt"))
+GLOBAL_LIST_INIT(adjectives, world.file2list("strings/names/adjectives.txt"))	
 GLOBAL_LIST_INIT(dream_strings, world.file2list("strings/dreamstrings.txt"))
 //loaded on startup because of "
 //would include in rsc if ' was used
@@ -50,6 +50,6 @@ GLOBAL_LIST_INIT(preferences_custom_names, list(
 	"ai" = list("pref_name" = "AI", "qdesc" = "ai name", "allow_numbers" = TRUE , "group" = "silicons", "allow_null" = FALSE),
 	"religion" = list("pref_name" = "Chaplain religion", "qdesc" = "religion" , "allow_numbers" = TRUE , "group" = "chaplain", "allow_null" = FALSE),
 	"deity" = list("pref_name" = "Chaplain deity", "qdesc" = "deity", "allow_numbers" = TRUE , "group" = "chaplain", "allow_null" = FALSE),
-	"owner" = list("pref_name" = "Hypnotist title", "qdesc" = "Title as a hypnotist", "allow_numbers" = FALSE , "group" = "hypno", "allow_null" = FALSE)
+	"owner" = list("pref_name" = "Hypnotist title", "qdesc" = "Title as a hypnotist", "allow_numbers" = FALSE , "group" = "hypno", "allow_null" = FALSE),
 	"subject" = list("pref_name" = "Subject term", "qdesc" = "Term as a hypnotic subject. (CAN EASILY BE CHANGED BY TIST)", "allow_numbers" = FALSE , "group" = "hypno", "allow_null" = FALSE)
 	))
