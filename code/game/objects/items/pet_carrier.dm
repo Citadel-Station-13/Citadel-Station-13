@@ -24,6 +24,7 @@
 	var/max_occupant_weight = MOB_SIZE_SMALL //This is calculated from the mob sizes of occupants
 	var/entrance_name = "door" //name of the entrance to the item
 	var/escape_time = 200 //how long it takes for mobs above small sizes to escape (for small sizes, its randomly 1.5 to 2x this)
+	var/alternate_escape_time = 0 //how long it takes for mobs to escape when the entrance is open
 	var/load_time = 30 //how long it takes for mobs to be loaded into the pet carrier
 	var/has_lock_sprites = TRUE //whether to load the lock overlays or not
 	var/allows_hostiles = FALSE //does the pet carrier allow hostile entities to be held within it?
@@ -106,8 +107,9 @@
 	if(user == target)
 		to_chat(user, "<span class='warning'>Why would you ever do that?</span>")
 		return
-	if(ishostile(target) && (!allows_hostiles || istype(target, /mob/living/simple_animal/hostile/carp/cayenne)) || target.move_resist < MOVE_FORCE_VERY_STRONG) //don't allow goliaths into pet carriers, but let cayenne in!
+	if((ishostile(target) && (!allows_hostiles || !istype(target, /mob/living/simple_animal/hostile/carp/cayenne))) || target.move_resist >= MOVE_FORCE_VERY_STRONG) //don't allow goliaths into pet carriers, but let cayenne in!
 		to_chat(user, "<span class='warning'>You have a feeling you shouldn't keep this as a pet.</span>")
+		return
 	load_occupant(user, target)
 
 /obj/item/pet_carrier/relaymove(mob/living/user, direction)
@@ -128,13 +130,18 @@
 /obj/item/pet_carrier/container_resist(mob/living/user)
 	//don't do the whole resist timer thing if it's open!
 	if(open)
-		loc.visible_message("<span class='notice'>[user] climbs out of [src]!</span>", \
-		"<span class='warning'>[user] jumps out of [src]!</span>")
-		remove_occupant(user)
-		return
+		if(alternate_escape_time > 0)
+			loc.visible_message("<span class='notice'>The [src] begins to shake!</span>")
+			if(do_after(user, alternate_escape_time, target = user))
+				loc.visible_message("<span class='notice'>[user] jumps out of [src]</span>")
+				remove_occupant(user)
+			return
+		else //instant escape, different message
+			loc.visible_message("<span class='notice'>[user] climbs out of [src]!</span>", \
+				"<span class='warning'>[user] jumps out of [src]!</span>")
+			remove_occupant(user)
+			return
 
-	user.changeNext_move(CLICK_CD_BREAKOUT)
-	user.last_special = world.time + CLICK_CD_BREAKOUT
 	if(user.mob_size <= MOB_SIZE_SMALL)
 		to_chat(user, "<span class='notice'>You begin to try escaping the [src] and start fumbling for the lock switch... (This will take some time.)</span>")
 		to_chat(loc, "<span class='warning'>You see [user] attempting to unlock the [src]!</span>")
@@ -147,7 +154,7 @@
 		update_icon()
 	else
 		loc.visible_message("<span class='warning'>[src] starts rattling as something pushes against the [entrance_name]!</span>", null, null, null, user)
-		to_chat(user, "<span class='notice'>You start pushing out of [src]... (This will take about 20 seconds.)</span>")
+		to_chat(user, "<span class='notice'>You start pushing out of [src]... (This will take about [escape_time/10] seconds.)</span>")
 		if(!do_after(user, escape_time, target = user) || open || !locked || !(user in occupants))
 			return
 		loc.visible_message("<span class='warning'>[user] shoves out of	[src]!</span>", null, null, null, user)
@@ -180,21 +187,22 @@
 /obj/item/pet_carrier/proc/load_occupant(mob/living/user, mob/living/target)
 	if(pet_carrier_full(src))
 		to_chat(user, "<span class='warning'>[src] is already carrying too much!</span>")
-		return
+		return FALSE
 	user.visible_message("<span class='notice'>[user] starts loading [target] into [src].</span>", \
 	"<span class='notice'>You start loading [target] into [src]...</span>", null, null, target)
 	to_chat(target, "<span class='userdanger'>[user] starts loading you into [user.p_their()] [name]!</span>")
 	if(!do_mob(user, target, load_time))
-		return
+		return FALSE
 	if(target in occupants)
-		return
+		return FALSE
 	if(pet_carrier_full(src)) //Run the checks again, just in case
 		to_chat(user, "<span class='warning'>[src] is already carrying too much!</span>")
-		return
+		return FALSE
 	user.visible_message("<span class='notice'>[user] loads [target] into [src]!</span>", \
 	"<span class='notice'>You load [target] into [src].</span>", null, null, target)
 	to_chat(target, "<span class='userdanger'>[user] loads you into [user.p_their()] [name]!</span>")
 	add_occupant(target)
+	return TRUE
 
 /obj/item/pet_carrier/proc/add_occupant(mob/living/occupant)
 	if(occupant in occupants || !istype(occupant))
@@ -230,7 +238,8 @@
 	allows_hostiles = TRUE //can fit hostile creatures, with the move resist restrictions in place, this means they still cannot take things like legions/goliaths/etc regardless
 	has_lock_sprites = FALSE //jar doesn't show the regular lock overlay
 	custom_materials = list(/datum/material/glass = 1000, /datum/material/bluespace = 600)
-	escape_time = 10 //half the time of a bluespace bodybag
+	escape_time = 200 //equal to the time of a bluespace bodybag
+	alternate_escape_time = 100
 	var/datum/gas_mixture/occupant_gas_supply
 
 /obj/item/pet_carrier/bluespace/update_icon_state()
@@ -271,10 +280,15 @@
 		REMOVE_TRAIT(occupant, TRAIT_NOBREATH, "bluespace_container_no_breath")
 		REMOVE_TRAIT(occupant, TRAIT_RESISTHIGHPRESSURE, "bluespace_container_resist_high_pressure")
 		REMOVE_TRAIT(occupant, TRAIT_RESISTLOWPRESSURE, "bluespace_container_resist_low_pressure")
+	name = initial(name)
 
 /obj/item/pet_carrier/bluespace/return_air()
 	if(!occupant_gas_supply)
 		occupant_gas_supply = new
 	return occupant_gas_supply
+
+/obj/item/pet_carrier/bluespace/load_occupant(mob/living/user, mob/living/target)
+	if(..())
+		name = "[initial(name)] ([target])"
 
 #undef pet_carrier_full

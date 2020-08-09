@@ -123,6 +123,7 @@
 
 /obj/item/tank/analyzer_act(mob/living/user, obj/item/I)
 	atmosanalyzer_scan(air_contents, user, src)
+	return TRUE
 
 /obj/item/tank/deconstruct(disassembled = TRUE)
 	if(!disassembled)

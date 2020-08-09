@@ -11,7 +11,7 @@
 	layer = ABOVE_MOB_LAYER
 	dir = EAST
 
-/obj/structure/pool/ladder/attack_hand(mob/living/user, act_intent = user.a_intent, unarmed_attack_flags)
+/obj/structure/pool/ladder/on_attack_hand(mob/living/user, act_intent = user.a_intent, unarmed_attack_flags)
 	. = ..()
 	if(.)
 		return
@@ -52,7 +52,7 @@
 	user.pixel_x = initial_px
 	user.pixel_y = initial_py
 
-/obj/structure/pool/Lboard/attack_hand(mob/living/user, act_intent = user.a_intent, unarmed_attack_flags)
+/obj/structure/pool/Lboard/on_attack_hand(mob/living/user, act_intent = user.a_intent, unarmed_attack_flags)
 	if(iscarbon(user))
 		var/mob/living/carbon/jumper = user
 		if(jumping)

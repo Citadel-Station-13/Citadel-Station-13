@@ -1,4 +1,0 @@
-author: "silicons"
-delete-after: True
-changes: 
-  - tweak: "sanitization now doesn't cut off 15.7 or something million possible colors from character preferences (instead of only allowing 16 values for R G and B, it now allows 256 each)"

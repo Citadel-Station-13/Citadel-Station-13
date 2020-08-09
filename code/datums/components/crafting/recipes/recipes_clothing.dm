@@ -263,6 +263,14 @@
 	time = 30
 	category = CAT_CLOTHING
 
+/datum/crafting_recipe/durathread_reinforcement_kit
+	name = "Durathread Reinforcement Kit"
+	result = /obj/item/armorkit
+	reqs = list(/obj/item/stack/sheet/durathread = 4)
+	tools = list(/obj/item/stack/sheet/mineral/titanium, TOOL_WIRECUTTER) // tough needle for a tough fabric
+	time = 40
+	category = CAT_CLOTHING
+
 /datum/crafting_recipe/durathread_duffelbag
 	name = "Durathread Dufflebag"
 	result = /obj/item/storage/backpack/duffelbag/durathread

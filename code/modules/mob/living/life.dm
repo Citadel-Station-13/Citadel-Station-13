@@ -3,7 +3,7 @@
   * Splits off into PhysicalLife() and BiologicalLife(). Override those instead of this.
   */
 /mob/living/proc/Life(seconds, times_fired)
-	set waitfor = FALSE		// yeah hey we're kind of on a subsystem, no sleeping will be tolerated here!
+	SHOULD_NOT_SLEEP(TRUE)
 	if(mob_transforming)
 		return
 
@@ -82,7 +82,7 @@
 		handle_diginvis() //AI becomes unable to see mob
 
 	if((movement_type & FLYING) && !(movement_type & FLOATING))	//TODO: Better floating
-		float(on = TRUE)
+		INVOKE_ASYNC(src, /atom/movable.proc/float, TRUE)
 
 	if(!loc)
 		return FALSE
@@ -139,7 +139,7 @@
 		ExtinguishMob()
 		return
 	var/datum/gas_mixture/G = loc.return_air() // Check if we're standing in an oxygenless environment
-	if(G.get_moles(/datum/gas/oxygen, 1))
+	if(!G.get_moles(/datum/gas/oxygen, 1))
 		ExtinguishMob() //If there's no oxygen in the tile we're on, put out the fire
 		return
 	var/turf/location = get_turf(src)

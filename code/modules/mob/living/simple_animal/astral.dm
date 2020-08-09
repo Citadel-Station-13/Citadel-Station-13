@@ -41,7 +41,11 @@
 	to_chat(src, "<span class='notice'>Your astral projection is interrupted and your mind is sent back to your body with a shock!</span>")
 
 /mob/living/simple_animal/astral/ClickOn(var/atom/A, var/params)
-	..()
+	. = ..()
+	attempt_possess(A)
+
+/mob/living/simple_animal/astral/proc/attempt_possess(atom/A)
+	set waitfor = FALSE
 	if(pseudo_death == FALSE)
 		if(isliving(A))
 			if(ishuman(A))
