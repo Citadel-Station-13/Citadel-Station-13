@@ -36,6 +36,10 @@
 	QDEL_NULL(cpu)
 	return ..()
 
+/obj/machinery/modular_computer/examine(mob/user)
+	. = ..()
+	. += get_modular_computer_parts_examine(user)
+
 /obj/machinery/modular_computer/attack_ghost(mob/dead/observer/user)
 	. = ..()
 	if(.)
@@ -45,31 +49,31 @@
 
 /obj/machinery/modular_computer/emag_act(mob/user)
 	. = ..()
-	if(cpu)
-		. |= cpu.emag_act(user)
+	if(!cpu)
+		to_chat(user, "<span class='warning'>You'd need to turn the [src] on first.</span>")
+		return FALSE
+	return (cpu.emag_act(user))
 
-/obj/machinery/modular_computer/update_icon_state()
-	if(cpu?.enabled)
-		icon_state = icon_state_powered
-	else if(stat & NOPOWER || !(cpu?.use_power()))
-		icon_state = icon_state_unpowered
+/obj/machinery/modular_computer/update_icon()
+	cut_overlays()
+	icon_state = icon_state_powered
 
-/obj/machinery/modular_computer/update_overlays()
-	. = ..()
 	if(!cpu || !cpu.enabled)
 		if (!(stat & NOPOWER) && (cpu && cpu.use_power()))
-			. += screen_icon_screensaver
+			add_overlay(screen_icon_screensaver)
+		else
+			icon_state = icon_state_unpowered
 		set_light(0)
 	else
 		set_light(light_strength)
 		if(cpu.active_program)
-			. += cpu.active_program.program_icon_state ? cpu.active_program.program_icon_state : screen_icon_state_menu
+			add_overlay(cpu.active_program.program_icon_state ? cpu.active_program.program_icon_state : screen_icon_state_menu)
 		else
-			. += screen_icon_state_menu
+			add_overlay(screen_icon_state_menu)
 
 	if(cpu && cpu.obj_integrity <= cpu.integrity_failure * cpu.max_integrity)
-		. += "bsod"
-		. += "broken"
+		add_overlay("bsod")
+		add_overlay("broken")
 
 // Eject ID card from computer, if it has ID slot with card inside.
 /obj/machinery/modular_computer/proc/eject_id()
@@ -96,10 +100,10 @@
 		cpu.eject_card()
 
 /obj/machinery/modular_computer/AltClick(mob/user)
-	. = ..()
 	if(cpu)
-		return cpu.AltClick(user)
+		cpu.AltClick(user)
 
+//ATTACK HAND IGNORING PARENT RETURN VALUE
 // On-click handling. Turns on the computer if it's off and opens the GUI.
 /obj/machinery/modular_computer/interact(mob/user)
 	if(cpu)
@@ -130,8 +134,7 @@
 		stat &= ~NOPOWER
 		update_icon()
 		return
-	..()
-	update_icon()
+	. = ..()
 
 /obj/machinery/modular_computer/attackby(var/obj/item/W as obj, mob/user)
 	if(cpu && !(flags_1 & NODECONSTRUCT_1))
@@ -144,6 +147,13 @@
 /obj/machinery/modular_computer/ex_act(severity)
 	if(cpu)
 		cpu.ex_act(severity)
+		// switch(severity)
+		// 	if(EXPLODE_DEVASTATE)
+		// 		SSexplosions.highobj += cpu
+		// 	if(EXPLODE_HEAVY)
+		// 		SSexplosions.medobj += cpu
+		// 	if(EXPLODE_LIGHT)
+		// 		SSexplosions.lowobj += cpu
 	..()
 
 // EMPs are similar to explosions, but don't cause physical damage to the casing. Instead they screw up the components

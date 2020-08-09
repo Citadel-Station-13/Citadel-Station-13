@@ -583,16 +583,6 @@
 				C.Stun(60)
 				to_chat(owner, "<span class='warning'><i>Your muscles seize up, then start spasming wildy!</i></span>")
 
-			//wah intensifies wah-rks
-			else if (lowertext(customTriggers[trigger]) == "cum")//aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-				if (lewd)
-					if(ishuman(C))
-						var/mob/living/carbon/human/H = C
-						H.mob_climax(forced_climax=TRUE)
-					C.SetStun(10)//We got your stun effects in somewhere, Kev.
-				else
-					C.throw_at(get_step_towards(hearing_args[HEARING_SPEAKER],C), 3, 1) //cut this if it's too hard to get working
-
 			//kneel (knockdown)
 			else if (lowertext(customTriggers[trigger]) == "kneel")//as close to kneeling as you can get, I suppose.
 				to_chat(owner, "<span class='notice'><i>You drop to the ground unsurreptitiously.</i></span>")
@@ -674,15 +664,6 @@
 		deltaResist *= 1.25
 	if (owner.reagents.has_reagent(/datum/reagent/medicine/neurine))
 		deltaResist *= 1.5
-	if (!(owner.client?.prefs.cit_toggles & NO_APHRO) && lewd)
-		if (owner.reagents.has_reagent(/datum/reagent/drug/anaphrodisiac))
-			deltaResist *= 1.5
-		if (owner.reagents.has_reagent(/datum/reagent/drug/anaphrodisiacplus))
-			deltaResist *= 2
-		if (owner.reagents.has_reagent(/datum/reagent/drug/aphrodisiac))
-			deltaResist *= 0.75
-		if (owner.reagents.has_reagent(/datum/reagent/drug/aphrodisiacplus))
-			deltaResist *= 0.5
 	//Antag resistance
 	//cultists are already brainwashed by their god
 	if(iscultist(owner))

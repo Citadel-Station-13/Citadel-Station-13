@@ -1,4 +1,0 @@
-author: "silicons"
-delete-after: True
-changes: 
-  - rscdel: "fun removal: squeaking objects now have an 1 second cooldown between squeaks, and will have a 33% chance of interrupting any other squeaking object when Cross()ing, meaning no more ear-fuck conveyor belts."

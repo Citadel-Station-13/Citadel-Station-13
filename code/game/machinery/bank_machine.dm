@@ -3,6 +3,7 @@
 	desc = "A machine used to deposit and withdraw station funds."
 	icon = 'goon/icons/obj/goon_terminals.dmi'
 	idle_power_usage = 100
+
 	var/siphoning = FALSE
 	var/next_warning = 0
 	var/obj/item/radio/radio
@@ -38,7 +39,6 @@
 		return
 	return ..()
 
-
 /obj/machinery/computer/bank_machine/process()
 	..()
 	if(siphoning)
@@ -51,7 +51,7 @@
 			end_syphon()
 			return
 
-		playsound(src.loc, 'sound/items/poster_being_created.ogg', 100, 1)
+		playsound(src, 'sound/items/poster_being_created.ogg', 100, TRUE)
 		syphoning_credits += 200
 		D.adjust_money(-200)
 		if(next_warning < world.time && prob(15))
@@ -60,17 +60,20 @@
 			radio.talk_into(src, message, radio_channel)
 			next_warning = world.time + minimum_time_between_warnings
 
-/obj/machinery/computer/bank_machine/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
-									datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+/obj/machinery/computer/bank_machine/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, ui_key, "BankMachine", name, 320, 165, master_ui, state)
+		ui = new(user, src, "BankMachine", name)
 		ui.open()
 
 /obj/machinery/computer/bank_machine/ui_data(mob/user)
 	var/list/data = list()
 	var/datum/bank_account/D = SSeconomy.get_dep_account(ACCOUNT_CAR)
-	data["current_balance"] = D.account_balance
+
+	if(D)
+		data["current_balance"] = D.account_balance
+	else
+		data["current_balance"] = 0
 	data["siphoning"] = siphoning
 	data["station_name"] = station_name()
 

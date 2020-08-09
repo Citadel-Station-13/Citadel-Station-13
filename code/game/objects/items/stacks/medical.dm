@@ -115,14 +115,15 @@
 
 /obj/item/stack/medical/gauze
 	name = "medical gauze"
-	desc = "A roll of elastic cloth, perfect for stabilizing all kinds of wounds, from cuts and burns, to broken bones. "
+	desc = "A roll of elastic cloth, perfect for stabilizing all kinds of wounds, from cuts and burns to broken bones."
 	gender = PLURAL
 	singular_name = "medical gauze"
 	icon_state = "gauze"
 	heal_brute = 5
 	self_delay = 50
 	other_delay = 20
-	amount = 6
+	amount = 10
+	max_amount = 10
 	absorption_rate = 0.25
 	absorption_capacity = 5
 	splint_factor = 0.35
@@ -170,6 +171,14 @@
 					 "<span class='notice'>You cut [src] into pieces of cloth with [I].</span>", \
 					 "<span class='italics'>You hear cutting.</span>")
 		use(2)
+	else if(I.is_drainable() && I.reagents.has_reagent(/datum/reagent/space_cleaner/sterilizine))
+		if(!I.reagents.has_reagent(/datum/reagent/space_cleaner/sterilizine, 10))
+			to_chat(user, "<span class='warning'>There's not enough sterilizine in [I] to sterilize [src]!</span>")
+			return
+		user.visible_message("<span class='notice'>[user] pours the contents of [I] onto [src], sterilizing it.</span>", "<span class='notice'>You pour the contents of [I] onto [src], sterilizing it.</span>")
+		I.reagents.remove_reagent(/datum/reagent/space_cleaner/sterilizine, 10)
+		new /obj/item/stack/medical/gauze/adv/one(user.drop_location())
+		use(1)
 	else
 		return ..()
 
@@ -181,7 +190,7 @@
 	name = "improvised gauze"
 	singular_name = "improvised gauze"
 	heal_brute = 0
-	desc = "A roll of cloth roughly cut from something that does a decent job of stabilizing wounds, but less efficiently so than real medical gauze."
+	desc = "A roll of cloth roughly cut from something that does a decent job of stabilizing wounds, but less efficiently than real medical gauze."
 	self_delay = 60
 	other_delay = 30
 	absorption_rate = 0.15
@@ -189,9 +198,13 @@
 
 /obj/item/stack/medical/gauze/adv
 	name = "sterilized medical gauze"
-	desc = "A roll of elastic sterilized cloth that is extremely effective at stopping bleeding, heals minor wounds and cleans them."
 	singular_name = "sterilized medical gauze"
-	self_delay = 5
+	desc = "A roll of elastic sterilized cloth that is extremely effective at stopping bleeding and covering burns."
+	heal_brute = 6
+	self_delay = 45
+	other_delay = 15
+	absorption_rate = 0.4
+	absorption_capacity = 6
 
 /obj/item/stack/medical/gauze/adv/one
 	amount = 1
@@ -209,8 +222,8 @@
 	icon_state = "suture"
 	self_delay = 30
 	other_delay = 10
-	amount = 10
-	max_amount = 10
+	amount = 15
+	max_amount = 15
 	repeating = TRUE
 	heal_brute = 10
 	stop_bleeding = 0.6
@@ -264,8 +277,8 @@
 	icon_state = "ointment"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
-	amount = 10
-	max_amount = 10
+	amount = 12
+	max_amount = 12
 	self_delay = 40
 	other_delay = 20
 
@@ -295,8 +308,8 @@
 	self_delay = 30
 	other_delay = 10
 	amount = 15
-	heal_burn = 10
 	max_amount = 15
+	heal_burn = 10
 	repeating = TRUE
 	sanitization = 0.75
 	flesh_regeneration = 3

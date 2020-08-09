@@ -201,9 +201,18 @@
 	WRITE_LOG(log, "Starting up round ID [GLOB.round_id].\n-------------------------")
 
 /* ui logging */
-
-/proc/log_tgui(text)
-	WRITE_LOG(GLOB.tgui_log, text)
+/proc/log_tgui(user_or_client, text)
+	var/entry = ""
+	if(!user_or_client)
+		entry += "no user"
+	else if(istype(user_or_client, /mob))
+		var/mob/user = user_or_client
+		entry += "[user.ckey] (as [user])"
+	else if(istype(user_or_client, /client))
+		var/client/client = user_or_client
+		entry += "[client.ckey]"
+	entry += ":\n[text]"
+	WRITE_LOG(GLOB.tgui_log, entry)
 
 /* Close open log handles. This should be called as late as possible, and no logging should hapen after. */
 /proc/shutdown_logging()
