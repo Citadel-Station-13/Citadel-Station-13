@@ -33,16 +33,20 @@ export const SkillPanel = (props, context) => {
                   {skill.desc}
                 </span>
                 <br />
-                <Level
-                  skill_lvl_num={skill.lvlnum}
-                  skill_lvl={skill.lvl} />
-                <br />
-                Total Experience: [{skill.exp} XP]
+                {!!skill.level_based && (
+                  <Fragment>
+                    <Level
+                      skill_lvl_num={skill.lvl_base_num}
+                      skill_lvl={skill.lvl_base} />
+                    <br />
+                  </Fragment>
+                )}
+                Total Experience: [{skill.value_base} XP]
                 <br />
                 XP To Next Level: 
-                {skill.exp_req !== 0 ? (
+                {skill.level_based ? (
                   <span>
-                    [{skill.exp_prog} / {skill.exp_req}]
+                    {skill.xp_next_lvl_base}
                   </span>
                 ) : (
                   <span style={skillgreen}>
@@ -50,9 +54,9 @@ export const SkillPanel = (props, context) => {
                   </span>
                 )}
                 <br />
-                Overall Skill Progress: [{skill.exp} / {skill.max_exp}]
+                {skill.base_readout}
                 <ProgressBar
-                  value={skill.exp_percent}
+                  value={skill.percent_base}
                   color="good" />
                 <br />
                 {!!data.admin && (
