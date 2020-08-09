@@ -33,7 +33,7 @@
 	if(reagents)
 		applyChemicals(reagents)
 		reagents.clear_reagents()
- if(dead)
+ 	if(dead)
 		dead = 0
 		qdel(myseed)
 		myseed = null
