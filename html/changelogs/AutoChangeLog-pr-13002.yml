@@ -1,0 +1,4 @@
+author: "silicons"
+delete-after: True
+changes: 
+  - balance: "getting hit by an explosion will now barely hard knockdown, but will leave you somewhat winded."
