@@ -195,6 +195,7 @@ obj/item/seeds/proc/is_gene_forbidden(typepath)
 	var/t_amount = 0
 	var/list/result = list()
 	var/output_loc =  parent.loc
+	var/product_name
 	while(t_amount < getYield())
 		var/obj/item/reagent_containers/food/snacks/grown/t_prod = new product(output_loc, src)
 		if(parent.myseed.plantname != initial(parent.myseed.plantname))
