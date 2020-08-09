@@ -73,6 +73,7 @@
 		new /datum/data/mining_equipment("Miner Full Replacement",		/obj/item/storage/backpack/duffelbag/mining_cloned,					3000),
 		new /datum/data/mining_equipment("Premium Accelerator",			/obj/item/gun/energy/kinetic_accelerator/premiumka,					8000),
 		new /datum/data/mining_equipment("Kinetic Glaive",				/obj/item/kinetic_crusher/glaive,									2250),
+		new /datum/data/mining_equipment("Kinetic Destroyer",			/obj/item/kinetic_crusher/premiumcrusher,							12000), //boop
 		)
 
 /datum/data/mining_equipment
