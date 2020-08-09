@@ -55,6 +55,10 @@
 	var/stun_projectile = null
 	/// Sound of stun projectile
 	var/stun_projectile_sound
+	/// Projectile to use in stun mode when the target is resting, if any
+	var/nonlethal_projectile
+	/// Sound of stun projectile wen the target is resting, optional
+	var/nonlethal_projectile_sound
 	/// Lethal mode projectile type
 	var/lethal_projectile = null
 	/// Sound of lethal projectile
@@ -598,9 +602,14 @@
 	var/obj/item/projectile/A
 	//any emagged turrets drains 2x power and uses a different projectile?
 	if(mode == TURRET_STUN)
-		use_power(reqpower)
-		A = new stun_projectile(T)
-		playsound(loc, stun_projectile_sound, 75, TRUE)
+		if(nonlethal_projectile && C && C.resting)
+			use_power(reqpower*0.5)
+			A = new nonlethal_projectile(T)
+			playsound(loc, nonlethal_projectile_sound, 75, 1)
+		else
+			use_power(reqpower)
+			A = new stun_projectile(T)
+			playsound(loc, stun_projectile_sound, 75, 1)
 	else
 		use_power(reqpower * 2)
 		A = new lethal_projectile(T)
@@ -721,6 +730,8 @@
 	base_icon_state = "standard"
 	stun_projectile = /obj/item/projectile/energy/electrode
 	stun_projectile_sound = 'sound/weapons/taser.ogg'
+	nonlethal_projectile = /obj/item/projectile/beam/disabler
+	nonlethal_projectile_sound = 'sound/weapons/taser2.ogg'
 	lethal_projectile = /obj/item/projectile/beam/laser
 	lethal_projectile_sound = 'sound/weapons/laser.ogg'
 	desc = "An energy blaster auto-turret."
@@ -730,6 +741,8 @@
 	base_icon_state = "standard"
 	stun_projectile = /obj/item/projectile/energy/electrode
 	stun_projectile_sound = 'sound/weapons/taser.ogg'
+	nonlethal_projectile = /obj/item/projectile/beam/disabler
+	nonlethal_projectile_sound = 'sound/weapons/taser2.ogg'
 	lethal_projectile = /obj/item/projectile/beam/laser/heavylaser
 	lethal_projectile_sound = 'sound/weapons/lasercannonfire.ogg'
 	desc = "An energy blaster auto-turret."
@@ -770,6 +783,8 @@
 
 /obj/machinery/porta_turret/ai
 	faction = list("silicon")
+	nonlethal_projectile = /obj/item/projectile/beam/disabler
+	nonlethal_projectile_sound = 'sound/weapons/taser2.ogg'
 	turret_flags = TURRET_FLAG_SHOOT_CRIMINALS | TURRET_FLAG_SHOOT_ANOMALOUS | TURRET_FLAG_SHOOT_HEADS
 
 /obj/machinery/porta_turret/ai/assess_perp(mob/living/carbon/human/perp)
