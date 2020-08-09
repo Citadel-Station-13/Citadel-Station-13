@@ -602,7 +602,10 @@
 	var/obj/item/projectile/A
 	//any emagged turrets drains 2x power and uses a different projectile?
 	if(mode == TURRET_STUN)
-		if(nonlethal_projectile && target?.resting)
+		var/mob/living/carbon/C = null
+		if(iscarbon(target))
+			C = target
+		if(nonlethal_projectile && C?.resting)
 			use_power(reqpower*0.5)
 			A = new nonlethal_projectile(T)
 			playsound(loc, nonlethal_projectile_sound, 75, 1)
