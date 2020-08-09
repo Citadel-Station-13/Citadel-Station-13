@@ -776,6 +776,10 @@ GLOBAL_LIST_INIT(binary, list("0","1"))
 		else
 			return "[number]\th"
 
+
+/proc/random_capital_letter()
+	return uppertext(pick(GLOB.alphabet))
+
 /proc/unintelligize(message)
 	var/regex/word_boundaries = regex(@"\b[\S]+\b", "g")
 	var/prefix = message[1]

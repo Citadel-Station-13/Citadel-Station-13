@@ -30,6 +30,8 @@ Make sure to add new items to this list if you document new components.
   - [`Icon`](#icon)
   - [`Input`](#input)
   - [`Knob`](#knob)
+  - [`LabeledControls`](#labeledcontrols)
+  - [`LabeledControls.Item`](#labeledcontrolsitem)
   - [`LabeledList`](#labeledlist)
   - [`LabeledList.Item`](#labeledlistitem)
   - [`LabeledList.Divider`](#labeledlistdivider)
@@ -239,7 +241,7 @@ A ghetto checkbox, made entirely using existing Button API.
 
 ### `Button.Confirm`
 
-A button with a an extra confirmation step, using native button component.
+A button with an extra confirmation step, using native button component.
 
 **Props:**
 
@@ -273,11 +275,11 @@ interface.
 
 Example (button):
 
-```
+```jsx
 <ByondUi
   params={{
     id: 'test_button', // optional, can be auto-generated
-    parent: config.window,
+    parent: 'some_container', // optional, defaults to the current window
     type: 'button',
     text: 'Hello, world!',
   }} />
@@ -285,11 +287,10 @@ Example (button):
 
 Example (map):
 
-```
+```jsx
 <ByondUi
   params={{
     id: 'test_map',
-    parent: config.window,
     type: 'map',
   }} />
 ```
@@ -583,6 +584,24 @@ Default is about 250ms, increase it if you still see flickering.
 the input, or successfully enter a number.
 - `onDrag: (e, value) => void` - An event, which fires about every 500ms
 when you drag the input up and down, on release and on manual editing.
+
+### `LabeledControls`
+
+LabeledControls is a horizontal grid, that is designed to hold various
+controls, like [Knobs](#knob) or small [Buttons](#button). Every item in
+this grid is labeled at the bottom.
+
+**Props:**
+
+- See inherited props: [Box](#box)
+- `children: LabeledControls.Item` - Items to render.
+
+### `LabeledControls.Item`
+
+**Props:**
+
+- See inherited props: [Box](#box)
+- `label: string` - Item label.
 
 ### `LabeledList`
 
@@ -962,6 +981,7 @@ Example:
 - `className: string` - Applies a CSS class to the element.
 - `theme: string` - A name of the theme.
   - For a list of themes, see `packages/tgui/styles/themes`.
+- `title: string` - Window title.
 - `resizable: boolean` - Controls resizability of the window.
 - `children: any` - Child elements, which are rendered directly inside the
 window. If you use a [Dimmer](#dimmer) or [Modal](#modal) in your UI,

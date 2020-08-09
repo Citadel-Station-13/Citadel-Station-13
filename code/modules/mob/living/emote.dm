@@ -326,6 +326,11 @@
 	key_third_person = "smiles"
 	message = "smiles."
 
+/datum/emote/living/smirk
+	key = "smirk"
+	key_third_person = "smirks"
+	message = "smirks."
+
 /datum/emote/living/sneeze
 	key = "sneeze"
 	key_third_person = "sneezes"

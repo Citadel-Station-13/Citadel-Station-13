@@ -81,3 +81,14 @@
 		user.updatehealth()
 		user.adjustOrganLoss(ORGAN_SLOT_BRAIN, -hp_gained) // Zom Bee gibbers "BRAAAAISNSs!1!"
 		user.adjust_nutrition(hp_gained, NUTRITION_LEVEL_FULL)
+
+/obj/item/paper/guides/antag/romerol_instructions
+	info = "How to do necromancy with chemicals:<br>\
+	<ul>\
+	<li>Use a dropper or syringe (provided) to inject the Romerol (provided) into a target (not provided)</li>\
+	<li>Wait for said target to die, or speed the process up by doing it yourself</li>\
+	<li>Run away from the target, as they will be hostile when rising back up</li>\
+	<li>Optionally: Inject chemical into foods and drinks to further spread possible infection</li>\
+	<li>???</li>\
+	<li>Complete assigned objectives amidst the chaos</li>\
+	</ul>"

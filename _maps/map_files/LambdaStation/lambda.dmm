@@ -44383,7 +44383,6 @@
 /turf/open/floor/plasteel/white,
 /area/hallway/primary/aft)
 "bFB" = (
-/obj/structure/reagent_dispensers/keg/aphro/strong,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/wood{
 	icon_state = "wood-broken5"

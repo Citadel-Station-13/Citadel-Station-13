@@ -16,6 +16,8 @@
 
 	/// If it's valid territory for gangs/cults to summon
 	var/valid_territory = TRUE
+	/// malf ais can hack this
+	var/valid_malf_hack = TRUE
 	/// if blobs can spawn there and if it counts towards their score.
 	var/blob_allowed = TRUE
 	/// whether servants can warp into this area from Reebe
@@ -572,6 +574,7 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 	power_environ = FALSE
 	always_unpowered = FALSE
 	valid_territory = FALSE
+	valid_malf_hack = FALSE
 	blob_allowed = FALSE
 	addSorted()
 

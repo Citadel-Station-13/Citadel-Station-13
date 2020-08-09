@@ -29,7 +29,7 @@
 
 /obj/item/electropack/Destroy()
 	SSradio.remove_object(src, frequency)
-	. = ..()
+	return ..()
 
 /obj/item/electropack/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	if(iscarbon(user))
@@ -39,7 +39,7 @@
 			return
 	return ..()
 
-/obj/item/electropack/attackby(obj/item/W, mob/living/user, params)
+/obj/item/electropack/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/clothing/head/helmet))
 		var/obj/item/assembly/shock_kit/A = new /obj/item/assembly/shock_kit(user)
 		A.icon = 'icons/obj/assemblies.dmi'
@@ -59,56 +59,12 @@
 	else
 		return ..()
 
-/obj/item/electropack/Topic(href, href_list)
-	var/mob/living/carbon/C = usr
-	if(usr.stat || usr.restrained() || C.back == src)
-		return
-
-	if(!usr.canUseTopic(src, BE_CLOSE))
-		usr << browse(null, "window=radio")
-		onclose(usr, "radio")
-		return
-
-	if(href_list["set"])
-		if(href_list["set"] == "freq")
-			var/new_freq = input(usr, "Input a new receiving frequency", "Electropack Frequency", format_frequency(frequency)) as num|null
-			if(!usr.canUseTopic(src, BE_CLOSE))
-				return
-			new_freq = unformat_frequency(new_freq)
-			new_freq = sanitize_frequency(new_freq, TRUE)
-			set_frequency(new_freq)
-
-		if(href_list["set"] == "code")
-			var/new_code = input(usr, "Input a new receiving code", "Electropack Code", code) as num|null
-			if(!usr.canUseTopic(src, BE_CLOSE))
-				return
-			new_code = round(new_code)
-			new_code = clamp(new_code, 1, 100)
-			code = new_code
-
-		if(href_list["set"] == "power")
-			if(!usr.canUseTopic(src, BE_CLOSE))
-				return
-			on = !(on)
-			icon_state = "electropack[on]"
-
-	if(usr)
-		attack_self(usr)
-
-	return
-
-/obj/item/electropack/proc/set_frequency(new_frequency)
-	SSradio.remove_object(src, frequency)
-	frequency = new_frequency
-	SSradio.add_object(src, frequency, RADIO_SIGNALER)
-	return
-
 /obj/item/electropack/receive_signal(datum/signal/signal)
 	if(!signal || signal.data["code"] != code)
 		return
 
 	if(isliving(loc) && on)
-		if(shock_cooldown == TRUE)
+		if(shock_cooldown)
 			return
 		shock_cooldown = TRUE
 		addtimer(VARSET_CALLBACK(src, shock_cooldown, FALSE), 100)
@@ -124,18 +80,59 @@
 
 	if(master)
 		master.receive_signal()
-	return
 
-/obj/item/electropack/ui_interact(mob/user)
-	if(!ishuman(user))
+/obj/item/electropack/proc/set_frequency(new_frequency)
+	SSradio.remove_object(src, frequency)
+	frequency = new_frequency
+	SSradio.add_object(src, frequency, RADIO_SIGNALER)
+
+/obj/item/electropack/ui_state(mob/user)
+	return GLOB.hands_state
+
+/obj/item/electropack/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "Electropack", name)
+		ui.open()
+
+/obj/item/electropack/ui_data(mob/user)
+	var/list/data = list()
+	data["power"] = on
+	data["frequency"] = frequency
+	data["code"] = code
+	data["minFrequency"] = MIN_FREE_FREQ
+	data["maxFrequency"] = MAX_FREE_FREQ
+	return data
+
+/obj/item/electropack/ui_act(action, params)
+	if(..())
 		return
 
-/obj/item/electropack/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
-									datum/tgui/master_ui = null, datum/ui_state/state = GLOB.hands_state)
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
-	if(!ui)
-		ui = new(user, src, ui_key, "Electropack", name, ui_x, ui_y, master_ui, state)
-		ui.open()
+	switch(action)
+		if("power")
+			on = !on
+			icon_state = "electropack[on]"
+			. = TRUE
+		if("freq")
+			var/value = unformat_frequency(params["freq"])
+			if(value)
+				frequency = sanitize_frequency(value, TRUE)
+				set_frequency(frequency)
+				. = TRUE
+		if("code")
+			var/value = text2num(params["code"])
+			if(value)
+				value = round(value)
+				code = clamp(value, 1, 100)
+				. = TRUE
+		if("reset")
+			if(params["reset"] == "freq")
+				frequency = initial(frequency)
+				. = TRUE
+			else if(params["reset"] == "code")
+				code = initial(code)
+				. = TRUE
+
 
 /obj/item/electropack/shockcollar
 	name = "shock collar"
@@ -145,7 +142,7 @@
 	icon_state = "shockcollar"
 	item_state = "shockcollar"
 	body_parts_covered = NECK
-	slot_flags = ITEM_SLOT_NECK | ITEM_SLOT_DENYPOCKET   //no more pocket shockers
+	slot_flags = ITEM_SLOT_NECK //no more pocket shockers. Now done without lazyness
 	w_class = WEIGHT_CLASS_SMALL
 	strip_delay = 60
 	equip_delay_other = 60
@@ -167,16 +164,18 @@
 		return
 	return ..()
 
-/obj/item/electropack/shockcollar/receive_signal(datum/signal/signal)
+/obj/item/electropack/shockcollar/receive_signal(datum/signal/signal) //we have to override this because of text
 	if(!signal || signal.data["code"] != code)
 		return
 
-	if(isliving(loc) && on)
+	if(isliving(loc) && on) //the "on" arg is currently useless
+		var/mob/living/L = loc
+		if(!L.get_item_by_slot(SLOT_NECK)) //**properly** stops pocket shockers
+			return
 		if(shock_cooldown == TRUE)
 			return
 		shock_cooldown = TRUE
 		addtimer(VARSET_CALLBACK(src, shock_cooldown, FALSE), 100)
-		var/mob/living/L = loc
 		step(L, pick(GLOB.cardinals))
 
 		to_chat(L, "<span class='danger'>You feel a sharp shock from the collar!</span>")
@@ -196,10 +195,13 @@
 		if(t)
 			tagname = t
 			name = "[initial(name)] - [t]"
+		return
+	if(istype(W, /obj/item/clothing/head/helmet)) //lazy method of denying this
+		return
 	else
 		return ..()
 
-/obj/item/electropack/shockcollar/ui_interact(mob/user) //on_click calls this
+/obj/item/electropack/shockcollar/ui_interact(mob/user) //note to src: use tgooey
 	var/dat = {"
 <TT>
 <B>Frequency/Code</B> for shock collar:<BR>

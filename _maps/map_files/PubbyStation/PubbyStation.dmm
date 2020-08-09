@@ -60051,7 +60051,6 @@
 /turf/open/floor/plasteel/dark,
 /area/chapel/office)
 "tap" = (
-/obj/structure/reagent_dispensers/keg/aphro,
 /turf/open/floor/wood,
 /area/maintenance/department/crew_quarters/dorms)
 "taA" = (

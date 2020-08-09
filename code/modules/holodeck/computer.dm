@@ -2,10 +2,7 @@
 	Holodeck Update
 
 	The on-station holodeck area is of type [holodeck_type].
-	All types found in GLOB.holodeck_areas_per_comp_type[src.type], generated on make_datum_references_lists(),
-	are loaded into the program cache or emag programs list.
-	Paths with their abstract_type variable equal to themselves will be skipped.
-
+	All subtypes of [program_type] are loaded into the program cache or emag programs list.
 	If init_program is null, a random program will be loaded on startup.
 	If you don't wish this, set it to the offline program or another of your choosing.
 
@@ -15,6 +12,7 @@
 	3) Create a new control console that uses those areas
 
 	Non-mapped areas should be skipped but you should probably comment them out anyway.
+	The base of program_type will always be ignored; only subtypes will be loaded.
 */
 
 #define HOLODECK_CD 25
@@ -26,17 +24,19 @@
 	icon_screen = "holocontrol"
 	idle_power_usage = 10
 	active_power_usage = 50
+
 	var/area/holodeck/linked
 	var/area/holodeck/program
 	var/area/holodeck/last_program
 	var/area/offline_program = /area/holodeck/rec_center/offline
 
-	// Splitting this up allows two holodecks of the same size
-	// to use the same source patterns.  Y'know, if you want to.
-	var/holodeck_type = /area/holodeck/rec_center
-
 	var/list/program_cache
 	var/list/emag_programs
+
+	// Splitting this up allows two holodecks of the same size
+	// to use the same source patterns.  Y'know, if you want to.
+	var/holodeck_type = /area/holodeck/rec_center	// locate(this) to get the target holodeck
+	var/program_type = /area/holodeck/rec_center	// subtypes of this (but not this itself) are loadable programs
 
 	var/active = FALSE
 	var/damaged = FALSE
@@ -49,41 +49,47 @@
 	return INITIALIZE_HINT_LATELOAD
 
 /obj/machinery/computer/holodeck/LateInitialize()
-	linked = SSholodeck.target_holodeck_area[type]
-	offline_program = SSholodeck.offline_programs[type]
+	if(ispath(holodeck_type, /area))
+		linked = pop(get_areas(holodeck_type, FALSE))
+	if(ispath(offline_program, /area))
+		offline_program = pop(get_areas(offline_program), FALSE)
+	// the following is necessary for power reasons
 	if(!linked || !offline_program)
 		log_world("No matching holodeck area found")
 		qdel(src)
 		return
-
-	program_cache = SSholodeck.program_cache[type]
-	emag_programs = SSholodeck.emag_program_cache[type]
-
-	// the following is necessary for power reasons
-	var/area/AS = get_base_area(src)
+	var/area/AS = get_area(src)
 	if(istype(AS, /area/holodeck))
 		log_mapping("Holodeck computer cannot be in a holodeck, This would cause circular power dependency.")
 		qdel(src)
 		return
 	else
 		linked.linked = src
-
+		/*
+		var/area/my_area = get_area(src)
+		if(my_area)
+			linked.power_usage = my_area.power_usage
+		else
+			linked.power_usage = new /list(AREA_USAGE_LEN)
+		*/
+	generate_program_list()
 	load_program(offline_program, FALSE, FALSE)
 
 /obj/machinery/computer/holodeck/Destroy()
 	emergency_shutdown()
 	if(linked)
 		linked.linked = null
+		//linked.power_usage = new /list(AREA_USAGE_LEN)
 	return ..()
 
 /obj/machinery/computer/holodeck/power_change()
 	. = ..()
 	toggle_power(!stat)
 
-/obj/machinery/computer/holodeck/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+/obj/machinery/computer/holodeck/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, ui_key, "Holodeck", name, 400, 500, master_ui, state)
+		ui = new(user, src, "Holodeck", name)
 		ui.open()
 
 /obj/machinery/computer/holodeck/ui_data(mob/user)
@@ -107,19 +113,27 @@
 			var/program_to_load = text2path(params["type"])
 			if(!ispath(program_to_load))
 				return FALSE
+			var/valid = FALSE
+			var/list/checked = program_cache.Copy()
+			if(obj_flags & EMAGGED)
+				checked |= emag_programs
+			for(var/prog in checked)
+				var/list/P = prog
+				if(P["type"] == program_to_load)
+					valid = TRUE
+					break
+			if(!valid)
+				return FALSE
+
 			var/area/A = locate(program_to_load) in GLOB.sortedAreas
 			if(A)
 				load_program(A)
 		if("safety")
-			if(!hasSiliconAccessInArea(usr) && !IsAdminGhost(usr))
-				var/msg = "[key_name(usr)] attempted to emag the holodeck using a href they shouldn't have!"
-				message_admins(msg)
-				log_admin(msg)
-				return
-			obj_flags ^= EMAGGED
-			if((obj_flags & EMAGGED) && program && emag_programs[program.name])
+			if((obj_flags & EMAGGED) && program)
 				emergency_shutdown()
 			nerf(obj_flags & EMAGGED)
+			obj_flags ^= EMAGGED
+			say("Safeties restored. Restarting...")
 
 /obj/machinery/computer/holodeck/process()
 	if(damaged && prob(10))
@@ -160,13 +174,12 @@
 	if(!LAZYLEN(emag_programs))
 		to_chat(user, "[src] does not seem to have a card swipe port. It must be an inferior model.")
 		return
-	playsound(src, "sparks", 75, 1)
+	playsound(src, "sparks", 75, TRUE)
 	obj_flags |= EMAGGED
 	to_chat(user, "<span class='warning'>You vastly increase projector power and override the safety and security protocols.</span>")
-	to_chat(user, "Warning.  Automatic shutoff and derezing protocols have been corrupted.  Please call Nanotrasen maintenance and do not use the simulator.")
+	say("Warning. Automatic shutoff and derezzing protocols have been corrupted. Please call Nanotrasen maintenance and do not use the simulator.")
 	log_game("[key_name(user)] emagged the Holodeck Control Console")
 	nerf(!(obj_flags & EMAGGED))
-	return TRUE
 
 /obj/machinery/computer/holodeck/emp_act(severity)
 	. = ..()
@@ -181,6 +194,19 @@
 /obj/machinery/computer/holodeck/blob_act(obj/structure/blob/B)
 	emergency_shutdown()
 	return ..()
+
+/obj/machinery/computer/holodeck/proc/generate_program_list()
+	for(var/typekey in subtypesof(program_type))
+		var/area/holodeck/A = GLOB.areas_by_type[typekey]
+		if(!A || !A.contents.len)
+			continue
+		var/list/info_this = list()
+		info_this["name"] = A.name
+		info_this["type"] = A.type
+		if(A.restricted)
+			LAZYADD(emag_programs, list(info_this))
+		else
+			LAZYADD(program_cache, list(info_this))
 
 /obj/machinery/computer/holodeck/proc/toggle_power(toggleOn = FALSE)
 	if(active == toggleOn)
@@ -281,7 +307,7 @@
 			silent = FALSE					// otherwise make sure they are dropped
 
 	if(!silent)
-		visible_message("[O] fades away!")
+		visible_message("<span class='notice'>[O] fades away!</span>")
 	qdel(O)
 
 #undef HOLODECK_CD
