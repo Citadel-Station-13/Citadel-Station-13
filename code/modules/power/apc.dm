@@ -890,26 +890,19 @@
 	if((stat & MAINT) && !opened) //no board; no interface
 		return
 
-/obj/machinery/power/apc/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
-										datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
-
+/obj/machinery/power/apc/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, ui_key, "Apc", name, 480, 460, master_ui, state)
+		ui = new(user, src, "Apc", name)
 		ui.open()
 
 /obj/machinery/power/apc/ui_data(mob/user)
-	var/obj/item/implant/hijack/H = user.getImplant(/obj/item/implant/hijack)
-	var/abilitiesavail = FALSE
-	if (H && !H.stealthmode && H.toggled)
-		abilitiesavail = TRUE
 	var/list/data = list(
 		"locked" = locked,
-		"lock_nightshift" = nightshift_requires_auth,
 		"failTime" = failure_timer,
 		"isOperating" = operating,
 		"externalPower" = main_status,
-		"powerCellStatus" = (cell?.percent() || null),
+		"powerCellStatus" = cell ? cell.percent() : null,
 		"chargeMode" = chargemode,
 		"chargingStatus" = charging,
 		"totalLoad" = DisplayPower(lastused_total),
@@ -918,10 +911,7 @@
 		"malfStatus" = get_malf_status(user),
 		"emergencyLights" = !emergency_lights,
 		"nightshiftLights" = nightshift_lights,
-		"hijackable" = HAS_TRAIT(user,TRAIT_HIJACKER),
-		"hijacker" = hijacker == user ? TRUE : FALSE,
-		"drainavail" = cell && cell.percent() >= 85 && abilitiesavail,
-		"lockdownavail" = cell && cell.percent() >= 35 && abilitiesavail,
+
 		"powerChannels" = list(
 			list(
 				"title" = "Equipment",
@@ -1019,43 +1009,32 @@
 		. = UI_INTERACTIVE
 
 /obj/machinery/power/apc/ui_act(action, params)
-	if(..() || !can_use(usr, 1))
-		return
-	if(failure_timer)
-		if(action == "reboot")
-			failure_timer = 0
-			update_icon()
-			update()
-	if(action == "hijack" && can_use(usr, 1)) //don't need auth for hijack button
-		hijack(usr)
-		return
-	var/authorized = (!locked || area.hasSiliconAccessInArea(usr, PRIVILEDGES_SILICON|PRIVILEDGES_DRONE) || (integration_cog && (is_servant_of_ratvar(usr))))
-	if((action == "toggle_nightshift") && (!nightshift_requires_auth || authorized))
-		toggle_nightshift_lights()
-		return TRUE
-	if(!authorized)
+	if(..() || !can_use(usr, 1) || (locked && area.hasSiliconAccessInArea(usr, PRIVILEDGES_SILICON|PRIVILEDGES_DRONE) && !failure_timer && action != "toggle_nightshift") || (integration_cog && (is_servant_of_ratvar(usr))))
 		return
 	switch(action)
 		if("lock")
 			if(area.hasSiliconAccessInArea(usr))
 				if((obj_flags & EMAGGED) || (stat & (BROKEN|MAINT)))
-					to_chat(usr, "The APC does not respond to the command.")
+					to_chat(usr, "<span class='warning'>The APC does not respond to the command!</span>")
 				else
 					locked = !locked
 					update_icon()
-			return TRUE
+					. = TRUE
 		if("cover")
 			coverlocked = !coverlocked
-			return TRUE
+			. = TRUE
 		if("breaker")
-			toggle_breaker()
-			return TRUE
+			toggle_breaker(usr)
+			. = TRUE
+		if("toggle_nightshift")
+			toggle_nightshift_lights()
+			. = TRUE
 		if("charge")
 			chargemode = !chargemode
 			if(!chargemode)
 				charging = APC_NOT_CHARGING
 				update_icon()
-			return TRUE
+			. = TRUE
 		if("channel")
 			if(params["eqp"])
 				equipment = setsubsystem(text2num(params["eqp"]))
@@ -1069,23 +1048,24 @@
 				environ = setsubsystem(text2num(params["env"]))
 				update_icon()
 				update()
-			return TRUE
+			. = TRUE
 		if("overload")
-			if(area.hasSiliconAccessInArea(usr))
+			if(area.hasSiliconAccessInArea(usr, PRIVILEDGES_SILICON|PRIVILEDGES_DRONE)) //usr.has_unlimited_silicon_privilege)
 				overload_lighting()
-			return TRUE
+				. = TRUE
 		if("hack")
 			if(get_malf_status(usr))
 				malfhack(usr)
-			return TRUE
 		if("occupy")
 			if(get_malf_status(usr))
 				malfoccupy(usr)
-			return TRUE
 		if("deoccupy")
 			if(get_malf_status(usr))
 				malfvacate()
-			return TRUE
+		if("reboot")
+			failure_timer = 0
+			update_icon()
+			update()
 		if("emergency_lighting")
 			emergency_lights = !emergency_lights
 			for(var/obj/machinery/light/L in area)
@@ -1093,31 +1073,14 @@
 					L.no_emergency = emergency_lights
 					INVOKE_ASYNC(L, /obj/machinery/light/.proc/update, FALSE)
 				CHECK_TICK
-		if("drain")
-			cell.use(cell.charge)
-			hijacker.toggleSiliconAccessArea(area)
-			hijacker = null
-			set_hijacked_lighting()
-			update_icon()
-			var/obj/item/implant/hijack/H = usr.getImplant(/obj/item/implant/hijack)
-			H.stealthcooldown = world.time + 2 MINUTES
-			energy_fail(30 SECONDS * (cell.charge / cell.maxcharge))
-		if("lockdown")
-			var/celluse = rand(20,35)
-			celluse = celluse /100
-			for (var/obj/machinery/door/D in GLOB.airlocks)
-				if (get_area(D) == area)
-					INVOKE_ASYNC(D,/obj/machinery/door.proc/hostile_lockdown,usr, FALSE)
-					addtimer(CALLBACK(D,/obj/machinery/door.proc/disable_lockdown, FALSE), 30 SECONDS)
-			cell.charge -= cell.maxcharge*celluse
-			var/obj/item/implant/hijack/H = usr.getImplant(/obj/item/implant/hijack)
-			H.stealthcooldown = world.time + 3 MINUTES
 	return TRUE
 
-/obj/machinery/power/apc/proc/toggle_breaker()
+/obj/machinery/power/apc/proc/toggle_breaker(mob/user)
 	if(!is_operational() || failure_timer)
 		return
 	operating = !operating
+	add_hiddenprint(user) //delete when runtime
+	log_game("[key_name(user)] turned [operating ? "on" : "off"] the [src] in [AREACOORD(src)]")
 	update()
 	update_icon()
 

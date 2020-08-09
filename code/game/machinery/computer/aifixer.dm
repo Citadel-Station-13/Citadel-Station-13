@@ -2,14 +2,13 @@
 	name = "\improper AI system integrity restorer"
 	desc = "Used with intelliCards containing nonfunctional AIs to restore them to working order."
 	req_access = list(ACCESS_CAPTAIN, ACCESS_ROBOTICS, ACCESS_HEADS)
-	var/mob/living/silicon/ai/occupier = null
-	var/active = 0
-	circuit = /obj/item/circuitboard/computer/aifixer
 	icon_keyboard = "tech_key"
 	icon_screen = "ai-fixer"
 	light_color = LIGHT_COLOR_PINK
-	ui_x = 370
-	ui_y = 360
+	circuit = /obj/item/circuitboard/computer/aifixer
+
+	var/mob/living/silicon/ai/occupier = null
+	var/active = FALSE
 
 /obj/machinery/computer/aifixer/attackby(obj/I, mob/user, params)
 	if(occupier && istype(I, /obj/item/screwdriver))
@@ -20,64 +19,45 @@
 	else
 		return ..()
 
-/obj/machinery/computer/aifixer/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
-									datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+
+/obj/machinery/computer/aifixer/ui_interact(mob/user, datum/tgui/ui) //artur didn't port this correctly
+	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, ui_key, "AiRestorer", name, ui_x, ui_y, master_ui, state)
+		ui = new(user, src, "AiRestorer", name)
 		ui.open()
 
-	var/dat = ""
+/obj/machinery/computer/aifixer/ui_data(mob/user)
+	var/list/data = list()
 
-	if (src.occupier)
-		var/laws
-		dat += "<h3>Stored AI: [src.occupier.name]</h3>"
-		dat += "<b>System integrity:</b> [(src.occupier.health+100)/2]%<br>"
+	data["ejectable"] = FALSE
+	data["AI_present"] = FALSE
+	data["error"] = null
+	if(!occupier)
+		data["error"] = "Please transfer an AI unit."
+	else
+		data["AI_present"] = TRUE
+		data["name"] = occupier.name
+		data["restoring"] = active
+		data["health"] = (occupier.health + 100) / 2
+		data["isDead"] = occupier.stat == DEAD
+		data["laws"] = occupier.laws.get_law_list(include_zeroth = TRUE, render_html = FALSE)
 
-		if (src.occupier.laws.zeroth)
-			laws += "<b>0:</b> [src.occupier.laws.zeroth]<BR>"
+	return data
 
-		for (var/index = 1, index <= src.occupier.laws.hacked.len, index++)
-			var/law = src.occupier.laws.hacked[index]
-			if (length(law) > 0)
-				var/num = ionnum()
-				laws += "<b>[num]:</b> [law]<BR>"
+/obj/machinery/computer/aifixer/ui_act(action, params)
+	if(..())
+		return
+	if(!occupier)
+		active = FALSE
 
-		for (var/index = 1, index <= src.occupier.laws.ion.len, index++)
-			var/law = src.occupier.laws.ion[index]
-			if (length(law) > 0)
-				var/num = ionnum()
-				laws += "<b>[num]:</b> [law]<BR>"
-
-		var/number = 1
-		for (var/index = 1, index <= src.occupier.laws.inherent.len, index++)
-			var/law = src.occupier.laws.inherent[index]
-			if (length(law) > 0)
-				laws += "<b>[number]:</b> [law]<BR>"
-				number++
-
-		for (var/index = 1, index <= src.occupier.laws.supplied.len, index++)
-			var/law = src.occupier.laws.supplied[index]
-			if (length(law) > 0)
-				laws += "<b>[number]:</b> [law]<BR>"
-				number++
-
-		dat += "<b>Laws:</b><br>[laws]<br>"
-
-		if (src.occupier.stat == DEAD)
-			dat += "<span class='bad'>AI non-functional</span>"
-		else
-			dat += "<span class='good'>AI functional</span>"
-		if (!src.active)
-			dat += {"<br><br><A href='byond://?src=[REF(src)];fix=1'>Begin Reconstruction</A>"}
-		else
-			dat += "<br><br>Reconstruction in process, please wait.<br>"
-	dat += {"<br><A href='?src=[REF(user)];mach_close=computer'>Close</A>"}
-	var/datum/browser/popup = new(user, "computer", "AI System Integrity Restorer", 400, 500)
-	popup.set_content(dat)
-	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
-	popup.open()
-	return
+	switch(action)
+		if("PRG_beginReconstruction")
+			if(occupier?.health < 100)
+				to_chat(usr, "<span class='notice'>Reconstruction in progress. This will take several minutes.</span>")
+				playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 25, FALSE)
+				active = TRUE
+				occupier.notify_ghost_cloning("Your core files are being restored!", source = src)
+				. = TRUE
 
 /obj/machinery/computer/aifixer/proc/Fix()
 	use_power(1000)
@@ -97,17 +77,6 @@
 			active = Fix()
 			if(oldstat != occupier.stat)
 				update_icon()
-		updateDialog()
-
-/obj/machinery/computer/aifixer/Topic(href, href_list)
-	if(..())
-		return
-	if(href_list["fix"])
-		to_chat(usr, "<span class='notice'>Reconstruction in progress. This will take several minutes.</span>")
-		playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 25, 0)
-		active = TRUE
-		add_fingerprint(usr)
-	updateUsrDialog()
 
 /obj/machinery/computer/aifixer/update_overlays()
 	. = ..()
