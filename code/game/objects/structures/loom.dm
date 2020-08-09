@@ -21,9 +21,7 @@
 			if(W.use_tool(src, user, W.pull_effort))
 				new W.loom_result(drop_location())
 				user.show_message("<span class='notice'>You weave the [W.name] into a workable fabric.</span>", 1)
-				W.amount = (W.amount - FABRIC_PER_SHEET)
-				if(W.amount < 1)
-					qdel(W)
+				W.use(FABRIC_PER_SHEET)
 		else
 			user.show_message("<span class='notice'>You need a valid fabric and at least [FABRIC_PER_SHEET] of said fabric before using this.</span>")
 	else
