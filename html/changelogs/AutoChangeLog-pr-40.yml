@@ -1,0 +1,4 @@
+author: "SandPoot"
+delete-after: True
+changes: 
+  - bugfix: "Makes the Kinetic Destroyer be displayed on the mining vendor."
