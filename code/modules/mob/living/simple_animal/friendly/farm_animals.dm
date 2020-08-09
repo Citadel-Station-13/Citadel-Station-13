@@ -416,7 +416,7 @@
 				user.visible_message("[src] has already been shaved!")
 				return
 			user.visible_message("[user] shaves some wool off [src] using \the [O].", "<span class='notice'>You shave some wool off [src] using \the [O].</span>")
-			playsound(loc, 'sound/items/welder2.ogg', 20, 1)
+			playsound(src, 'sound/items/welder2.ogg', 20, 1)
 			shaved = TRUE
 			icon_living = "sheep_sheared"
 			icon_dead = "sheep_sheared_dead"
