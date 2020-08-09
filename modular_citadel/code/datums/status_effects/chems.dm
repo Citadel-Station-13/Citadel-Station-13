@@ -286,7 +286,7 @@
 					to_chat(owner, "<span class='big warning'><b>You are now fully enthralled to [master], and eager to follow their commands. In your submissive state you cannot stand the thought of being permanently separated from your [enthrallTitle] - the idea of becoming violent or committing suicide, even if ordered to, is unthinkable.</i></span>")//If people start using this as an excuse to be violent I'll just make them all pacifists so it's not OP.
 				else
 					to_chat(owner, "<span class='big nicegreen'><i>You are unable to put up a resistance any longer, and are now [master]'s faithful follower. In your loyal state you cannot stand the thought of being permanently separated from your [enthrallTitle] - the idea of becoming violent or committing suicide, even if ordered to, is unthinkable.</i></span>")
-				to_chat(master, "<span class='notice'><i>Your [(lewd?subjectTerm:"follower")] [owner] appears to have fully fallen under your sway.</i></span>")
+				to_chat(master, "<span class='notice'><i>Your [(lewd? "[subjectTerm]":"follower")] [owner] appears to have fully fallen under your sway.</i></span>")
 				log_reagent("FERMICHEM: MKULTRA: Status on [owner] ckey: [owner.key] has been fully enthralled (state 3) with a master of [master] ckey: [enthrallID].")
 				SSblackbox.record_feedback("tally", "fermi_chem", 1, "thralls fully enthralled.")
 			else if (resistanceTally > 200)
