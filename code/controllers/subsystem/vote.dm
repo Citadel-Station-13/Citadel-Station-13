@@ -526,7 +526,7 @@ SUBSYSTEM_DEF(vote)
 				choices.Add("secret", "extended")
 			if("mode tiers")
 				var/list/modes_to_add = config.votable_modes
-				var/list/probabilities = CONFIG_GET(keyed_list/probability)
+				var/list/probabilities = CONFIG_GET(keyed_list/gamemodes/probability)
 				for(var/tag in modes_to_add)
 					if(probabilities[tag] <= 0)
 						modes_to_add -= tag

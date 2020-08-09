@@ -236,7 +236,7 @@ SUBSYSTEM_DEF(ticker)
 			if(GLOB.secret_force_mode != "secret")
 				var/datum/game_mode/smode = config.pick_mode(GLOB.secret_force_mode)
 				if(!smode.can_start())
-					message_admins("<span class='notice'>Unable to force secret [GLOB.secret_force_mode]. [smode.required_players] players and [smode.required_enemies] eligible antagonists needed.</span>")
+					message_admins("<span class='notice'>Unable to force secret [GLOB.secret_force_mode]. [smode.config_min_players] players and [smode.config_required_antagonists] eligible antagonists needed.</span>")
 				else
 					mode = smode
 
@@ -251,7 +251,7 @@ SUBSYSTEM_DEF(ticker)
 	else
 		mode = config.pick_mode(GLOB.master_mode)
 		if(!mode.can_start())
-			to_chat(world, "<B>Unable to start [mode.name].</B> Not enough players, [mode.required_players] players and [mode.required_enemies] eligible antagonists needed. Reverting to pre-game lobby.")
+			to_chat(world, "<B>Unable to start [mode.name].</B> Not enough players, [mode.config_min_pop] players and [mode.config_required_antagonists] eligible antagonists needed. Reverting to pre-game lobby.")
 			qdel(mode)
 			mode = null
 			SSjob.ResetOccupations()

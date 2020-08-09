@@ -92,14 +92,14 @@
 	msg += "Enforce Continuous Rounds: [length(CONFIG_GET(keyed_list/continuous))] of [config.modes.len] roundtypes"
 	msg += "Allow Midround Antagonists: [length(CONFIG_GET(keyed_list/midround_antag))] of [config.modes.len] roundtypes"
 	if(CONFIG_GET(flag/show_game_type_odds))
-		var/list/probabilities = CONFIG_GET(keyed_list/probability)
+		var/list/probabilities = CONFIG_GET(keyed_list/gamemodes/probability)
 		if(SSticker.IsRoundInProgress())
 			var/prob_sum = 0
 			var/current_odds_differ = FALSE
 			var/list/probs = list()
 			var/list/modes = config.gamemode_cache
-			var/list/min_pop = CONFIG_GET(keyed_list/min_pop)
-			var/list/max_pop = CONFIG_GET(keyed_list/max_pop)
+			var/list/min_pop = CONFIG_GET(keyed_list/gamemodes/min_pop)
+			var/list/max_pop = CONFIG_GET(keyed_list/gamemodes/max_pop)
 			for(var/mode in modes)
 				var/datum/game_mode/M = mode
 				var/ctag = initial(M.config_tag)

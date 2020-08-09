@@ -1,4 +1,6 @@
 ## Policy configuration
+## Each line is pure html that gets sent to the user under certain conditions
+##
 ## Current valid keys are:
 ## ON_CLONE - displayed after a successful cloning operation to the cloned person
 ## ON_DEFIB_INTACT - displayed after defibbing before memory loss time threshold
@@ -11,3 +13,6 @@
 
 ## Defib time limit for "cloning memory disorder" memory loss in seconds
 # DEFIB_CMD_TIME_LIMIT 300
+
+## When a mob is polymorphed
+POLYMORPH <span class='danger'>Note that you are allowed to act as an antagonist while transformed into a hostile mob, unless you volunteered for or sought out transformation.</span>
