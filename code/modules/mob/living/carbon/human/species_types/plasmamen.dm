@@ -4,7 +4,7 @@
 	say_mod = "rattles"
 	sexes = 0
 	meat = /obj/item/stack/sheet/mineral/plasma
-	species_traits = list(NOBLOOD,NOTRANSSTING,NOGENITALS)
+	species_traits = list(NOBLOOD,NOTRANSSTING,NOGENITALS,HAS_BONE)
 	inherent_traits = list(TRAIT_RESISTCOLD,TRAIT_RADIMMUNE,TRAIT_NOHUNGER,TRAIT_CALCIUM_HEALER)
 	inherent_biotypes = MOB_HUMANOID|MOB_MINERAL
 	mutantlungs = /obj/item/organ/lungs/plasmaman

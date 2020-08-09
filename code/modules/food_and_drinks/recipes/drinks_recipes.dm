@@ -18,12 +18,6 @@
 	results = list(/datum/reagent/consumable/ethanol/bilk = 2)
 	required_reagents = list(/datum/reagent/consumable/milk = 1, /datum/reagent/consumable/ethanol/beer = 1)
 
-/datum/chemical_reaction/icetea
-	name = "Iced Tea"
-	id = /datum/reagent/consumable/icetea
-	results = list(/datum/reagent/consumable/icetea = 4)
-	required_reagents = list(/datum/reagent/consumable/ice = 1, /datum/reagent/consumable/tea = 3)
-
 /datum/chemical_reaction/icecoffee
 	name = "Iced Coffee"
 	id = /datum/reagent/consumable/icecoffee
@@ -581,13 +575,6 @@
 	required_reagents = list(/datum/reagent/consumable/lemonjuice = 2, /datum/reagent/water = 2, /datum/reagent/consumable/sugar = 1, /datum/reagent/consumable/ice = 1)
 	mix_message = "You're suddenly reminded of home."
 
-/datum/chemical_reaction/arnold_palmer
-	name = "Arnold Palmer"
-	id = /datum/reagent/consumable/tea/arnold_palmer
-	results = list(/datum/reagent/consumable/tea/arnold_palmer = 2)
-	required_reagents = list(/datum/reagent/consumable/tea = 1, /datum/reagent/consumable/lemonade = 1)
-	mix_message = "The smells of fresh green grass and sand traps waft through the air as the mixture turns a friendly yellow-orange."
-
 /datum/chemical_reaction/chocolate_milk
 	name = "chocolate milk"
 	id = /datum/reagent/consumable/milk/chocolate_milk
@@ -756,12 +743,6 @@
 	results = list(/datum/reagent/consumable/pinkmilk = 2)
 	required_reagents = list(/datum/reagent/consumable/strawberryjuice = 1, /datum/reagent/consumable/milk = 1)
 
-/datum/chemical_reaction/pinktea
-	name = "Strawberry Tea"
-	id = /datum/reagent/consumable/pinktea
-	results = list(/datum/reagent/consumable/pinktea = 5)
-	required_reagents = list(/datum/reagent/consumable/strawberryjuice = 1, /datum/reagent/consumable/tea/arnold_palmer = 1, /datum/reagent/consumable/sugar = 1)
-
 /datum/chemical_reaction/blank_paper
 	name = "Blank Paper"
 	id = /datum/reagent/consumable/ethanol/blank_paper
@@ -903,18 +884,82 @@
 	results = list(/datum/reagent/consumable/ethanol/mauna_loa = 5)
 	required_reagents = list(/datum/reagent/consumable/capsaicin = 2, /datum/reagent/consumable/ethanol/kahlua = 1, /datum/reagent/consumable/ethanol/bahama_mama = 2)
 
-/datum/chemical_reaction/catnip_tea
-	name = "Catnip Tea"
-	id = /datum/reagent/consumable/catnip_tea
-	results = list(/datum/reagent/consumable/catnip_tea = 3)
-	required_reagents = list(/datum/reagent/consumable/tea = 5, /datum/reagent/pax/catnip = 2)
-
 /datum/chemical_reaction/commander_and_chief
 	name = "Commander and Chief"
 	id = /datum/reagent/consumable/ethanol/commander_and_chief
 	results = list(/datum/reagent/consumable/ethanol/commander_and_chief = 50)
 	required_reagents = list(/datum/reagent/consumable/ethanol/alliescocktail = 50, /datum/reagent/consumable/ethanol/champagne = 20, /datum/reagent/consumable/doctor_delight = 10, /datum/reagent/consumable/ethanol/quintuple_sec = 10, /datum/reagent/consumable/ethanol/screwdrivercocktail = 10)
 	mix_message = "When your powers combine, I am Captain Pl-..."
+
+////////////////////////////////////////// Tea  Base Drinks //////////////////////////////////////
+
+/datum/chemical_reaction/mush
+	name = "Mush Tea"
+	id = /datum/reagent/consumable/tea/mush
+	results = list(/datum/reagent/consumable/tea/mush = 3)
+	required_reagents = list(/datum/reagent/drug/mushroomhallucinogen = 3, /datum/reagent/consumable/tea = 3)
+
+/datum/chemical_reaction/foresttea1
+	name = "Forest Tea"
+	id = /datum/reagent/consumable/tea/forest
+	results = list(/datum/reagent/consumable/tea/forest = 3)
+	required_reagents = list(/datum/reagent/consumable/buzz_fuzz= 3, /datum/reagent/consumable/tea = 3)
+
+/datum/chemical_reaction/foresttea2
+	name = "Forest Tea"
+	id = /datum/reagent/consumable/tea/forest
+	results = list(/datum/reagent/consumable/tea/forest = 3)
+	required_reagents = list(/datum/reagent/consumable/honey = 1, /datum/reagent/consumable/tea = 3)
+
+/datum/chemical_reaction/redtea1
+	name = "Red Tea"
+	id = /datum/reagent/consumable/tea/red
+	results = list(/datum/reagent/consumable/tea/red = 3)
+	required_reagents = list(/datum/reagent/colorful_reagent/crayonpowder/red = 1, /datum/reagent/consumable/tea = 3)
+
+/datum/chemical_reaction/greentea1
+	name = "Green Tea"
+	id = /datum/reagent/consumable/tea/green
+	results = list(/datum/reagent/consumable/tea/green = 3)
+	required_reagents = list(/datum/reagent/colorful_reagent/crayonpowder/green = 1, /datum/reagent/consumable/tea = 3)
+
+/datum/chemical_reaction/redtea2
+	name = "Red Tea"
+	id = /datum/reagent/consumable/tea/red
+	results = list(/datum/reagent/consumable/tea/red = 3)
+	required_reagents = list(/datum/reagent/toxin/teapowder/red = 1, /datum/reagent/water = 3)
+
+/datum/chemical_reaction/greentea2
+	name = "Green Tea"
+	id = /datum/reagent/consumable/tea/green
+	results = list(/datum/reagent/consumable/tea/green = 3)
+	required_reagents = list(/datum/reagent/toxin/teapowder/green = 1, /datum/reagent/water = 3)
+
+/datum/chemical_reaction/arnold_palmer
+	name = "Arnold Palmer"
+	id = /datum/reagent/consumable/tea/arnold_palmer
+	results = list(/datum/reagent/consumable/tea/arnold_palmer = 2)
+	required_reagents = list(/datum/reagent/consumable/tea = 1, /datum/reagent/consumable/lemonade = 1)
+	mix_message = "The smells of fresh green grass and sand traps waft through the air as the mixture turns a friendly yellow-orange."
+
+/datum/chemical_reaction/icetea
+	name = "Iced Tea"
+	id = /datum/reagent/consumable/icetea
+	results = list(/datum/reagent/consumable/icetea = 4)
+	required_reagents = list(/datum/reagent/consumable/ice = 1, /datum/reagent/consumable/tea = 3)
+
+/datum/chemical_reaction/pinktea
+	name = "Strawberry Tea"
+	id = /datum/reagent/consumable/pinktea
+	results = list(/datum/reagent/consumable/pinktea = 5)
+	required_reagents = list(/datum/reagent/consumable/strawberryjuice = 1, /datum/reagent/consumable/tea/arnold_palmer = 1, /datum/reagent/consumable/sugar = 1)
+
+/datum/chemical_reaction/catnip_tea
+	name = "Catnip Tea"
+	id = /datum/reagent/consumable/catnip_tea
+	results = list(/datum/reagent/consumable/catnip_tea = 3)
+	required_reagents = list(/datum/reagent/consumable/tea = 5, /datum/reagent/pax/catnip = 2)
+
 
 ////////////////////////////////////////// Race Base Drinks //////////////////////////////////////
 

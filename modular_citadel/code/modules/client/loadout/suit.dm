@@ -1,261 +1,250 @@
-/datum/gear/poncho
+/datum/gear/suit
+	category = LOADOUT_CATEGORY_SUIT
+	subcategory = LOADOUT_SUBCATEGORY_SUIT_GENERAL
+	slot = SLOT_WEAR_SUIT
+
+/datum/gear/suit/poncho
 	name = "Poncho"
-	category = SLOT_WEAR_SUIT
 	path = /obj/item/clothing/suit/poncho
 
-/datum/gear/ponchogreen
+/datum/gear/suit/ponchogreen
 	name = "Green poncho"
-	category = SLOT_WEAR_SUIT
 	path = /obj/item/clothing/suit/poncho/green
 
-/datum/gear/ponchored
+/datum/gear/suit/ponchored
 	name = "Red poncho"
-	category = SLOT_WEAR_SUIT
 	path = /obj/item/clothing/suit/poncho/red
 
-/datum/gear/redhood
+/datum/gear/suit/redhood
 	name = "Red cloak"
-	category = SLOT_WEAR_SUIT
 	path = /obj/item/clothing/suit/hooded/cloak/david
 	cost = 3
 
-/datum/gear/jacketbomber
+/datum/gear/suit/jacketbomber
 	name = "Bomber jacket"
-	category = SLOT_WEAR_SUIT
 	path = /obj/item/clothing/suit/jacket
+	subcategory = LOADOUT_SUBCATEGORY_SUIT_JACKETS
 
-/datum/gear/jacketflannelblack // all of these are reskins of bomber jackets but with the vibe to make you look like a true lumberjack
+/datum/gear/suit/jacketflannelblack // all of these are reskins of bomber jackets but with the vibe to make you look like a true lumberjack
 	name = "Black flannel jacket"
-	category = SLOT_WEAR_SUIT
 	path = /obj/item/clothing/suit/jacket/flannel
+	subcategory = LOADOUT_SUBCATEGORY_SUIT_JACKETS
 
-/datum/gear/jacketflannelred
+/datum/gear/suit/jacketflannelred
 	name = "Red flannel jacket"
-	category = SLOT_WEAR_SUIT
 	path = /obj/item/clothing/suit/jacket/flannel/red
+	subcategory = LOADOUT_SUBCATEGORY_SUIT_JACKETS
 
-/datum/gear/jacketflannelaqua
+/datum/gear/suit/jacketflannelaqua
 	name = "Aqua flannel jacket"
-	category = SLOT_WEAR_SUIT
 	path = /obj/item/clothing/suit/jacket/flannel/aqua
+	subcategory = LOADOUT_SUBCATEGORY_SUIT_JACKETS
 
-/datum/gear/jacketflannelbrown
+/datum/gear/suit/jacketflannelbrown
 	name = "Brown flannel jacket"
-	category = SLOT_WEAR_SUIT
 	path = /obj/item/clothing/suit/jacket/flannel/brown
+	subcategory = LOADOUT_SUBCATEGORY_SUIT_JACKETS
 
-/datum/gear/jacketleather
+/datum/gear/suit/jacketleather
 	name = "Leather jacket"
-	category = SLOT_WEAR_SUIT
 	path = /obj/item/clothing/suit/jacket/leather
+	subcategory = LOADOUT_SUBCATEGORY_SUIT_JACKETS
 
-/datum/gear/overcoatleather
+/datum/gear/suit/overcoatleather
 	name = "Leather overcoat"
-	category = SLOT_WEAR_SUIT
 	path = /obj/item/clothing/suit/jacket/leather/overcoat
+	subcategory = LOADOUT_SUBCATEGORY_SUIT_JACKETS
 
-/datum/gear/jacketpuffer
+/datum/gear/suit/jacketpuffer
 	name = "Puffer jacket"
-	category = SLOT_WEAR_SUIT
 	path = /obj/item/clothing/suit/jacket/puffer
+	subcategory = LOADOUT_SUBCATEGORY_SUIT_JACKETS
 
-/datum/gear/vestpuffer
+/datum/gear/suit/vestpuffer
 	name = "Puffer vest"
-	category = SLOT_WEAR_SUIT
 	path = /obj/item/clothing/suit/jacket/puffer/vest
+	subcategory = LOADOUT_SUBCATEGORY_SUIT_JACKETS
 
-/datum/gear/jacketlettermanbrown
+/datum/gear/suit/jacketlettermanbrown
 	name = "Brown letterman jacket"
-	category = SLOT_WEAR_SUIT
 	path = /obj/item/clothing/suit/jacket/letterman
+	subcategory = LOADOUT_SUBCATEGORY_SUIT_JACKETS
 
-/datum/gear/jacketlettermanred
+/datum/gear/suit/jacketlettermanred
 	name = "Red letterman jacket"
-	category = SLOT_WEAR_SUIT
 	path = /obj/item/clothing/suit/jacket/letterman_red
+	subcategory = LOADOUT_SUBCATEGORY_SUIT_JACKETS
 
-/datum/gear/jacketlettermanNT
+/datum/gear/suit/jacketlettermanNT
 	name = "Nanotrasen letterman jacket"
-	category = SLOT_WEAR_SUIT
 	path = /obj/item/clothing/suit/jacket/letterman_nanotrasen
+	subcategory = LOADOUT_SUBCATEGORY_SUIT_JACKETS
 
-/datum/gear/coat
+/datum/gear/suit/coat
 	name = "Winter coat"
-	category = SLOT_WEAR_SUIT
 	path = /obj/item/clothing/suit/hooded/wintercoat
+	subcategory = LOADOUT_SUBCATEGORY_SUIT_COATS
 
-/datum/gear/coat/aformal
+/datum/gear/suit/coat/aformal
 	name = "Assistant's formal winter coat"
-	category = SLOT_WEAR_SUIT
 	path = /obj/item/clothing/suit/hooded/wintercoat/aformal
 
-/datum/gear/coat/runed
+/datum/gear/suit/coat/runed
 	name = "Runed winter coat"
-	category = SLOT_WEAR_SUIT
 	path = /obj/item/clothing/suit/hooded/wintercoat/narsie/fake
 
-/datum/gear/coat/brass
+/datum/gear/suit/coat/brass
 	name = "Brass winter coat"
-	category = SLOT_WEAR_SUIT
 	path = /obj/item/clothing/suit/hooded/wintercoat/ratvar/fake
 
-/datum/gear/coat/polycoat
+/datum/gear/suit/coat/polycoat
 	name = "Polychromic winter coat"
-	category = SLOT_WEAR_SUIT
 	path = /obj/item/clothing/suit/hooded/wintercoat/polychromic
 	cost = 4 //too many people with neon green coats is hard on the eyes
 
-/datum/gear/coat/med
+/datum/gear/suit/coat/med
 	name = "Medical winter coat"
-	category = SLOT_WEAR_SUIT
 	path = /obj/item/clothing/suit/hooded/wintercoat/medical
 	restricted_roles = list("Chief Medical Officer", "Medical Doctor") // Reserve it to Medical Doctors and their boss, the Chief Medical Officer
 
-/datum/gear/coat/paramedic
+/datum/gear/suit/coat/paramedic
 	name = "Paramedic winter coat"
-	category = SLOT_WEAR_SUIT
 	path = /obj/item/clothing/suit/hooded/wintercoat/paramedic
 	restricted_roles = list("Chief Medical Officer", "Paramedic") // Reserve it to Paramedics and their boss, the Chief Medical Officer
 
-/datum/gear/coat/robotics
+/datum/gear/suit/coat/robotics
 	name = "Robotics winter coat"
-	category = SLOT_WEAR_SUIT
 	path = /obj/item/clothing/suit/hooded/wintercoat/robotics
 	restricted_roles = list("Research Director", "Roboticist")
 
-/datum/gear/coat/sci
+/datum/gear/suit/coat/sci
 	name = "Science winter coat"
-	category = SLOT_WEAR_SUIT
 	path = /obj/item/clothing/suit/hooded/wintercoat/science
 	restricted_roles = list("Research Director", "Scientist", "Roboticist") // Reserve it to the Science Departement
 
-/datum/gear/coat/eng
+/datum/gear/suit/coat/eng
 	name = "Engineering winter coat"
-	category = SLOT_WEAR_SUIT
 	path = /obj/item/clothing/suit/hooded/wintercoat/engineering
 	restricted_roles = list("Chief Engineer", "Station Engineer") // Reserve it to Station Engineers and their boss, the Chief Engineer
 
-/datum/gear/coat/eng/atmos
+/datum/gear/suit/coat/eng/atmos
 	name = "Atmospherics winter coat"
-	category = SLOT_WEAR_SUIT
 	path = /obj/item/clothing/suit/hooded/wintercoat/engineering/atmos
 	restricted_roles = list("Chief Engineer", "Atmospheric Technician") // Reserve it to Atmos Techs and their boss, the Chief Engineer
 
-/datum/gear/coat/hydro
+/datum/gear/suit/coat/hydro
 	name = "Hydroponics winter coat"
-	category = SLOT_WEAR_SUIT
 	path = /obj/item/clothing/suit/hooded/wintercoat/hydro
 	restricted_roles = list("Head of Personnel", "Botanist") // Reserve it to Botanists and their boss, the Head of Personnel
 
-/datum/gear/coat/bar
+/datum/gear/suit/coat/bar
 	name = "Bar winter coat"
-	category = SLOT_WEAR_SUIT
 	path = /obj/item/clothing/suit/hooded/wintercoat/bar
 	restricted_roles = list("Bartender") // Reserve it to Bartenders and not the Head of Personnel because he doesnt deserve to look as fancy as them
 
-/datum/gear/coat/cargo
+/datum/gear/suit/coat/cargo
 	name = "Cargo winter coat"
-	category = SLOT_WEAR_SUIT
 	path = /obj/item/clothing/suit/hooded/wintercoat/cargo
 	restricted_roles = list("Quartermaster", "Cargo Technician") // Reserve it to Cargo Techs and their boss, the Quartermaster
 
-/datum/gear/coat/miner
+/datum/gear/suit/coat/miner
 	name = "Mining winter coat"
-	category = SLOT_WEAR_SUIT
 	path = /obj/item/clothing/suit/hooded/wintercoat/miner
 	restricted_roles = list("Quartermaster", "Shaft Miner") // Reserve it to Miners and their boss, the Quartermaster
 
-/datum/gear/militaryjacket
+/datum/gear/suit/militaryjacket
 	name = "Military Jacket"
-	category = SLOT_WEAR_SUIT
 	path = /obj/item/clothing/suit/jacket/miljacket
+	subcategory = LOADOUT_SUBCATEGORY_SUIT_JACKETS
 
-/datum/gear/ianshirt
+/datum/gear/suit/ianshirt
 	name = "Ian Shirt"
-	category = SLOT_WEAR_SUIT
 	path = /obj/item/clothing/suit/ianshirt
 
-/datum/gear/flakjack
+/datum/gear/suit/flakjack
 	name = "Flak Jacket"
-	category = SLOT_WEAR_SUIT
 	path = /obj/item/clothing/suit/flakjack
+	subcategory = LOADOUT_SUBCATEGORY_SUIT_JACKETS
 	cost = 2
 
-/datum/gear/trekds9_coat
+/datum/gear/suit/trekds9_coat
 	name = "DS9 Overcoat (use uniform)"
-	category = SLOT_WEAR_SUIT
 	path = /obj/item/clothing/suit/storage/trek/ds9
+	subcategory = LOADOUT_SUBCATEGORY_SUIT_JOBS
 	restricted_desc = "All, barring Service and Civilian"
 	restricted_roles = list("Head of Security","Captain","Head of Personnel","Chief Engineer","Research Director","Chief Medical Officer","Quartermaster",
 							"Medical Doctor","Chemist","Virologist","Paramedic","Geneticist","Scientist", "Roboticist",
 							"Atmospheric Technician","Station Engineer","Warden","Detective","Security Officer",
 							"Cargo Technician", "Shaft Miner") //everyone who actually deserves a job.
 //Federation jackets from movies
-/datum/gear/trekcmdcap
+/datum/gear/suit/trekcmdcap
 	name = "Fed (movie) uniform, Black"
-	category = SLOT_WEAR_SUIT
 	path = /obj/item/clothing/suit/storage/fluff/fedcoat/capt
+	subcategory = LOADOUT_SUBCATEGORY_SUIT_JOBS
 	restricted_roles = list("Captain","Head of Personnel")
 
-/datum/gear/trekcmdmov
+/datum/gear/suit/trekcmdmov
 	name = "Fed (movie) uniform, Red"
-	category = SLOT_WEAR_SUIT
 	path = /obj/item/clothing/suit/storage/fluff/fedcoat
+	subcategory = LOADOUT_SUBCATEGORY_SUIT_JOBS
 	restricted_desc = "Heads of Staff and Security"
 	restricted_roles = list("Head of Security","Captain","Head of Personnel","Chief Engineer","Research Director","Chief Medical Officer","Quartermaster","Warden","Detective","Security Officer")
 
-/datum/gear/trekmedscimov
+/datum/gear/suit/trekmedscimov
 	name = "Fed (movie) uniform, Blue"
-	category = SLOT_WEAR_SUIT
 	path = /obj/item/clothing/suit/storage/fluff/fedcoat/medsci
+	subcategory = LOADOUT_SUBCATEGORY_SUIT_JOBS
 	restricted_desc = "Medical and Science"
 	restricted_roles = list("Chief Medical Officer","Medical Doctor","Chemist","Virologist","Paramedic","Geneticist","Research Director","Scientist", "Roboticist")
 
-/datum/gear/trekengmov
+/datum/gear/suit/trekengmov
 	name = "Fed (movie) uniform, Yellow"
-	category = SLOT_WEAR_SUIT
 	path = /obj/item/clothing/suit/storage/fluff/fedcoat/eng
+	subcategory = LOADOUT_SUBCATEGORY_SUIT_JOBS
 	restricted_desc = "Engineering and Cargo"
 	restricted_roles = list("Chief Engineer","Atmospheric Technician","Station Engineer","Cargo Technician", "Shaft Miner", "Quartermaster")
 
-/datum/gear/trekcmdcapmod
+/datum/gear/suit/trekcmdcapmod
 	name = "Fed (Modern) uniform, White"
-	category = SLOT_WEAR_SUIT
 	path = /obj/item/clothing/suit/storage/fluff/modernfedcoat
 	restricted_roles = list("Captain","Head of Personnel")
 
-/datum/gear/trekcmdmod
+/datum/gear/suit/trekcmdmod
 	name = "Fed (Modern) uniform, Red"
-	category = SLOT_WEAR_SUIT
 	path = /obj/item/clothing/suit/storage/fluff/modernfedcoat/sec
+	subcategory = LOADOUT_SUBCATEGORY_SUIT_JOBS
 	restricted_desc = "Heads of Staff and Security"
 	restricted_roles = list("Head of Security","Captain","Head of Personnel","Chief Engineer","Research Director","Chief Medical Officer","Quartermaster","Warden","Detective","Security Officer")
 
-/datum/gear/trekmedscimod
+/datum/gear/suit/trekmedscimod
 	name = "Fed (Modern) uniform, Blue"
-	category = SLOT_WEAR_SUIT
 	path = /obj/item/clothing/suit/storage/fluff/modernfedcoat/medsci
+	subcategory = LOADOUT_SUBCATEGORY_SUIT_JOBS
 	restricted_desc = "Medical and Science"
 	restricted_roles = list("Chief Medical Officer","Medical Doctor","Chemist","Virologist","Paramedic","Geneticist","Research Director","Scientist", "Roboticist")
 
-/datum/gear/trekengmod
+/datum/gear/suit/trekengmod
 	name = "Fed (Modern) uniform, Yellow"
-	category = SLOT_WEAR_SUIT
 	path = /obj/item/clothing/suit/storage/fluff/modernfedcoat/eng
+	subcategory = LOADOUT_SUBCATEGORY_SUIT_JOBS
 	restricted_desc = "Engineering and Cargo"
 	restricted_roles = list("Chief Engineer","Atmospheric Technician","Station Engineer","Cargo Technician", "Shaft Miner", "Quartermaster")
 
-/datum/gear/christmascoatr
+/datum/gear/suit/christmascoatr
 	name = "Red Christmas Coat"
-	category = SLOT_WEAR_SUIT
 	path = /obj/item/clothing/suit/hooded/wintercoat/christmascoatr
+	subcategory = LOADOUT_SUBCATEGORY_SUIT_COATS
 
-/datum/gear/christmascoatg
+/datum/gear/suit/christmascoatg
 	name = "Green Christmas Coat"
-	category = SLOT_WEAR_SUIT
 	path = /obj/item/clothing/suit/hooded/wintercoat/christmascoatg
+	subcategory = LOADOUT_SUBCATEGORY_SUIT_COATS
 
-/datum/gear/christmascoatrg
+/datum/gear/suit/christmascoatrg
 	name = "Red and Green Christmas Coat"
-	category = SLOT_WEAR_SUIT
 	path = /obj/item/clothing/suit/hooded/wintercoat/christmascoatrg
+	subcategory = LOADOUT_SUBCATEGORY_SUIT_COATS
+
+/datum/gear/suit/samurai
+	name = "Samurai outfit"
+	path = /obj/item/clothing/suit/samurai

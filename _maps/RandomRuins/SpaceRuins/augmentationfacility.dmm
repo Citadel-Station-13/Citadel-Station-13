@@ -3,7 +3,7 @@
 /turf/template_noop,
 /area/template_noop)
 "b" = (
-/turf/open/floor/plating/asteroid,
+/turf/open/floor/plating/asteroid/airless,
 /area/ruin/powered)
 "c" = (
 /turf/closed/mineral/random/high_chance,
@@ -176,8 +176,8 @@
 /obj/structure/table,
 /obj/effect/decal/cleanable/dirt,
 /obj/item/autosurgeon{
-	name = "rusted autosurgeon";
 	desc = "A device that automatically inserts an implant or organ into the user without the hassle of extensive surgery. It has a slot to insert an organ of implant. But this rusted version looks like it could only manage one implant....";
+	name = "rusted autosurgeon";
 	uses = 1
 	},
 /turf/open/floor/plasteel,
@@ -205,7 +205,7 @@
 /obj/machinery/atmospherics/components/unary/outlet_injector/on/layer1{
 	dir = 4
 	},
-/turf/open/floor/plating/asteroid,
+/turf/open/floor/plating/asteroid/airless,
 /area/ruin/powered)
 "K" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer1{

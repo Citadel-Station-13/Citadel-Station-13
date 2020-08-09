@@ -42,6 +42,7 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 	name = "immovable rod"
 	desc = "What the fuck is that?"
 	icon = 'icons/obj/objects.dmi'
+	movement_type = FLOATING
 	icon_state = "immrod"
 	throwforce = 100
 	move_force = INFINITY

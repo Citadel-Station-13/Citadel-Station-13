@@ -8,7 +8,7 @@
 	sexes = 0
 	blacklisted = 1
 	meat = /obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/zombie
-	species_traits = list(NOBLOOD,NOZOMBIE,NOTRANSSTING,CAN_SCAR)
+	species_traits = list(NOBLOOD,NOZOMBIE,NOTRANSSTING,HAS_FLESH,HAS_BONE)
 	inherent_traits = list(TRAIT_RESISTCOLD,TRAIT_RESISTHIGHPRESSURE,TRAIT_RESISTLOWPRESSURE,TRAIT_RADIMMUNE,TRAIT_EASYDISMEMBER,TRAIT_LIMBATTACHMENT,TRAIT_NOBREATH,TRAIT_NODEATH,TRAIT_FAKEDEATH)
 	inherent_biotypes = MOB_UNDEAD|MOB_HUMANOID
 	mutanttongue = /obj/item/organ/tongue/zombie
@@ -32,6 +32,7 @@
 	name = "Infectious Zombie"
 	id = "memezombies"
 	limbs_id = "zombie"
+	inherent_traits = list(TRAIT_RESISTCOLD,TRAIT_RESISTHIGHPRESSURE,TRAIT_RESISTLOWPRESSURE,TRAIT_RADIMMUNE,TRAIT_EASYDISMEMBER,TRAIT_LIMBATTACHMENT,TRAIT_NOBREATH,TRAIT_NODEATH,TRAIT_NOSOFTCRIT, TRAIT_FAKEDEATH)
 	mutanthands = /obj/item/zombie_hand
 	armor = 20 // 120 damage to KO a zombie, which kills it
 	speedmod = 1.6 // they're very slow
@@ -45,7 +46,7 @@
 /datum/species/zombie/infectious/spec_stun(mob/living/carbon/human/H,amount)
 	. = min(20, amount)
 
-/datum/species/zombie/infectious/apply_damage(damage, damagetype = BRUTE, def_zone = null, blocked, mob/living/carbon/human/H, forced = FALSE, wound_bonus = 0, bare_wound_bonus = 0, sharpness = FALSE)
+/datum/species/zombie/infectious/apply_damage(damage, damagetype = BRUTE, def_zone = null, blocked, mob/living/carbon/human/H, forced = FALSE, wound_bonus = 0, bare_wound_bonus = 0, sharpness = SHARP_NONE)
 	. = ..()
 	if(.)
 		regen_cooldown = world.time + REGENERATION_DELAY
@@ -63,9 +64,9 @@
 		C.heal_overall_damage(heal_amt,heal_amt)
 		C.adjustToxLoss(-heal_amt)
 		for(var/i in C.all_wounds)
-			var/datum/wound/W = i
-			if(prob(4-W.severity))
-				W.remove_wound()
+			var/datum/wound/iter_wound = i
+			if(prob(4-iter_wound.severity))
+				iter_wound.remove_wound()
 	if(!C.InCritical() && prob(4))
 		playsound(C, pick(spooks), 50, TRUE, 10)
 
@@ -89,8 +90,8 @@
 		infection = new()
 		infection.Insert(C)
 
-	//make their bodyparts stamina-resistant
-	var/incoming_stam_mult = 0.7
+	//make their bodyparts stamina-immune, its a corpse.
+	var/incoming_stam_mult = 0
 	for(var/obj/item/bodypart/part in C.bodyparts)
 		part.incoming_stam_mult = incoming_stam_mult
 		//todo: add negative wound resistance to all parts when wounds is merged (zombies are physically weak in terms of limbs)

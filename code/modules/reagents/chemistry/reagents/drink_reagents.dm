@@ -217,6 +217,9 @@
 /datum/reagent/consumable/milk/on_mob_life(mob/living/carbon/M)
 	if(HAS_TRAIT(M, TRAIT_CALCIUM_HEALER))
 		M.heal_bodypart_damage(1.5,0, 0)
+		for(var/i in M.all_wounds)
+			var/datum/wound/iter_wound = i
+			iter_wound.on_xadone(2)
 		. = 1
 	else
 		if(M.getBruteLoss() && prob(20))
@@ -318,6 +321,83 @@
 		M.adjustToxLoss(-1, 0)
 	M.adjust_bodytemperature(20 * TEMPERATURE_DAMAGE_COEFFICIENT, 0, BODYTEMP_NORMAL)
 	..()
+	. = 1
+
+/datum/reagent/consumable/tea/red
+	name = "Red Tea"
+	description = "Tasty red tea, helps the body digest food. Drink in moderation!"
+	color = "#101000" // rgb: 16, 16, 0
+	nutriment_factor = 0
+	taste_description = "sweet red tea"
+	glass_icon_state = "teaglass"
+	glass_name = "glass of red tea"
+	glass_desc = "A piping hot tea that helps with the digestion of food."
+
+/datum/reagent/consumable/tea/red/on_mob_life(mob/living/carbon/M)
+	if(M.nutrition > NUTRITION_LEVEL_HUNGRY)
+		M.adjust_nutrition(-3)
+	M.dizziness = max(0,M.dizziness-2)
+	M.drowsyness = max(0,M.drowsyness-1)
+	M.jitteriness = max(0,M.jitteriness-3)
+	M.adjust_bodytemperature(23 * TEMPERATURE_DAMAGE_COEFFICIENT, 0, BODYTEMP_NORMAL)
+	. = 1
+
+/datum/reagent/consumable/tea/green
+	name = "Green Tea"
+	description = "Tasty green tea, known to heal livers, it's good for you!"
+	color = "#101000" // rgb: 16, 16, 0
+	nutriment_factor = 0
+	taste_description = "tart green tea"
+	glass_icon_state = "teaglass"
+	glass_name = "glass of tea"
+	glass_desc = "A calming glass of green tea to help get you through the day."
+
+/datum/reagent/consumable/tea/green/on_mob_life(mob/living/carbon/M)
+	M.adjustOrganLoss(ORGAN_SLOT_LIVER, -0.5) //Detox!
+	M.dizziness = max(0,M.dizziness-2)
+	M.drowsyness = max(0,M.drowsyness-1)
+	M.jitteriness = max(0,M.jitteriness-3)
+	M.adjust_bodytemperature(15 * TEMPERATURE_DAMAGE_COEFFICIENT, 0, BODYTEMP_NORMAL)
+	. = 1
+
+/datum/reagent/consumable/tea/forest
+	name = "Forest Tea"
+	description = "Tea mixed with honey, has both antitoxins and sweetness in one!"
+	color = "#101000" // rgb: 16, 16, 0
+	nutriment_factor = 0
+	quality = DRINK_NICE
+	taste_description = "sweet tea"
+	glass_icon_state = "teaglass"
+	glass_name = "glass of forest tea"
+	glass_desc = "A lovely glass of tea and honey."
+
+/datum/reagent/consumable/tea/forest/on_mob_life(mob/living/carbon/M)
+	if(M.getToxLoss() && prob(40))//Two anti-toxins working here
+		M.adjustToxLoss(-1, 0, TRUE) //heals TOXINLOVERs
+		//Reminder that honey heals toxin lovers
+	M.dizziness = max(0,M.dizziness-2)
+	M.drowsyness = max(0,M.drowsyness-1)
+	M.jitteriness = max(0,M.jitteriness-3)
+	M.adjust_bodytemperature(15 * TEMPERATURE_DAMAGE_COEFFICIENT, 0, BODYTEMP_NORMAL)
+	. = 1
+
+/datum/reagent/consumable/tea/mush
+	name = "Mush Tea"
+	description = "Tea mixed with mushroom hallucinogen, used for fun rides or self reflection."
+	color = "#101000" // rgb: 16, 16, 0
+	nutriment_factor = 0
+	quality = DRINK_NICE
+	taste_description = "fungal infections"
+	glass_icon_state = "teaglass"
+	glass_name = "glass of mush tea"
+	glass_desc = "A cold merky brown tea."
+
+/datum/reagent/consumable/tea/mush/on_mob_life(mob/living/carbon/M)
+	M.set_drugginess(20) //Little better then space drugs
+	if(prob(20))
+		M.Dizzy(10)
+	if(prob(10))
+		M.disgust = 0
 	. = 1
 
 /datum/reagent/consumable/lemonade
@@ -964,12 +1044,6 @@
 		M.emote("nya")
 	if(prob(20))
 		to_chat(M, "<span class = 'notice'>[pick("Headpats feel nice.", "Backrubs would be nice.", "Mew")]</span>")
-	if(ishuman(M))
-		var/mob/living/carbon/human/H = M
-		var/list/adjusted = H.adjust_arousal(5,aphro = TRUE)
-		for(var/g in adjusted)
-			var/obj/item/organ/genital/G = g
-			to_chat(M, "<span class='userlove'>You feel like playing with your [G.name]!</span>")
 	..()
 
 /datum/reagent/consumable/monkey_energy
@@ -1014,3 +1088,22 @@
 		M.adjustToxLoss(-1, 0)
 	..()
 	. = TRUE
+
+// i googled "natural coagulant" and a couple of results came up for banana peels, so after precisely 30 more seconds of research, i now dub grinding banana peels good for your blood
+/datum/reagent/consumable/banana_peel
+	name = "Pulped Banana Peel"
+	description = "Okay, so you put a banana peel in a grinder... Why, exactly?"
+	color = "#863333" // rgb: 175, 175, 0
+	reagent_state = SOLID
+	taste_description = "stringy, bitter pulp"
+	glass_name = "glass of banana peel pulp"
+	glass_desc = "Okay, so you put a banana peel in a grinder... Why, exactly?"
+
+/datum/reagent/consumable/baked_banana_peel
+	name = "Baked Banana Peel Powder"
+	description = "You took a banana peel... pulped it... baked it... Where are you going with this?"
+	color = "#863333" // rgb: 175, 175, 0
+	reagent_state = SOLID
+	taste_description = "bitter powder"
+	glass_name = "glass of banana peel powder"
+	description = "You took a banana peel... pulped it... baked it... Where are you going with this?"

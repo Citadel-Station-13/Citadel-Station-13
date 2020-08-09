@@ -213,6 +213,9 @@ Credit where due:
 	var/list/slots = list("In your left pocket" = SLOT_L_STORE, "In your right pocket" = SLOT_R_STORE, "In your backpack" = SLOT_IN_BACKPACK)
 	if(ishuman(L))
 		var/mob/living/carbon/human/H = L
+		var/obj/item/clockwork/replica_fabricator/F = new
+		if(H.equip_to_slot_or_del(F, SLOT_IN_BACKPACK))
+			to_chat(H, "<span class='brass'>You have been equipped with a replica fabricator, an advanced tool that can convert objects like doors, tables or even coats into clockwork equivalents.</span>")
 		slot = H.equip_in_one_of_slots(S, slots)
 		if(slot == "In your backpack")
 			slot = "In your [H.back.name]"

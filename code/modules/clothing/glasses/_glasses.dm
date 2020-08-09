@@ -96,7 +96,7 @@
 	throw_speed = 4
 	attack_verb = list("sliced")
 	hitsound = 'sound/weapons/bladeslice.ogg'
-	sharpness = IS_SHARP
+	sharpness = SHARP_EDGED
 
 /obj/item/clothing/glasses/meson/eyepatch
 	name = "eyepatch mesons"
@@ -180,7 +180,7 @@
 	throw_speed = 4
 	attack_verb = list("sliced")
 	hitsound = 'sound/weapons/bladeslice.ogg'
-	sharpness = IS_SHARP
+	sharpness = SHARP_EDGED
 	vision_correction = 1
 	glass_colour_type = /datum/client_colour/glass_colour/lightgreen
 
@@ -237,7 +237,7 @@
 	throw_speed = 4
 	attack_verb = list("sliced")
 	hitsound = 'sound/weapons/bladeslice.ogg'
-	sharpness = IS_SHARP
+	sharpness = SHARP_EDGED
 
 /obj/item/clothing/glasses/sunglasses/garb/supergarb
 	name = "black giga gar glasses"
@@ -257,7 +257,7 @@
 	throw_speed = 4
 	attack_verb = list("sliced")
 	hitsound = 'sound/weapons/bladeslice.ogg'
-	sharpness = IS_SHARP
+	sharpness = SHARP_EDGED
 	glass_colour_type = /datum/client_colour/glass_colour/orange
 
 /obj/item/clothing/glasses/sunglasses/gar/supergar

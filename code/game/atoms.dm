@@ -962,15 +962,16 @@
 	if(source != target)
 		target.log_talk(message, message_type, tag="[tag] from [key_name(source)]", log_globally=FALSE)
 
-/*
-Proc for attack log creation, because really why not
-1 argument is the actor performing the action
-2 argument is the target of the action
-3 is a verb describing the action (e.g. punched, throwed, kicked, etc.)
-4 is a tool with which the action was made (usually an item)
-5 is any additional text, which will be appended to the rest of the log line
-*/
-
+/**
+  * Log a combat message in the attack log
+  *
+  * Arguments:
+  * * atom/user - argument is the actor performing the action
+  * * atom/target - argument is the target of the action
+  * * what_done - is a verb describing the action (e.g. punched, throwed, kicked, etc.)
+  * * atom/object - is a tool with which the action was made (usually an item)
+  * * addition - is any additional text, which will be appended to the rest of the log line
+  */
 /proc/log_combat(atom/user, atom/target, what_done, atom/object=null, addition=null)
 	var/ssource = key_name(user)
 	var/starget = key_name(target)
