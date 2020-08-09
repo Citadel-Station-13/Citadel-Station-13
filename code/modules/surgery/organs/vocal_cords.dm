@@ -1081,7 +1081,7 @@
 			var/datum/status_effect/chem/enthrall/E = L.has_status_effect(/datum/status_effect/chem/enthrall)
 			L.throw_at(get_step_towards(user,L), 3 * power_multiplier, 1 * power_multiplier)
 			E.cooldown += 3
-			addtimer(CALLBACK(GLOBAL_PROC, .proc/to_chat, L, "<span class='notice'>You are drawn towards [user]!</b></span>"), 5)
+			addtimer(CALLBACK(GLOBAL_PROC, .proc/to_chat, L, "<span class='notice'>You are drawn towards [user]!</span>"), 5)
 			to_chat(user, "<span class='notice'><i>You draw [L] towards you!</i></span>")
 
 	//Subterm
@@ -1098,6 +1098,7 @@
 						var/newTerm = stripped_input(user, "Enter the new sub term", MAX_MESSAGE_LEN)
 						E.subjectTerm = newTerm
 						to_chat(user, "<span class='notice'><i>You successfully teach [H] their proper place.</i></span>")
+						to_chat(V, "<span class='notice'><i>You suddenly realize your proper place as [(E.lewd?"your [E.enthrallTitle]'s [E.subjectTerm]!":"[E.master]'s [E.subjectTerm]!"")
 
 	//awoo
 	else if((findtext(message, awoo_words)))
