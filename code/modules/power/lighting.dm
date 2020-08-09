@@ -610,7 +610,18 @@
 		var/mob/living/carbon/human/H = user
 
 		if(istype(H))
-
+			var/datum/species/ethereal/eth_species = H.dna?.species
+			if(istype(eth_species))
+				to_chat(H, "<span class='notice'>You start channeling some power through the [fitting] into your body.</span>")
+				if(do_after(user, 50, target = src))
+					var/obj/item/organ/stomach/ethereal/stomach = H.getorganslot(ORGAN_SLOT_STOMACH)
+					if(istype(stomach))
+						to_chat(H, "<span class='notice'>You receive some charge from the [fitting].</span>")
+						stomach.adjust_charge(2)
+					else
+						to_chat(H, "<span class='warning'>You can't receive charge from the [fitting]!</span>")
+				return
+				
 			if(H.gloves)
 				var/obj/item/clothing/gloves/G = H.gloves
 				if(G.max_heat_protection_temperature)
