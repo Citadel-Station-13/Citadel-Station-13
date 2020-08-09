@@ -1,0 +1,4 @@
+author: "Seris02"
+delete-after: True
+changes: 
+  - bugfix: "borgs being able to select and use a module when it's too damaged"
