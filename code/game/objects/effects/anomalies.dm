@@ -8,7 +8,7 @@
 	anchored = TRUE
 	light_range = 3
 	var/movechance = 70
-	var/obj/item/assembly/signaler/anomaly/aSignal
+	var/obj/item/assembly/signaler/anomaly/aSignal = /obj/item/assembly/signaler/anomaly
 	var/area/impact_area
 
 	var/lifespan = 990
@@ -23,8 +23,10 @@
 	START_PROCESSING(SSobj, src)
 	impact_area = get_area(src)
 
-	aSignal = new(src)
-	aSignal.name = "[name] core"
+	if (!impact_area)
+		return INITIALIZE_HINT_QDEL
+
+	aSignal = new aSignal(src)
 	aSignal.code = rand(1,100)
 	aSignal.anomaly_type = type
 
@@ -75,7 +77,7 @@
 
 
 /obj/effect/anomaly/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/analyzer))
+	if(I.tool_behaviour == TOOL_ANALYZER) //revert if runtimed
 		to_chat(user, "<span class='notice'>Analyzing... [src]'s unstable field is fluctuating along frequency [format_frequency(aSignal.frequency)], code [aSignal.code].</span>")
 
 ///////////////////////
@@ -85,6 +87,7 @@
 	icon_state = "shield2"
 	density = FALSE
 	var/boing = 0
+	aSignal = /obj/item/assembly/signaler/anomaly/grav
 
 /obj/effect/anomaly/grav/anomalyEffect()
 	..()
@@ -95,17 +98,23 @@
 	for(var/mob/living/M in range(0, src))
 		gravShock(M)
 	for(var/mob/living/M in orange(4, src))
-		step_towards(M,src)
+		if(!M.mob_negates_gravity()) //delete when runtimed
+			step_towards(M,src)
 	for(var/obj/O in range(0,src))
 		if(!O.anchored)
+			//if(isturf(O.loc))
+			//	var/turf/T = O.loc
+			//	if(T.intact && HAS_TRAIT(O, TRAIT_T_RAY_VISIBLE))
+			//		continue
 			var/mob/living/target = locate() in view(4,src)
 			if(target && !target.stat)
 				O.throw_at(target, 5, 10)
 
-/obj/effect/anomaly/grav/Crossed(mob/A)
-	gravShock(A)
+/obj/effect/anomaly/grav/Crossed(atom/movable/AM)
+	. = ..()
+	gravShock(AM)
 
-/obj/effect/anomaly/grav/Bump(mob/A)
+/obj/effect/anomaly/grav/Bump(atom/A)
 	gravShock(A)
 
 /obj/effect/anomaly/grav/Bumped(atom/movable/AM)
@@ -138,6 +147,7 @@
 	name = "flux wave anomaly"
 	icon_state = "electricity2"
 	density = TRUE
+	aSignal = /obj/item/assembly/signaler/anomaly/flux
 	var/canshock = FALSE
 	var/shockdamage = 20
 	var/explosive = TRUE
@@ -148,11 +158,12 @@
 	for(var/mob/living/M in range(0, src))
 		mobShock(M)
 
-/obj/effect/anomaly/flux/Crossed(mob/living/M)
-	mobShock(M)
+/obj/effect/anomaly/flux/Crossed(atom/movable/AM)
+	. = ..()
+	mobShock(AM)
 
-/obj/effect/anomaly/flux/Bump(mob/living/M)
-	mobShock(M)
+/obj/effect/anomaly/flux/Bump(atom/A)
+	mobShock(A)
 
 /obj/effect/anomaly/flux/Bumped(atom/movable/AM)
 	mobShock(AM)
@@ -160,7 +171,7 @@
 /obj/effect/anomaly/flux/proc/mobShock(mob/living/M)
 	if(canshock && istype(M))
 		canshock = FALSE //Just so you don't instakill yourself if you slam into the anomaly five times in a second.
-		M.electrocute_act(shockdamage, "[name]", flags = SHOCK_NOGLOVES)
+		M.electrocute_act(shockdamage, name, flags = SHOCK_NOGLOVES)
 
 /obj/effect/anomaly/flux/detonate()
 	if(explosive)
@@ -176,6 +187,7 @@
 	icon = 'icons/obj/projectiles.dmi'
 	icon_state = "bluespace"
 	density = TRUE
+	aSignal = /obj/item/assembly/signaler/anomaly/bluespace
 
 /obj/effect/anomaly/bluespace/anomalyEffect()
 	..()
@@ -187,7 +199,7 @@
 		do_teleport(AM, locate(AM.x, AM.y, AM.z), 8, channel = TELEPORT_CHANNEL_BLUESPACE)
 
 /obj/effect/anomaly/bluespace/detonate()
-	var/turf/T = safepick(get_area_turfs(impact_area))
+	var/turf/T = pick(get_area_turfs(impact_area))
 	if(T)
 			// Calculate new position (searches through beacons in world)
 		var/obj/item/beacon/chosen
@@ -224,21 +236,23 @@
 				if(!A.Move(newloc) && newloc) // if the atom, for some reason, can't move, FORCE them to move! :) We try Move() first to invoke any movement-related checks the atom needs to perform after moving
 					A.forceMove(newloc)
 
-				spawn()
-					if(ismob(A) && !(A in flashers)) // don't flash if we're already doing an effect
-						var/mob/M = A
-						if(M.client)
-							var/obj/blueeffect = new /obj(src)
-							blueeffect.screen_loc = "WEST,SOUTH to EAST,NORTH"
-							blueeffect.icon = 'icons/effects/effects.dmi'
-							blueeffect.icon_state = "shieldsparkles"
-							blueeffect.layer = FLASH_LAYER
-							blueeffect.plane = FULLSCREEN_PLANE
-							blueeffect.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-							M.client.screen += blueeffect
-							sleep(20)
-							M.client.screen -= blueeffect
-							qdel(blueeffect)
+				if(ismob(A) && !(A in flashers)) // don't flash if we're already doing an effect
+					var/mob/M = A
+					if(M.client)
+						INVOKE_ASYNC(src, .proc/blue_effect, M)
+
+/obj/effect/anomaly/bluespace/proc/blue_effect(mob/M)
+	var/obj/blueeffect = new /obj(src)
+	blueeffect.screen_loc = "WEST,SOUTH to EAST,NORTH"
+	blueeffect.icon = 'icons/effects/effects.dmi'
+	blueeffect.icon_state = "shieldsparkles"
+	blueeffect.layer = FLASH_LAYER
+	blueeffect.plane = FULLSCREEN_PLANE
+	blueeffect.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	M.client.screen += blueeffect
+	sleep(20)
+	M.client.screen -= blueeffect
+	qdel(blueeffect)
 
 /////////////////////
 
@@ -246,6 +260,7 @@
 	name = "pyroclastic anomaly"
 	icon_state = "mustard"
 	var/ticks = 0
+	aSignal = /obj/item/assembly/signaler/anomaly/pyro
 
 /obj/effect/anomaly/pyro/anomalyEffect()
 	..()
@@ -278,6 +293,7 @@
 	name = "vortex anomaly"
 	icon_state = "bhole3"
 	desc = "That's a nice station you have there. It'd be a shame if something happened to it."
+	aSignal = /obj/item/assembly/signaler/anomaly/vortex
 
 /obj/effect/anomaly/bhole/anomalyEffect()
 	..()

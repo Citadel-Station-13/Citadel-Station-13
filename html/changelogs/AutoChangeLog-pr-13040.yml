@@ -1,0 +1,4 @@
+author: "Sishen1542"
+delete-after: True
+changes: 
+  - balance: "gave chairs active block/parry in exchange for removal of block_chance"

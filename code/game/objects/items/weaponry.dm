@@ -249,6 +249,18 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	playsound(src, 'sound/weapons/bladeslice.ogg', 50, 1)
 	return(BRUTELOSS)
 
+/obj/item/katana/timestop
+	name = "temporal katana"
+	desc = "Delicately balanced, this finely-crafted blade hums with barely-restrained potential."
+	item_flags = ITEM_CAN_PARRY
+	block_parry_data = /datum/block_parry_data/bokken/quick_parry/proj
+
+/obj/item/katana/timestop/on_active_parry(mob/living/owner, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, list/block_return, parry_efficiency, parry_time)
+	if(ishuman(owner))
+		var/mob/living/carbon/human/flynn = owner
+		flynn.emote("smirk")
+	new /obj/effect/timestop(get_turf(owner), 2, 50, list(owner))
+
 /obj/item/melee/bokken // parrying stick
 	name = "bokken"
 	desc = "A space-Japanese training sword made of wood and shaped like a katana."
@@ -290,7 +302,9 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 		TEXT_ATTACK_TYPE_PROJECTILE = 30,
 	)
 	parry_failed_stagger_duration = 3 SECONDS
-	parry_data = list(PARRY_COUNTERATTACK_MELEE_ATTACK_CHAIN = 2.5) // 7*2.5 = 17.5, 8*2.5 = 20, 9*2.5 = 22.5, 10*2.5 = 25
+	parry_data = list(
+		PARRY_COUNTERATTACK_MELEE_ATTACK_CHAIN = 2.5, // 7*2.5 = 17.5, 8*2.5 = 20, 9*2.5 = 22.5, 10*2.5 = 25
+		)
 
 /datum/block_parry_data/bokken/quick_parry // emphasizing REALLY SHORT PARRIES
 	parry_stamina_cost = 6 // still more costly than most parries, but less than a full bokken parry
@@ -300,6 +314,9 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	parry_failed_stagger_duration = 1 SECONDS
 	parry_failed_clickcd_duration = 1 SECONDS // more forgiving punishments for missed parries
 	// still, don't fucking miss your parries or you're down stamina and staggered to shit
+
+/datum/block_parry_data/bokken/quick_parry/proj
+	parry_efficiency_perfect_override = list()
 
 /obj/item/melee/bokken/Initialize()
 	. = ..()
@@ -363,6 +380,40 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 		. += " There's a metal rod shoved into the base."
 	if(burnt)
 		. += " Burned into the \"blade\" is [burned_in]."
+
+/obj/item/melee/bokken/debug
+	name = "funny debug parrying stick"
+	desc = "if you see this you've fucked up somewhere my good man"
+	block_parry_data = /datum/block_parry_data/bokken/debug
+
+/obj/item/melee/bokken/debug/AltClick(mob/user)
+	quick_parry = !quick_parry
+	if(quick_parry)
+		block_parry_data = /datum/block_parry_data/bokken/quick_parry/debug
+	else
+		block_parry_data = /datum/block_parry_data/bokken/debug
+	to_chat(user, "<span class='notice'>[src] is now [quick_parry ? "emphasizing shorter parries, forcing you to riposte or be staggered" : "emphasizing longer parries, with a shorter window to riposte but more forgiving parries"].</span>")
+
+/datum/block_parry_data/bokken/debug
+	parry_efficiency_perfect_override = list()
+	parry_data = list(
+		PARRY_COUNTERATTACK_MELEE_ATTACK_CHAIN = 2.5, // 7*2.5 = 17.5, 8*2.5 = 20, 9*2.5 = 22.5, 10*2.5 = 25
+		PARRY_DISARM_ATTACKER = TRUE,
+		PARRY_KNOCKDOWN_ATTACKER = 10,
+		PARRY_STAGGER_ATTACKER = 10,
+		PARRY_DAZE_ATTACKER = 10,
+		)
+
+/datum/block_parry_data/bokken/quick_parry/debug
+	parry_efficiency_perfect_override = list()
+	parry_data = list(
+		PARRY_COUNTERATTACK_MELEE_ATTACK_CHAIN = 2.5, // 7*2.5 = 17.5, 8*2.5 = 20, 9*2.5 = 22.5, 10*2.5 = 25
+		PARRY_DISARM_ATTACKER = TRUE,
+		PARRY_KNOCKDOWN_ATTACKER = 10,
+		PARRY_STAGGER_ATTACKER = 10,
+		PARRY_DAZE_ATTACKER = 10,
+		)
+
 
 /obj/item/wirerod
 	name = "wired rod"

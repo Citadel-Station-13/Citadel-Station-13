@@ -31,15 +31,10 @@
 	var/available_on_ntnet = 1
 	/// Whether the program can be downloaded from SyndiNet (accessible via emagging the computer). Set to 1 to enable.
 	var/available_on_syndinet = 0
-	/// ID of TGUI interface
+	/// Name of the tgui interface
 	var/tgui_id
-	/// Default size of TGUI window, in pixels
-	var/ui_x = 575
-	var/ui_y = 700
 	/// Example: "something.gif" - a header image that will be rendered in computer's UI when this program is running at background. Images are taken from /icons/program_icons. Be careful not to use too large images!
 	var/ui_header = null
-	///Assets specific to programs
-	var/list/special_assets = list()
 
 /datum/computer_file/program/New(obj/item/modular_computer/comp = null)
 	..()
@@ -69,23 +64,23 @@
 /datum/computer_file/program/proc/generate_network_log(text)
 	if(computer)
 		return computer.add_log(text)
-	return FALSE
+	return 0
 
 /datum/computer_file/program/proc/is_supported_by_hardware(hardware_flag = 0, loud = 0, mob/user = null)
 	if(!(hardware_flag & usage_flags))
 		if(loud && computer && user)
-			to_chat(user, "<span class='danger'>\The [computer] flashes an \"Hardware Error - Incompatible software\" warning.</span>")
-		return FALSE
-	return TRUE
+			to_chat(user, "<span class='danger'>\The [computer] flashes a \"Hardware Error - Incompatible software\" warning.</span>")
+		return 0
+	return 1
 
 /datum/computer_file/program/proc/get_signal(specific_action = 0)
 	if(computer)
 		return computer.get_ntnet_status(specific_action)
-	return FALSE
+	return 0
 
 // Called by Process() on device that runs us, once every tick.
 /datum/computer_file/program/proc/process_tick()
-	return TRUE
+	return 1
 
 // Check if the user can run program. Only humans can operate computer. Automatically called in run_program()
 // User has to wear their ID for ID Scan to work.
@@ -131,7 +126,7 @@
 				return TRUE
 		if(loud)
 			to_chat(user, "<span class='danger'>\The [computer] flashes an \"Access Denied\" warning.</span>")
-	return FALSE
+	return 0
 
 // This attempts to retrieve header data for UIs. If implementing completely new device of different type than existing ones
 // always include the device here in this proc. This proc basically relays the request to whatever is running the program.
@@ -143,11 +138,25 @@
 // This is performed on program startup. May be overridden to add extra logic. Remember to include ..() call. Return 1 on success, 0 on failure.
 // When implementing new program based device, use this to run the program.
 /datum/computer_file/program/proc/run_program(mob/living/user)
-	if(can_run(user, TRUE))
+	if(can_run(user, 1))
 		if(requires_ntnet && network_destination)
 			generate_network_log("Connection opened to [network_destination].")
 		program_state = PROGRAM_STATE_ACTIVE
-		return TRUE
+		return 1
+	return 0
+
+/**
+  *
+  *Called by the device when it is emagged.
+  *
+  *Emagging the device allows certain programs to unlock new functions. However, the program will
+  *need to be downloaded first, and then handle the unlock on their own in their run_emag() proc.
+  *The device will allow an emag to be run multiple times, so the user can re-emag to run the
+  *override again, should they download something new. The run_emag() proc should return TRUE if
+  *the emagging affected anything, and FALSE if no change was made (already emagged, or has no
+  *emag functions).
+**/
+/datum/computer_file/program/proc/run_emag()
 	return FALSE
 
 // Use this proc to kill the program. Designed to be implemented by each program if it requires on-quit logic, such as the NTNRC client.
@@ -155,20 +164,14 @@
 	program_state = PROGRAM_STATE_KILLED
 	if(network_destination)
 		generate_network_log("Connection to [network_destination] closed.")
-	return TRUE
+	return 1
 
-
-/datum/computer_file/program/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+/datum/computer_file/program/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui && tgui_id)
-		var/datum/asset/assets = get_asset_datum(/datum/asset/simple/headers)
-		assets.send(user)
-		for(var/i in special_assets)
-			assets = get_asset_datum(i)
-			assets.send(user)
-
-		ui = new(user, src, ui_key, tgui_id, filedesc, ui_x, ui_y, state = state)
+		ui = new(user, src, tgui_id, filedesc)
 		ui.open()
+		ui.send_asset(get_asset_datum(/datum/asset/simple/headers))
 
 // CONVENTIONS, READ THIS WHEN CREATING NEW PROGRAM AND OVERRIDING THIS PROC:
 // Topic calls are automagically forwarded from NanoModule this program contains.
@@ -177,17 +180,17 @@
 // ALWAYS INCLUDE PARENT CALL ..() OR DIE IN FIRE.
 /datum/computer_file/program/ui_act(action,list/params,datum/tgui/ui)
 	if(..())
-		return TRUE
+		return 1
 	if(computer)
 		switch(action)
 			if("PC_exit")
 				computer.kill_program()
 				ui.close()
-				return TRUE
+				return 1
 			if("PC_shutdown")
 				computer.shutdown_computer()
 				ui.close()
-				return TRUE
+				return 1
 			if("PC_minimize")
 				var/mob/user = usr
 				if(!computer.active_program || !computer.all_components[MC_CPU])

@@ -73,6 +73,7 @@ This might look a bit intimidating compared to the reactive part but it's not as
 You don't really need to know all this to understand how to use it, but I find it helps with understanding when things go wrong.
 
 Ractive conditionals can have an `else` as well
+
 ```ractive
 {{#if data.condition}}
   value
@@ -116,7 +117,7 @@ and you can mix string literals, values, and tags as well.
 Ractive has loops for iterating over data and inserting something for each
 member of an array or object
 
-```
+```ractive
 {{#each data.list_of_foo}}
   foo {{number}} is here.
 {{/each}}
@@ -135,6 +136,7 @@ Objects are represented by `{}`, arrays by `[]`
 `list("bla", "blo")` would become `["bla", "blo"]` and `list("foo" = 1, "bar" = 2)` would become `{"foo": 1, "bar": 2}`
 
 First things first, above the `return` of the function you're making the interface in, you're going to want to add something like this
+
 ```jsx
 const things = data.things || [];
 ```
@@ -142,6 +144,7 @@ const things = data.things || [];
 This ensures that you'll never be reading a null entry by mistake. Substitute `{}` for objects as appropriate.
 
 If it's an array, you'll want to do this in the template
+
 ```jsx
 {things.map(thing => (
   <Fragment>
@@ -187,7 +190,7 @@ const fooArray = toArray(fooObject);
 
 Also occasionally you'd see an else:
 
-```
+```ractive
 {{#each data.potentially_empty_list}}
   Thing "{{name}}" is in this list!
 {{else}}
@@ -220,7 +223,7 @@ This will be a reference of tgui components and the tgui-next equivalent.
 
 Equivalent of `<ui-display>` is `<Section>`
 
-```
+```ractive
 <ui-display title="Status">
   Contents
 </ui-display>
@@ -236,7 +239,7 @@ becomes
 
 A feature sometimes used is if `ui-display` has the `button` property, it will contain a `partial` command. This becomes the `buttons` property on `Section`:
 
-```
+```ractive
 <ui-display title="Status" button>
   {{#partial button}}
     <ui-button /> // lots more button bullshit here
@@ -263,7 +266,7 @@ Very important to note `ui-section` is NOT the equivalent of `Section`
 
 `<ui-section>` does not have a direct equivalent, but the closest equivalent is `<LabeledList>`
 
-```
+```ractive
 <ui-section label="power">
   No Power
 </ui-section>
@@ -293,7 +296,7 @@ Also good to know that if you need the contents of a `LabeledList.Item` to be co
 
 `<ui-notice>` has a direct equivalent in `<NoticeBox>`
 
-```
+```ractive
 <ui-notice>
   Notice stuff!
 </ui-notice>
@@ -311,7 +314,7 @@ becomes
 
 The equivalent of `ui-button` is `Button` but it works quite a bit differently.
 
-```
+```ractive
 <ui-button
   state='{{data.condition ? "disabled" : null}}'
   action="ui_action"

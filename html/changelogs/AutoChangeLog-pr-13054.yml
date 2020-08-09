@@ -1,0 +1,5 @@
+author: "KeRSedChaplain"
+delete-after: True
+changes: 
+  - rscadd: "Added a guide for romerol usage"
+  - balance: "made infectious zombies not enter softcrit and take no stamina damage"
