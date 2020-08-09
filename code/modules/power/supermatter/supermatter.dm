@@ -480,9 +480,19 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		// Pass all the gas related code an empty gas container
 		removed = new()
 	damage_archived = damage
+
+	/********
+	EXPERIMENTAL, HUGBOXY AS HELL CITADEL CHANGES: Even in a vaccum, update gas composition and modifiers.
+	This means that the SM will usually have a very small explosion if it ends up being breached to space,
+	and CO2 tesla delaminations basically require multiple grounding rods to stabilize it long enough to not have it vent.
+	*********/
+
 	if(!removed || !removed.total_moles() || isspaceturf(T)) //we're in space or there is no gas to process
 		if(takes_damage)
 			damage += max((power / 1000) * DAMAGE_INCREASE_MULTIPLIER, 0.1) // always does at least some damage
+		combined_gas = max(0, combined_gas - 0.5)		// Slowly wear off.
+		for(var/gasID in gases_we_care_about)
+			gas_comp[gasID] = max(0, gas_comp[gasID] - 0.05)		//slowly ramp down
 	else
 		if(takes_damage)
 			//causing damage
@@ -509,126 +519,130 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 			//This means we can only deal 1.8 damage per function call
 			damage = min(damage_archived + (DAMAGE_HARDCAP * explosion_point), damage)
 
-		//calculating gas related values
-		//Wanna know a secret? See that max() to zero? it's used for error checking. If we get a mol count in the negative, we'll get a divide by zero error
-		combined_gas = max(removed.total_moles(), 0)
+			//calculating gas related values
+			//Wanna know a secret? See that max() to zero? it's used for error checking. If we get a mol count in the negative, we'll get a divide by zero error
+			combined_gas = max(removed.total_moles(), 0)
 
-		//This is more error prevention, according to all known laws of atmos, gas_mix.remove() should never make negative mol values.
-		//But this is tg
+			//This is more error prevention, according to all known laws of atmos, gas_mix.remove() should never make negative mol values.
+			//But this is tg
 
-		//Lets get the proportions of the gasses in the mix and then slowly move our comp to that value
-		//Can cause an overestimation of mol count, should stabalize things though.
-		//Prevents huge bursts of gas/heat when a large amount of something is introduced
-		//They range between 0 and 1
-		for(var/gasID in gases_we_care_about)
-			gas_comp[gasID] += clamp(max(removed.get_moles(gasID)/combined_gas, 0) - gas_comp[gasID], -1, gas_change_rate)
+			//Lets get the proportions of the gasses in the mix and then slowly move our comp to that value
+			//Can cause an overestimation of mol count, should stabalize things though.
+			//Prevents huge bursts of gas/heat when a large amount of something is introduced
+			//They range between 0 and 1
+			for(var/gasID in gases_we_care_about)
+				gas_comp[gasID] += clamp(max(removed.get_moles(gasID)/combined_gas, 0) - gas_comp[gasID], -1, gas_change_rate)
 
-		var/list/heat_mod = gases_we_care_about.Copy()
-		var/list/transit_mod = gases_we_care_about.Copy()
-		var/list/resistance_mod = gases_we_care_about.Copy()
+	var/list/heat_mod = gases_we_care_about.Copy()
+	var/list/transit_mod = gases_we_care_about.Copy()
+	var/list/resistance_mod = gases_we_care_about.Copy()
 
-		//We're concerned about pluoxium being too easy to abuse at low percents, so we make sure there's a substantial amount.
-		var/pluoxiumbonus = (gas_comp[/datum/gas/pluoxium] >= 0.15) //makes pluoxium only work at 15%+
-		var/h2obonus = 1 - (gas_comp[/datum/gas/water_vapor] * 0.25)//At max this value should be 0.75
+	//We're concerned about pluoxium being too easy to abuse at low percents, so we make sure there's a substantial amount.
+	var/pluoxiumbonus = (gas_comp[/datum/gas/pluoxium] >= 0.15) //makes pluoxium only work at 15%+
+	var/h2obonus = 1 - (gas_comp[/datum/gas/water_vapor] * 0.25)//At max this value should be 0.75
 //		var/freonbonus = (gas_comp[/datum/gas/freon] <= 0.03) //Let's just yeet power output if this shit is high
 
-		heat_mod[/datum/gas/pluoxium] = pluoxiumbonus
-		transit_mod[/datum/gas/pluoxium] = pluoxiumbonus
-		resistance_mod[/datum/gas/pluoxium] = pluoxiumbonus
+	heat_mod[/datum/gas/pluoxium] = pluoxiumbonus
+	transit_mod[/datum/gas/pluoxium] = pluoxiumbonus
+	resistance_mod[/datum/gas/pluoxium] = pluoxiumbonus
 
-		//No less then zero, and no greater then one, we use this to do explosions and heat to power transfer
-		//Be very careful with modifing this var by large amounts, and for the love of god do not push it past 1
-		gasmix_power_ratio = 0
-		for(var/gasID in gas_powermix)
-			gasmix_power_ratio += gas_comp[gasID] * gas_powermix[gasID]
-		gasmix_power_ratio = clamp(gasmix_power_ratio, 0, 1)
+	//No less then zero, and no greater then one, we use this to do explosions and heat to power transfer
+	//Be very careful with modifing this var by large amounts, and for the love of god do not push it past 1
+	gasmix_power_ratio = 0
+	for(var/gasID in gas_powermix)
+		gasmix_power_ratio += gas_comp[gasID] * gas_powermix[gasID]
+	gasmix_power_ratio = clamp(gasmix_power_ratio, 0, 1)
 
-		//Minimum value of -10, maximum value of 23. Effects plasma and o2 output and the output heat
-		dynamic_heat_modifier = 0
-		for(var/gasID in gas_heat)
-			dynamic_heat_modifier += gas_comp[gasID] * gas_heat[gasID] * (isnull(heat_mod[gasID]) ? 1 : heat_mod[gasID])
-		dynamic_heat_modifier *= h2obonus
-		dynamic_heat_modifier = max(dynamic_heat_modifier, 0.5)
+	//Minimum value of -10, maximum value of 23. Effects plasma and o2 output and the output heat
+	dynamic_heat_modifier = 0
+	for(var/gasID in gas_heat)
+		dynamic_heat_modifier += gas_comp[gasID] * gas_heat[gasID] * (isnull(heat_mod[gasID]) ? 1 : heat_mod[gasID])
+	dynamic_heat_modifier *= h2obonus
+	dynamic_heat_modifier = max(dynamic_heat_modifier, 0.5)
 
-		//Value between 1 and 10. Effects the damage heat does to the crystal
-		dynamic_heat_resistance = 0
-		for(var/gasID in gas_resist)
-			dynamic_heat_resistance += gas_comp[gasID] * gas_resist[gasID] * (isnull(resistance_mod[gasID]) ? 1 : resistance_mod[gasID])
-		dynamic_heat_resistance = max(dynamic_heat_resistance, 1)
+	//Value between 1 and 10. Effects the damage heat does to the crystal
+	dynamic_heat_resistance = 0
+	for(var/gasID in gas_resist)
+		dynamic_heat_resistance += gas_comp[gasID] * gas_resist[gasID] * (isnull(resistance_mod[gasID]) ? 1 : resistance_mod[gasID])
+	dynamic_heat_resistance = max(dynamic_heat_resistance, 1)
 
-		//Value between -5 and 30, used to determine radiation output as it concerns things like collectors.
-		power_transmission_bonus = 0
-		for(var/gasID in gas_trans)
-			power_transmission_bonus += gas_comp[gasID] * gas_trans[gasID] * (isnull(transit_mod[gasID]) ? 1 : transit_mod[gasID])
-		power_transmission_bonus *= h2obonus
+	//Value between -5 and 30, used to determine radiation output as it concerns things like collectors.
+	power_transmission_bonus = 0
+	for(var/gasID in gas_trans)
+		power_transmission_bonus += gas_comp[gasID] * gas_trans[gasID] * (isnull(transit_mod[gasID]) ? 1 : transit_mod[gasID])
+	power_transmission_bonus *= h2obonus
 
-		//more moles of gases are harder to heat than fewer, so let's scale heat damage around them
-		mole_heat_penalty = max(combined_gas / MOLE_HEAT_PENALTY, 0.25)
+	//more moles of gases are harder to heat than fewer, so let's scale heat damage around them
+	mole_heat_penalty = max(combined_gas / MOLE_HEAT_PENALTY, 0.25)
 
-		//Ramps up or down in increments of 0.02 up to the proportion of co2
-		//Given infinite time, powerloss_dynamic_scaling = co2comp
-		//Some value between 0 and 1
-		if (combined_gas > POWERLOSS_INHIBITION_MOLE_THRESHOLD && gas_comp[/datum/gas/carbon_dioxide] > POWERLOSS_INHIBITION_GAS_THRESHOLD) //If there are more then 20 mols, and more then 20% co2
-			powerloss_dynamic_scaling = clamp(powerloss_dynamic_scaling + clamp(gas_comp[/datum/gas/carbon_dioxide] - powerloss_dynamic_scaling, -0.02, 0.02), 0, 1)
-		else
-			powerloss_dynamic_scaling = clamp(powerloss_dynamic_scaling - 0.05, 0, 1)
-		//Ranges from 0 to 1(1-(value between 0 and 1 * ranges from 1 to 1.5(mol / 500)))
-		//We take the mol count, and scale it to be our inhibitor
-		powerloss_inhibitor = clamp(1-(powerloss_dynamic_scaling * clamp(combined_gas/POWERLOSS_INHIBITION_MOLE_BOOST_THRESHOLD, 1, 1.5)), 0, 1)
+	//Ramps up or down in increments of 0.02 up to the proportion of co2
+	//Given infinite time, powerloss_dynamic_scaling = co2comp
+	//Some value between 0 and 1
+	if (combined_gas > POWERLOSS_INHIBITION_MOLE_THRESHOLD && gas_comp[/datum/gas/carbon_dioxide] > POWERLOSS_INHIBITION_GAS_THRESHOLD) //If there are more then 20 mols, and more then 20% co2
+		powerloss_dynamic_scaling = clamp(powerloss_dynamic_scaling + clamp(gas_comp[/datum/gas/carbon_dioxide] - powerloss_dynamic_scaling, -0.02, 0.02), 0, 1)
+	else
+		powerloss_dynamic_scaling = clamp(powerloss_dynamic_scaling - 0.05, 0, 1)
+	//Ranges from 0 to 1(1-(value between 0 and 1 * ranges from 1 to 1.5(mol / 500)))
+	//We take the mol count, and scale it to be our inhibitor
+	powerloss_inhibitor = clamp(1-(powerloss_dynamic_scaling * clamp(combined_gas/POWERLOSS_INHIBITION_MOLE_BOOST_THRESHOLD, 1, 1.5)), 0, 1)
 
-		//Releases stored power into the general pool
-		//We get this by consuming shit or being scalpeled
-		if(matter_power && power_changes)
-			//We base our removed power off one 10th of the matter_power.
-			var/removed_matter = max(matter_power/MATTER_POWER_CONVERSION, 40)
-			//Adds at least 40 power
-			power = max(power + removed_matter, 0)
-			//Removes at least 40 matter power
-			matter_power = max(matter_power - removed_matter, 0)
+	//Releases stored power into the general pool
+	//We get this by consuming shit or being scalpeled
+	if(matter_power && power_changes)
+		//We base our removed power off one 10th of the matter_power.
+		var/removed_matter = max(matter_power/MATTER_POWER_CONVERSION, 40)
+		//Adds at least 40 power
+		power = max(power + removed_matter, 0)
+		//Removes at least 40 matter power
+		matter_power = max(matter_power - removed_matter, 0)
 
-		var/temp_factor = 50
-		if(gasmix_power_ratio > 0.8)
-			//with a perfect gas mix, make the power more based on heat
-			icon_state = "[base_icon_state]_glow"
-		else
-			//in normal mode, power is less effected by heat
-			temp_factor = 30
-			icon_state = base_icon_state
+	var/temp_factor = 50
+	if(gasmix_power_ratio > 0.8)
+		//with a perfect gas mix, make the power more based on heat
+		icon_state = "[base_icon_state]_glow"
+	else
+		//in normal mode, power is less effected by heat
+		temp_factor = 30
+		icon_state = base_icon_state
 
-		//if there is more pluox and n2 then anything else, we receive no power increase from heat
-		if(power_changes)
-			power = max((removed.return_temperature() * temp_factor / T0C) * gasmix_power_ratio + power, 0)
+	//if there is more pluox and n2 then anything else, we receive no power increase from heat
+	if(power_changes)
+		power = max((removed.return_temperature() * temp_factor / T0C) * gasmix_power_ratio + power, 0)
 
-		if(prob(50))
-			//(1 + (tritRad + pluoxDampen * bzDampen * o2Rad * plasmaRad / (10 - bzrads))) * freonbonus
-			radiation_pulse(src, power * max(0, (1 + (power_transmission_bonus/(10-(gas_comp[/datum/gas/bz] * BZ_RADIOACTIVITY_MODIFIER)))) * 1))//freonbonus))// RadModBZ(500%)
-		if(gas_comp[/datum/gas/bz] >= 0.4 && prob(30 * gas_comp[/datum/gas/bz]))
-			src.fire_nuclear_particle()        // Start to emit radballs at a maximum of 30% chance per tick
+	if(prob(50))
+		//(1 + (tritRad + pluoxDampen * bzDampen * o2Rad * plasmaRad / (10 - bzrads))) * freonbonus
+		radiation_pulse(src, power * max(0, (1 + (power_transmission_bonus/(10-(gas_comp[/datum/gas/bz] * BZ_RADIOACTIVITY_MODIFIER)))) * 1))//freonbonus))// RadModBZ(500%)
+	if(gas_comp[/datum/gas/bz] >= 0.4 && prob(30 * gas_comp[/datum/gas/bz]))
+		src.fire_nuclear_particle()        // Start to emit radballs at a maximum of 30% chance per tick
 
-		//Power * 0.55 * a value between 1 and 0.8
-		var/device_energy = power * REACTION_POWER_MODIFIER
+	//Power * 0.55 * a value between 1 and 0.8
+	var/device_energy = power * REACTION_POWER_MODIFIER
 
-		//To figure out how much temperature to add each tick, consider that at one atmosphere's worth
-		//of pure oxygen, with all four lasers firing at standard energy and no N2 present, at room temperature
-		//that the device energy is around 2140. At that stage, we don't want too much heat to be put out
-		//Since the core is effectively "cold"
+	//To figure out how much temperature to add each tick, consider that at one atmosphere's worth
+	//of pure oxygen, with all four lasers firing at standard energy and no N2 present, at room temperature
+	//that the device energy is around 2140. At that stage, we don't want too much heat to be put out
+	//Since the core is effectively "cold"
 
-		//Also keep in mind we are only adding this temperature to (efficiency)% of the one tile the rock
-		//is on. An increase of 4*C @ 25% efficiency here results in an increase of 1*C / (#tilesincore) overall.
-		//Power * 0.55 * (some value between 1.5 and 23) / 5
-		removed.set_temperature(removed.return_temperature() + ((device_energy * dynamic_heat_modifier) / THERMAL_RELEASE_MODIFIER))
-		//We can only emit so much heat, that being 57500
-		removed.set_temperature(max(0, min(removed.return_temperature(), 2500 * dynamic_heat_modifier)))
+	//Also keep in mind we are only adding this temperature to (efficiency)% of the one tile the rock
+	//is on. An increase of 4*C @ 25% efficiency here results in an increase of 1*C / (#tilesincore) overall.
+	//Power * 0.55 * (some value between 1.5 and 23) / 5
+	removed.set_temperature(removed.return_temperature() + ((device_energy * dynamic_heat_modifier) / THERMAL_RELEASE_MODIFIER))
+	//We can only emit so much heat, that being 57500
+	removed.set_temperature(max(0, min(removed.return_temperature(), 2500 * dynamic_heat_modifier)))
 
-		//Calculate how much gas to release
-		//Varies based on power and gas content
-		removed.adjust_moles(/datum/gas/plasma, max((device_energy * dynamic_heat_modifier) / PLASMA_RELEASE_MODIFIER, 0))
-		//Varies based on power, gas content, and heat
-		removed.adjust_moles(/datum/gas/oxygen, max(((device_energy + removed.return_temperature() * dynamic_heat_modifier) - T0C) / OXYGEN_RELEASE_MODIFIER, 0))
+	//Calculate how much gas to release
+	//Varies based on power and gas content
+	removed.adjust_moles(/datum/gas/plasma, max((device_energy * dynamic_heat_modifier) / PLASMA_RELEASE_MODIFIER, 0))
+	//Varies based on power, gas content, and heat
+	removed.adjust_moles(/datum/gas/oxygen, max(((device_energy + removed.return_temperature() * dynamic_heat_modifier) - T0C) / OXYGEN_RELEASE_MODIFIER, 0))
 
-		if(produces_gas)
-			env.merge(removed)
-			air_update_turf()
+	if(produces_gas)
+		env.merge(removed)
+		air_update_turf()
+	
+	/*********
+	END CITADEL CHANGES
+	*********/
 
 	//Makes em go mad and accumulate rads.
 	for(var/mob/living/carbon/human/l in fov_viewers(src, HALLUCINATION_RANGE(power))) // If they can see it without mesons on.  Bad on them.
