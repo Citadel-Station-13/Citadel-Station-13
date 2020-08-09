@@ -47,17 +47,7 @@
 	name = "swap hand"
 
 /obj/screen/swap_hand/Click()
-	// At this point in client Click() code we have passed the 1/10 sec check and little else
-	// We don't even know if it's a middle click
-	if(world.time <= usr.next_move)
-		return 1
-
-	if(usr.incapacitated())
-		return 1
-
-	if(ismob(usr))
-		var/mob/M = usr
-		M.swap_hand()
+	usr.swap_hand()
 	return 1
 
 /obj/screen/craft
@@ -101,15 +91,9 @@
 	plane = HUD_PLANE
 
 /obj/screen/inventory/Click(location, control, params)
-	// At this point in client Click() code we have passed the 1/10 sec check and little else
-	// We don't even know if it's a middle click
-	if(world.time <= usr.next_move)
-		return TRUE
-
-	if(usr.incapacitated())
-		return TRUE
-	if(ismecha(usr.loc)) // stops inventory actions in a mech
-		return TRUE
+	if(hud?.mymob && (hud.mymob != usr))
+		return
+	// just redirect clicks
 
 	if(hud?.mymob && slot_id)
 		var/obj/item/inv_item = hud.mymob.get_item_by_slot(slot_id)
@@ -190,17 +174,10 @@
 
 
 /obj/screen/inventory/hand/Click(location, control, params)
-	// At this point in client Click() code we have passed the 1/10 sec check and little else
-	// We don't even know if it's a middle click
-	var/mob/user = hud?.mymob
-	if(usr != user)
-		return TRUE
-	if(world.time <= user.next_move)
-		return TRUE
-	if(user.incapacitated())
-		return TRUE
-	if (ismecha(user.loc)) // stops inventory actions in a mech
-		return TRUE
+	if(hud?.mymob && (hud.mymob != usr))
+		return
+	var/mob/user = hud.mymob
+	// just redirect clicks
 
 	if(user.active_hand_index == held_index)
 		var/obj/item/I = user.get_active_held_item()

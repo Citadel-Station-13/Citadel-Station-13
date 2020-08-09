@@ -10,30 +10,32 @@ const VendingRow = (props, context) => {
     productStock,
     custom,
   } = props;
-  const to_pay = (!product.premium
-    ? Math.round(product.price * data.cost_mult)
-    : product.price
-  );
-  const pay_text = (!product.premium
-    ? to_pay + ' cr' + data.cost_text
-    : to_pay + ' cr'
-  );
+  const {
+    onstation,
+    department,
+    user,
+  } = data;
   const free = (
-    !data.onstation
+    !onstation
     || product.price === 0
+    || (
+      !product.premium
+      && department
+      && user
+      && department === user.department
+    )
   );
-
   return (
     <Table.Row>
       <Table.Cell collapsing>
-        {product.base64 ? (
+        {product.base64 && (
           <img
             src={`data:image/jpeg;base64,${product.img}`}
             style={{
               'vertical-align': 'middle',
               'horizontal-align': 'middle',
             }} />
-        ) : (
+        ) || (
           <span
             className={classes([
               'vending32x32',
@@ -50,13 +52,12 @@ const VendingRow = (props, context) => {
       </Table.Cell>
       <Table.Cell collapsing textAlign="center">
         <Box
-          color={custom
-            ? 'good'
-            : productStock <= 0
-              ? 'bad'
-              : productStock <= (product.max_amount / 2)
-                ? 'average'
-                : 'good'}>
+          color={(
+            custom && 'good'
+            || productStock <= 0 && 'bad'
+            || productStock <= (product.max_amount / 2) && 'average'
+            || 'good'
+          )}>
           {productStock} in stock
         </Box>
       </Table.Cell>
@@ -72,16 +73,13 @@ const VendingRow = (props, context) => {
           <Button
             fluid
             disabled={(
-              data.stock[product.namename] === 0
-                || (
-                  !free
-                  && (
-                    !data.user
-                    || to_pay > data.user.cash
-                  )
-                )
+              productStock === 0
+              || !free && (
+                !data.user
+                || product.price > data.user.cash
+              )
             )}
-            content={!free ? pay_text : 'FREE'}
+            content={free ? 'FREE' : product.price + ' cr'}
             onClick={() => act('vend', {
               'ref': product.ref,
             })} />
@@ -93,52 +91,67 @@ const VendingRow = (props, context) => {
 
 export const Vending = (props, context) => {
   const { act, data } = useBackend(context);
+  const {
+    user,
+    onstation,
+    product_records = [],
+    coin_records = [],
+    hidden_records = [],
+    stock,
+  } = data;
   let inventory;
   let custom = false;
   if (data.vending_machine_input) {
-    inventory = data.vending_machine_input;
+    inventory = data.vending_machine_input || [];
     custom = true;
-  } else if (data.extended_inventory) {
-    inventory = [
-      ...data.product_records,
-      ...data.coin_records,
-      ...data.hidden_records,
-    ];
-  } else {
-    inventory = [
-      ...data.product_records,
-      ...data.coin_records,
-    ];
   }
+  else {
+    inventory = [
+      ...product_records,
+      ...coin_records,
+    ];
+    if (data.extended_inventory) {
+      inventory = [
+        ...inventory,
+        ...hidden_records,
+      ];
+    }
+  }
+  // Just in case we still have undefined values in the list
+  inventory = inventory.filter(item => !!item);
   return (
-    <Window resizable>
+    <Window
+      title="Vending Machine"
+      width={450}
+      height={600}
+      resizable>
       <Window.Content scrollable>
-        {!!data.onstation && (
+        {!!onstation && (
           <Section title="User">
-            {data.user && (
+            {user && (
               <Box>
-                Welcome, <b>{data.user.name}</b>,
+                Welcome, <b>{user.name}</b>,
                 {' '}
-                <b>{data.user.job || 'Unemployed'}</b>!
+                <b>{user.job || 'Unemployed'}</b>!
                 <br />
-                Your balance is <b>{data.user.cash} credits</b>.
+                Your balance is <b>{user.cash} credits</b>.
               </Box>
             ) || (
-              <Box color="light-gray">
+              <Box color="light-grey">
                 No registered ID card!<br />
                 Please contact your local HoP!
               </Box>
             )}
           </Section>
         )}
-        <Section title="Products" >
+        <Section title="Products">
           <Table>
             {inventory.map(product => (
               <VendingRow
                 key={product.name}
                 custom={custom}
                 product={product}
-                productStock={data.stock[product.name]} />
+                productStock={stock[product.name]} />
             ))}
           </Table>
         </Section>

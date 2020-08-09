@@ -80,7 +80,7 @@ GLOBAL_LIST_EMPTY(gravity_generators) // We will keep track of this by adding ne
 /obj/machinery/gravity_generator/part/get_status()
 	return main_part?.get_status()
 
-/obj/machinery/gravity_generator/part/attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
+/obj/machinery/gravity_generator/part/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	return main_part.attack_hand(user)
 
 /obj/machinery/gravity_generator/part/set_broken()
@@ -116,8 +116,6 @@ GLOBAL_LIST_EMPTY(gravity_generators) // We will keep track of this by adding ne
 	sprite_number = 8
 	use_power = IDLE_POWER_USE
 	interaction_flags_machine = INTERACT_MACHINE_ALLOW_SILICON | INTERACT_MACHINE_OFFLINE
-	ui_x = 400
-	ui_y = 165
 	var/on = TRUE
 	var/breaker = TRUE
 	var/list/parts = list()
@@ -222,11 +220,10 @@ GLOBAL_LIST_EMPTY(gravity_generators) // We will keep track of this by adding ne
 				return
 	return ..()
 
-/obj/machinery/gravity_generator/main/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
-									datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+/obj/machinery/gravity_generator/main/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, ui_key, "GravityGenerator", name, ui_x, ui_y, master_ui, state)
+		ui = new(user, src, "GravityGenerator", name)
 		ui.open()
 
 /obj/machinery/gravity_generator/main/ui_data(mob/user)

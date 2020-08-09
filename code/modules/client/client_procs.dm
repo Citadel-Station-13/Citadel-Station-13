@@ -41,6 +41,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 		if(!asset_cache_job)
 			return
 
+	// Rate limiting
 	var/mtl = CONFIG_GET(number/minute_topic_limit)
 	if (!holder && mtl)
 		var/minute = round(world.time, 600)
@@ -96,6 +97,10 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 		var/keycode = browser_keycode_to_byond(href_list["__keyup"])
 		if(keycode)
 			keyUp(keycode)
+		return
+
+	// Tgui Topic middleware
+	if(!tgui_Topic(href_list))
 		return
 
 	// Admin PM
@@ -471,6 +476,11 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 //////////////
 
 /client/Del()
+	if(!gc_destroyed)
+		Destroy()
+	return ..()
+
+/client/Destroy()
 	if(credits)
 		QDEL_LIST(credits)
 	log_access("Logout: [key_name(src)]")
@@ -504,9 +514,7 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 		movingmob.client_mobs_in_contents -= mob
 		UNSETEMPTY(movingmob.client_mobs_in_contents)
 	Master.UpdateTickRate()
-	return ..()
-
-/client/Destroy()
+	. = ..()
 	return QDEL_HINT_HARDDEL_NOW
 
 /client/proc/set_client_age_from_db(connectiontopic)
@@ -771,6 +779,9 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 		ip_intel = res.intel
 
 /client/Click(atom/object, atom/location, control, params, ignore_spam = FALSE)
+	if(last_click > world.time - world.tick_lag)
+		return
+	last_click = world.time
 	var/ab = FALSE
 	var/list/L = params2list(params)
 	if (object && object == middragatom && L["left"])

@@ -41,10 +41,8 @@
 	if(manifest)
 		. += "manifest"
 
-/obj/structure/closet/crate/attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
+/obj/structure/closet/crate/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	. = ..()
-	if(.)
-		return
 	if(manifest)
 		tear_manifest(user)
 
@@ -144,6 +142,9 @@
 	desc = "A freezer containing packs of blood."
 	icon_state = "surgery"
 
+/obj/structure/closet/crate/freezer/blood/fake
+	should_populate_contents = FALSE
+
 /obj/structure/closet/crate/freezer/blood/PopulateContents()
 	. = ..()
 	new /obj/item/reagent_containers/blood(src)
@@ -163,6 +164,9 @@
 /obj/structure/closet/crate/freezer/surplus_limbs
 	name = "surplus prosthetic limbs"
 	desc = "A crate containing an assortment of cheap prosthetic limbs."
+
+/obj/structure/closet/crate/freezer/surplus_limbs/fake
+	should_populate_contents = FALSE
 
 /obj/structure/closet/crate/freezer/surplus_limbs/PopulateContents()
 	. = ..()
@@ -197,6 +201,9 @@
 	desc = "A crate for the storage of an RCD."
 	name = "\improper RCD crate"
 	icon_state = "engi_crate"
+
+/obj/structure/closet/crate/rcd/fake
+	should_populate_contents = FALSE
 
 /obj/structure/closet/crate/rcd/PopulateContents()
 	..()

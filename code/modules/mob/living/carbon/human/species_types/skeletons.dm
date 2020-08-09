@@ -5,7 +5,7 @@
 	blacklisted = 0
 	sexes = 0
 	meat = /obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/skeleton
-	species_traits = list(NOBLOOD,NOGENITALS,NOAROUSAL)
+	species_traits = list(NOBLOOD,NOGENITALS,NOAROUSAL,HAS_BONE)
 	inherent_traits = list(TRAIT_NOBREATH,TRAIT_RADIMMUNE,TRAIT_PIERCEIMMUNE,TRAIT_NOHUNGER,TRAIT_EASYDISMEMBER,TRAIT_LIMBATTACHMENT,TRAIT_FAKEDEATH, TRAIT_CALCIUM_HEALER)
 	inherent_biotypes = MOB_UNDEAD|MOB_HUMANOID
 	mutanttongue = /obj/item/organ/tongue/bone
@@ -14,6 +14,8 @@
 	liked_food = GROSS | MEAT | RAW | DAIRY
 	brutemod = 1.25
 	burnmod = 1.25
+
+	species_type = "skeleton" //they have their own category that's disassociated from undead, paired with plasmapeople
 
 /datum/species/skeleton/New()
 	if(SSevents.holidays && SSevents.holidays[HALLOWEEN]) //skeletons are stronger during the spooky season!

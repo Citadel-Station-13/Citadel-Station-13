@@ -297,10 +297,7 @@ GLOBAL_LIST_INIT(dye_registry, list(
 	else
 		return ..()
 
-/obj/machinery/washing_machine/attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
-	. = ..()
-	if(.)
-		return
+/obj/machinery/washing_machine/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	if(busy)
 		to_chat(user, "<span class='warning'>[src] is busy.</span>")
 		return

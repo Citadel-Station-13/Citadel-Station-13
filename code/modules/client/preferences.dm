@@ -40,7 +40,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 										//If it's 0, that's good, if it's anything but 0, the owner of this prefs file's antag choices were,
 										//autocorrected this round, not that you'd need to check that.
 
-
 	var/UI_style = null
 	var/buttons_locked = FALSE
 	var/hotkeys = FALSE
@@ -83,24 +82,24 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/gender = MALE					//gender of character (well duh)
 	var/age = 30						//age of character
 	var/underwear = "Nude"				//underwear type
-	var/undie_color = "FFF"
+	var/undie_color = "FFFFFF"
 	var/undershirt = "Nude"				//undershirt type
-	var/shirt_color = "FFF"
+	var/shirt_color = "FFFFFF"
 	var/socks = "Nude"					//socks type
-	var/socks_color = "FFF"
+	var/socks_color = "FFFFFF"
 	var/backbag = DBACKPACK				//backpack type
 	var/jumpsuit_style = PREF_SUIT		//suit/skirt
 	var/hair_style = "Bald"				//Hair type
-	var/hair_color = "000"				//Hair color
+	var/hair_color = "000000"				//Hair color
 	var/facial_hair_style = "Shaved"	//Face hair type
-	var/facial_hair_color = "000"		//Facial hair color
+	var/facial_hair_color = "000000"		//Facial hair color
 	var/skin_tone = "caucasian1"		//Skin color
 	var/use_custom_skin_tone = FALSE
-	var/eye_color = "000"				//Eye color
+	var/eye_color = "000000"				//Eye color
 	var/datum/species/pref_species = new /datum/species/human()	//Mutant race
-	var/list/features = list("mcolor" = "FFF",
-		"mcolor2" = "FFF",
-		"mcolor3" = "FFF",
+	var/list/features = list("mcolor" = "FFFFFF",
+		"mcolor2" = "FFFFFF",
+		"mcolor3" = "FFFFFF",
 		"tail_lizard" = "Smooth",
 		"tail_human" = "None",
 		"snout" = "Round",
@@ -131,23 +130,23 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		"cock_shape" = DEF_COCK_SHAPE,
 		"cock_length" = COCK_SIZE_DEF,
 		"cock_diameter_ratio" = COCK_DIAMETER_RATIO_DEF,
-		"cock_color" = "fff",
+		"cock_color" = "ffffff",
 		"cock_taur" = FALSE,
 		"has_balls" = FALSE,
-		"balls_color" = "fff",
+		"balls_color" = "ffffff",
 		"balls_shape" = DEF_BALLS_SHAPE,
 		"balls_size" = BALLS_SIZE_DEF,
 		"balls_cum_rate" = CUM_RATE,
 		"balls_cum_mult" = CUM_RATE_MULT,
 		"balls_efficiency" = CUM_EFFICIENCY,
 		"has_breasts" = FALSE,
-		"breasts_color" = "fff",
+		"breasts_color" = "ffffff",
 		"breasts_size" = BREASTS_SIZE_DEF,
 		"breasts_shape" = DEF_BREASTS_SHAPE,
 		"breasts_producing" = FALSE,
 		"has_vag" = FALSE,
 		"vag_shape" = DEF_VAGINA_SHAPE,
-		"vag_color" = "fff",
+		"vag_color" = "ffffff",
 		"has_womb" = FALSE,
 		"balls_visibility"	= GEN_VISIBLE_NO_UNDIES,
 		"breasts_visibility"= GEN_VISIBLE_NO_UNDIES,
@@ -230,7 +229,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/gear_points = 10
 	var/list/gear_categories
 	var/list/chosen_gear = list()
-	var/gear_tab
+	var/gear_category
+	var/gear_subcategory
 
 	var/screenshake = 100
 	var/damagescreenshake = 2
@@ -238,6 +238,13 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/widescreenpref = TRUE
 	var/autostand = TRUE
 	var/auto_ooc = FALSE
+
+	/// If we have persistent scars enabled
+	var/persistent_scars = TRUE
+	/// We have 5 slots for persistent scars, if enabled we pick a random one to load (empty by default) and scars at the end of the shift if we survived as our original person
+	var/list/scars_list = list("1" = "", "2" = "", "3" = "", "4" = "", "5" = "")
+	/// Which of the 5 persistent scar slots we randomly roll to load for this round, if enabled. Actually rolled in [/datum/preferences/proc/load_character(slot)]
+	var/scars_index = 1
 
 /datum/preferences/New(client/C)
 	parent = C
@@ -825,6 +832,9 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				dat += "<b>Socks Color:</b> <span style='border:1px solid #161616; background-color: #[socks_color];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=socks_color;task=input'>Change</a><BR>"
 			dat += "<b>Backpack:</b><a style='display:block;width:100px' href ='?_src_=prefs;preference=bag;task=input'>[backbag]</a>"
 			dat += "<b>Jumpsuit:</b><BR><a href ='?_src_=prefs;preference=suit;task=input'>[jumpsuit_style]</a><BR>"
+			if((HAS_FLESH in pref_species.species_traits) || (HAS_BONE in pref_species.species_traits))
+				dat += "<BR><b>Temporal Scarring:</b><BR><a href='?_src_=prefs;preference=persistent_scars'>[(persistent_scars) ? "Enabled" : "Disabled"]</A>"
+				dat += "<a href='?_src_=prefs;preference=clear_scars'>Clear scar slots</A>"
 			dat += "<b>Uplink Location:</b><a style='display:block;width:100px' href ='?_src_=prefs;preference=uplink_loc;task=input'>[uplink_spawn_loc]</a>"
 			dat += "</td>"
 
@@ -1049,58 +1059,83 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			dat += "<br>"
 
 		if(3)
-			if(!gear_tab)
-				gear_tab = GLOB.loadout_items[1]
 			dat += "<table align='center' width='100%'>"
 			dat += "<tr><td colspan=4><center><b><font color='[gear_points == 0 ? "#E62100" : "#CCDDFF"]'>[gear_points]</font> loadout points remaining.</b> \[<a href='?_src_=prefs;preference=gear;clear_loadout=1'>Clear Loadout</a>\]</center></td></tr>"
 			dat += "<tr><td colspan=4><center>You can only choose one item per category, unless it's an item that spawns in your backpack or hands.</center></td></tr>"
 			dat += "<tr><td colspan=4><center><b>"
-			var/firstcat = TRUE
-			for(var/i in GLOB.loadout_items)
-				if(firstcat)
-					firstcat = FALSE
+
+			if(!length(GLOB.loadout_items))
+				dat += "<center>ERROR: No loadout categories - something is horribly wrong!"
+			else
+				if(!GLOB.loadout_categories[gear_category])
+					gear_category = GLOB.loadout_categories[1]
+				var/firstcat = TRUE
+				for(var/category in GLOB.loadout_categories)
+					if(firstcat)
+						firstcat = FALSE
+					else
+						dat += " |"
+					if(category == gear_category)
+						dat += " <span class='linkOn'>[category]</span> "
+					else
+						dat += " <a href='?_src_=prefs;preference=gear;select_category=[html_encode(category)]'>[category]</a> "
+
+				dat += "</b></center></td></tr>"
+				dat += "<tr><td colspan=4><hr></td></tr>"
+				
+				dat += "<tr><td colspan=4><center><b>"
+				
+				if(!length(GLOB.loadout_categories[gear_category]))
+					dat += "No subcategories detected. Something is horribly wrong!"
 				else
-					dat += " |"
-				if(i == gear_tab)
-					dat += " <span class='linkOn'>[i]</span> "
-				else
-					dat += " <a href='?_src_=prefs;preference=gear;select_category=[i]'>[i]</a> "
-			dat += "</b></center></td></tr>"
-			dat += "<tr><td colspan=4><hr></td></tr>"
-			dat += "<tr><td colspan=4><b><center>[gear_tab]</center></b></td></tr>"
-			dat += "<tr><td colspan=4><hr></td></tr>"
-			dat += "<tr width=10% style='vertical-align:top;'><td width=15%><b>Name</b></td>"
-			dat += "<td style='vertical-align:top'><b>Cost</b></td>"
-			dat += "<td width=10%><font size=2><b>Restrictions</b></font></td>"
-			dat += "<td width=80%><font size=2><b>Description</b></font></td></tr>"
-			for(var/j in GLOB.loadout_items[gear_tab])
-				var/datum/gear/gear = GLOB.loadout_items[gear_tab][j]
-				var/donoritem = gear.donoritem
-				if(donoritem && !gear.donator_ckey_check(user.ckey))
-					continue
-				var/class_link = ""
-				if(gear.type in chosen_gear)
-					class_link = "style='white-space:normal;' class='linkOn' href='?_src_=prefs;preference=gear;toggle_gear_path=[html_encode(j)];toggle_gear=0'"
-				else if(gear_points <= 0)
-					class_link = "style='white-space:normal;' class='linkOff'"
-				else if(donoritem)
-					class_link = "style='white-space:normal;background:#ebc42e;' href='?_src_=prefs;preference=gear;toggle_gear_path=[html_encode(j)];toggle_gear=1'"
-				else
-					class_link = "style='white-space:normal;' href='?_src_=prefs;preference=gear;toggle_gear_path=[html_encode(j)];toggle_gear=1'"
-				dat += "<tr style='vertical-align:top;'><td width=15%><a [class_link]>[j]</a></td>"
-				dat += "<td width = 5% style='vertical-align:top'>[gear.cost]</td><td>"
-				if(islist(gear.restricted_roles))
-					if(gear.restricted_roles.len)
-						if(gear.restricted_desc)
-							dat += "<font size=2>"
-							dat += gear.restricted_desc
-							dat += "</font>"
+					var/list/subcategories = GLOB.loadout_categories[gear_category]
+					if(!subcategories.Find(gear_subcategory))
+						gear_subcategory = subcategories[1]
+
+					var/firstsubcat = FALSE
+					for(var/subcategory in subcategories)
+						if(firstsubcat)
+							firstsubcat = FALSE
 						else
-							dat += "<font size=2>"
-							dat += gear.restricted_roles.Join(";")
-							dat += "</font>"
-				dat += "</td><td><font size=2><i>[gear.description]</i></font></td></tr>"
-			dat += "</table>"
+							dat += " |"
+						if(gear_subcategory == subcategory)
+							dat += " <span class='linkOn'>[subcategory]</span> "
+						else
+							dat += " <a href='?_src_=prefs;preference=gear;select_subcategory=[html_encode(subcategory)]'>[subcategory]</a> "
+					dat += "</b></center></td></tr>"
+
+					dat += "<tr width=10% style='vertical-align:top;'><td width=15%><b>Name</b></td>"
+					dat += "<td style='vertical-align:top'><b>Cost</b></td>"
+					dat += "<td width=10%><font size=2><b>Restrictions</b></font></td>"
+					dat += "<td width=80%><font size=2><b>Description</b></font></td></tr>"
+					for(var/name in GLOB.loadout_items[gear_category][gear_subcategory])
+						var/datum/gear/gear = GLOB.loadout_items[gear_category][gear_subcategory][name]
+						var/donoritem = gear.donoritem
+						if(donoritem && !gear.donator_ckey_check(user.ckey))
+							continue
+						var/class_link = ""
+						if(gear.type in chosen_gear)
+							class_link = "style='white-space:normal;' class='linkOn' href='?_src_=prefs;preference=gear;toggle_gear_path=[html_encode(name)];toggle_gear=0'"
+						else if(gear_points <= 0)
+							class_link = "style='white-space:normal;' class='linkOff'"
+						else if(donoritem)
+							class_link = "style='white-space:normal;background:#ebc42e;' href='?_src_=prefs;preference=gear;toggle_gear_path=[html_encode(name)];toggle_gear=1'"
+						else
+							class_link = "style='white-space:normal;' href='?_src_=prefs;preference=gear;toggle_gear_path=[html_encode(name)];toggle_gear=1'"
+						dat += "<tr style='vertical-align:top;'><td width=15%><a [class_link]>[name]</a></td>"
+						dat += "<td width = 5% style='vertical-align:top'>[gear.cost]</td><td>"
+						if(islist(gear.restricted_roles))
+							if(gear.restricted_roles.len)
+								if(gear.restricted_desc)
+									dat += "<font size=2>"
+									dat += gear.restricted_desc
+									dat += "</font>"
+								else
+									dat += "<font size=2>"
+									dat += gear.restricted_roles.Join(";")
+									dat += "</font>"
+						dat += "</td><td><font size=2><i>[gear.description]</i></font></td></tr>"
+					dat += "</table>"
 		if(4) // Content preferences
 			dat += "<table><tr><td width='340px' height='300px' valign='top'>"
 			dat += "<h2>Fetish content prefs</h2>"
@@ -1118,8 +1153,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			dat += "<b>Breast Enlargement:</b> <a href='?_src_=prefs;preference=breast_enlargement'>[(cit_toggles & BREAST_ENLARGEMENT) ? "Allowed" : "Disallowed"]</a><br>"
 			dat += "<b>Penis Enlargement:</b> <a href='?_src_=prefs;preference=penis_enlargement'>[(cit_toggles & PENIS_ENLARGEMENT) ? "Allowed" : "Disallowed"]</a><br>"
 			dat += "<b>Hypno:</b> <a href='?_src_=prefs;preference=never_hypno'>[(cit_toggles & NEVER_HYPNO) ? "Disallowed" : "Allowed"]</a><br>"
-			dat += "<b>Aphrodisiacs:</b> <a href='?_src_=prefs;preference=aphro'>[(cit_toggles & NO_APHRO) ? "Disallowed" : "Allowed"]</a><br>"
 			dat += "<b>Ass Slapping:</b> <a href='?_src_=prefs;preference=ass_slap'>[(cit_toggles & NO_ASS_SLAP) ? "Disallowed" : "Allowed"]</a><br>"
+			dat += "<b>Automatic Wagging:</b> <a href='?_src_=prefs;preference=auto_wag'>[(cit_toggles & NO_AUTO_WAG) ? "Disabled" : "Enabled"]</a><br>"
 			dat += "</tr></table>"
 			dat += "<br>"
 		if(5) // Custom keybindings
@@ -1697,7 +1732,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				if("hair")
 					var/new_hair = input(user, "Choose your character's hair colour:", "Character Preference","#"+hair_color) as color|null
 					if(new_hair)
-						hair_color = sanitize_hexcolor(new_hair)
+						hair_color = sanitize_hexcolor(new_hair, 6)
 
 				if("hair_style")
 					var/new_hair_style
@@ -1714,7 +1749,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				if("facial")
 					var/new_facial = input(user, "Choose your character's facial-hair colour:", "Character Preference","#"+facial_hair_color) as color|null
 					if(new_facial)
-						facial_hair_color = sanitize_hexcolor(new_facial)
+						facial_hair_color = sanitize_hexcolor(new_facial, 6)
 
 				if("facial_hair_style")
 					var/new_facial_hair_style
@@ -1739,7 +1774,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				if("undie_color")
 					var/n_undie_color = input(user, "Choose your underwear's color.", "Character Preference", "#[undie_color]") as color|null
 					if(n_undie_color)
-						undie_color = sanitize_hexcolor(n_undie_color)
+						undie_color = sanitize_hexcolor(n_undie_color, 6)
 
 				if("undershirt")
 					var/new_undershirt = input(user, "Choose your character's undershirt:", "Character Preference") as null|anything in GLOB.undershirt_list
@@ -1749,7 +1784,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				if("shirt_color")
 					var/n_shirt_color = input(user, "Choose your undershirt's color.", "Character Preference", "#[shirt_color]") as color|null
 					if(n_shirt_color)
-						shirt_color = sanitize_hexcolor(n_shirt_color)
+						shirt_color = sanitize_hexcolor(n_shirt_color, 6)
 
 				if("socks")
 					var/new_socks = input(user, "Choose your character's socks:", "Character Preference") as null|anything in GLOB.socks_list
@@ -1759,12 +1794,12 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				if("socks_color")
 					var/n_socks_color = input(user, "Choose your socks' color.", "Character Preference", "#[socks_color]") as color|null
 					if(n_socks_color)
-						socks_color = sanitize_hexcolor(n_socks_color)
+						socks_color = sanitize_hexcolor(n_socks_color, 6)
 
 				if("eyes")
 					var/new_eyes = input(user, "Choose your character's eye colour:", "Character Preference","#"+eye_color) as color|null
 					if(new_eyes)
-						eye_color = sanitize_hexcolor(new_eyes)
+						eye_color = sanitize_hexcolor(new_eyes, 6)
 
 				if("species")
 					var/result = input(user, "Select a species", "Species Selection") as null|anything in GLOB.roundstart_race_names
@@ -1788,11 +1823,11 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 						//Now that we changed our species, we must verify that the mutant colour is still allowed.
 						var/temp_hsv = RGBtoHSV(features["mcolor"])
-						if(features["mcolor"] == "#000" || (!(MUTCOLORS_PARTSONLY in pref_species.species_traits) && ReadHSV(temp_hsv)[3] < ReadHSV("#202020")[3]))
+						if(features["mcolor"] == "#000000" || (!(MUTCOLORS_PARTSONLY in pref_species.species_traits) && ReadHSV(temp_hsv)[3] < ReadHSV("#202020")[3]))
 							features["mcolor"] = pref_species.default_color
-						if(features["mcolor2"] == "#000" || (!(MUTCOLORS_PARTSONLY in pref_species.species_traits) && ReadHSV(temp_hsv)[3] < ReadHSV("#202020")[3]))
+						if(features["mcolor2"] == "#000000" || (!(MUTCOLORS_PARTSONLY in pref_species.species_traits) && ReadHSV(temp_hsv)[3] < ReadHSV("#202020")[3]))
 							features["mcolor2"] = pref_species.default_color
-						if(features["mcolor3"] == "#000" || (!(MUTCOLORS_PARTSONLY in pref_species.species_traits) && ReadHSV(temp_hsv)[3] < ReadHSV("#202020")[3]))
+						if(features["mcolor3"] == "#000000" || (!(MUTCOLORS_PARTSONLY in pref_species.species_traits) && ReadHSV(temp_hsv)[3] < ReadHSV("#202020")[3]))
 							features["mcolor3"] = pref_species.default_color
 
 				if("custom_species")
@@ -1809,7 +1844,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						if(new_mutantcolor == "#000000")
 							features["mcolor"] = pref_species.default_color
 						else if((MUTCOLORS_PARTSONLY in pref_species.species_traits) || ReadHSV(temp_hsv)[3] >= ReadHSV("#202020")[3]) // mutantcolors must be bright, but only if they affect the skin
-							features["mcolor"] = sanitize_hexcolor(new_mutantcolor)
+							features["mcolor"] = sanitize_hexcolor(new_mutantcolor, 6)
 						else
 							to_chat(user, "<span class='danger'>Invalid color. Your color is not bright enough.</span>")
 
@@ -1820,7 +1855,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						if(new_mutantcolor == "#000000")
 							features["mcolor2"] = pref_species.default_color
 						else if((MUTCOLORS_PARTSONLY in pref_species.species_traits) || ReadHSV(temp_hsv)[3] >= ReadHSV("#202020")[3]) // mutantcolors must be bright, but only if they affect the skin
-							features["mcolor2"] = sanitize_hexcolor(new_mutantcolor)
+							features["mcolor2"] = sanitize_hexcolor(new_mutantcolor, 6)
 						else
 							to_chat(user, "<span class='danger'>Invalid color. Your color is not bright enough.</span>")
 
@@ -1831,7 +1866,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						if(new_mutantcolor == "#000000")
 							features["mcolor3"] = pref_species.default_color
 						else if((MUTCOLORS_PARTSONLY in pref_species.species_traits) || ReadHSV(temp_hsv)[3] >= ReadHSV("#202020")[3]) // mutantcolors must be bright, but only if they affect the skin
-							features["mcolor3"] = sanitize_hexcolor(new_mutantcolor)
+							features["mcolor3"] = sanitize_hexcolor(new_mutantcolor, 6)
 						else
 							to_chat(user, "<span class='danger'>Invalid color. Your color is not bright enough.</span>")
 
@@ -1959,7 +1994,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						if (new_horn_color == "#000000")
 							features["horns_color"] = "85615A"
 						else
-							features["horns_color"] = sanitize_hexcolor(new_horn_color)
+							features["horns_color"] = sanitize_hexcolor(new_horn_color, 6)
 
 				if("wings")
 					var/new_wings
@@ -1973,7 +2008,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						if (new_wing_color == "#000000")
 							features["wings_color"] = "#FFFFFF"
 						else
-							features["wings_color"] = sanitize_hexcolor(new_wing_color)
+							features["wings_color"] = sanitize_hexcolor(new_wing_color, 6)
 
 				if("frills")
 					var/new_frills
@@ -2147,7 +2182,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						if(new_cockcolor == "#000000")
 							features["cock_color"] = pref_species.default_color
 						else if(ReadHSV(temp_hsv)[3] >= ReadHSV("#202020")[3])
-							features["cock_color"] = sanitize_hexcolor(new_cockcolor)
+							features["cock_color"] = sanitize_hexcolor(new_cockcolor, 6)
 						else
 							to_chat(user,"<span class='danger'>Invalid color. Your color is not bright enough.</span>")
 
@@ -2187,7 +2222,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						if(new_ballscolor == "#000000")
 							features["balls_color"] = pref_species.default_color
 						else if(ReadHSV(temp_hsv)[3] >= ReadHSV("#202020")[3])
-							features["balls_color"] = sanitize_hexcolor(new_ballscolor)
+							features["balls_color"] = sanitize_hexcolor(new_ballscolor, 6)
 						else
 							to_chat(user,"<span class='danger'>Invalid color. Your color is not bright enough.</span>")
 
@@ -2214,7 +2249,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						if(new_breasts_color == "#000000")
 							features["breasts_color"] = pref_species.default_color
 						else if(ReadHSV(temp_hsv)[3] >= ReadHSV("#202020")[3])
-							features["breasts_color"] = sanitize_hexcolor(new_breasts_color)
+							features["breasts_color"] = sanitize_hexcolor(new_breasts_color, 6)
 						else
 							to_chat(user,"<span class='danger'>Invalid color. Your color is not bright enough.</span>")
 
@@ -2236,7 +2271,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						if(new_vagcolor == "#000000")
 							features["vag_color"] = pref_species.default_color
 						else if(ReadHSV(temp_hsv)[3] >= ReadHSV("#202020")[3])
-							features["vag_color"] = sanitize_hexcolor(new_vagcolor)
+							features["vag_color"] = sanitize_hexcolor(new_vagcolor, 6)
 						else
 							to_chat(user,"<span class='danger'>Invalid color. Your color is not bright enough.</span>")
 
@@ -2545,6 +2580,17 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				if("hear_midis")
 					toggles ^= SOUND_MIDI
 
+				if("persistent_scars")
+					persistent_scars = !persistent_scars
+
+				if("clear_scars")
+					to_chat(user, "<span class='notice'>All scar slots cleared. Please save character to confirm.</span>")
+					scars_list["1"] = ""
+					scars_list["2"] = ""
+					scars_list["3"] = ""
+					scars_list["4"] = ""
+					scars_list["5"] = ""
+
 				if("lobby_music")
 					toggles ^= SOUND_LOBBY
 					if((toggles & SOUND_LOBBY) && user.client && isnewplayer(user))
@@ -2623,6 +2669,9 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				if("bimbo")
 					cit_toggles ^= BIMBOFICATION
 
+				if("auto_wag")
+					cit_toggles ^= NO_AUTO_WAG
+
 				//END CITADEL EDIT
 
 				if("ambientocclusion")
@@ -2666,11 +2715,13 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			gear_points = CONFIG_GET(number/initial_gear_points)
 			save_preferences()
 		if(href_list["select_category"])
-			for(var/i in GLOB.loadout_items)
-				if(i == href_list["select_category"])
-					gear_tab = i
+			gear_category = html_decode(href_list["select_category"])
+			gear_subcategory = GLOB.loadout_categories[gear_category][1]
+		if(href_list["select_subcategory"])
+			gear_subcategory = html_decode(href_list["select_subcategory"])
 		if(href_list["toggle_gear_path"])
-			var/datum/gear/G = GLOB.loadout_items[gear_tab][html_decode(href_list["toggle_gear_path"])]
+			var/name = html_decode(href_list["toggle_gear_path"])
+			var/datum/gear/G = GLOB.loadout_items[gear_category][gear_subcategory][name]
 			if(!G)
 				return
 			var/toggle = text2num(href_list["toggle_gear"])
@@ -2775,6 +2826,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	if(custom_tongue != "default")
 		var/new_tongue = GLOB.roundstart_tongues[custom_tongue]
 		if(new_tongue)
+			character.dna.species.mutanttongue = new_tongue //this means we get our tongue when we clone
 			var/obj/item/organ/tongue/T = character.getorganslot(ORGAN_SLOT_TONGUE)
 			if(T)
 				qdel(T)
@@ -2849,17 +2901,17 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	LAZYINITLIST(L)
 	for(var/i in chosen_gear)
 		var/datum/gear/G = i
-		var/occupied_slots = L[slot_to_string(initial(G.category))] ? L[slot_to_string(initial(G.category))] + 1 : 1
-		LAZYSET(L, slot_to_string(initial(G.category)), occupied_slots)
+		var/occupied_slots = L[initial(G.category)] ? L[initial(G.category)] + 1 : 1
+		LAZYSET(L, initial(G.category), occupied_slots)
 	switch(slot)
 		if(SLOT_IN_BACKPACK)
-			if(L[slot_to_string(SLOT_IN_BACKPACK)] < BACKPACK_SLOT_AMT)
+			if(L[LOADOUT_CATEGORY_BACKPACK] < BACKPACK_SLOT_AMT)
 				return TRUE
 		if(SLOT_HANDS)
-			if(L[slot_to_string(SLOT_HANDS)] < HANDS_SLOT_AMT)
+			if(L[LOADOUT_CATEGORY_HANDS] < HANDS_SLOT_AMT)
 				return TRUE
 		else
-			if(L[slot_to_string(slot)] < DEFAULT_SLOT_AMT)
+			if(L[slot] < DEFAULT_SLOT_AMT)
 				return TRUE
 
 #undef DEFAULT_SLOT_AMT
