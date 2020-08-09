@@ -428,7 +428,7 @@
 			addtimer(CALLBACK(src, .proc/generateWool), 3 MINUTES)
 
 		return
-	..()
+	return ..()
 
 /mob/living/simple_animal/sheep/proc/generateWool()
 	if(stat == CONSCIOUS)
