@@ -5,7 +5,9 @@ import { Window } from '../layouts';
 export const VrSleeper = (props, context) => {
   const { act, data } = useBackend(context);
   return (
-    <Window>
+    <Window
+      width={475}
+      height={340}>
       <Window.Content>
         {!!data.emagged && (
           <Section>

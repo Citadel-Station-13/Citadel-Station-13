@@ -188,16 +188,16 @@
 	//ideas: altclick that lets you pummel people with the handguard/handle?
 	//parrying functionality?
 
-/datum/block_parry_data/crusherglaive // it's like quickparry, without the damage multiplier
+/datum/block_parry_data/crusherglaive // small perfect window, active for a fair while, time it right or use the Forbidden Technique
 	parry_time_windup = 0
-	parry_time_active = 5
+	parry_time_active = 8
 	parry_time_spindown = 0
-	parry_time_perfect = 1.5
-	parry_time_perfect_leeway = 0.5
-	parry_imperfect_falloff_percent = 30
-	parry_efficiency_perfect = 100
-	parry_failed_stagger_duration = 1 SECONDS
-	parry_failed_clickcd_duration = 1 SECONDS
+	parry_time_perfect = 1
+	parry_time_perfect_leeway = 2
+	parry_imperfect_falloff_percent = 20
+	parry_efficiency_to_counterattack = 100 // perfect parry or you're cringe
+	parry_failed_stagger_duration = 1.5 SECONDS // a good time to reconsider your actions...
+	parry_failed_clickcd_duration = 1.5 SECONDS // or your failures
 
 /obj/item/kinetic_crusher/glaive/on_active_parry(mob/living/owner, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, list/block_return, parry_efficiency, parry_time) // if you're dumb enough to go for a parry...
 	var/turf/proj_turf = owner.loc // destabilizer bolt, ignoring cooldown
@@ -212,9 +212,11 @@
 	D.hammer_synced = src
 	playsound(owner, 'sound/weapons/plasma_cutter.ogg', 100, 1)
 	D.fire()
-	if((!attacker.anchored || ismegafauna(attacker))) // free backstab, if you perfect parry
+
+/obj/item/kinetic_crusher/glaive/active_parry_reflex_counter(mob/living/owner, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, list/return_list, parry_efficiency, list/effect_text)
+	if(owner.Adjacent(attacker) && (!attacker.anchored || ismegafauna(attacker))) // free backstab, if you perfect parry
 		attacker.dir = get_dir(owner,attacker)
- 
+
 /obj/item/kinetic_crusher/glaive/update_icon_state()
 	item_state = "crusher[wielded]-glaive" // this is not icon_state and not supported by 2hcomponent
 

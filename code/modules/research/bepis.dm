@@ -33,11 +33,13 @@
 	var/inaccuracy_percentage = 1.5
 	var/positive_cash_offset = 0
 	var/negative_cash_offset = 0
-	var/minor_rewards = list(/obj/item/stack/circuit_stack/full, //To add a new minor reward, add it here.
-					/obj/item/flashlight/flashdark,
-					/obj/item/pen/survival,
-					/obj/item/circuitboard/machine/sleeper/party,
-					/obj/item/toy/sprayoncan)
+	var/list/minor_rewards = list(
+		//To add a new minor reward, add it here.
+		/obj/item/stack/circuit_stack/full,
+		/obj/item/pen/survival,
+		/obj/item/circuitboard/machine/sleeper/party,
+		/obj/item/toy/sprayoncan,
+	)
 	var/static/list/item_list = list()
 
 /obj/machinery/rnd/bepis/attackby(obj/item/O, mob/user, params)
@@ -101,6 +103,7 @@
 		return
 	account.adjust_money(-deposit_value) //The money vanishes, not paid to any accounts.
 	SSblackbox.record_feedback("amount", "BEPIS_credits_spent", deposit_value)
+	//log_econ("[deposit_value] credits were inserted into [src] by [account.account_holder]")
 	banked_cash += deposit_value
 	use_power(1000 * power_saver)
 	say("Cash deposit successful. There is [banked_cash] in the chamber.")
@@ -179,10 +182,10 @@
 		icon_state = "chamber"
 		return
 
-/obj/machinery/rnd/bepis/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+/obj/machinery/rnd/bepis/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, ui_key, "Bepis", name, 500, 480, master_ui, state)
+		ui = new(user, src, "Bepis", name)
 		ui.open()
 	RefreshParts()
 

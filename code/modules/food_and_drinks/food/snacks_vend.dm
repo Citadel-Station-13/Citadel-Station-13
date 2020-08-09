@@ -91,3 +91,13 @@
 	tastes = list("sweetness" = 3, "cake" = 1)
 	foodtype = GRAIN | FRUIT | VEGETABLES
 	custom_price = PRICE_CHEAP
+
+/obj/item/reagent_containers/food/snacks/energybar
+	name = "High-power energy bars"
+	icon_state = "energybar"
+	desc = "An energy bar with a lot of punch, you probably shouldn't eat this if you're not an Ethereal."
+	trash = /obj/item/trash/energybar
+	list_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/liquidelectricity = 3)
+	filling_color = "#97ee63"
+	tastes = list("pure electricity" = 3, "fitness" = 2)
+	foodtype = TOXIC
