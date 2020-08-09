@@ -32,7 +32,7 @@
 	item_state = "sring"
 
 /obj/item/clothing/gloves/ring/custom
-	name = " ring"
+	name = "ring"
 	desc = "A ring."
 	gender = NEUTER
 	w_class = WEIGHT_CLASS_TINY
