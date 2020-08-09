@@ -400,8 +400,9 @@
 	else
 		return ..()
 
-/mob/living/simple_animal/sheep/Life()
-	. = ..()
+/mob/living/simple_animal/sheep/BiologicalLife()
+	if(!(. = ..()))
+		return
 	if(stat == CONSCIOUS)
 		udder.generateMilk()
 
