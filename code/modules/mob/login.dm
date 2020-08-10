@@ -6,7 +6,7 @@
 	world.update_status()
 	client.screen = list()				//remove hud items just in case
 	client.images = list()
-	client.refresh_statbrowser()
+	client.reassert_statbrowser()
 
 	if(!hud_used)
 		create_mob_hud()

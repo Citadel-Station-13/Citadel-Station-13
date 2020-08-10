@@ -272,8 +272,10 @@ window "statbrowser_window"
 		size = 640x480
 		anchor1 = none
 		anchor2 = none
-		background-color = none
+		background-color = #272727
 		saved-params = "pos;size;is-minimized;is-maximized"
+		title = "Information"
+		is-pane = true
 		outer-size = 662x561
 		inner-size = 640x505
 	elem "statbrowser"
@@ -283,6 +285,7 @@ window "statbrowser_window"
 		anchor1 = 0,0
 		anchor2 = 100,100
 		background-color = #272727
+		is-visible = false
 		saved-params = ""
 
 window "statoutput_window"
@@ -294,6 +297,8 @@ window "statoutput_window"
 		anchor2 = none
 		background-color = none
 		saved-params = "pos;size;is-minimized;is-maximized"
+		title = "Stat/Verbs"
+		is-pane = true
 		outer-size = 662x561
 		inner-size = 640x505
 	elem "statpanel"
@@ -333,8 +338,8 @@ window "statwindow"
 		text-color = #eaeaea
 		background-color = #333333
 		saved-params = ""
-		tabs = "statbrowser_window,statpanel_window"
-		current-tab = "statbrowser_window"
+		tabs = "statbrowser_window,statoutput_window"
+		current-tab = "statbrowser_window,statpanel_window"
 		on-tab = ".stattab [[*]]"
 
 window "preferences_window"

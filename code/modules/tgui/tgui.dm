@@ -66,7 +66,7 @@
  *
  * Open this UI (and initialize it with data).
  */
-/datum/tgui/proc/open()
+/datum/tgui/proc/open(datum/tgui_window/use_window)
 	if(!user.client)
 		return null
 	if(window)
@@ -74,7 +74,7 @@
 	process_status()
 	if(status < UI_UPDATE)
 		return null
-	window = SStgui.request_pooled_window(user)
+	window = use_window || SStgui.request_pooled_window(user)
 	if(!window)
 		return null
 	opened_at = world.time

@@ -5,6 +5,8 @@
 
 /datum/tgui_window
 	var/id
+	/// citadel snowflake variable for statbrowser. this specifies if we're targeting the browser itself rather than the window.
+	var/direct = FALSE
 	var/client/client
 	var/pooled
 	var/pool_index
@@ -23,8 +25,9 @@
  * required client /client
  * required id string A unique window identifier.
  */
-/datum/tgui_window/New(client/client, id, pooled = FALSE)
+/datum/tgui_window/New(client/client, id, pooled = FALSE, direct = FALSE)
 	src.id = id
+	src.direct = direct
 	src.client = client
 	src.pooled = pooled
 	if(pooled)
@@ -177,7 +180,7 @@
 			message_queue = list()
 		message_queue += list(message)
 		return
-	client << output(message, "[id].browser:update")
+	client << output(message, "[id][direct? "" : ".browser"]:update")
 
 /**
  * public
@@ -205,7 +208,7 @@
 	if(!client || !message_queue)
 		return
 	for(var/message in message_queue)
-		client << output(message, "[id].browser:update")
+		client << output(message, "[id][direct? "" : ".browser"]:update")
 	message_queue = null
 
 /**
