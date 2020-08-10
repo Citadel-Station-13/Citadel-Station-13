@@ -334,7 +334,7 @@
 /**
   * Cleans up the game, resetting variables back to the beginning and removing the map with the generator.
   */
-/datum/mafia_controller/proc/end_game(
+/datum/mafia_controller/proc/end_game()
 	map_deleter.generate() //remove the map, it will be loaded at the start of the next one
 	QDEL_LIST(all_roles)
 	turn = 0
