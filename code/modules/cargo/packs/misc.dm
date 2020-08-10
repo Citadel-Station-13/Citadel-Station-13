@@ -90,18 +90,7 @@
 //////////////////////////////////////////////////////////////////////////////
 //////////////////////////////// Entertainment ///////////////////////////////
 //////////////////////////////////////////////////////////////////////////////
-/datum/supply_pack/misc/randombedsheets
-	name = "Bedsheet Crate (R)"
-	desc = "Snuggle up in some sweet sheets with this assorted bedsheet crate. Each set comes with eight random bedsheets for your slumbering pleasure!"
-	cost = 2000
-	contains = list(/obj/item/bedsheet/random)
-	crate_name = "random bedsheet crate"
 
-/datum/supply_pack/misc/randombedsheets/generate()
-	. = ..()
-	for(var/i in 1 to 7)
-		new /obj/item/bedsheet/random(.)
-		
 /datum/supply_pack/misc/coloredsheets
 	name = "Bedsheet Crate"
 	desc = "Give your night life a splash of color with this crate filled with bedsheets! Contains a total of nine different-colored sheets."
@@ -205,9 +194,9 @@
 
 /datum/supply_pack/misc/dirtymags
 	name = "Dirty Magazines"
-	desc = "Get your mind out of the gutter operative, you have work to do. Three items per order. Possible Results: .357 Speedloaders, Kitchen Gun Mags, Stetchkin Mags."
+	desc = "Get your mind out of the gutter operative, you have work to do. Three items per order. Possible Results: .357 Speedloaders, Kitchen Gun patented magazines, or Stetchkin magazines."
 	hidden = TRUE
-	cost = 12000
+	cost = 4000
 	var/num_contained = 3
 	contains = list(/obj/item/ammo_box/a357,
 					/obj/item/ammo_box/magazine/pistolm9mm,
@@ -409,7 +398,7 @@
 //////////////////////////////// Lewd Supplies ///////////////////////////////
 //////////////////////////////////////////////////////////////////////////////
 
-/*/datum/supply_pack/misc/lewd
+/datum/supply_pack/misc/lewd
 	name = "Lewd Crate" // OwO
 	desc = "Pssst, want to have a good time with your sluts? Well I got what you want! Maid clothing, dildos, collars and more!"
 	cost = 5250
@@ -426,20 +415,9 @@
 					/obj/item/restraints/handcuffs/fake/kinky,
 					/obj/item/clothing/head/kitty/genuine, // Why its illegal
 					/obj/item/clothing/head/kitty/genuine,
-					/obj/item/storage/pill_bottle/penis_enlargement,
-					/obj/structure/reagent_dispensers/keg/aphro)
+					/obj/item/storage/pill_bottle/penis_enlargement)
 	crate_name = "lewd kit"
-	crate_type = /obj/structure/closet/crate*/
-
-/*/datum/supply_pack/misc/lewdkeg
-	name = "Lewd Deluxe Keg"
-	desc = "That other stuff not getting you ready? Well I have a Chemslut making tons of the good stuff."
-	cost = 7500 //It can be a weapon
-	contraband = TRUE
-	contains = list(/obj/structure/reagent_dispensers/keg/aphro/strong)
-	crate_name = "deluxe keg"
-	crate_type = /obj/structure/closet/crate*/
-
+	crate_type = /obj/structure/closet/crate
 
 ///Special supply crate that generates random syndicate gear up to a determined TC value
 
