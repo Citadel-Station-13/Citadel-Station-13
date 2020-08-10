@@ -1,0 +1,4 @@
+author: "kappa-sama"
+delete-after: True
+changes: 
+  - tweak: "tracer no longer gives you full stamheals per use"
