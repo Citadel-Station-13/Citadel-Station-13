@@ -71314,7 +71314,7 @@
 	min_oxy = 5;
 	name = "Lia";
 	real_name = "Lia";
-	!INVALID_VAR! = "pets";
+	response_help = "pets";
 	turns_per_move = 10
 	},
 /turf/open/floor/plasteel/dark,
