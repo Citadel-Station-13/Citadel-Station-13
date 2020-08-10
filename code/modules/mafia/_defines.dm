@@ -32,6 +32,8 @@
 GLOBAL_LIST_EMPTY(mafia_signup)
 //the current global mafia game running.
 GLOBAL_VAR(mafia_game)
+/// list of ghosts who want to play mafia that have since disconnected. They are kept in the lobby, but not counted for starting a game.
+GLOBAL_LIST_EMPTY(mafia_bad_signup)
 
 GLOBAL_LIST_INIT(mafia_setups,generate_mafia_setups())
 

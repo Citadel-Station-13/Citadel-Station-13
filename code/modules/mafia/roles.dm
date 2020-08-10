@@ -19,7 +19,12 @@
 
 	var/game_status = MAFIA_ALIVE
 
-	var/special_theme //set this to something cool for antagonists and their window will look different
+	///icon state in the mafia dmi of the hud of the role, used in the mafia ui
+	var/hud_icon = "hudassistant"
+	///icon state in the mafia dmi of the hud of the role, used in the mafia ui
+	var/revealed_icon = "assistant"
+	///set this to something cool for antagonists and their window will look different
+	var/special_theme
 
 	var/list/role_notes = list()
 
@@ -34,6 +39,8 @@
 	body.death()
 	if(lynch)
 		reveal_role(game, verbose = TRUE)
+	if(!(player_key in game.spectators)) //people who played will want to see the end of the game more often than not
+		game.spectators += player_key
 	return TRUE
 
 /datum/mafia_role/Destroy(force, ...)
@@ -108,6 +115,9 @@
 	desc = "You can investigate a single person each night to learn their team."
 	revealed_outfit = /datum/outfit/mafia/detective
 
+	hud_icon = "huddetective"
+	revealed_icon = "detective"
+
 	targeted_actions = list("Investigate")
 
 	var/datum/mafia_role/current_investigation
@@ -152,7 +162,8 @@
 	name = "Medical Doctor"
 	desc = "You can protect a single person each night from killing."
 	revealed_outfit = /datum/outfit/mafia/md // /mafia <- outfit must be readded (just make a new mafia outfits file for all of these)
-
+	hud_icon = "hudmedicaldoctor"
+	revealed_icon = "medicaldoctor"
 	targeted_actions = list("Protect")
 
 	var/datum/mafia_role/current_protected
@@ -194,7 +205,8 @@
 	name = "Chaplain"
 	desc = "You can communicate with spirits of the dead each night to discover dead crewmember roles."
 	revealed_outfit = /datum/outfit/mafia/chaplain
-
+	hud_icon = "hudchaplain"
+	revealed_icon = "chaplain"
 	targeted_actions = list("Pray")
 	var/current_target
 
@@ -222,8 +234,9 @@
 /datum/mafia_role/lawyer
 	name = "Lawyer"
 	desc = "You can choose a person during the day to provide extensive legal advice to during the night, preventing night actions."
-
 	revealed_outfit = /datum/outfit/mafia/lawyer
+	hud_icon = "hudlawyer"
+	revealed_icon = "lawyer"
 	targeted_actions = list("Advise")
 
 	var/datum/mafia_role/current_target
@@ -278,6 +291,9 @@
 	desc = "You can visit someone ONCE PER GAME to reveal their true role in the morning!"
 	revealed_outfit = /datum/outfit/mafia/psychologist
 
+	hud_icon = "hudpsychologist"
+	revealed_icon = "psychologist"
+
 	targeted_actions = list("Reveal")
 	var/datum/mafia_role/current_target
 	var/can_use = TRUE
@@ -313,6 +329,8 @@
 	desc = "You're a member of the changeling hive. Use ':j' talk prefix to talk to your fellow lings."
 	team = MAFIA_TEAM_MAFIA
 	revealed_outfit = /datum/outfit/mafia/changeling
+	hud_icon = "hudchangeling"
+	revealed_icon = "changeling"
 	special_theme = "syndicate"
 	win_condition = "become majority over the town and no solo killing role can stop them."
 
@@ -332,7 +350,10 @@
 	team = MAFIA_TEAM_SOLO
 	targeted_actions = list("Night Kill")
 	revealed_outfit = /datum/outfit/mafia/traitor
-	special_theme = "syndicate"
+
+	hud_icon = "hudtraitor"
+	revealed_icon = "traitor"
+	special_theme = "neutral"
 
 	var/datum/mafia_role/current_victim
 
@@ -384,6 +405,9 @@
 	var/protection_status = FUGITIVE_NOT_PRESERVING
 	solo_counts_as_town = TRUE //should not count towards mafia victory, they should have the option to work with town
 	revealed_outfit = /datum/outfit/mafia/fugitive
+	special_theme = "neutral"
+	hud_icon = "hudfugitive"
+	revealed_icon = "fugitive"
 
 /datum/mafia_role/fugitive/New(datum/mafia_controller/game)
 	. = ..()
@@ -434,7 +458,9 @@
 	win_condition = "lynch their obsession."
 	team = MAFIA_TEAM_SOLO
 	revealed_outfit = /datum/outfit/mafia/obsessed // /mafia <- outfit must be readded (just make a new mafia outfits file for all of these)
-
+	special_theme = "neutral"
+	hud_icon = "hudobsessed"
+	revealed_icon = "obsessed"
 	solo_counts_as_town = TRUE //after winning or whatever, can side with whoever. they've already done their objective!
 	var/datum/mafia_role/obsession
 	var/lynched_target = FALSE
@@ -470,10 +496,14 @@
 
 /datum/mafia_role/clown
 	name = "Clown"
-	desc = "If you are lynched you take down one of your voters with you and win. HONK!"
+	desc = "If you are lynched you take down one of your voters (guilty or abstain) with you and win. HONK!"
 	win_condition = "get themselves lynched!"
 	revealed_outfit = /datum/outfit/mafia/clown
+	solo_counts_as_town = TRUE
 	team = MAFIA_TEAM_SOLO
+	special_theme = "neutral"
+	hud_icon = "hudclown"
+	revealed_icon = "clown"
 
 /datum/mafia_role/clown/New(datum/mafia_controller/game)
 	. = ..()
@@ -481,7 +511,7 @@
 
 /datum/mafia_role/clown/proc/prank(datum/source,datum/mafia_controller/game,lynch)
 	if(lynch)
-		var/datum/mafia_role/victim = pick(game.judgement_guilty_votes)
+		var/datum/mafia_role/victim = pick(game.judgement_guilty_votes + game.judgement_abstain_votes)
 		game.send_message("<span class='big clown'>[body.real_name] WAS A CLOWN! HONK! They take down [victim.body.real_name] with their last prank.</span>")
 		game.send_message("<span class='big clown'>!! CLOWN VICTORY !!</span>")
 		victim.kill(game,FALSE)
