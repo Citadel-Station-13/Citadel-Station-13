@@ -173,8 +173,7 @@
 /datum/uplink_item/bundles_TC/reroll/purchase(mob/user, datum/component/uplink/U)
 	var/datum/antagonist/traitor/T = user?.mind?.has_antag_datum(/datum/antagonist/traitor)
 	if(istype(T))
-		var/new_traitor_kind = get_random_traitor_kind(list(T.traitor_kind.type))
-		T.set_traitor_kind(new_traitor_kind)
+		T.set_traitor_kind(/datum/traitor_class/human/subterfuge)
 	else
 		to_chat(user,"Invalid user for contract renegotiation.")
 

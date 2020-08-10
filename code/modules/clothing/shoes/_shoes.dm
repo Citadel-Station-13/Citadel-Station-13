@@ -257,10 +257,8 @@
 
 			if(14 to 25) // 1.3ish% chance to stumble and be a bit off balance (like being disarmed)
 				to_chat(our_guy, "<span class='danger'>You stumble a bit on your untied shoelaces!</span>")
-				if(!our_guy.has_movespeed_modifier(/datum/movespeed_modifier/shove))
-					our_guy.add_movespeed_modifier(/datum/movespeed_modifier/shove)
-					addtimer(CALLBACK(our_guy, /mob/living/carbon/human/proc/clear_shove_slowdown), SHOVE_SLOWDOWN_LENGTH)
-
+				our_guy.ShoveOffBalance(SHOVE_OFFBALANCE_DURATION)
+				our_guy.Stagger(SHOVE_OFFBALANCE_DURATION)		//yes, same.
 			if(26 to 1000)
 				wiser = FALSE
 		if(wiser)

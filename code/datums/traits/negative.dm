@@ -14,7 +14,7 @@
 	if(NOBLOOD in H.dna.species.species_traits) //can't lose blood if your species doesn't have any
 		return
 	else
-		quirk_holder.blood_volume -= 0.275
+		quirk_holder.blood_volume -= 0.2
 
 /datum/quirk/depression
 	name = "Depression"
@@ -54,7 +54,7 @@ GLOBAL_LIST_EMPTY(family_heirlooms)
 		if("Botanist")
 			heirloom_type = pick(/obj/item/cultivator, /obj/item/reagent_containers/glass/bucket, /obj/item/storage/bag/plants, /obj/item/toy/plush/beeplushie)
 		if("Medical Doctor")
-			heirloom_type = /obj/item/healthanalyzer/advanced
+			heirloom_type = /obj/item/healthanalyzer
 		if("Paramedic")
 			heirloom_type = /obj/item/lighter
 		if("Station Engineer")
@@ -337,10 +337,8 @@ GLOBAL_LIST_EMPTY(family_heirlooms)
 		dumb_thing = FALSE //only once per life
 		if(prob(1))
 			new/obj/item/reagent_containers/food/snacks/pastatomato(get_turf(H)) //now that's what I call spaghetti code
+
 // small chance to make eye contact with inanimate objects/mindless mobs because of nerves
-
-
-
 /datum/quirk/social_anxiety/proc/looks_at_floor(datum/source, atom/A)
 	var/mob/living/mind_check = A
 	if(prob(85) || (istype(mind_check) && mind_check.mind))
