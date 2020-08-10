@@ -30,7 +30,7 @@
 	else
 		stat_tgui.user = mob
 		stat_tgui.close(qdel_self = FALSE)
-	stat_tgui.set_autoupdate(FALSE)
+	//stat_tgui.set_autoupdate(FALSE)
 	winset(src, "statbrowser", "is-visible=true")
 	stat_tgui.open(stat_tgui_window)
 
@@ -51,6 +51,7 @@
   * Statpanel data
   */
 /client/proc/tguiStat()
+	. = list()
 	.["admin"] = holder? TRUE : FALSE
 	var/atom/A = src.statobj
 	. |= A.tguiStat()
