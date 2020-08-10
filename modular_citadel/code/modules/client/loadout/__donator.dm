@@ -4,7 +4,7 @@
 	name = "IF YOU SEE THIS, PING A CODER RIGHT NOW!"
 	slot = SLOT_IN_BACKPACK
 	path = /obj/item/bikehorn/golden
-	category = CATEGORY_DONATOR
+	category = LOADOUT_CATEGORY_DONATOR
 	ckeywhitelist = list("This entry should never appear with this variable set.") //If it does, then that means somebody fucked up the whitelist system pretty hard
 
 /datum/gear/donator/donortestingbikehorn

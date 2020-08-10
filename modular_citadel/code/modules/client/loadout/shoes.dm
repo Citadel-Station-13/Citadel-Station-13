@@ -1,5 +1,5 @@
 /datum/gear/shoes
-	category = CATEGORY_SHOES
+	category = LOADOUT_CATEGORY_SHOES
 	slot = SLOT_SHOES
 
 /datum/gear/shoes/laceup

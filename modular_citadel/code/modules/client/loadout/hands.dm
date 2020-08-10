@@ -1,5 +1,5 @@
 /datum/gear/hands
-	category = CATEGORY_HANDS
+	category = LOADOUT_CATEGORY_HANDS
 	slot = SLOT_HANDS
 
 /datum/gear/hands/cane

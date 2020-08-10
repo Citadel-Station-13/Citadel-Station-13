@@ -1,21 +1,21 @@
 /datum/gear/neck
-	category = CATEGORY_NECK
-	subcategory = SUBCATEGORY_NECK_GENERAL
+	category = LOADOUT_CATEGORY_NECK
+	subcategory = LOADOUT_SUBCATEGORY_NECK_GENERAL
 	slot = SLOT_NECK
 
 /datum/gear/neck/bluetie
 	name = "Blue tie"
-	subcategory = SUBCATEGORY_NECK_TIE
+	subcategory = LOADOUT_SUBCATEGORY_NECK_TIE
 	path = /obj/item/clothing/neck/tie/blue
 
 /datum/gear/neck/redtie
 	name = "Red tie"
-	subcategory = SUBCATEGORY_NECK_TIE
+	subcategory = LOADOUT_SUBCATEGORY_NECK_TIE
 	path = /obj/item/clothing/neck/tie/red
 
 /datum/gear/neck/blacktie
 	name = "Black tie"
-	subcategory = SUBCATEGORY_NECK_TIE
+	subcategory = LOADOUT_SUBCATEGORY_NECK_TIE
 	path = /obj/item/clothing/neck/tie/black
 
 /datum/gear/neck/collar
@@ -32,7 +32,7 @@
 
 /datum/gear/neck/scarf
 	name = "White scarf"
-	subcategory = SUBCATEGORY_NECK_SCARVES
+	subcategory = LOADOUT_SUBCATEGORY_NECK_SCARVES
 	path = /obj/item/clothing/neck/scarf
 
 /datum/gear/neck/scarf/black
