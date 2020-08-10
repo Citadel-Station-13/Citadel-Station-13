@@ -522,7 +522,7 @@ GLOBAL_LIST_INIT(fluid_duct_recipes, list(
 
 /obj/item/pipe_dispenser/proc/activate()
 	playsound(get_turf(src), 'sound/items/deconstruct.ogg', 50, 1)
-
+/* unneeded, you can craft ducts from plastic
 /obj/item/pipe_dispenser/plumbing
 	name = "Plumberinator"
 	desc = "A crude device to rapidly plumb things."
@@ -540,7 +540,7 @@ GLOBAL_LIST_INIT(fluid_duct_recipes, list(
 
 	recipe = first_plumbing
 
-
+*/
 
 #undef ATMOS_CATEGORY
 #undef DISPOSALS_CATEGORY

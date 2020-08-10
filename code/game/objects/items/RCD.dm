@@ -860,6 +860,7 @@ RLD
 /obj/item/construction/plumbing
 	name = "Plumbing Constructor"
 	desc = "An expertly modified RCD outfitted to construct plumbing machinery. Reload with compressed matter cartridges."
+	icon = 'icons/obj/tools.dmi'
 	icon_state = "arcd"
 	item_state = "oldrcd"
 	has_ammobar = FALSE
