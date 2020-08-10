@@ -6,7 +6,7 @@
 	.["ping"] = round(client.lastping, 1)
 	.["ping_avg"] = round(client.avgping, 1)
 	.["mapname"] = SSmapping.stat_map_name
-	.["round_id"] = GLOB.round_id || NULL
+	.["round_id"] = GLOB.round_id || "NULL"
 	.["time_dilation"] = list(SStime_track.time_dilation_current, SStime_track.time_dilation_avg_fast, SStime_track.time_dilation_avg, SStime_track.time_dilation_avg_slow)
 	.["servertime"] = SStime_track.server_time_text
 	.["roundtime"] = SStime_track.round_time_text

@@ -124,8 +124,6 @@ window "infowindow"
 		background-color = #242424
 		saved-params = "pos;size;is-minimized;is-maximized"
 		is-pane = true
-		outer-size = 662x561
-		inner-size = 640x505
 	elem "info"
 		type = CHILD
 		pos = 0,30
@@ -220,7 +218,6 @@ window "outputwindow"
 		can-minimize = false
 		can-resize = false
 		is-pane = true
-		outer-size = 660x500
 	elem "input"
 		type = INPUT
 		pos = 2,460
@@ -276,8 +273,6 @@ window "statbrowser_window"
 		saved-params = "pos;size;is-minimized;is-maximized"
 		title = "Information"
 		is-pane = true
-		outer-size = 662x561
-		inner-size = 640x505
 	elem "statbrowser"
 		type = BROWSER
 		pos = 0,0
@@ -295,12 +290,9 @@ window "statoutput_window"
 		size = 640x480
 		anchor1 = none
 		anchor2 = none
-		background-color = none
 		saved-params = "pos;size;is-minimized;is-maximized"
 		title = "Stat/Verbs"
 		is-pane = true
-		outer-size = 662x561
-		inner-size = 640x505
 	elem "statpanel"
 		type = INFO
 		pos = 0,0

@@ -52,7 +52,8 @@
   */
 /client/proc/tguiStat()
 	.["admin"] = holder? TRUE : FALSE
-	. |= statobj.tguiStat()
+	var/atom/A = src.statobj
+	. |= A.tguiStat()
 
 /atom/proc/tguiStat()
 	return list()
