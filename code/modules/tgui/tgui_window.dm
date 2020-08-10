@@ -7,6 +7,8 @@
 	var/id
 	/// citadel snowflake variable for statbrowser. overrides the usual "[id].browser" param for byond --> tgui output.
 	var/direct
+	/// ditto, but for overriding window options
+	var/override_options
 	var/client/client
 	var/pooled
 	var/pool_index
@@ -25,9 +27,10 @@
  * required client /client
  * required id string A unique window identifier.
  */
-/datum/tgui_window/New(client/client, id, pooled = FALSE, direct)
+/datum/tgui_window/New(client/client, id, pooled = FALSE, direct, override_options)
 	src.id = id
 	src.direct = direct
+	src.override_options = override_options
 	src.client = client
 	src.pooled = pooled
 	if(pooled)
@@ -76,7 +79,7 @@
 	html = replacetextEx(html, "<!-- tgui:styles -->\n", inline_styles)
 	html = replacetextEx(html, "<!-- tgui:scripts -->\n", inline_scripts)
 	// Open the window
-	client << browse(html, "window=[id];[options]")
+	client << browse(html, "window=[id];[isnull(override_options)? options : override_options]")
 	// Instruct the client to signal UI when the window is closed.
 	winset(client, id, "on-close=\"uiclose [id]\"")
 

@@ -35,7 +35,9 @@ export class Window extends Component {
       options.size = [this.props.width, this.props.height];
     }
     setWindowKey(config.window.key);
-    recallWindowGeometry(config.window.key, options);
+    if (!config.fixed_window) {
+      recallWindowGeometry(config.window.key, options);
+    }
     refocusLayout();
   }
 
@@ -61,16 +63,16 @@ export class Window extends Component {
       <Layout
         className="Window"
         theme={theme}>
-        <TitleBar
+        {!config.no_titlebar && <TitleBar
           className="Window__titleBar"
           title={!suspended && (title || decodeHtmlEntities(config.title))}
           status={config.status}
           fancy={fancy}
-          onDragStart={dragStartHandler}
+          onDragStart={!config.fixed_window && dragStartHandler}
           onClose={() => {
             logger.log('pressed close');
             dispatch(backendSuspendStart());
-          }} />
+          }} />}
         <div
           className={classes([
             'Window__rest',

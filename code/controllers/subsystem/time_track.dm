@@ -19,11 +19,14 @@ SUBSYSTEM_DEF(time_track)
 	var/last_measurement = 0
 	var/measurement_delay = 60
 
-	var/stat_time_text
-	var/time_dilation_text
+	var/server_time_text
+	var/station_time_text
+	var/round_time_text
 
 /datum/controller/subsystem/time_track/fire()
-	stat_time_text = "Server Time: [time2text(world.timeofday, "YYYY-MM-DD hh:mm:ss")]\n\nRound Time: [DisplayTimeText(world.time - SSticker.round_start_time, 1)] \n\nStation Time: [STATION_TIME_TIMESTAMP("hh:mm:ss", world.time)]\n\n[time_dilation_text]"
+	server_time_text = time2text(world.timeofday, "YYYY-MM-DD hh:mm:ss")
+	round_time_text = DisplayTimeText(world.time - SSticker.round_start_time, 1)
+	station_time_text = STATION_TIME_TIMESTAMP("hh:mm:ss", world.time)
 
 	if(++last_measurement == measurement_delay)
 		last_measurement = 0
@@ -45,4 +48,3 @@ SUBSYSTEM_DEF(time_track)
 		last_tick_byond_time = current_byondtime
 		last_tick_tickcount = current_tickcount
 		SSblackbox.record_feedback("associative", "time_dilation_current", 1, list("[SQLtime()]" = list("current" = "[time_dilation_current]", "avg_fast" = "[time_dilation_avg_fast]", "avg" = "[time_dilation_avg]", "avg_slow" = "[time_dilation_avg_slow]")))
-		time_dilation_text = "Time Dilation: [round(time_dilation_current,1)]% AVG:([round(time_dilation_avg_fast,1)]%, [round(time_dilation_avg,1)]%, [round(time_dilation_avg_slow,1)]%)"

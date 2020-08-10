@@ -33,6 +33,10 @@
 	var/status = UI_INTERACTIVE
 	/// Topic state used to determine status/interactability.
 	var/datum/ui_state/state = null
+	/// citadel snowflake embedded panes - disable auto resizing
+	var/fixed_window = FALSE
+	/// ditto - disables titlebar
+	var/no_titlebar = FALSE
 
 /**
  * public
@@ -100,7 +104,7 @@
  *
  * optional can_be_suspended bool
  */
-/datum/tgui/proc/close(can_be_suspended = TRUE)
+/datum/tgui/proc/close(can_be_suspended = TRUE, qdel_self = TRUE)
 	if(closing)
 		return
 	closing = TRUE
@@ -115,7 +119,8 @@
 		src_object.ui_close(user)
 		SStgui.on_close(src)
 	state = null
-	qdel(src)
+	if(qdel_self)
+		qdel(src)
 
 /**
  * public
@@ -198,6 +203,8 @@
 		"window" = list(
 			"key" = window_key,
 			"size" = window_size,
+			"fixed_window" = fixed_window,
+			"no_titlebar" = no_titlebar,
 			"fancy" = user.client.prefs.tgui_fancy,
 			"locked" = user.client.prefs.tgui_lock
 		),
