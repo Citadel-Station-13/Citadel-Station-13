@@ -63,6 +63,11 @@
 	///used for debugging in testing (doesn't put people out of the game, some other shit i forgot, who knows just don't set this in live) honestly kinda deprecated
 	var/debug = FALSE
 
+	///Max player count
+	var/max_player = MAFIA_MAX_PLAYER_COUNT
+	///Required player count
+	var/required_player = 5
+
 /datum/mafia_controller/New()
 	. = ..()
 	GLOB.mafia_game = src
@@ -786,10 +791,10 @@
 	var/mafiaspe_left = 1
 	var/killing_role = prob(50)
 	var/disruptors = killing_role ? 1 : 2 //still required to calculate overflow
-	var/overflow_left = MAFIA_MAX_PLAYER_COUNT - (invests_left + protects_left + miscs_left + mafiareg_left + mafiaspe_left + killing_role + disruptors)
+	var/overflow_left = max_player - (invests_left + protects_left + miscs_left + mafiareg_left + mafiaspe_left + killing_role + disruptors)
 
 	var/list/random_setup = list()
-	for(var/i in 1 to MAFIA_MAX_PLAYER_COUNT) //should match the number of roles to add
+	for(var/i in 1 to max_player) //should match the number of roles to add
 		if(overflow_left)
 			add_setup_role(random_setup, TOWN_OVERFLOW)
 			overflow_left--
@@ -841,7 +846,7 @@
 /**
   * Called when enough players have signed up to fill a setup. DOESN'T NECESSARILY MEAN THE GAME WILL START.
   *
-  * Checks for a custom setup, if so gets the required players from that and if not it sets the player requirement to MAFIA_MAX_PLAYER_COUNT and generates one IF basic setup starts a game.
+  * Checks for a custom setup, if so gets the required players from that and if not it sets the player requirement to required_player(max_player) and generates one IF basic setup starts a game.
   * Checks if everyone signed up is an observer, and is still connected. If people aren't, they're removed from the list.
   * If there aren't enough players post sanity, it aborts. otherwise, it selects enough people for the game and starts preparing the game for real.
   */
@@ -849,7 +854,7 @@
 	var/req_players
 	var/list/setup = custom_setup
 	if(!setup.len)
-		req_players = MAFIA_MAX_PLAYER_COUNT
+		req_players = required_player //max_player
 	else
 		req_players = assoc_value_sum(setup)
 
@@ -894,7 +899,7 @@
 /datum/mafia_controller/proc/try_autostart()
 	if(phase != MAFIA_PHASE_SETUP) // || !(GLOB.ghost_role_flags & GHOSTROLE_MINIGAME))
 		return
-	if(GLOB.mafia_signup.len >= MAFIA_MAX_PLAYER_COUNT || custom_setup.len)//enough people to try and make something (or debug mode)
+	if(GLOB.mafia_signup.len >= max_player || GLOB.mafia_signup.len >= required_player|| custom_setup.len)//enough people to try and make something (or debug mode)
 		basic_setup()
 
 /**
