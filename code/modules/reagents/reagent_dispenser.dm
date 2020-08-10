@@ -222,16 +222,6 @@
 	icon_state = "orangekeg"
 	reagent_id = /datum/reagent/consumable/ethanol/mead
 
-/obj/structure/reagent_dispensers/keg/aphro
-	name = "keg"
-	desc = "A keg."
-	tank_volume = 150
-
-/obj/structure/reagent_dispensers/keg/aphro/strong
-	name = "keg"
-	desc = "A keg."
-	tank_volume = 120
-
 /obj/structure/reagent_dispensers/keg/milk
 	name = "keg of milk"
 	desc = "A keg of pasteurised, homogenised, filtered and semi-skimmed space milk."
