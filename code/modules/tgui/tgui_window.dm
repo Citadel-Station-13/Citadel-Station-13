@@ -5,8 +5,8 @@
 
 /datum/tgui_window
 	var/id
-	/// citadel snowflake variable for statbrowser. this specifies if we're targeting the browser itself rather than the window.
-	var/direct = FALSE
+	/// citadel snowflake variable for statbrowser. overrides the usual "[id].browser" param for byond --> tgui output.
+	var/direct
 	var/client/client
 	var/pooled
 	var/pool_index
@@ -25,7 +25,7 @@
  * required client /client
  * required id string A unique window identifier.
  */
-/datum/tgui_window/New(client/client, id, pooled = FALSE, direct = FALSE)
+/datum/tgui_window/New(client/client, id, pooled = FALSE, direct)
 	src.id = id
 	src.direct = direct
 	src.client = client
@@ -180,7 +180,7 @@
 			message_queue = list()
 		message_queue += list(message)
 		return
-	client << output(message, "[id][direct? "" : ".browser"]:update")
+	client << output(message, "[direct || "[id].browser"]:update")
 
 /**
  * public
@@ -208,7 +208,7 @@
 	if(!client || !message_queue)
 		return
 	for(var/message in message_queue)
-		client << output(message, "[id][direct? "" : ".browser"]:update")
+		client << output(message, "[direct || "[id].browser"]:update")
 	message_queue = null
 
 /**
