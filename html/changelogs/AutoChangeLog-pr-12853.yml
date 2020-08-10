@@ -1,5 +1,0 @@
-author: "LetterN"
-delete-after: True
-changes: 
-  - tweak: "clocktheme color"
-  - code_imp: "Ports TGUI-4"
