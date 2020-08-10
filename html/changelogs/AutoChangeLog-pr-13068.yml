@@ -1,6 +1,0 @@
-author: "Hatterhat"
-delete-after: True
-changes: 
-  - balance: "Sterilized gauze is now better at stopping bleeding, and applies slightly faster. Very slightly faster."
-  - balance: "Ointment and sutures now hold more in a stack (12 and 15, respectively)."
-  - tweak: "Sterilized gauze can now be made by just pouring 10u sterilizine onto standard medical gauze, instead of having to craft it. Why you had to craft it, I will honestly never know."
