@@ -319,10 +319,43 @@
 	throwforce = 10
 	throw_range = 3
 	hitsound = 'sound/items/trayhit1.ogg'
-	block_chance = 50
 	custom_materials = list(/datum/material/iron = 2000)
 	var/break_chance = 5 //Likely hood of smashing the chair.
 	var/obj/structure/chair/origin_type = /obj/structure/chair
+	item_flags = ITEM_CAN_PARRY | ITEM_CAN_BLOCK
+	block_parry_data = /datum/block_parry_data/chair
+
+/obj/item/chair/ComponentInitialize()
+	. = ..()
+	AddComponent(/datum/component/two_handed, require_twohands = TRUE)
+
+/datum/block_parry_data/chair
+	block_damage_multiplier = 0.7
+	block_stamina_efficiency = 2
+	block_stamina_cost_per_second = 1.5
+	block_slowdown = 0.5
+	block_lock_attacking = FALSE
+	block_lock_sprinting = TRUE
+	block_start_delay = 1.5
+	block_damage_absorption = 7
+	block_damage_limit = 20
+	block_resting_stamina_penalty_multiplier = 2
+	block_projectile_mitigation = 20
+	parry_stamina_cost = 5
+	parry_time_windup = 1
+	parry_time_active = 11
+	parry_time_spindown = 2
+	parry_time_perfect = 1.5
+	parry_time_perfect_leeway = 1
+	parry_imperfect_falloff_percent = 7.5
+	parry_efficiency_to_counterattack = 100
+	parry_efficiency_considered_successful = 50
+	parry_efficiency_perfect = 120
+	parry_efficiency_perfect_override = list(
+		TEXT_ATTACK_TYPE_PROJECTILE = 30,
+	)
+	parry_failed_stagger_duration = 3.5 SECONDS
+	parry_data = list(PARRY_COUNTERATTACK_MELEE_ATTACK_CHAIN = 2.5)
 
 /obj/item/chair/suicide_act(mob/living/carbon/user)
 	user.visible_message("<span class='suicide'>[user] begins hitting [user.p_them()]self with \the [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")

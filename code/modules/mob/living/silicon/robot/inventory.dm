@@ -79,15 +79,15 @@
 	if(activated(O))
 		to_chat(src, "<span class='warning'>That module is already activated.</span>")
 		return
-	if(!held_items[1])
+	if(!held_items[1] && health >= -maxHealth*0.5)
 		held_items[1] = O
 		O.screen_loc = inv1.screen_loc
 		. = TRUE
-	else if(!held_items[2])
+	else if(!held_items[2] && health >= 0)
 		held_items[2] = O
 		O.screen_loc = inv2.screen_loc
 		. = TRUE
-	else if(!held_items[3])
+	else if(!held_items[3] && health >= maxHealth*0.5)
 		held_items[3] = O
 		O.screen_loc = inv3.screen_loc
 		. = TRUE

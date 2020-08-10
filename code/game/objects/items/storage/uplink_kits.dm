@@ -335,6 +335,7 @@
 	new /obj/item/reagent_containers/glass/bottle/romerol(src)
 	new /obj/item/reagent_containers/syringe(src)
 	new /obj/item/reagent_containers/dropper(src)
+	new /obj/item/paper/guides/antag/romerol_instructions(src)
 
 /obj/item/storage/box/syndie_kit/ez_clean/PopulateContents()
 	for(var/i in 1 to 3)

@@ -7,6 +7,7 @@
 	icon_state_powered = "laptop"
 	icon_state_unpowered = "laptop-off"
 	icon_state_menu = "menu"
+	display_overlays = FALSE
 
 	hardware_flag = PROGRAM_LAPTOP
 	max_hardware_size = 2
@@ -18,8 +19,8 @@
 	screen_on = 0 		// Starts closed
 	var/start_open = TRUE	// unless this var is set to 1
 	var/icon_state_closed = "laptop-closed"
-	display_overlays = FALSE
 	var/w_class_open = WEIGHT_CLASS_BULKY
+	var/slowdown_open = TRUE
 
 /obj/item/modular_computer/laptop/examine(mob/user)
 	. = ..()
@@ -37,6 +38,13 @@
 		icon_state = icon_state_closed
 	else
 		. = ..()
+
+/obj/item/modular_computer/laptop/update_overlays()
+	if(screen_on)
+		return ..()
+	else
+		cut_overlays()
+		icon_state = icon_state_closed
 
 /obj/item/modular_computer/laptop/attack_self(mob/user)
 	if(!screen_on)
@@ -65,6 +73,7 @@
 			M.put_in_hand(src, H.held_index)
 
 /obj/item/modular_computer/laptop/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
+	. = ..()
 	if(screen_on && isturf(loc))
 		return attack_self(user)
 
@@ -73,7 +82,7 @@
 		return
 	if(!isturf(loc) && !ismob(loc)) // No opening it in backpack.
 		return
-	if(!user.canUseTopic(src))
+	if(!user.canUseTopic(src, BE_CLOSE))
 		return
 
 	toggle_open(user)
@@ -82,15 +91,17 @@
 /obj/item/modular_computer/laptop/AltClick(mob/user)
 	if(screen_on) // Close it.
 		try_toggle_open(user)
-		return TRUE
-	return ..()
+	else
+		return ..()
 
 /obj/item/modular_computer/laptop/proc/toggle_open(mob/living/user=null)
 	if(screen_on)
 		to_chat(user, "<span class='notice'>You close \the [src].</span>")
+		slowdown = initial(slowdown)
 		w_class = initial(w_class)
 	else
 		to_chat(user, "<span class='notice'>You open \the [src].</span>")
+		slowdown = slowdown_open
 		w_class = w_class_open
 
 	screen_on = !screen_on
