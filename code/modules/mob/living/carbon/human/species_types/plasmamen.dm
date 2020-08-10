@@ -57,8 +57,8 @@
 	..()
 
 /datum/species/plasmaman/before_equip_job(datum/job/J, mob/living/carbon/human/H, visualsOnly = FALSE)
+	var/datum/outfit/plasmaman/O = new /datum/outfit/plasmaman
 	if(J)
-		var/datum/outfit/plasmaman/O = new /datum/outfit/plasmaman
 		if(J.plasma_outfit)
 			O = new J.plasma_outfit
 
