@@ -10,6 +10,7 @@
 	selection_color = "#dddddd"
 
 	outfit = /datum/outfit/job/chaplain
+	plasma_outfit = /datum/outfit/plasmaman/chaplain
 
 	access = list(ACCESS_MORGUE, ACCESS_CHAPEL_OFFICE, ACCESS_CREMATORIUM, ACCESS_THEATRE)
 	minimal_access = list(ACCESS_MORGUE, ACCESS_CHAPEL_OFFICE, ACCESS_CREMATORIUM, ACCESS_THEATRE)
