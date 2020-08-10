@@ -6,7 +6,7 @@
 	var/capacity
 
 /datum/ductnet/proc/add_duct(obj/machinery/duct/D)
-	if(!D || D in ducts)
+	if(!D || (D in ducts))
 		return
 	ducts += D
 	D.duct = src
@@ -57,4 +57,4 @@
 		var/obj/machinery/duct/D = A
 		D.duct = null
 	if(delete) //I don't want code to run with qdeleted objects because that can never be good, so keep this in-case the ductnet has some business left to attend to before commiting suicide
-		qdel(src) 
+		qdel(src)
