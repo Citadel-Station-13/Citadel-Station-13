@@ -162,6 +162,13 @@
 	surplus = 30
 	include_modes = list(/datum/game_mode/nuclear)
 
+/datum/uplink_item/dangerous/flenser
+	name = "Flensing Net Projector"
+	desc = "A Carminus Yards Hellthrasher flensing apparatus. Fires concertina-wire nets that entangle, dealing damage over time. The nets can be retracted, allowing the weapon to fire again- and tearing the flesh off of those unfortunate enough to be trapped within said net."
+	item = /obj/item/gun/energy/warcrime
+	cost = 12
+	exclude_modes = list(/datum/game_mode/nuclear/clown_ops)
+
 /datum/uplink_item/dangerous/rapid
 	name = "Bands of the North Star"
 	desc = "These armbands let the user punch people very fast and with the lethality of a legendary martial artist. \
