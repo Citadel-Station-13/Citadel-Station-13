@@ -298,7 +298,7 @@
 
 /obj/machinery/door/firedoor/border_only
 	icon = 'icons/obj/doors/edge_Doorfire.dmi'
-	flags_1 = ON_BORDER_1
+	flags_1 = ON_BORDER_1|DEFAULT_RICOCHET_1
 	CanAtmosPass = ATMOS_PASS_PROC
 
 /obj/machinery/door/firedoor/border_only/closed
@@ -320,7 +320,7 @@
 				to_chat(M, "<span class='notice'>You pull [M.pulling] through [src] right as it closes</span>")
 				M.pulling.forceMove(T1)
 				M.start_pulling(M2)
-				
+
 	for(var/mob/living/M in T2)
 		if(M.stat == CONSCIOUS && M.pulling && M.pulling.loc == T1 && !M.pulling.anchored && M.pulling.move_resist <= M.move_force)
 			var/mob/living/M2 = M.pulling
