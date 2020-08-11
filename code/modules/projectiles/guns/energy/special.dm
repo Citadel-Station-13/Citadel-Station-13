@@ -368,8 +368,8 @@
 	create_reagents(250, TRANSPARENT)
 
 /obj/item/gun/energy/warcrime/unethical/examine(mob/user)
-	. =+ "<span class='notice'>Alt-click the gun in hand when hurt to splash yourself with the stored reagents.</span>"
-
+	. += "<span class='notice'>Alt-click the gun in hand when hurt to splash yourself with the stored reagents.</span>"
+	return .
 /obj/item/gun/energy/warcrime/unethical/attack_self(mob/user)
 	to_chat(user, "<span class='danger'>You retract all nearby nets using the electromagnetic tether!</span>")
 	for(var/obj/structure/flensingnet/F in oview(7, user))
