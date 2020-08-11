@@ -2,9 +2,6 @@
 "a" = (
 /turf/closed/indestructible/riveted,
 /area/mafia)
-"b" = (
-/turf/closed/indestructible/riveted/plastinum,
-/area/mafia)
 "d" = (
 /turf/open/floor/plating,
 /area/mafia)
@@ -97,7 +94,7 @@
 /turf/open/floor/holofloor/snow,
 /area/mafia)
 "w" = (
-/turf/open/lava/plasma/mafia,
+/turf/open/lava/plasma,
 /area/mafia)
 "x" = (
 /obj/machinery/door/airlock/external{
@@ -119,7 +116,7 @@
 /area/mafia)
 "z" = (
 /obj/structure/lattice/catwalk,
-/turf/open/lava/plasma/mafia,
+/turf/open/lava/plasma,
 /area/mafia)
 "A" = (
 /obj/machinery/door/airlock/external{
@@ -137,7 +134,7 @@
 "B" = (
 /obj/effect/landmark/mafia,
 /obj/structure/lattice/catwalk,
-/turf/open/lava/plasma/mafia,
+/turf/open/lava/plasma,
 /area/mafia)
 "C" = (
 /obj/mafia_game_board,
@@ -154,7 +151,7 @@
 /obj/structure/closet/crate/critter,
 /obj/item/clothing/suit/hooded/wintercoat/miner,
 /obj/item/clothing/shoes/winterboots,
-/turf/open/lava/plasma/mafia,
+/turf/open/lava/plasma,
 /area/mafia)
 "F" = (
 /turf/open/floor/holofloor/wood,
@@ -208,16 +205,16 @@ a
 "}
 (2,1,1) = {"
 a
-b
-b
-b
-b
-b
-b
-b
-b
-b
-b
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
 s
 K
 K
@@ -233,8 +230,8 @@ a
 "}
 (3,1,1) = {"
 a
-b
-b
+a
+a
 s
 s
 s
@@ -258,8 +255,8 @@ a
 "}
 (4,1,1) = {"
 a
-b
-b
+a
+a
 s
 g
 h
@@ -283,8 +280,8 @@ a
 "}
 (5,1,1) = {"
 a
-b
-b
+a
+a
 s
 h
 d
@@ -308,8 +305,8 @@ a
 "}
 (6,1,1) = {"
 a
-b
-b
+a
+a
 s
 i
 s
@@ -333,7 +330,7 @@ a
 "}
 (7,1,1) = {"
 a
-b
+a
 s
 s
 d
@@ -358,7 +355,7 @@ a
 "}
 (8,1,1) = {"
 a
-b
+a
 s
 d
 d
@@ -383,7 +380,7 @@ a
 "}
 (9,1,1) = {"
 a
-b
+a
 s
 d
 s
@@ -408,7 +405,7 @@ a
 "}
 (10,1,1) = {"
 a
-b
+a
 s
 d
 s
@@ -433,7 +430,7 @@ a
 "}
 (11,1,1) = {"
 a
-b
+a
 s
 d
 j
@@ -458,11 +455,11 @@ a
 "}
 (12,1,1) = {"
 a
-b
+a
 s
 e
 s
-b
+a
 p
 s
 p
@@ -483,7 +480,7 @@ a
 "}
 (13,1,1) = {"
 a
-b
+a
 s
 d
 j
@@ -508,7 +505,7 @@ a
 "}
 (14,1,1) = {"
 a
-b
+a
 s
 d
 s
@@ -533,7 +530,7 @@ a
 "}
 (15,1,1) = {"
 a
-b
+a
 s
 d
 s
@@ -558,7 +555,7 @@ a
 "}
 (16,1,1) = {"
 a
-b
+a
 s
 f
 d
@@ -583,7 +580,7 @@ a
 "}
 (17,1,1) = {"
 a
-b
+a
 s
 s
 d
@@ -608,8 +605,8 @@ a
 "}
 (18,1,1) = {"
 a
-b
-b
+a
+a
 s
 d
 s
@@ -633,8 +630,8 @@ a
 "}
 (19,1,1) = {"
 a
-b
-b
+a
+a
 s
 h
 i
@@ -658,8 +655,8 @@ a
 "}
 (20,1,1) = {"
 a
-b
-b
+a
+a
 s
 k
 h
@@ -683,8 +680,8 @@ a
 "}
 (21,1,1) = {"
 a
-b
-b
+a
+a
 s
 s
 s
@@ -708,16 +705,16 @@ a
 "}
 (22,1,1) = {"
 a
-b
-b
-b
-b
-b
-b
-b
-b
-b
-b
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
 s
 K
 K

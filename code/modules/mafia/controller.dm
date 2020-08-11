@@ -873,6 +873,8 @@
 	//if there were not enough players, don't start. we already trimmed the list to now hold only valid signups
 	if(length(possible_keys) < req_players)
 		return
+	else //hacky implementation of max players
+		req_players = clamp(length(possible_keys), 1, max_player)
 
 	//if there were too many players, still start but only make filtered keys as big as it needs to be (cut excess)
 	//also removes people who do get into final player list from the signup so they have to sign up again when game ends

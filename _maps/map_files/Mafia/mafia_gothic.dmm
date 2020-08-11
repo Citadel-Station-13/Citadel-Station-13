@@ -70,7 +70,8 @@
 	max_integrity = 99999;
 	name = "Station Night Shutters"
 	},
-/turf/closed/indestructible/opsglass,
+/obj/effect/spawner/structure/window/plastitanium,
+/turf/open/space/basic,
 /area/mafia)
 "q" = (
 /turf/open/floor/carpet/red,
