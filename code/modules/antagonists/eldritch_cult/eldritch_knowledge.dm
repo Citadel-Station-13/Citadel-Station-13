@@ -244,10 +244,10 @@
 	var/mob/living/carbon/carbon_user = user
 	for(var/obj/item/living_heart/LH in atoms)
 
-		if(LH.target && LH.target.stat == UNCONSCIOUS)
+		if(LH.target && LH.target.stat == DEAD)
 			to_chat(carbon_user,"<span class='danger'>Your patrons accepts your offer..</span>")
 			var/mob/living/carbon/human/H = LH.target
-			H.death(0)
+			H.become_husk()
 			LH.target = null
 			var/datum/antagonist/heretic/EC = carbon_user.mind.has_antag_datum(/datum/antagonist/heretic)
 
