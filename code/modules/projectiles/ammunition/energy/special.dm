@@ -81,3 +81,8 @@
 	projectile_type = /obj/item/projectile/energy/pickle
 	select_name = "pickle ray"
 	e_cost = 0
+
+/obj/item/ammo_casing/energy/flenser
+	projectile_type = /obj/item/projectile/energy/flenser
+	select_name = "flensing net"
+	e_cost = 120

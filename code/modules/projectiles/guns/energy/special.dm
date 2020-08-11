@@ -337,3 +337,24 @@
 	icon_state = "decloner"
 	no_pin_required = TRUE
 	ammo_type = list(/obj/item/ammo_casing/energy/pickle)
+
+/obj/item/gun/energy/warcrime
+	name = "man-portable flensing apparatus"
+	desc = "A Carminus Yards <i>Hellthrasher</i> flensing apparatus. Fires concertina-wire nets that entangle, dealing damage over time. The nets can be retracted, allowing the weapon to fire again- and tearing the flesh off of those unfortunate enough to be trapped within said net."
+	icon_state = "pulse"
+	item_state = null
+	w_class = WEIGHT_CLASS_BULKY
+	force = 10
+	modifystate = TRUE
+	flags_1 =  CONDUCT_1
+	slot_flags = ITEM_SLOT_BACK
+	can_charge = FALSE
+	ammo_type = list(/obj/item/ammo_casing/energy/flenser)
+	cell_type = /obj/item/stock_parts/cell/emergency_light //120 charge
+
+/obj/item/gun/energy/warcrime/attack_self(mob/user)
+	to_chat(user, "<span class='danger'You retract all nearby nets using the electromagnetic tether!</span>")
+	for(var/obj/structure/flensingnet/F in oview(7, user))
+		F.rend()
+		addtimer(CALLBACK(F, .proc/take_damage, max_integrity), 1)
+		cell.charge = 120
