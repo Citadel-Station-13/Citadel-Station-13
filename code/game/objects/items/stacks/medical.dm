@@ -240,6 +240,9 @@
 /obj/item/stack/medical/suture/one
 	amount = 1
 
+/obj/item/stack/medical/suture/five
+	amount = 5
+
 /obj/item/stack/medical/suture/medicated
 	name = "medicated suture"
 	icon_state = "suture_purp"
@@ -319,6 +322,9 @@
 
 /obj/item/stack/medical/mesh/one
 	amount = 1
+
+/obj/item/stack/medical/mesh/five
+	amount = 5
 
 /obj/item/stack/medical/mesh/advanced
 	name = "advanced regenerative mesh"
