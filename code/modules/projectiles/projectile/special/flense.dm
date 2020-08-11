@@ -3,7 +3,7 @@
 /obj/item/projectile/energy/flenser
 	name = "flensing net"
 	damage_type = BRUTE
-	damage = 5//this isn't even the start of how much pain this causes
+	damage = 15//this isn't even the start of how much pain this causes
 
 /obj/item/projectile/energy/flenser/on_hit(atom/target, blocked = FALSE)
 	if(target)
