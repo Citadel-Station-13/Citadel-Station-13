@@ -107,7 +107,7 @@
 			H.DefaultCombatKnockdown(30)
 			if(H.bruteloss > 300)
 				to_chat(H, "<span class='userdanger'>Your skin is flensed by the [src]!</span>")
-				become_husk(source)
+				H.become_husk(TRAIT_GENERIC)
 			else
 				to_chat(H, "<span class='userdanger'>The [src] rends your flesh!</span>")
 				H.emote("scream")
