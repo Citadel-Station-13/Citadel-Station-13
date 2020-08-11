@@ -1,4 +1,0 @@
-author: "Hatterhat"
-delete-after: True
-changes: 
-  - bugfix: "PDA uplinks can now steal from pens. Properly. Just make sure to have a pen in your PDA, first."
