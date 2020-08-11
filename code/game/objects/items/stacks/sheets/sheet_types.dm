@@ -412,6 +412,7 @@ GLOBAL_LIST_INIT(cloth_recipes, list ( \
 	force = 0
 	throwforce = 0
 	merge_type = /obj/item/stack/sheet/cloth
+	grind_results = list(/datum/reagent/cellulose = 2)
 
 /obj/item/stack/sheet/cloth/get_main_recipes()
 	. = ..()
@@ -843,6 +844,7 @@ new /datum/stack_recipe("paper frame door", /obj/structure/mineral_door/paperfra
 	merge_type = /obj/item/stack/sheet/cotton
 	var/pull_effort = 30
 	var/loom_result = /obj/item/stack/sheet/cloth
+	grind_results = list(/datum/reagent/cellulose = 1)
 
 /obj/item/stack/sheet/cotton/ten
 	amount = 10
@@ -858,6 +860,7 @@ new /datum/stack_recipe("paper frame door", /obj/structure/mineral_door/paperfra
 	merge_type = /obj/item/stack/sheet/cotton/durathread
 	pull_effort = 70
 	loom_result = /obj/item/stack/sheet/durathread
+	grind_results = list(/datum/reagent/cellulose = 4)
 
 /obj/item/stack/sheet/meat
 	name = "meat sheets"
