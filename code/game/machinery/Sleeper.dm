@@ -203,8 +203,8 @@
 
 /obj/machinery/sleeper/ui_state(mob/user)
 	if(controls_inside)
-		return GLOB.notcontained_state
-	return GLOB.default_state
+		return GLOB.default_state
+	return GLOB.notcontained_state
 
 /obj/machinery/sleeper/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
