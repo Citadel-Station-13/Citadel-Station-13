@@ -368,8 +368,9 @@
 	create_reagents(250, TRANSPARENT)
 
 /obj/item/gun/energy/warcrime/unethical/examine(mob/user)
-	. += "<span class='notice'>Alt-click the gun in hand when hurt to splash yourself with the stored reagents.</span>"
+	. += "<span class='notice'>Alt-click the gun in hand to splash yourself with the stored reagents.</span>"
 	return .
+
 /obj/item/gun/energy/warcrime/unethical/attack_self(mob/user)
 	to_chat(user, "<span class='danger'>You retract all nearby nets using the electromagnetic tether!</span>")
 	for(var/obj/structure/flensingnet/F in oview(7, user))
@@ -380,9 +381,6 @@
 		cell.charge = 120
 
 /obj/item/gun/energy/warcrime/unethical/AltClick(mob/user)
-	if(user.health >= user.maxHealth)
-		to_chat(user, "<span class='notice'>You aren't hurt!</span>")
-		return FALSE
 	to_chat(user, "<span class='notice'>You splash the contents of the flesh storage onto yourself. Gross.</span>")
 	reagents.reaction(user, TOUCH)
 	reagents.clear_reagents()
