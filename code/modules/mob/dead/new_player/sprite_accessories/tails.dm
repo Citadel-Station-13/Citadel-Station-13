@@ -16,7 +16,7 @@
 *******************************************/
 
 /datum/sprite_accessory/tails_animated/lizard/is_not_visible(var/mob/living/carbon/human/H, var/tauric)
-	return ((H.wear_suit && (H.wear_suit.flags_inv & HIDETAUR)) || tauric || mutant_bodyparts["tail_lizard"])
+	return ((H.wear_suit && (H.wear_suit.flags_inv & HIDETAUR)) || tauric || H.dna.species.mutant_bodyparts["tail_lizard"])
 
 /datum/sprite_accessory/tails/lizard/smooth
 	name = "Smooth"
