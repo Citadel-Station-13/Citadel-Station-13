@@ -9475,14 +9475,8 @@
 /obj/structure/sign/warning/nosmoking{
 	pixel_y = 30
 	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/yellow{
-	dir = 4
-	},
-/turf/open/floor/plasteel/white,
-/area/janitor)
+/turf/open/floor/plasteel/dark,
+/area/medical/sleeper)
 "asN" = (
 /obj/machinery/airalarm{
 	dir = 4;
@@ -9567,20 +9561,10 @@
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
 "asY" = (
-/obj/structure/table,
-/obj/item/crowbar,
-/obj/item/clothing/neck/stethoscope,
-/obj/item/reagent_containers/spray/cleaner,
 /obj/structure/sign/warning/nosmoking{
 	pixel_y = 30
 	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/yellow{
-	dir = 4
-	},
-/turf/open/floor/plasteel/white,
+/turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "ata" = (
 /turf/open/floor/wood,
@@ -91231,7 +91215,7 @@ bqH
 aJq
 aJq
 gnf
-asM
+bCv
 bDJ
 bCt
 bGD
@@ -95597,7 +95581,7 @@ bEe
 bhh
 bBL
 bvj
-bAl
+asM
 bAl
 bvh
 bzS
