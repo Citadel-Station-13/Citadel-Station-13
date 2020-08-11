@@ -130,6 +130,18 @@
 	result = /obj/item/reagent_containers/food/snacks/pie/dulcedebatata
 	subcategory = CAT_PIE
 
+/datum/crafting_recipe/food/burek
+	name = "Burek"
+	reqs = list(
+		/datum/reagent/consumable/blackpepper = 3,
+		/datum/reagent/consumable/sodiumchloride = 3,
+		/obj/item/reagent_containers/food/snacks/pizzabread = 2,
+		/obj/item/reagent_containers/food/snacks/meat/cutlet/plain = 6,
+		/obj/item/reagent_containers/food/snacks/butter = 1,
+	)
+	result = /obj/item/reagent_containers/food/snacks/pie/burek
+	subcategory = CAT_PIE
+
 /datum/crafting_recipe/food/meatpie
 	name = "Meat pie"
 	reqs = list(

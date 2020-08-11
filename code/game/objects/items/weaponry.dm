@@ -252,6 +252,8 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 /obj/item/katana/timestop
 	name = "temporal katana"
 	desc = "Delicately balanced, this finely-crafted blade hums with barely-restrained potential."
+	block_chance = 0 // oops
+	force = 27.5 // oops
 	item_flags = ITEM_CAN_PARRY
 	block_parry_data = /datum/block_parry_data/bokken/quick_parry/proj
 
@@ -259,7 +261,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	if(ishuman(owner))
 		var/mob/living/carbon/human/flynn = owner
 		flynn.emote("smirk")
-	new /obj/effect/timestop(get_turf(owner), 2, 50, list(owner))
+	new /obj/effect/timestop/magic(get_turf(owner), 1, 50, list(owner)) // null roddies counter
 
 /obj/item/melee/bokken // parrying stick
 	name = "bokken"

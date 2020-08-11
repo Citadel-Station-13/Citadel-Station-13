@@ -1,0 +1,4 @@
+author: "silicons"
+delete-after: True
+changes: 
+  - rscadd: "You can now use anything as an emoji by doing :/obj/item/path/to/item:. This works for any /atom or subtype."

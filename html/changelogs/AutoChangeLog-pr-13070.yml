@@ -1,0 +1,6 @@
+author: "kappa-sama"
+delete-after: True
+changes: 
+  - tweak: "smuggler satchel cost 2->1"
+  - tweak: "radio jammer cost 5->2"
+  - bugfix: "smuggler satchel uplink description now implies that persistence is disabled"
