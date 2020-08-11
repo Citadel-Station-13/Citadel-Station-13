@@ -105,7 +105,7 @@
 			CHECK_DNA_AND_SPECIES(H)
 			H.adjustBruteLoss(15) // skin gone!
 			H.DefaultCombatKnockdown(30)
-			if(!istype(H.dna.species, /datum/species/krokodil_addict))
+			if(!istype(H.dna.species, /datum/species/krokodil_addict) && H.bruteloss > 300)
 				to_chat(H, "<span class='userdanger'>Your skin is flensed by the [src]!</span>")
 				H.emote("scream")
 				H.set_species(/datum/species/krokodil_addict)
