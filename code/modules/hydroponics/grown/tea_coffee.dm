@@ -52,6 +52,9 @@
 	species = "catnip"
 	plantname = "Catnip Plant"
 	growthstages = 3
+	icon_grow = "catnip-grow"
+	icon_harvest = "catnip-harvest"
+	icon_dead = "tea-dead"
 	product = /obj/item/reagent_containers/food/snacks/grown/tea/catnip
 	reagents_add = list(/datum/reagent/pax/catnip = 0.1, /datum/reagent/consumable/nutriment/vitamin = 0.06, /datum/reagent/toxin/teapowder = 0.3)
 	rarity = 50
