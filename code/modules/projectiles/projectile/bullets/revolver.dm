@@ -132,9 +132,9 @@
 	name = ".357 DumDum bullet" // the warcrime bullet
 	damage = 40
 	armour_penetration = -20
-	wound_bonus = 30
-	bare_wound_bonus = 30
+	wound_bonus = 45
+	bare_wound_bonus = 45
 	sharpness = SHARP_EDGED
-	embedding = list(embed_chance=80, fall_chance=3, jostle_chance=4, ignore_throwspeed_threshold=TRUE, pain_stam_pct=0.4, pain_mult=5, jostle_pain_mult=6, rip_time=10)
+	embedding = list(embed_chance=90, fall_chance=2, jostle_chance=5, ignore_throwspeed_threshold=TRUE, pain_stam_pct=0.4, pain_mult=5, jostle_pain_mult=6, rip_time=10)
 	wound_falloff_tile = -1
 	embed_falloff_tile = -5
