@@ -20,6 +20,7 @@
 	var/caliber
 	var/multiload = 1
 	var/start_empty = 0
+	var/load_delay = 0 //how long do we take to load (deciseconds)
 	var/list/bullet_cost
 	var/list/base_cost// override this one as well if you override bullet_cost
 
@@ -79,6 +80,9 @@
 	if(!can_load(user))
 		return
 	if(istype(A, /obj/item/ammo_box))
+		if(load_delay)
+			if(!do_after(user, load_delay, target = src))
+				return
 		var/obj/item/ammo_box/AM = A
 		for(var/obj/item/ammo_casing/AC in AM.stored_ammo)
 			var/did_load = give_round(AC, replace_spent)
