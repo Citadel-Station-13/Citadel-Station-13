@@ -105,7 +105,7 @@
 	relevant_layers = null
 
 /datum/sprite_accessory/tails_animated/is_not_visible(var/mob/living/carbon/human/H, var/tauric)
-	return if((H.wear_suit && (H.wear_suit.flags_inv & HIDETAUR)) || tauric || mutant_bodyparts["tail_human"])
+	return ((H.wear_suit && (H.wear_suit.flags_inv & HIDETAUR)) || tauric || H.dna.species.mutant_bodyparts["tail_human"])
 
 /datum/sprite_accessory/tails/human/ailurus
 	name = "Red Panda"
@@ -547,7 +547,7 @@
 	relevant_layers = list(BODY_BEHIND_LAYER, BODY_FRONT_LAYER)
 
 /datum/sprite_accessory/tails_animated/mam_tails_animated/is_not_visible(var/mob/living/carbon/human/H, var/tauric)
-	return ((H.wear_suit && (H.wear_suit.flags_inv & HIDETAUR)) || tauric || mutant_bodyparts["mam_tail"])
+	return ((H.wear_suit && (H.wear_suit.flags_inv & HIDETAUR)) || tauric || H.dna.species.mutant_bodyparts["mam_tail"])
 
 /datum/sprite_accessory/tails_animated/mam_tails_animated/none
 	name = "None"

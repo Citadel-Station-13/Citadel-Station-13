@@ -13,7 +13,7 @@
 	relevant_layers = list(BODY_BEHIND_LAYER, BODY_ADJ_LAYER, BODY_FRONT_LAYER)
 
 /datum/sprite_accessory/wings_open/is_not_visible(var/mob/living/carbon/human/H, var/tauric)
-	return (H.wear_suit && (H.wear_suit.flags_inv & HIDEJUMPSUIT) && (!H.wear_suit.species_exception || !is_type_in_list(src, H.wear_suit.species_exception)) || mutant_bodyparts["wings"])
+	return (H.wear_suit && (H.wear_suit.flags_inv & HIDEJUMPSUIT) && (!H.wear_suit.species_exception || !is_type_in_list(src, H.wear_suit.species_exception)) || H.dna.species.mutant_bodyparts["wings"])
 
 /datum/sprite_accessory/wings_open/angel
 	name = "Angel"
