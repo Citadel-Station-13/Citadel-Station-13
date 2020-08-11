@@ -642,10 +642,12 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 	var/tauric = mutant_bodyparts["taur"] && H.dna.features["taur"] && H.dna.features["taur"] != "None"
 
 	for(var/mutant_part in mutant_bodyparts)
-		var/datum/sprite_accessory/S
-		S = GLOB.mutant_reference_list[mutant_part][H.dna.features[mutant_part]]
-		if(!S || S.is_not_visible(H, tauric))
-			bodyparts_to_add -= mutant_part
+		var/reference_list = GLOB.mutant_reference_list[mutant_part]
+		if(reference_list)
+			var/datum/sprite_accessory/S
+			S = reference_list[H.dna.features[mutant_part]]
+			if(!S || S.is_not_visible(H, tauric))
+				bodyparts_to_add -= mutant_part
 
 	//Digitigrade legs are stuck in the phantom zone between true limbs and mutant bodyparts. Mainly it just needs more agressive updating than most limbs.
 	var/update_needed = FALSE
@@ -682,16 +684,18 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 	var/list/dna_feature_as_text_string = list()
 
 	for(var/bodypart in bodyparts_to_add)
-		var/datum/sprite_accessory/S
-		S = GLOB.mutant_reference_list[bodypart][H.dna.features[bodypart]]
+		var/reference_list = GLOB.mutant_reference_list[bodypart]
+		if(reference_list)
+			var/datum/sprite_accessory/S
+			S = reference_list[H.dna.features[bodypart]]
 
-		if(!S || S.icon_state == "none")
-			continue
+			if(!S || S.icon_state == "none")
+				continue
 
-		for(var/L in S.relevant_layers)
-			LAZYADD(relevant_layers["[L]"], S)
-		if(!S.mutant_part_string)
-			dna_feature_as_text_string[S] = bodypart
+			for(var/L in S.relevant_layers)
+				LAZYADD(relevant_layers["[L]"], S)
+			if(!S.mutant_part_string)
+				dna_feature_as_text_string[S] = bodypart
 
 	var/static/list/layer_text = list(
 		"[BODY_BEHIND_LAYER]" = "BEHIND",
