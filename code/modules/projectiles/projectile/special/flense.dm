@@ -104,7 +104,7 @@
 			var/mob/living/carbon/human/H = unrended
 			CHECK_DNA_AND_SPECIES(H)
 			H.adjustBruteLoss(15) // skin gone!
-			H.DefaultCombatKnockdown(30)
+			H.DefaultCombatKnockdown(5)
 			if(H.bruteloss > 300)
 				to_chat(H, "<span class='userdanger'>Your skin is flensed by the [src]!</span>")
 				H.become_husk(TRAIT_GENERIC)
