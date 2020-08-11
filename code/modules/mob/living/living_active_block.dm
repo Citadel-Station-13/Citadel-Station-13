@@ -181,9 +181,9 @@
 /// Apply the stamina damage to our user, notice how damage argument is stamina_amount.
 /obj/item/proc/active_block_do_stamina_damage(mob/living/owner, atom/object, stamina_amount, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return)
 	if(istype(object, /obj/item/projectile))
-		var/obj/item/projectile/P = O
+		var/obj/item/projectile/P = object
 		if(P.stamina)
-			var/blocked = active_block_calculate_final_damage(owner, object, stamina, attack_text, attack_type, armour_penetration, attacker, def_zone, final_block_chance, block_return)
+			var/blocked = active_block_calculate_final_damage(owner, object, P.stamina, attack_text, attack_type, armour_penetration, attacker, def_zone, final_block_chance, block_return)
 			var/stam = active_block_stamina_cost(owner, object, blocked, attack_text, ATTACK_TYPE_PROJECTILE, armour_penetration, attacker, def_zone, final_block_chance, block_return)
 			stamina_amount += stam
 	var/datum/block_parry_data/data = get_block_parry_data()
