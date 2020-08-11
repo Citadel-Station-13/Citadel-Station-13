@@ -24,3 +24,7 @@
 	name = "A diamond ring"
 	path = /obj/item/clothing/gloves/ring/diamond
 	cost = 4
+
+/datum/gear/gloves/customring
+	name = "A ring, renameable"
+	path = /obj/item/clothing/gloves/ring/custom

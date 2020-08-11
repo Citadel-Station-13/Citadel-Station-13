@@ -98,3 +98,7 @@
 	name = "A diamond ring box"
 	path = /obj/item/storage/fancy/ringbox/diamond
 	cost = 5
+
+/datum/gear/backpack/necklace//this is here because loadout doesn't support proper accessories
+	name = "A renameable necklace"
+	path = /obj/item/clothing/accessory/necklace
