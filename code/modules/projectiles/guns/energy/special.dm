@@ -353,8 +353,8 @@
 	cell_type = /obj/item/stock_parts/cell/emergency_light //120 charge
 
 /obj/item/gun/energy/warcrime/attack_self(mob/user)
-	to_chat(user, "<span class='danger'You retract all nearby nets using the electromagnetic tether!</span>")
+	to_chat(user, "<span class='danger'>You retract all nearby nets using the electromagnetic tether!</span>")
 	for(var/obj/structure/flensingnet/F in oview(7, user))
 		F.rend()
-		addtimer(CALLBACK(F, .proc/take_damage, max_integrity), 1)
+		addtimer(CALLBACK(F, .proc/qdel), 1)
 		cell.charge = 120

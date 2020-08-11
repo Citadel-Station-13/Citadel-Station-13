@@ -2,10 +2,11 @@
 
 /obj/item/projectile/energy/flenser
 	name = "flensing net"
+	damage_type = BRUTE
 	damage = 5//this isn't even the start of how much pain this causes
 
 /obj/item/projectile/energy/flenser/on_hit(atom/target, blocked = FALSE)
-	if(isliving(target))
+	if(target)
 		var/turf/Tloc = get_turf(target)
 		if(!locate(/obj/structure/flensingnet) in Tloc)
 			new /obj/structure/flensingnet(Tloc)
@@ -35,10 +36,10 @@
 			playsound(user, 'sound/misc/desceration-03.ogg', 50, TRUE)
 			return
 	else
-		user.visible_message("<span class='danger'>[user] starts tenderly lifting [dyingman] off of [src]...</span>", \
-		"<span class='danger'>You start tenderly lifting [dyingman] off of [src]...</span>")
+		user.visible_message("<span class='danger'>[user] starts tenderly lifting [src] off of [dyingman]...</span>", \
+		"<span class='danger'>You start tenderly lifting [src] off of [dyingman]...</span>")
 		if(!do_after(user, 60, target = dyingman))
-			dyingman.visible_message("<span class='warning'>[dyingman] painfully slides back down [src].</span>")
+			dyingman.visible_message("<span class='warning'>[src] painfully rends [dyingman].</span>")
 			if(dyingman.stat >= UNCONSCIOUS)
 				return
 			dyingman.say("Oof, ouch owwie!!", forced = "flensing net removal failure")
@@ -60,7 +61,7 @@
 		if(iscyborg(whale))
 			if(!whale.stat)
 				whale.visible_message("<span class='boldwarning'>The flensing net rends [whale]'s chassis, going blunt and useless in the process!</span>", \
-				"<span class='userdanger'>A massive brass spike rips through your chassis and bursts into shrapnel in your casing!</span>")
+				"<span class='userdanger'>A razor net rips your chassis and bursts into shrapnel in your casing!</span>")
 				whale.adjustBruteLoss(35)
 				whale.Stun(20)
 				addtimer(CALLBACK(src, .proc/take_damage, max_integrity), 1)
@@ -83,6 +84,8 @@
 
 /obj/structure/flensingnet/Destroy()
 	STOP_PROCESSING(SSfastprocess, src)
+	if(rended)
+		return ..()
 	if(buckled_mobs && LAZYLEN(buckled_mobs))
 		var/mob/living/L = buckled_mobs[1]
 		if(iscarbon(L))
@@ -100,7 +103,8 @@
 		if(ishuman(unrended))
 			var/mob/living/carbon/human/H = unrended
 			CHECK_DNA_AND_SPECIES(H)
-			H.adjustBruteLoss(20) // skin gone!
+			H.adjustBruteLoss(15) // skin gone!
+			H.DefaultCombatKnockdown(30)
 			if(!istype(H.dna.species, /datum/species/krokodil_addict))
 				to_chat(H, "<span class='userdanger'>Your skin is flensed by the [src]!</span>")
 				H.emote("scream")
@@ -110,5 +114,5 @@
 				H.emote("scream")
 		else
 			to_chat(unrended, "<span class='userdanger'>The [src] rends your flesh!</span>")
-			unrended.adjustBruteLoss(20)
+			unrended.adjustBruteLoss(15)
 	rended = TRUE
