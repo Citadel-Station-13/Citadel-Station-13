@@ -1,10 +1,25 @@
+#define DEFAULT_MAP_SIZE 15
+
 /obj/machinery/computer/security
 	name = "security camera console"
 	desc = "Used to access the various cameras on the station."
 	icon_screen = "cameras"
 	icon_keyboard = "security_key"
 	circuit = /obj/item/circuitboard/computer/security
-	light_color = LIGHT_COLOR_RED
+	light_color = COLOR_SOFT_RED
+
+	var/list/network = list("ss13")
+	var/obj/machinery/camera/active_camera
+	/// The turf where the camera was last updated.
+	var/turf/last_camera_turf
+	var/list/concurrent_users = list()
+
+	// Stuff needed to render the map
+	var/map_name
+	var/obj/screen/map_view/cam_screen
+	/// All the plane masters that need to be applied.
+	var/list/cam_plane_masters
+	var/obj/screen/background/cam_background
 
 /obj/machinery/computer/security/Initialize()
 	. = ..()
@@ -186,14 +201,13 @@
 			D["[C.c_tag]"] = C
 	return D
 
-
 // SECURITY MONITORS
 
 /obj/machinery/computer/security/wooden_tv
 	name = "security camera monitor"
 	desc = "An old TV hooked into the station's camera network."
 	icon_state = "television"
-	icon_keyboard = null
+	icon_keyboard = "no_keyboard"
 	icon_screen = "detective_tv"
 	pass_flags = PASSTABLE
 
@@ -225,7 +239,7 @@
 
 /obj/machinery/computer/security/qm
 	name = "\improper Quartermaster's camera console"
-	desc = "A console with access to the mining, auxillary base and vault camera networks."
+	desc = "A console with access to the mining, auxiliary base and vault camera networks."
 	network = list("mine", "auxbase", "vault")
 	circuit = null
 
@@ -236,20 +250,15 @@
 	desc = "Used for watching an empty arena."
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "telescreen"
+	layer = SIGN_LAYER
 	network = list("thunder")
 	density = FALSE
 	circuit = null
 	light_power = 0
 
-/obj/machinery/computer/security/telescreen/Initialize()
-	. = ..()
-	var/turf/T = get_turf_pixel(src)
-	if(iswallturf(T))
-		plane = ABOVE_WALL_PLANE
-
 /obj/machinery/computer/security/telescreen/update_icon_state()
 	icon_state = initial(icon_state)
-	if(stat & BROKEN)
+	if(machine_stat & BROKEN)
 		icon_state += "b"
 
 /obj/machinery/computer/security/telescreen/entertainment
@@ -288,9 +297,9 @@
 	desc = "Used for watching the AI and the RD's goons from the safety of his office."
 	network = list("rd", "aicore", "aiupload", "minisat", "xeno", "test")
 
-/obj/machinery/computer/security/telescreen/circuitry
-	name = "circuitry telescreen"
-	desc = "Used for watching the other eggheads from the safety of the circuitry lab."
+/obj/machinery/computer/security/telescreen/research
+	name = "research telescreen"
+	desc = "A telescreen with access to the research division's camera network."
 	network = list("rd")
 
 /obj/machinery/computer/security/telescreen/ce
@@ -334,8 +343,8 @@
 	network = list("prison")
 
 /obj/machinery/computer/security/telescreen/auxbase
-	name = "auxillary base monitor"
-	desc = "A telescreen that connects to the auxillary base's camera."
+	name = "auxiliary base monitor"
+	desc = "A telescreen that connects to the auxiliary base's camera."
 	network = list("auxbase")
 
 /obj/machinery/computer/security/telescreen/minisat
@@ -348,11 +357,4 @@
 	desc = "A telescreen that connects to the AI upload's camera network."
 	network = list("aiupload")
 
-// Subtype that connects to shuttles.
-/obj/machinery/computer/security/shuttle
-	circuit = /obj/item/circuitboard/computer/security/shuttle
-
-/obj/machinery/computer/security/shuttle/connect_to_shuttle(obj/docking_port/mobile/port, obj/docking_port/stationary/dock, idnum, override=FALSE)
-	for(var/i in network)
-		network -= i
-		network += "[idnum][i]"
+#undef DEFAULT_MAP_SIZE
