@@ -39,6 +39,8 @@
 		air = new
 		air.copy_from_turf(src)
 		update_air_ref()
+		if(planetary_atmos)
+			update_planet_atmos()
 	. = ..()
 
 /turf/open/Destroy()
@@ -50,6 +52,8 @@
 	return ..()
 
 /turf/proc/update_air_ref()
+
+/turf/proc/update_planet_atmos()
 
 /////////////////GAS MIXTURE PROCS///////////////////
 
@@ -177,6 +181,7 @@
 	SSair.remove_from_active(src)
 
 /turf/open/proc/equalize_pressure_in_zone(cyclenum)
+
 /turf/open/proc/consider_firelocks(turf/T2)
 	var/reconsider_adj = FALSE
 	for(var/obj/machinery/door/firedoor/FD in T2)

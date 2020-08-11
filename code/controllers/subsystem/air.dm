@@ -203,8 +203,10 @@ SUBSYSTEM_DEF(air)
 		if(MC_TICK_CHECK)
 			return
 
-/datum/controller/subsystem/air/proc/process_turf_equalize(resumed = 0)
-	if(process_turf_equalize_extools(resumed,(Master.current_ticklimit - TICK_USAGE) * 0.01 * world.tick_lag))
+/datum/controller/subsystem/air/proc/post_process_turf_equalize_extools()
+
+/datum/controller/subsystem/air/proc/post_process_turf_equalize(resumed = 0)
+	if(post_process_turf_equalize_extools(resumed,(Master.current_ticklimit - TICK_USAGE) * 0.01 * world.tick_lag))
 		sleep()
 	/*
 	//cache for sanic speed
@@ -223,34 +225,11 @@ SUBSYSTEM_DEF(air)
 			return
 	*/
 
-/datum/controller/subsystem/air/proc/process_turf_equalize_extools()
-
-/datum/controller/subsystem/air/proc/process_active_turfs(resumed = 0)
-	if(process_active_turfs_extools(resumed,(Master.current_ticklimit - TICK_USAGE) * 0.01 * world.tick_lag))
-		sleep()
-	/*
-	//cache for sanic speed
-	var/fire_count = times_fired
-	if (!resumed)
-		src.currentrun = active_turfs.Copy()
-	//cache for sanic speed (lists are references anyways)
-	var/list/currentrun = src.currentrun
-	while(currentrun.len)
-		var/turf/open/T = currentrun[currentrun.len]
-		currentrun.len--
-		if (T)
-			T.process_cell(fire_count)
-		if (MC_TICK_CHECK)
-			return
-	*/
-
-/datum/controller/subsystem/air/proc/process_active_turfs_extools()
+/datum/controller/subsystem/air/proc/post_process_turfs_extools()
 
 /datum/controller/subsystem/air/proc/post_process_turfs(resumed = 0)
 	if(post_process_turfs_extools(resumed,(Master.current_ticklimit - TICK_USAGE) * 0.01 * world.tick_lag))
 		sleep()
-
-/datum/controller/subsystem/air/proc/post_process_turfs_extools()
 
 /datum/controller/subsystem/air/proc/process_excited_groups(resumed = 0)
 	if(process_excited_groups_extools(resumed, (Master.current_ticklimit - TICK_USAGE) * 0.01 * world.tick_lag))

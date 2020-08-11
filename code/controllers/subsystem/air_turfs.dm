@@ -12,7 +12,7 @@ SUBSYSTEM_DEF(air_turfs)
 	var/cost_groups = 0
 	var/cost_equalize = 0
 
-	var/currentpart = SSAIR_ACTIVETURFS
+	var/currentpart = SSAIR_POST_PROCESS
 
 /datum/controller/subsystem/air_turfs/stat_entry(msg)
 	var/active_turf_len = SSair.active_turfs_length()
@@ -30,7 +30,10 @@ SUBSYSTEM_DEF(air_turfs)
 	msg += "AT/MS:[round((cost ? active_turf_len/cost : 0),0.1)]"
 	..(msg)
 
+/datum/controller/subsystem/air_turfs/proc/wake_thread()
+
 /datum/controller/subsystem/air_turfs/fire(resumed = 0)
+	wake_thread()
 	var/timer = TICK_USAGE_REAL
 	// "why is it post process if it comes before" because in C++ it only happens after the thread does the process
 	if(currentpart == SSAIR_POST_PROCESS)
@@ -40,7 +43,16 @@ SUBSYSTEM_DEF(air_turfs)
 		if(state != SS_RUNNING)
 			return
 		resumed = 0
-		currentpart = SSair.monstermos_enabled ? SSAIR_EQUALIZE : SSAIR_ACTIVETURFS
+		currentpart = SSair.monstermos_enabled ? SSAIR_EQUALIZE : SSAIR_EXCITEDGROUPS
+
+	if(currentpart == SSAIR_EQUALIZE)
+		timer = TICK_USAGE_REAL
+		SSair.post_process_turf_equalize(resumed)
+		cost_equalize = MC_AVERAGE(cost_equalize, TICK_DELTA_TO_MS(TICK_USAGE_REAL - timer))
+		if(state != SS_RUNNING)
+			return
+		resumed = 0
+		currentpart = SSAIR_EXCITEDGROUPS
 
 	if(currentpart == SSAIR_EXCITEDGROUPS)
 		timer = TICK_USAGE_REAL
@@ -49,23 +61,6 @@ SUBSYSTEM_DEF(air_turfs)
 		if(state != SS_RUNNING)
 			return
 		resumed = 0
-		currentpart = SSAIR_EQUALIZE
-
-	if(currentpart == SSAIR_EQUALIZE)
-		timer = TICK_USAGE_REAL
-		SSair.process_turf_equalize(resumed)
-		cost_equalize = MC_AVERAGE(cost_equalize, TICK_DELTA_TO_MS(TICK_USAGE_REAL - timer))
-		if(state != SS_RUNNING)
-			return
-		resumed = 0
-		currentpart = SSAIR_ACTIVETURFS
-
-	if(currentpart == SSAIR_ACTIVETURFS)
-		timer = TICK_USAGE_REAL
-		SSair.process_active_turfs(resumed)
-		cost_turfs = MC_AVERAGE(cost_turfs, TICK_DELTA_TO_MS(TICK_USAGE_REAL - timer))
-		if(state != SS_RUNNING)
-			return
-		resumed = 0
+		currentpart = SSAIR_POST_PROCESS
 
 	currentpart = SSAIR_POST_PROCESS
