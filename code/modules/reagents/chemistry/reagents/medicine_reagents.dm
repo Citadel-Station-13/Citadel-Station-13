@@ -488,6 +488,14 @@
 /datum/reagent/medicine/synthflesh/overdose_start(mob/living/M)
 	metabolization_rate = 15 * REAGENTS_METABOLISM
 
+/datum/reagent/medicine/synthflesh/flesh
+	name = "Flesh"
+	description = "Like synthflesh, but not synthetic."
+
+/datum/reagent/medicine/synthflesh/flesh/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message = 1)
+	..()
+	SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "notsynthflesh", /datum/mood_event/notsynthflesh)
+
 /datum/reagent/medicine/charcoal
 	name = "Charcoal"
 	description = "Heals toxin damage as well as slowly removing any other chemicals the patient has in their bloodstream."

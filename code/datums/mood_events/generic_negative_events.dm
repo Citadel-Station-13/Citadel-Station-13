@@ -147,6 +147,11 @@
 	mood_change = -5
 	timeout = 1 MINUTES
 
+/datum/mood_event/notsynthflesh
+	description = "<span class='boldwarning'>Oh, god! I'm covered in someone else's raw flesh!</span>\n"
+	mood_change = -8
+	timeout = 1 MINUTES
+
 /datum/mood_event/loud_gong
 	description = "<span class='warning'>That loud gong noise really hurt my ears!</span>\n"
 	mood_change = -3
