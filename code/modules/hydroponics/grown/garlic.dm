@@ -10,6 +10,7 @@
 	growthstages = 3
 	growing_icon = 'icons/obj/hydroponics/growing_vegetables.dmi'
 	icon_grow = "onion-grow" //TODO: GET SOME GARLIC SPRITES, PLEASE!
+	icon_harvest = "onion-harvest"
 	icon_dead = "onion-dead"
 	reagents_add = list(/datum/reagent/consumable/garlic = 0.15, /datum/reagent/consumable/nutriment = 0.1)
 
