@@ -4,7 +4,6 @@
 	name = "security camera console"
 	desc = "Used to access the various cameras on the station."
 	icon_screen = "cameras"
-	icon_keyboard = "security_key"
 	circuit = /obj/item/circuitboard/computer/security
 	light_color = COLOR_SOFT_RED
 
@@ -207,7 +206,6 @@
 	name = "security camera monitor"
 	desc = "An old TV hooked into the station's camera network."
 	icon_state = "television"
-	icon_keyboard = "no_keyboard"
 	icon_screen = "detective_tv"
 	pass_flags = PASSTABLE
 
@@ -215,7 +213,6 @@
 	name = "outpost camera console"
 	desc = "Used to access the various cameras on the outpost."
 	icon_screen = "mining"
-	icon_keyboard = "mining_key"
 	network = list("mine", "auxbase")
 	circuit = /obj/item/circuitboard/computer/mining
 
