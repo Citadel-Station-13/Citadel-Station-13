@@ -44,7 +44,7 @@
 	filling_color = "#4582B4"
 	grind_results = list(/datum/reagent/toxin/teapowder = 0, /datum/reagent/medicine/salglu_solution = 0)
 
-// Kitty drugs
+// Catnip
 /obj/item/seeds/tea/catnip
 	name = "pack of catnip seeds"
 	icon_state = "seed-catnip"
