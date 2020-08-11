@@ -12,7 +12,7 @@
 	var/ascended = FALSE
 
 /datum/antagonist/heretic/admin_add(datum/mind/new_owner,mob/admin)
-	give_equipment = FALSE
+	give_equipment = TRUE
 	new_owner.add_antag_datum(src)
 	message_admins("[key_name_admin(admin)] has heresized [key_name_admin(new_owner)].")
 	log_admin("[key_name(admin)] has heresized [key_name(new_owner)].")
