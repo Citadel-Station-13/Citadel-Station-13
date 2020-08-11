@@ -29,17 +29,17 @@
 	display_name = "Reagent Plumbing Technology"
 	description = "Plastic tubes, and machinery used for manipulating things in them."
 	prereq_ids = list("base")
-	design_ids = list("acclimator", "disposer", "plumb_filter", "plumb_synth", "plumb_grinder", "reaction_chamber", "duct_print", "plumb_splitter", "pill_press", "plumb_pump", "plumb_in", "plumb_out", "plumb_tank")
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
+	design_ids = list("acclimator", "disposer", "plumb_filter", "plumb_synth", "plumb_grinder", "reaction_chamber", "duct_print", "plumb_splitter", "pill_press", "plumb_pump", "plumb_in", "plumb_out", "plumb_tank", "medipen_refiller")
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 1000)
 
 
 /datum/techweb_node/advplumbing
 	id = "advplumbing"
 	display_name = "Advanced Plumbing Technology"
 	description = "Plumbing RCD."
-	prereq_ids = list("plumbing", "adv_engi", "adv_biotech")
+	prereq_ids = list("plumbing", "adv_engi")
 	design_ids = list("plumb_rcd", "autohydrotray")
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 10000)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 
 //////////////////////Cybernetics/////////////////////
 
