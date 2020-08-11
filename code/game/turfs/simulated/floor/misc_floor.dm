@@ -267,3 +267,15 @@
 	icon = 'icons/turf/floors.dmi'
 	icon_state = "floor_padded"
 	floor_tile = /obj/item/stack/tile/padded
+
+/turf/open/floor/plating/rust
+	name = "rusted plating"
+	desc = "Corrupted steel."
+	icon_state = "plating_rust"
+	footstep = FOOTSTEP_RUST
+	barefootstep = FOOTSTEP_RUST
+	clawfootstep = FOOTSTEP_RUST
+	heavyfootstep = FOOTSTEP_RUST
+
+/turf/open/floor/plating/rust/rust_heretic_act()
+	return 
