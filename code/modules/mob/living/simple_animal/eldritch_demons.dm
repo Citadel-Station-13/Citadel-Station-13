@@ -336,7 +336,7 @@
 	sight = SEE_TURFS
 	spells_to_add = list(/obj/effect/proc_holder/spell/aoe_turf/rust_conversion/small,/obj/effect/proc_holder/spell/aimed/rust_wave/short)
 
-/mob/living/simple_animal/hostile/eldritch/rust_spirit/setDir(newdir)
+/mob/living/simple_animal/hostile/eldritch/rust_spirit/setDir(newdir, ismousemovement)
     . = ..()
     if(newdir == NORTH)
         icon_state = "rust_walker_n"

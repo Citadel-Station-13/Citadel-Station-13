@@ -418,6 +418,7 @@
 	return ..()
 
 /datum/status_effect/eldritch/on_apply()
+	. = ..()
 	if(owner.mob_size >= MOB_SIZE_HUMAN)
 		RegisterSignal(owner,COMSIG_ATOM_UPDATE_OVERLAYS,.proc/update_owner_underlay)
 		owner.update_icon()
@@ -572,6 +573,7 @@
 	. = ..()
 
 /datum/status_effect/cloudstruck/on_apply()
+	. = ..()
 	mob_overlay = mutable_appearance('icons/effects/eldritch.dmi', "cloud_swirl", ABOVE_MOB_LAYER)
 	owner.overlays += mob_overlay
 	owner.update_icon()
