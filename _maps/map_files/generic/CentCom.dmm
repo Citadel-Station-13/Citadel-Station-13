@@ -17249,6 +17249,10 @@
 	},
 /turf/open/floor/mineral/titanium,
 /area/centcom/evac)
+"Qc" = (
+/obj/effect/landmark/mafia_game_area,
+/turf/open/space/basic,
+/area/space)
 "Qe" = (
 /turf/open/ai_visible,
 /area/ai_multicam_room)
@@ -58911,7 +58915,7 @@ aa
 aa
 aa
 aa
-aa
+Qc
 aa
 aa
 aa
