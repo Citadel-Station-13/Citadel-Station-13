@@ -17,7 +17,6 @@ GLOBAL_LIST_EMPTY(electrochromatic_window_lookup)
 	layer = ABOVE_OBJ_LAYER //Just above doors
 	pressure_resistance = 4*ONE_ATMOSPHERE
 	anchored = TRUE //initially is 0 for tile smoothing
-	flags_1 = ON_BORDER_1
 	max_integrity = 25
 	var/ini_dir = null
 	var/state = WINDOW_OUT_OF_FRAME
@@ -38,7 +37,8 @@ GLOBAL_LIST_EMPTY(electrochromatic_window_lookup)
 	var/hitsound = 'sound/effects/Glasshit.ogg'
 	rad_insulation = RAD_VERY_LIGHT_INSULATION
 	rad_flags = RAD_PROTECT_CONTENTS
-	flags_ricochet = RICOCHET_HARD
+	flags_1 = ON_BORDER_1|DEFAULT_RICOCHET_1
+	flags_ricochet =  RICOCHET_HARD
 	ricochet_chance_mod = 0.4
 	attack_hand_speed = CLICK_CD_MELEE
 	attack_hand_is_action = TRUE
