@@ -68,7 +68,6 @@
 	to_chat(user, "<span class='notice'>You start furiously plunging [name].</span>")
 	if(do_after(user, 30, target = src))
 		to_chat(user, "<span class='notice'>You finish plunging the [name].</span>")
-		reagents.expose(get_turf(src), TOUCH)
 		reagents.clear_reagents()
 
 /obj/machinery/medipen_refiller/wrench_act(mob/living/user, obj/item/I)
