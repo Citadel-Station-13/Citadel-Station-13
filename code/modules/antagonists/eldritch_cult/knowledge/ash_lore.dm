@@ -1,7 +1,7 @@
 /datum/eldritch_knowledge/base_ash
 	name = "Nightwatcher's Secret"
-	desc = "Opens up the path of ash to you. Allows you to transmute a match with a kitchen knife or it's derivatives into an ashen blade."
-	gain_text = "City Guard knows their watch. If you ask them at night, they may just tell you about the Ashy Lantern."
+	desc = "Inducts you into the Path of Ash. Allows you to transmute a match with an eldritch blade into an ashen blade."
+	gain_text = "The City guard knows their watch. If you ask them at night they may tell you about the ashy lantern."
 	banned_knowledge = list(/datum/eldritch_knowledge/base_rust,/datum/eldritch_knowledge/base_flesh,/datum/eldritch_knowledge/final/rust_final,/datum/eldritch_knowledge/final/flesh_final)
 	next_knowledge = list(/datum/eldritch_knowledge/ashen_grasp)
 	required_atoms = list(/obj/item/melee/sickly_blade,/obj/item/match)
@@ -12,7 +12,7 @@
 /datum/eldritch_knowledge/spell/ashen_shift
 	name = "Ashen Shift"
 	gain_text = "Ash is all the same, how can one man master it all?"
-	desc = "Short range jaunt that can help you escape from bad situations."
+	desc = "A short range jaunt that will enable you to escape from danger."
 	cost = 1
 	spell_to_add = /obj/effect/proc_holder/spell/targeted/ethereal_jaunt/shift/ash
 	next_knowledge = list(/datum/eldritch_knowledge/ash_mark,/datum/eldritch_knowledge/essence,/datum/eldritch_knowledge/ashen_eyes)
@@ -20,8 +20,8 @@
 
 /datum/eldritch_knowledge/ashen_grasp
 	name = "Grasp of Ash"
-	gain_text = "Gates have opened, minds have flooded, I remain."
-	desc = "Empowers your mansus grasp to throw away enemies."
+	gain_text = "Gates have opened, minds have flooded, yet I remain."
+	desc = "Empowers your mansus grasp to knock enemies down and throw them away."
 	cost = 1
 	next_knowledge = list(/datum/eldritch_knowledge/spell/ashen_shift)
 	route = PATH_ASH
@@ -40,7 +40,7 @@
 			if(!istype(X,/obj/effect/proc_holder/spell/targeted/touch/mansus_grasp))
 				continue
 			var/obj/effect/proc_holder/spell/targeted/touch/mansus_grasp/MG = X
-			MG.charge_counter = min(round(MG.charge_counter + MG.charge_max * 0.5),MG.charge_max) // refunds 75% of charge.
+			MG.charge_counter = min(round(MG.charge_counter + MG.charge_max * 0.5),MG.charge_max) // refunds 50% of charge.
 	var/atom/throw_target = get_edge_target_turf(C, user.dir)
 	if(!C.anchored)
 		. = TRUE
@@ -155,7 +155,7 @@
 /datum/eldritch_knowledge/spell/cleave
 	name = "Blood Cleave"
 	gain_text = "At first I was unfamiliar with these instruments of war, but the priest told me how to use them."
-	desc = "Gives a ranged spell that causes heavy bleeding and blood loss to a target and any surrounding individuals."
+	desc = "Grants a spell that will inflict wounds and bleeding upon the target, as well as in a short radius around them."
 	cost = 1
 	spell_to_add = /obj/effect/proc_holder/spell/pointed/cleave
 	next_knowledge = list(/datum/eldritch_knowledge/spell/entropic_plume,/datum/eldritch_knowledge/spell/flame_birth)
@@ -163,7 +163,7 @@
 /datum/eldritch_knowledge/final/ash_final
 	name = "Ashlord's Rite"
 	gain_text = "The forgotten lords have spoken! The Lord of Ash has come! Fear the flame!"
-	desc = "Bring 3 corpses onto a transmutation rune, you will become immune to fire ,space ,cold and other enviromental hazards and become overall sturdier to all other damages. You will gain a spell that passively creates ring of fire around you as well ,as you will gain a powerful abiltiy that let's you create a wave of flames all around you."
+	desc = "Bring three corpses onto a transmutation rune, after ascending you will become immune to fire, space, temperature and other environmental hazards. You will develop resistance to all other damages. You will be granted two spells, one which can bring forth a cascade of massive fire, and another which will surround your body in precious flames for a minute."
 	required_atoms = list(/mob/living/carbon/human)
 	cost = 3
 	route = PATH_ASH

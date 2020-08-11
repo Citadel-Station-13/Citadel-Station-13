@@ -1,6 +1,6 @@
 /datum/eldritch_knowledge/base_rust
 	name = "Blacksmith's Tale"
-	desc = "Opens up the path of rust to you. Allows you to transmute a knife with any trash item into a Rusty Blade."
+	desc = "Inducts you into the Path of Rust. Allows you to transmute an eldritch blade with any trash item into a Blade of Rust."
 	gain_text = "'Let me tell you a story,' The Blacksmith said as he gazed into his rusty blade."
 	banned_knowledge = list(/datum/eldritch_knowledge/base_ash,/datum/eldritch_knowledge/base_flesh,/datum/eldritch_knowledge/final/ash_final,/datum/eldritch_knowledge/final/flesh_final)
 	next_knowledge = list(/datum/eldritch_knowledge/rust_fist)
@@ -11,7 +11,7 @@
 
 /datum/eldritch_knowledge/rust_fist
 	name = "Grasp of Rust"
-	desc = "Empowers your mansus grasp to deal 500 damage to non-living matter and rust any turf it touches. Destroys already rusted turfs."
+	desc = "Empowers your Mansus Grasp to deal 500 damage to non-living matter and rust any structure it touches. Destroys already rusted structures."
 	gain_text = "Rust grows on the ceiling of the mansus."
 	cost = 1
 	next_knowledge = list(/datum/eldritch_knowledge/rust_regen)
@@ -61,7 +61,7 @@
 
 /datum/eldritch_knowledge/rust_mark
 	name = "Mark of Rust"
-	desc = "Your eldritch blade now applies a rust mark. Rust mark has a chance to deal between 0 to 200 damage to 75% of enemies items. To Detonate the mark use your mansus grasp on it."
+	desc = "Your eldritch blade now applies a rust mark. Rust marks have a chance to deal between 0 to 200 damage to 75% of enemies items. To activate the mark use your Mansus Grasp on it."
 	gain_text = "Lords of the depths help those in dire need at a cost."
 	cost = 2
 	next_knowledge = list(/datum/eldritch_knowledge/spell/area_conversion)
@@ -100,7 +100,7 @@
 
 /datum/eldritch_knowledge/armor
 	name = "Armorer's Ritual"
-	desc = "You can now create eldritch armor using a table and a gas mask."
+	desc = "You can now create eldritch armor using a built table and a gas mask on top of a transmutation rune."
 	gain_text = "For I am the heir to the throne of doom."
 	cost = 1
 	next_knowledge = list(/datum/eldritch_knowledge/rust_regen,/datum/eldritch_knowledge/flesh_ghoul)
@@ -109,7 +109,7 @@
 
 /datum/eldritch_knowledge/essence
 	name = "Priest's Ritual"
-	desc = "You can now transmute a tank of water into a bottle of eldritch water."
+	desc = "You can now transmute a tank of water into a bottle of eldritch fluid."
 	gain_text = "This is an old recipe, i got it from an owl."
 	cost = 1
 	next_knowledge = list(/datum/eldritch_knowledge/rust_regen,/datum/eldritch_knowledge/spell/ashen_shift)
@@ -118,7 +118,7 @@
 
 /datum/eldritch_knowledge/final/rust_final
 	name = "Rustbringer's Oath"
-	desc = "Bring 3 corpses onto the transmutation rune. After you finish the ritual rust will now automatically spread from the rune. Your healing on rust is also tripled, while you become more resillient overall."
+	desc = "Bring three corpses onto a transmutation rune. After you finish the ritual, rust will now automatically spread from the rune. Your healing on rust is also tripled, while you become more resilient overall."
 	gain_text = "Champion of rust. Corruptor of steel. Fear the dark for Rustbringer has come!"
 	cost = 3
 	required_atoms = list(/mob/living/carbon/human)

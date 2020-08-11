@@ -112,8 +112,8 @@
 	. = TRUE
 	RegisterSignal(human_target,COMSIG_MOB_DEATH,.proc/remove_ghoul)
 	human_target.revive(full_heal = TRUE, admin_revive = TRUE)
-	human_target.setMaxHealth(25)
-	human_target.health = 25
+	human_target.setMaxHealth(40)
+	human_target.health = 40
 	human_target.become_husk()
 	human_target.faction |= "heretics"
 	var/datum/antagonist/heretic_monster/heretic_monster = human_target.mind.add_antag_datum(/datum/antagonist/heretic_monster)
