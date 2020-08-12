@@ -313,13 +313,14 @@
 	glass_desc = "Drinking it from here would not seem right."
 
 /datum/reagent/consumable/tea/on_mob_life(mob/living/carbon/M)
-	M.dizziness = max(0,M.dizziness-2)
-	M.drowsyness = max(0,M.drowsyness-1)
-	M.jitteriness = max(0,M.jitteriness-3)
-	M.AdjustSleeping(-20, FALSE)
-	if(M.getToxLoss() && prob(20))
-		M.adjustToxLoss(-1, 0)
-	M.adjust_bodytemperature(20 * TEMPERATURE_DAMAGE_COEFFICIENT, 0, BODYTEMP_NORMAL)
+	if(method == INGEST)
+		M.dizziness = max(0,M.dizziness-2)
+		M.drowsyness = max(0,M.drowsyness-1)
+		M.jitteriness = max(0,M.jitteriness-3)
+		M.AdjustSleeping(-20, FALSE)
+		if(M.getToxLoss() && prob(20))
+			M.adjustToxLoss(-1, 0)
+		M.adjust_bodytemperature(20 * TEMPERATURE_DAMAGE_COEFFICIENT, 0, BODYTEMP_NORMAL)
 	..()
 	. = 1
 
@@ -334,12 +335,14 @@
 	glass_desc = "A piping hot tea that helps with the digestion of food."
 
 /datum/reagent/consumable/tea/red/on_mob_life(mob/living/carbon/M)
-	if(M.nutrition > NUTRITION_LEVEL_HUNGRY)
-		M.adjust_nutrition(-3)
-	M.dizziness = max(0,M.dizziness-2)
-	M.drowsyness = max(0,M.drowsyness-1)
-	M.jitteriness = max(0,M.jitteriness-3)
-	M.adjust_bodytemperature(23 * TEMPERATURE_DAMAGE_COEFFICIENT, 0, BODYTEMP_NORMAL)
+	if(method == INGEST)
+		if(M.nutrition > NUTRITION_LEVEL_HUNGRY)
+			M.adjust_nutrition(-3)
+		M.dizziness = max(0,M.dizziness-2)
+		M.drowsyness = max(0,M.drowsyness-1)
+		M.jitteriness = max(0,M.jitteriness-3)
+		M.adjust_bodytemperature(23 * TEMPERATURE_DAMAGE_COEFFICIENT, 0, BODYTEMP_NORMAL)
+	..()
 	. = 1
 
 /datum/reagent/consumable/tea/green
@@ -353,11 +356,13 @@
 	glass_desc = "A calming glass of green tea to help get you through the day."
 
 /datum/reagent/consumable/tea/green/on_mob_life(mob/living/carbon/M)
-	M.adjustOrganLoss(ORGAN_SLOT_LIVER, -0.5) //Detox!
-	M.dizziness = max(0,M.dizziness-2)
-	M.drowsyness = max(0,M.drowsyness-1)
-	M.jitteriness = max(0,M.jitteriness-3)
-	M.adjust_bodytemperature(15 * TEMPERATURE_DAMAGE_COEFFICIENT, 0, BODYTEMP_NORMAL)
+	if(method == INGEST)
+		M.adjustOrganLoss(ORGAN_SLOT_LIVER, -0.5) //Detox!
+		M.dizziness = max(0,M.dizziness-2)
+		M.drowsyness = max(0,M.drowsyness-1)
+		M.jitteriness = max(0,M.jitteriness-3)
+		M.adjust_bodytemperature(15 * TEMPERATURE_DAMAGE_COEFFICIENT, 0, BODYTEMP_NORMAL)
+	..()
 	. = 1
 
 /datum/reagent/consumable/tea/forest
@@ -372,13 +377,15 @@
 	glass_desc = "A lovely glass of tea and honey."
 
 /datum/reagent/consumable/tea/forest/on_mob_life(mob/living/carbon/M)
-	if(M.getToxLoss() && prob(40))//Two anti-toxins working here
-		M.adjustToxLoss(-1, 0, TRUE) //heals TOXINLOVERs
-		//Reminder that honey heals toxin lovers
-	M.dizziness = max(0,M.dizziness-2)
-	M.drowsyness = max(0,M.drowsyness-1)
-	M.jitteriness = max(0,M.jitteriness-3)
-	M.adjust_bodytemperature(15 * TEMPERATURE_DAMAGE_COEFFICIENT, 0, BODYTEMP_NORMAL)
+	if(method == INGEST)
+		if(M.getToxLoss() && prob(40))//Two anti-toxins working here
+			M.adjustToxLoss(-1, 0, TRUE) //heals TOXINLOVERs
+			//Reminder that honey heals toxin lovers
+		M.dizziness = max(0,M.dizziness-2)
+		M.drowsyness = max(0,M.drowsyness-1)
+		M.jitteriness = max(0,M.jitteriness-3)
+		M.adjust_bodytemperature(15 * TEMPERATURE_DAMAGE_COEFFICIENT, 0, BODYTEMP_NORMAL)
+	..()
 	. = 1
 
 /datum/reagent/consumable/tea/mush
@@ -392,12 +399,14 @@
 	glass_name = "glass of mush tea"
 	glass_desc = "A cold merky brown tea."
 
+//Also anything works to get high off this
 /datum/reagent/consumable/tea/mush/on_mob_life(mob/living/carbon/M)
 	M.set_drugginess(20) //Little better then space drugs
 	if(prob(20))
 		M.Dizzy(10)
 	if(prob(10))
 		M.disgust = 0
+	..()
 	. = 1
 
 /datum/reagent/consumable/lemonade
