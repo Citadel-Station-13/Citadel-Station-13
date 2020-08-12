@@ -47,7 +47,7 @@
 /obj/item/implant/warp/activate()
 	. = ..()
 	uses--
-	imp_in.do_adrenaline(150, TRUE, 0, 0, TRUE, list(/datum/reagent/fermi/eigenstate = 1.2), "<span class='boldnotice'>You feel an internal prick as as the bluespace starts ramping up!</span>")
+	imp_in.do_adrenaline(20, TRUE, 0, 0, TRUE, list(/datum/reagent/fermi/eigenstate = 1.2), "<span class='boldnotice'>You feel an internal prick as as the bluespace starts ramping up!</span>")
 	to_chat(imp_in, "<span class='notice'>You feel an internal prick as as the bluespace starts ramping up!</span>")
 	if(!uses)
 		qdel(src)

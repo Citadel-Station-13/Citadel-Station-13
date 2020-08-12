@@ -15,8 +15,6 @@
 	requires_ntnet = 0
 	size = 8
 	tgui_id = "NtosCard"
-	ui_x = 450
-	ui_y = 520
 
 	var/is_centcom = FALSE
 	var/minor = FALSE
@@ -275,7 +273,7 @@
 		departments = list("CentCom" = get_all_centcom_jobs())
 	else if(isnull(departments))
 		departments = list(
-			CARDCON_DEPARTMENT_COMMAND = list("Captain"),
+			CARDCON_DEPARTMENT_COMMAND = list("Captain"),//lol
 			CARDCON_DEPARTMENT_ENGINEERING = GLOB.engineering_positions,
 			CARDCON_DEPARTMENT_MEDICAL = GLOB.medical_positions,
 			CARDCON_DEPARTMENT_SCIENCE = GLOB.science_positions,

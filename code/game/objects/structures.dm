@@ -9,8 +9,10 @@
 	var/mob/living/structureclimber
 	var/broken = 0 //similar to machinery's stat BROKEN
 	layer = BELOW_OBJ_LAYER
-	flags_ricochet = RICOCHET_HARD
-	ricochet_chance_mod = 0.5
+	//ricochets on structures commented out for now because there's a lot of structures that /shouldnt/ be ricocheting and those need to be reviewed first
+	//flags_1 = DEFAULT_RICOCHET_1
+	//flags_ricochet = RICOCHET_HARD
+	//ricochet_chance_mod = 0.5
 
 /obj/structure/Initialize()
 	if (!armor)

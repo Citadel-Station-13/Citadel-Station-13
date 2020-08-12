@@ -23,6 +23,7 @@ GLOBAL_VAR_INIT(script_scripture_unlocked, FALSE) //If script scripture is avail
 GLOBAL_VAR_INIT(application_scripture_unlocked, FALSE) //If application scripture is available
 GLOBAL_VAR_INIT(judgement_scripture_unlocked, FALSE) //If judgement scripture is available
 GLOBAL_LIST_EMPTY(all_scripture) //a list containing scripture instances; not used to track existing scripture
+GLOBAL_LIST_EMPTY(all_clockwork_rites) //a list containing all clockwork rites. Filled the first time any cultist interacts with a sigil of rites.
 
 //Scripture tiers and requirements; peripherals should never be used
 #define SCRIPTURE_PERIPHERAL "Peripheral"
