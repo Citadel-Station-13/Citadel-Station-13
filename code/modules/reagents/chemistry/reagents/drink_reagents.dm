@@ -311,9 +311,10 @@
 	glass_icon_state = "teaglass"
 	glass_name = "glass of tea"
 	glass_desc = "Drinking it from here would not seem right."
+	var/drank = FALSE
 
 /datum/reagent/consumable/tea/on_mob_life(mob/living/carbon/M)
-	if(method == INGEST)
+	if(drank == TRUE)
 		M.dizziness = max(0,M.dizziness-2)
 		M.drowsyness = max(0,M.drowsyness-1)
 		M.jitteriness = max(0,M.jitteriness-3)
@@ -323,6 +324,10 @@
 		M.adjust_bodytemperature(20 * TEMPERATURE_DAMAGE_COEFFICIENT, 0, BODYTEMP_NORMAL)
 	..()
 	. = 1
+
+/datum/reagent/consumable/tea/reaction_mob(mob/living/L, method=TOUCH, reac_volume)
+	if(method == INGEST)
+		drank = TRUE
 
 /datum/reagent/consumable/tea/red
 	name = "Red Tea"
@@ -335,7 +340,7 @@
 	glass_desc = "A piping hot tea that helps with the digestion of food."
 
 /datum/reagent/consumable/tea/red/on_mob_life(mob/living/carbon/M)
-	if(method == INGEST)
+	if(drank == TRUE)
 		if(M.nutrition > NUTRITION_LEVEL_HUNGRY)
 			M.adjust_nutrition(-3)
 		M.dizziness = max(0,M.dizziness-2)
@@ -356,7 +361,7 @@
 	glass_desc = "A calming glass of green tea to help get you through the day."
 
 /datum/reagent/consumable/tea/green/on_mob_life(mob/living/carbon/M)
-	if(method == INGEST)
+	if(drank == TRUE)
 		M.adjustOrganLoss(ORGAN_SLOT_LIVER, -0.5) //Detox!
 		M.dizziness = max(0,M.dizziness-2)
 		M.drowsyness = max(0,M.drowsyness-1)
@@ -377,7 +382,7 @@
 	glass_desc = "A lovely glass of tea and honey."
 
 /datum/reagent/consumable/tea/forest/on_mob_life(mob/living/carbon/M)
-	if(method == INGEST)
+	if(drank == TRUE)
 		if(M.getToxLoss() && prob(40))//Two anti-toxins working here
 			M.adjustToxLoss(-1, 0, TRUE) //heals TOXINLOVERs
 			//Reminder that honey heals toxin lovers
@@ -398,8 +403,8 @@
 	glass_icon_state = "teaglass"
 	glass_name = "glass of mush tea"
 	glass_desc = "A cold merky brown tea."
+	drank = TRUE //Also anything works to get high off this.
 
-//Also anything works to get high off this
 /datum/reagent/consumable/tea/mush/on_mob_life(mob/living/carbon/M)
 	M.set_drugginess(20) //Little better then space drugs
 	if(prob(20))
