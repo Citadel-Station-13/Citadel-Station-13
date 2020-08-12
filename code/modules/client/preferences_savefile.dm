@@ -5,7 +5,7 @@
 //	You do not need to raise this if you are adding new values that have sane defaults.
 //	Only raise this value when changing the meaning/format/name/layout of an existing value
 //	where you would want the updater procs below to run
-#define SAVEFILE_VERSION_MAX	33
+#define SAVEFILE_VERSION_MAX	34
 
 /*
 SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Carn
@@ -200,6 +200,13 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		features["silicon_flavor_text"] = html_encode(features["silicon_flavor_text"])
 		features["ooc_notes"] = html_encode(features["ooc_notes"])
 
+	if(current_version < 34)
+		if(features["horns"] && S["species"]) //check for saved horn data
+			var/datum/species/loaded_species = GLOB.species_list[S["species"]]
+			if(loaded_species && !initial(loaded_species.mutant_bodyparts["horns"])) //if saved horn data plus previously no initial horns were allowed on their race, wipe the horns
+				features["horns"] = null
+
+
 /datum/preferences/proc/load_path(ckey,filename="preferences.sav")
 	if(!ckey)
 		return
@@ -224,7 +231,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	var/needs_update = savefile_needs_update(S)
 	if(needs_update == -2)		//fatal, can't load any data
 		return 0
-	
+
 	. = TRUE
 
 	//general preferences
@@ -443,7 +450,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		return 0
 
 	. = TRUE
-	
+
 	//Species
 	var/species_id
 	S["species"]			>> species_id
