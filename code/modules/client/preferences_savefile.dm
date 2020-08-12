@@ -203,7 +203,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	if(current_version < 34)
 		if(features["horns"] && S["species"]) //check for saved horn data
 			var/datum/species/loaded_species = GLOB.species_list[S["species"]]
-			if(loaded_species && !initial(loaded_species.mutant_bodyparts["horns"])) //if saved horn data plus previously no initial horns were allowed on their race, wipe the horns
+			if(loaded_species && !initial(loaded_species.mutant_bodyparts)["horns"]) //if saved horn data plus previously no initial horns were allowed on their race, wipe the horns
 				features["horns"] = null
 
 
