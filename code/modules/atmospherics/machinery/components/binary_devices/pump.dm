@@ -77,9 +77,9 @@
 		return
 
 	//Calculate necessary moles to transfer using PV=nRT
-	if((air1.total_moles() > 0) && (air1.temperature>0))
+	if((air1.total_moles() > 0) && (air1.return_temperature()>0))
 		var/pressure_delta = target_pressure - output_starting_pressure
-		var/transfer_moles = pressure_delta*air2.volume/(air1.temperature * R_IDEAL_GAS_EQUATION)
+		var/transfer_moles = pressure_delta*air2.return_volume()/(air1.return_temperature() * R_IDEAL_GAS_EQUATION)
 
 		//Actually transfer the gas
 		var/datum/gas_mixture/removed = air1.remove(transfer_moles)
@@ -107,11 +107,10 @@
 	))
 	radio_connection.post_signal(src, signal, filter = RADIO_ATMOSIA)
 
-/obj/machinery/atmospherics/components/binary/pump/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
-																datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+/obj/machinery/atmospherics/components/binary/pump/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, ui_key, "atmos_pump", name, 335, 115, master_ui, state)
+		ui = new(user, src, "AtmosPump", name)
 		ui.open()
 
 /obj/machinery/atmospherics/components/binary/pump/ui_data()
@@ -145,7 +144,7 @@
 				pressure = text2num(pressure)
 				. = TRUE
 			if(.)
-				target_pressure = CLAMP(pressure, 0, MAX_OUTPUT_PRESSURE)
+				target_pressure = clamp(pressure, 0, MAX_OUTPUT_PRESSURE)
 				investigate_log("was set to [target_pressure] kPa by [key_name(usr)]", INVESTIGATE_ATMOS)
 	update_icon()
 
@@ -167,7 +166,7 @@
 		on = !on
 
 	if("set_output_pressure" in signal.data)
-		target_pressure = CLAMP(text2num(signal.data["set_output_pressure"]),0,ONE_ATMOSPHERE*50)
+		target_pressure = clamp(text2num(signal.data["set_output_pressure"]),0,ONE_ATMOSPHERE*50)
 
 	if(on != old_on)
 		investigate_log("was turned [on ? "on" : "off"] by a remote signal", INVESTIGATE_ATMOS)

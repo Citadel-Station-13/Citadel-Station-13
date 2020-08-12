@@ -24,13 +24,13 @@
 	icon_aggro = "pandora"
 	icon_dead = "pandora_dead"
 	icon_gib = "syndicate_gib"
+	threat = 10
 	maxHealth = 800
 	health = 800
 	melee_damage_lower = 15
 	melee_damage_upper = 15
-	attacktext = "smashes into the side of"
-	/*attack_verb_continuous = "smashes into the side of"
-	attack_verb_simple = "smash into the side of"*/
+	attack_verb_continuous = "smashes into the side of"
+	attack_verb_simple = "smash into the side of"
 	attack_sound = 'sound/weapons/sonic_jackhammer.ogg'
 	throw_message = "merely dinks off of the"
 	speed = 4
@@ -95,8 +95,9 @@
 		if(AOE_SQUARES)
 			aoe_squares(target)
 
-/mob/living/simple_animal/hostile/asteroid/elite/pandora/Life()
-	. = ..()
+/mob/living/simple_animal/hostile/asteroid/elite/pandora/BiologicalLife(seconds, times_fired)
+	if(!(. = ..()))
+		return
 	if(health >= maxHealth * 0.5)
 		cooldown_time = 20
 		return

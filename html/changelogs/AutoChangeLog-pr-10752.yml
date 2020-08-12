@@ -1,9 +1,0 @@
-author: "Owai-Seek"
-delete-after: True
-changes: 
-  - rscadd: "Burger, Cargo Packaging, Dirty Magazine, Air Pump, and Scrubber crates."
-  - rscdel: "Duplicate Crate, Festive Wrapping Paper Crate, Contraband Monkey Meat Crate"
-  - tweak: "Gave Seed Crate Ambrosia Seed, gave Biker Gang Crate Spraypaint."
-  - tweak: "Organised some crates with sub-categories. Also, moved all vendor refills to a new tab."
-  - tweak: "Moved Grill to Service Tab"
-  - bugfix: "Engineering Hardsuit Access"

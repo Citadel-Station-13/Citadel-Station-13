@@ -68,7 +68,7 @@ INITIALIZE_IMMEDIATE(/mob/dead)
 	set category = "OOC"
 	set name = "Server Hop!"
 	set desc= "Jump to the other server"
-	if(notransform)
+	if(mob_transforming)
 		return
 	var/list/csa = CONFIG_GET(keyed_list/cross_server)
 	var/pick
@@ -93,9 +93,9 @@ INITIALIZE_IMMEDIATE(/mob/dead)
 	to_chat(C, "<span class='notice'>Sending you to [pick].</span>")
 	new /obj/screen/splash(C)
 
-	notransform = TRUE
+	mob_transforming = TRUE
 	sleep(29)	//let the animation play
-	notransform = FALSE
+	mob_transforming = FALSE
 
 	if(!C)
 		return

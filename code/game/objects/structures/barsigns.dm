@@ -5,7 +5,7 @@
 	icon_state = "empty"
 	req_access = list(ACCESS_BAR)
 	max_integrity = 500
-	integrity_failure = 250
+	integrity_failure = 0.5
 	armor = list("melee" = 20, "bullet" = 20, "laser" = 20, "energy" = 100, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 50)
 	buildable_sign = 0
 	var/list/barsigns=list()
@@ -52,10 +52,7 @@
 /obj/structure/sign/barsign/attack_ai(mob/user)
 	return attack_hand(user)
 
-/obj/structure/sign/barsign/attack_hand(mob/user)
-	. = ..()
-	if(.)
-		return
+/obj/structure/sign/barsign/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	if(!allowed(user))
 		to_chat(user, "<span class='info'>Access denied.</span>")
 		return
@@ -84,7 +81,6 @@
 			panel_open = FALSE
 
 	else if(istype(I, /obj/item/stack/cable_coil) && panel_open)
-		var/obj/item/stack/cable_coil/C = I
 		if(obj_flags & EMAGGED) //Emagged, not broken by EMP
 			to_chat(user, "<span class='warning'>Sign has been damaged beyond repair!</span>")
 			return
@@ -92,7 +88,7 @@
 			to_chat(user, "<span class='warning'>This sign is functioning properly!</span>")
 			return
 
-		if(C.use(2))
+		if(I.use_tool(src, user, 0, 2))
 			to_chat(user, "<span class='notice'>You replace the burnt wiring.</span>")
 			broken = FALSE
 		else
@@ -308,27 +304,25 @@
 	icon = "Meow Mix"
 	desc = "No, we don't serve catnip, officer!"
 
+/datum/barsign/the_hive
+	name = "The Hive"
+	icon = "thehive"
+	desc = "Comb in for some sweet drinks! Not known for serving any sappy drink."
+
 /datum/barsign/hiddensigns
 	hidden = TRUE
 
-
 //Hidden signs list below this point
-
-
 
 /datum/barsign/hiddensigns/empbarsign
 	name = "Haywire Barsign"
 	icon = "empbarsign"
 	desc = "Something has gone very wrong."
 
-
-
 /datum/barsign/hiddensigns/syndibarsign
 	name = "Syndi Cat Takeover"
 	icon = "syndibarsign"
 	desc = "Syndicate or die."
-
-
 
 /datum/barsign/hiddensigns/signoff
 	name = "Bar Sign"

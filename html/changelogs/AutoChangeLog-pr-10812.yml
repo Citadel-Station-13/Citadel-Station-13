@@ -1,5 +1,0 @@
-author: "Tupinambis"
-delete-after: True
-changes: 
-  - balance: "stunbatons now take 4 hits to inflict hard crit, up from 3."
-  - balance: "stunbatons no longer disarm targets."

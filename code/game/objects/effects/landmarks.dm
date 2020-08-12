@@ -36,6 +36,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark)
 	var/jobspawn_override = FALSE
 	var/delete_after_roundstart = TRUE
 	var/used = FALSE
+	var/job_spawnpoint = TRUE //Is it a potential job spawnpoint or should we skip it?
 
 /obj/effect/landmark/start/proc/after_round_start()
 	if(delete_after_roundstart)
@@ -150,6 +151,10 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark)
 /obj/effect/landmark/start/medical_doctor
 	name = "Medical Doctor"
 	icon_state = "Medical Doctor"
+
+/obj/effect/landmark/start/paramedic
+	name = "Paramedic"
+	icon_state = "Paramedic"
 
 /obj/effect/landmark/start/scientist
 	name = "Scientist"
@@ -277,6 +282,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 	name = "bomb or clown beacon spawner"
 	var/nukie_path = /obj/item/sbeacondrop/bomb
 	var/clown_path = /obj/item/sbeacondrop/clownbomb
+	job_spawnpoint = FALSE
 
 /obj/effect/landmark/start/nuclear_equipment/after_round_start()
 	var/npath = nukie_path
@@ -306,6 +312,11 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 /obj/effect/landmark/carpspawn
 	name = "carpspawn"
 	icon_state = "carp_spawn"
+
+// lone op (optional)
+/obj/effect/landmark/loneopspawn
+	name = "loneop+ninjaspawn"
+	icon_state = "snukeop_spawn"
 
 // observer-start.
 /obj/effect/landmark/observer_start
@@ -458,6 +469,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 /obj/effect/landmark/stationroom
 	var/list/templates = list()
 	layer = BULLET_HOLE_LAYER
+	plane = ABOVE_WALL_PLANE
 
 /obj/effect/landmark/stationroom/New()
 	..()
@@ -477,7 +489,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 			if(!SSmapping.station_room_templates[t])
 				log_world("Station room spawner placed at ([T.x], [T.y], [T.z]) has invalid ruin name of \"[t]\" in its list")
 				templates -= t
-		template_name = pickweightAllowZero(templates)
+		template_name = pickweight(templates, 0)
 	if(!template_name)
 		GLOB.stationroom_landmarks -= src
 		qdel(src)
@@ -486,7 +498,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 	if(!template)
 		return FALSE
 	testing("Room \"[template_name]\" placed at ([T.x], [T.y], [T.z])")
-	template.load(T, centered = FALSE)
+	template.load(T, centered = FALSE, orientation = dir, rotate_placement_to_orientation = TRUE)
 	template.loaded++
 	GLOB.stationroom_landmarks -= src
 	qdel(src)
@@ -498,7 +510,6 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 	templates = list("Engine SM" = 3, "Engine Singulo" = 3, "Engine Tesla" = 3)
 	icon = 'icons/rooms/box/engine.dmi'
 
-
 /obj/effect/landmark/stationroom/box/engine/New()
 	. = ..()
 	templates = CONFIG_GET(keyed_list/box_random_engine)
@@ -507,3 +518,9 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 /obj/effect/landmark/stationroom/lavaland/station
 	templates = list("Public Mining Base" = 3)
 	icon = 'icons/rooms/Lavaland/Mining.dmi'
+
+// handled in portals.dm, id connected to one-way portal
+/obj/effect/landmark/portal_exit
+	name = "portal exit"
+	icon_state = "portal_exit"
+	var/id

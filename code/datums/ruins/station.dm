@@ -37,22 +37,22 @@
 
 /datum/map_template/ruin/station/box/engine/teg
 	id = "engine_teg"
-	suffix = "Box/Engine/engine_tesla.dmm"
+	suffix = "Box/Engine/engine_teg.dmm"
 	name = "Box TEG"
 
 /datum/map_template/ruin/station/box/engine/empty
 	id = "engine_empty"
-	suffix = "Box/Engine/engine_tesla.dmm"
+	suffix = "Box/Engine/empty.dmm"
 	name = "Box Empty"
 
 /datum/map_template/ruin/station/box/engine/am
 	id = "engine_am"
-	suffix = "Box/Engine/engine_tesla.dmm"
+	suffix = "Box/Engine/engine_am.dmm"
 	name = "Box Antimatter"
 
 /datum/map_template/ruin/station/box/engine/budget
 	id = "engine_budget"
-	suffix = "Box/Engine/engine_tesla.dmm"
+	suffix = "Box/Engine/budget.dmm"
 	name = "Box P.A.C.M.A.N"
 
 // Lavaland

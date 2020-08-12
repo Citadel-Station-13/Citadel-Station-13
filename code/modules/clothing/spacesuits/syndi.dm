@@ -4,7 +4,7 @@
 	icon_state = "syndicate"
 	item_state = "syndicate"
 	desc = "Has a tag on it: Totally not property of an enemy corporation, honest!"
-	armor = list("melee" = 40, "bullet" = 50, "laser" = 30,"energy" = 15, "bomb" = 30, "bio" = 30, "rad" = 30, "fire" = 80, "acid" = 85)
+	armor = list("melee" = 40, "bullet" = 50, "laser" = 30,"energy" = 15, "bomb" = 30, "bio" = 30, "rad" = 30, "fire" = 80, "acid" = 85, "wound" = 20)
 
 /obj/item/clothing/suit/space/syndicate
 	name = "red space suit"
@@ -13,7 +13,7 @@
 	desc = "Has a tag on it: Totally not property of an enemy corporation, honest!"
 	w_class = WEIGHT_CLASS_NORMAL
 	allowed = list(/obj/item/gun, /obj/item/ammo_box, /obj/item/ammo_casing, /obj/item/melee/baton, /obj/item/melee/transforming/energy/sword/saber, /obj/item/restraints/handcuffs, /obj/item/tank/internals)
-	armor = list("melee" = 40, "bullet" = 50, "laser" = 30,"energy" = 15, "bomb" = 30, "bio" = 30, "rad" = 30, "fire" = 80, "acid" = 85)
+	armor = list("melee" = 40, "bullet" = 50, "laser" = 30,"energy" = 15, "bomb" = 30, "bio" = 30, "rad" = 30, "fire" = 80, "acid" = 85, "wound" = 20)
 	mutantrace_variation = STYLE_DIGITIGRADE
 
 //Green syndicate space suit
@@ -75,6 +75,22 @@
 	icon_state = "syndicate-black"
 	item_state = "syndicate-black"
 
+//Black-red syndicate contract varient
+/obj/item/clothing/head/helmet/space/syndicate/contract
+	name = "contractor helmet"
+	desc = "A specialised black and gold helmet that's more compact than its standard Syndicate counterpart. Can be ultra-compressed into even the tightest of spaces."
+	w_class = WEIGHT_CLASS_SMALL
+	icon_state = "syndicate-contract-helm"
+	item_state = "syndicate-contract-helm"
+
+/obj/item/clothing/suit/space/syndicate/contract
+	name = "contractor space suit"
+	desc = "A specialised black and gold space suit that's quicker, and more compact than its standard Syndicate counterpart. Can be ultra-compressed into even the tightest of spaces."
+	slowdown = 0.55
+	w_class = WEIGHT_CLASS_SMALL
+	icon_state = "syndicate-contract"
+	item_state = "syndicate-contract"
+	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_SNEK_TAURIC|STYLE_PAW_TAURIC
 
 //Black-green syndicate space suit
 /obj/item/clothing/head/helmet/space/syndicate/black/green

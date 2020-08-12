@@ -75,6 +75,12 @@
 	suit_type = /obj/item/clothing/suit/space/hardsuit/medical
 	mask_type = /obj/item/clothing/mask/breath
 
+/obj/machinery/suit_storage_unit/paramedic
+	name = "paramedic suit storage unit"
+	suit_type = /obj/item/clothing/suit/space/eva/paramedic
+	helmet_type = /obj/item/clothing/head/helmet/space/eva/paramedic
+	mask_type = /obj/item/clothing/mask/breath
+
 /obj/machinery/suit_storage_unit/rd
 	suit_type = /obj/item/clothing/suit/space/hardsuit/rd
 	mask_type = /obj/item/clothing/mask/breath
@@ -134,29 +140,28 @@
 	QDEL_NULL(storage)
 	return ..()
 
-/obj/machinery/suit_storage_unit/update_icon()
-	cut_overlays()
-
+/obj/machinery/suit_storage_unit/update_overlays()
+	. = ..()
 	if(uv)
 		if(uv_super)
-			add_overlay("super")
+			. += "super"
 		else if(occupant)
-			add_overlay("uvhuman")
+			. += "uvhuman"
 		else
-			add_overlay("uv")
+			. += "uv"
 	else if(state_open)
 		if(stat & BROKEN)
-			add_overlay("broken")
+			. += "broken"
 		else
-			add_overlay("open")
+			. += "open"
 			if(suit)
-				add_overlay("suit")
+				. += "suit"
 			if(helmet)
-				add_overlay("helm")
+				. += "helm"
 			if(storage)
-				add_overlay("storage")
+				. += "storage"
 	else if(occupant)
-		add_overlay("human")
+		. += "human"
 
 /obj/machinery/suit_storage_unit/power_change()
 	..()
@@ -296,8 +301,6 @@
 		open_machine()
 		dump_contents()
 		return
-	user.changeNext_move(CLICK_CD_BREAKOUT)
-	user.last_special = world.time + CLICK_CD_BREAKOUT
 	user.visible_message("<span class='notice'>You see [user] kicking against the doors of [src]!</span>", \
 		"<span class='notice'>You start kicking against the doors... (this will take about [DisplayTimeText(breakout_time)].)</span>", \
 		"<span class='italics'>You hear a thump from [src].</span>")
@@ -374,11 +377,13 @@
 
 	return ..()
 
-/obj/machinery/suit_storage_unit/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
-										datum/tgui/master_ui = null, datum/ui_state/state = GLOB.notcontained_state)
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+/obj/machinery/suit_storage_unit/ui_state(mob/user)
+	return GLOB.notcontained_state
+
+/obj/machinery/suit_storage_unit/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, ui_key, "suit_storage_unit", name, 400, 305, master_ui, state)
+		ui = new(user, src, "SuitStorageUnit", name)
 		ui.open()
 
 /obj/machinery/suit_storage_unit/ui_data()

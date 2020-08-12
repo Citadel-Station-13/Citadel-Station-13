@@ -1,4 +1,35 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"aa" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/machinery/door/poddoor/shutters/radiation/preopen{
+	id = "engsm";
+	name = "Radiation Chamber Shutters"
+	},
+/turf/open/floor/plasteel,
+/area/engine/engineering)
+"ab" = (
+/obj/machinery/door/poddoor/shutters/radiation/preopen{
+	id = "engsm";
+	name = "Radiation Chamber Shutters"
+	},
+/turf/open/floor/plasteel,
+/area/engine/engineering)
+"ac" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/machinery/door/poddoor/shutters/radiation/preopen{
+	id = "engsm";
+	name = "Radiation Chamber Shutters"
+	},
+/turf/open/floor/plasteel,
+/area/engine/engineering)
+"ad" = (
+/obj/machinery/door/poddoor/shutters/radiation/preopen,
+/turf/open/floor/plating,
+/area/engine/engineering)
 "aT" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/button/door{
@@ -118,13 +149,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/engine/engineering)
-"nR" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
-	},
-/obj/effect/turf_decal/box/red,
-/turf/open/floor/engine,
-/area/engine/engineering)
 "nW" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -170,20 +194,6 @@
 "uG" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 6
-	},
-/turf/open/floor/plasteel,
-/area/engine/engineering)
-"wt" = (
-/obj/machinery/door/poddoor/shutters/preopen{
-	id = "engsm";
-	name = "Radiation Chamber Shutters"
-	},
-/turf/open/floor/plating,
-/area/engine/engineering)
-"xg" = (
-/obj/machinery/door/poddoor/shutters/preopen{
-	id = "engsm";
-	name = "Radiation Chamber Shutters"
 	},
 /turf/open/floor/plasteel,
 /area/engine/engineering)
@@ -266,13 +276,6 @@
 	},
 /turf/open/floor/plating,
 /area/engine/engineering)
-"Bh" = (
-/obj/machinery/door/poddoor/shutters/preopen{
-	id = "engsm";
-	name = "Radiation Chamber Shutters"
-	},
-/turf/open/floor/plasteel,
-/area/engine/engineering)
 "BG" = (
 /obj/structure/closet/emcloset/anchored,
 /obj/machinery/light/small{
@@ -341,16 +344,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/engine/engineering)
-"HW" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 4
-	},
-/obj/machinery/door/poddoor/shutters/preopen{
-	id = "engsm";
-	name = "Radiation Chamber Shutters"
-	},
-/turf/open/floor/plasteel,
-/area/engine/engineering)
 "In" = (
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /obj/machinery/door/airlock/external{
@@ -387,13 +380,6 @@
 /obj/machinery/power/am_control_unit,
 /turf/open/floor/plating,
 /area/engine/engineering)
-"JC" = (
-/obj/machinery/door/poddoor/shutters/preopen{
-	id = "engsm";
-	name = "Radiation Chamber Shutters"
-	},
-/turf/open/floor/plasteel,
-/area/engine/engineering)
 "JZ" = (
 /obj/machinery/atmospherics/pipe/simple/orange/visible{
 	dir = 4
@@ -425,13 +411,6 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
-/turf/open/floor/engine,
-/area/engine/engineering)
-"Mn" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 4
-	},
-/obj/effect/turf_decal/box/red,
 /turf/open/floor/engine,
 /area/engine/engineering)
 "MD" = (
@@ -503,10 +482,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/engine/engineering)
-"SD" = (
-/obj/effect/turf_decal/box/red,
-/turf/open/floor/engine,
-/area/engine/engineering)
 "Tr" = (
 /obj/structure/sign/warning/radiation/rad_area,
 /obj/machinery/atmospherics/pipe/simple/orange/visible{
@@ -556,16 +531,6 @@
 /obj/effect/turf_decal/stripes/line,
 /obj/effect/turf_decal/box/red,
 /turf/open/floor/engine,
-/area/engine/engineering)
-"YY" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
-	},
-/obj/machinery/door/poddoor/shutters/preopen{
-	id = "engsm";
-	name = "Radiation Chamber Shutters"
-	},
-/turf/open/floor/plasteel,
 /area/engine/engineering)
 "Zb" = (
 /obj/effect/turf_decal/stripes/line{
@@ -894,7 +859,7 @@ xJ
 gf
 fh
 dN
-YY
+aa
 MD
 Ch
 dz
@@ -922,7 +887,7 @@ LO
 Eu
 Pg
 cP
-JC
+ab
 WI
 rj
 dz
@@ -950,7 +915,7 @@ NS
 xx
 fh
 zW
-JC
+ab
 WI
 rj
 dz
@@ -978,7 +943,7 @@ yo
 me
 aT
 Aw
-JC
+ab
 WI
 rj
 dz
@@ -1005,7 +970,7 @@ MJ
 jH
 FK
 Ch
-wt
+ad
 Ch
 rj
 rj
@@ -1058,7 +1023,7 @@ MJ
 MJ
 "}
 (17,1,1) = {"
-wt
+ad
 Zz
 Wf
 Ox
@@ -1114,11 +1079,11 @@ MJ
 MJ
 "}
 (19,1,1) = {"
-wt
+ad
 eJ
 Zx
-Mn
-Mn
+nW
+nW
 WQ
 lY
 Og
@@ -1173,7 +1138,7 @@ MJ
 jH
 Nz
 Ch
-wt
+ad
 Ch
 rj
 rj
@@ -1202,7 +1167,7 @@ fh
 WX
 HQ
 Aw
-JC
+ab
 WI
 rj
 dz
@@ -1230,7 +1195,7 @@ fh
 kh
 fh
 fh
-JC
+ab
 WI
 rj
 dz
@@ -1258,7 +1223,7 @@ fh
 kh
 uG
 cP
-JC
+ab
 WI
 rj
 dz
@@ -1286,7 +1251,7 @@ eA
 FY
 mB
 Rp
-HW
+ac
 Mi
 Ch
 dz
@@ -1401,7 +1366,7 @@ fh
 JZ
 kK
 Ch
-dz
+Ch
 MJ
 MJ
 MJ

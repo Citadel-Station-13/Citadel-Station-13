@@ -19,21 +19,21 @@
 	Estimated time of last contact: Deployment, 5000 millennia ago."
 	assignedrole = "Lifebringer"
 
-/obj/effect/mob_spawn/human/seed_vault/special(mob/living/new_spawn)
-	var/plant_name = pick("Tomato", "Potato", "Broccoli", "Carrot", "Ambrosia", "Pumpkin", "Ivy", "Kudzu", "Banana", "Moss", "Flower", "Bloom", "Root", "Bark", "Glowshroom", "Petal", "Leaf", \
-	"Venus", "Sprout","Cocoa", "Strawberry", "Citrus", "Oak", "Cactus", "Pepper", "Juniper")
-	new_spawn.real_name = plant_name
-	if(ishuman(new_spawn))
-		var/mob/living/carbon/human/H = new_spawn
-		H.underwear = "Nude" //You're a plant, partner
-		H.update_body()
-
 /obj/effect/mob_spawn/human/seed_vault/Destroy()
 	new/obj/structure/fluff/empty_terrarium(get_turf(src))
 	return ..()
 
 /obj/effect/mob_spawn/human/seed_vault/special(mob/living/carbon/human/new_spawn)
 	ADD_TRAIT(new_spawn,TRAIT_EXEMPT_HEALTH_EVENTS,GHOSTROLE_TRAIT)
+	var/plant_name = pick("Tomato", "Potato", "Broccoli", "Carrot", "Ambrosia", "Pumpkin", "Ivy", "Kudzu", "Banana", "Moss", "Flower", "Bloom", "Root", "Bark", "Glowshroom", "Petal", "Leaf", \
+	"Venus", "Sprout","Cocoa", "Strawberry", "Citrus", "Oak", "Cactus", "Pepper", "Juniper")
+	new_spawn.real_name = plant_name //why this works when moving it from one function to another is beyond me
+	new_spawn.underwear = "Nude" //You're a plant, partner
+	new_spawn.undershirt = "Nude" //changing underwear/shirt/socks doesn't seem to function correctly right now because of some bug elsewhere?
+	new_spawn.socks = "Nude"
+	new_spawn.update_body(TRUE)
+	new_spawn.language_holder.selected_language = /datum/language/sylvan
+
 //Ash walker eggs: Spawns in ash walker dens in lavaland. Ghosts become unbreathing lizards that worship the Necropolis and are advised to retrieve corpses to create more ash walkers.
 
 /obj/effect/mob_spawn/human/ash_walker
@@ -51,18 +51,26 @@
 	move_resist = MOVE_FORCE_NORMAL
 	density = FALSE
 	short_desc = "You are an ash walker. Your tribe worships the Necropolis."
-	flavour_text = "The wastes are sacred ground, its monsters a blessed bounty. You would never leave its sacred ground. \
-	You have seen lights in the distance... they foreshadow the arrival of outsiders that seek to tear apart the Necropolis and its domain. \
-	Fresh sacrifices for your nest."
+	flavour_text = "The wastes are sacred ground, its monsters a blessed bounty. You would never willingly leave your homeland behind. \
+	You have seen lights in the distance... they foreshadow the arrival of outsiders to your domain. \
+	Ensure your nest remains protected at all costs."
 	assignedrole = "Ash Walker"
 
 /obj/effect/mob_spawn/human/ash_walker/special(mob/living/new_spawn)
 	new_spawn.real_name = random_unique_lizard_name(gender)
-	to_chat(new_spawn, "<b>Drag the corpses of men and beasts to your nest. It will absorb them to create more of your kind. Glory to the Necropolis!</b>")
+	if(is_mining_level(z))
+		to_chat(new_spawn, "<b>Drag the corpses of men and beasts to your nest. It will absorb them to create more of your kind. Glory to the Necropolis!</b>")
+		to_chat(new_spawn, "<b>You can expand the weather proof area provided by your shelters by using the 'New Area' key near the bottom right of your HUD.</b>")
+	else
+		to_chat(new_spawn, "<span class='userdanger'>You have been born outside of your natural home! Whether you decide to return home, or make due with your new home is your own decision.</span>")
 
-	new_spawn.grant_language(/datum/language/draconic)
-	var/datum/language_holder/holder = new_spawn.get_language_holder()
-	holder.selected_default_language = /datum/language/draconic
+//Ash walkers on birth understand how to make bone bows, bone arrows and ashen arrows
+
+	new_spawn.mind.teach_crafting_recipe(/datum/crafting_recipe/bone_arrow)
+	new_spawn.mind.teach_crafting_recipe(/datum/crafting_recipe/bone_bow)
+	new_spawn.mind.teach_crafting_recipe(/datum/crafting_recipe/ashen_arrow)
+	new_spawn.mind.teach_crafting_recipe(/datum/crafting_recipe/quiver)
+	new_spawn.mind.teach_crafting_recipe(/datum/crafting_recipe/bow_tablet)
 
 	if(ishuman(new_spawn))
 		var/mob/living/carbon/human/H = new_spawn
@@ -78,7 +86,7 @@
 /datum/outfit/ashwalker
 	name ="Ashwalker"
 	head = /obj/item/clothing/head/helmet/gladiator
-	uniform = /obj/item/clothing/under/gladiator/ash_walker
+	uniform = /obj/item/clothing/under/costume/gladiator/ash_walker
 
 
 //Timeless prisons: Spawns in Wish Granter prisons in lavaland. Ghosts become age-old users of the Wish Granter and are advised to seek repentance for their past.
@@ -178,15 +186,10 @@
 	else
 		new_spawn.mind.assigned_role = "Free Golem"
 
-/obj/effect/mob_spawn/human/golem/attack_hand(mob/user)
-	. = ..()
-	if(.)
-		return
+/obj/effect/mob_spawn/human/golem/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	if(isgolem(user) && can_transfer)
 		var/transfer_choice = alert("Transfer your soul to [src]? (Warning, your old body will die!)",,"Yes","No")
-		if(transfer_choice != "Yes")
-			return
-		if(QDELETED(src) || uses <= 0)
+		if(transfer_choice != "Yes" || QDELETED(src) || uses <= 0 || !user.canUseTopic(src, BE_CLOSE, NO_DEXTERY, NO_TK))
 			return
 		log_game("[key_name(user)] golem-swapped into [src]")
 		user.visible_message("<span class='notice'>A faint light leaves [user], moving to [src] and animating it!</span>","<span class='notice'>You leave your old body behind, and transfer into [src]!</span>")
@@ -234,7 +237,7 @@
 			flavour_text += "you were a [pick("arms dealer", "shipwright", "docking manager")]'s assistant on a small trading station several sectors from here. Raiders attacked, and there was \
 			only one pod left when you got to the escape bay. You took it and launched it alone, and the crowd of terrified faces crowding at the airlock door as your pod's engines burst to \
 			life and sent you to this hell are forever branded into your memory."
-			outfit.uniform = /obj/item/clothing/under/assistantformal
+			outfit.uniform = /obj/item/clothing/under/misc/assistantformal
 			outfit.shoes = /obj/item/clothing/shoes/sneakers/black
 			outfit.back = /obj/item/storage/backpack
 		if(2)
@@ -247,7 +250,7 @@
 		if(3)
 			flavour_text += "you were a doctor on one of Nanotrasen's space stations, but you left behind that damn corporation's tyranny and everything it stood for. From a metaphorical hell \
 			to a literal one, you find yourself nonetheless missing the recycled air and warm floors of what you left behind... but you'd still rather be here than there."
-			outfit.uniform = /obj/item/clothing/under/rank/medical
+			outfit.uniform = /obj/item/clothing/under/rank/medical/doctor
 			outfit.suit = /obj/item/clothing/suit/toggle/labcoat
 			outfit.back = /obj/item/storage/backpack/medic
 			outfit.shoes = /obj/item/clothing/shoes/sneakers/black
@@ -342,7 +345,7 @@
 
 /datum/outfit/hotelstaff
 	name = "Hotel Staff"
-	uniform = /obj/item/clothing/under/telegram
+	uniform = /obj/item/clothing/under/suit/telegram
 	shoes = /obj/item/clothing/shoes/laceup
 	head = /obj/item/clothing/head/hotel
 	r_pocket = /obj/item/radio/off
@@ -362,7 +365,7 @@
 
 /datum/outfit/hotelstaff/security
 	name = "Hotel Secuirty"
-	uniform = /obj/item/clothing/under/rank/security/blueshirt
+	uniform = /obj/item/clothing/under/rank/security/officer/blueshirt
 	shoes = /obj/item/clothing/shoes/jackboots
 	suit = /obj/item/clothing/suit/armor/vest/blueshirt
 	head = /obj/item/clothing/head/helmet/blueshirt
@@ -424,7 +427,7 @@
 
 /datum/outfit/demonic_friend
 	name = "Demonic Friend"
-	uniform = /obj/item/clothing/under/assistantformal
+	uniform = /obj/item/clothing/under/misc/assistantformal
 	shoes = /obj/item/clothing/shoes/laceup
 	r_pocket = /obj/item/radio/off
 	back = /obj/item/storage/backpack
@@ -444,7 +447,7 @@
 	name = "Syndicate Operative Empty"
 	uniform = /obj/item/clothing/under/syndicate
 	shoes = /obj/item/clothing/shoes/combat
-	gloves = /obj/item/clothing/gloves/combat
+	gloves = /obj/item/clothing/gloves/tackler/combat/insulated
 	ears = /obj/item/radio/headset/syndicate/alt
 	back = /obj/item/storage/backpack
 	implants = list(/obj/item/implant/weapons_auth)
@@ -518,7 +521,7 @@
 	The last thing you remember is the station's Artificial Program telling you that you would only be asleep for eight hours. As you open \
 	your eyes, everything seems rusted and broken, a dark feeling swells in your gut as you climb out of your pod."
 	important_info = "Work as a team with your fellow survivors and do not abandon them."
-	uniform = /obj/item/clothing/under/rank/security
+	uniform = /obj/item/clothing/under/rank/security/officer
 	shoes = /obj/item/clothing/shoes/jackboots
 	id = /obj/item/card/id/away/old/sec
 	r_pocket = /obj/item/restraints/handcuffs
@@ -546,7 +549,7 @@
 	you remember is the station's Artificial Program telling you that you would only be asleep for eight hours. As you open \
 	your eyes, everything seems rusted and broken, a dark feeling swells in your gut as you climb out of your pod."
 	important_info = "Work as a team with your fellow survivors and do not abandon them."
-	uniform = /obj/item/clothing/under/rank/engineer
+	uniform = /obj/item/clothing/under/rank/engineering/engineer
 	shoes = /obj/item/clothing/shoes/workboots
 	id = /obj/item/card/id/away/old/eng
 	gloves = /obj/item/clothing/gloves/color/fyellow/old
@@ -572,10 +575,10 @@
 	The last thing you remember is the station's Artificial Program telling you that you would only be asleep for eight hours. As you open \
 	your eyes, everything seems rusted and broken, a dark feeling swells in your gut as you climb out of your pod."
 	important_info = "Work as a team with your fellow survivors and do not abandon them."
-	uniform = /obj/item/clothing/under/rank/scientist
+	uniform = /obj/item/clothing/under/rank/rnd/scientist
 	shoes = /obj/item/clothing/shoes/laceup
 	id = /obj/item/card/id/away/old/sci
-	l_pocket = /obj/item/stack/medical/bruise_pack
+	l_pocket = /obj/item/stack/medical/suture
 	assignedrole = "Ancient Crew"
 	job_description = "Oldstation Crew"
 
@@ -665,16 +668,14 @@
 		O.equip(new_spawn, FALSE, new_spawn.client)
 		SSjob.equip_loadout(null, new_spawn, FALSE)
 		SSquirks.AssignQuirks(new_spawn, new_spawn.client, TRUE, TRUE, null, FALSE, new_spawn)
-		new_spawn.AddElement(/datum/element/ghost_role_eligibility)
+		new_spawn.AddElement(/datum/element/ghost_role_eligibility, free_ghosting = TRUE)
 		new_spawn.AddElement(/datum/element/dusts_on_catatonia)
 		new_spawn.AddElement(/datum/element/dusts_on_leaving_area,list(A.type,/area/hilbertshotel))
 		ADD_TRAIT(new_spawn, TRAIT_SIXTHSENSE, GHOSTROLE_TRAIT)
-		ADD_TRAIT(new_spawn,TRAIT_EXEMPT_HEALTH_EVENTS,GHOSTROLE_TRAIT)
-		ADD_TRAIT(new_spawn,TRAIT_PACIFISM,GHOSTROLE_TRAIT)
-		to_chat(new_spawn,"<span class='boldwarning'>You may be sharing your cafe with some ninja-captured individuals, so make sure to only interact with the ghosts you hear as a ghost!</span>")
-		to_chat(new_spawn,"<span class='boldwarning'>You can turn yourself into a ghost and freely reenter your body with the ghost action.</span>")
-		var/datum/action/ghost/G = new(new_spawn)
-		G.Grant(new_spawn)
+		ADD_TRAIT(new_spawn, TRAIT_EXEMPT_HEALTH_EVENTS, GHOSTROLE_TRAIT)
+		ADD_TRAIT(new_spawn, TRAIT_NO_MIDROUND_ANTAG, GHOSTROLE_TRAIT) //The mob can't be made into a random antag, they are still eligible for ghost roles popups.
+		ADD_TRAIT(new_spawn, TRAIT_PACIFISM, GHOSTROLE_TRAIT)
+		to_chat(new_spawn,"<span class='boldwarning'>Ghosting is free!</span>")
 		var/datum/action/toggle_dead_chat_mob/D = new(new_spawn)
 		D.Grant(new_spawn)
 
@@ -682,7 +683,7 @@
 	name = "ID, jumpsuit and shoes"
 	uniform = /obj/item/clothing/under/color/random
 	shoes = /obj/item/clothing/shoes/sneakers/black
-	id = /obj/item/card/id
+	id = /obj/item/card/id/no_banking
 	r_hand = /obj/item/storage/box/syndie_kit/chameleon/ghostcafe
 
 
@@ -690,15 +691,12 @@
 	..()
 	var/suited = !preference_source || preference_source.prefs.jumpsuit_style == PREF_SUIT
 	if (CONFIG_GET(flag/grey_assistants))
-		if(suited)
-			uniform = /obj/item/clothing/under/color/grey
-		else
-			uniform = /obj/item/clothing/under/skirt/color/grey
+		uniform = suited ? /obj/item/clothing/under/color/grey : /obj/item/clothing/under/color/jumpskirt/grey
 	else
-		if(suited)
-			uniform = /obj/item/clothing/under/color/random
+		if(SSevents.holidays && SSevents.holidays[PRIDE_MONTH])
+			uniform = suited ? /obj/item/clothing/under/color/rainbow : /obj/item/clothing/under/color/jumpskirt/rainbow
 		else
-			uniform = /obj/item/clothing/under/skirt/color/random
+			uniform = suited ? /obj/item/clothing/under/color/random : /obj/item/clothing/under/color/jumpskirt/random
 
 /obj/item/storage/box/syndie_kit/chameleon/ghostcafe
 	name = "ghost cafe costuming kit"

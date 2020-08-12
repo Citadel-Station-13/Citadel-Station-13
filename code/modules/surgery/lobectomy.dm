@@ -4,7 +4,7 @@
 				 /datum/surgery_step/lobectomy, /datum/surgery_step/close)
 	possible_locs = list(BODY_ZONE_CHEST)
 
-/datum/surgery/lobectomy/can_start(mob/user, mob/living/carbon/target)
+/datum/surgery/lobectomy/can_start(mob/user, mob/living/carbon/target, obj/item/tool)
 	var/obj/item/organ/lungs/L = target.getorganslot(ORGAN_SLOT_LUNGS)
 	if(L)
 		if(L.damage > 60 && !L.operated)

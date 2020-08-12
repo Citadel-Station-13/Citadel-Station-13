@@ -12,7 +12,9 @@
 	name = "Xenomorph"
 	job_rank = ROLE_ALIEN
 	show_in_antagpanel = FALSE
+	show_to_ghosts = TRUE
 	var/datum/team/xeno/xeno_team
+	threat = 3
 
 /datum/antagonist/xeno/create_team(datum/team/xeno/new_team)
 	if(!new_team)

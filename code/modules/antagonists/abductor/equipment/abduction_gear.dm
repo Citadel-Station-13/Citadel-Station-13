@@ -22,6 +22,7 @@
 		/obj/item/gun/energy,
 		/obj/item/restraints/handcuffs
 		)
+	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
 	var/mode = VEST_STEALTH
 	var/stealth_active = 0
 	var/combat_cooldown = 10
@@ -92,10 +93,8 @@
 		M.cut_overlays()
 		M.regenerate_icons()
 
-/obj/item/clothing/suit/armor/abductor/vest/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
-	DeactivateStealth()
-
-/obj/item/clothing/suit/armor/abductor/vest/IsReflect()
+/obj/item/clothing/suit/armor/abductor/vest/run_block(mob/living/owner, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return)
+	. = ..()
 	DeactivateStealth()
 
 /obj/item/clothing/suit/armor/abductor/vest/ui_action_click()
@@ -116,14 +115,13 @@
 		var/mob/living/carbon/human/M = loc
 		M.adjustStaminaLoss(-75)
 		M.SetUnconscious(0)
-		M.SetStun(0)
-		M.SetKnockdown(0)
+		M.SetAllImmobility(0)
 		combat_cooldown = 0
 		START_PROCESSING(SSobj, src)
 
 /obj/item/clothing/suit/armor/abductor/vest/process()
 	combat_cooldown++
-	if(combat_cooldown==initial(combat_cooldown))
+	if(combat_cooldown == initial(combat_cooldown))
 		STOP_PROCESSING(SSobj, src)
 
 /obj/item/clothing/suit/armor/abductor/Destroy()
@@ -420,8 +418,9 @@
 		<br>
 		Congratulations! You are now trained for invasive xenobiology research!"}
 
-/obj/item/paper/guides/antag/abductor/update_icon()
-	return
+/obj/item/paper/guides/antag/abductor/ComponentInitialize()
+	. = ..()
+	AddElement(/datum/element/update_icon_blocker)
 
 /obj/item/paper/guides/antag/abductor/AltClick()
 	return //otherwise it would fold into a paperplane.
@@ -443,6 +442,10 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	actions_types = list(/datum/action/item_action/toggle_mode)
 
+/obj/item/abductor/baton/ComponentInitialize()
+	. = ..()
+	AddElement(/datum/element/update_icon_updates_onmob)
+
 /obj/item/abductor/baton/proc/toggle(mob/living/user=usr)
 	mode = (mode+1)%BATON_MODES
 	var/txt
@@ -459,7 +462,7 @@
 	to_chat(usr, "<span class='notice'>You switch the baton to [txt] mode.</span>")
 	update_icon()
 
-/obj/item/abductor/baton/update_icon()
+/obj/item/abductor/baton/update_icon_state()
 	switch(mode)
 		if(BATON_STUN)
 			icon_state = "wonderprodStun"
@@ -489,7 +492,7 @@
 
 	user.do_attack_animation(L)
 
-	if(L.check_shields(src, 0, "[user]'s [name]", MELEE_ATTACK))
+	if(L.mob_run_block(src, 0, "[user]'s [src]", ATTACK_TYPE_MELEE, 0, user, check_zone(user.zone_selected), null) & BLOCK_SUCCESS)
 		playsound(L, 'sound/weapons/genhit.ogg', 50, TRUE)
 		return FALSE
 
@@ -512,7 +515,7 @@
 	L.lastattackerckey = user.ckey
 
 	L.adjustStaminaLoss(35) //because previously it took 5-6 hits to actually "incapacitate" someone for the purposes of the sleep inducement
-	L.Knockdown(140)
+	L.DefaultCombatKnockdown(140)
 	L.apply_effect(EFFECT_STUTTER, 7)
 	SEND_SIGNAL(L, COMSIG_LIVING_MINOR_SHOCK)
 

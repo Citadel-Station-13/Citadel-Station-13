@@ -6,6 +6,7 @@
 	value = -2
 	gain_text = "<span class='danger'>You feel your vigor slowly fading away.</span>"
 	lose_text = "<span class='notice'>You feel vigorous again.</span>"
+	antag_removal_text = "Your antagonistic nature has removed your blood deficiency."
 	medical_record_text = "Patient requires regular treatment for blood loss due to low production of blood."
 
 /datum/quirk/blooddeficiency/on_process()
@@ -13,7 +14,7 @@
 	if(NOBLOOD in H.dna.species.species_traits) //can't lose blood if your species doesn't have any
 		return
 	else
-		quirk_holder.blood_volume -= 0.275
+		quirk_holder.blood_volume -= 0.2
 
 /datum/quirk/depression
 	name = "Depression"
@@ -38,6 +39,8 @@
 	var/obj/item/heirloom
 	var/where
 
+GLOBAL_LIST_EMPTY(family_heirlooms)
+
 /datum/quirk/family_heirloom/on_spawn()
 	var/mob/living/carbon/human/H = quirk_holder
 	var/obj/item/heirloom_type
@@ -51,7 +54,9 @@
 		if("Botanist")
 			heirloom_type = pick(/obj/item/cultivator, /obj/item/reagent_containers/glass/bucket, /obj/item/storage/bag/plants, /obj/item/toy/plush/beeplushie)
 		if("Medical Doctor")
-			heirloom_type = /obj/item/healthanalyzer/advanced
+			heirloom_type = /obj/item/healthanalyzer
+		if("Paramedic")
+			heirloom_type = /obj/item/lighter
 		if("Station Engineer")
 			heirloom_type = /obj/item/wirecutters/brass
 		if("Atmospheric Technician")
@@ -76,6 +81,7 @@
 		/obj/item/lighter,
 		/obj/item/dice/d20)
 	heirloom = new heirloom_type(get_turf(quirk_holder))
+	GLOB.family_heirlooms += heirloom
 	var/list/slots = list(
 		"in your left pocket" = SLOT_L_STORE,
 		"in your right pocket" = SLOT_R_STORE,
@@ -140,9 +146,8 @@
 /datum/quirk/nearsighted/on_spawn()
 	var/mob/living/carbon/human/H = quirk_holder
 	var/obj/item/clothing/glasses/regular/glasses = new(get_turf(H))
-	H.put_in_hands(glasses)
-	H.equip_to_slot(glasses, SLOT_GLASSES)
-	H.regenerate_icons() //this is to remove the inhand icon, which persists even if it's not in their hands
+	if(!H.equip_to_slot_if_possible(glasses, SLOT_GLASSES))
+		H.put_in_hands(glasses)
 
 /datum/quirk/nyctophobia
 	name = "Nyctophobia"
@@ -188,11 +193,7 @@
 	gain_text = "<span class='danger'>You feel repulsed by the thought of violence!</span>"
 	lose_text = "<span class='notice'>You think you can defend yourself again.</span>"
 	medical_record_text = "Patient is unusually pacifistic and cannot bring themselves to cause physical harm."
-
-/datum/quirk/nonviolent/on_process()
-	if(quirk_holder.mind && LAZYLEN(quirk_holder.mind.antag_datums))
-		to_chat(quirk_holder, "<span class='boldannounce'>Your antagonistic nature has caused you to renounce your pacifism.</span>")
-		qdel(src)
+	antag_removal_text = "Your antagonistic nature has caused you to renounce your pacifism."
 
 /datum/quirk/paraplegic
 	name = "Paraplegic"
@@ -313,6 +314,13 @@
 	medical_record_text = "Patient is usually anxious in social encounters and prefers to avoid them."
 	var/dumb_thing = TRUE
 
+/datum/quirk/social_anxiety/add()
+	RegisterSignal(quirk_holder, COMSIG_MOB_EYECONTACT, .proc/eye_contact)
+	RegisterSignal(quirk_holder, COMSIG_MOB_EXAMINATE, .proc/looks_at_floor)
+
+/datum/quirk/social_anxiety/remove()
+	UnregisterSignal(quirk_holder, list(COMSIG_MOB_EYECONTACT, COMSIG_MOB_EXAMINATE))
+
 /datum/quirk/social_anxiety/on_process()
 	var/nearby_people = 0
 	for(var/mob/living/carbon/human/H in oview(3, quirk_holder))
@@ -329,6 +337,43 @@
 		dumb_thing = FALSE //only once per life
 		if(prob(1))
 			new/obj/item/reagent_containers/food/snacks/pastatomato(get_turf(H)) //now that's what I call spaghetti code
+
+// small chance to make eye contact with inanimate objects/mindless mobs because of nerves
+/datum/quirk/social_anxiety/proc/looks_at_floor(datum/source, atom/A)
+	var/mob/living/mind_check = A
+	if(prob(85) || (istype(mind_check) && mind_check.mind))
+		return
+
+	addtimer(CALLBACK(GLOBAL_PROC, .proc/to_chat, quirk_holder, "<span class='smallnotice'>You make eye contact with [A].</span>"), 3)
+
+/datum/quirk/social_anxiety/proc/eye_contact(datum/source, mob/living/other_mob, triggering_examiner)
+	if(prob(75))
+		return
+	var/msg
+	if(triggering_examiner)
+		msg = "You make eye contact with [other_mob], "
+	else
+		msg = "[other_mob] makes eye contact with you, "
+
+	switch(rand(1,3))
+		if(1)
+			quirk_holder.Jitter(10)
+			msg += "causing you to start fidgeting!"
+		if(2)
+			quirk_holder.stuttering = max(3, quirk_holder.stuttering)
+			msg += "causing you to start stuttering!"
+		if(3)
+			quirk_holder.Stun(2 SECONDS)
+			msg += "causing you to freeze up!"
+
+	SEND_SIGNAL(quirk_holder, COMSIG_ADD_MOOD_EVENT, "anxiety_eyecontact", /datum/mood_event/anxiety_eyecontact)
+	addtimer(CALLBACK(GLOBAL_PROC, .proc/to_chat, quirk_holder, "<span class='userdanger'>[msg]</span>"), 3) // so the examine signal has time to fire and this will print after
+	return COMSIG_BLOCK_EYECONTACT
+
+/datum/mood_event/anxiety_eyecontact
+	description = "<span class='warning'>Sometimes eye contact makes me so nervous...</span>\n"
+	mood_change = -5
+	timeout = 3 MINUTES
 
 /datum/quirk/phobia
 	name = "Phobia"
@@ -355,6 +400,7 @@
 	gain_text = "<span class='danger'>You find yourself unable to speak!</span>"
 	lose_text = "<span class='notice'>You feel a growing strength in your vocal chords.</span>"
 	medical_record_text = "Functionally mute, patient is unable to use their voice in any capacity."
+	antag_removal_text = "Your antagonistic nature has caused your voice to be heard."
 	var/datum/brain_trauma/severe/mute/mute
 
 /datum/quirk/mute/add()
@@ -365,11 +411,6 @@
 /datum/quirk/mute/remove()
 	var/mob/living/carbon/human/H = quirk_holder
 	H?.cure_trauma_type(mute, TRAUMA_RESILIENCE_ABSOLUTE)
-
-/datum/quirk/mute/on_process()
-	if(quirk_holder.mind && LAZYLEN(quirk_holder.mind.antag_datums))
-		to_chat(quirk_holder, "<span class='boldannounce'>Your antagonistic nature has caused your voice to be heard.</span>")
-		qdel(src)
 
 /datum/quirk/unstable
 	name = "Unstable"
@@ -409,3 +450,21 @@
 	mob_trait = TRAIT_COLDBLOODED
 	gain_text = "<span class='notice'>You feel cold-blooded.</span>"
 	lose_text = "<span class='notice'>You feel more warm-blooded.</span>"
+
+/datum/quirk/monophobia
+	name = "Monophobia"
+	desc = "You will become increasingly stressed when not in company of others, triggering panic reactions ranging from sickness to heart attacks."
+	value = -3 // Might change it to 4.
+	gain_text = "<span class='danger'>You feel really lonely...</span>"
+	lose_text = "<span class='notice'>You feel like you could be safe on your own.</span>"
+	medical_record_text = "Patient feels sick and distressed when not around other people, leading to potentially lethal levels of stress."
+
+/datum/quirk/monophobia/post_add()
+	. = ..()
+	var/mob/living/carbon/human/H = quirk_holder
+	H.gain_trauma(/datum/brain_trauma/severe/monophobia, TRAUMA_RESILIENCE_ABSOLUTE)
+
+/datum/quirk/monophobia/remove()
+	. = ..()
+	var/mob/living/carbon/human/H = quirk_holder
+	H?.cure_trauma_type(/datum/brain_trauma/severe/monophobia, TRAUMA_RESILIENCE_ABSOLUTE)

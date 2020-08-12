@@ -44,6 +44,12 @@
 			index = findtext(t, char, index + length(char))
 	return t
 
+/proc/sanitize_name(t,list/repl_chars = null)
+	if(t == "space" || t == "floor" || t == "wall" || t == "r-wall" || t == "monkey" || t == "unknown" || t == "inactive ai")	//prevents these common metagamey names
+		alert("Invalid name.")
+		return ""
+	return sanitize(t)
+
 /proc/sanitize_filename(t)
 	return sanitize_simple(t, list("\n"="", "\t"="", "/"="", "\\"="", "?"="", "%"="", "*"="", ":"="", "|"="", "\""="", "<"="", ">"=""))
 
@@ -101,6 +107,22 @@
 /proc/stripped_multiline_input(mob/user, message = "", title = "", default = "", max_length=MAX_MESSAGE_LEN, no_trim=FALSE)
 	var/name = input(user, message, title, default) as message|null
 	if(isnull(name)) // Return null if canceled.
+		return null
+	if(no_trim)
+		return copytext(html_encode(name), 1, max_length)
+	else
+		return trim(html_encode(name), max_length)
+
+/**
+  * stripped_multiline_input but reflects to the user instead if it's too big and returns null.
+  */
+/proc/stripped_multiline_input_or_reflect(mob/user, message = "", title = "", default = "", max_length=MAX_MESSAGE_LEN, no_trim=FALSE)
+	var/name = input(user, message, title, default) as message|null
+	if(isnull(name)) // Return null if canceled.
+		return null
+	if(length(name) > max_length)
+		to_chat(user, name)
+		to_chat(user, "<span class='danger'>^^^----- The preceeding message has been DISCARDED for being over the maximum length of [max_length]. It has NOT been sent! -----^^^</span>")
 		return null
 	if(no_trim)
 		return copytext(html_encode(name), 1, max_length)
@@ -754,6 +776,10 @@ GLOBAL_LIST_INIT(binary, list("0","1"))
 		else
 			return "[number]\th"
 
+
+/proc/random_capital_letter()
+	return uppertext(pick(GLOB.alphabet))
+
 /proc/unintelligize(message)
 	var/regex/word_boundaries = regex(@"\b[\S]+\b", "g")
 	var/prefix = message[1]
@@ -776,3 +802,33 @@ GLOBAL_LIST_INIT(binary, list("0","1"))
 
 #define is_alpha(X) ((text2ascii(X) <= 122) && (text2ascii(X) >= 97))
 #define is_digit(X) ((length(X) == 1) && (length(text2num(X)) == 1))
+
+/// Slightly expensive proc to scramble a message using equal probabilities of character replacement from a list. DOES NOT SUPPORT HTML!
+/proc/scramble_message_replace_chars(original, replaceprob = 25, list/replacementchars = list("$", "@", "!", "#", "%", "^", "&", "*"), replace_letters_only = FALSE, replace_whitespace = FALSE)
+	var/list/out = list()
+	var/static/list/whitespace = list(" ", "\n", "\t")
+	for(var/i in 1 to length(original))
+		var/char = original[i]
+		if(!replace_whitespace && (char in whitespace))
+			out += char
+			continue
+		if(replace_letters_only && (!ISINRANGE(char, 65, 90) && !ISINRANGE(char, 97, 122)))
+			out += char
+			continue
+		out += prob(replaceprob)? pick(replacementchars) : char
+	return out.Join("")
+
+/proc/readable_corrupted_text(text)
+	var/list/corruption_options = list("..", "£%", "~~\"", "!!", "*", "^", "$!", "-", "}", "?")
+	var/corrupted_text = ""
+	for(var/letter_index = 1; letter_index <= length(text); letter_index++)	// Have every letter have a chance of creating corruption on either side
+		var/letter = text[letter_index]	// Small chance of letters being removed in place of corruption - still overall readable
+		if(prob(15))
+			corrupted_text += pick(corruption_options)
+		if(prob(95))
+			corrupted_text += letter
+		else
+			corrupted_text += pick(corruption_options)
+	if(prob(15))
+		corrupted_text += pick(corruption_options)
+	return corrupted_text

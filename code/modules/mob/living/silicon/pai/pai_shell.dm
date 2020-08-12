@@ -17,7 +17,6 @@
 		return FALSE
 
 	emitter_next_use = world.time + emittercd
-	canmove = TRUE
 	density = TRUE
 	if(istype(card.loc, /obj/item/pda))
 		var/obj/item/pda/P = card.loc
@@ -37,6 +36,7 @@
 		C.push_data()
 	forceMove(get_turf(card))
 	card.forceMove(src)
+	update_mobility()
 	if(client)
 		client.perspective = EYE_PERSPECTIVE
 		client.eye = src
@@ -63,12 +63,11 @@
 	var/turf/T = drop_location()
 	card.forceMove(T)
 	forceMove(card)
-	canmove = FALSE
 	density = FALSE
 	set_light(0)
 	holoform = FALSE
-	if(resting)
-		lay_down()
+	set_resting(FALSE, TRUE, FALSE)
+	update_mobility()
 
 /mob/living/silicon/pai/proc/choose_chassis()
 	if(!isturf(loc) && loc != card)
@@ -77,6 +76,7 @@
 	var/list/choices = list("Preset - Basic", "Preset - Dynamic")
 	if(CONFIG_GET(flag/pai_custom_holoforms))
 		choices += "Custom"
+	var/old_chassis = chassis
 	var/choicetype = input(src, "What type of chassis do you want to use?") as null|anything in choices
 	if(!choicetype)
 		return FALSE
@@ -96,6 +96,10 @@
 			dynamic_chassis = choice
 	resist_a_rest(FALSE, TRUE)
 	update_icon()
+	if(possible_chassis[old_chassis])
+		RemoveElement(/datum/element/mob_holder, old_chassis, 'icons/mob/pai_item_head.dmi', 'icons/mob/pai_item_rh.dmi', 'icons/mob/pai_item_lh.dmi', ITEM_SLOT_HEAD)
+	if(possible_chassis[chassis])
+		AddElement(/datum/element/mob_holder, chassis, 'icons/mob/pai_item_head.dmi', 'icons/mob/pai_item_rh.dmi', 'icons/mob/pai_item_lh.dmi', ITEM_SLOT_HEAD)
 	to_chat(src, "<span class='boldnotice'>You switch your holochassis projection composite to [chassis]</span>")
 
 /mob/living/silicon/pai/lay_down()
@@ -116,19 +120,6 @@
 	else
 		set_light(0)
 		to_chat(src, "<span class='notice'>You disable your integrated light.</span>")
-
-/mob/living/silicon/pai/mob_pickup(mob/living/L)
-	var/obj/item/clothing/head/mob_holder/holder = new(get_turf(src), src, chassis, item_head_icon, item_lh_icon, item_rh_icon)
-	if(!L.put_in_hands(holder))
-		qdel(holder)
-	else
-		L.visible_message("<span class='warning'>[L] scoops up [src]!</span>")
-
-/mob/living/silicon/pai/mob_try_pickup(mob/living/user)
-	if(!possible_chassis[chassis])
-		to_chat(user, "<span class='warning'>[src]'s current form isn't able to be carried!</span>")
-		return FALSE
-	return ..()
 
 /mob/living/silicon/pai/verb/toggle_chassis_sit()
 	set name = "Toggle Chassis Sit"

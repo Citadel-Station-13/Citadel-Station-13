@@ -38,8 +38,9 @@
 	if(!msg)
 		msg = input(src,"Message:", "Private message") as text|null
 
-		if(!msg && is_mentor(whom))
-			to_chat(GLOB.admins | GLOB.mentors, "<span class='purple'>[src] has stopped their reply to [whom]'s mhelp.</span>")
+		if(!msg)
+			if (is_mentor(whom))
+				to_chat(GLOB.admins | GLOB.mentors, "<span class='purple'>[src] has stopped their reply to [whom]'s mhelp.</span>")
 			return
 
 		if(!C)
@@ -54,10 +55,10 @@
 			return
 
 	msg = sanitize(copytext_char(msg, 1, MAX_MESSAGE_LEN))
-	if(!msg && is_mentor(whom))
-		to_chat(GLOB.admins | GLOB.mentors, "<span class='purple'>[src] has stopped their reply to [whom]'s mhelp.</span>")
+	if(!msg)
+		if (is_mentor(whom))
+			to_chat(GLOB.admins | GLOB.mentors, "<span class='purple'>[src] has stopped their reply to [whom]'s mhelp.</span>")
 		return
-
 	log_mentor("Mentor PM: [key_name(src)]->[key_name(C)]: [msg]")
 
 	msg = emoji_parse(msg)
@@ -66,7 +67,7 @@
 	if(C.is_mentor())
 		if(is_mentor())//both are mentors
 			to_chat(C, "<span class='purple'>Mentor PM from-<b>[key_name_mentor(src, C, 1, 0, 0)]</b>: [msg]</span>")
-			to_chat(src, "<span class='green'>Mentor PM to-<b>[key_name_mentor(C, C, 1, 0, 0)]</b>: [msg]</font>")
+			to_chat(src, "<span class='blue'>Mentor PM to-<b>[key_name_mentor(C, C, 1, 0, 0)]</b>: [msg]</font>")
 
 		else		//recipient is a mentor but sender is not
 			to_chat(C, "<span class='purple'>Reply PM from-<b>[key_name_mentor(src, C, 1, 0, show_char)]</b>: [msg]</span>")

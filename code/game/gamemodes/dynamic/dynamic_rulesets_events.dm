@@ -2,6 +2,7 @@
 	ruletype = "Event"
 	var/typepath // typepath of the event
 	var/triggering
+	var/earliest_start = 20 MINUTES
 
 /datum/dynamic_ruleset/event/get_blackbox_info()
 	var/list/ruleset_data = list()
@@ -25,8 +26,10 @@
 
 	return E
 
-/datum/dynamic_ruleset/event/ready(forced = FALSE) // same as midround cause we're still using enemy system
+/datum/dynamic_ruleset/event/ready(forced = FALSE)
 	if (!forced)
+		if(earliest_start >= world.time-SSticker.round_start_time)
+			return FALSE
 		var/job_check = 0
 		if (enemy_roles.len > 0)
 			for (var/mob/M in mode.current_players[CURRENT_LIVING_PLAYERS])
@@ -56,6 +59,7 @@
 	required_enemies = list(2,2,1,1,0,0,0,0,0,0)
 	weight = 5
 	cost = 10
+	earliest_start = 30 MINUTES
 	blocking_rules = list(/datum/dynamic_ruleset/roundstart/nuclear,/datum/dynamic_ruleset/midround/from_ghosts/nuclear)
 	requirements = list(70,60,50,50,40,40,40,30,20,15)
 	property_weights = list("story_potential" = 1, "trust" = 1, "chaos" = 1)
@@ -157,17 +161,18 @@
 	required_enemies = list(3,3,3,3,3,3,3,3,3,3)
 	cost = 15
 	weight = 3
+	earliest_start = 25 MINUTES
 	repeatable_weight_decrease = 2
 	requirements = list(60,50,40,30,30,30,30,30,30,30)
 	high_population_requirement = 30
 	property_weights = list("extended" = -2)
 
 /datum/dynamic_ruleset/event/meteor_wave/ready()
-	if(mode.threat_level > 40 && mode.threat >= 25 && prob(20))
+	if(world.time-SSticker.round_start_time > 35 MINUTES && mode.threat_level > 40 && mode.threat >= 25 && prob(30))
 		name = "Meteor Wave: Threatening"
 		cost = 25
 		typepath = /datum/round_event/meteor_wave/threatening
-	else if(mode.threat_level > 50 && mode.threat >= 40 && prob(30))
+	else if(world.time-SSticker.round_start_time > 45 MINUTES && mode.threat_level > 50 && mode.threat >= 40 && prob(30))
 		name = "Meteor Wave: Catastrophic"
 		cost = 40
 		typepath = /datum/round_event/meteor_wave/catastrophic
@@ -280,6 +285,7 @@
 	cost = 4
 	requirements = list(10,10,10,10,10,10,10,10,10,10)
 	high_population_requirement = 10
+	earliest_start = 10 MINUTES
 	repeatable = TRUE
 	property_weights = list("extended" = 1)
 
@@ -324,6 +330,7 @@
 	requirements = list(5,5,5,5,5,5,5,5,5,5)
 	high_population_requirement = 5
 	repeatable = TRUE
+	earliest_start = 0 MINUTES
 	property_weights = list("extended" = 1)
 	always_max_weight = TRUE
 
@@ -381,3 +388,67 @@
 	requirements = list(5,5,5,5,5,5,5,5,5,5)
 	high_population_requirement = 5
 	property_weights = list("extended" = 1,"chaos" = 1)
+
+/datum/dynamic_ruleset/event/portal_storm_syndicate
+	name = "Portal Storm"
+	config_tag = "portal_storm"
+	typepath = /datum/round_event/portal_storm/syndicate_shocktroop
+	cost = 10
+	weight = 1
+	enemy_roles = list("Head of Security","Security Officer","AI","Captain","Shaft Miner")
+	required_enemies = list(2,2,2,2,2,2,2,2,2,2)
+	requirements = list(101,101,101,30,30,30,30,30,30,30)
+	high_population_requirement =  30
+	earliest_start = 30 MINUTES
+	property_weights = list("teamwork" = 1,"chaos" = 1, "extended" = -1)
+
+/datum/dynamic_ruleset/event/wormholes
+	name = "Wormholes"
+	config_tag = "wormhole"
+	typepath = /datum/round_event/wormholes
+	cost = 3
+	weight = 4
+	enemy_roles = list("AI","Medical Doctor","Station Engineer","Head of Personnel","Captain")
+	required_enemies = list(2,2,2,2,2,2,2,2,2,2)
+	requirements = list(5,5,5,5,5,5,5,5,5,5)
+	high_population_requirement =  5
+	property_weights = list("extended" = 1)
+
+/datum/dynamic_ruleset/event/swarmers
+	name = "Swarmers"
+	config_tag = "swarmer"
+	typepath = /datum/round_event/spawn_swarmer
+	cost = 10
+	weight = 1
+	earliest_start = 30 MINUTES
+	enemy_roles = list("AI","Security Officer","Head of Security","Captain","Station Engineer","Atmos Technician","Chief Engineer")
+	required_enemies = list(4,4,4,4,3,3,2,2,1,1)
+	requirements = list(101,101,101,101,101,101,101,101,101,101)
+	high_population_requirement =  5
+	property_weights = list("extended" = -2)
+
+/datum/dynamic_ruleset/event/sentient_disease
+	name = "Sentient Disease"
+	config_tag = "sentient_disease"
+	typepath = /datum/round_event/ghost_role/sentient_disease
+	enemy_roles = list("Virologist","Chief Medical Officer","Captain","Chemist")
+	required_enemies = list(2,1,1,1,0,0,0,0,0,0)
+	required_candidates = 1
+	weight = 4
+	cost = 5
+	requirements = list(30,30,20,20,15,10,10,10,10,5) // yes, it can even happen in "extended"!
+	property_weights = list("story_potential" = 1, "extended" = 1, "valid" = -2)
+	high_population_requirement = 5
+
+/datum/dynamic_ruleset/event/revenant
+	name = "Revenant"
+	config_tag = "revenant"
+	typepath = /datum/round_event/ghost_role/revenant
+	enemy_roles = list("Chief Engineer","Station Engineer","Captain","Chaplain","AI")
+	required_enemies = list(2,1,1,1,0,0,0,0,0,0)
+	required_candidates = 1
+	weight = 4
+	cost = 5
+	requirements = list(30,30,30,30,20,15,15,15,15,15)
+	high_population_requirement = 15
+	property_weights = list("story_potential" = -2, "extended" = -1)

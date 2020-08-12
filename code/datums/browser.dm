@@ -43,8 +43,14 @@
 		var/datum/asset/spritesheet/sheet = name
 		stylesheets["spritesheet_[sheet.name].css"] = "data/spritesheets/[sheet.name]"
 	else
-		stylesheets["[ckey(name)].css"] = file
-		register_asset("[ckey(name)].css", file)
+		var/asset_name = "[name].css"
+		stylesheets[asset_name] = file
+		if(!SSassets.cache[asset_name])
+			register_asset(asset_name, file)
+
+/datum/browser/proc/add_script(name, file)
+	scripts["[ckey(name)].js"] = file
+	register_asset("[ckey(name)].js", file)
 
 /datum/browser/proc/set_content(ncontent)
 	content = ncontent
@@ -66,9 +72,9 @@
 
 	return {"<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<head>
+		<meta http-equiv='Content-Type' content='text/html; charset=UTF-8'>
+		<meta http-equiv='X-UA-Compatible' content='IE=edge'>
 		[head_content]
 	</head>
 	<body scroll=auto>
@@ -91,20 +97,20 @@
 	[get_footer()]
 	"}
 
-/datum/browser/proc/open(use_onclose = 1)
+/datum/browser/proc/open(use_onclose = TRUE)
 	if(isnull(window_id))	//null check because this can potentially nuke goonchat
 		WARNING("Browser [title] tried to open with a null ID")
 		to_chat(user, "<span class='userdanger'>The [title] browser you tried to open failed a sanity check! Please report this on github!</span>")
 		return
 	var/window_size = ""
-	if (width && height)
+	if(width && height)
 		window_size = "size=[width]x[height];"
-	if (stylesheets.len)
-		send_asset_list(user, stylesheets, verify=FALSE)
-	if (scripts.len)
-		send_asset_list(user, scripts, verify=FALSE)
+	if(stylesheets.len)
+		send_asset_list(user, stylesheets)
+	if(scripts.len)
+		send_asset_list(user, scripts)
 	user << browse(get_content(), "window=[window_id];[window_size][window_options]")
-	if (use_onclose)
+	if(use_onclose)
 		setup_onclose()
 
 /datum/browser/proc/setup_onclose()
@@ -151,7 +157,7 @@
 	close()
 
 //designed as a drop in replacement for alert(); functions the same. (outside of needing User specified)
-/proc/tgalert(var/mob/User, Message, Title, Button1="Ok", Button2, Button3, StealFocus = 1, Timeout = 6000)
+/proc/tgalert(mob/User, Message, Title, Button1="Ok", Button2, Button3, StealFocus = 1, Timeout = 6000)
 	if (!User)
 		User = usr
 	switch(askuser(User, Message, Title, Button1, Button2, Button3, StealFocus, Timeout))

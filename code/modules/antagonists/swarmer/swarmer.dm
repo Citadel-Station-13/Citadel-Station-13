@@ -4,7 +4,7 @@
 	desc = "A shell of swarmer that was completely powered down. It can no longer activate itself."
 	icon = 'icons/mob/swarmer.dmi'
 	icon_state = "swarmer_unactivated"
-	materials = list(MAT_METAL=10000, MAT_GLASS=4000)
+	custom_materials = list(/datum/material/iron=10000, /datum/material/glass=4000)
 
 /obj/effect/mob_spawn/swarmer
 	name = "unactivated swarmer"
@@ -36,7 +36,7 @@
 	if(A)
 		notify_ghosts("A swarmer shell has been created in [A.name].", 'sound/effects/bin_close.ogg', source = src, action = NOTIFY_ATTACK, flashwindow = FALSE, ignore_dnr_observers = TRUE)
 
-/obj/effect/mob_spawn/swarmer/attack_hand(mob/living/user)
+/obj/effect/mob_spawn/swarmer/on_attack_hand(mob/living/user, act_intent = user.a_intent, unarmed_attack_flags)
 	. = ..()
 	if(.)
 		return
@@ -62,7 +62,7 @@
 	speak_emote = list("tones")
 	initial_language_holder = /datum/language_holder/swarmer
 	bubble_icon = "swarmer"
-	mob_biotypes = list(MOB_ROBOTIC)
+	mob_biotypes = MOB_ROBOTIC
 	health = 40
 	maxHealth = 40
 	status_flags = CANPUSH
@@ -70,6 +70,7 @@
 	icon_living = "swarmer"
 	icon_dead = "swarmer_unactivated"
 	icon_gib = null
+	threat = 0.5
 	wander = 0
 	harm_intent_damage = 5
 	minbodytemp = 0
@@ -83,9 +84,11 @@
 	hud_possible = list(ANTAG_HUD, DIAG_STAT_HUD, DIAG_HUD)
 	obj_damage = 0
 	environment_smash = ENVIRONMENT_SMASH_NONE
-	attacktext = "shocks"
+	attack_verb_continuous = "shocks"
+	attack_verb_simple = "shock"
 	attack_sound = 'sound/effects/empulse.ogg'
-	friendly = "pinches"
+	friendly_verb_continuous = "pinches"
+	friendly_verb_simple = "pinch"
 	speed = 0
 	faction = list("swarmer")
 	AIStatus = AI_OFF
@@ -155,10 +158,11 @@
 	face_atom(A)
 	if(!isturf(loc))
 		return
-	if(next_move > world.time)
+	if(!CheckActionCooldown())
 		return
 	if(!A.Adjacent(src))
 		return
+	DelayNextAction()
 	A.swarmer_act(src)
 
 /atom/proc/swarmer_act(mob/living/simple_animal/hostile/swarmer/S)
@@ -178,8 +182,8 @@
 /obj/swarmer_act(mob/living/simple_animal/hostile/swarmer/S)
 	if(resistance_flags & INDESTRUCTIBLE)
 		return FALSE
-	for(var/mob/living/L in contents)
-		if(!issilicon(L) && !isbrain(L))
+	for(var/mob/living/L in GetAllContents())
+		if(!ispAI(L) && !isbrain(L))
 			to_chat(S, "<span class='warning'>An organism has been detected inside this object. Aborting.</span>")
 			return FALSE
 	return ..()
@@ -191,7 +195,7 @@
 	return 0
 
 /obj/item/IntegrateAmount() //returns the amount of resources gained when eating this item
-	if(materials[MAT_METAL] || materials[MAT_GLASS])
+	if(custom_materials[SSmaterials.GetMaterialRef(/datum/material/iron)] || custom_materials[SSmaterials.GetMaterialRef(/datum/material/glass)])
 		return 1
 	return ..()
 
@@ -396,13 +400,13 @@
 	return FALSE
 
 /obj/structure/lattice/catwalk/swarmer_act(mob/living/simple_animal/hostile/swarmer/S)
-	. = ..()
 	var/turf/here = get_turf(src)
 	for(var/A in here.contents)
 		var/obj/structure/cable/C = A
 		if(istype(C))
 			to_chat(S, "<span class='warning'>Disrupting the power grid would bring no benefit to us. Aborting.</span>")
 			return FALSE
+	return ..()
 
 /obj/item/deactivated_swarmer/IntegrateAmount()
 	return 50
@@ -413,6 +417,57 @@
 
 /obj/machinery/field/generator/swarmer_act(mob/living/simple_animal/hostile/swarmer/S)
 	to_chat(S, "<span class='warning'>Destroying this object would cause a catastrophic chain reaction. Aborting.</span>")
+	return FALSE
+
+/obj/machinery/ore_silo/swarmer_act(mob/living/simple_animal/hostile/swarmer/S)
+	to_chat(S, "<span class='warning'>Destroying this object, however tempting it's, will disrupt the research development that may serve for our masters in the future. Aborting.</span>")
+	return FALSE
+
+/obj/machinery/rnd/server/swarmer_act(mob/living/simple_animal/hostile/swarmer/S)
+	to_chat(S, "<span class='warning'>Destroying this object, will disrupt the research development that may serve for our masters in the future. Aborting.</span>")
+	return FALSE
+
+/obj/machinery/pool/swarmer_act(mob/living/simple_animal/hostile/swarmer/S) //pool's closed, but not.
+	to_chat(S, "<span class='warning'>The pool must not be closed, it will provide healthy fun for our masters in the future. Aborting.</span>")
+	return FALSE
+
+/obj/structure/pool/swarmer_act(mob/living/simple_animal/hostile/swarmer/S)
+	to_chat(S, "<span class='warning'>The pool must not be closed, it will provide healthy fun for our masters in the future. Aborting.</span>")
+	return FALSE
+
+/obj/structure/holosign/barrier/swarmer_act(mob/living/simple_animal/hostile/swarmer/S)
+	var/static/list/lazy_typecache = typecacheof(list(/obj/structure/holosign/barrier/engineering, /obj/structure/holosign/barrier/firelock, /obj/structure/holosign/barrier/atmos, /obj/structure/holosign/barrier/combifan))
+	if(lazy_typecache[type])
+		to_chat(S, "<span class='warning'>Destroying this holographic barrier may not benefit us. Aborting.</span>")
+		return FALSE
+	return ..()
+
+/obj/machinery/dominator/swarmer_act(mob/living/simple_animal/hostile/swarmer/S)
+	to_chat(S, "<span class='warning'>This advanced piece of technology may be of use for our masters in the future. Aborting.</span>")
+	return FALSE
+
+/obj/machinery/computer/bsa_control/swarmer_act(mob/living/simple_animal/hostile/swarmer/S)
+	to_chat(S, "<span class='warning'>This advanced piece of technology may be of use for our masters in the future. Aborting.</span>")
+	return FALSE
+
+/obj/machinery/bsa/swarmer_act(mob/living/simple_animal/hostile/swarmer/S)
+	to_chat(S, "<span class='warning'>This advanced piece of technology may be of use for our masters in the future. Aborting.</span>")
+	return FALSE
+
+/obj/machinery/dna_vault/swarmer_act(mob/living/simple_animal/hostile/swarmer/S)
+	to_chat(S, "<span class='warning'>This advanced piece of technology may be of use for our masters in the future. Aborting.</span>")
+	return FALSE
+
+/obj/structure/filler/swarmer_act(mob/living/simple_animal/hostile/swarmer/S)
+	to_chat(S, "<span class='warning'>This advanced piece of technology may be of use for our masters in the future. Aborting.</span>")
+	return FALSE
+
+/obj/machinery/computer/sat_control/swarmer_act(mob/living/simple_animal/hostile/swarmer/S)
+	to_chat(S, "<span class='warning'>Destroying this object will lower the station shielding against space debris. Aborting.</span>")
+	return FALSE
+
+/obj/machinery/satellite/meteor_shield/swarmer_act(mob/living/simple_animal/hostile/swarmer/S)
+	to_chat(S, "<span class='warning'>Destroying this object will lower the station shielding against space debris. Aborting.</span>")
 	return FALSE
 
 ////END CTRL CLICK FOR SWARMERS////
@@ -428,6 +483,14 @@
 	return new fabrication_object(loc)
 
 /mob/living/simple_animal/hostile/swarmer/proc/Integrate(atom/movable/target)
+	if(isobj(target))
+		var/obj/O = target
+		if(O.resistance_flags & INDESTRUCTIBLE)
+			return FALSE
+	for(var/mob/living/L in target.GetAllContents())
+		if(!ispAI(L) && !isbrain(L))
+			to_chat(src, "<span class='warning'>An organism has been detected inside this object. Aborting.</span>")
+			return FALSE
 	var/resource_gain = target.IntegrateAmount()
 	if(resources + resource_gain > max_resources)
 		to_chat(src, "<span class='warning'>We cannot hold more materials!</span>")
@@ -435,7 +498,7 @@
 	if(resource_gain)
 		resources += resource_gain
 		do_attack_animation(target)
-		changeNext_move(CLICK_CD_MELEE)
+		DelayNextAction(CLICK_CD_MELEE)
 		var/obj/effect/temp_visual/swarmer/integrate/I = new /obj/effect/temp_visual/swarmer/integrate(get_turf(target))
 		I.pixel_x = target.pixel_x
 		I.pixel_y = target.pixel_y
@@ -455,9 +518,8 @@
 /mob/living/simple_animal/hostile/swarmer/proc/DisIntegrate(atom/movable/target)
 	new /obj/effect/temp_visual/swarmer/disintegration(get_turf(target))
 	do_attack_animation(target)
-	changeNext_move(CLICK_CD_MELEE)
+	DelayNextAction(CLICK_CD_MELEE)
 	target.ex_act(EXPLODE_LIGHT)
-
 
 /mob/living/simple_animal/hostile/swarmer/proc/DisperseTarget(mob/living/target)
 	if(target == src)
@@ -492,8 +554,8 @@
 	playsound(src,'sound/effects/sparks4.ogg',50,1)
 	do_teleport(target, F, 0, channel = TELEPORT_CHANNEL_BLUESPACE)
 
-/mob/living/simple_animal/hostile/swarmer/electrocute_act(shock_damage, obj/source, siemens_coeff = 1, safety = FALSE, tesla_shock = FALSE, illusion = FALSE, stun = TRUE)
-	if(!tesla_shock)
+/mob/living/simple_animal/hostile/swarmer/electrocute_act(shock_damage, source, siemens_coeff = 1, flags = NONE)
+	if(!(flags & SHOCK_TESLA))
 		return FALSE
 	return ..()
 
@@ -584,9 +646,9 @@
 		var/mob/living/L = AM
 		if(!istype(L, /mob/living/simple_animal/hostile/swarmer))
 			playsound(loc,'sound/effects/snap.ogg',50, 1, -1)
-			L.electrocute_act(0, src, 1, 1, 1)
+			L.electrocute_act(0, src, 1, flags = SHOCK_NOGLOVES|SHOCK_ILLUSION)
 			if(iscyborg(L))
-				L.Knockdown(100)
+				L.DefaultCombatKnockdown(100)
 			qdel(src)
 	..()
 

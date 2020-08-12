@@ -56,6 +56,9 @@
 	//can be overridden by antag_rep.txt config
 	var/antag_rep = 10
 
+	var/paycheck = PAYCHECK_MINIMAL
+	var/paycheck_department = ACCOUNT_CIV
+
 	var/list/mind_traits // Traits added to the mind of the mob assigned this job
 	var/list/blacklisted_quirks		//list of quirk typepaths blacklisted.
 
@@ -63,6 +66,11 @@
 
 	//If a job complies with dresscodes, loadout items will not be equipped instead of the job's outfit, instead placing the items into the player's backpack.
 	var/dresscodecompliant = TRUE
+	// How much threat this job is worth in dynamic. Is subtracted if the player's not an antag, added if they are.
+	var/threat = 0
+
+	/// Starting skill modifiers.
+	var/list/starting_modifiers
 
 //Only override this proc
 //H is usually a human unless an /equip override transformed it
@@ -88,11 +96,22 @@
 	if(. == null)
 		return antag_rep
 
+/datum/job/proc/GetThreat()
+	. = CONFIG_GET(keyed_list/job_threat)[lowertext(title)]
+	if(. == null)
+		return threat
+
 //Don't override this unless the job transforms into a non-human (Silicons do this for example)
 /datum/job/proc/equip(mob/living/carbon/human/H, visualsOnly = FALSE, announce = TRUE, latejoin = FALSE, datum/outfit/outfit_override = null, client/preference_source)
 	if(!H)
 		return FALSE
-
+	if(!visualsOnly)
+		var/datum/bank_account/bank_account = new(H.real_name, src)
+		bank_account.account_holder = H.real_name
+		bank_account.account_job = src
+		bank_account.account_id = rand(111111,999999)
+		bank_account.payday(STARTING_PAYCHECKS, TRUE)
+		H.account_id = bank_account.account_id
 	if(CONFIG_GET(flag/enforce_human_authority) && (title in GLOB.command_positions))
 		if(H.dna.species.id != "human")
 			H.set_species(/datum/species/human)
@@ -135,7 +154,6 @@
 		return TRUE	//Available in 0 days = available right now = player is old enough to play.
 	return FALSE
 
-
 /datum/job/proc/available_in_days(client/C)
 	if(!C)
 		return 0
@@ -159,6 +177,12 @@
 /datum/job/proc/radio_help_message(mob/M)
 	to_chat(M, "<b>Prefix your message with :h to speak on your department's radio. To see other prefixes, look closely at your headset.</b>")
 
+/datum/job/proc/standard_assign_skills(datum/mind/M)
+	if(!starting_modifiers)
+		return
+	for(var/mod in starting_modifiers)
+		ADD_SINGLETON_SKILL_MODIFIER(M, mod, null)
+
 /datum/outfit/job
 	name = "Standard Gear"
 
@@ -179,21 +203,24 @@
 	var/pda_slot = SLOT_BELT
 
 /datum/outfit/job/pre_equip(mob/living/carbon/human/H, visualsOnly = FALSE, client/preference_source)
-	switch(preference_source?.prefs.backbag)
-		if(GBACKPACK)
-			back = /obj/item/storage/backpack //Grey backpack
-		if(GSATCHEL)
-			back = /obj/item/storage/backpack/satchel //Grey satchel
-		if(GDUFFELBAG)
-			back = /obj/item/storage/backpack/duffelbag //Grey Duffel bag
-		if(LSATCHEL)
-			back = /obj/item/storage/backpack/satchel/leather //Leather Satchel
-		if(DSATCHEL)
-			back = satchel //Department satchel
-		if(DDUFFELBAG)
-			back = duffelbag //Department duffel bag
-		else
-			back = backpack //Department backpack
+	var/preference_backpack = preference_source?.prefs.backbag
+
+	if(preference_backpack)
+		switch(preference_backpack)
+			if(DBACKPACK)
+				back = backpack //Department backpack
+			if(DSATCHEL)
+				back = satchel //Department satchel
+			if(DDUFFELBAG)
+				back = duffelbag //Department duffel bag
+			else
+				var/find_preference_backpack = GLOB.backbaglist[preference_backpack] //attempt to find non-department backpack
+				if(find_preference_backpack)
+					back = find_preference_backpack
+				else //tried loading in a backpack that we don't allow as a loadout one
+					back = backpack
+	else //somehow doesn't have a preference set, should never reach this point but just-in-case
+		back = backpack
 
 	//converts the uniform string into the path we'll wear, whether it's the skirt or regular variant
 	var/holder
@@ -220,12 +247,18 @@
 			H.real_name = "[J.title] #[rand(10000, 99999)]"
 
 	var/obj/item/card/id/C = H.wear_id
-	if(istype(C))
+	if(istype(C) && C.bank_support)
 		C.access = J.get_access()
 		shuffle_inplace(C.access) // Shuffle access list to make NTNet passkeys less predictable
 		C.registered_name = H.real_name
 		C.assignment = J.title
 		C.update_label()
+		for(var/A in SSeconomy.bank_accounts)
+			var/datum/bank_account/B = A
+			if(B.account_id == H.account_id)
+				C.registered_account = B
+				B.bank_cards += C
+				break
 		H.sec_hud_set_ID()
 
 	var/obj/item/pda/PDA = H.get_item_by_slot(pda_slot)

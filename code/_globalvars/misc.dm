@@ -14,7 +14,7 @@ GLOBAL_VAR_INIT(fileaccess_timer, 0)
 
 GLOBAL_DATUM_INIT(data_core, /datum/datacore, new)
 
-GLOBAL_VAR_INIT(CELLRATE, 0.002)  // conversion ratio between a watt-tick and kilojoule
+GLOBAL_VAR_INIT(CELLRATE, 0.002)  // conversion ratio between a watt-tick and kilojoule, dimensionless, kilojoules/watt-tick
 GLOBAL_VAR_INIT(CHARGELEVEL, 0.001) // Cap for how fast cells charge, as a percentage-per-tick (.001 means cellcharge is capped to 1% per second)
 
 GLOBAL_LIST_EMPTY(powernets)
@@ -33,3 +33,5 @@ GLOBAL_VAR(bible_icon_state)
 GLOBAL_VAR(bible_item_state)
 GLOBAL_VAR(holy_weapon_type)
 GLOBAL_VAR(holy_armor_type)
+
+GLOBAL_VAR_INIT(internal_tick_usage, 0.2 * world.tick_lag)

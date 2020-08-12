@@ -27,7 +27,7 @@
 
 /obj/machinery/transformer/examine(mob/user)
 	. = ..()
-	if(cooldown && (issilicon(user) || isobserver(user)))
+	if(cooldown && (hasSiliconAccessInArea(user) || isobserver(user)))
 		. += "It will be ready in [DisplayTimeText(cooldown_timer - world.time)]."
 
 /obj/machinery/transformer/Destroy()
@@ -38,8 +38,7 @@
 	..()
 	update_icon()
 
-/obj/machinery/transformer/update_icon()
-	..()
+/obj/machinery/transformer/update_icon_state()
 	if(stat & (BROKEN|NOPOWER) || cooldown == 1)
 		icon_state = "separator-AO0"
 	else

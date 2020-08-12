@@ -9,9 +9,9 @@
 /world/IsBanned(key,address,computer_id,type,real_bans_only=FALSE)
 	var/static/key_cache = list()
 	if(!real_bans_only)
-		if(key_cache[key])
+		if(key_cache[key] >= REALTIMEOFDAY)
 			return list("reason"="concurrent connection attempts", "desc"="You are attempting to connect too fast. Try again.")
-		key_cache[key] = 1
+		key_cache[key] = REALTIMEOFDAY+10 //this shouldn't runtime, but if it does, expiry attempts will cover it to ensure genuine connection attemps wont get trapped in limbo
 
 	if (!key || !address || !computer_id)
 		if(real_bans_only)

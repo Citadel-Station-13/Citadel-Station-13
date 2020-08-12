@@ -14,6 +14,10 @@
 	name = "Security Cameras (Computer Board)"
 	build_path = /obj/machinery/computer/security
 
+/obj/item/circuitboard/computer/security/shuttle
+	name = "Shuttlelinking Security Cameras (Computer Board)"
+	build_path = /obj/machinery/computer/security/shuttle
+
 /obj/item/circuitboard/computer/xenobiology
 	name = "circuit board (Xenobiology Console)"
 	build_path = /obj/machinery/computer/camera_advanced/xenobio
@@ -112,9 +116,9 @@
 	build_path = /obj/machinery/computer/cloning
 	var/list/records = list()
 
-/obj/item/circuitboard/computer/prototype_cloning
+/obj/item/circuitboard/computer/cloning/prototype
 	name = "Prototype Cloning (Computer Board)"
-	build_path = /obj/machinery/computer/prototype_cloning
+	build_path = /obj/machinery/computer/cloning/prototype
 
 /obj/item/circuitboard/computer/arcade/battle
 	name = "Arcade Battle (Computer Board)"
@@ -293,9 +297,9 @@
 	name = "Mining Shuttle (Computer Board)"
 	build_path = /obj/machinery/computer/shuttle/mining
 
-/obj/item/circuitboard/computer/mining_shuttle/common
-	name = "Lavaland Shuttle (Computer Board)"
-	build_path = /obj/machinery/computer/shuttle/mining/common
+/obj/item/circuitboard/computer/snow_taxi
+	name = "Snow Taxi (Computer Board)"
+	build_path = /obj/machinery/computer/shuttle/snow_taxi
 
 /obj/item/circuitboard/computer/white_ship
 	name = "White Ship (Computer Board)"
@@ -379,3 +383,11 @@
 /obj/item/circuitboard/computer/nanite_cloud_controller
 	name = "Nanite Cloud Control (Computer Board)"
 	build_path = /obj/machinery/computer/nanite_cloud_controller
+
+/obj/item/circuitboard/computer/shuttle/flight_control
+	name = "Shuttle Flight Control (Computer Board)"
+	build_path = /obj/machinery/computer/custom_shuttle
+
+/obj/item/circuitboard/computer/shuttle/docker
+	name = "Shuttle Navigation Computer (Computer Board)"
+	build_path = /obj/machinery/computer/camera_advanced/shuttle_docker/custom

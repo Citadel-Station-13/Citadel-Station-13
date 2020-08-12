@@ -1,6 +1,8 @@
 /datum/antagonist/santa
 	name = "Santa"
 	show_in_antagpanel = FALSE
+	show_name_in_check_antagonists = TRUE
+	show_to_ghosts = TRUE
 
 /datum/antagonist/santa/on_gain()
 	. = ..()
@@ -18,7 +20,7 @@
 
 	owner.AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/conjure/presents)
 	var/obj/effect/proc_holder/spell/targeted/area_teleport/teleport/telespell = new
-	telespell.clothes_req = 0 //santa robes aren't actually magical.
+	telespell.clothes_req = NONE //santa robes aren't actually magical.
 	owner.AddSpell(telespell) //does the station have chimneys? WHO KNOWS!
 
 /datum/antagonist/santa/proc/give_objective()

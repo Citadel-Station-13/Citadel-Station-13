@@ -139,13 +139,6 @@
 /obj/effect/temp_visual/dir_setting/curse/hand
 	icon_state = "cursehand"
 
-/obj/effect/temp_visual/dir_setting/curse/hand/Initialize(mapload, set_dir, handedness)
-	. = ..()
-	update_icon()
-
-/obj/item/projectile/curse_hand/update_icon()
-	icon_state = "[icon_state][handedness]"
-
 /obj/effect/temp_visual/wizard
 	name = "water"
 	icon = 'icons/mob/mob.dmi'
@@ -474,7 +467,7 @@
 	else
 		update_icon()
 
-/obj/effect/constructing_effect/update_icon()
+/obj/effect/constructing_effect/update_icon_state()
 	icon_state = "rcd"
 	if (delay < 10)
 		icon_state += "_shortest"
@@ -494,3 +487,14 @@
 
 /obj/effect/constructing_effect/proc/end()
 	qdel(src)
+
+/obj/effect/temp_visual/dir_setting/space_wind
+	icon = 'icons/effects/atmospherics.dmi'
+	icon_state = "space_wind"
+	layer = FLY_LAYER
+	duration = 20
+	mouse_opacity = 0
+
+/obj/effect/temp_visual/dir_setting/space_wind/Initialize(mapload, set_dir, set_alpha = 255)
+	. = ..()
+	alpha = set_alpha

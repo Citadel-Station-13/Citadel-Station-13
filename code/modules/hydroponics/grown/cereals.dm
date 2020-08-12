@@ -33,6 +33,7 @@
 	icon_state = "seed-oat"
 	species = "oat"
 	plantname = "Oat Stalks"
+	rarity = 10 //Not really new, just better
 	product = /obj/item/reagent_containers/food/snacks/grown/oat
 	mutatelist = list()
 
@@ -45,7 +46,7 @@
 	filling_color = "#556B2F"
 	bitesize_mod = 2
 	foodtype = GRAIN
-	grind_results = list(/datum/reagent/consumable/flour = 0)
+	grind_results = list(/datum/reagent/consumable/flour = 0.5) //So when it grinds it has 50% more flour
 	tastes = list("oat" = 1)
 	distill_reagent = /datum/reagent/consumable/ethanol/ale
 
@@ -81,6 +82,7 @@
 	species = "meatwheat"
 	plantname = "Meatwheat"
 	product = /obj/item/reagent_containers/food/snacks/grown/meatwheat
+	rarity = 40
 	mutatelist = list()
 
 /obj/item/reagent_containers/food/snacks/grown/meatwheat

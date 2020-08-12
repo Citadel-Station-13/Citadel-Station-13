@@ -5,16 +5,18 @@
 	var/list/testmerge = list()
 
 /datum/getrev/New()
+	commit = rustg_git_revparse("HEAD")
+	if(commit)
+		date = rustg_git_commit_date(commit)
+	originmastercommit = rustg_git_revparse("origin/master")
+
+/datum/getrev/proc/load_tgs_info()
 	testmerge = world.TgsTestMerges()
 	var/datum/tgs_revision_information/revinfo = world.TgsRevision()
 	if(revinfo)
 		commit = revinfo.commit
 		originmastercommit = revinfo.origin_commit
-	else
-		commit = rustg_git_revparse("HEAD")
-		if(commit)
-			date = rustg_git_commit_date(commit)
-		originmastercommit = rustg_git_revparse("origin/master")
+		date = rustg_git_commit_date(commit)
 
 	// goes to DD log and config_error.txt
 	log_world(get_log_message())
@@ -27,7 +29,8 @@
 
 	for(var/line in testmerge)
 		var/datum/tgs_revision_information/test_merge/tm = line
-		msg += "Test merge active of PR #[tm.number] commit [tm.commit]"
+		msg += "Test merge active of PR #[tm.number] commit [tm.pull_request_commit]"
+		SSblackbox.record_feedback("associative", "testmerged_prs", 1, list("number" = "[tm.number]", "commit" = "[tm.pull_request_commit]", "title" = "[tm.title]", "author" = "[tm.author]"))
 
 	if(commit && commit != originmastercommit)
 		msg += "HEAD: [commit]"
@@ -75,7 +78,10 @@
 	else if(!pc)
 		msg += "No commit information"
 	if(world.TgsAvailable())
-		msg += "Server tools version: [world.TgsVersion()]"
+		var/datum/tgs_version/version = world.TgsVersion()
+		msg += "TGS version: [version.raw_parameter]"
+		var/datum/tgs_version/api_version = world.TgsApiVersion()
+		msg += "DMAPI version: [api_version.raw_parameter]"
 
 	// Game mode odds
 	msg += "<br><b>Current Informational Settings:</b>"

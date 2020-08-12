@@ -32,7 +32,7 @@
 	if(setdesc && P.picture_desc)
 		desc = P.picture_desc
 
-/obj/item/photo/update_icon()
+/obj/item/photo/update_icon_state()
 	if(!istype(picture) || !picture.picture_image)
 		return
 	var/icon/I = picture.get_small_icon()
@@ -51,6 +51,8 @@
 	user.examinate(src)
 
 /obj/item/photo/attackby(obj/item/P, mob/user, params)
+	if(try_burn(P, user))
+		return
 	if(istype(P, /obj/item/pen) || istype(P, /obj/item/toy/crayon))
 		if(!user.is_literate())
 			to_chat(user, "<span class='notice'>You scribble illegibly on [src]!</span>")
@@ -59,6 +61,26 @@
 		if(txt && user.canUseTopic(src, BE_CLOSE))
 			scribble = txt
 	..()
+
+/obj/item/photo/proc/try_burn(obj/item/I, mob/living/user)
+	var/ignition_message = I.ignition_effect(src, user)
+	if(!ignition_message)
+		return
+	. = TRUE
+	if(HAS_TRAIT(user, TRAIT_CLUMSY) && prob(10) && Adjacent(user))
+		user.visible_message("<span class='warning'>[user] accidentally ignites [user.p_them()]self!</span>", \
+							"<span class='userdanger'>You miss [src] and accidentally light yourself on fire!</span>")
+		if(user.is_holding(I)) //checking if they're holding it in case TK is involved
+			user.dropItemToGround(I)
+		user.adjust_fire_stacks(1)
+		user.IgniteMob()
+		return
+
+	if(user.is_holding(src)) //no TK shit here.
+		user.dropItemToGround(src)
+	user.visible_message(ignition_message)
+	add_fingerprint(user)
+	fire_act(I.get_temperature())
 
 /obj/item/photo/examine(mob/user)
 	. = ..()
@@ -72,7 +94,7 @@
 		to_chat(user, "<span class='warning'>[src] seems to be blank...</span>")
 		return
 	user << browse_rsc(picture.picture_image, "tmp_photo.png")
-	user << browse("<html><head><title>[name]</title></head>" \
+	user << browse("<html><head><meta http-equiv='Content-Type' content='text/html; charset=UTF-8'><title>[name]</title></head>" \
 		+ "<body style='overflow:hidden;margin:0;text-align:center'>" \
 		+ "<img src='tmp_photo.png' width='480' style='-ms-interpolation-mode:nearest-neighbor' />" \
 		+ "[scribble ? "<br>Written on the back:<br><i>[scribble]</i>" : ""]"\
@@ -84,8 +106,12 @@
 	set category = "Object"
 	set src in usr
 
+	var/mob/living/L = usr
+	if(!istype(L))
+		return
+
 	var/n_name = stripped_input(usr, "What would you like to label the photo?", "Photo Labelling", "", MAX_NAME_LEN)
 	//loc.loc check is for making possible renaming photos in clipboards
-	if(n_name && (loc == usr || loc.loc && loc.loc == usr) && usr.stat == CONSCIOUS && usr.canmove && !usr.restrained())
+	if(n_name && (loc == usr || loc.loc && loc.loc == usr) && CHECK_MOBILITY(L, MOBILITY_USE))
 		name = "photo[(n_name ? text("- '[n_name]'") : null)]"
 	add_fingerprint(usr)

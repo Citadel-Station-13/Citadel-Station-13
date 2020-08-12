@@ -30,33 +30,3 @@
 				H.visible_message("<span class='danger'>[H] contracts strangely, spewing out contents on the floor!</span>", \
  						"<span class='userdanger'>You spew out everything inside you on the floor!</span>")
 		return BULLET_ACT_HIT
-
-
-////////////////////////// Anti-Noms Drugs //////////////////////////
-/*
-/datum/reagent/medicine/ickypak
-	name = "Ickypak"
-	description = "A foul-smelling green liquid, for inducing muscle contractions to expel accidentally ingested things."
-	reagent_state = LIQUID
-	color = "#0E900E"
-	metabolization_rate = 0.25 * REAGENTS_METABOLISM
-
-/datum/reagent/medicine/ickypak/on_mob_life(var/mob/living/M, method=INGEST)
-	if(prob(10))
-		M.visible_message("<span class='danger'>[M] retches!</span>", \
- 						"<span class='userdanger'>You don't feel good...</span>")
-	for(var/I in M.vore_organs)
-		var/datum/belly/B = M.vore_organs[I]
-		for(var/atom/movable/A in B.internal_contents)
-			if(prob(55))
-				playsound(M, 'sound/effects/splat.ogg', 50, 1)
-				B.release_specific_contents(A)
-				M.visible_message("<span class='danger'>[M] contracts strangely, spewing out something!</span>", \
- 						"<span class='userdanger'>You spew out something from inside you!</span>")
-	return ..()
-
-/datum/chemical_reaction/ickypak
-	name = "Ickypak"
-	id = /datum/reagent/medicine/ickypak
-	results = list(/datum/reagent/medicine/ickypak = 2)
-	required_reagents = list(/datum/reagent/chlorine = 2 , /datum/reagent/oil = 1) */

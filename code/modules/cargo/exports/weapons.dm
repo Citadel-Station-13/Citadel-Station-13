@@ -200,6 +200,31 @@
 	export_types = list(/obj/item/ammo_casing/shotgun/dragonsbreath, /obj/item/ammo_casing/shotgun/meteorslug, /obj/item/ammo_casing/shotgun/pulseslug, /obj/item/ammo_casing/shotgun/frag12, /obj/item/ammo_casing/shotgun/ion, /obj/item/ammo_casing/shotgun/laserslug)
 
 /////////////////////////
+//Bow and Arrows/////////
+/////////////////////////
+
+/datum/export/weapon/bows
+	cost = 450
+	unit_name = "bow"
+	export_types = list(/obj/item/gun/ballistic/bow)
+
+/datum/export/weapon/arrows
+	cost = 150
+	unit_name = "arrow"
+	export_types = list(/obj/item/ammo_casing/caseless/arrow, /obj/item/ammo_casing/caseless/arrow/bone, /obj/item/ammo_casing/caseless/arrow/ash)
+
+/datum/export/weapon/bow_teaching
+	cost = 500
+	unit_name = "stone tablets"
+	export_types = list(/obj/item/book/granter/crafting_recipe/bone_bow)
+
+/datum/export/weapon/quiver
+	cost = 100
+	unit_name = "quiver"
+	export_types = list(/obj/item/storage/belt/quiver)
+
+
+/////////////////////////
 //The Traitor Sell Outs//
 /////////////////////////
 
@@ -242,7 +267,7 @@
 /datum/export/weapon/duelsaber
 	cost = 360 //Get it?
 	unit_name = "energy saber"
-	export_types = list(/obj/item/twohanded/dualsaber)
+	export_types = list(/obj/item/dualsaber)
 
 /datum/export/weapon/esword
 	cost = 130
@@ -262,7 +287,7 @@
 /datum/export/weapon/gloves
 	cost = 90
 	unit_name = "star struck gloves"
-	export_types = list(/obj/item/clothing/gloves/rapid)
+	export_types = list(/obj/item/clothing/gloves/fingerless/pugilist/rapid)
 
 /datum/export/weapon/l6
 	cost = 500

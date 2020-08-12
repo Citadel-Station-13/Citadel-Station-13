@@ -28,6 +28,7 @@
 		take_damage(5, BURN, 0, 0)
 
 /obj/structure/spider/stickyweb
+	var/genetic = FALSE
 	icon_state = "stickyweb1"
 
 /obj/structure/spider/stickyweb/Initialize()
@@ -36,6 +37,8 @@
 	. = ..()
 
 /obj/structure/spider/stickyweb/CanPass(atom/movable/mover, turf/target)
+	if (genetic)
+		return
 	if(istype(mover, /mob/living/simple_animal/hostile/poison/giant_spider))
 		return TRUE
 	else if(isliving(mover))
@@ -47,6 +50,28 @@
 	else if(istype(mover, /obj/item/projectile))
 		return prob(30)
 	return TRUE
+
+/obj/structure/spider/stickyweb/genetic //for the spider genes in genetics
+	genetic = TRUE
+	var/mob/living/allowed_mob
+
+/obj/structure/spider/stickyweb/genetic/Initialize(mapload, allowedmob)
+	allowed_mob = allowedmob
+	. = ..()
+
+/obj/structure/spider/stickyweb/genetic/CanPass(atom/movable/mover, turf/target)
+	. = ..() //this is the normal spider web return aka a spider would make this TRUE
+	if(mover == allowed_mob)
+		return TRUE
+	else if(isliving(mover)) //we change the spider to not be able to go through here
+		if(mover.pulledby == allowed_mob)
+			return TRUE
+		if(prob(50))
+			to_chat(mover, "<span class='danger'>You get stuck in \the [src] for a moment.</span>")
+			return FALSE
+		return TRUE
+	else if(istype(mover, /obj/item/projectile))
+		return prob(30)
 
 /obj/structure/spider/eggcluster
 	name = "egg cluster"
@@ -95,6 +120,8 @@
 	var/poison_type = "toxin"
 	var/poison_per_bite = 5
 	var/list/faction = list("spiders")
+	attack_hand_speed = CLICK_CD_MELEE
+	attack_hand_is_action = TRUE
 
 /obj/structure/spider/spiderling/Destroy()
 	new/obj/item/reagent_containers/food/snacks/spiderling(get_turf(src))
@@ -127,6 +154,15 @@
 		forceMove(user.loc)
 	else
 		..()
+
+/obj/structure/spider/spiderling/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
+	. = ..()
+	if(user.a_intent != INTENT_HELP)
+		user.do_attack_animation(src)
+		user.visible_message("<span class='warning'>[user] splats [src].</span>", "<span class='warning'>You splat [src].</span>", "<span class='italics'>You hear a splat...</span>")
+		playsound(loc, 'sound/effects/snap.ogg', 25)
+		qdel(src)
+		return TRUE
 
 /obj/structure/spider/spiderling/process()
 	if(travelling_in_vent)
@@ -218,16 +254,12 @@
 
 /obj/structure/spider/cocoon/container_resist(mob/living/user)
 	var/breakout_time = 600
-	user.changeNext_move(CLICK_CD_BREAKOUT)
-	user.last_special = world.time + CLICK_CD_BREAKOUT
 	to_chat(user, "<span class='notice'>You struggle against the tight bonds... (This will take about [DisplayTimeText(breakout_time)].)</span>")
 	visible_message("You see something struggling and writhing in \the [src]!")
 	if(do_after(user,(breakout_time), target = src))
 		if(!user || user.stat != CONSCIOUS || user.loc != src)
 			return
 		qdel(src)
-
-
 
 /obj/structure/spider/cocoon/Destroy()
 	var/turf/T = get_turf(src)

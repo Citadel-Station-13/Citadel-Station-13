@@ -1,7 +1,0 @@
-author: "Ghommie"
-delete-after: True
-changes: 
-  - bugfix: "Fixed bananium energy sword/shield slips."
-  - balance: "Buffed said slips to ignore no-grav/crawling/flying as well as adding some deadly force to the e-sword."
-  - bugfix: "Fixed the 'stache grenade anti-non-clumsy user check."
-  - balance: "Doubled the timer for the sticky mustaches effect from the above grenade (from 1 to 2 minutes)"

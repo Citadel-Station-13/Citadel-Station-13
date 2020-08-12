@@ -23,8 +23,7 @@ GLOBAL_PROTECT(protected_ranks)
 	name = init_name
 	if(!name)
 		qdel(src)
-		throw EXCEPTION("Admin rank created without name.")
-		return
+		CRASH("Admin rank created without name.")
 	if(init_rights)
 		rights = init_rights
 	include_rights = rights
@@ -138,15 +137,15 @@ GLOBAL_PROTECT(protected_ranks)
 		if(!line || findtextEx_char(line,"#",1,2))
 			continue
 		var/next = findtext(line, "=")
-		var/datum/admin_rank/R = new(ckeyEx(copytext(line, 1, line[next])))
+		var/datum/admin_rank/R = new(ckeyEx(copytext(line, 1, next)))
 		if(!R)
 			continue
 		GLOB.admin_ranks += R
 		GLOB.protected_ranks += R
 		var/prev = findchar(line, "+-*", next, 0)
 		while(prev)
-			next = findchar(line, "+-*", prev + 1, 0)
-			R.process_keyword(copytext_char(line, prev, next), previous_rights)
+			next = findchar(line, "+-*", prev + length(line[prev]), 0)
+			R.process_keyword(copytext(line, prev, next), previous_rights)
 			prev = next
 		previous_rights = R.rights
 	if(!CONFIG_GET(flag/admin_legacy_system) || dbfail)

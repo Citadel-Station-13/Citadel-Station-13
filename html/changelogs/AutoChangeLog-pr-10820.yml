@@ -1,4 +1,0 @@
-author: "Ghommie"
-delete-after: True
-changes: 
-  - tweak: "Uplink items excluded (such as mulligan, chameleon, ebow) from or exclusive (such as cyber implants) to normal nuke ops will now be properly unavailable/available to clown ops."

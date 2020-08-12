@@ -9,22 +9,21 @@
 	blacklisted = 1
 	ignored_by = list(/mob/living/simple_animal/hostile/faithless)
 	meat = /obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/shadow
-	species_traits = list(NOBLOOD,NOEYES)
+	species_traits = list(NOBLOOD,NOEYES,HAS_FLESH,HAS_BONE)
 	inherent_traits = list(TRAIT_RADIMMUNE,TRAIT_VIRUSIMMUNE,TRAIT_NOBREATH)
 
 	dangerous_existence = 1
 	mutanteyes = /obj/item/organ/eyes/night_vision
 
+	species_type = "shadow"
 
-/datum/species/shadow/spec_life(mob/living/carbon/human/H)
-	var/turf/T = H.loc
-	if(istype(T))
-		var/light_amount = T.get_lumcount()
+/datum/species/shadow/on_species_gain(mob/living/carbon/C, datum/species/old_species)
+	. = ..()
+	C.AddElement(/datum/element/photosynthesis, 1, 1, 0, 0, 0, 0, SHADOW_SPECIES_LIGHT_THRESHOLD, SHADOW_SPECIES_LIGHT_THRESHOLD)
 
-		if(light_amount > SHADOW_SPECIES_LIGHT_THRESHOLD) //if there's enough light, start dying
-			H.take_overall_damage(1,1)
-		else if (light_amount < SHADOW_SPECIES_LIGHT_THRESHOLD) //heal in the dark
-			H.heal_overall_damage(1,1)
+/datum/species/shadow/on_species_loss(mob/living/carbon/C)
+	. = ..()
+	C.RemoveElement(/datum/element/photosynthesis, 1, 1, 0, 0, 0, 0, SHADOW_SPECIES_LIGHT_THRESHOLD, SHADOW_SPECIES_LIGHT_THRESHOLD)
 
 /datum/species/shadow/check_roundstart_eligible()
 	if(SSevents.holidays && SSevents.holidays[HALLOWEEN])
@@ -100,6 +99,9 @@
 	var/obj/item/light_eater/blade
 	decay_factor = 0
 
+/obj/item/organ/heart/nightmare/ComponentInitialize()
+	. = ..()
+	AddElement(/datum/element/update_icon_blocker)
 
 /obj/item/organ/heart/nightmare/attack(mob/M, mob/living/carbon/user, obj/target)
 	if(M != user)
@@ -129,9 +131,6 @@
 
 /obj/item/organ/heart/nightmare/Stop()
 	return 0
-
-/obj/item/organ/heart/nightmare/update_icon()
-	return //always beating visually
 
 /obj/item/organ/heart/nightmare/on_death()
 	if(!owner)
@@ -167,7 +166,7 @@
 	righthand_file = 'icons/mob/inhands/antag/changeling_righthand.dmi'
 	item_flags = ABSTRACT | DROPDEL
 	w_class = WEIGHT_CLASS_HUGE
-	sharpness = IS_SHARP
+	sharpness = SHARP_EDGED
 	total_mass = TOTAL_MASS_HAND_REPLACEMENT
 
 /obj/item/light_eater/Initialize()
@@ -186,6 +185,8 @@
 			T.ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
 	else if(isliving(AM))
 		var/mob/living/L = AM
+		if(isethereal(AM))
+			AM.emp_act(EMP_LIGHT)
 		if(iscyborg(AM))
 			var/mob/living/silicon/robot/borg = AM
 			if(borg.lamp_intensity)
@@ -213,6 +214,16 @@
 		PDA.f_lum = 0
 		PDA.update_icon()
 		visible_message("<span class='danger'>The light in [PDA] shorts out!</span>")
+	else if(istype(O, /obj/item/gun))
+		var/obj/item/gun/weapon = O
+		if(weapon.gun_light)
+			var/obj/item/flashlight/seclite/light = weapon.gun_light
+			light.forceMove(get_turf(weapon))
+			light.burn()
+			weapon.gun_light = null
+			weapon.update_gunlight()
+			QDEL_NULL(weapon.alight)
+			visible_message("<span class='danger'>[light] on [O] flickers out and disintegrates!</span>")
 	else
 		visible_message("<span class='danger'>[O] is disintegrated by [src]!</span>")
 		O.burn()

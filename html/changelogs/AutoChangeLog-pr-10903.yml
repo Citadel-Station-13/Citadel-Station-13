@@ -1,5 +1,0 @@
-author: "Hatterhat"
-delete-after: True
-changes: 
-  - rscadd: "Formaldehyde prevents organ decay and corpses' miasma production at 1u in the body."
-  - rscadd: "Epinephrine pens now contain 3u formaldehyde. This should not kill you."

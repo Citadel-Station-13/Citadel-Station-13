@@ -44,14 +44,14 @@ field_generator power level display
 	var/list/obj/machinery/field/generator/connected_gens
 	var/clean_up = 0
 
-/obj/machinery/field/generator/update_icon()
-	cut_overlays()
+/obj/machinery/field/generator/update_overlays()
+	. = ..()
 	if(warming_up)
-		add_overlay("+a[warming_up]")
+		. += "+a[warming_up]"
 	if(fields.len)
-		add_overlay("+on")
+		. += "+on"
 	if(power_level)
-		add_overlay("+p[power_level]")
+		. += "+p[power_level]"
 
 
 /obj/machinery/field/generator/Initialize()
@@ -61,7 +61,7 @@ field_generator power level display
 
 /obj/machinery/field/generator/ComponentInitialize()
 	. = ..()
-	AddComponent(/datum/component/empprotection, EMP_PROTECT_SELF | EMP_PROTECT_WIRES)
+	AddElement(/datum/element/empprotection, EMP_PROTECT_SELF | EMP_PROTECT_WIRES)
 
 /obj/machinery/field/generator/process()
 	if(active == FG_ONLINE)

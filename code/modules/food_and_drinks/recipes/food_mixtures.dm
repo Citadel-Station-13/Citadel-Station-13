@@ -1,13 +1,13 @@
 /datum/crafting_recipe/food
 	var/real_parts
 	category = CAT_FOOD
+	time = 5
 
 /datum/crafting_recipe/food/New()
 	real_parts = parts.Copy()
 	parts |= reqs
 
 //////////////////////////////////////////FOOD MIXTURES////////////////////////////////////
-
 /datum/chemical_reaction/tofu
 	name = "Tofu"
 	id = "tofu"
@@ -101,6 +101,10 @@
 	required_reagents = list(/datum/reagent/blood = 5, /datum/reagent/medicine/cryoxadone = 1)
 	mob_react = FALSE
 
+/datum/chemical_reaction/synthmeat/synthblood
+	id = "synthmeat_synthblood"
+	required_reagents = list(/datum/reagent/blood/synthetics = 5, /datum/reagent/medicine/cryoxadone = 1)
+
 /datum/chemical_reaction/synthmeat/on_reaction(datum/reagents/holder, multiplier)
 	var/location = get_turf(holder.my_atom)
 	for(var/i = 1, i <= multiplier, i++)
@@ -175,3 +179,14 @@
 	id = /datum/reagent/consumable/bbqsauce
 	results = list(/datum/reagent/consumable/bbqsauce = 5)
 	required_reagents = list(/datum/reagent/ash = 1, /datum/reagent/consumable/tomatojuice = 1, /datum/reagent/medicine/salglu_solution = 3, /datum/reagent/consumable/blackpepper = 1)
+
+/datum/chemical_reaction/margarine
+	name = "Margarine"
+	id = "margarine"
+	required_reagents = list(/datum/reagent/consumable/cornoil = 5, /datum/reagent/consumable/soymilk = 5, /datum/reagent/consumable/sodiumchloride = 1)
+	mix_message = "The ingredients solidify into a stick of margarine."
+
+/datum/chemical_reaction/margarine/on_reaction(datum/reagents/holder, multiplier)
+	var/location = get_turf(holder.my_atom)
+	for(var/i = 1, i <= multiplier, i++)
+		new /obj/item/reagent_containers/food/snacks/butter/margarine(location)

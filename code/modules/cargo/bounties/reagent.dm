@@ -105,6 +105,7 @@ datum/bounty/reagent/complex_drink/New()
 		/datum/reagent/consumable/ethanol/hearty_punch,\
 		/datum/reagent/consumable/ethanol/manhattan_proj,\
 		/datum/reagent/consumable/ethanol/narsour,\
+		/datum/reagent/consumable/ethanol/cogchamp,\
 		/datum/reagent/consumable/ethanol/neurotoxin,\
 		/datum/reagent/consumable/ethanol/patron,\
 		/datum/reagent/consumable/ethanol/quadruple_sec,\

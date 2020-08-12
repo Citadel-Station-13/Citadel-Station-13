@@ -54,11 +54,7 @@
 		. *= booster_damage_modifier
 
 
-/obj/mecha/attack_hand(mob/living/user)
-	. = ..()
-	if(.)
-		return
-	user.changeNext_move(CLICK_CD_MELEE) // Ugh. Ideally we shouldn't be setting cooldowns outside of click code.
+/obj/mecha/on_attack_hand(mob/living/user, act_intent = user.a_intent, unarmed_attack_flags)
 	user.do_attack_animation(src, ATTACK_EFFECT_PUNCH)
 	playsound(loc, 'sound/weapons/tap.ogg', 40, 1, -1)
 	user.visible_message("<span class='danger'>[user] hits [name]. Nothing happens</span>", null, null, COMBAT_MESSAGE_RANGE)
@@ -77,7 +73,7 @@
 /obj/mecha/attack_animal(mob/living/simple_animal/user)
 	mecha_log_message("Attack by simple animal. Attacker - [user].", color="red")
 	if(!user.melee_damage_upper && !user.obj_damage)
-		user.emote("custom", message = "[user.friendly] [src].")
+		user.emote("custom", message = "[user.friendly_verb_continuous] [src].")
 		return 0
 	else
 		var/play_soundeffect = 1
@@ -172,6 +168,10 @@
 			to_chat(user, "[src]-[W] interface initialization failed.")
 		return
 
+	if(istype(W, /obj/item/mecha_ammo))
+		ammo_resupply(W, user)
+		return
+
 	if(istype(W, /obj/item/mecha_parts/mecha_equipment))
 		var/obj/item/mecha_parts/mecha_equipment/E = W
 		spawn()
@@ -216,8 +216,7 @@
 		return
 	else if(istype(W, /obj/item/stack/cable_coil))
 		if(state == 3 && (internal_damage & MECHA_INT_SHORT_CIRCUIT))
-			var/obj/item/stack/cable_coil/CC = W
-			if(CC.use(2))
+			if(W.use_tool(src, user, 0, 2))
 				clearInternalDamage(MECHA_INT_SHORT_CIRCUIT)
 				to_chat(user, "<span class='notice'>You replace the fused wires.</span>")
 			else
@@ -252,7 +251,7 @@
 		return
 
 	else if(istype(W, /obj/item/weldingtool) && user.a_intent != INTENT_HARM)
-		user.changeNext_move(CLICK_CD_MELEE)
+		user.DelayNextAction(CLICK_CD_MELEE)
 		if(obj_integrity < max_integrity)
 			if(W.use_tool(src, user, 0, volume=50, amount=1))
 				if (internal_damage & MECHA_INT_TANK_BREACH)
@@ -279,9 +278,9 @@
 	else
 		return ..()
 
-/obj/mecha/attacked_by(obj/item/I, mob/living/user)
+/obj/mecha/attacked_by(obj/item/I, mob/living/user, attackchain_flags = NONE, damage_multiplier = 1)
 	mecha_log_message("Attacked by [I]. Attacker - [user]")
-	..()
+	return ..()
 
 /obj/mecha/proc/mech_toxin_damage(mob/living/target)
 	playsound(src, 'sound/effects/spray2.ogg', 50, 1)
@@ -316,11 +315,7 @@
 		clearInternalDamage(MECHA_INT_CONTROL_LOST)
 
 /obj/mecha/narsie_act()
-	if(occupant)
-		var/mob/living/L = occupant
-		go_out(TRUE)
-		if(L)
-			L.narsie_act()
+	emp_act(EMP_HEAVY)
 
 /obj/mecha/ratvar_act()
 	if((GLOB.ratvar_awakens || GLOB.clockwork_gateway_activated) && occupant)

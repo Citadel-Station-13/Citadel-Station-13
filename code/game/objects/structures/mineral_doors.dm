@@ -50,10 +50,7 @@
 /obj/structure/mineral_door/attack_paw(mob/user)
 	return attack_hand(user)
 
-/obj/structure/mineral_door/attack_hand(mob/user)
-	. = ..()
-	if(.)
-		return
+/obj/structure/mineral_door/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	return TryToSwitchState(user)
 
 /obj/structure/mineral_door/CanPass(atom/movable/mover, turf/target)
@@ -118,7 +115,7 @@
 	update_icon()
 	isSwitchingStates = 0
 
-/obj/structure/mineral_door/update_icon()
+/obj/structure/mineral_door/update_icon_state()
 	if(state)
 		icon_state = "[initial_state]open"
 	else

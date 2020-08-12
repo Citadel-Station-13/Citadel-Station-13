@@ -15,16 +15,21 @@
 	exp_type = EXP_TYPE_COMMAND
 	exp_type_department = EXP_TYPE_COMMAND
 
+
 	outfit = /datum/outfit/job/captain
 
 	access = list() 			//See get_access()
 	minimal_access = list() 	//See get_access()
+
+	paycheck = PAYCHECK_COMMAND
+	paycheck_department = ACCOUNT_SEC
 
 	mind_traits = list(TRAIT_CAPTAIN_METABOLISM, TRAIT_DISK_VERIFIER)
 
 	display_order = JOB_DISPLAY_ORDER_CAPTAIN
 
 	blacklisted_quirks = list(/datum/quirk/mute, /datum/quirk/brainproblems, /datum/quirk/insanity)
+	threat = 5
 
 /datum/job/captain/get_access()
 	return get_all_accesses()

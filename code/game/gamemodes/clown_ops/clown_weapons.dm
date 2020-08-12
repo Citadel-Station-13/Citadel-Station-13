@@ -40,14 +40,14 @@
 /obj/item/clothing/shoes/clown_shoes/banana_shoes/combat/Initialize()
 	. = ..()
 	var/datum/component/material_container/bananium = GetComponent(/datum/component/material_container)
-	bananium.insert_amount(max_recharge, MAT_BANANIUM)
+	bananium.insert_amount_mat(max_recharge, /datum/material/bananium)
 	START_PROCESSING(SSobj, src)
 
 /obj/item/clothing/shoes/clown_shoes/banana_shoes/combat/process()
 	var/datum/component/material_container/bananium = GetComponent(/datum/component/material_container)
-	var/bananium_amount = bananium.amount(MAT_BANANIUM)
+	var/bananium_amount = bananium.get_material_amount(/datum/material/bananium)
 	if(bananium_amount < max_recharge)
-		bananium.insert_amount(min(recharge_rate, max_recharge - bananium_amount), MAT_BANANIUM)
+		bananium.insert_amount_mat(min(recharge_rate, max_recharge - bananium_amount), /datum/material/bananium)
 
 /obj/item/clothing/shoes/clown_shoes/banana_shoes/combat/attack_self(mob/user)
 	ui_action_click(user)
@@ -62,8 +62,8 @@
 	hitsound = null
 	attack_verb_on = list("slipped")
 	clumsy_check = FALSE
-	sharpness = IS_BLUNT
-	item_color = "yellow"
+	sharpness = SHARP_NONE
+	sword_color = "yellow"
 	heat = 0
 	light_color = "#ffff00"
 	var/next_trombone_allowed = 0
@@ -202,7 +202,7 @@
 	icon_state = "moustacheg"
 	clumsy_check = GRENADE_NONCLUMSY_FUMBLE
 
-/obj/item/grenade/chem_grenade/teargas/moustache/prime()
+/obj/item/grenade/chem_grenade/teargas/moustache/prime(mob/living/lanced_by)
 	var/list/check_later = list()
 	for(var/mob/living/carbon/C in get_turf(src))
 		check_later += C
@@ -279,7 +279,6 @@
 	internals_req_access = list(ACCESS_SYNDICATE)
 	wreckage = /obj/structure/mecha_wreckage/honker/dark
 	max_equip = 3
-	spawn_tracked = FALSE
 
 /obj/mecha/combat/honker/dark/GrantActions(mob/living/user, human_occupant = 0)
 	..()

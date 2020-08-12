@@ -36,7 +36,8 @@
 	new /obj/item/stack/sheet/metal(src, 2)
 
 /turf/closed/wall/r_wall/attack_animal(mob/living/simple_animal/M)
-	M.changeNext_move(CLICK_CD_MELEE)
+	if(!M.CheckActionCooldown())
+		return
 	M.do_attack_animation(src)
 	if(!M.environment_smash)
 		return
@@ -46,6 +47,7 @@
 	else
 		playsound(src, 'sound/effects/bang.ogg', 50, 1)
 		to_chat(M, "<span class='warning'>This wall is far too strong for you to destroy.</span>")
+	M.DelayNextAction()
 
 /turf/closed/wall/r_wall/try_destroy(obj/item/I, mob/user, turf/T)
 	if(istype(I, /obj/item/pickaxe/drill/jackhammer))
@@ -256,5 +258,24 @@
 	smooth = SMOOTH_FALSE
 
 /turf/closed/wall/r_wall/syndicate/overspace
+	icon_state = "map-overspace"
+	fixed_underlay = list("space"=1)
+
+/////////////////////Pirate Ship walls/////////////////////
+
+/turf/closed/wall/r_wall/syndicate/pirate
+	desc = "Yarr just try to blow this to smithereens!"
+	explosion_block = 30
+	canSmoothWith = list(/turf/closed/wall/r_wall/syndicate/pirate, /obj/machinery/door/airlock/shuttle, /obj/machinery/door/airlock, /obj/structure/window/plastitanium/pirate, /obj/structure/shuttle/engine, /obj/structure/falsewall/plastitanium)
+
+/turf/closed/wall/r_wall/syndicate/pirate/nodiagonal
+	smooth = SMOOTH_MORE
+	icon_state = "map-shuttle_nd"
+
+/turf/closed/wall/r_wall/syndicate/pirate/nosmooth
+	icon = 'icons/turf/shuttle.dmi'
+	icon_state = "wall"
+
+/turf/closed/wall/r_wall/syndicate/pirate/overspace
 	icon_state = "map-overspace"
 	fixed_underlay = list("space"=1)

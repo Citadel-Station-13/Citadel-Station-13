@@ -1,4 +1,0 @@
-author: "Tupinambis"
-delete-after: True
-changes: 
-  - bugfix: "masks no longer improperly stick out of helmets when they should be hidden."

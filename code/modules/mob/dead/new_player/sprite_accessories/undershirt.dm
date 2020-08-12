@@ -2,9 +2,13 @@
 // Undershirt Definitions //
 ////////////////////////////
 
+/datum/sprite_accessory/underwear/top
+	covers_chest = TRUE
+
 /datum/sprite_accessory/underwear/top/nude
 	name = "Nude"
 	icon_state = null
+	covers_chest = FALSE
 
 // please make sure they're sorted alphabetically and categorized
 

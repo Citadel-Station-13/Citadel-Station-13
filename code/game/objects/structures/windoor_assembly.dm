@@ -47,7 +47,7 @@
 	setDir(ini_dir)
 	move_update_air(T)
 
-/obj/structure/windoor_assembly/update_icon()
+/obj/structure/windoor_assembly/update_icon_state()
 	icon_state = "[facing]_[secure ? "secure_" : ""]windoor_assembly[state]"
 
 /obj/structure/windoor_assembly/CanPass(atom/movable/mover, turf/target)
@@ -169,8 +169,7 @@
 				if(do_after(user, 40, target = src))
 					if(!src || !anchored || src.state != "01")
 						return
-					var/obj/item/stack/cable_coil/CC = W
-					if(!CC.use(1))
+					if(!W.use_tool(src, user, 0, 1))
 						to_chat(user, "<span class='warning'>You need more cable to do this!</span>")
 						return
 					to_chat(user, "<span class='notice'>You wire the windoor.</span>")
@@ -315,13 +314,8 @@
 
 /obj/structure/windoor_assembly/ComponentInitialize()
 	. = ..()
-	AddComponent(
-		/datum/component/simple_rotation,
-		ROTATION_ALTCLICK | ROTATION_CLOCKWISE | ROTATION_COUNTERCLOCKWISE | ROTATION_VERBS,
-		null,
-		CALLBACK(src, .proc/can_be_rotated),
-		CALLBACK(src,.proc/after_rotation)
-		)
+	var/static/rotation_flags = ROTATION_ALTCLICK | ROTATION_CLOCKWISE | ROTATION_COUNTERCLOCKWISE | ROTATION_VERBS
+	AddComponent(/datum/component/simple_rotation, rotation_flags, can_be_rotated=CALLBACK(src, .proc/can_be_rotated), after_rotation=CALLBACK(src,.proc/after_rotation))
 
 /obj/structure/windoor_assembly/proc/can_be_rotated(mob/user,rotation_type)
 	if(anchored)
@@ -343,7 +337,8 @@
 	set name = "Flip Windoor Assembly"
 	set category = "Object"
 	set src in oview(1)
-	if(usr.stat || !usr.canmove || usr.restrained())
+	var/mob/living/L = usr
+	if(!CHECK_MOBILITY(L, MOBILITY_PULL))
 		return
 
 	if(facing == "l")
@@ -354,4 +349,3 @@
 		to_chat(usr, "<span class='notice'>The windoor will now slide to the left.</span>")
 
 	update_icon()
-	return

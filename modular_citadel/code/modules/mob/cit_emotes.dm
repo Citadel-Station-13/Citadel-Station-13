@@ -14,13 +14,10 @@
 	emote_type = EMOTE_AUDIBLE
 
 /datum/emote/living/insult/run_emote(mob/living/user, params)
-	var/insult_message = ""
-	var/miming = user.mind ? user.mind.miming : 0
-	if(!user.is_muzzled())
-		insult_message += pick_list_replacements(INSULTS_FILE, "insult_gen")
-		message = insult_message
-	else if(miming)
+	if(user.mind?.miming)
 		message = "creatively gesticulates."
+	else if(!user.is_muzzled())
+		message = pick_list_replacements(INSULTS_FILE, "insult_gen")
 	else
 		message = "muffles something."
 	. = ..()
@@ -36,7 +33,7 @@
 			sound = 'modular_citadel/sound/voice/scream_silicon.ogg'
 			if(iscyborg(user))
 				var/mob/living/silicon/robot/S = user
-				if(S.cell.charge < 20)
+				if(S.cell?.charge < 20)
 					to_chat(S, "<span class='warning'>Scream module deactivated. Please recharge.</span>")
 					return
 				S.cell.use(200)
@@ -246,4 +243,22 @@
 		return
 	user.nextsoundemote = world.time + 7
 	var/sound = pick('modular_citadel/sound/voice/bark1.ogg', 'modular_citadel/sound/voice/bark2.ogg')
+	playsound(user, sound, 50, 1, -1)
+
+/datum/emote/living/squish
+	key = "squish"
+	key_third_person = "squishes"
+	message = "squishes!"
+	emote_type = EMOTE_AUDIBLE
+	muzzle_ignore = FALSE
+	restraint_check = FALSE
+	mob_type_allowed_typecache = list(/mob/living/carbon, /mob/living/silicon/pai)
+
+/datum/emote/living/squish/run_emote(mob/living/user, params)
+	if(!(. = ..()))
+		return
+	if(user.nextsoundemote >= world.time)
+		return
+	user.nextsoundemote = world.time + 7
+	var/sound = pick('sound/voice/slime_squish.ogg')
 	playsound(user, sound, 50, 1, -1)

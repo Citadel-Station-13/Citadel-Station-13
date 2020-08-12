@@ -45,7 +45,7 @@
 	/obj/item/projectile/magic/death, /obj/item/projectile/magic/teleport, /obj/item/projectile/magic/door, /obj/item/projectile/magic/aoe/fireball,
 	/obj/item/projectile/magic/spellblade, /obj/item/projectile/magic/arcane_barrage, /obj/item/projectile/magic/locker)
 
-/obj/item/gun/magic/staff/chaos/process_fire(atom/target, mob/living/user, message = TRUE, params = null, zone_override = "", bonus_spread = 0)
+/obj/item/gun/magic/staff/chaos/process_fire(atom/target, mob/living/user, message = TRUE, params = null, zone_override = "", bonus_spread = 0, stam_cost = 0)
 	chambered.projectile_type = pick(allowed_projectile_types)
 	. = ..()
 
@@ -83,16 +83,17 @@
 	force = 20
 	armour_penetration = 75
 	block_chance = 50
-	sharpness = IS_SHARP
+	sharpness = SHARP_EDGED
 	max_charges = 4
 
 /obj/item/gun/magic/staff/spellblade/Initialize()
 	. = ..()
 	AddComponent(/datum/component/butchering, 15, 125, 0, hitsound)
 
-/obj/item/gun/magic/staff/spellblade/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
-	if(attack_type == PROJECTILE_ATTACK)
-		final_block_chance = 0
+/obj/item/gun/magic/staff/spellblade/run_block(mob/living/owner, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return)
+	// Do not block projectiles.
+	if(attack_type & ATTACK_TYPE_PROJECTILE)
+		return BLOCK_NONE
 	return ..()
 
 /obj/item/gun/magic/staff/locker

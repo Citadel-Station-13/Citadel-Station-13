@@ -16,13 +16,14 @@
 	startWhen		= 6
 	endWhen			= 66
 	announceWhen	= 1
+	threat = 15
 	var/list/wave_type
 	var/wave_name = "normal"
 	var/direction
 
 /datum/round_event/meteor_wave/setup()
 	announceWhen = 1
-	startWhen = rand(60, 90) //Yeah for SOME REASON this is measured in seconds and not deciseconds???
+	startWhen = rand(90, 180) // Apparently it is by 2 seconds, so 90 is actually 180 seconds, and 180 is 360 seconds. So this is 3-6 minutes
 	if(GLOB.singularity_counter)
 		startWhen *= 1 - min(GLOB.singularity_counter * SINGULO_BEACON_DISTURBANCE, SINGULO_BEACON_MAX_DISTURBANCE)
 	endWhen = startWhen + 60
@@ -88,8 +89,10 @@
 	max_occurrences = 3
 	earliest_start = 35 MINUTES
 
+
 /datum/round_event/meteor_wave/threatening
 	wave_name = "threatening"
+	threat = 25
 
 /datum/round_event_control/meteor_wave/catastrophic
 	name = "Meteor Wave: Catastrophic"
@@ -101,6 +104,7 @@
 
 /datum/round_event/meteor_wave/catastrophic
 	wave_name = "catastrophic"
+	threat = 35
 
 #undef SINGULO_BEACON_DISTURBANCE
 #undef SINGULO_BEACON_MAX_DISTURBANCE

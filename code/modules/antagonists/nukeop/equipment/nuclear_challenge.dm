@@ -74,12 +74,6 @@ GLOBAL_VAR_INIT(war_declared, FALSE)
 	new uplink_type(get_turf(user), user.key, CHALLENGE_TELECRYSTALS - tc_malus + CEILING(PLAYER_SCALING * actual_players, 1))
 
 	CONFIG_SET(number/shuttle_refuel_delay, max(CONFIG_GET(number/shuttle_refuel_delay), CHALLENGE_SHUTTLE_DELAY))
-	if(istype(SSticker.mode, /datum/game_mode/dynamic))
-		var/datum/game_mode/dynamic/mode = SSticker.mode
-		if(!(mode.storyteller.flags & WAROPS_ALWAYS_ALLOWED))
-			var/threat_spent = CONFIG_GET(number/dynamic_warops_cost)
-			mode.spend_threat(threat_spent)
-			mode.log_threat("Nuke ops spent [threat_spent] on war ops.")
 	SSblackbox.record_feedback("amount", "nuclear_challenge_mode", 1)
 
 	qdel(src)

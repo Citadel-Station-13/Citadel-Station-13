@@ -1,5 +1,0 @@
-author: "r4d6"
-delete-after: True
-changes: 
-  - tweak: "RPD subcategories and preview icons reorganized."
-  - rscadd: "RPD now starts with painting turned off, hitting pipes with build and no paint will target the turf underneath instead. Bye bye turf pixelhunting."

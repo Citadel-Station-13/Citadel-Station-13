@@ -60,7 +60,7 @@
 	name = "Link Worlds"
 	desc = "A whole new dimension for you to play with! They won't be happy about it, though."
 	invocation = "WTF"
-	clothes_req = FALSE
+	clothes_req = NONE
 	charge_max = 600
 	cooldown_min = 200
 	summon_type = list(/obj/structure/spawner/nether)
@@ -74,17 +74,17 @@
 	invocation_type = "none"
 	include_user = 1
 	range = -1
-	clothes_req = 0
+	clothes_req = NONE
 	var/obj/item/item
 	var/item_type = /obj/item/banhammer
 	school = "conjuration"
 	charge_max = 150
 	cooldown_min = 10
+	var/delete_old = TRUE
 
 /obj/effect/proc_holder/spell/targeted/conjure_item/cast(list/targets, mob/user = usr)
-	if (item && !QDELETED(item))
-		qdel(item)
-		item = null
+	if (delete_old && item && !QDELETED(item))
+		QDEL_NULL(item)
 	else
 		for(var/mob/living/carbon/C in targets)
 			if(C.dropItemToGround(C.get_active_held_item()))

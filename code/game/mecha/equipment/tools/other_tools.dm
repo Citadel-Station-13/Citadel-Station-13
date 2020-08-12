@@ -283,13 +283,13 @@
 /obj/item/mecha_parts/mecha_equipment/tesla_energy_relay/proc/get_charge()
 	if(equip_ready) //disabled
 		return
-	var/area/A = get_base_area(chassis)
-	var/pow_chan = get_power_channel(A)
+	var/area/A = get_area(chassis)
+	var/pow_chan = get_MUTATION_POWER_channel(A)
 	if(pow_chan)
 		return 1000 //making magic
 
 
-/obj/item/mecha_parts/mecha_equipment/tesla_energy_relay/proc/get_power_channel(var/area/A)
+/obj/item/mecha_parts/mecha_equipment/tesla_energy_relay/proc/get_MUTATION_POWER_channel(var/area/A)
 	var/pow_chan
 	if(A)
 		for(var/c in use_channels)
@@ -388,7 +388,7 @@
 /obj/item/mecha_parts/mecha_equipment/generator/get_equip_info()
 	var/output = ..()
 	if(output)
-		return "[output] \[[fuel]: [round(fuel.amount*fuel.perunit,0.1)] cm<sup>3</sup>\] - <a href='?src=[REF(src)];toggle=1'>[equip_ready?"A":"Dea"]ctivate</a>"
+		return "[output] \[[fuel]: [round(fuel.amount*MINERAL_MATERIAL_AMOUNT,0.1)] cm<sup>3</sup>\] - <a href='?src=[REF(src)];toggle=1'>[equip_ready?"A":"Dea"]ctivate</a>"
 
 /obj/item/mecha_parts/mecha_equipment/generator/action(target)
 	if(chassis)
@@ -398,9 +398,9 @@
 
 /obj/item/mecha_parts/mecha_equipment/generator/proc/load_fuel(var/obj/item/stack/sheet/P)
 	if(P.type == fuel.type && P.amount > 0)
-		var/to_load = max(max_fuel - fuel.amount*fuel.perunit,0)
+		var/to_load = max(max_fuel - fuel.amount*MINERAL_MATERIAL_AMOUNT,0)
 		if(to_load)
-			var/units = min(max(round(to_load / P.perunit),1),P.amount)
+			var/units = min(max(round(to_load / MINERAL_MATERIAL_AMOUNT),1),P.amount)
 			fuel.amount += units
 			P.use(units)
 			occupant_message("[units] unit\s of [fuel] successfully loaded.")
@@ -422,13 +422,13 @@
 		return
 	var/datum/gas_mixture/GM = new
 	if(prob(10))
-		GM.gases[/datum/gas/plasma] += 100
-		GM.temperature = 1500+T0C //should be enough to start a fire
+		GM.adjust_moles(/datum/gas/plasma,100)
+		GM.set_temperature(1500+T0C) //should be enough to start a fire
 		T.visible_message("[src] suddenly disgorges a cloud of heated plasma.")
 		qdel(src)
 	else
-		GM.gases[/datum/gas/plasma] += 5
-		GM.temperature = istype(T) ? T.air.return_temperature() : T20C
+		GM.adjust_moles(/datum/gas/plasma,5)
+		GM.set_temperature(istype(T) ? T.air.return_temperature() : T20C)
 		T.visible_message("[src] suddenly disgorges a cloud of plasma.")
 	T.assume_air(GM)
 	return
@@ -454,7 +454,7 @@
 	if(cur_charge < chassis.cell.maxcharge)
 		use_fuel = fuel_per_cycle_active
 		chassis.give_power(power_per_cycle)
-	fuel.amount -= min(use_fuel/fuel.perunit,fuel.amount)
+	fuel.amount -= min(use_fuel/MINERAL_MATERIAL_AMOUNT,fuel.amount)
 	update_equip_info()
 	return 1
 

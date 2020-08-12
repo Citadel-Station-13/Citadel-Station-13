@@ -36,7 +36,7 @@
 
 /obj/item/gun/energy/decloner/update_icon()
 	..()
-	var/obj/item/ammo_casing/energy/shot = ammo_type[select]
+	var/obj/item/ammo_casing/energy/shot = ammo_type[current_firemode_index]
 	if(!QDELETED(cell) && (cell.charge > shot.e_cost))
 		add_overlay("decloner_spin")
 
@@ -85,10 +85,11 @@
 	icon_state = "crossbow"
 	item_state = "crossbow"
 	w_class = WEIGHT_CLASS_SMALL
-	materials = list(MAT_METAL=2000)
+	custom_materials = list(/datum/material/iron=2000)
 	suppressed = TRUE
 	ammo_type = list(/obj/item/ammo_casing/energy/bolt)
 	weapon_weight = WEAPON_LIGHT
+	inaccuracy_modifier = 0.25
 	obj_flags = 0
 	overheat_time = 20
 	holds_charge = TRUE
@@ -108,7 +109,7 @@
 	desc = "A reverse engineered weapon using syndicate technology. This thing seems incredibly unwieldly, and seems to be using similar internals to the Proto-Kinetic Accelerator. It might not play nice when brought near weapons similar to it."
 	icon_state = "crossbowlarge"
 	w_class = WEIGHT_CLASS_BULKY
-	materials = list(MAT_METAL=4000)
+	custom_materials = list(/datum/material/iron=4000)
 	suppressed = null
 	ammo_type = list(/obj/item/ammo_casing/energy/bolt/large)
 	weapon_weight = WEAPON_HEAVY
@@ -124,7 +125,8 @@
 	flags_1 = CONDUCT_1
 	attack_verb = list("attacked", "slashed", "cut", "sliced")
 	force = 12
-	sharpness = IS_SHARP
+	sharpness = SHARP_EDGED
+	inaccuracy_modifier = 0.25
 	can_charge = 0
 
 	heat = 3800
@@ -180,12 +182,13 @@
 	item_state = null
 	icon_state = "wormhole_projector"
 	pin = null
+	inaccuracy_modifier = 0.25
 	var/obj/effect/portal/p_blue
 	var/obj/effect/portal/p_orange
 	var/atmos_link = FALSE
 
 /obj/item/gun/energy/wormhole_projector/update_icon()
-	icon_state = "[initial(icon_state)][select]"
+	icon_state = "[initial(icon_state)][current_firemode_index]"
 	item_state = icon_state
 
 /obj/item/gun/energy/wormhole_projector/update_ammo_types()
@@ -315,13 +318,22 @@
 	icon_state = "emitter_carbine"
 	force = 12
 	w_class = WEIGHT_CLASS_SMALL
+	inaccuracy_modifier = 0.25
 	cell_type = /obj/item/stock_parts/cell/super
 	ammo_type = list(/obj/item/ammo_casing/energy/emitter)
 
 /obj/item/gun/energy/emitter/update_icon()
 	..()
-	var/obj/item/ammo_casing/energy/shot = ammo_type[select]
+	var/obj/item/ammo_casing/energy/shot = ammo_type[current_firemode_index]
 	if(!QDELETED(cell) && (cell.charge > shot.e_cost))
 		add_overlay("emitter_carbine_empty")
 	else
 		add_overlay("emitter_carbine")
+
+//the pickle ray
+/obj/item/gun/energy/pickle_gun
+	name = "pickle ray"
+	desc = "funniest shit i've ever seen"
+	icon_state = "decloner"
+	no_pin_required = TRUE
+	ammo_type = list(/obj/item/ammo_casing/energy/pickle)

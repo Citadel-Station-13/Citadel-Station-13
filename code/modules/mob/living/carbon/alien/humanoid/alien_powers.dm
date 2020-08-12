@@ -21,14 +21,13 @@ Doesn't work on other aliens/AI.*/
 	. = ..()
 	action = new(src)
 
-/obj/effect/proc_holder/alien/Click()
-	if(!iscarbon(usr))
-		return 1
-	var/mob/living/carbon/user = usr
-	if(cost_check(check_turf,user))
+/obj/effect/proc_holder/alien/Trigger(mob/living/carbon/user, skip_cost_check = FALSE)
+	if(!istype(user))
+		return TRUE
+	if(skip_cost_check || cost_check(check_turf,user))
 		if(fire(user) && user) // Second check to prevent runtimes when evolving
 			user.adjustPlasma(-plasma_cost)
-	return 1
+	return TRUE
 
 /obj/effect/proc_holder/alien/on_gain(mob/living/carbon/user)
 	return

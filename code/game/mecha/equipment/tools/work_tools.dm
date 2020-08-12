@@ -8,11 +8,12 @@
 	icon_state = "mecha_clamp"
 	equip_cooldown = 15
 	energy_drain = 10
+	tool_behaviour = TOOL_RETRACTOR
+	toolspeed = 0.8
 	var/dam_force = 20
 	var/obj/mecha/working/ripley/cargo_holder
 	harmful = TRUE
-	tool_behaviour = TOOL_RETRACTOR
-	toolspeed = 0.8
+	mech_flags = EXOSUIT_MODULE_RIPLEY
 
 /obj/item/mecha_parts/mecha_equipment/hydraulic_clamp/can_attach(obj/mecha/working/ripley/M as obj)
 	if(..())
@@ -33,6 +34,19 @@
 	if(!action_checks(target))
 		return
 	if(!cargo_holder)
+		return
+	if(ismecha(target))
+		var/obj/mecha/M = target
+		var/have_ammo
+		for(var/obj/item/mecha_ammo/box in cargo_holder.cargo)
+			if(istype(box, /obj/item/mecha_ammo) && box.rounds)
+				have_ammo = TRUE
+				if(M.ammo_resupply(box, chassis.occupant, TRUE))
+					return
+		if(have_ammo)
+			to_chat(chassis.occupant, "No further supplies can be provided to [M].")
+		else
+			to_chat(chassis.occupant, "No providable supplies found in cargo hold")
 		return
 	if(isobj(target))
 		var/obj/O = target
@@ -167,6 +181,7 @@
 	equip_cooldown = 5
 	energy_drain = 0
 	range = MELEE|RANGED
+	mech_flags = EXOSUIT_MODULE_WORKING
 
 /obj/item/mecha_parts/mecha_equipment/extinguisher/Initialize()
 	. = ..()

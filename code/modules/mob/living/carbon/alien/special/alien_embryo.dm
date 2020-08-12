@@ -4,6 +4,7 @@
 	name = "alien embryo"
 	icon = 'icons/mob/alien.dmi'
 	icon_state = "larva0_dead"
+	food_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/toxin/acid = 10)
 	var/stage = 0
 	var/bursting = FALSE
 
@@ -16,13 +17,10 @@
 		if(prob(10))
 			AttemptGrow(0)
 
-/obj/item/organ/body_egg/alien_embryo/prepare_eat()
-	var/obj/S = ..()
-	S.reagents.add_reagent(/datum/reagent/toxin/acid, 10)
-	return S
-
 /obj/item/organ/body_egg/alien_embryo/on_life()
 	. = ..()
+	if(!owner)
+		return
 	switch(stage)
 		if(2, 3)
 			if(prob(2))
@@ -89,8 +87,8 @@
 	var/mob/living/carbon/alien/larva/new_xeno = new(xeno_loc)
 	ghost.transfer_ckey(new_xeno, FALSE)
 	SEND_SOUND(new_xeno, sound('sound/voice/hiss5.ogg',0,0,0,100))	//To get the player's attention
-	new_xeno.canmove = 0 //so we don't move during the bursting animation
-	new_xeno.notransform = 1
+	new_xeno.Paralyze(6)
+	new_xeno.mob_transforming = TRUE
 	new_xeno.invisibility = INVISIBILITY_MAXIMUM
 
 	sleep(6)
@@ -99,8 +97,8 @@
 		return
 
 	if(new_xeno)
-		new_xeno.canmove = 1
-		new_xeno.notransform = 0
+		new_xeno.SetParalyzed(0)
+		new_xeno.mob_transforming = FALSE
 		new_xeno.invisibility = 0
 
 	var/mob/living/carbon/old_owner = owner

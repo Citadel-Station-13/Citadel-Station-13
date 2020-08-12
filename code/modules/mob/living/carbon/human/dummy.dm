@@ -4,7 +4,10 @@
 	status_flags = GODMODE|CANPUSH
 	mouse_drag_pointer = MOUSE_INACTIVE_POINTER
 	var/in_use = FALSE
-	no_vore = TRUE
+	vore_flags = NO_VORE
+
+/mob/living/carbon/human/vore
+	vore_flags = DEVOURABLE | DIGESTABLE | FEEDING
 
 INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 

@@ -1,4 +1,0 @@
-author: "Tupinambis"
-delete-after: True
-changes: 
-  - bugfix: "Status Displays should now update correctly."

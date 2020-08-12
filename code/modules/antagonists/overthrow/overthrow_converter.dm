@@ -9,7 +9,7 @@
 	throw_speed = 3
 	throw_range = 5
 	w_class = WEIGHT_CLASS_SMALL
-	materials = list(MAT_METAL=600, MAT_GLASS=200)
+	custom_materials = list(/datum/material/iron=600, /datum/material/glass=200)
 	var/uses = 2
 
 /obj/item/overthrow_converter/proc/convert(mob/living/carbon/human/target, mob/living/carbon/human/user) // Should probably also delete any mindshield implant. Not sure.
@@ -49,7 +49,7 @@
 		else
 			to_chat(user, "<span class='warning'>[user] fails to implant [M].</span>")
 
-/obj/item/overthrow_converter/update_icon()
+/obj/item/overthrow_converter/update_icon_state()
 	if(uses)
 		icon_state = "implanter1"
 	else

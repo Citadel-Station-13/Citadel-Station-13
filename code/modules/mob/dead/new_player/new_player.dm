@@ -10,7 +10,6 @@
 
 	density = FALSE
 	stat = DEAD
-	canmove = FALSE
 
 	var/mob/living/new_character	//for instant transfer once the round is set up
 
@@ -177,9 +176,6 @@
 			SSticker.queue_delay = 4
 			qdel(src)
 
-	if(!ready && href_list["preference"])
-		if(client)
-			client.prefs.process_link(src, href_list)
 	else if(!href_list["late_join"])
 		new_player_panel()
 
@@ -393,6 +389,8 @@
 
 		character.update_parallax_teleport()
 
+	job.standard_assign_skills(character.mind)
+
 	SSticker.minds += character.mind
 
 	var/mob/living/carbon/human/humanc
@@ -400,7 +398,7 @@
 		humanc = character	//Let's retypecast the var to be human,
 
 	if(humanc)	//These procs all expect humans
-		GLOB.data_core.manifest_inject(humanc)
+		GLOB.data_core.manifest_inject(humanc, humanc.client, humanc.client.prefs)
 		if(SSshuttle.arrivals)
 			SSshuttle.arrivals.QueueAnnounce(humanc, rank)
 		else
@@ -414,6 +412,8 @@
 			give_guns(humanc)
 		if(GLOB.summon_magic_triggered)
 			give_magic(humanc)
+		if(GLOB.curse_of_madness_triggered)
+			give_madness(humanc, GLOB.curse_of_madness_triggered)
 
 	GLOB.joined_player_list += character.ckey
 	GLOB.latejoiners += character
@@ -557,6 +557,16 @@
 	if(frn)
 		client.prefs.random_character()
 		client.prefs.real_name = client.prefs.pref_species.random_name(gender,1)
+	var/cur_scar_index = client.prefs.scars_index
+	if(client.prefs.persistent_scars && client.prefs.scars_list["[cur_scar_index]"])
+		var/scar_string = client.prefs.scars_list["[cur_scar_index]"]
+		var/valid_scars = ""
+		for(var/scar_line in splittext(scar_string, ";"))
+			if(H.load_scar(scar_line))
+				valid_scars += "[scar_line];"
+
+		client.prefs.scars_list["[cur_scar_index]"] = valid_scars
+		client.prefs.save_character()
 	client.prefs.copy_to(H)
 	H.dna.update_dna_identity()
 	if(mind)
@@ -564,6 +574,7 @@
 			mind.late_joiner = TRUE
 		mind.active = 0					//we wish to transfer the key manually
 		mind.transfer_to(H)					//won't transfer key since the mind is not active
+		mind.original_character = H
 
 	H.name = real_name
 
@@ -581,7 +592,13 @@
 		qdel(src)
 
 /mob/dead/new_player/proc/ViewManifest()
-	var/dat = "<html><body>"
+	if(!client)
+		return
+	if(world.time < client.crew_manifest_delay)
+		return
+	client.crew_manifest_delay = world.time + (1 SECONDS)
+
+	var/dat = "<html><head><meta http-equiv='Content-Type' content='text/html; charset=UTF-8'></head><body>"
 	dat += "<h4>Crew Manifest</h4>"
 	dat += GLOB.data_core.get_manifest(OOC = 1)
 

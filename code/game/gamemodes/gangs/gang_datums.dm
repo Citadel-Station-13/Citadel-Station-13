@@ -21,7 +21,7 @@
 /datum/team/gang/zerog
 	name = "Zero-G"
 	color = "#C0C0C0"
-	inner_outfits = list(/obj/item/clothing/under/suit_jacket/white)
+	inner_outfits = list(/obj/item/clothing/under/suit/white)
 	outer_outfits = list(/obj/item/clothing/suit/hooded/wintercoat)
 
 /datum/team/gang/max
@@ -33,13 +33,13 @@
 /datum/team/gang/blasto
 	name = "Blasto"
 	color = "#000080"
-	inner_outfits = list(/obj/item/clothing/under/suit_jacket/navy)
+	inner_outfits = list(/obj/item/clothing/under/suit/navy)
 	outer_outfits = list(/obj/item/clothing/suit/jacket/miljacket)
 
 /datum/team/gang/waffle
 	name = "Waffle"
 	color = "#808000" //shared color with cyber, but they can keep brown cause waffles.
-	inner_outfits = list(/obj/item/clothing/under/suit_jacket/green)
+	inner_outfits = list(/obj/item/clothing/under/suit/green)
 	outer_outfits = list(/obj/item/clothing/suit/poncho)
 
 /datum/team/gang/north
@@ -87,7 +87,7 @@
 /datum/team/gang/tunnel
 	name = "Tunnel"
 	color = "#FF00FF" //Gave the leather jacket to the tunnel gang over diablo.
-	inner_outfits = list(/obj/item/clothing/under/villain)
+	inner_outfits = list(/obj/item/clothing/under/costume/villain)
 	outer_outfits = list(/obj/item/clothing/suit/jacket/leather)
 
 /datum/team/gang/diablo
@@ -123,13 +123,13 @@
 /datum/team/gang/h
 	name = "H"
 	color = "#993333"
-	inner_outfits = list(/obj/item/clothing/under/jabroni) //Why not?
+	inner_outfits = list(/obj/item/clothing/under/costume/jabroni) //Why not?
 	outer_outfits = list(/obj/item/clothing/suit/toggle/owlwings)
 
 /datum/team/gang/rigatonifamily
 	name = "Rigatoni family"
 	color = "#cc9900" // p a s t a colored
-	inner_outfits = list(/obj/item/clothing/under/rank/chef)
+	inner_outfits = list(/obj/item/clothing/under/rank/civilian/chef)
 	outer_outfits = list(/obj/item/clothing/suit/apron/chef)
 
 /datum/team/gang/weed

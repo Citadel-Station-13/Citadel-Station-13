@@ -15,6 +15,9 @@
 	exp_type_department = EXP_TYPE_SILICON
 	display_order = JOB_DISPLAY_ORDER_AI
 	var/do_special_check = TRUE
+	threat = 5
+
+	starting_modifiers = list(/datum/skill_modifier/job/level/wiring/basic)
 
 /datum/job/ai/equip(mob/living/carbon/human/H, visualsOnly, announce, latejoin, datum/outfit/outfit_override, client/preference_source = null)
 	if(visualsOnly)

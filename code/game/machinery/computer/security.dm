@@ -265,7 +265,7 @@ What a mess.*/
 		active1 = null
 	if(!( GLOB.data_core.security.Find(active2) ))
 		active2 = null
-	if(usr.contents.Find(src) || (in_range(src, usr) && isturf(loc)) || issilicon(usr) || IsAdminGhost(usr))
+	if(usr.contents.Find(src) || (in_range(src, usr) && isturf(loc)) || hasSiliconAccessInArea(usr) || IsAdminGhost(usr))
 		usr.set_machine(src)
 		switch(href_list["choice"])
 // SORTING!
@@ -299,7 +299,7 @@ What a mess.*/
 			if("Log In")
 				var/mob/M = usr
 				var/obj/item/card/id/I = M.get_idcard(TRUE)
-				if(issilicon(M))
+				if(hasSiliconAccessInArea(M))
 					var/mob/living/silicon/borg = M
 					active1 = null
 					active2 = null
@@ -662,7 +662,7 @@ What a mess.*/
 								GLOB.data_core.removeMajorCrime(active1.fields["id"], href_list["cdataid"])
 					if("notes")
 						if(istype(active2, /datum/data/record))
-							var/t1 = stripped_input(usr, "Please summarize notes:", "Secure. records", active2.fields["notes"], null)
+							var/t1 = stripped_multiline_input(usr, "Please summarize notes:", "Secure records", active2.fields["notes"], 8192)
 							if(!canUseSecurityRecordsConsole(usr, t1, null, a2))
 								return
 							active2.fields["notes"] = t1
@@ -802,7 +802,7 @@ What a mess.*/
 /obj/machinery/computer/secure_data/proc/canUseSecurityRecordsConsole(mob/user, message1 = 0, record1, record2)
 	if(user)
 		if(authenticated)
-			if(user.canUseTopic(src, !issilicon(user)))
+			if(user.canUseTopic(src, !hasSiliconAccessInArea(user)))
 				if(!trim(message1))
 					return 0
 				if(!record1 || record1 == active1)

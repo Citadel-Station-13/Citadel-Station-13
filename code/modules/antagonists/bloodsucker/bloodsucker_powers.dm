@@ -93,10 +93,18 @@
 		if(display_error)
 			to_chat(owner, "<span class='warning'>You have a stake in your chest! Your powers are useless.</span>")
 		return FALSE
+	if(istype(owner.get_item_by_slot(SLOT_NECK), /obj/item/clothing/neck/garlic_necklace))
+		if(display_error)
+			to_chat(owner, "<span class='warning'The necklace on your neck is interfering with your powers!</span>")
+		return FALSE
+	if(owner.reagents?.has_reagent(/datum/reagent/consumable/garlic))
+		if(display_error)
+			to_chat(owner, "<span class='warning'>Garlic in your blood is interfering with your powers!</span>")
+		return FALSE
 	// Incap?
 	if(must_be_capacitated)
 		var/mob/living/L = owner
-		if (L.incapacitated(TRUE, TRUE) || L.resting && !can_be_immobilized)
+		if (L.incapacitated(TRUE, TRUE) || !CHECK_MOBILITY(L, MOBILITY_STAND) && !can_be_immobilized)
 			if(display_error)
 				to_chat(owner, "<span class='warning'>Not while you're incapacitated!</span>")
 			return FALSE

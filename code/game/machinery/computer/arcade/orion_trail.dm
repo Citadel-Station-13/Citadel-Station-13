@@ -117,7 +117,7 @@
 			if(food <= 0)
 				dat += "<br>You ran out of food and starved."
 				if(obj_flags & EMAGGED)
-					user.nutrition = 0 //yeah you pretty hongry
+					user.set_nutrition(0) //yeah you pretty hongry
 					to_chat(user, "<span class='userdanger'>Your body instantly contracts to that of one who has not eaten in months. Agonizing cramps seize you as you fall to the floor.</span>")
 			if(fuel <= 0)
 				dat += "<br>You ran out of fuel, and drift, slowly, into a star."
@@ -217,7 +217,7 @@
 							M.vomit(10, distance = 5)
 					if(ORION_TRAIL_FLUX)
 						if(prob(75))
-							M.Knockdown(60)
+							M.DefaultCombatKnockdown(60)
 							say("A sudden gust of powerful wind slams [M] into the floor!")
 							M.take_bodypart_damage(25)
 							playsound(loc, 'sound/weapons/genhit.ogg', 100, 1)

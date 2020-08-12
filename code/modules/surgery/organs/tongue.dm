@@ -30,39 +30,23 @@
 
 /obj/item/organ/tongue/Initialize(mapload)
 	. = ..()
+	low_threshold_passed = "<span class='info'>Your [name] feels a little sore.</span>"
+	low_threshold_cleared = "<span class='info'>Your [name] soreness has subsided.</span>"
+	high_threshold_passed = "<span class='warning'>Your [name] is really starting to hurt.</span>"
+	high_threshold_cleared = "<span class='info'>The pain of your [name] has subsided a little.</span>"
+	now_failing = "<span class='warning'>Your [name] feels like it's about to fall out!.</span>"
+	now_fixed = "<span class='info'>The excruciating pain of your [name] has subsided.</span>"
 	languages_possible = languages_possible_base
 
 /obj/item/organ/tongue/proc/handle_speech(datum/source, list/speech_args)
+	return
 
-/obj/item/organ/tongue/emp_act(severity)
+/obj/item/organ/tongue/applyOrganDamage(d, maximum = maxHealth)
 	. = ..()
-	if(. & EMP_PROTECT_SELF)
-		return
-	if(organ_flags & ORGAN_SYNTHETIC)
-		var/errormessage = list("Runtime in tongue.dm, line 39: Undefined operation \"zapzap ow my tongue\"", "afhsjifksahgjkaslfhashfjsak", "-1.#IND", "Graham's number", "inside you all along", "awaiting at least 1 approving review before merging this taste request")
-		owner.say("The pH is appropriately [pick(errormessage)].")
-
-/obj/item/organ/tongue/applyOrganDamage(var/d, var/maximum = maxHealth)
-
-	if(!d) //Micro-optimization.
-		return
-	if(maximum < damage)
-		return
-	damage = CLAMP(damage + d, 0, maximum)
-	var/mess = check_damage_thresholds(owner)
-	prev_damage = damage
-	if(mess && owner)
-		to_chat(owner, mess)
-
-	if ((damage / maxHealth) > 1)
+	if (damage >= maxHealth)
 		to_chat(owner, "<span class='userdanger'>Your tongue is singed beyond recognition, and disintegrates!</span>")
 		SSblackbox.record_feedback("tally", "fermi_chem", 1, "Tongues lost to Fermi")
 		qdel(src)
-	else if ((damage / maxHealth) > 0.85)
-		to_chat(owner, "<span class='warning'>Your tongue feels like it's about to fall out!.</span>")
-	else if ((damage / maxHealth) > 0.5)
-		to_chat(owner, "<span class='notice'>Your tongue is really starting to hurt.</span>")
-
 
 /obj/item/organ/tongue/Insert(mob/living/carbon/M, special = 0, drop_if_replaced = TRUE)
 	..()
@@ -80,8 +64,8 @@
 		owner.RegisterSignal(owner, COMSIG_MOB_SAY, /mob/living/carbon/.proc/handle_tongueless_speech)
 	return ..()
 
-/obj/item/organ/tongue/could_speak_in_language(datum/language/dt)
-	return is_type_in_typecache(dt, languages_possible)
+/obj/item/organ/tongue/could_speak_language(language)
+	return is_type_in_typecache(language, languages_possible)
 
 /obj/item/organ/tongue/lizard
 	name = "forked tongue"
@@ -157,7 +141,7 @@
 /obj/item/organ/tongue/abductor/handle_speech(datum/source, list/speech_args)
 	//Hacks
 	var/message = speech_args[SPEECH_MESSAGE]
-	var/mob/living/carbon/human/user = usr
+	var/mob/living/carbon/human/user = source
 	var/rendered = "<span class='abductor'><b>[user.name]:</b> [message]</span>"
 	user.log_talk(message, LOG_SAY, tag="abductor")
 	for(var/mob/living/carbon/human/H in GLOB.alive_mob_list)
@@ -268,6 +252,7 @@
 	name = "robotic voicebox"
 	desc = "A voice synthesizer that can interface with organic lifeforms."
 	status = ORGAN_ROBOTIC
+	organ_flags = ORGAN_NO_SPOIL
 	icon_state = "tonguerobot"
 	say_mod = "states"
 	attack_verb = list("beeped", "booped")
@@ -276,7 +261,7 @@
 	maxHealth = 100 //RoboTongue!
 	var/electronics_magic = TRUE
 
-/obj/item/organ/tongue/robot/can_speak_in_language(datum/language/dt)
+/obj/item/organ/tongue/robot/could_speak_language(language)
 	return ..() || electronics_magic
 
 /obj/item/organ/tongue/robot/handle_speech(datum/source, list/speech_args)
@@ -311,6 +296,13 @@
 	maxHealth = 60 //It's robotic!
 	organ_flags = ORGAN_SYNTHETIC
 
+/obj/item/organ/tongue/cybernetic/emp_act(severity)
+	. = ..()
+	if(. & EMP_PROTECT_SELF)
+		return
+	var/errormessage = list("Runtime in tongue.dm, line 39: Undefined operation \"zapzap ow my tongue\"", "afhsjifksahgjkaslfhashfjsak", "-1.#IND", "Graham's number", "inside you all along", "awaiting at least 1 approving review before merging this taste request")
+	owner.say("The pH is appropriately [pick(errormessage)].", forced = "EMPed synthetic tongue")
+
 /obj/item/organ/tongue/cybernetic/handle_speech(datum/source, list/speech_args)
 	speech_args[SPEECH_SPANS] |= SPAN_ROBOT
 
@@ -320,3 +312,26 @@
 	desc = "A voice synthesizer used by IPCs to smoothly interface with organic lifeforms."
 	electronics_magic = FALSE
 	organ_flags = ORGAN_SYNTHETIC
+
+/obj/item/organ/tongue/ethereal
+	name = "electric discharger"
+	desc = "A sophisticated ethereal organ, capable of synthesising speech via electrical discharge."
+	icon_state = "electrotongue"
+	say_mod = "crackles"
+	attack_verb = list("shocked", "jolted", "zapped")
+	taste_sensitivity = 101 // Not a tongue, they can't taste shit
+	var/static/list/languages_possible_ethereal = typecacheof(list(
+		/datum/language/common,
+		/datum/language/draconic,
+		/datum/language/codespeak,
+		/datum/language/monkey,
+		/datum/language/narsie,
+		/datum/language/beachbum,
+		/datum/language/aphasia,
+		/datum/language/sylvan,
+		/datum/language/voltaic
+	))
+
+/obj/item/organ/tongue/ethereal/Initialize(mapload)
+	. = ..()
+	languages_possible = languages_possible_ethereal

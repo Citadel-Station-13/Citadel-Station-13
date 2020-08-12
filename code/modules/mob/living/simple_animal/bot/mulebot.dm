@@ -29,9 +29,6 @@
 	model = "MULE"
 	bot_core_type = /obj/machinery/bot_core/mulebot
 
-	var/ui_x = 350
-	var/ui_y = 425
-
 	var/id
 
 	path_image_color = "#7F5200"
@@ -123,7 +120,8 @@
 		emagged = TRUE
 	if(!open)
 		locked = !locked
-		to_chat(user, "<span class='notice'>You [locked ? "lock" : "unlock"] [src]'s controls!</span>")
+		if(user)
+			to_chat(user, "<span class='notice'>You [locked ? "lock" : "unlock"] [src]'s controls!</span>")
 	flick("mulebot-emagged", src)
 	playsound(src, "sparks", 100, FALSE)
 
@@ -169,18 +167,17 @@
 			return
 		ui_interact(user)
 
-/mob/living/simple_animal/bot/mulebot/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
-										datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+/mob/living/simple_animal/bot/mulebot/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, ui_key, "mulebot", name, ui_x, ui_y, master_ui, state)
+		ui = new(user, src, "Mule", name)
 		ui.open()
 
 /mob/living/simple_animal/bot/mulebot/ui_data(mob/user)
 	var/list/data = list()
 	data["on"] = on
 	data["locked"] = locked
-	data["siliconUser"] = user.has_unlimited_silicon_privilege
+	data["siliconUser"] = hasSiliconAccessInArea(user)
 	data["mode"] = mode ? mode_name[mode] : "Ready"
 	data["modeStatus"] = ""
 	switch(mode)
@@ -190,8 +187,7 @@
 			data["modeStatus"] = "average"
 		if(BOT_NO_ROUTE)
 			data["modeStatus"] = "bad"
-		else
-	data["load"] = load ? load.name : null
+	data["load"] = load ? load.name : null //IF YOU CHANGE THE NAME OF THIS, UPDATE MULEBOT/PARANORMAL/UI_DATA.
 	data["destination"] = destination ? destination : null
 	data["home"] = home_destination
 	data["destinations"] = GLOB.deliverybeacontags
@@ -205,17 +201,20 @@
 	return data
 
 /mob/living/simple_animal/bot/mulebot/ui_act(action, params)
-	if(..() || (locked && !usr.has_unlimited_silicon_privilege))
+	if(..() || (locked && hasSiliconAccessInArea(usr)))
 		return
 	switch(action)
 		if("lock")
-			if(usr.has_unlimited_silicon_privilege)
+			if(hasSiliconAccessInArea(usr))
 				locked = !locked
 				. = TRUE
 		if("power")
 			if(on)
 				turn_off()
-			else if(cell && !open)
+			else if(open)
+				to_chat(usr, "<span class='warning'>[name]'s maintenance panel is open!</span>")
+				return
+			else if(cell)
 				if(!turn_on())
 					to_chat(usr, "<span class='warning'>You can't switch on [src]!</span>")
 					return
@@ -279,7 +278,7 @@
 
 // TODO: remove this; PDAs currently depend on it
 /mob/living/simple_animal/bot/mulebot/get_controls(mob/user)
-	var/ai = issilicon(user)
+	var/ai = hasSiliconAccessInArea(user)
 	var/dat
 	dat += "<h3>Multiple Utility Load Effector Mk. V</h3>"
 	dat += "<b>ID:</b> [id]<BR>"
@@ -660,7 +659,7 @@
 				if(!paicard)
 					log_combat(src, L, "knocked down")
 					visible_message("<span class='danger'>[src] knocks over [L]!</span>")
-					L.Knockdown(160)
+					L.DefaultCombatKnockdown(160)
 	return ..()
 
 // called from mob/living/carbon/human/Crossed()
@@ -745,12 +744,12 @@
 	else
 		return null
 
-/mob/living/simple_animal/bot/mulebot/resist()
-	..()
+/mob/living/simple_animal/bot/mulebot/do_resist()
+	. = ..()
 	if(load)
 		unload()
 
-/mob/living/simple_animal/bot/mulebot/UnarmedAttack(atom/A)
+/mob/living/simple_animal/bot/mulebot/UnarmedAttack(atom/A, proximity, intent = a_intent, flags = NONE)
 	if(isturf(A) && isturf(loc) && loc.Adjacent(A) && load)
 		unload(get_dir(loc, A))
 	else
@@ -766,4 +765,3 @@
 
 /obj/machinery/bot_core/mulebot
 	req_access = list(ACCESS_CARGO)
-	

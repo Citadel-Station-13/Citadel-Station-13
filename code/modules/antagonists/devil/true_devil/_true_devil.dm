@@ -29,7 +29,7 @@
 /mob/living/carbon/true_devil/Initialize()
 	create_bodyparts() //initialize bodyparts
 	create_internal_organs()
-	grant_all_languages(omnitongue=TRUE)
+	grant_all_languages()
 	..()
 
 /mob/living/carbon/true_devil/create_internal_organs()
@@ -116,24 +116,11 @@
 /mob/living/carbon/true_devil/get_ear_protection()
 	return 2
 
-
-/mob/living/carbon/true_devil/attacked_by(obj/item/I, mob/living/user, def_zone)
-	var/weakness = check_weakness(I, user)
-	apply_damage(I.force * weakness, I.damtype, def_zone)
-	var/message_verb = ""
-	if(I.attack_verb && I.attack_verb.len)
-		message_verb = "[pick(I.attack_verb)]"
-	else if(I.force)
-		message_verb = "attacked"
-
-	var/attack_message = "[src] has been [message_verb] with [I]."
-	if(user)
-		user.do_attack_animation(src)
-		if(user in viewers(src, null))
-			attack_message = "[user] has [message_verb] [src] with [I]!"
-	if(message_verb)
-		visible_message("<span class='danger'>[attack_message]</span>",
-		"<span class='userdanger'>[attack_message]</span>", null, COMBAT_MESSAGE_RANGE)
+/mob/living/carbon/true_devil/attacked_by(obj/item/I, mob/living/user, def_zone, attackchain_flags = NONE, damage_multiplier = 1)
+	var/totitemdamage = pre_attacked_by(I, user)
+	totitemdamage *= check_weakness(I, user)
+	apply_damage(totitemdamage, I.damtype, def_zone)
+	send_item_attack_message(I, user, null, totitemdamage)
 	return TRUE
 
 /mob/living/carbon/true_devil/singularity_act()
@@ -157,7 +144,7 @@
 /mob/living/carbon/true_devil/resist_fire()
 	//They're immune to fire.
 
-/mob/living/carbon/true_devil/attack_hand(mob/living/carbon/human/M)
+/mob/living/carbon/true_devil/on_attack_hand(mob/living/carbon/human/M)
 	. = ..()
 	if(.)
 		switch(M.a_intent)

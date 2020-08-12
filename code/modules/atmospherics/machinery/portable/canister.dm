@@ -19,7 +19,7 @@
 
 	armor = list("melee" = 50, "bullet" = 50, "laser" = 50, "energy" = 100, "bomb" = 10, "bio" = 100, "rad" = 100, "fire" = 80, "acid" = 50)
 	max_integrity = 250
-	integrity_failure = 100
+	integrity_failure = 0.4
 	pressure_resistance = 7 * ONE_ATMOSPHERE
 	var/temperature_resistance = 1000 + T0C
 	var/starter_temp
@@ -165,7 +165,6 @@
 	name = "prototype canister"
 	desc = "The best way to fix an atmospheric emergency... or the best way to introduce one."
 	icon_state = "proto"
-	icon_state = "proto"
 	volume = 5000
 	max_integrity = 300
 	temperature_resistance = 2000 + T0C
@@ -182,8 +181,6 @@
 	filled = 1
 	release_pressure = ONE_ATMOSPHERE*2
 
-
-
 /obj/machinery/portable_atmospherics/canister/New(loc, datum/gas_mixture/existing_mixture)
 	..()
 	if(existing_mixture)
@@ -193,9 +190,10 @@
 	pump = new(src, FALSE)
 	pump.on = TRUE
 	pump.stat = 0
-	pump.build_network()
+	SSair.add_to_rebuild_queue(pump)
 
 	update_icon()
+
 
 /obj/machinery/portable_atmospherics/canister/Destroy()
 	qdel(pump)
@@ -205,69 +203,34 @@
 /obj/machinery/portable_atmospherics/canister/proc/create_gas()
 	if(gas_type)
 		if(starter_temp)
-			air_contents.temperature = starter_temp
-		air_contents.gases[gas_type] = (maximum_pressure * filled) * air_contents.volume / (R_IDEAL_GAS_EQUATION * air_contents.temperature)
+			air_contents.set_temperature(starter_temp)
+		air_contents.set_moles(gas_type,(maximum_pressure * filled) * air_contents.return_volume() / (R_IDEAL_GAS_EQUATION * air_contents.return_temperature()))
 		if(starter_temp)
-			air_contents.temperature = starter_temp
+			air_contents.set_temperature(starter_temp)
+
 /obj/machinery/portable_atmospherics/canister/air/create_gas()
-	air_contents.gases[/datum/gas/oxygen] = (O2STANDARD * maximum_pressure * filled) * air_contents.volume / (R_IDEAL_GAS_EQUATION * air_contents.temperature)
-	air_contents.gases[/datum/gas/nitrogen] = (N2STANDARD * maximum_pressure * filled) * air_contents.volume / (R_IDEAL_GAS_EQUATION * air_contents.temperature)
+	air_contents.set_moles(/datum/gas/oxygen, (O2STANDARD * maximum_pressure * filled) * air_contents.return_volume() / (R_IDEAL_GAS_EQUATION * air_contents.return_temperature()))
+	air_contents.set_moles(/datum/gas/nitrogen, (N2STANDARD * maximum_pressure * filled) * air_contents.return_volume() / (R_IDEAL_GAS_EQUATION * air_contents.return_temperature()))
 
-#define HOLDING		(1<<0)
-#define CONNECTED	(1<<1)
-#define EMPTY		(1<<2)
-#define LOW			(1<<3)
-#define MEDIUM		(1<<4)
-#define FULL		(1<<5)
-#define DANGER		(1<<6)
-/obj/machinery/portable_atmospherics/canister/update_icon()
+/obj/machinery/portable_atmospherics/canister/update_icon_state()
 	if(stat & BROKEN)
-		cut_overlays()
 		icon_state = "[icon_state]-1"
-		return
 
-	var/last_update = update
-	update = 0
-
+/obj/machinery/portable_atmospherics/canister/update_overlays()
+	. = ..()
 	if(holding)
-		update |= HOLDING
+		. += "can-open"
 	if(connected_port)
-		update |= CONNECTED
+		. += "can-connector"
 	var/pressure = air_contents.return_pressure()
-	if(pressure < 10)
-		update |= EMPTY
-	else if(pressure < 5 * ONE_ATMOSPHERE)
-		update |= LOW
-	else if(pressure < 10 * ONE_ATMOSPHERE)
-		update |= MEDIUM
-	else if(pressure < 40 * ONE_ATMOSPHERE)
-		update |= FULL
-	else
-		update |= DANGER
-
-	if(update == last_update)
-		return
-
-	cut_overlays()
-	if(update & HOLDING)
-		add_overlay("can-open")
-	if(update & CONNECTED)
-		add_overlay("can-connector")
-	if(update & LOW)
-		add_overlay("can-o0")
-	else if(update & MEDIUM)
-		add_overlay("can-o1")
-	else if(update & FULL)
-		add_overlay("can-o2")
-	else if(update & DANGER)
-		add_overlay("can-o3")
-#undef HOLDING
-#undef CONNECTED
-#undef EMPTY
-#undef LOW
-#undef MEDIUM
-#undef FULL
-#undef DANGER
+	if(pressure >= 40 * ONE_ATMOSPHERE)
+		. += "can-o3"
+	else if(pressure >= 10 * ONE_ATMOSPHERE)
+		. += "can-o2"
+	else if(pressure >= 5 * ONE_ATMOSPHERE)
+		. += "can-o1"
+	else if(pressure >= 10)
+		. += "can-o0"
 
 /obj/machinery/portable_atmospherics/canister/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	if(exposed_temperature > temperature_resistance)
@@ -284,7 +247,8 @@
 			new /obj/item/stack/sheet/metal (loc, 5)
 	qdel(src)
 
-/obj/machinery/portable_atmospherics/canister/welder_act(mob/living/user, obj/item/I)
+obj/machinery/portable_atmospherics/canister/welder_act(mob/living/user, obj/item/I)
+	..()
 	if(user.a_intent == INTENT_HARM)
 		return FALSE
 
@@ -302,6 +266,7 @@
 /obj/machinery/portable_atmospherics/canister/obj_break(damage_flag)
 	if((stat & BROKEN) || (flags_1 & NODECONSTRUCT_1))
 		return
+	stat |= BROKEN
 	canister_break()
 
 /obj/machinery/portable_atmospherics/canister/proc/canister_break()
@@ -311,10 +276,9 @@
 	T.assume_air(expelled_gas)
 	air_update_turf()
 
-	stat |= BROKEN
+	obj_break()
 	density = FALSE
-	playsound(src.loc, 'sound/effects/spray.ogg', 10, 1, -3)
-	update_icon()
+	playsound(src.loc, 'sound/effects/spray.ogg', 10, TRUE, -3)
 	investigate_log("was destroyed.", INVESTIGATE_ATMOS)
 
 	if(holding)
@@ -353,11 +317,13 @@
 		air_update_turf() // Update the environment if needed.
 	update_icon()
 
-/obj/machinery/portable_atmospherics/canister/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
-															datum/tgui/master_ui = null, datum/ui_state/state = GLOB.physical_state)
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+/obj/machinery/portable_atmospherics/canister/ui_state(mob/user)
+	return GLOB.physical_state
+
+/obj/machinery/portable_atmospherics/canister/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, ui_key, "canister", name, 420, 405, master_ui, state)
+		ui = new(user, src, "Canister", name)
 		ui.open()
 
 /obj/machinery/portable_atmospherics/canister/ui_data()
@@ -392,7 +358,7 @@
 		return
 	switch(action)
 		if("relabel")
-			var/label = input("New canister label:", name) as null|anything in label2types
+			var/label = input("New canister label:", name) as null|anything in sortList(label2types)
 			if(label && !..())
 				var/newtype = label2types[label]
 				if(newtype)
@@ -426,7 +392,7 @@
 				pressure = text2num(pressure)
 				. = TRUE
 			if(.)
-				release_pressure = CLAMP(round(pressure), can_min_release_pressure, can_max_release_pressure)
+				release_pressure = clamp(round(pressure), can_min_release_pressure, can_max_release_pressure)
 				investigate_log("was set to [release_pressure] kPa by [key_name(usr)].", INVESTIGATE_ATMOS)
 		if("valve")
 			var/logmsg
@@ -435,8 +401,8 @@
 				logmsg = "Valve was <b>opened</b> by [key_name(usr)], starting a transfer into \the [holding || "air"].<br>"
 				if(!holding)
 					var/list/danger = list()
-					for(var/id in air_contents.gases)
-						var/gas = air_contents.gases[id]
+					for(var/id in air_contents.get_gases())
+						var/gas = air_contents.get_moles(id)
 						if(!GLOB.meta_gas_dangers[id])
 							continue
 						if(gas > (GLOB.meta_gas_visibility[id] || MOLES_GAS_VISIBLE)) //if moles_visible is undefined, default to default visibility
@@ -470,7 +436,7 @@
 					var/N = text2num(user_input)
 					if(!N)
 						return
-					timer_set = CLAMP(N,minimum_timer_set,maximum_timer_set)
+					timer_set = clamp(N,minimum_timer_set,maximum_timer_set)
 					log_admin("[key_name(usr)] has activated a prototype valve timer")
 					. = TRUE
 				if("toggle_timer")

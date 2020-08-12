@@ -6,6 +6,7 @@
 	status = ORGAN_ROBOTIC
 	beating = TRUE
 	organ_flags = ORGAN_NO_SPOIL
+	no_pump = TRUE
 	var/true_name = "baseline placebo referencer"
 	var/cooldown_low = 300
 	var/cooldown_high = 300
@@ -92,6 +93,7 @@
 	update_gland_hud()
 
 /obj/item/organ/heart/gland/on_life()
+	. = ..()
 	if(!beating)
 		// alien glands are immune to stopping.
 		beating = TRUE

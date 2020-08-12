@@ -94,7 +94,7 @@
 
 	//Calculate necessary moles to transfer using PV=nRT
 
-	var/transfer_ratio = transfer_rate/air1.volume
+	var/transfer_ratio = transfer_rate/air1.return_volume()
 
 	//Actually transfer the gas
 
@@ -111,14 +111,13 @@
 			else
 				filtering = FALSE
 
-		if(filtering && removed.gases[filter_type])
+		if(filtering && removed.get_moles(filter_type))
 			var/datum/gas_mixture/filtered_out = new
 
-			filtered_out.temperature = removed.temperature
-			filtered_out.gases[filter_type] = removed.gases[filter_type]
+			filtered_out.set_temperature(removed.return_temperature())
+			filtered_out.set_moles(filter_type, removed.get_moles(filter_type))
 
-			removed.gases[filter_type] = 0
-			GAS_GARBAGE_COLLECT(removed.gases)
+			removed.set_moles(filter_type, 0)
 
 			var/datum/gas_mixture/target = (air2.return_pressure() < 9000 ? air2 : air1)
 			target.merge(filtered_out)
@@ -134,11 +133,10 @@
 	set_frequency(frequency)
 	return ..()
 
-/obj/machinery/atmospherics/components/trinary/filter/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
-																	datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+/obj/machinery/atmospherics/components/trinary/filter/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, ui_key, "atmos_filter", name, 475, 185, master_ui, state)
+		ui = new(user, src, "AtmosFilter", name)
 		ui.open()
 
 /obj/machinery/atmospherics/components/trinary/filter/ui_data()
@@ -175,7 +173,7 @@
 				rate = text2num(rate)
 				. = TRUE
 			if(.)
-				transfer_rate = CLAMP(rate, 0, MAX_TRANSFER_RATE)
+				transfer_rate = clamp(rate, 0, MAX_TRANSFER_RATE)
 				investigate_log("was set to [transfer_rate] L/s by [key_name(usr)]", INVESTIGATE_ATMOS)
 		if("filter")
 			filter_type = null

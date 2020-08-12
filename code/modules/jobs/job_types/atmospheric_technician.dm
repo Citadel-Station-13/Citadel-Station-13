@@ -5,7 +5,7 @@
 	department_flag = ENGSEC
 	faction = "Station"
 	total_positions = 3
-	spawn_positions = 2
+	spawn_positions = 3
 	supervisors = "the chief engineer"
 	selection_color = "#ff9b3d"
 	exp_requirements = 60
@@ -17,7 +17,13 @@
 									ACCESS_EXTERNAL_AIRLOCKS, ACCESS_CONSTRUCTION, ACCESS_ATMOSPHERICS, ACCESS_MINERAL_STOREROOM)
 	minimal_access = list(ACCESS_ATMOSPHERICS, ACCESS_MAINT_TUNNELS, ACCESS_EXTERNAL_AIRLOCKS, ACCESS_ENGINE,
 									ACCESS_ENGINE_EQUIP, ACCESS_EMERGENCY_STORAGE, ACCESS_CONSTRUCTION, ACCESS_MINERAL_STOREROOM)
+	paycheck = PAYCHECK_MEDIUM
+	paycheck_department = ACCOUNT_ENG
+
+	starting_modifiers = list(/datum/skill_modifier/job/level/wiring/basic, /datum/skill_modifier/job/affinity/wiring)
+
 	display_order = JOB_DISPLAY_ORDER_ATMOSPHERIC_TECHNICIAN
+	threat = 0.5
 
 /datum/outfit/job/atmos
 	name = "Atmospheric Technician"
@@ -26,7 +32,7 @@
 	belt = /obj/item/storage/belt/utility/atmostech
 	l_pocket = /obj/item/pda/atmos
 	ears = /obj/item/radio/headset/headset_eng
-	uniform = /obj/item/clothing/under/rank/atmospheric_technician
+	uniform = /obj/item/clothing/under/rank/engineering/atmospheric_technician
 	r_pocket = /obj/item/analyzer
 
 	backpack = /obj/item/storage/backpack/industrial

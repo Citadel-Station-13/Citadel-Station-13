@@ -125,7 +125,7 @@
 		var/mob/living/carbon/human/H = user
 		var/open = FALSE
 		if(H.dna.features["wings"] != "None")
-			if("wingsopen" in H.dna.species.mutant_bodyparts)
+			if(H.dna.species.mutant_bodyparts["wingsopen"])
 				open = TRUE
 				H.CloseWings()
 			else
@@ -226,7 +226,7 @@
 			'sound/voice/catpeople/nyahehe.ogg'),
 			50, 1)
 			return
-		else if(ismoth(C))
+		else if(isinsect(C))
 			playsound(C, 'sound/voice/moth/mothlaugh.ogg', 50, 1)
 		else if(ishumanbasic(C))
 			if(user.gender == FEMALE)
@@ -244,7 +244,7 @@
 	. = ..()
 	if(. && iscarbon(user)) //Citadel Edit because this is hilarious
 		var/mob/living/carbon/C = user
-		if(ismoth(C))
+		if(isinsect(C))
 			playsound(C, 'sound/voice/moth/mothchitter.ogg', 50, 1)
 
 /datum/emote/living/look
@@ -273,7 +273,7 @@
 		if(H.get_num_arms() == 0)
 			if(H.get_num_legs() != 0)
 				message_param = "tries to point at %t with a leg, <span class='userdanger'>falling down</span> in the process!"
-				H.Knockdown(20)
+				H.DefaultCombatKnockdown(20)
 			else
 				message_param = "<span class='userdanger'>bumps [user.p_their()] head on the ground</span> trying to motion towards %t."
 				H.adjustOrganLoss(ORGAN_SLOT_BRAIN, 5)
@@ -326,6 +326,11 @@
 	key_third_person = "smiles"
 	message = "smiles."
 
+/datum/emote/living/smirk
+	key = "smirk"
+	key_third_person = "smirks"
+	message = "smirks."
+
 /datum/emote/living/sneeze
 	key = "sneeze"
 	key_third_person = "sneezes"
@@ -377,7 +382,7 @@
 	. = ..()
 	if(. && isliving(user))
 		var/mob/living/L = user
-		L.Knockdown(200)
+		L.DefaultCombatKnockdown(200)
 
 /datum/emote/living/sway
 	key = "sway"
@@ -441,7 +446,7 @@
 		to_chat(user, "You cannot send IC messages (muted).")
 		return FALSE
 	else if(!params)
-		var/custom_emote = stripped_multiline_input("Choose an emote to display.", "Custom Emote", null, MAX_MESSAGE_LEN)
+		var/custom_emote = stripped_multiline_input_or_reflect(user, "Choose an emote to display.", "Custom Emote", null, MAX_MESSAGE_LEN)
 		if(custom_emote && !check_invalid(user, custom_emote))
 			var/type = input("Is this a visible or hearable emote?") as null|anything in list("Visible", "Hearable")
 			switch(type)
@@ -457,6 +462,7 @@
 		message = params
 		if(type_override)
 			emote_type = type_override
+	message = user.say_emphasis(message)
 	. = ..()
 	message = null
 	emote_type = EMOTE_VISIBLE
@@ -530,3 +536,29 @@
 		to_chat(user, "<span class='notice'>You ready your slapping hand.</span>")
 	else
 		to_chat(user, "<span class='warning'>You're incapable of slapping in your current state.</span>")
+
+/datum/emote/living/audio_emote/blorble
+	key = "blorble"
+	key_third_person = "blorbles"
+	message = "blorbles."
+	message_param = "blorbles at %t."
+
+/datum/emote/living/audio_emote/blorble/run_emote(mob/user, params)
+	. = ..()
+	if(. && iscarbon(user))
+		var/mob/living/carbon/C = user
+		if(isjellyperson(C))
+			pick(playsound(C, 'sound/effects/attackblob.ogg', 50, 1),playsound(C, 'sound/effects/blobattack.ogg', 50, 1))
+
+/datum/emote/living/audio_emote/blurp
+	key = "blurp"
+	key_third_person = "blurps"
+	message = "blurps."
+	message_param = "blurps at %t."
+
+/datum/emote/living/audio_emote/blurp/run_emote(mob/user, params)
+	. = ..()
+	if(. && iscarbon(user))
+		var/mob/living/carbon/C = user
+		if(isjellyperson(C))
+			pick(playsound(C, 'sound/effects/meatslap.ogg', 50, 1),playsound(C, 'sound/effects/gib_step.ogg', 50, 1))

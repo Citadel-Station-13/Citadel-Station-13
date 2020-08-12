@@ -10,7 +10,7 @@
 	damage_type = BURN
 	damage = 10
 	knockdown = 20
-	speed = 2
+	pixels_per_second = TILES_TO_PIXELS(5)
 	range = 16
 	movement_type = FLYING | UNSTOPPABLE
 	var/datum/beam/arm
@@ -20,6 +20,9 @@
 	. = ..()
 	handedness = prob(50)
 	icon_state = "cursehand[handedness]"
+
+/obj/item/projectile/curse_hand/update_icon_state()
+	icon_state = "[initial(icon_state)][handedness]"
 
 /obj/item/projectile/curse_hand/fire(setAngle)
 	if(starting)
@@ -40,7 +43,8 @@
 	if(CHECK_BITFIELD(movement_type, UNSTOPPABLE))
 		playsound(src, 'sound/effects/curse3.ogg', 25, 1, -1)
 	var/turf/T = get_step(src, dir)
-	new/obj/effect/temp_visual/dir_setting/curse/hand(T, dir, handedness)
+	var/obj/effect/temp_visual/dir_setting/curse/hand/leftover = new(T, dir)
+	leftover.icon_state = icon_state
 	for(var/obj/effect/temp_visual/dir_setting/curse/grasp_portal/G in starting)
 		qdel(G)
 	new /obj/effect/temp_visual/dir_setting/curse/grasp_portal/fading(starting, dir)

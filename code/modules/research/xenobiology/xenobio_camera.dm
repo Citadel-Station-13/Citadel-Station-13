@@ -146,7 +146,7 @@
 		else
 			to_chat(user, "<span class='warning'>[src] already has the contents of [O] installed!</span>")
 		return
-	if(istype(O, /obj/item/reagent_containers/food/snacks/monkeycube) && (upgradetier & XENOBIO_UPGRADE_MONKEYS)) //CIT CHANGE - makes monkey-related actions require XENOBIO_UPGRADE_MONKEYS
+	if(istype(O, /obj/item/reagent_containers/food/snacks/cube/monkey) && (upgradetier & XENOBIO_UPGRADE_MONKEYS)) //CIT CHANGE - makes monkey-related actions require XENOBIO_UPGRADE_MONKEYS
 		monkeys++
 		to_chat(user, "<span class='notice'>You feed [O] to [src]. It now has [monkeys] monkey cubes stored.</span>")
 		qdel(O)
@@ -155,7 +155,7 @@
 		var/obj/item/storage/P = O
 		var/loaded = FALSE
 		for(var/obj/G in P.contents)
-			if(istype(G, /obj/item/reagent_containers/food/snacks/monkeycube))
+			if(istype(G, /obj/item/reagent_containers/food/snacks/cube/monkey))
 				loaded = TRUE
 				monkeys++
 				qdel(G)
@@ -236,7 +236,7 @@
 		if(X.monkeys >= 1)
 			var/mob/living/carbon/monkey/food = new /mob/living/carbon/monkey(remote_eye.loc, TRUE, owner)
 			if (!QDELETED(food))
-				food.LAssailant = C
+				food.LAssailant = WEAKREF(C)
 				X.monkeys --
 				to_chat(owner, "<span class='notice'>[X] now has [X.monkeys] monkey(s) left.</span>")
 		else
@@ -474,7 +474,7 @@
 		if(X.monkeys >= 1)
 			var/mob/living/carbon/monkey/food = new /mob/living/carbon/monkey(T, TRUE, C)
 			if (!QDELETED(food))
-				food.LAssailant = C
+				food.LAssailant = WEAKREF(C)
 				X.monkeys--
 				X.monkeys = round(X.monkeys, 0.1)		//Prevents rounding errors
 				to_chat(C, "<span class='notice'>[X] now has [X.monkeys] monkey(s) stored.</span>")

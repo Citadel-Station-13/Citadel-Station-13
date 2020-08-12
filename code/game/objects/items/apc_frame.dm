@@ -1,6 +1,6 @@
 /obj/item/wallframe
 	icon = 'icons/obj/wallframe.dmi'
-	materials = list(MAT_METAL=MINERAL_MATERIAL_AMOUNT*2)
+	custom_materials = list(/datum/material/iron=MINERAL_MATERIAL_AMOUNT*2)
 	flags_1 = CONDUCT_1
 	item_state = "syringe_kit"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
@@ -58,18 +58,22 @@
 /obj/item/wallframe/proc/after_attach(var/obj/O)
 	transfer_fingerprints_to(O)
 
-/obj/item/wallframe/attackby(obj/item/W, mob/user, params)
-	..()
-	if(istype(W, /obj/item/screwdriver))
-		// For camera-building borgs
-		var/turf/T = get_step(get_turf(user), user.dir)
-		if(iswallturf(T))
-			T.attackby(src, user, params)
+/obj/item/wallframe/screwdriver_act(mob/user, obj/item/I)
+	. = ..()
+	if(.)
+		return
+	// For camera-building borgs
+	var/turf/T = get_step(get_turf(user), user.dir)
+	if(iswallturf(T))
+		T.attackby(src, user)
 
-	var/metal_amt = round(materials[MAT_METAL]/MINERAL_MATERIAL_AMOUNT)
-	var/glass_amt = round(materials[MAT_GLASS]/MINERAL_MATERIAL_AMOUNT)
+/obj/item/wallframe/wrench_act(mob/user, obj/item/I)
+	if(!custom_materials)
+		return
+	var/metal_amt = round(custom_materials[SSmaterials.GetMaterialRef(/datum/material/iron)]/MINERAL_MATERIAL_AMOUNT)
+	var/glass_amt = round(custom_materials[SSmaterials.GetMaterialRef(/datum/material/glass)]/MINERAL_MATERIAL_AMOUNT)
 
-	if(istype(W, /obj/item/wrench) && (metal_amt || glass_amt))
+	if(metal_amt || glass_amt)
 		to_chat(user, "<span class='notice'>You dismantle [src].</span>")
 		if(metal_amt)
 			new /obj/item/stack/sheet/metal(get_turf(src), metal_amt)
@@ -119,5 +123,5 @@
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 	flags_1 = CONDUCT_1
 	w_class = WEIGHT_CLASS_SMALL
-	materials = list(MAT_METAL=50, MAT_GLASS=50)
+	custom_materials = list(/datum/material/iron=50, /datum/material/glass=50)
 	grind_results = list(/datum/reagent/iron = 10, /datum/reagent/silicon = 10)

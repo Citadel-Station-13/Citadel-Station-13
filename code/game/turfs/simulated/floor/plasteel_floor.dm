@@ -68,6 +68,9 @@
 /turf/open/floor/plasteel/chapel
 	icon_state = "chapel"
 
+/turf/open/floor/plasteel/chapel_floor
+	icon_state = "chapel_alt"
+
 /turf/open/floor/plasteel/showroomfloor
 	icon_state = "showroomfloor"
 

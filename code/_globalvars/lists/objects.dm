@@ -16,7 +16,6 @@ GLOBAL_LIST_EMPTY(singularities)				    //list of all singularities on the stati
 
 GLOBAL_LIST(chemical_reactions_list)				//list of all /datum/chemical_reaction datums. Used during chemical reactions
 GLOBAL_LIST(chemical_reagents_list)				//list of all /datum/reagent datums indexed by reagent id. Used by chemistry stuff
-GLOBAL_LIST_EMPTY(materials_list)				//list of all /datum/material datums indexed by material id.
 GLOBAL_LIST_EMPTY(tech_list)					//list of all /datum/tech datums indexed by id.
 GLOBAL_LIST_EMPTY(surgeries_list)				//list of all surgeries by name, associated with their path.
 GLOBAL_LIST_EMPTY(uplink_items)					//list of all uplink item typepaths, ascendingly sorted by their initial name.
@@ -33,6 +32,7 @@ GLOBAL_LIST_EMPTY(meteor_list)				// List of all meteors.
 GLOBAL_LIST_EMPTY(active_jammers)             // List of active radio jammers
 GLOBAL_LIST_EMPTY(ladders)
 GLOBAL_LIST_EMPTY(trophy_cases)
+GLOBAL_LIST_EMPTY(coin_values)
 
 GLOBAL_LIST_EMPTY(wire_color_directory)
 GLOBAL_LIST_EMPTY(wire_name_directory)

@@ -6,13 +6,13 @@
 
 /datum/surgery_step/ventricular_electrotherapy
 	name = "ventricular electrotherapy"
-	implements = list(/obj/item/twohanded/shockpaddles = 90, /obj/item/defibrillator = 75, /obj/item/inducer = 55, /obj/item/stock_parts/cell = 25) //Just because the idea of a new player using the whole magine to defib is hillarious to me
+	implements = list(/obj/item/shockpaddles = 90, /obj/item/defibrillator = 75, /obj/item/inducer = 55, /obj/item/stock_parts/cell = 25) //Just because the idea of a new player using the whole magine to defib is hillarious to me
 	time = 50
 	repeatable = TRUE //So you can retry
 
 /datum/surgery_step/ventricular_electrotherapy/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
-	if(istype(tool, /obj/item/twohanded/shockpaddles))
-		var/obj/item/twohanded/shockpaddles/pads = tool
+	if(istype(tool, /obj/item/shockpaddles))
+		var/obj/item/shockpaddles/pads = tool
 		if(!pads.wielded)
 			to_chat(user, "<span class='warning'>You need to wield the paddles in both hands before you can use them!</span>")
 			return FALSE
@@ -23,8 +23,8 @@
 	playsound(src, 'sound/machines/defib_charge.ogg', 75, 0)
 
 /datum/surgery_step/ventricular_electrotherapy/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
-	if(istype(tool, /obj/item/twohanded/shockpaddles))
-		var/obj/item/twohanded/shockpaddles/pads = tool
+	if(istype(tool, /obj/item/shockpaddles))
+		var/obj/item/shockpaddles/pads = tool
 		if(!pads.wielded)
 			return FALSE
 	var/mob/living/carbon/human/H = target
@@ -35,7 +35,7 @@
 			"<span class='warning'>[user] screws up, causing [H] to flop around violently as they're zapped!</span>",
 			"<span class='warning'>[user] screws up, causing [H] to flop around violently as they're zapped!</span>")
 		H.emote("scream")
-		H.electrocute_act(25, (tool), 1, FALSE, FALSE, FALSE, TRUE)
+		H.electrocute_act(25, (tool), 1, SHOCK_ILLUSION)
 		H.adjustFireLoss(10)
 		H.emote("flip")
 		H.Jitter(100)
@@ -50,9 +50,9 @@
 	var/obj/item/organ/brain/BR = H.getorgan(/obj/item/organ/brain)
 	if(BR.organ_flags & ORGAN_FAILING)
 		H.adjustOrganLoss(ORGAN_SLOT_BRAIN, -5)
-	H.electrocute_act(0, (tool), 1, FALSE, FALSE, FALSE, TRUE)
+	H.electrocute_act(0, (tool), 1, SHOCK_ILLUSION)
 	//If we're using a defib, let the defib handle the revive.
-	if(istype(tool, /obj/item/twohanded/shockpaddles))
+	if(istype(tool, /obj/item/shockpaddles))
 		return
 	//Otherwise, we're ad hocing it
 	if(!(do_after(user, 50, target = target)))
@@ -70,7 +70,7 @@
 	display_results(user, target, "<span class='warning'>You screw up, sending a current through their body!</span>",
 		"<span class='warning'>[user] screws up, causing [H] to flop around violently as they're zapped!</span>",
 		"<span class='warning'>[user] screws up, causing [H] to flop around violently as they're zapped!</span>")
-	H.electrocute_act(25, (tool), 1, FALSE, FALSE, FALSE, TRUE)
+	H.electrocute_act(25, (tool), 1, SHOCK_ILLUSION)
 	H.adjustFireLoss(10)
 	H.emote("flip")
 	H.adjustOrganLoss(ORGAN_SLOT_HEART, 10)

@@ -33,19 +33,24 @@
 				return 1
 	return !density
 
-/obj/structure/closet/crate/update_icon()
+/obj/structure/closet/crate/update_icon_state()
 	icon_state = "[initial(icon_state)][opened ? "open" : ""]"
 
-	cut_overlays()
+/obj/structure/closet/crate/closet_update_overlays(list/new_overlays)
+	. = new_overlays
 	if(manifest)
-		add_overlay("manifest")
+		. += "manifest"
 
-/obj/structure/closet/crate/attack_hand(mob/user)
+/obj/structure/closet/crate/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	. = ..()
-	if(.)
-		return
 	if(manifest)
 		tear_manifest(user)
+
+/obj/structure/closet/crate/tool_interact(obj/item/W, mob/user)
+	if(W.tool_behaviour == TOOL_WIRECUTTER && manifest)
+		tear_manifest(user)
+		return TRUE
+	return ..()
 
 /obj/structure/closet/crate/open(mob/living/user)
 	. = ..()
@@ -77,9 +82,12 @@
 	desc = "It's a burial receptacle for the dearly departed."
 	icon_state = "coffin"
 	resistance_flags = FLAMMABLE
+	can_weld_shut = FALSE
+	breakout_time = 200
 	max_integrity = 70
 	material_drop = /obj/item/stack/sheet/mineral/wood
 	material_drop_amount = 5
+	var/pryLidTimer = 250
 
 /obj/structure/closet/crate/coffin/examine(mob/user)
 	. = ..()
@@ -134,6 +142,9 @@
 	desc = "A freezer containing packs of blood."
 	icon_state = "surgery"
 
+/obj/structure/closet/crate/freezer/blood/fake
+	should_populate_contents = FALSE
+
 /obj/structure/closet/crate/freezer/blood/PopulateContents()
 	. = ..()
 	new /obj/item/reagent_containers/blood(src)
@@ -154,6 +165,9 @@
 	name = "surplus prosthetic limbs"
 	desc = "A crate containing an assortment of cheap prosthetic limbs."
 
+/obj/structure/closet/crate/freezer/surplus_limbs/fake
+	should_populate_contents = FALSE
+
 /obj/structure/closet/crate/freezer/surplus_limbs/PopulateContents()
 	. = ..()
 	new /obj/item/bodypart/l_arm/robot/surplus(src)
@@ -169,6 +183,7 @@
 	desc = "A crate with a radiation sign on it."
 	name = "radiation crate"
 	icon_state = "radiation"
+	rad_flags = RAD_PROTECT_CONTENTS | RAD_NO_CONTAMINATE
 
 /obj/structure/closet/crate/hydroponics
 	name = "hydroponics crate"
@@ -186,6 +201,9 @@
 	desc = "A crate for the storage of an RCD."
 	name = "\improper RCD crate"
 	icon_state = "engi_crate"
+
+/obj/structure/closet/crate/rcd/fake
+	should_populate_contents = FALSE
 
 /obj/structure/closet/crate/rcd/PopulateContents()
 	..()

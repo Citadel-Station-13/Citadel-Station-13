@@ -30,7 +30,7 @@
 		H.confused += 3
 	for(var/mob/living/silicon/S in range(2,user))
 		to_chat(S, "<span class='userdanger'>Your sensors are disabled by a shower of blood!</span>")
-		S.Knockdown(60)
+		S.DefaultCombatKnockdown(60)
 	var/turf = get_turf(user)
 	user.gib()
 	. = TRUE

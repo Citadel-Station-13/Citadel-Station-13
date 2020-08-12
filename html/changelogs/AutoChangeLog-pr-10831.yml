@@ -1,4 +1,0 @@
-author: "Ghommie"
-delete-after: True
-changes: 
-  - bugfix: "Fixed an edge case with the chaplain armaments beacon spawning the box in nullspace."

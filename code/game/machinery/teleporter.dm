@@ -70,7 +70,7 @@
 		com.target = null
 		visible_message("<span class='alert'>Cannot authenticate locked on coordinates. Please reinstate coordinate matrix.</span>")
 		return
-	if (ismovableatom(M))
+	if (ismovable(M))
 		if(do_teleport(M, com.target, channel = TELEPORT_CHANNEL_BLUESPACE))
 			use_power(5000)
 
@@ -85,7 +85,7 @@
 			calibrated = FALSE
 	return
 
-/obj/machinery/teleport/hub/update_icon()
+/obj/machinery/teleport/hub/update_icon_state()
 	if(panel_open)
 		icon_state = "tele-o"
 	else if(is_ready())
@@ -218,7 +218,7 @@
 	if(teleporter_hub)
 		teleporter_hub.update_icon()
 
-/obj/machinery/teleport/station/update_icon()
+/obj/machinery/teleport/station/update_icon_state()
 	if(panel_open)
 		icon_state = "controller-o"
 	else if(stat & (BROKEN|NOPOWER))

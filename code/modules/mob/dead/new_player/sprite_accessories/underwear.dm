@@ -2,9 +2,13 @@
 // Underwear Definitions //
 ///////////////////////////
 
+/datum/sprite_accessory/underwear/bottom
+	covers_groin = TRUE
+
 /datum/sprite_accessory/underwear/bottom/nude
 	name = "Nude"
 	icon_state = null
+	covers_groin = FALSE
 
 /datum/sprite_accessory/underwear/bottom/mankini
 	name = "Mankini"
@@ -155,16 +159,19 @@
 	name = "Swimsuit, One Piece - Red"
 	icon_state = "swimming_red"
 	gender = FEMALE
+	covers_chest = TRUE
 
 /datum/sprite_accessory/underwear/bottom/swimsuit
 	name = "Swimsuit, One Piece - Black"
 	icon_state = "swimming_black"
 	gender = FEMALE
+	covers_chest = TRUE
 
 /datum/sprite_accessory/underwear/bottom/swimsuit_blue
 	name = "Swimsuit, One Piece - Striped Blue"
 	icon_state = "swimming_blue"
 	gender = FEMALE
+	covers_chest = TRUE
 
 /datum/sprite_accessory/underwear/bottom/thong
 	name = "Thong"

@@ -94,7 +94,7 @@
 	else
 		direction_mode = SYRINGE_INJECT
 	if(isnum(new_amount))
-		new_amount = CLAMP(new_amount, 0, volume)
+		new_amount = clamp(new_amount, 0, volume)
 		transfer_amount = new_amount
 
 
@@ -222,7 +222,7 @@
 	else
 		direction_mode = SYRINGE_INJECT
 	if(isnum(new_amount))
-		new_amount = CLAMP(new_amount, 0, 50)
+		new_amount = clamp(new_amount, 0, 50)
 		transfer_amount = new_amount
 
 /obj/item/integrated_circuit/reagent/pump/do_work()
@@ -468,7 +468,7 @@
 	else
 		direction_mode = SYRINGE_INJECT
 	if(isnum(new_amount))
-		new_amount = CLAMP(new_amount, 0, 50)
+		new_amount = clamp(new_amount, 0, 50)
 		transfer_amount = new_amount
 
 /obj/item/integrated_circuit/reagent/filter/do_work()
@@ -514,6 +514,8 @@
 	outputs = list("volume used" = IC_PINTYPE_NUMBER,"self reference" = IC_PINTYPE_SELFREF,"temperature" = IC_PINTYPE_NUMBER)
 	spawn_flags = IC_SPAWN_RESEARCH
 	var/heater_coefficient = 0.1
+	var/max_temp = 1000
+	var/min_temp = 2.7
 
 /obj/item/integrated_circuit/reagent/storage/heater/on_data_written()
 	if(get_pin_data(IC_INPUT, 2))
@@ -531,7 +533,7 @@
 
 /obj/item/integrated_circuit/reagent/storage/heater/process()
 	if(power_draw_idle)
-		var/target_temperature = get_pin_data(IC_INPUT, 1)
+		var/target_temperature = clamp(get_pin_data(IC_INPUT, 1), min_temp, max_temp)
 		if(reagents.chem_temp > target_temperature)
 			reagents.chem_temp += min(-1, (target_temperature - reagents.chem_temp) * heater_coefficient)
 		if(reagents.chem_temp < target_temperature)

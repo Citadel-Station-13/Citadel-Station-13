@@ -1,6 +1,6 @@
 
 /datum/element/wuv //D'awwwww
-	element_flags = ELEMENT_BESPOKE
+	element_flags = ELEMENT_BESPOKE|ELEMENT_DETACH
 	id_arg_index = 2
 	//the for the me emote proc call when petted.
 	var/pet_emote
@@ -30,6 +30,10 @@
 
 	RegisterSignal(target, COMSIG_MOB_ATTACK_HAND, .proc/on_attack_hand)
 
+/datum/element/wuv/Detach(datum/source, force)
+	. = ..()
+	UnregisterSignal(source, COMSIG_MOB_ATTACK_HAND)
+
 /datum/element/wuv/proc/on_attack_hand(datum/source, mob/user)
 	var/mob/living/L = source
 
@@ -37,7 +41,7 @@
 		return
 	//we want to delay the effect to be displayed after the mob is petted, not before.
 	switch(user.a_intent)
-		if(INTENT_HARM, INTENT_DISARM)
+		if(INTENT_HARM)
 			addtimer(CALLBACK(src, .proc/kick_the_dog, source, user), 1)
 		if(INTENT_HELP)
 			addtimer(CALLBACK(src, .proc/pet_the_dog, source, user), 1)

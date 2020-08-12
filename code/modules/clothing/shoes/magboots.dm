@@ -30,8 +30,10 @@
 	magpulse = !magpulse
 	icon_state = "[magboot_state][magpulse]"
 	to_chat(user, "<span class='notice'>You [magpulse ? "enable" : "disable"] the mag-pulse traction system.</span>")
-	user.update_inv_shoes()	//so our mob-overlays update
-	user.update_gravity(user.has_gravity())
+	if(user)
+		user.update_equipment_speed_mods()
+		user.update_inv_shoes()	//so our mob-overlays update
+		user.update_gravity(user.has_gravity())
 	for(var/X in actions)
 		var/datum/action/A = X
 		A.UpdateButtonIcon()
@@ -51,6 +53,20 @@
 	magboot_state = "advmag"
 	slowdown_active = SHOES_SLOWDOWN
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
+
+/obj/item/clothing/shoes/magboots/advance/debug
+
+/obj/item/clothing/shoes/magboots/advance/debug/Initialize()
+	. = ..()
+	var/mob/living/L = loc
+	if(istype(L))
+		attack_self(L)
+
+/obj/item/clothing/shoes/magboots/paramedic
+	desc = "A pair of magboots decked in colors matching the equipment of an emergency medical technician."
+	name = "paramedic magboots"
+	icon_state = "para_magboots0"
+	magboot_state = "para_magboots"
 
 /obj/item/clothing/shoes/magboots/syndie
 	desc = "Reverse-engineered magnetic boots that have a heavy magnetic pull. Property of Gorlex Marauders."

@@ -3,7 +3,7 @@
 	melee_damage_lower = 20
 	melee_damage_upper = 20
 	obj_damage = 80
-	next_move_modifier = 0.5 //attacks 50% faster
+	action_cooldown_mod = 0.5 //attacks 50% faster
 	environment_smash = ENVIRONMENT_SMASH_WALLS
 	playstyle_string = "<span class='holoparasite'>As a <b>standard</b> type you have no special abilities, but take half damage and have powerful attack capable of smashing through walls.</span>"
 	magic_fluff_string = "<span class='holoparasite'>..And draw the Assistant, faceless and generic, but never to be underestimated.</span>"

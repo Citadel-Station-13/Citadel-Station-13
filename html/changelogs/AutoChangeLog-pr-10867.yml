@@ -1,5 +1,0 @@
-author: "Ghommie"
-delete-after: True
-changes: 
-  - bugfix: "Fixed the tearstache nade not properly working."
-  - balance: "Buffed it against space helmet internals."

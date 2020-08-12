@@ -14,6 +14,7 @@
 	var/list/modes			// allowed modes
 	var/list/gamemode_cache
 	var/list/votable_modes		// votable modes
+	// var/list/ic_filter_regex
 	var/list/storyteller_cache
 	var/list/mode_names
 	var/list/mode_reports
@@ -104,7 +105,9 @@
 	var/list/lines = world.file2list("[directory]/[filename]")
 	var/list/_entries = entries
 	var/list/postload_required = list()
+	var/linenumber = 0
 	for(var/L in lines)
+		linenumber++
 		L = trim(L)
 		if(!L)
 			continue
@@ -132,7 +135,7 @@
 
 		if(entry == "$include")
 			if(!value)
-				log_config("Warning: Invalid $include directive: [value]")
+				log_config("LINE [linenumber]: Invalid $include directive: [value]")
 			else
 				LoadEntries(value, stack)
 				++.
@@ -140,7 +143,7 @@
 
 		var/datum/config_entry/E = _entries[entry]
 		if(!E)
-			log_config("Unknown setting in configuration: '[entry]'")
+			log_config("LINE [linenumber]: Unknown setting: '[entry]'")
 			continue
 
 		if(lockthis)
@@ -150,7 +153,7 @@
 			var/datum/config_entry/new_ver = entries_by_type[E.deprecated_by]
 			var/new_value = E.DeprecationUpdate(value)
 			var/good_update = istext(new_value)
-			log_config("Entry [entry] is deprecated and will be removed soon. Migrate to [new_ver.name]![good_update ? " Suggested new value is: [new_value]" : ""]")
+			log_config("LINE [linenumber]: [entry] is deprecated and will be removed soon. Migrate to [new_ver.name]![good_update ? " Suggested new value is: [new_value]" : ""]")
 			if(!warned_deprecated_configs)
 				addtimer(CALLBACK(GLOBAL_PROC, /proc/message_admins, "This server is using deprecated configuration settings. Please check the logs and update accordingly."), 0)
 				warned_deprecated_configs = TRUE
@@ -162,10 +165,10 @@
 
 		var/validated = E.ValidateAndSet(value, TRUE)
 		if(!validated)
-			log_config("Failed to validate setting \"[value]\" for [entry]")
+			log_config("LINE [linenumber]: Failed to validate setting \"[value]\" for [entry]")
 		else
 			if(E.modified && !E.dupes_allowed)
-				log_config("Duplicate setting for [entry] ([value], [E.resident_file]) detected! Using latest.")
+				log_config("LINE [linenumber]: Duplicate setting for [entry] ([value], [E.resident_file]) detected! Using latest.")
 		if(E.postload_required)
 			postload_required[E] = TRUE
 
@@ -364,6 +367,32 @@
 			runnable_modes[M] = final_weight
 	return runnable_modes
 
+/datum/controller/configuration/proc/get_runnable_storytellers()
+	var/list/datum/dynamic_storyteller/runnable_storytellers = new
+	var/list/probabilities = Get(/datum/config_entry/keyed_list/storyteller_weight)
+	var/list/repeated_mode_adjust = Get(/datum/config_entry/number_list/repeated_mode_adjust)
+	var/list/min_player_counts = Get(/datum/config_entry/keyed_list/storyteller_min_players)
+	for(var/T in storyteller_cache)
+		var/datum/dynamic_storyteller/S = T
+		var/config_tag = initial(S.config_tag)
+		var/probability = (config_tag in probabilities) ? probabilities[config_tag] : initial(S.weight)
+		var/min_players = (config_tag in min_player_counts) ? min_player_counts[config_tag] : initial(S.min_players)
+		if(probability <= 0)
+			continue
+		if(length(GLOB.player_list) < min_players)
+			continue
+		if(SSpersistence.saved_storytellers.len == repeated_mode_adjust.len)
+			var/name = initial(S.name)
+			var/recent_round = min(SSpersistence.saved_storytellers.Find(name),3)
+			var/adjustment = 0
+			while(recent_round)
+				adjustment += repeated_mode_adjust[recent_round]
+				recent_round = SSpersistence.saved_modes.Find(name,recent_round+1,0)
+			probability *= ((100-adjustment)/100)
+		runnable_storytellers[S] = probability
+	return runnable_storytellers
+
+
 /datum/controller/configuration/proc/get_runnable_midround_modes(crew)
 	var/list/datum/game_mode/runnable_modes = new
 	var/list/probabilities = Get(/datum/config_entry/keyed_list/probability)
@@ -386,3 +415,21 @@
 				continue
 			runnable_modes[M] = probabilities[M.config_tag]
 	return runnable_modes
+/*
+/datum/controller/configuration/proc/LoadChatFilter()
+	var/list/in_character_filter = list()
+
+	if(!fexists("[directory]/in_character_filter.txt"))
+		return
+	log_config("Loading config file in_character_filter.txt...")
+	for(var/line in world.file2list("[directory]/in_character_filter.txt"))
+		if(!line)
+			continue
+		if(findtextEx(line,"#",1,2))
+			continue
+		in_character_filter += REGEX_QUOTE(line)
+
+	ic_filter_regex = in_character_filter.len ? regex("\\b([jointext(in_character_filter, "|")])\\b", "i") : null
+
+	syncChatRegexes()
+*/

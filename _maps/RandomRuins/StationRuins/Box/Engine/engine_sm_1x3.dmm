@@ -1,4 +1,11 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"aa" = (
+/obj/machinery/door/poddoor/shutters/radiation/preopen{
+	id = "engsm";
+	name = "Radiation Chamber Shutters"
+	},
+/turf/open/floor/engine,
+/area/engine/supermatter)
 "ab" = (
 /obj/effect/spawner/structure/window/plasma/reinforced,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -1805,13 +1812,6 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel/dark,
 /area/engine/engineering)
-"Vz" = (
-/obj/machinery/door/poddoor/shutters/preopen{
-	id = "engsm";
-	name = "Radiation Chamber Shutters"
-	},
-/turf/open/floor/engine,
-/area/engine/supermatter)
 "VP" = (
 /obj/machinery/meter,
 /obj/machinery/atmospherics/pipe/simple/green/visible{
@@ -2320,7 +2320,7 @@ Vg
 KX
 px
 nW
-Vz
+aa
 cN
 xB
 WI
@@ -2348,7 +2348,7 @@ lQ
 KX
 RA
 tE
-Vz
+aa
 cN
 Xy
 Ml
@@ -2376,7 +2376,7 @@ uz
 RA
 ti
 YY
-Vz
+aa
 cN
 JK
 WT
@@ -2488,7 +2488,7 @@ RA
 Wf
 mW
 bq
-Vz
+aa
 cN
 JK
 WT
@@ -2516,7 +2516,7 @@ wz
 fj
 RA
 cY
-Vz
+aa
 cN
 vO
 Np
@@ -2544,7 +2544,7 @@ Ey
 fj
 Cn
 df
-Vz
+aa
 cN
 JK
 lw

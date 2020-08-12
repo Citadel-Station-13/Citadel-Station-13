@@ -17,6 +17,11 @@ GLOBAL_VAR_INIT(message_delay, 0) // To make sure restarting the recentmessages 
 	idle_power_usage = 25
 	circuit = /obj/item/circuitboard/machine/telecomms/broadcaster
 
+/obj/machinery/telecomms/broadcaster/RefreshParts()
+	idle_power_usage = 25
+	for(var/obj/item/stock_parts/manipulator/P in component_parts)
+		idle_power_usage -= (P.rating * 1.5) //Has 2 manipulators
+
 /obj/machinery/telecomms/broadcaster/receive_information(datum/signal/subspace/signal, obj/machinery/telecomms/machine_from)
 	// Don't broadcast rejected signals
 	if(!istype(signal))
@@ -40,9 +45,6 @@ GLOBAL_VAR_INIT(message_delay, 0) // To make sure restarting the recentmessages 
 	if(signal_message in GLOB.recentmessages)
 		return
 	GLOB.recentmessages.Add(signal_message)
-
-	if(signal.data["slow"] > 0)
-		sleep(signal.data["slow"]) // simulate the network lag if necessary
 
 	signal.broadcast()
 

@@ -138,7 +138,8 @@
 	limb = new buildpath(loc)
 	if(selected_category=="human" || selected_category=="lizard") //Species with greyscale parts should be included here
 		limb.icon = 'icons/mob/human_parts_greyscale.dmi'
-		limb.should_draw_greyscale = TRUE
+		limb.base_bp_icon = DEFAULT_BODYPART_ICON_ORGANIC
+		limb.color_src = MUTCOLORS
 	else
 		limb.icon = 'icons/mob/human_parts.dmi'
 	// Set this limb up using the specias name and body zone

@@ -1,9 +1,6 @@
 //THIS FILE CONTAINS CONSTANTS, PROCS, AND OTHER THINGS//
 /////////////////////////////////////////////////////////
 
-/mob/proc/setClickCooldown(var/timeout)
-	next_move = max(world.time + timeout, next_move)
-
 /proc/get_matrix_largest()
 	var/matrix/mtrx=new()
 	return mtrx.Scale(2)
@@ -57,19 +54,14 @@ GLOBAL_LIST_EMPTY(ipc_antennas_list)
 
 	//Genitals and Arousal Lists
 GLOBAL_LIST_EMPTY(genitals_list)
-GLOBAL_LIST_EMPTY(cock_shapes_list)//global_lists.dm for the list initializations //Now also _DATASTRUCTURES globals.dm
-GLOBAL_LIST_EMPTY(cock_shapes_icons) //Associated list for names->icon_states for cockshapes.
-GLOBAL_LIST_EMPTY(gentlemans_organ_names)
+GLOBAL_LIST_EMPTY(cock_shapes_list)
 GLOBAL_LIST_EMPTY(balls_shapes_list)
-GLOBAL_LIST_EMPTY(balls_shapes_icons)
-GLOBAL_LIST_EMPTY(breasts_size_list)
 GLOBAL_LIST_EMPTY(breasts_shapes_list)
-GLOBAL_LIST_EMPTY(breasts_shapes_icons)
 GLOBAL_LIST_EMPTY(vagina_shapes_list)
-GLOBAL_LIST_INIT(cum_into_containers_list, list(/obj/item/reagent_containers/food/snacks/pie)) //Yer fuggin snowflake name list jfc
-GLOBAL_LIST_INIT(dick_nouns, list("dick","cock","member","shaft"))
-GLOBAL_LIST_INIT(cum_id_list,"semen")
-GLOBAL_LIST_INIT(milk_id_list,"milk")
+//longcat memes.
+GLOBAL_LIST_INIT(dick_nouns, list("phallus", "willy", "dick", "prick", "member", "tool", "gentleman's organ", "cock", "wang", "knob", "dong", "joystick", "pecker", "johnson", "weenie", "tadger", "schlong", "thirsty ferret", "One eyed trouser trout", "Ding dong", "ankle spanker", "Pork sword", "engine cranker", "Harry hot dog", "Davy Crockett", "Kidney cracker", "Heat seeking moisture missile", "Giggle stick", "love whistle", "Tube steak", "Uncle Dick", "Purple helmet warrior"))
+
+GLOBAL_LIST_INIT(genitals_visibility_toggles, list(GEN_VISIBLE_ALWAYS, GEN_VISIBLE_NO_CLOTHES, GEN_VISIBLE_NO_UNDIES, GEN_VISIBLE_NEVER))
 
 GLOBAL_LIST_INIT(dildo_shapes, list(
 		"Human"		= "human",
@@ -110,38 +102,6 @@ GLOBAL_VAR_INIT(miscreants_allowed, FALSE)
 		if(!src.holder)	return
 		message_admins("[key_name_admin(usr)] manually reloaded mentors")
 
-//Flavor Text
-/mob/living/carbon/human/verb/set_flavor()
-	set name = "Set Flavor Text"
-	set desc = "Sets an extended description of your character's features."
-	set category = "IC"
-
-	var/new_flavor = input(src, "Enter your new flavor text:", "Flavor text", null) as message|null
-	if(!isnull(new_flavor))
-		flavor_text = sanitize(new_flavor)
-		to_chat(src, "Your flavor text has been updated.")
-
-//Flavor Text
-/mob/living/carbon/human/verb/set_flavor_2()
-	set name = "Set Temporary Flavor Text"
-	set desc = "Sets a description of your character's current appearance. Use this for emotions, poses etc."
-	set category = "IC"
-
-	var/new_flavor = input(src, "Enter your new temporary flavor text:", "Temporary flavor text", null) as message|null
-	if(!isnull(new_flavor))
-		flavor_text_2 = sanitize(new_flavor)
-		to_chat(src, "Your temporary flavor text has been updated.")
-
-//LOOC toggles
-/client/verb/listen_looc()
-	set name = "Show/Hide LOOC"
-	set category = "Preferences"
-	set desc = "Toggles seeing LocalOutOfCharacter chat"
-	prefs.chat_toggles ^= CHAT_LOOC
-	prefs.save_preferences()
-	src << "You will [(prefs.chat_toggles & CHAT_LOOC) ? "now" : "no longer"] see messages on the LOOC channel."
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "TLOOC") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-
 /mob/living/carbon/proc/has_penis()
 	var/obj/item/organ/genital/G = getorganslot(ORGAN_SLOT_PENIS)
 	if(G && istype(G, /obj/item/organ/genital/penis))
@@ -161,18 +121,6 @@ GLOBAL_VAR_INIT(miscreants_allowed, FALSE)
 
 /mob/living/carbon/proc/has_breasts()
 	if(getorganslot(ORGAN_SLOT_BREASTS))
-		return TRUE
-	return FALSE
-
-/mob/living/carbon/proc/has_ovipositor()
-	var/obj/item/organ/genital/G = getorganslot(ORGAN_SLOT_PENIS)
-	if(G && istype(G, /obj/item/organ/genital/ovipositor))
-		return TRUE
-	return FALSE
-
-/mob/living/carbon/human/proc/has_eggsack()
-	var/obj/item/organ/genital/G = getorganslot(ORGAN_SLOT_TESTICLES)
-	if(G && istype(G, /obj/item/organ/genital/eggsack))
 		return TRUE
 	return FALSE
 

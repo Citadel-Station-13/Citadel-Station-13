@@ -65,7 +65,7 @@
 	var/gift_type = /obj/item/a_gift/anything
 	var/list/ckeys_that_took = list()
 
-/obj/structure/flora/tree/pine/xmas/presents/attack_hand(mob/living/user)
+/obj/structure/flora/tree/pine/xmas/presents/on_attack_hand(mob/living/user, act_intent = user.a_intent, unarmed_attack_flags)
 	. = ..()
 	if(.)
 		return
@@ -288,7 +288,7 @@
 	icon_state = "fullgrass_[rand(1, 3)]"
 	. = ..()
 
-/obj/item/twohanded/required/kirbyplants
+/obj/item/kirbyplants
 	name = "potted plant"
 	icon = 'icons/obj/flora/plants.dmi'
 	icon_state = "plant-01"
@@ -300,23 +300,25 @@
 	throw_speed = 2
 	throw_range = 4
 
-/obj/item/twohanded/required/kirbyplants/Initialize()
+/obj/item/kirbyplants/ComponentInitialize()
 	. = ..()
-	AddComponent(/datum/component/tactical)
+	AddElement(/datum/element/tactical)
+	addtimer(CALLBACK(src, /datum.proc/_AddElement, list(/datum/element/beauty, 500)), 0)
+	AddComponent(/datum/component/two_handed, require_twohands=TRUE, force_unwielded=10, force_wielded=10)
 
-/obj/item/twohanded/required/kirbyplants/random
+/obj/item/kirbyplants/random
 	icon = 'icons/obj/flora/_flora.dmi'
 	icon_state = "random_plant"
 	var/list/static/states
 
-/obj/item/twohanded/required/kirbyplants/random/Initialize()
+/obj/item/kirbyplants/random/Initialize()
 	. = ..()
 	icon = 'icons/obj/flora/plants.dmi'
 	if(!states)
 		generate_states()
 	icon_state = pick(states)
 
-/obj/item/twohanded/required/kirbyplants/random/proc/generate_states()
+/obj/item/kirbyplants/random/proc/generate_states()
 	states = list()
 	for(var/i in 1 to 25)
 		var/number
@@ -328,12 +330,12 @@
 	states += "applebush"
 
 
-/obj/item/twohanded/required/kirbyplants/dead
+/obj/item/kirbyplants/dead
 	name = "RD's potted plant"
 	desc = "A gift from the botanical staff, presented after the RD's reassignment. There's a tag on it that says \"Y'all come back now, y'hear?\"\nIt doesn't look very healthy..."
 	icon_state = "plant-25"
 
-/obj/item/twohanded/required/kirbyplants/photosynthetic
+/obj/item/kirbyplants/photosynthetic
 	name = "photosynthetic potted plant"
 	desc = "A bioluminescent plant."
 	icon_state = "plant-09"
@@ -350,10 +352,27 @@
 	icon = 'icons/obj/flora/rocks.dmi'
 	resistance_flags = FIRE_PROOF
 	density = TRUE
+	/// Itemstack that is dropped when a rock is mined with a pickaxe
+	var/obj/item/stack/mineResult = /obj/item/stack/ore/glass/basalt
+	/// Amount of the itemstack to drop
+	var/mineAmount = 20
 
 /obj/structure/flora/rock/Initialize()
 	. = ..()
 	icon_state = "[icon_state][rand(1,3)]"
+
+/obj/structure/flora/rock/attackby(obj/item/W, mob/user, params)
+	if(!mineResult || W.tool_behaviour != TOOL_MINING)
+		return ..()
+	if(flags_1 & NODECONSTRUCT_1)
+		return ..()
+	to_chat(user, "<span class='notice'>You start mining...</span>")
+	if(W.use_tool(src, user, 40, volume=50))
+		to_chat(user, "<span class='notice'>You finish mining the rock.</span>")
+		if(mineResult && mineAmount)
+			new mineResult(get_turf(src), mineAmount)
+		SSblackbox.record_feedback("tally", "pick_used_mining", 1, W.type)
+		qdel(src)
 
 /obj/structure/flora/rock/pile
 	icon_state = "lavarocks"

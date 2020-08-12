@@ -79,8 +79,7 @@
 				construction_state = PA_CONSTRUCTION_UNSECURED
 				did_something = TRUE
 			else if(istype(W, /obj/item/stack/cable_coil))
-				var/obj/item/stack/cable_coil/CC = W
-				if(CC.use(1))
+				if(W.use_tool(src, user, 0, 1))
 					user.visible_message("[user.name] adds wires to the [name].", \
 						"You add some wires.")
 					construction_state = PA_CONSTRUCTION_PANEL_OPEN
@@ -104,7 +103,6 @@
 				did_something = TRUE
 
 	if(did_something)
-		user.changeNext_move(CLICK_CD_MELEE)
 		update_state()
 		update_icon()
 		return
@@ -124,7 +122,7 @@
 		investigate_log("was moved whilst active; it <font color='red'>powered down</font>.", INVESTIGATE_SINGULO)
 
 
-/obj/structure/particle_accelerator/update_icon()
+/obj/structure/particle_accelerator/update_icon_state()
 	switch(construction_state)
 		if(PA_CONSTRUCTION_UNSECURED,PA_CONSTRUCTION_UNWIRED)
 			icon_state="[reference]"
