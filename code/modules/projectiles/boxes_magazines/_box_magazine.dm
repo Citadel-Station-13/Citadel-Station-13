@@ -76,11 +76,12 @@
 	return 1
 
 /obj/item/ammo_box/attackby(obj/item/A, mob/user, params, silent = FALSE, replace_spent = 0)
+	if(INTERACTING_WITH(user, A))
+		return FALSE
 	var/num_loaded = 0
 	if(!can_load(user))
 		return
 	if(istype(A, /obj/item/ammo_box))
-
 		var/obj/item/ammo_box/AM = A
 		for(var/obj/item/ammo_casing/AC in AM.stored_ammo)
 			if(load_delay && do_after(user, load_delay, target = src))
