@@ -171,7 +171,7 @@
 	else if(!silent)
 		to_chat(src, "<span class='warning'>You cannot do this without an appropriate container.</span>")
 
-/mob/living/carbon/human/proc/available_rosie_palms(silent = FALSE, list/whitelist_typepaths = list(/obj/item/dildo))
+/mob/living/carbon/human/proc/available_rosie_palms(silent = FALSE, list/whitelist_typepaths)
 	if(restrained(TRUE)) //TRUE ignores grabs
 		if(!silent)
 			to_chat(src, "<span class='warning'>You can't do that while restrained!</span>")

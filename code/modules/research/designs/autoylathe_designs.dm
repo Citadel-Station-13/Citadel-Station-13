@@ -462,13 +462,6 @@
 	build_path = /obj/item/toy/figure/wizard
 	category = list("hacked", "Figurines")
 
-/datum/design/autoylathe/dildo
-	name = "Customizable Dildo"
-	id = "dildo"
-	materials = list(/datum/material/plastic = 2000)
-	build_path = /obj/item/dildo/custom
-	category = list("initial", "Adult")
-
 /datum/design/autoylathe/collar
 	name = "Collar"
 	id = "collar"

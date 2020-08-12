@@ -63,30 +63,6 @@ GLOBAL_LIST_INIT(dick_nouns, list("phallus", "willy", "dick", "prick", "member",
 
 GLOBAL_LIST_INIT(genitals_visibility_toggles, list(GEN_VISIBLE_ALWAYS, GEN_VISIBLE_NO_CLOTHES, GEN_VISIBLE_NO_UNDIES, GEN_VISIBLE_NEVER))
 
-GLOBAL_LIST_INIT(dildo_shapes, list(
-		"Human"		= "human",
-		"Knotted"	= "knotted",
-		"Plain"		= "plain",
-		"Flared"	= "flared"
-		))
-GLOBAL_LIST_INIT(dildo_sizes, list(
-		"Small"		= 1,
-		"Medium"	= 2,
-		"Big"		= 3
-		))
-GLOBAL_LIST_INIT(dildo_colors, list(//mostly neon colors
-		"Cyan"		= "#00f9ff",//cyan
-		"Green"		= "#49ff00",//green
-		"Pink"		= "#ff4adc",//pink
-		"Yellow"	= "#fdff00",//yellow
-		"Blue"		= "#00d2ff",//blue
-		"Lime"		= "#89ff00",//lime
-		"Black"		= "#101010",//black
-		"Red"		= "#ff0000",//red
-		"Orange"	= "#ff9a00",//orange
-		"Purple"	= "#e300ff"//purple
-		))
-
 GLOBAL_LIST_INIT(meat_types, list(
 	"Mammalian" = /obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/mammal,
 	"Aquatic" = /obj/item/reagent_containers/food/snacks/carpmeat/aquatic,
