@@ -56,6 +56,8 @@
 /datum/config_entry/flag/log_adminchat	// log admin chat messages
 	protection = CONFIG_ENTRY_LOCKED
 
+/datum/config_entry/flag/log_shuttle // log shuttle related actions, ie shuttle computers, shuttle manipulator, emergency console
+
 /datum/config_entry/flag/log_pda	// log pda messages
 
 /datum/config_entry/flag/log_telecomms	// log telecomms messages
@@ -207,7 +209,7 @@
 /datum/config_entry/string/wikiurltg
 	config_entry_value = "http://www.tgstation13.org/wiki"
 
-/datum/config_entry/string/forumurl
+/datum/config_entry/string/discordurl
 	config_entry_value = "http://tgstation13.org/phpBB/index.php"
 
 /datum/config_entry/string/rulesurl
@@ -468,3 +470,5 @@
 
 /datum/config_entry/flag/minimaps_enabled
 	config_entry_value = TRUE
+
+/datum/config_entry/string/centcom_ban_db	// URL for the CentCom Galactic Ban DB API

@@ -13,9 +13,7 @@
 		hud_used.show_hud(hud_used.hud_version)
 		hud_used.update_ui_style(ui_style2icon(client.prefs.UI_style))
 
-	next_move = 1
-
-	..()
+	. = ..()
 
 	reset_perspective(loc)
 
@@ -51,6 +49,10 @@
 			for(var/foo in client.player_details.post_login_callbacks)
 				var/datum/callback/CB = foo
 				CB.Invoke()
+
+//SKYRAT CHANGES
+	mind?.appear_in_round_end_report = client?.prefs?.appear_in_round_end_report
+//END OF SKYRAT CHANGES	
 
 	log_message("Client [key_name(src)] has taken ownership of mob [src]([src.type])", LOG_OWNERSHIP)
 	SEND_SIGNAL(src, COMSIG_MOB_CLIENT_LOGIN, client)

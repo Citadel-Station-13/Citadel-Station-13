@@ -13,6 +13,7 @@
 	var/move_to_lair = TRUE
 	var/outfit_type = /datum/outfit/wizard
 	var/wiz_age = WIZARD_AGE_MIN /* Wizards by nature cannot be too young. */
+	show_to_ghosts = TRUE
 
 /datum/antagonist/wizard/on_gain()
 	register()

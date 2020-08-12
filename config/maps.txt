@@ -48,3 +48,6 @@ endmap
 
 map kilostation
 endmap
+
+map SmolStation
+endmap

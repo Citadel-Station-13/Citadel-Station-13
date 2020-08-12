@@ -140,7 +140,8 @@
 	var/stored_decal_total = "warningline"
 	var/color_list = list("","red","white")
 	var/dir_list = list(1,2,4,8)
-	var/decal_list = list(list("Warning Line","warningline"),
+	var/decal_list = list(
+			list("Warning Line","warningline"),
 			list("Warning Line Corner","warninglinecorner"),
 			list("Caution Label","caution"),
 			list("Directional Arrows","arrows"),
@@ -165,9 +166,23 @@
 		return
 	. = ..()
 
-/obj/item/airlock_painter/decal/AltClick(mob/user)
+/obj/item/airlock_painter/decal/AltClick(mob/user) //sandstorm change - everything that makes this work is on same path to this but on sandcode
 	. = ..()
-	ui_interact(user)
+	var/decal_category = list(
+		"Decal" = image(icon = 'icons/turf/decals.dmi', icon_state = "[stored_decal]", dir = stored_dir),
+		"Color" = image(icon = 'icons/obj/crayons.dmi', icon_state = "crayonred"),
+		"Dir" = image(icon = 'icons/obj/device.dmi', icon_state = "pinonfar", dir = stored_dir)
+	)
+	var/cat_chosen = show_radial_menu(user,src,decal_category, custom_check = CALLBACK(src,.proc/check_menu,user), require_near = TRUE, tooltips = TRUE)
+	if(!check_menu(user))
+		return
+	switch(cat_chosen)
+		if("Decal")
+			choose_decal(user)
+		if("Color")
+			choose_color(user)
+		if("Dir")
+			choose_dir(user)
 
 /obj/item/airlock_painter/decal/Initialize()
 	. = ..()
@@ -180,10 +195,10 @@
 	stored_decal_total = "[stored_decal][yellow_fix][stored_color]"
 	return
 
-/obj/item/airlock_painter/decal/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+/obj/item/airlock_painter/decal/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, ui_key, "decal_painter", name, 500, 400, master_ui, state)
+		ui = new(user, src, "DecalPainter", name)
 		ui.open()
 
 /obj/item/airlock_painter/decal/ui_data(mob/user)

@@ -166,7 +166,7 @@
 	if(stat == CONSCIOUS)
 		udder.generateMilk(milk_reagent)
 
-/mob/living/simple_animal/cow/attack_hand(mob/living/carbon/M)
+/mob/living/simple_animal/cow/on_attack_hand(mob/living/carbon/M)
 	if(!stat && M.a_intent == INTENT_DISARM && icon_state != icon_dead)
 		M.visible_message("<span class='warning'>[M] tips over [src].</span>",
 			"<span class='notice'>You tip over [src].</span>")
@@ -191,6 +191,15 @@
 					"<span class='revennotice'>[internal]</span>")
 	else
 		..()
+
+//a cow that produces a random reagent in its udder
+/mob/living/simple_animal/cow/random
+	name = "strange cow"
+	desc = "Something seems off about the milk this cow is producing."
+
+/mob/living/simple_animal/cow/random/Initialize()
+	milk_reagent = get_random_reagent_id() //this has a blacklist so don't worry about romerol cows, etc
+	..()
 
 //Wisdom cow, speaks and bestows great wisdoms
 /mob/living/simple_animal/cow/wisdom

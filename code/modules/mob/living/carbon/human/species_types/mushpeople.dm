@@ -8,7 +8,7 @@
 	nojumpsuit = TRUE
 
 	say_mod = "poofs" //what does a mushroom sound like
-	species_traits = list(MUTCOLORS, NOEYES, NO_UNDERWEAR,NOGENITALS,NOAROUSAL)
+	species_traits = list(MUTCOLORS, NOEYES, NO_UNDERWEAR,NOGENITALS,NOAROUSAL,HAS_FLESH,HAS_BONE)
 	inherent_traits = list(TRAIT_NOBREATH)
 	speedmod = 1.5 //faster than golems but not by much
 
@@ -21,8 +21,11 @@
 	burnmod = 1.25
 	heatmod = 1.5
 
+	species_type = "plant"
+
 	mutanteyes = /obj/item/organ/eyes/night_vision/mushroom
 	var/datum/martial_art/mushpunch/mush
+	languagewhitelist = list("Mushroom") //Skyrat change - species language whitelist
 	species_language_holder = /datum/language_holder/mushroom
 
 /datum/species/mush/on_species_gain(mob/living/carbon/C, datum/species/old_species)

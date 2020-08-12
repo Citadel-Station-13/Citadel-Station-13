@@ -2,6 +2,7 @@
 	var/dumping_range = 8
 	var/dumping_sound = 'sound/items/pshoom.ogg'
 	var/alt_sound = 'sound/items/pshoom_2.ogg'
+	allow_big_nesting = TRUE
 
 /datum/component/storage/concrete/bluespace/dump_content_at(atom/dest, mob/M)
 	var/atom/A = parent

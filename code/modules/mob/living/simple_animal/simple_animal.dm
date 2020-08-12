@@ -140,6 +140,13 @@
 	///What kind of footstep this mob should have. Null if it shouldn't have any.
 	var/footstep_type
 
+	//How much wounding power it has
+	var/wound_bonus = CANT_WOUND
+	//How much bare wounding power it has
+	var/bare_wound_bonus = 0
+	//If the attacks from this are sharp
+	var/sharpness = SHARP_NONE
+
 /mob/living/simple_animal/Initialize()
 	. = ..()
 	GLOB.simple_animals[AIStatus] += src
@@ -343,9 +350,10 @@
 		return 1
 
 /mob/living/simple_animal/proc/drop_loot()
-	if(loot.len)
-		for(var/i in loot)
-			new i(loc)
+	if(!length(loot))
+		return
+	for(var/i in loot)
+		new i(loc)
 
 /mob/living/simple_animal/death(gibbed)
 	movement_type &= ~FLYING

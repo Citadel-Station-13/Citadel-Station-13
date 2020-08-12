@@ -125,7 +125,7 @@
 	flags_1 = CONDUCT_1
 	attack_verb = list("attacked", "slashed", "cut", "sliced")
 	force = 12
-	sharpness = IS_SHARP
+	sharpness = SHARP_EDGED
 	inaccuracy_modifier = 0.25
 	can_charge = 0
 
@@ -329,3 +329,11 @@
 		add_overlay("emitter_carbine_empty")
 	else
 		add_overlay("emitter_carbine")
+
+//the pickle ray
+/obj/item/gun/energy/pickle_gun
+	name = "pickle ray"
+	desc = "funniest shit i've ever seen"
+	icon_state = "decloner"
+	no_pin_required = TRUE
+	ammo_type = list(/obj/item/ammo_casing/energy/pickle)

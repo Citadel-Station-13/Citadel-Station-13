@@ -791,6 +791,10 @@
 	name = "Volaju"
 	icon_state = "hair_volaju"
 
+/datum/sprite_accessory/hair/volajupompless
+	name = "Volaju (Alt)"
+	icon_state = "hair_volajupompless"
+
 /datum/sprite_accessory/hair/wisp
 	name = "Wisp"
 	icon_state = "hair_wisp"

@@ -20,3 +20,6 @@
 					"tail", "trim", "tube", "wobble", "roll", "gnarly", "epic")
 
 	icon_state = "beach"
+	//SKYRAT CHANGE - language restriction
+	restricted = FALSE
+	//

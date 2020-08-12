@@ -44,6 +44,7 @@
 		if(G.genital_flags & GENITAL_CAN_AROUSE && !G.aroused_state && prob(strength*G.sensitivity))
 			G.set_aroused_state(strength > 0)
 			G.update_appearance()
+			update_body(TRUE)
 			if(G.aroused_state)
 				genit_list += G
 	return genit_list
@@ -70,6 +71,12 @@
 		R.trans_to(target, R.total_volume * (spill ? G.fluid_transfer_factor : 1))
 	G.time_since_last_orgasm = 0
 	R.clear_reagents()
+	//skyrat edit - chock i am going to beat you to death
+	//this is not a joke i am actually going to break your
+	//ribcage
+	if(!Process_Spacemove(turn(dir, 180)))
+		newtonian_move(turn(dir, 180))
+	//
 
 /mob/living/carbon/human/proc/mob_climax_outside(obj/item/organ/genital/G, mb_time = 30) //This is used for forced orgasms and other hands-free climaxes
 	var/datum/reagents/fluid_source = G.climaxable(src, TRUE)
@@ -189,7 +196,8 @@
 	return TRUE
 
 //Here's the main proc itself
-/mob/living/carbon/human/proc/mob_climax(forced_climax=FALSE) //Forced is instead of the other proc, makes you cum if you have the tools for it, ignoring restraints
+//skyrat edit - forced partner and spillage
+/mob/living/carbon/human/proc/mob_climax(forced_climax=FALSE, var/mob/living/forced_partner = null, var/forced_spillage = TRUE) //Forced is instead of the other proc, makes you cum if you have the tools for it, ignoring restraints
 	if(mb_cd_timer > world.time)
 		if(!forced_climax) //Don't spam the message to the victim if forced to come too fast
 			to_chat(src, "<span class='warning'>You need to wait [DisplayTimeText((mb_cd_timer - world.time), TRUE)] before you can do that again!</span>")
@@ -224,8 +232,17 @@
 							partner = C
 					else //A cat is fine too
 						partner = check_target
+				//skyrat edit
+				if(forced_partner)
+					if((forced_partner == TRUE) || (!istype(forced_partner)))
+						partner = null
+					else
+						partner = forced_partner
+				//
 				if(partner) //Did they pass the clothing checks?
-					mob_climax_partner(G, partner, mb_time = 0) //Instant climax due to forced
+					//skyrat edit
+					mob_climax_partner(G, partner, spillage = forced_spillage, mb_time = 0) //Instant climax due to forced
+					//
 					continue //You've climaxed once with this organ, continue on
 			//not exposed OR if no partner was found while exposed, climax alone
 			mob_climax_outside(G, mb_time = 0) //removed climax timer for sudden, forced orgasms

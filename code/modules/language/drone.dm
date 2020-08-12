@@ -14,3 +14,6 @@
 	default_priority = 20
 
 	icon_state = "drone"
+	//SKYRAT CHANGE - language restriction
+	restricted = TRUE
+	//

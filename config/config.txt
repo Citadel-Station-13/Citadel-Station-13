@@ -251,8 +251,8 @@ CHECK_RANDOMIZER
 ## Don't set this to the same server, BYOND will automatically restart players to the server when it has restarted.
 # SERVER ss13.example.com:2506
 
-## forum address
-# FORUMURL https://citadel-station.net/forum/
+## discord address
+# DISCORDURL https://discord.gg/Jx7A7dW
 
 ## Wiki address
 # WIKIURL https://katlin.dog/citadel-wiki
@@ -525,3 +525,7 @@ FAIL2TOPIC_RULE_NAME _dd_fail2topic
 
 ## Enable automatic profiling - Byond 513.1506 and newer only.
 #AUTO_PROFILE
+
+## Uncomment to enable global ban DB using the provided URL. The API should expect to receive a ckey at the end of the URL.
+## More API details can be found here: https://centcom.melonmesa.com
+CENTCOM_BAN_DB https://centcom.melonmesa.com/ban/search

@@ -43,6 +43,11 @@
 	if(GLOB.say_disabled)	//This is here to try to identify lag problems
 		to_chat(usr, "<span class='danger'>Speech is currently admin-disabled.</span>")
 		return
+	
+	if(length(message) > MAX_MESSAGE_LEN)
+		to_chat(usr, message)
+		to_chat(usr, "<span class='danger'>^^^----- The preceeding message has been DISCARDED for being over the maximum length of [MAX_MESSAGE_LEN]. It has NOT been sent! -----^^^</span>")
+		return
 
 	message = trim(copytext_char(sanitize(message), 1, MAX_MESSAGE_LEN))
 	clear_typing_indicator()		// clear it immediately!
@@ -146,6 +151,10 @@
 		return MODE_WHISPER
 	else if(key == ";")
 		return MODE_HEADSET
+	// Skyrat edit
+	else if(key == "%")
+		return MODE_SING
+	// End of Skyrat edit
 	else if((length(message) > (length(key) + 1)) && (key in GLOB.department_radio_prefixes))
 		var/key_symbol = lowertext(message[length(key) + 1])
 		return GLOB.department_radio_keys[key_symbol]

@@ -26,6 +26,7 @@
 	L.keybind_stop_active_blocking()
 
 /datum/keybinding/living/active_block_toggle
+	hotkey_keys = list("Unbound")
 	name = "active_block_toggle"
 	full_name = "Block (Toggle)"
 	category = CATEGORY_COMBAT

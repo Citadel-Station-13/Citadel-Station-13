@@ -45,7 +45,7 @@
 
 /obj/item/stock_parts/cell/vv_edit_var(var_name, var_value)
 	switch(var_name)
-		if("self_recharge")
+		if(NAMEOF(src, self_recharge))
 			if(var_value)
 				START_PROCESSING(SSobj, src)
 			else
@@ -151,6 +151,27 @@
 				if(prob(25))
 					corrupt()
 
+/obj/item/stock_parts/cell/attack_self(mob/user)
+	if(isethereal(user))
+		var/mob/living/carbon/human/H = user
+		if(charge < 100)
+			to_chat(H, "<span class='warning'>The [src] doesn't have enough power!</span>")
+			return
+		var/obj/item/organ/stomach/ethereal/stomach = H.getorganslot(ORGAN_SLOT_STOMACH)
+		if(stomach.crystal_charge > 146)
+			to_chat(H, "<span class='warning'>Your charge is full!</span>")
+			return
+		to_chat(H, "<span class='notice'>You clumsily channel power through the [src] and into your body, wasting some in the process.</span>")
+		if(do_after(user, 5, target = src))
+			if((charge < 100) || (stomach.crystal_charge > 146))
+				return
+			if(istype(stomach))
+				to_chat(H, "<span class='notice'>You receive some charge from the [src].</span>")
+				stomach.adjust_charge(3)
+				charge -= 100 //you waste way more than you receive, so that ethereals cant just steal one cell and forget about hunger
+			else
+				to_chat(H, "<span class='warning'>You can't receive charge from the [src]!</span>")
+		return
 
 /obj/item/stock_parts/cell/blob_act(obj/structure/blob/B)
 	ex_act(EXPLODE_DEVASTATE)
@@ -264,6 +285,19 @@
 	rating = 5
 
 /obj/item/stock_parts/cell/bluespace/empty
+	start_charged = FALSE
+
+/obj/item/stock_parts/cell/vortex
+	name = "vortex power cell"
+	desc = "A rechargeable transdimensional power cell."
+	icon_state = "bscell"
+	maxcharge = 60000
+	custom_materials = list(/datum/material/glass=600)
+	chargerate = 3000 //Recharges slowly.
+	self_recharge = 1
+	rating = 6
+
+/obj/item/stock_parts/cell/vortex/empty
 	start_charged = FALSE
 
 /obj/item/stock_parts/cell/infinite

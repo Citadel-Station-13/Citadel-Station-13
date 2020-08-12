@@ -51,7 +51,7 @@
 			gain skin as hard as steel and swat bullets from the air, but you also refuse to use dishonorable ranged weaponry."
 	item = /obj/item/book/granter/martial/carp
 	cost = 17
-	player_minimum = 30
+	player_minimum = 20
 	surplus = 0
 	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops)
 
@@ -61,9 +61,19 @@
 	and dodging all ranged weapon fire, but you will refuse to use dishonorable ranged weaponry."
 	item = /obj/item/book/granter/martial/bass
 	cost = 18
-	player_minimum = 30
+	player_minimum = 20
 	surplus = 0
 	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops)
+
+/datum/uplink_item/stealthy_weapons/martialartsthree
+	name = "Krav Maga Scroll"
+	desc = "This scroll contains the secrets of an ancient martial arts technique. You will gain special unarmed attacks for \
+			stealthy takedowns."
+	item = /obj/item/book/granter/martial/krav_maga
+	cost = 16
+	player_minimum = 25
+	surplus = 0
+	include_modes = list(/datum/game_mode/traitor/internal_affairs)
 
 /datum/uplink_item/stealthy_weapons/crossbow
 	name = "Miniature Energy Crossbow"

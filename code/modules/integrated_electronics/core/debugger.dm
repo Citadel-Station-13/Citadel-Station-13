@@ -10,9 +10,11 @@
 	var/data_to_write = null
 	var/accepting_refs = FALSE
 	var/copy_values = FALSE
+	var/copy_id = FALSE
+	var/datum/weakref/idlock = null
 
 /obj/item/integrated_electronics/debugger/attack_self(mob/user)
-	var/type_to_use = input("Please choose a type to use.","[src] type setting") as null|anything in list("string","number","ref","copy","null")
+	var/type_to_use = input("Please choose a type to use.","[src] type setting") as null|anything in list("string","number","ref","copy","null","id lock")
 	if(!user.IsAdvancedToolUser())
 		return
 
@@ -21,6 +23,7 @@
 		if("string")
 			accepting_refs = FALSE
 			copy_values = FALSE
+			copy_id = FALSE
 			new_data = stripped_input(user, "Now type in a string.","[src] string writing", no_trim = TRUE)
 			if(istext(new_data) && user.IsAdvancedToolUser())
 				data_to_write = new_data
@@ -28,6 +31,7 @@
 		if("number")
 			accepting_refs = FALSE
 			copy_values = FALSE
+			copy_id = FALSE
 			new_data = input(user, "Now type in a number.","[src] number writing") as null|num
 			if(isnum(new_data) && user.IsAdvancedToolUser())
 				data_to_write = new_data
@@ -35,17 +39,25 @@
 		if("ref")
 			accepting_refs = TRUE
 			copy_values = FALSE
+			copy_id = FALSE
 			to_chat(user, "<span class='notice'>You turn \the [src]'s ref scanner on.  Slide it across \
 			an object for a ref of that object to save it in memory.</span>")
 		if("copy")
 			accepting_refs = FALSE
 			copy_values = TRUE
+			copy_id = FALSE
 			to_chat(user, "<span class='notice'>You turn \the [src]'s value copier on.  Use it on a pin \
 			to save its current value in memory.</span>")
 		if("null")
 			data_to_write = null
 			copy_values = FALSE
 			to_chat(user, "<span class='notice'>You set \the [src]'s memory to absolutely nothing.</span>")
+		if("id lock")
+			accepting_refs = FALSE
+			copy_values = FALSE
+			copy_id = TRUE
+			to_chat(user, "<span class='notice'>You turn \the [src]'s id card scanner on. Use your own card \
+			to store the identity and id-lock an assembly.</span>")
 
 /obj/item/integrated_electronics/debugger/afterattack(atom/target, mob/living/user, proximity)
 	. = ..()
@@ -55,6 +67,18 @@
 		to_chat(user, "<span class='notice'>You set \the [src]'s memory to a reference to [target.name] \[Ref\].  The ref scanner is \
 		now off.</span>")
 		accepting_refs = FALSE
+
+	else if(copy_id && proximity)
+		if(istype(target,/obj/item/card/id))
+			idlock = WEAKREF(target)
+			to_chat(user, "<span class='notice'>You set \the [src]'s card memory to [target.name].  The id card scanner is \
+			now off.</span>")
+
+		else
+			to_chat(user, "<span class='notice'>You turn the id card scanner is off.</span>")
+
+		copy_id = FALSE
+		return
 
 /obj/item/integrated_electronics/debugger/proc/write_data(var/datum/integrated_io/io, mob/user)
 	//If the pin can take data:

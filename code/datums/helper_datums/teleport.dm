@@ -8,7 +8,9 @@
 // no_effects: disable the default effectin/effectout of sparks
 // forceMove: if false, teleport will use Move() proc (dense objects will prevent teleportation)
 // forced: whether or not to ignore no_teleport
-/proc/do_teleport(atom/movable/teleatom, atom/destination, precision=null, forceMove = TRUE, datum/effect_system/effectin=null, datum/effect_system/effectout=null, asoundin=null, asoundout=null, no_effects=FALSE, channel=TELEPORT_CHANNEL_BLUESPACE, forced = FALSE)
+
+// Skyrat Change
+/proc/do_teleport(atom/movable/teleatom, atom/destination, precision=null, forceMove = TRUE, datum/effect_system/effectin=null, datum/effect_system/effectout=null, asoundin=null, asoundout=null, no_effects=FALSE, channel=TELEPORT_CHANNEL_BLUESPACE, forced = FALSE, effects_multiplier = 1)
 	// teleporting most effects just deletes them
 	var/static/list/delete_atoms = typecacheof(list(
 		/obj/effect,
@@ -42,7 +44,7 @@
 			// if effects are not specified and not explicitly disabled, sparks
 			if ((!effectin || !effectout) && !no_effects)
 				var/datum/effect_system/spark_spread/sparks = new
-				sparks.set_up(5, 1, teleatom)
+				sparks.set_up(5 * effects_multiplier, 1, teleatom) // Skyrat change
 				if (!effectin)
 					effectin = sparks
 				if (!effectout)
@@ -51,7 +53,7 @@
 			// if effects are not specified and not explicitly disabled, rainbow sparks
 			if ((!effectin || !effectout) && !no_effects)
 				var/datum/effect_system/spark_spread/quantum/sparks = new
-				sparks.set_up(5, 1, teleatom)
+				sparks.set_up(5 * effects_multiplier, 1, teleatom) // Skyrat change
 				if (!effectin)
 					effectin = sparks
 				if (!effectout)

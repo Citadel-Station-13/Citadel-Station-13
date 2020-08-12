@@ -24,21 +24,18 @@
 
 /obj/structure/ore_box/crowbar_act(mob/living/user, obj/item/I)
 	if(I.use_tool(src, user, 50, volume=50))
-		user.visible_message("[user] pries \the [src] apart.",
+		user.visible_message("<span class='notice'>[user] pries \the [src] apart.</span>",
 			"<span class='notice'>You pry apart \the [src].</span>",
-			"<span class='italics'>You hear splitting wood.</span>")
+			"<span class='hear'>You hear splitting wood.</span>")
 		deconstruct(TRUE, user)
 	return TRUE
 
 /obj/structure/ore_box/examine(mob/living/user)
 	if(Adjacent(user) && istype(user))
 		ui_interact(user)
-	return ..()
-
-/obj/structure/ore_box/attack_hand(mob/user)
 	. = ..()
-	if(.)
-		return
+
+/obj/structure/ore_box/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	if(Adjacent(user))
 		ui_interact(user)
 
@@ -58,11 +55,10 @@
 			stoplag()
 			drop = drop_location()
 
-/obj/structure/ore_box/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
-									datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+/obj/structure/ore_box/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, ui_key, "ore_box", name, 335, 415, master_ui, state)
+		ui = new(user, src, "OreBox", name)
 		ui.open()
 
 /obj/structure/ore_box/ui_data()

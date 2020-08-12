@@ -9,6 +9,7 @@
 	roundend_category = "monkeys"
 	antagpanel_category = "Monkey"
 	threat = 3
+	show_to_ghosts = TRUE
 	var/datum/team/monkey/monkey_team
 	var/monkey_only = TRUE
 

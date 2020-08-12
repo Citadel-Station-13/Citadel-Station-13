@@ -32,7 +32,6 @@
 	var/nopower_state = "dispenser_nopower"
 	var/has_panel_overlay = TRUE
 	var/obj/item/reagent_containers/beaker = null
-	//dispensable_reagents is copypasted in plumbing synthesizers. Please update accordingly. (I didn't make it global because that would limit custom chem dispensers)
 	var/list/dispensable_reagents = list(
 		/datum/reagent/hydrogen,
 		/datum/reagent/lithium,
@@ -79,6 +78,10 @@
 		/datum/reagent/toxin
 	)
 
+	var/list/upgrade_reagents4 = list(
+		/datum/reagent/toxin/slimejelly
+	)
+
 	var/list/emagged_reagents = list(
 		/datum/reagent/drug/space_drugs,
 		/datum/reagent/toxin/plasma,
@@ -102,6 +105,8 @@
 		upgrade_reagents2 = sortList(upgrade_reagents2, /proc/cmp_reagents_asc)
 	if(upgrade_reagents3)
 		upgrade_reagents3 = sortList(upgrade_reagents3, /proc/cmp_reagents_asc)
+	if(upgrade_reagents4)
+		upgrade_reagents4 = sortList(upgrade_reagents4, /proc/cmp_reagents_asc)
 	dispensable_reagents = sortList(dispensable_reagents, /proc/cmp_reagents_asc)
 	update_icon()
 
@@ -178,11 +183,10 @@
 		beaker = null
 		update_icon()
 
-/obj/machinery/chem_dispenser/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
-											datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+/obj/machinery/chem_dispenser/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, ui_key, "chem_dispenser", name, 565, 550, master_ui, state)
+		ui = new(user, src, "ChemDispenser", name)
 		if(user.hallucinating())
 			ui.set_autoupdate(FALSE) //to not ruin the immersion by constantly changing the fake chemicals
 		ui.open()
@@ -217,7 +221,7 @@
 		data["beakerTransferAmounts"] = null
 		data["beakerCurrentpH"] = null
 
-	var/list/chemicals = list()
+	var/chemicals[0]
 	var/is_hallucinating = FALSE
 	if(user.hallucinating())
 		is_hallucinating = TRUE
@@ -276,7 +280,7 @@
 				. = TRUE
 		if("eject")
 			replace_beaker(usr)
-			. = TRUE //no afterattack
+			. = TRUE
 		if("dispense_recipe")
 			if(!is_operational() || QDELETED(cell))
 				return
@@ -327,9 +331,9 @@
 				for(var/reagent in recording_recipe)
 					var/reagent_id = GLOB.name2reagent[translate_legacy_chem_id(reagent)]
 					if(!dispensable_reagents.Find(reagent_id))
-						visible_message("<span class='warning'>[src] buzzes.</span>", "<span class='italics'>You hear a faint buzz.</span>")
+						visible_message("<span class='warning'>[src] buzzes.</span>", "<span class='hear'>You hear a faint buzz.</span>")
 						to_chat(usr, "<span class ='danger'>[src] cannot find <b>[reagent]</b>!</span>")
-						playsound(src, 'sound/machines/buzz-two.ogg', 50, 1)
+						playsound(src, 'sound/machines/buzz-two.ogg', 50, TRUE)
 						return
 				saved_recipes[name] = recording_recipe
 				recording_recipe = null
@@ -401,6 +405,8 @@
 			dispensable_reagents |= upgrade_reagents2
 		if(M.rating > 3)
 			dispensable_reagents |= upgrade_reagents3
+		if(M.rating > 4)
+			dispensable_reagents |= upgrade_reagents4
 	powerefficiency = round(newpowereff, 0.01)
 
 /obj/machinery/chem_dispenser/proc/replace_beaker(mob/living/user, obj/item/reagent_containers/new_beaker)
@@ -510,6 +516,11 @@
 		/datum/reagent/consumable/nothing,
 		/datum/reagent/consumable/peachjuice
 	)
+	upgrade_reagents4 = list(
+		/datum/reagent/toxin/teapowder,
+		/datum/reagent/consumable/bungojuice,
+		/datum/reagent/consumable/caramel
+	)
 	emagged_reagents = list(
 		/datum/reagent/toxin/mindbreaker,
 		/datum/reagent/toxin/staminatoxin,
@@ -568,6 +579,7 @@
 	)
 	upgrade_reagents2 = null
 	upgrade_reagents3 = null
+	upgrade_reagents4 = null
 	emagged_reagents = list(
 		/datum/reagent/consumable/ethanol/alexander,
 		/datum/reagent/consumable/clownstears,
@@ -769,7 +781,9 @@
 	upgrade_reagents3 = list(
 		/datum/reagent/medicine/mine_salve
 	)
-
+	upgrade_reagents4 = list(
+		/datum/reagent/blood
+	)
 	emagged_reagents = list(
 		/datum/reagent/drug/space_drugs,
 		/datum/reagent/toxin/carpotoxin,

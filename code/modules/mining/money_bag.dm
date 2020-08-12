@@ -25,3 +25,7 @@
 	new /obj/item/coin/gold(src)
 	new /obj/item/coin/gold(src)
 	new /obj/item/coin/adamantine(src)
+
+/obj/item/storage/bag/money/c5000/PopulateContents()
+	for(var/i = 0, i < 5, i++)
+		new /obj/item/stack/spacecash/c1000(src)

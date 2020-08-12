@@ -11,6 +11,9 @@
 	space_chance = 40
 	default_priority = 90
 	icon_state = "bloodsucker"
+	//SKYRAT CHANGE - language restriction
+	restricted = TRUE
+	//
 
 	flags = TONGUELESS_SPEECH | LANGUAGE_HIDE_ICON_IF_NOT_UNDERSTOOD // Hide the icon next to your text if someone doesn't know this language.
 	syllables = list(

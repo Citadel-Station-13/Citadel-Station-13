@@ -24,6 +24,15 @@
 		/datum/language/slime,
 		/datum/language/vampiric,
 		/datum/language/dwarf,
+		/datum/language/machine, //Skyrat change - adds machine language
+		/datum/language/sandcode/calcic, //Skyrat change - plasmaman language
+		/datum/language/sandcode/dunmeri, //Skyrat change - dunmer language
+		/datum/language/sandcode/moffic, //Skyrat change - insect language
+		/datum/language/sandcode/neokanji, //Skyrat change - generally asian language
+		/datum/language/sandcode/shadowtongue, //Skyrat change - shadowpeople language
+		/datum/language/sandcode/solcommon, //Skyrat change - sol common blah blah
+		/datum/language/sandcode/technorussian, //Skyrat change - russian stereotype language
+		/datum/language/sandcode/sergal,
 	))
 	healing_factor = STANDARD_ORGAN_HEALING*5 //Fast!!
 	decay_factor = STANDARD_ORGAN_DECAY/2
@@ -312,3 +321,26 @@
 	desc = "A voice synthesizer used by IPCs to smoothly interface with organic lifeforms."
 	electronics_magic = FALSE
 	organ_flags = ORGAN_SYNTHETIC
+
+/obj/item/organ/tongue/ethereal
+	name = "electric discharger"
+	desc = "A sophisticated ethereal organ, capable of synthesising speech via electrical discharge."
+	icon_state = "electrotongue"
+	say_mod = "crackles"
+	attack_verb = list("shocked", "jolted", "zapped")
+	taste_sensitivity = 101 // Not a tongue, they can't taste shit
+	var/static/list/languages_possible_ethereal = typecacheof(list(
+		/datum/language/common,
+		/datum/language/draconic,
+		/datum/language/codespeak,
+		/datum/language/monkey,
+		/datum/language/narsie,
+		/datum/language/beachbum,
+		/datum/language/aphasia,
+		/datum/language/sylvan,
+		/datum/language/voltaic
+	))
+
+/obj/item/organ/tongue/ethereal/Initialize(mapload)
+	. = ..()
+	languages_possible = languages_possible_ethereal

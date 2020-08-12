@@ -502,7 +502,7 @@
 		dresscode = outfits[dresscode]
 
 	if(dresscode == "Cancel")
-		return
+		return FALSE // Skyrat change
 
 	if (dresscode == "As Job...")
 		var/list/job_paths = subtypesof(/datum/outfit/job)

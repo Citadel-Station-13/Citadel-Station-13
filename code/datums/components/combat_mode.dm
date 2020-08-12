@@ -87,13 +87,16 @@
 		else
 			to_chat(source, self_message)
 		if(playsound)
-			source.playsound_local(source, 'sound/misc/ui_toggle.ogg', 50, FALSE, pressure_affected = FALSE) //Sound from interbay!
+			playsound(source, 'sound/machines/chime.ogg', 10) 	//sandstorm stuff - combat mode indicator
+			flick_emote_popup_on_mob(source, "combat", 10)	//sandstorm stuff - combat mode indicator
 	RegisterSignal(source, COMSIG_MOB_CLIENT_MOUSEMOVE, .proc/onMouseMove)
 	RegisterSignal(source, COMSIG_MOVABLE_MOVED, .proc/on_move)
 	RegisterSignal(source, COMSIG_MOB_CLIENT_MOVE, .proc/on_client_move)
 	if(hud_icon)
 		hud_icon.combat_on = TRUE
 		hud_icon.update_icon()
+
+	source.set_combat_indicator(TRUE) //sandstorm stuff - combat mode indicator
 
 /// Disables combat mode. Please use 'safe_disable_combat_mode' instead, if you wish to also disable the toggle flag.
 /datum/component/combat_mode/proc/disable_combat_mode(mob/living/source, silent = TRUE, forced = TRUE, visible = FALSE, locked = FALSE, playsound = FALSE)
@@ -121,6 +124,8 @@
 		hud_icon.update_icon()
 	source.stop_active_blocking()
 	source.end_parry_sequence()
+
+	source.set_combat_indicator(FALSE) //sandstorm stuff - combat mode indicator
 
 ///Changes the user direction to (try) keep match the pointer.
 /datum/component/combat_mode/proc/on_move(atom/movable/source, dir, atom/oldloc, forced)

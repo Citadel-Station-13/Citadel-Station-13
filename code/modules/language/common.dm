@@ -9,6 +9,9 @@
 	default_priority = 100
 
 	icon_state = "galcom"
+	//SKYRAT CHANGE - language restriction
+	restricted = TRUE //i know it's weird, but it's restricted because crewmembers spawn with it by default
+	//
 
 //Syllable Lists
 /*

@@ -145,9 +145,9 @@
 				continue
 			if(!S.ckeys_allowed)
 				snowflake_ipc_antenna_list[S.name] = mspath
-	var/color1 = random_short_color()
-	var/color2 = random_short_color()
-	var/color3 = random_short_color()
+	var/color1 = random_color()
+	var/color2 = random_color()
+	var/color3 = random_color()
 
 	var/body_model = MALE
 	switch(intended_gender)
@@ -260,6 +260,13 @@
 /proc/random_unique_plasmaman_name(attempts_to_find_unique_name=10)
 	for(var/i in 1 to attempts_to_find_unique_name)
 		. = capitalize(plasmaman_name())
+
+		if(!findname(.))
+			break
+
+/proc/random_unique_ethereal_name(attempts_to_find_unique_name=10)
+	for(var/i in 1 to attempts_to_find_unique_name)
+		. = capitalize(ethereal_name())
 
 		if(!findname(.))
 			break

@@ -80,6 +80,7 @@
 /obj/machinery/door/airlock{
 	name = "Labor Camp External Access"
 	},
+/obj/structure/fans/tiny,
 /turf/open/floor/plasteel,
 /area/mine/laborcamp)
 "bg" = (
@@ -431,7 +432,8 @@
 /obj/structure/lattice/catwalk,
 /obj/machinery/atmospherics/components/unary/outlet_injector/atmos/atmos_waste{
 	dir = 4;
-	piping_layer = 3
+	piping_layer = 3;
+	pixel_y = 5
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/mine/living_quarters)
@@ -1785,6 +1787,7 @@
 	name = "Labor Camp Shuttle Security Airlock";
 	req_access_txt = "2"
 	},
+/obj/structure/fans/tiny,
 /turf/open/floor/plasteel,
 /area/mine/laborcamp)
 "CA" = (
@@ -2045,6 +2048,7 @@
 /obj/machinery/door/airlock/security/glass{
 	name = "Labor Camp Shuttle Prisoner Airlock"
 	},
+/obj/structure/fans/tiny,
 /turf/open/floor/plasteel,
 /area/mine/laborcamp)
 "HS" = (
@@ -2319,6 +2323,7 @@
 	opacity = 0;
 	req_access_txt = "54"
 	},
+/obj/structure/fans/tiny,
 /turf/open/floor/plasteel,
 /area/mine/eva)
 "KQ" = (
@@ -2497,6 +2502,7 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 1
 	},
+/obj/structure/fans/tiny,
 /turf/open/floor/plasteel,
 /area/mine/production)
 "MD" = (
@@ -2965,6 +2971,7 @@
 	name = "Mining Shuttle Airlock";
 	opacity = 0
 	},
+/obj/structure/fans/tiny,
 /turf/open/floor/plasteel,
 /area/mine/production)
 "TC" = (

@@ -380,8 +380,6 @@
 	name = "random keg spawner"
 	lootcount = 1
 	loot = list(/obj/structure/reagent_dispensers/keg/mead = 5,
-		/obj/structure/reagent_dispensers/keg/aphro = 2,
-		/obj/structure/reagent_dispensers/keg/aphro/strong = 2,
 		/obj/structure/reagent_dispensers/keg/gargle = 1)
 
 /obj/effect/spawner/lootdrop/coin
@@ -466,7 +464,7 @@
 		/obj/effect/spawner/lootdrop/cigars_cases/no_turf = 2,
 		/obj/effect/spawner/lootdrop/space_cash/no_turf = 5,
 		/obj/item/reagent_containers/food/snacks/grown/cannabis = 5,
-		/obj/item/storage/pill_bottle/dice = 5,
+		/obj/item/storage/box/dice = 5,
 		/obj/item/toy/cards/deck = 5,
 		/obj/effect/spawner/lootdrop/druggie_pill/no_turf = 5
 		)
@@ -485,7 +483,7 @@
 		/obj/effect/spawner/lootdrop/cig_packs/no_turf = 10,
 		/obj/effect/spawner/lootdrop/cigars_cases/no_turf = 5,
 		/obj/item/reagent_containers/food/snacks/grown/cannabis = 5,
-		/obj/item/storage/pill_bottle/dice = 5,
+		/obj/item/storage/box/dice = 5,
 		/obj/item/toy/cards/deck = 5,
 		/obj/effect/spawner/lootdrop/druggie_pill/no_turf = 5,
 		/obj/item/kitchen/knife = 5,

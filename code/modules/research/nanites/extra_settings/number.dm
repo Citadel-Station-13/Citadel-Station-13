@@ -14,7 +14,7 @@
 /datum/nanite_extra_setting/number/set_value(value)
 	if(istext(value))
 		value = text2num(value)
-	if(!value || !isnum(value))
+	if(isnull(value) || !isnum(value))
 		return
 	src.value = clamp(value, min, max)
 
