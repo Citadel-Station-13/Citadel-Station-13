@@ -84,7 +84,7 @@
 		infinite number of bolts, but takes time to automatically recharge \
 		after each shot."
 	item = /obj/item/gun/energy/kinetic_accelerator/crossbow
-	cost = 12
+	cost = 8
 	surplus = 50
 	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops)
 
