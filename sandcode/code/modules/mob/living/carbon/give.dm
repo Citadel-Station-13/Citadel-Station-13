@@ -1,4 +1,4 @@
-/mob/living/verb/give()
+/mob/living/carbon/verb/give()
 	set category = "IC"
 	set name = "Give"
 	set desc = "Give something to someone!"
@@ -6,7 +6,7 @@
 
 	give_item(usr)
 
-/mob/living/proc/give_item(mob/living/carbon/user)
+/mob/living/carbon/proc/give_item(mob/living/carbon/user)
 
 
 /mob/living/carbon/give_item(mob/living/carbon/user)
