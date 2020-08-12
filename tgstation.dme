@@ -3599,7 +3599,6 @@
 #include "sandcode\code\modules\atmospherics\machinery\pipes\bluespace.dm"
 #include "sandcode\code\modules\cargo\packs\emergency.dm"
 #include "sandcode\code\modules\client\asset_cache.dm"
-#include "sandcode\code\modules\client\loadout\__donator.dm"
 #include "sandcode\code\modules\clothing\refactor.dm"
 #include "sandcode\code\modules\clothing\head\misc.dm"
 #include "sandcode\code\modules\clothing\masks\miscellaneous.dm"
