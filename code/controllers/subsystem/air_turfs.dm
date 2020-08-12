@@ -4,63 +4,58 @@ SUBSYSTEM_DEF(air_turfs)
 	name = "Atmospherics - Turfs"
 	init_order = INIT_ORDER_AIR_TURFS
 	priority = FIRE_PRIORITY_AIR_TURFS
-	wait = 2
+	wait = 1
 	flags = SS_BACKGROUND
 	runlevels = RUNLEVEL_GAME | RUNLEVEL_POSTGAME
-	var/cost_turfs = 0
+	var/cost_thread_wake = 0
 	var/cost_post_turfs = 0
-	var/cost_groups = 0
-	var/cost_equalize = 0
+	var/cost_post_equalize = 0
 
 	var/currentpart = SSAIR_POST_PROCESS
 
 /datum/controller/subsystem/air_turfs/stat_entry(msg)
 	var/active_turf_len = SSair.active_turfs_length()
 	msg += "C:{"
-	msg += "EQ:[round(cost_equalize,1)]|"
-	msg += "AT:[round(cost_turfs,1)]|"
-	msg += "PT:[round(cost_post_turfs,1)]|"
-	msg += "EG:[round(cost_groups,1)]|"
+	msg += "TH:[round(cost_thread_wake,1)]|"
+	msg += "EQ:[round(cost_post_equalize,1)]|"
+	msg += "AT:[round(cost_post_turfs,1)]|"
 	msg += "}"
 	msg += "AT:[active_turf_len]|"
-	msg += "CPP:[SSair.cpp_currentrun_length()]|"
-	msg += "TP:[SSair.processing_length()]|"
+	msg += "EQ:[SSair.post_equalize_turf_length()]"
 	msg += "PT:[SSair.post_processing_length()]|"
 	msg += "EG:[SSair.get_amt_excited_groups()]|"
-	msg += "AT/MS:[round((cost ? active_turf_len/cost : 0),0.1)]"
+	msg += "AT/MS:[round((cost ? active_turf_len/cost : 0),0.1)]|"
 	..(msg)
+
+/datum/controller/subsystem/air_turfs/Initialize(timeofday)
+	extools_update_ssair_turfs()
+	return ..()
 
 /datum/controller/subsystem/air_turfs/proc/wake_thread()
 
+/datum/controller/subsystem/air_turfs/proc/extools_update_ssair_turfs()
+
 /datum/controller/subsystem/air_turfs/fire(resumed = 0)
-	wake_thread()
 	var/timer = TICK_USAGE_REAL
-	// "why is it post process if it comes before" because in C++ it only happens after the thread does the process
+	wake_thread()
+	cost_thread_wake = MC_AVERAGE_FAST(cost_thread_wake, TICK_DELTA_TO_MS(TICK_USAGE_REAL - timer))
 	if(currentpart == SSAIR_POST_PROCESS)
 		timer = TICK_USAGE_REAL
 		SSair.post_process_turfs(resumed)
-		cost_post_turfs = MC_AVERAGE(cost_post_turfs, TICK_DELTA_TO_MS(TICK_USAGE_REAL - timer))
+		cost_post_turfs = MC_AVERAGE_FAST(cost_post_turfs, TICK_DELTA_TO_MS(TICK_USAGE_REAL - timer))
 		if(state != SS_RUNNING)
 			return
 		resumed = 0
-		currentpart = SSair.monstermos_enabled ? SSAIR_EQUALIZE : SSAIR_EXCITEDGROUPS
+		currentpart = SSair.monstermos_enabled ? SSAIR_EQUALIZE : SSAIR_POST_PROCESS
 
 	if(currentpart == SSAIR_EQUALIZE)
 		timer = TICK_USAGE_REAL
 		SSair.post_process_turf_equalize(resumed)
-		cost_equalize = MC_AVERAGE(cost_equalize, TICK_DELTA_TO_MS(TICK_USAGE_REAL - timer))
-		if(state != SS_RUNNING)
-			return
-		resumed = 0
-		currentpart = SSAIR_EXCITEDGROUPS
-
-	if(currentpart == SSAIR_EXCITEDGROUPS)
-		timer = TICK_USAGE_REAL
-		SSair.process_excited_groups(resumed)
-		cost_groups = MC_AVERAGE(cost_groups, TICK_DELTA_TO_MS(TICK_USAGE_REAL - timer))
+		cost_post_equalize = MC_AVERAGE_FAST(cost_post_equalize, TICK_DELTA_TO_MS(TICK_USAGE_REAL - timer))
 		if(state != SS_RUNNING)
 			return
 		resumed = 0
 		currentpart = SSAIR_POST_PROCESS
-
+	if(cost && SSair.active_turfs_length()/cost > 10000000) // it's PROBABLY broken, just kick it
+		restart_extools_atmos_thread()
 	currentpart = SSAIR_POST_PROCESS

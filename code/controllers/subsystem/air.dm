@@ -230,11 +230,10 @@ SUBSYSTEM_DEF(air)
 /datum/controller/subsystem/air/proc/post_process_turfs(resumed = 0)
 	if(post_process_turfs_extools(resumed,(Master.current_ticklimit - TICK_USAGE) * 0.01 * world.tick_lag))
 		sleep()
-
+/*
 /datum/controller/subsystem/air/proc/process_excited_groups(resumed = 0)
 	if(process_excited_groups_extools(resumed, (Master.current_ticklimit - TICK_USAGE) * 0.01 * world.tick_lag))
 		sleep()
-	/*
 	if (!resumed)
 		src.currentrun = excited_groups.Copy()
 	//cache for sanic speed (lists are references anyways)
@@ -252,7 +251,8 @@ SUBSYSTEM_DEF(air)
 			return
 	*/
 
-/datum/controller/subsystem/air/proc/process_excited_groups_extools()
+//datum/controller/subsystem/air/proc/process_excited_groups_extools()
+
 /datum/controller/subsystem/air/proc/get_amt_excited_groups()
 
 /datum/controller/subsystem/air/proc/remove_from_active_extools()
@@ -297,11 +297,9 @@ SUBSYSTEM_DEF(air)
 
 /datum/controller/subsystem/air/proc/active_turfs_length()
 
-/datum/controller/subsystem/air/proc/cpp_currentrun_length()
-
-/datum/controller/subsystem/air/proc/processing_length()
-
 /datum/controller/subsystem/air/proc/post_processing_length()
+
+/datum/controller/subsystem/air/proc/post_equalize_turf_length()
 
 /datum/controller/subsystem/air/proc/get_active_turfs()
 

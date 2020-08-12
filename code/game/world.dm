@@ -279,6 +279,8 @@ GLOBAL_LIST(topic_status_cache)
 
 /proc/destroy_extools_atmos_thread()
 
+/proc/restart_extools_atmos_thread()
+
 /world/Del()
 	// memory leaks bad
 	var/num_deleted = 0

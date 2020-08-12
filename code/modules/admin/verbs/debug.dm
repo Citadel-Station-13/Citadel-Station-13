@@ -838,3 +838,11 @@
 		return
 	if(alert(usr, "Are you absolutely sure you want to reload the configuration from the default path on the disk, wiping any in-round modificatoins?", "Really reset?", "No", "Yes") == "Yes")
 		config.admin_reload()
+
+/client/proc/restart_atmos_thread()
+	set category = "Debug"
+	set name = "Restart Atmos Thread"
+	set desc = "Press this if air suddenly stops moving around. It should fix itself, but it might not!"
+	
+	if(check_rights(R_DEBUG))
+		restart_extools_atmos_thread()
