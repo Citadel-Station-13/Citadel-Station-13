@@ -126402,6 +126402,13 @@
 	},
 /turf/open/space,
 /area/engine/atmos)
+"kqo" = (
+/obj/structure/cable/white{
+	icon_state = "4-8"
+	},
+/mob/living/simple_animal/opossum,
+/turf/open/floor/plating,
+/area/maintenance/port/fore)
 "ktK" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
@@ -127060,6 +127067,10 @@
 	dir = 1
 	},
 /area/science/circuit)
+"pok" = (
+/mob/living/simple_animal/opossum/poppy,
+/turf/open/floor/plasteel/grimy,
+/area/crew_quarters/theatre/abandoned)
 "poI" = (
 /obj/structure/bed,
 /obj/item/tank/internals/anesthetic,
@@ -164059,7 +164070,7 @@ aof
 aky
 aky
 aky
-arD
+kqo
 asZ
 aui
 avF
@@ -178818,7 +178829,7 @@ dCX
 dEj
 dFq
 dGJ
-dGJ
+pok
 dJy
 dGJ
 dGJ

@@ -42007,6 +42007,16 @@
 	},
 /turf/open/floor/plasteel,
 /area/hydroponics)
+"saI" = (
+/obj/structure/cable/white{
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/mob/living/simple_animal/opossum,
+/turf/open/floor/plating,
+/area/maintenance/starboard)
 "scn" = (
 /obj/structure/cable{
 	icon_state = "4-8"
@@ -45224,6 +45234,10 @@
 /obj/effect/landmark/carpspawn,
 /turf/open/space,
 /area/space/station_ruins)
+"uXV" = (
+/mob/living/simple_animal/opossum/poppy,
+/turf/open/floor/wood,
+/area/maintenance/port/aft)
 "ver" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/visible{
 	dir = 10
@@ -79465,7 +79479,7 @@ aFM
 aOH
 aOT
 aPV
-aRm
+uXV
 aSI
 aRC
 aKm
@@ -92545,7 +92559,7 @@ aSD
 aRz
 aRz
 aRz
-sGY
+saI
 aRz
 sIb
 bsD

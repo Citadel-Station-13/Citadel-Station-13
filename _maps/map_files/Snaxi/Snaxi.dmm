@@ -18914,6 +18914,10 @@
 	},
 /turf/open/floor/plasteel,
 /area/storage/primary)
+"ihL" = (
+/mob/living/simple_animal/opossum,
+/turf/open/floor/plating,
+/area/maintenance/aft/secondary)
 "ihX" = (
 /obj/structure/cable{
 	icon_state = "0-2"
@@ -24055,6 +24059,10 @@
 "luo" = (
 /turf/open/floor/plasteel/white,
 /area/science/misc_lab)
+"lwl" = (
+/mob/living/simple_animal/opossum/poppy,
+/turf/open/floor/plating,
+/area/engine/engineering)
 "lwH" = (
 /obj/structure/cable{
 	icon_state = "1-4"
@@ -83468,7 +83476,7 @@ tRe
 tRe
 tRe
 bWf
-bVa
+ihL
 kXG
 sqx
 owj
@@ -98026,7 +98034,7 @@ xUL
 xUL
 dKF
 ijZ
-ijZ
+lwl
 bnU
 oJa
 cNE
