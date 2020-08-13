@@ -309,8 +309,8 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 
 /datum/block_parry_data/bokken/quick_parry // emphasizing REALLY SHORT PARRIES
 	parry_stamina_cost = 6 // still more costly than most parries, but less than a full bokken parry
-	parry_time_active = 4 // REALLY small parry window
-	parry_time_perfect = 2 // however...
+	parry_time_active = 5 // REALLY small parry window
+	parry_time_perfect = 2.5 // however...
 	parry_time_perfect_leeway = 2 // the entire time, the parry is perfect
 	parry_failed_stagger_duration = 1 SECONDS
 	parry_failed_clickcd_duration = 1 SECONDS // more forgiving punishments for missed parries
