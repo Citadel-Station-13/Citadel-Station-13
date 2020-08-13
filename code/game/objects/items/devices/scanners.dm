@@ -730,9 +730,8 @@ GENETICS SCANNER
 
 		if(cached_scan_results && cached_scan_results["fusion"]) //notify the user if a fusion reaction was detected
 			var/fusion_power = round(cached_scan_results["fusion"], 0.01)
-			var/tier = fusionpower2text(fusion_power)
 			to_chat(user, "<span class='boldnotice'>Large amounts of free neutrons detected in the air indicate that a fusion reaction took place.</span>")
-			to_chat(user, "<span class='notice'>Power of the last fusion reaction: [fusion_power]\n This power indicates it was a [tier]-tier fusion reaction.</span>")
+			to_chat(user, "<span class='notice'>Power of the last fusion reaction: [fusion_power] joules.</span>")
 	return
 
 /obj/item/analyzer/proc/scan_turf(mob/user, turf/location)
