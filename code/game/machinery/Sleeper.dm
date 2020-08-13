@@ -144,8 +144,8 @@
 		open_machine()
 
 /obj/machinery/sleeper/ui_state(mob/user)
-	if(!controls_inside)
-		return GLOB.notcontained_state
+	if(controls_inside)
+		return GLOB.contained_state
 	return GLOB.default_state
 
 /obj/machinery/sleeper/ui_interact(mob/user, datum/tgui/ui)
