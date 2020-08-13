@@ -258,9 +258,6 @@
 	STOP_PROCESSING(SSobj, src)
 	return ..()
 
-// /obj/item/pet_carrier/bluespace/examine(mob/user)
-// 	. = ..()
-
 /obj/item/pet_carrier/bluespace/attack_self(mob/living/user)
 	..()
 	if(reagents)
