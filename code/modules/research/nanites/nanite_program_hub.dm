@@ -55,7 +55,7 @@
 		return
 	disk.forceMove(drop_location())
 	if(istype(user) && Adjacent(user))
-		user.put_in_hands(disk)
+		user.put_in_active_hand(disk)
 	disk = null
 
 /obj/machinery/nanite_program_hub/AltClick(mob/user)
