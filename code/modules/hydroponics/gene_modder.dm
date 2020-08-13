@@ -5,7 +5,8 @@
 	icon_state = "dnamod"
 	density = TRUE
 	circuit = /obj/item/circuitboard/machine/plantgenes
-	pass_flags = PASSTABLE|LETPASSTHROW
+	pass_flags = PASSTABLE | LETPASSTHROW
+	flags_1 = DEFAULT_RICOCHET_1 | ON_BORDER_1 // apparently this works???
 
 	var/obj/item/seeds/seed
 	var/obj/item/disk/plantgene/disk
