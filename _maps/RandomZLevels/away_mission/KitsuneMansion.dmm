@@ -117,7 +117,12 @@
 /area/awaymission/kitsune)
 "pb" = (
 /obj/structure/table/wood/fancy/red,
-/obj/item/gun/magic/wand/fireball/inert,
+/obj/item/circlegame,
+/obj/item/cookiesynth,
+/obj/item/holochip{
+	credits = 1000;
+	name = "1000 credit holochip"
+	},
 /turf/open/floor/wood/kitsune,
 /area/awaymission/kitsune)
 "rE" = (
@@ -276,7 +281,7 @@
 /turf/open/water,
 /area/awaymission/kitsune)
 "LD" = (
-/obj/item/gun/magic/wand/resurrection,
+/obj/item/rod_of_asclepius,
 /turf/open/floor/plating/asteroid/snow/kitsune,
 /area/awaymission/kitsune)
 "LQ" = (
@@ -298,6 +303,10 @@
 /area/awaymission/kitsune)
 "Pb" = (
 /turf/open/floor/wood,
+/area/awaymission/kitsune)
+"PV" = (
+/obj/item/candle/infinite/hugbox,
+/turf/open/floor/plating/asteroid/snow/kitsune,
 /area/awaymission/kitsune)
 "Qv" = (
 /obj/structure/table/wood/fancy/red,
@@ -12531,8 +12540,8 @@ YS
 YS
 Bq
 Bq
-Bq
 YS
+PV
 Bq
 YS
 YS
