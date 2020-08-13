@@ -41,7 +41,7 @@
 		return
 	disk.forceMove(drop_location())
 	if(istype(user) && user.Adjacent(src))
-		user.put_in_hands(disk)
+		user.put_in_active_hand(disk)
 	disk = null
 	program = null
 
