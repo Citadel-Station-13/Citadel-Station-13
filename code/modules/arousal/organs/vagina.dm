@@ -7,7 +7,7 @@
 	slot = "vagina"
 	size = 1 //There is only 1 size right now
 	shape = DEF_VAGINA_SHAPE
-	genital_flags = GENITAL_CAN_AROUSE|GENITAL_UNDIES_HIDDEN
+	genital_flags = GENITAL_UNDIES_HIDDEN
 	layer_index = VAGINA_LAYER_INDEX
 	var/cap_length = 8//D   E   P   T   H (cap = capacity)
 	var/cap_girth = 12
