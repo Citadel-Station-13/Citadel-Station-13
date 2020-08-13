@@ -1,5 +1,0 @@
-author: "SandPoot"
-delete-after: True
-changes: 
-  - rscadd: "Show held item, taken from Cit-rp which probably is vorestation's."
-  - bugfix: "Moves give item to carbon so only mobs that can grab items, can give them."
