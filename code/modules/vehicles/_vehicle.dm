@@ -168,8 +168,8 @@
 		var/dir_to_move = get_dir(trailer.loc, newloc)
 		step(trailer, dir_to_move)
 
-/obj/vehicle/bullet_act(obj/projectile/Proj) //wrapper
-	if (!enclosed && occupant && !Proj.force_hit && (Proj.def_zone == BODY_ZONE_HEAD || Proj.def_zone == BODY_ZONE_CHEST)) //allows bullets to hit drivers
-		occupant.bullet_act(Proj) //i'm sure that ATV will protect you against a dink, idiot
+/obj/vehicle/bullet_act(obj/item/projectile/Proj) //wrapper
+	if (!enclosed && occupants && !Proj.force_hit && (Proj.def_zone == BODY_ZONE_HEAD || Proj.def_zone == BODY_ZONE_CHEST)) //allows bullets to hit drivers
+		occupants.bullet_act(Proj) //i'm sure that ATV will protect you against a dink, idiot
 		return BULLET_ACT_HIT
 	. = ..()
