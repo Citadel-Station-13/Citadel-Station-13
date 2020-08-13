@@ -252,7 +252,7 @@
 
 /obj/item/pet_carrier/bluespace/Initialize()
 	. = ..()
-	create_reagents(300, NONE, DEFAULT_REAGENTS_VALUE) //equivalent of bsbeakers
+	create_reagents(300, OPENCONTAINER, DEFAULT_REAGENTS_VALUE) //equivalent of bsbeakers
 
 /obj/item/pet_carrier/bluespace/Destroy()
 	STOP_PROCESSING(SSobj, src)
