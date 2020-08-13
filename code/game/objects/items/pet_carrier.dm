@@ -245,6 +245,10 @@
 	var/datum/gas_mixture/occupant_gas_supply
 	///level until the reagent gets INGEST ed instead of TOUCH
 	var/sipping_level = 150
+	///prob50 level of sipping
+	var/sipping_probably = 99
+	///chem transfer rate / second
+	var/transfer_rate = 5
 
 /obj/item/pet_carrier/bluespace/Initialize()
 	. = ..()
@@ -259,10 +263,11 @@
 
 /obj/item/pet_carrier/bluespace/attack_self(mob/living/user)
 	..()
-	if(open)
-		reagents.reagents_holder_flags = OPENCONTAINER
-	else
-		reagents.reagents_holder_flags = NONE
+	if(reagents)
+		if(open)
+			reagents.reagents_holder_flags = OPENCONTAINER
+		else
+			reagents.reagents_holder_flags = NONE
 
 /obj/item/pet_carrier/bluespace/update_icon_state()
 	if(open)
@@ -335,8 +340,9 @@
 	for(var/mob/living/L in occupants)
 		if(!ishuman(L))
 			continue
-		if(reagents.total_volume >= sipping_level && prob(80))
+		if((reagents.total_volume >= sipping_level) || ((reagents.total_volume >= sipping_probably) && prob(50))) //sipp
 			reagents.reaction(L, INGEST) //consume
+			reagents.trans_to(L, transfer_rate)
 		else
 			reagents.reaction(L, TOUCH, show_message = FALSE)
 
