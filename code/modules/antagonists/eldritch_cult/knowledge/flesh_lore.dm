@@ -70,7 +70,7 @@
 	desc = "Empowers your Mansus Grasp to be able to create a single ghoul out of a dead player. You cannot raise the same person twice. Ghouls have only 50 HP and look like husks."
 	cost = 1
 	next_knowledge = list(/datum/eldritch_knowledge/flesh_ghoul)
-	var/ghoul_amt = 1
+	var/ghoul_amt = 6
 	var/list/spooky_scaries
 	route = PATH_FLESH
 
@@ -192,7 +192,7 @@
 /datum/eldritch_knowledge/summon/rusty
 	name = "Rusted Ritual"
 	gain_text = "I combined principle of hunger with desire of corruption. The rusted hills call my name."
-	desc = "You can now summon a Rust Walker transmuting a vomit pool, a head using a transmutation circle. Rust Walkers possess the ability to spread rust and can fire bolts of rust to further corrode the area."
+	desc = "You can now summon a Rust Walker transmuting a vomit pool, a head, and a book using a transmutation circle. Rust Walkers possess the ability to spread rust and can fire bolts of rust to further corrode the area."
 	cost = 1
 	required_atoms = list(/obj/effect/decal/cleanable/vomit,/obj/item/bodypart/head,/obj/item/book)
 	mob_to_summon = /mob/living/simple_animal/hostile/eldritch/rust_spirit

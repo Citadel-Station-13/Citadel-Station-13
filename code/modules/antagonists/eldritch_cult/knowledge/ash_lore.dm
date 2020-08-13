@@ -90,9 +90,9 @@
 	chosen_mob.cure_blind(MAGIC_TRAIT)
 
 /datum/eldritch_knowledge/spell/flame_birth
-	name = "Flame Birth"
+	name = "Fiery Rebirth"
 	gain_text = "Nightwatcher was a man of principles, and yet he arose from the chaos he vowed to protect from."
-	desc = "Short range spell that allows you to curse someone with massive sanity loss."
+	desc = "Drains nearby alive people that are engulfed in flames. It heals 10 of each damage type per person. If a person is in critical condition it finishes them off."
 	cost = 1
 	spell_to_add = /obj/effect/proc_holder/spell/targeted/fiery_rebirth
 	next_knowledge = list(/datum/eldritch_knowledge/spell/cleave,/datum/eldritch_knowledge/summon/ashy,/datum/eldritch_knowledge/final/ash_final)

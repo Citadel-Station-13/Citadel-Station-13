@@ -36,7 +36,15 @@
 	gain_text = "All wise men know not to touch the bound king."
 	cost = 1
 	spell_to_add = /obj/effect/proc_holder/spell/aoe_turf/rust_conversion
-	next_knowledge = list(/datum/eldritch_knowledge/rust_blade_upgrade,/datum/eldritch_knowledge/curse/corrosion,/datum/eldritch_knowledge/spell/blood_siphon)
+	next_knowledge = list(/datum/eldritch_knowledge/rust_blade_upgrade,/datum/eldritch_knowledge/curse/corrosion,/datum/eldritch_knowledge/spell/blood_siphon,/datum/eldritch_knowledge/spell/rust_wave)
+	route = PATH_RUST
+
+/datum/eldritch_knowledge/spell/rust_wave
+	name = "Patron's Reach"
+	desc = "You can now send a bolt of rust that corrupts the immediate area, and lightly c the first target hit."
+	gain_text = "Messengers of hope fear the rustbringer."
+	cost = 1
+	spell_to_add = /obj/effect/proc_holder/spell/aimed/rust_wave
 	route = PATH_RUST
 
 /datum/eldritch_knowledge/rust_regen
@@ -57,7 +65,7 @@
 	living_user.adjustFireLoss(-3, FALSE)
 	living_user.adjustToxLoss(-3, FALSE)
 	living_user.adjustOxyLoss(-1, FALSE)
-	living_user.adjustStaminaLoss(-4)
+	living_user.adjustStaminaLoss(-6)
 
 /datum/eldritch_knowledge/rust_mark
 	name = "Mark of Rust"

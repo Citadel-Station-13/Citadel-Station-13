@@ -245,7 +245,7 @@
 	for(var/obj/item/living_heart/LH in atoms)
 
 		if(LH.target && LH.target.stat == DEAD)
-			to_chat(carbon_user,"<span class='danger'>Your patrons accepts your offer..</span>")
+			to_chat(carbon_user,"<span class='danger'>Your patrons accepts your offer...</span>")
 			var/mob/living/carbon/human/H = LH.target
 			H.become_husk()
 			LH.target = null
