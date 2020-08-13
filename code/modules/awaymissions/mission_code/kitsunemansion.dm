@@ -2,8 +2,8 @@
 /area/awaymission/kitsune
 	name = "A snowy Mansion"
 	icon_state = "away"
-	requires_power = FALSE
-	dynamic_lighting = DYNAMIC_LIGHTING_DISABLED
+	always_unpowered = TRUE
+	dynamic_lighting = DYNAMIC_LIGHTING_ENABLED
 	has_gravity = STANDARD_GRAVITY
 
 
@@ -11,18 +11,20 @@
 
 /turf/open/floor/wood/kitsune
 	initial_gas_mix = "o2=22;n2=82;TEMP=258"
+	planetary_atmos = TRUE
 /turf/open/floor/plating/asteroid/snow/kitsune
 	initial_gas_mix = "o2=22;n2=82;TEMP=258"
+	planetary_atmos = TRUE
 //mobs
 /mob/living/simple_animal/hostile/fox
-	name = "fox"
+	name = "Fox"
 	desc = "It's a fox. Seems extra angry."
 	icon = 'icons/mob/pets.dmi'
 	icon_state = "fox"
 	icon_living = "fox"
 	icon_dead = "fox_dead"
-	maxHealth = 40
-	health = 40
+	maxHealth = 50
+	health = 50
 	speak = list("Ack-Ack","Ack-Ack-Ack-Ackawoooo","Geckers","Awoo","Tchoff")
 	speak_emote = list("geckers", "barks")
 	emote_hear = list("howls.","barks.")
@@ -53,7 +55,7 @@
 	emote_taunt = list("growls")
 	taunt_chance = 20
 /mob/living/simple_animal/hostile/fox/kitsune
-	name = "fox?"
+	name = "Kitsune"
 	desc = "It's a fox. Seems to have a magical aura"
 	maxHealth = 100
 	health = 100
