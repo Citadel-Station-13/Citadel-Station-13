@@ -5,12 +5,8 @@
 	icon = 'icons/obj/genitals/penis.dmi'
 	zone = BODY_ZONE_PRECISE_GROIN
 	slot = ORGAN_SLOT_PENIS
-	masturbation_verb = "stroke"
-	arousal_verb = "You pop a boner"
-	unarousal_verb = "Your boner goes down"
-	genital_flags = CAN_MASTURBATE_WITH|CAN_CLIMAX_WITH|GENITAL_CAN_AROUSE|UPDATE_OWNER_APPEARANCE|GENITAL_UNDIES_HIDDEN|GENITAL_CAN_TAUR
+	genital_flags = UPDATE_OWNER_APPEARANCE|GENITAL_UNDIES_HIDDEN|GENITAL_CAN_TAUR
 	linked_organ_slot = ORGAN_SLOT_TESTICLES
-	fluid_transfer_factor = 0.5
 	shape = DEF_COCK_SHAPE
 	size = 2 //arbitrary value derived from length and diameter for sprites.
 	layer_index = PENIS_LAYER_INDEX
@@ -39,7 +35,6 @@
 		return
 	var/rounded_length = round(length)
 	var/new_size
-	var/enlargement = FALSE
 	switch(rounded_length)
 		if(0 to 6) //If modest size
 			new_size = 1
@@ -49,16 +44,9 @@
 			new_size = 3
 		if(21 to 34) //If massive and due for large effects
 			new_size = 3
-			enlargement = TRUE
 		if(35 to INFINITY) //If comical
 			new_size = 4 //no new sprites for anything larger yet
-			enlargement = TRUE
-	if(owner)
-		var/status_effect = owner.has_status_effect(STATUS_EFFECT_PENIS_ENLARGEMENT)
-		if(enlargement && !status_effect)
-			owner.apply_status_effect(STATUS_EFFECT_PENIS_ENLARGEMENT)
-		else if(!enlargement && status_effect)
-			owner.remove_status_effect(STATUS_EFFECT_PENIS_ENLARGEMENT)
+
 	if(linked_organ)
 		linked_organ.size = clamp(size + new_size, BALLS_SIZE_MIN, BALLS_SIZE_MAX)
 		linked_organ.update()
@@ -94,7 +82,7 @@
 			if(T.taur_mode & S.accepted_taurs) //looks out of place on those.
 				lowershape = "taur, [lowershape]"
 
-	desc = "You see [aroused_state ? "an erect" : "a flaccid"] [lowershape] [name]. You estimate it's about [round(length, 0.25)] inch[round(length, 0.25) != 1 ? "es" : ""] long and [round(diameter, 0.25)] inch[round(diameter, 0.25) != 1 ? "es" : ""] in diameter."
+	desc = "You see a [lowershape] [name]. You estimate it's about [round(length, 0.25)] inch[round(length, 0.25) != 1 ? "es" : ""] long and [round(diameter, 0.25)] inch[round(diameter, 0.25) != 1 ? "es" : ""] in diameter."
 
 /obj/item/organ/genital/penis/get_features(mob/living/carbon/human/H)
 	var/datum/dna/D = H.dna

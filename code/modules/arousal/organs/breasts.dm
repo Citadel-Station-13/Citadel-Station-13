@@ -9,15 +9,8 @@
 	zone = BODY_ZONE_CHEST
 	slot = ORGAN_SLOT_BREASTS
 	size = BREASTS_SIZE_DEF // "c". Refer to the breast_values static list below for the cups associated number values
-	fluid_id = /datum/reagent/consumable/milk
-	fluid_rate = MILK_RATE
 	shape = DEF_BREASTS_SHAPE
-	genital_flags = CAN_MASTURBATE_WITH|CAN_CLIMAX_WITH|GENITAL_FUID_PRODUCTION|GENITAL_CAN_AROUSE|UPDATE_OWNER_APPEARANCE|GENITAL_UNDIES_HIDDEN
-	masturbation_verb = "massage"
-	arousal_verb = "Your breasts start feeling sensitive"
-	unarousal_verb = "Your breasts no longer feel sensitive"
-	orgasm_verb = "leaking"
-	fluid_transfer_factor = 0.5
+	genital_flags = UPDATE_OWNER_APPEARANCE|GENITAL_UNDIES_HIDDEN
 	var/static/list/breast_values = list("a" =  1, "b" = 2, "c" = 3, "d" = 4, "e" = 5, "f" = 6, "g" = 7, "h" = 8, "i" = 9, "j" = 10, "k" = 11, "l" = 12, "m" = 13, "n" = 14, "o" = 15, "huge" = 16, "flat" = 0)
 	var/cached_size //these two vars pertain size modifications and so should be expressed in NUMBERS.
 	var/prev_size //former cached_size value, to allow update_size() to early return should be there no significant changes.
@@ -48,10 +41,6 @@
 		else
 			desc += " You estimate that they're [uppertext(size)]-cups."
 
-	if(CHECK_BITFIELD(genital_flags, GENITAL_FUID_PRODUCTION) && aroused_state)
-		var/datum/reagent/R = GLOB.chemical_reagents_list[fluid_id]
-		if(R)
-			desc += " They're leaking [lowertext(R.name)]."
 	var/datum/sprite_accessory/S = GLOB.breasts_shapes_list[shape]
 	var/icon_shape = S ? S.icon_state : "pair"
 	var/icon_size = clamp(breast_values[size], BREASTS_ICON_MIN_SIZE, BREASTS_ICON_MAX_SIZE)
@@ -88,7 +77,6 @@
 			to_chat(owner, "<span class='warning'>You feel your breasts shrinking away from your body as your chest flattens out.</span>")
 		QDEL_IN(src, 1)
 		return
-	var/enlargement = FALSE
 	switch(rounded_cached)
 		if(0) //flatchested
 			size = "flat"
@@ -96,16 +84,8 @@
 			size = breast_values[rounded_cached]
 		if(9 to 15) //massive
 			size = breast_values[rounded_cached]
-			enlargement = TRUE
 		if(16 to INFINITY) //rediculous
 			size = "huge"
-			enlargement = TRUE
-	if(owner)
-		var/status_effect = owner.has_status_effect(STATUS_EFFECT_BREASTS_ENLARGEMENT)
-		if(enlargement && !status_effect)
-			owner.apply_status_effect(STATUS_EFFECT_BREASTS_ENLARGEMENT)
-		else if(!enlargement && status_effect)
-			owner.remove_status_effect(STATUS_EFFECT_BREASTS_ENLARGEMENT)
 
 	if(rounded_cached < 16 && owner)//Because byond doesn't count from 0, I have to do this.
 		var/mob/living/carbon/human/H = owner
@@ -123,8 +103,6 @@
 		color = "#[D.features["breasts_color"]]"
 	size = D.features["breasts_size"]
 	shape = D.features["breasts_shape"]
-	if(!D.features["breasts_producing"])
-		DISABLE_BITFIELD(genital_flags, GENITAL_FUID_PRODUCTION|CAN_CLIMAX_WITH|CAN_MASTURBATE_WITH)
 	if(!isnum(size))
 		cached_size = breast_values[size]
 	else

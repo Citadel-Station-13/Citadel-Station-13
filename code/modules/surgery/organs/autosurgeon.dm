@@ -122,28 +122,3 @@
 	while(contents.len <= amount)
 		implant = pick(boxed)
 		new implant(src)
-
-/obj/item/autosurgeon/penis
-	desc = "A single use autosurgeon that contains a penis. A screwdriver can be used to remove it, but implants can't be placed back in."
-	uses = 1
-	starting_organ = /obj/item/organ/genital/penis
-
-/obj/item/autosurgeon/testicles
-	desc = "A single use autosurgeon that contains a set of testicles. A screwdriver can be used to remove it, but implants can't be placed back in."
-	uses = 1
-	starting_organ = /obj/item/organ/genital/testicles
-
-/obj/item/autosurgeon/vagina
-	desc = "A single use autosurgeon that contains a vagina. A screwdriver can be used to remove it, but implants can't be placed back in."
-	uses = 1
-	starting_organ = /obj/item/organ/genital/vagina
-
-/obj/item/autosurgeon/breasts
-	desc = "A single use autosurgeon that contains a set of breasts. A screwdriver can be used to remove it, but implants can't be placed back in."
-	uses = 1
-	starting_organ = /obj/item/organ/genital/breasts
-
-/obj/item/autosurgeon/womb
-	desc = "A single use autosurgeon that contains a womb. A screwdriver can be used to remove it, but implants can't be placed back in."
-	uses = 1
-	starting_organ = /obj/item/organ/genital/womb

@@ -135,13 +135,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		for(var/V in all_quirks) // quirk migration
 			switch(V)
 				if("Acute hepatic pharmacokinesis")
-					DISABLE_BITFIELD(cit_toggles, PENIS_ENLARGEMENT)
-					DISABLE_BITFIELD(cit_toggles, BREAST_ENLARGEMENT)
 					ENABLE_BITFIELD(cit_toggles,FORCED_FEM)
 					ENABLE_BITFIELD(cit_toggles,FORCED_MASC)
-					all_quirks -= V
-				if("Crocin Immunity")
-					ENABLE_BITFIELD(cit_toggles,NO_APHRO)
 					all_quirks -= V
 				if("Buns of Steel")
 					ENABLE_BITFIELD(cit_toggles,NO_ASS_SLAP)

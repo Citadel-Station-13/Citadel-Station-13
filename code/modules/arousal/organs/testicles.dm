@@ -6,21 +6,11 @@
 	zone = BODY_ZONE_PRECISE_GROIN
 	slot = ORGAN_SLOT_TESTICLES
 	size = BALLS_SIZE_MIN
-	arousal_verb = "Your balls ache a little"
-	unarousal_verb = "Your balls finally stop aching, again"
 	linked_organ_slot = ORGAN_SLOT_PENIS
-	genital_flags = CAN_MASTURBATE_WITH|MASTURBATE_LINKED_ORGAN|GENITAL_FUID_PRODUCTION|UPDATE_OWNER_APPEARANCE|GENITAL_UNDIES_HIDDEN
+	genital_flags = UPDATE_OWNER_APPEARANCE|GENITAL_UNDIES_HIDDEN
 	var/size_name = "average"
 	shape = DEF_BALLS_SHAPE
-	fluid_id = /datum/reagent/consumable/semen
-	masturbation_verb = "massage"
 	layer_index = TESTICLES_LAYER_INDEX
-
-/obj/item/organ/genital/testicles/generate_fluid()
-	if(!linked_organ && !update_link())
-		return FALSE
-	return ..()
-	// in memoriam "Your balls finally feel full, again." ??-2020
 
 /obj/item/organ/genital/testicles/upon_link()
 	size = linked_organ.size
@@ -61,7 +51,4 @@
 	else
 		color = "#[D.features["balls_color"]]"
 	shape = D.features["balls_shape"]
-	fluid_rate = D.features["balls_cum_rate"]
-	fluid_mult = D.features["balls_cum_mult"]
-	fluid_efficiency = D.features["balls_efficiency"]
 	toggle_visibility(D.features["balls_visibility"], FALSE)

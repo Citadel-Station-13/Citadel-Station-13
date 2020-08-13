@@ -3,40 +3,16 @@
 	w_class = WEIGHT_CLASS_SMALL
 	organ_flags = ORGAN_NO_DISMEMBERMENT|ORGAN_EDIBLE
 	var/shape
-	var/sensitivity = 1 // wow if this were ever used that'd be cool but it's not but i'm keeping it for my unshit code
 	var/genital_flags //see citadel_defines.dm
-	var/masturbation_verb = "masturbate"
-	var/orgasm_verb = "cumming" //present continous
-	var/arousal_verb = "You feel aroused"
-	var/unarousal_verb = "You no longer feel aroused"
-	var/fluid_transfer_factor = 0 //How much would a partner get in them if they climax using this?
 	var/size = 2 //can vary between num or text, just used in icon_state strings
-	var/datum/reagent/fluid_id = null
-	var/fluid_max_volume = 50
-	var/fluid_efficiency = 1
-	var/fluid_rate = CUM_RATE
-	var/fluid_mult = 1
-	var/time_since_last_orgasm = 500
-	var/aroused_state = FALSE //Boolean used in icon_state strings
 	var/obj/item/organ/genital/linked_organ
 	var/linked_organ_slot //used for linking an apparatus' organ to its other half on update_link().
 	var/layer_index = GENITAL_LAYER_INDEX //Order should be very important. FIRST vagina, THEN testicles, THEN penis, as this affects the order they are rendered in.
 
 /obj/item/organ/genital/Initialize(mapload, do_update = TRUE)
 	. = ..()
-	if(fluid_id)
-		create_reagents(fluid_max_volume, NONE, NO_REAGENTS_VALUE)
-		if(CHECK_BITFIELD(genital_flags, GENITAL_FUID_PRODUCTION))
-			reagents.add_reagent(fluid_id, fluid_max_volume)
 	if(do_update)
 		update()
-
-/obj/item/organ/genital/proc/set_aroused_state(new_state)
-	if(!(genital_flags & GENITAL_CAN_AROUSE))
-		return FALSE
-	if(!((HAS_TRAIT(owner,TRAIT_PERMABONER) && !new_state) || HAS_TRAIT(owner,TRAIT_NEVERBONER) && new_state))
-		aroused_state = new_state
-	return aroused_state
 
 /obj/item/organ/genital/proc/update()
 	if(QDELETED(src))
@@ -114,56 +90,14 @@
 			picked_organ.toggle_visibility(picked_visibility)
 	return
 
-/mob/living/carbon/verb/toggle_arousal_state()
-	set category = "IC"
-	set name = "Toggle genital arousal"
-	set desc = "Allows you to toggle which genitals are showing signs of arousal."
-	var/list/genital_list = list()
-	for(var/obj/item/organ/genital/G in internal_organs)
-		if(G.genital_flags & GENITAL_CAN_AROUSE)
-			genital_list += G
-	if(!genital_list.len) //There's nothing that can show arousal
-		return
-	var/obj/item/organ/genital/picked_organ
-	picked_organ = input(src, "Choose which genitalia to toggle arousal on", "Set genital arousal", null) in genital_list
-	if(picked_organ)
-		var/original_state = picked_organ.aroused_state
-		picked_organ.set_aroused_state(!picked_organ.aroused_state)
-		if(original_state != picked_organ.aroused_state)
-			to_chat(src,"<span class='userlove'>[picked_organ.aroused_state ? picked_organ.arousal_verb : picked_organ.unarousal_verb].</span>")
-		else
-			to_chat(src,"<span class='userlove'>You can't make that genital [picked_organ.aroused_state ? "unaroused" : "aroused"]!</span>")
-		picked_organ.update_appearance()
-	return
-
-
 /obj/item/organ/genital/proc/modify_size(modifier, min = -INFINITY, max = INFINITY)
-	fluid_max_volume += modifier*2.5
-	fluid_rate += modifier/10
-	if(reagents)
-		reagents.maximum_volume = fluid_max_volume
 	return
 
 /obj/item/organ/genital/proc/update_size()
 	return
 
 /obj/item/organ/genital/proc/update_appearance()
-	if(!owner || owner.stat == DEAD)
-		aroused_state = FALSE
-
-/obj/item/organ/genital/on_life()
-	. = ..()
-	if(!reagents || !.)
-		return
-	reagents.maximum_volume = fluid_max_volume
-	if(fluid_id && CHECK_BITFIELD(genital_flags, GENITAL_FUID_PRODUCTION))
-		time_since_last_orgasm++
-
-/obj/item/organ/genital/proc/generate_fluid(datum/reagents/R)
-	var/amount = clamp(fluid_rate * time_since_last_orgasm * fluid_mult,0,fluid_max_volume)
-	R.clear_reagents()
-	R.add_reagent(fluid_id,amount)
-	return TRUE
+	return
 
 /obj/item/organ/genital/proc/update_link()
 	if(owner)
@@ -280,7 +214,6 @@
 
 			if(!S || S.icon_state == "none")
 				continue
-			var/aroused_state = G.aroused_state && S.alt_aroused
 			var/accessory_icon = S.icon
 			var/do_center = S.center
 			var/dim_x = S.dimension_x
@@ -310,7 +243,7 @@
 					if("vag_color")
 						genital_overlay.color = "#[dna.features["vag_color"]]"
 
-			genital_overlay.icon_state = "[G.slot]_[S.icon_state]_[size][(dna.species.use_skintones && !dna.skin_tone_override) ? "_s" : ""]_[aroused_state]_[layertext]"
+			genital_overlay.icon_state = "[G.slot]_[S.icon_state]_[size][(dna.species.use_skintones && !dna.skin_tone_override) ? "_s" : ""]_0_[layertext]"
 
 			if(layers_num[layer] == GENITALS_FRONT_LAYER && G.genital_flags & GENITAL_THROUGH_CLOTHES)
 				genital_overlay.layer = -GENITALS_EXPOSED_LAYER

@@ -93,16 +93,6 @@
 	icon_state = "hypovial"
 	list_reagents = list(/datum/reagent/medicine/tricordrazine = 30)
 
-/obj/item/reagent_containers/glass/bottle/vial/small/breastreduction
-	name = "pink hypovial (breast treatment)"
-	icon_state = "hypovial-pink"
-	list_reagents = list(/datum/reagent/fermi/BEsmaller_hypo = 30)
-
-/obj/item/reagent_containers/glass/bottle/vial/small/penisreduction
-	name = "pink hypovial (penis treatment)"
-	icon_state = "hypovial-pink"
-	list_reagents = list(/datum/reagent/fermi/PEsmaller_hypo = 30)
-
 /obj/item/reagent_containers/glass/bottle/vial/large/CMO
 	name = "deluxe hypovial"
 	icon_state = "hypoviallarge-cmos"

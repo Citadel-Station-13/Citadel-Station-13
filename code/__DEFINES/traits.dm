@@ -259,7 +259,6 @@
 #define STATUS_EFFECT_TRAIT "status-effect"
 #define ROUNDSTART_TRAIT "roundstart" //cannot be removed without admin intervention
 #define GHOSTROLE_TRAIT "ghostrole"
-#define APHRO_TRAIT "aphro"
 #define BLOODSUCKER_TRAIT "bloodsucker"
 #define SHOES_TRAIT "shoes" //inherited from your sweet kicks
 #define GLOVE_TRAIT "glove" //inherited by your cool gloves
