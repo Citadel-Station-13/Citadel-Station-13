@@ -167,6 +167,7 @@ As a Cook, any food you make will be much healthier than the junk food found in 
 As a Cook, being in the kitchen will make you remember the basics of Close Quarters Cooking (CQC). It is highly effective at removing Assistants from your workplace.
 As a Cook, your Kitchenmate can vend out trays that fit on your belt slot. These trays pick up 7 food items at a time and are a quick way to transport large meals.
 As a Cook, the advanced roasting stick is used to cook food at a distance, and can be used on SME, singularity, and other objects that cook food normally.
+As a Cook, the deep frier is a tool which can turn very large quantities of seemingly useless objects into food, albeit nutritionally poor and awful tasting food, but hey, food is food.
 As the Bartender, the drinks you start with only give you the basics. If you want more advanced mixtures, look into working with chemistry, hydroponics, or even mining for things to grind up and throw in!
 As the Bartender, you can use a circular saw on your shotgun to make it easier to store. Make sure to empty them prior lest you blast yourself in the face!
 As a Janitor, if someone steals your janicart, you can instead use your spray bottles, soap, and arsenal of slippery objects to exact your bloody revenge.. ..or just order another one from Cargo.
