@@ -348,6 +348,12 @@
 	name = "Cowboy Shirt Shortsleeved Red"
 	icon_state = "cowboyshirt_reds"
 
+/datum/sprite_accessory/underwear/top/bra_binder
+	name = "Bra (binder)"
+	icon_state = "bra_binder"
+	has_color = TRUE
 
-
-
+/datum/sprite_accessory/underwear/top/bra_binder_strapless
+	name = "Bra (binder, strapless)"
+	icon_state = "bra_binder_strapless"
+	has_color = TRUE
