@@ -170,7 +170,7 @@ As the Bartender, the drinks you start with only give you the basics. If you wan
 As the Bartender, you can use a circular saw on your shotgun to make it easier to store. Make sure to empty them prior lest you blast yourself in the face!
 As a Janitor, if someone steals your janicart, you can instead use your spray bottles, soap, and arsenal of slippery objects to exact your bloody revenge.. ..or just order another one from Cargo.
 As a Janitor, the trash bag can be used to hold more than trash. Tools, medical equipment, smuggled nuclear disks... You name it!
-As a Janitor, mousetraps can be used as bom triggers to booby-trap containers.
+As a Janitor, mousetraps can be used as bomb triggers to booby-trap containers.
 Beware the Curator, for they are not completely defenseless. The curator's whip always disarms people, their laser pointer can blind humans and cyborgs, and can hide items in wirecut books.
 As the Curator, be sure to keep the shelves stocked and the library clean for crew.
 As a Cargo Technician, you can hack MULEbots to make them faster, run over people in their way, and even let you ride them!
