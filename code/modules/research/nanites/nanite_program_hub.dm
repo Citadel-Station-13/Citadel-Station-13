@@ -53,8 +53,9 @@
 /obj/machinery/nanite_program_hub/proc/eject(mob/living/user)
 	if(!disk)
 		return
-	if(!istype(user) || !Adjacent(user))// || !user.put_in_active_hand(disk))
-		disk.forceMove(drop_location())
+	disk.forceMove(drop_location())
+	if(istype(user) && Adjacent(user))
+		user.put_in_active_hand(disk)
 	disk = null
 
 /obj/machinery/nanite_program_hub/AltClick(mob/user)
