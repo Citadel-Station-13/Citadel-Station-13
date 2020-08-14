@@ -25,6 +25,7 @@
 	density = TRUE
 	anchored = TRUE
 	var/workpiece_state = FALSE
+	var/datum/material = workpiece_material
 	var/qualitymod = 0
 	var/currentquality = qualitymod
 	var/currentsteps = 0
@@ -44,20 +45,22 @@
 	RECIPE_HALBERD = obj/item/smithing/halberdhead)
 
 /obj/structure/anvil/attackby(obj/item/I, mob/user)
-	if(istype(I, obj/item/ingot))
-		var/obj/item/ingot/notsword = I
+	if(istype(I, obj/item/smithing/ingot))
+		var/obj/item/smithing/ingot/notsword = I
 		if(workpiece_state)
 			to_chat(user, "There's already a workpiece! Finish it or take it off.")
 			return FALSE
 		if(notsword.workability == "shapeable")
 			workpiece_state = WORKPIECE_PRESENT
+			workpiece_material = notsword.custom_materials
 			to_chat(user, "You place the [notsword] on the [src].")
+			qdel(notsword)
 		else
 			to_chat(user, "The ingot isn't workable yet!")
 			return FALSE
 		return
 	else if(istype(I, obj/item/hammer))
-		var/obj/item/hammer/hammertime = I
+		var/obj/item/melee/hammer/hammertime = I
 		if(workpiece_state = WORKPIECE_PRESENT || WORKPIECE_INPROGRESS)
 			do_shaping(user, hammer.qualitymod)
 		else
