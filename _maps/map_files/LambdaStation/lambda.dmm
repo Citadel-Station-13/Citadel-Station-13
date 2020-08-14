@@ -75545,10 +75545,6 @@
 /obj/effect/turf_decal/loading_area{
 	dir = 4
 	},
-/obj/machinery/computer/cryopod_tele{
-	dir = 1;
-	pixel_y = -27
-	},
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/dorms)
 "cOu" = (
@@ -81253,7 +81249,7 @@
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/turret_protected/aisat/foyer)
 "nJo" = (
-/obj/machinery/cryopod_tele,
+/obj/machinery/cryopod/tele,
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/dorms)
 "nRc" = (

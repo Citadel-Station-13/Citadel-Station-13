@@ -1,0 +1,9 @@
+author: "SandPoot"
+delete-after: True
+changes: 
+  - balance: "Alien toolset got a long range analyzer (it is meant to be top tier technology after all)"
+  - balance: "Telepads no longer have 3x3 displacement."
+  - imagedel: "Duplicate poster."
+  - spellcheck: "Added a few dots to the ending of sentences."
+  - spellcheck: "Alien Surgical Toolset doesn't sound right."
+  - code_imp: "Made the \"teleporter\" code better."

@@ -40,7 +40,7 @@
 			occupant.forceMove(drop_location())
 			occupant = null
 			return
-		to_chat(occupant, "<span class='notice'>You enter [src]</span>")
+		to_chat(occupant, "<span class='notice'>You enter [src].</span>")
 
 		dosurgery()
 
@@ -78,14 +78,14 @@
 			currentorgan.forceMove(get_turf(src))
 		storedorgan.Insert(occupant)//insert stored organ into the user
 		storedorgan = null
-		occupant.visible_message("<span class='notice'>[src] completes the surgery procedure", "<span class='notice'>[src] inserts the organ into your body.</span>")
+		occupant.visible_message("<span class='notice'>[src] completes the surgery procedure.", "<span class='notice'>[src] inserts the organ into your body.</span>")
 	playsound(src, 'sound/machines/microwave/microwave-end.ogg', 100, 0)
 	processing = FALSE
 	open_machine()
 
 /obj/machinery/autodoc/open_machine(mob/user)
 	if(processing)
-		occupant.visible_message("<span class='notice'>[user] cancels [src]'s procedure", "<span class='notice'>[src] stops inserting the organ into your body.</span>")
+		occupant.visible_message("<span class='notice'>[user] cancels [src]'s procedure.", "<span class='notice'>[src] stops inserting the organ into your body.</span>")
 		processing = FALSE
 	if(occupant)
 		occupant.forceMove(drop_location())

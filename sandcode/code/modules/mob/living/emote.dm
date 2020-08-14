@@ -18,5 +18,5 @@
 	key = "blep"
 	key_third_person = "bleps"
 	message = "bleps!"
-	emote_type = EMOTE_AUDIBLE | EMOTE_VISIBLE
-	mob_type_allowed_typecache = list(/mob/living/carbon)
+	emote_type = EMOTE_VISIBLE
+	mob_type_allowed_typecache = list(/mob/living)

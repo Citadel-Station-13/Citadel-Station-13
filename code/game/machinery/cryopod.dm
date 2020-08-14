@@ -9,8 +9,8 @@
 //Main cryopod console.
 
 /obj/machinery/computer/cryopod
-	name = "cryogenic oversight console"
-	desc = "An interface between crew and the cryogenic storage oversight systems."
+	name = "general oversight console"
+	desc = "An interface between crew and the cryogenic storage/teleporter storage oversight systems."
 	icon = 'icons/obj/Cryogenic2.dmi'
 	icon_state = "cellconsole_1"
 	circuit = /obj/item/circuitboard/cryopodcontrol
@@ -57,7 +57,7 @@
 				dat += "<a href='byond://?src=[REF(src)];allitems=1'>Recover all objects</a><br>"
 		if(2)
 			dat += "<a href='byond://?src=[REF(src)];menu=1'><< Back</a><br><br>"
-			dat += "<h3>Recently stored Crew</h3><br/><hr/><br/>"
+			dat += "<h3>Recently stored/teleported Crew</h3><br/><hr/><br/>"
 			if(!frozen_crew.len)
 				dat += "There has been no storage usage at this terminal.<br/>"
 			else
@@ -74,7 +74,7 @@
 					dat += "[I.name]<br/>"
 			dat += "<hr/>"
 
-	var/datum/browser/popup = new(user, "cryopod_console", "Cryogenic System Control")
+	var/datum/browser/popup = new(user, "cryopod_console", "General Storage System Control")
 	popup.set_content(dat)
 	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
 	popup.open()
@@ -169,6 +169,7 @@
 	density = TRUE
 	anchored = TRUE
 	state_open = TRUE
+	var/tele = FALSE
 
 	var/on_store_message = "has entered long-term storage."
 	var/on_store_name = "Cryogenic Oversight"
@@ -230,8 +231,8 @@
 
 	// Don't send messages unless we *need* the computer, and less than five minutes have passed since last time we messaged
 	if(!control_computer && urgent && last_no_computer_message + 5*60*10 < world.time)
-		log_admin("Cryopod in [get_area(src)] could not find control computer!")
-		message_admins("Cryopod in [get_area(src)] could not find control computer!")
+		log_admin("\The [src] in [get_area(src)] could not find control computer!")
+		message_admins("\The [src] in [get_area(src)] could not find control computer!")
 		last_no_computer_message = world.time
 
 	return control_computer != null
@@ -242,27 +243,33 @@
 	if((isnull(user) || istype(user)) && state_open && !panel_open)
 		..(user)
 		var/mob/living/mob_occupant = occupant
-		investigate_log("Cryogenics machine closed with occupant [key_name(occupant)] by user [key_name(user)].", INVESTIGATE_CRYOGENICS)
-		if(mob_occupant && mob_occupant.stat != DEAD)
+		investigate_log("[src] closed with occupant [key_name(occupant)] by user [key_name(user)].", INVESTIGATE_CRYOGENICS)
+		if(mob_occupant && mob_occupant.stat != DEAD && !(tele))
 			to_chat(occupant, "<span class='boldnotice'>You feel cool air surround you. You go numb as your senses turn inward.</span>")
 		if(mob_occupant.client)//if they're logged in
 			despawn_world_time = world.time + (time_till_despawn * 0.1)
 		else
 			despawn_world_time = world.time + time_till_despawn
-	icon_state = "cryopod"
+	if(!tele)
+		icon_state = "cryopod"
+	else
+		icon_state = "implantchair_occupied"
 
 /obj/machinery/cryopod/open_machine()
 	if(occupant)
-		investigate_log("Cryogenics machine opened with occupant [key_name(occupant)] inside.", INVESTIGATE_CRYOGENICS)
+		investigate_log("[src] opened with occupant [key_name(occupant)] inside.", INVESTIGATE_CRYOGENICS)
 	..()
-	icon_state = "cryopod-open"
+	if(!tele)
+		icon_state = "cryopod-open"
+	else
+		icon_state = "implantchair_open"
 	density = TRUE
 	name = initial(name)
 
 /obj/machinery/cryopod/container_resist(mob/living/user)
-	investigate_log("Cryogenics machine container resisted by [key_name(user)] with occupant [key_name(occupant)].", INVESTIGATE_CRYOGENICS)
-	visible_message("<span class='notice'>[occupant] emerges from [src]!</span>",
-		"<span class='notice'>You climb out of [src]!</span>")
+	investigate_log("[src] resisted by [key_name(user)] with occupant [key_name(occupant)].", INVESTIGATE_CRYOGENICS)
+	visible_message("<span class='notice'>[occupant] emerges from \the [src]!</span>",
+		"<span class='notice'>You climb out of \the [src]!</span>")
 	open_machine()
 
 /obj/machinery/cryopod/relaymove(mob/user)
@@ -286,6 +293,11 @@
 				find_control_computer(urgent = TRUE)//better hope you found it this time
 
 			despawn_occupant()
+
+			if(tele)
+				despawn_occupant()
+				do_sparks(2, TRUE, src)
+				playsound(src, 'sound/weapons/emitter2.ogg', 25, 1, extrarange = 3, falloff = 5)
 
 #define CRYO_DESTROY 0
 #define CRYO_PRESERVE 1
@@ -407,7 +419,7 @@
 	if(GLOB.announcement_systems.len)
 		var/obj/machinery/announcement_system/announcer = pick(GLOB.announcement_systems)
 		announcer.announce("CRYOSTORAGE", mob_occupant.real_name, announce_rank, list())
-		visible_message("<span class='notice'>\The [src] hums and hisses as it moves [mob_occupant.real_name] into storage.</span>")
+		visible_message("<span class='notice'>\The [src] hums and hisses as it [tele ? "teleports" : "moves"] [mob_occupant.real_name] [tele ? "to centcom" : "into storage"].</span>")
 
 	// Ghost and delete the mob.
 	if(!mob_occupant.get_ghost(1))
@@ -432,11 +444,11 @@
 		return
 
 	if(occupant)
-		to_chat(user, "<span class='boldnotice'>The cryo pod is already occupied!</span>")
+		to_chat(user, "<span class='boldnotice'>\The [src] is already occupied!</span>")
 		return
 
 	if(target.stat == DEAD)
-		to_chat(user, "<span class='notice'>Dead people can not be put into cryo.</span>")
+		to_chat(user, "<span class='notice'>Dead people can not be put into [tele ? "teleportation process" : "cryo"].</span>")
 		return
 
 	if(target.client && user != target)
@@ -446,7 +458,7 @@
 			to_chat(user, "<span class='danger'>You can't put [target] into [src]. They're conscious.</span>")
 		return
 	else if(target.client)
-		if(alert(target,"Would you like to enter cryosleep?",,"Yes","No") == "No")
+		if(alert(target,"Would you like to [tele ? "be teleported out" : "enter cryosleep"]?",,"Yes","No") == "No")
 			return
 
 	var/generic_plsnoleave_message = " Please adminhelp before leaving the round, even if there are no administrators online!"
@@ -478,9 +490,9 @@
 		//rerun the checks in case of shenanigans
 
 	if(target == user)
-		visible_message("[user] starts climbing into the cryo pod.")
+		visible_message("[user] starts climbing into \the [src].")
 	else
-		visible_message("[user] starts putting [target] into the cryo pod.")
+		visible_message("[user] starts putting [target] into \the [src].")
 
 	if(occupant)
 		to_chat(user, "<span class='boldnotice'>\The [src] is in use.</span>")
@@ -489,8 +501,8 @@
 
 	to_chat(target, "<span class='boldnotice'>If you ghost, log out or close your client now, your character will shortly be permanently removed from the round.</span>")
 	name = "[name] ([occupant.name])"
-	log_admin("<span class='notice'>[key_name(target)] entered a stasis pod.</span>")
-	message_admins("[key_name_admin(target)] entered a stasis pod. (<A HREF='?_src_=holder;[HrefToken()];adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)")
+	log_admin("<span class='notice'>[key_name(target)] entered a [src].</span>")
+	message_admins("[key_name_admin(target)] entered a [src]. (<A HREF='?_src_=holder;[HrefToken()];adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)")
 	add_fingerprint(target)
 
 //Attacks/effects.

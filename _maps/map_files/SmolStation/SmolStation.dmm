@@ -16560,11 +16560,7 @@
 /obj/machinery/light{
 	dir = 8
 	},
-/obj/machinery/cryopod_tele,
-/obj/machinery/computer/cryopod_tele{
-	dir = 1;
-	pixel_y = -23
-	},
+/obj/machinery/cryopod/tele,
 /turf/open/floor/carpet,
 /area/crew_quarters/dorms)
 "lXy" = (
@@ -32348,7 +32344,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer1{
 	dir = 4
 	},
-/obj/machinery/cryopod_tele,
+/obj/machinery/cryopod/tele,
 /turf/open/floor/carpet,
 /area/crew_quarters/dorms)
 "xEk" = (
