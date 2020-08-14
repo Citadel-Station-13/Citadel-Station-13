@@ -16,6 +16,7 @@
 #define RECIPE_BROADSWORD "dfufd" //draw fold upset fold draw
 #define RECIPE_HALBERD "duffp" //draw upset fold fold punch
 
+#define STEPS_CAP 8
 /obj/structure/anvil
 	name = "anvil"
 	desc = "Base class of anvil. This shouldn't exist, but is useable."
@@ -29,7 +30,7 @@
 	var/currentsteps = 0
 	var/strengthstepcostmod = 1
 	var/stepsdone
-	var/list/recipes = (RECIPE_AXE, RECIPE_HAMMER, RECIPE_SCYTHE, RECIPE_SHOVEL, RECIPE_COGHEAD, RECIPE_JAVELIN, RECIPE_LARGEPICK, RECIPE_SMALLPICK, RECIPE_SHORTSWORD, RECIPE_SMALLKNIFE)
+	var/list/smithrecipes = (RECIPE_AXE, RECIPE_HAMMER, RECIPE_SCYTHE, RECIPE_SHOVEL, RECIPE_COGHEAD, RECIPE_JAVELIN, RECIPE_LARGEPICK, RECIPE_SMALLPICK, RECIPE_SHORTSWORD, RECIPE_SMALLKNIFE, RECIPE_BROADSWORD, RECIPE_HALBERD)
 
 /obj/structure/anvil/attackby(obj/item/I, mob/user)
 	if(istype(I, obj/item/ingot))
@@ -44,6 +45,13 @@
 			to_chat(user, "The ingot isn't workable yet!")
 			return FALSE
 		return
+	else if(istype(I, obj/item/hammer))
+		var/obj/item/hammer/hammertime = I
+		if(workpiece_state = WORKPIECE_PRESENT || WORKPIECE_INPROGRESS)
+			do_shaping(user, hammer.qualitymod)
+		else
+		 to_chat(user, "You can't work an empty anvil!")
+		 return FALSE
 	return ..()
 
 /obj/structure/anvil/wrench_act(mob/living/user, obj/item/I)
@@ -52,8 +60,10 @@
 	return TRUE
 
 
-/obj/structure/anvil/proc/do_shaping(mob/user)
+/obj/structure/anvil/proc/do_shaping(mob/user, var/qualitychange)
+	qualitymod += qualitychange
 	var/list/shapingsteps = ("weak hit", "strong hit", "heavy hit", "fold", "draw", "shrink", "bend", "punch", "upset") //weak/strong/heavy hit affect strength. All the other steps shape.
+	workpiece_state = WORKPIECE_INPROGRESS
 	var/stepdone = input(user, "How would you like to work the metal?") in shapingsteps
 	switch(stepdone)
 		if("weak hit")
@@ -93,5 +103,17 @@
 			currentsteps += 1
 			qualitymod -= 2
 	if(length(stepsdone) >= 3)
-		//todo: TRYFINISHTHEPIECE
-	//TODO: CHECK IF IT'S TOO WORKED
+		if(currentsteps > STEPS_CAP)
+			to_chat(user, "You overwork the metal, causing it to turn into useless slag!")
+			var/turf/T = get_turf(user)
+			workpiece_state = FALSE
+			new /obj/item/stack/ore/slag(T)
+		for(var/solutions in smithrecipes)
+			if(!solution == stepsdone)
+				return FALSE
+			else
+				var/finisheditem = smithrecipes[stepsdone]
+				var/turf/T = get_turf(user)
+				workpiece_state = FALSE
+				new finisheditem(T)
+				to_chat(user, "You finish your [finisheditem]!")
