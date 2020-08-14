@@ -257,6 +257,7 @@
 					continue
 				var/obj/item/forbidden_book/FB = X
 				FB.charge++
+				FB.charge++
 				break
 
 		if(!LH.target)

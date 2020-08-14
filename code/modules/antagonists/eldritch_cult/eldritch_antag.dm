@@ -40,6 +40,7 @@
 	START_PROCESSING(SSprocessing,src)
 	if(give_equipment)
 		equip_cultist()
+	owner.teach_crafting_recipe(/datum/crafting_recipe/heretic/codex)
 	return ..()
 
 /datum/antagonist/heretic/on_removal()
@@ -109,11 +110,16 @@
 				P.find_target(owners,assasination)
 				protection += P.target
 				objectives += P
+			
 
 	var/datum/objective/sacrifice_ecult/SE = new
 	SE.owner = owner
 	SE.update_explanation_text()
 	objectives += SE
+
+	var/datum/objective/escape/escape_objective = new
+	escape_objective.owner = owner
+	objectives += escape_objective
 
 /datum/antagonist/heretic/apply_innate_effects(mob/living/mob_override)
 	. = ..()
