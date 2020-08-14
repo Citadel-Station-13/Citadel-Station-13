@@ -30,7 +30,18 @@
 	var/currentsteps = 0
 	var/strengthstepcostmod = 1
 	var/stepsdone
-	var/list/smithrecipes = (RECIPE_AXE, RECIPE_HAMMER, RECIPE_SCYTHE, RECIPE_SHOVEL, RECIPE_COGHEAD, RECIPE_JAVELIN, RECIPE_LARGEPICK, RECIPE_SMALLPICK, RECIPE_SHORTSWORD, RECIPE_SMALLKNIFE, RECIPE_BROADSWORD, RECIPE_HALBERD)
+	var/list/smithrecipes = (RECIPE_AXE = obj/item/smithing/axehead,
+	RECIPE_HAMMER = obj/item/smithing/hammerhead,
+	RECIPE_SCYTHE = obj/item/smithing/scytheblade,
+	RECIPE_SHOVEL = obj/item/smithing/shovelhead,
+	RECIPE_COGHEAD = obj/item/smithing/cogheadclubhead,
+	RECIPE_JAVELIN = obj/item/smithing/javelinhead,
+	RECIPE_LARGEPICK = obj/item/smithing/pickaxehead,
+	RECIPE_SMALLPICK = obj/item/smithing/prospectingpickhead,
+	RECIPE_SHORTSWORD = obj/item/smithing/shortswordblade,
+	RECIPE_SMALLKNIFE = obj/item/smithing/knifeblade,
+	RECIPE_BROADSWORD = obj/item/smithing/broadblade,
+	RECIPE_HALBERD = obj/item/smithing/halberdhead)
 
 /obj/structure/anvil/attackby(obj/item/I, mob/user)
 	if(istype(I, obj/item/ingot))
