@@ -159,7 +159,7 @@ As a Botanist, you can hack the MegaSeed Vendor to get access to more exotic see
 As a Botanist, you can mutate the plants growing in your hydroponics trays with unstable mutagen or, as an alternative, crude radioactives from chemistry to get special variations.
 As a Botanist, you should look into increasing the potency of your plants. This is shown by the size of the plant's sprite, and can increase the amount of chemicals, points gained from grinding them in the biogenerator, and lets people know you are a proficient botanist.
 As a Botanist, you can combine production trait chemicals and mix your own complex chemicals inside of the plants themselves using precursors. Chlorine (blumpkin) + radium and phosphorus (glowshrooms) equals unstable mutagen!
-As a Botanist, earthsblood is an incredibly powerful chemical found in Ambrosia Gaia, it heals all types of damages very rapidly but causes lingering brain damage and has a nasty overdose. You can chemicals from watermelons (water), grass (hydrogen), and cherries (sugar) to mix mannitol with your earthsblood to completely counteract its main drawback!
+As a Botanist, earthsblood is an incredibly powerful chemical found in Ambrosia Gaia, it heals all types of damages very rapidly but causes lingering brain damage and has a nasty overdose. You can combine the chemicals from watermelons (water), grass (hydrogen), and cherries (sugar) to mix mannitol in with your earthsblood to completely counteract its main drawback!
 As a Cook, you can load your food into snack vending machines.
 As a Cook, you can rename your custom made food with a pen.
 As a Cook, any food you make will be much healthier than the junk food found in vendors. Having the crew routinely eating from you will provide minor buffs.
