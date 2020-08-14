@@ -2,7 +2,6 @@
 /area/awaymission/kitsune
 	name = "A snowy Mansion"
 	icon_state = "away"
-	always_unpowered = TRUE
 	dynamic_lighting = DYNAMIC_LIGHTING_ENABLED
 	has_gravity = STANDARD_GRAVITY
 
@@ -10,11 +9,18 @@
 //turfs
 
 /turf/open/floor/wood/kitsune
-	initial_gas_mix = "o2=22;n2=82;TEMP=258"
+	initial_gas_mix = "o2=22;n2=82;TEMP=263"
 	planetary_atmos = TRUE
 /turf/open/floor/plating/asteroid/snow/kitsune
-	initial_gas_mix = "o2=22;n2=82;TEMP=258"
+	initial_gas_mix = "o2=22;n2=82;TEMP=263"
 	planetary_atmos = TRUE
+
+//structure
+/obj/structure/bloodsucker/candelabrum/fox
+	light_power = 3
+	light_range = 4
+	anchored = TRUE
+	lit = TRUE
 //mobs
 /mob/living/simple_animal/hostile/fox
 	name = "Fox"
@@ -44,8 +50,7 @@
 	atmos_requirements = list("min_oxy" = 2, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	unsuitable_atmos_damage = 5
 	minbodytemp = 190
-
-	maxbodytemp = 400
+	maxbodytemp = 600
 	harm_intent_damage = 5
 	melee_damage_lower = 20
 	melee_damage_upper = 40
@@ -54,18 +59,17 @@
 	attack_sound = 'sound/weapons/bite.ogg'
 	emote_taunt = list("growls")
 	taunt_chance = 20
+	gold_core_spawnable = HOSTILE_SPAWN
 /mob/living/simple_animal/hostile/fox/kitsune
 	name = "Kitsune"
 	desc = "It's a fox. Seems to have a magical aura"
-	maxHealth = 100
-	health = 100
 	retreat_distance = 4
 	minimum_distance = 4
 	maxHealth = 200
 	health = 200
+	gold_core_spawnable = NO_SPAWN
 	var/obj/effect/proc_holder/spell/aimed/fireball/fireball = null
 	var/obj/effect/proc_holder/spell/targeted/projectile/magic_missile/mm = null
-
 	var/next_cast = 0
 
 /mob/living/simple_animal/hostile/fox/kitsune/Initialize()
