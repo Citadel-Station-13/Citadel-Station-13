@@ -15686,10 +15686,7 @@
 /turf/open/floor/plasteel,
 /area/hallway/primary/port/fore)
 "aIv" = (
-/obj/machinery/cryopod_tele,
-/obj/machinery/computer/cryopod_tele{
-	pixel_y = 27
-	},
+/obj/machinery/cryopod/tele,
 /turf/open/floor/circuit/green,
 /area/crew_quarters/cryopod)
 "aIw" = (
@@ -16548,7 +16545,7 @@
 	dir = 1;
 	pixel_y = -26
 	},
-/obj/machinery/cryopod_tele,
+/obj/machinery/cryopod/tele,
 /turf/open/floor/circuit/green,
 /area/crew_quarters/cryopod)
 "aJX" = (
@@ -71905,7 +71902,7 @@
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "ePg" = (
-/obj/machinery/cryopod_tele,
+/obj/machinery/cryopod/tele,
 /turf/open/floor/circuit/green,
 /area/crew_quarters/cryopod)
 "eTZ" = (

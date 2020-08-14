@@ -11,3 +11,5 @@
 	icon = 'sandcode/icons/obj/guns/projectile.dmi'
 	spawnwithmagazine = FALSE
 	var/can_supress = FALSE
+
+//Note for the future, i didn't know this gun already existed in the code, may be deleted eventually.

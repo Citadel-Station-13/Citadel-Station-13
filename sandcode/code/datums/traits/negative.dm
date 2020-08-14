@@ -10,9 +10,7 @@
 /datum/quirk/sheltered/on_spawn()
 	var/mob/living/carbon/human/H = quirk_holder
 	H.remove_language(/datum/language/common)
-/*	if(!H.can_speak_language(/datum/language/draconic) && !H.can_speak_language(/datum/language/machine))
-		H.grant_language(/datum/language/japanese)
-*/ //if doesn't know common wont know anything else unless already does.... like lizards! :3
+// You can pick languages for your character, if you don't pick anything, enjoy the rest of the round understanding nothing.
 
 /datum/quirk/sheltered/remove() //i mean, the lose text explains it, so i'm making it actually work
 	var/mob/living/carbon/human/H = quirk_holder

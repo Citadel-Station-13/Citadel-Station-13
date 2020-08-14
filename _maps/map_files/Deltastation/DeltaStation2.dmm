@@ -125944,11 +125944,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/obj/machinery/cryopod_tele,
-/obj/machinery/computer/cryopod_tele{
-	dir = 8;
-	pixel_x = 26
-	},
+/obj/machinery/cryopod/tele,
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/locker)
 "hAf" = (
@@ -127607,7 +127603,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/obj/machinery/cryopod_tele,
+/obj/machinery/cryopod/tele,
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/locker)
 "voA" = (

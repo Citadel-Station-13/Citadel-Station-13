@@ -81820,7 +81820,7 @@
 /obj/machinery/light{
 	dir = 4
 	},
-/obj/machinery/cryopod_tele,
+/obj/machinery/cryopod/tele,
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/cryopod)
 "maP" = (
@@ -81889,7 +81889,7 @@
 /obj/machinery/camera{
 	c_tag = "Fitness Room - Fore"
 	},
-/obj/machinery/cryopod_tele,
+/obj/machinery/cryopod/tele,
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/cryopod)
 "mEe" = (
@@ -82768,10 +82768,7 @@
 /turf/open/floor/plasteel,
 /area/crew_quarters/fitness/recreation)
 "vtn" = (
-/obj/machinery/cryopod_tele,
-/obj/machinery/computer/cryopod_tele{
-	pixel_y = 27
-	},
+/obj/machinery/cryopod/tele,
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/cryopod)
 "vuY" = (

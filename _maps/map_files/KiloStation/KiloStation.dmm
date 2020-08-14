@@ -54745,10 +54745,6 @@
 /turf/open/floor/plasteel/dark,
 /area/security/courtroom)
 "bKj" = (
-/obj/machinery/computer/cryopod_tele{
-	dir = 4;
-	pixel_x = -26
-	},
 /turf/open/floor/plasteel/showroomfloor,
 /area/crew_quarters/locker)
 "bKk" = (
@@ -65846,7 +65842,7 @@
 /obj/machinery/airalarm{
 	pixel_y = 22
 	},
-/obj/machinery/cryopod_tele,
+/obj/machinery/cryopod/tele,
 /turf/open/floor/plasteel/showroomfloor,
 /area/crew_quarters/locker)
 "cbs" = (

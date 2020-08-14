@@ -14,9 +14,7 @@
 	var/z_co = 1
 	var/power_off
 	var/rotation_off
-	var/angle_off
-	var/offsety
-	var/offsetx
+	//var/angle_off
 	var/last_target
 	var/in_use
 
@@ -45,8 +43,8 @@
 	return ..()
 
 /obj/machinery/computer/telescience/examine(mob/user)
-	..()
-	to_chat(user, "There are [crystals.len ? crystals.len : "no"] bluespace crystal\s in the crystal slots.")
+	. = ..()
+	. += "<span class='notice'>There are [crystals.len ? crystals.len : "no"] bluespace crystal\s in the crystal slots.</span>"
 
 /obj/machinery/computer/telescience/Initialize(mapload)
 	. = ..()
@@ -163,15 +161,13 @@
 
 		var/truePower = clamp(power + power_off, 1, 1000)
 		var/trueRotation = rotation + rotation_off
-		var/trueAngle = clamp(angle + angle_off, 1, 90)
-		var/trueoffsetx = offsetx + rand(-1,1) // Where will you land?
-		var/trueoffsety = offsety + rand(-1,1) // You never TRULY know. There are 9 possibilities, IF you calculated the offsetx and offsety.
+		var/trueAngle = clamp(angle, 1, 90)
 
 		var/datum/projectile_data/proj_data = projectile_trajectory(telepad.x, telepad.y, trueRotation, trueAngle, truePower)
 		last_tele_data = proj_data
 
-		var/trueX = clamp(round(proj_data.dest_x + trueoffsetx, 1), 1, world.maxx)
-		var/trueY = clamp(round(proj_data.dest_y + trueoffsety, 1), 1, world.maxy)
+		var/trueX = clamp(round(proj_data.dest_x, 1), 1, world.maxx)
+		var/trueY = clamp(round(proj_data.dest_y, 1), 1, world.maxy)
 		var/spawn_time = round(proj_data.time) * 10
 
 		var/turf/target = locate(trueX, trueY, z_co)
@@ -353,9 +349,7 @@
 	updateDialog()
 
 /obj/machinery/computer/telescience/proc/recalibrate()
-	teles_left = rand(10, 30)
-	angle_off = rand(-15, 15)
+	teles_left = rand(30, 40)
+	//angle_off = rand(-25, 25)
 	power_off = rand(-4, 0)
 	rotation_off = rand(-10, 10)
-	offsetx = rand(0, 7)
-	offsety = rand(0, 7)

@@ -10506,11 +10506,7 @@
 /turf/open/floor/plasteel,
 /area/hallway/primary/fore)
 "dij" = (
-/obj/machinery/computer/cryopod_tele{
-	dir = 1;
-	pixel_y = -26
-	},
-/obj/machinery/cryopod_tele,
+/obj/machinery/cryopod/tele,
 /turf/open/floor/plasteel,
 /area/hallway/secondary/exit/departure_lounge)
 "diD" = (
