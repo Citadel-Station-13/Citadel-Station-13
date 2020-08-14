@@ -14,6 +14,10 @@
 /turf/open/floor/plating/asteroid/snow/kitsune
 	initial_gas_mix = "o2=22;n2=82;TEMP=263"
 	planetary_atmos = TRUE
+/turf/closed/indestructible/wood/kitsune
+	canSmoothWith = list(/obj/structure/falsewall/wood/kitsune, /turf/closed/indestructible/wood/kitsune)
+/obj/structure/falsewall/wood/kitsune
+	canSmoothWith = list(/turf/closed/indestructible/wood/kitsune, /obj/structure/falsewall/wood/kitsune)
 
 //structure
 /obj/structure/bloodsucker/candelabrum/fox
@@ -21,6 +25,15 @@
 	light_range = 4
 	anchored = TRUE
 	lit = TRUE
+	icon_state = "candelabrum_lit"
+
+
+/obj/machinery/pool/controller/largescan
+	scan_range = 15
+	temperature = 4
+	mist_state = 1
+	shocked = 1
+
 //mobs
 /mob/living/simple_animal/hostile/fox
 	name = "Fox"

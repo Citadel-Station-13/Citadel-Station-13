@@ -3,10 +3,6 @@
 /obj/structure/fluff/drake_statue,
 /turf/open/floor/plating/asteroid/snow/kitsune,
 /area/awaymission/kitsune)
-"ak" = (
-/mob/living/simple_animal/hostile/fox,
-/turf/closed/indestructible/rock/snow,
-/area/awaymission/kitsune)
 "aN" = (
 /obj/structure/stone_tile/slab,
 /turf/open/floor/plating/asteroid/snow/kitsune,
@@ -23,9 +19,7 @@
 /turf/open/floor/wood/kitsune,
 /area/awaymission/kitsune)
 "bo" = (
-/obj/structure/falsewall/wood{
-	canSmoothWith = list(/obj/structure/falsewall/wood,/turf/closed/wall/mineral/wood,/turf/closed/indestructible/wood)
-	},
+/obj/structure/falsewall/wood/kitsune,
 /turf/open/floor/wood/kitsune,
 /area/awaymission/kitsune)
 "bu" = (
@@ -62,14 +56,6 @@
 /obj/structure/healingfountain,
 /turf/open/floor/wood/kitsune,
 /area/awaymission/kitsune)
-"cs" = (
-/turf/closed/indestructible/wood{
-	canSmoothWith = list(/obj/structure/falsewall/wood)
-	},
-/area/awaymission/kitsune{
-	canSmoothWith = (obj/structure/falsewall/wood);
-	smooth = 1
-	})
 "cG" = (
 /obj/structure/stone_tile/slab,
 /obj/structure/punji_sticks,
@@ -95,7 +81,7 @@
 /area/awaymission/kitsune)
 "da" = (
 /obj/item/stack/sheet/mineral/wood,
-/turf/closed/indestructible/wood,
+/turf/closed/indestructible/wood/kitsune,
 /area/awaymission/kitsune)
 "dm" = (
 /obj/structure/ladder/unbreakable{
@@ -111,7 +97,7 @@
 /area/awaymission/kitsune)
 "dy" = (
 /mob/living/simple_animal/hostile/fox,
-/turf/closed/indestructible/wood,
+/turf/closed/indestructible/wood/kitsune,
 /area/awaymission/kitsune)
 "dG" = (
 /obj/effect/gibspawner/lizard,
@@ -153,7 +139,7 @@
 /area/awaymission/kitsune)
 "fz" = (
 /obj/structure/mirror,
-/turf/closed/indestructible/wood,
+/turf/closed/indestructible/wood/kitsune,
 /area/awaymission/kitsune)
 "fM" = (
 /obj/effect/decal/cleanable/dirt/dust,
@@ -169,6 +155,10 @@
 "gb" = (
 /obj/structure/bed,
 /turf/open/floor/wood/kitsune,
+/area/awaymission/kitsune)
+"gz" = (
+/obj/structure/pool/ladder,
+/turf/open/pool,
 /area/awaymission/kitsune)
 "gO" = (
 /obj/structure/bloodsucker/candelabrum/fox,
@@ -187,10 +177,10 @@
 	},
 /area/awaymission/kitsune)
 "hE" = (
-/obj/machinery/pool/filter{
-	pixel_y = 15
+/obj/structure/pool/ladder{
+	dir = 2;
+	pixel_y = 24
 	},
-/obj/effect/gibspawner/human,
 /turf/open/pool,
 /area/awaymission/kitsune)
 "hM" = (
@@ -198,7 +188,11 @@
 /turf/open/floor/wood/kitsune,
 /area/awaymission/kitsune)
 "hS" = (
-/obj/effect/mob_spawn/human/corpse/bee_terrorist,
+/obj/item/stack/ore/diamond,
+/turf/closed/indestructible/rock/snow,
+/area/awaymission/kitsune)
+"hY" = (
+/obj/effect/gibspawner/robot,
 /turf/open/floor/wood/kitsune,
 /area/awaymission/kitsune)
 "io" = (
@@ -235,8 +229,8 @@
 /turf/open/floor/wood/kitsune,
 /area/awaymission/kitsune)
 "kk" = (
-/obj/structure/punji_sticks,
-/obj/effect/mine/sound/bwoink,
+/obj/item/stack/ore/diamond,
+/obj/item/stack/ore/diamond,
 /turf/closed/indestructible/rock/snow,
 /area/awaymission/kitsune)
 "kp" = (
@@ -266,6 +260,13 @@
 /obj/effect/gibspawner/xeno,
 /turf/open/floor/wood/kitsune,
 /area/awaymission/kitsune)
+"mQ" = (
+/obj/structure/window/plasma/reinforced{
+	dir = 8
+	},
+/obj/effect/gibspawner/robot,
+/turf/open/floor/wood/kitsune,
+/area/awaymission/kitsune)
 "mS" = (
 /obj/effect/decal/cleanable/blood,
 /obj/effect/gibspawner/lizard,
@@ -273,7 +274,7 @@
 /area/awaymission/kitsune)
 "mV" = (
 /obj/item/candle/infinite/hugbox,
-/turf/closed/indestructible/wood,
+/turf/closed/indestructible/wood/kitsune,
 /area/awaymission/kitsune)
 "mZ" = (
 /obj/item/candle/infinite/hugbox,
@@ -293,7 +294,7 @@
 /area/awaymission/kitsune)
 "nA" = (
 /obj/effect/gibspawner/human,
-/turf/closed/indestructible/wood,
+/turf/open/space/basic,
 /area/awaymission/kitsune)
 "nI" = (
 /obj/effect/decal/cleanable/cobweb/cobweb2,
@@ -305,8 +306,8 @@
 /area/awaymission/kitsune)
 "ov" = (
 /obj/item/circlegame,
-/obj/structure/closet/emcloset/anchored,
 /obj/item/reagent_containers/food/condiment/saltshaker,
+/obj/structure/closet,
 /turf/open/floor/wood/kitsune,
 /area/awaymission/kitsune)
 "oB" = (
@@ -323,10 +324,6 @@
 "pb" = (
 /obj/structure/table/wood/fancy/red,
 /obj/item/cookiesynth,
-/obj/item/holochip{
-	credits = 1000;
-	name = "1000 credit holochip"
-	},
 /turf/open/floor/wood/kitsune,
 /area/awaymission/kitsune)
 "pL" = (
@@ -416,7 +413,7 @@
 /area/awaymission/kitsune)
 "sJ" = (
 /obj/effect/decal/cleanable/dirt,
-/turf/closed/indestructible/wood,
+/turf/closed/indestructible/wood/kitsune,
 /area/awaymission/kitsune)
 "sX" = (
 /turf/closed/indestructible/fakeglass,
@@ -438,6 +435,10 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/wood/kitsune,
 /area/awaymission/kitsune)
+"uv" = (
+/obj/effect/gibspawner/human,
+/turf/open/pool,
+/area/awaymission/kitsune)
 "uw" = (
 /obj/structure/table/wood/fancy/red,
 /obj/item/candle/infinite/hugbox,
@@ -449,11 +450,6 @@
 /obj/structure/punji_sticks,
 /turf/open/floor/wood/kitsune,
 /area/awaymission/kitsune)
-"vw" = (
-/mob/living/simple_animal/hostile/fox,
-/obj/effect/gibspawner/human,
-/turf/open/pool,
-/area/awaymission/kitsune)
 "vH" = (
 /turf/open/floor/wood/kitsune{
 	icon_state = "wood-broken2"
@@ -463,7 +459,7 @@
 /obj/structure/window/plasma/reinforced{
 	dir = 8
 	},
-/turf/closed/indestructible/wood,
+/turf/closed/indestructible/wood/kitsune,
 /area/awaymission/kitsune)
 "vN" = (
 /obj/effect/gibspawner/generic/animal,
@@ -578,6 +574,12 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/wood/kitsune,
 /area/awaymission/kitsune)
+"yW" = (
+/mob/living/simple_animal/pet/fox,
+/turf/open/floor/wood/kitsune{
+	icon_state = "wood-broken2"
+	},
+/area/awaymission/kitsune)
 "yX" = (
 /obj/structure/window/plasma/reinforced{
 	dir = 8
@@ -672,9 +674,7 @@
 /area/awaymission/kitsune)
 "DG" = (
 /obj/structure/bookcase/random,
-/turf/open/floor/wood/kitsune{
-	icon_state = "wood-broken3"
-	},
+/turf/closed/indestructible/wood/kitsune,
 /area/awaymission/kitsune)
 "DL" = (
 /obj/structure/bloodsucker/candelabrum/fox,
@@ -713,8 +713,9 @@
 /turf/open/floor/plating/asteroid/snow/kitsune,
 /area/awaymission/kitsune)
 "Es" = (
-/obj/effect/gibspawner/generic/animal,
-/turf/closed/indestructible/wood,
+/obj/structure/table/wood/fancy/red,
+/obj/item/storage/bag/money/c5000,
+/turf/open/floor/wood/kitsune,
 /area/awaymission/kitsune)
 "EZ" = (
 /obj/machinery/shower,
@@ -724,11 +725,6 @@
 /obj/item/candle/infinite/hugbox,
 /obj/effect/gibspawner/slime/bodypartless,
 /turf/open/floor/wood/kitsune,
-/area/awaymission/kitsune)
-"Fl" = (
-/obj/machinery/pool/drain,
-/obj/effect/gibspawner/human,
-/turf/open/pool,
 /area/awaymission/kitsune)
 "Fq" = (
 /obj/item/stack/sheet/mineral/wood,
@@ -740,12 +736,7 @@
 /turf/open/floor/wood/kitsune,
 /area/awaymission/kitsune)
 "Fy" = (
-/obj/machinery/pool/controller{
-	bloody = 1;
-	mist_state = 1;
-	shocked = 1;
-	temperature = 4
-	},
+/obj/machinery/pool/controller/largescan,
 /turf/open/floor/wood/kitsune,
 /area/awaymission/kitsune)
 "FU" = (
@@ -801,9 +792,7 @@
 /area/awaymission/kitsune)
 "Hm" = (
 /obj/structure/bookcase/random/religion,
-/turf/closed/indestructible/wood{
-	canSmoothWith = list(/obj/structure/falsewall/wood)
-	},
+/turf/closed/indestructible/wood/kitsune,
 /area/awaymission/kitsune)
 "Hw" = (
 /obj/item/stack/sheet/mineral/wood,
@@ -847,7 +836,8 @@
 /mob/living/simple_animal/hostile/retaliate/clown/clownhulk/chlown{
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 1, "min_co2" = 0, "max_co2" = 5, "min_n2" = 0, "max_n2" = 0);
 	maxbodytemp = 99999;
-	minbodytemp = 0
+	minbodytemp = 0;
+	name = "The entity"
 	},
 /turf/open/floor/plating/asteroid/snow/kitsune,
 /area/awaymission/kitsune)
@@ -894,6 +884,10 @@
 "Kx" = (
 /turf/closed/wall/mineral/plastitanium,
 /area/awaymission/kitsune)
+"KB" = (
+/obj/effect/gibspawner/ipc,
+/turf/open/floor/wood/kitsune,
+/area/awaymission/kitsune)
 "KI" = (
 /obj/structure/table/wood/fancy/red,
 /obj/effect/decal/cleanable/dirt/dust,
@@ -921,11 +915,6 @@
 /obj/structure/bed,
 /obj/structure/bed,
 /turf/open/floor/wood/kitsune,
-/area/awaymission/kitsune)
-"Lk" = (
-/obj/structure/pool/ladder,
-/obj/effect/gibspawner/human,
-/turf/open/pool,
 /area/awaymission/kitsune)
 "Lr" = (
 /obj/effect/gibspawner/lizard/bodypartless,
@@ -996,16 +985,11 @@
 /obj/structure/pool/ladder{
 	dir = 8
 	},
-/obj/effect/gibspawner/human,
 /turf/open/pool,
 /area/awaymission/kitsune)
 "NX" = (
 /obj/item/bedsheet/random,
 /turf/open/floor/wood/kitsune,
-/area/awaymission/kitsune)
-"Oa" = (
-/obj/structure/punji_sticks,
-/turf/closed/indestructible/wood,
 /area/awaymission/kitsune)
 "Od" = (
 /obj/machinery/gibber,
@@ -1054,10 +1038,9 @@
 /obj/item/kitchen/knife/butcher,
 /turf/open/floor/wood/kitsune,
 /area/awaymission/kitsune)
-"QS" = (
-/turf/closed/indestructible/wood{
-	canSmoothWith = list(/obj/structure/falsewall/wood)
-	},
+"QF" = (
+/obj/machinery/pool/drain,
+/turf/open/pool,
 /area/awaymission/kitsune)
 "Rk" = (
 /obj/item/bikehorn/rubberducky,
@@ -1065,7 +1048,7 @@
 /area/awaymission/kitsune)
 "Rq" = (
 /obj/effect/decal/cleanable/blood,
-/turf/closed/indestructible/wood,
+/turf/closed/indestructible/wood/kitsune,
 /area/awaymission/kitsune)
 "Rv" = (
 /obj/structure/table/wood/fancy/red,
@@ -1103,7 +1086,7 @@
 /area/awaymission/kitsune)
 "Se" = (
 /obj/item/stack/sheet/metal,
-/turf/closed/indestructible/wood,
+/turf/closed/indestructible/wood/kitsune,
 /area/awaymission/kitsune)
 "So" = (
 /obj/effect/decal/cleanable/blood/footprints{
@@ -1153,11 +1136,11 @@
 /area/awaymission/kitsune)
 "UA" = (
 /obj/structure/mirror/magic/pride,
-/turf/closed/indestructible/wood,
+/turf/closed/indestructible/wood/kitsune,
 /area/awaymission/kitsune)
 "UD" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/turf/closed/indestructible/wood,
+/turf/closed/indestructible/wood/kitsune,
 /area/awaymission/kitsune)
 "UH" = (
 /obj/machinery/porta_turret/syndicate/vehicle_turret,
@@ -1180,7 +1163,7 @@
 "UV" = (
 /obj/structure/bookcase/random,
 /obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/wood/kitsune,
+/turf/closed/indestructible/wood/kitsune,
 /area/awaymission/kitsune)
 "VB" = (
 /obj/structure/bookcase/random,
@@ -1214,6 +1197,10 @@
 /obj/structure/table/wood/fancy/red,
 /obj/machinery/reagentgrinder,
 /turf/open/floor/wood/kitsune,
+/area/awaymission/kitsune)
+"Wl" = (
+/obj/effect/gibspawner/human,
+/turf/closed/indestructible/wood/kitsune,
 /area/awaymission/kitsune)
 "Wu" = (
 /obj/effect/gibspawner/xeno,
@@ -1281,7 +1268,6 @@
 /turf/open/floor/wood/kitsune,
 /area/awaymission/kitsune)
 "Yu" = (
-/obj/effect/gibspawner/human,
 /turf/open/pool,
 /area/awaymission/kitsune)
 "YL" = (
@@ -1295,11 +1281,8 @@
 /obj/effect/gibspawner/lizard/bodypartless,
 /turf/open/floor/wood/kitsune,
 /area/awaymission/kitsune)
-"YS" = (
-/turf/closed/mineral/snowmountain,
-/area/awaymission/kitsune)
 "Zg" = (
-/turf/closed/indestructible/wood,
+/turf/closed/indestructible/wood/kitsune,
 /area/awaymission/kitsune)
 "Zj" = (
 /mob/living/simple_animal/hostile/fox/kitsune{
@@ -1307,11 +1290,15 @@
 	},
 /turf/open/floor/plating/asteroid/snow/kitsune,
 /area/awaymission/kitsune)
+"ZE" = (
+/mob/living/simple_animal/pet/fox,
+/turf/open/floor/wood/kitsune,
+/area/awaymission/kitsune)
 "ZG" = (
 /obj/structure/window/plasma/reinforced{
 	dir = 4
 	},
-/turf/closed/indestructible/wood,
+/turf/closed/indestructible/wood/kitsune,
 /area/awaymission/kitsune)
 "ZO" = (
 /obj/structure/chair/wood/normal,
@@ -1795,7 +1782,7 @@ eC
 eC
 eC
 eC
-ak
+eC
 eC
 VI
 VI
@@ -1906,7 +1893,7 @@ eC
 eC
 VI
 VI
-VI
+Yc
 VI
 VI
 VI
@@ -4560,25 +4547,25 @@ eC
 eC
 eC
 eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
+Zg
+Zg
+Zg
+Zg
+Zg
+Zg
+Zg
+Zg
+Zg
+Zg
+Zg
+Zg
+Zg
+Zg
+Zg
+Zg
+Zg
+Zg
+Zg
 VY
 VY
 VI
@@ -4667,25 +4654,25 @@ eC
 eC
 eC
 eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-Bq
-eC
-eC
+Zg
+gO
+Jp
+Jp
+Jp
+Jp
+Jp
+Jp
+Jp
+Jp
+Jp
+Jp
+Jp
+Jp
+Jp
+Jp
+Jp
+gO
+Zg
 VI
 VI
 VI
@@ -4774,25 +4761,25 @@ eC
 eC
 eC
 eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-Bq
-Bq
-eC
+Zg
+Jp
+Jp
+Jp
+Jp
+Jp
+Jp
+Jp
+Jp
+ZE
+Jp
+Jp
+Jp
+Jp
+Jp
+Jp
+Jp
+Jp
+Zg
 VI
 VI
 VI
@@ -4881,25 +4868,25 @@ eC
 eC
 eC
 eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
+Zg
+Jp
+Jp
+gz
+Yu
+Yu
+Yu
+Yu
+Yu
+gz
+Yu
+Yu
+Yu
+Yu
+Yu
+gz
+Jp
+Jp
+Zg
 VI
 VI
 VI
@@ -4988,25 +4975,25 @@ eC
 eC
 eC
 eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
+Zg
+Jp
+Jp
+Yu
+Yu
+Yu
+Yu
+Yu
+Yu
+Yu
+Yu
+Yu
+Yu
+Yu
+Yu
+Yu
+Jp
+Jp
+Zg
 VI
 VI
 VI
@@ -5096,23 +5083,23 @@ eC
 eC
 eC
 Zg
-Zg
-Zg
-Zg
-Zg
-Zg
-Zg
-Zg
-Zg
-Zg
-Zg
-Zg
-Zg
-Zg
-Zg
-Zg
-Zg
-Zg
+Jp
+Jp
+Yu
+Yu
+Yu
+Yu
+uv
+Yu
+Yu
+Yu
+uv
+Yu
+Yu
+uv
+Yu
+Jp
+Jp
 Zg
 sX
 sX
@@ -5203,21 +5190,21 @@ eC
 eC
 eC
 Zg
-gO
 Jp
 Jp
-Jp
-qH
-Jp
-sv
-Jp
-Jp
-Jp
-Jp
-Jp
-Jp
-PL
-Jp
+hE
+Yu
+Yu
+uv
+Yu
+Yu
+uv
+Yu
+Yu
+Yu
+Yu
+uv
+Yu
 Jp
 Jp
 Zg
@@ -5237,24 +5224,24 @@ Jp
 Jp
 Jp
 Zg
-VB
-VB
-VB
-VB
-VB
+DG
+DG
+DG
+DG
+DG
 Fq
-VB
-VB
-VB
+DG
+DG
+DG
 Fq
-VB
-VB
-VB
-VB
-VB
-VB
-VB
-VB
+DG
+DG
+DG
+DG
+DG
+DG
+DG
+DG
 Zg
 VI
 VI
@@ -5312,19 +5299,19 @@ eC
 Zg
 Jp
 Jp
-Jp
-Jp
-Jp
-Jp
-Jp
-Jp
-Jp
-Jp
-Jp
-Jp
-Jp
-Jp
-Jp
+Yu
+Yu
+uv
+Yu
+Yu
+uv
+Yu
+Yu
+Yu
+Yu
+Yu
+Yu
+Yu
 bu
 Jp
 Zg
@@ -5419,19 +5406,19 @@ eC
 Zg
 sv
 Jp
-Lk
 Yu
 Yu
 Yu
 Yu
 Yu
 Yu
-Lk
 Yu
 Yu
 Yu
+uv
 Yu
-Lk
+uv
+Yu
 Jp
 sv
 Zg
@@ -5451,24 +5438,24 @@ Jp
 Jp
 Jp
 Zg
-VB
-vv
-VB
-VB
 DG
-VB
-VB
-VB
-VB
+vv
+DG
+DG
+DG
+DG
+DG
+DG
+DG
 Jp
 DG
-VB
-VB
+DG
+DG
 UV
-VB
-VB
-VB
-VB
+DG
+DG
+DG
+DG
 Zg
 VI
 VI
@@ -5525,21 +5512,21 @@ eC
 eC
 Zg
 Jp
-Jp
+Fy
 Yu
 Yu
 Yu
 Yu
 Yu
 Yu
+QF
+uv
 Yu
 Yu
 Yu
 Yu
 Yu
-Yu
-Yu
-vH
+yW
 Jp
 Zg
 Jp
@@ -5632,11 +5619,11 @@ eC
 eC
 Zg
 Jp
-Jp
+ZE
 Yu
 Yu
 Yu
-vw
+Yu
 Yu
 Yu
 Yu
@@ -5665,24 +5652,24 @@ Jp
 sv
 Jp
 Zg
-VB
-VB
-VB
-VB
-VB
+DG
+DG
+DG
+DG
+DG
 Fq
 VB
 VB
 VB
 Jp
-VB
-VB
-VB
-VB
-VB
-VB
-VB
-VB
+DG
+DG
+DG
+DG
+DG
+DG
+DG
+DG
 Zg
 VI
 VI
@@ -5739,17 +5726,17 @@ eC
 eC
 Zg
 Jp
-Fy
-Yu
-Yu
-Fl
+Jp
 Yu
 Yu
 Yu
+uv
 Yu
 Yu
+uv
+uv
 Yu
-Yu
+uv
 Yu
 Yu
 Yu
@@ -5856,7 +5843,7 @@ Yu
 Yu
 Yu
 Yu
-Yu
+uv
 Yu
 Yu
 Yu
@@ -5879,24 +5866,24 @@ Jp
 Jp
 Jp
 Zg
-VB
-VB
-VB
-VB
-VB
-VB
-VB
-VB
-VB
+DG
+DG
+DG
+DG
+DG
+DG
+DG
+DG
+DG
 Jp
-VB
-VB
-VB
+DG
+DG
+DG
 Fq
 UV
-VB
-VB
-VB
+DG
+DG
+DG
 Zg
 VI
 VI
@@ -5961,11 +5948,11 @@ Yu
 Yu
 Yu
 Yu
-vw
 Yu
 Yu
 Yu
 Yu
+uv
 Yu
 Jp
 sv
@@ -6064,11 +6051,11 @@ Jp
 Yu
 Yu
 Yu
+uv
 Yu
 Yu
 Yu
-Yu
-Yu
+uv
 Yu
 Yu
 Yu
@@ -6093,23 +6080,23 @@ Jp
 cW
 Jp
 Zg
-VB
-VB
-VB
-VB
+DG
+DG
+DG
+DG
 Fq
-VB
-VB
-VB
+DG
+DG
+DG
 vv
 mZ
-VB
-VB
-VB
-VB
-VB
-VB
-VB
+DG
+DG
+DG
+DG
+DG
+DG
+DG
 UV
 Zg
 VI
@@ -6174,8 +6161,8 @@ Yu
 Yu
 Yu
 Yu
-Yu
 NM
+Yu
 Yu
 Yu
 Yu
@@ -6281,7 +6268,7 @@ PL
 Jp
 sv
 Jp
-Jp
+ZE
 sv
 Jp
 Jp
@@ -6307,24 +6294,24 @@ Jp
 Jp
 Jp
 Zg
-VB
+DG
 Jp
-VB
-VB
-VB
-VB
-VB
-VB
-VB
+DG
+DG
+DG
+DG
+DG
+DG
+DG
 Jp
-VB
-VB
-VB
-VB
+DG
+DG
+DG
+DG
 Fq
-VB
-VB
-VB
+DG
+DG
+DG
 Zg
 VI
 VI
@@ -6380,7 +6367,7 @@ eC
 eC
 eC
 Zg
-Jp
+gO
 Jp
 Jp
 Jp
@@ -6513,7 +6500,7 @@ Zg
 Zg
 Zg
 XP
-Es
+Zg
 Zg
 Zg
 Zg
@@ -7281,11 +7268,11 @@ Zg
 Zg
 Zg
 Zg
-nA
+Wl
 rP
 sJ
 Zg
-Es
+Zg
 Zg
 Zg
 Zg
@@ -7979,7 +7966,7 @@ eC
 eC
 Zg
 Jp
-bK
+Es
 XB
 pb
 RX
@@ -8869,7 +8856,7 @@ Jp
 Jp
 Jp
 vJ
-yX
+mQ
 yX
 yX
 yX
@@ -9059,7 +9046,7 @@ Jp
 Jp
 Jp
 cW
-Zg
+Jp
 Jp
 Jp
 qH
@@ -9304,7 +9291,7 @@ Zg
 Jp
 jQ
 Jp
-Jp
+hY
 Jp
 Zg
 Jp
@@ -9513,7 +9500,7 @@ Zg
 Jp
 sv
 Jp
-Oa
+Zg
 Jp
 Jp
 Jp
@@ -9640,7 +9627,7 @@ Jp
 Jp
 Zg
 Jp
-Jp
+pT
 Jp
 Zg
 VI
@@ -9746,7 +9733,7 @@ Pl
 Jp
 Jp
 Jp
-hS
+Jp
 gO
 mb
 Zg
@@ -9786,17 +9773,17 @@ eC
 eC
 eC
 eC
-Bq
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
+VY
+VI
+VI
+VI
+VI
+VI
+VI
+VI
+VI
+VI
+VI
 VI
 VI
 VI
@@ -9893,17 +9880,17 @@ eC
 eC
 eC
 eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
+VI
+VI
+VI
+VI
+VI
+VI
+VI
+VI
+VI
+VI
+VI
 VY
 VI
 VI
@@ -9946,24 +9933,24 @@ Zg
 Zg
 Zg
 Zg
-QS
-QS
-QS
-QS
-QS
-QS
-cs
+Zg
+Zg
+Zg
+Zg
+Zg
+Zg
+Zg
 bo
-QS
-QS
-QS
-QS
-QS
-QS
-QS
-QS
-QS
-QS
+Zg
+Zg
+Zg
+Zg
+Zg
+Zg
+Zg
+Zg
+Zg
+Zg
 VY
 VI
 VI
@@ -10000,17 +9987,17 @@ eC
 eC
 eC
 eC
-eC
-eC
-eC
-eC
-eC
-Bq
-eC
-Bq
-eC
-eC
-eC
+VI
+VI
+VI
+VI
+VI
+VY
+VI
+VY
+VI
+VI
+VI
 VI
 VI
 VI
@@ -10070,7 +10057,7 @@ Jp
 Jp
 Jp
 Jp
-QS
+Zg
 VY
 VI
 VI
@@ -10107,17 +10094,17 @@ eC
 eC
 eC
 eC
-eC
-eC
-eC
-eC
-eC
-eC
-Bq
-eC
-eC
-Bq
-eC
+VI
+VI
+VI
+VI
+VI
+VI
+VY
+VI
+VI
+VY
+VI
 VI
 VI
 VI
@@ -10177,7 +10164,7 @@ qH
 Jp
 Jp
 Jp
-QS
+Zg
 VI
 VY
 VI
@@ -10211,20 +10198,20 @@ eC
 eC
 eC
 eC
-Bq
 eC
 eC
 eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-Bq
-eC
+VI
+VI
+VI
+VI
+VI
+VI
+VI
+VI
+VI
+VY
+VI
 VI
 VI
 VI
@@ -10284,7 +10271,7 @@ Hm
 Hm
 Hm
 Jp
-QS
+Zg
 VI
 VI
 VY
@@ -10321,17 +10308,17 @@ eC
 eC
 eC
 eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-Bq
-eC
-eC
-eC
+VI
+VI
+VI
+VI
+VI
+VI
+VI
+VY
+VI
+VI
+VI
 VI
 VI
 VI
@@ -10391,7 +10378,7 @@ Jp
 Jp
 vN
 Jp
-QS
+Zg
 VI
 VI
 VI
@@ -10428,17 +10415,17 @@ eC
 eC
 eC
 eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
+VI
+VI
+VI
+VI
+VI
+VI
+VI
+VI
+VI
+VI
+VI
 VI
 VI
 VI
@@ -10498,7 +10485,7 @@ sv
 Jp
 Jp
 Jp
-QS
+Zg
 VI
 VI
 VI
@@ -10526,26 +10513,26 @@ eC
 eC
 "}
 (87,1,1) = {"
-YS
-YS
-YS
-YS
+eC
+eC
+eC
+eC
 ys
 Sz
 Sz
 eC
 eC
-eC
-eC
-eC
-eC
-eC
-eC
-Bq
-eC
-eC
-eC
-eC
+VI
+VI
+VI
+VI
+VI
+VI
+VY
+VI
+VI
+VI
+VI
 VI
 VI
 VI
@@ -10595,7 +10582,7 @@ Jp
 Hm
 Jp
 Hm
-Jp
+hY
 Hm
 Jp
 Hm
@@ -10605,7 +10592,7 @@ Jp
 Xf
 Jp
 Jp
-QS
+Zg
 VI
 VI
 VI
@@ -10633,26 +10620,26 @@ eC
 eC
 "}
 (88,1,1) = {"
-YS
-YS
-YS
-YS
+eC
+eC
+eC
+eC
 Sz
 Sz
 Sz
 eC
 eC
-eC
-eC
-Bq
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
+VI
+VI
+VY
+VI
+VI
+VI
+VI
+VI
+VI
+VI
+VI
 DF
 VI
 VI
@@ -10700,7 +10687,7 @@ Jp
 Jp
 Jp
 Hm
-Jp
+hY
 Hm
 Jp
 Hm
@@ -10712,7 +10699,7 @@ Hm
 qH
 vN
 Jp
-QS
+Zg
 VI
 VI
 VI
@@ -10740,26 +10727,26 @@ eC
 eC
 "}
 (89,1,1) = {"
-YS
-YS
-YS
-YS
+eC
+eC
+eC
+eC
 Sz
 Sz
 Sz
 eC
 eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
+VI
+VI
+VI
+VI
+VI
+VI
+VI
+VI
+VI
+VI
+VI
 VI
 VI
 VI
@@ -10819,7 +10806,7 @@ Hm
 Jp
 Jp
 Jp
-QS
+Zg
 VI
 VI
 VI
@@ -10847,26 +10834,26 @@ eC
 eC
 "}
 (90,1,1) = {"
-YS
-YS
-YS
-YS
+eC
+eC
+eC
+eC
 Sz
 Sz
 Sz
 eC
 eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
+VI
+VI
+VI
+VI
+VI
+VI
+VI
+VI
+VI
+VI
+VI
 VY
 VI
 VY
@@ -10926,7 +10913,7 @@ bK
 gO
 Jp
 Jp
-QS
+Zg
 VI
 VI
 VI
@@ -10954,26 +10941,26 @@ eC
 eC
 "}
 (91,1,1) = {"
-YS
-YS
-YS
-YS
+eC
+eC
+eC
+eC
 Sz
 Sz
 Sz
 eC
 eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-Bq
-eC
+VI
+VI
+VI
+VI
+VI
+VI
+VI
+VI
+VI
+VY
+VI
 VI
 VI
 VY
@@ -11033,7 +11020,7 @@ Jp
 Jp
 Hm
 Jp
-QS
+Zg
 VI
 VI
 VI
@@ -11061,26 +11048,26 @@ eC
 eC
 "}
 (92,1,1) = {"
-YS
-YS
-YS
-YS
+eC
+eC
+eC
+hS
 Sz
 Sz
 Sz
 eC
 eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
+VI
+VI
+VI
+VI
+VI
+VI
+VI
+VI
+VI
+VI
+VI
 VI
 VI
 VI
@@ -11140,7 +11127,7 @@ cW
 Jp
 Hm
 Jp
-QS
+Zg
 VI
 VI
 VI
@@ -11168,26 +11155,26 @@ eC
 eC
 "}
 (93,1,1) = {"
-YS
-YS
-YS
-YS
+eC
+eC
+eC
+eC
 Sz
 Sz
 Sz
+hS
 eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
+VI
+VI
+VI
+VI
+VI
+VI
+VI
+VI
+VI
+VI
+VI
 VI
 VI
 VI
@@ -11247,7 +11234,7 @@ Jp
 Jp
 Hm
 Jp
-QS
+Zg
 VI
 VI
 VI
@@ -11275,26 +11262,26 @@ eC
 eC
 "}
 (94,1,1) = {"
-YS
-YS
-YS
-YS
+eC
+eC
+eC
+eC
 Sz
 Sz
 Sz
 eC
 eC
-eC
-eC
-eC
-eC
-Bq
-eC
-eC
-eC
-eC
-eC
-eC
+VI
+VI
+VI
+VI
+VY
+VI
+VI
+VI
+VI
+VI
+VI
 VI
 VY
 VI
@@ -11354,7 +11341,7 @@ Yo
 Jp
 Jp
 vN
-QS
+Zg
 VI
 VI
 VI
@@ -11382,26 +11369,26 @@ eC
 eC
 "}
 (95,1,1) = {"
-YS
-YS
-YS
-YS
+eC
+eC
+eC
+eC
 Sz
 Sz
 Sz
 eC
 eC
-eC
-eC
-Bq
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
+VI
+VI
+VY
+VI
+VI
+VI
+VI
+VI
+VI
+VI
+VI
 VI
 VI
 VY
@@ -11461,7 +11448,7 @@ Jp
 Jp
 Zg
 Jp
-QS
+Zg
 VI
 VI
 VI
@@ -11489,26 +11476,26 @@ eC
 eC
 "}
 (96,1,1) = {"
-YS
-YS
-YS
-YS
+eC
+eC
+eC
+eC
 Sz
 Sz
 Sz
 eC
 eC
-eC
-eC
-eC
-eC
-Bq
-Bq
-eC
-eC
-eC
-eC
-eC
+VI
+VI
+VI
+VI
+VY
+VY
+VI
+VI
+VI
+VI
+VI
 VI
 VI
 VI
@@ -11568,7 +11555,7 @@ Jp
 Jp
 Jp
 Jp
-QS
+Zg
 VI
 VI
 VI
@@ -11596,26 +11583,26 @@ eC
 eC
 "}
 (97,1,1) = {"
-YS
-YS
-YS
-YS
+eC
+eC
+eC
+eC
 Sz
 Sz
 Sz
 eC
 eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
+VI
+VI
+VI
+VI
+VI
+VI
+VI
+VI
+VI
+VI
+VI
 VI
 VI
 VI
@@ -11675,7 +11662,7 @@ Jp
 Jp
 Hm
 Jp
-QS
+Zg
 VI
 VI
 VI
@@ -11703,26 +11690,26 @@ eC
 eC
 "}
 (98,1,1) = {"
-YS
-YS
-YS
-YS
+eC
+eC
+eC
+eC
 Sz
 Sz
 Sz
 eC
 eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
+VI
+VI
+VI
+VI
+VI
+VI
+VI
+VI
+VI
+VI
+VI
 VY
 VI
 VI
@@ -11772,7 +11759,7 @@ Jp
 Hm
 Jp
 Hm
-Jp
+KB
 Hm
 Jp
 Hm
@@ -11782,7 +11769,7 @@ Hm
 qH
 Hm
 Jp
-QS
+Zg
 VI
 VI
 VI
@@ -11810,10 +11797,10 @@ eC
 eC
 "}
 (99,1,1) = {"
-YS
-YS
-YS
-YS
+eC
+eC
+eC
+hS
 Sz
 Sz
 Sz
@@ -11889,7 +11876,7 @@ Hm
 Jp
 Hm
 Jp
-QS
+Zg
 VI
 VI
 VI
@@ -11917,10 +11904,10 @@ eC
 eC
 "}
 (100,1,1) = {"
-YS
-YS
-YS
-YS
+eC
+eC
+eC
+eC
 Sz
 Sz
 Sz
@@ -11991,12 +11978,12 @@ Hm
 Jp
 Hm
 Hm
-Jp
+KB
 Hm
 Jp
 Hm
 Jp
-QS
+Zg
 VI
 VI
 VI
@@ -12024,14 +12011,14 @@ eC
 eC
 "}
 (101,1,1) = {"
-YS
-YS
-YS
-YS
-Sz
-Sz
-Sz
 eC
+eC
+eC
+eC
+Sz
+Sz
+Sz
+hS
 eC
 eC
 eC
@@ -12103,7 +12090,7 @@ Hm
 Jp
 Hm
 Jp
-QS
+Zg
 VI
 VI
 VI
@@ -12131,10 +12118,10 @@ eC
 eC
 "}
 (102,1,1) = {"
-YS
-YS
-YS
-YS
+eC
+eC
+eC
+eC
 Sz
 Sz
 Sz
@@ -12193,24 +12180,24 @@ Zg
 Zg
 Zg
 Zg
-QS
+Zg
 bo
-QS
-QS
-QS
-QS
-QS
-QS
-QS
-QS
-QS
-QS
-QS
-QS
-QS
-QS
-QS
-QS
+Zg
+Zg
+Zg
+Zg
+Zg
+Zg
+Zg
+Zg
+Zg
+Zg
+Zg
+Zg
+Zg
+Zg
+Zg
+Zg
 VI
 VI
 VI
@@ -12238,14 +12225,14 @@ eC
 eC
 "}
 (103,1,1) = {"
-YS
-YS
-YS
-YS
+eC
+eC
+eC
+eC
 Sz
 Sz
 Sz
-eC
+hS
 eC
 eC
 eC
@@ -12300,7 +12287,7 @@ VI
 VI
 VI
 VI
-QS
+Zg
 Jp
 Jp
 Jp
@@ -12345,10 +12332,10 @@ eC
 eC
 "}
 (104,1,1) = {"
-YS
-YS
-YS
-YS
+eC
+eC
+eC
+hS
 Sz
 Sz
 Sz
@@ -12452,10 +12439,10 @@ eC
 eC
 "}
 (105,1,1) = {"
-YS
-YS
-YS
-YS
+eC
+eC
+eC
+eC
 Sz
 Sz
 Sz
@@ -12517,7 +12504,7 @@ VY
 VI
 Zg
 Zg
-gO
+Jp
 gO
 Jp
 Zg
@@ -12559,10 +12546,10 @@ eC
 eC
 "}
 (106,1,1) = {"
-YS
-YS
-YS
-YS
+eC
+eC
+eC
+eC
 Sz
 Sz
 Sz
@@ -12666,10 +12653,10 @@ eC
 eC
 "}
 (107,1,1) = {"
-YS
-YS
-YS
-YS
+eC
+eC
+eC
+eC
 Sz
 Sz
 Sz
@@ -12686,7 +12673,7 @@ eC
 eC
 eC
 eC
-eC
+hS
 eC
 eC
 eC
@@ -12773,10 +12760,10 @@ eC
 eC
 "}
 (108,1,1) = {"
-YS
-YS
-YS
-YS
+eC
+eC
+eC
+eC
 Sz
 Sz
 Sz
@@ -12880,10 +12867,10 @@ eC
 eC
 "}
 (109,1,1) = {"
-YS
-YS
-YS
-YS
+eC
+eC
+eC
+eC
 Sz
 Sz
 Sz
@@ -12912,7 +12899,7 @@ eC
 eC
 eC
 eC
-eC
+hS
 eC
 eC
 eC
@@ -12987,14 +12974,14 @@ eC
 eC
 "}
 (110,1,1) = {"
-YS
-YS
-YS
-YS
-Sz
-Sz
-Sz
 eC
+eC
+eC
+eC
+Sz
+Sz
+Sz
+hS
 eC
 eC
 eC
@@ -13010,16 +12997,16 @@ eC
 eC
 eC
 Bn
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
+Bn
+Bn
+Bn
+Bn
+Bn
+Bn
+Bn
+Bn
+Bn
+Bn
 eC
 eC
 eC
@@ -13094,10 +13081,10 @@ eC
 eC
 "}
 (111,1,1) = {"
-YS
-YS
-YS
-YS
+eC
+eC
+eC
+eC
 Sz
 Sz
 Sz
@@ -13201,10 +13188,10 @@ eC
 eC
 "}
 (112,1,1) = {"
-YS
-YS
-YS
-YS
+eC
+eC
+eC
+eC
 Sz
 Sz
 Sz
@@ -13222,14 +13209,14 @@ eC
 eC
 eC
 eC
-eC
+hS
 Oi
 eC
 eC
 eC
 eC
 eC
-eC
+hS
 eC
 eC
 eC
@@ -13308,10 +13295,10 @@ eC
 eC
 "}
 (113,1,1) = {"
-YS
-YS
-YS
-YS
+eC
+eC
+eC
+eC
 Sz
 Sz
 Sz
@@ -13331,16 +13318,16 @@ eC
 eC
 eC
 Bn
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
+Bn
+Bn
+Bn
+Bn
+Bn
+Bn
+Bn
+Bn
+Bn
+Bn
 eC
 eC
 eC
@@ -13415,10 +13402,10 @@ eC
 eC
 "}
 (114,1,1) = {"
-YS
-YS
-YS
-YS
+eC
+eC
+eC
+eC
 Sz
 Sz
 Sz
@@ -13522,10 +13509,10 @@ eC
 eC
 "}
 (115,1,1) = {"
-YS
-YS
-YS
-YS
+eC
+eC
+eC
+eC
 Sz
 Sz
 Sz
@@ -13554,7 +13541,7 @@ eC
 eC
 eC
 eC
-eC
+hS
 eC
 eC
 eC
@@ -13629,10 +13616,10 @@ eC
 eC
 "}
 (116,1,1) = {"
-YS
-YS
-YS
-YS
+eC
+eC
+eC
+eC
 Sz
 Sz
 Sz
@@ -13652,16 +13639,16 @@ eC
 eC
 eC
 Bn
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
+Bn
+Bn
+Bn
+Bn
+Bn
+Bn
+Bn
+Bn
+Bn
+Bn
 eC
 eC
 eC
@@ -13736,10 +13723,10 @@ eC
 eC
 "}
 (117,1,1) = {"
-YS
-YS
-YS
-YS
+eC
+eC
+eC
+eC
 Sz
 Sz
 Sz
@@ -13761,7 +13748,7 @@ eC
 Bn
 eC
 eC
-eC
+hS
 eC
 eC
 eC
@@ -13843,10 +13830,10 @@ eC
 eC
 "}
 (118,1,1) = {"
-YS
-YS
-YS
-YS
+eC
+eC
+eC
+eC
 Sz
 Sz
 Sz
@@ -13875,7 +13862,7 @@ eC
 eC
 eC
 eC
-eC
+hS
 eC
 eC
 eC
@@ -13950,39 +13937,39 @@ eC
 eC
 "}
 (119,1,1) = {"
-YS
-YS
-YS
-YS
+eC
+eC
+eC
+eC
 Sz
 Sz
 Sz
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
+Bn
+Bn
 Bn
 eC
 eC
+hS
 eC
 eC
 eC
 eC
 eC
 eC
+hS
 eC
-eC
+hS
+Bn
+Bn
+Bn
+Bn
+Bn
+Bn
+Bn
+Bn
+Bn
+Bn
+Bn
 eC
 eC
 eC
@@ -14057,17 +14044,17 @@ eC
 eC
 "}
 (120,1,1) = {"
-YS
-YS
-YS
-YS
+eC
+eC
+eC
+eC
 Sz
 Sz
 Sz
 Bn
 Bn
 Bn
-yH
+Bn
 Bn
 Bn
 Bn
@@ -14076,10 +14063,10 @@ Bn
 Bn
 Bn
 Jq
+yH
 Bn
 Bn
 Bn
-Bn
 eC
 eC
 eC
@@ -14087,7 +14074,7 @@ eC
 eC
 eC
 eC
-eC
+hS
 eC
 eC
 eC
@@ -14168,18 +14155,18 @@ eC
 eC
 eC
 eC
+Sz
+Sz
+Sz
+Bn
+Bn
+eC
+eC
+eC
+eC
+eC
+eC
 kk
-kk
-kk
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
 eC
 eC
 eC
@@ -14188,7 +14175,7 @@ eC
 eC
 Bn
 eC
-eC
+hS
 eC
 eC
 eC
@@ -14278,7 +14265,7 @@ eC
 eC
 eC
 eC
-eC
+hS
 eC
 eC
 eC
@@ -14294,16 +14281,16 @@ eC
 eC
 eC
 Bn
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
-eC
+Bn
+Bn
+Bn
+Bn
+Bn
+Bn
+Bn
+Bn
+Bn
+Bn
 eC
 eC
 eC
@@ -14399,7 +14386,7 @@ eC
 eC
 eC
 eC
-eC
+hS
 Oi
 eC
 eC
@@ -14510,10 +14497,10 @@ eC
 Bn
 eC
 eC
+Bn
 eC
 eC
-eC
-eC
+Bn
 eC
 eC
 eC
@@ -14617,10 +14604,10 @@ eC
 Bn
 eC
 eC
+Bn
+hS
 eC
-eC
-eC
-eC
+Bn
 eC
 eC
 eC
@@ -14724,10 +14711,10 @@ eC
 Bn
 eC
 eC
+Bn
 eC
 eC
-eC
-eC
+Bn
 eC
 eC
 eC
@@ -14936,13 +14923,13 @@ eC
 eC
 eC
 eC
+Bn
 eC
 eC
+Bn
 eC
 eC
-eC
-eC
-eC
+Bn
 eC
 eC
 eC
@@ -15043,14 +15030,14 @@ eC
 eC
 eC
 eC
+Bn
 eC
 eC
+Bn
 eC
 eC
-eC
-eC
-eC
-eC
+Bn
+hS
 eC
 eC
 eC
@@ -15149,14 +15136,14 @@ eC
 eC
 eC
 eC
+hS
+Bn
 eC
 eC
+Bn
 eC
 eC
-eC
-eC
-eC
-eC
+Bn
 eC
 eC
 eC
@@ -15257,13 +15244,13 @@ eC
 eC
 eC
 eC
+Bn
 eC
 eC
+Bn
 eC
 eC
-eC
-eC
-eC
+Bn
 eC
 eC
 eC
@@ -15364,14 +15351,14 @@ eC
 eC
 eC
 eC
+Bn
 eC
 eC
+Bn
 eC
 eC
-eC
-eC
-eC
-eC
+Bn
+hS
 eC
 eC
 eC
@@ -15470,14 +15457,14 @@ eC
 eC
 eC
 eC
+hS
+Bn
+eC
+hS
+Bn
 eC
 eC
-eC
-eC
-eC
-eC
-eC
-eC
+Bn
 eC
 eC
 eC
