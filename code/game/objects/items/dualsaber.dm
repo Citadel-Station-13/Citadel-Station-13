@@ -342,8 +342,8 @@
 	name = "divine lightblade"
 	desc = "A giant blade of bright and holy light, said to cut down the wicked with ease."
 	force = 5
-	block_chance = 50
 	armour_penetration = 0
+	block_parry_data = /datum/block_parry_data/chair
 	var/chaplain_spawnable = TRUE
 	can_reflect = FALSE
 	obj_flags = UNIQUE_RENAME
