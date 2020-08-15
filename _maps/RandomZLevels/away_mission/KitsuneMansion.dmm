@@ -131,6 +131,11 @@
 /obj/structure/bed,
 /turf/open/floor/wood/kitsune,
 /area/awaymission/kitsune)
+"gh" = (
+/turf/open/pool{
+	initial_gas_mix = "o2=22;n2=82;TEMP=263"
+	},
+/area/awaymission/kitsune)
 "gn" = (
 /obj/structure/window/plasma/reinforced{
 	dir = 8
@@ -162,7 +167,7 @@
 	dir = 8
 	},
 /turf/open/pool{
-	initial_gas_mix = "o2=22;n2=82;TEMP=260"
+	initial_gas_mix = "o2=22;n2=82;TEMP=263"
 	},
 /area/awaymission/kitsune)
 "hx" = (
@@ -187,6 +192,12 @@
 /obj/structure/table/wood,
 /turf/open/floor/wood/kitsune,
 /area/awaymission/kitsune)
+"ib" = (
+/turf/open/floor/engine{
+	initial_gas_mix = "o2=22;n2=82;TEMP=263";
+	name = "Holodeck Projector Floor"
+	},
+/area/holodeck/kitsune)
 "iz" = (
 /obj/machinery/pool/controller/largescan,
 /turf/open/floor/wood/kitsune,
@@ -307,7 +318,7 @@
 "qc" = (
 /obj/effect/mob_spawn/human/corpse,
 /turf/open/floor/engine{
-	initial_gas_mix = "o2=22;n2=82;TEMP=260";
+	initial_gas_mix = "o2=22;n2=82;TEMP=263";
 	name = "Holodeck Projector Floor"
 	},
 /area/holodeck/kitsune)
@@ -403,7 +414,7 @@
 "uL" = (
 /obj/machinery/pool/drain,
 /turf/open/pool{
-	initial_gas_mix = "o2=22;n2=82;TEMP=260"
+	initial_gas_mix = "o2=22;n2=82;TEMP=263"
 	},
 /area/awaymission/kitsune)
 "uW" = (
@@ -412,7 +423,7 @@
 	pixel_y = 24
 	},
 /turf/open/pool{
-	initial_gas_mix = "o2=22;n2=82;TEMP=260"
+	initial_gas_mix = "o2=22;n2=82;TEMP=263"
 	},
 /area/awaymission/kitsune)
 "vv" = (
@@ -991,7 +1002,7 @@
 "MB" = (
 /obj/effect/gibspawner/human,
 /turf/open/floor/engine{
-	initial_gas_mix = "o2=22;n2=82;TEMP=260";
+	initial_gas_mix = "o2=22;n2=82;TEMP=263";
 	name = "Holodeck Projector Floor"
 	},
 /area/holodeck/kitsune)
@@ -1012,7 +1023,7 @@
 "NP" = (
 /obj/structure/pool/ladder,
 /turf/open/pool{
-	initial_gas_mix = "o2=22;n2=82;TEMP=260"
+	initial_gas_mix = "o2=22;n2=82;TEMP=263"
 	},
 /area/awaymission/kitsune)
 "Oi" = (
@@ -1061,15 +1072,10 @@
 /obj/item/reagent_containers/food/snacks/spiderling,
 /turf/open/floor/wood/kitsune,
 /area/awaymission/kitsune)
-"QF" = (
-/turf/open/pool{
-	initial_gas_mix = "o2=22;n2=82;TEMP=260"
-	},
-/area/awaymission/kitsune)
 "QZ" = (
 /obj/effect/gibspawner/human,
 /turf/open/pool{
-	initial_gas_mix = "o2=22;n2=82;TEMP=260"
+	initial_gas_mix = "o2=22;n2=82;TEMP=263"
 	},
 /area/awaymission/kitsune)
 "Rb" = (
@@ -1259,12 +1265,6 @@
 /obj/structure/bookcase/random/religion,
 /turf/closed/indestructible/wood/kitsune,
 /area/awaymission/kitsune)
-"XP" = (
-/turf/open/floor/engine{
-	initial_gas_mix = "o2=22;n2=82;TEMP=260";
-	name = "Holodeck Projector Floor"
-	},
-/area/holodeck/kitsune)
 "XZ" = (
 /obj/machinery/gibber,
 /obj/effect/mob_spawn/human/clown/corpse,
@@ -5109,17 +5109,17 @@ Zg
 ZO
 ZO
 NP
-QF
-QF
-QF
-QF
-QF
+gh
+gh
+gh
+gh
+gh
 NP
-QF
-QF
-QF
-QF
-QF
+gh
+gh
+gh
+gh
+gh
 NP
 ZO
 ZO
@@ -5215,19 +5215,19 @@ YR
 Zg
 ZO
 ZO
-QF
-QF
-QF
-QF
-QF
-QF
-QF
-QF
-QF
-QF
-QF
-QF
-QF
+gh
+gh
+gh
+gh
+gh
+gh
+gh
+gh
+gh
+gh
+gh
+gh
+gh
 ZO
 ZO
 Zg
@@ -5322,19 +5322,19 @@ YR
 Zg
 ZO
 ZO
-QF
-QF
-QF
-QF
+gh
+gh
+gh
+gh
 QZ
-QF
-QF
-QF
+gh
+gh
+gh
 QZ
-QF
-QF
+gh
+gh
 QZ
-QF
+gh
 ZO
 ZO
 Zg
@@ -5430,18 +5430,18 @@ Zg
 ZO
 ZO
 uW
-QF
-QF
+gh
+gh
 QZ
-QF
-QF
+gh
+gh
 QZ
-QF
-QF
-QF
-QF
+gh
+gh
+gh
+gh
 QZ
-QF
+gh
 ZO
 ZO
 Zg
@@ -5536,19 +5536,19 @@ YR
 Zg
 ZO
 ZO
-QF
-QF
+gh
+gh
 QZ
-QF
-QF
+gh
+gh
 QZ
-QF
-QF
-QF
-QF
-QF
-QF
-QF
+gh
+gh
+gh
+gh
+gh
+gh
+gh
 yW
 ZO
 Zg
@@ -5643,19 +5643,19 @@ YR
 Zg
 Ui
 ZO
-QF
-QF
-QF
-QF
-QF
-QF
-QF
-QF
-QF
+gh
+gh
+gh
+gh
+gh
+gh
+gh
+gh
+gh
 QZ
-QF
+gh
 QZ
-QF
+gh
 ZO
 Ui
 Zg
@@ -5750,19 +5750,19 @@ YR
 Zg
 ZO
 iz
-QF
-QF
-QF
-QF
-QF
-QF
+gh
+gh
+gh
+gh
+gh
+gh
 uL
 QZ
-QF
-QF
-QF
-QF
-QF
+gh
+gh
+gh
+gh
+gh
 hu
 ZO
 Zg
@@ -5857,19 +5857,19 @@ YR
 Zg
 ZO
 Kp
-QF
-QF
-QF
-QF
-QF
-QF
-QF
-QF
-QF
-QF
-QF
-QF
-QF
+gh
+gh
+gh
+gh
+gh
+gh
+gh
+gh
+gh
+gh
+gh
+gh
+gh
 ZO
 ZO
 Zg
@@ -5964,19 +5964,19 @@ YR
 Zg
 ZO
 ZO
-QF
-QF
-QF
+gh
+gh
+gh
 QZ
-QF
-QF
+gh
+gh
 QZ
 QZ
-QF
+gh
 QZ
-QF
-QF
-QF
+gh
+gh
+gh
 ZO
 ZO
 GM
@@ -6072,33 +6072,33 @@ Zg
 ZO
 ZO
 uW
-QF
-QF
-QF
-QF
-QF
-QF
-QF
-QF
+gh
+gh
+gh
+gh
+gh
+gh
+gh
+gh
 QZ
-QF
-QF
-QF
+gh
+gh
+gh
 ZO
 ZO
 Zg
 ZO
 ZO
-XP
-XP
-XP
-XP
-XP
-XP
-XP
-XP
-XP
-XP
+ib
+ib
+ib
+ib
+ib
+ib
+ib
+ib
+ib
+ib
 ZO
 ZO
 ZO
@@ -6178,34 +6178,34 @@ YR
 Zg
 ZO
 ZO
-QF
-QF
-QF
-QF
-QF
-QF
-QF
-QF
-QF
-QF
-QF
+gh
+gh
+gh
+gh
+gh
+gh
+gh
+gh
+gh
+gh
+gh
 QZ
-QF
+gh
 ZO
 Ui
 Zg
 ZO
 ZO
-XP
-XP
-XP
-XP
-XP
-XP
-XP
-XP
+ib
+ib
+ib
+ib
+ib
+ib
+ib
+ib
 MB
-XP
+ib
 ZO
 yB
 oT
@@ -6285,34 +6285,34 @@ YR
 Zg
 ZO
 ZO
-QF
-QF
-QF
+gh
+gh
+gh
 QZ
-QF
-QF
-QF
+gh
+gh
+gh
 QZ
-QF
-QF
-QF
-QF
-QF
+gh
+gh
+gh
+gh
+gh
 ZO
 ZO
 Zg
 ZO
 ZO
-XP
-XP
-XP
+ib
+ib
+ib
 qc
-XP
-XP
-XP
-XP
-XP
-XP
+ib
+ib
+ib
+ib
+ib
+ib
 VB
 cW
 ZO
@@ -6393,33 +6393,33 @@ Zg
 ZO
 ZO
 hw
-QF
-QF
-QF
-QF
-QF
+gh
+gh
+gh
+gh
+gh
 hw
-QF
-QF
-QF
-QF
-QF
+gh
+gh
+gh
+gh
+gh
 hw
 ZO
 ZO
 Zg
 ZO
 cj
-XP
-XP
-XP
-XP
-XP
-XP
-XP
-XP
-XP
-XP
+ib
+ib
+ib
+ib
+ib
+ib
+ib
+ib
+ib
+ib
 fv
 ZO
 ZO
@@ -6517,16 +6517,16 @@ ZO
 Zg
 ZO
 ZO
-XP
-XP
-XP
-XP
-XP
-XP
-XP
-XP
-XP
-XP
+ib
+ib
+ib
+ib
+ib
+ib
+ib
+ib
+ib
+ib
 ZO
 ZO
 ZO
