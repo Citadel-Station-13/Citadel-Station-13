@@ -342,11 +342,29 @@
 	name = "divine lightblade"
 	desc = "A giant blade of bright and holy light, said to cut down the wicked with ease."
 	force = 5
-	block_chance = 50
 	armour_penetration = 0
+	block_parry_data = /datum/block_parry_data/chaplain
 	var/chaplain_spawnable = TRUE
 	can_reflect = FALSE
 	obj_flags = UNIQUE_RENAME
+
+/datum/block_parry_data/chaplain
+	parry_stamina_cost = 12
+	parry_time_windup = 2
+	parry_time_active = 5
+	parry_time_spindown = 3
+	// parry_flags = PARRY_DEFAULT_HANDLE_FEEDBACK
+	parry_time_perfect = 1
+	parry_time_perfect_leeway = 1
+	parry_imperfect_falloff_percent = 7.5
+	parry_efficiency_to_counterattack = 100
+	parry_efficiency_considered_successful = 80
+	parry_efficiency_perfect = 120
+	parry_efficiency_perfect_override = list(
+		TEXT_ATTACK_TYPE_PROJECTILE = 30,
+	)
+	parry_failed_stagger_duration = 3 SECONDS
+	parry_failed_clickcd_duration = 2 SECONDS
 
 /obj/item/dualsaber/hypereutactic/chaplain/ComponentInitialize()
 	. = ..()
