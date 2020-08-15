@@ -6,7 +6,7 @@
 	next_knowledge = list(/datum/eldritch_knowledge/ashen_grasp)
 	required_atoms = list(/obj/item/melee/sickly_blade,/obj/item/match)
 	result_atoms = list(/obj/item/melee/sickly_blade/ash)
-	cost = 1
+	cost = 0
 	route = PATH_ASH
 
 /datum/eldritch_knowledge/spell/ashen_shift
@@ -40,7 +40,7 @@
 			if(!istype(X,/obj/effect/proc_holder/spell/targeted/touch/mansus_grasp))
 				continue
 			var/obj/effect/proc_holder/spell/targeted/touch/mansus_grasp/MG = X
-			MG.charge_counter = min(round(MG.charge_counter + MG.charge_max * 0.5),MG.charge_max) // refunds 50% of charge.
+			MG.charge_counter = min(round(MG.charge_counter + MG.charge_max * 0.75),MG.charge_max) // refunds 75% of charge.
 	var/atom/throw_target = get_edge_target_turf(C, user.dir)
 	if(!C.anchored)
 		. = TRUE
