@@ -37,5 +37,4 @@ cp *byond-extools.* $1/ || true
 #find $1/_maps -name "*.dm" -type f -delete
 
 #dlls on windows
-cp rust_g* $1/ || true
-cp *BSQL.* $1/ || true
+cp *.dll $1/ || true
