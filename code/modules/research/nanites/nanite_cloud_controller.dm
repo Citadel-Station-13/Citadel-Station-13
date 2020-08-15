@@ -36,8 +36,9 @@
 /obj/machinery/computer/nanite_cloud_controller/proc/eject(mob/living/user)
 	if(!disk)
 		return
-	if(!istype(user) || !Adjacent(user))// ||!user.put_in_active_hand(disk))
-		disk.forceMove(drop_location())
+	disk.forceMove(drop_location())
+	if(istype(user) && user.Adjacent(src))
+		user.put_in_active_hand(disk)
 	disk = null
 
 /obj/machinery/computer/nanite_cloud_controller/proc/get_backup(cloud_id)
