@@ -58688,7 +58688,7 @@
 /turf/closed/wall/r_wall,
 /area/engine/engine_smes)
 "sRH" = (
-/obj/machinery/autolathe/secure{
+/obj/machinery/autolathe{
 	name = "public autolathe"
 	},
 /turf/open/floor/plasteel,

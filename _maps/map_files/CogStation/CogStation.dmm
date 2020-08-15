@@ -31245,7 +31245,7 @@
 	dir = 1;
 	pixel_y = -26
 	},
-/obj/machinery/autolathe/secure{
+/obj/machinery/autolathe{
 	name = "public autolathe"
 	},
 /obj/effect/turf_decal/bot,
