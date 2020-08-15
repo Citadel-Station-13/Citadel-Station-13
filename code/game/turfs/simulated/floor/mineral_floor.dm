@@ -60,9 +60,9 @@
 
 // Plasma floor that can't be removed, for disco
 
-/turf/open/floor/material/plasma/disco
+/turf/open/floor/mineral/plasma/disco
 	name = "disco floor"
-/turf/open/floor/material/plasma/disco/crowbar_act(mob/living/user, obj/item/I)
+/turf/open/floor/mineral/plasma/disco/crowbar_act(mob/living/user, obj/item/I)
 	return
 
 //GOLD
