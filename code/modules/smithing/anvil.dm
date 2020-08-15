@@ -20,33 +20,35 @@
 /obj/structure/anvil
 	name = "anvil"
 	desc = "Base class of anvil. This shouldn't exist, but is useable."
-	icon = 'icons/obj/hydroponics/equipment.dmi'
-	icon_state = "loom"
+	icon = 'icons/obj/smith.dmi'
+	icon_state = "anvil"
 	density = TRUE
 	anchored = TRUE
 	var/workpiece_state = FALSE
-	var/datum/material = workpiece_material
+	var/datum/material/workpiece_material
 	var/qualitymod = 0
-	var/currentquality = qualitymod
+	var/currentquality = 0
 	var/currentsteps = 0
 	var/strengthstepcostmod = 1
-	var/stepsdone
-	var/list/smithrecipes = (RECIPE_AXE = obj/item/smithing/axehead,
-	RECIPE_HAMMER = obj/item/smithing/hammerhead,
-	RECIPE_SCYTHE = obj/item/smithing/scytheblade,
-	RECIPE_SHOVEL = obj/item/smithing/shovelhead,
-	RECIPE_COGHEAD = obj/item/smithing/cogheadclubhead,
-	RECIPE_JAVELIN = obj/item/smithing/javelinhead,
-	RECIPE_LARGEPICK = obj/item/smithing/pickaxehead,
-	RECIPE_SMALLPICK = obj/item/smithing/prospectingpickhead,
-	RECIPE_SHORTSWORD = obj/item/smithing/shortswordblade,
-	RECIPE_SMALLKNIFE = obj/item/smithing/knifeblade,
-	RECIPE_BROADSWORD = obj/item/smithing/broadblade,
-	RECIPE_HALBERD = obj/item/smithing/halberdhead)
+	var/stepsdone = 0
+	var/list/smithrecipes = list(RECIPE_AXE = /obj/item/smithing/axehead,
+	RECIPE_HAMMER = /obj/item/smithing/hammerhead,
+	RECIPE_SCYTHE = /obj/item/smithing/scytheblade,
+	RECIPE_SHOVEL = /obj/item/smithing/shovelhead,
+	RECIPE_COGHEAD = /obj/item/smithing/cogheadclubhead,
+	RECIPE_JAVELIN = /obj/item/smithing/javelinhead,
+	RECIPE_LARGEPICK = /obj/item/smithing/pickaxehead,
+	RECIPE_SMALLPICK = /obj/item/smithing/prospectingpickhead,
+	RECIPE_SHORTSWORD = /obj/item/smithing/shortswordblade,
+	RECIPE_SMALLKNIFE = /obj/item/smithing/knifeblade,
+	RECIPE_BROADSWORD = /obj/item/smithing/broadblade,
+	RECIPE_HALBERD = /obj/item/smithing/halberdhead)
+
+
 
 /obj/structure/anvil/attackby(obj/item/I, mob/user)
-	if(istype(I, obj/item/smithing/ingot))
-		var/obj/item/smithing/ingot/notsword = I
+	if(istype(I, /obj/item/ingot))
+		var/obj/item/ingot/notsword = I
 		if(workpiece_state)
 			to_chat(user, "There's already a workpiece! Finish it or take it off.")
 			return FALSE
@@ -54,15 +56,16 @@
 			workpiece_state = WORKPIECE_PRESENT
 			workpiece_material = notsword.custom_materials
 			to_chat(user, "You place the [notsword] on the [src].")
+			currentquality = qualitymod
 			qdel(notsword)
 		else
 			to_chat(user, "The ingot isn't workable yet!")
 			return FALSE
 		return
-	else if(istype(I, obj/item/hammer))
-		var/obj/item/melee/hammer/hammertime = I
-		if(workpiece_state = WORKPIECE_PRESENT || WORKPIECE_INPROGRESS)
-			do_shaping(user, hammer.qualitymod)
+	else if(istype(I, /obj/item/melee/smith/hammer))
+		var/obj/item/melee/smith/hammer/hammertime = I
+		if(workpiece_state == WORKPIECE_PRESENT || WORKPIECE_INPROGRESS)
+			do_shaping(user, hammertime.qualitymod)
 		else
 		 to_chat(user, "You can't work an empty anvil!")
 		 return FALSE
@@ -76,7 +79,7 @@
 
 /obj/structure/anvil/proc/do_shaping(mob/user, var/qualitychange)
 	qualitymod += qualitychange
-	var/list/shapingsteps = ("weak hit", "strong hit", "heavy hit", "fold", "draw", "shrink", "bend", "punch", "upset") //weak/strong/heavy hit affect strength. All the other steps shape.
+	var/list/shapingsteps = list("weak hit", "strong hit", "heavy hit", "fold", "draw", "shrink", "bend", "punch", "upset") //weak/strong/heavy hit affect strength. All the other steps shape.
 	workpiece_state = WORKPIECE_INPROGRESS
 	var/stepdone = input(user, "How would you like to work the metal?") in shapingsteps
 	switch(stepdone)
@@ -122,12 +125,20 @@
 			var/turf/T = get_turf(user)
 			workpiece_state = FALSE
 			new /obj/item/stack/ore/slag(T)
+			currentquality = qualitymod
 		for(var/solutions in smithrecipes)
-			if(!solution == stepsdone)
+			if(!solutions == stepsdone)
 				return FALSE
 			else
-				var/finisheditem = smithrecipes[stepsdone]
+				var/obj/item/smithing/finisheditem = smithrecipes[stepsdone]
 				var/turf/T = get_turf(user)
 				workpiece_state = FALSE
-				new finisheditem(T)
+				finisheditem.set_custom_materials(workpiece_material)
 				to_chat(user, "You finish your [finisheditem]!")
+				new finisheditem(T)
+				currentquality = qualitymod
+
+#undef WORKPIECE_PRESENT
+#undef WORKPIECE_INPROGRESS
+#undef WORKPIECE_FINISHED
+#undef WORKPIECE_SLAG
