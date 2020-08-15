@@ -1,0 +1,6 @@
+author: "kiwedespars"
+delete-after: True
+changes: 
+  - balance: "nerfed hypereut chaplain weapon."
+  - balance: "50% rng blockchance -> 0%"
+  - balance: "parry made much worse because it's an actual weapon and a roundstart one at that."
