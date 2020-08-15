@@ -329,7 +329,7 @@
 	id = "spacediner"
 	suffix= "spacediner.dmm"
 	name = "Space DIner"
-	description = "Come, traveler of the bluespace planes. Sit, enjoy a drink and tae one of the fair maidens for a night."
+	description = "Come, traveler of the bluespace planes. Sit, enjoy a drink and take one of the fair maidens for a night."
 
 //Space ruins for the station z
 /datum/map_template/ruin/spacenearstation
