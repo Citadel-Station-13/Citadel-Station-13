@@ -5,7 +5,11 @@
 	dynamic_lighting = DYNAMIC_LIGHTING_ENABLED
 	has_gravity = STANDARD_GRAVITY
 
-
+/area/holodeck/kitsune
+	name = "A snowy Mansion"
+	icon_state = "away1"
+	dynamic_lighting = DYNAMIC_LIGHTING_ENABLED
+	has_gravity = STANDARD_GRAVITY
 //turfs
 
 /turf/open/floor/wood/kitsune
