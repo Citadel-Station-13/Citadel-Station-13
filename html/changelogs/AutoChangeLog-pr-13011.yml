@@ -1,5 +1,0 @@
-author: "timothyteakettle"
-delete-after: True
-changes: 
-  - rscadd: "syndicate agents now have access to mechanical aim enhancers which allow them to aim bullets to bounce off walls"
-  - bugfix: "ricochets work properly now for the bullets that support them"

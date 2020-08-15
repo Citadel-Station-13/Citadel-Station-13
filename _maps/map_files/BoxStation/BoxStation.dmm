@@ -9475,14 +9475,8 @@
 /obj/structure/sign/warning/nosmoking{
 	pixel_y = 30
 	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/yellow{
-	dir = 4
-	},
-/turf/open/floor/plasteel/white,
-/area/janitor)
+/turf/open/floor/plasteel/dark,
+/area/medical/sleeper)
 "asN" = (
 /obj/machinery/airalarm{
 	dir = 4;
@@ -9567,20 +9561,10 @@
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
 "asY" = (
-/obj/structure/table,
-/obj/item/crowbar,
-/obj/item/clothing/neck/stethoscope,
-/obj/item/reagent_containers/spray/cleaner,
 /obj/structure/sign/warning/nosmoking{
 	pixel_y = 30
 	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/yellow{
-	dir = 4
-	},
-/turf/open/floor/plasteel/white,
+/turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "ata" = (
 /turf/open/floor/wood,
@@ -56039,6 +56023,10 @@
 	},
 /turf/open/floor/plasteel,
 /area/crew_quarters/theatre)
+"kEm" = (
+/mob/living/simple_animal/opossum/poppy,
+/turf/open/floor/plating,
+/area/maintenance/port/aft)
 "kEY" = (
 /obj/effect/landmark/stationroom/box/engine,
 /turf/open/space/basic,
@@ -58166,6 +58154,10 @@
 /obj/effect/decal/cleanable/blood/old,
 /turf/open/floor/plating,
 /area/maintenance/fore)
+"rtU" = (
+/mob/living/simple_animal/opossum,
+/turf/open/floor/plating,
+/area/maintenance/starboard/fore)
 "ruo" = (
 /obj/structure/cable{
 	icon_state = "4-8"
@@ -85350,7 +85342,7 @@ bVI
 bTA
 xgk
 bHE
-bHE
+kEm
 bHE
 bHE
 bHE
@@ -91231,7 +91223,7 @@ bqH
 aJq
 aJq
 gnf
-asM
+bCv
 bDJ
 bCt
 bGD
@@ -95597,7 +95589,7 @@ bEe
 bhh
 bBL
 bvj
-bAl
+asM
 bAl
 bvh
 bzS
@@ -104295,7 +104287,7 @@ anf
 anf
 alP
 alP
-anf
+rtU
 alP
 alP
 alP
