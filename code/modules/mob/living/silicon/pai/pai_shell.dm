@@ -61,6 +61,7 @@
 		client.perspective = EYE_PERSPECTIVE
 		client.eye = card
 	var/turf/T = drop_location()
+	release_vore_contents()
 	card.forceMove(T)
 	forceMove(card)
 	density = FALSE

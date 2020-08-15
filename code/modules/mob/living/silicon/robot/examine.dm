@@ -48,6 +48,12 @@
 			. += "<span class='warning'>It doesn't seem to be responding.</span>"
 		if(DEAD)
 			. += "<span class='deadsay'>It looks like its system is corrupted and requires a reset.</span>"
+
+	//SKYRAT EDIT - OOC NOTES!
+	if(client)
+		. += "OOC Notes: <a href='?src=[REF(src)];skyrat_ooc_notes=1'>\[View\]</a>"
+	//END SKYRAT EDIT
+
 	. += "*---------*</span>"
 
 	. += ..()

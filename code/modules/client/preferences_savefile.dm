@@ -196,9 +196,9 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		S["horn_color"]			>> features["horns_color"]
 
 	if(current_version < 33)
-		features["flavor_text"] = html_encode(features["flavor_text"])
-		features["silicon_flavor_text"] = html_encode(features["silicon_flavor_text"])
-		features["ooc_notes"] = html_encode(features["ooc_notes"])
+		features["flavor_text"]			= strip_html_simple(features["flavor_text"], MAX_FLAVOR_LEN, TRUE)
+		features["silicon_flavor_text"]			= strip_html_simple(features["silicon_flavor_text"], MAX_FLAVOR_LEN, TRUE)
+		features["ooc_notes"]			= strip_html_simple(features["ooc_notes"], MAX_FLAVOR_LEN, TRUE)
 
 /datum/preferences/proc/load_path(ckey,filename="preferences.sav")
 	if(!ckey)

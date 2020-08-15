@@ -56662,6 +56662,7 @@
 	},
 /area/maintenance/bar)
 "mqZ" = (
+/obj/structure/reagent_dispensers/keg/aphro/strong,
 /obj/item/reagent_containers/glass/beaker,
 /turf/open/floor/plating,
 /area/maintenance/bar)

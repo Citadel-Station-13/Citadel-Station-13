@@ -157,9 +157,6 @@
 		else // Skyrat Change
 			. += "[t_His] player has not allowed lewd verbs." // Skyrat Change
 
-	if(client && client.prefs) //what about a runtime for not having clients!
-		. += "[src]'s Prefs : <br> <b>ERP :</b> [client.prefs.erppref] <b>| Non-Con :</b> [client.prefs.nonconpref] <b>| Vore :</b> [client.prefs.vorepref]<br>"
-
 	var/list/missing = list(BODY_ZONE_HEAD, BODY_ZONE_CHEST, BODY_ZONE_L_ARM, BODY_ZONE_R_ARM, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
 	var/list/disabled = list()
 	for(var/X in bodyparts)
@@ -451,6 +448,11 @@
 		. += "<span class='info'><b>Traits:</b> [traitstring]</span>"
 
 	SEND_SIGNAL(src, COMSIG_PARENT_EXAMINE, user, .) //This also handles flavor texts now
+	
+	var/invisible_man = skipface || get_visible_name() == "Unknown" // SKYRAT EDIT -- BEGIN
+	if(!invisible_man)
+		if(client)
+			. += "OOC Notes: <a href='?src=[REF(src)];skyrat_ooc_notes=1'>\[View\]</a>" // SKYRAT EDIT -- END
 
 	. += "*---------*</span>"
 
