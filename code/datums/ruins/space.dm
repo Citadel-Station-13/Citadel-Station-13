@@ -328,7 +328,7 @@
 /datum/map_template/ruin/space/spacediner
 	id = "spacediner"
 	suffix= "spacediner.dmm"
-	name = "Space DIner"
+	name = "Space Diner"
 	description = "Come, traveler of the bluespace planes. Sit, enjoy a drink and take one of the fair maidens for a night."
 
 //Space ruins for the station z
