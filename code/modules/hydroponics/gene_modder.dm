@@ -6,7 +6,7 @@
 	density = TRUE
 	circuit = /obj/item/circuitboard/machine/plantgenes
 	pass_flags = PASSTABLE | LETPASSTHROW
-	flags_1 = DEFAULT_RICOCHET_1 | ON_BORDER_1 // apparently this works???
+	flags_1 = DEFAULT_RICOCHET_1
 
 	var/obj/item/seeds/seed
 	var/obj/item/disk/plantgene/disk
