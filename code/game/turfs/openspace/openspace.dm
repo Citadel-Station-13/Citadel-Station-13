@@ -135,5 +135,5 @@ GLOBAL_DATUM_INIT(openspace_backdrop_one_for_all, /atom/movable/openspace_backdr
 	can_build_on = TRUE
 	initial_gas_mix = ICEMOON_DEFAULT_ATMOS
 
-/turf/open/transparent/openspace/icemoon/can_zFall(atom/moveable/A, levels = 1, turf/target)
+/turf/open/transparent/openspace/icemoon/can_zFall(atom/movable/A, levels = 1, turf/target)
 	return TRUE
