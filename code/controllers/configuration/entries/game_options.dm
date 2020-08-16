@@ -523,3 +523,6 @@
   * Camera mobs, AIs, ghosts and some other are of course exempt from this. This also doesn't influence simplemob AI, for the best.
   */
 /datum/config_entry/flag/use_field_of_vision
+
+/datum/config_entry/number/max_shuttle_size
+	config_entry_value = 500
