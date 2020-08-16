@@ -649,8 +649,6 @@ GLOBAL_VAR_INIT(exploit_warn_spam_prevention, 0)
 					continue
 				if(overrides.len && (A in overrides))
 					continue
-				if(A.IsObscured())
-					continue
 				statpanel(listed_turf.name, null, A)
 	if(mind)
 		add_spells_to_statpanel(mind.spell_list)

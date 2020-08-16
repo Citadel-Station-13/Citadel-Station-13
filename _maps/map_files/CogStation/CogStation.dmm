@@ -242,13 +242,13 @@
 	pixel_x = 22
 	},
 /obj/structure/rack,
-/obj/item/gun/energy{
+/obj/item/gun/energy/e_gun{
 	pixel_y = -6
 	},
-/obj/item/gun/energy{
+/obj/item/gun/energy/e_gun{
 	pixel_y = -3
 	},
-/obj/item/gun/energy,
+/obj/item/gun/energy/e_gun,
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/security/armory)
 "aaI" = (

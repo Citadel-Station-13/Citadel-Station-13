@@ -45,11 +45,8 @@
 	desc = "A solid wall of slightly twitching tendrils with a reflective glow."
 	damaged_desc = "A wall of twitching tendrils with a reflective glow."
 	icon_state = "blob_glow"
+	flags_ricochet = RICOCHET_SHINY
 	point_return = 8
 	max_integrity = 100
 	brute_resist = 1
 	explosion_block = 2
-
-/obj/structure/blob/shield/reflective/check_projectile_ricochet(obj/item/projectile/P)
-	return PROJECTILE_RICOCHET_FORCE
-

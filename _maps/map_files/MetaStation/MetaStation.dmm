@@ -10324,6 +10324,7 @@
 /turf/open/floor/carpet,
 /area/crew_quarters/dorms)
 "atd" = (
+/mob/living/simple_animal/opossum,
 /turf/open/floor/plating{
 	icon_state = "panelscorched"
 	},
@@ -82149,6 +82150,16 @@
 /obj/structure/grille,
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
+"pbc" = (
+/obj/structure/light_construct/small{
+	dir = 4
+	},
+/obj/machinery/computer/security/telescreen/entertainment{
+	pixel_x = 30
+	},
+/mob/living/simple_animal/opossum/poppy,
+/turf/open/floor/wood,
+/area/maintenance/port/aft)
 "pbF" = (
 /obj/machinery/portable_atmospherics/canister,
 /obj/machinery/atmospherics/components/unary/portables_connector/visible{
@@ -100175,7 +100186,7 @@ csT
 dux
 cxQ
 ckS
-cmi
+pbc
 cnk
 ckP
 cmi
