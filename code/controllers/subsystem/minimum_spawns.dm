@@ -43,7 +43,7 @@ GLOBAL_LIST_INIT(minimum_snow_under_spawns, list(
 		active_spawns = GLOB.minimum_lavaland_spawns
 	if(!active_spawns)
 		flags = SS_NO_FIRE
-		return
+		return ..()
 	// borrowing this from auxbase code - see code\modules\mining\aux_base.dm
 	if(snaxi_snowflake_check)
 		for(var/z_level in SSmapping.levels_by_trait(ZTRAIT_ICE_RUINS))
@@ -79,7 +79,9 @@ GLOBAL_LIST_INIT(minimum_snow_under_spawns, list(
 				valid_mining_turfs.Add(TT)
 	if(!valid_mining_turfs)
 		flags = SS_NO_FIRE
-		return
+		return ..() 
+	return ..()
+
 
 /datum/controller/subsystem/min_spawns/fire(resumed)
 	if(active_spawns.len)
