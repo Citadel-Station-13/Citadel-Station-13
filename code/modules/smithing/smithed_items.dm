@@ -226,7 +226,7 @@
 	icon_state = "glaive"
 
 /obj/item/smithing/glaive/startfinish()
-	var/obj/item/melee/smith/twohand/halberd/finalforreal = new /obj/item/melee/smith/twohand/glaive(src)
+	var/obj/item/melee/smith/twohand/glaive/finalforreal = new /obj/item/melee/smith/twohand/glaive(src)
 	finalforreal.force += quality
 	finalforreal.wield_force = finalforreal.force*finalforreal.wielded_mult
 	finalforreal.throwforce = finalforreal.force

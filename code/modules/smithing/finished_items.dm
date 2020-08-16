@@ -1,3 +1,7 @@
+//TODO: OBTAILABILITY, ANVIL TYPES, HAMMER TYPES, INGOTS
+
+
+
 /obj/item/melee/smith
 	name = "base class obj/item/melee/smith" //tin. handles overlay and quality and shit.
 	icon = 'icons/obj/smith.dmi'
@@ -45,6 +49,7 @@
 
 /obj/item/mining_scanner/prospector/Initialize()
 	..()
+	var/mutable_appearance/overlay
 	desc = "A handmade [name]."
 	overlay = mutable_appearance(icon, "minihandle")
 	overlay.appearance_flags = RESET_COLOR
@@ -61,6 +66,7 @@
 /obj/item/pickaxe/smithed/Initialize()
 	..()
 	desc = "A handmade [name]."
+	var/mutable_appearance/overlay
 	overlay = mutable_appearance(icon, "stick")
 	overlay.appearance_flags = RESET_COLOR
 	add_overlay(overlay)
@@ -76,6 +82,7 @@
 /obj/item/shovel/smithed/Initialize()
 	..()
 	desc = "A handmade [name]."
+	var/mutable_appearance/overlay
 	overlay = mutable_appearance(icon, "shovelhandle")
 	overlay.appearance_flags = RESET_COLOR
 	add_overlay(overlay)
@@ -125,6 +132,8 @@
 
 /obj/item/melee/smith/hammer//blacksmithing, not warhammer.
 	name = "hammer"
+	icon_state = "hammer"
+	overlay_state = "hammerhandle"
 	var/qualitymod = 0
 
 /obj/item/scythe/smithed //we need to inherit scythecode, but that's about it.
@@ -135,9 +144,13 @@
 	name = "coghead club"
 
 /obj/item/melee/smith/shortsword
-	name = "shortsword"
+	name = "gladius"
+	icon_state = "gladius"
+	overlay_state = "gladiushilt"
 
 /obj/item/melee/smith/twohand/broadsword
 	name = "broadsword"
+	icon_state = "broadsword"
+	overlay_state = "broadhilt"
 	force = 15
 	wielded_mult = 1.8

@@ -17,7 +17,6 @@
 #define RECIPE_HALBERD "duffp" //draw upset fold fold punch
 #define RECIPE_GLAIVE "usfp" //upset shrink fold punch
 
-#define STEPS_CAP 8
 /obj/structure/anvil
 	name = "anvil"
 	desc = "Base class of anvil. This shouldn't exist, but is useable."
@@ -28,10 +27,9 @@
 	var/workpiece_state = FALSE
 	var/datum/material/workpiece_material
 	var/anvilquality = 0
-	var/qualitymod = 0
 	var/currentquality = 0 //lolman? what the fuck do these vars do?
 	var/currentsteps = 0 //even i don't know
-	var/strengthstepcostmod = 1 //todo: document this shit
+	var/outrightfailchance = 1 //todo: document this shit
 	var/stepsdone = ""
 	var/list/smithrecipes = list(RECIPE_AXE = /obj/item/smithing/axehead,
 	RECIPE_HAMMER = /obj/item/smithing/hammerhead,
@@ -49,7 +47,7 @@
 
 /obj/structure/anvil/Initialize()
 	..()
-	qualitymod = anvilquality
+	currentquality = anvilquality
 
 /obj/structure/anvil/attackby(obj/item/I, mob/user)
 	if(istype(I, /obj/item/ingot))
@@ -61,7 +59,11 @@
 			workpiece_state = WORKPIECE_PRESENT
 			workpiece_material = notsword.custom_materials
 			to_chat(user, "You place the [notsword] on the [src].")
-			currentquality = qualitymod
+			currentquality = anvilquality
+			var/skillmod = 0
+			if(user.mind.skill_holder)
+				skillmod = user.mind.get_skill_level(/datum/skill/level/dorfy/blacksmithing)/2
+			currentquality += skillmod
 			qdel(notsword)
 		else
 			to_chat(user, "The ingot isn't workable yet!")
@@ -84,63 +86,64 @@
 
 
 /obj/structure/anvil/proc/do_shaping(mob/user, var/qualitychange)
-	qualitymod += qualitychange
+	currentquality += qualitychange
 	var/list/shapingsteps = list("weak hit", "strong hit", "heavy hit", "fold", "draw", "shrink", "bend", "punch", "upset") //weak/strong/heavy hit affect strength. All the other steps shape.
 	workpiece_state = WORKPIECE_INPROGRESS
 	var/stepdone = input(user, "How would you like to work the metal?") in shapingsteps
 	switch(stepdone)
 		if("weak hit")
-			currentsteps += 1 * strengthstepcostmod
-			strengthstepcostmod += 0.3
-			qualitymod += 1
+			currentsteps += 1
+			outrightfailchance += 10
+			currentquality += 1
 		if("strong hit")
-			currentsteps += 1.25 * strengthstepcostmod
-			strengthstepcostmod += 0.5
-			qualitymod += 2
+			currentsteps += 2
+			outrightfailchance += 17.5
+			currentquality += 2
 		if("heavy hit")
-			currentsteps += 1.5 * strengthstepcostmod
-			strengthstepcostmod += 0.7
-			qualitymod += 3
+			currentsteps += 3
+			outrightfailchance += 25
+			currentquality += 3
 		if("fold")
 			stepsdone += "f"
 			currentsteps += 1
-			qualitymod -= 2
+			currentquality -= 1
 		if("draw")
 			stepsdone += "d"
 			currentsteps += 1
-			qualitymod -= 2
+			currentquality -= 1
 		if("shrink")
 			stepsdone += "s"
 			currentsteps += 1
-			qualitymod -= 2
+			currentquality -= 1
 		if("bend")
 			stepsdone += "b"
 			currentsteps += 1
-			qualitymod -= 2
+			currentquality -= 1
 		if("punch")
 			stepsdone += "p"
 			currentsteps += 1
-			qualitymod -= 2
+			currentquality -= 1
 		if("upset")
 			stepsdone += "u"
 			currentsteps += 1
-			qualitymod -= 2
+			currentquality -= 1
 	to_chat(user, "You [stepdone] the metal.")
-	currentquality += qualitymod
 	to_chat(user, stepsdone)
 	if(length(stepsdone) >= 3)
 		tryfinish(user)
 
 /obj/structure/anvil/proc/tryfinish(mob/user)
-	if(currentsteps > STEPS_CAP)
+	if(currentsteps > 12 || (rng && prob(outrightfailchance))
 		to_chat(user, "You overwork the metal, causing it to turn into useless slag!")
 		var/turf/T = get_turf(user)
 		workpiece_state = FALSE
 		new /obj/item/stack/ore/slag(T)
-		currentquality = 0
-		qualitymod = anvilquality
+		currentquality = anvilquality
 		stepsdone = ""
 		currentsteps = 0
+		outrightfailchance = 1
+		if(user.mind.skill_holder)
+			user.mind.auto_gain_experience(/datum/skill/level/dorfy/blacksmithing, 25, 400, silent = FALSE)
 	for(var/i in smithrecipes)
 		to_chat(user, "comparing [i] to [stepsdone]")
 		if(i == stepsdone)
@@ -151,10 +154,10 @@
 			workpiece_state = FALSE
 			finisheditem.quality = currentquality
 			finisheditem.set_custom_materials(workpiece_material)
-			currentquality = 0
-			qualitymod = anvilquality
+			currentquality = anvilquality
 			stepsdone = ""
 			currentsteps = 0
+			outrightfailchance = 1
 			break
 
 
