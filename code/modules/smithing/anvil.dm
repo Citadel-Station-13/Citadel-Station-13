@@ -26,11 +26,12 @@
 	anchored = TRUE
 	var/workpiece_state = FALSE
 	var/datum/material/workpiece_material
+	var/anvilquality = 0
 	var/qualitymod = 0
 	var/currentquality = 0
 	var/currentsteps = 0
 	var/strengthstepcostmod = 1
-	var/stepsdone = 0
+	var/stepsdone = ""
 	var/list/smithrecipes = list(RECIPE_AXE = /obj/item/smithing/axehead,
 	RECIPE_HAMMER = /obj/item/smithing/hammerhead,
 	RECIPE_SCYTHE = /obj/item/smithing/scytheblade,
@@ -44,7 +45,9 @@
 	RECIPE_BROADSWORD = /obj/item/smithing/broadblade,
 	RECIPE_HALBERD = /obj/item/smithing/halberdhead)
 
-
+/obj/structure/anvil/Initialize()
+	..()
+	qualitymod = anvilquality
 
 /obj/structure/anvil/attackby(obj/item/I, mob/user)
 	if(istype(I, /obj/item/ingot))
@@ -64,8 +67,9 @@
 		return
 	else if(istype(I, /obj/item/melee/smith/hammer))
 		var/obj/item/melee/smith/hammer/hammertime = I
-		if(workpiece_state == WORKPIECE_PRESENT || WORKPIECE_INPROGRESS)
+		if(workpiece_state == WORKPIECE_PRESENT || workpiece_state == WORKPIECE_INPROGRESS)
 			do_shaping(user, hammertime.qualitymod)
+			return
 		else
 		 to_chat(user, "You can't work an empty anvil!")
 		 return FALSE
@@ -119,24 +123,38 @@
 			stepsdone += "u"
 			currentsteps += 1
 			qualitymod -= 2
+	to_chat(user, "You [stepdone] the metal.")
+	currentquality += qualitymod
+	to_chat(user, stepsdone)
 	if(length(stepsdone) >= 3)
-		if(currentsteps > STEPS_CAP)
-			to_chat(user, "You overwork the metal, causing it to turn into useless slag!")
+		tryfinish(user)
+
+/obj/structure/anvil/proc/tryfinish(mob/user)
+	if(currentsteps > STEPS_CAP)
+		to_chat(user, "You overwork the metal, causing it to turn into useless slag!")
+		var/turf/T = get_turf(user)
+		workpiece_state = FALSE
+		new /obj/item/stack/ore/slag(T)
+		currentquality = 0
+		qualitymod = anvilquality
+		stepsdone = ""
+		currentsteps = 0
+	for(var/i in smithrecipes)
+		to_chat(user, "comparing [i] to [stepsdone]")
+		if(i == stepsdone)
 			var/turf/T = get_turf(user)
+			var/obj/item/smithing/create = smithrecipes[stepsdone]
+			var/obj/item/smithing/finisheditem = new create(T)
+			to_chat(user, "You finish your [finisheditem]!")
 			workpiece_state = FALSE
-			new /obj/item/stack/ore/slag(T)
+			finisheditem.quality = currentquality
+			finisheditem.set_custom_materials(workpiece_material)
 			currentquality = qualitymod
-		for(var/solutions in smithrecipes)
-			if(!solutions == stepsdone)
-				return FALSE
-			else
-				var/obj/item/smithing/finisheditem = smithrecipes[stepsdone]
-				var/turf/T = get_turf(user)
-				workpiece_state = FALSE
-				finisheditem.set_custom_materials(workpiece_material)
-				to_chat(user, "You finish your [finisheditem]!")
-				new finisheditem(T)
-				currentquality = qualitymod
+			qualitymod = anvilquality
+			stepsdone = ""
+			currentsteps = 0
+			break
+
 
 #undef WORKPIECE_PRESENT
 #undef WORKPIECE_INPROGRESS

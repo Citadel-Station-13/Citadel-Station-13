@@ -4,6 +4,7 @@
 	icon_state = "mace_greyscale"
 	item_state = "mace_greyscale"
 	material_flags = MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS
+	force = 10
 	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
 	var/quality
@@ -12,13 +13,26 @@
 
 
 /obj/item/melee/smith/Initialize()
+	..()
 	desc = "A handmade [name]."
-	. = ..()
 	overlay = mutable_appearance(icon, overlay_state)
 	overlay.appearance_flags = RESET_COLOR
 	add_overlay(overlay)
+	if(force < 0)
+		force = 0
 
 
+/obj/item/melee/smith/twohand
+	var/wielded_mult = 1.75
+
+
+/obj/item/melee/smith/twohand/ComponentInitialize()
+	. = ..()
+	AddComponent(/datum/component/butchering, 100, 70) //decent in a pinch, but pretty bad.
+	AddComponent(/datum/component/jousting)
+	AddElement(/datum/element/sword_point)
+	var/fw = force*wielded_mult
+	AddComponent(/datum/component/two_handed, force_unwielded=10, force_wielded=fw, icon_wielded="[icon_state]_wield")
 
 
 ///////////////////////////
@@ -51,13 +65,21 @@
 ///////////////////////////
 
 
-/obj/item/melee/smith/halberd
+/obj/item/melee/smith/twohand/halberd
+	name = "halberd"
+
+/obj/item/melee/smith/twohand/halberd/Initialize()
+	..()
+	throwforce = force/3
 
 
-/obj/item/melee/smith/javelin
+/obj/item/melee/smith/twohand/javelin
+	name = "javelin"
+	wielded_mult = 1.5
 
-
-
+/obj/item/melee/smith/twohand/javelin/Initialize()
+	..()
+	throwforce = force*2
 
 
 //////////////////////////
@@ -65,14 +87,23 @@
 ///////////////////////////
 
 /obj/item/melee/smith/axe
+	name = "axe"
 
 /obj/item/melee/smith/hammer//blacksmithing, not warhammer.
+	name = "hammer"
 	var/qualitymod = 0
 
-/obj/item/scythe/smithed //we need to inherit scythecode
+/obj/item/scythe/smithed //we need to inherit scythecode, but that's about it.
+	material_flags = MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS
+
 
 /obj/item/melee/smith/cogheadclub
+	name = "coghead club"
 
 /obj/item/melee/smith/shortsword
+	name = "shortsword"
 
-/obj/item/melee/smith/shortsword
+/obj/item/melee/smith/twohand/broadsword
+	name = "broadsword"
+	force = 15
+	wielded_mult = 1.8

@@ -1,3 +1,7 @@
+
+
+
+
 /obj/item/smithing
 	name = "base class /obj/item/smithing"
 	icon = 'icons/obj/smith.dmi'
@@ -5,7 +9,7 @@
 	material_flags = MATERIAL_COLOR | MATERIAL_ADD_PREFIX
 	var/quality = 0 //quality. Changed by the smithing process.
 	var/obj/item/finishingitem = /obj/item/stick //What this item needs to be hit by to create finalitem
-	var/obj/item/finalitem = /obj/item/melee/smith
+	var/obj/item/finalitem
 
 /obj/item/ingot
 	name = "ingot"
@@ -18,20 +22,22 @@
 	custom_materials = list(/datum/material/iron=12000)
 
 /obj/item/smithing/Initialize()
+	..()
 	desc = "A [src]. Hit it with a [finishingitem] to create a [finalitem]."
+
+
 /obj/item/smithing/attackby(obj/item/I, mob/user)
 	if(istype(I, finishingitem))
-		to_chat(user, "You finish the [src].")
 		qdel(I)
-		dofinish()
+		startfinish()
 	else
 		return ..()
 
+/obj/item/smithing/proc/startfinish()
+	dofinish()
 
 /obj/item/smithing/proc/dofinish()
-	var/turf/T = get_turf(src)
-	. = new finalitem(T)
-	finalitem.set_custom_materials(custom_materials)
+	visible_message("The finishing of [src].")
 	var/qualname
 	switch(quality)
 		if(-1000 to -5)
@@ -54,33 +60,39 @@
 			qualname = "above-average"
 	var/datum/material/mat = custom_materials[1]
 	mat = mat.name
-	finalitem.name = "[qualname] [mat] [finalitem.name]."
+	finalitem.name = "[qualname] [mat] [finalitem.name]"
+	finalitem.forceMove(get_turf(src))
 	qdel(src)
-	return
+
 
 /obj/item/smithing/axehead
 	name = "smithed axe head"
 	finalitem = /obj/item/melee/smith/axe
 
-/obj/item/smithing/axehead/dofinish()
+/obj/item/smithing/axehead/startfinish()
+	finalitem = new /obj/item/melee/smith/axe(src)
 	finalitem.force += quality
 	..()
 
 /obj/item/smithing/hammerhead
 	name = "smithed hammer head"
-	var/obj/item/melee/smith/hammer/finalforreal = /obj/item/melee/smith/hammer
+	finalitem = /obj/item/melee/smith/hammer
 
-/obj/item/smithing/hammerhead/dofinish()
+/obj/item/smithing/hammerhead/startfinish()
+	var/obj/item/melee/smith/hammer/finalforreal = new /obj/item/melee/smith/hammer(src)
 	finalforreal.force += quality/2
 	finalforreal.qualitymod = quality/4
 	finalitem = finalforreal
 	..()
 
+
+
 /obj/item/smithing/scytheblade
 	name = "smithed scythe head"
 	finalitem = /obj/item/scythe/smithed
 
-/obj/item/smithing/scytheblade/dofinish()
+/obj/item/smithing/scytheblade/startfinish()
+	finalitem = new /obj/item/scythe/smithed(src)
 	finalitem.force += quality
 	..()
 
@@ -88,16 +100,19 @@
 	name = "smithed shovel head"
 	finalitem = /obj/item/shovel/smithed
 
-/obj/item/smithing/shovelhead/dofinish()
+/obj/item/smithing/shovelhead/startfinish()
+	finalitem = new /obj/item/shovel/smithed(src)
 	finalitem.force += quality/2
-	finalitem.toolspeed /= quality
+	if(quality)
+		finalitem.toolspeed /= quality
 	..()
 
 /obj/item/smithing/cogheadclubhead
 	name = "smithed coghead club head"
 	finalitem = /obj/item/melee/smith/cogheadclub
 
-/obj/item/smithing/cogheadclubhead/dofinish()
+/obj/item/smithing/cogheadclubhead/startfinish()
+	finalitem = new /obj/item/melee/smith/cogheadclub(src)
 	finalitem.force += quality
 	..()
 
@@ -105,17 +120,21 @@
 	name = "smithed javelin head"
 	finalitem = /obj/item/melee/smith/javelin
 
-/obj/item/smithing/javelinhead/dofinish()
+/obj/item/smithing/javelinhead/startfinish()
+	finalitem = new /obj/item/melee/smith/javelin(src)
 	finalitem.force += quality
 	..()
 
+
 /obj/item/smithing/pickaxehead
 	name = "smithed pickaxe head"
-	var/obj/item/pickaxe/smithed/finalforreal = /obj/item/pickaxe/smithed
+	finalitem = /obj/item/pickaxe/smithed
 
-/obj/item/smithing/pickaxehead/dofinish()
+/obj/item/smithing/pickaxehead/startfinish()
+	var/obj/item/pickaxe/smithed/finalforreal = new /obj/item/pickaxe/smithed(src)
 	finalforreal.force += quality/2
-	finalforreal.toolspeed /= quality
+	if(quality)
+		finalforreal.toolspeed /= quality
 	switch(quality)
 		if(10 to INFINITY)
 			finalforreal.digrange = 4
@@ -126,22 +145,27 @@
 	finalitem = finalforreal
 	..()
 
+
 /obj/item/smithing/prospectingpickhead
 	name = "smithed prospector's pickaxe head"
-	var/obj/item/mining_scanner/prospector/finalforreal = /obj/item/mining_scanner/prospector
+	finalitem = /obj/item/mining_scanner/prospector
 
-/obj/item/smithing/prospectingpickhead/dofinish()
+/obj/item/smithing/prospectingpickhead/startfinish()
+	var/obj/item/mining_scanner/prospector/finalforreal = new /obj/item/mining_scanner/prospector(src)
 	finalforreal.range = 2 + quality
-	finalforreal.cooldown = 100/quality
+	if(quality)
+		finalforreal.cooldown = 100/quality
 	finalitem = finalforreal
 	..()
+
 
 /obj/item/smithing/shortswordblade
 	name = "smithed shortsword blade"
 	finishingitem = /obj/item/swordhandle
 	finalitem = /obj/item/melee/smith/shortsword
 
-/obj/item/smithing/shortswordblade/dofinish()
+/obj/item/smithing/shortswordblade/startfinish()
+	finalitem = new /obj/item/melee/smith/shortsword(src)
 	finalitem.force += quality
 	..()
 
@@ -150,16 +174,18 @@
 	finishingitem = /obj/item/swordhandle
 	finalitem = /obj/item/kitchen/knife
 
-/obj/item/smithing/knifehead/dofinish()
+/obj/item/smithing/knifehead/startfinish()
+	finalitem = new /obj/item/kitchen/knife(src)
 	finalitem.force += quality/2
 	..()
 
 /obj/item/smithing/broadblade
 	name = "smithed broadsword blade"
 	finishingitem = /obj/item/swordhandle
-	finalitem = /obj/item/melee/smith/shortsword
+	finalitem = /obj/item/melee/smith/broadsword
 
-/obj/item/smithing/broadblade/dofinish()
+/obj/item/smithing/broadblade/startfinish()
+	finalitem = new /obj/item/melee/smith/broadsword(src)
 	finalitem.force += quality
 	..()
 
@@ -167,7 +193,8 @@
 	name = "smithed halberd head"
 	finalitem = /obj/item/melee/smith/halberd
 
-/obj/item/smithing/halberdhead/dofinish()
+/obj/item/smithing/halberdhead/startfinish()
+	finalitem = new /obj/item/melee/smith/halberd(src)
 	finalitem.force += quality
 	..()
 
