@@ -15,6 +15,7 @@
 #define RECIPE_COGHEAD "bsf" //bend shrink fold.
 #define RECIPE_BROADSWORD "dfufd" //draw fold upset fold draw
 #define RECIPE_HALBERD "duffp" //draw upset fold fold punch
+#define RECIPE_GLAIVE "usfp" //upset shrink fold punch
 
 #define STEPS_CAP 8
 /obj/structure/anvil
@@ -43,7 +44,8 @@
 	RECIPE_SHORTSWORD = /obj/item/smithing/shortswordblade,
 	RECIPE_SMALLKNIFE = /obj/item/smithing/knifeblade,
 	RECIPE_BROADSWORD = /obj/item/smithing/broadblade,
-	RECIPE_HALBERD = /obj/item/smithing/halberdhead)
+	RECIPE_HALBERD = /obj/item/smithing/halberdhead,
+	RECIPE_GLAIVE = /obj/item/smithing/glaivehead)
 
 /obj/structure/anvil/Initialize()
 	..()

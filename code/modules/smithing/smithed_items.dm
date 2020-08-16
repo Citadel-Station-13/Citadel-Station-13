@@ -14,7 +14,7 @@
 /obj/item/ingot
 	name = "ingot"
 	icon = 'icons/obj/smith.dmi'
-	icon_state = "unfinished"
+	icon_state = "ingot"
 	material_flags = MATERIAL_COLOR | MATERIAL_ADD_PREFIX
 	var/workability = "shapeable"
 
@@ -69,6 +69,7 @@
 	name = "smithed axe head"
 	finalitem = /obj/item/melee/smith/axe
 
+
 /obj/item/smithing/axehead/startfinish()
 	finalitem = new /obj/item/melee/smith/axe(src)
 	finalitem.force += quality
@@ -77,6 +78,7 @@
 /obj/item/smithing/hammerhead
 	name = "smithed hammer head"
 	finalitem = /obj/item/melee/smith/hammer
+	icon_state = "hammer"
 
 /obj/item/smithing/hammerhead/startfinish()
 	var/obj/item/melee/smith/hammer/finalforreal = new /obj/item/melee/smith/hammer(src)
@@ -90,6 +92,7 @@
 /obj/item/smithing/scytheblade
 	name = "smithed scythe head"
 	finalitem = /obj/item/scythe/smithed
+	icon_state = "scythe"
 
 /obj/item/smithing/scytheblade/startfinish()
 	finalitem = new /obj/item/scythe/smithed(src)
@@ -99,6 +102,7 @@
 /obj/item/smithing/shovelhead
 	name = "smithed shovel head"
 	finalitem = /obj/item/shovel/smithed
+	icon_state = "shovel"
 
 /obj/item/smithing/shovelhead/startfinish()
 	finalitem = new /obj/item/shovel/smithed(src)
@@ -119,11 +123,14 @@
 /obj/item/smithing/javelinhead
 	name = "smithed javelin head"
 	finalitem = /obj/item/melee/smith/twohand/javelin
+	icon_state = "javelin"
 
 /obj/item/smithing/javelinhead/startfinish()
 	var/obj/item/melee/smith/twohand/javelin/finalforreal = new /obj/item/melee/smith/twohand/javelin(src)
 	finalforreal.force += quality
 	finalforreal.wield_force = finalforreal.force*finalforreal.wielded_mult
+	finalforreal.AddComponent(/datum/component/two_handed, force_unwielded=finalforreal.force, force_wielded=finalforreal.wield_force, icon_wielded="[icon_state]_wield")
+	finalforreal.throwforce = finalforreal.force*2
 	finalitem = finalforreal
 	..()
 
@@ -131,6 +138,7 @@
 /obj/item/smithing/pickaxehead
 	name = "smithed pickaxe head"
 	finalitem = /obj/item/pickaxe/smithed
+	icon_state = "pickaxe"
 
 /obj/item/smithing/pickaxehead/startfinish()
 	var/obj/item/pickaxe/smithed/finalforreal = new /obj/item/pickaxe/smithed(src)
@@ -151,6 +159,7 @@
 /obj/item/smithing/prospectingpickhead
 	name = "smithed prospector's pickaxe head"
 	finalitem = /obj/item/mining_scanner/prospector
+	icon_state = "minipick"
 
 /obj/item/smithing/prospectingpickhead/startfinish()
 	var/obj/item/mining_scanner/prospector/finalforreal = new /obj/item/mining_scanner/prospector(src)
@@ -165,6 +174,7 @@
 	name = "smithed shortsword blade"
 	finishingitem = /obj/item/swordhandle
 	finalitem = /obj/item/melee/smith/shortsword
+	icon_state = "gladius"
 
 /obj/item/smithing/shortswordblade/startfinish()
 	finalitem = new /obj/item/melee/smith/shortsword(src)
@@ -175,6 +185,7 @@
 	name = "smithed knife blade"
 	finishingitem = /obj/item/swordhandle
 	finalitem = /obj/item/kitchen/knife
+	icon_state = "dagger"
 
 /obj/item/smithing/knifehead/startfinish()
 	finalitem = new /obj/item/kitchen/knife(src)
@@ -185,24 +196,44 @@
 	name = "smithed broadsword blade"
 	finishingitem = /obj/item/swordhandle
 	finalitem = /obj/item/melee/smith/twohand/broadsword
+	icon_state = "broadsword"
 
 /obj/item/smithing/broadblade/startfinish()
 	var/obj/item/melee/smith/twohand/broadsword/finalforreal = new /obj/item/melee/smith/twohand/broadsword(src)
 	finalforreal.force += quality
 	finalforreal.wield_force = finalforreal.force*finalforreal.wielded_mult
+	finalforreal.AddComponent(/datum/component/two_handed, force_unwielded=finalforreal.force, force_wielded=finalforreal.wield_force, icon_wielded="[icon_state]_wield")
 	finalitem = finalforreal
 	..()
 
 /obj/item/smithing/halberdhead
 	name = "smithed halberd head"
 	finalitem = /obj/item/melee/smith/twohand/halberd
+	icon_state = "halberd"
 
 /obj/item/smithing/halberdhead/startfinish()
 	var/obj/item/melee/smith/twohand/halberd/finalforreal = new /obj/item/melee/smith/twohand/halberd(src)
 	finalforreal.force += quality
 	finalforreal.wield_force = finalforreal.force*finalforreal.wielded_mult
+	finalforreal.throwforce = finalforreal.force/3
+	finalforreal.AddComponent(/datum/component/two_handed, force_unwielded=finalforreal.force, force_wielded=finalforreal.wield_force, icon_wielded="[icon_state]_wield")
 	finalitem = finalforreal
 	..()
+
+/obj/item/smithing/glaivehead
+	name = "smithed glaive head"
+	finalitem = /obj/item/melee/smith/twohand/glaive
+	icon_state = "glaive"
+
+/obj/item/smithing/glaive/startfinish()
+	var/obj/item/melee/smith/twohand/halberd/finalforreal = new /obj/item/melee/smith/twohand/glaive(src)
+	finalforreal.force += quality
+	finalforreal.wield_force = finalforreal.force*finalforreal.wielded_mult
+	finalforreal.throwforce = finalforreal.force
+	finalforreal.AddComponent(/datum/component/two_handed, force_unwielded=finalforreal.force, force_wielded=finalforreal.wield_force, icon_wielded="[icon_state]_wield")
+	finalitem = finalforreal
+	..()
+
 
 /obj/item/stick
 	name = "wooden rod"
@@ -215,4 +246,4 @@
 	name = "sword handle"
 	desc = "It's a rod, suitable for use of a handle of a tool. Also could serve as a weapon, in a pinch."
 	icon = 'icons/obj/smith.dmi'
-	icon_state = "stick"
+	icon_state = "shorthilt"

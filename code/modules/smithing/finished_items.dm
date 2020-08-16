@@ -27,12 +27,11 @@
 	wielded_mult = 1.75
 
 
-/obj/item/melee/smith/twohand/Initialize()
-	..()
+/obj/item/melee/smith/twohand/ComponentInitialize()
+	. = ..()
 	AddComponent(/datum/component/butchering, 100, 70) //decent in a pinch, but pretty bad.
-	AddComponent(/datum/component/jousting)
 	AddElement(/datum/element/sword_point)
-	AddComponent(/datum/component/two_handed, force_unwielded=force, force_wielded=wield_force, icon_wielded="[icon_state]_wield")
+
 
 
 ///////////////////////////
@@ -41,23 +40,47 @@
 /obj/item/mining_scanner/prospector
 	name = "prospector's pickaxe"
 	desc = "A pickaxe that can sound rocks to find mineral deposits and stop gibtonite detonations."
-	icon = 'icons/obj/mining.dmi'
+	icon = 'icons/obj/smith.dmi'
 	icon_state = "pickaxe" //todo:sprite
+
+/obj/item/mining_scanner/prospector/Initialize()
+	..()
+	desc = "A handmade [name]."
+	overlay = mutable_appearance(icon, "minihandle")
+	overlay.appearance_flags = RESET_COLOR
+	add_overlay(overlay)
+	if(force < 0)
+		force = 0
 
 /obj/item/pickaxe/smithed
 	name = "pickaxe"
 	desc = "A pickaxe."
-	icon = 'icons/obj/mining.dmi'
+	icon = 'icons/obj/smith.dmi'
 	icon_state = "pickaxe"
+
+/obj/item/pickaxe/smithed/Initialize()
+	..()
+	desc = "A handmade [name]."
+	overlay = mutable_appearance(icon, "stick")
+	overlay.appearance_flags = RESET_COLOR
+	add_overlay(overlay)
+	if(force < 0)
+		force = 0
 
 /obj/item/shovel/smithed
 	name = "shovel"
 	desc = "A shovel."
-	icon = 'icons/obj/mining.dmi'
+	icon = 'icons/obj/smith.dmi'
 	icon_state = "shovel"
 
-
-
+/obj/item/shovel/smithed/Initialize()
+	..()
+	desc = "A handmade [name]."
+	overlay = mutable_appearance(icon, "shovelhandle")
+	overlay.appearance_flags = RESET_COLOR
+	add_overlay(overlay)
+	if(force < 0)
+		force = 0
 
 
 ///////////////////////////
@@ -67,21 +90,32 @@
 
 /obj/item/melee/smith/twohand/halberd
 	name = "halberd"
+	icon_state = "halberd"
+	overlay_state = "spearhandle"
 
-/obj/item/melee/smith/twohand/halberd/Initialize()
-	..()
-	throwforce = force/3
-
+/obj/item/melee/smith/twohand/halberd/ComponentInitialize()
+	. = ..()
+	AddComponent(/datum/component/jousting)
 
 /obj/item/melee/smith/twohand/javelin
 	name = "javelin"
+	icon_state = "javelin"
+	overlay_state = "longhandle"
 	wielded_mult = 1.5
 
-/obj/item/melee/smith/twohand/javelin/Initialize()
-	..()
-	throwforce = force*2
 
+/obj/item/melee/smith/twohand/javelin/ComponentInitialize()
+	. = ..()
+	AddComponent(/datum/component/jousting)
 
+/obj/item/melee/smith/twohand/glaive
+	name = "glaive"
+	icon_state = "glaive"
+	overlay_state = "longhandle"
+
+/obj/item/melee/smith/twohand/glaive/ComponentInitialize()
+	. = ..()
+	AddComponent(/datum/component/jousting)
 //////////////////////////
 //      Other Melee     //
 ///////////////////////////
