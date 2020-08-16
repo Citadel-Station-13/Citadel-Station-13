@@ -66,7 +66,7 @@
 		var/mob/living/carbon/C = target
 		C.adjustBruteLoss(15)
 		C.DefaultCombatKnockdown(50, override_stamdmg = 0)
-		C.adjustStaminaLoss(40)
+		C.adjustStaminaLoss(60)
 	var/list/knowledge = cultie.get_all_knowledge()
 
 	for(var/X in knowledge)

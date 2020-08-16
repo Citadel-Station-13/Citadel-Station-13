@@ -6,7 +6,7 @@
 	next_knowledge = list(/datum/eldritch_knowledge/ashen_grasp)
 	required_atoms = list(/obj/item/melee/sickly_blade,/obj/item/match)
 	result_atoms = list(/obj/item/melee/sickly_blade/ash)
-	cost = 0
+	cost = 1
 	route = PATH_ASH
 
 /datum/eldritch_knowledge/spell/ashen_shift
@@ -165,7 +165,7 @@
 	gain_text = "The forgotten lords have spoken! The Lord of Ash has come! Fear the flame!"
 	desc = "Bring three corpses onto a transmutation rune, after ascending you will become immune to fire, space, temperature and other environmental hazards. You will develop resistance to all other damages. You will be granted two spells, one which can bring forth a cascade of massive fire, and another which will surround your body in precious flames for a minute."
 	required_atoms = list(/mob/living/carbon/human)
-	cost = 3
+	cost = 5
 	route = PATH_ASH
 	var/list/trait_list = list(TRAIT_RESISTHEAT,TRAIT_NOBREATH,TRAIT_RESISTCOLD,TRAIT_RESISTHIGHPRESSURE,TRAIT_RESISTLOWPRESSURE,TRAIT_NOFIRE,TRAIT_RADIMMUNE,TRAIT_GENELESS,TRAIT_PIERCEIMMUNE,TRAIT_NODISMEMBER,TRAIT_BOMBIMMUNE)
 

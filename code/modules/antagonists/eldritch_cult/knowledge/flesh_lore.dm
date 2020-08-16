@@ -211,7 +211,7 @@
 	gain_text = "Man of this world. Hear me! For the time of the lord of arms has come!"
 	desc = "Bring three corpses to a transmutation rune to either ascend as The Lord of the Night or summon a single Terror of the Night, however you cannot ascend more than once."
 	required_atoms = list(/mob/living/carbon/human)
-	cost = 3
+	cost = 5
 	route = PATH_FLESH
 
 /datum/eldritch_knowledge/final/flesh_final/on_finished_recipe(mob/living/user, list/atoms, loc)

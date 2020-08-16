@@ -6,7 +6,7 @@
 	next_knowledge = list(/datum/eldritch_knowledge/rust_fist)
 	required_atoms = list(/obj/item/melee/sickly_blade,/obj/item/trash)
 	result_atoms = list(/obj/item/melee/sickly_blade/rust)
-	cost = 0
+	cost = 1
 	route = PATH_RUST
 
 /datum/eldritch_knowledge/rust_fist
@@ -129,7 +129,7 @@
 	name = "Rustbringer's Oath"
 	desc = "Bring three corpses onto a transmutation rune. After you finish the ritual, rust will now automatically spread from the rune. Your healing on rust is also tripled, while you become more resilient overall."
 	gain_text = "Champion of rust. Corruptor of steel. Fear the dark for Rustbringer has come!"
-	cost = 3
+	cost = 5
 	required_atoms = list(/mob/living/carbon/human)
 	route = PATH_RUST
 
