@@ -170,6 +170,6 @@
 
 /obj/vehicle/bullet_act(obj/item/projectile/Proj) //wrapper
 	if (!enclosed && occupants && !Proj.force_hit && (Proj.def_zone == BODY_ZONE_HEAD || Proj.def_zone == BODY_ZONE_CHEST)) //allows bullets to hit drivers
-		occupants.bullet_act(Proj) //i'm sure that ATV will protect you against a dink, idiot
+		occupants[1].bullet_act(Proj) // driver dinkage
 		return BULLET_ACT_HIT
 	. = ..()
