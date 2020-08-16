@@ -50,7 +50,7 @@
 			Combines with all martial arts, but the user will be unable to bring themselves to use guns, nor remove the armbands."
 	item = /obj/item/storage/box/syndie_kit/northstar
 	cost = 20
-	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops)
+	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops, /datum/game_mode/traitor/internal_affairs)
 
 /datum/uplink_item/suits/infiltrator_bundle
 	name = "Insidious Infiltration Gear Case"
@@ -117,7 +117,7 @@
 			you will receive. May contain discontinued and/or exotic items."
 	item = /obj/item/storage/box/syndicate
 	cost = 20
-	exclude_modes = list(/datum/game_mode/nuclear)
+	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/traitor/internal_affairs)
 	cant_discount = TRUE
 
 /datum/uplink_item/bundles_TC/surplus
@@ -127,7 +127,7 @@
 	item = /obj/structure/closet/crate
 	cost = 20
 	player_minimum = 25
-	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops)
+	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops, /datum/game_mode/traitor/internal_affairs)
 	cant_discount = TRUE
 	var/starting_crate_value = 50
 
@@ -163,7 +163,7 @@
 
 /datum/uplink_item/bundles_TC/reroll
 	name = "Renegotiate Contract"
-	desc = "Selecting this will inform the syndicate that you wish to change employers. Can only be done once; no take-backs."
+	desc = "Selecting this will inform your employers that you wish for new objectives. Can only be done once; no take-backs."
 	item = /obj/effect/gibspawner/generic
 	cost = 0
 	cant_discount = TRUE
@@ -173,8 +173,7 @@
 /datum/uplink_item/bundles_TC/reroll/purchase(mob/user, datum/component/uplink/U)
 	var/datum/antagonist/traitor/T = user?.mind?.has_antag_datum(/datum/antagonist/traitor)
 	if(istype(T))
-		var/new_traitor_kind = get_random_traitor_kind(list(T.traitor_kind.type))
-		T.set_traitor_kind(new_traitor_kind)
+		T.set_traitor_kind(/datum/traitor_class/human/subterfuge)
 	else
 		to_chat(user,"Invalid user for contract renegotiation.")
 
@@ -184,6 +183,7 @@
 	item = /obj/effect/gibspawner/generic // non-tangible item because techwebs use this path to determine illegal tech
 	cost = 0
 	cant_discount = TRUE
+	exclude_modes = list(/datum/game_mode/traitor/internal_affairs)
 
 /datum/uplink_item/bundles_TC/random/purchase(mob/user, datum/component/uplink/U)
 	var/list/uplink_items = U.uplink_items

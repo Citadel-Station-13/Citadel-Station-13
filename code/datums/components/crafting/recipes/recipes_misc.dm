@@ -126,7 +126,7 @@
 
 /datum/crafting_recipe/brute_pack
 	name = "Suture Pack"
-	result = /obj/item/stack/medical/suture/one
+	result = /obj/item/stack/medical/suture/five
 	time = 1
 	reqs = list(/obj/item/stack/medical/gauze = 1,
 				/datum/reagent/medicine/styptic_powder = 10)
@@ -135,7 +135,7 @@
 
 /datum/crafting_recipe/burn_pack
 	name = "Regenerative Mesh"
-	result = /obj/item/stack/medical/mesh/one
+	result = /obj/item/stack/medical/mesh/five
 	time = 1
 	reqs = list(/obj/item/stack/medical/gauze = 1,
 				/datum/reagent/medicine/silver_sulfadiazine = 10)
@@ -322,6 +322,13 @@
 	name = "Non-Euplastic Blade"
 	reqs = list(/obj/item/light/tube = 1, /obj/item/stack/cable_coil = 1, /obj/item/stack/sheet/plastic = 4)
 	result = /obj/item/toy/sword/cx
+	subcategory = CAT_MISCELLANEOUS
+	category = CAT_MISC
+	
+/datum/crafting_recipe/catgirlplushie
+	name = "Catgirl Plushie"
+	reqs = list(/obj/item/toy/plush/hairball = 3)
+	result = /obj/item/toy/plush/catgirl
 	subcategory = CAT_MISCELLANEOUS
 	category = CAT_MISC
 

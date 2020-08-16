@@ -167,10 +167,7 @@
 		qdel(src)
 	return TRUE
 
-/obj/item/gps/computer/attack_hand(mob/user)
-	. = ..()
-	if(.)
-		return
+/obj/item/gps/computer/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	attack_self(user)
 
 //Bed
@@ -204,7 +201,7 @@
 		var/obj/item/reagent_containers/food/snacks/donkpocket/warm/W = new(src)
 		load(W)
 	if(prob(50))
-		var/obj/item/storage/pill_bottle/dice/D = new(src)
+		var/obj/item/storage/box/dice/D = new(src)
 		load(D)
 	else
 		var/obj/item/instrument/guitar/G = new(src)

@@ -11,6 +11,10 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 	name = "item"
 	icon = 'icons/obj/items_and_weapons.dmi'
 	blocks_emissive = EMISSIVE_BLOCK_GENERIC
+	
+	attack_hand_speed = 0
+	attack_hand_is_action = FALSE
+	attack_hand_unwieldlyness = 0
 
 	///icon state name for inhand overlays
 	var/item_state = null
@@ -58,15 +62,6 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 	/// How long, in deciseconds, this staggers for, if null it will autocalculate from w_class and force. Unlike total mass this supports 0 and negatives.
 	var/stagger_force
 
-	/**
-	  * Set FALSE and then checked at the end of on mob/living/attackby(), set TRUE on living/pre_attacked_by().
-	  * Should it be FALSE by the end of the item/attack(), that means the item overrode the standard attack behaviour
-	  * and the user still needs the delay applied. We can't be using return values since that'll stop afterattack() from being triggered.
-	  */
-	var/attack_delay_done = FALSE
-	///next_move click/attack delay of this item.
-	var/click_delay = CLICK_CD_MELEE
-
 	var/slot_flags = 0		//This is used to determine on which slots an item can fit.
 	var/current_equipped_slot
 	pass_flags = PASSTABLE
@@ -108,12 +103,12 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 
 	mouse_drag_pointer = MOUSE_ACTIVE_POINTER //the icon to indicate this object is being dragged
 
-	var/list/embedding = NONE
+	var/list/embedding
 
 	var/flags_cover = 0 //for flags such as GLASSESCOVERSEYES
 	var/heat = 0
-	///All items with sharpness of IS_SHARP or higher will automatically get the butchering component.
-	var/sharpness = IS_BLUNT
+	///All items with sharpness of SHARP_EDGED or higher will automatically get the butchering component.
+	var/sharpness = SHARP_NONE
 
 	var/tool_behaviour = NONE
 	var/toolspeed = 1
@@ -211,7 +206,7 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 	if(GLOB.rpg_loot_items)
 		AddComponent(/datum/component/fantasy)
 
-	if(sharpness) //give sharp objects butchering functionality, for consistency
+	if(sharpness && force > 5) //give sharp objects butchering functionality, for consistency
 		AddComponent(/datum/component/butchering, 80 * toolspeed)
 
 /obj/item/proc/check_allowed_items(atom/target, not_inside, target_self)
@@ -313,10 +308,7 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 	add_fingerprint(usr)
 	return ..()
 
-/obj/item/attack_hand(mob/user)
-	. = ..()
-	if(.)
-		return
+/obj/item/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	if(!user)
 		return
 	if(anchored)
@@ -473,6 +465,7 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 			usr.UnarmedAttack(src, TRUE)
 			if(usr.get_active_held_item() == src)
 				melee_attack_chain(usr, over)
+			usr.FlushCurrentAction()
 			return TRUE //returning TRUE as a "is this overridden?" flag
 	if(!Adjacent(usr) || !over.Adjacent(usr))
 		return // should stop you from dragging through windows
@@ -1097,7 +1090,7 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 
 
 /obj/item/proc/updateEmbedding()
-	if(!islist(embedding) || !LAZYLEN(embedding))
+	if(!LAZYLEN(embedding))
 		return
 
 	AddElement(/datum/element/embed,\

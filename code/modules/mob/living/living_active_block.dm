@@ -10,8 +10,7 @@
 	REMOVE_TRAIT(src, TRAIT_SPRINT_LOCKED, ACTIVE_BLOCK_TRAIT)
 	remove_movespeed_modifier(/datum/movespeed_modifier/active_block)
 	var/datum/block_parry_data/data = I.get_block_parry_data()
-	if(timeToNextMove() < data.block_end_click_cd_add)
-		changeNext_move(data.block_end_click_cd_add)
+	DelayNextAction(data.block_end_click_cd_add)
 	return TRUE
 
 /mob/living/proc/ACTIVE_BLOCK_START(obj/item/I)
@@ -97,7 +96,7 @@
 		return
 	// QOL: Attempt to toggle on combat mode if it isn't already
 	SEND_SIGNAL(src, COMSIG_ENABLE_COMBAT_MODE)
-	if(!SEND_SIGNAL(src, COMSIG_COMBAT_MODE_CHECK, COMBAT_MODE_ACTIVE))
+	if(SEND_SIGNAL(src, COMSIG_COMBAT_MODE_CHECK, COMBAT_MODE_INACTIVE))
 		to_chat(src, "<span class='warning'>You must be in combat mode to actively block!</span>")
 		return FALSE
 	var/datum/block_parry_data/data = I.get_block_parry_data()

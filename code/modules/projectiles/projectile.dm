@@ -49,7 +49,7 @@
 	var/pixel_move_interrupted = FALSE
 
 	/// Pixels moved per second.
-	var/pixels_per_second = TILES_TO_PIXELS(12.5)
+	var/pixels_per_second = TILES_TO_PIXELS(17.5)
 	/// The number of pixels we increment by. THIS IS NOT SPEED, DO NOT TOUCH THIS UNLESS YOU KNOW WHAT YOU ARE DOING. In general, lower values means more linetrace accuracy up to a point at cost of performance.
 	var/pixel_increment_amount
 
@@ -149,15 +149,25 @@
 
 	var/temporary_unstoppable_movement = FALSE
 
-	///If defined, on hit we create an item of this type then call hitby() on the hit target with this
+	///If defined, on hit we create an item of this type then call hitby() on the hit target with this, mainly used for embedding items (bullets) in targets
 	var/shrapnel_type
 	///If TRUE, hit mobs even if they're on the floor and not our target
 	var/hit_stunned_targets = FALSE
+
+	wound_bonus = CANT_WOUND
+	///How much we want to drop both wound_bonus and bare_wound_bonus (to a minimum of 0 for the latter) per tile, for falloff purposes
+	var/wound_falloff_tile
+	///How much we want to drop the embed_chance value, if we can embed, per tile, for falloff purposes
+	var/embed_falloff_tile
+	/// For telling whether we want to roll for bone breaking or lacerations if we're bothering with wounds
+	sharpness = SHARP_NONE
 
 /obj/item/projectile/Initialize()
 	. = ..()
 	permutated = list()
 	decayedRange = range
+	if(embedding)
+		updateEmbedding()
 
 /**
   * Artificially modified to be called at around every world.icon_size pixels of movement.
@@ -165,6 +175,11 @@
   */
 /obj/item/projectile/proc/Range()
 	range--
+	if(wound_bonus != CANT_WOUND)
+		wound_bonus += wound_falloff_tile
+		bare_wound_bonus = max(0, bare_wound_bonus + wound_falloff_tile)
+	if(embedding)
+		embedding["embed_chance"] += embed_falloff_tile
 	if(range <= 0 && loc)
 		on_range()
 
@@ -312,16 +327,18 @@
 	if(!trajectory)
 		return
 	var/turf/T = get_turf(A)
-	if(check_ricochet(A) && A.handle_ricochet(src)) //if you can ricochet, attempt to ricochet off the object
-		on_ricochet(A) //if allowed, use autoaim to ricochet into someone, otherwise default to ricocheting off the object from above
-		var/datum/point/pcache = trajectory.copy_to()
-		if(hitscan)
-			store_hitscan_collision(pcache)
-		decayedRange = max(0, decayedRange - reflect_range_decrease)
-		ricochet_chance *= ricochet_decay_chance
-		damage *= ricochet_decay_damage
-		range = decayedRange
-		return TRUE
+	if(check_ricochet_flag(A) && check_ricochet(A)) //if you can ricochet, attempt to ricochet off the object
+		ricochets++
+		if(A.handle_ricochet(src))
+			on_ricochet(A) //if allowed, use autoaim to ricochet into someone, otherwise default to ricocheting off the object from above
+			var/datum/point/pcache = trajectory.copy_to()
+			if(hitscan)
+				store_hitscan_collision(pcache)
+			decayedRange = max(0, decayedRange - reflect_range_decrease)
+			ricochet_chance *= ricochet_decay_chance
+			damage *= ricochet_decay_damage
+			range = decayedRange
+			return TRUE
 
 	var/distance = get_dist(T, starting) // Get the distance between the turf shot from and the mob we hit and use that for the calculations.
 	if(def_zone && check_zone(def_zone) != BODY_ZONE_CHEST)
@@ -619,7 +636,7 @@
 				pixel_x = trajectory.return_px()
 				pixel_y = trajectory.return_py()
 		else if(T != loc)
-			var/safety = CEILING(pixel_increment_amount / world.icon_size, 1) * 2 + 1
+			var/safety = CEILING(pixel_increment_amount / world.icon_size, 1) * 5 + 1
 			while(T != loc)
 				if(!--safety)
 					CRASH("[type] took too long (allowed: [CEILING(pixel_increment_amount/world.icon_size,1)*2] moves) to get to its location.")
@@ -665,7 +682,8 @@
 	if(!ignore_source_check && firer)
 		var/mob/M = firer
 		if((target == firer) || ((target == firer.loc) && ismecha(firer.loc)) || (target in firer.buckled_mobs) || (istype(M) && (M.buckled == target)))
-			return FALSE
+			if(!ricochets) //if it has ricocheted, it can hit the firer.
+				return FALSE
 	if(!ignore_loc && (loc != target.loc))
 		return FALSE
 	if(target in passthrough)

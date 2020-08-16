@@ -11,7 +11,7 @@
 	max_integrity = 350
 	armor = list("melee" = 30, "bullet" = 30, "laser" = 20, "energy" = 20, "bomb" = 10, "bio" = 100, "rad" = 100, "fire" = 80, "acid" = 70)
 	CanAtmosPass = ATMOS_PASS_DENSITY
-	flags_1 = PREVENT_CLICK_UNDER_1
+	flags_1 = PREVENT_CLICK_UNDER_1|DEFAULT_RICOCHET_1
 	ricochet_chance_mod = 0.8
 
 	interaction_flags_atom = INTERACT_ATOM_UI_INTERACT
@@ -140,10 +140,7 @@
 			do_animate("deny")
 	return
 
-/obj/machinery/door/attack_hand(mob/user)
-	. = ..()
-	if(.)
-		return
+/obj/machinery/door/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	return try_to_activate_door(user)
 
 /obj/machinery/door/attack_tk(mob/user)
@@ -343,6 +340,11 @@
 /obj/machinery/door/proc/crush()
 	for(var/mob/living/L in get_turf(src))
 		L.visible_message("<span class='warning'>[src] closes on [L], crushing [L.p_them()]!</span>", "<span class='userdanger'>[src] closes on you and crushes you!</span>")
+		if(iscarbon(L))
+			var/mob/living/carbon/C = L
+			for(var/i in C.all_wounds) // should probably replace with signal
+				var/datum/wound/W = i
+				W.crush(DOOR_CRUSH_DAMAGE)
 		if(isalien(L))  //For xenos
 			L.adjustBruteLoss(DOOR_CRUSH_DAMAGE * 1.5) //Xenos go into crit after aproximately the same amount of crushes as humans.
 			L.emote("roar")

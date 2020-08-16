@@ -17,6 +17,7 @@
 	force = 5
 	item_flags = NEEDS_PERMIT
 	attack_verb = list("struck", "hit", "bashed")
+	attack_speed = CLICK_CD_RANGE
 
 	var/fire_sound = "gunshot"
 	var/suppressed = null					//whether or not a message is displayed when fired
@@ -28,6 +29,13 @@
 	trigger_guard = TRIGGER_GUARD_NORMAL	//trigger guard on the weapon, hulks can't fire them with their big meaty fingers
 	var/sawn_desc = null				//description change if weapon is sawn-off
 	var/sawn_off = FALSE
+
+	/// can we be put into a turret
+	var/can_turret = TRUE
+	/// can we be put in a circuit
+	var/can_circuit = TRUE
+	/// can we be put in an emitter
+	var/can_emitter = TRUE
 
 	/// Weapon is burst fire if this is above 1
 	var/burst_size = 1
@@ -166,6 +174,8 @@
 
 /obj/item/gun/afterattack(atom/target, mob/living/user, flag, params)
 	. = ..()
+	if(!CheckAttackCooldown(user, target))
+		return
 	process_afterattack(target, user, flag, params)
 
 /obj/item/gun/proc/process_afterattack(atom/target, mob/living/user, flag, params)
@@ -174,16 +184,19 @@
 	if(firing)
 		return
 	var/stamloss = user.getStaminaLoss()
-	if(stamloss >= STAMINA_NEAR_SOFTCRIT) //The more tired you are, the less damage you do.
-		var/penalty = (stamloss - STAMINA_NEAR_SOFTCRIT)/(STAMINA_NEAR_CRIT - STAMINA_NEAR_SOFTCRIT)*STAM_CRIT_GUN_DELAY
-		user.changeNext_move(CLICK_CD_RANGE+(CLICK_CD_RANGE*penalty))
 	if(flag) //It's adjacent, is the user, or is on the user's person
 		if(target in user.contents) //can't shoot stuff inside us.
 			return
 		if(!ismob(target) || user.a_intent == INTENT_HARM) //melee attack
 			return
-		if(target == user && user.zone_selected != BODY_ZONE_PRECISE_MOUTH) //so we can't shoot ourselves (unless mouth selected)
+		if(target == user && user.zone_selected != BODY_ZONE_PRECISE_MOUTH && (user.a_intent != INTENT_DISARM)) //so we can't shoot ourselves (unless mouth selected or disarm intent)
 			return
+		if(iscarbon(target))
+			var/mob/living/carbon/C = target
+			for(var/i in C.all_wounds)
+				var/datum/wound/W = i
+				if(W.try_treating(src, user))
+					return // another coward cured!
 
 	if(istype(user))//Check if the user can use the gun, if the user isn't alive(turrets) assume it can.
 		var/mob/living/L = user
@@ -212,6 +225,8 @@
 	if(weapon_weight == WEAPON_HEAVY && user.get_inactive_held_item())
 		to_chat(user, "<span class='userdanger'>You need both hands free to fire \the [src]!</span>")
 		return
+
+	user.DelayNextAction()
 
 	//DUAL (or more!) WIELDING
 	var/bonus_spread = 0
@@ -242,6 +257,17 @@
 	if(HAS_TRAIT(user, TRAIT_PACIFISM) && chambered?.harmful) // If the user has the pacifist trait, then they won't be able to fire [src] if the round chambered inside of [src] is lethal.
 		to_chat(user, "<span class='notice'> [src] is lethally chambered! You don't want to risk harming anyone...</span>")
 		return FALSE
+
+/obj/item/gun/CheckAttackCooldown(mob/user, atom/target)
+	if((user.a_intent == INTENT_HARM) && user.Adjacent(target))		//melee
+		return user.CheckActionCooldown(CLICK_CD_MELEE)
+	return user.CheckActionCooldown(get_clickcd())
+
+/obj/item/gun/proc/get_clickcd()
+	return isnull(chambered?.click_cooldown_override)? CLICK_CD_RANGE : chambered.click_cooldown_override
+
+/obj/item/gun/GetEstimatedAttackSpeed()
+	return get_clickcd()
 
 /obj/item/gun/proc/handle_pins(mob/living/user)
 	if(no_pin_required)
@@ -284,8 +310,6 @@
 		randomized_gun_spread = rand(0, spread)
 	else if(burst_size > 1 && burst_spread)
 		randomized_gun_spread = rand(0, burst_spread)
-	if(HAS_TRAIT(user, TRAIT_POOR_AIM)) //nice shootin' tex
-		bonus_spread += 25
 	var/randomized_bonus_spread = rand(0, bonus_spread)
 
 	if(burst_size > 1)
@@ -357,17 +381,14 @@
 	if(user.a_intent == INTENT_HARM) //Flogging
 		if(bayonet)
 			M.attackby(bayonet, user)
-			attack_delay_done = TRUE
 			return
 		else
 			return ..()
-	attack_delay_done = TRUE //we are firing the gun, not bashing people with its butt.
 
 /obj/item/gun/attack_obj(obj/O, mob/user)
 	if(user.a_intent == INTENT_HARM)
 		if(bayonet)
-			O.attackby(bayonet, user)
-			return TRUE
+			return O.attackby(bayonet, user)
 	return ..()
 
 /obj/item/gun/attackby(obj/item/I, mob/user, params)
@@ -580,10 +601,16 @@
 		var/penalty = (last_fire + GUN_AIMING_TIME + fire_delay) - world.time
 		if(penalty > 0) //Yet we only penalize users firing it multiple times in a haste. fire_delay isn't necessarily cumbersomeness.
 			aiming_delay = penalty
-	if(SEND_SIGNAL(user, COMSIG_COMBAT_MODE_CHECK, COMBAT_MODE_ACTIVE)) //To be removed in favor of something less tactless later.
+	if(SEND_SIGNAL(user, COMSIG_COMBAT_MODE_CHECK, COMBAT_MODE_ACTIVE) || HAS_TRAIT(user, TRAIT_INSANE_AIM)) //To be removed in favor of something less tactless later.
 		base_inaccuracy /= 1.5
 	if(stamloss > STAMINA_NEAR_SOFTCRIT) //This can null out the above bonus.
 		base_inaccuracy *= 1 + (stamloss - STAMINA_NEAR_SOFTCRIT)/(STAMINA_NEAR_CRIT - STAMINA_NEAR_SOFTCRIT)*0.5
+	if(HAS_TRAIT(user, TRAIT_POOR_AIM)) //nice shootin' tex
+		if(!HAS_TRAIT(user, TRAIT_INSANE_AIM))
+			bonus_spread += 25
+		else
+			//you have both poor aim and insane aim, why?
+			bonus_spread += rand(0,50)
 	var/mult = max((GUN_AIMING_TIME + aiming_delay + user.last_click_move - world.time)/GUN_AIMING_TIME, -0.5) //Yes, there is a bonus for taking time aiming.
 	if(mult < 0) //accurate weapons should provide a proper bonus with negative inaccuracy. the opposite is true too.
 		mult *= 1/inaccuracy_modifier

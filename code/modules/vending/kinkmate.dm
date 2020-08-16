@@ -6,8 +6,10 @@
 	product_slogans = "Kinky!;Sexy!;Check me out, big boy!"
 	vend_reply = "Have fun, you shameless pervert!"
 	products = list(
+				/obj/item/clothing/head/maid = 5,
 				/obj/item/clothing/under/costume/maid = 5,
 				/obj/item/clothing/under/rank/civilian/janitor/maid = 5,
+				/obj/item/clothing/gloves/evening = 5,
 				/obj/item/clothing/neck/petcollar = 5,
 				/obj/item/clothing/neck/petcollar/choker = 5,
 				/obj/item/clothing/neck/petcollar/leather = 5,
@@ -34,13 +36,10 @@
 				/obj/item/clothing/under/misc/keyholesweater = 2,
 				/obj/item/clothing/under/misc/stripper/mankini = 2,
 				/obj/item/clothing/under/costume/jabroni = 2,
-				/obj/item/dildo/flared/huge = 3,
-				/obj/item/reagent_containers/glass/bottle/crocin = 5,
-				/obj/item/reagent_containers/glass/bottle/camphor = 5
+				/obj/item/dildo/flared/huge = 3
 				)
 	premium = list(
 				/obj/item/clothing/accessory/skullcodpiece/fake = 3,
-				/obj/item/reagent_containers/glass/bottle/hexacrocin = 10,
 				/obj/item/clothing/under/pants/chaps = 5
 				)
 	refill_canister = /obj/item/vending_refill/kink

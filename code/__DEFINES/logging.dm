@@ -38,6 +38,7 @@
 #define LOG_ADMIN_PRIVATE (1 << 14)
 #define LOG_ASAY		(1 << 15)
 #define LOG_VIRUS		(1 << 16)
+#define LOG_SHUTTLE		(1 << 18)
 
 //Individual logging panel pages
 #define INDIVIDUAL_ATTACK_LOG		(LOG_ATTACK)

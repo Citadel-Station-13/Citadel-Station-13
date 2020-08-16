@@ -56,6 +56,7 @@
 	item_flags = NONE
 	casing_ejector = FALSE
 	can_suppress = FALSE
+	weapon_weight = WEAPON_MEDIUM
 
 /obj/item/gun/ballistic/shotgun/toy/process_chamber(mob/living/user, empty_chamber = 0)
 	..()

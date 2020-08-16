@@ -20,6 +20,18 @@
 
 	pipe_state = "injector"
 
+/obj/machinery/atmospherics/components/unary/outlet_injector/CtrlClick(mob/user)
+	if(can_interact(user))
+		on = !on
+		update_icon()
+	return ..()
+
+/obj/machinery/atmospherics/components/unary/outlet_injector/AltClick(mob/user)
+	if(can_interact(user))
+		volume_rate = MAX_TRANSFER_RATE
+		update_icon()
+	return ..()
+
 /obj/machinery/atmospherics/components/unary/outlet_injector/Destroy()
 	SSradio.remove_object(src,frequency)
 	return ..()
@@ -117,7 +129,7 @@
 		on = !on
 
 	if("inject" in signal.data)
-		spawn inject()
+		INVOKE_ASYNC(src, .proc/inject)
 		return
 
 	if("set_volume_rate" in signal.data)
@@ -125,22 +137,16 @@
 		var/datum/gas_mixture/air_contents = airs[1]
 		volume_rate = clamp(number, 0, air_contents.return_volume())
 
-	if("status" in signal.data)
-		spawn(2)
-			broadcast_status()
-		return //do not update_icon
+	addtimer(CALLBACK(src, .proc/broadcast_status), 2)
 
-	spawn(2)
-		broadcast_status()
-
-	update_icon()
+	if(!("status" in signal.data)) //do not update_icon
+		update_icon()
 
 
-/obj/machinery/atmospherics/components/unary/outlet_injector/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
-																		datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+/obj/machinery/atmospherics/components/unary/outlet_injector/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, ui_key, "atmos_pump", name, 310, 115, master_ui, state)
+		ui = new(user, src, "AtmosPump", name)
 		ui.open()
 
 /obj/machinery/atmospherics/components/unary/outlet_injector/ui_data()

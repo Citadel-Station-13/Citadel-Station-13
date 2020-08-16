@@ -16,10 +16,15 @@
 			search = findtext(text, ":", pos + length(text[pos]))
 			if(search)
 				emoji = lowertext(copytext(text, pos + length(text[pos]), search))
+				var/isthisapath = (emoji[1] == "/") && text2path(emoji)
 				var/datum/asset/spritesheet/sheet = get_asset_datum(/datum/asset/spritesheet/goonchat)
 				var/tag = sheet.icon_tag("emoji-[emoji]")
 				if(tag)
 					parsed += "<i style='width:16px !important;height:16px !important;'>[tag]</i>" //evil way of enforcing 16x16
+					pos = search + length(text[pos])
+				else if(ispath(isthisapath, /atom))	//path
+					var/atom/thisisanatom = isthisapath
+					parsed += "[icon2html(initial(thisisanatom.icon), world, initial(thisisanatom.icon_state))]"
 					pos = search + length(text[pos])
 				else
 					parsed += copytext(text, pos, search)

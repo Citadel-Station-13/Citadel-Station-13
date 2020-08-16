@@ -79,7 +79,7 @@
 	else
 		. += "There are no paper cups left."
 
-/obj/structure/reagent_dispensers/water_cooler/attack_hand(mob/living/user)
+/obj/structure/reagent_dispensers/water_cooler/on_attack_hand(mob/living/user, act_intent = user.a_intent, unarmed_attack_flags)
 	. = ..()
 	if(.)
 		return
@@ -222,19 +222,6 @@
 	icon_state = "orangekeg"
 	reagent_id = /datum/reagent/consumable/ethanol/mead
 
-/obj/structure/reagent_dispensers/keg/aphro
-	name = "keg of aphrodisiac"
-	desc = "A keg of aphrodisiac."
-	icon_state = "pinkkeg"
-	reagent_id = /datum/reagent/drug/aphrodisiac
-	tank_volume = 150
-
-/obj/structure/reagent_dispensers/keg/aphro/strong
-	name = "keg of strong aphrodisiac"
-	desc = "A keg of strong and addictive aphrodisiac."
-	reagent_id = /datum/reagent/drug/aphrodisiacplus
-	tank_volume = 120
-
 /obj/structure/reagent_dispensers/keg/milk
 	name = "keg of milk"
 	desc = "A keg of pasteurised, homogenised, filtered and semi-skimmed space milk."
@@ -247,3 +234,42 @@
 	icon_state = "bluekeg"
 	reagent_id = /datum/reagent/consumable/ethanol/gargle_blaster
 	tank_volume = 100
+
+//kegs given by the travelling trader's bartender subtype
+
+/obj/structure/reagent_dispensers/keg/quintuple_sec
+	name = "keg of quintuple sec"
+	desc = "A keg of pure justice."
+	icon_state = "redkeg"
+	reagent_id = /datum/reagent/consumable/ethanol/quintuple_sec
+	tank_volume = 250
+
+/obj/structure/reagent_dispensers/keg/narsour
+	name = "keg of narsour"
+	desc = "A keg of eldritch terrors."
+	icon_state = "redkeg"
+	reagent_id = /datum/reagent/consumable/ethanol/narsour
+	tank_volume = 250
+
+/obj/structure/reagent_dispensers/keg/red_queen
+	name = "keg of red queen"
+	desc = "A strange keg, filled with a kind of tea."
+	icon_state = "redkeg"
+	reagent_id = /datum/reagent/consumable/red_queen
+	tank_volume = 250
+
+/obj/structure/reagent_dispensers/keg/hearty_punch
+	name = "keg of hearty punch"
+	desc = "A keg that will get you right back on your feet."
+	icon_state = "redkeg"
+	reagent_id = /datum/reagent/consumable/ethanol/hearty_punch
+	tank_volume = 100 //this usually has a 15:1 ratio when being made, so we provide less of it
+
+/obj/structure/reagent_dispensers/keg/neurotoxin
+	name = "keg of neurotoxin"
+	desc = "A keg of the sickly substance known as 'neurotoxin'."
+	icon_state = "bluekeg"
+	reagent_id = /datum/reagent/consumable/ethanol/neurotoxin
+	tank_volume = 100 //2.5x less than the other kegs because it's harder to get
+
+

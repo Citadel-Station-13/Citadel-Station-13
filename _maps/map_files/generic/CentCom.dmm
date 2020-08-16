@@ -8429,7 +8429,7 @@
 /area/centcom/ferry)
 "tx" = (
 /obj/structure/table/wood,
-/obj/item/storage/pill_bottle/dice,
+/obj/item/storage/box/dice,
 /turf/open/floor/plasteel/grimy,
 /area/centcom/ferry)
 "ty" = (
@@ -10217,7 +10217,7 @@
 /area/wizard_station)
 "xy" = (
 /obj/structure/table/wood/fancy,
-/obj/item/storage/pill_bottle/dice{
+/obj/item/storage/box/dice{
 	icon_state = "magicdicebag"
 	},
 /turf/open/floor/carpet,
@@ -17249,6 +17249,10 @@
 	},
 /turf/open/floor/mineral/titanium,
 /area/centcom/evac)
+"Qc" = (
+/obj/effect/landmark/mafia_game_area,
+/turf/open/space/basic,
+/area/space)
 "Qe" = (
 /turf/open/ai_visible,
 /area/ai_multicam_room)
@@ -58911,7 +58915,7 @@ aa
 aa
 aa
 aa
-aa
+Qc
 aa
 aa
 aa

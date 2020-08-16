@@ -32,7 +32,6 @@
 /obj/machinery/portable_atmospherics/pump/update_icon_state()
 	icon_state = "psiphon:[on]"
 
-
 /obj/machinery/portable_atmospherics/pump/update_overlays()
 	. = ..()
 	if(holding)
@@ -79,14 +78,13 @@
 				on = FALSE
 				update_icon()
 		else if(on && holding && direction == PUMP_OUT)
-			investigate_log("[key_name(user)] started a transfer into [holding].<br>", INVESTIGATE_ATMOS)
+			investigate_log("[key_name(user)] started a transfer into [holding].", INVESTIGATE_ATMOS)
 
 
-/obj/machinery/portable_atmospherics/pump/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
-														datum/tgui/master_ui = null, datum/ui_state/state = GLOB.physical_state)
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+/obj/machinery/portable_atmospherics/pump/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, ui_key, "portable_pump", name, 300, 315, master_ui, state)
+		ui = new(user, src, "PortablePump", name)
 		ui.open()
 
 /obj/machinery/portable_atmospherics/pump/ui_data()
@@ -121,14 +119,14 @@
 					message_admins("[ADMIN_LOOKUPFLW(usr)] turned on a pump that contains [n2o ? "N2O" : ""][n2o && plasma ? " & " : ""][plasma ? "Plasma" : ""] at [ADMIN_VERBOSEJMP(src)]")
 					log_admin("[key_name(usr)] turned on a pump that contains [n2o ? "N2O" : ""][n2o && plasma ? " & " : ""][plasma ? "Plasma" : ""] at [AREACOORD(src)]")
 			else if(on && direction == PUMP_OUT)
-				investigate_log("[key_name(usr)] started a transfer into [holding].<br>", INVESTIGATE_ATMOS)
+				investigate_log("[key_name(usr)] started a transfer into [holding].", INVESTIGATE_ATMOS)
 			. = TRUE
 		if("direction")
 			if(direction == PUMP_OUT)
 				direction = PUMP_IN
 			else
 				if(on && holding)
-					investigate_log("[key_name(usr)] started a transfer into [holding].<br>", INVESTIGATE_ATMOS)
+					investigate_log("[key_name(usr)] started a transfer into [holding].", INVESTIGATE_ATMOS)
 				direction = PUMP_OUT
 			. = TRUE
 		if("pressure")
@@ -142,10 +140,6 @@
 			else if(pressure == "max")
 				pressure = PUMP_MAX_PRESSURE
 				. = TRUE
-			else if(pressure == "input")
-				pressure = input("New release pressure ([PUMP_MIN_PRESSURE]-[PUMP_MAX_PRESSURE] kPa):", name, pump.target_pressure) as num|null
-				if(!isnull(pressure) && !..())
-					. = TRUE
 			else if(text2num(pressure) != null)
 				pressure = text2num(pressure)
 				. = TRUE
@@ -154,7 +148,6 @@
 				investigate_log("was set to [pump.target_pressure] kPa by [key_name(usr)].", INVESTIGATE_ATMOS)
 		if("eject")
 			if(holding)
-				holding.forceMove(drop_location())
-				holding = null
+				replace_tank(usr, FALSE)
 				. = TRUE
 	update_icon()

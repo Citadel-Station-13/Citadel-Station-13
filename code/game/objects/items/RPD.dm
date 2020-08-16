@@ -238,24 +238,22 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 	playsound(get_turf(user), 'sound/items/deconstruct.ogg', 50, 1)
 	return(BRUTELOSS)
 
-/obj/item/pipe_dispenser/ui_base_html(html)
-	var/datum/asset/spritesheet/assets = get_asset_datum(/datum/asset/spritesheet/pipes)
-	. = replacetext(html, "<!--customheadhtml-->", assets.css_tag())
+/obj/item/pipe_dispenser/ui_assets(mob/user)
+	return list(
+		get_asset_datum(/datum/asset/spritesheet/pipes),
+	)
 
-/obj/item/pipe_dispenser/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
-									datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+/obj/item/pipe_dispenser/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		var/datum/asset/assets = get_asset_datum(/datum/asset/spritesheet/pipes)
-		assets.send(user)
-
-		ui = new(user, src, ui_key, "rpd", name, 425, 472, master_ui, state)
+		ui = new(user, src, "RapidPipeDispenser", name)
 		ui.open()
 
 /obj/item/pipe_dispenser/ui_data(mob/user)
 	var/list/data = list(
 		"category" = category,
 		"piping_layer" = piping_layer,
+		// "ducting_layer" = ducting_layer, //uhh is this for chem thing?
 		"preview_rows" = recipe.get_preview(p_dir),
 		"categories" = list(),
 		"selected_color" = paint_color,
@@ -284,7 +282,7 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 /obj/item/pipe_dispenser/ui_act(action, params)
 	if(..())
 		return
-	if(!usr.canUseTopic(src))
+	if(!usr.canUseTopic(src, BE_CLOSE))
 		return
 	var/playeffect = TRUE
 	switch(action)
@@ -304,6 +302,9 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 		if("piping_layer")
 			piping_layer = text2num(params["piping_layer"])
 			playeffect = FALSE
+		// if("ducting_layer")
+		// 	ducting_layer = text2num(params["ducting_layer"])
+		// 	playeffect = FALSE
 		if("pipe_type")
 			var/static/list/recipes
 			if(!recipes)
@@ -320,11 +321,9 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 				mode &= ~n
 			else
 				mode |= n
-
-	if(playeffect && world.time >= effectcooldown)
+	if(playeffect)
 		spark_system.start()
-		effectcooldown = world.time + 100
-		playsound(get_turf(src), 'sound/effects/pop.ogg', 50, 0)
+		playsound(get_turf(src), 'sound/effects/pop.ogg', 50, FALSE)
 	return TRUE
 
 /obj/item/pipe_dispenser/pre_attack(atom/A, mob/user)

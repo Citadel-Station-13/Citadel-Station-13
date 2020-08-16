@@ -36,9 +36,10 @@
 	. = ..()
 	if(!.)
 		return
-
-	if(HAS_TRAIT(user, CHANGELING_DRAIN) || ((user.stat != DEAD) && !(HAS_TRAIT(user, TRAIT_DEATHCOMA))))
-		var/datum/antagonist/changeling/changeling = user.mind.has_antag_datum(/datum/antagonist/changeling)
+	var/datum/antagonist/changeling/changeling = user.mind.has_antag_datum(/datum/antagonist/changeling)
+	if(!changeling)
+		return FALSE
+	if(changeling.hostile_absorbed || ((user.stat != DEAD) && !(HAS_TRAIT(user, TRAIT_DEATHCOMA))))
 		changeling.purchasedpowers -= src
 		return FALSE
 

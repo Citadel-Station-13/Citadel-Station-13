@@ -11,10 +11,15 @@
 	var/equip_ready = 1 //whether the equipment is ready for use. (or deactivated/activated for static stuff)
 	var/energy_drain = 0
 	var/obj/mecha/chassis = null
-	var/range = MELEE //bitFflags
+	/// Bitflag. Determines the range of the equipment.
+	var/range = MELEE
+	/// Bitflag. Used by exosuit fabricator to assign sub-categories based on which exosuits can equip this.
+	var/mech_flags = NONE
 	var/salvageable = 1
+	//var/detachable = TRUE // Set to FALSE for built-in equipment that cannot be removed
 	var/selectable = 1	// Set to 0 for passive equipment such as mining scanner or armor plates
 	var/harmful = FALSE //Controls if equipment can be used to attack by a pacifist.
+	//var/destroy_sound = 'sound/mecha/critdestr.ogg'
 
 /obj/item/mecha_parts/mecha_equipment/proc/update_chassis_page()
 	if(chassis)
@@ -35,9 +40,14 @@
 		if(chassis.selected == src)
 			chassis.selected = null
 		src.update_chassis_page()
-		chassis.occupant_message("<span class='danger'>[src] is destroyed!</span>")
+		//log_message("[src] is destroyed.", LOG_MECHA)
 		chassis.log_append_to_last("[src] is destroyed.",1)
-		SEND_SOUND(chassis.occupant, sound(istype(src, /obj/item/mecha_parts/mecha_equipment/weapon) ? 'sound/mecha/weapdestr.ogg' : 'sound/mecha/critdestr.ogg', volume=50))
+		if(chassis.occupant)
+			chassis.occupant_message("<span class='danger'>[src] is destroyed!</span>")
+			SEND_SOUND(chassis.occupant, sound(istype(src, /obj/item/mecha_parts/mecha_equipment/weapon) ? 'sound/mecha/weapdestr.ogg' : 'sound/mecha/critdestr.ogg', volume=50))
+			//chassis.occupant.playsound_local(chassis, destroy_sound, 50)
+		//if(!detachable) //If we're a built-in nondetachable equipment, let's lock up the slot that we were in.
+		//	chassis.max_equip--
 		chassis = null
 	return ..()
 
@@ -59,7 +69,7 @@
 	return txt
 
 /obj/item/mecha_parts/mecha_equipment/proc/is_ranged()//add a distance restricted equipment. Why not?
-	return range&RANGED
+	return range&RANGED //rename to MECHA_RANGE and MECHA_MELEE
 
 /obj/item/mecha_parts/mecha_equipment/proc/is_melee()
 	return range&MELEE
@@ -72,9 +82,9 @@
 		return 0
 	if(!equip_ready)
 		return 0
-	if(crit_fail)
-		return 0
 	if(energy_drain && !chassis.has_charge(energy_drain))
+		return 0
+	if(crit_fail)
 		return 0
 	if(chassis.equipment_disabled)
 		to_chat(chassis.occupant, "<span=warn>Error -- Equipment control unit is unresponsive.</span>")
@@ -117,8 +127,6 @@
 	chassis = M
 	forceMove(M)
 	M.mecha_log_message("[src] initialized.")
-	if(!M.selected && selectable)
-		M.selected = src
 	src.update_chassis_page()
 	return
 
@@ -150,7 +158,7 @@
 		chassis.occupant_message("[icon2html(src, chassis.occupant)] [message]")
 	return
 
-/obj/item/mecha_parts/mecha_equipment/proc/mecha_log_message(message, color)
+/obj/item/mecha_parts/mecha_equipment/proc/mecha_log_message(message, color) //on tg this just overrides log_message
 	log_message(message, LOG_GAME, color)			//pass to default admin logging too
 	if(chassis)
 		chassis.mecha_log_message(message, color)		//and pass to our chassis

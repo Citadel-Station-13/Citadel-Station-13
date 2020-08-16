@@ -4,7 +4,7 @@
 	icon_state = "chronohelmet"
 	item_state = "chronohelmet"
 	slowdown = 1
-	armor = list("melee" = 60, "bullet" = 60, "laser" = 60, "energy" = 60, "bomb" = 30, "bio" = 90, "rad" = 90, "fire" = 100, "acid" = 100)
+	armor = list("melee" = 60, "bullet" = 60, "laser" = 60, "energy" = 60, "bomb" = 30, "bio" = 90, "rad" = 90, "fire" = 100, "acid" = 100, "wound" = 80)
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	var/obj/item/clothing/suit/space/chronos/suit = null
 
@@ -19,7 +19,7 @@
 	icon_state = "chronosuit"
 	item_state = "chronosuit"
 	actions_types = list(/datum/action/item_action/toggle)
-	armor = list("melee" = 60, "bullet" = 60, "laser" = 60, "energy" = 60, "bomb" = 30, "bio" = 90, "rad" = 90, "fire" = 100, "acid" = 1000)
+	armor = list("melee" = 60, "bullet" = 60, "laser" = 60, "energy" = 60, "bomb" = 30, "bio" = 90, "rad" = 90, "fire" = 100, "acid" = 1000, "wound" = 80)
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	mutantrace_variation = STYLE_DIGITIGRADE
 	var/list/chronosafe_items = list(/obj/item/chrono_eraser, /obj/item/gun/energy/chrono_gun)
@@ -80,7 +80,7 @@
 		if(to_turf)
 			user.forceMove(to_turf)
 		user.SetStun(0)
-		user.next_move = 1
+		user.SetNextAction(0, considered_action = FALSE, immediate = FALSE)
 		user.alpha = 255
 		user.update_atom_colour()
 		user.animate_movement = FORWARD_STEPS
@@ -124,8 +124,8 @@
 		for(var/obj/item/I in user.held_items)
 			ADD_TRAIT(I, TRAIT_NODROP, CHRONOSUIT_TRAIT)
 		user.animate_movement = NO_STEPS
-		user.changeNext_move(8 + phase_in_ds)
-		user.mob_transforming = 1
+		user.DelayNextAction(8 + phase_in_ds, considered_action = FALSE, immediate = FALSE)
+		user.mob_transforming = TRUE
 		user.anchored = TRUE
 		user.Stun(INFINITY)
 

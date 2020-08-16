@@ -479,7 +479,7 @@ GLOBAL_LIST_EMPTY(vending_products)
 
 	var/crit_case
 	if(crit)
-		crit_case = rand(1,5)
+		crit_case = rand(1,6)
 
 	if(forcecrit)
 		crit_case = forcecrit
@@ -491,7 +491,7 @@ GLOBAL_LIST_EMPTY(vending_products)
 			if(istype(C))
 				var/crit_rebate = 0 // lessen the normal damage we deal for some of the crits
 
-				if(crit_case != 5) // the head asplode case has its own description
+				if(crit_case < 5) // the head asplode case has its own description
 					C.visible_message("<span class='danger'>[C] is crushed by [src]!</span>", \
 						"<span class='userdanger'>You are crushed by [src]!</span>")
 
@@ -526,7 +526,17 @@ GLOBAL_LIST_EMPTY(vending_products)
 						// the new paraplegic gets like 4 lines of losing their legs so skip them
 						visible_message("<span class='danger'>[C]'s spinal cord is obliterated with a sickening crunch!</span>", ignored_mobs = list(C))
 						C.gain_trauma(/datum/brain_trauma/severe/paralysis/spinesnapped)
-					if(5) // skull squish!
+					if(5) // limb squish!
+						for(var/i in C.bodyparts)
+							var/obj/item/bodypart/squish_part = i
+							if(squish_part.is_organic_limb())
+								var/type_wound = pick(list(/datum/wound/blunt/critical, /datum/wound/blunt/severe, /datum/wound/blunt/moderate))
+								squish_part.force_wound_upwards(type_wound)
+							else
+								squish_part.receive_damage(brute=30)
+						C.visible_message("<span class='danger'>[C]'s body is maimed underneath the mass of [src]!</span>", \
+							"<span class='userdanger'>Your body is maimed underneath the mass of [src]!</span>")
+					if(6) // skull squish!
 						var/obj/item/bodypart/head/O = C.get_bodypart(BODY_ZONE_HEAD)
 						if(O)
 							C.visible_message("<span class='danger'>[O] explodes in a shower of gore beneath [src]!</span>", \
@@ -536,7 +546,11 @@ GLOBAL_LIST_EMPTY(vending_products)
 							qdel(O)
 							new /obj/effect/gibspawner/human/bodypartless(get_turf(C))
 
-				C.apply_damage(max(0, squish_damage - crit_rebate), forced=TRUE, spread_damage=TRUE)
+				if(prob(30))
+					C.apply_damage(max(0, squish_damage - crit_rebate), forced=TRUE, spread_damage=TRUE) // the 30% chance to spread the damage means you escape breaking any bones
+				else
+					C.take_bodypart_damage((squish_damage - crit_rebate)*0.5, wound_bonus = 5) // otherwise, deal it to 2 random limbs (or the same one) which will likely shatter something
+					C.take_bodypart_damage((squish_damage - crit_rebate)*0.5, wound_bonus = 5)
 				C.AddElement(/datum/element/squish, 18 SECONDS)
 			else
 				L.visible_message("<span class='danger'>[L] is crushed by [src]!</span>", \
@@ -562,7 +576,7 @@ GLOBAL_LIST_EMPTY(vending_products)
 		"<span class='notice'>You right [src].")
 
 	unbuckle_all_mobs(TRUE)
-
+	anchored = FALSE //so you can push it back into position
 	tilted = FALSE
 	layer = initial(layer)
 
@@ -658,21 +672,21 @@ GLOBAL_LIST_EMPTY(vending_products)
 		return
 	return ..()
 
-/obj/machinery/vending/ui_base_html(html)
-	var/datum/asset/spritesheet/assets = get_asset_datum(/datum/asset/spritesheet/vending)
-	. = replacetext(html, "<!--customheadhtml-->", assets.css_tag())
+/obj/machinery/vending/ui_assets(mob/user)
+	return list(
+		get_asset_datum(/datum/asset/spritesheet/vending),
+	)
 
-/obj/machinery/vending/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+/obj/machinery/vending/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		var/datum/asset/assets = get_asset_datum(/datum/asset/spritesheet/vending)
-		assets.send(user)
-		ui = new(user, src, ui_key, "vending", name, 450, 600, master_ui, state)
+		ui = new(user, src, "Vending")
 		ui.open()
 
 /obj/machinery/vending/ui_static_data(mob/user)
 	. = list()
 	.["onstation"] = onstation
+	.["department"] = payment_department
 	.["product_records"] = list()
 	for (var/datum/data/vending_product/R in product_records)
 		var/list/data = list(
@@ -699,7 +713,7 @@ GLOBAL_LIST_EMPTY(vending_products)
 		var/list/data = list(
 			path = replacetext(replacetext("[R.product_path]", "/obj/item/", ""), "/", "-"),
 			name = R.name,
-			price = R.custom_price || default_price,
+			price = R.custom_premium_price || extra_price, //may cause breakage. please note
 			max_amount = R.max_amount,
 			ref = REF(R),
 			premium = TRUE
@@ -708,28 +722,24 @@ GLOBAL_LIST_EMPTY(vending_products)
 
 /obj/machinery/vending/ui_data(mob/user)
 	. = list()
-	var/obj/item/card/id/C = user.get_idcard(TRUE)
-	.["cost_mult"] = 1
-	.["cost_text"] = ""
-	if(C && C.registered_account)
-		.["user"] = list()
-		.["user"]["name"] = C.registered_account.account_holder
-		.["user"]["cash"] = C.registered_account.account_balance
-		if(C.registered_account.account_job)
-			.["user"]["job"] = C.registered_account.account_job.title
-		else
-			.["user"]["job"] = "No Job"
-		var/cost_mult = get_best_discount(C)
-		if(cost_mult != 1)
-			.["cost_mult"] = cost_mult
-			if(cost_mult < 1)
-				.["cost_text"] = " ([(1 - cost_mult) * 100]% OFF)"
+	var/mob/living/carbon/human/H
+	var/obj/item/card/id/C
+	if(ishuman(user))
+		H = user
+		C = H.get_idcard(TRUE)
+		if(C?.registered_account)
+			.["user"] = list()
+			.["user"]["name"] = C.registered_account.account_holder
+			.["user"]["cash"] = C.registered_account.account_balance
+			if(C.registered_account.account_job)
+				.["user"]["job"] = C.registered_account.account_job.title
+				.["user"]["department"] = C.registered_account.account_job.paycheck_department
 			else
-				.["cost_text"] = " ([(cost_mult - 1) * 100]% EXTRA)"
+				.["user"]["job"] = "No Job"
+				.["user"]["department"] = "No Department"
 	.["stock"] = list()
 	for (var/datum/data/vending_product/R in product_records + coin_records + hidden_records)
 		.["stock"][R.name] = R.amount
-		.
 	.["extended_inventory"] = extended_inventory
 
 /obj/machinery/vending/ui_act(action, params)
@@ -752,7 +762,9 @@ GLOBAL_LIST_EMPTY(vending_products)
 			if(!R || !istype(R) || !R.product_path)
 				vend_ready = TRUE
 				return
-			var/price_to_use = R.custom_price || default_price
+			var/price_to_use = default_price
+			if(R.custom_price)
+				price_to_use = R.custom_price
 			if(R in hidden_records)
 				if(!extended_inventory)
 					vend_ready = TRUE
@@ -766,8 +778,10 @@ GLOBAL_LIST_EMPTY(vending_products)
 				flick(icon_deny,src)
 				vend_ready = TRUE
 				return
-			if(onstation && price_to_use >= 0)
-				var/obj/item/card/id/C = usr.get_idcard(TRUE)
+			if(onstation && ishuman(usr))
+				var/mob/living/carbon/human/H = usr
+				var/obj/item/card/id/C = H.get_idcard(TRUE)
+
 				if(!C)
 					say("No card found.")
 					flick(icon_deny,src)
@@ -778,11 +792,20 @@ GLOBAL_LIST_EMPTY(vending_products)
 					flick(icon_deny,src)
 					vend_ready = TRUE
 					return
+				// else if(age_restrictions && R.age_restricted && (!C.registered_age || C.registered_age < AGE_MINOR))
+				// 	say("You are not of legal age to purchase [R.name].")
+				// 	if(!(usr in GLOB.narcd_underages))
+				// 		Radio.set_frequency(FREQ_SECURITY)
+				// 		Radio.talk_into(src, "SECURITY ALERT: Underaged crewmember [H] recorded attempting to purchase [R.name] in [get_area(src)]. Please watch for substance abuse.", FREQ_SECURITY)
+				// 		GLOB.narcd_underages += H
+				// 	flick(icon_deny,src)
+				// 	vend_ready = TRUE
+				// 	return
 				var/datum/bank_account/account = C.registered_account
-				if(coin_records.Find(R))
-					price_to_use = R.custom_premium_price || extra_price
-				else if(!hidden_records.Find(R))
-					price_to_use = round(price_to_use * get_best_discount(C))
+				if(account.account_job && account.account_job.paycheck_department == payment_department)
+					price_to_use = 0
+				if(coin_records.Find(R) || hidden_records.Find(R))
+					price_to_use = R.custom_premium_price ? R.custom_premium_price : extra_price
 				if(price_to_use && !account.adjust_money(-price_to_use))
 					say("You do not possess the funds to purchase [R.name].")
 					flick(icon_deny,src)
@@ -791,6 +814,8 @@ GLOBAL_LIST_EMPTY(vending_products)
 				var/datum/bank_account/D = SSeconomy.get_dep_account(payment_department)
 				if(D)
 					D.adjust_money(price_to_use)
+					SSblackbox.record_feedback("amount", "vending_spent", price_to_use)
+					//log_econ("[price_to_use] credits were inserted into [src] by [D.account_holder] to buy [R].")
 			if(last_shopper != usr || purchase_message_cooldown < world.time)
 				say("Thank you for shopping with [src]!")
 				purchase_message_cooldown = world.time + 5 SECONDS

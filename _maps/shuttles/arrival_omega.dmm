@@ -237,7 +237,7 @@
 /area/shuttle/arrival)
 "C" = (
 /obj/structure/table/reinforced,
-/obj/item/storage/pill_bottle/dice{
+/obj/item/storage/box/dice{
 	pixel_x = -2;
 	pixel_y = 8
 	},

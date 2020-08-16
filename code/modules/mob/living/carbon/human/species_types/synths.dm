@@ -17,6 +17,7 @@
 	var/disguise_fail_health = 75 //When their health gets to this level their synthflesh partially falls off
 	var/datum/species/fake_species = null //a species to do most of our work for us, unless we're damaged
 	species_language_holder = /datum/language_holder/synthetic
+	species_type = "robotic"
 
 /datum/species/synth/military
 	name = "Military Synth"
@@ -42,7 +43,6 @@
 		H.reagents.remove_reagent(chem.type, REAGENTS_METABOLISM)
 		return TRUE
 	return ..()
-
 
 /datum/species/synth/proc/assume_disguise(datum/species/S, mob/living/carbon/human/H)
 	if(S && !istype(S, type))

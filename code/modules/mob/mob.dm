@@ -589,6 +589,8 @@ GLOBAL_VAR_INIT(exploit_warn_spam_prevention, 0)
 /mob/Stat()
 	..()
 
+	SSvote?.render_statpanel(src)
+
 	//This is only called from client/Stat(), let's assume client exists.
 
 	if(statpanel("Status"))
@@ -646,8 +648,6 @@ GLOBAL_VAR_INIT(exploit_warn_spam_prevention, 0)
 				if(A.invisibility > see_invisible)
 					continue
 				if(overrides.len && (A in overrides))
-					continue
-				if(A.IsObscured())
 					continue
 				statpanel(listed_turf.name, null, A)
 	if(mind)
