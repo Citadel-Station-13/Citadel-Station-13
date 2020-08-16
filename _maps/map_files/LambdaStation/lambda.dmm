@@ -44383,7 +44383,6 @@
 /turf/open/floor/plasteel/white,
 /area/hallway/primary/aft)
 "bFB" = (
-/obj/structure/reagent_dispensers/keg/aphro/strong,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/wood{
 	icon_state = "wood-broken5"
@@ -80286,6 +80285,11 @@
 	},
 /turf/open/space/basic,
 /area/engine/engineering)
+"eCO" = (
+/obj/effect/decal/cleanable/dirt,
+/mob/living/simple_animal/opossum/poppy,
+/turf/open/floor/plasteel/dark,
+/area/maintenance/starboard/aft)
 "eDP" = (
 /obj/effect/turf_decal/trimline/blue/filled/corner{
 	dir = 8
@@ -82039,6 +82043,10 @@
 	},
 /turf/open/floor/plasteel/cafeteria,
 /area/crew_quarters/kitchen)
+"vDO" = (
+/mob/living/simple_animal/opossum,
+/turf/open/floor/plating,
+/area/maintenance/fore)
 "vDW" = (
 /obj/structure/cable{
 	icon_state = "1-2"
@@ -107579,7 +107587,7 @@ aaA
 abY
 ayy
 acw
-acw
+vDO
 acw
 acw
 aeG
@@ -135198,7 +135206,7 @@ bPp
 ccJ
 clR
 bQh
-clN
+eCO
 bPp
 bQh
 bYx

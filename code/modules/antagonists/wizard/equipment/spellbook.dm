@@ -294,6 +294,11 @@
 		dat += "[surplus] left.<br>"
 	return dat
 
+/datum/spellbook_entry/item/timestop_katana
+	name = "Temporal Katana"
+	desc = "An oddly-weighted katana, reinforced to allow parrying, with a temporal anomaly magically shoved into it. Successful ripostes prove devastating to those unprepared."
+	item_path = /obj/item/katana/timestop
+
 /datum/spellbook_entry/item/staffchange
 	name = "Staff of Change"
 	desc = "An artefact that spits bolts of coruscating energy which cause the target's very form to reshape itself."

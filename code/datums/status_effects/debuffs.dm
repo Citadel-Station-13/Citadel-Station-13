@@ -97,6 +97,21 @@
 		duration = set_duration
 	return ..()
 
+/datum/status_effect/off_balance
+	id = "offbalance"
+	alert_type = null
+
+/datum/status_effect/off_balance/on_creation(mob/living/new_owner, set_duration)
+	if(isnum(set_duration))
+		duration = set_duration
+	return ..()
+
+/datum/status_effect/off_balance/on_remove()
+	var/active_item = owner.get_active_held_item()
+	if(is_type_in_typecache(active_item, GLOB.shove_disarming_types))
+		owner.visible_message("<span class='warning'>[owner.name] regains their grip on \the [active_item]!</span>", "<span class='warning'>You regain your grip on \the [active_item]</span>", null, COMBAT_MESSAGE_RANGE)
+	return ..()
+
 /obj/screen/alert/status_effect/asleep
 	name = "Asleep"
 	desc = "You've fallen asleep. Wait a bit and you should wake up. Unless you don't, considering how helpless you are."
@@ -433,7 +448,7 @@
 	var/still_bleeding = FALSE
 	for(var/thing in throat.wounds)
 		var/datum/wound/W = thing
-		if(W.wound_type == WOUND_LIST_CUT && W.severity > WOUND_SEVERITY_MODERATE)
+		if(W.wound_type == WOUND_SLASH && W.severity > WOUND_SEVERITY_MODERATE)
 			still_bleeding = TRUE
 			break
 	if(!still_bleeding)
@@ -547,8 +562,8 @@
 	owner.DefaultCombatKnockdown(15, TRUE, FALSE, 15)
 	if(iscarbon(owner))
 		var/mob/living/carbon/C = owner
-		C.silent = max(2, C.silent)
-		C.stuttering = max(5, C.stuttering)
+		C.silent = max(5, C.silent) //Increased, now lasts until five seconds after it ends, instead of 2
+		C.stuttering = max(10, C.stuttering) //Increased, now lasts for five seconds after the mute ends, instead of 3
 	if(!old_health)
 		old_health = owner.health
 	if(!old_oxyloss)

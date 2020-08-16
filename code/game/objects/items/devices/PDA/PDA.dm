@@ -1027,6 +1027,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 	else if(is_type_in_list(C, contained_item)) //Checks if there is a pen
 		if(inserted_item)
 			to_chat(user, "<span class='warning'>There is already \a [inserted_item] in \the [src]!</span>")
+			return ..()
 		else
 			if(!user.transferItemToLoc(C, src))
 				return

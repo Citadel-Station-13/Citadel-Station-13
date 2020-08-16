@@ -245,7 +245,7 @@
 		. |= BLOCK_SUCCESS
 	var/list/effect_text
 	if(efficiency >= data.parry_efficiency_to_counterattack)
-		run_parry_countereffects(object, damage, attack_text, attack_type, armour_penetration, attacker, def_zone, return_list, efficiency)
+		effect_text = run_parry_countereffects(object, damage, attack_text, attack_type, armour_penetration, attacker, def_zone, return_list, efficiency)
 	if(data.parry_flags & PARRY_DEFAULT_HANDLE_FEEDBACK)
 		handle_parry_feedback(object, damage, attack_text, attack_type, armour_penetration, attacker, def_zone, return_list, efficiency, effect_text)
 	successful_parries += efficiency
@@ -254,9 +254,12 @@
 
 /mob/living/proc/handle_parry_feedback(atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, list/return_list = list(), parry_efficiency, list/effect_text)
 	var/datum/block_parry_data/data = get_parry_data()
+	var/knockdown_check = FALSE
+	if(data.parry_data[PARRY_KNOCKDOWN_ATTACKER] && parry_efficiency >= data.parry_efficiency_to_counterattack)
+		knockdown_check = TRUE
 	if(data.parry_sounds)
 		playsound(src, pick(data.parry_sounds), 75)
-	visible_message("<span class='danger'>[src] parries [attack_text][length(effect_text)? ", [english_list(effect_text)] [attacker]" : ""]!</span>")
+	visible_message("<span class='danger'>[src] parries [attack_text][length(effect_text)? ", [english_list(effect_text)] [attacker]" : ""][length(effect_text) && knockdown_check? " and" : ""][knockdown_check? " knocking them to the ground" : ""]!</span>")
 
 /// Run counterattack if any
 /mob/living/proc/run_parry_countereffects(atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, list/return_list = list(), parry_efficiency)
@@ -288,15 +291,15 @@
 		if(data.parry_data[PARRY_DISARM_ATTACKER])
 			L.drop_all_held_items()
 			effect_text += "disarming"
-		if(data.parry_data[PARRY_KNOCKDOWN_ATTACKER])
-			L.DefaultCombatKnockdown(data.parry_data[PARRY_KNOCKDOWN_ATTACKER])
-			effect_text += "knocking them to the ground"
 		if(data.parry_data[PARRY_STAGGER_ATTACKER])
 			L.Stagger(data.parry_data[PARRY_STAGGER_ATTACKER])
 			effect_text += "staggering"
 		if(data.parry_data[PARRY_DAZE_ATTACKER])
 			L.Daze(data.parry_data[PARRY_DAZE_ATTACKER])
 			effect_text += "dazing"
+		if(data.parry_data[PARRY_KNOCKDOWN_ATTACKER])
+			L.DefaultCombatKnockdown(data.parry_data[PARRY_KNOCKDOWN_ATTACKER])
+			// effect_text += "knocking them to the ground" - snowflaked above
 	return effect_text
 
 /// Gets the datum/block_parry_data we're going to use to parry.

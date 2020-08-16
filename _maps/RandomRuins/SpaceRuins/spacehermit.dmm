@@ -5,9 +5,6 @@
 "ab" = (
 /turf/closed/mineral/random/low_chance,
 /area/ruin/unpowered)
-"ac" = (
-/turf/open/floor/plating/asteroid,
-/area/ruin/unpowered)
 "ad" = (
 /obj/machinery/hydroponics/soil,
 /turf/open/floor/plating/asteroid,
@@ -327,9 +324,6 @@
 /obj/item/flashlight/lamp/bananalamp,
 /turf/open/floor/plating/asteroid,
 /area/ruin/powered)
-"bt" = (
-/turf/closed/mineral/random/low_chance/earth_like,
-/area/ruin/unpowered)
 "bC" = (
 /obj/item/pickaxe/titanium,
 /turf/open/floor/plating/asteroid,
@@ -396,7 +390,7 @@ aa
 aa
 aa
 aa
-ac
+aA
 aO
 aA
 aA
@@ -2648,7 +2642,7 @@ aa
 aa
 aa
 aa
-ac
+aA
 aa
 aa
 aa
@@ -2699,9 +2693,9 @@ aa
 aa
 aa
 aa
-ac
+aA
 ab
-ac
+aA
 aa
 aa
 "}
@@ -2855,9 +2849,9 @@ aa
 aa
 aa
 aa
-ac
+aA
 ab
-ac
+aA
 aa
 aa
 "}
@@ -2907,7 +2901,7 @@ aa
 aa
 aa
 aa
-ac
+aA
 aa
 aa
 aa
@@ -2959,7 +2953,7 @@ aa
 aa
 aa
 aa
-bt
+ab
 aa
 aa
 aa

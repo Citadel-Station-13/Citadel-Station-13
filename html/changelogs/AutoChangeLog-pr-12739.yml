@@ -1,0 +1,12 @@
+author: "Strazyplus"
+delete-after: True
+changes: 
+  - rscadd: "Added drakeborgs"
+  - rscadd: "Added drakeplushies"
+  - imageadd: "added drakeborg sprites"
+  - imageadd: "added drakeplushie sprites"
+  - code_imp: "changed some code - added drakeplushies to backpack loadout
+Removed duplicate voresleeper belly sprites from engdrake & jantidrake.
+[CC BY-NC-SA 3.0](https://creativecommons.org/licenses/by-nc-sa/3.0/)"
+  - rscadd: "Added CC BY-NC-SA 3.0 license details to icon/mob/cyborg
+moved drakeborg.dmi to icon/mob/cyborg"

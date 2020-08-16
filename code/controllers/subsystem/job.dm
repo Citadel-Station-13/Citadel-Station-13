@@ -674,7 +674,7 @@ SUBSYSTEM_DEF(job)
 			return
 		for(var/i in the_mob.client.prefs.chosen_gear)
 			var/datum/gear/G = i
-			G = GLOB.loadout_items[slot_to_string(initial(G.category))][initial(G.name)]
+			G = GLOB.loadout_items[initial(G.category)][initial(G.subcategory)][initial(G.name)]
 			if(!G)
 				continue
 			var/permitted = TRUE
@@ -682,14 +682,14 @@ SUBSYSTEM_DEF(job)
 				permitted = FALSE
 			if(G.donoritem && !G.donator_ckey_check(the_mob.client.ckey))
 				permitted = FALSE
-			if(!equipbackpackstuff && G.category == SLOT_IN_BACKPACK)//snowflake check since plopping stuff in the backpack doesnt work for pre-job equip loadout stuffs
+			if(!equipbackpackstuff && G.slot == SLOT_IN_BACKPACK)//snowflake check since plopping stuff in the backpack doesnt work for pre-job equip loadout stuffs
 				permitted = FALSE
-			if(equipbackpackstuff && G.category != SLOT_IN_BACKPACK)//ditto
+			if(equipbackpackstuff && G.slot != SLOT_IN_BACKPACK)//ditto
 				permitted = FALSE
 			if(!permitted)
 				continue
 			var/obj/item/I = new G.path
-			if(!M.equip_to_slot_if_possible(I, G.category, disable_warning = TRUE, bypass_equip_delay_self = TRUE)) // If the job's dresscode compliant, try to put it in its slot, first
+			if(!M.equip_to_slot_if_possible(I, G.slot, disable_warning = TRUE, bypass_equip_delay_self = TRUE)) // If the job's dresscode compliant, try to put it in its slot, first
 				if(iscarbon(M))
 					var/mob/living/carbon/C = M
 					var/obj/item/storage/backpack/B = C.back

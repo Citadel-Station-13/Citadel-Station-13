@@ -28,6 +28,7 @@
 	var/degrees = 0
 	var/font = PEN_FONT
 	embedding = list()
+	sharpness = SHARP_POINTY
 
 /obj/item/pen/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is scribbling numbers all over [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to commit sudoku...</span>")
@@ -84,7 +85,7 @@
 	throw_speed = 4
 	colour = "crimson"
 	custom_materials = list(/datum/material/gold = 750)
-	sharpness = IS_SHARP
+	sharpness = SHARP_EDGED
 	resistance_flags = FIRE_PROOF
 	unique_reskin = list("Oak" = "pen-fountain-o",
 						"Gold" = "pen-fountain-g",
@@ -146,7 +147,7 @@
 				log_game("[user] [key_name(user)] has renamed [O] to [input]")
 
 		if(penchoice == "Change description")
-			var/input = stripped_input(user,"Describe \the [O.name] here", ,"", 100)
+			var/input = stripped_input(user,"Describe \the [O.name] here", ,"", 2048)
 			if(QDELETED(O) || !user.canUseTopic(O, BE_CLOSE))
 				return
 			O.desc = input
@@ -180,7 +181,7 @@
  */
 /obj/item/pen/edagger
 	attack_verb = list("slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut") //these wont show up if the pen is off
-	sharpness = IS_SHARP
+	sharpness = SHARP_EDGED
 	var/on = FALSE
 	embedding = list(embed_chance = EMBED_CHANCE)
 

@@ -373,6 +373,14 @@
 	pH = 4.9
 	value = REAGENT_VALUE_VERY_COMMON
 
+/datum/reagent/toxin/teapowder/red
+	name = "Ground Red Tea Leaves"
+	toxpwr = 0.4
+
+/datum/reagent/toxin/teapowder/green
+	name = "Ground Green Tea Leaves"
+	toxpwr = 0.6
+
 /datum/reagent/toxin/mutetoxin //the new zombie powder.
 	name = "Mute Toxin"
 	description = "A nonlethal poison that inhibits speech in its victim."

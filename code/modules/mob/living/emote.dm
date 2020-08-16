@@ -326,6 +326,11 @@
 	key_third_person = "smiles"
 	message = "smiles."
 
+/datum/emote/living/smirk
+	key = "smirk"
+	key_third_person = "smirks"
+	message = "smirks."
+
 /datum/emote/living/sneeze
 	key = "sneeze"
 	key_third_person = "sneezes"
@@ -441,7 +446,7 @@
 		to_chat(user, "You cannot send IC messages (muted).")
 		return FALSE
 	else if(!params)
-		var/custom_emote = stripped_multiline_input(user, "Choose an emote to display.", "Custom Emote", null, MAX_MESSAGE_LEN)
+		var/custom_emote = stripped_multiline_input_or_reflect(user, "Choose an emote to display.", "Custom Emote", null, MAX_MESSAGE_LEN)
 		if(custom_emote && !check_invalid(user, custom_emote))
 			var/type = input("Is this a visible or hearable emote?") as null|anything in list("Visible", "Hearable")
 			switch(type)
@@ -531,3 +536,29 @@
 		to_chat(user, "<span class='notice'>You ready your slapping hand.</span>")
 	else
 		to_chat(user, "<span class='warning'>You're incapable of slapping in your current state.</span>")
+
+/datum/emote/living/audio_emote/blorble
+	key = "blorble"
+	key_third_person = "blorbles"
+	message = "blorbles."
+	message_param = "blorbles at %t."
+
+/datum/emote/living/audio_emote/blorble/run_emote(mob/user, params)
+	. = ..()
+	if(. && iscarbon(user))
+		var/mob/living/carbon/C = user
+		if(isjellyperson(C))
+			pick(playsound(C, 'sound/effects/attackblob.ogg', 50, 1),playsound(C, 'sound/effects/blobattack.ogg', 50, 1))
+
+/datum/emote/living/audio_emote/blurp
+	key = "blurp"
+	key_third_person = "blurps"
+	message = "blurps."
+	message_param = "blurps at %t."
+
+/datum/emote/living/audio_emote/blurp/run_emote(mob/user, params)
+	. = ..()
+	if(. && iscarbon(user))
+		var/mob/living/carbon/C = user
+		if(isjellyperson(C))
+			pick(playsound(C, 'sound/effects/meatslap.ogg', 50, 1),playsound(C, 'sound/effects/gib_step.ogg', 50, 1))

@@ -447,7 +447,7 @@
 	block_parry_data = null
 	attack_verb = list("attacked", "struck", "hit")
 	total_mass_on = TOTAL_MASS_TOY_SWORD
-	sharpness = IS_BLUNT
+	sharpness = SHARP_NONE
 
 /obj/item/dualsaber/toy/ComponentInitialize()
 	AddComponent(/datum/component/two_handed, force_unwielded=0, force_wielded=0, wieldsound='sound/weapons/saberon.ogg', unwieldsound='sound/weapons/saberoff.ogg')
@@ -466,7 +466,7 @@
 	attack_verb = list("attacked", "struck", "hit")
 	total_mass_on = TOTAL_MASS_TOY_SWORD
 	slowdown_wielded = 0
-	sharpness = IS_BLUNT
+	sharpness = SHARP_NONE
 
 /obj/item/dualsaber/hypereutactic/toy/ComponentInitialize()
 	AddComponent(/datum/component/two_handed, force_unwielded=0, force_wielded=0, wieldsound='sound/weapons/saberon.ogg', unwieldsound='sound/weapons/saberoff.ogg')
@@ -1230,7 +1230,7 @@
 	name = "steampunk watch"
 	desc = "A stylish steampunk watch made out of thousands of tiny cogwheels."
 	icon = 'icons/obj/clockwork_objects.dmi'
-	icon_state = "dread_ipad"
+	icon_state = "clockwork_slab"
 	slot_flags = ITEM_SLOT_BELT
 	w_class = WEIGHT_CLASS_SMALL
 	var/cooldown = 0

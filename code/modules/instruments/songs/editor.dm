@@ -109,8 +109,11 @@
 				linenum++
 		updateDialog(usr)		// make sure updates when complete
 
+/datum/song/proc/check_can_use(mob/user)
+	return user.canUseTopic(parent, TRUE, FALSE, FALSE, FALSE)
+
 /datum/song/Topic(href, href_list)
-	if(!usr.canUseTopic(parent, TRUE, FALSE, FALSE, FALSE))
+	if(!check_can_use(usr))
 		usr << browse(null, "window=instrument")
 		usr.unset_machine()
 		return

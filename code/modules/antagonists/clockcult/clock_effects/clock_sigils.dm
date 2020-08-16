@@ -216,6 +216,20 @@
 	else if(get_clockwork_power())
 		to_chat(L, "<span class='brass'>You feel a slight, static shock.</span>")
 
+/obj/effect/clockwork/sigil/transmission/process()
+    var/power_drained = 0
+    var/power_mod = 0.005
+    for(var/t in spiral_range_turfs(SIGIL_ACCESS_RANGE, src))
+        var/turf/T = t
+        for(var/M in T)
+            var/atom/movable/A = M
+            power_drained += A.power_drain(TRUE)
+
+        CHECK_TICK
+
+    adjust_clockwork_power(power_drained * power_mod * 15)
+    new /obj/effect/temp_visual/ratvar/sigil/transmission(loc, 1 + (power_drained * 0.0035))
+
 /obj/effect/clockwork/sigil/transmission/proc/charge_cyborg(mob/living/silicon/robot/cyborg)
 	if(!cyborg_checks(cyborg))
 		return
@@ -391,3 +405,49 @@
 		animation_number = initial(animation_number)
 		sigil_active = FALSE
 	animate(src, alpha = initial(alpha), time = 10, flags = ANIMATION_END_NOW)
+
+/obj/effect/clockwork/sigil/rite
+	name = "radiant sigil"
+	desc = "A glowing sigil glowing with barely-contained power."
+	clockwork_desc = "A sigil that will allow you to perform certain rites on it, provided you have access to sufficient power and materials."
+	icon_state = "sigiltransmission" //am big lazy - recolored transmission sigil
+	sigil_name = "Sigil of Rites"
+	alpha = 255
+	var/performing_rite = FALSE
+	color = "#ffe63a"
+	light_color = "#ffe63a"
+	light_range = 1
+	light_power = 2
+
+/obj/effect/clockwork/sigil/rite/on_attack_hand(mob/living/user, act_intent = user.a_intent, unarmed_attack_flags)
+	. = ..()
+	if(.)
+		return
+	if(!is_servant_of_ratvar(user))
+		return
+	if(!GLOB.all_clockwork_rites.len) //Did we already generate the list?
+		generate_all_rites()
+	if(performing_rite)
+		to_chat(user, "<span class='warning'>Someone is already performing a rite here!")
+		return
+	var/list/possible_rites = list()
+	for(var/datum/clockwork_rite/R in GLOB.all_clockwork_rites)
+		possible_rites[R] = R
+	var/input_key = input(user, "Choose a rite", "Choosing a rite") as null|anything in possible_rites
+	if(!input_key)
+		return
+	var/datum/clockwork_rite/CR = possible_rites[input_key]
+	if(!CR)
+		return
+	var/choice = alert(user, "What to do with this rite?", "What to do?", "Cast", "Show Info", "Cancel")
+	switch(choice)
+		if("Cast")
+			CR.try_cast(src, user)
+		if("Show Info")
+			var/infotext = CR.build_info()
+			to_chat(user, infotext)
+
+/obj/effect/clockwork/sigil/rite/proc/generate_all_rites() //The first time someone uses a sigil of rites, all the rites are actually generated. No need to have a bunch of random datums laying around all the time.
+	for(var/V in subtypesof(/datum/clockwork_rite))
+		var/datum/clockwork_rite/R = new V
+		GLOB.all_clockwork_rites += R

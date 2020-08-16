@@ -105,6 +105,8 @@
 
 /// Triggered on attack self of the item containing the component
 /datum/component/two_handed/proc/on_attack_self(datum/source, mob/user)
+	if(!user.is_holding(parent))
+		return			//give no quarter to telekinesis powergaemrs (telekinetic wielding will desync the offhand and result in all sorts of bugs so no until someone codes it properly)
 	if(wielded)
 		unwield(user)
 	else

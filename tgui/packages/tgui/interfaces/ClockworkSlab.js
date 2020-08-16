@@ -5,9 +5,10 @@ import { Fragment } from 'inferno';
 import { Window } from '../layouts';
 
 let REC_RATVAR = "";
+// You may ask "why is this not inside ClockworkSlab"
+// It's because cslab gets called every time. Lag is bad.
 for (let index = 0; index < Math.min(Math.random()*100); index++) {
-  // HEY! is it faster to do it serverside or client side?
-  REC_RATVAR.concat("HONOR RATVAR ");
+  REC_RATVAR += "HONOR RATVAR ";
 }
 
 export const ClockworkSlab = (props, context) => {
@@ -17,7 +18,7 @@ export const ClockworkSlab = (props, context) => {
     recollection_categories = [],
     rec_section = null,
     rec_binds = [],
-    scripture = {}, // this is a {}, not a []
+    scripture = {},
     tier_infos = {},
     power = "0 W",
     power_unformatted = 0,
@@ -35,7 +36,10 @@ export const ClockworkSlab = (props, context) => {
   || {};
 
   return (
-    <Window theme="clockcult">
+    <Window
+      theme="clockcult"
+      width={800}
+      height={420}>
       <Window.Content scrollable>
         {recollection ? ( // tutorial
           <Section
@@ -88,23 +92,20 @@ export const ClockworkSlab = (props, context) => {
                 </Fragment>
               )}
             </Box>
-            {recollection_categories?.map(cat => {
-              return (
-                <Fragment key={cat.name} >
-                  <br />
-                  <Button
-                    content={cat.name}
-                    tooltip={cat.desc}
-                    tooltipPosition={'right'}
-                    onClick={() => act('rec_category', {
-                      "category": cat.name,
-                    })} />
-                </Fragment>
-              );
-            })}
+            {recollection_categories?.map(cat => (
+              <Fragment key={cat.name}>
+                <br />
+                <Button
+                  content={cat.name}
+                  tooltip={cat.desc}
+                  tooltipPosition={'right'}
+                  onClick={() => act('rec_category', {
+                    "category": cat.name,
+                  })} />
+              </Fragment>
+            ))}
             <Divider />
             <Box>
-              {data.rec_section}
               <Box
                 as={'span'}
                 textColor={'#BE8700'}
@@ -112,7 +113,7 @@ export const ClockworkSlab = (props, context) => {
                 {rec_section?.title ? (
                   rec_section.title
                 ) : (
-                  '500 Server Internal archives not found.'
+                  '500 Slab Internal archives not found.'
                 )}
               </Box>
               <br /><br />
@@ -165,16 +166,14 @@ export const ClockworkSlab = (props, context) => {
             and other consumers.
             <Section level={2}>
               <Tabs>
-                {map((scriptures, name) => {
-                  return (
-                    <Tabs.Tab
-                      key={name}
-                      selected={tab === name}
-                      onClick={() => setTab(name)}>
-                      {name}
-                    </Tabs.Tab>
-                  );
-                })(scripture)}
+                {map((scriptures, name) => (
+                  <Tabs.Tab
+                    key={name}
+                    selected={tab === name}
+                    onClick={() => setTab(name)}>
+                    {name}
+                  </Tabs.Tab>
+                ))(scripture)}
               </Tabs>
               <Box
                 as={'span'}
@@ -214,7 +213,7 @@ export const ClockworkSlab = (props, context) => {
               </Box>
               <Divider />
               <Table>
-                {!!scriptInTab && scriptInTab.map(script => (
+                {scriptInTab?.map(script => (
                   <Table.Row
                     key={script.name}
                     className="candystripe">

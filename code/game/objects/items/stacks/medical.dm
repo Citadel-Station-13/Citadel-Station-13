@@ -28,8 +28,7 @@
 
 /obj/item/stack/medical/attack(mob/living/M, mob/user)
 	. = ..()
-	try_heal(M, user)
-
+	INVOKE_ASYNC(src, .proc/try_heal, M, user)
 
 /obj/item/stack/medical/proc/try_heal(mob/living/M, mob/user, silent = FALSE)
 	if(!M.can_inject(user, TRUE))
@@ -116,14 +115,15 @@
 
 /obj/item/stack/medical/gauze
 	name = "medical gauze"
-	desc = "A roll of elastic cloth, perfect for stabilizing all kinds of wounds, from cuts and burns, to broken bones. "
+	desc = "A roll of elastic cloth, perfect for stabilizing all kinds of wounds, from cuts and burns to broken bones."
 	gender = PLURAL
 	singular_name = "medical gauze"
 	icon_state = "gauze"
 	heal_brute = 5
 	self_delay = 50
 	other_delay = 20
-	amount = 6
+	amount = 10
+	max_amount = 10
 	absorption_rate = 0.25
 	absorption_capacity = 5
 	splint_factor = 0.35
@@ -132,11 +132,34 @@
 // gauze is only relevant for wounds, which are handled in the wounds themselves
 /obj/item/stack/medical/gauze/try_heal(mob/living/M, mob/user, silent)
 	var/obj/item/bodypart/limb = M.get_bodypart(check_zone(user.zone_selected))
-	if(limb)
-		if(limb.brute_dam > 40)
-			to_chat(user, "<span class='warning'>The bleeding on [user==M ? "your" : "[M]'s"] [limb.name] is from bruising, and cannot be treated with [src]!</span>")
-		else
-			to_chat(user, "<span class='warning'>There's no bleeding on [user==M ? "your" : "[M]'s"] [limb.name]</span>")
+	if(!limb)
+		to_chat(user, "<span class='notice'>There's nothing there to bandage!</span>")
+		return
+	if(!LAZYLEN(limb.wounds))
+		to_chat(user, "<span class='notice'>There's no wounds that require bandaging on [user==M ? "your" : "[M]'s"] [limb.name]!</span>") // good problem to have imo
+		return
+
+	var/gauzeable_wound = FALSE
+	for(var/i in limb.wounds)
+		var/datum/wound/woundies = i
+		if(woundies.wound_flags & ACCEPTS_GAUZE)
+			gauzeable_wound = TRUE
+			break
+	if(!gauzeable_wound)
+		to_chat(user, "<span class='notice'>There's no wounds that require bandaging on [user==M ? "your" : "[M]'s"] [limb.name]!</span>") // good problem to have imo
+		return
+
+	if(limb.current_gauze && (limb.current_gauze.absorption_capacity * 0.8 > absorption_capacity)) // ignore if our new wrap is < 20% better than the current one, so someone doesn't bandage it 5 times in a row
+		to_chat(user, "<span class='warning'>The bandage currently on [user==M ? "your" : "[M]'s"] [limb.name] is still in good condition!</span>")
+		return
+
+	user.visible_message("<span class='warning'>[user] begins wrapping the wounds on [M]'s [limb.name] with [src]...</span>", "<span class='warning'>You begin wrapping the wounds on [user == M ? "your" : "[M]'s"] [limb.name] with [src]...</span>")
+
+	if(!do_after(user, (user == M ? self_delay : other_delay), target=M))
+		return
+
+	user.visible_message("<span class='green'>[user] applies [src] to [M]'s [limb.name].</span>", "<span class='green'>You bandage the wounds on [user == M ? "yourself" : "[M]'s"] [limb.name].</span>")
+	limb.apply_gauze(src)
 
 /obj/item/stack/medical/gauze/attackby(obj/item/I, mob/user, params)
 	if(I.tool_behaviour == TOOL_WIRECUTTER || I.get_sharpness())
@@ -148,6 +171,14 @@
 					 "<span class='notice'>You cut [src] into pieces of cloth with [I].</span>", \
 					 "<span class='italics'>You hear cutting.</span>")
 		use(2)
+	else if(I.is_drainable() && I.reagents.has_reagent(/datum/reagent/space_cleaner/sterilizine))
+		if(!I.reagents.has_reagent(/datum/reagent/space_cleaner/sterilizine, 10))
+			to_chat(user, "<span class='warning'>There's not enough sterilizine in [I] to sterilize [src]!</span>")
+			return
+		user.visible_message("<span class='notice'>[user] pours the contents of [I] onto [src], sterilizing it.</span>", "<span class='notice'>You pour the contents of [I] onto [src], sterilizing it.</span>")
+		I.reagents.remove_reagent(/datum/reagent/space_cleaner/sterilizine, 10)
+		new /obj/item/stack/medical/gauze/adv/one(user.drop_location())
+		use(1)
 	else
 		return ..()
 
@@ -159,7 +190,7 @@
 	name = "improvised gauze"
 	singular_name = "improvised gauze"
 	heal_brute = 0
-	desc = "A roll of cloth roughly cut from something that does a decent job of stabilizing wounds, but less efficiently so than real medical gauze."
+	desc = "A roll of cloth roughly cut from something that does a decent job of stabilizing wounds, but less efficiently than real medical gauze."
 	self_delay = 60
 	other_delay = 30
 	absorption_rate = 0.15
@@ -167,9 +198,13 @@
 
 /obj/item/stack/medical/gauze/adv
 	name = "sterilized medical gauze"
-	desc = "A roll of elastic sterilized cloth that is extremely effective at stopping bleeding, heals minor wounds and cleans them."
 	singular_name = "sterilized medical gauze"
-	self_delay = 5
+	desc = "A roll of elastic sterilized cloth that is extremely effective at stopping bleeding and covering burns."
+	heal_brute = 6
+	self_delay = 45
+	other_delay = 15
+	absorption_rate = 0.4
+	absorption_capacity = 6
 
 /obj/item/stack/medical/gauze/adv/one
 	amount = 1
@@ -187,8 +222,8 @@
 	icon_state = "suture"
 	self_delay = 30
 	other_delay = 10
-	amount = 10
-	max_amount = 10
+	amount = 15
+	max_amount = 15
 	repeating = TRUE
 	heal_brute = 10
 	stop_bleeding = 0.6
@@ -203,6 +238,9 @@
 
 /obj/item/stack/medical/suture/one
 	amount = 1
+
+/obj/item/stack/medical/suture/five
+	amount = 5
 
 /obj/item/stack/medical/suture/medicated
 	name = "medicated suture"
@@ -242,8 +280,8 @@
 	icon_state = "ointment"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
-	amount = 10
-	max_amount = 10
+	amount = 12
+	max_amount = 12
 	self_delay = 40
 	other_delay = 20
 
@@ -273,8 +311,8 @@
 	self_delay = 30
 	other_delay = 10
 	amount = 15
-	heal_burn = 10
 	max_amount = 15
+	heal_burn = 10
 	repeating = TRUE
 	sanitization = 0.75
 	flesh_regeneration = 3
@@ -283,6 +321,9 @@
 
 /obj/item/stack/medical/mesh/one
 	amount = 1
+
+/obj/item/stack/medical/mesh/five
+	amount = 5
 
 /obj/item/stack/medical/mesh/advanced
 	name = "advanced regenerative mesh"
@@ -378,9 +419,9 @@
 			C.emote("scream")
 			for(var/i in C.bodyparts)
 				var/obj/item/bodypart/bone = i
-				var/datum/wound/brute/bone/severe/oof_ouch = new
+				var/datum/wound/blunt/severe/oof_ouch = new
 				oof_ouch.apply_wound(bone)
-				var/datum/wound/brute/bone/critical/oof_OUCH = new
+				var/datum/wound/blunt/critical/oof_OUCH = new
 				oof_OUCH.apply_wound(bone)
 
 			for(var/i in C.bodyparts)
