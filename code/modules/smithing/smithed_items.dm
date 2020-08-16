@@ -118,11 +118,13 @@
 
 /obj/item/smithing/javelinhead
 	name = "smithed javelin head"
-	finalitem = /obj/item/melee/smith/javelin
+	finalitem = /obj/item/melee/smith/twohand/javelin
 
 /obj/item/smithing/javelinhead/startfinish()
-	finalitem = new /obj/item/melee/smith/javelin(src)
-	finalitem.force += quality
+	var/obj/item/melee/smith/twohand/javelin/finalforreal = new /obj/item/melee/smith/twohand/javelin(src)
+	finalforreal.force += quality
+	finalforreal.wield_force = finalforreal.force*finalforreal.wielded_mult
+	finalitem = finalforreal
 	..()
 
 
@@ -182,20 +184,24 @@
 /obj/item/smithing/broadblade
 	name = "smithed broadsword blade"
 	finishingitem = /obj/item/swordhandle
-	finalitem = /obj/item/melee/smith/broadsword
+	finalitem = /obj/item/melee/smith/twohand/broadsword
 
 /obj/item/smithing/broadblade/startfinish()
-	finalitem = new /obj/item/melee/smith/broadsword(src)
-	finalitem.force += quality
+	var/obj/item/melee/smith/twohand/broadsword/finalforreal = new /obj/item/melee/smith/twohand/broadsword(src)
+	finalforreal.force += quality
+	finalforreal.wield_force = finalforreal.force*finalforreal.wielded_mult
+	finalitem = finalforreal
 	..()
 
 /obj/item/smithing/halberdhead
 	name = "smithed halberd head"
-	finalitem = /obj/item/melee/smith/halberd
+	finalitem = /obj/item/melee/smith/twohand/halberd
 
 /obj/item/smithing/halberdhead/startfinish()
-	finalitem = new /obj/item/melee/smith/halberd(src)
-	finalitem.force += quality
+	var/obj/item/melee/smith/twohand/halberd/finalforreal = new /obj/item/melee/smith/twohand/halberd(src)
+	finalforreal.force += quality
+	finalforreal.wield_force = finalforreal.force*finalforreal.wielded_mult
+	finalitem = finalforreal
 	..()
 
 /obj/item/stick

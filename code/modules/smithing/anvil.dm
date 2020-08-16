@@ -28,9 +28,9 @@
 	var/datum/material/workpiece_material
 	var/anvilquality = 0
 	var/qualitymod = 0
-	var/currentquality = 0
-	var/currentsteps = 0
-	var/strengthstepcostmod = 1
+	var/currentquality = 0 //lolman? what the fuck do these vars do?
+	var/currentsteps = 0 //even i don't know
+	var/strengthstepcostmod = 1 //todo: document this shit
 	var/stepsdone = ""
 	var/list/smithrecipes = list(RECIPE_AXE = /obj/item/smithing/axehead,
 	RECIPE_HAMMER = /obj/item/smithing/hammerhead,
@@ -149,7 +149,7 @@
 			workpiece_state = FALSE
 			finisheditem.quality = currentquality
 			finisheditem.set_custom_materials(workpiece_material)
-			currentquality = qualitymod
+			currentquality = 0
 			qualitymod = anvilquality
 			stepsdone = ""
 			currentsteps = 0

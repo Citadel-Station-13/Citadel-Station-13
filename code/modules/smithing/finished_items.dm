@@ -10,7 +10,8 @@
 	var/quality
 	var/overlay_state = "stick"
 	var/mutable_appearance/overlay
-
+	var/wielded_mult = 1
+	var/wield_force = 15
 
 /obj/item/melee/smith/Initialize()
 	..()
@@ -23,16 +24,15 @@
 
 
 /obj/item/melee/smith/twohand
-	var/wielded_mult = 1.75
+	wielded_mult = 1.75
 
 
-/obj/item/melee/smith/twohand/ComponentInitialize()
-	. = ..()
+/obj/item/melee/smith/twohand/Initialize()
+	..()
 	AddComponent(/datum/component/butchering, 100, 70) //decent in a pinch, but pretty bad.
 	AddComponent(/datum/component/jousting)
 	AddElement(/datum/element/sword_point)
-	var/fw = force*wielded_mult
-	AddComponent(/datum/component/two_handed, force_unwielded=10, force_wielded=fw, icon_wielded="[icon_state]_wield")
+	AddComponent(/datum/component/two_handed, force_unwielded=force, force_wielded=wield_force, icon_wielded="[icon_state]_wield")
 
 
 ///////////////////////////
@@ -46,15 +46,15 @@
 
 /obj/item/pickaxe/smithed
 	name = "pickaxe"
-	desc = "A pickaxe that can sound rocks to find mineral deposits and stop gibtonite detonations."
+	desc = "A pickaxe."
 	icon = 'icons/obj/mining.dmi'
 	icon_state = "pickaxe"
 
 /obj/item/shovel/smithed
-	name = "prospector's pickaxe"
-	desc = "A pickaxe that can sound rocks to find mineral deposits and stop gibtonite detonations."
+	name = "shovel"
+	desc = "A shovel."
 	icon = 'icons/obj/mining.dmi'
-	icon_state = "pickaxe"
+	icon_state = "shovel"
 
 
 
