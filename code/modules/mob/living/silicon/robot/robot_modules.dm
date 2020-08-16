@@ -596,7 +596,7 @@
 		"Marina" = image(icon = 'modular_citadel/icons/mob/robots.dmi', icon_state = "marinasec"),
 		"Spider" = image(icon = 'modular_citadel/icons/mob/robots.dmi', icon_state = "spidersec"),
 		"Heavy" = image(icon = 'modular_citadel/icons/mob/robots.dmi', icon_state = "heavysec"),
-		"Drake" = image(icon = 'icons/mob/cyborg/drakemech.dmi', icon_state = "drakesecbox")		
+		"Drake" = image(icon = 'icons/mob/cyborg/drakemech.dmi', icon_state = "drakesecbox") 
 		)
 		var/list/L = list("K9" = "k9", "Vale" = "valesec", "K9 Dark" = "k9dark")
 		for(var/a in L)
@@ -863,7 +863,7 @@
 		"(Janitor) Sleek" = image(icon = 'modular_citadel/icons/mob/robots.dmi', icon_state = "sleekjan"),
 		"(Janitor) Can" = image(icon = 'modular_citadel/icons/mob/robots.dmi', icon_state = "canjan"),
 		"(Janitor) Heavy" = image(icon = 'modular_citadel/icons/mob/robots.dmi', icon_state = "heavyjan"),
-		"Drake" = image(icon = 'icons/mob/cyborg/drakemech.dmi', icon_state = "drakejanitbox")
+		"(Janitor) Drake" = image(icon = 'icons/mob/cyborg/drakemech.dmi', icon_state = "drakejanitbox") 
 		)
 		var/list/L = list("(Service) DarkK9" = "k50", "(Service) Vale" = "valeserv", "(Service) ValeDark" = "valeservdark",
 						"(Janitor) Scrubpuppy" = "scrubpup")
@@ -935,7 +935,7 @@
 			cyborg_icon_override = 'modular_citadel/icons/mob/widerobot.dmi'
 			sleeper_overlay = "jsleeper"
 			dogborg = TRUE
-		if("Drake")
+		if("(Janitor) Drake")
 			cyborg_base_icon = "drakejanit"
 			cyborg_icon_override = 'icons/mob/cyborg/drakemech.dmi'
 			sleeper_overlay = "drakesecsleeper"
