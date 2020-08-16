@@ -89,16 +89,16 @@
 			return
 		var/obj/item/stack/sheet/rglass/RG = C
 		if (RG.get_amount() < 2)
-			to_chat(user, "<span class='warning'>You need two glass sheets to make a glass floor!</span>")
+			to_chat(user, "<span class='warning'>You need two reinforced glass sheets to make a reinforced glass floor!</span>")
 			return
 		else
-			to_chat(user, "<span class='notice'>You begin adding glass to the floor...</span>")
+			to_chat(user, "<span class='notice'>You begin adding reinforced glass to the floor...</span>")
 			if(do_after(user, 10, target = src))
 				if (RG.get_amount() >= 2 && !istype(src, /turf/open/transparent/glass/reinforced))
 					PlaceOnTop(/turf/open/transparent/glass/reinforced, flags = CHANGETURF_INHERIT_AIR)
 					playsound(src, 'sound/items/deconstruct.ogg', 80, 1)
 					RG.use(2)
-					to_chat(user, "<span class='notice'>You add glass to the floor.</span>")
+					to_chat(user, "<span class='notice'>You add reinforced glass to the floor.</span>")
 				return
 	else if(istype(C, /obj/item/stack/tile))
 		if(!broken && !burnt)
