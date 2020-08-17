@@ -1,0 +1,5 @@
+author: "SandPoot"
+delete-after: True
+changes: 
+  - rscadd: "Added a new admin command, \"Fix air\", choose a range and get breathable air!"
+  - bugfix: "Fixed discord button being a forum button that does nothing."
