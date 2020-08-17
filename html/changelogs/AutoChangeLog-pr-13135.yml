@@ -1,0 +1,4 @@
+author: "LetterN"
+delete-after: True
+changes: 
+  - tweak: "tweaks how role assigning works"

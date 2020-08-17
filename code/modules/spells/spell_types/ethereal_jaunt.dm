@@ -17,7 +17,7 @@
 	action_icon_state = "jaunt"
 
 /obj/effect/proc_holder/spell/targeted/ethereal_jaunt/cast(list/targets,mob/user = usr) //magnets, so mostly hardcoded
-	playsound(get_turf(user), 'sound/magic/ethereal_enter.ogg', 50, 1, -1)
+	play_sound("enter",user)
 	for(var/mob/living/target in targets)
 		INVOKE_ASYNC(src, .proc/do_jaunt, target)
 
@@ -42,7 +42,7 @@
 	ADD_TRAIT(target, TRAIT_MOBILITY_NOMOVE, src)
 	target.update_mobility()
 	holder.reappearing = 1
-	playsound(get_turf(target), 'sound/magic/ethereal_exit.ogg', 50, 1, -1)
+	play_sound("exit",target)
 	sleep(25 - jaunt_in_time)
 	new jaunt_in_type(mobloc, holder.dir)
 	target.setDir(holder.dir)
@@ -62,6 +62,13 @@
 	var/datum/effect_system/steam_spread/steam = new /datum/effect_system/steam_spread()
 	steam.set_up(10, 0, mobloc)
 	steam.start()
+
+/obj/effect/proc_holder/spell/targeted/ethereal_jaunt/proc/play_sound(type,mob/living/target)
+	switch(type)
+		if("enter")
+			playsound(get_turf(target), 'sound/magic/ethereal_enter.ogg', 50, TRUE, -1)
+		if("exit")
+			playsound(get_turf(target), 'sound/magic/ethereal_exit.ogg', 50, TRUE, -1)
 
 /obj/effect/dummy/phased_mob/spell_jaunt
 	name = "water"

@@ -269,6 +269,19 @@
 	subcategory = CAT_TOOL
 	category = CAT_MISC
 
+/datum/crafting_recipe/heretic/codex
+	name = "Codex Cicatrix"
+	result = /obj/item/forbidden_book
+	tools = list(/obj/item/pen)
+	reqs = list(/obj/item/paper = 5,
+				/obj/item/organ/eyes = 1,
+				/obj/item/organ/heart = 1,
+				/obj/item/stack/sheet/animalhide/human = 1)
+	time = 150
+	subcategory = CAT_MISCELLANEOUS
+	category = CAT_MISC
+	always_availible = FALSE
+
 ////////////
 //Vehicles//
 ////////////
