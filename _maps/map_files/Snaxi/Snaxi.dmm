@@ -210,7 +210,8 @@
 "aap" = (
 /obj/machinery/quantumpad{
 	map_pad_id = "5";
-	map_pad_link_id = "6"
+	map_pad_link_id = "6";
+	name = "South Sector Pad"
 	},
 /obj/structure/sign/directions/evac{
 	pixel_y = 40
@@ -220,6 +221,13 @@
 	},
 /obj/structure/sign/directions/command{
 	pixel_y = 24
+	},
+/obj/structure/sign/directions/science{
+	dir = 8;
+	icon_state = "pad_s";
+	layer = 4.1;
+	name = "south sector";
+	pixel_y = 13
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/aft)
@@ -519,7 +527,8 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /obj/machinery/quantumpad{
 	map_pad_id = "1";
-	map_pad_link_id = "2"
+	map_pad_link_id = "2";
+	name = "Northwest Sector Pad"
 	},
 /obj/structure/sign/directions/medical{
 	dir = 8;
@@ -530,6 +539,13 @@
 	dir = 8;
 	icon_state = "direction_sci";
 	pixel_y = 28
+	},
+/obj/structure/sign/directions/science{
+	dir = 8;
+	icon_state = "pad_nw";
+	layer = 4.1;
+	name = "northwest sector";
+	pixel_y = 13
 	},
 /turf/open/floor/plasteel,
 /area/quartermaster/miningdock)
@@ -730,12 +746,11 @@
 /obj/machinery/light{
 	dir = 4
 	},
-/obj/structure/reagent_dispensers/watertank,
-/obj/item/radio/intercom{
-	pixel_y = -26
-	},
 /obj/structure/sign/departments/xenobio{
 	pixel_x = 32
+	},
+/obj/structure/closet/bombcloset{
+	anchored = 1
 	},
 /turf/open/floor/plasteel/white,
 /area/science/misc_lab)
@@ -1242,11 +1257,8 @@
 /turf/open/floor/plasteel/dark,
 /area/security/main)
 "acb" = (
-/obj/structure/sign/poster/official/science{
-	pixel_y = -32
-	},
-/turf/open/floor/plasteel/white,
-/area/science/mixing)
+/turf/open/floor/plasteel/dark,
+/area/hydroponics)
 "acc" = (
 /obj/structure/sign/poster/contraband/lusty_xenomorph{
 	pixel_x = -32;
@@ -5209,7 +5221,15 @@
 "buO" = (
 /obj/machinery/quantumpad{
 	map_pad_id = "3";
-	map_pad_link_id = "4"
+	map_pad_link_id = "4";
+	name = "Northeast Sector Pad"
+	},
+/obj/structure/sign/directions/science{
+	dir = 8;
+	icon_state = "pad_ne";
+	layer = 4.1;
+	name = "northeast sector";
+	pixel_y = 13
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/port)
@@ -7186,9 +7206,6 @@
 	dir = 5
 	},
 /obj/machinery/atmospherics/components/unary/portables_connector/visible,
-/obj/machinery/firealarm{
-	pixel_y = 24
-	},
 /turf/open/floor/plasteel,
 /area/science/mixing)
 "bKO" = (
@@ -8958,7 +8975,15 @@
 "cpC" = (
 /obj/machinery/quantumpad{
 	map_pad_id = "2";
-	map_pad_link_id = "1"
+	map_pad_link_id = "1";
+	name = "South Sector Pad"
+	},
+/obj/structure/sign/directions/science{
+	dir = 8;
+	icon_state = "pad_s";
+	layer = 4.1;
+	name = "south sector";
+	pixel_y = 13
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/port)
@@ -9818,7 +9843,15 @@
 "cQa" = (
 /obj/machinery/quantumpad{
 	map_pad_id = "6";
-	map_pad_link_id = "5"
+	map_pad_link_id = "5";
+	name = "Northeast Sector Pad"
+	},
+/obj/structure/sign/directions/science{
+	dir = 8;
+	icon_state = "pad_ne";
+	layer = 4.1;
+	name = "northeast sector";
+	pixel_y = 13
 	},
 /turf/open/floor/plasteel,
 /area/quartermaster/miningdock)
@@ -11054,6 +11087,13 @@
 "dAV" = (
 /turf/closed/wall/r_wall,
 /area/ai_monitored/turret_protected/ai_upload_foyer)
+"dBA" = (
+/obj/machinery/portable_atmospherics/pump,
+/obj/item/radio/intercom{
+	pixel_y = -26
+	},
+/turf/open/floor/plasteel/white,
+/area/science/mixing)
 "dBL" = (
 /obj/structure/closet/secure_closet/medical1,
 /obj/structure/extinguisher_cabinet{
@@ -13766,7 +13806,6 @@
 	dir = 4;
 	pixel_x = -24
 	},
-/obj/structure/closet/crate/bin,
 /turf/open/floor/plasteel/white,
 /area/science/misc_lab)
 "fjS" = (
@@ -15167,7 +15206,15 @@
 "gct" = (
 /obj/machinery/quantumpad{
 	map_pad_id = "4";
-	map_pad_link_id = "3"
+	map_pad_link_id = "3";
+	name = "Northwest Sector Pad"
+	},
+/obj/structure/sign/directions/science{
+	dir = 8;
+	icon_state = "pad_nw";
+	layer = 4.1;
+	name = "northwest sector";
+	pixel_y = 13
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/aft)
@@ -15934,8 +15981,6 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 4
 	},
-/obj/machinery/portable_atmospherics/scrubber,
-/obj/item/storage/firstaid/toxin,
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
@@ -16444,6 +16489,9 @@
 /area/storage/atmos)
 "gPE" = (
 /obj/machinery/portable_atmospherics/pump,
+/obj/machinery/firealarm{
+	pixel_y = 24
+	},
 /turf/open/floor/plasteel/white,
 /area/science/mixing)
 "gPF" = (
@@ -18346,9 +18394,8 @@
 /turf/open/floor/carpet,
 /area/security/detectives_office)
 "hTL" = (
-/obj/effect/spawner/structure/window/plasma/reinforced,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/turf/open/floor/plating,
+/turf/open/floor/plasteel/white,
 /area/science/mixing)
 "hTO" = (
 /obj/structure/cable{
@@ -22646,6 +22693,8 @@
 	c_tag = "Testing Lab East";
 	network = list("ss13","rd")
 	},
+/obj/machinery/portable_atmospherics/scrubber,
+/obj/item/storage/firstaid/toxin,
 /turf/open/floor/plasteel/white,
 /area/science/misc_lab)
 "kxI" = (
@@ -28299,6 +28348,12 @@
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/plasteel,
 /area/maintenance/starboard)
+"odf" = (
+/obj/structure/closet/bombcloset{
+	anchored = 1
+	},
+/turf/open/floor/plasteel/white,
+/area/science/mixing)
 "odg" = (
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple{
 	dir = 4
@@ -34114,7 +34169,6 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
-/obj/structure/reagent_dispensers/fueltank,
 /turf/open/floor/plasteel/white,
 /area/science/misc_lab)
 "rqE" = (
@@ -34787,6 +34841,10 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
+"rQB" = (
+/obj/structure/reagent_dispensers/fueltank,
+/turf/open/floor/plasteel/white,
+/area/science/mixing)
 "rQH" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -37658,7 +37716,6 @@
 /area/icemoon/surface/outdoors)
 "tDO" = (
 /obj/machinery/atmospherics/components/unary/portables_connector/visible,
-/obj/machinery/portable_atmospherics/canister/toxins,
 /obj/machinery/computer/security/telescreen{
 	name = "Test Chamber Monitor";
 	network = list("test");
@@ -45215,14 +45272,6 @@
 /area/medical/medbay/central)
 "ykk" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/machinery/door/firedoor/border_only{
-	dir = 1;
-	name = "north facing firelock"
-	},
-/obj/machinery/door/airlock/research{
-	name = "Toxins Lab";
-	req_access_txt = "7"
-	},
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plasteel/white,
 /area/science/mixing)
@@ -81154,7 +81203,7 @@ bDW
 bEl
 bDE
 bFK
-bJC
+rQB
 prL
 fiN
 hmX
@@ -81411,7 +81460,7 @@ bDW
 bIn
 bQP
 wOK
-bJC
+fjU
 gzZ
 gSu
 ipY
@@ -82182,7 +82231,7 @@ bDW
 mOv
 jOB
 lYy
-bJC
+fjU
 ihE
 fJO
 eex
@@ -82439,7 +82488,7 @@ bDW
 gpp
 wbT
 nHi
-bJC
+fjU
 rDA
 fjU
 dvO
@@ -82696,7 +82745,7 @@ bEa
 kxj
 aaw
 rqx
-qJV
+fjU
 bKL
 fJO
 jKT
@@ -82953,10 +83002,10 @@ bEa
 pHl
 aaw
 abh
-qJV
+odf
 fjU
 fjU
-acb
+fjU
 qJV
 fuG
 qJV
@@ -83213,7 +83262,7 @@ cBt
 tRe
 gPE
 syy
-gPE
+dBA
 qJV
 goM
 gxF
@@ -86976,7 +87025,7 @@ now
 mKv
 sAh
 sAh
-sAh
+acb
 aar
 uEz
 uEz
@@ -87233,7 +87282,7 @@ qss
 mKv
 sAh
 sAh
-sAh
+acb
 urI
 qkO
 uEz
@@ -87747,7 +87796,7 @@ qss
 sYv
 sAh
 sAh
-sAh
+acb
 urI
 uoV
 uEz
@@ -88004,7 +88053,7 @@ qss
 sYv
 sAh
 sAh
-sAh
+acb
 urI
 uoV
 uEz
