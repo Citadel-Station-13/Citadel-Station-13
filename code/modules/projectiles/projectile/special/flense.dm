@@ -15,8 +15,8 @@
 /obj/structure/flensingnet
 	name = "flensing net"
 	desc = "A net made of concertina wire."
-	icon = 'icons/obj/iv_drip.dmi'
-	icon_state = "iv_drip"
+	icon = 'icons/effects/effects.dmi'
+	icon_state = "net"
 	can_buckle = 1
 	max_integrity = 40
 	density = FALSE
@@ -107,7 +107,7 @@
 			H.DefaultCombatKnockdown(5)
 			if(H.bruteloss > 300)
 				to_chat(H, "<span class='userdanger'>Your skin is flensed by the [src]!</span>")
-				H.become_husk(TRAIT_GENERIC)
+				H.become_husk("burn")//rezadone only heals burn husks
 			else
 				to_chat(H, "<span class='userdanger'>The [src] rends your flesh!</span>")
 				H.emote("scream")
