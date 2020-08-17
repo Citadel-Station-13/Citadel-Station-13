@@ -55,6 +55,8 @@ GLOBAL_LIST_INIT(minimum_snow_under_spawns, list(
 					continue
 				if(!istype(TT, /turf/open/floor/plating/asteroid))
 					continue
+				if(/turf/open/lava in orange(9, TT))
+					continue
 				valid_mining_turfs.Add(TT)
 		for(var/z_level in SSmapping.levels_by_trait(ZTRAIT_ICE_RUINS_UNDERGROUND))
 			for(var/turf/TT in Z_TURFS(z_level))
@@ -64,6 +66,8 @@ GLOBAL_LIST_INIT(minimum_snow_under_spawns, list(
 				if(!A.mob_spawn_allowed)
 					continue
 				if(!istype(TT, /turf/open/floor/plating/asteroid))
+					continue
+				if(/turf/open/lava in orange(9, TT))
 					continue
 				valid_mining_turfs_2.Add(TT)	
 	else
@@ -76,6 +80,8 @@ GLOBAL_LIST_INIT(minimum_snow_under_spawns, list(
 					continue
 				if(!istype(TT, /turf/open/floor/plating/asteroid))
 					continue
+				if(/turf/open/lava in orange(9, TT))
+					continue
 				valid_mining_turfs.Add(TT)
 	if(!valid_mining_turfs)
 		flags = SS_NO_FIRE
@@ -87,18 +93,18 @@ GLOBAL_LIST_INIT(minimum_snow_under_spawns, list(
 	if(active_spawns.len)
 		var/turf/RT = pick_n_take(valid_mining_turfs) //Pick a random mining Z-level turf
 		var/MS_tospawn = pick_n_take(active_spawns)
-		for(var/mob/living/simple_animal/hostile/H in urange(36,RT)) //prevents mob clumps
-			if((ispath(MS_tospawn, /mob/living/simple_animal/hostile/megafauna) || ismegafauna(H)) && get_dist(src, H) <= 40)
+		for(var/mob/living/simple_animal/hostile/H in urange(70,RT)) //prevents mob clumps
+			if((ispath(MS_tospawn, /mob/living/simple_animal/hostile/megafauna) || ismegafauna(H)) && get_dist(src, H) <= 70)
 				active_spawns.Add(MS_tospawn)
 				return //let's try not to dump megas too close to each other?	
-			if((ispath(MS_tospawn, /obj/structure/spawner) || istype(H, /obj/structure/spawner)) && get_dist(src, H) <= 24)
+			if((ispath(MS_tospawn, /obj/structure/spawner) || istype(H, /obj/structure/spawner)) && get_dist(src, H) <= 35)
 				active_spawns.Add(MS_tospawn)
 				return //let's at least /try/ to space these out?
-			for(var/obj/structure/spawner/LT in urange(36,RT)) //prevents tendril/mega clumps
-				if((ispath(MS_tospawn, /mob/living/simple_animal/hostile/megafauna)) && get_dist(src, LT) <= 40)
+			for(var/obj/structure/spawner/LT in urange(70,RT)) //prevents tendril/mega clumps
+				if((ispath(MS_tospawn, /mob/living/simple_animal/hostile/megafauna)) && get_dist(src, LT) <= 70)
 					active_spawns.Add(MS_tospawn)
 					return //let's try not to dump megas too close to each other?	
-				if((ispath(MS_tospawn, /obj/structure/spawner)) && get_dist(src, LT) <= 24)
+				if((ispath(MS_tospawn, /obj/structure/spawner)) && get_dist(src, LT) <= 35)
 					active_spawns.Add(MS_tospawn)
 					return //let's at least /try/ to space these out?
 			// man the overhead on this is gonna SUCK
@@ -106,18 +112,18 @@ GLOBAL_LIST_INIT(minimum_snow_under_spawns, list(
 	if(active_spawns_2.len)
 		var/turf/RT = pick_n_take(valid_mining_turfs_2) //Pick a random mining Z-level turf
 		var/MS2_tospawn = pick_n_take(active_spawns_2)
-		for(var/mob/living/simple_animal/hostile/H in urange(36,RT)) //prevents mob clumps
-			if((ispath(MS2_tospawn, /mob/living/simple_animal/hostile/megafauna) || ismegafauna(H)) && get_dist(src, H) <= 40)
+		for(var/mob/living/simple_animal/hostile/H in urange(70,RT)) //prevents mob clumps
+			if((ispath(MS2_tospawn, /mob/living/simple_animal/hostile/megafauna) || ismegafauna(H)) && get_dist(src, H) <= 70)
 				active_spawns_2.Add(MS2_tospawn)
 				return //let's try not to dump megas too close to each other?	
-			if((ispath(MS2_tospawn, /obj/structure/spawner) || istype(H, /obj/structure/spawner)) && get_dist(src, H) <= 24)
+			if((ispath(MS2_tospawn, /obj/structure/spawner) || istype(H, /obj/structure/spawner)) && get_dist(src, H) <= 35)
 				active_spawns_2.Add(MS2_tospawn)
 				return //let's at least /try/ to space these out?
-			for(var/obj/structure/spawner/LT in urange(36,RT)) //prevents tendril/mega clumps
-				if((ispath(MS2_tospawn, /mob/living/simple_animal/hostile/megafauna)) && get_dist(src, LT) <= 40)
+			for(var/obj/structure/spawner/LT in urange(70,RT)) //prevents tendril/mega clumps
+				if((ispath(MS2_tospawn, /mob/living/simple_animal/hostile/megafauna)) && get_dist(src, LT) <= 70)
 					active_spawns_2.Add(MS2_tospawn)
 					return //let's try not to dump megas too close to each other?	
-				if((ispath(MS2_tospawn, /obj/structure/spawner)) && get_dist(src, LT) <= 24)
+				if((ispath(MS2_tospawn, /obj/structure/spawner)) && get_dist(src, LT) <= 35)
 					active_spawns.Add(MS2_tospawn)
 					return //let's at least /try/ to space these out?
 			// man the overhead on this is gonna SUCK
