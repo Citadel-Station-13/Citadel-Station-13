@@ -55,7 +55,7 @@ GLOBAL_LIST_INIT(minimum_snow_under_spawns, list(
 					continue
 				if(!istype(TT, /turf/open/floor/plating/asteroid))
 					continue
-				if(/turf/open/lava in orange(9, TT))
+				if(typesof(/turf/open/lava) in orange(9, TT))
 					continue
 				valid_mining_turfs.Add(TT)
 		for(var/z_level in SSmapping.levels_by_trait(ZTRAIT_ICE_RUINS_UNDERGROUND))
@@ -67,7 +67,7 @@ GLOBAL_LIST_INIT(minimum_snow_under_spawns, list(
 					continue
 				if(!istype(TT, /turf/open/floor/plating/asteroid))
 					continue
-				if(/turf/open/lava in orange(9, TT))
+				if(typesof(/turf/open/lava) in orange(9, TT))
 					continue
 				valid_mining_turfs_2.Add(TT)	
 	else
@@ -80,7 +80,7 @@ GLOBAL_LIST_INIT(minimum_snow_under_spawns, list(
 					continue
 				if(!istype(TT, /turf/open/floor/plating/asteroid))
 					continue
-				if(/turf/open/lava in orange(9, TT))
+				if(typesof(/turf/open/lava) in orange(9, TT))
 					continue
 				valid_mining_turfs.Add(TT)
 	if(!valid_mining_turfs)
