@@ -5169,7 +5169,7 @@
 /turf/open/floor/plasteel/dark,
 /area/hallway/secondary/exit/departure_lounge)
 "bum" = (
-/turf/open/openspace/icemoon,
+/turf/open/transparent/openspace/icemoon,
 /area/icemoon/surface/outdoors)
 "buF" = (
 /obj/machinery/light,
@@ -12388,7 +12388,7 @@
 /turf/open/floor/plasteel,
 /area/hallway/primary/port)
 "esY" = (
-/turf/open/openspace/icemoon,
+/turf/open/transparent/openspace/icemoon,
 /area/engine/atmos)
 "ets" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
@@ -34891,7 +34891,7 @@
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "rUd" = (
-/turf/open/openspace/icemoon,
+/turf/open/transparent/openspace/icemoon,
 /area/science/mixing)
 "rUl" = (
 /obj/structure/cable{
@@ -36338,7 +36338,7 @@
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
 "sTq" = (
-/turf/open/openspace/icemoon,
+/turf/open/transparent/openspace/icemoon,
 /area/engine/atmospherics_engine)
 "sTz" = (
 /obj/effect/turf_decal/bot_white,
