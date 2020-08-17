@@ -10,7 +10,6 @@
 	selection_color = "#dddddd"
 
 	outfit = /datum/outfit/job/mime
-	plasma_outfit = /datum/outfit/plasmaman/mime
 
 	access = list(ACCESS_THEATRE)
 	minimal_access = list(ACCESS_THEATRE)

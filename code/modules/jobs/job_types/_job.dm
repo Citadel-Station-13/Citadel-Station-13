@@ -46,7 +46,6 @@
 	var/minimal_player_age = 0
 
 	var/outfit = null
-	var/plasma_outfit = null //the outfit given to plasmamen
 
 	var/exp_requirements = 0
 
