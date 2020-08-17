@@ -1,4 +1,0 @@
-author: "SandPoot"
-delete-after: True
-changes: 
-  - rscadd: "Added wires system to fire alarms (use any intent other than help to advance on wirecutters step)."
