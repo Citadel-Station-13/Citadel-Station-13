@@ -14,7 +14,8 @@
 		var/obj/item/bodypart/BP = X
 		temp_bleed += BP.get_bleed_rate()
 		BP.generic_bleedstacks = max(0, BP.generic_bleedstacks - 1)
-	bleed(temp_bleed)
+	if(temp_bleed)
+		bleed(temp_bleed)
 
 	//Blood regeneration if there is some space
 	if(blood_volume < BLOOD_VOLUME_NORMAL)
@@ -61,10 +62,6 @@
 		//Effects of bloodloss
 		var/word = pick("dizzy","woozy","faint")
 		switch(blood_volume)
-			if(BLOOD_VOLUME_EXCESS to BLOOD_VOLUME_MAX_LETHAL)
-				if(prob(15))
-					to_chat(src, "<span class='userdanger'>Blood starts to tear your skin apart. You're going to burst!</span>")
-					gib()
 			if(BLOOD_VOLUME_MAXIMUM to BLOOD_VOLUME_EXCESS)
 				if(prob(10))
 					to_chat(src, "<span class='warning'>You feel terribly bloated.</span>")

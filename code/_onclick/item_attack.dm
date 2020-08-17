@@ -67,9 +67,9 @@
 
 /**
   * Called when someone uses us to attack a mob in melee combat.
-  * 
+  *
   * This proc respects CheckAttackCooldown() default clickdelay handling.
-  * 
+  *
   * @params
   * * mob/living/M - target
   * * mob/living/user - attacker
@@ -201,9 +201,9 @@
 		if(SEND_SIGNAL(user, COMSIG_COMBAT_MODE_CHECK, COMBAT_MODE_INACTIVE))
 			bad_trait = SKILL_COMBAT_MODE //blacklist combat skills.
 			if(SEND_SIGNAL(src, COMSIG_COMBAT_MODE_CHECK, COMBAT_MODE_ACTIVE))
-				. *= 0.5
+				. *= 0.8
 		else if(SEND_SIGNAL(src, COMSIG_COMBAT_MODE_CHECK, COMBAT_MODE_INACTIVE))
-			. *= 1.5
+			. *= 1.2
 
 	if(!user.mind || !I.used_skills)
 		return
@@ -220,7 +220,7 @@
   * Also called when clicking on something with an item without being in melee range
   *
   * WARNING: This does not automatically check clickdelay if not in a melee attack! Be sure to account for this!
-  * 
+  *
   * @params
   * * target - The thing we clicked
   * * user - mob of person clicking
@@ -238,25 +238,24 @@
 		else
 			return clamp(w_class * 6, 10, 100) // Multiply the item's weight class by 6, then clamp the value between 10 and 100
 
-/mob/living/proc/send_item_attack_message(obj/item/I, mob/living/user, hit_area, current_force)
+/mob/living/proc/send_item_attack_message(obj/item/I, mob/living/user, hit_area, obj/item/bodypart/hit_bodypart)
 	var/message_verb = "attacked"
-	if(I.attack_verb && I.attack_verb.len)
+	if(length(I.attack_verb))
 		message_verb = "[pick(I.attack_verb)]"
-	if(current_force < I.force * FEEBLE_ATTACK_MSG_THRESHOLD)
-		message_verb = "[pick("feebly", "limply", "saplessly")] [message_verb]"
 	else if(!I.force)
 		return
 	var/message_hit_area = ""
 	if(hit_area)
 		message_hit_area = " in the [hit_area]"
-	var/attack_message = "[src] has been [message_verb][message_hit_area] with [I]."
+	var/attack_message = "[src] is [message_verb][message_hit_area] with [I]!"
+	var/attack_message_local = "You're [message_verb][message_hit_area] with [I]!"
 	if(user in viewers(src, null))
-		attack_message = "[user] has [message_verb] [src][message_hit_area] with [I]!"
+		attack_message = "[user] [message_verb] [src][message_hit_area] with [I]!"
+		attack_message_local = "[user] [message_verb] you[message_hit_area] with [I]!"
+	if(user == src)
+		attack_message_local = "You [message_verb] yourself[message_hit_area] with [I]"
 	visible_message("<span class='danger'>[attack_message]</span>",\
-		"<span class='userdanger'>[attack_message]</span>", null, COMBAT_MESSAGE_RANGE)
-	if(hit_area == BODY_ZONE_HEAD)
-		if(prob(2))
-			playsound(src, 'sound/weapons/dink.ogg', 30, 1)
+		"<span class='userdanger'>[attack_message_local]</span>", null, COMBAT_MESSAGE_RANGE)
 	return 1
 
 /// How much stamina this takes to swing this is not for realism purposes hecc off.

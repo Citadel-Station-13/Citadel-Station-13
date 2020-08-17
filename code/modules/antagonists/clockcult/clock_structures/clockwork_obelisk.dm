@@ -41,6 +41,11 @@
 		affected += try_use_power(MIN_CLOCKCULT_POWER*4)
 	return affected
 
+/obj/structure/destructible/clockwork/powered/clockwork_obelisk/Destroy()
+	for(var/obj/effect/clockwork/spatial_gateway/SG in loc)
+		SG.ex_act(EXPLODE_DEVASTATE)
+	return ..()
+
 /obj/structure/destructible/clockwork/powered/clockwork_obelisk/on_attack_hand(mob/living/user, act_intent = user.a_intent, unarmed_attack_flags)
 	. = ..()
 	if(.)
@@ -48,7 +53,7 @@
 	if(!is_servant_of_ratvar(user) || !can_access_clockwork_power(src, hierophant_cost) || !anchored)
 		to_chat(user, "<span class='warning'>You place your hand on [src], but it doesn't react.</span>")
 		return
-	var/choice = alert(user,"You place your hand on [src]...",,"Hierophant Broadcast","Spatial Gateway","Cancel")
+	var/choice = alert(user,"You place your hand on [src]...",,"Hierophant Broadcast","Spatial Gateway","Cancel") //Will create a stable gateway instead if between two obelisks one of which is onstation and the other on reebe
 	switch(choice)
 		if("Hierophant Broadcast")
 			if(active)
@@ -96,7 +101,7 @@
 	if(!anchored)
 		return
 	var/obj/effect/clockwork/spatial_gateway/SG = locate(/obj/effect/clockwork/spatial_gateway) in loc
-	if(SG && SG.timerid) //it's a valid gateway, we're active
+	if(SG && (SG.timerid || SG.is_stable)) //it's a valid gateway, we're active
 		icon_state = active_icon
 		density = FALSE
 		active = TRUE

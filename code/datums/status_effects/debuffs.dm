@@ -97,6 +97,21 @@
 		duration = set_duration
 	return ..()
 
+/datum/status_effect/off_balance
+	id = "offbalance"
+	alert_type = null
+
+/datum/status_effect/off_balance/on_creation(mob/living/new_owner, set_duration)
+	if(isnum(set_duration))
+		duration = set_duration
+	return ..()
+
+/datum/status_effect/off_balance/on_remove()
+	var/active_item = owner.get_active_held_item()
+	if(is_type_in_typecache(active_item, GLOB.shove_disarming_types))
+		owner.visible_message("<span class='warning'>[owner.name] regains their grip on \the [active_item]!</span>", "<span class='warning'>You regain your grip on \the [active_item]</span>", null, COMBAT_MESSAGE_RANGE)
+	return ..()
+
 /obj/screen/alert/status_effect/asleep
 	name = "Asleep"
 	desc = "You've fallen asleep. Wait a bit and you should wake up. Unless you don't, considering how helpless you are."
@@ -388,6 +403,197 @@
 	owner.underlays -= marked_underlay //if this is being called, we should have an owner at this point.
 	..()
 
+/datum/status_effect/eldritch
+	duration = 15 SECONDS
+	status_type = STATUS_EFFECT_REPLACE
+	alert_type = null
+	on_remove_on_mob_delete = TRUE
+	///underlay used to indicate that someone is marked
+	var/mutable_appearance/marked_underlay
+	///path for the underlay
+	var/effect_sprite = ""
+
+/datum/status_effect/eldritch/on_creation(mob/living/new_owner, ...)
+	marked_underlay = mutable_appearance('icons/effects/effects.dmi', effect_sprite,BELOW_MOB_LAYER)
+	return ..()
+
+/datum/status_effect/eldritch/on_apply()
+	. = ..()
+	if(owner.mob_size >= MOB_SIZE_HUMAN)
+		RegisterSignal(owner,COMSIG_ATOM_UPDATE_OVERLAYS,.proc/update_owner_underlay)
+		owner.update_icon()
+		return TRUE
+	return FALSE
+
+/datum/status_effect/eldritch/on_remove()
+	UnregisterSignal(owner,COMSIG_ATOM_UPDATE_OVERLAYS)
+	owner.update_icon()
+	return ..()
+
+/datum/status_effect/eldritch/proc/update_owner_underlay(atom/source, list/overlays)
+	overlays += marked_underlay
+
+/datum/status_effect/eldritch/Destroy()
+	QDEL_NULL(marked_underlay)
+	return ..()
+
+/**
+  * What happens when this mark gets popped
+  *
+  * Adds actual functionality to each mark
+  */
+/datum/status_effect/eldritch/proc/on_effect()
+	playsound(owner, 'sound/magic/repulse.ogg', 75, TRUE)
+	qdel(src) //what happens when this is procced.
+
+//Each mark has diffrent effects when it is destroyed that combine with the mansus grasp effect.
+/datum/status_effect/eldritch/flesh
+	id = "flesh_mark"
+	effect_sprite = "emark1"
+
+/datum/status_effect/eldritch/flesh/on_effect()
+
+	if(ishuman(owner))
+		var/mob/living/carbon/human/H = owner
+		var/obj/item/bodypart/bodypart = pick(H.bodyparts)
+		var/datum/wound/slash/severe/crit_wound = new
+		crit_wound.apply_wound(bodypart)
+	return ..()
+
+/datum/status_effect/eldritch/ash
+	id = "ash_mark"
+	effect_sprite = "emark2"
+	///Dictates how much damage and stamina loss this mark will cause.
+	var/repetitions = 1
+
+/datum/status_effect/eldritch/ash/on_creation(mob/living/new_owner, _repetition = 5)
+	. = ..()
+	repetitions = min(1,_repetition)
+
+/datum/status_effect/eldritch/ash/on_effect()
+	if(iscarbon(owner))
+		var/mob/living/carbon/carbon_owner = owner
+		carbon_owner.adjustStaminaLoss(10 * repetitions)
+		carbon_owner.adjustFireLoss(5 * repetitions)
+		for(var/mob/living/carbon/victim in range(1,carbon_owner))
+			if(IS_HERETIC(victim) || victim == carbon_owner)
+				continue
+			victim.apply_status_effect(type,repetitions-1)
+			break
+	return ..()
+
+/datum/status_effect/eldritch/rust
+	id = "rust_mark"
+	effect_sprite = "emark3"
+
+/datum/status_effect/eldritch/rust/on_effect()
+	if(!iscarbon(owner))
+		return
+	var/mob/living/carbon/carbon_owner = owner
+	for(var/obj/item/I in carbon_owner.get_all_gear())	//Affects roughly 75% of items
+		if(!QDELETED(I) && prob(75)) //Just in case
+			I.take_damage(100)
+	return ..()
+
+/datum/status_effect/corrosion_curse
+	id = "corrosion_curse"
+	status_type = STATUS_EFFECT_REPLACE
+	alert_type = null
+	tick_interval = 1 SECONDS
+
+/datum/status_effect/corrosion_curse/on_creation(mob/living/new_owner, ...)
+	. = ..()
+	to_chat(owner, "<span class='danger'>Your feel your body starting to break apart...</span>")
+
+/datum/status_effect/corrosion_curse/tick()
+	. = ..()
+	if(!ishuman(owner))
+		return
+	var/mob/living/carbon/human/H = owner
+	var/chance = rand(0,100)
+	switch(chance)
+		if(0 to 19)
+			H.vomit()
+		if(20 to 29)
+			H.Dizzy(10)
+		if(30 to 39)
+			H.adjustOrganLoss(ORGAN_SLOT_LIVER,5)
+		if(40 to 49)
+			H.adjustOrganLoss(ORGAN_SLOT_HEART,5)
+		if(50 to 59)
+			H.adjustOrganLoss(ORGAN_SLOT_STOMACH,5)
+		if(60 to 69)
+			H.adjustOrganLoss(ORGAN_SLOT_EYES,10)
+		if(70 to 79)
+			H.adjustOrganLoss(ORGAN_SLOT_EARS,10)
+		if(80 to 89)
+			H.adjustOrganLoss(ORGAN_SLOT_LUNGS,10)
+		if(90 to 99)
+			H.adjustOrganLoss(ORGAN_SLOT_TONGUE,10)
+		if(100)
+			H.adjustOrganLoss(ORGAN_SLOT_BRAIN,20)
+
+/datum/status_effect/amok
+	id = "amok"
+	status_type = STATUS_EFFECT_REPLACE
+	alert_type = null
+	duration = 10 SECONDS
+	tick_interval = 1 SECONDS
+
+/datum/status_effect/amok/on_apply(mob/living/afflicted)
+	. = ..()
+	to_chat(owner, "<span class='boldwarning'>Your feel filled with a rage that is not your own!</span>")
+
+/datum/status_effect/amok/tick()
+	. = ..()
+	var/prev_intent = owner.a_intent
+	owner.a_intent = INTENT_HARM
+
+	var/list/mob/living/targets = list()
+	for(var/mob/living/potential_target in oview(owner, 1))
+		if(IS_HERETIC(potential_target) || potential_target.mind?.has_antag_datum(/datum/antagonist/heretic_monster))
+			continue
+		targets += potential_target
+	if(LAZYLEN(targets))
+		owner.log_message(" attacked someone due to the amok debuff.", LOG_ATTACK) //the following attack will log itself
+		owner.ClickOn(pick(targets))
+	owner.a_intent = prev_intent
+
+/datum/status_effect/cloudstruck
+	id = "cloudstruck"
+	status_type = STATUS_EFFECT_REPLACE
+	duration = 3 SECONDS
+	on_remove_on_mob_delete = TRUE
+	///This overlay is applied to the owner for the duration of the effect.
+	var/mutable_appearance/mob_overlay
+
+/datum/status_effect/cloudstruck/on_creation(mob/living/new_owner, set_duration)
+	if(isnum(set_duration))
+		duration = set_duration
+	. = ..()
+
+/datum/status_effect/cloudstruck/on_apply()
+	. = ..()
+	mob_overlay = mutable_appearance('icons/effects/eldritch.dmi', "cloud_swirl", ABOVE_MOB_LAYER)
+	owner.overlays += mob_overlay
+	owner.update_icon()
+	ADD_TRAIT(owner, TRAIT_BLIND, "cloudstruck")
+	return TRUE
+
+/datum/status_effect/cloudstruck/on_remove()
+	. = ..()
+	if(QDELETED(owner))
+		return
+	REMOVE_TRAIT(owner, TRAIT_BLIND, "cloudstruck")
+	if(owner)
+		owner.overlays -= mob_overlay
+		owner.update_icon()
+
+/datum/status_effect/cloudstruck/Destroy()
+	. = ..()
+	QDEL_NULL(mob_overlay)
+
+
 /datum/status_effect/stacking/saw_bleed
 	id = "saw_bleed"
 	tick_interval = 6
@@ -433,7 +639,7 @@
 	var/still_bleeding = FALSE
 	for(var/thing in throat.wounds)
 		var/datum/wound/W = thing
-		if(W.wound_type == WOUND_LIST_CUT && W.severity > WOUND_SEVERITY_MODERATE)
+		if(W.wound_type == WOUND_SLASH && W.severity > WOUND_SEVERITY_MODERATE)
 			still_bleeding = TRUE
 			break
 	if(!still_bleeding)
@@ -547,8 +753,8 @@
 	owner.DefaultCombatKnockdown(15, TRUE, FALSE, 15)
 	if(iscarbon(owner))
 		var/mob/living/carbon/C = owner
-		C.silent = max(2, C.silent)
-		C.stuttering = max(5, C.stuttering)
+		C.silent = max(5, C.silent) //Increased, now lasts until five seconds after it ends, instead of 2
+		C.stuttering = max(10, C.stuttering) //Increased, now lasts for five seconds after the mute ends, instead of 3
 	if(!old_health)
 		old_health = owner.health
 	if(!old_oxyloss)

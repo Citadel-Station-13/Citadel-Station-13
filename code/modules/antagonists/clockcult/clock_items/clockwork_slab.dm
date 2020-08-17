@@ -4,7 +4,7 @@
 	clockwork_desc = "A link between you and the Celestial Derelict. It contains information, recites scripture, and is your most vital tool as a Servant.\
 	It can be used to link traps and triggers by attacking them with the slab. Keep in mind that traps linked with one another will activate in tandem!"
 
-	icon_state = "dread_ipad"
+	icon_state = "clockwork_slab"
 	lefthand_file = 'icons/mob/inhands/antag/clockwork_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/antag/clockwork_righthand.dmi'
 	var/inhand_overlay //If applicable, this overlay will be applied to the slab's inhand
@@ -21,12 +21,9 @@
 	var/recollecting = TRUE //if we're looking at fancy recollection. tutorial enabled by default
 	var/recollection_category = "Default"
 
-	var/list/quickbound = list(/datum/clockwork_scripture/abscond, \
+	var/list/quickbound = list(/datum/clockwork_scripture/spatial_gateway, \
 	/datum/clockwork_scripture/ranged_ability/kindle, /datum/clockwork_scripture/ranged_ability/hateful_manacles) //quickbound scripture, accessed by index
 	var/maximum_quickbound = 5 //how many quickbound scriptures we can have
-
-	var/ui_x = 800
-	var/ui_z = 420
 
 	var/obj/structure/destructible/clockwork/trap/linking //If we're linking traps together, which ones we're doing
 
@@ -38,6 +35,11 @@
 /obj/item/clockwork/slab/debug
 	speed_multiplier = 0
 	no_cost = TRUE
+
+/obj/item/clockwork/slab/debug/on_attack_hand(mob/living/user, act_intent = user.a_intent, unarmed_attack_flags)
+	if(!is_servant_of_ratvar(user))
+		add_servant_of_ratvar(user)
+	return ..()
 
 /obj/item/clockwork/slab/traitor
 	var/spent = FALSE
@@ -57,11 +59,6 @@
 			to_chat(user, "<span class='userdanger'>[src] falls dark. It appears you weren't worthy.</span>")
 	return ..()
 
-/obj/item/clockwork/slab/debug/on_attack_hand(mob/living/user, act_intent = user.a_intent, unarmed_attack_flags)
-	if(!is_servant_of_ratvar(user))
-		add_servant_of_ratvar(user)
-	return ..()
-
 /obj/item/clockwork/slab/cyborg //three scriptures, plus a spear and fabricator
 	clockwork_desc = "A divine link to the Celestial Derelict, allowing for limited recital of scripture."
 	quickbound = list(/datum/clockwork_scripture/ranged_ability/judicial_marker, /datum/clockwork_scripture/ranged_ability/linked_vanguard, \
@@ -69,29 +66,32 @@
 	maximum_quickbound = 6 //we usually have one or two unique scriptures, so if ratvar is up let us bind one more
 	actions_types = list()
 
-/obj/item/clockwork/slab/cyborg/engineer //three scriptures, plus a fabricator
-	quickbound = list(/datum/clockwork_scripture/abscond, /datum/clockwork_scripture/create_object/replicant, /datum/clockwork_scripture/create_object/sigil_of_transmission,  /datum/clockwork_scripture/create_object/stargazer)
+/obj/item/clockwork/slab/cyborg/engineer //six scriptures, plus a fabricator. Might revert this if its too OP, I just thought that engineering borgs should get the all the structures
+	quickbound = list(/datum/clockwork_scripture/spatial_gateway, /datum/clockwork_scripture/create_object/replicant, /datum/clockwork_scripture/create_object/sigil_of_transmission,  /datum/clockwork_scripture/create_object/stargazer, \
+	/datum/clockwork_scripture/create_object/ocular_warden, /datum/clockwork_scripture/create_object/clockwork_obelisk, /datum/clockwork_scripture/create_object/mania_motor)
 
-/obj/item/clockwork/slab/cyborg/medical //five scriptures, plus a spear
-	quickbound = list(/datum/clockwork_scripture/abscond, /datum/clockwork_scripture/ranged_ability/linked_vanguard, /datum/clockwork_scripture/ranged_ability/sentinels_compromise, \
-	/datum/clockwork_scripture/create_object/vitality_matrix)
+/obj/item/clockwork/slab/cyborg/medical //six scriptures, plus a spear
+	quickbound = list(/datum/clockwork_scripture/spatial_gateway, /datum/clockwork_scripture/ranged_ability/linked_vanguard, /datum/clockwork_scripture/ranged_ability/sentinels_compromise, \
+	/datum/clockwork_scripture/create_object/vitality_matrix, /datum/clockwork_scripture/channeled/mending_mantra)
 
-/obj/item/clockwork/slab/cyborg/security //twoscriptures, plus a spear
-	quickbound = list(/datum/clockwork_scripture/abscond, /datum/clockwork_scripture/ranged_ability/hateful_manacles, /datum/clockwork_scripture/ranged_ability/judicial_marker)
+/obj/item/clockwork/slab/cyborg/security //four scriptures, plus a spear
+	quickbound = list(/datum/clockwork_scripture/spatial_gateway, /datum/clockwork_scripture/channeled/volt_blaster, /datum/clockwork_scripture/ranged_ability/hateful_manacles, \
+	/datum/clockwork_scripture/ranged_ability/judicial_marker, /datum/clockwork_scripture/channeled/belligerent)
 
-/obj/item/clockwork/slab/cyborg/peacekeeper //two scriptures, plus a spear
-	quickbound = list(/datum/clockwork_scripture/abscond, /datum/clockwork_scripture/ranged_ability/hateful_manacles, /datum/clockwork_scripture/ranged_ability/judicial_marker)
-
+/obj/item/clockwork/slab/cyborg/peacekeeper //four scriptures, plus a spear
+	quickbound = list(/datum/clockwork_scripture/spatial_gateway, /datum/clockwork_scripture/channeled/volt_blaster, /datum/clockwork_scripture/ranged_ability/hateful_manacles, \
+	/datum/clockwork_scripture/ranged_ability/judicial_marker, /datum/clockwork_scripture/channeled/belligerent)
+/*//this module was commented out so why wasn't this?
 /obj/item/clockwork/slab/cyborg/janitor //six scriptures, plus a fabricator
-	quickbound = list(/datum/clockwork_scripture/abscond, /datum/clockwork_scripture/create_object/replicant, /datum/clockwork_scripture/create_object/sigil_of_transgression, \
+	quickbound = list(/datum/clockwork_scripture/spatial_gateway, /datum/clockwork_scripture/create_object/replicant, /datum/clockwork_scripture/create_object/sigil_of_transgression, \
 	/datum/clockwork_scripture/create_object/stargazer, /datum/clockwork_scripture/create_object/ocular_warden, /datum/clockwork_scripture/create_object/mania_motor)
-
+*/
 /obj/item/clockwork/slab/cyborg/service //six scriptures, plus xray vision
-	quickbound = list(/datum/clockwork_scripture/abscond, /datum/clockwork_scripture/create_object/replicant,/datum/clockwork_scripture/create_object/stargazer, \
+	quickbound = list(/datum/clockwork_scripture/spatial_gateway, /datum/clockwork_scripture/create_object/replicant,/datum/clockwork_scripture/create_object/stargazer, \
 	/datum/clockwork_scripture/spatial_gateway, /datum/clockwork_scripture/create_object/clockwork_obelisk)
 
-/obj/item/clockwork/slab/cyborg/miner //two scriptures, plus a spear and xray vision
-	quickbound = list(/datum/clockwork_scripture/abscond, /datum/clockwork_scripture/ranged_ability/linked_vanguard, /datum/clockwork_scripture/spatial_gateway)
+/obj/item/clockwork/slab/cyborg/miner //three scriptures, plus a spear and xray vision
+	quickbound = list(/datum/clockwork_scripture/spatial_gateway, /datum/clockwork_scripture/ranged_ability/linked_vanguard, /datum/clockwork_scripture/channeled/belligerent, /datum/clockwork_scripture/channeled/volt_blaster)
 
 /obj/item/clockwork/slab/cyborg/access_display(mob/living/user)
 	if(!GLOB.ratvar_awakens)
@@ -142,14 +142,15 @@
 
 /obj/item/clockwork/slab/examine(mob/user)
 	. = ..()
-	if(is_servant_of_ratvar(user) || isobserver(user))
-		if(LAZYLEN(quickbound))
-			for(var/i in 1 to quickbound.len)
-				if(!quickbound[i])
-					continue
-				var/datum/clockwork_scripture/quickbind_slot = quickbound[i]
-				. += "Quickbind button: <span class='[get_component_span(initial(quickbind_slot.primary_component))]'>[initial(quickbind_slot.name)]</span>."
-		. += "Available power: <span class='bold brass'>[DisplayPower(get_clockwork_power())].</span>"
+	if(!is_servant_of_ratvar(user) || !isobserver(user))
+		return
+	if(LAZYLEN(quickbound))
+		for(var/i in 1 to quickbound.len)
+			if(!quickbound[i])
+				continue
+			var/datum/clockwork_scripture/quickbind_slot = quickbound[i]
+			. += "Quickbind button: <span class='[get_component_span(initial(quickbind_slot.primary_component))]'>[initial(quickbind_slot.name)]</span>."
+	. += "Available power: <span class='bold brass'>[DisplayPower(get_clockwork_power())].</span>"
 
 //Slab actions; Hierophant, Quickbind
 /obj/item/clockwork/slab/ui_action_click(mob/user, action)
@@ -195,12 +196,6 @@
 	ui_interact(user)
 	return TRUE
 
-/obj/item/clockwork/slab/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.inventory_state)
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
-	if(!ui)
-		ui = new(user, src, ui_key, "ClockworkSlab", name, ui_x, ui_z, master_ui, state)
-		ui.open()
-
 /obj/item/clockwork/slab/proc/recite_scripture(datum/clockwork_scripture/scripture, mob/living/user)
 	if(!scripture || !user || !user.canUseTopic(src) || (!no_cost && !can_recite_scripture(user)))
 		return FALSE
@@ -220,29 +215,64 @@
 	scripture_to_recite.run_scripture()
 	return TRUE
 
+/*
+ * Gets text for a certain section. "Default" is used for when you first open Recollection.
+ * Current sections (make sure to update this if you add one:
+ * Basics
+ * Terminology
+ * Components
+ * Scripture
+ * Power
+ * Conversion
+ * * what - What section?
+ */
+/obj/item/clockwork/slab/proc/get_recollection(what) //Now DMDOC compliant!*
+	. = list()
+	switch(what) //need someone to rewrite info for this.
+		if("Default")
+			.["title"] = "Default"
+			.["info"] = "Hello servant! Currently these categories dosen't work!"
+		/*
+		if("Basics")
+			.["title"] = "Basics"
+			.["info"] = "# MARKDOWN WITH HTML?"
+		if("Terminology")
+			.["title"] = "Terminology"
+			.["info"] = "# MARKDOWN WITH HTML?"
+		if("Components")
+			.["title"] = "Default"
+			.["info"] = "# MARKDOWN WITH HTML?"
+		if("Scripture")
+			.["title"] = "Default"
+			.["info"] = "# MARKDOWN WITH HTML?"
+		if("Power")
+			.["title"] = "Power"
+			.["info"] = "# MARKDOWN WITH HTML?"
+		if("Conversion")
+			.["title"] = "Conversion"
+			.["info"] = "# MARKDOWN WITH HTML?"
+		*/
+		else
+			return null //error text handled tgui side. should not cause BSOD
 
-//Gets text for a certain section. "Default" is used for when you first open Recollection.
-//Current sections (make sure to update this if you add one:
-//- Basics
-//- Terminology
-//- Components
-//- Scripture
-//- Power
-//- Conversion
+/obj/item/clockwork/slab/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "ClockworkSlab", name)
+		ui.open()
 
 /obj/item/clockwork/slab/ui_data(mob/user) //we display a lot of data via TGUI
 	. = list()
 	.["recollection"] = recollecting
 	.["power"] = DisplayPower(get_clockwork_power())
 	.["power_unformatted"] = get_clockwork_power()
-	// .["rec_text"] = recollection() handled TGUI side
 	.["HONOR_RATVAR"] = GLOB.ratvar_awakens
 	.["scripture"] = list()
-	for(var/s in GLOB.all_scripture)
+	for(var/s in GLOB.all_scripture) //don't block this, even when ratvar spawns for roundend griff.
 		var/datum/clockwork_scripture/S = GLOB.all_scripture[s]
-		if(S.tier == SCRIPTURE_PERIPHERAL) //yes, tiers are the tabs.
+		if(S.tier == SCRIPTURE_PERIPHERAL) // This tier is skiped because this contains basetype stuff
 			continue
-		
+
 		var/list/data = list()
 		data["name"] = S.name
 		data["descname"] = S.descname
@@ -250,34 +280,36 @@
 		data["required"] = "([DisplayPower(S.power_cost)][S.special_power_text ? "+ [replacetext(S.special_power_text, "POWERCOST", "[DisplayPower(S.special_power_cost)]")]" : ""])"
 		data["required_unformatted"] = S.power_cost
 		data["type"] = "[S.type]"
-		data["quickbind"] = S.quickbind //this is if it cant quickbind
+		data["quickbind"] = S.quickbind //this is if it cant quickbind (bool)
 		data["fontcolor"] = get_component_color_bright(S.primary_component)
 		data["important"] = S.important //italic!
-		
+
 		var/found = quickbound.Find(S.type)
 		if(found)
 			data["bound"] = found //number (pos) on where is it on the list
 		if(S.invokers_required > 1)
 			data["invokers"] = "Invokers: [S.invokers_required]"
-		
+
 		.["rec_binds"] = list()
 		for(var/i in 1 to maximum_quickbound)
-			if(GLOB.ratvar_awakens)
-				return
 			if(LAZYLEN(quickbound) < i || !quickbound[i])
-				.["rec_binds"] += list(list())
+				.["rec_binds"] += list(list()) //a blank json.
 			else
 				var/datum/clockwork_scripture/quickbind_slot = quickbound[i]
 				.["rec_binds"] += list(list(
-					"name" = initial(quickbind_slot.name), 
+					"name" = initial(quickbind_slot.name),
 					"color" = get_component_color_bright(initial(quickbind_slot.primary_component))
 				))
-		
+
 		.["scripture"][S.tier] += list(data)
 
 /obj/item/clockwork/slab/ui_static_data(mob/user)
 	. = list()
-	.["tier_infos"] = list()
+	.["tier_infos"] = list() //HEY!! WHEN ADDING NEW TIER, ADD IT HERE
+	.["tier_infos"][SCRIPTURE_PERIPHERAL] = list(
+		"requirement" = "Breaking the code DM side. Report to coggerbus if this appears!!",
+		"ready" = FALSE //just in case. Should NOT exist at all
+	)
 	.["tier_infos"][SCRIPTURE_DRIVER] = list(
 		"requirement" = "None, this is already unlocked",
 		"ready" = TRUE //to bold it on JS side, and to say "These scriptures are permanently unlocked."
@@ -290,10 +322,14 @@
 		"requirement" = "Unlock these optional scriptures by converting another servant or if [DisplayPower(APPLICATION_UNLOCK_THRESHOLD)] of power is reached..",
 		"ready" = SSticker.scripture_states[SCRIPTURE_APPLICATION]
 	)
-
-	// .["selected"] = selected_scripture
-	generate_all_scripture()
-	.["recollection_categories"] = GLOB.ratvar_awakens ? list() : list(
+	.["tier_infos"][SCRIPTURE_JUDGEMENT] = list(
+		"requirement" = "Unlock powerful equipment and structures by converting five servants or if [DisplayPower(JUDGEMENT_UNLOCK_THRESHOLD)] of power is reached..",
+		"ready" = SSticker.scripture_states[SCRIPTURE_JUDGEMENT]
+	)
+	.["recollection_categories"] = list()
+	if(GLOB.ratvar_awakens)
+		return
+	.["recollection_categories"] = list(
 		list("name" = "Getting Started", "desc" = "First-time servant? Read this first."),
 		list("name" = "Basics", "desc" = "A primer on how to play as a servant."),
 		list("name" = "Terminology", "desc" = "Common acronyms, words, and terms."),
@@ -302,8 +338,9 @@
 		list("name" = "Power", "desc" = "The power system that certain objects use to function."),
 		list("name" = "Conversion", "desc" = "Converting the crew, cyborgs, and very walls to your cause.")
 	)
-	// .["rec_section"]["title"] //this is here if ever we decided to return these back.
-	// .["rec_section"]["info"]// wall of info for the thing
+	.["rec_section"] = get_recollection(recollection_category)
+	generate_all_scripture()
+	//needs a new place to live, preferably when clockcult unlocks/downgrades a tier. Smart enough to earlyreturn.
 
 /obj/item/clockwork/slab/ui_act(action, params)
 	switch(action)

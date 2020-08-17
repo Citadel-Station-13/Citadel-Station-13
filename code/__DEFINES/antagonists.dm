@@ -63,6 +63,16 @@
 #define CONTRACT_UPLINK_PAGE_CONTRACTS "CONTRACTS"
 #define CONTRACT_UPLINK_PAGE_HUB "HUB"
 
+
+///Heretics --
+#define IS_HERETIC(mob) (mob.mind?.has_antag_datum(/datum/antagonist/heretic))
+
+#define PATH_SIDE "Side"
+
+#define PATH_ASH "Ash"
+#define PATH_RUST "Rust"
+#define PATH_FLESH "Flesh"
+
 //Overthrow time to update heads obj
 #define OBJECTIVE_UPDATING_TIME 300
 

@@ -111,6 +111,13 @@
 
 #define STATUS_EFFECT_LIMP /datum/status_effect/limp //For when you have a busted leg (or two!) and want additional slowdown when walking on that leg
 
+#define STATUS_EFFECT_AMOK /datum/status_effect/amok //Makes the target automatically strike out at adjecent non-heretics.
+
+#define STATUS_EFFECT_CLOUDSTRUCK /datum/status_effect/cloudstruck //blinds and applies an overlay.
+
+/// shoves inflict this to indicate the next shove while this is in effect should disarm guns
+#define STATUS_EFFECT_OFF_BALANCE /datum/status_effect/off_balance
+
 /////////////
 // NEUTRAL //
 /////////////

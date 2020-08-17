@@ -157,13 +157,25 @@
 	max_capacity = 64
 	icon_state = "ssd_mini"
 	w_class = WEIGHT_CLASS_TINY
-	custom_price = PRICE_ABOVE_NORMAL
+	custom_price = 150
 
-/obj/item/computer_hardware/hard_drive/small/syndicate	// Syndicate variant - very slight better
+// Syndicate variant - very slight better
+/obj/item/computer_hardware/hard_drive/small/syndicate
 	desc = "An efficient SSD for portable devices developed by a rival organisation."
 	power_usage = 8
 	max_capacity = 70
 	var/datum/antagonist/traitor/traitor_data // Syndicate hard drive has the user's data baked directly into it on creation
+
+/// For tablets given to nuke ops
+/obj/item/computer_hardware/hard_drive/small/nukeops
+	power_usage = 8
+	max_capacity = 70
+
+/obj/item/computer_hardware/hard_drive/small/nukeops/install_default_programs()
+	store_file(new/datum/computer_file/program/computerconfig(src))
+	store_file(new/datum/computer_file/program/ntnetdownload/syndicate(src)) // Syndicate version; automatic access to syndicate apps and no NT apps
+	store_file(new/datum/computer_file/program/filemanager(src))
+	store_file(new/datum/computer_file/program/radar/fission360(src)) //I am legitimately afraid if I don't do this, Ops players will think they just don't get a pinpointer anymore.
 
 /obj/item/computer_hardware/hard_drive/micro
 	name = "micro solid state drive"

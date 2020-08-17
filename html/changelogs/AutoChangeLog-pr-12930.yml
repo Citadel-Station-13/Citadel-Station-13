@@ -1,5 +1,0 @@
-author: "silicons"
-delete-after: True
-changes: 
-  - rscadd: "turrets now automatically stagger their shots. Happy parrying/blocking."
-  - bugfix: "turrets now speed_process, they were shooting slower than they should be"

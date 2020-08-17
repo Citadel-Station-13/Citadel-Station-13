@@ -161,12 +161,12 @@
 
 /datum/spellbook_entry/blind
 	name = "Blind"
-	spell_type = /obj/effect/proc_holder/spell/targeted/trigger/blind
+	spell_type = /obj/effect/proc_holder/spell/pointed/trigger/blind
 	cost = 1
 
 /datum/spellbook_entry/mindswap
 	name = "Mindswap"
-	spell_type = /obj/effect/proc_holder/spell/targeted/mind_transfer
+	spell_type = /obj/effect/proc_holder/spell/pointed/mind_transfer
 	category = "Mobility"
 
 /datum/spellbook_entry/forcewall
@@ -246,7 +246,7 @@
 
 /datum/spellbook_entry/barnyard
 	name = "Barnyard Curse"
-	spell_type = /obj/effect/proc_holder/spell/targeted/barnyardcurse
+	spell_type = /obj/effect/proc_holder/spell/pointed/barnyardcurse
 
 /datum/spellbook_entry/charge
 	name = "Charge"
@@ -293,6 +293,11 @@
 	if(surplus>=0)
 		dat += "[surplus] left.<br>"
 	return dat
+
+/datum/spellbook_entry/item/timestop_katana
+	name = "Temporal Katana"
+	desc = "An oddly-weighted katana, reinforced to allow parrying, with a temporal anomaly magically shoved into it. Successful ripostes prove devastating to those unprepared."
+	item_path = /obj/item/katana/timestop
 
 /datum/spellbook_entry/item/staffchange
 	name = "Staff of Change"
