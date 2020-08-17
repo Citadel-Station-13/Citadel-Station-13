@@ -1,4 +1,5 @@
 #define SHUTTLE_CREATOR_MAX_SIZE CONFIG_GET(number/max_shuttle_size)
+#define CUSTOM_SHUTTLE_LIMIT CONFIG_GET(number/max_shuttle_count)
 #define CARDINAL_DIRECTIONS_X list(1, 0, -1, 0)
 #define CARDINAL_DIRECTIONS_Y list(0, 1, 0, -1)
 
@@ -56,6 +57,10 @@ GLOBAL_LIST_EMPTY(custom_shuttle_machines)		//Machines that require updating (He
 /obj/item/shuttle_creator/attack_self(mob/user)
 	..()
 	if(linkedShuttleId)
+		return
+	if(GLOB.custom_shuttle_count > CUSTOM_SHUTTLE_LIMIT && !override_max_shuttles)
+		to_chat(user, "<span class='warning'>Too many shuttles have been created.</span>")
+		message_admins("[ADMIN_FLW(user)] attempted to create a shuttle, however [CUSTOM_SHUTTLE_LIMIT] have already been created.")
 		return
 	if(!internal_shuttle_creator)
 		return
