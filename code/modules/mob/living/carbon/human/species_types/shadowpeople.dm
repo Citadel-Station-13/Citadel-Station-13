@@ -82,12 +82,10 @@
 	M.AddSpell(SW)
 	shadowwalk = SW
 
-
 /obj/item/organ/brain/nightmare/Remove(special = FALSE)
 	if(shadowwalk && owner)
 		owner.RemoveSpell(shadowwalk)
 	return ..()
-
 
 /obj/item/organ/heart/nightmare
 	name = "heart of darkness"
