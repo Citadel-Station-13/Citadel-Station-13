@@ -6792,6 +6792,22 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/centcom/supplypod)
+"pC" = (
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/structure/table/wood,
+/obj/item/canvas/twentythreeXtwentythree,
+/obj/item/canvas/twentythreeXtwentythree,
+/obj/item/canvas/twentythreeXtwentythree,
+/obj/item/canvas/twentythreeXnineteen,
+/obj/item/canvas/twentythreeXnineteen,
+/obj/item/canvas/twentythreeXnineteen,
+/obj/item/canvas/nineteenXnineteen,
+/obj/item/canvas/nineteenXnineteen,
+/obj/item/canvas/nineteenXnineteen,
+/turf/open/indestructible/hotelwood,
+/area/centcom/holding)
 "pH" = (
 /obj/structure/table/wood,
 /obj/machinery/recharger,
@@ -9037,6 +9053,14 @@
 /obj/effect/baseturf_helper/asteroid/snow,
 /turf/closed/indestructible/riveted,
 /area/syndicate_mothership)
+"uK" = (
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/structure/easel,
+/obj/item/canvas/twentythreeXtwentythree,
+/turf/open/indestructible/hotelwood,
+/area/centcom/holding)
 "uM" = (
 /obj/structure/mirror{
 	pixel_x = -28
@@ -16225,6 +16249,9 @@
 	dir = 1
 	},
 /obj/structure/table/wood,
+/obj/item/storage/crayons,
+/obj/item/storage/crayons,
+/obj/item/storage/crayons,
 /turf/open/indestructible/hotelwood,
 /area/centcom/holding)
 "KU" = (
@@ -45457,8 +45484,8 @@ Nd
 AE
 CV
 Sd
-KT
-Sd
+uK
+CV
 Sd
 Sd
 Sd
@@ -45714,7 +45741,7 @@ Nd
 QJ
 Sd
 Sd
-KT
+pC
 Sd
 Sd
 Sd
