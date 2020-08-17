@@ -24,7 +24,7 @@ Thanks to spacemaniac and mcdonald for help with the JS side of this.
 	winset(src, "changelog", "background-color = [COLOR_WHITEMODE_INFO_BUTTONS_BG];text-color = [COLOR_WHITEMODE_TEXT]")
 	winset(src, "rules", "background-color = [COLOR_WHITEMODE_INFO_BUTTONS_BG];text-color = [COLOR_WHITEMODE_TEXT]")
 	winset(src, "wiki", "background-color = [COLOR_WHITEMODE_INFO_BUTTONS_BG];text-color = [COLOR_WHITEMODE_TEXT]")
-	winset(src, "forum", "background-color = [COLOR_WHITEMODE_INFO_BUTTONS_BG];text-color = [COLOR_WHITEMODE_TEXT]")
+	winset(src, "discord", "background-color = [COLOR_WHITEMODE_INFO_BUTTONS_BG];text-color = [COLOR_WHITEMODE_TEXT]")
 	winset(src, "github", "background-color = [COLOR_WHITEMODE_INFO_BUTTONS_BG];text-color = [COLOR_WHITEMODE_TEXT]")
 	winset(src, "report-issue", "background-color = [COLOR_WHITEMODE_ISSUE_BUTTON_BG];text-color = [COLOR_WHITEMODE_TEXT]")
 	//Status and verb tabs
@@ -50,7 +50,7 @@ Thanks to spacemaniac and mcdonald for help with the JS side of this.
 	winset(src, "changelog", "background-color = [COLOR_DARKMODE_INFO_BUTTONS_BG];text-color = [COLOR_DARKMODE_TEXT]")
 	winset(src, "rules", "background-color = [COLOR_DARKMODE_INFO_BUTTONS_BG];text-color = [COLOR_DARKMODE_TEXT]")
 	winset(src, "wiki", "background-color = [COLOR_DARKMODE_INFO_BUTTONS_BG];text-color = [COLOR_DARKMODE_TEXT]")
-	winset(src, "forum", "background-color = [COLOR_DARKMODE_INFO_BUTTONS_BG];text-color = [COLOR_DARKMODE_TEXT]")
+	winset(src, "discord", "background-color = [COLOR_DARKMODE_INFO_BUTTONS_BG];text-color = [COLOR_DARKMODE_TEXT]")
 	winset(src, "github", "background-color = [COLOR_DARKMODE_INFO_BUTTONS_BG];text-color = [COLOR_DARKMODE_TEXT]")
 	winset(src, "report-issue", "background-color = [COLOR_DARKMODE_ISSUE_BUTTON_BG];text-color = [COLOR_DARKMODE_TEXT]")
 	//Status and verb tabs

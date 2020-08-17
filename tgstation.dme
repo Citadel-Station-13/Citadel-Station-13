@@ -3614,6 +3614,7 @@
 #include "sandcode\code\interactions\lewd\lewd_interactions.dm"
 #include "sandcode\code\interactions\lewd\lewd_species.dm"
 #include "sandcode\code\interactions\lewd\objects.dm"
+#include "sandcode\code\modules\admin\verbs\fix_air.dm"
 #include "sandcode\code\modules\atmospherics\machinery\pipes\bluespace.dm"
 #include "sandcode\code\modules\cargo\packs\emergency.dm"
 #include "sandcode\code\modules\cargo\packs\misc.dm"
