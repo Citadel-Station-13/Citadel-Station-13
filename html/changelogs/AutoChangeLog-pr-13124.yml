@@ -1,0 +1,7 @@
+author: "TheObserver-sys"
+delete-after: True
+changes: 
+  - bugfix: "moves Garlic sprites from growing.dmi to growing_vegetable.dmi"
+  - rscdel: "Removes the unused Electric Lime mutation, it just takes up space with no actual function nor sprites."
+  - imageadd: "Gives Catnip growing sprites"
+  - imagedel: "Removes redundant images in growing.dmi"

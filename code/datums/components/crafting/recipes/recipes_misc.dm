@@ -188,7 +188,7 @@
 	result = /obj/item/screwdriver/bronze
 	reqs = list(/obj/item/screwdriver = 1,
 				/obj/item/stack/cable_coil = 10,
-				/obj/item/stack/tile/bronze = 1,
+				/obj/item/stack/sheet/bronze = 1,
 				/datum/reagent/water  = 15)
 	time = 40
 	subcategory = CAT_TOOL
@@ -200,7 +200,7 @@
 	result = /obj/item/weldingtool/bronze
 	reqs = list(/obj/item/weldingtool = 1,
 				/obj/item/stack/cable_coil = 10,
-				/obj/item/stack/tile/bronze = 1,
+				/obj/item/stack/sheet/bronze = 1,
 				/datum/reagent/water  = 15)
 	time = 40
 	subcategory = CAT_TOOL
@@ -212,7 +212,7 @@
 	result = /obj/item/wirecutters/bronze
 	reqs = list(/obj/item/wirecutters = 1,
 				/obj/item/stack/cable_coil = 10,
-				/obj/item/stack/tile/bronze = 1,
+				/obj/item/stack/sheet/bronze = 1,
 				/datum/reagent/water  = 15)
 	time = 40
 	subcategory = CAT_TOOL
@@ -224,7 +224,7 @@
 	result = /obj/item/crowbar/bronze
 	reqs = list(/obj/item/crowbar = 1,
 				/obj/item/stack/cable_coil = 10,
-				/obj/item/stack/tile/bronze = 1,
+				/obj/item/stack/sheet/bronze = 1,
 				/datum/reagent/water  = 15)
 	time = 40
 	subcategory = CAT_TOOL
@@ -236,7 +236,7 @@
 	result = /obj/item/wrench/bronze
 	reqs = list(/obj/item/wrench = 1,
 				/obj/item/stack/cable_coil = 10,
-				/obj/item/stack/tile/bronze = 1,
+				/obj/item/stack/sheet/bronze = 1,
 				/datum/reagent/water  = 15)
 	time = 40
 	subcategory = CAT_TOOL
@@ -268,6 +268,19 @@
 	time = 5
 	subcategory = CAT_TOOL
 	category = CAT_MISC
+
+/datum/crafting_recipe/heretic/codex
+	name = "Codex Cicatrix"
+	result = /obj/item/forbidden_book
+	tools = list(/obj/item/pen)
+	reqs = list(/obj/item/paper = 5,
+				/obj/item/organ/eyes = 1,
+				/obj/item/organ/heart = 1,
+				/obj/item/stack/sheet/animalhide/human = 1)
+	time = 150
+	subcategory = CAT_MISCELLANEOUS
+	category = CAT_MISC
+	always_availible = FALSE
 
 ////////////
 //Vehicles//

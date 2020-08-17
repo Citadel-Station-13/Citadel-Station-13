@@ -17,6 +17,7 @@
 #define ROLE_ALIEN					"xenomorph"
 #define ROLE_PAI					"pAI"
 #define ROLE_CULTIST				"cultist"
+#define ROLE_HERETIC				"Heretic"
 #define ROLE_BLOB					"blob"
 #define ROLE_NINJA					"space ninja"
 #define ROLE_MONKEY					"monkey"
@@ -64,6 +65,7 @@ GLOBAL_LIST_INIT(special_roles, list(
 	ROLE_INTERNAL_AFFAIRS = /datum/game_mode/traitor/internal_affairs,
 	ROLE_SENTIENCE,
 	ROLE_GANG = /datum/game_mode/gang,
+	ROLE_HERETIC = /datum/game_mode/heretics,
 	ROLE_BLOODSUCKER = /datum/game_mode/bloodsucker
 	//ROLE_MONSTERHUNTER Disabled for now
 ))
