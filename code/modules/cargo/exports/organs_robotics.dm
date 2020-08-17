@@ -2,11 +2,11 @@
 
 /datum/export/robotics
 	include_subtypes = FALSE
-	k_elasticity = 1/50
+	k_elasticity = 1/200
 
 /datum/export/implant
 	include_subtypes = FALSE
-	k_elasticity = 1/50
+	k_elasticity = 1/200
 
 /datum/export/organs
 	include_subtypes = TRUE
@@ -34,8 +34,8 @@
 	export_types = list(/obj/item/organ/cyberimp/brain/anti_stun)
 
 /datum/export/implant/breathtube
-	cost = 150
-	k_elasticity = 300/20 //Large before depleating
+	cost = 175
+	k_elasticity = 1/350 //Large before depleating
 	unit_name = "breath implant"
 	export_types = list(/obj/item/organ/cyberimp/mouth/breathing_tube)
 
@@ -71,35 +71,35 @@
 	export_types = list(/obj/item/organ/cyberimp/arm/gun/laser, /obj/item/organ/cyberimp/arm/gun/taser, /obj/item/organ/cyberimp/arm/esword, /obj/item/organ/cyberimp/arm/medibeam, /obj/item/organ/cyberimp/arm/combat, /obj/item/organ/cyberimp/arm/flash, /obj/item/organ/cyberimp/arm/baton)
 	include_subtypes = TRUE
 
-/datum/export/orgains/heart
+/datum/export/organs/heart
 	cost = 250
 	unit_name = "heart"
 	export_types = list(/obj/item/organ/heart)
 	exclude_types = list(/obj/item/organ/heart/cursed, /obj/item/organ/heart/cybernetic)
 
-/datum/export/orgains/tongue
+/datum/export/organs/tongue
 	cost = 75
 	unit_name = "tongue"
 	export_types = list(/obj/item/organ/tongue)
 
-/datum/export/orgains/eyes
+/datum/export/organs/eyes
 	cost = 50 //So many things take your eyes out anyways
 	unit_name = "eyes"
 	export_types = list(/obj/item/organ/eyes)
 	exclude_types = list(/obj/item/organ/eyes/robotic)
 
-/datum/export/orgains/stomach
+/datum/export/organs/stomach
 	cost = 50 //can be replaced
 	unit_name = "stomach"
 	export_types = list(/obj/item/organ/stomach)
 
-/datum/export/orgains/lungs
+/datum/export/organs/lungs
 	cost = 150
 	unit_name = "lungs"
 	export_types = list(/obj/item/organ/lungs)
 	exclude_types = list(/obj/item/organ/lungs/cybernetic, /obj/item/organ/lungs/cybernetic/upgraded)
 
-/datum/export/orgains/liver
+/datum/export/organs/liver
 	cost = 175
 	unit_name = "liver"
 	export_types = list(/obj/item/organ/liver)
@@ -116,33 +116,33 @@
 	unit_name = "upgraded cybernetic organ"
 	export_types = list(/obj/item/organ/lungs/cybernetic/upgraded, /obj/item/organ/liver/cybernetic/upgraded)
 
-/datum/export/organs/tail //Shhh
+/datum/export/organs/tail // yeah have fun pulling this off someone without catching a bwoink
 	cost = 500
-	unit_name = "error shipment failer"
+	unit_name = "organic tail"
 	export_types = list(/obj/item/organ/tail)
 
-/datum/export/orgains/vocal_cords
+/datum/export/organs/vocal_cords
 	cost = 500
 	unit_name = "vocal cords"
 	export_types = list(/obj/item/organ/vocal_cords) //These are gotten via different races
 
-/datum/export/robotics/lims
-	cost = 30
-	unit_name = "robotic lim replacement"
+/datum/export/robotics/limbs
+	cost = 60
+	unit_name = "robotic limb replacement"
 	export_types = list(/obj/item/bodypart/l_arm/robot, /obj/item/bodypart/r_arm/robot, /obj/item/bodypart/l_leg/robot, /obj/item/bodypart/r_leg/robot, /obj/item/bodypart/chest/robot, /obj/item/bodypart/head/robot)
 
 /datum/export/robotics/surpluse
-	cost = 40
-	unit_name = "robotic lim replacement"
+	cost = 50
+	unit_name = "robotic limb replacement"
 	export_types = list(/obj/item/bodypart/l_arm/robot/surplus, /obj/item/bodypart/r_arm/robot/surplus, /obj/item/bodypart/l_leg/robot/surplus, /obj/item/bodypart/r_leg/robot/surplus)
 
 /datum/export/robotics/surplus_upgraded
-	cost = 50
-	unit_name = "upgraded robotic lim replacement"
+	cost = 80
+	unit_name = "upgraded robotic limb replacement"
 	export_types = list(/obj/item/bodypart/l_arm/robot/surplus_upgraded, /obj/item/bodypart/r_arm/robot/surplus_upgraded, /obj/item/bodypart/l_leg/robot/surplus_upgraded, /obj/item/bodypart/r_leg/robot/surplus_upgraded)
 
 /datum/export/robotics/surgery_gear_basic
-	cost = 10
+	cost = 50
 	unit_name = "surgery tool"
 	export_types = list(/obj/item/retractor, /obj/item/hemostat, /obj/item/cautery, /obj/item/surgicaldrill, /obj/item/scalpel, /obj/item/circular_saw, /obj/item/bonesetter, /obj/item/surgical_drapes)
 
