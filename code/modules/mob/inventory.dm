@@ -382,10 +382,20 @@
 
 	return 0
 
-//Outdated but still in use apparently. This should at least be a human proc.
-//Daily reminder to murder this - Remie.
+/**
+ * Used to return a list of equipped items on a mob; does not include held items (use get_all_gear)
+ *
+ * Argument(s):
+ * * Optional - include_pockets (TRUE/FALSE), whether or not to include the pockets and suit storage in the returned list
+ */
+
 /mob/living/proc/get_equipped_items(include_pockets = FALSE)
-	return
+	var/list/items = list()
+	for(var/obj/item/I in contents)
+		if(I.item_flags & IN_INVENTORY)
+			items += I
+	items -= held_items
+	return items
 
 /mob/living/proc/unequip_everything()
 	var/list/items = list()
