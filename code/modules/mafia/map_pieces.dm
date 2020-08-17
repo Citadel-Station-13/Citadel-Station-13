@@ -73,7 +73,7 @@
 	description = "Vampires and changelings clash to find out who's the superior bloodsucking monster in this creepy castle map."
 	mappath = "_maps/map_files/Mafia/mafia_gothic.dmm"
 
-/datum/map_template/mafia/gothic
+/datum/map_template/mafia/reebe
 	name = "Reebe"
 	description = "Trouble in Reebe station! Copypaste guranteed by ClockCo&trade;"
 	mappath = "_maps/map_files/Mafia/mafia_reebe.dmm"

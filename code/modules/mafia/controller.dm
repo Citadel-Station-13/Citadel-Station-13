@@ -67,6 +67,8 @@
 	var/max_player = MAFIA_MAX_PLAYER_COUNT
 	///Required player count
 	var/required_player = 5
+	///Prioritizes clients to have cool antag roles
+	var/low_pop_mode = FALSE
 
 /datum/mafia_controller/New()
 	. = ..()
@@ -93,7 +95,7 @@
   * * setup_list: list of all the datum setups (fancy list of roles) that would work for the game
   * * ready_players: list of filtered, sane players (so not playing or disconnected) for the game to put into roles
   */
-/datum/mafia_controller/proc/prepare_game(setup_list,ready_players)
+/datum/mafia_controller/proc/prepare_game(setup_list, ready_players)
 
 	var/list/possible_maps = subtypesof(/datum/map_template/mafia)
 	var/turf/spawn_area = get_turf(locate(/obj/effect/landmark/mafia_game_area) in GLOB.landmarks_list)
@@ -116,18 +118,40 @@
 				landmarks += possible_spawn
 
 	current_setup_text = list()
+
+	var/list/boring_roles = list()
+	var/list/not_boring_roles = list()
+
 	for(var/rtype in setup_list)
 		for(var/i in 1 to setup_list[rtype])
-			all_roles += new rtype(src)
+			var/datum/mafia_role/role = new rtype(src)
+			all_roles += role
+			if(role.role_type == TOWN_PROTECT || role.role_type == TOWN_INVEST || role.role_type == MAFIA_SPECIAL || role.role_type == MAFIA_REGULAR)
+				not_boring_roles += role
+			else
+				boring_roles += role
 		var/datum/mafia_role/rp = rtype
 		current_setup_text += "[initial(rp.name)] x[setup_list[rtype]]"
+
 	var/list/spawnpoints = landmarks.Copy()
-	for(var/datum/mafia_role/role in all_roles)
-		role.assigned_landmark = pick_n_take(spawnpoints)
-		if(!debug)
+
+	if(length(ready_players) < 7 || low_pop_mode)
+		//do normal assign
+		for(var/datum/mafia_role/role in not_boring_roles)
+			role.assigned_landmark = pick_n_take(spawnpoints)
 			role.player_key = pick_n_take(ready_players)
-		else
-			role.player_key = pop(ready_players)
+		//shame!
+		for(var/datum/mafia_role/role in boring_roles)
+			role.assigned_landmark = pick_n_take(spawnpoints)
+			role.player_key = pick_n_take(ready_players)
+
+	else //go run the normal one
+		for(var/datum/mafia_role/role in all_roles)
+			role.assigned_landmark = pick_n_take(spawnpoints)
+			if(!debug)
+				role.player_key = pick_n_take(ready_players)
+			else
+				role.player_key = pop(ready_players)
 
 /datum/mafia_controller/proc/send_message(msg,team)
 	for(var/datum/mafia_role/R in all_roles)
