@@ -7,7 +7,7 @@
 	canirrigate = FALSE
 
 
-/obj/machinery/hydroponics/attackby(obj/item/O, mob/user, params)
+/obj/machinery/hydroponics/constructable/automagic/attackby(obj/item/O, mob/user, params)
 	if(istype(O, /obj/item/reagent_containers) )
 		return FALSE //avoid fucky wuckies
 	..()
