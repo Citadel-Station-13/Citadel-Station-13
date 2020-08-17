@@ -57,6 +57,7 @@
 	icon = 'icons/turf/floors/glass.dmi'
 	icon_state = "floor_glass"
 	smooth = SMOOTH_MORE
+	var/floor_tile = /obj/item/stack/sheet/glass
 	canSmoothWith = list(/turf/open/transparent/glass, /turf/open/transparent/glass/reinforced)
 	footstep = FOOTSTEP_PLATING
 	barefootstep = FOOTSTEP_HARD_BAREFOOT
@@ -67,7 +68,28 @@
 	icon_state = "" //Prevent the normal icon from appearing behind the smooth overlays
 	return ..()
 
+/turf/open/transparent/glass/wrench_act(mob/living/user, obj/item/I)
+	to_chat(user, "<span class='notice'>You begin removing glass...</span>")
+	if(I.use_tool(src, user, 30, volume=80))
+		if(!istype(src, /turf/open/transparent/glass))
+			return TRUE
+		if(floor_tile)
+			new floor_tile(src, 2)
+		ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
+	return TRUE
+
 /turf/open/transparent/glass/reinforced
 	name = "Reinforced glass floor"
 	desc = "Do jump on it, it can take it."
 	icon = 'icons/turf/floors/reinf_glass.dmi'
+	floor_tile = /obj/item/stack/sheet/rglass
+
+/turf/open/transparent/glass/reinforced/wrench_act(mob/living/user, obj/item/I)
+	to_chat(user, "<span class='notice'>You begin removing reinforced glass...</span>")
+	if(I.use_tool(src, user, 30, volume=80))
+		if(!istype(src, /turf/open/transparent/glass/reinforced))
+			return TRUE
+		if(floor_tile)
+			new floor_tile(src, 2)
+		ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
+	return TRUE
