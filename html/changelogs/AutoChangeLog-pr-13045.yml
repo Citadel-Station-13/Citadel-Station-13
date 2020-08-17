@@ -1,0 +1,5 @@
+author: "ported from tg"
+delete-after: True
+changes: 
+  - rscadd: "bronze airlocks and windows can now be built"
+  - balance: "i also tweaked bronze flooring to be cheaper."
