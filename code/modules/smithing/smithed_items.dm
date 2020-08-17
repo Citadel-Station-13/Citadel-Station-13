@@ -23,7 +23,7 @@
 
 /obj/item/smithing/Initialize()
 	..()
-	desc = "A [src]. Hit it with a [finishingitem] to create a [finalitem]."
+	desc = "A [src]. Hit it with a [finishingitem.name] to create a [finalitem.name]."
 
 
 /obj/item/smithing/attackby(obj/item/I, mob/user)
@@ -234,6 +234,19 @@
 	finalitem = finalforreal
 	..()
 
+/obj/item/smithing/katanablade
+	name = "smithed katana blade"
+	finishingitem = /obj/item/swordhandle
+	finalitem = /obj/item/melee/smith/twohand/katana
+	icon_state = "katana"
+	
+
+/obj/item/smithing/katanablade/startfinish()
+	var/obj/item/melee/smith/twohand/katana/finalforreal = new /obj/item/melee/smith/twohand/katana(src)
+	finalforreal.force += quality
+	finalforreal.wield_force = finalforreal.force*finalforreal.wielded_mult
+	finalforreal.AddComponent(/datum/component/two_handed, force_unwielded=finalforreal.force, force_wielded=finalforreal.wield_force, icon_wielded="[icon_state]_wield")
+	finalitem = finalforreal
 
 /obj/item/stick
 	name = "wooden rod"
@@ -244,6 +257,6 @@
 
 /obj/item/swordhandle
 	name = "sword handle"
-	desc = "It's a rod, suitable for use of a handle of a tool. Also could serve as a weapon, in a pinch."
+	desc = "It's a crudlely shaped wooden sword hilt."
 	icon = 'icons/obj/smith.dmi'
 	icon_state = "shorthilt"

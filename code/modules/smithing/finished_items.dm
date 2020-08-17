@@ -1,9 +1,33 @@
 //TODO: OBTAILABILITY, ANVIL TYPES, HAMMER TYPES, INGOTS
 
+/*
+sords:
+broadsword [x]
+gladius [x]
+dirk [x]
+zweihander [x]
+sabre
+rapier
+scimitar
+katana [x]
 
+polearms:
+halberd [x]
+glaive [x]
+javelin [x]
+pike
+
+misc:
+blacksmith's hammer [x]
+scythe [x]
+axe
+coghead club
+pickaxes [x]
+*/
 
 /obj/item/melee/smith
 	name = "base class obj/item/melee/smith" //tin. handles overlay and quality and shit.
+	desc = "cringe"
 	icon = 'icons/obj/smith.dmi'
 	icon_state = "mace_greyscale"
 	item_state = "mace_greyscale"
@@ -19,7 +43,8 @@
 
 /obj/item/melee/smith/Initialize()
 	..()
-	desc = "A handmade [name]."
+	if(desc == "cringe")
+		desc = "A handmade [name]."
 	overlay = mutable_appearance(icon, overlay_state)
 	overlay.appearance_flags = RESET_COLOR
 	add_overlay(overlay)
@@ -28,6 +53,7 @@
 
 
 /obj/item/melee/smith/twohand
+	item_flags = NEEDS_PERMIT //it's a bigass sword/spear. beepsky is going to give you shit for it.
 	wielded_mult = 1.75
 
 
@@ -129,6 +155,7 @@
 
 /obj/item/melee/smith/axe
 	name = "axe"
+	item_flags = NEEDS_PERMIT
 
 /obj/item/melee/smith/hammer//blacksmithing, not warhammer.
 	name = "hammer"
@@ -142,9 +169,11 @@
 
 /obj/item/melee/smith/cogheadclub
 	name = "coghead club"
+	item_flags = NEEDS_PERMIT
 
 /obj/item/melee/smith/shortsword
 	name = "gladius"
+	item_flags = NEEDS_PERMIT
 	icon_state = "gladius"
 	overlay_state = "gladiushilt"
 
@@ -152,5 +181,35 @@
 	name = "broadsword"
 	icon_state = "broadsword"
 	overlay_state = "broadhilt"
-	force = 15
+	force = 11
 	wielded_mult = 1.8
+
+/obj/item/melee/smith/twohand/zweihander
+	name = "zweihander"
+	icon_state = "zweihander"
+	overlay_state = "zweihilt"
+	force = 4
+	wielded_mult = 3
+
+/obj/item/melee/smith/twohand/katana
+	name = "katana"
+	icon_state = "katana"
+	overlay_state = "katanahilt"
+	force = 7
+	wielded_mult = 2
+	item_flags = ITEM_CAN_PARRY | UNIQUE_RENAME //want to name your katana "DEMON BLADE" or some shit? go ahead, idiot.
+	block_parry_data = /datum/block_parry_data/captain_saber
+
+//unique hammers
+/obj/item/melee/smith/hammer/toolbox
+	name = "toolbox hammer"
+	desc = "A metal filled toolbox on a stick. Useable as a really shitty hammer."
+	w_class = WEIGHT_CLASS_BULKY
+	icon_state = "toolbox"
+	overlay_state = "hammerhandle"
+	qualitymod = -2
+
+/obj/item/melee/smith/hammer/debug
+	name = "debugging hammer"
+	desc = "A DEBUGGING HAMMER!! EPIC!!."
+	qualitymod = 10

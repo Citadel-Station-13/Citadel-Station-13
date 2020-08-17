@@ -6,14 +6,21 @@
 #define RECIPE_SMALLPICK "dbp" //draw bend punch
 #define RECIPE_LARGEPICK "ddbp" //draw draw bend punch
 #define RECIPE_SHOVEL "dfup" //draw fold upset punch
-#define RECIPE_SMALLKNIFE "sdd" //shrink draw draw
 #define RECIPE_HAMMER "sfp" //shrink fold punch
 #define RECIPE_AXE "ufp" //upset fold punch
+
+
+#define RECIPE_SMALLKNIFE "sdd" //shrink draw draw
 #define RECIPE_SHORTSWORD "dff" //draw fold fold
-#define RECIPE_JAVELIN "dbf" //draw bend fold
+#define RECIPE_BROADSWORD "dfufd" //draw fold upset fold draw
+#define RECIPE_KATANA "fffff" //fold fold fold fold fold
+
+
 #define RECIPE_SCYTHE "bdf" //bend draw fold
 #define RECIPE_COGHEAD "bsf" //bend shrink fold.
-#define RECIPE_BROADSWORD "dfufd" //draw fold upset fold draw
+
+
+#define RECIPE_JAVELIN "dbf" //draw bend fold
 #define RECIPE_HALBERD "duffp" //draw upset fold fold punch
 #define RECIPE_GLAIVE "usfp" //upset shrink fold punch
 
@@ -31,6 +38,7 @@
 	var/currentsteps = 0 //even i don't know
 	var/outrightfailchance = 1 //todo: document this shit
 	var/stepsdone = ""
+	var/rng = FALSE
 	var/list/smithrecipes = list(RECIPE_AXE = /obj/item/smithing/axehead,
 	RECIPE_HAMMER = /obj/item/smithing/hammerhead,
 	RECIPE_SCYTHE = /obj/item/smithing/scytheblade,
@@ -133,7 +141,7 @@
 		tryfinish(user)
 
 /obj/structure/anvil/proc/tryfinish(mob/user)
-	if(currentsteps > 12 || (rng && prob(outrightfailchance))
+	if(currentsteps > 12 || (rng && prob(outrightfailchance)))
 		to_chat(user, "You overwork the metal, causing it to turn into useless slag!")
 		var/turf/T = get_turf(user)
 		workpiece_state = FALSE
@@ -160,6 +168,59 @@
 			outrightfailchance = 1
 			break
 
+/obj/structure/anvil/debugsuper
+	name = "super ultra epic anvil of debugging."
+	desc = "WOW. A DEBUG <del>ITEM</DEL> STRUCTURE. EPIC."
+	icon = 'icons/obj/smith.dmi'
+	icon_state = "anvil"
+	anvilquality = 10
+	outrightfailchance = 0
+
+/obj/structure/anvil/obtainable
+	name = "anvil"
+	desc = "Base class of anvil. This shouldn't exist, but is useable."
+	icon = 'icons/obj/smith.dmi'
+	icon_state = "anvil"
+	anvilquality = 0
+	outrightfailchance = 5
+	rng = TRUE
+
+/obj/structure/anvil/obtainable/table
+	name = "table anvil"
+	desc = "A slightly reinforced table. Good luck."
+	icon = 'icons/obj/smith.dmi'
+	icon_state = "anvil"
+	anvilquality = -2
+
+
+/obj/structure/anvil/obtainable/table/do_shaping(mob/user, var/qualitychange)
+	if(prob(5))
+		to_chat(user, "The [src] breaks under the strain!")
+		take_damage(max_integrity)
+		return FALSE
+	else
+		..()
+
+/obj/structure/anvil/obtainable/sandstone
+	name = "sandstone brick anvil"
+	desc = "A big block of sandstone. Useable as an anvil."
+	icon = 'icons/obj/smith.dmi'
+	icon_state = "anvil"
+	anvilquality = -1
+
+/obj/structure/anvil/obtainable/basalt
+	name = "basalt brick anvil"
+	desc = "A big block of basalt. Useable as an anvil, better than sandstone. Igneous!"
+	icon = 'icons/obj/smith.dmi'
+	icon_state = "anvil"
+	anvilquality = -0.5
+
+/obj/structure/anvil/obtainable/basic
+	name = "anvil"
+	desc = "An anvil. It's got wheels bolted to the bottom."
+	icon = 'icons/obj/smith.dmi'
+	icon_state = "anvil"
+	anvilquality = 0
 
 #undef WORKPIECE_PRESENT
 #undef WORKPIECE_INPROGRESS
