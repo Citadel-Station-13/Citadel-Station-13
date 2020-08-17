@@ -73,7 +73,12 @@ GLOBAL_LIST_INIT(mutant_reference_list, list(
 	"xenohead" = GLOB.xeno_head_list,
 	"xenotail" = GLOB.xeno_tail_list))
 
-
+//references wag types to regular types, wings open to wings, etc
+GLOBAL_LIST_INIT(mutant_transform_list, list("wingsopen" = "wings",
+	"waggingtail_human" = "tail_human",
+	"waggingtail_lizard" = "tail_lizard",
+	"waggingspines" = "spines",
+	"mam_waggingtail" = "mam_tail"))
 
 GLOBAL_LIST_INIT(ghost_forms_with_directions_list, list("ghost")) //stores the ghost forms that support directional sprites
 GLOBAL_LIST_INIT(ghost_forms_with_accessories_list, list("ghost")) //stores the ghost forms that support hair and other such things

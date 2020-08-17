@@ -648,7 +648,11 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 		var/reference_list = GLOB.mutant_reference_list[mutant_part]
 		if(reference_list)
 			var/datum/sprite_accessory/S
-			S = reference_list[H.dna.features[mutant_part]]
+			var/transformed_part = GLOB.mutant_transform_list[mutant_part]
+			if(transformed_part)
+				S = reference_list[H.dna.features[transformed_part]]
+			else
+				S = reference_list[H.dna.features[mutant_part]]
 			if(!S || S.is_not_visible(H, tauric))
 				bodyparts_to_add -= mutant_part
 
