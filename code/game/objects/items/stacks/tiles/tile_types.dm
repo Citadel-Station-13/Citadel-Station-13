@@ -513,3 +513,12 @@
 	icon_state = "material_tile"
 	turf_type = /turf/open/floor/material
 	material_flags = MATERIAL_ADD_PREFIX | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS
+
+/obj/item/stack/tile/bronze
+	name = "bronze tile"
+	singular_name = "bronze floor tile"
+	desc = "A tile made out of bronze. Looks like clockwork."
+	icon_state = "material_tile"
+	color = "#92661A"
+	turf_type = /turf/open/floor/bronze
+	custom_materials = list(/datum/material/bronze = 250)
