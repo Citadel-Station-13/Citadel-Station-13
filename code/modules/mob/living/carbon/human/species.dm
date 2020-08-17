@@ -126,6 +126,9 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 		limbs_id = id
 	..()
 
+	//update our mutant bodyparts to include unlocked ones
+	mutant_bodyparts += GLOB.unlocked_mutant_parts
+
 /proc/generate_selectable_species(clear = FALSE)
 	if(clear)
 		GLOB.roundstart_races = list()
