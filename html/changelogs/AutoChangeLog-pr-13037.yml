@@ -1,5 +1,0 @@
-author: "timothyteakettle"
-delete-after: True
-changes: 
-  - refactor: "snowflake code for mutant bodypart selection has been rewritten to be ~14x shorter"
-  - tweak: "meat type and horns can now be selected by any species"

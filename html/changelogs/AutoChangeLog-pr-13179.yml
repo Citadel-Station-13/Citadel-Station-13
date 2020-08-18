@@ -1,4 +1,0 @@
-author: "Detective-Google"
-delete-after: True
-changes: 
-  - code_imp: "get_equipped_items is hopefully less gross"

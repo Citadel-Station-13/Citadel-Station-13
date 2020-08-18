@@ -1,5 +1,0 @@
-author: "Hatterhat"
-delete-after: True
-changes: 
-  - rscadd: "Bluespace beakers now have a chemical window through the side that shows chemical overlays."
-  - rscadd: "Plant DNA manipulators now let you chuck things over them. Or they WOULD, if LETPASSTHROW worked half a damn."
