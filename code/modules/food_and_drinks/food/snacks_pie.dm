@@ -113,6 +113,27 @@
 	tastes = list("pie" = 1, "meat" = 1)
 	foodtype = GRAIN | MEAT
 
+/obj/item/reagent_containers/food/snacks/pie/burek
+	name = "Burek"
+	icon = 'icons/obj/food/piecake.dmi'
+	icon_state = "burek"
+	desc = "If you know, you know."
+	slice_path = /obj/item/reagent_containers/food/snacks/pie/burekslice
+	slices_num = 4
+	bonus_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/consumable/nutriment/vitamin = 6)
+	list_reagents = list(/datum/reagent/consumable/nutriment= 20, /datum/reagent/consumable/nutriment/vitamin = 6)
+	bitesize = 12
+	tastes = list("meat" = 1, "oil" = 1)
+	foodtype = GRAIN | MEAT
+
+/obj/item/reagent_containers/food/snacks/pie/burekslice
+	name = "Burek Slice"
+	icon = 'icons/obj/food/piecake.dmi'
+	icon_state = "burekslice"
+	desc = "A slice of Burek, watch out for oil stains!"
+	tastes = list("meat" = 1, "oil" = 1)
+	foodtype = GRAIN | MEAT
+
 
 /obj/item/reagent_containers/food/snacks/pie/tofupie
 	name = "tofu-pie"

@@ -232,23 +232,6 @@
 /obj/item/organ/genital/proc/get_features(mob/living/carbon/human/H)
 	return
 
-
-//procs to handle sprite overlays being applied to humans
-
-/mob/living/carbon/human/equip_to_slot(obj/item/I, slot)
-	. = ..()
-	if(!. && I && slot && !(slot in GLOB.no_genitals_update_slots)) //the item was successfully equipped, and the chosen slot wasn't merely storage, hands or cuffs.
-		update_genitals()
-
-/mob/living/carbon/human/doUnEquip(obj/item/I, force, newloc, no_move, invdrop = TRUE)
-	var/no_update = FALSE
-	if(!I || I == l_store || I == r_store || I == s_store || I == handcuffed || I == legcuffed || get_held_index_of_item(I)) //stops storages, cuffs and held items from triggering it.
-		no_update = TRUE
-	. = ..()
-	if(!. || no_update)
-		return
-	update_genitals()
-
 /mob/living/carbon/human/proc/update_genitals()
 	if(QDELETED(src))
 		return

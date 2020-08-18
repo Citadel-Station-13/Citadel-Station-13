@@ -66,6 +66,40 @@
 					R.use(2)
 					to_chat(user, "<span class='notice'>You reinforce the floor.</span>")
 				return
+	if(istype(C, /obj/item/stack/sheet/glass))
+		if(broken || burnt)
+			to_chat(user, "<span class='warning'>Repair the plating first!</span>")
+			return
+		var/obj/item/stack/sheet/glass/G = C
+		if (G.get_amount() < 2)
+			to_chat(user, "<span class='warning'>You need two glass sheets to make a glass floor!</span>")
+			return
+		else
+			to_chat(user, "<span class='notice'>You begin adding glass to the floor...</span>")
+			if(do_after(user, 5, target = src))
+				if (G.get_amount() >= 2 && !istype(src, /turf/open/transparent/glass))
+					PlaceOnTop(/turf/open/transparent/glass, flags = CHANGETURF_INHERIT_AIR)
+					playsound(src, 'sound/items/deconstruct.ogg', 80, 1)
+					G.use(2)
+					to_chat(user, "<span class='notice'>You add glass to the floor.</span>")
+				return
+	if(istype(C, /obj/item/stack/sheet/rglass))
+		if(broken || burnt)
+			to_chat(user, "<span class='warning'>Repair the plating first!</span>")
+			return
+		var/obj/item/stack/sheet/rglass/RG = C
+		if (RG.get_amount() < 2)
+			to_chat(user, "<span class='warning'>You need two reinforced glass sheets to make a reinforced glass floor!</span>")
+			return
+		else
+			to_chat(user, "<span class='notice'>You begin adding reinforced glass to the floor...</span>")
+			if(do_after(user, 10, target = src))
+				if (RG.get_amount() >= 2 && !istype(src, /turf/open/transparent/glass/reinforced))
+					PlaceOnTop(/turf/open/transparent/glass/reinforced, flags = CHANGETURF_INHERIT_AIR)
+					playsound(src, 'sound/items/deconstruct.ogg', 80, 1)
+					RG.use(2)
+					to_chat(user, "<span class='notice'>You add reinforced glass to the floor.</span>")
+				return
 	else if(istype(C, /obj/item/stack/tile))
 		if(!broken && !burnt)
 			for(var/obj/O in src)
@@ -97,6 +131,11 @@
 		broken = FALSE
 
 	return TRUE
+
+/turf/open/floor/plating/rust_heretic_act()
+	if(prob(70))
+		new /obj/effect/temp_visual/glowing_rune(src)
+	ChangeTurf(/turf/open/floor/plating/rust)
 
 /turf/open/floor/plating/make_plating()
 	return
