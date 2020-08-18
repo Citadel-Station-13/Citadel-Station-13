@@ -844,7 +844,7 @@ new /datum/stack_recipe("paper frame door", /obj/structure/mineral_door/paperfra
 	merge_type = /obj/item/stack/sheet/cotton
 	var/pull_effort = 30
 	var/loom_result = /obj/item/stack/sheet/cloth
-	grind_results = list(/datum/reagent/cellulose = 1)
+	grind_results = list(/datum/reagent/cellulose = 5)
 
 /obj/item/stack/sheet/cotton/ten
 	amount = 10
@@ -860,7 +860,7 @@ new /datum/stack_recipe("paper frame door", /obj/structure/mineral_door/paperfra
 	merge_type = /obj/item/stack/sheet/cotton/durathread
 	pull_effort = 70
 	loom_result = /obj/item/stack/sheet/durathread
-	grind_results = list(/datum/reagent/cellulose = 4)
+	grind_results = list(/datum/reagent/cellulose = 10)
 
 /obj/item/stack/sheet/meat
 	name = "meat sheets"
