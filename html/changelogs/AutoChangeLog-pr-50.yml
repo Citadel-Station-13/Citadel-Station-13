@@ -1,0 +1,8 @@
+author: "SandPoot"
+delete-after: True
+changes: 
+  - balance: "Rogue Process is now a fun fight."
+  - rscadd: "Megafauna music now uses a proper preference toggle."
+  - bugfix: "Goldbrand can now be upgraded to eltonbrand proper."
+  - bugfix: "Crucible now has a proper inhand overlay on mobs."
+  - bugfix: "The super shotgun from bubblegum no longer floats around telepathically when you pick it up."
