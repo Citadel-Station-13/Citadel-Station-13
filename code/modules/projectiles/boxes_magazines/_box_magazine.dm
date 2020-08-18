@@ -76,7 +76,8 @@
 	return 1
 
 /obj/item/ammo_box/attackby(obj/item/A, mob/user, params, silent = FALSE, replace_spent = 0)
-	if(INTERACTING_WITH(user, A))
+	if(INTERACTING_WITH(user, src) || INTERACTING_WITH(user, A))
+		to_chat(user, "<span class='notice'>You're already doing that!</span>")
 		return FALSE
 	var/num_loaded = 0
 	if(!can_load(user))
@@ -84,8 +85,11 @@
 	if(istype(A, /obj/item/ammo_box))
 		var/obj/item/ammo_box/AM = A
 		for(var/obj/item/ammo_casing/AC in AM.stored_ammo)
-			if(load_delay)
-				if(do_after(user, load_delay, target = src))
+			if(load_delay || AM.load_delay)
+				var/loadtime = load_delay
+				if(AM.load_delay > load_delay)
+					loadtime = AM.load_delay
+				if(do_after(user, loadtime, target = src))
 				else
 					return FALSE
 			var/did_load = give_round(AC, replace_spent)
