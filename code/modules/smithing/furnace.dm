@@ -32,6 +32,7 @@
 		var/obj/item/ingot/notsword = I
 		if(working)
 			to_chat(user, "You heat the [notsword] in the [src].")
+			notsword.workability = "shapeable"
 		else
 			to_chat(user, "The furnace isn't working!.")
 	else
