@@ -229,11 +229,11 @@ Difficulty: Insanely Hard
 	current_song_length = 1759
 	var/sound/song_played = sound(current_song)
 	for(var/mob/M in rangers)
-		if(!M.client || !(M.client.prefs.toggles & SOUND_BOSS_MUSIC))
+		if(!M.client || !(M.client.prefs.toggles & SOUND_MEGAFAUNA))
 			continue
-		M.stop_sound_channel(CHANNEL_BOSSMUSIC)
+		M.stop_sound_channel(CHANNEL_JUKEBOX)
 		rangers[M] = world.time + current_song_length
-		M.playsound_local(null, null, 30, channel = CHANNEL_BOSSMUSIC, S = song_played)
+		M.playsound_local(null, null, 30, channel = CHANNEL_JUKEBOX, S = song_played)
 	stun_chance = 10
 	update_icon()
 	visible_message("<span class='cult'>\The [src]' wounds close with a flash, and when he emerges, he's even larger than before!</span>")
@@ -256,24 +256,24 @@ Difficulty: Insanely Hard
 		var/sound/song_played = sound(current_song)
 
 		for(var/mob/M in range(10, src))
-			if(!M.client || !(M.client.prefs.toggles & SOUND_BOSS_MUSIC))
+			if(!M.client || !(M.client.prefs.toggles & SOUND_MEGAFAUNA))
 				continue
 			if(!(M in rangers) || world.time > rangers[M])
-				M.stop_sound_channel(CHANNEL_BOSSMUSIC)
+				M.stop_sound_channel(CHANNEL_JUKEBOX)
 				rangers[M] = world.time + current_song_length
-				M.playsound_local(null, null, 30, channel = CHANNEL_BOSSMUSIC, S = song_played)
+				M.playsound_local(null, null, 30, channel = CHANNEL_JUKEBOX, S = song_played)
 		for(var/mob/L in rangers)
 			if(get_dist(src, L) > 10)
 				rangers -= L
 				if(!L || !L.client)
 					continue
-				L.stop_sound_channel(CHANNEL_BOSSMUSIC)
+				L.stop_sound_channel(CHANNEL_JUKEBOX)
 	else
 		for(var/mob/L in rangers)
 			rangers -= L
 			if(!L || !L.client)
 				continue
-			L.stop_sound_channel(CHANNEL_BOSSMUSIC)
+			L.stop_sound_channel(CHANNEL_JUKEBOX)
 	if(move_to_delay < 3)
 		move_to_delay += 0.2
 	if(!phase3 && ((health <= 150 && spellscast == 5) || stat == DEAD)) //begin phase 3, reset spell limit and heal
@@ -297,7 +297,7 @@ Difficulty: Insanely Hard
 		rangers -= L
 		if(!L || !L.client)
 			continue
-		L.stop_sound_channel(CHANNEL_BOSSMUSIC)
+		L.stop_sound_channel(CHANNEL_JUKEBOX)
 	if(phase3)
 		visible_message("<span class='cult'>\The [src] shrieks as the seal on his power breaks and he starts to break apart!</span>")
 		new /obj/structure/ladder/unbreakable/goat(loc)
@@ -313,7 +313,7 @@ Difficulty: Insanely Hard
 		rangers -= L
 		if(!L || !L.client)
 			continue
-		L.stop_sound_channel(CHANNEL_BOSSMUSIC)
+		L.stop_sound_channel(CHANNEL_JUKEBOX)
 	. = ..()
 
 /mob/living/simple_animal/hostile/megafauna/king/AttackingTarget()
