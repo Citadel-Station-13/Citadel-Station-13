@@ -1,4 +1,0 @@
-author: "lolman360"
-delete-after: True
-changes: 
-  - balance: "shotgun stripper clip nerf. ammoboxes can now accept a load_delay that happens when they attack a magazine, internal or external."

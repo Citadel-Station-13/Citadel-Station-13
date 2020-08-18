@@ -1,4 +1,0 @@
-author: "Hatterhat"
-delete-after: True
-changes: 
-  - balance: "Slaughter demons (and laughter demons, being a subtype) are MOB_SIZE_LARGE, with one of the more immediate effects being able to mark them with a crusher and backstab them."
