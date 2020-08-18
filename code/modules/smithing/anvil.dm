@@ -202,6 +202,14 @@
 	else
 		..()
 
+/obj/structure/anvil/obtainable/bronze
+	name = "slab of bronze"
+	desc = "A big block of bronze. Useable as an anvil."
+	custom_materials = list(/datum/material/bronze=8000)
+	icon = 'icons/obj/smith.dmi'
+	icon_state = "anvil"
+	anvilquality = -1
+
 /obj/structure/anvil/obtainable/sandstone
 	name = "sandstone brick anvil"
 	desc = "A big block of sandstone. Useable as an anvil."
@@ -223,6 +231,34 @@
 	icon = 'icons/obj/smith.dmi'
 	icon_state = "anvil"
 	anvilquality = 0
+
+/obj/structure/anvil/obtainable/ratvar
+	name = "brass anvil"
+	desc = "A big block of what appears to be brass. Useable as an anvil, if whatever's holding the brass together lets you."
+	custom_materials = list(/datum/material/bronze=8000)
+	icon = 'icons/obj/smith.dmi'
+	icon_state = "anvil"
+	anvilquality = 1
+
+/obj/structure/anvil/obtainable/ratvar/attackby(obj/item/I, mob/user)
+	if(is_servant_of_ratvar(user))
+		return ..()
+	else
+		to_chat(user, "<span class='neovgre'>KNPXWN, QNJCQNW!</span>") //rot13 then rot22 if anyone wants to decode
+
+/obj/structure/anvil/obtainable/narsie
+	name = "runic anvil"
+	desc = "An anvil made of a strange, runic metal."
+	custom_materials = list(/datum/material/runedmetal=8000)
+	icon = 'icons/obj/smith.dmi'
+	icon_state = "anvil"
+	anvilquality = 1
+
+/obj/structure/anvil/obtainable/narsie/attackby(obj/item/I, mob/user)
+	if(iscultistr(user))
+		return ..()
+	else
+		to_chat(user, "<span class='narsiesmall'>That is not yours to use!</span>")
 
 #undef WORKPIECE_PRESENT
 #undef WORKPIECE_INPROGRESS

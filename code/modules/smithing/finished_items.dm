@@ -209,6 +209,46 @@ pickaxes [x]
 	overlay_state = "hammerhandle"
 	qualitymod = -2
 
+/obj/item/melee/smith/hammer/narsie
+	name = "runemetal hammer"
+	custom_materials = list(datum/material/runedmetal = 12000)
+	desc = "A metal hammer inscribed with geometeric runes."
+	qualitymod = 1
+
+/obj/item/melee/smith/hammer/narsie(mob/living/target, mob/living/carbon/human/user)
+	if(!iscultist(user))
+		user.DefaultCombatKnockdown(100)
+		user.dropItemToGround(src, TRUE)
+		user.visible_message("<span class='warning'>A powerful force shoves [user] away from [target]!</span>", \
+							 "<span class='cultlarge'>\"You shouldn't be touching tools that aren't yours.\"</span>")
+		if(ishuman(user))
+			var/mob/living/carbon/human/H = user
+			H.apply_damage(rand(force/2, force), BRUTE, pick(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM))
+		else
+			user.adjustBruteLoss(rand(force/2,force))
+		return
+	..()
+
+/obj/item/melee/smith/hammer/ratvar
+	name = "brass hammer"
+	custom_materials = list(datum/material/bronze = 12000)
+	desc = "A brass hammer inscribed with... writing? You can't read it."
+	qualitymod = 1
+
+/obj/item/melee/smith/hammer/ratvar(mob/living/target, mob/living/carbon/human/user)
+	if(!is_servant_of_ratvar(user))
+		user.DefaultCombatKnockdown(100)
+		user.dropItemToGround(src, TRUE)
+		user.visible_message("<span class='warning'>A powerful force shoves [user] away from [target]!</span>", \
+							 "<span class='neovgre'>\""You shouldn't be touching tools that aren't yours.\"</span>")
+		if(ishuman(user))
+			var/mob/living/carbon/human/H = user
+			H.apply_damage(rand(force/2, force), BRUTE, pick(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM))
+		else
+			user.adjustBruteLoss(rand(force/2,force))
+		return
+	..()
+
 /obj/item/melee/smith/hammer/debug
 	name = "debugging hammer"
 	desc = "A DEBUGGING HAMMER!! EPIC!!."

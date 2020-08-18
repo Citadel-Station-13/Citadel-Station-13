@@ -27,6 +27,7 @@
 		working = TRUE
 	else
 		working = FALSE
+
 /obj/structure/furnace/attackby(obj/item/I, mob/user)
 	if(istype(I, /obj/item/ingot))
 		var/obj/item/ingot/notsword = I
@@ -46,3 +47,12 @@
 /obj/structure/furnace/infinite
 	name = "fuelless furnace"
 	debug = TRUE
+
+
+/obj/structure/furnace/infinite/ratvar
+	name = "brass furnace"
+	desc = "A brass furnace. Powered by... something, but seems otherwise safe." //todo:sprites they're safe for noncultists because you're just putting ingots in them. also there';s a reason to steal them ig
+
+/obj/structure/furnace/infinite/narsie
+	name = "rune furnace"
+	desc = "A runed furnace. Powered by... something, but seems otherwise safe."//todo:sprites
