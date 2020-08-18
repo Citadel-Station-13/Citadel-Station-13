@@ -108,6 +108,8 @@
 	item_state = "heckgun"
 	sharpness = SHARP_EDGED
 	force = 15
+	inhand_x_dimension = 0
+	inhand_y_dimension = 0
 	var/recharge_rate = 4
 	var/charge_tick = 0
 	var/toggled = FALSE
@@ -207,8 +209,8 @@
 	icon = 'sandcode/icons/obj/1x2.dmi'
 	icon_state = "crucible0"
 	var/icon_state_on = "crucible1"
-	lefthand_file = 'sandcode/icons/mob/inhands/weapons/crucible_lefthand.dmi'
-	righthand_file = 'sandcode/icons/mob/inhands/weapons/crucible_righthand.dmi'
+	lefthand_file = 'sandcode/icons/mob/inhands/weapons/swords_lefthand.dmi'
+	righthand_file = 'sandcode/icons/mob/inhands/weapons/swords_righthand.dmi'
 	item_state = "crucible0"
 	force = 3
 	throwforce = 5
@@ -965,7 +967,7 @@
 	icon_state = "necklace_forsaken_active"
 	actions_types = list(/datum/action/item_action/hands_free/necklace_of_the_forsaken)
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
-	var/mob/living/carbon/human/active_owner
+	var/mob/living/carbon/active_owner
 	var/numUses = 1
 
 /obj/item/clothing/neck/necklace/necklace_of_the_forsaken/item_action_slot_check(slot)
@@ -989,10 +991,10 @@
 	icon_state = "necklace_forsaken_active"
 	if(!active_owner)
 		return
-	var/mob/living/carbon/human/H = active_owner
+	var/mob/living/carbon/C = active_owner
 	active_owner = null
-	to_chat(H, "<span class='userdanger'>You feel a scorching burn fill your body and limbs!</span>")
-	H.revive(TRUE, FALSE)
+	to_chat(C, "<span class='userdanger'>You feel a scorching burn fill your body and limbs!</span>")
+	C.revive(TRUE, FALSE)
 	remove_necklace() //remove buffs
 
 //Remove buffs
@@ -1012,14 +1014,14 @@
 //What happens when the user clicks on datum
 /datum/action/item_action/hands_free/necklace_of_the_forsaken/Trigger()
 	var/obj/item/clothing/neck/necklace/necklace_of_the_forsaken/MM = target
-	if(MM.numUses == 0)//skip if it has already been used up
+	if(MM.numUses <= 0)//skip if it has already been used up
 		return
 	if(!MM.active_owner)//apply bind if there is no active owner
-		if(ishuman(owner))
+		if(iscarbon(owner))
 			MM.temp_buff(owner)
 		src.desc = "Revive or fully heal yourself, but you can only do this once! Can be used when knocked out or dead."
 		to_chat(MM.active_owner, "<span class='userdanger'>You have binded the ember to yourself! The next time you use the necklace it will heal you!</span>")
-	else if(MM.numUses == 1 && MM.active_owner)//revive / heal then remove usage
+	else if(MM.numUses >= 1 && MM.active_owner)//revive / heal then remove usage
 		MM.second_chance()
 		MM.numUses = 0
 		MM.icon_state = "necklace_forsaken"
@@ -1076,7 +1078,7 @@
 	tool_behaviour = TOOL_MINING
 	toolspeed = 0.1
 	slot_flags = ITEM_SLOT_BELT
-	custom_materials = list(/datum/material/diamond=2000, /datum/material/titanium=20000, /datum/material/plasma=20000)
+	custom_materials = list(/datum/material/diamond=10000, /datum/material/titanium=20000, /datum/material/plasma=20000)
 	usesound = 'sound/weapons/drill.ogg'
 	hitsound = 'sound/weapons/drill.ogg'
 	attack_verb = list("drilled")
@@ -1092,11 +1094,11 @@
 	. = ..()
 	if(user.a_intent == INTENT_HARM)
 		var/datum/component/two_handed/TH = GetComponent(/datum/component/two_handed)
-		if(isliving(target) && TH.wielded && proximity_flag && cooldown <= world.time)
-			cooldown = world.time + (cooldowntime * 0.75)
+		if(TH.wielded && isliving(target) && proximity_flag && cooldown <= world.time)
+			cooldown = world.time + (cooldowntime * 0.5)
 			playsound(src,'sound/misc/crunch.ogg', 200, 1)
 			var/mob/living/M = target
-			M.DefaultCombatKnockdown(30)
+			M.DefaultCombatKnockdown(40)
 			M.adjustStaminaLoss(20)
 		else if(TH.wielded)
 			if(cooldown < world.time)

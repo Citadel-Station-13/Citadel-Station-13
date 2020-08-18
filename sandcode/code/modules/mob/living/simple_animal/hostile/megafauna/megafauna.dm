@@ -56,8 +56,8 @@
 				chosenlength = text2num(chosenlengthstring)
 				chosensong = songs[chosenlengthstring]
 				if(chosensong && !songend)
-					if(M.client.prefs.toggles & SOUND_BOSS_MUSIC)
-						M.stop_sound_channel(CHANNEL_BOSSMUSIC)
+					if(M?.client?.prefs?.toggles & SOUND_MEGAFAUNA)
+						M.stop_sound_channel(CHANNEL_JUKEBOX)
 						songend = chosenlength + world.time
 						SEND_SOUND(M, chosensong) // so silence boss music will mute moosic for people who don't want that, or it just doesn't play at all if prefs disable it
 				if(!retaliated)
@@ -70,8 +70,8 @@
 				enemies |= M
 				enemies |= M.occupant
 				var/mob/living/O = M.occupant
-				if(O.client.prefs.toggles & SOUND_BOSS_MUSIC)
-					O.stop_sound_channel(CHANNEL_BOSSMUSIC)
+				if(O?.client?.prefs?.toggles & SOUND_MEGAFAUNA)
+					O.stop_sound_channel(CHANNEL_JUKEBOX)
 					songend = chosenlength + world.time
 					SEND_SOUND(O, chosensong)
 				if(!retaliated)
@@ -95,8 +95,8 @@
 		if(world.time >= songend)
 			for(var/mob/living/M in view(src, vision_range))
 				if(client)
-					if(M.client.prefs.toggles & SOUND_BOSS_MUSIC)
-						M.stop_sound_channel(CHANNEL_BOSSMUSIC)
+					if(M?.client?.prefs?.toggles & SOUND_MEGAFAUNA)
+						M.stop_sound_channel(CHANNEL_JUKEBOX)
 						songend = chosenlength + world.time
 						SEND_SOUND(M, chosensong)
 	if(health <= glorythreshold && !glorykill && stat != DEAD)
@@ -115,8 +115,8 @@
 		return
 	else
 		for(var/mob/living/M in view(src, vision_range))
-			if(M.client)
-				M.stop_sound_channel(CHANNEL_AMBIENCE)
+			if(M?.client?.prefs?.toggles & SOUND_MEGAFAUNA)
+				M.stop_sound_channel(CHANNEL_JUKEBOX)
 		animate(src, color = initial(color), time = 3)
 		desc = initial(desc)
 		var/datum/status_effect/crusher_damage/C = has_status_effect(STATUS_EFFECT_CRUSHERDAMAGETRACKING)
@@ -131,7 +131,7 @@
 			SSblackbox.record_feedback("tally", tab, 1, "[initial(name)]")
 			if(!elimination)	//used so the achievment only occurs for the last legion to die.
 				grant_achievement(medal_type, score_type, crusher_kill)
-		..()
+		return ..()
 
 /mob/living/simple_animal/hostile/megafauna/AltClick(mob/living/carbon/slayer)
 	if(!slayer.canUseTopic(src, TRUE))
@@ -174,7 +174,7 @@
 		"<span class='userdanger'>You feast on [L], restoring your health!</span>")
 	if(!is_station_level(z) || client) //NPC monsters won't heal while on station
 		adjustBruteLoss(-L.maxHealth/2)
-	if(L.client)
-		L.stop_sound_channel(CHANNEL_AMBIENCE)
+	if(L?.client?.prefs?.toggles & SOUND_MEGAFAUNA)
+		L.stop_sound_channel(CHANNEL_JUKEBOX)
 	L.gib()
 	..()
