@@ -2,21 +2,21 @@ macro "default"
 
 
 menu "menu"
-	elem 
+	elem
 		name = "&File"
 		command = ""
 		saved-params = "is-checked"
-	elem 
+	elem
 		name = "&Quick screenshot\tF2"
 		command = ".screenshot auto"
 		category = "&File"
 		saved-params = "is-checked"
-	elem 
+	elem
 		name = "&Save screenshot as...\tShift+F2"
 		command = ".screenshot"
 		category = "&File"
 		saved-params = "is-checked"
-	elem 
+	elem
 		name = ""
 		command = ""
 		category = "&File"
@@ -26,26 +26,25 @@ menu "menu"
 		command = ".reconnect"
 		category = "&File"
 		saved-params = "is-checked"
-	elem 
+	elem
 		name = "&Quit\tAlt-F4"
 		command = ".quit"
 		category = "&File"
 		saved-params = "is-checked"
-	elem 
+	elem
 		name = "&Help"
 		command = ""
 		saved-params = "is-checked"
-	elem 
+	elem
 		name = "&Admin Help\tF1"
 		command = "adminhelp"
 		category = "&Help"
 		saved-params = "is-checked"
-	elem 
+	elem
 		name = "&Hotkeys"
 		command = "hotkeys-help"
 		category = "&Help"
 		saved-params = "is-checked"
-
 
 window "mainwindow"
 	elem "mainwindow"
@@ -62,8 +61,8 @@ window "mainwindow"
 		menu = "menu"
 	elem "split"
 		type = CHILD
-		pos = 0,0
-		size = 637x440
+		pos = 3,0
+		size = 634x417
 		anchor1 = 0,0
 		anchor2 = 100,100
 		background-color = #272727
@@ -71,14 +70,58 @@ window "mainwindow"
 		left = "mapwindow"
 		right = "infowindow"
 		is-vert = true
-		splitter = 75
+	elem "input"
+		type = INPUT
+		pos = 3,420
+		size = 517x20
+		anchor1 = 0,100
+		anchor2 = 100,100
+		background-color = #d3b5b5
+		is-default = true
+		border = sunken
+		saved-params = "command"
+	elem "saybutton"
+		type = BUTTON
+		pos = 600,420
+		size = 40x20
+		anchor1 = 100,100
+		anchor2 = none
+		text-color = #e0e0e0
+		background-color = #272727
+		saved-params = "is-checked"
+		text = "Chat"
+		command = ".winset \"saybutton.is-checked=true ? input.command=\"!say \\\"\" : input.command=\"\"saybutton.is-checked=true ? mebutton.is-checked=false\"\"saybutton.is-checked=true ? oocbutton.is-checked=false\""
+		button-type = pushbox
+	elem "oocbutton"
+		type = BUTTON
+		pos = 520,420
+		size = 40x20
+		anchor1 = 100,100
+		anchor2 = none
+		text-color = #e0e0e0
+		background-color = #272727
+		saved-params = "is-checked"
+		text = "OOC"
+		command = ".winset \"oocbutton.is-checked=true ? input.command=\"!ooc \\\"\" : input.command=\"\"oocbutton.is-checked=true ? mebutton.is-checked=false\"\"oocbutton.is-checked=true ? saybutton.is-checked=false\""
+		button-type = pushbox
+	elem "mebutton"
+		type = BUTTON
+		pos = 560,420
+		size = 40x20
+		anchor1 = 100,100
+		anchor2 = none
+		text-color = #e0e0e0
+		background-color = #272727
+		saved-params = "is-checked"
+		text = "Me"
+		command = ".winset \"mebutton.is-checked=true ? input.command=\"!me \\\"\" : input.command=\"\"mebutton.is-checked=true ? saybutton.is-checked=false\"\"mebutton.is-checked=true ? oocbutton.is-checked=false\""
+		button-type = pushbox
 	elem "asset_cache_browser"
 		type = BROWSER
 		pos = 0,0
 		size = 200x200
 		anchor1 = none
 		anchor2 = none
-		background-color = #272727
 		is-visible = false
 		auto-format = false
 		saved-params = ""
@@ -88,35 +131,29 @@ window "mainwindow"
 		size = 999x999
 		anchor1 = none
 		anchor2 = none
-		background-color = #272727
 		is-visible = false
 		saved-params = ""
 
 window "mapwindow"
 	elem "mapwindow"
 		type = MAIN
-		pos = 418,0
-		size = 1024x1024
+		pos = 0,0
+		size = 640x480
 		anchor1 = none
 		anchor2 = none
-		background-color = none
 		saved-params = "pos;size;is-minimized;is-maximized"
-		statusbar = false
 		is-pane = true
-		outer-size = 684x617
-		inner-size = 662x561
 	elem "map"
 		type = MAP
 		pos = 0,0
-		size = 1024x1024
+		size = 640x480
 		anchor1 = 0,0
 		anchor2 = 100,100
 		font-family = "Arial"
 		font-size = 7
+		text-color = none
 		is-default = true
-		saved-params = "icon-size"
-		zoom-mode = distort
-		style = ".center { text-align: center; }\n.maptext { font-family: 'Small Fonts'; font-size: 7px; -dm-text-outline: 1px black; color: white; line-height: 1.1; }\n.command_headset { font-weight: bold;\tfont-size: 8px; } .small { font-size: 6px; }\n.big { font-size: 8px; }\n.reallybig { font-size: 8px; }\n.extremelybig { font-size: 8px; }\n.greentext { color: #00ff00; font-size: 7px; }\n.redtext { color: #ff0000; font-size: 7px; }\n.clown { color: #ff69bf; font-size: 7px;  font-weight: bold; }\n.his_grace { color: #15d512; }\n.hypnophrase { color: #0d0d0d; font-weight: bold; }\n.yell { font-weight: bold; }\n.italics { font-size: 6px; }"
+		style=".center { text-align: center; } .maptext { font-family: 'Small Fonts'; font-size: 7px; -dm-text-outline: 1px black; color: white; line-height: 1.1; } .command_headset { font-weight: bold;	font-size: 8px; } .small { font-size: 6px; } .big { font-size: 8px; } .reallybig { font-size: 8px; } .extremelybig { font-size: 8px; } .greentext { color: #00FF00; font-size: 7px; } .redtext { color: #FF0000; font-size: 7px; } .clown { color: #FF69Bf; font-size: 7px;  font-weight: bold; } .his_grace { color: #15D512; } .hypnophrase { color: #0d0d0d; font-weight: bold; } .yell { font-weight: bold; } .italics { font-size: 6px; }"
 
 window "infowindow"
 	elem "infowindow"
@@ -192,7 +229,7 @@ window "infowindow"
 		text-color = #e0e0e0
 		background-color = #40628a
 		saved-params = "is-checked"
-		text = "GitHub"
+		text = "Github"
 		command = "github"
 	elem "report-issue"
 		type = BUTTON
@@ -200,9 +237,8 @@ window "infowindow"
 		size = 100x20
 		anchor1 = 81,0
 		anchor2 = 97,0
-		font-size = 8
 		text-color = #e0e0e0
-		background-color = #a92c2c
+		background-color = #40628a
 		saved-params = "is-checked"
 		text = "Report Issue"
 		command = "report-issue"
@@ -216,39 +252,11 @@ window "outputwindow"
 		anchor2 = none
 		background-color = #272727
 		saved-params = "pos;size;is-minimized;is-maximized"
-		titlebar = false
-		statusbar = false
-		can-close = false
-		can-minimize = false
-		can-resize = false
 		is-pane = true
-	elem "input"
-		type = INPUT
-		pos = 2,460
-		size = 595x20
-		anchor1 = 0,100
-		anchor2 = 100,100
-		background-color = #d3b5b5
-		is-default = true
-		border = sunken
-		saved-params = "command"
-	elem "say"
-		type = BUTTON
-		pos = 600,460
-		size = 37x20
-		anchor1 = 100,100
-		anchor2 = none
-		text-color = #e0e0e0
-		background-color = #272727
-		saved-params = "is-checked"
-		text = "Chat"
-		command = ".winset \"say.is-checked=true ? input.command=\"!say \\\"\" : input.command=\""
-		is-flat = true
-		button-type = pushbox
 	elem "browseroutput"
 		type = BROWSER
 		pos = 0,0
-		size = 640x456
+		size = 640x480
 		anchor1 = 0,0
 		anchor2 = 100,100
 		background-color = #272727
@@ -259,7 +267,7 @@ window "outputwindow"
 	elem "output"
 		type = OUTPUT
 		pos = 0,0
-		size = 640x456
+		size = 640x480
 		anchor1 = 0,0
 		anchor2 = 100,100
 		text-color = #e0e0e0
@@ -267,35 +275,23 @@ window "outputwindow"
 		is-default = true
 		saved-params = ""
 
-window "statwindow"
-	elem "statwindow"
+window "popupwindow"
+	elem "popupwindow"
 		type = MAIN
 		pos = 281,0
-		size = 640x480
+		size = 120x120
 		anchor1 = none
 		anchor2 = none
-		background-color = #242424
+		background-color = none
+		is-visible = false
 		saved-params = "pos;size;is-minimized;is-maximized"
-		is-pane = true
-	elem "stat"
-		type = INFO
-		pos = 0,0
-		size = 640x480
-		anchor1 = 0,0
-		anchor2 = 100,100
-		text-color = #e0e0e0
-		background-color = #272727
-		is-default = true
-		saved-params = ""
-		tab-text-color = #e0e0e0
-		tab-background-color = #242424
-		prefix-color = #e0e0e0
-		suffix-color = #e0e0e0
+		statusbar = false
+		can-resize = false
 
 window "preferences_window"
 	elem "preferences_window"
 		type = MAIN
-		pos = 372,0
+		pos = 281,0
 		size = 1280x1000
 		anchor1 = none
 		anchor2 = none
@@ -317,4 +313,22 @@ window "preferences_window"
 		anchor2 = 100,100
 		right-click = true
 		saved-params = "zoom;letterbox;zoom-mode"
+
+window "statwindow"
+	elem "statwindow"
+		type = MAIN
+		pos = 281,0
+		size = 640x480
+		anchor1 = none
+		anchor2 = none
+		saved-params = "pos;size;is-minimized;is-maximized"
+		is-pane = true
+	elem "stat"
+		type = INFO
+		pos = 0,0
+		size = 640x480
+		anchor1 = 0,0
+		anchor2 = 100,100
+		is-default = true
+		saved-params = ""
 
