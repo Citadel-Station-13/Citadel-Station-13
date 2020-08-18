@@ -852,7 +852,9 @@
 /obj/machinery/igniter{
 	id = "TEG_igniter"
 	},
-/mob/living/carbon/monkey,
+/mob/living/carbon/monkey{
+	name = "Captain Plasma"
+	},
 /obj/item/clothing/head/hardhat/atmos,
 /turf/open/floor/engine/vacuum,
 /area/engine/engineering)
