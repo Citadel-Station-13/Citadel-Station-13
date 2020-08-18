@@ -694,7 +694,11 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 		var/reference_list = GLOB.mutant_reference_list[bodypart]
 		if(reference_list)
 			var/datum/sprite_accessory/S
-			S = reference_list[H.dna.features[bodypart]]
+			var/transformed_part = GLOB.mutant_transform_list[bodypart]
+			if(transformed_part)
+				S = reference_list[H.dna.features[transformed_part]]
+			else
+				S = reference_list[H.dna.features[bodypart]]
 
 			if(!S || S.icon_state == "none")
 				continue
