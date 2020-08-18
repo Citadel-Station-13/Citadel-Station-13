@@ -186,6 +186,7 @@
 	new_choice.mob_size = MOB_SIZE_TINY //yeah we're not letting you use this roundstart pet to hurt people / knock them down
 	if(pet_name)
 		new_choice.name = pet_name
+		new_choice.unique_name = TRUE
 	return carrier
 
 /obj/item/choice_beacon/pet/spawn_option(atom/choice,mob/living/M)
