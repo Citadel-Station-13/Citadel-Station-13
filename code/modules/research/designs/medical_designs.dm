@@ -969,7 +969,7 @@
 	id = "acclimator"
 	build_type = PROTOLATHE
 	materials = list(/datum/material/iron = 1000, /datum/material/glass = 500)
-	construction_time = 75
+	construction_time = 15
 	build_path = /obj/machinery/plumbing/acclimator
 	category = list("Misc","Medical Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL | DEPARTMENTAL_FLAG_SCIENCE
@@ -980,7 +980,7 @@
 	id = "disposer"
 	build_type = PROTOLATHE
 	materials = list(/datum/material/iron = 500, /datum/material/glass = 100)
-	construction_time = 75
+	construction_time = 15
 	build_path = /obj/machinery/plumbing/disposer
 	category = list("Misc","Medical Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL | DEPARTMENTAL_FLAG_SCIENCE
@@ -991,7 +991,7 @@
 	id = "plumb_filter"
 	build_type = PROTOLATHE
 	materials = list(/datum/material/iron = 1000, /datum/material/glass = 500)
-	construction_time = 75
+	construction_time = 15
 	build_path = /obj/machinery/plumbing/filter
 	category = list("Misc","Medical Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL | DEPARTMENTAL_FLAG_SCIENCE
@@ -1002,7 +1002,7 @@
 	id = "plumb_synth"
 	build_type = PROTOLATHE
 	materials = list(/datum/material/iron = 5000, /datum/material/glass = 1000, /datum/material/plastic = 1000)
-	construction_time = 75
+	construction_time = 15
 	build_path = /obj/machinery/plumbing/synthesizer
 	category = list("Misc","Medical Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL | DEPARTMENTAL_FLAG_SCIENCE
@@ -1013,7 +1013,7 @@
 	id = "plumb_grinder"
 	build_type = PROTOLATHE
 	materials = list(/datum/material/iron = 2000, /datum/material/glass = 1500)
-	construction_time = 75
+	construction_time = 15
 	build_path = /obj/machinery/plumbing/grinder_chemical
 	category = list("Misc","Medical Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL | DEPARTMENTAL_FLAG_SCIENCE
@@ -1024,7 +1024,7 @@
 	id = "reaction_chamber"
 	build_type = PROTOLATHE
 	materials = list(/datum/material/iron = 1000, /datum/material/glass = 500)
-	construction_time = 75
+	construction_time = 15
 	build_path = /obj/machinery/plumbing/reaction_chamber
 	category = list("Misc","Medical Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL | DEPARTMENTAL_FLAG_SCIENCE
@@ -1046,7 +1046,7 @@
 	id = "plumb_splitter"
 	build_type = PROTOLATHE
 	materials = list(/datum/material/iron = 750, /datum/material/glass = 250)
-	construction_time = 75
+	construction_time = 15
 	build_path = /obj/machinery/plumbing/splitter
 	category = list("Misc","Medical Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL | DEPARTMENTAL_FLAG_SCIENCE
@@ -1057,7 +1057,7 @@
 	id = "pill_press"
 	build_type = PROTOLATHE
 	materials = list(/datum/material/iron = 1000, /datum/material/glass = 500)
-	construction_time = 75
+	construction_time = 15
 	build_path = /obj/machinery/plumbing/pill_press
 	category = list("Misc","Medical Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL | DEPARTMENTAL_FLAG_SCIENCE
@@ -1068,7 +1068,7 @@
 	id = "plumb_pump"
 	build_type = PROTOLATHE
 	materials = list(/datum/material/iron = 1000, /datum/material/glass = 500)
-	construction_time = 75
+	construction_time = 15
 	build_path = /obj/machinery/plumbing/liquid_pump
 	category = list("Misc","Medical Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL | DEPARTMENTAL_FLAG_SCIENCE
@@ -1079,7 +1079,7 @@
 	id = "plumb_in"
 	build_type = PROTOLATHE
 	materials = list(/datum/material/iron = 400, /datum/material/glass = 400)
-	construction_time = 75
+	construction_time = 15
 	build_path = /obj/machinery/plumbing/input
 	category = list("Misc","Medical Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL | DEPARTMENTAL_FLAG_SCIENCE
@@ -1090,7 +1090,7 @@
 	id = "plumb_out"
 	build_type = PROTOLATHE
 	materials = list(/datum/material/iron = 400, /datum/material/glass = 400)
-	construction_time = 75
+	construction_time = 15
 	build_path = /obj/machinery/plumbing/output
 	category = list("Misc","Medical Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL | DEPARTMENTAL_FLAG_SCIENCE
@@ -1101,7 +1101,7 @@
 	id = "plumb_tank"
 	build_type = PROTOLATHE
 	materials = list(/datum/material/iron = 10000, /datum/material/glass = 10000, /datum/material/plastic = 4000)
-	construction_time = 75
+	construction_time = 15
 	build_path = /obj/machinery/plumbing/tank
 	category = list("Misc","Medical Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL | DEPARTMENTAL_FLAG_SCIENCE
