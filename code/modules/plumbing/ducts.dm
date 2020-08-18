@@ -66,7 +66,6 @@ All the important duct code:
 	if(active)
 		attempt_connect()
 
-	AddElement(/datum/element/undertile, TRAIT_T_RAY_VISIBLE)
 
 ///start looking around us for stuff to connect to
 /obj/machinery/duct/proc/attempt_connect()
