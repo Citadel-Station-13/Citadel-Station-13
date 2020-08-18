@@ -968,7 +968,7 @@
 	desc = "A heating and cooling device for pipes!"
 	id = "acclimator"
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 1000, MAT_GLASS = 500)
+	materials = list(/datum/material/iron = 1000, /datum/material/glass = 500)
 	construction_time = 75
 	build_path = /obj/machinery/plumbing/acclimator
 	category = list("Misc","Medical Designs")
@@ -976,10 +976,10 @@
 
 /datum/design/disposer
 	name = "Plumbing Disposer"
-	desc = "Using the power of SCIENCE, dissolves reagents into nothing (almost)."
+	desc = "Using the power of Science, dissolves reagents into nothing (almost)."
 	id = "disposer"
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 500, MAT_GLASS = 100)
+	materials = list(/datum/material/iron = 500, /datum/material/glass = 100)
 	construction_time = 75
 	build_path = /obj/machinery/plumbing/disposer
 	category = list("Misc","Medical Designs")
@@ -990,7 +990,7 @@
 	desc = "Filters out chemicals by their NTDB ID."
 	id = "plumb_filter"
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 1000, MAT_GLASS = 500)
+	materials = list(/datum/material/iron = 1000, /datum/material/glass = 500)
 	construction_time = 75
 	build_path = /obj/machinery/plumbing/filter
 	category = list("Misc","Medical Designs")
@@ -1001,7 +1001,7 @@
 	desc = "Using standard mass-energy dynamic autoconverters, generates reagents from power and puts them in a pipe."
 	id = "plumb_synth"
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 5000, MAT_GLASS = 1000, MAT_PLASTIC = 1000)
+	materials = list(/datum/material/iron = 5000, /datum/material/glass = 1000, MAT_PLASTIC = 1000)
 	construction_time = 75
 	build_path = /obj/machinery/plumbing/synthesizer
 	category = list("Misc","Medical Designs")
@@ -1012,7 +1012,7 @@
 	desc = "Automatically extracts reagents from an item by grinding it. Think of the possibilities! Note: does not grind people."
 	id = "plumb_grinder"
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 2000, MAT_GLASS = 1500)
+	materials = list(/datum/material/iron = 2000, /datum/material/glass = 1500)
 	construction_time = 75
 	build_path = /obj/machinery/plumbing/grinder_chemical
 	category = list("Misc","Medical Designs")
@@ -1023,7 +1023,7 @@
 	desc = "You can set a list of allowed reagents and amounts. Once the chamber has these reagents, will let the products through."
 	id = "reaction_chamber"
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 1000, MAT_GLASS = 500)
+	materials = list(/datum/material/iron = 1000, /datum/material/glass = 500)
 	construction_time = 75
 	build_path = /obj/machinery/plumbing/reaction_chamber
 	category = list("Misc","Medical Designs")
@@ -1034,8 +1034,8 @@
 	desc = "Ducts for plumbing! Now lathed for efficiency."
 	id = "duct_print"
 	build_type = PROTOLATHE
-	materials = list(MAT_PLASTIC = 400)
-	construction_time = 5
+	materials = list(/datum/material/plastic = 400)
+	construction_time = 1
 	build_path = /obj/item/stack/ducts
 	category = list("Misc","Medical Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL | DEPARTMENTAL_FLAG_SCIENCE
@@ -1045,7 +1045,7 @@
 	desc = "A splitter. Has 2 outputs. Can be configured to allow a certain amount through each side."
 	id = "plumb_splitter"
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 750, MAT_GLASS = 250)
+	materials = list(/datum/material/iron = 750, /datum/material/glass = 250)
 	construction_time = 75
 	build_path = /obj/machinery/plumbing/splitter
 	category = list("Misc","Medical Designs")
@@ -1056,7 +1056,7 @@
 	desc = "Automatically forms pills to the required parameters with piped reagents! A good replacement for those lazy, useless chemists."
 	id = "pill_press"
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 1000, MAT_GLASS = 500)
+	materials = list(/datum/material/iron = 1000, /datum/material/glass = 500)
 	construction_time = 75
 	build_path = /obj/machinery/plumbing/pill_press
 	category = list("Misc","Medical Designs")
@@ -1067,7 +1067,7 @@
 	desc = "Use it for extracting liquids from lavaland's geysers!"
 	id = "plumb_pump"
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 1000, MAT_GLASS = 500)
+	materials = list(/datum/material/iron = 1000, /datum/material/glass = 500)
 	construction_time = 75
 	build_path = /obj/machinery/plumbing/liquid_pump
 	category = list("Misc","Medical Designs")
@@ -1078,7 +1078,7 @@
 	desc = "A big piped funnel for putting stuff in the pipe network."
 	id = "plumb_in"
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 400, MAT_GLASS = 400)
+	materials = list(/datum/material/iron = 400, /datum/material/glass = 400)
 	construction_time = 75
 	build_path = /obj/machinery/plumbing/input
 	category = list("Misc","Medical Designs")
@@ -1089,7 +1089,7 @@
 	desc = "A big piped funnel for taking stuff out of the pipe network."
 	id = "plumb_out"
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 400, MAT_GLASS = 400)
+	materials = list(/datum/material/iron = 400, /datum/material/glass = 400)
 	construction_time = 75
 	build_path = /obj/machinery/plumbing/output
 	category = list("Misc","Medical Designs")
@@ -1100,7 +1100,7 @@
 	desc = "A tank for storing plumbed reagents."
 	id = "plumb_tank"
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 10000, MAT_GLASS = 10000, MAT_PLASTIC = 4000)
+	materials = list(/datum/material/iron = 10000, /datum/material/glass = 10000, MAT_PLASTIC = 4000)
 	construction_time = 75
 	build_path = /obj/machinery/plumbing/tank
 	category = list("Misc","Medical Designs")
@@ -1111,7 +1111,7 @@
 	desc = "A RCD for plumbing machines! Cannot make ducts."
 	id = "plumb_rcd"
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 20000, MAT_GLASS = 10000, MAT_PLASTIC = 20000, MAT_PLASMA = 6000, MAT_DIAMOND = 5000, MAT_BLUESPACE = 5000, MAT_GOLD = 5000, MAT_SILVER = 5000)
+	materials = list(/datum/material/iron = 20000, /datum/material/glass = 10000, /datum/material/plastic = 20000, /datum/material/titanium = 2000, /datum/material/diamond = 800, /datum/material/gold = 2000, /datum/material/silver = 2000)
 	construction_time = 150
 	build_path = /obj/item/construction/plumbing
 	category = list("Misc","Medical Designs")
