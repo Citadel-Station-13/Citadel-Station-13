@@ -85,7 +85,8 @@
 		var/obj/item/ammo_box/AM = A
 		for(var/obj/item/ammo_casing/AC in AM.stored_ammo)
 			if(load_delay)
-				if(!do_after(user, load_delay, target = src))
+				if(do_after(user, load_delay, target = src))
+				else
 					return FALSE
 			var/did_load = give_round(AC, replace_spent)
 			if(did_load)
