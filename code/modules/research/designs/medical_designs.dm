@@ -1001,7 +1001,7 @@
 	desc = "Using standard mass-energy dynamic autoconverters, generates reagents from power and puts them in a pipe."
 	id = "plumb_synth"
 	build_type = PROTOLATHE
-	materials = list(/datum/material/iron = 5000, /datum/material/glass = 1000, MAT_PLASTIC = 1000)
+	materials = list(/datum/material/iron = 5000, /datum/material/glass = 1000, /datum/material/plastic = 1000)
 	construction_time = 75
 	build_path = /obj/machinery/plumbing/synthesizer
 	category = list("Misc","Medical Designs")
@@ -1100,7 +1100,7 @@
 	desc = "A tank for storing plumbed reagents."
 	id = "plumb_tank"
 	build_type = PROTOLATHE
-	materials = list(/datum/material/iron = 10000, /datum/material/glass = 10000, MAT_PLASTIC = 4000)
+	materials = list(/datum/material/iron = 10000, /datum/material/glass = 10000, /datum/material/plastic = 4000)
 	construction_time = 75
 	build_path = /obj/machinery/plumbing/tank
 	category = list("Misc","Medical Designs")
