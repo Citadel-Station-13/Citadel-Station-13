@@ -14,14 +14,6 @@
 	category = list("Teleportation Machinery")
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_SCIENCE
 
-/datum/design/board/mecha_part_fabricator_adv
-	name= "Machine Design (Advanced exosuit fabricator)"
-	desc = "An advanced version of the exosuit fabricator that can link to oresilos!"
-	id = "mech_fab_adv"
-	build_path = /obj/item/circuitboard/machine/mechfab_adv
-	category = list("Research Machinery")
-	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
-
 /datum/design/mclunky_electronics
 	name = "Machine Design (McLunky Circuit Board)"
 	desc = "Now just give the parts to the botanist and they could perhaps be making power for you!"

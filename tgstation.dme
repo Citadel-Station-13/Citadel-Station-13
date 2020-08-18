@@ -3584,7 +3584,6 @@
 #include "sandcode\code\game\machinery\posialert.dm"
 #include "sandcode\code\game\machinery\computer\arcade\tetris.dm"
 #include "sandcode\code\game\machinery\pipe\construction.dm"
-#include "sandcode\code\game\mecha\mech_fabricator.dm"
 #include "sandcode\code\game\mecha\mecha_construction_paths.dm"
 #include "sandcode\code\game\mecha\mecha_parts.dm"
 #include "sandcode\code\game\objects\effects\contraband.dm"

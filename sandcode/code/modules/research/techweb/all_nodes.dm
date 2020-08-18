@@ -23,14 +23,6 @@
 	design_ids = list("telepad", "telesci_console")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 5000)
 
-/datum/techweb_node/adv_mechfab
-	id = "advanced_mechfab"
-	display_name = "Advanced Exosuit Fabricator"
-	description = "Studying more about devices you get to know how to make a linkable exosuit fabricator"
-	prereq_ids = list("datatheory")
-	design_ids = list("mech_fab_adv")
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 3000)
-
 /datum/techweb_node/adv_toolset_implant
 	id = "adv_toolset_implant"
 	display_name = "Advanced Toolset Implant"
