@@ -297,7 +297,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	parry_time_perfect = 1.5
 	parry_time_perfect_leeway = 1
 	parry_imperfect_falloff_percent = 7.5
-	parry_efficiency_to_counterattack = 100
+	parry_efficiency_to_counterattack = 120
 	parry_efficiency_considered_successful = 65		// VERY generous
 	parry_efficiency_perfect = 120
 	parry_efficiency_perfect_override = list(
@@ -306,13 +306,13 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	parry_failed_stagger_duration = 3 SECONDS
 	parry_data = list(
 		PARRY_COUNTERATTACK_MELEE_ATTACK_CHAIN = 2.5, // 7*2.5 = 17.5, 8*2.5 = 20, 9*2.5 = 22.5, 10*2.5 = 25
-		)
+	)
 
 /datum/block_parry_data/bokken/quick_parry // emphasizing REALLY SHORT PARRIES
 	parry_stamina_cost = 6 // still more costly than most parries, but less than a full bokken parry
 	parry_time_active = 5 // REALLY small parry window
 	parry_time_perfect = 2.5 // however...
-	parry_time_perfect_leeway = 2.5 // the entire time, the parry is perfect
+	parry_time_perfect_leeway = 2 // the entire time, the parry is perfect
 	parry_failed_stagger_duration = 1 SECONDS
 	parry_failed_clickcd_duration = 1 SECONDS // more forgiving punishments for missed parries
 	// still, don't fucking miss your parries or you're down stamina and staggered to shit
