@@ -182,7 +182,7 @@
 	var/mob/living/simple_animal/new_choice = new choice()
 	new_choice.butcher_results = null //please don't eat your pet, chef
 	var/obj/item/pet_carrier/donator/carrier = new() //a donator pet carrier is just a carrier that can't be shoved in an autolathe for metal
-	new_choice.forceMove(carrier)
+	carrier.add_occupant(new_choice)
 	new_choice.mob_size = MOB_SIZE_TINY //yeah we're not letting you use this roundstart pet to hurt people / knock them down
 	if(pet_name)
 		new_choice.name = pet_name
