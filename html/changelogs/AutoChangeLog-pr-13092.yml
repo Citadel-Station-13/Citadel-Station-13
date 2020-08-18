@@ -1,4 +1,0 @@
-author: "silicons"
-delete-after: True
-changes: 
-  - tweak: "stamina draining projectiles without stamina for their primary damage type now has their stamina damage taken into account for shield blocking, rather than the block being done for free for that."
