@@ -84,13 +84,15 @@
 	if(istype(A, /obj/item/ammo_box))
 		var/obj/item/ammo_box/AM = A
 		for(var/obj/item/ammo_casing/AC in AM.stored_ammo)
-			if(load_delay && do_after(user, load_delay, target = src))
-				var/did_load = give_round(AC, replace_spent)
-				if(did_load)
-					AM.stored_ammo -= AC
-					num_loaded++
-				if(!did_load || !multiload)
-					break
+			if(load_delay)
+				if(!do_after(user, load_delay, target = src))
+					return FALSE
+			var/did_load = give_round(AC, replace_spent)
+			if(did_load)
+				AM.stored_ammo -= AC
+				num_loaded++
+			if(!did_load || !multiload)
+				break
 	if(istype(A, /obj/item/ammo_casing))
 		var/obj/item/ammo_casing/AC = A
 		if(give_round(AC, replace_spent))
