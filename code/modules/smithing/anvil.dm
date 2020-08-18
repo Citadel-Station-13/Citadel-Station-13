@@ -51,7 +51,8 @@
 	RECIPE_SMALLKNIFE = /obj/item/smithing/knifeblade,
 	RECIPE_BROADSWORD = /obj/item/smithing/broadblade,
 	RECIPE_HALBERD = /obj/item/smithing/halberdhead,
-	RECIPE_GLAIVE = /obj/item/smithing/glaivehead)
+	RECIPE_GLAIVE = /obj/item/smithing/glaivehead,
+	RECIPE_KATANA = /obj/item/smithing/katanablade)
 
 /obj/structure/anvil/Initialize()
 	..()
@@ -204,6 +205,7 @@
 /obj/structure/anvil/obtainable/sandstone
 	name = "sandstone brick anvil"
 	desc = "A big block of sandstone. Useable as an anvil."
+	custom_materials = list(/datum/material/sandstone=8000)
 	icon = 'icons/obj/smith.dmi'
 	icon_state = "anvil"
 	anvilquality = -1

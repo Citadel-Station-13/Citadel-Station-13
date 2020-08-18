@@ -1,5 +1,8 @@
-
-
+/obj/item/basaltblock
+	name = "basalt block"
+	desc = "A block of basalt."
+	icon = 'icons/obj/smith.dmi'
+	icon_state = "unfinished"
 
 
 /obj/item/smithing
@@ -16,10 +19,65 @@
 	icon = 'icons/obj/smith.dmi'
 	icon_state = "ingot"
 	material_flags = MATERIAL_COLOR | MATERIAL_ADD_PREFIX
-	var/workability = "shapeable"
+	var/workability = "cold"
+
+
+/obj/item/ingot/on_attack_hand(mob/user)
+	var/mob/living/carbon/human/H
+	if(!workability == "shapeable")
+		return ..()
+	var/prot = 0
+	if(ishuman(user))
+		H = user
+		if(H.gloves)
+			var/obj/item/clothing/gloves/G = H.gloves
+			if(G.max_heat_protection_temperature)
+				prot = (G.max_heat_protection_temperature > 360)
+		else
+			prot = 1
+	if(prot > 0 || HAS_TRAIT(user, TRAIT_RESISTHEAT) || HAS_TRAIT(user, TRAIT_RESISTHEATHANDS))
+		to_chat(user, "<span class='notice'>You pick up the [src].</span>")
+		return ..()
+	else
+		to_chat(user, "<span class='warning'>You try to move the [src], but you burn your hand on it!</span>")
+	if(H)
+		var/obj/item/bodypart/affecting = H.get_bodypart("[(user.active_hand_index % 2 == 0) ? "r" : "l" ]_arm")
+		if(affecting && affecting.receive_damage( 0, 5 ))		// 5 burn damage
+			H.update_damage_overlays()
 
 /obj/item/ingot/iron
 	custom_materials = list(/datum/material/iron=12000)
+
+/obj/item/ingot/diamond
+	custom_materials = list(/datum/material/diamond=12000) //yeah ok
+
+/obj/item/ingot/uranium
+	custom_materials = list(/datum/material/uranium=12000)
+
+/obj/item/ingot/plasma
+	custom_materials = list(/datum/material/plasma=12000)//yeah ok
+
+/obj/item/ingot/gold
+	custom_materials = list(/datum/material/gold=12000)
+
+/obj/item/ingot/silver
+	custom_materials = list(/datum/material/silver=12000)
+
+/obj/item/ingot/bananium
+	custom_materials = list(/datum/material/bananium=12000)
+
+/obj/item/ingot/titanium
+	custom_materials = list(/datum/material/titanium=12000)
+
+/obj/item/ingot/adamantine
+	custom_materials = list(/datum/material/adamantine=12000)
+
+/obj/item/ingot/cult
+	custom_materials = list(/datum/material/runedmetal=12000)
+
+/obj/item/ingot/bronze
+	custom_materials = list(/datum/material/bronze=12000)
+
 
 /obj/item/smithing/Initialize()
 	..()
@@ -129,7 +187,7 @@
 	var/obj/item/melee/smith/twohand/javelin/finalforreal = new /obj/item/melee/smith/twohand/javelin(src)
 	finalforreal.force += quality
 	finalforreal.wield_force = finalforreal.force*finalforreal.wielded_mult
-	finalforreal.AddComponent(/datum/component/two_handed, force_unwielded=finalforreal.force, force_wielded=finalforreal.wield_force, icon_wielded="[icon_state]_wield")
+	finalforreal.AddComponent(/datum/component/two_handed, force_unwielded=finalforreal.force, force_wielded=finalforreal.wield_force, icon_wielded="[icon_state]")
 	finalforreal.throwforce = finalforreal.force*2
 	finalitem = finalforreal
 	..()
@@ -202,7 +260,7 @@
 	var/obj/item/melee/smith/twohand/broadsword/finalforreal = new /obj/item/melee/smith/twohand/broadsword(src)
 	finalforreal.force += quality
 	finalforreal.wield_force = finalforreal.force*finalforreal.wielded_mult
-	finalforreal.AddComponent(/datum/component/two_handed, force_unwielded=finalforreal.force, force_wielded=finalforreal.wield_force, icon_wielded="[icon_state]_wield")
+	finalforreal.AddComponent(/datum/component/two_handed, force_unwielded=finalforreal.force, force_wielded=finalforreal.wield_force, icon_wielded="[icon_state]")
 	finalitem = finalforreal
 	..()
 
@@ -216,7 +274,7 @@
 	finalforreal.force += quality
 	finalforreal.wield_force = finalforreal.force*finalforreal.wielded_mult
 	finalforreal.throwforce = finalforreal.force/3
-	finalforreal.AddComponent(/datum/component/two_handed, force_unwielded=finalforreal.force, force_wielded=finalforreal.wield_force, icon_wielded="[icon_state]_wield")
+	finalforreal.AddComponent(/datum/component/two_handed, force_unwielded=finalforreal.force, force_wielded=finalforreal.wield_force, icon_wielded="[icon_state]")
 	finalitem = finalforreal
 	..()
 
@@ -230,7 +288,7 @@
 	finalforreal.force += quality
 	finalforreal.wield_force = finalforreal.force*finalforreal.wielded_mult
 	finalforreal.throwforce = finalforreal.force
-	finalforreal.AddComponent(/datum/component/two_handed, force_unwielded=finalforreal.force, force_wielded=finalforreal.wield_force, icon_wielded="[icon_state]_wield")
+	finalforreal.AddComponent(/datum/component/two_handed, force_unwielded=finalforreal.force, force_wielded=finalforreal.wield_force, icon_wielded="[icon_state]")
 	finalitem = finalforreal
 	..()
 
@@ -239,13 +297,13 @@
 	finishingitem = /obj/item/swordhandle
 	finalitem = /obj/item/melee/smith/twohand/katana
 	icon_state = "katana"
-	
+
 
 /obj/item/smithing/katanablade/startfinish()
 	var/obj/item/melee/smith/twohand/katana/finalforreal = new /obj/item/melee/smith/twohand/katana(src)
 	finalforreal.force += quality
 	finalforreal.wield_force = finalforreal.force*finalforreal.wielded_mult
-	finalforreal.AddComponent(/datum/component/two_handed, force_unwielded=finalforreal.force, force_wielded=finalforreal.wield_force, icon_wielded="[icon_state]_wield")
+	finalforreal.AddComponent(/datum/component/two_handed, force_unwielded=finalforreal.force, force_wielded=finalforreal.wield_force, icon_wielded="[icon_state]")
 	finalitem = finalforreal
 
 /obj/item/stick

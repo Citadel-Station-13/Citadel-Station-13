@@ -3263,6 +3263,7 @@
 #include "code\modules\shuttle\shuttle_creation\shuttle_upgrades.dm"
 #include "code\modules\smithing\anvil.dm"
 #include "code\modules\smithing\finished_items.dm"
+#include "code\modules\smithing\furnace.dm"
 #include "code\modules\smithing\smithed_items.dm"
 #include "code\modules\spells\spell.dm"
 #include "code\modules\spells\spell_types\aimed.dm"

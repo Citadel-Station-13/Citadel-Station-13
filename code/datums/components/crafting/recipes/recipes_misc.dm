@@ -130,7 +130,23 @@
 	subcategory = CAT_MISCELLANEOUS
 	category = CAT_MISC
 
+/datum/crafting_recipe/basaltblock
+	name = "Sintered Basalt Block"
+	result = /obj/item/basaltblock
+	time = 200
+	reqs = list(/obj/item/stack/ore/glass/basalt = 50)
+	tools = list(TOOL_WELDER)
+	subcategory = CAT_MISCELLANEOUS
+	category = CAT_MISC
 
+/datum/crafting_recipe/basaltanvil
+	name = "Basalt Anvil"
+	result = /obj/structure/anvil/obtainable/sandstone
+	time = 200
+	reqs = list(/obj/item/basaltblock = 5)
+	tools = list(TOOL_CROWBAR)
+	subcategory = CAT_MISCELLANEOUS
+	category = CAT_MISC
 ///////////////////
 //Tools & Storage//
 ///////////////////
