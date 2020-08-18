@@ -791,9 +791,9 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 				dat += "</b></center></td></tr>"
 				dat += "<tr><td colspan=4><hr></td></tr>"
-				
+
 				dat += "<tr><td colspan=4><center><b>"
-				
+
 				if(!length(GLOB.loadout_categories[gear_category]))
 					dat += "No subcategories detected. Something is horribly wrong!"
 				else
