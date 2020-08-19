@@ -188,6 +188,7 @@
 	new_choice.density = FALSE
 	new_choice.blood_volume = 0 //your pet cannot be used to drain blood from for a bloodsucker
 	new_choice.desc = "A pet [initial(choice.name)], owned by [owner]!"
+	new_choice.can_have_ai = FALSE //no it cant be sentient damnit
 	if(pet_name)
 		new_choice.name = pet_name
 		new_choice.unique_name = TRUE
