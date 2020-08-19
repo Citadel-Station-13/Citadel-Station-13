@@ -89,8 +89,7 @@
 				var/loadtime = load_delay
 				if(AM.load_delay > load_delay)
 					loadtime = AM.load_delay
-				if(do_after(user, loadtime, target = src))
-				else
+				if(!do_after(user, loadtime, target = src))
 					return FALSE
 			var/did_load = give_round(AC, replace_spent)
 			if(did_load)
