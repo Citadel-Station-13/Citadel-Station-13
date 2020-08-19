@@ -294,7 +294,7 @@
 	target_air.merge(removed)
 
 	// If the item is in a grabber circuit we'll update the grabber's outputs after we've thrown it.
-	var/obj/item/integrated_circuit/manipulation/grabber/G = A.loc
+	// var/obj/item/integrated_circuit/manipulation/grabber/G = A.loc
 
 	var/x_abs = clamp(T.x + target_x_rel, 0, world.maxx)
 	var/y_abs = clamp(T.y + target_y_rel, 0, world.maxy)
@@ -308,8 +308,8 @@
 	air_update_turf()
 
 	// If the item came from a grabber now we can update the outputs since we've thrown it.
-	if(istype(G))
-		G.update_outputs()
+	// if(istype(G))
+	//	G.update_outputs()
 
 
 /obj/item/integrated_circuit/weaponized/stun
