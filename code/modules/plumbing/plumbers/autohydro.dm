@@ -8,7 +8,7 @@
 
 
 /obj/machinery/hydroponics/constructable/automagic/attackby(obj/item/O, mob/user, params)
-	if(istype(O, /obj/item/reagent_containers) )
+	if(istype(O, /obj/item/reagent_containers))
 		return FALSE //avoid fucky wuckies
 	..()
 
@@ -23,11 +23,22 @@
 		else
 			CP.disable()
 
-/obj/machinery/hydroponics/constructable/automagic/Initialize(mapload, bolt)
+/obj/machinery/hydroponics/constructable/automagic/Destroy()
 	. = ..()
-	AddComponent(/datum/component/plumbing/simple_demand, bolt)
+	STOP_PROCESSING(SSobj, src)
+
+/obj/machinery/hydroponics/constructable/automagic/Initialize(mapload)
+	. = ..()
+	START_PROCESSING(SSobj, src)
 	create_reagents(100 , AMOUNT_VISIBLE)
 
+/obj/machinery/hydroponics/constructable/automagic/ComponentInitialize()
+	. = ..()
+	AddComponent(/datum/component/simple_rotation, ROTATION_ALTCLICK | ROTATION_CLOCKWISE | ROTATION_COUNTERCLOCKWISE | ROTATION_VERBS, null, CALLBACK(src, .proc/can_be_rotated))
+	AddComponent(/datum/component/plumbing/simple_demand)
+
+/obj/machinery/hydroponics/constructable/proc/can_be_rotated(mob/user, rotation_type)
+	return !anchored
 
 /obj/machinery/hydroponics/constructable/automagic/process()
 	if(reagents)
