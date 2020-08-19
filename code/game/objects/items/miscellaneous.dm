@@ -47,11 +47,11 @@
 	spawn_option(stored_options[choice],M)
 	qdel(src)
 
-/obj/item/choice_beacon/proc/create_choice_atom(atom/choice)
+/obj/item/choice_beacon/proc/create_choice_atom(atom/choice, mob/owner)
 	return new choice()
 
 /obj/item/choice_beacon/proc/spawn_option(atom/choice,mob/living/M)
-	var/obj/new_item = create_choice_atom(choice)
+	var/obj/new_item = create_choice_atom(choice, M)
 	var/obj/structure/closet/supplypod/bluespacepod/pod = new()
 	pod.explosionSize = list(0,0,0,0)
 	new_item.forceMove(pod)
@@ -178,12 +178,16 @@
 /obj/item/choice_beacon/pet/generate_display_names()
 	return pets
 
-/obj/item/choice_beacon/pet/create_choice_atom(atom/choice)
+/obj/item/choice_beacon/pet/create_choice_atom(atom/choice, mob/owner)
 	var/mob/living/simple_animal/new_choice = new choice()
 	new_choice.butcher_results = null //please don't eat your pet, chef
 	var/obj/item/pet_carrier/donator/carrier = new() //a donator pet carrier is just a carrier that can't be shoved in an autolathe for metal
 	carrier.add_occupant(new_choice)
 	new_choice.mob_size = MOB_SIZE_TINY //yeah we're not letting you use this roundstart pet to hurt people / knock them down
+	new_choice.pass_flags = PASSTABLE | PASSMOB //your pet is not a bullet/person shield
+	new_choice.density = FALSE
+	new_choice.blood_volume = 0 //your pet cannot be used to drain blood from for a bloodsucker
+	new_choice.desc = "A pet [new_choice], owned by [owner]!"
 	if(pet_name)
 		new_choice.name = pet_name
 		new_choice.unique_name = TRUE
