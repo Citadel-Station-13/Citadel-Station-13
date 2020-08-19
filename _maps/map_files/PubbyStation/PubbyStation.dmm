@@ -54046,6 +54046,20 @@
 	},
 /turf/open/floor/plasteel,
 /area/construction/mining/aux_base)
+"fgS" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/mob/living/simple_animal/opossum/poppy,
+/turf/open/floor/plasteel/dark,
+/area/maintenance/department/engine)
 "fhM" = (
 /obj/item/storage/secure/safe{
 	pixel_x = -22
@@ -58645,6 +58659,10 @@
 "pyw" = (
 /turf/open/space/basic,
 /area/hallway/secondary/entry)
+"pzF" = (
+/mob/living/simple_animal/opossum,
+/turf/open/floor/wood,
+/area/maintenance/department/crew_quarters/dorms)
 "pBD" = (
 /obj/structure/cable{
 	icon_state = "0-8"
@@ -83454,7 +83472,7 @@ bHP
 bJb
 bJb
 bJb
-bJb
+fgS
 bJb
 bJb
 bPp
@@ -99823,7 +99841,7 @@ akh
 alc
 alR
 amF
-alb
+pzF
 alb
 anm
 ajv

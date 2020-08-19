@@ -147,7 +147,7 @@
 				log_game("[user] [key_name(user)] has renamed [O] to [input]")
 
 		if(penchoice == "Change description")
-			var/input = stripped_input(user,"Describe \the [O.name] here", ,"", 100)
+			var/input = stripped_input(user,"Describe \the [O.name] here", ,"", 2048)
 			if(QDELETED(O) || !user.canUseTopic(O, BE_CLOSE))
 				return
 			O.desc = input

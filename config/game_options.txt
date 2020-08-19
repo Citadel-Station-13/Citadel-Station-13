@@ -116,6 +116,7 @@ CONTINUOUS CHANGELING
 CONTINUOUS WIZARD
 #CONTINUOUS MONKEY
 CONTINUOUS BLOODSUCKER
+CONTINUOUS HERESY
 
 ##Note: do not toggle continuous off for these modes, as they have no antagonists and would thus end immediately!
 

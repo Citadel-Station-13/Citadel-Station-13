@@ -487,7 +487,7 @@
 	desc = "A bronze bar stool with red silk for a pillow."
 	icon_state = "barbrass"
 	item_chair = /obj/item/chair/stool/bar/bronze
-	buildstacktype = /obj/item/stack/tile/bronze
+	buildstacktype = /obj/item/stack/sheet/bronze
 	buildstackamount = 1
 
 /obj/structure/chair/stool/brass
@@ -503,7 +503,7 @@
 	desc = "A bronze stool with a silk top for comfort."
 	icon_state = "stoolbrass"
 	item_chair = /obj/item/chair/stool/bronze
-	buildstacktype = /obj/item/stack/tile/bronze
+	buildstacktype = /obj/item/stack/sheet/bronze
 	buildstackamount = 1
 
 /obj/item/chair/stool/brass
@@ -569,7 +569,6 @@
 	buildstacktype = /obj/item/stack/tile/brass
 	buildstackamount = 1
 	item_chair = null
-	var/turns = 0
 
 /obj/structure/chair/brass/ComponentInitialize()
 	return //it spins with the power of ratvar, not components.
@@ -581,16 +580,12 @@
 /obj/structure/chair/brass/process()
 	setDir(turn(dir,-90))
 	playsound(src, 'sound/effects/servostep.ogg', 50, FALSE)
-	turns++
-	if(turns >= 8)
-		STOP_PROCESSING(SSfastprocess, src)
 
 /obj/structure/chair/brass/ratvar_act()
 	return
 
 /obj/structure/chair/brass/AltClick(mob/living/user)
 	. = ..()
-	turns = 0
 	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
 		return
 	if(!(datum_flags & DF_ISPROCESSING))
@@ -608,7 +603,7 @@
 	desc = "A spinny chair made of bronze. It has little cogs for wheels!"
 	anchored = FALSE
 	icon_state = "brass_chair"
-	buildstacktype = /obj/item/stack/tile/bronze
+	buildstacktype = /obj/item/stack/sheet/bronze
 	buildstackamount = 1
 	item_chair = null
 

@@ -168,3 +168,26 @@
 	items = list(
 		/obj/item/clothing/mask/gas/sexymime,
 		/obj/item/clothing/under/rank/civilian/mime/sexy)
+
+/obj/effect/spawner/bundle/crate/Initialize(mapload)
+	if(items && items.len)
+		var/turf/T = get_turf(src)
+		var/obj/structure/closet/LC = locate(/obj/structure/closet) in T
+		if(LC)
+			for(var/path in items)
+				new path(LC)
+	return INITIALIZE_HINT_QDEL
+
+/obj/effect/spawner/bundle/crate/mosin
+	name = "Mosin-Nagant spawner"
+	items = list(
+		/obj/item/gun/ballistic/shotgun/boltaction,
+		/obj/item/ammo_box/a762
+	)
+
+/obj/effect/spawner/bundle/crate/surplusrifle
+	name = "surplus rifle spawner"
+	items = list(
+		/obj/item/gun/ballistic/automatic/surplus,
+		/obj/item/ammo_box/magazine/m10mm/rifle
+	)

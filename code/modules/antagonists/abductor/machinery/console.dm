@@ -30,6 +30,22 @@
 	/// Possible gear to be dispensed
 	var/list/possible_gear
 
+/obj/machinery/abductor/console/Initialize(mapload)
+	. = ..()
+	possible_gear = get_abductor_gear()
+
+/**
+  * get_abductor_gear: Returns a list of a filtered abductor gear sorted by categories
+  */
+/obj/machinery/abductor/console/proc/get_abductor_gear()
+	var/list/filtered_modules = list()
+	for(var/path in GLOB.abductor_gear)
+		var/datum/abductor_gear/AG = new path
+		if(!filtered_modules[AG.category])
+			filtered_modules[AG.category] = list()
+		filtered_modules[AG.category][AG] = AG
+	return filtered_modules
+
 /obj/machinery/abductor/console/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	if(!HAS_TRAIT(user, TRAIT_ABDUCTOR_TRAINING) && !HAS_TRAIT(user.mind, TRAIT_ABDUCTOR_TRAINING))
 		to_chat(user, "<span class='warning'>You start mashing alien buttons at random!</span>")

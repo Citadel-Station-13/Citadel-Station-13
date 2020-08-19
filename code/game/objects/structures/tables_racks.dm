@@ -597,7 +597,7 @@
 	icon = 'icons/obj/smooth_structures/brass_table.dmi'
 	icon_state = "brass_table"
 	resistance_flags = FIRE_PROOF | ACID_PROOF
-	buildstack = /obj/item/stack/tile/bronze
+	buildstack = /obj/item/stack/sheet/bronze
 	canSmoothWith = list(/obj/structure/table/reinforced/brass, /obj/structure/table/bronze)
 
 /obj/structure/table/bronze/tablelimbsmash(mob/living/user, mob/living/pushed_mob)
