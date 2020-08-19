@@ -89,7 +89,7 @@
 	teleport_channel = TELEPORT_CHANNEL_WORMHOLE
 	innate_accuracy_penalty = 6
 
-/obj/effect/portal/jaunt_tunnel/teleport(atom/movable/M)
+/obj/effect/portal/jaunt_tunnel/teleport(atom/movable/M, force = FALSE)
 	. = ..()
 	if(.)
 		// KERPLUNK
