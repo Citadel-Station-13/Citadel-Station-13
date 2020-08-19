@@ -1,3 +1,4 @@
+/*
 /obj/item/integrated_circuit/manipulation
 	category_text = "Manipulation"
 
@@ -621,4 +622,4 @@
 	activate_pin(3)
 
 
-
+*/
