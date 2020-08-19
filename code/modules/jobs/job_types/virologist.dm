@@ -12,6 +12,7 @@
 	exp_requirements = 60
 
 	outfit = /datum/outfit/job/virologist
+	plasma_outfit = /datum/outfit/plasmaman/viro
 
 	access = list(ACCESS_MEDICAL, ACCESS_MORGUE, ACCESS_SURGERY, ACCESS_CHEMISTRY, ACCESS_VIROLOGY, ACCESS_GENETICS, ACCESS_CLONING, ACCESS_MINERAL_STOREROOM)
 	minimal_access = list(ACCESS_MEDICAL, ACCESS_VIROLOGY, ACCESS_MINERAL_STOREROOM)
