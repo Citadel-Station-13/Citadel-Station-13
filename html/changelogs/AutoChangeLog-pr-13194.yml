@@ -1,0 +1,4 @@
+author: "DeltaFire15"
+delete-after: True
+changes: 
+  - tweak: "Changed the clockie help-link to lead to our own wiki."
