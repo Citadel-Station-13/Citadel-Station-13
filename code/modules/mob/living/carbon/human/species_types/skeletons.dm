@@ -24,7 +24,7 @@
 		burnmod = 1
 	..()
 
-/datum/species/skeleton/greater/check_roundstart_eligible()
+/datum/species/skeleton/check_roundstart_eligible()
 	if(SSevents.holidays && SSevents.holidays[HALLOWEEN])
 		return TRUE
 	return ..()

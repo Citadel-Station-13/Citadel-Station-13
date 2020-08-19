@@ -100,13 +100,11 @@
 	else
 		return ..()
 
-
 /datum/species/synth/handle_body(mob/living/carbon/human/H)
 	if(fake_species)
 		fake_species.handle_body(H)
 	else
 		return ..()
-
 
 /datum/species/synth/handle_mutant_bodyparts(mob/living/carbon/human/H, forced_colour)
 	if(fake_species)
