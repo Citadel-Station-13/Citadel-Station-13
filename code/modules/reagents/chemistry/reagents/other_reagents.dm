@@ -2209,8 +2209,8 @@
 
 //body bluids
 /datum/reagent/consumable/semen
-	name = "?"
-	description = "?"
+	name = "Semen"
+	description = "Sperm from some animal. Useless for anything but insemination, really."
 	taste_description = "something salty"
 	taste_mult = 2 //Not very overpowering flavor
 	data = list("donor"=null,"viruses"=null,"donor_DNA"=null,"blood_type"=null,"resistances"=null,"trace_chem"=null,"mind"=null,"ckey"=null,"gender"=null,"real_name"=null)
@@ -2218,6 +2218,7 @@
 	color = "#FFFFFF" // rgb: 255, 255, 255
 	can_synth = FALSE
 	nutriment_factor = 0.5 * REAGENTS_METABOLISM
+	var/decal_path = /obj/effect/decal/cleanable/semen
 
 /datum/reagent/consumable/semen/reaction_turf(turf/T, reac_volume)
 	if(!istype(T))
@@ -2227,12 +2228,12 @@
 
 	var/obj/effect/decal/cleanable/semen/S = locate() in T
 	if(!S)
-		S = new(T)
+		S = new decal_path(T)
 	if(data["blood_DNA"])
 		S.add_blood_DNA(list(data["blood_DNA"] = data["blood_type"]))
 
 /obj/effect/decal/cleanable/semen
-	name = "?"
+	name = "semen"
 	desc = null
 	gender = PLURAL
 	density = 0
@@ -2251,50 +2252,19 @@
 		blood_DNA |= S.blood_DNA
 	return ..()
 
-/datum/reagent/consumable/femcum
-	name = "?"
-	description = "?"
+/datum/reagent/consumable/semen/femcum
+	name = "Female Ejaculate"
+	description = "Vaginal lubricant found in most mammals and other animals of similar nature. Where you found this is your own business."
 	taste_description = "something with a tang" // wew coders who haven't eaten out a girl.
-	taste_mult = 2
-	data = list("donor"=null,"viruses"=null,"donor_DNA"=null,"blood_type"=null,"resistances"=null,"trace_chem"=null,"mind"=null,"ckey"=null,"gender"=null,"real_name"=null)
-	reagent_state = LIQUID
 	color = "#AAAAAA77"
-	can_synth = FALSE
-	nutriment_factor = 0.5 * REAGENTS_METABOLISM
+	decal_path = /obj/effect/decal/cleanable/semen/femcum
 
-/obj/effect/decal/cleanable/femcum
-	name = "?"
-	desc = null
-	gender = PLURAL
-	density = 0
-	layer = ABOVE_NORMAL_TURF_LAYER
-	icon = 'icons/obj/genitals/effects.dmi'
+/obj/effect/decal/cleanable/semen/femcum
+	name = "female ejaculate"
 	icon_state = "fem1"
 	random_icon_states = list("fem1", "fem2", "fem3", "fem4")
 	blood_state = null
 	bloodiness = null
-
-/obj/effect/decal/cleanable/femcum/Initialize(mapload)
-	. = ..()
-	dir = GLOB.cardinals
-	add_blood_DNA(list("Non-human DNA" = "A+"))
-
-/obj/effect/decal/cleanable/femcum/replace_decal(obj/effect/decal/cleanable/femcum/F)
-	if(F.blood_DNA)
-		blood_DNA |= F.blood_DNA
-	return ..()
-
-/datum/reagent/consumable/femcum/reaction_turf(turf/T, reac_volume)
-	if(!istype(T))
-		return
-	if(reac_volume < 10)
-		return
-
-	var/obj/effect/decal/cleanable/femcum/S = locate() in T
-	if(!S)
-		S = new(T)
-	if(data["blood_DNA"])
-		S.add_blood_DNA(list(data["blood_DNA"] = data["blood_type"]))
 
 /datum/reagent/determination
 	name = "Determination"
@@ -2411,4 +2381,3 @@ datum/reagent/eldritch
 			M.reagents.del_reagent(/datum/reagent/hairball)
 			return
 	..()
-
