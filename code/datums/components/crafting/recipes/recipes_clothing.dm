@@ -40,6 +40,16 @@
 	reqs = list(/obj/item/paper = 20)
 	category = CAT_CLOTHING
 
+/datum/crafting_recipe/kittyears
+	name = "Breathaclava"
+	result = /obj/item/clothing/mask/balaclava/breath
+	time = 10
+	reqs = list(/obj/item/clothing/mask/balaclava = 1,
+				/obj/item/clothing/mask/breath = 1)
+	category = CAT_CLOTHING
+
+
+
 /datum/crafting_recipe/armwraps
 	name = "Armwraps"
 	result = /obj/item/clothing/gloves/fingerless/pugilist
