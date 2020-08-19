@@ -1,6 +1,0 @@
-author: "SandPoot"
-delete-after: True
-changes: 
-  - rscadd: "You can now see for how long someone was ssd(skyrat port)."
-  - rscdel: "Removed the \"advanced exosuit fabricator\", goodbye."
-  - tweak: "Fix-air was meant to be in Admin category, i'm not editing the admin menus, at least not now."
