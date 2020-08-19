@@ -505,7 +505,7 @@
 	else if (select_alteration == "Ears")
 		var/list/snowflake_ears_list = list("Normal" = null)
 		for(var/path in GLOB.mam_ears_list)
-			var/datum/sprite_accessory/mam_ears/instance = GLOB.mam_ears_list[path]
+			var/datum/sprite_accessory/ears/mam_ears/instance = GLOB.mam_ears_list[path]
 			if(istype(instance, /datum/sprite_accessory))
 				var/datum/sprite_accessory/S = instance
 				if((!S.ckeys_allowed) || (S.ckeys_allowed.Find(H.client.ckey)))
@@ -519,7 +519,7 @@
 	else if (select_alteration == "Snout")
 		var/list/snowflake_snouts_list = list("Normal" = null)
 		for(var/path in GLOB.mam_snouts_list)
-			var/datum/sprite_accessory/mam_snouts/instance = GLOB.mam_snouts_list[path]
+			var/datum/sprite_accessory/snouts/mam_snouts/instance = GLOB.mam_snouts_list[path]
 			if(istype(instance, /datum/sprite_accessory))
 				var/datum/sprite_accessory/S = instance
 				if((!S.ckeys_allowed) || (S.ckeys_allowed.Find(H.client.ckey)))
@@ -550,7 +550,7 @@
 	else if (select_alteration == "Tail")
 		var/list/snowflake_tails_list = list("Normal" = null)
 		for(var/path in GLOB.mam_tails_list)
-			var/datum/sprite_accessory/mam_tails/instance = GLOB.mam_tails_list[path]
+			var/datum/sprite_accessory/tails/mam_tails/instance = GLOB.mam_tails_list[path]
 			if(istype(instance, /datum/sprite_accessory))
 				var/datum/sprite_accessory/S = instance
 				if((!S.ckeys_allowed) || (S.ckeys_allowed.Find(H.client.ckey)))

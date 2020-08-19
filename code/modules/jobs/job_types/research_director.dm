@@ -17,6 +17,7 @@
 	exp_type = EXP_TYPE_CREW
 
 	outfit = /datum/outfit/job/rd
+	plasma_outfit = /datum/outfit/plasmaman/rd
 
 	access = list(ACCESS_RD, ACCESS_HEADS, ACCESS_TOX, ACCESS_GENETICS, ACCESS_MORGUE,
 						ACCESS_TOX_STORAGE, ACCESS_TELEPORTER, ACCESS_SEC_DOORS,

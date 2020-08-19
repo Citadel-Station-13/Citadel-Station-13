@@ -10,6 +10,7 @@
 	selection_color = "#bbe291"
 
 	outfit = /datum/outfit/job/botanist
+	plasma_outfit = /datum/outfit/plasmaman/botany
 
 	access = list(ACCESS_HYDROPONICS, ACCESS_BAR, ACCESS_KITCHEN, ACCESS_MORGUE, ACCESS_MINERAL_STOREROOM)
 	minimal_access = list(ACCESS_HYDROPONICS, ACCESS_MORGUE, ACCESS_MINERAL_STOREROOM)

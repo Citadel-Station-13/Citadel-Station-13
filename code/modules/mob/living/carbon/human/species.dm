@@ -644,106 +644,19 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 	if(!mutant_bodyparts)
 		return
 
-	var/obj/item/bodypart/head/HD = H.get_bodypart(BODY_ZONE_HEAD)
 	var/tauric = mutant_bodyparts["taur"] && H.dna.features["taur"] && H.dna.features["taur"] != "None"
 
-	if(mutant_bodyparts["tail_lizard"])
-		if((H.wear_suit && (H.wear_suit.flags_inv & HIDETAUR)) || tauric)
-			bodyparts_to_add -= "tail_lizard"
-
-	if(mutant_bodyparts["waggingtail_lizard"])
-		if((H.wear_suit && (H.wear_suit.flags_inv & HIDETAUR)) || tauric)
-			bodyparts_to_add -= "waggingtail_lizard"
-		else if (mutant_bodyparts["tail_lizard"])
-			bodyparts_to_add -= "waggingtail_lizard"
-
-	if(mutant_bodyparts["tail_human"])
-		if((H.wear_suit && (H.wear_suit.flags_inv & HIDETAUR)) || tauric)
-			bodyparts_to_add -= "tail_human"
-
-	if(mutant_bodyparts["waggingtail_human"])
-		if((H.wear_suit && (H.wear_suit.flags_inv & HIDETAUR)) || tauric)
-			bodyparts_to_add -= "waggingtail_human"
-		else if (mutant_bodyparts["tail_human"])
-			bodyparts_to_add -= "waggingtail_human"
-
-	if(mutant_bodyparts["spines"])
-		if(!H.dna.features["spines"] || H.dna.features["spines"] == "None" || H.wear_suit && (H.wear_suit.flags_inv & HIDETAUR))
-			bodyparts_to_add -= "spines"
-
-	if(mutant_bodyparts["waggingspines"])
-		if(!H.dna.features["spines"] || H.dna.features["spines"] == "None" || H.wear_suit && (H.wear_suit.flags_inv & HIDETAUR))
-			bodyparts_to_add -= "waggingspines"
-		else if (mutant_bodyparts["tail"])
-			bodyparts_to_add -= "waggingspines"
-
-	if(mutant_bodyparts["snout"]) //Take a closer look at that snout!
-		if((H.wear_mask && (H.wear_mask.flags_inv & HIDESNOUT)) || (H.head && (H.head.flags_inv & HIDESNOUT)) || !HD || HD.status == BODYPART_ROBOTIC)
-			bodyparts_to_add -= "snout"
-
-	if(mutant_bodyparts["frills"])
-		if(!H.dna.features["frills"] || H.dna.features["frills"] == "None" || H.head && (H.head.flags_inv & HIDEEARS) || !HD || HD.status == BODYPART_ROBOTIC)
-			bodyparts_to_add -= "frills"
-
-	if(mutant_bodyparts["horns"])
-		if(!H.dna.features["horns"] || H.dna.features["horns"] == "None" || H.head && (H.head.flags_inv & HIDEHAIR) || (H.wear_mask && (H.wear_mask.flags_inv & HIDEHAIR)) || !HD || HD.status == BODYPART_ROBOTIC)
-			bodyparts_to_add -= "horns"
-
-	if(mutant_bodyparts["ears"])
-		if(!H.dna.features["ears"] || H.dna.features["ears"] == "None" || H.head && (H.head.flags_inv & HIDEEARS) || (H.wear_mask && (H.wear_mask.flags_inv & HIDEEARS)) || !HD || HD.status == BODYPART_ROBOTIC)
-			bodyparts_to_add -= "ears"
-
-	if(mutant_bodyparts["wings"])
-		if(!H.dna.features["wings"] || H.dna.features["wings"] == "None" || (H.wear_suit && (H.wear_suit.flags_inv & HIDEJUMPSUIT) && (!H.wear_suit.species_exception || !is_type_in_list(src, H.wear_suit.species_exception))))
-			bodyparts_to_add -= "wings"
-
-	if(mutant_bodyparts["wings_open"])
-		if(H.wear_suit && (H.wear_suit.flags_inv & HIDEJUMPSUIT) && (!H.wear_suit.species_exception || !is_type_in_list(src, H.wear_suit.species_exception)))
-			bodyparts_to_add -= "wings_open"
-		else if (mutant_bodyparts["wings"])
-			bodyparts_to_add -= "wings_open"
-
-	if(mutant_bodyparts["insect_fluff"])
-		if(!H.dna.features["insect_fluff"] || H.dna.features["insect_fluff"] == "None" || H.wear_suit && (H.wear_suit.flags_inv & HIDEJUMPSUIT))
-			bodyparts_to_add -= "insect_fluff"
-
-//CITADEL EDIT
-	//Race specific bodyparts:
-	//Xenos
-	if(mutant_bodyparts["xenodorsal"])
-		if(!H.dna.features["xenodorsal"] || H.dna.features["xenodorsal"] == "None" || (H.wear_suit && (H.wear_suit.flags_inv & HIDEJUMPSUIT)))
-			bodyparts_to_add -= "xenodorsal"
-	if(mutant_bodyparts["xenohead"])//This is an overlay for different castes using different head crests
-		if(!H.dna.features["xenohead"] || H.dna.features["xenohead"] == "None" || H.head && (H.head.flags_inv & HIDEHAIR) || (H.wear_mask && (H.wear_mask.flags_inv & HIDEHAIR)) || !HD || HD.status == BODYPART_ROBOTIC)
-			bodyparts_to_add -= "xenohead"
-	if(mutant_bodyparts["xenotail"])
-		if(!H.dna.features["xenotail"] || H.dna.features["xenotail"] == "None" || H.wear_suit && (H.wear_suit.flags_inv & HIDEJUMPSUIT))
-			bodyparts_to_add -= "xenotail"
-
-	//Other Races
-	if(mutant_bodyparts["mam_tail"])
-		if((H.wear_suit && (H.wear_suit.flags_inv & HIDETAUR)) || tauric)
-			bodyparts_to_add -= "mam_tail"
-
-	if(mutant_bodyparts["mam_waggingtail"])
-		if((H.wear_suit && (H.wear_suit.flags_inv & HIDETAUR)) || tauric)
-			bodyparts_to_add -= "mam_waggingtail"
-		else if (mutant_bodyparts["mam_tail"])
-			bodyparts_to_add -= "mam_waggingtail"
-
-	if(mutant_bodyparts["mam_ears"])
-		if(!H.dna.features["mam_ears"] || H.dna.features["mam_ears"] == "None" || H.head && (H.head.flags_inv & HIDEEARS) || (H.wear_mask && (H.wear_mask.flags_inv & HIDEEARS)) || !HD || HD.status == BODYPART_ROBOTIC)
-			bodyparts_to_add -= "mam_ears"
-
-	if(mutant_bodyparts["mam_snouts"]) //Take a closer look at that snout!
-		if((H.wear_mask && (H.wear_mask.flags_inv & HIDESNOUT)) || (H.head && (H.head.flags_inv & HIDESNOUT)) || !HD || HD.status == BODYPART_ROBOTIC)
-			bodyparts_to_add -= "mam_snouts"
-
-	if(mutant_bodyparts["taur"])
-		if(!tauric || (H.wear_suit && (H.wear_suit.flags_inv & HIDETAUR)))
-			bodyparts_to_add -= "taur"
-
-//END EDIT
+	for(var/mutant_part in mutant_bodyparts)
+		var/reference_list = GLOB.mutant_reference_list[mutant_part]
+		if(reference_list)
+			var/datum/sprite_accessory/S
+			var/transformed_part = GLOB.mutant_transform_list[mutant_part]
+			if(transformed_part)
+				S = reference_list[H.dna.features[transformed_part]]
+			else
+				S = reference_list[H.dna.features[mutant_part]]
+			if(!S || S.is_not_visible(H, tauric))
+				bodyparts_to_add -= mutant_part
 
 	//Digitigrade legs are stuck in the phantom zone between true limbs and mutant bodyparts. Mainly it just needs more agressive updating than most limbs.
 	var/update_needed = FALSE
@@ -780,76 +693,22 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 	var/list/dna_feature_as_text_string = list()
 
 	for(var/bodypart in bodyparts_to_add)
-		var/datum/sprite_accessory/S
-		switch(bodypart)
-			if("tail_lizard")
-				S = GLOB.tails_list_lizard[H.dna.features["tail_lizard"]]
-			if("waggingtail_lizard")
-				S = GLOB.animated_tails_list_lizard[H.dna.features["tail_lizard"]]
-			if("tail_human")
-				S = GLOB.tails_list_human[H.dna.features["tail_human"]]
-			if("waggingtail_human")
-				S = GLOB.animated_tails_list_human[H.dna.features["tail_human"]]
-			if("spines")
-				S = GLOB.spines_list[H.dna.features["spines"]]
-			if("waggingspines")
-				S = GLOB.animated_spines_list[H.dna.features["spines"]]
-			if("snout")
-				S = GLOB.snouts_list[H.dna.features["snout"]]
-			if("frills")
-				S = GLOB.frills_list[H.dna.features["frills"]]
-			if("horns")
-				S = GLOB.horns_list[H.dna.features["horns"]]
-			if("ears")
-				S = GLOB.ears_list[H.dna.features["ears"]]
-			if("body_markings")
-				S = GLOB.body_markings_list[H.dna.features["body_markings"]]
-			if("wings")
-				S = GLOB.wings_list[H.dna.features["wings"]]
-			if("wingsopen")
-				S = GLOB.wings_open_list[H.dna.features["wings"]]
-			if("deco_wings")
-				S = GLOB.deco_wings_list[H.dna.features["deco_wings"]]
-			if("legs")
-				S = GLOB.legs_list[H.dna.features["legs"]]
-			if("insect_wings")
-				S = GLOB.insect_wings_list[H.dna.features["insect_wings"]]
-			if("insect_fluff")
-				S = GLOB.insect_fluffs_list[H.dna.features["insect_fluff"]]
-			if("insect_markings")
-				S = GLOB.insect_markings_list[H.dna.features["insect_markings"]]
-			if("caps")
-				S = GLOB.caps_list[H.dna.features["caps"]]
-			if("ipc_screen")
-				S = GLOB.ipc_screens_list[H.dna.features["ipc_screen"]]
-			if("ipc_antenna")
-				S = GLOB.ipc_antennas_list[H.dna.features["ipc_antenna"]]
-			if("mam_tail")
-				S = GLOB.mam_tails_list[H.dna.features["mam_tail"]]
-			if("mam_waggingtail")
-				S = GLOB.mam_tails_animated_list[H.dna.features["mam_tail"]]
-			if("mam_body_markings")
-				S = GLOB.mam_body_markings_list[H.dna.features["mam_body_markings"]]
-			if("mam_ears")
-				S = GLOB.mam_ears_list[H.dna.features["mam_ears"]]
-			if("mam_snouts")
-				S = GLOB.mam_snouts_list[H.dna.features["mam_snouts"]]
-			if("taur")
-				S = GLOB.taur_list[H.dna.features["taur"]]
-			if("xenodorsal")
-				S = GLOB.xeno_dorsal_list[H.dna.features["xenodorsal"]]
-			if("xenohead")
-				S = GLOB.xeno_head_list[H.dna.features["xenohead"]]
-			if("xenotail")
-				S = GLOB.xeno_tail_list[H.dna.features["xenotail"]]
+		var/reference_list = GLOB.mutant_reference_list[bodypart]
+		if(reference_list)
+			var/datum/sprite_accessory/S
+			var/transformed_part = GLOB.mutant_transform_list[bodypart]
+			if(transformed_part)
+				S = reference_list[H.dna.features[transformed_part]]
+			else
+				S = reference_list[H.dna.features[bodypart]]
 
-		if(!S || S.icon_state == "none")
-			continue
+			if(!S || S.icon_state == "none")
+				continue
 
-		for(var/L in S.relevant_layers)
-			LAZYADD(relevant_layers["[L]"], S)
-		if(!S.mutant_part_string)
-			dna_feature_as_text_string[S] = bodypart
+			for(var/L in S.relevant_layers)
+				LAZYADD(relevant_layers["[L]"], S)
+			if(!S.mutant_part_string)
+				dna_feature_as_text_string[S] = bodypart
 
 	var/static/list/layer_text = list(
 		"[BODY_BEHIND_LAYER]" = "BEHIND",
@@ -2048,17 +1907,8 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 	return
 
 /**
-
-
-
   * The human species version of [/mob/living/carbon/proc/get_biological_state]. Depends on the HAS_FLESH and HAS_BONE species traits, having bones lets you have bone wounds, having flesh lets you have burn, slash, and piercing wounds
-
-
-
   */
-
-
-
 /datum/species/proc/get_biological_state(mob/living/carbon/human/H)
 	. = BIO_INORGANIC
 	if(HAS_FLESH in species_traits)
@@ -2073,7 +1923,6 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 /datum/species/proc/breathe(mob/living/carbon/human/H)
 	if(HAS_TRAIT(H, TRAIT_NOBREATH))
 		return TRUE
-
 
 /datum/species/proc/handle_environment(datum/gas_mixture/environment, mob/living/carbon/human/H)
 	if(!environment)
@@ -2266,7 +2115,6 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 /datum/species/proc/spec_stun(mob/living/carbon/human/H,amount)
 	if(H)
 		stop_wagging_tail(H)
-
 	. = stunmod * H.physiology.stun_mod * amount
 
 //////////////
