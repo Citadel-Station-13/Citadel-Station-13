@@ -46,13 +46,6 @@
 	range = 4
 	log_override = TRUE
 
-/obj/item/gun/energy/kinetic_accelerator/premiumka/update_icon()
-	..()
-	if(!can_shoot())
-		add_overlay("[icon_state]_empty")
-	else
-		cut_overlays()
-
 /obj/item/gun/energy/kinetic_accelerator/getinaccuracy(mob/living/user, bonus_spread, stamloss)
 	var/old_fire_delay = fire_delay //It's pretty irrelevant tbh but whatever.
 	fire_delay = overheat_time
@@ -187,11 +180,9 @@
 	overheat = FALSE
 
 /obj/item/gun/energy/kinetic_accelerator/update_icon()
-	..()
+	. += ..()
 	if(!can_shoot())
-		add_overlay("[icon_state]_empty")
-	else
-		cut_overlays()
+		. += "[icon_state]_empty"
 
 //Casing
 /obj/item/ammo_casing/energy/kinetic

@@ -150,7 +150,6 @@
 	if (TRUE) {\
 		var/list/ad = A.add_overlays;\
 		var/list/rm = A.remove_overlays;\
-		var/list/po = A.priority_overlays;\
 		if(LAZYLEN(rm)){\
 			A.overlays -= rm;\
 			A.remove_overlays = null;\
@@ -158,12 +157,6 @@
 		if(LAZYLEN(ad)){\
 			A.overlays |= ad;\
 			A.add_overlays = null;\
-		}\
-		if(LAZYLEN(po)){\
-			A.overlays |= po;\
-		}\
-		else{\
-			A.priority_overlays = null;\
 		}\
 		A.flags_1 &= ~OVERLAY_QUEUED_1;\
 	}
