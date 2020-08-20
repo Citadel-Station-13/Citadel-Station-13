@@ -179,8 +179,8 @@
 	update_icon()
 	overheat = FALSE
 
-/obj/item/gun/energy/kinetic_accelerator/update_icon()
-	. += ..()
+/obj/item/gun/energy/kinetic_accelerator/update_overlays()
+	. = ..()
 	if(!can_shoot())
 		. += "[icon_state]_empty"
 
