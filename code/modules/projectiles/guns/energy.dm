@@ -249,9 +249,9 @@
 	item_state = new_item_state
 
 /obj/item/gun/energy/update_overlays()
+	. = ..()
 	if(QDELETED(src))
 		return
-	..()
 	if(!automatic_charge_overlays)
 		return
 	var/overlay_icon_state  = "[icon_state]_charge"
