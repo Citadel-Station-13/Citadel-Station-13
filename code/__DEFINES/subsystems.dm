@@ -146,6 +146,7 @@
 #define SSAIR_EQUALIZE 8
 #define SSAIR_ACTIVETURFS 9
 
+// |= on overlays is not actually guaranteed to not add same appearances but we're optimistically using it anyway.
 #define COMPILE_OVERLAYS(A)\
 	if (TRUE) {\
 		var/list/ad = A.add_overlays;\
