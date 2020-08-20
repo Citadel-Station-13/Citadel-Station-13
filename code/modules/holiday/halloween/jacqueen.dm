@@ -335,7 +335,7 @@
 		if(2)
 			visible_message("<b>[src]</b> waves their arms around, <span class='spooky'>\"If only you had a better upbringing, your ears are now full of my singing!\"</span>")
 			var/client/C2 = C.client
-			C2.chatOutput.sendMusic("https://puu.sh/ExBbv.mp4", 1)//I hope this works!
+			C.tgui_panel?.play_music("https://puu.sh/ExBbv.mp4")
 		if(3)
 			visible_message("<b>[src]</b> waves their arms around, <span class='spooky'>\"You're cute little bumpkin, On your head is a pumpkin!\"</span>")
 			if(C.head)
