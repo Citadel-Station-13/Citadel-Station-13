@@ -853,7 +853,7 @@
 	id = "TEG_igniter"
 	},
 /mob/living/carbon/monkey{
-	name = "Captain Plasma"
+	name = "Mumkey Jones"
 	},
 /obj/item/clothing/head/hardhat/atmos,
 /turf/open/floor/engine/vacuum,
