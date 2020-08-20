@@ -62,11 +62,6 @@
 	last_channel_played = channel_text
 	for(var/i in hearing_mobs)
 		var/mob/M = i
-		if(user && HAS_TRAIT(user, TRAIT_MUSICIAN) && isliving(M))
-			var/mob/living/L = M
-			L.apply_status_effect(STATUS_EFFECT_GOOD_MUSIC)
-		if(!(M?.client?.prefs?.toggles & SOUND_INSTRUMENTS))
-			continue
 		M.playsound_local(get_turf(parent), null, volume, FALSE, K.frequency, INSTRUMENT_DISTANCE_NO_FALLOFF, channel, null, copy, distance_multiplier = INSTRUMENT_DISTANCE_FALLOFF_BUFF)
 		// Could do environment and echo later but not for now
 
