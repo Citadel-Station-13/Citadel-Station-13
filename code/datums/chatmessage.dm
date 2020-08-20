@@ -172,7 +172,7 @@
 	//dogborg check sandstorm thingy thing.
 	var/mob/living/silicon/robot/R = owner
 	if(iscyborg(R)) //without this it would check for module on every mob speaking, and you would NOT remove this unless you love runtimes
-		if(R.module.dogborg == TRUE)
+		if(R.module.dogborg == TRUE || R.dogborg == TRUE) //BOYS, WHAT THE HELL, GREAT INCONSISTENCY!
 			message.pixel_x = 16
 		else
 			message.pixel_x = 0

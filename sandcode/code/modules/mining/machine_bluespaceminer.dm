@@ -1,8 +1,8 @@
 /obj/machinery/mineral/bluespace_miner
 	name = "bluespace mining machine"
 	desc = "A machine that uses the magic of Bluespace to slowly generate materials and add them to a linked ore silo."
-	icon = 'icons/obj/machines/mining_machines.dmi'
-	icon_state = "stacker"
+	icon = 'sandcode/icons/obj/machines/mining_machines.dmi'
+	icon_state = "bsminer"
 	density = TRUE
 	circuit = /obj/item/circuitboard/machine/bluespace_miner
 	layer = BELOW_OBJ_LAYER
@@ -31,6 +31,7 @@
 		. += "<span class='warning'>Ore silo access is on hold, please contact the quartermaster.</span>"
 
 /obj/machinery/mineral/bluespace_miner/process()
+	update_icon_state()
 	if(!materials?.silo || materials?.on_hold())
 		return
 	var/datum/component/material_container/mat_container = materials.mat_container
@@ -52,4 +53,34 @@
 				materials[i] += amt
 				total_amount += amt
 		return (total_amount - total_amount_saved)
+	return FALSE
+
+/obj/machinery/mineral/bluespace_miner/update_icon_state()
+	if(!powered())
+		if(!panel_open)
+			icon_state = "bsminer-unpowered"
+		else
+			icon_state = "bsminer-unpowered-maintenance"
+	else
+		if(!panel_open)
+			icon_state = "bsminer"
+		else
+			icon_state = "bsminer-maintenance"
+
+/obj/machinery/mineral/bluespace_miner/crowbar_act(mob/living/user, obj/item/I)
+	. = ..()
+	if(default_deconstruction_crowbar(I, FALSE))
+		return TRUE
+	
+/obj/machinery/mineral/bluespace_miner/screwdriver_act(mob/living/user, obj/item/screwdriver/I)
+	. = TRUE
+	if(..())
+		return
+	if(!state_open)
+		if(powered())
+			if(default_deconstruction_screwdriver(user, "bsminer-maintenance", "bsminer", I))
+				return TRUE
+		else if(!powered())
+			if(default_deconstruction_screwdriver(user, "bsminer-unpowered-maintenance", "bsminer-unpowered", I))
+				return TRUE
 	return FALSE
