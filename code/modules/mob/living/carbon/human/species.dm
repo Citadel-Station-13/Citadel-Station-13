@@ -1381,8 +1381,8 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 			if(user.dna.species.punchdamagelow)
 				if(atk_verb == ATTACK_EFFECT_KICK) //kicks never miss (provided your species deals more than 0 damage)
 					miss_chance = 0
-				else if(HAS_TRAIT(user, TRAIT_PUGILIST)) //pugilists have a flat 10% miss chance
-					miss_chance = 10
+				else if(HAS_TRAIT(user, TRAIT_PUGILIST)) //pugilists, being good at Punching People, also never miss
+					miss_chance = 0
 				else
 					miss_chance = min(10 + max(puncherstam * 0.5, puncherbrute * 0.5), 100) //probability of miss has a base of 10, and modified based on half brute total. Capped at max 100 to prevent weirdness in prob()
 
@@ -1398,10 +1398,12 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 		var/armor_block = target.run_armor_check(affecting, "melee")
 
 		playsound(target.loc, user.dna.species.attack_sound, 25, 1, -1)
-
+		var/initial_atk_verb = atk_verb
+		if(atk_verb == ATTACK_EFFECT_PUNCH)
+			atk_verb = "punche" // grammar but done in a really godawful manner honestly i mean fuck
 		target.visible_message("<span class='danger'>[user] [atk_verb]s [target]!</span>", \
 					"<span class='userdanger'>[user] [atk_verb]s you!</span>", null, COMBAT_MESSAGE_RANGE, null, \
-					user, "<span class='danger'>You [atk_verb] [target]!</span>")
+					user, "<span class='danger'>You [initial_atk_verb] [target]!</span>")
 
 		target.lastattacker = user.real_name
 		target.lastattackerckey = user.ckey

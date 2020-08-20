@@ -91,8 +91,8 @@
 	item = /obj/item/clothing/shoes/wallwalkers
 	cost = 6
 
-/datum/uplink_item/device_tools/guerillagloves
-	name = "Guerilla Gloves"
+/datum/uplink_item/device_tools/guerrillagloves
+	name = "Guerrilla Gloves"
 	desc = "A pair of highly robust combat gripper gloves that excels at performing takedowns at close range, with an added lining of insulation. Careful not to hit a wall!"
 	item = /obj/item/clothing/gloves/tackler/combat/insulated
 	include_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops)
