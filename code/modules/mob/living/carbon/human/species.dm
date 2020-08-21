@@ -1398,12 +1398,9 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 		var/armor_block = target.run_armor_check(affecting, "melee")
 
 		playsound(target.loc, user.dna.species.attack_sound, 25, 1, -1)
-		var/initial_atk_verb = atk_verb
-		if(atk_verb == ATTACK_EFFECT_PUNCH)
-			atk_verb = "punche" // grammar but done in a really godawful manner honestly i mean fuck
-		target.visible_message("<span class='danger'>[user] [atk_verb]s [target]!</span>", \
-					"<span class='userdanger'>[user] [atk_verb]s you!</span>", null, COMBAT_MESSAGE_RANGE, null, \
-					user, "<span class='danger'>You [initial_atk_verb] [target]!</span>")
+		target.visible_message("<span class='danger'>[user] [atk_verb]ed [target]!</span>", \
+					"<span class='userdanger'>[user] [atk_verb]ed you!</span>", null, COMBAT_MESSAGE_RANGE, null, \
+					user, "<span class='danger'>You [atk_verb]ed [target]!</span>")
 
 		target.lastattacker = user.real_name
 		target.lastattackerckey = user.ckey
