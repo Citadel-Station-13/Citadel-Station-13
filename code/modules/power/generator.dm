@@ -42,7 +42,6 @@
 
 
 #define GENRATE 800		// generator output coefficient from Q
-#define LOGISTIC_FUNCTION(L,k,x,x_0) (L/(1+(NUM_E**(-k*(x-x_0)))))
 
 /obj/machinery/power/generator/process_atmos()
 
