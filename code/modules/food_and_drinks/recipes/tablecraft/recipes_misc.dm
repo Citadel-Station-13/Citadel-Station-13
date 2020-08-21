@@ -144,10 +144,97 @@
 /datum/crafting_recipe/food/butteredpotato
 	name = "Buttered mash"
 	reqs = list(
-		/obj/item/reagent_containers/food/snacks/mashedpotato = 1,
+		/obj/item/reagent_containers/food/snacks/cheesewedge = 2,
+		/obj/item/reagent_containers/food/snacks/grown/eggplant = 1
+	)
+	result = /obj/item/reagent_containers/food/snacks/eggplantparm
+	subcategory = CAT_MISCFOOD
+
+/datum/crafting_recipe/food/baguette
+	name = "Baguette"
+	time = 40
+	reqs = list(/datum/reagent/consumable/sodiumchloride = 1,
+				/datum/reagent/consumable/blackpepper = 1,
+				/obj/item/reagent_containers/food/snacks/pastrybase = 2
+	)
+	result = /obj/item/food/baguette
+	subcategory = CAT_MISCFOOD
+
+////////////////////////////////////////////////TOAST////////////////////////////////////////////////
+
+/datum/crafting_recipe/food/slimetoast
+	name = "Slime toast"
+	reqs = list(
+		/datum/reagent/toxin/slimejelly = 5,
+		/obj/item/food/breadslice/plain = 1
+	)
+	result = /obj/item/reagent_containers/food/snacks/jelliedtoast/slime
+	subcategory = CAT_MISCFOOD
+
+/datum/crafting_recipe/food/jelliedyoast
+	name = "Jellied toast"
+	reqs = list(
+		/datum/reagent/consumable/cherryjelly = 5,
+		/obj/item/food/breadslice/plain = 1
+	)
+	result = /obj/item/reagent_containers/food/snacks/jelliedtoast/cherry
+	subcategory = CAT_MISCFOOD
+
+/datum/crafting_recipe/food/butteredtoast
+	name = "Buttered Toast"
+	reqs = list(
+		/obj/item/food/breadslice/plain = 1,
 		/obj/item/reagent_containers/food/snacks/butter = 1
 	)
-	result = /obj/item/reagent_containers/food/snacks/butteredpotato
+	result = /obj/item/reagent_containers/food/snacks/butteredtoast
+	subcategory = CAT_MISCFOOD
+
+/datum/crafting_recipe/food/twobread
+	name = "Two bread"
+	reqs = list(
+		/datum/reagent/consumable/ethanol/wine = 5,
+		/obj/item/food/breadslice/plain = 2
+	)
+	result = /obj/item/reagent_containers/food/snacks/twobread
+	subcategory = CAT_MISCFOOD
+
+/datum/crafting_recipe/food/burrito
+	name ="Burrito"
+	reqs = list(
+		/obj/item/reagent_containers/food/snacks/tortilla = 1,
+		/obj/item/reagent_containers/food/snacks/grown/soybeans = 2
+	)
+	result = /obj/item/reagent_containers/food/snacks/burrito
+	subcategory = CAT_MISCFOOD
+
+/datum/crafting_recipe/food/cheesyburrito
+	name ="Cheesy burrito"
+	reqs = list(
+		/obj/item/reagent_containers/food/snacks/tortilla = 1,
+		/obj/item/reagent_containers/food/snacks/cheesewedge = 2,
+		/obj/item/reagent_containers/food/snacks/grown/soybeans = 1
+	)
+	result = /obj/item/reagent_containers/food/snacks/cheesyburrito
+	subcategory = CAT_MISCFOOD
+
+/datum/crafting_recipe/food/carneburrito
+	name ="Carne de asada burrito"
+	reqs = list(
+		/obj/item/reagent_containers/food/snacks/tortilla = 1,
+		/obj/item/reagent_containers/food/snacks/meat/cutlet = 2,
+		/obj/item/reagent_containers/food/snacks/grown/soybeans = 1
+	)
+	result = /obj/item/reagent_containers/food/snacks/carneburrito
+	subcategory = CAT_MISCFOOD
+
+/datum/crafting_recipe/food/fuegoburrito
+	name ="Fuego plasma burrito"
+	reqs = list(
+		/obj/item/reagent_containers/food/snacks/tortilla = 1,
+		/obj/item/reagent_containers/food/snacks/grown/ghost_chili = 2,
+		/obj/item/reagent_containers/food/snacks/grown/soybeans = 1
+	)
+	result = /obj/item/reagent_containers/food/snacks/fuegoburrito
 	subcategory = CAT_MISCFOOD
 
 /datum/crafting_recipe/food/melonfruitbowl

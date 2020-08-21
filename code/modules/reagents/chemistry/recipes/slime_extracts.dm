@@ -168,7 +168,10 @@
 		var/chosen = getbork()
 		var/obj/B = new chosen(T)
 		if(prob(5))//Fry it!
-			B.fry() // actually set the name and colour it
+			var/obj/item/food/deepfryholder/fried
+			fried = new(T, B)
+			fried.fry() // actually set the name and colour it
+			B = fried
 		if(prob(50))
 			for(var/j in 1 to rand(1, 3))
 				step(B, pick(NORTH,SOUTH,EAST,WEST))

@@ -83,6 +83,7 @@
 	wound_bonus = -5
 	bare_wound_bonus = 10
 	custom_price = PRICE_NORMAL
+	tool_behaviour = TOOL_KNIFE
 
 /obj/item/kitchen/knife/Initialize(mapload)
 	. = ..()

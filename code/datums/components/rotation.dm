@@ -43,7 +43,7 @@
 		RegisterSignal(parent, COMSIG_CLICK_ALT, .proc/HandRot)
 		RegisterSignal(parent, COMSIG_PARENT_EXAMINE, .proc/ExamineMessage)
 	if(rotation_flags & ROTATION_WRENCH)
-		RegisterSignal(parent, COMSIG_PARENT_ATTACKBY, .proc/WrenchRot)
+		RegisterSignal(parent, COMSIG_ATOM_TOOL_ACT(TOOL_WRENCH), .proc/WrenchRot)
 
 /datum/component/simple_rotation/proc/add_verbs()
 	if(rotation_flags & ROTATION_VERBS)
