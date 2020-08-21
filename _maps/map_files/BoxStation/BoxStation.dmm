@@ -5033,7 +5033,7 @@
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /turf/open/floor/plating,
-/area/solar/port/fore)
+/area/maintenance/solars/port/fore)
 "ajr" = (
 /obj/structure/table/wood,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -45035,7 +45035,7 @@
 	dir = 4
 	},
 /turf/closed/wall/r_wall,
-/area/engine/engineering)
+/area/engine/atmos)
 "cez" = (
 /obj/machinery/atmospherics/pipe/simple/cyan/visible,
 /turf/open/floor/plasteel,
@@ -54806,10 +54806,6 @@
 	dir = 8
 	},
 /area/medical/sleeper)
-"haL" = (
-/obj/structure/lattice,
-/turf/open/space/basic,
-/area/space)
 "haM" = (
 /obj/item/radio/intercom{
 	name = "Station Intercom (General)";
@@ -57159,10 +57155,6 @@
 /obj/item/bedsheet/green,
 /turf/open/floor/plasteel,
 /area/security/brig)
-"okM" = (
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/plating/airless,
-/area/space/nearstation)
 "old" = (
 /obj/effect/turf_decal/tile/red{
 	dir = 8
@@ -58892,7 +58884,7 @@
 	req_access_txt = "10; 13"
 	},
 /turf/open/floor/plating,
-/area/solar/port/aft)
+/area/maintenance/solars/port/aft)
 "tHh" = (
 /obj/machinery/disposal/bin,
 /obj/effect/turf_decal/tile/red,
@@ -59066,10 +59058,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/starboard)
-"ucr" = (
-/obj/structure/lattice,
-/turf/open/space,
-/area/space)
 "udT" = (
 /obj/machinery/atmospherics/pipe/manifold/purple/visible,
 /turf/open/floor/plasteel,
@@ -67580,7 +67568,7 @@ gXs
 gXs
 gJi
 gJi
-haL
+gXs
 aag
 gJi
 aaa
@@ -68334,7 +68322,7 @@ aaa
 aaa
 aaa
 aae
-ktS
+aaa
 gXs
 aaa
 aaa
@@ -68591,7 +68579,7 @@ aaa
 aaa
 aaa
 aaa
-ktS
+aaa
 gXs
 aaa
 aaa
@@ -68848,7 +68836,7 @@ aaa
 aaa
 aaa
 aaa
-ktS
+aaa
 gXs
 aaa
 aaa
@@ -69105,7 +69093,7 @@ aaa
 aaa
 aaa
 aaa
-ktS
+aaa
 gXs
 aaa
 cqq
@@ -69362,7 +69350,7 @@ aaf
 aaf
 aaf
 aaa
-ktS
+aaa
 arB
 asE
 cyb
@@ -78687,9 +78675,9 @@ aaf
 aaa
 aaf
 aaa
-ucr
+aaf
 hrF
-ucr
+aaf
 aaa
 aaf
 aaa
@@ -78944,9 +78932,9 @@ aaf
 aaf
 aaf
 aaf
-okM
+cfx
 tEK
-okM
+cfx
 aaf
 aaf
 aaf
@@ -79450,8 +79438,8 @@ caf
 aoV
 aag
 aaf
-haL
-haL
+gXs
+gXs
 aaf
 aaa
 aaa
@@ -90244,7 +90232,7 @@ bUE
 bWM
 bXJ
 bMK
-bMK
+bYH
 bYH
 bYH
 bVg
@@ -92560,10 +92548,10 @@ bWQ
 bWQ
 caD
 bWQ
-ccw
-ccw
+bLK
+bLK
 cey
-ccw
+bLK
 ccw
 ccw
 ccw
