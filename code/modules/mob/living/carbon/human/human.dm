@@ -1042,7 +1042,7 @@
 
 /mob/living/carbon/human/updatehealth()
 	. = ..()
-
+	dna?.species.spec_updatehealth(src)
 	if(HAS_TRAIT(src, TRAIT_IGNORESLOWDOWN))	//if we want to ignore slowdown from damage and equipment
 		remove_movespeed_modifier(/datum/movespeed_modifier/damage_slowdown)
 		remove_movespeed_modifier(/datum/movespeed_modifier/damage_slowdown_flying)
@@ -1198,6 +1198,9 @@
 
 /mob/living/carbon/human/species/lizard
 	race = /datum/species/lizard
+
+/mob/living/carbon/human/species/ethereal
+	race = /datum/species/ethereal
 
 /mob/living/carbon/human/species/lizard/ashwalker
 	race = /datum/species/lizard/ashwalker

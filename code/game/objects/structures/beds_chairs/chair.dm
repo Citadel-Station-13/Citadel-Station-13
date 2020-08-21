@@ -319,10 +319,43 @@
 	throwforce = 10
 	throw_range = 3
 	hitsound = 'sound/items/trayhit1.ogg'
-	block_chance = 50
 	custom_materials = list(/datum/material/iron = 2000)
 	var/break_chance = 5 //Likely hood of smashing the chair.
 	var/obj/structure/chair/origin_type = /obj/structure/chair
+	item_flags = ITEM_CAN_PARRY | ITEM_CAN_BLOCK
+	block_parry_data = /datum/block_parry_data/chair
+
+/obj/item/chair/ComponentInitialize()
+	. = ..()
+	AddComponent(/datum/component/two_handed, require_twohands = TRUE)
+
+/datum/block_parry_data/chair
+	block_damage_multiplier = 0.7
+	block_stamina_efficiency = 2
+	block_stamina_cost_per_second = 1.5
+	block_slowdown = 0.5
+	block_lock_attacking = FALSE
+	block_lock_sprinting = TRUE
+	block_start_delay = 1.5
+	block_damage_absorption = 7
+	block_damage_limit = 20
+	block_resting_stamina_penalty_multiplier = 2
+	block_projectile_mitigation = 20
+	parry_stamina_cost = 5
+	parry_time_windup = 1
+	parry_time_active = 11
+	parry_time_spindown = 2
+	parry_time_perfect = 1.5
+	parry_time_perfect_leeway = 1
+	parry_imperfect_falloff_percent = 7.5
+	parry_efficiency_to_counterattack = 100
+	parry_efficiency_considered_successful = 50
+	parry_efficiency_perfect = 120
+	parry_efficiency_perfect_override = list(
+		TEXT_ATTACK_TYPE_PROJECTILE = 30,
+	)
+	parry_failed_stagger_duration = 3.5 SECONDS
+	parry_data = list(PARRY_COUNTERATTACK_MELEE_ATTACK_CHAIN = 2.5)
 
 /obj/item/chair/suicide_act(mob/living/carbon/user)
 	user.visible_message("<span class='suicide'>[user] begins hitting [user.p_them()]self with \the [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
@@ -454,7 +487,7 @@
 	desc = "A bronze bar stool with red silk for a pillow."
 	icon_state = "barbrass"
 	item_chair = /obj/item/chair/stool/bar/bronze
-	buildstacktype = /obj/item/stack/tile/bronze
+	buildstacktype = /obj/item/stack/sheet/bronze
 	buildstackamount = 1
 
 /obj/structure/chair/stool/brass
@@ -470,7 +503,7 @@
 	desc = "A bronze stool with a silk top for comfort."
 	icon_state = "stoolbrass"
 	item_chair = /obj/item/chair/stool/bronze
-	buildstacktype = /obj/item/stack/tile/bronze
+	buildstacktype = /obj/item/stack/sheet/bronze
 	buildstackamount = 1
 
 /obj/item/chair/stool/brass
@@ -536,7 +569,6 @@
 	buildstacktype = /obj/item/stack/tile/brass
 	buildstackamount = 1
 	item_chair = null
-	var/turns = 0
 
 /obj/structure/chair/brass/ComponentInitialize()
 	return //it spins with the power of ratvar, not components.
@@ -548,16 +580,12 @@
 /obj/structure/chair/brass/process()
 	setDir(turn(dir,-90))
 	playsound(src, 'sound/effects/servostep.ogg', 50, FALSE)
-	turns++
-	if(turns >= 8)
-		STOP_PROCESSING(SSfastprocess, src)
 
 /obj/structure/chair/brass/ratvar_act()
 	return
 
 /obj/structure/chair/brass/AltClick(mob/living/user)
 	. = ..()
-	turns = 0
 	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
 		return
 	if(!(datum_flags & DF_ISPROCESSING))
@@ -575,7 +603,7 @@
 	desc = "A spinny chair made of bronze. It has little cogs for wheels!"
 	anchored = FALSE
 	icon_state = "brass_chair"
-	buildstacktype = /obj/item/stack/tile/bronze
+	buildstacktype = /obj/item/stack/sheet/bronze
 	buildstackamount = 1
 	item_chair = null
 

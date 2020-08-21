@@ -11,7 +11,7 @@
 	mutanttail = /obj/item/organ/tail/lizard
 	coldmod = 1.5
 	heatmod = 0.67
-	mutant_bodyparts = list("mcolor" = "0F0", "mcolor2" = "0F0", "mcolor3" = "0F0", "tail_lizard" = "Smooth", "snout" = "Round",
+	mutant_bodyparts = list("mcolor" = "0F0", "mcolor2" = "0F0", "mcolor3" = "0F0", "tail_lizard" = "Smooth", "mam_snouts" = "Round",
 							 "horns" = "None", "frills" = "None", "spines" = "None", "body_markings" = "None",
 							  "legs" = "Digitigrade", "taur" = "None", "deco_wings" = "None")
 	attack_verb = "slash"
@@ -52,6 +52,7 @@
 	species_traits = list(MUTCOLORS,EYECOLOR,LIPS,DIGITIGRADE)
 	inherent_traits = list(TRAIT_CHUNKYFINGERS)
 	mutantlungs = /obj/item/organ/lungs/ashwalker
+	mutanteyes = /obj/item/organ/eyes/night_vision
 	burnmod = 0.9
 	brutemod = 0.9
 	species_language_holder = /datum/language_holder/lizard/ash

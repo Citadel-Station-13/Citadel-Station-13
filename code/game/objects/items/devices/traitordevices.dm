@@ -86,98 +86,102 @@ effective or pretty fucking useless.
 		return
 	if(!used)
 		log_combat(user, M, "irradiated", src)
-		var/cooldown = GetCooldown()
-		used = 1
+		var/cooldown = get_cooldown()
+		used = TRUE
 		icon_state = "health1"
-		handle_cooldown(cooldown) // splits off to handle the cooldown while handling wavelength
+		addtimer(VARSET_CALLBACK(src, used, FALSE), cooldown)
+		addtimer(VARSET_CALLBACK(src, icon_state, "health"), cooldown)
 		to_chat(user, "<span class='warning'>Successfully irradiated [M].</span>")
-		spawn((wavelength+(intensity*4))*5)
-			if(M)
-				if(intensity >= 5)
-					M.apply_effect(round(intensity/0.075), EFFECT_UNCONSCIOUS)
-				M.rad_act(intensity*10)
+		addtimer(CALLBACK(src, .proc/radiation_aftereffect, M), (wavelength+(intensity*4))*5)
 	else
 		to_chat(user, "<span class='warning'>The radioactive microlaser is still recharging.</span>")
 
-/obj/item/healthanalyzer/rad_laser/proc/handle_cooldown(cooldown)
-	spawn(cooldown)
-		used = 0
-		icon_state = "health"
+/obj/item/healthanalyzer/rad_laser/proc/radiation_aftereffect(mob/living/M)
+	if(QDELETED(M))
+		return
+	if(intensity >= 5)
+		M.apply_effect(round(intensity/0.075), EFFECT_UNCONSCIOUS)
+	M.rad_act(intensity*10)
+
+/obj/item/healthanalyzer/rad_laser/proc/get_cooldown()
+	return round(max(10, (stealth*30 + intensity*5 - wavelength/4)))
 
 /obj/item/healthanalyzer/rad_laser/attack_self(mob/user)
 	interact(user)
 
-/obj/item/healthanalyzer/rad_laser/proc/GetCooldown()
-	return round(max(10, (stealth*30 + intensity*5 - wavelength/4)))
-
 /obj/item/healthanalyzer/rad_laser/interact(mob/user)
 	ui_interact(user)
 
-/obj/item/healthanalyzer/rad_laser/ui_interact(mob/user)
-/obj/item/healthanalyzer/rad_laser/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
-									datum/tgui/master_ui = null, datum/ui_state/state = GLOB.hands_state)
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+/obj/item/healthanalyzer/rad_laser/ui_state(mob/user)
+	return GLOB.hands_state
+
+/obj/item/healthanalyzer/rad_laser/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, ui_key, "RadioactiveMicrolaser", "Radioactive Microlaser", ui_x, ui_y, master_ui, state)
+		ui = new(user, src, "RadioactiveMicrolaser")
 		ui.open()
 
-	var/dat = "Irradiation: <A href='?src=[REF(src)];rad=1'>[irradiate ? "On" : "Off"]</A><br>"
-	dat += "Stealth Mode (NOTE: Deactivates automatically while Irradiation is off): <A href='?src=[REF(src)];stealthy=[TRUE]'>[stealth ? "On" : "Off"]</A><br>"
-	dat += "Scan Mode: <a href='?src=[REF(src)];mode=1'>"
-	if(!scanmode)
-		dat += "Scan Health"
-	else if(scanmode == 1)
-		dat += "Scan Reagents"
-	else
-		dat += "Disabled"
-	dat += "</a><br><br>"
+/obj/item/healthanalyzer/rad_laser/ui_data(mob/user)
+	var/list/data = list()
+	data["irradiate"] = irradiate
+	data["stealth"] = stealth
+	data["scanmode"] = scanmode
+	data["intensity"] = intensity
+	data["wavelength"] = wavelength
+	data["on_cooldown"] = used
+	data["cooldown"] = DisplayTimeText(get_cooldown())
+	return data
 
-	dat += {"
-	Radiation Intensity:
-	<A href='?src=[REF(src)];radint=-5'>-</A><A href='?src=[REF(src)];radint=-1'>-</A>
-	[intensity]
-	<A href='?src=[REF(src)];radint=1'>+</A><A href='?src=[REF(src)];radint=5'>+</A><BR>
+/obj/item/healthanalyzer/rad_laser/ui_act(action, params)
+	if(..())
+		return
 
-	Radiation Wavelength:
-	<A href='?src=[REF(src)];radwav=-5'>-</A><A href='?src=[REF(src)];radwav=-1'>-</A>
-	[(wavelength+(intensity*4))]
-	<A href='?src=[REF(src)];radwav=1'>+</A><A href='?src=[REF(src)];radwav=5'>+</A><BR>
-	Laser Cooldown: [DisplayTimeText(GetCooldown())]<BR>
-	"}
-
-	var/datum/browser/popup = new(user, "radlaser", "Radioactive Microlaser Interface", 400, 240)
-	popup.set_content(dat)
-	popup.open()
-
-/obj/item/healthanalyzer/rad_laser/Topic(href, href_list)
-	if(!usr.canUseTopic(src))
-		return 1
-
-	usr.set_machine(src)
-	if(href_list["rad"])
-		irradiate = !irradiate
-
-	else if(href_list["stealthy"])
-		stealth = !stealth
-
-	else if(href_list["mode"])
-		scanmode += 1
-		if(scanmode > 2)
-			scanmode = 0
-
-	else if(href_list["radint"])
-		var/amount = text2num(href_list["radint"])
-		amount += intensity
-		intensity = max(1,(min(20,amount)))
-
-	else if(href_list["radwav"])
-		var/amount = text2num(href_list["radwav"])
-		amount += wavelength
-		wavelength = max(0,(min(120,amount)))
-
-	attack_self(usr)
-	add_fingerprint(usr)
-	return
+	switch(action)
+		if("irradiate")
+			irradiate = !irradiate
+			. = TRUE
+		if("stealth")
+			stealth = !stealth
+			. = TRUE
+		if("scanmode")
+			scanmode = !scanmode
+			. = TRUE
+		if("radintensity")
+			var/target = params["target"]
+			var/adjust = text2num(params["adjust"])
+			if(target == "min")
+				target = 1
+				. = TRUE
+			else if(target == "max")
+				target = 20
+				. = TRUE
+			else if(adjust)
+				target = intensity + adjust
+				. = TRUE
+			else if(text2num(target) != null)
+				target = text2num(target)
+				. = TRUE
+			if(.)
+				target = round(target)
+				intensity = clamp(target, 1, 20)
+		if("radwavelength")
+			var/target = params["target"]
+			var/adjust = text2num(params["adjust"])
+			if(target == "min")
+				target = 0
+				. = TRUE
+			else if(target == "max")
+				target = 120
+				. = TRUE
+			else if(adjust)
+				target = wavelength + adjust
+				. = TRUE
+			else if(text2num(target) != null)
+				target = text2num(target)
+				. = TRUE
+			if(.)
+				target = round(target)
+				wavelength = clamp(target, 0, 120)
 
 /obj/item/shadowcloak
 	name = "cloaker belt"

@@ -28,7 +28,6 @@
 		if(istype(owner.current.loc, /obj/structure/closet/crate/coffin))
 			Torpor_Begin()
 				// Wait before next pass
-	FreeAllVassals() 	// Free my Vassals! (if I haven't yet)
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -270,13 +269,15 @@
 
 /datum/antagonist/bloodsucker/AmFinalDeath()
  	return owner && owner.AmFinalDeath()
-/datum/antagonist/changeling/AmFinalDeath()
- 	return owner && owner.AmFinalDeath()
 
 /datum/mind/proc/AmFinalDeath()
  	return !current || QDELETED(current) || !isliving(current) || isbrain(current) || !get_turf(current) // NOTE: "isliving()" is not the same as STAT == CONSCIOUS. This is to make sure you're not a BORG (aka silicon)
 
 /datum/antagonist/bloodsucker/proc/FinalDeath()
+		//Dont bother if we are already supposed to be dead
+	if(FinalDeath)
+		return 
+	FinalDeath = TRUE //We are now supposed to die. Lets not spam it.
 	if(!iscarbon(owner.current)) //Check for non carbons.
 		owner.current.gib()
 		return
@@ -303,6 +304,7 @@
 			 "<span class='italics'>You hear a wet, bursting sound.</span>")
 		owner.current.gib(TRUE, FALSE, FALSE) //Brain cloning is wierd and allows hellbounds. Lets destroy the brain for safety.
 	playsound(owner.current, 'sound/effects/tendril_destroyed.ogg', 40, TRUE)
+
 
 
 

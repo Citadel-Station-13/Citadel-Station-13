@@ -16,6 +16,11 @@
 	name = "speed loader (.357 AP)"
 	ammo_type = /obj/item/ammo_casing/a357/ap
 
+/obj/item/ammo_box/a357/dumdum
+	name = "speed loader (.357 DumDum)"
+	desc = "Designed to quickly reload revolvers. Usage of these rounds will constitute a war crime in your area."
+	ammo_type = /obj/item/ammo_casing/a357/dumdum
+
 /obj/item/ammo_box/c38
 	name = "speed loader (.38 rubber)"
 	desc = "Designed to quickly reload revolvers."
@@ -148,6 +153,8 @@
 	max_ammo = 4
 	var/pixeloffsetx = 4
 	start_empty = TRUE
+	multiload = FALSE
+	load_delay = 6 //6ds
 
 /obj/item/ammo_box/shotgun/update_overlays()
 	. = ..()

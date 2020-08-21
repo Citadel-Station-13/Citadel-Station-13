@@ -102,6 +102,7 @@
 	export_types = list(/obj/item/stock_parts/cell/high/slime/hypercharged)
 
 //Glass working stuff
+// i'd just like to say how i despise the previous coder's fetish for their funny glasswork
 
 /datum/export/glasswork_dish
 	cost = 300

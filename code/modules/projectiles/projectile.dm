@@ -327,16 +327,18 @@
 	if(!trajectory)
 		return
 	var/turf/T = get_turf(A)
-	if(check_ricochet(A) && A.handle_ricochet(src)) //if you can ricochet, attempt to ricochet off the object
-		on_ricochet(A) //if allowed, use autoaim to ricochet into someone, otherwise default to ricocheting off the object from above
-		var/datum/point/pcache = trajectory.copy_to()
-		if(hitscan)
-			store_hitscan_collision(pcache)
-		decayedRange = max(0, decayedRange - reflect_range_decrease)
-		ricochet_chance *= ricochet_decay_chance
-		damage *= ricochet_decay_damage
-		range = decayedRange
-		return TRUE
+	if(check_ricochet_flag(A) && check_ricochet(A)) //if you can ricochet, attempt to ricochet off the object
+		ricochets++
+		if(A.handle_ricochet(src))
+			on_ricochet(A) //if allowed, use autoaim to ricochet into someone, otherwise default to ricocheting off the object from above
+			var/datum/point/pcache = trajectory.copy_to()
+			if(hitscan)
+				store_hitscan_collision(pcache)
+			decayedRange = max(0, decayedRange - reflect_range_decrease)
+			ricochet_chance *= ricochet_decay_chance
+			damage *= ricochet_decay_damage
+			range = decayedRange
+			return TRUE
 
 	var/distance = get_dist(T, starting) // Get the distance between the turf shot from and the mob we hit and use that for the calculations.
 	if(def_zone && check_zone(def_zone) != BODY_ZONE_CHEST)
@@ -680,7 +682,8 @@
 	if(!ignore_source_check && firer)
 		var/mob/M = firer
 		if((target == firer) || ((target == firer.loc) && ismecha(firer.loc)) || (target in firer.buckled_mobs) || (istype(M) && (M.buckled == target)))
-			return FALSE
+			if(!ricochets) //if it has ricocheted, it can hit the firer.
+				return FALSE
 	if(!ignore_loc && (loc != target.loc))
 		return FALSE
 	if(target in passthrough)

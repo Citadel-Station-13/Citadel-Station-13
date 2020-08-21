@@ -78498,6 +78498,7 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden,
+/mob/living/simple_animal/opossum/poppy,
 /turf/open/floor/plating{
 	icon_state = "platingdmg3"
 	},
@@ -84902,6 +84903,11 @@
 /obj/machinery/light,
 /turf/open/floor/plating/airless,
 /area/hallway/secondary/entry)
+"jGN" = (
+/obj/effect/decal/cleanable/dirt,
+/mob/living/simple_animal/opossum,
+/turf/open/floor/plating,
+/area/maintenance/starboard/aft)
 "jHJ" = (
 /obj/machinery/atmospherics/pipe/simple/general/visible{
 	dir = 9
@@ -125028,7 +125034,7 @@ bAP
 bCf
 bhQ
 bhQ
-bAM
+jGN
 bGH
 bOc
 bHZ

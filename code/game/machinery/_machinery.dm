@@ -92,6 +92,7 @@ Class Procs:
 	pressure_resistance = 15
 	max_integrity = 200
 	layer = BELOW_OBJ_LAYER //keeps shit coming out of the machine from ending up underneath it.
+	flags_1 = DEFAULT_RICOCHET_1
 	flags_ricochet = RICOCHET_HARD
 	ricochet_chance_mod = 0.3
 
@@ -546,3 +547,6 @@ Class Procs:
 	. = . % 9
 	AM.pixel_x = -8 + ((.%3)*8)
 	AM.pixel_y = -8 + (round( . / 3)*8)
+
+/obj/machinery/rust_heretic_act()
+	take_damage(500, BRUTE, "melee", 1) 

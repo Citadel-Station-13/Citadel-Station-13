@@ -543,6 +543,7 @@
 	cold_protection = HEAD
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
 	flags_inv = HIDEHAIR|HIDEEARS
+	rad_flags = RAD_NO_CONTAMINATE
 
 /obj/item/clothing/suit/hooded/wintercoat/centcom
 	name = "centcom winter coat"
@@ -1057,3 +1058,9 @@
 	desc = "Reminds you of someone, but you just can't put your finger on it..."
 	icon_state = "waldo_shirt"
 	item_state = "waldo_shirt"
+
+/obj/item/clothing/suit/samurai
+	name = "Samurai outfit"
+	desc = "An outfit used by traditional japanese warriors."
+	icon_state = "samurai"
+	item_state = "samurai"

@@ -1,5 +1,5 @@
 #define MAX_EMAG_ROCKETS 8
-#define BEACON_COST 5000
+#define BEACON_COST 500
 #define SP_LINKED 1
 #define SP_READY 2
 #define SP_LAUNCH 3
@@ -13,10 +13,9 @@
 		All sales are near instantaneous - please choose carefully"
 	icon_screen = "supply_express"
 	circuit = /obj/item/circuitboard/computer/cargo/express
-	ui_x = 600
-	ui_y = 700
 	blockade_warning = "Bluespace instability detected. Delivery impossible."
 	req_access = list(ACCESS_QM)
+
 	var/message
 	var/printed_beacons = 0 //number of beacons printed. Used to determine beacon names.
 	var/list/meme_pack_data
@@ -42,7 +41,7 @@
 		to_chat(user, "<span class='notice'>You [locked ? "lock" : "unlock"] the interface.</span>")
 		return
 	else if(istype(W, /obj/item/disk/cargo/bluespace_pod))
-		podType = /obj/structure/closet/supplypod/bluespacepod
+		podType = /obj/structure/closet/supplypod/bluespacepod //doesnt effect circuit board, making reversal possible
 		to_chat(user, "<span class='notice'>You insert the disk into [src], allowing for advanced supply delivery vehicles.</span>")
 		qdel(W)
 		return TRUE
@@ -52,22 +51,20 @@
 			sb.link_console(src, user)
 			return TRUE
 		else
-			to_chat(user, "<span class='notice'>[src] is already linked to [sb].</span>")
+			to_chat(user, "<span class='alert'>[src] is already linked to [sb].</span>")
 	..()
 
 /obj/machinery/computer/cargo/express/emag_act(mob/living/user)
-	. = SEND_SIGNAL(src, COMSIG_ATOM_EMAG_ACT)
 	if(obj_flags & EMAGGED)
 		return
-	user.visible_message("<span class='warning'>[user] swipes a suspicious card through [src]!</span>",
-	"<span class='notice'>You change the routing protocols, allowing the Supply Pod to land anywhere on the station.</span>")
+	if(user)
+		user.visible_message("<span class='warning'>[user] swipes a suspicious card through [src]!</span>",
+		"<span class='notice'>You change the routing protocols, allowing the Supply Pod to land anywhere on the station.</span>")
 	obj_flags |= EMAGGED
 	// This also sets this on the circuit board
 	var/obj/item/circuitboard/computer/cargo/board = circuit
 	board.obj_flags |= EMAGGED
 	packin_up()
-	req_access = list()
-	return TRUE
 
 /obj/machinery/computer/cargo/express/proc/packin_up() // oh shit, I'm sorry
 	meme_pack_data = list() // sorry for what?
@@ -89,10 +86,10 @@
 			"desc" = P.desc || P.name // If there is a description, use it. Otherwise use the pack's name.
 		))
 
-/obj/machinery/computer/cargo/express/ui_interact(mob/living/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state) // Remember to use the appropriate state.
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+/obj/machinery/computer/cargo/express/ui_interact(mob/living/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, ui_key, "CargoExpress", name, ui_x, ui_y, master_ui, state)
+		ui = new(user, src, "CargoExpress", name)
 		ui.open()
 
 /obj/machinery/computer/cargo/express/ui_data(mob/user)
@@ -131,9 +128,6 @@
 	return data
 
 /obj/machinery/computer/cargo/express/ui_act(action, params, datum/tgui/ui)
-	if(!allowed(usr))
-		to_chat(usr, "<span class='notice'>Access denied.</span>")
-		return
 	switch(action)
 		if("LZCargo")
 			usingBeacon = FALSE
@@ -152,6 +146,7 @@
 					C.link_console(src, usr)//rather than in beacon's Initialize(), we can assign the computer to the beacon by reusing this proc)
 					printed_beacons++//printed_beacons starts at 0, so the first one out will be called beacon # 1
 					beacon.name = "Supply Pod Beacon #[printed_beacons]"
+
 
 		if("add")//Generate Supply Order first
 			var/id = text2path(params["id"])
@@ -195,7 +190,6 @@
 							LZ = pick(empty_turfs)
 					if (SO.pack.cost <= points_to_check && LZ)//we need to call the cost check again because of the CHECK_TICK call
 						D.adjust_money(-SO.pack.cost)
-						SSblackbox.record_feedback("nested tally", "cargo_imports", 1, list("[SO.pack.cost]", "[SO.pack.name]"))
 						new /obj/effect/abstract/DPtarget(LZ, podType, SO)
 						. = TRUE
 						update_icon()
@@ -209,7 +203,7 @@
 						CHECK_TICK
 					if(empty_turfs && empty_turfs.len)
 						D.adjust_money(-(SO.pack.cost * (0.72*MAX_EMAG_ROCKETS)))
-						SSblackbox.record_feedback("nested tally", "cargo_imports", MAX_EMAG_ROCKETS, list("[SO.pack.cost * 0.72]", "[SO.pack.name]"))
+
 						SO.generateRequisition(get_turf(src))
 						for(var/i in 1 to MAX_EMAG_ROCKETS)
 							var/LZ = pick(empty_turfs)

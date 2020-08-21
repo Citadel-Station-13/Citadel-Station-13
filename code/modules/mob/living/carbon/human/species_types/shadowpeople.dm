@@ -82,12 +82,10 @@
 	M.AddSpell(SW)
 	shadowwalk = SW
 
-
 /obj/item/organ/brain/nightmare/Remove(special = FALSE)
 	if(shadowwalk && owner)
 		owner.RemoveSpell(shadowwalk)
 	return ..()
-
 
 /obj/item/organ/heart/nightmare
 	name = "heart of darkness"
@@ -185,6 +183,8 @@
 			T.ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
 	else if(isliving(AM))
 		var/mob/living/L = AM
+		if(isethereal(AM))
+			AM.emp_act(EMP_LIGHT)
 		if(iscyborg(AM))
 			var/mob/living/silicon/robot/borg = AM
 			if(borg.lamp_intensity)

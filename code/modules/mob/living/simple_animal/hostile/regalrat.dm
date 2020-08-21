@@ -184,6 +184,7 @@
 /mob/living/simple_animal/hostile/rat/Initialize()
 	. = ..()
 	SSmobs.cheeserats += src
+	AddComponent(/datum/component/swarming)
 
 /mob/living/simple_animal/hostile/rat/Destroy()
 	SSmobs.cheeserats -= src
