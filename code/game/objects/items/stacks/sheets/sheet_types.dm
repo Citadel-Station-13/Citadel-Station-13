@@ -415,6 +415,7 @@ GLOBAL_LIST_INIT(cloth_recipes, list ( \
 	force = 0
 	throwforce = 0
 	merge_type = /obj/item/stack/sheet/cloth
+	grind_results = list(/datum/reagent/cellulose = 2)
 
 /obj/item/stack/sheet/cloth/get_main_recipes()
 	. = ..()
@@ -776,6 +777,7 @@ GLOBAL_LIST_INIT(plastic_recipes, list(
 	new /datum/stack_recipe("water bottle", /obj/item/reagent_containers/glass/beaker/waterbottle/empty), \
 	new /datum/stack_recipe("large water bottle", /obj/item/reagent_containers/glass/beaker/waterbottle/large/empty,3), \
 	new /datum/stack_recipe("shower curtain", /obj/structure/curtain, 10, time = 10, one_per_turf = 1, on_floor = 1), \
+	new /datum/stack_recipe("duct", /obj/item/stack/ducts,1), \
 	new /datum/stack_recipe("laser pointer case", /obj/item/glasswork/glass_base/laserpointer_shell, 30), \
 	new /datum/stack_recipe("wet floor sign", /obj/item/caution, 2)))
 
@@ -844,6 +846,7 @@ new /datum/stack_recipe("paper frame door", /obj/structure/mineral_door/paperfra
 	merge_type = /obj/item/stack/sheet/cotton
 	var/pull_effort = 30
 	var/loom_result = /obj/item/stack/sheet/cloth
+	grind_results = list(/datum/reagent/cellulose = 5)
 
 /obj/item/stack/sheet/cotton/ten
 	amount = 10
@@ -859,6 +862,7 @@ new /datum/stack_recipe("paper frame door", /obj/structure/mineral_door/paperfra
 	merge_type = /obj/item/stack/sheet/cotton/durathread
 	pull_effort = 70
 	loom_result = /obj/item/stack/sheet/durathread
+	grind_results = list(/datum/reagent/cellulose = 10)
 
 /obj/item/stack/sheet/meat
 	name = "meat sheets"

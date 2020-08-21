@@ -1,0 +1,5 @@
+author: "Time-Green (copypasta'd by lolman360)"
+delete-after: True
+changes: 
+  - rscadd: "plumbing"
+  - rscadd: "automatic hydro trays"

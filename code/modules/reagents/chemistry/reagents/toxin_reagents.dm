@@ -64,6 +64,7 @@
 	toxpwr = 3
 	pH = 4
 	value = REAGENT_VALUE_RARE //sheets are worth more
+	material = /datum/material/plasma
 
 /datum/reagent/toxin/plasma/on_mob_life(mob/living/carbon/C)
 	if(holder.has_reagent(/datum/reagent/medicine/epinephrine))
