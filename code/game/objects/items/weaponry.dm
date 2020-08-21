@@ -269,9 +269,9 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 
 /obj/item/katana/timestop/suicide_act(mob/living/user) // stolen from hierophant staff
 	new /obj/effect/timestop/magic(get_turf(user), 1, 50, list(user)) // free usage for dying
-	user.say("Heh.. Nothing personnel, kid..", forced = "temporal katana suicide")
 	user.visible_message("<span class='suicide'>[user] poses menacingly with the [src]! It looks like [user.p_theyre()] trying to teleport behind someone!</span>")
-	sleep(10)
+	user.say("Heh.. Nothing personnel, kid..", forced = "temporal katana suicide")
+	sleep(20)
 	if(!user)
 		return
 	user.visible_message("<span class='hierophant_warning'>[user] vanishes into a cloud of falling dust and  burning embers, likely off to style on some poor sod in the distance!</span>")
