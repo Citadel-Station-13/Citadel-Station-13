@@ -274,12 +274,8 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	sleep(20)
 	if(!user)
 		return
-<<<<<<< HEAD
-	user.visible_message("<span class='hierophant_warning'>[user] vanishes into a cloud of falling dust and  burning embers, likely off to style on some poor sod in the distance!</span>")
-	playsound(user,'sound/magic/blink.ogg', 75, TRUE)
-=======
 	user.visible_message("<span class='hierophant_warning'>[user] vanishes into a cloud of falling dust and burning embers, likely off to style on some poor sod in the distance!</span>")
->>>>>>> a183fb316503edb4f128b6dbc9e630ed851a888a
+	playsound(user,'sound/magic/blink.ogg', 75, TRUE)
 	for(var/obj/item/I in user)
 		if(I != src)
 			user.dropItemToGround(I)
