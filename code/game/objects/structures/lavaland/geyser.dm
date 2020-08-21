@@ -9,7 +9,7 @@
 
 	var/erupting_state = null //set to null to get it greyscaled from "[icon_state]_soup". Not very usable with the whole random thing, but more types can be added if you change the spawn prob
 	var/activated = FALSE //whether we are active and generating chems
-	var/reagent_id = /datum/reagent/fuel/oil
+	var/reagent_id = /datum/reagent/oil
 	var/potency = 2 //how much reagents we add every process (2 seconds)
 	var/max_volume = 500
 	var/start_volume = 50
@@ -77,10 +77,10 @@
 
 /obj/item/plunger/reinforced
 	name = "reinforced plunger"
-	desc = "It's an M. 7 Reinforced Plunger© for heavy duty plunging."
+	desc = "It's an M. 7 Reinforced Plungerï¿½ for heavy duty plunging."
 	icon_state = "reinforced_plunger"
 
 	reinforced = TRUE
 	plunge_mod = 0.8
 
-	custom_premium_price = 1200
+	custom_premium_price = 600
