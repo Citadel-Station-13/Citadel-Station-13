@@ -961,3 +961,158 @@
 	build_path = /obj/item/bodypart/r_arm/robot/surplus_upgraded
 	category = list("Medical Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
+
+
+/datum/design/acclimator
+	name = "Plumbing Acclimator"
+	desc = "A heating and cooling device for pipes!"
+	id = "acclimator"
+	build_type = PROTOLATHE
+	materials = list(/datum/material/iron = 1000, /datum/material/glass = 500)
+	construction_time = 15
+	build_path = /obj/machinery/plumbing/acclimator
+	category = list("Misc","Medical Designs")
+	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL | DEPARTMENTAL_FLAG_SCIENCE
+
+/datum/design/disposer
+	name = "Plumbing Disposer"
+	desc = "Using the power of Science, dissolves reagents into nothing (almost)."
+	id = "disposer"
+	build_type = PROTOLATHE
+	materials = list(/datum/material/iron = 500, /datum/material/glass = 100)
+	construction_time = 15
+	build_path = /obj/machinery/plumbing/disposer
+	category = list("Misc","Medical Designs")
+	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL | DEPARTMENTAL_FLAG_SCIENCE
+
+/datum/design/plumb_filter
+	name = "Plumbing Filter"
+	desc = "Filters out chemicals by their NTDB ID."
+	id = "plumb_filter"
+	build_type = PROTOLATHE
+	materials = list(/datum/material/iron = 1000, /datum/material/glass = 500)
+	construction_time = 15
+	build_path = /obj/machinery/plumbing/filter
+	category = list("Misc","Medical Designs")
+	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL | DEPARTMENTAL_FLAG_SCIENCE
+
+/datum/design/plumb_synth
+	name = "Plumbing Synthesizer"
+	desc = "Using standard mass-energy dynamic autoconverters, generates reagents from power and puts them in a pipe."
+	id = "plumb_synth"
+	build_type = PROTOLATHE
+	materials = list(/datum/material/iron = 5000, /datum/material/glass = 1000, /datum/material/plastic = 1000)
+	construction_time = 15
+	build_path = /obj/machinery/plumbing/synthesizer
+	category = list("Misc","Medical Designs")
+	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL | DEPARTMENTAL_FLAG_SCIENCE
+
+/datum/design/plumb_grinder
+	name = "Plumbing-Linked Autogrinder"
+	desc = "Automatically extracts reagents from an item by grinding it. Think of the possibilities! Note: does not grind people."
+	id = "plumb_grinder"
+	build_type = PROTOLATHE
+	materials = list(/datum/material/iron = 2000, /datum/material/glass = 1500)
+	construction_time = 15
+	build_path = /obj/machinery/plumbing/grinder_chemical
+	category = list("Misc","Medical Designs")
+	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL | DEPARTMENTAL_FLAG_SCIENCE
+
+/datum/design/reaction_chamber
+	name = "Plumbing Reaction Chamber"
+	desc = "You can set a list of allowed reagents and amounts. Once the chamber has these reagents, will let the products through."
+	id = "reaction_chamber"
+	build_type = PROTOLATHE
+	materials = list(/datum/material/iron = 1000, /datum/material/glass = 500)
+	construction_time = 15
+	build_path = /obj/machinery/plumbing/reaction_chamber
+	category = list("Misc","Medical Designs")
+	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL | DEPARTMENTAL_FLAG_SCIENCE
+
+/datum/design/duct_print
+	name = "Plumbing Ducts"
+	desc = "Ducts for plumbing! Now lathed for efficiency."
+	id = "duct_print"
+	build_type = PROTOLATHE
+	materials = list(/datum/material/plastic = 400)
+	construction_time = 1
+	build_path = /obj/item/stack/ducts
+	category = list("Misc","Medical Designs")
+	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL | DEPARTMENTAL_FLAG_SCIENCE
+
+/datum/design/plumb_splitter
+	name = "Plumbing Chemical Splitter"
+	desc = "A splitter. Has 2 outputs. Can be configured to allow a certain amount through each side."
+	id = "plumb_splitter"
+	build_type = PROTOLATHE
+	materials = list(/datum/material/iron = 750, /datum/material/glass = 250)
+	construction_time = 15
+	build_path = /obj/machinery/plumbing/splitter
+	category = list("Misc","Medical Designs")
+	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL | DEPARTMENTAL_FLAG_SCIENCE
+
+/datum/design/pill_press
+	name = "Plumbing Automatic Pill Former"
+	desc = "Automatically forms pills to the required parameters with piped reagents! A good replacement for those lazy, useless chemists."
+	id = "pill_press"
+	build_type = PROTOLATHE
+	materials = list(/datum/material/iron = 1000, /datum/material/glass = 500)
+	construction_time = 15
+	build_path = /obj/machinery/plumbing/pill_press
+	category = list("Misc","Medical Designs")
+	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL | DEPARTMENTAL_FLAG_SCIENCE
+
+/datum/design/plumb_pump
+	name = "Liquid Extraction Pump"
+	desc = "Use it for extracting liquids from lavaland's geysers!"
+	id = "plumb_pump"
+	build_type = PROTOLATHE
+	materials = list(/datum/material/iron = 1000, /datum/material/glass = 500)
+	construction_time = 15
+	build_path = /obj/machinery/plumbing/liquid_pump
+	category = list("Misc","Medical Designs")
+	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL | DEPARTMENTAL_FLAG_SCIENCE
+
+/datum/design/plumb_in
+	name = "Plumbing Input Device"
+	desc = "A big piped funnel for putting stuff in the pipe network."
+	id = "plumb_in"
+	build_type = PROTOLATHE
+	materials = list(/datum/material/iron = 400, /datum/material/glass = 400)
+	construction_time = 15
+	build_path = /obj/machinery/plumbing/input
+	category = list("Misc","Medical Designs")
+	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL | DEPARTMENTAL_FLAG_SCIENCE
+
+/datum/design/plumb_out
+	name = "Plumbing Output Device"
+	desc = "A big piped funnel for taking stuff out of the pipe network."
+	id = "plumb_out"
+	build_type = PROTOLATHE
+	materials = list(/datum/material/iron = 400, /datum/material/glass = 400)
+	construction_time = 15
+	build_path = /obj/machinery/plumbing/output
+	category = list("Misc","Medical Designs")
+	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL | DEPARTMENTAL_FLAG_SCIENCE
+
+/datum/design/plumb_tank
+	name = "Plumbed Storage Tank"
+	desc = "A tank for storing plumbed reagents."
+	id = "plumb_tank"
+	build_type = PROTOLATHE
+	materials = list(/datum/material/iron = 10000, /datum/material/glass = 10000, /datum/material/plastic = 4000)
+	construction_time = 15
+	build_path = /obj/machinery/plumbing/tank
+	category = list("Misc","Medical Designs")
+	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL | DEPARTMENTAL_FLAG_SCIENCE
+
+/datum/design/plumb_rcd
+	name = "Plumbed Autoconstruction Device"
+	desc = "A RCD for plumbing machines! Cannot make ducts."
+	id = "plumb_rcd"
+	build_type = PROTOLATHE
+	materials = list(/datum/material/iron = 20000, /datum/material/glass = 10000, /datum/material/plastic = 20000, /datum/material/titanium = 2000, /datum/material/diamond = 800, /datum/material/gold = 2000, /datum/material/silver = 2000)
+	construction_time = 150
+	build_path = /obj/item/construction/plumbing
+	category = list("Misc","Medical Designs")
+	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL | DEPARTMENTAL_FLAG_SCIENCE

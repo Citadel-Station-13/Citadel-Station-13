@@ -2,6 +2,15 @@
 //Large Objects//
 /////////////////
 
+/datum/crafting_recipe/plunger
+	name = "Plunger"
+	result = /obj/item/plunger
+	time = 1
+	reqs = list(/obj/item/stack/sheet/plastic = 1,
+				/obj/item/stack/sheet/mineral/wood = 1)
+	category = CAT_MISC
+	subcategory = CAT_TOOL
+
 /datum/crafting_recipe/showercurtain
 	name = "Shower Curtains"
 	reqs = 	list(/obj/item/stack/sheet/cloth = 2,
@@ -337,7 +346,7 @@
 	result = /obj/item/toy/sword/cx
 	subcategory = CAT_MISCELLANEOUS
 	category = CAT_MISC
-	
+
 /datum/crafting_recipe/catgirlplushie
 	name = "Catgirl Plushie"
 	reqs = list(/obj/item/toy/plush/hairball = 3)
