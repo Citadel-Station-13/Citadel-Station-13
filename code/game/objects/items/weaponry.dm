@@ -274,7 +274,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	sleep(10)
 	if(!user)
 		return
-	user.visible_message("<span class='hierophant_warning'>[user] vanishes into a cloud of falling dust and  burning embers, likely off to style on some poor sod in the distance!</span>")
+	user.visible_message("<span class='hierophant_warning'>[user] vanishes into a cloud of falling dust and burning embers, likely off to style on some poor sod in the distance!</span>")
 	for(var/obj/item/I in user)
 		if(I != src)
 			user.dropItemToGround(I)
