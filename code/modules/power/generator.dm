@@ -42,6 +42,7 @@
 
 
 #define GENRATE 800		// generator output coefficient from Q
+#define LOGISTIC_FUNCTION(L,k,x,x_0) (L/(1+(NUM_E**(-k*(x-x_0)))))
 
 /obj/machinery/power/generator/process_atmos()
 
@@ -66,7 +67,7 @@
 				var/energy_transfer = delta_temperature*hot_air_heat_capacity*cold_air_heat_capacity/(hot_air_heat_capacity+cold_air_heat_capacity)
 
 				var/heat = energy_transfer*(1-efficiency)
-				lastgen += energy_transfer*(efficiency-0.41)
+				lastgen += LOGISTIC_FUNCTION(1000000,0.0034,delta_temperature,2000)
 
 				hot_air.set_temperature(hot_air.return_temperature() - energy_transfer/hot_air_heat_capacity)
 				cold_air.set_temperature(cold_air.return_temperature() + heat/cold_air_heat_capacity)
