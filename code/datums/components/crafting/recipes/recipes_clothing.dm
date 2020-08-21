@@ -46,6 +46,7 @@
 	time = 60
 	tools = list(TOOL_WIRECUTTER)
 	reqs = list(/obj/item/stack/sheet/cloth = 4,
+				/obj/item/stack/sticky_tape = 2,
 				/obj/item/stack/sheet/leather = 2)
 	category = CAT_CLOTHING
 
