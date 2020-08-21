@@ -6,7 +6,7 @@
 	desc = "A small portable microcomputer."
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "laptop-open"
-	light_on = FALSE
+	var/light_on = FALSE
 	integrity_failure = 0.5
 	max_integrity = 100
 	armor = list("melee" = 0, "bullet" = 20, "laser" = 20, "energy" = 100, "bomb" = 0, "bio" = 100, "rad" = 100, "fire" = 0, "acid" = 0)
@@ -130,7 +130,7 @@
 		return
 	if(enabled)
 		ui_interact(user)
-	else if(isAdminGhostAI(user))
+	else if(IsAdminGhost(user))
 		var/response = alert(user, "This computer is turned off. Would you like to turn it on?", "Admin Override", "Yes", "No")
 		if(response == "Yes")
 			turn_on(user)

@@ -4,11 +4,11 @@
  * @license MIT
  */
 
-export const THEMES = ['light', 'dark'];
+export const THEMES = ['light', 'dark', 'default'];
 
 const COLOR_DARK_BG = '#202020';
 const COLOR_DARK_BG_DARKER = '#171717';
-const COLOR_DARK_TEXT = '#a4bad6';
+const COLOR_DARK_TEXT = 'E0E0E0'; // '#a4bad6';
 
 /**
  * Darkmode preference, originally by Kmc2000.
@@ -35,18 +35,18 @@ export const setClientTheme = name => {
       'mainwindow.background-color': 'none',
       'split.background-color': 'none',
       // Buttons
-      'changelog.background-color': 'none',
-      'changelog.text-color': '#000000',
-      'rules.background-color': 'none',
-      'rules.text-color': '#000000',
-      'wiki.background-color': 'none',
-      'wiki.text-color': '#000000',
-      'forum.background-color': 'none',
-      'forum.text-color': '#000000',
-      'github.background-color': 'none',
-      'github.text-color': '#000000',
-      'report-issue.background-color': 'none',
-      'report-issue.text-color': '#000000',
+      'changelog.background-color': '#90B3DD',
+      'changelog.text-color': '#EF7F7F',
+      'rules.background-color': '#90B3DD',
+      'rules.text-color': '#EF7F7F',
+      'wiki.background-color': '#90B3DD',
+      'wiki.text-color': '#EF7F7F',
+      'forum.background-color': '#90B3DD',
+      'forum.text-color': '#EF7F7F',
+      'github.background-color': '#90B3DD',
+      'github.text-color': '#EF7F7F',
+      'report-issue.background-color': '#90B3DD',
+      'report-issue.text-color': '#EF7F7F',
       // Status and verb tabs
       'output.background-color': 'none',
       'output.text-color': '#000000',
@@ -85,17 +85,17 @@ export const setClientTheme = name => {
       'mainwindow.background-color': COLOR_DARK_BG,
       'split.background-color': COLOR_DARK_BG,
       // Buttons
-      'changelog.background-color': '#494949',
+      'changelog.background-color': '#40628A',
       'changelog.text-color': COLOR_DARK_TEXT,
-      'rules.background-color': '#494949',
+      'rules.background-color': '#40628A',
       'rules.text-color': COLOR_DARK_TEXT,
-      'wiki.background-color': '#494949',
+      'wiki.background-color': '#40628A',
       'wiki.text-color': COLOR_DARK_TEXT,
-      'forum.background-color': '#494949',
+      'forum.background-color': '#40628A',
       'forum.text-color': COLOR_DARK_TEXT,
-      'github.background-color': '#3a3a3a',
+      'github.background-color': '#40628A',
       'github.text-color': COLOR_DARK_TEXT,
-      'report-issue.background-color': '#492020',
+      'report-issue.background-color': '#40628A',
       'report-issue.text-color': COLOR_DARK_TEXT,
       // Status and verb tabs
       'output.background-color': COLOR_DARK_BG_DARKER,
@@ -120,5 +120,8 @@ export const setClientTheme = name => {
       'tooltip.background-color': COLOR_DARK_BG,
       'tooltip.text-color': COLOR_DARK_TEXT,
     });
+  }
+  if (name === 'default') {
+    setClientTheme('light'); // absolute cheeze.
   }
 };

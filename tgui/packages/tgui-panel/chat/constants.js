@@ -61,6 +61,18 @@ export const MESSAGE_TYPES = [
     selector: '.filter_ooc, .ooc, .adminooc',
   },
   {
+    type: 'looc',
+    name: 'LOOC',
+    description: 'Local OOC Chat. Less of a bluewall',
+    selector: '.filter_looc, .looc',
+  },
+  {
+    type: 'antagooc',
+    name: 'AOOC',
+    description: 'Antag OOC Chat.',
+    selector: '.filter_aooc, .antagooc',
+  },
+  {
     type: 'adminpm',
     name: 'Admin PMs',
     description: 'Messages to/from admins (adminhelp)',
@@ -77,6 +89,13 @@ export const MESSAGE_TYPES = [
     name: 'Unsorted',
     description: 'Everything we could not sort, always enabled',
   },
+  // Semi-admin stuff.
+  {
+    type: 'mentorchat',
+    name: 'Mentor Chat',
+    description: 'Mhelp how do i not die?',
+    selector: '.filter_MSAY, .mentor_channel',
+  },
   // Admin stuff
   {
     type: 'adminchat',
@@ -85,6 +104,7 @@ export const MESSAGE_TYPES = [
     selector: '.filter_ASAY, .admin_channel',
     admin: true,
   },
+  /*
   {
     type: 'modchat',
     name: 'Mod Chat',
@@ -92,6 +112,7 @@ export const MESSAGE_TYPES = [
     selector: '.filter_MSAY, .mod_channel',
     admin: true,
   },
+  */
   {
     type: 'eventchat',
     name: 'Event Chat',

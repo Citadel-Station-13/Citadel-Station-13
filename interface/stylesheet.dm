@@ -26,12 +26,17 @@ em						{font-style: normal;	font-weight: bold;}
 .prefix					{					font-weight: bold;}
 
 .ooc					{					font-weight: bold;}
+.looc					{color: #6699CC;	font-weight: bold;}
+.antagooc				{color: #b8002e;	font-weight: bold;}
 .adminobserverooc		{color: #0099cc;	font-weight: bold;}
 .adminooc				{color: #700038;	font-weight: bold;}
 
 .adminobserver			{color: #996600;	font-weight: bold;}
 .adminsay				{color:	#FF4500;	font-weight: bold;}
 .admin					{color: #386aff;	font-weight: bold;}
+
+.mentorsay				{color: #E236D8;	font-weight: bold;}
+.mentorsay_admin		{color: #8A2BE2;	font-weight: bold;}
 
 .name					{					font-weight: bold;}
 
