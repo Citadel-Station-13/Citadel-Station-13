@@ -17,4 +17,4 @@
 	wagging_type = "mam_waggingtail"
 	species_type = "furry"
 
-	allowed_limb_ids = list("mammal","squid","apid")
+	allowed_limb_ids = list("mammal","aquatic","avian")

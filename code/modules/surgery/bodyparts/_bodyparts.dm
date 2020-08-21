@@ -614,8 +614,6 @@
 
 		if(S.use_skintones)
 			skin_tone = H.skin_tone
-			if(GLOB.greyscale_limb_types[species_id]) //dont try giving species greyscale sprites if they can't have them, please.
-				base_bp_icon = (base_bp_icon == DEFAULT_BODYPART_ICON) ? DEFAULT_BODYPART_ICON_ORGANIC : base_bp_icon
 		else
 			skin_tone = ""
 
@@ -628,13 +626,8 @@
 				species_color = S.fixed_mut_color
 			else
 				species_color = H.dna.features["mcolor"]
-			if(GLOB.greyscale_limb_types[species_id]) //dont try giving species greyscale sprites if they can't have them, please.
-				base_bp_icon = (base_bp_icon == DEFAULT_BODYPART_ICON) ? DEFAULT_BODYPART_ICON_ORGANIC : base_bp_icon
 		else
 			species_color = ""
-
-		if(base_bp_icon != DEFAULT_BODYPART_ICON)
-			color_src = mut_colors ? MUTCOLORS : ((H.dna.skin_tone_override && S.use_skintones == USE_SKINTONES_GRAYSCALE_CUSTOM) ? CUSTOM_SKINTONE : SKINTONE)
 
 		if(S.mutant_bodyparts["legs"])
 			if(body_zone == BODY_ZONE_L_LEG || body_zone == BODY_ZONE_R_LEG)
@@ -659,9 +652,11 @@
 			body_markings = null
 			aux_marking = null
 
-		if(GLOB.greyscale_limb_types[species_id]) //should they have greyscales?
+		if(species_id in GLOB.greyscale_limb_types) //should they have greyscales?
 			base_bp_icon = DEFAULT_BODYPART_ICON_ORGANIC
-			message_admins("fuck")
+
+		if(base_bp_icon != DEFAULT_BODYPART_ICON)
+			color_src = mut_colors ? MUTCOLORS : ((H.dna.skin_tone_override && S.use_skintones == USE_SKINTONES_GRAYSCALE_CUSTOM) ? CUSTOM_SKINTONE : SKINTONE)
 
 		if(!dropping_limb && H.dna.check_mutation(HULK))
 			mutation_color = "00aa00"

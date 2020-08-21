@@ -524,8 +524,10 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						mutant_category = 0
 
 			if(length(pref_species.allowed_limb_ids))
+				if(!chosen_limb_id || !(chosen_limb_id in pref_species.allowed_limb_ids))
+					chosen_limb_id = pref_species.id
 				dat += "<h3>Body sprite</h3>"
-				dat += "<a style='display:block;width:100px' href='?_src_=prefs;preference=bodysprite;task=input'>[pref_species.mutant_bodyparts["limbs_id"]]</a>"
+				dat += "<a style='display:block;width:100px' href='?_src_=prefs;preference=bodysprite;task=input'>[chosen_limb_id]</a>"
 
 			if(mutant_category)
 				dat += "</td>"
