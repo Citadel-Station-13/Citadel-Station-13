@@ -1,6 +1,0 @@
-author: "SmArtKar"
-delete-after: True
-changes: 
-  - tweak: "RSD limitation is now 500 tiles"
-  - bugfix: "Fixed broken RSD sprites"
-  - config: "Removed that shuttle limit"
