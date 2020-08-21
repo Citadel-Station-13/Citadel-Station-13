@@ -13,6 +13,7 @@ RPD
 #define DESTROY_MODE (1<<2)
 #define PAINT_MODE (1<<3)
 
+
 GLOBAL_LIST_INIT(atmos_pipe_recipes, list(
 	"Pipes" = list(
 		new /datum/pipe_info/pipe("Pipe",				/obj/machinery/atmospherics/pipe/simple),
@@ -227,9 +228,10 @@ GLOBAL_LIST_INIT(fluid_duct_recipes, list(
 	var/static/datum/pipe_info/first_disposal
 	var/static/datum/pipe_info/first_transit
 	var/mode = BUILD_MODE | DESTROY_MODE | WRENCH_MODE
-	var/has_bluespace_pipe = FALSE // Skyrat
 	var/static/datum/pipe_info/first_plumbing
 	var/locked = FALSE //wheter we can change categories. Useful for the plumber
+
+	var/has_bluespace_pipe = FALSE // Skyrat
 
 /obj/item/pipe_dispenser/New()
 	. = ..()
@@ -360,13 +362,10 @@ GLOBAL_LIST_INIT(fluid_duct_recipes, list(
 		playsound(get_turf(src), 'sound/effects/pop.ogg', 50, FALSE)
 	return TRUE
 
-/obj/item/pipe_dispenser/pre_attack(atom/A, mob/user) // Skyrat: All functionality moved to proc/dispense
-	dispense(A, user)
-
-/obj/item/pipe_dispenser/proc/dispense(atom/A, mob/user)
+/obj/item/pipe_dispenser/pre_attack(atom/A, mob/user)
 	var/turf/T = get_turf(A)
 	if(!user.IsAdvancedToolUser() || !T || istype(T, /turf/open/space/transit) || isindestructiblewall(T))
-		return
+		return ..()
 
 	//So that changing the menu settings doesn't affect the pipes already being built.
 	var/queued_p_type = recipe.id
@@ -413,7 +412,7 @@ GLOBAL_LIST_INIT(fluid_duct_recipes, list(
 		switch(category) //if we've gotten this var, the target is valid
 			if(ATMOS_CATEGORY) //Making pipes
 				if(!can_make_pipe)
-					return
+					return ..()
 				A = T
 				if(is_type_in_typecache(recipe, GLOB.ventcrawl_machinery) && isclosedturf(A)) //wall escapism sanity check.
 					to_chat(user, "<span class='warning'>[src]'s error light flickers; there's something in the way!</span>")
@@ -449,7 +448,7 @@ GLOBAL_LIST_INIT(fluid_duct_recipes, list(
 
 			if(DISPOSALS_CATEGORY) //Making disposals pipes
 				if(!can_make_pipe)
-					return
+					return ..()
 				A = T
 				if(isclosedturf(A))
 					to_chat(user, "<span class='warning'>[src]'s error light flickers; there's something in the way!</span>")
@@ -474,7 +473,7 @@ GLOBAL_LIST_INIT(fluid_duct_recipes, list(
 
 			if(TRANSIT_CATEGORY) //Making transit tubes
 				if(!can_make_pipe)
-					return
+					return ..()
 				A = T
 				if(isclosedturf(A))
 					to_chat(user, "<span class='warning'>[src]'s error light flickers; there's something in the way!</span>")
@@ -505,7 +504,6 @@ GLOBAL_LIST_INIT(fluid_duct_recipes, list(
 						if(mode & WRENCH_MODE)
 							tube.wrench_act(user, src)
 					return
-// End skyrat edit
 			if(PLUMBING_CATEGORY) //Plumbing.
 				if(!can_make_pipe)
 					return ..()
@@ -528,7 +526,7 @@ GLOBAL_LIST_INIT(fluid_duct_recipes, list(
 					if(mode & WRENCH_MODE)
 						D.wrench_act(user, src)
 			else
-				return 
+				return ..()
 
 /obj/item/pipe_dispenser/proc/activate()
 	playsound(get_turf(src), 'sound/items/deconstruct.ogg', 50, 1)

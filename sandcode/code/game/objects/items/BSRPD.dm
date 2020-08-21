@@ -63,7 +63,7 @@ GLOBAL_LIST_INIT(bsatmos_pipe_recipes, list(
 		return // this will be handled in pre_attack in RPD.dm
 	user.Beam(target, icon_state = "rped_upgrade", time = 5)
 	playsound(src, 'sound/items/pshoom.ogg', 30, TRUE)
-	dispense(target, user)
+	pre_attack(target, user)
 
 // End skyrat edit 
 #undef ATMOS_CATEGORY
