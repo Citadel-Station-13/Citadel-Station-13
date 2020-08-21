@@ -20,4 +20,4 @@
 	wagging_type = "mam_waggingtail"
 	species_type = "insect"
 
-	allowed_limb_ids = list("insect","apid")
+	allowed_limb_ids = list("insect","apid","moth")
