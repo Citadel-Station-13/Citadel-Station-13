@@ -414,9 +414,16 @@ Regarding sprites & sounds, you must credit the artist and possibly the codebase
 Do not add any of the following in a Pull Request or risk getting the PR closed:
 * National Socialist Party of Germany content, National Socialist Party of Germany related content, or National Socialist Party of Germany references
 * Code where one line of code is split across mutiple lines (except for multiple, separate strings and comments; in those cases, existing longer lines must not be split up)
-* Code adding, removing, or updating the availability of alien races/species/human mutants without prior approval. Pull requests attempting to add or remove features from said races/species/mutants require prior approval as well.
 
 Just because something isn't on this list doesn't mean that it's acceptable. Use common sense above all else.
+
+## Content requiring prior approval
+Certain types of changes may require prior approval from maintainers. This currently includes:
+
+* Code adding, removing, or updating the availability of alien races/species/human mutants. This includes pull requests attempting to add or remove features from said races/species/mutants. (Requires approval from at least one maintainer)
+* Code adding, removing, or modifying the functionality of adult-oriented features (such as, but not limited to: vore, genitals, MKUltra, and more). This also includes pull requests attempting to add or remove these features outright. (Requires approval from at least half of the formal maintainer team)
+
+The above content requires approval from the specified amount of maintainers prior to PR creation. Seeking approval must be done via a @Maintainer ping in a relevant development/code or staff channel on the Discord, otherwise it will be considered insufficient. If a PR contains any of the above content, but the creator does not have sufficient approval prior to the PR's creation, then the PR may be closed by any maintainer, at any time, for any reason.
 
 ## A word on Git
 Yes, we know that the files have a tonne of mixed Windows and Linux line endings. Attempts to fix this have been met with less than stellar success, and as such we have decided to give up caring until there comes a time when it matters.

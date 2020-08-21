@@ -28,7 +28,6 @@
 		if(istype(owner.current.loc, /obj/structure/closet/crate/coffin))
 			Torpor_Begin()
 				// Wait before next pass
-	FreeAllVassals() 	// Free my Vassals! (if I haven't yet)
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -305,6 +304,7 @@
 			 "<span class='italics'>You hear a wet, bursting sound.</span>")
 		owner.current.gib(TRUE, FALSE, FALSE) //Brain cloning is wierd and allows hellbounds. Lets destroy the brain for safety.
 	playsound(owner.current, 'sound/effects/tendril_destroyed.ogg', 40, TRUE)
+
 
 
 

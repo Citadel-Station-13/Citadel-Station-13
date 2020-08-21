@@ -14,7 +14,7 @@
 	brutemod = 1.25 //They're weak to punches
 	attack_type = BURN //burn bish
 	damage_overlay_type = "" //We are too cool for regular damage overlays
-	species_traits = list(MUTCOLORS, NO_UNDERWEAR, HAIR, HAS_FLESH, HAS_BONE) // i mean i guess they have blood so they can have wounds too
+	species_traits = list(MUTCOLORS, HAIR, HAS_FLESH, HAS_BONE) // i mean i guess they have blood so they can have wounds too
 	species_language_holder = /datum/language_holder/ethereal
 	inherent_traits = list(TRAIT_NOHUNGER)
 	sexes = FALSE
@@ -27,7 +27,7 @@
 	// Cold temperatures hurt faster as it is harder to move with out the heat energy
 	bodytemp_cold_damage_limit = (T20C - 10) // about 10c
 	*/
-	hair_color = "fixedmutcolor"
+	hair_color = "mutcolor"
 	hair_alpha = 140
 	var/current_color
 	var/EMPeffect = FALSE

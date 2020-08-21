@@ -543,6 +543,7 @@
 	cold_protection = HEAD
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
 	flags_inv = HIDEHAIR|HIDEEARS
+	rad_flags = RAD_NO_CONTAMINATE
 
 /obj/item/clothing/suit/hooded/wintercoat/centcom
 	name = "centcom winter coat"
