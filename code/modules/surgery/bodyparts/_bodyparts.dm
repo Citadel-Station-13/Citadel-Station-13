@@ -599,6 +599,7 @@
 		var/datum/species/S = H.dna.species
 		base_bp_icon = S?.icon_limbs || DEFAULT_BODYPART_ICON
 		species_id = S.mutant_bodyparts["limbs_id"]
+		message_admins("limbs is [species_id]")
 		species_flags_list = H.dna.species.species_traits
 
 		//body marking memes
@@ -613,7 +614,8 @@
 
 		if(S.use_skintones)
 			skin_tone = H.skin_tone
-			base_bp_icon = (base_bp_icon == DEFAULT_BODYPART_ICON) ? DEFAULT_BODYPART_ICON_ORGANIC : base_bp_icon
+			if(GLOB.greyscale_limb_types[species_id]) //dont try giving species greyscale sprites if they can't have them, please.
+				base_bp_icon = (base_bp_icon == DEFAULT_BODYPART_ICON) ? DEFAULT_BODYPART_ICON_ORGANIC : base_bp_icon
 		else
 			skin_tone = ""
 
@@ -626,7 +628,8 @@
 				species_color = S.fixed_mut_color
 			else
 				species_color = H.dna.features["mcolor"]
-			base_bp_icon = (base_bp_icon == DEFAULT_BODYPART_ICON) ? DEFAULT_BODYPART_ICON_ORGANIC : base_bp_icon
+			if(GLOB.greyscale_limb_types[species_id]) //dont try giving species greyscale sprites if they can't have them, please.
+				base_bp_icon = (base_bp_icon == DEFAULT_BODYPART_ICON) ? DEFAULT_BODYPART_ICON_ORGANIC : base_bp_icon
 		else
 			species_color = ""
 
