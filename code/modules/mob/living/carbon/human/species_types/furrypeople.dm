@@ -17,3 +17,5 @@
 	tail_type = "mam_tail"
 	wagging_type = "mam_waggingtail"
 	species_type = "furry"
+
+	allowed_limb_ids = list("lizard","pod","mammal","human","insect")

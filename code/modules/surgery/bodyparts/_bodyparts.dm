@@ -598,7 +598,7 @@
 
 		var/datum/species/S = H.dna.species
 		base_bp_icon = S?.icon_limbs || DEFAULT_BODYPART_ICON
-		species_id = S.limbs_id
+		species_id = S.mutant_bodyparts["limbs_id"]
 		species_flags_list = H.dna.species.species_traits
 
 		//body marking memes
