@@ -234,7 +234,7 @@
 						partner = check_target
 				//skyrat edit
 				if(forced_partner)
-					if((forced_partner == TRUE) || (!istype(forced_partner)))
+					if((forced_partner == "none") || (!istype(forced_partner)))
 						partner = null
 					else
 						partner = forced_partner

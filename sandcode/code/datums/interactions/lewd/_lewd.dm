@@ -29,6 +29,27 @@
 */
 //I'm sorry, lewd should not have mob procs such as life() and such in it. //NO SHIT IT SHOULDNT I REMOVED THEM
 
+// Lewd interactions have a blacklist for certain mobs. When we evalute the user and target, both of
+// their requirements must be satisfied, and the mob must not be of a blacklisted type.
+// This should not be too weighty on the server, as the check is only run to generate the menu options.
+/datum/interaction/lewd/evaluate_user(mob/living/user, silent)
+	. = ..()
+	if(.)
+		if((user.stat == DEAD))
+			return FALSE
+		for(var/check in blacklisted_mobs)
+			if(istype(user, check))
+				return FALSE
+
+/datum/interaction/lewd/evaluate_target(mob/living/user, mob/living/target, silent = TRUE)
+	. = ..()
+	if(.)
+		if((target.stat == DEAD))
+			return FALSE
+		for(var/check in blacklisted_mobs)
+			if(istype(target, check))
+				return FALSE
+
 /proc/playlewdinteractionsound(turf/turf_source, soundin, vol as num, vary, extrarange as num ,frequency, falloff, channel = 0, pressure_affected = TRUE, sound/S, envwet = -10000, envdry = 0, manual_x, manual_y)
 	var/list/hearing_mobs
 	for(var/mob/H in get_hearers_in_view(4, turf_source))
@@ -746,9 +767,9 @@
 		if(ishuman(src))
 			var/mob/living/carbon/human/H = src
 			if(!partner)
-				H.mob_climax(TRUE, TRUE)
+				H.mob_climax(TRUE, "none")
 			else
-				H.mob_climax(TRUE, partner, cumin)
+				H.mob_climax(TRUE, partner, !cumin)
 	set_lust(0)
 /*
 /mob/living/cum(mob/living/partner, target_orifice)
