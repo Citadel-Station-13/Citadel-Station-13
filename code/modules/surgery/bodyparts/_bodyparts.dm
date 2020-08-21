@@ -655,10 +655,13 @@
 				body_markings = "plain"
 				aux_marking = "plain"
 			markings_color = list(colorlist)
-
 		else
 			body_markings = null
 			aux_marking = null
+
+		if(GLOB.greyscale_limb_types[species_id]) //should they have greyscales?
+			base_bp_icon = DEFAULT_BODYPART_ICON_ORGANIC
+			message_admins("fuck")
 
 		if(!dropping_limb && H.dna.check_mutation(HULK))
 			mutation_color = "00aa00"
