@@ -281,7 +281,6 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	user.dropItemToGround(src) //Drop us last, so it goes on top of their stuff
 	qdel(user)
 
-
 /obj/item/melee/bokken // parrying stick
 	name = "bokken"
 	desc = "A space-Japanese training sword made of wood and shaped like a katana."
